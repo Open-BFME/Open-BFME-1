@@ -1,7 +1,8 @@
 // cl: /DNDEBUG /MD
-// Retail 0x007D2D30: ScreenBWFilterDOT3::postRender.
+// Retail 0x007D2D30: Rva007D3580::postRender.
 // The BFME filter wrapper forwards a fourth Coord2D* display-size argument;
-// the ZH ScreenBWFilterDOT3 body is the semantic source for this method.
+// the ZH ScreenBWFilterDOT3 body is the semantic source; this owner remains
+// address-qualified because its constructor/vtable chain is distinct.
 
 #include "d3dx8math.h"
 
@@ -117,7 +118,7 @@ public:
 	virtual void reset();
 };
 
-class ScreenBWFilterDOT3 : public ScreenBWFilter
+class Rva007D3580 : public ScreenBWFilter
 {
 public:
 	virtual Int init();
@@ -127,8 +128,8 @@ public:
 	virtual Bool setup(FilterModes);
 };
 
-// ?postRender@ScreenBWFilterDOT3@@UAE_NW4FilterModes@@AAUCoord2D@@AA_NPAU3@@Z
-Bool ScreenBWFilterDOT3::postRender(FilterModes mode, Coord2D &scrollDelta,
+// ?postRender@Rva007D3580@@UAE_NW4FilterModes@@AAUCoord2D@@AA_NPAU3@@Z
+Bool Rva007D3580::postRender(FilterModes mode, Coord2D &scrollDelta,
 	Bool &doExtraRender, Coord2D *displaySize)
 {
 	void *tex = bfmeEndRenderToTexture();
