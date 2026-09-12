@@ -87218,3 +87218,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeGetKeyBG@BfmeNamedBG@@QBE?AVAsciiString@@XZ,0x0060AA10,Open-BFME5 scaffold getter in BfmeNamedDtorBG.cpp; reuses the retail generic getter body already claimed by dup_0060aa10
 ??1BfmeNamedBaseBG@@UAE@XZ,0x0061E3E0,Open-BFME5 scaffold base dtor in BfmeNamedCtorBG.cpp; retail base-class destructor the named dtor 0x0060AB40 calls last, still a dump
 ??0TurretStateMachine@@QAE@PAVTurretAI@@PAVObject@@VAsciiString@@@Z,0x00048612,route=0x0018DB60; real TurretStateMachine constructor; retail ILT 0x00048612 in gen_small/thunks_034.cpp reaches corrected full boundary; existing 0x0018DB84 ledger row is a stale interior boundary
+?set@BFMERetailAsciiString@@QAEXABV1@@Z,0x00887C90,additive; same per-TU copy already pinned as ?set@UnicodeString@@QAEXABV1@@Z; used by Condition::ParseConditionDataChunk 0x0035A510

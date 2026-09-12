@@ -1,818 +1,349 @@
+// ?ParseConditionDataChunk@Condition@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump Condition::ParseConditionDataChunk to C++ thunk.
+// Open-BFME: clean C++ reconstruction of Condition::ParseConditionDataChunk.
+//
+// The retail BFME parser uses the 0x4c-byte Condition layout and scans the
+// 0xb8-condition template table.  The shared Scripts.cpp source is the ZH
+// implementation (its current enum ends at 0x6d and its Parameter status
+// mask is larger), so this body keeps the BFME layouts local to this TU.
+// BFME additionally frees stale parameters (both on a name mismatch and on
+// a parameter-count mismatch) where ZH only reset the count.
 
-class DataChunkInput;
-struct DataChunkInfo;
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
-class Condition
+typedef int Int;
+typedef bool Bool;
+typedef unsigned short DataChunkVersionType;
+enum NameKeyType { NAMEKEY_INVALID = 0 };
+
+class BfmeStringLiteralBase
 {
-public:
-static bool ParseConditionDataChunk(DataChunkInput &, DataChunkInfo *, void *);
+	friend class BFMERetailAsciiString;
+
+private:
+	BfmeStringLiteralBase(const char *text);
+	~BfmeStringLiteralBase();
 };
 
-// ?ParseConditionDataChunk@Condition@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
-__declspec(naked) bool Condition::ParseConditionDataChunk(DataChunkInput &, DataChunkInfo *, void *)
+class BFMERetailAsciiString
 {
-__asm {
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x08
-        __emit 0x96
-        __emit 0x01
-        __emit 0x01
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x08
-        __emit 0x53
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x4c
-        __emit 0xe8
-        __emit 0xff
-        __emit 0x79
-        __emit 0x52
-        __emit 0x00
-        __emit 0x33
-        __emit 0xdb
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x42
-        __emit 0xc7
-        __emit 0x00
-        __emit 0xdc
-        __emit 0x84
-        __emit 0x0e
-        __emit 0x01
-        __emit 0x89
-        __emit 0x58
-        __emit 0x04
-        __emit 0x89
-        __emit 0x58
-        __emit 0x08
-        __emit 0x89
-        __emit 0x58
-        __emit 0x3c
-        __emit 0x89
-        __emit 0x58
-        __emit 0x40
-        __emit 0x89
-        __emit 0x58
-        __emit 0x44
-        __emit 0x89
-        __emit 0x58
-        __emit 0x48
-        __emit 0x33
-        __emit 0xc9
-        __emit 0x89
-        __emit 0x48
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x48
-        __emit 0x10
-        __emit 0x89
-        __emit 0x48
-        __emit 0x14
-        __emit 0x89
-        __emit 0x48
-        __emit 0x18
-        __emit 0x89
-        __emit 0x48
-        __emit 0x1c
-        __emit 0x89
-        __emit 0x48
-        __emit 0x20
-        __emit 0x89
-        __emit 0x48
-        __emit 0x24
-        __emit 0x89
-        __emit 0x48
-        __emit 0x28
-        __emit 0x89
-        __emit 0x48
-        __emit 0x2c
-        __emit 0x89
-        __emit 0x48
-        __emit 0x30
-        __emit 0x89
-        __emit 0x48
-        __emit 0x34
-        __emit 0x89
-        __emit 0x48
-        __emit 0x38
-        __emit 0x8b
-        __emit 0xf0
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xf6
-        __emit 0x55
-        __emit 0x8b
-        __emit 0x6c
-        __emit 0x24
-        __emit 0x24
-        __emit 0x57
-        __emit 0x8b
-        __emit 0xcd
-        __emit 0xe8
-        __emit 0x7a
-        __emit 0x02
-        __emit 0xce
-        __emit 0xff
-        __emit 0x89
-        __emit 0x46
-        __emit 0x04
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x07
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x50
-        __emit 0xff
-        __emit 0x52
-        __emit 0x2c
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x66
-        __emit 0x83
-        __emit 0x78
-        __emit 0x08
-        __emit 0x04
-        __emit 0x89
-        __emit 0x7c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x88
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x13
-        __emit 0x72
-        __emit 0x3c
-        __emit 0x8b
-        __emit 0xcd
-        __emit 0xe8
-        __emit 0xbc
-        __emit 0x55
-        __emit 0xcc
-        __emit 0xff
-        __emit 0x3b
-        __emit 0xfb
-        __emit 0x8b
-        __emit 0xe8
-        __emit 0x74
-        __emit 0x05
-        __emit 0x39
-        __emit 0x6f
-        __emit 0x0c
-        __emit 0x74
-        __emit 0x25
-        __emit 0x33
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x07
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x57
-        __emit 0xff
-        __emit 0x52
-        __emit 0x2c
-        __emit 0x3b
-        __emit 0x68
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x74
-        __emit 0x0b
-        __emit 0x47
-        __emit 0x81
-        __emit 0xff
-        __emit 0xb8
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x7c
-        __emit 0xe2
-        __emit 0xeb
-        __emit 0x08
-        __emit 0x89
-        __emit 0x7e
-        __emit 0x04
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x13
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x28
-        __emit 0xe8
-        __emit 0x11
-        __emit 0x02
-        __emit 0xce
-        __emit 0xff
-        __emit 0x33
-        __emit 0xff
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x89
-        __emit 0x46
-        __emit 0x08
-        __emit 0x7e
-        __emit 0x67
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x83
-        __emit 0xc0
-        __emit 0x48
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x8d
-        __emit 0x6e
-        __emit 0x0c
-        __emit 0xeb
-        __emit 0x03
-        __emit 0x8d
-        __emit 0x49
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x28
-        __emit 0x51
-        __emit 0xe8
-        __emit 0xfe
-        __emit 0xde
-        __emit 0xce
-        __emit 0xff
-        __emit 0x89
-        __emit 0x45
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x08
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x83
-        __emit 0xf9
-        __emit 0x0f
-        __emit 0x75
-        __emit 0x27
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x4a
-        __emit 0x44
-        __emit 0x3b
-        __emit 0xcf
-        __emit 0x7e
-        __emit 0x1c
-        __emit 0x3b
-        __emit 0xfb
-        __emit 0x7c
-        __emit 0x18
-        __emit 0x3b
-        __emit 0xf9
-        __emit 0x7d
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x83
-        __emit 0x39
-        __emit 0x3d
-        __emit 0x75
-        __emit 0x0b
-        __emit 0x83
-        __emit 0x38
-        __emit 0x0f
-        __emit 0x75
-        __emit 0x06
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x3d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x08
-        __emit 0x47
-        __emit 0x83
-        __emit 0xc1
-        __emit 0x04
-        __emit 0x83
-        __emit 0xc5
-        __emit 0x04
-        __emit 0x3b
-        __emit 0xf8
-        __emit 0x89
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x7c
-        __emit 0xac
-        __emit 0x38
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x13
-        __emit 0x75
-        __emit 0x3f
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x07
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x53
-        __emit 0xff
-        __emit 0x52
-        __emit 0x2c
-        __emit 0x89
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x39
-        __emit 0x5e
-        __emit 0x08
-        __emit 0x89
-        __emit 0x5e
-        __emit 0x04
-        __emit 0x7e
-        __emit 0x27
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x08
-        __emit 0x49
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x86
-        __emit 0x0c
-        __emit 0x3b
-        __emit 0xfb
-        __emit 0x74
-        __emit 0x11
-        __emit 0x8d
-        __emit 0x4f
-        __emit 0x10
-        __emit 0xe8
-        __emit 0xa5
-        __emit 0xd2
-        __emit 0x52
-        __emit 0x00
-        __emit 0x57
-        __emit 0xe8
-        __emit 0x0f
-        __emit 0x78
-        __emit 0x52
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x39
-        __emit 0x5e
-        __emit 0x08
-        __emit 0x7f
-        __emit 0xd9
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x28
-        __emit 0xe8
-        __emit 0x03
-        __emit 0x84
-        __emit 0xcd
-        __emit 0xff
-        __emit 0x66
-        __emit 0x3d
-        __emit 0x02
-        __emit 0x00
-        __emit 0x73
-        __emit 0x69
-        __emit 0x83
-        __emit 0x3d
-        __emit 0x58
-        __emit 0x3e
-        __emit 0x2b
-        __emit 0x01
-        __emit 0xff
-        __emit 0x74
-        __emit 0x60
-        __emit 0xb8
-        __emit 0x58
-        __emit 0x3e
-        __emit 0x2b
-        __emit 0x01
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0xbd
-        __emit 0x03
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x49
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x04
-        __emit 0x3b
-        __emit 0x08
-        __emit 0x75
-        __emit 0x3d
-        __emit 0x6a
-        __emit 0x28
-        __emit 0xe8
-        __emit 0x52
-        __emit 0x78
-        __emit 0x52
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x23
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x58
-        __emit 0x04
-        __emit 0x89
-        __emit 0x68
-        __emit 0x08
-        __emit 0x89
-        __emit 0x58
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x58
-        __emit 0x10
-        __emit 0x89
-        __emit 0x58
-        __emit 0x20
-        __emit 0x89
-        __emit 0x58
-        __emit 0x24
-        __emit 0x89
-        __emit 0x58
-        __emit 0x14
-        __emit 0x89
-        __emit 0x58
-        __emit 0x18
-        __emit 0x89
-        __emit 0x58
-        __emit 0x1c
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x8b
-        __emit 0x56
-        __emit 0x08
-        __emit 0x89
-        __emit 0x44
-        __emit 0x96
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x6e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x4f
-        __emit 0x04
-        __emit 0x83
-        __emit 0xc7
-        __emit 0x04
-        __emit 0x83
-        __emit 0xf9
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc7
-        __emit 0x75
-        __emit 0xaf
-        __emit 0x83
-        __emit 0x7e
-        __emit 0x04
-        __emit 0x55
-        __emit 0x75
-        __emit 0x7c
-        __emit 0x83
-        __emit 0x7e
-        __emit 0x08
-        __emit 0x01
-        __emit 0x75
-        __emit 0x76
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x0c
-        __emit 0x6a
-        __emit 0x28
-        __emit 0xc7
-        __emit 0x46
-        __emit 0x08
-        __emit 0x02
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x89
-        __emit 0x46
-        __emit 0x10
-        __emit 0xe8
-        __emit 0xef
-        __emit 0x77
-        __emit 0x52
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x74
-        __emit 0x23
-        __emit 0xc7
-        __emit 0x00
-        __emit 0x0b
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x88
-        __emit 0x58
-        __emit 0x04
-        __emit 0x89
-        __emit 0x58
-        __emit 0x08
-        __emit 0x89
-        __emit 0x58
-        __emit 0x0c
-        __emit 0x89
-        __emit 0x58
-        __emit 0x10
-        __emit 0x89
-        __emit 0x58
-        __emit 0x20
-        __emit 0x89
-        __emit 0x58
-        __emit 0x24
-        __emit 0x89
-        __emit 0x58
-        __emit 0x14
-        __emit 0x89
-        __emit 0x58
-        __emit 0x18
-        __emit 0x89
-        __emit 0x58
-        __emit 0x1c
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x68
-        __emit 0xf8
-        __emit 0x7d
-        __emit 0x0e
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x30
-        __emit 0x89
-        __emit 0x46
-        __emit 0x0c
-        __emit 0xe8
-        __emit 0x42
-        __emit 0xe4
-        __emit 0x52
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x0c
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x8d
-        __emit 0x48
-        __emit 0x10
-        __emit 0x52
-        __emit 0x89
-        __emit 0x5c
-        __emit 0x24
-        __emit 0x24
-        __emit 0xe8
-        __emit 0xfe
-        __emit 0xd4
-        __emit 0x52
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x2c
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x20
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0x9d
-        __emit 0xd1
-        __emit 0x52
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x44
-        __emit 0x3b
-        __emit 0x4e
-        __emit 0x08
-        __emit 0x74
-        __emit 0x3b
-        __emit 0x8b
-        __emit 0x0d
-        __emit 0x6c
-        __emit 0x07
-        __emit 0x2f
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x11
-        __emit 0x53
-        __emit 0xff
-        __emit 0x52
-        __emit 0x2c
-        __emit 0x39
-        __emit 0x5e
-        __emit 0x08
-        __emit 0x89
-        __emit 0x5e
-        __emit 0x04
-        __emit 0x7e
-        __emit 0x27
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x08
-        __emit 0x49
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x89
-        __emit 0x4e
-        __emit 0x08
-        __emit 0x8b
-        __emit 0x7c
-        __emit 0x86
-        __emit 0x0c
-        __emit 0x3b
-        __emit 0xfb
-        __emit 0x74
-        __emit 0x11
-        __emit 0x8d
-        __emit 0x4f
-        __emit 0x10
-        __emit 0xe8
-        __emit 0x64
-        __emit 0xd1
-        __emit 0x52
-        __emit 0x00
-        __emit 0x57
-        __emit 0xe8
-        __emit 0xce
-        __emit 0x76
-        __emit 0x52
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x39
-        __emit 0x5e
-        __emit 0x08
-        __emit 0x7f
-        __emit 0xd9
-        __emit 0x8b
-        __emit 0x54
-        __emit 0x24
-        __emit 0x30
-        __emit 0x8b
-        __emit 0x42
-        __emit 0x08
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x5f
-        __emit 0x5d
-        __emit 0x74
-        __emit 0x0d
-        __emit 0x8b
-        __emit 0x48
-        __emit 0x3c
-        __emit 0x3b
-        __emit 0xcb
-        __emit 0x74
-        __emit 0x1c
-        __emit 0x8b
-        __emit 0xc1
-        __emit 0x3b
-        __emit 0xc3
-        __emit 0x75
-        __emit 0xf3
-        __emit 0x89
-        __emit 0x72
-        __emit 0x08
-        __emit 0x5e
-        __emit 0xb0
-        __emit 0x01
-        __emit 0x5b
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x08
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x14
-        __emit 0xc3
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0x89
-        __emit 0x70
-        __emit 0x3c
-        __emit 0x5e
-        __emit 0xb0
-        __emit 0x01
-        __emit 0x5b
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x14
-        __emit 0xc3
-}
+public:
+	BFMERetailAsciiString() : m_data(0) {}
+	BFMERetailAsciiString(const char *text)
+	{
+		((BfmeStringLiteralBase *)this)->BfmeStringLiteralBase::BfmeStringLiteralBase(text);
+	}
+	BFMERetailAsciiString(const BFMERetailAsciiString &text);
+	~BFMERetailAsciiString() { releaseBuffer(); }
+	void set(const BFMERetailAsciiString &text);
+
+private:
+	void releaseBuffer();
+	char *m_data;
+};
+
+typedef BFMERetailAsciiString AsciiString;
+
+struct DataChunkInfo
+{
+	AsciiString label;
+	AsciiString parentLabel;
+	DataChunkVersionType version;
+	Int dataSize;
+};
+
+class DataChunkInput
+{
+public:
+	Int readInt();
+	NameKeyType readNameKey();
+	DataChunkVersionType getChunkVersion();
+	Bool atEndOfChunk();
+};
+
+class Parameter
+{
+public:
+	enum ParameterType
+	{
+		OBJECT_TYPE = 0x0f,
+		SIDE = 0x0b,
+		SURFACES_ALLOWED = 0x25,
+		TEMPLATE_REMAP_TYPE = 0x3d
+	};
+
+	__forceinline Parameter(ParameterType type, Int value = 0) :
+		m_initialized(false),
+		m_paramType(type),
+		m_int(value),
+		m_real(0.0f)
+	{
+		m_coord.x = 0.0f;
+		m_coord.y = 0.0f;
+		m_coord.z = 0.0f;
+	}
+
+	static Parameter *ReadParameter(DataChunkInput &file);
+
+	__forceinline ParameterType getParameterType() const
+	{
+		return m_paramType;
+	}
+
+	__forceinline void friend_setString(const AsciiString &text)
+	{
+		BFMERetailAsciiString *dst = &m_string;
+		dst->set(text);
+	}
+
+	__forceinline void friend_setParameterType(ParameterType type)
+	{
+		m_paramType = type;
+	}
+
+private:
+	volatile ParameterType m_paramType;
+	bool m_initialized;
+	Int m_int;
+	float m_real;
+	AsciiString m_string;
+	struct Coord3D
+	{
+		float x;
+		float y;
+		float z;
+	} m_coord;
+	struct ObjectStatusMask
+	{
+		__forceinline ObjectStatusMask() : m_low(0), m_high(0) {}
+		unsigned int m_low;
+		unsigned int m_high;
+	} m_objectStatus;
+};
+
+class ConditionTemplate
+{
+public:
+	__forceinline Int getNumParameters() const
+	{
+		return m_numParameters;
+	}
+
+	__forceinline Int getParameterType(Int index) const
+	{
+		if (index >= 0 && index < m_numParameters)
+			return m_parameters[index];
+		return -1;
+	}
+
+	char m_prefix[0x0c];
+	NameKeyType m_internalNameKey;
+	char m_middle[0x34];
+	Int m_numParameters;
+	Int m_parameters[12];
+};
+
+class ScriptEngine
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual const ConditionTemplate *getConditionTemplate(Int type);
+};
+
+extern ScriptEngine *TheScriptEngine;
+
+class MemoryPoolObject
+{
+public:
+	virtual ~MemoryPoolObject();
+};
+
+class Condition : public MemoryPoolObject
+{
+public:
+	enum ConditionType
+	{
+		CONDITION_FALSE = 0,
+		SKIRMISH_SPECIAL_POWER_READY = 0x55,
+		NUM_ITEMS = 0xb8
+	};
+
+	__forceinline Condition() :
+		m_conditionType(CONDITION_FALSE),
+		m_numParms(0),
+		m_nextAndCondition(0),
+		m_hasWarnings(0),
+		m_customData(0),
+		m_customFrame(0)
+	{
+		for (Int i = 0; i < 12; ++i)
+			m_parms[i] = 0;
+	}
+
+	static Bool __cdecl ParseConditionDataChunk(DataChunkInput &file,
+		DataChunkInfo *info, void *userData);
+
+	__forceinline ConditionType getConditionType() const
+	{
+		return m_conditionType;
+	}
+
+	__forceinline Condition *getNext() const
+	{
+		return m_nextAndCondition;
+	}
+
+	__forceinline Int getNumParameters() const
+	{
+		return m_numParms;
+	}
+
+	__forceinline void setNextCondition(Condition *condition)
+	{
+		m_nextAndCondition = condition;
+	}
+
+private:
+	ConditionType m_conditionType;
+	Int m_numParms;
+	Parameter *m_parms[12];
+	Condition *m_nextAndCondition;
+	Int m_hasWarnings;
+	Int m_customData;
+	unsigned int m_customFrame;
+};
+
+class OrCondition
+{
+public:
+	__forceinline Condition *getFirstAndCondition() const
+	{
+		return m_firstAnd;
+	}
+
+	__forceinline void setFirstAndCondition(Condition *condition)
+	{
+		m_firstAnd = condition;
+	}
+
+private:
+	void *m_vtable;
+	OrCondition *m_nextOr;
+	Condition *m_firstAnd;
+};
+
+static int ParameterChangesVer2[] =
+{
+	7, 17, 18, 40, 39, 41, 42, -1
+};
+
+Bool __cdecl Condition::ParseConditionDataChunk(DataChunkInput &file,
+	DataChunkInfo *info, void *userData)
+{
+	Condition *pCondition = new Condition;
+	OrCondition *pOr = (OrCondition *)userData;
+	pCondition->m_conditionType = (ConditionType)file.readInt();
+	const ConditionTemplate *ct =
+		TheScriptEngine->getConditionTemplate(pCondition->m_conditionType);
+	Bool match = false;
+	if (info->version >= 4)
+	{
+		NameKeyType key = file.readNameKey();
+		Int i;
+		if (ct && ct->m_internalNameKey == key)
+			goto condition_name_match;
+		for (i = 0; i < Condition::NUM_ITEMS; ++i)
+		{
+			ct = TheScriptEngine->getConditionTemplate(i);
+			if (key == ct->m_internalNameKey)
+			{
+				pCondition->m_conditionType = (ConditionType)i;
+				goto condition_name_match;
+			}
+		}
+		goto condition_name_done;
+	condition_name_match:
+		match = true;
+	condition_name_done:;
+	}
+	pCondition->m_numParms = file.readInt();
+	Int i;
+	for (i = 0; i < pCondition->m_numParms; ++i)
+	{
+		Parameter *parameter = Parameter::ReadParameter(file);
+		pCondition->m_parms[i] = parameter;
+		if (parameter->getParameterType() != Parameter::OBJECT_TYPE)
+			continue;
+		if (ct->getNumParameters() > i &&
+			ct->getParameterType(i) == Parameter::TEMPLATE_REMAP_TYPE &&
+			parameter->getParameterType() == Parameter::OBJECT_TYPE)
+		{
+			parameter->friend_setParameterType(Parameter::TEMPLATE_REMAP_TYPE);
+		}
+	}
+	if (!match)
+	{
+		ct = TheScriptEngine->getConditionTemplate(CONDITION_FALSE);
+		pCondition->m_conditionType = CONDITION_FALSE;
+		while (pCondition->m_numParms > 0)
+		{
+			--pCondition->m_numParms;
+			Parameter *parameter = pCondition->m_parms[pCondition->m_numParms];
+			if (parameter)
+				delete parameter;
+		}
+	}
+
+	if (file.getChunkVersion() < 2)
+	{
+		for (Int j = 0; ParameterChangesVer2[j] != -1; ++j)
+		{
+			if (pCondition->m_conditionType == (ConditionType)ParameterChangesVer2[j])
+			{
+				pCondition->m_parms[pCondition->m_numParms] =
+					new Parameter(Parameter::SURFACES_ALLOWED, 3);
+				pCondition->m_numParms = 3;
+			}
+		}
+	}
+	switch (pCondition->getConditionType())
+	{
+		case SKIRMISH_SPECIAL_POWER_READY:
+			if (pCondition->m_numParms == 1)
+			{
+				pCondition->m_numParms = 2;
+				pCondition->m_parms[1] = pCondition->m_parms[0];
+				pCondition->m_parms[0] = new Parameter(Parameter::SIDE, 0);
+				pCondition->m_parms[0]->friend_setString(AsciiString("<This Player>"));
+			}
+			break;
+	}
+	if (ct->getNumParameters() != pCondition->m_numParms)
+	{
+		ct = TheScriptEngine->getConditionTemplate(CONDITION_FALSE);
+		pCondition->m_conditionType = CONDITION_FALSE;
+		while (pCondition->m_numParms > 0)
+		{
+			--pCondition->m_numParms;
+			Parameter *parameter = pCondition->m_parms[pCondition->m_numParms];
+			if (parameter)
+				delete parameter;
+		}
+	}
+	Condition *pLast = pOr->getFirstAndCondition();
+	while (pLast && pLast->getNext())
+		pLast = pLast->getNext();
+	if (pLast)
+		pLast->setNextCondition(pCondition);
+	else
+		pOr->setFirstAndCondition(pCondition);
+	return true;
 }
