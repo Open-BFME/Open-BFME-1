@@ -6710,7 +6710,6 @@ name,address,notes
 ??1Gen_dtorv_005bfe70@@UAE@XZ,0x00022C64,gen-dtor class destructor
 ??1Gen_dtorv_005c1b80@@UAE@XZ,0x000081C5,gen-dtor class destructor
 ??1Gen_dtorv_005d5830@@UAE@XZ,0x00013101,gen-dtor class destructor
-??1Gen_dtorv_005d59e0@@UAE@XZ,0x00041F56,gen-dtor class destructor
 ??1Gen_dtorv_005d5b60@@UAE@XZ,0x0002F03B,gen-dtor class destructor
 ??1Gen_dtorv_005d60b0@@UAE@XZ,0x0001DCA0,gen-dtor class destructor
 ??1Gen_dtorv_005d61d0@@UAE@XZ,0x00028E9D,gen-dtor class destructor
