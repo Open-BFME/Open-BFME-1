@@ -180,9 +180,6 @@ CommandButton+0x40|m_buttonImageName|m_invalidCursorName,Code/GameEngine/Source/
 CommandButton+0x40|m_buttonImageName|m_invalidCursorName,Code/GameEngine/Source/GameClient/GUI/ControlBar/CommandButton_getButtonImage.cpp,42,1.00,field_names
 CommandButton+0x44|m_beforeButtonImage|m_textLabel,Code/GameEngine/Source/GameClient/GUI/ControlBar/CommandButton_cacheButtonImage.cpp,43,1.00,field_names
 CommandButton+0x44|m_beforeButtonImage|m_textLabel,Code/GameEngine/Source/GameClient/GUI/ControlBar/CommandButton_getButtonImage.cpp,43,1.00,field_names
-Condition+0x8|m_parameterCount|m_numParms,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions_evaluateCounterSeconds.cpp,50,1.00,layout_witness
-Condition+0x8|m_parameterCount|m_numParms,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineTimers.cpp,113,1.00,layout_witness
-Condition+0x8|m_parameterCount|m_numParms,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineEvaluateFlag.cpp,72,1.00,layout_witness
 ConnectionManager+0x4|m_bfmePad|m_connections,Code/GameEngine/Source/GameNetwork/Network_init.cpp,44,1.00,layout_witness
 ControlBar+0x0|m_beforeControlBarSchemeManager|m_containData,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DCommandBarForegroundDraw.cpp,32,1.00,layout_witness
 ControlBar+0x0|m_beforeControlBarSchemeManager|m_containData,Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/GUICallbacks/W3DCommandBarBackgroundDraw.cpp,32,1.00,layout_witness

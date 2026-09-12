@@ -39,14 +39,14 @@ class Condition
 public:
 	Parameter *getParameter(int index)
 	{
-		if (index >= 0 && index < m_parameterCount)
+		if (index >= 0 && index < m_numParms)
 			return m_parameters[index];
 		return 0;
 	}
 
 private:
 	char m_unknown[8];
-	int m_parameterCount;
+	int m_numParms;
 	Parameter *m_parameters[12];
 };
 
