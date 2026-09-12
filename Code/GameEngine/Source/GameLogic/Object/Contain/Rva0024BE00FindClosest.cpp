@@ -1,13 +1,6 @@
+// Open-BFME5: RVA-qualified containment findClosest body at 0x0024BE00.
 // ?findClosest@Rva0024BE00Owner@@QAEPAVObject@@PBURva0024BE00Coord@@@Z
-// partial score=0.92 date=2026-09-12
-// ?findClosest@Rva0024BE00Owner@@QAEPAVObject@@PAURva0024BE00Coord@@@Z
-// Retail0x002494D0 and0x0024BE00 are411B instruction-identical siblings except EH/relocations.
-// Repaired old bank: Object position starts+0x38 including vptr; first rider wins even if distanceNaN.
-// Inline Coord3D memberwise copy ctor is essential: it restores dx float spill and12B local frame.
-// Authentic list iterators restore list header lifetimes; current411B has33 ESI/EDI operand differences.
-// Allocation constants, x87 operations, branches, stack slots, and every instruction otherwise match.
-// Structural owner/method names remain pending a named caller or vtable ownership proof.
-// ?findClosest@Rva0024BE00Owner@@QAEPAVObject@@PAURva0024BE00Coord@@@Z
+// Exact clean C++ reconstruction; owner remains address-qualified because no named caller or vtable proof is available.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
@@ -100,8 +93,7 @@ Object *Rva0024BE00Owner::findClosest(const Rva0024BE00Coord *pos)
 		if (result == 0)
 			continue;
 
-		_STL::list<Object *> *values = result->getVal();
-		found = *values;
+		found = *result->getVal();
 
         for (_STL::list<Object *>::iterator valueIt = found.begin();
              valueIt != found.end(); ++valueIt)
