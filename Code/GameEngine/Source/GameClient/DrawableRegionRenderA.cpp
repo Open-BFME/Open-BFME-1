@@ -106,7 +106,7 @@ void bfmeRegionRenderA( void *rawRegion, Int rawOffset, const Int rawValue )
 	// Retail float pool values: 0x010828C4 is 6.0f, 0x01075340 is 4.0f,
 	// and 0x01088830 is 2.0f.
 	TheDisplay->drawOpenRect(
-		(Real)(offset->x + regionLeft - 3),
+		(Real)(regionLeft + *(const volatile Int *)&offset->x - 3),
 		(Real)(region->top + offset->y - 3),
 		regionWidth + *(const Real *)0x010828C4,
 		10.0f, 1.0f, *(UnsignedInt *)0x012F13B4 );
@@ -123,7 +123,8 @@ void bfmeRegionRenderA( void *rawRegion, Int rawOffset, const Int rawValue )
 		regionWidth + *(const Real *)0x01088830,
 		6.0f, *(UnsignedInt *)0x012F13AC );
 
-	regionWidth = *(volatile Real *)&regionWidth * *(Real *)&rawValue;
+	const Real &rawValueReal = *(const Real *)&rawValue;
+	regionWidth = *(volatile Real *)&regionWidth * rawValueReal;
 	for( Int i = 0; i < 4; ++i )
 	{
 		TheDisplay->drawFillRect(
