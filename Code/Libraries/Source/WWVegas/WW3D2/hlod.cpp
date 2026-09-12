@@ -1106,6 +1106,10 @@ HLodClass::HLodClass(const char * name,RenderObjClass ** lods,int count) :
  * HISTORY:                                                                                    *
  *   1/26/00    gth : Created.                                                                 *
  *=============================================================================================*/
+// Retail calls the plain Create_Render_Obj(name) free function here, not the
+// WW3DAssetManager singleton method; see Create_Render_Obj_plain.cpp (0x008FF290).
+RenderObjClass *Create_Render_Obj(const char *name);
+
 // ?HLodClass::HLodClass present-unmatched
 HLodClass::HLodClass(const HLodDefClass & def) :
 	Animatable3DObjClass(def.HierarchyTreeName),
@@ -1143,7 +1147,7 @@ HLodClass::HLodClass(const HLodDefClass & def) :
 
 		for (int imodel=0; imodel < def.Lod[ilod].ModelCount; imodel++) {
 
-			RenderObjClass * robj = WW3DAssetManager::Get_Instance()->Create_Render_Obj(def.Lod[ilod].ModelName[imodel]);
+			RenderObjClass * robj = Create_Render_Obj(def.Lod[ilod].ModelName[imodel]);
 			int boneindex = def.Lod[ilod].BoneIndex[imodel];
 			if (robj != NULL) {
 				Add_Lod_Model(ilod,robj,boneindex);
@@ -1156,7 +1160,7 @@ HLodClass::HLodClass(const HLodDefClass & def) :
 	
 	// Add aggregates to this model
 	for (int iagg=0; iagg<def.Aggregates.ModelCount; iagg++) {
-		RenderObjClass * robj = WW3DAssetManager::Get_Instance()->Create_Render_Obj(def.Aggregates.ModelName[iagg]);
+		RenderObjClass * robj = Create_Render_Obj(def.Aggregates.ModelName[iagg]);
 		int boneindex = def.Aggregates.BoneIndex[iagg];
 		if (robj != NULL) {
 			Add_Sub_Object_To_Bone(robj,boneindex);
