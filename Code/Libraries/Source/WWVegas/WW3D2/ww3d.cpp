@@ -1118,59 +1118,8 @@ WW3DErrorType WW3D::Render(const LayerClass &Layer)
  * HISTORY:                                                                                    *
  *   3/24/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/WW3DRenderLayerThunk.cpp
-// ?Render@WW3D@@ present-unmatched
-WW3DErrorType WW3D::Render(SceneClass * scene,CameraClass * cam,bool clear,bool clearz,const Vector3 & color)
-{
-	if (!IsInitted) {
-		return(WW3D_ERROR_OK);
-	}
+// Scene overload is byte-verified in WW3DRenderScene.cpp.
 
-	WWPROFILE("WW3D::Render");
-	WWMEMLOG(MEM_GAMEDATA);
-	WWASSERT(IsInitted);
-	WWASSERT(IsRendering);
-	WWASSERT(scene);
-	WWASSERT(cam);
-
-	cam->On_Frame_Update();
-	RenderInfoClass rinfo(*cam);
-
-	// Apply the camera and viewport (including depth range)
-	cam->Apply();
-
-	// Clear the viewport
-	if (clear || clearz) {
-		DX8Wrapper::Clear(clear, clearz, color);
-	}
-
-	// set the rendering mode
-	switch(scene->Get_Polygon_Mode()) {
-		case SceneClass::POINT:
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE,D3DFILL_POINT);
-			break;
-		case SceneClass::LINE:
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE,D3DFILL_WIREFRAME);
-			break;
-		case SceneClass::FILL:
-			DX8Wrapper::Set_DX8_Render_State(D3DRS_FILLMODE,D3DFILL_SOLID);
-			break;
-	}
-
-	// Set the global ambient light value here.  If the scene is using the LightEnvironment system
-	// this setting will get overriden.
-	DX8Wrapper::Set_Ambient(scene->Get_Ambient_Light());
-
-	// render the scene
-
-	TheDX8MeshRenderer.Set_Camera(&rinfo.Camera);
-
-	scene->Render(rinfo);
-
-	Flush(rinfo);
-
-	return WW3D_ERROR_OK;
-}
 
 
 /***********************************************************************************************
