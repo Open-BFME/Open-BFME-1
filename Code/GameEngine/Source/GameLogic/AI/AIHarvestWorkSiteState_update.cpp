@@ -1,5 +1,4 @@
 // ?update@AIHarvestWorkSiteState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.99 date=2026-09-07
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 
@@ -172,6 +171,8 @@ public:
 	int adjust(Rva001601E0HarvestRecord *, int);
 };
 
+extern void j_000226ab();
+
 class Rva001601E0Locomotor
 {
 public:
@@ -197,21 +198,56 @@ public:
 	int m_amount;
 };
 
-class Rva001601E0GameLogic
+class GameLogic
 {
 public:
 	char m_pad00[0x3c];
 	unsigned int m_frame;
 };
 
-#pragma comment(linker, "/alternatename:?find@Rva001601E0Terrain@@QAEPAVRva001601E0HarvestRecord@@PAV2@M@Z=?j_000226ab@@YAXXZ")
-#pragma comment(linker, "/alternatename:?check@Rva001601E0Terrain@@QAE_NH@Z=?j_0002b3be@@YAXXZ")
-#pragma comment(linker, "/alternatename:?adjust@Rva001601E0Terrain@@QAEHPAVRva001601E0HarvestRecord@@H@Z=?j_00003166@@YAXXZ")
-#pragma comment(linker, "/alternatename:?action@Rva001601E0Locomotor@@QAEXPAVRva001601E0Object@@PAVRva001601E0HarvestRecord@@H@Z=?j_00002b49@@YAXXZ")
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Rva001601E0Object@@QAEXXZ=?j_0002191d@@YAXXZ")
 
-#define TheTerrainLogic (*(Rva001601E0Terrain **)0x012EF4CC)
-#define TheBfmeGameLogic (*(Rva001601E0GameLogic **)0x012F0898)
+class TerrainLogic;
+extern TerrainLogic *TheTerrainLogic;
+extern GameLogic *TheGameLogic;
+
+extern void j_0002b3be();
+extern void j_00003166();
+extern void j_00002b49();
+extern void j_0002191d();
+
+static __forceinline bool bfmeTerrainCheck(Rva001601E0Terrain *terrain, int id)
+{
+	typedef bool (Rva001601E0Terrain::*Call)(int);
+	union { void *asVoid; Call asMember; } cast;
+	cast.asVoid = (void *)j_0002b3be;
+	return (terrain->*cast.asMember)(id);
+}
+
+static __forceinline int bfmeTerrainAdjust(Rva001601E0Terrain *terrain,
+	Rva001601E0HarvestRecord *record, int amount)
+{
+	typedef int (Rva001601E0Terrain::*Call)(Rva001601E0HarvestRecord *, int);
+	union { void *asVoid; Call asMember; } cast;
+	cast.asVoid = (void *)j_00003166;
+	return (terrain->*cast.asMember)(record, amount);
+}
+
+static __forceinline void bfmeLocomotorAction(Rva001601E0Locomotor *locomotor,
+	Rva001601E0Object *owner, Rva001601E0HarvestRecord *record, int value)
+{
+	typedef void (Rva001601E0Locomotor::*Call)(Rva001601E0Object *, Rva001601E0HarvestRecord *, int);
+	union { void *asVoid; Call asMember; } cast;
+	cast.asVoid = (void *)j_00002b49;
+	(locomotor->*cast.asMember)(owner, record, value);
+}
+
+static __forceinline void bfmeNotifyModelConditionChanged(Rva001601E0Object *owner)
+{
+	typedef void (Rva001601E0Object::*Call)();
+	union { void *asVoid; Call asMember; } cast;
+	cast.asVoid = (void *)j_0002191d;
+	(owner->*cast.asMember)();
+}
 
 class Rva001601E0StateBase
 {
@@ -243,31 +279,35 @@ StateReturnType AIHarvestWorkSiteState::update()
 	if (target != 0)
 	{
 		register Rva001601E0Object *owner = self->m_machine->m_owner;
-		register Rva001601E0HarvestRecord *record = TheTerrainLogic->find(
-			(Rva001601E0HarvestRecord *)((char *)owner + 0x38),
-			target->getValue(0, 2));
+		typedef Rva001601E0HarvestRecord *(Rva001601E0Terrain::*FindCall)(
+			Rva001601E0HarvestRecord *, float);
+		union { void *asVoid; FindCall asMember; } findCast;
+		findCast.asVoid = (void *)j_000226ab;
+		register Rva001601E0HarvestRecord *record =
+			(((Rva001601E0Terrain *)TheTerrainLogic)->*findCast.asMember)(
+				(Rva001601E0HarvestRecord *)((char *)owner + 0x38),
+				target->getValue(0, 2));
 		int recordOwner = 0;
 		if (record != 0)
 		{
 			recordOwner = record->m_owner;
 		}
 		if (record != 0 && recordOwner == target->getOwner() &&
-			TheTerrainLogic->check(record->getID()))
+			bfmeTerrainCheck((Rva001601E0Terrain *)TheTerrainLogic, record->getID()))
 		{
-			Rva001601E0GameLogic *gameLogic = TheBfmeGameLogic;
+			GameLogic *gameLogic = TheGameLogic;
 			if (gameLogic->m_frame >= self->m_frame)
 			{
 				int first = target->slot01();
 				int second = target->slot00();
 				const int previousAmount = record->m_amount;
 				int amount = first - second;
-				int remaining = TheTerrainLogic->adjust(record, amount);
+				int remaining = bfmeTerrainAdjust((Rva001601E0Terrain *)TheTerrainLogic, record, amount);
 				if (remaining > 0)
 				{
-					const int next = previousAmount - remaining;
 					for (int count = remaining; count != 0; --count)
 					{
-						target->slot03(next);
+						target->slot03(previousAmount - remaining);
 					}
 					return STATE_SUCCESS;
 				}
@@ -276,7 +316,7 @@ StateReturnType AIHarvestWorkSiteState::update()
 
 			if (self->m_machine->m_owner->m_ai->m_locomotor != 0)
 			{
-				self->m_machine->m_owner->m_ai->m_locomotor->action(
+				bfmeLocomotorAction(self->m_machine->m_owner->m_ai->m_locomotor,
 					self->m_machine->m_owner, record, 0);
 			}
 		}
@@ -292,7 +332,7 @@ StateReturnType AIHarvestWorkSiteState::update()
 	if (!flagsOwner->m_flags.test(22))
 	{
 		flagsOwner->m_flags.set(22);
-		flagsOwner->notifyModelConditionChanged();
+		bfmeNotifyModelConditionChanged(flagsOwner);
 	}
 	return STATE_CONTINUE;
 
