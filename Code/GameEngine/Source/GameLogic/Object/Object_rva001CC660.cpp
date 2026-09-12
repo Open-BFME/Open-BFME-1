@@ -42,7 +42,7 @@ class AIUpdateInterface
 {
 public:
 	unsigned char m_pad[0x1cc];
-	BfmeSub1CC_EC3 *m_sub1cc;
+	BfmeSub1CC_EC3 *m_curLocomotor;
 };
 
 class Rva001E1770ByteField
@@ -107,7 +107,7 @@ void Object::rva001CC660(Object *other)
 		AIUpdateInterface *ai = container->m_ai;
 		if (!ai)
 			return;
-		BfmeSub1CC_EC3 *sub = ai->m_sub1cc;
+		BfmeSub1CC_EC3 *sub = ai->m_curLocomotor;
 		if (!sub)
 			return;
 		float v = sub->queryCached(this);
@@ -129,7 +129,7 @@ void Object::rva001CC660(Object *other)
 	AIUpdateInterface *ai = m_ai;
 	if (!ai)
 		return;
-	BfmeSub1CC_EC3 *sub = ai->m_sub1cc;
+	BfmeSub1CC_EC3 *sub = ai->m_curLocomotor;
 	if (!sub)
 		return;
 	float v = sub->queryCached(this);
