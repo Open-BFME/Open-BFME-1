@@ -38,7 +38,7 @@ class AsciiString
 public:
 	~AsciiString() {}
 
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 // -------------------------------------------------------------------------

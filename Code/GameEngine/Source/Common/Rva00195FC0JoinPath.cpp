@@ -10,7 +10,7 @@ public:
 	// Retail's AsciiString adds no members to StringBase<char>: a copy of one
 	// encodes the base copy ctor at 0x00887B60 directly, so the delegation has
 	// to be visible here.
-	AsciiString( const AsciiString &other ) : m_string( other.m_string ) {}
+	AsciiString( const AsciiString &other ) : m_data( other.m_data ) {}
 	~AsciiString();
 
 	void concat( const char *text, Int length );
@@ -18,16 +18,16 @@ public:
 
 	Int getLength( void ) const
 	{
-		return m_string.m_data ? m_string.m_data->length : 0;
+		return m_data.m_data ? m_data.m_data->length : 0;
 	}
 
 	const char *str( void ) const
 	{
-		return m_string.m_data ? &m_string.m_data->data[ 0 ] : "";
+		return m_data.m_data ? &m_data.m_data->data[ 0 ] : "";
 	}
 
 private:
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 AsciiString Rva00195FC0JoinPath( const AsciiString &left, const AsciiString &right )

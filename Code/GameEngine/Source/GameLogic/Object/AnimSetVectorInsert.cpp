@@ -29,10 +29,10 @@ private:
 class AsciiString
 {
 public:
-	AsciiString(const AsciiString &other) : m_string(other.m_string) {}
-	~AsciiString() { m_string.releaseBuffer(); }
+	AsciiString(const AsciiString &other) : m_data(other.m_data) {}
+	~AsciiString() { m_data.releaseBuffer(); }
 
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 class GenericObjectCreationNugget

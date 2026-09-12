@@ -40,7 +40,7 @@ public:
 	Bool isKindOf(KindOfType kind) const;
 
 	void *m_vtable;
-	Real m_pad004;
+	Real m_template;
 	Matrix3D m_transform;
 };
 

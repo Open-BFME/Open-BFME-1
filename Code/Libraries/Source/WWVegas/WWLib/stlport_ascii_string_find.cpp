@@ -28,12 +28,12 @@ class AsciiString
 public:
 	int compare(const AsciiString &that) const
 	{
-		const int len = that.m_string.m_data ? that.m_string.m_data->length : 0;
-		const char *data = that.m_string.m_data ?
-			&that.m_string.m_data->data[0] : "";
-		const int myLen = m_string.m_data ? m_string.m_data->length : 0;
-		const char *myData = m_string.m_data ?
-			&m_string.m_data->data[0] : "";
+		const int len = that.m_data.m_data ? that.m_data.m_data->length : 0;
+		const char *data = that.m_data.m_data ?
+			&that.m_data.m_data->data[0] : "";
+		const int myLen = m_data.m_data ? m_data.m_data->length : 0;
+		const char *myData = m_data.m_data ?
+			&m_data.m_data->data[0] : "";
 		const int result = memcmp(myData, data, myLen < len ? myLen : len);
 		if (result != 0)
 			return result;
@@ -41,7 +41,7 @@ public:
 	}
 
 private:
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 inline bool operator==(const AsciiString &left, const AsciiString &right)

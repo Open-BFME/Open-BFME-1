@@ -26,11 +26,11 @@ class AsciiString
 {
 public:
 	AsciiString(const char *text);
-	AsciiString(const AsciiString &source) : m_string(source.m_string) {}
-	~AsciiString() { m_string.releaseBuffer(); }
+	AsciiString(const AsciiString &source) : m_data(source.m_data) {}
+	~AsciiString() { m_data.releaseBuffer(); }
 
 private:
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 class CRCParameterCheck

@@ -255,6 +255,25 @@ def outer_members(text, brace, has_base):
     return out, None
 
 
+def _declares(text, owner, member):
+    """Does `owner`'s own declaration in this file already have a member `member`?
+
+    The check used to ask whether the name appeared ANYWHERE in the file, which
+    refused 42 of the AsciiString rows: a TU that shims both `AsciiString` and
+    `StringBase` already spells `m_data` in the second, and renaming the first
+    struct's `m_text` to `m_data` is correct C++ -- they are different types and
+    every use resolves through its object. Only a collision INSIDE the same
+    declaration would merge two members.
+    """
+    for decl in DECL.finditer(text):
+        if decl.group(1) != owner:
+            continue
+        body = struct_body(text, decl.end() - 1)
+        if body and re.search(rf"\b{re.escape(member)}\b\s*(?:\[[^\]]*\])?\s*;", body):
+            return True
+    return False
+
+
 def sources(paths, staged):
     if paths:
         # Callers pass repo-relative paths (that is what every other tool here
@@ -509,7 +528,7 @@ def main():
             # ledgers against.
             with open(ROOT / path, "r", encoding="utf-8", newline="") as fh:
                 text = fh.read()
-            for _, _, _, _, old, new, _, _ in [t for t in todo if t[0] == path]:
+            for _, _, owner, _, old, new, _, _ in [t for t in todo if t[0] == path]:
                 if len(re.findall(rf"\b{re.escape(old)}\b\s*(?:\[[^\]]*\])?\s*;", text)) > 1:
                     # The same placeholder spelling declared in two structs of one file
                     # sits at two different offsets; a file-wide substitution would put
@@ -518,7 +537,7 @@ def main():
                           file=sys.stderr)
                     refused += 1
                     continue
-                if re.search(rf"\b{re.escape(new)}\b", text):
+                if _declares(text, owner, new):
                     # Renaming onto a name the file already uses would silently merge
                     # two distinct members. Refuse the row, never the whole file.
                     print(f"  REFUSED {path}: {new!r} already appears in this file", file=sys.stderr)

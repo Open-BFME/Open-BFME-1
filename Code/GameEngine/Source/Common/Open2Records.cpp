@@ -61,10 +61,10 @@ private:
 class AsciiString
 {
 public:
-	AsciiString( const AsciiString &other ) : m_string( other.m_string ) {}
+	AsciiString( const AsciiString &other ) : m_data( other.m_data ) {}
 	~AsciiString() {}
 
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 inline void *operator new( unsigned int, void *place ) { return place; }

@@ -15,14 +15,14 @@
 class AsciiString
 {
 public:
-	AsciiString(const AsciiString &other) : m_string(other.m_string) {}
+	AsciiString(const AsciiString &other) : m_data(other.m_data) {}
 
 	const char *str() const
 	{
-		return m_string.m_data ? &m_string.m_data->data[0] : "";
+		return m_data.m_data ? &m_data.m_data->data[0] : "";
 	}
 
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 namespace rts

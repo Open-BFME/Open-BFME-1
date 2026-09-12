@@ -86,7 +86,7 @@ public:
 	ObjectID getSoleHealingBenefactor(void) const;
 
 	char m_pad00[0x74];
-	Int m_id74;
+	Int m_id;
 	char m_pad78[0x88];
 	UnsignedByte m_privateStatus100;
 	char m_pad101[0xff];
@@ -94,7 +94,7 @@ public:
 	char m_pad204[0x10];
 	void *m_containedBy214;
 	char m_pad218[0x12c];
-	UnsignedByte m_privateStatus344;
+	UnsignedByte m_privateStatus;
 };
 
 static Bool isObjectShroudedForAction(const Object *source, const Object *target,
@@ -135,7 +135,7 @@ Bool ActionManager::canRepairObject(const Object *obj, const Object *objectToRep
 	if (obj->getRelationship(objectToRepair) != ENEMIES)
 		return false;
 
-	if ((objectToRepair->m_privateStatus344 & 1) != 0 &&
+	if ((objectToRepair->m_privateStatus & 1) != 0 &&
 		!((const Rva000C4A70 *)objectToRepair)->field())
 		return false;
 
@@ -172,7 +172,7 @@ Bool ActionManager::canRepairObject(const Object *obj, const Object *objectToRep
 		return false;
 
 	ObjectID beneficiary = objectToRepair->getSoleHealingBenefactor();
-	if (beneficiary != 0 && beneficiary != obj->m_id74)
+	if (beneficiary != 0 && beneficiary != obj->m_id)
 		return false;
 	return true;
 }

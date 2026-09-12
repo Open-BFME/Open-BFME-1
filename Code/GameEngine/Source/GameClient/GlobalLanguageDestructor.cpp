@@ -59,12 +59,12 @@ private:
 class AsciiString
 {
 public:
-	AsciiString() { m_string.m_data = 0; }
-	AsciiString(const char *text) : m_string(text) {}
-	~AsciiString() { m_string.releaseBuffer(); }
+	AsciiString() { m_data.m_data = 0; }
+	AsciiString(const char *text) : m_data(text) {}
+	~AsciiString() { m_data.releaseBuffer(); }
 
 private:
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 struct BfmeFontEntry

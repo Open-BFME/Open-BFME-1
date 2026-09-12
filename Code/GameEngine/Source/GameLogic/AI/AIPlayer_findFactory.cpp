@@ -34,7 +34,7 @@ public:
 	ThingTemplate *m_nextOverride;
 	unsigned char m_unmodelled008[0xcc - 8];
 	// Retail tests bit 30 of this word; the current naming witness conflicts.
-	unsigned int m_field0xcc;
+	unsigned int m_shadowOffsetY;
 	unsigned char m_unmodelled0d0[0x4cb - 0xd0];
 	unsigned char m_bfmeProductionFlag;
 
@@ -54,7 +54,7 @@ public:
 	unsigned char m_unmodelled094[0x1a4 - 0x94];
 	unsigned int m_disabledMask;
 	unsigned char m_unmodelled1a8[0x344 - 0x1a8];
-	unsigned char m_bfmeFlags344;
+	unsigned char m_privateStatus;
 
 	Player *getControllingPlayer() const;
 	ProductionUpdateInterface *getProductionUpdateInterface();
@@ -179,7 +179,7 @@ Object *AIPlayer::findFactory(const ThingTemplate *thing, Bool busyOK,
 		ThingTemplate *factoryTemplate = factory->m_template;
 		if (factoryTemplate != NULL && factoryTemplate->m_nextOverride != NULL)
 			factoryTemplate = factoryTemplate->m_nextOverride->getFinalOverride();
-		if ((factoryTemplate->m_field0xcc & 0x40000000) == 0)
+		if ((factoryTemplate->m_shadowOffsetY & 0x40000000) == 0)
 			goto nextFactory;
 		if ((factory->m_status & 4) != 0 ||
 			(factory->m_status & 0x80000) != 0)
@@ -191,7 +191,7 @@ Object *AIPlayer::findFactory(const ThingTemplate *thing, Bool busyOK,
 			factory->getProductionUpdateInterface();
 		if (production == NULL)
 			goto nextFactory;
-		if ((factory->m_bfmeFlags344 & 1) != 0)
+		if ((factory->m_privateStatus & 1) != 0)
 			goto nextFactory;
 
 		Int availableBuildIndex = bfmeFindBuildIndex(

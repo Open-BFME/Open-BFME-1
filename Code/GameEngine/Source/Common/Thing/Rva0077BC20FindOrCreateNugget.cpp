@@ -43,15 +43,15 @@ public:
 
 	const AsciiString &operator=(const AsciiString &source)
 	{
-		m_string.set(source.m_string);
+		m_data.set(source.m_data);
 		return *this;
 	}
 
 	const char *str() const
 	{
-		if (m_string.m_data)
+		if (m_data.m_data)
 			return reinterpret_cast<const char *>(
-				reinterpret_cast<const unsigned char *>(m_string.m_data) + 8);
+				reinterpret_cast<const unsigned char *>(m_data.m_data) + 8);
 		return reinterpret_cast<const char *>(0x0107388B);
 	}
 
@@ -61,7 +61,7 @@ public:
 	}
 
 private:
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 class Rva00026AB2Vec12

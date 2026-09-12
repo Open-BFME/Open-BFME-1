@@ -43,7 +43,7 @@ private:
 class AsciiString
 {
 public:
-	StringBase<char> m_slot0;
+	StringBase<char> m_data;
 	StringBase<char> m_slot4;
 	StringBase<char> m_slot8;
 	StringBase<char> m_slotC;
@@ -52,7 +52,7 @@ public:
 // ??8@YA_NABVAsciiString@@0@Z
 inline bool operator==(const AsciiString &left, const AsciiString &right)
 {
-	int order = left.m_slot0.compareNoCase(right.m_slot0);
+	int order = left.m_data.compareNoCase(right.m_data);
 	if (order < 0)
 		return true;
 	if (order > 0)

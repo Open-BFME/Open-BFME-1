@@ -30,7 +30,7 @@ public:
     ~AsciiString();
     AsciiString &operator=(const AsciiString &);
 private:
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 struct Gen_t_000bc4b0_p4pod

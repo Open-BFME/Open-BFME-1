@@ -23,14 +23,14 @@ class Rva00692D50Mapped;
 class AsciiString
 {
 public:
-	AsciiString(const AsciiString &other) : m_string(other.m_string) {}
+	AsciiString(const AsciiString &other) : m_data(other.m_data) {}
 
 	int compare(const AsciiString &str) const
 	{
-		const int len = str.m_string.m_data ? str.m_string.m_data->length : 0;
-		const char *data = str.m_string.m_data ? &str.m_string.m_data->data[0] : "";
-		const int myLen = m_string.m_data ? m_string.m_data->length : 0;
-		const char *myData = m_string.m_data ? &m_string.m_data->data[0] : "";
+		const int len = str.m_data.m_data ? str.m_data.m_data->length : 0;
+		const char *data = str.m_data.m_data ? &str.m_data.m_data->data[0] : "";
+		const int myLen = m_data.m_data ? m_data.m_data->length : 0;
+		const char *myData = m_data.m_data ? &m_data.m_data->data[0] : "";
 		const int result = memcmp(myData, data, myLen < len ? myLen : len);
 		if (result != 0) {
 			return result;
@@ -38,7 +38,7 @@ public:
 		return myLen - len;
 	}
 
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 inline bool operator==(const AsciiString &left, const AsciiString &right)

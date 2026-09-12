@@ -31,11 +31,11 @@ private:
 class AsciiString
 {
 public:
-	~AsciiString() { m_string.releaseBuffer(); }
+	~AsciiString() { m_data.releaseBuffer(); }
 
-	const AsciiString &operator=(const AsciiString &src) { m_string.set(src.m_string); return *this; }
+	const AsciiString &operator=(const AsciiString &src) { m_data.set(src.m_data); return *this; }
 
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/FontDesc.h

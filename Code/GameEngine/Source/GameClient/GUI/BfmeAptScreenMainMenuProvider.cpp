@@ -9,18 +9,18 @@
 class AsciiString
 {
 public:
-	AsciiString( const char *text ) : m_string( text ) {}
+	AsciiString( const char *text ) : m_data( text ) {}
 	~AsciiString() {}
 	AsciiString &operator=( const char *text );
 
 	const char *str() const
 	{
-		return m_string.m_data ?
-			(const char *)m_string.m_data + 8 : (const char *)0x0107388B;
+		return m_data.m_data ?
+			(const char *)m_data.m_data + 8 : (const char *)0x0107388B;
 	}
 
 private:
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 class GameState

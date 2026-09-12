@@ -44,22 +44,22 @@ class AsciiString
 {
 public:
 	AsciiString() {}
-	AsciiString( const AsciiString &other ) : m_string( other.m_string ) {}
+	AsciiString( const AsciiString &other ) : m_data( other.m_data ) {}
 	~AsciiString() {}
 
-	void set( const char *text, int length ) { m_string.set( text, length ); }
+	void set( const char *text, int length ) { m_data.set( text, length ); }
 
 	AsciiString &operator=( const AsciiString &other )
 	{
-		m_string.set( other.m_string );
+		m_data.set( other.m_data );
 		return *this;
 	}
 
-	void set( const AsciiString &other ) { m_string.set( other.m_string ); }
-	void toLower() { m_string.toLower(); }
-	bool isNotEmpty() const { return m_string.isNotEmpty(); }
+	void set( const AsciiString &other ) { m_data.set( other.m_data ); }
+	void toLower() { m_data.toLower(); }
+	bool isNotEmpty() const { return m_data.isNotEmpty(); }
 
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 // ---------------------------------------------------------------------------

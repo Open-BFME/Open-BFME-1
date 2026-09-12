@@ -45,6 +45,19 @@ For a narrow codegen hypothesis, tools/shape_search.py tests explicit C++ altern
 with a trial/plateau budget; see docs/throughput-tools.md. Read probe's experiment
 history before repeating a spelling. Record blocker=NAME for a shared missing
 callee/layout and explain what changed before retrying a banked attempt.
+NAMING. Ask before you invent: `python3 tools/name_oracle.py --class <C> --offset 0x2c`
+answers from the ZH<->retail layout witness and the binary's own FieldParse tables, and
+`--todo` lists placeholders the evidence can already name. The commit hook REFUSES a
+member name that contradicts the witness, and refuses a placeholder you ADD at an offset
+the evidence already names -- its message carries the name to use, so there is nothing to
+guess. An address-derived name is honest and greps out in a second; a plausible WRONG one
+is invisible and no byte gate can see it. So: identity you can PROVE (matched caller,
+vtable slot, string literal, ZH twin) -> the real name, cite the evidence. Identity you
+cannot prove -> a name describing what the body itself proves, KEEPING the address token
+(`FiveDwordElem063700`, not `Rva063700Elem` and not a guessed class name). The address has
+to stay UNIQUE, because ICF means one spelling reaches several retail copies; it never has
+to be the whole name. Never put a real class's name on a shim whose layout you have not
+checked. docs/naming_evidence.md has the detail.
 HARD RULES: never run git commands (the orchestrator owns VCS); never run a full ./build.sh;
 never edit files under Code/gen_asm/; only touch your assigned bodies; new sources go in
 the class's home directory under Code/ with descriptive names.

@@ -148,13 +148,13 @@ private:
 class AsciiString
 {
 public:
-	AsciiString( const AsciiString &other ) : m_string( other.m_string ) {}
+	AsciiString( const AsciiString &other ) : m_data( other.m_data ) {}
 	~AsciiString() {}
 
-	void concat( const char *text, int length ) { m_string.concat( text, length ); }
-	const char *str() const { return m_string.str(); }
+	void concat( const char *text, int length ) { m_data.concat( text, length ); }
+	const char *str() const { return m_data.str(); }
 
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 // @?Open2OpenPastSeparators@@YAPAVFile@@ABVAsciiString@@@Z 0x00785270

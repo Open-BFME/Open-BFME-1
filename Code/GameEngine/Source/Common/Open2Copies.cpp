@@ -37,11 +37,11 @@ public:
 
 	AsciiString &operator=( const AsciiString &other )
 	{
-		m_string.set( other.m_string );
+		m_data.set( other.m_data );
 		return *this;
 	}
 
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 // -------------------------------------------------------------------------
