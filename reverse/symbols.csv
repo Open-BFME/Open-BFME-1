@@ -5322,7 +5322,7 @@ name,address,notes
 ??1Gen_dtor_0025ac50@@UAE@XZ,0x00032E25,gen-dtor class destructor
 ??1Gen_dtor_0025ae30@@UAE@XZ,0x000227B4,gen-dtor class destructor
 ??1Gen_dtor_0025bbf0@@UAE@XZ,0x00002F86,gen-dtor class destructor
-??1Gen_dtor_0025cc50@@UAE@XZ,0x0004854A,gen-dtor class destructor
+??1ElvenWoodSpecialPowerModuleData@@UAE@XZ,0x0004854A,route=0x0025CC80; vtable 0x010B4C38 slot0 deleting wrapper calls this ILT
 ??1Gen_dtor_0025d070@@UAE@XZ,0x00003274,gen-dtor class destructor
 ??1Gen_dtor_0025d8f0@@UAE@XZ,0x0004770D,gen-dtor class destructor
 ??1Gen_dtor_0025dbb0@@UAE@XZ,0x0004653D,gen-dtor class destructor
