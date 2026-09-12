@@ -102,5 +102,9 @@ BFME_STATE_SELF_NAMING_CTOR( Rva002C61F0State, Rva000A19E0StateBase, "DockingSta
 BFME_STATE_SELF_NAMING_CTOR( Rva002C6260State, Rva000A19E0StateBase, "HarvestingState" )
 BFME_STATE_SELF_NAMING_CTOR( Rva002C62D0State, Rva000A19E0StateBase, "SupplyTruckBusyState" )
 BFME_STATE_SELF_NAMING_CTOR( Rva002C63A0State, Rva000A19E0StateBase, "SupplyTruckIdleState" )
-BFME_STATE_SELF_NAMING_CTOR( Rva002C9180State, Rva000A19E0StateBase, "ActAsDozerState" )
-BFME_STATE_SELF_NAMING_CTOR( Rva002C91F0State, Rva000A19E0StateBase, "ActAsSupplyTruckState" )
+// 0x002C9180 / 0x002C91F0 are already claimed as ActAsDozerState /
+// ActAsSupplyTruckState in WorkerAIUpdateStateConstructors.cpp (StateMachine*
+// thiscall).  These TU-local shims take void* so their mangled names stay off
+// those pins; they exist so the same 46 bytes ICF with the claimed bodies.
+BFME_STATE_SELF_NAMING_CTOR( ActAsDozerNamedState, Rva000A19E0StateBase, "ActAsDozerState" )
+BFME_STATE_SELF_NAMING_CTOR( ActAsSupplyTruckNamedState, Rva000A19E0StateBase, "ActAsSupplyTruckState" )
