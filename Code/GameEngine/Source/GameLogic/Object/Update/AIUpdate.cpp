@@ -225,11 +225,29 @@ struct BFMEStateMachineFields
 	Int m_goalObjectID;					///< retail this+0x5C
 };
 
-// The reference GameLogic inlines its object lookup; BFME calls it.
+// BFME retained the hash-map lookup that ZH replaced with a flat vector.
+// Keep its authentic body visible but out of line: MSVC's alias analysis then
+// schedules doPathfind's repulsor-ID load before the GameLogic load. An opaque
+// declaration leaves six differing bytes in the otherwise exact 2031-byte body.
+// This lookup independently matches all 82 bytes at RVA 0x0009A510; its retail
+// caller uses ILT 0x0001F253. See System/GameLogicFindObjectByID.cpp.
 class BFMEObjectLookup
 {
 public:
-	Object *findObjectByID( ObjectID id );			///< retail ILT 0x0001f253
+	__declspec(noinline) Object *findObjectByID( ObjectID id )
+	{
+		if (id == INVALID_ID)
+			return NULL;
+		ObjectHash::iterator it = m_objHash.find((int)id);
+		if (it == m_objHash.end())
+			return NULL;
+		return (*it).second;
+	}
+
+private:
+	typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > ObjectHash;
+	char m_pad[0xB0];
+	ObjectHash m_objHash;
 };
 
 // doPathfind uses the BFME singleton layout directly.  The reference AI
@@ -275,16 +293,17 @@ public:
 	Bool test( UnsignedInt bit ) const;
 };
 
-class BFMECrushableLevelQuery
-{
-public:
-	char getCrushableLevel() const;
-};
-
+extern void j_000082ba(void);
 class BFMEPathfinderMoveAllies
 {
 public:
-	Bool moveAllies( Object *object, Path *path, Bool moveAllies );
+	typedef Bool (BFMEPathfinderMoveAllies::*Call)(Object *, Path *, Bool);
+	__forceinline Bool moveAllies(Object *object, Path *path, Bool moveAllies)
+	{
+		// Retail cleans three stack arguments. The ZH declaration has only two.
+		union { void (*address)(); Call member; } route = { j_000082ba };
+		return (this->*route.member)(object, path, moveAllies);
+	}
 };
 
 struct BFMEPathNodeView
@@ -305,6 +324,19 @@ typedef Bool (__fastcall *BFMEAdjustDestinationCall)( Pathfinder *, LocomotorSet
 // has only the receiver, so fastcall gives the same ECX/no-stack ABI.
 typedef void (__fastcall *BFMEWakeCall)( AIUpdateInterface * );
 
+// The computePath implementation remains a dump. Preserve its proven ILT
+// identity and use a single-inheritance PMF to express the two-argument ABI.
+extern void j_00023209( void );
+class BFMEComputePathRoute
+{
+public:
+	typedef Bool (BFMEComputePathRoute::*Call)(PathfindServicesInterface *, Coord3D *);
+	__forceinline Bool invoke(PathfindServicesInterface *pathfinder, Coord3D *position)
+	{
+		union { void (*address)(); Call member; } route = { j_00023209 };
+		return (this->*route.member)(pathfinder, position);
+	}
+};
 extern void j_00005637( void );
 extern void j_00011252( void );
 extern void j_000294e2( void );
@@ -1008,7 +1040,6 @@ to call use the PathfindServicesInterface to do a pathfind operation.  This shou
 (and in fact is very hard to do because PathfindServicesInterace is private to the pathfinder)
 except by the pathfinder during pathfind queue processing.  jba */
 //-------------------------------------------------------------------------------------------------
-// ?doPathfind@AIUpdateInterface@@ present-unmatched
 #if 0
 void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 {
@@ -1093,7 +1124,6 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 
 #define TheGameLogic BFME_PATH_GAME_LOGIC
 #define TheAI BFME_PATH_AI
-// ?doPathfind@AIUpdateInterface@@ present-unmatched
 void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 {
 	BFMEApproachPathFields *retail = reinterpret_cast<BFMEApproachPathFields *>( this );
@@ -1121,9 +1151,7 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 		pos1.y = -1000.0f;
 		pos1.z = 0.0f;
 		BFMEObjectLookup * const gameLogic = BFME_PATH_GAME_LOGIC;
-		Object *repulsor = gameLogic->findObjectByID(
-			*reinterpret_cast<const volatile ObjectID *>(
-				reinterpret_cast<const char *>(this) + 0x18C));
+		Object *repulsor = gameLogic->findObjectByID(retail->m_repulsor1);
 		if (repulsor)
 		{
 			pos1 = *repulsor->getPosition();
@@ -1306,7 +1334,7 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 			{
 				Pathfinder *alliesPathfinder = TheAI->pathfinder();
 				char crushableLevel =
-					reinterpret_cast<const BFMECrushableLevelQuery *>(object)->getCrushableLevel();
+					static_cast<char>(object->getCrushableLevel());
 				reinterpret_cast<BFMEPathfinderMoveAllies *>(alliesPathfinder)->moveAllies(
 					object, retail->m_path,
 					!(crushableLevel < 4));
@@ -1330,7 +1358,7 @@ void AIUpdateInterface::doPathfind( PathfindServicesInterface *pathfinder )
 			retail->m_requestedDestination.x, retail->m_requestedDestination.y,
 			retail->m_requestedDestination.z);
 	}
-	computePath( pathfinder, &retail->m_requestedDestination );
+	reinterpret_cast<BFMEComputePathRoute *>(this)->invoke(pathfinder, &retail->m_requestedDestination);
 	if (g_012F0239 && g_012ED4FC)
 	{
 		((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC,

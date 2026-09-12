@@ -118,3 +118,17 @@ its actual vtable and free path first; this is not a global pool-shim change.
 | STLport helper kept out of line (`_M_create_node`, `__destroy_aux`, `_M_fill_insert`...) or an extra try/catch region where retail inlines the node creation straight from `__node_alloc::_M_allocate` | Retail game TUs were built with STLport exceptions off per TU: `#define _STLP_NO_EXCEPTIONS 1` before the vendor `<map>`/`<vector>`/`<list>` (before `PreRTS.h` in port-style TUs, with `#include <map>` first so the default node allocator is kept). Landed the `_M_insert` family, hinted inserts (684, 1122, 629 B), vector twins, PSPlayerStats dtor. Second copies of a claimed name take an alias tag (empty comparator subclass / tagged element); `build/autopin.py` pins the callees. |
 | Extra `mov [esp+N],-1` (EH state reset) after a vector-constructor iterator or array new, plus a loop-alignment `lea` NOP, 8-16 bytes long | Retail's TU saw `operator delete[]` declared `throw()`: with a nothrow array delete MSVC 7.1 has no reason to reset the EH state before the later `delete[]`. Declare `void __cdecl operator delete[](void *) throw();` before the includes (VectorClass<Vector2/3/4>::Resize, 480/515/550 B). |
 | Twin of a port function blocked because adding a define to the port breaks its gen-funclet rows | The dump is a copy-paste twin in another retail TU: copy the whole port source into a new file, add the define, wrap everything after the includes in `namespace RvaXXXXXXXXTwin { }`, claim only the twin; autopin resolves its file-local statics and string literals (DIR32) to the retail copy's own (WOLWelcomeMenuUpdate twin 1164 B). |
+
+## AI pathfinding: authentic lookup visibility
+
+`AIUpdateInterface::doPathfind` (RVA `0x0027B3A0`, 2031 bytes) was six
+non-relocation bytes short of an exact match: two independent loads after
+`destroyPath` appeared in reverse order. Local ordering and volatile reads
+did not recover it. The out-of-line `findObjectByID` declaration hid the real
+BFME hash-map lookup, which differs from Zero Hour's later flat vector.
+Giving the TU-local lookup view its authentic body with `__declspec(noinline)`
+recovered the caller exactly and allowed the old volatile cast to be removed.
+The visible helper independently matches all 82 bytes at `0x0009A510`, and all
+69 claimed emissions in AIUpdate.cpp pass the normal gate. This is another
+case where callee side-effect knowledge affects scheduling in its caller;
+the helper must be real, not an invented pure stub.
