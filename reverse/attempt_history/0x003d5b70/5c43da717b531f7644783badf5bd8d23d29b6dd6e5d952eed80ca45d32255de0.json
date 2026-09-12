@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "5c43da717b531f7644783badf5bd8d23d29b6dd6e5d952eed80ca45d32255de0",
+  "symbol": "?contains@Rva003D5B70@@QAE_NHH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?contains@Rva003D5B70@@QAE_NHH@Z\n// partial score=0.9 date=2026-09-11\n// cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2\n\nstruct Rva003D5B70Cell\n{\n\tchar m_pad00[0x0C];\n\tunsigned int m_flags;\n};\n\nclass Rva003D5B70Info\n{\nprivate:\n\tchar m_pad00[0x10];\n\npublic:\n\tRva003D5B70Cell **m_rows;\n\tint m_minX;\n\tint m_minY;\n\tint m_maxX;\n\tint m_maxY;\n};\n\nclass Rva003D5B70\n{\npublic:\n\tbool contains(int x, int y);\n\nprivate:\n\tRva003D5B70Info *m_info;\n};\n\nbool Rva003D5B70::contains(int x, int y)\n{\n\tRva003D5B70Info *info = m_info;\n\tif (x < info->m_minX || x > info->m_maxX ||\n\t\ty < info->m_minY || y > info->m_maxY)\n\t\treturn true;\n\n\tRva003D5B70Cell *cell = info->m_rows[x] + y;\n\tif (cell == 0)\n\t\treturn true;\n\tunsigned int flags = cell->m_flags;\n\tunsigned int high = flags >> 21;\n\tif ((high & 1) != 0)\n\t\treturn false;\n\n\tunsigned int type = flags & 7;\n\tif (type == 2)\n\t\treturn false;\n\tif (type == 5)\n\t\treturn false;\n\tif (type == 4)\n\t\treturn false;\n\tif (type == 1)\n\t\treturn false;\n\treturn true;\n}\n"
+}
