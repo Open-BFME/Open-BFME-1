@@ -43,12 +43,12 @@ public:
 class Thing
 {
 public:
-    const Coord3D *getPosition() const { return &m_position; }
+    const Coord3D *getPosition() const { return &m_cachedPos; }
     void setPosition(const Coord3D *position);
 
 private:
     unsigned char m_pad00[0x38];
-    Coord3D m_position;
+    Coord3D m_cachedPos;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h

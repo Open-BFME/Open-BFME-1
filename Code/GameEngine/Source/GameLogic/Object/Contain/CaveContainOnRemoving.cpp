@@ -59,12 +59,12 @@ public:
 
 	const Coord3D *getPosition() const
 	{
-		return &m_position;
+		return &m_cachedPos;
 	}
 
 private:
 	unsigned char m_thingData04[0x34];
-	Coord3D m_position;
+	Coord3D m_cachedPos;
 };
 
 class Object : public Thing

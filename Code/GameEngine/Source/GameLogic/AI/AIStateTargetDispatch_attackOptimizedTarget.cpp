@@ -56,7 +56,7 @@ public:
 	const Coord3D *getUnitDirectionVector2D() const;
 
 	unsigned char m_beforePos[0x38];
-	Coord3D m_pos;
+	Coord3D m_cachedPos;
 	unsigned char m_beforeAI[0x204 - 0x44];
 	BfmeHordeMember *m_ai;
 };
@@ -136,7 +136,7 @@ void AIStateTargetDispatch::attackOptimizedTarget(Thing *target)
 		return;
 	if (self->getLayer() != LAYER_GROUND)
 		return;
-	if (TheTerrainLogic->probePosition(&self->m_pos))
+	if (TheTerrainLogic->probePosition(&self->m_cachedPos))
 		return;
 	if (!selfBlocks)
 		return;

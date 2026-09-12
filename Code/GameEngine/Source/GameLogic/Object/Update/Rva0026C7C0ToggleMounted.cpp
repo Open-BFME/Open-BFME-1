@@ -44,7 +44,7 @@ public:
 	virtual Rva0026C7C0Result *getResult();
 	void setOrientation(float angle);
 	char m_pad00[0x40];
-	float m_orientation;               // +0x44
+	float m_cachedAngle;               // +0x44
 };
 
 class Object : public Thing
@@ -135,7 +135,7 @@ Bool Rva0026C7C0Owner::bfmeAdvance()
 		if (m_mode == 2)
 		{
 			if (data->m_modeTwoEnabled)
-				m_target->setOrientation(m_target->m_orientation + 3.1415927f);
+				m_target->setOrientation(m_target->m_cachedAngle + 3.1415927f);
 			m_mode = 4;
 			return false;
 		}
@@ -143,7 +143,7 @@ Bool Rva0026C7C0Owner::bfmeAdvance()
 		if (m_mode == 1)
 		{
 			if (data->m_modeOneEnabled)
-				m_target->setOrientation(m_target->m_orientation + 3.1415927f);
+				m_target->setOrientation(m_target->m_cachedAngle + 3.1415927f);
 			m_mode = 3;
 			slot17();
 			return true;

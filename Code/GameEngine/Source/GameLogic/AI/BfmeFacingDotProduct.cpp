@@ -15,7 +15,7 @@ public:
 	void getUnitDirectionVector2D(Coord3D &direction) const;
 
 	unsigned char m_pad00[0x38];
-	Coord3D m_position;
+	Coord3D m_cachedPos;
 };
 
 class BfmeFacingView
@@ -35,8 +35,8 @@ bool BfmeFacingView::bfmeIsPositionAhead(
 	offset.x = position->x;
 	offset.y = position->y;
 	const Thing *thing = m_thing;
-	offset.x -= origin->m_position.x;
-	offset.y -= origin->m_position.y;
+	offset.x -= origin->m_cachedPos.x;
+	offset.y -= origin->m_cachedPos.y;
 	if (thing != 0)
 	{
 		Coord3D direction;

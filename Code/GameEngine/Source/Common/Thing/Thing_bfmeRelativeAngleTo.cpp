@@ -21,7 +21,7 @@ public:
 
 private:
 	unsigned char m_pad000[0x38];
-	Coord3D m_position;
+	Coord3D m_cachedPos;
 };
 
 #define BFME_ZERO_RANGE (*(const Real *)0x01075350)
@@ -33,8 +33,8 @@ private:
 Real Thing::bfmeRelativeAngleTo(const Coord3D *point) const
 {
 	Coord3D delta;
-	delta.x = point->x - m_position.x;
-	delta.y = point->y - m_position.y;
+	delta.x = point->x - m_cachedPos.x;
+	delta.y = point->y - m_cachedPos.y;
 	Real distance = (Real)sqrt(delta.x * delta.x + delta.y * delta.y);
 	if (distance == BFME_ZERO_RANGE)
 		return BFME_ZERO_RANGE;

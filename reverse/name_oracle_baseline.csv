@@ -730,17 +730,7 @@ TerrainTracksRenderObjClass+0x14|m_beforeTotalEdges|m_ownerDrawable,Code/GameEng
 TerrainTracksRenderObjClass+0xc|m_topIndex|m_activeEdgeCount,Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassSystemClearTracks.cpp,18,1.00,layout_witness
 TerrainTracksRenderObjClass+0xc|m_topIndex|m_activeEdgeCount,Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassInit.cpp,50,1.00,layout_witness
 TerrainTracksRenderObjClassSystem+0x0|m_head|m_vertexBuffer,Code/GameEngineDevice/Source/W3DDevice/GameClient/TerrainTracksRenderObjClassSystemClearTracks.cpp,37,1.00,layout_witness
-Thing+0x38|m_position|m_cachedPos,Code/GameEngine/Source/GameLogic/AI/BfmeFacingDotProduct.cpp,19,1.00,layout_witness
-Thing+0x38|m_position|m_cachedPos,Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeHordeWaitState_update.cpp,96,1.00,layout_witness
-Thing+0x38|m_position|m_cachedPos,Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContainTrackTargets.cpp,52,1.00,layout_witness
-Thing+0x38|m_position|m_cachedPos,Code/GameEngine/Source/GameLogic/Object/Contain/CaveContainOnRemoving.cpp,68,1.00,layout_witness
-Thing+0x38|m_position|m_cachedPos,Code/GameEngine/Source/Common/Thing/Thing_bfmeRelativeAngleTo.cpp,25,1.00,layout_witness
-Thing+0x38|m_pos|m_cachedPos,Code/GameEngine/Source/GameLogic/AI/AIStateTargetDispatch_attackOptimizedTarget.cpp,60,1.00,layout_witness
-Thing+0x38|m_pos|m_cachedPos,Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/QueueProductionExitInterface.cpp,57,1.00,layout_witness
 Thing+0x44|m_beforeAI|m_cachedAngle,Code/GameEngine/Source/GameLogic/AI/AIStateTargetDispatch_attackOptimizedTarget.cpp,61,1.00,layout_witness
-Thing+0x44|m_orientation|m_cachedAngle,Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeHordeWaitState_update.cpp,97,1.00,layout_witness
-Thing+0x44|m_orientation|m_cachedAngle,Code/GameEngine/Source/GameLogic/Object/Update/Rva0026C7C0ToggleMounted.cpp,48,1.00,layout_witness
-Thing+0x44|m_orientation|m_cachedAngle,Code/GameEngine/Source/GameLogic/Object/Update/ProductionExitUpdate/QueueProductionExitInterface.cpp,58,1.00,layout_witness
 ThingTemplate+0x0|m_beforeCommandPoints|s_objectFieldParseTable,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsHasCommandPointsToBuildTeam.cpp,57,1.00,layout_witness
 ThingTemplate+0x0|m_beforeKindFlags|s_objectFieldParseTable,Code/GameEngine/Source/Common/RTS/Handicap.cpp,20,1.00,layout_witness
 ThingTemplate+0x0|m_head|s_objectFieldParseTable,Code/GameEngine/Source/Common/Team_hasAnyBuildings.cpp,75,1.00,layout_witness

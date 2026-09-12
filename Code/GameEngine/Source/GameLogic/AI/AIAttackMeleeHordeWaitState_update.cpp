@@ -87,13 +87,13 @@ public:
 	Bool bfmeIsKindOf(KindOfType kind) const;
 	void setOrientation(float angle);
 
-	const Coord3D *getPosition() const { return &m_position; }
-	float getOrientation() const { return m_orientation; }
+	const Coord3D *getPosition() const { return &m_cachedPos; }
+	float getOrientation() const { return m_cachedAngle; }
 
 private:
 	unsigned char m_pad_000[0x38];
-	Coord3D m_position;
-	float m_orientation;
+	Coord3D m_cachedPos;
+	float m_cachedAngle;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h

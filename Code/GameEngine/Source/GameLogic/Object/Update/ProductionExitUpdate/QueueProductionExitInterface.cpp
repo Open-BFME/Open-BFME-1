@@ -53,8 +53,8 @@ class Thing
 {
 public:
 	unsigned char m_pad[0x38];
-	Coord3D m_pos;						// +0x38
-	float m_orientation;					// +0x44
+	Coord3D m_cachedPos;						// +0x38
+	float m_cachedAngle;					// +0x44
 
 	void setOrientation(float angle);
 };
@@ -126,23 +126,23 @@ void QueueProductionExitUpdate::exitObjectByBudding(Object *newObj, Object *budH
 {
 	if (budHost)
 	{
-		float newAngle = budHost->m_orientation;
+		float newAngle = budHost->m_cachedAngle;
 		int newLayer = budHost->getLayer();
-		newObj->setPosition(&budHost->m_pos);
+		newObj->setPosition(&budHost->m_cachedPos);
 		newObj->setOrientation(newAngle);
 		newObj->setLayer((PathfindLayerEnum)newLayer);
 	}
 	else
 	{
 		newObj->setPosition(&(*reinterpret_cast<Object **>(
-			reinterpret_cast<char *>(this) - 0x18))->m_pos);
+			reinterpret_cast<char *>(this) - 0x18))->m_cachedPos);
 		newObj->setOrientation((*reinterpret_cast<Object **>(
-			reinterpret_cast<char *>(this) - 0x18))->m_orientation);
+			reinterpret_cast<char *>(this) - 0x18))->m_cachedAngle);
 	}
 
 	AIUpdateInterface *ai = newObj->m_ai;
 	if (ai)
-		ai->m_command.aiMoveToPosition(&newObj->m_pos, CMD_FROM_AI);
+		ai->m_command.aiMoveToPosition(&newObj->m_cachedPos, CMD_FROM_AI);
 
 	const QueueProductionExitUpdateModuleData *data =
 		*reinterpret_cast<const QueueProductionExitUpdateModuleData *const *>(
