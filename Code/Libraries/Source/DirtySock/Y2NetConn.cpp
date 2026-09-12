@@ -22,15 +22,15 @@ __declspec(dllimport) void __stdcall Rva01358F30Sleep( unsigned int ms );
 // The idle-handler table 0x007F8D30 sweeps: sixteen slots of a function and a
 // ref, indexed with an eight-byte stride.  Sixteen is the loop's own bound.
 // The handler is CALLED with its own ref and a tick, cdecl, by 0x007F8C90.
-typedef void ( __cdecl *Rva007F8D30IdleProc )( void *ref, unsigned int tick );
+typedef void ( __cdecl *IdleHandlerProc )( void *ref, unsigned int tick );
 
-struct Rva007F8D30Idle
+struct IdleHandlerSlot
 {
-	void *m_function;   // +0x00 -- cast to Rva007F8D30IdleProc where it is called
+	void *m_function;   // +0x00 -- cast to IdleHandlerProc where it is called
 	void *m_ref;        // +0x04
 };
 
-extern Rva007F8D30Idle g_Rva0130A7B0Idle[ 16 ];
+extern IdleHandlerSlot g_Rva0130A7B0Idle[ 16 ];
 
 // The tick the pump at 0x007F8C90 will next run at.
 extern unsigned int g_Rva0130A850Next;
@@ -113,7 +113,7 @@ int Rva007EB410NetConnStatus( int selector, void *buffer, int bufferSize )
 // the buffer at +0x04 and the length at +0x08, copies a name to +0x0A and
 // steps the LANA number at +0x30 -- which is the documented layout, and 0x40 is
 // the size it memsets.
-struct Rva007EB520Ncb
+struct NCB
 {
 	unsigned char  ncb_command;      // +0x00
 	unsigned char  ncb_retcode;      // +0x01
@@ -132,7 +132,7 @@ struct Rva007EB520Ncb
 	void          *ncb_event;
 };
 
-extern "C" unsigned char __stdcall Netbios( Rva007EB520Ncb *ncb );
+extern "C" unsigned char __stdcall Netbios( NCB *ncb );
 extern "C" char *strcpy( char *dest, const char *src );
 extern "C" void *memset( void *dest, int value, unsigned int count );
 
@@ -159,7 +159,7 @@ extern "C" void *memset( void *dest, int value, unsigned int count );
 // line belongs to the loop running out, not to the query failing.
 unsigned int Rva007EB520NetConnMAC( void *adapter )
 {
-	Rva007EB520Ncb ncb;
+	NCB ncb;
 	int result;
 	int lana;
 
@@ -387,7 +387,7 @@ void Rva007F8C90( void )
 	for( i = 0; i < 0x10; i++ )
 	{
 		if( g_Rva0130A7B0Idle[ i ].m_function != 0 )
-			( (Rva007F8D30IdleProc)g_Rva0130A7B0Idle[ i ].m_function )(
+			( (IdleHandlerProc)g_Rva0130A7B0Idle[ i ].m_function )(
 					g_Rva0130A7B0Idle[ i ].m_ref, Rva007FEA00Tick() );
 	}
 }
