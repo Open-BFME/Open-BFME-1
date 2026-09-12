@@ -209,6 +209,9 @@ private:
 
 BfmeAptScreenQuitMenu::~BfmeAptScreenQuitMenu()
 {
+	*(const void ***)this = (const void **)0x0110A388;
+	*(const void ***)((char *)this + 0x218) = (const void **)0x0110A384;
+
 	if( this == g_obj12F4B40 )
 	{
 		g_obj12F4B40 = 0;
