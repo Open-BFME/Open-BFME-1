@@ -20,7 +20,22 @@ public:
 class TAiData
 {
 public:
-	char m_pad[ 0x40 ];
+	char m_pad00[ 4 ];
+	float m_structureSeconds;
+	float m_teamSeconds;
+	int m_resourcesWealthy;
+	int m_resourcesPoor;
+	unsigned int m_forceIdleFramesCount;
+	float m_structuresWealthyMod;
+	float m_teamWealthyMod;
+	float m_structuresPoorMod;
+	float m_teamPoorMod;
+	float m_teamResourcesToBuild;
+	float m_guardInnerModifierAI;
+	float m_guardOuterModifierAI;
+	float m_guardInnerModifierHuman;
+	float m_guardOuterModifierHuman;
+	unsigned int m_guardChaseUnitFrames;
 	int m_guardEnemyScanRate;
 };
 
