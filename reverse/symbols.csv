@@ -37370,6 +37370,7 @@ name,address,notes
 ?b_002c9c00@@YAXXZ,0x002C9C00,gen-thunk body
 ?b_002c9c30@@YAXXZ,0x002C9C30,gen-thunk body
 ?b_002c9c40@@YAXXZ,0x002C9C40,gen-thunk body
+?findGoodBuildOrRepairPosition@WorkerAIUpdate@@IAE_NPBVObject@@0AAUCoord3D@@@Z,0x0001CBF7,Worker helper2C9C40 calls ILT to native position finder; literal caller identity at VA010CA548
 ?b_002c9ed0@@YAXXZ,0x002C9ED0,gen-thunk body
 ?b_002ca0e0@@YAXXZ,0x002CA0E0,gen-thunk body
 ?b_002ca130@@YAXXZ,0x002CA130,gen-thunk body
