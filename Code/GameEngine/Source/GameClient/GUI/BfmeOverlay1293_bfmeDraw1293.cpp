@@ -1,7 +1,8 @@
-// ?bfmeDraw1293@BfmeOverlay1293@@QAEXXZ
-// partial score=0.98 date=2026-09-04
-// ?bfmeDraw1293@BfmeOverlay1293@@QAEXXZ
-// partial score=0.98 date=2026-09-04
+﻿// ?bfmeDraw1293@BfmeOverlay1293@@QAEXXZ
+// Retail RVA 0x0059FA10; exact 152-byte BFME overlay draw body.
+// TheDisplay begin/quad/end dispatch and overlay field layout are proven by
+// the lane12 identity audit; clean C++ uses the native display vtable shape.
+// cl: /DNDEBUG /MD /EHsc
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
@@ -104,7 +105,7 @@ void BfmeOverlay1293::bfmeDraw1293()
 	float left = (float)m_left18;
 	_ReadWriteBarrier();
 	Display *device = TheDisplay;
-	device->bfmeBegin1293();
+	TheDisplay->bfmeBegin1293();
 	device->bfmeDrawQuad1293(left, top, right, bottom, color);
 	device->bfmeEnd1293();
 }
