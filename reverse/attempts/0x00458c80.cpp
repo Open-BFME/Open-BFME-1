@@ -4,6 +4,7 @@
 
 #include <string.h>
 
+
 // BFME's AsciiString is the eight-byte-header StringBase view: length is at
 // +0x04 and the characters begin at +0x08.  Keep the accessors inline here so
 // the retail body remains a manual length/data check rather than an out-of-line

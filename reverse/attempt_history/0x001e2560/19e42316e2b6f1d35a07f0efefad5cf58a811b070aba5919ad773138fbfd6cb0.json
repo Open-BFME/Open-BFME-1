@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "19e42316e2b6f1d35a07f0efefad5cf58a811b070aba5919ad773138fbfd6cb0",
+  "symbol": "?bfmeClampDH@BfmeHostDH@@QBEXPAVBfmeVecDH@@PBVBfmeSrcDH@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeClampDH@BfmeHostDH@@QBEXPAVBfmeVecDH@@PBVBfmeSrcDH@@@Z\n// partial score=0.95 date=2026-09-12\nextern \"C\" double sqrt(double x);\n\n#pragma intrinsic(sqrt)\n\nextern const float BfmeZeroRange;\n\nclass BfmeVecDH\n{\npublic:\n\tvoid bfmeSetDH(float x, float y, float z) volatile\n\t{\n\t\tm_bfmeXDH = x;\n\t\tm_bfmeYDH = y;\n\t\tm_bfmeZDH = z;\n\t}\n\n\tfloat m_bfmeXDH;\n\tfloat m_bfmeYDH;\n\tfloat m_bfmeZDH;\n};\n\nclass BfmeSrcDH;\n\nclass BfmeHostDH\n{\npublic:\n\tBfmeVecDH bfmeDeltaDH(const BfmeSrcDH *src) const;\n\tvoid bfmeClampDH(BfmeVecDH *out, const BfmeSrcDH *src) const;\n\n\tunsigned char m_bfmeHeadDH[0xbc];\n\tfloat m_bfmeRangeDH;\n};\n\nvoid BfmeHostDH::bfmeClampDH(BfmeVecDH *out, const BfmeSrcDH *src) const\n{\n\tBfmeVecDH v = bfmeDeltaDH(src);\n\n\tfloat len = (float)sqrt(v.m_bfmeXDH * v.m_bfmeXDH + v.m_bfmeYDH * v.m_bfmeYDH + v.m_bfmeZDH * v.m_bfmeZDH);\n\n\tfloat range = m_bfmeRangeDH;\n\n\tif (len <= range)\n\t{\n\t\t((volatile BfmeVecDH *)out)->bfmeSetDH(*(const volatile float *)&BfmeZeroRange, *(const volatile float *)&BfmeZeroRange, *(const volatile float *)&BfmeZeroRange);\n\t}\n\telse\n\t{\n\t\tvolatile float t = (len - range) / len;\n\n\t\t((volatile BfmeVecDH *)out)->bfmeSetDH(t * v.m_bfmeXDH, v.m_bfmeYDH * t, v.m_bfmeZDH * t);\n\t}\n}\n"
+}

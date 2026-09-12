@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7f1dd43ce7f58a2c2b0de3559da2b7f428b7d67f71509a9515ecf92059285ffa",
+  "symbol": "?d_00362760@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?d_00362760@@YAXXZ\n// partial score=0.9 date=2026-09-12\nclass BfmeElemEAP\n{\npublic:\n\tvoid bfmeDoEAP(void *arg);\n\n\tunsigned char m_bfmeBodyEAP[0x58];\n};\n\nclass BfmeVecEAP\n{\npublic:\n\tvoid bfmeApplyEAP(int index, void *arg);\n\n\tunsigned char m_bfmeHeadEAP[0x18];\n\tBfmeElemEAP *m_bfmeBeginEAP;\n\tBfmeElemEAP *m_bfmeEndEAP;\n};\n\nvoid BfmeVecEAP::bfmeApplyEAP(int index, void *arg)\n{\n\tif (index < 0 ||\n\t\t(unsigned int)index >= (unsigned int)(m_bfmeEndEAP - m_bfmeBeginEAP))\n\t\treturn;\n\n\tm_bfmeBeginEAP[index].bfmeDoEAP(arg);\n}\n"
+}
