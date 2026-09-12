@@ -268,15 +268,33 @@ def sources(paths, staged):
     return [p for area in AREAS for p in (ROOT / area).rglob("*.cpp")]
 
 
-def scan(paths, staged):
-    """Every (file, class, offset) a source asserts that the witness also names."""
+def at_head(path):
+    """That file's content at HEAD, or None when it is newly added."""
+    rel = path.relative_to(ROOT).as_posix()
+    got = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=ROOT,
+                         capture_output=True, text=True)
+    return None if got.returncode else got.stdout
+
+
+def scan(paths, staged, texts=None):
+    """Every (file, class, offset) a source asserts that the witness also names.
+
+    `texts` overrides what is read from disk, so the identical walk can be run
+    against HEAD's version of a staged file -- which is what tells a placeholder
+    this commit INTRODUCED from one it merely inherited.
+    """
     wit = load_witness()
     tally = collections.Counter()
     todo, conflicts = [], []
     for path in sources(paths, staged):
-        if not path.exists():
+        if texts is not None:
+            text = texts.get(path)
+            if text is None:
+                continue
+        elif not path.exists():
             continue
-        text = path.read_text(encoding="utf-8", errors="replace")
+        else:
+            text = path.read_text(encoding="utf-8", errors="replace")
         for decl in DECL.finditer(text):
             owner = decl.group(1)
             members, refused = outer_members(text, decl.end() - 1, bool(decl.group("base")))
@@ -548,6 +566,24 @@ def main():
         print("\nA disagreement is a question, not a verdict: the witness is inferred and BFME forked "
               "the ZH layout. Settle it, then remove the line -- never add one to go green.", file=sys.stderr)
         return 1
+
+    # A placeholder this commit INTRODUCED at an offset the evidence already names
+    # is the one finding with nothing to adjudicate: the answer is in the message.
+    # Measured over 1,500 commits, agents did this 30 times -- once every ~50 -- each
+    # time with the real name one command away. Inherited placeholders are somebody
+    # else's backlog and never fail a commit; only what this diff adds does, which is
+    # why HEAD's version of each staged file is re-walked.
+    if args.staged and todo:
+        was = {(t[2], t[3], t[4]) for t in
+               scan(None, True, texts={p_: at_head(p_) for p_ in sources(None, True)})[1]}
+        added = [t for t in todo if (t[2], t[3], t[4]) not in was]
+        if added:
+            print(f"\nname_oracle: {len(added)} placeholder(s) this commit adds already have a "
+                  f"name in the evidence:", file=sys.stderr)
+            for t in added:
+                print(f"  {t[0]}:{t[1]}: {t[2]}+{t[3]:#x}  {t[4]}  ->  use {t[5]}  ({t[7]})",
+                      file=sys.stderr)
+            return 1
     return 0
 
 

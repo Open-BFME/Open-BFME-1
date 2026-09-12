@@ -190,3 +190,16 @@ def test_a_member_reports_its_size_so_a_span_can_be_told_from_a_field():
     assert refused is None
     assert [(r[0], r[1], r[4], r[5]) for r in rows] == [
         ("m_unknown", 0, 0x54, True), ("m_after", 0x54, 4, False)]
+
+
+def test_scan_can_be_pointed_at_alternate_file_contents():
+    """The introduced-vs-inherited gate works by running the identical walk against
+    HEAD's version of each staged file. An inherited placeholder is somebody else's
+    backlog and must never fail a commit; only what this diff ADDS does."""
+    path = N.ROOT / "Code/GameEngine/Source/__fixture__.cpp"
+    body = "struct Anything {\n\tint m_unk04;\n};\n"
+    tally, todo, conflicts = N.scan([str(path)], False, texts={path: body})
+    # No witness knows `Anything`, so nothing is claimed either way -- what this
+    # asserts is that the override is honoured and no disk read is attempted.
+    assert not conflicts and not todo
+    assert tally["members computed"] == 1

@@ -224,7 +224,7 @@ python3 tools/identity_guard.py || fail "a byte-matching row now names the wrong
 # shrink. Settle the disagreement; never add a line to go green.
 if [ "${#staged_sources[@]}" -ne 0 ]; then
     python3 tools/name_oracle.py --check --staged \
-        || fail "a member name disagrees with the witnessed layout (see above)"
+        || fail "a member name disagrees with the witnessed layout, or this commit adds a placeholder the evidence already names (see above)"
 fi
 
 # A fixed path count still overflows Windows' 32767-code-unit command line
