@@ -727,10 +727,6 @@ WeaponTemplate+0x0|m_prefix|m_clipReloadTime,Code/GameEngine/Source/GameLogic/Ob
 WeaponTemplate+0x0|m_prefix|m_clipReloadTime,Code/GameEngine/Source/GameLogic/Object/WeaponTemplate_getClipReloadTime.cpp,52,1.00,field_names
 WeaponTemplate+0x0|m_templateFields|m_clipReloadTime,Code/GameEngine/Source/GameLogic/AI/AIWaitUntilFinishedFiringState_onEnter.cpp,38,1.00,field_names
 WeaponTemplate+0x0|m_vtable|m_clipReloadTime,Code/GameEngine/Source/GameLogic/Object/WeaponStore_newOverride.cpp,26,1.00,field_names
-WeaponTemplate+0x4e0|m_projectileCollideMask|m_collideMask,Code/GameEngine/Source/GameLogic/Object/Weapon/WeaponTemplate_shouldProjectileCollideWith.cpp,137,1.00,field_names
-WeaponTemplate+0x4f0|m_autoReload|m_reloadType,Code/GameEngine/Source/GameLogic/Object/WeaponSet_chooseBestWeaponForTarget.cpp,113,1.00,field_names
-WeaponTemplate+0x4f8|m_isLeechRangeWeapon|m_leechRangeWeapon,Code/GameEngine/Source/GameLogic/Object/Weapon_preFireWeapon.cpp,89,1.00,field_names
-WeaponTemplate+0x4fb|m_showsAmmoPips|m_isShowsAmmoPips,Code/GameEngine/Source/GameLogic/Object/Weapon/WeaponSet_findAmmoPipShowingWeapon.cpp,8,1.00,field_names
 WeaponTemplateSet+0x0|m_data|m_thingTemplate,Code/GameEngine/Source/GameLogic/ScriptEngine/LuaScriptEngineReset.cpp,65,1.00,layout_witness
 WeaponTemplateSet+0x0|m_data|m_thingTemplate,Code/GameEngine/Source/Common/Thing/WeaponTemplateSetVectorInsertOverflowBody.cpp,23,1.00,layout_witness
 WeaponTemplateSet+0x0|m_head|m_thingTemplate,Code/GameEngine/Source/GameLogic/Object/WeaponSetAutoChoose.cpp,13,1.00,layout_witness

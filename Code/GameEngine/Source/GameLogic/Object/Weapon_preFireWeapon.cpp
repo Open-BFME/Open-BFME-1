@@ -85,7 +85,7 @@ public:
 	unsigned char m_pad05c[0xa4 - 0x5c];
 	FXList *m_fireFX;
 	unsigned char m_pad0a8[0x4f8 - 0xa8];
-	unsigned char m_isLeechRangeWeapon;
+	unsigned char m_leechRangeWeapon;
 	unsigned char m_pad4f9[3];
 	unsigned char m_pad4fc[4];
 	int m_preAttackDelay;
@@ -166,7 +166,7 @@ void Weapon::preFireWeapon(const Object *source, const Object *victim,
 			m_lastFireFrame = TheGameLogic->getFrame() + extra + delay;
 	}
 
-	if (tmpl->m_isLeechRangeWeapon)
+	if (tmpl->m_leechRangeWeapon)
 	{
 		int leech = (int)((float)tmpl->m_preAttackDelay * bonus.m_field[4]);
 		int extra2 = (int)(float)tmpl->m_timingExtra;

@@ -4,7 +4,7 @@ class WeaponTemplate
 {
 public:
 	char m_fields[0x4fb];
-	bool m_showsAmmoPips;
+	bool m_isShowsAmmoPips;
 };
 
 class Weapon
@@ -12,7 +12,7 @@ class Weapon
 public:
 	bool isShowsAmmoPips() const
 	{
-		return m_template->m_showsAmmoPips;
+		return m_template->m_isShowsAmmoPips;
 	}
 
 private:

@@ -133,7 +133,7 @@ public:
 		ObjectID intendedVictimID) const;
 
 	char m_pad00[0x4E0];
-	unsigned m_projectileCollideMask;
+	unsigned m_collideMask;
 };
 
 // ?shouldProjectileCollideWith@WeaponTemplate@@QBE_NPBVObject@@00W4ObjectID@@@Z
@@ -209,7 +209,7 @@ Bool WeaponTemplate::shouldProjectileCollideWith(
 	if (vic->isKindOf(KINDOF_0A))
 		requiredMask |= WEAPON_COLLIDE_0A;
 
-	if ((self->m_projectileCollideMask & requiredMask) == 0)
+	if ((self->m_collideMask & requiredMask) == 0)
 		return false;
 
 	if (vic->isKindOf(KINDOF_LAYERED) && intendedVictimID)

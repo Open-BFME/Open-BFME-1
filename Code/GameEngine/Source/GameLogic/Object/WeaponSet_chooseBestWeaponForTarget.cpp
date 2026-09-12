@@ -109,7 +109,7 @@ public:
 	char m_pad_4d4_from_6c[0x4d4 - 0x6c];
 	int m_antiMask;
 	char m_pad_4d8[0x4f0 - 0x4d8];
-	int m_autoReload;
+	int m_reloadType;
 };
 
 class Weapon
@@ -207,7 +207,7 @@ bool WeaponSet::chooseBestWeaponForTarget(const Object *obj, const Object *victi
 			Weapon *weapon = *slot;
 			if (weapon == 0)
 				continue;
-			if (weapon->getStatus() != OUT_OF_AMMO || weapon->m_template->m_autoReload == 0)
+			if (weapon->getStatus() != OUT_OF_AMMO || weapon->m_template->m_reloadType == 0)
 			{
 				m_curWeapon = (WeaponSlotType)i;
 				return true;
@@ -241,7 +241,7 @@ bool WeaponSet::chooseBestWeaponForTarget(const Object *obj, const Object *victi
 		WeaponStatus status = weapon->getStatus();
 		if (status == OUT_OF_AMMO)
 		{
-			if (weapon->m_template->m_autoReload != 0)
+			if (weapon->m_template->m_reloadType != 0)
 				continue;
 			if (weapon->m_template->m_clipOrLimit >= 0)
 				continue;
