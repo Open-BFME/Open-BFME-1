@@ -2268,6 +2268,7 @@ name,address,notes
 ??0BFMERetailFontLibrary@@QAE@XZ,0x0000FDF3
 ??0BFMETransitionGroup@@QAE@XZ,0x0048AAD0,TransitionGroup constructor called by retail getNewGroup
 ??0BFMEVertexFVFInfo@@QAE@II@Z,0x00964270,VertexBufferClass retail call targets the wrapper around the 0x40-byte FVF bit-layout initializer at 0x00964150
+??0BFMEWaterTrackTextureHandle@@QAE@ABVRva009EBCE0AssetReference@@@Z,0x0090DB70,TU-local ABI constructor alias emitted by W3DWaterTracks.cpp; alternatename targets canonical ??0Gen0090DB70@@QAE@PAX@Z at 0x0090DB70
 ??0BFME_ModuleInfoNuggetCopyLayout@@QAE@ABU0@@Z,0x0004ABEC,retail ILT target for isolated ModuleInfo Nugget copy helper
 ??0BFU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,BoneFXUpdate constructor calls the shared ObjectModule constructor ILT
 ??0BPU_BaseModuleData@@QAE@XZ,0x0000F0A6,BattlePlanUpdateModuleData constructs the shared module-data base through this ILT
@@ -3357,6 +3358,7 @@ name,address,notes
 ??0Rva00244A80Element@@QAE@ABU0@@Z,0x00038334,Open-BFME5 0x002403E0 element copy constructor ILT
 ??0Rva002542F0String@@QAE@ABV0@@Z,0x00887B60,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002542F0 calls; autopin
 ??0Rva002542F0String@@QAE@PBD@Z,0x00888BC0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002542F0 calls; autopin
+??0Rva002BD020AIAttackState@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z,0x0000BF3C,local ABI constructor view for the GiantBirdGuardInnerState attack-state call
 ??0Rva002C11E0StateBase@@QAE@PAXVAsciiString@@@Z,0x000035B2,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002C11E0 calls; autopin
 ??0Rva002C1260StateMachine@@QAE@PAXVAsciiString@@@Z,0x00022F5C,address-derived GiantBird state machine constructor call
 ??0Rva002DC6D0Filter@@QAE@XZ,0x0003747A,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002DC6D0 calls; autopin
@@ -3971,10 +3973,16 @@ name,address,notes
 ??1?$StringBase@D@@AAE@XZ,0x00887940,NetCommandMsg_text.cpp setters call the destructor body directly; the ledger row at 0x0005E490 is its incremental-link thunk
 ??1?$StringBase@G@@AAE@XZ,0x008881D0,the wide destructor body, which folds with releaseBuffer; the ledger row at 0x0005E4E0 is its incremental-link thunk
 ??1?$StringBase@G@@IAE@XZ,0x008881D0,BFME display-name getter UnicodeString forwarding-base destructor
+??1?$SubsystemSlot@VAudioManager@@@@UAE@XZ,0x000223BD,SubsystemSlot<AudioManager> destructor ILT called by authentic scalar-deleting destructor at 0x0006F930
+??1?$SubsystemSlot@VEva@@@@UAE@XZ,0x0003B51B,SubsystemSlot<Eva> destructor ILT called by authentic scalar-deleting destructor at 0x0006F9F0
 ??1?$SubsystemSlot@VGameTextInterface@@@@UAE@XZ,0x0001C274,SubsystemSlot<GameTextInterface> destructor ILT called by authentic scalar-deleting destructor at 0x0006F870
 ??1?$SubsystemSlot@VGlobalData@@@@UAE@XZ,0x0003B96C,SubsystemSlot<GlobalData> destructor ILT called by authentic scalar-deleting destructor at 0x0006F6F0
 ??1?$SubsystemSlot@VGlobalLanguage@@@@UAE@XZ,0x000268AA,SubsystemSlot<GlobalLanguage> destructor ILT called by authentic scalar-deleting destructor at 0x0006F7B0
+??1?$SubsystemSlot@VMultiplayerSettings@@@@UAE@XZ,0x0002C543,SubsystemSlot<MultiplayerSettings> destructor ILT called by authentic scalar-deleting destructor at 0x0006FC30
+??1?$SubsystemSlot@VScienceStore@@@@UAE@XZ,0x0001B18A,SubsystemSlot<ScienceStore> destructor ILT called by authentic scalar-deleting destructor at 0x0006FAB0
 ??1?$SubsystemSlot@VSubsystemLegend@@@@UAE@XZ,0x00002BDF,SubsystemSlot<SubsystemLegend> destructor ILT called by authentic scalar-deleting destructor at 0x0006F630
+??1?$SubsystemSlot@VTerrainTypeCollection@@@@UAE@XZ,0x0002C520,SubsystemSlot<TerrainTypeCollection> destructor ILT called by authentic scalar-deleting destructor at 0x0006FCF0
+??1?$SubsystemSlot@VUpgradeCenter@@@@UAE@XZ,0x0000111D,SubsystemSlot<UpgradeCenter> destructor ILT called by authentic scalar-deleting destructor at 0x0006FB70
 ??1?$VectorClass@VShaderClass@@@@UAE@XZ,0x0092FD10,0x009305B0 wrapper call and immediately adjacent matched 0x009305D0 VectorClass<ShaderClass> constructor; callee clears Vector/VectorMax/IsAllocated
 ??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x0000E68D,HordeSiegeEngineContain list member destructor call target (second COMDAT copy)
 ??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x00013449,ResourceGatheringManager list destructor ILT
@@ -4772,17 +4780,11 @@ name,address,notes
 ??1Gen_dtor_0006f7b0@@UAE@XZ,0x000268AA,gen-dtor class destructor
 ??1Gen_dtor_0006f870@@UAE@XZ,0x0001C274,gen-dtor class destructor
 ??1Gen_dtor_0006f930@@UAE@XZ,0x000223BD,gen-dtor class destructor
-??1?$SubsystemSlot@VAudioManager@@@@UAE@XZ,0x000223BD,SubsystemSlot<AudioManager> destructor ILT called by authentic scalar-deleting destructor at 0x0006F930
 ??1Gen_dtor_0006f9f0@@UAE@XZ,0x0003B51B,gen-dtor class destructor
-??1?$SubsystemSlot@VEva@@@@UAE@XZ,0x0003B51B,SubsystemSlot<Eva> destructor ILT called by authentic scalar-deleting destructor at 0x0006F9F0
 ??1Gen_dtor_0006fab0@@UAE@XZ,0x0001B18A,gen-dtor class destructor
-??1?$SubsystemSlot@VScienceStore@@@@UAE@XZ,0x0001B18A,SubsystemSlot<ScienceStore> destructor ILT called by authentic scalar-deleting destructor at 0x0006FAB0
 ??1Gen_dtor_0006fb70@@UAE@XZ,0x0000111D,gen-dtor class destructor
-??1?$SubsystemSlot@VUpgradeCenter@@@@UAE@XZ,0x0000111D,SubsystemSlot<UpgradeCenter> destructor ILT called by authentic scalar-deleting destructor at 0x0006FB70
 ??1Gen_dtor_0006fc30@@UAE@XZ,0x0002C543,gen-dtor class destructor
-??1?$SubsystemSlot@VMultiplayerSettings@@@@UAE@XZ,0x0002C543,SubsystemSlot<MultiplayerSettings> destructor ILT called by authentic scalar-deleting destructor at 0x0006FC30
 ??1Gen_dtor_0006fcf0@@UAE@XZ,0x0002C520,gen-dtor class destructor
-??1?$SubsystemSlot@VTerrainTypeCollection@@@@UAE@XZ,0x0002C520,SubsystemSlot<TerrainTypeCollection> destructor ILT called by authentic scalar-deleting destructor at 0x0006FCF0
 ??1Gen_dtor_0006fdb0@@UAE@XZ,0x00045C50,gen-dtor class destructor
 ??1?$SubsystemSlot@VTerrainRoadCollection@@@@UAE@XZ,0x00045C50,SubsystemSlot<TerrainRoadCollection> destructor ILT called by authentic scalar-deleting destructor at 0x0006FDB0
 ??1Gen_dtor_0006fe70@@UAE@XZ,0x000220E3,gen-dtor class destructor
@@ -6708,13 +6710,14 @@ name,address,notes
 ??1Gen_dtorv_005bf880@@UAE@XZ,0x00041D5D,gen-dtor class destructor
 ??1Gen_dtorv_005bf9b0@@UAE@XZ,0x0001DF48,gen-dtor class destructor
 ??1Gen_dtorv_005bfaf0@@UAE@XZ,0x0000B04B,gen-dtor class destructor
-??1Gen_dtorv_005bfd40@@UAE@XZ,0x0002B751,gen-dtor class destructor
 ??1Gen_dtorv_005bfc20@@UAE@XZ,0x0001DA02,gen-dtor class destructor
+??1Gen_dtorv_005bfd40@@UAE@XZ,0x0002B751,gen-dtor class destructor
 ??1Gen_dtorv_005bfe70@@UAE@XZ,0x00022C64,gen-dtor class destructor
 ??1Gen_dtorv_005c1b80@@UAE@XZ,0x000081C5,gen-dtor class destructor
 ??1Gen_dtorv_005d5830@@UAE@XZ,0x00013101,gen-dtor class destructor
-??1Gen_dtorv_005d5b60@@UAE@XZ,0x0002F03B,gen-dtor class destructor
 ??1Gen_dtorv_005d59e0@@UAE@XZ,0x00041F56,gen-dtor class destructor
+??1Gen_dtorv_005d5b60@@UAE@XZ,0x0002F03B,gen-dtor class destructor
+??1Gen_dtorv_005d60b0@@UAE@XZ,0x0001DCA0,gen-dtor class destructor
 ??1Gen_dtorv_005d61d0@@UAE@XZ,0x00028E9D,gen-dtor class destructor
 ??1Gen_dtorv_005d6380@@UAE@XZ,0x00029BEA,gen-dtor class destructor
 ??1Gen_dtorv_005d64f0@@UAE@XZ,0x0001ADB6,gen-dtor class destructor
@@ -9406,6 +9409,7 @@ name,address,notes
 ??1SpyVisionUpdateModuleDataMemberG@@QAE@XZ,0x00007FB8,Open-BFME5 pin
 ??1SpyVisionUpdateModuleDataMemberH@@QAE@XZ,0x00014DF3,Open-BFME5 pin
 ??1State@@UAE@XZ,0x00016725,AIInternalMoveToState destructor base call through ILT to State destructor
+??1StateMachine@@UAE@XZ,0x00031D5E,ILT to matched StateMachine scalar destructor at 0x000A1130; retail Dozer constructor unwind target decoded from 0x00C133C0
 ??1StealthDetectorUpdateModuleDataBase@@UAE@XZ,0x00026F35,Open-BFME5 pin
 ??1StealthDetectorUpdateModuleDataMemberA@@QAE@XZ,0x00026F35,Open-BFME5 pin
 ??1StealthDetectorUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
@@ -9943,17 +9947,18 @@ name,address,notes
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
 ??_7?$SimpleDynVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D010,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
 ??_7?$SimpleVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D004,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
+??_7?$SubsystemSlot@VAudioManager@@@@6B@,0x01075D9C,vtable installed by exact SubsystemSlot<AudioManager> constructor at 0x0006F910; slot zero routes through ILT 0x00001BA4 to scalar-deleting destructor 0x0006F930
+??_7?$SubsystemSlot@VEva@@@@6B@,0x01075DA0,vtable installed by exact SubsystemSlot<Eva> constructor at 0x0006F9D0; slot zero routes through ILT 0x0000C13F to scalar-deleting destructor 0x0006F9F0
 ??_7?$SubsystemSlot@VGameTextInterface@@@@6B@,0x01075D98,vtable installed by exact SubsystemSlot<GameTextInterface> constructor at 0x0006F850; slot zero routes through ILT 0x00034400 to scalar-deleting destructor 0x0006F870
 ??_7?$SubsystemSlot@VGlobalData@@@@6B@,0x01075D90,vtable installed by exact SubsystemSlot<GlobalData> constructor at 0x0006F6D0; slot zero routes through ILT 0x0000C72F to scalar-deleting destructor 0x0006F6F0
 ??_7?$SubsystemSlot@VGlobalLanguage@@@@6B@,0x01075D94,vtable installed by exact SubsystemSlot<GlobalLanguage> constructor at 0x0006F790; slot zero routes through ILT 0x00015726 to scalar-deleting destructor 0x0006F7B0
-??_7?$SubsystemSlot@VAudioManager@@@@6B@,0x01075D9C,vtable installed by exact SubsystemSlot<AudioManager> constructor at 0x0006F910; slot zero routes through ILT 0x00001BA4 to scalar-deleting destructor 0x0006F930
-??_7?$SubsystemSlot@VEva@@@@6B@,0x01075DA0,vtable installed by exact SubsystemSlot<Eva> constructor at 0x0006F9D0; slot zero routes through ILT 0x0000C13F to scalar-deleting destructor 0x0006F9F0
-??_7?$SubsystemSlot@VScienceStore@@@@6B@,0x01075DA4,vtable installed by exact SubsystemSlot<ScienceStore> constructor at 0x0006FA90; slot zero routes through ILT 0x0000B52D to scalar-deleting destructor 0x0006FAB0
-??_7?$SubsystemSlot@VUpgradeCenter@@@@6B@,0x01075DA8,vtable installed by exact SubsystemSlot<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
 ??_7?$SubsystemSlot@VMultiplayerSettings@@@@6B@,0x01075DAC,vtable installed by exact SubsystemSlot<MultiplayerSettings> constructor at 0x0006FC10; slot zero routes through ILT 0x00018F48 to scalar-deleting destructor 0x0006FC30
 ??_7?$SubsystemSlot@VTerrainTypeCollection@@@@6B@,0x01075DB0,vtable installed by exact SubsystemSlot<TerrainTypeCollection> constructor at 0x0006FCD0; slot zero routes through ILT 0x0000F26D to scalar-deleting destructor 0x0006FCF0
 ??_7?$SubsystemSlot@VTerrainRoadCollection@@@@6B@,0x01075DB4,vtable installed by exact SubsystemSlot<TerrainRoadCollection> constructor at 0x0006FD90; slot zero routes through ILT 0x0001F280 to scalar-deleting destructor 0x0006FDB0
+??_7?$SubsystemSlot@VScienceStore@@@@6B@,0x01075DA4,vtable installed by exact SubsystemSlot<ScienceStore> constructor at 0x0006FA90; slot zero routes through ILT 0x0000B52D to scalar-deleting destructor 0x0006FAB0
 ??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x01075D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
+??_7?$SubsystemSlot@VTerrainTypeCollection@@@@6B@,0x01075DB0,vtable installed by exact SubsystemSlot<TerrainTypeCollection> constructor at 0x0006FCD0; slot zero routes through ILT 0x0000F26D to scalar-deleting destructor 0x0006FCF0
+??_7?$SubsystemSlot@VUpgradeCenter@@@@6B@,0x01075DA8,vtable installed by exact SubsystemSlot<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
 ??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
 ??_7?$basic_ifstream@DV?$char_traits@D@_STL@@@_STL@@6B@,0x0112FC28,STLport static library basic_ifstream<char> vftable
 ??_7?$basic_ifstream@GV?$char_traits@G@_STL@@@_STL@@6B@,0x0112FC40,STLport static library basic_ifstream<unsigned short> vftable
@@ -9980,6 +9985,7 @@ name,address,notes
 ??_7?$moneypunct@G$0A@@_STL@@6B@,0x00D2FB60,retail STLport 4.5.3 moneypunct wide false vtable with matching RTTI descriptor
 ??_7?$numpunct@D@_STL@@6B@,0x00D2EAFC,retail STLport 4.5.3 narrow numpunct vtable identified by its virtual method signatures
 ??_7?$numpunct@G@_STL@@6B@,0x00D2EB18,retail STLport 4.5.3 wide numpunct vtable identified by its virtual method signatures
+??_7AIAttackSwoopThenIdleStateMachine@@6B@,0x010C7460,outer this preserved in ESI at 006BF49A and vptr installed at 006BF4D3; matched factories 002BFA80 and 002C0370 name class and ctor ILT25095
 ??_7AITunnelNetworkGuardState@@6B@,0x00C982B8,vptr stored by ??0AITunnelNetworkGuardState 0x001717B0 right after the State base ctor
 ??_7AODHordeContainModuleDataVtbl@@6B@,0x01089960,AODHordeContain ModuleData vtbl
 ??_7AnimalAIUpdateModuleDataVtbl@@6B@,0x010899F0,AnimalAIUpdate vtbl
@@ -10084,6 +10090,7 @@ name,address,notes
 ??_7HighlanderBody@@6BBehaviorModuleInterface@@@,0x010A86C0,secondary vtable at this+0x0C
 ??_7HighlanderBody@@6BBodyModuleInterface@@@,0x010A85F0,secondary vtable at this+0x10
 ??_7HordeContainModuleDataBase@@6B@,0x01073744,Open-BFME5 HordeContain base vtable
+??_7HorseHordeContainModuleData@@6B@,0x00CAF9B0,Horse factory 0x00115DE0 allocates 0x2F4 and shared ctor 0x002472D0 installs this vtable
 ??_7IMEManager@@6B@,0x010F9978,derived vtable installed by ctor48D200 and restored by destructor48D8B0; campaign=luna36h-20260907;lane=mid
 ??_7IMEManagerInterface@@6B@,0x010F98F0,interface vtable restored immediately before SubsystemInterface destructor in48D8B0; campaign=luna36h-20260907;lane=mid
 ??_7ImmortalBody@@6BBehaviorModule@@@,0x010A8980,primary vtable installed by the named constructor and destructor
@@ -12917,6 +12924,7 @@ name,address,notes
 ?_M_initialize_map@?$_Deque_base@HV?$allocator@H@_STL@@@_STL@@IAEXI@Z,0x00089190,gen-tgrid shared callee
 ?_M_initialize_map@?$_Deque_base@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@IAEXI@Z,0x008FA150,rel32 pin for exact-ambiguous landing
 ?_M_initialize_map@?$_Deque_base@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@IAEXI@Z,0x009ED640,resweep callee back-solved
+?_M_initialize_map@?$_Deque_base@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXI@Z,0x0002694A,ICF helper route for PeerThread 0x00647F90: pointer deque init is the verified 203-byte 4-byte ICF body shared with 0x003546E0/0x003684C0; retail call encodes j_0002694a
 ?_M_initialize_map@?$_Deque_base@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXI@Z,0x003546E0,gen-tgrid shared callee
 ?_M_initialize_map@?$_Deque_base@UGen_t_00356770_p12cd@@V?$allocator@UGen_t_00356770_p12cd@@@_STL@@@_STL@@IAEXI@Z,0x003546E0,gen-tgrid payload member
 ?_M_initialize_map@?$_Deque_base@UGen_t_003567d0_p12cd@@V?$allocator@UGen_t_003567d0_p12cd@@@_STL@@@_STL@@IAEXI@Z,0x00354890,gen-tgrid payload member
@@ -13655,6 +13663,7 @@ name,address,notes
 ?_M_push_back_aux_v@?$deque@PAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@IAEXABQAVMapObject@@@Z,0x00089CE0,Named WorldHeightMap stack/deque push89D60 tail89D80 via2FF1D proves this pointer helper body; raw101B loads4B payload through reference and expands128Bbuffer; replaces unsubstantiated pinharvest8553 to35AEC0; target is body not thunk
 ?_M_push_back_aux_v@?$deque@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@IAEXABQAVPartitionCell@@@Z,0x0002FF1D,PartitionManager's queue<PartitionCell*> push_back tail-jumps here; ILT to the 101-byte body 0x00089CE0. The old 0x00008553 (body 0x0035AEC0) is a different copy of the helper and no call site encodes it for this instantiation
 ?_M_push_back_aux_v@?$deque@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@IAEXABQAVSightingInfo@@@Z,0x0002FF1D,PartitionManager's deque<SightingInfo*> push_back tail-jumps here; ILT to the 101-byte body 0x00089CE0. The old 0x00008553 (body 0x0035AEC0) is a different copy of the helper and no call site encodes it for this instantiation
+?_M_push_back_aux_v@?$deque@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXABQAX@Z,0x00036C82,ICF helper route for PeerThread 0x00647F90: pointer deque push body 0x00369710 is the verified 101-byte retail helper; call encodes j_00036c82
 ?_M_push_back_aux_v@?$deque@UGen_t_00595870_p12cd@@V?$allocator@UGen_t_00595870_p12cd@@@_STL@@@_STL@@IAEXABUGen_t_00595870_p12cd@@@Z,0x00594220,gen-tgrid payload member
 ?_M_push_back_aux_v@?$deque@UGen_t_008fbc70_p8cd@@V?$allocator@UGen_t_008fbc70_p8cd@@@_STL@@@_STL@@IAEXABUGen_t_008fbc70_p8cd@@@Z,0x008FB570,gen-tgrid payload member
 ?_M_push_back_aux_v@?$deque@VBFMENetworkQueueItem1@@V?$allocator@VBFMENetworkQueueItem1@@@_STL@@@_STL@@IAEXABVBFMENetworkQueueItem1@@@Z,0x0001B018,BFMENetwork callback deque growth-helper ILT
@@ -77497,6 +77506,7 @@ name,address,notes
 ?bfmeStepD4F90@Pathfinder@@QAE_NPAXPAVPathfindCell@@@Z,0x0002B9E0,ILT to the body at 0x003D4F90; address-derived name; the trailing per-cell validity test of the examine step at 0x003E5820
 ?bfmeStepE05B0@Pathfinder@@QAE_NPAVObject@@PAUICoord2D@@@Z,0x0004A980,ILT to the body at 0x003E05B0; address-derived name; the no-from-cell form of the same movement test; called by the examine step at 0x003E5820
 ?bfmeStepE0930@Pathfinder@@QAE_NPAVObject@@PAUICoord2D@@1@Z,0x00024299,ILT to the body at 0x003E0930; address-derived name; the from-cell form of the per-cell movement test taking the current and previous cell positions; called by the examine step at 0x003E5820
+?bfmeStepEN@BfmeHostEN@@QAEXXZ,0x00046D03,route=0x005EF250; direct call in 351-byte color update; thunk targets existing matched keyframe velocity body
 ?bfmeStepFFF@BfmeThingFFF@@QAEXPAUBfmeSubFFF@@PAX@Z,0x00016C3E,pin
 ?bfmeStepJW@@YAXPAX@Z,0x009A85F0,pin step for BfmeConv2080
 ?bfmeStepRZ@BfmeThingRZ@@QAEXPAX@Z,0x00029311,pin
@@ -77564,7 +77574,6 @@ name,address,notes
 ?bfmeSubmit1283@BfmeSubmitter1283@@QAEXHHHHHHHPAMHHHH@Z,0x008BEBF0,address-derived twelve-argument submitter; argument shape decoded from the 0x008BEE50 retail call site
 ?bfmeSubmit1285@BfmeRouteManager1285@@QAEXPAXPAUBfmeNode1285@@HH@Z,0x008A0960,address-derived route submission called by the 0x008BB570 retail body
 ?bfmeSubmitBL@BfmeSinkBL@@QAEXVAsciiStringBL@@HPAVBfmeBlobBL@@111@Z,0x00039333,Open-BFME5 the submit the report send at 0x0042B370 makes
-?rva004498d0@Rva004488B0FourBlockRecord@@QAEXVAsciiStringBL@@H@Z,0x00043603,address-derived typed alias for the existing ILT that reaches the 0x004498D0 helper
 ?bfmeSubmitBM@BfmeSinkBM@@QAEXVAsciiStringBM@@HPAVBfmeBlobBM@@111@Z,0x00039333,Open-BFME5 the submit the report send at 0x0042B3D0 makes
 ?bfmeSubmitEVA@Rva00893030Manager@@QAEXPAVBfmeStrVKI@@@Z,0x00895D30,pin manager submit for BfmeConv1992
 ?bfmeSwapESO@BfmeSubAESO@@QAEXAAV1@@Z,0x00040372,pin
@@ -79547,6 +79556,7 @@ name,address,notes
 ?g_Rva009B3EC0Blocks@@3PAPAXA,0x012D8558,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009B3EC0 calls; autopin
 ?g_Rva0107301CEmptyString@@3QBDB,0x0107301C,empty AsciiString literal passed by the constructor at 0x00770E70
 ?g_Rva0109B558StateSecondaryVTable@@3HA,0x0109B558,Direct retail shared secondary state table at VA 0x0109B558 written at this+0x24 by Inner/Outer/Attack; address-qualified identity distinct from primary Inner 0x0109B560
+?g_Rva012F340C@@3PCVDrawable@@C,0x012F340C,Address-derived drawable selection cache read at switchToContext0049E780+4D and written at+72; full1254B real C++ body witnesses data VA
 ?g_Va0112E8B0@@3MA,0x0112E8B0,float global loaded by 0x006AE250
 ?g_Va012F8064@@3HA,0x012F8064,pin stale-stamp dispatcher global
 ?g_Va01336E50@@3V?@D@@A,0x01336E50,AsciiString::TheEmptyString copied by 0x006AEE00
@@ -79794,6 +79804,7 @@ name,address,notes
 ?g_bfmeCVIW@@3PAXA,0x00F0A624,pin
 ?g_bfmeCfgUKD@@3PAUBfmeCfgUKD@@A,0x00EED524,pin
 ?g_bfmeCh1035@@3DA,0x00F4ECC8,pin
+?g_bfmeChatColor@@3HA,0x00EB73F8,BFME disconnect chat listbox color; retail VA 0x012B73F8
 ?g_bfmeClientETE@@3PAVBfmeClientETE@@A,0x00EF1464,pin
 ?g_bfmeClock977@@3PAVBfmeClock977@@A,0x00EF1B40,pin
 ?g_bfmeClock983@@3PAVBfmeClock983@@A,0x00EF1B40,pin
@@ -81181,6 +81192,7 @@ name,address,notes
 ?getAddresses@IPEnumeration@@QAEPAVEnumeratedIP@@XZ,0x00624C80,retail body reached through the ILT at 0x00001E1A from OptionPreferences::getLANIPAddress
 ?getAdjustedVisionRangeForObject@AI@@SAMPBVObject@@H@Z,0x0002481B,pinharvest x6 (thunk)
 ?getAdjustedVisionRangeForObject@AIAdjustedVisionRangeForObjectShim@@SAMPBVObject@@H@Z,0x0014A620,AI incremental-link static thunk target through a TU-local forwarding shim
+?getAdjustedVisionRangeForObject@Rva002BD020AI@@SAMPBVObject@@H@Z,0x0002481B,local ABI view of the AI vision-range thunk used by GiantBirdGuardInnerState
 ?getAdjustsDestination@AIInternalMoveToState@@IBE_NXZ,0x00010109,ILT to the assigned 0x001724B0 body called by AIInternalMoveToState computePath at 0x001725B0
 ?getAimPosition@WeaponTemplate@@QAEPAUCoord3D@@PAU2@PBVObject@@1H@Z,0x00001C17,ILT 0x00001C17 -> 0x001E65C0; 4-arg aim/center helper from BezierProjectile fire-at
 ?getAmmoPipShowingInfo@Object@@QBE_NAAH0@Z,0x0001858E,Open-BFME5 canonical Object ammo-pip query ILT thunk to body 0x001BE2C0; surviving Object.cpp implementation and retail Object WeaponSet offset 0x264
@@ -83259,6 +83271,7 @@ name,address,notes
 ?j000454d0@Rva00285300Base@@QAEXPAVObject@@@Z,0x000454D0,thiscall pin over matched forwarding thunk for Rva00285300::update sibling call
 ?j_000030bc@?$vector@PAVSoundKeyPair@@V?$allocator@PAVSoundKeyPair@@@_STL@@@_STL@@IAEXPAPAVSoundKeyPair@@ABQAV3@ABU__true_type@2@I_N@Z,0x000030BC,LargeGroupAudioMap SoundKeyPair pointer vector overflow call uses retail ILT 0x000030BC
 ?j_0000353f@Glo012F1028Type@@QAEHXZ,0x0000353F,adjustment call emitted through Glo012F1028Type in BfmePlayerMapState::bfmeNewMap
+?j_00004f8e@?$vector@PBVUpgradeTemplate@@V?$allocator@PBVUpgradeTemplate@@@_STL@@@_STL@@IAEXPAPBVUpgradeTemplate@@ABQBV3@ABU__true_type@2@I_N@Z,0x00004F8E,STLport pointer vector overflow ILT for ExperienceLevel upgrades
 ?j_000055e7@@YAXXZ,0x000055E7,portrait-entry lookup ILT called by the adjacent Rva000FA830 body
 ?j_00007e96@?$vector@PAVRva003C2280Item@@V?$allocator@PAVRva003C2280Item@@@_STL@@@_STL@@IAEXPAPAVRva003C2280Item@@ABQAV3@ABU__true_type@2@I_N@Z,0x00007E96,STLport pointer vector overflow ILT for Rva003C2280Owner
 ?j_00008053@Glo012F1024Item@@QAEXXZ,0x00008053,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
@@ -83284,6 +83297,7 @@ name,address,notes
 ?j_0002d3e4@Glo012F1024Item@@QAEXXZ,0x0002D3E4,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_0002e5a5@@YAXXZ,0x00042F78,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00462DE0 calls; autopin
 ?j_0002eeec@Glo012F1024Item@@QAEXXZ,0x0002EEEC,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
+?j_0002f95a@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z,0x0002F95A,UpgradeCenter::findUpgrade call uses the retail ILT at 0x0002F95A
 ?j_0003152a@Glo012F1024Item@@QAEXXZ,0x0003152A,direct retail thunk called by ?bfmeEnter@Glo012F1024Item@@QAEXXZ
 ?j_000327a4@@YAXPAVGameWindow@@PAVWinInstanceData@@PAUPushButtonData@@@Z,0x000327A4,W3DGadgetPushButtonDraw +0x02BA target call; local typed ABI declaration for existing incremental-link thunk; raw thunk routes to retail 0x00794B70 number-draw body
 ?j_000359db@@YAXXZ,0x000359DB
@@ -84451,6 +84465,7 @@ name,address,notes
 ?rva003C8340@LivingWorldRegionManager@@QAEXPAVLivingWorldRegion@@@Z,0x003C8340,address-derived typed LivingWorldRegionManager member body whose matched layout consumes the selected-region pointer at this+0x08; campaign=luna36h-20260907;lane=expand02;model=gpt-5.6-sol-ultra
 ?rva003D2B80ReleaseRaw@@YAXXZ,0x00881EB0,deallocation call used by the four-child element callback
 ?rva00411DD0@Drawable@@QAEX_N@Z,0x00411DD0,address-derived Drawable Bool member called through the removed object's vslot +0x28 result
+?rva004498d0@Rva004488B0FourBlockRecord@@QAEXVAsciiStringBL@@H@Z,0x00043603,address-derived typed alias for the existing ILT that reaches the 0x004498D0 helper
 ?rva0046ef50@@YAXXZ,0x00018E8F,Open-BFME5 ILT thunk b_0046ef50
 ?rva0048B390@TransitionGroup@@QAEXPAX@Z,0x0048B390,address-derived TransitionGroup list-copy helper body; the verified existing ILT 0x0000BE97 is the compiler resolver candidate for the 0x0048B690 calls; campaign=luna36h-20260907;lane=files
 ?rva004CAF70@@YAXXZ,0x004CAF70,OnAccept null-global fallback actual body
@@ -87300,14 +87315,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-??_7AIAttackSwoopThenIdleStateMachine@@6B@,0x010C7460,outer this preserved in ESI at 006BF49A and vptr installed at 006BF4D3; matched factories 002BFA80 and 002C0370 name class and ctor ILT25095
-??_7HorseHordeContainModuleData@@6B@,0x00CAF9B0,Horse factory 0x00115DE0 allocates 0x2F4 and shared ctor 0x002472D0 installs this vtable
-??0BFMEWaterTrackTextureHandle@@QAE@ABVRva009EBCE0AssetReference@@@Z,0x0090DB70,TU-local ABI constructor alias emitted by W3DWaterTracks.cpp; alternatename targets canonical ??0Gen0090DB70@@QAE@PAX@Z at 0x0090DB70
-?g_Rva012F340C@@3PCVDrawable@@C,0x012F340C,Address-derived drawable selection cache read at switchToContext0049E780+4D and written at+72; full1254B real C++ body witnesses data VA
-??1StateMachine@@UAE@XZ,0x00031D5E,ILT to matched StateMachine scalar destructor at 0x000A1130; retail Dozer constructor unwind target decoded from 0x00C133C0
-?_M_initialize_map@?$_Deque_base@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXI@Z,0x0002694A,ICF helper route for PeerThread 0x00647F90: pointer deque init is the verified 203-byte 4-byte ICF body shared with 0x003546E0/0x003684C0; retail call encodes j_0002694a
-?_M_push_back_aux_v@?$deque@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXABQAX@Z,0x00036C82,ICF helper route for PeerThread 0x00647F90: pointer deque push body 0x00369710 is the verified 101-byte retail helper; call encodes j_00036c82
-?g_bfmeChatColor@@3HA,0x00EB73F8,BFME disconnect chat listbox color; retail VA 0x012B73F8
-?j_0002f95a@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z,0x0002F95A,UpgradeCenter::findUpgrade call uses the retail ILT at 0x0002F95A
-?j_00004f8e@?$vector@PBVUpgradeTemplate@@V?$allocator@PBVUpgradeTemplate@@@_STL@@@_STL@@IAEXPAPBVUpgradeTemplate@@ABQBV3@ABU__true_type@2@I_N@Z,0x00004F8E,STLport pointer vector overflow ILT for ExperienceLevel upgrades
-?bfmeStepEN@BfmeHostEN@@QAEXXZ,0x00046D03,route=0x005EF250; direct call in 351-byte color update; thunk targets existing matched keyframe velocity body
