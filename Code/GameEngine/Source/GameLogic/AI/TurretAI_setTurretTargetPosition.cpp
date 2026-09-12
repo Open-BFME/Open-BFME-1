@@ -110,7 +110,14 @@ public:
 class TurretAIData
 {
 public:
-	char m_pad[0x3c];
+	float m_turnRate;
+	float m_pitchRate;
+	float m_naturalTurretAngle;
+	float m_naturalTurretPitch;
+	char m_pad10[0x20];
+	float m_firePitch;
+	float m_minPitch;
+	float m_groundUnitPitch;
 	int m_turretWeaponSlots;
 };
 
