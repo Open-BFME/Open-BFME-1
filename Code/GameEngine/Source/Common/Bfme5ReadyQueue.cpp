@@ -87,7 +87,7 @@ public:
 	SubsystemInterface(void);
 	virtual ~SubsystemInterface();
 
-	int m_bfmeSubsystem04;
+	int m_name;
 };
 
 class Bfme5TripleSubsystem : public SubsystemInterface

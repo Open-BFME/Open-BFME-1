@@ -120,7 +120,7 @@ public:
 	virtual ~SubsystemInterface();                             ///< matched 0x009A1A40
 
 private:
-	unsigned int m_pad04;
+	unsigned int m_name;
 };
 
 class BfmeSlotVNH

@@ -169,11 +169,11 @@ public:
 	void setDisabledUntil(DisabledType type, unsigned int frame);
 
 	unsigned char m_pad00[0x90];
-	unsigned int m_flags90;
+	unsigned int m_status;
 	unsigned char m_pad94[0x84];
 	unsigned int m_flags118;
 	unsigned char m_pad11c[0x10];
-	unsigned int m_flags12c;
+	unsigned int m_shroudRange;
 	unsigned char m_pad130[0xd0];
 	Rva00291F20Vt200 *m_slot200;
 	Rva00291F20Vt204 *m_slot204;
@@ -372,7 +372,7 @@ unsigned int Rva00291F20Self::Rva00291F20()
 	if (obj->m_flags344 & 1)
 		return 0x3fffffff;
 
-	bool ready = m_frame14 <= TheBfmeGameLogic->m_frame && (obj->m_flags90 & 0x400) == 0;
+	bool ready = m_frame14 <= TheBfmeGameLogic->m_frame && (obj->m_status & 0x400) == 0;
 	if (m_flag1d)
 		ready = true;
 
@@ -422,7 +422,7 @@ unsigned int Rva00291F20Self::Rva00291F20()
 		m_flag1e = true;
 	}
 
-	if (obj->m_flags90 & 0x400)
+	if (obj->m_status & 0x400)
 		ok = false;
 	if (m_flag1f)
 		ok = true;
@@ -432,7 +432,7 @@ unsigned int Rva00291F20Self::Rva00291F20()
 	if (!ok)
 		return 1;
 
-	if ((obj->m_flags12c & 0x8000) == 0 && !obj->testStatus(0xa))
+	if ((obj->m_shroudRange & 0x8000) == 0 && !obj->testStatus(0xa))
 	{
 		((BfmeItemRY *)obj)->bfmeDoRY((void *)0x11a, (void *)md->m_delay20);
 		obj->setDisabledUntil((DisabledType)4, TheBfmeGameLogic->m_frame + md->m_delay20);

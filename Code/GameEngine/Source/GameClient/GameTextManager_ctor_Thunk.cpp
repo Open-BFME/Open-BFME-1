@@ -21,7 +21,7 @@ public:
 	virtual ~SubsystemInterface();
 
 private:
-	unsigned int m_unknown;
+	unsigned int m_name;
 };
 
 class GameTextInterface : public SubsystemInterface

@@ -10,7 +10,7 @@ typedef float Real;
 struct EvaCheckInfo
 {
 	unsigned m_a;
-	unsigned m_b;
+	unsigned m_framesToExpire;
 	unsigned m_c;
 };
 

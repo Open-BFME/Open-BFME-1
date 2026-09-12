@@ -10,7 +10,7 @@ typedef bool Bool;
 class AsciiString
 {
 public:
-	unsigned int m_value;
+	unsigned int m_data;
 };
 
 class ParticleSystemTemplate {};

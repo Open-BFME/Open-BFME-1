@@ -12,8 +12,8 @@
 class AsciiString
 {
 public:
-	AsciiString( const char *text ) : m_string( text ) {}
-	StringBase<char> m_string;
+	AsciiString( const char *text ) : m_data( text ) {}
+	StringBase<char> m_data;
 };
 
 class StateMachine;

@@ -24,9 +24,9 @@ public:
 		m_naturalRallyPoint = 0;
 		m_e = 0;
 		m_f = 0;
-		m_g = 0;
-		m_h = 0;
-		m_i = 0;
+		m_exitDelayData = 0;
+		m_allowAirborneCreationData = 0;
+		m_initialBurst = 0;
 		m_j = 0;
 		m_k = 0;
 		m_l = 0;
@@ -40,12 +40,12 @@ private:
 	unsigned int m_naturalRallyPoint;
 	unsigned int m_e;
 	unsigned int m_f;
-	unsigned int m_g;
-	unsigned char m_h;
+	unsigned int m_exitDelayData;
+	unsigned char m_allowAirborneCreationData;
 	unsigned char m_pad1;
 	unsigned char m_pad2;
 	unsigned char m_pad3;
-	unsigned int m_i;
+	unsigned int m_initialBurst;
 	unsigned int m_j;
 	unsigned char m_k;
 	unsigned char m_l;

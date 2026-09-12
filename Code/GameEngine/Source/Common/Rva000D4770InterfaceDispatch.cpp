@@ -41,7 +41,7 @@ private:
 	char m_padding[0x74];
 
 public:
-	void *m_value;
+	void *m_id;
 };
 
 void __stdcall rva000D4770InterfaceDispatch(Thing *thing, Object *object)
@@ -54,7 +54,7 @@ void __stdcall rva000D4770InterfaceDispatch(Thing *thing, Object *object)
 	if (completion == 0 || production == 0)
 		return;
 
-	production->apply(object->m_value);
+	production->apply(object->m_id);
 	completion->begin(1);
 	completion->finish(1);
 }

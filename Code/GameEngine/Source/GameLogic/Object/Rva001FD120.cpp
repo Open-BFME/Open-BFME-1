@@ -10,7 +10,7 @@ class Overridable
 public:
     const Overridable *getFinalOverride() const;
     void *m_vtable;
-    Overridable *m_field04;
+    Overridable *m_nextOverride;
 };
 
 class BFMEObjectLayerQuery
@@ -70,9 +70,9 @@ void Rva001FD120Owner::run(Object *candidate, void *, void *)
 	const Rva001FD120Template *template_ = candidate->m_template;
 	if (template_ != 0)
 	{
-		if (template_->m_field04 != 0)
+		if (template_->m_nextOverride != 0)
 			template_ = static_cast<const Rva001FD120Template *>(
-                template_->m_field04->getFinalOverride());
+                template_->m_nextOverride->getFinalOverride());
 	}
 	if (*(const unsigned char *)((const char *)template_ + 0xC8) & 4)
 		return;

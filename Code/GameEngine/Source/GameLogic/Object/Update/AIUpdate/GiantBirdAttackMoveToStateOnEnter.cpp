@@ -183,7 +183,7 @@ public:
 	unsigned char m_unreconstructed124[0xe0];
 	AIUpdateInterface *m_aiUpdate;
 	unsigned char m_unreconstructed208[0x13c];
-	unsigned char m_flags344;
+	unsigned char m_privateStatus;
 
 	void notifyModelConditionChanged();
 };
@@ -300,7 +300,7 @@ StateReturnType GiantBirdNormalFlightState::onEnter()
 		return (StateReturnType)-2;
 	else
 	{
-		if (owner->m_flags344 & 1)
+		if (owner->m_privateStatus & 1)
 			return (StateReturnType)-2;
 		ai->chooseLocomotorSet(0);
 		Locomotor *locomotor = ai->m_curLocomotor;

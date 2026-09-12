@@ -57,7 +57,7 @@ protected:
 private:
     char m_unreconstructed_00[0x4c];
     Bool m_bfmeState4c;
-    Bool m_bfmeState4d;
+    Bool m_pendingPop;
     char m_unreconstructed_4e[0x06];
     AsciiString m_pendingPushName;
     char m_unreconstructed_58[0x04];
@@ -76,9 +76,9 @@ void Shell::shutdownComplete(WindowLayout *, Bool impendingPush)
         m_bfmeState4c = false;
         m_pendingPushName.set("", 0);
     }
-    else if (m_bfmeState4d)
+    else if (m_pendingPop)
     {
         doPop(impendingPush);
-        m_bfmeState4d = false;
+        m_pendingPop = false;
     }
 }

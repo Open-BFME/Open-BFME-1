@@ -51,9 +51,9 @@
 class AsciiString
 {
 public:
-	AsciiString( const char *text ) : m_string( text ) {}
+	AsciiString( const char *text ) : m_data( text ) {}
 
-	StringBase<char> m_string;
+	StringBase<char> m_data;
 };
 
 class Rva000A19E0StateBase

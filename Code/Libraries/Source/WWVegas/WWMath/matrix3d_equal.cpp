@@ -3,13 +3,13 @@
 class Vector4
 {
 public:
-	const float &operator[](int index) const { return (&m_x)[index]; }
+	const float &operator[](int index) const { return (&X)[index]; }
 
 private:
-	float m_x;
-	float m_y;
-	float m_z;
-	float m_w;
+	float X;
+	float Y;
+	float Z;
+	float W;
 };
 
 class Matrix3D

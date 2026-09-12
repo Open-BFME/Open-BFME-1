@@ -225,7 +225,7 @@ protected:
 private:
     int m_padding0;
     int m_padding4;
-    int m_padding8;
+    int m_crcInfo;
     FILE *m_file;
     AsciiString m_fileName;
     char m_padding14[0x29c - 0x14];

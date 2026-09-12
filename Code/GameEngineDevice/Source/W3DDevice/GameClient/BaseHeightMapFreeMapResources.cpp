@@ -35,7 +35,7 @@ private:
 	BaseHeightMapInlineRef *m_ref2fd8;
 	BaseHeightMapInlineRef *m_ref2fdc;
 	char m_pad1[0x2ff4 - 0x2fe0];
-	BaseHeightMapInlineRef *m_ref2ff4;
+	BaseHeightMapInlineRef *m_map;
 	char m_pad2[0x304c - 0x2ff8];
 	BaseHeightMapInlineRef *m_ref304c;
 	TextureBaseClass *m_ref3050;
@@ -63,6 +63,6 @@ int BaseHeightMapRenderObjClass::freeMapResources(void)
 	if (m_ref3064) { m_ref3064->Release_Ref(); m_ref3064 = 0; }
 	if (m_ref3068) { m_ref3068->Release_Ref(); m_ref3068 = 0; }
 	if (m_ref3090) { m_ref3090->Release_Ref(); m_ref3090 = 0; }
-	if (m_ref2ff4) { m_ref2ff4->Release_Ref(); m_ref2ff4 = 0; }
+	if (m_map) { m_map->Release_Ref(); m_map = 0; }
 	return 0;
 }

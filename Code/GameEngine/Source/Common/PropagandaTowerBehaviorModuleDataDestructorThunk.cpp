@@ -26,7 +26,7 @@ public:
 	~AsciiString();
 
 private:
-	char *m_str;
+	char *m_data;
 };
 
 struct PropagandaEntry

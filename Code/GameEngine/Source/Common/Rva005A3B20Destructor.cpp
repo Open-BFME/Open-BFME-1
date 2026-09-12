@@ -20,7 +20,7 @@ class SubsystemInterface
 {
 public:
 	virtual ~SubsystemInterface();
-	int m_bfmeSubsystem04;
+	int m_name;
 };
 
 class Rva005A3B20 : public SubsystemInterface

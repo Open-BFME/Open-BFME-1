@@ -37,7 +37,7 @@ public:
 	Player *getControllingPlayer() const;
 
 	char m_bfmeHead[0x90];
-	unsigned char m_status90;
+	unsigned char m_status;
 	char m_bfmeHead91[0x07];
 	unsigned char m_status98;
 	char m_bfmeHead99[0x16B];
@@ -83,7 +83,7 @@ Bool Rva00210230::check(Object *source, Object *target)
 	BfmeObjectAI *ai = source->m_ai;
 	if (ai && ai->m_field34)
 		goto failure;
-	if (target->m_status90 & 0x40)
+	if (target->m_status & 0x40)
 		goto failure;
 	if (target->getRelationship(source) != NEUTRAL)
 		goto failure;

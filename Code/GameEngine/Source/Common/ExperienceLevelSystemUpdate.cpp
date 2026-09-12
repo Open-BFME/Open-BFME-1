@@ -19,7 +19,7 @@ class Object
 {
 public:
 	char m_pad[ 0x344 ];
-	unsigned char m_flags344;
+	unsigned char m_privateStatus;
 };
 
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>,
@@ -72,7 +72,7 @@ void ExperienceLevelSystem::update()
 		it != m_pending.end(); ++it )
 	{
 		Object *object = TheBfmeGameLogic->findObjectByID( (*it).m_objectID );
-		if ( object && !(object->m_flags344 & 1) )
+		if ( object && !(object->m_privateStatus & 1) )
 			((Gen0002B7F6 *)this)->call(
 				(*it).m_level, object, (*it).m_showEffect );
 	}

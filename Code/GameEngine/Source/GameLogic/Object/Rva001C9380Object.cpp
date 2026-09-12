@@ -76,7 +76,7 @@ private:
 	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate() const;
 
 	unsigned char m_unreconstructed000[0x90];
-	unsigned char m_status90;
+	unsigned char m_status;
 	unsigned char m_unreconstructed091[0x17f];
 	ExperienceTracker *m_experienceTracker;
 	unsigned char m_unreconstructed214[0x170];
@@ -89,7 +89,7 @@ void Object::rva001c9380(Rva001C9380VictimArgument victim, Rva001C9380Argument a
 		|| !m_experienceTracker->isAcceptingExperiencePoints())
 		return;
 
-	if ((victim.object->m_status90 & 4) != 0)
+	if ((victim.object->m_status & 4) != 0)
 		return;
 
 	BfmeThingCGG *victimTracker =

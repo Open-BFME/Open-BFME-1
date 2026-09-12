@@ -92,7 +92,7 @@ private:
 	char m_pad18[0x30 - 0x18];
 	Bridge *m_bridgeHead;
 	char m_pad34[0x38 - 0x34];
-	int m_field38;
+	int m_bridgeDamageStatesChanged;
 	char m_pad3C[0x548 - 0x3C];
 	int m_field548;
 	char m_pad54C[0x558 - 0x54C];
@@ -140,7 +140,7 @@ void TerrainLogic::reset()
 
 	m_field548 = 0;
 	m_field18EC = 0;
-	m_field38 = 1;
+	m_bridgeDamageStatesChanged = 1;
 
 	void *array = *(void **)((char *)first + 0x18);
 	bfmeFreeArray(array);

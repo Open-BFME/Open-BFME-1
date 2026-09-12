@@ -4,9 +4,9 @@
 class GhostObjectManager
 {
 	virtual void virtualAnchor( void ) = 0;
-	unsigned int m_value;
+	unsigned int m_localPlayer;
 	unsigned char m_active;
-	unsigned char m_reserved;
+	unsigned char m_saveLockGhostObjects;
 
 public:
 	GhostObjectManager( void );
@@ -15,6 +15,6 @@ public:
 GhostObjectManager::GhostObjectManager( void )
 {
 	m_active = 0;
-	m_reserved = 0;
-	m_value = 0;
+	m_saveLockGhostObjects = 0;
+	m_localPlayer = 0;
 }

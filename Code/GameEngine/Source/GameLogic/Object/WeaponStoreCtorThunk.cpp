@@ -12,7 +12,7 @@ public:
 	virtual void subsystemInterfaceAnchor();
 
 private:
-	unsigned int m_pad;
+	unsigned int m_name;
 };
 
 extern "C" char WeaponStore_vtbl;

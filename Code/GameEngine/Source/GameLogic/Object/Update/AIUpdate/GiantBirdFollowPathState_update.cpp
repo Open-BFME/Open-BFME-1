@@ -53,7 +53,7 @@ public:
 	char m_gap44[0x1c0];
 	Rva002BCB60Owner *m_ai;
 	char m_gap208[0x13c];
-	unsigned char m_flags344;
+	unsigned char m_privateStatus;
 };
 
 class StateMachine
@@ -79,7 +79,7 @@ typedef char GiantBirdCoordSize[(sizeof(Coord3D) == 12) ? 1 : -1];
 StateReturnType GiantBirdFollowPathState::update()
 {
 	Object *object = m_machine->m_owner;
-	if ((object->m_flags344 & 1) != 0)
+	if ((object->m_privateStatus & 1) != 0)
 		return STATE_FAILURE;
 
 	Rva002BCB60Owner *ai = object->m_ai;

@@ -10,7 +10,7 @@ public:
 	virtual ~SubsystemInterface();
 
 private:
-	unsigned int m_pad04;
+	unsigned int m_name;
 };
 
 class BFMERetailAsciiString

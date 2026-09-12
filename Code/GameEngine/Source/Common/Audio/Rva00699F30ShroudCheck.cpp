@@ -22,7 +22,7 @@ public:
     char m_pad0[8];
     const AudioEventInfoSlice *m_eventInfo;
     char m_pad1[0x1c];
-    unsigned int m_unmodelled028;
+    unsigned int m_timeOfDay;
 };
 
 enum CellShroudStatus
@@ -55,7 +55,7 @@ extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
 
 bool __stdcall Rva00699F30ShroudCheck(AudioEventRTS *event)
 {
-    if (event->m_unmodelled028 == 0)
+    if (event->m_timeOfDay == 0)
     {
         if ((event->m_eventInfo->m_type & 4) != 0)
         {

@@ -40,7 +40,7 @@ class SpecialPowerTemplate
 {
 public:
 	char m_padding[0x14];
-	unsigned int m_id;
+	unsigned int m_type;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
@@ -124,7 +124,7 @@ const CommandButton *Rva005A7E20SpecialPowerButtonFinder::find(
 						next = final->friend_getFinalOverride();
 					power = next;
 				}
-				if (reinterpret_cast<const SpecialPowerTemplate *>(power)->m_id == specialPowerID)
+				if (reinterpret_cast<const SpecialPowerTemplate *>(power)->m_type == specialPowerID)
 					return button;
 			}
 		}

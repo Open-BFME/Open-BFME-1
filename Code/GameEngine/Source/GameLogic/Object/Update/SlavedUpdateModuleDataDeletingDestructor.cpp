@@ -6,7 +6,7 @@
 
 class AsciiString
 {
-	char *m_str;
+	char *m_data;
 public:
 	~AsciiString();
 };

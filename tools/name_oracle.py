@@ -222,7 +222,7 @@ def outer_members(text, brace, has_base):
             # this very declaration has already refuted is how a checker starts
             # blocking correct commits.
             return [], "annotation contradicts the computed layout"
-        out.append((hit.group(3), off, first_line + n + 1, stated, span))
+        out.append((hit.group(3), off, first_line + n + 1, stated, span, bool(hit.group(4))))
         off += span
     return out, None
 
@@ -256,7 +256,7 @@ def scan(paths, staged):
                 # Counted, never silent: refusals are the safety property, so a drop
                 # in this number is the signal that the model started guessing.
                 tally["refused: " + refused.split(" '")[0]] += 1
-            for member, off, line, stated, span in members:
+            for member, off, line, stated, span, is_array in members:
                 tally["members computed"] += 1
                 if stated is not None:
                     tally["  ...offset stated in the file too"] += 1
@@ -280,8 +280,14 @@ def scan(paths, staged):
                     # begin there, and naming it after the first field inside it is
                     # simply false. Offer a name only when the member does not swallow
                     # another witnessed offset.
-                    if any((owner, o) in wit for o in range(off + 1, off + span)):
-                        tally["placeholder spans other witnessed fields"] += 1
+                    # An ARRAY placeholder is unknown SPACE, not an unknown field, and
+                    # space cannot take the name of the field that happens to start at
+                    # its front: `unsigned char m_unmodelled00[8]` is not the 4-byte
+                    # s_GlobalDataFieldParseTable. Checking only that the span swallows
+                    # no OTHER witnessed offset was too weak -- it passed exactly that
+                    # case, because the next witnessed offset was 8 and the pad was 8.
+                    if is_array or any((owner, o) in wit for o in range(off + 1, off + span)):
+                        tally["placeholder is unknown space, not an unknown field"] += 1
                     else:
                         todo.append(rec)
                 else:
@@ -448,7 +454,13 @@ def main():
         # It stages nothing and commits nothing: build the touched files, then commit.
         done = refused = 0
         for path in sorted({t[0] for t in todo}):
-            text = (ROOT / path).read_text(encoding="utf-8")
+            # newline="" keeps CRLF as CRLF. Python's universal-newline default
+            # translates on read and writes back "\n", so one rename silently
+            # rewrites every line of a CRLF source -- a 130-line diff for a
+            # one-token change, and the same class of trap check_csv guards the
+            # ledgers against.
+            with open(ROOT / path, "r", encoding="utf-8", newline="") as fh:
+                text = fh.read()
             for _, _, _, _, old, new, _, _ in [t for t in todo if t[0] == path]:
                 if len(re.findall(rf"\b{re.escape(old)}\b\s*(?:\[[^\]]*\])?\s*;", text)) > 1:
                     # The same placeholder spelling declared in two structs of one file
@@ -466,7 +478,8 @@ def main():
                     continue
                 text, n = re.subn(rf"\b{re.escape(old)}\b", new, text)
                 done += n
-            (ROOT / path).write_text(text, encoding="utf-8")
+            with open(ROOT / path, "w", encoding="utf-8", newline="") as fh:
+                fh.write(text)
         print(f"name_oracle: rewrote {done} occurrence(s), refused {refused}. "
               f"Now byte-verify: ./build.sh " + " ".join(sorted({t[0] for t in todo})[:4]) + " ...")
         return 0

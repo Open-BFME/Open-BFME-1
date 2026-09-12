@@ -75,7 +75,7 @@ public:
 	char m_pad204[0x1c];
 	Real m_field220;
 	char m_pad224[0x120];
-	unsigned char m_field344;
+	unsigned char m_privateStatus;
 
 	virtual void slot00() = 0;
 	virtual void slot04() = 0;
@@ -248,7 +248,7 @@ UpdateSleepTime GettingBuiltBehavior::update()
 {
 	Object *object = m_object;
 	ModuleData *data = (ModuleData *)m_moduleData;
-	Bool objectDead = (object->m_field344 & 1) != 0;
+	Bool objectDead = (object->m_privateStatus & 1) != 0;
 	if (m_field31 != objectDead && data->m_field2c)
 	{
 		m_field31 = objectDead;

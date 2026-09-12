@@ -173,7 +173,7 @@ class Object
 {
 public:
 	unsigned char m_padding00[0x90];
-	unsigned char m_status90;
+	unsigned char m_status;
 	unsigned char m_padding91[0x1fc - 0x91];
 	ContainModuleInterface *m_contain;
 };
@@ -270,7 +270,7 @@ UpdateSleepTime HordeAIUpdate::update()
 		Bool ready = horde->slot9c();
 		if (!container)
 		{
-			if (isIdle() && ready && !(object->m_status90 & 8))
+			if (isIdle() && ready && !(object->m_status & 8))
 				horde->notifyMember(object);
 		}
 	}

@@ -140,4 +140,5 @@ def test_a_member_reports_its_size_so_a_span_can_be_told_from_a_field():
     rows, refused = N.outer_members(
         "struct S {\n\tchar m_unknown[0x54];\n\tint m_after;\n};", 9, False)
     assert refused is None
-    assert [(r[0], r[1], r[4]) for r in rows] == [("m_unknown", 0, 0x54), ("m_after", 0x54, 4)]
+    assert [(r[0], r[1], r[4], r[5]) for r in rows] == [
+        ("m_unknown", 0, 0x54, True), ("m_after", 0x54, 4, False)]

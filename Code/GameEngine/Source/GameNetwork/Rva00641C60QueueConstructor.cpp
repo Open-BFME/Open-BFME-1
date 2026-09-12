@@ -15,7 +15,7 @@ public:
 	virtual ~SubsystemInterface() {}
 
 private:
-	int m_unreconstructed04;
+	int m_name;
 };
 
 class MutexClass

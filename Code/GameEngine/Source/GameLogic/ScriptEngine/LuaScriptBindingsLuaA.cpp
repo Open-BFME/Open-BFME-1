@@ -54,7 +54,7 @@ public:
 	BfmeAI956 *m_ai;
 	void *m_at208;
 	char m_unreconstructed20c[ 0x23c - 0x20c ];
-	Rva002E5FF0Field23C *m_field23c;
+	Rva002E5FF0Field23C *m_team;
 };
 
 class GameLogic
@@ -117,7 +117,7 @@ int Rva002E5FF0ObjectFieldName( lua_State *state )
 	Object *object = TheGameLogic->bfmeFind1011( id );
 	if( object )
 	{
-		void *field2 = object->m_field23c->m_field4;
+		void *field2 = object->m_team->m_field4;
 		Rva002E5FF0Str *str = !field2 ? &Rva01336E50Str : (Rva002E5FF0Str *)( (char *)field2 + 0x14 );
 		lua_pushstring( state, str->m_data ? (const char *)str->m_data + 8 : g_bfmeEmptyAscii );
 		return 1;

@@ -19,7 +19,7 @@ public:
 	unsigned char m_beforeAI[0x204];
 	class GiantBirdAIUpdate *m_aiUpdate;
 	unsigned char m_beforeFlags[0x344 - 0x208];
-	unsigned char m_flags344;
+	unsigned char m_privateStatus;
 };
 
 class StateMachine
@@ -179,7 +179,7 @@ StateReturnType GiantBirdFollowPathState::onEnter()
 	GiantBirdAIUpdate *ai = object->m_aiUpdate;
 	if (ai == 0)
 		goto failure;
-	if ((object->m_flags344 & 1) != 0)
+	if ((object->m_privateStatus & 1) != 0)
 		goto failure;
 	if (!rva002BDBF0())
 		return STATE_SUCCESS;

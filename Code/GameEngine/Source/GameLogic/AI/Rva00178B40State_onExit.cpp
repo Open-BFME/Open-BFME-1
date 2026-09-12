@@ -16,7 +16,7 @@ class Object
 {
 public:
 	unsigned char m_pad00[0x90];
-	unsigned char m_status90;
+	unsigned char m_status;
 	unsigned char m_pad91[3];
 	unsigned char m_status94;
 	unsigned char m_pad95[0x16f];
@@ -69,7 +69,7 @@ void Rva00178B40State::onExit(StateExitType status)
 {
 	Rva00178B40Fields *self = (Rva00178B40Fields *)this;
 	Object *owner = self->m_machine->m_owner;
-	if ((owner->m_status90 & 1) != 0)
+	if ((owner->m_status & 1) != 0)
 		return;
 
 	{

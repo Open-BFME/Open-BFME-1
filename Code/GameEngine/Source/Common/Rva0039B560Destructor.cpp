@@ -22,7 +22,7 @@ public:
 	virtual ~SubsystemInterface();                             ///< pinned 0x009A1A40
 
 private:
-	unsigned int m_pad04;
+	unsigned int m_name;
 };
 
 template <typename T>

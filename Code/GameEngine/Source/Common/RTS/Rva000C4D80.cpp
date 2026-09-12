@@ -54,11 +54,11 @@ public:
 	ObjectShroudStatus getShroudedStatus( Int playerIndex ) const;
 
 	char m_unreconstructed00[ 0x90 ];
-	UnsignedByte m_flags90;
+	UnsignedByte m_status;
 	char m_unreconstructed91[ 0x200 - 0x91 ];
 	class Rva000C4D80Module *m_module200;
 	char m_unreconstructed204[ 0x344 - 0x204 ];
-	UnsignedByte m_status344;
+	UnsignedByte m_privateStatus;
 };
 
 class BFMEActionObject
@@ -122,9 +122,9 @@ Bool Rva000C4D80Manager::evaluate( Object *obj, const Object *target, Int comman
 		return false;
 	if( obj->getRelationship( target ) != ENEMIES )
 		return false;
-	if( obj->m_status344 & 1 )
+	if( obj->m_privateStatus & 1 )
 		return false;
-	if( obj->m_flags90 & 4 )
+	if( obj->m_status & 4 )
 		return false;
 	if( ((const BFMEActionObject *)target)->testStatus( 2 ) )
 		return false;

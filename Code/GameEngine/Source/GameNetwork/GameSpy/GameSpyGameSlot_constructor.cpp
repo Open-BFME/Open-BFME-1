@@ -36,7 +36,7 @@ private:
 	unsigned char m_prefix[0x24];
 	UnicodeString m_name;
 	AsciiString m_serial;
-	unsigned int m_value30;
+	unsigned int m_connectInfo;
 	unsigned short m_value34;
 	unsigned char m_tail[0x0e];
 };
