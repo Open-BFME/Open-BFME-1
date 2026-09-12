@@ -75,7 +75,7 @@ public:
     AsciiString getMachineName();
 private:
     void *m_ipList;
-    Bool m_winsockInitialized;
+    Bool m_isWinsockInitialized;
 };
 
 class DesyncInGameUI

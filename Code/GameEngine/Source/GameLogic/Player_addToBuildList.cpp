@@ -101,7 +101,7 @@ private:
 	float m_rallyX;
 	float m_rallyY;
 	float m_angle;
-	bool m_initiallyBuilt;
+	bool m_isInitiallyBuilt;
  unsigned char m_pad25[3];
 	unsigned int m_numRebuilds;
 	BuildListInfo *m_nextBuildList;

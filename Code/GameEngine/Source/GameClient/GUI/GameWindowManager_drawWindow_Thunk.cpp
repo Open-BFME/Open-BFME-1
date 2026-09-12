@@ -43,7 +43,7 @@ private:
 	unsigned char m_pad0c[0x24];
 	unsigned char m_instData[0x1c8];
 	GameWindow *m_next;
-	GameWindow *m_previous;
+	GameWindow *m_prev;
 	GameWindow *m_parent;
 	GameWindow *m_child;
 };
@@ -86,7 +86,7 @@ Int GameWindowManager::drawWindow(GameWindow *window)
 		while (child && child->m_next)
 			child = child->m_next;
 
-		for (; child; child = child->m_previous)
+		for (; child; child = child->m_prev)
 			drawWindow(child);
 
 		if (!(window->winGetStyle() & GWS_SCROLL_LISTBOX))

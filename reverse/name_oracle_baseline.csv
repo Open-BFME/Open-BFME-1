@@ -164,7 +164,6 @@ BaseHeightMapRenderObjClass+0x2ff4|m_shroudSecondary|m_map,Code/GameEngineDevice
 BaseHeightMapRenderObjClass+0x2ff4|m_shroudSecondary|m_map,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapReAcquireResources_Bfme.cpp,104,1.00,layout_witness
 BezierSegment+0x0|m_controlPoints|s_bezBasisMatrix,Code/GameEngine/Source/Common/Bezier/BezierSegmentConstructionAndLength.cpp,55,1.00,layout_witness
 BoneFXUpdateModuleData+0xc|m_damageOCLTypes|m_fxList,Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdate_initTimes.cpp,94,1.00,field_names
-BuildListInfo+0x24|m_initiallyBuilt|m_isInitiallyBuilt,Code/GameEngine/Source/GameLogic/Player_addToBuildList.cpp,105,1.00,layout_witness
 BuildListInfo+0x2c|m_nextBuildList|m_numRebuilds,Code/GameEngine/Source/GameLogic/Player_addToBuildList.cpp,108,1.00,layout_witness
 BuildListInfo+0x4c|m_tail|m_objectID,Code/GameEngine/Source/GameLogic/Player_addToBuildList.cpp,111,1.00,layout_witness
 BuildListInfo+0x84|m_currentGatherers|m_desiredGatherers,Code/GameEngine/Source/GameLogic/AI/AIPlayerSupply.cpp,136,1.00,layout_witness
@@ -265,7 +264,6 @@ GameSlot+0x4|m_isAccepted|m_state,Code/GameEngine/Source/GameNetwork/GameInfo_al
 GameSlot+0x4|m_prefix|m_state,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlot_constructor.cpp,37,1.00,layout_witness
 GameSlot+0x4|m_unreconstructed_04|m_state,Code/GameEngine/Source/GameLogic/System/GameLogicPopulateGameReport.cpp,94,1.00,layout_witness
 GameSpyInfo+0x14|m_ping|m_pingString,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoSetPingStringThunk.cpp,21,1.00,layout_witness
-GameWindow+0x1fc|m_previous|m_prev,Code/GameEngine/Source/GameClient/GUI/GameWindowManager_drawWindow_Thunk.cpp,47,1.00,layout_witness
 GeometryInfo+0x18|m_centerOffset|m_boundingCircleRadius,Code/GameEngine/Source/Common/GeometryInfoCalcPitches.cpp,39,1.00,layout_witness
 GhostObjectManager+0x8|m_active|m_lockGhostObjects,Code/GameEngine/Source/GameLogic/Object/GhostObject.cpp,9,1.00,layout_witness
 GhostObjectManager+0x8|m_managerPadding|m_lockGhostObjects,Code/GameEngineDevice/Source/W3DDevice/GameLogic/W3DGhostObjectSetLocalPlayerIndex.cpp,104,1.00,layout_witness
@@ -354,7 +352,6 @@ INI+0x0|m_unreconstructed_000|m_file,Code/GameEngine/Source/GameLogic/Object/Upd
 INI+0x0|m_unreconstructed|m_file,Code/GameEngine/Source/Common/INI/INI_fieldParsers.cpp,94,1.00,layout_witness
 INI+0x0|m_unreconstructed|m_file,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/ModelConditionInfo_parseModel.cpp,25,1.00,layout_witness
 IPEnumeration+0x0|m_addresses|m_IPlist,Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobbyInitLan.cpp,103,1.00,layout_witness
-IPEnumeration+0x4|m_winsockInitialized|m_isWinsockInitialized,Code/GameEngine/Source/GameNetwork/native_desync_report.cpp,79,1.00,layout_witness
 Image+0x24|m_imageWidth|m_imageSize,Code/GameEngine/Source/Common/insertPlayerInListbox_Thunk.cpp,62,1.00,layout_witness
 Image+0x24|m_imageWidth|m_imageSize,Code/GameEngine/Source/GameClient/System/Anim2DConstructor.cpp,40,1.00,layout_witness
 Image+0x24|m_width|m_imageSize,Code/GameEngine/Source/GameClient/GUI/OnlineCustomMatchInsertGame.cpp,64,1.00,layout_witness
