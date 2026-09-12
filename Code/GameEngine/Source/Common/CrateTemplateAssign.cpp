@@ -72,12 +72,12 @@ public:
 
 private:
 	AsciiString m_bfmeName;					// +0x0C
-	int m_bfme10;						// +0x10
-	int m_bfme14;						// +0x14
+	int m_creationChance;					// +0x10
+	int m_veterancyLevel;					// +0x14
 	BfmeCrateChances m_bfmeChances;				// +0x18
-	int m_bfme30;						// +0x30
+	int m_killerScience;					// +0x30
 	_STL::list<crateCreationEntry> m_bfmeEntries;		// +0x34
-	bool m_bfme38;						// +0x38
+	bool m_isOwnedByMaker;					// +0x38
 };
 
 // ??4CrateTemplate@@QAEAAV0@ABV0@@Z
@@ -86,12 +86,12 @@ CrateTemplate &CrateTemplate::operator=(const CrateTemplate &other)
 	ScienceInfoBase::operator=(other);
 
 	m_bfmeName = other.m_bfmeName;
-	m_bfme10 = other.m_bfme10;
-	m_bfme14 = other.m_bfme14;
+	m_creationChance = other.m_creationChance;
+	m_veterancyLevel = other.m_veterancyLevel;
 	m_bfmeChances = other.m_bfmeChances;
-	m_bfme30 = other.m_bfme30;
+	m_killerScience = other.m_killerScience;
 	m_bfmeEntries = other.m_bfmeEntries;
-	m_bfme38 = other.m_bfme38;
+	m_isOwnedByMaker = other.m_isOwnedByMaker;
 
 	return *this;
 }
