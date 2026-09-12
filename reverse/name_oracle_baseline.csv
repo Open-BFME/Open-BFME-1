@@ -152,8 +152,6 @@ AsciiString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/SaveGame/Game
 AsciiString+0x0|m_text|m_data,Code/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileDtor.cpp,43,1.00,layout_witness
 AsciiString+0x0|m_text|m_data,Code/GameEngineDevice/Source/Win32Device/Common/Win32BIGFileNames.cpp,50,1.00,layout_witness
 AssistedTargetingUpdateModuleData+0x8|m_one|m_clipSize,Code/GameEngine/Source/GameLogic/AI/AssistedTargetingUpdateFriendNewModuleDataThunk.cpp,23,1.00,field_names
-AudioEventRTS+0x20|m_pitchShift|m_priority,Code/GameEngine/Source/Common/Audio/AudioEventRTSGetPitchShiftThunk.cpp,65,1.00,layout_witness
-AudioEventRTS+0x42|m_isLogicalAudio|m_uninterruptable,Code/GameEngine/Source/Common/Audio/AudioEventRTS_bfmeGenerateFilename.cpp,31,1.00,layout_witness
 AudioSettings+0x0|m_prefix|m_audioRoot,Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerOpenDevice.cpp,35,1.00,field_names
 AudioSettings+0x28|m_gap2|m_sampleCount2D,Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerOpenDevice.cpp,42,1.00,field_names
 BaseHeightMapRenderObjClass+0x2ff4|m_shroudSecondary|m_map,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapReleaseResources_Bfme.cpp,146,1.00,layout_witness
