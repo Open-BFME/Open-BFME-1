@@ -143,7 +143,10 @@ extern AudioManager *TheAudio;
 class FlammableUpdateModuleData
 {
 private:
-	unsigned char m_pad00[0x14];
+	unsigned char m_pad00[8];
+	unsigned int m_burnedDelay;
+	unsigned int m_aflameDuration;
+	unsigned int m_aflameDamageDelay;
 
 public:
 	int m_aflameDamageAmount;			// +0x14
