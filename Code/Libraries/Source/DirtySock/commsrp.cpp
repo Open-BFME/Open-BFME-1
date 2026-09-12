@@ -9,8 +9,8 @@
 // and the matched CommSRP siblings that fill it.
 
 extern "C" {
-	struct Rva00815300Comm;
-	struct Rva00815300Comm *Rva00815300(int maxPacket, int recvCount,
+	struct CommSRPRef;
+	struct CommSRPRef *Rva00815300(int maxPacket, int recvCount,
 		int sendCount);
 	void *Rva007F0000Alloc(int size);
 	void Rva007FEA20(void *lock);
@@ -41,7 +41,7 @@ extern void Rva00815890(void);
 
 int Rva007FE780Printf(const char *format, ...);
 
-struct Rva00815300Comm
+struct CommSRPRef
 {
 	void *m_op[ 14 ];
 	char m_gap38[ 0x10 ];
@@ -68,12 +68,12 @@ struct Rva00815300Comm
 	char m_tail[ 0x2C ];
 };
 
-struct Rva00815300Comm *Rva00815300( int maxPacket, int recvCount,
+struct CommSRPRef *Rva00815300( int maxPacket, int recvCount,
 	int sendCount )
 {
-	struct Rva00815300Comm *comm;
+	struct CommSRPRef *comm;
 
-	comm = (struct Rva00815300Comm *)Rva007F0000Alloc( 0x21C );
+	comm = (struct CommSRPRef *)Rva007F0000Alloc( 0x21C );
 	if ( comm == 0 )
 		return 0;
 
