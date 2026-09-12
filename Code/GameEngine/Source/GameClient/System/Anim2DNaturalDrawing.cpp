@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?draw@Anim2D@@QAEXHH@Z: natural-size Anim2D drawing
+// readable body of ?draw@Anim2D@@QAEXHH@Z: Code/GameEngine/Source/GameClient/System/Anim2D.cpp
 
 typedef int Int;
 typedef float Real;

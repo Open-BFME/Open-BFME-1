@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?draw@Rva005BA9E0Anim2D@@QAEXHHHH@Z: world-animation mode 2
+// World-animation mode 2 draw. The owning class is still address-derived, so
+// there is no destination file to name -- no `readable body of` claim until there is.
 
 typedef int Int;
 typedef float Real;

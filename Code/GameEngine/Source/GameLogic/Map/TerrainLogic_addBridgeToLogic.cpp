@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
-// readable body of ?addBridgeToLogic@TerrainLogic@@UAEXPAVBridgeInfo@@PAVDict@@VAsciiString@@@Z
+// readable body of ?addBridgeToLogic@TerrainLogic@@UAEXPAVBridgeInfo@@PAVDict@@VAsciiString@@@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // Retail RVA 0x001AA780, TerrainLogic vtable slot 43.
 
 #include <new>

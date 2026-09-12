@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?xfer@W3DDebrisDraw@@MAEXPAVXfer@@@Z
+// readable body of ?xfer@W3DDebrisDraw@@MAEXPAVXfer@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDebrisDraw.cpp
 // Open-BFME5: convert the W3DDebrisDraw snapshot transfer to clean C++.
 
 typedef unsigned char XferVersion;

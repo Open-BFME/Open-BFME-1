@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of ?calculateTerrainLOD@W3DDisplay@@IAEXXZ, retail 0x006E8E60.
+// readable body of ?calculateTerrainLOD@W3DDisplay@@IAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 // TU-local layouts because the real W3DDisplay/GlobalData headers carry ZH
 // vtable/field offsets that drift from BFME's compiled layout for this body.
 

@@ -1,6 +1,6 @@
 // ?findFactory@AIPlayer@@IAEPAVObject@@PBVThingTemplate@@_NPAH@Z
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?findFactory@AIPlayer@@IAEPAVObject@@PBVThingTemplate@@_NPAH@Z
+// readable body of ?findFactory@AIPlayer@@IAEPAVObject@@PBVThingTemplate@@_NPAH@Z: Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
 //
 // BFME's findFactory is not the two-argument Zero Hour build-list query.  Its
 // callers pass a build-index out pointer, and the retail body walks the live

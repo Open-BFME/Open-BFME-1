@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/objectdlink
 // stlport
-// readable body of ?doTeamChangeObjectStatus@ScriptActions@@IAEXPAVParameter@@H_N@Z
+// readable body of ?doTeamChangeObjectStatus@ScriptActions@@IAEXPAVParameter@@H_N@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
