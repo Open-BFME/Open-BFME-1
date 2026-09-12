@@ -1,5 +1,5 @@
 // ?Render@SegLineRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@ABVSphereClass@@PAVVector4@@@Z
-// partial score=0.994673674 date=2026-09-11
+// partial score=0.9950997798451814 date=2026-09-12
 // cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -903,7 +903,9 @@ top_int_idx++;
 residual_top_points = intersection[top_int_idx][TOP_EDGE].PointCount;
 pidx++;
 Vector3 &top_dir = intersection[top_int_idx][TOP_EDGE].Direction;
-top = top_dir * Vector3::Dot_Product(points[pidx], top_dir);
+// Keep the retail Y-Z-X dot-product order and its live x87 result.
+top = top_dir * ((*(const volatile float *)&points[pidx].Y * top_dir.Y
+    + points[pidx].Z * top_dir.Z) + points[pidx].X * top_dir.X);
 vArray[vidx].x = top.X;
 vArray[vidx].y = top.Y;
 vArray[vidx].z = top.Z;
