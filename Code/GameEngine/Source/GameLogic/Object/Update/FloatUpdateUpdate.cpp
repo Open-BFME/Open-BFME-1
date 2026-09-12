@@ -1,5 +1,4 @@
 // ?update@FloatUpdate@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.95 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include
 
 // Module-constructor family shape: an out-of-line ObjectModule base call
@@ -12,16 +11,14 @@
 // group by value ahead of them.
 //
 // update() (retail 0x002950D0) reuses this exact layout: the interface
-// vtable at 0x10 is the "this" the retail body operates on, so m_flag20
+// vtable at 0x10 is the "this" the retail body operates on, so m_enabled
 // (the real header's m_enabled) reads at this+0x10, and getObject() reads
-// m_08 at this-8. TheTerrainLogic and Object are BFME-vtable-drifted
+// m_object at this-8. TheTerrainLogic and Object are BFME-vtable-drifted
 // against the vendored headers (isUnderwater sits at retail slot 19/0x4c,
 // getDrawable at slot 10/0x28) so both get minimal TU-local views sized to
 // the verified slot instead of the real classes.
 
-typedef float Real;
-typedef int Bool;
-#define TRUE 1
+#include "PreRTS.h"
 
 struct Coord3D
 {
@@ -40,23 +37,22 @@ enum UpdateSleepTime
 #include "WWMath/matrix3d.h"
 #include <math.h>
 
-// Minimal Drawable view: the instance matrix sits at +0x198 and is read as
-// twelve plain floats (getInstanceMatrix() is inlined in retail); setting it
-// back is an out-of-line call (?setInstanceMatrix@Drawable@@QAEXPBVMatrix3D@@@Z,
-// unpinned -- retail RVA 0x00811840 via ILT 0x0003AAD0).
-class DrawableView
+// BFME matrix at +0x198 is also proved by the matched Drawable setter:
+// RVA 0x00411840, reached through ILT 0x0003AAD0, takes (Matrix3D const*, bool).
+// Its field remains address-qualified because no member-name witness exists.
+class Drawable
 {
 public:
 	unsigned char m_pad000[0x198];
-	Matrix3D m_instance;					///< +0x198
+	Matrix3D m_at198;					///< +0x198
 
-	const Matrix3D *getInstanceMatrix() const { return &m_instance; }
-	void setInstanceMatrix( const Matrix3D *instance, int extra );
+	const Matrix3D *getInstanceMatrix() const { return &m_at198; }
+	void setInstanceMatrix( const Matrix3D *instance, bool extra );
 };
 
 // Minimal TerrainLogic view: only isUnderwater's slot (retail 19, offset
 // 0x4c) needs to be correct; the other 19 slots are unused padding.
-class TerrainLogicView
+class TerrainLogic
 {
 public:
 	virtual void slot00(); virtual void slot01(); virtual void slot02();
@@ -69,37 +65,37 @@ public:
 	virtual Bool isUnderwater( Real x, Real y, Real *waterZ, Real *terrainZ );
 };
 
-extern void *TheTerrainLogic;			// ?TheTerrainLogic@@3PAXA
+extern TerrainLogic *TheTerrainLogic;		// ?TheTerrainLogic@@3PAVTerrainLogic@@A
 
 // Minimal GameLogic view: only the frame counter at +0x3c is read.
-class GameLogicView
+class GameLogic
 {
 public:
 	unsigned char m_pad000[0x3c];
 	unsigned int m_frame;					///< +0x3c
+	unsigned int getFrame() const { return m_frame; }
 };
 
-extern GameLogicView *TheGameLogic;	// ?TheGameLogic@@3PAVGameLogicView@@A
+extern GameLogic *TheGameLogic;			// ?TheGameLogic@@3PAVGameLogic@@A
 
 // Minimal Object view: slot 10 (offset 0x28) is the verified retail slot
-// for getDrawable(); m_position sits at +0x38 (plain field, not virtual).
-class ObjectView
+// for getDrawable(); m_cachedPos sits at +0x38 (plain field, not virtual).
+class Thing
 {
 public:
 	virtual void slot00(); virtual void slot01(); virtual void slot02();
 	virtual void slot03(); virtual void slot04(); virtual void slot05();
 	virtual void slot06(); virtual void slot07(); virtual void slot08();
 	virtual void slot09();
-	virtual DrawableView *getDrawable();
+	virtual Drawable *getDrawable();
 
-	unsigned char m_pad018[0x38 - 0x04];
-	Coord3D m_position;						///< +0x38
+	unsigned char m_pad004[0x38 - 0x04];
+	Coord3D m_cachedPos;						///< +0x38
 
-	const Coord3D *getPosition() const { return &m_position; }
+	const Coord3D *getPosition() const { return &m_cachedPos; }	
 	void setPosition( const Coord3D *pos );	///< ?setPosition@Thing@@QAEXPBUCoord3D@@@Z
 };
 
-class Thing;
 class ModuleData;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
@@ -111,9 +107,9 @@ public:
 	virtual void objectModuleAnchor();		///< vptr at 0x00
 
 	void *m_04;
-	void *m_08;								///< ends at 0x0c
+	void *m_object;								///< ends at 0x0c
 
-	ObjectView *getObject() const { return (ObjectView *)m_08; }
+	Thing *getObject() const { return (Thing *)m_object; }
 };
 
 class BehaviorInterface
@@ -170,26 +166,19 @@ public:
 	virtual void behaviorAnchor();
 	virtual UpdateSleepTime update();
 
-	bool m_flag20;							///< 0x20
+	bool m_enabled;							///< 0x20
 };
-
-// ??0FloatUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
-FloatUpdate::FloatUpdate( Thing *thing, const ModuleData *moduleData )
-	: UpdateModule( thing, moduleData )
-{
-	m_flag20 = ((const FloatUpdateModuleData *)moduleData)->m_enabled;
-}
 
 // ?update@FloatUpdate@@UAE?AW4UpdateSleepTime@@XZ at retail RVA 0x002950D0
 // Zero Hour reference source: GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Update/FloatUpdate.cpp
 UpdateSleepTime FloatUpdate::update( void )
 {
-	if( m_flag20 == TRUE )
+	if( m_enabled == TRUE )
 	{
 		const Coord3D *pos = getObject()->getPosition();
 
 		Real waterZ;
-		((TerrainLogicView *)TheTerrainLogic)->isUnderwater( pos->x, pos->y, &waterZ, 0 );
+		TheTerrainLogic->isUnderwater( pos->x, pos->y, &waterZ, 0 );
 
 		Coord3D newPos;
 		newPos.x = pos->x;
@@ -198,12 +187,12 @@ UpdateSleepTime FloatUpdate::update( void )
 		getObject()->setPosition( &newPos );
 	}
 
-	DrawableView *draw = getObject()->getDrawable();
+	Drawable *draw = getObject()->getDrawable();
 	if (draw)
 	{
-		Real angle = (Real)(TheGameLogic->m_frame);
-		Real yaw = sinf(angle * 0.0291f) * 0.05f;
-		Real pitch = sinf(angle * 0.0515f) * 0.05f;
+		Real angle = INT_TO_REAL(TheGameLogic->getFrame());
+		Real yaw = sin(angle * 0.0291f) * 0.05f;
+		Real pitch = sin(angle * 0.0515f) * 0.05f;
 
 		Matrix3D mx = *draw->getInstanceMatrix();
 
