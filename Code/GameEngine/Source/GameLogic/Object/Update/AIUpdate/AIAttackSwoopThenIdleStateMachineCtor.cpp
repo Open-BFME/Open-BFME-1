@@ -1,8 +1,7 @@
 // ??0AIAttackSwoopThenIdleStateMachine@@QAE@PAXVAsciiString@@@Z
-// partial score=1.0 date=2026-09-12
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
 
-#include "../../../../../../../reference/shims/stringinline/StringInline.h"
+#include "StringInline.h"
 
 class Object;
 class State;
@@ -23,6 +22,7 @@ public:
 	virtual ~StateMachine();
 
 protected:
+	unsigned char m_rva002BF480_stateMachineTail[0x40]; // factories allocate 0x44 bytes
 	void defineState( StateID id, State *state, StateID successID,
 		StateID failureID, const StateConditionInfo *conditions );
 };
@@ -48,21 +48,21 @@ public:
 
 private:
 	char m_gap04[ 0x20 ];
-	int m_targetID;
+	int m_rva002BE230_024;
 	char m_gap28[ 0x0C ];
-	bool m_enabled;
+	bool m_field034;
 	char m_gap35[ 3 ];
-	int m_counter;
-	float m_scale;
+	int m_field038;
+	float m_rva002BE230_03C;
 };
 
 AIGiantBirdSwoopState::AIGiantBirdSwoopState( void *machine, int targetID, bool enabled )
 	: Rva000A19E0StateBase( machine, AsciiString( "AIGiantBirdSwoopState" ) )
 {
-	m_targetID = targetID;
-	m_enabled = enabled;
-	m_counter = 0;
-	m_scale = 1.0f;
+	m_rva002BE230_024 = targetID;
+	m_field034 = enabled;
+	m_field038 = 0;
+	m_rva002BE230_03C = 1.0f;
 }
 
 // byte-exact reconstruction, verbatim from GiantBirdStateConstructors.cpp
@@ -74,13 +74,13 @@ public:
 
 private:
 	char m_gap04[ 0x20 ];
-	int m_mode;
+	int m_rva002BE400_024;
 };
 
 AIGiantBirdAttackState::AIGiantBirdAttackState( void *machine, int mode )
 	: Rva000A19E0StateBase( machine, AsciiString( "AIGiantBirdAttackState" ) )
 {
-	m_mode = mode;
+	m_rva002BE400_024 = mode;
 }
 
 // byte-exact reconstruction, verbatim from GiantBirdStateConstructors.cpp
@@ -92,16 +92,16 @@ public:
 
 private:
 	char m_gap04[ 0x20 ];
-	bool m_enabled;
+	bool m_field024;
 	char m_gap25[ 3 ];
-	int m_counter;
+	int m_field028;
 };
 
 AIGiantBirdFollowThruState::AIGiantBirdFollowThruState( void *machine, bool enabled )
 	: Rva000A19E0StateBase( machine, AsciiString( "AIGiantBirdFollowThruState" ) )
 {
-	m_enabled = enabled;
-	m_counter = 0;
+	m_field024 = enabled;
+	m_field028 = 0;
 }
 
 // Declared only: retail keeps this ctor out of line at 0x001720D0 (matched,
@@ -113,9 +113,9 @@ public:
 
 private:
 	char m_stateBaseTail[ 0x20 ];
-	unsigned short m_goalPathIndex;
-	bool m_shouldLookForTargets;
-	bool m_initialized;
+	unsigned short m_rva001720D0_024;
+	bool m_rva001720D0_026;
+	bool m_rva001720D0_027;
 };
 
 class AIAttackSwoopThenIdleStateMachine : public StateMachine
@@ -124,6 +124,9 @@ public:
 	AIAttackSwoopThenIdleStateMachine( void *owner, AsciiString name );
 };
 
+// Native C++ virtual construction emits the outer vptr; no literal vptr write.
+// Retail 0x006BF49A preserves incoming this in ESI; 0x006BF4D3 installs
+// 0x010C7460 into [ESI]. Later [EDI] stores belong to separately allocated states.
 // retail RVA 0x002BF480, 472B. Identity: this constructor installs vtable
 // 0x010C7460 and defines the Swoop/Attack/FollowThru/Idle-like states whose
 // own ctors are matched at 0x002BE230/0x002BE400/0x002BEC00/0x001720D0; the
@@ -133,7 +136,6 @@ public:
 AIAttackSwoopThenIdleStateMachine::AIAttackSwoopThenIdleStateMachine( void *owner, AsciiString name )
 	: StateMachine( (Object *)owner, name, false )
 {
-	*reinterpret_cast<int **>( this ) = reinterpret_cast<int *>( 0x010C7460 );
 
 	AIGiantBirdSwoopState *swoop = new AIGiantBirdSwoopState( this, 1, false );
 	defineState( 10, (State *)swoop, 1012, 0, 0 );
