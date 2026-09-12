@@ -154,3 +154,27 @@ For a remaining load/store swap or excess frame slots, inspect the actual
 called helper's memory effects before attempting register-order variations.
 Keep the authentic helper and verify its emission; a fabricated side-effect
 stub would manufacture a compiler assumption rather than recover the program.
+
+## GameSpy packets: preserve native accessor expressions
+
+An inlined getter can affect VC7.1 register allocation even when its result is
+the same member load. The BFME results packet at `0x006386F0` compiled to
+1694 bytes with direct seed/quick-match field reads, against retail's 1684.
+Restoring `getSeed()`, `isQuickMatch()` and `getQuickMatchType()` as ordinary
+inline accessors recovered all 1684 bytes. The earlier bank had broad register
+and stack-home drift, not merely ten isolated extra bytes. The complete source
+is `GameSpy/GenerateGameSpyGameResultsPacket.cpp`.
+
+The same source-level context helped the 1583-byte ladder packet at
+`0x00639190`: native seed, ladder-port and quick-match getters restored the
+register schedule. The final one-byte difference was a real extra leading
+variadic argument at `+0x4AB`. That malformed retail call shifts the format's
+values and can feed a small integer to `%s`; preserve and document it for byte
+matching rather than silently correcting it. This body's previous 1580-byte
+claim also omitted its final `ret 4`, proven at `+0x62C` before INT3 padding.
+
+For `PlayerInfoMap::operator[]` at `0x006359C0`, STLport's old built-in
+value-initialization workaround emitted an extra `__default_constructed`
+call. Selecting direct `PlayerInfo()` construction locally before parsing
+`<map>` recovered all 288 bytes and the register schedule. See
+`GameSpy/PeerDefs_PlayerInfoMap_Subscript.cpp`; no vendored header was edited.
