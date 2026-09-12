@@ -1,7 +1,8 @@
-// ?iterateSaveFiles@GameState@@AAEXP6AXVAsciiString@@PAX@Z1@Z
-// partial score=0.3467 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep
-// Scratch-only ABI/layout experiment for GameState::iterateSaveFiles.
+// GameState::iterateSaveFiles, retail RVA 0x0010E8B0 (346 bytes).
+// The save-list builder calls this callback iterator through ILT 0x00040403.
+// _stricmp is a CRT DLL import: declaring a plain out-of-line stricmp changes
+// both the call ABI encoding and MSVC's zero/IAT register allocation.
 
 #include <windows.h>
 
@@ -23,7 +24,8 @@ template <typename T> class StringBase
 	struct Header
 	{
 		int refCount;
-		int length;
+		unsigned short length;
+        unsigned short capacity;
 		T data[ 1 ];
 	};
 
@@ -60,7 +62,7 @@ public:
 	void iterateSaveFiles( IterateSaveFileCallback callback, void *userData );
 };
 
-extern "C" int __cdecl stricmp( const char *left, const char *right );
+extern "C" __declspec(dllimport) int __cdecl _stricmp( const char *left, const char *right );
 
 void GameState::iterateSaveFiles( IterateSaveFileCallback callback, void *userData )
 {
@@ -75,14 +77,13 @@ void GameState::iterateSaveFiles( IterateSaveFileCallback callback, void *userDa
 	HANDLE hFile = FindFirstFile( "*", &item );
 	if( hFile == INVALID_HANDLE_VALUE )
 		return;
-	char *(__cdecl * const findDot)( const char *, int ) = strrchr;
 
 	while( TRUE )
 	{
 		if( !(item.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) )
 		{
-			Char *c = findDot( item.cFileName, '.' );
-			if( c && !stricmp( c, ".sav" ) )
+			Char *c = strrchr( item.cFileName, '.' );
+			if( c && !_stricmp( c, ".sav" ) )
 			{
 				AsciiString filename;
 				filename.set( item.cFileName );

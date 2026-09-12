@@ -201,21 +201,12 @@ struct AvailableGameInfo
 
 typedef void (*IterateSaveFileCallback)(AsciiString filename, void *userData);
 
-extern void j_00040403();
 class GameState
 {
     friend class BfmeGameStateSaveList;
 private:
     void clearAvailableGames();
-    void iterateSaveFiles(IterateSaveFileCallback callback, void *userData)
-    {
-        // The witnessed ILT reaches the still-unconverted file iterator at
-        // 0x0010E8B0. Preserve its callback ABI without adding a new name pin.
-        typedef void (GameState::*Iterate)(IterateSaveFileCallback, void *);
-        union { void (*entry)(); Iterate method; } call;
-        call.entry = j_00040403;
-        (this->*call.method)(callback, userData);
-    }
+    void iterateSaveFiles(IterateSaveFileCallback callback, void *userData);
 };
 
 extern void addGameToAvailableList(AsciiString filename, void *userData);
