@@ -3334,6 +3334,7 @@ name,address,notes
 ??0Rva0016CF40Machine@@QAE@PAVObject@@@Z,0x0003FE4F,ILT thunk: machine ctor called by the xfer twin 0x0016CF40 (sibling of AIDockMachine); real ctor at 0x0015FE90 still an unconverted dump
 ??0Rva0016D9C0Machine@@QAE@PAVObject@@@Z,0x0000715D,ILT thunk: machine ctor called by the xfer twin 0x0016D9C0 (sibling of AIGuardRetaliateMachine)
 ??0Rva0019A1D0Member@@QAE@H@Z,0x00018129,ILT thunk to 0x00196D90 member ctor
+?construct@Rva0019A1D0Member@@QAEPAV1@H@Z,0x00196D90,local return-valued declaration for the matched member constructor body
 ??0Rva0019A1D0Owner@@QAE@XZ,0x00008792,tree owner constructor used by Rva001A0320Owner::fill
 ??0Rva0019AFF0Temp@@QAE@PAX@Z,0x001985E0,ICF-shared body also reached as the constructor call in rva0019aff0
 ??0Rva00244A80Element@@QAE@ABU0@@Z,0x00038334,Open-BFME5 0x002403E0 element copy constructor ILT
