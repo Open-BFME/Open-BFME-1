@@ -37,7 +37,7 @@ class ContainModuleInterface
 public:
 	virtual void slot00();
 	virtual void slot01();
-	virtual Bool isGarrisonable();
+	virtual Bool isGarrisonable() const;
 	virtual void slot03();
 	virtual void slot04();
 	virtual void slot05();
@@ -94,7 +94,7 @@ public:
 	virtual void slot56();
 	virtual void slot57();
 	virtual void slot58();
-	virtual void slot59();
+	virtual void slot59() const;
 };
 
 class BehaviorModuleInterface
@@ -134,6 +134,7 @@ public:
 	virtual void slot06();
 	virtual void upgradeRemovalImplementation();
 	virtual void setUpgradeExecuted(Bool enabled);
+
 };
 
 class ModuleInterface

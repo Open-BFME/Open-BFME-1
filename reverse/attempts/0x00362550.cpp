@@ -1,5 +1,5 @@
 // ?handle@Gen00362760Elem@@QAEXPAX@Z
-// partial score=0.9 date=2026-09-08
+// partial score=0.93 date=2026-09-12
 // The element callback at retail RVA 0x00362550.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ivendor/stlport /Ireference/shims/campaignmanagerascii /Ireference/shims/moduledata /Ireference/shims/sweep /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 
@@ -67,12 +67,18 @@ private:
 
 void Gen00362760Elem::handle( void *visitor )
 {
-	unsigned int offset = 0;
 	unsigned int i = 0;
-	for( ; i < m_armies.size(); ++i, offset += sizeof( LivingWorldArmy ) )
+	if( m_armies.size() == 0 )
+		return;
+
+	unsigned int offset = 0;
+	do
 	{
 		LivingWorldArmy &army = *(LivingWorldArmy *)( (char *)m_armies.begin() + offset );
 		( *(Rva00362550ArmyVisitorPtr *)visitor )->visit(
 			army.getName(), army.getCount() );
+		++i;
+		offset += sizeof( LivingWorldArmy );
 	}
+	while( i < m_armies.size() );
 }
