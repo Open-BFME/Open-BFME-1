@@ -132,6 +132,8 @@ private:
 
 FontCharsClass::~FontCharsClass()
 {
+	void (__stdcall *release)(void *);
+	int zero = 0;
 	while (BufferList.Count())
 	{
 		FontCharsBufferClass *entry = BufferList[0];
@@ -142,7 +144,7 @@ FontCharsClass::~FontCharsClass()
 		}
 		BufferList.Delete(0);
 	}
-	void (__stdcall *release)(void *) = g_release;
+	release = g_release;
 	if (GDIFont)
 	{
 		release(GDIFont);
@@ -152,7 +154,7 @@ FontCharsClass::~FontCharsClass()
 	FontCharsGDIState *state = _TheFontCharsGDIState;
 	state->Refs--;
 	state = _TheFontCharsGDIState;
-	if (state->Refs == 0)
+	if (state->Refs == zero)
 	{
 		if (state->Bitmap)
 		{
