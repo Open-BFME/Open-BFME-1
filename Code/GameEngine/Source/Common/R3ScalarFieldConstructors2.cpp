@@ -68,12 +68,12 @@ class Rva000D1930
 {
 public:
 	Rva000D1930();
-	int *m_00;
+	int *m_vtable;
 	int m_04, m_08, m_0C, m_10, m_14, m_18;
 };
 Rva000D1930::Rva000D1930()
 {
-	m_00 = &Gen01083E78;
+	m_vtable = &Gen01083E78;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;
@@ -89,12 +89,12 @@ Rva000D1930::Rva000D1930()
 	{                                                                     \
 	public:                                                               \
 		NAME();                                                           \
-		int *m_00;                                                        \
+		int *m_vtable;                                                    \
 		int m_04, m_08, m_0C, m_10, m_14, m_18;                           \
 	};                                                                    \
 	NAME::NAME()                                                          \
 	{                                                                     \
-		m_00 = &GLOBAL;                                                   \
+		m_vtable = &GLOBAL;                                               \
 		m_04 = 0;                                                         \
 		m_14 = 0;                                                         \
 		m_18 = 0;                                                         \
@@ -110,13 +110,13 @@ class Rva001611A0
 {
 public:
 	Rva001611A0();
-	int *m_00;
+	int *m_vtable;
 	int m_04, m_08, m_0C, m_10, m_14;
 	char m_18, m_19;
 };
 Rva001611A0::Rva001611A0()
 {
-	m_00 = &Gen01096964;
+	m_vtable = &Gen01096964;
 	m_04 = 0;
 	m_08 = 0;
 	m_0C = 0;
@@ -149,13 +149,13 @@ class Rva001F7810
 {
 public:
 	Rva001F7810();
-	int *m_00;
+	int *m_vtable;
 	int m_04;
 	int m_08, m_0C, m_10, m_14, m_18, m_1C;
 };
 Rva001F7810::Rva001F7810()
 {
-	m_00 = &Gen010A31A0;
+	m_vtable = &Gen010A31A0;
 	m_08 = 0x258;
 	m_0C = 0;
 	m_10 = 0;
@@ -188,7 +188,7 @@ class Rva00354B30
 public:
 	Rva00354B30();
 	int m_00;
-	int *m_04;
+	int *m_vtable;
 	int m_08, m_0C;
 	char m_10, m_11, m_12;
 };
@@ -197,7 +197,7 @@ Rva00354B30::Rva00354B30()
 	m_00 = 0;
 	m_08 = 0;
 	m_0C = 0;
-	m_04 = &Gen010E855C;
+	m_vtable = &Gen010E855C;
 	m_10 = 1;
 	m_11 = 0;
 	m_12 = 0;
@@ -209,14 +209,14 @@ class Rva00489210
 {
 public:
 	Rva00489210();
-	int *m_00;
+	int *m_vtable;
 	int m_04;
 	char m_08, m_09, m_0A;
 	int m_0C;
 };
 Rva00489210::Rva00489210()
 {
-	m_00 = &Gen010F95E8;
+	m_vtable = &Gen010F95E8;
 	m_04 = 1;
 	m_08 = 0;
 	m_09 = 1;
@@ -293,7 +293,7 @@ class Rva00203440
 {
 public:
 	Rva00203440();
-	int *m_00;
+	int *m_vtable;
 	int m_04;
 	float m_08;
 	int m_0C;
@@ -304,7 +304,7 @@ public:
 };
 Rva00203440::Rva00203440()
 {
-	m_00 = &Gen010A57B0;
+	m_vtable = &Gen010A57B0;
 	m_18 = 0;
 	m_08 = 200.0f;
 	m_0C = 15;
@@ -337,7 +337,7 @@ class Rva0039C3D0
 {
 public:
 	Rva0039C3D0();
-	int *m_00;
+	int *m_vtable;
 	int m_04;
 	char m_08;
 	int m_0C, m_10, m_14, m_18, m_1C;
@@ -346,7 +346,7 @@ Rva0039C3D0::Rva0039C3D0()
 {
 	m_04 = 0;
 	m_08 = 0;
-	m_00 = &Gen010EBDD0;
+	m_vtable = &Gen010EBDD0;
 	m_0C = 0;
 	m_10 = 0;
 	m_14 = 0;
