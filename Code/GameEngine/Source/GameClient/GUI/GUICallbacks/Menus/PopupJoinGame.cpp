@@ -71,12 +71,21 @@
 // DEFINES ////////////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
 
-static NameKeyType parentPopupID = NAMEKEY_INVALID;
-static NameKeyType textEntryGamePasswordID = NAMEKEY_INVALID;
-static NameKeyType buttonCancelID = NAMEKEY_INVALID;
+namespace PopupJoinGameState
+{
+NameKeyType parentPopupID = NAMEKEY_INVALID;
+NameKeyType textEntryGamePasswordID = NAMEKEY_INVALID;
+NameKeyType buttonCancelID = NAMEKEY_INVALID;
 
-static GameWindow *parentPopup = NULL;
-static GameWindow *textEntryGamePassword = NULL;
+GameWindow *parentPopup = NULL;
+GameWindow *textEntryGamePassword = NULL;
+
+}
+using PopupJoinGameState::parentPopupID;
+using PopupJoinGameState::textEntryGamePasswordID;
+using PopupJoinGameState::buttonCancelID;
+using PopupJoinGameState::parentPopup;
+using PopupJoinGameState::textEntryGamePassword;
 
 static void joinGame( AsciiString password );
 
@@ -87,29 +96,8 @@ static void joinGame( AsciiString password );
 //-------------------------------------------------------------------------------------------------
 /** Initialize the PopupHostGameInit menu */
 //-------------------------------------------------------------------------------------------------
-void PopupJoinGameInit( WindowLayout *layout, void *userData )
-{
-	parentPopupID = TheNameKeyGenerator->nameToKey(AsciiString("PopupJoinGame.wnd:ParentJoinPopUp"));
-	parentPopup = TheWindowManager->winGetWindowFromId(NULL, parentPopupID);
+// Byte-verified initialization is in PopupJoinGameInit.cpp; state is shared above.
 
-	textEntryGamePasswordID = TheNameKeyGenerator->nameToKey(AsciiString("PopupJoinGame.wnd:TextEntryGamePassword"));
-	textEntryGamePassword = TheWindowManager->winGetWindowFromId(parentPopup, textEntryGamePasswordID);
-	GadgetTextEntrySetText(textEntryGamePassword, UnicodeString::TheEmptyString);
-
-	NameKeyType staticTextGameNameID = TheNameKeyGenerator->nameToKey(AsciiString("PopupJoinGame.wnd:StaticTextGameName"));
-	GameWindow *staticTextGameName = TheWindowManager->winGetWindowFromId(parentPopup, staticTextGameNameID);
-	GadgetStaticTextSetText(staticTextGameName, UnicodeString::TheEmptyString);
-
-	buttonCancelID = NAMEKEY("PopupJoinGame.wnd:ButtonCancel");
-
-	GameSpyStagingRoom *ourRoom = TheGameSpyInfo->findStagingRoomByID(TheGameSpyInfo->getCurrentStagingRoomID());
-	if (ourRoom)
-		GadgetStaticTextSetText(staticTextGameName, ourRoom->getGameName());
-
-	TheWindowManager->winSetFocus( parentPopup );
-	TheWindowManager->winSetModal( parentPopup );
-
-}
 
 //-------------------------------------------------------------------------------------------------
 /** PopupHostGameInput callback */
