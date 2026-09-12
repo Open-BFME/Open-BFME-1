@@ -1045,28 +1045,9 @@ EMPTY_DTOR(DozerPrimaryGoingHomeState)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// matched via Code/masm_dumps/_sa3___0DozerPrimaryStateMachine__QAE_PAVObject___Z_2B7870.asm (AsciiString-ctor shape C++ can't reproduce)
-DozerPrimaryStateMachine::DozerPrimaryStateMachine( Object *owner ) : StateMachine( owner, "DozerPrimaryStateMachine" )
-{
-	static const StateConditionInfo idleConditions[] = 
-	{
-		StateConditionInfo(isBuildMostImportant, DOZER_PRIMARY_BUILD, NULL),
-		StateConditionInfo(isRepairMostImportant, DOZER_PRIMARY_REPAIR, NULL),
-		StateConditionInfo(isFortifyMostImportant, DOZER_PRIMARY_FORTIFY, NULL),
-		StateConditionInfo(NULL, NULL, NULL)	// keep last
-	};
+// DozerPrimaryStateMachine is defined in the dedicated BFME constructor TU.
+// See DozerPrimaryStateMachine.cpp for the byte-exact five-state graph.
 
-	// order matters: first state is the default state.
-	defineState( DOZER_PRIMARY_IDLE, newInstance(DozerPrimaryIdleState)( this ), INVALID_STATE_ID, INVALID_STATE_ID, idleConditions );
-	defineState( DOZER_PRIMARY_BUILD, newInstance(DozerActionState)( this, DOZER_TASK_BUILD ), DOZER_PRIMARY_IDLE, DOZER_PRIMARY_IDLE );
-	defineState( DOZER_PRIMARY_REPAIR, newInstance(DozerActionState)( this, DOZER_TASK_REPAIR ), DOZER_PRIMARY_IDLE, DOZER_PRIMARY_IDLE );
-	defineState( DOZER_PRIMARY_FORTIFY, newInstance(DozerActionState)( this, DOZER_TASK_FORTIFY ), DOZER_PRIMARY_IDLE, DOZER_PRIMARY_IDLE );
-	defineState( DOZER_PRIMARY_GO_HOME, newInstance(DozerPrimaryGoingHomeState)( this ), DOZER_PRIMARY_IDLE, DOZER_PRIMARY_IDLE );
-
-}  // end DozerPrimaryStateMachine
-
-//-------------------------------------------------------------------------------------------------
-//-------------------------------------------------------------------------------------------------
 // ??1DozerPrimaryStateMachine@@MAE@XZ present-unmatched
 DozerPrimaryStateMachine::~DozerPrimaryStateMachine( void )
 {

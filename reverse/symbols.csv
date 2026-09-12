@@ -87298,3 +87298,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??_7HorseHordeContainModuleData@@6B@,0x00CAF9B0,Horse factory 0x00115DE0 allocates 0x2F4 and shared ctor 0x002472D0 installs this vtable
 ??0BFMEWaterTrackTextureHandle@@QAE@ABVRva009EBCE0AssetReference@@@Z,0x0090DB70,TU-local ABI constructor alias emitted by W3DWaterTracks.cpp; alternatename targets canonical ??0Gen0090DB70@@QAE@PAX@Z at 0x0090DB70
 ?g_Rva012F340C@@3PCVDrawable@@C,0x012F340C,Address-derived drawable selection cache read at switchToContext0049E780+4D and written at+72; full1254B real C++ body witnesses data VA
+??1StateMachine@@UAE@XZ,0x00031D5E,ILT to matched StateMachine scalar destructor at 0x000A1130; retail Dozer constructor unwind target decoded from 0x00C133C0
