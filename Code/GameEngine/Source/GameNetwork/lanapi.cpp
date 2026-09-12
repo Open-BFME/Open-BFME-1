@@ -75,30 +75,7 @@ LANGame::LANGame( void )
 
 
 
-// ??0LANAPI@@QAE@XZ present-unmatched
-LANAPI::LANAPI( void ) : m_transport(NULL)
-{
-	DEBUG_LOG(("LANAPI::LANAPI() - max game option size is %d, sizeof(LANMessage)=%d, MAX_PACKET_SIZE=%d\n",
-		m_lanMaxOptionsLength, sizeof(LANMessage), MAX_PACKET_SIZE));
-
-	m_lastResendTime = 0;
-	//
-	m_lobbyPlayers = NULL;
-	m_games = NULL;
-	m_name = L""; // safe default?
-	m_pendingAction = ACT_NONE;
-	m_expiration = 0;
-	m_localIP = 0;
-	m_inLobby = true;
-	m_isInLANMenu = TRUE;
-	m_currentGame = NULL;
-	m_broadcastAddr = INADDR_BROADCAST;
-	m_directConnectRemoteIP = 0;
-	m_actionTimeout = 5000; // ms
-	m_lastUpdate = 0;
-	m_transport = new Transport;
-	m_isActive = TRUE;
-}
+// LANAPI constructor is byte-verified in LANAPIConstructor.cpp.
 
 LANAPI::~LANAPI( void )
 {
