@@ -2,9 +2,6 @@ finding,file,line,confidence,source
 AABTreeClass+0xc|m_bfmeRoot|Nodes,Code/GameEngine/Source/Common/BfmeConv911.cpp,30,1.00,layout_witness
 AICommandParmsStorage+0x0|m_payload|m_cmd,Code/GameEngine/Source/GameLogic/AI/DeployStyleAIUpdate_aiDoCommand_BFME.cpp,52,1.00,layout_witness
 AICommandParmsStorage+0x0|m_payload|m_cmd,Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceCommandDispatch.cpp,164,1.00,layout_witness
-AIGroup+0x4|m_bfmeMembers|m_memberList,Code/GameEngine/Source/GameLogic/AI/AIGroup_recompute.cpp,136,0.98,layout_witness
-AIGroup+0x4|m_bfmeMembers|m_memberList,Code/GameEngine/Source/GameLogic/AI/AIGroupForwardedOrders.cpp,303,0.98,layout_witness
-AIGroup+0x8|m_bfmeSize|m_memberListSize,Code/GameEngine/Source/GameLogic/AI/AIGroup_recompute.cpp,137,1.00,layout_witness
 AIGuardRetaliateMachine+0x44|m_positionToGuard|m_nemesisToAttack,Code/GameEngine/Source/GameLogic/AI/AIStateOnEnterBodies.cpp,198,1.00,layout_witness
 AIGuardRetaliateMachine+0x44|m_positionToGuard|m_nemesisToAttack,Code/GameEngine/Source/GameLogic/AI/AIGuardRetaliateReturnState_onEnter_Bfme.cpp,158,1.00,layout_witness
 AIInternalMoveToState+0x4c|m_adjustsDestination|m_adjustDestinations,Code/GameEngine/Source/GameLogic/AI/AIGuardReturnState_onEnter_Bfme.cpp,186,1.00,layout_witness

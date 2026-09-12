@@ -132,8 +132,8 @@ public:
 
 private:
 	char m_bfmeHead[0x04];
-	BfmeListNodeBase *m_bfmeMembers;
-	char m_bfmeSize[0x0C - 0x08];
+	BfmeListNodeBase *m_memberList;
+	unsigned int m_memberListSize;
 	float m_speed;
 	unsigned char m_dirty;
 	char m_bfmeId[0x18 - 0x11];
@@ -186,8 +186,8 @@ void AIGroup::recompute(void)
 
 	m_speed = 9999999999.9f;
 
-	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
-		it != m_bfmeMembers;
+	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
+		it != m_memberList;
 		it = it->m_bfmeNext)
 	{
 		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;

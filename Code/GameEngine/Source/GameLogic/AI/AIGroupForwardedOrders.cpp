@@ -299,7 +299,7 @@ public:
 
 private:
 	char m_bfmeHead[0x04];
-	BfmeListNodeBase *m_bfmeMembers;			// +0x04
+	BfmeListNodeBase *m_memberList;			// +0x04
 };
 
 // ?groupTightenToPosition@AIGroup@@QAEXPBUCoord3D@@_NW4CommandSourceType@@@Z
@@ -311,8 +311,8 @@ void AIGroup::groupTightenToPosition(const Coord3D *pos, bool addWaypoint,
 {
 	SimpleObjectIterator *iter = new SimpleObjectIterator;
 
-	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
-			it != m_bfmeMembers;
+	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
+			it != m_memberList;
 			it = it->m_bfmeNext)
 	{
 		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
@@ -354,8 +354,8 @@ void AIGroup::groupFollowWaypointPathAsTeam(const Waypoint *way, ::CommandSource
 
 	prepFollow(cmdSource, 0);
 
-	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
-			it != m_bfmeMembers;
+	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
+			it != m_memberList;
 			it = it->m_bfmeNext)
 	{
 		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
@@ -370,8 +370,8 @@ void AIGroup::groupFollowWaypointPathAsTeam(const Waypoint *way, ::CommandSource
 // matched aiHunt callee, ILT 0x0001C882 -> 0x000D88D0.
 void AIGroup::groupHunt(::CommandSourceType cmdSource)
 {
-	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
-			it != m_bfmeMembers;
+	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
+			it != m_memberList;
 			it = it->m_bfmeNext)
 	{
 		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
@@ -387,8 +387,8 @@ void AIGroup::groupHunt(::CommandSourceType cmdSource)
 // a structure without an AI orders its passengers out through the contain module.
 void AIGroup::groupEvacuate(::CommandSourceType cmdSource)
 {
-	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
-			it != m_bfmeMembers;
+	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
+			it != m_memberList;
 			it = it->m_bfmeNext)
 	{
 		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
@@ -425,8 +425,8 @@ void AIGroup::groupGuardPosition(const Coord3D *pos, GuardMode mode,
 	if (!pos)
 		return;
 
-	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
-			it != m_bfmeMembers;
+	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
+			it != m_memberList;
 			it = it->m_bfmeNext)
 	{
 		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
@@ -447,8 +447,8 @@ void AIGroup::groupBfmeCommand44(const PolygonTrigger *poly, int value,
 	if (!poly)
 		return;
 
-	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
-			it != m_bfmeMembers;
+	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
+			it != m_memberList;
 			it = it->m_bfmeNext)
 	{
 		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
@@ -463,8 +463,8 @@ void AIGroup::groupBfmeCommand44(const PolygonTrigger *poly, int value,
 // It is not Zero Hour's groupIdle, which takes a CommandSourceType.
 void AIGroup::groupStealthIdle()
 {
-	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
-			it != m_bfmeMembers;
+	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
+			it != m_memberList;
 			it = it->m_bfmeNext)
 	{
 		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
@@ -491,7 +491,7 @@ void AIGroup::groupStealthIdle()
 // containing one of those units is not ready; all other paths return true.
 char AIGroup::isReady()
 {
-	BfmeListNodeBase *head = m_bfmeMembers;
+	BfmeListNodeBase *head = m_memberList;
 	BfmeListNodeBase *it = head->m_bfmeNext;
 	if (it != head)
 	{
@@ -524,21 +524,21 @@ char AIGroup::isReady()
 			continue;
 		}
 
-		BfmeListNodeBase *countIt = m_bfmeMembers->m_bfmeNext;
+		BfmeListNodeBase *countIt = m_memberList->m_bfmeNext;
 		int count = 0;
-		if (countIt != m_bfmeMembers)
+		if (countIt != m_memberList)
 		{
 			do
 			{
 				countIt = countIt->m_bfmeNext;
 				++count;
-			} while (countIt != m_bfmeMembers);
+			} while (countIt != m_memberList);
 		}
 		if (count == 1)
 			return 0;
 
 		obj->leaveGroup();
-		head = m_bfmeMembers;
+		head = m_memberList;
 		it = head->m_bfmeNext;
 		if (it == head)
 			break;
