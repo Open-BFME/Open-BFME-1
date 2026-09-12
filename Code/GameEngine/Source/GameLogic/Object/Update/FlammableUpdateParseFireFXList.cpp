@@ -58,7 +58,14 @@ struct Rva002949D0Element
 class FlammableUpdateModuleData
 {
 public:
-	char m_unreconstructed_000[0x24];
+	char m_pad00[8];
+	unsigned int m_burnedDelay;
+	unsigned int m_aflameDuration;
+	unsigned int m_aflameDamageDelay;
+	int m_aflameDamageAmount;
+	void *m_burningSoundName;
+	float m_flameDamageLimitData;
+	unsigned int m_flameDamageExpirationDelay;
 	_STL::vector<_STL::Rva002949D0Element> fireFXList;
 };
 
