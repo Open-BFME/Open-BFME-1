@@ -25833,3 +25833,4 @@ tg_005c9ca0,0x005C9CA0,Generated += shape placeholder superseded by authentic ST
 ??_EGen_dtorv_0005e2d0@@UAEPAXI@Z,0x0005E2D0,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::CategoryModuleTemplateBase<8> vector-deleting destructor over the same 84-byte range"
 ??_EGen_dtorv_005d9f80@@UAEPAXI@Z,0x005D9F80,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem StreakDraw ConcreteModuleTemplate specialization vector-deleting destructor over the same 84-byte range"
 ??_GGen_dtor_0014f350@@UAEPAXI@Z,0x0014F350,"generated scalar-destructor placeholder superseded by the authentic AIInternalMoveToState scalar-deleting destructor over the same 30-byte range"
+??_GGen_dtor_0019ec50@@UAEPAXI@Z,0x0019EC50,"generated scalar-destructor placeholder superseded by the authentic SidesList scalar-deleting destructor over the same 30-byte range"
