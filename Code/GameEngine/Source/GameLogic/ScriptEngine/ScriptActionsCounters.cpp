@@ -116,7 +116,7 @@ public:
 struct Money
 {
 	unsigned char m_beforeValue[4];
-	Int m_value;
+	Int m_money;
 };
 
 // Money is inline at Player+0x48; the other two sub-objects are reached at
@@ -419,7 +419,7 @@ void ScriptActions::doSetPlayerMoneyToCounter(Parameter *player,
 			{
 				Money *money = &((BfmePlayerMoney *)thePlayer)->m_money;
 				if (money)
-					value += money->m_value;
+					value += money->m_money;
 			}
 		} while (mask);
 	}
