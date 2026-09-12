@@ -354,30 +354,37 @@ ATTEMPT_NAME = re.compile(r"^0x[0-9a-f]{8}\.cpp$")
 ATTEMPT_LIMIT = 64 * 1024
 
 
-def _attempt_paths(spec):
+def _attempt_paths(spec, sources_ok=None):
     """Stash files as they exist in the state being gated, never on disk.
 
     A working-tree scan would fail an unrelated `--ref` push over a stray
     uncommitted file, so this reads the same source of truth known_sources does.
     """
-    return sorted(p for p in known_sources(spec)
+    if sources_ok is None:
+        sources_ok = known_sources(spec)
+    return sorted(p for p in sources_ok
                   if p.startswith(ATTEMPTS_DIR) and p != ATTEMPTS_DIR)
 
 
-def check_attempts(spec, problems):
+def check_attempts(spec, problems, *, functions_raw=None, sources_ok=None):
     """Validate banked near-miss bodies under reverse/attempts/.
 
     A stash is evidence handed to the next agent, so a malformed one is worse
     than none: it gets served at a score nobody measured. Absent directory means
-    nothing banked yet, which is the normal state and passes.
+    nothing banked yet, which is the normal state and passes. ``functions_raw``
+    and ``sources_ok`` are the already-loaded bytes and source set for this
+    exact working-tree, index, or committed-ref state when called by ``main``.
+    ``None`` preserves the standalone helper's state-specific reads.
     """
-    paths = _attempt_paths(spec)
+    paths = _attempt_paths(spec, sources_ok)
     if not paths:
         return 0
     import re_log
 
     matched = {}
-    for row in csv.reader(io.StringIO(read_ledger(FUNCTIONS, spec).decode(
+    if functions_raw is None:
+        functions_raw = read_ledger(FUNCTIONS, spec)
+    for row in csv.reader(io.StringIO(functions_raw.decode(
             "utf-8", errors="replace"))):
         if len(row) == 7 and row[5] == "matched":
             matched.setdefault(row[2].lower(), []).append((row[0], row[4]))
@@ -447,21 +454,27 @@ def check_attempts(spec, problems):
 ORPHAN_BASELINE = 6
 
 
-def check_orphans(spec, problems):
+def check_orphans(spec, problems, *, functions_raw=None, sources_ok=None):
     """Refuse a NEW Code/*.cpp that owns no matched row.
 
     A source with no row is presence pretending to be progress: nothing compiles
     it, nothing verifies it, and the only check that catches it is one the
     workflow never runs. Counting rather than listing keeps this a few lines and
-    keeps the existing backlog someone else's to clear.
+    keeps the existing backlog someone else's to clear. ``functions_raw`` and
+    ``sources_ok`` are the state-specific values already loaded by ``main``;
+    omitted values retain the standalone helper's reads.
     """
     claimed = set()
-    for row in csv.reader(io.StringIO(
-            read_ledger(FUNCTIONS, spec).decode("utf-8", errors="replace"))):
+    if functions_raw is None:
+        functions_raw = read_ledger(FUNCTIONS, spec)
+    for row in csv.reader(io.StringIO(functions_raw.decode(
+            "utf-8", errors="replace"))):
         if len(row) == 7 and row[5] == "matched":
             claimed.add(row[4])
+    if sources_ok is None:
+        sources_ok = known_sources(spec)
     orphans = sorted(
-        path for path in known_sources(spec)
+        path for path in sources_ok
         if path.startswith("Code/") and path.endswith(".cpp")
         and not path.startswith(("Code/gen_asm/", "Code/gen_small/"))
         and path not in claimed)
@@ -489,13 +502,20 @@ def main():
     problems = []
     functions_raw = read_ledger(FUNCTIONS, spec)
     deleted = tombstones(read_ledger(DELETED, spec))
-    n_funcs = check_functions(functions_raw, problems, known_sources(spec), deleted)
+    # All three state-sensitive checks need the same source membership. Resolve
+    # it once, after selecting the mode: working-tree (None), index (""), and a
+    # committed ref each have different authoritative files. Never cache this
+    # set across invocations or modes.
+    sources_ok = known_sources(spec)
+    n_funcs = check_functions(functions_raw, problems, sources_ok, deleted)
     if args.staged:
         check_removed_rows(read_ledger(FUNCTIONS, "HEAD"), functions_raw,
                            deleted, problems)
     n_syms = check_symbols(read_ledger(SYMBOLS, spec), problems)
-    check_attempts(spec, problems)
-    n_orphans = check_orphans(spec, problems)
+    check_attempts(spec, problems, functions_raw=functions_raw,
+                   sources_ok=sources_ok)
+    n_orphans = check_orphans(spec, problems, functions_raw=functions_raw,
+                              sources_ok=sources_ok)
 
     if problems:
         print(f"check_csv: {len(problems)} problem(s):", file=sys.stderr)

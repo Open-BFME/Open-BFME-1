@@ -84,12 +84,12 @@ def test_mutable_modes_keep_original_source_reads(attempt_repo, monkeypatch, spe
     code.write_bytes(b'void fn() {}')
     if spec == '':
         git('add', '--', code.relative_to(root).as_posix())
-    read = Mock(wraps=check_csv.read_ledger)
-    monkeypatch.setattr(check_csv, 'read_ledger', read)
+    read = Mock(wraps=check_csv.read_blobs)
+    monkeypatch.setattr(check_csv, 'read_blobs', read)
     problems = []
     check_csv.check_attempts(spec, problems)
     assert bool(problems) == (spec != 'HEAD')
-    read.assert_any_call(code, spec)
+    read.assert_any_call([code], spec)
     # A later working/index edit is observed on the next invocation.
     code.write_bytes(b'__declspec(naked) void fn() {}')
     if spec == '':
