@@ -4023,868 +4023,6 @@ static GameWindow *createWindow( char *type,
 
 }  // end createWindow
 
-// parseChildWindows ==========================================================
-/** Parse window descriptions until an extra end is encountered indicating
-	* the end of this block of child window descriptions. */
-//=============================================================================
-// ?parseChildWindows@@YA_NPAVGameWindow@@PAVFile@@PAD@Z matched 850 bytes (Open-BFME5)
-__declspec(naked) static Bool parseChildWindows(GameWindow *, File *, char *)
-{
-	__asm
-	{
-		__emit 0x6a;
-		__emit 0xff;
-		__emit 0x68;
-		__emit 0xa8;
-		__emit 0x6a;
-		__emit 0x02;
-		__emit 0x01;
-		__emit 0x64;
-		__emit 0xa1;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x50;
-		__emit 0x64;
-		__emit 0x89;
-		__emit 0x25;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x51;
-		__emit 0x53;
-		__emit 0x8b;
-		__emit 0x5c;
-		__emit 0x24;
-		__emit 0x18;
-		__emit 0x56;
-		__emit 0x57;
-		__emit 0xc7;
-		__emit 0x44;
-		__emit 0x24;
-		__emit 0x0c;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x8b;
-		__emit 0xcb;
-		__emit 0xc7;
-		__emit 0x44;
-		__emit 0x24;
-		__emit 0x18;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0xe8;
-		__emit 0xce;
-		__emit 0x0f;
-		__emit 0xb8;
-		__emit 0xff;
-		__emit 0xf6;
-		__emit 0xc4;
-		__emit 0x20;
-		__emit 0x74;
-		__emit 0x28;
-		__emit 0x8b;
-		__emit 0xcb;
-		__emit 0xe8;
-		__emit 0x65;
-		__emit 0x02;
-		__emit 0xb9;
-		__emit 0xff;
-		__emit 0x8b;
-		__emit 0xf0;
-		__emit 0x85;
-		__emit 0xf6;
-		__emit 0x74;
-		__emit 0x1b;
-		__emit 0x8b;
-		__emit 0xce;
-		__emit 0xe8;
-		__emit 0x13;
-		__emit 0x57;
-		__emit 0xb8;
-		__emit 0xff;
-		__emit 0x8b;
-		__emit 0x0d;
-		__emit 0x40;
-		__emit 0x1b;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0xf8;
-		__emit 0x8b;
-		__emit 0x01;
-		__emit 0x56;
-		__emit 0xff;
-		__emit 0x50;
-		__emit 0x78;
-		__emit 0x85;
-		__emit 0xff;
-		__emit 0x8b;
-		__emit 0xf7;
-		__emit 0x75;
-		__emit 0xe5;
-		__emit 0xa1;
-		__emit 0xf4;
-		__emit 0x24;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0x3d;
-		__emit 0x1c;
-		__emit 0x25;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0x74;
-		__emit 0x0a;
-		__emit 0x89;
-		__emit 0x18;
-		__emit 0x83;
-		__emit 0xc0;
-		__emit 0x04;
-		__emit 0xa3;
-		__emit 0xf4;
-		__emit 0x24;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0x4c;
-		__emit 0x24;
-		__emit 0x24;
-		__emit 0x8b;
-		__emit 0x11;
-		__emit 0x8d;
-		__emit 0x44;
-		__emit 0x24;
-		__emit 0x0c;
-		__emit 0x50;
-		__emit 0xff;
-		__emit 0x52;
-		__emit 0x24;
-		__emit 0x84;
-		__emit 0xc0;
-		__emit 0x0f;
-		__emit 0x84;
-		__emit 0x44;
-		__emit 0x02;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x8d;
-		__emit 0x49;
-		__emit 0x00;
-		__emit 0x8b;
-		__emit 0x5c;
-		__emit 0x24;
-		__emit 0x0c;
-		__emit 0x85;
-		__emit 0xdb;
-		__emit 0x74;
-		__emit 0x10;
-		__emit 0x0f;
-		__emit 0xb7;
-		__emit 0x53;
-		__emit 0x04;
-		__emit 0x83;
-		__emit 0xfa;
-		__emit 0x0e;
-		__emit 0x8d;
-		__emit 0x73;
-		__emit 0x08;
-		__emit 0x7d;
-		__emit 0x0f;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x10;
-		__emit 0x33;
-		__emit 0xd2;
-		__emit 0xbe;
-		__emit 0x8b;
-		__emit 0x38;
-		__emit 0x07;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x05;
-		__emit 0xb9;
-		__emit 0x0e;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0xbf;
-		__emit 0x1c;
-		__emit 0x95;
-		__emit 0x0f;
-		__emit 0x01;
-		__emit 0x33;
-		__emit 0xc0;
-		__emit 0xf3;
-		__emit 0xa6;
-		__emit 0x74;
-		__emit 0x05;
-		__emit 0x1b;
-		__emit 0xc0;
-		__emit 0x83;
-		__emit 0xd8;
-		__emit 0xff;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x0b;
-		__emit 0x8d;
-		__emit 0x42;
-		__emit 0xf2;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x0f;
-		__emit 0x84;
-		__emit 0xfa;
-		__emit 0x01;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x85;
-		__emit 0xdb;
-		__emit 0x74;
-		__emit 0x10;
-		__emit 0x0f;
-		__emit 0xb7;
-		__emit 0x53;
-		__emit 0x04;
-		__emit 0x83;
-		__emit 0xfa;
-		__emit 0x03;
-		__emit 0x8d;
-		__emit 0x73;
-		__emit 0x08;
-		__emit 0x7d;
-		__emit 0x0f;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x10;
-		__emit 0x33;
-		__emit 0xd2;
-		__emit 0xbe;
-		__emit 0x8b;
-		__emit 0x38;
-		__emit 0x07;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x05;
-		__emit 0xb9;
-		__emit 0x03;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0xbf;
-		__emit 0xc8;
-		__emit 0x39;
-		__emit 0x0f;
-		__emit 0x01;
-		__emit 0x33;
-		__emit 0xc0;
-		__emit 0xf3;
-		__emit 0xa6;
-		__emit 0x74;
-		__emit 0x05;
-		__emit 0x1b;
-		__emit 0xc0;
-		__emit 0x83;
-		__emit 0xd8;
-		__emit 0xff;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x0b;
-		__emit 0x8d;
-		__emit 0x42;
-		__emit 0xfd;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x0f;
-		__emit 0x84;
-		__emit 0xb7;
-		__emit 0x01;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x85;
-		__emit 0xdb;
-		__emit 0x74;
-		__emit 0x10;
-		__emit 0x0f;
-		__emit 0xb7;
-		__emit 0x53;
-		__emit 0x04;
-		__emit 0x83;
-		__emit 0xfa;
-		__emit 0x0c;
-		__emit 0x8d;
-		__emit 0x73;
-		__emit 0x08;
-		__emit 0x7d;
-		__emit 0x0f;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x10;
-		__emit 0x33;
-		__emit 0xd2;
-		__emit 0xbe;
-		__emit 0x8b;
-		__emit 0x38;
-		__emit 0x07;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x05;
-		__emit 0xb9;
-		__emit 0x0c;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0xbf;
-		__emit 0x0c;
-		__emit 0x95;
-		__emit 0x0f;
-		__emit 0x01;
-		__emit 0x33;
-		__emit 0xc0;
-		__emit 0xf3;
-		__emit 0xa6;
-		__emit 0x74;
-		__emit 0x05;
-		__emit 0x1b;
-		__emit 0xc0;
-		__emit 0x83;
-		__emit 0xd8;
-		__emit 0xff;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x11;
-		__emit 0x8d;
-		__emit 0x42;
-		__emit 0xf4;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x0a;
-		__emit 0x68;
-		__emit 0x20;
-		__emit 0x25;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0xe9;
-		__emit 0x1c;
-		__emit 0x01;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x85;
-		__emit 0xdb;
-		__emit 0x74;
-		__emit 0x10;
-		__emit 0x0f;
-		__emit 0xb7;
-		__emit 0x53;
-		__emit 0x04;
-		__emit 0x83;
-		__emit 0xfa;
-		__emit 0x0d;
-		__emit 0x8d;
-		__emit 0x73;
-		__emit 0x08;
-		__emit 0x7d;
-		__emit 0x0f;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x10;
-		__emit 0x33;
-		__emit 0xd2;
-		__emit 0xbe;
-		__emit 0x8b;
-		__emit 0x38;
-		__emit 0x07;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x05;
-		__emit 0xb9;
-		__emit 0x0d;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0xbf;
-		__emit 0xfc;
-		__emit 0x94;
-		__emit 0x0f;
-		__emit 0x01;
-		__emit 0x33;
-		__emit 0xc0;
-		__emit 0xf3;
-		__emit 0xa6;
-		__emit 0x74;
-		__emit 0x05;
-		__emit 0x1b;
-		__emit 0xc0;
-		__emit 0x83;
-		__emit 0xd8;
-		__emit 0xff;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x11;
-		__emit 0x8d;
-		__emit 0x42;
-		__emit 0xf3;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x0a;
-		__emit 0x68;
-		__emit 0x24;
-		__emit 0x25;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0xe9;
-		__emit 0xd3;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x85;
-		__emit 0xdb;
-		__emit 0x74;
-		__emit 0x10;
-		__emit 0x0f;
-		__emit 0xb7;
-		__emit 0x53;
-		__emit 0x04;
-		__emit 0x83;
-		__emit 0xfa;
-		__emit 0x0b;
-		__emit 0x8d;
-		__emit 0x73;
-		__emit 0x08;
-		__emit 0x7d;
-		__emit 0x0f;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x10;
-		__emit 0x33;
-		__emit 0xd2;
-		__emit 0xbe;
-		__emit 0x8b;
-		__emit 0x38;
-		__emit 0x07;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x05;
-		__emit 0xb9;
-		__emit 0x0b;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0xbf;
-		__emit 0xec;
-		__emit 0x94;
-		__emit 0x0f;
-		__emit 0x01;
-		__emit 0x33;
-		__emit 0xc0;
-		__emit 0xf3;
-		__emit 0xa6;
-		__emit 0x74;
-		__emit 0x05;
-		__emit 0x1b;
-		__emit 0xc0;
-		__emit 0x83;
-		__emit 0xd8;
-		__emit 0xff;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x11;
-		__emit 0x8d;
-		__emit 0x42;
-		__emit 0xf5;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x0a;
-		__emit 0x68;
-		__emit 0x2c;
-		__emit 0x25;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0xe9;
-		__emit 0x8a;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x85;
-		__emit 0xdb;
-		__emit 0x74;
-		__emit 0x10;
-		__emit 0x0f;
-		__emit 0xb7;
-		__emit 0x53;
-		__emit 0x04;
-		__emit 0x83;
-		__emit 0xfa;
-		__emit 0x0d;
-		__emit 0x8d;
-		__emit 0x73;
-		__emit 0x08;
-		__emit 0x7d;
-		__emit 0x0f;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x10;
-		__emit 0x33;
-		__emit 0xd2;
-		__emit 0xbe;
-		__emit 0x8b;
-		__emit 0x38;
-		__emit 0x07;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x05;
-		__emit 0xb9;
-		__emit 0x0d;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0xbf;
-		__emit 0xdc;
-		__emit 0x94;
-		__emit 0x0f;
-		__emit 0x01;
-		__emit 0x33;
-		__emit 0xc0;
-		__emit 0xf3;
-		__emit 0xa6;
-		__emit 0x74;
-		__emit 0x05;
-		__emit 0x1b;
-		__emit 0xc0;
-		__emit 0x83;
-		__emit 0xd8;
-		__emit 0xff;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x0e;
-		__emit 0x8d;
-		__emit 0x42;
-		__emit 0xf3;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x07;
-		__emit 0x68;
-		__emit 0x30;
-		__emit 0x25;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0xeb;
-		__emit 0x44;
-		__emit 0x85;
-		__emit 0xdb;
-		__emit 0x74;
-		__emit 0x10;
-		__emit 0x0f;
-		__emit 0xb7;
-		__emit 0x53;
-		__emit 0x04;
-		__emit 0x83;
-		__emit 0xfa;
-		__emit 0x09;
-		__emit 0x8d;
-		__emit 0x73;
-		__emit 0x08;
-		__emit 0x7d;
-		__emit 0x0f;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x10;
-		__emit 0x33;
-		__emit 0xd2;
-		__emit 0xbe;
-		__emit 0x8b;
-		__emit 0x38;
-		__emit 0x07;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0xca;
-		__emit 0xeb;
-		__emit 0x05;
-		__emit 0xb9;
-		__emit 0x09;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0xbf;
-		__emit 0xc4;
-		__emit 0x90;
-		__emit 0x0f;
-		__emit 0x01;
-		__emit 0x33;
-		__emit 0xc0;
-		__emit 0xf3;
-		__emit 0xa6;
-		__emit 0x74;
-		__emit 0x05;
-		__emit 0x1b;
-		__emit 0xc0;
-		__emit 0x83;
-		__emit 0xd8;
-		__emit 0xff;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x20;
-		__emit 0x8d;
-		__emit 0x42;
-		__emit 0xf7;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x19;
-		__emit 0x68;
-		__emit 0x34;
-		__emit 0x25;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0x5c;
-		__emit 0x24;
-		__emit 0x2c;
-		__emit 0x8b;
-		__emit 0x4c;
-		__emit 0x24;
-		__emit 0x28;
-		__emit 0xe8;
-		__emit 0x94;
-		__emit 0xdb;
-		__emit 0xff;
-		__emit 0xff;
-		__emit 0x83;
-		__emit 0xc4;
-		__emit 0x04;
-		__emit 0x84;
-		__emit 0xc0;
-		__emit 0xeb;
-		__emit 0x26;
-		__emit 0x68;
-		__emit 0xd4;
-		__emit 0x94;
-		__emit 0x0f;
-		__emit 0x01;
-		__emit 0x8d;
-		__emit 0x4c;
-		__emit 0x24;
-		__emit 0x10;
-		__emit 0xe8;
-		__emit 0x29;
-		__emit 0x32;
-		__emit 0xbc;
-		__emit 0xff;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x75;
-		__emit 0x16;
-		__emit 0x8b;
-		__emit 0x4c;
-		__emit 0x24;
-		__emit 0x28;
-		__emit 0x8b;
-		__emit 0x54;
-		__emit 0x24;
-		__emit 0x24;
-		__emit 0x51;
-		__emit 0x52;
-		__emit 0xe8;
-		__emit 0x7c;
-		__emit 0x01;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x83;
-		__emit 0xc4;
-		__emit 0x08;
-		__emit 0x85;
-		__emit 0xc0;
-		__emit 0x74;
-		__emit 0x72;
-		__emit 0x8b;
-		__emit 0x4c;
-		__emit 0x24;
-		__emit 0x24;
-		__emit 0x8b;
-		__emit 0x01;
-		__emit 0x8d;
-		__emit 0x54;
-		__emit 0x24;
-		__emit 0x0c;
-		__emit 0x52;
-		__emit 0xff;
-		__emit 0x50;
-		__emit 0x24;
-		__emit 0x84;
-		__emit 0xc0;
-		__emit 0x0f;
-		__emit 0x85;
-		__emit 0xbf;
-		__emit 0xfd;
-		__emit 0xff;
-		__emit 0xff;
-		__emit 0xa1;
-		__emit 0xf4;
-		__emit 0x24;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0x3d;
-		__emit 0xf8;
-		__emit 0x24;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0x75;
-		__emit 0x04;
-		__emit 0x33;
-		__emit 0xc0;
-		__emit 0xeb;
-		__emit 0x0a;
-		__emit 0x83;
-		__emit 0xe8;
-		__emit 0x04;
-		__emit 0xa3;
-		__emit 0xf4;
-		__emit 0x24;
-		__emit 0x2f;
-		__emit 0x01;
-		__emit 0x8b;
-		__emit 0x00;
-		__emit 0x8b;
-		__emit 0x74;
-		__emit 0x24;
-		__emit 0x20;
-		__emit 0x3b;
-		__emit 0xc6;
-		__emit 0x75;
-		__emit 0x3a;
-		__emit 0x8b;
-		__emit 0xce;
-		__emit 0xe8;
-		__emit 0x08;
-		__emit 0x0d;
-		__emit 0xb8;
-		__emit 0xff;
-		__emit 0xf6;
-		__emit 0xc4;
-		__emit 0x20;
-		__emit 0x74;
-		__emit 0x09;
-		__emit 0x56;
-		__emit 0xe8;
-		__emit 0x7e;
-		__emit 0xc2;
-		__emit 0xb8;
-		__emit 0xff;
-		__emit 0x83;
-		__emit 0xc4;
-		__emit 0x04;
-		__emit 0x8d;
-		__emit 0x4c;
-		__emit 0x24;
-		__emit 0x0c;
-		__emit 0xc7;
-		__emit 0x44;
-		__emit 0x24;
-		__emit 0x18;
-		__emit 0xff;
-		__emit 0xff;
-		__emit 0xff;
-		__emit 0xff;
-		__emit 0xe8;
-		__emit 0xd7;
-		__emit 0xfa;
-		__emit 0x3f;
-		__emit 0x00;
-		__emit 0x5f;
-		__emit 0x5e;
-		__emit 0xb0;
-		__emit 0x01;
-		__emit 0x5b;
-		__emit 0x8b;
-		__emit 0x4c;
-		__emit 0x24;
-		__emit 0x04;
-		__emit 0x64;
-		__emit 0x89;
-		__emit 0x0d;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x83;
-		__emit 0xc4;
-		__emit 0x10;
-		__emit 0xc3;
-		__emit 0x8d;
-		__emit 0x4c;
-		__emit 0x24;
-		__emit 0x0c;
-		__emit 0xc7;
-		__emit 0x44;
-		__emit 0x24;
-		__emit 0x18;
-		__emit 0xff;
-		__emit 0xff;
-		__emit 0xff;
-		__emit 0xff;
-		__emit 0xe8;
-		__emit 0xb2;
-		__emit 0xfa;
-		__emit 0x3f;
-		__emit 0x00;
-		__emit 0x8b;
-		__emit 0x4c;
-		__emit 0x24;
-		__emit 0x10;
-		__emit 0x5f;
-		__emit 0x5e;
-		__emit 0x32;
-		__emit 0xc0;
-		__emit 0x5b;
-		__emit 0x64;
-		__emit 0x89;
-		__emit 0x0d;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x00;
-		__emit 0x83;
-		__emit 0xc4;
-		__emit 0x10;
-		__emit 0xc3;
-	}
-}
-
 // lookup table for parsing functions
 static GameWindowParse gameWindowFieldList[] = 
 {
@@ -6276,6 +5414,201 @@ __declspec(naked) static GameWindow *parseWindow(File *, char *)
 		__emit 0xff;
 	}
 }
+
+// parseChildWindows: real C++ conversion with the retail string and File ABI views
+// parseChildWindows uses the retail stack update inline; keep the matched
+// pushWindow body out of this conversion so its independent ledger row stays stable.
+static inline void pushWindowForParseChild( GameWindow *window )
+{
+
+  if( stackPtr == &windowStack[ WIN_STACK_DEPTH - 1 ] )
+	{
+
+    DEBUG_LOG(( "pushWindow: Warning, stack overflow\n" ));
+    return;
+
+  }  // end if
+
+  *stackPtr++ = window;
+
+}  // end pushWindowForParseChild
+template <typename T>
+struct BfmeParseStringData
+{
+    int refCount;
+    unsigned short length;
+    unsigned short capacity;
+    T text[1];
+};
+template <typename T>
+class StringBase
+{
+    friend class RetailWindowString;
+private:
+    StringBase() : m_data(0) {}
+    void releaseBuffer();
+public:
+    int compare(const char *s) const;
+protected:
+    BfmeParseStringData<T> *m_data;
+};
+class RetailWindowString : private StringBase<char>
+{
+public:
+    RetailWindowString() : StringBase<char>() {}
+    ~RetailWindowString() { releaseBuffer(); }
+    int compareExternal(const char *s) const
+    {
+        return ((const StringBase<char> *)this)->compare(s);
+    }
+    template <int N>
+    int compare(const char (&s)[N]) const
+    {
+        BfmeParseStringData<char> *d = m_data;
+        int length = d ? d->length : 0;
+        const char *text = d ? d->text : "";
+        int literalLength = N - 1;
+        int n = length < literalLength ? length : literalLength;
+        int c = memcmp(text, s, n);
+        if (c != 0)
+            return c;
+        return length - literalLength;
+    }
+};class File_RetailScanIface
+{
+public:
+    virtual void slot00();
+    virtual void slot01();
+    virtual void slot02();
+    virtual void slot03();
+    virtual void slot04();
+    virtual void slot05();
+    virtual void slot06();
+    virtual void slot07();
+    virtual void slot08();
+    virtual Bool scanString(RetailWindowString &);
+};
+static Bool parseChildWindows( GameWindow *window,
+															 File *inFile,
+															 char *buffer )
+{
+  GameWindow *lastWindow;
+	RetailWindowString asciibuf;
+
+	//The gadget with children needs to delete its default created children in favor
+	//of the ones from the script file.  So kill them before reading.
+	if( BitTest( window->winGetStyle(), GWS_TAB_CONTROL ) )
+	{
+		GameWindow *nextWindow = NULL;
+		for( GameWindow *myChild = window->winGetChild(); myChild; myChild = nextWindow )
+		{
+			nextWindow = myChild->winGetNext();
+			TheWindowManager->winDestroy( myChild );
+		}
+	}
+
+		// Push the current window onto the stack so we know it's the parent
+  pushWindowForParseChild( window );
+
+	while( TRUE )
+	{
+
+		if (reinterpret_cast<File_RetailScanIface *>(inFile)->scanString(asciibuf) == FALSE) {
+			break;
+		}
+
+		if (asciibuf.compare("ENDALLCHILDREN") == 0) {
+			break;
+		}
+
+		if (asciibuf.compare("END") == 0) {
+      break;
+		}
+
+		if (asciibuf.compare("ENABLEDCOLOR") == 0)
+		{
+
+			if( parseDefaultColor( &defEnabledColor, inFile, buffer ) == FALSE )
+			{
+				return FALSE;
+			}
+
+		}
+		else if (asciibuf.compare("DISABLEDCOLOR") == 0)
+		{
+
+			if( parseDefaultColor( &defDisabledColor, inFile, buffer ) == FALSE )
+			{
+				return FALSE;
+			}
+
+		}
+		else if (asciibuf.compare("HILITECOLOR") == 0)
+		{
+
+			if( parseDefaultColor( &defHiliteColor, inFile, buffer ) == FALSE )
+			{
+				return FALSE;
+			}
+
+		}
+		else if (asciibuf.compare("SELECTEDCOLOR") == 0)
+		{
+
+			if( parseDefaultColor( &defSelectedColor, inFile, buffer ) == FALSE )
+			{
+				return FALSE;
+			}
+
+		}
+		else if (asciibuf.compare("TEXTCOLOR") == 0)
+		{
+
+			if( parseDefaultColor( &defTextColor, inFile, buffer ) == FALSE )
+			{
+				return FALSE;
+			}
+
+		}
+		else if (asciibuf.compareExternal("WINDOW") == 0)
+		{
+
+      // Parse window descriptions until the last END is read
+			if( parseWindow( inFile, buffer ) == NULL )
+			{
+				return FALSE;
+			}
+
+		}
+
+	}  // end while( TRUE )
+
+  // Pop the current window off the stack
+  lastWindow = popWindow();
+
+  if( lastWindow != window )
+	{
+
+    DEBUG_LOG(( "parseChildWindows: unmatched window on stack.  Corrupt stack or bad source\n" ));
+    return FALSE;
+
+  }
+
+	if( BitTest( window->winGetStyle(), GWS_TAB_CONTROL ) )
+		GadgetTabControlFixupSubPaneList( window );//all children created, so re-fill SubPane array with children
+
+  return TRUE;
+
+}  // end parseChildWindows
+
+// Keep this real C++ body live while the retail parseWindow body remains a
+// byte-accurate emitted sibling; the retail call is encoded in that sibling.
+// ?retainParseChildWindows@@YAXPAVGameWindow@@PAVFile@@PAD@Z absent-from-retail
+void retainParseChildWindows( GameWindow *window, File *inFile, char *buffer )
+{
+  (void)parseChildWindows( window, inFile, buffer );
+}
+
 
 //=================================================================================================
 //=================================================================================================
