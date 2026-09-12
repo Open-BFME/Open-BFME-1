@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c308e1f142335f76f4f47cde733b8ecb6bb8ba196e1ca0d24e15ea0274c207fc",
+  "symbol": "?bfmeHasFK@BfmeHostFK@@QAEDPBVBfmeHolderFK@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?bfmeHasFK@BfmeHostFK@@QAEDPBVBfmeHolderFK@@@Z\n// partial score=0.9 date=2026-09-12\nextern \"C\" int memcmp(const void *a, const void *b, unsigned int n);\n\n#pragma intrinsic(memcmp)\n\nextern char *Rva006A16B0Empty;\n\nclass BfmeStrFK\n{\npublic:\n\tunsigned char m_bfmeHeadFK[4];\n\tunsigned short m_bfmeLenFK;\n\tunsigned char m_bfmeGapFK[2];\n\tchar m_bfmeDataFK[1];\n};\n\nclass BfmeHolderFK\n{\npublic:\n\tunsigned char m_bfmeHeadFK[0x20];\n\tBfmeStrFK *m_bfmeStrFK;\n};\n\nclass BfmeHostFK\n{\npublic:\n\tchar bfmeHasFK(const BfmeHolderFK *h);\n\n\tunsigned char m_bfmeHeadFK[0x2d0];\n\tBfmeStrFK **m_bfmeBeginFK;\n\tBfmeStrFK **m_bfmeEndFK;\n};\n\nchar BfmeHostFK::bfmeHasFK(const BfmeHolderFK *h)\n{\n\tBfmeStrFK **p = m_bfmeBeginFK;\n\tBfmeStrFK **e = m_bfmeEndFK;\n\n\tif (p == e)\n\t\treturn 0;\n\n\twhile (p != e)\n\t{\n\t\tBfmeStrFK *a = *p;\n\t\tint alen = a != 0 ? a->m_bfmeLenFK : 0;\n\t\tconst char *ad = a != 0 ? a->m_bfmeDataFK : (const char *)&Rva006A16B0Empty;\n\n\t\tBfmeStrFK *b = *(BfmeStrFK *volatile *)&h->m_bfmeStrFK;\n\t\tint blen = b != 0 ? b->m_bfmeLenFK : 0;\n\t\tconst char *bd = b != 0 ? b->m_bfmeDataFK : (const char *)&Rva006A16B0Empty;\n\n\t\tint n = blen < alen ? blen : alen;\n\t\tint r = memcmp(bd, ad, n);\n\n\t\tif (r == 0)\n\t\t\tr = blen - alen;\n\n\t\tif (r == 0)\n\t\t\treturn 1;\n\n\t\t++p;\n\t}\n\n\treturn 0;\n}\n"
+}
