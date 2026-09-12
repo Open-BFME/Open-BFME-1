@@ -260,6 +260,69 @@ void Rva003CD260::run( Y1ForEachArg *first, Y1ForEachArg *second )
 		it->call( first, second );
 }
 
+// ---------------------------------------------------------------- shape G ---
+// 0x003D0720 walks four inline ranges of the same 0x3C-byte elements as
+// Rva003CD260, then dispatches the owner through the 0x0000F2EA thunk twice.
+
+class Rva003D0720Range
+{
+public:
+	char m_lead[ 8 ];
+	Gen000135B1 *m_begin;
+	Gen000135B1 *m_end;
+};
+
+class Rva003D0720Tail
+{
+public:
+	void dispatch( Y1ForEachArg *, void *, Y1ForEachArg * );
+};
+
+extern void j_0000f2ea();
+
+class Rva003D0720
+{
+public:
+	char m_lead[ 0x10 ];
+	Rva003D0720Range *m_ranges[ 4 ];
+	char m_mid[ 4 ];
+	char m_x24[ 0x0C ];
+	char m_x30[ 4 ];
+
+	void run( Y1ForEachArg *, Y1ForEachArg * );
+};
+
+void Rva003D0720::run( Y1ForEachArg *first, Y1ForEachArg *second )
+{
+	Rva003D0720Range **range = m_ranges;
+	int count = 4;
+	do
+	{
+		Rva003D0720Range *current = *range;
+		if ( current != 0 )
+		{
+			for ( Gen000135B1 *it = current->m_begin;
+				it != current->m_end; ++it )
+				it->call( first, second );
+		}
+
+		++range;
+		--count;
+	} while ( count != 0 );
+
+	typedef void (Rva003D0720Tail::*TailCall)( Y1ForEachArg *, void *, Y1ForEachArg * );
+	union
+	{
+		void (*raw)( void );
+		TailCall member;
+	} tail;
+	tail.raw = j_0000f2ea;
+	( reinterpret_cast<Rva003D0720Tail *>( this )->*tail.member )(
+		first, (char *)this + 0x30, second );
+	( reinterpret_cast<Rva003D0720Tail *>( this )->*tail.member )(
+		first, (char *)this + 0x24, second );
+}
+
 // ---------------------------------------------------------------- shape D ---
 class Gen00036A9D
 {
