@@ -1,92 +1,74 @@
 // cl: /DNDEBUG /MD /EHsc
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CashHackSpecialPower.h
-class CashHackSpecialPower
+enum ScienceType
 {
-protected:
-    int findAmountToSteal() const;
+	SCIENCE_UNRECONSTRUCTED
 };
 
-__declspec(naked) int CashHackSpecialPower::findAmountToSteal() const
+class Player
 {
-    __asm {
-        _emit 053h
-        _emit 056h
-        _emit 057h
-        _emit 08Bh
-        _emit 079h
-        _emit 004h
-        _emit 08Bh
-        _emit 049h
-        _emit 008h
-        _emit 0E8h
-        _emit 086h
-        _emit 082h
-        _emit 0DCh
-        _emit 0FFh
-        _emit 08Bh
-        _emit 0D8h
-        _emit 085h
-        _emit 0DBh
-        _emit 074h
-        _emit 029h
-        _emit 08Bh
-        _emit 0B7h
-        _emit 010h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 03Bh
-        _emit 0B7h
-        _emit 014h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 074h
-        _emit 01Bh
-        _emit 08Bh
-        _emit 006h
-        _emit 050h
-        _emit 08Bh
-        _emit 0CBh
-        _emit 0E8h
-        _emit 083h
-        _emit 00Eh
-        _emit 0DBh
-        _emit 0FFh
-        _emit 084h
-        _emit 0C0h
-        _emit 075h
-        _emit 017h
-        _emit 08Bh
-        _emit 087h
-        _emit 014h
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 083h
-        _emit 0C6h
-        _emit 008h
-        _emit 03Bh
-        _emit 0F0h
-        _emit 075h
-        _emit 0E5h
-        _emit 08Bh
-        _emit 087h
-        _emit 01Ch
-        _emit 002h
-        _emit 000h
-        _emit 000h
-        _emit 05Fh
-        _emit 05Eh
-        _emit 05Bh
-        _emit 0C3h
-        _emit 08Bh
-        _emit 046h
-        _emit 004h
-        _emit 05Fh
-        _emit 05Eh
-        _emit 05Bh
-        _emit 0C3h
-    }
+public:
+	bool hasScience(ScienceType science) const;
+};
+
+class Object
+{
+public:
+	Player *getControllingPlayer(void) const;
+};
+
+struct CashHackUpgrade
+{
+	ScienceType m_science;
+	int m_amountToSteal;
+};
+
+struct CashHackUpgradeVector
+{
+	CashHackUpgrade *m_begin;
+	CashHackUpgrade *m_end;
+	CashHackUpgrade *m_capacity;
+
+	const CashHackUpgrade *begin(void) const { return m_begin; }
+	const CashHackUpgrade *end(void) const { return m_end; }
+};
+
+class CashHackSpecialPowerModuleData
+{
+	char m_beforeUpgrades[0x210];
+
+public:
+	CashHackUpgradeVector m_upgrades;
+	int m_defaultAmountToSteal;
+};
+
+class CashHackSpecialPower
+{
+	char m_beforeModuleData[4];
+	CashHackSpecialPowerModuleData *m_moduleData;
+	Object *m_object;
+
+protected:
+	int findAmountToSteal() const;
+};
+
+#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
+#pragma comment(linker, "/alternatename:?hasScience@Player@@QBE_NW4ScienceType@@@Z=?j_0000943f@@YAXXZ")
+
+int CashHackSpecialPower::findAmountToSteal() const
+{
+	const CashHackSpecialPowerModuleData *d = m_moduleData;
+	const Player *controller = m_object->getControllingPlayer();
+	if (controller != 0)
+	{
+		for (const CashHackUpgrade *it = d->m_upgrades.begin();
+			it != d->m_upgrades.end();
+			++it)
+		{
+			if (controller->hasScience(it->m_science))
+				return it->m_amountToSteal;
+		}
+	}
+	return d->m_defaultAmountToSteal;
 }
