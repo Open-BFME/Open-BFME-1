@@ -346,9 +346,6 @@ INI+0x0|m_unreconstructed_000|m_file,Code/GameEngine/Source/GameLogic/Object/Upd
 INI+0x0|m_unreconstructed|m_file,Code/GameEngine/Source/Common/INI/INI_fieldParsers.cpp,94,1.00,layout_witness
 INI+0x0|m_unreconstructed|m_file,Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/ModelConditionInfo_parseModel.cpp,25,1.00,layout_witness
 IPEnumeration+0x0|m_addresses|m_IPlist,Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobbyInitLan.cpp,103,1.00,layout_witness
-Image+0x24|m_imageWidth|m_imageSize,Code/GameEngine/Source/Common/insertPlayerInListbox_Thunk.cpp,62,1.00,layout_witness
-Image+0x24|m_imageWidth|m_imageSize,Code/GameEngine/Source/GameClient/System/Anim2DConstructor.cpp,40,1.00,layout_witness
-Image+0x24|m_width|m_imageSize,Code/GameEngine/Source/GameClient/GUI/OnlineCustomMatchInsertGame.cpp,64,1.00,layout_witness
 Keyboard+0xa|m_bfmeKeyboardTail|m_shift2Key,Code/GameEngineDevice/Source/Win32Device/GameClient/Win32DIKeyboardDtor.cpp,53,1.00,layout_witness
 Keyboard+0xa|m_bfmeKeyboardTail|m_shift2Key,Code/GameEngineDevice/Source/Win32Device/GameClient/Win32DIKeyboardCtor.cpp,49,1.00,layout_witness
 LANAPI+0x10|m_bfmeHeadB|m_name,Code/GameEngine/Source/GameNetwork/LANAPIGames.cpp,226,1.00,layout_witness
