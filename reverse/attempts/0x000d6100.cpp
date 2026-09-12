@@ -66,22 +66,21 @@ public:
 long Player::getRva0058B590Value(int value) const
 {
 	Real result = BfmeZeroRange;
+	Int valueIndex = 0;
 	BfmePlayerValueNode *anchor = *(BfmePlayerValueNode **)((const unsigned char *)this + 0x640);
 	BfmePlayerValueNode *node = anchor->m_next;
-	Int valueIndex = 0;
 
 	if (node != anchor)
 	{
 		while (node != anchor)
 		{
 			BfmePlayerValue *entry = node->m_value;
-			UnsignedInt objectID = entry->m_objectID;
-			if (objectID != 0)
+			if (entry->m_objectID != 0)
 			{
 				BfmeObjectHashNode **buckets = TheBfmeGameLogic->m_objectBucketsBegin;
 				UnsignedInt bucketCount = (UnsignedInt)(TheBfmeGameLogic->m_objectBucketsEnd - buckets);
-				BfmeObjectHashNode *hash = buckets[objectID % bucketCount];
-				while (hash != NULL && hash->m_id != objectID)
+				BfmeObjectHashNode *hash = buckets[entry->m_objectID % bucketCount];
+				while (hash != NULL && hash->m_id != entry->m_objectID)
 					hash = hash->m_next;
 				if (hash != NULL)
 				{
