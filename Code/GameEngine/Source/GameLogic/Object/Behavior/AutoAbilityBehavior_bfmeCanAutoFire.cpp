@@ -43,7 +43,7 @@ public:
 	Bool bfmeCanUseCommandButton(const CommandButton *button) const;
 
 	unsigned char m_pad_000[0x90];
-	UnsignedInt m_status90;
+	UnsignedInt m_status;
 	unsigned char m_pad_094[4];
 	UnsignedInt m_status98;
 	unsigned char m_pad_09C[0x11C - 0x9C];
@@ -79,7 +79,7 @@ Bool AutoAbilityBehavior::bfmeCanAutoFire() const
 	if (obj->m_model120 & 0x02000000)
 		return false;
 
-	UnsignedInt status90 = obj->m_status90;
+	UnsignedInt status90 = obj->m_status;
 	if ((status90 & 0x8000) != 0 && (status90 & 0x20000) == 0)
 		return false;
 	if (obj->m_status98 & 0x200)
