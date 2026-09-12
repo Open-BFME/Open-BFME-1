@@ -71,7 +71,10 @@ class CrateTemplate : public Overridable
 public:
 	int m_pad08;
 	AsciiString m_name;
-	char m_pad10[0x24];
+	int m_creationChance;
+	int m_veterancyLevel;
+	char m_pad18[0x18];
+	int m_killerScience;
 	CrateTemplateCrateList m_crateData;
 
 protected:
