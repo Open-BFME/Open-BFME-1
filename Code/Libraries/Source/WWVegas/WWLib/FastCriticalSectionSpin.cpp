@@ -10,56 +10,22 @@ public:
 	};
 };
 
-__declspec(naked) void __fastcall FastCriticalSectionClass::LockClass::spin(unsigned int *)
+void bfmeGoDWI();
+
+void __fastcall FastCriticalSectionClass::LockClass::spin(unsigned int *lock)
 {
-	__asm {
-		_emit 055h
-		_emit 08Bh
-		_emit 0ECh
-		_emit 083h
-		_emit 0ECh
-		_emit 008h
-		_emit 053h
-		_emit 089h
-		_emit 04Dh
-		_emit 0F8h
-		_emit 08Bh
-		_emit 045h
-		_emit 0F8h
-		_emit 089h
-		_emit 045h
-		_emit 0FCh
-		_emit 08Bh
-		_emit 05Dh
-		_emit 0FCh
-		_emit 0F0h
-		_emit 00Fh
-		_emit 0BAh
-		_emit 02Bh
-		_emit 000h
-		_emit 072h
-		_emit 002h
-		_emit 0EBh
-		_emit 00Fh
-		_emit 0E8h
-		_emit 06Fh
-		_emit 0A4h
-		_emit 030h
-		_emit 000h
-		_emit 08Bh
-		_emit 05Dh
-		_emit 0FCh
-		_emit 0F0h
-		_emit 00Fh
-		_emit 0BAh
-		_emit 02Bh
-		_emit 000h
-		_emit 072h
-		_emit 0F1h
-		_emit 05Bh
-		_emit 08Bh
-		_emit 0E5h
-		_emit 05Dh
-		_emit 0C3h
-	}
+	unsigned int &flag = *lock;
+	__asm mov ebx, [flag]
+	__asm lock bts dword ptr [ebx], 0
+	__asm jc retry
+	__asm jmp acquired
+
+retry:
+	bfmeGoDWI();
+	__asm mov ebx, [flag]
+	__asm lock bts dword ptr [ebx], 0
+	__asm jc retry
+
+acquired:
+	;
 }
