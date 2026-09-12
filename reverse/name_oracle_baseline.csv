@@ -261,12 +261,6 @@ GameSlot+0x4|m_body|m_state,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpySt
 GameSlot+0x4|m_isAccepted|m_state,Code/GameEngine/Source/GameNetwork/GameInfo_allSameTeam.cpp,32,1.00,layout_witness
 GameSlot+0x4|m_prefix|m_state,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlot_constructor.cpp,37,1.00,layout_witness
 GameSlot+0x4|m_unreconstructed_04|m_state,Code/GameEngine/Source/GameLogic/System/GameLogicPopulateGameReport.cpp,94,1.00,layout_witness
-GameSlot+0xa|m_muted|m_isMuted,Code/GameEngine/Source/GameClient/BfmeAptScreenLanLobby_applySlotTeam.cpp,49,1.00,layout_witness
-GameSlot+0xa|m_muted|m_isMuted,Code/GameEngine/Source/GameClient/BfmeAptScreenLanLobby_applySlotPlayerTemplate.cpp,70,1.00,layout_witness
-GameSlot+0xa|m_muted|m_isMuted,Code/GameEngine/Source/GameClient/GUI/OnlineCustomMatchApplySlotPlayerTemplate.cpp,73,1.00,layout_witness
-GameSlot+0xa|m_muted|m_isMuted,Code/GameEngine/Source/GameClient/GUI/OnlineCustomMatchApplyLocalSlot.cpp,23,1.00,layout_witness
-GameSlot+0xa|m_muted|m_isMuted,Code/GameEngine/Source/GameClient/GUI/OnlineCustomMatchApplySlotColor.cpp,72,1.00,layout_witness
-GameSlot+0xa|m_muted|m_isMuted,Code/GameEngine/Source/GameClient/GUI/SkirmishScreenApplySlotPlayerTemplate.cpp,36,1.00,layout_witness
 GameSpyInfo+0x14|m_ping|m_pingString,Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoSetPingStringThunk.cpp,21,1.00,layout_witness
 GameWindow+0x1fc|m_previous|m_prev,Code/GameEngine/Source/GameClient/GUI/GameWindowManager_drawWindow_Thunk.cpp,47,1.00,layout_witness
 GeometryInfo+0x18|m_centerOffset|m_boundingCircleRadius,Code/GameEngine/Source/Common/GeometryInfoCalcPitches.cpp,39,1.00,layout_witness

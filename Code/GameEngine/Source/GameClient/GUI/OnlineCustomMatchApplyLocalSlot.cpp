@@ -19,7 +19,7 @@ private:
 	int m_state;
 	unsigned char m_accepted;
 	unsigned char m_hasMap;
-	unsigned char m_muted;
+	unsigned char m_isMuted;
 	unsigned char m_pad;
 	int m_color;
 	int m_startPos;
