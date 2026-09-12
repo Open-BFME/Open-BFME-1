@@ -1,6 +1,10 @@
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// DockUpdate::onEnterReached reconstructed from the BFME retail body at 0x002CDDF0.
+// MonsterDockUpdate::onApproachReached, retail RVA 0x002CDDF0 (216 bytes).
+// The MonsterDockUpdate constructor and destructor install DockUpdateInterface
+// vtable 0x010CA9F0: slot 8 routes through 0x00029181 to this body. The base
+// vtable 0x010CA800 has onApproachReached in that slot, and this override calls
+// it through 0x0001A6E0 -> 0x002CBCC0. onEnterReached is the next slot.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
@@ -72,10 +76,15 @@ class DockUpdate
 {
 public:
 	virtual void onApproachReached(Object *docker);
-	virtual void onEnterReached(Object *docker);
 };
 
-void DockUpdate::onEnterReached(Object *docker)
+class MonsterDockUpdate : public DockUpdate
+{
+public:
+	virtual void onApproachReached(Object *docker);
+};
+
+void MonsterDockUpdate::onApproachReached(Object *docker)
 {
 	DockUpdate::onApproachReached(docker);
 	GameLogic *logic = TheGameLogic;
