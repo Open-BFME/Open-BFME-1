@@ -1,10 +1,15 @@
-// ?applySlotPlayerTemplate@BfmeAptScreenLanLobby@@QAE_NPAVGameSlot@@H@Z
-// partial score=0.87 date=2026-09-08
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // BfmeAptScreenLanLobby::applySlotPlayerTemplate, retail 0x00518DF0.
 // The secondary APT callback updates the LAN slot, sends the new player
 // template through LANAPI, and stores the local template in preferences.
+// Secondary vtable VA 0x01105A28 slot 4 routes through ILT 0x0003E243
+// to this complete 398-byte body. The receiver is the secondary subobject
+// at screen +0x258, making its prefs +0x138 the full screen prefs +0x390.
+// The preference store is followed by vslot 0x0c; omitting that call was
+// a semantic bug in the earlier bank, not merely a nine-byte shape gap.
+// LANPreferences ctor 0x00086480 installs vtable 0x0107C6F8: slot 3
+// follows ILT 0x00030495 to the named UserPreferences::write at 0x000A9F60.
 
 template <typename T> struct StringData
 {
@@ -66,6 +71,9 @@ public:
 	int m_color;
 	int m_startPos;
 	int m_playerTemplate;
+
+	// Match the accessor used by the already recovered team callback.
+	int getPlayerTemplate() const { return m_playerTemplate; }
 };
 
 class LANGameInfo
@@ -147,7 +155,7 @@ public:
 
 extern LANAPI *TheLAN;
 
-class BfmeHostGame : public LANGameInfo
+class BfmeThing935B
 {
 public:
 	char bfmeGo935B();
@@ -157,6 +165,10 @@ class Open2Option087010
 {
 public:
 	void store( int value );
+ virtual void v0();
+ virtual void v1();
+ virtual void v2();
+ virtual bool write();
 };
 
 class BfmeAptScreenLanLobby
@@ -183,7 +195,7 @@ bool BfmeAptScreenLanLobby::applySlotPlayerTemplate(
 		slot->m_startPos = -1;
 
 	game->resetAccepted();
-	if( ( (BfmeHostGame *)game )->bfmeGo935B() )
+	if( ( (BfmeThing935B *)game )->bfmeGo935B() )
 	{
 		TransportAddress address;
 		TheLAN->requestSerializedGameInfo( true, &address );
@@ -192,7 +204,7 @@ bool BfmeAptScreenLanLobby::applySlotPlayerTemplate(
 	{
 		AsciiString options;
 		options.format( AsciiString( "PlayerTemplate=%d" ),
-			slot->m_playerTemplate );
+			slot->getPlayerTemplate() );
 		TheLAN->RequestGameOptions( options, true );
 	}
 
@@ -200,6 +212,7 @@ bool BfmeAptScreenLanLobby::applySlotPlayerTemplate(
 			game->getSlot( game->getLocalSlotNum() )->getName() ) == 0 )
 	{
 		m_playerTemplate.store( playerTemplate );
+ m_playerTemplate.write();
 	}
 	return true;
 }
