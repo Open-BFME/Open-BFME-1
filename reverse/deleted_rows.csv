@@ -25820,3 +25820,4 @@ tg_005c9ca0,0x005C9CA0,Generated += shape placeholder superseded by authentic ST
 ??_EGen_dtorv_005dea10@@UAEPAXI@Z,0x005DEA10,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::TerrainCollisionModuleTemplate vector-deleting destructor over the same 84-byte range"
 ??_EGen_dtorv_005d7280@@UAEPAXI@Z,0x005D7280,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::SphericalEmissionVelocityInfo vector-deleting destructor over the same 84-byte range"
 ??_EGen_dtorv_005d9e30@@UAEPAXI@Z,0x005D9E30,generated vector destructor superseded by ConcreteModuleTemplate DefaultModuleTag6 real C++ over the same 84-byte range
+??_EGen_dtorv_005bd730@@UAEPAXI@Z,0x005BD730,"generated vector-destructor placeholder superseded by the authentic FXParticleSystem::EmissionVolumeInfo vector-deleting destructor over the same 84-byte range"
