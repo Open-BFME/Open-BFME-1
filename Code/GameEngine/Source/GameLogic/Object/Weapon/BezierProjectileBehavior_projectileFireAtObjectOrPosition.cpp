@@ -1,17 +1,22 @@
-// ?rva001F0480@BezierProjectileBehavior@@QAEXPAVObject@@PBUCoord3D@@@Z
-// partial score=0.82 date=2026-09-10
+// ?projectileFireAtObjectOrPosition@BezierProjectileBehavior@@QAEXPAVObject@@PBUCoord3D@@@Z
+// recovered from the 0x001F0480 generated body; 846-byte retail extent
 // cl: /DNDEBUG /DWIN32 /MD /O2 /Ob2 /GX- /D_STLP_USE_STATIC_LIB
 // stlport
 
 // BezierProjectileBehavior primary-interface body at retail 0x001F0480.
 // The primary vtable and the two-argument thiscall ABI are proven by the
-// constructor, vtable slot, and the caller at 0x001F1CE0.  The semantic
-// method name remains address-derived pending lexical evidence.
+// constructor, vtable slot, and the caller at 0x001F1CE0.  The method identity follows the ZH DumbProjectile twin and the BFME caller/callee pins.
 
 typedef float Real;
 typedef bool Bool;
 typedef int Int;
 typedef int ObjectID;
+
+template <typename T>
+static __forceinline const T &Luna10Max(const T &a, const T &b)
+{
+	return (a > b) ? a : b;
+}
 
 enum KindOfType
 {
@@ -48,19 +53,79 @@ public:
 	Real Get_Z_Rotation() const;
 };
 
-class Drawable
+// The bool setter already has a landed canonical owner in
+// Common/S3ValueSetters.cpp.  The three effect calls are still only known by
+// their incremental-link thunk names, so use the repository's typed member
+// pointer adapters below rather than inventing /alternatename aliases.
+class Gen_00411DD0
 {
 public:
 	void bfmeSet(Bool value);
-	void bfmeDelayA(Int frames);
-	void bfmeDelayB(Int frames);
-	void bfmePair(Int a, Int b);
+};
+
+extern void j_0003f288();
+extern void j_00046a1f();
+extern void j_0002019e();
+extern void j_0002bb43();
+
+class Luna10DrawableDelayCall
+{
+};
+
+typedef void (Luna10DrawableDelayCall::*Luna10Delay)(Int);
+typedef void (Luna10DrawableDelayCall::*Luna10Pair)(Int, Int);
+
+union Luna10DelayCallBits
+{
+	void (*raw)();
+	Luna10Delay member;
+};
+
+union Luna10PairCallBits
+{
+	void (*raw)();
+	Luna10Pair member;
+};
+
+static __forceinline void luna10DelayA(Gen_00411DD0 *draw, Int frames)
+{
+	Luna10DelayCallBits call;
+	call.raw = j_0003f288;
+	(reinterpret_cast<Luna10DrawableDelayCall *>(draw)->*call.member)(frames);
+}
+
+static __forceinline void luna10DelayB(Gen_00411DD0 *draw, Int frames)
+{
+	Luna10DelayCallBits call;
+	call.raw = j_00046a1f;
+	(reinterpret_cast<Luna10DrawableDelayCall *>(draw)->*call.member)(frames);
+}
+
+static __forceinline void luna10Pair(Gen_00411DD0 *draw, Int first, Int second)
+{
+	Luna10PairCallBits call;
+	call.raw = j_0002019e;
+	(reinterpret_cast<Luna10DrawableDelayCall *>(draw)->*call.member)(first, second);
+}
+
+class Luna10ObjectRecordCall
+{
+};
+
+typedef void (Luna10ObjectRecordCall::*Luna10Record)(unsigned);
+
+union Luna10RecordCallBits
+{
+	void (*raw)();
+	Luna10Record member;
 };
 
 class Thing
 {
 public:
+	virtual void vThing();
 	Bool isKindOf(KindOfType kind) const;
+	void setOrientation(Real angle);
 };
 
 class Object : public Thing
@@ -75,13 +140,10 @@ public:
 	virtual void v06();
 	virtual void v07();
 	virtual void v08();
-	virtual void v09();
-	virtual Drawable *getDrawable();
+	virtual Gen_00411DD0 *getDrawable();
 
-	void setOrientation(Real angle);
 	ObjectShroudStatus getShroudedStatus(Int playerIndex) const;
 	void bfmeRefreshPartitionCells();
-	void bfmeRecordTransform(unsigned frame);
 
 	char m_pad04[0x08 - 4];
 	char m_mtx[0x30];
@@ -97,17 +159,17 @@ class WeaponTemplate
 public:
 	Real getWeaponSpeed() const { return m_weaponSpeed; }
 	Real getMinWeaponSpeed() const { return m_minWeaponSpeed; }
-	Bool isScaleWeaponSpeed() const { return m_scaleWeaponSpeed; }
+	Bool isScaleWeaponSpeed() const { return m_isScaleWeaponSpeed; }
 	Real getMinimumAttackRange() const;
 	Real getUnmodifiedAttackRange() const;
 	Coord3D *getAimPosition(Coord3D *out, const Object *proj,
 		const Object *victim, Int flag);
 
 	char m_pad00[0x58];
-	Real m_weaponSpeed;
-	Real m_minWeaponSpeed;
-	Real m_maxScaledSpeed;
-	unsigned char m_scaleWeaponSpeed;
+	Real m_weaponSpeed; // +0x58, name_oracle
+	Real m_minWeaponSpeed; // +0x5c, name_oracle
+	Real m_shockWaveRadius; // +0x60, name_oracle witness; MaxWeaponSpeed table row is an unresolved competing label
+	unsigned char m_isScaleWeaponSpeed; // +0x64, name_oracle
 };
 
 class BezierProjectileBehaviorModuleData
@@ -116,8 +178,8 @@ public:
 	char m_pad00[0x18];
 	unsigned char m_snapZToTerrain;
 	char m_pad19[0x40 - 0x19];
-	Int m_pairA;
-	Int m_pairB;
+	unsigned int m_value40; // +0x40, constructor witness
+	unsigned int m_value44; // +0x44, constructor witness
 };
 
 class GameLogic
@@ -181,6 +243,13 @@ public:
 	void setWakeFrame(Object *obj, unsigned sleep);
 };
 
+static __forceinline void luna10RecordTransform(Object *object, unsigned frame)
+{
+	Luna10RecordCallBits call;
+	call.raw = j_0002bb43;
+	(reinterpret_cast<Luna10ObjectRecordCall *>(object)->*call.member)(frame);
+}
+
 extern GameLogic *TheGameLogic;
 extern TerrainLogic *TheTerrainLogic;
 extern PartitionManager *TheShroudManager;
@@ -191,7 +260,7 @@ extern const Real BfmeZeroRange;
 class BezierProjectileBehavior : public UpdateModule
 {
 public:
-	void rva001F0480(Object *victim, const Coord3D *victimPos);
+	void projectileFireAtObjectOrPosition(Object *victim, const Coord3D *victimPos);
 	Bool calcFlightPath(Bool recalcNumSegments);
 
 	void *m_vtable;
@@ -209,8 +278,8 @@ public:
 	Int m_currentFlightPathStep;
 };
 
-// ?rva001F0480@BezierProjectileBehavior@@QAEXPAVObject@@PBUCoord3D@@@Z
-void BezierProjectileBehavior::rva001F0480(Object *victim,
+// ?projectileFireAtObjectOrPosition@BezierProjectileBehavior@@QAEXPAVObject@@PBUCoord3D@@@Z
+void BezierProjectileBehavior::projectileFireAtObjectOrPosition(Object *victim,
 	const Coord3D *victimPos)
 {
 	const BezierProjectileBehaviorModuleData *md = m_moduleData;
@@ -250,10 +319,7 @@ void BezierProjectileBehavior::rva001F0480(Object *victim,
 
 	if (m_weapon != (WeaponTemplate *)zero && m_weapon->isScaleWeaponSpeed())
 	{
-		Real lo = weaponSpeed;
-		Real hi = minWeaponSpeed;
-		if (hi < lo)
-			hi = lo;
+		weaponSpeed = Luna10Max(weaponSpeed, minWeaponSpeed);
 
 		Real minRange = m_weapon->getMinimumAttackRange();
 		Real maxRange = m_weapon->getUnmodifiedAttackRange();
@@ -261,10 +327,10 @@ void BezierProjectileBehavior::rva001F0480(Object *victim,
 		Real dy = obj->m_position.y - victimPosToUse.y;
 		Real distSq = dx * dx + dy * dy;
 		Real speed = ((distSq - minRange) / (maxRange - minRange)) *
-			(hi - lo) + lo;
+			(weaponSpeed - minWeaponSpeed) + minWeaponSpeed;
 		m_flightPathSpeed = speed;
-		if (speed > m_weapon->m_maxScaledSpeed)
-			m_flightPathSpeed = m_weapon->m_maxScaledSpeed;
+		if (speed > m_weapon->m_shockWaveRadius)
+			m_flightPathSpeed = m_weapon->m_shockWaveRadius;
 	}
 	else
 	{
@@ -278,12 +344,8 @@ void BezierProjectileBehavior::rva001F0480(Object *victim,
 		obj->setOrientation(ang);
 	}
 
-	m_flightPathStart.x = obj->m_position.x;
-	m_flightPathStart.y = obj->m_position.y;
-	m_flightPathStart.z = obj->m_position.z;
-	m_flightPathEnd.x = victimPosToUse.x;
-	m_flightPathEnd.y = victimPosToUse.y;
-	m_flightPathEnd.z = victimPosToUse.z;
+	m_flightPathStart = *(const Coord3D *)((const char *)m_object + 0x38);
+	m_flightPathEnd = victimPosToUse;
 
 	if (!calcFlightPath(true))
 	{
@@ -293,20 +355,21 @@ void BezierProjectileBehavior::rva001F0480(Object *victim,
 
 	m_currentFlightPathStep = zero;
 
-	Drawable *draw = obj->getDrawable();
-	if (draw != (Drawable *)zero)
+	Gen_00411DD0 *draw = obj->getDrawable();
+	if (draw != (Gen_00411DD0 *)zero)
 	{
 		if (!obj->isKindOf(KINDOF_0x59) && !obj->isKindOf(KINDOF_0x0A))
 		{
-			Int player = zero;
-			if (ThePlayerList != (PlayerList *)zero)
-				player = ThePlayerList->m_inner->m_localIndex;
+						Int player = (ThePlayerList == (PlayerList *)zero) ?
+				zero : ThePlayerList->m_inner->m_localIndex;
 
 			Object *producer = TheGameLogic->findObjectByID(obj->m_producerID);
 			Bool producerShrouded = false;
 			if (producer != (Object *)zero &&
 				producer->getShroudedStatus(player) == OBJECTSHROUD_SHROUDED)
 				producerShrouded = true;
+			else
+				producerShrouded = false;
 
 			Bool cellClear = TheShroudManager->getShroudStatusForPlayer(
 				player, &m_flightPathEnd) == CELLSHROUD_CLEAR;
@@ -317,25 +380,19 @@ void BezierProjectileBehavior::rva001F0480(Object *victim,
 				{
 					Int frames = (Int)((Real)TheGameEngine->m_frameScale *
 						(Real)m_flightPathSegments);
-					draw->bfmeDelayA(frames);
+					luna10DelayA(draw, frames);
 				}
-				else if (md->m_pairA != zero || md->m_pairB != zero)
+				else if (md->m_value40 != zero || md->m_value44 != zero)
 				{
-					Real fb = (Real)md->m_pairB;
-					if (md->m_pairB < zero)
-						fb = fb + 4294967296.0f;
-					Real fa = (Real)md->m_pairA;
-					if (md->m_pairA < zero)
-						fa = fa + 4294967296.0f;
-					draw->bfmePair((Int)(fa * 0.03f),
-						(Int)(fb * 0.03f));
+					luna10Pair(draw, (Int)((Real)md->m_value40 * 0.03f),
+						(Int)((Real)md->m_value44 * 0.03f));
 				}
 			}
 			else if (cellClear)
 			{
 				Int frames = (Int)((Real)TheGameEngine->m_frameScale *
 					(Real)m_flightPathSegments);
-				draw->bfmeDelayB(frames);
+					luna10DelayB(draw, frames);
 			}
 			else
 			{
@@ -345,8 +402,10 @@ void BezierProjectileBehavior::rva001F0480(Object *victim,
 	}
 
 	m_lock.lock();
-	obj->bfmeRefreshPartitionCells();
-	obj->bfmeRecordTransform(TheGameLogic->m_frame);
+	m_object->bfmeRefreshPartitionCells();
+	luna10RecordTransform(m_object, TheGameLogic->m_frame);
 	m_lock.lock();
-	obj->bfmeRefreshPartitionCells();
+	m_object->bfmeRefreshPartitionCells();
 }
+
+
