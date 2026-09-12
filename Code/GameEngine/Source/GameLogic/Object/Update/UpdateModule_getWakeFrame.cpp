@@ -33,7 +33,7 @@ protected:
 
 private:
 	unsigned char m_unmodelled_00[ 0x14 ];
-	UnsignedInt m_nextCallFrame;			// +0x14
+	UnsignedInt m_nextCallFrameAndPhase;			// +0x14
 };
 
 // ?getWakeFrame@UpdateModule@@IBE?AW4UpdateSleepTime@@XZ
@@ -41,8 +41,8 @@ UpdateSleepTime UpdateModule::getWakeFrame( void ) const
 {
 	UnsignedInt now = TheGameLogic->m_frame;
 
-	if( m_nextCallFrame > now )
-		return (UpdateSleepTime)( m_nextCallFrame - now );
+	if( m_nextCallFrameAndPhase > now )
+		return (UpdateSleepTime)( m_nextCallFrameAndPhase - now );
 
 	return UPDATE_SLEEP_NONE;
 }

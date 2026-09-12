@@ -793,7 +793,6 @@ UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/RegistryGet
 UnicodeString+0x0|m_text|m_data,Code/GameEngine/Source/Common/System/SaveGame/Rva0010D090SaveInfoXfer.cpp,44,1.00,layout_witness
 UnicodeString+0x0|m_text|m_data,Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjConstructor.cpp,182,1.00,layout_witness
 UnicodeString+0x0|m_text|m_data,Code/Libraries/Source/WWVegas/WWLib/Z1ListAssign.cpp,24,1.00,layout_witness
-UpdateModule+0x14|m_nextCallFrame|m_nextCallFrameAndPhase,Code/GameEngine/Source/GameLogic/Object/Update/UpdateModule_getWakeFrame.cpp,37,1.00,layout_witness
 UpgradeTemplate+0x4|m_head|m_type,Code/GameEngine/Source/Common/UpgradeCenterDestructorThunk.cpp,23,1.00,field_names
 View+0x3c|m_minHeightAboveGround|m_zoom,Code/GameEngine/Source/GameClient/ViewConstructorBfme.cpp,35,1.00,layout_witness
 View+0x44|m_zoomLimited|m_heightAboveGround,Code/GameEngine/Source/GameClient/ViewConstructorBfme.cpp,37,1.00,layout_witness
