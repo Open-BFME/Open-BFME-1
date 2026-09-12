@@ -1,9 +1,8 @@
 // ?updateSpecialPowerShortcut@ControlBar@@IAEXXZ
-// partial score=0.89 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
 // Clean reconstruction of ?updateSpecialPowerShortcut@ControlBar@@IAEXXZ.
 // The bounded body is tied to the named populateSpecialPowerShortcut caller at
-// 0x0049E3C9 and to the retail fields/callees below; it is not a dump lift.
+// 0x004A04C0 and to the retail fields/callees below; it is not a dump lift.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -78,6 +77,20 @@ enum CommandAvailability
     COMMAND_RESTRICTED_SPECIAL = 7
 };
 
+// The retail call uses the existing incremental-link thunk at ILT 0x000414D4.
+// Its generated declaration is niladic, so adapt its verified address to the
+// observed const __thiscall five-argument ABI without inventing a target pin.
+extern void j_000414d4(void);
+struct ControlBarGetCommandAvailabilityThunk
+{
+    CommandAvailability call(const CommandButton *command, GameWindow *window,
+                             Object *object, Real *percent,
+                             Bool forceDisabledEvaluation) const;
+};
+typedef CommandAvailability (ControlBarGetCommandAvailabilityThunk::*
+    ControlBarGetCommandAvailabilityCall)(const CommandButton *, GameWindow *,
+                                          Object *, Real *, Bool) const;
+
 class ControlBar
 {
 public:
@@ -86,11 +99,6 @@ public:
     void hideSpecialPowerShortcut(void);
 
 protected:
-    CommandAvailability getCommandAvailability(const CommandButton *command,
-                                               GameWindow *window,
-                                               Object *object,
-                                               Real *percent,
-                                               Bool forceDisabledEvaluation) const;
     void updateSpecialPowerShortcut(void);
 
 private:
@@ -159,9 +167,18 @@ void ControlBar::updateSpecialPowerShortcut(void)
         Real percent = 0.0f;
         if(ThePlayerList->getLocalPlayer()->findNaturalCommandCenter())
         {
-            availability = getCommandAvailability(
-                command, win, ThePlayerList->getLocalPlayer()->findNaturalCommandCenter(),
-                &percent, FALSE);
+            union
+            {
+                void (*asFunction)(void);
+                ControlBarGetCommandAvailabilityCall asMember;
+            } availabilityCall;
+            availabilityCall.asFunction = j_000414d4;
+            availability =
+                (reinterpret_cast<const ControlBarGetCommandAvailabilityThunk *>(this)->*
+                 availabilityCall.asMember)(
+                    command, win,
+                    ThePlayerList->getLocalPlayer()->findNaturalCommandCenter(),
+                    &percent, FALSE);
         }
 
         if(availability == COMMAND_RESTRICTED || availability == COMMAND_NOT_READY_SPECIAL)
@@ -201,6 +218,6 @@ void ControlBar::updateSpecialPowerShortcut(void)
         }
 
         if(percent < g_bfmeDefaultBU)
-            GadgetButtonDrawInverseClock(win, (Int)(g_bfmeScaleBC * percent), color);
+            GadgetButtonDrawInverseClock(win, (Int)(((volatile Real &)percent) * g_bfmeScaleBC), color);
     }
 }
