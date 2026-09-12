@@ -2523,6 +2523,7 @@ name,address,notes
 ??0BoxDynamicVBAccessClass@@QAE@IIGI@Z,0x0091F730,TU-local DynamicVB ABI for BoxRenderObjClass::render_box
 ??0BoxRenderObjClass@@QAE@ABUW3dBoxStruct@@@Z,0x00956D30
 ??0Bridge@@QAE@PAVObject@@@Z,0x00047C0D,ILT fronting the 1412-byte body at 0x001A9CE0; from TerrainLogic::addLandmarkBridgeToLogic
+??0Bridge@@QAE@AAVBridgeInfo@@PAVDict@@VAsciiString@@H@Z,0x001A98A0,focused ABI view of the four-word Bridge constructor call at the matched retail body
 ??0BridgeBehaviorModuleData@@QAE@XZ,0x0001F7F3,module-glue cascade callee (from retail call site)
 ??0BridgeScaffoldBehavior@@QAE@PAVThing@@PBVModuleData@@@Z,0x01002D,module ctor (friend_newModuleInstance retail call target)
 ??0BridgeTowerBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,BridgeTowerBehavior ctor base call

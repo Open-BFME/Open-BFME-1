@@ -1,12 +1,9 @@
-// ?addBridgeToLogic@TerrainLogic@@UAEXPAVBridgeInfo@@PAVDict@@VAsciiString@@@Z
-// partial score=0.98 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
-// Open-BFME: TerrainLogic::addBridgeToLogic, retail 0x001AA780.
-// Authentic one-pointer AsciiString and MemoryPoolObject inheritance compile
-// to 174/176 bytes. Retail reserves one extra zero word for the Bridge ctor;
-// its 0x001A98A0 body ends in ret 0x10 despite the three-argument declaration.
+// readable body of ?addBridgeToLogic@TerrainLogic@@UAEXPAVBridgeInfo@@PAVDict@@VAsciiString@@@Z
+// Retail RVA 0x001AA780, TerrainLogic vtable slot 43.
 
 #include <new>
+
 #include "../../../../../reference/shims/stringinline/StringInline.h"
 
 class BridgeInfo
@@ -20,16 +17,10 @@ enum PathfindLayerEnum
 {
 };
 
-class MemoryPoolObject
-{
-protected:
-	virtual ~MemoryPoolObject() { }
-};
-
-class Bridge : public MemoryPoolObject
+class Bridge
 {
 public:
-	Bridge(BridgeInfo &info, Dict *props, AsciiString name);
+	Bridge(BridgeInfo &info, Dict *props, AsciiString name, int unused);
 
 	void setNext(Bridge *next)
 	{
@@ -42,11 +33,16 @@ public:
 	}
 
 private:
+	void *m_vtable;
 	Bridge *m_next;
 	char m_data[0x80];
 	PathfindLayerEnum m_layer;
 	char m_tail[4];
 };
+
+// Bridge's retail constructor takes a fourth stack word although its public
+// declaration exposes only three source arguments.
+#pragma comment(linker, "/alternatename:??0Bridge@@QAE@AAVBridgeInfo@@PAVDict@@VAsciiString@@H@Z=_bfme_Bridge_ctor_1A98A0")
 
 class Pathfinder
 {
@@ -90,7 +86,7 @@ private:
 void TerrainLogic::addBridgeToLogic(BridgeInfo *info, Dict *props,
 	AsciiString name)
 {
-	Bridge *bridge = new Bridge(*info, props, name);
+	Bridge *bridge = new Bridge(*info, props, name, 0);
 	bridge->setNext(m_bridgeListHead);
 	m_bridgeListHead = bridge;
 	PathfindLayerEnum layer = TheAI->pathfinder()->addBridge(bridge);

@@ -72,6 +72,13 @@
 // GLOBALS ////////////////////////////////////////////////////////////////////////////////////////
 TerrainLogic *TheTerrainLogic = NULL;
 
+#pragma optimize("", off)
+static void preserveBridgeSetLayer(Bridge *bridge, PathfindLayerEnum layer)
+{
+	bridge->setLayer(layer);
+}
+#pragma optimize("", on)
+
 // STATIC /////////////////////////////////////////////////////////////////////////////////////////
 WaterHandle TerrainLogic::m_gridWaterHandle;
 
@@ -1694,28 +1701,11 @@ PathfindLayerEnum TerrainLogic::alignOnTerrain( Real angle, const Coord3D& pos, 
 //-------------------------------------------------------------------------------------------------
 /** Adds a bridge's info get height function for logical terrain */
 //-------------------------------------------------------------------------------------------------
-// ?addBridgeToLogic@TerrainLogic@@UAEXPAVBridgeInfo@@PAVDict@@VAsciiString@@@Z present-unmatched
-void TerrainLogic::addBridgeToLogic(BridgeInfo *pInfo, Dict *props, AsciiString bridgeTemplateName)
-{
-	Bridge *pBridge = ::new ((void *)::operator new(0x90)) Bridge(*pInfo, props, bridgeTemplateName);
-	pBridge->setNext(m_bridgeListHead);
-	m_bridgeListHead = pBridge;
-	PathfindLayerEnum layer = TheAI->pathfinder()->addBridge(pBridge);
-	pBridge->setLayer(layer);
-
-}
-
-//-------------------------------------------------------------------------------------------------
-/** Adds a bridge's info get height function for logical terrain */
-//-------------------------------------------------------------------------------------------------
 // BFME's Bridge is 0x90 bytes where the vendored class is 0x8c, and this one is
 // built with the GLOBAL operator new rather than the memory pool -- which is
 // what makes the allocation 0x90 exactly, with no pool cookie. The list head is
 // at TerrainLogic+0x34, not the vendored +0x2c. Bridge's own offsets are already
 // right: setNext writes +0x04 and setLayer writes +0x88, both inlined.
-//
-// addBridgeToLogic above keeps its newInstance(Bridge), so the pool allocator
-// and deallocator rows this file claims stay emitted.
 struct BfmeBridgeNode
 {
 	BfmeBridgeNode( Object *bridgeObj );				///< retail ILT 0x00047c0d
@@ -1745,7 +1735,7 @@ void TerrainLogic::addLandmarkBridgeToLogic(Object *bridgeObj)
 	pBridge->setNext(self->m_bridgeListHead);
 	self->m_bridgeListHead = pBridge;
 	PathfindLayerEnum layer = TheAI->pathfinder()->addBridge((Bridge *)pBridge);
-	pBridge->setLayer(layer);
+	((Bridge *)pBridge)->setLayer(layer);
 
 }
 
@@ -3238,4 +3228,3 @@ void TerrainLogic::loadPostProcess( void )
 	}
 
 }  // end loadPostProcess
-
