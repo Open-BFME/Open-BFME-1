@@ -46,14 +46,14 @@ public:
 };
 
 #define BFME_NESTED_INLINE_DTOR3( NAME )                                      \
-	class NAME##MixA { public: virtual void mixA(); };                        \
-	class NAME##Mid : public NestedInlineBase, public NAME##MixA              \
+	class NAME##FirstMixin { public: virtual void mixA(); };                  \
+	class NAME##InlineMid : public NestedInlineBase, public NAME##FirstMixin  \
 	{                                                                         \
 	public:                                                                   \
-		virtual ~NAME##Mid() {}                                               \
+		virtual ~NAME##InlineMid() {}                                         \
 	};                                                                        \
-	class NAME##MixC { public: virtual void mixC(); };                        \
-	class NAME : public NAME##Mid, public NAME##MixC                          \
+	class NAME##SecondMixin { public: virtual void mixC(); };                 \
+	class NAME : public NAME##InlineMid, public NAME##SecondMixin             \
 	{                                                                         \
 	public:                                                                   \
 		virtual ~NAME();                                                      \
@@ -63,22 +63,22 @@ public:
 	}
 
 #define BFME_NESTED_INLINE_DTOR4( NAME )                                      \
-	class NAME##MixA { public: virtual void mixA(); };                        \
-	class NAME##Mid : public NestedInlineBase, public NAME##MixA              \
+	class NAME##FirstMixin { public: virtual void mixA(); };                  \
+	class NAME##InlineMid : public NestedInlineBase, public NAME##FirstMixin  \
 	{                                                                         \
 	public:                                                                   \
-		virtual ~NAME##Mid() {}                                               \
+		virtual ~NAME##InlineMid() {}                                         \
 	};                                                                        \
-	class NAME##MixC { public: virtual void mixC(); };                        \
-	class NAME##Mid2 : public NAME##Mid, public NAME##MixC                    \
+	class NAME##SecondMixin { public: virtual void mixC(); };                 \
+	class NAME##PaddedInlineMid : public NAME##InlineMid, public NAME##SecondMixin \
 	{                                                                         \
 	public:                                                                   \
-		virtual ~NAME##Mid2() {}                                              \
+		virtual ~NAME##PaddedInlineMid() {}                                   \
                                                                               \
 		unsigned int m_pad[ 3 ];                                              \
 	};                                                                        \
-	class NAME##MixD { public: virtual void mixD(); };                        \
-	class NAME : public NAME##Mid2, public NAME##MixD                         \
+	class NAME##ThirdMixin { public: virtual void mixD(); };                  \
+	class NAME : public NAME##PaddedInlineMid, public NAME##ThirdMixin        \
 	{                                                                         \
 	public:                                                                   \
 		virtual ~NAME();                                                      \
