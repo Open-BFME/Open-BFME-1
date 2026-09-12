@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f23c0790268e656659aa34853ed14d446822ff0e906033210c9fad1874aa7db2",
+  "symbol": "?bfmeAtFM@BfmeHostFM@@QBE?AVBfmeStrFM@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?bfmeAtFM@BfmeHostFM@@QBE?AVBfmeStrFM@@H@Z\n// partial score=0.97 date=2026-09-12\nclass BfmeStrFM\n{\npublic:\n\tBfmeStrFM(const BfmeStrFM &o);\n\t~BfmeStrFM();\n\n\tunsigned char m_bfmeHeadFM[4];\n};\n\nextern BfmeStrFM Rva01336E50Str;\n\nclass BfmeElemFM\n{\npublic:\n\tBfmeStrFM bfmeNameFM() const;\n\n\tunsigned char m_bfmeHeadFM[0x58];\n};\n\nclass BfmeHostFM\n{\npublic:\n\tBfmeStrFM bfmeAtFM(int i) const;\n\n\tunsigned char m_bfmeHeadFM[0x18];\n\tBfmeElemFM *m_bfmeBeginFM;\n\tBfmeElemFM *m_bfmeEndFM;\n};\n\nBfmeStrFM BfmeHostFM::bfmeAtFM(int i) const\n{\n\tif (i >= 0 && (unsigned int)i < (unsigned int)(m_bfmeEndFM - m_bfmeBeginFM))\n\t\treturn (*(BfmeElemFM *volatile *)&m_bfmeBeginFM)[i].bfmeNameFM();\n\n\treturn Rva01336E50Str;\n}\n"
+}
