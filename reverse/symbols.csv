@@ -87305,3 +87305,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?g_bfmeChatColor@@3HA,0x00EB73F8,BFME disconnect chat listbox color; retail VA 0x012B73F8
 ?j_0002f95a@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z,0x0002F95A,UpgradeCenter::findUpgrade call uses the retail ILT at 0x0002F95A
 ?j_00004f8e@?$vector@PBVUpgradeTemplate@@V?$allocator@PBVUpgradeTemplate@@@_STL@@@_STL@@IAEXPAPBVUpgradeTemplate@@ABQBV3@ABU__true_type@2@I_N@Z,0x00004F8E,STLport pointer vector overflow ILT for ExperienceLevel upgrades
+?bfmeStepEN@BfmeHostEN@@QAEXXZ,0x00046D03,route=0x005EF250; direct call in 351-byte color update; thunk targets existing matched keyframe velocity body
