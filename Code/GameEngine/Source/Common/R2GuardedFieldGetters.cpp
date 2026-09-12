@@ -39,58 +39,63 @@
 // IDENTITY IS NOT RECOVERED.  Every name is address-derived.  The bytes name
 // neither the holder, the pointee, nor the field.
 
-#define R2_GUARDED_FIELD_GET( NAME, OFF, FIELD, TYPE )  \
-	class NAME##Pointee                                 \
-	{                                                   \
-	public:                                             \
-		char m_leading[ FIELD ];                        \
-		TYPE m_field;                                   \
-	};                                                  \
+// Pointee layouts named for the field they expose.  Holder class names stay
+// address-derived: they are the claimed `?get@Rva...` pins.
+
+struct IntAtCh   { char m_leading[ 0xC ];   int  m_value; };
+struct IntAt14h  { char m_leading[ 0x14 ];  int  m_value; };
+struct IntAt20h  { char m_leading[ 0x20 ];  int  m_value; };
+struct IntAt24h  { char m_leading[ 0x24 ];  int  m_value; };
+struct IntAt2Ch  { char m_leading[ 0x2C ];  int  m_value; };
+struct IntAt3Ch  { char m_leading[ 0x3C ];  int  m_value; };
+struct IntAt4Ch  { char m_leading[ 0x4C ];  int  m_value; };
+struct IntAt50h  { char m_leading[ 0x50 ];  int  m_value; };
+struct IntAt54h  { char m_leading[ 0x54 ];  int  m_value; };
+struct IntAt168h { char m_leading[ 0x168 ]; int  m_value; };
+struct IntAt1C8h { char m_leading[ 0x1C8 ]; int  m_value; };
+struct IntAt1CCh { char m_leading[ 0x1CC ]; int  m_value; };
+
+struct BoolAt41h  { char m_leading[ 0x41 ]; bool m_value; };
+struct BoolAt50h  { char m_leading[ 0x50 ]; bool m_value; };
+struct BoolAt51h  { char m_leading[ 0x51 ]; bool m_value; };
+struct BoolAt52h  { char m_leading[ 0x52 ]; bool m_value; };
+struct BoolAtE8h  { char m_leading[ 0xE8 ]; bool m_value; };
+struct BoolAt118h { char m_leading[ 0x118 ]; bool m_value; };
+
+#define R2_GUARDED_FIELD_GET( NAME, OFF, POINTEE, TYPE )  \
 	class NAME                                          \
 	{                                                   \
 	public:                                             \
 		char m_leading[ OFF ];                          \
-		NAME##Pointee *m_pointee;                       \
+		POINTEE *m_pointee;                             \
 		TYPE get();                                     \
 	};                                                  \
 	TYPE NAME::get()                                    \
 	{                                                   \
 		if ( m_pointee )                                \
 		{                                               \
-			return m_pointee->m_field;                  \
+			return m_pointee->m_value;                  \
 		}                                               \
 		return 0;                                       \
 	}
 
-#define R2_GUARDED_FIELD_GET_HEAD( NAME, FIELD, TYPE )  \
-	class NAME##Pointee                                 \
-	{                                                   \
-	public:                                             \
-		char m_leading[ FIELD ];                        \
-		TYPE m_field;                                   \
-	};                                                  \
+#define R2_GUARDED_FIELD_GET_HEAD( NAME, POINTEE, TYPE )  \
 	class NAME                                          \
 	{                                                   \
 	public:                                             \
-		NAME##Pointee *m_pointee;                       \
+		POINTEE *m_pointee;                             \
 		TYPE get();                                     \
 	};                                                  \
 	TYPE NAME::get()                                    \
 	{                                                   \
 		if ( m_pointee )                                \
 		{                                               \
-			return m_pointee->m_field;                  \
+			return m_pointee->m_value;                  \
 		}                                               \
 		return 0;                                       \
 	}
 
-#define R2_GUARDED_FIELD_GET_BACK( NAME, BACK, FIELD, TYPE )  \
-	class NAME##Pointee                                       \
-	{                                                         \
-	public:                                                   \
-		char m_leading[ FIELD ];                              \
-		TYPE m_field;                                         \
-	};                                                        \
+#define R2_GUARDED_FIELD_GET_BACK( NAME, BACK, POINTEE, TYPE )  \
 	class NAME                                                \
 	{                                                         \
 	public:                                                   \
@@ -98,38 +103,38 @@
 	};                                                        \
 	TYPE NAME::get()                                          \
 	{                                                         \
-		NAME##Pointee *pointee =                              \
-			*(NAME##Pointee **)( (char *)this - BACK );       \
+		POINTEE *pointee =                                    \
+			*(POINTEE **)( (char *)this - BACK );             \
 		if ( pointee )                                        \
 		{                                                     \
-			return pointee->m_field;                          \
+			return pointee->m_value;                          \
 		}                                                     \
 		return 0;                                             \
 	}
 
-R2_GUARDED_FIELD_GET( Rva001BDFF0, 0x204, 0x1CC, int )
-R2_GUARDED_FIELD_GET( Rva001BE010, 0x204, 0x1CC, int )
-R2_GUARDED_FIELD_GET( Rva001BE3B0, 0x1EC, 0x24, int )
-R2_GUARDED_FIELD_GET( Rva001EB140, 0x4, 0xE8, bool )
-R2_GUARDED_FIELD_GET( Rva00267FA0, 0x4, 0x118, bool )
-R2_GUARDED_FIELD_GET( Rva003BCBF0, 0x28, 0x3C, int )
-R2_GUARDED_FIELD_GET( Rva003C6360, 0x4, 0x4C, int )
-R2_GUARDED_FIELD_GET( Rva003C6380, 0x4, 0x50, int )
-R2_GUARDED_FIELD_GET_HEAD( Rva003D4A50, 0x14, int )
-R2_GUARDED_FIELD_GET_HEAD( Rva003D4AA0, 0xC, int )
-R2_GUARDED_FIELD_GET( Rva004C1160, 0x8, 0x1C8, int )
-R2_GUARDED_FIELD_GET( Rva005C3530, 0x1CC, 0x20, int )
-R2_GUARDED_FIELD_GET( Rva0063A850, 0x64, 0x52, bool )
-R2_GUARDED_FIELD_GET( Rva0063A870, 0x64, 0x51, bool )
-R2_GUARDED_FIELD_GET( Rva0063A8A0, 0x64, 0x54, int )
-R2_GUARDED_FIELD_GET( Rva00642C80, 0x64, 0x51, bool )
-R2_GUARDED_FIELD_GET( Rva00642CA0, 0x64, 0x50, bool )
-R2_GUARDED_FIELD_GET_HEAD( Rva00694900, 0x2C, int )
-R2_GUARDED_FIELD_GET_HEAD( Rva00694AA0, 0x41, bool )
-R2_GUARDED_FIELD_GET_HEAD( Rva00694AD0, 0x3C, int )
+R2_GUARDED_FIELD_GET( Rva001BDFF0, 0x204, IntAt1CCh, int )
+R2_GUARDED_FIELD_GET( Rva001BE010, 0x204, IntAt1CCh, int )
+R2_GUARDED_FIELD_GET( Rva001BE3B0, 0x1EC, IntAt24h, int )
+R2_GUARDED_FIELD_GET( Rva001EB140, 0x4, BoolAtE8h, bool )
+R2_GUARDED_FIELD_GET( Rva00267FA0, 0x4, BoolAt118h, bool )
+R2_GUARDED_FIELD_GET( Rva003BCBF0, 0x28, IntAt3Ch, int )
+R2_GUARDED_FIELD_GET( Rva003C6360, 0x4, IntAt4Ch, int )
+R2_GUARDED_FIELD_GET( Rva003C6380, 0x4, IntAt50h, int )
+R2_GUARDED_FIELD_GET_HEAD( Rva003D4A50, IntAt14h, int )
+R2_GUARDED_FIELD_GET_HEAD( Rva003D4AA0, IntAtCh, int )
+R2_GUARDED_FIELD_GET( Rva004C1160, 0x8, IntAt1C8h, int )
+R2_GUARDED_FIELD_GET( Rva005C3530, 0x1CC, IntAt20h, int )
+R2_GUARDED_FIELD_GET( Rva0063A850, 0x64, BoolAt52h, bool )
+R2_GUARDED_FIELD_GET( Rva0063A870, 0x64, BoolAt51h, bool )
+R2_GUARDED_FIELD_GET( Rva0063A8A0, 0x64, IntAt54h, int )
+R2_GUARDED_FIELD_GET( Rva00642C80, 0x64, BoolAt51h, bool )
+R2_GUARDED_FIELD_GET( Rva00642CA0, 0x64, BoolAt50h, bool )
+R2_GUARDED_FIELD_GET_HEAD( Rva00694900, IntAt2Ch, int )
+R2_GUARDED_FIELD_GET_HEAD( Rva00694AA0, BoolAt41h, bool )
+R2_GUARDED_FIELD_GET_HEAD( Rva00694AD0, IntAt3Ch, int )
 
 // The three back-reference members.
 
-R2_GUARDED_FIELD_GET_BACK( Rva0022A4F0, 0x1C, 0x168, int )
-R2_GUARDED_FIELD_GET_BACK( Rva0022CFF0, 0x1C, 0x168, int )
-R2_GUARDED_FIELD_GET_BACK( Rva00234020, 0xE0, 0x168, int )
+R2_GUARDED_FIELD_GET_BACK( Rva0022A4F0, 0x1C, IntAt168h, int )
+R2_GUARDED_FIELD_GET_BACK( Rva0022CFF0, 0x1C, IntAt168h, int )
+R2_GUARDED_FIELD_GET_BACK( Rva00234020, 0xE0, IntAt168h, int )
