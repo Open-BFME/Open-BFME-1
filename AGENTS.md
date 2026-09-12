@@ -127,6 +127,13 @@ record `blocked`.
   `Network*` fields differ from their compiled defaults, the largest by 120x,
   and two wrong numbers have already been published from the disassembly. The
   compiled constant identifies the field; the archive says what it does.
+- **Naming a member, type or file? Ask before you invent.** `tools/name_oracle.py
+  --class <C> --offset <N>` answers from `bfme_layouts.json` and `field_names.csv`;
+  `--todo` lists placeholders the evidence can already name, `--check` reports sources
+  that CONFLICT with the witness (shrink-only `reverse/name_oracle_baseline.csv`).
+  An address-derived name is self-labelling and harmless; a plausible WRONG one is
+  invisible and no gate can see it, so the address may only be dropped for a name
+  evidence supports. `docs/naming_evidence.md` has the supply, the rule and the traps.
 - No fallback paths; they conceal mismatches.
 - Never load `reverse/functions.csv`, `ghidra_functions.csv` or `exports.csv`
   wholesale; use `rg` or narrow filters.
