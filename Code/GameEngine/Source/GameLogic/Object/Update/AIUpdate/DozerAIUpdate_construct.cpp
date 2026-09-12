@@ -1,5 +1,6 @@
-// ?construct@DozerAIUpdate@@WCAA@AEPAVObject@@PBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@_N@Z
-// partial score=0.97 date=2026-09-10
+// ?construct@DozerAIUpdate@@WDEA@AEPAVObject@@PBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@_N@Z
+// Exact 561-byte real C++ reconstruction.
+// WDEA is the retail 0x340 interface adjustment; WCAA was the ZH 0x200 ABI.
 // cl: /DNDEBUG /DWIN32 /MD /EHs-c- /D_STLP_USE_STATIC_LIB
 // BFME's DozerAIInterface construct slot enters through the interface slice
 // at owner+0x340.  Keep the moved BFME fields local to this conversion.
@@ -13,20 +14,25 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-struct Coord3D
+// BFME Coord3D derives its three floats from Coord3DBase and has a real
+// copy constructor (RVA 0x0005BC20). Preserve that copy operation when inline.
+struct Coord3DBase { Real x, y, z; };
+struct Coord3D : Coord3DBase
 {
-	__forceinline Coord3D(const Coord3D &other)
-		: z(other.z), x(other.x), y(other.y) { }
-
-	Real x;
-	Real y;
-	Real z;
+    Coord3D() {}
+    __forceinline Coord3D(const Coord3D &other)
+    {
+        x = other.x;
+        y = other.y;
+        z = other.z;
+    }
 };
 
 class Object;
 class Player;
 class Team;
 class ThingTemplate;
+class Thing { public: void setOrientation(Real); };
 
 template <Int NUMBITS>
 class Rva002B7C80BitFlags
@@ -271,7 +277,6 @@ extern void j_00023033();
 extern void j_0003a1a7();
 extern void j_0003aa8f();
 extern void j_0003d424();
-extern void j_000399a5();
 extern void j_00041894();
 extern void j_0004494a();
 extern void j_00049d2d();
@@ -440,9 +445,7 @@ static __forceinline void bfmeSetPosition(Object *object,
 
 static __forceinline void bfmeSetOrientation(Object *object, Real angle)
 {
-	SetOrientationCallBits call;
-	call.raw = j_000399a5;
-	(((Rva002B7C80Object *)object)->*call.member)(angle);
+	((Thing *)object)->setOrientation(angle);
 }
 
 static __forceinline void bfmeFlattenTerrain(
@@ -483,14 +486,17 @@ static __forceinline Rva002B7C80Money *bfmeGetMoney(Player *player)
 	return (Rva002B7C80Money *)((char *)player + 0x48);
 }
 
-#define TheBuildAssistant (*(Rva002B7C80BuildAssistant **)0x012ED83C)
-#define TheThingFactory (*(Rva002B7C80ThingFactory **)0x012EF1D8)
-#define TheTerrainLogic (*(Rva002B7C80TerrainLogicPre **)0x012EF4CC)
-#define TheAI (*(Rva002B7C80AI **)0x012EF214)
-#define BFME_UINT32_SCALE (*(const Real *)0x01075358)
-#define BFME_DEFAULT_HEALTH (*(const Real *)0x01075334)
+extern Rva002B7C80BuildAssistant *TheBuildAssistant;
+extern Rva002B7C80ThingFactory *TheThingFactory;
+// A typed external singleton is significant here: the old absolute-address
+// macro scheduled the Coord3D y store before the terrain vtable load.
+// The declaration recovers the
+// retail order without forced instructions or volatile field changes.
+extern Rva002B7C80TerrainLogicPre *TheTerrainLogic;
+extern Rva002B7C80AI *TheAI;
+#define BFME_DEFAULT_HEALTH 1.0f
 
-// ?construct@DozerAIUpdate@@WCAA@AEPAVObject@@PBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@_N@Z
+// ?construct@DozerAIUpdate@@WDEA@AEPAVObject@@PBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@_N@Z
 Object *Rva002B7C80DozerAIInterface::construct(const ThingTemplate *what,
 	const Coord3D *pos, Real angle, Player *owningPlayer, Bool isRebuild)
 {
