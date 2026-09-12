@@ -1,546 +1,103 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?verifyValidUniqueID@MapObject@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// MapObject::verifyValidUniqueID, retail RVA 0x00089450, full 530-byte body.
+// Ported from GeneralsMD WorldHeightMap.cpp with the BFME StringBase and
+// MapObject-list-holder layouts. The original loop intentionally inspects
+// only the first other non-waypoint object before choosing the next index.
+// Keep Overridable::getFinalOverride visible: its original recursive body
+// proves it cannot modify MapObject and preserves retail's cached pointer.
+#include <stdlib.h>
 
-class __declspec(novtable) MapObject
-{
+template<class T> struct StringData { unsigned short refs, capacity, length, pad; T text[1]; };
+template<class T> class StringBase {
+    friend class AsciiString;
+protected:
+    StringData<T> *data;
+private:
+    StringBase():data(0) {}
+    StringBase(const T*);
+    StringBase(const StringBase &);
+    ~StringBase();
+};
+class AsciiString : private StringBase<char> {
 public:
+    AsciiString() {}
+    AsciiString(const char *p):StringBase<char>(p) {}
+    AsciiString(const AsciiString &p):StringBase<char>(p) {}
+    ~AsciiString() {}
+    const char *str() const { return data ? data->text : ""; }
+    int getLength() const { return data ? data->length : 0; }
+    const char *reverseFind(char ch) const {
+        const char *s = str();
+        const char *p = s + getLength();
+        while (p != s) { --p; if (*p == ch) return p; }
+        return 0;
+    }
+    void __cdecl format(AsciiString, ...);
+};
+enum NameKeyType { NAMEKEY_INVALID=0 };
+class StaticNameKey { public: NameKeyType key() const; };
+extern const StaticNameKey TheKey_uniqueID;
+class Dict { public:
+    AsciiString getAsciiString(NameKeyType, bool *exists=0) const;
+    void setAsciiString(NameKeyType,const AsciiString &);
+    void *data;
+};
+class Overridable {
+public:
+    void *vtable;
+    Overridable *nextOverride;
+    const Overridable *getFinalOverride() const { if(nextOverride) return nextOverride->getFinalOverride(); return this; }
+};
+class ThingTemplate : public Overridable {
+public:
+    char pad1[0x20-8];
+    AsciiString name;
+};
+class MapObject;
+struct MapObjectList { MapObject *first; };
+extern MapObjectList *BfmeTheMapObjectListHolder;
+class MapObject {
+public:
+    void *vtable;
+    MapObject *next;
+    char pad0[0x14-8];
+    AsciiString name;
+    ThingTemplate *thing;
+    char pad1[0x24-0x1c];
+    Dict properties;
+    char pad2[0x44-0x28];
+    int runtimeFlags;
+    bool isWaypoint() const { return (runtimeFlags & 4) != 0; }
+    const ThingTemplate *getThingTemplate() const { return thing ? static_cast<const ThingTemplate *>(thing->getFinalOverride()) : 0; }
+    AsciiString getWaypointName();
     void verifyValidUniqueID();
 };
-
-// ?verifyValidUniqueID@MapObject@@QAEXXZ
-__declspec(naked) void MapObject::verifyValidUniqueID()
+void MapObject::verifyValidUniqueID()
 {
-    __asm {
-        __emit 0x6a
-        __emit 0xff
-        __emit 0x68
-        __emit 0x70
-        __emit 0x57
-        __emit 0xff
-        __emit 0x00
-        __emit 0x64
-        __emit 0xa1
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x50
-        __emit 0x64
-        __emit 0x89
-        __emit 0x25
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x83
-        __emit 0xec
-        __emit 0x18
-        __emit 0x55
-        __emit 0x56
-        __emit 0x8b
-        __emit 0xe9
-        __emit 0x57
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x0e
-        __emit 0x8d
-        __emit 0x75
-        __emit 0x24
-        __emit 0x50
-        __emit 0xb9
-        __emit 0xc0
-        __emit 0x78
-        __emit 0x2a
-        __emit 0x01
-        __emit 0x89
-        __emit 0x74
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xe8
-        __emit 0x81
-        __emit 0xfe
-        __emit 0xf7
-        __emit 0xff
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xce
-        __emit 0xe8
-        __emit 0xdd
-        __emit 0x6a
-        __emit 0xfa
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x15
-        __emit 0xdc
-        __emit 0xd5
-        __emit 0x2e
-        __emit 0x01
-        __emit 0x8b
-        __emit 0x32
-        __emit 0x83
-        __emit 0xcf
-        __emit 0xff
-        __emit 0x85
-        __emit 0xf6
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x0f
-        __emit 0x84
-        __emit 0x84
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xeb
-        __emit 0x03
-        __emit 0x8d
-        __emit 0x49
-        __emit 0x00
-        __emit 0x3b
-        __emit 0xf5
-        __emit 0x74
-        __emit 0x0a
-        __emit 0x8b
-        __emit 0x46
-        __emit 0x44
-        __emit 0xc1
-        __emit 0xe8
-        __emit 0x02
-        __emit 0xa8
-        __emit 0x01
-        __emit 0x74
-        __emit 0x09
-        __emit 0x8b
-        __emit 0x76
-        __emit 0x04
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x75
-        __emit 0xeb
-        __emit 0xeb
-        __emit 0x68
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x0f
-        __emit 0x51
-        __emit 0xb9
-        __emit 0xc0
-        __emit 0x78
-        __emit 0x2a
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x2e
-        __emit 0xfe
-        __emit 0xf7
-        __emit 0xff
-        __emit 0x50
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x52
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x24
-        __emit 0xe8
-        __emit 0x89
-        __emit 0x6a
-        __emit 0xfa
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x09
-        __emit 0x8d
-        __emit 0x48
-        __emit 0x08
-        __emit 0x0f
-        __emit 0xb7
-        __emit 0x40
-        __emit 0x04
-        __emit 0xeb
-        __emit 0x07
-        __emit 0xb9
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x33
-        __emit 0xc0
-        __emit 0x03
-        __emit 0xc1
-        __emit 0x3b
-        __emit 0xc1
-        __emit 0x74
-        __emit 0x24
-        __emit 0x8a
-        __emit 0x50
-        __emit 0xff
-        __emit 0x48
-        __emit 0x80
-        __emit 0xfa
-        __emit 0x20
-        __emit 0x74
-        __emit 0x06
-        __emit 0x3b
-        __emit 0xc1
-        __emit 0x75
-        __emit 0xf3
-        __emit 0xeb
-        __emit 0x15
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x11
-        __emit 0x50
-        __emit 0xff
-        __emit 0x15
-        __emit 0x84
-        __emit 0x93
-        __emit 0x35
-        __emit 0x01
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x04
-        __emit 0x83
-        __emit 0xf8
-        __emit 0xff
-        __emit 0x7e
-        __emit 0x02
-        __emit 0x8b
-        __emit 0xf8
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0xe8
-        __emit 0x11
-        __emit 0xe4
-        __emit 0x7f
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x75
-        __emit 0x18
-        __emit 0x47
-        __emit 0x85
-        __emit 0xf6
-        __emit 0x74
-        __emit 0x2c
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x07
-        __emit 0xe8
-        __emit 0x78
-        __emit 0x8d
-        __emit 0xf7
-        __emit 0xff
-        __emit 0xeb
-        __emit 0x02
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x74
-        __emit 0x18
-        __emit 0x8b
-        __emit 0x4e
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0a
-        __emit 0xe8
-        __emit 0x64
-        __emit 0x8d
-        __emit 0xf7
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x20
-        __emit 0xeb
-        __emit 0x39
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x8b
-        __emit 0x40
-        __emit 0x20
-        __emit 0xeb
-        __emit 0x32
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x44
-        __emit 0xc1
-        __emit 0xe8
-        __emit 0x02
-        __emit 0xa8
-        __emit 0x01
-        __emit 0x74
-        __emit 0x25
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0x51
-        __emit 0x8b
-        __emit 0xcd
-        __emit 0xe8
-        __emit 0x8c
-        __emit 0x79
-        __emit 0xf8
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x00
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x08
-        __emit 0x75
-        __emit 0x05
-        __emit 0xbe
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x14
-        __emit 0xe8
-        __emit 0xb0
-        __emit 0xe3
-        __emit 0x7f
-        __emit 0x00
-        __emit 0xeb
-        __emit 0x0f
-        __emit 0x8b
-        __emit 0x45
-        __emit 0x14
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x8d
-        __emit 0x70
-        __emit 0x08
-        __emit 0x75
-        __emit 0x05
-        __emit 0xbe
-        __emit 0x8b
-        __emit 0x38
-        __emit 0x07
-        __emit 0x01
-        __emit 0x8a
-        __emit 0x06
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x8b
-        __emit 0xce
-        __emit 0x74
-        __emit 0x16
-        __emit 0x8d
-        __emit 0xa4
-        __emit 0x24
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x3c
-        __emit 0x2f
-        __emit 0x75
-        __emit 0x03
-        __emit 0x8d
-        __emit 0x4e
-        __emit 0x01
-        __emit 0x8a
-        __emit 0x46
-        __emit 0x01
-        __emit 0x46
-        __emit 0x84
-        __emit 0xc0
-        __emit 0x75
-        __emit 0xf1
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x10
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x55
-        __emit 0x44
-        __emit 0xc1
-        __emit 0xea
-        __emit 0x02
-        __emit 0xf6
-        __emit 0xc2
-        __emit 0x01
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x01
-        __emit 0x74
-        __emit 0x21
-        __emit 0x51
-        __emit 0x51
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x28
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x68
-        __emit 0x24
-        __emit 0xc8
-        __emit 0x07
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xd7
-        __emit 0xf5
-        __emit 0x7f
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x18
-        __emit 0x50
-        __emit 0xe8
-        __emit 0xfd
-        __emit 0xf9
-        __emit 0x7f
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x0c
-        __emit 0xeb
-        __emit 0x20
-        __emit 0x57
-        __emit 0x51
-        __emit 0x51
-        __emit 0x89
-        __emit 0x64
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x8b
-        __emit 0xcc
-        __emit 0x68
-        __emit 0x1c
-        __emit 0xc8
-        __emit 0x07
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xb5
-        __emit 0xf5
-        __emit 0x7f
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x51
-        __emit 0xe8
-        __emit 0xdb
-        __emit 0xf9
-        __emit 0x7f
-        __emit 0x00
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x10
-        __emit 0x8d
-        __emit 0x54
-        __emit 0x24
-        __emit 0x10
-        __emit 0x52
-        __emit 0xb9
-        __emit 0xc0
-        __emit 0x78
-        __emit 0x2a
-        __emit 0x01
-        __emit 0xe8
-        __emit 0xdd
-        __emit 0xfc
-        __emit 0xf7
-        __emit 0xff
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0x50
-        __emit 0xe8
-        __emit 0x5f
-        __emit 0x19
-        __emit 0xfa
-        __emit 0xff
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x10
-        __emit 0xc6
-        __emit 0x44
-        __emit 0x24
-        __emit 0x2c
-        __emit 0x00
-        __emit 0xe8
-        __emit 0x01
-        __emit 0xe3
-        __emit 0x7f
-        __emit 0x00
-        __emit 0x8d
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x1c
-        __emit 0xc7
-        __emit 0x44
-        __emit 0x24
-        __emit 0x2c
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xff
-        __emit 0xe8
-        __emit 0xf0
-        __emit 0xe2
-        __emit 0x7f
-        __emit 0x00
-        __emit 0x8b
-        __emit 0x4c
-        __emit 0x24
-        __emit 0x24
-        __emit 0x5f
-        __emit 0x5e
-        __emit 0x64
-        __emit 0x89
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x5d
-        __emit 0x83
-        __emit 0xc4
-        __emit 0x24
-        __emit 0xc3
+    bool exists;
+    AsciiString uniqueID = properties.getAsciiString(TheKey_uniqueID.key(), &exists);
+    MapObject *obj = BfmeTheMapObjectListHolder->first;
+    int highestIndex = -1;
+    while (obj) {
+        if (obj == this) { obj = obj->next; continue; }
+        if (obj->isWaypoint()) { obj = obj->next; continue; }
+        bool iterateExists;
+        AsciiString tempStr = obj->properties.getAsciiString(TheKey_uniqueID.key(), &iterateExists);
+        const char *lastSpace = tempStr.reverseFind(' ');
+        int testIndex = -1;
+        if (lastSpace) testIndex = atoi(lastSpace);
+        if (testIndex > highestIndex) highestIndex = testIndex;
+        break;
     }
+    int indexOfThisObject = highestIndex + 1;
+    const char *thingName;
+    if (getThingTemplate()) thingName = getThingTemplate()->name.str();
+    else if (isWaypoint()) thingName = getWaypointName().str();
+    else thingName = name.str();
+    const char *pName = thingName;
+    while (*thingName) { if (*thingName == '/') pName = thingName + 1; ++thingName; }
+    AsciiString newID;
+    if (isWaypoint()) newID.format("%s", pName);
+    else newID.format("%s %d", pName, indexOfThisObject);
+    properties.setAsciiString(TheKey_uniqueID.key(), newID);
 }
