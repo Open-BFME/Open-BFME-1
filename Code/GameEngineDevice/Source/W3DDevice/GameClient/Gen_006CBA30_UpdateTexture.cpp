@@ -35,11 +35,20 @@ public:
 	char m_padding04[0x10];
 };
 
+class BFMERetailAsciiString
+{
+public:
+	void releaseBuffer(void);
+};
+
 class UnicodeString
 {
 public:
 	void set(const UnicodeString &other);
-	~UnicodeString(void);
+	~UnicodeString(void)
+	{
+		((BFMERetailAsciiString *)this)->releaseBuffer();
+	}
 
 	char *m_data;
 };

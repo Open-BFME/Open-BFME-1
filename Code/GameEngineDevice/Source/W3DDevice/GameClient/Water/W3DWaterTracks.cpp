@@ -90,18 +90,125 @@ public:
 	void Release_Ref();
 };
 
+class Rva009EBCE0AssetReference
+{
+public:
+	Rva009EBCE0AssetReference() : m_object(0) {}
+	~Rva009EBCE0AssetReference(void)
+	{
+		if (m_object)
+			((BFMEWaterTrackTexture *)m_object)->Release_Ref();
+	}
+
+	void *m_object;
+};
+
+class GenBase009EB7D0
+{
+public:
+	GenBase009EB7D0();
+	virtual ~GenBase009EB7D0();
+	virtual void handle();
+
+	unsigned int m_flags;
+	unsigned int m_zero08;
+	unsigned int m_zero0c;
+	unsigned int m_zero10;
+};
+
+class BfmeThingSJ : public GenBase009EB7D0
+{
+public:
+	BfmeThingSJ(int what);
+	virtual void handle();
+
+	int m_bfme14;
+	StringClass m_bfmeName;
+	int m_bfmeData[5];
+	int m_bfme30;
+	int m_bfme34;
+	int m_bfme38;
+};
+
+class Gen0090DB70
+{
+public:
+	Gen0090DB70(void *source);
+};
+
+class Gen_0090DB10
+{
+public:
+	Gen_0090DB10 &operator=(const Gen_0090DB10 &other);
+};
+
+class BfmeThingVHN
+{
+public:
+	void bfmeGoVHN(int format);
+};
+
 class BFMEWaterTrackTextureHandle
 {
 public:
+	BFMEWaterTrackTextureHandle() : m_texture(0) {}
+	BFMEWaterTrackTextureHandle(const Rva009EBCE0AssetReference &source);
+	BFMEWaterTrackTextureHandle(const BFMEWaterTrackTextureHandle &other)
+		: m_texture(other.m_texture)
+	{
+		if (m_texture)
+			++*(unsigned short *)((char *)m_texture + 4);
+	}
+
 	TextureClass *m_texture;
 	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
 			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
 	}
+
+	void assign(const Rva009EBCE0AssetReference &source)
+	{
+		((Gen_0090DB10 *)this)->operator=((const Gen_0090DB10 &)source);
+	}
+	void bfmeGoVHN(int format)
+	{
+		((BfmeThingVHN *)this)->bfmeGoVHN(format);
+	}
 };
 
-extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(Char *name, Int mipCount, Int format);
+extern Rva009EBCE0AssetReference Rva009EBCE0_GetPrototype(const char *name);
+extern void __cdecl Add_Prototype(void *prototype);
+
+#pragma comment(linker, "/alternatename:??0BFMEWaterTrackTextureHandle@@QAE@ABVRva009EBCE0AssetReference@@@Z=??0Gen0090DB70@@QAE@PAX@Z")
+
+class WaterTrackThing : public BfmeThingSJ
+{
+public:
+	WaterTrackThing(int what) : BfmeThingSJ(what)
+	{
+		*(unsigned int *)this = 0x0113A6F8;
+	}
+};
+
+// ?BFMEGetWaterTrackTexture@@YA?AVBFMEWaterTrackTextureHandle@@PADHH@Z
+BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(Char *name, Int mipCount, Int format)
+{
+	if (!name)
+		return BFMEWaterTrackTextureHandle();
+
+	BFMEWaterTrackTextureHandle texture(Rva009EBCE0_GetPrototype(name));
+	if (!texture.m_texture)
+	{
+		WaterTrackThing *thing = new WaterTrackThing((int)name);
+		Add_Prototype(thing);
+		texture.assign(Rva009EBCE0_GetPrototype(name));
+	} else {
+		*(int *)((char *)texture.m_texture + 0x30) = mipCount;
+		texture.bfmeGoVHN(format);
+	}
+	return texture;
+}
 
 static inline void BFMEAssignWaterTrackTexture(
 	TextureClass *&destination,
