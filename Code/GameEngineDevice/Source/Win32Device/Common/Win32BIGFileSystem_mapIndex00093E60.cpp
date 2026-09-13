@@ -14,6 +14,17 @@ void __cdecl operator delete(void *) throw();
 
 class Rva00093E60Item;
 
+namespace _STL
+{
+template <> struct less<AsciiString>
+{
+	bool operator()(const AsciiString &left, const AsciiString &right) const
+	{
+		return left.compareNoCase(right) < 0;
+	}
+};
+}
+
 typedef _STL::map<AsciiString, Rva00093E60Item *, _STL::less<AsciiString>, _STL::allocator<_STL::pair<const AsciiString, Rva00093E60Item *> > > Rva00093E60Map;
 
 // retail 0x00093E60
