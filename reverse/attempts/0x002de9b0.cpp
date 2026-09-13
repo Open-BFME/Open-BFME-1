@@ -1,44 +1,36 @@
 // ?doNugget@SpawnAndFadeNugget@@UBEXPBVDamageInfo@@PBUCoord3D@@@Z
-// partial score=0.92 date=2026-09-06
+// partial score=0.93 date=2026-09-12
 // cl: /DNDEBUG /MD /EHsc
-// BFME SpawnAndFadeNugget weapon nugget, retail 0x002DE9B0.
+// SpawnAndFadeNugget::doNugget, retail 0x002DE9B0.
+// Parser 0x001E6170, constructor 0x002DE930 (Made001E6170, size 0x6c).
+
+extern "C" double sin(double);
+extern "C" double cos(double);
+#pragma intrinsic(sin)
+#pragma intrinsic(cos)
 
 typedef int Int;
 typedef float Real;
 typedef unsigned int UnsignedInt;
 
-namespace WWMath
-{
-	class InlineTrig
-	{
-	public:
-		static __forceinline Real Sin(Real radians)
-		{
-			Real result;
-			__asm {
-				fld dword ptr [radians]
-				fsin
-				fstp dword ptr [result]
-			}
-			return result;
-		}
-
-		static __forceinline Real Cos(Real radians)
-		{
-			Real result;
-			__asm {
-				fld dword ptr [radians]
-				fcos
-				fstp dword ptr [result]
-			}
-			return result;
-		}
-	};
-}
-
 struct Coord3D
 {
-	Real x, y, z;
+	Real x;
+	Real y;
+	Real z;
+};
+
+class AsciiString
+{
+	void *m_data;
+};
+
+class ThingTemplate
+{
+};
+
+class Team
+{
 };
 
 class ObjectStatusMaskType
@@ -54,21 +46,14 @@ public:
 	UnsignedInt m_bits[3];
 };
 
-class AsciiString
-{
-};
-
-class ThingTemplate
-{
-};
-
-class Team
-{
-};
-
 class Object
 {
 public:
+	Int getLayer() const;
+	void setPosition(const Coord3D *position);
+	void setOrientation(Real angle);
+	void kill(Int damageType, Int deathType);
+
 	char m_pad00[0x38];
 	Coord3D m_position;
 	Real m_orientation;
@@ -79,72 +64,24 @@ public:
 class GameLogic
 {
 public:
-	Object *bfmeFind1011(Int id);
+	Object *findObjectByID(Int id);
 };
 
 extern GameLogic *TheBfmeGameLogic;
 
-class BfmeThingFactory
+class ThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
-extern BfmeThingFactory *g_bfmeOtherBN;
+extern ThingFactory *TheThingFactory;
 
 typedef Object *(__fastcall *ThingFactoryNewObjectCall)(
-	BfmeThingFactory *, ObjectStatusMaskType *, ThingTemplate *, Team *,
+	ThingFactory *, ObjectStatusMaskType *, ThingTemplate *, Team *,
 	const volatile ObjectStatusMaskType &, void *);
 
 extern void j_0004494a();
-
-class BFMEObjectLayerQuery
-{
-public:
-	Int getLayer() const;
-};
-
-class BfmeThingPositionSetter
-{
-public:
-	void setPosition(const Coord3D *position);
-};
-
-class BfmeD1044
-{
-public:
-	void bfmeStep1044(Int value);
-};
-
-class BfmeDrop987
-{
-public:
-	void bfmeClear987(Int first, Int second);
-};
-
-class BfmeSubBIA
-{
-public:
-	void *ask();
-};
-
-struct BfmeAskResult
-{
-	char m_pad00[0xdc];
-	UnsignedInt m_flags;
-};
-
-struct BfmeAskLink
-{
-	char m_pad00[4];
-	BfmeSubBIA *m_query;
-};
-
-struct BfmeSpawnedObject
-{
-	char m_pad00[4];
-	BfmeAskLink *m_link;
-};
 
 class TerrainLogic
 {
@@ -156,12 +93,21 @@ public:
 	virtual void slot4() = 0;
 	virtual void slot5() = 0;
 	virtual void slot6() = 0;
-	virtual Real getLayerForDestination(Real x, Real y, Int layer) = 0;
+	virtual Real getLayerHeight(Real x, Real y, Int layer, void *normal,
+		int clip) = 0;
 };
 
 extern TerrainLogic *TheTerrainLogic;
 
-class BFMEPathfinderMapShim
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+	char m_pad00[4];
+	Overridable *m_nextOverride;
+};
+
+class Pathfinder
 {
 public:
 	void addObjectToPathfindMap(Object *object);
@@ -171,14 +117,14 @@ class AI
 {
 public:
 	char m_pad00[0x0c];
-	BFMEPathfinderMapShim *m_pathfinder;
+	Pathfinder *m_pathfinder;
 };
 
 extern AI *TheAI;
 
 class DamageInfo
 {
-	public:
+public:
 	char m_pad00[8];
 	Int m_sourceID;
 };
@@ -195,48 +141,51 @@ public:
 	virtual void doNugget(const DamageInfo *damageInfo,
 		const Coord3D *position) const;
 
-	char m_pad00[0x58 - 4];
+	char m_pad04[0x58 - 4];
 	char m_objectTargetFilter[4];
 	AsciiString m_spawnedObjectName;
 	Coord3D m_spawnOffset;
 };
 
-// ?doNugget@SpawnAndFadeNugget@@UBEXPBVDamageInfo@@PBUCoord3D@@@Z
 void SpawnAndFadeNugget::doNugget(const DamageInfo *damageInfo,
 	const Coord3D *) const
 {
-	Object *source = TheBfmeGameLogic->bfmeFind1011(damageInfo->m_sourceID);
-	const ThingTemplate *thingTemplate = g_bfmeOtherBN->findTemplate(m_spawnedObjectName);
+	Object *source;
+	Object *spawned;
+	const ThingTemplate *thingTemplate;
+	float extra[3];
+
+	source = TheBfmeGameLogic->findObjectByID(damageInfo->m_sourceID);
+	thingTemplate = TheThingFactory->findTemplate(m_spawnedObjectName);
 	if (!thingTemplate)
 		return;
 
 	ObjectStatusMaskType statusMask;
-	Object *spawned = ((ThingFactoryNewObjectCall)j_0004494a)(
-		g_bfmeOtherBN, &statusMask, (ThingTemplate *)thingTemplate,
+	spawned = ((ThingFactoryNewObjectCall)j_0004494a)(
+		TheThingFactory, &statusMask, (ThingTemplate *)thingTemplate,
 		source->m_team, statusMask, 0);
 
 	Coord3D position;
 	position.x = source->m_position.x;
 	position.y = source->m_position.y;
 	position.z = source->m_position.z;
-	Real orientation = source->m_orientation;
-	Real sinOrientation = WWMath::InlineTrig::Sin(orientation);
-	Real cosOrientation = WWMath::InlineTrig::Cos(orientation);
-	position.x += m_spawnOffset.x * cosOrientation - m_spawnOffset.y * sinOrientation;
-	position.y += m_spawnOffset.x * sinOrientation + m_spawnOffset.y * cosOrientation;
-	position.z = TheTerrainLogic->getLayerForDestination(
-		position.x, position.y,
-		((const BFMEObjectLayerQuery *)source)->getLayer());
+	extra[0] = source->m_orientation;
+	extra[1] = (Real)sin(extra[0]);
+	extra[2] = (Real)cos(extra[0]);
+	position.x += m_spawnOffset.x * extra[2] - m_spawnOffset.y * extra[1];
+	position.y += m_spawnOffset.x * extra[1] + m_spawnOffset.y * extra[2];
+	position.z = TheTerrainLogic->getLayerHeight(
+		position.x, position.y, source->getLayer(), 0, 1);
 
-	((BfmeThingPositionSetter *)spawned)->setPosition(&position);
-	((BfmeD1044 *)spawned)->bfmeStep1044(1);
-	((BfmeDrop987 *)source)->bfmeClear987(8, 22);
+	spawned->setPosition(&position);
+	spawned->setOrientation(extra[0]);
+	source->kill(8, 22);
 
-	BfmeAskLink *link = ((BfmeSpawnedObject *)spawned)->m_link;
-	if (link && link->m_query)
+	Overridable *link = *(Overridable **)((char *)spawned + 4);
+	if (link && link->m_nextOverride)
 	{
-		BfmeAskResult *result = (BfmeAskResult *)link->m_query->ask();
-		if (result->m_flags & 0x400)
+		const Overridable *result = link->m_nextOverride->getFinalOverride();
+		if (*(UnsignedInt *)((char *)result + 0xdc) & 0x400)
 			TheAI->m_pathfinder->addObjectToPathfindMap(spawned);
 	}
 }

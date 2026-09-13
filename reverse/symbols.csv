@@ -87352,3 +87352,4 @@ _Rva0084DE40Tail,0x0084DE40,STLport 4.5.3 __FixStr Win32 date/time format conver
 ?compute@Rva0018CF10Owner@@QBEMPBURva0018CF10Point@@0@Z,0x0002CEEE,pin; ILT of bfmeBoundaryDistanceSquared3D used by Rva0018CF10Owner::distanceSquaredTo
 ?g_rva012EF4D0@@3PAVRva001A2D50Node@@A,0x012EF4D0,typed pointer at the dword already read by Rva001A19D0Get
 ?rva0028D0C0@@YAHXZ,0x0028D0C0,DestroyEnvironmentUpdate spawn helper returns object id
+?Rva0109BF40ZeroRange@@3MB,0x0109BF40,address-derived WWMATH_EPSILON copy used by 0x002DC8B0
