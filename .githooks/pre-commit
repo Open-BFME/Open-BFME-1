@@ -241,6 +241,23 @@ if [ "${#staged_sources[@]}" -ne 0 ]; then
         || fail "a member name disagrees with the witnessed layout, or this commit adds a placeholder the evidence already names (see above)"
 fi
 
+# A type with a canonical header should be included, not redeclared. The
+# conversion fleet writes ~1,300 TU-local class bodies a day and ~300 of them are
+# for a type a header already defines -- more per day than the adoption lane
+# drains, so cleaning up afterwards loses about 2:1. This is the half that wins.
+#
+# Narrow by construction: only shims that ARE the header's layout and spell
+# nothing it brings in, and only for the types that have exactly ONE definition in
+# the tree. Coord3D has three headers that disagree; the byte gate cannot pick
+# between them, so it is not covered here. See docs/header_adoption.md.
+#
+# Never a dead end -- the fix is one command, and a shim the compiler will not take
+# is recorded in reverse/header_adopt_blocked.tsv and skipped from then on.
+if [ "${#staged_sources[@]}" -ne 0 ]; then
+    python3 tools/adopt_header.py --check --staged \
+        || fail "a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)"
+fi
+
 # A fixed path count still overflows Windows' 32767-code-unit command line
 # when source paths are long. Twice the UTF-8 byte length plus quotes/space
 # bounds the quoted UTF-16 argument size; reserve room for launcher/script paths.
