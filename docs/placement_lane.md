@@ -29,28 +29,32 @@ the lane reached nine files:
 | | groups | files |
 |---|---|---|
 | groups of 2+ files owned by one class | 961 | — |
-| blocked: holds a `__declspec(naked)`/`__emit` donor | 216 | — |
-| blocked: donors disagree on their `// cl:` line | 484 | — |
-| **clean: no naked donor, one shared `// cl:`** | **261** | **647** |
+| blocked: donors disagree on their `// cl:` line | 463 | — |
+| blocked: two donors declare the SAME type | 235 | — |
+| blocked: holds a `__declspec(naked)`/`__emit` donor | 232 | — |
+| **mergeable** | **13** | **26** |
 
-Folding those 647 into one TU per group would remove **386 files**. That is real
-and larger than this document used to claim, but it is not free, and nothing here
-has attempted it:
+Folding those 13 removes **13 files**. An earlier version of this document said
+261 groups and 386 files, from a measurement that checked the `// cl:` line and
+the naked donors but NOT whether two donors declare the same type -- and 235
+groups fail exactly there, because concatenating two TU-local shims for one type
+is a redefinition, not a merge. The lane is nearly exhausted; do not plan around
+it. `tools/merge_cluster.py --list --ready` reports 52 marker clusters and every
+one of them has donors that disagree on their flags.
+
+The three reasons a merge is refused, each paid for once:
 
 * Folding a byte spray into a readable file is the lift AGENTS.md bans -- it
-  byte-matches by construction, scores +0, and destroys the destination's readable
-  statement of that function. 216 groups need the conversion lane first.
+  byte-matches by construction, scores +0, and destroys the destination's
+  readable statement of that function.
 * The `// cl:` line is the TU's entire compile environment, flags *and* include
-  search path. `BezierSegmentEvaluation.cpp` builds against `Code/GameEngine/Include`
-  and `BezierSegment.cpp` against the ZH reference tree; folding the first into the
-  second resolved different headers and gave `FAIL 1/68` from byte-identical source
-  text. Only 19% of directories are flag-homogeneous.
+  search path. `BezierSegmentEvaluation.cpp` builds against
+  `Code/GameEngine/Include` and `BezierSegment.cpp` against the ZH reference
+  tree; folding the first into the second resolved different headers and gave
+  `FAIL 1/68` from byte-identical source text.
 * Two TUs that each declare their own shim for the same type cannot simply be
-  concatenated -- that is a redefinition. `docs/header_adoption.md` is the
-  prerequisite, not a parallel lane.
-* ICF: one C++ spelling can reach several retail addresses, and a type named after
-  an address is what forces the compiler at the right copy. Merging can move which
-  copy a call site binds to, and the byte gate will say so, loudly.
+  concatenated. `docs/header_adoption.md` is the prerequisite, not a parallel
+  lane.
 
 **MOVING** has none of those constraints and is the lane that works:
 
