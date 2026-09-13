@@ -183,3 +183,38 @@ nothing is findable: 533 headers against 1,471 means types have no home, so ever
 TU redeclares them. `AsciiString` is declared TU-locally **1,375** times, `Object`
 1,317. That is a separate campaign with a different cost model, because any staged
 `.h` forces the full gate.
+
+
+## Four more evidence sources, measured and rejected
+
+The 8,909 files skipped for "no destination the evidence supports" are the bulk of
+the flat `Common/` directory, so it is worth knowing what has already been tried.
+All four were measured, not argued:
+
+| idea | reach | spot checks | verdict |
+|---|---|---|---|
+| classify by the file's own `#include` set | 67 files | **3 of 5 WRONG** | no |
+| classify by the classes the file REFERENCES | **1,275 files (30.7%)** | **0 of 10 correct** | no |
+| the `/I` paths on its `// cl:` line | 0 files | — | no |
+| ZH's directory for the class's BASE class | 0 files | — | no |
+
+**The second one is the cautionary tale.** It reaches nearly a third of the
+directory, which is by far the best reach anything has ever shown here, and it is
+wrong every single time. A file that defines its own class still references
+classes from whichever area dominates the tree, so
+`AnimationSoundClientBehaviorGlobal_unregister.cpp` -- a GameClient file by its
+name and its headers -- infers GameLogic. Implementing it would have moved 1,275
+files to the wrong place, and **every one of those moves would have been
+byte-neutral**, so no gate in this repo could have caught it. Reach is not
+evidence.
+
+The other two reach zero for structural reasons: most of these files carry no `/I`
+paths at all or several areas' worth, and most are constructor/destructor thunks
+with no base class written in the source -- the hierarchy lives in the ledger and
+the binary, not the text.
+
+**Conclusion: the lane is evidence-limited, not tooling-limited.** The 8,909 are
+BFME-specific classes with no ZH twin, free functions, and synthetic shims
+(`Rva*`, `Gen_*`, `Bfme*`). They are blocked on identification, which is the
+conversion lane's work. Adopting headers (`docs/header_adoption.md`) is the
+prerequisite that would make them tractable, not a smarter placement heuristic.
