@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1eb70e72f3a858e387c5040883a49b0866c33ffd92ccc60a7a6d5b8d453dbc1c",
+  "symbol": "?d_001f6db0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_001f6db0@@YAXXZ\n// partial score=0.95 date=2026-09-12\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n// stlport\n//\n// Retail 0x001F6DB0, 165 bytes.  FieldParse table at RVA 0x00CA2D28 names this\n// the FireName parser (offset 0) for Rva001F6EA0::buildFieldParse.\n\n#include <vector>\n\ntemplate <typename T> struct StringInlineData\n{\n\tint m_refCount;\n\tint m_length;\n\tT m_text[1];\n};\n\ntemplate <typename T> class StringBase\n{\n\tfriend class Open2Elem063700;\n\nprivate:\n\tStringBase(const T *text);\n\tStringBase(const StringBase<T> &other);\n\t~StringBase();\n\n\tStringInlineData<T> *m_data;\n};\n\nclass Open2Elem063700 : private StringBase<char>\n{\npublic:\n\tOpen2Elem063700(const char *text) : StringBase<char>(text) {}\n\tOpen2Elem063700(const Open2Elem063700 &other) : StringBase<char>(other) {}\n\t~Open2Elem063700() {}\n};\n\nclass INI\n{\npublic:\n\tconst char *getNextToken(const char *separators);\n};\n\nclass Rva001F6EA0\n{\npublic:\n\tstatic void parseFireName(INI *ini, void *instance, void *store, const void *userData);\n\nprivate:\n\tunsigned char m_pad[0x18];\n\tstd::vector<Open2Elem063700> m_fireNames;\n};\n\n// ?parseFireName@Rva001F6EA0@@SAXPAVINI@@PAX1PBX@Z\nvoid Rva001F6EA0::parseFireName(INI *ini, void *instance, void * /*store*/, const void * /*userData*/)\n{\n\tconst char *token = ini->getNextToken(0);\n\tif (token)\n\t{\n\t\tOpen2Elem063700 name(token);\n\t\t((Rva001F6EA0 *)instance)->m_fireNames.push_back(name);\n\t}\n}\n"
+}
