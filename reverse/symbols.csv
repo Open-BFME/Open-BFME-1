@@ -6443,6 +6443,7 @@ name,address,notes
 ??1Gen_dtor_0077f190@@UAE@XZ,0x00025EA5,gen-dtor class destructor
 ??1Gen_dtor_0077f510@@UAE@XZ,0x0001D4F3,gen-dtor class destructor
 ??1Gen_dtor_007814f0@@UAE@XZ,0x0001CDF0,gen-dtor class destructor
+??1W3DTruckDrawModuleData@@UAE@XZ,0x0001CDF0,route=0x0077F920; scalar deleting destructor call target established by retail wrapper
 ??1Gen_dtor_00781630@@UAE@XZ,0x00025A40,gen-dtor class destructor
 ??1Gen_dtor_00782e30@@UAE@XZ,0x00039F45,gen-dtor class destructor
 ??1Gen_dtor_007862f0@@UAE@XZ,0x000428DE,gen-dtor class destructor
