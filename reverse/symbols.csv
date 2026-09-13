@@ -6389,6 +6389,7 @@ name,address,notes
 ??1Gen_dtor_006fb6e0@@UAE@XZ,0x0003FCE7,gen-dtor class destructor
 ??1Gen_dtor_006fbd70@@UAE@XZ,0x0002EB77,gen-dtor class destructor
 ??1Gen_dtor_006fc3c0@@UAE@XZ,0x0004A610,gen-dtor class destructor
+??1W3DInGameUI@@UAE@XZ,0x0004A610,route=0x006FBED0; scalar deleting destructor retail call calls the matched W3DInGameUI destructor through this ILT
 ??1Gen_dtor_006fd6c0@@UAE@XZ,0x0001328C,gen-dtor class destructor
 ??1Gen_dtor_006fe570@@UAE@XZ,0x0002D47F,gen-dtor class destructor
 ??1Gen_dtor_007002d0@@UAE@XZ,0x0003AC01,gen-dtor class destructor
