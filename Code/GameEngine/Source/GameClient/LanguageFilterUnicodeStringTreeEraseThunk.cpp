@@ -1,7 +1,5 @@
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-};
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
+#include "unicode_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/LanguageFilter.h
 struct UnicodeStringLessThan

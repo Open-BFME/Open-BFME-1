@@ -22,11 +22,7 @@ public:
 	void releaseBuffer();
 };
 
-class UnicodeString
-{
-public:
-	void set(const UnicodeString &other);
-};
+#include "unicode_string.h"
 
 #include "ascii_string.h"
 

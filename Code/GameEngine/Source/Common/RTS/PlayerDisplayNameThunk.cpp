@@ -6,14 +6,7 @@
 // ??0?$StringBase@D@@AAE@ABV0@@Z (0x00887B60) at the return copy, while this
 // wide body encodes ??0?$StringBase@G@@AAE@ABV0@@Z (0x00888400). One compiled
 // body cannot carry both displacements.
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString();
-	UnicodeString(const UnicodeString &);
-	~UnicodeString();
-};
+#include "unicode_string.h"
 
 // Retail inlines the copy constructor, so the return copy reaches the base body
 // directly; left declared-only, cl emits a call to ??0UnicodeString@@QAE@ABV0@@Z.

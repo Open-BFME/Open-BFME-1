@@ -2,14 +2,7 @@
 
 // Open-BFME5: DisplayString::getText returns UnicodeString member at +4.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString();
-	UnicodeString(const UnicodeString &);
-	~UnicodeString();
-};
+#include "unicode_string.h"
 
 // The real DisplayString::getText at 0x00410080 -- carried here, not in
 // DisplayStringGetTextThunk.cpp, because the seven vendored dup-of rows that

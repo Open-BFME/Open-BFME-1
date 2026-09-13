@@ -616,3 +616,16 @@ Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarUnderConstruction.cpp
 Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupPlayerInfoLookupRankImage.cpp	StringBase	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
 Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/Rva004EBA70NotificationDispatch.cpp	StringBase	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
 Code/GameEngine/Source/GameClient/GUI/Rva0059E320MainMenuMediumInit.cpp	StringBase	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/Common/BfmeConv2085.cpp	UnicodeString	Code\GameEngine\Source\Common\BfmeConv2085.cpp(50) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/Gen002BBD40Accept.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME-Seats\grok\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/Rva0040B130Set.cpp	UnicodeString	Code\GameEngine\Source\Common\Rva0040B130Set.cpp(18) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/Rva0040B150Set.cpp	UnicodeString	Code\GameEngine\Source\Common\Rva0040B150Set.cpp(10) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/Rva0047A140Release.cpp	UnicodeString	Code\GameEngine\Source\Common\Rva0047A140Release.cpp(7) : error C2039: 'releaseBuffer' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/Rva00558D90Release.cpp	UnicodeString	Code\GameEngine\Source\Common\Rva00558D90Release.cpp(7) : error C2039: 'releaseBuffer' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenOnlineShellConstructor.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME-Seats\grok\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/MessageBoxOk.cpp	UnicodeString	Code\GameEngine\Source\GameClient\GUI\GUICallbacks\MessageBoxOk.cpp(8) : error C2653: 'MessageBoxOkShim' : is not a class or namespace name
+Code/GameEngine/Source/GameClient/GUI/TextTypeTransitionConstructor.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/Shell_hide.cpp	UnicodeString	Code\GameEngine\Source\GameClient\Shell_hide.cpp(91) : error C2039: 'releaseBuffer' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameNetwork/GameSlotIsPlayerUnicodeThunk.cpp	UnicodeString	Code\GameEngine\Source\GameNetwork\GameSlotIsPlayerUnicodeThunk.cpp(41) : error C2039: 'releaseBuffer' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyStagingRoom_getGameName_Thunk.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameNetwork/LANGameSlotSetHost.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME-Seats\grok\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
