@@ -434,3 +434,9 @@ Code/GameEngine/Source/GameNetwork/GameSpy/BuddyMessageListAppend.cpp	UnicodeStr
 Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlot_constructor.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
 Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyStagingRoomAssign.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
 Code/GameEngineDevice/Source/VideoDevice/Bink/Rva004349D0CreateSubtitleEntry.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/Common/SkirmishBattleHonors_getFavoriteSideName.cpp	AsciiString	Code\GameEngine\Source\Common\SkirmishBattleHonors_getFavoriteSideName.cpp(65) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/Thing/Rva0077BC20FindOrCreateNugget.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/UpgradePairTree.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/UpgradePairTreeWide.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/LivingWorld/ParseRegionReinforcementBlock.cpp	AsciiString	Code\GameEngine\Source\GameLogic\LivingWorld\ParseRegionReinforcementBlock.cpp(102) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
+Code/GameEngine/Source/GameLogic/Object/DeliverPayloadNugget_parsePayload_Thunk.cpp	AsciiString	Functions: FAIL 1/2

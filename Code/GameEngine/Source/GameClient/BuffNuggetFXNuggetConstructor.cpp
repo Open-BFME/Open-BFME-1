@@ -10,21 +10,7 @@ typedef unsigned int UnsignedInt;
 
 #include "string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	// Inline forward so the this-pointer is computed before the literal is
-	// pushed -- retail's six template strings are `lea ecx / push / call`.
-	AsciiString(const char *s)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(s);
-	}
-	~AsciiString();
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor

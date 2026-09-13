@@ -43,16 +43,7 @@ struct FontDesc
 
 #include "string_base.h"
 
-class AsciiString
-{
-public:
-	AsciiString() { m_data.m_data = 0; }
-	AsciiString(const char *text) : m_data(text) {}
-	~AsciiString() { m_data.releaseBuffer(); }
-
-private:
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 struct BfmeFontEntry
 {

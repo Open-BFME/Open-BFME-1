@@ -17,20 +17,7 @@
 
 #include "string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString() {}
-
-	AsciiString &operator=( const AsciiString &other )
-	{
-		m_data.set( other.m_data );
-		return *this;
-	}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 // -------------------------------------------------------------------------
 // 0x003A4270 -- 101 bytes, element 0x14

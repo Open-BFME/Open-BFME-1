@@ -15,16 +15,7 @@
 // Only the two members these bodies reach.
 #include "string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString() { m_data.releaseBuffer(); }
-
-	const AsciiString &operator=(const AsciiString &src) { m_data.set(src.m_data); return *this; }
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class ParticleSystemTemplate;
 

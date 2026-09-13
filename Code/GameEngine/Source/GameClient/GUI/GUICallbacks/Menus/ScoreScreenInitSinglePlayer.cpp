@@ -3,23 +3,7 @@
 #if 0
 #include "string_base.h"
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(text);
-	}
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-	~AsciiString() {}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 #endif
 
 #include "../../../../../../reference/shims/stringinline/StringInline.h"

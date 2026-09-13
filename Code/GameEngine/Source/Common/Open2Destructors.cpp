@@ -23,14 +23,7 @@ public:
 
 #include "string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString() {}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 // -------------------------------------------------------------------------
 // 0x0005F4B0 -- 103 bytes, 4 string member(s)

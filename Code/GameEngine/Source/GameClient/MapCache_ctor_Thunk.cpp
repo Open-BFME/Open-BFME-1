@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME5: clean C++ lift of the retail MapCache constructor.
 
@@ -7,17 +7,7 @@
 
 typedef int Bool;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString();
-	~AsciiString();
-	bool operator<(const AsciiString &other) const;
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
 struct MapMetaData

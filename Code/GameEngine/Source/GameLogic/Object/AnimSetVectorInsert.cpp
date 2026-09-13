@@ -13,15 +13,7 @@ typedef int Int;
 
 #include "string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &other) : m_data(other.m_data) {}
-	~AsciiString() { m_data.releaseBuffer(); }
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class GenericObjectCreationNugget
 {

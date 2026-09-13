@@ -12,24 +12,7 @@
 
 #include "string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-
-	~AsciiString(void)
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 extern AsciiString TheBfmeCrateNameDefault;
 

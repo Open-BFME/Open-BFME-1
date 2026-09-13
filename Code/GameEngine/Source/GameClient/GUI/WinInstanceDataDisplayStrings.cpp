@@ -75,16 +75,7 @@ public:
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-	void clear(void);					// retail 0x00887940
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString

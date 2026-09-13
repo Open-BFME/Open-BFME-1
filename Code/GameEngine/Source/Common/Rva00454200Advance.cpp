@@ -1,20 +1,9 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #include <set>
 
-class AsciiString
-{
-public:
-	~AsciiString()
-	{
-		releaseBuffer();
-	}
-
-private:
-	void releaseBuffer();
-	void *m_data;
-};
+#include "ascii_string.h"
 
 bool operator<(const AsciiString &left, const AsciiString &right);
 

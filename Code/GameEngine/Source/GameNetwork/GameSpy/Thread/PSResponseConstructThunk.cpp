@@ -10,18 +10,7 @@
 
 #include "string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-    AsciiString(const AsciiString &that)
-    {
-        ((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&that);
-    }
-
-private:
-    char *m_text;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PersistentStorageThread.h
 class PSResponse

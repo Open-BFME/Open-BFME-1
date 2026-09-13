@@ -15,15 +15,7 @@ extern void j_0000efde();
 
 typedef StringBase<char> BfmeNarrowString;
 
-class AsciiString
-{
-public:
-    AsciiString(const AsciiString &);
-    ~AsciiString();
-    AsciiString &operator=(const AsciiString &);
-private:
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 struct Gen_t_000bc4b0_p4pod
 {

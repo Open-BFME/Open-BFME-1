@@ -10,16 +10,7 @@ extern "C" __declspec(dllimport) int __cdecl _vsnprintf(
 
 #include "string_base.h"
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	AsciiString(const AsciiString &source) : m_data(source.m_data) {}
-	~AsciiString() { m_data.releaseBuffer(); }
-
-private:
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class CRCParameterCheck
 {

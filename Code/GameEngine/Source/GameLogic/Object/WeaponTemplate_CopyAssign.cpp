@@ -13,18 +13,7 @@
 
 #include "string_base.h"
 
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->set(*(const StringBase<char> *)&that);
-		return *this;
-	}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class WtVecCoord2D
 {

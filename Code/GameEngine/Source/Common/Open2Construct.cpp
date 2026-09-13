@@ -33,15 +33,7 @@ public:
 
 #include "string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString( const AsciiString &other ) : m_data( other.m_data ) {}
-	~AsciiString() {}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 inline void *operator new( unsigned int, void *place ) { return place; }
 inline void operator delete( void *, void * ) {}

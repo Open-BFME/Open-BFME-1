@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // BFME retail RVA 0x000EACD0, the object-count map transfer helper.
 
@@ -28,26 +28,7 @@ public:
 	void set(const UnicodeString &other);
 };
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-
-	AsciiString &operator=(const AsciiString &other)
-	{
-		reinterpret_cast<UnicodeString *>(this)->set(
-			*reinterpret_cast<const UnicodeString *>(&other));
-		return *this;
-	}
-
-	~AsciiString()
-	{
-		reinterpret_cast<BFMERetailAsciiString *>(this)->releaseBuffer();
-	}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Xfer
 {

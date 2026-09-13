@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // Base then two maps, and the body is empty -- everything here is member
@@ -13,18 +13,7 @@
 // which is the base followed by two destructible members.
 #include <map>
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString();
-	~AsciiString();
-
-	bool operator<(const AsciiString &other) const;
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HotKey.h
 struct HotKey

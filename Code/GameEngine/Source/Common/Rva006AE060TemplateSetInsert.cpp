@@ -1,4 +1,4 @@
-// cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
+// cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Retail 0x006AE060: mutex-guarded insertion into an indexed string set and
 // invalidation of the entry cache when a new non-default-scale key is added.
@@ -6,12 +6,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <set>
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 bool operator<(const AsciiString &left, const AsciiString &right);
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: map<AsciiString, Coord3D>'s tree copy, _M_copy at 0x000BFF50,
 // 171 bytes. The name was parked on the 5-byte thunk at 0x0002E15E, which
@@ -27,11 +27,7 @@ struct Coord3D
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	// Only the size matters here: the comparison is a call, not inline code.
-	void *m_data;
-};
+#include "ascii_string.h"
 
 bool operator<(const AsciiString &left, const AsciiString &right);
 

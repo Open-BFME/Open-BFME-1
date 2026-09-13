@@ -6,14 +6,7 @@
 
 #include "string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString() {}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 template <int N>
 class BfmeGap1134

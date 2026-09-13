@@ -28,15 +28,7 @@
 typedef int Int;
 typedef bool Bool;
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 enum ObjectID
 {

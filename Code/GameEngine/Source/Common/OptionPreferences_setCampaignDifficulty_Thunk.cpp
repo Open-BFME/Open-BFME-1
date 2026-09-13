@@ -5,25 +5,7 @@ class AsciiString;
 
 #include "string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-    char *m_text;
-
-public:
-    AsciiString() { m_text = 0; }
-    AsciiString(const char *text)
-    {
-        ((StringBase<char> *)this)->StringBase<char>::StringBase(text);
-    }
-    ~AsciiString();
-    AsciiString &operator=(const AsciiString &that)
-    {
-        ((StringBase<char> *)this)->set(*(const StringBase<char> *)&that);
-        return *this;
-    }
-    void __cdecl format(AsciiString format, ...);
-};
+#include "ascii_string.h"
 
 namespace _STL
 {
