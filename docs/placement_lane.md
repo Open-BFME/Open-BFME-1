@@ -34,13 +34,22 @@ the lane reached nine files:
 | blocked: holds a `__declspec(naked)`/`__emit` donor | 232 | — |
 | **mergeable** | **13** | **26** |
 
-Folding those 13 removes **13 files**. An earlier version of this document said
-261 groups and 386 files, from a measurement that checked the `// cl:` line and
-the naked donors but NOT whether two donors declare the same type -- and 235
-groups fail exactly there, because concatenating two TU-local shims for one type
-is a redefinition, not a merge. The lane is nearly exhausted; do not plan around
-it. `tools/merge_cluster.py --list --ready` reports 52 marker clusters and every
-one of them has donors that disagree on their flags.
+**All 13 were then tried, and all 13 failed to compile.** The lane's real reach
+is ZERO; do not plan around it. `merge_cluster --list --ready` reports 52 marker
+clusters and every one has donors that disagree on their flags.
+
+The number in this document has been wrong twice, each time because the check was
+weaker than the compiler. It said 261 groups when it tested only the `// cl:`
+line and naked donors; 13 once it also tested whether two donors declare the same
+type; zero once the groups were actually built. The last blocker is the one a
+static check cannot see: a donor's shim collides with a type the DESTINATION's
+includes already define. `RankInfo.cpp` includes ZH's `RankInfo.h`, which defines
+`RankInfo` and `RankInfoStore`; `RankInfoParse.cpp` declares its own. Each
+compiles alone, and concatenated they give `error C2011: type redefinition`.
+
+Treat `tools/mergeable_groups.py` as an upper bound and the compiler as the
+oracle. Adopting headers (`docs/header_adoption.md`) is the prerequisite for this
+lane, not a parallel one.
 
 The three reasons a merge is refused, each paid for once:
 
