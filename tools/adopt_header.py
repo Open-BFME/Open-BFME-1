@@ -326,8 +326,15 @@ def main():
         text = (ROOT / rel).read_text(encoding="utf-8", newline="")
         if blocker(text, args.type, want):
             continue
-        (ROOT / rel).write_text(rewrite(text, args.type, include, incdir),
-                                encoding="utf-8", newline="")
+        # --type picks the FILE; once picked, every covered type in it is
+        # swapped. Doing one at a time leaves the file still redeclaring another
+        # covered type, and this tool's own commit gate then refuses the commit
+        # it just produced -- the hook cannot tell "half adopted" from "not
+        # adopted", and it should not have to.
+        for kind, (inc_k, dir_k, want_k) in headers().items():
+            if blocker(text, kind, want_k) is None:
+                text = rewrite(text, kind, inc_k, dir_k)
+        (ROOT / rel).write_text(text, encoding="utf-8", newline="")
         changed.append(rel)
     if not changed:
         print("nothing swappable left in this pass")
