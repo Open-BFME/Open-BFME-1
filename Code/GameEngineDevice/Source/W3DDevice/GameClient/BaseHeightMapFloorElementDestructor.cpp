@@ -55,10 +55,10 @@ public:
 	~AsciiString() {}
 };
 
-class __declspec(novtable) Gen_dtor_006f8910
+class __declspec(novtable) BaseHeightMapFloorElement
 {
 public:
-	virtual ~Gen_dtor_006f8910();
+	virtual ~BaseHeightMapFloorElement();
 
 private:
 	unsigned char m_pad04[0x1c];
@@ -73,8 +73,8 @@ private:
 	AsciiString m_name;
 };
 
-// ??1Gen_dtor_006f8910@@UAE@XZ
-Gen_dtor_006f8910::~Gen_dtor_006f8910()
+// ??1BaseHeightMapFloorElement@@UAE@XZ
+BaseHeightMapFloorElement::~BaseHeightMapFloorElement()
 {
 	m_active = false;
 	if (m_renderObject)

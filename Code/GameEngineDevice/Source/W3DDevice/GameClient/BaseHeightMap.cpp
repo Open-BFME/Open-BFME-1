@@ -897,15 +897,10 @@ void BaseHeightMapResetBuffer::clear3098()
 // BFME's +0x30A4 buffer is a W3DFloorBuffer.  Its list is the STLport
 // circular list at +0x20; the payloads are the floor render objects allocated
 // by the buffer and owned by this reset path.
-class Gen_dtor_006f8910
-{
-public:
-	virtual ~Gen_dtor_006f8910();
-};
-
 struct BaseHeightMapFloorElement
 {
-	char m_pad00[0x20];
+	virtual ~BaseHeightMapFloorElement();
+	char m_pad04[0x1c];
 	BFMETextureRelease *m_texture;
 	RefCountClass *m_renderObject;
 	void *m_field28;
@@ -947,7 +942,7 @@ void BaseHeightMapResetBuffer::clear30A4()
 		element->m_field48 = NULL;
 		element = reinterpret_cast<BaseHeightMapFloorElement *>(*it);
 		if (element) {
-			reinterpret_cast<Gen_dtor_006f8910 *>(element)->Gen_dtor_006f8910::~Gen_dtor_006f8910();
+			element->BaseHeightMapFloorElement::~BaseHeightMapFloorElement();
 			::operator delete(element);
 		}
 	}
