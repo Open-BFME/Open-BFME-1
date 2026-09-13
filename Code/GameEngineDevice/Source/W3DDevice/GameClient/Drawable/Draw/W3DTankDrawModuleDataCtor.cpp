@@ -60,6 +60,7 @@ public:
 	Real m_treadDriveSpeedFraction;
 
 	W3DTankDrawModuleData();
+	virtual ~W3DTankDrawModuleData();
 };
 
 W3DTankDrawModuleData::W3DTankDrawModuleData() :
@@ -67,5 +68,9 @@ W3DTankDrawModuleData::W3DTankDrawModuleData() :
 	m_treadAnimationRate( 0.0f ),
 	m_treadPivotSpeedFraction( 0.6f ),
 	m_treadDriveSpeedFraction( 0.3f )
+{
+}
+
+W3DTankDrawModuleData::~W3DTankDrawModuleData()
 {
 }
