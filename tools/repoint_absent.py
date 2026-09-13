@@ -41,6 +41,11 @@ ABSENT = re.compile(r"symbol not found in object: (\S+)")
 # emits this name" is not evidence of anything. Repointing one would be the same
 # mistake as matching a small body by bytes and calling it an identity.
 LOCAL_LABEL = re.compile(r"_?\$[A-Za-z]+\d+")
+# build.py detects a renumbered gen-funclet label itself and says which one the
+# body is now. That is the compiler's own answer, not an inference, so it is the
+# one case where re-pointing a compiler-local label IS evidence-backed.
+RENUMBERED = re.compile(
+    r"(\S+) was renumbered by an edit to this TU; the body is (\S+) in the object built now")
 
 
 def red_absent(log):
@@ -58,6 +63,43 @@ def red_absent(log):
     return out
 
 
+def renumbered(log):
+    """[(row name, source, old label, new label)] the gate itself resolved."""
+    out, current = [], None
+    for line in Path(log).read_text(errors="replace").splitlines():
+        if line.startswith("  FAIL") and "(" in line:
+            current = (line[len("  FAIL"):line.index("(")].strip(),
+                       line[line.index("(") + 1:line.rindex(")")])
+        elif current:
+            hit = RENUMBERED.search(line)
+            if hit:
+                out.append((current[0], current[1], hit.group(1), hit.group(2)))
+                current = None
+    return out
+
+
+def relabel(moves):
+    """Rewrite each row's own `object-symbol=` in place, as bytes."""
+    data = LEDGER.read_bytes()
+    done = 0
+    for name, _source, old, new in moves:
+        key = name.encode() + b","
+        i = data.find(key)
+        while i >= 0 and not (i == 0 or data[i - 1:i] in (b"\n", b"\r")):
+            i = data.find(key, i + 1)
+        if i < 0:
+            continue
+        end = data.find(b"\n", i)
+        line = data[i:end]
+        swapped = line.replace(b"object-symbol=" + old.encode(),
+                               b"object-symbol=" + new.encode(), 1)
+        if swapped != line:
+            data = data[:i] + swapped + data[end:]
+            done += 1
+    LEDGER.write_bytes(data)
+    return done
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -65,6 +107,13 @@ def main():
     ap.add_argument("--apply", action="store_true")
     ap.add_argument("--limit", type=int, default=0)
     args = ap.parse_args()
+
+    stale = renumbered(args.gate_log)
+    print(f"rows the gate itself says are a renumbered label: {len(stale)}")
+    for name, source, old, new in stale:
+        print(f"  {name[:44]:<44} {old} -> {new}  ({source.split('/')[-1]})")
+    if stale and args.apply:
+        print(f"  relabelled {relabel(stale)} row(s)")
 
     red = red_absent(args.gate_log)
     if args.limit:
