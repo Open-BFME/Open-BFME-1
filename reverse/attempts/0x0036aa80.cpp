@@ -1,18 +1,46 @@
 // ?xfer@AttributeModifierPoolUpdate@@MAEXPAVXfer@@@Z
-// partial score=0.85 date=2026-09-11
+// partial score=0.88 date=2026-09-12
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline /ICode/GameEngine/Source
 // stlport
 
-// Identity from the AttributeModifierPoolUpdate vtable at 0x010E92DC slot 3
-// and the sibling field layouts in AttributeModifierPoolUpdateConstructor.cpp
-// and AttributeModifierPoolUpdate_bfmeGetBonus.cpp: m_modifiers begins at
-// this+0x20, m_maxFrame at +0x2c, the two 7-entry UnsignedInt arrays at
-// +0x30 and +0x4c. UpdateModule's own layout (vtable + PB_DeepBase fields +
-// two interface vtables + three ints) totals 0x20 bytes.
+// AttributeModifierPoolUpdate::xfer, retail RVA 0x0036AA80.
+// Identity from vtable 0x010E92DC slot 3 and the sibling constructor layout.
+// throw() on the StringBase copy ctor recovers retail's this-in-ebx coloring
+// and the 0x2C frame; remaining gap is EH state 0/1 around the temp string
+// plus STLport _Construct inlining into push_back (598B vs 582B).
 
 #include "Common/System/xfer.h"
-#include "StringInline.h"
+#define _STLP_NO_EXCEPTIONS 1
 #include <vector>
+
+template <typename T> struct StringInlineData
+{
+	int m_refCount;
+	int m_length;
+	T m_text[1];
+};
+
+template <typename T> class StringBase
+{
+	friend class AsciiString;
+
+private:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const T *text );
+	StringBase( const StringBase<T> &other ) throw();
+	~StringBase();
+
+	StringInlineData<T> *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString( const char *text ) : StringBase<char>( text ) {}
+	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
+	~AsciiString() {}
+};
 
 class Thing;
 class ModuleData;
@@ -62,10 +90,6 @@ protected:
 	int m_f1c;
 };
 
-// The nameKey field xfers through Xfer::operator==(int&), not the unsigned
-// overload: NameKeyType is a plain int in this tree, and the two overloads
-// sit at different vtable slots (0x78 vs 0x74), so the wrong one is a real
-// codegen difference, not cosmetic.
 struct AttributeModifierEntry
 {
 	int m_nameKey;
@@ -88,9 +112,10 @@ private:
 	_STL::vector<AttributeModifierEntry> m_modifiers;
 	unsigned int m_maxFrame;
 	unsigned int m_activationFrames[ 7 ];
-	unsigned int m_values[ 7 ];
+	int m_values[ 7 ];
 };
 
+// ?xfer@AttributeModifierPoolUpdate@@MAEXPAVXfer@@@Z
 void AttributeModifierPoolUpdate::xfer( Xfer *xfer )
 {
 	Xfer::Version version;
@@ -100,7 +125,8 @@ void AttributeModifierPoolUpdate::xfer( Xfer *xfer )
 
 	if ( xfer->IsLoading() )
 	{
-		m_modifiers.erase( m_modifiers.begin(), m_modifiers.end() );
+		_STL::vector<AttributeModifierEntry> *modifiers = &m_modifiers;
+		modifiers->erase( modifiers->begin(), modifiers->end() );
 
 		int count = 0;
 		*xfer == count;
@@ -113,7 +139,7 @@ void AttributeModifierPoolUpdate::xfer( Xfer *xfer )
 				*xfer == entry.m_name;
 			*xfer == entry.m_expirationFrame;
 			*xfer == entry.m_unknown;
-			m_modifiers.push_back( entry );
+			modifiers->push_back( entry );
 		}
 	}
 	else
@@ -133,13 +159,17 @@ void AttributeModifierPoolUpdate::xfer( Xfer *xfer )
 		}
 	}
 
-	if ( version.data[ 0 ] >= 2 )
+	if ( version.data[ 1 ] >= 2 )
 	{
-		for ( int index = 0; index < 7; ++index )
+		int *values = m_values;
+		int remaining = 7;
+		do
 		{
-			*xfer == m_activationFrames[ index ];
-			*xfer == m_values[ index ];
-		}
+			*xfer == *reinterpret_cast<unsigned int *>( values - 7 );
+			*xfer == *values;
+			++values;
+			--remaining;
+		} while ( remaining );
 	}
 
 	UpdateModule::xfer( xfer );
