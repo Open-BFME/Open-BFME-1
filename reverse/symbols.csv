@@ -4834,6 +4834,7 @@ name,address,notes
 ??1Gen_dtor_00070ef0@@UAE@XZ,0x000083C3,gen-dtor class destructor
 ??1?$SubsystemSlot@VExperienceLevelSystem@@@@UAE@XZ,0x000083C3,SubsystemSlot<ExperienceLevelSystem> destructor ILT called by authentic scalar-deleting destructor at 0x00070EF0
 ??1Gen_dtor_00070fb0@@UAE@XZ,0x000444B8,gen-dtor class destructor
+??1?$SubsystemSlot@VAptPlayer@@@@UAE@XZ,0x000444B8,SubsystemSlot<AptPlayer> destructor ILT called by authentic scalar-deleting destructor at 0x00070FB0
 ??1Gen_dtor_00071070@@UAE@XZ,0x00034E96,gen-dtor class destructor
 ??1Gen_dtor_00071130@@UAE@XZ,0x0004473D,gen-dtor class destructor
 ??1Gen_dtor_000711f0@@UAE@XZ,0x00013A48,gen-dtor class destructor
@@ -9997,6 +9998,7 @@ name,address,notes
 ??_7?$SubsystemSlot@VThingFactory@@@@6B@,0x01075E08,vtable installed by exact SubsystemSlot<ThingFactory> constructor at 0x00070D50; slot zero routes through ILT 0x00027A89 to scalar-deleting destructor 0x00070D70
 ??_7?$SubsystemSlot@VLightPointSystem@@@@6B@,0x01075E0C,vtable installed by exact SubsystemSlot<LightPointSystem> constructor at 0x00070E10; slot zero routes through ILT 0x0001E3DA to scalar-deleting destructor 0x00070E30
 ??_7?$SubsystemSlot@VExperienceLevelSystem@@@@6B@,0x01075E10,vtable installed by exact SubsystemSlot<ExperienceLevelSystem> constructor at 0x00070ED0; slot zero routes through ILT 0x0001333B to scalar-deleting destructor 0x00070EF0
+??_7?$SubsystemSlot@VAptPlayer@@@@6B@,0x01075E14,vtable installed by exact SubsystemSlot<AptPlayer> constructor at 0x00070F90; slot zero routes through ILT 0x0001A582 to scalar-deleting destructor 0x00070FB0
 ??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x01075D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
 ??_7?$SubsystemSlot@VUpgradeCenter@@@@6B@,0x01075DA8,vtable installed by exact SubsystemSlot<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
 ??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
