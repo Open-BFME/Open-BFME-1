@@ -22388,3 +22388,6 @@ _Rva0080FD30	0x0080FD30	146	partial	t=24min model=gpt-5.6 exact except one accum
 ?a_00c18768@@YAXXZ	0x00C18768	39	converted	same MI shape with pad[12] this at [ebp-0x1C] $L376. t=25m model=grok-4.6 run=20260913T001849Z-767f1306eddb
 ?a_00c1e0a8@@YAXXZ	0x00C1E0A8	39	converted	byte-identical twin of 0x00C01E28 aliased onto $L356. t=25m model=grok-4.6 run=20260913T001849Z-767f1306eddb
 ?d_00bf2743@@YAXXZ	0x00BF2743	11	blocked	Ghidra Unwind@00ff2743 is mov ecx,[ebp+0x10]; add ecx,0x14; jmp AsciiString dtor. Constructor this-spill is [ebp-0x10] and only walks down; HasAscii ctor probe emits the add-0x14 jmp but at [ebp-0x10]. Placement-new of a +0x14 member produced no funclet. gen_uw template M cannot place a positive disp. No trustworthy C++ owner. t=25m model=grok-4.6 run=20260913T001849Z-767f1306eddb
+?a_00c1fbd0@@YAXXZ	0x00C1FBD0	39	converted	MI dtor second-base +4 this at [ebp-0x10] $L419 jmp ??1Gen_uw_00001c80. t=30m model=grok-4.6 run=20260913T001849Z-767f1306eddb
+?a_00c52c28@@YAXXZ	0x00C52C28	39	converted	MI dtor second-base +8 $L453 jmp ??1Gen_uwm_00046cb8. t=30m model=grok-4.6 run=20260913T001849Z-767f1306eddb
+?a_00c3a9f0@@YAXXZ	0x00C3A9F0	39	converted	MI dtor second-base +4 $L439 jmp ??1Gen_uw_000246ae. t=30m model=grok-4.6 run=20260913T001849Z-767f1306eddb
