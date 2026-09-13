@@ -59,6 +59,15 @@ BLOCKED = ROOT / "reverse/header_adopt_blocked.tsv"
 # type is not a hand-edit of a table that can drift out of step with it.
 AREAS = ("Code/GameEngine", "Code/GameEngineDevice", "Code/Libraries")
 
+# The gate REFUSES a commit only for these. Every type headers() derives is fair
+# game for the batch tool, but demanding a swap at commit time is only fair when
+# the swap actually works: measured, SubsystemInterface lands 1 of 20 and
+# DX8Wrapper 0 of 12, because those headers drag in dependencies the TU cannot
+# take. Blocking a commit to require a change that fails 95% of the time is pure
+# friction for the fleet. These three are the ones with a real success rate --
+# and they are also the bulk of the problem, at 1,342 / 430 / 313 TU-local copies.
+ENFORCED = ("AsciiString", "UnicodeString", "StringBase")
+
 
 CL_LINE = re.compile(r"^(//\s*cl:.*)$", re.M)
 MEMBER = re.compile(r"^\s*[A-Za-z_][\w:<>*&\s]*?\b(m_\w+)\s*(\[[^\]]*\])?\s*;", re.M)
@@ -245,8 +254,9 @@ def offenders(paths):
         if rel in exempt:
             continue
         text = (ROOT / rel).read_text(encoding="utf-8", newline="", errors="replace")
-        for kind, (_include, _incdir, want) in headers().items():
-            if not blocker(text, kind, want):
+        for kind in ENFORCED:
+            spec = headers().get(kind)
+            if spec and not blocker(text, kind, spec[2]):
                 out.append((rel, kind))
     return out
 
