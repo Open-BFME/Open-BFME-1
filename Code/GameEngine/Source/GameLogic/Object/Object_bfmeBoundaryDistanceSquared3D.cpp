@@ -31,9 +31,12 @@ public:
 	float bfmeBoundaryDistanceSquared3D(
 		const BfmeBoundaryPoint3D *first,
 		const BfmeBoundaryPoint3D *second) const;
+	float rva0018CF10(const BfmeBoundaryPoint3D *other) const;
 
 private:
-	char m_prefix[0xac];
+	char m_prefix[0x38];
+	BfmeBoundaryPoint3D m_point;
+	char m_mid[0x68];
 	BfmeBoundaryGeometry3D m_geometry;
 };
 
@@ -52,4 +55,10 @@ float BfmeBoundaryObject3D::bfmeBoundaryDistanceSquared3D(
 	if (distance < BfmeBoundaryZero3D)
 		return BfmeBoundaryZero3D;
 	return distance * distance;
+}
+
+// ?rva0018CF10@BfmeBoundaryObject3D@@QBEMPBUBfmeBoundaryPoint3D@@@Z
+float BfmeBoundaryObject3D::rva0018CF10(const BfmeBoundaryPoint3D *other) const
+{
+	return bfmeBoundaryDistanceSquared3D(&m_point, other);
 }
