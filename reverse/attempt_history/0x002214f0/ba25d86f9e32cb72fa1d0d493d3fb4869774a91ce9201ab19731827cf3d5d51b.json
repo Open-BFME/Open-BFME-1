@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ba25d86f9e32cb72fa1d0d493d3fb4869774a91ce9201ab19731827cf3d5d51b",
+  "symbol": "?set@Rva002214F0@@QAEXPAURva002214F0Source@@H0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.79,
+  "source": "// ?set@Rva002214F0@@QAEXPAURva002214F0Source@@H0@Z\r\n// partial score=0.79 date=2026-09-10\r\n// cl: /O2 /Ob0\r\n\r\nstruct Rva002214F0Source\r\n{\r\n\tchar m_pad[0x74];\r\n\tint m_value;\r\n};\r\n\r\nclass Rva002214F0\r\n{\r\npublic:\r\n\tvoid set(Rva002214F0Source *a, int b, Rva002214F0Source *c);\r\n\r\nprivate:\r\n\tchar m_pad[0x9C];\r\n\tint m_9C;\r\n\tint m_A0;\r\n\tint m_A4;\r\n};\r\n\r\nvoid Rva002214F0::set(Rva002214F0Source *a, int b, Rva002214F0Source *c)\r\n{\r\n\tint one = 1;\r\n\tconst int *maxp = (b > one) ? &b : &one;\r\n\tm_A4 = *maxp;\r\n\tm_9C = a->m_value;\r\n\tm_A0 = c->m_value;\r\n}\r\n"
+}

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c9db14d4314f645046fe685c4765bac336a6beea8e920eca5544218036fa4a5e",
+  "symbol": "?set@Rva002214F0@@QAEXPAURva002214F0Source@@H0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.79,
+  "source": "// ?set@Rva002214F0@@QAEXPAURva002214F0Source@@H0@Z\n// partial score=0.79 date=2026-09-12\n// Address-derived reconstruction of retail RVA 0x002214F0.\n// ContestableContain secondary vtable 0x010AB140 slot 0x98.\n\nstruct Rva002214F0Source\n{\n\tchar m_pad[0x74];\n\tint m_value;\n};\n\nclass Rva002214F0\n{\npublic:\n\tvoid set(Rva002214F0Source *a, int b, Rva002214F0Source *c);\n\nprivate:\n\tchar m_pad[0x9C];\n\tint m_9C;\n\tint m_A0;\n\tint m_A4;\n};\n\n// ?set@Rva002214F0@@QAEXPAURva002214F0Source@@H0@Z\nvoid Rva002214F0::set(Rva002214F0Source *a, int b, Rva002214F0Source *c)\n{\n\tint one = 1;\n\tconst int *maxp = (b > one) ? &b : &one;\n\tm_A4 = *maxp;\n\tm_9C = a->m_value;\n\tm_A0 = c->m_value;\n}\n"
+}
