@@ -1,30 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x00638150, the default GameSpyGameSlot constructor.
 // The base GameSlot keeps one wide and one narrow string at +0x28 and +0x2c.
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString() { releaseBuffer(); }
-	void clear() { releaseBuffer(); }
+#include "ascii_string.h"
 
-private:
-	void releaseBuffer();
-	void *m_data;
-};
-
-class UnicodeString
-{
-public:
-	UnicodeString() : m_data(0) {}
-	~UnicodeString() { releaseBuffer(); }
-
-private:
-	void releaseBuffer();
-	void *m_data;
-};
+#include "unicode_string.h"
 
 class GameSlot
 {

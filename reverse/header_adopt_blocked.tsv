@@ -464,3 +464,92 @@ Code/GameEngine/Source/Common/System/RecorderReadReplayHeader.cpp	SubsystemInter
 Code/GameEngine/Source/Common/System/Rva00880F00SubsystemCtor.cpp	SubsystemInterface	build.sh exited 2
 Code/GameEngine/Source/Common/System/Rva008F7510ShroudManagerCtor.cpp	SubsystemInterface	build.sh exited 2
 Code/GameEngine/Source/Common/System/SaveGame/GameStateDtorThunk.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/System/SaveGame/GameStateFindBlockInfoByToken.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/System/SaveGame/GameStateGetSaveGameInfoFromFileThunk.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/System/SaveGame/GameStateXferSaveData.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/System/SaveGame/GameState_ctor_Thunk.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/System/SubsystemInterfaceName.cpp	SubsystemInterface	Code\Libraries\Source\WWVegas\WWLib\ascii_string.h(11) : error C2011: 'AsciiString' : 'class' type redefinition
+Code/GameEngine/Source/Common/Thing/ModuleFactoryConstructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/Thing/ThingFactoryDestructorThunk.cpp	SubsystemInterface	Code\GameEngine\Source\Common\System\subsystem_interface.h(25) : error C2146: syntax error : missing ';' before identifier 'loadIniFilesFromLegend'
+Code/GameEngine/Source/GameClient/EvaDestructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/GameClient/FXListStoreLifecycle.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/GameClient/GUI/AptPalantirDestructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/GameClient/GUI/IMEManagerDestructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/GameClient/GUI/IMEManagerInit.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/GameClient/GUI/Shell/ShellDestructor.cpp	SubsystemInterface	Code\GameEngine\Source\Common\System\subsystem_interface.h(25) : error C2146: syntax error : missing ';' before identifier 'loadIniFilesFromLegend'
+Code/GameEngine/Source/GameClient/GUI/Shell/Shell_ctor_Thunk.cpp	SubsystemInterface	Code\GameEngine\Source\GameClient\GUI\Shell\Shell_ctor_Thunk.cpp(80) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
+Code/GameEngine/Source/GameClient/GUI/Shell/Shell_doPush.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/GameClient/GUI/Shell/Shell_popImmediate.cpp	SubsystemInterface	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GameClientDestructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/GameClient/GameClient_loadPostProcess.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/GameClient/GameTextManager_ctor_Thunk.cpp	SubsystemInterface	Code\GameEngine\Source\Common\System\subsystem_interface.h(25) : error C2146: syntax error : missing ';' before identifier 'loadIniFilesFromLegend'
+Code/GameEngine/Source/GameClient/GlobalLanguageConstructor.cpp	SubsystemInterface	Z:\home\wacket\Projects\Open-BFME-seats\grok\vendor\stlport\stl\_alloc.h(125) : error C2011: '_STL::__new_alloc' : 'class' type redefinition
+Code/GameEngine/Source/GameClient/GlobalLanguageDestructor.cpp	SubsystemInterface	Code\GameEngine\Source\Common\System\subsystem_interface.h(25) : error C2146: syntax error : missing ';' before identifier 'loadIniFilesFromLegend'
+Code/GameEngine/Source/GameClient/MessageStream/HotKeyManagerCtorThunk.cpp	SubsystemInterface	Code\GameEngine\Source\Common\System\subsystem_interface.h(25) : error C2146: syntax error : missing ';' before identifier 'loadIniFilesFromLegend'
+Code/GameEngine/Source/GameClient/MessageStream/HotKeyManager_addHotKey_Bfme.cpp	SubsystemInterface	Code\Libraries\Source\WWVegas\WWLib\ascii_string.h(11) : error C2011: 'AsciiString' : 'class' type redefinition
+Code/GameEngine/Source/GameClient/Open2Twins006.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/GameClient/Rva000678B0DtorBody.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/GameClient/System/ParticleSystemManagerCtor.cpp	SubsystemInterface	Code\GameEngine\Source\Common\System\subsystem_interface.h(25) : error C2146: syntax error : missing ';' before identifier 'loadIniFilesFromLegend'
+Code/GameEngine/Source/GameClient/System/ParticleSystemManagerDestructor.cpp	SubsystemInterface	Code\Libraries\Source\WWVegas\WWLib\ascii_string.h(11) : error C2011: 'AsciiString' : 'class' type redefinition
+Code/GameEngine/Source/GameClient/WindowManagerConstructor.cpp	SubsystemInterface	Code\GameEngine\Source\Common\System\subsystem_interface.h(25) : error C2146: syntax error : missing ';' before identifier 'loadIniFilesFromLegend'
+Code/GameEngine/Source/GameLogic/Map/SidesListDestructorThunk.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/GameLogic/Map/TerrainLogicDestructorThunk.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/System/ArmorStoreSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/AudioManagerSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/BuildAssistantSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/CDManagerInterfaceSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/CaveSystemSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/DamageFXStoreSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/EmotionSystemSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/EvaSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/FXListStoreSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/FunctionLexiconSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/GameTextInterfaceSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/GlobalDataSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/GlobalLanguageSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/GlobalWeatherSystemSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/LocomotorStoreSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/MessageStreamSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/ModuleFactorySlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/MultiplayerSettingsSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/ObjectCreationListStoreSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/ParticleSystemManagerSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/PlayerAITypeSetSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/PlayerTemplateStoreSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/RankInfoStoreSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/ScienceStoreSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/SidesListSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/SpecialPowerStoreSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/SubsystemLegendSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/TerrainRoadCollectionSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/TerrainTypeCollectionSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/System/UpgradeCenterSlotDeletingDestructor.cpp	SubsystemSlot	build.sh exited 2
+Code/GameEngine/Source/Common/INI/LivingWorldPlayerArmyLoadPostProcess.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/System/Recorder.cpp	AsciiString	Functions: FAIL 1/7
+Code/GameEngine/Source/Common/System/RecorderInitControls_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/System/UpgradeCenter_newUpgrade_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/System/fx_particle_system_module_keys.cpp	AsciiString	Functions: FAIL 8/14
+Code/GameEngine/Source/Common/Thing/W3DStreakDrawConstructor.cpp	AsciiString	Code\GameEngine\Source\Common\Thing\W3DStreakDrawConstructor.cpp(296) : error C2664: 'BFMEGetWaterTrackTexture' : cannot convert parameter 1 from 'const char *' to 'Char *'
+Code/GameEngine/Source/GameClient/DrawableGetDisplayName.cpp	AsciiString	z:\home\wacket\Projects\Open-BFME-Seats\grok\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme_find.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferencesGetUsePixelShader.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferences_ctor.cpp	AsciiString	z:\home\wacket\Projects\Open-BFME-Seats\grok\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferences_getBuildingOcclusionEnabled.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferences_getCampaignDifficulty.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferences_getFPSLimitEnabled.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferences_getParticleCap_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferences_getSendDelay.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferences_getTextureReduction_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferences_saveCameraInReplays.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishPreferences_getPreferredColor.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishPreferences_getPreferredFaction.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/promoted__hasSeenLogoMovies_OptionPreferences_QAE_NXZ_000913B0.cpp	AsciiString	Functions: FAIL 2/2
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/promoted__usesSystemMapDir_OptionPreferences_QAE_NXZ_00090780.cpp	AsciiString	Functions: FAIL 3/3
+Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme_set.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/Shell/Shell_push_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/Shell/Shell_showShellMap.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/Object/WeaponStore_findWeaponTemplate_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsUnitGuardForFramecount.cpp	AsciiString	Code\GameEngine\Source\GameLogic\ScriptEngine\ScriptActionsUnitGuardForFramecount.cpp(17) : error C2146: syntax error : missing ';' before identifier 'm_command'
+Code/GameEngine/Source/GameNetwork/GameSpy/BuddyMessageCopyConstructorThunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameNetwork/GameSpy/Thread/Pinger_getPing.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameNetwork/GameSpy/Thread/Pinger_getPingString.cpp	AsciiString	Functions: FAIL 1/1
