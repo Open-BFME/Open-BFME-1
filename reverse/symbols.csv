@@ -6400,6 +6400,7 @@ name,address,notes
 ??1Gen_dtor_00702fc0@@UAE@XZ,0x00041E57,gen-dtor class destructor
 ??1Gen_dtor_00712100@@UAE@XZ,0x00044A67,gen-dtor class destructor
 ??1Gen_dtor_007158c0@@UAE@XZ,0x0000A1F0,gen-dtor class destructor
+??1RTS3DScene@@UAE@XZ,0x0000A1F0,route=0x00713510; scalar deleting destructor retail call targets the matched RTS3DScene destructor through this ILT
 ??1Gen_dtor_007207f0@@UAE@XZ,0x0002711A,gen-dtor class destructor
 ??1Gen_dtor_007255d0@@UAE@XZ,0x0001E5F1,gen-dtor class destructor
 ??1Gen_dtor_0072f1a0@@UAE@XZ,0x00017774,gen-dtor class destructor
