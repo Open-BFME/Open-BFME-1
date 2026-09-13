@@ -47,7 +47,11 @@ for line in lines:
     if not (hit and current):
         continue
     ours, target, body, ledger = hit.groups()
-    ledger = ledger.strip()
+    # build.py prints "(ledger: <mangled name>, <free-text note>)". The note is
+    # NOT part of the name, and treating it as one makes every annotated row look
+    # unconverted: that reported 54 failures as blocked on the conversion lane
+    # when the true number is zero, and hid 49 that are fixable in source.
+    ledger = ledger.split(", ")[0].strip()
     mine = by_name.get(ours)
     theirs = by_name.get(ledger)
     if mine and theirs:

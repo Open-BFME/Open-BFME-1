@@ -2,7 +2,17 @@
 
 **Category (a) definition**: Both functions exist and are matched in the ledger; source calls the wrong one. The ledger proves both are real.
 
-**Total**: 28 failures across 24 files.
+**Total**: 77 failures, not 28. The original count came from a parser that read
+build.py's `(ledger: <name>, <note>)` field as if the free-text note were part of
+the mangled name, so every annotated row looked unconverted. Corrected:
+
+    77  both matched -- our source calls the wrong one of two real functions
+    13  retail's target is matched; the symbol we emit is not a row
+     0  blocked on an unconverted callee   (was reported as 54)
+
+The 28 below were the subset visible before the fix, and the conclusions drawn
+from them hold -- 1 fixable, the rest architectural. The other 49 have not been
+attempted and are the place to start.
 
 **Key Rules Established**:
 1. **ICF twins are identical length**: Different lengths mean different functions, not type aliases. A pin under the wrong name still byte-matches but hides the defect.
