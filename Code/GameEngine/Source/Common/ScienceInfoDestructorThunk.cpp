@@ -1,14 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-    ~UnicodeString();
-
-private:
-    void *m_data;
-};
+#include "unicode_string.h"
 
 class ScienceVecStandIn
 {

@@ -1,15 +1,7 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // BFME FloatingTextData destructor from the InGameUI floating-text path.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	~UnicodeString();
-
-private:
-	void *m_data;
-};
+#include "unicode_string.h"
 
 class DisplayString;
 

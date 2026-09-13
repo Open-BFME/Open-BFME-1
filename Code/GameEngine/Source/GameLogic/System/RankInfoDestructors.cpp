@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // readable body of ??1RankInfo@@MAE@XZ: Code/GameEngine/Source/GameLogic/System/RankInfo.cpp
 // readable body of ??1RankInfoStore@@UAE@XZ: Code/GameEngine/Source/GameLogic/System/RankInfo.cpp
@@ -26,19 +26,7 @@
 // with itself, and a branch that can never be taken.
 #include <vector>
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	~UnicodeString()
-	{
-		releaseBuffer();
-	}
-
-protected:
-	void releaseBuffer();
-	void *m_data;
-};
+#include "unicode_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable

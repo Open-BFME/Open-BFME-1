@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #include <vector>
 //
@@ -16,13 +16,7 @@
 // The strings belong inside the confirmation branch: this lexical scope
 // reproduces retail's reuse of the first two dead incoming-argument slots.
 
-class UnicodeString
-{
-public:
-	~UnicodeString();
-private:
-	void *m_data;
-};
+#include "unicode_string.h"
 
 class GameTextInterface
 {

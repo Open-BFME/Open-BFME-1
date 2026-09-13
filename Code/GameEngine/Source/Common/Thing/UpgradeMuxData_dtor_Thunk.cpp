@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: UpgradeMuxData::~UpgradeMuxData, retail 0x0058C4C0,
 // zh_sweep packet 0058c4c0.
 //
@@ -20,15 +20,7 @@
 // that folds onto the same code is not settled here, so the member names are
 // kept from the reference and only the type is taken from the call target.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	~UnicodeString();										///< body 0x008881D0
-
-private:
-	void *m_data;
-};
+#include "unicode_string.h"
 
 class UpgradeMuxData
 {

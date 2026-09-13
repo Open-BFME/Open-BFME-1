@@ -1,17 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef unsigned short WideChar;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString(const WideChar *);
-	~UnicodeString();
-
-private:
-	void *m_data;
-};
+#include "unicode_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: ScienceInfo assignment in the retail 0x30-byte layout.
 
@@ -10,14 +10,7 @@ private:
 	unsigned char m_data[0x0c];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString &operator=(const UnicodeString &);
-private:
-	void *m_data;
-};
+#include "unicode_string.h"
 
 class ScienceVecStorage
 {

@@ -1,10 +1,6 @@
-// cl: /O2 /Ob0 /MD /EHsc
+// cl: /O2 /Ob0 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-class UnicodeString
-{
-private:
-	void *m_data;
-};
+#include "unicode_string.h"
 
 class SubtitleEntryUnicodeBase
 {

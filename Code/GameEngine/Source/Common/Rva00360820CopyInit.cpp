@@ -1,18 +1,10 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef unsigned int UnsignedInt;
 typedef unsigned char UnsignedByte;
 typedef unsigned char Bool;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
-{
-public:
-	UnicodeString &operator=(const UnicodeString &other);
-
-private:
-	void *m_data;
-};
+#include "unicode_string.h"
 
 struct Rva00360820Destination
 {

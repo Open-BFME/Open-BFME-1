@@ -358,3 +358,79 @@ Code/Libraries/Source/WWVegas/WWLib/stlport_unguarded_insertion_sort_s4sortelem2
 Code/Libraries/Source/WWVegas/WWLib/stlport_unguarded_linear_insert_s4sortelem12.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\stlport_unguarded_linear_insert_s4sortelem12.cpp(12) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
 Code/Libraries/Source/WWVegas/WWLib/vector_Q3SortElem4_resize.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\vector_Q3SortElem4_resize.cpp(11) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
 Code/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetAnimSetCopy.cpp	StringBase	PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above)
+Code/GameEngine/Source/Common/Bfme5PanelClear.cpp	UnicodeString	Code\GameEngine\Source\Common\Bfme5PanelClear.cpp(46) : error C2039: 'm_bfmeData' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/BfmeConv1926.cpp	UnicodeString	Code\GameEngine\Source\Common\BfmeConv1926.cpp(25) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/BfmeConv1938.cpp	UnicodeString	Code\GameEngine\Source\Common\BfmeConv1938.cpp(170) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/Glo012F1028Type_Rva003C1C50.cpp	UnicodeString	Code\GameEngine\Source\Common\Glo012F1028Type_Rva003C1C50.cpp(92) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/Rva003B6680Assign.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Rva003B6D70CopyRange.cpp	UnicodeString	Code\GameEngine\Source\Common\Rva003B6D70CopyRange.cpp(53) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/Rva00416BD0GetName.cpp	UnicodeString	Code\GameEngine\Source\Common\Rva00416BD0GetName.cpp(34) : error C2039: 'TheEmptyString' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/SmallGaps/Rva003AECC0CopyBackward.cpp	UnicodeString	Code\GameEngine\Source\Common\SmallGaps\Rva003AECC0CopyBackward.cpp(23) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/SmallGaps/Rva003B22E0CopyBackward.cpp	UnicodeString	Code\GameEngine\Source\Common\SmallGaps\Rva003B22E0CopyBackward.cpp(43) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/SmallGaps/Rva003B3720CopyBackward.cpp	UnicodeString	Code\GameEngine\Source\Common\SmallGaps\Rva003B3720CopyBackward.cpp(24) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/SmallGaps/Rva003B5EA0CopyBackward.cpp	UnicodeString	Code\GameEngine\Source\Common\SmallGaps\Rva003B5EA0CopyBackward.cpp(43) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/System/RegistryGetUnicodeString.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/System/RegistryGetUnicodeStringPublic.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/System/RegistryUserDataLeafNameUnicode.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/System/SaveGame/Rva0010D090SaveInfoXfer.cpp	UnicodeString	Code\GameEngine\Source\Common\System\SaveGame\Rva0010D090SaveInfoXfer.cpp(110) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/Common/TextTypeTransitionConstructor.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Thing/Rva00416E20GetDisplayName.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/AptScreenFactories.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/BfmeAptScreenLanLobbyConstructor.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/BfmeAptScreenLanLobbyRefreshGame.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/BfmeAptScreenOnlineShellConstructor.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/BfmeAptScreenOptionsConstructor.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/BfmeAptScreenQuitMenuConstructor.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/Drawable/DrawableGetDisplayName.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/FloatingTextDataCtorThunk.cpp	UnicodeString	Code\GameEngine\Source\GameClient\FloatingTextDataCtorThunk.cpp(54) : error C2039: 'clear' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameClient/GUI/AptChatFriendLogInMessage.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/BuddyMessageCopyConstructorThunk.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LANPreferences_getUserName.cpp	UnicodeString	Code\GameEngine\Source\GameClient\GUI\GUICallbacks\Menus\LANPreferences_getUserName.cpp(92) : error C2039: 'trim' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameClient/GUI/GameWindowManagerMessageBox.cpp	UnicodeString	Functions: FAIL 2/6
+Code/GameEngine/Source/GameClient/InGameUIBodies.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/Input/Mouse_init.cpp	UnicodeString	Code\GameEngine\Source\GameClient\Input\Mouse_init.cpp(85) : error C2039: 'clear' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameClient/Input/Rva005A4BF0MouseTooltipClear.cpp	UnicodeString	Code\GameEngine\Source\GameClient\Input\Rva005A4BF0MouseTooltipClear.cpp(33) : error C2039: 'm_data' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameClient/MapMetaData_assign.cpp	UnicodeString	Code\GameEngine\Source\GameClient\MapMetaData_assign.cpp(122) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameClient/MessageStream/MetaMap_getMetaMapRecThunk.cpp	UnicodeString	Code\GameEngine\Source\GameClient\MessageStream\MetaMap_getMetaMapRecThunk.cpp(81) : error C2039: 'clear' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameClient/MessageStream/SelectionTranslator_killThemKillThemAll.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/MessageStream/SelectionTranslator_selectFriends.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/PopupMessageData.cpp	UnicodeString	Functions: FAIL 1/3
+Code/GameEngine/Source/GameLogic/AI/CritterEmitterUpdateModuleDataCtorThunk.cpp	UnicodeString	Code\GameEngine\Source\GameLogic\AI\CritterEmitterUpdateModuleDataCtorThunk.cpp(90) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameLogic/AI/TAiDataAssign.cpp	UnicodeString	Code\GameEngine\Source\GameLogic\AI\TAiDataAssign.cpp(160) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameLogic/LivingWorld/Rva00364B10ScanArmyGroups.cpp	UnicodeString	Code\GameEngine\Source\GameLogic\LivingWorld\Rva00364B10ScanArmyGroups.cpp(193) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameLogic/LivingWorld/Rva003C15C0LivingWorldListCtor.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/Map/SidesListAddPlayerByTemplate.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/Object/Die/RefundDieOnDie.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameLogic/System/RankInfoConstructorThunk.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameNetwork/ConnectionManagerProcessDisconnectChat.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameNetwork/GameSlotIsPlayerAsciiThunk.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGroupRoomCtorThunk.cpp	UnicodeString	Code\GameEngine\Source\GameNetwork\GameSpy\GameSpyGroupRoomCtorThunk.cpp(45) : error C2039: 'TheEmptyString' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyInfoHandleText.cpp	UnicodeString	Code\GameEngine\Source\GameNetwork\GameSpy\GameSpyInfoHandleText.cpp(52) : error C2039: 'trim' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyStagingRoom_ctor.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameNetwork/GameSpy/Rva000E92B0SetWideString.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameNetwork/GameSpyStagingRoom_getGameName_Thunk.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameNetwork/LANAPIHandleRequestLocationsThunk.cpp	UnicodeString	Code\GameEngine\Source\GameNetwork\LANAPIHandleRequestLocationsThunk.cpp(194) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/GameEngine/Source/GameNetwork/LANAPIOnGameStartTimer.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameNetwork/LANAPISendPath.cpp	UnicodeString	Functions: FAIL 3/8
+Code/GameEngine/Source/GameNetwork/LANAPIhandlers_handleGameAnnounce_Thunk.cpp	UnicodeString	Functions: FAIL 1/1
+Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_006CBA30_UpdateTexture.cpp	UnicodeString	Code\GameEngineDevice\Source\W3DDevice\GameClient\Gen_006CBA30_UpdateTexture.cpp(88) : error C2039: 'm_data' : is not a member of 'UnicodeString'
+Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayStringBaseDestructor.cpp	UnicodeString	Code\GameEngineDevice\Source\W3DDevice\GameClient\W3DDisplayStringBaseDestructor.cpp(29) : error C2039: 'clear' : is not a member of 'UnicodeString'
+Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjConstructor.cpp	UnicodeString	Code\GameEngineDevice\Source\W3DDevice\GameClient\Water\WaterRenderObjConstructor.cpp(354) : error C2039: 'set' : is not a member of 'UnicodeString'
+Code/Libraries/Source/WWVegas/WWLib/Z1ListAssign.cpp	UnicodeString	Functions: FAIL 1/1
+Code/Libraries/Source/WWVegas/WWLib/quoted_printable.cpp	UnicodeString	Functions: FAIL 1/5
+Code/GameEngine/Source/Common/Audio/AudioEventRTSDestructor.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/Common/BfmeOwnVUMXfer.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/Common/Dict_releaseData.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/Common/Dict_setNameAndType.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/Common/Rva001C2E50Xfer.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/Common/Rva0040F6D0Destructor.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/Common/System/recorder_strings.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/Common/Thing/ThingTemplateCopyAssignment.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/Common/setUnignoreText_Thunk.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopulateOldBuddyMessages.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/Rva004EDED0BuddyMessageNotification.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/GameLogic/Object/ObjectBuildObjectInfo.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/GameNetwork/GameSpy/BuddyMessageListAppend.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGameSlot_constructor.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyStagingRoomAssign.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
+Code/GameEngineDevice/Source/VideoDevice/Bink/Rva004349D0CreateSubtitleEntry.cpp	UnicodeString	PRE-COMMIT FAILED: a staged source redeclares a type that has a header (run tools/adopt_header.py --fix-staged)
