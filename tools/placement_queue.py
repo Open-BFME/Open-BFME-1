@@ -128,6 +128,12 @@ def destination(root, source, cls, homes, zh, zh_hdr):
     """Where that file belongs, or None when the evidence does not say."""
     here = os.path.dirname(source)
 
+    # EVERY rule below stops at "already home". A rule that answers with the
+    # current directory has said the file belongs here; treating that as a
+    # non-answer and falling through to weaker evidence is what moved MapCache out
+    # of GameClient -- where ZH's header puts it -- into a Common/RTS pile of nine,
+    # and then proposed moving it back next rebuild. Fixed in one rule at a time,
+    # it just relocated the oscillation; all three need it.
     def usable(candidate):
         # Never UP into a parent of where the file already is. ZH's header tree is
         # coarser than ours in places -- it declares AIUpdateInterface in
@@ -157,6 +163,8 @@ def destination(root, source, cls, homes, zh, zh_hdr):
     hdr_dir = zh_hdr.get(cls)
     if hdr_dir:
         candidate = hdr_dir.replace(ZH, "Code", 1)
+        if candidate == here:
+            return None
         if candidate != DUMPING_GROUND and usable(candidate):
             return candidate
     # Otherwise: where this class already keeps most of its bodies. Two or more,
@@ -164,6 +172,15 @@ def destination(root, source, cls, homes, zh, zh_hdr):
     ranked = [(d, n) for d, n in homes[cls].most_common()
               if n >= 2 and d != DUMPING_GROUND]
     for d, _ in ranked:
+        # The class already keeps two or more bodies HERE: the file is home, and
+        # the search stops. Treating "here" as a non-answer and falling through to
+        # the next-best directory is what made this rule oscillate -- five
+        # BuddyThreadClass bodies in Common/RTS against two in
+        # GameNetwork/GameSpy/Thread, and the queue kept proposing the minority.
+        # Same defect as the ZH rule above; fixing one and not the other left
+        # 147 files being volleyed between a class's two homes.
+        if d == here:
+            return None
         if usable(d):
             return d
     return None
