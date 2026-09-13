@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "54c67554490e4290723121625c996fd690277fe4db0e0af57ee133fdef74034e",
+  "symbol": "?tick@Rva006E1670@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.88,
+  "source": "// ?tick@Rva006E1670@@QAEXXZ\n// partial score=0.88 date=2026-09-12\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n// Retail 0x006E1670. Sibling of BfmeTimerGF::bfmeTickGF at 0x006E1620:\n// enter phase 1 when the global mode is 4 and this is not, then count\n// the timer down and notify. No named caller; name stays address-derived.\n\nstruct BfmeModeAZC\n{\n\tvoid bfmeStopAZC(int a);\n\n\tunsigned char m_pad[0xC];\n\tint m_state;\n};\n\nextern BfmeModeAZC *g_bfmeModeAZC;\n\nclass Rva006E1670\n{\npublic:\n\tvoid tick(void);\n\n\tunsigned char m_head[0xC];\n\tint m_state;\n\tint m_phase;\n\tint m_timer;\n};\n\nvoid Rva006E1670::tick(void)\n{\n\tint gstate = g_bfmeModeAZC->m_state;\n\tint four = 4;\n\tif (gstate == four)\n\t{\n\t\tif (m_state != four)\n\t\t{\n\t\t\tm_phase = 1;\n\t\t\tm_state = four;\n\t\t\tm_timer = 0xFF;\n\t\t}\n\t}\n\n\tint phase = m_phase;\n\tif (phase != 0)\n\t{\n\t\tif (phase == 1)\n\t\t{\n\t\t\tint remaining = --m_timer;\n\t\t\tif (remaining > 0)\n\t\t\t\treturn;\n\t\t\tm_timer = 0;\n\t\t\tm_phase = 0;\n\t\t\tif (g_bfmeModeAZC->m_state == four)\n\t\t\t\tg_bfmeModeAZC->bfmeStopAZC(0);\n\t\t\tm_state = 0;\n\t\t}\n\t}\n}\n"
+}

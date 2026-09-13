@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ecc0ebb6f9e9ac416c76e464d98c5275277047b17a395986b5ff43deb800c4f4",
+  "symbol": "?bfmeTickAZ@BfmeThingAZ@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?bfmeTickAZ@BfmeThingAZ@@QAEXXZ\r\n// partial score=0.85 date=2026-09-08\r\nstruct BfmeModeAZC\r\n{\r\n\tvoid bfmeNotifyAZ(int a);\r\n\r\n\tunsigned char m_bfmeGapAZ[0xc];\r\n\tint m_bfmeStateAZ;\r\n};\r\n\r\nextern BfmeModeAZC *g_bfmeModeAZC;\r\n\r\nclass BfmeThingAZ\r\n{\r\npublic:\r\n\tvoid bfmeTickAZ();\r\n\r\n\tunsigned char m_bfmeHeadAZ[0xc];\r\n\tint m_bfmeStateAZ;\r\n\tint m_bfmePhaseAZ;\r\n\tint m_bfmeTimerAZ;\r\n};\r\n\r\nvoid BfmeThingAZ::bfmeTickAZ()\r\n{\r\n\tif (g_bfmeModeAZC->m_bfmeStateAZ == 4 && m_bfmeStateAZ != 4)\r\n\t{\r\n\t\tm_bfmePhaseAZ = 1;\r\n\t\tm_bfmeStateAZ = 4;\r\n\t\tm_bfmeTimerAZ = 0xff;\r\n\t}\r\n\r\n\tif (m_bfmePhaseAZ != 0)\r\n\t{\r\n\t\tif (m_bfmePhaseAZ == 1)\r\n\t\t{\r\n\t\t\tif (--m_bfmeTimerAZ <= 0)\r\n\t\t\t{\r\n\t\t\t\tm_bfmeTimerAZ = 0;\r\n\t\t\t\tm_bfmePhaseAZ = 0;\r\n\r\n\t\t\t\tif (g_bfmeModeAZC->m_bfmeStateAZ == 4)\r\n\t\t\t\t\tg_bfmeModeAZC->bfmeNotifyAZ(0);\r\n\r\n\t\t\t\tm_bfmeStateAZ = 0;\r\n\t\t\t}\r\n\t\t}\r\n\t}\r\n}\r\n"
+}
