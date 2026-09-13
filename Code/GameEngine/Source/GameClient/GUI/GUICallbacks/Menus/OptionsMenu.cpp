@@ -282,14 +282,6 @@ void OptionPreferences::setLANIPAddress( AsciiString IP )
 	slot = IP;
 }
 
-// ?setLANIPAddress@OptionPreferences@@QAEXI@Z present-unmatched
-void OptionPreferences::setLANIPAddress( UnsignedInt IP )
-{
-	AsciiString tmp;
-	tmp.format("%d.%d.%d.%d", ((IP & 0xff000000) >> 24), ((IP & 0xff0000) >> 16), ((IP & 0xff00) >> 8), (IP & 0xff));
-	(*this)["IPAddress"] = tmp;
-}
-
 // ?getOnlineIPAddress@OptionPreferences@@QAEIXZ
 // Body in OptionsMenu_getOnlineIPAddress.asm (exact 397B retail).
 
