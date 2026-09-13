@@ -140,14 +140,31 @@ def brought_in(include, incdir):
     return frozenset(names)
 
 
-def blocker(text, name, want_members):
-    """Why this TU cannot take the header, or None when it can."""
+def blocker(text, name, want_members, partial=False):
+    """Why this TU cannot take the header, or None when it can.
+
+    `partial` accepts a shim that declares FEWER members than the header. 277
+    shims are that shape: the TU declared only the fields it touched. Adopting
+    there changes sizeof, so it is sound ONLY because the byte gate then rejects
+    every TU where the size mattered -- an allocation, a by-value copy, a frame
+    slot -- and keeps the ones that use nothing but pointers and references. It
+    is opt-in rather than default because it trades a guaranteed-neutral edit for
+    one the compiler has to adjudicate file by file.
+    """
     found = shim(text, name)
     if not found:
         return "no local shim"
     members = MEMBER.findall(found.group(1))
-    if len(members) != want_members or any(a for _, a in members):
+    if any(a for _, a in members):
+        return "shim declares an array: an opaque pad, not fields"
+    if len(members) > want_members or (not partial and len(members) != want_members):
         return "layout is not the header's"
+    if not members and not partial:
+        # A zero-member shim is a pure facade -- `class DX8Wrapper { static void
+        # Foo(); };` -- so it asserts no layout at all and adopting can only add
+        # one. That makes it the SAFEST partial case, not the riskiest, but it is
+        # still a size change and still the gate's call.
+        return "shim declares no members"
     include, incdir, _ = headers()[name]
     clash = (brought_in(include, incdir) - {name}) & \
         {m.group(1) for m in TYPE_BODY.finditer(text)}
@@ -297,6 +314,8 @@ def main():
     ap.add_argument("--type", default="AsciiString")
     ap.add_argument("--count", type=int, default=40)
     ap.add_argument("--jobs", type=int, default=8)
+    ap.add_argument("--partial", action="store_true",
+                    help="also take shims that declare fewer members than the header")
     ap.add_argument("--commit", action="store_true")
     ap.add_argument("--check", action="store_true",
                     help="refuse staged sources that redeclare a type with a header")
@@ -324,7 +343,7 @@ def main():
         if rel in known:
             continue
         text = (ROOT / rel).read_text(encoding="utf-8", newline="")
-        if blocker(text, args.type, want):
+        if blocker(text, args.type, want, args.partial):
             continue
         # --type picks the FILE; once picked, every covered type in it is
         # swapped. Doing one at a time leaves the file still redeclaring another
@@ -332,7 +351,7 @@ def main():
         # it just produced -- the hook cannot tell "half adopted" from "not
         # adopted", and it should not have to.
         for kind, (inc_k, dir_k, want_k) in headers().items():
-            if blocker(text, kind, want_k) is None:
+            if blocker(text, kind, want_k, args.partial) is None:
                 text = rewrite(text, kind, inc_k, dir_k)
         (ROOT / rel).write_text(text, encoding="utf-8", newline="")
         changed.append(rel)
