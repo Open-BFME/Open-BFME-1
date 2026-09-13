@@ -87339,3 +87339,13 @@ _Rva0084DE40Tail,0x0084DE40,STLport 4.5.3 __FixStr Win32 date/time format conver
 ?rva006F83F0@Rva006F8700Owner@@QAEHPAXH00@Z,0x006F83F0,typed thiscall view of dump 0x006F83F0 reached from 0x006F8700 via ILT 0x0000F9BB
 ?bfmeCall2@MemberUnknown006E85D0@@QAEXXZ,0x0002F7FC,thiscall address-adjust forward to existing thunk j_0002f7fc for landing 0x006E85D0
 ?friend_turnTowardsAngle@TurretAI@@QAE_NMMM@Z,0x0004198E,TurretAI friend_turnTowardsAngle ILT to 0x0018E0B0
+?erase@?$vector@UGen003A99D0@@V?$allocator@UGen003A99D0@@@_STL@@@_STL@@QAEPAUGen003A99D0@@PAU3@0@Z,0x00020928,ILT to 0x003AF7A0 vector erase callee of Rva003B6680 converting ctor m08
+?erase@?$vector@UGen003A9B60@@V?$allocator@UGen003A9B60@@@_STL@@@_STL@@QAEPAUGen003A9B60@@PAU3@0@Z,0x000450CA,ILT to 0x003AF800 vector erase callee of Rva003B6680 converting ctor m20
+?erase@?$vector@UGen003A9C30@@V?$allocator@UGen003A9C30@@@_STL@@@_STL@@QAEPAUGen003A9C30@@PAU3@0@Z,0x00048C48,ILT to 0x003AF860 vector erase callee of Rva003B6680 converting ctor m2c
+?erase@?$vector@UGen003A9CF0@@V?$allocator@UGen003A9CF0@@@_STL@@@_STL@@QAEPAUGen003A9CF0@@PAU3@0@Z,0x00037821,ILT to 0x003AF8C0 vector erase callee of Rva003B6680 converting ctor m54
+?erase@?$vector@UGen003A9DC0@@V?$allocator@UGen003A9DC0@@@_STL@@@_STL@@QAEPAUGen003A9DC0@@PAU3@0@Z,0x00026611,ILT to 0x003B2830 vector erase callee of Rva003B6680 converting ctor m60
+?erase@?$vector@UGen003AA300@@V?$allocator@UGen003AA300@@@_STL@@@_STL@@QAEPAUGen003AA300@@PAU3@0@Z,0x0002DFC4,ILT to 0x003AF9E0 vector erase callee of Rva003B6680 converting ctor m9c
+?erase@?$vector@UGen003AA1A0@@V?$allocator@UGen003AA1A0@@@_STL@@@_STL@@QAEPAUGen003AA1A0@@PAU3@0@Z,0x0003578D,ILT to 0x003AF980 vector erase callee of Rva003B6680 converting ctor m90
+?erase@?$vector@UGen003AA010@@V?$allocator@UGen003AA010@@@_STL@@@_STL@@QAEPAUGen003AA010@@PAU3@0@Z,0x0003D3AC,ILT to 0x003AF920 vector erase callee of Rva003B6680 converting ctor m78
+?erase@?$vector@UGen003AA0D0@@V?$allocator@UGen003AA0D0@@@_STL@@@_STL@@QAEPAUGen003AA0D0@@PAU3@0@Z,0x0003CAE2,ILT to 0x003B2540 vector erase callee of Rva003B6680 converting ctor m84
+?erase@?$vector@UGen_t_003ab360_p12cd@@V?$allocator@UGen_t_003ab360_p12cd@@@_STL@@@_STL@@QAEPAUGen_t_003ab360_p12cd@@PAU3@0@Z,0x00011E28,ILT to 0x003B0E30 vector erase callee of Rva003B6680 converting ctor mcc
