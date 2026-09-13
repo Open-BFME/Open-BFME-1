@@ -105,7 +105,13 @@ record `blocked`.
   untracked under `build/`. Banked attempts (`reverse/attempts/<rva>.cpp`) are
   evidence, never progress: nothing compiles them, `add_match` deletes one on
   landing, `check_csv` flags leftovers.
-- Prefer TU-scoped shims over shared-header edits.
+- Prefer TU-scoped shims over shared-header EDITS — editing a header costs a
+  full gate. That is not a licence to redeclare: if a header already says what
+  you need, `#include` it. `AsciiString` had 1,342 TU-local copies against a
+  complete `ascii_string.h`, which is why the type had no definition to jump to.
+  The hook refuses a staged source that redeclares a covered type;
+  `tools/adopt_header.py --fix-staged` does the swap and byte-gates it. See
+  `docs/header_adoption.md`.
 - Progress = `matched` `reverse/functions.csv` rows backed by real source and
   byte verification. Markers and prose are not.
 - **Landing a `reverse/symbols.csv` pin?** It is an ADDITIVE candidate list:

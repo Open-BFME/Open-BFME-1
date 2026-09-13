@@ -287,9 +287,25 @@ def sources(paths, staged):
     return [p for area in AREAS for p in (ROOT / area).rglob("*.cpp")]
 
 
-def at_head(path):
+def renamed_from():
+    """staged new path -> old path. A pure move introduces no placeholder.
+
+    Without this, every placeholder in a moved file looks newly added, because
+    HEAD has nothing at the new path. The placement lane moves ~85 files a batch
+    and one of them carried six inherited `m_fNN` members; the commit was refused
+    for adding names it had not touched.
+    """
+    out = subprocess.run(
+        ["git", "diff", "--cached", "--name-status", "-M", "--diff-filter=R"],
+        cwd=ROOT, capture_output=True, text=True).stdout
+    pairs = (line.split("\t") for line in out.splitlines())
+    return {new: old for status, old, new in (p_ for p_ in pairs if len(p_) == 3)}
+
+
+def at_head(path, renames=None):
     """That file's content at HEAD, or None when it is newly added."""
     rel = path.relative_to(ROOT).as_posix()
+    rel = (renames or {}).get(rel, rel)
     got = subprocess.run(["git", "show", f"HEAD:{rel}"], cwd=ROOT,
                          capture_output=True, text=True)
     return None if got.returncode else got.stdout
@@ -593,8 +609,10 @@ def main():
     # else's backlog and never fail a commit; only what this diff adds does, which is
     # why HEAD's version of each staged file is re-walked.
     if args.staged and todo:
+        moves = renamed_from()
         was = {(t[2], t[3], t[4]) for t in
-               scan(None, True, texts={p_: at_head(p_) for p_ in sources(None, True)})[1]}
+               scan(None, True,
+                    texts={p_: at_head(p_, moves) for p_ in sources(None, True)})[1]}
         added = [t for t in todo if (t[2], t[3], t[4]) not in was]
         if added:
             print(f"\nname_oracle: {len(added)} placeholder(s) this commit adds already have a "

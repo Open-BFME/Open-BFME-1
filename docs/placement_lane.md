@@ -21,22 +21,36 @@ month while `Body` rises: the tree is getting larger at constant legibility.
 ## Two lanes, and only one of them works
 
 **MERGING** fragments into one TU per class is the obvious answer and is mostly
-blocked. `tools/merge_cluster.py --list --ready` prints the split:
+blocked. Measured over every (directory, owning class) group with two or more
+files -- not just the ones carrying a `readable body of ...: <dest>` marker, which
+is how this was first counted and is why an earlier version of this document said
+the lane reached nine files:
 
-* 146 clusters covering 704 files carry a `readable body of ...: <dest>` marker
-* **95 of them (531 files) hold a `__declspec(naked)`/`__emit` donor.** Folding a
-  byte spray into a readable file is the lift AGENTS.md bans — it byte-matches by
-  construction, scores +0, and destroys the destination's readable statement of
-  that function. Those clusters need the conversion lane first.
-* Of the 51 that remain, **only 6 have donors that agree on their `// cl:` line.**
-  That line is the TU's entire compile environment, flags *and* include search
-  path. `BezierSegmentEvaluation.cpp` builds against `Code/GameEngine/Include`
-  and `BezierSegment.cpp` against the ZH reference tree; folding the first into
-  the second resolved different headers and gave `FAIL 1/68` from byte-identical
-  source text. Only 19% of directories are flag-homogeneous, so this is the
-  common case.
+| | groups | files |
+|---|---|---|
+| groups of 2+ files owned by one class | 961 | — |
+| blocked: holds a `__declspec(naked)`/`__emit` donor | 216 | — |
+| blocked: donors disagree on their `// cl:` line | 484 | — |
+| **clean: no naked donor, one shared `// cl:`** | **261** | **647** |
 
-Total reach of the merge lane: **9 files.** Do not plan around it.
+Folding those 647 into one TU per group would remove **386 files**. That is real
+and larger than this document used to claim, but it is not free, and nothing here
+has attempted it:
+
+* Folding a byte spray into a readable file is the lift AGENTS.md bans -- it
+  byte-matches by construction, scores +0, and destroys the destination's readable
+  statement of that function. 216 groups need the conversion lane first.
+* The `// cl:` line is the TU's entire compile environment, flags *and* include
+  search path. `BezierSegmentEvaluation.cpp` builds against `Code/GameEngine/Include`
+  and `BezierSegment.cpp` against the ZH reference tree; folding the first into the
+  second resolved different headers and gave `FAIL 1/68` from byte-identical source
+  text. Only 19% of directories are flag-homogeneous.
+* Two TUs that each declare their own shim for the same type cannot simply be
+  concatenated -- that is a redefinition. `docs/header_adoption.md` is the
+  prerequisite, not a parallel lane.
+* ICF: one C++ spelling can reach several retail addresses, and a type named after
+  an address is what forces the compiler at the right copy. Merging can move which
+  copy a call site binds to, and the byte gate will say so, loudly.
 
 **MOVING** has none of those constraints and is the lane that works:
 
