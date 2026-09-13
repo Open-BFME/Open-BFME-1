@@ -32,6 +32,6 @@ size_outlier.indicted = 1
 ctor_vtable.contradicted = 45
 ctor_vtable.unreadable = 0
 # fcf825b4f7 retired the false FXNugget zero-store claim; the body still has aliases.
-null_reloc.rows = 65
+null_reloc.rows = 64
 null_reloc.bodies = 19
 null_reloc.max_unreadable = 1000
