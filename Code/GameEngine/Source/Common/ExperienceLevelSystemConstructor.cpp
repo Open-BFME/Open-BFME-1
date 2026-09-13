@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/GameEngine/Source/Common/System
 // stlport
 //
 // ExperienceLevelSystem constructor, retail RVA 0x00381480.
@@ -18,20 +18,7 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
-class SubsystemInterface
-{
-public:
-	SubsystemInterface();
-	virtual ~SubsystemInterface();
-	virtual void init() = 0;
-	virtual void loadIniFilesFromLegend() {}
-	virtual void reset() = 0;
-	virtual void update() = 0;
-	virtual void draw() {}
-
-private:
-	AsciiString m_name;
-};
+#include "subsystem_interface.h"
 
 class ExperienceLevel
 {

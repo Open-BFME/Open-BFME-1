@@ -440,3 +440,27 @@ Code/GameEngine/Source/Common/UpgradePairTree.cpp	AsciiString	Functions: FAIL 1/
 Code/GameEngine/Source/Common/UpgradePairTreeWide.cpp	AsciiString	Functions: FAIL 1/1
 Code/GameEngine/Source/GameLogic/LivingWorld/ParseRegionReinforcementBlock.cpp	AsciiString	Code\GameEngine\Source\GameLogic\LivingWorld\ParseRegionReinforcementBlock.cpp(102) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
 Code/GameEngine/Source/GameLogic/Object/DeliverPayloadNugget_parsePayload_Thunk.cpp	AsciiString	Functions: FAIL 1/2
+Code/GameEngine/Source/Common/Bfme5ReadyQueue.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/ExperienceLevelSystemDestructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/GODupBaseConstructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/GlobalDataDestructor.cpp	SubsystemInterface	Code\GameEngine\Source\Common\System\subsystem_interface.h(25) : error C2146: syntax error : missing ';' before identifier 'loadIniFilesFromLegend'
+Code/GameEngine/Source/Common/INI/INILargeGroupAudioUnusedKnownKeys.cpp	SubsystemInterface	Code\GameEngine\Source\Common\System\subsystem_interface.h(25) : error C2146: syntax error : missing ';' before identifier 'loadIniFilesFromLegend'
+Code/GameEngine/Source/Common/RTS/PlayerListConstructorClean.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/RTS/PlayerListDestructorThunk.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/RTS/PlayerListSetLocalPlayer.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/RTS/PlayerListUpdate.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/RTS/Rva000C5EF0ActionManager.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/RTS/SpecialPowerStoreDestructorThunk.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/RTS/TeamDeleteCallback.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/Rva00076B60Constructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/Rva001B6F20Destructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/Rva0039B450Constructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/Rva005A3B20Destructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/Rva009F2730Constructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/Rva009F2730Destructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/System/CollisionManagerConstructor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/System/RecorderClassConstructor.cpp	SubsystemInterface	z:\home\wacket\Projects\Open-BFME\Code\GameEngine\Source\Common\System\subsystem_interface.h(25) : error C2146: syntax error : missing ';' before identifier 'loadIniFilesFromLegend'
+Code/GameEngine/Source/Common/System/RecorderReadReplayHeader.cpp	SubsystemInterface	Z:\home\wacket\Projects\Open-BFME\build\toolchains\vs2003\Program Files\Microsoft Visual Studio .NET 2003\Vc7\include\stdio.h(271) : error C2733: second C linkage of overloaded function 'fgetpos' not allowed
+Code/GameEngine/Source/Common/System/Rva00880F00SubsystemCtor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/System/Rva008F7510ShroudManagerCtor.cpp	SubsystemInterface	build.sh exited 2
+Code/GameEngine/Source/Common/System/SaveGame/GameStateDtorThunk.cpp	SubsystemInterface	build.sh exited 2
