@@ -6395,6 +6395,7 @@ name,address,notes
 ??1Gen_dtor_007002d0@@UAE@XZ,0x0003AC01,gen-dtor class destructor
 ??1MouseThreadClass@@UAE@XZ,0x0003AC01,route=0x00700260; scalar deleting destructor retail call targets the matched MouseThreadClass destructor through this ILT
 ??1Gen_dtor_00701e50@@UAE@XZ,0x0002CEFD,gen-dtor class destructor
+??1W3DMouse@@UAE@XZ,0x0002CEFD,route=0x00701240; scalar deleting destructor retail call targets the matched W3DMouse destructor through this ILT
 ??1Gen_dtor_00702550@@UAE@XZ,0x00016DC9,gen-dtor class destructor
 ??1Gen_dtor_00702fc0@@UAE@XZ,0x00041E57,gen-dtor class destructor
 ??1Gen_dtor_00712100@@UAE@XZ,0x00044A67,gen-dtor class destructor
