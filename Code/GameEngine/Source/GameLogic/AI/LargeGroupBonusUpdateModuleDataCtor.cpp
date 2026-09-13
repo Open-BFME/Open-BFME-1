@@ -1,13 +1,19 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/GrantStealthBehavior.h
+// The class was named GrantStealthBehaviorModuleData from the ZH header of that
+// name. BFME never shipped it: "GrantStealthBehavior" appears zero times in
+// lotrbfme.exe, while "LargeGroupBonusUpdate" appears twice and
+// reverse/module_registry.tsv registers it with new_module_data_rva 0x00118BB0 --
+// which is exactly where the ledger already puts
+// ?friend_newModuleData@LargeGroupBonusUpdate@@. The ModuleData that factory
+// builds is this one, so this body is its constructor.
 // Base's own ctor is trivial and inlines away, so this ctor installs the
 // derived vtable directly (same elision as DelayedDeathBodyConstructor.cpp).
 // +0x4 is left untouched, matching retail.
-class GrantStealthBehaviorModuleDataBase
+class LargeGroupBonusUpdateModuleDataBase
 {
 public:
-	virtual ~GrantStealthBehaviorModuleDataBase() {}
+	virtual ~LargeGroupBonusUpdateModuleDataBase() {}
 
 protected:
 	unsigned int m_unused04;
@@ -23,11 +29,11 @@ private:
 	unsigned int m_handle;
 };
 
-class GrantStealthBehaviorModuleData : public GrantStealthBehaviorModuleDataBase
+class LargeGroupBonusUpdateModuleData : public LargeGroupBonusUpdateModuleDataBase
 {
 public:
-	GrantStealthBehaviorModuleData();
-	virtual ~GrantStealthBehaviorModuleData();
+	LargeGroupBonusUpdateModuleData();
+	virtual ~LargeGroupBonusUpdateModuleData();
 
 private:
 	unsigned int m_healingAmount; // +0x08
@@ -42,8 +48,8 @@ private:
 	volatile unsigned int m_gap2c;         // +0x2c
 };
 
-// ??0GrantStealthBehaviorModuleData@@QAE@XZ
-GrantStealthBehaviorModuleData::GrantStealthBehaviorModuleData()
+// ??0LargeGroupBonusUpdateModuleData@@QAE@XZ
+LargeGroupBonusUpdateModuleData::LargeGroupBonusUpdateModuleData()
 	: m_healingAmount( 5 )
 {
 	m_gap10 = 0;
