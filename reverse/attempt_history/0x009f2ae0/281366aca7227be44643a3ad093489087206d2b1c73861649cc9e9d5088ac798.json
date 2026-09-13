@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "281366aca7227be44643a3ad093489087206d2b1c73861649cc9e9d5088ac798",
+  "symbol": "?link@PartitionFilter@@QAEPAV1@PAV1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?link@PartitionFilter@@QAEPAV1@PAV1@@Z\n// partial score=0.99 date=2026-09-12\n// cl: /O2 /Ob2 /DNDEBUG /DWIN32 /MD /EHsc\n// ?link@PartitionFilter@@QAEPAV1@PAV1@@Z\n// BFME PartitionFilter linked-list append. ZH filters were a NULL-terminated\n// array; retail walks m_next at +4 and writes the supplied filter on the tail.\n\nclass Object;\n\nclass PartitionFilter\n{\npublic:\n\tvirtual bool allow(Object *object) = 0;\n\tPartitionFilter *link(PartitionFilter *next);\n\tPartitionFilter *m_next;\n};\n\nPartitionFilter *PartitionFilter::link(PartitionFilter *next)\n{\n\tPartitionFilter *cursor = 0;\n\tPartitionFilter *candidate = m_next;\n\tif (candidate != 0)\n\t{\n\t\tdo\n\t\t{\n\t\t\tcursor = candidate;\n\t\t\tcandidate = *(PartitionFilter **)(4 + (unsigned int)cursor);\n\t\t}\n\t\twhile (candidate != 0);\n\t\tcursor->m_next = next;\n\t}\n\telse\n\t{\n\t\tm_next = next;\n\t}\n\treturn this;\n}\n"
+}

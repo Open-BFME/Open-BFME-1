@@ -1,28 +1,32 @@
+// ?bfmeInvoke@Gen_009EBA60Target@@QAEXPAX0@Z
+// partial score=0.95 date=2026-09-12
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
-// partial score=0.93 date=2026-09-09
 // stlport
+// ?bfmeInvoke@Gen_009EBA60Target@@QAEXPAX0@Z
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 
-struct BfmeLockTEA
+struct CRITICAL_SECTION
 {
-	char m_data[ 0x18 ];
+	unsigned char m_data[0x18];
 };
 
-extern "C" __declspec( dllimport ) void __stdcall bfmeEnterTEA( BfmeLockTEA *lock );
-extern "C" __declspec( dllimport ) void __stdcall bfmeLeaveTEA( BfmeLockTEA *lock );
+extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(
+	CRITICAL_SECTION *lock);
+extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(
+	CRITICAL_SECTION *lock);
 
 class CriticalSectionLock
 {
 public:
-	explicit CriticalSectionLock( int lock ) : m_lock( lock )
+	explicit CriticalSectionLock(int lock) : m_lock(lock)
 	{
-		bfmeEnterTEA( (BfmeLockTEA *)m_lock );
+		EnterCriticalSection((CRITICAL_SECTION *)m_lock);
 	}
 	~CriticalSectionLock()
 	{
-		bfmeLeaveTEA( (BfmeLockTEA *)m_lock );
+		LeaveCriticalSection((CRITICAL_SECTION *)m_lock);
 	}
 
 	int m_lock;
@@ -31,7 +35,7 @@ public:
 class NameKeyGenerator
 {
 public:
-	int nameToLowercaseKey( const char *name );
+	int nameToLowercaseKey(const char *name);
 };
 
 struct Gen_p12cd
@@ -41,8 +45,8 @@ struct Gen_p12cd
 	int m_reserved8;
 };
 
-typedef _STL::pair< const int, Gen_p12cd > GenAssetPair;
-typedef _STL::hash_map< int, Gen_p12cd > GenAssetHash;
+typedef _STL::pair<const int, Gen_p12cd> GenAssetPair;
+typedef _STL::hash_map<int, Gen_p12cd> GenAssetHash;
 
 namespace _STL
 {
@@ -52,20 +56,20 @@ struct _Rb_tree_node_base;
 template <class T>
 struct _Rb_global
 {
-	static _Rb_tree_node_base *_M_increment( _Rb_tree_node_base *node );
+	static _Rb_tree_node_base *_M_increment(_Rb_tree_node_base *node);
 };
 
 }
 
 struct GenAssetTreeNode
 {
-	char m_tree_links[ 0x10 ];
+	char m_tree_links[0x10];
 	void *m_value;
 };
 
 struct GenAssetTree
 {
-	char m_tree_header[ 8 ];
+	char m_tree_header[8];
 	GenAssetTreeNode *m_root;
 };
 
@@ -77,55 +81,55 @@ struct GenAssetSource
 
 struct GenAssetRecord
 {
-	char m_prefix[ 0xc ];
+	char m_prefix[0xc];
 	void **m_items;
 };
 
 class Gen_009EBA60Target
 {
 public:
-	void bfmeInvoke( void *name, void *source );
+	void bfmeInvoke(void *name, void *source);
 
 private:
-	char m_prefix[ 0x2c ];
-	BfmeLockTEA m_lock;
+	char m_prefix[0x2c];
+	CRITICAL_SECTION m_lock;
 	GenAssetHash m_assets;
-	char m_gap[ 0x1f0 - 0x44 - sizeof( GenAssetHash ) ];
+	char m_gap[0x1f0 - 0x44 - sizeof(GenAssetHash)];
 	NameKeyGenerator *m_hash_context;
 };
 
-void Gen_009EBA60Target::bfmeInvoke( void *name, void *source )
+void Gen_009EBA60Target::bfmeInvoke(void *name, void *source)
 {
-	if ( name == 0 )
+	if (name == 0)
 		return;
 
 	GenAssetSource *assetSource = (GenAssetSource *)source;
-	if ( assetSource->m_count == 0 )
+	if (assetSource->m_count == 0)
 		return;
 
-	CriticalSectionLock lock( (int)&m_lock );
-	int key = m_hash_context->nameToLowercaseKey( (const char *)name );
-	if ( key == 0 )
+	CriticalSectionLock lock((int)&m_lock);
+	int keySlot[2];
+	keySlot[0] = m_hash_context->nameToLowercaseKey((const char *)name);
+	if (keySlot[0] == 0)
 		return;
-
-	GenAssetHash::iterator *it = &m_assets.find( key );
+	GenAssetHash::iterator *it = &m_assets.find(keySlot[0]);
 	GenAssetHash::iterator found = *it;
-	if ( found._M_cur == 0 )
+	if (found._M_cur == 0)
 		return;
 	GenAssetRecord *record =
 		(GenAssetRecord *)found._M_cur->_M_val.second.m_asset;
-	if ( record->m_items != 0 )
+	if (record->m_items != 0)
 		return;
 
 	GenAssetTreeNode *entry;
-	record->m_items = new void *[ assetSource->m_count + 1 ];
+	record->m_items = new void *[assetSource->m_count + 1];
 	entry = assetSource->m_tree->m_root;
 	int count = 0;
-	while ( entry != (GenAssetTreeNode *)assetSource->m_tree )
+	while (entry != (GenAssetTreeNode *)assetSource->m_tree)
 	{
-		record->m_items[ count++ ] = (void *)entry->m_value;
+		record->m_items[count++] = (void *)entry->m_value;
 		entry = (GenAssetTreeNode *)_STL::_Rb_global<bool>::_M_increment(
-			(_STL::_Rb_tree_node_base *)entry );
+			(_STL::_Rb_tree_node_base *)entry);
 	}
-	record->m_items[ count ] = 0;
+	record->m_items[count] = 0;
 }
