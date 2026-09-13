@@ -1,13 +1,10 @@
-// cl: /DNDEBUG /DWIN32 /MD
+// cl: /DNDEBUG /DWIN32 /MD /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Open-BFME5: free stdcall helper at retail 0x0032BB30 (70B). ScriptEngine
 // getUnitNamed (vtable +0x68) then tests a bit taken from arg2+8 against the
 // dword bitset at Object+0x90.
 
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Object
 {

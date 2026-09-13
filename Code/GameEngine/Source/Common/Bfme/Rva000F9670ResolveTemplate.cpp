@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x000F9670 (32 bytes).  The receiver is the same 0x60-byte record
 // vector whose checked element accessor is matched at 0x000F94B0.  Each
@@ -8,11 +8,7 @@
 // call and the latter two store/use it.  A relocation-wildcard scan finds this
 // complete instruction shape only at 0x000F9670, followed by INT3 padding.
 
-class AsciiString
-{
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class ThingTemplate;
 

@@ -1,0 +1,13 @@
+Code/GameEngine/Source/Common/Audio/AudioEventRTSCommonInit.cpp	AsciiString	Code\GameEngine\Source\Common\Audio\AudioEventRTSCommonInit.cpp(110) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/Audio/AudioEventRTSInitFromName.cpp	AsciiString	Code\GameEngine\Source\Common\Audio\AudioEventRTSInitFromName.cpp(60) : error C2039: 'm_data' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/Audio/Rva006B1E60ProviderState.cpp	AsciiString	Code\GameEngine\Source\Common\Audio\Rva006B1E60ProviderState.cpp(68) : error C2039: 'bfmeCompare1294' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/Bfme5CountedClears.cpp	AsciiString	Code\GameEngine\Source\Common\Bfme5CountedClears.cpp(193) : error C3861: 'releaseBuffer': identifier not found, even with argument-dependent lookup
+Code/GameEngine/Source/Common/Bfme5HandOffClears.cpp	AsciiString	Code\GameEngine\Source\Common\Bfme5HandOffClears.cpp(167) : error C2039: 'releaseBuffer' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/Bfme5NamedCommandSelection.cpp	AsciiString	Code\GameEngine\Source\Common\Bfme5NamedCommandSelection.cpp(96) : error C2039: 'bfmeHasText' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/BfmeConv561.cpp	AsciiString	build.sh exited 1
+Code/GameEngine/Source/Common/BfmeGrokSetIns.cpp	AsciiString	build.sh exited 1
+Code/GameEngine/Source/Common/BfmeItemEUARunC.cpp	AsciiString	Code\GameEngine\Source\Common\BfmeItemEUARunC.cpp(82) : error C2039: 'm_data' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/BitFlagsParseFromINI.cpp	AsciiString	Code\GameEngine\Source\Common\BitFlagsParseFromINI.cpp(78) : error C2661: 'AsciiString::concat' : no overloaded function takes 2 arguments
+Code/GameEngine/Source/Common/ExperienceLevelParseLevelUpFx.cpp	AsciiString	build.sh exited 1
+Code/GameEngine/Source/Common/GameLODManagerGetAudioLODIndex.cpp	AsciiString	Code\GameEngine\Source\Common\GameLODManagerGetAudioLODIndex.cpp(100) : error C2039: 'm_data' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/GameLODManagerGetStaticGameLODIndex.cpp	AsciiString	build.sh exited 1

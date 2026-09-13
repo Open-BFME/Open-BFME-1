@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: AudioEventRTS virtual destructor, retail 0x000B31F0, 162B.
 // ILT 0x00026F35. Stores vftable 0x01081D40 and releases the AsciiStrings at
@@ -6,14 +6,7 @@
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *lpAddend);
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Counted
 {

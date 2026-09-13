@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // The destructor at retail 0x0060EBB0 tears down the same 0x188-byte cloud/sky
 // settings record its constructor at 0x0060E8A0 builds (BfmeConv2153.cpp).
@@ -13,13 +13,7 @@
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *lpAddend);
 
-class AsciiString
-{
-public:
-	~AsciiString();												///< pinned 0x00887940
-
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeThingEQ
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: CrateTemplate::operator=, retail 0x0037A1A0, 109 bytes. The body
 // carried only a machine byte-dump row; the symbols.csv pin names it.
@@ -14,15 +14,7 @@
 // class: written as members the compiler folds the offsets onto this and drops
 // the two leas.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other);	// retail 0x00887C90
-
-private:
-	char *m_bfmeData;
-};
+#include "ascii_string.h"
 
 class ScienceInfoBase
 {

@@ -1,14 +1,10 @@
-// cl: /DNDEBUG /DWIN32 /MD
+// cl: /DNDEBUG /DWIN32 /MD /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME: retail 0x002EF350, 57 bytes.
 // executeAction calls this. ScriptEngine getUnitNamed (slot 26) then Object
 // getDrawable (slot 10) twice, then BfmeOwner1158::bfmeStopAll1158 via ILT
 // 0x0001DA8E. Not doEnableObjectSound -- that callee is enableAmbientSoundFromScript.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeArg1158;
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: thin AudioEventRTS constructors that call outlined initFromName
 // (ILT 0x0004A86D) after the member zeros.
@@ -8,15 +8,7 @@
 //   DrawableID  0x000B45E0 141B  (inlined twin 0x000B44F0)
 //   LivingWorld 0x000B4780 145B  (inlined twin 0x000B4690)
 
-class AsciiString
-{
-public:
-	AsciiString() { m_data = 0; }
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // One-word opaque ABI view. SlowDeathBehavior retains/releases this pointer
 // and the callee helper reads info+8, proving this overload takes an info ref.

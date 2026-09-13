@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME5: lift ModuleData dtor MASM dump to clean C++.
 // Retail @0x0027E4E0: SEH dtor whose body frees two POD pointers at
@@ -7,13 +7,7 @@
 // (state 3), AsciiStrings at +0x44 (state 2) and +0x30 (state 1), and a
 // sentinel-list container at +0x08 (state 0), then the base vftable store.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_data;
-public:
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 // Stand-in for the out-of-line STL-list-style container dtor @0x001468A0
 // (sentinel-node teardown); pinned in symbols.csv.

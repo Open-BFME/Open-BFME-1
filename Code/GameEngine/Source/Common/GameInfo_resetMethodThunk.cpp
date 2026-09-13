@@ -1,24 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?reset@GameInfo@@UAEXXZ: Code/GameEngine/Source/GameNetwork/GameInfo.cpp
 // Open-BFME5: retail GameInfo reset in C++.
 
 extern "C" __declspec(dllimport) unsigned long __stdcall GetTickCount();
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-	__forceinline AsciiString &operator=(const AsciiString &other)
-	{
-		set(other);
-		return *this;
-	}
-private:
-	void set(const AsciiString &other);
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameSlot

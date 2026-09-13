@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: AudioEventRTS constructors.
 //   (const AsciiString &, ObjectID)              retail 0x000B4350, 188B
@@ -39,17 +39,7 @@ struct Coord3D
 	float x, y, z;
 };
 
-class AsciiString
-{
-public:
-	AsciiString() { m_data = 0; }
-	~AsciiString();
-
-	AsciiString &operator=(const AsciiString &other);
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Counted
 {

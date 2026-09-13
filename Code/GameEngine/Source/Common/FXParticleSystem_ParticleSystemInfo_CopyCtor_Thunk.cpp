@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // The vtable, field offsets, and three AsciiString copy calls match retail
 // constructor 0x0005EF60.
 
@@ -10,18 +10,7 @@ public:
 	void construct(const AsciiString *source);
 };
 
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &source)
-	{
-		((AsciiStringCopyCtorShim *)this)->construct(&source);
-	}
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 struct ThreeDwords
 {

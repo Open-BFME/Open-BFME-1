@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: the two constructors of the BfmeOwnVVB owner whose destructor
 // landed in BfmeOwnVVBDestructor.cpp: 0x001903F0 (id, arg) and 0x00190340
 // (arg, id drawn from the global counter g_bfmeBFAE). The node-list pointer at
@@ -15,14 +15,7 @@ public:
 	BfmeOwnVVBNode *m_nodes;
 };
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString();
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeElemBX
 {

@@ -1,15 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-class AsciiString
-{
-public:
-	AsciiString(void) : m_data(0) {}
-	AsciiString(const AsciiString &that);
-	~AsciiString(void);
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 AsciiString __cdecl bfmeSlashOrDefaultName(AsciiString &name,
 	const AsciiString &fallback);

@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5 conversions.
 
 class BfmeB977;
@@ -20,16 +21,7 @@ public:
 
 extern BfmeCampaignSwitch977 *g_bfmeSwitchDR;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-
-private:
-	char *m_bfmeData;
-};
+#include "ascii_string.h"
 
 struct BfmeRec977
 {

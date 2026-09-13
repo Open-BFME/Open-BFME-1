@@ -1,10 +1,5 @@
-class AsciiString
-{
-public:
-	int compareNoCase(const AsciiString &o) const;
-
-	void *m_bfmeStrZP;
-};
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
+#include "ascii_string.h"
 
 struct BfmeKeyZP
 {

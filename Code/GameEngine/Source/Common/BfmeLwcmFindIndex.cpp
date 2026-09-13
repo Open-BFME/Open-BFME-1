@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Open-BFME5: index form of BfmeLwcmFindByKey. Retail 0x003B40A0, 203 bytes.
 // Same 32-byte record vector at this+0x10 and inlined AsciiString compare
@@ -19,24 +19,7 @@ struct BfmeAsciiStringData
 	char m_text[1];
 };
 
-class AsciiString
-{
-public:
-	Int compare(const AsciiString &other) const
-	{
-		const AsciiString *that = &other;
-		const AsciiString *self = this;
-		Int thatLen = that->m_data ? that->m_data->m_length : 0;
-		const char *thatData = that->m_data ? &that->m_data->m_text[0] : g_bfmeEmptyAscii;
-		Int thisLen = self->m_data ? self->m_data->m_length : 0;
-		const char *thisData = self->m_data ? &self->m_data->m_text[0] : g_bfmeEmptyAscii;
-		Int c = memcmp(thisData, thatData, (unsigned int)(thisLen < thatLen ? thisLen : thatLen));
-		if (c != 0)
-			return c;
-		return thisLen - thatLen;
-	}
-	BfmeAsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeLwcmFindResult
 {

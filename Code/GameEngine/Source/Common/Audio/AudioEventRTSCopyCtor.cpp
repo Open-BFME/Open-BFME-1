@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: AudioEventRTS copy constructor (0x000B2FB0, 451B) and
 // operator= (0x000B2690, 360B). Copy-ctor ILT 0x00047B27 (Player radar
@@ -15,16 +15,7 @@ struct Coord3D
 	unsigned int x, y, z;
 };
 
-class AsciiString
-{
-public:
-	AsciiString() { m_data = 0; }
-	~AsciiString();
-	AsciiString &operator=(const AsciiString &other);
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Counted
 {

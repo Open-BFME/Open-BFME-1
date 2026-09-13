@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 struct BfmeNodeZK
 {
 	BfmeNodeZK *m_bfmeNextZK;
@@ -29,12 +30,7 @@ public:
 
 // The matched string-record release at 0x00359530 proves this four-byte
 // owned string field and its destructor. No string is copied in this helper.
-class AsciiString
-{
-public:
-	~AsciiString();
-	char *m_data;
-};
+#include "ascii_string.h"
 
 struct BfmeStringRecordZK
 {
