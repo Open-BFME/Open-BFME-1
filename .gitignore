@@ -35,3 +35,8 @@ reference/shims/sweep/stdAfx.h
 reference/shims/sweep/WorldBuilder.h
 reference/shims/sweep/wpaudio/Source.h
 reference/shims/sweep/D3DX8Math.h
+
+# ledger_io.py writes <name>.tmp-<pid> and renames it into place. A process killed
+# between the write and the rename leaves one behind; two 23 MB ones were committed
+# by a broad `git add` on 2026-09-06 and shipped to every clone.
+reverse/*.tmp-*
