@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "50f18cad7686caa143576de1e3bd796f29621bc67a0b82157e52b86ebba8aa33",
+  "symbol": "?link@PartitionFilter@@QAEPAV1@PAV1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?link@PartitionFilter@@QAEPAV1@PAV1@@Z\r\n// partial score=0.99 date=2026-09-09\r\nclass PartitionFilter;\r\n\r\nstruct PartitionFilterLinkView\r\n{\r\n\tvoid *vtable;\r\n\tPartitionFilter *m_next;\r\n};\r\n\r\nclass PartitionFilter\r\n{\r\npublic:\r\n\tvirtual bool allow(void *object) = 0;\r\n\tPartitionFilter *link(PartitionFilter *next);\r\n\tPartitionFilter *m_next;\r\n};\r\n\r\nPartitionFilter *PartitionFilter::link(PartitionFilter *next)\r\n{\r\n\tPartitionFilterLinkView *cursor = 0;\r\n\tPartitionFilter *candidate = m_next;\r\n\tif (candidate != 0)\r\n\t{\r\n\t\tdo\r\n\t\t{\r\n\t\t\tcursor = (PartitionFilterLinkView *)(unsigned int)candidate;\r\n\t\t\tcandidate = cursor->*(&PartitionFilterLinkView::m_next);\r\n\t\t}\r\n\t\twhile (candidate != 0);\r\n\t\tcursor->m_next = next;\r\n\t}\r\n\telse\r\n\t{\r\n\t\tm_next = next;\r\n\t}\r\n\treturn this;\r\n}\r\n"
+}

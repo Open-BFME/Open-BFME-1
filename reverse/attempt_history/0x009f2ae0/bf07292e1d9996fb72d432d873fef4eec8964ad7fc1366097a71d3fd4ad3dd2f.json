@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "bf07292e1d9996fb72d432d873fef4eec8964ad7fc1366097a71d3fd4ad3dd2f",
+  "symbol": "?link@PartitionFilter@@QAEPAV1@PAV1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?link@PartitionFilter@@QAEPAV1@PAV1@@Z\n// partial score=0.99 date=2026-09-12\n// cl: /O2 /Ob2 /DNDEBUG /MD\nclass Object;\n\nclass PartitionFilter\n{\npublic:\n\tvirtual bool allow(Object *object) = 0;\n\tPartitionFilter *link(PartitionFilter *next);\n\tPartitionFilter *m_next;\n};\n\nPartitionFilter *PartitionFilter::link(PartitionFilter *next)\n{\n\tPartitionFilter *cursor = 0;\n\tPartitionFilter *candidate = m_next;\n\tif (candidate != 0)\n\t{\n\t\tdo\n\t\t{\n\t\t\tcursor = candidate;\n\t\t\tcandidate = cursor->m_next;\n\t\t}\n\t\twhile (candidate != 0);\n\t\tcursor->m_next = next;\n\t}\n\telse\n\t{\n\t\tm_next = next;\n\t}\n\treturn this;\n}\n"
+}
