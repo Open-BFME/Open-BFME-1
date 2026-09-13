@@ -12,7 +12,20 @@ the mangled name, so every annotated row looked unconverted. Corrected:
 
 The 28 below were the subset visible before the fix, and the conclusions drawn
 from them hold -- 1 fixable, the rest architectural. The other 49 have not been
-attempted and are the place to start.
+attempted.
+
+**Temper the optimism, though.** "Both functions are matched" means a source fix
+is CONCEIVABLE, not that it is easy. The one that yielded was a same-class method
+mix-up (`compare` vs `compareNoCase` on StringBase<char>), and across all 77 there
+is exactly ONE other same-class pair: mesh.cpp's `MeshClass::Generate_Culling_Tree`
+forwards to `MeshGeometryClass::Generate_Culling_Tree` (166 B @0x00925060) where
+retail reaches 0x00924C30, which the ledger calls `Get_User_Text` (14 B). Different
+sizes, so different functions, and deciding which the forward should reach is an
+identity question for the image oracles rather than a one-line edit.
+
+Everything else pairs methods of DIFFERENT classes, which is the signature of a
+hierarchy modelled wrong rather than a call written wrong. Expect the 49 to behave
+like the 27, and treat any that does not as a bonus.
 
 **Key Rules Established**:
 1. **ICF twins are identical length**: Different lengths mean different functions, not type aliases. A pin under the wrong name still byte-matches but hides the defect.
