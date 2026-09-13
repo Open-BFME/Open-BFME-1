@@ -114,3 +114,34 @@ of those is the shape of this campaign.
    `tools/audit_ret_arity.py`. See the memory note "Image oracles for identity".
 4. Never settle a row by editing a baseline or adding a pin to go green. Both
    files say so in their own headers, and both have been burned before.
+
+## The gate is partly self-blocking
+
+Three failures in `WWLib/ini.cpp` — `~BufferPipe`, `~BufferStraw`, `~CacheStraw` —
+share one cause. At +0x29 each calls `~Buffer` out of line, while retail calls
+`Buffer::Reset` at 0x009E1E60 directly. That is not a wrong candidate: retail
+INLINED `~Buffer`, whose entire body is
+
+    Buffer::~Buffer(void) { Reset(); }          buff.cpp:82
+
+so the inlined call goes straight to Reset. Our `buff.h` declares
+`~Buffer(void);` out of line, so MSVC emits a call to the destructor instead.
+
+**The fix is a one-line header change and it cannot be committed.** Tested:
+inlining the body in `buff.h` clears all three. It then costs four — `~Buffer`
+loses the out-of-line body its own row at 0x009E1E30 claims, and three `uw_*`
+unwind funclets in ini.cpp shift because inlining changes the EH structure. So
+the real change is "inline it AND keep a COMDAT AND re-land the funclets", which
+is conversion work rather than a one-liner.
+
+Either way it edits a `.h`, and `.githooks/pre-commit` gives any staged header the
+FULL gate with no baseline tolerance. **The full gate is red partly because of
+these three, and fixing them requires the full gate to be green.**
+
+That circularity is worth a decision rather than more attempts. The obvious
+resolution is the one every other check here already uses: compare a header
+change against a BASELINE of known reds -- the way `reverse/identity_baseline.txt`
+works -- instead of demanding zero. A header edit would then have to not make
+things WORSE, which is the property that actually matters, rather than having to
+fix everything first. That is a policy change to the hook and belongs to whoever
+owns it, not to a tool.
