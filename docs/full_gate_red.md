@@ -145,3 +145,28 @@ works -- instead of demanding zero. A header edit would then have to not make
 things WORSE, which is the property that actually matters, rather than having to
 fix everything first. That is a policy change to the hook and belongs to whoever
 owns it, not to a tool.
+
+## Leads that look like a pin and are not — verified, do not re-chase
+
+Each of these has the shape "retail calls a body our ledger already names", which
+reads like a missing candidate. In every case the sizes settle it: **ICF twins are
+the same length, because they are the same code.** Different lengths mean
+different functions, and a pin would be a lie.
+
+| our source calls | retail calls | verdict |
+|---|---|---|
+| `~Snapshot` 7B @0x0005C520 | `~SubsystemInterface` 14B @0x009A1A40 | different; our hierarchy is one base short |
+| `~Buffer` 40B @0x009E1E30 | `Buffer::Reset` 40B @0x009E1E60 | same size, still different: retail INLINED `~Buffer`, whose body IS `Reset()` |
+| `Free_Definitions` 50B @0x009CB880 | `bfmeGo920F` 27B @0x00160E70 | different |
+| `freeSockets` 64B @0x0008FCE0 | `bfmeGo920F` 27B @0x00160E70 | different |
+
+The `~SubsystemInterface` case is worth reading twice. Its 14 bytes are
+`mov [ecx],vptr; add ecx,4; jmp <next base dtor>` -- a base-chain destructor --
+and FOUR invented names are already pinned to it as aliases (`BannerSubsystemBase`,
+`BfmeBase1134`, `BfmeBaseAA`, `BfmeBaseP`). The tree keeps meeting this body and
+naming it locally instead of modelling the base class. That is the same disease as
+a TU-local `BFMEFindAsciiStringView`, one level up the hierarchy.
+
+`tools/wrong_callee.py` splits the whole family by whether each side is a matched
+row, so the 28 with a possible source fix can be told from the 54 waiting on the
+conversion lane.
