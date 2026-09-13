@@ -33,6 +33,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 QUEUE = ROOT / "reverse/placement_queue.tsv"
 LEDGER = ROOT / "reverse/functions.csv"
+BLOCKED = ROOT / "reverse/placement_blocked.tsv"
 
 
 def git(*args, check=True):
@@ -52,18 +53,36 @@ def repoint(pairs):
     return moved
 
 
+def blocked_paths():
+    if not BLOCKED.exists():
+        return set()
+    return {l.split("\t")[0] for l in
+            BLOCKED.read_text(encoding="utf-8").splitlines() if l.strip()}
+
+
 def build(paths):
-    """(ok, failing paths). Never called with an empty list -- see the docstring."""
+    """(failing paths, output). Raises on a failure it cannot attribute to a file.
+
+    build.sh reports compile errors on STDERR and aborts the whole scoped build on
+    the first one, so reading stdout alone sees a batch with no `Functions: OK`
+    line and no FAIL line either. That used to print `byte gate: UNVERIFIED` and
+    commit anyway -- a green-looking path through a build that never ran.
+    """
     if not paths:
         raise RuntimeError("refusing to build an empty set: that is the full gate")
     done = subprocess.run([str(ROOT / "build.sh"), *paths], cwd=ROOT,
                           capture_output=True, text=True)
-    bad = set()
-    for line in done.stdout.splitlines():
-        if line.startswith("  FAIL") and "(" in line:
-            bad.add(line[line.index("(") + 1:line.rindex(")")])
-    ok = any(l.startswith("Functions: OK") for l in done.stdout.splitlines())
-    return ok, bad, done.stdout
+    out = done.stdout + done.stderr
+    bad = {l[l.index("(") + 1:l.rindex(")")] for l in out.splitlines()
+           if l.startswith("  FAIL") and "(" in l}
+    bad |= {l.split(":", 1)[1].strip() for l in out.splitlines()
+            if l.lower().startswith("compile failed:")}
+    if done.returncode and not bad:
+        raise RuntimeError(f"build.sh exited {done.returncode} naming no file:\n"
+                           + out[-3000:])
+    if not bad and "Functions: OK" not in out:
+        raise RuntimeError("build.sh exited 0 with no verdict:\n" + out[-3000:])
+    return bad, out
 
 
 def main():
@@ -75,10 +94,14 @@ def main():
 
     rows = [l.rstrip("\n").split("\t") for l in
             QUEUE.read_text(encoding="utf-8").splitlines() if l.strip()]
+    # A file the hook refuses at any path stays queued otherwise, so every later
+    # batch moves it again, pays a build for it, and is refused again.
+    refused = blocked_paths()
+    rows = [r for r in rows if r[0] not in refused]
     if not rows:
         print("queue empty")
         return 9
-    batch, rest = rows[:args.count], rows[args.count:]
+    batch = rows[:args.count]
 
     moved = []
     for source, target, _cls in batch:
@@ -93,7 +116,7 @@ def main():
         return 9
     print(f"moved {len(moved)}, repointed {repoint(moved)} ledger row(s)")
 
-    ok, bad, out = build([t for _, t in moved])
+    bad, out = build([t for _, t in moved])
     if bad:
         print(f"  {len(bad)} pre-existing red(s) -- returning them")
         back = [(t, s) for s, t in moved if t in bad]
@@ -104,11 +127,11 @@ def main():
         if not moved:
             print("  every file in this batch was red; nothing to land")
             return 1
-        ok, bad, out = build([t for _, t in moved])
+        bad, out = build([t for _, t in moved])
         if bad:
             print("  still failing after returning the reds -- stopping", file=sys.stderr)
             return 1
-    print(f"  byte gate: {'OK' if ok else 'UNVERIFIED'} over {len(moved)} file(s)")
+    print(f"  byte gate: OK over {len(moved)} file(s)")
 
     if not args.commit:
         print("  --commit to land. Queue is left unchanged until then.")
@@ -127,6 +150,8 @@ def land(moved, rows):
     """
     for _ in range(4):
         git("add", "reverse/functions.csv", *[t for _, t in moved])
+        if BLOCKED.exists():
+            git("add", str(BLOCKED.relative_to(ROOT)))
         subject = f"Move {len(moved)} misplaced sources into their class's directory"
         body = (f"{subject}\n\n"
                 "Placement lane. Each file declares exactly one owning class and sat in a\n"
@@ -144,15 +169,25 @@ def land(moved, rows):
         if not done.returncode:
             break
         out = done.stdout + done.stderr
-        named = [(src, dst) for src, dst in moved
-                 if any(l.startswith(dst + ":") for l in out.splitlines())]
+        named = {}
+        for src, dst in moved:
+            for line in out.splitlines():
+                if line.startswith(dst + ":"):
+                    named[(src, dst)] = "defines a function no ledger row declares"
+                elif line.lower().startswith("compile failed:") and line.endswith(dst):
+                    named[(src, dst)] = "does not compile at the new path"
+                elif line.startswith("  FAIL") and line.endswith("(" + dst + ")"):
+                    named[(src, dst)] = "byte-red at the new path"
         if not named:
             print("COMMIT REFUSED:\n" + out[-2500:], file=sys.stderr)
             return 1
-        print(f"  hook refuses {len(named)} at any path -- returning them")
+        print(f"  hook refuses {len(named)} -- returning them")
         for src, dst in named:
             git("mv", dst, src, check=False)
         repoint([(dst, src) for src, dst in named])
+        with BLOCKED.open("a", encoding="utf-8") as fh:
+            for (src, _), why in named.items():
+                fh.write(f"{src}\t{why}\n")
         moved = [m for m in moved if m not in named]
         if not moved:
             print("  nothing left to land")

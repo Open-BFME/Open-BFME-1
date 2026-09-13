@@ -50,9 +50,13 @@ DUMPING_GROUND = "Code/GameEngine/Source/Common"
 # ?method@Class@@... and ??0Class@@ / ??1Class@@ for constructors and destructors.
 METHOD = re.compile(r"^\?([A-Za-z_]\w*)@([A-Za-z_]\w*)@@")
 STRUCTOR = re.compile(r"^\?\?[01]([A-Za-z_]\w*)@@")
-# A move rewrites no text, so only a RELATIVE include can resolve differently
-# afterwards. 119 files carry one; they stay where they are.
-RELATIVE_INCLUDE = re.compile(r'^\s*#include\s+"(?:\.\./|\./)', re.M)
+# A move rewrites no text, so only an include that resolves against the file's OWN
+# directory can break. That is not just `../` and `./`: a bare quoted name does it
+# too, and MSVC searches the including file's directory first.
+# ManTheWallsSpecialPowerDestructorThunk.cpp says
+# `#include "SpecialPowerModuleDestructorThunk.cpp"` -- a sibling, by bare name --
+# and moving it gave `fatal error C1083` after the batch had already been gated.
+QUOTED_INCLUDE = re.compile(r'^\s*#include\s+"([^"]+)"', re.M)
 CLASS_DECL = re.compile(r"^[ \t]*(?:class|struct)[ \t]+([A-Za-z_]\w*)\b[^;{]*\{", re.M)
 
 
@@ -181,8 +185,10 @@ def build(root):
             text = (root / source).read_text(encoding="utf-8", errors="replace")
         except OSError:
             continue
-        if RELATIVE_INCLUDE.search(text):
-            skipped["carries a relative include"] += 1
+        here = os.path.dirname(source)
+        if any((root / here / inc).exists()
+               for inc in QUOTED_INCLUDE.findall(text)):
+            skipped["quoted include resolves to a sibling"] += 1
             continue
         queue.append((source, target, cls))
     return queue, skipped

@@ -54,30 +54,61 @@ Measured over 103 landed moves, a move is byte-neutral.
     python3 tools/placement_batch.py --count 80 --commit
 
 `placement_queue.py` queues a file only when it declares exactly ONE owning class
-and that class demonstrably lives elsewhere — the ZH reference has a file for it,
-or the class already keeps two or more bodies in another existing directory. The
-destination is never invented, and never the flat `Common/` root: a class whose
-bodies mostly sit in the dumping ground is not evidence that the dumping ground is
-where they belong.
+and the evidence names a different home for it. Three sources, strongest first:
 
-Current queue: **1,368 files.** 7,556 are skipped because no evidence names a
-destination — those are BFME-specific classes and free functions with no ZH twin,
-and they are blocked on identification, not on this lane.
+1. **ZH has a `.cpp` of that class's name** — its directory.
+2. **A ZH header declares that class** — the mirrored `Source/` directory, *when
+   that directory exists in ZH*. Worth files the first rule cannot see: ZH
+   declares 1,264 classes across its headers and most never got a file of their
+   own name.
+3. **The class already keeps two or more bodies somewhere else** — that directory.
+   One sibling elsewhere is as likely to be the misplaced file.
+
+And three destinations are always refused: the flat `Common/` root (a class whose
+bodies mostly sit in the dumping ground is not evidence that the dumping ground is
+where they belong), a directory that does not exist, and **any ancestor of where
+the file already is** — a file inside the destination subtree is already home.
+
+Current queue: **839 files**, down from 1,368, because 529 of those entries were
+wrong (see below). 8,096 are skipped because no evidence names a destination —
+BFME-specific classes and free functions with no ZH twin, blocked on
+identification rather than on this lane.
+
+## Weak evidence must never outrank strong
+
+The queue's worst defect was silent, and the byte gate could never have caught it:
+a move that is byte-neutral is still a move to the wrong place.
+
+`AssaultTransportAIUpdate.cpp` sits in `GameLogic/Object/Update/AIUpdate/` —
+exactly where ZH has it. The queue wanted it in `GameLogic/AI`. Rule 1 looked up
+ZH, found *this* directory, saw `candidate == here`, and **fell through** to rule
+3, which answered on two siblings that were themselves misplaced. ZH saying "this
+file is already home" has to end the search, not be skipped as a non-answer.
+
+Two more of the same family:
+
+* A destination that is an **ancestor** of the current directory was accepted, so
+  324 files were bound to leave `GameLogic/AI` for `GameLogic`. ZH's header tree
+  is coarser than our source tree in places; answering with the parent throws away
+  a subdirectory that already names the file.
+* `Include/<Area>/<Sub>` was mirrored onto `Source/<Area>/<Sub>` without checking
+  the mirror **exists in ZH**. It does not for `Module`: ZH keeps those bodies
+  under `Object/Update` and `Object/Behavior`. 606 files were bound for an
+  invented directory and 195 of them were leaving the right one to get there.
+
+The 103 moves that had already landed were audited against ZH afterwards: none of
+them went against a ZH location.
 
 ## State
 
-103 files moved and landed. `Common/` 6,965 → 6,892.
+181 files moved and landed. The `0x002978A0` row that was blocking every `Code/`
+commit is settled, and `identity_guard` is green.
 
-**The lane is currently blocked repo-wide.** `tools/identity_guard.py` fails on a
-completely clean checkout:
-
-    identity_guard: FAIL — a row that byte-matches now names the wrong function
-        multi_name.different: 0 -> 1
-
-`tools/multi_name.py` names it: `0x002978A0`, 105 bytes, *DIFFERENT BODIES —
-cannot share an address*. Until somebody settles that row, the commit hook rejects
-every change under `Code/`, including byte-neutral moves. Settle it, or establish
-it is an artifact, before resuming.
+If `identity_guard` fails again with `multi_name.different: 0 -> N`, read its own
+verdict before believing it: it compares THIS TREE'S compiled objects, prints
+`-> DIRTY`, and names the source whose object no longer matches. Rebuild that one
+source and re-run. Compiling a few hundred TUs is enough to surface it. It is an
+artifact, not a ledger defect, and it must never be settled by editing the ledger.
 
 ## Traps this lane has already paid for
 
@@ -98,9 +129,12 @@ paths only.
 
 **`git mv` and the ledger repoint are two halves of one change.** Committing one
 without the other leaves `reverse/functions.csv` pointing at an untracked path;
-`check_csv` catches it, but only if you run it. And `git add -A <old-path>` fails
-once the old path is gone, which will take an `&&` chain down with it and produce
-a half-commit.
+`check_csv` catches it, but only if you run it.
+
+**`git mv` already stages both halves of the rename.** Naming the old paths again
+— `git add -u <old>` — aborts the whole command with exit 128 as soon as one of
+them is gone from the working tree, which is all of them. A batch moved 80 files,
+byte-verified them, and threw the result away on that line.
 
 **The ledger is bytes.** `reverse/functions.csv` carries mixed line terminators
 and a `csv` round-trip flattens them, which `check_csv` rejects. Repoint the
