@@ -6061,7 +6061,6 @@ name,address,notes
 ??1Gen_dtor_005d5800@@UAE@XZ,0x00013101,gen-dtor class destructor
 ??1Gen_dtor_005d9e00@@UAE@XZ,0x00040FDE,gen-dtor class destructor
 ??1Gen_dtor_005db2a0@@UAE@XZ,0x0002DCE0,gen-dtor class destructor
-??1Gen_dtor_005db460@@UAE@XZ,0x00014ED4,gen-dtor class destructor
 ??1Gen_dtor_005db600@@UAE@XZ,0x0000D59E,gen-dtor class destructor
 ??1Gen_dtor_005db780@@UAE@XZ,0x00043A8B,gen-dtor class destructor
 ??1Gen_dtor_005db900@@UAE@XZ,0x0003B8DB,gen-dtor class destructor
