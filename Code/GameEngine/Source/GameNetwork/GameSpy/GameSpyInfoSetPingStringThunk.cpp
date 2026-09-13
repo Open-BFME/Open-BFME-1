@@ -1,13 +1,8 @@
-// cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: GameSpyInfo::setPingString
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &);
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefsImplementation.h
 class GameSpyInfo

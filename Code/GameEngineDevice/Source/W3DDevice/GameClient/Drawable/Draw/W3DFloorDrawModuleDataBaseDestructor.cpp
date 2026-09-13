@@ -1,14 +1,10 @@
-// cl: /EHsc
+// cl: /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // The matched W3DFloorDrawModuleDataBase constructor leaves an AsciiString at
 // +0x08.  Its destructor tears that member down under an EH guard and restores
 // the module-data parent vptr.
 
-class AsciiString
-{
-public:
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 class W3DFloorDrawModuleDataParent
 {

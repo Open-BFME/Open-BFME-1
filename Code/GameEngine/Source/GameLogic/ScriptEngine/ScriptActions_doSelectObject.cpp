@@ -1,13 +1,11 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // SELECT_OBJECT at retail RVA 0x002F0FD0.
 
 typedef bool Bool;
 typedef unsigned short PlayerMaskType;
 typedef unsigned int ObjectID;
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class Parameter
 {

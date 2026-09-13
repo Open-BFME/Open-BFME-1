@@ -1,14 +1,10 @@
-// cl: /EHsc
+// cl: /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // W3DStreakDrawModuleData's matched constructor places its AsciiString texture
 // name at +0x20.  Destruction restores the module-data base vptr after tearing
 // down that string, exactly as the retail EH-protected body does.
 
-class AsciiString
-{
-public:
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 class W3DStreakDrawModuleDataBase
 {

@@ -1,14 +1,10 @@
-// cl: /EHsc
+// cl: /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // The exact constructor initializes W3DLightDrawModuleData's sole owning
 // AsciiString at +0x44 before its scalar fields.  The retail destructor tears
 // that member down under an EH guard and restores the module-data base vptr.
 
-class AsciiString
-{
-public:
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 class W3DLightDrawModuleDataBase
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Clean C++ recovery of ScriptActions::doNamedEmoticon.
 // Retail boundary: 0x002F04F0, 66 bytes.
 // Identity: executeAction's NAMED_SET_EMOTICON arm dispatches this exact
@@ -8,9 +8,7 @@
 typedef float Real;
 typedef int Int;
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class Drawable
 {
