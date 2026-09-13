@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DBFME_STLP_NODE_ALLOC /D_STLP_USE_STATIC_LIB /MD /EHsc /Ireference/shims/science /Ireference/shims/asciistring8 /Ireference/shims/iniexception /Ireference/shims/ini_noinline /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DBFME_STLP_NODE_ALLOC /D_STLP_USE_STATIC_LIB /MD /EHsc /Ireference/shims/science /Ireference/shims/asciistring8 /Ireference/shims/iniexception /Ireference/shims/ini_noinline /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -39,12 +39,7 @@
 // forwarders away: the call sites below encode the StringBase<WideChar> bodies
 // directly, not the ZH UnicodeString spellings (which resolve to the NARROW
 // StringBase<char> bodies).
-template <typename Char>
-class StringBase
-{
-public:
-	void set( const StringBase<Char> &src );
-};
+#include "string_base.h"
 
 // ?set@?$StringBase@G@@QAEXABV1@@Z at 0x00888530
 inline void UnicodeString::set( const UnicodeString &stringSrc )

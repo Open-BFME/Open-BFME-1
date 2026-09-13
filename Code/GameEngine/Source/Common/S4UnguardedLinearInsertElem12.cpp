@@ -1,16 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: _STL::__unguarded_linear_insert over S4SortElem12, retail
 // 0x0052F110, 109 bytes.  The comparison is the same BfmeLess0052E880 the
 // matched linear_insert at 0x0052FE90 already names: key descending, then
 // the pointed-to StringBase at +4.
 
-template <class T>
-class StringBase
-{
-public:
-	int compareNoCase(const StringBase<T> &other) const;
-};
+#include "string_base.h"
 
 struct S4Named0052E880
 {

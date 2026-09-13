@@ -1,15 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: STLport __push_heap over S4SortElem12 (pointer-key-int),
 // retail 0x0052F3F0, 171 bytes.  Named by the matched adjust_heap at
 // 0x005300E0 whose last call is this body through ILT 0x000058AD.
 
-template <class T>
-class StringBase
-{
-public:
-	int compareNoCase(const StringBase<T> &other) const;
-};
+#include "string_base.h"
 
 struct S4Named0052E880
 {

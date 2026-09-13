@@ -1,15 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: STLport __adjust_heap over S4SortElem12 (pointer-key-int),
 // retail 0x005300E0, 221 bytes.  The sift-down comparison is the same
 // BfmeLess0052E880 the matched linear_insert names; copies are three dwords.
 
-template <class T>
-class StringBase
-{
-public:
-	int compareNoCase(const StringBase<T> &other) const;
-};
+#include "string_base.h"
 
 struct S4Named0052E880
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -29,12 +29,7 @@ enum GameDifficulty
 	DIFFICULTY_HARD
 };
 
-template <typename T>
-class StringBase
-{
-public:
-	StringBase(const StringBase &that);
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

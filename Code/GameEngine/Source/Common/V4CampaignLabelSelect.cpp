@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // One 44-byte __stdcall free function that fills a string object with one of two
 // literals chosen by a byte read out of a global object:
 //
@@ -26,12 +27,7 @@
 // holds a one-byte "is the evil campaign selected" flag at +0x1C.  The function's
 // own name is still derived from its address, and so is the global's type.
 
-template< class T >
-class StringBase
-{
-public:
-	void set( const T * text, int length );
-};
+#include "string_base.h"
 
 // One type for 0x012F1024, shared with V4TwoCallForwarders.cpp, which calls the
 // niladic member declared here.
