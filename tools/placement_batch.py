@@ -116,9 +116,16 @@ def main():
         return 9
     print(f"moved {len(moved)}, repointed {repoint(moved)} ledger row(s)")
 
-    bad, out = build([t for _, t in moved])
-    if bad:
-        print(f"  {len(bad)} pre-existing red(s) -- returning them")
+    # One round of returning reds is not enough: build.sh raises SystemExit at the
+    # FIRST compile failure, so a batch holding several names only one per round.
+    # Stopping after one round left 84 verified files moved and uncommitted, and
+    # every later batch then span on a queue that still listed them.
+    returned = 0
+    while True:
+        bad, out = build([t for _, t in moved])
+        if not bad:
+            break
+        returned += len(bad)
         back = [(t, s) for s, t in moved if t in bad]
         for target, source in back:
             git("mv", target, source, check=False)
@@ -127,10 +134,8 @@ def main():
         if not moved:
             print("  every file in this batch was red; nothing to land")
             return 1
-        bad, out = build([t for _, t in moved])
-        if bad:
-            print("  still failing after returning the reds -- stopping", file=sys.stderr)
-            return 1
+    if returned:
+        print(f"  {returned} pre-existing red(s) returned")
     print(f"  byte gate: OK over {len(moved)} file(s)")
 
     if not args.commit:
