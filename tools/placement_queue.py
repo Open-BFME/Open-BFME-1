@@ -53,6 +53,7 @@ STRUCTOR = re.compile(r"^\?\?[01]([A-Za-z_]\w*)@@")
 # A move rewrites no text, so only a RELATIVE include can resolve differently
 # afterwards. 119 files carry one; they stay where they are.
 RELATIVE_INCLUDE = re.compile(r'^\s*#include\s+"(?:\.\./|\./)', re.M)
+CLASS_DECL = re.compile(r"^[ \t]*(?:class|struct)[ \t]+([A-Za-z_]\w*)\b[^;{]*\{", re.M)
 
 
 def owning_class(mangled):
@@ -92,30 +93,83 @@ def zh_directories(root):
     return out
 
 
-def destination(root, source, cls, homes, zh):
+def zh_header_directories(root):
+    """class name -> the ZH SOURCE directory implied by the header that declares it.
+
+    The .cpp rule above only reaches a class ZH gave a file of its own name. Most
+    did not get one: ZH declares 1,264 classes across its headers and keeps their
+    bodies in the Source tree that mirrors Include/<Area>/<Sub>. That mirror is
+    the evidence -- UpdateModule is declared in Include/GameLogic/Module, so its
+    bodies belong in Source/GameLogic/Module, and 693 of ours are sitting in the
+    flat Common/ instead. Worth 2,028 files the .cpp rule cannot see.
+    """
+    out = {}
+    for path in glob.glob(str(root / ZH) + "/GameEngine/Include/**/*.h", recursive=True):
+        here = os.path.dirname(os.path.relpath(path, root))
+        mirror = here.replace("/Include/", "/Source/", 1)
+        # The mirror has to be real IN ZH. Include/GameLogic/Module has no
+        # Source/GameLogic/Module -- ZH keeps those bodies under Object/Update and
+        # Object/Behavior -- so trusting the mirror blindly invented a directory
+        # for 606 files and dragged 195 out of the one that already named them.
+        if not (root / mirror).is_dir():
+            continue
+        for match in CLASS_DECL.finditer(
+                Path(path).read_text(encoding="utf-8", errors="replace")):
+            out.setdefault(match.group(1), mirror)
+    return out
+
+
+def destination(root, source, cls, homes, zh, zh_hdr):
     """Where that file belongs, or None when the evidence does not say."""
     here = os.path.dirname(source)
+
+    def usable(candidate):
+        # Never UP into a parent of where the file already is. ZH's header tree is
+        # coarser than ours in places -- it declares AIUpdateInterface in
+        # Include/GameLogic and we already keep it in Source/GameLogic/AI -- and
+        # answering "GameLogic" there would drag 324 files out of a directory that
+        # names them into one that does not. A file inside the destination subtree
+        # is already home.
+        return (candidate != here
+                and not here.startswith(candidate + "/")
+                and (root / candidate).is_dir())
+
     zh_dir = zh.get(cls.lower())
     if zh_dir:
         candidate = zh_dir.replace(ZH, "Code", 1)
-        if candidate != here and (root / candidate).is_dir():
+        # ZH naming this very directory is the strongest evidence there is, and it
+        # says the file is already home -- stop, do not fall through. Falling
+        # through sent AssaultTransportAIUpdate.cpp from Object/Update/AIUpdate,
+        # where ZH puts it, to GameLogic/AI on the strength of two siblings that
+        # were themselves misplaced. Weak evidence must never outrank strong.
+        if candidate == here:
+            return None
+        if usable(candidate):
+            return candidate
+    # Then the header that declares it. Never into the flat Common/ root: that is
+    # the directory this lane exists to drain, and ZH's Common/ header saying
+    # "Common" is not evidence that 6,892 files belong in one directory.
+    hdr_dir = zh_hdr.get(cls)
+    if hdr_dir:
+        candidate = hdr_dir.replace(ZH, "Code", 1)
+        if candidate != DUMPING_GROUND and usable(candidate):
             return candidate
     # Otherwise: where this class already keeps most of its bodies. Two or more,
     # because one sibling elsewhere is as likely to be the misplaced file.
     ranked = [(d, n) for d, n in homes[cls].most_common()
-              if d != here and n >= 2 and d != DUMPING_GROUND]
+              if n >= 2 and d != DUMPING_GROUND]
     for d, _ in ranked:
-        if (root / d).is_dir():
+        if usable(d):
             return d
     return None
 
 
 def build(root):
     single, homes = survey(root)
-    zh = zh_directories(root)
+    zh, zh_hdr = zh_directories(root), zh_header_directories(root)
     queue, skipped = [], collections.Counter()
     for source, cls in sorted(single.items()):
-        dest = destination(root, source, cls, homes, zh)
+        dest = destination(root, source, cls, homes, zh, zh_hdr)
         if not dest:
             skipped["no destination the evidence supports"] += 1
             continue
