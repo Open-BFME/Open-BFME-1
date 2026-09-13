@@ -1,5 +1,6 @@
 // ?charAt@BfmeUtf8Cursor0089F8D0@@QBEHH@Z
-// partial score=0.85 date=2026-09-05
+// partial score=0.92 date=2026-09-12
+// ?charAt@BfmeUtf8Cursor0089F8D0@@QBEHH@Z
 // cl: /O2 /DNDEBUG /MD
 
 class BfmeUtf8Cursor0089F8D0
@@ -87,5 +88,12 @@ decode_final:
 		value = (p[2] & 0x3f) | (value << 6);
 		return value;
 	}
-	return ((((c & 7) << 6 | (p[1] & 0x3f)) << 6 | (p[2] & 0x3f)) << 6) | (p[3] & 0x3f);
+	value = c & 7;
+	value <<= 6;
+	value |= p[1] & 0x3f;
+	value <<= 6;
+	value |= p[2] & 0x3f;
+	value <<= 6;
+	value |= p[3] & 0x3f;
+	return value;
 }
