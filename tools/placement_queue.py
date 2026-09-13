@@ -57,6 +57,7 @@ STRUCTOR = re.compile(r"^\?\?[01]([A-Za-z_]\w*)@@")
 # `#include "SpecialPowerModuleDestructorThunk.cpp"` -- a sibling, by bare name --
 # and moving it gave `fatal error C1083` after the batch had already been gated.
 QUOTED_INCLUDE = re.compile(r'^\s*#include\s+"([^"]+)"', re.M)
+BARE_INCLUDE = re.compile(r'^\s*#include\s+"([^"/]+\.c(?:pp)?)"', re.M)
 CLASS_DECL = re.compile(r"^[ \t]*(?:class|struct)[ \t]+([A-Za-z_]\w*)\b[^;{]*\{", re.M)
 
 
@@ -168,8 +169,33 @@ def destination(root, source, cls, homes, zh, zh_hdr):
     return None
 
 
+def included_by_siblings(root):
+    """Files some neighbour #includes by bare name -- they cannot be moved.
+
+    The guard below asks what a file includes. This asks the other direction, and
+    it is the one that bites: ManTheWallsSpecialPowerDestructorThunk.cpp and
+    ProductionSpeedBonusDestructorThunk.cpp both say
+    `#include "SpecialPowerModuleDestructorThunk.cpp"`, so moving THAT file broke
+    two sources nobody had touched. The batch gate never saw it -- it builds what
+    it moved, and what it moved compiled fine at its new home.
+    """
+    pinned = set()
+    for path in glob.glob(str(root / "Code") + "/**/*.cpp", recursive=True):
+        here = os.path.dirname(os.path.relpath(path, root))
+        try:
+            text = Path(path).read_text(encoding="utf-8", errors="replace")
+        except OSError:
+            continue
+        for name in BARE_INCLUDE.findall(text):
+            target = os.path.join(here, name)
+            if (root / target).exists():
+                pinned.add(target)
+    return pinned
+
+
 def build(root):
     single, homes = survey(root)
+    pinned = included_by_siblings(root)
     zh, zh_hdr = zh_directories(root), zh_header_directories(root)
     queue, skipped = [], collections.Counter()
     for source, cls in sorted(single.items()):
@@ -189,6 +215,9 @@ def build(root):
         if any((root / here / inc).exists()
                for inc in QUOTED_INCLUDE.findall(text)):
             skipped["quoted include resolves to a sibling"] += 1
+            continue
+        if source in pinned:
+            skipped["a sibling includes it by bare name"] += 1
             continue
         queue.append((source, target, cls))
     return queue, skipped

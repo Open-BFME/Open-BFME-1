@@ -8,3 +8,4 @@ Code/GameEngine/Source/GameLogic/Object/Contain/SiegeEngineContainIsValidContain
 Code/GameEngine/Source/GameLogic/Object/Update/DynamicGeometryInfoUpdateConstructor.cpp	defines a function no ledger row declares
 Code/GameEngine/Source/GameLogic/Object/Update/NeutronMissileUpdateConstructor.cpp	defines a function no ledger row declares
 Code/GameEngine/Source/GameNetwork/GameSpyGameSlotCopyCtor.cpp	defines a function no ledger row declares
+Code/GameEngine/Source/Common/SpecialPowerModuleDestructorThunk.cpp	two siblings include it by bare name; moving it breaks their compile
