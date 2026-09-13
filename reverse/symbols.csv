@@ -87334,3 +87334,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?check@Rva00032B46Pathfinder@@QAE_NPAVObject@@PAUCoord3D@@_N2@Z,0x00032B46,address-derived thunk used by AIMoveToStateSA computePath
 ?check@Rva0003BC05State@@QAE_NPAUCoord3D@@PAVObject@@@Z,0x0003BC05,address-derived thunk used by AIMoveToStateSA computePath
 ?reset@Rva0001246DAIUpdateInterface@@QAEXXZ,0x0001246D,address-derived thunk used by AIMoveToStateSA computePath
+?handle@Rva0021C8A0StatusGate@@QAE_NPAVObject@@0@Z,0x0002B2D8,address-derived status-gate tail handler ILT thunk
