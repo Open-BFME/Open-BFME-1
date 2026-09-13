@@ -87336,3 +87336,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?reset@Rva0001246DAIUpdateInterface@@QAEXXZ,0x0001246D,address-derived thunk used by AIMoveToStateSA computePath
 ?handle@Rva0021C8A0StatusGate@@QAE_NPAVObject@@0@Z,0x0002B2D8,address-derived status-gate tail handler ILT thunk
 _Rva0084DE40Tail,0x0084DE40,STLport 4.5.3 __FixStr Win32 date/time format converter
+?rva006F83F0@Rva006F8700Owner@@QAEHPAXH00@Z,0x006F83F0,typed thiscall view of dump 0x006F83F0 reached from 0x006F8700 via ILT 0x0000F9BB
