@@ -134,3 +134,27 @@ Most other failures require either:
 - **Different class hierarchies** (not resolvable by renaming)
 
 Only a handful (like NameKeyGenerator's operator new) appear to be simple source location changes.
+
+
+## The other 13: our name is the real one, the ledger's is invented
+
+The split also finds 13 failures where the symbol WE emit has no ledger row while
+retail's target does. They are the same type-invention problem pointing the other
+way -- here our source spells the real type and the LEDGER carries the stand-in:
+
+    PeerThread.cpp   emits  _Rb_tree<int, pair<int, _SBServer *>>
+                     retail _Rb_tree<int, pair<int, Gen_t_000a4c90_p12cd>>
+
+    Locomotor.cpp    emits  _Rb_tree<NameKeyType, pair<NameKeyType, Locomotor *>>
+                     retail _Rb_tree<NameKeyType, pair<NameKeyType, Object...>>
+
+That matters for choosing which side to change. Where the ledger holds the
+invented name, the fix is in the TU that MINTED it -- make that TU spell the real
+type so its instantiation mangles the same way -- and not in the row. Renaming the
+row to match our object is the move that hides defects, because the byte gate then
+passes and nothing downstream can tell.
+
+So all 99 remaining failures reduce to one cause in two directions: a translation
+unit somewhere invented a local type instead of using the real one, and every
+instantiation that touches it mangles differently from retail. That is conversion
+work on those TUs, not ledger work, and it is why the count stopped falling.
