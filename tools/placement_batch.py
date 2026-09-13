@@ -114,25 +114,59 @@ def main():
         print("  --commit to land. Queue is left unchanged until then.")
         return 0
 
-    git("add", "reverse/functions.csv", *[t for _, t in moved])
-    git("add", "-u", *[s for s, _ in moved])
-    subject = f"Move {len(moved)} misplaced sources into their class's directory"
-    body = (f"{subject}\n\n"
-            "Placement lane. Each file declares exactly one owning class and sat in a\n"
-            "directory that class keeps nothing else in; the destination is where ZH puts\n"
-            "that class, or where the class already keeps two or more bodies. Never\n"
-            "invented, never the flat Common/ dumping ground.\n\n"
-            "Byte-neutral: the `// cl:` line travels with the file and none of these\n"
-            "carries a relative include. The ledger source column is repointed as BYTES.\n\n"
-            "Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>\n"
-            "Claude-Session: https://claude.ai/code/session_01Wh8KKNWW2pk7waNmmnzU6R\n")
-    done = subprocess.run(["git", "commit", "-q", "-F", "-"], cwd=ROOT,
-                          input=body, text=True, capture_output=True)
-    if done.returncode:
-        print("COMMIT REFUSED:\n" + done.stdout[-2000:], file=sys.stderr)
+    return land(moved, rows)
+
+
+def land(moved, rows):
+    """Commit, returning whatever the hook names. Bounded rounds, not hope.
+
+    Some files cannot be committed at ANY path: GameMessage_destructor.cpp defines
+    GameMessageArgument::deleteInstance and no ledger row declares it. That
+    predates this lane and needs a row, not a move, so it goes back where it was
+    and the rest of the batch still lands.
+    """
+    for _ in range(4):
+        git("add", "reverse/functions.csv", *[t for _, t in moved])
+        subject = f"Move {len(moved)} misplaced sources into their class's directory"
+        body = (f"{subject}\n\n"
+                "Placement lane. Each file declares exactly one owning class and sat in a\n"
+                "directory that class keeps nothing else in; the destination is where ZH\n"
+                "puts that class -- by a file of its own name, or by the header that\n"
+                "declares it where ZH's Include/Source mirror is real. Never invented,\n"
+                "never the flat Common/ dumping ground, and never a parent of where the\n"
+                "file already sits.\n\n"
+                "Byte-neutral: the `// cl:` line travels with the file and none of these\n"
+                "carries a relative include. The ledger source column is repointed as BYTES.\n\n"
+                "Co-Authored-By: Claude Opus 5 (1M context) <noreply@anthropic.com>\n"
+                "Claude-Session: https://claude.ai/code/session_01Wh8KKNWW2pk7waNmmnzU6R\n")
+        done = subprocess.run(["git", "commit", "-q", "-F", "-"], cwd=ROOT,
+                              input=body, text=True, capture_output=True)
+        if not done.returncode:
+            break
+        out = done.stdout + done.stderr
+        named = [(src, dst) for src, dst in moved
+                 if any(l.startswith(dst + ":") for l in out.splitlines())]
+        if not named:
+            print("COMMIT REFUSED:\n" + out[-2500:], file=sys.stderr)
+            return 1
+        print(f"  hook refuses {len(named)} at any path -- returning them")
+        for src, dst in named:
+            git("mv", dst, src, check=False)
+        repoint([(dst, src) for src, dst in named])
+        moved = [m for m in moved if m not in named]
+        if not moved:
+            print("  nothing left to land")
+            return 1
+    else:
+        print("COMMIT REFUSED: still refused after four rounds", file=sys.stderr)
         return 1
+
+    # Drop by what actually moved, not by position: a batch that returned reds
+    # leaves them queued, and slicing the first N would forget them.
+    done_paths = {src for src, _ in moved}
+    rest = [r for r in rows if r[0] not in done_paths]
     QUEUE.write_text("".join("\t".join(r) + "\n" for r in rest), encoding="utf-8")
-    print(f"  committed. queue: {len(rest)} left")
+    print(f"  committed {len(moved)}. queue: {len(rest)} left")
     return 0
 
 
