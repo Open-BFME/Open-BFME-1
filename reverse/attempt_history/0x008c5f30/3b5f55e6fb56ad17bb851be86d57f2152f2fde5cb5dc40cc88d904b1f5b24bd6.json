@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3b5f55e6fb56ad17bb851be86d57f2152f2fde5cb5dc40cc88d904b1f5b24bd6",
+  "symbol": "?bfmePushDB@BfmeStackDB@@QAEXPAVAptValue@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?bfmePushDB@BfmeStackDB@@QAEXPAVAptValue@@@Z\r\n// partial score=0.85 date=2026-09-09\r\nclass AptValue\r\n{\r\npublic:\r\n\tvirtual void bfmeReleaseDB();\r\n\r\n\tunsigned int m_bfme04DB;\r\n\tint m_bfme08DB;\r\n};\r\n\r\nextern AptValue *g_bfmeFallbackDB;\r\n\r\nclass BfmeStackDB\r\n{\r\npublic:\r\n\tvoid bfmePushDB(AptValue *value);\r\n\r\n\tint m_bfme00DB;\r\n\tunsigned char m_bfmeHeadDB[4];\r\n\tAptValue **m_bfme08DB;\r\n\tunsigned char m_bfmeMidDB[0x58 - 0xc];\r\n\tAptValue **m_bfme58DB;\r\n\tunsigned char m_bfmeMid2DB[4];\r\n\tAptValue **m_bfme60DB;\r\n};\r\n\r\nvoid BfmeStackDB::bfmePushDB(AptValue *value)\r\n{\r\n\tAptValue *v = value;\r\n\tunsigned int flags = value->m_bfme04DB;\r\n\tunsigned int tag = flags & 0x3f;\r\n\r\n\tif (tag == 8 && ((unsigned char)~(unsigned char)(flags >> 15) & 1) == 0)\r\n\t{\r\n\t\tv = m_bfme60DB[value->m_bfme08DB];\r\n\t}\r\n\telse if (tag == 4 && ((unsigned char)~(unsigned char)(flags >> 15) & 1) == 0)\r\n\t{\r\n\t\tv = m_bfme58DB[value->m_bfme08DB];\r\n\r\n\t\tif (v == 0)\r\n\t\t\tv = g_bfmeFallbackDB;\r\n\t}\r\n\r\n\tm_bfme08DB[m_bfme00DB] = v;\r\n\tm_bfme00DB++;\r\n\r\n\tif (((unsigned char)(v->m_bfme04DB >> 30) & 1) == 0)\r\n\t\tv->bfmeReleaseDB();\r\n}\r\n"
+}
