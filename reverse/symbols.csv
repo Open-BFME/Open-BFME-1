@@ -6405,6 +6405,7 @@ name,address,notes
 ??1Gen_dtor_0072f1a0@@UAE@XZ,0x00017774,gen-dtor class destructor
 ??1Gen_dtor_00730560@@UAE@XZ,0x0002F77F,gen-dtor class destructor
 ??1Gen_dtor_00731870@@UAE@XZ,0x0000D38C,gen-dtor class destructor
+??1W3DTerrainVisual@@UAE@XZ,0x0000D38C,route=0x00731050; scalar deleting destructor retail call targets the matched W3DTerrainVisual destructor through this ILT
 ??1Gen_dtor_007366f0@@UAE@XZ,0x00031052,gen-dtor class destructor
 ??1Gen_dtor_0073a570@@UAE@XZ,0x0003E7E3,gen-dtor class destructor
 ??1Gen_dtor_00740c50@@UAE@XZ,0x000063DE,gen-dtor class destructor
