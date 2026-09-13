@@ -4806,6 +4806,7 @@ name,address,notes
 ??1Gen_dtor_00070470@@UAE@XZ,0x00042C21,gen-dtor class destructor
 ??1?$SubsystemSlot@VPlayerAITypeSet@@@@UAE@XZ,0x00042C21,SubsystemSlot<PlayerAITypeSet> destructor ILT called by authentic scalar-deleting destructor at 0x00070470
 ??1Gen_dtor_00070530@@UAE@XZ,0x00041E39,gen-dtor class destructor
+??1?$SubsystemSlot@VPlayerTemplateStore@@@@UAE@XZ,0x00041E39,SubsystemSlot<PlayerTemplateStore> destructor ILT called by authentic scalar-deleting destructor at 0x00070530
 ??1Gen_dtor_000705f0@@UAE@XZ,0x0002D7BD,gen-dtor class destructor
 ??1Gen_dtor_000706b0@@UAE@XZ,0x00027728,gen-dtor class destructor
 ??1Gen_dtor_00070770@@UAE@XZ,0x000307B5,gen-dtor class destructor
@@ -9972,6 +9973,7 @@ name,address,notes
 ??_7?$SubsystemSlot@VCaveSystem@@@@6B@,0x01075DD0,vtable installed by exact SubsystemSlot<CaveSystem> constructor at 0x000702D0; slot zero routes through ILT 0x00012B3E to scalar-deleting destructor 0x000702F0
 ??_7?$SubsystemSlot@VRankInfoStore@@@@6B@,0x01075DD4,vtable installed by exact SubsystemSlot<RankInfoStore> constructor at 0x00070390; slot zero routes through ILT 0x00008855 to scalar-deleting destructor 0x000703B0
 ??_7?$SubsystemSlot@VPlayerAITypeSet@@@@6B@,0x01075DD8,vtable installed by exact SubsystemSlot<PlayerAITypeSet> constructor at 0x00070450; slot zero routes through ILT 0x0003C38F to scalar-deleting destructor 0x00070470
+??_7?$SubsystemSlot@VPlayerTemplateStore@@@@6B@,0x01075DDC,vtable installed by exact SubsystemSlot<PlayerTemplateStore> constructor at 0x00070510; slot zero routes through ILT 0x000322E0 to scalar-deleting destructor 0x00070530
 ??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x01075D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
 ??_7?$SubsystemSlot@VUpgradeCenter@@@@6B@,0x01075DA8,vtable installed by exact SubsystemSlot<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
 ??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
