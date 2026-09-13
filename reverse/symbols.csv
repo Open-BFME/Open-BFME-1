@@ -9335,6 +9335,7 @@ name,address,notes
 ??1Rva00ABC788SizeOptDeleting@@UAE@XZ,0x00AB8350,address decoded from the retail REL32 call site; name is address-derived
 ??1S4Base00479CD0@@UAE@XZ,0x00479CD0,S4 member or base destructor of the two-member destructor family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??1S4Base0077C1F0@@UAE@XZ,0x0077C1F0,S4 member or base destructor of the two-member destructor family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
+??1S4Base0077C1F0@@UAE@XZ,0x0002C71E,route=0x0077C1F0; W3DTruckDrawModuleData destructor reaches the already matched address-derived base through this retail ILT
 ??1S4Base009A1A40@@UAE@XZ,0x009A1A40,S4 member or base destructor of the two-member destructor family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??1S4Elem00252ED0@@QAE@XZ,0x00252A40,S4 vector element destructor (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??1S4Elem0039EBE0@@QAE@XZ,0x0039DCC0,S4 vector element destructor (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)

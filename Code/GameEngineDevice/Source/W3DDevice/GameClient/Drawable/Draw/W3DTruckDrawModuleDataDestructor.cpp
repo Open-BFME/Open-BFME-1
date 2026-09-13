@@ -1,21 +1,24 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
-// Open-BFME5: 21-string derived destructor at retail 0x0077F920.
+// BFME W3DTruckDrawModuleData destructor.  The matched module-data factory at
+// 0x006BF4F0 allocates 0x1C4 bytes and calls the constructor at 0x0077F830.
+// Retail's destructor at 0x0077F920 tears down the 21 consecutive strings at
+// +0x15C..+0x1AC in reverse declaration order, then destroys the +0 base.
 
 #include "ascii_string.h"
 
-class BfmeDtorBaseI
+class S4Base0077C1F0
 {
 public:
-	virtual ~BfmeDtorBaseI();
+	virtual ~S4Base0077C1F0();
 
 private:
-	char m_bfmePad[0x158];
+	char m_fields[ 0x158 ];
 };
 
-class Gen_dtor_007814f0 : public BfmeDtorBaseI
+class W3DTruckDrawModuleData : public S4Base0077C1F0
 {
 public:
-	virtual ~Gen_dtor_007814f0();
+	virtual ~W3DTruckDrawModuleData();
 
 private:
 	AsciiString m_string00;
@@ -39,9 +42,9 @@ private:
 	AsciiString m_string18;
 	AsciiString m_string19;
 	AsciiString m_string20;
+	char m_tail[ 0x14 ];
 };
 
-// ??1Gen_dtor_007814f0@@UAE@XZ
-Gen_dtor_007814f0::~Gen_dtor_007814f0()
+W3DTruckDrawModuleData::~W3DTruckDrawModuleData()
 {
 }
