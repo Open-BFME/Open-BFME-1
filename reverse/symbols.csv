@@ -6063,7 +6063,6 @@ name,address,notes
 ??1Gen_dtor_005d5800@@UAE@XZ,0x00013101,gen-dtor class destructor
 ??1Gen_dtor_005d9e00@@UAE@XZ,0x00040FDE,gen-dtor class destructor
 ??1Gen_dtor_005db2a0@@UAE@XZ,0x0002DCE0,gen-dtor class destructor
-??1Gen_dtor_005db780@@UAE@XZ,0x00043A8B,gen-dtor class destructor
 ??1Gen_dtor_005db900@@UAE@XZ,0x0003B8DB,gen-dtor class destructor
 ??1Gen_dtor_005dba80@@UAE@XZ,0x000408EA,gen-dtor class destructor
 ??1Gen_dtor_005dbc20@@UAE@XZ,0x00044E2C,gen-dtor class destructor
