@@ -20,6 +20,15 @@ extern "C" void *(__cdecl *__gameMemAllocPtr)(unsigned int, int);
 extern "C" void (__cdecl *__gameMemFreePtr)(void *, int);
 extern unsigned int (__cdecl *g_poolBlockSize)(void *);
 
+// BFME's heap verifier is a separate owner object, not the Zero Hour
+// MemoryPool class.  The validation entry point below calls its already
+// matched helper through the fixed global object at 0x0130EA10.
+class Rva008838F0Owner
+{
+public:
+	bool isValidBlock(int type, void *block);
+};
+
 #pragma intrinsic(memcpy)
 
 void memset32(void *ptr, int value, unsigned int bytesToFill)
@@ -49,48 +58,15 @@ unsigned int MemoryPool::_GetBlockSize(void *block)
     return ((unsigned int *)block)[-1];
 }
 
-__declspec(naked) bool MemoryPool::_IsValidBlock(void *block)
+bool MemoryPool::_IsValidBlock(void *block)
 {
-    __asm {
-        __emit 0x8b
-        __emit 0x44
-        __emit 0x24
-        __emit 0x04
-        __emit 0x85
-        __emit 0xc0
-        __emit 0x75
-        __emit 0x03
-        __emit 0x32
-        __emit 0xc0
-        __emit 0xc3
-        __emit 0x8a
-        __emit 0x0d
-        __emit 0xf9
-        __emit 0xe9
-        __emit 0x30
-        __emit 0x01
-        __emit 0x84
-        __emit 0xc9
-        __emit 0x74
-        __emit 0x0e
-        __emit 0x50
-        __emit 0x6a
-        __emit 0xff
-        __emit 0xb9
-        __emit 0x10
-        __emit 0xea
-        __emit 0x30
-        __emit 0x01
-        __emit 0xe8
-        __emit 0x9e
-        __emit 0x0d
-        __emit 0x00
-        __emit 0x00
-        __emit 0xc3
-        __emit 0xb0
-        __emit 0x01
-        __emit 0xc3
-    }
+	if (block == 0)
+		return false;
+
+	if (*(volatile unsigned char *)0x0130E9F9 != 0)
+		return ((Rva008838F0Owner *)0x0130EA10)->isValidBlock(-1, block);
+
+	return true;
 }
 
 __declspec(naked) void *MemoryPool::_Allocate(unsigned int size, MemoryPool::AllocType type)
