@@ -146,3 +146,59 @@ Two follow-ups this lane surfaced and did not take:
 * **The compiler refusals name what the header is missing.** 442 shims declare
   `releaseBuffer` and friends. Adding those to `ascii_string.h` -- on evidence,
   not on demand -- would reopen most of that pool in one full gate.
+
+## Blocked: AsciiString+0x0 and UnicodeString+0x0 are named against the evidence
+
+`layout_witness` puts **`m_data`** at `AsciiString+0x0` and `UnicodeString+0x0`,
+both at confidence 1.00. `ascii_string.h`, `unicode_string.h` and
+`module_factory.h` all say `m_text`, and the 490 TUs this lane moved onto those
+headers inherited it. That is the worst shape this defect takes -- a wrong name
+spreading through an `#include` rather than sitting in one file -- and it is why
+`tools/name_oracle.py` now reads headers at all.
+
+**The change is prepared and verified, and it cannot be committed.** The hook gives
+any staged `.h` the full gate with no baseline tolerance, and the full gate is red
+on master for reasons that have nothing to do with this:
+
+    FULL GATE: FAIL — 5 red: functions, dir32 consistency, source claims,
+                             null relocs, no-op patch (unrunnable)
+    Functions: FAIL 147/161889
+    Source claims: FAIL (14 problem(s))   # ZERO matched rows, e.g. gen_small/X4*.cpp
+
+No `Code/` header has landed from anyone in three days, which is this same wall.
+
+### The recipe
+
+    python3 - <<'PY'
+    import re, pathlib
+    for f in ("Code/Libraries/Source/WWVegas/WWLib/ascii_string.h",
+              "Code/Libraries/Source/WWVegas/WWLib/unicode_string.h",
+              "Code/GameEngine/Source/Common/System/module_factory.h",
+              # these three name the member from inside their own methods
+              "Code/Libraries/Source/WWVegas/WWLib/ascii_string.cpp",
+              "Code/Libraries/Source/WWVegas/WWLib/unicode_string.cpp",
+              "Code/GameEngine/Source/GameClient/GUI/WinInstanceDataDisplayStrings.cpp"):
+        p = pathlib.Path(f); t = p.read_text(encoding="utf-8", newline="")
+        p.write_text(re.sub(r"\bm_text\b", "m_data", t), encoding="utf-8", newline="")
+    PY
+
+### What was measured
+
+* All **424** TUs that include one of the three headers were byte-verified in
+  chunks of 30. **One** failed: `AsciiStringListCtorNothrow.cpp`, and it fails
+  identically with the change stashed -- pre-existing, not this rename.
+* So the change contributes **zero** of the 147 tree-wide failures.
+
+### Two traps it cost to find
+
+**A member is also named without a `this->`.** Grepping `\.m_text` and `->m_text`
+found only other classes' fields and suggested the rename was self-contained. It
+is not: `unicode_string.cpp` says bare `m_text` inside its own methods, and the
+first full gate died on `error C2065: 'm_text' : undeclared identifier`. The test
+that works is "declares its own member called `m_text`" -- and it must accept any
+type, since `UnicodeString m_text;` in an unrelated class is not the header's.
+
+**A scoped build can pass without compiling anything.** The first check after the
+rename reported `Functions: OK 25/25` on `ascii_string.cpp` -- from a **cached**
+object, `deps-cache: 1 current`, built before the edit. Read the `Compile: N of M`
+line before believing a green scoped build of a header change.
