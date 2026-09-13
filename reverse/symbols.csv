@@ -4818,6 +4818,7 @@ name,address,notes
 ??1Gen_dtor_000708f0@@UAE@XZ,0x0002F077,gen-dtor class destructor
 ??1?$SubsystemSlot@VLocomotorStore@@@@UAE@XZ,0x0002F077,SubsystemSlot<LocomotorStore> destructor ILT called by authentic scalar-deleting destructor at 0x000708F0
 ??1Gen_dtor_000709b0@@UAE@XZ,0x000248C0,gen-dtor class destructor
+??1?$SubsystemSlot@VSpecialPowerStore@@@@UAE@XZ,0x000248C0,SubsystemSlot<SpecialPowerStore> destructor ILT called by authentic scalar-deleting destructor at 0x000709B0
 ??1Gen_dtor_00070a70@@UAE@XZ,0x000294F1,gen-dtor class destructor
 ??1Gen_dtor_00070b30@@UAE@XZ,0x000172CE,gen-dtor class destructor
 ??1Gen_dtor_00070bf0@@UAE@XZ,0x0001B7DE,gen-dtor class destructor
@@ -9984,6 +9985,7 @@ name,address,notes
 ??_7?$SubsystemSlot@VWeaponStore@@@@6B@,0x01075DE8,vtable installed by exact SubsystemSlot<WeaponStore> constructor at 0x00070750; slot zero routes through ILT 0x000314EE to scalar-deleting destructor 0x00070770
 ??_7?$SubsystemSlot@VObjectCreationListStore@@@@6B@,0x01075DEC,vtable installed by exact SubsystemSlot<ObjectCreationListStore> constructor at 0x00070810; slot zero routes through ILT 0x00033BB8 to scalar-deleting destructor 0x00070830
 ??_7?$SubsystemSlot@VLocomotorStore@@@@6B@,0x01075DF0,vtable installed by exact SubsystemSlot<LocomotorStore> constructor at 0x000708D0; slot zero routes through ILT 0x0000141F to scalar-deleting destructor 0x000708F0
+??_7?$SubsystemSlot@VSpecialPowerStore@@@@6B@,0x01075DF4,vtable installed by exact SubsystemSlot<SpecialPowerStore> constructor at 0x00070990; slot zero routes through ILT 0x00030DD7 to scalar-deleting destructor 0x000709B0
 ??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x01075D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
 ??_7?$SubsystemSlot@VUpgradeCenter@@@@6B@,0x01075DA8,vtable installed by exact SubsystemSlot<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
 ??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
