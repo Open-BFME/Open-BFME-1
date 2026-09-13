@@ -377,6 +377,16 @@ def scan(paths, staged, texts=None):
                     tally["embedded"] += 1
                 elif member.lower().replace("bfme", "") == name.lower().replace("bfme", ""):
                     tally["variant"] += 1
+                elif is_array:
+                    # An array member is a SPAN, not a field, so it cannot
+                    # disagree with the field the witness puts at its front --
+                    # `char m_prefix[8]` covering PlayerTemplate+0x0..0x8 is not
+                    # claiming to BE m_nameKey, it is claiming eight bytes are
+                    # unmodelled. This was already the rule for --todo; applying
+                    # it only to names that LOOK like placeholders meant a
+                    # reconstruction that spelled its pad `m_prefix` instead of
+                    # `m_pad` was blocked from committing at all.
+                    tally["array member is space, not a field"] += 1
                 elif PLACEHOLDER.match(member):
                     # `char m_unknown[0x54]` starting where s_GlobalDataFieldParseTable
                     # starts is not that field -- it is unknown SPACE that happens to
