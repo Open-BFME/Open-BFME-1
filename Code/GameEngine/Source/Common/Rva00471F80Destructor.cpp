@@ -1,14 +1,6 @@
-// cl: /EHsc
+// cl: /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Rva00471F80Owned
 {

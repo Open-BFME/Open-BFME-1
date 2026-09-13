@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // A module destructor landed as a relocation-blind twin of
 // Code/GameEngine/Source/Common/AutoAbilityBehaviorDestructorThunk.cpp
@@ -57,14 +57,7 @@ private:
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 
 class Open2Module28AC90 : public UpdateModule

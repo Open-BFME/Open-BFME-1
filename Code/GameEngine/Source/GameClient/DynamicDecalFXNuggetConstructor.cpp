@@ -1,20 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Clean C++ reconstruction of the BFME dynamic-decal FX nugget constructor.
 
 typedef float Real;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() : m_text(0) {}
-	~AsciiString();
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor

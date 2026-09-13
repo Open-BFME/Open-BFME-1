@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // StructureToppleUpdateModuleData's destructor, lifted from its MASM dump to C++.
@@ -32,15 +32,7 @@ bool operator<(const Gen_t_0012a770_p8cd&, const Gen_t_0012a770_p8cd&);
 // vector elements: trivially destructible, so only their size reaches the bytes
 struct Gen_p8pod { int a[2]; };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // Array element: non-trivially destructible, identity unknown. Only its size
 // and its destructor's address reach the bytes, and the address is masked.

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: retail 0x00423280 and 0x00605080 (103 bytes each) are the compiler-generated
 // destructors of a plain record holding an AsciiString and a ref-counted pointer: the
 // pointer is released first (EH state 0), then the string buffer (releaseBuffer on the
@@ -47,15 +47,7 @@ private:
 	RefCountedThing *m_ptr;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
-class AsciiString
-{
-public:
-	~AsciiString() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct Rva00423280Record
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: WeaponModeSpecialPowerUpdateModuleDataBase constructor.
 // Retail installs vtable 0x010B7D40, clears +0x08 and +0x1CC, and constructs
@@ -6,14 +6,7 @@
 
 typedef int Int;
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeNamedSlot
 {

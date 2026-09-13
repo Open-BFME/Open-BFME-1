@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: GeometryInfo five-argument constructor, retail 0x00100580.
 //
@@ -20,17 +20,7 @@ enum GeometryType
 	GEOMETRY_BOX
 };
 
-class AsciiString
-{
-private:
-	void *m_data;
-
-public:
-	AsciiString();
-	AsciiString(const AsciiString &other);
-	~AsciiString();
-	AsciiString &operator=(const AsciiString &other);
-};
+#include "ascii_string.h"
 
 struct GeometryShape
 {

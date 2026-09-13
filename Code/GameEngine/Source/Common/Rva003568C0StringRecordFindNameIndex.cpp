@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // The two BFME string-record tables use a sorted array of record indexes.
 // Retail 0x003568C0 is the first table's lower-bound search over that array.
 // The 20-byte record and the eight-byte BFME AsciiString header are fixed by
@@ -16,34 +17,7 @@ struct Rva003568C0AsciiStringData
 	char m_text[1];
 };
 
-class AsciiString
-{
-public:
-	int getLength() const
-	{
-		return m_data ? m_data->m_length : 0;
-	}
-
-	const char *str() const
-	{
-		return m_data ? &m_data->m_text[0] : g_bfmeEmptyAscii;
-	}
-
-	int compare(const AsciiString &other) const
-	{
-		int thatLength = other.getLength();
-		const char *thatText = other.str();
-		int selfLength = getLength();
-		const char *selfText = str();
-		int result = memcmp(selfText, thatText,
-			(unsigned int)(selfLength < thatLength ? selfLength : thatLength));
-		if (result != 0)
-			return result;
-		return selfLength - thatLength;
-	}
-
-	Rva003568C0AsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 struct Rva003568C0Record
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Lift doAudioFeedback to clean C++ with the BFME GUI and audio layouts.
 
 typedef bool Bool;
@@ -16,16 +16,7 @@ struct ListboxData
 	Bool audioFeedback;                                 ///< retail this+0x0e
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const char *name);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 enum ObjectID
 {

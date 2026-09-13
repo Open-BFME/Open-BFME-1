@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: BuffNuggetFXNugget destructor at 0x0042D7D0 (175B).
 // Member offsets match the landed ctor thunk: six AsciiString templates
 // at +0xC0..+0xD4, then the 12-byte tail at +0xE8, then the FXNugget base.
@@ -9,16 +9,7 @@ typedef float Real;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() : m_text(0) {}
-	~AsciiString();
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct RGBColor

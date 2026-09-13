@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // SoundKeyPair constructor; retail 0x003CFB00 (127 bytes).
 // EH cleanup uses the actual retail thunks for the string at +0x0C and
 // four-byte vectors at +0x24/+0x30; helper identities stay local.
@@ -23,21 +23,7 @@ private:
 
 // The +0x0C member is an AsciiString: retail's EH funclet calls ILT
 // 0x0000D828, whose body is the existing AsciiString dtor at 0x0005EE90.
-class AsciiString
-{
-public:
-	AsciiString() : m_text(0) {}
-	__forceinline ~AsciiString()
-	{
-		typedef void (AsciiString::*Destroy)();
-		union { void (*raw)(void); Destroy member; } target;
-		target.raw = j_0000d828;
-		(this->*target.member)();
-	}
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class SoundKeyVector
 {

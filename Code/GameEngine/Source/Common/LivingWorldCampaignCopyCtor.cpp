@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 #include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
@@ -7,19 +7,7 @@
 
 typedef int Int;
 
-class AsciiString
-{
-public:
-	__forceinline AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeMissionPlaceholder;
 

@@ -1,4 +1,4 @@
-// cl: /O2 /EHsc
+// cl: /O2 /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: virtual destructor of the 0x003B6680 class, retail 0x003B16B0
 // 325 bytes. Installs vtable 0x010EC850 then destroys members +CC down to +4.
 // Layout is the assignment sibling at 0x003B6680.
@@ -12,11 +12,7 @@ public:
 	~BFMERetailAsciiString() { releaseBuffer(); }
 };
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct Gen003A99D0;
 struct Gen003A9A90;

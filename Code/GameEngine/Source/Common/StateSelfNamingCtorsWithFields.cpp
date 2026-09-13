@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // 26 more constructors of the family landed in StateSelfNamingCtors.cpp --
 // same prologue, same `StringBase<char>` temporary built from a state-name
 // literal, same base constructor taking (machine, name) -- differing only in
@@ -35,14 +36,7 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString( const char *text ) : m_data( text ) {}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 extern int g_Va0109B558;
 

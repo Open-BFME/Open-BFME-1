@@ -1,17 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Clean C++ reconstruction of the BFME FX-at-bone-position nugget constructor.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() : m_text(0) {}
-	~AsciiString();
-	void clear();
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class FXList;
 

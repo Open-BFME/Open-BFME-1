@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: unidentified Overridable subclass destructor at 0x00380C00.
 // This body resets to the single-slot Overridable table at0x0107FCB0.
 // No derived-table identity is inferred from the neighbouring constructor.
@@ -16,14 +16,7 @@ inline void bfmeRelease(void *block, unsigned int bytes)
 		bfmeDeallocate(block, bytes);
 }
 
-class AsciiString
-{
-public:
-	~AsciiString(void);
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Rva00026AB2Vec12
 {

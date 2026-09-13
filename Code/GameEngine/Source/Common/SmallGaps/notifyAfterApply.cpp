@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // ?notifyAfterApply@@YAXPAURva00234200Owner@@HH@Z
 //
 // The apply helper called from this TU is the real owner of the generated
@@ -5,11 +6,7 @@
 // at +0x174, while the later vector remains at +0x2b0 for notifyAfterApply.
 // The registry object keeps its retail neutral type for the global symbol but
 // inherits the already matched ThingFactory lookup ABI.
-class AsciiString
-{
-public:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 struct Rva0020AA00Target
 {

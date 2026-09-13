@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: clean reconstruction of the 0x0077C1F0 S4Base destructor.
 // The member offsets and unwind order are taken from the retail body.  The
 // address-derived member types retain the established destructor pins.
@@ -8,14 +9,7 @@ public:
 	virtual ~Inner01073744() {}
 };
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 #define S4_MEMBER( NAME, SIZE ) \
 	class NAME \

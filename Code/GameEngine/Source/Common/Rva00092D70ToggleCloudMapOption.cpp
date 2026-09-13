@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: the 154-byte routine at 0x00092D70.  It reloads
 // Data\INI\OptionRegistry.ini through the loader at 0x00093F70 then opens the
 // Render.UseCloudMap option entry (the 4-byte lookup handle whose constructor
@@ -8,15 +8,7 @@
 
 typedef bool Bool;
 
-class AsciiString
-{
-public:
-	AsciiString( const char *text );
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 void rva00093f70( const AsciiString &path );
 

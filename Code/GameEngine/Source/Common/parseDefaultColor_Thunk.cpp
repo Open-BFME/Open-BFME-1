@@ -1,17 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: lift the retail default-color parser to clean C++.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString() { freeBytes(); }
-
-private:
-	void freeBytes();
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class File
 {

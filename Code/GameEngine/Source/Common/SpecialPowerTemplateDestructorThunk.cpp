@@ -1,16 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ??1SpecialPowerTemplate@@: Code/GameEngine/Source/Common/RTS/SpecialPower.cpp
 // Open-BFME5: retail-layout C++ conversion of the SpecialPowerTemplate destructor.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS

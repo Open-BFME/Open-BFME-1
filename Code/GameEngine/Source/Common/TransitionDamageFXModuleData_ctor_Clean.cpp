@@ -1,14 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
-class AsciiString
-{
-public:
-	AsciiString();
-	~AsciiString();
-
-	void *m_data;
-};
+#include "ascii_string.h"
 
 namespace
 {

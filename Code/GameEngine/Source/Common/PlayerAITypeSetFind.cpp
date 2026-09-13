@@ -1,4 +1,4 @@
-// cl: /O2 /EHsc
+// cl: /O2 /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 extern "C" int __cdecl memcmp(const void *left, const void *right,
 	unsigned int count);
@@ -12,24 +12,7 @@ struct BfmeAsciiStringData
 	char m_text[1];
 };
 
-class AsciiString
-{
-public:
-	int compare(const AsciiString &other) const
-	{
-		int otherLength = other.m_data ? other.m_data->m_length : 0;
-		const char *otherText = other.m_data ? other.m_data->m_text : (const char *)0x0107388b;
-		int thisLength = m_data ? m_data->m_length : 0;
-		const char *thisText = m_data ? m_data->m_text : (const char *)0x0107388b;
-		int difference = memcmp(thisText, otherText,
-			thisLength < otherLength ? thisLength : otherLength);
-		if (difference != 0)
-			return difference;
-		return thisLength - otherLength;
-	}
-
-	BfmeAsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 class SubsystemInterface
 {

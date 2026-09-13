@@ -1,17 +1,9 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // BFME's name-based convenience entry point accepts a raw string, owns the
 // temporary AsciiString across lookup, and permits calls before subsystem init.
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class UpgradeTemplate;
 

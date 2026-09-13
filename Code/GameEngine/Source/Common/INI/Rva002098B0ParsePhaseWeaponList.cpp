@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME7: INI field parser at 0x002098B0 (167 B).  The first token picks
 // a phase through INI::scanIndexList against the INITIAL / MIDPOINT / FINAL /
@@ -16,15 +16,7 @@
 
 typedef int Int;
 
-class AsciiString
-{
-public:
-	AsciiString( const char *text );
-	~AsciiString() {}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Rva002098B0Name : public AsciiString
 {

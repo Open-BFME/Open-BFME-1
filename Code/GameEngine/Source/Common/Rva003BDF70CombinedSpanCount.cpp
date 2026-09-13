@@ -8,11 +8,7 @@ struct Rva003BDF70Span
 	int size() const { return m_end - m_begin; }
 };
 
-class AsciiString
-{
-public:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class LivingWorldRegion
 {
@@ -53,4 +49,4 @@ int Rva003BDF70Owner::combinedSpanCount()
 	return result->m_first.size() + result->m_second.size();
 }
 
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib

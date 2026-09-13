@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: INI block parser at 0x004255F0 (105 B): a zeroed (AsciiString
 // name + 4-byte value) record local is filled through INI::initFromINI with
 // the field table at VA 0x010F1B34 then inserted into the map the store
@@ -8,14 +8,7 @@
 
 struct FieldParse;
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data( 0 ) {}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct Rva004255F0Record
 {

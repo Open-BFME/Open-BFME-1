@@ -1,20 +1,6 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other)
-	{
-		set(other);
-		return *this;
-	}
-	~AsciiString();
-
-private:
-	void set(const AsciiString &other);
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Rva0022A620Obj
 {

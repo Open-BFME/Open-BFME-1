@@ -1,4 +1,4 @@
-// cl: /EHsc
+// cl: /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: canonical GeometryRecord vector specialization used by the
 // GeometryInfo constructor at retail 0x00100580.
@@ -10,17 +10,7 @@
 
 #include <vector>
 
-class AsciiString
-{
-public:
-	AsciiString();
-	AsciiString(const AsciiString &other);
-	~AsciiString();
-	AsciiString &operator=(const AsciiString &other);
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct GeometryRecord
 {

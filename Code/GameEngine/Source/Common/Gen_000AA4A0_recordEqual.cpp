@@ -1,13 +1,7 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Two-part record equality at retail RVA 0x000AA4A0.
 
-class AsciiString
-{
-public:
-	int compare(const AsciiString &other) const;
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeRecordAA4A0
 {

@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // The second BFME string-record table has the same 20-byte record and
 // eight-byte AsciiString layout as the first table.  Retail 0x00356A60 is
 // its matching sorted name-index search; this TU keeps the recovered owner
@@ -16,34 +17,7 @@ struct Rva00356A60AsciiStringData
 	char m_text[1];
 };
 
-class AsciiString
-{
-public:
-	int getLength() const
-	{
-		return m_data ? m_data->m_length : 0;
-	}
-
-	const char *str() const
-	{
-		return m_data ? &m_data->m_text[0] : g_bfmeEmptyAscii;
-	}
-
-	int compare(const AsciiString &other) const
-	{
-		int thatLength = other.getLength();
-		const char *thatText = other.str();
-		int selfLength = getLength();
-		const char *selfText = str();
-		int result = memcmp(selfText, thatText,
-			(unsigned int)(selfLength < thatLength ? selfLength : thatLength));
-		if (result != 0)
-			return result;
-		return selfLength - thatLength;
-	}
-
-	Rva00356A60AsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 struct Rva00356A60Record
 {

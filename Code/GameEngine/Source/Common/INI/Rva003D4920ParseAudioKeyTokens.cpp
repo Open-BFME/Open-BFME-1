@@ -1,20 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: INI field parser at 0x003D4920 (125 B): every remaining token
 // becomes an AsciiString handed to LargeGroupAudioKeyMap::bfmeAddKey
 // (0x003D46A0, landed) on the map the store argument points at; the string
 // is destroyed after each call (EH state 0 across the call).  Address-derived
 // parser name.
 
-class AsciiString
-{
-public:
-	AsciiString( const char *text );
-	~AsciiString() { releaseBuffer(); }
-
-private:
-	void releaseBuffer( void );
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class INI
 {

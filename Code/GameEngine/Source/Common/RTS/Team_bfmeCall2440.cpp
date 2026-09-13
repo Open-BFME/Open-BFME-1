@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // Team::bfmeCall2440, retail 0x000F75B0 (86 bytes).
@@ -9,11 +9,7 @@
 
 #define _STLP_NO_EXCEPTIONS 1
 
-class AsciiString
-{
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class BfmeTeamCall2440Iterator
 {

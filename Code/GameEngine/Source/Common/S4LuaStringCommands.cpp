@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Four 145-byte Lua-callable commands.  Each reads a global, walks two pointers,
 // checks that the script passed an argument, and forwards it as an AsciiString
 // with two flags:
@@ -56,16 +57,7 @@ struct lua_State;
 extern "C" int lua_gettop( lua_State *L );
 extern "C" const char *lua_tostring( lua_State *L, int index );
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString( const char *s );
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 struct S4Sink004135C0
 {

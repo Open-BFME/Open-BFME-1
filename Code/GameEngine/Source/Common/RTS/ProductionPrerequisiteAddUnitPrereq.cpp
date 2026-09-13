@@ -1,19 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
 
-class AsciiString
-{
-public:
-	AsciiString()
-		: m_data( 0 )
-	{
-	}
-
-	AsciiString &operator=( const AsciiString &other );
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 #pragma comment(linker, "/alternatename:??4AsciiString@@QAEAAV0@ABV0@@Z=?set@UnicodeString@@QAEXABV1@@Z")
 #pragma comment(linker, "/alternatename:??1AsciiString@@QAE@XZ=?releaseBuffer@BFMERetailAsciiString@@AAEXXZ")

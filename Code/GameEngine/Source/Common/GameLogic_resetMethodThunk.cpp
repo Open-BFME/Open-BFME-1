@@ -1,15 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-class AsciiString
-{
-public:
-	AsciiString(const char *);
-	~AsciiString();
-	int compare(const char *) const;
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class ThingTemplate;
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Lift the UpgradeCenter::findVeterancyUpgrade __emit thunk to clean C++.
 //
 // Verbatim Zero Hour Upgrade.cpp -- two lines: name the veterancy upgrade, then
@@ -14,17 +14,7 @@ class UpgradeTemplate;
 
 enum VeterancyLevel { LEVEL_REGULAR = 0 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(void);
-	AsciiString(const AsciiString &other);
-	~AsciiString(void);
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 AsciiString getVetUpgradeName(VeterancyLevel level);		///< retail body at 0x0010AD90
 

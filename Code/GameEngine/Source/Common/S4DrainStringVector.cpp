@@ -1,4 +1,4 @@
-// cl: -GX-
+// cl: -GX- /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // Four 134-byte bodies that hand every string in a member vector to one global
@@ -57,16 +57,7 @@
 
 #include <vector>
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=( const AsciiString &o );
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 struct S4Holder0046DBB0
 {

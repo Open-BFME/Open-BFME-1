@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME5: _STL::__copy<NamedReveal *, NamedReveal *, int>, retail
 // 0x0033A9F0, 91 bytes. The body carried only a machine byte-dump row; the
@@ -20,15 +20,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <algorithm>
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other);	// retail 0x00887C90
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 struct NamedReveal

@@ -1,18 +1,10 @@
-// cl: /DNDEBUG /MD /O2 /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// cl: /DNDEBUG /MD /O2 /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
 
 // STLport random-access __copy over a 12-byte record {int, AsciiString, char}.
 // Retail 0x002E0040, 82 bytes. Magic 0x2AAAAAAB / sar 1 is a 12-byte stride.
 // The string member assignment is the shared AsciiString::operator= body.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other);
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct Gen_t_002e13b0_p12cd
 {

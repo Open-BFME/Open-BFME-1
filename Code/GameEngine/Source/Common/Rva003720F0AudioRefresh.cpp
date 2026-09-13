@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x003720F0 is an address-derived two-argument __thiscall.  The
 // boundary is proved by ret 8 and by the status-word read at argument two
@@ -33,11 +33,7 @@ struct Rva003720F0Context
 
 // The retail object is AudioEventRTS (0x70B). Its outlined ObjectID
 // constructor is a distinct compiled variant, reached through ILT 0x00008E86.
-class AsciiString
-{
-public:
-    void *m_data;
-};
+#include "ascii_string.h"
 enum ObjectID { INVALID_ID = 0 };
 class AudioEventRTS
 {

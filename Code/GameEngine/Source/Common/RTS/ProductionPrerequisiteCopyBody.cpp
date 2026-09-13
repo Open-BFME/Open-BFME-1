@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: the out-of-line body of _STL::__copy over ProductionPrerequisite,
 // retail 0x00753280, 99 bytes. The name sat on the 5-byte incremental-link
@@ -45,15 +45,7 @@
 // source and destination are the same class, so taking the vptr from the source
 // stores the same value a vftable literal would.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &);
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ProductionPrerequisite.h
 class ProductionPrerequisite

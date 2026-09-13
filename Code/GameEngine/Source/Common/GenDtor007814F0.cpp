@@ -1,14 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: 21-string derived destructor at retail 0x0077F920.
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	int m_data;
-};
+#include "ascii_string.h"
 
 class BfmeDtorBaseI
 {

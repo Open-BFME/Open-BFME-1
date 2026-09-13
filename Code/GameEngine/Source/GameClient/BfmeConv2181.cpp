@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // BfmeAptScreenScoreScreen destructor, retail 0x00575050, 290 bytes.
 // Resets its own vtable (0x0110AAB8) and the secondary base vtable at
@@ -19,11 +19,7 @@
 // the thunk address directly), then chains to the _bfme_AptGameWindow base
 // destructor through ILT 0x000204C3 exactly like BfmeAptScreenLanLobbyDestructor.cpp.
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class BFMERetailAsciiString
 {

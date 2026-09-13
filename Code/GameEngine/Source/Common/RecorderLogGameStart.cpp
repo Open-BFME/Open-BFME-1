@@ -10,18 +10,7 @@ extern "C" __declspec(dllimport) int __cdecl fseek(void *stream, long offset, in
 extern "C" __declspec(dllimport) unsigned int __cdecl fwrite(const void *buffer, unsigned int size,
 	unsigned int count, void *stream);
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString {
-public:
-	AsciiString(const AsciiString &that) { base()->StringBase<char>::StringBase(*that.base()); }
-	~AsciiString() { base()->releaseBuffer(); }
-
-private:
-	StringBase<char> *base() { return (StringBase<char> *)this; }
-	const StringBase<char> *base() const { return (const StringBase<char> *)this; }
-
-	StringBase<char>::Header *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Recorder.h
 class RecorderClass {

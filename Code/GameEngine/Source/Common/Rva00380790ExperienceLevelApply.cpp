@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc-
+// cl: /O2 /Ob1 /DNDEBUG /MD /EHsc- /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x00380790.  This is the address-derived ExperienceLevelSystem
 // wrapper beside the exact 0x0037FE30 pending-record body.  The first call is
@@ -9,11 +9,7 @@ typedef bool Bool;
 typedef int Int;
 typedef float Real;
 
-class AsciiString
-{
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 // Borrowed field view of the D8-byte ExperienceLevel returned by findLevel.
 // This wrapper emits no constructor, destructor or virtual table for it.

@@ -7,24 +7,7 @@ extern int g_bfmeDirtyBG;
 // The retail value and member slots are narrow shared-buffer strings.  Keep
 // this local view one word wide, but use the real StringBase<char> member
 // functions so both calls carry the canonical object symbols.
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &other); // Real copy retains the shared buffer.
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-	AsciiString &operator=(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->set(*(const StringBase<char> *)&other);
-		return *this;
-	}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Rva00190590
 {

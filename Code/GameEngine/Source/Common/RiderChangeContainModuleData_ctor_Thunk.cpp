@@ -1,15 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
 // The 0x00268120 body is an ICF-shared SpecialPower module-data constructor.
 // The Rider factory at 0x001195C0 allocates 0x210 bytes and calls this body.
 // The vtable at 0x010B7858 and the destructor at 0x00268A00 identify the Rider
 // ledger row and confirm the four named slots, string, and filter members.
 #include <bitset>
 
-class AsciiString
-{
-public:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 extern AsciiString TheBfmeCrateNameDefault;
 extern const char g_Rva0107301CEmptyString[];

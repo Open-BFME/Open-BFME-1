@@ -1,7 +1,7 @@
 // Open-BFME7: reloc-only twins (diff 0) of the AudioEventInfo hashtable insert_unique_noresize
 // at 0x006AB4A0: 0x00424D30 and 0x005C9A20, AsciiString key + pointer payload; only the
 // _M_bkt_num_key and _Construct callee thunks differ.
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // The 0x006AB4A0 body is the STLport hash insertion used by the audio-name
@@ -22,29 +22,7 @@ struct Rva00424D30StringData
 	char m_data[1];
 };
 
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &other);
-	~AsciiString();
-
-	int compare(const AsciiString &other) const
-	{
-		int otherLength = other.m_data ? other.m_data->m_length : 0;
-		const char *otherData = other.m_data ? other.m_data->m_data :
-			(const char *)"";
-		int thisLength = m_data ? m_data->m_length : 0;
-		const char *thisData = m_data ? m_data->m_data : (const char *)"";
-		int length = thisLength < otherLength ? thisLength : otherLength;
-		int result = memcmp(thisData, otherData, length);
-		if (result != 0)
-			return result;
-		return thisLength - otherLength;
-	}
-
-private:
-	Rva00424D30StringData *m_data;
-};
+#include "ascii_string.h"
 
 struct Rva00424D30Value;
 struct Rva005C9A20Value;

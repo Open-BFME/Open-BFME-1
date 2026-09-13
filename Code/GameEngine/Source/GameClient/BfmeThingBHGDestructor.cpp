@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: the destructor at 0x0051D4A0 (145 B) of BfmeThingBHG, derived
 // from _bfme_AptGameWindow (Rva00465430AptGameWindowDestructor.cpp): the own
 // and second-base vtables are re-installed at +0 (0x11061C4) and +0x218
@@ -28,15 +28,7 @@ private:
 	unsigned char m_pad[ 0x24C - 0x218 - 4 ];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class _bfme_AptGameWindow : public GameWindow, public Gen_dtor_004654c0Base
 {

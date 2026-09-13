@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Instance-list walks over TeamPrototype+0x274:
 //   0x000F6FD0  hasAnyBuildings(Bool)                     59 bytes
@@ -76,10 +76,7 @@ public:
 	virtual void loadPostProcess(void);
 };
 
-class AsciiString
-{
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct XferVersion
 {

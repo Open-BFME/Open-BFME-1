@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 void * __cdecl operator new( unsigned int size );
 void __cdecl f_00881eb0( void *block );
 class BfmeReportWeightScaleHolder
@@ -40,11 +41,7 @@ const float BfmeReportWeightScaleHolder::value = 30.0f;
 // and vtable chain and by the LivingWorldRegion allocation/constructor chain.
 // The three enclosing row owners remain address-derived where named that way.
 
-class AsciiString
-{
-public:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class LivingWorldRegion
 {

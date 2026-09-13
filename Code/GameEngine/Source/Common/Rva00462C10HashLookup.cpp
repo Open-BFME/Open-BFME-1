@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Fuzzy-twin lane: near-twin of bfmeFindUpgradeByName (retail 0x000BB270,
 // Code/GameEngine/Source/Common/UpgradeCenter_findUpgradeByName.cpp) -- same
 // "wrap a C-string in a temporary AsciiString key, look up, release the key,
@@ -19,15 +19,7 @@
 //     table's value struct carries a payload field right after the 4-byte
 //     AsciiString key
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 extern void j_0002e5a5(void);
 

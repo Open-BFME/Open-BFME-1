@@ -1,13 +1,9 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // The retail body walks PlayerTemplate::InitialUpgrades and grants each
 // resolved template to the Player with complete status.
 
-class AsciiString
-{
-public:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 struct BfmeLegendStringVec
 {

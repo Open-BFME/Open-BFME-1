@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Rva003C1A50Tick::tick, retail 0x003C03C0, 238 bytes.
 //
@@ -16,11 +16,7 @@ public:
 
 extern Glo012F706CType *g_bfmeGameCW;
 
-class AsciiString
-{
-public:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class LivingWorldRegion;
 

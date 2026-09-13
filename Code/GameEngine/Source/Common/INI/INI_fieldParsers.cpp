@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Four INI field parsers -- the functions that read one .ini field and store it.
 // These are the modding interface: every stat in an .ini file arrives through a
@@ -44,15 +44,7 @@ private:
 	const char *m_msg;
 };
 
-class AsciiString
-{
-public:
-	AsciiString( const char *text );
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class UpgradeTemplate;
 

@@ -1,4 +1,4 @@
-// cl: /O2 /Ob2 /GR- /MD /DNDEBUG /DWIN32 /D_WINDOWS /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /O2 /Ob2 /GR- /MD /DNDEBUG /DWIN32 /D_WINDOWS /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // The LivingWorldManager particle record creates one particle system at the
 // manager position and retains its handle and system id in a 16-byte vector.
@@ -33,11 +33,7 @@ private:
 
 class ParticleSystemTemplate;
 
-class AsciiString
-{
-public:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class ParticleSystem
 {

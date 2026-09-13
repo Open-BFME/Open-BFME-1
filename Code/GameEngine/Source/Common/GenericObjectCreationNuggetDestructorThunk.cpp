@@ -1,15 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: retail-layout C++ conversion of the GenericObjectCreationNugget destructor.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-private:
-	char *m_text;
-
-public:
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 class GenericObjectCreationNuggetNames
 {

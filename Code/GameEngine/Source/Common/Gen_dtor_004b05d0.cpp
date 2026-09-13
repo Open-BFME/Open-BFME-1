@@ -20,17 +20,7 @@ public:
 
 extern void Rva00565DA0(const GenString *value);
 
-class AsciiString
-{
-public:
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class Gen_dtor_004b05d0Base
 {

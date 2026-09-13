@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: INI field parser at 0x00250BA0 (97 B): the token is looked up
 // in the weapon store (findWeaponTemplate takes the AsciiString by value so
 // the token copies straight into the argument slot; the store global at VA
@@ -12,15 +12,7 @@
 extern "C" unsigned int __cdecl strlen( const char *s );
 #pragma intrinsic( strlen )
 
-class AsciiString
-{
-public:
-	AsciiString( const char *text );
-	~AsciiString() {}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Rva00250BA0Name : public AsciiString
 {

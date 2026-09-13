@@ -1,12 +1,4 @@
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct PreferenceNode
 {
@@ -56,4 +48,4 @@ int OptionPreferences::getAudioLOD()
 	return TheGameLODManager->getAudioLODIndex(it->m_value);
 }
 
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /O2 /Ob2
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib

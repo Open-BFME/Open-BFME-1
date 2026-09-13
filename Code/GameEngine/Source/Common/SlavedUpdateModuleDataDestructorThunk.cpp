@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: lift ModuleData dtor MASM dump to clean C++.
 // Retail @0x00126980: SEH dtor destroying two adjacent 4-byte string members
 // at this+0x4C then this+0x48 (reverse declaration order), then an inlined
@@ -6,13 +6,7 @@
 // m_weldingFXBone sit at exactly those offsets after 8 base bytes and the
 // 16 int/real fields from the GeneralsMD SlavedUpdate.h layout.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_data;
-public:
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
 class UpdateModuleData

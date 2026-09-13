@@ -4,37 +4,7 @@
 
 #include "string_base.h"
 
-class AsciiString
-{
-public:
-	AsciiString()
-	{
-		m_data = 0;
-	}
-
-	AsciiString(const char *s)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(s);
-	}
-
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&other);
-	}
-
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-	void set(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->set(*(const StringBase<char> *)&other);
-	}
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class CDDriveInterface
 {

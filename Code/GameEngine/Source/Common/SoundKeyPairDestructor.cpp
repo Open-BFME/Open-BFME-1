@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #include <vector>
@@ -15,14 +15,7 @@ private:
 	void *m_capacity;
 };
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 struct Gen003D1380Elem
 {

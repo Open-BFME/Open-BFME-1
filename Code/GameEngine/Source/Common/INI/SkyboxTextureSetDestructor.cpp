@@ -1,16 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: SkyboxTextureSet::~SkyboxTextureSet, retail 0x000B84D0.
 // The owning class is proven by vtable 0x01082BE4 and its matched constructor.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class SkyboxTextureSet
 {

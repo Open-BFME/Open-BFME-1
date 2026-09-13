@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 class MemoryPoolObject
 {
@@ -6,15 +6,7 @@ public:
 	virtual void memoryPoolAnchor();
 };
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Mapping : public MemoryPoolObject
 {

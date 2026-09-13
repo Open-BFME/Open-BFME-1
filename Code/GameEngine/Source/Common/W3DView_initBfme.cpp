@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // BFME W3DView::init, retail 0x00742700.
 
 struct Coord2D
@@ -14,22 +14,7 @@ struct Coord3D
 	float z;
 };
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString() { releaseBuffer(); }
-	void set(const AsciiString &source);
-	AsciiString &operator=(const AsciiString &source)
-	{
-		set(source);
-		return *this;
-	}
-
-private:
-	void releaseBuffer();
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Vector2
 {

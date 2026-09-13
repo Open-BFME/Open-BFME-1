@@ -1,14 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // BfmeAptScreenOptions destructor, retail 0x0055E320 (255 bytes).
 // The Options.apt constructor installs vtables 0x0110912C and 0x01109128,
 // and AptOptions::InitGadgets references this destructor's cleanup path.
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class BFMERetailAsciiString
 {

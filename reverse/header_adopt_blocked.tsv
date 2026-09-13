@@ -11,3 +11,89 @@ Code/GameEngine/Source/Common/BitFlagsParseFromINI.cpp	AsciiString	Code\GameEngi
 Code/GameEngine/Source/Common/ExperienceLevelParseLevelUpFx.cpp	AsciiString	build.sh exited 1
 Code/GameEngine/Source/Common/GameLODManagerGetAudioLODIndex.cpp	AsciiString	Code\GameEngine\Source\Common\GameLODManagerGetAudioLODIndex.cpp(100) : error C2039: 'm_data' : is not a member of 'AsciiString'
 Code/GameEngine/Source/Common/GameLODManagerGetStaticGameLODIndex.cpp	AsciiString	build.sh exited 1
+Code/GameEngine/Source/Common/GameSpyLoginPreferences_getNicksForEmail_Thunk.cpp	AsciiString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/GarrisonContainModuleData_parseInitialRoster_Thunk.cpp	AsciiString	Code\GameEngine\Source\Common\GarrisonContainModuleData_parseInitialRoster_Thunk.cpp(53) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
+Code/GameEngine/Source/Common/Gen003BB8F0Free.cpp	AsciiString	Code\GameEngine\Source\Common\Gen003BB8F0Free.cpp(137) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/GiantBirdAIUpdateDestructorThunk.cpp	AsciiString	Functions: FAIL 1/3
+Code/GameEngine/Source/Common/Glo012F1024Entry_bfmeStep.cpp	AsciiString	Code\GameEngine\Source\Common\Glo012F1024Entry_bfmeStep.cpp(404) : error C2664: 'Gen_003bcb40::m' : cannot convert parameter 1 from 'AsciiString' to 'int'
+Code/GameEngine/Source/Common/GlobalDataParseDefinition.cpp	AsciiString	Code\GameEngine\Source\Common\GlobalDataParseDefinition.cpp(61) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/INI/INIModifierList.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/INI/Rva00094010Register.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/LANAPI_RequestChat_Thunk.cpp	AsciiString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/LargeGroupAudioKeyMapXfer.cpp	AsciiString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/LivingWorldCampaignManagerConstructor.cpp	AsciiString	Code\GameEngine\Source\Common\LivingWorldCampaignManagerConstructor.cpp(35) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/LivingWorldManagerLookupByName.cpp	AsciiString	Code\GameEngine\Source\Common\LivingWorldManagerLookupByName.cpp(53) : error C2039: 'm_data' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/LivingWorldPlayerArmyLoadPostProcess.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/NameKeyHelperThunk.cpp	AsciiString	Code\GameEngine\Source\Common\NameKeyHelperThunk.cpp(37) : error C2039: 'm_data' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/Open2BitFlagsParse.cpp	AsciiString	Code\GameEngine\Source\Common\Open2BitFlagsParse.cpp(63) : error C2661: 'AsciiString::concat' : no overloaded function takes 2 arguments
+Code/GameEngine/Source/Common/OptionPreferencesGetUsePixelShader.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/OptionPreferences_ctor.cpp	AsciiString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/OptionPreferences_getBuildingOcclusionEnabled.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/OptionPreferences_getCampaignDifficulty.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/OptionPreferences_getFPSLimitEnabled.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/OptionPreferences_getParticleCap_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/OptionPreferences_getSendDelay.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/OptionPreferences_getTextureReduction_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/OptionPreferences_saveCameraInReplays.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/RTS/PlayerProductionCost.cpp	AsciiString	Functions: FAIL 1/2
+Code/GameEngine/Source/Common/RTS/PlayerRankAndScience.cpp	AsciiString	Code\GameEngine\Source\Common\RTS\PlayerRankAndScience.cpp(68) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/RTS/Player_setDefaultTeam.cpp	AsciiString	Code\GameEngine\Source\Common\RTS\Player_setDefaultTeam.cpp(7) : error C2039: 'Header' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/RTS/TeamFactoryCtorThunk.cpp	AsciiString	Functions: FAIL 2/16
+Code/GameEngine/Source/Common/RTS/TeamFactory_findTeamPrototype_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Recorder.cpp	AsciiString	Functions: FAIL 1/7
+Code/GameEngine/Source/Common/RecorderInitControls_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Rva0007F560FactoryLookup.cpp	AsciiString	Code\GameEngine\Source\Common\Rva0007F560FactoryLookup.cpp(111) : error C2039: 'm_data' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/Rva00090880UseCameraInReplays.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Rva000D4870NameKeyMapFind.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Rva000F9CF0Xfer.cpp	AsciiString	Code\GameEngine\Source\Common\Rva000F9CF0Xfer.cpp(150) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/Rva00195FC0JoinPath.cpp	AsciiString	Code\GameEngine\Source\Common\Rva00195FC0JoinPath.cpp(12) : error C2661: 'AsciiString::concat' : no overloaded function takes 2 arguments
+Code/GameEngine/Source/Common/Rva00380270ExperienceLevelSystem.cpp	AsciiString	Functions: FAIL 1/3
+Code/GameEngine/Source/Common/Rva00382460ExperienceLevelParser.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Rva00388820FindWaypointByName.cpp	AsciiString	Code\GameEngine\Source\Common\Rva00388820FindWaypointByName.cpp(64) : error C2039: 'm_data' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/Rva0046F910RankDisplay.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Rva00619FF0LookupByName.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/ScriptActionsUnitGuardForFramecount.cpp	AsciiString	Code\GameEngine\Source\Common\ScriptActionsUnitGuardForFramecount.cpp(17) : error C2146: syntax error : missing ';' before identifier 'm_command'
+Code/GameEngine/Source/Common/Shell_push_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Shell_showShellMap.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/SkirmishPreferences_getPreferredColor.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/SkirmishPreferences_getPreferredFaction.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/StatsCollector.cpp	AsciiString	Functions: FAIL 4/10
+Code/GameEngine/Source/Common/StructureToppleUpdateModuleData_ctor_Thunk.cpp	AsciiString	Code\GameEngine\Source\Common\StructureToppleUpdateModuleData_ctor_Thunk.cpp(211) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
+Code/GameEngine/Source/Common/System/AsciiString_endsWith_BfmeTwin.cpp	AsciiString	Code\GameEngine\Source\Common\System\AsciiString_endsWith_BfmeTwin.cpp(31) : error C2084: function 'bool AsciiString::endsWith(const char *) const' already has a body
+Code/GameEngine/Source/Common/System/SaveGame/GameStateMap_clearScratchPadMaps.cpp	AsciiString	Code\GameEngine\Source\Common\System\SaveGame\GameStateMap_clearScratchPadMaps.cpp(54) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
+Code/GameEngine/Source/Common/System/SaveGame/GameStateMap_extractAndSaveMap.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/System/UpgradeCenter_reset.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/System/UpgradeTemplate.cpp	AsciiString	Functions: FAIL 1/3
+Code/GameEngine/Source/Common/System/UpgradeTemplate_friend_makeVeterancyUpgrade_Thunk.cpp	AsciiString	Code\GameEngine\Source\Common\System\UpgradeTemplate_friend_makeVeterancyUpgrade_Thunk.cpp(68) : error C2664: 'NameKeyGenerator::nameToKey' : cannot convert parameter 1 from 'AsciiString' to 'const char *'
+Code/GameEngine/Source/Common/System/message_stream_commandName.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Thing/ThingTemplateModuleRemovalParsers.cpp	AsciiString	Functions: FAIL 2/2
+Code/GameEngine/Source/Common/Thing/ThingTemplateResolveNames.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Thing/UpgradeMuxData.cpp	AsciiString	Functions: FAIL 1/2
+Code/GameEngine/Source/Common/UpgradeCenter_newUpgrade_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/UserPreferencesCopy.cpp	AsciiString	Code\GameEngine\Source\Common\UserPreferencesCopy.cpp(23) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/UserPreferences_write_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/W3DShadowGeometryManager_Load_Geom_Thunk.cpp	AsciiString	Code\GameEngine\Source\Common\W3DShadowGeometryManager_Load_Geom_Thunk.cpp(109) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
+Code/GameEngine/Source/Common/WeaponStore_findWeaponTemplate_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/parseInputCallback_Thunk.cpp	AsciiString	Code\GameEngine\Source\Common\parseInputCallback_Thunk.cpp(58) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
+Code/GameEngine/Source/Common/parseName_Thunk.cpp	AsciiString	Code\GameEngine\Source\Common\parseName_Thunk.cpp(61) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
+Code/GameEngine/Source/Common/promoted__getPreferredColor_CustomMatchPreferences_QAEHXZ_000AC2A0.cpp	AsciiString	Functions: FAIL 3/4
+Code/GameEngine/Source/Common/promoted__hasSeenLogoMovies_OptionPreferences_QAE_NXZ_000913B0.cpp	AsciiString	Functions: FAIL 2/2
+Code/GameEngine/Source/Common/promoted__usesSystemMapDir_OptionPreferences_QAE_NXZ_00090780.cpp	AsciiString	Functions: FAIL 3/3
+Code/GameEngine/Source/GameClient/AssetListOperatorInsert.cpp	AsciiString	Functions: FAIL 1/3
+Code/GameEngine/Source/GameClient/BfmeAptScreenLanLobbyDestructor.cpp	AsciiString	Code\GameEngine\Source\GameClient\BfmeAptScreenLanLobbyDestructor.cpp(26) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/ControlBarScheme_find.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/EvaInit.cpp	AsciiString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/FXListAtBonePosFXNugget_doFxAtBones.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/FontDescCtor.cpp	AsciiString	Code\GameEngine\Source\GameClient\FontDescCtor.cpp(20) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
+Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenMainMenuProvider.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/ControlBar/CommandButton_cacheButtonImage.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/ControlBar/CommandButton_getButtonImage.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/ControlBar/CommandSet_parseCommandButton.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_bfmeQueryWD.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_setControlCommand_Thunk.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/ControlBar/ThingTemplatePortrait_getSelectedPortraitImage.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LANPreferencesCtorThunk.cpp	AsciiString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferences_getLANIPAddress_Thunk.cpp	AsciiString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/OptionPreferences_getOnlineIPAddress_Thunk.cpp	AsciiString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/Common/GiantBirdNestedTailDestructor.cpp	AsciiString	PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above)
+Code/GameEngine/Source/Common/System/DataChunkInput_registerParser.cpp	AsciiString	PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above)

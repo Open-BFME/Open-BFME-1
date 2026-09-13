@@ -1,14 +1,11 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x0037F190 returns the experience-level list and matching node for
 // an Object. The ControlBar multi-select body at 0x004A9300 calls this member
 // through ILT 0x0000EDC7 and passes the returned pair to its level helpers.
 
 typedef bool Bool;
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class AsciiStringCompareShim
 {

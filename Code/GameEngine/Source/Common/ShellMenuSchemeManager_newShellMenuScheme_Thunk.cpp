@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // readable body of ?newShellMenuScheme@ShellMenuSchemeManager@@QAEPAVShellMenuScheme@@VAsciiString@@@Z: Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuScheme.cpp
 // Open-BFME5: convert ShellMenuSchemeManager::newShellMenuScheme to clean C++.
@@ -20,37 +20,7 @@ struct BfmeAsciiStringData
 	UnsignedShort m_pad;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &that);
-	~AsciiString();
-
-	void toLower(void);                         // retail 0x00887DA0
-	void set(const AsciiString &that);          // retail 0x00887C90
-
-	Int getLength(void) const { return m_data ? m_data->m_len : 0; }
-	const char *str(void) const { return m_data ? (const char *)(m_data + 1) : ""; }
-
-	Int compare(const AsciiString &other) const
-	{
-		Int lenOther = other.getLength();
-		const char *pOther = other.str();
-		Int lenThis = getLength();
-		const char *pThis = str();
-		Int shorter = lenThis < lenOther ? lenThis : lenOther;
-
-		Int diff = memcmp(pThis, pOther, shorter);
-		if (diff != 0)
-			return diff;
-
-		return lenThis - lenOther;
-	}
-
-private:
-	BfmeAsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 class ShellMenuSchemeLine;
 class ShellMenuSchemeImage;

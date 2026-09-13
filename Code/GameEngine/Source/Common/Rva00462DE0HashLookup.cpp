@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: retail 0x00462DE0 (120 bytes) is the one-byte twin of the hash lookup at
 // 0x00462C10 (Rva00462C10HashLookup.cpp): the same search over its own table, but it
 // returns the pointer STORED at node+8 (mov eax,[esi+8]) rather than the address of
@@ -23,15 +23,7 @@
 //     table's value struct carries a payload field right after the 4-byte
 //     AsciiString key
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 extern void j_0002e5a5(void);
 

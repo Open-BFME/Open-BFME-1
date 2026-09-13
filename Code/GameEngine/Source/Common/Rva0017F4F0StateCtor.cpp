@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Near-twin of the state-constructor family in StateSelfNamingCtorsWithFields.cpp
 // (see that file's header for the shared shape and why identity is not
 // recovered for this family). This one shares the AIInternalMoveToState base
@@ -12,13 +13,7 @@
 
 #include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-class AsciiString
-{
-public:
-	AsciiString( const char *text ) : m_data( text ) {}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class AIInternalMoveToState
 {

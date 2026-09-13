@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ??1CrateTemplate@@MAE@XZ: Code/GameEngine/Source/GameLogic/System/CrateSystem.cpp
 // Open-BFME5: CrateTemplate::~CrateTemplate at retail 0x00379EC0.
 //
@@ -22,13 +22,7 @@
 // the rest is padding at retail offsets.  The two out-of-line callees are
 // declared without bodies because retail calls them out of line.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	void *m_data;
-	~AsciiString( void );
-};
+#include "ascii_string.h"
 
 extern void rva379ec0SmallDeallocate( void *, unsigned int );
 

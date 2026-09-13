@@ -1,21 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Clean C++ reconstruction of the BFME CursorParticleSystem FX constructor.
 // FieldParse at 0x010F31B0 names Anim2DTemplateName, BurstCount, ParticleLife,
 // SystemLife, DriftVelX and DriftVelY.
 
 typedef float Real;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() : m_text(0) {}
-	~AsciiString();
-	void clear();
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ClientRandomValue.h
 class GameClientRandomVariable

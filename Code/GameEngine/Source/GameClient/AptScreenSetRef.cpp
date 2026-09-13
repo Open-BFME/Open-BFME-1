@@ -1,13 +1,10 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x004628E0, 144 bytes. Free function: find-or-insert the named
 // holder slot on the map at 0x012F1990, then assign the by-value functor
 // holder (addref incoming, release the stored pointer through vslot 0).
 
-class AsciiString
-{
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class FunctorWrapperHead
 {

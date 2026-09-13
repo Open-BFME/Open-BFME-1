@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /O2
+// cl: /DNDEBUG /MD /EHsc /O2 /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Open-BFME5: retail 0x0034E2E0, 110 bytes. BfmeBaseVUQ destructor family:
 // own vtable 0x010E7D00 stored at entry, a ThingTemplate-keyed _Rb_tree
@@ -15,16 +15,7 @@ public:
 	virtual ~BfmeBaseVUQ() { }
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString(void) { releaseBuffer(); }
-	void releaseBuffer(void);                                  ///< retail 0x00887940
-
-private:
-	void *m_bfmeData;                                          ///< +0x00
-};
+#include "ascii_string.h"
 
 class ThingTemplate;
 
