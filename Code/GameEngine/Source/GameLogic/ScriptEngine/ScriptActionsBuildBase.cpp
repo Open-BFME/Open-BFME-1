@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // The three base-building actions:
 //
 //   0x002F16C0  doBuildBaseBuilding        action 383, BUILD_BASE_BUILDING
@@ -23,12 +23,7 @@ enum NameKeyType
 	NAMEKEY_FORCE_LONG = 0x7fffffff
 };
 
-template <class T>
-class StringBase
-{
-public:
-	Bool isEmpty() const;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>

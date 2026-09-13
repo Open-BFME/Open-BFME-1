@@ -1,16 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: STLport __partial_sort over the twelve-byte S4 record ordered by
 // S4SortElem12::BfmeLess0052E880, retail 0x00532CC0, 233 bytes.  The
 // introsort caller at 0x005331E0 and the surrounding insertion-sort family
 // use this same pointer, key, and third-word record layout.
 
-template <class T>
-class StringBase
-{
-public:
-	int compareNoCase(const StringBase<T> &other) const;
-};
+#include "string_base.h"
 
 struct S4Named0052E880
 {
