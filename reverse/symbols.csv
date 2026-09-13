@@ -6356,6 +6356,7 @@ name,address,notes
 ??1Gen_dtor_006c05a0@@UAE@XZ,0x000130FC,gen-dtor class destructor
 ??1Gen_dtor_006c0670@@UAE@XZ,0x0001830E,gen-dtor class destructor
 ??1Gen_dtor_006c1ef0@@UAE@XZ,0x0001FD3E,gen-dtor class destructor
+??1W3DRadar@@UAE@XZ,0x0001FD3E,route=0x006C1780; scalar deleting destructor retail call targets the matched W3DRadar destructor through this ILT
 ??1Gen_dtor_006c5c50@@UAE@XZ,0x00047F32,gen-dtor class destructor
 ??1Gen_dtor_006c5c80@@UAE@XZ,0x00041DC1,gen-dtor class destructor
 ??1Gen_dtor_006c5cb0@@UAE@XZ,0x00003341,gen-dtor class destructor
