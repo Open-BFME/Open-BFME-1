@@ -87349,3 +87349,5 @@ _Rva0084DE40Tail,0x0084DE40,STLport 4.5.3 __FixStr Win32 date/time format conver
 ?erase@?$vector@UGen003AA010@@V?$allocator@UGen003AA010@@@_STL@@@_STL@@QAEPAUGen003AA010@@PAU3@0@Z,0x0003D3AC,ILT to 0x003AF920 vector erase callee of Rva003B6680 converting ctor m78
 ?erase@?$vector@UGen003AA0D0@@V?$allocator@UGen003AA0D0@@@_STL@@@_STL@@QAEPAUGen003AA0D0@@PAU3@0@Z,0x0003CAE2,ILT to 0x003B2540 vector erase callee of Rva003B6680 converting ctor m84
 ?erase@?$vector@UGen_t_003ab360_p12cd@@V?$allocator@UGen_t_003ab360_p12cd@@@_STL@@@_STL@@QAEPAUGen_t_003ab360_p12cd@@PAU3@0@Z,0x00011E28,ILT to 0x003B0E30 vector erase callee of Rva003B6680 converting ctor mcc
+?compute@Rva0018CF10Owner@@QBEMPBURva0018CF10Point@@0@Z,0x0002CEEE,pin; ILT of bfmeBoundaryDistanceSquared3D used by Rva0018CF10Owner::distanceSquaredTo
+?g_rva012EF4D0@@3PAVRva001A2D50Node@@A,0x012EF4D0,typed pointer at the dword already read by Rva001A19D0Get
