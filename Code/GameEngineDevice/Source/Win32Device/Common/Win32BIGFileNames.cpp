@@ -27,27 +27,7 @@
 // 0x2C bytes -- the two AsciiStrings are the last thing in the object.
 #include "string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() { m_text = 0; }
-
-	// The one shape this file exists for: a direct call to
-	// ??0?$StringBase@D@@AAE@ABV0@@Z rather than an inlined refcount bump.
-	AsciiString( const AsciiString &that )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase( *(const StringBase<char> *)&that );
-	}
-
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/Common/Win32BIGFile.h
 class Win32BIGFile

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD
+// cl: /DNDEBUG /DWIN32 /MD /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?evaluateNamedContainEmpty@ScriptConditions@@IAEEPAVParameter@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 // readable body of ?evaluateNamedHasFreeContainerSlots@ScriptConditions@@IAE_NPAVParameter@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditions.cpp
 
@@ -32,11 +32,7 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Parameter;
 

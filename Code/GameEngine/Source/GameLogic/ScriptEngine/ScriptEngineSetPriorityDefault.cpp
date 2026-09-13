@@ -1,16 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 typedef int Int;
 
-class AsciiString
-{
-public:
-    const char *str(void) const;
-
-private:
-    void *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeStringLiteralBase
 {

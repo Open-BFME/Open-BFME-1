@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: EvacuateDamageModuleData's constructor, retail 0x00250C20, 101
 // bytes. The body carried only a machine byte-dump row; reverse/reloc_names.csv
@@ -15,18 +15,7 @@
 typedef int Int;
 typedef float Real;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() { m_bfmeData = 0; }
-	~AsciiString();						// retail 0x00887940
-
-	void clear();						// same body
-
-private:
-	char *m_bfmeData;
-};
+#include "ascii_string.h"
 
 class BfmeDamageModuleDataBase
 {

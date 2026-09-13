@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /ICode/Libraries/Source/WWVegas/WWLib
 // MilesAudioManager::getProviderIndex, ported from
 // reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManager.cpp
 
@@ -13,25 +13,7 @@ struct BfmeAsciiStringData
 	char data[1];
 };
 
-class AsciiString
-{
-public:
-	BfmeAsciiStringData *m_data;
-	int compare(const AsciiString &other) const
-	{
-		const AsciiString *self = this;
-		const AsciiString *that = &other;
-		int thatLength = that->m_data ? that->m_data->length : 0;
-		const char *thatText = that->m_data ? &that->m_data->data[0] : (const char *)"";
-		int selfLength = self->m_data ? self->m_data->length : 0;
-		const char *selfText = self->m_data ? &self->m_data->data[0] : (const char *)"";
-		int count = selfLength < thatLength ? selfLength : thatLength;
-		int result = memcmp(selfText, thatText, count);
-		if (result != 0)
-			return result;
-		return selfLength - thatLength;
-	}
-};
+#include "ascii_string.h"
 
 struct ProviderInfo
 {

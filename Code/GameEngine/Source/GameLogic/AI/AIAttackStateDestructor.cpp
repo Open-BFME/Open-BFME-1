@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ??1AIAttackState@@MAE@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // BFME layout reconstruction for the AIAttackState destructor at 0x0017CA40.
 
@@ -56,13 +56,7 @@ public:
 	virtual void halt();
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	void *m_buffer;
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIAttackState : public State, public NotifyWeaponFiredInterface

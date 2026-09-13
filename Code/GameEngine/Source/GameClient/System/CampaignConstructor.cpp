@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // readable body of ??0Campaign@@QAE@XZ: Code/GameEngine/Source/GameClient/System/CampaignManager.cpp
 
@@ -6,17 +6,7 @@
 
 typedef int Int;
 
-class AsciiString
-{
-public:
-	AsciiString(void) : m_data(0) {}
-	void clear(void);
-	~AsciiString() { releaseBuffer(); }
-
-private:
-	void releaseBuffer(void);
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Mission;
 typedef _STL::list<Mission *> MissionList;

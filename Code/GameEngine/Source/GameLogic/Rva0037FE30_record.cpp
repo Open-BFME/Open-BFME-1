@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1
+// cl: /O2 /Ob1 /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x0037FE30. this+0x1C circular 0x14-byte list (push_back). arg2 is
 // Object with ExperienceTracker at +0x210. RVA-derived host name.
@@ -66,14 +66,7 @@ public:
 
 }
 
-class AsciiString
-{
-public:
-	void set(const AsciiString &other);
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class ExperienceTracker
 {

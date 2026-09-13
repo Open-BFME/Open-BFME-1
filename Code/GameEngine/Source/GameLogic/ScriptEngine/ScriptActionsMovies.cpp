@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // The two movie actions:
 //
 //   0x002F3FF0  doMoviePlayFullScreen  MOVIE_PLAY_FULLSCREEN
@@ -27,12 +27,7 @@ typedef float Real;
 
 extern float g_bfmeUint32Scale; // retail 0x01075358 (2^32 conversion fixup)
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

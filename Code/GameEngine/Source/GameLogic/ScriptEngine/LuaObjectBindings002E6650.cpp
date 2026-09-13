@@ -1,4 +1,4 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: two Lua script bindings (cdecl int f(lua_State*)).
 // 0x002E6650 (151 B): with at least two arguments and the client subsystem
 // global present, argument 1 resolves to an object (the table lookup at
@@ -19,15 +19,7 @@ extern "C" const char *lua_tostring( lua_State *state, int index );
 unsigned Rva00990030Lookup( lua_State *range, int index );
 unsigned Rva00990210Lookup( lua_State *range, int index );
 
-class AsciiString
-{
-public:
-	AsciiString( const char *text );
-	~AsciiString() {}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Rva002E6650Name : public AsciiString
 {

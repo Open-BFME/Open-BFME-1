@@ -1,5 +1,5 @@
 // Open-BFME5: HorseHordeContainModuleData constructor reconstruction.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #include <list>
@@ -22,19 +22,7 @@ private:
 
 #pragma comment(linker, "/alternatename:?set@BFMERetailAsciiString@@QAEXABV1@@Z=?set@?$StringBase@D@@QAEXABV1@@Z")
 
-class AsciiString
-{
-public:
-    AsciiString() : m_data(0) {}
-    ~AsciiString() { ((BFMERetailAsciiString *)this)->releaseBuffer(); }
-    AsciiString &operator=(const AsciiString &that)
-    {
-        ((BFMERetailAsciiString *)this)->set(*(const BFMERetailAsciiString *)&that);
-        return *this;
-    }
-private:
-    void *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeHordeContainSplitResultList
 {

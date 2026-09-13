@@ -1,19 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 typedef int Int;
 
-class AsciiString
-{
-public:
-	AsciiString() : m_text(0) {}
-	AsciiString(const AsciiString &that);
-	~AsciiString();
-	void set(const AsciiString &that);
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class ScriptActionParameter
 {

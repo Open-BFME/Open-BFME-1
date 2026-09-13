@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1 /DNDEBUG /MD
+// cl: /O2 /Ob1 /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWLib
 // BFME retail LocomotorTemplate::operator= (RVA 0x001B4250).
 
 class ScienceInfoBase
@@ -10,14 +10,7 @@ private:
 	char m_head[0x0c];
 };
 
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other);
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class LocomotorTemplate : public ScienceInfoBase
 {

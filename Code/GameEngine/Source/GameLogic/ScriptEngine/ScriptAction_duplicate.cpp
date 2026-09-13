@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /O2 /GX /ICode/Libraries/Source/WWVegas/WWLib
 // Clean C++ reconstruction of ScriptAction::duplicate at RVA 0x003560A0.
 //
 // The retail body is reached by the named Script copy constructor at
@@ -9,19 +9,7 @@
 typedef int Int;
 typedef bool Bool;
 
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other)
-	{
-		set(other);
-		return *this;
-	}
-	void set(const AsciiString &other);
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct Coord3D
 {

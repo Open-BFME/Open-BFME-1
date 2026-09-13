@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // The small BFME deque wrapper at retail 0x00596B60 appends a 12-byte
@@ -8,16 +8,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <deque>
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data( 0 ) {}
-	AsciiString( const AsciiString &other );
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct Gen_t_00595870_p12cd
 {

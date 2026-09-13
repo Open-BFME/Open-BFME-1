@@ -1,18 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x001720D0 constructs a State-derived object with the diagnostic name
 // "AIIdleState".  Another retail body already owns the public AIIdleState
 // constructor symbol, so this class name remains address-derived.
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString( const char *text ) : m_data( text ) {}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class Rva000A19E0StateBase
 {

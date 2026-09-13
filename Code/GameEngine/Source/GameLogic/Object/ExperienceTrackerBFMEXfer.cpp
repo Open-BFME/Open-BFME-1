@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?isAcceptingExperiencePoints@ExperienceTracker@@: Code/GameEngine/Source/GameLogic/Object/ExperienceTracker.cpp
 // Byte-matched BFME ExperienceTracker transfer implementation.
 
@@ -61,11 +62,7 @@ public:
 class Xfer;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class XferVersion
 {

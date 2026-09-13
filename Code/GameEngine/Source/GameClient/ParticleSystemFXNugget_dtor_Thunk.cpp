@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: ParticleSystemFXNugget destructor at 0x0042A1A0 (127B).
 // Member offsets match the landed ctor thunk: four AsciiString tails at
 // +0xB4, +0xFC, +0x104, +0x108, then the FXNugget base.
@@ -6,17 +6,7 @@
 typedef float Real;
 typedef bool Bool;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() : m_text(0) {}
-	~AsciiString();
-	void clear();
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D

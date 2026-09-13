@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
@@ -9,12 +9,7 @@
 // class's own vtables after the base ctor returns (multiple-inheritance base
 // layout modelled as plain fields, matching the family in
 // Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageStateCtor.cpp).
-class AsciiString
-{
-public:
-	AsciiString( const char *text ) : m_data( text ) {}
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class StateMachine;
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Address-derived: 0.852 difflib match to the landed
 // ??1Rva001B0820Store@@UAE@XZ (Code/GameEngine/Source/GameLogic/Object/
@@ -18,15 +18,7 @@
 
 #include <list>
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // reused verbatim from the already-instantiated list value type
 // (Code/gen_small/tgrid_105.cpp) so the list's own destructor chain matches.

@@ -1,16 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // ScriptEngine slot 16 resolves a canonical team name through TheTeamFactory.
 
-class AsciiString
-{
-public:
-	AsciiString(void) : m_text(0) {}
-	AsciiString(const AsciiString &that);
-	~AsciiString(void);
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class TeamPrototype;
 class ScriptEngine;

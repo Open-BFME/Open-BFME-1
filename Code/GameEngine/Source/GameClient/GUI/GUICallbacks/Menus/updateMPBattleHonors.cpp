@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // 0x004E59E0 is the ScoreScreen-local updateMPBattleHonors helper.  The
@@ -17,14 +17,7 @@ typedef unsigned int UnsignedInt;
 #undef _STLP_DEFAULT_CONSTRUCTOR_BUG
 #include <bitset>
 
-class AsciiString
-{
-public:
-	Int compare(const char *text) const;
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 enum
 {

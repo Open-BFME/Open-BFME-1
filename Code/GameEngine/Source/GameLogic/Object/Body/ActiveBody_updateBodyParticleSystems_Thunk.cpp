@@ -1,17 +1,13 @@
 // Lane 20 scratch: real-C++ reconstruction of ActiveBody::updateBodyParticleSystems.
 // This TU models BFME's three-subobject ActiveBody ABI locally; root integrates only
 // after the body and identity are independently verified.
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef bool Bool;
 
-class AsciiString
-{
-public:
-	unsigned int m_data;
-};
+#include "ascii_string.h"
 
 class ParticleSystemTemplate {};
 

@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1 /DNDEBUG /MD
+// cl: /O2 /Ob1 /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWLib
 // Complete BFME LocomotorTemplate constructor at RVA 0x001B52C0.  The old
 // generated row covered only 41 bytes and ended two bytes into the instruction
 // at +0x27; the real function returns at +0x207 and is 520 bytes long.
@@ -27,15 +27,7 @@ private:
 	unsigned char m_isAllocatedOverride;
 };
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class LocomotorTemplate : public Overridable
 {

@@ -12,15 +12,7 @@ typedef float Real;
 typedef int Int;
 typedef bool Bool;
 
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &other);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct Coord3D
 {

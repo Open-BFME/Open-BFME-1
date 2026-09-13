@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail's TooltipUpgradeModuleData vtable at 0x0108F650 names this scalar
 // deleting destructor in slot zero. Its call target is the independently
@@ -12,13 +12,7 @@ private:
 	char m_opaque[0x68];
 };
 
-class AsciiString
-{
-public:
-	~AsciiString();
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class TooltipUpgradeModuleDataPrimaryBase
 {

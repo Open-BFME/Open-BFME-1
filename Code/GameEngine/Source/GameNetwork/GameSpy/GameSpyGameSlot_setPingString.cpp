@@ -15,28 +15,7 @@ typedef statsgame_s *statsgame_t;
 
 extern "C" void FreeGame(statsgame_t game);
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	__forceinline AsciiString() : m_data(0) {}
-
-	__forceinline AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(*(const StringBase<char> *)&other);
-	}
-
-	~AsciiString();
-
-	__forceinline AsciiString &operator=(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->set(*(const StringBase<char> *)&other);
-		return *this;
-	}
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
 class GameSpyInfoInterface

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /O2 /EHsc
+// cl: /DNDEBUG /MD /O2 /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // SequentialScript::xfer, retail 0x00336D90.
 // ZH twin: ScriptEngine.cpp SequentialScript::xfer. BFME adds skipTransfer0C
 // early-out, stores two name strings on the object, and resolves the script
@@ -15,10 +15,7 @@ struct XferVersion
 	UnsignedByte m_currentVersion;
 };
 
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Team
 {

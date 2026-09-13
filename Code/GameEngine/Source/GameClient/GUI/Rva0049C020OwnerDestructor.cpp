@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: ~Rva0049C020Owner at 0x0049C020 (556 B), a BfmeBaseVUH-derived
 // record with 26 destructible members (EH states 0..0x19): AsciiStrings, two
 // 12-byte member types destroyed through their ILT thunks (0x000351D4, the
@@ -9,14 +9,7 @@
 // the base destructor that deletes the owned object at +4.
 extern void __cdecl operator delete(void *);
 
-class AsciiString
-{
-public:
-	~AsciiString() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Rva0049B890Elem
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: the destructor at 0x007461B0 (390 B) of the 0x2450-byte owner
 // whose constructor is the 977-byte dump at 0x00745B10. Three bases: a primary
 // base destroyed out of line through the ILT at 0x0003732B, a second base at
@@ -21,14 +21,7 @@ public:
 };
 }
 
-class AsciiString
-{
-public:
-	~AsciiString() { releaseBuffer(); }
-private:
-	void releaseBuffer();
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Rva007461B0RefCounted
 {

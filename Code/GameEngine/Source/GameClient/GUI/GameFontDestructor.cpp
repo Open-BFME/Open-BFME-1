@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 class MemoryPoolObject
 {
@@ -6,14 +6,7 @@ public:
 	virtual void memoryPoolAnchor();
 };
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class GameFont : public MemoryPoolObject
 {

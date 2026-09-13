@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/asciistring_outofline /Ireference/shims/sweep
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/asciistring_outofline /Ireference/shims/sweep /ICode/Libraries/Source/WWVegas/WWLib
 
 // BFME WeatherSetting assignment.  The retail body is the same concrete
 // ScienceInfoBase-headed layout used by the neighboring setting assignments:
@@ -9,15 +9,7 @@ typedef int Int;
 typedef float Real;
 typedef unsigned char Bool;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other); // retail 0x00887C90
-
-private:
-	void *m_bfmeData;
-};
+#include "ascii_string.h"
 
 class ScienceInfoBase
 {

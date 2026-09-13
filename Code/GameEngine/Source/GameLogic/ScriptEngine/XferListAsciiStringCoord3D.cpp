@@ -23,23 +23,7 @@ struct Coord3D
 	float z;
 };
 
-class AsciiString
-{
-public:
-	AsciiString(void) : m_data(0) {}
-	AsciiString(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&that);
-	}
-	~AsciiString(void)
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 struct AsciiStringCoord3DPair
 {

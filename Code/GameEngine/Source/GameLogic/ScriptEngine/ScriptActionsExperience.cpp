@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // The four experience and level actions:
 //
 //   0x002F11E0  doUnitGainLevel            UNIT_GAIN_LEVEL
@@ -20,12 +20,7 @@ class Team;
 class ScriptActionParameter;
 class ExperienceLevel;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

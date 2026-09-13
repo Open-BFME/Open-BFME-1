@@ -28,23 +28,7 @@ typedef char Char;
 typedef int Int;
 typedef bool Bool;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString( const char *s )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase( s );
-	}
-
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class File
 {

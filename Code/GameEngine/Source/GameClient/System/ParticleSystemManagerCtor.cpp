@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // ParticleSystemManager constructor, retail 0x005CBF60 (224 bytes).
 // The retail vtable string at 0x0110FE14 names FXParticleSystemManager.
@@ -49,11 +49,7 @@ namespace rts
 	template <class T> struct hash {};
 }
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 typedef std::hash_map<AsciiString, ParticleSystemTemplate *, rts::hash<AsciiString>,
 	std::equal_to<AsciiString> > ParticleTemplateMap;

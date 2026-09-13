@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x00183990 is the three-argument constructor for
 // AIFollowPathAsTeamState.  The caller passes the state machine, a Bool, and
 // the name "AIFollowPathAsTeamState"; vtable 0x01099C08 confirms the class.
@@ -17,13 +17,7 @@ private:
 	volatile bool m_value;
 };
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text) : m_data(text) {}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class StateMachine;
 class Object;

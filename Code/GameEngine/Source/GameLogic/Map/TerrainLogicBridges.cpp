@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // readable body of ?deleteBridge@TerrainLogic@@UAEXPAVBridge@@@Z: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
 // readable body of ?deleteBridges@TerrainLogic@@IAEXXZ: Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
@@ -71,10 +71,7 @@ public:
 // Only its size is visible from these four bodies; it is here so Bridge's
 // members land where retail's do.
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
 struct BridgeInfo

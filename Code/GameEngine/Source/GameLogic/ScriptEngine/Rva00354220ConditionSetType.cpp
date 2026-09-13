@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Near-twin of Condition::setConditionType (twin 0x00355D10,
 // Condition_setConditionType_Thunk.cpp): identical parameter-rebuild shape,
 // but getConditionTemplate sits at vtable slot 0x28 here instead of 0x2c --
@@ -8,14 +8,7 @@
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	void *m_data;
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D

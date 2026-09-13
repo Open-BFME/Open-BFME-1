@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME5: EnragedBehavior module-data constructor.
 //
@@ -8,14 +8,7 @@
 
 #include <vector>
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class EnragedBehaviorModuleDataBase
 {

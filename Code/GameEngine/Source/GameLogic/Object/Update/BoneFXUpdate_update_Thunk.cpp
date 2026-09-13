@@ -1,6 +1,6 @@
 // ?update@BoneFXUpdate@@UAE?AW4UpdateSleepTime@@XZ
 // clean reconstruction of retail 0x00289580, 467 bytes
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -22,10 +22,7 @@ class FXList;
 class ObjectCreationList;
 class ParticleSystemTemplate;
 
-class AsciiString
-{
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class GameClientRandomVariable
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef int Int;
 typedef unsigned short UnsignedShort;
@@ -13,27 +13,7 @@ struct BfmeAsciiStringData
 	UnsignedShort m_pad;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	Int getLength() const { return m_data ? m_data->m_len : 0; }
-	const char *str() const { return m_data ? (const char *)(m_data + 1) : ""; }
-	Int compare(const AsciiString &other) const
-	{
-		Int otherLength = other.getLength();
-		const char *otherData = other.str();
-		Int thisLength = getLength();
-		const char *thisData = str();
-		Int shorter = thisLength < otherLength ? thisLength : otherLength;
-		Int result = memcmp(thisData, otherData, shorter);
-		if (result != 0)
-			return result;
-		return thisLength - otherLength;
-	}
-private:
-	BfmeAsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 struct BfmeAttributeNamedEntry
 {

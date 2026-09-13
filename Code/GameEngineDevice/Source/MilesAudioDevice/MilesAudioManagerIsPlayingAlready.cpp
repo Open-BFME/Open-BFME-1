@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #include <list>
@@ -14,26 +14,7 @@ struct BfmeAsciiStringData
 	char data[1];
 };
 
-class AsciiString
-{
-public:
-	int compare(const AsciiString &other) const
-	{
-		const AsciiString *self = this;
-		const AsciiString *that = &other;
-		int thatLength = that->m_data ? that->m_data->length : 0;
-		const char *thatText = that->m_data ? &that->m_data->data[0] : (const char *)"";
-		int selfLength = self->m_data ? self->m_data->length : 0;
-		const char *selfText = self->m_data ? &self->m_data->data[0] : (const char *)"";
-		int count = selfLength < thatLength ? selfLength : thatLength;
-		int result = memcmp(selfText, thatText, count);
-		if (result != 0)
-			return result;
-		return selfLength - thatLength;
-	}
-
-	BfmeAsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 class AudioEventRTS
 {

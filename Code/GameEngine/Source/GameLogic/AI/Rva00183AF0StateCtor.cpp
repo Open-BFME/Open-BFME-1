@@ -8,17 +8,11 @@
 // 0x01099C08, so this source keeps an address-derived class spelling rather
 // than conflating the two constructors.  The base-name literal in this body
 // is the proven retail string "AIMoveToState".
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-class AsciiString
-{
-public:
-	AsciiString( const char *text ) : m_data( text ) {}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class StateMachine;
 class Object;

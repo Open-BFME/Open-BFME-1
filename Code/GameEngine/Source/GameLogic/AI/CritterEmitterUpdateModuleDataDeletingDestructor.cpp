@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // Retail's CritterEmitterUpdateModuleData vtable at 0x010A39F0 names this
@@ -9,13 +9,7 @@
 
 struct CritterEmitterPod { int data[2]; };
 
-class AsciiString
-{
-public:
-	~AsciiString();
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class CritterEmitterUpdateModuleDataInner
 {

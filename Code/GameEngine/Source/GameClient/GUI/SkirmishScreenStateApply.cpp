@@ -1,11 +1,6 @@
-// cl: /O2 /DNDEBUG /MD /EHsc
+// cl: /O2 /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-class AsciiString
-{
-public:
-	void *m_data;
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 class GameWindow
 {

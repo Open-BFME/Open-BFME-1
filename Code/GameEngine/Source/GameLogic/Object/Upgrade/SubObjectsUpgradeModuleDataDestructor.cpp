@@ -1,19 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #include <vector>
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString();
-	AsciiString(const AsciiString &other);
-	~AsciiString();
-	AsciiString &operator=(const AsciiString &other);
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class ReplacementModel
 {

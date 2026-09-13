@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?getMapDir@MapCache@@QBE?AVAsciiString@@XZ: Code/GameEngine/Source/GameClient/MapUtil.cpp
 // readable body of ?getMapExtension@MapCache@@QBE?AVAsciiString@@XZ: Code/GameEngine/Source/GameClient/MapUtil.cpp
 // readable body of ?findMap@MapCache@@QAEPBVMapMetaData@@VAsciiString@@@Z: Code/GameEngine/Source/GameClient/MapUtil.cpp
@@ -15,18 +15,7 @@
 // would call ??0?$StringBase@D@@AAE@PBD@Z instead, and the two are different
 // addresses. Merging those two in as well would have to unpick that first.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	AsciiString(const AsciiString &other);
-	~AsciiString();
-	void toLower();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
 class MapMetaData

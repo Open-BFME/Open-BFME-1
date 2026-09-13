@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Identity evidence: AIStateMachine's constructor calls this 201-byte body;
 // its two retail literals are "AIFollowWaypointPathState" and
 // "AIAttackFollowMachine", matching the upstream constructor exactly.
@@ -19,13 +19,7 @@ private:
 	volatile bool m_value;
 };
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text) : m_data(text) {}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class StateMachine;
 class Object;

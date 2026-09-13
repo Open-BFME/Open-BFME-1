@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Address-derived: 0.853 difflib match to the landed
 // ??1W3DTerrainVisualBase@@UAE@XZ (Code/GameEngineDevice/Source/W3DDevice/
@@ -34,15 +34,7 @@ private:
 	unsigned char m_pad[ 0x24C - 0x218 - 4 ];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class _bfme_AptGameWindow : public GameWindow, public Gen_dtor_004654c0Base
 {

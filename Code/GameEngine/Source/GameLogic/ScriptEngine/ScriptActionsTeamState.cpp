@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // The four actions that change a team's own record:
 //
 //   0x002F23F0  doSetTeamState                    m_state at +0x18
@@ -11,15 +11,7 @@
 // touch four different parts of Team, which is why merging them is worth doing --
 // the four fields were only ever described one file at a time.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	void set(const AsciiString &that);
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

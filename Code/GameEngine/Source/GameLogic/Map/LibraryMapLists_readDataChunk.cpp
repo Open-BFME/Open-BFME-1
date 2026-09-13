@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #include <vector>
@@ -19,16 +19,7 @@ class DataChunkInfo
 {
 };
 
-class AsciiString
-{
-public:
-	AsciiString(void) : m_data(0) {}
-	AsciiString(const AsciiString &source);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class LibraryMapsParser
 {

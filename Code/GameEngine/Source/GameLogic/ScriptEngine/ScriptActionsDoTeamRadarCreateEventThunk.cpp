@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 typedef float Real;
@@ -16,11 +16,7 @@ struct Coord3D
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-private:
-    char *m_text;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

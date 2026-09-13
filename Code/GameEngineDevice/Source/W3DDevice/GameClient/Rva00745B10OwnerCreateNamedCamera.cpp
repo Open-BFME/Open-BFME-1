@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // The primary vftable 0x011217A0 places this method at slot 112.
 // Its body allocates the named camera record constructed at 0x00741830.
 
@@ -10,11 +11,7 @@ struct Coord3D
 	Real z;
 };
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Rva00741830
 {

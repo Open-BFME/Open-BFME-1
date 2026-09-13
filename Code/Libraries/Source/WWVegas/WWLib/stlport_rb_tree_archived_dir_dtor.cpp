@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: _STL::_Rb_tree<AsciiString, pair<const AsciiString,
 // ArchivedDirectoryInfo> >::~_Rb_tree, retail 0x009C9570, 83 bytes. The body
@@ -15,11 +15,7 @@
 // node base, leaves 0x20 for pair<const AsciiString, ArchivedDirectoryInfo>.
 // AsciiString is one pointer, so ArchivedDirectoryInfo is the remaining 28.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_bfmeData;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ArchiveFileSystem.h
 class ArchivedDirectoryInfo

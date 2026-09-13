@@ -1,19 +1,11 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ??0Script@@QAE@XZ: Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
 // BFME's Script predates the additional Zero Hour action-comment field.  Keep
 // the retail layout local so the later reference header cannot shift members.
 
 class Xfer;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() : m_text( 0 ) {}
-	~AsciiString();
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
 class Snapshot

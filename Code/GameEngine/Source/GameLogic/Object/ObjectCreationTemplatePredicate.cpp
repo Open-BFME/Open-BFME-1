@@ -1,11 +1,6 @@
-// cl: /DNDEBUG /DWIN32 /MD
+// cl: /DNDEBUG /DWIN32 /MD /ICode/Libraries/Source/WWVegas/WWLib
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class ThingTemplate;
 

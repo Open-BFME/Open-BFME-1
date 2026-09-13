@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: ParseWorldTextBlock (retail 0x003B8610 174 B; a gap claimed through
 // its own exception text).  With no INI or instance it throws INIException(3
 // "ParseWorldTextBlock::Invalid data passed in."); otherwise the record below is built inline filled through
@@ -26,16 +26,7 @@ public:
 	void initFromINI( void *what, const FieldParse *parseTable );
 };
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data( 0 ) {}
-	~AsciiString() { releaseBuffer(); }
-
-private:
-	void releaseBuffer( void );
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Rva003B8610Record
 {

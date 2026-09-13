@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: HordeSiegeEngineContainModuleDataBase's destructor, retail
 // 0x0022B030, 132 bytes. The body carried only a machine byte-dump row; the
@@ -51,15 +51,7 @@ struct Gen_t_0022b000_p8cd
 	char m_bfmeBody[8];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();						// retail 0x00887940
-
-private:
-	char *m_bfmeData;
-};
+#include "ascii_string.h"
 
 class HordeSiegeEngineContainModuleDataMemberA
 {

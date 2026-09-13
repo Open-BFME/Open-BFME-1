@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /ICode/Libraries/Source/WWVegas/WWLib
 // BFME W3DView::cameraModFinalMoveTo, retail 0x0073C1B0 (228 bytes).
 //
 // The public identity is established by the named ScriptActions caller for
@@ -21,15 +21,7 @@ typedef bool Bool;
 // The upstream AsciiString occupies one pointer-sized word in each camera
 // path record.  Its lifetime is owned by the real camera-path object; this
 // method only reads/writes the proven Coord3D prefix.
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &other);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct Coord3D
 {

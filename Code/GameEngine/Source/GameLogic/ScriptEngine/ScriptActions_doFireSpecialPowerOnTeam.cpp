@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // FIRE_SPECIAL_POWER_ON_TEAM at retail RVA 0x002F8340.
 
 typedef bool Bool;
@@ -13,11 +13,7 @@ struct Coord3D
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

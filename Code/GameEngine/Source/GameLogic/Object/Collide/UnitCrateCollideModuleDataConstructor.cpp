@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: UnitCrateCollideModuleData's constructor, retail 0x002F1B10, 87
 // bytes, from the zh_sweep packet for that address.
@@ -11,18 +11,7 @@
 // The unwind slot is written twice, 0 for the base and 1 once the string is
 // standing, because the assignment is a call that can throw.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() { m_bfmeData = 0; }
-	~AsciiString();
-
-	AsciiString &operator=(const AsciiString &other);	// retail 0x00887C90
-
-private:
-	char *m_bfmeData;
-};
+#include "ascii_string.h"
 
 extern AsciiString TheBfmeCrateNameDefault;			// 0x01336E50
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/objectdlink /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // readable body of ?doTeamChangeObjectStatus@ScriptActions@@IAEXPAVParameter@@H_N@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 
@@ -32,10 +32,7 @@ private:
 
 typedef BitFlags<86> ObjectStatusMaskType;
 
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

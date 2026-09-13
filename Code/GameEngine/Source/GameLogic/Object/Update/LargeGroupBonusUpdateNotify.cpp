@@ -1,15 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x00297820: LargeGroupBonusUpdate helper sitting between the
 // constructor at 0x00297640 and destructor at 0x00297930. Walks a 4-byte
 // vector at module-data +0x20/+0x24 and invokes a sink from object vtable
 // slot +0x28.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class S4Sink004135C0
 {

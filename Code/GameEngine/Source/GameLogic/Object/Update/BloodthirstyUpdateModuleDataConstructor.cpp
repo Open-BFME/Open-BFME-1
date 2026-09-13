@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: BloodthirstyUpdateModuleData's constructor, retail 0x00286EC0,
 // 119 bytes. The body carried only a machine byte-dump row;
@@ -17,15 +17,7 @@
 
 typedef int Int;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_bfmeData;
-};
+#include "ascii_string.h"
 
 extern AsciiString TheBfmeCrateNameDefault;			// 0x01336E50
 

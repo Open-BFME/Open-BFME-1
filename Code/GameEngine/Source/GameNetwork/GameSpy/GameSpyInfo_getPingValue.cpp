@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 #include <stdlib.h>
 
@@ -12,12 +12,7 @@ struct BfmePingStringData
 	char m_text[1];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	BfmePingStringData *m_data;
-};
+#include "ascii_string.h"
 
 struct BfmePingString
 {

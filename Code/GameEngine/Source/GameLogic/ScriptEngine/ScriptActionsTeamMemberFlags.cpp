@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/objectdlink /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // readable body of ?doTeamSetRepulsor@ScriptActions@@IAEXABVAsciiString@@_N@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 //
@@ -15,11 +15,7 @@
 typedef int Int;
 typedef bool Bool;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

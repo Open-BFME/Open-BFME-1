@@ -1,17 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Clean C++ body for the BFME ScriptAction destructor at 0x00354330.
 // The ScriptAction constructors and duplicate body use vtable 0x010E84E0.
 
 void __cdecl operator delete(void *);
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct Coord3D
 {

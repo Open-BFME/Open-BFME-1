@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD
+// cl: /DNDEBUG /DWIN32 /MD /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?doNamedSetStoppingDistance@ScriptActions@@IAEXABVAsciiString@@M@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doNamedGuard@ScriptActions@@IAEXABVAsciiString@@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 //
@@ -30,11 +30,7 @@ enum CommandSourceType { CMD_FROM_SCRIPT = 1 };
 
 struct Coord3D { Real x, y, z; };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 template<int NUMBITS>
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h

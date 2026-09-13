@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // Authentic constructors for the two worker master-state wrappers.  Their
@@ -7,14 +7,7 @@
 // inlines them into WorkerStateMachine's constructor.
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const char *text) : m_data(text) {}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class StateMachine;
 

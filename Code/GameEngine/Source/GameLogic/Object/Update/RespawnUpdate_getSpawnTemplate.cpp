@@ -1,9 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class ThingTemplate;
 

@@ -1,19 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ??1Shell@@UAE@XZ: Code/GameEngine/Source/GameClient/GUI/Shell/Shell.cpp
 // Open-BFME: Shell::~Shell, retail 0x0057F7A0, 253 bytes.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SubsystemInterface.h
 class SubsystemInterface

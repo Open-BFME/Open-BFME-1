@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // GameSlot::reset is called by the retail GameSlot constructor at 0x0061F0C0.
 // The BFME layout extends the Zero Hour slot with an AsciiString at +0x2C and
@@ -6,14 +6,7 @@
 // adjacent reset stores in their source order while preserving VC7.1's shared
 // -1 value for the remaining fields.
 
-class AsciiString
-{
-public:
-	void clear();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct GameSlotConnectInfo
 {

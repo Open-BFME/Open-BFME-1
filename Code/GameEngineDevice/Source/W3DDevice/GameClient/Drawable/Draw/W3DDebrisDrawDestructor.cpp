@@ -1,15 +1,8 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	void *m_buffer;
-};
+#include "ascii_string.h"
 
 class DrawableModule
 {

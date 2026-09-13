@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Shared BFME map-object chunk writer.  The retail strings and field order
 // match the canonical WorldBuilder map writer: location, angle, flags, name,
@@ -15,11 +15,7 @@ struct Coord3D
 	Real z;
 };
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Dict
 {

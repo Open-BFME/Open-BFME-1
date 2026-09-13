@@ -1,18 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Clean C++ body for the BFME Condition destructor at 0x00352D20.
 // The vtable and field order are fixed by Condition's constructor at
 // 0x00357CC0 and the complete vtable at 0x010E84DC.
 
 void __cdecl operator delete(void *);
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct Coord3D
 {

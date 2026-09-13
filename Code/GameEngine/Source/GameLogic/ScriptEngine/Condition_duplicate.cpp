@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Real BFME Condition::duplicate body at RVA 0x00357D30.
 //
 // Identity is independently established by the matched OrCondition::duplicate
@@ -11,19 +11,7 @@
 typedef int Int;
 typedef bool Bool;
 
-class AsciiString
-{
-public:
-	AsciiString &operator=( const AsciiString &other )
-	{
-		set( other );
-		return *this;
-	}
-	void set( const AsciiString &other );
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct Coord3D
 {

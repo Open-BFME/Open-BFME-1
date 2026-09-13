@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: FlightDeckBehavior::RunwayInfo's destructor, retail 0x002BC7A0,
 // 90 bytes. The body carried only a machine byte-dump row; the symbols.csv pin
@@ -15,15 +15,7 @@
 // The frame stores this before the first destruction because the iterator call
 // needs an unwind record, and the unwind slot goes 0 then -1 across the two.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();						// retail 0x00887940
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 class Coord3D

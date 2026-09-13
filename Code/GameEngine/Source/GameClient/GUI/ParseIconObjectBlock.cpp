@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME7: ParseIconObjectBlock (retail 0x0060B710 209 B; the name is the
 // exception text's own): with no INI it throws INIException(3
@@ -17,15 +17,7 @@ typedef float Real;
 
 struct FieldParse;
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data( 0 ) {}
-	AsciiString &operator=( const char *text );
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class INIException
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
@@ -17,14 +17,7 @@ public:
 	void initFromINI( void *object, const void *fieldTable );
 };
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data( 0 ) {}
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class TransitionWindow
 {

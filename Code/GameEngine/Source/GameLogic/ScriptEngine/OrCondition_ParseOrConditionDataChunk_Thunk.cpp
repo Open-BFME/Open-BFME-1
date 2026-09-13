@@ -1,15 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: retail OrCondition chunky parser in C++.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-private:
-	unsigned int m_data;
-};
+#include "ascii_string.h"
 
 class OrConditionAllocation
 {

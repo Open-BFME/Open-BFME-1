@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // BFME GameSpyConfig layout probe for the 0x00629F90 destructor body.
 
@@ -5,14 +6,7 @@
 #include <set>
 #include <vector>
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class GameSpyConfigInterfaceDtorBase
 {

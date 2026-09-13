@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: W3DTruckDraw constructor at retail 0x0077FB20.
 // The BFME vehicle layout carries three 12-byte particle handles and two
 // 0x70-byte AudioEventRTS members after the scripted-model base.
@@ -115,11 +115,7 @@ private:
 	int m_60;
 };
 
-class AsciiString
-{
-public:
-	Char *m_data;
-};
+#include "ascii_string.h"
 
 extern AsciiString TheEmptyString;
 

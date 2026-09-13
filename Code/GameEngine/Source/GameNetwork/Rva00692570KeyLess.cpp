@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Binary less over a 12-byte key: unsigned primary at +0, AsciiString at +4.
 // thiscall functor, two by-ref arguments, ret 8. Unsigned trichotomy then
 // AsciiString::compare via the ILT at 0x000220C5.
@@ -5,23 +6,7 @@
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
 #pragma intrinsic(memcmp)
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	int compare(const AsciiString &str) const;
-
-private:
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		char data[1];
-	};
-
-	Header *m_data;
-};
+#include "ascii_string.h"
 
 struct Rva00692570Key
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: _STL::_Rb_tree<Int, pair<const Int, AsciiString> >::_M_insert,
 // retail 0x000AA290, 176 bytes. The body carried only a machine byte-dump row;
@@ -22,11 +22,7 @@ typedef int Int;
 
 struct BfmeRbTreeInsertAnchorHelper;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_bfmeData;
-};
+#include "ascii_string.h"
 
 
 namespace _STL

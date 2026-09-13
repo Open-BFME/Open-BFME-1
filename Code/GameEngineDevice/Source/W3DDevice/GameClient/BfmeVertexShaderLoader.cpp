@@ -21,23 +21,7 @@ extern "C" __declspec(dllimport) int __stdcall HeapFree(void *, unsigned long, v
 extern "C" __declspec(dllimport) void __stdcall OutputDebugStringA(const char *);
 #define OutputDebugString OutputDebugStringA
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString( const char *s )
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase( s );
-	}
-
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 struct FileInfo
 {

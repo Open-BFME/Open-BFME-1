@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/objectdlink /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: clean C++ conversion of ScriptActions::doTeamFlash.
 //
 // The team walk uses the BFME Object DLINK pointer-to-member shape from
@@ -32,11 +32,7 @@ struct RGBColor
 	}
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

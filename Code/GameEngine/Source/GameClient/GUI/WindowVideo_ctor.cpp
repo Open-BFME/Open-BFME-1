@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // WindowVideo::WindowVideo, retail 0x00498130. BFME dropped the video-stream
 // pointer that sits between the buffer and the name in the reference layout.
 
@@ -17,18 +17,7 @@ enum WindowVideoStates
 class GameWindow;
 class VideoBuffer;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() : m_text( 0 ) {}
-	~AsciiString();
-	void clear() { releaseBuffer(); }
-
-private:
-	void releaseBuffer();
-	char *m_text;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/WindowVideoManager.h
 class WindowVideo

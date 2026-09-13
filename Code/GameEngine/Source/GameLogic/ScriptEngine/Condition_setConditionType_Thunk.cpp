@@ -1,17 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?setConditionType@Condition@@QAEXW4ConditionType@1@@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/Scripts.cpp
 
 void *__cdecl operator new(unsigned int);
 void __cdecl operator delete(void *);
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	void *m_data;
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D

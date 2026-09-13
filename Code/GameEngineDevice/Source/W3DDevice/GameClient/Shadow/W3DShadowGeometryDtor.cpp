@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 #define MAX_SHADOW_CASTER_MESHES 160
 
@@ -31,15 +31,7 @@ private:
 struct AsciiStringData;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(void);
-	~AsciiString(void);
-
-private:
-	AsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 class W3DShadowGeometryMesh
 {

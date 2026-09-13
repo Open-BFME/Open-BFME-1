@@ -1,5 +1,5 @@
 // ?onObjectCreated@GarrisonContain@@MAEXXZ
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // The canonical GarrisonContain source and vtable identify this callback.
@@ -11,11 +11,7 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 class ThingTemplate;
 class Team;
 class Object;

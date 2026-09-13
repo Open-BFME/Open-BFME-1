@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?onEnter@TurretAIIdleState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/TurretAI.cpp
 // readable body of ?setTurretTargetObject@TurretAI@@QAEXPAVObject@@_N@Z: Code/GameEngine/Source/GameLogic/AI/TurretAI.cpp
 // readable body of ?startRotOrPitchSound@TurretAI@@AAEXXZ: Code/GameEngine/Source/GameLogic/AI/TurretAI.cpp
@@ -50,15 +50,7 @@ typedef unsigned int AudioHandle;
 class Weapon;
 class TurretAI;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString {
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AudioEventRTS.h
 class AudioEventRTS {

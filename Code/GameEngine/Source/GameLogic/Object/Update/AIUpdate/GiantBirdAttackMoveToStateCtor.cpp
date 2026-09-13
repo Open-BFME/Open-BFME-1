@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // GiantBirdAttackMoveToState constructor.  The retail constructor directly
 // invokes the State base with the normal-flight name, installs the derived
@@ -6,13 +6,7 @@
 
 #include "../../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
-class AsciiString
-{
-public:
-	AsciiString( const char *text ) : m_data( text ) {}
-
-	StringBase<char> m_data;
-};
+#include "ascii_string.h"
 
 class Rva000A19E0StateBase
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // The t-grid record at 0x00776240 is an anonymous 0xbc-byte value type.  Its
@@ -6,14 +6,7 @@
 // are the original string, vector, tree, and array members; the helper calls
 // are the already-ledgered incremental-link thunks for those member types.
 
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other);
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 struct Raw10
 {

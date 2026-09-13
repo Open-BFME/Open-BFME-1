@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /O2
+// cl: /DNDEBUG /DWIN32 /MD /O2 /ICode/Libraries/Source/WWVegas/WWLib
 
 struct lua_State;
 
@@ -30,15 +30,7 @@ struct LuaDrawableState
 
 extern LuaDrawableState *g_obj12F060C;
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class AudioEventRTS
 {

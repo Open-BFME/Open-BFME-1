@@ -1,15 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail's SlavedUpdateModuleData vtable at 0x0108E730 names this scalar
 // deleting destructor in slot zero. Its call target is the independently
 // matched destructor body at 0x00126980.
 
-class AsciiString
-{
-	char *m_data;
-public:
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 class UpdateModuleData
 {

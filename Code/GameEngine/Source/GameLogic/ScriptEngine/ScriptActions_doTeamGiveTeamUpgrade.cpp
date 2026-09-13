@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME: TEAM_GIVE_TEAM_UPGRADE at retail RVA 0x002F8880.
 //
 // The source team supplies the first member of kind 0x34.  Its upgrade mask
@@ -10,12 +10,7 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

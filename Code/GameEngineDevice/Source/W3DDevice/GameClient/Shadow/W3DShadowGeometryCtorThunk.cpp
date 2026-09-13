@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: lift MASM dump to standalone C++ thunk.
 
 #define MAX_SHADOW_CASTER_MESHES 160
@@ -37,17 +37,7 @@ struct AsciiStringData;
 
 // BFME drift: the geometry name is a StringBase-derived string object at +0x10,
 // not Zero Hour's inline char[2*W3D_NAME_LEN].
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(void) : m_data(0) {}
-	~AsciiString(void);
-	const char *str(void) const;
-
-private:
-	AsciiStringData *m_data;
-};
+#include "ascii_string.h"
 
 class W3DShadowGeometryMesh
 {

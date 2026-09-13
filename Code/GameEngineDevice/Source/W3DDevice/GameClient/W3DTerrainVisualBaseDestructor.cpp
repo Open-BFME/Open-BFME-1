@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // BFME's TerrainVisual base is Snapshot + SubsystemInterface followed by the
 // filename string.  The empty body is the Generals/Zero Hour source shape;
@@ -6,15 +6,7 @@
 // base destruction, and final Snapshot vtable restoration seen in retail.
 class Xfer;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeSnapshotBase
 {

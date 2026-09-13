@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?setFont@SuperweaponInfo@@QAEXABVAsciiString@@H_N@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // readable body of ?drawName@SuperweaponInfo@@QAEXHHHH@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
 // readable body of ?drawTime@SuperweaponInfo@@QAEXHHHH@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
@@ -29,15 +29,7 @@ typedef bool Bool;
 
 class GameFont;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/DisplayString.h
 class DisplayString

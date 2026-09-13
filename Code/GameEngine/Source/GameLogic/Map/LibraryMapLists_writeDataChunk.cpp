@@ -1,16 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // BFME writes the nested LibraryMapLists and LibraryMaps chunks from this record array.
 
-class AsciiString
-{
-public:
-	AsciiString(void) : m_data(0) {}
-	AsciiString(const AsciiString &source);
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class DataChunkOutput
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Shell::popImmediate, retail 0x0057F4E0.
 
 typedef bool Bool;
@@ -6,14 +6,7 @@ typedef int Int;
 
 class GameWindow;
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class SubsystemInterface
 {

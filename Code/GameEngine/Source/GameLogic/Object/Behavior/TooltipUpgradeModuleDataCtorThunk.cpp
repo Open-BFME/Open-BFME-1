@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: TooltipUpgrade module-data constructor.
 //
 // The named friend_newModuleData factory at retail 0x0012BC30 allocates 0x78
@@ -16,17 +16,7 @@ private:
 	unsigned char m_data[ 0x68 ];
 };
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data( 0 ) {}
-	~AsciiString() { releaseBuffer(); }
-	void set( const AsciiString &other );
-
-private:
-	void releaseBuffer();
-	char *m_data;
-};
+#include "ascii_string.h"
 
 extern AsciiString TheEmptyString;
 

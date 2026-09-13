@@ -1,21 +1,11 @@
-// cl: /DNDEBUG /MD /O2 /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /O2 /EHsc /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME: TEAM_EXECUTE_SEQUENTIAL_SCRIPT(_LOOPING) at retail RVA
 // 0x002F4E80.  The two dispatch arms share this team sequential-script body.
 
 typedef bool Bool;
 typedef int Int;
 
-class AsciiString
-{
-public:
-	AsciiString() : m_text(0) {}
-	AsciiString(const AsciiString &that);
-	~AsciiString();
-	void set(const AsciiString &that);
-
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class Team;
 class Script;

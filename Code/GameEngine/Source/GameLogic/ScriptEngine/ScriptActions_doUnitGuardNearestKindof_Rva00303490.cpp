@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // ScriptActions::doUnitGuardNearestKindof, retail RVA 0x00303490 (381B).
@@ -19,11 +19,7 @@ typedef unsigned int UnsignedInt;
 // This declaration keeps the one-pointer BFME AsciiString layout.  The
 // getUnitNamed slot takes the script parameter by reference, so no temporary
 // StringBase copy or cleanup is part of this body.
-class AsciiString
-{
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 struct Coord3D
 {

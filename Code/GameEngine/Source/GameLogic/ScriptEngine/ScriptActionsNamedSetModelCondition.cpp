@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
 
 // Readable reconstruction of the BFME UNIT_SET_MODELCONDITION action.
 //
@@ -13,10 +13,7 @@ typedef int Int;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 enum ModelConditionFlagType
 {

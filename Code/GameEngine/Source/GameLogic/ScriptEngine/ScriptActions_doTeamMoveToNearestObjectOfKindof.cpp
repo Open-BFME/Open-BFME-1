@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // The action template names TEAM_MOVE_TO_NEAREST_OBJECT_OF_KINDOF.
 // Retail RVA 0x002FC800 finds the nearest object with the requested kind bit
@@ -13,11 +13,7 @@ typedef float Real;
 typedef unsigned short PlayerMaskType;
 typedef unsigned int UnsignedInt;
 
-class AsciiString
-{
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

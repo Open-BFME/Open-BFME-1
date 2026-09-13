@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // The action template at index 400 names TEAM_GUARD_NEAREST_KINDOF.
 // Retail RVA 0x002FCC90 finds the nearest object with the requested kind bit
@@ -14,11 +14,7 @@ typedef unsigned short PlayerMaskType;
 typedef unsigned int UnsignedInt;
 
 // This declaration keeps the one-pointer BFME AsciiString layout.
-class AsciiString
-{
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

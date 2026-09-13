@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // BFME script-action handler at retail RVA 0x002EFA10, fuzzy twin (ratio 0.902)
 // of ScriptActions::doCameraTetherNamed (0x002EDB50, ScriptActions_doCameraTetherNamed.cpp).
 // Same getUnitNamed/setCameraLock/setCameraLockDrawableID/snapToCameraLock shape, but
@@ -13,11 +13,7 @@ typedef bool Bool;
 typedef unsigned int ObjectID;
 typedef unsigned int DrawableID;
 
-class AsciiString
-{
-private:
-	char *m_text;
-};
+#include "ascii_string.h"
 
 class BfmeDrawableWithID
 {

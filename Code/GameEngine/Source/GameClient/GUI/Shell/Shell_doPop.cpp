@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 
@@ -16,11 +16,7 @@ protected:
     char m_name[4];
 };
 
-class AsciiString
-{
-private:
-    void *m_data;
-};
+#include "ascii_string.h"
 
 class AnimateWindowManager;
 class ShellMenuSchemeManager;

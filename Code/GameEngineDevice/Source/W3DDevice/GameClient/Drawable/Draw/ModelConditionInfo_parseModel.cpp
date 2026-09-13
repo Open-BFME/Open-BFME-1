@@ -1,19 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: clean reconstruction of the Model field parser at retail 0x00773170.
 
 extern "C" __declspec(dllimport) int __cdecl _stricmp( const char *left, const char *right );
 
-class AsciiString
-{
-	public:
-	AsciiString( const char *text );
-	~AsciiString() { releaseBuffer(); }
-
-	private:
-	void releaseBuffer( void );
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class INI
 {

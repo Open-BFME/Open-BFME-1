@@ -1,17 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Exact C++ reconstruction of the generated destructor at retail 0x001A7350.
 // The recovered layout is deliberately local: a vptr, an unknown word, the
 // AsciiString at +8, and the owned polymorphic member at +0x8c.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Gen_dtor_001a87f0_Owned
 {

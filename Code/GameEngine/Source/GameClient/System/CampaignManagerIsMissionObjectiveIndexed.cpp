@@ -1,5 +1,5 @@
 // ?isMissionObjectiveIndexed@CampaignManager@@QAEEH@Z
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 extern "C" void _ReadWriteBarrier( void );
 #pragma intrinsic(_ReadWriteBarrier)
@@ -11,11 +11,7 @@ struct Rva003BDF70Span
 	int size() const { return m_end - m_begin; }
 };
 
-class AsciiString
-{
-public:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class LivingWorldRegion
 {

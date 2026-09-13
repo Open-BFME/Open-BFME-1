@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 class Thing;
 class ModuleData;
@@ -78,18 +78,7 @@ public:
 	}
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString( const char *text );
-	AsciiString( const AsciiString &that );
-	~AsciiString();
-	AsciiString &operator=( const AsciiString &that );
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct AsciiStringListNode
 {

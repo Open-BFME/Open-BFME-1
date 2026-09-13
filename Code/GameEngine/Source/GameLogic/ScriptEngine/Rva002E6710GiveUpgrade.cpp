@@ -1,4 +1,4 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: Lua binding at 0x002E6710 resolves an object ID, looks up an
 // upgrade by name, gives it to the object, and returns one on success.
 // The adjacent Lua binding and the 0x002E6710 family record identify the
@@ -12,16 +12,7 @@ extern "C" const char *lua_tostring(lua_State *state, int index);
 
 unsigned Rva00990030Lookup(lua_State *state, int index);
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString() { releaseBuffer(); }
-
-private:
-	void releaseBuffer();
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BFMERetailAsciiString;
 

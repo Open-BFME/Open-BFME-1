@@ -1,17 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x001901F0: constructor storing BFME water texture names.
 // Image/resource names inside a ctor do not identify the owning class;
 // this type is RVA-derived.
 
 void *__cdecl operator new[](unsigned int size);
 
-class AsciiString
-{
-public:
-	void set(const AsciiString &other);
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class RetailLayoutString
 {

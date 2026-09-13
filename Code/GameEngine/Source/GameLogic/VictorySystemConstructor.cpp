@@ -26,16 +26,7 @@ public:
 	virtual void loadPostProcess() = 0;
 };
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString() { releaseBuffer(); }
-
-private:
-	void releaseBuffer();
-	void *m_data;
-};
+#include "ascii_string.h"
 
 struct FactionVictoryParameters
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // BFME's W3DTerrainVisual is a 0x20-byte multiple-inheritance object.  The
 // generated queue pointed at 0x0073104B, five bytes before this destructor's
@@ -7,14 +7,7 @@
 
 class Xfer;
 
-class AsciiString
-{
-public:
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeSnapshotBase
 {

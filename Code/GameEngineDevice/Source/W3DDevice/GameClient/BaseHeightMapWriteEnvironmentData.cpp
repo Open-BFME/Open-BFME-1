@@ -1,12 +1,10 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // BaseHeightMapRenderObjClass::writeEnvironmentData, retail 0x006C8F60.
 // The body sits between BaseHeightMapRenderObjClass::updateCenter and xfer.
 // Its field offsets match the BFME BaseHeightMap layout, and the chunk name
 // is the retail EnvironmentData string.
 
-class AsciiString
-{
-    void *m_data;
-};
+#include "ascii_string.h"
 
 class DataChunkOutput
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink /ICode/Libraries/Source/WWVegas/WWLib
 // Clean C++ recovery of TEAM_WANDER_IN_PLACE.
 // Retail RVA 0x00301FE0 (134 bytes).  script_engine.cpp sets
 // m_actionTemplates[237].m_internalName to "TEAM_WANDER_IN_PLACE", and the
@@ -12,11 +12,7 @@
 
 typedef bool Bool;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

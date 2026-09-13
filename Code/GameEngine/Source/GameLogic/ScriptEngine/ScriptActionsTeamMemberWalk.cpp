@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?doAffectObjectPanelFlagsTeam@ScriptActions@@IAEXABVAsciiString@@0_N@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 // readable body of ?doTeamStop@ScriptActions@@IAEXABVAsciiString@@_N@Z: Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp
 //
@@ -15,11 +15,7 @@
 
 typedef bool Bool;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class BfmeStringArgBase
 {

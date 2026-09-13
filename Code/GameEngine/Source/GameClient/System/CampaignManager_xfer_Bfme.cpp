@@ -22,31 +22,7 @@ struct XferVersion
     UnsignedByte m_currentVersion;
 };
 
-class AsciiString
-{
-public:
-    AsciiString() : m_data(0) {}
-
-    AsciiString(const AsciiString &source)
-    {
-        ((StringBase<char> *)this)->StringBase<char>::StringBase(
-            *(const StringBase<char> *)&source);
-    }
-
-    ~AsciiString()
-    {
-        releaseBuffer();
-    }
-
-    void set(const AsciiString &source)
-    {
-        ((StringBase<char> *)this)->set(*(const StringBase<char> *)&source);
-    }
-
-private:
-    void releaseBuffer();
-    char *m_data;
-};
+#include "ascii_string.h"
 
 class Xfer
 {

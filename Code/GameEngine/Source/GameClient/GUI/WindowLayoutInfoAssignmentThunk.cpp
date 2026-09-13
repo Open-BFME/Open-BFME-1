@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /ICode/Libraries/Source/WWVegas/WWLib
 // Lift the WindowLayoutInfo::operator= naked dump to clean C++.
 //
 // There is no hand-written body here: retail copies every member in
@@ -24,15 +24,7 @@ typedef void (*WindowLayoutInitFunc)(WindowLayout *, void *);
 typedef void (*WindowLayoutUpdateFunc)(WindowLayout *, void *);
 typedef void (*WindowLayoutShutdownFunc)(WindowLayout *, void *);
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other);	///< retail body at 0x00887C90
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // std::list<GameWindow *>; only its assignment is reached from here.
 class GameWindowList

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // BFME W3DPropDraw::reactToTransformChange, retail 0x00759560.
 // The implementation is the upstream W3DPropDraw.cpp body.  The adjacent
@@ -28,11 +28,7 @@ struct Coord3D
 
 class Matrix3D;
 
-class AsciiString
-{
-public:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class Drawable
 {

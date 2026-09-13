@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // Open-BFME: STLport _Rb_tree<Gen_..._m12cd, V>::_M_lower_bound, one 364-byte
@@ -26,34 +26,7 @@ typedef bool Bool;
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2, unsigned int count);
 #pragma intrinsic(memcmp)
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	int compare(const AsciiString &str) const
-	{
-		const int len = str.m_data ? str.m_data->length : 0;
-		const char *data = str.m_data ? &str.m_data->data[0] : "";
-		const int myLen = m_data ? m_data->length : 0;
-		const char *myData = m_data ? &m_data->data[0] : "";
-		int result = memcmp(myData, data, myLen < len ? myLen : len);
-		if (result == 0) {
-			result = myLen - len;
-		}
-		return result;
-	}
-
-private:
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		char data[1];
-	};
-
-	Header *m_data;
-};
+#include "ascii_string.h"
 
 // Gen_t_0019a8e0_m12cd / Gen_t_0019bca0_m12cd from Code/gen_small/fam_009.cpp:
 // a 12-byte key with a declared copy ctor/dtor -- two AsciiStrings (the

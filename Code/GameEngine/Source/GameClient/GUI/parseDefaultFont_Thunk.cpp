@@ -1,18 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Byte-exact reconstruction of the file-local default-font parser.
 
 class GameFont;
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	~AsciiString() { freeBytes(); }
-
-private:
-	void freeBytes();
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class File
 {

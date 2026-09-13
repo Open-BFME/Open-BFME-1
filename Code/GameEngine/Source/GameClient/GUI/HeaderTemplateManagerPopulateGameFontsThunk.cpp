@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?populateGameFonts@HeaderTemplateManager@@AAEXXZ: Code/GameEngine/Source/GameClient/GUI/HeaderTemplate.cpp
 // Lift the HeaderTemplateManager::populateGameFonts __emit thunk to clean C++.
 //
@@ -20,12 +20,7 @@ class GameFont;
 
 // Embedded by value in HeaderTemplate: retail passes its address with
 // lea eax,[esi+8], not the stored word, so this cannot be a pointer field.
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/HeaderTemplate.h
 class HeaderTemplate

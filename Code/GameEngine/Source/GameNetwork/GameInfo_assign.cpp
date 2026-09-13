@@ -1,15 +1,8 @@
-// cl: /EHs-c-
+// cl: /EHs-c- /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef int Int;
 
-class AsciiString
-{
-public:
-	AsciiString &operator=(const AsciiString &other);
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class GameSlot;
 

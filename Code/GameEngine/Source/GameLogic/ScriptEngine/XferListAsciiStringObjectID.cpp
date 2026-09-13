@@ -17,30 +17,7 @@ struct XferVersion
 	unsigned short m_padding;
 };
 
-class AsciiString
-{
-public:
-	AsciiString(void) : m_data(0) {}
-	AsciiString(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&that);
-	}
-	~AsciiString(void)
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-
-	AsciiString &operator=(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::operator=(
-			*(const StringBase<char> *)&that);
-		return *this;
-	}
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 class Xfer
 {

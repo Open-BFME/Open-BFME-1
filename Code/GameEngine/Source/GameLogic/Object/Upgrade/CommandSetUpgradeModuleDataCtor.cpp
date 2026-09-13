@@ -1,19 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // ModuleFactory's verified allocator fixes the BFME object at 0x74 bytes.
 // EA's class declaration and the clean destructor independently place the
 // UpgradeModuleData subobject at +0x08 and its AsciiString at +0x70.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString() : m_data( 0 ) {}
-	~AsciiString();
-	AsciiString &operator=( const AsciiString &other );
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 extern AsciiString TheBfmeCrateNameDefault;
 

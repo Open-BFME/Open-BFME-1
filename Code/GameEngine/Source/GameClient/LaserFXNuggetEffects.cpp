@@ -1,4 +1,4 @@
-// cl: /O2 /Ob0 /DNDEBUG /MD /EHsc
+// cl: /O2 /Ob0 /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef int Int;
 
@@ -24,11 +24,7 @@ class ClientUpdateModule
 {
 };
 
-class AsciiString
-{
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class NameKeyGenerator
 {

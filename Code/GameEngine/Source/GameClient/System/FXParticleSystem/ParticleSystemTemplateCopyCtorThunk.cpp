@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 class AsciiString;
 
@@ -8,20 +8,7 @@ public:
 	void construct(const AsciiString *other);
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &other)
-	{
-		const AsciiString *source = &other;
-		((AsciiStringCopyCtorShim *)this)->construct(source);
-	}
-	~AsciiString();
-
-private:
-	char *m_data;
-};
+#include "ascii_string.h"
 
 namespace FXParticleSystem
 {
