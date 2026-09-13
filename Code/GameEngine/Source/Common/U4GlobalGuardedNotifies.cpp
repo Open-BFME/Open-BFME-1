@@ -117,7 +117,7 @@ public:
 	void Set_Rotation( const Matrix3 &rotation );
 	// Retail takes this snapshot in a fixed load/store sequence before
 	// replacing its rotation, so the view preserves those observable accesses.
-	volatile float m_bfme00;
+	volatile float Row;
 	volatile float m_bfme01;
 	volatile float m_bfme02;
 	volatile float m_bfme03;
@@ -179,7 +179,7 @@ void U4Target0060C2C0::hand( void *payload )
 	{
 		primary->prepare();
 		Matrix3D matrix;
-		matrix.m_bfme00 = primary->m_bfmeMatrix.m_bfme00;
+		matrix.Row = primary->m_bfmeMatrix.Row;
 		matrix.m_bfme01 = primary->m_bfmeMatrix.m_bfme01;
 		matrix.m_bfme02 = primary->m_bfmeMatrix.m_bfme02;
 		matrix.m_bfme03 = primary->m_bfmeMatrix.m_bfme03;

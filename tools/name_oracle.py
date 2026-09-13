@@ -567,7 +567,13 @@ def main():
             with open(ROOT / path, "r", encoding="utf-8", newline="") as fh:
                 text = fh.read()
             for _, _, owner, _, old, new, _, _ in [t for t in todo if t[0] == path]:
-                if len(re.findall(rf"\b{re.escape(old)}\b\s*(?:\[[^\]]*\])?\s*;", text)) > 1:
+                # Count DECLARATIONS, not every mention that ends in a semicolon.
+                # `m_f04 = that.m_f04;` is an assignment, and counting it as a second
+                # declaration refused ten renames in SegLineRendererClassAssignThunk
+                # where the member is declared exactly once.
+                if len(re.findall(
+                        rf"^\s*[A-Za-z_][\w:<>*&\s]*?\b{re.escape(old)}\b"
+                        rf"\s*(?:\[[^\]]*\])?\s*;", text, re.M)) > 1:
                     # The same placeholder spelling declared in two structs of one file
                     # sits at two different offsets; a file-wide substitution would put
                     # one struct's name into the other. Refuse the row, not the file.

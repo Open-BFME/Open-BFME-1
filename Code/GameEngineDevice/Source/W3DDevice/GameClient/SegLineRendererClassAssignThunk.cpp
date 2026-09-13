@@ -19,21 +19,21 @@ public:
 
 private:
     TextureBaseClass *m_texture;
-    unsigned int m_f04;
-    unsigned int m_f08;
-    unsigned int m_f0C;
+    unsigned int Shader;
+    unsigned int Width;
+    unsigned int Color;
     unsigned int m_f10;
     unsigned int m_f14;
     unsigned int m_f18;
-    unsigned int m_f1C;
+    unsigned int SubdivisionLevel;
     unsigned int m_f20;
     unsigned int m_f24;
-    unsigned int m_f28;
+    unsigned int MergeAbortFactor;
     unsigned int m_f2C;
     unsigned int m_f30;
     unsigned int m_f34;
     unsigned int m_f38;
-    unsigned int m_f3C;
+    unsigned int UVOffsetDeltaPerMS;
     unsigned int m_f40;
     unsigned int m_f44;
 };
@@ -48,21 +48,21 @@ SegLineRendererClass &SegLineRendererClass::operator=(const SegLineRendererClass
     if (m_texture)
         m_texture->Release_Ref();
     m_texture = that.m_texture;
-    m_f04 = that.m_f04;
-    m_f08 = that.m_f08;
-    m_f1C = that.m_f1C;
-    m_f0C = that.m_f0C;
+    Shader = that.Shader;
+    Width = that.Width;
+    SubdivisionLevel = that.SubdivisionLevel;
+    Color = that.Color;
     m_f10 = that.m_f10;
     m_f14 = that.m_f14;
     m_f18 = that.m_f18;
     m_f20 = that.m_f20;
     m_f24 = that.m_f24;
-    m_f28 = that.m_f28;
+    MergeAbortFactor = that.MergeAbortFactor;
     m_f2C = that.m_f2C;
     m_f30 = that.m_f30;
     m_f34 = that.m_f34;
     m_f38 = that.m_f38;
-    m_f3C = that.m_f3C;
+    UVOffsetDeltaPerMS = that.UVOffsetDeltaPerMS;
     m_f40 = that.m_f40;
     m_f44 = that.m_f44;
     return *this;
