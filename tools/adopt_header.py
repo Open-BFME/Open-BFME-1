@@ -50,16 +50,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 BLOCKED = ROOT / "reverse/header_adopt_blocked.tsv"
 
-# type -> (include spelling, directory to add to `// cl:`, scalar members it has).
-# Every one of these is the ONLY header in the tree that defines that type. Types
-# with two or more -- Coord3D has three, GameLogic three -- are not listed: which
-# one is canonical is a judgement about the game, and the byte gate cannot make
-# it, since it only says a spelling compiles the same, never that it is right.
-HEADERS = {
-    "AsciiString": ("ascii_string.h", "Code/Libraries/Source/WWVegas/WWLib", 1),
-    "UnicodeString": ("unicode_string.h", "Code/Libraries/Source/WWVegas/WWLib", 1),
-    "StringBase": ("string_base.h", "Code/Libraries/Source/WWVegas/WWLib", 1),
-}
+# The types this tool may touch, DERIVED rather than listed: a type qualifies
+# when exactly ONE header in the tree defines it. 62 types are defined by two or
+# more headers that disagree -- Coord3D has three and coord3d.h even gives it a
+# base class the others do not -- and the byte gate cannot choose between them,
+# because it says a spelling compiles to the same bytes, never that it is right.
+# The header's own scalar-member count is read from the header too, so adding a
+# type is not a hand-edit of a table that can drift out of step with it.
+AREAS = ("Code/GameEngine", "Code/GameEngineDevice", "Code/Libraries")
+
 
 CL_LINE = re.compile(r"^(//\s*cl:.*)$", re.M)
 MEMBER = re.compile(r"^\s*[A-Za-z_][\w:<>*&\s]*?\b(m_\w+)\s*(\[[^\]]*\])?\s*;", re.M)
@@ -70,6 +69,47 @@ TYPE_BODY = re.compile(r"^[ \t]*(?:class|struct)[ \t]+(\w+)\b[^{;]*\{", re.M)
 # The shim, with the `template <typename T>` line above it when there is one --
 # StringBase is a template in all 431 of its TU-local copies, and replacing the
 # class alone would leave that line hanging over an #include.
+@functools.lru_cache(maxsize=1)
+def headers():
+    """type -> (include spelling, /I directory, scalar members the header has).
+
+    Derived, not listed. A type qualifies only when exactly ONE header defines
+    it; the member count comes from that header, so the two can never drift
+    apart. `want` is the number of non-static, non-array data members the class
+    declares at depth 1 -- the layout a TU-local shim has to agree with.
+    """
+    # Two headers define AsciiString and UnicodeString, so the rule below would
+    # drop them -- but the choice is already settled on evidence, not taste:
+    # ascii_string.h has 507 includers against module_factory.h's 2, and the two
+    # agree on layout. Curated entries are decisions somebody made and wrote down.
+    out = {
+        "AsciiString": ("ascii_string.h", "Code/Libraries/Source/WWVegas/WWLib", 1),
+        "UnicodeString": ("unicode_string.h", "Code/Libraries/Source/WWVegas/WWLib", 1),
+    }
+    defining = {}
+    for path in (ROOT / "Code").rglob("*.h"):
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for match in TYPE_BODY.finditer(text):
+            defining.setdefault(match.group(1), []).append(path)
+    for name, paths in defining.items():
+        if name in out or len(paths) != 1:
+            continue                       # two headers disagreeing is a judgement
+        path = paths[0]
+        body = shim(path.read_text(encoding="utf-8", errors="replace"), name)
+        if not body:
+            continue
+        members = MEMBER.findall(body.group(1))
+        # An ARRAY member is an opaque pad -- a claim about size, not about
+        # fields -- so a shim matching one proves nothing. Any number of scalar
+        # members is fine: blocker() makes the shim agree with this exact count,
+        # and the byte gate verifies every file individually anyway.
+        if not members or any(a for _, a in members):
+            continue
+        rel = path.relative_to(ROOT).as_posix()
+        out[name] = (path.name, rel[:rel.rindex("/")], len(members))
+    return out
+
+
 def shim(text, name):
     return re.search(rf"^[ \t]*(?:template[^\n]*\n)?[ \t]*class {name}\s*\{{(.*?)\n\}};\n",
                      text, re.S | re.M)
@@ -108,7 +148,7 @@ def blocker(text, name, want_members):
     members = MEMBER.findall(found.group(1))
     if len(members) != want_members or any(a for _, a in members):
         return "layout is not the header's"
-    include, incdir, _ = HEADERS[name]
+    include, incdir, _ = headers()[name]
     clash = (brought_in(include, incdir) - {name}) & \
         {m.group(1) for m in TYPE_BODY.finditer(text)}
     if clash:
@@ -188,7 +228,7 @@ def offenders(paths):
         if rel in exempt:
             continue
         text = (ROOT / rel).read_text(encoding="utf-8", newline="", errors="replace")
-        for kind, (_include, _incdir, want) in HEADERS.items():
+        for kind, (_include, _incdir, want) in headers().items():
             if not blocker(text, kind, want):
                 out.append((rel, kind))
     return out
@@ -212,7 +252,7 @@ def check():
         return 0
     for rel, kind in bad:
         print(f"{rel}: declares its own `class {kind}` where "
-              f'#include "{HEADERS[kind][0]}" says the same thing')
+              f'#include "{headers()[kind][0]}" says the same thing')
     print("\n  python3 tools/adopt_header.py --fix-staged"
           "   (swaps, byte-gates, records whatever the compiler refuses)")
     return 1
@@ -226,7 +266,7 @@ def fix_staged(jobs):
         return 0
     kinds = dict(bad)
     for rel, kind in bad:
-        include, incdir, _ = HEADERS[kind]
+        include, incdir, _ = headers()[kind]
         text = (ROOT / rel).read_text(encoding="utf-8", newline="")
         (ROOT / rel).write_text(rewrite(text, kind, include, incdir),
                                 encoding="utf-8", newline="")
@@ -254,7 +294,7 @@ def record(entries):
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument("--type", default="AsciiString", choices=sorted(HEADERS))
+    ap.add_argument("--type", default="AsciiString")
     ap.add_argument("--count", type=int, default=40)
     ap.add_argument("--jobs", type=int, default=8)
     ap.add_argument("--commit", action="store_true")
@@ -268,7 +308,9 @@ def main():
         return check()
     if args.fix_staged:
         return fix_staged(args.jobs)
-    include, incdir, want = HEADERS[args.type]
+    if args.type not in headers():
+        raise SystemExit(f"{args.type}: not a type with exactly one defining header")
+    include, incdir, want = headers()[args.type]
 
     known = blocked_paths()
     listed = subprocess.run(
