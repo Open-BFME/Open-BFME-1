@@ -217,3 +217,45 @@ That is ~231 newly illegible files a day. A six-seat naming fleet clears roughly
 files per seat-hour, so a cleanup lane cannot outrun the conversion lane. The naming
 convention has to be right where the file is BORN; everything in this document is
 cheaper applied at conversion time than retrofitted.
+
+## A lane with evidence already in the ledger: aliased base classes
+
+Some invented class names are already PROVED to be a real class, by a pin somebody
+landed: `reverse/symbols.csv` pins the invented class's destructor onto the real
+class's destructor body. That pin is the evidence the naming rule asks for -- the
+address disappears as a reward for evidence, and here the evidence exists.
+
+Measured by matching `??1<Class>@@[UQ]AE@XZ` pins against the matched row that owns
+the target address (non-template, non-nested destructors only -- the class token
+cannot be read off a template mangling with a regex, and trying produced
+"VAsciiString" and "ABV0" as class names):
+
+| | count |
+|---|---|
+| invented classes pinned onto a real class's destructor | 139 |
+| ...of which GENERATOR-minted (`Gen_t_*`, `Gen_uw*`, `Mem<n>`) | 117 |
+| **hand-written, genuinely misnamed** | **22** across 20 real classes |
+
+The 117 are not misnamed and must not be touched: gen_uw's own header says its
+payloads "reproduce a frame slot and a call, never a class identity". Anonymous by
+design is not the same as badly named.
+
+Of the 22, several alias a target that is itself invented (`BfmeHostZB`,
+`BfmeOwnVVE`), so the clean set is about a dozen:
+
+    SubsystemInterface  <- BfmeBase1134, BfmeDtorBase_00077560, Rva004948B0Base
+    RenderObjClass      <- Rva0091FC10MultiBase
+    ModelConditionInfo  <- Gen0013C3F0
+    AIInternalMoveToState <- Gen00172430
+    LZHLCompressor      <- Gen00825550
+    LZHLDecompressor    <- Gen008267E0
+    HLodDefClass        <- Gen0097D800
+    DamageInfo          <- Gen000C3410
+    ServiceHubImpl      <- Gen007EB140
+
+**Why this has not been done.** Renaming a class changes the mangled name of every
+one of its members, so each rename is a large `reverse/functions.csv` edit, not a
+source edit. That is the shape that hides defects when it goes wrong, so it wants a
+green full gate, a byte-verify per touched row, and one class per commit -- not a
+batch. The evidence is banked here so the next attempt starts from the list rather
+than from a survey.
