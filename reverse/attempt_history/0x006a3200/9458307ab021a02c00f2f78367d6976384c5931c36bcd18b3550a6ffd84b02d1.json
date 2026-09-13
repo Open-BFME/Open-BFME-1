@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "9458307ab021a02c00f2f78367d6976384c5931c36bcd18b3550a6ffd84b02d1",
+  "symbol": "?rva006A3200@W3DGameClient@@QAEXI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.89,
+  "source": "// ?rva006A3200@W3DGameClient@@QAEXI@Z\n// partial score=0.89 date=2026-09-12\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n// Retail 0x006A3200. thiscall on W3DGameClient: if the argument is >= 5,\n// createVideoPlayer, stamp two fields, and push_back a 12-byte list node\n// onto the circular list whose sentinel lives at this+0x4C.\n\nclass VideoPlayerInterface\n{\npublic:\n\tunsigned m_flag;\n\tunsigned m_pad;\n\tint m_kind;\n};\n\nnamespace _STL\n{\n\tstruct __new_alloc\n\t{\n\t\tstatic void *allocate(unsigned int n);\n\t};\n}\n\nstruct Rva006A3200Node\n{\n\tRva006A3200Node *m_next;\n\tRva006A3200Node *m_prev;\n\tVideoPlayerInterface *m_player;\n};\n\nclass W3DGameClient\n{\npublic:\n\tVideoPlayerInterface *createVideoPlayer(void);\n\tvoid rva006A3200(unsigned int kind);\n\n\tchar m_pad[0x4C];\n\tRva006A3200Node *m_sentinel;\n};\n\nvoid W3DGameClient::rva006A3200(unsigned int kind)\n{\n\tVideoPlayerInterface *player;\n\tRva006A3200Node *sent;\n\tif (kind < 5)\n\t\treturn;\n\n\tplayer = createVideoPlayer();\n\tplayer->m_kind = kind;\n\tplayer->m_flag = 1;\n\n\tsent = m_sentinel;\n\tRva006A3200Node *node = (Rva006A3200Node *)_STL::__new_alloc::allocate(0xC);\n\tif (&node->m_player)\n\t\tnode->m_player = player;\n\tRva006A3200Node *prev = sent->m_prev;\n\tnode->m_next = sent;\n\tnode->m_prev = prev;\n\tprev->m_next = node;\n\tsent->m_prev = node;\n}\n"
+}

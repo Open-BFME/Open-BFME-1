@@ -22391,3 +22391,4 @@ _Rva0080FD30	0x0080FD30	146	partial	t=24min model=gpt-5.6 exact except one accum
 ?a_00c1fbd0@@YAXXZ	0x00C1FBD0	39	converted	MI dtor second-base +4 this at [ebp-0x10] $L419 jmp ??1Gen_uw_00001c80. t=30m model=grok-4.6 run=20260913T001849Z-767f1306eddb
 ?a_00c52c28@@YAXXZ	0x00C52C28	39	converted	MI dtor second-base +8 $L453 jmp ??1Gen_uwm_00046cb8. t=30m model=grok-4.6 run=20260913T001849Z-767f1306eddb
 ?a_00c3a9f0@@YAXXZ	0x00C3A9F0	39	converted	MI dtor second-base +4 $L439 jmp ??1Gen_uw_000246ae. t=30m model=grok-4.6 run=20260913T001849Z-767f1306eddb
+?rva006A3200@W3DGameClient@@QAEXI@Z	0x006A3200	71	partial	esi save shrink-wrapped past jb; body after prologue is exact list push_back of createVideoPlayer result; t=25min model=grok-4.6 run=20260913T002344Z-d132d46c3775 score=0.89 stash=reverse/attempts/0x006a3200.cpp submitted=0.89 alternative=reverse/attempt_history/0x006a3200/9458307ab021a02c00f2f78367d6976384c5931c36bcd18b3550a6ffd84b02d1.json
