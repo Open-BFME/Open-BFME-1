@@ -1,78 +1,68 @@
-// cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 
-__declspec(naked) void DynamicShroudClearingRangeUpdateCreateGridDecalsBodyThunk()
+struct Coord3D;
+class Player;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameEngine/Object.h
+class Object
 {
-	__asm {
-		_emit 053h
-		_emit 055h
-		_emit 056h
-		_emit 08Bh
-		_emit 0D9h
-		_emit 057h
-		_emit 08Bh
-		_emit 07Ch
-		_emit 024h
-		_emit 01Ch
-		_emit 08Dh
-		_emit 073h
-		_emit 050h
-		_emit 0BDh
-		_emit 01Eh
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 08Bh
-		_emit 0CEh
-		_emit 0E8h
-		_emit 090h
-		_emit 0C1h
-		_emit 0DBh
-		_emit 0FFh
-		_emit 08Bh
-		_emit 04Bh
-		_emit 008h
-		_emit 056h
-		_emit 0E8h
-		_emit 002h
-		_emit 021h
-		_emit 0D9h
-		_emit 0FFh
-		_emit 08Bh
-		_emit 04Ch
-		_emit 024h
-		_emit 018h
-		_emit 050h
-		_emit 08Bh
-		_emit 044h
-		_emit 024h
-		_emit 020h
-		_emit 050h
-		_emit 057h
-		_emit 0E8h
-		_emit 0F4h
-		_emit 090h
-		_emit 0DAh
-		_emit 0FFh
-		_emit 057h
-		_emit 08Bh
-		_emit 0CEh
-		_emit 0E8h
-		_emit 016h
-		_emit 097h
-		_emit 0D7h
-		_emit 0FFh
-		_emit 083h
-		_emit 0C6h
-		_emit 010h
-		_emit 04Dh
-		_emit 075h
-		_emit 0D2h
-		_emit 05Fh
-		_emit 05Eh
-		_emit 05Dh
-		_emit 05Bh
-		_emit 0C2h
-		_emit 00Ch
-		_emit 000h
+public:
+	Player *getControllingPlayer() const;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
+class RadiusDecal
+{
+public:
+	void clear();
+	void setPosition(const Coord3D &);
+
+private:
+	const void *m_template;
+	void *m_decal;
+	unsigned char m_empty;
+	unsigned char m_padding[4];
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/RadiusDecal.h
+class RadiusDecalTemplate
+{
+public:
+	void createRadiusDecal(const Coord3D &, float, const Player *, RadiusDecal &) const;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UpdateModule.h
+class UpdateModule
+{
+protected:
+	Object *getObject() const { return m_object; }
+
+private:
+	unsigned char m_header[8];
+	Object *m_object;
+	unsigned char m_state[0x14];
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DynamicShroudClearingRangeUpdate.h
+class DynamicShroudClearingRangeUpdate : public UpdateModule
+{
+public:
+	void createGridDecals(const RadiusDecalTemplate &, float, const Coord3D &);
+
+private:
+	unsigned char m_stateData[0x30];
+	RadiusDecal m_gridDecal[30];
+};
+
+// ?createGridDecals@DynamicShroudClearingRangeUpdate@@QAEXABVRadiusDecalTemplate@@MABUCoord3D@@@Z
+void DynamicShroudClearingRangeUpdate::createGridDecals(
+	const RadiusDecalTemplate &tmpl, float radius, const Coord3D &position)
+{
+	for (int decal = 0; decal < 30; ++decal)
+	{
+		m_gridDecal[decal].clear();
+		tmpl.createRadiusDecal(position, radius,
+			getObject()->getControllingPlayer(), m_gridDecal[decal]);
+		m_gridDecal[decal].setPosition(position);
 	}
 }
