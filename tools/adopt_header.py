@@ -51,10 +51,12 @@ ROOT = Path(__file__).resolve().parents[1]
 BLOCKED = ROOT / "reverse/header_adopt_blocked.tsv"
 
 # The types this tool may touch, DERIVED rather than listed: a type qualifies
-# when exactly ONE header in the tree defines it. 62 types are defined by two or
-# more headers that disagree -- Coord3D has three and coord3d.h even gives it a
-# base class the others do not -- and the byte gate cannot choose between them,
-# because it says a spelling compiles to the same bytes, never that it is right.
+# when exactly ONE header in the tree defines it. Types with two or more are left
+# out, and MEASURED, that costs nothing: `canonical_header.py` settles 18 of the
+# 39 real ones mechanically, and all 39 hold 13 TU-local copies between them --
+# KeyClass, the one this rule would newly admit, has zero. Multi-header ambiguity
+# reads like the blocker here and is not one; those types are ambiguous BECAUSE
+# they are rare enough that nobody ever copied them into a .cpp.
 # The header's own scalar-member count is read from the header too, so adding a
 # type is not a hand-edit of a table that can drift out of step with it.
 AREAS = ("Code/GameEngine", "Code/GameEngineDevice", "Code/Libraries")
