@@ -3,3 +3,4 @@ Code/GameEngine/Source/Common/ManTheWallsSpecialPowerDestructorThunk.cpp	does no
 Code/GameEngine/Source/Common/CrateTemplate_parseCrateCreationEntryMethodThunk.cpp	byte-red at the new path
 Code/GameEngine/Source/Common/LANGameSlot_getUser_Thunk.cpp	byte-red at the new path
 Code/GameEngine/Source/GameClient/ParticleSystemManager_destroyAttachedSystems.cpp	defines a function no ledger row declares
+Code/GameEngine/Source/GameLogic/AI/PathfinderCellPredicates.cpp	defines a function no ledger row declares
