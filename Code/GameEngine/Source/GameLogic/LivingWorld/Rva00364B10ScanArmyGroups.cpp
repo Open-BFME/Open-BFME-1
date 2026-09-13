@@ -1,24 +1,31 @@
-// ?scanArmyGroups@Rva00364B10LivingWorldPlayerArmyCollection@@QAEHPAVRva00364B10Summary@@_N@Z
-// partial score=0.9 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/campaignmanagerascii /Ireference/shims/moduledata /Ireference/shims/sweep /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 //
-// RohanSam's Living World special-case scan.  The collection's vector is at
-// this+0x18, each player-army record is 0x58 bytes, and each nested army is
-// 0xB4 bytes.  The override/name protocol is the witnessed BFME layout used
-// by the retail branch before it copies the matched army summary.
+// Retail 0x00364B10 (574 B). Collection of 0x58-byte player-army groups at
+// this+0x18 with nested 0xB4 LivingWorldArmy records. RohanSam special-case
+// scan. Address-derived names: no matched caller names the method.
 #include "Common/AsciiString.h"
 
 class UnicodeString
 {
 public:
-	void set( const UnicodeString &source );
-
-	bool isNotEmpty() const
+	void set( const UnicodeString &source )
 	{
-		return m_data != 0 && *reinterpret_cast<const unsigned short *>( reinterpret_cast<const char *>( m_data ) + 4 ) != 0;
+		reinterpret_cast<StringBase<unsigned short> *>( this )->set(
+			*reinterpret_cast<const StringBase<unsigned short> *>( &source ) );
 	}
 
-	public:
+	void *m_data;
+};
+
+class Rva00364B10AsciiSet
+{
+public:
+	void set( const Rva00364B10AsciiSet &source )
+	{
+		reinterpret_cast<StringBase<char> *>( this )->set(
+			*reinterpret_cast<const StringBase<char> *>( &source ) );
+	}
+
 	void *m_data;
 };
 
@@ -74,25 +81,31 @@ public:
 	unsigned char m_field384;
 	char m_unmodelled385[ 3 ];
 	UnicodeString m_field388;
-	UnicodeString m_field38C;
+	Rva00364B10AsciiSet m_field38C;
 };
 
 class LivingWorldArmy;
 
-class Rva00364B10ArmyVector
+namespace _STL
 {
-public:
-	LivingWorldArmy *erase( LivingWorldArmy *first, LivingWorldArmy *last );
-
-	LivingWorldArmy *m_begin;
-	LivingWorldArmy *m_end;
-	LivingWorldArmy *m_capacity;
-	LivingWorldArmy *begin() const { return m_begin; }
-	LivingWorldArmy *end() const { return m_end; }
-	LivingWorldArmy *&endRef() { return m_end; }
+template <class T>
+class allocator
+{
 };
 
-#pragma comment( linker, "/alternatename:?erase@Rva00364B10ArmyVector@@QAEPAVLivingWorldArmy@@PAV2@0@Z=?erase@?$vector@VLivingWorldArmy@@V?$allocator@VLivingWorldArmy@@@_STL@@@_STL@@QAEPAVLivingWorldArmy@@PAV3@0@Z" )
+template <class T, class A>
+class vector
+{
+public:
+	T *erase( T *first, T *last );
+
+	T *m_begin;
+	T *m_end;
+	T *m_capacity;
+};
+}
+
+typedef _STL::vector<LivingWorldArmy, _STL::allocator<LivingWorldArmy> > Rva00364B10ArmyVector;
 
 class LivingWorldArmy
 {
@@ -106,7 +119,7 @@ public:
 	char m_unmodelled40[ 4 ];
 	int m_field44;
 	int m_field48;
-	UnicodeString m_displayName;
+	Rva00364B10AsciiSet m_displayName;
 	char m_unmodelled50[ 0x28 ];
 	UnicodeString m_sourceString;
 	char m_unmodelled7C[ 0x38 ];
@@ -160,7 +173,7 @@ int Rva00364B10LivingWorldPlayerArmyCollection::scanArmyGroups(
 	char *armyEnd;
 	Rva00364B10ArmyGroup *groupValue;
 	unsigned int groupIndex;
-	AsciiString expected( reinterpret_cast<const char *>( 0x010E8F88 ) );
+	AsciiString expected( "RohanSam" );
 	groupValue = m_groups.first();
 	groupIndex = 0;
 
@@ -194,10 +207,10 @@ int Rva00364B10LivingWorldPlayerArmyCollection::scanArmyGroups(
 							summary->m_field378 = 0;
 							summary->m_field384 = 0;
 
-							const UnicodeString *displayName = &army->m_displayName;
+							const Rva00364B10AsciiSet *displayName = &army->m_displayName;
 							if( displayName->m_data != 0 && *reinterpret_cast<const unsigned short *>( reinterpret_cast<const char *>( displayName->m_data ) + 4 ) != 0 )
 							{
-								UnicodeString *summaryDisplayName = &summary->m_field38C;
+								Rva00364B10AsciiSet *summaryDisplayName = &summary->m_field38C;
 								summaryDisplayName->set( *displayName );
 							}
 						}
