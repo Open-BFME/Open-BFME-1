@@ -1,16 +1,12 @@
-// ?d_006c13e0@@YAXXZ
-// partial score=0.95 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/GameClient /ICode/GameEngine/Include/Precompiled
-//
-// Retail 0x006C13E0 blends the color already stored at the destination with a
-// packed source color.  The owner is not named in the retail call graph, so
-// this address-derived free-function identity preserves the proven behavior.
+// ?Rva006C13E0@@YAHPAHHE@Z
+// Retail 0x006C13E0 blends the packed color already stored at the destination
+// with a packed source color scaled by an extra alpha byte.
 
 #include "prerts.h"
 #include "color.h"
 
-// ?Rva006C13E0@@YAXPAHHE@Z
-void Rva006C13E0(Color *color, Color source, UnsignedByte alpha)
+Color Rva006C13E0(Color *color, Color source, UnsignedByte alpha)
 {
 	Color *out = color;
 	UnsignedByte oldAlpha, blue, green, red;
@@ -21,12 +17,7 @@ void Rva006C13E0(Color *color, Color source, UnsignedByte alpha)
 
 	UnsignedByte effectiveAlpha = (UnsignedInt)(sourceAlpha * alpha) / 255;
 	if (oldAlpha == 0 || effectiveAlpha == 255)
-	{
-		UnsignedInt packed = (effectiveAlpha << 24) | (sourceRed << 16) |
-			(sourceGreen << 8) | sourceBlue;
-		*out = (Color)packed;
-		return;
-	}
+		return *out = GameMakeColor(sourceRed, sourceGreen, sourceBlue, effectiveAlpha);
 
 	red = (UnsignedInt)(red * oldAlpha + sourceRed * effectiveAlpha) /
 		(oldAlpha + effectiveAlpha);
@@ -35,6 +26,7 @@ void Rva006C13E0(Color *color, Color source, UnsignedByte alpha)
 	blue = (UnsignedInt)(blue * oldAlpha + sourceBlue * effectiveAlpha) /
 		(oldAlpha + effectiveAlpha);
 	oldAlpha = 255 - (UnsignedInt)((255 - oldAlpha) * (255 - effectiveAlpha)) / 255;
-	UnsignedInt packed = (oldAlpha << 24) | (red << 16) | (green << 8) | blue;
-	*out = (Color)packed;
+	Color result = (Color)(UnsignedInt)blue;
+	result |= (oldAlpha << 24) | (red << 16) | (green << 8);
+	return *out = result;
 }
