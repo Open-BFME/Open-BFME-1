@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // STLport 4.5.3 _Construct at 0x0009EF50 calls the wide StringBase copy at 0x00888400.
 // Keeping the UnicodeString forwarder visible preserves that callee instead
@@ -9,16 +9,7 @@
 
 class UnicodeString;
 
-template <typename T>
-class StringBase
-{
-    friend class UnicodeString;
-
-private:
-    StringBase(const StringBase<T> &source);
-    struct Header;
-    Header *m_data;
-};
+#include "string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

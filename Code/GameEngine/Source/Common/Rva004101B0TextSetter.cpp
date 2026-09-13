@@ -1,4 +1,4 @@
-// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Bfme5TextWidget's by-value UnicodeString setter.  The parameter is compared
 // with the inline StringBase member before the member is replaced and the
@@ -7,22 +7,7 @@
 class UnicodeString;
 class Rva004101B0TextWidget;
 
-template <typename T>
-class StringBase
-{
-public:
-	int compare(const StringBase<T> &other) const;
-	void set(const StringBase<T> &other);
-
-private:
-	friend class UnicodeString;
-	friend class Rva004101B0TextWidget;
-	StringBase();
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class UnicodeString : public StringBase<unsigned short>
 {

@@ -1,23 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: STLport __pop_heap over a twelve-byte element, retail
 // 0x00531A40, 169 bytes.  gen00531D80 calls this with (first, last-1, last-1,
 // *(last-1), comp, 0).  *result = *first goes through StringBase<char>::set
 // at 0x00887C90; the by-value element is then handed to __adjust_heap.
 
-template <class T>
-class StringBase
-{
-public:
-	void set(const StringBase<T> &other);
-
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase(void);
-	T *m_data;
-
-	friend class AsciiString;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>

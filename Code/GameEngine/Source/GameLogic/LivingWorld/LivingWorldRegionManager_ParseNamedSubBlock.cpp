@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // The Region field table registers this callback for LivingWorldRegion.  The
@@ -6,17 +6,7 @@
 // 0x01117258, calls BfmeThingDCG::bfmeGoDCG, then appends the pointer to the
 // campaign vector at instance+0x30.
 
-template <typename Type>
-class StringBase
-{
-	friend class AsciiString;
-
-	StringBase(const Type *text);
-	void releaseBuffer();
-
-private:
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

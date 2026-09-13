@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // IMEManager::updateCandidateList at retail 0x0048D5C0 (592 bytes).
 // Matched openCandidateList(0x0048DCA0)+0x1C calls ILT 0x0000F27C
 // directly to this body; ret 4 at 0x0048D80D ends at 0x0048D810.
@@ -26,17 +26,7 @@ extern "C"
 	void *memset(void *destination, int value, unsigned int size);
 }
 
-template <typename Character>
-class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	void *m_data;
-
-public:
-	void set(const Character *text);
-};
+#include "string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

@@ -1,19 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Lane 28 scratch reconstruction of retail 0x00415D50.
 
 class AsciiString;
 
-template <typename T>
-class StringBase
-{
-    friend class AsciiString;
-
-private:
-    StringBase(const T *text);
-    StringBase(const StringBase<T> &other);
-    void releaseBuffer();
-    void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /GX
+// cl: /DNDEBUG /MD /GX /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef unsigned char UnsignedByte;
 typedef unsigned short UnsignedShort;
@@ -10,19 +10,7 @@ const T &minimum(const T &first, const T &second)
 	return first < second ? first : second;
 }
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	StringBase(const T *str);
-	~StringBase();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

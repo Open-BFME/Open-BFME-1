@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: the vector<ParticleSysBoneInfo> internals -- _M_clear at
 // 0x000A8170, the const-source __copy at 0x000A78A0, _M_allocate_and_copy at
@@ -13,19 +13,7 @@
 #include <vector>
 
 // Only the two members these bodies reach.
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-public:
-	void set(const StringBase<T> &src);			// retail 0x00887C90
-
-private:
-	void releaseBuffer();					// retail 0x00887940
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

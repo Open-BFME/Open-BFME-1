@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Clean C++ reconstruction of the BFME BuffNugget FX constructor.
 // FieldParse at 0x010F2980 names BuffType, IsComplexBuff, six template
 // strings, BuffLifeTime, Extrusion and Color.  The 12-byte tail at +0xE8
@@ -8,14 +8,7 @@ typedef float Real;
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-template <class T>
-class StringBase
-{
-	friend class AsciiString;
-	StringBase(const T *s);
-	~StringBase();
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

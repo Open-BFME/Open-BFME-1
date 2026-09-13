@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Two GameWindow members that sit next to each other in the image, 0x00479660
 // and 0x00479770:
@@ -84,17 +84,7 @@ extern AudioManager *TheAudio;
 
 class UnicodeString;
 
-template <class T>
-class StringBase
-{
-private:
-	friend class UnicodeString;
-
-	StringBase(const StringBase<T> &other);		///< body at 0x00888400
-	~StringBase();								///< body at 0x008881D0
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME: DisconnectMenu::showChat, retail 0x0050EF20, 112 bytes.
 //
 // The reference's body with the lookup gone: BFME keeps the display control in
@@ -14,17 +14,7 @@ typedef bool Bool;
 
 class UnicodeString;
 
-template <typename T>
-class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase(const StringBase<T> &src);			// 0x00888400
-	~StringBase();						// 0x008881D0
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>	// G is unsigned short: MSVC 7.1 without /Zc:wchar_t

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: twenty-six more seeders, unlocked by one observation about the
 // __cdecl hand-over helper: MSVC does not always clean its two arguments at
@@ -10,18 +10,7 @@
 // This batch is helper-heavy: 46 of its hand-overs go through the __cdecl
 // helper rather than a slot on the target.
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase(void);
-	void releaseBuffer(void);
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

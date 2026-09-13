@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?prepareNewGame@GameLogic@@QAEXHW4GameDifficulty@@H@Z: Code/GameEngine/Source/GameLogic/System/GameLogicDispatch.cpp
 
 typedef bool Bool;
@@ -18,17 +18,7 @@ enum GameMode
 
 class AsciiString;
 
-template <class T>
-class StringBase
-{
-private:
-	friend class AsciiString;
-
-	StringBase(const char *text);
-	~StringBase();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public StringBase<char>

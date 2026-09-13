@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: preserve the retail payload layout and STLPort growth path.
 
 extern "C" unsigned int __cdecl strlen(const char *text);
@@ -24,17 +24,7 @@ public:
 
 class AsciiString;
 
-template <typename T>
-class StringBase
-{
-    T *m_text;
-
-    friend class AsciiString;
-    StringBase(const StringBase<T> &that);
-
-public:
-    void set(const T *text, int length);
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

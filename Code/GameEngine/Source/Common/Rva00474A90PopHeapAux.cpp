@@ -1,22 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // STLport __pop_heap_aux over the sixteen-byte record of the neighbouring heap
 // helpers. Retail 0x00474A90 steps back one element and forwards it by value to
 // __pop_heap at 0x004748F0 through the 0x0000561E jump stub.
 
-template <class T>
-class StringBase
-{
-public:
-	void set(const StringBase<T> &other);
-
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase(void);
-	T *m_data;
-
-	friend class AsciiString;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

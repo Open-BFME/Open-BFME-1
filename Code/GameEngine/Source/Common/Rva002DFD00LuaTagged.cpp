@@ -1,4 +1,4 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Lua tagged-value setter. switch(lua_type) writes this+0x04 float (kind 1),
 // this+0x10 AsciiString (kind 4), this+0x08 bool via type-6 lookup (kind 2),
 // or this+0x0C object-id via table lookup (kind 3). Type 6 is EA's
@@ -10,19 +10,7 @@ extern "C" int lua_type(lua_State *state, int index);
 extern "C" double lua_tonumber(lua_State *state, int index);
 extern "C" const char *lua_tostring(lua_State *state, int index);
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-public:
-	void set(const StringBase<T> &other);
-
-private:
-	StringBase(const T *text);
-	void releaseBuffer();
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

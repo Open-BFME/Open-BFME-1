@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Four more of P7ByValueStringSetters.cpp's one-line by-value setters, split
 // out only because their string sits at +4 or +8 -- the four smallest heads in
@@ -22,20 +22,7 @@
 // IDENTITY IS NOT RECOVERED for the owners; each is named for its own address
 // and `char m_bfmeHead[K]` carries the offset and nothing else.
 
-template <class CharType>
-class StringBase
-{
-public:
-	void set( const StringBase &other );		// narrow 0x00887C90, wide 0x00888530
-
-private:
-	~StringBase();				// narrow 0x00887940, wide 0x008881D0
-
-	CharType *m_data;
-
-	friend class AsciiString;
-	friend class UnicodeString;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public StringBase<char>

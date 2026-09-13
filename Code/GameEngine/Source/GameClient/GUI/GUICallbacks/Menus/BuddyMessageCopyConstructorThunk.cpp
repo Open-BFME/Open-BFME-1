@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: BuddyMessage(const BuddyMessage &) copy constructor.
 // Members, in declaration order: UnsignedInt timestamp, GPProfile senderID,
@@ -8,16 +8,7 @@
 // for the narrow strings, StringBase<G> for the wide one), matching the two
 // distinct call targets in the retail thunk.
 
-template <class T>
-class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-
-private:
-	StringBase(const StringBase<T> &that);
-	T *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

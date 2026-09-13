@@ -1,20 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 class Object;
 class Xfer;
 class AsciiString;
 
-template <class T>
-class StringBase
-{
-private:
-	friend class AsciiString;
-
-	StringBase(const T *text);
-	~StringBase();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public StringBase<char>

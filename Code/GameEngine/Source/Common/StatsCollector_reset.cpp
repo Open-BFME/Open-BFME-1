@@ -1,26 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled
+// cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
 
 #include "PreRTS.h"
 
 // The retail body at 0x000A2F60 resets BFME's expanded stats record after it
 // writes the new file header. The file-system call, StatsCollector call chain,
 // field offsets, and GameLogic frame read identify this as StatsCollector::reset.
-template <typename T>
-class StringBase
-{
-    friend class AsciiString;
-
-public:
-    StringBase() : m_data( 0 ) {}
-
-private:
-    StringBase( const StringBase<T> &other );
-    StringBase( const T *text );
-    void releaseBuffer();
-
-public:
-    char *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : public StringBase<char>
 {

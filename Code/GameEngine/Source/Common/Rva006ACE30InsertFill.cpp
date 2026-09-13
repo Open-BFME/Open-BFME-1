@@ -1,14 +1,9 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x006ACE30. Same +0x9C scale / +0xA0 tree / +0x188 48-byte buffer
 // as Rva006ABB80::reset and 0x006B0C50. insert_unique the name; if it was
 // new and the scale is not 1.0f, fill the buffer with 0x02.
 
-template <class T>
-class StringBase
-{
-public:
-	void *m_data;
-};
+#include "string_base.h"
 
 class Rva006AEE00Tree
 {

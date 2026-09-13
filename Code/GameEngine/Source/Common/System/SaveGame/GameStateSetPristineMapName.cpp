@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // GameLogic::startNewGame calls this through ILT 0x0002A0DB at 0x00394435
 // with TheGameState and GlobalData::m_mapName. The reference GameState.h
 // setter and retail's char-string calls identify pristineMapName at +0x1C;
@@ -6,19 +6,7 @@
 
 class AsciiString;
 
-template <typename T>
-class StringBase
-{
-    friend class AsciiString;
-
-public:
-    void set(const StringBase<T> &source);
-
-private:
-    ~StringBase();
-    struct Header;
-    Header *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

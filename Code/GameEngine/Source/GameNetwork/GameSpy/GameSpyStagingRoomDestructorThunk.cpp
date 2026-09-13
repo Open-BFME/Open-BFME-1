@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Six destructible members, destroyed in reverse declaration order with the
 // unwind state counting down 4 to -1.
@@ -21,17 +21,7 @@ private:
 	char *m_data;
 };
 
-template <class T>
-class StringBase
-{
-public:
-	~StringBase() { releaseBuffer(); }
-
-private:
-	void releaseBuffer();
-
-	T *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>

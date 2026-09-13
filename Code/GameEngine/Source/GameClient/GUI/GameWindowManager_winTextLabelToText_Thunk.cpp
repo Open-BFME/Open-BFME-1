@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: clean C++ conversion of GameWindowManager::winTextLabelToText.
 
 struct StringData
@@ -24,16 +24,7 @@ private:
 // call site encodes the base body at 0x00888400
 // (??0?$StringBase@G@@AAE@ABV0@@Z). The delegation has to be visible here
 // for this TU to encode the same call.
-template <typename T>
-class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase(const StringBase<T> &src);
-
-	T *m_str;
-};
+#include "string_base.h"
 
 class UnicodeString
 {

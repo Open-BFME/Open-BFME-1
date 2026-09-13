@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: STLport _Rb_tree<K, V>::_M_insert, the four-argument form, over a
 // string key -- 24 bodies, 183 bytes each but for two that allocate a node too
@@ -32,16 +32,7 @@
 // class with an out-of-line compare.  That was true and it was less than the
 // bytes said: the compare's own address was sitting in the displacement.
 
-template <class Character>
-class StringBase
-{
-public:
-	int compare( const StringBase &other ) const;
-	int compareNoCase( const StringBase &other ) const;
-
-protected:
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public StringBase<char>

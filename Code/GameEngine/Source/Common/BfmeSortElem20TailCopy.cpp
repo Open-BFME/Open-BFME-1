@@ -1,4 +1,4 @@
-// cl: /O2 /Ob2 /DNDEBUG /MD /EHsc
+// cl: /O2 /Ob2 /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #include <vector>
@@ -6,16 +6,7 @@
 // The ILT at RVA 0x000266BB is called by the named Rva002E8FC0 copy
 // constructor for its +0x08 member.  Its body is the retail STLport vector
 // copy constructor at RVA 0x002E7320.
-template <class T>
-class StringBase
-{
-public:
-	StringBase( const StringBase<T> &other );
-	~StringBase();
-
-private:
-	T *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

@@ -1,18 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // Open-BFME: STLport median of three for the twelve-byte S4 name record at
 // retail 0x0052FB30. The matched introsort body at 0x00533520 reaches this
 // specialization through ILT 0x000206C6.
 
-template <class T>
-class StringBase
-{
-public:
-	int compareNoCase(const StringBase<T> &other) const;
-
-	void *m_data;
-};
+#include "string_base.h"
 
 struct S4Name
 {

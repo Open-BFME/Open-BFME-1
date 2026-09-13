@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Eleven record copy bodies over one shape: a struct whose members include an
 // AsciiString, copied either by its own copy constructor (__thiscall, `ret 4`,
@@ -45,17 +45,7 @@ public:
 	void *m_held;
 };
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase( const StringBase<T> &src );		// retail 0x00887B60
-	~StringBase();					// retail 0x00887940
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // BFME's implementation follows the released Zero Hour routine, returning
 // the shared empty string when WinSock setup or hostname discovery fails.
 
@@ -21,18 +21,7 @@ void __cdecl operator delete(void *);
 // forwarder at 0x0005EE50 and it holds nothing of its own, so a caller that
 // copies a string encodes the base body at 0x00887B60 directly. The delegation
 // has to be visible here for this TU to encode the same call.
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase(const StringBase<T> &src);
-
-	struct Header;
-
-	Header *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

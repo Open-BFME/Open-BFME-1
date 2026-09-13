@@ -1,23 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x007409A0: copy-assignment of a 0x14-byte record. On this != other,
 // assign the AsciiString at +0xC from a by-value getName(), then copy the
 // 12-byte POD at +0 and the trailing dword at +0x10.
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-public:
-	void set(const StringBase &other);
-
-private:
-	StringBase(const StringBase &other);
-	~StringBase();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: WeaponTemplate::operator=, retail 0x001E80A0 size 1185.
 // newOverride at 0x001E9AF0 calls this after the default ctor (ILT 0x0001AF3C).
 // Layout is the BFME 0x53C record: AsciiString name at +8, nameKey at +0x0C,
@@ -11,15 +11,7 @@
 // Scalar slots retain raw integer storage to preserve retail copy codegen;
 // INI names identify properties, not recovered C++ types.
 
-template <typename T>
-class StringBase
-{
-public:
-	void set(const StringBase &src);
-
-private:
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString
 {

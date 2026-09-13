@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // STLport 4.5.3 algorithm reconstruction; external helper declarations keep
 // the independently compiled retail partition and partial-sort specializations.
 //
@@ -10,15 +10,7 @@
 // owner address-derived; the family evidence does not prove a higher-level
 // game class for this COMDAT.
 
-template <class T>
-class StringBase
-{
-public:
-	int compareNoCase(const StringBase<T> &other) const;
-
-private:
-	void *m_bfmeData;
-};
+#include "string_base.h"
 
 struct S4Named0052E880
 {

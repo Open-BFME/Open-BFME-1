@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /GX /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /GX /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
@@ -8,19 +8,7 @@
 extern "C" __declspec(dllimport) int __cdecl _vsnprintf(
 	char *, unsigned int, const char *, va_list);
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-public:
-	StringBase(const StringBase<T> &source);
-
-private:
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString
 {

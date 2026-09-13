@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Rva003C1A50::start, retail 0x003C1AD0, 306 bytes.
 //
@@ -6,15 +6,7 @@
 // TheWritableGlobalData +0x94 campaign name or MordorCampaign/GondorCampaign
 // from the bool argument, then owner notify/clear.
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

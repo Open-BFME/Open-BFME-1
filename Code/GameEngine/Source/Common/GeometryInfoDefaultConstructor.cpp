@@ -1,4 +1,4 @@
-// cl: /EHsc
+// cl: /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: GeometryInfo default constructor, retail 0x001B3C60.
 //
@@ -23,19 +23,7 @@ enum GeometryType
 	GEOMETRY_BOX
 };
 
-template <typename T>
-class StringBase
-{
-public:
-	~StringBase()
-	{
-		releaseBuffer();
-	}
-
-private:
-	void releaseBuffer();
-	void *m_data;
-};
+#include "string_base.h"
 
 struct GeometryShape
 {

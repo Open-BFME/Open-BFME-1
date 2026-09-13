@@ -1,16 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Candidate for the drawable-event manager forwarder at retail 0x006CCC50.
 
-template <class T>
-class StringBase
-{
-friend class AsciiString;
-
-private:
-	StringBase(const StringBase<T> &that);
-	~StringBase();
-	T *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

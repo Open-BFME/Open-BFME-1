@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?init@WinInstanceData@@QAEXXZ: Code/GameEngine/Source/GameClient/GUI/WinInstanceData.cpp
 // readable body of ?setText@WinInstanceData@@QAEXVUnicodeString@@@Z: Code/GameEngine/Source/GameClient/GUI/WinInstanceData.cpp
 // readable body of ?setTooltipText@WinInstanceData@@QAEXVUnicodeString@@@Z: Code/GameEngine/Source/GameClient/GUI/WinInstanceData.cpp
@@ -64,17 +64,7 @@ struct WinTextDrawData
 
 class UnicodeString;
 
-template <class T>
-class StringBase
-{
-private:
-	friend class UnicodeString;
-
-	StringBase(const StringBase<T> &other);		///< body at 0x00888400
-	~StringBase();								///< body at 0x008881D0
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME8: Player::getPlayerDisplayName returns the UnicodeString member at
 // +8. Carried here, not in ControlBarObserver.cpp, because the seven vendored
@@ -17,16 +17,7 @@ public:
 
 // Retail inlines the copy constructor, so the return copy reaches the base body
 // directly; left declared-only, cl emits a call to ??0UnicodeString@@QAE@ABV0@@Z.
-template <typename BfmeWideChar>
-class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase(const StringBase<BfmeWideChar> &src);
-
-	void *m_data;
-};
+#include "string_base.h"
 
 inline UnicodeString::UnicodeString(const UnicodeString &stringSrc)
 {

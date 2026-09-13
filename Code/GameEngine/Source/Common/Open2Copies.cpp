@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Four instances of STLport's random-access `copy` over records whose
 // members include an AsciiString.  Each walks two pointers by the element
@@ -15,19 +15,7 @@
 // the trailing padding: the members below account for every byte the copy
 // touches, and the record is padded out to the stride the loop walks.
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-public:
-	void set( const StringBase<T> &src );		// retail 0x00887C90
-
-private:
-	~StringBase();					// retail 0x00887940
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

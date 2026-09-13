@@ -1,14 +1,6 @@
-// cl: /O2 /Ob1
+// cl: /O2 /Ob1 /ICode/Libraries/Source/WWVegas/WWLib
 
-template <class T>
-class StringBase
-{
-public:
-	void set(const StringBase &other);
-
-private:
-	void *m_bfmeData;
-};
+#include "string_base.h"
 
 struct BfmeSubA100
 {

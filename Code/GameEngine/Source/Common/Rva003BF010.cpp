@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Rva003BF540::run, retail 0x003BF010, 303 bytes.
 //
@@ -6,17 +6,7 @@
 // from 15 then notifyTarget on Glo012F4B98; else isOpen+allowed then hold
 // the arg at +0xC4 until count 0x2D and a non-empty name at arg+0x34.
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-public:
-	bool isEmpty() const;
-private:
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

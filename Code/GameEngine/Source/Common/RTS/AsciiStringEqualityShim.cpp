@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x005A8140, 94 bytes: the target of the AsciiString equality
 // incremental-link thunk, already pinned in symbols.csv as
 // ?equal@AsciiStringEqualityShim@@SA_NABVAsciiString@@0@Z.
@@ -18,15 +19,7 @@
 // Returns are byte-wide throughout (mov al,1 / xor al,al / setl dl), so the
 // result type is bool rather than int.
 
-template <class T>
-class StringBase
-{
-public:
-	int compareNoCase(const StringBase<T> &other) const;	// retail 0x00090570
-
-private:
-	T *m_bfmeData;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

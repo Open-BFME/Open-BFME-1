@@ -1,18 +1,6 @@
-// cl: /DNDEBUG /MD /O2 /EHsc
+// cl: /DNDEBUG /MD /O2 /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-template <class T>
-class StringBase
-{
-public:
-	void set(const StringBase<T> &other);
-
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase(void);
-	T *m_data;
-
-	friend class AsciiString;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

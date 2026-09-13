@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: lift the ParseObjectsDataChunk MASM dump to clean C++.
 //
 // Zero Hour's version is MapUtil.cpp:178 and BFME kept the shape, but changed
@@ -13,17 +13,7 @@ class DataChunkInput;
 struct DataChunkInfo;
 class AsciiString;
 
-template <class T>
-class StringBase
-{
-private:
-	friend class AsciiString;
-
-	StringBase(const char *s);					///< body at 0x00888BC0
-	~StringBase();								///< body at 0x00887940
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : public StringBase<char>

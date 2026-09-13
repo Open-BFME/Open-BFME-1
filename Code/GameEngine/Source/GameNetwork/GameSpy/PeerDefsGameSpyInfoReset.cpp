@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHs-c-
+// cl: /DNDEBUG /MD /EHs-c- /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?reset@GameSpyInfo@@UAEXXZ: Code/GameEngine/Source/GameNetwork/GameSpy/PeerDefs.cpp
 
 // FILE: PeerDefsGameSpyInfoReset.cpp ////////////////////////////////////////
@@ -139,21 +139,7 @@ typedef _STL::_List_base<BuddyMessage, _STL::allocator<BuddyMessage> > BuddyMess
 
 // StringBase<char> is what the calls name: set at 0x00887D20, and clear()
 // expands to the private releaseBuffer at 0x00887940.
-template <class Char>
-class StringBase
-{
-public:
-
-	void set( const Char *s, int len );
-	void clear() { releaseBuffer(); }
-
-private:
-
-	void releaseBuffer();
-
-	Char *m_data;
-
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PersistentStorageThread.h
 class PSPlayerStats

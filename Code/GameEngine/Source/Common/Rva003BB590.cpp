@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #include <vector>
 //
@@ -7,17 +7,7 @@
 // inlined 20-byte push_back. Copy ctor is Rva003B9AD0 (ILT 0x00048923).
 // Dtors: rb_tree at +8 (0x00032FD3) then AsciiString releaseBuffer.
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data( 0 ) {}
-	~StringBase();
-	void set(const StringBase<T> &other);
-	int *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

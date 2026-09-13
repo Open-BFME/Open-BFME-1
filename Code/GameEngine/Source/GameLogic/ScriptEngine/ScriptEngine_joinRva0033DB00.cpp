@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x0033DB00. No matched caller names this helper; the body is
 // helper3398F0(name) + "/" + name. The joining method uses an address-derived name.
@@ -12,21 +12,7 @@ struct StringHeader
 	T data[1];
 };
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-public:
-	void concat(const T *str, int len);
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase &other);
-	~StringBase();
-
-	StringHeader<T> *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

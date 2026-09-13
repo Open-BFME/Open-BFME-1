@@ -1,22 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // STLport __pop_heap over the sixteen-byte record used by the neighbouring
 // heap helpers. Retail 0x004748F0 copies three scalar words and an
 // AsciiString, then calls __adjust_heap at 0x00474330 with the element count.
 
-template <class T>
-class StringBase
-{
-public:
-	void set(const StringBase<T> &other);
-
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase(void);
-	T *m_data;
-
-	friend class AsciiString;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

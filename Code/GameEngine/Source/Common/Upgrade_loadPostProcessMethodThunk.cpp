@@ -1,19 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x00109560 is a global Unicode registry display-name getter.  It was
 // previously misidentified as Upgrade::loadPostProcess, whose reference body
 // is empty and whose this pointer the retail function never reads.
 
-template <typename T>
-class StringBase
-{
-protected:
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &that);
-	~StringBase();
-
-private:
-	void *m_data;
-};
+#include "string_base.h"
 
 class UnicodeString : private StringBase<unsigned short>
 {

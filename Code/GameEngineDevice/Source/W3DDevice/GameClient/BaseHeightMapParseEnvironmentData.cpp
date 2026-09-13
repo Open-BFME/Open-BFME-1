@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // BaseHeightMapRenderObjClass::ParseEnvironmentData, retail 0x00749C20.
 // The BEnvironmentData registration at 0x0074B09E passes thunk 0x00008706,
 // which targets this callback.  Retail reads the terrain floats, force flag,
@@ -7,20 +8,7 @@ typedef float Real;
 typedef unsigned char Byte;
 typedef bool Bool;
 
-template <typename T>
-class StringBase
-{
-public:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase &other);
-	void set(const StringBase &other);
-
-	void *m_data;
-
-private:
-	~StringBase();
-	friend class AsciiString;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

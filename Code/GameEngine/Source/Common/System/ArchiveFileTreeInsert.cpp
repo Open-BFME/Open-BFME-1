@@ -1,15 +1,10 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Complete ArchiveFile pointer-tree insertion at retail RVA 0x00063140.
 // ArchiveFileSystem callers establish the mapped type; node layout and
 // all six callee routes are independently verified.
 
-template <class T>
-class StringBase
-{
-protected:
-	void *m_data;
-};
+#include "string_base.h"
 
 // The four-byte thin AsciiString layout and member compare route are the same
 // view used by the already matched RvaTreeMInsertStringKey.cpp family.

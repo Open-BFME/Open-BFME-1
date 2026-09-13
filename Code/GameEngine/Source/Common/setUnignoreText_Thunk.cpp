@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // BFME's callback uses the one-dword retail string layout.  The helper
 // constructors and release body are shared retail routines; keeping their
@@ -7,15 +7,7 @@
 // copy constructor is an inline forwarder so MSVC records the temporary in
 // the EH frame before loading its this pointer.
 
-template <typename T>
-class StringBase
-{
-    friend class AsciiString;
-
-private:
-    StringBase(const StringBase<T> &other);
-    void *m_data;
-};
+#include "string_base.h"
 
 class BfmeStringLiteralBase
 {

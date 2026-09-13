@@ -1,4 +1,4 @@
-// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /ICode/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x000C1050 is the bounded MapMetaData assignment body.  Its
 // neighboring copy constructor at 0x000C1240 establishes this record's
@@ -10,15 +10,7 @@
 
 typedef unsigned short UnsignedShort;
 
-template <typename T>
-class StringBase
-{
-	friend class MapMetaData;
-private:
-	void set(const StringBase<T> &other);
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class UnicodeString
 {

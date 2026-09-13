@@ -218,3 +218,143 @@ Code/Libraries/Source/WWVegas/WWLib/RvaTreeBoundsAsciiStringNoCase.cpp	AsciiStri
 Code/Libraries/Source/WWVegas/WWLib/TreeLowerBound00093230.cpp	AsciiString	Functions: FAIL 1/1
 Code/Libraries/Source/WWVegas/WWLib/stlport_rb_tree_asciistring_hotkey_insert.cpp	AsciiString	Code\Libraries\Source\WWVegas\WWLib\stlport_rb_tree_asciistring_hotkey_insert.cpp(82) : error C2039: 'bfmeCompare' : is not a member of 'AsciiString'
 Code/GameEngine/Source/GameLogic/ScriptEngine/victory_conditions_create.cpp	AsciiString	PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above)
+Code/GameEngine/Source/Common/Audio/AudioEventRTSAdjustForLocalization.cpp	StringBase	Code\GameEngine\Source\Common\Audio\AudioEventRTSAdjustForLocalization.cpp(59) : error C2039: 'peek' : is not a member of 'StringBase<T>::Header'
+Code/GameEngine/Source/Common/BfmeConv832.cpp	StringBase	Functions: FAIL 1/7
+Code/GameEngine/Source/Common/CreditsMenuInit_Thunk.cpp	StringBase	Code\GameEngine\Source\Common\CreditsMenuInit_Thunk.cpp(38) : error C2446: ':' : no conversion from 'const char *' to 'StringBase<T>::Header *const '
+Code/GameEngine/Source/Common/GeometryInfoCopyConstructor.cpp	StringBase	Z:\home\wacket\Projects\Open-BFME\vendor\stlport\stl\_construct.h(85) : error C2514: 'GeometryShape' : class has no constructors
+Code/GameEngine/Source/Common/GeometryShapeCopyBackward.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/INI/INIAnimation.cpp	StringBase	Functions: FAIL 1/2
+Code/GameEngine/Source/Common/INI/INI_AsciiStringVectorParsers.cpp	StringBase	Code\GameEngine\Source\Common\INI\INI_AsciiStringVectorParsers.cpp(55) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/InGameUI_popupMessage_Thunk.cpp	StringBase	Code\GameEngine\Source\Common\InGameUI_popupMessage_Thunk.cpp(100) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/LANGameInfoDestructorThunk.cpp	StringBase	Code\GameEngine\Source\Common\LANGameInfoDestructorThunk.cpp(52) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/LadderList_loadLocalLaddersMethodThunk.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/LibraryMapParse.cpp	StringBase	Code\GameEngine\Source\Common\LibraryMapParse.cpp(46) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/LivingWorldRegionCtor.cpp	StringBase	Code\GameEngine\Source\Common\LivingWorldRegionCtor.cpp(87) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/MapTransferLoadScreenSetCurrentFilenameThunk.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/ModuleInfoNuggetVector.cpp	StringBase	Functions: FAIL 1/2
+Code/GameEngine/Source/Common/PlayerTemplate_parseProductionVeterancyLevel_Thunk.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Q2TemporaryKeyStores.cpp	StringBase	Code\GameEngine\Source\Common\Q2TemporaryKeyStores.cpp(63) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp	StringBase	Functions: FAIL 4/8
+Code/GameEngine/Source/Common/Q3IntrosortLoop009CDAA0.cpp	StringBase	Code\GameEngine\Source\Common\Q3IntrosortLoop009CDAA0.cpp(11) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Q3LinearInsertAsciiString.cpp	StringBase	Code\GameEngine\Source\Common\Q3LinearInsertAsciiString.cpp(91) : error C2664: 'Gen009CCE50' : cannot convert parameter 2 from 'Q3SortElem4' to 'Q3SortElem4'
+Code/GameEngine/Source/Common/Q3Median009CCB60.cpp	StringBase	Code\GameEngine\Source\Common\Q3Median009CCB60.cpp(25) : error C2248: 'StringBase<T>::m_data' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Q3SortCompareUnderscore.cpp	StringBase	Code\GameEngine\Source\Common\Q3SortCompareUnderscore.cpp(24) : error C2248: 'StringBase<T>::m_data' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Q3UnguardedInsertionSort009CD1A0.cpp	StringBase	Code\GameEngine\Source\Common\Q3UnguardedInsertionSort009CD1A0.cpp(12) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Q4Sort004566F0Comparator.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/RTS/ModuleInfoNuggetConstCopyBody.cpp	StringBase	Functions: FAIL 1/2
+Code/GameEngine/Source/Common/RTS/Player.cpp	StringBase	Code\GameEngine\Source\Common\RTS\Player.cpp(159) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/RTS/TeamPrototypeScripts.cpp	StringBase	Functions: FAIL 1/2
+Code/GameEngine/Source/Common/RecorderClassDestructor.cpp	StringBase	Code\GameEngine\Source\Common\RecorderClassDestructor.cpp(18) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Rva00222380Copy.cpp	StringBase	Code\GameEngine\Source\Common\Rva00222380Copy.cpp(30) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Rva002E8FC0Copy.cpp	StringBase	Code\GameEngine\Source\Common\Rva002E8FC0Copy.cpp(10) : error C2371: 'AsciiString' : redefinition; different basic types
+Code/GameEngine/Source/Common/Rva00367810EntryUpdate.cpp	StringBase	Functions: FAIL 1/2
+Code/GameEngine/Source/Common/Rva003877A0Copy.cpp	StringBase	Code\GameEngine\Source\Common\Rva003877A0Copy.cpp(10) : error C2371: 'AsciiString' : redefinition; different basic types
+Code/GameEngine/Source/Common/Rva0039B560Destructor.cpp	StringBase	Code\GameEngine\Source\Common\Rva0039B560Destructor.cpp(33) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Rva003A89F0Copy.cpp	StringBase	Code\GameEngine\Source\Common\Rva003A89F0Copy.cpp(10) : error C2371: 'AsciiString' : redefinition; different basic types
+Code/GameEngine/Source/Common/Rva003B8850Dtor.cpp	StringBase	Code\GameEngine\Source\Common\Rva003B8850Dtor.cpp(10) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Rva003B9610Ctor.cpp	StringBase	Code\GameEngine\Source\Common\Rva003B9610Ctor.cpp(14) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Rva003B9AD0PairCopyCtor.cpp	StringBase	Code\GameEngine\Source\Common\Rva003B9AD0PairCopyCtor.cpp(15) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Rva003BD700Ctor.cpp	StringBase	Code\GameEngine\Source\Common\Rva003BD700Ctor.cpp(15) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Rva0042F400Copy.cpp	StringBase	Code\GameEngine\Source\Common\Rva0042F400Copy.cpp(10) : error C2371: 'AsciiString' : redefinition; different basic types
+Code/GameEngine/Source/Common/Rva0046FBB0SideIndex.cpp	StringBase	Code\GameEngine\Source\Common\Rva0046FBB0SideIndex.cpp(19) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Rva0054D5A0Ctor.cpp	StringBase	Code\GameEngine\Source\Common\Rva0054D5A0Ctor.cpp(30) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Rva0061A9A0Ctor.cpp	StringBase	Code\GameEngine\Source\Common\Rva0061A9A0Ctor.cpp(39) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/Rva007E3930StringStateCtor.cpp	StringBase	Code\GameEngine\Source\Common\Rva007E3930StringStateCtor.cpp(29) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/S4Cmp00452A50Comparator.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/S4PopHeapAuxElem12.cpp	StringBase	Code\GameEngine\Source\Common\S4PopHeapAuxElem12.cpp(21) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/S4SortElem20Swap.cpp	StringBase	Code\GameEngine\Source\Common\S4SortElem20Swap.cpp(52) : error C2262: 'temporary' : cannot be destroyed
+Code/GameEngine/Source/Common/System/DataChunkInput.cpp	StringBase	Code\GameEngine\Source\Common\System\DataChunkInput.cpp(102) : error C2440: 'static_cast' : cannot convert from 'StringBase<T>::Header *const ' to 'const char *'
+Code/GameEngine/Source/Common/System/DataChunkOutput.cpp	StringBase	Code\GameEngine\Source\Common\System\DataChunkOutput.cpp(31) : error C2039: 'm_len' : is not a member of 'StringBase<T>::Header'
+Code/GameEngine/Source/Common/System/DataChunkTableOfContents.cpp	StringBase	Code\GameEngine\Source\Common\System\DataChunkTableOfContents.cpp(56) : error C2039: 'm_len' : is not a member of 'StringBase<T>::Header'
+Code/GameEngine/Source/Common/System/FileSystem_getFileInfo.cpp	StringBase	Code\GameEngine\Source\Common\System\FileSystem_getFileInfo.cpp(26) : error C2446: ':' : no conversion from 'const char *' to 'StringBase<T>::Header *const '
+Code/GameEngine/Source/Common/System/FunctionLexicon.cpp	StringBase	Code\GameEngine\Source\Common\System\FunctionLexicon.cpp(388) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/Common/System/XferUnicodeStringVector.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/Thing/ThingTemplateGetAssetList.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/VersionConstructor.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/VersionGetAsciiBuildTime.cpp	StringBase	Code\GameEngine\Source\Common\VersionGetAsciiBuildTime.cpp(26) : error C2039: 'm_text' : is not a member of 'StringBase<T>::Header'
+Code/GameEngine/Source/Common/VersionGetAsciiVersion.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/Common/insertPlayerInListbox_Thunk.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/CreditsGetUnicodeString.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/AptPalantirResourceImage.cpp	StringBase	Functions: FAIL 2/2
+Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarPopulateObserverInfoWindow.cpp	StringBase	Code\GameEngine\Source\GameClient\GUI\ControlBar\ControlBarPopulateObserverInfoWindow.cpp(2) : error C3209: '?' : Unicode identifiers are not yet supported
+Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar_doRepopulateBuildTooltipLayout.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/KeyboardOptionsMenuSetKeyDown.cpp	StringBase	Code\GameEngine\Source\GameClient\GUI\GUICallbacks\Menus\KeyboardOptionsMenuSetKeyDown.cpp(18) : error C2504: 'StringBase' : base class undefined
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupReplay_reallySaveReplay_Thunk.cpp	StringBase	Functions: FAIL 1/4
+Code/GameEngine/Source/GameClient/GUI/GUICallbacks/MessageBox.cpp	StringBase	Code\GameEngine\Source\GameClient\GUI\GUICallbacks\MessageBox.cpp(55) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameClient/GUI/GameWindowManagerScript.cpp	StringBase	Code\GameEngine\Source\GameClient\GUI\GameWindowManagerScript.cpp(5447) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameClient/GUI/MapTransferLoadScreenProcessProgress.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/PositionStartSpotsGameInfo.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/Shell/ShellMenuSchemeImageConstructor.cpp	StringBase	Code\GameEngine\Source\GameClient\GUI\Shell\ShellMenuSchemeImageConstructor.cpp(52) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameClient/GUI/Shell/Shell_findScreenByFilename.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GameClientBfmeReset00592B80.cpp	StringBase	Code\GameEngine\Source\GameClient\GameClientBfmeReset00592B80.cpp(146) : error C2248: 'StringBase<T>::releaseBuffer' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameClient/GlobalLanguage_onGameEngineExit.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GlobalLanguage_parseFontDesc.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/HotKeyTranslator_translateGameMessage_Thunk.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/MapMetaData_dtor.cpp	StringBase	Code\GameEngine\Source\GameClient\MapMetaData_dtor.cpp(98) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameClient/MessageStream/HotKeyManager_searchHotKey_Unicode_Thunk.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/MessageStream/MetaMapDestructor.cpp	StringBase	Code\GameEngine\Source\GameClient\MessageStream\MetaMapDestructor.cpp(15) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameClient/System/CampaignManager_parseMissionPart_Thunk.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/System/FXParticleSystem/Q4Sort0034BFC0Comparator.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/System/FXParticleSystem/RenderObjectDrawModuleCtor.cpp	StringBase	Code\GameEngine\Source\GameClient\System\FXParticleSystem\RenderObjectDrawModuleCtor.cpp(46) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameClient/System/FXParticleSystem/RenderObjectDrawModuleInfoCopyCtorThunk.cpp	StringBase	Code\GameEngine\Source\GameClient\System\FXParticleSystem\RenderObjectDrawModuleInfoCopyCtorThunk.cpp(12) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameClient/Terrain/TerrainRoadType_setFXString.cpp	StringBase	Functions: FAIL 2/2
+Code/GameEngine/Source/GameClient/WindowManager_setAptText.cpp	StringBase	Functions: FAIL 2/4
+Code/GameEngine/Source/GameLogic/AI/AI_crc_Thunk.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/AI/Rva0061A780Destructor.cpp	StringBase	Code\GameEngine\Source\GameLogic\AI\Rva0061A780Destructor.cpp(34) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameLogic/AI/SlaughterHordeContainBaseDestructor.cpp	StringBase	Code\GameEngine\Source\GameLogic\AI\SlaughterHordeContainBaseDestructor.cpp(78) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameLogic/LivingWorld/Rva003BFB80AutoSummonFilter.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/Map/BuildListInfoDestructorThunk.cpp	StringBase	Code\GameEngine\Source\GameLogic\Map\BuildListInfoDestructorThunk.cpp(8) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameLogic/Object/Behavior/DeathStatusFlags_parse.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorRva001FF360.cpp	StringBase	Code\GameEngine\Source\GameLogic\Object\Behavior\GettingBuiltBehaviorRva001FF360.cpp(58) : error C2039: 'm_length' : is not a member of 'StringBase<T>::Header'
+Code/GameEngine/Source/GameLogic/Object/Behavior/SlowDeathBehavior_parseDeathFlags.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetParseAnimSet.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/Object/Update/ProductionUpdateXfer.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/PlayerBattlePlanBonuses_apply.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/Player_addToBuildList.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/ScriptEngine/BfmeEnableListenerNotify.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsAudio.cpp	StringBase	Code\GameEngine\Source\GameLogic\ScriptEngine\ScriptActionsAudio.cpp(57) : error C2039: 'm_length' : is not a member of 'StringBase<T>::Header'
+Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doDisplayCinematicText.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptCopyCtor.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineIsAudioComplete.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptEngineIsSpeechComplete.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameNetwork/GameSpy/GameSpyGroupRoomPairDestructor.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameNetwork/LANAPIGames.cpp	StringBase	Functions: FAIL 1/2
+Code/GameEngine/Source/GameNetwork/LANGameInfoBodies.cpp	StringBase	Code\GameEngine\Source\GameNetwork\LANGameInfoBodies.cpp(362) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/LANGameInfoSlotLookup.cpp	StringBase	Functions: FAIL 1/3
+Code/GameEngine/Source/GameNetwork/LANGameSlot_copy.cpp	StringBase	Code\GameEngine\Source\GameNetwork\LANGameSlot_copy.cpp(46) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/LANPlayer_copy.cpp	StringBase	Code\GameEngine\Source\GameNetwork\LANPlayer_copy.cpp(10) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/LadderList_checkLadder_Thunk.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngine/Source/GameNetwork/NATSendMangledPortNumberToTarget.cpp	StringBase	Code\GameEngine\Source\GameNetwork\NATSendMangledPortNumberToTarget.cpp(39) : error C2039: 'm_text' : is not a member of 'StringBase<T>::Header'
+Code/GameEngine/Source/GameNetwork/NetFileCommandMsgGetPortableFilename.cpp	StringBase	Code\GameEngine\Source\GameNetwork\NetFileCommandMsgGetPortableFilename.cpp(37) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/NetPacketChatReaders.cpp	StringBase	Functions: FAIL 2/2
+Code/GameEngine/Source/GameNetwork/NetPacketCommandBodies.cpp	StringBase	Code\GameEngine\Source\GameNetwork\NetPacketCommandBodies.cpp(267) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/NetPacket_addChatFamily.cpp	StringBase	Code\GameEngine\Source\GameNetwork\NetPacket_addChatFamily.cpp(173) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/NetPacket_commandSizes.cpp	StringBase	Code\GameEngine\Source\GameNetwork\NetPacket_commandSizes.cpp(98) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/NetPacket_commandSizesGameSpy.cpp	StringBase	Code\GameEngine\Source\GameNetwork\NetPacket_commandSizesGameSpy.cpp(71) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/NetPacket_fill.cpp	StringBase	Code\GameEngine\Source\GameNetwork\NetPacket_fill.cpp(182) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/NetPacket_fillGameSpyStatsAuthKey.cpp	StringBase	Code\GameEngine\Source\GameNetwork\NetPacket_fillGameSpyStatsAuthKey.cpp(136) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForFileAndChat.cpp	StringBase	Code\GameEngine\Source\GameNetwork\NetPacket_isRoomForFileAndChat.cpp(139) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/NetPacket_isRoomForGameSpyStatsAuthKeyMessage.cpp	StringBase	Code\GameEngine\Source\GameNetwork\NetPacket_isRoomForGameSpyStatsAuthKeyMessage.cpp(125) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/Network_processDestroyPlayerCommand.cpp	StringBase	Code\GameEngine\Source\GameNetwork\Network_processDestroyPlayerCommand.cpp(156) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameNetwork/Rva0068A900LANAPIOnPlayerLeave.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapResetTerrainUpdateMacroTexture.cpp	StringBase	Code\GameEngineDevice\Source\W3DDevice\GameClient\BaseHeightMapResetTerrainUpdateMacroTexture.cpp(13) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva0076D850DoSingleBoneName.cpp	StringBase	Code\GameEngineDevice\Source\W3DDevice\GameClient\Drawable\Draw\Rva0076D850DoSingleBoneName.cpp(39) : error C2039: 'm_length' : is not a member of 'StringBase<T>::Header'
+Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawModuleData_parseEmbedPortal.cpp	StringBase	Code\GameEngineDevice\Source\W3DDevice\GameClient\Drawable\Draw\W3DModelDrawModuleData_parseEmbedPortal.cpp(42) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DAnimationInfoConstCopyBody.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBufferRemovePropsForConstruction.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp	StringBase	Functions: FAIL 1/1
+Code/Libraries/Source/WWVegas/WWLib/Gen_t_00776240CopyConstructor.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\Gen_t_00776240CopyConstructor.cpp(15) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/Libraries/Source/WWVegas/WWLib/S4SortElem12Swap.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\S4SortElem12Swap.cpp(10) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/Libraries/Source/WWVegas/WWLib/stlport_insertion_sort_s4sortelem12.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\stlport_insertion_sort_s4sortelem12.cpp(54) : error C2664: '_STL::__linear_insert' : cannot convert parameter 3 from 'S4SortElem12' to 'S4SortElem12'
+Code/Libraries/Source/WWVegas/WWLib/stlport_insertion_sort_s4sortelem12_b.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\stlport_insertion_sort_s4sortelem12_b.cpp(34) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/Libraries/Source/WWVegas/WWLib/stlport_insertion_sort_s4sortelem20.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\stlport_insertion_sort_s4sortelem20.cpp(64) : error C2664: '_STL::__linear_insert' : cannot convert parameter 3 from 'S4SortElem20' to 'S4SortElem20'
+Code/Libraries/Source/WWVegas/WWLib/stlport_introsort_loop_s4sortelem12_002e1b60.cpp	StringBase	Z:\home\wacket\Projects\Open-BFME\vendor\stlport\stl\_algo.c(819) : error C2440: 'type cast' : cannot convert from 'const S4SortElem12' to 'S4SortElem12'
+Code/Libraries/Source/WWVegas/WWLib/stlport_linear_insert_s4sortelem12.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\stlport_linear_insert_s4sortelem12.cpp(12) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/Libraries/Source/WWVegas/WWLib/stlport_linear_insert_s4sortelem20.cpp	StringBase	Functions: FAIL 1/1
+Code/Libraries/Source/WWVegas/WWLib/stlport_make_heap_s4sortelem20.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\stlport_make_heap_s4sortelem20.cpp(48) : error C2664: '_STL::__adjust_heap' : cannot convert parameter 4 from 'S4SortElem20' to 'S4SortElem20'
+Code/Libraries/Source/WWVegas/WWLib/stlport_unguarded_insertion_sort_s4sortelem12.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\stlport_unguarded_insertion_sort_s4sortelem12.cpp(13) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/Libraries/Source/WWVegas/WWLib/stlport_unguarded_insertion_sort_s4sortelem12_b.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\stlport_unguarded_insertion_sort_s4sortelem12_b.cpp(13) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/Libraries/Source/WWVegas/WWLib/stlport_unguarded_insertion_sort_s4sortelem20.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\stlport_unguarded_insertion_sort_s4sortelem20.cpp(10) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/Libraries/Source/WWVegas/WWLib/stlport_unguarded_linear_insert_s4sortelem12.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\stlport_unguarded_linear_insert_s4sortelem12.cpp(12) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/Libraries/Source/WWVegas/WWLib/vector_Q3SortElem4_resize.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\vector_Q3SortElem4_resize.cpp(11) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
+Code/GameEngine/Source/GameLogic/Object/GenericObjectCreationNuggetAnimSetCopy.cpp	StringBase	PRE-COMMIT FAILED: staged sources define functions the ledger does not declare (see above)

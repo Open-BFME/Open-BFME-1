@@ -1,4 +1,4 @@
-// cl: /O2 /D_STLP_USE_STATIC_LIB /Ivendor/stlport
+// cl: /O2 /D_STLP_USE_STATIC_LIB /Ivendor/stlport /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Converted from Code/gen_asm/d_00140de0.asm at retail RVA 0x001415D0.
 // The ThingTemplate.cpp caller and the ModuleInfo method name identify this
@@ -20,13 +20,7 @@ struct BfmeStringData
 	unsigned short m_pad;
 };
 
-template <class T>
-class StringBase
-{
-public:
-	void set(const StringBase<T> &source);
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString
 {

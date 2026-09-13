@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME: STLport _Rb_tree equal-insert body at 0x00605900.
 // The value constructor at 0x00605630 makes the value field 0x60 bytes, so
@@ -204,16 +204,7 @@ _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::_M_insert(
 
 }
 
-template <class T>
-class StringBase
-{
-public:
-	StringBase(const StringBase &other);
-	int compareNoCase(const StringBase<T> &other) const;
-
-protected:
-	void *m_data;
-};
+#include "string_base.h"
 
 struct Gen_t_00605630_p12cd
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?setVersion@Version@@QAEXHHHHVAsciiString@@000@Z: Code/GameEngine/Source/Common/version.cpp
 //
 // Retail 0x000AEB50, 188 bytes. Four int stores then four StringBase::set
@@ -12,23 +12,7 @@ struct StringInlineData
 	T m_text[1];
 };
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-public:
-	void set(const StringBase<T> &other);
-
-private:
-	StringInlineData<T> *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>

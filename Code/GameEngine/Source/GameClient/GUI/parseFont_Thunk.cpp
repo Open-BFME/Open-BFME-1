@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME: readable reconstruction of the retail window-definition FONT
 // callback.  The callback is registered by gameWindowFieldList in the
 // reference GameWindowManagerScript.cpp and uses the BFME font-library ABI.
@@ -14,17 +14,7 @@ typedef bool Bool;
 extern "C" __declspec(dllimport) int __cdecl sscanf(const char *, const char *, ...);
 extern "C" __declspec(dllimport) char *__cdecl strtok(char *, const char *);
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase(const T *text);
-	void releaseBuffer();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

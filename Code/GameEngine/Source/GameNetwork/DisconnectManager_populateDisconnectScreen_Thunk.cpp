@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?populateDisconnectScreen@DisconnectManager@@IAEXPAVConnectionManager@@@Z: Code/GameEngine/Source/GameNetwork/DisconnectManager.cpp
 
 typedef int Int;
@@ -6,17 +6,7 @@ typedef unsigned int UnsignedInt;
 
 class UnicodeString;
 
-template <class T>
-class StringBase
-{
-private:
-	friend class UnicodeString;
-
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : public StringBase<unsigned short>

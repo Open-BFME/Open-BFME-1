@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 /*
 ** Command & Conquer Generals Zero Hour(tm)
@@ -16,14 +16,7 @@
 
 class AsciiString;
 
-template <typename T>
-class StringBase
-{
-    friend class AsciiString;
-private:
-    StringBase(const StringBase<T> &source);
-    void *m_data;
-};
+#include "string_base.h"
 
 // Retail inlines the forwarding copy and calls the narrow StringBase body.
 class AsciiString : private StringBase<char>

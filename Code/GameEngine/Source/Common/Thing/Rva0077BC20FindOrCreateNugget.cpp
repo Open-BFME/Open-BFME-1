@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: clean reconstruction of the 0x0077BC20 one-name lookup.
 //
@@ -23,16 +23,7 @@ static __forceinline CompareFunction getCompareFunction()
 	return *reinterpret_cast<CompareFunction *>(0x0135933C);
 }
 
-template <typename T>
-class StringBase
-{
-public:
-	void set(const StringBase<T> &source);       // retail 0x00887C90
-
-	void releaseBuffer();                       // retail 0x00887940
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString
 {

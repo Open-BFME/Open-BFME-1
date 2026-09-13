@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: ParseRegionReinforcementBlock (retail 0x003BABE0 157 B; a gap claimed through its
 // own exception text).  With no INI or instance it throws INIException(3
 // "ParseRegionReinforcementBlock::Invalid data passed in."); otherwise a 0x24-byte record built by
@@ -10,15 +10,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-template <class T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase( const StringBase<T> &other );
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: WindowLayout::getFilename, retail 0x004EA450.
 //
 // Matched callers findScreenByFilename, WOLBuddyOverlayRCMenuInit and
@@ -11,17 +11,7 @@
 // base. AsciiString privately inherits and inlines the forwarder so the
 // call that remains is the base's (docs/shape_levers.md, stringinline).
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

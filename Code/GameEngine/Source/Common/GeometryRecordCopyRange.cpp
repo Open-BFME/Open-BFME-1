@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // Open-BFME: STLport GeometryRecord range copies, retail 0x000FC5D0 and
@@ -11,17 +11,7 @@
 // vector erase uses the mutable-source form at 0x000FCD80.  Their StringBase
 // assignments call the already recovered StringBase::set body at 0x00887C90.
 
-template <typename T>
-class StringBase
-{
-public:
-	StringBase &operator=(const StringBase &other);
-
-	void set(const StringBase &other);
-
-private:
-	void *m_data;
-};
+#include "string_base.h"
 
 struct GeometryRecordValues
 {

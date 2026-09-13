@@ -1,4 +1,4 @@
-// cl: /O2 /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// cl: /O2 /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME5: byte-twin of vector<GeometryShape>::operator=
 // (Code/GameEngine/Source/Common/System/GeometryShapeVectorAssign.cpp,
@@ -11,17 +11,7 @@
 
 #include <vector>
 
-template <typename T>
-class StringBase
-{
-	void *m_data;
-
-public:
-	StringBase(void);
-	StringBase(const StringBase &other);
-	~StringBase(void);
-	StringBase &operator=(const StringBase &other);
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Retail RVA 0x0025FBF0, 201 bytes.
 //
 // The enclosing HeroModeSpecialAbilityUpdate constructor stores the primary
@@ -7,17 +7,7 @@
 // available headers, so the callable owner below deliberately stays
 // address-derived while retaining the proven class/layout relationship.
 
-template <typename T>
-class StringBase
-{
-    friend class AsciiString;
-
-private:
-    StringBase(const T *text);       // retail 0x00888BC0
-    void releaseBuffer();            // retail 0x00887940
-
-    void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

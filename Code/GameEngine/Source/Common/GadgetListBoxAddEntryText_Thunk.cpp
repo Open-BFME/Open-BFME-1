@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 typedef int Int;
@@ -11,20 +11,7 @@ struct UnicodeStringData
 	unsigned short m_length;
 };
 
-template <typename BfmeWideChar>
-class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase(const StringBase<BfmeWideChar> &source);
-	StringBase(const BfmeWideChar *text);
-	~StringBase();
-	void set(const StringBase<BfmeWideChar> &source);
-
-protected:
-	void *m_data;
-};
+#include "string_base.h"
 
 class UnicodeString : public StringBase<unsigned short>
 {

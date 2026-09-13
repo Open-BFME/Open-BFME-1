@@ -1,4 +1,4 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /ICode/Libraries/Source/WWVegas/WWLib
 
 // Raw twelve-byte prefix and canonical StringBase/STLport views for retail assignment
 // 0x004A32E0.  The body has a thiscall source reference and returns *this;
@@ -11,15 +11,7 @@ class Rva004A32E0CallReceiver {};
 extern void j_00048725();
 extern void j_0000efde();
 
-template <typename T>
-class StringBase
-{
-public:
-	void set(const StringBase<T> &);
-
-private:
-	void *m_data;
-};
+#include "string_base.h"
 
 typedef StringBase<char> BfmeNarrowString;
 

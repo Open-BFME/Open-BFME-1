@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5 conversions.
 
 class BfmeTab1052
@@ -58,16 +59,7 @@ enum SlotState
 	SLOT_PLAYER
 };
 
-template <typename T>
-class StringBase
-{
-	friend class UnicodeString;
-
-	private:
-	StringBase(const StringBase<T> &other);
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : private StringBase<unsigned short>

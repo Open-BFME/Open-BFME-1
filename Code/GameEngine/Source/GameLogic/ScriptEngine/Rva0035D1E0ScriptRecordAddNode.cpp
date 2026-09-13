@@ -1,4 +1,4 @@
-// cl: /O2 /Ob1
+// cl: /O2 /Ob1 /ICode/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x0035D1E0 is the Script-valued overload in the same string-record
 // table family as the matched 0x0035D2B0 default-node overload.  The table
@@ -15,18 +15,7 @@ struct StringInlineData
 	T m_text[1];
 };
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	StringInlineData<T> *m_data;
-};
+#include "string_base.h"
 
 // Same four-byte StringBase-backed view as the matched Script copy
 // constructor.  The string-record table stores this header at record +0x08.

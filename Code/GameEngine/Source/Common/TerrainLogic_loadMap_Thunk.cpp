@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Clean C++ reconstruction of TerrainLogic::loadMap.
 //
 // The retail entry consumes a filename, stream, tail flag, and query flag.
@@ -12,21 +12,7 @@ typedef unsigned short UnsignedShort;
 
 class ChunkInputStream;
 
-template <typename T>
-class StringBase
-{
-public:
-	StringBase(void) : m_data(0) {}
-	StringBase(const StringBase &other);
-	void set(const StringBase &other);
-
-private:
-	friend class AsciiString;
-	StringBase(const T *text);
-
-protected:
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : public StringBase<char>
 {

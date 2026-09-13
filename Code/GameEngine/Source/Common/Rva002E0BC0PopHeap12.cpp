@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: near-twin of bfmePopHeap00531A40 (S4PopHeapElem12.cpp).  Same
 // STLport __pop_heap shape over a twelve-byte element, but the element field
@@ -8,19 +8,7 @@
 // callee is the already-pinned ?Gen002E07A0@@YAXPAUS4SortElem12@@HHU1@
 // US4Cmp002E0CD0@@@Z (ILT thunk 0x0002C0CA).
 
-template <class T>
-class StringBase
-{
-public:
-	void set(const StringBase<T> &other);
-
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase(void);
-	T *m_data;
-
-	friend class AsciiString;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString : private StringBase<char>

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: DisplayString::getText returns UnicodeString member at +4.
 
@@ -19,16 +19,7 @@ public:
 // (0x00888400). One compiled body cannot carry both displacements, so this TU
 // spells the delegation the wide string needs and the other TU keeps the
 // declared-only copy ctor the ASCII dups need.
-template <typename BfmeWideChar>
-class StringBase
-{
-	friend class UnicodeString;
-
-private:
-	StringBase(const StringBase<BfmeWideChar> &src);
-
-	void *m_data;
-};
+#include "string_base.h"
 
 inline UnicodeString::UnicodeString(const UnicodeString &stringSrc)
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #include <list>
@@ -41,20 +41,7 @@ struct FontDesc
 	unsigned char bold;
 };
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-public:
-	void set(const StringBase<T> &source);
-
-private:
-	StringBase() {}
-	StringBase(const T *text);
-	void releaseBuffer();
-	char *m_data;
-};
+#include "string_base.h"
 
 class AsciiString
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: BfmeOwnVVB's complete destructor at retail RVA 0x00190490.
 // The owner releases its array and linked-list members, then destroys the
@@ -9,19 +9,7 @@ extern "C" void _ReadWriteBarrier(void);
 
 void __cdecl operator delete[](void *block);
 
-template <typename T>
-class StringBase
-{
-public:
-	~StringBase()
-	{
-		releaseBuffer();
-	}
-
-private:
-	void releaseBuffer();
-	char *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : public StringBase<char>
 {

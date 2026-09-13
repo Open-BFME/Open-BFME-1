@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME: OpenContain::getPassengerBoneName, retail 0x002228E0.
 // The BFME passenger-bone list lives at OpenContainModuleData+0x11C. Each
 // entry stores a 116-bit KindOf mask at +0x08 and an AsciiString at +0x20.
@@ -17,18 +17,7 @@ typedef BitFlags<116> KindOfMaskType;
 
 extern const KindOfMaskType KINDOFMASK_NONE;
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class AsciiString : private StringBase<char>
 {

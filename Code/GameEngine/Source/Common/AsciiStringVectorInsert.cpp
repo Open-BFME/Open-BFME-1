@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: vector<AsciiString>::_M_insert_overflow, retail 0x00757C70. The
 // name was parked on the 5-byte thunk at 0x000112C0.
@@ -10,19 +10,7 @@
 #include <vector>
 
 // Only what these bodies reach.
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-public:
-	StringBase(const StringBase<T> &src);			// retail 0x00887B60
-
-private:
-	void releaseBuffer();					// retail 0x00887940
-
-	void *m_data;
-};
+#include "string_base.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString

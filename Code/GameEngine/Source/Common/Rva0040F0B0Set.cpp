@@ -1,23 +1,11 @@
-// cl: /DNDEBUG /MD /O2 /EHsc
+// cl: /DNDEBUG /MD /O2 /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Retail assigns the live member at +0xAC with ?set@?$StringBase@G@@QAEXABV1@@Z
 // (0x00888530), not with the copy ctor.  StringBase is declared here rather
 // than pulled from reference/shims/stringinline because that shim's copy has no
 // public set(), and a shim edit would take the full gate.
 
-template <typename Char>
-class StringBase
-{
-public:
-	void set( const StringBase<Char> &src );
-
-protected:
-	StringBase();
-	StringBase( const StringBase<Char> &other );
-	~StringBase();
-
-	void *m_data;
-};
+#include "string_base.h"
 
 class UnicodeString : public StringBase<unsigned short>
 {
