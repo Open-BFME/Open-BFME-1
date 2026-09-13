@@ -365,6 +365,12 @@ def land(changed, rejected, kind, include):
     found, and they are recorded so the next run skips them.
     """
     for _ in range(4):
+        # `git add` aborts the WHOLE command on one missing pathspec, so a file
+        # another seat moved between listing and staging takes the batch with it.
+        changed = [rel for rel in changed if (ROOT / rel).exists()]
+        if not changed:
+            print("  nothing left to land")
+            return 1
         paths = changed + ([str(BLOCKED.relative_to(ROOT))] if rejected else [])
         subprocess.run(["git", "add", *paths], cwd=ROOT, check=True)
         body = (f"Adopt {include} in {len(changed)} TUs that declared their own {kind}\n\n"
