@@ -60,6 +60,14 @@ PLACEHOLDER = re.compile(
 
 DECL = re.compile(r"\b(?:class|struct)\s+([A-Za-z_][A-Za-z_0-9]*)\s*(?P<base>:[^{;]*)?\{")
 # `Real m_offsetZ;  // +0x18`, `BfmeShape *m_shapes;  // this+0x2C`, `int m_x;`
+# A member declaration this model cannot place: same shape as MEMBER but any name.
+# `friend`, `typedef`, `using`, `enum` and labels are excluded -- they declare no
+# storage, so they do not move an offset.
+PLAIN_MEMBER = re.compile(
+    r"^\s*(?!friend\b|typedef\b|using\b|enum\b|return\b|class\b|struct\b)"
+    r"(?:const\s+)?[A-Za-z_][\w:<> ]*?\s+\*?\s*[A-Za-z_]\w*\s*(?:\[[^\]]*\])?\s*;"
+)
+
 MEMBER = re.compile(
     r"^\s*((?:const\s+)?[A-Za-z_][\w:<> ]*?)\s+(\*?\s*)(m_[A-Za-z_0-9]+)\s*(\[[^\]]*\])?\s*;"
     r"(?:\s*//\s*(?:this)?\s*\+?(0x[0-9A-Fa-f]+)\b)?"
@@ -231,6 +239,13 @@ def outer_members(text, brace, has_base):
         if not hit:
             if re.search(r"\bm_[A-Za-z_0-9]+\s*;", line):
                 return [], "unparsed member declaration"
+            # A member whose name is not m_-prefixed is INVISIBLE to MEMBER, and
+            # skipping it silently shifts every offset after it. The WW3D2 classes
+            # carry ZH's convention -- `TextureClass *Texture; ShaderClass Shader;`
+            # -- so SegLineRendererClass computed its last two members at +0 and
+            # +4 and reported the header as disagreeing with the witness. Refuse.
+            if PLAIN_MEMBER.match(line):
+                return [], "member declaration without an m_ prefix"
             continue
         sized = size_of(hit.group(1), hit.group(2), hit.group(4))
         if sized is None:
@@ -283,8 +298,15 @@ def sources(paths, staged):
         out = subprocess.run(
             ["git", "diff", "--cached", "--name-only", "--diff-filter=ACMRT"],
             cwd=ROOT, capture_output=True, text=True, check=True).stdout.split()
-        return [ROOT / p for p in out if p.endswith(".cpp") and p.startswith(AREAS)]
-    return [p for area in AREAS for p in (ROOT / area).rglob("*.cpp")]
+        return [ROOT / p for p in out
+                if p.endswith((".cpp", ".h")) and p.startswith(AREAS)]
+    # Headers too. A wrong member name in a header is the worst version of this
+    # defect -- ascii_string.h called AsciiString+0x0 `m_text` where the witness
+    # says `m_data`, and 507 TUs include it -- and until now nothing looked at
+    # them. All 533 headers together hold six findings, so this costs almost
+    # nothing to carry.
+    return [p for area in AREAS for ext in ("*.cpp", "*.h")
+            for p in (ROOT / area).rglob(ext)]
 
 
 def renamed_from():

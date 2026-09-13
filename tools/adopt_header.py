@@ -41,6 +41,7 @@ raises instead of guessing.
 """
 import argparse
 import concurrent.futures as cf
+import functools
 import re
 import subprocess
 import sys
@@ -74,24 +75,29 @@ def shim(text, name):
                      text, re.S | re.M)
 
 
-def brought_in(include, incdir, seen=None):
+@functools.lru_cache(maxsize=None)
+def brought_in(include, incdir):
     """Type names the header defines, its own quoted #includes included.
 
     A TU that already spells one of these collides with the header rather than
     adopting it: `ascii_string.h` pulls in `string_base.h`, so a TU carrying its
-    own `class StringBase` cannot take it. Derived rather than listed, because
-    the list is different for every header and drifts when a header changes.
+    own `class StringBase` cannot take it. Derived rather than listed, because the
+    set differs per header and drifts when a header changes. Cached: the commit
+    hook asks once per staged source, and there can be hundreds.
     """
-    seen = set() if seen is None else seen
-    path = ROOT / incdir / include
-    if include in seen or not path.exists():
-        return set()
-    seen.add(include)
-    text = path.read_text(encoding="utf-8", errors="replace")
-    names = {m.group(1) for m in TYPE_BODY.finditer(text)}
-    for nested in re.findall(r'^\s*#include\s+"([^"]+)"', text, re.M):
-        names |= brought_in(nested, incdir, seen)
-    return names
+    names, seen, todo = set(), set(), [include]
+    while todo:
+        this = todo.pop()
+        if this in seen:
+            continue
+        seen.add(this)
+        path = ROOT / incdir / this
+        if not path.exists():
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace")
+        names |= {m.group(1) for m in TYPE_BODY.finditer(text)}
+        todo += re.findall(r'^\s*#include\s+"([^"]+)"', text, re.M)
+    return frozenset(names)
 
 
 def blocker(text, name, want_members):

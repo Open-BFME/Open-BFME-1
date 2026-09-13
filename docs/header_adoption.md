@@ -123,7 +123,26 @@ surfaces `multi_name.different: 0 -> 2`. The check prints its own verdict —
 `-> DIRTY`, and the source whose object no longer matches. Rebuild that one source
 and re-run; it is an artifact, not a ledger defect. Never settle a row to go green.
 
-## State
+## What is left
 
-`AsciiString` 1,342 -> 1,010 TU-local (332 adopted, byte-verified, pushed).
-`ascii_string.h` includers 45 -> 507. `StringBase` and `UnicodeString` in progress.
+490 TUs adopted and byte-verified; `ascii_string.h` includers 45 -> 507. The pool
+of shims that pass the pre-filter is **empty** -- every remaining copy either has a
+different layout, spells something the header brings in, or was refused by the
+compiler and recorded. The gate is what carries this from here.
+
+| type | TU-local copies left | why they stay |
+|---|---|---|
+| `AsciiString` | 489 | 99 different layout, 68 own `StringBase`, 50 own `operator==`, 47 own `Header` |
+| `StringBase` | 316 | 90 own `Header`, 86 different layout |
+| `UnicodeString` | 112 | 24 different layout, 13 own `StringBase` |
+| recorded compiler refusals | 442 | declare `releaseBuffer`, `freeBytes`, `bfmeCompare1294` -- methods the header does not have |
+
+Two follow-ups this lane surfaced and did not take:
+
+* **`module_factory.h` defines its own `AsciiString`** -- the same layout, four
+  methods, two includers against `ascii_string.h`'s 507. It should include the
+  header rather than restate it. A header edit costs a full gate, so it wants to
+  ride along with other header work.
+* **The compiler refusals name what the header is missing.** 442 shims declare
+  `releaseBuffer` and friends. Adding those to `ascii_string.h` -- on evidence,
+  not on demand -- would reopen most of that pool in one full gate.
