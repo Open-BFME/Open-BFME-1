@@ -6377,6 +6377,7 @@ name,address,notes
 ??1Gen_dtor_006e1dd0@@UAE@XZ,0x0002A919,gen-dtor class destructor
 ??1Gen_dtor_006e2510@@UAE@XZ,0x00048C39,gen-dtor class destructor
 ??1Gen_dtor_006e6d00@@UAE@XZ,0x000156E0,gen-dtor class destructor
+??1W3DDebugDisplay@@UAE@XZ,0x000156E0,route=0x006E6C50; scalar deleting destructor retail call targets the matched W3DDebugDisplay destructor through this ILT
 ??1Gen_dtor_006e7c00@@UAE@XZ,0x0001B6A8,gen-dtor class destructor
 ??1Gen_dtor_006e7c30@@UAE@XZ,0x00936E90,gen-dtor class destructor
 ??1Gen_dtor_006ee7d0@@UAE@XZ,0x0003B386,gen-dtor class destructor
