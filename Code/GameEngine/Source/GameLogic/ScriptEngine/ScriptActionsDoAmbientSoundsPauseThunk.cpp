@@ -9,38 +9,31 @@ protected:
     void doAmbientSoundsPause(bool);
 };
 
-__declspec(naked) void ScriptActions::doAmbientSoundsPause(bool)
+// The BFME audio client keeps the pause/resume entry at vtable slot 28.  The
+// global is written as an absolute overlay so this TU emits the same DIR32
+// literal as the retail call site (and does not require a guessed global
+// declaration or a new linker alias).
+class BfmeAudioClient
 {
-    __asm {
-        _emit 08Ah
-        _emit 04Ch
-        _emit 024h
-        _emit 004h
-        _emit 033h
-        _emit 0C0h
-        _emit 084h
-        _emit 0C9h
-        _emit 08Bh
-        _emit 00Dh
-        _emit 068h
-        _emit 0D6h
-        _emit 02Eh
-        _emit 001h
-        _emit 08Bh
-        _emit 011h
-        _emit 00Fh
-        _emit 094h
-        _emit 0C0h
-        _emit 050h
-        _emit 06Ah
-        _emit 001h
-        _emit 06Ah
-        _emit 000h
-        _emit 0FFh
-        _emit 052h
-        _emit 070h
-        _emit 0C2h
-        _emit 004h
-        _emit 000h
-    }
+public:
+    virtual void slot00(); virtual void slot01(); virtual void slot02();
+    virtual void slot03(); virtual void slot04(); virtual void slot05();
+    virtual void slot06(); virtual void slot07(); virtual void slot08();
+    virtual void slot09(); virtual void slot10(); virtual void slot11();
+    virtual void slot12(); virtual void slot13(); virtual void slot14();
+    virtual void slot15(); virtual void slot16(); virtual void slot17();
+    virtual void slot18(); virtual void slot19(); virtual void slot20();
+    virtual void slot21(); virtual void slot22(); virtual void slot23();
+    virtual void slot24(); virtual void slot25(); virtual void slot26();
+    virtual void slot27();
+    virtual void pauseAmbient(int first, int second, int third);
+};
+
+#define TheAudioClientUpdate (*(BfmeAudioClient **)0x012ED668)
+
+void ScriptActions::doAmbientSoundsPause(bool pause)
+{
+    int shouldPause = !pause;
+    int *pausePtr = &shouldPause;
+    TheAudioClientUpdate->pauseAmbient(0, 1, *pausePtr);
 }
