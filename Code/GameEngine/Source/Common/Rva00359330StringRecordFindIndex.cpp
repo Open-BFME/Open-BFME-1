@@ -1,9 +1,8 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // The retail body is the name-index lookup on the first string-record table (its release body is 0x00359330).
 // Its table layout is shared with Rva00359330StringRecordRelease.cpp; byte-twin of Rva00359530StringRecordFindIndex.cpp (tools/twin_scan.py).
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class AsciiStringCompareShim
 {

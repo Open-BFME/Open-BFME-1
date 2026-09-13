@@ -1,13 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x006ABC60 is the non-virtual destructor for an owner containing a
 // six-element 12-byte vector, an AsciiString tree, and a trailing helper.
 // The member extents are taken from the three destructor calls and the
 // eh-vector arguments in the retail body.
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 namespace _STL
 {

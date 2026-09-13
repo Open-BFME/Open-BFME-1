@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: AutoAbilityBehavior command-ready predicate, retail 0x001EDC00
 // size 125. Layout is the landed dtor's: Object* at +8, AsciiString at +0x20.
 // TheControlBar->findCommandButton, CommandButton::isReady, and
@@ -12,9 +12,7 @@ typedef bool Bool;
 
 class Object;
 class CommandButton;
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class ControlBar
 {

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // BFME Player::setRankLevel at retail RVA 0x000D7E30.
 
 typedef int Int;
@@ -7,9 +7,7 @@ typedef bool Bool;
 
 enum ScienceType {};
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 struct ScienceRange
 {

@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME: address-derived HordeContain template selection helper, retail
 // 0x002369C0.  Retail chooses one integer from the list at +0x138, maps its
 // sixteen-byte slot at +0x12C to the module-data roster at +0x224, and asks
@@ -6,9 +7,7 @@
 typedef bool Bool;
 typedef int Int;
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class ThingTemplate
 {

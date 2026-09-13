@@ -1,8 +1,7 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Parser-registration wrapper constructor at retail RVA 0x000872C0.
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class UserParser
 {

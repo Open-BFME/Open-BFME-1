@@ -1,8 +1,6 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class Rva00354BC0
 {

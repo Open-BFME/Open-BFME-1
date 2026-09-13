@@ -1,5 +1,5 @@
 // Lua callback: ObjectHideSubObject
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 struct lua_State;
 
@@ -13,12 +13,7 @@ struct Rva00990210Range;
 unsigned Rva00990030Lookup(Rva00990030Range *range, int index);
 unsigned Rva00990210Lookup(Rva00990210Range *range, int index);
 
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 class S4Sink004135C0
 {

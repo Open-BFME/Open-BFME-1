@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Four more bodies the ledger had split three ways, reunited. Each ends with
 // an eight-byte return TRUE and a five-byte return FALSE that its own branches
 // target, and both arms had been claimed as aliases elsewhere.
@@ -74,12 +75,7 @@ private:
 	Gen_00684b90Holder *m_bfmeHolder;				// +0x40E04
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	int compare(const AsciiString &other) const;			// ILT 0x000220C5
-};
+#include "ascii_string.h"
 
 class Gen_001eda90Sub
 {

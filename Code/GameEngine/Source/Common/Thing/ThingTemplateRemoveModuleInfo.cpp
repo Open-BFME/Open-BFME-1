@@ -1,10 +1,8 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class ModuleInfo
 {

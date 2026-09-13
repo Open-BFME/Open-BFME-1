@@ -1,14 +1,6 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /ICode/Libraries/Source/WWVegas/WWLib
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-
-private:
-	char *data;
-};
+#include "ascii_string.h"
 
 extern const char g_Rva0107301CEmptyString[];
 

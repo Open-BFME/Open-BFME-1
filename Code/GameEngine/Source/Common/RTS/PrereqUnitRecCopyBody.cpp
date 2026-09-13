@@ -1,9 +1,5 @@
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	void set(const AsciiString &other);
-};
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
+#include "ascii_string.h"
 
 struct PrereqUnitRecCopyABI
 {

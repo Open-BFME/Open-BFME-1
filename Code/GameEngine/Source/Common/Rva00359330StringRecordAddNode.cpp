@@ -1,8 +1,6 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /ICode/Libraries/Source/WWVegas/WWLib
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class Rva003529B0
 {

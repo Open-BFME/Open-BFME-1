@@ -1,3 +1,4 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x006F9800, 42 bytes, split by the ledger across its two return arms.
 //
 // The first argument compared against the kind word at +0x48 -- the argument
@@ -9,12 +10,7 @@
 //
 // Both exits set the whole register, so the return is int.
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	int compare(const AsciiString &other) const;			// ILT 0x000220C5
-};
+#include "ascii_string.h"
 
 class Gen_006f9800
 {

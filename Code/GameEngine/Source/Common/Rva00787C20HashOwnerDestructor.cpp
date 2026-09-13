@@ -1,4 +1,4 @@
-// cl: /EHsc
+// cl: /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // The retail body is an owning destructor: it frees the auxiliary buffer,
 // then destroys two 12-byte-value hash maps and an AsciiString member.
@@ -6,11 +6,7 @@
 #include <algorithm>
 #include <hash_map>
 
-class AsciiString
-{
-public:
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 struct Gen_t_00786db0_p12cd
 {

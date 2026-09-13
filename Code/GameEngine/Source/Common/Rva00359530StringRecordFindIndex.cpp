@@ -1,9 +1,8 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 // The retail body is the name-index lookup on the second string-record table.
 // Its table layout is shared with Rva00359330StringRecordRelease.cpp.
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class AsciiStringCompareShim
 {

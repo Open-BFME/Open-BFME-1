@@ -1,9 +1,8 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
 extern "C" char g_bfmeNameZO[];
 extern "C" char g_bfmeNameItemZO[];
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class DataChunkOutput
 {

@@ -1,4 +1,4 @@
-// cl: /O2 /EHsc
+// cl: /O2 /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 typedef bool Bool;
 
@@ -18,15 +18,7 @@ public:
 
 }
 
-class AsciiString
-{
-public:
-	void releaseBuffer();
-	~AsciiString()
-	{
-		releaseBuffer();
-	}
-};
+#include "ascii_string.h"
 
 class Dict
 {

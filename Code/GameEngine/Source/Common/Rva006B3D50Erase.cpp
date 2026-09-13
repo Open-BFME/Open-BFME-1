@@ -1,14 +1,11 @@
-// cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
+// cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Mutex-guarded erase and cache invalidation in the 0x006B3C50 owner family.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <set>
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 bool operator<(const AsciiString &left, const AsciiString &right);
 

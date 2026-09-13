@@ -1,4 +1,4 @@
-// cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
+// cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Retail 0x006AC030: lock the template-set owner and clear one of its three
 // string sets.  The generated name is anonymous; the indexed array layout and
@@ -7,10 +7,7 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <set>
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 bool operator<(const AsciiString &left, const AsciiString &right);
 

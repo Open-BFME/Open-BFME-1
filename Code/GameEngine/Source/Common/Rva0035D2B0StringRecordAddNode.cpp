@@ -1,11 +1,9 @@
-// cl: /O2 /Ob0
+// cl: /O2 /Ob0 /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: retail 0x0035D2B0 (127 bytes) is the twin of Rva00359330StringRecordAddNode.cpp
 // whose node is 0x44 bytes and default-constructed by a constructor that cannot throw (no
 // unwind state around the new expression).
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 class Rva003529B0
 {

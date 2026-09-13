@@ -1,12 +1,10 @@
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x006B0C50. Same +0x9C scale / +0xA0 tree / +0x188 48-byte buffer
 // as Rva006ABB80::reset. erase() the key; if anything was removed and the
 // scale is not 1.0f, fill the buffer with 0x02. The stosd setup order is
 // the proven codegen blocker recorded on the sibling at 0x006ABB80.
 
-class AsciiString
-{
-};
+#include "ascii_string.h"
 
 namespace _STL
 {

@@ -1,13 +1,8 @@
-// cl: /DNDEBUG /MD /GX- /O2 /Ob2
+// cl: /DNDEBUG /MD /GX- /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
 
 // Open-BFME5: FXBoneInfo destructor - destroy AsciiString at +4
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	~AsciiString();
-};
+#include "ascii_string.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/StructureToppleUpdate.h
 class FXBoneInfo
