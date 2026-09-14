@@ -5402,7 +5402,7 @@ name,address,notes
 ??1PorcupineFormationBodyModuleModuleData@@UAE@XZ,0x00019D0D,destructor ILT used by the PorcupineFormationBodyModuleModuleData scalar-deleting destructor
 ??1RespawnBodyModuleData@@UAE@XZ,0x0001BE1E,public complete destructor ILT called by scalar wrapper 0x00214AC0; exact constructor 0x002149D0 installs dedicated vtable 0x010A92C8; matched body 0x00211D40
 ??1AODCrushCollide@@MAE@XZ,0x0000F781,vtable 0x00CA9AC4 slots name AODCrushCollide; protected complete destructor called by wrapper 0x00215D90
-??1Gen_dtor_00215dc0@@UAE@XZ,0x0000FC31,gen-dtor class destructor
+??1AODCrushCollideModuleData@@UAE@XZ,0x0000FC31,public complete destructor ILT called by scalar wrapper 0x00215DC0; exact constructor 0x00215B90 installs dedicated vtable 0x010A9740
 ??1Gen_dtor_00216360@@UAE@XZ,0x00039D1F,gen-dtor class destructor
 ??1Gen_dtor_002164f0@@UAE@XZ,0x0001809D,gen-dtor class destructor
 ??1HordeMemberCollide@@MAE@XZ,0x0002BA71,vtable 0x00CA9F04 slots name HordeMemberCollide; protected complete destructor called by wrapper 0x00216890
@@ -88099,3 +88099,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7ReplenishUnitsBehavior@@6B@,0x010A5C44,exact constructor 0x002044E0 installs this dedicated vtable; slot zero ILT 0x0000CE4B reaches scalar wrapper 0x002046E0
 ??_7InactiveBody@@6B@,0x010A8B74,exact constructor 0x00213BF0 installs this dedicated vtable; slot zero ILT 0x0003648A reaches scalar wrapper 0x00213E10
 ??1FlightDeckBehaviorModuleData@@UAE@XZ,0x000275BB,complete destructor ILT called by scalar wrapper 0x002131F0; exact constructor 0x002131B0 installs vtable 0x010A8268
+??_7AODCrushCollideModuleData@@6B@,0x010A9740,exact constructor 0x00215B90 installs this dedicated vtable; slot zero ILT 0x0003F8F0 reaches scalar wrapper 0x00215DC0
