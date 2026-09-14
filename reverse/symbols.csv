@@ -88056,3 +88056,8 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_GTBuff@@MAEPAXI@Z,0x00009444,vtable 0x00D1E134 slot zero routes through this ILT to scalar wrapper 0x006DB540
 ??_7TBuff@@6B@,0x00D1E134,vtable whose slots name TBuff
 ??1PoisonedBehavior@@MAE@XZ,0x000356C0,complete-destructor route for folded scalar wrapper 0x002B0C30
+?_bfme_showAptScreen@_bfme_AptGameWindow@@QAEXABVAsciiString@@VRva0051EDB0FunctorHolder@@@Z,0x000338ED,MainMenu ctor fscommand registration through this ILT
+?_bfme_showAptScreenWithArg@_bfme_AptGameWindow@@QAEXABVAsciiString@@PAXVRva0051EE20FunctorHolder@@@Z,0x0000ACFE,MainMenu ctor provider registration through this ILT
+??_7BfmeAptScreenMainMenu@@6B_bfme_AptGameWindow@@@,0x011061C4,primary vftable installed at +0 by ??0BfmeAptScreenMainMenu
+??_7BfmeAptScreenMainMenu@@6BRva00465200GameWindow@@@,0x011061C0,secondary vftable installed at +0x218 by ??0BfmeAptScreenMainMenu
+?showPalantirScreen@Rva00465200GameWindow@@QAEXABVAsciiString@@VRva0051EE90FunctorHolder@@@Z,0x000265E9,MainMenu ctor RenderCredits palantir registration through this ILT
