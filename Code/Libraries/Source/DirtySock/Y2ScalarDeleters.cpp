@@ -45,6 +45,7 @@ struct BfmeDirtyBase
 // shared base destructor at 0x007EB6C0 and the global operator delete.
 // ??0BfmeDirtyBase@@QAE@XZ present-unmatched
 BfmeDirtyBase::BfmeDirtyBase() {}
+__declspec(noinline) BfmeDirtyBase::~BfmeDirtyBase() {}
 
 void force_BfmeDirtyBase_scalar()
 {
