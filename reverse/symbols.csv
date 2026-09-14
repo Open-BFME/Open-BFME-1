@@ -6608,6 +6608,8 @@ name,address,notes
 ??1?$num_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@MAE@XZ,0x008323B0,STLport 4.5.3 num_put<char> complete destructor called by the vtable-identified scalar-deleting wrapper at 0x00832390; narrow num_put slots 1/2/8 are matched overloads
 ??_7?$num_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,0x0112E9B0,STLport 4.5.3 num_put<char> vtable identified by retail RTTI type descriptor 0x012C75B8; slot zero is scalar-deleting destructor 0x00832390 and slots 1/2/8 are matched narrow overloads
 ??1Gen_dtor_008323c0@@UAE@XZ,0x008323E0,gen-dtor class destructor
+??1?$money_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@MAE@XZ,0x008323E0,STLport 4.5.3 money_get<wchar_t> complete destructor called by the RTTI-identified scalar-deleting wrapper at 0x008323C0; matched wide money_get long-double overload identifies the facet
+??_7?$money_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x0112E9D8,STLport 4.5.3 money_get<wchar_t> vtable identified by retail RTTI type descriptor 0x012C7610; slot zero is scalar-deleting destructor 0x008323C0 and slot 2 is matched wide money_get long-double overload
 ??1Gen_dtor_008323f0@@UAE@XZ,0x00832410,gen-dtor class destructor
 ??1Gen_dtor_00832420@@UAE@XZ,0x00832440,gen-dtor class destructor
 ??1?$num_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@MAE@XZ,0x00832440,STLport 4.5.3 num_get<wchar_t> complete destructor called by the vtable-identified scalar-deleting wrapper at 0x00832420; wide num_get numeric slots 3/5/6 are matched overloads
