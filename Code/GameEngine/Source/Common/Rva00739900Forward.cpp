@@ -156,9 +156,9 @@ public:
 	int NumRefs;
 };
 
-typedef bool (*BoolForward)(void *, float);
+typedef unsigned char (*ByteForward)(void *, volatile int);
 
-bool Rva00739900Forward(register void *object, float value)
+unsigned char Rva00739900Forward(register void *object, volatile int value)
 {
 	RenderObjClass *robj = (RenderObjClass *)object;
 	if (!robj)
@@ -173,7 +173,7 @@ bool Rva00739900Forward(register void *object, float value)
 			VertexMaterialClass *mat = minfo->Get_Vertex_Material(i);
 			if (mat)
 			{
-				mat->Set_Opacity(value);
+				mat->Set_Opacity(*(float *)&value);
 				mat->Release_Ref();
 				result = 1;
 			}
@@ -187,7 +187,7 @@ bool Rva00739900Forward(register void *object, float value)
 	for (int i = 0; i < count; i++)
 	{
 		RenderObjClass *sub = robj->Get_Sub_Object(i);
-		register bool child = ((BoolForward)Rva00739900Forward)(sub, value);
+		register unsigned char child = ((ByteForward)Rva00739900Forward)(sub, value);
 		if (result || child)
 			result = 1;
 		if (sub)
