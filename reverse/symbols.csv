@@ -6079,7 +6079,6 @@ name,address,notes
 ??1Gen_dtor_005dd340@@UAE@XZ,0x0000CC16,gen-dtor class destructor
 ??1Gen_dtor_005dec80@@UAE@XZ,0x00031084,gen-dtor class destructor
 ??1Gen_dtor_005decb0@@UAE@XZ,0x00004C82,gen-dtor class destructor
-??1Gen_dtor_005e1f80@@UAE@XZ,0x0001BA81,gen-dtor class destructor
 ??1Gen_dtor_005e3360@@UAE@XZ,0x0004016A,gen-dtor class destructor
 ??1Gen_dtor_005e3450@@UAE@XZ,0x00023C8B,gen-dtor class destructor
 ??1Gen_dtor_005e3580@@UAE@XZ,0x0001F7AD,gen-dtor class destructor
@@ -6763,7 +6762,6 @@ name,address,notes
 ??1Gen_dtorv_005d7f70@@UAE@XZ,0x00042F28,gen-dtor class destructor
 ??1Gen_dtorv_005d9230@@UAE@XZ,0x00011A3B,gen-dtor class destructor
 ??1Gen_dtorv_005d9e30@@UAE@XZ,0x00040FDE,gen-dtor class destructor
-??1Gen_dtorv_005e1fb0@@UAE@XZ,0x0001BA81,gen-dtor class destructor
 ??1Gen_dtorv_006704d0@@UAE@XZ,0x000308D2,gen-dtor class destructor
 ??1Gen_dtorv_00699e90@@UAE@XZ,0x0002D902,gen-dtor class destructor
 ??1Gen_dtorv_00707e60@@UAE@XZ,0x0001DE49,gen-dtor class destructor
