@@ -6532,7 +6532,8 @@ name,address,notes
 ??1Gen_dtor_007f6d20@@UAE@XZ,0x00800290,gen-dtor class destructor
 ??1Gen_dtor_007f6d40@@UAE@XZ,0x007E86C0,gen-dtor class destructor
 ??1Gen_dtor_00802020@@UAE@XZ,0x00801C40,gen-dtor class destructor
-??1Gen_dtor_0081c530@@UAE@XZ,0x0081C520,gen-dtor class destructor
+??1Gen_dtor_0081c530@@UAE@XZ,0x0081C520,gen-dtor class destructor retained for generated scaffold history
+??1VideoPlayerInterface@@UAE@XZ,0x0081C520,authentic VideoPlayerInterface complete destructor; adjacent constructor 0x0081C500 and vtable 0x0112CC60 prove identity
 ??1Gen_dtor_0081c7c0@@UAE@XZ,0x0081C590,gen-dtor class destructor
 ??1Gen_dtor_0081c9a0@@UAE@XZ,0x000167CF,gen-dtor class destructor
 ??1Gen_dtor_00823150@@UAE@XZ,0x00825550,gen-dtor class destructor
