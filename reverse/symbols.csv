@@ -5741,6 +5741,7 @@ name,address,notes
 ??1Gen_dtor_003cdea0@@UAE@XZ,0x00049A3F,gen-dtor class destructor
 ??1Gen_dtor_003ce4a0@@UAE@XZ,0x00012BB6,gen-dtor class destructor
 ??1Gen_dtor_003d1350@@UAE@XZ,0x000139FD,gen-dtor class destructor
+??1LargeGroupAudio@@UAE@XZ,0x000139FD,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x003D0D70
 ??1Gen_dtor_003d1660@@UAE@XZ,0x0002A4F0,gen-dtor class destructor
 ??1Gen_dtor_003d2190@@UAE@XZ,0x0000D0B7,gen-dtor class destructor
 ??1Gen_dtor_003d2f10@@UAE@XZ,0x00019B19,gen-dtor class destructor
