@@ -5400,7 +5400,7 @@ name,address,notes
 ??1W3DModelDrawModuleData@@UAE@XZ,0x0003E414,route=0x00213750; scalar deleting destructor retail call targets the matched W3DModelDrawModuleData destructor through this ILT
 ??1InactiveBody@@UAE@XZ,0x0003C867,public complete destructor ILT called by scalar wrapper 0x00213E10; exact constructor 0x00213BF0 installs dedicated vtable 0x010A8B74; matched body 0x001CEFC0
 ??1PorcupineFormationBodyModuleModuleData@@UAE@XZ,0x00019D0D,destructor ILT used by the PorcupineFormationBodyModuleModuleData scalar-deleting destructor
-??1Gen_dtor_00214ac0@@UAE@XZ,0x0001BE1E,gen-dtor class destructor
+??1RespawnBodyModuleData@@UAE@XZ,0x0001BE1E,public complete destructor ILT called by scalar wrapper 0x00214AC0; exact constructor 0x002149D0 installs dedicated vtable 0x010A92C8; matched body 0x00211D40
 ??1AODCrushCollide@@MAE@XZ,0x0000F781,vtable 0x00CA9AC4 slots name AODCrushCollide; protected complete destructor called by wrapper 0x00215D90
 ??1Gen_dtor_00215dc0@@UAE@XZ,0x0000FC31,gen-dtor class destructor
 ??1Gen_dtor_00216360@@UAE@XZ,0x00039D1F,gen-dtor class destructor
@@ -10334,7 +10334,7 @@ name,address,notes
 ??_7RespawnBody@@6BBehaviorModule@@@,0x010A9268,primary vtable installed by the named constructor and destructor
 ??_7RespawnBody@@6BBehaviorModuleInterface@@@,0x010A91A0,secondary vtable at this+0x0C
 ??_7RespawnBody@@6BBodyModuleInterface@@@,0x010A90D0,secondary vtable at this+0x10
-??_7RespawnBodyModuleData@@6B@,0x010A92C8,RespawnBodyModuleData retail vtable
+??_7RespawnBodyModuleData@@6B@,0x010A92C8,exact constructor 0x002149D0 installs this dedicated vtable; slot zero ILT 0x0001A46A reaches scalar wrapper 0x00214AC0
 ??_7RetailCollideModuleData@@6B@,0x0108A350,CollideModule factory vtable target
 ??_7RetailDamageModuleData@@6B@,0x0108A350,DamageModule factory vtable target
 ??_7RetailUpdateModuleData@@6B@,0x0108A350,UpdateModule factory vtable target
