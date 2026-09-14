@@ -25951,3 +25951,32 @@ uw_00c5f850,0x00C5F850,retail funclet frees through operator delete[] at 0x00881
 ??_GGen_dtor_005db460@@UAEPAXI@Z,0x005DB460,"generated scalar-destructor placeholder superseded by the authentic FXParticleSystem ConcreteModuleTemplate DefaultModuleTag<7> specialization scalar-deleting destructor over the same 30-byte range"
 ??_GGen_dtor_005db600@@UAEPAXI@Z,0x005DB600,"generated scalar-destructor placeholder superseded by the authentic FXParticleSystem RenderObjectUpdate ConcreteModuleTemplate specialization scalar-deleting destructor over the same 30-byte range"
 ??_GGen_dtor_005db780@@UAEPAXI@Z,0x005DB780,"generated scalar-destructor placeholder superseded by the authentic FXParticleSystem OrthoEmissionVelocity ConcreteModuleTemplate specialization scalar-deleting destructor over the same 30-byte range"
+??_GGen_dtor_00070e30@@UAEPAXI@Z,0x00070E30,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_00070ef0@@UAEPAXI@Z,0x00070EF0,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_00070fb0@@UAEPAXI@Z,0x00070FB0,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_00071070@@UAEPAXI@Z,0x00071070,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_00071130@@UAEPAXI@Z,0x00071130,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_000711f0@@UAEPAXI@Z,0x000711F0,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_000712b0@@UAEPAXI@Z,0x000712B0,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_00071370@@UAEPAXI@Z,0x00071370,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_00602e50@@UAEPAXI@Z,0x00602E50,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_006bd070@@UAEPAXI@Z,0x006BD070,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_006c1ef0@@UAEPAXI@Z,0x006C1EF0,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_006e6d00@@UAEPAXI@Z,0x006E6D00,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_00701e50@@UAEPAXI@Z,0x00701E50,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_007158c0@@UAEPAXI@Z,0x007158C0,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_0072f1a0@@UAEPAXI@Z,0x0072F1A0,union-merge cleanup: retracted synthetic Gen_dtor
+??_GGen_dtor_00731870@@UAEPAXI@Z,0x00731870,union-merge cleanup: retracted synthetic Gen_dtor
+??_EGen_dtorv_005db2d0@@UAEPAXI@Z,0x005DB2D0,union-merge cleanup: retracted synthetic dtor
+??_EGen_dtorv_005db7b0@@UAEPAXI@Z,0x005DB7B0,union-merge cleanup: retracted synthetic dtor
+??_EGen_dtorv_005dbf70@@UAEPAXI@Z,0x005DBF70,union-merge cleanup: retracted synthetic dtor
+??_EGen_dtorv_005dc2c0@@UAEPAXI@Z,0x005DC2C0,union-merge cleanup: retracted synthetic dtor
+??_GGen_dtor_005da1f0@@UAEPAXI@Z,0x005DA1F0,union-merge cleanup: retracted synthetic dtor
+??_GGen_dtor_005da3b0@@UAEPAXI@Z,0x005DA3B0,union-merge cleanup: retracted synthetic dtor
+??_GGen_dtor_005dae90@@UAEPAXI@Z,0x005DAE90,union-merge cleanup: retracted synthetic dtor
+??_GGen_dtor_005dafe0@@UAEPAXI@Z,0x005DAFE0,union-merge cleanup: retracted synthetic dtor
+??_GGen_dtor_005db150@@UAEPAXI@Z,0x005DB150,union-merge cleanup: retracted synthetic dtor
+??_GGen_dtor_005db460@@UAEPAXI@Z,0x005DB460,union-merge cleanup: retracted synthetic dtor
+??_GGen_dtor_005db600@@UAEPAXI@Z,0x005DB600,union-merge cleanup: retracted synthetic dtor
+??_GGen_dtor_005db780@@UAEPAXI@Z,0x005DB780,union-merge cleanup: retracted synthetic dtor
+??_GGen_dtor_005dc290@@UAEPAXI@Z,0x005DC290,union-merge cleanup: retracted synthetic dtor

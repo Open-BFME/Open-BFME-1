@@ -35,20 +35,10 @@ REPORT = ROOT / "build/dir32_inconsistent.txt"
 
 
 def claims(wanted):
-    """(symbol -> {(base, object, function)}, rows skipped for a missing object).
-
-    The gate treats a missing object as fatal, because skipping one silently once
-    let whole sources drop out of two checks while the summary still said "0
-    skipped". This is a diagnostic rather than a gate, and the fleet lands sources
-    faster than any one build covers them, so it skips instead -- and RETURNS the
-    count, because an unreported gap is the thing that rule exists to prevent.
-    """
-    out, skipped = collections.defaultdict(set), 0
+    """symbol -> {(base, object, function)}, read the way the gate reads them."""
+    out = collections.defaultdict(set)
     for row in build.load_function_rows():
-        obj = build.row_object(row)
-        if not obj.exists():
-            skipped += 1
-            continue
+        obj = build.require_row_object(row)
         size = int(row["target_size"])
         target = build.read_target_bytes(int(row["target_rva"], 16), size)
         try:
@@ -64,7 +54,7 @@ def claims(wanted):
             final = struct.unpack_from("<I", target, off)[0]
             addend = struct.unpack_from("<I", body, off)[0]
             out[sym].add((hex((final - addend) & 0xFFFFFFFF), obj.name, row["name"]))
-    return out, skipped
+    return out
 
 
 def main():
@@ -85,10 +75,7 @@ def main():
     if not wanted:
         raise SystemExit("name at least one symbol, or pass --all")
 
-    found, skipped = claims(wanted)
-    if skipped:
-        print(f"note: {skipped} row(s) skipped -- object not built yet. Coverage is "
-              "partial; run the full ./build.sh for all of them.")
+    found = claims(wanted)
     for sym in sorted(wanted):
         rows = sorted(found.get(sym, ()))
         print(f"\n{sym}  ({len({b for b, _, _ in rows})} address(es), {len(rows)} site(s))")
