@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
-// Open-BFME7: ~Rva0049C020Owner at 0x0049C020 (556 B), a BfmeBaseVUH-derived
-// record with 26 destructible members (EH states 0..0x19): AsciiStrings, two
+// Open-BFME7: CommandButton::~CommandButton at 0x0049C020 (556 B), an
+// Overridable-derived record with 26 destructible members (EH states 0..0x19): AsciiStrings, two
 // 12-byte member types destroyed through their ILT thunks (0x000351D4, the
 // vector<Gen0049B890> destructor, for the twelve consecutive entries at
 // +0xa8..+0x134; 0x00026AB2, the PlayerUpgradeSpecialPowerModuleData
@@ -75,10 +75,10 @@ public:
 	Rva0049C020Owned *m_owned;
 };
 
-class Rva0049C020Owner : public BfmeBaseVUH
+class CommandButton : public BfmeBaseVUH
 {
-public:
-	virtual ~Rva0049C020Owner();
+protected:
+	virtual ~CommandButton();
 private:
 	int m_08;
 	AsciiString m_str0c;
@@ -115,6 +115,6 @@ private:
 	AsciiString m_str184;
 };
 
-Rva0049C020Owner::~Rva0049C020Owner()
+CommandButton::~CommandButton()
 {
 }

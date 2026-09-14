@@ -5908,7 +5908,7 @@ name,address,notes
 ??1Gen_dtor_00499e00@@UAE@XZ,0x00021431,gen-dtor class destructor
 ??1Gen_dtor_00499fc0@@UAE@XZ,0x00011086,gen-dtor class destructor
 ??1Gen_dtor_0049a150@@UAE@XZ,0x00030A8F,gen-dtor class destructor
-??1Gen_dtor_0049c560@@UAE@XZ,0x0001AE1A,gen-dtor class destructor
+??1CommandButton@@MAE@XZ,0x0001AE1A,exact constructor 0x0049BBF0 and dedicated vtable 0x010FB5DC establish the protected complete destructor called by wrapper 0x0049C560
 ??1Gen_dtor_0049c8d0@@UAE@XZ,0x0000EA39,gen-dtor class destructor
 ??1Gen_dtor_0049e750@@UAE@XZ,0x0002626F,gen-dtor class destructor
 ??1Gen_dtor_004ab0d0@@UAE@XZ,0x0002B125,gen-dtor class destructor
@@ -10288,7 +10288,7 @@ name,address,notes
 ??_7Rva00490A30@@6B@,0x010F9B44,vftable of the table-owning sibling in the Rva00490350 linked-object family (constructor 0x00490A30)
 ??_7Rva00491DB0DisplayOwner@@6B@,0x010F9C08,Rva00491DB0 owner vtable
 ??_7Rva004948B0OwnedSubsystem@@6B@,0x010FA1CC,Rva004948B0 derived vtable
-??_7Rva0049C020Owner@@6B@,0x010FB5DC,vftable of the BfmeBaseVUH-derived 26-member record whose destructor is 0x0049C020
+??_7CommandButton@@6B@,0x010FB5DC,dedicated CommandButton vtable installed by exact constructor 0x0049BBF0 and restored by destructor 0x0049C020
 ??_7Rva005225F0@@6B@,0x01106938,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x005225F0 calls; autopin
 ??_7Rva0052B730FunctorWrapper@@6B@,0x01106DAC,Objectives value-provider wrapper vftable read directly from all four constructor stores
 ??_7Rva0052B780FunctorWrapper@@6B@,0x01106DB8,Objectives InitGadgets wrapper vftable read directly from the constructor store
