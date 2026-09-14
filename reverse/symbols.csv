@@ -79286,6 +79286,7 @@ name,address,notes
 ??1HordeSiegeEngineContain@@UAE@XZ,0x00030099,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0024A180
 ??1ArrowStormUpdate@@UAE@XZ,0x0003E879,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x00257940
 ??1CreateObjectDieModuleData@@UAE@XZ,0x00016031,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x002548A0
+??1FireWeaponUpdate@@UAE@XZ,0x00030111,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x00292B50
 ?findArmyIcon@BfmeLivingWorldManagerIcons@@QAEPAVBfmeArmyIcon@@ABVAsciiString@@@Z,0x00002C89,derived from the REL32 displacement at 0x0060B820
 ?findAttackInfo@ScriptEngine@@AAEPAVAttackPriorityInfo@@ABVAsciiString@@_N@Z,0x00002969,Open-BFME5 ILT to ScriptEngine::findAttackInfo body 0x0033DBF0
 ?findAttributeModifierPoolUpdate@Object@@ABEPAVAttributeModifierPoolUpdate@@XZ,0x000202ED,module-name-key-based AttributeModifierPoolUpdate finder used by modifier application and value selection
