@@ -52,3 +52,8 @@ Gen_008AC620::~Gen_008AC620(void)
 	if (m_flag == 1)
 		g_bfmeFreeDWF(m_ptr);
 }
+
+void DeleteGen008AC620(Gen_008AC620 *value)
+{
+	delete value;
+}
