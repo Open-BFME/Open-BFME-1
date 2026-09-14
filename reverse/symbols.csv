@@ -6322,6 +6322,7 @@ name,address,notes
 ??1Gen_dtor_00674760@@UAE@XZ,0x0003FFF3,gen-dtor class destructor
 ??1Gen_dtor_00674790@@UAE@XZ,0x0000CD24,gen-dtor class destructor
 ??1Gen_dtor_00676210@@UAE@XZ,0x0002413B,gen-dtor class destructor
+??1BFMENetGameSpyStatsAuthKeyCommandMsg@@UAE@XZ,0x0002413B,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x00675E60
 ??1Gen_dtor_00681880@@UAE@XZ,0x00015064,gen-dtor class destructor
 ??1Gen_dtor_00681e10@@UAE@XZ,0x00019E25,gen-dtor class destructor
 ??1Gen_dtor_00682770@@UAE@XZ,0x00010140,gen-dtor class destructor
