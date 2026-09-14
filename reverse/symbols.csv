@@ -2533,6 +2533,8 @@ name,address,notes
 ??0Bitmap2DObjClass@@QAE@ABV0@@Z,0x00956140,Open-BFME5 retail bitmap copy constructor pin
 ??0Bitmap@Gdiplus@@QAE@HHHHPAE@Z,0x0005BE50,direct body pin: VS2003 gdiplusheaders.h scan-buffer Bitmap constructor exact 70-byte body; retail caller selects the existing ILT at 0x0001BF45; campaign=luna36h-20260907;lane=xfer;model=gpt-5.6-sol-ultra
 ??0BloodthirstyUpdateModuleData@@QAE@XZ,0x0001C684,module-data constructor called by BloodthirstyUpdate::friend_newModuleData at 0x00114030
+??_GBloodthirstyUpdateModuleData@@UAEPAXI@Z,0x00048982,dedicated vtable 0x010BC6B8 slot zero routes through this ILT to scalar wrapper 0x00287350
+??_7BloodthirstyUpdateModuleData@@6B@,0x010BC6B8,exact constructor 0x00286EC0 installs this dedicated vtable; slot zero routes to wrapper 0x00287350
 ??0BodyModule@@QAE@PAVThing@@PBVModuleData@@@Z,0x00211A50,Open-BFME5 base constructor every *Body module ctor forwards to
 ??0BoneFXDamage@@QAE@PAVThing@@PBVModuleData@@@Z,0x00005B19,link thunk to 0x00250740; the address the factory at 0x0011E800 encodes
 ??0BoneFXUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0000264E,module ctor (friend_newModuleInstance retail call target)
@@ -5466,7 +5468,7 @@ name,address,notes
 ??1Gen_dtor_002846d0@@UAE@XZ,0x000438AB,gen-dtor class destructor
 ??1Gen_dtor_00285490@@UAE@XZ,0x0003FDD2,gen-dtor class destructor
 ??1Gen_dtor_00285d00@@UAE@XZ,0x00006E0B,gen-dtor class destructor
-??1Gen_dtor_00287350@@UAE@XZ,0x0003F59E,gen-dtor class destructor
+??1BloodthirstyUpdateModuleData@@UAE@XZ,0x0003F59E,exact constructor 0x00286EC0 and dedicated vtable 0x010BC6B8 establish the complete destructor called by wrapper 0x00287350
 ??1BoneFXUpdateModuleData@@UAE@XZ,0x000049D5,destructor ILT used by the BoneFXUpdateModuleData scalar-deleting destructor
 ??1Gen_dtor_00289550@@UAE@XZ,0x0001BCE8,gen-dtor class destructor
 ??1Gen_dtor_00289bb0@@UAE@XZ,0x00018156,gen-dtor class destructor

@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 //
-// Open-BFME5: BaseUpgradeModuleData-shaped destructor sibling at retail
-// 0x00287380, 96 bytes. Same EH-unwind shape (3 tracked members) and same
+// Open-BFME5: BloodthirstyUpdateModuleData destructor at retail 0x00287380,
+// 96 bytes. The exact constructor at 0x00286EC0 establishes the same
+// three-member layout and dedicated vtable 0x010BC6B8. Its EH-unwind shape has
+// 3 tracked members and the same
 // installed vtable slot as BaseUpgradeModuleDataDestructorThunk.cpp's
 // ~BaseUpgradeModuleData, but the trailing members are two AudioEventRTS
 // (ILT 0x00026F35, see Audio/AudioEventRTSDtor.cpp) plus a small non-trivial
@@ -36,11 +38,11 @@ private:
 	char m_pad[0x70];
 };
 
-class __declspec(novtable) Rva00287380AuraSoundModuleData
+class __declspec(novtable) BloodthirstyUpdateModuleData
 	: public BaseUpgradeModuleDataPrimaryBase
 {
 public:
-	virtual ~Rva00287380AuraSoundModuleData();
+	virtual ~BloodthirstyUpdateModuleData();
 
 private:
 	AttributeModifierAuraUpdateModuleDataMemberC m_08;
@@ -48,7 +50,7 @@ private:
 	AudioEventRTS m_80;
 };
 
-// ??1Rva00287380AuraSoundModuleData@@UAE@XZ
-Rva00287380AuraSoundModuleData::~Rva00287380AuraSoundModuleData()
+// ??1BloodthirstyUpdateModuleData@@UAE@XZ
+BloodthirstyUpdateModuleData::~BloodthirstyUpdateModuleData()
 {
 }
