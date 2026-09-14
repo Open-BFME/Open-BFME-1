@@ -6606,6 +6606,7 @@ name,address,notes
 ??1Gen_dtor_00937040@@UAE@XZ,0x00936E40,gen-dtor class destructor
 ??1Gen_dtor_00938130@@UAE@XZ,0x009380E0,gen-dtor class destructor
 ??1Gen_dtor_0093bf90@@UAE@XZ,0x0093BE00,gen-dtor class destructor
+??1LightClass@@UAE@XZ,0x0093BE00,LightClass complete destructor; constructors 0x0093BE90/0x0093BFB0 install vtable 0x0113CBB8 whose scalar-deleting slot is 0x0093BF90
 ??1Gen_dtor_0093e840@@UAE@XZ,0x0093DF80,gen-dtor class destructor
 ??1Gen_dtor_0093e860@@UAE@XZ,0x0003F44F,gen-dtor class destructor
 ??1Gen_dtor_0093fd60@@UAE@XZ,0x0093EA10,gen-dtor class destructor
