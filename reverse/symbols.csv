@@ -6263,7 +6263,8 @@ name,address,notes
 ??1BeaconClientUpdateModuleData@@UAE@XZ,0x0000AC9A,exact constructor 0x006031C0 and dedicated vtable 0x01115280 establish the complete destructor thunk called by wrapper 0x006032C0
 ??_GBeaconClientUpdateModuleData@@UAEPAXI@Z,0x000217BA,constructor-installed vtable 0x01115280 slot zero routes through this ILT to 0x006032C0
 ??1Gen_dtor_006039d0@@UAE@XZ,0x0003FB9D,gen-dtor class destructor
-??1Gen_dtor_006045f0@@UAE@XZ,0x00044035,gen-dtor class destructor
+??1SwayClientUpdate@@UAE@XZ,0x00044035,exact constructor 0x006044E0 and dedicated vtable 0x011154F0 establish the complete destructor thunk called by wrapper 0x006045F0
+??_GSwayClientUpdate@@UAEPAXI@Z,0x0003C420,constructor-installed vtable 0x011154F0 slot zero routes through this ILT to 0x006045F0
 ??1Gen_dtor_00604e60@@UAE@XZ,0x0004B67D,gen-dtor class destructor
 ??1Gen_dtor_006051d0@@UAE@XZ,0x000014D8,gen-dtor class destructor
 ??1Gen_dtor_006060f0@@UAE@XZ,0x000386EF,gen-dtor class destructor
