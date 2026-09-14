@@ -23,8 +23,10 @@ struct ShadowPool
 	int available;
 };
 
-extern ShadowPool ShadowPoolA;
-extern int ShadowPoolALimit;
+// Retail 0x01306F54 / 0x01306F64. The ctor at 0x007BB520 names these
+// ShadowPoolB / ShadowPoolBLimit; ShadowPoolA lives at 0x01306F3C.
+extern ShadowPool ShadowPoolB;
+extern int ShadowPoolBLimit;
 
 class W3DShadowGeometryMesh
 {
@@ -52,11 +54,11 @@ void W3DShadowGeometryMesh::buildPolygonNormals()
 		Vector3 *tempVec;
 		if (m_terrainShadow)
 		{
-			if (ShadowPoolA.available < m_numPolygons &&
-				ShadowPoolA.allocate( m_numPolygons, 0 ) &&
-				ShadowPoolA.available < ShadowPoolALimit)
-				ShadowPoolALimit = ShadowPoolA.available;
-			tempVec = ShadowPoolA.buffer;
+			if (ShadowPoolB.available < m_numPolygons &&
+				ShadowPoolB.allocate( m_numPolygons, 0 ) &&
+				ShadowPoolB.available < ShadowPoolBLimit)
+				ShadowPoolBLimit = ShadowPoolB.available;
+			tempVec = ShadowPoolB.buffer;
 		}
 		else
 		{
