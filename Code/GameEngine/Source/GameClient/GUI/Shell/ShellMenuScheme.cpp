@@ -313,7 +313,6 @@ void ShellMenuSchemeManager::draw( void )
 		m_currentScheme->draw();
 }
 
-// ?update@ShellMenuSchemeManager@@QAEXXZ present-unmatched
 void ShellMenuSchemeManager::update( void )
 {
 
