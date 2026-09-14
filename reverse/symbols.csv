@@ -5818,6 +5818,7 @@ name,address,notes
 ??1Gen_dtor_0045c440@@UAE@XZ,0x0003732B,gen-dtor class destructor
 ??1Gen_dtor_0045c870@@UAE@XZ,0x00028984,gen-dtor class destructor
 ??1Gen_dtor_0045ccf0@@UAE@XZ,0x0003D4B0,gen-dtor class destructor
+??1WaterSetting@@UAE@XZ,0x0003D4B0,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0045CC80
 ??1Gen_dtor_0045e540@@UAE@XZ,0x00038F69,gen-dtor class destructor
 ??1Gen_dtor_0045e590@@UAE@XZ,0x00042677,gen-dtor class destructor
 ??1Gen_dtor_0045e5e0@@UAE@XZ,0x00027DDB,gen-dtor class destructor
