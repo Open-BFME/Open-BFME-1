@@ -5236,7 +5236,7 @@ name,address,notes
 ??1MoveAwayAndCowerState@@MAE@XZ,0x0000EA84,protected complete destructor ILT called by scalar wrapper 0x00185850; exact constructor 0x00180450 installs dedicated vtable 0x0109AD88
 ??1Gen_dtor_00185890@@UAE@XZ,0x0004915C,gen-dtor class destructor
 ??1Gen_dtor_001858d0@@UAE@XZ,0x0004871B,gen-dtor class destructor
-??1Gen_dtor_00187240@@UAE@XZ,0x00020D9C,gen-dtor class destructor
+??1AIStateMachine@@MAE@XZ,0x00020D9C,protected complete destructor ILT called by scalar wrapper 0x00187240; route reaches matched body 0x00187270 and exact constructor 0x00185A20 installs dedicated vtable 0x0109AEF8
 ??1Gen_dtor_001873e0@@UAE@XZ,0x0001C215,gen-dtor class destructor
 ??1AIAttackFollowWaypointPathState@@MAE@XZ,0x0000F664,exact constructor 0x00183C90 and dedicated vtable 0x0109B220 establish the protected complete destructor called by wrapper 0x00187410
 ??_GAIMoveToState@@MAEPAXI@Z,0x0001E0F6,dedicated vtable 0x01098F08 slot zero routes to scalar wrapper 0x00182120
@@ -88085,3 +88085,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7AIAttackThenIdleStateMachine@@6B@,0x010976F8,exact constructor 0x00184A40 installs this dedicated vtable; slot zero ILT 0x0003CEE3 reaches scalar wrapper 0x0016F310
 ??_7MoveAwayAndCowerState@@6B@,0x0109AD88,exact constructor 0x00180450 installs this dedicated vtable; slot zero ILT 0x0001B162 reaches scalar wrapper 0x00185850
 ??_7AITNGuardMachine@@6B@,0x0109B4B0,exact constructor 0x0018AFB0 installs this dedicated vtable; slot zero ILT 0x0000889B reaches scalar wrapper 0x00189E10
+??_7AIStateMachine@@6B@,0x0109AEF8,exact constructor 0x00185A20 installs this dedicated vtable; slot zero ILT 0x0001DA11 reaches scalar wrapper 0x00187240
