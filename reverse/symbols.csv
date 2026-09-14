@@ -88133,3 +88133,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1AABTreeClass@@UAE@XZ,0x0096A920,WW3D AABTreeClass destructor; matched constructors 0x0096A8E0 0x0096ACC0 and 0x0096AD60 plus vtable 0x0113E678 prove identity
 ??_GAABTreeClass@@UAEPAXI@Z,0x0096ACA0,WW3D AABTreeClass scalar deleting destructor; vtable 0x0113E678 slot one points here after RefCountClass::Delete_This
 ??_7AABTreeClass@@6B@,0x0113E678,WW3D AABTreeClass vtable installed by three matched constructors and destructor 0x0096A920
+?Resize@?$VectorClass@VKeyClass@Curve3DClass@@@@UAE_NHPBVKeyClass@Curve3DClass@@@Z,0x0093E1F0
