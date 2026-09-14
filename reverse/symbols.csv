@@ -5414,7 +5414,7 @@ name,address,notes
 ??1Gen_dtor_002649b0@@UAE@XZ,0x00004AAC,gen-dtor class destructor
 ??1Gen_dtor_00264b40@@UAE@XZ,0x000400D9,gen-dtor class destructor
 ??1Gen_dtor_00264e70@@UAE@XZ,0x0002C3E5,gen-dtor class destructor
-??1Gen_dtor_002657d0@@UAE@XZ,0x0001CCA1,gen-dtor class destructor
+??1RousingSpeechUpdateModuleData@@UAE@XZ,0x0001CCA1,destructor ILT used by the RousingSpeechUpdateModuleData scalar-deleting destructor
 ??1Gen_dtor_00265ab0@@UAE@XZ,0x00025577,gen-dtor class destructor
 ??1Gen_dtor_00265cd0@@UAE@XZ,0x0000DFB7,gen-dtor class destructor
 ??1Gen_dtor_00265db0@@UAE@XZ,0x000175B7,gen-dtor class destructor
@@ -5439,12 +5439,12 @@ name,address,notes
 ??1Gen_dtor_0027ef30@@UAE@XZ,0x00025356,gen-dtor class destructor
 ??1Gen_dtor_0027fac0@@UAE@XZ,0x0001C774,gen-dtor class destructor
 ??1Gen_dtor_0027fcb0@@UAE@XZ,0x00044A21,gen-dtor class destructor
-??1Gen_dtor_00280c10@@UAE@XZ,0x0002BD28,gen-dtor class destructor
+??1AttributeModifierAuraUpdateModuleData@@UAE@XZ,0x0002BD28,destructor ILT used by the AttributeModifierAuraUpdateModuleData scalar-deleting destructor
 ??1Gen_dtor_00280eb0@@UAE@XZ,0x0003C06F,gen-dtor class destructor
 ??1Gen_dtor_00281580@@UAE@XZ,0x00015EB5,gen-dtor class destructor
 ??1Gen_dtor_00281600@@UAE@XZ,0x00032303,gen-dtor class destructor
 ??1Gen_dtor_00281a70@@UAE@XZ,0x000158F7,gen-dtor class destructor
-??1Gen_dtor_00282a50@@UAE@XZ,0x0000188E,gen-dtor class destructor
+??1AutoPickUpUpdateModuleData@@UAE@XZ,0x0000188E,destructor ILT used by the AutoPickUpUpdateModuleData scalar-deleting destructor
 ??1Gen_dtor_00283430@@UAE@XZ,0x000301B6,gen-dtor class destructor
 ??1Gen_dtor_00283760@@UAE@XZ,0x0000E110,gen-dtor class destructor
 ??1Gen_dtor_002839e0@@UAE@XZ,0x00038F55,gen-dtor class destructor
@@ -5452,7 +5452,7 @@ name,address,notes
 ??1Gen_dtor_00285490@@UAE@XZ,0x0003FDD2,gen-dtor class destructor
 ??1Gen_dtor_00285d00@@UAE@XZ,0x00006E0B,gen-dtor class destructor
 ??1Gen_dtor_00287350@@UAE@XZ,0x0003F59E,gen-dtor class destructor
-??1Gen_dtor_00288460@@UAE@XZ,0x000049D5,gen-dtor class destructor
+??1BoneFXUpdateModuleData@@UAE@XZ,0x000049D5,destructor ILT used by the BoneFXUpdateModuleData scalar-deleting destructor
 ??1Gen_dtor_00289550@@UAE@XZ,0x0001BCE8,gen-dtor class destructor
 ??1Gen_dtor_00289bb0@@UAE@XZ,0x00018156,gen-dtor class destructor
 ??1Gen_dtor_0028a450@@UAE@XZ,0x000013F7,gen-dtor class destructor
