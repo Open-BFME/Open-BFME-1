@@ -6566,7 +6566,6 @@ name,address,notes
 ??1?$messages@D@_STL@@MAE@XZ,0x00848A30,STLport 4.5.3 messages<char> destructor directly called by its scalar-deleting wrapper at 0x00848BA0
 ??1Gen_dtor_00849af0@@UAE@XZ,0x00849990,gen-dtor class destructor
 ??1Gen_dtor_00851ea0@@UAE@XZ,0x00851340,gen-dtor class destructor
-??1Gen_dtor_00880dd0@@UAE@XZ,0x008813E0,gen-dtor class destructor
 ??1Gen_dtor_00881180@@UAE@XZ,0x00880FC0,gen-dtor class destructor
 ??1Gen_dtor_00886aa0@@UAE@XZ,0x00885AF0,gen-dtor class destructor
 ??1Gen_dtor_008ad510@@UAE@XZ,0x008AC620,gen-dtor class destructor
