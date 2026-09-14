@@ -5173,7 +5173,7 @@ name,address,notes
 ??1Gen_dtor_001852d0@@UAE@XZ,0x0003018E,gen-dtor class destructor
 ??1Gen_dtor_00185310@@UAE@XZ,0x00019BE6,gen-dtor class destructor
 ??1Gen_dtor_00185350@@UAE@XZ,0x00033F8C,gen-dtor class destructor
-??1Gen_dtor_00185390@@UAE@XZ,0x00020DBA,gen-dtor class destructor
+??1AIAttackMeleeHordeApproachTargetState@@MAE@XZ,0x00020DBA,exact protected complete-destructor ILT for this state; the shared AIInternalMoveToState body at 0x00172430 is called through 0x00020DBA by scalar wrapper 0x00185390
 ??1AIAttackPursueTargetState@@MAE@XZ,0x0003C687,exact constructor 0x0017F700 and dedicated vtable 0x0109A5C8 establish the protected complete destructor called by wrapper 0x001853D0
 ??_GAIMoveOutOfTheWayState@@MAEPAXI@Z,0x00045E30,dedicated vtable 0x0109A278 slot zero routes to scalar wrapper 0x00185220
 ??_GAIMoveAwayFromRepulsorsState@@MAEPAXI@Z,0x0001E7CC,dedicated vtable 0x0109A368 slot zero routes to scalar wrapper 0x00185290
@@ -5181,9 +5181,9 @@ name,address,notes
 ??_7AIMoveOutOfTheWayState@@6B@,0x0109A278,exact constructor 0x0017F350 installs this dedicated vtable
 ??_7AIMoveAwayFromRepulsorsState@@6B@,0x0109A368,exact constructor 0x0017F450 installs this dedicated vtable
 ??_7AIAttackPursueTargetState@@6B@,0x0109A5C8,exact constructor 0x0017F700 installs this dedicated vtable
-??1Gen_dtor_00185410@@UAE@XZ,0x00027F43,gen-dtor class destructor
+??1AIAttackFireDuringApproachState@@MAE@XZ,0x00027F43,exact protected complete-destructor ILT for this state; the shared AIInternalMoveToState body at 0x00172430 is called through 0x00027F43 by scalar wrapper 0x00185410
 ??1Gen_dtor_00185450@@UAE@XZ,0x0002CB56,gen-dtor class destructor
-??1Gen_dtor_00185490@@UAE@XZ,0x00013D59,gen-dtor class destructor
+??1AIAttackMeleeSquishState@@MAE@XZ,0x00013D59,exact protected complete-destructor ILT for this state; the shared AIInternalMoveToState body at 0x00172430 is called through 0x00013D59 by scalar wrapper 0x00185490
 ??1Gen_dtor_001854d0@@UAE@XZ,0x00007D1F,gen-dtor class destructor
 ??1AIFollowWaypointPathExactState@@MAE@XZ,0x000078AB,exact constructor 0x0017FA90 and dedicated vtable 0x0109A828 establish the protected complete destructor called by wrapper 0x00185500
 ??1AIWanderState@@MAE@XZ,0x00016095,exact constructor 0x0017FB00 and dedicated vtable 0x0109A8A8 establish the protected complete destructor called by wrapper 0x00185540
@@ -87617,3 +87617,9 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7CommandSet@@6B@,0x010FB7C0,CommandSet derived vtable stored by constructor 0x0049C680 and complete destructor 0x0049C740
 ??1FireWeaponWhenDamagedBehaviorModuleData@@UAE@XZ,0x00049A1C,FireWeaponWhenDamagedBehaviorModuleData complete virtual destructor ILT; scalar wrapper 0x0012ACA0 calls this route to cleanup body 0x0012ACD0 which destroys the +0x08 module-data base through ILT 0x0001B97D
 ??_7FireWeaponWhenDamagedBehaviorModuleData@@6B@,0x0108F078,FireWeaponWhenDamagedBehaviorModuleData vtable installed by exact constructor 0x0012A100; slot zero ILT 0x0001C3EB reaches scalar wrapper 0x0012ACA0
+??_GAIAttackMeleeHordeApproachTargetState@@MAEPAXI@Z,0x0003EF18,dedicated vtable 0x0109A540 slot-zero ILT; routes to scalar wrapper 0x00185390
+??_7AIAttackMeleeHordeApproachTargetState@@6B@,0x0109A540,exact constructor for ??_GAIAttackMeleeHordeApproachTargetState@@MAEPAXI@Z installs this dedicated vtable
+??_GAIAttackFireDuringApproachState@@MAEPAXI@Z,0x00049BBB,dedicated vtable 0x0109A640 slot-zero ILT; routes to scalar wrapper 0x00185410
+??_7AIAttackFireDuringApproachState@@6B@,0x0109A640,exact constructor for ??_GAIAttackFireDuringApproachState@@MAEPAXI@Z installs this dedicated vtable
+??_GAIAttackMeleeSquishState@@MAEPAXI@Z,0x0003E30B,dedicated vtable 0x0109A738 slot-zero ILT; routes to scalar wrapper 0x00185490
+??_7AIAttackMeleeSquishState@@6B@,0x0109A738,exact constructor for ??_GAIAttackMeleeSquishState@@MAEPAXI@Z installs this dedicated vtable
