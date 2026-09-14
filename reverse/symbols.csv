@@ -87604,3 +87604,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1CommandSet@@MAE@XZ,0x0000EA39,CommandSet protected complete-destructor ILT; scalar wrapper at 0x0049C8D0 calls this retail route
 ??_GCommandSet@@MAEPAXI@Z,0x00021166,CommandSet vtable 0x010FB7C0 slot-zero ILT; retail thunk routes to scalar wrapper 0x0049C8D0
 ??_7CommandSet@@6B@,0x010FB7C0,CommandSet derived vtable stored by constructor 0x0049C680 and complete destructor 0x0049C740
+??1FireWeaponWhenDamagedBehaviorModuleData@@UAE@XZ,0x00049A1C,FireWeaponWhenDamagedBehaviorModuleData complete virtual destructor ILT; scalar wrapper 0x0012ACA0 calls this route to cleanup body 0x0012ACD0 which destroys the +0x08 module-data base through ILT 0x0001B97D
+??_7FireWeaponWhenDamagedBehaviorModuleData@@6B@,0x0108F078,FireWeaponWhenDamagedBehaviorModuleData vtable installed by exact constructor 0x0012A100; slot zero ILT 0x0001C3EB reaches scalar wrapper 0x0012ACA0
