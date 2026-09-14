@@ -6086,11 +6086,11 @@ name,address,notes
 ??1SphereEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00004291,destructor ILT used by the SphereEmissionVolumeModule scalar-deleting destructor
 ??1CylinderEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00043CD9,destructor ILT used by the CylinderEmissionVolumeModule scalar-deleting destructor
 ??1Gen_dtor_005e3920@@UAE@XZ,0x0000EA52,gen-dtor class destructor
-??1Gen_dtor_005e39f0@@UAE@XZ,0x00033753,gen-dtor class destructor
-??1Gen_dtor_005e3ae0@@UAE@XZ,0x0003BF7F,gen-dtor class destructor
 ??1Gen_dtor_005e3b60@@UAE@XZ,0x0004A0F7,gen-dtor class destructor
-??1Gen_dtor_005e3c60@@UAE@XZ,0x00014AAB,gen-dtor class destructor
-??1Gen_dtor_005e3d60@@UAE@XZ,0x00034829,gen-dtor class destructor
+??1OrthoEmissionVelocityModule@FXParticleSystem@@UAE@XZ,0x00033753,destructor ILT used by the OrthoEmissionVelocityModule scalar-deleting destructor
+??1SphericalEmissionVelocityModule@FXParticleSystem@@UAE@XZ,0x0003BF7F,destructor ILT used by the SphericalEmissionVelocityModule scalar-deleting destructor
+??1CylindricalEmissionVelocityModule@FXParticleSystem@@UAE@XZ,0x00014AAB,destructor ILT used by the CylindricalEmissionVelocityModule scalar-deleting destructor
+??1OutwardEmissionVelocityModule@FXParticleSystem@@UAE@XZ,0x00034829,destructor ILT used by the OutwardEmissionVelocityModule scalar-deleting destructor
 ??1Gen_dtor_005e4af0@@UAE@XZ,0x0004AE17,gen-dtor class destructor
 ??1Gen_dtor_005e4b20@@UAE@XZ,0x0002ED93,gen-dtor class destructor
 ??1Gen_dtor_005e4b50@@UAE@XZ,0x0001FE1F,gen-dtor class destructor
