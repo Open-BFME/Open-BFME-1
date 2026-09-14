@@ -88,3 +88,27 @@ One-function identity:           2 (HIGH confidence, requires binary analysis)
 Multi-address (3+):              6 (MEDIUM confidence, need per-object data)
 Placement disagreements (2):    87 (LOW-MEDIUM confidence)
 TOTAL:                          97
+
+
+================================================================================
+CORRECTION: Status Update (97 → 95)
+================================================================================
+
+Cross-over pairs: exactly 2 found in the 97-symbol report
+  1. ?IsSortingEnabled@WW3D@@0_NA + ?AreStaticSortListsEnabled@WW3D@@0_NA
+     Status: FIXED (commit aa2dff0378) - both now single address each
+     
+  2. ?ZFar@DX8Wrapper@@1MA + ?ZNear@DX8Wrapper@@1MA
+     Status: DIAGNOSED, needs binary analysis to name the global at 0x1340500
+
+The "cheap lane" is closed. No more cross-over pairs exist in the remaining work.
+
+After WW3D fix: 97 symbols → 95 symbols
+Remaining breakdown (95):
+  - One-function-identity: 2 (ZNear/ZFar - blocked on binary analysis)
+  - Multi-address (3+): 6 (need dir32_who.py per-object data)
+  - Placement disagreement: 87
+
+Key lesson learned: 
+Heuristics (majority voting, "several pairs probably exist") must be verified.
+The skeptical approach—asking about the build rather than running it—was correct.
