@@ -5495,7 +5495,7 @@ name,address,notes
 ??1Gen_dtor_0025fb50@@UAE@XZ,0x00023948,gen-dtor class destructor
 ??1Gen_dtor_0025ffc0@@UAE@XZ,0x00034090,gen-dtor class destructor
 ??1Gen_dtor_00260b20@@UAE@XZ,0x0002147C,gen-dtor class destructor
-??1Gen_dtor_00261280@@UAE@XZ,0x00016220,gen-dtor class destructor
+??1ManTheWallsSpecialPowerModuleData@@UAE@XZ,0x00016220,public complete destructor ILT called by scalar wrapper 0x00261280; exact constructor 0x00261260 installs dedicated vtable 0x010B5EA0
 ??1Gen_dtor_002616a0@@UAE@XZ,0x0001BA72,gen-dtor class destructor
 ??1Gen_dtor_00263c60@@UAE@XZ,0x0003CE9D,gen-dtor class destructor
 ??1Gen_dtor_00264290@@UAE@XZ,0x0000D968,gen-dtor class destructor
@@ -88114,3 +88114,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@6B@,0x0113CE5C,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> vtable installed by matched constructor 0x0093E660
 ?m@Gen_00944c50@@QAAXXZ,0x00944C50,cdecl ABI alias for retail Begin_Render call
 ??_7CombineHordeSpecialPowerModuleData@@6B@,0x010B3EC8,exact constructor 0x002598A0 installs this dedicated vtable; slot zero ILT 0x0002A072 reaches scalar wrapper 0x002598D0
+??_7ManTheWallsSpecialPowerModuleData@@6B@,0x010B5EA0,exact constructor 0x00261260 installs this dedicated vtable; slot zero ILT 0x00032AFB reaches scalar wrapper 0x00261280
