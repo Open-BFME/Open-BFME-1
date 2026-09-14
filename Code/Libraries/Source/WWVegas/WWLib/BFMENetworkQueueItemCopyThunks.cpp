@@ -13,22 +13,22 @@ public:
 class BFMENetworkQueueItem1copyFromQueueNodeShim
 {
 public:
-	void copyFromQueueNode(void * a0);
+	void copyFromQueueNode(void *node);
 };
 
-void BFMENetworkQueueItem1::copyFromQueueNode(void * a0)
+void BFMENetworkQueueItem1::copyFromQueueNode(void *node)
 {
-	((BFMENetworkQueueItem1copyFromQueueNodeShim *)this)->copyFromQueueNode(a0);
+	((BFMENetworkQueueItem1copyFromQueueNodeShim *)this)->copyFromQueueNode(node);
 }
 
 class BFMENetworkQueueItemcopyFromQueueNodeShim
 {
 public:
-	void copyFromQueueNode(void * a0);
+	void copyFromQueueNode(void *node);
 };
 
-void BFMENetworkQueueItem::copyFromQueueNode(void * a0)
+void BFMENetworkQueueItem::copyFromQueueNode(void *node)
 {
-	((BFMENetworkQueueItemcopyFromQueueNodeShim *)this)->copyFromQueueNode(a0);
+	((BFMENetworkQueueItemcopyFromQueueNodeShim *)this)->copyFromQueueNode(node);
 }
 
