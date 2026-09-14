@@ -88101,3 +88101,6 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7InactiveBody@@6B@,0x010A8B74,exact constructor 0x00213BF0 installs this dedicated vtable; slot zero ILT 0x0003648A reaches scalar wrapper 0x00213E10
 ??1FlightDeckBehaviorModuleData@@UAE@XZ,0x000275BB,complete destructor ILT called by scalar wrapper 0x002131F0; exact constructor 0x002131B0 installs vtable 0x010A8268
 ??_7AODCrushCollideModuleData@@6B@,0x010A9740,exact constructor 0x00215B90 installs this dedicated vtable; slot zero ILT 0x0003F8F0 reaches scalar wrapper 0x00215DC0
+??1?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAE@XZ,0x0093EA10,retail copy called by the dedicated AddInfo deleting wrapper 0x0093FD60; body is the exact 67-byte DynamicVector destructor ICF family
+??_G?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAEPAXI@Z,0x0093FD60,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> scalar deleting destructor; matched ctor 0x0093E660 stores vtable 0x0113CE5C whose slot zero is this body
+??_7?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@6B@,0x0113CE5C,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> vtable installed by matched constructor 0x0093E660
