@@ -1,4 +1,4 @@
-// ?d_0077d6b0@@YAXXZ
+// ?streakBody0077D6B0@W3DStreakDraw@@QAEXXZ
 // partial score=0.987 date=2026-09-14
 // cl: /O2 /EHsc
 
@@ -113,16 +113,17 @@ public:
 class W3DStreakDraw
 {
 public:
-	virtual void doDrawModule();
+	void streakBody0077D6B0();
 
 private:
+	void *m_vtable;
 	const W3DStreakDrawModuleData *m_moduleData;
 	BFMERopeDrawable *m_drawable;
 	BfmeStreakObject *volatile m_streak;
 };
 
 // zero-argument helper body at 0x0077D6B0; virtual wrapper is 0x0077DB30
-void W3DStreakDraw::doDrawModule()
+void W3DStreakDraw::streakBody0077D6B0()
 {
 	const W3DStreakDrawModuleData *data = m_moduleData;
 	if (m_streak != 0)
