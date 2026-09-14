@@ -87821,7 +87821,7 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7W3DView@@6B@,0x00D217A0,vtable whose slots name W3DView
 ??1Gen_dtor_00185350@@UAE@XZ,0x00033F8C,gen-dtor class destructor
 ??1Gen_dtor_001ae160@@UAE@XZ,0x00008D32,gen-dtor class destructor
-??1Gen_dtor_001f5f30@@UAE@XZ,0x0000DEA9,gen-dtor class destructor
+??1ParkingPlaceBehavior@@MAE@XZ,0x0000DEA9,protected complete destructor ILT called by scalar wrapper 0x001F5F30; exact constructor 0x001F59F0 installs dedicated vtable 0x010A2A1C
 ??1Gen_dtor_002b8290@@UAE@XZ,0x000154DD,gen-dtor class destructor
 ??1Gen_dtor_00602ff0@@UAE@XZ,0x0002EDCA,gen-dtor class destructor
 ??1Gen_dtor_00161df0@@UAE@XZ,0x0003692B,gen-dtor class destructor
@@ -88094,3 +88094,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7SymbioticStructuresBodyModuleData@@6B@,0x0108EC78,dedicated vtable associated with matched constructor 0x00128D20 and ModuleFactory registration; slot zero ILT 0x00046236 reaches scalar wrapper 0x00129530
 ??_7OathbreakersFadeAwayBehavior@@6B@,0x010A5124,matched constructor 0x00201BB0 installs this dedicated vtable; slot zero ILT 0x00006622 reaches scalar wrapper 0x00201CC0
 ??_7AutoAbilityBehaviorModuleData@@6B@,0x010A1A70,exact constructor 0x001ED6A0 installs this dedicated vtable; slot zero ILT 0x0002775F reaches scalar wrapper 0x001ED860
+??_7ParkingPlaceBehavior@@6B@,0x010A2A1C,exact constructor 0x001F59F0 installs this dedicated vtable; slot zero ILT 0x0002F80B reaches scalar wrapper 0x001F5F30
