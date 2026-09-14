@@ -32,9 +32,9 @@ public:
 class BfmeA1207 : public BfmeRender2D
 {
 public:
-	void bfmeDo1207(const BfmeV1207 &a1, const BfmeV1207 &a2,
-		const BfmeV1207 &a3, const BfmeV1207 &a4,
-		const BfmeV1207 &a5, const BfmeV1207 &a6, int color);
+	void bfmeDo1207(const BfmeV1207 &v0, const BfmeV1207 &v1,
+		const BfmeV1207 &v2, const BfmeV1207 &uv0,
+		const BfmeV1207 &uv1, const BfmeV1207 &uv2, int color);
 };
 
 class W3DDisplay
