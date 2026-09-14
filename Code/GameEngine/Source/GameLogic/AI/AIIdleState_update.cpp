@@ -1,15 +1,8 @@
 // ?update@AIIdleState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.68 date=2026-09-10
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /MD /EHsc
 // BFME AIIdleState::update at retail RVA 0x00188090.
-//
-// The matched BFME AIFaceState::update tail-jumps through j_00003b39 when it
-// returns to idle.  That thunk resolves to this body.  The first call below
-// is the already matched AIIdleState::doInitIdleState body at 0x00172180;
-// the sleep fields and the AI command subobject offsets are likewise taken
-// from the retail body, not from the generated dump's anonymous name.
 
-typedef unsigned char Bool;
+typedef bool Bool;
 typedef unsigned short UnsignedShort;
 typedef unsigned int UnsignedInt;
 typedef float Real;
@@ -80,15 +73,21 @@ public:
 class Weapon
 {
 public:
+	void *m_vptr;
 	WeaponTemplate *m_template;
 	Bool isWithinFrameWindow() const;
 };
 
-class Object
+class Thing
+{
+public:
+	Bool isKindOf(KindOfType kind) const;
+};
+
+class Object : public Thing
 {
 public:
 	Weapon *getCurrentWeapon(WeaponSlotType *slot);
-	Bool isKindOf(KindOfType kind) const;
 	Real getVisionRange() const;
 
 	unsigned char m_padding000[0x94];
@@ -129,7 +128,7 @@ public:
 	UnsignedInt getMoodMatrixActionAdjustment(MoodMatrixAction action) const;
 	Object *getNextMoodTarget(Bool includeCurrent, Bool includeFriends);
 
-	unsigned char m_padding184[0x1FC - 0x184];
+	unsigned char m_padding004[0x1FC - 4];
 	UnsignedInt m_nextMoodCheckTime;
 	unsigned char m_padding200[0x335 - 0x200];
 	Bool m_attackStarted;
@@ -137,9 +136,10 @@ public:
 
 class AI
 {
-	public:
+public:
 	Object *findClosestRepulsor(const Object *object, Real range);
 };
+
 
 class BfmeGameLogic
 {
@@ -155,7 +155,7 @@ public:
 
 	unsigned char m_padding004[0x18];
 	StateMachine *m_machine;
-	};
+};
 
 class AIIdleState : public State
 {
@@ -239,10 +239,11 @@ StateReturnType AIIdleState::update()
 			return STATE_CONTINUE;
 		}
 
-		if ((owner->m_status & 0x20) == 0 && weapon &&
-			!((IsLeechRangeCall)j_00028f74)(weapon->m_template) &&
-			owner->isKindOf(KINDOF_CAN_BE_REPULSED) &&
-			ai->isIdle())
+		if ((owner->m_status & 0x20) != 0 && weapon &&
+			((IsLeechRangeCall)j_00028f74)(weapon->m_template))
+			return STATE_CONTINUE;
+
+		if (owner->isKindOf(KINDOF_CAN_BE_REPULSED) && ai->isIdle())
 		{
 			Object *enemy = TheAI->findClosestRepulsor(owner,
 				((GetVisionRangeCall)j_00014b4b)(owner));
@@ -258,7 +259,13 @@ StateReturnType AIIdleState::update()
 		{
 			AICommandInterface *commands =
 				reinterpret_cast<AICommandInterface *>((char *)ai + 0x20);
-			commands->aiMoveToObject(crate, CMD_FROM_AI);
+			union
+			{
+				void *asVoid;
+				AIMoveToObjectCall asMember;
+			} moveToObjectCast;
+			moveToObjectCast.asVoid = (void *)j_00041074;
+			(commands->*moveToObjectCast.asMember)(crate, CMD_FROM_AI);
 			return STATE_CONTINUE;
 		}
 
@@ -273,6 +280,7 @@ StateReturnType AIIdleState::update()
 					reinterpret_cast<AICommandInterface *>((char *)ai + 0x20);
 				commands->aiAttackObject(enemy, 0x7FFFFFFF, CMD_FROM_AI);
 				ai->m_attackStarted = 1;
+				return STATE_CONTINUE;
 			}
 		}
 
