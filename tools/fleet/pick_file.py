@@ -4,9 +4,8 @@
 A file is busy only while a seat is CURRENTLY on it (seats.log: last event for
 the stem is '->'). Finished sessions leave most bodies unconverted (a session
 lands ~5 of 25), so the old append-only claim list starved the fleet once every
-big file had been touched once. Prefer files with enough bodies still servable
-after the latest attempt verdict, then order by landed-neighbour density and
-remaining dump bytes. argv[1] is the minimum body count (default 6).
+big file had been touched once. Order: landed-neighbour density first (see below), then remaining dump bytes,
+at least argv[1] remaining dump bodies (default 6).
 """
 import csv, collections, re, sys, time
 from pathlib import Path
@@ -29,18 +28,7 @@ active = active_rvas(ROOT)
 # sessions older than 3h with no 'done' are dead seats, not busy (log has only HH:MM; be lenient)
 
 minb = int(sys.argv[1]) if len(sys.argv) > 1 else 6
-b = collections.Counter(); n = collections.Counter(); viable = collections.Counter()
-latest = {}
-for name in ('re_attempts-converted.log', 're_attempts.log'):
-    with open(ROOT / 'reverse' / name, encoding='utf-8', errors='replace') as log:
-        for line in log:
-            fields = line.split('\t')
-            if len(fields) > 3 and fields[1].lower().startswith('0x'):
-                latest[int(fields[1], 16)] = fields[3]
-dead_ends = {
-    'blocked', 'refuted', 'negative', 'no-match', 'not-convertible',
-    'identity-suspect', 'mis-anchored', 'no-boundary',
-}
+b = collections.Counter(); n = collections.Counter()
 for _ in range(4):
     try:
         rows = list(csv.DictReader(open(ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')))
@@ -60,8 +48,6 @@ for r in rows:
             busy_stems.add(Path(s).stem)
         b[s] += int(r.get('target_size') or 0); n[s] += 1
         a = int(rva, 16); lo[s] = min(lo.get(s, a), a); hi[s] = max(hi.get(s, a), a)
-        if latest.get(a) not in dead_ends:
-            viable[s] += 1
     elif r.get('status') == 'matched' and not s.startswith('Code/gen_'):
         landed.append(int(rva, 16))
 # Order by landed-neighbour density: real C++ rows inside the file's address
@@ -74,9 +60,7 @@ landed.sort()
 def density(s):
     return (bisect.bisect_right(landed, hi[s]) - bisect.bisect_left(landed, lo[s])) / max(n[s], 1)
 ordered = sorted(b, key=lambda s: (-density(s), -b[s]))
-preferred = [s for s in ordered if n[s] >= minb and viable[s] >= max(1, minb // 2)]
-preferred_set = set(preferred)
-for s in preferred + [s for s in ordered if s not in preferred_set]:
+for s in ordered:
     by = b[s]
     stem = Path(s).stem
     if stem in busy_stems or n[s] < minb:
