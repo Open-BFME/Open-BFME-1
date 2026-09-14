@@ -5088,7 +5088,7 @@ name,address,notes
 ??1AIGuardRetaliateMachine@@MAE@XZ,0x0001F4F1,protected complete destructor ILT called by scalar wrapper 0x0015EBB0; exact constructor 0x0015F240 installs dedicated vtable 0x01096420
 ??1AIGuardRetaliateReturnState@@MAE@XZ,0x0002FD83,vtable 0x00C96520 slots name AIGuardRetaliateReturnState; protected complete destructor called by wrapper 0x0015ECA0
 ??1Gen_dtor_0015f3e0@@UAE@XZ,0x0000FF3D,gen-dtor class destructor
-??1Gen_dtor_0015fa60@@UAE@XZ,0x000289FC,gen-dtor class destructor
+??1AIHarvestMachine@@MAE@XZ,0x000289FC,protected complete destructor ILT called by scalar wrapper 0x0015FA60; exact constructor 0x0015FE90 installs dedicated vtable 0x01096650
 ??1Gen_dtor_0015fd70@@UAE@XZ,0x000240FA,gen-dtor class destructor
 ??1AIHarvestPrepareSiteState@@MAE@XZ,0x0002DECF,vtable 0x00C96770 slots name AIHarvestPrepareSiteState; protected complete destructor called by wrapper 0x001603A0
 ??1Gen_dtor_001603e0@@UAE@XZ,0x0004924C,gen-dtor class destructor
@@ -88088,3 +88088,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7AIStateMachine@@6B@,0x0109AEF8,exact constructor 0x00185A20 installs this dedicated vtable; slot zero ILT 0x0001DA11 reaches scalar wrapper 0x00187240
 ??_7AIDockMachine@@6B@,0x01095A38,exact constructor 0x0014F7C0 installs this dedicated vtable; slot zero ILT 0x00041BA5 reaches scalar wrapper 0x0014F120
 ??_7AIGuardRetaliateMachine@@6B@,0x01096420,exact constructor 0x0015F240 installs this dedicated vtable; slot zero ILT 0x000380C8 reaches scalar wrapper 0x0015EBB0
+??_7AIHarvestMachine@@6B@,0x01096650,exact constructor 0x0015FE90 installs this dedicated vtable; slot zero ILT 0x00014EC5 reaches scalar wrapper 0x0015FA60
