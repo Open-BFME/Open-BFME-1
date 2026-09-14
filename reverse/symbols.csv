@@ -5665,6 +5665,7 @@ name,address,notes
 ??1Gen_dtor_00363e00@@UAE@XZ,0x00006C4E,gen-dtor class destructor
 ??1Gen_dtor_00364ae0@@UAE@XZ,0x0000B5CD,gen-dtor class destructor
 ??1Gen_dtor_0036a110@@UAE@XZ,0x000442D3,gen-dtor class destructor
+??1W3DProjectileStreamDraw@@UAE@XZ,0x000442D3,route=0x00369CF0; scalar deleting destructor retail call targets the matched W3DProjectileStreamDraw destructor through this ILT
 ??1Gen_dtor_0036adc0@@UAE@XZ,0x00024DB6,gen-dtor class destructor
 ??1Gen_dtor_0036cf10@@UAE@XZ,0x0003FB89,gen-dtor class destructor
 ??1Gen_dtor_0036da80@@UAE@XZ,0x0001E2FE,gen-dtor class destructor
