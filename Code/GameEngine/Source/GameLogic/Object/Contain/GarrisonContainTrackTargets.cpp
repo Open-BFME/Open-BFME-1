@@ -2,6 +2,8 @@
 // readable body of ?removeObjectFromGarrisonPoint@GarrisonContain@@IAEXPAVObject@@H@Z: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp
 // readable body of ?trackTargets@GarrisonContain@@IAEXXZ: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain.cpp
 
+#include <float.h>
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
 {
@@ -141,6 +143,7 @@ private:
     GarrisonPointData m_garrisonPointData[40];
     int m_garrisonPointsInUse;
     Coord3D m_garrisonPoints[3][40];
+    int m_unmodelled_99c[3];
 };
 
 // ?removeObjectFromGarrisonPoint@GarrisonContain@@IAEXPAVObject@@H@Z
@@ -169,6 +172,48 @@ void GarrisonContain::removeObjectFromGarrisonPoint(Object *object, int index)
     --m_garrisonPointsInUse;
 
     object->setPosition(m_object->getPosition());
+}
+
+// ?findClosestFreeGarrisonPointIndex@GarrisonContain@@IAEHHPBUCoord3D@@@Z
+int GarrisonContain::findClosestFreeGarrisonPointIndex(
+    int conditionIndex, const Coord3D *targetPosition)
+{
+    if (!targetPosition || m_garrisonPointsInUse == 40)
+        return -1;
+
+    const int pointCount = m_unmodelled_99c[conditionIndex];
+    if (m_garrisonPointsInUse >= pointCount)
+        return -1;
+
+    const Coord3D *const objectPosition = m_object->getPosition();
+    if (targetPosition->x == objectPosition->x &&
+        targetPosition->y == objectPosition->y &&
+        targetPosition->z == objectPosition->z)
+    {
+        for (int i = 0; i < 40; ++i)
+        {
+            if (m_garrisonPointData[i].objectID == INVALID_OBJECT_ID)
+                return i;
+        }
+        return conditionIndex;
+    }
+
+    int closestIndex = -1;
+    float closestDistance = FLT_MAX;
+    for (int i = 0; i < pointCount; ++i)
+    {
+        if (m_garrisonPointData[i].objectID == INVALID_OBJECT_ID)
+        {
+            const float distance = calcDistanceSquared(
+                *targetPosition, m_garrisonPoints[conditionIndex][i]);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestIndex = i;
+            }
+        }
+    }
+    return closestIndex;
 }
 
 // ?trackTargets@GarrisonContain@@IAEXXZ
