@@ -23,7 +23,7 @@ void BFMEZBiasSetter::set(float zbias)
 	current_zbias=zbias;
 	if (ZNear!=ZFar) {
 		Matrix4x4 tmp=ProjectionMatrix;
-		tmp[3][2]-=(ZNear*ZFar/(ZNear-ZFar))*(zbias*(1.0f/16.0f));
+		tmp[3][2]-=(ZNear*ZFar/(ZFar-ZNear))*(zbias*(1.0f/16.0f));
 		DX8CALL(SetTransform(D3DTS_PROJECTION,(D3DMATRIX*)&tmp));
 	}
 }
