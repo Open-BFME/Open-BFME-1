@@ -87825,7 +87825,7 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1Gen_dtor_001ae160@@UAE@XZ,0x00008D32,gen-dtor class destructor
 ??1ParkingPlaceBehavior@@MAE@XZ,0x0000DEA9,protected complete destructor ILT called by scalar wrapper 0x001F5F30; exact constructor 0x001F59F0 installs dedicated vtable 0x010A2A1C
 ??1Gen_dtor_002b8290@@UAE@XZ,0x000154DD,gen-dtor class destructor
-??1Gen_dtor_00602ff0@@UAE@XZ,0x0002EDCA,gen-dtor class destructor
+??1ClientUpdateModule@@UAE@XZ,0x0002EDCA,complete destructor ILT called by scalar wrapper 0x00602FF0; exact constructor 0x00602ED0 installs vtable 0x01115210
 ??1Gen_dtor_00161df0@@UAE@XZ,0x0003692B,gen-dtor class destructor
 ??_GAIPlayer@@MAEPAXI@Z,0x00046CDB,vtable 0x00C968B0 slot zero routes through this ILT to scalar wrapper 0x00161DF0
 ??_7AIPlayer@@6B@,0x00C968B0,vtable whose slots name AIPlayer
@@ -88124,6 +88124,7 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7SiegeDeployHordeSpecialPowerModuleData@@6B@,0x010B7240,exact constructor 0x00265D90 installs this dedicated vtable; slot zero ILT 0x00025AE5 reaches scalar wrapper 0x00265DB0
 ??_7DevastateSpecialPowerModuleData@@6B@,0x010B47C8,exact constructor 0x0025AC10 installs this dedicated vtable; slot zero ILT 0x00034897 reaches scalar wrapper 0x0025AC50
 ??_7SpawnPointProductionExitUpdateModuleData@@6B@,0x010E8D28,exact constructor 0x0035F0F0 installs this dedicated vtable; slot zero ILT 0x0002AEF0 reaches scalar wrapper 0x0035F120
+??_7ClientUpdateModule@@6B@,0x01115210,exact constructor 0x00602ED0 installs this vtable; slot zero ILT 0x00045A7A reaches scalar wrapper 0x00602FF0
 ??1FontCharsClass@@UAE@XZ,0x00940010,WW3D FontCharsClass destructor; matched constructor identity at 0x00940610 and shared vtable 0x0113CE8C prove this complex cleanup body
 ??_GFontCharsClass@@UAEPAXI@Z,0x00940770,WW3D FontCharsClass scalar deleting destructor; vtable 0x0113CE8C slot one points here after RefCountClass::Delete_This
 ??_7FontCharsClass@@6B@,0x0113CE8C,WW3D FontCharsClass vtable installed by constructor 0x00940610 and destructor 0x00940010; slots are RefCountClass::Delete_This and scalar deleting destructor 0x00940770
