@@ -6,7 +6,7 @@
 // BfmeAptScreenOnlineCustomMatch constructor, retail 0x00545310, 1935 bytes.
 // The constructor uses the recovered online custom-match callback bindings.
 
-#include "../../../../../reference/shims/stringinline/StringInline.h"
+#include "../../reference/shims/stringinline/StringInline.h"
 
 class BfmeAptWindowContext
 {
