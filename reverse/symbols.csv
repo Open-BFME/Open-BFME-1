@@ -3039,7 +3039,7 @@ name,address,notes
 ??0HordeMemberCollide@@QAE@PAVThing@@PBVModuleData@@@Z,0x000287F9,link thunk to the HordeMemberCollide constructor; named from the ModuleFactory registration that pairs "HordeMemberCollide" with factory 0x0011ED40
 ??0HordeMemberCollideModuleData@@QAE@XZ,0x000317C8,module-data constructor called by HordeMemberCollide::friend_newModuleData at 0x00124890
 ??0HordeTransportContainBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000023A1,HordeTransportContain ctor base call
-??0HordeTransportContainModuleDataBase@@QAE@XZ,0x0003D055,base of HordeTransportContainModuleData; same ILT as the ICF-folded HordeGarrisonContain body
+??0Rva0024D190Base@@QAE@XZ,0x0003D055,base of disputed ICF-shared constructor at 0x0024D190
 ??0HordeUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x00037619,derived-ICF
 ??0HordeUpdateModuleData@@QAE@XZ,0x0001BE41,pinharvest x1 (thunk)
 ??0HordeWorkerAIUpdateBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000254A0,HordeWorkerAIUpdate ModuleFactory body calls this base constructor ILT
@@ -5446,7 +5446,7 @@ name,address,notes
 ??1ContestableContainModuleData@@UAE@XZ,0x0001871E,public complete destructor ILT called by scalar wrapper 0x00249BC0; exact constructor 0x00249B50 installs dedicated vtable 0x010AFE60
 ??1Gen_dtor_0024a6e0@@UAE@XZ,0x00030099,gen-dtor class destructor
 ??1HordeTransportContain@@UAE@XZ,0x00037E6B,public complete destructor ILT called by scalar wrapper 0x0024B980; exact constructor 0x0024B6F0 installs dedicated vtable 0x010B0688; matched body 0x0024C530
-??1Gen_dtor_0024d1b0@@UAE@XZ,0x000486AD,gen-dtor class destructor
+??1HordeGarrisonContainModuleData@@UAE@XZ,0x000486AD,destructor ILT used by the HordeGarrisonContainModuleData scalar-deleting destructor
 ??1Gen_dtor_0024d4b0@@UAE@XZ,0x0001BDB0,gen-dtor class destructor
 ??1Gen_dtor_0024ea90@@UAE@XZ,0x0001445C,gen-dtor class destructor
 ??1Gen_dtor_0024f3c0@@UAE@XZ,0x0003B813,gen-dtor class destructor

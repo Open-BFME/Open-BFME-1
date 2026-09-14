@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// HordeTransportContainModuleData's constructor, retail 0x0024D190. Eighteen bytes: the
+// The disputed ICF-shared constructor at retail 0x0024D190. Eighteen bytes: the
 // base's constructor and then this class's own vftable pointer, nothing else.
 //
 // The name used to sit on 0x00852130, which is INI::initFromINIMultiProc - a
@@ -8,20 +8,20 @@
 // module-data constructor at all. It was one of seven names aliased onto those
 // bytes; that claim is retracted here.
 
-class HordeTransportContainModuleDataBase
+class Rva0024D190Base
 {
 public:
-	HordeTransportContainModuleDataBase();
+	Rva0024D190Base();
 
 	virtual void moduleDataAnchor();
 };
 
-class HordeTransportContainModuleData : public HordeTransportContainModuleDataBase
+class Rva0024D190 : public Rva0024D190Base
 {
 public:
-	HordeTransportContainModuleData();
+	Rva0024D190();
 };
 
-HordeTransportContainModuleData::HordeTransportContainModuleData()
+Rva0024D190::Rva0024D190()
 {
 }
