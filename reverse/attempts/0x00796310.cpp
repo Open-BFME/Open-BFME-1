@@ -146,7 +146,6 @@ static void drawRadioButtonText( GameWindow *window, WinInstanceData *instData )
 	halfSizeX = size.x / 2;
 	textPos.x = origin.x + halfSizeX - halfWidth;
 	halfHeight = height / 2;
-	_ReadWriteBarrier();
 	halfSizeY = size.y / 2;
 	textPos.y = origin.y + halfSizeY - halfHeight;
 
