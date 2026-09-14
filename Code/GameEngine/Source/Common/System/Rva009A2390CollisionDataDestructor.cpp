@@ -91,3 +91,9 @@ Rva009A45A0CollisionData::~Rva009A45A0CollisionData()
 		m_secondaryPrev = 0;
 	}
 }
+
+void Force_Rva009A45A0CollisionData_DeletingDestructor(
+	Rva009A45A0CollisionData *value)
+{
+	delete value;
+}
