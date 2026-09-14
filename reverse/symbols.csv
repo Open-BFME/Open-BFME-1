@@ -87587,3 +87587,6 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_GBucket@@UAEPAXI@Z,0x0003E88D,exact Bucket constructor 0x0008F6F0 installs vtable 0x0107F980 whose sole slot routes through this ILT to wrapper 0x0008F810
 ??1AttackNugget@@UAE@XZ,0x00013C2D,exact AttackNugget complete destructor ILT; constructor/vtable evidence routes this through body 0x001D6D80
 ??_GAttackNugget@@UAEPAXI@Z,0x00010816,exact AttackNugget vtable 0x0109F5D0 slot-zero ILT; routes to scalar-deleting wrapper 0x001D6D50
+??1CommandSet@@MAE@XZ,0x0000EA39,CommandSet protected complete-destructor ILT; scalar wrapper at 0x0049C8D0 calls this retail route
+??_GCommandSet@@MAEPAXI@Z,0x00021166,CommandSet vtable 0x010FB7C0 slot-zero ILT; retail thunk routes to scalar wrapper 0x0049C8D0
+??_7CommandSet@@6B@,0x010FB7C0,CommandSet derived vtable stored by constructor 0x0049C680 and complete destructor 0x0049C740

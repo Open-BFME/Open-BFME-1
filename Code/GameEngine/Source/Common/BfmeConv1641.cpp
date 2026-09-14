@@ -1,4 +1,9 @@
-// Open-BFME5 conversions.
+// Open-BFME5: CommandSet's complete destructor.
+//
+// The retail body is a compiler-generated destructor for the CommandSet
+// layout from ControlBar.h.  The two small ABI shims below retain the exact
+// one-slot virtual override route and StringBase-owned name cleanup that the
+// retail body uses, while the derived type carries the authentic class name.
 
 class BfmeStrVUJ
 {
@@ -34,13 +39,21 @@ public:
 	char m_bfmePad08[4];
 };
 
-class BfmeOwnVUJ : public BfmeBaseVUJ
+class CommandSet : public BfmeBaseVUJ
 {
 public:
-	~BfmeOwnVUJ();
+	friend void forceCommandSetCompleteDestructor();
+
+protected:
+	virtual ~CommandSet();
 	BfmeStrVUJ m_bfme0c;
 };
 
-BfmeOwnVUJ::~BfmeOwnVUJ()
+CommandSet::~CommandSet()
 {
+}
+
+void forceCommandSetCompleteDestructor()
+{
+	CommandSet value;
 }
