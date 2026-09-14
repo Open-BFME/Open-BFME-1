@@ -4716,6 +4716,7 @@ name,address,notes
 ??1Gen0035AA50@@QAE@XZ,0x00887940,Open-BFME5 ILT the element destructor the 20-byte-stride vector at 0x0035AA50 calls
 ??1Gen0037B4D0@@QAE@XZ,0x0037B4D0,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
 ??1Gen003A4310@@QAE@XZ,0x003A4310,element destructor called by the 98-byte no-exceptions vector<T> destructor family (Q4VectorDtorPlain.cpp); address-derived name; identity not recovered
+??1Open2Rec3A4420@@QAE@XZ,0x000165B3,retail callee of BfmeHostCB::bfmePopCB at 0x003A4E30; target thunk resolves to the matched 0x003A4310 element destructor
 ??1Gen003B9270@@QAE@XZ,0x003B9270,element destructor called by the 98-byte no-exceptions vector<T> destructor family (Q4VectorDtorPlain.cpp); address-derived name; identity not recovered
 ??1Gen003CDE30@@QAE@XZ,0x003CDE30,element destructor called by the no-exceptions vector<T> destructor family (R4VectorDtorWideElems.cpp); address-derived name; identity not recovered
 ??1Gen003D1380Elem@@QAE@XZ,0x00036A9D,EH vector element destructor callee for 0x003D1380
