@@ -1,6 +1,20 @@
 // ?refresh@Rva000F72D0FrameCachedValue@@AAEXM@Z
-// partial score=0.92 date=2026-09-11
+// partial score=0.95 date=2026-09-14
 // cl: /DNDEBUG /MD /EHsc
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
+struct Coord3D
+{
+	float x, y, z;
+};
+
+class BfmeTeamXQ
+{
+public:
+	void bfmeEstimateXQ(Coord3D *outPos);
+};
 
 class GameLogicFrameSlice
 {
@@ -10,11 +24,6 @@ public:
 };
 
 extern GameLogicFrameSlice *TheGameLogic;
-
-struct Coord3D
-{
-	float x, y, z;
-};
 
 class Overridable
 {
@@ -76,7 +85,7 @@ class PartitionFilter
 {
 public:
 	PartitionFilter *link(PartitionFilter *next);
-	unsigned int m_vptr;
+	volatile unsigned int m_vptr;
 	PartitionFilter *m_next;
 };
 
@@ -113,14 +122,13 @@ public:
 
 extern BfmeWideForwardC *ThePartitionManager;
 
-class Rva000F72D0FrameCachedValue
+class Rva000F72D0FrameCachedValue : public BfmeTeamXQ
 {
 public:
 	float value(float range);
 
 private:
 	void refresh(float range);
-	void bfmeEstimateXQ(Coord3D *outPos) const;
 
 	unsigned char m_unmodelled_000[0xc];
 	void *m_object;
@@ -145,18 +153,21 @@ void Rva000F72D0FrameCachedValue::refresh(float range)
 	if (object == 0)
 		return;
 
-	PartitionFilterA fa(object);
-	PartitionFilterB fb;
-	PartitionFilterC fc(object);
 	BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
-		(int)&estimate, *(int *)&range, 0, (int)fc.link(fb.link(&fa)), 0);
+		(int)&estimate, *(int *)&range, 0,
+		(int)PartitionFilterC(object).link(
+			PartitionFilterB().link(&PartitionFilterA(object))), 0);
 
 	volatile float newValue = 0.0f;
+	_ReadWriteBarrier();
 	WideResultHandle *handle = result.m_value;
-	if (handle->m_cursor != handle->m_end)
+	WideResultEntry *cursor = handle->m_cursor;
+	WideResultEntry *end = handle->m_end;
+	if (cursor != end)
 	{
-		Overridable *node = handle->m_cursor->node;
-		handle->m_cursor++;
+		Overridable *node = cursor->node;
+		++cursor;
+		handle->m_cursor = cursor;
 		if (node != 0)
 		{
 			Overridable *override_ = node->m_nextOverride;
