@@ -5589,13 +5589,13 @@ name,address,notes
 ??1ExperienceScalarUpgradeModuleData@@UAE@XZ,0x00007C7F,destructor ILT used by the ExperienceScalarUpgradeModuleData scalar-deleting destructor
 ??1Gen_dtor_002d5380@@UAE@XZ,0x00023371,gen-dtor class destructor
 ??1Gen_dtor_002d58d0@@UAE@XZ,0x0001C1D4,gen-dtor class destructor
-??1Gen_dtor_002d5da0@@UAE@XZ,0x00007EAF,gen-dtor class destructor
+??1GeometryUpgradeModuleData@@UAE@XZ,0x00007EAF,destructor ILT used by the GeometryUpgradeModuleData scalar-deleting destructor
 ??1Gen_dtor_002d6020@@UAE@XZ,0x0002AA13,gen-dtor class destructor
 ??1Gen_dtor_002d6260@@UAE@XZ,0x00020BE4,gen-dtor class destructor
 ??1Gen_dtor_002d64a0@@UAE@XZ,0x0001F8E8,gen-dtor class destructor
 ??1Gen_dtor_002d67d0@@UAE@XZ,0x000387F3,gen-dtor class destructor
 ??1Gen_dtor_002d6e30@@UAE@XZ,0x0003E685,gen-dtor class destructor
-??1Gen_dtor_002d7630@@UAE@XZ,0x0000FD03,gen-dtor class destructor
+??1ObjectCreationUpgradeModuleData@@UAE@XZ,0x0000FD03,destructor ILT used by the ObjectCreationUpgradeModuleData scalar-deleting destructor
 ??1Gen_dtor_002d7860@@UAE@XZ,0x00027A6B,gen-dtor class destructor
 ??1Gen_dtor_002d7980@@UAE@XZ,0x00017E90,gen-dtor class destructor
 ??1Gen_dtor_002d7ba0@@UAE@XZ,0x00021D55,gen-dtor class destructor
@@ -5605,7 +5605,7 @@ name,address,notes
 ??1Gen_dtor_002d86a0@@UAE@XZ,0x0003848D,gen-dtor class destructor
 ??1Gen_dtor_002d94e0@@UAE@XZ,0x000434FA,gen-dtor class destructor
 ??1Gen_dtor_002d9860@@UAE@XZ,0x0003C6C8,gen-dtor class destructor
-??1Gen_dtor_002d99e0@@UAE@XZ,0x0002E6A9,gen-dtor class destructor
+??1UnpauseSpecialPowerUpgradeModuleData@@UAE@XZ,0x0002E6A9,destructor ILT used by the UnpauseSpecialPowerUpgradeModuleData scalar-deleting destructor
 ??1Gen_dtor_002da420@@UAE@XZ,0x00022020,gen-dtor class destructor
 ??1Gen_dtor_002da5e0@@UAE@XZ,0x0003E45A,gen-dtor class destructor
 ??1Gen_dtor_002dabe0@@UAE@XZ,0x0004A430,gen-dtor class destructor
