@@ -87423,6 +87423,7 @@ _Rva0084DE40Tail,0x0084DE40,STLport 4.5.3 __FixStr Win32 date/time format conver
 ?xferRva003D6CB0@@YAAAVXfer@@AAV1@AAY0CAA@H@Z,0x000163E7,additive: retail call target of the red row ?xfer@Pathfinder@@UAEXPAVXfer@@@Z
 ?xferRva003D6D40@@YAAAVXfer@@AAV1@AAY0EA@M@Z,0x0000CF4A,additive: retail call target of the red row ?xfer@Pathfinder@@UAEXPAVXfer@@@Z
 _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMapTransfers@@YA_NPAVGameInfo@@@Z
+??1WeaponChangeSpecialPowerModuleModuleData@@UAE@XZ,0x0002C179,authentic scalar-deleting wrapper callee ILT; routes to matched complete destructor body 0x0026CF10
 ??1?$SubsystemSlot@VVictorySystem@@@@UAE@XZ,0x0000D1AC,SubsystemSlot<VictorySystem> destructor ILT called by authentic scalar-deleting destructor at 0x00071F70
 ??1?$SubsystemSlot@VActionManager@@@@UAE@XZ,0x00037542,SubsystemSlot<ActionManager> destructor ILT called by authentic scalar-deleting destructor at 0x00072030
 ??1?$SubsystemSlot@VGameStateMap@@@@UAE@XZ,0x0002062B,SubsystemSlot<GameStateMap> destructor ILT called by authentic scalar-deleting destructor at 0x000720F0
