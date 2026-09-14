@@ -1,5 +1,5 @@
-// ?doDrawModule@W3DStreakDraw@@UAEXPBUMatrix3D@@@Z
-// partial score=0.978 date=2026-09-14
+// ?d_0077d6b0@@YAXXZ
+// partial score=0.987 date=2026-09-14
 // cl: /O2 /EHsc
 
 #include <math.h>
@@ -113,7 +113,7 @@ public:
 class W3DStreakDraw
 {
 public:
-	virtual void doDrawModule(const Matrix3D *transformMtx);
+	virtual void doDrawModule();
 
 private:
 	const W3DStreakDrawModuleData *m_moduleData;
@@ -121,8 +121,8 @@ private:
 	BfmeStreakObject *volatile m_streak;
 };
 
-// ?doDrawModule@W3DStreakDraw@@UAEXPBUMatrix3D@@@Z
-void W3DStreakDraw::doDrawModule(const Matrix3D *)
+// zero-argument helper body at 0x0077D6B0; virtual wrapper is 0x0077DB30
+void W3DStreakDraw::doDrawModule()
 {
 	const W3DStreakDrawModuleData *data = m_moduleData;
 	if (m_streak != 0)
