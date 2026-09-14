@@ -67,7 +67,11 @@ extern InGameUI *TheInGameUI;
 extern Mouse *TheMouse;
 extern MessageStream *TheMessageStream;
 extern ControlBar *TheControlBar;
-extern LookAtTranslator *TheLookAtTranslator;
+// Retail tail-calls resetModes with ecx = 0x012F4C84. LookAtTranslator's own
+// ctor/dtor store the singleton at 0x012F4C64; 0x012F4C84 is BfmeOwnVVD
+// (g_bfmeSingletonVVD, written by ??0BfmeOwnVVD). Type stays LookAtTranslator*
+// so resetModes keeps its existing pin.
+extern LookAtTranslator *g_bfmeSingletonVVD;	///< retail 0x012F4C84
 
 class ScriptActions
 {
@@ -84,5 +88,5 @@ void ScriptActions::doDisableInput()
 	TheInGameUI->clearAttackMoveToMode();
 	TheInGameUI->m_waypointMode = false;
 	TheControlBar->deleteBuildTooltipLayout();
-	TheLookAtTranslator->resetModes();
+	g_bfmeSingletonVVD->resetModes();
 }
