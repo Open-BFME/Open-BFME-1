@@ -5864,6 +5864,7 @@ name,address,notes
 ??1Gen_dtor_00479dd0@@UAE@XZ,0x0002C98F,gen-dtor class destructor
 ??1Gen_dtor_00489c60@@UAE@XZ,0x0002125B,gen-dtor class destructor
 ??1Gen_dtor_0048acc0@@UAE@XZ,0x0000BB27,gen-dtor class destructor
+??1BFMETransitionGroup@@QAE@XZ,0x0000BB27,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0048AB20
 ??1Gen_dtor_0048b8a0@@UAE@XZ,0x000105B9,gen-dtor class destructor
 ??1Gen_dtor_0048c2d0@@UAE@XZ,0x00017332,gen-dtor class destructor
 ??1Gen_dtor_0048cce0@@UAE@XZ,0x00011B12,gen-dtor class destructor
