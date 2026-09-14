@@ -6561,7 +6561,7 @@ name,address,notes
 ??1Gen_dtor_008323f0@@UAE@XZ,0x00832410,gen-dtor class destructor
 ??1Gen_dtor_00832420@@UAE@XZ,0x00832440,gen-dtor class destructor
 ??1Gen_dtor_00832450@@UAE@XZ,0x00832470,gen-dtor class destructor
-??1Gen_dtor_0083b310@@UAE@XZ,0x00836520,gen-dtor class destructor
+??1_Locale_impl@_STL@@UAE@XZ,0x00836520,STLport 4.5.3 _Locale_impl destructor called by its RTTI-identified scalar-deleting wrapper at 0x0083B310
 ??1Gen_dtor_00840d20@@UAE@XZ,0x00840780,gen-dtor class destructor
 ??1Gen_dtor_00841080@@UAE@XZ,0x00849A10,gen-dtor class destructor
 ??1Gen_dtor_008410c0@@UAE@XZ,0x00849AB0,gen-dtor class destructor
@@ -9939,6 +9939,7 @@ name,address,notes
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
 ??_7?$SimpleDynVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D010,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
 ??_7?$SimpleVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D004,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
+??_7_Locale_impl@_STL@@6B@,0x0112EB34,STLport _Locale_impl vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x0083B310
 ??_7?$SubsystemSlot@VAudioManager@@@@6B@,0x01075D9C,vtable installed by exact SubsystemSlot<AudioManager> constructor at 0x0006F910; slot zero routes through ILT 0x00001BA4 to scalar-deleting destructor 0x0006F930
 ??_7?$SubsystemSlot@VEva@@@@6B@,0x01075DA0,vtable installed by exact SubsystemSlot<Eva> constructor at 0x0006F9D0; slot zero routes through ILT 0x0000C13F to scalar-deleting destructor 0x0006F9F0
 ??_7?$SubsystemSlot@VGameTextInterface@@@@6B@,0x01075D98,vtable installed by exact SubsystemSlot<GameTextInterface> constructor at 0x0006F850; slot zero routes through ILT 0x00034400 to scalar-deleting destructor 0x0006F870
