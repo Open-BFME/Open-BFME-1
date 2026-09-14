@@ -6679,7 +6679,7 @@ name,address,notes
 ??1Gen_dtor_008323c0@@UAE@XZ,0x008323E0,gen-dtor class destructor
 ??1?$money_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@MAE@XZ,0x008323E0,STLport 4.5.3 money_get<wchar_t> complete destructor called by the RTTI-identified scalar-deleting wrapper at 0x008323C0; matched wide money_get long-double overload identifies the facet
 ??_7?$money_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x0112E9D8,STLport 4.5.3 money_get<wchar_t> vtable identified by retail RTTI type descriptor 0x012C7610; slot zero is scalar-deleting destructor 0x008323C0 and slot 2 is matched wide money_get long-double overload
-??1Gen_dtor_008323f0@@UAE@XZ,0x00832410,gen-dtor class destructor
+??1?$money_put@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@MAE@XZ,0x00832410,STLport 4.5.3 money_put<unsigned short> destructor called by its RTTI-identified scalar-deleting wrapper at 0x008323F0
 ??1Gen_dtor_00832420@@UAE@XZ,0x00832440,gen-dtor class destructor
 ??1?$num_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@MAE@XZ,0x00832440,STLport 4.5.3 num_get<wchar_t> complete destructor called by the vtable-identified scalar-deleting wrapper at 0x00832420; wide num_get numeric slots 3/5/6 are matched overloads
 ??_7?$num_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x0112E9F8,STLport 4.5.3 num_get<wchar_t> vtable identified by retail RTTI type descriptor 0x012C76C0; slot zero is scalar-deleting destructor 0x00832420 and slots 3/5/6 are matched wide numeric overloads
@@ -10065,6 +10065,7 @@ name,address,notes
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
 ??_7?$SimpleDynVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D010,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
 ??_7?$SimpleVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D004,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
+??_7?$money_put@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x0112E9E8,STLport money_put<unsigned short> vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x008323F0
 ??_7?$money_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,0x0112E95C,STLport money_get<char> vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x00832300
 ??_7facet@locale@_STL@@6B@,0x0112E940,STLport locale::facet vtable identified by retail RTTI and restored by the money_get destructor at 0x00832320
 ??_7_Locale_impl@_STL@@6B@,0x0112EB34,STLport _Locale_impl vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x0083B310
