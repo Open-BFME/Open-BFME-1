@@ -88068,3 +88068,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ?showPalantirScreen@Rva00465200GameWindow@@QAEXABVAsciiString@@VRva0051EE90FunctorHolder@@@Z,0x000265E9,MainMenu ctor RenderCredits palantir registration through this ILT
 ??1stdio_streambuf_base@_SgI@@UAE@XZ,0x00849990,STLport 4.5.3 stdio_streambuf_base destructor; wrapper 0x00849AF0 calls this body and derived destructors 0x00849A10 and 0x00849AB0 inline its behavior
 ??_Gstdio_streambuf_base@_SgI@@UAEPAXI@Z,0x00849AF0,STLport 4.5.3 stdio_streambuf_base scalar deleting destructor; RTTI type descriptor 0x012C7B88 and vtable 0x0112FBDC slot zero prove identity
+??_G?$SimpleDynVecClass@VVector3@@@@UAEPAXI@Z,0x00918AB0,WW3D SimpleDynVecClass<Vector3> scalar deleting destructor; dedicated vtable 0x0113AD08 slot zero calls the exact destructor 0x009183B0
+??_7?$SimpleDynVecClass@VVector3@@@@6B@,0x0113AD08,WW3D SimpleDynVecClass<Vector3> vtable installed by exact destructor 0x009183B0 and referenced by StreakLineClass construction/destruction family
