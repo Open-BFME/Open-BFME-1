@@ -1,10 +1,18 @@
 // ??1Rva007E3C20Vp6Stream@@UAE@XZ
-// partial score=0.94 date=2026-09-10
-// ??1Rva007E3C20Vp6Stream@@UAE@XZ [retail body 0x007E3C20]
+// Open-BFME5: derived stream destructor, retail 0x007E3C20, 217 bytes.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-
-#pragma intrinsic(_ReadWriteBarrier)
-extern "C" void _ReadWriteBarrier(void);
+//
+// Base is the Gen_0081E480 class (ctor 0x0081E480); its destructor body at
+// 0x0081E4B0 stores the same vtable 0x0112D210 and runs last here at EH state
+// -1, which is why it is spelled as the base destructor and not as a tail call.
+// Callees: bfmeFreeCodecJW on +0x14/+0x18, the +0x2C owner's vslot 1 release,
+// operator delete[] on +0x54, TheAudio vslot 0x4C release on +0x5C/+0x60, and
+// the Rva007E3450 member destructor on +0x1C.
+//
+// Shape lever: retail tests +0x54 twice (outer je skips both zero stores,
+// inner je skips only the delete[] and the first store). A by-reference
+// __forceinline SAFE_DELETE_ARRAY helper inside an outer `if` reproduces it;
+// a raw nested if, a local copy, or a barrier all fold the inner test.
 
 class Gen_0081E480
 {
@@ -58,12 +66,13 @@ int bfmeFreeCodecJW(CodecState **p);
 
 void operator delete[](void *value);
 
-// real, already-matched cleanup on the Gen_0081E480-shaped base member (BfmeThreeHundredFiftyFour.cpp)
-class BfmeThingUC
+static __forceinline void rva007E3C20SafeDeleteArray(char *&p)
 {
-public:
-    void bfmeResetUC(void);
-};
+    if (p != 0) {
+        delete[] p;
+        p = 0;
+    }
+}
 
 class Rva007E3C20Vp6Stream : public Gen_0081E480
 {
@@ -104,17 +113,12 @@ Rva007E3C20Vp6Stream::~Rva007E3C20Vp6Stream(void)
         m_at2c->release(1);
         m_at2c = 0;
     }
-    char *at54 = m_at54;
-    if (at54 != 0) {
-        _ReadWriteBarrier();
-        if (at54 != 0)
-            operator delete[](at54);
+    if (m_at54 != 0) {
+        rva007E3C20SafeDeleteArray(m_at54);
         m_at54 = 0;
     }
-    m_at54 = 0;
     if (m_at5c != 1)
         TheAudio->release(m_at5c);
     if (m_at60 != 1)
         TheAudio->release(m_at60);
-    ((BfmeThingUC *)this)->bfmeResetUC();
 }

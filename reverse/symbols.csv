@@ -88072,3 +88072,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7?$SimpleDynVecClass@VVector3@@@@6B@,0x0113AD08,WW3D SimpleDynVecClass<Vector3> vtable installed by exact destructor 0x009183B0 and referenced by StreakLineClass construction/destruction family
 ??1BfmeNodeY@@QAE@XZ,0x00028EC0,node dtor in bfmeUnregisterY 0x0035ADC0 (sibling of 0x0035AC30)
 ??1BfmeElementY@@QAE@XZ,0x0001FD0C,element dtor in bfmeUnregisterY 0x0035ADC0 (sibling of 0x0035AC30)
+??1Gen_0081E480@@UAE@XZ,0x0081E4B0,destructor of the class whose ctor is 0x0081E480: both store vtable 0x0112D210; called at base-dtor position (EH state -1 after members) by the derived dtor 0x007E3C20; same body the ledger holds as bfmeResetUC
+??_7Rva007E3C20Vp6Stream@@6B@,0x01128DA8,vtable stored by the derived destructor 0x007E3C20
