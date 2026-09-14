@@ -117,7 +117,8 @@ struct Rva007DB820Snap {
 	float d;
 };
 
-extern int FadeCurrentFrame;
+// Retail 0x0130733C. Same static Rva007DB820::set already names Rva007DB820FadeCurrentFrame.
+extern int Rva007DB820FadeCurrentFrame;
 extern void *RingFilterSlot;
 extern char RingFilterObject;
 
@@ -141,7 +142,7 @@ public:
 int Rva007DB820::init()
 {
 	shader[0] = 0;
-	FadeCurrentFrame = 0;
+	Rva007DB820FadeCurrentFrame = 0;
 
 	if (!HighlightVertexSupport || !HighlightPixelSupport)
 		return 0;
