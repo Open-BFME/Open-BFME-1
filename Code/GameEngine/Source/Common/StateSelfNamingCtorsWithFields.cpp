@@ -40,6 +40,8 @@
 
 extern int g_Va0109B558;
 
+class StateMachine;
+
 class Rva000A19E0StateBase
 {
 public:
@@ -364,16 +366,16 @@ Rva001744C0State::Rva001744C0State( void *machine )
 {
 }
 
-class Rva0017FDC0State : public AIInternalMoveToState
+class AIMoveToPositionAndDieState : public AIInternalMoveToState
 {
 public:
-	Rva0017FDC0State( void *machine );
+	AIMoveToPositionAndDieState( StateMachine *machine );
 
 	char m_gap0[ 0x4C ];
 	unsigned char m_field0;
 };
 
-Rva0017FDC0State::Rva0017FDC0State( void *machine )
+AIMoveToPositionAndDieState::AIMoveToPositionAndDieState( StateMachine *machine )
 	: AIInternalMoveToState( machine, AsciiString( "AIMoveToPositionAndDieState" ) ),
 	  m_field0( 0 )
 {
