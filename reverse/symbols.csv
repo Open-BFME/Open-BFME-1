@@ -4385,6 +4385,8 @@ name,address,notes
 ??1BfmeDtorMemberC@@QAE@XZ,0x00887940,Open-BFME5 the member destructor the two-member destructors at 0x001031B0 and siblings call
 ??1BfmeDtorMemberD@@QAE@XZ,0x0001A401,Open-BFME5 the member destructor the two-member destructor at 0x00427390 calls
 ??1BfmeDtorMemberE@@QAE@XZ,0x008881D0,Open-BFME5 the member destructor the two-member destructor at 0x0043DB30 calls first
+??1BfmeNamedTimerAsciiString@@QAE@XZ,0x00887940,NamedTimerInfo member at +0x04 is the retail AsciiString object destroyed second
+??1BfmeNamedTimerUnicodeString@@QAE@XZ,0x008881D0,NamedTimerInfo member at +0x08 is the retail UnicodeString object destroyed first
 ??1BfmeDtorMemberF@@QAE@XZ,0x00013AFC,Open-BFME5 the member destructor the chained destructors at 0x00076C80 and siblings call
 ??1BfmeDtorMemberG000E9A40@@QAE@XZ,0x008881D0,pin reuse of StringBase<G> releaseBuffer for the 0x000E9A40 UnicodeString member
 ??1BfmeDtorMemberJ@@QAE@XZ,0x009CF1E0,Open-BFME5 the twelve-byte member destructor the plain chain destructor at 0x009D0730 calls second
@@ -5814,7 +5816,7 @@ name,address,notes
 ??1Gen_dtor_0043a4b0@@UAE@XZ,0x0003E5DB,gen-dtor class destructor
 ??1Gen_dtor_0043bf70@@UAE@XZ,0x00029E15,gen-dtor class destructor
 ??1Gen_dtor_0043cd30@@UAE@XZ,0x0003F1A7,gen-dtor class destructor
-??1Gen_dtor_0043db00@@UAE@XZ,0x000198A3,gen-dtor class destructor
+??1NamedTimerInfo@@MAE@XZ,0x000198A3,exact constructor 0x0043DAE0 and dedicated vtable 0x010F5758 establish the protected complete destructor called by wrapper 0x0043DB00
 ??1Gen_dtor_00440810@@UAE@XZ,0x000407B9,gen-dtor class destructor
 ??1Gen_dtor_00440840@@UAE@XZ,0x000011E5,gen-dtor class destructor
 ??1Gen_dtor_00440a10@@UAE@XZ,0x000489BE,gen-dtor class destructor

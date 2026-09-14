@@ -60,16 +60,6 @@ private:
 	BfmeDtorMemberC m_bfmeSecond;				// +0x1B8
 };
 
-class Gen_0043DB30
-{
-public:
-	virtual ~Gen_0043DB30(void);
-
-private:
-	BfmeDtorMemberC m_bfmeFirst;				// +0x04
-	BfmeDtorMemberE m_bfmeSecond;				// +0x08
-};
-
 // ??1Gen_001031B0@@UAE@XZ
 Gen_001031B0::~Gen_001031B0(void)
 {
@@ -77,10 +67,5 @@ Gen_001031B0::~Gen_001031B0(void)
 
 // ??1Gen_0014B790@@UAE@XZ
 Gen_0014B790::~Gen_0014B790(void)
-{
-}
-
-// ??1Gen_0043DB30@@UAE@XZ
-Gen_0043DB30::~Gen_0043DB30(void)
 {
 }
