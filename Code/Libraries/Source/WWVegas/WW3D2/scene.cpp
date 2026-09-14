@@ -152,7 +152,6 @@ SceneClass::SceneClass(void) :
  * HISTORY:                                                                                    *
  *   12/10/98   GTH : Created.                                                                 *
  *=============================================================================================*/
-// ??1SceneClass@@UAE@XZ present-unmatched
 SceneClass::~SceneClass(void)
 {
 }
