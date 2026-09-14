@@ -74,6 +74,14 @@ Open2Store8F75D0::~Open2Store8F75D0()
 	delete m_map;
 }
 
+// The retail 30-byte wrapper at 0x008F7890 is this abstract store's
+// scalar-deleting destructor.  A delete expression on the pointer emits the
+// compiler-owned ??_G wrapper without requiring an abstract local object.
+void Force_Open2Store8F75D0_DeletingDestructor(Open2Store8F75D0 *value)
+{
+	delete value;
+}
+
 class Open2Held9A2680;
 
 typedef std::map<NameKeyType, Open2Held9A2680 *, std::less<NameKeyType> > Open2Map9A2680;
