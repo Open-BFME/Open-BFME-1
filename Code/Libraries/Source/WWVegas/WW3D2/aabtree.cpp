@@ -326,7 +326,6 @@ void AABTreeClass::Build_Tree_Recursive(AABTreeBuilderClass::CullNodeStruct * no
  * HISTORY:                                                                                    *
  *   6/22/99    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?AABTreeClass::Set_Mesh present-unmatched
 void AABTreeClass::Set_Mesh(MeshGeometryClass * mesh)
 {
 	Mesh = mesh;
