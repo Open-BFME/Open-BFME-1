@@ -87494,3 +87494,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1LargeGroupAudioUpdateModuleData@@UAE@XZ,0x0003D302,authentic scalar-deleting wrapper callee ILT; routes to matched complete destructor body 0x00297390
 ??1EmotionTrackerUpdateModuleData@@UAE@XZ,0x0004AED5,authentic scalar-deleting wrapper callee ILT; routes to matched complete destructor body 0x0028FBB0
 ?destroy@W3DRadarDestructorBody@@QAEXXZ,0x006C1780,TU-local forwarding view of the matched W3DRadar complete destructor used to reproduce its retail ILT
+??_GState@@UAEPAXI@Z,0x00049904,exact State constructor 0x000A19E0 installs vtable 0x01080770 whose slot zero routes through this ILT to scalar-deleting destructor 0x000A1B00
