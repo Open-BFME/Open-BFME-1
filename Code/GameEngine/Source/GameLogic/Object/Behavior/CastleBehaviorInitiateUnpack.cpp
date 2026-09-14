@@ -1,7 +1,5 @@
-// initiateUnpack
-// partial score=0.96 date=2026-09-07
 // ?initiateUnpack@CastleBehavior@@QAEX_NPBVThingTemplate@@@Z
-// The retail body is a CastleBehavior unpack state update and CRC log.
+// CastleBehavior's pack/unpack state transition and retail CRC trace.
 #pragma optimize("a", on)
 
 typedef bool Bool;
@@ -62,15 +60,24 @@ public:
 	AsciiString m_name;
 };
 
-class Object
+class Thing
+{
+public:
+	void *m_vtable;
+	ThingTemplate * volatile m_template;
+};
+
+class Object : public Thing
 {
 public:
 	Player *getControllingPlayer() const;
 	Int getID() const { return m_id; }
-	void *m_vtable;
-	ThingTemplate *m_template;
+
+private:
 	unsigned char m_pad08[0x6c];
 	volatile Int m_id;
+
+public:
 	unsigned char m_pad78[0xb0];
 	ObjectStatus m_status;
 };
@@ -192,30 +199,29 @@ void CastleBehavior::initiateUnpack(Bool unpack,
 		if (!crcParameterCheck)
 			return;
 
-		ControllingPlayerCall controllingPlayerCall;
-		union { void *asVoid; ControllingPlayerCall asMember; } controllingPlayerCast;
-		controllingPlayerCast.asVoid = (void *)j_00020824;
-		const char *callerName = (object->*controllingPlayerCast.asMember)()->m_playerName.str();
+		const char *callerName = object->getControllingPlayer()->m_playerName.str();
 		const Int castleID = object->getID();
-		const ThingTemplate *finalTemplate;
-		if (object->m_template == 0)
+		const ThingTemplate *thingTemplate = object->m_template;
+		const ThingTemplate *finalTemplate = thingTemplate;
+		if (thingTemplate == 0)
 		{
 			finalTemplate = (const ThingTemplate *)0;
 		}
-		else if (object->m_template->m_nextOverride)
-		{
-			FinalOverrideCall finalOverrideCall;
-			union { void *asVoid; FinalOverrideCall asMember; } finalOverrideCast;
-			finalOverrideCast.asVoid = (void *)j_000022bb;
-			finalTemplate = (const ThingTemplate *)
-				(object->m_template->m_nextOverride->*finalOverrideCast.asMember)();
-		}
 		else
-			finalTemplate = object->m_template;
+		{
+			if (thingTemplate->m_nextOverride)
+			{
+				FinalOverrideCall finalOverrideCall;
+				union { void *asVoid; FinalOverrideCall asMember; } finalOverrideCast;
+				finalOverrideCast.asVoid = (void *)j_000022bb;
+				finalTemplate = (const ThingTemplate *)
+					(thingTemplate->m_nextOverride->*finalOverrideCast.asMember)();
+			}
+			else
+				finalTemplate = thingTemplate;
+		}
 
-		const char *castleName = (const char *)0x0107388B;
-		if (finalTemplate)
-			castleName = finalTemplate->m_name.str();
+		const char *castleName = finalTemplate->m_name.str();
 
 		((DebugLogFunction)j_0003a17a)(g_012ED4FC,
 			(const char *)0x010E9D90, TheBfmeGameLogic->m_frame,
