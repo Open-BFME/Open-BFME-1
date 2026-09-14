@@ -6556,6 +6556,7 @@ name,address,notes
 ??1Gen_dtor_007a01e0@@UAE@XZ,0x0002880D,gen-dtor class destructor
 ??1Gen_dtor_007a2490@@UAE@XZ,0x0002816E,gen-dtor class destructor
 ??1Gen_dtor_007a60f0@@UAE@XZ,0x00032DCB,gen-dtor class destructor
+??1WaterRenderObjClass@@UAE@XZ,0x00032DCB,WaterRenderObjClass virtual complete destructor ILT used by scalar wrapper 0x007A60F0; thunk routes to the exact 784-byte cleanup body at 0x007A5D10 selected by ctor vtable 0x01128148
 ??1Gen_dtor_007aba70@@UAE@XZ,0x0003DD2F,gen-dtor class destructor
 ??1Gen_dtor_007af280@@UAE@XZ,0x00021193,gen-dtor class destructor
 ??1Gen_dtor_007af4b0@@UAE@XZ,0x00019B82,gen-dtor class destructor
@@ -10352,6 +10353,7 @@ name,address,notes
 ??_7W3DVideoBuffer@@6B@,0x0112165C,W3DVideoBuffer vftable installed by ctor 0x0073A230 and dtor 0x0073A4E0 with named createVideoBuffer caller; campaign=luna36h-20260907;lane=particle;model=gpt-5.6-sol-ultra
 ??_7WanderAIUpdateModuleDataVtbl@@6B@,0x0108A5A8,WanderAIUpdate vtbl
 ??_7Watchdog@@6B@,0x00C88E34,Watchdog constructor vptr; slots reach destructor start thread function and stop bodies in the Watchdog cluster
+??_7WaterRenderObjClass@@6B@,0x01128148,WaterRenderObjClass primary vtable installed by exact ctor 0x007A46E0; slot zero ILT 0x0004614B reaches scalar-deleting wrapper 0x007A60F0 and adjacent retail string identifies the class
 ??_7Weapon@@6B@,0x00CA13F4,Weapon constructor writes the table whose slot 0 ILT 0x000112D4 reaches the known scalar deleting destructor at 0x001E6900
 ??_7WeaponModeSpecialPowerUpdateModuleDataBase@@6B@,0x010B7D40,WeaponModeSpecialPowerUpdateModuleDataBase vtable installed by its clean constructor
 ??_7_bfme_AptGameWindow@@6BGameWindow@@@,0x010F711C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00465430 calls; autopin
