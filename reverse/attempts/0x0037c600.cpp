@@ -1,52 +1,38 @@
 // ?bfmeStop@BfmeStopF@@QAEXXZ
-// partial score=0.35 date=2026-09-09
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
-// Scratch reconstruction for the ASM-backed BfmeStopF::bfmeStop body at
-// retail RVA 0x0037C600.  This file is intentionally outside Code/.
+// partial score=0.75 date=2026-09-14
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// BfmeStopF::bfmeStop — retail 0x0037C600 (508B). Called by the clear
+// bodies in Bfme5ClearsWithTails.cpp and Bfme5GuardedStopClear.cpp through
+// ILT 0x00015E2E.
 
-typedef unsigned char UnsignedByte;
+#include "ascii_string.h"
 
-template <typename T> class RvaStringBase
-{
-	protected:
-	RvaStringBase() : m_data( 0 ) {}
-	RvaStringBase( const RvaStringBase &other ) : m_data( other.m_data ) {}
-	~RvaStringBase();
-	void releaseBuffer();
-	void *m_data;
-};
-
-class RvaStopString : private RvaStringBase<char>
+// map<int,int>::operator[] resolves through ILT 0x00033AA (??AEmotionMap);
+// map<unsigned short,int>::operator[] through ILT 0x00028D0D.
+class EmotionMap
 {
 public:
-	RvaStopString() : RvaStringBase<char>() {}
-	RvaStopString( const RvaStopString &other ) : RvaStringBase<char>( other ) {}
-	~RvaStopString() {}
-	void *data() const { return m_data; }
-};
-
-struct RvaStopState;
-class RvaStopObject;
-class RvaStopModule;
-
-class RvaStopMap
-{
-	public:
-	unsigned int &operator[]( void *key );
+	int &operator[]( const int &key );
 
 	unsigned int m_head;
 	unsigned int m_count;
 	unsigned int m_compare;
 };
 
-class RvaStopFxList
+class EmotionShortMap
 {
 public:
-	virtual void slot00();
-	virtual void slot01();
+	int &operator[]( const unsigned short &key );
+
+	unsigned int m_head;
+	unsigned int m_count;
+	unsigned int m_compare;
 };
 
-class RvaStopObject
+class Object;
+
+// ILT 0x0002BE77: the object's related-pointer getter (retail 0x001CF980).
+class BfmeRes920D
 {
 public:
 	virtual void slot00();
@@ -69,196 +55,215 @@ public:
 	virtual void slot17();
 	virtual void slot18();
 	virtual void *slot19();
-
-	UnsignedByte m_bfmeObjectBody[0x120];
-	unsigned int m_bfmeFlags124;
-	UnsignedByte m_bfmeObjectGap128[0xDC];
-	RvaStopModule *m_bfmeModule;
-	void apply( const RvaStopString &value, unsigned int frame );
 };
 
-class RvaStopModule
+class BfmeX920D
 {
+public:
+	BfmeRes920D *bfmeGet920D();
 };
 
-struct RvaStopState
+// ILT 0x000486FD: module preload wrapper (retail 0x0026FD50).
+class BfmeAI956
 {
-	UnsignedByte m_bfmeHead[0x10];
+public:
+	void j_000486fd();
+};
+
+// ILT 0x00011F77 / 0x00022BBA: FXList predicate and object-effect call.
+class FXList
+{
+public:
+	bool bfmeIsBlocked() const;
+	void doFXObj( const Object *a, const Object *b ) const;
+};
+
+// ILT 0x000095ED: the !related apply path (retail 0x001C7720).
+class BfmeThingVKP
+{
+public:
+	void bfmeSetVKP( short a, short b );
+};
+
+class BfmeStrShell
+{
+public:
+	void *m_bfmeData;
+	void releaseBuffer() const;
+};
+
+class BfmeBridgeStr
+{
+public:
+	void *m_bfmeData;
+	~BfmeBridgeStr() { releaseBuffer(); }
+	void releaseBuffer() const;
+};
+
+class RvaStopState
+{
+public:
+	BfmeStrShell getBridgeModelNameDamagedFirst();
+	BfmeBridgeStr getBridgeModelNameDamaged();	// ILT 0x00041BF0 -> 0x0037B0D0
+
+	char m_pad00[0x10];
 	unsigned int m_bfme10;
 	unsigned int m_bfme14;
 	unsigned int m_bfme18;
-	UnsignedByte m_bfmeGap1C[0x1C];
-	RvaStopFxList *m_bfme38;
+	char m_pad1C[0x1C];
+	FXList *m_bfme38;
 	unsigned int m_bfme3C;
 	unsigned int m_bfme40;
-	UnsignedByte m_bfme44;
-	UnsignedByte m_bfmeGap45[3];
+	unsigned char m_bfme44;
+	char m_pad45[3];
 	unsigned int m_bfme48;
-	unsigned int m_bfme4C;
-	UnsignedByte m_bfmeGap50[0x2C];
-	void *m_bfme7C;
-	UnsignedByte m_bfmeGap80[0x4C];
-	void *m_bfmeCC;
-	RvaStopString getBridgeModelNameDamaged();
+	int m_bfme4C;
+	char m_pad50[0x2C];
+	int m_bfme7C;
+	char m_pad80[0x4C];
+	int m_bfmeCC;
 };
 
-struct Rva00367E30Logic
+class ModelConditionFlags
 {
-	UnsignedByte m_bfmeHead[0x3C];
-	unsigned int m_bfmeFrame;
 };
 
-#define TheBfmeGameLogic (*(Rva00367E30Logic **)0x012F0898)
+class Object
+{
+public:
+	bool applyAttributeModifier( const AsciiString &name, int value );
+	void rva001CD300( const int &a, const int &b );
+	void clearAndSetModelConditionFlags( const ModelConditionFlags &a, const ModelConditionFlags &b );
+	void notifyModelConditionChanged();
 
-extern void j_000033aa();
-extern void j_00028d0d();
-extern void j_0002be77();
-extern void j_0001f253();
-extern void j_00011f77();
-extern void j_00022bba();
-extern void j_000486fd();
-extern void j_0001028a();
-extern void j_000095ed();
-extern void j_0002191d();
-extern void j_00041bf0();
-extern void j_00037a56();
+	char m_pad00[0x124];
+	unsigned int m_bfmeFlags124;
+	char m_pad128[0x204 - 0x128];
+	BfmeAI956 *m_bfmeModule;			// +0x204
+};
+
+class GameLogic
+{
+public:
+	Object *findObjectByID( int id );
+
+	char m_pad00[0x3C];
+	unsigned int m_bfmeFrame;				// +0x3C
+};
+
+extern GameLogic *volatile TheGameLogic;				// retail [0x012F0898]
 
 class BfmeStopF
 {
 public:
 	void bfmeStop();
 
-	RvaStopObject *m_bfmeObject;
-	RvaStopState *m_bfmeState;
-	void *m_bfme08;
-	unsigned short m_bfme0C;
+	Object *m_bfmeObject;					// +0x00
+	RvaStopState *m_bfmeState;				// +0x04
+	int m_bfme08;						// +0x08
+	unsigned short m_bfme0C;				// +0x0C
 	unsigned short m_bfme0E;
-	unsigned int m_bfme10;
-	RvaStopMap m_bfme14;
-	RvaStopMap m_bfme20;
-	UnsignedByte m_bfmeGap2C[4];
-	unsigned int m_bfme30;
+	unsigned int m_bfme10;					// +0x10
+	EmotionMap m_bfme14;					// +0x14
+	EmotionShortMap m_bfme20;				// +0x20
+	char m_pad2C[4];
+	unsigned int m_bfme30;					// +0x30
 };
-
-typedef RvaStopObject *(RvaStopObject::*RvaGetObjectCall)();
-typedef RvaStopObject *(Rva00367E30Logic::*RvaFindObjectCall)( void * );
-typedef bool (RvaStopFxList::*RvaFxPredicateCall)();
-typedef void (RvaStopFxList::*RvaDoFxCall)( RvaStopObject *, RvaStopObject * );
-typedef void (RvaStopModule::*RvaModuleCall)();
-typedef void (RvaStopObject::*RvaObjectPairCall)( void *, void * );
-typedef void (RvaStopObject::*RvaObjectNotifyCall)();
 
 // ?bfmeStop@BfmeStopF@@QAEXXZ
 void BfmeStopF::bfmeStop()
 {
+	Object *found;
+	FXList *fx;
+	Object *target;
 	if (m_bfmeState->m_bfme10)
 	{
-		m_bfme10 = TheBfmeGameLogic->m_bfmeFrame + m_bfmeState->m_bfme10;
-
-		unsigned int frame;
-		unsigned int state14 = m_bfmeState->m_bfme14;
-		if (state14 && m_bfme08)
-		{
-			frame = TheBfmeGameLogic->m_bfmeFrame;
-			m_bfme14[ &m_bfme08 ] = state14 + frame;
-		}
+		m_bfme10 = m_bfmeState->m_bfme10 + TheGameLogic->m_bfmeFrame;
 	}
 
-	unsigned int frame;
-	unsigned int state18 = m_bfmeState->m_bfme18;
-	if (state18 && m_bfme0C)
+	if (m_bfmeState->m_bfme14 && m_bfme08)
 	{
-		frame = TheBfmeGameLogic->m_bfmeFrame;
-		m_bfme20[ &m_bfme0C ] = state18 + frame;
+		unsigned int frame = TheGameLogic->m_bfmeFrame;
+		m_bfme14[m_bfme08] = m_bfmeState->m_bfme14 + frame;
+	}
+
+	if (m_bfmeState->m_bfme18 && m_bfme0C)
+	{
+		unsigned int frame = TheGameLogic->m_bfmeFrame;
+		m_bfme20[m_bfme0C] = m_bfmeState->m_bfme18 + frame;
 	}
 
 	if (m_bfmeState->m_bfme38)
 	{
-		RvaStopObject *object = m_bfmeObject;
-		RvaGetObjectCall getObjectCall;
-		union { void *asVoid; RvaGetObjectCall asMember; } getObjectCast;
-		getObjectCast.asVoid = (void *)j_0002be77;
-		getObjectCall = getObjectCast.asMember;
-		RvaStopObject *related = (object->*getObjectCall)();
-		void *relatedValue = 0;
+		target = m_bfmeObject;
+		BfmeRes920D *related = ((BfmeX920D *)m_bfmeObject)->bfmeGet920D();
 		if (related)
-			relatedValue = related->slot19();
-
-		RvaFindObjectCall findObjectCall;
-		union { void *asVoid; RvaFindObjectCall asMember; } findObjectCast;
-		findObjectCast.asVoid = (void *)j_0001f253;
-		findObjectCall = findObjectCast.asMember;
-		RvaStopObject *found = (TheBfmeGameLogic->*findObjectCall)( m_bfme08 );
-		if ((found || !m_bfme08) && !relatedValue)
 		{
-			RvaFxPredicateCall predicateCall;
-			union { void *asVoid; RvaFxPredicateCall asMember; } predicateCast;
-			predicateCast.asVoid = (void *)j_00011f77;
-			predicateCall = predicateCast.asMember;
-			if (!(m_bfmeState->m_bfme38->*predicateCall)())
+			target = (Object *)related->slot19();
+		}
+
+		found = TheGameLogic->findObjectByID(m_bfme08);
+		if (found || !m_bfme08)
+		{
+			if (!target)
 			{
-				RvaDoFxCall doFxCall;
-				union { void *asVoid; RvaDoFxCall asMember; } doFxCast;
-				doFxCast.asVoid = (void *)j_00022bba;
-				doFxCall = doFxCast.asMember;
-				(m_bfmeState->m_bfme38->*doFxCall)( object, found );
+				target = m_bfmeObject;
+			}
+			fx = m_bfmeState->m_bfme38;
+			if (fx && !fx->bfmeIsBlocked())
+			{
+				fx->doFXObj(target, found);
 			}
 		}
 	}
 
-	RvaStopModule *module = m_bfmeObject->m_bfmeModule;
-	if (module)
+	if (m_bfmeObject->m_bfmeModule)
 	{
-		if (m_bfmeState->m_bfme4C > 1 && m_bfmeState->m_bfme4C <= 5)
+		if (m_bfmeState->m_bfme4C == 0 ||
+			(m_bfmeState->m_bfme4C > 1 && m_bfmeState->m_bfme4C <= 5))
 		{
-			RvaModuleCall moduleCall;
-			union { void *asVoid; RvaModuleCall asMember; } moduleCast;
-			moduleCast.asVoid = (void *)j_000486fd;
-			moduleCall = moduleCast.asMember;
-			(module->*moduleCall)();
+			m_bfmeObject->m_bfmeModule->j_000486fd();
 		}
 
-		RvaGetObjectCall getObjectCall;
-		union { void *asVoid; RvaGetObjectCall asMember; } getObjectCast;
-		getObjectCast.asVoid = (void *)j_0002be77;
-		getObjectCall = getObjectCast.asMember;
-		RvaStopObject *related = (m_bfmeObject->*getObjectCall)();
-		RvaObjectPairCall applyCall;
-		union { void *asVoid; RvaObjectPairCall asMember; } applyCast;
+		Object *related = (Object *)((BfmeX920D *)m_bfmeObject)->bfmeGet920D();
 		if (related)
 		{
-			applyCast.asVoid = (void *)j_0001028a;
-			applyCall = applyCast.asMember;
-			(m_bfmeObject->*applyCall)( &m_bfmeState->m_bfme7C, &m_bfmeState->m_bfmeCC );
+			m_bfmeObject->rva001CD300(
+				m_bfmeState->m_bfme7C, m_bfmeState->m_bfmeCC);
 		}
 		else
 		{
-			applyCast.asVoid = (void *)j_000095ed;
-			applyCall = applyCast.asMember;
-			(m_bfmeObject->*applyCall)( &m_bfmeState->m_bfme7C, &m_bfmeState->m_bfmeCC );
+			m_bfmeObject->clearAndSetModelConditionFlags(
+				(const ModelConditionFlags &)m_bfmeState->m_bfme7C,
+				(const ModelConditionFlags &)m_bfmeState->m_bfmeCC);
 		}
 
-		if ((m_bfmeObject->m_bfmeFlags124 & 0x40000000) != 0)
+		if (m_bfmeObject->m_bfmeFlags124 & 0x40000000)
 		{
 			m_bfmeObject->m_bfmeFlags124 &= 0xBFFFFFFF;
-			RvaObjectNotifyCall notifyCall;
-			union { void *asVoid; RvaObjectNotifyCall asMember; } notifyCast;
-			notifyCast.asVoid = (void *)j_0002191d;
-			notifyCall = notifyCast.asMember;
-			(m_bfmeObject->*notifyCall)();
+			m_bfmeObject->notifyModelConditionChanged();
 		}
 	}
 
-	RvaStopString first = m_bfmeState->getBridgeModelNameDamaged();
-	RvaStopString &firstResult = first;
+	BfmeStrShell first = m_bfmeState->getBridgeModelNameDamagedFirst();
+	void *firstData = first.m_bfmeData;
 	bool ready;
-	if (firstResult.data() && *(unsigned short *)((unsigned char *)firstResult.data() + 4))
-		ready = TheBfmeGameLogic->m_bfmeFrame >= m_bfmeState->m_bfme40 + m_bfme30 && m_bfmeState->m_bfme44;
+	if (firstData &&
+		*(unsigned short *)((char *)firstData + 4) &&
+		TheGameLogic->m_bfmeFrame >= m_bfme30 + m_bfmeState->m_bfme40 &&
+		m_bfmeState->m_bfme44)
+	{
+		ready = true;
+	}
 	else
+	{
 		ready = false;
-
+	}
+	first.releaseBuffer();
 	if (ready)
 	{
-		m_bfmeObject->apply( m_bfmeState->getBridgeModelNameDamaged(), m_bfmeState->m_bfme48 );
+		m_bfmeObject->applyAttributeModifier(
+			(const AsciiString &)m_bfmeState->getBridgeModelNameDamaged(),
+			m_bfmeState->m_bfme48);
 	}
 }
