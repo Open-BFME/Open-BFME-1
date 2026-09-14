@@ -6083,7 +6083,7 @@ name,address,notes
 ??1BoxEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00047915,destructor ILT used by the BoxEmissionVolumeModule scalar-deleting destructor
 ??1SphereEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00004291,destructor ILT used by the SphereEmissionVolumeModule scalar-deleting destructor
 ??1CylinderEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00043CD9,destructor ILT used by the CylinderEmissionVolumeModule scalar-deleting destructor
-??1Gen_dtor_005e3920@@UAE@XZ,0x0000EA52,gen-dtor class destructor
+??1?$DefaultParticleModule@$03@FXParticleSystem@@UAE@XZ,0x0000EA52,DefaultParticleModule<4> destructor ILT proven by constructor vtable 0x01111994 slot zero reaching scalar wrapper 0x005E3920
 ??1Gen_dtor_005e3b60@@UAE@XZ,0x0004A0F7,gen-dtor class destructor
 ??1OrthoEmissionVelocityModule@FXParticleSystem@@UAE@XZ,0x00033753,destructor ILT used by the OrthoEmissionVelocityModule scalar-deleting destructor
 ??1SphericalEmissionVelocityModule@FXParticleSystem@@UAE@XZ,0x0003BF7F,destructor ILT used by the SphericalEmissionVelocityModule scalar-deleting destructor
