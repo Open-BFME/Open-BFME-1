@@ -88,7 +88,8 @@
 #include "GameClient/GadgetProgressBar.h"
 
 extern RankPoints *TheRankPointValues;
-extern const Image* lookupRankImageForPopup(AsciiString side, Int rank);
+extern const Image* lookupRankImage(AsciiString side, Int rank);
+extern GameWindow* findWindow(GameWindow *parent, AsciiString baseWindow, AsciiString gadgetName);
 
 //-------------------------------------------------------------------------------------------------
 // Open-BFME5: BFME made WindowLayout::hide VIRTUAL. Retail reaches it through
@@ -769,15 +770,6 @@ Int GetAdditionalDisconnectsFromUserFile(Int playerID)
 	return retval;
 }
 
-static GameWindow* findWindow(GameWindow *parent, AsciiString baseWindow, AsciiString gadgetName)
-{
-	AsciiString fullPath;
-	fullPath.format("%s:%s", baseWindow.str(), gadgetName.str());
-	GameWindow *res = TheWindowManager->winGetWindowFromId(parent, NAMEKEY(fullPath));
-	DEBUG_ASSERTLOG(res, ("Cannot find window %s\n", fullPath.str()));
-	return res;
-}
-
 Int CalculateRank( const PSPlayerStats& stats )
 {
 	if(stats.id == 0 || !TheRankPointValues)
@@ -1263,7 +1255,7 @@ void PopulatePlayerInfoWindows( AsciiString parentWindowName )
 		if (rankPoints == 0 || pPlayerTemplate == NULL)
 			win->winSetEnabledImage(0, TheMappedImageCollection->findImageByName("NewPlayer"));
 		else
-			win->winSetEnabledImage(0, lookupRankImageForPopup(pPlayerTemplate->getBaseSide(), currentRank));
+			win->winSetEnabledImage(0, lookupRankImage(pPlayerTemplate->getBaseSide(), currentRank));
 //x		win->setTooltipText(rankStr);  //ex: Corporal
 	}
 
