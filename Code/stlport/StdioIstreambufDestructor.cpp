@@ -16,11 +16,20 @@ stdio_istreambuf::~stdio_istreambuf()
 {
 }
 
+stdio_ostreambuf::~stdio_ostreambuf()
+{
+}
+
 // The original library object also constructs this concrete class, which
 // makes its vtable and compiler-generated deleting destructor concrete here.
 stdio_istreambuf* make_stdio_istreambuf_for_vtable(FILE* file)
 {
 	return new stdio_istreambuf(file);
+}
+
+stdio_ostreambuf* make_stdio_ostreambuf_for_vtable(FILE* file)
+{
+	return new stdio_ostreambuf(file);
 }
 
 } // namespace _SgI

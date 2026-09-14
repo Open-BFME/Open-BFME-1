@@ -87819,3 +87819,6 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1Gen_dtor_00161df0@@UAE@XZ,0x0003692B,gen-dtor class destructor
 ??_GAIPlayer@@MAEPAXI@Z,0x00046CDB,vtable 0x00C968B0 slot zero routes through this ILT to scalar wrapper 0x00161DF0
 ??_7AIPlayer@@6B@,0x00C968B0,vtable whose slots name AIPlayer
+??1stdio_ostreambuf@_SgI@@UAE@XZ,0x00849AB0,STLport 4.5.3 stdio_ostreambuf destructor; RTTI vtable 0x0112F2B8 slot zero routes to scalar wrapper 0x008410C0
+??_Gstdio_ostreambuf@_SgI@@UAEPAXI@Z,0x008410C0,STLport 4.5.3 stdio_ostreambuf scalar deleting destructor; RTTI type descriptor 0x012C7BD4 and vtable 0x0112F2B8 prove identity
+??_7stdio_ostreambuf@_SgI@@6B@,0x0112F2B8,STLport 4.5.3 stdio_ostreambuf vtable; RTTI type descriptor 0x012C7BD4 and constructor store at 0x008410AF prove identity
