@@ -88063,3 +88063,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7BfmeAptScreenMainMenu@@6B_bfme_AptGameWindow@@@,0x011061C4,primary vftable installed at +0 by ??0BfmeAptScreenMainMenu
 ??_7BfmeAptScreenMainMenu@@6BRva00465200GameWindow@@@,0x011061C0,secondary vftable installed at +0x218 by ??0BfmeAptScreenMainMenu
 ?showPalantirScreen@Rva00465200GameWindow@@QAEXABVAsciiString@@VRva0051EE90FunctorHolder@@@Z,0x000265E9,MainMenu ctor RenderCredits palantir registration through this ILT
+??1stdio_streambuf_base@_SgI@@UAE@XZ,0x00849990,STLport 4.5.3 stdio_streambuf_base destructor; wrapper 0x00849AF0 calls this body and derived destructors 0x00849A10 and 0x00849AB0 inline its behavior
+??_Gstdio_streambuf_base@_SgI@@UAEPAXI@Z,0x00849AF0,STLport 4.5.3 stdio_streambuf_base scalar deleting destructor; RTTI type descriptor 0x012C7B88 and vtable 0x0112FBDC slot zero prove identity
