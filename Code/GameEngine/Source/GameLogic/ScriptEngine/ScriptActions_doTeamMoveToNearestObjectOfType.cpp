@@ -1,5 +1,4 @@
 // ?doTeamMoveToNearestObjectOfType@ScriptActions@@IAEXABVAsciiString@@0@Z
-// partial score=0.93 date=2026-09-07
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
 // TEAM_MOVE_TO_NEAREST_OBJECT_OF_TYPE, retail RVA 0x002F5F40 (280 bytes).
 // executeAction arm 393 calls ILT 0x0002D0EC, whose body is this action.
@@ -76,7 +75,21 @@ public:
 		Int distanceCalculation, PartitionFilter *filters);
 };
 
-class Rva0020AA00Registry
+extern PartitionManager *ThePartitionManager;
+
+class ScriptActions;
+
+static __forceinline void bfmeGetClosestObject(Object *&object,
+	ScriptActions *actions, const Coord3D *position,
+	const ThingTemplate *thingTemplate)
+{
+	(void)actions;
+	PartitionFilterThing thingFilter(thingTemplate, true);
+	object = ThePartitionManager->getClosestObject(position, 1000000.0f, 0,
+		&thingFilter);
+}
+
+class BfmeThingFactory
 {
 public:
 	const ThingTemplate *findTemplate(const AsciiString &name);
@@ -121,16 +134,12 @@ public:
 	virtual ObjectTypes *getObjectTypes(const AsciiString &name) = 0;
 };
 
-class Rva0015A190Packet
+struct Rva0015A190Packet
 {
-public:
 	void *m_first;
 	unsigned char m_flag;
-	union
-	{
-		void *m_objA;
-		Real m_scratchZ;
-	};
+	void *m_objA;
+	void *m_objB;
 };
 
 class Rva0015A190Owner
@@ -151,8 +160,7 @@ public:
 };
 
 extern ScriptEngine *TheScriptEngine;
-extern Rva0020AA00Registry *Rva0020AA00TheRegistry;
-extern PartitionManager *ThePartitionManager;
+extern BfmeThingFactory *TheThingFactory;
 extern AI *TheAI;
 
 class ScriptActions;
@@ -186,7 +194,6 @@ protected:
 		const AsciiString &objectType);
 };
 
-// ?doTeamMoveToNearestObjectOfType@ScriptActions@@IAEXABVAsciiString@@0@Z
 void ScriptActions::doTeamMoveToNearestObjectOfType(
 	const AsciiString &teamName, const AsciiString &objectType)
 {
@@ -199,7 +206,8 @@ void ScriptActions::doTeamMoveToNearestObjectOfType(
 	team->getEstimateTeamPosition_000EDCD0(&teamPosition);
 
 	objectTypes = TheScriptEngine->getObjectTypes(objectType);
-	Object *object = 0;
+	AIGroup *group = 0;
+	Object *object;
 	if (objectTypes)
 	{
 		object = bfmeFindClosestObject(this, &teamPosition, objectTypes, 0);
@@ -207,28 +215,28 @@ void ScriptActions::doTeamMoveToNearestObjectOfType(
 	else
 	{
 		const ThingTemplate *thingTemplate =
-			Rva0020AA00TheRegistry->findTemplate(objectType);
+			TheThingFactory->findTemplate(objectType);
 		if (!thingTemplate)
 			return;
 
-		PartitionFilterThing thingFilter(thingTemplate, true);
-		object = ThePartitionManager->getClosestObject(&teamPosition,
-			1000000.0f, 0, &thingFilter);
+		bfmeGetClosestObject(object, this, &teamPosition, thingTemplate);
 	}
 
-	if (!object)
+	Object *bestObject = object;
+	if (!bestObject)
 		return;
 
 	{
-		AIGroup *group = TheAI->createGroup();
+		group = TheAI->createGroup();
 		if (!group)
 			return;
 
 		team->getTeamAsAIGroup(group);
 		Rva0015A190Packet packet;
-		packet.m_first = (void *)object->getPosition();
+		packet.m_first = (void *)bestObject->getPosition();
 		packet.m_flag = 0;
 		packet.m_objA = 0;
+		packet.m_objB = 0;
 		((Rva0015A190Owner *)group)->applyPacket(&packet, 1);
 	}
 }
