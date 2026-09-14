@@ -11568,6 +11568,7 @@ name,address,notes
 ?Rva006D4690Apply@@YAXPAX@Z,0x00038389,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006D4FF0 calls; autopin
 ?Rva006F2890RegisterVideoBuffer@Display@@QAEXPAVVideoBuffer@@@Z,0x006F2890,body pin for the address-derived Display video-buffer registration method proven by TheDisplay receiver and pointer-vector append; campaign=luna36h-20260907;lane=particle;model=gpt-5.6-sol-ultra
 ?Rva00739900Forward@@YAXPAXM@Z,0x000246A4,Open-BFME5 ILT thunk used by the 0x006FCBD0 clamped float forwarder
+?Rva00739900ForwardSub@@YAEPAXM@Z,0x000246A4,ILT thunk the recursive opacity walk at 0x00739900 calls for its own tail recursion
 ?Rva007705D0Copy@@YAPAURva007705D0Element@@PAU1@00ABURva007705D0RandomAccessTag@@PAH@Z,0x0000DB89,STL copy helper called by the resize wrapper at 0x007705D0
 ?Rva007E8640Copy@@YAXPADIPBD@Z,0x007E8640,U2 lane: bounded string copy called by the setters at 0x00801470 and 0x008014A0
 ?Rva007E9B70Get@@YAPAURva007E9B70Obj@@XZ,0x007E9B70,FESL getter used by 0x007FA6C0 vslot2
