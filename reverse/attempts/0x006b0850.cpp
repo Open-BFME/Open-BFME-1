@@ -3,7 +3,7 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /I../../../vendor/stlport
 // stlport
 
-#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "../../Code/Libraries/Source/WWVegas/WWLib/string_base.h"
 #define _STLP_USE_NAMESPACES 1
 #define _STLP_USE_OWN_NAMESPACE 1
 #include <map>
