@@ -6075,7 +6075,8 @@ name,address,notes
 ??1Gen_dtor_005a7ad0@@UAE@XZ,0x00049C1F,gen-dtor class destructor
 ??1Gen_dtor_005a80c0@@UAE@XZ,0x0001D584,gen-dtor class destructor
 ??1Gen_dtor_005b1a50@@UAE@XZ,0x000201A8,gen-dtor class destructor
-??1Gen_dtor_005b3aa0@@UAE@XZ,0x0003FFCB,gen-dtor class destructor
+??1HotKeyManager@@UAE@XZ,0x0003FFCB,HotKeyManager complete destructor ILT; exact constructor 0x005B39E0, dedicated vtable 0x0110DE08, and 95-byte body 0x005B37C0 with two map-member destructions and SubsystemInterface base cleanup establish identity for wrapper 0x005B3AA0
+??_GHotKeyManager@@UAEPAXI@Z,0x00046F1A,constructor-installed vtable 0x0110DE08 slot zero routes through this ILT to scalar wrapper 0x005B3AA0
 ??1Gen_dtor_005b4350@@UAE@XZ,0x0000CB67,gen-dtor class destructor
 ??1Gen_dtor_005b5560@@UAE@XZ,0x0001C6D4,gen-dtor class destructor
 ??1Gen_dtor_005b7320@@UAE@XZ,0x00031B42,gen-dtor class destructor
