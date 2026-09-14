@@ -5808,6 +5808,7 @@ name,address,notes
 ??1FloatingTextData@@UAE@XZ,0x0001661C,authentic FloatingTextData scalar-deleting wrapper callee ILT; resolves to the matched complete destructor at 0x0043F550
 ??1Gen_dtor_00443e90@@UAE@XZ,0x0001DC05,gen-dtor class destructor
 ??1Gen_dtor_0044c0f0@@UAE@XZ,0x0003B106,gen-dtor class destructor
+??1InGameUI@@UAE@XZ,0x0003B106,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0044AE70
 ??1Gen_dtor_0044d240@@UAE@XZ,0x00039D7E,gen-dtor class destructor
 ??1Gen_dtor_0044f3d0@@UAE@XZ,0x000017E9,gen-dtor class destructor
 ??1Gen_dtor_00450390@@UAE@XZ,0x0000DE81,gen-dtor class destructor
