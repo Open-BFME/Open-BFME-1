@@ -152,6 +152,11 @@ Gen_00837560::~Gen_00837560(void)
 {
 }
 
+void DeleteGen00837560(Gen_00837560 *value)
+{
+	delete value;
+}
+
 // ??1Gen_008375D0@@UAE@XZ
 Gen_008375D0::~Gen_008375D0(void)
 {
