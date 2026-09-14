@@ -412,7 +412,7 @@ File * ArchiveFileSystem::openFile(const Char *filename, Int access /* = 0 */)
 // The wide form, vtable slot 6, retail 0x009CA6E0 and ret 0x10. Same body as the
 // narrow one above except that it reaches ArchiveFile slot 3 rather than slot 2,
 // which is the same one-slot step the wide FileSystem::openFile takes.
-File * ArchiveFileSystem::openFile(const Char *filename, Int access, Int a3, Int a4)
+File * ArchiveFileSystem::openFile(const Char *filename, Int access, Int offset, Int size)
 {
 	AsciiString archiveFilename;
 	{
@@ -424,7 +424,7 @@ File * ArchiveFileSystem::openFile(const Char *filename, Int access, Int a3, Int
 		return NULL;
 	}
 
-	return m_archiveFileMap[archiveFilename]->openFile(filename, access, a3, a4);
+	return m_archiveFileMap[archiveFilename]->openFile(filename, access, offset, size);
 }
 
 Bool ArchiveFileSystem::getFileInfo(const AsciiString& filename, FileInfo *fileInfo) const

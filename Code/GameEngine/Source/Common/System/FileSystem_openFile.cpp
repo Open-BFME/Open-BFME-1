@@ -105,7 +105,7 @@ public:
 	// Declared widest-first: MSVC lays out a run of same-name virtual overloads
 	// in reverse declaration order, so this is what puts the two-argument form at
 	// slot 5 and the four-argument one at slot 6.
-	virtual File *openFile( const char *filename, int access, int a3, int a4 ) = 0;	// slot 6 = +0x18
+	virtual File *openFile( const char *filename, int access, int offset, int size ) = 0;	// slot 6 = +0x18
 	virtual File *openFile( const char *filename, int access ) = 0;					// slot 5 = +0x14
 };
 
@@ -115,7 +115,7 @@ class LocalFileSystem
 public:
 	virtual ~LocalFileSystem() {}
 	virtual void L1() = 0;
-	virtual File *openFile( const char *filename, int access, int a3, int a4 ) = 0;	// slot 3 = +0x0c
+	virtual File *openFile( const char *filename, int access, int offset, int size ) = 0;	// slot 3 = +0x0c
 	virtual File *openFile( const char *filename, int access ) = 0;					// slot 2 = +0x08
 };
 
@@ -129,7 +129,7 @@ class FileSystem
 {
 public:
 	File *openFile( const char *filename, int access );
-	File *openFile( const char *filename, int access, int a3, int a4 );
+	File *openFile( const char *filename, int access, int offset, int size );
 };
 
 // ?openFile@FileSystem@@QAEPAVFile@@PBDH@Z
@@ -181,10 +181,10 @@ File *FileSystem::openFile( const char *filename, int access )
 // BFME's wide form, retail 0x009C89F0, 445 bytes. Structurally the narrow one
 // above with two more arguments threaded into every downstream call, and the
 // calls go one slot further on: LocalFileSystem slot 3 rather than 2, and
-// ArchiveFileSystem slot 6 rather than 5. Nothing in the image says what the two
-// extra parameters mean -- Win32LocalFileSystem's narrow forwarder passes them
-// as zero -- so they keep positional names.
-File *FileSystem::openFile( const char *filename, int access, int a3, int a4 )
+// ArchiveFileSystem slot 6 rather than 5. The extra pair is offset and size:
+// Win32BIGFile::openFile at 0x009CB5F0 adds offset to the archived entry and
+// treats size 0 as "the whole entry"; the two-arg forwarders pass zeros.
+File *FileSystem::openFile( const char *filename, int access, int offset, int size )
 {
 	char buf[0x200];
 	File *file = NULL;
@@ -195,23 +195,23 @@ File *FileSystem::openFile( const char *filename, int access, int a3, int a4 )
 	{
 		BFMERetailAsciiString path( byte_134CB50 );
 		path.concat( filename );
-		file = TheLocalFileSystem->openFile( path.str(), access, a3, a4 );
+		file = TheLocalFileSystem->openFile( path.str(), access, offset, size );
 	}
 
 	if( !byte_134CB4C && file == NULL && TheArchiveFileSystem )
 	{
 		if( !(access & 8) )
-			file = TheArchiveFileSystem->openFile( buf, access, a3, a4 );
+			file = TheArchiveFileSystem->openFile( buf, access, offset, size );
 		if( file == NULL )
-			file = TheArchiveFileSystem->openFile( filename, access, a3, a4 );
+			file = TheArchiveFileSystem->openFile( filename, access, offset, size );
 	}
 
 	if( TheLocalFileSystem && file == NULL )
 	{
 		if( !(access & 2) )
-			file = TheLocalFileSystem->openFile( buf, access, a3, a4 );
+			file = TheLocalFileSystem->openFile( buf, access, offset, size );
 		if( file == NULL )
-			file = TheLocalFileSystem->openFile( filename, access, a3, a4 );
+			file = TheLocalFileSystem->openFile( filename, access, offset, size );
 	}
 
 	// Note the test order: the wide form checks TheArchiveFileSystem before
@@ -220,11 +220,11 @@ File *FileSystem::openFile( const char *filename, int access, int a3, int a4 )
 	{
 		if( !(access & 8) )
 		{
-			File *f = TheArchiveFileSystem->openFile( buf, access, a3, a4 );
+			File *f = TheArchiveFileSystem->openFile( buf, access, offset, size );
 			if( f != NULL )
 				return f;
 		}
-		return TheArchiveFileSystem->openFile( filename, access, a3, a4 );
+		return TheArchiveFileSystem->openFile( filename, access, offset, size );
 	}
 
 	return file;
