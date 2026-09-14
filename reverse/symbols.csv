@@ -6239,7 +6239,7 @@ name,address,notes
 ??1?$DefaultModule@$0A@@FXParticleSystem@@UAE@XZ,0x000343EC,DefaultModule<0> destructor ILT proven by matched factory constructor vtable 0x01111FCC slot zero reaching scalar wrapper 0x005E6FA0
 ??1?$DefaultModule@$02@FXParticleSystem@@UAE@XZ,0x0003A1B6,DefaultModule<3> destructor ILT proven by matched factory constructor vtable 0x01112050 slot zero reaching scalar wrapper 0x005E6FE0
 ??1?$DefaultModule@$06@FXParticleSystem@@UAE@XZ,0x00043612,DefaultModule<7> destructor ILT proven by matched factory constructor vtable 0x011120CC slot zero reaching scalar wrapper 0x005E7020
-??1Gen_dtor_005e7060@@UAE@XZ,0x00023650,gen-dtor class destructor
+??1LifeEventModule@FXParticleSystem@@UAE@XZ,0x00023650,LifeEventModule destructor ILT proven by matched createModule factory and constructor vtable 0x01112190 slot zero reaching scalar wrapper 0x005E7060
 ??1Gen_dtor_005e70a0@@UAE@XZ,0x0004826B,gen-dtor class destructor
 ??1Gen_dtor_005e70e0@@UAE@XZ,0x0003E400,gen-dtor class destructor
 ??1Gen_dtor_005e7510@@UAE@XZ,0x00001532,gen-dtor class destructor
