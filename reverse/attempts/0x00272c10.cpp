@@ -1,12 +1,10 @@
 // ?chooseLocomotorSetExplicit@AIUpdateInterface@@AAE_NW4LocomotorSetType@@@Z
-// partial score=0.9 date=2026-09-06
+// partial score=0.9 date=2026-09-14
 // cl: /DNDEBUG /MD /EHsc
 
 typedef bool Bool;
 typedef int Int;
-
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
+typedef unsigned int UnsignedInt;
 
 enum LocomotorSetType
 {
@@ -21,35 +19,43 @@ public:
 	char *m_start;
 	char *m_finish;
 
-	Int size() const { return (Int)((m_finish - m_start) >> 2); }
-	const LocomotorTemplate *at(Int index) const
+	UnsignedInt size() const
+	{
+		return (UnsignedInt)((m_finish - m_start) >> 2);
+	}
+
+	const LocomotorTemplate *operator[](UnsignedInt index) const
 	{
 		return ((const LocomotorTemplate **)m_start)[index];
 	}
 };
 
-class AIUpdateModuleData;
-
 class BfmeThingTemplate
 {
 public:
-	BfmeThingTemplate *friend_getFinalOverride();
+	const BfmeThingTemplate *getFinalOverride() const;
 	const LocomotorTemplateVector *findLocomotorTemplateVector(LocomotorSetType type) const;
 
 	char m_vtable[4];
-	BfmeThingTemplate *m_nextOverride;
+	const BfmeThingTemplate *m_nextOverride;
 };
 
 class BfmeObject
 {
 public:
-	char m_vtable[4];
-	BfmeThingTemplate *m_template;
-
-	__forceinline BfmeThingTemplate *getTemplate() const
+	__forceinline const BfmeThingTemplate *getTemplate() const
 	{
-		return *(BfmeThingTemplate **)((char *)this + 4);
+		const BfmeThingTemplate *const volatile *templateSlot = &m_template;
+		const BfmeThingTemplate *thingTemplate = *templateSlot;
+		if (thingTemplate == 0)
+			return 0;
+		if (thingTemplate->m_nextOverride)
+			thingTemplate = thingTemplate->m_nextOverride->getFinalOverride();
+		return thingTemplate;
 	}
+
+	char m_vtable[4];
+	const BfmeThingTemplate *m_template;
 };
 
 class LocomotorSet
@@ -63,7 +69,7 @@ public:
 
 class AIUpdateInterface
 {
-	private:
+private:
 	Bool chooseLocomotorSetExplicit(LocomotorSetType wst);
 	__forceinline BfmeObject *getObject() const { return m_object; }
 
@@ -78,17 +84,7 @@ class AIUpdateInterface
 Bool AIUpdateInterface::chooseLocomotorSetExplicit(LocomotorSetType wst)
 {
 	BfmeObject *object = getObject();
-	BfmeThingTemplate **templateSlot = (BfmeThingTemplate **)((char *)object + 4);
-	_ReadWriteBarrier();
-	BfmeThingTemplate *sourceTemplate = *templateSlot;
-	Int zero = 0;
-	BfmeThingTemplate *thingTemplate = sourceTemplate;
-	if (sourceTemplate != (BfmeThingTemplate *)0)
-	{
-		BfmeThingTemplate *nextOverride = sourceTemplate->m_nextOverride;
-		if (nextOverride != (BfmeThingTemplate *)zero)
-			thingTemplate = nextOverride->friend_getFinalOverride();
-	}
+	const BfmeThingTemplate *thingTemplate = object->getTemplate();
 	const LocomotorTemplateVector *set = thingTemplate->findLocomotorTemplateVector(wst);
 	if (set)
 	{
@@ -96,7 +92,7 @@ Bool AIUpdateInterface::chooseLocomotorSetExplicit(LocomotorSetType wst)
 		m_curLocomotor = 0;
 		for (Int i = 0; i < set->size(); ++i)
 		{
-			const LocomotorTemplate *lt = set->at(i);
+			const LocomotorTemplate *lt = (*set)[i];
 			if (lt)
 				m_locomotorSet.addLocomotor(lt);
 		}
