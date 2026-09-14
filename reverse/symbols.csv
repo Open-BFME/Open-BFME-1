@@ -4966,7 +4966,7 @@ name,address,notes
 ??1Gen_dtor_001244e0@@UAE@XZ,0x0002A6BC,gen-dtor class destructor
 ??1Gen_dtor_001249e0@@UAE@XZ,0x00031282,gen-dtor class destructor
 ??1ModelConditionSoundSelectorClientBehavior@@UAE@XZ,0x00042758,ModelConditionSoundSelectorClientBehavior complete destructor ILT; dedicated constructor/vtables and friend_newModuleInstance factory establish this virtual destructor route to 0x00124B20
-??1Gen_dtor_00124bc0@@UAE@XZ,0x000369B7,gen-dtor class destructor
+??1UpgradeSoundSelectorClientBehavior@@UAE@XZ,0x000369B7,UpgradeSoundSelectorClientBehavior complete destructor ILT; exact constructor 0x00121F60 and friend_newModuleInstance factory 0x00124B30 establish the scalar wrapper's destructor route to 0x00124BF0
 ??1Gen_dtor_001251f0@@UAE@XZ,0x0001921D,gen-dtor class destructor
 ??1Gen_dtor_00125260@@UAE@XZ,0x000374D4,gen-dtor class destructor
 ??1Gen_dtor_00125290@@UAE@XZ,0x0002D7E0,gen-dtor class destructor
