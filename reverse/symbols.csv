@@ -6069,7 +6069,7 @@ name,address,notes
 ??1Gen_dtor_005d55f0@@UAE@XZ,0x0004791F,gen-dtor class destructor
 ??1Gen_dtor_005d5800@@UAE@XZ,0x00013101,gen-dtor class destructor
 ??1Gen_dtor_005d9e00@@UAE@XZ,0x00040FDE,gen-dtor class destructor
-??1Gen_dtor_005db2a0@@UAE@XZ,0x0002DCE0,gen-dtor class destructor
+??1?$ConcreteModuleTemplate@V?$DefaultModuleTag@$01@FXParticleSystem@@@FXParticleSystem@@UAE@XZ,0x0002DCE0,destructor ILT used by the DefaultModuleTag<2> scalar-deleting destructor
 ??1?$ConcreteModuleTemplate@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@UAE@XZ,0x00013D40,destructor ILT used by the PointEmissionVolume scalar-deleting destructor
 ??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ,0x0003C69B,destructor ILT used by the LineEmissionVolume scalar-deleting destructor
 ??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ,0x00048B53,destructor ILT used by the SphereEmissionVolume scalar-deleting destructor
