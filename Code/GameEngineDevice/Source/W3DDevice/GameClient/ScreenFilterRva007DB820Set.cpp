@@ -89,19 +89,19 @@ virtual void pad41();
 virtual void pad42();
 virtual void pad43();
 virtual void setMode(int);virtual void pad45();virtual void setFilter(int);};extern FadeView *FadeTacticalView;
-extern int FadeDirection,FadeFrames,FadeCurrentFrame;extern float FadeValue;
+extern int Rva007DB820FadeDirection,Rva007DB820FadeFrames,Rva007DB820FadeCurrentFrame;extern float Rva007DB820FadeValue;
 enum FilterModes {FM_NULL_MODE};
 class Rva007DB820 { protected: virtual int set(FilterModes); };
 int Rva007DB820::set(FilterModes mode) {
  if(mode>FM_NULL_MODE){
- if(FadeDirection>0){
-  int fade=++FadeCurrentFrame;
-  if(fade<FadeFrames)FadeValue=(float)fade/(float)FadeFrames;
-  else{FadeValue=1;FadeCurrentFrame=0;FadeDirection=0;}
- }else if(FadeDirection<0){
-  int fade=++FadeCurrentFrame;
-  if(fade<FadeFrames)FadeValue=1-(float)fade/(float)FadeFrames;
-  else{FadeValue=0;FadeTacticalView->setMode(0);FadeTacticalView->setFilter(0);FadeCurrentFrame=0;FadeDirection=0;}
+ if(Rva007DB820FadeDirection>0){
+  int fade=++Rva007DB820FadeCurrentFrame;
+  if(fade<Rva007DB820FadeFrames)Rva007DB820FadeValue=(float)fade/(float)Rva007DB820FadeFrames;
+  else{Rva007DB820FadeValue=1;Rva007DB820FadeCurrentFrame=0;Rva007DB820FadeDirection=0;}
+ }else if(Rva007DB820FadeDirection<0){
+  int fade=++Rva007DB820FadeCurrentFrame;
+  if(fade<Rva007DB820FadeFrames)Rva007DB820FadeValue=1-(float)fade/(float)Rva007DB820FadeFrames;
+  else{Rva007DB820FadeValue=0;FadeTacticalView->setMode(0);FadeTacticalView->setFilter(0);Rva007DB820FadeCurrentFrame=0;Rva007DB820FadeDirection=0;}
  }
 
  VertexMaterialClass *vmat=VertexMaterialClass::Get_Preset(VertexMaterialClass::PRELIT_DIFFUSE);
