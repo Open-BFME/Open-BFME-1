@@ -5424,7 +5424,7 @@ name,address,notes
 ??1Gen_dtor_00222350@@UAE@XZ,0x00025289,gen-dtor class destructor
 ??1Gen_dtor_00227400@@UAE@XZ,0x000376E1,gen-dtor class destructor
 ??1Gen_dtor_00227b30@@UAE@XZ,0x00039D6A,gen-dtor class destructor
-??1Gen_dtor_0022a510@@UAE@XZ,0x0001CA80,gen-dtor class destructor
+??1RiderChangeContain@@MAE@XZ,0x0001CA80,protected complete destructor ILT called by scalar wrapper 0x0022A510; exact constructor 0x00229FB0 installs dedicated vtable 0x010ACAF0
 ??1Gen_dtor_0022a5f0@@UAE@XZ,0x0002A6D0,gen-dtor class destructor
 ??1Gen_dtor_0022b1f0@@UAE@XZ,0x0000EF75,gen-dtor class destructor
 ??1Gen_dtor_0022bdb0@@UAE@XZ,0x0004AB47,gen-dtor class destructor
@@ -88102,6 +88102,7 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1FlightDeckBehaviorModuleData@@UAE@XZ,0x000275BB,complete destructor ILT called by scalar wrapper 0x002131F0; exact constructor 0x002131B0 installs vtable 0x010A8268
 ??_7AODCrushCollideModuleData@@6B@,0x010A9740,exact constructor 0x00215B90 installs this dedicated vtable; slot zero ILT 0x0003F8F0 reaches scalar wrapper 0x00215DC0
 ??_7HordeContainModuleData@@6B@,0x010ABCF8,exact constructor 0x00220530 installs this dedicated vtable; slot zero ILT 0x0002131E reaches scalar wrapper 0x00220560
+??_7RiderChangeContain@@6B@,0x010ACAF0,exact constructor 0x00229FB0 installs this dedicated vtable; slot zero ILT 0x000310AC reaches scalar wrapper 0x0022A510
 ??1?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAE@XZ,0x0093EA10,retail copy called by the dedicated AddInfo deleting wrapper 0x0093FD60; body is the exact 67-byte DynamicVector destructor ICF family
 ??_G?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAEPAXI@Z,0x0093FD60,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> scalar deleting destructor; matched ctor 0x0093E660 stores vtable 0x0113CE5C whose slot zero is this body
 ??_7?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@6B@,0x0113CE5C,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> vtable installed by matched constructor 0x0093E660
