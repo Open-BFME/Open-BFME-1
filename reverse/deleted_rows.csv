@@ -25994,3 +25994,8 @@ uw_00c5f850,0x00C5F850,retail funclet frees through operator delete[] at 0x00881
 ??_GGen_dtor_000717f0@@UAEPAXI@Z,0x000717F0,recovered authentic identity: ??_G?$SubsystemSlot@VTeamFactory@@@@UAEPAXI@Z
 ??_GGen_dtor_000718b0@@UAEPAXI@Z,0x000718B0,recovered authentic identity: ??_G?$SubsystemSlot@VCrateSystem@@@@UAEPAXI@Z
 ??_GGen_dtor_00071970@@UAEPAXI@Z,0x00071970,recovered authentic identity: ??_G?$SubsystemSlot@VPlayerList@@@@UAEPAXI@Z
+??_GGen_dtor_00071f70@@UAEPAXI@Z,0x00071F70,Placeholder superseded by authentic SubsystemSlot<VictorySystem> scalar-deleting destructor
+??_GGen_dtor_00072030@@UAEPAXI@Z,0x00072030,Placeholder superseded by authentic SubsystemSlot<ActionManager> scalar-deleting destructor
+??_GGen_dtor_000720f0@@UAEPAXI@Z,0x000720F0,Placeholder superseded by authentic SubsystemSlot<GameStateMap> scalar-deleting destructor
+??_GGen_dtor_000721b0@@UAEPAXI@Z,0x000721B0,Placeholder superseded by authentic SubsystemSlot<GameState> scalar-deleting destructor
+??_GGen_dtor_00072270@@UAEPAXI@Z,0x00072270,Placeholder superseded by authentic SubsystemSlot<GameResultsInterface> scalar-deleting destructor
