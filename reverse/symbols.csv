@@ -6713,7 +6713,6 @@ name,address,notes
 ??1Gen_dtor_009e3860@@UAE@XZ,0x009E3880,gen-dtor class destructor
 ??1Gen_dtor_009eb9e0@@QAE@XZ,0x009F23C0,W3DRenderObjectSnapshot member deleting destructor target at RVA 0x009EBC70
 ??1Gen_dtor_009eb9e0@@UAE@XZ,0x009F23C0,gen-dtor class destructor
-??1Gen_dtor_009ebe70@@UAE@XZ,0x009EBC70,gen-dtor class destructor
 ??1Gen_dtor_009ed840@@UAE@XZ,0x009ED2F0,gen-dtor class destructor
 ??1Gen_dtor_009f2600@@UAE@XZ,0x009F5970,gen-dtor class destructor
 ??1Gen_dtor_009f43d0@@UAE@XZ,0x009F2B60,gen-dtor class destructor
