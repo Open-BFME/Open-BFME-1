@@ -88076,3 +88076,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1BfmeElementY@@QAE@XZ,0x0001FD0C,element dtor in bfmeUnregisterY 0x0035ADC0 (sibling of 0x0035AC30)
 ??1Gen_0081E480@@UAE@XZ,0x0081E4B0,destructor of the class whose ctor is 0x0081E480: both store vtable 0x0112D210; called at base-dtor position (EH state -1 after members) by the derived dtor 0x007E3C20; same body the ledger holds as bfmeResetUC
 ??_7Rva007E3C20Vp6Stream@@6B@,0x01128DA8,vtable stored by the derived destructor 0x007E3C20
+??1?$DynamicVectorClass@K@@UAE@XZ,0x0003F44F,route=0x0005E960; second WW3D DynamicVectorClass<unsigned long> destructor copy reached through the retail ILT used by wrapper 0x0093E860
