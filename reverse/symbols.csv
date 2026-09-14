@@ -9019,6 +9019,7 @@ name,address,notes
 ??1ObjectHelper@@UAE@XZ,0x0002514E,ObjectDefectionHelper destructor tail call reaches the UpdateModule destructor alias
 ??1ObjectModule@@MAE@XZ,0x00047C53,DockUpdate protected base destructor call shares the pinned ObjectModule destructor body
 ??1ObjectModule@@UAE@XZ,0x00047C53,Open-BFME5 FireWeaponCollide base destructor ILT pin
+??_GObjectModule@@UAEPAXI@Z,0x00002C9D,constructor-installed vtable 0x01089774 slot zero routes through this ILT to scalar wrapper 0x00113F20
 ??1ObjectRecoveryHelper@@UAE@XZ,0x0003A7A1,destructor ILT to 0x00256D20
 ??1ObjectRepulsorHelper@@UAE@XZ,0x0001DC41,destructor ILT to 0x00256DB0
 ??1ObjectWeaponStatusHelper@@UAE@XZ,0x000222B9,destructor ILT to 0x00257500
