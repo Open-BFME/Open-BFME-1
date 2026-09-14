@@ -9,7 +9,7 @@ public:
 
 private:
 	unsigned char m_pad[0x14];
-	float m_s;											///< this+0x14
+	float m_s;
 };
 
 // ?eval@Rva00063FD0Blend@@QBEMXZ

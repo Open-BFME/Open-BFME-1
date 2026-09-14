@@ -8,7 +8,7 @@ public:
 
 private:
 	unsigned char m_pad[0x10];
-	float m_t;											///< this+0x10
+	float m_t;
 };
 
 // ?eval@Rva00063F90Blend@@QBEMXZ
