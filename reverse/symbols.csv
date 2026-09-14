@@ -6298,7 +6298,7 @@ name,address,notes
 ??1Gen_dtor_005eb250@@UAE@XZ,0x0001E669,gen-dtor class destructor
 ??1Gen_dtor_005eb390@@UAE@XZ,0x00006F23,gen-dtor class destructor
 ??1?$DefaultModule@$00@FXParticleSystem@@UAE@XZ,0x00022674,DefaultModule<1> destructor ILT proven by matched factory constructor vtable 0x01112DEC slot zero reaching scalar wrapper 0x005EB5F0
-??1Gen_dtor_005eb630@@UAE@XZ,0x000287D6,gen-dtor class destructor
+??1?$DefaultModule@$01@FXParticleSystem@@UAE@XZ,0x000287D6,DefaultModule<2> destructor ILT proven by matched factory constructor vtable 0x01112E1C slot zero reaching scalar wrapper 0x005EB630
 ??1Gen_dtor_005eb670@@UAE@XZ,0x000072AC,gen-dtor class destructor
 ??1Gen_dtor_005eb780@@UAE@XZ,0x0001C04E,gen-dtor class destructor
 ??1Gen_dtor_005eb800@@UAE@XZ,0x000082E7,gen-dtor class destructor
