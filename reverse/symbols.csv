@@ -5441,7 +5441,7 @@ name,address,notes
 ??1Gen_dtor_00240880@@UAE@XZ,0x00017657,gen-dtor class destructor
 ??1Gen_dtor_002408b0@@UAE@XZ,0x0001AB90,gen-dtor class destructor
 ??1HordeGarrisonContain@@UAE@XZ,0x00038622,public complete destructor ILT called by scalar wrapper 0x00249110; exact constructor 0x00248F90 installs dedicated vtable 0x010AFDC0; matched body 0x00249820
-??1Gen_dtor_00249bc0@@UAE@XZ,0x0001871E,gen-dtor class destructor
+??1ContestableContainModuleData@@UAE@XZ,0x0001871E,public complete destructor ILT called by scalar wrapper 0x00249BC0; exact constructor 0x00249B50 installs dedicated vtable 0x010AFE60
 ??1Gen_dtor_0024a6e0@@UAE@XZ,0x00030099,gen-dtor class destructor
 ??1Gen_dtor_0024b980@@UAE@XZ,0x00037E6B,gen-dtor class destructor
 ??1Gen_dtor_0024d1b0@@UAE@XZ,0x000486AD,gen-dtor class destructor
