@@ -5033,7 +5033,8 @@ name,address,notes
 ??1Gen_dtor_0013be10@@UAE@XZ,0x0002F487,gen-dtor class destructor
 ??1Gen_dtor_0013c570@@UAE@XZ,0x0002306F,gen-dtor class destructor
 ??1Gen_dtor_00147e70@@UAE@XZ,0x0001FE5B,gen-dtor class destructor
-??1Gen_dtor_0014aae0@@UAE@XZ,0x00012B16,gen-dtor class destructor
+??1DistLODPrototypeClass@@UAE@XZ,0x00012B16,exact constructor 0x00149E30 and dedicated vtable 0x010956B0 establish the complete destructor thunk called by wrapper 0x0014AAE0
+??_GDistLODPrototypeClass@@UAEPAXI@Z,0x000169F5,constructor-installed vtable 0x010956B0 slot zero routes through this ILT to 0x0014AAE0
 ??1Gen_dtor_0014ab10@@UAE@XZ,0x00044611,gen-dtor class destructor
 ??1Gen_dtor_0014ab40@@UAE@XZ,0x0003E0CC,gen-dtor class destructor
 ??1Gen_dtor_0014ab70@@UAE@XZ,0x0000DB9D,gen-dtor class destructor
