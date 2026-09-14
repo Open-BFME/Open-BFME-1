@@ -52,6 +52,7 @@ private:
 	_STL::hash_map<int, Gen_t_000678b0_p36cd, _STL::hash<int>, _STL::equal_to<int>, _STL::allocator<Rva000678B0MapPair> > m_fxmap;
 };
 
+// ??1DamageFXStore@@UAE@XZ
 Rva000678B0Body::~Rva000678B0Body()
 {
 	m_fxmap.clear();
