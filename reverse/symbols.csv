@@ -5003,7 +5003,7 @@ name,address,notes
 ??1Gen_dtor_0012ab80@@UAE@XZ,0x00019704,gen-dtor class destructor
 ??1Gen_dtor_0012ac60@@UAE@XZ,0x000173A5,gen-dtor class destructor
 ??1Gen_dtor_0012aca0@@UAE@XZ,0x00049A1C,gen-dtor class destructor
-??1Gen_dtor_0012adc0@@UAE@XZ,0x0001ED8F,gen-dtor class destructor
+??1BroadcastStealthUpdateModuleData@@UAE@XZ,0x0001ED8F,destructor ILT used by the BroadcastStealthUpdateModuleData scalar-deleting destructor
 ??1Gen_dtor_0012ae90@@UAE@XZ,0x0003C9C5,gen-dtor class destructor
 ??1Gen_dtor_0012b170@@UAE@XZ,0x00020784,gen-dtor class destructor
 ??1Gen_dtor_0012b290@@UAE@XZ,0x00001208,gen-dtor class destructor
@@ -5456,7 +5456,7 @@ name,address,notes
 ??1Gen_dtor_00289550@@UAE@XZ,0x0001BCE8,gen-dtor class destructor
 ??1Gen_dtor_00289bb0@@UAE@XZ,0x00018156,gen-dtor class destructor
 ??1Gen_dtor_0028a450@@UAE@XZ,0x000013F7,gen-dtor class destructor
-??1Gen_dtor_0028a500@@UAE@XZ,0x0003AE7C,gen-dtor class destructor
+??1CivilianSpawnUpdateModuleData@@UAE@XZ,0x0003AE7C,destructor ILT used by the CivilianSpawnUpdateModuleData scalar-deleting destructor
 ??1Gen_dtor_0028ad30@@UAE@XZ,0x0000DAF3,gen-dtor class destructor
 ??1Gen_dtor_0028ad70@@UAE@XZ,0x0001C44A,gen-dtor class destructor
 ??1Gen_dtor_0028ba10@@UAE@XZ,0x000353E1,gen-dtor class destructor
@@ -5470,7 +5470,7 @@ name,address,notes
 ??1Gen_dtor_0028d090@@UAE@XZ,0x00007257,gen-dtor class destructor
 ??1Gen_dtor_0028d6d0@@UAE@XZ,0x00029672,gen-dtor class destructor
 ??1Gen_dtor_0028ebc0@@UAE@XZ,0x000465E7,gen-dtor class destructor
-??1Gen_dtor_0028ec70@@UAE@XZ,0x0000F8C6,gen-dtor class destructor
+??1DynamicShroudClearingRangeUpdateModuleData@@UAE@XZ,0x0000F8C6,destructor ILT used by the DynamicShroudClearingRangeUpdateModuleData scalar-deleting destructor
 ??1Gen_dtor_0028edc0@@UAE@XZ,0x00028FCE,gen-dtor class destructor
 ??1Gen_dtor_0028edf0@@UAE@XZ,0x000452FA,gen-dtor class destructor
 ??1Gen_dtor_0028f3b0@@UAE@XZ,0x000307FB,gen-dtor class destructor
@@ -5496,7 +5496,7 @@ name,address,notes
 ??1Gen_dtor_002975e0@@UAE@XZ,0x000137D7,gen-dtor class destructor
 ??1Gen_dtor_00299050@@UAE@XZ,0x0002A86F,gen-dtor class destructor
 ??1Gen_dtor_00299a50@@UAE@XZ,0x0000806C,gen-dtor class destructor
-??1Gen_dtor_00299f20@@UAE@XZ,0x0002FA36,gen-dtor class destructor
+??1PartTheHeavensUpdateModuleData@@UAE@XZ,0x0002FA36,destructor ILT used by the PartTheHeavensUpdateModuleData scalar-deleting destructor
 ??1Gen_dtor_0029a610@@UAE@XZ,0x00041425,gen-dtor class destructor
 ??1Gen_dtor_0029ac10@@UAE@XZ,0x000087D8,gen-dtor class destructor
 ??1Gen_dtor_0029c5c0@@UAE@XZ,0x000033B9,gen-dtor class destructor
