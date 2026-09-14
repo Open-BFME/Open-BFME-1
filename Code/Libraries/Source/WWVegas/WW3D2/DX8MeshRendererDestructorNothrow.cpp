@@ -38,3 +38,8 @@ Rva00949D00Renderer::~Rva00949D00Renderer()
 		delete texture_category_container_list_skin;
 	}
 }
+
+void Force_Rva00949D00Renderer_DeletingDestructor(Rva00949D00Renderer *value)
+{
+	delete value;
+}
