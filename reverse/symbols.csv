@@ -5803,7 +5803,7 @@ name,address,notes
 ??1Gen_dtor_00440840@@UAE@XZ,0x000011E5,gen-dtor class destructor
 ??1Gen_dtor_00440a10@@UAE@XZ,0x000489BE,gen-dtor class destructor
 ??1Gen_dtor_00442010@@UAE@XZ,0x00018CE1,gen-dtor class destructor
-??1Gen_dtor_00442290@@UAE@XZ,0x0001661C,gen-dtor class destructor
+??1FloatingTextData@@UAE@XZ,0x0001661C,authentic FloatingTextData scalar-deleting wrapper callee ILT; resolves to the matched complete destructor at 0x0043F550
 ??1Gen_dtor_00443e90@@UAE@XZ,0x0001DC05,gen-dtor class destructor
 ??1Gen_dtor_0044c0f0@@UAE@XZ,0x0003B106,gen-dtor class destructor
 ??1Gen_dtor_0044d240@@UAE@XZ,0x00039D7E,gen-dtor class destructor
