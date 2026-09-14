@@ -6549,6 +6549,7 @@ name,address,notes
 ??1?$ctype@D@_STL@@UAE@XZ,0x00840780,authentic STLport ctype<char> complete destructor; matched specialization constructor and vtable 0x0112F254 with canonical facet slots prove identity
 ??1?$DynamicVectorClass@UPtrRemapStruct@PointerRemapClass@@@@UAE@XZ,0x00930040,authentic PointerRemapClass::PtrRemapStruct DynamicVectorClass complete destructor target; matched specialization constructor 0x00930C50 and vtable 0x0113C644 establish identity
 ??1?$DynamicVectorClass@PAVTextureClass@@@@UAE@XZ,0x0093DF80,authentic DynamicVectorClass<TextureClass *> complete destructor target; matched specialization constructor 0x0093D5E0 and vtable 0x0113CDDC establish identity
+??1Null3DObjClass@@UAE@XZ,0x00972980,authentic Null3DObjClass complete destructor thunk to RenderObjClass; matched constructors and vtable 0x0113E87C prove identity
 ??1Gen_dtor_0081c7c0@@UAE@XZ,0x0081C590,gen-dtor class destructor
 ??1Gen_dtor_0081c9a0@@UAE@XZ,0x000167CF,gen-dtor class destructor
 ??1Gen_dtor_00823150@@UAE@XZ,0x00825550,gen-dtor class destructor
