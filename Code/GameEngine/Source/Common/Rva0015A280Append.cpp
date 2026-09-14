@@ -1,31 +1,28 @@
-// ?d_0015a280@@YAXXZ
-// partial score=0.99 date=2026-09-10
-// ?bfmeAddMA@BfmeThingMA@@QAEXPAVBfmeItemMA@@@Z
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
-class BfmeThingMA;
+class Rva0015A280Owner;
 
-class BfmeItemMA
+class Rva0015A280Item
 {
 public:
 	unsigned char m_pad000[0x31C];
-	BfmeThingMA *m_owner;
+	Rva0015A280Owner *m_owner;
 };
 
-class BfmeThingMA
+class Rva0015A280Owner
 {
 public:
-	void bfmeAddMA(BfmeItemMA *item);
+	void append(Rva0015A280Item *item);
 
 private:
 	unsigned char m_pad000[0x120];
 	int m_itemCount;
-	BfmeItemMA *m_items[36];
+	Rva0015A280Item *m_items[36];
 	unsigned char m_pad1B4[4];
 	bool m_itemsCurrent;
 };
 
-void BfmeThingMA::bfmeAddMA(BfmeItemMA *item)
+void Rva0015A280Owner::append(Rva0015A280Item *item)
 {
 	item->m_owner = 0;
 	if (m_itemCount < 36)
