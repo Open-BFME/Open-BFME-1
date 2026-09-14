@@ -4981,7 +4981,7 @@ name,address,notes
 ??1Gen_dtor_001253d0@@UAE@XZ,0x0000B1F4,gen-dtor class destructor
 ??1Gen_dtor_00125400@@UAE@XZ,0x00007AF9,gen-dtor class destructor
 ??1Gen_dtor_00125500@@UAE@XZ,0x0000CCD9,gen-dtor class destructor
-??1Gen_dtor_00125620@@UAE@XZ,0x00037759,gen-dtor class destructor
+??1FXListDieModuleData@@UAE@XZ,0x00037759,FXListDieModuleData complete destructor ILT called by scalar wrapper 0x00125620; thunk reaches the exact 7-byte base-vptr teardown body at 0x00125650
 ??1Gen_dtor_00125660@@UAE@XZ,0x0000A13C,gen-dtor class destructor
 ??1Gen_dtor_001257a0@@UAE@XZ,0x0002729B,gen-dtor class destructor
 ??1Gen_dtor_001257e0@@UAE@XZ,0x0002B963,gen-dtor class destructor
@@ -10170,6 +10170,7 @@ name,address,notes
 ??_7FreeLifeBody@@6BBehaviorModule@@@,0x010A8538,primary vtable shared by the named constructor and destructor
 ??_7FreeLifeBody@@6BBodyModuleInterface@@@,0x010A8470,secondary vtable at this+0x0C
 ??_7FreeLifeBody@@6BModuleInterface@@@,0x010A83A0,secondary vtable at this+0x10
+??_7FXListDieModuleData@@6B@,0x0108B758,dedicated FXListDieModuleData vtable installed by exact ctor 0x001234F0; slot zero ILT 0x000124A4 reaches scalar wrapper 0x00125620
 ??_7GameFont@@6B@,0x010F7628,vtable installed by FontLibrary font builder
 ??_7GameResultsInterface@@6B@,0x01119318,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
 ??_7GameWindowTransitionsHandler@@6B@,0x010F9610,GameWindowTransitionsHandler vtable installed by the matched retail constructor at 0x0048BF40 and used by destructor 0x0048B410; campaign=luna36h-20260907;lane=files
