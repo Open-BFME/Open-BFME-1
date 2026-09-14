@@ -193,27 +193,29 @@ LivingWorldRegion *LivingWorldRegionManager::rva003C8160(Coord3D *position)
 		do
 		{
 			LivingWorldRegion *region = (*regions)[index];
-			AsciiString fullName = m_campaign->m_name + "."
-				+ *(AsciiString *)((char *)region + 0x28);
-			const char *text = *(const char **)&fullName;
-			if (text != 0)
-				text += 8;
-			else
-				text = Rva006A16B0Empty;
-
-			BfmeThingESM *thing = m_state->lookup(text, 0);
-
-			if (thing != 0)
 			{
-				char ok = ((BfmeHostESM *)g_bfmeStateDF)->bfmeDoESM(
-					thing, BfmePairESM(position->x, position->y), 0, 1, 1);
+				AsciiString fullName = (m_campaign->m_name + ".")
+					+ region->m_name;
+				const char *text = *(const char **)&fullName;
+				if (text != 0)
+					text += 8;
+				else
+					text = Rva006A16B0Empty;
 
-				--thing->m_refCount;
-				if (thing->m_refCount == 0)
-					thing->release();
+				BfmeThingESM *thing = m_state->lookup(text, 0);
 
-				if (ok)
-					return regions->m_begin[index];
+				if (thing != 0)
+				{
+					char ok = ((BfmeHostESM *)g_bfmeStateDF)->bfmeDoESM(
+						thing, BfmePairESM(position->x, position->y), 0, 1, 1);
+
+					--thing->m_refCount;
+					if (thing->m_refCount == 0)
+						thing->release();
+
+					if (ok)
+						return regions->m_begin[index];
+				}
 			}
 
 			++index;
