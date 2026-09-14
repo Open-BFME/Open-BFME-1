@@ -5143,6 +5143,14 @@ name,address,notes
 ??1AIAttackSquadState@@MAE@XZ,0x00006F41,exact constructor 0x00171330 and dedicated vtable 0x01097E30 establish the protected complete destructor called by wrapper 0x0017FF20
 ??1Gen_dtor_0017ff50@@UAE@XZ,0x00047B9F,gen-dtor class destructor
 ??1Gen_dtor_0017ff90@@UAE@XZ,0x0002FB1C,gen-dtor class destructor
+??1Gen_dtor_0017fee0@@UAE@XZ,0x00028DD0,gen-dtor class destructor
+??1Gen_dtor_0017ff20@@UAE@XZ,0x00006F41,gen-dtor class destructor
+??1AIDeadState@@MAE@XZ,0x00047B9F,AIDeadState complete destructor ILT called by scalar wrapper 0x0017FF50; thunk reaches the State base destructor body through 0x0017FF80
+??1AIDockState@@MAE@XZ,0x0002FB1C,AIDockState complete destructor ILT called by scalar wrapper 0x0017FF90; thunk reaches the matched 106-byte teardown at 0x0017D7A0 whose vptr store and owned-machine cleanup establish identity
+??_GAIDeadState@@MAEPAXI@Z,0x00042B04,dedicated vtable 0x01097EA0 slot zero routes through this ILT to scalar wrapper 0x0017FF50
+??_GAIDockState@@MAEPAXI@Z,0x0003B3F4,dedicated vtable 0x01097F08 slot zero routes through this ILT to scalar wrapper 0x0017FF90
+??_7AIDeadState@@6B@,0x01097EA0,exact constructor 0x001713C0 installs this dedicated vtable
+??_7AIDockState@@6B@,0x01097F08,exact constructor 0x00171420 installs this dedicated vtable
 ??1Gen_dtor_0017ffc0@@UAE@XZ,0x0003AC92,gen-dtor class destructor
 ??1Gen_dtor_00180100@@UAE@XZ,0x0000DDEB,gen-dtor class destructor
 ??1Gen_dtor_00180140@@UAE@XZ,0x0001B64E,gen-dtor class destructor
