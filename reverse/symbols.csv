@@ -5910,6 +5910,7 @@ name,address,notes
 ??1Gen_dtor_0050e120@@UAE@XZ,0x0001F3CF,gen-dtor class destructor
 ??1Gen_dtor_0050e160@@UAE@XZ,0x0004A43F,gen-dtor class destructor
 ??1Gen_dtor_0050e1a0@@UAE@XZ,0x00013688,gen-dtor class destructor
+??1BfmeAptScreenCampaignReview@@UAE@XZ,0x0050DBD0,CampaignReview complete destructor; constructor 0x0050E320 installs vtables 0x01104C74/0x01104C70 whose primary slot 0 is the scalar-deleting wrapper at 0x0050E1A0
 ??1Gen_dtor_0050f570@@UAE@XZ,0x0001B860,gen-dtor class destructor
 ??1Gen_dtor_0050f5b0@@UAE@XZ,0x00009A66,gen-dtor class destructor
 ??1Gen_dtor_0050f5f0@@UAE@XZ,0x0001F0E6,gen-dtor class destructor
