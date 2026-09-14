@@ -5154,7 +5154,9 @@ name,address,notes
 ??1Gen_dtor_001801c0@@UAE@XZ,0x0001B22F,gen-dtor class destructor
 ??1Gen_dtor_001801f0@@UAE@XZ,0x000162DE,gen-dtor class destructor
 ??1Gen_dtor_00180230@@UAE@XZ,0x000430C2,gen-dtor class destructor
-??1Gen_dtor_00180260@@UAE@XZ,0x000348C9,gen-dtor class destructor
+??1AIGuardRetaliateState@@MAE@XZ,0x000348C9,exact constructor 0x00171750 and dedicated vtable 0x01098248 establish the protected complete destructor called by wrapper 0x00180260
+??_GAIGuardRetaliateState@@MAEPAXI@Z,0x0003395B,dedicated vtable 0x01098248 slot zero routes to scalar wrapper 0x00180260
+??_7AIGuardRetaliateState@@6B@,0x01098248,exact constructor 0x00171750 installs this dedicated vtable
 ??1AITunnelNetworkGuardState@@MAE@XZ,0x00002D97,exact constructor 0x001717B0 and dedicated vtable 0x010982B8 establish the protected complete destructor called by wrapper 0x00180290
 ??1Gen_dtor_001802c0@@UAE@XZ,0x000409BC,gen-dtor class destructor
 ??1AIAttackAreaState@@MAE@XZ,0x0000DC9C,exact constructor 0x001718A0 and dedicated vtable 0x01098398 establish the protected complete destructor called by wrapper 0x001802F0
