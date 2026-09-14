@@ -6546,6 +6546,7 @@ name,address,notes
 ??1Cftp@@UAE@XZ,0x00885AF0,authentic Cftp complete destructor; matched constructor and one-slot vtable 0x01132ECC plus surrounding named FTP methods prove identity
 ??1?$DynamicVectorClass@PAX@@UAE@XZ,0x00906630,authentic DynamicVectorClass<void *> complete destructor target; matched specialization constructor 0x00907440 and vtable 0x0113A3A0 establish identity
 ??1SceneClass@@UAE@XZ,0x00942F90,authentic SceneClass complete destructor; matched constructor and vtable 0x0113CECC with named SceneClass slots prove identity
+??1?$ctype@D@_STL@@UAE@XZ,0x00840780,authentic STLport ctype<char> complete destructor; matched specialization constructor and vtable 0x0112F254 with canonical facet slots prove identity
 ??1Gen_dtor_0081c7c0@@UAE@XZ,0x0081C590,gen-dtor class destructor
 ??1Gen_dtor_0081c9a0@@UAE@XZ,0x000167CF,gen-dtor class destructor
 ??1Gen_dtor_00823150@@UAE@XZ,0x00825550,gen-dtor class destructor
