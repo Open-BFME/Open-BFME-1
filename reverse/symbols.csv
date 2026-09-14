@@ -6668,7 +6668,7 @@ name,address,notes
 ??1Gen_dtor_009e2500@@UAE@XZ,0x009E1F00,gen-dtor class destructor
 ??1Gen_dtor_009e2520@@UAE@XZ,0x009E1F40,gen-dtor class destructor
 ??1Gen_dtor_009e3030@@UAE@XZ,0x009E2F30,gen-dtor class destructor
-??1Gen_dtor_009e3460@@UAE@XZ,0x009E3110,gen-dtor class destructor
+??1List@@UAE@XZ,0x009E3110,complete List destructor reached by the scalar-deleting destructor at 0x009E3460
 ??1Gen_dtor_009e35b0@@UAE@XZ,0x009E31C0,gen-dtor class destructor
 ??1Gen_dtor_009e3860@@UAE@XZ,0x009E3880,gen-dtor class destructor
 ??1Gen_dtor_009eb9e0@@QAE@XZ,0x009F23C0,W3DRenderObjectSnapshot member deleting destructor target at RVA 0x009EBC70
