@@ -119,15 +119,6 @@ def test_selection_beats_uniform_under_both_cost_models(ranked):
     if len(candidates) < 50:
         pytest.skip("queue too small to measure a distribution")
 
-    fresh = [candidate for candidate in candidates
-             if not candidate.get("deferred_attempts")]
-    if fresh:
-        candidates = fresh
-    else:
-        fewest = min(candidate["deferred_attempts"] for candidate in candidates)
-        candidates = [candidate for candidate in candidates
-                      if candidate["deferred_attempts"] == fewest]
-
     def mean(sample, value):
         return sum(value(c) for c in sample) / len(sample)
 
@@ -155,8 +146,7 @@ def test_selection_beats_uniform_under_both_cost_models(ranked):
             f"{tiny:.2%} of draws in the <64B band against a {baseline:.2%} "
             f"uniform baseline — the band is not being suppressed "
             f"(measured suppression is normally ~3.9x)")
-    assert len({id(c) for c in drawn}) > min(20, len(candidates) // 2), (
-        "selection concentrated on too few eligible candidates")
+    assert len({id(c) for c in drawn}) > 20, "selection concentrated on too few candidates"
 
 
 def test_land_rate_curve_is_not_monotonic_in_size(ranked):
