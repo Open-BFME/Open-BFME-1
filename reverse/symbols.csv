@@ -4597,6 +4597,7 @@ name,address,notes
 ??1DarknessSpecialPower@@MAE@XZ,0x00029A28,destructor ILT to 0x00259BD0
 ??1DataChunkInfo@@QAE@XZ,0x00103240,compiler-synthesized DataChunkInput::parse info dtor; releaseBuffer parentLabel then label; retail addr currently mis-claimed by a gen-tgrid STL pair placeholder
 ??1DebugCmdInterfaceDebug@@UAE@XZ,0x00889620,pinharvest x1 (body)
+??1DebugDisplay@@UAE@XZ,0x005BD280,DebugDisplay complete virtual destructor body; scalar wrapper 0x005BD250 calls its ILT 0x00015E4C, which resets the derived vtable 0x0110F8D4 to DebugDisplayInterface vtable 0x0110F898
 ??1DebugIOCon@@UAE@XZ,0x00889620,pinharvest x1 (body)
 ??1DebugIOFlat@@UAE@XZ,0x00889620,pinharvest x1 (body)
 ??1DebugIONet@@UAE@XZ,0x00889620,pinharvest x1 (body)
@@ -10144,6 +10145,8 @@ name,address,notes
 ??_7CommandSetUpgradeModuleData@@6B@,0x0108F338,CommandSetUpgrade ModuleData constructor installs this retail vftable
 ??_7ConvertToCarBombCrateCollideModuleDataVtbl@@6B@,0x0108E940,ConvertToCarBombCrateCollide vtbl
 ??_7DX8TextureCategoryClass@@6B@,0x0113D020,DX8TextureCategoryClass vftable stored by its destructor 0x00946540
+??_7DebugDisplay@@6B@,0x0110F8D4,DebugDisplay vtable installed by exact ctor 0x005BD1C0; slot zero ILT 0x00005155 reaches scalar-deleting wrapper 0x005BD250
+??_7DebugDisplayInterface@@6B@,0x0110F898,DebugDisplayInterface base vtable restored by complete DebugDisplay destructor body 0x005BD280 and used by scalar wrapper 0x005BD010
 ??_7DebugIOFlat@@6B@,0x0113517C,vptr stored at entry of ??1DebugIOFlat 0x00890780
 ??_7DebugIOInterface@@6B@,0x01135044,base vptr restored at exit of ??1DebugIOFlat 0x00890780
 ??_7DebugIONet@@6B@,0x0113507C,address-derived network vptr in 0x0088FE00
