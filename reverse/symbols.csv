@@ -5473,7 +5473,8 @@ name,address,notes
 ??1Gen_dtor_0028a450@@UAE@XZ,0x000013F7,gen-dtor class destructor
 ??1CivilianSpawnUpdateModuleData@@UAE@XZ,0x0003AE7C,destructor ILT used by the CivilianSpawnUpdateModuleData scalar-deleting destructor
 ??1Gen_dtor_0028ad30@@UAE@XZ,0x0000DAF3,gen-dtor class destructor
-??1Gen_dtor_0028ad70@@UAE@XZ,0x0001C44A,gen-dtor class destructor
+??1CommandButtonHuntUpdate@@UAE@XZ,0x0001C44A,CommandButtonHuntUpdate complete destructor ILT; exact constructor/vtable and the 116-byte complete body at 0x0028AC90 establish the class identity for wrapper 0x0028AD70
+??_GCommandButtonHuntUpdate@@UAEPAXI@Z,0x0000EF2A,constructor-installed vtable 0x010BD004 slot zero routes through this ILT to scalar wrapper 0x0028AD70
 ??1Gen_dtor_0028ba10@@UAE@XZ,0x000353E1,gen-dtor class destructor
 ??1Gen_dtor_0028bc70@@UAE@XZ,0x00049B4D,gen-dtor class destructor
 ??1Gen_dtor_0028bfc0@@UAE@XZ,0x0001B531,gen-dtor class destructor
