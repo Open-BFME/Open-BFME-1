@@ -233,10 +233,11 @@ public:
 // ?preflight@HordeTransportContain@@QBE_NPAVObject@@_N@Z
 Bool HordeTransportContain::preflight(Object *object, Bool checkCapacity) const
 {
-	register HordeTransportContainModuleData * const data =
-		*(HordeTransportContainModuleData **)((char *)this - 0x1c);
+	register HordeTransportContainBase * const record =
+		(HordeTransportContainBase *)this;
 	register Object *owner = *(Object **)((char *)this - 0x18);
-	register HordeTransportContain *record = (HordeTransportContain *)this;
+	register HordeTransportContainModuleData *data =
+		*(HordeTransportContainModuleData **)((char *)this - 0x1c);
 	unsigned int status0 = object->m_status[0];
 	if ((status0 & 1) != 0 ||
 		(object->m_status[1] & 0x20000000) != 0 ||
