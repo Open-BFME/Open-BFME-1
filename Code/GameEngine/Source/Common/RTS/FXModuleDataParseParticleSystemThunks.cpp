@@ -6,34 +6,34 @@ class INI;
 class BoneFXUpdateModuleData
 {
 public:
-	static void parseParticleSystem(INI *, void *, void *, const void *);
+	static void parseParticleSystem(INI *ini, void *instance, void *store, const void *userData);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/TransitionDamageFX.h
 class TransitionDamageFXModuleData
 {
 public:
-	static void parseParticleSystem(INI *, void *, void *, const void *);
+	static void parseParticleSystem(INI *ini, void *instance, void *store, const void *userData);
 };
 
 class BoneFXParseParticleSystemShim
 {
 public:
-	static void parseParticleSystem(INI *, void *, void *, const void *);
+	static void parseParticleSystem(INI *ini, void *instance, void *store, const void *userData);
 };
 
 class TransitionDamageFXParseParticleSystemShim
 {
 public:
-	static void parseParticleSystem(INI *, void *, void *, const void *);
+	static void parseParticleSystem(INI *ini, void *instance, void *store, const void *userData);
 };
 
-void BoneFXUpdateModuleData::parseParticleSystem(INI *a0, void *a1, void *a2, const void *a3)
+void BoneFXUpdateModuleData::parseParticleSystem(INI *ini, void *instance, void *store, const void *userData)
 {
-	BoneFXParseParticleSystemShim::parseParticleSystem(a0, a1, a2, a3);
+	BoneFXParseParticleSystemShim::parseParticleSystem(ini, instance, store, userData);
 }
 
-void TransitionDamageFXModuleData::parseParticleSystem(INI *a0, void *a1, void *a2, const void *a3)
+void TransitionDamageFXModuleData::parseParticleSystem(INI *ini, void *instance, void *store, const void *userData)
 {
-	TransitionDamageFXParseParticleSystemShim::parseParticleSystem(a0, a1, a2, a3);
+	TransitionDamageFXParseParticleSystemShim::parseParticleSystem(ini, instance, store, userData);
 }
