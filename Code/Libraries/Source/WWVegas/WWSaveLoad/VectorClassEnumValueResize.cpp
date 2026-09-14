@@ -1,10 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 //
-// The DynamicVectorClass<EnumParameterClass::ENUM_VALUE>::Resize caller at
-// 0x0093E700 reaches this shared 8-byte VectorClass body. Retail's constructor
-// at 0x0093D1E0 and destructor thunk at 0x000470F5 show a reference-counted
-// surface in the record's second word, so this source uses the retail RVA for
-// the ICF-shared body name.
+// Named DynamicVectorClass<EnumParameterClass::_ENUM_VALUE>::Resize at
+// 0x0093E700 is a byte-true call to this VectorClass::Resize. The copy loop
+// addRef/releases the record's second word, which is why the element is not
+// spelled from parameter.h's StringClass+int layout.
 
 #include <new.h>
 
@@ -39,32 +38,35 @@ private:
 	Rva0093E4D0SurfaceResource *m_surface;
 };
 
-class Rva0093E4D0Element
+class EnumParameterClass
 {
 public:
-	Rva0093E4D0Element();
-	~Rva0093E4D0Element();
-
-	Rva0093E4D0Element &operator=(const Rva0093E4D0Element &that)
+	struct _ENUM_VALUE
 	{
-		m_first = that.m_first;
-		m_surface = that.m_surface;
-		return *this;
-	}
+		_ENUM_VALUE();
+		~_ENUM_VALUE();
 
-	void *m_first;
-	Rva0093E4D0Surface m_surface;
+		_ENUM_VALUE &operator=(const _ENUM_VALUE &that)
+		{
+			m_first = that.m_first;
+			m_surface = that.m_surface;
+			return *this;
+		}
+
+		void *m_first;
+		Rva0093E4D0Surface m_surface;
+	};
 };
 
 template <class T>
-class Rva0093E4D0Vector
+class VectorClass
 {
 public:
-	Rva0093E4D0Vector(int size = 0, T const *array = 0);
-	virtual ~Rva0093E4D0Vector(void);
-	virtual bool equal(const Rva0093E4D0Vector<T> &) const;
-	virtual bool resize(int newsize, T const *array = 0);
-	virtual void clear(void);
+	VectorClass(int size = 0, T const *array = 0);
+	virtual ~VectorClass(void);
+	virtual bool equal(const VectorClass<T> &) const;
+	virtual bool Resize(int newsize, T const *array = 0);
+	virtual void Clear(void);
 	virtual int id(T const *ptr);
 	virtual int id(T const &ptr);
 
@@ -77,7 +79,7 @@ protected:
 };
 
 template <class T>
-Rva0093E4D0Vector<T>::Rva0093E4D0Vector(int size, T const *array)
+VectorClass<T>::VectorClass(int size, T const *array)
 	: m_vector(0), m_vectorMax(size), m_isValid(true), m_isAllocated(false)
 {
 	if (size)
@@ -93,7 +95,7 @@ Rva0093E4D0Vector<T>::Rva0093E4D0Vector(int size, T const *array)
 }
 
 template <class T>
-bool Rva0093E4D0Vector<T>::resize(int newsize, T const *array)
+bool VectorClass<T>::Resize(int newsize, T const *array)
 {
 	if (newsize)
 	{
@@ -126,10 +128,10 @@ bool Rva0093E4D0Vector<T>::resize(int newsize, T const *array)
 		m_isAllocated = (m_vector && !array);
 	}
 	else
-		clear();
+		Clear();
 
 	return true;
 }
 
-template bool Rva0093E4D0Vector<Rva0093E4D0Element>::resize(
-	int, Rva0093E4D0Element const *);
+template bool VectorClass<EnumParameterClass::_ENUM_VALUE>::Resize(
+	int, EnumParameterClass::_ENUM_VALUE const *);

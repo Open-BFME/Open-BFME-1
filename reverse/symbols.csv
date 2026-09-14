@@ -11468,7 +11468,7 @@ name,address,notes
 ?Resize@?$SimpleVecClass@VVector3@@@@UAE_NH@Z,0x00031593,hit-decoded x13 (thunk)
 ?Resize@?$SimpleVecClass@VVector3i16@@@@UAE_NH@Z,0x00031593,pinharvest x3 (thunk)
 ?Resize@?$SimpleVecClass@VVector4@@@@UAE_NH@Z,0x00031593,Open-BFME7 additive: retail call target used by the landed row at 0x0078CA10 (thunk drift repair)
-?Resize@?$VectorClass@U_ENUM_VALUE@EnumParameterClass@@@@UAE_NHPBU_ENUM_VALUE@EnumParameterClass@@@Z,0x0093E4D0,pinharvest (call-site decode from ?Resize@?$DynamicVectorClass@U_ENUM_VALUE@EnumParameterClass@@@@ at 0x93E700; body not source-owned)
+?Resize@?$VectorClass@U_ENUM_VALUE@EnumParameterClass@@@@UAE_NHPBU_ENUM_VALUE@EnumParameterClass@@@Z,0x0093E4D0,call-site from DynamicVectorClass ENUM_VALUE Resize at 0x0093E700; body now source-owned
 ?ResolveIP@@YAIVAsciiString@@@Z,0x0003DC08,ILT thunk to 0x00682EF0; the address LANAPI::SetLocalIP(AsciiString) at 0x00686C10 encodes
 ?RetailScriptVTable@@3PAPAXA,0x010E858C,Open-BFME5 retail Script vtable value
 ?ReturnToGame@AptPlayerStatus@@QAEXPBD@Z,0x0003244D,Objectives/PlayerStatus constructor 0x0052C660 binds this ILT under both ReturnToGame registration strings
@@ -87435,3 +87435,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1?$ConcreteModuleTemplate@V?$ModuleTag@$07$E?TERRAIN_COLLISION_MODULE_KEY@FXParticleSystem@@3QBDB$E?TERRAIN_COLLISION_MODULE_NAME@2@3QBDBVTerrainCollisionModule@2@VTerrainCollisionModuleTemplate@2@VParticleTerrainCollisionModule@2@VParticleTerrainCollisionModuleTemplate@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ,0x0001BA81,destructor ILT used by the TerrainCollision ConcreteModuleTemplate deleting destructors
 ?getPath@RoadType@@QAEPAVBfmeRoadPath@@PAV2@@Z,0x00707F00,W3DRoadBuffer addMapObjects calls this on m_roadTypes[i] inside the LOAD_TEST_ASSETS path-compare loop; returns the m_texturePath(+0x20) string word by value into an untracked POD temp, folds with the getText20 accessor already ledgered here
 ?releaseBuffer@BfmeRoadPath@@QAEXXZ,0x00887940,explicit release of the POD getPath temp in addMapObjects; folds with StringBase<char>::releaseBuffer
+??0_ENUM_VALUE@EnumParameterClass@@QAE@XZ,0x0093D1E0,ENUM_VALUE ctor from matched VectorClass ctor 0x0093DBB0 vecctor slot
+??1_ENUM_VALUE@EnumParameterClass@@QAE@XZ,0x000470F5,ENUM_VALUE dtor thunk from matched VectorClass ctor 0x0093DBB0 vecctor slot
