@@ -16,7 +16,7 @@ public:
     NetCommandRef *m_next;
     NetCommandRef *m_prev;
     unsigned char m_relay;
-    unsigned int m_unknown10; // Constructor 0x00676240 writes this final word.
+    unsigned int m_timeLastSent; // this+0x10
 };
 
 class NetCommandList
