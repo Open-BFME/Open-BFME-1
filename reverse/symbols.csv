@@ -6538,6 +6538,8 @@ name,address,notes
 ??1Vector3SolidSphereRandomizer@@UAE@XZ,0x00B02620,implicit derived destructor target adjacent to scalar wrapper 0x00B02600; constructor and vtable 0x011BC4D0 prove class identity
 ??1Vector3HollowSphereRandomizer@@UAE@XZ,0x00B02680,implicit derived destructor target adjacent to scalar wrapper 0x00B02660; constructor and vtable 0x011BC4EC prove class identity
 ??1Vector3SolidCylinderRandomizer@@UAE@XZ,0x00B026E0,implicit derived destructor target adjacent to scalar wrapper 0x00B026C0; constructor and vtable 0x011BC508 prove class identity
+??1Base64Pipe@@UAE@XZ,0x009E1F00,authentic Base64Pipe complete destructor target adjacent to its matched constructor; vtable 0x011453E4 with named virtual slots proves identity
+??1Base64Straw@@UAE@XZ,0x009E1F40,authentic Base64Straw complete destructor target adjacent to its matched constructor; vtable 0x011453F8 with named virtual slots proves identity
 ??1Gen_dtor_0081c7c0@@UAE@XZ,0x0081C590,gen-dtor class destructor
 ??1Gen_dtor_0081c9a0@@UAE@XZ,0x000167CF,gen-dtor class destructor
 ??1Gen_dtor_00823150@@UAE@XZ,0x00825550,gen-dtor class destructor
