@@ -5722,6 +5722,7 @@ name,address,notes
 ??1Gen_dtor_003a7040@@UAE@XZ,0x00044B07,gen-dtor class destructor
 ??1Gen_dtor_003a86a0@@UAE@XZ,0x00015415,gen-dtor class destructor
 ??1Gen_dtor_003a87a0@@UAE@XZ,0x00045E26,gen-dtor class destructor
+??1LivingWorldCampaignManager@@UAE@XZ,0x00045E26,LivingWorldCampaignManager virtual complete destructor ILT used by scalar wrapper 0x003A87A0; thunk routes to the exact named cleanup body at 0x003B7D30 selected by ctor vtable 0x010EC770
 ??1Gen_dtor_003a88e0@@UAE@XZ,0x00006253,gen-dtor class destructor
 ??1Gen_dtor_003a89c0@@UAE@XZ,0x00023AFB,gen-dtor class destructor
 ??1Gen_dtor_003a8a20@@UAE@XZ,0x0000DCF1,gen-dtor class destructor
@@ -10208,6 +10209,7 @@ name,address,notes
 ??_7LargeGroupBonusUpdate@@6BLargeGroupBonusIface2@@@,0x010BFC5C,LargeGroupBonus second interface retail vtable
 ??_7LifeEventModuleInfo@FXParticleSystem@@6B@,0x01111278,LifeEventModuleInfo vtable
 ??_7LifeEventModuleInfoBase@FXParticleSystem@@6B@,0x01073744,LifeEvent module-info base vtable
+??_7LivingWorldCampaignManager@@6B@,0x010EC770,LivingWorldCampaignManager primary vtable installed by exact ctor 0x003B7C70; its sole slot zero is ILT 0x00022250 reaching scalar-deleting wrapper 0x003A87A0
 ??_7LivingWorldLogic@@6B@,0x010EDBDC,LivingWorldLogic own vtable installed by its constructor at 0x003C2FC0; second vtable at +0x08 (0x010EDBC8) stored as a plain field, no pin needed
 ??_7LockWeaponCreate@@6B@,0x010B180C,secondary vtable at this+0x10
 ??_7LockWeaponCreate@@6BBehaviorModuleInterface@@@,0x010B1820,secondary vtable at this+0x0C
