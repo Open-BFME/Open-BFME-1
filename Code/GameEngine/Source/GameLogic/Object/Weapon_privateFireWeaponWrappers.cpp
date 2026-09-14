@@ -43,7 +43,7 @@ public:
 
 	bool rva001EA6D0(const Object *source, const Object *target);
 	bool fireWeapon(const Object *source, const Coord3D *pos, int *projectileID);
-	bool rva001EA5F0(const Object *source, int arg2, const Object *arg3, int *arg4);
+	bool rva001EA5F0(const Object *source, int targetID, const Object *target, int *projectileID);
 	Object *forceFireWeapon(const Object *source, const Coord3D *pos);
 };
 
@@ -57,9 +57,9 @@ bool Weapon::fireWeapon(const Object *source, const Coord3D *pos, int *projectil
 	return privateFireWeapon(source, &source->m_position, 0, 0, pos, 0, 0, 0, projectileID);
 }
 
-bool Weapon::rva001EA5F0(const Object *source, int arg2, const Object *arg3, int *arg4)
+bool Weapon::rva001EA5F0(const Object *source, int targetID, const Object *target, int *projectileID)
 {
-	return privateFireWeapon(source, &source->m_position, arg3, arg2, 0, 0, 0, 0, arg4);
+	return privateFireWeapon(source, &source->m_position, target, targetID, 0, 0, 0, 0, projectileID);
 }
 
 Object *Weapon::forceFireWeapon(const Object *source, const Coord3D *pos)
