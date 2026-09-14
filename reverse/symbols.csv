@@ -4849,12 +4849,12 @@ name,address,notes
 ??1?$SubsystemSlot@VSplineService@@@@UAE@XZ,0x00039BDF,SubsystemSlot<SplineService> destructor ILT called by authentic scalar-deleting destructor at 0x00071430
 ??1Gen_dtor_000714f0@@UAE@XZ,0x00020941,gen-dtor class destructor
 ??1?$SubsystemSlot@VAttributeModifierStore@@@@UAE@XZ,0x00020941,SubsystemSlot<AttributeModifierStore> destructor ILT called by authentic scalar-deleting destructor at 0x000714F0
-??1Gen_dtor_000715b0@@UAE@XZ,0x00009A5C,gen-dtor class destructor
-??1Gen_dtor_00071670@@UAE@XZ,0x00043BEE,gen-dtor class destructor
-??1Gen_dtor_00071730@@UAE@XZ,0x00040683,gen-dtor class destructor
-??1Gen_dtor_000717f0@@UAE@XZ,0x0002DDDF,gen-dtor class destructor
-??1Gen_dtor_000718b0@@UAE@XZ,0x0003C52E,gen-dtor class destructor
-??1Gen_dtor_00071970@@UAE@XZ,0x000309B3,gen-dtor class destructor
+??1?$SubsystemSlot@VTaintManager@@@@UAE@XZ,0x00009A5C,gen-dtor class destructor
+??1?$SubsystemSlot@VScriptEngine@@@@UAE@XZ,0x00043BEE,gen-dtor class destructor
+??1?$SubsystemSlot@VLuaScriptEngine@@@@UAE@XZ,0x00040683,gen-dtor class destructor
+??1?$SubsystemSlot@VTeamFactory@@@@UAE@XZ,0x0002DDDF,gen-dtor class destructor
+??1?$SubsystemSlot@VCrateSystem@@@@UAE@XZ,0x0003C52E,gen-dtor class destructor
+??1?$SubsystemSlot@VPlayerList@@@@UAE@XZ,0x000309B3,gen-dtor class destructor
 ??1Gen_dtor_00071a30@@UAE@XZ,0x0000410B,gen-dtor class destructor
 ??1Gen_dtor_00071af0@@UAE@XZ,0x00025045,gen-dtor class destructor
 ??1Gen_dtor_00071bb0@@UAE@XZ,0x00027C87,gen-dtor class destructor
