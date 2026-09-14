@@ -6536,11 +6536,6 @@ name,address,notes
 ??1Gen_dtor_0081c9a0@@UAE@XZ,0x000167CF,gen-dtor class destructor
 ??1Gen_dtor_00823150@@UAE@XZ,0x00825550,gen-dtor class destructor
 ??1Gen_dtor_008231d0@@UAE@XZ,0x008267E0,gen-dtor class destructor
-??1Gen_dtor_0082c0c0@@UAE@XZ,0x0082AEE0,gen-dtor class destructor
-??1Gen_dtor_0082c0e0@@UAE@XZ,0x0082AF00,gen-dtor class destructor
-??1Gen_dtor_0082c100@@UAE@XZ,0x0082AF20,gen-dtor class destructor
-??1Gen_dtor_0082c120@@UAE@XZ,0x0082AF40,gen-dtor class destructor
-??1Gen_dtor_0082c140@@UAE@XZ,0x0082AF60,gen-dtor class destructor
 ??1Gen_dtor_00832300@@UAE@XZ,0x00832320,gen-dtor class destructor
 ??1Gen_dtor_00832330@@UAE@XZ,0x00832350,gen-dtor class destructor
 ??1Gen_dtor_00832360@@UAE@XZ,0x00832380,gen-dtor class destructor
