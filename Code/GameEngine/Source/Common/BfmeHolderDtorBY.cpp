@@ -26,3 +26,11 @@ BfmeHolderBY::~BfmeHolderBY(void)
 {
 	bfmeResetBY(0, 0, 0);
 }
+
+// The retail 30-byte wrapper is BfmeHolderBY's scalar-deleting destructor.
+// Keep the delete expression separate from the matched body so MSVC emits
+// its compiler-owned ??_G wrapper at the original address.
+void Force_BfmeHolderBY_DeletingDestructor(BfmeHolderBY *value)
+{
+	delete value;
+}
