@@ -19,7 +19,12 @@ private:
 	SubObjectArrayClass m_aggregates;
 };
 
-HLodDefClass::~HLodDefClass()
+__declspec(noinline) HLodDefClass::~HLodDefClass()
 {
 	Free();
+}
+
+void Force_HLodDefClass_Deleting_Destructor(HLodDefClass *value)
+{
+	delete value;
 }
