@@ -1,10 +1,10 @@
-// ?clearGameData@GameLogic@@QAEX_N_N@Z
-// partial score=0.55 date=2026-09-11
+// ?push@U4Sink0060D3B0@@QAEX_N0@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
-// BFME GameLogic::clearGameData grew a second Bool over the ZH one-arg
-// version; ZH's copy stays in GameLogicDispatch.cpp as present-unmatched.
-// Retail 0x00396B00, 451B.
+// Retail 0x00396B00, 451B -- the clearGameData-shaped teardown reachable
+// through the byte-true callsite in U4MixedForwarders.cpp.  Args are Bool
+// (byte loads + test al,al); the GameLogic::closeWindows self-call resolves
+// through the GameLogic shim decl.
 
 typedef bool Bool;
 typedef int Int;
@@ -288,7 +288,7 @@ void HideControlBar(Bool arg);
 class Mouse
 {
 public:
-	void setVisibility(Bool visible);
+	void _bfme_setEngineVisibility(Bool visible);
 };
 #define TheMouse (*(Mouse **)0x012f4c5c)
 
@@ -312,8 +312,18 @@ public:
 class GameLogic
 {
 public:
-	void clearGameData(const Bool showScoreScreen, Bool arg2);
-	void closeWindows();       // matched elsewhere: Code/GameEngine/Source/Common/GameLogic_closeWindows_Thunk.cpp
+	void closeWindows();
+private:
+	unsigned char m_gpad[0xa4];
+	WindowLayout *m_gbackground;
+	unsigned char m_gpad2[0x10c - 0xa4 - 4];
+	Int m_gGameMode;
+};
+
+class U4Sink0060D3B0
+{
+public:
+	void push(bool showScoreScreen, bool arg2);
 
 private:
 	unsigned char m_pad000[0xa4];
@@ -322,7 +332,7 @@ private:
 	Int m_gameMode;                      // 0x10c
 };
 
-void GameLogic::clearGameData(const Bool showScoreScreen, Bool arg2)
+void U4Sink0060D3B0::push(bool showScoreScreen, bool arg2)
 {
 	Watchdog *watchdog = TheWatchdog;
 	if (watchdog)
@@ -352,21 +362,32 @@ void GameLogic::clearGameData(const Bool showScoreScreen, Bool arg2)
 	if ((m_gameMode != 8 && m_gameMode != 4) ||
 		(Glo012F1028Ptr && Glo012F1028Ptr->m_flag2c && Glo012F1028Ptr->m_flag2d))
 	{
-		if (showScoreScreen)
+		if (arg2 || showScoreScreen)
 		{
-			TheShell->showShell(false);
-			if (!_bfme_showScoreScreen())
+			if (showScoreScreen)
 			{
-				if (Rva00579160Flag == 0)
-					TheShell->showShellMap(true);
-				TheShell->showShell(true);
+				TheShell->showShell(false);
+				if (!_bfme_showScoreScreen() || !showScoreScreen)
+				{
+					if (Rva00579160Flag != 0)
+						TheShell->showShell(true);
+					else
+					{
+						TheShell->showShellMap(true);
+						TheShell->showShell(true);
+					}
+				}
 			}
-		}
-		else if (arg2)
-		{
-			if (Rva00579160Flag == 0)
-				TheShell->showShellMap(true);
-			TheShell->showShell(true);
+			else
+			{
+				if (Rva00579160Flag != 0)
+					TheShell->showShell(true);
+				else
+				{
+					TheShell->showShellMap(true);
+					TheShell->showShell(true);
+				}
+			}
 		}
 	}
 
@@ -384,17 +405,20 @@ void GameLogic::clearGameData(const Bool showScoreScreen, Bool arg2)
 	TheInGameUI->iu58clear();
 	TheControlBar->cb05reset();
 	HideControlBar(true);
-	closeWindows();
+	((GameLogic *)this)->closeWindows();
 
-	TheMouse->setVisibility(true);
+	TheMouse->_bfme_setEngineVisibility(true);
 
 	if (m_background)
+	{
 		m_background->destroyWindows();
-	if (m_background)
-		m_background->deleteInstance(true);
-	m_background = 0;
+		if (m_background)
+			m_background->deleteInstance(true);
+		m_background = 0;
+	}
 
+	Watchdog *watchdog2 = TheWatchdog;
 	BfmeSavedClientFrame = 0;
-	if (TheWatchdog)
-		TheWatchdog->resumeTimeouts();
+	if (watchdog2)
+		watchdog2->resumeTimeouts();
 }

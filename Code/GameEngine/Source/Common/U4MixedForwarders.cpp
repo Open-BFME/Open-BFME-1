@@ -153,7 +153,7 @@ void u4Guard005F7A30( INI *ini, void *instance, void *store, const void *userDat
 class U4Sink0060D3B0
 {
 public:
-	void push( int a, int b );
+	void push( bool a, bool b );
 };
 extern U4Sink0060D3B0 *g_u4Sink0060D3B0;
 int u4Emit0060D3B0( void )
