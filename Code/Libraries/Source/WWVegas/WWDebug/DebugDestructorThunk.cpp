@@ -8,6 +8,11 @@ public:
 	~DebugMember();
 };
 
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
+
+__declspec(noinline) DebugMember::~DebugMember() { _ReadWriteBarrier(); }
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug/debug_debug.h
 class Debug
 {
