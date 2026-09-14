@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "942c186526c2fffa21fe2b64b45cd080f0282472588013c6f5234fab64f41d21",
+  "symbol": "?bfmeUpdateAAU@BfmeHostAAU@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.91,
+  "source": "// ?bfmeUpdateAAU@BfmeHostAAU@@QAEXXZ\n// partial score=0.91 date=2026-09-13\nvoid __stdcall bfmeRefreshAAU(void);\n\nclass Glo012F1028Type\n{\npublic:\n\tvoid bfmeNotifyAAU();\n};\n\nextern Glo012F1028Type *Glo012F1028;\n\nclass BfmeHostAAU\n{\npublic:\n\tvoid bfmeUpdateAAU();\n\tvoid bfmeStepAAU();\n\tvoid bfmeSetAAU(bool on);\n\n\tunsigned char m_bfmeHeadAAU[0x1c];\n\tunsigned char m_bfme1CAAU;\n\tunsigned char m_bfmeGapAAU[2];\n\tunsigned char m_bfme1FAAU;\n};\n\nvoid BfmeHostAAU::bfmeUpdateAAU()\n{\n\tif (m_bfme1CAAU == 0)\n\t\tbfmeRefreshAAU();\n\n\tunsigned char b = m_bfme1CAAU;\n\tint prev = b;\n\n\tif (b != 0)\n\t\tbfmeStepAAU();\n\n\tunsigned char cur = m_bfme1CAAU;\n\n\tif (prev != 0)\n\t{\n\t\tif (cur == 0 && m_bfme1FAAU != 0)\n\t\t{\n\t\t\tGlo012F1028->bfmeNotifyAAU();\n\t\t\tm_bfme1FAAU = 0;\n\t\t}\n\n\t\tbfmeSetAAU(true);\n\t}\n\telse if (cur != 0)\n\t{\n\t\tbfmeSetAAU(true);\n\t}\n\telse\n\t{\n\t\tbfmeSetAAU(false);\n\t}\n}\n"
+}
