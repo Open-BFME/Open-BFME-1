@@ -4,7 +4,25 @@
 // 0x30, imul for 0x38, shl 7 for 0x80.  The searches compare a dword at offset
 // 8 of the element, which is the only element field the bytes name.
 struct T2ElemA { char m_head[8]; int m_id; char m_tail[0x30 - 0xC]; };
-struct T2ElemB { char m_body[0x38]; };
+struct GetterWord { int m_value; };
+struct T2ElemB
+{
+	virtual ~T2ElemB();
+	virtual void v1();
+	virtual GetterWord get() const;
+	char m_body[0x38 - 4];
+};
+struct T2ArrB
+{
+	T2ElemB *m_a;
+	int m_n;
+	__forceinline T2ElemB *at(int index)
+	{
+		if (index >= m_n)
+			return 0;
+		return m_a + index;
+	}
+};
 struct T2ElemC { char m_head[8]; int m_id; char m_tail[0x80 - 0xC]; };
 
 struct T2OwnerA
@@ -40,17 +58,30 @@ T2ElemA *T2OwnerA::find(int id)
 struct T2OwnerB
 {
 	char m_head[0x20];
-	T2ElemB *m_base;
-	int m_count;
+	T2ArrB m_20;
 
 	T2ElemB *at(int index);
+	T2ElemB *find(int id);
 };
 
 T2ElemB *T2OwnerB::at(int index)
 {
-	if (index >= m_count)
+	if (index >= m_20.m_n)
 		return 0;
-	return m_base + index;
+	return m_20.m_a + index;
+}
+
+T2ElemB *T2OwnerB::find(int id)
+{
+	for (int i = 0; i < m_20.m_n; ++i)
+	{
+		T2ElemB *slot = m_20.at(i);
+		GetterWord key;
+		key = slot->get();
+		if (key.m_value == id)
+			return slot;
+	}
+	return 0;
 }
 
 struct T2OwnerC
