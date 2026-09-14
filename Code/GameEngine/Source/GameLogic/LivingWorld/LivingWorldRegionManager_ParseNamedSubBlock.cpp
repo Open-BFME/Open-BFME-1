@@ -51,7 +51,7 @@ private:
 class LivingWorldRegionManager
 {
 public:
-	static void parseNamedSubBlock(INI *ini, void *instance, void *, const void *);
+	static void parseNamedSubBlock(INI *ini, void *instance, void *store, const void *userData);
 };
 
 class LivingWorldRegionStore
@@ -63,14 +63,14 @@ public:
 
 // ?parseNamedSubBlock@LivingWorldRegionManager@@SAXPAVINI@@PAX1PBX@Z
 void LivingWorldRegionManager::parseNamedSubBlock(
-	INI *ini, void *instance, void *, const void *)
+	INI *ini, void *instance, void *store, const void *userData)
 {
 	Rva0061AF80Region *region = 0;
 	const char *token = ini->getNextToken();
 	region = new Rva0061AF80Region(AsciiString(token));
 	region->bfmeGoDCG(reinterpret_cast<BfmeOtherDCG *>(ini));
 
-	LivingWorldRegionStore *store =
+	LivingWorldRegionStore *self =
 		reinterpret_cast<LivingWorldRegionStore *>(instance);
-	store->m_regions.push_back(region);
+	self->m_regions.push_back(region);
 }

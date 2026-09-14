@@ -69,7 +69,7 @@ public:
 		const void *userData);
 };
 
-void CampaignManager::parseMissionPart(INI *ini, void *instance, void *, const void *)
+void CampaignManager::parseMissionPart(INI *ini, void *instance, void *store, const void *userData)
 {
 	AsciiString name;
 	const char *token = ini->getNextToken();

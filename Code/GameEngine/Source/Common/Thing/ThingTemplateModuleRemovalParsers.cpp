@@ -141,7 +141,7 @@ void __cdecl ThingTemplate::parseRemoveModule(INI *ini, void *instance, void *st
 //
 // removeModuleInfo takes the module name as a const AsciiString reference, so the
 // token converts through a temporary that dies right after the call.
-void ThingTemplate::parseReplaceModule(INI *ini, void *instance, void *, const void *)
+void ThingTemplate::parseReplaceModule(INI *ini, void *instance, void *store, const void *userData)
 {
 	ThingTemplate *self = (ThingTemplate *)instance;
 

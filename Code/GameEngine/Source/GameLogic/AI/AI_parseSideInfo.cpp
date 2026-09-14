@@ -166,11 +166,11 @@ public:
 class AI
 {
 public:
-	static void parseSideInfo(INI *, void *, void *, const void *);
-	static void parseSkillSet(INI *, void *, void *, const void *);
+	static void parseSideInfo(INI *, void *instance, void *store, const void *userData);
+	static void parseSkillSet(INI *, void *instance, void *store, const void *userData);
 };
 
-void AI::parseSideInfo(INI *ini, void *instance, void *, const void *)
+void AI::parseSideInfo(INI *ini, void *instance, void *store, const void *userData)
 {
 	const char *c = ini->getNextToken();
 	BFMERetailAsciiString side(c);

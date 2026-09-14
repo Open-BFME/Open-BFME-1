@@ -39,7 +39,7 @@ public:
 	_STL::vector<const FXList *> m_effects[5];
 };
 
-void parseStructureCollapseEffects(INI *ini, void *instance, void *, const void *)
+void parseStructureCollapseEffects(INI *ini, void *instance, void *store, const void *userData)
 {
 	Rva002AEDF0ModuleData *self = (Rva002AEDF0ModuleData *)instance;
 	int phase = INI::scanIndexList(ini->getNextToken(), StructureCollapsePhaseNames);
@@ -50,7 +50,7 @@ void parseStructureCollapseEffects(INI *ini, void *instance, void *, const void 
 	}
 }
 
-void parseStructureCollapseObjectCreationLists(INI *ini, void *instance, void *, const void *)
+void parseStructureCollapseObjectCreationLists(INI *ini, void *instance, void *store, const void *userData)
 {
 	Rva002AEDF0ModuleData *self = (Rva002AEDF0ModuleData *)instance;
 	int phase = INI::scanIndexList(ini->getNextToken(), StructureCollapsePhaseNames);

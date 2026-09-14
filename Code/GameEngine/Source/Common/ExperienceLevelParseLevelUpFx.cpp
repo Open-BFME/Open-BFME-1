@@ -61,7 +61,7 @@ public:
 };
 
 // ?parseLevelUpFx@@YAXPAVINI@@PAX1PBX@Z
-void parseLevelUpFx(INI *ini, void *instance, void *, const void *)
+void parseLevelUpFx(INI *ini, void *instance, void *store, const void *userData)
 {
 	ExperienceLevel *self = (ExperienceLevel *)instance;
 	LevelUpFXInfo info;
