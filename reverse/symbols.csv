@@ -5102,15 +5102,15 @@ name,address,notes
 ??1Gen_dtor_0016e510@@UAE@XZ,0x0004AACF,gen-dtor class destructor
 ??1Gen_dtor_0016e540@@UAE@XZ,0x00040A4D,gen-dtor class destructor
 ??1Gen_dtor_0016e570@@UAE@XZ,0x0001FB40,gen-dtor class destructor
-??1Gen_dtor_0016e5a0@@UAE@XZ,0x0000F349,gen-dtor class destructor
+??1AttackMeleeStateMachine@@UAE@XZ,0x0000F349,complete destructor ILT called by scalar wrapper 0x0016E5A0; exact constructor 0x00180EE0 installs dedicated vtable 0x010971D0
 ??1Gen_dtor_0016e5d0@@UAE@XZ,0x00041F65,gen-dtor class destructor
-??1Gen_dtor_0016e600@@UAE@XZ,0x0002F8AB,gen-dtor class destructor
-??1Gen_dtor_0016e630@@UAE@XZ,0x0001BD65,gen-dtor class destructor
-??1Gen_dtor_0016e660@@UAE@XZ,0x00019448,gen-dtor class destructor
+??1AttackFireWhileMovingMachine@@UAE@XZ,0x0002F8AB,complete destructor ILT called by scalar wrapper 0x0016E600; exact constructor 0x00181670 installs dedicated vtable 0x010972A0
+??1AttackHordeStateMachine@@UAE@XZ,0x0001BD65,complete destructor ILT called by scalar wrapper 0x0016E630; exact constructor 0x00171B40 installs dedicated vtable 0x01097310
+??1AttackFireWhileChargingMachine@@UAE@XZ,0x00019448,complete destructor ILT called by scalar wrapper 0x0016E660; exact constructor 0x001818D0 installs dedicated vtable 0x01097380
 ??1Gen_dtor_0016e690@@UAE@XZ,0x000163F6,gen-dtor class destructor
 ??1Gen_dtor_0016e990@@UAE@XZ,0x0000680C,gen-dtor class destructor
-??1Gen_dtor_0016ed10@@UAE@XZ,0x00005727,gen-dtor class destructor
-??1Gen_dtor_0016f310@@UAE@XZ,0x00006BDB,gen-dtor class destructor
+??1BackAwayAndCowerStateMachine@@UAE@XZ,0x00005727,complete destructor ILT called by scalar wrapper 0x0016ED10; exact constructor 0x00182190 installs dedicated vtable 0x01097588
+??1AIAttackThenIdleStateMachine@@MAE@XZ,0x00006BDB,protected complete destructor ILT called by scalar wrapper 0x0016F310; exact constructor 0x00184A40 installs dedicated vtable 0x010976F8
 ??1Gen_dtor_0016f470@@UAE@XZ,0x000289DE,gen-dtor class destructor
 ??1Gen_dtor_00172150@@UAE@XZ,0x0000E061,gen-dtor class destructor
 ??1FailureState@@MAE@XZ,0x000047F0,FailureState complete destructor ILT called by scalar wrapper 0x0017F250; thunk reaches the exact State base destructor body through 0x0017F280
@@ -88077,3 +88077,9 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1Gen_0081E480@@UAE@XZ,0x0081E4B0,destructor of the class whose ctor is 0x0081E480: both store vtable 0x0112D210; called at base-dtor position (EH state -1 after members) by the derived dtor 0x007E3C20; same body the ledger holds as bfmeResetUC
 ??_7Rva007E3C20Vp6Stream@@6B@,0x01128DA8,vtable stored by the derived destructor 0x007E3C20
 ??1?$DynamicVectorClass@K@@UAE@XZ,0x0003F44F,route=0x0005E960; second WW3D DynamicVectorClass<unsigned long> destructor copy reached through the retail ILT used by wrapper 0x0093E860
+??_7AttackMeleeStateMachine@@6B@,0x010971D0,exact constructor 0x00180EE0 installs this dedicated vtable; slot zero ILT 0x0003F67A reaches scalar wrapper 0x0016E5A0
+??_7AttackFireWhileMovingMachine@@6B@,0x010972A0,exact constructor 0x00181670 installs this dedicated vtable; slot zero ILT 0x0002135A reaches scalar wrapper 0x0016E600
+??_7AttackHordeStateMachine@@6B@,0x01097310,exact constructor 0x00171B40 installs this dedicated vtable; slot zero ILT 0x0000131B reaches scalar wrapper 0x0016E630
+??_7AttackFireWhileChargingMachine@@6B@,0x01097380,exact constructor 0x001818D0 installs this dedicated vtable; slot zero ILT 0x0000DB5C reaches scalar wrapper 0x0016E660
+??_7BackAwayAndCowerStateMachine@@6B@,0x01097588,exact constructor 0x00182190 installs this dedicated vtable; slot zero ILT 0x000316A6 reaches scalar wrapper 0x0016ED10
+??_7AIAttackThenIdleStateMachine@@6B@,0x010976F8,exact constructor 0x00184A40 installs this dedicated vtable; slot zero ILT 0x0003CEE3 reaches scalar wrapper 0x0016F310
