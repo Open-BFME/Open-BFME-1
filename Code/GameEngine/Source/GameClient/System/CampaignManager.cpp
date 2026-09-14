@@ -276,7 +276,6 @@ void CampaignManager::init( void )
 }
 
 //-----------------------------------------------------------------------------
-// ?getCurrentCampaign@CampaignManager@@QAEPAVCampaign@@XZ present-unmatched
 Campaign *CampaignManager::getCurrentCampaign( void )
 {
 	return m_currentCampaign;
