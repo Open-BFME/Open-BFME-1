@@ -26,21 +26,23 @@ struct BfmeRadarResetGuard
 extern DefaultStaticSortListClass *g_WW3D_DefaultStaticSortList;
 extern void (__stdcall *g_WW3D_ShutdownTextures)(int);
 extern DefaultStaticSortListClass *g_WW3D_SecondaryResource;
-extern unsigned char g_WW3D_IsInitted;
 extern unsigned char g_WW3D_SkipDeviceShutdown;
 
 class WW3D
 {
 public:
 	static bool Shutdown(void);
+	// First block is inlined Stop_Movie_Capture: 0x133f42a is IsCapturing, not IsInitted.
+	static bool IsInitted;
+	static bool IsCapturing;
 };
 
 bool WW3D::Shutdown(void)
 {
-	if (g_WW3D_IsInitted)
+	if (IsCapturing)
 	{
 		DefaultStaticSortListClass *list = g_WW3D_DefaultStaticSortList;
-		g_WW3D_IsInitted = 0;
+		IsCapturing = 0;
 		if (list)
 			list->slot00(1);
 		g_WW3D_DefaultStaticSortList = 0;
@@ -55,6 +57,6 @@ bool WW3D::Shutdown(void)
 	{
 		g_WW3D_SecondaryResource->slot00(1);
 	}
-	g_WW3D_IsInitted = 0;
+	IsInitted = 0;
 	return true;
 }
