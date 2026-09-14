@@ -5127,7 +5127,7 @@ name,address,notes
 ??1Gen_dtor_0017f540@@UAE@XZ,0x000061CC,gen-dtor class destructor
 ??1Gen_dtor_0017f680@@UAE@XZ,0x00041C68,gen-dtor class destructor
 ??1Gen_dtor_0017f6c0@@UAE@XZ,0x0002200C,gen-dtor class destructor
-??1Gen_dtor_0017f950@@UAE@XZ,0x0001A3DE,gen-dtor class destructor
+??1AIAttackMeleeEngageState@@MAE@XZ,0x0001A3DE,exact constructor 0x0017F8D0 and dedicated vtable 0x01099848 establish the protected complete destructor called by wrapper 0x0017F950; body 0x001780A0 resets this vtable and calls the AIInternalMoveToState cleanup route
 ??1AIAttackAimAtTargetState@@MAE@XZ,0x0000C0C7,exact constructor 0x00171180 and dedicated vtable 0x01097C60 establish the protected complete destructor called by wrapper 0x0017FE20
 ??1AIWaitState@@MAE@XZ,0x00023CF9,exact constructor 0x001711F0 and dedicated vtable 0x01097CD8 establish the protected complete destructor called by wrapper 0x0017FE60
 ??_GAIBusyState@@MAEPAXI@Z,0x0004897D,dedicated vtable 0x01097AA0 slot zero routes through this ILT to scalar wrapper 0x0017F310
@@ -87648,3 +87648,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7AIAttackMeleeSquishState@@6B@,0x0109A738,exact constructor for ??_GAIAttackMeleeSquishState@@MAEPAXI@Z installs this dedicated vtable
 ??1AIFollowPathAsTeamState@@UAE@XZ,0x00013F66,AIFollowPathAsTeamState complete virtual destructor ILT; scalar wrapper 0x00183AC0 calls this route to cleanup body 0x00179550 which deletes the +0x60 attack-move submachine and then calls AIInternalMoveToState destructor through ILT 0x0004AAF7
 ??_7AIFollowPathAsTeamState@@6B@,0x01099C08,AIFollowPathAsTeamState dedicated vtable installed by exact constructor 0x00183990; slot zero ILT 0x00001D43 reaches scalar wrapper 0x00183AC0
+??_GAIAttackMeleeEngageState@@MAEPAXI@Z,0x0003A620,dedicated vtable 0x01099848 slot zero routes through this ILT to scalar wrapper 0x0017F950
+??_7AIAttackMeleeEngageState@@6B@,0x01099848,exact constructor 0x0017F8D0 installs this dedicated vtable
