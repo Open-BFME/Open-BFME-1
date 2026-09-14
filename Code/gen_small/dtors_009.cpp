@@ -161,9 +161,6 @@ void gen_force_00823150() { Gen_dtor_00823150 v; }
 struct Gen_dtor_008231d0 { virtual ~Gen_dtor_008231d0(); };
 void gen_force_008231d0() { Gen_dtor_008231d0 v; }
 
-struct Gen_dtor_0082c0a0 { virtual ~Gen_dtor_0082c0a0(); };
-void gen_force_0082c0a0() { Gen_dtor_0082c0a0 v; }
-
 struct Gen_dtor_0082c0c0 { virtual ~Gen_dtor_0082c0c0(); };
 void gen_force_0082c0c0() { Gen_dtor_0082c0c0 v; }
 
