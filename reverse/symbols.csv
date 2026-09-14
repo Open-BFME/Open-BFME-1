@@ -5573,6 +5573,7 @@ name,address,notes
 ??1Gen_dtor_002d2fa0@@UAE@XZ,0x000446E3,gen-dtor class destructor
 ??1Gen_dtor_002d33b0@@UAE@XZ,0x000120F8,gen-dtor class destructor
 ??1Gen_dtor_002d3740@@UAE@XZ,0x0003BD1D,gen-dtor class destructor
+??1W3DOverlordTankDrawModuleData@@UAE@XZ,0x0003BD1D,route=0x002D36B0; scalar deleting destructor retail call targets the matched W3DOverlordTankDrawModuleData destructor through this ILT
 ??1Gen_dtor_002d3900@@UAE@XZ,0x0001A785,gen-dtor class destructor
 ??1Gen_dtor_002d3cf0@@UAE@XZ,0x00006609,gen-dtor class destructor
 ??1Gen_dtor_002d3f20@@UAE@XZ,0x00019AC4,gen-dtor class destructor
