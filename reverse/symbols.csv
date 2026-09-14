@@ -6543,6 +6543,7 @@ name,address,notes
 ??1Win32LocalFile@@UAE@XZ,0x009D1950,authentic Win32LocalFile complete destructor; matched constructor and vtable 0x01143C10 with named LocalFile/File slots prove identity
 ??1?$List@PAUINISection@@@@UAE@XZ,0x009E3880,authentic List<INISection *> complete destructor target adjacent to scalar wrapper 0x009E3860; matched constructor and INIClass allocation prove specialization identity
 ??1Cftp@@UAE@XZ,0x00885AF0,authentic Cftp complete destructor; matched constructor and one-slot vtable 0x01132ECC plus surrounding named FTP methods prove identity
+??1?$DynamicVectorClass@PAX@@UAE@XZ,0x00906630,authentic DynamicVectorClass<void *> complete destructor target; matched specialization constructor 0x00907440 and vtable 0x0113A3A0 establish identity
 ??1Gen_dtor_0081c7c0@@UAE@XZ,0x0081C590,gen-dtor class destructor
 ??1Gen_dtor_0081c9a0@@UAE@XZ,0x000167CF,gen-dtor class destructor
 ??1Gen_dtor_00823150@@UAE@XZ,0x00825550,gen-dtor class destructor
