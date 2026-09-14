@@ -208,7 +208,6 @@ void IndexBufferClass::Release_Engine_Ref() const
 //
 // ----------------------------------------------------------------------------
 
-// ?Copy@IndexBufferClass@@ present-unmatched
 void IndexBufferClass::Copy(unsigned int* indices,unsigned first_index,unsigned count)
 {
 	WWASSERT(indices);
@@ -231,7 +230,6 @@ void IndexBufferClass::Copy(unsigned int* indices,unsigned first_index,unsigned 
 
 // ----------------------------------------------------------------------------
 
-// ?Copy@IndexBufferClass@@ present-unmatched
 void IndexBufferClass::Copy(unsigned short* indices,unsigned first_index,unsigned count)
 {
 	WWASSERT(indices);
