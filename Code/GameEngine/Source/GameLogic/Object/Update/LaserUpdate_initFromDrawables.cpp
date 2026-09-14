@@ -28,18 +28,18 @@ public:
 class LaserUpdate
 {
 public:
-	void initFromDrawables(void *a, Drawable *parent, Drawable *target, void *d);
+	void initFromDrawables(void *primary, Drawable *parent, Drawable *target, void *d);
 
 private:
 	char m_pad00[0x4C];
 	unsigned m_parentID;
 	unsigned m_targetID;
 
-	void initLaserInner(void *a, const Coord3D *parentPos, const Coord3D *targetPos, void *d);
+	void initLaserInner(void *primary, const Coord3D *parentPos, const Coord3D *targetPos, void *d);
 };
 
 // ?initFromDrawables@LaserUpdate@@QAEXPAXPAVDrawable@@10@Z
-void LaserUpdate::initFromDrawables(void *a, Drawable *parent, Drawable *target, void *d)
+void LaserUpdate::initFromDrawables(void *primary, Drawable *parent, Drawable *target, void *d)
 {
 	if (parent)
 	{
@@ -47,7 +47,7 @@ void LaserUpdate::initFromDrawables(void *a, Drawable *parent, Drawable *target,
 		{
 			m_parentID = parent->getID();
 			m_targetID = target->getID();
-			initLaserInner(a, parent->getPosition(), target->getPosition(), d);
+			initLaserInner(primary, parent->getPosition(), target->getPosition(), d);
 		}
 	}
 }

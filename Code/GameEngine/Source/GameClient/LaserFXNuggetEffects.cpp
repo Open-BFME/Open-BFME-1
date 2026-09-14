@@ -75,7 +75,7 @@ public:
 class LaserUpdate : public ClientUpdateModule
 {
 public:
-	void initFromDrawables(void *a, Drawable *parent, Drawable *target, void *d);
+	void initFromDrawables(void *primary, Drawable *parent, Drawable *target, void *d);
 	void initLaser(const Object *parent, const Coord3D *start,
 		const Coord3D *end, Int sizeDeltaFrames);
 };
