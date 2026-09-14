@@ -533,7 +533,6 @@ Bool VictoryConditions::amIObserver( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getEndFrame@VictoryConditions@@ present-unmatched
 UnsignedInt VictoryConditions::getEndFrame( void )
 {
 	return m_endFrame;
