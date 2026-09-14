@@ -5253,7 +5253,7 @@ name,address,notes
 ??1Gen_dtor_001f6d10@@UAE@XZ,0x00016A13,gen-dtor class destructor
 ??1Gen_dtor_001f71a0@@UAE@XZ,0x0002868C,gen-dtor class destructor
 ??1Gen_dtor_001f71d0@@UAE@XZ,0x0003C560,gen-dtor class destructor
-??1Gen_dtor_001f7390@@UAE@XZ,0x000018CA,gen-dtor class destructor
+??1ClearanceTestingSlowDeathBehaviorModuleData@@UAE@XZ,0x000018CA,destructor ILT used by the ClearanceTestingSlowDeathBehaviorModuleData scalar-deleting destructor
 ??1Gen_dtor_001f79c0@@UAE@XZ,0x00013B6F,gen-dtor class destructor
 ??1Gen_dtor_001f7ad0@@UAE@XZ,0x000056D2,gen-dtor class destructor
 ??1Gen_dtor_001f7fb0@@UAE@XZ,0x00032D49,gen-dtor class destructor
@@ -5271,7 +5271,7 @@ name,address,notes
 ??1Gen_dtor_001fce40@@UAE@XZ,0x00044A4E,gen-dtor class destructor
 ??1Gen_dtor_001ff190@@UAE@XZ,0x0004186C,gen-dtor class destructor
 ??1Gen_dtor_001ffde0@@UAE@XZ,0x00027593,gen-dtor class destructor
-??1Gen_dtor_001fff20@@UAE@XZ,0x0001CE0E,gen-dtor class destructor
+??1GiantBirdSlowDeathBehaviorModuleData@@UAE@XZ,0x0001CE0E,destructor ILT used by the GiantBirdSlowDeathBehaviorModuleData scalar-deleting destructor
 ??1Gen_dtor_00200350@@UAE@XZ,0x00041704,gen-dtor class destructor
 ??1Gen_dtor_002003e0@@UAE@XZ,0x00011162,gen-dtor class destructor
 ??1Gen_dtor_00200b60@@UAE@XZ,0x0004654C,gen-dtor class destructor
@@ -5279,21 +5279,21 @@ name,address,notes
 ??1Gen_dtor_00201cc0@@UAE@XZ,0x00038262,gen-dtor class destructor
 ??1Gen_dtor_00201f80@@UAE@XZ,0x0004A241,gen-dtor class destructor
 ??1Gen_dtor_00202390@@UAE@XZ,0x000116E4,gen-dtor class destructor
-??1Gen_dtor_00202840@@UAE@XZ,0x0002F0C2,gen-dtor class destructor
+??1PassiveAreaEffectBehaviorModuleData@@UAE@XZ,0x0002F0C2,destructor ILT used by the PassiveAreaEffectBehaviorModuleData scalar-deleting destructor
 ??1Gen_dtor_00202ba0@@UAE@XZ,0x00009BEC,gen-dtor class destructor
 ??1Gen_dtor_00202db0@@UAE@XZ,0x000443FF,gen-dtor class destructor
 ??1Gen_dtor_002030e0@@UAE@XZ,0x0003AC5B,gen-dtor class destructor
 ??1Gen_dtor_002034c0@@UAE@XZ,0x00028A38,gen-dtor class destructor
 ??1Gen_dtor_00203d80@@UAE@XZ,0x0001D732,gen-dtor class destructor
-??1Gen_dtor_00203f00@@UAE@XZ,0x0003A6DE,gen-dtor class destructor
+??1EnragedBehaviorModuleData@@UAE@XZ,0x0003A6DE,destructor ILT used by the EnragedBehaviorModuleData scalar-deleting destructor
 ??1Gen_dtor_002044b0@@UAE@XZ,0x0000BA5F,gen-dtor class destructor
 ??1Gen_dtor_002046e0@@UAE@XZ,0x0002CCB4,gen-dtor class destructor
 ??1Gen_dtor_00204f60@@UAE@XZ,0x000219D1,gen-dtor class destructor
 ??1Gen_dtor_002058c0@@UAE@XZ,0x000088AA,gen-dtor class destructor
-??1Gen_dtor_00205990@@UAE@XZ,0x0003E649,gen-dtor class destructor
+??1ShareExperienceBehaviorModuleData@@UAE@XZ,0x0003E649,destructor ILT used by the ShareExperienceBehaviorModuleData scalar-deleting destructor
 ??1Gen_dtor_00206070@@UAE@XZ,0x00006451,gen-dtor class destructor
 ??1Gen_dtor_00207200@@UAE@XZ,0x000372B8,gen-dtor class destructor
-??1Gen_dtor_002074e0@@UAE@XZ,0x0002F36F,gen-dtor class destructor
+??1SlaveWatcherBehaviorModuleData@@UAE@XZ,0x0002F36F,destructor ILT used by the SlaveWatcherBehaviorModuleData scalar-deleting destructor
 ??1Gen_dtor_002076e0@@UAE@XZ,0x0001448E,gen-dtor class destructor
 ??1Gen_dtor_00207da0@@UAE@XZ,0x00032691,gen-dtor class destructor
 ??1Gen_dtor_0020c020@@UAE@XZ,0x0003BA70,gen-dtor class destructor
