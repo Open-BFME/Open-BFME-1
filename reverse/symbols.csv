@@ -4895,7 +4895,8 @@ name,address,notes
 ??1Gen_dtor_0009fa30@@UAE@XZ,0x00046B82,gen-dtor class destructor
 ??1Gen_dtor_000a1b00@@UAE@XZ,0x00016725,gen-dtor class destructor
 ??1Gen_dtor_000a7900@@UAE@XZ,0x0004A462,gen-dtor class destructor
-??1Gen_dtor_000a8650@@UAE@XZ,0x00024442,gen-dtor class destructor
+??1TerrainType@@UAE@XZ,0x00024442,exact TerrainType constructor 0x000A82F0 installs vtable 0x01080F0C; complete destructor body 0x000A83D0
+??_GTerrainType@@UAEPAXI@Z,0x000209D2,exact TerrainType constructor 0x000A82F0 installs vtable 0x01080F0C whose slot zero routes through this ILT to wrapper 0x000A8650
 ??1Gen_dtor_000a9e70@@UAE@XZ,0x0004723F,gen-dtor class destructor
 ??1Gen_dtor_000a9f00@@UAE@XZ,0x0000240F,gen-dtor class destructor
 ??1Gen_dtor_000aba00@@UAE@XZ,0x000141A0,gen-dtor class destructor

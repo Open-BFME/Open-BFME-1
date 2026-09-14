@@ -82,10 +82,10 @@ private:
 	int m_bfmeField;
 };
 
-class Gen_000A83D0
+class TerrainType
 {
 public:
-	virtual ~Gen_000A83D0(void);
+	virtual ~TerrainType(void);
 
 private:
 	BfmeTailW m_bfmeA;					// +0x04
@@ -96,7 +96,7 @@ private:
 	BfmeOtherX m_bfmeD;					// +0x24
 };
 
-// ??1Gen_000A83D0@@UAE@XZ
-Gen_000A83D0::~Gen_000A83D0(void)
+// ??1TerrainType@@UAE@XZ
+TerrainType::~TerrainType(void)
 {
 }
