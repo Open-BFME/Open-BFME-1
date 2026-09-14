@@ -5477,7 +5477,7 @@ name,address,notes
 ??1ObjectGuardingHelper@@MAE@XZ,0x00004D3B,vtable 0x00CB3614 slots name ObjectGuardingHelper; protected complete destructor called by wrapper 0x00256940
 ??1Gen_dtor_00257c70@@UAE@XZ,0x0003E879,gen-dtor class destructor
 ??1CloudBreakSpecialPowerModuleData@@UAE@XZ,0x0001F76C,public complete destructor ILT called by scalar wrapper 0x002592F0; exact constructor 0x002592A0 installs dedicated vtable 0x010B3CD8
-??1Gen_dtor_002598d0@@UAE@XZ,0x0000B37F,gen-dtor class destructor
+??1CombineHordeSpecialPowerModuleData@@UAE@XZ,0x0000B37F,public complete destructor ILT called by scalar wrapper 0x002598D0; exact constructor 0x002598A0 installs dedicated vtable 0x010B3EC8
 ??1Gen_dtor_00259ee0@@UAE@XZ,0x0002C78C,gen-dtor class destructor
 ??1Gen_dtor_0025a140@@UAE@XZ,0x0001DF89,gen-dtor class destructor
 ??1DeflectSpecialPower@@MAE@XZ,0x00007180,vtable 0x00CB44EC slots name DeflectSpecialPower; protected complete destructor called by wrapper 0x0025A530
@@ -88113,3 +88113,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_G?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAEPAXI@Z,0x0093FD60,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> scalar deleting destructor; matched ctor 0x0093E660 stores vtable 0x0113CE5C whose slot zero is this body
 ??_7?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@6B@,0x0113CE5C,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> vtable installed by matched constructor 0x0093E660
 ?m@Gen_00944c50@@QAAXXZ,0x00944C50,cdecl ABI alias for retail Begin_Render call
+??_7CombineHordeSpecialPowerModuleData@@6B@,0x010B3EC8,exact constructor 0x002598A0 installs this dedicated vtable; slot zero ILT 0x0002A072 reaches scalar wrapper 0x002598D0
