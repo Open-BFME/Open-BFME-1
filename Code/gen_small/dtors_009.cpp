@@ -350,9 +350,6 @@ void gen_force_0093e840() { Gen_dtor_0093e840 v; }
 struct Gen_dtor_0093e860 { virtual ~Gen_dtor_0093e860(); };
 void gen_force_0093e860() { Gen_dtor_0093e860 v; }
 
-struct Gen_dtor_0093fd40 { virtual ~Gen_dtor_0093fd40(); };
-void gen_force_0093fd40() { Gen_dtor_0093fd40 v; }
-
 struct Gen_dtor_0093fd60 { virtual ~Gen_dtor_0093fd60(); };
 void gen_force_0093fd60() { Gen_dtor_0093fd60 v; }
 
