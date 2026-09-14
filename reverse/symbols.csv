@@ -5338,7 +5338,7 @@ name,address,notes
 ??1Gen_dtor_001f3ee0@@UAE@XZ,0x00048996,gen-dtor class destructor
 ??1BridgeTowerBehavior@@MAE@XZ,0x00012F44,vtable 0x00CA2B54 slots name BridgeTowerBehavior; protected complete destructor called by wrapper 0x001F6180
 ??1BuildingBehavior@@MAE@XZ,0x0003C592,vtable 0x00CA2C54 slots name BuildingBehavior; protected complete destructor called by wrapper 0x001F68D0
-??1Gen_dtor_001f6d10@@UAE@XZ,0x00016A13,gen-dtor class destructor
+??1BuildingBehaviorModuleData@@UAE@XZ,0x00016A13,public complete destructor ILT called by scalar wrapper 0x001F6D10; exact constructor 0x001F6C70 installs dedicated vtable 0x010A2C88
 ??1Gen_dtor_001f71a0@@UAE@XZ,0x0002868C,gen-dtor class destructor
 ??1Gen_dtor_001f71d0@@UAE@XZ,0x0003C560,gen-dtor class destructor
 ??1ClearanceTestingSlowDeathBehaviorModuleData@@UAE@XZ,0x000018CA,destructor ILT used by the ClearanceTestingSlowDeathBehaviorModuleData scalar-deleting destructor
@@ -88095,3 +88095,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7OathbreakersFadeAwayBehavior@@6B@,0x010A5124,matched constructor 0x00201BB0 installs this dedicated vtable; slot zero ILT 0x00006622 reaches scalar wrapper 0x00201CC0
 ??_7AutoAbilityBehaviorModuleData@@6B@,0x010A1A70,exact constructor 0x001ED6A0 installs this dedicated vtable; slot zero ILT 0x0002775F reaches scalar wrapper 0x001ED860
 ??_7ParkingPlaceBehavior@@6B@,0x010A2A1C,exact constructor 0x001F59F0 installs this dedicated vtable; slot zero ILT 0x0002F80B reaches scalar wrapper 0x001F5F30
+??_7BuildingBehaviorModuleData@@6B@,0x010A2C88,exact constructor 0x001F6C70 installs this dedicated vtable; slot zero ILT 0x00019F0B reaches scalar wrapper 0x001F6D10
