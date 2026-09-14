@@ -127,6 +127,9 @@ public:
 	void Get_Description(SurfaceDescription &description);
 };
 
+extern UnsignedInt Rva008FC4F0_PixelSize(
+	const SurfaceClass::SurfaceDescription &description);
+
 class W3DRadarResetSurface
 {
 public:
@@ -142,7 +145,12 @@ void W3DRadarResetSurface::clear(UnsignedInt color)
 	{
 		SurfaceClass::SurfaceDescription description;
 		reinterpret_cast<SurfaceClass *>(this)->Get_Description(description);
-		UnsignedInt size = description.Rva008FC4F0_PixelSize() * description.Width;
+		typedef UnsignedInt (SurfaceClass::SurfaceDescription::*PixelSizeOperation)(void);
+		union { void *asVoid; PixelSizeOperation asMember; } pixelSizeCast;
+		pixelSizeCast.asVoid = reinterpret_cast<void *>(Rva008FC4F0_PixelSize);
+		UnsignedInt size =
+			(reinterpret_cast<SurfaceClass::SurfaceDescription *>(&description)->*pixelSizeCast.asMember)()
+			* description.Width;
 
 		BfmeLockedRect locked;
 		::memset(&locked, 0, sizeof(locked));
