@@ -26750,3 +26750,4 @@ uw_00c5f850,0x00C5F850,retail funclet frees through operator delete[] at 0x00881
 ??_GGen_dtor_0024ea90@@UAEPAXI@Z,0x0024EA90,"generated scalar-destructor placeholder superseded by the authentic SlaughterHordeContainBase scalar-deleting destructor over the same 30-byte range"
 ??_GGen_dtor_002c2400@@UAEPAXI@Z,0x002C2400,"generated scalar-destructor placeholder superseded by the authentic GiantBirdNested scalar-deleting destructor over the same 30-byte range"
 ??_GGen_dtor_00440a10@@UAEPAXI@Z,0x00440A10,"generated scalar-destructor placeholder superseded by the authentic SuperweaponInfo scalar-deleting destructor over the same 30-byte range"
+??_GGen_dtor_0022ece0@@UAEPAXI@Z,0x0022ECE0,"generated scalar-destructor placeholder superseded by the authentic HordeSiegeEngineContainModuleDataBase scalar-deleting destructor over the same 30-byte range"
