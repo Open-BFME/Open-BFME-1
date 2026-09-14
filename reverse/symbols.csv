@@ -5482,7 +5482,7 @@ name,address,notes
 ??1Gen_dtor_0025a140@@UAE@XZ,0x0001DF89,gen-dtor class destructor
 ??1DeflectSpecialPower@@MAE@XZ,0x00007180,vtable 0x00CB44EC slots name DeflectSpecialPower; protected complete destructor called by wrapper 0x0025A530
 ??1DeflectSpecialPowerModuleData@@UAE@XZ,0x00033AF0,public complete destructor ILT called by scalar wrapper 0x0025A620; exact constructor 0x0025A600 installs dedicated vtable 0x010B4520
-??1Gen_dtor_0025ac50@@UAE@XZ,0x00032E25,gen-dtor class destructor
+??1DevastateSpecialPowerModuleData@@UAE@XZ,0x00032E25,public complete destructor ILT called by scalar wrapper 0x0025AC50; exact constructor 0x0025AC10 installs dedicated vtable 0x010B47C8
 ??1Gen_dtor_0025ae30@@UAE@XZ,0x000227B4,gen-dtor class destructor
 ??1Gen_dtor_0025bbf0@@UAE@XZ,0x00002F86,gen-dtor class destructor
 ??1Gen_dtor_0025d070@@UAE@XZ,0x00003274,gen-dtor class destructor
@@ -88121,3 +88121,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7SplitHordeSpecialPowerModuleData@@6B@,0x010B80E8,exact constructor 0x0026B1D0 installs this dedicated vtable; slot zero ILT 0x0000C8AB reaches scalar wrapper 0x0026B1F0
 ??_7DeflectSpecialPowerModuleData@@6B@,0x010B4520,exact constructor 0x0025A600 installs this dedicated vtable; slot zero ILT 0x0003A70B reaches scalar wrapper 0x0025A620
 ??_7SiegeDeployHordeSpecialPowerModuleData@@6B@,0x010B7240,exact constructor 0x00265D90 installs this dedicated vtable; slot zero ILT 0x00025AE5 reaches scalar wrapper 0x00265DB0
+??_7DevastateSpecialPowerModuleData@@6B@,0x010B47C8,exact constructor 0x0025AC10 installs this dedicated vtable; slot zero ILT 0x00034897 reaches scalar wrapper 0x0025AC50
