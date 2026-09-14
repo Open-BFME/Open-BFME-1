@@ -87638,3 +87638,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7AIAttackFireDuringApproachState@@6B@,0x0109A640,exact constructor for ??_GAIAttackFireDuringApproachState@@MAEPAXI@Z installs this dedicated vtable
 ??_GAIAttackMeleeSquishState@@MAEPAXI@Z,0x0003E30B,dedicated vtable 0x0109A738 slot-zero ILT; routes to scalar wrapper 0x00185490
 ??_7AIAttackMeleeSquishState@@6B@,0x0109A738,exact constructor for ??_GAIAttackMeleeSquishState@@MAEPAXI@Z installs this dedicated vtable
+??1AIFollowPathAsTeamState@@UAE@XZ,0x00013F66,AIFollowPathAsTeamState complete virtual destructor ILT; scalar wrapper 0x00183AC0 calls this route to cleanup body 0x00179550 which deletes the +0x60 attack-move submachine and then calls AIInternalMoveToState destructor through ILT 0x0004AAF7
+??_7AIFollowPathAsTeamState@@6B@,0x01099C08,AIFollowPathAsTeamState dedicated vtable installed by exact constructor 0x00183990; slot zero ILT 0x00001D43 reaches scalar wrapper 0x00183AC0
