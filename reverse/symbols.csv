@@ -6508,6 +6508,7 @@ name,address,notes
 ??1Gen_dtor_007aba70@@UAE@XZ,0x0003DD2F,gen-dtor class destructor
 ??1Gen_dtor_007af280@@UAE@XZ,0x00021193,gen-dtor class destructor
 ??1Gen_dtor_007af4b0@@UAE@XZ,0x00019B82,gen-dtor class destructor
+??1W3DShadowTexture@@UAE@XZ,0x00019B82,route=0x007AF4E0; scalar deleting destructor retail call targets the matched W3DShadowTexture destructor through this ILT
 ??1Gen_dtor_007af570@@UAE@XZ,0x0001FCAD,gen-dtor class destructor
 ??1Gen_dtor_007b1320@@UAE@XZ,0x0003F562,gen-dtor class destructor
 ??1Gen_dtor_007b13a0@@UAE@XZ,0x000376BE,gen-dtor class destructor
