@@ -88124,3 +88124,6 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7SiegeDeployHordeSpecialPowerModuleData@@6B@,0x010B7240,exact constructor 0x00265D90 installs this dedicated vtable; slot zero ILT 0x00025AE5 reaches scalar wrapper 0x00265DB0
 ??_7DevastateSpecialPowerModuleData@@6B@,0x010B47C8,exact constructor 0x0025AC10 installs this dedicated vtable; slot zero ILT 0x00034897 reaches scalar wrapper 0x0025AC50
 ??_7SpawnPointProductionExitUpdateModuleData@@6B@,0x010E8D28,exact constructor 0x0035F0F0 installs this dedicated vtable; slot zero ILT 0x0002AEF0 reaches scalar wrapper 0x0035F120
+??1FontCharsClass@@UAE@XZ,0x00940010,WW3D FontCharsClass destructor; matched constructor identity at 0x00940610 and shared vtable 0x0113CE8C prove this complex cleanup body
+??_GFontCharsClass@@UAEPAXI@Z,0x00940770,WW3D FontCharsClass scalar deleting destructor; vtable 0x0113CE8C slot one points here after RefCountClass::Delete_This
+??_7FontCharsClass@@6B@,0x0113CE8C,WW3D FontCharsClass vtable installed by constructor 0x00940610 and destructor 0x00940010; slots are RefCountClass::Delete_This and scalar deleting destructor 0x00940770
