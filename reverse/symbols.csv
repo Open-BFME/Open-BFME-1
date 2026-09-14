@@ -88130,3 +88130,6 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_GFontCharsClass@@UAEPAXI@Z,0x00940770,WW3D FontCharsClass scalar deleting destructor; vtable 0x0113CE8C slot one points here after RefCountClass::Delete_This
 ??_7FontCharsClass@@6B@,0x0113CE8C,WW3D FontCharsClass vtable installed by constructor 0x00940610 and destructor 0x00940010; slots are RefCountClass::Delete_This and scalar deleting destructor 0x00940770
 ?m@Gen_00832090@@QAEXXZ,0x00832090,compatibility alias retained for already-converted callers; authentic owning row is ??1Rva00832090TailBase@@UAE@XZ at the same retail body
+??1AABTreeClass@@UAE@XZ,0x0096A920,WW3D AABTreeClass destructor; matched constructors 0x0096A8E0 0x0096ACC0 and 0x0096AD60 plus vtable 0x0113E678 prove identity
+??_GAABTreeClass@@UAEPAXI@Z,0x0096ACA0,WW3D AABTreeClass scalar deleting destructor; vtable 0x0113E678 slot one points here after RefCountClass::Delete_This
+??_7AABTreeClass@@6B@,0x0113E678,WW3D AABTreeClass vtable installed by three matched constructors and destructor 0x0096A920
