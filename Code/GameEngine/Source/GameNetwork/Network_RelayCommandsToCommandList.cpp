@@ -66,7 +66,7 @@ public:
 	NetCommandType getNetCommandType(void) { return m_commandType; }
 	UnsignedInt getExecutionFrame(void) { return m_executionFrame; }
 
-	UnsignedInt m_pad04;
+	UnsignedInt m_timestamp;
 	UnsignedInt m_executionFrame;
 	UnsignedInt m_playerID;
 	unsigned short m_id;
