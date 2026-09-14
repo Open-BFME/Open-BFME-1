@@ -5077,7 +5077,9 @@ name,address,notes
 ??1Gen_dtor_0015cdd0@@UAE@XZ,0x0004B213,gen-dtor class destructor
 ??1Gen_dtor_0015cfc0@@UAE@XZ,0x0002EF82,gen-dtor class destructor
 ??1Gen_dtor_0015d050@@UAE@XZ,0x000108F7,gen-dtor class destructor
-??1Gen_dtor_0015d110@@UAE@XZ,0x000434CD,gen-dtor class destructor
+??1AIGuardInnerState@@MAE@XZ,0x000434CD,exact constructor 0x0015CE00 and dedicated vtable 0x01096160 establish the protected complete destructor called by wrapper 0x0015D110
+??_GAIGuardInnerState@@MAEPAXI@Z,0x00012030,dedicated vtable 0x01096160 slot zero routes through this ILT to scalar wrapper 0x0015D110
+??_7AIGuardInnerState@@6B@,0x01096160,exact constructor 0x0015CE00 installs this dedicated vtable; slot zero routes to wrapper 0x0015D110
 ??1Gen_dtor_0015d150@@UAE@XZ,0x00048829,gen-dtor class destructor
 ??1Gen_dtor_0015d190@@UAE@XZ,0x0003751F,gen-dtor class destructor
 ??1Gen_dtor_0015e680@@UAE@XZ,0x00016900,gen-dtor class destructor
