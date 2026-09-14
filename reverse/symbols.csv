@@ -5516,7 +5516,7 @@ name,address,notes
 ??1Gen_dtor_0026aff0@@UAE@XZ,0x00019565,gen-dtor class destructor
 ??1Gen_dtor_0026b1f0@@UAE@XZ,0x00018AC0,gen-dtor class destructor
 ??1Gen_dtor_0026b5e0@@UAE@XZ,0x0000AE2F,gen-dtor class destructor
-??1Gen_dtor_0026b8b0@@UAE@XZ,0x0000A187,gen-dtor class destructor
+??1TaintSpecialPowerModuleData@@UAE@XZ,0x0000A187,public complete destructor ILT called by scalar wrapper 0x0026B8B0; exact constructor 0x0026B870 installs dedicated vtable 0x010B8550
 ??1Gen_dtor_0026c1a0@@UAE@XZ,0x0001CF12,gen-dtor class destructor
 ??1Gen_dtor_0026c6f0@@UAE@XZ,0x00037F56,gen-dtor class destructor
 ??1ToggleMountedSpecialAbilityUpdate@@MAE@XZ,0x0003E5E5,vtable 0x00CB88E8 slots name ToggleMountedSpecialAbilityUpdate; protected complete destructor called by wrapper 0x0026C790
@@ -88116,3 +88116,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7CombineHordeSpecialPowerModuleData@@6B@,0x010B3EC8,exact constructor 0x002598A0 installs this dedicated vtable; slot zero ILT 0x0002A072 reaches scalar wrapper 0x002598D0
 ??_7ManTheWallsSpecialPowerModuleData@@6B@,0x010B5EA0,exact constructor 0x00261260 installs this dedicated vtable; slot zero ILT 0x00032AFB reaches scalar wrapper 0x00261280
 ??_7RepairSpecialPowerModuleData@@6B@,0x010B6B10,exact constructor 0x00264990 installs this dedicated vtable; slot zero ILT 0x0000BAAF reaches scalar wrapper 0x002649B0
+??_7TaintSpecialPowerModuleData@@6B@,0x010B8550,exact constructor 0x0026B870 installs this dedicated vtable; slot zero ILT 0x0002C025 reaches scalar wrapper 0x0026B8B0
