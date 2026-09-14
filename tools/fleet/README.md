@@ -15,7 +15,7 @@ change does not replace a shell that is already executing an older copy.
 |---|---|
 | `launch_fleet.sh N B F M` | start N file-lane, B big-body, F finish-lane, M mid-lane seats plus the watchdog and harvest loop |
 | `seat.sh ENGINE SEAT` | one seat loop; engines `luna`, `lunamid`, `lunaclass`, `lunafin`, `lunabig`, `solhigh*`, `grok*`; SESSION_CAP default 150 min |
-| `pick_file.py` | claim a dump file, ordered by landed-neighbour density (46.5% vs 19.5% land rate) |
+| `pick_file.py` | claim a dump file with enough bodies not currently logged as dead ends, then order by landed-neighbour density |
 | `pick_mid.py` | claim 3 bodies of 300..1000 B from the file with the densest landed C++ neighbourhood |
 | `pick_class.py` | claim the warmest vtable (most slots landed, some still dumps) and print its slot table |
 | `vtable_rank.py` | build the vtable ranking `pick_class.py` reads; game classes have no RTTI |
