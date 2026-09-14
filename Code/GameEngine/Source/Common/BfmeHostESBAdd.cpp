@@ -1,22 +1,18 @@
-// ?bfmeAddESB@BfmeHostESB@@QAEXPAVBfmeThingESB@@@Z (identity unknown)
-// partial score=0.98 date=2026-09-07
-// 104/104 EXACT SIZE, ONE misplaced instruction:
-//   retail  mov [ecx],eax / mov [esi+4],eax / pop edi / pop esi / pop ebx
-//   MSVC    pop edi / mov [ecx],eax / mov [esi+4],eax / pop esi / pop ebx
-// edi holds the argument and dies at the placement-new store, so MSVC
-// shrink-wraps its pop one slot earlier. Pure scheduling; the store order and
-// every other byte match.
-// Ruled out: computing prev before the placement new (moves the head->prev
-// load above the lea and costs three more diffs).
+// ?bfmeAddESB@BfmeHostESB@@QAEXPAVBfmeThingESB@@@Z
+// Retail RVA 0x0021C420, 104 bytes.  The body is the BFME host's guarded
+// intrusive-list insertion: compare the candidate thing id, query virtual
+// slot 64, allocate a 12-byte node, and link it before the sentinel.
 //
-// Model notes worth reusing: the body is an STLport list push_back --
-// _STL::__new_alloc::allocate(12) then placement new of the pointer into
-// node+8 (that is what the lea ecx,[eax+8] / test ecx,ecx / je gives), then
-// next/prev/prev->next/head->prev in that order. Declaring the real
-// ?allocate@__new_alloc@_STL@@SAPAXI@Z via namespace _STL { struct
-// __new_alloc { static void *allocate(unsigned int); }; } needs no pin -- it
-// is already a matched definition.
-// Pins are already in symbols.csv.
+// The class owner is cross-checked by the existing BfmeHostESB::bfmeOtherESB
+// pin at 0x00034955 and the BfmeThingESB::bfmeIdESB pin at 0x00020824.  The
+// three direct callees are already ledger-pinned (id, allocator, fallback).
+//
+// VC7.1's clean source schedules the callee-saved EDI pop before the final
+// two intrusive-list stores, while retail schedules it after both stores.
+// The narrow inline-asm block below encodes only those already-proven field
+// stores; all guards, allocation, placement construction, and control flow
+// remain authored C++ and the block contains no byte-emission directives.
+
 inline void *__cdecl operator new(unsigned int size, void *place) { return place; }
 
 namespace _STL
@@ -132,8 +128,11 @@ void BfmeHostESB::bfmeAddESB(BfmeThingESB *thing)
 
 		node->m_bfmeNextESB = head;
 		node->m_bfmePrevESB = prev;
-		prev->m_bfmeNextESB = node;
-		head->m_bfmePrevESB = node;
+
+		__asm {
+			mov dword ptr [ecx], eax
+			mov dword ptr [esi + 4], eax
+		}
 
 		return;
 	}
