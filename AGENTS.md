@@ -27,6 +27,15 @@ printed `drawn from 3885` for two days while every one of those had already
 failed; the count is the pool, not the untried work in it. Read the tool's own
 exhaustion line, not the size.
 
+Before writing a body, run `python3 tools/callees.py <rva> <size>` and read the
+names it prints. They are the callee contract, resolved from the image against
+the ledger. Two seats in a row declared a callee that does not exist -- one
+invented `lookupRankImageForPopup` where retail calls `lookupRankImage`, the
+other `SegmentedLineClass::Set_Texture` where retail never calls it -- and both
+reported the invention as a missing pin. Both bodies had ZERO unpinned targets.
+A link failure against a real retail body almost always means you named a callee
+wrong, not that it needs a pin. Never add a pin on a seat's say-so.
+
 Finish or revert each body before the next.
 
 ## Work the file, not the row
