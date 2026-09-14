@@ -6555,7 +6555,7 @@ name,address,notes
 ??1Gen_dtor_0081c9a0@@UAE@XZ,0x000167CF,gen-dtor class destructor
 ??1Gen_dtor_00823150@@UAE@XZ,0x00825550,gen-dtor class destructor
 ??1Gen_dtor_008231d0@@UAE@XZ,0x008267E0,gen-dtor class destructor
-??1Gen_dtor_00832300@@UAE@XZ,0x00832320,gen-dtor class destructor
+??1?$money_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@MAE@XZ,0x00832320,STLport 4.5.3 money_get<char> destructor called by its RTTI-identified scalar-deleting wrapper at 0x00832300
 ??1Gen_dtor_00832330@@UAE@XZ,0x00832350,gen-dtor class destructor
 ??1Gen_dtor_00832360@@UAE@XZ,0x00832380,gen-dtor class destructor
 ??1Gen_dtor_00832390@@UAE@XZ,0x008323B0,gen-dtor class destructor
@@ -9941,6 +9941,8 @@ name,address,notes
 ??_7?$ShareBufferClass@VVector3@@@@6B@,0x011135D0,Open-BFME5 ShareBuffer Vector3 retail vtable
 ??_7?$SimpleDynVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D010,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
 ??_7?$SimpleVecClass@PAV?$MultiListClass@VDX8FVFCategoryContainer@@@@@@6B@,0x00D3D004,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00949D00 calls; autopin
+??_7?$money_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@6B@,0x0112E95C,STLport money_get<char> vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x00832300
+??_7facet@locale@_STL@@6B@,0x0112E940,STLport locale::facet vtable identified by retail RTTI and restored by the money_get destructor at 0x00832320
 ??_7_Locale_impl@_STL@@6B@,0x0112EB34,STLport _Locale_impl vtable identified by retail RTTI; slot zero is scalar-deleting destructor 0x0083B310
 ??_7?$SubsystemSlot@VAudioManager@@@@6B@,0x01075D9C,vtable installed by exact SubsystemSlot<AudioManager> constructor at 0x0006F910; slot zero routes through ILT 0x00001BA4 to scalar-deleting destructor 0x0006F930
 ??_7?$SubsystemSlot@VEva@@@@6B@,0x01075DA0,vtable installed by exact SubsystemSlot<Eva> constructor at 0x0006F9D0; slot zero routes through ILT 0x0000C13F to scalar-deleting destructor 0x0006F9F0
