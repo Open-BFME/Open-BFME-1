@@ -171,3 +171,8 @@ void DeleteGen008375D0(Gen_008375D0 *value)
 Gen_009D9C00::~Gen_009D9C00(void)
 {
 }
+
+void DeleteGen009D9C00(Gen_009D9C00 *value)
+{
+	delete value;
+}
