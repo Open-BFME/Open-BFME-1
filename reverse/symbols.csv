@@ -4965,7 +4965,7 @@ name,address,notes
 ??1WanderAIUpdateModuleData@@UAE@XZ,0x0004A2B9,WanderAIUpdateModuleData complete destructor ILT; factory/vtable and matched complete body establish this virtual destructor route through 0x001244D0 and 0x00029D02 to 0x0027E4E0
 ??1Gen_dtor_001244e0@@UAE@XZ,0x0002A6BC,gen-dtor class destructor
 ??1Gen_dtor_001249e0@@UAE@XZ,0x00031282,gen-dtor class destructor
-??1Gen_dtor_00124af0@@UAE@XZ,0x00042758,gen-dtor class destructor
+??1ModelConditionSoundSelectorClientBehavior@@UAE@XZ,0x00042758,ModelConditionSoundSelectorClientBehavior complete destructor ILT; dedicated constructor/vtables and friend_newModuleInstance factory establish this virtual destructor route to 0x00124B20
 ??1Gen_dtor_00124bc0@@UAE@XZ,0x000369B7,gen-dtor class destructor
 ??1Gen_dtor_001251f0@@UAE@XZ,0x0001921D,gen-dtor class destructor
 ??1Gen_dtor_00125260@@UAE@XZ,0x000374D4,gen-dtor class destructor
