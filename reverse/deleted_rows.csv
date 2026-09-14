@@ -26007,3 +26007,4 @@ uw_00c5f850,0x00C5F850,retail funclet frees through operator delete[] at 0x00881
 ??_GGen_dtor_00071d30@@UAEPAXI@Z,0x00071D30,retracted: synthetic placeholder superseded by the recovered SubsystemSlot identity at the same address and size
 ??_GGen_dtor_00071df0@@UAEPAXI@Z,0x00071DF0,retracted: synthetic placeholder superseded by the recovered SubsystemSlot identity at the same address and size
 ??_GGen_dtor_00071eb0@@UAEPAXI@Z,0x00071EB0,retracted: synthetic placeholder superseded by the recovered SubsystemSlot identity at the same address and size
+?d_004502d0@@YAXXZ,0x004502D0,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ??0Gen004502D0ParserRegistration@@QAE@PAXPAVDataChunkInput@@PAVAsciiString@@@Z, a gate-required claim from Code/GameEngine/Source/Common/Gen004502D0ParserRegistrationCtor.cpp over the same 153-byte range. The Code/gen_asm/d_00448a60.asm scaffold reproduces those bytes but carries no identity."
