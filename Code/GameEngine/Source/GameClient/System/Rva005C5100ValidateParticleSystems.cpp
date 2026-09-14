@@ -1,11 +1,7 @@
 // ?validateParticleSystems@Rva005C5100Owner@@QAEXXZ
-// partial score=0.95 date=2026-09-09
+// Open-BFME: validate the two saved particle-system handles at retail
+// 0x005C5100 (329 bytes). The owner identity remains address-derived.
 // cl: /DNDEBUG /MD /O2 /EHs-c-
-// Open-BFME: convert d_005c5100, retail 0x005C5100 (329 bytes).
-// The owning class remains address-derived. The two 16-byte records at +0x160
-// and +0x170 hold a 12-byte particle-system handle followed by a saved ID.
-
-#include <new>
 
 struct BfmeFormattedText
 {
@@ -15,19 +11,23 @@ struct BfmeFormattedText
 
 extern "C" BfmeFormattedText *__cdecl bfmeFormatText(
 	BfmeFormattedText *result, int tag, const char *format, ...);
-__declspec(noreturn) void __stdcall _CxxThrowException(void *object, void *throwInfo);
+__declspec(noreturn) void __stdcall _CxxThrowException(
+	void *object, void *throwInfo);
 extern int g_rva005c5100ThrowInfo;
 
-enum ParticleSystemID { PARTICLE_SYSTEM_ID_NONE = 0 };
+enum ParticleSystemID
+{
+	PARTICLE_SYSTEM_ID_NONE = 0
+};
 
 class ParticleSystem
 {
 public:
 	unsigned char m_pad[0x1A8];
-	unsigned char m_loaded;
+	unsigned char m_isDestroyed;
 };
 
-extern "C" ParticleSystem *__cdecl Make00001B18();
+ParticleSystem *Make00001B18();
 
 class ParticleSystemHandle
 {
@@ -36,8 +36,11 @@ public:
 	operator bool() const { return m_ptr != 0; }
 	ParticleSystem *operator->() const
 	{
-		return m_ptr ? m_ptr : Make00001B18();
+		if (m_ptr == 0)
+			return Make00001B18();
+		return m_ptr;
 	}
+
 	ParticleSystem *m_ptr;
 	unsigned char m_pad[0x08];
 };
@@ -48,9 +51,13 @@ public:
 	~BfmeParticleSystemHandle();
 };
 
+class Rva005C5100Owner;
+
 class ParticleSystemManager
 {
-public:
+	friend class Rva005C5100Owner;
+
+	private:
 	BfmeParticleSystemHandle findParticleSystemByID(ParticleSystemID id);
 };
 
@@ -82,7 +89,7 @@ void Rva005C5100Owner::validateParticleSystems()
 
 		m_slotA = TheParticleSystemManager->findParticleSystemByID(m_slotAId);
 
-		if (m_slotA.m_ptr == 0 || m_slotA->m_loaded != 1)
+		if (m_slotA.m_ptr == 0 || m_slotA->m_isDestroyed == 1)
 		{
 			BfmeFormattedText error;
 			bfmeFormatText(&error, 5, 0);
@@ -101,7 +108,7 @@ void Rva005C5100Owner::validateParticleSystems()
 
 		m_slotB = TheParticleSystemManager->findParticleSystemByID(m_slotBId);
 
-		if (m_slotB.m_ptr == 0 || m_slotB->m_loaded != 1)
+		if (m_slotB.m_ptr == 0 || m_slotB->m_isDestroyed == 1)
 		{
 			BfmeFormattedText error;
 			bfmeFormatText(&error, 5, 0);
