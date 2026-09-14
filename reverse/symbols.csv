@@ -6534,6 +6534,10 @@ name,address,notes
 ??1Gen_dtor_00802020@@UAE@XZ,0x00801C40,gen-dtor class destructor
 ??1Gen_dtor_0081c530@@UAE@XZ,0x0081C520,gen-dtor class destructor retained for generated scaffold history
 ??1VideoPlayerInterface@@UAE@XZ,0x0081C520,authentic VideoPlayerInterface complete destructor; adjacent constructor 0x0081C500 and vtable 0x0112CC60 prove identity
+??1Vector3SolidBoxRandomizer@@UAE@XZ,0x0095C710,implicit derived destructor target of the scalar wrapper at 0x00B025B0; constructor and vtable 0x011BC4B4 prove class identity
+??1Vector3SolidSphereRandomizer@@UAE@XZ,0x00B02620,implicit derived destructor target adjacent to scalar wrapper 0x00B02600; constructor and vtable 0x011BC4D0 prove class identity
+??1Vector3HollowSphereRandomizer@@UAE@XZ,0x00B02680,implicit derived destructor target adjacent to scalar wrapper 0x00B02660; constructor and vtable 0x011BC4EC prove class identity
+??1Vector3SolidCylinderRandomizer@@UAE@XZ,0x00B026E0,implicit derived destructor target adjacent to scalar wrapper 0x00B026C0; constructor and vtable 0x011BC508 prove class identity
 ??1Gen_dtor_0081c7c0@@UAE@XZ,0x0081C590,gen-dtor class destructor
 ??1Gen_dtor_0081c9a0@@UAE@XZ,0x000167CF,gen-dtor class destructor
 ??1Gen_dtor_00823150@@UAE@XZ,0x00825550,gen-dtor class destructor
