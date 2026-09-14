@@ -252,6 +252,14 @@ Gen_008812D0::~Gen_008812D0()
 	delete[] m_bfmeCells;
 }
 
+// The retail 30-byte wrapper is the scalar-deleting destructor for this
+// TaintManager-owned grid.  Keep the delete expression out of the matched
+// destructor so MSVC emits the compiler-owned ??_G wrapper separately.
+void Force_Gen_008812D0_DeletingDestructor(Gen_008812D0 *value)
+{
+	delete value;
+}
+
 // ?bfmeSetRegion@Gen_008812D0@@QAEXPBURegion3D@@M@Z
 void Gen_008812D0::bfmeSetRegion(const Region3D *region, Real cellSize)
 {
