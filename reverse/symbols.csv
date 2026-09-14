@@ -6553,7 +6553,6 @@ name,address,notes
 ??1Gen_dtor_008323f0@@UAE@XZ,0x00832410,gen-dtor class destructor
 ??1Gen_dtor_00832420@@UAE@XZ,0x00832440,gen-dtor class destructor
 ??1Gen_dtor_00832450@@UAE@XZ,0x00832470,gen-dtor class destructor
-??1Gen_dtor_00837460@@UAE@XZ,0x00837480,gen-dtor class destructor
 ??1Gen_dtor_008374d0@@UAE@XZ,0x008374F0,gen-dtor class destructor
 ??1Gen_dtor_00837540@@UAE@XZ,0x00837560,gen-dtor class destructor
 ??1Gen_dtor_008375b0@@UAE@XZ,0x008375D0,gen-dtor class destructor
