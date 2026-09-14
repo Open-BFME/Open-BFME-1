@@ -40,11 +40,11 @@ struct Rva0061AD20Region
 class Rva0061AD20
 {
 public:
-	static void parseConnections(INI *, void *, void *, const void *);
+	static void parseConnections(INI *, void *instance, void *store, const void *userData);
 };
 
 // Full retail body ends with ret at +0xBB; padding starts at +0xBC.
-void Rva0061AD20::parseConnections(INI *ini, void *instance, void *, const void *)
+void Rva0061AD20::parseConnections(INI *ini, void *instance, void *store, const void *userData)
 {
 	Rva0061AD20Region *self = (Rva0061AD20Region *)instance;
 	for (const char *token = ini->getNextTokenOrNull(ini->getSepsColon()); token;

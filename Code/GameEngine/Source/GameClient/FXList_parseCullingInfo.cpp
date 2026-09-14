@@ -55,7 +55,7 @@ extern void __declspec(noreturn) __stdcall _CxxThrowException(void *object, void
 class FXList
 {
 public:
-	static void parseCullingInfo(INI *ini, void *instance, void *, const void *);
+	static void parseCullingInfo(INI *ini, void *instance, void *store, const void *userData);
 
 private:
 	char m_unreconstructed_00[0x14];
@@ -66,7 +66,7 @@ private:
 };
 
 // ?parseCullingInfo@FXList@@SAXPAVINI@@PAX1PBX@Z
-void FXList::parseCullingInfo(INI *ini, void *instance, void *, const void *)
+void FXList::parseCullingInfo(INI *ini, void *instance, void *store, const void *userData)
 {
 	FXList *list = (FXList *)instance;
 	const char *token = ini->getNextTokenOrNull(ini->getSepsColon());

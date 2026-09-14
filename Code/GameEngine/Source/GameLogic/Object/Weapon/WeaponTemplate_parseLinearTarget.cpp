@@ -63,7 +63,7 @@ class WeaponTemplate
 };
 
 // ?parseLinearTarget@WeaponTemplate@@CAXPAVINI@@PAX1PBX@Z
-void WeaponTemplate::parseLinearTarget(INI *ini, void *instance, void *, const void *)
+void WeaponTemplate::parseLinearTarget(INI *ini, void *instance, void *store, const void *userData)
 {
 	LinearTarget rec;
 	rec.x = INI::scanReal(ini->getNextSubToken("X"));

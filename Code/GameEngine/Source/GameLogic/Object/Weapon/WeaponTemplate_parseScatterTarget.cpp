@@ -61,7 +61,7 @@ class WeaponTemplate
 };
 
 // ?parseScatterTarget@WeaponTemplate@@CAXPAVINI@@PAX1PBX@Z
-void WeaponTemplate::parseScatterTarget(INI *ini, void *instance, void *, const void *)
+void WeaponTemplate::parseScatterTarget(INI *ini, void *instance, void *store, const void *userData)
 {
 	Coord2D target;
 	target.x = 0;

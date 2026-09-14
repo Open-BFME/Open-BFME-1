@@ -70,7 +70,7 @@ public:
 };
 
 // ?parseFireFXList@@YAXPAVINI@@PAX1PBX@Z
-void parseFireFXList(INI *ini, void *instance, void *, const void *)
+void parseFireFXList(INI *ini, void *instance, void *store, const void *userData)
 {
 	FlammableUpdateModuleData *self = (FlammableUpdateModuleData *)instance;
 	_STL::Rva002949D0Element info;

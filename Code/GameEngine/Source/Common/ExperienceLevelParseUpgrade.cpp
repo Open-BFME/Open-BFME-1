@@ -52,7 +52,7 @@ public:
 };
 
 // ?parseExperienceLevelUpgrade@@YAXPAVINI@@PAX1PBX@Z
-void parseExperienceLevelUpgrade(INI *ini, void *instance, void *, const void *)
+void parseExperienceLevelUpgrade(INI *ini, void *instance, void *store, const void *userData)
 {
 	ExperienceLevel *self = (ExperienceLevel *)instance;
 	const char *token;

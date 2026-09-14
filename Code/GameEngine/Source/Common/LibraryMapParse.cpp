@@ -79,7 +79,7 @@ private:
 	std::vector<Open2Elem063700> m_libraryMaps;
 };
 
-void LibraryMap::parse(INI *ini, void *instance, void *, const void *)
+void LibraryMap::parse(INI *ini, void *instance, void *store, const void *userData)
 {
 	((LibraryMap *)instance)->m_libraryMaps.push_back(
 		reinterpret_cast<const Open2Elem063700 &>(
