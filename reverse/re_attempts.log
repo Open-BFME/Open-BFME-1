@@ -22669,3 +22669,4 @@ _ciCallCallback	0x008712F0	369	partial	Codex spent 20 minutes on this attempt (t
 _d_0088d240	0x0088D240	437	blocked	unpinned call target at 0x88d396
 ??0S4Guarded0055BCA0@@QAE@H@Z	0x00545310	1935	blocked	constructor body not defined in source file Code/GameEngine/Source/Common/S4GuardedNewWithOneArg.cpp; only declarations present; definitions must come from elsewhere
 ??0S4Guarded0055BAA0@@QAE@H@Z	0x005484E0	1636	blocked	same source file issue: constructor body not defined
+?b_00190700@@YAXXZ	0x00190700	1432	blocked	WaterSurfaceBubbles.tga string anchor points to W3DWater.cpp, but retail disassembly is an EH-heavy GameSpyGroupRoom routine reading g_bfmeGlobal012F18F0 and setting g_bfmeDirtyBG; shared literal does not establish water identity; no clean owner safe; t=10min model=gpt-5.6
