@@ -1,14 +1,25 @@
 // ?Mid@EAStringC@@QBE?AV1@HH@Z
-// partial score=0.72 date=2026-09-08
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// partial score=0.92 date=2026-09-14
+// cl: /O2 /DNDEBUG /MD /EHsc
 
-struct BfmeStringPool1284
+extern "C" void *__cdecl memcpy(void *, const void *, unsigned int);
+extern "C" void *__cdecl memmove(void *, const void *, unsigned int);
+
+#pragma intrinsic(memcpy)
+
+struct BfmeAllocVKJ
+{
+	void *(__cdecl *allocate)(unsigned int);
+	void (__cdecl *free)(void *);
+};
+
+extern BfmeAllocVKJ *g_bfmeAllocVKJ;
+
+struct BfmeStringPool3AF0
 {
 	void *m_unused;
 	void (__cdecl *free)(void *storage);
 };
-
-extern BfmeStringPool1284 *g_bfmeStringPool1284;
 
 struct EAStringData
 {
@@ -19,14 +30,15 @@ struct EAStringData
 };
 
 extern EAStringData g_emptyStringData;
+extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 
 template <typename T> class StringBase
 {
-protected:
+	protected:
 	EAStringData *m_data;
 	StringBase() {}
 
-private:
+	private:
 	StringBase(const StringBase &other) : m_data(other.m_data)
 	{
 		++m_data->m_refCount;
@@ -37,6 +49,7 @@ private:
 		++m_data->m_refCount;
 	}
 
+	protected:
 	void releaseBuffer()
 	{
 		EAStringData *data = m_data;
@@ -75,30 +88,87 @@ class EAStringC : private StringBase<char>
 		CB_PUSH_ZERO
 	};
 
-	void ChangeBuffer(unsigned int reserve, unsigned int offset,
+	__declspec(noinline) void ChangeBuffer(unsigned int reserve, unsigned int offset,
 		unsigned int copy, CBPushZero pushZero, unsigned int internalSize);
 
 public:
+	EAStringC Mid(int start) const;
 	EAStringC Mid(int start, int count) const;
 };
 
+void EAStringC::ChangeBuffer(unsigned int reserve, unsigned int offset,
+	unsigned int copy, CBPushZero pushZero, unsigned int internalSize)
+{
+	StringDataC *oldData = m_data;
+	EAStringC *self = this;
+	if (oldData->m_refCount == 1 && reserve <= oldData->m_maxSize)
+	{
+		if (offset != 0)
+			memmove((char *)oldData + sizeof(StringDataC),
+				(char *)oldData + sizeof(StringDataC) + offset, copy);
+
+		self->m_data->m_size = (unsigned short)internalSize;
+		self->m_data->m_hash = 0;
+		if (pushZero != CB_NO_PUSH_ZERO)
+			((char *)self->m_data + sizeof(StringDataC))[internalSize] = 0;
+		return;
+	}
+
+	if (reserve != 0)
+	{
+		unsigned int allocationSize = (reserve + (reserve >> 3) + 0xc) & ~3;
+		self->m_data = (StringDataC *)g_bfmeAllocVKJ->allocate(allocationSize);
+		self->m_data->m_refCount = 1;
+		self->m_data->m_maxSize = (unsigned short)(allocationSize - 9);
+		self->m_data->m_size = (unsigned short)internalSize;
+		self->m_data->m_hash = 0;
+		memcpy((char *)self->m_data + sizeof(StringDataC),
+			(char *)oldData + sizeof(StringDataC) + offset, copy);
+		if (pushZero != CB_NO_PUSH_ZERO)
+			((char *)self->m_data + sizeof(StringDataC))[internalSize] = 0;
+	}
+	else
+	{
+		self->m_data = &g_emptyStringData;
+		++g_emptyStringData.m_refCount;
+	}
+
+	if (--oldData->m_refCount == 0)
+		g_bfmeStringPool1284->free(oldData);
+}
+
+EAStringC EAStringC::Mid(int start) const
+{
+	if (start <= 0)
+		return *this;
+
+	int size = m_data->m_size - start;
+	if (size <= 0)
+		return EAStringC();
+
+	EAStringC result(m_data);
+	result.ChangeBuffer(size, start, size, CB_PUSH_ZERO, size);
+	return result;
+}
+
 EAStringC EAStringC::Mid(int start, int count) const
 {
+	int effectiveStart = start;
 	if (start < 0)
 	{
 		count += start;
-		start = 0;
+		effectiveStart = 0;
 	}
 	if (count <= 0)
 		return EAStringC();
 
-	unsigned size = m_data->m_size - start;
-	if ((int)size <= 0)
+	int size = m_data->m_size - effectiveStart;
+	if (size <= 0)
 		return EAStringC();
-	if ((unsigned)count >= size)
-		count = (int)size;
+	if (count < size)
+		size = count;
 
 	EAStringC result(m_data);
-	result.ChangeBuffer(count, start, count, CB_PUSH_ZERO, count);
+	result.ChangeBuffer(size, start, size, CB_PUSH_ZERO, size);
 	return result;
 }
