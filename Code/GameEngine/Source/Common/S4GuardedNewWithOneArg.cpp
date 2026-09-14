@@ -51,7 +51,22 @@
 	}
 
 S4_GUARDED_NEW( 0055BA20, 44 )
-S4_GUARDED_NEW( 0055BAA0, 16 )
+
+struct BfmeAptScreenOnlineHome
+{
+	int m_storage[ 16 ];
+	BfmeAptScreenOnlineHome( int a );
+};
+
+extern void *g_s4Guard0055BAA0;
+
+BfmeAptScreenOnlineHome *s4mk0055BAA0( int a )
+{
+	if ( g_s4Guard0055BAA0 )
+		return 0;
+	return new BfmeAptScreenOnlineHome( a );
+}
+
 S4_GUARDED_NEW( 0055BB20, 47 )
 S4_GUARDED_NEW( 0055BC20, 31 )
 S4_GUARDED_NEW( 0055BCA0, 124 )

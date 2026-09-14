@@ -3534,7 +3534,6 @@ name,address,notes
 ??0S4Elem007746E0@@QAE@ABV0@@Z,0x00039879,44-byte S4 copy call in the time-of-day parser resolves to the matched pair-copy thunk
 ??0S4Elem007746E0@@QAE@XZ,0x0000345E,"Root removed all three generated-thunk alternatename fallbacks and replaced address-pinned empty string with real literals;253B remains exact. Independently disassembled complete constructor754590117B (two empty string ctors at0/C, default string at18, zero integers24/28, this return) and assignment755610104B (three owning string range assignments, copy integers24/28, this return ret4). Destructor753E80200B has three matching12B owning blocks, already real source. Identity remains address-derived. Typed constructor/assignment pins proven by those complete callees; no emitted vtable."
 ??0S4Guarded0055BA20@@QAE@H@Z,0x005538A0,S4 constructor of a guarded new-expression family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
-??0S4Guarded0055BAA0@@QAE@H@Z,0x005484E0,S4 constructor of a guarded new-expression family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??0S4Guarded0055BB20@@QAE@H@Z,0x00536DC0,S4 constructor of a guarded new-expression family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??0S4Guarded0055BC20@@QAE@H@Z,0x00559400,S4 constructor of a guarded new-expression family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ??0S4Guarded0055BCA0@@QAE@H@Z,0x00545310,S4 constructor of a guarded new-expression family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
@@ -87432,3 +87431,8 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ?releaseBuffer@BfmeRoadPath@@QAEXXZ,0x00887940,explicit release of the POD getPath temp in addMapObjects; folds with StringBase<char>::releaseBuffer
 ??0_ENUM_VALUE@EnumParameterClass@@QAE@XZ,0x0093D1E0,ENUM_VALUE ctor from matched VectorClass ctor 0x0093DBB0 vecctor slot
 ??1_ENUM_VALUE@EnumParameterClass@@QAE@XZ,0x000470F5,ENUM_VALUE dtor thunk from matched VectorClass ctor 0x0093DBB0 vecctor slot
+?g_d_012b7920@@3PBDA,0x012B7920,address-derived char* global used by OnlineHome AptIconGondor registration
+?g_d_012b7924@@3PBDA,0x012B7924,address-derived char* global used by OnlineHome AptIconIsengard registration
+?g_d_012b7928@@3PBDA,0x012B7928,address-derived char* global used by OnlineHome AptIconRohan registration
+?g_d_012b792c@@3PBDA,0x012B792C,address-derived char* global used by OnlineHome AptIconMordor registration
+?rva00547730@BfmeAptScreenOnlineHome@@QAEXXZ,0x00547730,address-derived OnlineHome constructor call target
