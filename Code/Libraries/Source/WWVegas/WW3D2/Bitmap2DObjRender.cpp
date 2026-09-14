@@ -55,11 +55,11 @@ void Bitmap2DObjClass::Render(RenderInfoClass &rinfo)
 	}
 
 	unsigned int sort_level = 0;
-	if (!WW3D::Are_Static_Sort_Lists_Enabled()) {
+	if (!WW3D::Is_Sorting_Enabled()) {
 		sort_level = m_vgx.Get_Shader().Guess_Sort_Level();
 	}
 
-	if (WW3D::Is_Sorting_Enabled() && sort_level != 0) {
+	if (WW3D::Are_Static_Sort_Lists_Enabled() && sort_level != 0) {
 		WW3D::Add_To_Static_Sort_List(this, sort_level);
 		return;
 	}
