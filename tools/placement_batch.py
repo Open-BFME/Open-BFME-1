@@ -107,6 +107,18 @@ def main():
     for source, target, _cls in batch:
         if not (ROOT / source).exists():
             continue
+        # A queue row names ONE SOURCE FILE. It has to be checked, because the
+        # move below is `git mv`, and `git mv Code mods/Code` relocates the
+        # entire 16,281-file source tree in one call -- which is exactly what a
+        # malformed row did on 2026-09-14, leaving the repo with no Code/ at all.
+        # Nothing was committed, so it restored from HEAD, but the tool handed
+        # the whole tree to one unchecked row and reported "moved 2".
+        if not (ROOT / source).is_file() or not source.endswith((".cpp", ".h")):
+            raise SystemExit(f"placement row 1 is not a source FILE: {source!r}. "
+                             "A directory here moves the whole tree; refusing.")
+        if not target.startswith("Code/") or not target.endswith((".cpp", ".h")):
+            raise SystemExit(f"placement row 2 leaves Code/: {target!r}. "
+                             "Sources only ever move within Code/; refusing.")
         (ROOT / target).parent.mkdir(parents=True, exist_ok=True)
         if git("mv", source, target, check=False).returncode:
             continue
