@@ -5188,7 +5188,9 @@ name,address,notes
 ??1AIAttackFireDuringApproachState@@MAE@XZ,0x00027F43,exact protected complete-destructor ILT for this state; the shared AIInternalMoveToState body at 0x00172430 is called through 0x00027F43 by scalar wrapper 0x00185410
 ??1Gen_dtor_00185450@@UAE@XZ,0x0002CB56,gen-dtor class destructor
 ??1AIAttackMeleeSquishState@@MAE@XZ,0x00013D59,exact protected complete-destructor ILT for this state; the shared AIInternalMoveToState body at 0x00172430 is called through 0x00013D59 by scalar wrapper 0x00185490
-??1Gen_dtor_001854d0@@UAE@XZ,0x00007D1F,gen-dtor class destructor
+??1AIFollowWaypointPathState@@MAE@XZ,0x00007D1F,exact constructor 0x0017F980 and dedicated vtable 0x0109A7B0 establish the protected complete destructor called by wrapper 0x001854D0
+??_GAIFollowWaypointPathState@@MAEPAXI@Z,0x0000A556,dedicated vtable 0x0109A7B0 slot zero routes to scalar wrapper 0x001854D0
+??_7AIFollowWaypointPathState@@6B@,0x0109A7B0,exact constructor 0x0017F980 installs this dedicated vtable
 ??1AIFollowWaypointPathExactState@@MAE@XZ,0x000078AB,exact constructor 0x0017FA90 and dedicated vtable 0x0109A828 establish the protected complete destructor called by wrapper 0x00185500
 ??1AIWanderState@@MAE@XZ,0x00016095,exact constructor 0x0017FB00 and dedicated vtable 0x0109A8A8 establish the protected complete destructor called by wrapper 0x00185540
 ??1AIWanderInPlaceState@@MAE@XZ,0x00036DB8,exact constructor 0x0017FB80 and dedicated vtable 0x0109A910 establish the protected complete destructor called by wrapper 0x00185580
