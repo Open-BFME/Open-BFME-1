@@ -83,7 +83,11 @@ public:
 
 extern GlobalData *TheWritableGlobalData;
 extern GameLogic *TheGameLogic;
-extern CampaignManager *TheCampaignManager;		// 0x012F1028
+// countMissionObjectives loads 0x012F1028. GameEngine::init names that slot
+// TheLivingWorldLogic (tag after TheLivingWorldCampaignManager at 0x012F1024).
+// TheCampaignManager is the GameClient global at 0x012F4CB0. Type stays
+// CampaignManager* so the four objective-query callees keep their pins.
+extern CampaignManager *TheLivingWorldLogic;		///< retail 0x012F1028
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScoreKeeper.h
 class ScoreKeeper
@@ -121,7 +125,7 @@ Int ScoreKeeper::countMissionObjectives(Int *outTotal)
 {
 	Int completed = 0;
 	Int total = 0;
-	CampaignManager *mgr = TheCampaignManager;
+	CampaignManager *mgr = TheLivingWorldLogic;
 
 	if (mgr)
 	{
@@ -131,12 +135,12 @@ Int ScoreKeeper::countMissionObjectives(Int *outTotal)
 		{
 			do
 			{
-				if (TheCampaignManager->isMissionObjectiveEligible(i))
+				if (TheLivingWorldLogic->isMissionObjectiveEligible(i))
 				{
-					if (TheCampaignManager->isMissionObjectiveIndexed(i))
+					if (TheLivingWorldLogic->isMissionObjectiveIndexed(i))
 					{
 						++total;
-						if (TheCampaignManager->isMissionObjectiveComplete(i))
+						if (TheLivingWorldLogic->isMissionObjectiveComplete(i))
 							++completed;
 					}
 				}

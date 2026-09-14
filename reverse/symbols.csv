@@ -12011,8 +12011,10 @@ name,address,notes
 ?TheLadderList@@3PAVLadderList@@A,0x012F70E8,LadderList* global used by PopupHostGame createGame findLadderByIndex
 ?TheLaserUpdatePool@?1??getClassMemoryPool@LaserUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF7028,pool-glue cascade static (back-solved)
 ?TheLifetimeUpdatePool@?1??getClassMemoryPool@LifetimeUpdate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFFB8,pool-glue cascade static (back-solved)
+?TheLivingWorldCampaignManager@@3PAVBfmeCampaignManagerVictorious@@A,0x012F1024,typed pin: ScriptActions doDefeat/doLocalDefeat write m_victorious at this slot; GameEngine::init tag TheLivingWorldCampaignManager
 ?TheLivingWorldCampaignManager@@3PAVBfmeLivingWorldCampaignManager@@A,0x012F1024,Open-BFME5 manager global; same slot as g_bfmeSwitchDR / initSubsystem literal
 ?TheLivingWorldCampaignManager@@3PAVGlo012F1024Type@@A,0x012F1024,typed pin for Rva003BFB20::run campaign step
+?TheLivingWorldLogic@@3PAVCampaignManager@@A,0x012F1028,typed pin: ScoreKeeper::countMissionObjectives loads this slot; GameEngine::init tag TheLivingWorldLogic
 ?TheLivingWorldLogic@@3PAVCampaignObject@@A,0x012F1028,TheLivingWorldLogic global the 0x00382B50 campaign predicate reads at +0x2C
 ?TheLocalFileSystem@@3PAVLocalFileSystem@@A,0x0134D060,LocalFileSystem* global
 ?TheLockWeaponCreatePool@?1??getClassMemoryPool@LockWeaponCreate@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFB94,pool-glue cascade static (back-solved)

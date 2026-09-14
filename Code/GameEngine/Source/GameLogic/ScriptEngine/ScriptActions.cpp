@@ -461,6 +461,11 @@ public:
 	Bool m_victorious;										///< retail manager+0x1D
 };
 
+// GameEngine::init stores 0x012F1024 then pushes "TheLivingWorldCampaignManager".
+// TheCampaignManager is a separate GameClient global at 0x012F4CB0. doDefeat and
+// doLocalDefeat write m_victorious on the living-world manager, not the ZH one.
+extern BfmeCampaignManagerVictorious *TheLivingWorldCampaignManager;	///< retail 0x012F1024
+
 class BfmeVictoryConditionsVtbl
 {
 public:
@@ -1007,7 +1012,7 @@ void ScriptActions::doDefeat( void )
 				*(const AsciiString *)&screen, BfmeDefeatScreenTable);
 		}
 	}
-	((BfmeCampaignManagerVictorious *)TheCampaignManager)->m_victorious = FALSE;
+	TheLivingWorldCampaignManager->m_victorious = FALSE;
 	((BfmeScriptEngineVtbl_30 *)TheScriptEngine)->startEndGameTimer();
 }
 
@@ -1036,7 +1041,7 @@ void ScriptActions::doLocalDefeat( void )
 				*(const AsciiString *)&screen, BfmeDefeatScreenTable);
 		}
 	}
-	((BfmeCampaignManagerVictorious *)TheCampaignManager)->m_victorious = FALSE;
+	TheLivingWorldCampaignManager->m_victorious = FALSE;
 	((BfmeScriptEngineVtbl_38 *)TheScriptEngine)->startCloseWindowTimer();
 }
 
