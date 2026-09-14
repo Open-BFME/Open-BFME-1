@@ -6389,7 +6389,8 @@ name,address,notes
 ??1Gen_dtor_006bce10@@UAE@XZ,0x0002A46E,gen-dtor class destructor
 ??1Gen_dtor_006bd070@@UAE@XZ,0x00033F96,gen-dtor class destructor
 ??1W3DGhostObject@@UAE@XZ,0x00033F96,route=0x006BC6E0; scalar deleting destructor retail call targets the matched W3DGhostObject destructor through this ILT
-??1Gen_dtor_006bdbe0@@UAE@XZ,0x0000C694,gen-dtor class destructor
+??1W3DGhostObjectManager@@UAE@XZ,0x0000C694,exact constructor 0x006BC8C0 and dedicated vtable 0x0111CFE0 establish the complete destructor thunk called by wrapper 0x006BDBE0
+??_GW3DGhostObjectManager@@UAEPAXI@Z,0x0000A3CB,constructor-installed vtable 0x0111CFE0 slot zero routes through this ILT to 0x006BDBE0
 ??1Gen_dtor_006be540@@UAE@XZ,0x000087B0,gen-dtor class destructor
 ??1Gen_dtor_006bff40@@UAE@XZ,0x00003DD2,gen-dtor class destructor
 ??1Gen_dtor_006c05a0@@UAE@XZ,0x000130FC,gen-dtor class destructor
