@@ -5187,7 +5187,9 @@ name,address,notes
 ??1AIMoveOutOfTheWayState@@MAE@XZ,0x0001F587,exact constructor 0x0017F350 and dedicated vtable 0x0109A278 establish the protected complete destructor called by wrapper 0x00185220
 ??1AIMoveAndTightenState@@MAE@XZ,0x000174A9,AIMoveAndTightenState complete destructor ILT called by scalar wrapper 0x00185260; thunk 0x0017F440 reaches the matched AIInternalMoveToState destructor route 0x0004AAF7
 ??1AIMoveAwayFromRepulsorsState@@MAE@XZ,0x00047587,exact constructor 0x0017F450 and dedicated vtable 0x0109A368 establish the protected complete destructor called by wrapper 0x00185290
-??1Gen_dtor_001852d0@@UAE@XZ,0x0003018E,gen-dtor class destructor
+??1MoveAwayPanicState@@MAE@XZ,0x0003018E,exact named constructor 0x0017F4A0 and dedicated vtable 0x0109A3E0 establish the protected complete destructor called by wrapper 0x001852D0; chain reaches exact AIInternalMoveToState
+??_GMoveAwayPanicState@@MAEPAXI@Z,0x0003EC89,dedicated vtable 0x0109A3E0 slot zero routes to scalar wrapper 0x001852D0
+??_7MoveAwayPanicState@@6B@,0x0109A3E0,exact named constructor 0x0017F4A0 installs this dedicated vtable and passes AIMoveAwayPanicState
 ??1Gen_dtor_00185310@@UAE@XZ,0x00019BE6,gen-dtor class destructor
 ??1AIAttackMeleeHordeApproachTargetState@@MAE@XZ,0x00020DBA,exact protected complete-destructor ILT for this state; the shared AIInternalMoveToState body at 0x00172430 is called through 0x00020DBA by scalar wrapper 0x00185390
 ??1AIAttackPursueTargetState@@MAE@XZ,0x0003C687,exact constructor 0x0017F700 and dedicated vtable 0x0109A5C8 establish the protected complete destructor called by wrapper 0x001853D0
