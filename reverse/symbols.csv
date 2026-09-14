@@ -5310,7 +5310,7 @@ name,address,notes
 ??1Gen_dtor_002131f0@@UAE@XZ,0x000275BB,gen-dtor class destructor
 ??1Gen_dtor_00213720@@UAE@XZ,0x0003E414,gen-dtor class destructor
 ??1Gen_dtor_00213e10@@UAE@XZ,0x0003C867,gen-dtor class destructor
-??1Gen_dtor_00214490@@UAE@XZ,0x00019D0D,gen-dtor class destructor
+??1PorcupineFormationBodyModuleModuleData@@UAE@XZ,0x00019D0D,destructor ILT used by the PorcupineFormationBodyModuleModuleData scalar-deleting destructor
 ??1Gen_dtor_00214ac0@@UAE@XZ,0x0001BE1E,gen-dtor class destructor
 ??1Gen_dtor_00215d90@@UAE@XZ,0x0000F781,gen-dtor class destructor
 ??1Gen_dtor_00215dc0@@UAE@XZ,0x0000FC31,gen-dtor class destructor
