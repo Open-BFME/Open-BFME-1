@@ -4992,7 +4992,7 @@ name,address,notes
 ??1Gen_dtor_00126da0@@UAE@XZ,0x0003FA62,gen-dtor class destructor
 ??1Gen_dtor_00126e40@@UAE@XZ,0x00034685,gen-dtor class destructor
 ??1Gen_dtor_00126ed0@@UAE@XZ,0x00024703,gen-dtor class destructor
-??1Gen_dtor_00126f90@@UAE@XZ,0x0002BB2A,gen-dtor class destructor
+??1MoneyCrateCollideModuleData@@UAE@XZ,0x0002BB2A,MoneyCrateCollideModuleData complete destructor ILT; factory/vtable and matched complete body establish this virtual destructor route through 0x00126FC0 to 0x00125E40
 ??1Gen_dtor_00127160@@UAE@XZ,0x0000A051,gen-dtor class destructor
 ??1Gen_dtor_001271f0@@UAE@XZ,0x00024910,gen-dtor class destructor
 ??1Gen_dtor_00127910@@UAE@XZ,0x00011A81,gen-dtor class destructor
