@@ -293,6 +293,11 @@ Gen0090F680::~Gen0090F680()
 	}
 }
 
+void DeleteGen0090F680(Gen0090F680 *value)
+{
+	delete value;
+}
+
 // @?Rva005F0D10@@YAXXZ 0x005F0D10
 void Rva005F0D10( void )
 {
