@@ -5829,6 +5829,7 @@ name,address,notes
 ??1Gen_dtor_004654c0Base@@UAE@XZ,0x00021FC1,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00465430 calls; autopin
 ??1Gen_dtor_00465500@@UAE@XZ,0x000204C3,gen-dtor class destructor
 ??1Gen_dtor_00465740@@UAE@XZ,0x0000DCBA,gen-dtor class destructor
+??1W3DGameWindow@@MAE@XZ,0x0000DCBA,route=0x004655F0; scalar deleting destructor retail call targets the matched protected W3DGameWindow destructor through this ILT
 ??1Gen_dtor_00467110@@UAE@XZ,0x00014C68,gen-dtor class destructor
 ??1Gen_dtor_00467140@@UAE@XZ,0x00042C8F,gen-dtor class destructor
 ??1Gen_dtor_00467cc0@@UAE@XZ,0x0000A277,gen-dtor class destructor
