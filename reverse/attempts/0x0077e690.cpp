@@ -1,5 +1,5 @@
 // ?doDrawModule@W3DTankDraw@@UAEXPBVMatrix3D@@@Z
-// partial score=0.4 date=2026-09-10
+// partial score=0.7373 date=2026-09-14
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -618,105 +618,239 @@ public:
 	Bool isTimeFrozenScriptIlt();
 };
 
+extern ParticleSystem *emptyParticleSystem(void);
+
+class BfmeTankParticleIlt
+{
+public:
+	void setVelocityMultiplier(const Coord3D *value)
+	{
+		*(Coord3D *)((char *)this + 0x134) = *value;
+	}
+
+	void setBurstCountMultiplier(Real value)
+	{
+		*(Real *)((char *)this + 0x140) = value;
+	}
+};
+
+struct BfmeTankParticleHandle
+{
+	BfmeTankParticleIlt *system;
+	void *previous;
+	void *next;
+
+	operator bool(void) const
+	{
+		return system != 0;
+	}
+
+	BfmeTankParticleIlt *operator->(void) const
+	{
+		if (!system)
+			return reinterpret_cast<BfmeTankParticleIlt *>(emptyParticleSystem());
+		return system;
+	}
+};
+
+struct BfmeTankDrawFields
+{
+	void *vtable;
+	void *moduleData;
+	void *drawable;
+	unsigned char m_pad00c[0x270];
+	BfmeTankParticleHandle treadDebrisLeft;
+	BfmeTankParticleHandle treadDebrisRight;
+	RenderObjClass *prevRenderObj;
+	unsigned char m_treads[0x50];
+	int treadCount;
+	Coord3D lastDirection;
+};
+
+struct BfmeTankModuleDataFields
+{
+	unsigned char m_pad000[0x164];
+	Real treadAnimationRate;
+	Real treadPivotSpeedFraction;
+	Real treadDriveSpeedFraction;
+};
+
+struct BfmeTankDrawableFields
+{
+	unsigned char m_pad000[0xfc];
+	void *object;
+};
+
+struct BfmeTankObjectFields
+{
+	unsigned char m_pad000[0x204];
+	void *ai;
+	void *required;
+};
+
+struct BfmeTankAiFields
+{
+	unsigned char m_pad000[0x1cc];
+	void *locomotor;
+};
+
+struct BfmeTankLocomotorFields
+{
+	unsigned char m_pad000[0xa4];
+	int turning;
+};
+
+struct BfmeTankTreadScrollFields
+{
+	Real customUVOffsetX;
+	Real customUVOffsetY;
+	unsigned char m_pad008[0xc];
+};
+
+struct BfmeTankParticleFields
+{
+	unsigned char m_pad000[0x134];
+	Coord3D velocityMultiplier;
+	Real burstCountMultiplier;
+};
+
+extern void j_000047c8(void);
+extern void j_00005ee3(void);
+extern void j_00012e3b(void);
+extern void j_000187f5(void);
+extern void j_00032d35(void);
+extern void j_00036840(void);
+extern void j_00038e15(void);
+extern void j_0003c0d8(void);
+extern void j_0003daa5(void);
+extern void j_00042d52(void);
+
+class BfmeTankObjectHeightIlt
+{
+public:
+	Real bfmeGetNonnegativePreferredLocomotorHeight() const;
+};
+
+class BfmeTankDrawableHiddenIlt
+{
+public:
+	Bool isDrawableEffectivelyHidden() const;
+};
+
 void W3DTankDraw::doDrawModule(const Matrix3D* transformMtx)
 {
-	const Real DEBRIS_THRESHOLD = 0.00001f;
+	BfmeTankDrawFields *tank = reinterpret_cast<BfmeTankDrawFields *>(this);
 
- 	Bool frozen = reinterpret_cast<BfmeViewThunk *>(TheTacticalView)->isTimeFrozen()
-		&& !reinterpret_cast<BfmeViewThunk *>(TheTacticalView)->isCameraMovementFinished();
-	if (frozen)
+	if (reinterpret_cast<BfmeViewThunk *>(TheTacticalView)->isTimeFrozen()
+		&& !reinterpret_cast<BfmeViewThunk *>(TheTacticalView)->isCameraMovementFinished())
 		return;
-	BfmeScriptEngineDebugFreezeIlt *seDebug = reinterpret_cast<BfmeScriptEngineDebugFreezeIlt *>(TheScriptEngine);
+	BfmeScriptEngineDebugFreezeIlt *seDebug =
+		reinterpret_cast<BfmeScriptEngineDebugFreezeIlt *>(TheScriptEngine);
 	if (seDebug->isTimeFrozenDebugIlt()
 		|| reinterpret_cast<BfmeScriptEngineScriptFreezeIlt *>(seDebug)->isTimeFrozenScriptIlt())
 		return;
 	if (reinterpret_cast<const BfmeScriptEngineFreezeExtra *>(TheScriptEngine)->get())
 		return;
-	if (getRenderObject()==NULL) return;
-	if (getRenderObject() != m_prevRenderObj) {
+
+	if (reinterpret_cast<BfmeTankRenderObjectThunk *>(this)->GetRenderObject() == 0)
+		return;
+	if (reinterpret_cast<BfmeTankRenderObjectThunk *>(this)->GetRenderObject() != tank->prevRenderObj)
+	{
 		updateTreadObjects();
 	}
 
-	// get object from logic
-	Object *obj = getDrawable()->getObject();
-	if (obj == NULL)
+	BfmeTankDrawableFields *drawable =
+		reinterpret_cast<BfmeTankDrawableFields *>(tank->drawable);
+	BfmeTankObjectFields *obj =
+		reinterpret_cast<BfmeTankObjectFields *>(drawable->object);
+	if (obj == 0 || obj->required == 0)
 		return;
 
-	// get object physics state
-	PhysicsBehavior *physics = obj->getPhysics();
-	if (physics == NULL)
-		return;
-
-	const Coord3D *vel = physics->getVelocity();
-
-	// if tank is moving, kick up dust and debris
-	Real velMag = vel->x*vel->x + vel->y*vel->y;		// only care about moving on the ground
-
-	if (velMag > DEBRIS_THRESHOLD && !getDrawable()->isDrawableEffectivelyHidden() && !getFullyObscuredByShroud())
-		startMoveDebris();
-	else
-		stopMoveDebris();
-
-	// kick debris higher the faster we move
-	Coord3D velMult;
-	velMag = (Real)sqrt( velMag );
-
-	velMult.x = 0.5f * velMag + 0.1f;
-	if (velMult.x > 1.0f)
-		velMult.x = 1.0f;
-
-	velMult.y = velMult.x;
-
-	velMult.z = velMag + 0.1f;
-	if (velMult.z > 1.0f)
-		velMult.z = 1.0f;
-
-	m_treadDebrisLeft->setVelocityMultiplier( &velMult );
-	m_treadDebrisRight->setVelocityMultiplier( &velMult );
-
-	m_treadDebrisLeft->setBurstCountMultiplier( velMult.z );
-	m_treadDebrisRight->setBurstCountMultiplier( velMult.z );
-
-	//Update movement of treads
-	if (m_treadCount)
+	BfmeTankObjectHeightIlt *heightObject =
+		reinterpret_cast<BfmeTankObjectHeightIlt *>(obj);
+	Real debrisSpeed = heightObject->bfmeGetNonnegativePreferredLocomotorHeight();
+	if (debrisSpeed > *(const Real *)0x0112100C)
 	{
-		PhysicsTurningType turn=physics->getTurning();
-		Real offset_u;
-		Real treadScrollSpeed=getW3DTankDrawModuleData()->m_treadAnimationRate;
-		TreadObjectInfo *pTread=m_treads;
-		Real maxSpeed=obj->getAIUpdateInterface()->getCurLocomotorSpeed();
-
-		//For optimization sake, we only do complex tread scrolling when tank
-		//is mostly stationary and turning
-		if (turn != TURN_NONE && physics->getVelocityMagnitude()/maxSpeed < getW3DTankDrawModuleData()->m_treadPivotSpeedFraction)
+		if (!((reinterpret_cast<BfmeTankDrawableHiddenIlt *>(tank->drawable)->isDrawableEffectivelyHidden)())
+			&& *(unsigned char *)((char *)this + 0x2d) == 0)
 		{
-				//Check if we have turned enough since last draw to require animation
-				Coord3D dir;
-				obj->getUnitDirectionVector2D(dir);
-				Real angleToGoal = dir.x * m_lastDirection.x + dir.y * m_lastDirection.y;
-				
-				if (fabs(1.0f-angleToGoal) > 0.00001f)	//check if difference in angle cosines is greater than some cutoff.
-				{
-					if (turn == TURN_NEGATIVE)	//turning right
-						updateTreadPositions(-treadScrollSpeed);
-					else	//turning left
-						updateTreadPositions(treadScrollSpeed);
-				}
-				m_lastDirection=dir;	//update for next frame
+			startMoveDebris();
 		}
 		else
-		if (physics->isMotive() && physics->getVelocityMagnitude()/maxSpeed >= getW3DTankDrawModuleData()->m_treadDriveSpeedFraction)
-		{	//do simple scrolling based only on speed when tank is moving straight at high speed.
-			//we stop scrolling when tank slows down to reduce the appearance of sliding
-			//tread scrolling speed was not directly tied into tank velocity because it looked odd
-			//under certain situations when tank moved sideways.
-			for (Int i=0; i<m_treadCount; i++)
+		{
+			stopMoveDebris();
+		}
+	}
+	else
+	{
+		stopMoveDebris();
+	}
+
+	Coord3D velocityMultiplier;
+	Real speed = (Real)sqrt(debrisSpeed);
+	velocityMultiplier.x = speed * *(const Real *)0x0107533C
+		+ *(const Real *)0x01075C70;
+	if (velocityMultiplier.x > *(const Real *)0x01075334)
+		velocityMultiplier.x = 1.0f;
+	velocityMultiplier.y = velocityMultiplier.x;
+	velocityMultiplier.z = speed + *(const Real *)0x01075C70;
+	if (velocityMultiplier.z > *(const Real *)0x01075334)
+		velocityMultiplier.z = 1.0f;
+
+	if (tank->treadDebrisLeft)
+	{
+		tank->treadDebrisLeft->setVelocityMultiplier(&velocityMultiplier);
+		tank->treadDebrisLeft->setBurstCountMultiplier(velocityMultiplier.z);
+	}
+	if (tank->treadDebrisRight)
+	{
+		tank->treadDebrisRight->setVelocityMultiplier(&velocityMultiplier);
+		tank->treadDebrisRight->setBurstCountMultiplier(velocityMultiplier.z);
+	}
+
+	if (tank->treadCount)
+	{
+		BfmeTankAiFields *ai = reinterpret_cast<BfmeTankAiFields *>(obj->ai);
+		BfmeTankLocomotorFields *locomotor = 0;
+		if (ai != 0)
+			locomotor = reinterpret_cast<BfmeTankLocomotorFields *>(ai->locomotor);
+		else
+			locomotor = 0;
+		if (locomotor == 0)
+			return;
+		const BfmeTankModuleDataFields *moduleData =
+			reinterpret_cast<const BfmeTankModuleDataFields *>(tank->moduleData);
+		int turning = locomotor->turning;
+		Real treadScrollSpeed = moduleData->treadAnimationRate;
+		Real maxSpeed = reinterpret_cast<AIUpdateInterface *>(ai)->getCurLocomotorSpeed();
+
+		if (turning != 0
+		&& (heightObject->bfmeGetNonnegativePreferredLocomotorHeight() / maxSpeed < moduleData->treadPivotSpeedFraction))
+		{
+			Coord3D direction;
+			reinterpret_cast<Thing *>(obj)->getUnitDirectionVector2D(direction);
+			Real angleToGoal = direction.x * tank->lastDirection.x
+				+ direction.y * tank->lastDirection.y;
+			if (fabs(*(const Real *)0x01075334 - angleToGoal) > *(const Real *)0x0112100C)
 			{
-				offset_u = pTread->m_materialSettings.customUVOffset.X - treadScrollSpeed;
-				// ensure coordinates of offset are in [0, 1] range:
-				offset_u = offset_u - WWMath::Floor(offset_u);
-				pTread->m_materialSettings.customUVOffset.Set(offset_u,0);
-				pTread++;
+				if (turning == -1)
+					updateTreadPositions(-treadScrollSpeed);
+				else
+					updateTreadPositions(treadScrollSpeed);
+			}
+			tank->lastDirection = direction;
+		}
+		else if (heightObject->bfmeGetNonnegativePreferredLocomotorHeight() / maxSpeed >= moduleData->treadDriveSpeedFraction)
+		{
+			BfmeTankTreadScrollFields *tread =
+				reinterpret_cast<BfmeTankTreadScrollFields *>((char *)this + 0x2a4);
+			for (int i = 0; i < tank->treadCount; ++i)
+			{
+				Real offset = tread->customUVOffsetX - treadScrollSpeed;
+				offset = offset - floorf(offset);
+				tread->customUVOffsetX = offset;
+				tread->customUVOffsetY = 0.0f;
+				++tread;
 			}
 		}
 	}
