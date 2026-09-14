@@ -5116,10 +5116,14 @@ name,address,notes
 ??1Gen_dtor_0016f310@@UAE@XZ,0x00006BDB,gen-dtor class destructor
 ??1Gen_dtor_0016f470@@UAE@XZ,0x000289DE,gen-dtor class destructor
 ??1Gen_dtor_00172150@@UAE@XZ,0x0000E061,gen-dtor class destructor
-??1Gen_dtor_0017f250@@UAE@XZ,0x000047F0,gen-dtor class destructor
-??1Gen_dtor_0017f290@@UAE@XZ,0x000161D0,gen-dtor class destructor
+??1FailureState@@MAE@XZ,0x000047F0,FailureState complete destructor ILT called by scalar wrapper 0x0017F250; thunk reaches the exact State base destructor body through 0x0017F280
+??1ContinueState@@MAE@XZ,0x000161D0,ContinueState complete destructor ILT called by scalar wrapper 0x0017F290; thunk reaches the exact State base destructor body through 0x0017F2C0
 ??1Gen_dtor_0017f2d0@@UAE@XZ,0x0004339C,gen-dtor class destructor
 ??1AIBusyState@@MAE@XZ,0x00002D60,exact constructor 0x00170FC0 and dedicated vtable 0x01097AA0 establish the protected complete destructor called by wrapper 0x0017F310
+??_GFailureState@@MAEPAXI@Z,0x00006EF6,dedicated vtable 0x01097950 slot zero routes through this ILT to scalar wrapper 0x0017F250
+??_GContinueState@@MAEPAXI@Z,0x0000D79C,dedicated vtable 0x010979B8 slot zero routes through this ILT to scalar wrapper 0x0017F290
+??_7FailureState@@6B@,0x01097950,exact constructor 0x00170E10 installs this dedicated vtable
+??_7ContinueState@@6B@,0x010979B8,exact constructor 0x00170EA0 installs this dedicated vtable
 ??1Gen_dtor_0017f540@@UAE@XZ,0x000061CC,gen-dtor class destructor
 ??1Gen_dtor_0017f680@@UAE@XZ,0x00041C68,gen-dtor class destructor
 ??1Gen_dtor_0017f6c0@@UAE@XZ,0x0002200C,gen-dtor class destructor
