@@ -44,9 +44,8 @@ private:
 	Rva00892640Item m_inline[2];
 };
 
-// Its 46-byte out-of-line copy matches both 0x00892C30 and 0x008940E0.
-// Neither address has unique caller-based ownership proof; this use is inlined.
-// ??0Gen_uw_00893e70@@QAE@XZ present-unmatched
+// Its 46-byte out-of-line copy is uniquely located at 0x00892C30 after
+// relocation-aware whole-image verification.
 inline Gen_uw_00893e70::Gen_uw_00893e70()
 	: m_count(0), m_capacity(0), m_data(m_inline)
 {
