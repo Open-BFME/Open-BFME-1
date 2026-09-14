@@ -87813,3 +87813,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1Gen_dtor_002b8290@@UAE@XZ,0x000154DD,gen-dtor class destructor
 ??1Gen_dtor_00602ff0@@UAE@XZ,0x0002EDCA,gen-dtor class destructor
 ??1Gen_dtor_00161df0@@UAE@XZ,0x0003692B,gen-dtor class destructor
+??_GAIPlayer@@MAEPAXI@Z,0x00046CDB,vtable 0x00C968B0 slot zero routes through this ILT to scalar wrapper 0x00161DF0
+??_7AIPlayer@@6B@,0x00C968B0,vtable whose slots name AIPlayer
