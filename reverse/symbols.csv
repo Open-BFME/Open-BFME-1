@@ -79274,6 +79274,7 @@ name,address,notes
 ?findArmorTemplate@ArmorStore@@QBEPBVArmorTemplate@@VAsciiString@@@Z,0x00022FC5,parseArmorTemplate call target (incremental-link thunk); resolves repointed INI parser thunk-dump
 ?findArmy@BfmeLivingWorldCampaignManager@@QAEPAVLivingWorldArmy@@ABVAsciiString@@@Z,0x00010302,LivingWorldPlayerArmy loadPostProcess retail call at 0x00365855 uses the ILT thunk to the 0x003B43D0 army lookup body
 ??1CampaignManager@@UAE@XZ,0x000385FF,authentic CampaignManager scalar-deleting wrapper callee ILT; routes to matched complete destructor body 0x005BC4E0
+??1Campaign@@UAE@XZ,0x00025220,authentic Campaign scalar-deleting wrapper callee ILT; routes to complete destructor body 0x005BC020
 ?findArmyIcon@BfmeLivingWorldManagerIcons@@QAEPAVBfmeArmyIcon@@ABVAsciiString@@@Z,0x00002C89,derived from the REL32 displacement at 0x0060B820
 ?findAttackInfo@ScriptEngine@@AAEPAVAttackPriorityInfo@@ABVAsciiString@@_N@Z,0x00002969,Open-BFME5 ILT to ScriptEngine::findAttackInfo body 0x0033DBF0
 ?findAttributeModifierPoolUpdate@Object@@ABEPAVAttributeModifierPoolUpdate@@XZ,0x000202ED,module-name-key-based AttributeModifierPoolUpdate finder used by modifier application and value selection
