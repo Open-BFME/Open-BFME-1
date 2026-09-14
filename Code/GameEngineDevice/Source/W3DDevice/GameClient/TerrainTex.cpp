@@ -515,28 +515,128 @@ for a single texture.  If stage==1, then we are doing a single pass, and we
 set up the pipe so that we blend onto the base texture in stage 0.
 (standard D3D setup, but beyond the scope of W3D). */
 //=============================================================================
-// ?Apply@AlphaTerrainTextureClass@@ present-unmatched
+#define ALPHA_DEVICE_SLOT(n) virtual void __stdcall slot##n(void);
+struct Rva006D4FF0Device
+{
+	ALPHA_DEVICE_SLOT(0) ALPHA_DEVICE_SLOT(1) ALPHA_DEVICE_SLOT(2)
+	ALPHA_DEVICE_SLOT(3) ALPHA_DEVICE_SLOT(4) ALPHA_DEVICE_SLOT(5)
+	ALPHA_DEVICE_SLOT(6) ALPHA_DEVICE_SLOT(7) ALPHA_DEVICE_SLOT(8)
+	ALPHA_DEVICE_SLOT(9) ALPHA_DEVICE_SLOT(10) ALPHA_DEVICE_SLOT(11)
+	ALPHA_DEVICE_SLOT(12) ALPHA_DEVICE_SLOT(13) ALPHA_DEVICE_SLOT(14)
+	ALPHA_DEVICE_SLOT(15) ALPHA_DEVICE_SLOT(16) ALPHA_DEVICE_SLOT(17)
+	ALPHA_DEVICE_SLOT(18) ALPHA_DEVICE_SLOT(19) ALPHA_DEVICE_SLOT(20)
+	ALPHA_DEVICE_SLOT(21) ALPHA_DEVICE_SLOT(22) ALPHA_DEVICE_SLOT(23)
+	ALPHA_DEVICE_SLOT(24) ALPHA_DEVICE_SLOT(25) ALPHA_DEVICE_SLOT(26)
+	ALPHA_DEVICE_SLOT(27) ALPHA_DEVICE_SLOT(28) ALPHA_DEVICE_SLOT(29)
+	ALPHA_DEVICE_SLOT(30) ALPHA_DEVICE_SLOT(31) ALPHA_DEVICE_SLOT(32)
+	ALPHA_DEVICE_SLOT(33) ALPHA_DEVICE_SLOT(34) ALPHA_DEVICE_SLOT(35)
+	ALPHA_DEVICE_SLOT(36) ALPHA_DEVICE_SLOT(37) ALPHA_DEVICE_SLOT(38)
+	ALPHA_DEVICE_SLOT(39) ALPHA_DEVICE_SLOT(40) ALPHA_DEVICE_SLOT(41)
+	ALPHA_DEVICE_SLOT(42) ALPHA_DEVICE_SLOT(43) ALPHA_DEVICE_SLOT(44)
+	ALPHA_DEVICE_SLOT(45) ALPHA_DEVICE_SLOT(46) ALPHA_DEVICE_SLOT(47)
+	ALPHA_DEVICE_SLOT(48) ALPHA_DEVICE_SLOT(49) ALPHA_DEVICE_SLOT(50)
+	ALPHA_DEVICE_SLOT(51) ALPHA_DEVICE_SLOT(52) ALPHA_DEVICE_SLOT(53)
+	ALPHA_DEVICE_SLOT(54) ALPHA_DEVICE_SLOT(55) ALPHA_DEVICE_SLOT(56)
+	ALPHA_DEVICE_SLOT(57) ALPHA_DEVICE_SLOT(58) ALPHA_DEVICE_SLOT(59)
+	ALPHA_DEVICE_SLOT(60) ALPHA_DEVICE_SLOT(61) ALPHA_DEVICE_SLOT(62)
+	ALPHA_DEVICE_SLOT(63) ALPHA_DEVICE_SLOT(64) ALPHA_DEVICE_SLOT(65)
+	ALPHA_DEVICE_SLOT(66) ALPHA_DEVICE_SLOT(67) ALPHA_DEVICE_SLOT(68)
+	virtual long __stdcall SetTextureStageState(unsigned int stage,
+		unsigned int state, unsigned int value);
+};
+#undef ALPHA_DEVICE_SLOT
+
+extern Rva006D4FF0Device *Rva01340534Device;
+extern unsigned int Rva01340594DX8Calls;
+extern unsigned int Rva01340568StageChanges;
+
+struct Rva006C9270Texture
+{
+	virtual void __stdcall QueryInterface(void);
+	virtual void __stdcall AddRef(void);
+	virtual void __stdcall Release(void);
+};
+
+struct Rva006C9270Device
+{
+#define ALPHA_TEXTURE_DEVICE_SLOT(n) virtual void __stdcall slot##n(void);
+	ALPHA_TEXTURE_DEVICE_SLOT(0) ALPHA_TEXTURE_DEVICE_SLOT(1)
+	ALPHA_TEXTURE_DEVICE_SLOT(2) ALPHA_TEXTURE_DEVICE_SLOT(3)
+	ALPHA_TEXTURE_DEVICE_SLOT(4) ALPHA_TEXTURE_DEVICE_SLOT(5)
+	ALPHA_TEXTURE_DEVICE_SLOT(6) ALPHA_TEXTURE_DEVICE_SLOT(7)
+	ALPHA_TEXTURE_DEVICE_SLOT(8) ALPHA_TEXTURE_DEVICE_SLOT(9)
+	ALPHA_TEXTURE_DEVICE_SLOT(10) ALPHA_TEXTURE_DEVICE_SLOT(11)
+	ALPHA_TEXTURE_DEVICE_SLOT(12) ALPHA_TEXTURE_DEVICE_SLOT(13)
+	ALPHA_TEXTURE_DEVICE_SLOT(14) ALPHA_TEXTURE_DEVICE_SLOT(15)
+	ALPHA_TEXTURE_DEVICE_SLOT(16) ALPHA_TEXTURE_DEVICE_SLOT(17)
+	ALPHA_TEXTURE_DEVICE_SLOT(18) ALPHA_TEXTURE_DEVICE_SLOT(19)
+	ALPHA_TEXTURE_DEVICE_SLOT(20) ALPHA_TEXTURE_DEVICE_SLOT(21)
+	ALPHA_TEXTURE_DEVICE_SLOT(22) ALPHA_TEXTURE_DEVICE_SLOT(23)
+	ALPHA_TEXTURE_DEVICE_SLOT(24) ALPHA_TEXTURE_DEVICE_SLOT(25)
+	ALPHA_TEXTURE_DEVICE_SLOT(26) ALPHA_TEXTURE_DEVICE_SLOT(27)
+	ALPHA_TEXTURE_DEVICE_SLOT(28) ALPHA_TEXTURE_DEVICE_SLOT(29)
+	ALPHA_TEXTURE_DEVICE_SLOT(30) ALPHA_TEXTURE_DEVICE_SLOT(31)
+	ALPHA_TEXTURE_DEVICE_SLOT(32) ALPHA_TEXTURE_DEVICE_SLOT(33)
+	ALPHA_TEXTURE_DEVICE_SLOT(34) ALPHA_TEXTURE_DEVICE_SLOT(35)
+	ALPHA_TEXTURE_DEVICE_SLOT(36) ALPHA_TEXTURE_DEVICE_SLOT(37)
+	ALPHA_TEXTURE_DEVICE_SLOT(38) ALPHA_TEXTURE_DEVICE_SLOT(39)
+	ALPHA_TEXTURE_DEVICE_SLOT(40) ALPHA_TEXTURE_DEVICE_SLOT(41)
+	ALPHA_TEXTURE_DEVICE_SLOT(42) ALPHA_TEXTURE_DEVICE_SLOT(43)
+	ALPHA_TEXTURE_DEVICE_SLOT(44) ALPHA_TEXTURE_DEVICE_SLOT(45)
+	ALPHA_TEXTURE_DEVICE_SLOT(46) ALPHA_TEXTURE_DEVICE_SLOT(47)
+	ALPHA_TEXTURE_DEVICE_SLOT(48) ALPHA_TEXTURE_DEVICE_SLOT(49)
+	ALPHA_TEXTURE_DEVICE_SLOT(50) ALPHA_TEXTURE_DEVICE_SLOT(51)
+	ALPHA_TEXTURE_DEVICE_SLOT(52) ALPHA_TEXTURE_DEVICE_SLOT(53)
+	ALPHA_TEXTURE_DEVICE_SLOT(54) ALPHA_TEXTURE_DEVICE_SLOT(55)
+	ALPHA_TEXTURE_DEVICE_SLOT(56) ALPHA_TEXTURE_DEVICE_SLOT(57)
+	ALPHA_TEXTURE_DEVICE_SLOT(58) ALPHA_TEXTURE_DEVICE_SLOT(59)
+	ALPHA_TEXTURE_DEVICE_SLOT(60) ALPHA_TEXTURE_DEVICE_SLOT(61)
+	ALPHA_TEXTURE_DEVICE_SLOT(62) ALPHA_TEXTURE_DEVICE_SLOT(63)
+	ALPHA_TEXTURE_DEVICE_SLOT(64)
+#undef ALPHA_TEXTURE_DEVICE_SLOT
+	virtual long __stdcall SetTexture(unsigned int stage,
+		Rva006C9270Texture *texture);
+};
+
+extern Rva006C9270Device *Rva01340534DeviceB;
+extern Rva006C9270Texture *Rva0133F478Textures[];
+extern unsigned int Rva01340560TextureChanges;
+
+static __forceinline void AlphaSetTexture(unsigned int stage,
+	Rva006C9270Texture *texture)
+{
+	if (stage >= 8)
+	{
+		Rva01340534DeviceB->SetTexture(stage, texture);
+		++Rva01340594DX8Calls;
+		return;
+	}
+	if (Rva0133F478Textures[stage] == texture)
+		return;
+	if (Rva0133F478Textures[stage])
+		Rva0133F478Textures[stage]->Release();
+	Rva0133F478Textures[stage] = texture;
+	if (texture)
+		texture->AddRef();
+	Rva01340534DeviceB->SetTexture(stage, texture);
+	++Rva01340594DX8Calls;
+	++Rva01340560TextureChanges;
+}
+
+extern void __stdcall Rva0090C610Invoke(void *argument);
+extern void __cdecl Rva006D4690Apply(void *argument);
+
 void AlphaTerrainTextureClass::Apply(unsigned int stage)
 {
-	// Do the base apply.
-	TextureClass::Apply(stage);
-	
-	// Set the bilinear or trilinear filtering.
-	if (TheGlobalData && TheGlobalData->m_bilinearTerrainTex || TheGlobalData->m_trilinearTerrainTex) {
-		DX8Wrapper::Set_DX8_Texture_Stage_State(stage, D3DTSS_MINFILTER, D3DTEXF_LINEAR);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(stage, D3DTSS_MAGFILTER, D3DTEXF_LINEAR);
-	} else {
-		DX8Wrapper::Set_DX8_Texture_Stage_State(stage, D3DTSS_MINFILTER, D3DTEXF_POINT);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(stage, D3DTSS_MAGFILTER, D3DTEXF_POINT);
-	}
-	if (TheGlobalData && TheGlobalData->m_trilinearTerrainTex) {
-		DX8Wrapper::Set_DX8_Texture_Stage_State(stage, D3DTSS_MIPFILTER, D3DTEXF_LINEAR);
-	} else {
-		DX8Wrapper::Set_DX8_Texture_Stage_State(stage, D3DTSS_MIPFILTER, D3DTEXF_POINT);
-	}
-	// Since we are using multiple distinct tiles, the textures doesn't wrap, so clamp it.
-	DX8Wrapper::Set_DX8_Texture_Stage_State( 0, D3DTSS_ADDRESSU, D3DTADDRESS_CLAMP);
-	DX8Wrapper::Set_DX8_Texture_Stage_State( 0, D3DTSS_ADDRESSV, D3DTADDRESS_CLAMP);
+	Rva0090C610Invoke((void *)stage);
+	Rva006D4690Apply((void *)stage);
+	Rva01340534Device->SetTextureStageState(0, 1, 3);
+	++Rva01340594DX8Calls;
+	++Rva01340568StageChanges;
+	Rva01340534Device->SetTextureStageState(0, 2, 3);
+	++Rva01340594DX8Calls;
+	++Rva01340568StageChanges;
+
 	// Now setup the texture pipeline.
 	if (stage==0) {
 		// Modulate the diffuse color with the texture as lighting comes from diffuse.
@@ -554,7 +654,7 @@ void AlphaTerrainTextureClass::Apply(unsigned int stage)
 		DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
 	}	else if (stage==1) {
 
-		if (TheGlobalData && !TheGlobalData->m_multiPassTerrain)
+		if (TheGlobalData && !*(unsigned char *)((char *)TheGlobalData + 0x4c))
 		{
 			///@todo: Remove 8-Stage Nvidia hack after drivers are fixed.
 			//This method is a backdoor specific to Nvidia based cards.  It will fail on
@@ -575,7 +675,7 @@ void AlphaTerrainTextureClass::Apply(unsigned int stage)
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_ALPHAARG1, D3DTA_TFACTOR | D3DTA_COMPLEMENT);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
 
-			DX8Wrapper::Set_DX8_Texture(2, NULL);
+			AlphaSetTexture(2, 0);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 2, D3DTSS_COLOROP, D3DTOP_MODULATE);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 2, D3DTSS_TEXCOORDINDEX, 2);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 2, D3DTSS_COLORARG1, D3DTA_TEXTURE);
@@ -584,7 +684,7 @@ void AlphaTerrainTextureClass::Apply(unsigned int stage)
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 2, D3DTSS_ALPHAARG1, D3DTA_TFACTOR);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 2, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
 
-			DX8Wrapper::Set_DX8_Texture(3, NULL);
+			AlphaSetTexture(3, 0);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 3, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 3, D3DTSS_TEXCOORDINDEX, 3);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 3, D3DTSS_COLORARG1, D3DTA_DIFFUSE | 0 | D3DTA_ALPHAREPLICATE);
@@ -593,7 +693,7 @@ void AlphaTerrainTextureClass::Apply(unsigned int stage)
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 3, D3DTSS_ALPHAARG1, D3DTA_TFACTOR);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 3, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
 
-			DX8Wrapper::Set_DX8_Texture(4, NULL);
+			AlphaSetTexture(4, 0);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 4, D3DTSS_COLOROP, D3DTOP_MODULATE);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 4, D3DTSS_TEXCOORDINDEX, 4);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 4, D3DTSS_COLORARG1, D3DTA_CURRENT);
@@ -602,7 +702,7 @@ void AlphaTerrainTextureClass::Apply(unsigned int stage)
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 4, D3DTSS_ALPHAARG1, D3DTA_CURRENT);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 4, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
 
-			DX8Wrapper::Set_DX8_Texture(5, NULL);
+			AlphaSetTexture(5, 0);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 5, D3DTSS_COLOROP, D3DTOP_ADD);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 5, D3DTSS_TEXCOORDINDEX, 5);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 5, D3DTSS_COLORARG1, D3DTA_DIFFUSE);
@@ -611,7 +711,7 @@ void AlphaTerrainTextureClass::Apply(unsigned int stage)
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 5, D3DTSS_ALPHAARG1, D3DTA_TFACTOR | D3DTA_COMPLEMENT);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 5, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
 
-			DX8Wrapper::Set_DX8_Texture(6, NULL);
+			AlphaSetTexture(6, 0);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 6, D3DTSS_COLOROP, D3DTOP_MODULATE);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 6, D3DTSS_TEXCOORDINDEX, 6);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 6, D3DTSS_COLORARG1, D3DTA_TFACTOR);
@@ -620,7 +720,7 @@ void AlphaTerrainTextureClass::Apply(unsigned int stage)
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 6, D3DTSS_ALPHAARG1, D3DTA_TFACTOR);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 6, D3DTSS_ALPHAARG2, D3DTA_TFACTOR);
 
-			DX8Wrapper::Set_DX8_Texture(7, NULL);
+			AlphaSetTexture(7, 0);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 7, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 7, D3DTSS_TEXCOORDINDEX, 7);
 			DX8Wrapper::Set_DX8_Texture_Stage_State( 7, D3DTSS_COLORARG1, D3DTA_TFACTOR);
@@ -1161,5 +1261,3 @@ void ScorchTextureClass::Apply(unsigned int stage)
 	DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_COLOROP,   D3DTOP_DISABLE );
 	DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_ALPHAOP,   D3DTOP_DISABLE );
 }
-
-
