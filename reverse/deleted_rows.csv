@@ -23520,6 +23520,7 @@ uw_000970d0,0x000970D0,gen-funclet no longer has an emitting owner after the exa
 ?d_0082b780@@YAXXZ,0x0082B780,"gen-dump placeholder retired: converted to __debug_alloc::deallocate in Code/Libraries/Source/WWVegas/WWLib/STLDebugAllocDeallocate.cpp"
 ?d_0082ae40@@YAXXZ,0x0082AE40,"gen-dump placeholder retired: converted to bad_alloc dtor in Code/Libraries/Source/WWVegas/WWLib/STLBadAllocDtor.cpp"
 ?d_0082ae60@@YAXXZ,0x0082AE60,"gen-dump placeholder retired: converted to Rva0082AE60Exc dtor in Code/Libraries/Source/WWVegas/WWLib/STLBadAllocDtor.cpp"
+??_GGen_dtor_0082c040@@UAEPAXI@Z,0x0082C040,"generated scalar-destructor placeholder superseded by the authored _STL::Rva0082AE60Exc scalar-deleting destructor over the same 30-byte range; its matched complete destructor at 0x0082AE60 and matching bad_alloc-derived vtable/layout establish identity"
 ?d_0082ae80@@YAXXZ,0x0082AE80,"gen-dump placeholder retired: converted to Rva0082AE80Exc dtor in Code/Libraries/Source/WWVegas/WWLib/STLBadAllocDtor.cpp"
 ?d_0082aea0@@YAXXZ,0x0082AEA0,"gen-dump placeholder retired: converted to Rva0082AEA0Exc dtor in Code/Libraries/Source/WWVegas/WWLib/STLBadAllocDtor.cpp"
 ?d_0082aec0@@YAXXZ,0x0082AEC0,"gen-dump placeholder retired: converted to Rva0082AEC0Exc dtor in Code/Libraries/Source/WWVegas/WWLib/STLBadAllocDtor.cpp"
