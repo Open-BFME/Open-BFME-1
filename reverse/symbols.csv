@@ -4988,7 +4988,7 @@ name,address,notes
 ??1Gen_dtor_00125820@@UAE@XZ,0x0003FA58,gen-dtor class destructor
 ??1Gen_dtor_00125860@@UAE@XZ,0x00014FE2,gen-dtor class destructor
 ??1Gen_dtor_001258f0@@UAE@XZ,0x0001D62E,gen-dtor class destructor
-??1Gen_dtor_001259c0@@UAE@XZ,0x000114BE,gen-dtor class destructor
+??1QueueProductionExitUpdateModuleData@@MAE@XZ,0x000114BE,exact constructor 0x00124150 and dedicated vtable 0x00C8CFC0 establish the protected complete destructor called by wrapper 0x001259C0
 ??1Gen_dtor_00125c60@@UAE@XZ,0x00029735,gen-dtor class destructor
 ??1Gen_dtor_00125ca0@@UAE@XZ,0x00019411,gen-dtor class destructor
 ??1Gen_dtor_00125e00@@UAE@XZ,0x0003F792,gen-dtor class destructor
@@ -5282,7 +5282,7 @@ name,address,notes
 ??1GhostObjectManager@@UAE@XZ,0x000231A5,exact constructor 0x001B3AA0 and dedicated vtable 0x0109CE28 establish the complete destructor thunk called by wrapper 0x001B3B40
 ??_GGhostObjectManager@@UAEPAXI@Z,0x0003837F,constructor-installed vtable 0x0109CE28 slot zero routes through this ILT to 0x001B3B40
 ??1Gen_dtor_001b3ef0@@UAE@XZ,0x00034E50,gen-dtor class destructor
-??1Gen_dtor_001b60b0@@UAE@XZ,0x0003296B,gen-dtor class destructor
+??1LocomotorTemplate@@MAE@XZ,0x0003296B,exact constructor 0x001B52C0 and dedicated vtable 0x00C9DE9C establish the protected complete destructor called by wrapper 0x001B60B0
 ??1Gen_dtor_001b63b0@@UAE@XZ,0x000474EC,gen-dtor class destructor
 ??1Gen_dtor_001b7e00@@UAE@XZ,0x00015B0E,gen-dtor class destructor
 ??1Gen_dtor_001bbc10@@UAE@XZ,0x00012EB3,gen-dtor class destructor
@@ -5308,7 +5308,7 @@ name,address,notes
 ??1GenericObjectCreationNugget@@MAE@XZ,0x0004706E,authentic protected scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x001D8220
 ??1Gen_dtor_001dade0@@UAE@XZ,0x00025B7B,gen-dtor class destructor
 ??1Gen_dtor_001db340@@UAE@XZ,0x0000660E,gen-dtor class destructor
-??1Gen_dtor_001dc3d0@@UAE@XZ,0x0003EAFE,gen-dtor class destructor
+??1ObjectTypes@@MAE@XZ,0x0003EAFE,exact constructor 0x001DC220 and dedicated vtable 0x00C9FB2C establish the protected complete destructor called by wrapper 0x001DC3D0
 ??1Gen_dtor_001dd3f0@@UAE@XZ,0x00041268,gen-dtor class destructor
 ??1Gen_dtor_001dd430@@UAE@XZ,0x0002C9AD,gen-dtor class destructor
 ??1Gen_dtor_001dd550@@UAE@XZ,0x0003B56B,gen-dtor class destructor
@@ -5319,12 +5319,12 @@ name,address,notes
 ??1Gen_dtor_001e9350@@UAE@XZ,0x00046ECF,gen-dtor class destructor
 ??1Gen_dtor_001eb0d0@@UAE@XZ,0x00006587,gen-dtor class destructor
 ??1Gen_dtor_001ed090@@UAE@XZ,0x00045C5A,gen-dtor class destructor
-??1Gen_dtor_001ed120@@UAE@XZ,0x00039397,gen-dtor class destructor
+??1AimWeaponBehaviorModuleData@@MAE@XZ,0x00039397,exact constructor 0x001ECEF0 and dedicated vtable 0x00CA1848 establish the protected complete destructor called by wrapper 0x001ED120
 ??1Gen_dtor_001ed670@@UAE@XZ,0x00009DC7,gen-dtor class destructor
 ??1Gen_dtor_001ed860@@UAE@XZ,0x00003C51,gen-dtor class destructor
 ??1Gen_dtor_001ed970@@UAE@XZ,0x0000875B,gen-dtor class destructor
 ??1Gen_dtor_001eeb90@@UAE@XZ,0x00047D84,gen-dtor class destructor
-??1Gen_dtor_001efe50@@UAE@XZ,0x0004A14C,gen-dtor class destructor
+??1BezierProjectileBehaviorModuleData@@MAE@XZ,0x0004A14C,exact constructor 0x001EFD50 and dedicated vtable 0x00CA23E0 establish the protected complete destructor called by wrapper 0x001EFE50
 ??1Gen_dtor_001f15f0@@UAE@XZ,0x00001F0A,gen-dtor class destructor
 ??1Gen_dtor_001f2880@@UAE@XZ,0x00031F39,gen-dtor class destructor
 ??1Gen_dtor_001f3220@@UAE@XZ,0x0001F532,gen-dtor class destructor
@@ -5363,7 +5363,7 @@ name,address,notes
 ??1Gen_dtor_00202390@@UAE@XZ,0x000116E4,gen-dtor class destructor
 ??1PassiveAreaEffectBehaviorModuleData@@UAE@XZ,0x0002F0C2,destructor ILT used by the PassiveAreaEffectBehaviorModuleData scalar-deleting destructor
 ??1Gen_dtor_00202ba0@@UAE@XZ,0x00009BEC,gen-dtor class destructor
-??1Gen_dtor_00202db0@@UAE@XZ,0x000443FF,gen-dtor class destructor
+??1PoisonedBehaviorModuleData@@MAE@XZ,0x000443FF,exact constructor 0x002029B0 and dedicated vtable 0x00CA53B8 establish the protected complete destructor called by wrapper 0x00202DB0
 ??1Gen_dtor_002030e0@@UAE@XZ,0x0003AC5B,gen-dtor class destructor
 ??1Gen_dtor_002034c0@@UAE@XZ,0x00028A38,gen-dtor class destructor
 ??1Gen_dtor_00203d80@@UAE@XZ,0x0001D732,gen-dtor class destructor
@@ -5581,12 +5581,12 @@ name,address,notes
 ??1Gen_dtor_00299050@@UAE@XZ,0x0002A86F,gen-dtor class destructor
 ??1Gen_dtor_00299a50@@UAE@XZ,0x0000806C,gen-dtor class destructor
 ??1PartTheHeavensUpdateModuleData@@UAE@XZ,0x0002FA36,destructor ILT used by the PartTheHeavensUpdateModuleData scalar-deleting destructor
-??1Gen_dtor_0029a610@@UAE@XZ,0x00041425,gen-dtor class destructor
+??1PhysicsBehaviorModuleData@@MAE@XZ,0x00041425,exact constructor 0x0029A090 and dedicated vtable 0x00CC0910 establish the protected complete destructor called by wrapper 0x0029A610
 ??1Gen_dtor_0029ac10@@UAE@XZ,0x000087D8,gen-dtor class destructor
 ??1Gen_dtor_0029c5c0@@UAE@XZ,0x000033B9,gen-dtor class destructor
 ??1Gen_dtor_0029e300@@UAE@XZ,0x00010B9F,gen-dtor class destructor
 ??1Gen_dtor_0029ff70@@UAE@XZ,0x00019AA1,gen-dtor class destructor
-??1Gen_dtor_0029fff0@@UAE@XZ,0x0004A615,gen-dtor class destructor
+??1ProneUpdateModuleData@@MAE@XZ,0x0004A615,exact constructor 0x0029FE30 and dedicated vtable 0x00CC1290 establish the protected complete destructor called by wrapper 0x0029FFF0
 ??1Gen_dtor_002a02f0@@UAE@XZ,0x0000B037,gen-dtor class destructor
 ??1Gen_dtor_002a03a0@@UAE@XZ,0x00041BF5,gen-dtor class destructor
 ??1Gen_dtor_002a0720@@UAE@XZ,0x00012EC7,gen-dtor class destructor
@@ -87656,3 +87656,19 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7TurretAI@@6B@,0x0109BBF4,TurretAI primary vtable installed by exact constructor 0x0018DED0; slot zero ILT 0x0003700B reaches scalar deleting wrapper 0x0018D860 while secondary vtable 0x0109BBDC is installed at +4
 ??_GTurretStateMachine@@MAEPAXI@Z,0x00042915,dedicated vtable 0x0109B828 slot zero routes through this ILT to scalar wrapper 0x0018CF30
 ??_7TurretStateMachine@@6B@,0x0109B828,exact constructor 0x0018DB60 installs this dedicated vtable
+??_GQueueProductionExitUpdateModuleData@@MAEPAXI@Z,0x0002D79A,dedicated vtable 0x00C8CFC0 slot zero routes through this ILT to scalar wrapper 0x001259C0
+??_7QueueProductionExitUpdateModuleData@@6B@,0x00C8CFC0,exact constructor 0x00124150 installs this dedicated vtable
+??_GAimWeaponBehaviorModuleData@@MAEPAXI@Z,0x00037F0B,dedicated vtable 0x00CA1848 slot zero routes through this ILT to scalar wrapper 0x001ED120
+??_7AimWeaponBehaviorModuleData@@6B@,0x00CA1848,exact constructor 0x001ECEF0 installs this dedicated vtable
+??_GBezierProjectileBehaviorModuleData@@MAEPAXI@Z,0x0004B06F,dedicated vtable 0x00CA23E0 slot zero routes through this ILT to scalar wrapper 0x001EFE50
+??_7BezierProjectileBehaviorModuleData@@6B@,0x00CA23E0,exact constructor 0x001EFD50 installs this dedicated vtable
+??_GPoisonedBehaviorModuleData@@MAEPAXI@Z,0x0002351A,dedicated vtable 0x00CA53B8 slot zero routes through this ILT to scalar wrapper 0x00202DB0
+??_7PoisonedBehaviorModuleData@@6B@,0x00CA53B8,exact constructor 0x002029B0 installs this dedicated vtable
+??_GPhysicsBehaviorModuleData@@MAEPAXI@Z,0x00040827,dedicated vtable 0x00CC0910 slot zero routes through this ILT to scalar wrapper 0x0029A610
+??_7PhysicsBehaviorModuleData@@6B@,0x00CC0910,exact constructor 0x0029A090 installs this dedicated vtable
+??_GProneUpdateModuleData@@MAEPAXI@Z,0x00028E43,dedicated vtable 0x00CC1290 slot zero routes through this ILT to scalar wrapper 0x0029FFF0
+??_7ProneUpdateModuleData@@6B@,0x00CC1290,exact constructor 0x0029FE30 installs this dedicated vtable
+??_GLocomotorTemplate@@MAEPAXI@Z,0x0000F9AC,dedicated vtable 0x00C9DE9C slot zero routes through this ILT to scalar wrapper 0x001B60B0
+??_7LocomotorTemplate@@6B@,0x00C9DE9C,exact constructor 0x001B52C0 installs this dedicated vtable
+??_GObjectTypes@@MAEPAXI@Z,0x0003DFBE,dedicated vtable 0x00C9FB2C slot zero routes through this ILT to scalar wrapper 0x001DC3D0
+??_7ObjectTypes@@6B@,0x00C9FB2C,exact constructor 0x001DC220 installs this dedicated vtable
