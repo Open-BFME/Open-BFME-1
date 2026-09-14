@@ -16,7 +16,9 @@ struct Rect {long left,top,right,bottom;};
 extern "C" long __stdcall D3DXLoadSurfaceFromMemory(Surface*,const void*,const Rect*,const void*,unsigned,unsigned,const void*,const Rect*,unsigned,unsigned);
 extern Device *HighlightDevice;
 extern unsigned HighlightVertexSupport,HighlightPixelSupport;
-extern void *HighlightActive;
+// Retail 0x012F9CE0. ScreenHilightFilter::init stores a sibling at 0x012F9CDC
+// under the same HighlightActive name.
+extern void *Rva007DCA80Active;
 int bfmeCheck986B();
 unsigned bfmeCurrentCU();
 void bfmeCopyCuSnap(void*,void*);
@@ -63,7 +65,7 @@ int Rva007DCA80::init(){
  snap[2]=((Cu*)bfmeCurrentCU())->f[4];
  snap[4]=((Cu*)bfmeCurrentCU())->f[6];
  bfmeCopyCuSnap((char*)this+0x34,snap);
- HighlightActive=this;
+ Rva007DCA80Active=this;
  return 1;
 }
 
