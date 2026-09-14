@@ -345,8 +345,12 @@ def select_candidate(candidates):
     concurrent contributors rarely collide; no longer worth the pool average."""
     rank_candidates(candidates)
     if not candidates:
-        return None, {"pool": 0}
+        return None, {"pool": 0, "exhausted": True}
+    # An empty `untried` is the pool running dry, not a neutral condition: the
+    # guard below then falls through to the already-failed pile, and a seat that
+    # is not told that burns 12-25 minutes re-failing what already failed.
     untried = [item for item in candidates if not item.get("deferred_attempts")]
+    exhausted = not untried
     if untried:
         candidates = untried
     packets = packet_rvas()
@@ -358,7 +362,8 @@ def select_candidate(candidates):
     for item, weight in zip(candidates, weights):
         cutoff -= weight
         if cutoff < 0:
-            return item, {"pool": len(candidates),
+            return item, {"pool": len(candidates), "exhausted": exhausted,
+                          "attempts": item.get("deferred_attempts", 0),
                           "packet": candidate_packet(item, packets)}
     raise AssertionError("select_candidate fell through its cumulative walk")
 
@@ -558,6 +563,11 @@ def main():
             print("No validated naked-asm candidates remain in the requested paths.")
             return
         print(f"== selected naked-asm conversion (drawn from {meta['pool']}) ==")
+        if meta.get("exhausted"):
+            print("  POOL EXHAUSTED: every candidate here has been attempted before; "
+                  f"this one {meta.get('attempts', 0)}x. The untried queue is empty, so "
+                  "this is a REPEAT, not new work — read its reverse/re_attempts.log "
+                  "entries first and stop early if they already refute the approach.")
         print(f"  {selected['symbol'] or selected['signature'] or '(unnamed)'}")
         print(f"  {selected['size']} bytes  {selected['path']}:{selected['line']}")
         if meta.get("packet"):
