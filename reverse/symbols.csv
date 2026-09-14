@@ -5451,7 +5451,7 @@ name,address,notes
 ??1Gen_dtor_0024f6a0@@UAE@XZ,0x0000DD5F,gen-dtor class destructor
 ??1ExperienceLevelCreate@@MAE@XZ,0x00008058,vtable 0x00CB151C slots name ExperienceLevelCreate; protected complete destructor called by wrapper 0x0024F6F0
 ??1ExperienceLevelCreateModuleData@@MAE@XZ,0x0003FFF8,exact constructor 0x0024F7A0 and dedicated vtable 0x00CB15F8 establish the protected complete destructor called by wrapper 0x0024F7D0
-??1Gen_dtor_0024fb00@@UAE@XZ,0x0003DEF1,gen-dtor class destructor
+??1GrantUpgradeCreateModuleData@@UAE@XZ,0x0003DEF1,public complete destructor ILT called by scalar wrapper 0x0024FB00; exact constructor 0x0024FA80 installs dedicated vtable 0x010B17B8
 ??1LockWeaponCreateModuleData@@MAE@XZ,0x00031DEF,exact constructor 0x0024FE00 and dedicated vtable 0x00CB1950 establish the protected complete destructor called by wrapper 0x0024FE20
 ??1Gen_dtor_00250710@@UAE@XZ,0x00003A99,gen-dtor class destructor
 ??1BoneFXDamage@@MAE@XZ,0x00008607,vtable 0x00CB1FB4 slots name BoneFXDamage; protected complete destructor called by wrapper 0x00250850
@@ -88105,6 +88105,7 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7RiderChangeContain@@6B@,0x010ACAF0,exact constructor 0x00229FB0 installs this dedicated vtable; slot zero ILT 0x000310AC reaches scalar wrapper 0x0022A510
 ??_7HordeGarrisonContain@@6B@,0x010AFDC0,exact constructor 0x00248F90 installs this dedicated vtable; slot zero ILT 0x00006528 reaches scalar wrapper 0x00249110
 ??_7HordeTransportContain@@6B@,0x010B0688,exact constructor 0x0024B6F0 installs this dedicated vtable; slot zero ILT 0x00001ADC reaches scalar wrapper 0x0024B980
+??_7GrantUpgradeCreateModuleData@@6B@,0x010B17B8,exact constructor 0x0024FA80 installs this dedicated vtable; slot zero ILT 0x00040291 reaches scalar wrapper 0x0024FB00
 ??1?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAE@XZ,0x0093EA10,retail copy called by the dedicated AddInfo deleting wrapper 0x0093FD60; body is the exact 67-byte DynamicVector destructor ICF family
 ??_G?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAEPAXI@Z,0x0093FD60,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> scalar deleting destructor; matched ctor 0x0093E660 stores vtable 0x0113CE5C whose slot zero is this body
 ??_7?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@6B@,0x0113CE5C,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> vtable installed by matched constructor 0x0093E660
