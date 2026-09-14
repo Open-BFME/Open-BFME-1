@@ -5156,14 +5156,20 @@ name,address,notes
 ??1Gen_dtor_00182320@@UAE@XZ,0x00007E0A,gen-dtor class destructor
 ??1Gen_dtor_00183ac0@@UAE@XZ,0x00013F66,gen-dtor class destructor
 ??1Gen_dtor_001840e0@@UAE@XZ,0x00042CE4,gen-dtor class destructor
-??1Gen_dtor_00185220@@UAE@XZ,0x0001F587,gen-dtor class destructor
+??1AIMoveOutOfTheWayState@@MAE@XZ,0x0001F587,exact constructor 0x0017F350 and dedicated vtable 0x0109A278 establish the protected complete destructor called by wrapper 0x00185220
 ??1Gen_dtor_00185260@@UAE@XZ,0x000174A9,gen-dtor class destructor
-??1Gen_dtor_00185290@@UAE@XZ,0x00047587,gen-dtor class destructor
+??1AIMoveAwayFromRepulsorsState@@MAE@XZ,0x00047587,exact constructor 0x0017F450 and dedicated vtable 0x0109A368 establish the protected complete destructor called by wrapper 0x00185290
 ??1Gen_dtor_001852d0@@UAE@XZ,0x0003018E,gen-dtor class destructor
 ??1Gen_dtor_00185310@@UAE@XZ,0x00019BE6,gen-dtor class destructor
 ??1Gen_dtor_00185350@@UAE@XZ,0x00033F8C,gen-dtor class destructor
 ??1Gen_dtor_00185390@@UAE@XZ,0x00020DBA,gen-dtor class destructor
-??1Gen_dtor_001853d0@@UAE@XZ,0x0003C687,gen-dtor class destructor
+??1AIAttackPursueTargetState@@MAE@XZ,0x0003C687,exact constructor 0x0017F700 and dedicated vtable 0x0109A5C8 establish the protected complete destructor called by wrapper 0x001853D0
+??_GAIMoveOutOfTheWayState@@MAEPAXI@Z,0x00045E30,dedicated vtable 0x0109A278 slot zero routes to scalar wrapper 0x00185220
+??_GAIMoveAwayFromRepulsorsState@@MAEPAXI@Z,0x0001E7CC,dedicated vtable 0x0109A368 slot zero routes to scalar wrapper 0x00185290
+??_GAIAttackPursueTargetState@@MAEPAXI@Z,0x000203F1,dedicated vtable 0x0109A5C8 slot zero routes to scalar wrapper 0x001853D0
+??_7AIMoveOutOfTheWayState@@6B@,0x0109A278,exact constructor 0x0017F350 installs this dedicated vtable
+??_7AIMoveAwayFromRepulsorsState@@6B@,0x0109A368,exact constructor 0x0017F450 installs this dedicated vtable
+??_7AIAttackPursueTargetState@@6B@,0x0109A5C8,exact constructor 0x0017F700 installs this dedicated vtable
 ??1Gen_dtor_00185410@@UAE@XZ,0x00027F43,gen-dtor class destructor
 ??1Gen_dtor_00185450@@UAE@XZ,0x0002CB56,gen-dtor class destructor
 ??1Gen_dtor_00185490@@UAE@XZ,0x00013D59,gen-dtor class destructor
