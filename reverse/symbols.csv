@@ -4636,7 +4636,7 @@ name,address,notes
 ??1EvaCheckInfoVec@@QAE@XZ,0x00002D15,ILT thunk to the retail vector<EvaCheckInfo> destructor at 0x00426220; unidentified beyond its shape
 ??1EvaSideSounds@@QAE@XZ,0x00022390,EvaSideSounds destructor ILT used by adjacent vector fill-insert 0x000DEBE0
 ??1EvaSideSoundsVec@@QAE@XZ,0x0003763C,ILT thunk to the retail Eva side-sound container destructor at 0x00424890; unidentified beyond its shape
-??1ExperienceDefaultLevel@@QAE@XZ,0x00016E6E,ExperienceLevelSystem owned level record destructor call target
+??1ExperienceScalarTable@@QAE@XZ,0x00016E6E,ExperienceLevelSystem owned scalar-table destructor call target; exact named constructor 0x0037EF50 establishes identity
 ??1ExperienceLevel@@UAE@XZ,0x00380C00,Parent full221B rawreview ret380CDC; constructor380AB0 andparser3825BFvia4113C establishsameD8record; Overridablevirtualdtor cleansstringsC787C vectors1C283444 andchain4; declarationonlyvirtualABI
 ??1FXBoneInfo@@QAE@XZ,0x00007928,resweep callee back-solved
 ??1FXNugget@@UAE@XZ,0x000033F0,ILT to FXNugget dtor body 0x00427390; callee of ParticleSystemFXNugget dtor

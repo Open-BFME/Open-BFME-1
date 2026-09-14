@@ -51,12 +51,12 @@ struct PendingExperienceLevel
 	Bool m_showEffect;
 };
 
-struct ExperienceDefaultLevel
+struct ExperienceScalarTable
 {
-	~ExperienceDefaultLevel();
+	~ExperienceScalarTable();
 };
 
-#pragma comment(linker, "/alternatename:??1ExperienceDefaultLevel@@QAE@XZ=?j_00016e6e@@YAXXZ")
+#pragma comment(linker, "/alternatename:??1ExperienceScalarTable@@QAE@XZ=?j_00016e6e@@YAXXZ")
 
 class ExperienceLevelSystem : public SubsystemInterface
 {
@@ -70,8 +70,8 @@ public:
 private:
 	ExperienceMap m_levelMap;
 	_STL::list<PendingExperienceLevel> m_pending;
-	std::vector<ExperienceDefaultLevel *> m_scalarTables;
-	ExperienceDefaultLevel *m_defaultLevel;
+	std::vector<ExperienceScalarTable *> m_scalarTables;
+	ExperienceScalarTable *m_defaultLevel;
 };
 
 #pragma comment(linker, "/alternatename:?cleanup@ExperienceLevelSystem@@QAEXXZ=?j_00002568@@YAXXZ")
@@ -86,7 +86,7 @@ ExperienceLevelSystem::~ExperienceLevelSystem()
 
 	for (unsigned index = 0; index < m_scalarTables.size(); ++index)
 	{
-		ExperienceDefaultLevel *level = m_scalarTables[index];
+		ExperienceScalarTable *level = m_scalarTables[index];
 		if (level)
 			delete level;
 	}
