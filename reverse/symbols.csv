@@ -4952,7 +4952,7 @@ name,address,notes
 ??1Gen_dtor_00113ef0@@UAE@XZ,0x00017D46,gen-dtor class destructor
 ??1Gen_dtor_00113f20@@UAE@XZ,0x00047C53,gen-dtor class destructor
 ??1Gen_dtor_00123070@@UAE@XZ,0x00043E82,gen-dtor class destructor
-??1Gen_dtor_00123140@@UAE@XZ,0x0001435D,gen-dtor class destructor
+??1AnimalAIUpdateModuleData@@UAE@XZ,0x0001435D,AnimalAIUpdateModuleData complete destructor ILT; factory/vtable and matched complete body establish this virtual destructor route to 0x0027E4E0
 ??1Gen_dtor_00123a00@@UAE@XZ,0x0003945A,gen-dtor class destructor
 ??1Gen_dtor_00123a40@@UAE@XZ,0x000235A1,gen-dtor class destructor
 ??1Gen_dtor_00123c80@@UAE@XZ,0x00044625,gen-dtor class destructor
