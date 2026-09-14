@@ -46,7 +46,9 @@ struct BfmeDevice
 #define BfmeDeviceGlobal (*(BfmeDevice **)0x01340534)
 #define BfmeTacticalViewGlobal (*(class BfmeTacticalView **)0x012F1600)
 #define BfmeCurrentCapsGlobal (*(struct BfmeCaps **)0x01340578)
-/* ScreenBWFilter::m_curFadeValue is declared below. */
+// Retail 0x013071BC. ScreenBWFilter::m_curFadeValue is a different static at
+// 0x013071A8 (Rva007D1E60 postRender); naming both ScreenBWFilter collides.
+extern float Rva007D3580FadeValue;
 extern char g_rva007A2330Flag;
 /* ShaderClass::_PresetAlphaShader is declared below. */
 
@@ -112,7 +114,6 @@ public:
 	virtual Bool preRender(Bool &, Int &);
 	virtual Bool postRender(FilterModes, Coord2D &, Bool &, Coord2D *);
 	virtual Bool setup(FilterModes);
-	static Real m_curFadeValue;
 	protected:
 	virtual Int set(FilterModes);
 	virtual void reset();
@@ -173,7 +174,7 @@ Bool Rva007D3580::postRender(FilterModes mode, Coord2D &scrollDelta,
 	v[3].u = (g_bfmeDefaultBU / displaySize->x) * (Real)xpos;
 	v[3].v = (g_bfmeDefaultBU / displaySize->y) * (Real)ypos;
 	unsigned int currentFade =
-		((Int)((g_bfmeDefaultBU - ScreenBWFilter::m_curFadeValue) * g_bfmeScaleB3) << 24) |
+		((Int)((g_bfmeDefaultBU - Rva007D3580FadeValue) * g_bfmeScaleB3) << 24) |
 		0x00ffffff;
 	v[0].color = currentFade;
 	v[1].color = currentFade;
