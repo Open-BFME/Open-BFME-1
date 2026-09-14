@@ -26389,3 +26389,4 @@ uw_00c5f850,0x00C5F850,retail funclet frees through operator delete[] at 0x00881
 ??_GGen_dtor_00674700@@UAEPAXI@Z,0x00674700,"generated placeholder superseded by authentic BFMENetInformPlayerLeaveFrameCommandMsg scalar-deleting destructor; exact constructor and dedicated vtable establish identity"
 ??_GGen_dtor_00674760@@UAEPAXI@Z,0x00674760,"generated placeholder superseded by authentic BFMENetRequestFrameDataCommandMsg scalar-deleting destructor; exact constructor and dedicated vtable establish identity"
 ??_GGen_dtor_00674790@@UAEPAXI@Z,0x00674790,"generated placeholder superseded by authentic NetDisconnectScreenOffCommandMsg scalar-deleting destructor; exact constructor and dedicated vtable establish identity"
+??_GGen_dtor_0064d750@@UAEPAXI@Z,0x0064D750,"generated placeholder superseded by authentic GameSpyPeerMessageQueue scalar-deleting destructor; exact constructor 0x0064D650 and dedicated vtable 0x01119688 establish identity"

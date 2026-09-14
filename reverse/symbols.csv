@@ -6300,7 +6300,8 @@ name,address,notes
 ??1Gen_dtor_00642410@@UAE@XZ,0x00012A2B,gen-dtor class destructor
 ??1Gen_dtor_00647370@@UAE@XZ,0x0002DE43,gen-dtor class destructor
 ??1Gen_dtor_0064d2f0@@UAE@XZ,0x0003E6DF,gen-dtor class destructor
-??1Gen_dtor_0064d750@@UAE@XZ,0x0002D93E,gen-dtor class destructor
+??1GameSpyPeerMessageQueue@@UAE@XZ,0x0002D93E,exact constructor 0x0064D650 and dedicated vtable 0x01119688 establish the complete destructor thunk called by wrapper 0x0064D750
+??_GGameSpyPeerMessageQueue@@UAEPAXI@Z,0x0001E12D,constructor-installed vtable 0x01119688 slot zero routes through this ILT to 0x0064D750
 ??1Gen_dtor_00654cb0@@QAE@XZ,0x0003B0CF,non-virtual-dispatch sibling of the already-pinned virtual dtor pin at the same address; BFMENetworkQueue1::popFront calls it directly (e8), not through a vtable
 ??1Gen_dtor_00654cb0@@UAE@XZ,0x0003B0CF,gen-dtor class destructor
 ??1Gen_dtor_0065ea50@@UAE@XZ,0x00017D69,gen-dtor class destructor
