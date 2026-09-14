@@ -4933,7 +4933,8 @@ name,address,notes
 ??1Gen_dtor_000f0d70@@UAE@XZ,0x00022B97,gen-dtor class destructor
 ??1Gen_dtor_000f7280@@UAE@XZ,0x00003201,gen-dtor class destructor
 ??1Gen_dtor_000f7580@@UAE@XZ,0x00023641,gen-dtor class destructor
-??1Gen_dtor_000f8d50@@UAE@XZ,0x0002A19E,gen-dtor class destructor
+??1TunnelTracker@@UAE@XZ,0x0002A19E,exact TunnelTracker constructor 0x000F8980 and vtable 0x01085FD8 establish the complete destructor thunk called by scalar wrapper 0x000F8D50
+??_GTunnelTracker@@UAEPAXI@Z,0x000123FF,exact TunnelTracker constructor 0x000F8980 installs vtable 0x01085FD8 whose slot zero routes through this ILT to wrapper 0x000F8D50
 ??1Gen_dtor_000fc6f0@@UAE@XZ,0x00021D14,gen-dtor class destructor
 ??1Gen_dtor_000fc720@@UAE@XZ,0x0003BC78,gen-dtor class destructor
 ??1Gen_dtor_000fca80@@UAE@XZ,0x0000457A,gen-dtor class destructor
