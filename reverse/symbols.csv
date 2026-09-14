@@ -6608,6 +6608,8 @@ name,address,notes
 ??1?$num_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@MAE@XZ,0x00832440,STLport 4.5.3 num_get<wchar_t> complete destructor called by the vtable-identified scalar-deleting wrapper at 0x00832420; wide num_get numeric slots 3/5/6 are matched overloads
 ??_7?$num_get@GV?$istreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x0112E9F8,STLport 4.5.3 num_get<wchar_t> vtable identified by retail RTTI type descriptor 0x012C76C0; slot zero is scalar-deleting destructor 0x00832420 and slots 3/5/6 are matched wide numeric overloads
 ??1Gen_dtor_00832450@@UAE@XZ,0x00832470,gen-dtor class destructor
+??1?$num_put@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@MAE@XZ,0x00832470,STLport 4.5.3 num_put<wchar_t> complete destructor called by the vtable-identified scalar-deleting wrapper at 0x00832450; wide num_put pointer and bool slots are matched overloads
+??_7?$num_put@GV?$ostreambuf_iterator@GV?$char_traits@G@_STL@@@_STL@@@_STL@@6B@,0x0112EA2C,STLport 4.5.3 num_put<wchar_t> vtable identified by retail RTTI type descriptor 0x012C7718; slot zero is scalar-deleting destructor 0x00832450 and slots 1/8 are matched wide overloads
 ??1_Locale_impl@_STL@@UAE@XZ,0x00836520,STLport 4.5.3 _Locale_impl destructor called by its RTTI-identified scalar-deleting wrapper at 0x0083B310
 ??1Gen_dtor_00840d20@@UAE@XZ,0x00840780,gen-dtor class destructor
 ??1Gen_dtor_00841080@@UAE@XZ,0x00849A10,gen-dtor class destructor
