@@ -4361,6 +4361,7 @@ name,address,notes
 ??1BfmeDBaseA@@UAE@XZ,0x00033F6E,Open-BFME5 the first base destructor the clearing destructor at 0x0042B9F0 chains to
 ??1BfmeDelayedLuaEvent@@QAE@XZ,0x00041362,Open-BFME5 ILT the DelayedLuaEventList constructor at 0x000EDBB0 hands to the EH vector constructor iterator as the element destructor
 ??1BfmeDelayedLuaEventList@@QAE@XZ,0x00013156,local destructor identity adapter to DelayedLuaEventList thunk
+??1BfmeDelayedLuaEventList@@UAE@XZ,0x00013156,virtual spelling of the DelayedLuaEventList destructor used by its scalar-deleting wrapper at 0x000EDCA0
 ??1BfmeDirtyBase@@UAE@XZ,0x007EB6C0,Open-BFME5 the shared base destructor nine DirtySock scalar deleting destructors call
 ??1BfmeDrawableSnapshot@@QAE@XZ,0x009A1A40,"Drawable.cpp TU-local name for the polymorphic Snapshot base ~TintEnvelope destroys: vptr store then tail-jump to the AsciiString release"
 ??1BfmeDropObjectA@@QAE@XZ,0x00895260,opaque 24-byte child destructor called by bfmeDropA
