@@ -386,7 +386,10 @@ void ScoreKeeper::addObjectBuilt(Object *o)
 
 	if (o->getTemplate()->isKindOfMulti(scoringBuildingMask, KINDOFMASK_NONE))
 		++m_totalBuildingsLost;
-	else if (o->getTemplate()->isKindOfMulti(scoringBuildingCreateMask, KINDOFMASK_NONE))
+	// Retail 0x012ED7CC: ScoreKeeper::reset's SCORE_DESTROY mask, which
+	// addObjectDestroyed also reads as scoringBuildingDestroyMask. The CREATE
+	// mask lives at 0x012ED7E4 (addObjectBuilt(Object*,Int) / removeObjectBuilt).
+	else if (o->getTemplate()->isKindOfMulti(scoringBuildingDestroyMask, KINDOFMASK_NONE))
 		++m_totalBuildingsLost;
 	else if (TheWritableGlobalData->m_unitScoreFilter.accepts((BfmeRvaA760Object *)o, 0))
 		++m_totalUnitsLost;
