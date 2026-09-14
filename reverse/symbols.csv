@@ -5941,7 +5941,7 @@ name,address,notes
 ??1Gen_dtor_0046f120@@UAE@XZ,0x00009CB4,gen-dtor class destructor
 ??1Gen_dtor_0046fb70@@UAE@XZ,0x0002774B,gen-dtor class destructor
 ??1Gen_dtor_004705f0@@UAE@XZ,0x000336EF,gen-dtor class destructor
-??1Gen_dtor_00471850@@UAE@XZ,0x00023457,gen-dtor class destructor
+??1Gen_00471390@@UAE@XZ,0x00023457,Gen_00471390 complete destructor ILT; constructor 0x00471390 and vtable 0x010F756C establish the owned object identity for scalar wrapper 0x00471850
 ??1Gen_dtor_004724d0@@UAE@XZ,0x0001C0A3,gen-dtor class destructor
 ??1Gen_dtor_00473370@@UAE@XZ,0x00048DBF,gen-dtor class destructor
 ??1Gen_dtor_004735c0@@UAE@XZ,0x0000B636,gen-dtor class destructor
@@ -87520,6 +87520,8 @@ g_bfmeVtableVWc,0x010F9C08,Open-BFME5 the owner table the display owner at 0x004
 g_bfmeVtableVY,0x010EDAD8,Open-BFME5 the table the wide-text copy ctor at 0x0049A070 installs
 g_bfmeVtableWA,0x010F760C,Open-BFME5 the table the credited default ctor at 0x00471EC0 installs
 g_bfmeVtableWB,0x010F756C,Open-BFME5 the table the credited ctor at 0x00471390 installs
+??_GGen_00471390@@UAEPAXI@Z,0x00471850,Gen_00471390 scalar deleting destructor; constructor 0x00471390 installs vtable 0x010F756C whose slot zero routes through ILT 0x00023457
+??_7Gen_00471390@@6B@,0x010F756C,Gen_00471390 vtable installed by constructor 0x00471390; slot zero reaches complete destructor ILT 0x00023457 and scalar wrapper 0x00471850
 g_bfmeWindowManagerAR,0x012F1B40,Open-BFME5 the window manager the replay-control load at 0x0043E3E0 asks
 g_bfmeZeroCY,0x01075350,Open-BFME5 the constant the ratio at 0x0075F3D0 falls back to
 g_rva0058BED0NextId,0x012F4B9C,address-derived update alias for the 0x0058BED0 identifier counter
