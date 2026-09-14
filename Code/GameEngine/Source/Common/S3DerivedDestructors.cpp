@@ -27,7 +27,8 @@ private:
 class Gen_00924090 : public BfmeDtorBase
 {
 public:
-	~Gen_00924090(void);
+	Gen_00924090(void);
+	virtual ~Gen_00924090(void);
 
 private:
 	void *m_bfmeBlock;						// +0x08
@@ -78,10 +79,21 @@ private:
 	void *m_bfmeBlock;						// +0x08
 };
 
-// ??1Gen_00924090@@QAE@XZ
-Gen_00924090::~Gen_00924090(void)
+// Retail's complete-destructor body is retained under ??1Gen_00924090@@QAE@XZ;
+// the virtual declaration emits its ABI-equivalent UAE object symbol so the
+// scalar-deleting wrapper can call the same matched body.
+__declspec(noinline) Gen_00924090::~Gen_00924090(void)
 {
 	bfmeFreeBlock(m_bfmeBlock);
+}
+
+Gen_00924090::Gen_00924090(void) {}
+
+// A live object makes MSVC emit Gen_00924090's virtual scalar-deleting
+// destructor alongside the matched complete destructor above.
+void force_Gen_00924090_scalar(void)
+{
+	Gen_00924090 value;
 }
 
 // ??1Gen_00924110@@QAE@XZ
