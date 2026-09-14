@@ -6308,7 +6308,8 @@ name,address,notes
 ??1Gen_dtor_0065fce0@@UAE@XZ,0x00027C00,gen-dtor class destructor
 ??1Pinger@@UAE@XZ,0x00038785,exact Pinger constructor 0x00660FD0 and vtable 0x0111A1D0 establish the complete destructor thunk called by scalar wrapper 0x00661160
 ??_GPinger@@UAEPAXI@Z,0x00047E97,exact Pinger constructor 0x00660FD0 installs vtable 0x0111A1D0 whose slot zero routes through this ILT to wrapper 0x00661160
-??1Gen_dtor_00662880@@UAE@XZ,0x000265D0,gen-dtor class destructor
+??1NetFrameCommandMsg@@UAE@XZ,0x000265D0,exact NetFrameCommandMsg constructor 0x006627F0 and vtable 0x0111A220 establish the complete destructor thunk called by scalar wrapper 0x00662880
+??_GNetFrameCommandMsg@@UAEPAXI@Z,0x00029EC9,exact NetFrameCommandMsg constructor 0x006627F0 installs vtable 0x0111A220 whose slot zero routes through this ILT to wrapper 0x00662880
 ??1Gen_dtor_006628f0@@UAE@XZ,0x00020E00,gen-dtor class destructor
 ??1Gen_dtor_00662a20@@UAE@XZ,0x0003A48B,gen-dtor class destructor
 ??1Gen_dtor_00665210@@UAE@XZ,0x0000ABFF,gen-dtor class destructor
