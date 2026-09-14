@@ -26746,3 +26746,4 @@ uw_00c5f850,0x00C5F850,retail funclet frees through operator delete[] at 0x00881
 ??_GGen_dtor_0052c1b0@@UAEPAXI@Z,0x0052C1B0,"generated scalar-destructor placeholder superseded by the authentic AptPlayerStatus scalar-deleting destructor over the same 30-byte range"
 ??_GGen_dtor_003d2f10@@UAEPAXI@Z,0x003D2F10,"generated scalar-destructor placeholder superseded by the authentic LargeGroupAudioMap scalar-deleting destructor over the same 30-byte range"
 ??_GGen_dtor_002408b0@@UAEPAXI@Z,0x002408B0,"generated scalar-destructor placeholder superseded by the authentic HordeContain scalar-deleting destructor over the same 30-byte range"
+??_GGen_dtor_00253600@@UAEPAXI@Z,0x00253600,"generated scalar-destructor placeholder superseded by the authentic TensileFormationUpdate scalar-deleting destructor over the same 30-byte range"
