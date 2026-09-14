@@ -6304,6 +6304,7 @@ name,address,notes
 ??1Gen_dtor_00670e90@@UAE@XZ,0x000403E0,gen-dtor class destructor
 ??1Gen_dtor_00670ed0@@UAE@XZ,0x00024D39,gen-dtor class destructor
 ??1Gen_dtor_00674380@@UAE@XZ,0x00010B36,gen-dtor class destructor
+??1NetGameCommandMsg@@UAE@XZ,0x00010B36,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x006736B0
 ??1Gen_dtor_00674490@@UAE@XZ,0x0002F702,gen-dtor class destructor
 ??1Gen_dtor_006744c0@@UAE@XZ,0x00037C40,gen-dtor class destructor
 ??1Gen_dtor_006744f0@@UAE@XZ,0x000391FD,gen-dtor class destructor
