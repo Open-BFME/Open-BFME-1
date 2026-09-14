@@ -5375,7 +5375,7 @@ name,address,notes
 ??1RampageBehavior@@MAE@XZ,0x0001D732,vtable 0x00CA5A24 slots name RampageBehavior; protected complete destructor called by wrapper 0x00203D80
 ??1EnragedBehaviorModuleData@@UAE@XZ,0x0003A6DE,destructor ILT used by the EnragedBehaviorModuleData scalar-deleting destructor
 ??1Gen_dtor_002044b0@@UAE@XZ,0x0000BA5F,gen-dtor class destructor
-??1Gen_dtor_002046e0@@UAE@XZ,0x0002CCB4,gen-dtor class destructor
+??1ReplenishUnitsBehavior@@UAE@XZ,0x0002CCB4,public complete destructor ILT called by scalar wrapper 0x002046E0; exact constructor 0x002044E0 installs dedicated vtable 0x010A5C44; matched body 0x00204B50
 ??1Gen_dtor_00204f60@@UAE@XZ,0x000219D1,gen-dtor class destructor
 ??1Gen_dtor_002058c0@@UAE@XZ,0x000088AA,gen-dtor class destructor
 ??1ShareExperienceBehaviorModuleData@@UAE@XZ,0x0003E649,destructor ILT used by the ShareExperienceBehaviorModuleData scalar-deleting destructor
@@ -88096,3 +88096,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7AutoAbilityBehaviorModuleData@@6B@,0x010A1A70,exact constructor 0x001ED6A0 installs this dedicated vtable; slot zero ILT 0x0002775F reaches scalar wrapper 0x001ED860
 ??_7ParkingPlaceBehavior@@6B@,0x010A2A1C,exact constructor 0x001F59F0 installs this dedicated vtable; slot zero ILT 0x0002F80B reaches scalar wrapper 0x001F5F30
 ??_7BuildingBehaviorModuleData@@6B@,0x010A2C88,exact constructor 0x001F6C70 installs this dedicated vtable; slot zero ILT 0x00019F0B reaches scalar wrapper 0x001F6D10
+??_7ReplenishUnitsBehavior@@6B@,0x010A5C44,exact constructor 0x002044E0 installs this dedicated vtable; slot zero ILT 0x0000CE4B reaches scalar wrapper 0x002046E0
