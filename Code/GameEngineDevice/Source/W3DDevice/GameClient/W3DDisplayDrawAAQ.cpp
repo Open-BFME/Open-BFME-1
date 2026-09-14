@@ -68,11 +68,11 @@ public:
 
 extern Display *TheDisplay;
 
-void __stdcall bfmeDrawAAQ(int a0, int a1, int a2, int a3, int a4, int a5)
+void __stdcall bfmeDrawAAQ(int flags, int color, int left, int top, int right, int bottom)
 {
 	Display *d = TheDisplay;
 	TheDisplay->bfmeBeginAAQ();
-	d->bfmeRectAAQ((float)a2, (float)a3, (float)(a4 - a2),
-		(float)(a5 - a3), a1, a0);
+	d->bfmeRectAAQ((float)left, (float)top, (float)(right - left),
+		(float)(bottom - top), color, flags);
 	d->bfmeEndAAQ();
 }
