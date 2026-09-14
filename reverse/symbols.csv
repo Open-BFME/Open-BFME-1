@@ -88098,3 +88098,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7BuildingBehaviorModuleData@@6B@,0x010A2C88,exact constructor 0x001F6C70 installs this dedicated vtable; slot zero ILT 0x00019F0B reaches scalar wrapper 0x001F6D10
 ??_7ReplenishUnitsBehavior@@6B@,0x010A5C44,exact constructor 0x002044E0 installs this dedicated vtable; slot zero ILT 0x0000CE4B reaches scalar wrapper 0x002046E0
 ??_7InactiveBody@@6B@,0x010A8B74,exact constructor 0x00213BF0 installs this dedicated vtable; slot zero ILT 0x0003648A reaches scalar wrapper 0x00213E10
+??1FlightDeckBehaviorModuleData@@UAE@XZ,0x000275BB,complete destructor ILT called by scalar wrapper 0x002131F0; exact constructor 0x002131B0 installs vtable 0x010A8268
