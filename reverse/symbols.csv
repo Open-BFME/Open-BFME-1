@@ -3879,7 +3879,7 @@ name,address,notes
 ??0W3DMouse@@QAE@XZ,0x0002B7B0,ILT fronting the 233-byte body at 0x007003E0; from W3DGameClient::createMouse
 ??0W3DMouseSurfaceRef@@QAE@XZ,0x00006A8C,W3DMouse surface-reference default constructor ILT used by its EH vector constructor
 ??0W3DOverlordAircraftDrawModuleData@@QAE@XZ,0x00025EBE,pinharvest x1 (thunk)
-??0W3DOverlordTankDrawModuleData@@QAE@XZ,0x0000260D
+??0W3DOverlordTankDrawModuleData@@QAE@XZ,0x0000260D,route=0x002D3640
 ??0W3DProjectedShadowManager@@QAE@XZ,0x000246BD,retail ILT called by the exact W3DShadowManager constructor at 0x007B7900
 ??0W3DProjectileStreamDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00002B67,pinharvest x1 (thunk)
 ??0W3DProjectileStreamDrawModuleData@@QAE@XZ,0x00001780,pinharvest x1 (thunk)

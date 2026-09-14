@@ -1,10 +1,7 @@
-// ??0W3DOverlordTankDrawModuleData@@QAE@XZ
-// partial score=0.95 date=2026-09-08
 // cl: /DNDEBUG /MD /EHsc
-
-// Open-BFME5: W3DOverlordTankDrawModuleData default construction. The Zero
-// Hour source body is empty; BFME's inherited data layout constructs the
-// upgrade and die-mux blocks after initializing the reference fields.
+// Retail 0x002D3640. Byte-true W3DModuleFactory addModule names
+// ??0W3DOverlordTankDrawModuleData@@QAE@XZ, and this body stores vtable
+// 0x010CBED8, which the matched destructor at 0x002D36B0 also installs.
 
 class Snapshot
 {
@@ -25,7 +22,7 @@ private:
 class UpgradeModuleDataSub
 {
 public:
-	UpgradeModuleDataSub();
+	UpgradeModuleDataSub() throw();
 	~UpgradeModuleDataSub();
 
 private:
@@ -51,16 +48,15 @@ public:
 private:
 	unsigned char m_gap04[4];
 	ThingRef m_ref;
-	unsigned int m_value0c;
+	unsigned int m_value0C;
 	bool m_enabled;
 	unsigned char m_gap11[3];
 	UpgradeModuleDataSub m_upgradeData;
 	Rva002551A0DieMuxData m_dieMuxData;
 };
 
-// ??0W3DOverlordTankDrawModuleData@@QAE@XZ
 W3DOverlordTankDrawModuleData::W3DOverlordTankDrawModuleData()
-	: m_value0c(0),
+	: m_value0C(0),
 	  m_enabled(true)
 {
 }
