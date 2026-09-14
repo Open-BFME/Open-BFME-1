@@ -6331,11 +6331,17 @@ name,address,notes
 ??_GNetPlayerLeaveCommandMsg@@UAEPAXI@Z,0x0001BC89,constructor-installed vtable 0x0111A4C4 slot zero routes through this ILT to 0x00674520
 ??_GNetDestroyPlayerCommandMsg@@UAEPAXI@Z,0x0003AD37,constructor-installed vtable 0x0111A4D8 slot zero routes through this ILT to 0x00674550
 ??_GNetKeepAliveCommandMsg@@UAEPAXI@Z,0x0000A790,constructor-installed vtable 0x0111A4EC slot zero routes through this ILT to 0x00674580
-??1Gen_dtor_006745b0@@UAE@XZ,0x0002C070,gen-dtor class destructor
-??1Gen_dtor_006745e0@@UAE@XZ,0x00047B77,gen-dtor class destructor
-??1Gen_dtor_00674610@@UAE@XZ,0x0003C81C,gen-dtor class destructor
-??1Gen_dtor_00674640@@UAE@XZ,0x00003E04,gen-dtor class destructor
-??1Gen_dtor_006746a0@@UAE@XZ,0x000342F2,gen-dtor class destructor
+??1NetDisconnectKeepAliveCommandMsg@@UAE@XZ,0x0002C070,constructor 0x00673BD0 and dedicated vtable 0x0111A500 establish identity
+??1NetDisconnectPlayerCommandMsg@@UAE@XZ,0x00047B77,constructor 0x00673C20 and dedicated vtable 0x0111A514 establish identity
+??1NetDisconnectVoteCommandMsg@@UAE@XZ,0x0003C81C,constructor 0x00673CD0 and dedicated vtable 0x0111A528 establish identity
+??1NetProgressCommandMsg@@UAE@XZ,0x00003E04,constructor 0x00673D60 and dedicated vtable 0x0111A53C establish identity
+??1NetFileProgressCommandMsg@@UAE@XZ,0x000342F2,constructor 0x00674030 and dedicated vtable 0x0111A564 establish identity
+
+??_GNetDisconnectKeepAliveCommandMsg@@UAEPAXI@Z,0x000458FE,constructor-installed vtable 0x0111A500 slot zero routes through this ILT to 0x006745B0
+??_GNetDisconnectPlayerCommandMsg@@UAEPAXI@Z,0x0001413C,constructor-installed vtable 0x0111A514 slot zero routes through this ILT to 0x006745E0
+??_GNetDisconnectVoteCommandMsg@@UAEPAXI@Z,0x000297CB,constructor-installed vtable 0x0111A528 slot zero routes through this ILT to 0x00674610
+??_GNetProgressCommandMsg@@UAEPAXI@Z,0x0004376B,constructor-installed vtable 0x0111A53C slot zero routes through this ILT to 0x00674640
+??_GNetFileProgressCommandMsg@@UAEPAXI@Z,0x00045011,constructor-installed vtable 0x0111A564 slot zero routes through this ILT to 0x006746A0
 ??1Gen_dtor_006746d0@@UAE@XZ,0x0000AAFB,gen-dtor class destructor
 ??1Gen_dtor_00674700@@UAE@XZ,0x0003789E,gen-dtor class destructor
 ??1Gen_dtor_00674730@@UAE@XZ,0x0000CBD0,gen-dtor class destructor

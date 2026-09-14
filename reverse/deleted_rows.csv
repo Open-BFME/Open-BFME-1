@@ -26378,3 +26378,8 @@ uw_00c5f850,0x00C5F850,retail funclet frees through operator delete[] at 0x00881
 ??_GGen_dtor_00674520@@UAEPAXI@Z,0x00674520,"generated placeholder superseded by authentic NetPlayerLeaveCommandMsg scalar-deleting destructor; exact constructor and dedicated vtable establish identity"
 ??_GGen_dtor_00674550@@UAEPAXI@Z,0x00674550,"generated placeholder superseded by authentic NetDestroyPlayerCommandMsg scalar-deleting destructor; exact constructor and dedicated vtable establish identity"
 ??_GGen_dtor_00674580@@UAEPAXI@Z,0x00674580,"generated placeholder superseded by authentic NetKeepAliveCommandMsg scalar-deleting destructor; exact constructor and dedicated vtable establish identity"
+??_GGen_dtor_006745b0@@UAEPAXI@Z,0x006745B0,"generated placeholder superseded by authentic NetDisconnectKeepAliveCommandMsg scalar-deleting destructor; exact constructor and dedicated vtable establish identity"
+??_GGen_dtor_006745e0@@UAEPAXI@Z,0x006745E0,"generated placeholder superseded by authentic NetDisconnectPlayerCommandMsg scalar-deleting destructor; exact constructor and dedicated vtable establish identity"
+??_GGen_dtor_00674610@@UAEPAXI@Z,0x00674610,"generated placeholder superseded by authentic NetDisconnectVoteCommandMsg scalar-deleting destructor; exact constructor and dedicated vtable establish identity"
+??_GGen_dtor_00674640@@UAEPAXI@Z,0x00674640,"generated placeholder superseded by authentic NetProgressCommandMsg scalar-deleting destructor; exact constructor and dedicated vtable establish identity"
+??_GGen_dtor_006746a0@@UAEPAXI@Z,0x006746A0,"generated placeholder superseded by authentic NetFileProgressCommandMsg scalar-deleting destructor; exact constructor and dedicated vtable establish identity"
