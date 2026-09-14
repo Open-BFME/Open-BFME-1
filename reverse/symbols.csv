@@ -5835,6 +5835,7 @@ name,address,notes
 ??1Gen_dtor_0045afb0@@UAE@XZ,0x00011784,gen-dtor class destructor
 ??1Gen_dtor_0045b2b0@@UAE@XZ,0x0002AFEA,gen-dtor class destructor
 ??1Gen_dtor_0045c440@@UAE@XZ,0x0003732B,gen-dtor class destructor
+??1View@@UAE@XZ,0x0003732B,View complete destructor ILT called by W3DView destructor 0x007461B0; thunk reaches the exact 14-byte View base teardown body at 0x0045C1B0 and is called by scalar wrapper 0x0045C440
 ??1Gen_dtor_0045c870@@UAE@XZ,0x00028984,gen-dtor class destructor
 ??1Gen_dtor_0045ccf0@@UAE@XZ,0x0003D4B0,gen-dtor class destructor
 ??1WaterSetting@@UAE@XZ,0x0003D4B0,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0045CC80
@@ -10302,6 +10303,7 @@ name,address,notes
 ??_7Rva00740AE0@@6B@,0x0112171C,derived vftable stored by the 0x00740AE0 constructor
 ??_7Rva00740AE0Base@@6B@,0x010C7450,base vftable stored by the 0x00740AE0 constructor
 ??_7Rva00745B10Owner@@6B@,0x011217A0,primary vftable of the 0x2450-byte owner (ctor 0x00745B10 dtor 0x007461B0)
+??_7View@@6B@,0x010F6940,View complete 64-slot vftable installed by exact ctor 0x0045B8C0; slot zero is ILT 0x0000EF43 to scalar-deleting wrapper 0x0045C440
 ??_7Rva00745B10Owner@@6BRva007461B0BaseS@@@,0x01121790,second-base vftable of the owner (subobject at +0xb4)
 ??_7Rva00745B10Owner@@6BSubsystemInterface@@@,0x01121764,SubsystemInterface vftable of the owner (subobject at +0xfc)
 ??_7Rva007461B0BaseS@@6B@,0x011216B0,vftable of the second base restored by its inline destructor in 0x007461B0
