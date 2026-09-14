@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/w3droadbuffer /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/w3droadbuffer /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -52,6 +52,7 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <set>
 #include <assetmgr.h>
 #include <texture.h>
 #include "common/GlobalData.h"
@@ -1614,39 +1615,116 @@ void W3DRoadBuffer::addMapObject(RoadSegment *pRoad, Bool updateTheCounts)
 	}
 }
 
+// BFME map-object list model (same reconstruction view as
+// W3DBridgeBufferLoadMapBridges.cpp and BfmeConv547.cpp): retail MapObject has
+// m_next at +0x04, m_name at +0x14, m_flags at +0x20, and a bfmeGoBWF()
+// coordinate accessor in place of ZH's getLocation().
+class BfmeRetBWF { public: Real x, y, z; };
+
+struct BfmeThingBWF
+{
+	unsigned char m_unmodelled_00[4];
+	BfmeThingBWF *m_next;
+	unsigned char m_unmodelled_08[0x14 - 8];
+	AsciiString m_name;
+	unsigned char m_unmodelled_18[8];
+	unsigned int m_flags;
+
+	BfmeRetBWF *bfmeGoBWF();
+	unsigned char getFlag(int bit) const
+	{
+		return (unsigned char)(m_flags >> bit) & 1;
+	}
+};
+
+class BfmeMapObjectListHolder
+{
+public:
+	BfmeThingBWF *m_head;
+};
+extern BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;
+
+// BFME asset-reporting block, as in ImageLoad.cpp: while
+// FirstUpdateSubsystem is installed every road name is recorded through an
+// AssetList-shaped STL tree and forwarded to the reporting hook.
+class AssetList
+{
+public:
+	AssetList &operator <<(const AsciiString &name);
+};
+
+struct Gen_t_00140950_k4
+{
+	int m_value;
+};
+
+typedef _STL::_Rb_tree<Gen_t_00140950_k4, Gen_t_00140950_k4,
+	_STL::_Identity<Gen_t_00140950_k4>, _STL::less<Gen_t_00140950_k4>,
+	_STL::allocator<Gen_t_00140950_k4> > RoadAssetTree;
+
+class BfmeList950B
+{
+public:
+	BfmeList950B(void);
+
+	~BfmeList950B(void)
+	{
+		((RoadAssetTree *)this)->~RoadAssetTree();
+	}
+
+	char m_storage[0x14];
+};
+
+extern void Rva009EBAC0(int value);
+
+#define FirstUpdateSubsystem (*(void **)0x0134faa0)
+
+// Compares the map-object name against a getPath() word through the WWLib
+// StringBase<char> compare, then releases the untracked POD temp. The const-ref
+// parameter binds the by-value result so MSVC pushes the returned pointer.
+static Bool bfmePathCompare(const AsciiString &a, const BfmeRoadPath &b)
+{
+	return ((const StringBase<char> *)&a)->compare(*(const StringBase<char> *)&b) == 0;
+}
+
+// The matched 13-byte MapObject::getFlag body at 0x00382750 (mask test on the
+// +0x20 flags field) was emitted by this TU while addMapObjects still called
+// through ZH's MapObject; taking its address keeps the COMDAT in the object.
+static Bool (MapObject::* volatile bfmeMapObjectGetFlagEmit)(Int) const =
+	&MapObject::getFlag;
+
 //=============================================================================
 // W3DRoadBuffer::addMapObjects
 //=============================================================================
 /** Loads the roads from the map objects. */
 //=============================================================================
-// ?addMapObjects@W3DRoadBuffer@@IAEXXZ present-unmatched
+// ?addMapObjects@W3DRoadBuffer@@IAEXXZ
 void W3DRoadBuffer::addMapObjects()
 {
-	MapObject *pMapObj;
-	MapObject *pMapObj2;
-	for (pMapObj = MapObject::getFirstMapObject(); pMapObj; pMapObj = pMapObj->getNext()) {
+	if (!m_initialized) return;
+
+	BfmeThingBWF *pMapObj;
+	BfmeThingBWF *pMapObj2;
+	for (pMapObj = BfmeTheMapObjectListHolder->m_head; pMapObj; pMapObj = pMapObj->m_next) {
 		if (m_numRoads >= m_maxRoadSegments) {
 			break;
 		}
-		if (pMapObj->getFlag(FLAG_ROAD_POINT1)) {
-			pMapObj2 = pMapObj->getNext();
-#ifdef _DEBUG
-			DEBUG_ASSERTLOG(pMapObj2 && pMapObj2->getFlag(FLAG_ROAD_POINT2), ("Bad Flag\n"));
-#endif
+		if (pMapObj->getFlag(1)) {
+			pMapObj2 = pMapObj->m_next;
 			if (pMapObj2==NULL) break;
-			if (!pMapObj2->getFlag(FLAG_ROAD_POINT2)) continue;
+			if (!pMapObj2->getFlag(2)) continue;
 			Vector2 loc1, loc2;
-			loc1.Set(pMapObj->getLocation()->x, pMapObj->getLocation()->y);
-			loc2.Set(pMapObj2->getLocation()->x, pMapObj2->getLocation()->y);
+			loc1.Set(pMapObj->bfmeGoBWF()->x, pMapObj->bfmeGoBWF()->y);
+			loc2.Set(pMapObj2->bfmeGoBWF()->x, pMapObj2->bfmeGoBWF()->y);
 			if (loc1.X==loc2.X && loc1.Y==loc2.Y) {
 				loc2.X += 0.25;
 			}
 			RoadSegment	curRoad;
-			curRoad.m_scale = DEFAULT_ROAD_SCALE; 
-			curRoad.m_widthInTexture = 1.0f; 
+			curRoad.m_scale = DEFAULT_ROAD_SCALE;
+			curRoad.m_widthInTexture = 1.0f;
 			curRoad.m_uniqueID = 1;
 			Bool found = false;
-			TerrainRoadType *road = TheTerrainRoads->findRoad( pMapObj->getName() );
+			TerrainRoadType *road = TheTerrainRoads->findRoad( pMapObj->m_name );
 			if( road )
 			{
 				curRoad.m_widthInTexture = road->getRoadWidthInTexture();
@@ -1654,13 +1732,22 @@ void W3DRoadBuffer::addMapObjects()
 				curRoad.m_uniqueID = road->getID();
 				found = TRUE;
 			}  // end if
+			if (FirstUpdateSubsystem)
+			{
+				BfmeList950B assets;
+				(*(AssetList *)&assets) << pMapObj->m_name;
+				Rva009EBAC0((int)&assets);
+			}
 #ifdef LOAD_TEST_ASSETS
 			const Real DEFAULT_SCALE = 30;
 			if (!found) {
 				Int i;
 				for (i=0; i<m_maxRoadTypes; i++) {
-					if (pMapObj->getName() == m_roadTypes[i].getPath()) {
-						curRoad.m_scale = DEFAULT_SCALE; 
+					BfmeRoadPath path;
+					Bool same = bfmePathCompare(pMapObj->m_name, *m_roadTypes[i].getPath(&path));
+					path.releaseBuffer();
+					if (same) {
+						curRoad.m_scale = DEFAULT_SCALE;
 						curRoad.m_uniqueID = m_roadTypes[i].getUniqueID();
 						found = true;
 					}
@@ -1668,24 +1755,24 @@ void W3DRoadBuffer::addMapObjects()
 			}
 			if (!found && m_curOpenRoad<m_maxRoadTypes) {
 				m_maxUID++;
-				curRoad.m_scale = DEFAULT_SCALE; 
+				curRoad.m_scale = DEFAULT_SCALE;
 				curRoad.m_uniqueID = m_maxUID;
-				m_roadTypes[m_curOpenRoad].loadTexture(pMapObj->getName(), m_maxUID);
+				m_roadTypes[m_curOpenRoad].loadTexture(pMapObj->m_name, m_maxUID);
 				m_curOpenRoad++;
 			}
 #endif
 			curRoad.m_pt1.loc = loc1;
-			curRoad.m_pt1.isAngled = pMapObj->getFlag(FLAG_ROAD_CORNER_ANGLED);
-			curRoad.m_pt1.isJoin = pMapObj->getFlag(FLAG_ROAD_JOIN);
+			curRoad.m_pt1.isAngled = pMapObj->getFlag(3);
+			curRoad.m_pt1.isJoin = pMapObj->getFlag(7);
 			curRoad.m_pt2.loc =loc2;
-			curRoad.m_pt2.isAngled = pMapObj2->getFlag(FLAG_ROAD_CORNER_ANGLED);
-			curRoad.m_pt2.isJoin = pMapObj2->getFlag(FLAG_ROAD_JOIN);
-			curRoad.m_type = SEGMENT; 
-			curRoad.m_curveRadius = pMapObj->getFlag(FLAG_ROAD_CORNER_TIGHT)?TIGHT_CORNER_RADIUS:CORNER_RADIUS;
+			curRoad.m_pt2.isAngled = pMapObj2->getFlag(3);
+			curRoad.m_pt2.isJoin = pMapObj2->getFlag(7);
+			curRoad.m_type = SEGMENT;
+			curRoad.m_curveRadius = pMapObj->getFlag(6)?TIGHT_CORNER_RADIUS:CORNER_RADIUS;
 
 			addMapObject(&curRoad, true);
 			pMapObj = pMapObj2;
-		} 
+		}
 	}
 	Int curCount = m_numRoads;
 	Int i;

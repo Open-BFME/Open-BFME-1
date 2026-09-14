@@ -150,6 +150,17 @@ public:
 	void updateSegLighting(void);
 } ;
 
+// Retail addMapObjects holds the getPath result in an untracked 4-byte temp
+// (no EH state is written around it) and releases it by name, so the return
+// type here is a POD string word rather than AsciiString.
+class BfmeRoadPath
+{
+public:
+	void releaseBuffer(void);
+private:
+	char m_text[4];
+};
+
 class RoadType {
 public:
 	RoadType(void);
@@ -182,7 +193,7 @@ public:
 #ifdef LOAD_TEST_ASSETS
 	void setAutoLoaded(void) {m_isAutoLoaded = true;};
 	Bool isAutoLoaded(void) {return m_isAutoLoaded;};
-	AsciiString getPath(void) {return(m_texturePath);};
+	BfmeRoadPath *getPath(BfmeRoadPath *out);
 	void loadTestTexture(void);
 #endif
 }	;
