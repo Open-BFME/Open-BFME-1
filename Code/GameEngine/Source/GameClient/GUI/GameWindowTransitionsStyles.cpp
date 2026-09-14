@@ -71,6 +71,16 @@
 #include "GameClient/Controlbar.h"
 #include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
+// BFME stores ControlBar::m_genArrow at this offset. The ZH header places it
+// at +0x2fc, so this transition keeps the corrected view local to its one
+// direct field read.
+class BfmeControlBarArrowImageView
+{
+public:
+	char m_padding[0x2bc];
+	const Image *m_genArrow;
+};
+
 //-----------------------------------------------------------------------------
 // DEFINES ////////////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
@@ -1910,7 +1920,7 @@ void ControlBarArrowTransition::init( GameWindow *win )
 	m_percent = 1.0f / CONTROLBARARROWTRANSITION_BEGIN_FADE;
 	m_fadePercent = 1.0f/ (CONTROLBARARROWTRANSITION_END - CONTROLBARARROWTRANSITION_BEGIN_FADE);
 	
-	m_arrowImage = TheControlBar->getArrowImage();
+	m_arrowImage = reinterpret_cast<const BfmeControlBarArrowImageView *>(TheControlBar)->m_genArrow;
 	GameWindow *twin = TheWindowManager->winGetWindowFromId(NULL, TheNameKeyGenerator->nameToKey("ControlBar.wnd:ButtonGeneral"));
 	if(!twin || !m_arrowImage)
 	{
