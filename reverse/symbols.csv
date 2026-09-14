@@ -5555,6 +5555,7 @@ name,address,notes
 ??1Gen_dtor_002c5460@@UAE@XZ,0x00025F7C,gen-dtor class destructor
 ??1Gen_dtor_002c54a0@@UAE@XZ,0x0001C670,gen-dtor class destructor
 ??1Gen_dtor_002c5e30@@UAE@XZ,0x00042F2D,gen-dtor class destructor
+??1SupplyTruckAIUpdate@@UAE@XZ,0x00042F2D,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x002C5580
 ??1Gen_dtor_002c60d0@@UAE@XZ,0x0003EAC2,gen-dtor class destructor
 ??1Gen_dtor_002c69e0@@UAE@XZ,0x00008355,gen-dtor class destructor
 ??1Gen_dtor_002c6a20@@UAE@XZ,0x00042C80,gen-dtor class destructor
