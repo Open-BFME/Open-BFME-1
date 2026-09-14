@@ -1,0 +1,27 @@
+// cl: /EHs-c-
+
+#include <exception>
+
+namespace _STL {
+
+// The complete destructor at 0x0082AE60 is defined in STLBadAllocDtor.cpp.
+// This focused declaration preserves that matched STLport hierarchy and lets
+// MSVC emit the authentic scalar-deleting wrapper at 0x0082C040.
+class bad_alloc : public std::exception
+{
+public:
+	virtual ~bad_alloc();
+};
+
+class Rva0082AE60Exc : public bad_alloc
+{
+public:
+	virtual ~Rva0082AE60Exc();
+};
+
+void ForceRva0082AE60ExcDeletingDestructor()
+{
+	Rva0082AE60Exc value;
+}
+
+}
