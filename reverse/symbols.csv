@@ -79297,6 +79297,7 @@ name,address,notes
 ??1RadiusDecalUpdate@@UAE@XZ,0x00012EC7,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x002A04E0
 ??1FlammableUpdate@@UAE@XZ,0x0001BADB,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x00293440
 ??1PartTheHeavensUpdate@@UAE@XZ,0x0000806C,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x00299820
+??1PhysicsBehavior@@UAE@XZ,0x000087D8,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0029AA30
 ?findArmyIcon@BfmeLivingWorldManagerIcons@@QAEPAVBfmeArmyIcon@@ABVAsciiString@@@Z,0x00002C89,derived from the REL32 displacement at 0x0060B820
 ?findAttackInfo@ScriptEngine@@AAEPAVAttackPriorityInfo@@ABVAsciiString@@_N@Z,0x00002969,Open-BFME5 ILT to ScriptEngine::findAttackInfo body 0x0033DBF0
 ?findAttributeModifierPoolUpdate@Object@@ABEPAVAttributeModifierPoolUpdate@@XZ,0x000202ED,module-name-key-based AttributeModifierPoolUpdate finder used by modifier application and value selection
