@@ -5677,6 +5677,7 @@ name,address,notes
 ??1Gen_dtor_0036db60@@UAE@XZ,0x00012CBF,gen-dtor class destructor
 ??1Gen_dtor_00372840@@UAE@XZ,0x0003621E,gen-dtor class destructor
 ??1Gen_dtor_00374ef0@@UAE@XZ,0x0000ADC1,gen-dtor class destructor
+??1CastleBehavior@@UAE@XZ,0x0000ADC1,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x003728E0
 ??1Gen_dtor_00378890@@UAE@XZ,0x00042429,gen-dtor class destructor
 ??1Gen_dtor_00379220@@UAE@XZ,0x0000B898,gen-dtor class destructor
 ??1Gen_dtor_0037a2f0@@UAE@XZ,0x0002FC70,gen-dtor class destructor
