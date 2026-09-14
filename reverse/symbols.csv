@@ -87654,3 +87654,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7AIFollowPathAsTeamState@@6B@,0x01099C08,AIFollowPathAsTeamState dedicated vtable installed by exact constructor 0x00183990; slot zero ILT 0x00001D43 reaches scalar wrapper 0x00183AC0
 ??_GAIAttackMeleeEngageState@@MAEPAXI@Z,0x0003A620,dedicated vtable 0x01099848 slot zero routes through this ILT to scalar wrapper 0x0017F950
 ??_7AIAttackMeleeEngageState@@6B@,0x01099848,exact constructor 0x0017F8D0 installs this dedicated vtable
+??1TurretAI@@MAE@XZ,0x0003AC3D,TurretAI protected complete virtual destructor ILT; exact constructor 0x0018DED0 installs primary vtable 0x0109BBF4 and scalar wrapper 0x0018D860 calls this route to cleanup body 0x0018D600
+??_7TurretAI@@6B@,0x0109BBF4,TurretAI primary vtable installed by exact constructor 0x0018DED0; slot zero ILT 0x0003700B reaches scalar deleting wrapper 0x0018D860 while secondary vtable 0x0109BBDC is installed at +4
