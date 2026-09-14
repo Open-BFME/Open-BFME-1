@@ -87420,3 +87420,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ?g_d_012b7928@@3PBDA,0x012B7928,address-derived char* global used by OnlineHome AptIconRohan registration
 ?g_d_012b792c@@3PBDA,0x012B792C,address-derived char* global used by OnlineHome AptIconMordor registration
 ?rva00547730@BfmeAptScreenOnlineHome@@QAEXXZ,0x00547730,address-derived OnlineHome constructor call target
+?loadLayout@BfmeAptManager@@QAEPAXPAVAsciiString@@PAVWindowLayoutInfo@@@Z,0x000429A6,retail call from WindowLayoutInfo::load at 0x00487870; target thunk row ?j_000429a6@@YAXXZ
