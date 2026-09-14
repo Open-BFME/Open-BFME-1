@@ -5209,7 +5209,8 @@ name,address,notes
 ??1Gen_dtor_001b2f80@@UAE@XZ,0x0000F82B,gen-dtor class destructor
 ??1Gen_dtor_001b3020@@UAE@XZ,0x0004B5C4,gen-dtor class destructor
 ??1Gen_dtor_001b31d0@@UAE@XZ,0x0002B887,gen-dtor class destructor
-??1Gen_dtor_001b3b40@@UAE@XZ,0x000231A5,gen-dtor class destructor
+??1GhostObjectManager@@UAE@XZ,0x000231A5,exact constructor 0x001B3AA0 and dedicated vtable 0x0109CE28 establish the complete destructor thunk called by wrapper 0x001B3B40
+??_GGhostObjectManager@@UAEPAXI@Z,0x0003837F,constructor-installed vtable 0x0109CE28 slot zero routes through this ILT to 0x001B3B40
 ??1Gen_dtor_001b3ef0@@UAE@XZ,0x00034E50,gen-dtor class destructor
 ??1Gen_dtor_001b60b0@@UAE@XZ,0x0003296B,gen-dtor class destructor
 ??1Gen_dtor_001b63b0@@UAE@XZ,0x000474EC,gen-dtor class destructor
