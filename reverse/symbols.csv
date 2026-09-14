@@ -4885,7 +4885,7 @@ name,address,notes
 ??1Gen_dtor_00088ee0@@UAE@XZ,0x00017396,gen-dtor class destructor
 ??1Gen_dtor_00089010@@UAE@XZ,0x00038CFD,gen-dtor class destructor
 ??1Gen_dtor_0008e530@@UAE@XZ,0x000435F4,gen-dtor class destructor
-??1Gen_dtor_0008f810@@UAE@XZ,0x0000F01F,gen-dtor class destructor
+??1Bucket@@UAE@XZ,0x0000F01F,exact Bucket constructor 0x0008F6F0 and vtable 0x0107F980 establish the virtual destructor thunk called by scalar wrapper 0x0008F810
 ??1Gen_dtor_0008ff90@@UAE@XZ,0x0003D9BA,gen-dtor class destructor
 ??1Gen_dtor_00092ff0@@UAE@XZ,0x00024C30,gen-dtor class destructor
 ??1Gen_dtor_00094910@@UAE@XZ,0x0003D9E7,gen-dtor class destructor
@@ -87495,3 +87495,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1EmotionTrackerUpdateModuleData@@UAE@XZ,0x0004AED5,authentic scalar-deleting wrapper callee ILT; routes to matched complete destructor body 0x0028FBB0
 ?destroy@W3DRadarDestructorBody@@QAEXXZ,0x006C1780,TU-local forwarding view of the matched W3DRadar complete destructor used to reproduce its retail ILT
 ??_GState@@UAEPAXI@Z,0x00049904,exact State constructor 0x000A19E0 installs vtable 0x01080770 whose slot zero routes through this ILT to scalar-deleting destructor 0x000A1B00
+??_GBucket@@UAEPAXI@Z,0x0003E88D,exact Bucket constructor 0x0008F6F0 installs vtable 0x0107F980 whose sole slot routes through this ILT to wrapper 0x0008F810
