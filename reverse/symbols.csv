@@ -5505,7 +5505,7 @@ name,address,notes
 ??1Gen_dtor_00264b40@@UAE@XZ,0x000400D9,gen-dtor class destructor
 ??1Gen_dtor_00264e70@@UAE@XZ,0x0002C3E5,gen-dtor class destructor
 ??1RousingSpeechUpdateModuleData@@UAE@XZ,0x0001CCA1,destructor ILT used by the RousingSpeechUpdateModuleData scalar-deleting destructor
-??1Gen_dtor_00265ab0@@UAE@XZ,0x00025577,gen-dtor class destructor
+??1ScavengerSpecialPowerModuleData@@UAE@XZ,0x00025577,public complete destructor ILT called by scalar wrapper 0x00265AB0; exact constructor 0x00265A80 installs dedicated vtable 0x010B6FF8
 ??1Gen_dtor_00265cd0@@UAE@XZ,0x0000DFB7,gen-dtor class destructor
 ??1Gen_dtor_00265db0@@UAE@XZ,0x000175B7,gen-dtor class destructor
 ??1Gen_dtor_002664b0@@UAE@XZ,0x0003C03D,gen-dtor class destructor
@@ -88117,3 +88117,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7ManTheWallsSpecialPowerModuleData@@6B@,0x010B5EA0,exact constructor 0x00261260 installs this dedicated vtable; slot zero ILT 0x00032AFB reaches scalar wrapper 0x00261280
 ??_7RepairSpecialPowerModuleData@@6B@,0x010B6B10,exact constructor 0x00264990 installs this dedicated vtable; slot zero ILT 0x0000BAAF reaches scalar wrapper 0x002649B0
 ??_7TaintSpecialPowerModuleData@@6B@,0x010B8550,exact constructor 0x0026B870 installs this dedicated vtable; slot zero ILT 0x0002C025 reaches scalar wrapper 0x0026B8B0
+??_7ScavengerSpecialPowerModuleData@@6B@,0x010B6FF8,exact constructor 0x00265A80 installs this dedicated vtable; slot zero ILT 0x000314B7 reaches scalar wrapper 0x00265AB0
