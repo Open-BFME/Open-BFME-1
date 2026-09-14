@@ -1117,7 +1117,15 @@ def print_candidate(label, candidate, meta, candidates=()):
 
 def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
                  suppressed=0, named=(), named_note="", structural_meta=None):
+    # Dispatching off this view inverts the weighting the default draw exists to
+    # apply: it is ordered by SIZE, so the top rows are the biggest bodies and
+    # the worst bets. Five seats were sent at the head of this list and went
+    # 0-for-4 on 2514-3951B; the weighted draw returns 206-1636B for the same
+    # tier. Read it to understand the queue, draw to assign work.
     print("== 0. ledger health ==")
+    print("  NOTE: --ranked is ordered by size, NOT by land rate. To ASSIGN work "
+          "run `next_work.py` with no flags -- it draws weighted by measured land "
+          "rate for size. The rows below lead with the largest, least-landable bodies.")
     print(f"  {ledger}")
     if suppressed:
         print(f"  re_attempts: {suppressed} candidate(s) hidden as already "
