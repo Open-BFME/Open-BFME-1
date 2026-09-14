@@ -11,14 +11,21 @@ An explicit request or assigned lane overrides the queue:
 
 1. `git pull --rebase origin master`
 2. `python3 tools/check_csv.py` — repair ledger errors before other work
-3. `python3 tools/list_naked_candidates.py Code` serves a byte-true dump from
-   `Code/gen_asm/`, boundary already proven. **Converting dumps to real C++ is
-   the default work.**
-4. `python3 tools/next_work.py` for identity/structural work; it explains its
-   own tiers.
+3. `python3 tools/next_work.py` for identity and structural work; it explains
+   its own tiers. **This is the default work.**
+4. `python3 tools/list_naked_candidates.py Code` serves a byte-true dump from
+   `Code/gen_asm/`, boundary already proven. Take one only when next_work.py is
+   also dry -- measured 2026-09-14, this lane's untried pool is EMPTY: all 3,885
+   candidates have been attempted at least once (2,289 once, the rest 2-11
+   times). A draw from it is a REPEAT, and it now says so.
 
 A tier reporting zero candidates is exhausted, not broken. Regenerate with
 `tools/drift_classify.py`, `tools/anchor_unclaimed.py`, `./build.sh`.
+
+A pool reporting a large number is NOT therefore healthy. `list_naked_candidates`
+printed `drawn from 3885` for two days while every one of those had already
+failed; the count is the pool, not the untried work in it. Read the tool's own
+exhaustion line, not the size.
 
 Finish or revert each body before the next.
 
