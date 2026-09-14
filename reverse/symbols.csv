@@ -5004,7 +5004,7 @@ name,address,notes
 ??1Gen_dtor_00127970@@UAE@XZ,0x00022FE3,gen-dtor class destructor
 ??1Gen_dtor_00127cc0@@UAE@XZ,0x000313F9,gen-dtor class destructor
 ??1Gen_dtor_00128ba0@@UAE@XZ,0x0002815A,gen-dtor class destructor
-??1Gen_dtor_00129460@@UAE@XZ,0x0000A781,gen-dtor class destructor
+??1StructureBodyModuleData@@UAE@XZ,0x0000A781,public complete destructor ILT called by scalar wrapper 0x00129460; exact constructor 0x001293C0 installs dedicated vtable 0x0108ED20
 ??1Gen_dtor_00129530@@UAE@XZ,0x0002473A,gen-dtor class destructor
 ??1Gen_dtor_001295c0@@UAE@XZ,0x000248E8,gen-dtor class destructor
 ??1Gen_dtor_0012a580@@UAE@XZ,0x0003A36E,gen-dtor class destructor
@@ -88090,3 +88090,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7AIGuardRetaliateMachine@@6B@,0x01096420,exact constructor 0x0015F240 installs this dedicated vtable; slot zero ILT 0x000380C8 reaches scalar wrapper 0x0015EBB0
 ??_7AIHarvestMachine@@6B@,0x01096650,exact constructor 0x0015FE90 installs this dedicated vtable; slot zero ILT 0x00014EC5 reaches scalar wrapper 0x0015FA60
 ??_7WeaponStore@@6B@,0x010A13C8,exact constructor 0x001E5290 installs this dedicated vtable; slot zero ILT 0x000327DB reaches scalar wrapper 0x001E7F20
+??_7StructureBodyModuleData@@6B@,0x0108ED20,exact constructor 0x001293C0 installs this dedicated vtable; slot zero ILT 0x00046C90 reaches scalar wrapper 0x00129460
