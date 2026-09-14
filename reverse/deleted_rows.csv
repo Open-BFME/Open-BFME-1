@@ -25990,3 +25990,4 @@ uw_00c5f850,0x00C5F850,retail funclet frees through operator delete[] at 0x00881
 ??_GGen_dtor_005dba80@@UAEPAXI@Z,0x005DBA80,"generated scalar-destructor placeholder superseded by the authentic FXParticleSystem HemisphericalEmissionVelocity ConcreteModuleTemplate specialization scalar-deleting destructor over the same 30-byte range"
 ??_GGen_dtor_00071a30@@UAEPAXI@Z,0x00071A30,Generic generator placeholder superseded by authentic SubsystemSlot<GameLogic> scalar-deleting destructor proven by constructor 0x00071A10
 ??_GGen_dtor_00071af0@@UAEPAXI@Z,0x00071AF0,Generic generator placeholder superseded by authentic SubsystemSlot<RecorderClass> scalar-deleting destructor proven by constructor 0x00071AD0
+??_GGen_dtor_00071c70@@UAEPAXI@Z,0x00071C70,Generic generator placeholder superseded by authentic SubsystemSlot<VictoryConditionsInterface> scalar-deleting destructor proven by constructor 0x00071C50
