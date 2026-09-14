@@ -4856,7 +4856,7 @@ name,address,notes
 ??1Gen_dtor_000718b0@@UAE@XZ,0x0003C52E,gen-dtor class destructor
 ??1Gen_dtor_00071970@@UAE@XZ,0x000309B3,gen-dtor class destructor
 ??1?$SubsystemSlot@VGameLogic@@@@UAE@XZ,0x0000410B,SubsystemSlot<GameLogic> destructor ILT called by authentic scalar-deleting destructor at 0x00071A30
-??1Gen_dtor_00071af0@@UAE@XZ,0x00025045,gen-dtor class destructor
+??1?$SubsystemSlot@VRecorderClass@@@@UAE@XZ,0x00025045,SubsystemSlot<RecorderClass> destructor ILT called by authentic scalar-deleting destructor at 0x00071AF0
 ??1Gen_dtor_00071bb0@@UAE@XZ,0x00027C87,gen-dtor class destructor
 ??1Gen_dtor_00071c70@@UAE@XZ,0x000315D9,gen-dtor class destructor
 ??1Gen_dtor_00071d30@@UAE@XZ,0x0001C4C7,gen-dtor class destructor
