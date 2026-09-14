@@ -2160,6 +2160,7 @@ name,address,notes
 ??0AABTreeBuilderClass@@QAE@XZ,0x0096B350,Open-BFME5 retail builder constructor callee of MeshGeometryClass::Generate_Culling_Tree
 ??0AHB_BaseModuleData@@QAE@XZ,0x0000F0A6,AutoHealBehaviorModuleData constructs the shared module-data base through this ILT
 ??0AIAttackSwoopThenIdleStateMachine@@QAE@PAXVAsciiString@@@Z,0x00025095,AIAttackSwoopThenIdleStateMachine constructor ILT identified by exact state-machine literal and matching allocation size
+??1AIAttackSwoopThenIdleStateMachine@@UAE@XZ,0x000298D9,AIAttackSwoopThenIdleStateMachine complete destructor ILT; wrapper call and vtable slot-zero route to 0x002BBAC0 body identified by matching vptr reseat and StateMachine tail jump
 ??0AICommandParms@@QAE@W4AICommandType@@W4CommandSourceType@@@Z,0x00030EA4,AICommandParms constructor resolves to the retail ILT at 0x00030EA4 and body 0x00185910; AICommandInterface::aiEnter constructs AICMD_ENTER parameters through this exact target
 ??0AICommandParmsStorage@@QAE@ABUAICommandParms@@@Z,0x00019E2A,AIUpdateInterface_aiDoCommand placement copy aliases the known storage thunk
 ??0AIDockMachine@@QAE@PAVObject@@@Z,0x00014F15,ILT to AIDockMachine ctor 0x0014F7C0; retail onEnter@AIDockState call
