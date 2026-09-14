@@ -5420,7 +5420,7 @@ name,address,notes
 ??1Gen_dtor_0021e310@@UAE@XZ,0x00037A24,gen-dtor class destructor
 ??1Gen_dtor_0021fd90@@UAE@XZ,0x0004B227,gen-dtor class destructor
 ??1HealContain@@MAE@XZ,0x0003A41D,vtable 0x00CABC78 slots name HealContain; protected complete destructor called by wrapper 0x00220350
-??1Gen_dtor_00220560@@UAE@XZ,0x000100AF,gen-dtor class destructor
+??1HordeContainModuleData@@UAE@XZ,0x000100AF,public complete destructor ILT called by scalar wrapper 0x00220560; exact constructor 0x00220530 installs dedicated vtable 0x010ABCF8; matched body 0x00129E90
 ??1Gen_dtor_00222350@@UAE@XZ,0x00025289,gen-dtor class destructor
 ??1Gen_dtor_00227400@@UAE@XZ,0x000376E1,gen-dtor class destructor
 ??1Gen_dtor_00227b30@@UAE@XZ,0x00039D6A,gen-dtor class destructor
@@ -88101,6 +88101,7 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7InactiveBody@@6B@,0x010A8B74,exact constructor 0x00213BF0 installs this dedicated vtable; slot zero ILT 0x0003648A reaches scalar wrapper 0x00213E10
 ??1FlightDeckBehaviorModuleData@@UAE@XZ,0x000275BB,complete destructor ILT called by scalar wrapper 0x002131F0; exact constructor 0x002131B0 installs vtable 0x010A8268
 ??_7AODCrushCollideModuleData@@6B@,0x010A9740,exact constructor 0x00215B90 installs this dedicated vtable; slot zero ILT 0x0003F8F0 reaches scalar wrapper 0x00215DC0
+??_7HordeContainModuleData@@6B@,0x010ABCF8,exact constructor 0x00220530 installs this dedicated vtable; slot zero ILT 0x0002131E reaches scalar wrapper 0x00220560
 ??1?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAE@XZ,0x0093EA10,retail copy called by the dedicated AddInfo deleting wrapper 0x0093FD60; body is the exact 67-byte DynamicVector destructor ICF family
 ??_G?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAEPAXI@Z,0x0093FD60,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> scalar deleting destructor; matched ctor 0x0093E660 stores vtable 0x0113CE5C whose slot zero is this body
 ??_7?$DynamicVectorClass@UAddInfoStruct@MixFileFactoryClass@@@@6B@,0x0113CE5C,WWLib DynamicVectorClass<MixFileFactoryClass::AddInfoStruct> vtable installed by matched constructor 0x0093E660
