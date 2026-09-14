@@ -6080,11 +6080,11 @@ name,address,notes
 ??1Gen_dtor_005dec80@@UAE@XZ,0x00031084,gen-dtor class destructor
 ??1Gen_dtor_005decb0@@UAE@XZ,0x00004C82,gen-dtor class destructor
 ??1Gen_dtor_005e3360@@UAE@XZ,0x0004016A,gen-dtor class destructor
-??1Gen_dtor_005e3450@@UAE@XZ,0x00023C8B,gen-dtor class destructor
-??1Gen_dtor_005e3580@@UAE@XZ,0x0001F7AD,gen-dtor class destructor
-??1Gen_dtor_005e3690@@UAE@XZ,0x00047915,gen-dtor class destructor
-??1Gen_dtor_005e3790@@UAE@XZ,0x00004291,gen-dtor class destructor
-??1Gen_dtor_005e38b0@@UAE@XZ,0x00043CD9,gen-dtor class destructor
+??1PointEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00023C8B,destructor ILT used by the PointEmissionVolumeModule scalar-deleting destructor
+??1LineEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x0001F7AD,destructor ILT used by the LineEmissionVolumeModule scalar-deleting destructor
+??1BoxEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00047915,destructor ILT used by the BoxEmissionVolumeModule scalar-deleting destructor
+??1SphereEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00004291,destructor ILT used by the SphereEmissionVolumeModule scalar-deleting destructor
+??1CylinderEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00043CD9,destructor ILT used by the CylinderEmissionVolumeModule scalar-deleting destructor
 ??1Gen_dtor_005e3920@@UAE@XZ,0x0000EA52,gen-dtor class destructor
 ??1Gen_dtor_005e39f0@@UAE@XZ,0x00033753,gen-dtor class destructor
 ??1Gen_dtor_005e3ae0@@UAE@XZ,0x0003BF7F,gen-dtor class destructor
