@@ -1,5 +1,8 @@
-// ?d_008bd6b0@@YAXXZ
-// partial score=0.975 date=2026-09-11
+// ??0Rva008BE450SizedDeleting@@QAE@XZ
+// partial score=0.9753 date=2026-09-14
+// ??0Rva008BE450SizedDeleting@@QAE@XZ
+// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+
 struct BfmeStringData3AF0
 {
 	unsigned short m_refCount;
@@ -8,17 +11,17 @@ struct BfmeStringData3AF0
 	unsigned short m_flags;
 };
 
-extern char g_bfmeNode1281Vtable;
+extern char g_bfmeDerived1286Vtable;
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 extern unsigned char g_bfmeFlag1281;
 
 extern "C" void _ReadWriteBarrier();
 #pragma intrinsic(_ReadWriteBarrier)
 
-class BfmeNode1281
+class Rva008BE450SizedDeleting
 {
 public:
-	BfmeNode1281();
+	Rva008BE450SizedDeleting();
 
 private:
 	void *m_vtable;
@@ -61,19 +64,16 @@ private:
 	};
 };
 
-BfmeNode1281::BfmeNode1281()
+Rva008BE450SizedDeleting::Rva008BE450SizedDeleting()
+	: m_bfme04(-1), m_bfme08(0), m_bfme0c(0), m_bfme10(0), m_bfme14(0)
 {
-	m_bfme04 = -1;
-	m_bfme08 = 0;
-	m_bfme0c = 0;
-	m_bfme10 = 0;
-	m_bfme14 = 0;
-	m_vtable = &g_bfmeNode1281Vtable;
+	BfmeStringData3AF0 &string = g_bfmeDefaultString1284;
+	m_vtable = &g_bfmeDerived1286Vtable;
 	_ReadWriteBarrier();
-	m_bfme18 = &g_bfmeDefaultString1284;
-	++g_bfmeDefaultString1284.m_refCount;
-	m_bfme1c = &g_bfmeDefaultString1284;
-	++g_bfmeDefaultString1284.m_refCount;
+	m_bfme18 = &string;
+	++string.m_refCount;
+	m_bfme1c = &string;
+	++string.m_refCount;
 	m_bfme24 = -1;
 	m_bfme30 = -1;
 	m_bfme38 = 3;
