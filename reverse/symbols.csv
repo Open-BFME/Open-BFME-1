@@ -6610,7 +6610,6 @@ name,address,notes
 ??1Gen_dtor_009221b0@@UAE@XZ,0x009221D0,gen-dtor class destructor
 ??1Gen_dtor_00922220@@UAE@XZ,0x00921940,gen-dtor class destructor
 ??1Gen_dtor_00922730@@UAE@XZ,0x00922750,gen-dtor class destructor
-??1Gen_dtor_00924070@@UAE@XZ,0x00924090,gen-dtor class destructor
 ??1Gen_dtor_009240f0@@UAE@XZ,0x00924110,gen-dtor class destructor
 ??1Gen_dtor_00924130@@UAE@XZ,0x00924150,gen-dtor class destructor
 ??1Gen_dtor_00926610@@UAE@XZ,0x00926630,gen-dtor class destructor
