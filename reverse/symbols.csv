@@ -6288,7 +6288,6 @@ name,address,notes
 ??1Gen_dtor_0064d750@@UAE@XZ,0x0002D93E,gen-dtor class destructor
 ??1Gen_dtor_00654cb0@@QAE@XZ,0x0003B0CF,non-virtual-dispatch sibling of the already-pinned virtual dtor pin at the same address; BFMENetworkQueue1::popFront calls it directly (e8), not through a vtable
 ??1Gen_dtor_00654cb0@@UAE@XZ,0x0003B0CF,gen-dtor class destructor
-??1Gen_dtor_00654cf0@@UAE@XZ,0x00009525,gen-dtor class destructor
 ??1Gen_dtor_0065ea50@@UAE@XZ,0x00017D69,gen-dtor class destructor
 ??1Gen_dtor_0065fcb0@@UAE@XZ,0x00049E2C,gen-dtor class destructor
 ??1Gen_dtor_0065fce0@@UAE@XZ,0x00027C00,gen-dtor class destructor
