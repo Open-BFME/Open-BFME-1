@@ -5953,6 +5953,7 @@ name,address,notes
 ??1Gen_dtor_00522960@@UAE@XZ,0x0004A3D1,gen-dtor class destructor
 ??1Gen_dtor_00525a70@@UAE@XZ,0x000090CA,gen-dtor class destructor
 ??1Gen_dtor_00529310@@UAE@XZ,0x0000B42E,gen-dtor class destructor
+??1SkirmishScreenState@@QAE@XZ,0x0000B42E,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x00529110
 ??1Gen_dtor_0052b7d0@@UAE@XZ,0x00007B21,gen-dtor class destructor
 ??1Gen_dtor_0052b810@@UAE@XZ,0x0003185E,gen-dtor class destructor
 ??1Gen_dtor_0052b850@@UAE@XZ,0x0000C0BD,gen-dtor class destructor
