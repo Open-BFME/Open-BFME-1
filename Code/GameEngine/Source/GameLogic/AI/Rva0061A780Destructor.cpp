@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME7: retail 0x0061A780 (164 B). BfmeBaseVUQ family (own vtable
-// 0x1117258 at entry, restored to 0x1073744 at exit -- lever 4's inline
+// Open-BFME7: LivingWorldRegion destructor, retail 0x0061A780 (164 B).
+// Its vtable 0x1117258 is installed at entry and restored to 0x1073744 at
+// exit -- lever 4's inline
 // empty-virtual-destructor intermediate). Members destroy in reverse
 // declaration order: a pointer at +0xec (freed via the already-pinned
 // non-virtual ??1Gen_dtor_0061a440 then operator delete), an
@@ -61,10 +62,10 @@ public:
 
 void __cdecl operator delete( void *block );
 
-class Rva0061A780 : public BfmeBaseVUQ
+class LivingWorldRegion : public BfmeBaseVUQ
 {
 public:
-	~Rva0061A780();
+	~LivingWorldRegion();
 
 private:
 	Gen_uwm_0004178b m_field04;			// +0x04
@@ -78,8 +79,8 @@ private:
 	Gen_dtor_0061a440 *m_ptrEC;			// +0xec
 };
 
-// ??1Rva0061A780@@UAE@XZ
-Rva0061A780::~Rva0061A780()
+// ??1LivingWorldRegion@@UAE@XZ
+LivingWorldRegion::~LivingWorldRegion()
 {
 	Gen_dtor_0061a440 *p = m_ptrEC;
 	if ( p )
