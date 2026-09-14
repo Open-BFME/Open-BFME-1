@@ -3340,7 +3340,7 @@ name,address,notes
 ??0RubbleRiseUpdateModuleData@@QAE@XZ,0x00014DAD,retail ModuleFactory ordinal 0x88 data ctor thunk
 ??0RunOffMapBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,RunOffMapBehavior ctor base call (shared ILT)
 ??0Rva0001DD31CtorBase@@QAE@PAX@Z,0x0001DD31,base constructor address decoded from the retail REL32 call site; name is address-derived
-??0Rva000250BDStateBase@@QAE@PAXVAsciiString@@@Z,0x000250BD,base constructor thunk address decoded from the retail REL32 call site; name is address-derived
+??0AIFollowPathState@@QAE@PAVStateMachine@@VAsciiString@@@Z,0x000250BD,retail constructor ILT routes to exact body 0x0017FC60; shipped header signature and dedicated vtable establish identity
 ??0Rva0003707ECtorBase@@QAE@PAX@Z,0x0003707E,base constructor address decoded from the retail REL32 call site; name is address-derived
 ??0Rva000441CAModuleDataBase@@QAE@XZ,0x000441CA,address-derived spelling for the shared module-data base constructor thunk
 ??0Rva00048F09CtorBase@@QAE@PAX@Z,0x00048F09,base constructor address decoded from the retail REL32 call site; name is address-derived
@@ -5216,7 +5216,8 @@ name,address,notes
 ??_7AIFollowWaypointPathExactState@@6B@,0x0109A828,exact constructor 0x0017FA90 installs this dedicated vtable
 ??_7AIWanderInPlaceState@@6B@,0x0109A910,exact constructor 0x0017FB80 installs this dedicated vtable
 ??1AIPanicState@@MAE@XZ,0x0001CA08,exact constructor 0x0017FBE0 and dedicated vtable 0x0109A988 establish the protected complete destructor called by wrapper 0x001855C0
-??1Gen_dtor_00185600@@UAE@XZ,0x00014768,gen-dtor class destructor
+??1AIFollowPathState@@MAE@XZ,0x00014768,exact constructor 0x0017FC60 and dedicated vtable 0x0109A9F0 establish the protected complete destructor called by wrapper 0x00185600
+??_GAIFollowPathState@@MAEPAXI@Z,0x00014B0A,dedicated vtable 0x0109A9F0 slot zero routes to scalar wrapper 0x00185600
 ??1AIMoveAndEvacuateState@@MAE@XZ,0x00018458,exact constructor 0x0017FD10 and dedicated vtable 0x0109AA60 establish the protected complete destructor called by wrapper 0x00185640
 ??1AIMoveAndDeleteState@@MAE@XZ,0x00018D6D,exact constructor 0x0017FD70 and dedicated vtable 0x0109AAD8 establish the protected complete destructor called by wrapper 0x00185680
 ??_GAIMoveAndEvacuateState@@MAEPAXI@Z,0x000010A5,dedicated vtable 0x0109AA60 slot zero routes to scalar wrapper 0x00185640

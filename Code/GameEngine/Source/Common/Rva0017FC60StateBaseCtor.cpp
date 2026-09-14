@@ -4,6 +4,8 @@
 
 #include "ascii_string.h"
 
+class StateMachine;
+
 class AIInternalMoveToState
 {
 public:
@@ -12,10 +14,10 @@ public:
 	virtual void stateBaseAnchor();
 };
 
-class Rva000250BDStateBase : public AIInternalMoveToState
+class AIFollowPathState : public AIInternalMoveToState
 {
 public:
-	Rva000250BDStateBase( void *machine, AsciiString name );
+	AIFollowPathState( StateMachine *machine, AsciiString name );
 
 private:
 	char m_baseFields[ 0x4C ];
@@ -26,7 +28,7 @@ private:
 	int m_field58;
 };
 
-Rva000250BDStateBase::Rva000250BDStateBase( void *machine, AsciiString name )
+AIFollowPathState::AIFollowPathState( StateMachine *machine, AsciiString name )
 	: AIInternalMoveToState( machine, name ),
 	  m_field50( 0x0 ),
 	  m_field54( 0x1 ),
