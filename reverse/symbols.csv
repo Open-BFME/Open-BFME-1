@@ -5169,7 +5169,9 @@ name,address,notes
 ??_7AIAttackSquadState@@6B@,0x01097E30,exact constructor 0x00171330 installs this dedicated vtable
 ??_7AIIdleState@@6B@,0x0109AD20,exact constructor 0x00180320 installs this dedicated vtable
 ??1Gen_dtor_001803e0@@UAE@XZ,0x0000C905,gen-dtor class destructor
-??1Gen_dtor_00180410@@UAE@XZ,0x000317A0,gen-dtor class destructor
+??1AIQuarrelState@@MAE@XZ,0x000317A0,constructor 0x001719A0 and dedicated vtable 0x01098470 establish the protected complete destructor called by wrapper 0x00180410
+??_GAIQuarrelState@@MAEPAXI@Z,0x0001B243,dedicated vtable 0x01098470 slot zero routes to scalar wrapper 0x00180410
+??_7AIQuarrelState@@6B@,0x01098470,constructor 0x001719A0 installs this dedicated vtable; name slot and exact update method corroborate identity
 ??1Gen_dtor_00180510@@UAE@XZ,0x00040967,gen-dtor class destructor
 ??1Gen_dtor_00181be0@@UAE@XZ,0x00010C4E,gen-dtor class destructor
 ??1AIMoveToState@@MAE@XZ,0x00046D7B,exact constructor 0x00173430 and dedicated vtable 0x01098F08 establish the protected complete destructor called by wrapper 0x00182120
