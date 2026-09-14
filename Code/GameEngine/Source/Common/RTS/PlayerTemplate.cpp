@@ -57,6 +57,7 @@
 #include "Common/INI.h"
 #include "Common/Science.h"
 #include "GameClient/Image.h"
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -212,6 +213,216 @@ private:
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
+class BfmeThingEFG
+{
+public:
+	void bfmeClearEFG();
+	void bfmeCopyEFG(BfmeThingEFG *that);
+};
+
+class PlayerTemplateProductionTimeChangeMap
+{
+public:
+	PlayerTemplateProductionTimeChangeMap &operator=(const PlayerTemplateProductionTimeChangeMap &that)
+	{
+		if (&that != this)
+		{
+			((BfmeThingEFG *)this)->bfmeClearEFG();
+			((BfmeThingEFG *)this)->bfmeCopyEFG((BfmeThingEFG *)&that);
+		}
+		return *this;
+	}
+
+	unsigned char m_data[0x14];
+};
+
+class PlayerTemplateSoundObject
+{
+public:
+	virtual ~PlayerTemplateSoundObject();
+	void Release_Ref()
+	{
+		if (InterlockedDecrement(&m_refCount) <= 0)
+			delete this;
+	}
+
+	long m_refCount;
+};
+
+class PlayerTemplateSoundEvent
+{
+public:
+	PlayerTemplateSoundEvent &operator=(const PlayerTemplateSoundEvent &that)
+	{
+		if (this != &that)
+		{
+			PlayerTemplateSoundObject *source = (PlayerTemplateSoundObject *)that.m_data;
+			if (source != 0)
+				InterlockedIncrement(&source->m_refCount);
+
+			if (m_data != 0)
+			{
+				PlayerTemplateSoundObject *old = (PlayerTemplateSoundObject *)m_data;
+				old->Release_Ref();
+			}
+
+			m_data = that.m_data;
+		}
+		return *this;
+	}
+
+	void *m_data;
+};
+
+class PlayerTemplateView
+{
+public:
+	NameKeyType m_nameKey;
+	UnicodeString m_displayName;
+	AsciiString m_side;
+	Handicap m_handicap;
+	Money m_money;
+	RGBColor m_preferredColor;
+	AsciiString m_startingBuilding;
+	AsciiString m_startingUnits[MAX_MP_STARTING_UNITS];
+	ProductionChangeMap m_productionCostChanges;
+	PlayerTemplateProductionTimeChangeMap m_productionTimeChanges;
+	ProductionVeterancyMap m_productionVeterancyLevels;
+	ScienceVec m_intrinsicSciences;
+	ScienceVec m_intrinsicSciencesMP;
+	AsciiString m_purchaseScienceCommandSet;
+	AsciiString m_purchaseScienceCommandSetMP;
+	AsciiString m_specialPowerShortcutCommandSet;
+	AsciiString m_specialPowerShortcutWinName;
+	Int m_specialPowerShortcutButtonCount;
+	AsciiString m_loadScreenMusic;
+	Bool m_observer;
+	Bool m_playableSide;
+	Int m_intrinsicSPP;
+	Int m_maxLevelMP;
+	Int m_maxLevelSP;
+	AsciiString m_scoreScreenImage;
+	AsciiString m_loadScreenImage;
+	AsciiString m_headWaterMark;
+	AsciiString m_flagWaterMark;
+	AsciiString m_enabledImage;
+	AsciiString m_sideIconImage;
+	AsciiString m_beaconTemplate;
+	std::vector<AsciiString> m_initialUpgrades;
+	std::vector<AsciiString> m_buildableHeroesMP;
+	PlayerTemplateSoundEvent m_lightPointsUpSound;
+	PlayerTemplateSoundEvent m_objectiveAddedSound;
+	PlayerTemplateSoundEvent m_objectiveCompletedSound;
+	AsciiString m_defaultPlayerAIType;
+	AsciiString m_spellBook;
+	AsciiString m_spellBookMP;
+	Bool m_evil;
+	AsciiString m_spellStoreCurrentPowerLabel;
+	AsciiString m_spellStoreMaximumPowerLabel;
+};
+
+class PlayerTemplateAssignShim
+{
+public:
+	PlayerTemplate &assign(const PlayerTemplate &that);
+	NameKeyType m_nameKey;
+	UnicodeString m_displayName;
+	AsciiString m_side;
+	Handicap m_handicap;
+	Money m_money;
+	RGBColor m_preferredColor;
+	AsciiString m_startingBuilding;
+	AsciiString m_startingUnits[MAX_MP_STARTING_UNITS];
+	ProductionChangeMap m_productionCostChanges;
+	PlayerTemplateProductionTimeChangeMap m_productionTimeChanges;
+	ProductionVeterancyMap m_productionVeterancyLevels;
+	ScienceVec m_intrinsicSciences;
+	ScienceVec m_intrinsicSciencesMP;
+	AsciiString m_purchaseScienceCommandSet;
+	AsciiString m_purchaseScienceCommandSetMP;
+	AsciiString m_specialPowerShortcutCommandSet;
+	AsciiString m_specialPowerShortcutWinName;
+	Int m_specialPowerShortcutButtonCount;
+	AsciiString m_loadScreenMusic;
+	Bool m_observer;
+	Bool m_playableSide;
+	Int m_intrinsicSPP;
+	Int m_maxLevelMP;
+	Int m_maxLevelSP;
+	AsciiString m_scoreScreenImage;
+	AsciiString m_loadScreenImage;
+	AsciiString m_headWaterMark;
+	AsciiString m_flagWaterMark;
+	AsciiString m_enabledImage;
+	AsciiString m_sideIconImage;
+	AsciiString m_beaconTemplate;
+	std::vector<AsciiString> m_initialUpgrades;
+	std::vector<AsciiString> m_buildableHeroesMP;
+	PlayerTemplateSoundEvent m_lightPointsUpSound;
+	PlayerTemplateSoundEvent m_objectiveAddedSound;
+	PlayerTemplateSoundEvent m_objectiveCompletedSound;
+	AsciiString m_defaultPlayerAIType;
+	AsciiString m_spellBook;
+	AsciiString m_spellBookMP;
+	Bool m_evil;
+	AsciiString m_spellStoreCurrentPowerLabel;
+	AsciiString m_spellStoreMaximumPowerLabel;
+};
+
+PlayerTemplate &PlayerTemplateAssignShim::assign(const PlayerTemplate &that)
+{
+#define PT_SOURCE reinterpret_cast<const PlayerTemplateView *>(&that)
+#define PT_COPY_ASCII(destination, source) reinterpret_cast<StringBase<char> &>(destination).set(reinterpret_cast<const StringBase<char> &>(source))
+#define PT_COPY_WIDE(destination, source) reinterpret_cast<StringBase<WideChar> &>(destination).set(reinterpret_cast<const StringBase<WideChar> &>(source))
+	m_nameKey = PT_SOURCE->m_nameKey;
+	PT_COPY_WIDE(m_displayName, PT_SOURCE->m_displayName);
+	PT_COPY_ASCII(m_side, PT_SOURCE->m_side);
+	m_handicap = PT_SOURCE->m_handicap;
+	m_money = PT_SOURCE->m_money;
+	m_preferredColor = PT_SOURCE->m_preferredColor;
+	PT_COPY_ASCII(m_startingBuilding, PT_SOURCE->m_startingBuilding);
+	for (Int i = 0; i < MAX_MP_STARTING_UNITS; ++i)
+		PT_COPY_ASCII(m_startingUnits[i], PT_SOURCE->m_startingUnits[i]);
+	m_productionCostChanges = PT_SOURCE->m_productionCostChanges;
+	m_productionTimeChanges = PT_SOURCE->m_productionTimeChanges;
+	m_productionVeterancyLevels = PT_SOURCE->m_productionVeterancyLevels;
+	m_intrinsicSciences = PT_SOURCE->m_intrinsicSciences;
+	m_intrinsicSciencesMP = PT_SOURCE->m_intrinsicSciencesMP;
+	PT_COPY_ASCII(m_purchaseScienceCommandSet, PT_SOURCE->m_purchaseScienceCommandSet);
+	PT_COPY_ASCII(m_purchaseScienceCommandSetMP, PT_SOURCE->m_purchaseScienceCommandSetMP);
+	PT_COPY_ASCII(m_specialPowerShortcutCommandSet, PT_SOURCE->m_specialPowerShortcutCommandSet);
+	PT_COPY_ASCII(m_specialPowerShortcutWinName, PT_SOURCE->m_specialPowerShortcutWinName);
+	m_specialPowerShortcutButtonCount = PT_SOURCE->m_specialPowerShortcutButtonCount;
+	PT_COPY_ASCII(m_loadScreenMusic, PT_SOURCE->m_loadScreenMusic);
+	m_observer = PT_SOURCE->m_observer;
+	m_playableSide = PT_SOURCE->m_playableSide;
+	m_intrinsicSPP = PT_SOURCE->m_intrinsicSPP;
+	m_maxLevelMP = PT_SOURCE->m_maxLevelMP;
+	m_maxLevelSP = PT_SOURCE->m_maxLevelSP;
+	PT_COPY_ASCII(m_scoreScreenImage, PT_SOURCE->m_scoreScreenImage);
+	PT_COPY_ASCII(m_loadScreenImage, PT_SOURCE->m_loadScreenImage);
+	PT_COPY_ASCII(m_headWaterMark, PT_SOURCE->m_headWaterMark);
+	PT_COPY_ASCII(m_flagWaterMark, PT_SOURCE->m_flagWaterMark);
+	PT_COPY_ASCII(m_enabledImage, PT_SOURCE->m_enabledImage);
+	PT_COPY_ASCII(m_sideIconImage, PT_SOURCE->m_sideIconImage);
+	PT_COPY_ASCII(m_beaconTemplate, PT_SOURCE->m_beaconTemplate);
+	m_initialUpgrades = PT_SOURCE->m_initialUpgrades;
+	m_buildableHeroesMP = PT_SOURCE->m_buildableHeroesMP;
+	m_lightPointsUpSound = PT_SOURCE->m_lightPointsUpSound;
+	m_objectiveAddedSound = PT_SOURCE->m_objectiveAddedSound;
+	m_objectiveCompletedSound = PT_SOURCE->m_objectiveCompletedSound;
+	PT_COPY_ASCII(m_defaultPlayerAIType, PT_SOURCE->m_defaultPlayerAIType);
+	PT_COPY_ASCII(m_spellBook, PT_SOURCE->m_spellBook);
+	PT_COPY_ASCII(m_spellBookMP, PT_SOURCE->m_spellBookMP);
+	m_evil = PT_SOURCE->m_evil;
+	PT_COPY_ASCII(m_spellStoreCurrentPowerLabel, PT_SOURCE->m_spellStoreCurrentPowerLabel);
+	PT_COPY_ASCII(m_spellStoreMaximumPowerLabel, PT_SOURCE->m_spellStoreMaximumPowerLabel);
+	#undef PT_COPY_WIDE
+	#undef PT_COPY_ASCII
+	#undef PT_SOURCE
+	return *reinterpret_cast<PlayerTemplate *>(this);
+}
+
 // ??0PlayerTemplate@@QAE@XZ exact retail body is emitted by
 // PlayerTemplateCtorThunk.cpp.
 //-----------------------------------------------------------------------------
@@ -235,6 +446,7 @@ const Image *PlayerTemplate::getSideIconImage( void ) const
 }
 
 //-----------------------------------------------------------------------------
+// ?getGeneralImage@PlayerTemplate@@QBEPBVImage@@XZ absent-from-retail
 const Image *PlayerTemplate::getGeneralImage( void ) const
 {
 	return TheMappedImageCollection->findImageByName(m_generalImage);
@@ -373,6 +585,44 @@ const PlayerTemplate* PlayerTemplateStore::getNthPlayerTemplate(Int i) const
 // If this function is called frequently, there are some relatively trivial changes we could make to 
 // have it run a lot faster.
 // ?getAllSideStrings@PlayerTemplateStore@@QAEXPAV?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@Z present-unmatched
+class BFMERetailAsciiString
+{
+	public:
+	void releaseBuffer();
+};
+
+template <class T>
+class BFMERetailStringBase
+{
+public:
+	BFMERetailStringBase(const BFMERetailStringBase &source);
+	~BFMERetailStringBase()
+	{
+		reinterpret_cast<BFMERetailAsciiString *>(this)->releaseBuffer();
+	}
+
+protected:
+	T *m_data;
+};
+
+struct BFMEFindAsciiStringView : private BFMERetailStringBase<char>
+{
+	BFMEFindAsciiStringView(const BFMEFindAsciiStringView &source)
+		: BFMERetailStringBase<char>(source)
+	{
+	}
+
+	~BFMEFindAsciiStringView()
+	{
+	}
+
+	bool operator==(const BFMEFindAsciiStringView &that) const
+	{
+		return strcmp(static_cast<const char *>(m_data) + 4,
+			static_cast<const char *>(that.m_data) + 4) == 0;
+	}
+};
+
 void PlayerTemplateStore::getAllSideStrings(AsciiStringList *outStringList)
 {
 	if (!outStringList) 
@@ -389,7 +639,11 @@ void PlayerTemplateStore::getAllSideStrings(AsciiStringList *outStringList)
 		if (!pt)			
 			continue; 
 
-		if (std::find(tmpList.begin(), tmpList.end(), pt->getSide()) == tmpList.end())
+		std::list<BFMEFindAsciiStringView> &viewList =
+			reinterpret_cast<std::list<BFMEFindAsciiStringView> &>(tmpList);
+		const BFMEFindAsciiStringView &side =
+			reinterpret_cast<const BFMEFindAsciiStringView &>(pt->getSide());
+		if (std::find(viewList.begin(), viewList.end(), side) == viewList.end())
 			tmpList.push_back(pt->getSide());
 	}
 	// tmpList is now filled with all unique sides found in the player templates.

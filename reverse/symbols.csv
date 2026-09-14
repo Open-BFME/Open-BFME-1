@@ -87419,3 +87419,6 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ?g_d_012b792c@@3PBDA,0x012B792C,address-derived char* global used by OnlineHome AptIconMordor registration
 ?rva00547730@BfmeAptScreenOnlineHome@@QAEXXZ,0x00547730,address-derived OnlineHome constructor call target
 ?loadLayout@BfmeAptManager@@QAEPAXPAVAsciiString@@PAVWindowLayoutInfo@@@Z,0x000429A6,retail call from WindowLayoutInfo::load at 0x00487870; target thunk row ?j_000429a6@@YAXXZ
+??4?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@M@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@M@_STL@@@3@@_STL@@QAEAAV01@ABV01@@Z,0x0002CA16,PlayerTemplate production-cost map assignment callee at the retail call site
+??4?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00018A70,PlayerTemplate science-vector assignment callee at the retail call site
+??4?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAEAAV01@ABV01@@Z,0x00035DA0,PlayerTemplate production-veterancy map assignment callee at the retail call site
