@@ -87440,3 +87440,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1?$SubsystemSlot@VGameStateMap@@@@UAE@XZ,0x0002062B,SubsystemSlot<GameStateMap> destructor ILT called by authentic scalar-deleting destructor at 0x000720F0
 ??1?$SubsystemSlot@VGameState@@@@UAE@XZ,0x00032F56,SubsystemSlot<GameState> destructor ILT called by authentic scalar-deleting destructor at 0x000721B0
 ??1?$SubsystemSlot@VGameResultsInterface@@@@UAE@XZ,0x00044BD9,SubsystemSlot<GameResultsInterface> destructor ILT called by authentic scalar-deleting destructor at 0x00072270
+?parse@Rva008CF3C0State@@QAEPADPADPAVRva008CF3C0String@@1@Z,0x008C55B0,name-value pair scanner called twice by the 0x008CF3C0 pair parser (thiscall ecx); callee identity ?d_008c55b0@@YAXXZ
+?append@Rva008CF3C0State@@QAEXPAX0PAVRva008CF3C0String@@PAVRva008A9B00@@HHH@Z,0x008CC690,seven-argument node append called once by the 0x008CF3C0 pair parser (thiscall ecx); callee identity ?d_008cc690@@YAXXZ
