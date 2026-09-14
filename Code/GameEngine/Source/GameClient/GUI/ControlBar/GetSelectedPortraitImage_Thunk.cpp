@@ -48,6 +48,10 @@ public:
 
 extern GameLogicPortraitShim *TheGameLogic;
 extern MappedImageCollectionPortraitShim *TheMappedImageCollection;
+// Retail loads 0x012ED62C for the playback checks, not TheGameLogic (0x012F0898).
+// GameEngine::init names 0x012ED62C TheRecorder; this method's `this` is GameLogic
+// and only the nested getMode/+0x2AC reads go through the recorder singleton.
+extern RecorderClass *TheRecorder;	///< retail 0x012ED62C
 
 bool GameLogicPortraitShim::isInMultiplayerOrSkirmishGame()
 {
@@ -57,15 +61,15 @@ bool GameLogicPortraitShim::isInMultiplayerOrSkirmishGame()
 		goto true_result;
 	if (m_gameType == 2)
 		goto true_result;
-	if (!TheGameLogic)
+	if (!TheRecorder)
 		goto false_result;
-	if (((RecorderClass *)TheGameLogic)->getMode() != 1)
+	if (TheRecorder->getMode() != 1)
 		goto false_result;
-	if (TheGameLogic->m_recorderMode == 2)
+	if (((GameLogicPortraitShim *)TheRecorder)->m_recorderMode == 2)
 		goto true_result;
-	if (TheGameLogic->m_recorderMode == 1)
+	if (((GameLogicPortraitShim *)TheRecorder)->m_recorderMode == 1)
 		goto true_result;
-	if (TheGameLogic->m_recorderMode == 5)
+	if (((GameLogicPortraitShim *)TheRecorder)->m_recorderMode == 5)
 		goto true_result;
 	goto false_result;
 
