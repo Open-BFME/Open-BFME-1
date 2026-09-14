@@ -5242,7 +5242,7 @@ name,address,notes
 ??1Gen_dtor_0018af30@@UAE@XZ,0x00022FB1,gen-dtor class destructor
 ??1Gen_dtor_0018af70@@UAE@XZ,0x000321A0,gen-dtor class destructor
 ??1Gen_dtor_0018b360@@UAE@XZ,0x00046D30,gen-dtor class destructor
-??1Gen_dtor_0018cf30@@UAE@XZ,0x00017CC4,gen-dtor class destructor
+??1TurretStateMachine@@MAE@XZ,0x00017CC4,exact constructor 0x0018DB60 and dedicated vtable 0x0109B828 establish the protected complete destructor called by wrapper 0x0018CF30; body 0x0018C2D0 resets this vtable and tail-jumps to StateMachine cleanup
 ??1Gen_dtor_0018d860@@UAE@XZ,0x0003AC3D,gen-dtor class destructor
 ??1TurretState@@MAE@XZ,0x00032BF5,exact protected constructor 0x0018D890 and dedicated vtable 0x0109BC18 establish the protected complete destructor called by wrapper 0x0018E4F0
 ??_GTurretState@@MAEPAXI@Z,0x0003BCDC,dedicated vtable 0x0109BC18 slot zero routes to scalar wrapper 0x0018E4F0
@@ -87656,3 +87656,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7AIAttackMeleeEngageState@@6B@,0x01099848,exact constructor 0x0017F8D0 installs this dedicated vtable
 ??1TurretAI@@MAE@XZ,0x0003AC3D,TurretAI protected complete virtual destructor ILT; exact constructor 0x0018DED0 installs primary vtable 0x0109BBF4 and scalar wrapper 0x0018D860 calls this route to cleanup body 0x0018D600
 ??_7TurretAI@@6B@,0x0109BBF4,TurretAI primary vtable installed by exact constructor 0x0018DED0; slot zero ILT 0x0003700B reaches scalar deleting wrapper 0x0018D860 while secondary vtable 0x0109BBDC is installed at +4
+??_GTurretStateMachine@@MAEPAXI@Z,0x00042915,dedicated vtable 0x0109B828 slot zero routes through this ILT to scalar wrapper 0x0018CF30
+??_7TurretStateMachine@@6B@,0x0109B828,exact constructor 0x0018DB60 installs this dedicated vtable
