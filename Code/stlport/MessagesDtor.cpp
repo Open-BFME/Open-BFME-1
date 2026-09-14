@@ -1,6 +1,7 @@
 // cl: /O2 /EHsc /MD
-// STLport 4.5.3 messages<char>/messages<unsigned short> destructors
-// (src/messages.cpp). Optionally-owned _Messages via vtable slot 4.
+// STLport 4.5.3 messages<char>/messages<unsigned short> destructors and their
+// compiler-emitted scalar-deleting wrappers (src/messages.cpp). Optionally-
+// owned _Messages via vtable slot 4. The char wrapper is retail 0x00848BA0.
 
 namespace _STL {
 
