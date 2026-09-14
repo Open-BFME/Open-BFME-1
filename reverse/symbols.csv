@@ -6332,7 +6332,7 @@ name,address,notes
 ??1Gen_dtor_00695290@@UAE@XZ,0x00013345,gen-dtor class destructor
 ??1Gen_dtor_006952c0@@UAE@XZ,0x0000D33C,gen-dtor class destructor
 ??1Gen_dtor_006982e0@@UAE@XZ,0x0003FCEC,gen-dtor class destructor
-??1Gen_dtor_00699f00@@UAE@XZ,0x00009048,gen-dtor class destructor
+??1MiscAudio@@UAE@XZ,0x00009048,authentic MiscAudio scalar-deleting wrapper callee ILT; resolves to the matched complete destructor at 0x006952F0
 ??1Gen_dtor_0069ee80@@UAE@XZ,0x00036291,gen-dtor class destructor
 ??1Gen_dtor_0069eeb0@@UAE@XZ,0x0000916F,gen-dtor class destructor
 ??1Gen_dtor_0069f4a0@@UAE@XZ,0x0004B3A8,gen-dtor class destructor
