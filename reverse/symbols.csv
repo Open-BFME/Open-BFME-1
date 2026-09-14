@@ -5235,8 +5235,12 @@ name,address,notes
 ??1Gen_dtor_0018cf30@@UAE@XZ,0x00017CC4,gen-dtor class destructor
 ??1Gen_dtor_0018d860@@UAE@XZ,0x0003AC3D,gen-dtor class destructor
 ??1Gen_dtor_0018e4f0@@UAE@XZ,0x00032BF5,gen-dtor class destructor
-??1Gen_dtor_0018e520@@UAE@XZ,0x0003F6AC,gen-dtor class destructor
-??1Gen_dtor_0018e560@@UAE@XZ,0x0000F425,gen-dtor class destructor
+??1TurretAIIdleState@@MAE@XZ,0x0003F6AC,exact constructor 0x0018D930 and dedicated vtable 0x0109BC70 establish the protected complete destructor called by wrapper 0x0018E520
+??1TurretAIIdleScanState@@MAE@XZ,0x0000F425,exact constructor 0x0018D9A0 and dedicated vtable 0x0109BCE0 establish the protected complete destructor called by wrapper 0x0018E560
+??_GTurretAIIdleState@@MAEPAXI@Z,0x0001875F,dedicated vtable 0x0109BC70 slot zero routes to scalar wrapper 0x0018E520
+??_GTurretAIIdleScanState@@MAEPAXI@Z,0x0003F152,dedicated vtable 0x0109BCE0 slot zero routes to scalar wrapper 0x0018E560
+??_7TurretAIIdleState@@6B@,0x0109BC70,exact constructor 0x0018D930 installs this dedicated vtable
+??_7TurretAIIdleScanState@@6B@,0x0109BCE0,exact constructor 0x0018D9A0 installs this dedicated vtable
 ??1Gen_dtor_0018e5a0@@UAE@XZ,0x0003629B,gen-dtor class destructor
 ??1Gen_dtor_0018e5e0@@UAE@XZ,0x000319C1,gen-dtor class destructor
 ??1Gen_dtor_0018e620@@UAE@XZ,0x0003D9F1,gen-dtor class destructor
