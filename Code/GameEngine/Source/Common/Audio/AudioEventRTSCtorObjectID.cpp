@@ -10,6 +10,10 @@
 //     ILT 0x00025306: BloodthirstyUpdate 0x70-byte members with extra=0
 //   (const AsciiString &, const Coord3D *, int)  retail 0x000B2E10, 180B
 //     named by ScriptActions_doPlaySoundEffectAt_Thunk.cpp
+//   bfmeReset000B25B0(const AsciiString &)       retail 0x000B25B0, 67B
+//     BFME-only member: commonInit, assign the name, clear +0x08. No vptr
+//     store, so not a constructor; no named caller (ILT 0x00048545 is a gap
+//     thunk), so the name is address-derived.
 //
 // Shared field init is the body at 0x000B24C0 (ILT 0x0002E68B). After the name
 // is assigned, +0x08 is released as a refcounted pointer -- the same
@@ -89,6 +93,7 @@ public:
 	virtual ~AudioEventRTS();
 
 	void commonInit(void);
+	void bfmeReset000B25B0(const AsciiString &eventName);
 	void resolveOwnerPosition(Coord3D *pos, bool *found);
 
 private:
@@ -194,4 +199,12 @@ AudioEventRTS::AudioEventRTS(const AsciiString &eventName, const Coord3D *positi
 	m_ownerType = 0;
 	m_shouldFade = 1;
 	m_timeOfDay = static_cast<unsigned int>(extra);
+}
+
+// ?bfmeReset000B25B0@AudioEventRTS@@QAEXABVAsciiString@@@Z
+void AudioEventRTS::bfmeReset000B25B0(const AsciiString &eventName)
+{
+	commonInit();
+	m_eventName = eventName;
+	m_eventInfo.clear();
 }
