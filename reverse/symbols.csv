@@ -87674,3 +87674,7 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7LocomotorTemplate@@6B@,0x00C9DE9C,exact constructor 0x001B52C0 installs this dedicated vtable
 ??_GObjectTypes@@MAEPAXI@Z,0x0003DFBE,dedicated vtable 0x00C9FB2C slot zero routes through this ILT to scalar wrapper 0x001DC3D0
 ??_7ObjectTypes@@6B@,0x00C9FB2C,exact constructor 0x001DC220 installs this dedicated vtable
+??1stdio_istreambuf@_SgI@@UAE@XZ,0x00849A10,STLport 4.5.3 stdio_istreambuf destructor; RTTI vtable 0x0112F27C slot zero routes to scalar wrapper 0x00841080
+??_Gstdio_istreambuf@_SgI@@UAEPAXI@Z,0x00841080,STLport 4.5.3 stdio_istreambuf scalar deleting destructor; RTTI type descriptor 0x012C7BB0 and vtable 0x0112F27C prove identity
+??_7stdio_istreambuf@_SgI@@6B@,0x0112F27C,STLport 4.5.3 stdio_istreambuf vtable; RTTI type descriptor 0x012C7BB0 and constructor store at 0x0084106F prove identity
+??_7stdio_streambuf_base@_SgI@@6B@,0x0112FBDC,STLport 4.5.3 stdio_streambuf_base vtable installed by stdio_istreambuf destructor 0x00849A10
