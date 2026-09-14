@@ -6470,7 +6470,8 @@ name,address,notes
 ??1Gen_dtor_00751a40@@UAE@XZ,0x00009066,gen-dtor class destructor
 ??1W3DHordeModelDrawModuleData@@UAE@XZ,0x00026B6B,exact constructor 0x00751C30 and dedicated vtable 0x01122348 establish the complete destructor thunk called by wrapper 0x00752DD0
 ??_GW3DHordeModelDrawModuleData@@UAEPAXI@Z,0x000444AE,constructor-installed vtable 0x01122348 slot zero routes through this ILT to 0x00752DD0
-??1Gen_dtor_00752fc0@@UAE@XZ,0x000305F3,gen-dtor class destructor
+??1W3DHordeModelDraw@@UAE@XZ,0x000305F3,exact constructor 0x00751CF0 and dedicated vtable 0x01122470 establish the complete destructor thunk called by wrapper 0x00752FC0
+??_GW3DHordeModelDraw@@UAEPAXI@Z,0x000370B0,constructor-installed vtable 0x01122470 slot zero routes through this ILT to 0x00752FC0
 ??1Gen_dtor_00753cc0@@UAE@XZ,0x00025C25,gen-dtor class destructor
 ??1Gen_dtor_00757dc0@@UAE@XZ,0x000293A7,gen-dtor class destructor
 ??1Gen_dtor_00757df0@@UAE@XZ,0x0001DE94,gen-dtor class destructor
