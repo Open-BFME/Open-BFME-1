@@ -1,0 +1,122 @@
+DIR32 CONSISTENCY AUDIT - FULL BREAKDOWN
+====================================================================================================
+
+BUCKET 1: CROSS-OVER IDENTITY SWAPS (4 symbols)
+----------------------------------------------------------------------------------------------------
+Pattern: Two symbols share the same pair of addresses.
+Meaning: One source file is reading these globals through the wrong names.
+Confidence: HIGH - straightforward to fix once identified.
+
+1. ?AreStaticSortListsEnabled@WW3D@@0_NA
+   Addresses: 0x12d6d74, 0x133f42d
+
+2. ?IsSortingEnabled@WW3D@@0_NA
+   Addresses: 0x12d6d74, 0x133f42d
+
+3. ?ZFar@DX8Wrapper@@1MA
+   Addresses: 0x133f498, 0x1340500
+
+4. ?ZNear@DX8Wrapper@@1MA
+   Addresses: 0x133f498, 0x1340500
+
+
+BUCKET 2: MULTI-ADDRESS SYMBOLS (6 symbols)
+----------------------------------------------------------------------------------------------------
+Pattern: One symbol resolves to 3+ addresses.
+Meaning: Multiple TUs disagree, or a single function is referencing different globals under one name.
+Confidence: REQUIRES INVESTIGATION - need per-object/per-function data via dir32_who.py.
+
+1. ?FadeCurrentFrame@@3HA
+   Addresses: 0x13071b4, 0x13071c8, 0x130733c (3 sites)
+
+2. ?FadeDirection@@3HA
+   Addresses: 0x13071ac, 0x13071c0, 0x1307334 (3 sites)
+
+3. ?FadeFrames@@3HA
+   Addresses: 0x13071b0, 0x13071c4, 0x1307338 (3 sites)
+
+4. ?FadeValue@@3MA
+   Addresses: 0x13071a8, 0x13071bc, 0x1307330 (3 sites)
+
+5. ?TheCampaignManager@@3PAVCampaignManager@@A
+   Addresses: 0x12f1024, 0x12f1028, 0x12f4cb0 (3 sites)
+
+6. ?ThePartitionManager@@3PAVPartitionManager@@A
+   Addresses: 0x12ed5b8, 0x12ed5bc, 0x12ef0e4 (3 sites)
+
+
+BUCKET 3: PLACEMENT DISAGREEMENT (87 symbols)
+----------------------------------------------------------------------------------------------------
+Pattern: One symbol resolves to exactly 2 addresses.
+Meaning: Multiple TUs disagree on placement of this global, OR one function reads it at two addresses.
+Confidence: MEDIUM - requires per-object inspection to distinguish placement from identity issues.
+
+Total: 87 symbols
+
+Sample (first 10):
+  1. ??0UnicodeString@@QAE@XZ                                          0x417bd9, 0x441c95
+  2. ??1RoadType@@QAE@XZ                                               0x418fcf, 0x41de49
+  3. ??1UnicodeString@@QAE@XZ                                          0x40d828, 0x43b304
+  4. ??_7?$DynamicVectorClass@K@@6B@                                   0x113cdf4, 0x113d0b0
+  5. ??_7?$DynamicVectorClass@PAULegacyMaterialClass@MeshLoadContextCl 0x113d0b0, 0x113e6a8
+  6. ??_7?$DynamicVectorClass@PAVRenderObjClass@@@@6B@                 0x113eb10, 0x113f12c
+  7. ??_7?$DynamicVectorClass@PAVVertexMaterialClass@@@@6B@            0x113c614, 0x113f12c
+  8. ??_7?$DynamicVectorClass@U_ENUM_VALUE@EnumParameterClass@@@@6B@   0x1091078, 0x113ce5c
+  9. ??_7?$DynamicVectorClass@VProxyClass@@@@6B@                       0x1091078, 0x113c8ac
+  10. ??_7?$DynamicVectorClass@VShaderClass@@@@6B@                      0x1091078, 0x113c644
+
+... and 77 more
+
+
+====================================================================================================
+5 MOST TRACTABLE FIXES
+====================================================================================================
+
+1. ?IsSortingEnabled@WW3D@@0_NA & ?AreStaticSortListsEnabled@WW3D@@0_NA (CROSS-OVER SWAP)
+----------------------------------------------------------------------------------------------------
+   Addresses: 0x12d6d74, 0x133f42d
+   Status: bitmap2dobjrender.cpp is the outlier; it reads these flags through the wrong names.
+   Action: Audit bitmap2dobjrender.cpp; likely needs flag name corrections in the reader function(s).
+   Expected Impact: Fix both symbols (2/97). Reference: commit aa2dff0378 (similar fix).
+
+2. ?ZNear@DX8Wrapper@@1MA & ?ZFar@DX8Wrapper@@1MA (CROSS-OVER SWAP)
+----------------------------------------------------------------------------------------------------
+   Addresses: 0x133f498, 0x1340500
+   Status: One function body in DX8Wrapper reads both Z values at wrong addresses.
+   Action: Review matrix calculation in DX8Wrapper; check projection matrix setup for swapped globals.
+   Expected Impact: Fix both symbols (2/97). Look for pattern: if (ZNear!=ZFar) { ... }
+
+3. ?FadeCurrentFrame@@3HA (MULTI-ADDRESS - REQUEST dir32_who)
+----------------------------------------------------------------------------------------------------
+   Addresses: 0x13071b4, 0x13071c8, 0x130733c (3 sites)
+   Status: Multiple TUs claim this name. Need per-object attribution.
+   Action: Run dir32_who.py in team lead's worktree for this symbol.
+   Expected Impact: Clarify whether this is placement or a true identity issue.
+
+4. ?FadeDirection@@3HA (MULTI-ADDRESS - REQUEST dir32_who)
+----------------------------------------------------------------------------------------------------
+   Addresses: 0x13071ac, 0x13071c0, 0x1307334 (3 sites)
+   Status: Multiple TUs claim this name. Likely related to #3 (fade-related globals).
+   Action: Run dir32_who.py in team lead's worktree for this symbol.
+   Expected Impact: May be part of a coordinated set with other Fade* globals.
+
+5. ?FadeFrames@@3HA (MULTI-ADDRESS - REQUEST dir32_who)
+----------------------------------------------------------------------------------------------------
+   Addresses: 0x13071b0, 0x13071c4, 0x1307338 (3 sites)
+   Status: Multiple TUs claim this name. Part of Fade* family.
+   Action: Run dir32_who.py in team lead's worktree for this symbol.
+   Expected Impact: Investigate all Fade* symbols together for coordinated placement.
+
+
+====================================================================================================
+SUMMARY STATISTICS
+====================================================================================================
+Cross-over identity swaps:     4 (HIGH confidence, straightforward fixes)
+Multi-address (3+):            6 (MEDIUM confidence, need per-object data)
+Placement disagreements (2):  87 (LOW-MEDIUM confidence, need context)
+TOTAL:                        97
+
+Next steps:
+  1. Fix the 2 cross-over pairs (should clear ~4 symbols)
+  2. Request dir32_who output for the 6 multi-address symbols
+  3. Audit placement disagreements TU by TU (87 remains)
