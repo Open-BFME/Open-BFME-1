@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /D_STLP_NO_EXCEPTIONS /Ireference/shims/stlp_nodealloc
 // stlport
 
 #include <deque>
@@ -98,7 +98,7 @@ struct Gen_t_008fb350_p12pod
 	int x;
 	int y;
 	int radius;
-	int playerMask;
+	unsigned int playerMask;
 };
 
 class ShroudManagerImpl008FBA40;
@@ -255,7 +255,7 @@ private:
 	char padding69[3];
 	ShroudManagerImpl008FBA40RefreshCallback refreshCallback;
 
-	void processPending(bool drainAll);
+	__declspec(noinline) void processPending(bool drainAll);
 	friend class ShroudManagerImpl008FBA40Element;
 	friend class PartitionManager;
 	friend ShroudManagerImpl008FBA40ElementLayout *shroudElementAt(
@@ -348,6 +348,23 @@ void ShroudManagerImpl008FBA40::drainPending()
 	}
 
 	processPending(true);
+}
+
+void ShroudManagerImpl008FBA40::processPending(bool considerTimestamp)
+{
+	unsigned int compareTime = considerTimestamp
+		? (unsigned int)unknown38 : 0xffffffffu;
+	while (!records.empty() && records.front().timestamp < compareTime)
+	{
+		unsigned int playerMask = records.front().playerMask;
+		int radius = records.front().radius;
+		if (playerMask != 0 && radius >= 0)
+		{
+			processShroudRevealCircle008F9B10(records.front().x,
+				records.front().y, radius, this, playerMask & 0xffff);
+		}
+		records.pop_front();
+	}
 }
 
 void ShroudManagerImpl008FBA40::updatePlayerCells008FB010(int playerIndex)
