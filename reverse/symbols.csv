@@ -6267,7 +6267,8 @@ name,address,notes
 ??1Gen_dtor_006060f0@@UAE@XZ,0x000386EF,gen-dtor class destructor
 ??1Gen_dtor_006070b0@@UAE@XZ,0x000075EF,gen-dtor class destructor
 ??1Gen_dtor_006076e0@@UAE@XZ,0x00048306,gen-dtor class destructor
-??1Gen_dtor_00607ba0@@UAE@XZ,0x0004374D,gen-dtor class destructor
+??1RandomSoundSelectorClientBehavior@@UAE@XZ,0x0004374D,exact constructor 0x00607A30 and dedicated primary vtable 0x01115918 establish the complete destructor thunk called by wrapper 0x00607BA0
+??_GRandomSoundSelectorClientBehavior@@UAEPAXI@Z,0x000380F0,constructor-installed primary vtable 0x01115918 slot zero routes through this ILT to 0x00607BA0
 ??1Gen_dtor_006086b0@@UAE@XZ,0x00034158,gen-dtor class destructor
 ??1Gen_dtor_00608f50@@UAE@XZ,0x00021698,gen-dtor class destructor
 ??1Gen_dtor_0060a130@@UAE@XZ,0x00011356,gen-dtor class destructor
