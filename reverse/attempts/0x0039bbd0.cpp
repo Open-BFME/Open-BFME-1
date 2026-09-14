@@ -1,80 +1,101 @@
 // ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z
-// partial score=0.35 date=2026-09-04
+// partial score=0.95 date=2026-09-14
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: BfmeSpecialPowerAllowanceStore::bfmeIndexOf, retail 0x0039BBD0,
-// 195 bytes. Named by the already-matched _bfme_allows walk, which treats a
-// negative answer as "allowed". Kept in its own TU so that caller cannot
-// inline this body and break the 61-byte match at 0x0039BE50.
-//
-// Two nested pointer vectors: store+0x08/+0x0C of group records, each group
-// holding a pointer vector at +0x14/+0x18. The search key is SpecialPower
-// template+0x10 after the same one-level override walk _bfme_allows uses.
-// The first next-override pointer is hoisted out of the inner loop; the
-// inner and outer counts are re-read from the vectors each iteration.
+// ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z
 
 typedef int Int;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
 public:
-	Overridable *friend_getFinalOverride(void);		// ILT 0x00048C61
+	Overridable *friend_getFinalOverride( void );
+	const Overridable *friend_getFinalOverride( void ) const
+	{
+		return const_cast<Overridable *>( this )->friend_getFinalOverride();
+	}
 
 	char m_bfmeHeadA[0x04];
-	Overridable *m_bfmeNextOverride;			// +0x04
+	Overridable *m_bfmeNextOverride;
 	char m_bfmeHeadB[0x10 - 0x08];
-	void *m_bfmeKey;					// +0x10
+	void *m_bfmeKey;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
 class SpecialPowerTemplate : public Overridable
 {
+};
+
+class BfmeAllowanceGroup;
+
+class BfmeGroupVector
+{
+public:
+	BfmeAllowanceGroup **begin( void ) { return m_bfmeBegin; }
+	BfmeAllowanceGroup **end( void ) { return m_bfmeEnd; }
+	unsigned size( void ) { return (unsigned)(m_bfmeEnd - m_bfmeBegin); }
+
+private:
+	BfmeAllowanceGroup **m_bfmeBegin;
+	BfmeAllowanceGroup **m_bfmeEnd;
+};
+
+class BfmeEntryVector
+{
+public:
+	void **begin( void ) { return m_bfmeBegin; }
+	void **end( void ) { return m_bfmeEnd; }
+	unsigned size( void ) { return (unsigned)(m_bfmeEnd - m_bfmeBegin); }
+
+private:
+	void **m_bfmeBegin;
+	void **m_bfmeEnd;
 };
 
 class BfmeAllowanceGroup
 {
 public:
 	char m_bfmeHead[0x14];
-	void **m_bfmeBegin;					// +0x14
-	void **m_bfmeEnd;					// +0x18
+	void **m_bfmeBegin;
+	void **m_bfmeEnd;
 };
 
 class BfmeSpecialPowerAllowanceStore
 {
 private:
-	Int bfmeIndexOf(const SpecialPowerTemplate *tmpl);
-
+	Int bfmeIndexOf( const SpecialPowerTemplate *tmpl );
 	char m_bfmeHead[0x08];
-	BfmeAllowanceGroup **m_bfmeBegin;			// +0x08
-	BfmeAllowanceGroup **m_bfmeEnd;				// +0x0C
+	BfmeGroupVector m_bfmeGroups;
 };
 
-// ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z
-Int BfmeSpecialPowerAllowanceStore::bfmeIndexOf(const SpecialPowerTemplate *tmpl)
+// ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z present-unmatched
+Int BfmeSpecialPowerAllowanceStore::bfmeIndexOf( const SpecialPowerTemplate *tmpl )
 {
-	BfmeSpecialPowerAllowanceStore *self = this;
-	BfmeAllowanceGroup **end = self->m_bfmeEnd;
-	BfmeAllowanceGroup **begin = self->m_bfmeBegin;
-	unsigned outer = (unsigned)(end - begin);
+	unsigned outer = m_bfmeGroups.size();
 	unsigned i = 0;
+	if (outer <= 0)
+		goto noMatch;
+	BfmeAllowanceGroup **current = m_bfmeGroups.begin();
 
 	while (i < outer)
 	{
-		BfmeAllowanceGroup *group = begin[i];
-		void **innerBegin = group->m_bfmeBegin;
+		const BfmeAllowanceGroup *group = *current;
 		void **innerEnd = group->m_bfmeEnd;
-		unsigned inner = (unsigned)(innerEnd - innerBegin);
-		unsigned j = 0;
-		Overridable *next = tmpl->m_bfmeNextOverride;
+		void **innerBegin = group->m_bfmeBegin;
+		Int inner = (Int)(innerEnd - innerBegin);
+		Int j = 0;
+		const SpecialPowerTemplate *next;
+		if ((unsigned)inner <= 0)
+			goto nextGroup;
+		next = (const SpecialPowerTemplate *)tmpl->m_bfmeNextOverride;
 
-		while (j < inner)
+		do
 		{
-			const Overridable *finalTmpl;
+			const SpecialPowerTemplate *finalTmpl;
 
 			if (next)
 			{
 				if (next->m_bfmeNextOverride)
-					finalTmpl = next->m_bfmeNextOverride->friend_getFinalOverride();
+					finalTmpl = (const SpecialPowerTemplate *)
+						next->m_bfmeNextOverride->friend_getFinalOverride();
 				else
 					finalTmpl = next;
 			}
@@ -87,14 +108,16 @@ Int BfmeSpecialPowerAllowanceStore::bfmeIndexOf(const SpecialPowerTemplate *tmpl
 				return (Int)i;
 
 			++j;
-			inner = (unsigned)(group->m_bfmeEnd - group->m_bfmeBegin);
+			inner = (Int)(group->m_bfmeEnd - group->m_bfmeBegin);
 		}
+		while ((unsigned)j < (unsigned)inner);
 
+	nextGroup:
 		++i;
-		begin = self->m_bfmeBegin;
-		end = self->m_bfmeEnd;
-		outer = (unsigned)(end - begin);
+		++current;
+		outer = m_bfmeGroups.size();
 	}
 
+noMatch:
 	return -1;
 }
