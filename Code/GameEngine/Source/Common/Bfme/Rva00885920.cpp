@@ -11,7 +11,7 @@ public:
 	int m_socket8;
 
 	int d_00885920( void );
-	int d_00885530( const char* arg1, int arg2 );
+	int d_00885530( const char* command, int size );
 };
 
 
@@ -33,12 +33,12 @@ int Rva00885920Class::d_00885920( void )
 extern "C" int __stdcall send( int, const char*, int, int );
 extern "C" __declspec(dllimport) void __stdcall Rva01358EA8( void* );
 
-int Rva00885920Class::d_00885530( const char* arg1, int arg2 )
+int Rva00885920Class::d_00885530( const char* command, int size )
 {
-	if ( send( m_socket4, arg1, arg2, 0 ) > 0 )
+	if ( send( m_socket4, command, size, 0 ) > 0 )
 	{
 		Rva01358EA8( (void*)0x01132E90 );
-		Rva01358EA8( (void*)arg1 );
+		Rva01358EA8( (void*)command );
 		return 0;
 	}
 	return 0x80040001;
