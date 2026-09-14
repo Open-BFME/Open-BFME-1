@@ -65,11 +65,11 @@ public:
 class Rva000BD900
 {
 public:
-	static void parseFCurveOrReal(INI *ini, void *instance, void *, const void *);
+	static void parseFCurveOrReal(INI *ini, void *instance, void *store, const void *userData);
 };
 
 // ?parseFCurveOrReal@Rva000BD900@@SAXPAVINI@@PAX1PBX@Z
-void Rva000BD900::parseFCurveOrReal(INI *ini, void *, void *store, const void *)
+void Rva000BD900::parseFCurveOrReal(INI *ini, void *instance, void *store, const void *userData)
 {
 	const char *token = ini->getNextToken();
 	Rva0006AB10Curve *curve = (Rva0006AB10Curve *)store;

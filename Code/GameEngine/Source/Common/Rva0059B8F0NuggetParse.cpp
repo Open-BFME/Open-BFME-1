@@ -83,14 +83,14 @@ public:
 	Rva0059B8F0Nugget();
 	virtual void create();
 
-	static void parse(INI *, void *, void *, const void *);
+	static void parse(INI *, void *instance, void *store, const void *userData);
 
 private:
 	BfmeA1140 m_bfme;
 };
 
 // ?parse@Rva0059B8F0Nugget@@SAXPAVINI@@PAX1PBX@Z
-void Rva0059B8F0Nugget::parse(INI *ini, void *instance, void *, const void *)
+void Rva0059B8F0Nugget::parse(INI *ini, void *instance, void *store, const void *userData)
 {
 	static const FieldParse myFieldParse[] =
 	{

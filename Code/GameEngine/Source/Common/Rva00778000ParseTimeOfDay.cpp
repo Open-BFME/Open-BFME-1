@@ -49,7 +49,7 @@ struct Rva00778000Owner
 extern const char *const Rva00778000TimeOfDayNames[];
 
 // ?Rva00778000Parse@@YAXPAVINI@@PAX1PBX@Z
-void Rva00778000Parse(INI *ini, void *instance, void *, const void *)
+void Rva00778000Parse(INI *ini, void *instance, void *store, const void *userData)
 {
 	Rva00778000Owner *owner = (Rva00778000Owner *)instance;
 	if (owner == 0)

@@ -114,7 +114,7 @@ private:
 };
 
 // ?parse@ParticleSysBoneFXNugget@@SAXPAVINI@@PAX1PBX@Z
-void ParticleSysBoneFXNugget::parse(INI *ini, void *instance, void *, const void *)
+void ParticleSysBoneFXNugget::parse(INI *ini, void *instance, void *store, const void *userData)
 {
 	ParticleSysBoneFXNugget *nugget = new ParticleSysBoneFXNugget;
 	INI *p = ini;

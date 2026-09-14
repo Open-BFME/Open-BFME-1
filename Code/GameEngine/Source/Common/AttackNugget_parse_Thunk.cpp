@@ -66,7 +66,7 @@ private:
 
 // ?parse@AttackNugget@@SAXPAVINI@@PAX1PBX@Z
 // dup_59eb90 absent-from-retail
-void AttackNugget::parse(INI *ini, void *instance, void *, const void *)
+void AttackNugget::parse(INI *ini, void *instance, void *store, const void *userData)
 {
 	static const FieldParse myFieldParse[] =
 	{

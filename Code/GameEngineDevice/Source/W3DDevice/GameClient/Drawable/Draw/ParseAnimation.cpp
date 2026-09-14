@@ -158,7 +158,7 @@ public:
 };
 }
 
-__declspec(noinline) static void parseAnimation(INI *ini, void *instance, void *, const void *userData)
+__declspec(noinline) static void parseAnimation(INI *ini, void *instance, void *store, const void *userData)
 {
     AsciiString animationName = ini->getNextAsciiString();
     AsciiString originalAnimationName = animationName;

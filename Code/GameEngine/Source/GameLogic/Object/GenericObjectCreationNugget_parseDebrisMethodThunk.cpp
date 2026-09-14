@@ -53,7 +53,7 @@ public:
 	void addObjectCreationNugget(ObjectCreationNugget *);
 };
 
-void GenericObjectCreationNugget::parseDebris(INI *ini, void *instance, void *, const void *)
+void GenericObjectCreationNugget::parseDebris(INI *ini, void *instance, void *store, const void *userData)
 {
 	MultiIniFieldParse fields;
 	fields.add(GenericObjectCreationNuggetCommonFields);
