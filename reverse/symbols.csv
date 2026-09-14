@@ -5410,7 +5410,7 @@ name,address,notes
 ??1Gen_dtor_00263c60@@UAE@XZ,0x0003CE9D,gen-dtor class destructor
 ??1Gen_dtor_00264290@@UAE@XZ,0x0000D968,gen-dtor class destructor
 ??1Gen_dtor_00264550@@UAE@XZ,0x000490C1,gen-dtor class destructor
-??1Gen_dtor_00264720@@UAE@XZ,0x000180FC,gen-dtor class destructor
+??1ProductionSpeedBonusModuleData@@UAE@XZ,0x000180FC,destructor ILT used by the ProductionSpeedBonusModuleData scalar-deleting destructor
 ??1Gen_dtor_002649b0@@UAE@XZ,0x00004AAC,gen-dtor class destructor
 ??1Gen_dtor_00264b40@@UAE@XZ,0x000400D9,gen-dtor class destructor
 ??1Gen_dtor_00264e70@@UAE@XZ,0x0002C3E5,gen-dtor class destructor
@@ -5579,14 +5579,14 @@ name,address,notes
 ??1Gen_dtor_002d3740@@UAE@XZ,0x0003BD1D,gen-dtor class destructor
 ??1W3DOverlordTankDrawModuleData@@UAE@XZ,0x0003BD1D,route=0x002D36B0; scalar deleting destructor retail call targets the matched W3DOverlordTankDrawModuleData destructor through this ILT
 ??1Gen_dtor_002d3900@@UAE@XZ,0x0001A785,gen-dtor class destructor
-??1Gen_dtor_002d3cf0@@UAE@XZ,0x00006609,gen-dtor class destructor
+??1BaseUpgradeModuleData@@UAE@XZ,0x00006609,destructor ILT used by the BaseUpgradeModuleData scalar-deleting destructor
 ??1Gen_dtor_002d3f20@@UAE@XZ,0x00019AC4,gen-dtor class destructor
 ??1Gen_dtor_002d42a0@@UAE@XZ,0x0000433B,gen-dtor class destructor
 ??1Gen_dtor_002d46a0@@UAE@XZ,0x00025293,gen-dtor class destructor
-??1Gen_dtor_002d4bd0@@UAE@XZ,0x0003878F,gen-dtor class destructor
+??1CostModifierUpgradeModuleData@@UAE@XZ,0x0003878F,destructor ILT used by the CostModifierUpgradeModuleData scalar-deleting destructor
 ??1Gen_dtor_002d4e20@@UAE@XZ,0x00014C04,gen-dtor class destructor
 ??1Gen_dtor_002d50d0@@UAE@XZ,0x000423E3,gen-dtor class destructor
-??1Gen_dtor_002d51b0@@UAE@XZ,0x00007C7F,gen-dtor class destructor
+??1ExperienceScalarUpgradeModuleData@@UAE@XZ,0x00007C7F,destructor ILT used by the ExperienceScalarUpgradeModuleData scalar-deleting destructor
 ??1Gen_dtor_002d5380@@UAE@XZ,0x00023371,gen-dtor class destructor
 ??1Gen_dtor_002d58d0@@UAE@XZ,0x0001C1D4,gen-dtor class destructor
 ??1Gen_dtor_002d5da0@@UAE@XZ,0x00007EAF,gen-dtor class destructor
