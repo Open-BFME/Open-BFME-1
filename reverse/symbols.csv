@@ -6320,11 +6320,17 @@ name,address,notes
 ??1Gen_dtor_00674380@@UAE@XZ,0x00010B36,gen-dtor class destructor
 ??1NetGameCommandMsg@@UAE@XZ,0x00010B36,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x006736B0
 ??1Gen_dtor_00674490@@UAE@XZ,0x0002F702,gen-dtor class destructor
-??1Gen_dtor_006744c0@@UAE@XZ,0x00037C40,gen-dtor class destructor
-??1Gen_dtor_006744f0@@UAE@XZ,0x000391FD,gen-dtor class destructor
-??1Gen_dtor_00674520@@UAE@XZ,0x00034A45,gen-dtor class destructor
-??1Gen_dtor_00674550@@UAE@XZ,0x0000B8C0,gen-dtor class destructor
-??1Gen_dtor_00674580@@UAE@XZ,0x00013949,gen-dtor class destructor
+??1NetAckStage1CommandMsg@@UAE@XZ,0x00037C40,constructor 0x006738A0 and dedicated vtable 0x0111A49C establish identity
+??1NetAckStage2CommandMsg@@UAE@XZ,0x000391FD,constructor 0x006739B0 and dedicated vtable 0x0111A4B0 establish identity
+??1NetPlayerLeaveCommandMsg@@UAE@XZ,0x00034A45,constructor 0x00673AA0 and dedicated vtable 0x0111A4C4 establish identity
+??1NetDestroyPlayerCommandMsg@@UAE@XZ,0x0000B8C0,constructor 0x00673B10 and dedicated vtable 0x0111A4D8 establish identity
+??1NetKeepAliveCommandMsg@@UAE@XZ,0x00013949,constructor 0x00673B80 and dedicated vtable 0x0111A4EC establish identity
+
+??_GNetAckStage1CommandMsg@@UAEPAXI@Z,0x0003BF9D,constructor-installed vtable 0x0111A49C slot zero routes through this ILT to 0x006744C0
+??_GNetAckStage2CommandMsg@@UAEPAXI@Z,0x00002E32,constructor-installed vtable 0x0111A4B0 slot zero routes through this ILT to 0x006744F0
+??_GNetPlayerLeaveCommandMsg@@UAEPAXI@Z,0x0001BC89,constructor-installed vtable 0x0111A4C4 slot zero routes through this ILT to 0x00674520
+??_GNetDestroyPlayerCommandMsg@@UAEPAXI@Z,0x0003AD37,constructor-installed vtable 0x0111A4D8 slot zero routes through this ILT to 0x00674550
+??_GNetKeepAliveCommandMsg@@UAEPAXI@Z,0x0000A790,constructor-installed vtable 0x0111A4EC slot zero routes through this ILT to 0x00674580
 ??1Gen_dtor_006745b0@@UAE@XZ,0x0002C070,gen-dtor class destructor
 ??1Gen_dtor_006745e0@@UAE@XZ,0x00047B77,gen-dtor class destructor
 ??1Gen_dtor_00674610@@UAE@XZ,0x0003C81C,gen-dtor class destructor
