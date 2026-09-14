@@ -19,9 +19,20 @@ public:
 	virtual ~Rva0082AE60Exc();
 };
 
+class Rva0082AE80Exc : public bad_alloc
+{
+public:
+	virtual ~Rva0082AE80Exc();
+};
+
 void ForceRva0082AE60ExcDeletingDestructor()
 {
 	Rva0082AE60Exc value;
+}
+
+void ForceRva0082AE80ExcDeletingDestructor()
+{
+	Rva0082AE80Exc value;
 }
 
 }
