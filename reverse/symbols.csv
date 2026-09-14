@@ -13280,6 +13280,8 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PAVTunnelTracker@@V?$allocator@PAVTunnelTracker@@@_STL@@@_STL@@IAEXPAPAVTunnelTracker@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001212A,REL32 pin from CaveSystem::registerNewCave @0x378970
 ?_M_insert_overflow@?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@IAEXPAPAVUpdateModule@@ABQAV3@ABU__true_type@2@I_N@Z,0x00036B79,GameLogic loadPostProcess growth call at 0x0038E894 and 0x0038E88E reaches the existing vector overflow thunk
 ?_M_insert_overflow@?$vector@PAVWeaponTemplate@@V?$allocator@PAVWeaponTemplate@@@_STL@@@_STL@@IAEXPAPAVWeaponTemplate@@ABQAV3@ABU__true_type@2@I_N@Z,0x00012067,newWeaponTemplate STL growth call target (incremental-link thunk)
+?_M_insert_overflow@?$vector@PAUSiegeDockingEntry@@V?$allocator@PAUSiegeDockingEntry@@@_STL@@@_STL@@IAEXPAPAUSiegeDockingEntry@@ABQAU3@ABU__true_type@2@I_N@Z,0x0003A292,retail SiegeDockingBehavior::xfer call target at ILT 0x0003A292 reaches vector helper body 0x002065C0
+?j_0003a292@?$vector@PAUSiegeDockingEntry@@V?$allocator@PAUSiegeDockingEntry@@@_STL@@@_STL@@IAEXPAPAUSiegeDockingEntry@@ABQAU3@ABU__true_type@2@I_N@Z,0x0003A292,retail SiegeDockingBehavior::xfer emits the generated vector overflow alias at ILT 0x0003A292
 ?_M_insert_overflow@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXPAPAXABQAXABU__true_type@2@I_N@Z,0x0001CBFC,vector<void*>::_M_fill_insert REL32 call via ILT thunk
 ?_M_insert_overflow@?$vector@PBVFXList@@V?$allocator@PBVFXList@@@_STL@@@_STL@@IAEXPAPBVFXList@@ABQBV3@ABU__true_type@2@I_N@Z,0x0000F830,SlowDeath parseFX retail overflow helper
 ?_M_insert_overflow@?$vector@PBVFXList@@V?$allocator@PBVFXList@@@_STL@@@_STL@@IAEXPAPBVFXList@@ABQBV3@ABU__true_type@2@I_N@Z,0x00044FC1,ILT reached by InstantDeathBehavior parseFX twin at 0x0028BB10
@@ -78069,6 +78071,7 @@ name,address,notes
 ?bfmeWriteZO@BfmeItemZO@@QAEXPAVBfmeChunkZO@@@Z,0x0001C062
 ?bfmeXferFW@BfmeThingFW@@QAEXPAVBfmeXferFW@@@Z,0x0003DA69,route=0x00065D90; retail getCRC 0x003831B7 passes CRC writer to TheCRCParameterCheck; target exact body writes literal CRCParameterCheck then its AsciiString vector
 ?bfmeXferObjectID@@YAXPAVBfmeXfer@@PAI@Z,0x0000C9B4,AODHordeContain xfer reaches the existing ObjectID transfer helper
+?bfmeXferSiegeType@@YAXPAVXfer@@PAX@Z,0x00012508,retail SiegeDockingBehavior::xfer calls the 0x0010C440 enum forwarder through ILT 0x00012508
 ?bfmeZDeltaToCenter@BfmeBoundaryGeometry3D@@QBEMXZ,0x0087DBF0,GeometryInfo-compatible vertical center offset
 ?bfmeZeroKX@@YGXPAUBfmeVec3KX@@@Z,0x0002990B,pin
 ?bfme_appendGameOverDetails@GameLogic@@QAEXXZ,0x00387A50,once-only (+0x68 flag): formats Game Over Details and per slot Victory/Defeat frame Quit frame (graceful|voted out|n/a) from the PlayerLeaveStatus[8] records at +0x1b0 copying status into Player+0x484 and appending to the last AsciiString of the vector at +0x54..+0x58; ecx = this = GameLogic at the call 0x00397789; the ledger name ?endMenu@EstablishConnectionsMenu@@ for this 657 B body is wrong; reached via ILT 0x0004A10B
