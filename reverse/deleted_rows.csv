@@ -26743,3 +26743,4 @@ uw_00c5f850,0x00C5F850,retail funclet frees through operator delete[] at 0x00881
 ??_GGen_dtor_0006b110@@UAEPAXI@Z,0x0006B110,"generated scalar-destructor placeholder superseded by the authentic address-derived virtual class scalar-deleting destructor over the same 30-byte range"
 ??_GGen_dtor_00597680@@UAEPAXI@Z,0x00597680,"generated scalar-destructor placeholder superseded by the authentic GameClient scalar-deleting destructor over the same 30-byte range"
 ??_GGen_dtor_0079dbd0@@UAEPAXI@Z,0x0079DBD0,"generated scalar-destructor placeholder superseded by the authentic AptPalantir scalar-deleting destructor over the same 30-byte range"
+??_GGen_dtor_0052c1b0@@UAEPAXI@Z,0x0052C1B0,"generated scalar-destructor placeholder superseded by the authentic AptPlayerStatus scalar-deleting destructor over the same 30-byte range"
