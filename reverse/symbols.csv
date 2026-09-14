@@ -3986,6 +3986,7 @@ name,address,notes
 ??1?$VectorClass@VShaderClass@@@@UAE@XZ,0x0092FD10,0x009305B0 wrapper call and immediately adjacent matched 0x009305D0 VectorClass<ShaderClass> constructor; callee clears Vector/VectorMax/IsAllocated
 ??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x0000E68D,HordeSiegeEngineContain list member destructor call target (second COMDAT copy)
 ??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x00013449,ResourceGatheringManager list destructor ILT
+??1?$_List_base@HV?$allocator@H@_STL@@@_STL@@QAE@XZ,0x0014BB10,AI::~AI group-list member object symbol at retail 0x0014C3B0; call uses ILT 0x000491C0
 ??1?$_List_base@PAVAnimateWindow@@V?$allocator@PAVAnimateWindow@@@_STL@@@_STL@@QAE@XZ,0x0002CFD4,ILT thunk; retail call sites use the thunk
 ??1?$_List_base@PAVBfmeRva493A0Object@@V?$allocator@PAVBfmeRva493A0Object@@@_STL@@@_STL@@QAE@XZ,0x0000E68D,assigned list destructor call target for Rva002493A0
 ??1?$_List_base@PAVCampaign@@V?$allocator@PAVCampaign@@@_STL@@@_STL@@QAE@XZ,0x00015686,CampaignManager destructor STLport list base teardown
