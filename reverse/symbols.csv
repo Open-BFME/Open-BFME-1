@@ -5783,6 +5783,7 @@ name,address,notes
 ??1Gen_dtor_0042b9c0@@UAE@XZ,0x0003CCA4,gen-dtor class destructor
 ??1Gen_dtor_0042cdc0@@UAE@XZ,0x00033F6E,gen-dtor class destructor
 ??1Gen_dtor_0042d7a0@@UAE@XZ,0x0002499C,gen-dtor class destructor
+??1BuffNuggetFXNugget@@UAE@XZ,0x0002499C,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0042D7D0
 ??1Gen_dtor_0042e0a0@@UAE@XZ,0x00028DCB,gen-dtor class destructor
 ??1Gen_dtor_0042e400@@UAE@XZ,0x000132F5,gen-dtor class destructor
 ??1Gen_dtor_0042e440@@UAE@XZ,0x00031C2D,gen-dtor class destructor
