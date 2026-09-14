@@ -6564,7 +6564,8 @@ name,address,notes
 ??1Gen_dtor_007bbdf0@@UAE@XZ,0x00043F5E,gen-dtor class destructor
 ??1W3DShadowGeometry@@UAE@XZ,0x00043F5E,route=0x007BBE20; scalar deleting destructor retail call targets the matched W3DShadowGeometry destructor through this ILT
 ??1Gen_dtor_007bd2f0@@UAE@XZ,0x000461DC,gen-dtor class destructor
-??1Gen_dtor_007bdad0@@UAE@XZ,0x0001B6AD,gen-dtor class destructor
+??1W3DVolumetricShadow@@UAE@XZ,0x0001B6AD,exact constructor 0x007BA950 and dedicated vtable 0x011284CC establish the complete destructor thunk called by wrapper 0x007BDAD0
+??_GW3DVolumetricShadow@@UAEPAXI@Z,0x00025E0F,constructor-installed vtable 0x011284CC slot zero routes through this ILT to 0x007BDAD0
 ??1Gen_dtor_007c1500@@UAE@XZ,0x0091DE10,gen-dtor class destructor
 ??1Gen_dtor_007c1530@@UAE@XZ,0x0091CEF0,gen-dtor class destructor
 ??1Gen_dtor_007c29d0@@UAE@XZ,0x00032137,gen-dtor class destructor
