@@ -76,6 +76,7 @@ class _Rb_tree
 {
 public:
 	typedef _Rb_tree_node<Value> Node;
+	unsigned int size() const { return m_node_count; }
 
 	__forceinline void clear()
 	{
@@ -88,7 +89,14 @@ public:
 
 		if ( m_node_count != 0 )
 		{
-			_M_erase( (Node *)(void *)m_header->m_parent );
+			node = (Node *)(void *)m_header->m_parent;
+			while ( node != 0 )
+			{
+				_M_erase( (Node *)(void *)node->m_right );
+				Node *left = (Node *)(void *)node->m_left;
+				nodeDeallocate( node, sizeof( Node ) );
+				node = left;
+			}
 			m_header->m_left = m_header;
 			m_header->m_parent = 0;
 			m_header->m_right = m_header;
@@ -96,25 +104,19 @@ public:
 		}
 	}
 
-private:
-	__forceinline void _M_erase( Node *node );
+	__forceinline void eraseRoot( Node *node )
+	{
+		_M_erase( node );
+	}
 
+private:
+	void _M_erase( Node *node );
+
+public:
 	_Rb_tree_node_base *m_header;
 	unsigned int m_node_count;
 	Compare m_key_compare;
 };
-
-template <class Key, class Value, class KeyOfValue, class Compare, class Alloc>
-__forceinline void _Rb_tree<Key, Value, KeyOfValue, Compare, Alloc>::_M_erase( Node *node )
-{
-	while ( node != 0 )
-	{
-		_M_erase( (Node *)(void *)node->m_right );
-		Node *left = (Node *)(void *)node->m_left;
-		nodeDeallocate( node, sizeof( Node ) );
-		node = left;
-	}
-}
 
 }
 
@@ -123,6 +125,16 @@ struct Gen_t_00234730_m4pod
 	int m_pod;
 };
 
+class CampaignObject
+{
+public:
+	unsigned char m_pad[0x2c];
+	bool m_flag2c;
+	bool m_flag2d;
+};
+
+extern CampaignObject *TheLivingWorldLogic;
+
 typedef _STL::_Rb_tree<
 	Gen_t_00234730_m4pod,
 	Gen_t_00234730_m4pod,
@@ -130,14 +142,42 @@ typedef _STL::_Rb_tree<
 	_STL::less<Gen_t_00234730_m4pod>,
 	_STL::allocator<Gen_t_00234730_m4pod> > AptPalantirStoreTree;
 
+class AptPalantirStoreUpdateTree
+{
+public:
+	typedef AptPalantirStoreTree::Node Node;
+
+	__forceinline void clear()
+	{
+		AptPalantirStoreTree *tree =
+			reinterpret_cast<AptPalantirStoreTree *>( this );
+		Node *node = (Node *)(void *)tree->m_header->m_left;
+		while ( node != tree->m_header )
+		{
+			clearValue( node->m_value_field.m_pod );
+			node = (Node *)_STL::_Rb_global<bool>::_M_increment( node );
+		}
+
+		if ( tree->m_node_count != 0 )
+		{
+			tree->eraseRoot( (Node *)(void *)tree->m_header->m_parent );
+			tree->m_header->m_left = tree->m_header;
+			tree->m_header->m_parent = 0;
+			tree->m_header->m_right = tree->m_header;
+			tree->m_node_count = 0;
+		}
+	}
+};
+
 class AptPalantirStore
 {
 public:
 	void clear();
+	void rva00591b60();
 
 private:
 	unsigned int m_value00;
-	bool m_flag04;
+	unsigned char m_flag04;
 	unsigned char m_padding05[ 3 ];
 	int m_value08;
 	int m_value0c;
@@ -157,4 +197,29 @@ void AptPalantirStore::clear()
 	m_secondTree.clear();
 	m_value00 = 0;
 	m_flag04 = false;
+}
+
+void AptPalantirStore::rva00591b60()
+{
+	if ( !m_flag04 )
+		return;
+
+	CampaignObject *campaign = TheLivingWorldLogic;
+	if ( campaign == 0 || !campaign->m_flag2c || !campaign->m_flag2d )
+	{
+		clear();
+		return;
+	}
+
+	reinterpret_cast<AptPalantirStoreUpdateTree *>( &m_secondTree )->clear();
+
+	union NotEmpty
+	{
+		int value;
+		unsigned char byte;
+	} notEmpty;
+	notEmpty.value = ( m_value08 != 0 ) || ( m_firstTree.size() != 0 );
+	m_flag04 = notEmpty.byte;
+	if ( !notEmpty.byte )
+		m_value00 = 0;
 }
