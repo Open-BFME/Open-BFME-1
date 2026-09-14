@@ -2297,9 +2297,18 @@ def verify_dir32_consistency(rows):
     whitelist = {l.strip() for l in whitelist_path.read_text().splitlines() if l.strip() and not l.startswith("#")}
     new = [s for s in inconsistent if s not in whitelist]
     if new:
+        # This check refuses to self-seed because each entry needs a human to
+        # read it -- and then it printed 12 of 97, so the review it demands was
+        # impossible to do without editing this function. The full list goes to
+        # a file; stdout keeps the sample so the gate log stays readable.
+        report = ROOT / "build" / "dir32_inconsistent.txt"
+        report.parent.mkdir(parents=True, exist_ok=True)
+        report.write_text("".join(
+            f"{s}\t{','.join(hex(b) for b in sorted(sym2base[s]))}\n" for s in new))
         print(f"DIR32 consistency: FAIL {len(new)} NEW inconsistent symbol(s) (candidate hidden bug — same symbol, multiple addresses)")
         for s in new[:12]:
             print(f"    {s}: bases {[hex(b) for b in sorted(sym2base[s])]}")
+        print(f"    ... all {len(new)} with their bases: {report.relative_to(ROOT)}")
         raise SystemExit(1)
     print(f"DIR32 consistency: OK ({len(sym2base)} symbols; {len(inconsistent)} whitelisted, 0 new)")
 
