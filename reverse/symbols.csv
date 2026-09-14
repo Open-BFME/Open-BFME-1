@@ -6425,7 +6425,6 @@ name,address,notes
 ??1NetDisconnectVoteCommandMsg@@UAE@XZ,0x0003C81C,constructor 0x00673CD0 and dedicated vtable 0x0111A528 establish identity
 ??1NetProgressCommandMsg@@UAE@XZ,0x00003E04,constructor 0x00673D60 and dedicated vtable 0x0111A53C establish identity
 ??1NetFileProgressCommandMsg@@UAE@XZ,0x000342F2,constructor 0x00674030 and dedicated vtable 0x0111A564 establish identity
-
 ??_GNetDisconnectKeepAliveCommandMsg@@UAEPAXI@Z,0x000458FE,constructor-installed vtable 0x0111A500 slot zero routes through this ILT to 0x006745B0
 ??_GNetDisconnectPlayerCommandMsg@@UAEPAXI@Z,0x0001413C,constructor-installed vtable 0x0111A514 slot zero routes through this ILT to 0x006745E0
 ??_GNetDisconnectVoteCommandMsg@@UAEPAXI@Z,0x000297CB,constructor-installed vtable 0x0111A528 slot zero routes through this ILT to 0x00674610
@@ -6436,7 +6435,6 @@ name,address,notes
 ??1Gen_dtor_00674730@@UAE@XZ,0x0000CBD0,gen-dtor class destructor
 ??1BFMENetRequestFrameDataCommandMsg@@UAE@XZ,0x0003FFF3,constructor 0x00674260 and dedicated vtable 0x0111A5B4 establish identity
 ??1NetDisconnectScreenOffCommandMsg@@UAE@XZ,0x0000CD24,constructor 0x00674310 and dedicated vtable 0x0111A5C8 establish identity
-
 ??_GNetDisconnectFrameCommandMsg@@UAEPAXI@Z,0x00033109,constructor-installed vtable 0x0111A578 slot zero routes through this ILT to 0x006746D0
 ??_GBFMENetInformPlayerLeaveFrameCommandMsg@@UAEPAXI@Z,0x0002EBF9,constructor-installed vtable 0x0111A58C slot zero routes through this ILT to 0x00674700
 ??_GBFMENetRequestFrameDataCommandMsg@@UAEPAXI@Z,0x0003AA62,constructor-installed vtable 0x0111A5B4 slot zero routes through this ILT to 0x00674760
