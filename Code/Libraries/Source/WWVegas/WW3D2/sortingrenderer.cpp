@@ -405,7 +405,7 @@ static SortingNodeStruct* overlapping_nodes[MAX_OVERLAPPING_NODES];
 
 // ----------------------------------------------------------------------------
 
-// ?Insert_To_Sorting_Pool@SortingRendererClass@@CAXPAVSortingNodeStruct@@@Z present-unmatched
+// ?Insert_To_Sorting_Pool@SortingRendererClass@@CAXPAVSortingNodeStruct@@@Z
 void SortingRendererClass::Insert_To_Sorting_Pool(SortingNodeStruct* state)
 {
 	if (overlapping_node_count>=MAX_OVERLAPPING_NODES) {

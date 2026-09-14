@@ -3916,13 +3916,80 @@ void W3DBridgeBuffer::updateCenter(CameraClass *camera, RefRenderObjListIterator
 //=============================================================================
 /** Draws the bridges. */
 //=============================================================================
-// ?drawBridges@W3DBridgeBuffer@@QAEXPAVCameraClass@@_NPAVTextureClass@@@Z
-// Body in W3DBridgeBuffer_drawBridges.asm (exact 909B retail).
-// Keep COMDATs previously only referenced by drawBridges: DX8Wrapper::Set_Shader,
-// Bridge::getBridgeInfo, W3DBridge::setEnabled.
-void W3DBridgeBuffer_force_drawBridges_deps(ShaderClass *sh, Bridge *br, BridgeInfo *bi, W3DBridge *wb, Bool en)
+// ?drawBridges@W3DBridgeBuffer@@QAEXPAVCameraClass@@_NPAVTextureClass@@@Z present-unmatched
+void W3DBridgeBuffer::drawBridges(CameraClass * camera, Bool wireframe, TextureClass *cloudTexture)
 {
-	DX8Wrapper::Set_Shader(*sh);
-	br->getBridgeInfo(bi);
-	wb->setEnabled(en);
+	Int curBridge;
+	if (TheTerrainLogic) {
+		for (curBridge=0; curBridge<m_numBridges; curBridge++) {
+			m_bridges[curBridge].setEnabled(false);
+		}
+		Bool changed = false;
+		for (Bridge *bridge = TheTerrainLogic->getFirstBridge(); bridge; bridge = bridge->getNext()) {
+			BridgeInfo info;
+			bridge->getBridgeInfo(&info);
+			if (info.bridgeIndex<0 || info.bridgeIndex>=m_numBridges) {
+				continue;
+			}
+			m_bridges[info.bridgeIndex].setEnabled(true);
+			if (m_bridges[info.bridgeIndex].getDamageState() != info.curDamageState) {
+				changed = true;
+				enum BodyDamageType curState = m_bridges[info.bridgeIndex].getDamageState();
+				m_bridges[info.bridgeIndex].setDamageState(info.curDamageState);
+				if (!m_bridges[info.bridgeIndex].load(info.curDamageState)) {
+					m_bridges[info.bridgeIndex].load(curState);
+					m_bridges[info.bridgeIndex].setDamageState(info.curDamageState);
+				}
+			}
+		}
+		if (changed) {
+			loadBridgesInVertexAndIndexBuffers(NULL);
+		}
+	} else {
+		for (curBridge=0; curBridge<m_numBridges; curBridge++) {
+			m_bridges[curBridge].setEnabled(true);
+		}
+	}
+
+	if (m_curNumBridgeIndices == 0) {
+		return;
+	}
+
+	DX8Wrapper::Set_Material(m_vertexMaterial);
+	DX8Wrapper::Set_Index_Buffer(m_indexBridge,0);
+	DX8Wrapper::Set_Vertex_Buffer(m_vertexBridge);
+	DX8Wrapper::Set_Shader(detailAlphaShader);
+	DX8Wrapper::Apply_Render_State_Changes();
+
+	if (!wireframe && cloudTexture) {
+		W3DShaderManager::setTexture(1,cloudTexture);
+		W3DShaderManager::setShader(W3DShaderManager::ST_CLOUD_TEXTURE,1);
+	}
+
+	for (curBridge=0; curBridge<m_numBridges; curBridge++) {
+		if (m_bridges[curBridge].isEnabled() && m_bridges[curBridge].isVisible()) {
+			m_bridges[curBridge].renderBridge(wireframe);
+		}
+	}
+
+	if (!wireframe && cloudTexture) {
+		W3DShaderManager::resetShader(W3DShaderManager::ST_CLOUD_TEXTURE);
+	}
+
+	if (!wireframe && TheTerrainRenderObject->getShroud()) {
+		DX8Wrapper::Invalidate_Cached_Render_States();
+		DX8Wrapper::Set_Shader(ShaderClass::_PresetOpaqueShader);
+		DX8Wrapper::Set_Material(m_vertexMaterial);
+		DX8Wrapper::Set_Index_Buffer(m_indexBridge,0);
+		DX8Wrapper::Set_Vertex_Buffer(m_vertexBridge);
+		DX8Wrapper::Apply_Render_State_Changes();
+		W3DShaderManager::setTexture(0,TheTerrainRenderObject->getShroud()->getShroudTexture());
+		W3DShaderManager::setShader(W3DShaderManager::ST_SHROUD_TEXTURE, 0);
+		for (curBridge=0; curBridge<m_numBridges; curBridge++) {
+			if (m_bridges[curBridge].isEnabled() && m_bridges[curBridge].isVisible()) {
+				m_bridges[curBridge].renderBridge(TRUE);
+			}
+		}
+		W3DShaderManager::resetShader(W3DShaderManager::ST_SHROUD_TEXTURE);
+	}
 }
