@@ -40995,6 +40995,7 @@ name,address,notes
 ?b_0035bde0@@YAXXZ,0x0035BDE0,gen-thunk body
 ?b_0035be10@@YAXXZ,0x0035BE10,gen-thunk body
 ?b_0035bfb0@@YAXXZ,0x0035BFB0,gen-thunk body
+?g_animationSoundClientBehaviorGlobal@@3PAVBfmeResetSubsystem@@A,0x012F10D0,typed pin: GameClient::reset vtable+0x10 call; retail 0x012F10D0 is the AnimationSoundClientBehavior registry, not TheEva (0x012F142C)
 ?invoke@Rva0035BFB0CallTarget@@QAE_NPAX0@Z,0x0035BFB0,address-derived ABI name; retail 0x001916F0 calls this body through ILT 0x00035AAD with a thiscall bool two-argument shape; callee identity unknown
 ?b_0035c0c0@@YAXXZ,0x0035C0C0,gen-thunk body
 ?b_0035c3a0@@YAXXZ,0x0035C3A0,gen-thunk body
