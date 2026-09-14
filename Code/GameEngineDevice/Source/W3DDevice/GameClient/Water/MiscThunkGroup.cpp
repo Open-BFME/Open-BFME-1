@@ -3,7 +3,7 @@
 class TerrainLogic
 {
 protected:
-	void addWaypointLink(int, int);
+	void addWaypointLink(int id1, int id2);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWaterTracks.h
@@ -26,10 +26,10 @@ void WaterTracksRenderSystem::loadTracks()
 class TerrainLogicAddWaypointLinkShim
 {
 public:
-    void add(int a, int b);
+    void add(int id1, int id2);
 };
 
-void TerrainLogic::addWaypointLink(int a, int b)
+void TerrainLogic::addWaypointLink(int id1, int id2)
 {
-    ((TerrainLogicAddWaypointLinkShim *)this)->add(a, b);
+    ((TerrainLogicAddWaypointLinkShim *)this)->add(id1, id2);
 }
