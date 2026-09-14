@@ -6461,7 +6461,8 @@ name,address,notes
 ??1Gen_dtor_0074a730@@UAE@XZ,0x00012A53,gen-dtor class destructor
 ??1Gen_dtor_0074e2e0@@UAE@XZ,0x0002CFA2,gen-dtor class destructor
 ??1Gen_dtor_00750350@@UAE@XZ,0x00022967,gen-dtor class destructor
-??1Gen_dtor_007504c0@@UAE@XZ,0x0001FCB7,gen-dtor class destructor
+??1W3DBuffDraw@@UAE@XZ,0x0001FCB7,exact constructor 0x00750240 and dedicated vtable 0x01121CD8 establish the complete destructor thunk called by wrapper 0x007504C0
+??_GW3DBuffDraw@@UAEPAXI@Z,0x0002CC14,constructor-installed vtable 0x01121CD8 slot zero routes through this ILT to 0x007504C0
 ??1Gen_dtor_007504f0@@UAE@XZ,0x00045642,gen-dtor class destructor
 ??1Gen_dtor_00750c90@@UAE@XZ,0x0003EB26,gen-dtor class destructor
 ??1Gen_dtor_007512f0@@UAE@XZ,0x0004A1F6,gen-dtor class destructor
