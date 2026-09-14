@@ -4962,7 +4962,7 @@ name,address,notes
 ??1Gen_dtor_00123cc0@@UAE@XZ,0x00021F7B,gen-dtor class destructor
 ??1Gen_dtor_00124040@@UAE@XZ,0x00044F49,gen-dtor class destructor
 ??1Gen_dtor_00124110@@UAE@XZ,0x00007E55,gen-dtor class destructor
-??1Gen_dtor_001244a0@@UAE@XZ,0x0004A2B9,gen-dtor class destructor
+??1WanderAIUpdateModuleData@@UAE@XZ,0x0004A2B9,WanderAIUpdateModuleData complete destructor ILT; factory/vtable and matched complete body establish this virtual destructor route through 0x001244D0 and 0x00029D02 to 0x0027E4E0
 ??1Gen_dtor_001244e0@@UAE@XZ,0x0002A6BC,gen-dtor class destructor
 ??1Gen_dtor_001249e0@@UAE@XZ,0x00031282,gen-dtor class destructor
 ??1Gen_dtor_00124af0@@UAE@XZ,0x00042758,gen-dtor class destructor
