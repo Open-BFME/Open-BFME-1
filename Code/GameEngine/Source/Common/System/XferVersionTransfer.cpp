@@ -54,6 +54,21 @@ public:
     int tagValue;
 };
 
+// The retail XferException copy constructor delegates its text copy to the
+// same one-argument helper used by the already matched owner at 0x009D6290.
+// Keep that ABI spelling local so this definition emits the existing ILT.
+class Rva00065C50Owner
+{
+    friend class XferException;
+    Rva00065C50Owner *attach(void *source);
+};
+
+XferException::XferException(const XferException &that)
+{
+    text = 0;
+    ((Rva00065C50Owner *)this)->attach((void *)&that);
+}
+
 Xfer &Xfer::operator==(Version &v)
 {
     Rva009D6430XferView *receiver =
