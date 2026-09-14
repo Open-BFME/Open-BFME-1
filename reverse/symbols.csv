@@ -4944,7 +4944,7 @@ name,address,notes
 ??1Gen_dtor_000fe210@@UAE@XZ,0x000010FA,gen-dtor class destructor
 ??1Gen_dtor_00100660@@UAE@XZ,0x000309F4,gen-dtor class destructor
 ??1Gen_dtor_00103180@@UAE@XZ,0x000068CF,gen-dtor class destructor
-??1Gen_dtor_00105540@@UAE@XZ,0x00028763,gen-dtor class destructor
+??1FunctionLexicon@@UAE@XZ,0x00028763,FunctionLexicon complete destructor ILT; exact constructor 0x00105300 and vtable 0x01087AC0 establish the scalar wrapper's destructor route to 0x00105350
 ??1Gen_dtor_001075b0@@UAE@XZ,0x0003AC51,gen-dtor class destructor
 ??1Gen_dtor_0010aba0@@UAE@XZ,0x0003B9BC,gen-dtor class destructor
 ??1Gen_dtor_0010df60@@UAE@XZ,0x0003A873,gen-dtor class destructor
