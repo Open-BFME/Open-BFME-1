@@ -5171,6 +5171,10 @@ name,address,notes
 ??_7AIQuarrelState@@6B@,0x01098470,constructor 0x001719A0 installs this dedicated vtable; name slot and exact update method corroborate identity
 ??1Gen_dtor_00180510@@UAE@XZ,0x00040967,gen-dtor class destructor
 ??1AIMoveOntoWallState@@MAE@XZ,0x00010C4E,vtable 0x00C98540 slots name AIMoveOntoWallState; protected complete destructor called by wrapper 0x00181BE0
+??1AIRampageState@@MAE@XZ,0x00040967,constructor 0x001719F0 and dedicated vtable 0x010984D8 establish the protected complete destructor called by wrapper 0x00180510
+??_GAIRampageState@@MAEPAXI@Z,0x0003F07B,dedicated vtable 0x010984D8 slot zero routes to scalar wrapper 0x00180510
+??_7AIRampageState@@6B@,0x010984D8,constructor 0x001719F0 installs this dedicated vtable; name slot returns AIRampageState
+??1Gen_dtor_00181be0@@UAE@XZ,0x00010C4E,gen-dtor class destructor
 ??1AIMoveToState@@MAE@XZ,0x00046D7B,exact constructor 0x00173430 and dedicated vtable 0x01098F08 establish the protected complete destructor called by wrapper 0x00182120
 ??1Gen_dtor_00182150@@UAE@XZ,0x0004B475,gen-dtor class destructor
 ??1Gen_dtor_00182320@@UAE@XZ,0x00007E0A,gen-dtor class destructor
