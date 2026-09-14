@@ -123,14 +123,14 @@ public:
 	virtual ~Win32LocalFileSystem();
 	virtual void init();
 	virtual File *openFile(const char *filename, Int access);
-	virtual File *openFile(const char *filename, Int access, Int seekTo, Int a4);
+	virtual File *openFile(const char *filename, Int access, Int offset, Int size);
 	virtual Bool doesFileExist(const char *filename) const;
 	virtual void getFileListInDirectory(const AsciiString &, const AsciiString &, const AsciiString &, void *, Bool) const;
 	virtual Bool getFileInfo(const AsciiString &, void *) const;
 	virtual Bool createDirectory(AsciiString directory);
 };
 
-File *Win32LocalFileSystem::openFile(const Char *filename, Int access, Int seekTo, Int a4)
+File *Win32LocalFileSystem::openFile(const Char *filename, Int access, Int offset, Int size)
 {
 	if (strlen(filename) <= 0)
 		return 0;
@@ -158,8 +158,8 @@ File *Win32LocalFileSystem::openFile(const Char *filename, Int access, Int seekT
 		file = 0;
 	} else {
 		file->deleteOnClose();
-		if (seekTo != 0)
-			file->seek(seekTo, File::CURRENT);
+		if (offset != 0)
+			file->seek(offset, File::CURRENT);
 	}
 	return file;
 }

@@ -82,7 +82,7 @@ public:
 	virtual ArchiveFile *openArchiveFile( const Char *filename );			// slot 2
 	virtual void closeArchiveFile( const Char *filename ) = 0;				// slot 3
 	virtual void closeAllArchiveFiles( void ) = 0;							// slot 4
-	virtual File *openFile( const Char *f, Int a, Int a3, Int a4 ) = 0;		// slot 6
+	virtual File *openFile( const Char *f, Int a, Int offset, Int size ) = 0;		// slot 6
 	virtual File *openFile( const Char *f, Int a ) = 0;						// slot 5
 	virtual void closeAllFiles( void ) = 0;									// slot 7
 	virtual Bool doesFileExist( const Char *filename ) const = 0;			// slot 8

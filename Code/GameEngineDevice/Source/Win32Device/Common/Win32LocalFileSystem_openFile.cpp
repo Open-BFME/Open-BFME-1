@@ -27,8 +27,8 @@
 //   push edx
 //   call [eax+0x0c]      ; slot 3
 //
-// The two zeros are the added parameters; nothing here says what they mean, so
-// they stay unnamed.
+// The two zeros are offset and size: Win32BIGFile::openFile (matched) adds
+// offset to the archived entry and treats size 0 as the whole entry.
 
 class File;
 typedef int Int;
@@ -43,7 +43,7 @@ public:
 	// overloads in reverse declaration order, so this ordering is what puts the
 	// two-argument form at slot 2 and the four-argument one at slot 3; the
 	// obvious ordering emits call [eax+0x08] here instead of [eax+0x0c].
-	virtual File *openFile( const char *filename, Int access, Int a3, Int a4 );	// slot 3, +0x0c
+	virtual File *openFile( const char *filename, Int access, Int offset, Int size );	// slot 3, +0x0c
 	virtual File *openFile( const char *filename, Int access );					// slot 2, +0x08
 };
 

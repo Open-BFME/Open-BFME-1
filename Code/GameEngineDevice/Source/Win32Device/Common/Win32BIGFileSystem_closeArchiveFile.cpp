@@ -55,7 +55,7 @@ public:
 	virtual ArchiveFile *openArchiveFile( const Char *filename ) = 0;		// slot 2
 	virtual void closeArchiveFile( const Char *filename );					// slot 3
 	virtual void closeAllArchiveFiles( void ) = 0;							// slot 4
-	virtual File *openFile( const Char *filename, Int access, Int a3, Int a4 ) = 0;	// slot 6
+	virtual File *openFile( const Char *filename, Int access, Int offset, Int size ) = 0;	// slot 6
 	virtual File *openFile( const Char *filename, Int access ) = 0;			// slot 5
 	virtual void closeAllFiles( void );										// slot 7
 
