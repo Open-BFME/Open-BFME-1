@@ -6080,7 +6080,7 @@ name,address,notes
 ??1Gen_dtor_005dd340@@UAE@XZ,0x0000CC16,gen-dtor class destructor
 ??1Gen_dtor_005dec80@@UAE@XZ,0x00031084,gen-dtor class destructor
 ??1Gen_dtor_005decb0@@UAE@XZ,0x00004C82,gen-dtor class destructor
-??1Gen_dtor_005e3360@@UAE@XZ,0x0004016A,gen-dtor class destructor
+??1?$DefaultParticleModule@$04@FXParticleSystem@@UAE@XZ,0x0004016A,DefaultParticleModule<5> destructor ILT proven by constructor vtable 0x0111182C slot zero reaching scalar wrapper 0x005E3360
 ??1PointEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00023C8B,destructor ILT used by the PointEmissionVolumeModule scalar-deleting destructor
 ??1LineEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x0001F7AD,destructor ILT used by the LineEmissionVolumeModule scalar-deleting destructor
 ??1BoxEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x00047915,destructor ILT used by the BoxEmissionVolumeModule scalar-deleting destructor
