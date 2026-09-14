@@ -31,6 +31,12 @@ public:
 	virtual ~Rva0082AEA0Exc();
 };
 
+class Rva0082AEC0Exc : public Rva0082AE60Exc
+{
+public:
+	virtual ~Rva0082AEC0Exc();
+};
+
 void ForceRva0082AE60ExcDeletingDestructor()
 {
 	Rva0082AE60Exc value;
@@ -44,6 +50,11 @@ void ForceRva0082AE80ExcDeletingDestructor()
 void ForceRva0082AEA0ExcDeletingDestructor()
 {
 	Rva0082AEA0Exc value;
+}
+
+void ForceRva0082AEC0ExcDeletingDestructor()
+{
+	Rva0082AEC0Exc value;
 }
 
 }
