@@ -34,7 +34,7 @@ protected:
 class WaterRenderObjClassEnableWaterGridShim
 {
 public:
-	void enableWaterGrid(bool a0);
+	void enableWaterGrid(bool state);
 };
 
 class BoneFXUpdateInitTimesShim
@@ -49,9 +49,9 @@ public:
 	void unloadNext();
 };
 
-void WaterRenderObjClass::enableWaterGrid(bool a0)
+void WaterRenderObjClass::enableWaterGrid(bool state)
 {
-	((WaterRenderObjClassEnableWaterGridShim *)this)->enableWaterGrid(a0);
+	((WaterRenderObjClassEnableWaterGridShim *)this)->enableWaterGrid(state);
 }
 
 void BoneFXUpdate::initTimes()
