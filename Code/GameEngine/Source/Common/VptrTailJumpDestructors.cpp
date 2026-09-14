@@ -137,6 +137,8 @@ public:
 	virtual ~Rva00832090TailBase();
 };
 
+__declspec(noinline) Rva00832090TailBase::~Rva00832090TailBase() {}
+
 class Rva008B2DF0TailBase
 {
 public:

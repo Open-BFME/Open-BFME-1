@@ -88128,3 +88128,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1FontCharsClass@@UAE@XZ,0x00940010,WW3D FontCharsClass destructor; matched constructor identity at 0x00940610 and shared vtable 0x0113CE8C prove this complex cleanup body
 ??_GFontCharsClass@@UAEPAXI@Z,0x00940770,WW3D FontCharsClass scalar deleting destructor; vtable 0x0113CE8C slot one points here after RefCountClass::Delete_This
 ??_7FontCharsClass@@6B@,0x0113CE8C,WW3D FontCharsClass vtable installed by constructor 0x00940610 and destructor 0x00940010; slots are RefCountClass::Delete_This and scalar deleting destructor 0x00940770
+?m@Gen_00832090@@QAEXXZ,0x00832090,compatibility alias retained for already-converted callers; authentic owning row is ??1Rva00832090TailBase@@UAE@XZ at the same retail body
