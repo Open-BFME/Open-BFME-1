@@ -6072,9 +6072,9 @@ name,address,notes
 ??1Gen_dtor_005db2a0@@UAE@XZ,0x0002DCE0,gen-dtor class destructor
 ??1?$ConcreteModuleTemplate@UPointEmissionVolumeModuleTag@FXParticleSystem@@@FXParticleSystem@@UAE@XZ,0x00013D40,destructor ILT used by the PointEmissionVolume scalar-deleting destructor
 ??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LINE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?LINE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVLineEmissionVolumeModule@2@VLineEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ,0x0003C69B,destructor ILT used by the LineEmissionVolume scalar-deleting destructor
-??1Gen_dtor_005dc420@@UAE@XZ,0x00048B53,gen-dtor class destructor
-??1Gen_dtor_005dc5d0@@UAE@XZ,0x00001D16,gen-dtor class destructor
-??1Gen_dtor_005dc780@@UAE@XZ,0x0001D9EE,gen-dtor class destructor
+??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?SPHERE_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?SPHERE_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVSphereEmissionVolumeModule@2@VSphereEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ,0x00048B53,destructor ILT used by the SphereEmissionVolume scalar-deleting destructor
+??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?CYLINDER_EMISSION_VOLUME_MODULE_KEY@FXParticleSystem@@3QBDB$E?CYLINDER_EMISSION_VOLUME_MODULE_NAME@2@3QBDBVCylinderEmissionVolumeModule@2@VCylinderEmissionVolumeModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ,0x00001D16,destructor ILT used by the CylinderEmissionVolume scalar-deleting destructor
+??1?$ConcreteModuleTemplate@V?$ModuleTag@$04$E?LIGHTNING_EMISSION_MODULE_KEY@FXParticleSystem@@3QBDB$E?LIGHTNING_EMISSION_MODULE_NAME@2@3QBDBVLightningEmissionModule@2@VLightningEmissionModuleTemplate@2@V?$DefaultParticleModule@$04@2@V?$DefaultParticleModuleTemplate@$04@2@@FXParticleSystem@@@FXParticleSystem@@UAE@XZ,0x0001D9EE,destructor ILT used by the LightningEmission scalar-deleting destructor
 ??1Gen_dtor_005dd340@@UAE@XZ,0x0000CC16,gen-dtor class destructor
 ??1Gen_dtor_005dec80@@UAE@XZ,0x00031084,gen-dtor class destructor
 ??1Gen_dtor_005decb0@@UAE@XZ,0x00004C82,gen-dtor class destructor
