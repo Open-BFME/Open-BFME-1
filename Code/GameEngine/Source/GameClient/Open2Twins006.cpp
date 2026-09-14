@@ -100,3 +100,8 @@ Open2Store9A2680::~Open2Store9A2680()
 {
 	delete m_map;
 }
+
+void Force_Open2Store9A2680_DeletingDestructor(Open2Store9A2680 *value)
+{
+	delete value;
+}
