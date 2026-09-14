@@ -5328,7 +5328,7 @@ name,address,notes
 ??1AimWeaponBehavior@@MAE@XZ,0x00045C5A,vtable 0x00CA1A24 slots name AimWeaponBehavior; protected complete destructor called by wrapper 0x001ED090
 ??1AimWeaponBehaviorModuleData@@MAE@XZ,0x00039397,exact constructor 0x001ECEF0 and dedicated vtable 0x00CA1848 establish the protected complete destructor called by wrapper 0x001ED120
 ??1Gen_dtor_001ed670@@UAE@XZ,0x00009DC7,gen-dtor class destructor
-??1Gen_dtor_001ed860@@UAE@XZ,0x00003C51,gen-dtor class destructor
+??1AutoAbilityBehaviorModuleData@@UAE@XZ,0x00003C51,public complete destructor ILT called by scalar wrapper 0x001ED860; exact constructor 0x001ED6A0 installs dedicated vtable 0x010A1A70
 ??1Gen_dtor_001ed970@@UAE@XZ,0x0000875B,gen-dtor class destructor
 ??1Gen_dtor_001eeb90@@UAE@XZ,0x00047D84,gen-dtor class destructor
 ??1BezierProjectileBehaviorModuleData@@MAE@XZ,0x0004A14C,exact constructor 0x001EFD50 and dedicated vtable 0x00CA23E0 establish the protected complete destructor called by wrapper 0x001EFE50
@@ -88093,3 +88093,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7StructureBodyModuleData@@6B@,0x0108ED20,exact constructor 0x001293C0 installs this dedicated vtable; slot zero ILT 0x00046C90 reaches scalar wrapper 0x00129460
 ??_7SymbioticStructuresBodyModuleData@@6B@,0x0108EC78,dedicated vtable associated with matched constructor 0x00128D20 and ModuleFactory registration; slot zero ILT 0x00046236 reaches scalar wrapper 0x00129530
 ??_7OathbreakersFadeAwayBehavior@@6B@,0x010A5124,matched constructor 0x00201BB0 installs this dedicated vtable; slot zero ILT 0x00006622 reaches scalar wrapper 0x00201CC0
+??_7AutoAbilityBehaviorModuleData@@6B@,0x010A1A70,exact constructor 0x001ED6A0 installs this dedicated vtable; slot zero ILT 0x0002775F reaches scalar wrapper 0x001ED860
