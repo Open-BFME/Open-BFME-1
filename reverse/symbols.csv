@@ -4846,6 +4846,7 @@ name,address,notes
 ??1Gen_dtor_00071370@@UAE@XZ,0x0000F240,gen-dtor class destructor
 ??1?$SubsystemSlot@VLivingWorldLogic@@@@UAE@XZ,0x0000F240,SubsystemSlot<LivingWorldLogic> destructor ILT called by authentic scalar-deleting destructor at 0x00071370
 ??1Gen_dtor_00071430@@UAE@XZ,0x00039BDF,gen-dtor class destructor
+??1?$SubsystemSlot@VSplineService@@@@UAE@XZ,0x00039BDF,SubsystemSlot<SplineService> destructor ILT called by authentic scalar-deleting destructor at 0x00071430
 ??1Gen_dtor_000714f0@@UAE@XZ,0x00020941,gen-dtor class destructor
 ??1Gen_dtor_000715b0@@UAE@XZ,0x00009A5C,gen-dtor class destructor
 ??1Gen_dtor_00071670@@UAE@XZ,0x00043BEE,gen-dtor class destructor
@@ -10004,6 +10005,7 @@ name,address,notes
 ??_7?$SubsystemSlot@VAI@@@@6B@,0x01075E20,vtable installed by exact SubsystemSlot<AI> constructor at 0x000711D0; slot zero routes through ILT 0x00022B83 to scalar-deleting destructor 0x000711F0
 ??_7?$SubsystemSlot@VAerialPathfinder@@@@6B@,0x01075E24,vtable installed by exact SubsystemSlot<AerialPathfinder> constructor at 0x00071290; slot zero routes through ILT 0x0002CAF2 to scalar-deleting destructor 0x000712B0
 ??_7?$SubsystemSlot@VLivingWorldLogic@@@@6B@,0x01075E28,vtable installed by exact SubsystemSlot<LivingWorldLogic> constructor at 0x00071350; slot zero routes through ILT 0x0002F838 to scalar-deleting destructor 0x00071370
+??_7?$SubsystemSlot@VSplineService@@@@6B@,0x01075E2C,vtable installed by exact SubsystemSlot<SplineService> constructor at 0x00071410; slot zero routes through ILT 0x000274DA to scalar-deleting destructor 0x00071430
 ??_7?$SubsystemSlot@VSubsystemLegend@@@@6B@,0x01075D8C,vtable installed by exact SubsystemSlot<SubsystemLegend> constructor at 0x0006F610; slot zero routes through ILT 0x00032376 to scalar-deleting destructor 0x0006F630
 ??_7?$SubsystemSlot@VUpgradeCenter@@@@6B@,0x01075DA8,vtable installed by exact SubsystemSlot<UpgradeCenter> constructor at 0x0006FB50; slot zero routes through ILT 0x00048DA1 to scalar-deleting destructor 0x0006FB70
 ??_7?$VectorClass@VModelNodeClass@Rva0097BB40HLod@@@@6B@,0x00D3EB94,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097BB40 calls; autopin
