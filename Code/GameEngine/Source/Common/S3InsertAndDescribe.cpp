@@ -113,7 +113,7 @@ public:
 	virtual void bfmeSlot0(void);
 	virtual bool bfmeSlot1(void);
 	virtual void bfmeSlot2(void);
-	virtual void bfmeSlot3(void);
+	virtual bool bfmeSlot3(void);
 	virtual bool bfmeSlot4(void);
 	virtual void bfmeSlot5(void);
 	virtual void bfmeSlot6(void);
@@ -141,6 +141,11 @@ public:
 	virtual void bfmeSlot28(void);
 	virtual void bfmeSlot29(unsigned int *value);		// slot 29, vtable+0x74
 	virtual void bfmeSlot30(int *value);			// slot 30, vtable+0x78
+	virtual void bfmeSlot31(void);
+	virtual void bfmeSlot32(void);
+	virtual void bfmeSlot33(void);
+	virtual void bfmeSlot34(void);
+	virtual void bfmeSlot35(bool *value);			// slot 35, vtable+0x8C
 };
 
 class BfmeSinkA
@@ -270,7 +275,169 @@ class BfmeSinkB
 {
 public:
 	void bfmeAccept(BfmeFlagTarget *target);		// retail 0x008FB0B0
+
+private:
+	char m_bfmeHead[0x24];					// +0x00
+	unsigned int m_bfmeWidth;					// +0x24
+	unsigned int m_bfmeHeight;					// +0x28
+	class ShroudManagerImpl008FBA40Element *m_bfmeElements;		// +0x2C
+	class BfmeThingCDE *m_bfmeNodes;				// +0x30
+	class PartitionData *m_bfmePendingPartitionData;			// +0x34
+	int m_bfmeUnknown38;					// +0x38
+	char m_bfmeRecords[0x28];				// +0x3C
+	int m_bfmeUnknown64;					// +0x64
+	bool m_bfmeEnabled;					// +0x68
+	char m_bfmePadding69[3];					// +0x69
 };
+
+class BfmeThingCDE
+{
+public:
+	void d_008f7ec0();
+	char m_bfmeHead[0x10];					// +0x00
+	BfmeThingCDE *m_bfmeNext;					// +0x10
+};
+
+class BfmeHostXO
+{
+public:
+	void bfmeFlushXO();
+};
+
+class PartitionData
+{
+public:
+	void unlink();
+	void makeDirty();
+
+	private:
+	void updateCellsTouched();
+	friend class BfmeSinkB;
+};
+
+class ShroudManagerImpl008FBA40
+{
+public:
+	void drainPending();
+	void notify();
+
+	private:
+	void processPending(bool drainAll);
+	friend class BfmeSinkB;
+};
+
+class ShroudManagerImpl008FBA40Element
+{
+public:
+	ShroudManagerImpl008FBA40Element();
+	~ShroudManagerImpl008FBA40Element();
+
+	char m_bfmeHead[4];					// +0x00
+	char m_bfmePayload[0x60];				// +0x04
+	int m_bfmeUnknown64;					// +0x64
+};
+
+class BfmeTargetHL;
+
+class BfmeThingHL
+{
+public:
+	void bfmeGoHL(BfmeTargetHL *target);
+};
+
+class BfmeTargetHL
+{
+};
+
+// ?bfmeAccept@BfmeSinkB@@QAEXPAVBfmeFlagTarget@@@Z
+void BfmeSinkB::bfmeAccept(BfmeFlagTarget *target)
+{
+	if (!target->bfmeSlot4())
+	{
+		reinterpret_cast<ShroudManagerImpl008FBA40 *>(this)->drainPending();
+
+		BfmeThingCDE *node = m_bfmeNodes;
+		while (node != 0)
+		{
+			node->d_008f7ec0();
+			reinterpret_cast<BfmeHostXO *>(node)->bfmeFlushXO();
+			reinterpret_cast<PartitionData *>(node)->makeDirty();
+			node = node->m_bfmeNext;
+		}
+
+		reinterpret_cast<ShroudManagerImpl008FBA40 *>(this)->processPending(false);
+
+		{
+			unsigned char flags[4];
+			flags[0] = true;
+			flags[1] = true;
+			target->bfmeDescribe(reinterpret_cast<BfmeFlagPair *>(flags));
+		}
+		target->bfmeSlot29(reinterpret_cast<unsigned int *>(this));
+		target->bfmeSlot22(reinterpret_cast<unsigned char *>(this) + 4);
+		target->bfmeSlot27(reinterpret_cast<float *>(reinterpret_cast<unsigned char *>(this) + 0x1C));
+		target->bfmeSlot27(reinterpret_cast<float *>(reinterpret_cast<unsigned char *>(this) + 0x20));
+		target->bfmeSlot30(reinterpret_cast<int *>(reinterpret_cast<unsigned char *>(this) + 0x24));
+		target->bfmeSlot30(reinterpret_cast<int *>(reinterpret_cast<unsigned char *>(this) + 0x28));
+		target->bfmeSlot29(reinterpret_cast<unsigned int *>(reinterpret_cast<unsigned char *>(this) + 0x38));
+
+		if (!target->bfmeSlot3())
+			target->bfmeSlot30(&m_bfmeUnknown64);
+
+		target->bfmeSlot35(&m_bfmeEnabled);
+
+		if (target->bfmeSlot1())
+		{
+			delete[] m_bfmeElements;
+			m_bfmeElements = new ShroudManagerImpl008FBA40Element[
+				m_bfmeWidth * m_bfmeHeight];
+		}
+
+		ShroudManagerImpl008FBA40Element *element = m_bfmeElements;
+		unsigned int y = 0;
+		for (; y < m_bfmeHeight; ++y)
+		{
+			unsigned int x = 0;
+			for (; x < m_bfmeWidth; ++x, ++element)
+				reinterpret_cast<BfmeThingHL *>(element)->bfmeGoHL(
+					reinterpret_cast<BfmeTargetHL *>(target));
+		}
+
+		if (target->bfmeSlot1())
+		{
+			reinterpret_cast<ShroudManagerImpl008FBA40 *>(this)->notify();
+		}
+		else
+		{
+			++m_bfmeUnknown38;
+			while (m_bfmePendingPartitionData != 0)
+			{
+				PartitionData *partitionData = m_bfmePendingPartitionData;
+				partitionData->unlink();
+				partitionData->updateCellsTouched();
+			}
+			reinterpret_cast<ShroudManagerImpl008FBA40 *>(this)->processPending(true);
+		}
+	}
+	else
+	{
+		unsigned int scratch = 0;
+		ShroudManagerImpl008FBA40Element *element = m_bfmeElements;
+		unsigned int y = 0;
+		for (; y < m_bfmeHeight; ++y)
+		{
+			unsigned int x = 0;
+			for (; x < m_bfmeWidth; ++x, ++element)
+			{
+				scratch += CRC_Memory(
+					reinterpret_cast<const unsigned char *>(element->m_bfmePayload),
+					0x60,
+					0) + element->m_bfmeUnknown64;
+			}
+		}
+		target->bfmeSlot29(&scratch);
+	}
+}
 
 class Gen_008F7650
 {
