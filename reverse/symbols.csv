@@ -3119,7 +3119,6 @@ name,address,notes
 ??0MeshModelClass@@QAE@ABV0@@Z,0x0094EC20,Open-BFME5 retail MeshModelClass copy constructor pin
 ??0MessageStream@@QAE@XZ,0x000132B4,pinharvest x2 (thunk)
 ??0MinefieldBehaviorModuleData@@QAE@XZ,0x0002AE6E,ModuleFactory ILT thunk to 0x0036CDD0; the byte-verified retail caller encodes it
-??0MissileAIUpdateModuleData@@QAE@XZ,0x00025EBE
 ??0MissileAIUpdateModuleDataBase@@QAE@XZ,0x0003C556,MissileAIUpdateModuleData base ctor
 ??0MissileLauncherBuildingUpdateModuleData@@QAE@XZ,0x0003025B,derived-ICF
 ??0MissingAnimClass@@QAE@PBD@Z,0x00034559,callers use this thunk (like findMemoryPool 0x3ADD7); real body drift candidate 0x9723BF
@@ -3877,6 +3876,7 @@ name,address,notes
 ??0W3DLightDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00034EDC,ILT thunk encoded by the W3DLightDraw factory at 0x006BFAD0; registration table pairs that factory with the W3DLightDraw name
 ??0W3DLightDrawModuleData@@QAE@XZ,0x00028D9E,module-data constructor called by W3DLightDraw::friend_newModuleData at 0x006BFB50
 ??0W3DModelDrawModuleData@@QAE@XZ,0x00025EBE,pinharvest x1 (thunk)
+??0W3DModelDrawModuleDataBase@@QAE@XZ,0x0003C556,constructor call target encoded by the exact W3DModelDrawModuleData constructor
 ??0W3DMouse@@QAE@XZ,0x0002B7B0,ILT fronting the 233-byte body at 0x007003E0; from W3DGameClient::createMouse
 ??0W3DMouseSurfaceRef@@QAE@XZ,0x00006A8C,W3DMouse surface-reference default constructor ILT used by its EH vector constructor
 ??0W3DOverlordAircraftDrawModuleData@@QAE@XZ,0x00025EBE,pinharvest x1 (thunk)
@@ -5309,7 +5309,7 @@ name,address,notes
 ??1Gen_dtor_00212c40@@UAE@XZ,0x0003E086,gen-dtor class destructor
 ??1Gen_dtor_00212f90@@UAE@XZ,0x00016469,gen-dtor class destructor
 ??1Gen_dtor_002131f0@@UAE@XZ,0x000275BB,gen-dtor class destructor
-??1Gen_dtor_00213720@@UAE@XZ,0x0003E414,gen-dtor class destructor
+??1W3DModelDrawModuleData@@UAE@XZ,0x0003E414,route=0x00213750; scalar deleting destructor retail call targets the matched W3DModelDrawModuleData destructor through this ILT
 ??1Gen_dtor_00213e10@@UAE@XZ,0x0003C867,gen-dtor class destructor
 ??1PorcupineFormationBodyModuleModuleData@@UAE@XZ,0x00019D0D,destructor ILT used by the PorcupineFormationBodyModuleModuleData scalar-deleting destructor
 ??1Gen_dtor_00214ac0@@UAE@XZ,0x0001BE1E,gen-dtor class destructor
