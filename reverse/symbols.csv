@@ -6541,6 +6541,7 @@ name,address,notes
 ??1Base64Pipe@@UAE@XZ,0x009E1F00,authentic Base64Pipe complete destructor target adjacent to its matched constructor; vtable 0x011453E4 with named virtual slots proves identity
 ??1Base64Straw@@UAE@XZ,0x009E1F40,authentic Base64Straw complete destructor target adjacent to its matched constructor; vtable 0x011453F8 with named virtual slots proves identity
 ??1Win32LocalFile@@UAE@XZ,0x009D1950,authentic Win32LocalFile complete destructor; matched constructor and vtable 0x01143C10 with named LocalFile/File slots prove identity
+??1?$List@PAUINISection@@@@UAE@XZ,0x009E3880,authentic List<INISection *> complete destructor target adjacent to scalar wrapper 0x009E3860; matched constructor and INIClass allocation prove specialization identity
 ??1Gen_dtor_0081c7c0@@UAE@XZ,0x0081C590,gen-dtor class destructor
 ??1Gen_dtor_0081c9a0@@UAE@XZ,0x000167CF,gen-dtor class destructor
 ??1Gen_dtor_00823150@@UAE@XZ,0x00825550,gen-dtor class destructor
