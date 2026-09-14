@@ -341,7 +341,8 @@ void W3DRadar::drawHeroIcon( Int pixelX, Int pixelY, Int width, Int height, cons
 	* the tactical display into the game world */
 //-------------------------------------------------------------------------------------------------
 // ?drawViewBox@W3DRadar@@IAEXHHHH@Z
-// Body in W3DRadar_drawViewBox.asm (exact 984B retail).
+// present-unmatched: the retired W3DRadar_drawViewBox.asm range began inside
+// another function and crossed padding plus unrelated function boundaries.
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
