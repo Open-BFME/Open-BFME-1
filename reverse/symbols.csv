@@ -6568,6 +6568,7 @@ name,address,notes
 ??1Gen_dtor_008231d0@@UAE@XZ,0x008267E0,gen-dtor class destructor
 ??1?$money_get@DV?$istreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@MAE@XZ,0x00832320,STLport 4.5.3 money_get<char> destructor called by its RTTI-identified scalar-deleting wrapper at 0x00832300
 ??1Gen_dtor_00832330@@UAE@XZ,0x00832350,gen-dtor class destructor
+??1?$money_put@DV?$ostreambuf_iterator@DV?$char_traits@D@_STL@@@_STL@@@_STL@@MAE@XZ,0x00832350,STLport 4.5.3 money_put<char> complete destructor called by its RTTI/vtable-identified scalar-deleting wrapper at 0x00832330; vtable 0x0112E96C slot zero is the wrapper and matched do_put(long double) 0x00836050 identifies this facet
 ??1Gen_dtor_00832360@@UAE@XZ,0x00832380,gen-dtor class destructor
 ??1Gen_dtor_00832390@@UAE@XZ,0x008323B0,gen-dtor class destructor
 ??1Gen_dtor_008323c0@@UAE@XZ,0x008323E0,gen-dtor class destructor
