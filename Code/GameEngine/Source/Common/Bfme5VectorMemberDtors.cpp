@@ -255,3 +255,8 @@ Gen_003643C0::~Gen_003643C0(void)
 Gen_009D83D0::~Gen_009D83D0(void)
 {
 }
+
+void DeleteGen009D83D0(Gen_009D83D0 *value)
+{
+	delete value;
+}
