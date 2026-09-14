@@ -102,7 +102,8 @@ template <class T> inline void Quick_Sort (T* a, int N)
  *
  * Description:		Returns number of indices in a set of strips
  *
- * Parameters:
+ * Parameters:		strips = pointer to strip data (each strip prefixed with length)
+ *					strip_count = number of strips
  *
  *****************************************************************************/
 
@@ -124,9 +125,10 @@ int StripOptimizerClass::Get_Strip_Index_Count (const int* strips, int strip_cou
 // ?optimizeStripOrder@StripOptimizerClass@@ present-unmatched
  * Function:		StripOptimizerClass::optimizeStripOrder()
  *
- * Description:		
+ * Description:		Reorders strips to maximize similarity between consecutive strips
  *
- * Parameters:
+ * Parameters:		strips = pointer to strip data to be reordered
+ *					strip_count = number of strips to optimize
  *
  *****************************************************************************/
 
@@ -222,9 +224,10 @@ void StripOptimizerClass::Optimize_Strip_Order (int* strips, int strip_count)
 // ?optimizeTriangleOrder@StripOptimizerClass@@ present-unmatched
  * Function:		StripOptimizerClass::optimizeTriangleOrder()
  *
- * Description:		
+ * Description:		Reorders triangles to maximize connectivity
  *
- * Parameters:
+ * Parameters:		tris = pointer to triangle data to be reordered (groups of 3 ints per triangle)
+ *					triangle_count = number of triangles
  *
  *****************************************************************************/
 
@@ -318,7 +321,9 @@ void StripOptimizerClass::Optimize_Triangle_Order (int *tris, int triangle_count
  *
  * Description:		Combines a number of strips into one
  *
- * Parameters:
+ * Parameters:		strips = pointer to input strip data
+ *					strip_count = number of input strips to combine
+ *	Returns:		pointer to newly allocated combined strip array
  *
  *****************************************************************************/
 
