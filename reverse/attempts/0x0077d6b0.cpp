@@ -1,5 +1,5 @@
 // ?doDrawModule@W3DStreakDraw@@UAEXPBUMatrix3D@@@Z
-// partial score=0.97 date=2026-09-10
+// partial score=0.978 date=2026-09-14
 // cl: /O2 /EHsc
 
 #include <math.h>
@@ -56,12 +56,45 @@ public:
 
 class BfmeStreakObject
 {
+};
+
+class Gen_009559f0
+{
 public:
 	int m();
+};
+
+class BfmeThingOH
+{
+public:
 	void bfmeGetOH(unsigned int at, BfmeVecOH *out, int *also);
+};
+
+class Bitmap2DObjClass
+{
+public:
 	void Add_Point(const Vector3 &point, float width);
 	void Delete_Point(unsigned int point_idx);
-	void setVector(const BfmeStreakVector *value);
+};
+
+struct Rva00955BC0Vec
+{
+	float x;
+	float y;
+	float z;
+};
+
+class Rva00955BC0
+{
+public:
+	void set(const Rva00955BC0Vec *value);
+};
+
+extern void d_00955a00(void);
+
+class Gen_00955a00Call
+{
+public:
 	void setPoint(unsigned int at, const Vector3 &point, float width);
 };
 
@@ -98,56 +131,65 @@ void W3DStreakDraw::doDrawModule(const Matrix3D *)
 		StreakWidth pointWidth;
 		BfmeVecOH point;
 
-		if (m_streak->m() == 0)
+		if (reinterpret_cast<Gen_009559f0 *>(m_streak)->m() == 0)
 		{
-			m_streak->Add_Point(*position, 0.0f);
+			reinterpret_cast<Bitmap2DObjClass *>(m_streak)->Add_Point(*position, 0.0f);
 		}
 		else
 		{
-			if (m_streak->m() == 1)
+			if (reinterpret_cast<Gen_009559f0 *>(m_streak)->m() == 1)
 			{
-				m_streak->bfmeGetOH(0, &point, &pointWidth.raw);
+				reinterpret_cast<BfmeThingOH *>(m_streak)->bfmeGetOH(0, &point, &pointWidth.raw);
 
 				const float x = position->X - point.x;
 				const float y = position->Y - point.y;
 				const float z = position->Z - point.z;
-				volatile float distance;
 				volatile float square;
+				volatile float distance;
 				square = x * x + y * y + z * z;
 				distance = (float)sqrt(square);
 				pointWidth.value = distance + pointWidth.value;
-				m_streak->Add_Point(*position, pointWidth.value);
+				reinterpret_cast<Bitmap2DObjClass *>(m_streak)->Add_Point(*position, pointWidth.value);
 			}
 			else
 			{
-				m_streak->bfmeGetOH(
-					m_streak->m() - 2,
+				reinterpret_cast<BfmeThingOH *>(m_streak)->bfmeGetOH(
+					reinterpret_cast<Gen_009559f0 *>(m_streak)->m() - 2,
 					&point, &pointWidth.raw);
 
 				const float x = position->X - point.x;
 				const float y = position->Y - point.y;
 				const float z = position->Z - point.z;
-				volatile float square;
 				volatile float distance;
+				volatile float square;
 				square = x * x + y * y + z * z;
 				distance = (float)sqrt(square);
 				pointWidth.value = distance + pointWidth.value;
 
-				m_streak->setPoint(
-					m_streak->m() - 1, *position, pointWidth.value);
-				if (data->m_length / (float)(unsigned int)data->m_segmentCount <= distance)
+				typedef void (Gen_00955a00Call::*SetPoint)(
+					unsigned int, const Vector3 &, float);
+				union
 				{
-					m_streak->Add_Point(*position, pointWidth.value);
+					void (*raw)(void);
+					SetPoint member;
+				} setPointCall;
+				setPointCall.raw = ::d_00955a00;
+				(reinterpret_cast<Gen_00955a00Call *>(m_streak)->*setPointCall.member)(
+					reinterpret_cast<Gen_009559f0 *>(m_streak)->m() - 1,
+					*position, pointWidth.value);
+				if (data->m_length / (float)(unsigned int)data->m_segmentCount < distance)
+				{
+						reinterpret_cast<Bitmap2DObjClass *>(m_streak)->Add_Point(*position, pointWidth.value);
 				}
-				while (m_streak->m() >= 2)
+				while (reinterpret_cast<Gen_009559f0 *>(m_streak)->m() >= 2)
 				{
 					StreakWidth pruningWidth;
-					m_streak->bfmeGetOH(1, &point, &pruningWidth.raw);
-					if (pointWidth.value - data->m_length < pruningWidth.value)
+					reinterpret_cast<BfmeThingOH *>(m_streak)->bfmeGetOH(1, &point, &pruningWidth.raw);
+					if (!(pointWidth.value - data->m_length > pruningWidth.value))
 					{
 						break;
 					}
-					m_streak->Delete_Point(0);
+					reinterpret_cast<Bitmap2DObjClass *>(m_streak)->Delete_Point(0);
 				}
 			}
 		}
@@ -156,6 +198,7 @@ void W3DStreakDraw::doDrawModule(const Matrix3D *)
 		point.x = scale * data->m_vectorX;
 		point.y = scale * data->m_vectorY;
 		point.z = scale * data->m_vectorZ;
-		m_streak->setVector((const BfmeStreakVector *)&point);
+		reinterpret_cast<Rva00955BC0 *>(m_streak)->set(
+			(const Rva00955BC0Vec *)&point);
 	}
 }
