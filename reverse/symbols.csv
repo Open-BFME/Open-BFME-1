@@ -2718,6 +2718,7 @@ name,address,notes
 ??0GameLogic@@QAE@XZ,0x003928E0,Win32GameEngine::createGameLogic calls this body before installing W3DGameLogic primary and Snapshot vtables; body begins with SubsystemInterface construction and initializes the GameLogic layout established by its matched destructor
 ??0GameMessage@@QAE@W4Type@0@@Z,0x000359E5,GameMessage::GameMessage(Type) thunk
 ??0GameMessageParser@@QAE@XZ,0x00013FCA,GameMessageParser::GameMessageParser() thunk
+??1GameMessageParser@@UAE@XZ,0x00623530,GameMessageParser complete destructor; existing protected body 0x00623530 is shared by the scalar-deleting wrapper at 0x006235B0 and exact parser constructors 0x00623510/0x006236D0
 ??0GameResultsQueue@@QAE@XZ,0x0000DAFD
 ??0GameResultsRequest@@QAE@ABV0@@Z,0x0004355E
 ??0GameSlot@@QAE@ABV0@@Z,0x0006E600,the base-class copy constructor LANGameSlot's own copy constructor (0x00686D50) calls on (this src) at offset 0 before storing LANGameSlot's vtable; the base is GameSlot in the layout LANGameSlot_operator.cpp and LANGameSlot_dtor.cpp both pin
