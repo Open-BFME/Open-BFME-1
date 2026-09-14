@@ -5364,7 +5364,7 @@ name,address,notes
 ??1ClickReactionBehaviorModuleData@@MAE@XZ,0x00011162,exact constructor 0x002001A0 and dedicated vtable 0x00CA4A10 establish the protected complete destructor called by wrapper 0x002003E0
 ??1Gen_dtor_00200b60@@UAE@XZ,0x0004654C,gen-dtor class destructor
 ??1InstantDeathBehavior@@MAE@XZ,0x0003401D,vtable 0x00CA4EBC slots name InstantDeathBehavior; protected complete destructor called by wrapper 0x00200C90
-??1Gen_dtor_00201cc0@@UAE@XZ,0x00038262,gen-dtor class destructor
+??1OathbreakersFadeAwayBehavior@@UAE@XZ,0x00038262,public complete destructor ILT called by scalar wrapper 0x00201CC0; matched constructor 0x00201BB0 installs dedicated vtable 0x010A5124
 ??1Gen_dtor_00201f80@@UAE@XZ,0x0004A241,gen-dtor class destructor
 ??1Gen_dtor_00202390@@UAE@XZ,0x000116E4,gen-dtor class destructor
 ??1PassiveAreaEffectBehaviorModuleData@@UAE@XZ,0x0002F0C2,destructor ILT used by the PassiveAreaEffectBehaviorModuleData scalar-deleting destructor
@@ -88092,3 +88092,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7WeaponStore@@6B@,0x010A13C8,exact constructor 0x001E5290 installs this dedicated vtable; slot zero ILT 0x000327DB reaches scalar wrapper 0x001E7F20
 ??_7StructureBodyModuleData@@6B@,0x0108ED20,exact constructor 0x001293C0 installs this dedicated vtable; slot zero ILT 0x00046C90 reaches scalar wrapper 0x00129460
 ??_7SymbioticStructuresBodyModuleData@@6B@,0x0108EC78,dedicated vtable associated with matched constructor 0x00128D20 and ModuleFactory registration; slot zero ILT 0x00046236 reaches scalar wrapper 0x00129530
+??_7OathbreakersFadeAwayBehavior@@6B@,0x010A5124,matched constructor 0x00201BB0 installs this dedicated vtable; slot zero ILT 0x00006622 reaches scalar wrapper 0x00201CC0
