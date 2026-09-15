@@ -68,5 +68,23 @@ BfmeAptScreenOnlineHome *s4mk0055BAA0( int a )
 }
 
 S4_GUARDED_NEW( 0055BB20, 47 )
-S4_GUARDED_NEW( 0055BC20, 31 )
+
+class BfmeAptScreenOnlineQuickMatch
+{
+public:
+	BfmeAptScreenOnlineQuickMatch( int a );
+
+private:
+	int m_storage[ 31 ];
+};
+
+extern void *g_s4Guard0055BC20;
+
+BfmeAptScreenOnlineQuickMatch *s4mk0055BC20( int a )
+{
+	if ( g_s4Guard0055BC20 )
+		return 0;
+	return new BfmeAptScreenOnlineQuickMatch( a );
+}
+
 S4_GUARDED_NEW( 0055BCA0, 124 )
