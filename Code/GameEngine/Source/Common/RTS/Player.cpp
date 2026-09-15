@@ -2496,10 +2496,9 @@ Bool Player::isLocalPlayer() const
 }
 
 //=============================================================================
-// ?setListInScoreScreen@Player@@QAEX_N@Z present-unmatched
 void Player::setListInScoreScreen(Bool listInScoreScreen)
 {
-	m_listInScoreScreen = listInScoreScreen;
+	*reinterpret_cast<Bool *>(reinterpret_cast<char *>(this) + 0x29C) = listInScoreScreen;
 }
 
 //=============================================================================
