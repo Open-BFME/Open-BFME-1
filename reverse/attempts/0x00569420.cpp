@@ -41,7 +41,13 @@ extern Shell40D9 *TheShell;
 
 void __cdecl bfmeApplyEAI(int a, int b, int c);
 
-void __stdcall bfmeRefreshEAI(int unused)
+class BfmeAptScreenQuitMenu
+{
+public:
+	void _bfme_saveMenu(const char *unused);
+};
+
+void BfmeAptScreenQuitMenu::_bfme_saveMenu(const char *unused)
 {
 	char flag = (TheWritableGlobalData->m_bfmeFlagEAI == 0);
 
