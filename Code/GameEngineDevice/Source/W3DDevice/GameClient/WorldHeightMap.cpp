@@ -92,6 +92,30 @@ public:
 /*static*/ MapObject *MapObject::TheMapObjectListPtr = NULL;
 /*static*/ Dict MapObject::TheWorldDict;
 
+class Rva0041230aMapObject
+{
+public:
+	virtual void retailVtableAnchor();
+	char m_pad0[0x04];
+	Vector3 m_location;
+	AsciiString m_objectName;
+	const ThingTemplate *m_thingTemplate;
+	Real m_angle;
+	Int m_flags;
+	Dict m_properties;
+	Int m_color;
+	char m_pad1[0x18];
+	Int m_runtimeFlags;
+	char m_pad2[0x18];
+public:
+	Rva0041230aMapObject(Vector3 loc, const AsciiString &name, Real angle, Int flags,
+		const Dict *props, const ThingTemplate *thingTemplate);
+};
+
+void j_00031fcf();
+struct MapObjectValidateThunkView {};
+typedef void (MapObjectValidateThunkView::*MapObjectValidateThunk)();
+
 // byte-exact reconstruction: Code/GameEngine/Source/Common/MapObjectCtorThunk.cpp
 // ??0MapObject@@QAE@UCoord3D@@VAsciiString@@MHPBVDict@@PBVThingTemplate@@@Z present-unmatched
 MapObject::MapObject(Coord3D loc, AsciiString name, Real angle, Int flags, const Dict* props,
@@ -150,13 +174,19 @@ MapObject::~MapObject(void)
 
 }
 
-// ?duplicate@MapObject@@QAEPAV1@XZ present-unmatched
 MapObject *MapObject::duplicate(void)
 {
-	MapObject *pObj = newInstance( MapObject)(m_location, m_objectName, m_angle, m_flags, &m_properties, m_thingTemplate);
-	pObj->setColor(getColor());
-	pObj->m_runtimeFlags = m_runtimeFlags;
-	return pObj;
+	Rva0041230aMapObject *source = reinterpret_cast<Rva0041230aMapObject *>(this);
+	Rva0041230aMapObject *pObj = new Rva0041230aMapObject(source->m_location,
+		source->m_objectName, source->m_angle, source->m_flags, &source->m_properties,
+		source->m_thingTemplate);
+	MapObject *mapObject = reinterpret_cast<MapObject *>(pObj);
+	mapObject->setColor(getColor());
+	mapObject->m_runtimeFlags = m_runtimeFlags;
+	union { void (*asFunction)(); MapObjectValidateThunk asMember; } fnCast;
+	fnCast.asFunction = j_00031fcf;
+	(reinterpret_cast<MapObjectValidateThunkView *>(mapObject)->*fnCast.asMember)();
+	return mapObject;
 }
 
 void MapObject::setRenderObj(RenderObjClass *pObj)
