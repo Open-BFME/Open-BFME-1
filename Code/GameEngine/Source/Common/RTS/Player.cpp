@@ -4785,10 +4785,9 @@ Bool Player::isPlayerObserver(void) const
 }
 
 // ------------------------------------------------------------------------------------------------
-// ?isPlayerDead@Player@@QBE_NXZ present-unmatched
 Bool Player::isPlayerDead(void) const
 {
-	return m_isPlayerDead;
+	return *reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(this) + 0x680);
 }
 
 // ------------------------------------------------------------------------------------------------
