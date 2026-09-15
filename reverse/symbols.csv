@@ -88148,3 +88148,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ?Resize@?$VectorClass@VKeyClass@Curve3DClass@@@@UAE_NHPBVKeyClass@Curve3DClass@@@Z,0x0093E1F0
 ?Release_Refs@@YAXPAVSortingNodeStruct@@@Z,0x009390B0
 ?_M_reallocate_map@?$deque@VPSRequest@@V?$allocator@VPSRequest@@@_STL@@@_STL@@IAEXI_N@Z,0x008FABB0
+?m009EFD40@Q1Receiver0134FAAC@@QAEXPAUQ1ReceiverLocalSet@@@Z,0x009EFD40,address-derived direct callee of 0x009F0D40; same receiver and one local-set pointer argument; retail copies set with 0x009EE8E0
+??0Q1ReceiverTreeStorage@@QAE@ABV?$set@UGen_t_009ee8e0_k4@@U?$less@UGen_t_009ee8e0_k4@@@_STL@@V?$allocator@UGen_t_009ee8e0_k4@@@3@@_STL@@@Z,0x009EE8E0,ABI view of canonical 12-byte set copy constructor called at 0x009F0D40+0x26; same stack reference and receiver; existing generated template body proves header-count-comparator layout
