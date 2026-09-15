@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "453359c28be3b92c384feae9c43423264a40625d5ec617c8e29455ffc4e522a3",
+  "symbol": "?bfmeCellClear@Rva003D5B00Holder@@QBEHHH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeCellClear@Rva003D5B00Holder@@QBEHHH@Z\n// partial score=0.95 date=2026-09-14\n// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n//\n// Open-BFME5: thiscall cell bit test at retail 0x003D5B00 (75B).\n// Sibling of rva003D5AE0 (0x003D5AE0): same +0xC & 0xFC0 vs 0x40 bitfield.\n//\n// PARTIAL: 73/75 bytes. MSVC 7.1 folds null-check into add flags (je after\n// add) instead of retail test eax,eax / je. Remainder (push-esi-early,\n// bounds, edx bitfield, jne/mov-1 tail) matches.\n\nstruct Rva003D5B00Cell { char m_pad[0xC]; unsigned m_bits; };\nstruct Rva003D5B00Map {\n\tchar m_pad[0x10];\n\tRva003D5B00Cell **m_rows;\n\tint m_minX; int m_minY; int m_maxX; int m_maxY;\n};\nclass Rva003D5B00Holder {\npublic:\n\tint bfmeCellClear(int x, int y) const;\nprivate:\n\tRva003D5B00Map *m_map;\n};\n\nint Rva003D5B00Holder::bfmeCellClear(int x, int y) const\n{\n\tRva003D5B00Map *map = m_map;\n\tif (x < map->m_minX) goto fail;\n\tif (x > map->m_maxX) goto fail;\n\tif (y < map->m_minY) goto fail;\n\tif (y > map->m_maxY) goto fail;\n\tRva003D5B00Cell *row = map->m_rows[x];\n\tRva003D5B00Cell *cell = row + y;\n\tif (cell == 0) goto fail;\n\tif ((cell->m_bits & 0xFC0u) == 0x40u)\n\t\treturn 1;\nfail:\n\treturn 0;\n}\n"
+}

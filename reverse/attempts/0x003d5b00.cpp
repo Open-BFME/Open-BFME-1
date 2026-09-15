@@ -31,7 +31,7 @@ int Rva003D5B00Holder::bfmeCellClear(int x, int y) const
 	if (y > map->m_maxY) goto fail;
 	Rva003D5B00Cell *row = map->m_rows[x];
 	Rva003D5B00Cell *cell = row + y;
-	if ((unsigned)cell == 0u) goto fail;
+	if (cell == 0) goto fail;
 	if ((cell->m_bits & 0xFC0u) == 0x40u)
 		return 1;
 fail:

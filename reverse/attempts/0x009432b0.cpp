@@ -1,5 +1,6 @@
 // ?first@Gen_00943CF0@@AAEXPAXPAPAX11@Z
 // partial score=0.9 date=2026-09-08
+// cl: /DNDEBUG /MD /EHs-c- /O2 /Ob2
 // Clean reconstruction of the linked-node traversal at retail RVA 0x00943CF0.
 // The owning type and the two helper identities are not recovered; their
 // address-derived declarations preserve the call boundaries and observed
@@ -11,7 +12,14 @@ struct Gen_00943CF0_Node
 	void *m_value;
 };
 
-class Gen_00943CF0
+class Gen_009431F0
+{
+public:
+	int map_x(float x);
+	int map_y(float y);
+};
+
+class Gen_00943CF0 : public Gen_009431F0
 {
 	struct Bounds
 	{
@@ -102,6 +110,14 @@ class Gen_00943CF0
 		float center_y;
 	};
 
+	struct Locals
+	{
+		float center_x;
+		float center_y;
+		unsigned char padding[4];
+		Bounds bounds;
+	};
+
 	void first(void *value, void **secondOutput, void **firstOutput,
 		void **listAddress);
 	void second(void *value, void *secondOutput, void *firstOutput,
@@ -111,30 +127,26 @@ public:
 	void process(Gen_00943CF0_Node **list);
 };
 
-class Gen_009431F0
-{
-public:
-	int map_x(float x);
-	int map_y(float y);
-};
-
 void Gen_00943CF0::first(void *rawValue, void **secondOutput,
 	void **firstOutput, void **listAddress)
 {
 	Value *value = (Value *)rawValue;
-	Bounds bounds;
-	float center[3];
-	center[0] = value->center_x;
-	center[1] = value->center_y;
-	value->getBounds(&bounds);
-	float extent = value->getRadius() + bounds.fourth;
+	register unsigned int *first = (unsigned int *)firstOutput;
+	register unsigned int *second = (unsigned int *)secondOutput;
+	Locals locals;
+	locals.center_x = value->center_x;
+	locals.center_y = value->center_y;
+	value->getBounds(&locals.bounds);
+	float extent = value->getRadius() + locals.bounds.fourth;
 
-	*(unsigned int *)secondOutput = ((Gen_009431F0 *)this)->map_x(center[1] - extent);
-	*(unsigned int *)firstOutput = ((Gen_009431F0 *)this)->map_y(center[1] - extent);
-	unsigned int mask = ((Gen_009431F0 *)this)->map_y(center[1] + extent) ^
-		*(unsigned int *)firstOutput;
-	mask |= ((Gen_009431F0 *)this)->map_x(center[0] + extent) ^
-		*(unsigned int *)secondOutput;
+	*second = map_x(locals.center_x - extent);
+	*first = map_y(locals.center_y - extent);
+	register unsigned int mask = map_y(
+		*(volatile float *)&locals.center_y + extent) ^
+		*first;
+	mask |= map_x(
+		*(volatile float *)&locals.center_x + extent) ^
+		*second;
 	*(unsigned int *)listAddress = mask;
 	if (mask != 0) {
 		unsigned int bit = 0;
@@ -153,8 +165,8 @@ void Gen_00943CF0::first(void *rawValue, void **secondOutput,
 		if ((mask & 2) != 0)
 			++bit;
 		unsigned int keep = ~(1u << bit);
-		*(unsigned int *)secondOutput &= keep;
-		*(unsigned int *)firstOutput &= keep;
+		*second &= keep;
+		*first &= keep;
 	}
 }
 
