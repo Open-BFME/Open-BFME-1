@@ -2066,15 +2066,34 @@ void Player::addTeamToList(TeamPrototype* team)
 }
 
 //=============================================================================
-// ?removeTeamFromList@Player@@QAEXPAVTeamPrototype@@@Z present-unmatched
 void Player::removeTeamFromList(TeamPrototype* team)
 {
-	for (PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); 
-			it != m_playerTeamPrototypes.end(); ++it)
+	struct BfmePlayerTeamRemovalNode
 	{
-		if (team == *it)
+		BfmePlayerTeamRemovalNode *m_next;
+		BfmePlayerTeamRemovalNode *m_prev;
+		TeamPrototype *m_team;
+	};
+	struct BfmePlayerTeamRemovalFields
+	{
+		unsigned char m_pad[0x288];
+		BfmePlayerTeamRemovalNode *m_list;
+	};
+	extern void bfmeFree915A(void *p, unsigned int n);
+
+	BfmePlayerTeamRemovalFields *self =
+		reinterpret_cast<BfmePlayerTeamRemovalFields *>(this);
+	BfmePlayerTeamRemovalNode *list = self->m_list;
+	for (BfmePlayerTeamRemovalNode *node = list->m_next;
+			node != list; node = node->m_next)
+	{
+		if (team == node->m_team)
 		{
-			m_playerTeamPrototypes.erase(it);
+			BfmePlayerTeamRemovalNode *next = node->m_next;
+			BfmePlayerTeamRemovalNode *prev = node->m_prev;
+			prev->m_next = next;
+			next->m_prev = prev;
+			bfmeFree915A(node, 0xc);
 			return;
 		}
 	}
