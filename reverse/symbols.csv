@@ -78360,8 +78360,6 @@ name,address,notes
 ?classify@Rva005329Classify@@QAEXPAVRva005329C0Obj@@H@Z,0x00047807,ILT for 15B classify wrappers at 0x005329C0/E0
 ?classify@Rva005329Classify@@QAEXPAXH@Z,0x00047807,ILT for 15B classify wrappers at 0x005329C0/E0
 ?classifyMapCell@Pathfinder@@SAXHHPAVPathfindCell@@@Z,0x003F7630,Pathfinder map classifier called by classifyMap at 0x003F9140
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x00047D2A,"ILT to the 331-byte body at 0x0051F1C0 that both inline wrappers encode; replaces 0x00004EE9, which routes to the 103-byte SimpleDynVecClass::Add body"
-?classifyObjectFootprint@Pathfinder@@IAEXPAVObject@@_N@Z,0x0051F1C0,the body retail Pathfinder::add/removeObjectToPathfindMap actually call (thunk 0x00047D2A); replaces the 0x00004EE9 pin whose nine call sites are all SimpleDynVecClass::Add callers
 ?cleanUpReplayFile@RecorderClass@@QAEXXZ,0x0003CC9A,Recorder cleanup invoked by the GameEngine::execute catch-all path
 ?cleanUpSlotPointers@GameSpyStagingRoom@@QAEXXZ,0x00022507,addStagingRoom call target (incremental-link thunk)
 ?cleanup@BuffEntryTail@@QAEXXZ,0x00015479,BuffEntry embedded iterator clear ILT
@@ -84715,6 +84713,8 @@ name,address,notes
 ?rva0046ef50@@YAXXZ,0x00018E8F,Open-BFME5 ILT thunk b_0046ef50
 ?rva0048B390@TransitionGroup@@QAEXPAX@Z,0x0048B390,address-derived TransitionGroup list-copy helper body; the verified existing ILT 0x0000BE97 is the compiler resolver candidate for the 0x0048B690 calls; campaign=luna36h-20260907;lane=files
 ?rva004CAF70@@YAXXZ,0x004CAF70,OnAccept null-global fallback actual body
+?rva0051F1C0Campaign@BfmeAptScreenMainMenu@@QAEXPBD_N@Z,0x00047D2A,"ILT to the still-opaque MainMenu campaign body at 0x0051F1C0; retail constructor callback literals prove the two 15-byte callers are GoodCampaign and EvilCampaign"
+?rva0051F1C0Campaign@BfmeAptScreenMainMenu@@QAEXPBD_N@Z,0x0051F1C0,"address-preserving name: shared body behind the constructor-bound AptMainMenu::GoodCampaign and AptMainMenu::EvilCampaign wrappers"
 ?rva00536870@@YAXXZ,0x000436E9,Open-BFME5 ILT thunk b_00536870
 ?rva00547730@@YAXXZ,0x0003F2C9,Open-BFME5 ILT thunk b_00547730
 ?rva00552C40@BfmeAptScreenOnlineLogin@@QAEX_N@Z,0x00552C40,direct body pin: neutral OnlineLogin bool tail ABI; retail ILT 0x00049E1D is a genuine E9 to this body; campaign=luna36h-20260907;lane=hlod
