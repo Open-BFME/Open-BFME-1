@@ -84,3 +84,8 @@ private:
 Rva003B6680::~Rva003B6680()
 {
 }
+
+void forceRva003B6680DeletingDestructor()
+{
+	Rva003B6680 value;
+}
