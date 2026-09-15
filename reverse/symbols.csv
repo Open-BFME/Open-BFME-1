@@ -1,4 +1,5 @@
 name,address,notes
+?UpdateDiplomacyBriefingText@@YAXABVUnicodeString@@_N@Z,0x004C4630,Unicode briefing updater called by the171B AsciiString-reference wrapper4C47E0 through ILT1D0A2; complete346B body looks up Diplomacy.wnd:ListboxSolo then clears/deduplicates Unicode strings using StringBase<G> copy and appends colored listbox text; caller identity from matched InGameUI::popupMessage442040
 ?$S103@?1??getClassMemoryPool@AIUpdateInterface@@CAPAVMemoryPool@@XZ@4IA,0x00EEFE34,pool-glue cascade static (back-solved)
 ?$S105@?1??getClassMemoryPool@PoisonedBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF830,pool-glue cascade static (back-solved)
 ?$S107@?1??getClassMemoryPool@SupplyWarehouseCripplingBehavior@@CAPAVMemoryPool@@XZ@4IA,0x00EEF91C,pool-glue cascade static (back-solved)
