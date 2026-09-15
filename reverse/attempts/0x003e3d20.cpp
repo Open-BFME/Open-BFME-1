@@ -1,5 +1,5 @@
 // ?removeGoal@Pathfinder@@QAEXPAVObject@@@Z
-// partial score=0.3 date=2026-09-10
+// partial score=0.33 date=2026-09-15
 // cl: /DNDEBUG /MD
 
 typedef int Int;
@@ -38,7 +38,7 @@ public:
 			return false;
 		if (t->m_nextOverride)
 			t = (RemoveGoalTemplate *)t->m_nextOverride->getFinalOverride();
-		return (t->m_kindOf & (1u << kind)) != 0;
+		return (t->m_kindOf & 4) != 0;
 	}
 	ObjectID getID(void) const { return m_id; }
 	void *getAIUpdateInterface(void) const { return m_ai; }
@@ -124,7 +124,10 @@ private:
 
 void Pathfinder::removeGoal(Object *obj)
 {
-	if (obj->isKindOf(2)) {
+	RemoveGoalTemplate *kindTemplate = obj->m_template;
+	if (kindTemplate && kindTemplate->m_nextOverride)
+		kindTemplate = (RemoveGoalTemplate *)kindTemplate->m_nextOverride->getFinalOverride();
+	if (kindTemplate && (kindTemplate->m_kindOf & 4)) {
 		return;
 	}
 	ObjectID objID = obj->getID();
