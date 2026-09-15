@@ -2081,12 +2081,13 @@ void Player::removeTeamFromList(TeamPrototype* team)
 }
 
 //=============================================================================
-// ?healAllObjects@Player@@QAEXXZ present-unmatched
 void Player::healAllObjects()
 {
-	for (PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin(); 
-			 it != m_playerTeamPrototypes.end(); ++it)
-	{	
+	const PlayerTeamList *teams = reinterpret_cast<const PlayerTeamList *>(
+		reinterpret_cast<const char *>(this) + 0x288);
+	for (PlayerTeamList::const_iterator it = teams->begin();
+			 it != teams->end(); ++it)
+	{
 		(*it)->healAllObjects();
 	}
 }
