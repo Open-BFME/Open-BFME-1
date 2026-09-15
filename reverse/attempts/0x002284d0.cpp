@@ -1,5 +1,5 @@
-// ?d_002284d0@@YAXXZ
-// partial score=0.25 date=2026-09-10
+// ?exitObjectViaDoor@OpenContain@@UAEXPAVObject@@W4ExitDoorType@@@Z
+// partial score=0.257 date=2026-09-15
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 // Focused BFME ABI reconstruction of OpenContain::exitObjectViaDoor at
@@ -51,23 +51,23 @@ void BfmeOpenContainExitObject::exitObjectViaDoor(Object *exitObj, ExitDoorType 
 {
 	DEBUG_ASSERTCRASH(exitDoor == DOOR_1, ("multiple exit doors not supported here"));
 
-	register Object *exitObject = exitObj;
 	register char *self = reinterpret_cast<char *>(this);
+	register Object *exitObject = exitObj;
 	BfmeOpenContainExitInterface *contain =
 		reinterpret_cast<BfmeOpenContainExitInterface *>(self - 0x10);
 	contain->removeFromContain(exitObject, FALSE);
 
 	Object *me = *reinterpret_cast<Object **>(self - 0x28);
-	BfmeOpenContainExitModuleData *moduleData =
-		*reinterpret_cast<BfmeOpenContainExitModuleData **>(self - 0x2c);
-	*reinterpret_cast<UnsignedInt *>(self + 0x3c) = moduleData->m_doorOpenTime;
+	*reinterpret_cast<UnsignedInt *>(self + 0x3c) =
+		(*reinterpret_cast<BfmeOpenContainExitModuleData **>(self - 0x2c))->m_doorOpenTime;
 	if (*reinterpret_cast<UnsignedInt *>(self + 0x3c))
 	{
 		me->clearAndSetModelConditionState(MODELCONDITION_DOOR_1_CLOSING,
 			MODELCONDITION_DOOR_1_OPENING);
 	}
 
-	Int numberExits = moduleData->m_numberOfExitPaths;
+	Int numberExits =
+		(*reinterpret_cast<BfmeOpenContainExitModuleData **>(self - 0x2c))->m_numberOfExitPaths;
 	if (numberExits > 0)
 	{
 		AsciiString startBone("ExitStart");
