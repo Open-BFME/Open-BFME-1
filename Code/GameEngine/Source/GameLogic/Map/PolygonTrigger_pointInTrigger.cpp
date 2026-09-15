@@ -1,7 +1,3 @@
-// ?pointInTrigger@PolygonTrigger@@QBE_NAAUICoord3D@@@Z
-// partial score=0.99 date=2026-09-15
-// Scratch copy of reverse/attempts/0x0018f8a0.cpp; do not use as production source.
-// ?pointInTrigger@PolygonTrigger@@QBE_NAAUICoord3D@@@Z
 // cl: /O2 /G6 /DNDEBUG /MD /EHsc-
 // stlport
 
@@ -11,6 +7,13 @@ typedef bool Bool;
 typedef int Int;
 
 struct ICoord3D
+{
+	Int x;
+	Int y;
+	Int z;
+};
+
+struct TempIndexStruct
 {
 	Int x;
 	Int y;
@@ -29,16 +32,13 @@ struct IRegion2D
 	ICoord2D hi;
 };
 
-// The point array is the PolygonTrigger ICoord3D array witnessed by matched
-// callers and updateBounds; the generic TempIndexStruct swap pin is not used
-// as coordinate-type evidence.
 class PolygonTrigger
 {
 protected:
 	void updateBounds() const;
 
 	unsigned char m_unmodelled00[0x10];
-	ICoord3D *m_points;
+	TempIndexStruct *m_points;
 	Int m_numPoints;
 	Int m_sizePoints;
 	mutable IRegion2D m_bounds;
@@ -49,6 +49,7 @@ public:
 	Bool pointInTrigger(ICoord3D &point) const;
 };
 
+// ?pointInTrigger@PolygonTrigger@@QBE_NAAUICoord3D@@@Z
 Bool PolygonTrigger::pointInTrigger(ICoord3D &point) const
 {
 	if (m_boundsNeedsUpdate)
@@ -67,13 +68,10 @@ Bool PolygonTrigger::pointInTrigger(ICoord3D &point) const
 	Int i;
 	for (i = 0; i < m_numPoints; ++i)
 	{
-		ICoord3D pt1 = m_points[i];
-		const ICoord3D *src2 =
+		TempIndexStruct pt1 = m_points[i];
+		const TempIndexStruct *src2 =
 			(i != 0) ? &m_points[i - 1] : &m_points[m_numPoints - 1];
-		ICoord3D pt2;
-		pt2.x = src2->x;
-		pt2.y = src2->y;
-		pt2.z = src2->z;
+		TempIndexStruct pt2 = *src2;
 
 		if (pt1.y == pt2.y)
 			continue;
@@ -82,15 +80,14 @@ Bool PolygonTrigger::pointInTrigger(ICoord3D &point) const
 
 		if (pt1.y > pt2.y)
 			std::swap(pt1, pt2);
-		const Int pt2x = pt2.x;
 		if (pt2.y < point.y)
 			continue;
 		if (pt1.y >= point.y)
 			continue;
+		const Int pt2x = pt2.x;
 
-		Int dx = pt2x - pt1.x;
-		Int dy = pt2.y - pt1.y;
-		if (dx * (point.y - pt1.y) >= (point.x - pt1.x) * dy)
+		if ((pt2x - pt1.x) * (point.y - pt1.y) >=
+			(point.x - pt1.x) * (pt2.y - pt1.y))
 			inside = !inside;
 	}
 	return inside;
