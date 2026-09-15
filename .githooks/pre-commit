@@ -111,9 +111,17 @@ if [ "${#staged_sources[@]}" -eq 0 ] && [ "$ledger_changed" -eq 0 ] \
     exit 0
 fi
 
+# reverse/full_gate_baseline.txt is the set of rows already red on origin; it
+# may only shrink (tools/gate_baseline.py --validate). While the full gate is
+# red a header could never land, and the gate is red partly BECAUSE of header
+# fixes it refused (docs/full_gate_red.md), so the check is "no NEW red row",
+# not "no red row". A gate that dies before byte comparison still fails.
+if git diff --cached --quiet -- reverse/full_gate_baseline.txt; then :; else
+    python3 tools/gate_baseline.py --validate || fail "full-gate baseline may only shrink (see above)"
+fi
 if [ "$wide_change" -ne 0 ]; then
-    echo "pre-commit: header/shim change — running FULL gate (delta verify can't see wide effects)" >&2
-    BUILD_POOL="${BUILD_POOL:-4}" ./build.sh || fail "full gate after header/shim change (see above)"
+    echo "pre-commit: header/shim change — running FULL gate against reverse/full_gate_baseline.txt (no NEW red row allowed)" >&2
+    BUILD_POOL="${BUILD_POOL:-4}" python3 tools/gate_baseline.py --check || fail "full gate after header/shim change: new red row(s) or the gate did not reach byte comparison (see above)"
 fi
 
 # The build verifies file contents on disk; refuse if a file being committed

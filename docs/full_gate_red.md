@@ -25,6 +25,19 @@ produces, so it cannot run until `functions` is green. Two reds were cleared
 (`source claims`, `null relocs`) — see the commit "Clear two of the full gate's
 five reds".
 
+## The hook now compares against a baseline (2026-09-15)
+
+`.githooks/pre-commit` no longer demands a fully green gate for a header or
+shim. It runs `tools/gate_baseline.py --check`, which fails on any row that is
+red now and absent from `reverse/full_gate_baseline.txt`, and on a gate that
+dies before byte comparison. The baseline is recorded once with `--record`
+on a stated revision and may only SHRINK: `--validate` refuses a staged
+baseline that adds a row, so a red cannot be hidden by writing it down. Rows
+that went green are printed so the fixing commit removes them. Until the
+baseline exists the hook behaves as before (strict), which is the state on
+2026-09-15 while the gate still exits at a compile failure (see Lane A of
+the gate campaign in build/gate_lane*.md).
+
 ## The 147, by what is actually wrong
 
 | count | cause | note |
