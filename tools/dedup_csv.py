@@ -19,6 +19,7 @@ after it had moved to ini_parsers.cpp — the row then referenced a file that no
 longer defined it, and the full gate died with "symbol not found in object".)
 symbols.csv: unique (name,address) lines. Run with no arguments; edits in place.
 """
+import argparse
 import csv
 import io
 import sys
@@ -125,7 +126,11 @@ def dedup_symbols(path):
     return len(body), len(unique)
 
 
-def main():
+def main(argv=None):
+    # Parse before any reads or writes: historically even --help silently
+    # normalized both live ledgers and reordered thousands of unrelated rows.
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.parse_args(argv)
     before, after = dedup_functions(ROOT / "reverse" / "functions.csv")
     print(f"functions.csv: {before} -> {after} rows")
     before, after = dedup_symbols(ROOT / "reverse" / "symbols.csv")
