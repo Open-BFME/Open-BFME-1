@@ -58,6 +58,16 @@ reported the invention as a missing pin. Both bodies had ZERO unpinned targets.
 A link failure against a real retail body almost always means you named a callee
 wrong, not that it needs a pin. Never add a pin on a seat's say-so.
 
+**Carry small dependency repairs with the body.** A narrowly blocked candidate
+does not automatically mean switch candidates. If the scoped gate fails only on
+an unresolved callee that the candidate actually calls, keep the candidate open:
+run `tools/decode_calls.py` (or the equivalent retail call decoder), prove the
+callee's identity and ABI from the aligned call site and independent evidence,
+then add that one pin and rerun the scoped gate. Treat the pin as part of the
+same bounded investigation and commit. Switch only when the callee's target or
+identity is ambiguous, callers disagree, or the failure is unrelated to the
+candidate; preserve and record the evidence before moving on.
+
 Finish or revert each body before the next.
 
 ## Work the file, not the row
