@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "fdc78a66274bcd4315a3d6a42a7c68e43dbf8c3d89dc7c4fb26ca8684c55faed",
+  "symbol": "?onDockReached@DockUpdate@@UAEXPAVObject@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.951,
+  "source": "// ?onDockReached@DockUpdate@@UAEXPAVObject@@@Z\n// partial score=0.951 date=2026-09-15\n// Retail 0x002CC750 is DockUpdate::onDockReached.\n// The DockUpdate vtable slot and the two model-condition updates identify it.\n\ntypedef unsigned int UnsignedInt;\n\nvoid j_0002191d(void);\n\nclass Object\n{\npublic:\n\tunsigned char m_unknown[0x118];\n\tvolatile UnsignedInt m_modelConditionFlags;\n};\n\nstruct DockConditionValues\n{\n\tUnsignedInt set;\n\tUnsignedInt cleared;\n};\n\nstatic __forceinline DockConditionValues makeDockConditionValues(UnsignedInt flags)\n{\n\tDockConditionValues values;\n\tvalues.cleared = flags & 0xfffdffff;\n\tvalues.set = values.cleared | 0x40000;\n\treturn values;\n}\n\nstatic __forceinline void applyDockCondition(Object *object)\n{\n\tUnsignedInt flags = object->m_modelConditionFlags;\n\tif ((flags & 0x20000) != 0 || (flags & 0x40000) == 0)\n\t{\n\t\tDockConditionValues values = makeDockConditionValues(\n\t\t\tobject->m_modelConditionFlags);\n\t\tobject->m_modelConditionFlags = values.cleared;\n\t\tobject->m_modelConditionFlags = values.set;\n\t\tj_0002191d();\n\t}\n}\n\nclass DockUpdate\n{\npublic:\n\tvirtual void onDockReached(Object *docker);\n};\n\nvoid DockUpdate::onDockReached(Object *docker)\n{\n\tapplyDockCondition(*(Object **)((char *)this - 0x18));\n\tapplyDockCondition(docker);\n}\n"
+}
