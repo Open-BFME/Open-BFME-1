@@ -9339,6 +9339,7 @@ name,address,notes
 ??1Rva0077CDE0Vec3@@QAE@XZ,0x00003B6B,destructor of the +0x24 element vector of the 0x0077CDE0 class (unwind funclet target)
 ??1Rva00785FD0Renderer@@QAE@XZ,0x00039F45,Open-BFME5 ILT renderer destructor the 0x00783F60 shutdown deletes through
 ??1Rva007E86B0Base@@UAE@XZ,0x007E86C0,neutral base destructor paired with the held direct constructor pin at 0x007E86B0; both complete bodies install vtable 0x01129358 and retail 0x00809100 invokes this cleanup for the naturally scoped BfmeC994 derived message; campaign=luna36h-20260907;lane=netpacket_next;model=gpt-5.6-sol-ultra
+??1Rva00808CB0LanGameEntry@@UAE@XZ,0x007E86C0,derived destructor body folded with Rva007E86B0Base at 0x007E86C0; constructor 0x00808CB0 installs vtable 0x011296B0 whose slot zero routes through scalar wrapper 0x007E8E70
 ??1Rva007E8810Message@@QAE@XZ,0x007E86C0,FESL message dtor used by 0x007FA170 nonblock timeout
 ??1Rva00800780Addr@@QAE@XZ,0x007E86C0,jabba demangler connect-reply Addr dtor alias of 0x7E86C0
 ??1Rva00803890Base@@UAE@XZ,0x007FA650,FESL browser base dtor alias of Gen_007fa650; pin for 0x803890
