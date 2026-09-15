@@ -20,7 +20,7 @@ class Matrix3D;
 class FXList
 {
 public:
-	bool isEmpty() const; // ILT 0x00011F77 -> body 0x0042DAA0
+	bool bfmeIsBlocked(); // ILT 0x00011F77 -> non-const culling predicate 0x0042DAA0
 	void doFXPos(const Coord3D *, const Matrix3D *, float, const Coord3D *) const;
 	// ILT 0x0001BB21 -> body 0x004280D0
 };
@@ -70,7 +70,7 @@ void Rva0025E0B0Module::update(Object *position)
 	m_flagE9 = 0;
 
 	FXList *fxList = m_moduleData->m_fxList;
-	if (fxList != 0 && !fxList->isEmpty())
+	if (fxList != 0 && !fxList->bfmeIsBlocked())
 		fxList->doFXPos((const Coord3D *)((const char *)position + 0x38), 0, 0, 0);
 
 	ObjectStatusMaskType status(ObjectStatusMaskType::kInit, 3);
