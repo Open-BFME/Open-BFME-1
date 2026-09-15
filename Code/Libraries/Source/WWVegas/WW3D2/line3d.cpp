@@ -62,6 +62,11 @@ class CameraClass;
 #include "dx8indexbuffer.h"
 #include "dx8fvf.h"
 
+// Keep the retail out-of-line ShaderClass setter in this TU.  It is inline
+// in shader.h, but the retail object also exports the COMDAT body.
+void (ShaderClass::*bfmeSetAlphaTestAnchor)(ShaderClass::AlphaTestType) =
+	&ShaderClass::Set_Alpha_Test;
+
 // 12 Triangles for index buffer
 const unsigned short Indices[]=
 {
