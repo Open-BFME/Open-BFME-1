@@ -1,5 +1,5 @@
-// ?bfmeZonePathCheck003EDF90@Pathfinder@@QAE_NPAVObject@@PBUCoord3D@@1PBVBfmeLocomotorSet@@@Z
-// partial score=0.25 date=2026-09-09
+// ?slowDoesPathExist@Pathfinder@@QAE_NPAVObject@@PBUCoord3D@@1W4ObjectID@@@Z
+// partial score=0.25 date=2026-09-15
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail 0x003EDF90 (631 bytes) is a BFME extension of the quick terrain
@@ -11,8 +11,10 @@
 // the function a canonical source identity.
 
 typedef int Int;
+typedef unsigned int UnsignedInt;
 typedef unsigned char Bool;
 typedef unsigned short zoneStorageType;
+enum ObjectID { INVALID_ID = 0, FORCE_OBJECTID_TO_LONG_SIZE = 0x7fffffff };
 
 struct Coord3D
 {
@@ -139,27 +141,26 @@ public:
 	bool bfmeZoneTransition(Object *object, zoneStorageType fromZone,
 		zoneStorageType toZone, const BfmeLocomotorSet *locomotorSet);
 
-	bool bfmeZonePathCheck003EDF90(Object *object, const Coord3D *from,
-		const Coord3D *to, const BfmeLocomotorSet *locomotorSet);
+	bool slowDoesPathExist(Object *object, const Coord3D *from,
+		const Coord3D *to, ObjectID ignoreObject);
 
 private:
 	char m_prefix[0xc9c];
 	PathfindZoneManager m_zoneManager;
 };
 
-// ?bfmeZonePathCheck003EDF90@Pathfinder@@QAE_NPAVObject@@PBUCoord3D@@1PBVBfmeLocomotorSet@@@Z
-bool Pathfinder::bfmeZonePathCheck003EDF90(Object *object,
-	const Coord3D *from, const Coord3D *to,
-	const BfmeLocomotorSet *locomotorSet)
+// ?slowDoesPathExist@Pathfinder@@QAE_NPAVObject@@PBUCoord3D@@1W4ObjectID@@@Z
+bool Pathfinder::slowDoesPathExist(Object *object,
+	const Coord3D *from, const Coord3D *to, ObjectID ignoreObject)
 {
 	if (((const Rva001BF140ByteField *)object)->get() == 1)
 		return true;
 
 	AIUpdateInterface *ai = object->m_ai;
-	if (ai == 0 && locomotorSet == 0)
+	if (ai == 0 && ignoreObject == 0)
 		return false;
 
-	const BfmeLocomotorSet *selected = locomotorSet;
+	const BfmeLocomotorSet *selected = (const BfmeLocomotorSet *)(UnsignedInt)ignoreObject;
 	if (selected == 0)
 		selected = ai->getDefaultLocomotorSet();
 	if ((selected->m_acceptableSurfaces & 0xf) == 0)
@@ -225,5 +226,5 @@ bool Pathfinder::bfmeZonePathCheck003EDF90(Object *object,
 		return false;
 	if (parentZone == goalZone)
 		return true;
-	return bfmeZoneTransition(object, parentZone, goalZone, locomotorSet);
+	return bfmeZoneTransition(object, parentZone, goalZone, (const BfmeLocomotorSet *)(UnsignedInt)ignoreObject);
 }
