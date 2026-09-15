@@ -34,22 +34,18 @@ extern GameSpyInfo *TheGameSpyInfo;
 // BFME layout independently used by matched GameSpyInfo::updatePlayerInfo636C60.
 // The third AsciiString is absent in the Zero Hour PlayerInfo declaration.
 // That shifts profileID to +0x14; the full BFME record occupies 52 bytes.
+// Only the nickname and profile ID identities are needed here. Existing
+// reconstructions disagree on unused field labels (the matched lobby display
+// helper reads its side at +0x2C), so do not inherit their guessed names.
 class PlayerInfo
 {
 public:
     AsciiString m_name;
-    AsciiString m_locale;
-    AsciiString m_bfmeExtraString;
-    int m_wins;
-    int m_losses;
+    AsciiString m_unmodelledString04;
+    AsciiString m_unmodelledString08;
+    int m_unmodelled0c[2];
     int m_profileID;
-    int m_flags;
-    int m_rankPoints;
-    int m_side;
-    int m_bfmeExtra0;
-    int m_bfmeExtra1;
-    int m_bfmeExtra2;
-    int m_preorder;
+    int m_unmodelled18[7];
     bool isIgnored();
 };
 
