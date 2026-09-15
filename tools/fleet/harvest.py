@@ -80,6 +80,19 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         if subprocess.run([sys.executable, "tools/check_csv.py"], cwd=ROOT).returncode:
             run("git", "reset", "-q")
             sys.exit("harvest: check_csv failing; hands needed")
+    # The index may hold entries this harvest never staged (a stale branch, a
+    # crashed writer). f43040e9c5 committed 19 deliberately deleted generator
+    # files that way. Commit only what a harvest is allowed to own, and never
+    # a path the project retired.
+    staged = out("git", "diff", "--cached", "--name-only").splitlines()
+    allowed = tuple(evidence)
+    stray = [p for p in staged if not p.startswith(allowed) and p not in cited]
+    if stray:
+        run("git", "reset", "-q")
+        sys.exit("harvest: index holds paths a harvest may not commit; hands needed:\n  " + "\n  ".join(stray))
+    if subprocess.run([sys.executable, "tools/retired_guard.py", "--staged"], cwd=ROOT).returncode:
+        run("git", "reset", "-q")
+        sys.exit("harvest: a retired path is staged; hands needed")
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT).returncode:
         run("git", "commit", "-q", "-m", msg + "\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>")
     old = out("git", "rev-parse", "HEAD")

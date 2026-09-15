@@ -1,0 +1,22 @@
+# Paths deleted on purpose that must not come back (tools/retired_guard.py).
+# Retired in 2d4dab0ad5 (generators + wave tooling), resurrected by harvest f43040e9c5, re-deleted 2026-09-15.
+# Restoring one: remove its line here in the same commit and say why.
+tools/gen_dump.py
+tools/gen_small.py
+tools/gen_uw.py
+tools/land_wave.py
+tools/obj_sweep.py
+tools/tests/test_gen_accessors.py
+tools/tests/test_gen_gap_thunks.py
+tools/tests/test_gen_getters.py
+tools/tests/test_gen_small_named.py
+tools/tests/test_gen_tinst.py
+tools/tests/test_gen_uw_shapes.py
+tools/tests/test_gen_uw_transaction.py
+tools/tests/test_land_supersede.py
+tools/tests/test_obj_sweep_naming.py
+tools/tests/test_obj_sweep_rel32.py
+tools/tests/test_obj_sweep_string_refs.py
+tools/tests/test_obj_sweep_targets.py
+tools/tests/test_scan_population.py
+tools/wave_accounting.py
