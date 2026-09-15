@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e657d403618669587f6d3d5813d5a55f0457d1cb133ae08e7257cec95202110f",
+  "symbol": "?setValue@Rva005A6790Object@@QAEHH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?setValue@Rva005A6790Object@@QAEHH@Z\n// partial score=0.95 date=2026-09-09\n// Clean C++ matches 56/60 bytes. The only remaining difference is the\n// register allocation around the final Mouse vtable call.\n\nextern void j_000423b6(void);\n\nstruct Rva00579160Manager {};\nextern Rva00579160Manager *Rva00579160TheManager;\n\nstruct Rva005A63D0Mouse\n{\n\tvirtual void slot00(void); virtual void slot04(void);\n\tvirtual void slot08(void); virtual void slot0c(void);\n\tvirtual void slot10(void); virtual void slot14(void);\n\tvirtual void slot18(void); virtual void slot1c(void);\n\tvirtual void slot20(void); virtual void slot24(void);\n\tvirtual void slot28(void); virtual void slot2c(void);\n\tvirtual void slot30(void); virtual void slot34(void);\n\tvirtual void setCursor(int value);\n};\nextern Rva005A63D0Mouse *TheMouse;\n\nstruct Rva005A6790Object\n{\n\tchar m_padding[0x1ec];\n\tint m_value;\n\tint setValue(int value);\n};\n\nint Rva005A6790Object::setValue(int value)\n{\n\tint old = m_value;\n\tm_value = value;\n\ttypedef bool (__fastcall *Check)(Rva00579160Manager *);\n\tif (((Check)j_000423b6)(Rva00579160TheManager))\n\t\tTheMouse->setCursor(m_value);\n\treturn old;\n}\n"
+}
