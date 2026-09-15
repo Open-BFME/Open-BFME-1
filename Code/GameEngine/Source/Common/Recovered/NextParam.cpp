@@ -1,26 +1,20 @@
 // ?nextParam@@YAPADPAD0@Z
-// partial score=0.94 date=2026-09-07
+// The Zero Hour WinMain tokenizer names this body. Retail stores its static
+// cursor at 0x012ED264 and loads strpbrk through 0x013594C4.
 #include <string.h>
-
-#define g_nextParamSource (*(char **)0x012ED264)
 
 typedef char *(__cdecl *StrpbrkFunction)(const char *, const char *);
 
 char *nextParam(char *newSource, char *seps)
 {
-	char *source = newSource;
-	if (source)
+	static char *source = NULL;
+	if (newSource)
 	{
-		g_nextParamSource = source;
+		source = newSource;
 	}
-	else
-	{
-		source = g_nextParamSource;
-	}
-
 	if (!source)
 	{
-		return 0;
+		return NULL;
 	}
 
 	char *first = source;
@@ -28,45 +22,33 @@ char *nextParam(char *newSource, char *seps)
 	{
 		StrpbrkFunction find = *(StrpbrkFunction *)0x013594C4;
 		char *firstSep = find(first, seps);
-		char firstChar[2] = { 0, 0 };
+		char firstChar[2] = {0, 0};
 		if (firstSep == first)
 		{
 			firstChar[0] = *first;
-			while (*first == firstChar[0])
-			{
-				first++;
-			}
+			while (*first == firstChar[0]) first++;
 		}
 
 		char *end;
 		if (firstChar[0])
-		{
 			end = find(first, firstChar);
-		}
 		else
-		{
 			end = find(first, seps);
-		}
 
 		if (end)
 		{
-			source = end + 1;
-			*(volatile char *)end = 0;
-			g_nextParamSource = source;
+			source = end+1;
+			*end = 0;
 			if (!*source)
-			{
-				g_nextParamSource = 0;
-			}
+				source = NULL;
 		}
 		else
 		{
-			g_nextParamSource = 0;
+			source = NULL;
 		}
 
 		if (first && !*first)
-		{
-			first = 0;
-		}
+			first = NULL;
 	}
 
 	return first;
