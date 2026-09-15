@@ -37,9 +37,20 @@ HEADER = "# full-gate red rows, shrink-only (tools/gate_baseline.py). One 'name 
 def run_gate():
     env = dict(os.environ)
     env.setdefault("BUILD_POOL", env.get("BUILD_POOL", "4"))
-    result = subprocess.run([str(ROOT / "build.sh")], cwd=ROOT, env=env, text=True,
+    result = subprocess.run(gate_command(), cwd=ROOT, env=env, text=True,
                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     return result.returncode, result.stdout
+
+
+def gate_command():
+    """build.sh is a shell script: Windows cannot CreateProcess it directly
+    (WinError 193), so run it under bash there."""
+    script = str(ROOT / "build.sh")
+    if sys.platform.startswith("win"):
+        import shutil
+        bash = shutil.which("bash") or str(Path("C:/Program Files/Git/bin/bash.exe"))
+        return [bash, script]
+    return [script]
 
 
 def red_rows(output):
