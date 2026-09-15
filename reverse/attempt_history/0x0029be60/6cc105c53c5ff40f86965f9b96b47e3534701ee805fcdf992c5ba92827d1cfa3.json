@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6cc105c53c5ff40f86965f9b96b47e3534701ee805fcdf992c5ba92827d1cfa3",
+  "symbol": "?d_0029be60@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?d_0029be60@@YAXXZ\n// partial score=0.97 date=2026-09-15\nclass BfmeNodeEVP\n{\npublic:\n\tint m_bfmeHeadEVP;\n\tint m_bfmeKindEVP;\n\tvoid *m_bfmeKeyEVP;\n\tint m_bfmePadAEVP;\n\tvoid *m_bfmeDataEVP;\n\tunsigned char m_bfmePadBEVP[0x28];\n\tBfmeNodeEVP *m_bfmeNextEVP;\n};\n\nclass BfmeFilterEVP\n{\npublic:\n\tchar bfmeAcceptEVP(void *key);\n};\n\nclass BfmeHostEVP\n{\npublic:\n\tvirtual void bfmeSlot00EVP();\n\tvirtual void bfmeSlot01EVP();\n\tvirtual void bfmeSlot02EVP();\n\tvirtual void bfmeSlot03EVP();\n\tvirtual void bfmeSlot04EVP();\n\tvirtual void bfmeSlot05EVP();\n\tvirtual void bfmeSlot06EVP();\n\tvirtual void bfmeSlot07EVP();\n\tvirtual void bfmeHandleEVP(void *data);\n\n\tvoid bfmeSweepEVP(BfmeFilterEVP *filter);\n\n\tint m_bfmePadEVP;\n\tBfmeNodeEVP *m_bfmeListEVP;\n};\n\nvoid BfmeHostEVP::bfmeSweepEVP(BfmeFilterEVP *filter)\n{\n\tBfmeNodeEVP *node = m_bfmeListEVP;\n\n\twhile (node != 0)\n\t{\n\t\tif (node->m_bfmeKindEVP == 1 && filter->bfmeAcceptEVP(node->m_bfmeKeyEVP))\n\t\t{\n\t\t\tBfmeNodeEVP *next = node->m_bfmeNextEVP;\n\n\t\t\tbfmeHandleEVP(node->m_bfmeDataEVP);\n\n\t\t\tnode = next;\n\t\t}\n\t\telse\n\t\t{\n\t\t\tnode = node->m_bfmeNextEVP;\n\t\t}\n\t}\n}\n"
+}
