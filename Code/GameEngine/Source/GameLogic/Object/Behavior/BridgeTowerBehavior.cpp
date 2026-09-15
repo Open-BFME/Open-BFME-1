@@ -210,20 +210,61 @@ void BridgeTowerBehavior::onDie( const DamageInfo *damageInfo )
 // ------------------------------------------------------------------------------------------------
 /** Given an object, return a bridge tower interface if that object has one */
 // ------------------------------------------------------------------------------------------------
-// ?getBridgeTowerBehaviorInterfaceFromObject@BridgeTowerBehavior@@ present-unmatched
+class BridgeTowerThingTemplateView
+{
+public:
+	void *m_vtable;
+	BridgeTowerThingTemplateView *m_nextOverride;
+	unsigned char m_beforeKindOf[0xc0];
+	unsigned int m_kindOf;
+};
+
+class BridgeTowerModuleInterfaceView
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual BridgeTowerBehaviorInterface *getBridgeTowerBehaviorInterface();
+};
+
+extern void j_000022bb();
+
 BridgeTowerBehaviorInterface *BridgeTowerBehavior::getBridgeTowerBehaviorInterfaceFromObject( Object *obj )
 {
 
 	// sanity
-	if( obj == NULL || obj->isKindOf( KINDOF_BRIDGE_TOWER ) == FALSE )
+	if( obj == NULL )
 		return NULL;
 
-	BehaviorModule **bmi;
+	BridgeTowerThingTemplateView *thingTemplate = *(BridgeTowerThingTemplateView **)((unsigned char *)obj + 4);
+	if( thingTemplate != NULL && thingTemplate->m_nextOverride != NULL )
+	{
+		typedef BridgeTowerThingTemplateView *(__fastcall *FinalOverrideCall)(BridgeTowerThingTemplateView *);
+		FinalOverrideCall overrideCall = (FinalOverrideCall)j_000022bb;
+		thingTemplate = overrideCall( thingTemplate->m_nextOverride );
+	}
+
+	if( (thingTemplate->m_kindOf & 0x01000000) == 0 )
+		return NULL;
+
+	BehaviorModule **bmi = *(BehaviorModule ***)((unsigned char *)obj + 0x1f0);
 	BridgeTowerBehaviorInterface *bridgeTowerInterface = NULL;
-	for( bmi = obj->getBehaviorModules(); *bmi; ++bmi )
+	for( ; *bmi; ++bmi )
 	{
 
-		bridgeTowerInterface = (*bmi)->getBridgeTowerBehaviorInterface();
+		BridgeTowerModuleInterfaceView *moduleInterface =
+			(BridgeTowerModuleInterfaceView *)((unsigned char *)*bmi + 0x0c);
+		bridgeTowerInterface = moduleInterface->getBridgeTowerBehaviorInterface();
 		if( bridgeTowerInterface )
 			return bridgeTowerInterface;
 
