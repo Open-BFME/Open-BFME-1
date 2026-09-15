@@ -4573,11 +4573,23 @@ void Player::processAddTeamGameMessage(Int hotkeyNum, GameMessage *msg) {
 //-------------------------------------------------------------------------------------------------
 /** Select a hotkey team based on this GameMessage */
 //-------------------------------------------------------------------------------------------------
-// ?getCurrentSelectionAsAIGroup@Player@@QAEXPAVAIGroup@@@Z present-unmatched
-void Player::getCurrentSelectionAsAIGroup(AIGroup *group) {
-	if (m_currentSelection != NULL) {
-		m_currentSelection->aiGroupFromSquad(group);
-	}
+class Gen_000C9B40Target
+{
+public:
+	void bfmeForward(void *a0);
+};
+
+void Player::getCurrentSelectionAsAIGroup(AIGroup *group)
+{
+	struct BfmePlayerCurrentSelectionFields
+	{
+		unsigned char m_pad[0x67c];
+		Gen_000C9B40Target *m_currentSelection;
+	};
+	BfmePlayerCurrentSelectionFields *self =
+		reinterpret_cast<BfmePlayerCurrentSelectionFields *>(this);
+	if (self->m_currentSelection != NULL)
+		self->m_currentSelection->bfmeForward(group);
 }
 
 //-------------------------------------------------------------------------------------------------
