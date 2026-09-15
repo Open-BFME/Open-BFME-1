@@ -1,0 +1,54 @@
+"""Instruction boundaries and placeholder identities must not invent contracts."""
+import struct
+import sys
+from pathlib import Path
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+import callees
+
+
+def install_body(monkeypatch, body):
+    monkeypatch.setattr(callees.build, "read_target_bytes", lambda *_: body)
+    monkeypatch.setattr(callees, "read", lambda *_: b"\x90")
+
+
+def test_e8_inside_mov_immediate_is_not_a_call(monkeypatch):
+    # mov eax,0x5e8; add al,al; ret. A raw E8 scan invents target 0x100b.
+    install_body(monkeypatch, bytes.fromhex("b8 e8 05 00 00 00 c0 c3"))
+    assert not callees.call_targets(0x1000, 8)
+
+
+@pytest.mark.parametrize("target", [0x1800, 0x3000])
+def test_real_direct_calls_preserve_signed_displacements_and_counts(monkeypatch, target):
+    start = 0x2000
+    body = b"\xe8" + struct.pack("<i", target - start - 5)
+    body += b"\xe8" + struct.pack("<i", target - start - 10) + b"\xc3"
+    install_body(monkeypatch, body)
+    assert callees.call_targets(start, len(body)) == {target: 2}
+
+
+@pytest.mark.parametrize("body", ["e8 01 02", "ff 15 00 30 00 00 c3"])
+def test_truncated_and_indirect_calls_are_not_direct_targets(monkeypatch, body):
+    raw = bytes.fromhex(body)
+    install_body(monkeypatch, raw)
+    assert not callees.call_targets(0x2000, len(raw))
+
+
+def test_unmapped_target_is_excluded(monkeypatch):
+    install_body(monkeypatch, bytes.fromhex("e8 fb 0f 00 00 c3"))
+    monkeypatch.setattr(callees, "read", lambda *_: None)
+    assert not callees.call_targets(0x2000, 6)
+
+
+def test_placeholder_name_is_not_reported_as_a_typed_contract(monkeypatch, capsys):
+    monkeypatch.setattr(callees, "ledger_names", lambda: {0x3000: "?j_00003000@@YAXXZ"})
+    monkeypatch.setattr(callees, "call_targets", lambda *_: {0x3000: 1})
+    monkeypatch.setattr(callees, "read", lambda *_: b"\x90" * 5)
+    monkeypatch.setattr(sys, "argv", ["callees.py", "0x2000", "6"])
+    assert callees.main() == 0
+    output = capsys.readouterr().out
+    assert "0 unnamed in function ledger" in output
+    assert "not ABI proof" in output
+    assert "WRONG" not in output

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Every function a retail body calls, resolved against the ledger.
+"""Direct near calls in a retail body, with candidate function-ledger names.
 
 WHY THIS EXISTS. Two seats on consecutive tier-1 candidates reported being
 blocked on "unresolved" or "unpinned" callees, and both were wrong in the same
@@ -22,8 +22,9 @@ takes a bare address and never needs a row.
     python3 tools/callees.py 0x004DBE80 4126
     python3 tools/callees.py 0x00757E70 982 --unpinned-only
 
-Read it BEFORE writing the body: the resolved names are the callee contract, and
-every one of them is a function whose signature the ledger already knows.
+Read it BEFORE writing the body, but verify the callee contract independently.
+Generated dumps and thunks can have placeholder void signatures unrelated to
+the actual ABI. A ledger name is neither signature proof nor a symbols.csv pin.
 """
 import argparse
 import collections
@@ -64,16 +65,19 @@ def read(rva, size):
 
 
 def call_targets(rva, size):
+    try:
+        from capstone import Cs, CS_ARCH_X86, CS_MODE_32
+    except ImportError:
+        raise SystemExit("callees.py requires capstone; install it in the active Python environment")
     body = build.read_target_bytes(rva, size)
-    targets, i = [], 0
-    while i < len(body) - 4:
-        if body[i] == 0xE8:
-            target = rva + i + 5 + struct.unpack_from("<i", body, i + 1)[0]
+    targets = []
+    for instruction in Cs(CS_ARCH_X86, CS_MODE_32).disasm(body, rva):
+        # E8 inside an immediate or displacement is not a call. Keep this
+        # direct-near-call inventory separate from indirect calls and data.
+        if instruction.size == 5 and instruction.bytes[0] == 0xE8:
+            target = instruction.address + 5 + struct.unpack_from("<i", instruction.bytes, 1)[0]
             if 0x1000 <= target < IMAGE_MAX and read(target, 1) is not None:
                 targets.append(target)
-                i += 5
-                continue
-        i += 1
     return collections.Counter(targets)
 
 
@@ -102,17 +106,15 @@ def main():
         elif args.unpinned_only:
             continue
         via = f" -> {resolved:#x}" if resolved != target else ""
-        print(f"  {target:#x}{via}  x{hits}  {name or '*** UNPINNED ***'}")
+        print(f"  {target:#x}{via}  x{hits}  {name or '*** UNNAMED IN FUNCTION LEDGER ***'}")
 
-    print(f"\n{len(counts)} distinct call target(s), {len(unpinned)} unpinned")
+    print(f"\n{len(counts)} distinct call target(s), {len(unpinned)} unnamed in function ledger")
     if unpinned:
-        # Only these are candidates for a new pin, and even here the body may be
-        # reached through a thunk this scan did not follow. Prove it before pinning.
-        print("  unpinned: " + ", ".join(hex(u) for u in unpinned))
+        print("  unnamed: " + ", ".join(hex(u) for u in unpinned))
     else:
-        print("  Every callee is already in the ledger. If your source will not "
-              "link, you named one of them WRONG -- match your declaration to the "
-              "name above rather than adding a pin.")
+        print("  Every direct call target above has a ledger name, not necessarily a proven signature.")
+    print("  Ledger names, especially generated/thunk placeholders, are not ABI proof. "
+          "Verify full callee bodies and typed declarations before adding or reusing pins.")
     return 0
 
 
