@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c45750af0b5e7a730bba1aa6520047b57d4b7e2538c1331cd4b54642496ddaa7",
+  "symbol": "?appendPoints@Rva00196C60Owner@@QAE_NHHPAVGen_0018F210@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.5,
+  "source": "// ?appendPoints@Rva00196C60Owner@@QAE_NHHPAVGen_0018F210@@@Z\n// partial score=0.5 date=2026-09-15\n// cl: /O2 /EHsc\n// stlport\n#include <map>\n#include <vector>\nstruct BfmeVector3BG { int x,y,z; };\nclass Gen_0018F210 {\npublic:\n    void bfmeAppendVector3(const BfmeVector3BG *);\n};\ntypedef _STL::vector<BfmeVector3BG> Points;\ntypedef _STL::vector<Points> Groups;\ntypedef _STL::pair<const int,Groups> LookupPair;\ntypedef _STL::_Rb_tree<int,LookupPair,_STL::_Select1st<LookupPair>,_STL::less<int>,_STL::allocator<LookupPair> > LookupTree;\ntemplate<> template<> __declspec(noinline) LookupTree::iterator LookupTree::find<int>(const int &key)\n{\n    return LookupTree::iterator(_M_find(key));\n}\ntypedef _STL::pair<const int,Groups> ActualPair;\nclass Rva00196C60Owner {\npublic:\n    bool appendPoints(int key,int index,Gen_0018F210 *out);\nprivate:\n    char m_prefix[0x1c];\n    LookupTree m_lookup;\n};\nbool Rva00196C60Owner::appendPoints(int key,int index,Gen_0018F210 *out)\n{\n    if(!out) return false;\n    LookupTree::iterator found=m_lookup.find(key);\n    if(found==m_lookup.end()) return false;\n    Groups &groups=found->second;\n    if(index >= (int)groups.size()) return false;\n    Points &points=groups[index];\n    if(points.size()==0) return false;\n    for(Points::iterator i=points.begin();i!=points.end();++i)\n        out->bfmeAppendVector3(i);\n    return true;\n}\n"
+}
