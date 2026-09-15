@@ -1,5 +1,5 @@
 // ?Load_Texture@@YA?AVBfmeHandleCX@@AAVChunkLoadClass@@@Z
-// partial score=0.82 date=2026-09-10
+// partial score=0.83 date=2026-09-15
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep /Ibuild/toolchains/dx81/include
 /*
 ** Copyright 2025 Electronic Arts Inc.
@@ -15,7 +15,7 @@
 ** along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
-// BFME Load_Texture, retail RVA 0x0090EB00, complete 800 bytes.
+// BFME Load_Texture, retail RVA 0x0090EB00, retail boundary 800 bytes.
 // The BFME mesh loader names this return as BfmeHandleCX and calls it twice
 // from MeshModelClass::read_textures (0x0096EC40).  Unlike the upstream
 // pointer-returning helper, this body obtains the texture through the
@@ -59,9 +59,6 @@ public:
     }
 };
 
-extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
-    char *name, int mipCount, int format);
-
 class BfmeHandleCX
 {
 public:
@@ -99,6 +96,11 @@ public:
     TextureClass *p;
 };
 
+// This is the established water-track helper declaration.  Its BFME handle
+// return is converted to the mesh-loader handle at the two return paths.
+extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
+    char *name, int mipCount, int format);
+
 enum WW3DFormat
 {
     WW3D_FORMAT_UNKNOWN = 0
@@ -110,7 +112,11 @@ public:
     bool supportTextureFormat(WW3DFormat format);
 };
 
-extern W3DRadarFormatCaps *TheW3DRadarFormatCaps;
+// Retail reads the DX8 caps pointer at 0x01340578 and uses the radar-format
+// method through that object.  Keep the established data symbol spelling so
+// the relocation resolves to that pointer, rather than inventing a second
+// typed global.
+extern unsigned char *BfmeCurrentCaps;
 extern bool Render_Obj_Exists(const char *name);
 
 class Gen_00920a60
@@ -141,14 +147,15 @@ static void copy_texture_name(char *destination, const char *source)
 
 BfmeHandleCX Load_Texture(ChunkLoadClass &cload)
 {
+    W3dTextureInfoStruct texinfo;
     char name[256];
     char candidate[256];
-    W3dTextureInfoStruct texinfo;
-    bool hastexinfo = false;
 
     if (!cload.Open_Chunk() || cload.Cur_Chunk_ID() != W3D_CHUNK_TEXTURE)
         return BfmeHandleCX();
 
+    bool hastexinfo = false;
+    name[0] = 0;
     while (cload.Open_Chunk()) {
         switch (cload.Cur_Chunk_ID()) {
         case W3D_CHUNK_TEXTURE_NAME:
@@ -185,11 +192,10 @@ BfmeHandleCX Load_Texture(ChunkLoadClass &cload)
     }
 
     if (!hastexinfo) {
-        BFMEWaterTrackTextureHandle texture =
-            BFMEGetWaterTrackTexture(name, 0, 0);
-        return BfmeHandleCX(texture);
+        return BFMEGetWaterTrackTexture(name, 0, 0);
     }
 
+    {
     MipCountType mipcount;
     bool no_lod = (texinfo.Attributes & W3DTEXTURE_NO_LOD) == W3DTEXTURE_NO_LOD;
     if (no_lod) {
@@ -216,14 +222,13 @@ BfmeHandleCX Load_Texture(ChunkLoadClass &cload)
 
     int format = WW3D_FORMAT_UNKNOWN;
     if ((texinfo.Attributes & W3DTEXTURE_TYPE_MASK) == W3DTEXTURE_TYPE_BUMPMAP) {
-        mipcount = MIP_LEVELS_1;
-        if (*(const unsigned char *)0x0134050c && TheW3DRadarFormatCaps &&
-            *(const unsigned char *)((char *)TheW3DRadarFormatCaps + 0x13c)) {
-            if (TheW3DRadarFormatCaps->supportTextureFormat((WW3DFormat)0x3c))
+        if (*(const unsigned char *)0x0134050c && BfmeCurrentCaps[0x13c]) {
+            mipcount = MIP_LEVELS_1;
+            if (reinterpret_cast<W3DRadarFormatCaps *>(BfmeCurrentCaps)->supportTextureFormat((WW3DFormat)0x3c))
                 format = 0x3c;
-            else if (TheW3DRadarFormatCaps->supportTextureFormat((WW3DFormat)0x3e))
+            else if (reinterpret_cast<W3DRadarFormatCaps *>(BfmeCurrentCaps)->supportTextureFormat((WW3DFormat)0x3e))
                 format = 0x3e;
-            else if (TheW3DRadarFormatCaps->supportTextureFormat((WW3DFormat)0x3d))
+            else if (reinterpret_cast<W3DRadarFormatCaps *>(BfmeCurrentCaps)->supportTextureFormat((WW3DFormat)0x3d))
                 format = 0x3d;
         }
     }
@@ -244,4 +249,5 @@ BfmeHandleCX Load_Texture(ChunkLoadClass &cload)
         (texinfo.Attributes & W3DTEXTURE_CLAMP_V) != 0;
 
     return BfmeHandleCX(texture);
+    }
 }
