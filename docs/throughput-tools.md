@@ -42,6 +42,20 @@ The pilot is 20 anonymous bodies through `lunaanon` with `lunareview` behind
 it; judge it by headline pp against `docs/baseline-2026-09-15.md`, not by
 commits.
 
+## Exception-frame bodies: detection and mechanical levers (2026-09-15)
+
+57% of the open dump bytes (973 KB of 1.70 MB) carry a C++ exception frame,
+and the blocker tags seats write most often are EH codegen. The evidence pack
+now detects the frame from the bytes (fs:[0] registration, EH state stores,
+by-value temporary saved-esp, state reset to -1) and prints an `EH FRAME`
+block with the levers from docs/shape_levers.md that apply. `tools/eh_levers.py
+SRC.cpp` turns the four mechanical levers (throw() per callee, /EHsc toggle,
+`_STLP_NO_EXCEPTIONS`, nothrow `operator delete[]`) into a shape_search
+choices file so their combinations are compiled under the usual budget before
+a seat hand-iterates. Validated end to end on the 0.93 banked
+PushButtonImageDrawThree body (7 trials compiled; that body's remaining
+diff is not EH, which the run established in 3 minutes instead of a session).
+
 ## Retained attempts and compiler experiments
 
 `re_log.py record ... partial --stash FILE --score N` preserves the prior body

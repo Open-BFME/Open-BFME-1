@@ -108,6 +108,40 @@ def thunk_target(rva, hops=3):
         seen = cur = nxt
     return seen
 
+def eh_signatures(body, size):
+    """What the bytes say about this body's exception handling, and which
+    documented levers apply. 57% of open dump bytes carry an EH frame and the
+    most common blocker tags are EH codegen, so the recipe goes in the brief."""
+    has_frame = (b"\x64\xa1\x00\x00\x00\x00" in body          # mov eax, fs:[0]
+                 or b"\x64\x89\x0d\x00\x00\x00\x00" in body   # mov fs:[0], ecx
+                 or b"\x64\xff\x35\x00\x00\x00\x00" in body)  # push fs:[0]
+    if not has_frame:
+        return None
+    signs, levers = ["SEH/EH registration frame present"], []
+    # EH state stores: mov byte/dword ptr [esp+N], imm (C6 44 24 xx / C7 44 24 xx)
+    states = len(re.findall(rb"\xc6\x44\x24.|\xc7\x44\x24.....", body))
+    if states:
+        signs.append(f"~{states} EH state store(s)")
+        levers.append("a state store around a call retail makes with NO state change: declare that "
+                      "callee `throw()` (getPreferredMap trio); eh_levers tries this per declaration")
+    # saved-esp of a by-value temporary: mov ecx,esp (8B CC) shortly before mov [esp+N],esp (89 64 24 xx)
+    if re.search(rb"\x8b\xcc[\s\S]{0,24}\x89\x64\x24.", body):
+        signs.append("by-value temporary (mov ecx,esp ... mov [esp+N],esp)")
+        levers.append("by-value string arg: the string class must be `class AsciiString : private StringBase<char>` "
+                      "with INLINE forwarding ctor/dtor (reference/shims/stringinline/StringInline.h)")
+        levers.append("saved-esp displacement one slot off: keep the earlier argument LIVE past the temporary "
+                      "(reference it in every expression) instead of copying it to a local")
+    if b"\xc7\x44\x24" in body and re.search(rb"\xc7\x44\x24.\xff\xff\xff\xff", body):
+        signs.append("EH state reset to -1")
+        levers.append("extra `mov [esp+N],-1` after array new / vector ctor: declare "
+                      "`void __cdecl operator delete[](void *) throw();` before the includes")
+    levers.append("destructor of a temporary/RAII local sits LATER in ours: give the local its own nested "
+                  "`{ }` block ending where retail's destructor call sits")
+    levers.append("STLport helper out of line or an extra try region: `#define _STLP_NO_EXCEPTIONS 1` "
+                  "before the first STL include; extra EH states 0/2/4 around atexit: the TU wants /EHsc")
+    return {"signs": signs, "levers": levers}
+
+
 _layouts = None
 def layout_lines(rva, vt_entry, limit=10):
     """BFME offsets witnessed for the body's class (reverse/bfme_layouts.json,
@@ -159,6 +193,7 @@ def pack(rva, max_items=8):
     size = int(r['target_size'] or 0)
     body = _exe[build.rva_to_file_offset(_secs, rva):][:size]
     md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32); md.detail = True
+    eh = eh_signatures(body, size)
     callees = collections.OrderedDict(); fields = collections.Counter(); globs = collections.OrderedDict(); vtstore = []
     t = _secs[0]; tlo = t['rva']; thi = tlo + t['size']
     for ins in md.disasm(body, rva):
@@ -198,6 +233,12 @@ def pack(rva, max_items=8):
                 named[(o['name'][:60], o['source'].split('/')[-1])] += 1
         how = f", {via_thunk} via ILT thunk" if via_thunk else ""
         out.append(f"  callers ({len(callers)} sites{how}): " + '; '.join(f"{n} @ {s} x{c}" for (n, s), c in named.most_common(4)))
+    if eh:
+        out.append("  EH FRAME: " + "; ".join(eh["signs"]))
+        out.append("    levers (docs/shape_levers.md; mechanical ones via "
+                   "`python3 tools/eh_levers.py SRC.cpp > choices.json` + shape_search.py):")
+        for line in eh["levers"]:
+            out.append("      - " + line)
     if vtstore:
         out.append("  installs vtable(s): " + ', '.join(f"0x{v:08X}" for v in vtstore[:4]) + "  (tools/vtable_lookup.py names the class)")
     e = _vt.get(rva)

@@ -42,7 +42,10 @@ resists after ~40 minutes bank it:
 `python3 tools/re_log.py record SYM 0xRVA SIZE partial "evidence t=Xmin model=MODEL" --stash FILE.cpp --score 0.NN`
 and move on.
 For a narrow codegen hypothesis, tools/shape_search.py tests explicit C++ alternatives
-with a trial/plateau budget; see docs/throughput-tools.md. Read probe's experiment
+with a trial/plateau budget; see docs/throughput-tools.md. If the EVIDENCE block says
+EH FRAME, run `python3 tools/eh_levers.py SRC.cpp > choices.json` and feed that to
+shape_search BEFORE hand-iterating: it tries throw() per callee, /EHsc, _STLP_NO_EXCEPTIONS
+and nothrow delete[] mechanically. Read probe's experiment
 history before repeating a spelling. Record blocker=NAME for a shared missing
 callee/layout and explain what changed before retrying a banked attempt.
 NAMING. Ask before you invent: `python3 tools/name_oracle.py --class <C> --offset 0x2c`
