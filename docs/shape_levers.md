@@ -30,6 +30,33 @@ a byte-exact landing on 2026-09-02. Each row states its own mechanism.
 | A 12-bit bitfield store emits the MSVC insert (`shl; xor; and; xor`) where retail has `and <keep-mask>; or` | Retail knew the value fits the field, and a clamp written as an `if` does not tell MSVC that. Declare the word as a union of the bitfield struct and a plain `unsigned int`, read the count through the bitfield so retail `xor esi,esi; mov si,[p+6]; and esi,0xfff` survives, and write through the dword with an explicit keep-mask and shift. Took 0x008D6010 (163 B) from 52 differing bytes to 11 on 2026-09-11. |
 | A member read that retail performs twice is served once, and the live pointer steals the register retail spends on the next value | MSVC keeps the first read alive across the guard chain. Qualify the member `volatile`, as `Rva008D2070AvailabilityScan.cpp` does for `m_owner`, or put a `_ReadWriteBarrier()` before the second read. Both restore the second load. Recovered the size and the register assignment of 0x008D6010 on 2026-09-11. |
 
+## Filter construction: visible non-retaining constructors
+
+`Rva002622D0Collect.cpp` (532 bytes) initially kept a six-word mask
+temporary in separate stack storage: frame `0x84`, retail `0x6C`.
+The real `PartitionFilterAcceptByKindOf` constructor copies both masks;
+it does not retain either reference. Giving the TU its complete, independently
+exact 102-byte constructor at `0x000C3DD0`, with `__declspec(noinline)`,
+lets VC7.1 reuse the mask's storage for the relationship-filter temporary.
+This is the same callee-visibility mechanism as the pathfinding lookup below,
+not permission to invent a non-retaining stub or shorten a lifetime.
+
+Native `BitFlags<192>` construction also matters. The immediate `0x40000`
+belongs to the fourth word here: bit **114**, not bit 18. Derive the word
+offset before assigning a semantic flag name. Temporary filters are destroyed
+after iterator initialization and before iteration, as in the other filter
+witnesses.
+
+The caller's nested pointer-vector base exposed a second boundary: native
+inlined node allocation emitted 130 bytes, whereas retail's 97-byte base at
+`0x001D95B0` calls the 29-byte node allocator at `0x00061CE0` out of line.
+A TU-local specialization of the scoped pointer allocator preserves the
+zero-count check and element-size multiplication, but calls that real,
+independently exact allocator through a noinline definition. This recovers
+the base without changing the 532-byte caller. It is a local template
+inlining decision, not a reason to change the shared allocator or pin a
+130-byte emission to a 97-byte body.
+
 ## Model-condition bit masks: retain the native accessor layers
 
 When retail materializes a constant mask in a register (`mov eax,mask;

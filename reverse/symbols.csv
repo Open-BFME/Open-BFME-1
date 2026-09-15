@@ -88196,3 +88196,6 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ?get_allocator@?$vector@PAVRva002622D0Subject@@V?$allocator@PAVRva002622D0Subject@@@_STL@@@_STL@@QBE?AV?$allocator@PAVRva002622D0Subject@@@2@XZ,0x001D95A0,exact7B scoped pointer-vector allocator accessor body
 ?_M_insert_overflow@?$vector@URva002622D0Entry@@V?$allocator@URva002622D0Entry@@@_STL@@@_STL@@IAEXPAURva002622D0Entry@@ABU3@ABU__false_type@2@I_N@Z,0x00262120,exact270B scoped16-byte entry-vector overflow body; terminal ret20 at +0x10B establishes270B extent
 ?iterateAllAt002622D0@PartitionManager@@QAE?AUBfmeResultA@@PAVPartitionFilter@@@Z,0x009F2A40,typed all-object filter enumeration wrapper; full35B body forwards filter head through PartitionManager +0x0C source and downstream9F6600 uses nonzero argument as predicate-chain receiver
+??0Rva00262120Entry@@QAE@ABU0@@Z,0x00261440,exact90B noinline copy constructor for the scoped16-byte Object-pointer and inner-pointer-vector entry layout
+??$_Construct@URva00262120Entry@@U1@@_STL@@YAXPAURva00262120Entry@@ABU1@@Z,0x00261530,exact66B STLport placement construction helper calling the scoped entry copy constructor
+?_M_clear@?$vector@URva00262120Entry@@V?$allocator@URva00262120Entry@@@_STL@@@_STL@@IAEXXZ,0x002620B0,exact81B scoped16-byte entry-vector clear body used by overflow replacement
