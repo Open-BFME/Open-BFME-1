@@ -21,7 +21,7 @@ public:
 class Rva00803080 {
 public:
  Rva00803080() {}
- virtual void slot0();
+ virtual void slot0(unsigned int);
 };
 class Rva007EAServiceList {
 public: void add(Rva00803080*);
@@ -36,7 +36,7 @@ class BfmeThingTWA : public DemanglerPrimary, public Rva00803080 {
 public:
  BfmeThingTWA(Rva007EAServiceList*);
  virtual ~BfmeThingTWA();
- virtual void slot0();
+ virtual void slot0(unsigned int);
  virtual void rva007F8790(const char*,int,const char*,unsigned char);
  virtual void set(int,int);
  int field08, field0c;
@@ -56,4 +56,3 @@ BfmeThingTWA::BfmeThingTWA(Rva007EAServiceList* service) {
  field2c=0;
  service->add(this);
 }
-

@@ -1,17 +1,18 @@
-// ?rva007F8840@Rva007F8840Owner@@QAEXXZ
-// partial score=0.45 date=2026-09-13
-// Open-BFME5: FESL/ProtoMangle bridge step, retail 0x007F8840. Drives
-// Y2ProtoMangleHelpers.cpp's Rva008054A0/Rva00806040/Rva008060B0 through
-// this object's ref (+4) and dispatch state (+8), using the matched
-// BfmeE1036 tail object at this-4 (bfmeGo1036E) for state 3. The +0x24
-// field is a plain callback function pointer, called with (this+0xc,
-// this[0x28]) whenever a fresh lookup completes (rc!=0) in state 1.
+// ?slot0@Rva007F8840Owner@@UAEXI@Z
+// partial score=0.82 date=2026-09-15
+// cl: /O2 /GX-
+// Retail 0x007F8840, 242 bytes.  This is the one-argument override in
+// BfmeThingTWA's verified secondary interface at object +4.  The local owner
+// view keeps that derived identity separate from the generic base interface
+// body at 0x0088C500; the receiver is the secondary this-pointer.
 
 struct Rva00804150ProtoMangleRef;
 
 extern void Rva008054A0( Rva00804150ProtoMangleRef *ref );
-extern int Rva00806040( Rva00804150ProtoMangleRef *ref, unsigned int *addr, int *port );
-extern int Rva008060B0( Rva00804150ProtoMangleRef *ref, int status, int latency );
+extern int Rva00806040( Rva00804150ProtoMangleRef *ref,
+	unsigned int *addr, int *port );
+extern int Rva008060B0( Rva00804150ProtoMangleRef *ref,
+	int status, int latency );
 
 class BfmeE1036
 {
@@ -23,19 +24,33 @@ struct Rva007E9B70Obj
 {
 	virtual void v0();
 	virtual void v1();
-	virtual int getBase();   // slot 2, +8
 };
+
+class Gen_007e9b70
+{
+public:
+	virtual void v0();
+	virtual void v1();
+	virtual unsigned int m();
+};
+
 extern Rva007E9B70Obj *Rva007E9B70Get();
 
 typedef void ( __cdecl *Rva007F8840Callback )( void *context, void *data );
 
-class Rva007F8840Owner
+class Rva00803080
 {
 public:
-	void rva007F8840();
+	virtual void slot0( unsigned int opaque );
 };
 
-void Rva007F8840Owner::rva007F8840()
+class Rva007F8840Owner : public Rva00803080
+{
+public:
+	virtual void slot0( unsigned int opaque );
+};
+
+void Rva007F8840Owner::slot0( unsigned int )
 {
 	char *base = (char *)this;
 
@@ -46,56 +61,70 @@ void Rva007F8840Owner::rva007F8840()
 
 	Rva008054A0( (Rva00804150ProtoMangleRef *)*(void **)( base + 4 ) );
 
-	unsigned int outAddr = 0;
 	int outPort = 0;
-	int rc = Rva00806040( (Rva00804150ProtoMangleRef *)*(void **)( base + 4 ), &outAddr, &outPort );
+	unsigned int outAddr = 0;
+	int rc = Rva00806040(
+		(Rva00804150ProtoMangleRef *)*(void **)( base + 4 ),
+		&outAddr, &outPort );
 
-	*(volatile unsigned int *)( base + 0x14 ) = outAddr;
-	*(volatile int *)( base + 0x18 ) = outPort;
+	*(unsigned int *)( base + 0x14 ) = outAddr;
+	*(int *)( base + 0x18 ) = outPort;
 
 	switch( *(int *)( base + 8 ) )
 	{
-	case 1:
-		if( rc > 0 )
-		{
-			( *(Rva007F8840Callback *)( base + 0x24 ) )( base + 0xc, *(void **)( base + 0x28 ) );
-			if( *(unsigned char *)( base + 0x20 ) == 0 )
-			{
-				*(int *)( base + 8 ) = 3;
-				return;
-			}
-			{
-				Rva007E9B70Obj *obj = Rva007E9B70Get();
-				int latency = obj->getBase() - *(int *)( base + 0x1c );
-				Rva008060B0( (Rva00804150ProtoMangleRef *)*(void **)( base + 4 ), 0, latency );
-			}
-			*(int *)( base + 8 ) = 2;
-			return;
-		}
-		if( rc >= 0 )
-			return;
-		( *(Rva007F8840Callback *)( base + 0x24 ) )( base + 0xc, *(void **)( base + 0x28 ) );
-		if( *(unsigned char *)( base + 0x20 ) == 0 )
-		{
-			*(int *)( base + 8 ) = 3;
-			return;
-		}
-		{
-			Rva007E9B70Obj *obj = Rva007E9B70Get();
-			int latency = obj->getBase() - *(int *)( base + 0x1c );
-			Rva008060B0( (Rva00804150ProtoMangleRef *)*(void **)( base + 4 ), 1, latency );
-		}
-		*(int *)( base + 8 ) = 2;
-		return;
+	case 3:
+		( (BfmeE1036 *)( base - 4 ) )->bfmeGo1036E();
+		*(int *)( base + 8 ) = 0;
+		break;
 
 	case 2:
 		if( rc != 0 )
 			*(int *)( base + 8 ) = 3;
-		return;
+		break;
 
-	case 3:
-		( (BfmeE1036 *)( base - 4 ) )->bfmeGo1036E();
-		*(int *)( base + 8 ) = 0;
-		return;
+	case 1:
+		if( rc > 0 )
+		{
+			( *(Rva007F8840Callback *)( base + 0x24 ) )(
+				base + 0xc, *(void **)( base + 0x28 ) );
+			if( *(unsigned char *)( base + 0x20 ) == 0 )
+			{
+				*(int *)( base + 8 ) = 3;
+				break;
+			}
+			{
+				unsigned int now =
+					( (Gen_007e9b70 *)Rva007E9B70Get() )->m();
+				int latency = now - *(int *)( base + 0x1c );
+				Rva008060B0(
+					(Rva00804150ProtoMangleRef *)*(void **)( base + 4 ),
+					0, latency );
+			}
+			*(int *)( base + 8 ) = 2;
+			break;
+		}
+		else if( rc < 0 )
+		{
+			( *(Rva007F8840Callback *)( base + 0x24 ) )(
+				base + 0xc, *(void **)( base + 0x28 ) );
+			if( *(unsigned char *)( base + 0x20 ) == 0 )
+			{
+				*(int *)( base + 8 ) = 3;
+				break;
+			}
+			{
+				unsigned int now =
+					( (Gen_007e9b70 *)Rva007E9B70Get() )->m();
+				int latency = now - *(int *)( base + 0x1c );
+				Rva008060B0(
+					(Rva00804150ProtoMangleRef *)*(void **)( base + 4 ),
+					1, latency );
+			}
+			*(int *)( base + 8 ) = 2;
+		}
+		break;
+
+	default:
+		break;
 	}
 }
