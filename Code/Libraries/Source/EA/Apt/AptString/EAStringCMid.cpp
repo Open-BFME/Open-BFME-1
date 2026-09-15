@@ -89,6 +89,7 @@ class EAStringC : private StringBase<char>
 
 public:
 	EAStringC Mid(int start) const;
+	EAStringC Mid(int start, int count) const;
 };
 
 void EAStringC::ChangeBuffer(unsigned int reserve, unsigned int offset,
@@ -140,6 +141,29 @@ EAStringC EAStringC::Mid(int start) const
 	int size = m_data->m_size - start;
 	if (size <= 0)
 		return EAStringC();
+
+	EAStringC result(m_data);
+	result.ChangeBuffer(size, start, size, CB_PUSH_ZERO, size);
+	return result;
+}
+
+EAStringC EAStringC::Mid(int start, int count) const
+{
+	int effectiveStart = start;
+	int adjustedCount = count;
+	if (start < 0)
+	{
+		adjustedCount += start;
+		effectiveStart = 0;
+	}
+	if (adjustedCount <= 0)
+		return EAStringC();
+
+	int size = m_data->m_size - effectiveStart;
+	if (size <= 0)
+		return EAStringC();
+	if (adjustedCount < size)
+		size = adjustedCount;
 
 	EAStringC result(m_data);
 	result.ChangeBuffer(size, start, size, CB_PUSH_ZERO, size);
