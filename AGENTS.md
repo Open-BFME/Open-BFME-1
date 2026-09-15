@@ -60,13 +60,17 @@ wrong, not that it needs a pin. Never add a pin on a seat's say-so.
 
 **Carry small dependency repairs with the body.** A narrowly blocked candidate
 does not automatically mean switch candidates. If the scoped gate fails only on
-an unresolved callee that the candidate actually calls, keep the candidate open:
-run `tools/decode_calls.py` (or the equivalent retail call decoder), prove the
-callee's identity and ABI from the aligned call site and independent evidence,
-then add that one pin and rerun the scoped gate. Treat the pin as part of the
-same bounded investigation and commit. Switch only when the callee's target or
-identity is ambiguous, callers disagree, or the failure is unrelated to the
-candidate; preserve and record the evidence before moving on.
+an unresolved callee that the candidate actually calls, keep the candidate open.
+Decode the retail call, establish the target independently from the candidate's
+desired byte shape, and prove the callee's identity and ABI from the aligned call
+site plus independent evidence. Only then add the single pin, run pin-consistency
+checks, and rerun the scoped gate. Treat that pin as part of the same bounded
+investigation and commit. Do not add a speculative semantic name merely because
+it makes the caller match; use an address-derived identity when the target is
+proven but the semantic identity is not. Switch candidates when the target or ABI
+remains ambiguous, evidence conflicts, the repair would require broader
+shared-state changes, or the failure is unrelated to the candidate. Preserve the
+evidence before moving on.
 
 Finish or revert each body before the next.
 
