@@ -1,30 +1,22 @@
-// ?d_00529be0@@YAXXZ
-// partial score=0.41 date=2026-09-04
-// cl: /O2 /DNDEBUG /MD /EHsc
+// ?shouldRefresh@SkirmishScreenState@@QAE_NXZ
+// partial score=0.93 date=2026-09-15
+// cl: /DNDEBUG /MD /EHsc
 
-int bfmeMake_00529B60( int first, int second );
-unsigned int bfmeHash0002A473( unsigned int value, unsigned int type );
-unsigned int bfmeHashCombineA( unsigned int value, unsigned int salt );
-int Rva005278B0( int first, int second );
-
-#pragma intrinsic(_ReadWriteBarrier)
-extern "C" void _ReadWriteBarrier(void);
-
-class SkirmishScreenControls
+class Rva00520460
 {
 public:
-	bool isInitialized( void );
+	bool has();
 
 private:
-	unsigned char m_unmodelled[ 0x40 ];
+	unsigned char m_unmodelled[0x40];
 };
 
-class SkirmishScreenStateMember10C
-{
-public:
-	int m_required;
-	unsigned char m_unmodelled[ 0x1c ];
-};
+class GameWindow;
+
+int __cdecl Rva005277B0( int a, int b );
+int __cdecl Rva00527730( int a, int b );
+int __cdecl Rva005278B0( int a, int b );
+int __cdecl Rva00527830( int a, int b );
 
 class SkirmishScreenState
 {
@@ -32,50 +24,36 @@ public:
 	bool shouldRefresh( void );
 
 private:
-	unsigned char m_unmodelled00[ 0x28 ];
-	SkirmishScreenControls m_controls;
-	void *m_playerTypeControls[ 8 ];
-	void *m_colorControls[ 8 ];
-	void *m_factionControls[ 8 ];
-	void *m_teamControls[ 8 ];
-	void *m_startPositionControls[ 8 ];
-	SkirmishScreenStateMember10C m_member10C;
+	unsigned char m_head[ 0x28 ];
+	Rva00520460 m_slotRecord;
+	GameWindow *m_first[ 8 ];
+	GameWindow *m_elements[ 8 ];
+	GameWindow *m_second[ 8 ];
+	GameWindow *m_third[ 8 ];
+	GameWindow *m_fourth[ 8 ];
+	int m_field108;
 };
 
-// A refresh is safe only after every control in all four slot columns exists;
-// the retail iterator visits the eight slot keys in its hashed order.
-// ?shouldRefresh@SkirmishScreenState@@QAE_NXZ
 bool SkirmishScreenState::shouldRefresh( void )
 {
-	if( !m_controls.isInitialized() )
-		goto notReady;
-	if( !m_member10C.m_required )
-		goto notReady;
+	if ( !m_slotRecord.has() )
+		return false;
+	if ( !m_field108 )
+		return false;
 
-	int key = bfmeMake_00529B60( 0, 0 );
-	for( ;; )
+	int key = Rva005277B0( 0, 0 );
+	while ( Rva00527730( key, (int)0xB9DC8031 ) != (int)0x66DE9C79 )
 	{
-		if( bfmeHash0002A473( key, 0xB9DC8031 ) == 0x66DE9C79 )
-			return true;
-
-		{
-			int index = (short)Rva005278B0( key, key );
-			if( !m_playerTypeControls[ index ] )
-				return false;
-			index = (short)Rva005278B0( key, key );
-			if( !m_colorControls[ index ] )
-				return false;
-			index = (short)Rva005278B0( key, key );
-			if( !m_factionControls[ index ] )
-				return false;
-			index = (short)Rva005278B0( key, key );
-			if( !m_teamControls[ index ] )
-				return false;
-		}
-		key = bfmeHashCombineA( key, 0xE4CD9C42 );
+		if ( !m_first[ (short)Rva005278B0( key, key ) ] )
+			return false;
+		GameWindow **slot = &m_elements[ (short)Rva005278B0( key, key ) ];
+		if ( !*slot )
+			return false;
+		if ( !m_second[ (short)Rva005278B0( key, key ) ] )
+			return false;
+		if ( !m_third[ (short)Rva005278B0( key, key ) ] )
+			return false;
+		key = Rva00527830( key, (int)0xE4CD9C42 );
 	}
-
-notReady:
-	_ReadWriteBarrier();
-	return false;
+	return true;
 }
