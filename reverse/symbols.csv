@@ -5092,6 +5092,7 @@ name,address,notes
 ??1Gen_dtor_0015f3e0@@UAE@XZ,0x0000FF3D,gen-dtor class destructor
 ??1AIHarvestMachine@@MAE@XZ,0x000289FC,protected complete destructor ILT called by scalar wrapper 0x0015FA60; exact constructor 0x0015FE90 installs dedicated vtable 0x01096650
 ??1Gen_dtor_0015fd70@@UAE@XZ,0x000240FA,gen-dtor class destructor
+??1AIHarvestApproachSiteState@@MAE@XZ,0x000240FA,exact AIHarvestMachine constructor 0x0015FD00 passes the AIHarvestApproachSiteState literal and installs vtable 0x010966F8; this complete destructor route reaches the canonical AIInternalMoveToState cleanup path
 ??1AIHarvestPrepareSiteState@@MAE@XZ,0x0002DECF,vtable 0x00C96770 slots name AIHarvestPrepareSiteState; protected complete destructor called by wrapper 0x001603A0
 ??1Gen_dtor_001603e0@@UAE@XZ,0x0004924C,gen-dtor class destructor
 ??1Gen_dtor_001611f0@@UAE@XZ,0x0004A9C1,gen-dtor class destructor
@@ -87846,6 +87847,8 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??_7AIDockMoveToRallyState@@6B@,0x00C95DB0,vtable whose slots name AIDockMoveToRallyState
 ??_GAIGuardReturnState@@MAEPAXI@Z,0x00015578,vtable 0x00C962C8 slot zero routes through this ILT to scalar wrapper 0x0015CFC0
 ??_7AIGuardReturnState@@6B@,0x00C962C8,vtable whose slots name AIGuardReturnState
+??_GAIHarvestApproachSiteState@@MAEPAXI@Z,0x0000F8D5,AIHarvestMachine constructor 0x0015FD00 installs vtable 0x010966F8 whose slot zero routes through this ILT to scalar wrapper 0x0015FD70
+??_7AIHarvestApproachSiteState@@6B@,0x010966F8,AIHarvestMachine constructor 0x0015FD00 installs this vtable for the exact AIHarvestApproachSiteState literal
 ??_GAIHarvestPrepareSiteState@@MAEPAXI@Z,0x00003E6D,vtable 0x00C96770 slot zero routes through this ILT to scalar wrapper 0x001603A0
 ??_7AIHarvestPrepareSiteState@@6B@,0x00C96770,vtable whose slots name AIHarvestPrepareSiteState
 ??_GPartitionFilterRejectByKindOf@@MAEPAXI@Z,0x00039FA4,vtable 0x00C9686C slot zero routes through this ILT to scalar wrapper 0x00161300
