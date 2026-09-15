@@ -3091,6 +3091,7 @@ name,address,notes
 ??0LivingWorldAnimObject@@QAE@ABVAsciiString@@@Z,0x000089E0,LivingWorldAnimObject vtable and snapshot-name literal correct the constructor class identity
 ??0LivingWorldCampaign@@QAE@ABVAsciiString@@@Z,0x003AA750,Open-BFME5 REL32 target of ParseLivingWorldCampaignBlock; builds the campaign record from the block name
 ??0LivingWorldPlayerArmy@@QAE@XZ,0x00010582,derived from the REL32 displacement at 0x00366410
+??0LoadGameFadeHolder@@QAE@PAX@Z,0x003C00B0,ABI view of the LoadGameFadeHolder constructor calling the verified Rva003C00B0FunctorSlotHolder body through ILT j_0000b375
 ??0LocalFileSystem@@QAE@XZ,0x009CDE10,pin local fs ctor for BfmeConv2018
 ??0LockClass@CriticalSectionClass@@QAE@AAV1@@Z,0x009DB4B0
 ??0LockWeaponCreateModuleData@@QAE@XZ,0x000283F3,module-glue cascade callee (from retail call site)

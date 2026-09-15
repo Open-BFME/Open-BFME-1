@@ -1,5 +1,7 @@
-// ?_bfme_leaveScoreScreen@@YAXXZ
-// partial score=0.98 date=2026-09-14
+// Retail RVA 0x00573000, 359 bytes.
+// The callers at 0x005731C0, 0x005731D0, and 0x0057811D identify this routine
+// as the shared score-screen exit path.
+
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Ireference/shims/campaignmanagerascii /Ireference/shims/asciistring_downloadmanager
 
 #include "Common/AsciiString.h"
@@ -16,7 +18,6 @@ extern void j_0000bd7f();
 extern void j_000290d2();
 extern void j_0003950e();
 extern void j_0003e56d();
-extern void j_0000b375();
 
 class AudioEventRTS
 {
@@ -146,32 +147,18 @@ public:
 	int m_gameType;
 };
 
-// These methods use the retail incremental-link thunks at their call sites.
-#pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
-
 extern ClientSubsystem *TheAudioClientUpdate;
 extern CampaignManager *TheLivingWorldLogic;
 extern Rva012F49B4Thing *g_rva012F49B4;
 extern WindowManager *g_theWindowManager;
 extern Mouse *TheMouse;
 extern Shell *TheShell;
-
-#define TheScoreScreen ( *(BfmeAptScreenScoreScreen **)0x012f4b50 )
+extern BfmeAptScreenScoreScreen *g_obj12F4B50;
 
 class LoadGameFadeHolder
 {
 public:
-	__forceinline LoadGameFadeHolder( void *binding ) throw()
-	{
-		typedef void (LoadGameFadeHolder::*MemberThunk)( void * );
-		union
-		{
-			void (*function)();
-			MemberThunk member;
-		} thunk;
-		thunk.function = j_0000b375;
-		(this->*thunk.member)( binding );
-	}
+	LoadGameFadeHolder( void *binding ) throw();
 	LoadGameFadeHolder( const LoadGameFadeHolder &other ) throw() : m_ptr( other.m_ptr ) {}
 	~LoadGameFadeHolder() throw() {}
 
@@ -183,11 +170,11 @@ void postTimedOp( LoadGameFadeHolder holder, void *key );
 // ?_bfme_leaveScoreScreen@@YAXXZ
 void _bfme_leaveScoreScreen()
 {
-	if ( TheScoreScreen == 0 )
+	if ( g_obj12F4B50 == 0 )
 		return;
 
 	TheAudioClientUpdate->slot6c( 2, 1, 0 );
-	if ( TheScoreScreen->m_gameType == 0 )
+	if ( g_obj12F4B50->m_gameType == 0 )
 	{
 		if ( TheLivingWorldLogic->hasFollowUp() )
 		{
