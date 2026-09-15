@@ -2529,11 +2529,17 @@ Bool Player::getListInScoreScreen()
 }
 
 //=============================================================================
-// ?getSupplyBoxValue@Player@@QAEIXZ present-unmatched
 UnsignedInt Player::getSupplyBoxValue()
 {
 	/// @todo This would be the hookup for difficulty level modifiers and special economy buildings
-	return TheGlobalData->m_baseValuePerSupplyBox;
+	struct BfmeSupplyBoxGlobalData
+	{
+		unsigned char m_pad[0xB24];
+		UnsignedInt m_baseValuePerSupplyBox;
+	};
+	const BfmeSupplyBoxGlobalData *global =
+		reinterpret_cast<const BfmeSupplyBoxGlobalData *>(TheWritableGlobalData);
+	return global->m_baseValuePerSupplyBox;
 }
 
 //=============================================================================
