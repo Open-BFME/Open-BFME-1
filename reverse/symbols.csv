@@ -6500,7 +6500,7 @@ name,address,notes
 ??1Gen_dtor_006d5170@@UAE@XZ,0x00037899,gen-dtor class destructor
 ??1Gen_dtor_006d5350@@UAE@XZ,0x00030242,gen-dtor class destructor
 ??1Gen_dtor_006d65e0@@UAE@XZ,0x00026D2D,gen-dtor class destructor
-??1Gen_dtor_006d68c0@@UAE@XZ,0x000397B6,gen-dtor class destructor
+??1TileData@@UAE@XZ,0x000397B6,TileData complete destructor ILT called by the scalar-deleting destructor at 0x006D68C0
 ??1Gen_dtor_006d7b30@@UAE@XZ,0x0000F556,gen-dtor class destructor
 ??1Gen_dtor_006d8790@@UAE@XZ,0x0000B8D4,gen-dtor class destructor
 ??1Gen_dtor_006db1d0@@UAE@XZ,0x0001136F,gen-dtor class destructor
