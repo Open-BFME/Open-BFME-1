@@ -1,5 +1,5 @@
 // ?_bfme_showEndGameScreen@VictoryConditions@@UAEXABVAsciiString@@_N00@Z
-// partial score=0.96 date=2026-09-09
+// partial score=0.99 date=2026-09-15
 // ?_bfme_showEndGameScreen@VictoryConditions@@UAEXABVAsciiString@@_N00@Z
 // cl: /DNDEBUG /MD /EHsc
 
@@ -94,6 +94,8 @@ private:
 extern GameTextInterface *TheGameText;
 extern WindowManager *g_theWindowManager;
 extern Display *TheDisplay;
+extern const char Rva01081238Table[];
+extern const char Rva01080FC0Table[];
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 
 class VictoryConditions
@@ -124,12 +126,11 @@ void VictoryConditions::_bfme_showEndGameScreen(
 
 	const char *screen = screenName.isNotEmpty()
 		? screenName.str() : (const char *)0x0107301c;
-	const void *table = evil
-		? (const void *)0x01081238 : (const void *)0x01080fc0;
+	const void *table = evil ? Rva01081238Table : Rva01080FC0Table;
 	const char *cheer = cheerSound.hasData()
 		? cheerSound.str() : (const char *)0x0107388b;
 	g_theWindowManager->unidentified_00015235(
-		0xb, (const char *)0x010e8e10, 3, table, screen, cheer, 0, 0);
+		0xb, (const char *)0x010e8e10, 3, table, cheer, screen, 0, 0);
 	m_endGameShowing = true;
 	m_endGameShowTime = timeGetTime();
 	TheDisplay->setUnidentified13c(false);

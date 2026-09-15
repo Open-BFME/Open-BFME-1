@@ -1,5 +1,5 @@
 // ?bfmeAtFM@BfmeHostFM@@QBE?AVBfmeStrFM@@H@Z
-// partial score=0.97 date=2026-09-08
+// partial score=0.98 date=2026-09-15
 class BfmeStrFM
 {
 public:
