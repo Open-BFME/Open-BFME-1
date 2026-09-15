@@ -1293,6 +1293,7 @@ name,address,notes
 ??$append@PAG@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@AAEAAV01@PAG0ABUforward_iterator_tag@1@@Z,0x004F2260,gen-tgrid shared callee
 ??$append@PBD@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@AAEAAV01@PBD0ABUforward_iterator_tag@1@@Z,0x00036DE0,PeerDefs basic_string assign retail call target
 ??$append@PBG@?$basic_string@GV?$char_traits@G@_STL@@V?$allocator@G@2@@_STL@@AAEAAV01@PBG0ABUforward_iterator_tag@1@@Z,0x00030085
+??$bfmeFormatFloat@N@_STL@@YAXAAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@PBDHHNHH_N@Z,0x008492F0,local STLport formatting helper called by the double __write_float wrapper
 ??$bfmeFormatFloat@O@_STL@@YAXAAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@0@PBDHHOHH_N@Z,0x00849530,local STLport formatting helper called by the long-double __write_float wrapper
 ??$fill@PAGG@_STL@@YAXPAG0ABG@Z,0x0093CF20,Open-BFME5 the out-of-line fill the unsigned-short vector _M_fill_insert at 0x0093FC10 calls
 ??$fill@PAHH@_STL@@YAXPAH0ABH@Z,0x001DB670,zh-landmulti per-site callee copy (body proven byte-equal)
