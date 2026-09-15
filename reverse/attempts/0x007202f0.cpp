@@ -1,5 +1,5 @@
 // ?dispatch@Rva00720BB0Context@@QAEXHPAX@Z
-// partial score=0.35 date=2026-09-10
+// partial score=0.45 date=2026-09-14
 // BFME's tree-buffer request path.  The surrounding object stores its tree
 // records and type table in one large byte layout; these views keep the
 // offsets visible without claiming the unrelated parts of the class.
@@ -21,9 +21,47 @@ public:
 class Matrix3D
 {
 public:
+	Matrix3D() {}
 	void Set_Rotation( const Matrix3 &rotation );
 
+	__forceinline Matrix3D( const Matrix3D &source )
+	{
+		m_values[0] = source.m_values[0];
+		m_values[1] = source.m_values[1];
+		m_values[2] = source.m_values[2];
+		m_values[3] = source.m_values[3];
+		m_values[4] = source.m_values[4];
+		m_values[5] = source.m_values[5];
+		m_values[6] = source.m_values[6];
+		m_values[7] = source.m_values[7];
+		m_values[8] = source.m_values[8];
+		m_values[9] = source.m_values[9];
+		m_values[10] = source.m_values[10];
+	}
+
+	__forceinline Matrix3D &operator=( const Matrix3D &source )
+	{
+		m_values[0] = source.m_values[0];
+		m_values[1] = source.m_values[1];
+		m_values[2] = source.m_values[2];
+		m_values[3] = source.m_values[3];
+		m_values[4] = source.m_values[4];
+		m_values[5] = source.m_values[5];
+		m_values[6] = source.m_values[6];
+		m_values[7] = source.m_values[7];
+		m_values[8] = source.m_values[8];
+		m_values[9] = source.m_values[9];
+		m_values[10] = source.m_values[10];
+		return *this;
+	}
+
 	float m_values[12];
+};
+
+struct Rva00720BB0DispatchLocals
+{
+	char m_pad00[12];
+	Matrix3D m_transform;
 };
 
 class RenderObjClass
@@ -80,8 +118,8 @@ public:
 
 extern BfmeGlobPB *g_bfmeGlobPB;
 RenderObjClass *Create_Render_Obj( const char *name );
-extern "C" void Rva00739900Forward( void *object, float value );
-extern "C" void j_00018fc0( RenderObjClass *object, int geometry, const char *colors );
+extern "C" void j_00018fc0( RenderObjClass *object, int geometry );
+extern "C" void j_000246a4( void );
 extern "C" void j_0001593d( void *effect, const void *position, int a, int b, int c );
 
 struct Rva00720BB0TreeData
@@ -103,53 +141,77 @@ struct Rva00720BB0TreeType
 	int m_state;
 };
 
+struct Rva00720BB0Tree
+{
+	char m_pad00[0x40];
+	int m_treeType;
+	char m_pad44[0x44];
+	int m_toppleState;
+	int m_uprightType;
+	int m_toppledType;
+	unsigned int m_sinkFrames;
+	RenderObjClass *m_toppleObject;
+	RenderObjClass *m_pushAsideObject;
+	char m_padA0[4];
+};
+
 class Rva00720BB0Context
 {
 public:
 	void dispatch( int index, void *request );
 
-	public:
-	char m_unknown0000[0x1E1CC8];
-	int m_entryCount;
-};
+	Rva00720BB0TreeType *treeTypeAt( int treeType )
+	{
+		return reinterpret_cast<Rva00720BB0TreeType *>(
+			reinterpret_cast<char *>(this) + (treeType + 0x53cb) * 0x5c);
+	}
 
-static Rva00720BB0TreeType *treeTypeAt( Rva00720BB0Context *self, int treeType )
-{
-	return reinterpret_cast<Rva00720BB0TreeType *>(
-		reinterpret_cast<char *>(self) + (treeType + 0x53cb) * 0x5c);
-}
+	public:
+	char m_pad00[0x1548];
+	Rva00720BB0Tree m_trees[12000];
+	int m_entryCount;
+	unsigned char m_anythingChanged;
+};
 
 void Rva00720BB0Context::dispatch( int index, void *request )
 {
-	char *record = reinterpret_cast<char *>(this) + index * 0xa4;
-	int treeType = *reinterpret_cast<int *>(record + 0x1588);
+	int treeType;
 	Rva00720BB0TreeType *type;
+	Rva00720BB0TreeType *volatile firstType;
 	Rva00720BB0TreeData *data;
 	RenderObjClass *topple;
 	RenderObjClass *pushAside;
-	Matrix3D transform;
 	const char *name;
+	char * const treeBytes = reinterpret_cast<char *>(this) + index * 0xa4;
 
-	if (index >= m_entryCount || treeType < 0)
+	if (index >= m_entryCount)
 		return;
 
-	type = treeTypeAt(this, treeType);
+	treeType = m_trees[index].m_treeType;
+	if (treeType < 0)
+		return;
+
 	if (request == reinterpret_cast<void *>(1)) {
-		if (type->m_data->m_doShadow)
+		if (treeTypeAt(treeType)->m_data->m_doShadow)
 			return;
 	} else if (request == reinterpret_cast<void *>(2)) {
-		if (!type->m_data->m_doShadow)
+		if (!treeTypeAt(treeType)->m_data->m_doShadow)
 			return;
 	}
 
+	{
+	Rva00720BB0DispatchLocals transformStorage;
+	Matrix3D &transform = transformStorage.m_transform;
+	type = treeTypeAt(treeType);
+	firstType = type;
 	data = type->m_data;
-	*reinterpret_cast<int *>(record + 0x15dc) = data->m_toppleFrames;
-	*reinterpret_cast<int *>(record + 0x15d0) = reinterpret_cast<int>(request);
+	*reinterpret_cast<unsigned int *>(treeBytes + 0x15dc) = data->m_toppleFrames;
+	*reinterpret_cast<int *>(treeBytes + 0x15d0) = reinterpret_cast<int>(request);
 
-	topple = *reinterpret_cast<RenderObjClass **>(record + 0x15e0);
+	topple = *reinterpret_cast<RenderObjClass **>(treeBytes + 0x15e0);
 	if (topple)
 		topple->Release_Ref();
-	*reinterpret_cast<RenderObjClass **>(record + 0x15e0) = 0;
+	*reinterpret_cast<RenderObjClass **>(treeBytes + 0x15e0) = 0;
 
 	name = static_cast<const char *>(type->m_stumpName);
 	if (name)
@@ -157,23 +219,26 @@ void Rva00720BB0Context::dispatch( int index, void *request )
 	else
 		name = reinterpret_cast<const char *>(0x107388b);
 	topple = Create_Render_Obj(name);
-	*reinterpret_cast<RenderObjClass **>(record + 0x15e0) = topple;
-	j_00018fc0(topple, 0, name);
+	*reinterpret_cast<RenderObjClass **>(treeBytes + 0x15e0) = topple;
+	j_00018fc0(topple, 0);
 	g_bfmeGlobPB->Add_Render_Object(topple);
 	transform = topple->Get_Transform();
-	Matrix3 rotationValue(*reinterpret_cast<Matrix4 *>(record + 0x1558));
+	transform.m_values[3] = *reinterpret_cast<float *>(treeBytes + 0x1548);
+	transform.m_values[7] = *reinterpret_cast<float *>(treeBytes + 0x154c);
+	transform.m_values[11] = *reinterpret_cast<float *>(treeBytes + 0x1550);
+	Matrix3 rotationValue(*reinterpret_cast<Matrix4 *>(treeBytes + 0x1558));
 	transform.Set_Rotation(rotationValue);
 	topple->Set_Transform(transform);
 
-	pushAside = *reinterpret_cast<RenderObjClass **>(record + 0x15e4);
+	pushAside = *reinterpret_cast<RenderObjClass **>(treeBytes + 0x15e4);
 	if (pushAside)
 		pushAside->Release_Ref();
-	*reinterpret_cast<RenderObjClass **>(record + 0x15e4) = 0;
+	*reinterpret_cast<RenderObjClass **>(treeBytes + 0x15e4) = 0;
 
 	if (*reinterpret_cast<int *>(reinterpret_cast<char *>(this) + treeType * 0x5c + 0x1e1d2c) == -2)
 		return;
 
-	type = treeTypeAt(this, *reinterpret_cast<int *>(record + 0x15d8));
+	type = treeTypeAt(*reinterpret_cast<int *>(treeBytes + 0x15d8));
 	data = type->m_data;
 	name = static_cast<const char *>(data->m_modelName);
 	if (name)
@@ -181,22 +246,29 @@ void Rva00720BB0Context::dispatch( int index, void *request )
 	else
 		name = reinterpret_cast<const char *>(0x107388b);
 	pushAside = Create_Render_Obj(name);
-	*reinterpret_cast<RenderObjClass **>(record + 0x15e4) = pushAside;
-	j_00018fc0(pushAside, 0, name);
+	*reinterpret_cast<RenderObjClass **>(treeBytes + 0x15e4) = pushAside;
+	j_00018fc0(pushAside, 0);
 	g_bfmeGlobPB->Add_Render_Object(pushAside);
 	transform = pushAside->Get_Transform();
 	transform.Set_Rotation(rotationValue);
 	pushAside->Set_Transform(transform);
 
+	union
+	{
+		void (*function)(void);
+		void (*withArguments)(void *, float);
+	} forwardCast;
+	forwardCast.function = j_000246a4;
 	if (topple)
-		Rva00739900Forward(topple, 1.0f);
+		forwardCast.withArguments(topple, 1.0f);
 	if (pushAside)
-		Rva00739900Forward(pushAside, 0.0f);
+		forwardCast.withArguments(pushAside, 0.0f);
 
-	if (data->m_effect)
-		j_0001593d(data->m_effect, record + 0x1548, 0, 0, 0);
+	if (firstType->m_data->m_effect)
+		j_0001593d(firstType->m_data->m_effect, treeBytes + 0x1548, 0, 0, 0);
 
-	*reinterpret_cast<unsigned char *>(reinterpret_cast<char *>(this) + 0x1e1ccc) = 1;
+	m_anythingChanged = 1;
+	}
 }
 
 extern "C" bool __fastcall Rva00720BB0LookupDispatch( Rva00720BB0Context *self, void *, void *owner, void *request )
