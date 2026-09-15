@@ -4807,11 +4807,11 @@ Bool Player::isPlayerActive(void) const
 }
 
 // ------------------------------------------------------------------------------------------------
-// ?isPlayableSide@Player@@QBE_NXZ present-unmatched
 Bool Player::isPlayableSide( void ) const
 {
 
-	return m_playerTemplate ? m_playerTemplate->isPlayableSide() : FALSE;
+	return m_playerTemplate ? *reinterpret_cast<const Bool *>(
+		reinterpret_cast<const char *>(m_playerTemplate) + 0xBD) : FALSE;
 	
 }  // end isPlayableSide
 
