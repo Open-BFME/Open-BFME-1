@@ -1,5 +1,5 @@
-// ?iterateCellsAlongLine@Pathfinder@@AAEXPBUICoord2D@@0W4PathfindLayerEnum@@PAUMADStruct@@@Z
-// partial score=0.55 date=2026-09-09
+// ?iterateCellsAlongLine@Pathfinder@@AAEHPBUICoord2D@@0W4PathfindLayerEnum@@PAUMADStruct@@@Z
+// partial score=0.94 date=2026-09-15
 // cl: /DNDEBUG /MD
 //
 // Retail 0x003ED9F0 is byte-for-byte the SAME Bresenham shape as the
@@ -85,7 +85,7 @@ struct MADStruct
 class Pathfinder
 {
 private:
-	void iterateCellsAlongLine( const ICoord2D *start, const ICoord2D *end,
+	Int iterateCellsAlongLine( const ICoord2D *start, const ICoord2D *end,
 		PathfindLayerEnum layer, MADStruct *userData );
 
 	char m_beforeMap[0x10];
@@ -115,7 +115,7 @@ private:
 	}
 };
 
-void Pathfinder::iterateCellsAlongLine( const ICoord2D *start,
+Int Pathfinder::iterateCellsAlongLine( const ICoord2D *start,
 	const ICoord2D *end, PathfindLayerEnum layer,
 	MADStruct *userData )
 {
@@ -169,11 +169,11 @@ void Pathfinder::iterateCellsAlongLine( const ICoord2D *start,
 	{
 		PathfindCell *to = getCell( layer, x, y );
 		if (to == 0)
-			return;
+			return 0;
 
 		Int ret = userData->process( from, to, x, y );
 		if (ret != 0)
-			return;
+			return ret;
 
 		if (num < 0)
 		{
@@ -189,4 +189,5 @@ void Pathfinder::iterateCellsAlongLine( const ICoord2D *start,
 		}
 		from = to;
 	}
+	return 0;
 }
