@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a6ce81b4123237c92c7c7676e8f24b5853734a822be1897a40bb51ab0f0d6423",
+  "symbol": "?d_00425680@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?d_00425680@@YAXXZ\n// partial score=0.99 date=2026-09-15\nnamespace _STL\n{\n\tstruct __new_alloc\n\t{\n\t\tstatic void *allocate(unsigned int n);\n\t};\n}\n\nstruct BfmeNodeEAL\n{\n\tchar m_bfmeCharEAL;\n\tunsigned char m_bfmePadEAL[3];\n\tint m_bfmeSizeEAL;\n\tBfmeNodeEAL *m_bfmeNextEAL;\n\tBfmeNodeEAL *m_bfmePrevEAL;\n\tint m_bfmeTailEAL;\n\tint m_bfmeTail2EAL;\n};\n\nclass BfmeHostEAL\n{\npublic:\n\tBfmeHostEAL();\n\n\tvolatile int m_bfmeAEAL;\n\tvolatile int m_bfmeBEAL;\n\tvolatile int m_bfmeCEAL;\n\tvolatile int m_bfmeDEAL;\n\tBfmeNodeEAL *m_bfmeNodeEAL;\n\tvolatile int m_bfmeEEAL;\n};\n\nBfmeHostEAL::BfmeHostEAL()\n{\n\tm_bfmeAEAL = 0x4e20;\n\tm_bfmeBEAL = 0x5dc;\n\tm_bfmeCEAL = 0;\n\tm_bfmeDEAL = 5;\n\tm_bfmeNodeEAL = 0;\n\n\tm_bfmeNodeEAL = (BfmeNodeEAL *)_STL::__new_alloc::allocate(0x18);\n\n\tm_bfmeEEAL = 0;\n\n\tm_bfmeNodeEAL->m_bfmeCharEAL = 0;\n\tm_bfmeNodeEAL->m_bfmeSizeEAL = 0;\n\tm_bfmeNodeEAL->m_bfmeNextEAL = m_bfmeNodeEAL;\n\tm_bfmeNodeEAL->m_bfmePrevEAL = m_bfmeNodeEAL;\n}\n"
+}
