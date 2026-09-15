@@ -84469,6 +84469,7 @@ name,address,notes
 ?reserve@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEXI@Z,0x0003DBD1,retail REL32 pin for xferCoord3DVector
 ?reserve@?$vector@UGen_t_005c6190_m4pod@@V?$allocator@UGen_t_005c6190_m4pod@@@_STL@@@_STL@@QAEXI@Z,0x005C7940,U1SupplierHigh::fill local four-byte payload vector reserve
 ?reserve@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@QAEXI@Z,0x0000DE95
+?reserve@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAEXI@Z,0x0003A0A8,ASCII vector reserve ILT called by xferAsciiStringVector at retail 0x00065A60
 ?reserve@?$vector@VUnicodeString@@V?$allocator@VUnicodeString@@@_STL@@@_STL@@QAEXI@Z,0x0000D346,ICF-folded reserve thunk shared with the 4-byte vector body at 0x00AACAF0
 ?reserve@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QAEXI@Z,0x0036EE10,retail REL32 pin for Rva00372670XferObjectIDVector; target call uses ILT 0x00049DE6
 ?reserve@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEXI@Z,0x000D1420,ScienceType vector reserve reached through ILT 0x0003616A from full 0x000D7010 transfer; complete 167-byte four-byte element allocation and ownership audit
