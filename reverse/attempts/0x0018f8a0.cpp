@@ -1,5 +1,7 @@
 // ?pointInTrigger@PolygonTrigger@@QBE_NAAUICoord3D@@@Z
-// partial score=0.9 date=2026-09-11
+// partial score=0.99 date=2026-09-15
+// Scratch copy of reverse/attempts/0x0018f8a0.cpp; do not use as production source.
+// ?pointInTrigger@PolygonTrigger@@QBE_NAAUICoord3D@@@Z
 // cl: /O2 /G6 /DNDEBUG /MD /EHsc-
 // stlport
 
@@ -27,40 +29,18 @@ struct IRegion2D
 	ICoord2D hi;
 };
 
-// Retail's swap relocation identifies this local record as TempIndexStruct.
-struct TempIndexStruct
-{
-	Int x;
-	Int y;
-	Int z;
-};
-
-// This declaration exists only to bind the already-converted real callee.
-class Rva0018F8A0PolygonTrigger;
+// The point array is the PolygonTrigger ICoord3D array witnessed by matched
+// callers and updateBounds; the generic TempIndexStruct swap pin is not used
+// as coordinate-type evidence.
 class PolygonTrigger
 {
-	friend class Rva0018F8A0PolygonTrigger;
-
 protected:
-	virtual void marker() = 0;
 	void updateBounds() const;
-};
 
-class Rva0018F8A0PolygonTrigger
-{
-public:
-	virtual void marker() = 0;
-
-protected:
-	void updateBounds() const
-	{
-		reinterpret_cast<const PolygonTrigger *>(this)->updateBounds();
-	}
-
-	unsigned char m_unmodelled00[0x0c];
-	TempIndexStruct *m_points;
+	unsigned char m_unmodelled00[0x10];
+	ICoord3D *m_points;
 	Int m_numPoints;
-	unsigned char m_unmodelled18[4];
+	Int m_sizePoints;
 	mutable IRegion2D m_bounds;
 	mutable float m_radius;
 	mutable Bool m_boundsNeedsUpdate;
@@ -69,8 +49,7 @@ public:
 	Bool pointInTrigger(ICoord3D &point) const;
 };
 
-// ?pointInTrigger@PolygonTrigger@@QBE_NAAUICoord3D@@@Z
-Bool Rva0018F8A0PolygonTrigger::pointInTrigger(ICoord3D &point) const
+Bool PolygonTrigger::pointInTrigger(ICoord3D &point) const
 {
 	if (m_boundsNeedsUpdate)
 		updateBounds();
@@ -88,12 +67,13 @@ Bool Rva0018F8A0PolygonTrigger::pointInTrigger(ICoord3D &point) const
 	Int i;
 	for (i = 0; i < m_numPoints; ++i)
 	{
-		TempIndexStruct pt1 = m_points[i];
-		TempIndexStruct pt2;
-		if (i == 0)
-			pt2 = m_points[m_numPoints - 1];
-		else
-			pt2 = m_points[i - 1];
+		ICoord3D pt1 = m_points[i];
+		const ICoord3D *src2 =
+			(i != 0) ? &m_points[i - 1] : &m_points[m_numPoints - 1];
+		ICoord3D pt2;
+		pt2.x = src2->x;
+		pt2.y = src2->y;
+		pt2.z = src2->z;
 
 		if (pt1.y == pt2.y)
 			continue;
@@ -102,12 +82,13 @@ Bool Rva0018F8A0PolygonTrigger::pointInTrigger(ICoord3D &point) const
 
 		if (pt1.y > pt2.y)
 			std::swap(pt1, pt2);
+		const Int pt2x = pt2.x;
 		if (pt2.y < point.y)
 			continue;
 		if (pt1.y >= point.y)
 			continue;
 
-		Int dx = pt2.x - pt1.x;
+		Int dx = pt2x - pt1.x;
 		Int dy = pt2.y - pt1.y;
 		if (dx * (point.y - pt1.y) >= (point.x - pt1.x) * dy)
 			inside = !inside;
