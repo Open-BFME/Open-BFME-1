@@ -1,3 +1,29 @@
+// cl: /DNDEBUG /MD /EHsc
+// partial score=0.99 date=2026-09-15
+typedef int Int;
+typedef float Real;
+#define NULL 0
+
+struct ICoord2D
+{
+	Int x;
+	Int y;
+};
+
+struct Coord3D
+{
+	Real x;
+	Real y;
+	Real z;
+};
+
+class View
+{
+public:
+	virtual void getScreenCornerWorldPointsAtZ(
+		Coord3D *, Coord3D *, Coord3D *, Coord3D *, Real);
+};
+
 // ?getScreenCornerWorldPointsAtZ@View@@UAEXPAUCoord3D@@000M@Z
 // partial score=0.99 date=2026-09-10
 // BFME's View class inserts extra virtuals relative to the ZH layout this TU
@@ -115,6 +141,7 @@ void View::getScreenCornerWorldPointsAtZ( Coord3D *topLeft, Coord3D *topRight,
 	ICoord2D origin;
 	Int viewWidth = reinterpret_cast<BFMEViewCornerVTable *>( this )->getWidth();
 	Int viewHeight = reinterpret_cast<BFMEViewCornerVTable *>( this )->getHeight();
+	volatile char *viewWidthPointer = (char *)(unsigned)viewWidth;
 
 	// sanity
 	if( topLeft == NULL || topRight == NULL || bottomLeft == NULL || bottomRight == NULL )
@@ -124,7 +151,7 @@ void View::getScreenCornerWorldPointsAtZ( Coord3D *topLeft, Coord3D *topRight,
 	reinterpret_cast<BFMEViewCornerVTable *>( this )->getOrigin( &origin.x, &origin.y );
 	screenTopLeft.x     = origin.x;								// upper left
 	screenTopLeft.y     = origin.y;								// upper left
-	screenTopRight.x    = origin.x + viewWidth;		// upper right
+	screenTopRight.x    = (Int)(origin.x + (unsigned)viewWidthPointer);		// upper right
 	screenTopRight.y    = origin.y;								// upper right
 	screenBottomLeft.x  = origin.x + viewWidth;		// lower right
 	screenBottomLeft.y  = origin.y + viewHeight;  // lower right
