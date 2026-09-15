@@ -8828,6 +8828,7 @@ name,address,notes
 ??1Gen_uwm_008ac620@@QAE@XZ,0x008AC620,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uwm_008ad330@@QAE@XZ,0x008AD330,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uwm_008b2df0@@QAE@XZ,0x008B2DF0,gen-uw-pin dtor target read from the retail funclet bytes
+??1Gen_008BE660@@QAE@XZ,0x008BE6D0,member at Gen_008AC620+0x24 constructed by matched Gen_008BE660 and destroyed here by matched owner destructor 0x008AC620; existing Gen_uwm_008be6d0 ABI
 ??1Gen_uwm_008be6d0@@QAE@XZ,0x008BE6D0,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uwm_008c5b30@@QAE@XZ,0x008C5B30,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uwm_008c5c00@@QAE@XZ,0x008C5C00,gen-uw-pin dtor target read from the retail funclet bytes
