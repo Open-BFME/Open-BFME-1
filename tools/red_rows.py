@@ -17,6 +17,7 @@ hours of commits.
 """
 import os
 import re
+import shutil
 import subprocess
 import sys
 from pathlib import Path
@@ -32,7 +33,13 @@ def run_gate():
     # build.py reserves BUILD_POOL=8 for the full-suite audit that runs alone
     # under the host-wide build lock. This is that audit.
     env.setdefault("BUILD_POOL", "8")
-    result = subprocess.run([str(ROOT / "build.sh")], cwd=ROOT, env=env, text=True,
+    command = [str(ROOT / "build.sh")]
+    if os.name == "nt":
+        bash = shutil.which("bash")
+        if bash is None:
+            raise SystemExit("bash is required to run build.sh on Windows")
+        command = [bash, str(ROOT / "build.sh")]
+    result = subprocess.run(command, cwd=ROOT, env=env, text=True,
                             stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     return result.returncode, result.stdout
 

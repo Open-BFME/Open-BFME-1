@@ -9,6 +9,7 @@ different verdict than a clean run.
 import importlib.util
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 TOOLS = Path(__file__).resolve().parents[1]
 
@@ -22,6 +23,22 @@ def _load(name):
 
 
 red_rows = _load("red_rows")
+
+
+def test_windows_runner_invokes_build_sh_through_bash(monkeypatch):
+    seen = {}
+
+    monkeypatch.setattr(red_rows.os, "name", "nt")
+    monkeypatch.setattr(red_rows.shutil, "which", lambda name: "C:/Git/bin/bash.exe")
+
+    def run(command, **kwargs):
+        seen["command"] = command
+        seen["kwargs"] = kwargs
+        return SimpleNamespace(returncode=0, stdout="")
+
+    monkeypatch.setattr(red_rows.subprocess, "run", run)
+    assert red_rows.run_gate() == (0, "")
+    assert seen["command"] == ["C:/Git/bin/bash.exe", str(red_rows.ROOT / "build.sh")]
 
 GREEN = """Compile: 0 of 264 TU(s) (deps-cache: 264 current)
 Functions: OK 5127/5127 matched across 311 source file(s)
