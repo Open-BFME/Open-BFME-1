@@ -1,30 +1,15 @@
 // ?addAudioEventEx@AudioManager@@QAEIPBVAudioEventRTS@@HHH@Z
-// partial score=0.55 date=2026-09-09
+// partial score=0.65 date=2026-09-15
+// cl: /O2 /Ob2 /DNDEBUG /MD /EHsc
+// Self-contained audio reconstruction; not a verified conversion.
+// ?addAudioEventEx@AudioManager@@QAEIPBVAudioEventRTS@@HHH@Z
 // cl: /O2 /Ob2 /DNDEBUG /MD /EHsc
 // Scratch reconstruction for retail 0x006B9500.  This file is deliberately
 // outside Code/; it is only an inner-loop compiler experiment.
 
 typedef unsigned int AudioHandle;
 
-class AsciiString
-{
-public:
-	struct Data
-	{
-		int references;
-		unsigned short length;
-		unsigned short reserved;
-		char text[1];
-	};
-
-	int compareNoCase(const char *other) const;
-	bool isEmpty(void) const
-	{
-		return !m_data || m_data->length == 0;
-	}
-
-	Data *m_data;
-};
+#include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class AudioEventInfo
 {
@@ -164,7 +149,10 @@ public:
 	~AudioManagerMutex(void)
 	{
 		if (m_held)
+		{
 			ReleaseMutex(m_mutex);
+			m_held = 0;
+		}
 	}
 
 	void abort(void)
@@ -184,13 +172,145 @@ public:
 			void (*freeRelease)(void);
 			Release memberRelease;
 		} call;
-		call.freeRelease = ::j_0001e961;
+		call.freeRelease = ::j_0003e63a;
 		(this->*call.memberRelease)();
 	}
 
 	void *m_mutex;
 	unsigned char m_held;
 };
+
+typedef void * (AudioTimeMap::*MapFind)(unsigned int);
+typedef bool (AudioEventInfo::*Ready)(void) const;
+
+struct PendingRequestNode
+{
+	PendingRequestNode *m_prev;
+	PendingRequestNode *m_next;
+	void *m_value;
+};
+
+struct PendingRequestIterator
+{
+	PendingRequestNode *m_node;
+};
+
+class PendingRequestList
+{
+public:
+	PendingRequestIterator erase(PendingRequestIterator position)
+	{
+		typedef PendingRequestIterator (PendingRequestList::*Erase)(
+			PendingRequestIterator);
+		union
+		{
+			void (*freeErase)(void);
+			Erase memberErase;
+		} call;
+		call.freeErase = ::j_00007ce3;
+		return (this->*call.memberErase)(position);
+	}
+
+	PendingRequestNode *m_sentinel;
+};
+
+struct PendingMapPair
+{
+	unsigned int m_key;
+	unsigned int m_handle;
+};
+
+struct PendingMapIterator
+{
+	void *m_node;
+};
+
+struct PendingMapInsertResult
+{
+	PendingMapIterator m_iterator;
+	bool m_inserted;
+};
+
+class PendingRequestMap
+{
+public:
+	PendingMapInsertResult insert_unique(const PendingMapPair &value)
+	{
+		typedef PendingMapInsertResult (PendingRequestMap::*Insert)(
+			const PendingMapPair &);
+		union
+		{
+			void (*freeInsert)(void);
+			Insert memberInsert;
+		} call;
+		call.freeInsert = ::j_000317aa;
+		return (this->*call.memberInsert)(value);
+	}
+};
+
+class PendingRequestHandle
+{
+public:
+	void *m_value;
+
+	PendingRequestHandle(const PendingRequestHandle &other)
+	{
+		typedef PendingRequestHandle *(PendingRequestHandle::*Copy)(
+			const PendingRequestHandle &);
+		union
+		{
+			void (*freeCopy)(void);
+			Copy memberCopy;
+		} call;
+		call.freeCopy = ::j_0003834d;
+		(this->*call.memberCopy)(other);
+	}
+
+	~PendingRequestHandle(void)
+	{
+		typedef void (PendingRequestHandle::*Destroy)(void);
+		union
+		{
+			void (*freeDestroy)(void);
+			Destroy memberDestroy;
+		} call;
+		call.freeDestroy = ::j_000298e8;
+		(this->*call.memberDestroy)();
+	}
+};
+
+struct PendingRequestRecord
+{
+	int m_kind;
+	AudioEventRTS *m_event;
+	unsigned int m_field08;
+	PendingRequestHandle m_waitHandle;
+
+	void destroy(void)
+	{
+		typedef void (PendingRequestRecord::*Destroy)(void);
+		union
+		{
+			void (*freeDestroy)(void);
+			Destroy memberDestroy;
+		} call;
+		call.freeDestroy = ::j_0001ae2e;
+		(this->*call.memberDestroy)();
+	}
+};
+
+extern "C" __declspec(dllimport) void __stdcall Rva01358F30Wait(int interval);
+extern void operator delete(void *block);
+
+static unsigned int audio_info_sound_type(const AudioEventInfo *info)
+{
+	return *(const unsigned int *)((const char *)info + 0x84);
+}
+
+static unsigned char audio_info_flags(const AudioEventInfo *info)
+{
+	return *(const unsigned char *)((const char *)info + 0x3c);
+}
 
 class AudioManager
 {
@@ -228,23 +348,48 @@ public:
 	AudioRequestList m_audioRequests;
 };
 
-typedef void * (AudioTimeMap::*MapFind)(unsigned int);
-typedef unsigned int (AudioManager::*MusicPlay)(const AudioEventRTS *);
-typedef void (AudioManager::*MakeEvent)(AudioEventHolder *, const AudioEventRTS *);
-typedef void (AudioEventRTS::*SetFlag)(bool);
-typedef bool (AudioEventInfo::*Ready)(void) const;
+typedef unsigned int (AudioManager::*MusicPlayAudio)(const AudioEventRTS *);
+typedef void (AudioManager::*MakeEventAudio)(AudioEventHolder *,
+	const AudioEventRTS *);
+
+static void reacquire_audio_mutex(AudioManagerMutex *guard, void *mutex)
+{
+	typedef void (AudioManagerMutex::*Acquire)(void *, int);
+	union
+	{
+		void (*freeAcquire)(void);
+		Acquire memberAcquire;
+	} call;
+	call.freeAcquire = ::j_0000f9e8;
+	(guard->*call.memberAcquire)(mutex, -1);
+}
+
+static void process_audio_request(AudioManager *manager,
+	PendingRequestRecord *request, unsigned char *result)
+{
+	typedef void (AudioManager::*Process)(PendingRequestRecord *,
+		unsigned char *, int);
+	union
+	{
+		void (*freeProcess)(void);
+		Process memberProcess;
+	} call;
+	call.freeProcess = ::j_0000bd75;
+	(manager->*call.memberProcess)(request, result, 0);
+}
 
 AudioHandle AudioManager::addAudioEventEx(const AudioEventRTS *event, int force,
 	int allowLocal, int allowRemote)
 {
-	register const AudioEventRTS *eventToAdd = event;
-	AudioManagerMutex guard(m_mutex);
 	AudioManager *manager = this;
+	void *mutex = manager->m_mutex;
+	AudioManagerMutex guard(mutex);
+	const AudioEventRTS *eventToAdd = event;
 	if (eventToAdd->m_eventName.isEmpty() ||
 		eventToAdd->m_eventName.compareNoCase("NoSound") == 0)
 	{
 		guard.abort();
-		return 0;
+		return 1;
 	}
 
 	if (!eventToAdd->m_eventInfo)
@@ -271,20 +416,19 @@ AudioHandle AudioManager::addAudioEventEx(const AudioEventRTS *event, int force,
 	findCall.freeFind = ::j_00003071;
 	find = findCall.memberFind;
 	if ((map->*find)(key) != map->m_end)
-		return 0;
+		return 1;
 
-	if (info->m_soundType == 3)
+	if (audio_info_sound_type(eventToAdd->m_eventInfo) == 3)
 	{
-		MusicPlay play;
+		MusicPlayAudio play;
 		union
 		{
 			void (*freePlay)(void);
-			MusicPlay memberPlay;
+			MusicPlayAudio memberPlay;
 		} playCall;
 		playCall.freePlay = ::j_00023321;
 		play = playCall.memberPlay;
 		AudioHandle result = (manager->*play)(eventToAdd);
-		guard.release();
 		return result;
 	}
 
@@ -300,19 +444,19 @@ AudioHandle AudioManager::addAudioEventEx(const AudioEventRTS *event, int force,
 		soundClass = (eventToAdd->*classCall.memberGetClass)();
 	}
 	if (!manager->isOn(soundClass))
-		return 0;
+		return 1;
 
-	if (info->m_soundType == 1 &&
+	if (audio_info_sound_type(eventToAdd->m_eventInfo) == 1 &&
 		((1U << eventToAdd->m_timeOfDay) & manager->m_audioMask) != 0)
-		return 0;
+		return 1;
 
 	AudioEventHolder audioEvent;
 	{
-		MakeEvent make;
+		MakeEventAudio make;
 		union
 		{
 			void (*freeMake)(void);
-			MakeEvent memberMake;
+			MakeEventAudio memberMake;
 		} makeCall;
 		makeCall.freeMake = ::j_00041006;
 		make = makeCall.memberMake;
@@ -331,14 +475,10 @@ AudioHandle AudioManager::addAudioEventEx(const AudioEventRTS *event, int force,
 		ready = readyCall.memberReady;
 		if (!((audioEvent.m_event->m_eventInfo->*ready)()))
 		{
-			guard.release();
 			return 4;
 		}
-	}
 
-	if (!audioEvent.m_event->m_completed)
-	{
-		if (!audioEvent.m_event->m_playingHandle)
+		if (!*(unsigned int *)((char *)audioEvent.m_event + 0x60))
 		{
 			typedef void (AudioEventRTS::*Advance)(void);
 			union
@@ -350,23 +490,25 @@ AudioHandle AudioManager::addAudioEventEx(const AudioEventRTS *event, int force,
 			(audioEvent.m_event->*advanceCall.memberAdvance)();
 		}
 
-		unsigned int playingHandle = audioEvent.m_event->m_playingHandle;
-		AudioRequestScratch request;
-		request.m_flags = (unsigned int)allowRemote;
-		request.m_handle = playingHandle;
-		AudioRequestList *requests =
-			(AudioRequestList *)((char *)manager + 0xaf4);
-		typedef bool (AudioRequestList::*Append)(unsigned int *, unsigned int *, int);
+		PendingMapPair requestValue;
+		requestValue.m_key = (unsigned int)allowRemote;
+		requestValue.m_handle = audioEvent.m_event->m_playingHandle;
+		PendingRequestMap *requests =
+			(PendingRequestMap *)((char *)manager + 0xaf4);
+		typedef PendingMapInsertResult (PendingRequestMap::*Insert)(
+			const PendingMapPair &);
 		union
 		{
-			void (*freeAppend)(void);
-			Append memberAppend;
-		} appendCall;
-		appendCall.freeAppend = ::j_000317aa;
-		if (!(requests->*appendCall.memberAppend)(
-				&request.m_flags, &request.m_handle, allowLocal))
+			void (*freeInsert)(void);
+			Insert memberInsert;
+		} insertCall;
+		insertCall.freeInsert = ::j_000317aa;
+		PendingMapInsertResult inserted =
+			(requests->*insertCall.memberInsert)(requestValue);
+		if (!inserted.m_inserted)
 		{
-			AudioHandle result = audioEvent.m_event->m_playingHandle;
+			unsigned int result = *(unsigned int *)(
+				(char *)inserted.m_iterator.m_node + 0x14);
 			return result;
 		}
 	}
@@ -395,7 +537,7 @@ AudioHandle AudioManager::addAudioEventEx(const AudioEventRTS *event, int force,
 			return 3;
 	}
 
-	if (audioEvent.m_event->m_eventInfo->m_flags3c & 0x20)
+	if (audio_info_flags(audioEvent.m_event->m_eventInfo) & 0x20)
 	{
 		typedef void (AudioEventRTS::*SetLogical)(bool);
 		union
@@ -407,19 +549,18 @@ AudioHandle AudioManager::addAudioEventEx(const AudioEventRTS *event, int force,
 		(audioEvent.m_event->*logicalCall.memberSetLogical)(true);
 	}
 
-	int soundType = audioEvent.m_event->m_eventInfo->m_soundType;
+	int soundType = audio_info_sound_type(eventToAdd->m_eventInfo);
 	bool dispatched;
 	if (soundType == 0)
 	{
-		typedef void (AudioManager::*DispatchMusic)(AudioEventHolder *, int);
+		typedef bool (AudioManager::*DispatchMusic)(AudioEventHolder *, int);
 		union
 		{
 			void (*freeDispatch)(void);
 			DispatchMusic memberDispatch;
 		} dispatchCall;
 		dispatchCall.freeDispatch = ::j_00044e27;
-		(manager->*dispatchCall.memberDispatch)(&audioEvent, force);
-		dispatched = true;
+		dispatched = (manager->*dispatchCall.memberDispatch)(&audioEvent, force);
 	}
 	else
 	{
@@ -431,12 +572,77 @@ AudioHandle AudioManager::addAudioEventEx(const AudioEventRTS *event, int force,
 		} dispatchCall;
 		dispatchCall.freeDispatch = ::j_0003bead;
 		dispatched = (manager->*dispatchCall.memberDispatch)(
-			&audioEvent, allowRemote, force);
+			&audioEvent, force, allowLocal);
 	}
 	if (!dispatched)
-		return 0;
+		return 1;
 
-	AudioHandle result = audioEvent.m_event->m_playingHandle;
-	guard.release();
-	return result;
+	unsigned int playingHandle = audioEvent.m_event->m_playingHandle;
+	if (!allowLocal)
+	{
+		PendingRequestList *pending =
+			(PendingRequestList *)((char *)manager + 0x4c);
+	restart_requests:;
+		PendingRequestNode *cursor = pending->m_sentinel;
+		PendingRequestNode *end = cursor->m_prev;
+		for (;;)
+		{
+			PendingRequestNode *node = cursor->m_next;
+			if (cursor == end)
+				break;
+
+			PendingRequestRecord *request =
+				(PendingRequestRecord *)node->m_value;
+			if (request->m_kind == 0 && request->m_event == audioEvent.m_event)
+			{
+				PendingRequestHandle *waitHandle =
+					(PendingRequestHandle *)((char *)request + 0xc);
+				if (waitHandle->m_value)
+				{
+					PendingRequestHandle waiting(*waitHandle);
+					guard.release();
+					while (waiting.m_value &&
+						!*(unsigned char *)((char *)waiting.m_value + 0x41) &&
+						!*(unsigned char *)((char *)waiting.m_value + 0x42))
+						Rva01358F30Wait(1);
+					reacquire_audio_mutex(&guard, mutex);
+					goto restart_requests;
+				}
+
+				unsigned char processResult = 1;
+				typedef void (AudioManager::*Process)(PendingRequestRecord *,
+					unsigned char *, int);
+				union
+				{
+					void (*freeProcess)(void);
+					Process memberProcess;
+				} processCall;
+				processCall.freeProcess = ::j_0000bd75;
+				(manager->*processCall.memberProcess)(request, &processResult, 0);
+				if (processResult)
+				{
+					PendingRequestIterator position;
+					position.m_node = node;
+					typedef PendingRequestIterator (PendingRequestList::*Erase)(
+						PendingRequestIterator);
+					union
+					{
+						void (*freeErase)(void);
+						Erase memberErase;
+					} eraseCall;
+					eraseCall.freeErase = ::j_00007ce3;
+					(pending->*eraseCall.memberErase)(position);
+					if (request)
+					{
+						request->destroy();
+						operator delete(request);
+					}
+				}
+				break;
+			}
+			cursor = node;
+		}
+	}
+
+	return playingHandle;
 }
