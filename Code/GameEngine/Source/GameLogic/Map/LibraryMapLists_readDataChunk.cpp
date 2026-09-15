@@ -40,8 +40,6 @@ private:
 	int *m_count;
 };
 
-#pragma comment(linker, "/alternatename:??0LibraryMapsParser@@QAE@PAX000@Z=?d_00194050@@YAXXZ")
-
 struct LibraryMaps
 {
 	char m_pad[0xc];
