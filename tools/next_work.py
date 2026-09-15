@@ -933,8 +933,9 @@ def reloc_named_candidates(claimed, claimed_ranges):
             "target_rva": row["target_rva"],
             "size": int(row["target_size"]),
             "notes": row["notes"],
-            "command": (f"python3 tools/decode_calls.py --rva {row['target_rva']} "
-                        f"--size {row['target_size']}"),
+            "size_basis": "inventory-address-count; contiguous extent unverified",
+            "command": (f"python3 tools/callees.py {row['target_rva']} "
+                        f"{row['target_size']}"),
         })
     out.sort(key=lambda candidate: -candidate["size"])
     note = f"{len(out)} reloc-named candidate(s), recovered identity only"
@@ -1048,6 +1049,12 @@ def structural_size_label(candidate):
     return f"{candidate['size']:>5}B source / {retail}"
 
 
+def named_size_label(candidate):
+    # list_functions.java exports getBody().getNumAddresses(), not the span
+    # from entry to last byte. Alignment holes can make that count too short.
+    return f"{candidate['size']:>5}B inventory count; contiguous extent unverified"
+
+
 def print_candidate(label, candidate, meta, candidates=()):
     print(f"== selected work: {label} (drawn from {meta['pool']}) ==")
     if label == "Zero Hour work packet":
@@ -1059,11 +1066,13 @@ def print_candidate(label, candidate, meta, candidates=()):
         print(f"       start: read {candidate['packet']}, port {candidate['source']}")
         return
     if label == "reloc-named unclaimed function":
-        print(f"  {candidate['size']:>5}B  {candidate['function']}")
+        print(f"  {named_size_label(candidate)}  {candidate['function']}")
         print(f"       {candidate['target_rva']} ({candidate['notes']}) — named by a "
               f"byte-true call in {candidate['source']}")
         _print_stash(candidate)
         print(f"       start: {candidate['command']}")
+        print("       Verify the complete retail boundary before probing or claiming; "
+              "the inventory count can omit alignment gaps.")
         # No file cluster here: the whole point of this tier is that the body
         # has no source file yet, so there is no translation unit to drain and
         # nothing for `./build.sh <file>` to verify. The caller is a locality
@@ -1137,7 +1146,7 @@ def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
         print(f"\n== 1. reloc-named unclaimed functions ({len(named)}) ==")
         print(f"  {named_note}")
         for candidate in named[:args.limit]:
-            print(f"  {candidate['size']:>5}B  {candidate['function']}")
+            print(f"  {named_size_label(candidate)}  {candidate['function']}")
             print(f"       {candidate['target_rva']} named by a call in "
                   f"{candidate['source']} ({candidate['notes']})")
             _print_stash(candidate)

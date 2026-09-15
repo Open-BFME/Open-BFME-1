@@ -1,8 +1,8 @@
 # Ghidra inventory (optional accelerator)
 
 The PE export table names only ~1,300 of the binary's ~78,000 functions. Ghidra recovers
-the rest — exact boundaries, sizes, and the call graph — which gives accurate function sizes
-for `functions.csv`, callee addresses for `symbols.csv`, and the string anchors used to map
+the rest — candidate boundaries, owned-address counts, and the call graph — which gives
+boundary evidence for `functions.csv`, callee addresses for `symbols.csv`, and string anchors used to map
 anonymous functions to Generals source. The outputs are pinned to the baseline binary;
 regenerate only if the baseline changes (it shouldn't).
 
@@ -29,7 +29,16 @@ Outputs (gitignored, derived from the binary, like `reverse/exports.csv`):
         -scriptPath tools/ghidra -postScript export_vtables.java $PWD/reverse/vtables.tsv
 
 ## Use
-- **Sizes:** look up a function's exact `target_size` instead of guessing from export gaps.
+- **Sizes:** `list_functions.java` exports `getBody().getNumAddresses()`, not
+  `last address - entry + 1`. Gaps inside a body can shorten that count. Verify
+  the complete contiguous retail extent before using it as `target_size`.
+  Examples: Team's facility query at `0x000EF340` is 99 bytes, not inventory 96;
+  `Object::affectedByUpgrade` at `0x001C5A30` is 270, not 267; and
+  `Debug::SimpleMatch` at `0x0088A3A0` is 135, not 132. All three short counts
+  omit part of the final epilogue when interpreted as a contiguous span.
+  Do not fix this by blindly taking the largest Ghidra body address: shared or
+  discontiguous tails can span other functions. Keep the inventory as evidence,
+  and prove the actual range from retail control flow.
 - **Calls:** a call target's address (e.g. `__ftol2` at `0x9F6E38`) goes in `reverse/symbols.csv`.
 - **Identification:** ~12% of `.text` is in functions referencing strings that are greppable in
   the Generals source — anchoring them to a specific source file. See `tools/harvest.py` and `../../docs/matching.md`.

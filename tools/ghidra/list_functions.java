@@ -17,6 +17,9 @@ public class list_functions extends GhidraScript {
         int n = 0;
         while (it.hasNext()) {
             Function f = it.next();
+            // This is the owned-address count, NOT a contiguous byte extent.
+            // Alignment holes and discontiguous bodies require a separate
+            // retail boundary check before using size as a ledger span.
             long size = f.getBody().getNumAddresses();
             long rva = f.getEntryPoint().getOffset() - base;
             w.printf("0x%X,%d,%s%n", rva, size, f.getName().replace(",", ";"));
