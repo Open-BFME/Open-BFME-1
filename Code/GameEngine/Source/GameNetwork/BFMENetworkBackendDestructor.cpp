@@ -1,5 +1,3 @@
-// ??1BFMENetworkBackend@@UAE@XZ
-// partial score=0.94 date=2026-09-08
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 
 typedef bool Bool;
@@ -58,14 +56,15 @@ public:
 		if (m_size != 0)
 		{
 			Node *node = reinterpret_cast<Node *>(m_header->parent);
-			while (node != 0)
+			if (node != 0)
 			{
-				_M_erase(reinterpret_cast<Node *>(node->right));
-				Node *left = reinterpret_cast<Node *>(node->left);
-				_STL::__node_alloc<true, 0>::_M_deallocate(node, 0x18);
-				if (left == 0)
-					break;
-				node = left;
+				do
+				{
+					_M_erase(reinterpret_cast<Node *>(node->right));
+					Node *left = reinterpret_cast<Node *>(node->left);
+					_STL::__node_alloc<true, 0>::_M_deallocate(node, 0x18);
+					node = left;
+				} while (node != 0);
 			}
 			m_header->left = m_header;
 			m_header->parent = 0;
@@ -74,7 +73,7 @@ public:
 		}
 	}
 
-	private:
+private:
 	void _M_erase(Node *node);
 };
 
@@ -88,7 +87,7 @@ public:
 
 	__forceinline void clear() { m_tree.clear(); }
 
-	public:
+public:
 	Tree m_tree;
 };
 }
