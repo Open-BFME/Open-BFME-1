@@ -22,6 +22,9 @@ typedef _STL::vector<Rva00197480InnerVector,
 // The explicit member instantiations retain the real STLport copy-constructor
 // surface.  The nested vector is itself copied with placement construction;
 // its point loop is the vendor POD path (three dword copies).
+// The outer get_allocator at 0x001924D0 is also emitted here: the empty
+// allocator is returned through the caller-provided result slot (7 bytes).
+// Its legacy generated ledger key is retained with an explicit object-symbol.
 template _STL::vector<Rva00197480Point,
 	_STL::allocator<Rva00197480Point> >::vector(
 	const _STL::vector<Rva00197480Point,
@@ -34,4 +37,3 @@ template _STL::vector<Rva00197480InnerVector,
 
 typedef char PointSizeCheck[(sizeof(Rva00197480Point) == 12) ? 1 : -1];
 typedef char InnerVectorSizeCheck[(sizeof(Rva00197480InnerVector) == 12) ? 1 : -1];
-
