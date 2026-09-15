@@ -70,3 +70,12 @@ Rva00261F40Vector *Rva00261F40Owner::selectAt00261E40(
     // Retail assumes a nonempty result here; do not add a fallback.
     return begin->second;
 }
+
+// Retail [0x00260650,0x0026066C): 28 bytes, followed by INT3 padding.
+// The builder at 0x00261CC0 passes this address into the STL sorting helpers
+// at +0xBF, +0xD7 and +0xF7. It compares the float distance keys, not vectors.
+bool __cdecl compareDistanceAt00260650(
+    const Rva00261E40Pair &a, const Rva00261E40Pair &b)
+{
+    return a.first < b.first;
+}
