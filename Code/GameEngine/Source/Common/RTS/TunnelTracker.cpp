@@ -1,5 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/bfmekindof /Ireference/shims/tunneltracker /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
+#define BFME_STLP_NODE_ALLOC 1
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 // stlport
@@ -50,6 +51,15 @@
 
 #include "GameLogic/Module/BodyModule.h"
 #include "GameLogic/Module/TunnelContain.h"
+
+struct Rva000F8870Node
+{
+	Rva000F8870Node *m_next;
+	Rva000F8870Node *m_prev;
+	Object *m_value;
+};
+
+void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
 
 
 // ------------------------------------------------------------------------
@@ -194,15 +204,18 @@ void TunnelTracker::addToContainList( Object *obj )
 }
 
 // ------------------------------------------------------------------------
-// ?removeFromContain@TunnelTracker@@ present-unmatched
 void TunnelTracker::removeFromContain( Object *obj, Bool exposeStealthUnits )
 {
 
 	ContainedItemsList::iterator it = std::find(m_containList.begin(), m_containList.end(), obj);
 	if (it != m_containList.end())
 	{
-		// note that this invalidates the iterator!
-		m_containList.erase(it);
+		Rva000F8870Node *node = *(Rva000F8870Node **)&it;
+		Rva000F8870Node *next = node->m_next;
+		Rva000F8870Node *prev = node->m_prev;
+		prev->m_next = next;
+		next->m_prev = prev;
+		bfmeDeallocate(node, 12);
 		--m_containListSize;
 	}	
 
