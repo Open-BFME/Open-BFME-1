@@ -1,4 +1,5 @@
 name,target_rva,reason
+?addScript@ScriptGroup@@QAEXPAVScript@@H@Z,0x00352AB0,False method identity: full153B body installs parser registration base107C7D0 and derived10E8580; constructs ScriptGroup label; consumes four arguments and returns this with RET16 at352B46; caller35DD40 supplies ECX to a20B scoped registration object; exact address-labelled C++ constructor independently reproduced before retraction
 _$E64,0x00C6B2C0,Diplomacy BriefingList initializer is not this retail vector initializer: full build resolves its list ctor to8DCD rather than retail48667->39D5B0; existing ObjectCreationList _$E117 claim at same30B range independently full-byte verified; no coverage removed
 ??0Rva001B3E60@@QAE@XZ,0x001B3CF0,Identity recovered as GhostObject constructor through W3DGhostObject base call and matching geometry layout; existing exact C++ retained under real name
 ??1Rva001B3E60@@UAE@XZ,0x001B3E60,Identity recovered as GhostObject destructor through W3DGhostObject base tailcall and shared constructor vtables; existing exact C++ retained under real name
