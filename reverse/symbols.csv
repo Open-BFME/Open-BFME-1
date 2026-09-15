@@ -5364,6 +5364,7 @@ name,address,notes
 ??_GCostModifierUpgrade@@UAEPAXI@Z,0x00049CD8,unique primary vtable 0x010CC5AC slot zero routes through this ILT to scalar wrapper 0x002D46A0; object-symbol=??_GGen_dtor_002d46a0@@UAEPAXI@Z
 ??_GRva00641C60Queue@@UAEPAXI@Z,0x0001E3DF,vtable 0x01119380 slot zero routes through this ILT to scalar wrapper 0x00642410
 ??_GRva00490350Derived@@UAEPAXI@Z,0x000421C7,dedicated vtable 0x010F9AE4 slot zero routes through this ILT to scalar wrapper 0x00491030
+??_GRva007A1230ArrayOwner@@UAEPAXI@Z,0x000099B2,one-slot vtable 0x01127EB4 routes through this ILT to scalar wrapper 0x007A2490
 ??1Gen_dtor_001f96b0@@UAE@XZ,0x0001627A,gen-dtor class destructor
 ??1Gen_dtor_001fa720@@UAE@XZ,0x0002F1A3,gen-dtor class destructor
 ??1EnragedBehavior@@MAE@XZ,0x0000E822,vtable 0x00CA3D9C slots name EnragedBehavior; protected complete destructor called by wrapper 0x001FAD50
