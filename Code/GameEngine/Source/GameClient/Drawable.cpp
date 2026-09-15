@@ -1123,10 +1123,9 @@ void Drawable::fadeIn( UnsignedInt frames )		///< decloak object
 
 
 //-------------------------------------------------------------------------------------------------
-// ?getScale@Drawable@@QBE?BMXZ present-unmatched
 const Real Drawable::getScale (void) const 
 { 
-	return m_instanceScale; 
+	return *reinterpret_cast<const Real *>(reinterpret_cast<const char *>(this) + 0x1F8);
 //	return getTemplate()->getAssetScale(); 
 }
 
