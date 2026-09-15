@@ -21,4 +21,4 @@
 // against the ZH class definition.  Later retail phases allocate/update the
 // 0x50-byte TintEnvelope at +0x68, process tint bits 1/8/10/20, update the
 // attached envelopes, then perform the final ambient-sound checks.
-#include "Drawable.cpp"
+#include "../../Code/GameEngine/Source/GameClient/Drawable.cpp"
