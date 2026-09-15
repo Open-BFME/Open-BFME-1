@@ -14,6 +14,7 @@ Given one or more vtable VAs this prints everything the ledger already knows:
 
   python3 tools/vtable_lookup.py 0x01137180 [0x01136058 ...]
   python3 tools/vtable_lookup.py --slots 12 0x011135D0     # cap slot listing
+  python3 tools/vtable_lookup.py --target 0x00260180       # start from body RVA
 """
 import argparse
 import csv
@@ -104,20 +105,62 @@ def file_offset_to_rva(secs, off):
     return None
 
 
+def target_tables(image, target_rva, max_slots=64):
+    """Candidate installed tables whose bounded slots reach this body.
+
+    Reuse ctor_vtable's immediate-address scan and thunk resolver rather than
+    treating a pointer into the middle of a table as its head. These are
+    investigation leads, not proofs of an original method name or signature.
+    """
+    found = []
+    for va in image.starts:
+        for slot, body in enumerate(image.slots(va, cap=max_slots)):
+            if body == target_rva:
+                found.append((va, slot))
+    return found
+
+
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("vtables", nargs="+")
+    ap.add_argument("vtables", nargs="*")
     ap.add_argument("--slots", type=int, default=64)
+    ap.add_argument("--target", type=lambda value: int(value, 16),
+                    help="find candidate table heads containing this body RVA (not VA)")
     a = ap.parse_args()
+    if not a.vtables and a.target is None:
+        ap.error("provide a vtable address or --target RVA")
+    if a.slots < 1:
+        ap.error("--slots must be positive")
 
     data = open(build.EXE, "rb").read()
     secs = build.pe_sections(data)
+    discovered_starts = ()
+    if a.target is not None:
+        from ctor_vtable import Image
+        retail_image = Image(data=data, sections=secs)
+        discovered_starts = retail_image.starts
+        if not retail_image.in_text(a.target):
+            ap.error("--target must be a .text RVA, not an absolute VA")
+        matches = target_tables(retail_image, a.target, a.slots)
+        for va, slot in matches:
+            print(f"target {a.target:#010x}: candidate table {va:#010x}, "
+                  f"slot {slot} (+{slot * 4:#x}), slot VA {va + slot * 4:#010x}")
+        if not matches:
+            print("No candidate installed table reaches this body within the slot cap; "
+                  "this does not prove that the function is nonvirtual.")
+        else:
+            print("Verify the installing constructor and caller ABI; table membership "
+                  "alone does not establish the original method name.")
+        a.vtables.extend(hex(va) for va, _ in matches)
+        a.vtables = list(dict.fromkeys(a.vtables))
+        if not a.vtables:
+            return
     by_rva = load_ledger()
     sorted_rvas = sorted(by_rva)
     sym_lines = open(ROOT / "reverse/symbols.csv", encoding="utf-8", errors="replace").read().splitlines()
     fn_lines = open(ROOT / "reverse/functions.csv", encoding="utf-8", errors="replace").read().splitlines()
 
-    pinned_vtables = set()
+    pinned_vtables = set(discovered_starts)
     for l in sym_lines:
         if l.startswith("??_7"):
             parts = l.split(",")
