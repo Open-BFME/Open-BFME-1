@@ -7,10 +7,15 @@ class LocomotorOverridable
 {
 public:
 	LocomotorOverridable *friend_getFinalOverride();
-	int bfmeApplyYA(Player *pl, int mode);
 
 	unsigned char m_bfmeHeadYA[4];
 	LocomotorOverridable *m_bfme04YA;
+};
+
+class ThingTemplate : public LocomotorOverridable
+{
+public:
+	int calcTimeToBuild(const Player *pl, int mode) const;
 };
 
 class Team
@@ -22,18 +27,20 @@ public:
 extern const float BfmeZeroRange;
 extern float g_bfmeDefaultBU;
 
-static __forceinline LocomotorOverridable *bfmeFinalYA(LocomotorOverridable *p)
+static __forceinline ThingTemplate *bfmeFinalYA(LocomotorOverridable *p)
 {
-	LocomotorOverridable *overrideObject;
+	ThingTemplate *overrideObject;
 	if (p == 0)
 	{
 		overrideObject = 0;
 	}
 	else
 	{
-		overrideObject = p->m_bfme04YA;
-		if (overrideObject != 0)
-			overrideObject = overrideObject->friend_getFinalOverride();
+		LocomotorOverridable *next = p->m_bfme04YA;
+		if (next == 0)
+			overrideObject = (ThingTemplate *)p;
+		else
+			overrideObject = (ThingTemplate *)next->friend_getFinalOverride();
 	}
 	return overrideObject;
 }
@@ -60,5 +67,6 @@ float BfmeHostYA::bfmeGetYA()
 	if (pl == 0)
 		return BfmeZeroRange;
 
-	return g_bfmeDefaultBU / (float)bfmeFinalYA(m_bfme04YA)->bfmeApplyYA(pl, -1);
+	ThingTemplate *finalOverride = bfmeFinalYA(m_bfme04YA);
+	return g_bfmeDefaultBU / (float)finalOverride->calcTimeToBuild(pl, -1);
 }
