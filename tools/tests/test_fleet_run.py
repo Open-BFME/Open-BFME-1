@@ -168,3 +168,20 @@ class LegacyAndTimeoutTests(unittest.TestCase):
             record = json.loads(next((root / "build" / "fleet_runs").glob("*/record.json")).read_text())
             self.assertTrue(record.get("timed_out"))
             self.assertEqual(record["cap_seconds"], 2.0)
+
+
+class BriefOverStdinTests(unittest.TestCase):
+    def test_brief_argument_is_replaced_by_stdin(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            brief = root / "brief.txt"
+            text = "TARGETS" + chr(10) + "- 0x00123458 2B" + chr(10) + "x" * 20000 + chr(10)
+            brief.write_text(text, encoding="utf-8")
+            command = [sys.executable, "-c",
+                       "import sys; d=sys.stdin.read(); print('stdin-bytes', len(d)); print('argv', sys.argv[1])", text]
+            head = SimpleNamespace(stdout="fixture-head")
+            with patch.object(fleet_run.subprocess, "run", return_value=head), contextlib.redirect_stdout(io.StringIO()):
+                fleet_run.execute(root, brief, root / "latest.log", "test", "test", command)
+            log = next((root / "build" / "fleet_runs").glob("*/output.log")).read_text(encoding="utf-8")
+            self.assertIn("stdin-bytes " + str(len(text.encode("utf-8"))), log)
+            self.assertIn("argv -", log)

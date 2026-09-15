@@ -19,6 +19,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shutil
 import sqlite3
 import subprocess
 import sys
@@ -241,9 +242,28 @@ def execute(root, brief, legacy_log, engine, seat, command):
         print(f"fleet run {run}: {directory}", flush=True)
         with (directory / "output.log").open("w", encoding="utf-8") as log:
             command, cap, kill_after = strip_timeout(command)
+            # Popen without a shell does not consult PATHEXT: on Windows the
+            # npm `codex` shim is codex.cmd, and a bare `codex` is WinError 2.
+            command = [shutil.which(command[0]) or command[0]] + list(command[1:])
+            # seat.sh passes the whole brief as one argument; on Windows the
+            # npm codex shim goes through cmd.exe, whose line limit is ~8 KB
+            # ("The command line is too long"). Hand the brief over stdin
+            # instead: `codex exec -` reads the prompt from stdin everywhere.
+            def norm(value):
+                return value.replace("\r\n", "\n").strip()
+            text = norm(body.decode("utf-8-sig"))
+            feed = None
+            if any(norm(arg) == text for arg in command[1:]):
+                command = ["-" if norm(arg) == text else arg for arg in command]
+                feed = body
             child = subprocess.Popen(command, cwd=root, env=dict(os.environ, BFME_RUN_ID=run),
-                                     stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
-                                     stderr=subprocess.STDOUT)
+                                     stdin=subprocess.PIPE if feed else subprocess.DEVNULL,
+                                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            if feed:
+                try:
+                    child.stdin.write(feed)
+                finally:
+                    child.stdin.close()
             record["pid"] = child.pid
             record["cap_seconds"] = cap
             save(directory / "record.json", record)
