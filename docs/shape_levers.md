@@ -30,6 +30,29 @@ a byte-exact landing on 2026-09-02. Each row states its own mechanism.
 | A 12-bit bitfield store emits the MSVC insert (`shl; xor; and; xor`) where retail has `and <keep-mask>; or` | Retail knew the value fits the field, and a clamp written as an `if` does not tell MSVC that. Declare the word as a union of the bitfield struct and a plain `unsigned int`, read the count through the bitfield so retail `xor esi,esi; mov si,[p+6]; and esi,0xfff` survives, and write through the dword with an explicit keep-mask and shift. Took 0x008D6010 (163 B) from 52 differing bytes to 11 on 2026-09-11. |
 | A member read that retail performs twice is served once, and the live pointer steals the register retail spends on the next value | MSVC keeps the first read alive across the guard chain. Qualify the member `volatile`, as `Rva008D2070AvailabilityScan.cpp` does for `m_owner`, or put a `_ReadWriteBarrier()` before the second read. Both restore the second load. Recovered the size and the register assignment of 0x008D6010 on 2026-09-11. |
 
+## Model-condition bit masks: retain the native accessor layers
+
+When retail materializes a constant mask in a register (`mov eax,mask;
+test eax,ecx; or ecx,eax`) but a raw word expression emits an immediate OR
+or a compare against the updated word, preserve the native accessor layers:
+a small condition wrapper with inline `test/set/reset` forwarding to
+`_STL::bitset<320>`, consumed by a free `__forceinline` conditional-update
+helper that calls the real Object notifier. Calling bitset directly from an
+Object member was not equivalent for VC7.1's code generation.
+
+Verified witnesses are `Rva0025EF90ChargeApplication.cpp` (230 B),
+`Rva0018E210TurretAngleConditions.cpp` (405 B), and
+`TurretAI::friend_turnTowardsAngle` in `TurretAI.cpp` (274 B). The last went
+from an 11-byte residual to exact with the accessor layers; direct bitset
+calls still differed by 53 bytes. Its canonical-header integration also
+needed BFME's callback slot `0x30`, not the reference header's `0x20`.
+
+Keep the full field base and the bit index honest: Object's 40-byte array
+starts at `+0x110`; accesses at `+0x114`, `+0x124`, and `+0x130` are interior
+words, not new arrays. Derive names from the shipped enum table rather than
+Zero Hour's different numbering. This lever does not validate a routine's
+identity or excuse a changed lifetime or comparison.
+
 Also check that the attempts log entry is not stale: `grep ,0xRVA, reverse/functions.csv`
 -- if the row already points at a `.cpp`, someone landed it.
 

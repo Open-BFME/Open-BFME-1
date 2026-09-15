@@ -425,7 +425,49 @@ void TurretAI::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
-// ?friend_turnTowardsAngle@TurretAI@@QAE_NMMM@Z present-unmatched
+#include <bitset>
+// Full274B at0018E0B0, named by the matched Recenter/IdleScan updates.
+// BFME's320-bit condition array begins atObject+110. The shipped enum
+// table012A6918 identifies TURRET_ROTATE as index57 (ZH uses47).
+class Rva0018E0B0ConditionBits {
+public:
+ Bool test(Int bit) const { return bits.test(bit); }
+ void set(Int bit) { bits.set(bit); }
+ void reset(Int bit) { bits.reset(bit); }
+private:
+ _STL::bitset<320> bits;
+};
+typedef char Rva0018E0B0FlagsSize[(sizeof(Rva0018E0B0ConditionBits)==40)?1:-1];
+// BFME moved reactToTurretChange from ZH slot20 to slot30.
+class Rva0018E0B0ObjectVirtuals {
+public:
+ virtual void slot00(); virtual void slot04(); virtual void slot08();
+ virtual void slot0C(); virtual void slot10(); virtual void slot14();
+ virtual void slot18(); virtual void slot1C(); virtual void slot20();
+ virtual void slot24(); virtual void slot28(); virtual void slot2C();
+ virtual void reactToTurretChange(WhichTurretType, Real, Real);
+};
+class BfmeObjectModelCondition {
+public:
+ void notifyModelConditionChanged();
+ char prefix[0x110];
+ Rva0018E0B0ConditionBits bits;
+};
+static __forceinline void clearTurretRotateCondition(Object *object) {
+ BfmeObjectModelCondition *view=reinterpret_cast<BfmeObjectModelCondition *>(object);
+ if(view->bits.test(57)) {
+  view->bits.reset(57);
+  view->notifyModelConditionChanged();
+ }
+}
+static __forceinline void setTurretRotateCondition(Object *object) {
+ BfmeObjectModelCondition *view=reinterpret_cast<BfmeObjectModelCondition *>(object);
+ if(!view->bits.test(57)) {
+  view->bits.set(57);
+  view->notifyModelConditionChanged();
+ }
+}
+
 Bool TurretAI::friend_turnTowardsAngle(Real desiredAngle, Real rateModifier, Real relThresh)
 {
 	desiredAngle = normalizeAngle(desiredAngle);
@@ -442,7 +484,7 @@ Bool TurretAI::friend_turnTowardsAngle(Real desiredAngle, Real rateModifier, Rea
 		// we are centered
 		actualAngle = desiredAngle;
 
-		getOwner()->clearModelConditionState(MODELCONDITION_TURRET_ROTATE);
+		clearTurretRotateCondition(getOwner());
 	}
 	else
 	{
@@ -451,14 +493,14 @@ Bool TurretAI::friend_turnTowardsAngle(Real desiredAngle, Real rateModifier, Rea
 		else
 			actualAngle -= turnRate;
 
-		getOwner()->setModelConditionState(MODELCONDITION_TURRET_ROTATE);
+		setTurretRotateCondition(getOwner());
 		m_playRotSound = true;
 	}
 
 	m_angle = normalizeAngle(actualAngle);
 	
 	if( m_angle != origAngle )
-		getOwner()->reactToTurretChange( m_whichTurret, origAngle, m_pitch );
+		reinterpret_cast<Rva0018E0B0ObjectVirtuals *>(getOwner())->reactToTurretChange( m_whichTurret, origAngle, m_pitch );
 
 	Bool aligned = fabs(m_angle - desiredAngle) <= relThresh;
 
