@@ -1,5 +1,5 @@
 // ?j_0002eeec@Glo012F1024Item@@QAEXXZ
-// partial score=0.35 date=2026-09-10
+// partial score=0.4 date=2026-09-15
 // Identity: ILT thunk 0x0002EEEC (functions.csv d_0002eeec gen-thunk,
 // target=FUN_007addb0) is called directly by bfmeEnter's tail sequence
 // (Glo012F1024Entry_bfmeStep.cpp, matched, 0x003AEE70). Retail body is
@@ -76,7 +76,9 @@ public:
 void Glo012F1024Item::j_0002eeec(void)
 {
 	unsigned int index = 0;
-	if (m_bfmeFlag20.bfmeSize() != 0)
+	int count = ((int)m_bfmeFlag20.m_bfmeEnd -
+		(int)m_bfmeFlag20.m_bfmeBegin) / 20;
+	if (count != 0)
 	{
 		do
 		{
