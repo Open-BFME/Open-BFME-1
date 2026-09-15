@@ -22,6 +22,7 @@ import re
 import sqlite3
 import subprocess
 import sys
+import threading
 import time
 import uuid
 
@@ -80,9 +81,60 @@ def pid_alive(pid):
         return True
 
 
-def lease_dead(expires, pid, now=None):
+def run_finished(root, run):
+    """True when the immutable run record says the worker is no longer running.
+    Legacy claims (no pid, no expiry) can only be judged this way."""
+    record = root / "build" / "fleet_runs" / str(run) / "record.json"
+    try:
+        status = json.loads(record.read_text(encoding="utf-8")).get("status")
+    except (OSError, ValueError):
+        return True   # no record at all: nothing is running under that name
+    return status in ("finished", "failed", "interrupted")
+
+
+def lease_dead(expires, pid, now=None, root=None, run=None):
     now = time.time() if now is None else now
-    return bool(expires) and now > expires and not pid_alive(pid)
+    if not expires:
+        # legacy row from before leases: dead once its run record says so
+        return root is not None and run_finished(root, run)
+    return now > expires and not pid_alive(pid)
+
+
+def strip_timeout(command):
+    """Return (command, cap_seconds, kill_after). The seat scripts say
+    `timeout -k N SECS prog ...`; fleet_run enforces that cap itself, because
+    on Windows a bare `timeout` is TIMEOUT.EXE (a console pause) and Git's
+    Cygwin coreutils copy rejects the brief argument ("Too many levels of
+    nesting for @"). Both pilot seats died on it in under a second."""
+    if not command or command[0] != "timeout":
+        return command, None, None
+    i, kill_after = 1, None
+    if i < len(command) and command[i] == "-k":
+        kill_after = parse_duration(command[i + 1]); i += 2
+    cap = parse_duration(command[i]); i += 1
+    return command[i:], cap, kill_after
+
+
+def parse_duration(text):
+    units = {"s": 1, "m": 60, "h": 3600, "d": 86400}
+    text = str(text).strip()
+    if text and text[-1] in units:
+        return float(text[:-1]) * units[text[-1]]
+    return float(text)
+
+
+def kill_tree(child):
+    """Kill the worker and everything it spawned (codex forks tool shells)."""
+    if sys.platform.startswith("win"):
+        try:
+            subprocess.Popen(["taskkill", "/T", "/F", "/PID", str(child.pid)],
+                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).wait(30)
+        except OSError:
+            pass
+    try:
+        child.kill()
+    except (ProcessLookupError, OSError):
+        pass
 
 
 def claim(root, run, targets, pid=None, lease=None):
@@ -93,7 +145,7 @@ def claim(root, run, targets, pid=None, lease=None):
         for rva, _ in targets:
             owner = db.execute("SELECT run, pid, expires FROM claims WHERE rva=?", (rva,)).fetchone()
             if owner:
-                if not lease_dead(owner[2], owner[1], now):
+                if not lease_dead(owner[2], owner[1], now, root, owner[0]):
                     raise RuntimeError(f"{rva} is already owned by run {owner[0]}")
                 db.execute("DELETE FROM claims WHERE rva=?", (rva,))
                 db.execute("INSERT INTO releases VALUES (?,?,?)",
@@ -111,8 +163,8 @@ def active_rvas(root):
     """Leases that are live: unexpired, or expired with the worker still running."""
     now = time.time()
     with closing(connect(root)) as db, db:
-        rows = db.execute("SELECT rva, pid, expires FROM claims").fetchall()
-    return {rva for rva, pid, expires in rows if not lease_dead(expires, pid, now)}
+        rows = db.execute("SELECT rva, run, pid, expires FROM claims").fetchall()
+    return {rva for rva, run, pid, expires in rows if not lease_dead(expires, pid, now, root, run)}
 
 
 def run_tag(text):
@@ -188,12 +240,22 @@ def execute(root, brief, legacy_log, engine, seat, command):
         pointer.write_text(f"run={run}\n{directory / 'output.log'}\n", encoding="utf-8")
         print(f"fleet run {run}: {directory}", flush=True)
         with (directory / "output.log").open("w", encoding="utf-8") as log:
+            command, cap, kill_after = strip_timeout(command)
             child = subprocess.Popen(command, cwd=root, env=dict(os.environ, BFME_RUN_ID=run),
                                      stdin=subprocess.DEVNULL, stdout=subprocess.PIPE,
                                      stderr=subprocess.STDOUT)
             record["pid"] = child.pid
+            record["cap_seconds"] = cap
             save(directory / "record.json", record)
             set_pid(root, run, child.pid)
+            timer = None
+            if cap:
+                def expire():
+                    record["timed_out"] = True
+                    kill_tree(child)
+                timer = threading.Timer(cap, expire)
+                timer.daemon = True
+                timer.start()
             # Bound memory even if a tool emits a multi-megabyte single line.
             with child.stdout:
                 while chunk := child.stdout.readline(65536):
@@ -202,6 +264,8 @@ def execute(root, brief, legacy_log, engine, seat, command):
                         log.write(line.rstrip("\r\n")[:400] + "\n")
                         log.flush()
             code = child.wait()
+            if timer:
+                timer.cancel()
         record.update(status="finished", exit_code=code)
         return code
     except BaseException as error:

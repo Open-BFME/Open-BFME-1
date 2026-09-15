@@ -128,3 +128,43 @@ class LeaseTests(unittest.TestCase):
             self.assertIn("0x00000030", fleet_run.active_rvas(root))
             fleet_run.release(root, "run-f", "test")
             self.assertEqual(fleet_run.active_rvas(root), set())
+
+
+class LegacyAndTimeoutTests(unittest.TestCase):
+    def test_legacy_claim_dies_with_its_run_record(self):
+        with contextlib.ExitStack() as stack:
+            root = Path(stack.enter_context(tempfile.TemporaryDirectory()))
+            with contextlib.closing(fleet_run.connect(root)) as db, db:
+                db.execute("INSERT INTO claims (rva, run, started) VALUES ('0x00000040','old-run',0)")
+            # no record at all: nothing runs under that name -> reclaimable
+            self.assertEqual(fleet_run.active_rvas(root), set())
+            rec = root / "build" / "fleet_runs" / "old-run"
+            rec.mkdir(parents=True)
+            (rec / "record.json").write_text(json.dumps({"status": "running"}), encoding="utf-8")
+            self.assertEqual(fleet_run.active_rvas(root), {"0x00000040"})
+            (rec / "record.json").write_text(json.dumps({"status": "finished"}), encoding="utf-8")
+            self.assertEqual(fleet_run.active_rvas(root), set())
+
+    def test_timeout_prefix_is_stripped_and_parsed(self):
+        cmd, cap, kill = fleet_run.strip_timeout(["timeout", "-k", "60", "2700", "codex", "exec"])
+        self.assertEqual((cmd, cap, kill), (["codex", "exec"], 2700.0, 60.0))
+        cmd, cap, kill = fleet_run.strip_timeout(["timeout", "45m", "prog"])
+        self.assertEqual((cmd, cap, kill), (["prog"], 2700.0, None))
+        self.assertEqual(fleet_run.strip_timeout(["python", "-c", "1"]), (["python", "-c", "1"], None, None))
+
+    def test_cap_kills_a_runaway_worker(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            brief = root / "brief.txt"
+            brief.write_text("TARGETS" + chr(10) + "- 0x00123457 2B" + chr(10), encoding="utf-8")
+            command = ["timeout", "-k", "1", "2", sys.executable, "-c",
+                       "import time; print('started', flush=True); time.sleep(60)"]
+            head = SimpleNamespace(stdout="fixture-head")
+            with patch.object(fleet_run.subprocess, "run", return_value=head), contextlib.redirect_stdout(io.StringIO()):
+                started = __import__("time").time()
+                fleet_run.execute(root, brief, root / "latest.log", "test", "test", command)
+                elapsed = __import__("time").time() - started
+            self.assertLess(elapsed, 30)
+            record = json.loads(next((root / "build" / "fleet_runs").glob("*/record.json")).read_text())
+            self.assertTrue(record.get("timed_out"))
+            self.assertEqual(record["cap_seconds"], 2.0)
