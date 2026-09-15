@@ -205,6 +205,12 @@ static unsigned				last_frame_draw_calls									= 0;
 
 static D3DDISPLAYMODE DesktopMode;
 
+// Retail keeps the invalidate-only stage-state counter at 0x0134051C.  The
+// statistics counter below is a distinct object at 0x01340568, despite both
+// being spelled texture_stage_state_changes by the upstream class.  Keep this
+// one TU-local so the DIR32 identity check cannot conflate the two globals.
+static unsigned rva0134051C_invalidate_texture_stage_state_changes = 0;
+
 /* BFME's retail presentation block has a reserved DWORD before SwapEffect. */
 struct BFME_PRESENT_PARAMETERS {
 	UINT BackBufferWidth;
@@ -534,7 +540,7 @@ void DX8Wrapper::Invalidate_Cached_Render_States(void)
 {
 	unsigned zero=0;
 	render_state_changed=zero;
-	texture_stage_state_changes=zero;
+	rva0134051C_invalidate_texture_stage_state_changes=zero;
 
 	unsigned a;
 	for (a=0;a<sizeof(RenderStates)/sizeof(unsigned);++a) {
