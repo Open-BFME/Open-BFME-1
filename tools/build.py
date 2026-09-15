@@ -607,6 +607,61 @@ def source_needs_stlport(source):
     return "// stlport" in head
 
 
+def _resolve_toolchain_include_flag(flag):
+    """Resolve a TU's VS2003 include flag against the tracked toolchain.
+
+    A few recovered TUs carry paths copied from a Windows machine's short
+    names, for example ``.../PROG~FBU/MICR~2RR.NET/Vc7/PLAT~MIB/Include``.
+    Those aliases are not stable (and usually do not exist on the checkout's
+    filesystem), while the portion below ``Vc7`` identifies the SDK root we
+    need.  Keep ordinary project-relative ``/I`` flags untouched and only
+    repair paths explicitly rooted under ``build/toolchains/vs2003``.
+    """
+    if not flag.startswith(("-I", "/I")):
+        return flag
+
+    raw = flag[2:].replace("\\", "/")
+    lower = raw.lower()
+    prefix = "build/toolchains/vs2003/"
+    marker = "/vc7/"
+    if not lower.startswith(prefix) or marker not in lower:
+        return flag
+
+    suffix = raw[lower.index(marker) + len(marker):]
+    current = vc71_root() / "Vc7"
+    for component in suffix.split("/"):
+        if not component:
+            continue
+        direct = current / component
+        if direct.exists():
+            current = direct
+            continue
+
+        try:
+            choices = [child for child in current.iterdir()
+                       if child.name.lower() == component.lower()]
+        except OSError:
+            return flag
+
+        # Windows short names copied from another install are not reliable
+        # enough to compare literally.  A unique prefix is sufficient for the
+        # two SDK directories used by the recovered sources.
+        if not choices and "~" in component:
+            short_prefix = component.split("~", 1)[0].lower()
+            try:
+                choices = [child for child in current.iterdir()
+                           if child.name.lower().startswith(short_prefix)]
+            except OSError:
+                return flag
+        if len(choices) != 1:
+            return flag
+        current = choices[0]
+
+    if not current.exists():
+        return flag
+    return "-I" + str(current)
+
+
 def compiler_environment(root, source=None):
     env = os.environ.copy()
     bin_dir = root / "Vc7" / "bin"
@@ -671,7 +726,9 @@ def source_extra_flags(source):
             if line.startswith("// cl:"):
                 # Use '-' style options so MSYS/Cygwin shells don't rewrite
                 # leading '/' arguments as Windows paths.
-                return [f.replace("/", "-", 1) if f.startswith("/") else f for f in line[len("// cl:") :].split()]
+                flags = [f.replace("/", "-", 1) if f.startswith("/") else f
+                         for f in line[len("// cl:") :].split()]
+                return [_resolve_toolchain_include_flag(flag) for flag in flags]
     return []
 
 
