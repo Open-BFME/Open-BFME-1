@@ -3040,13 +3040,31 @@ void W3DModelDraw::hideAllMuzzleFlashes(const ModelConditionInfo* state, RenderO
 //-------------------------------------------------------------------------------------------------
 static Bool turretNamesDiffer(const ModelConditionInfo* a, const ModelConditionInfo* b)
 {
-	if (!(a->m_validStuff & ModelConditionInfo::TURRETS_VALID) || !(b->m_validStuff & ModelConditionInfo::TURRETS_VALID))
+	struct RetailModelConditionInfo
+	{
+		struct TurretInfo
+		{
+			UnsignedInt m_turretAngleNameKey;
+			UnsignedInt m_turretPitchNameKey;
+			char m_padding[0x10];
+		};
+
+		char m_padding[0xf0];
+		TurretInfo m_turrets[2];
+		char m_paddingAfterTurrets[4];
+		unsigned char m_validStuff;
+	};
+
+	if (!reinterpret_cast<const RetailModelConditionInfo *>(a)->m_validStuff ||
+			!reinterpret_cast<const RetailModelConditionInfo *>(b)->m_validStuff)
 	{
 		return true;
 	}
 	for (int i = 0; i < MAX_TURRETS; ++i)
-		if (a->m_turrets[i].m_turretAngleNameKey != b->m_turrets[i].m_turretAngleNameKey || 
-				a->m_turrets[i].m_turretPitchNameKey != b->m_turrets[i].m_turretPitchNameKey)
+		if (reinterpret_cast<const RetailModelConditionInfo *>(a)->m_turrets[i].m_turretAngleNameKey !=
+				reinterpret_cast<const RetailModelConditionInfo *>(b)->m_turrets[i].m_turretAngleNameKey ||
+				reinterpret_cast<const RetailModelConditionInfo *>(a)->m_turrets[i].m_turretPitchNameKey !=
+				reinterpret_cast<const RetailModelConditionInfo *>(b)->m_turrets[i].m_turretPitchNameKey)
 			return true;
 
 	return false;
