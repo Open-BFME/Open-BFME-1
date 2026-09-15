@@ -38,23 +38,15 @@ private:
 	float m_lightOffsetZ;
 
 public:
-	bool bfmeIntersectsVisibleBounds(const AABoxClass &box) const;
+	int bfmeIntersectsVisibleBounds(const AABoxClass &box) const;
 };
 
-bool W3DVolumetricShadow::bfmeIntersectsVisibleBounds(const AABoxClass &box) const
+__declspec(noinline) int W3DVolumetricShadow::bfmeIntersectsVisibleBounds(const AABoxClass &box) const
 {
 	Vector3 pos = m_robj->Get_Position();
 
-	if (pos.Z + m_extraExtrusionPadding < box.Center.Z)
-		return 0;
-
-	return ((m_lightOffsetX > BfmeZeroRange ? m_lightOffsetX : BfmeZeroRange) +
-				m_robjExtent + pos.X > box.Center.X &&
-				pos.X - m_robjExtent +
-					(m_lightOffsetX < BfmeZeroRange ? m_lightOffsetX : BfmeZeroRange) < box.Center.X &&
-				(m_lightOffsetY > BfmeZeroRange ? m_lightOffsetY : BfmeZeroRange) +
-					m_robjExtent + pos.Y > box.Center.Y &&
-				pos.Y - m_robjExtent +
-					(m_lightOffsetY < BfmeZeroRange ? m_lightOffsetY : BfmeZeroRange) < box.Center.Y)
-		;
+	return pos.X + m_robjExtent > box.Center.X - box.Extent.X &&
+			pos.X - m_robjExtent < box.Center.X + box.Extent.X &&
+			pos.Y + m_robjExtent > box.Center.Y - box.Extent.Y &&
+			pos.Y - m_robjExtent < box.Center.Y + box.Extent.Y;
 }
