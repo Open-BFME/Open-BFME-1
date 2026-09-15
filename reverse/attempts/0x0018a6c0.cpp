@@ -45,7 +45,7 @@ public:
     }
 };
 
-extern "C" AI *TheAIParseDefinitionAI;
+#define TheAI (*(AI **)0x012EF214)
 
 class StateMachine
 {
@@ -147,9 +147,10 @@ StateReturnType AITNGuardOuterState::onEnter()
     if (nemesis == 0)
         return STATE_SUCCESS;
 
+	AIData *aiData = TheAI->getAiData();
+	unsigned int gameFrame = logic->getFrame();
 	m_exitConditions.m_attackGiveUpFrame =
-		logic->getFrame() +
-		TheAIParseDefinitionAI->getAiData()->m_guardChaseUnitFrames;
+		gameFrame + aiData->m_guardChaseUnitFrames;
     m_attackState = new BfmeAIAttackState(
         (StateMachine *)m_machine, false, true, false, &m_exitConditions );
     m_attackState->getMachine()->setGoalObject(nemesis);
