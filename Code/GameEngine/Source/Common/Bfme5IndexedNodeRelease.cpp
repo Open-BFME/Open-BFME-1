@@ -1,5 +1,26 @@
+// cl: /O2 /EHsc
+// stlport
 // Releases one indexed 16-byte node, repairs its two reciprocal short links,
 // and moves the retired index onto the owner's free-list head.
+
+#include <map>
+
+// Reuse the verified 0x00196D30 tree-erase instantiation. Its payload's
+// original identity remains unknown; retail updates its second dword at
+// tree-node+0x18 to the new chain head. No new payload identity is claimed.
+struct Gen_t_00196d30_p8cd {
+	int a[2];
+	Gen_t_00196d30_p8cd();
+	Gen_t_00196d30_p8cd(const Gen_t_00196d30_p8cd &);
+	~Gen_t_00196d30_p8cd();
+	Gen_t_00196d30_p8cd &operator=(const Gen_t_00196d30_p8cd &);
+};
+typedef _STL::pair<const int, Gen_t_00196d30_p8cd> BfmeIndexedTreePair;
+typedef _STL::_Rb_tree<int, BfmeIndexedTreePair,
+	_STL::_Select1st<BfmeIndexedTreePair>, _STL::less<int>,
+	_STL::allocator<BfmeIndexedTreePair> > BfmeIndexedTree;
+template<> void BfmeIndexedTree::erase(BfmeIndexedTree::iterator);
+typedef char CheckIndexedTreeSize[(sizeof(BfmeIndexedTree) == 12) ? 1 : -1];
 
 class BfmeMapObjectExtra
 {
@@ -16,19 +37,19 @@ struct BfmeIndexedNodeFM
 	short m_next;
 	short m_chainNext;
 	short m_chainPrevious;
-	void *m_entry;
+	_STL::_Rb_tree_node<BfmeIndexedTreePair> *m_entry;
 	BfmeMapObjectExtra m_extra;
 };
 
 class BfmeIndexedNodesFM
 {
 public:
-	void bfmePrepareRelease(int index);
+	__declspec(noinline) void bfmePrepareRelease(int index);
 	void bfmeRelease(int index);
 	void clearChainedNodesAt00197860();
 
 private:
-	char m_head[0x0c];
+	BfmeIndexedTree m_tree;
 	BfmeIndexedNodeFM *m_nodes;
 	char m_gap[8];
 	short m_count;
@@ -74,5 +95,31 @@ void BfmeIndexedNodesFM::clearChainedNodesAt00197860()
 			m_freeHead = static_cast<short>(index);
 		}
 		index = next;
+	}
+}
+
+// Retail 0x00197750, 125 bytes. Unlink from the per-key chain; if removing
+// its head, update the tree payload or erase the now-empty tree entry.
+void BfmeIndexedNodesFM::bfmePrepareRelease(int index)
+{
+	BfmeIndexedNodeFM *node = &m_nodes[index];
+	short previous = node->m_chainPrevious;
+	if (!previous)
+	{
+		if (node->m_chainNext)
+		{
+			node->m_entry->_M_value_field.second.a[1] = node->m_chainNext;
+			m_nodes[node->m_chainNext].m_chainPrevious = 0;
+		}
+		else
+		{
+			m_tree.erase(BfmeIndexedTree::iterator(node->m_entry));
+		}
+	}
+	else
+	{
+		m_nodes[previous].m_chainNext = node->m_chainNext;
+		if (node->m_chainNext)
+			m_nodes[node->m_chainNext].m_chainPrevious = node->m_chainPrevious;
 	}
 }
