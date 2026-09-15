@@ -5944,7 +5944,7 @@ name,address,notes
 ??1Gen_00471390@@UAE@XZ,0x00023457,Gen_00471390 complete destructor ILT; constructor 0x00471390 and vtable 0x010F756C establish the owned object identity for scalar wrapper 0x00471850
 ??1Gen_dtor_004724d0@@UAE@XZ,0x0001C0A3,gen-dtor class destructor
 ??1Gen_dtor_00473370@@UAE@XZ,0x00048DBF,gen-dtor class destructor
-??1Gen_dtor_004735c0@@UAE@XZ,0x0000B636,gen-dtor class destructor
+??1GameFont@@UAE@XZ,0x0000B636,GameFont destructor ILT used by the scalar-deleting destructor at 0x004735C0
 ??1Gen_dtor_00473aa0@@UAE@XZ,0x00015F5F,gen-dtor class destructor
 ??1Gen_dtor_00473ad0@@UAE@XZ,0x000364A3,gen-dtor class destructor
 ??1Gen_dtor_00473b90@@UAE@XZ,0x0003DC3A,gen-dtor class destructor
