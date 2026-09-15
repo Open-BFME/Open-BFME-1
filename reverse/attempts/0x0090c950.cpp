@@ -58,16 +58,16 @@ struct BfmeDescEQS
 	int m_bfmeFieldEQS[8];
 };
 
-class BfmeHostEQS
+class BfmeNameVHN
 {
 public:
-	char bfmeCheckEQS();
+	char bfmeIsRawVHN();
 
 	unsigned char m_bfmeHeadEQS[8];
 	BfmeIfaceEQS *m_bfmeDevEQS;
 };
 
-char BfmeHostEQS::bfmeCheckEQS()
+char BfmeNameVHN::bfmeIsRawVHN()
 {
 	char ok = 0;
 
