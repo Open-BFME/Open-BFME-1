@@ -20,10 +20,6 @@ inline UnicodeString::UnicodeString(const UnicodeString &text)
 	((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
 		*(const StringBase<unsigned short> *)&text);
 }
-inline UnicodeString::~UnicodeString()
-{
-	((StringBase<unsigned short> *)this)->releaseBuffer();
-}
 
 extern const char g_bfmeEmptyUnicode[];
 inline int compareWideRuns(const unsigned short *s1, int len1,
