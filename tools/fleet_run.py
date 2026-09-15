@@ -2,12 +2,16 @@
 """Run one worker with an immutable brief, transcript and actual exit status.
 
 The caller supplies a bounded command (seat.sh uses timeout). Runs share an
-atomic RVA claim table across lanes. Claims never expire silently: after a
-supervisor crash an operator must establish the worker stopped, then release
-the named run with --release RUN --reason TEXT. Existing legacy workers do not
-participate; deploy at a fleet restart, not by overwriting a running script.
+atomic RVA claim table across lanes. A claim is a LEASE: it carries the
+worker's pid and an expiry (FLEET_LEASE_SECONDS, default the 150-minute
+session cap plus 30 minutes). A lease is reclaimed only when it has expired
+AND its pid is gone -- never out from under a live worker. An operator can
+still release a named run with --release RUN --reason TEXT after establishing
+the worker stopped. Existing legacy workers do not participate; deploy at a
+fleet restart, not by overwriting a running script.
 """
 import argparse
+from contextlib import closing
 import csv
 import datetime
 import hashlib
@@ -33,27 +37,82 @@ def keep_transcript_line(line):
     return bool(DISASSEMBLY.match(line)) or not DIFF.match(line)
 
 
+LEASE_SECONDS = int(os.environ.get("FLEET_LEASE_SECONDS", "0") or 0) or (9000 + 1800)
+
+
 def connect(root):
     (root / "build").mkdir(exist_ok=True)
     db = sqlite3.connect(root / "build/fleet_runs.sqlite", timeout=60)
     db.execute("CREATE TABLE IF NOT EXISTS claims (rva TEXT PRIMARY KEY, run TEXT, started REAL)")
     db.execute("CREATE TABLE IF NOT EXISTS releases (run TEXT, at REAL, reason TEXT)")
+    have = {row[1] for row in db.execute("PRAGMA table_info(claims)")}
+    if "pid" not in have:
+        db.execute("ALTER TABLE claims ADD COLUMN pid INTEGER")
+    if "expires" not in have:
+        db.execute("ALTER TABLE claims ADD COLUMN expires REAL")
     return db
 
 
-def claim(root, run, targets):
-    with connect(root) as db:
+def pid_alive(pid):
+    """True while the process exists. Unknown pid (None) counts as alive: a
+    lease we cannot check is not a lease we may take."""
+    if not pid:
+        return True
+    if sys.platform.startswith("win"):
+        import ctypes
+        kernel32 = ctypes.windll.kernel32
+        handle = kernel32.OpenProcess(0x1000, False, int(pid))  # PROCESS_QUERY_LIMITED_INFORMATION
+        if not handle:
+            return False
+        try:
+            code = ctypes.c_ulong()
+            if not kernel32.GetExitCodeProcess(handle, ctypes.byref(code)):
+                return True
+            return code.value == 259  # STILL_ACTIVE
+        finally:
+            kernel32.CloseHandle(handle)
+    try:
+        os.kill(int(pid), 0)
+        return True
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True
+
+
+def lease_dead(expires, pid, now=None):
+    now = time.time() if now is None else now
+    return bool(expires) and now > expires and not pid_alive(pid)
+
+
+def claim(root, run, targets, pid=None, lease=None):
+    lease = LEASE_SECONDS if lease is None else lease
+    now = time.time()
+    with closing(connect(root)) as db, db:
         db.execute("BEGIN IMMEDIATE")
         for rva, _ in targets:
-            owner = db.execute("SELECT run FROM claims WHERE rva=?", (rva,)).fetchone()
+            owner = db.execute("SELECT run, pid, expires FROM claims WHERE rva=?", (rva,)).fetchone()
             if owner:
-                raise RuntimeError(f"{rva} is already owned by run {owner[0]}")
-            db.execute("INSERT INTO claims VALUES (?,?,?)", (rva, run, time.time()))
+                if not lease_dead(owner[2], owner[1], now):
+                    raise RuntimeError(f"{rva} is already owned by run {owner[0]}")
+                db.execute("DELETE FROM claims WHERE rva=?", (rva,))
+                db.execute("INSERT INTO releases VALUES (?,?,?)",
+                           (owner[0], now, f"lease expired and pid {owner[1]} is gone; {rva} taken by {run}"))
+            db.execute("INSERT INTO claims (rva, run, started, pid, expires) VALUES (?,?,?,?,?)",
+                       (rva, run, now, pid, now + lease))
+
+
+def set_pid(root, run, pid):
+    with closing(connect(root)) as db, db:
+        db.execute("UPDATE claims SET pid=? WHERE run=?", (pid, run))
 
 
 def active_rvas(root):
-    with connect(root) as db:
-        return {row[0] for row in db.execute("SELECT rva FROM claims")}
+    """Leases that are live: unexpired, or expired with the worker still running."""
+    now = time.time()
+    with closing(connect(root)) as db, db:
+        rows = db.execute("SELECT rva, pid, expires FROM claims").fetchall()
+    return {rva for rva, pid, expires in rows if not lease_dead(expires, pid, now)}
 
 
 def run_tag(text):
@@ -88,7 +147,7 @@ def retry_allowed(root, rva, before):
 
 
 def release(root, run, reason):
-    with connect(root) as db:
+    with closing(connect(root)) as db, db:
         db.execute("DELETE FROM claims WHERE run=?", (run,))
         db.execute("INSERT INTO releases VALUES (?,?,?)", (run, time.time(), reason))
 
@@ -134,6 +193,7 @@ def execute(root, brief, legacy_log, engine, seat, command):
                                      stderr=subprocess.STDOUT)
             record["pid"] = child.pid
             save(directory / "record.json", record)
+            set_pid(root, run, child.pid)
             # Bound memory even if a tool emits a multi-megabyte single line.
             with child.stdout:
                 while chunk := child.stdout.readline(65536):

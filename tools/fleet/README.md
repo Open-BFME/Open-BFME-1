@@ -13,13 +13,15 @@ change does not replace a shell that is already executing an older copy.
 
 | Script | Role |
 |---|---|
-| `launch_fleet.sh N B F M` | start N file-lane, B big-body, F finish-lane, M mid-lane seats plus the watchdog and harvest loop |
-| `seat.sh ENGINE SEAT` | one seat loop; engines `luna`, `lunamid`, `lunaclass`, `lunafin`, `lunabig`, `solhigh*`, `grok*`; SESSION_CAP default 150 min |
+| `launch_fleet.sh N B F M A R` | start N file-lane, B big-body, F finish-lane, M mid-lane, A anonymous-lane, R reviewer seats plus the watchdog and harvest loop |
+| `seat.sh ENGINE SEAT` | one seat loop; engines `luna`, `lunamid`, `lunaclass`, `lunafin`, `lunabig`, `lunaanon`, `lunareview`, `lunaxhigh*`, `solhigh*`, `grok*`; SESSION_CAP default 150 min |
 | `pick_file.py` | claim a dump file, ordered by landed-neighbour density (46.5% vs 19.5% land rate) |
 | `pick_mid.py` | claim 3 bodies of 300..1000 B from the file with the densest landed C++ neighbourhood |
 | `pick_class.py` | claim the warmest vtable (most slots landed, some still dumps) and print its slot table |
 | `vtable_rank.py` | build the vtable ranking `pick_class.py` reads; game classes have no RTTI |
-| `pick_finish.py` | claim near-landed stashes (score 0.9+) |
+| `pick_finish.py` | claim near-landed stashes (score 0.9+); reads the stash on disk, not only the latest verdict |
+| `pick_anon.py` | claim anonymous dump bodies, warmest evidence pack first (callers via thunk, strings, vtable, layout) |
+| `pick_review.py` | claim banked bodies 0.5..0.95 for a reviewer seat (identity, layout, convention, pins) |
 | `harvest.py`, `harvest_loop.sh`, `ledger_prep.py` | the only VCS path while seats run: repair mechanical ledger states under the lock, commit, rebase in `build/wt`, push |
 | `ledger_watchdog.py` | keep the ledgers landable between harvests |
 | `retire_seat.ps1` | kill one seat's loop and only its own session; call with `-Seats @(...) -Stems @(...)` via `-Command`, never `-File` |

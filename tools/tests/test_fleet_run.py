@@ -88,3 +88,43 @@ class TranscriptFilterTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class LeaseTests(unittest.TestCase):
+    """A claim is a lease: reclaimed only when expired AND the pid is gone."""
+
+    def _root(self, stack):
+        temporary = stack.enter_context(tempfile.TemporaryDirectory())
+        return Path(temporary)
+
+    def test_live_lease_blocks_and_dead_lease_is_reclaimed(self):
+        with contextlib.ExitStack() as stack:
+            root = self._root(stack)
+            targets = [("0x00123456", 2)]
+            fleet_run.claim(root, "run-a", targets, pid=None, lease=10)
+            with self.assertRaises(RuntimeError):
+                fleet_run.claim(root, "run-b", targets, pid=None, lease=10)
+            self.assertEqual(fleet_run.active_rvas(root), {"0x00123456"})
+            # expired but pid unknown: still live (never reclaim what we cannot check)
+            fleet_run.claim(root, "run-c", [("0x00000010", 1)], pid=None, lease=-5)
+            self.assertIn("0x00000010", fleet_run.active_rvas(root))
+            # expired and pid dead: reclaimable, and the takeover is recorded
+            with patch.object(fleet_run, "pid_alive", return_value=False):
+                fleet_run.claim(root, "run-d", [("0x00000020", 1)], pid=999999, lease=-5)
+                self.assertNotIn("0x00000020", fleet_run.active_rvas(root))
+                fleet_run.claim(root, "run-e", [("0x00000020", 1)], pid=None, lease=10)
+            with contextlib.closing(fleet_run.connect(root)) as db:
+                owner = db.execute("SELECT run FROM claims WHERE rva='0x00000020'").fetchone()[0]
+                reasons = [r[0] for r in db.execute("SELECT reason FROM releases")]
+            self.assertEqual(owner, "run-e")
+            self.assertTrue(any("lease expired" in r for r in reasons))
+
+    def test_own_pid_is_alive_and_release_clears(self):
+        import os
+        self.assertTrue(fleet_run.pid_alive(os.getpid()))
+        with contextlib.ExitStack() as stack:
+            root = self._root(stack)
+            fleet_run.claim(root, "run-f", [("0x00000030", 1)], pid=os.getpid(), lease=-5)
+            self.assertIn("0x00000030", fleet_run.active_rvas(root))
+            fleet_run.release(root, "run-f", "test")
+            self.assertEqual(fleet_run.active_rvas(root), set())

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # A fleet seat: keeps one engine busy. $1 = engine, $2 = seat id.
 #   engines: grok | sol | luna        -> claim a whole dump file (>= 12 bodies), smallest first
+#            lunaanon                -> 2 anonymous dump bodies, warmest evidence pack first (pick_anon.py)
+#            lunareview              -> review 2 banked bodies 0.5..0.95 for identity/layout/convention (pick_review.py)
 #            grokbig | solbig | lunabig -> claim ONE large body (1KB..2.5KB) and stay on it
 #            for up to 3 sessions while it is still a dump and the last banked partial
 #            scored >= 0.5 (each session restarts from the stash)
@@ -9,6 +11,7 @@ cd "$(dirname "$0")/.." || exit 1
 ENGINE="$1"; SEAT="$2"
 case "$ENGINE" in
   lunahigh*) CMODEL=luna-high; CM="gpt-5.6-luna"; CE="high";;
+  lunaxhigh*) CMODEL=luna-xhigh; CM="gpt-5.6-luna"; CE="xhigh";;
   luna*) CMODEL=luna-max; CM="gpt-5.6-luna"; CE="max";;
   solhigh*) CMODEL=sol-high; CM="gpt-5.6-sol"; CE="high";;
   sol*)  CMODEL=sol;      CM="gpt-5.6-sol";  CE="medium";;
@@ -71,6 +74,30 @@ while true; do
     echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $STEM" >> build/fleet_logs/seats.log
     run_engine "$BRIEF" "$LOG"
     echo "$(date '+%H:%M') seat $ENGINE$SEAT done $STEM" >> build/fleet_logs/seats.log
+  elif [ "${ENGINE%anon}" != "$ENGINE" ]; then
+    # anonymous lane: 2 anonymous dump bodies with the warmest evidence pack
+    RVAS=$(python build/pick_anon.py 2 300 2500 | tr -d '\r' | tr '\n' ' ')
+    [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no anonymous bodies picked; retry in 120s"; sleep 120; continue; }
+    STEM=$(echo "$RVAS" | awk '{print $1}')
+    BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
+    # shellcheck disable=SC2086
+    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 2 --note "ANONYMOUS bodies. The EVIDENCE block under each target is the lead: callers (including via ILT thunk), string literals, vtable install/slot, witnessed layout, landed neighbours. Step 1 is the boundary: confirm start, size and a contiguous end (ret/jmp then padding) from tools/dis_retail.py before anything else. Step 2 is the callee contract: python3 tools/callees.py RVA SIZE, and name ONLY what it prints. Step 3: identity you can PROVE from that evidence (a matched caller naming the symbol, a vtable slot, a unique literal in the ZH tree) gets the real name with the evidence cited. Identity you cannot prove gets an OPAQUE name that keeps the address token (RvaXXXXXXXX::method or ?dup_XXXXXXXX) -- this is permitted and expected; a plausible GUESSED class or method name is prohibited, no gate can see it. Then skeleton compiling, probe.py on the FIRST divergence, one lever at a time. Land with add_match.py when EXACT; otherwise ALWAYS bank your best body with re_log.py partial --stash --score and say in the evidence what you proved, what you assumed, and what would justify reopening." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
+    LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $RVAS" >> build/fleet_logs/seats.log
+    run_engine "$BRIEF" "$LOG"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT done $RVAS" >> build/fleet_logs/seats.log
+  elif [ "${ENGINE%review}" != "$ENGINE" ]; then
+    # review lane: banked bodies 0.5..0.95; check what the byte gate cannot see
+    RVAS=$(python build/pick_review.py 2 0.5 0.95 | tr -d '\r' | tr '\n' ' ')
+    [ -z "${RVAS// /}" ] && { echo "seat $SEAT: nothing to review; retry in 300s"; sleep 300; continue; }
+    STEM=$(echo "$RVAS" | awk '{print $1}')
+    BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
+    # shellcheck disable=SC2086
+    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 2 --note "REVIEWER. A worker banked each body below (START FROM STASH line) and wrote its assumptions into the re_attempts.log evidence. Your job is what the byte gate cannot see: is the identity right (caller naming the symbol? vtable slot? literal?), is the class layout witnessed (tools/name_oracle.py, tools/bfme_layout.py), is the calling convention and every callee name what tools/callees.py prints, is any pin naming the WRONG function (tools/pin_consistency.py --symbol)? Correct what is wrong in the stash, run probe.py, and either land it with add_match.py or re-bank it with a corrected evidence line that states what you verified, what you changed, and the one thing still missing. Do not rewrite from scratch. Do not add a pin on the worker's say-so." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
+    LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $RVAS" >> build/fleet_logs/seats.log
+    run_engine "$BRIEF" "$LOG"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT done $RVAS" >> build/fleet_logs/seats.log
   elif [ "${ENGINE%fin}" != "$ENGINE" ]; then
     # finish lane: 2 bodies whose banked partial scored >= 0.9, start from the stash
     RVAS=$(python build/pick_finish.py 4 0.9 | tr -d '\r' | tr '\n' ' ')

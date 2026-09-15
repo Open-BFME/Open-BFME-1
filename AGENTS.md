@@ -12,7 +12,29 @@ An explicit request or assigned lane overrides the queue:
 1. `git pull --rebase origin master`
 2. `python3 tools/check_csv.py` — repair ledger errors before other work
 3. `python3 tools/next_work.py` for identity and structural work; it explains
-   its own tiers. **This is the default work.**
+   its own tiers. **This is the default work.** Its first tier is `finish`:
+   a dump address with a banked body scoring 0.90+ (`reverse/attempts/`).
+   Measured 2026-09-15: 404 such bodies, 106 KB, 1.1 pp, each one lever from
+   landing. START FROM THE STASH; a later `blocked` on the same address is a
+   failed session, not a reason to rewrite. Only a dead-end verdict
+   (no-match, refuted, ...) retires an address, and that rule now lives in
+   ONE place, `tools/eligibility.py`, which every picker and `brief.py`
+   import. Do not re-derive "is this open work" in a new tool.
+3a. **Anonymous bodies are the main lane from here.** 97% of the remaining
+   dump bytes are `?d_` bodies with no name. The evidence pack in every brief
+   (callers INCLUDING via ILT thunk, string literals, vtable install/slot,
+   witnessed layout, landed neighbours) is the lead: on 2026-09-15 folding
+   thunk-mediated callers took bodies-with-callers from 3/60 to 38/60 in a
+   sample, so "no callers" in an OLD verdict is stale. Identity you can prove
+   gets the real name with the evidence cited. Identity you cannot prove gets
+   an OPAQUE name that keeps the address token (`RvaXXXXXXXX::method`,
+   `?dup_XXXXXXXX`): permitted, expected, and counted by progress.py. A
+   plausible GUESSED class or method name is prohibited; no gate can see it.
+3b. **Replacing generator-written C++ with hand-written C++ is deferred.**
+   It scores +0 on the headline (generated code already compiles and is
+   already counted) and it consumed the seats meant for dumps once the naked
+   pool ran dry. Take it only when `next_work.py` and the fleet lanes are
+   both dry, and say so.
 4. `python3 tools/list_naked_candidates.py Code` serves a byte-true dump from
    `Code/gen_asm/`, boundary already proven. Take one only when next_work.py is
    also dry -- measured 2026-09-14, this lane's untried pool is EMPTY: all 3,885

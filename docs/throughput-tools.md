@@ -5,6 +5,43 @@ do not change what counts as a conversion: the normal source, relocation,
 identity, commit and push gates still apply. Neither a masked match nor an
 author's partial score proves a function is correct.
 
+## One eligibility predicate, leases, and the anonymous lane (2026-09-15)
+
+`tools/eligibility.py` is the single answer to "is this address open work,
+what has been tried, who is on it". `next_work.py`, every `tools/fleet/pick_*.py`
+and `tools/brief.py` import it. Rules: a dump row (gen-dump note or `.asm`
+source) is open; a dead-end verdict retires it; a deferral never does; a
+banked stash outlives a later `blocked`; busy means a live `fleet_run` lease
+or a seat currently `->` on it in `seats.log`. The append-only
+`build/fleet_*_claimed.txt` files are no longer read: a body a run touched
+waits 48 h (`recent_run_rvas`, from the immutable run records) instead of
+being claimed for ever. Measured before the change: `pick_finish.py` saw 147 of
+381 servable near-misses; `next_work.py` had no stash tier at all.
+
+`tools/fleet_run.py` claims are leases: pid + expiry (`FLEET_LEASE_SECONDS`,
+default session cap + 30 min). A lease is reclaimed only when expired AND the
+pid is gone; an unknown pid is never reclaimed. Takeovers are recorded in the
+`releases` table with the reason.
+
+Lanes added to `seat.sh` / `launch_fleet.sh` (args: file big finish mid anon
+review; defaults 10 0 10 5 10 2, no net new seats):
+
+- `lunaanon` -- `pick_anon.py N min max`: anonymous dump bodies ranked by what
+  the evidence pack can prove (strings 3, vtable 2, callers 2 each up to 3,
+  layout 1, neighbours 1). A body with warmth 0 and two prior attempts waits;
+  a body with a lead is served however often blind sessions bounced off it.
+  The brief permits an opaque address-keeping name and prohibits a guessed one.
+- `lunareview` -- `pick_review.py N lo hi`: banked bodies scoring 0.5..0.95
+  whose latest verdict is a deferral. The reviewer checks what the byte gate
+  cannot see (identity, layout, calling convention, callee names, wrong pins),
+  repairs the stash, lands or re-banks with a corrected evidence line. Trial:
+  measure landed bytes per reviewer-hour with `fleet_report.py` before
+  expanding it.
+
+The pilot is 20 anonymous bodies through `lunaanon` with `lunareview` behind
+it; judge it by headline pp against `docs/baseline-2026-09-15.md`, not by
+commits.
+
 ## Retained attempts and compiler experiments
 
 `re_log.py record ... partial --stash FILE --score N` preserves the prior body

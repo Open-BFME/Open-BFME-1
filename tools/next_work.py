@@ -573,14 +573,6 @@ def annotate_stashes(candidates):
     return candidates
 
 
-def _is_dump_row(row):
-    """A row that fixes a boundary but holds no source: gen-dump note or a
-    MASM body. Progress counts neither, so the address is still open work."""
-    import build
-    return (build.is_scaffold_row(row)
-            or Path(row.get("source", "")).suffix.lower() in (".asm", ".s"))
-
-
 def finish_candidates(min_score=0.9):
     """The near-landed tier: bodies with a banked attempt at or above
     `min_score` whose address is STILL a dump.
@@ -592,35 +584,12 @@ def finish_candidates(min_score=0.9):
     The stash is the evidence; the verdict beside it says what to read first.
     """
     import build
-    dumps = {}
-    for row in build.load_all_function_rows():
-        if row.get("status") != "matched" or not row.get("target_rva"):
-            continue
-        if _is_dump_row(row):
-            dumps[int(row["target_rva"], 16)] = row
-    attempts_dir = re_log.RE_ATTEMPTS.parent / "attempts"
-    latest = {rva: fields[3] for rva, fields in re_log.latest_records().items()}
+    import eligibility
+    latest = eligibility.latest_verdicts()
     out = []
-    for path in sorted(attempts_dir.glob("0x*.cpp")) if attempts_dir.exists() else ():
-        try:
-            rva = int(path.stem, 16)
-        except ValueError:
-            continue
-        row = dumps.get(rva)
-        if row is None:
-            continue
-        # A dead-end verdict after the bank refutes the BOUNDARY (no-match,
-        # refuted, not a function); re_log retires those and so does this
-        # tier. A deferral (blocked, attempted) is a failed session, not a
-        # finding about the address, and is exactly what the stash outlives.
-        if latest.get(rva) in re_log.DEAD_END_STATUSES:
-            continue
-        found = re_log.stash_for(rva)
-        if not found:
-            continue
-        stash_path, score = found
-        if score < min_score:
-            continue
+    for row, stash_path, score in eligibility.finish_bodies(
+            min_score, build.load_all_function_rows(), latest):
+        rva = int(row["target_rva"], 16)
         head = stash_path.read_text(encoding="utf-8", errors="replace").splitlines()[:1]
         symbol = (head[0].lstrip("/").strip() if head else "") or row["name"]
         target_rva = f"0x{rva:08X}"

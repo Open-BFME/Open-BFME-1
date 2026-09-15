@@ -10,13 +10,11 @@ dead-end verdict (no-match, refuted, ...) retires the address, as in re_log.
 Prints N RVAs (largest first), one per line. Claims live in seats.log via the
 'seat pick ->' marker, same as pick_file.py.
 """
-import csv, re, sys, time
+import sys, time
 from pathlib import Path
 sys.path.insert(0, 'tools')
 from portable_lock import lock
-from fleet_run import active_rvas
-from re_log import latest_records, stash_for, DEAD_END_STATUSES
-import build
+import eligibility
 ROOT = Path('.').resolve()
 seats_log = ROOT / 'build' / 'fleet_logs' / 'seats.log'
 n_want = int(sys.argv[1]) if len(sys.argv) > 1 else 2
@@ -24,46 +22,17 @@ min_score = float(sys.argv[2]) if len(sys.argv) > 2 else 0.9
 lf = (ROOT / 'build' / '.fleet_claims.lock').open('a')
 lock(lf, exclusive=True)
 
-busy = {}
-if seats_log.exists():
-    for l in seats_log.read_text(encoding='utf-8', errors='replace').splitlines():
-        m = re.match(r'\S+ seat (\S+) (->|done) (\S+)', l)
-        if m:
-            busy[m.group(3).lower()] = (m.group(2) == '->')
-claimed = set()
-claimed |= active_rvas(ROOT)
-for cf in ('fleet_big_claimed.txt', 'fleet_fin_claimed.txt'):
-    p = ROOT / 'build' / cf
-    if p.exists():
-        claimed |= {l.strip().lower() for l in p.read_text().splitlines() if l.strip()}
-# one finish session per body: a seat re-picking the body it just failed on
-# (still 0.9+, no longer busy) was observed; record every pick permanently
-fin_claims = ROOT / 'build' / 'fleet_fin_claimed.txt'
-
-latest = {f'0x{rva:08x}': fields[3] for rva, fields in latest_records(ROOT / 'reverse/re_attempts.log').items()}
-
-cands = []
-for r in csv.DictReader(open(ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')):
-    rva = (r.get('target_rva') or '').lower()
-    src = r.get('source') or ''
-    if not rva or r.get('status') != 'matched':
-        continue
-    if not (build.is_scaffold_row(r) or src.endswith(('.asm', '.s'))):
-        continue                      # already real source: nothing to finish
-    if latest.get(rva) in DEAD_END_STATUSES:
-        continue                      # boundary refuted after the bank
-    found = stash_for(int(rva, 16))
-    if not found or found[1] < min_score:
-        continue
-    if busy.get(rva) or rva in claimed:
-        continue
-    # best-first: score, then bytes. The remaining work is the distance from
-    # the stash, so a 0.99 body of 60 B outranks a 0.90 body of 900 B.
-    cands.append((found[1], int(r.get('target_size') or 0), r['target_rva']))
+# busy = live lease or a seat currently on it; a body a finish session just
+# left waits 48 h (immutable run records) instead of being claimed for ever
+claimed = eligibility.busy_rvas(ROOT) | eligibility.recent_run_rvas(48, ROOT)
+# best-first: score, then bytes. The remaining work is the distance from the
+# stash, so a 0.99 body of 60 B outranks a 0.90 body of 900 B.
+cands = [(score, int(r.get('target_size') or 0), r['target_rva'])
+         for r, _, score in eligibility.finish_bodies(min_score)
+         if r['target_rva'].lower() not in claimed]
 cands.sort(reverse=True)
 picked = [rva for _, _, rva in cands[:n_want]]
-with open(seats_log, 'a') as f, open(fin_claims, 'a') as c:
-    for rva in picked:
-        f.write(f"{time.strftime('%H:%M')} seat pick -> {rva}\n")
-        c.write(rva + '\n')
+if picked:
+    with open(seats_log, 'a') as f:
+        f.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(picked)}\n")
 print('\n'.join(picked))

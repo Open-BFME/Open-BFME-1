@@ -162,14 +162,20 @@ def main():
         for r in csv.DictReader(open(a.csv, newline="")):
             targets.append(int(r["rva"], 16))
 
-    live, dropped = [], []
+    import eligibility
+    live, dropped, retired = [], [], []
     for rva in targets:
         r = rows.get(rva)
-        if r and r["source"].endswith((".asm", ".s")):
+        if r and eligibility.is_dump_row(r):
             p = latest.get(rva)
             # SecuROM post-link bodies (55 89 E5 frames, opaque predicates) can never
             # byte-match clean C++; 32 sessions re-proved that at ~35 min each.
             if a.dump and p and p[3] in ("blocked", "no-match") and "SecuROM" in p[4]:
+                continue
+            # a dead-end verdict is a finding about the boundary; serving it again
+            # is rework in every lane, not just the file lane
+            if p and p[3] in re_log.DEAD_END_STATUSES:
+                retired.append(rva)
                 continue
             if rva not in live:
                 live.append(rva)
@@ -190,7 +196,7 @@ def main():
         out.append(describe(rva, rows, pins, latest, near))
     out.append(METHOD.replace("model=MODEL", f"model={a.model}"))
     print("\n".join(out))
-    print(f"[brief: {len(live)} live target(s), {sum(int(rows[v]['target_size']) for v in live)} bytes; {len(dropped)} dropped as stale]", file=sys.stderr)
+    print(f"[brief: {len(live)} live target(s), {sum(int(rows[v]['target_size']) for v in live)} bytes; {len(dropped)} dropped as stale; {len(retired)} retired by a dead-end verdict]", file=sys.stderr)
 
 
 if __name__ == "__main__":

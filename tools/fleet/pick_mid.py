@@ -16,8 +16,7 @@ import csv, re, sys, time
 from pathlib import Path
 sys.path.insert(0, 'tools')
 from portable_lock import lock
-from fleet_run import active_rvas
-from re_log import latest_records, DEAD_END_STATUSES
+import eligibility
 ROOT = Path('.').resolve()
 args = [a for a in sys.argv[1:] if not a.startswith('--')]
 dry = '--dry' in sys.argv
@@ -27,20 +26,11 @@ max_b = int(args[2]) if len(args) > 2 else 1000
 claims = ROOT / 'build' / 'fleet_mid_claimed.txt'
 lf = (ROOT / 'build' / '.fleet_claims.lock').open('a')
 lock(lf, exclusive=True)
-taken = {l.strip().lower() for l in claims.read_text().splitlines() if l.strip()} if claims.exists() else set()
-taken |= active_rvas(ROOT)
-
-latest = {f'0x{rva:08x}': fields for rva, fields in latest_records(ROOT / 'reverse/re_attempts.log').items()}
-
-rows = []
-for _ in range(4):
-    try:
-        rows = list(csv.DictReader(open(ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')))
-        if all(r.get('source') is not None and r.get('target_rva') is not None for r in rows):
-            break
-    except Exception:
-        pass
-    time.sleep(1)
+# live leases and seats, plus anything a run touched in the last 48 h; the
+# append-only claim file is no longer read (it starved the lane for ever)
+taken = eligibility.busy_rvas(ROOT) | eligibility.recent_run_rvas(48, ROOT)
+latest = eligibility.latest_verdicts()
+rows = eligibility.load_rows()
 
 landed = []          # rvas of real C++ rows
 files = {}           # dump file -> [rvas of remaining dump rows]
@@ -50,7 +40,7 @@ for r in rows:
     if not rva.startswith('0x'):
         continue
     src = r['source']
-    if src.endswith('.asm'):
+    if eligibility.is_dump_row(r):
         files.setdefault(src, []).append(rva)
         size[rva] = int(r['target_size'] or 0)
     elif r.get('status') == 'matched' and not src.startswith('Code/gen_'):
@@ -59,8 +49,7 @@ landed.sort()
 import bisect
 
 def blocked(rva):
-    record = latest.get(rva)
-    return bool(record and record[3] in DEAD_END_STATUSES)
+    return eligibility.retired(int(rva, 16), latest)
 
 best = None
 for f, rvas in files.items():
@@ -76,9 +65,8 @@ if not best:
     sys.exit(0)
 picked = best[2][:n_want]
 if not dry:
-    with open(claims, 'a') as h:
-        for a in picked:
-            h.write(a + '\n')
+    with open(ROOT / 'build' / 'fleet_logs' / 'seats.log', 'a') as h:
+        h.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(picked)}\n")
 print('\n'.join(picked))
 if dry:
     print(f'# file {best[1]} landed-neighbour score {best[0]:.2f}', file=sys.stderr)
