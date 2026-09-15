@@ -1,5 +1,5 @@
 // ??0BfmeAptScreenSaveLoad@@QAE@PAX@Z
-// partial score=0.74 date=2026-09-10
+// partial score=0.76 date=2026-09-15
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
 #include <list>
@@ -741,7 +741,7 @@ class BfmeSaveLoadObfState
 public:
 	BfmeSaveLoadObfState( int *a, int *b );
 
-	unsigned int m_bits[ 8 ];
+	unsigned int m_bits[ 12 ];
 };
 
 // The ILT shared by the SaveLoad obfuscation step and the short-value family
