@@ -396,12 +396,88 @@ void MapObject::setWaypointID(Int i) { getProperties()->setInt(TheKey_waypointID
 // ?setWaypointName@MapObject@@QAEXVAsciiString@@@Z present-unmatched
 void MapObject::setWaypointName(AsciiString n) { getProperties()->setAsciiString(TheKey_waypointName, n); }
 
+struct BfmeOwnerStringData
+{
+	int m_references;
+	unsigned short m_length;
+	unsigned short m_capacity;
+	char m_text[1];
+};
+
+class BFMERetailAsciiString
+{
+public:
+	void releaseBuffer();
+};
+
+class BfmeStringPresenceValue
+{
+public:
+	Int compare(const BfmeStringPresenceValue &other) const
+	{
+		const Int otherLength = other.m_data ? other.m_data->m_length : 0;
+		const char *otherText = other.m_data ? other.m_data->m_text : "";
+		const Int thisLength = m_data ? m_data->m_length : 0;
+		const char *thisText = m_data ? m_data->m_text : "";
+		const Int length = thisLength < otherLength ? thisLength : otherLength;
+		const Int result = memcmp(thisText, otherText, length);
+		if (result != 0)
+			return result;
+		return thisLength - otherLength;
+	}
+
+	Bool operator==(const BfmeStringPresenceValue &other) const
+	{
+		return compare(other) == 0;
+	}
+
+	~BfmeStringPresenceValue()
+	{
+		((BFMERetailAsciiString *)this)->releaseBuffer();
+	}
+
+private:
+	BfmeOwnerStringData *m_data;
+};
+
+class BfmeStringPresenceDict
+{
+public:
+	BfmeStringPresenceValue getAsciiString(int key, Bool *exists = 0) const;
+};
+
+class BfmeMapObjectListEntry
+{
+public:
+	virtual void bfmeDeleteThis(int freeIt) = 0;		///< vtable slot 0
+	BfmeMapObjectListEntry *m_next;
+	char m_pad08[0x1c];
+	BfmeStringPresenceDict m_properties;
+	BfmeStringPresenceDict *getProperties() { return &m_properties; }
+};
+
+class BfmeMapObjectListHolder
+{
+public:
+	BfmeMapObjectListEntry *m_bfmeHead;			///< retail this+0x00
+};
+
+class BfmeMapObjectExtra
+{
+public:
+	void bfmeReset(void);					///< retail 0x00033F46
+};
+
+extern BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;	///< retail [0x012ED5DC]
+extern BfmeMapObjectExtra BfmeTheMapObjectExtra;		///< retail 0x012ED5E0
+
 /*static */ Int MapObject::countMapObjectsWithOwner(const AsciiString& n)
 {
 	Int count = 0;
-	for (MapObject *pMapObj = MapObject::getFirstMapObject(); pMapObj; pMapObj = pMapObj->getNext()) 
+	BfmeMapObjectListEntry *pMapObj = BfmeTheMapObjectListHolder->m_bfmeHead;
+	for (; pMapObj; pMapObj = pMapObj->m_next)
 	{
-		if (pMapObj->getProperties()->getAsciiString(TheKey_originalOwner) == n)
+		if (pMapObj->getProperties()->getAsciiString(TheKey_originalOwner.key(), 0) == (const BfmeStringPresenceValue &)n)
 			++count;
 	}
 	return count;
@@ -483,27 +559,6 @@ WorldHeightMap::~WorldHeightMap(void)
 // it, so the source touches the global twice. The tail is a thiscall on the
 // object AT 0x012ED5E0 -- loaded as an immediate address, so that one is an
 // object and not a pointer to one. All three spellings are already pinned.
-class BfmeMapObjectListEntry
-{
-public:
-	virtual void bfmeDeleteThis(int freeIt) = 0;		///< vtable slot 0
-};
-
-class BfmeMapObjectListHolder
-{
-public:
-	BfmeMapObjectListEntry *m_bfmeHead;			///< retail this+0x00
-};
-
-class BfmeMapObjectExtra
-{
-public:
-	void bfmeReset(void);					///< retail 0x00033F46
-};
-
-extern BfmeMapObjectListHolder *BfmeTheMapObjectListHolder;	///< retail [0x012ED5DC]
-extern BfmeMapObjectExtra BfmeTheMapObjectExtra;		///< retail 0x012ED5E0
-
 void WorldHeightMap::freeListOfMapObjects(void)
 {
 	if (BfmeTheMapObjectListHolder->m_bfmeHead != 0)
