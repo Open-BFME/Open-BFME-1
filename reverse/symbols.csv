@@ -5353,7 +5353,9 @@ name,address,notes
 ??1DualWeaponBehavior@@MAE@XZ,0x00032D49,vtable 0x00CA3694 slots name DualWeaponBehavior; protected complete destructor called by wrapper 0x001F7FB0
 ??1DualWeaponBehaviorModuleData@@MAE@XZ,0x000364EE,exact constructor 0x001F7E20 and dedicated vtable 0x00CA3468 establish the protected complete destructor called by wrapper 0x001F8040
 ??1Gen_dtor_001f8a70@@UAE@XZ,0x00033F32,gen-dtor class destructor
+??1DynamicPortalBehaviour@@UAE@XZ,0x00040516,exact ICF-shared complete destructor route for scalar wrapper 0x001F9150; body 0x001F8D10 and constructor/vtable identity establish class
 ??1Gen_dtor_001f9150@@UAE@XZ,0x00040516,gen-dtor class destructor
+??_GDynamicPortalBehaviour@@UAEPAXI@Z,0x0001946B,primary vtable 0x010A397C slot zero routes through this ILT to scalar wrapper 0x001F9150
 ??1Gen_dtor_001f96b0@@UAE@XZ,0x0001627A,gen-dtor class destructor
 ??1Gen_dtor_001fa720@@UAE@XZ,0x0002F1A3,gen-dtor class destructor
 ??1EnragedBehavior@@MAE@XZ,0x0000E822,vtable 0x00CA3D9C slots name EnragedBehavior; protected complete destructor called by wrapper 0x001FAD50
