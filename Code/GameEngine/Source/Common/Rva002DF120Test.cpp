@@ -1,17 +1,11 @@
-// ?test@Rva002DF120@@QAEEPAX0@Z
-// partial score=0.95 date=2026-09-12
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
-// Shared two-argument object-match predicate, retail 0x002DF120.
-// Neighbor wrappers Rva002DF100Test / Rva002DF4C0Test and Rva002DCDA0Test
-// call this as unsigned char test(void *, void *).  The filter lives on
-// this at +0x50 (lea ecx,[ebp+50h]); the first argument is only the
-// lookup context (object at +4, id at +8).
+// The ILT at 0x0001D813 names Rva002DF120::test.
+// Rva002DF100Test.cpp and Rva002DCDA0Test.cpp call this predicate.
+// Retail stores the filter at this+0x50 and scans Object fields at the offsets below.
 
 extern "C" float fabs(float);
 #pragma intrinsic(fabs)
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
 
 class Rva002DF100
 {
@@ -123,29 +117,35 @@ unsigned char Rva002DF120::test(void *first, void *second)
 			return 0;
 	}
 
-	if (((Thing *)other)->isKindOf((KindOfType)0x19) && (signed char)flags >= 0)
+	if (((Thing *)other)->isKindOf((KindOfType)0x19) &&
+		(flags & 0x80) == 0)
 		return 0;
 	if ((flags & 0x40) != 0 && other->isSignificantlyAboveTerrain())
 		return 0;
 
 	if ((flags & 0x100) != 0)
 	{
-		if (fabs(other->m_positionZ - found->m_positionZ) > g_bfmeDirectionWeight1285)
+		if (fabs(other->m_positionZ - found->m_positionZ) >
+			g_bfmeDirectionWeight1285)
 			return 0;
 	}
 
-	if ((flags & 0x200) != 0 && ((Thing *)other)->isKindOf((KindOfType)0x36))
+	if ((flags & 0x200) != 0 &&
+		((Thing *)other)->isKindOf((KindOfType)0x36))
 		goto accept;
 
 	if ((other->m_scriptStatus & 0x10) == 0)
 	{
 		int relationship = found->getRelationship(other);
+		int required;
 		if (relationship == ALLIES)
 		{
-			_ReadWriteBarrier();
-			goto accept;
+			required = relationship;
+			goto relationship_check;
 		}
-		int required = relationship != ENEMIES ? 8 : 4;
+		required = relationship != ENEMIES ? 8 : 4;
+
+	relationship_check:
 		if ((flags & required) == 0)
 			return 0;
 	}
