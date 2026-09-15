@@ -1,5 +1,5 @@
 // ?bfmeStepYD@BfmeThingYD@@QAEXXZ
-// partial score=0.18 date=2026-09-10
+// partial score=0.5 date=2026-09-15
 struct BfmeClockYD
 {
 	unsigned char m_bfmeHead[0x3c];
@@ -42,6 +42,7 @@ struct BfmeQueryYD
 
 struct BfmeFilterYD
 {
+	~BfmeFilterYD();
 	unsigned int m_bfmeVptr;
 	BfmeFilterYD *m_bfmeNext;
 	const void *m_bfmeObject;
