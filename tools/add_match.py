@@ -19,7 +19,8 @@ changes the name (`?d_000a8940@@YAXXZ` -> `?addr@SpikeAccessor@@QAEPADXZ`), so
 --replace-existing cannot find the row it needs to retire and add_match refuses
 the address as already claimed. It accepts scaffold rows only. This is the
 supported path for replacing a 5-byte MASM thunk claim with the clean C++ body
-it jumps to; the original row is restored if the new claim does not byte-verify.
+it jumps to, and for replacing gen-tgrid template placeholders at their exact
+range; the original row is restored if the new claim does not byte-verify.
 """
 import argparse
 import csv
@@ -43,6 +44,15 @@ BOUNDARY_ENV = {
     "source": "ADDMATCH_BOUNDARY_SOURCE",
 }
 BOUNDARY_BATCH_FILE_ENV = "ADDMATCH_BOUNDARY_BATCH_FILE"
+
+
+def replaceable_scaffold(row):
+    """Only supported placeholders, never arbitrary generated/unwind claims."""
+    notes = row["notes"].lstrip()
+    if notes.startswith(("gen-dump", "gen-thunk")):
+        return True
+    return (notes.split(";", 1)[0] == "gen-tgrid" and
+            re.fullmatch(r"Code/gen_small/tgrid_\d+\.cpp", row["source"]) is not None)
 
 
 def fail(*lines):
@@ -203,7 +213,7 @@ def replacement_tombstone_record(replaced, successor_name, successor_rva,
             f"{proof} from {successor_source} over the corrected {successor_size}-byte "
             f"range at the same start. Boundary evidence: {boundary_evidence}"
         )
-    elif replaced["notes"].lstrip().startswith(("gen-dump", "gen-thunk")):
+    elif replaceable_scaffold(replaced):
         kind = replaced["notes"].lstrip().split(";", 1)[0]
         reason = (
             f"{kind} scaffold placeholder superseded by the real identity of these bytes: "
@@ -354,10 +364,9 @@ def main():
         if len(at_rva) != 1:
             fail(f"--replace-rva 0x{old_rva:08X} matches {len(at_rva)} rows; "
                  "it retires exactly one")
-        scaffold_kinds = ("gen-dump", "gen-thunk")
-        if not at_rva[0]["notes"].lstrip().startswith(scaffold_kinds):
+        if not replaceable_scaffold(at_rva[0]):
             fail(f"--replace-rva 0x{old_rva:08X} is {at_rva[0]['name']} "
-                 f"({at_rva[0]['source']}), not a gen-dump scaffold row",
+                 f"({at_rva[0]['source']}), not a supported generated scaffold row",
                  "only scaffolding may be taken over by name; retract a real claim "
                  "in its own commit so the retraction is reviewable")
         if old_rva != rva:

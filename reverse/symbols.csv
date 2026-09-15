@@ -88199,3 +88199,4 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??0Rva00262120Entry@@QAE@ABU0@@Z,0x00261440,exact90B noinline copy constructor for the scoped16-byte Object-pointer and inner-pointer-vector entry layout
 ??$_Construct@URva00262120Entry@@U1@@_STL@@YAXPAURva00262120Entry@@ABU1@@Z,0x00261530,exact66B STLport placement construction helper calling the scoped entry copy constructor
 ?_M_clear@?$vector@URva00262120Entry@@V?$allocator@URva00262120Entry@@@_STL@@@_STL@@IAEXXZ,0x002620B0,exact81B scoped16-byte entry-vector clear body used by overflow replacement
+??1Rva00262120Entry@@QAE@XZ,0x00261400,full46B scoped16-byte entry destructor destroys its inner pointer vector; independently byte-verified dependency of clear2620B0

@@ -28,7 +28,7 @@ SOURCE_REL = "Code/GameEngine/Source/Common/Thing.cpp"
 
 
 def arrange(tmp_path, monkeypatch, *, gate, target_rva="0x00ABCD00", size="32",
-            extra_args=()):
+            extra_args=(), scaffold=DUMP):
     reverse = tmp_path / "reverse"
     reverse.mkdir()
     source = tmp_path / SOURCE_REL
@@ -36,7 +36,7 @@ def arrange(tmp_path, monkeypatch, *, gate, target_rva="0x00ABCD00", size="32",
     source.write_bytes(
         f"// {REAL} present-unmatched\r\nvoid realBody() {{}}\r\n".encode("utf-8"))
     functions = reverse / "functions.csv"
-    functions.write_bytes(f"{HEADER}\r\n{DUMP}\r\n".encode("utf-8"))
+    functions.write_bytes(f"{HEADER}\r\n{scaffold}\r\n".encode("utf-8"))
     deleted = reverse / "deleted_rows.csv"
     deleted.write_bytes(
         b'name,target_rva,reason\n?older@@YAXXZ,0x00123456,"existing, quoted reason"\n')
@@ -77,6 +77,41 @@ def test_red_gate_restores_both_ledgers_and_source_exactly(tmp_path, monkeypatch
     with pytest.raises(SystemExit):
         add_match.main()
 
+    assert (functions.read_bytes(), deleted.read_bytes(), source.read_bytes()) == before
+
+
+@pytest.mark.parametrize("gate", [0, 1])
+def test_tgrid_replacement_keeps_transaction_and_tombstone(tmp_path, monkeypatch, gate):
+    scaffold = DUMP.replace("Code/gen_asm/d_00abcd00.asm", "Code/gen_small/tgrid_109.cpp").replace(
+        "gen-dump;ghidra=FUN_00eacd00", "gen-tgrid;template=vec_p16cd")
+    functions, deleted, source = arrange(tmp_path, monkeypatch, gate=gate, scaffold=scaffold)
+    before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
+    if gate:
+        with pytest.raises(SystemExit):
+            add_match.main()
+        assert (functions.read_bytes(), deleted.read_bytes(), source.read_bytes()) == before
+    else:
+        add_match.main()
+        assert REAL in functions.read_text()
+        tombstone = list(csv.reader(io.StringIO(deleted.read_text())))[-1]
+        assert "gen-tgrid scaffold placeholder" in tombstone[2]
+        assert "same 32-byte range" in tombstone[2]
+
+
+@pytest.mark.parametrize("notes,path", [
+    ("gen-tgrid;template=vec_p16cd", "Code/Real.cpp"),
+    ("gen-tgrid-other", "Code/gen_small/tgrid_109.cpp"),
+    ("gen-uw;parent=0x00123456", "Code/gen_small/uw_gen_001.cpp"),
+    ("authored", "Code/gen_small/tgrid_109.cpp"),
+])
+def test_tgrid_support_does_not_admit_real_or_unwind_claims(
+        tmp_path, monkeypatch, notes, path):
+    scaffold = DUMP.replace("Code/gen_asm/d_00abcd00.asm", path).replace(
+        "gen-dump;ghidra=FUN_00eacd00", notes)
+    functions, deleted, source = arrange(tmp_path, monkeypatch, gate=0, scaffold=scaffold)
+    before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
+    with pytest.raises(SystemExit):
+        add_match.main()
     assert (functions.read_bytes(), deleted.read_bytes(), source.read_bytes()) == before
 
 
