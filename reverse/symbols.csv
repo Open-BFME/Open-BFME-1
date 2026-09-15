@@ -5361,6 +5361,7 @@ name,address,notes
 ??_GCreateCrateDie@@UAEPAXI@Z,0x0004142A,unique primary vtable 0x010B29CC slot zero routes through this ILT to scalar wrapper 0x00253F60; object-symbol=??_GGen_dtor_00253f60@@UAEPAXI@Z
 ??_GSiegeDeployHordeSpecialPower@@UAEPAXI@Z,0x00025612,unique primary vtable 0x010B71FC slot zero routes through this ILT to scalar wrapper 0x00265CD0; object-symbol=??_GGen_dtor_00265cd0@@UAEPAXI@Z
 ??_GCostModifierUpgrade@@UAEPAXI@Z,0x00049CD8,unique primary vtable 0x010CC5AC slot zero routes through this ILT to scalar wrapper 0x002D46A0; object-symbol=??_GGen_dtor_002d46a0@@UAEPAXI@Z
+??_GRva00641C60Queue@@UAEPAXI@Z,0x0001E3DF,vtable 0x01119380 slot zero routes through this ILT to scalar wrapper 0x00642410
 ??1Gen_dtor_001f96b0@@UAE@XZ,0x0001627A,gen-dtor class destructor
 ??1Gen_dtor_001fa720@@UAE@XZ,0x0002F1A3,gen-dtor class destructor
 ??1EnragedBehavior@@MAE@XZ,0x0000E822,vtable 0x00CA3D9C slots name EnragedBehavior; protected complete destructor called by wrapper 0x001FAD50
