@@ -1,172 +1,120 @@
 // ?evaluateNamedSelected@ScriptConditions@@IAE_NPAVCondition@@PAVParameter@@@Z
-// partial score=0.5 date=2026-09-11
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.97 date=2026-09-15
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+
+#include "ascii_string.h"
 
 typedef bool Bool;
 typedef int Int;
-
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-
-public:
-	Int compare(const StringBase<T> &other) const;
-
-private:
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	Int compare(const AsciiString &other) const
-	{
-		return StringBase<char>::compare(other);
-	}
-};
+typedef unsigned int UnsignedInt;
 
 class Parameter
 {
 public:
-	const AsciiString &getString(void) const { return m_string; }
-
-private:
-	unsigned char m_beforeString[0x10];
-	AsciiString m_string;
+	const AsciiString &getString(void) const
+	{
+		return *(const AsciiString *)((const char *)this + 0x10);
+	}
 };
 
-// The condition caches its answer in two fields retail reads at +0x44 and +0x48.
 class Condition
 {
 public:
-	unsigned char m_beforeCache[0x44];
-	Int m_cachedAnswer;
-	Int m_cachedSelectionCount;
+	Int getCustomData(void) const
+	{
+		return *(const Int *)((const char *)this + 0x44);
+	}
+	void setCustomData(Int value)
+	{
+		*(Int *)((char *)this + 0x44) = value;
+	}
+	UnsignedInt getCustomFrame(void) const
+	{
+		return *(const UnsignedInt *)((const char *)this + 0x48);
+	}
+	void setCustomFrame(UnsignedInt value)
+	{
+		*(UnsignedInt *)((char *)this + 0x48) = value;
+	}
 };
 
-class ThingTemplate
+class Object
 {
 public:
-	const AsciiString &getName(void) const { return m_name; }
-
-private:
-	unsigned char m_beforeName[0x84];
-	AsciiString m_name;
+	const AsciiString &getName(void) const
+	{
+		return *(const AsciiString *)((const char *)this + 0x84);
+	}
 };
 
 class Drawable
 {
 public:
-	const ThingTemplate *getTemplate(void) const { return m_template; }
-
-private:
-	unsigned char m_beforeTemplate[0xfc];
-	const ThingTemplate *m_template;
+	Object *getObject(void)
+	{
+		return *(Object **)((char *)this + 0xfc);
+	}
+	Object *getObject(void) const
+	{
+		return *(Object **)((const char *)this + 0xfc);
+	}
 };
 
-struct BfmeSelectionNode
+struct DrawableListNode
 {
-	BfmeSelectionNode *m_next;
-	BfmeSelectionNode *m_prev;
+	DrawableListNode *m_next;
+	DrawableListNode *m_prev;
 	Drawable *m_drawable;
 };
 
-struct BfmeSelectionList
+struct DrawableList
 {
-	BfmeSelectionNode *m_sentinel;
+	DrawableListNode *m_sentinel;
 };
+
+__forceinline Bool bfmeStringEqual(const AsciiString &left, const AsciiString &right)
+{
+	return ((const StringBase<char> *)&left)->compare(
+		*(const StringBase<char> *)&right) == 0;
+}
 
 class GameEngine
 {
 public:
-	virtual void slot00() = 0;
-	virtual void slot01() = 0;
-	virtual void slot02() = 0;
-	virtual void slot03() = 0;
-	virtual void slot04() = 0;
-	virtual void slot05() = 0;
-	virtual void slot06() = 0;
-	virtual void slot07() = 0;
-	virtual void slot08() = 0;
-	virtual void slot09() = 0;
-	virtual void slot10() = 0;
-	virtual void slot11() = 0;
-	virtual void slot12() = 0;
-	virtual void slot13() = 0;
-	virtual void slot14() = 0;
+#define BFME_ENGINE_SLOT(n) virtual void slot##n(void) = 0
+	BFME_ENGINE_SLOT(00); BFME_ENGINE_SLOT(01); BFME_ENGINE_SLOT(02);
+	BFME_ENGINE_SLOT(03); BFME_ENGINE_SLOT(04); BFME_ENGINE_SLOT(05);
+	BFME_ENGINE_SLOT(06); BFME_ENGINE_SLOT(07); BFME_ENGINE_SLOT(08);
+	BFME_ENGINE_SLOT(09); BFME_ENGINE_SLOT(10); BFME_ENGINE_SLOT(11);
+	BFME_ENGINE_SLOT(12); BFME_ENGINE_SLOT(13); BFME_ENGINE_SLOT(14);
+#undef BFME_ENGINE_SLOT
 	virtual Bool isMultiplayerSession(void) = 0;
 };
 
 class InGameUI
 {
 public:
-	virtual void slot00() = 0;
-	virtual void slot01() = 0;
-	virtual void slot02() = 0;
-	virtual void slot03() = 0;
-	virtual void slot04() = 0;
-	virtual void slot05() = 0;
-	virtual void slot06() = 0;
-	virtual void slot07() = 0;
-	virtual void slot08() = 0;
-	virtual void slot09() = 0;
-	virtual void slot10() = 0;
-	virtual void slot11() = 0;
-	virtual void slot12() = 0;
-	virtual void slot13() = 0;
-	virtual void slot14() = 0;
-	virtual void slot15() = 0;
-	virtual void slot16() = 0;
-	virtual void slot17() = 0;
-	virtual void slot18() = 0;
-	virtual void slot19() = 0;
-	virtual void slot20() = 0;
-	virtual void slot21() = 0;
-	virtual void slot22() = 0;
-	virtual void slot23() = 0;
-	virtual void slot24() = 0;
-	virtual void slot25() = 0;
-	virtual void slot26() = 0;
-	virtual void slot27() = 0;
-	virtual void slot28() = 0;
-	virtual void slot29() = 0;
-	virtual void slot30() = 0;
-	virtual void slot31() = 0;
-	virtual void slot32() = 0;
-	virtual void slot33() = 0;
-	virtual void slot34() = 0;
-	virtual void slot35() = 0;
-	virtual void slot36() = 0;
-	virtual void slot37() = 0;
-	virtual void slot38() = 0;
-	virtual void slot39() = 0;
-	virtual void slot40() = 0;
-	virtual void slot41() = 0;
-	virtual void slot42() = 0;
-	virtual void slot43() = 0;
-	virtual void slot44() = 0;
-	virtual void slot45() = 0;
-	virtual void slot46() = 0;
-	virtual void slot47() = 0;
-	virtual void slot48() = 0;
-	virtual void slot49() = 0;
-	virtual void slot50() = 0;
-	virtual void slot51() = 0;
-	virtual void slot52() = 0;
-	virtual void slot53() = 0;
-	virtual void slot54() = 0;
-	virtual void slot55() = 0;
-	virtual void slot56() = 0;
-	virtual void slot57() = 0;
-	virtual void slot58() = 0;
-	virtual void slot59() = 0;
-	virtual void slot60() = 0;
-	virtual void slot61() = 0;
-	virtual Int getSelectionCount(void) = 0;
-	virtual const BfmeSelectionList *getAllSelectedDrawables(void) = 0;
+#define BFME_UI_SLOT(n) virtual void slot##n(void) = 0
+	BFME_UI_SLOT(00); BFME_UI_SLOT(01); BFME_UI_SLOT(02); BFME_UI_SLOT(03);
+	BFME_UI_SLOT(04); BFME_UI_SLOT(05); BFME_UI_SLOT(06); BFME_UI_SLOT(07);
+	BFME_UI_SLOT(08); BFME_UI_SLOT(09); BFME_UI_SLOT(10); BFME_UI_SLOT(11);
+	BFME_UI_SLOT(12); BFME_UI_SLOT(13); BFME_UI_SLOT(14); BFME_UI_SLOT(15);
+	BFME_UI_SLOT(16); BFME_UI_SLOT(17); BFME_UI_SLOT(18); BFME_UI_SLOT(19);
+	BFME_UI_SLOT(20); BFME_UI_SLOT(21); BFME_UI_SLOT(22); BFME_UI_SLOT(23);
+	BFME_UI_SLOT(24); BFME_UI_SLOT(25); BFME_UI_SLOT(26); BFME_UI_SLOT(27);
+	BFME_UI_SLOT(28); BFME_UI_SLOT(29); BFME_UI_SLOT(30); BFME_UI_SLOT(31);
+	BFME_UI_SLOT(32); BFME_UI_SLOT(33); BFME_UI_SLOT(34); BFME_UI_SLOT(35);
+	BFME_UI_SLOT(36); BFME_UI_SLOT(37); BFME_UI_SLOT(38); BFME_UI_SLOT(39);
+	BFME_UI_SLOT(40); BFME_UI_SLOT(41); BFME_UI_SLOT(42); BFME_UI_SLOT(43);
+	BFME_UI_SLOT(44); BFME_UI_SLOT(45); BFME_UI_SLOT(46); BFME_UI_SLOT(47);
+	BFME_UI_SLOT(48); BFME_UI_SLOT(49); BFME_UI_SLOT(50); BFME_UI_SLOT(51);
+	BFME_UI_SLOT(52); BFME_UI_SLOT(53); BFME_UI_SLOT(54); BFME_UI_SLOT(55);
+	BFME_UI_SLOT(56); BFME_UI_SLOT(57); BFME_UI_SLOT(58); BFME_UI_SLOT(59);
+	BFME_UI_SLOT(60); BFME_UI_SLOT(61);
+#undef BFME_UI_SLOT
+	virtual UnsignedInt getFrameSelectionChanged(void) = 0;
+	virtual const DrawableList *getAllSelectedDrawables(void) = 0;
 };
 
 extern GameEngine *TheGameEngine;
@@ -175,46 +123,48 @@ extern InGameUI *TheInGameUI;
 class ScriptConditions
 {
 protected:
-	Bool evaluateNamedSelected(Condition *condition, Parameter *unit);
+	Bool evaluateNamedSelected(Condition *pCondition, Parameter *pUnitParm);
 };
 
 // ?evaluateNamedSelected@ScriptConditions@@IAE_NPAVCondition@@PAVParameter@@@Z
-Bool ScriptConditions::evaluateNamedSelected(Condition *condition,
-	Parameter *unit)
+Bool ScriptConditions::evaluateNamedSelected(Condition *pCondition, Parameter *pUnitParm)
 {
 	if (TheGameEngine->isMultiplayerSession())
 		return false;
 
-	Bool stale;
-	if (condition->m_cachedAnswer == 0)
-		stale = true;
-	else
-		stale = false;
-	Int count = TheInGameUI->getSelectionCount();
-	if (count == condition->m_cachedSelectionCount && !stale)
+	Bool anyChanges = false;
+	if (pCondition->getCustomData() == 0)
+		anyChanges = true;
+
+	if (TheInGameUI->getFrameSelectionChanged() != pCondition->getCustomFrame())
+		anyChanges = true;
+
+	if (!anyChanges)
 	{
-		if (condition->m_cachedAnswer == -1)
+		if (pCondition->getCustomData() == -1)
 			return false;
-		if (condition->m_cachedAnswer == 1)
+		if (pCondition->getCustomData() == 1)
 			return true;
 	}
 
-	Bool selected = false;
-	const BfmeSelectionList *list = TheInGameUI->getAllSelectedDrawables();
-	const BfmeSelectionNode *sentinel = list->m_sentinel;
-	const BfmeSelectionNode *node = sentinel->m_next;
+	Bool isSelected = false;
+	const DrawableList *selected = TheInGameUI->getAllSelectedDrawables();
+	const DrawableListNode *sentinel = selected->m_sentinel;
+	const DrawableListNode *node = sentinel->m_next;
 	while (node != sentinel)
 	{
-		if (node->m_drawable->getTemplate()->getName().compare(
-				unit->getString()) == 0)
+		Drawable *draw = node->m_drawable;
+		if (bfmeStringEqual(draw->getObject()->getName(), pUnitParm->getString()))
 		{
-			selected = true;
+			isSelected = true;
 			break;
 		}
 		node = node->m_next;
 	}
 
-	condition->m_cachedAnswer = selected ? 1 : -1;
-	condition->m_cachedSelectionCount = TheInGameUI->getSelectionCount();
-	return selected;
+	pCondition->setCustomData(-1);
+	if (isSelected)
+		pCondition->setCustomData(1);
+	pCondition->setCustomFrame(TheInGameUI->getFrameSelectionChanged());
+	return isSelected;
 }
