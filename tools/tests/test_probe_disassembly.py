@@ -12,6 +12,24 @@ def layout(instructions):
     return [(ins.address, ins.size, ins.mnemonic) for ins in instructions]
 
 
+def test_extent_warns_when_size_cuts_stack_cleanup():
+    # The 262570 dump's old end split ADD ESP before its RET 4.
+    body = bytes.fromhex("5f 5e 5b 81 c4 98 00 00 00 c2 04 00 cc cc cc")
+    warning = probe.extent_warning(body, 6)
+    assert "end +0x6 cuts decoded instruction +0x3: add esp, 0x98" in warning
+    assert "size was NOT adjusted" in warning
+
+
+@pytest.mark.parametrize("body,size", [
+    ("c2 04 00 cc cc cc", 3),  # complete RET 4
+    ("e9 00 00 00 00 cc cc cc", 5),  # complete tail jump
+    ("b8 c3 cc cc cc c3", 5),  # RET/padding bytes inside an immediate
+    ("81 c4 98", 3),  # insufficient lookahead is not positive evidence
+])
+def test_extent_does_not_infer_boundaries_from_opcodes(body, size):
+    assert probe.extent_warning(bytes.fromhex(body), size) is None
+
+
 @pytest.mark.parametrize("retail,compiled,relocs", [
     # The object's CALL operand mask covers retail's CALL opcode.
     ("90 e8 11 22 33 44 c3", "e8 00 00 00 00 90 c3", [(1, 0x14, "_call")]),

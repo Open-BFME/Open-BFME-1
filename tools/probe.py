@@ -60,6 +60,24 @@ def disasm(data, base=0):
     return list(md.disasm(bytes(data), base))
 
 
+def extent_warning(data, size):
+    """Spot a requested end inside a decoded instruction, without resizing it.
+
+    Include up to 15 lookahead bytes in data. This is linear-disassembly
+    evidence, not a function-boundary proof (a body can contain inline data).
+    A tail call or a non-RET endpoint is not itself an error.
+    """
+    for ins in disasm(data):
+        if ins.address < size < ins.address + ins.size:
+            return (f"requested end +0x{size:X} cuts decoded instruction "
+                    f"+0x{ins.address:X}: {ins.mnemonic} {ins.op_str}; "
+                    "inspect the complete retail epilogue and argument cleanup "
+                    "before changing source shape (size was NOT adjusted)")
+        if ins.address >= size:
+            break
+    return None
+
+
 def masked(data, relocs):
     d = bytearray(data)
     for ro, kind, _n in relocs:
@@ -216,6 +234,9 @@ def main():
     secs = build.pe_sections(image)
     off = build.rva_to_file_offset(secs, rva)
     retail = image[off: off + size]
+    warning = extent_warning(image[off: off + size + 15], size)
+    if warning:
+        print("boundary WARNING: " + warning)
     outcome = record_result(src, a.symbol, rva, retail, compiled, relocs)
     print(f"history  {outcome['seen_before']} prior experiment(s) with this instruction/relocation result")
 
