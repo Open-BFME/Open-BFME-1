@@ -16,14 +16,16 @@ The dir32 whitelist's last commit (2026-08-20) says "gate red is down from 7 to
 
 ## State
 
-    FULL GATE: FAIL — 3 red: functions, dir32 consistency, no-op patch (unrunnable)
-    Functions: FAIL 147/161889
-    DIR32 consistency: FAIL 97 NEW inconsistent symbol(s)
+    FULL GATE: FAIL — 4 red: functions, dir32 consistency, source claims, no-op patch (unrunnable)
+    Functions: FAIL 100/161893
+    DIR32 consistency: FAIL 108 NEW inconsistent symbol(s)
 
-`no-op patch` is not independent: it needs the patch set `verify_functions`
-produces, so it cannot run until `functions` is green. Two reds were cleared
-(`source claims`, `null relocs`) — see the commit "Clear two of the full gate's
-five reds".
+String-ref verify, pin consistency, CRT import pins, and null relocs were OK.
+Null relocs read 161893 rows and reported 789 unreadable rows. Source claims
+had 4 zero-row sources. The no-op patch did not run because verify_functions
+did not produce a patch set while functions were red. The raw failing rows are
+preserved in docs/full_gate_red_2026-09-15.txt; reverse/reloc_names.csv was
+unchanged.
 
 ## The hook now compares against a baseline (2026-09-15)
 
@@ -38,18 +40,18 @@ baseline exists the hook behaves as before (strict), which is the state on
 2026-09-15 while the gate still exits at a compile failure (see Lane A of
 the gate campaign in build/gate_lane*.md).
 
-## The 147, by what is actually wrong
+## The 100, by what is actually wrong
 
 | count | cause | note |
 |---|---|---|
-| 75 | call-target identity | is the folded body the ledger knows under an invented name the SAME function as ours? |
-| 24 | generator-written funclet | one bug, in a file with no generator — see below |
-| 16 | byte mismatch, no candidate list | per-function reverse engineering |
-| 12 | named symbol absent from its object | the compiler stopped emitting an out-of-line body |
+| 83 | call-target identity | the retail call reaches a body whose ledger identity or emitted callee still needs proof |
+| 2 | generator-written funclet | stale compiler-local funclet pins in W3DDisplayString.cpp |
+| 1 | byte mismatch, no candidate list | per-function reverse engineering (GiantBirdAIUpdate destructor) |
+| 5 | named symbol absent from its object | the compiler stopped emitting an out-of-line body |
 | 9 | orphaned compiler-local label | byte-ambiguous; see below |
 
-74 distinct files. 101 failures sit in ordinary `Code/` sources, 25 in
-generator-written files, 21 in the vendored ZH reference tree.
+57 distinct files. 79 failures sit in Code/ sources and 21 in the vendored
+ZH reference tree.
 
 ## The trap that governs this whole campaign
 
@@ -60,27 +62,18 @@ whitelist carries the same warning from experience — 18 entries once got in
 without a human reading them, 8 hiding placements that very check had proved
 wrong.
 
-Every shortcut through these 147 is that trap. Adding `??3@YAXPAX@Z,0x00881EF0`
-would turn 24 rows green in one line and would be a lie: `0x00881EF0` is
-`operator delete[]`, a distinct 21-byte body from `operator delete` at
-`0x00881EB0`.
+Every shortcut through these 100 is that trap. Adding
+??3@YAXPAX@Z,0x00881EF0 would turn multiple rows green in one line and would
+be a lie: 0x00881EF0 is operator delete[], a distinct 21-byte body from
+operator delete at 0x00881EB0.
 
-## The 24 generator-written ones need a decision, not a fix
+## The 2 generator-written funclets need a decision, not a fix
 
-All 24 are in `Code/gen_small/uw_gen_010.cpp` and are one bug: retail's funclet
-calls `operator delete[]` and the generated C++ emits `operator delete`.
-
-`tools/gen_uw.py` was **deleted on purpose** in 2d4dab0ad5 (2026-09-07, "retire
-the C++ generators"), whose message is explicit: *"there is no generator left to
-regenerate those files, so an edit to one is permanent and nothing will ever
-cross-check it."* AGENTS.md still bans hand-editing them.
-
-**The generator is nevertheless back in the tree**, restored as a side effect of
-`f43040e9c5` ("Open-BFME6: fleet harvest 09-10 14:05"). A harvest resurrected a
-file that was removed deliberately; that is worth fixing independently of this.
-
-Three options, all of them somebody's call: regenerate (`gen_uw.py land` — 4,327
-units over 19 files), hand-edit (banned), or retire the rows.
+Both are gen-funclet rows in
+Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp.
+The gate reports stale $L45506 and $L45507 object-symbol pins after the
+translation unit was edited; their emitted destructor call also remains a
+call-target identity issue. Do not repoint them from bytes alone.
 
 ## Two lanes that were tried and returned nothing
 
@@ -119,7 +112,7 @@ of those is the shape of this campaign.
 
 ## Where to start
 
-1. Settle the `gen_uw.py` question — biggest single cluster, 24 rows, one bug.
+1. Review the two stale generated-funclet pins in W3DDisplayString.cpp.
 2. `tools/red_rows.py` runs the whole gate and reports every rotted row; it exists
    because "every red row found so far was found by accident".
 3. For an identity, the oracles are `tools/callers_of.py`, `tools/multi_name.py`,
