@@ -1,8 +1,7 @@
-// ?rva007F8730@BfmeThingTWA@@QAEPAV1@PAX@Z
-// partial score=0.9 date=2026-09-10
-// Best real-C++ reconstruction for retail RVA 0x007F8730 (95 bytes).
-// Owner identity is BfmeThingTWA: vtables 0x0112B8A4/0x0112B8A0
-// resolve to its matched 0x007F8970 destructor and 0x007F8940 step body.
+// ?bfmeInitDGF@BfmeThingDGF@@QAEPAV1@PAX@Z
+// partial score=0.99 date=2026-09-14
+// Retail RVA 0x007F8730 initializes the 0x30-byte BfmeThingDGF object.
+// The bfmeGoDGF wrapper, allocator pin, and vtable stores prove the identity.
 class Rva00803080
 {
 public:
@@ -32,17 +31,17 @@ public:
 	char m_bfmePad[0x20];
 };
 
-class BfmeThingTWA
+class BfmeThingDGF
 {
 public:
-	BfmeThingTWA *rva007F8730(void *serviceList);
+	BfmeThingDGF *bfmeInitDGF(void *serviceList);
 	void *m_bfmeVft0;
 	void *m_bfmeVft1;
 	char m_bfmePad[8];
 	BfmeStrTWA m_bfmeStr;
 };
 
-BfmeThingTWA *BfmeThingTWA::rva007F8730(void *serviceListArgument)
+BfmeThingDGF *BfmeThingDGF::bfmeInitDGF(void *serviceListArgument)
 {
 	Rva007EAServiceList &serviceList =
 		*(Rva007EAServiceList *)serviceListArgument;
@@ -51,21 +50,21 @@ BfmeThingTWA *BfmeThingTWA::rva007F8730(void *serviceListArgument)
 	owner->m_vtable = (void *)0x0112B89C;
 	Rva7F4CC0Child &packet =
 		*(Rva7F4CC0Child *)((char *)&m_bfmeStr);
-	*(volatile int *)((char *)this + 0x00) = 0x0112B8A4;
+	*(int *)((char *)this + 0x00) = 0x0112B8A4;
 	owner->m_vtable = (void *)0x0112B8A0;
 	packet.Rva7F4CC0Child::Rva7F4CC0Child();
 	*(volatile int *)&packet = 0x011296B0;
 	packet.m_08 = 0;
 	packet.m_0c = 0;
 	packet.m_04 = 0;
-	*(volatile int *)((char *)this + 0x0c) = 0;
-	*(volatile int *)((char *)this + 0x08) = 0;
-	*(volatile int *)((char *)this + 0x18) = 0;
-	*(volatile int *)((char *)this + 0x1c) = 0;
-	*(volatile int *)((char *)this + 0x20) = 0;
-	*(volatile unsigned char *)((char *)this + 0x24) = 0;
-	*(volatile int *)((char *)this + 0x28) = 0;
-	*(volatile int *)((char *)this + 0x2c) = 0;
+	*(int *)((char *)this + 0x0c) = 0;
+	*(int *)((char *)this + 0x08) = 0;
+	*(int *)((char *)this + 0x18) = 0;
+	*(int *)((char *)this + 0x1c) = 0;
+	*(int *)((char *)this + 0x20) = 0;
+	*(unsigned char *)((char *)this + 0x24) = 0;
+	*(int *)((char *)this + 0x28) = 0;
+	*(int *)((char *)this + 0x2c) = 0;
 	serviceList.add(owner);
 	return this;
 }
