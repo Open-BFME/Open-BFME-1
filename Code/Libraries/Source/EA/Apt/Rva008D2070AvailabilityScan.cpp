@@ -27,7 +27,9 @@ struct BfmeSlot1220
 	int m_index;
 };
 
-extern volatile BfmeSlot1220 g_bfmeSlots1220[ 15 ];
+// Retail walks fourteen 8-byte slots: m_index starts at 0x012D5D54 and the
+// exclusive end is 0x012D5DC4.
+extern volatile BfmeSlot1220 g_bfmeSlots1220[ 14 ];
 extern int g_bfmeValues1220[];
 
 class BfmeNode1220
@@ -58,7 +60,7 @@ bool BfmeNode1220::bfmeAllows1220()
 		}
 	}
 
-	for ( int index = 0; index < 15; ++index )
+	for ( int index = 0; index < 14; ++index )
 	{
 		if ( (g_bfmeSlots1220[ index ].m_flags & 0x7c00) != 0 &&
 			bfmeTest1220( g_bfmeValues1220 + g_bfmeSlots1220[ index ].m_index, 0 ) )
