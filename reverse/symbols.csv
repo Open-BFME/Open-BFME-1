@@ -5825,7 +5825,7 @@ name,address,notes
 ??1Gen_dtor_003be8c0@@UAE@XZ,0x0001BC11,gen-dtor class destructor
 ??1Gen_dtor_003be940@@UAE@XZ,0x0001EE20,gen-dtor class destructor
 ??1Gen_dtor_003beac0@@UAE@XZ,0x00047488,gen-dtor class destructor
-??1Gen_dtor_003c3730@@UAE@XZ,0x00042BBD,gen-dtor class destructor
+??1LivingWorldLogic@@UAE@XZ,0x00042BBD,LivingWorldLogic complete destructor call target; constructor 0x003C2FC0 installs own vtable 0x010EDBDC and wrapper slot-zero ILT 0x000436A3 routes to 0x003C3730
 ??1Gen_dtor_003c60a0@@UAE@XZ,0x0001CE4A,gen-dtor class destructor
 ??1Gen_dtor_003c9b30@@UAE@XZ,0x00018A2F,gen-dtor class destructor
 ??1Gen_dtor_003ca640@@UAE@XZ,0x0003F48B,gen-dtor class destructor
