@@ -67,6 +67,17 @@ necessary for the exact body: sequential, left-associated filter appends
 `this + 0xB0`, not at its nested Object pointer plus `0xB0`. Trace the receiver
 reloads independently; matching field displacements do not identify the owner.
 
+For the 806-byte GrabPassenger action at `0x0025F2D0`, finish the control-flow
+inventory before changing compiler flags: retail has **three** nearest-object
+queries, including the `0x2000` option path. Its two distance calculations need
+different local shapes: interleave each terrain-point component copy with its
+subtraction, but keep the object-position delta as a `Coord3D`. A whole-struct
+copy followed by both calculations gives different x87 spill scheduling.
+The final dispatch reloads Object through the secondary receiver rather than
+reusing the earlier Object local. Preserve that reload and the observed
+null-target branch; do not initialize or copy coordinates on a path where
+retail does neither merely to make the reconstruction look safer.
+
 ## Model-condition bit masks: retain the native accessor layers
 
 When retail materializes a constant mask in a register (`mov eax,mask;
