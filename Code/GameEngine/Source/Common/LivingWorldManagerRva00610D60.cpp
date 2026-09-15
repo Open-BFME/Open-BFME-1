@@ -1,8 +1,5 @@
 // ?rva00610d60@BfmeLivingWorldManager@@QAEXXZ
-// partial score=0.93 date=2026-09-10
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
-// Walks the manager's two target lists and gives every target that has no
-// particle system yet one built from the matching template name.
+// Walks both Living World target lists and creates missing particle systems.
 
 typedef bool Bool;
 
@@ -56,7 +53,6 @@ class ParticleSystem
 public:
 	void setPosition(const Coord3D *position);
 	void setField94(void *value);
-	void start();
 
 	unsigned char m_pad00[0x98];
 	ParticleSystemHandle *m_firstHandle;
@@ -64,6 +60,7 @@ public:
 };
 
 ParticleSystem *Make00001B18(void);
+extern void j_00013075();
 
 class ParticleSystemHandle
 {
@@ -117,7 +114,7 @@ extern ParticleSystemManager *TheParticleSystemManager;
 class Gen0060C510Target
 {
 public:
-	ParticleSystemHandle getParticleSystem();
+	ParticleSystemHandle getParticleSystem() throw();
 	void getPosition(Gen0060CBB0Coord3D *position);
 	void attachParticleSystem(BfmeParticleSystemHandle *handle, Coord3D origin);
 	void adoptParticleSystem(BfmeParticleSystemHandle *handle);
@@ -133,6 +130,11 @@ struct Gen0060C510TargetVector
 	Gen0060C510Target *operator[](unsigned int index) const
 	{
 		return m_start[index];
+	}
+
+	Gen0060C510Target **start(void) const
+	{
+		return m_start;
 	}
 
 	Gen0060C510Target **m_start;
@@ -172,7 +174,7 @@ void BfmeLivingWorldManager::rva00610d60()
 	{
 		for (unsigned int i = 0; i < m_secondaryTargets.size(); ++i)
 		{
-			if (!m_secondaryTargets[i]->getParticleSystem())
+			if (!(*(m_secondaryTargets.m_start + i))->getParticleSystem())
 			{
 				ParticleSystemTemplate *sysTemplate;
 				{
@@ -191,11 +193,18 @@ void BfmeLivingWorldManager::rva00610d60()
 					if (created)
 					{
 						Gen0060CBB0Coord3D position;
-						m_secondaryTargets[i]->getPosition(&position);
+						{
+							Gen0060C510Target **targets =
+								m_secondaryTargets.m_start;
+							targets[i]->getPosition(&position);
+						}
 						created->setPosition((const Coord3D *)&position);
 						created->setField94((void *)1);
-						created->start();
-						m_secondaryTargets[i]->attachParticleSystem(
+						typedef void (ParticleSystem::*ParticleSystemStart)(void);
+						union { void (*raw)(); ParticleSystemStart member; } start;
+						start.raw = j_00013075;
+						(created.operator->()->*start.member)();
+						m_secondaryTargets.start()[i]->attachParticleSystem(
 							&created, m_origin);
 					}
 				}
@@ -204,7 +213,7 @@ void BfmeLivingWorldManager::rva00610d60()
 
 		for (unsigned int i = 0; i < m_primaryTargets.size(); ++i)
 		{
-			if (!m_primaryTargets[i]->getParticleSystem())
+			if (!m_primaryTargets.start()[i]->getParticleSystem())
 			{
 				ParticleSystemTemplate *sysTemplate;
 				{
@@ -223,11 +232,14 @@ void BfmeLivingWorldManager::rva00610d60()
 					if (created)
 					{
 						Gen0060CBB0Coord3D position;
-						m_primaryTargets[i]->getPosition(&position);
+						(*(m_primaryTargets.m_start + i))->getPosition(&position);
 						created->setPosition((const Coord3D *)&position);
 						created->setField94((void *)1);
-						created->start();
-						m_primaryTargets[i]->adoptParticleSystem(
+						typedef void (ParticleSystem::*ParticleSystemStart)(void);
+						union { void (*raw)(); ParticleSystemStart member; } start;
+						start.raw = j_00013075;
+						(created.operator->()->*start.member)();
+						m_primaryTargets.start()[i]->adoptParticleSystem(
 							&created);
 					}
 				}
