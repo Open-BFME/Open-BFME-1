@@ -1,4 +1,5 @@
 name,target_rva,reason
+_$E64,0x00C6B2C0,Diplomacy BriefingList initializer is not this retail vector initializer: full build resolves its list ctor to8DCD rather than retail48667->39D5B0; existing ObjectCreationList _$E117 claim at same30B range independently full-byte verified; no coverage removed
 ??0Rva001B3E60@@QAE@XZ,0x001B3CF0,Identity recovered as GhostObject constructor through W3DGhostObject base call and matching geometry layout; existing exact C++ retained under real name
 ??1Rva001B3E60@@UAE@XZ,0x001B3E60,Identity recovered as GhostObject destructor through W3DGhostObject base tailcall and shared constructor vtables; existing exact C++ retained under real name
 ?Rva0010FDD4@@YAXXZ,0x0010FDD4,retired: 9-byte EH rethrow block is embedded at GameState::xferSaveData +0x204; the exact 559-byte GameState body now owns the contiguous extent and no independent caller or identity evidence exists

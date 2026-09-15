@@ -86,13 +86,13 @@ static NameKeyType winSoloID = NAMEKEY_INVALID;
 static GameWindow *winInGame = NULL;
 static GameWindow *winBuddies = NULL;
 static GameWindow *winSolo = NULL;
-static GameWindow *staticTextPlayer[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
-static GameWindow *staticTextSide[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
-static GameWindow *staticTextTeam[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
-static GameWindow *staticTextStatus[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
-static GameWindow *buttonMute[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
-static GameWindow *buttonUnMute[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
-static Int slotNumInRow[MAX_SLOTS];
+GameWindow *staticTextPlayer[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+GameWindow *staticTextSide[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+GameWindow *staticTextTeam[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+GameWindow *staticTextStatus[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+GameWindow *buttonMute[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+GameWindow *buttonUnMute[MAX_SLOTS] = {NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL};
+Int slotNumInRow[MAX_SLOTS];
 
 //-------------------------------------------------------------------------------------------------
 
@@ -479,144 +479,4 @@ WindowMsgHandledType DiplomacySystem( GameWindow *window, UnsignedInt msg,
 
 }  // end DiplomacySystem
 
-void PopulateInGameDiplomacyPopup( void )
-{
-	if (!TheGameInfo)
-		return;
-
-	Int rowNum = 0;
-	for (Int slotNum=0; slotNum<MAX_SLOTS; ++slotNum)
-	{
-		const GameSlot *slot = TheGameInfo->getConstSlot(slotNum);
-		if (slot && slot->isOccupied())
-		{
-			Bool isInGame = false;
-			// Note - for skirmish, TheNetwork == NULL.  jba.
-			if (TheNetwork &&	TheNetwork->isPlayerConnected(slotNum)) {
-				isInGame = true;
-			} else if ((TheNetwork == NULL) && slot->isHuman()) {
-				// this is a skirmish game and it is the human player.
-				isInGame = true;
-			}
-			if (slot->isAI())
-				isInGame = true;
-			AsciiString playerName;
-			playerName.format("player%d", slotNum);
-			Player *player = ThePlayerList->findPlayerWithNameKey(NAMEKEY(playerName));
-			Bool isAlive = !TheVictoryConditions->hasSinglePlayerBeenDefeated(player);
-			Bool isObserver = player->isPlayerObserver();
-
-			if (slot->isHuman() && TheGameInfo->getLocalSlotNum() != slotNum && isInGame)
-			{
-				// show mute button
-				if (buttonMute[rowNum])
-				{
-					buttonMute[rowNum]->winHide(slot->isMuted());
-				}
-				if (buttonUnMute[rowNum])
-				{
-					buttonUnMute[rowNum]->winHide(!slot->isMuted());
-				}
-			}
-			else
-			{
-				// can't mute self, AI players, or MIA humans
-				if (buttonMute[rowNum])
-					buttonMute[rowNum]->winHide(TRUE);
-				if (buttonUnMute[rowNum])
-					buttonUnMute[rowNum]->winHide(TRUE);
-			}
-
-			Color playerColor = TheMultiplayerSettings->getColor(slot->getApparentColor())->getColor();
-			Color backColor = GameMakeColor(0, 0, 0, 255);
-			Color aliveColor = GameMakeColor(0, 255, 0, 255);
-			Color deadColor = GameMakeColor(255, 0, 0, 255);
-			Color observerInGameColor = GameMakeColor(255, 255, 255, 255);
-			Color goneColor = GameMakeColor(196, 0, 0, 255);
-			Color observerGoneColor = GameMakeColor(196, 196, 196, 255);
-
-			if (staticTextPlayer[rowNum])
-			{
-				staticTextPlayer[rowNum]->winSetEnabledTextColors( playerColor, backColor );
-				GadgetStaticTextSetText(staticTextPlayer[rowNum], slot->getName());
-			}
-			if (staticTextSide[rowNum])
-			{
-				staticTextSide[rowNum]->winSetEnabledTextColors( playerColor, backColor );
-				GadgetStaticTextSetText(staticTextSide[rowNum], slot->getApparentPlayerTemplateDisplayName() );
-			}
-			if (staticTextTeam[rowNum])
-			{
-				staticTextTeam[rowNum]->winSetEnabledTextColors( playerColor, backColor );
-				AsciiString teamStr;
-				teamStr.format("Team:%d", slot->getTeamNumber() + 1);
-				if (slot->isAI() && slot->getTeamNumber() == -1)
-					teamStr = "Team:AI";
-				GadgetStaticTextSetText(staticTextTeam[rowNum], TheGameText->fetch(teamStr) );
-			}
-			if (staticTextStatus[rowNum])
-			{
-				staticTextStatus[rowNum]->winHide(FALSE);
-				if (isInGame)
-				{
-					if (isAlive)
-					{
-						staticTextStatus[rowNum]->winSetEnabledTextColors( aliveColor, backColor );
-						GadgetStaticTextSetText(staticTextStatus[rowNum], TheGameText->fetch("GUI:PlayerAlive"));
-					}
-					else
-					{
-						if (isObserver)
-						{
-							staticTextStatus[rowNum]->winSetEnabledTextColors( observerInGameColor, backColor );
-							GadgetStaticTextSetText(staticTextStatus[rowNum], TheGameText->fetch("GUI:PlayerObserver"));
-						}
-						else
-						{
-							staticTextStatus[rowNum]->winSetEnabledTextColors( deadColor, backColor );
-							GadgetStaticTextSetText(staticTextStatus[rowNum], TheGameText->fetch("GUI:PlayerDead"));
-						}
-					}
-				}
-				else
-				{
-					// not in game
-					if (isObserver)
-					{
-						staticTextStatus[rowNum]->winSetEnabledTextColors( observerGoneColor, backColor );
-						GadgetStaticTextSetText(staticTextStatus[rowNum], TheGameText->fetch("GUI:PlayerObserverGone"));
-					}
-					else
-					{
-						staticTextStatus[rowNum]->winSetEnabledTextColors( goneColor, backColor );
-						GadgetStaticTextSetText(staticTextStatus[rowNum], TheGameText->fetch("GUI:PlayerGone"));
-					}
-				}
-			}
-
-			slotNumInRow[rowNum++] = slotNum;
-		}
-	}
-
-	while (rowNum < MAX_SLOTS)
-	{
-		slotNumInRow[rowNum] = -1;
-		if (staticTextPlayer[rowNum])
-			staticTextPlayer[rowNum]->winHide(TRUE);
-		if (staticTextSide[rowNum])
-			staticTextSide[rowNum]->winHide(TRUE);
-		if (staticTextTeam[rowNum])
-			staticTextTeam[rowNum]->winHide(TRUE);
-		if (staticTextStatus[rowNum])
-			staticTextStatus[rowNum]->winHide(TRUE);
-		if (buttonMute[rowNum])
-			buttonMute[rowNum]->winHide(TRUE);
-		if (buttonUnMute[rowNum])
-			buttonUnMute[rowNum]->winHide(TRUE);
-
-		++rowNum;
-	}
-}
-
-
-
+// PopulateInGameDiplomacyPopup is implemented in its BFME-layout-specific TU.
