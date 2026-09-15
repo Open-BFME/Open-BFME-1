@@ -87760,7 +87760,7 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ??1Gen_dtor_000d17c0@@UAE@XZ,0x00036610,gen-dtor class destructor
 ??1Gen_dtor_000ed530@@UAE@XZ,0x00017A71,gen-dtor class destructor
 ??1Gen_dtor_0028c450@@UAE@XZ,0x00023F0B,gen-dtor class destructor
-??1Gen_dtor_0043cd30@@UAE@XZ,0x0003F1A7,gen-dtor class destructor
+??1?$BlitTransRemapXlat@E@@UAE@XZ,0x0003F1A7,BlitTransRemapXlat<unsigned char> complete destructor called by scalar-deleting destructor at 0x0043CD30
 ??1Gen_dtor_007af570@@UAE@XZ,0x0001FCAD,gen-dtor class destructor
 ??_GPartitionFilterRelationship@@MAEPAXI@Z,0x000080B7,vtable 0x00C85DC0 slot zero routes through this ILT to scalar wrapper 0x000ED500
 ??_7PartitionFilterRelationship@@6B@,0x00C85DC0,vtable whose slots name PartitionFilterRelationship
