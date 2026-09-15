@@ -2522,10 +2522,10 @@ void Player::setListInScoreScreen(Bool listInScoreScreen)
 }
 
 //=============================================================================
-// ?getListInScoreScreen@Player@@QAE_NXZ present-unmatched
 Bool Player::getListInScoreScreen()
 {
-	return m_listInScoreScreen;
+	return *reinterpret_cast<const Bool *>(
+		reinterpret_cast<const char *>(this) + 0x29C);
 }
 
 //=============================================================================
