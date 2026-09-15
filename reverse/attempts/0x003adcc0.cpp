@@ -92,7 +92,9 @@ public:
 void Glo012F1024Item::j_00021f26(void)
 {
 	unsigned int index = 0;
-	if (m_bfmeFlag16.bfmeSize() != 0)
+	int count = ((int)m_bfmeFlag16.m_bfmeEnd -
+		(int)m_bfmeFlag16.m_bfmeBegin) >> 4;
+	if (count != 0)
 	{
 		do
 		{
