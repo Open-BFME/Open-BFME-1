@@ -203,3 +203,22 @@ value-initialization workaround emitted an extra `__default_constructed`
 call. Selecting direct `PlayerInfo()` construction locally before parsing
 `<map>` recovered all 288 bytes and the register schedule. See
 `GameSpy/PeerDefs_PlayerInfoMap_Subscript.cpp`; no vendored header was edited.
+
+## Special-power containers: access expressions and lifetimes
+
+At `0x0025C7C0` (266 B), caching a separate vector-entry pointer produced a
+264-byte weighted-choice body with 179 non-relocation differences: VC7.1
+hoisted the extent and changed the loop and register allocation. Keeping
+`choices[i]` in the accumulation and string selection recovered the complete
+body, including its extent reloads. The entries contain an owning AsciiString
+and a float; accumulation truncates to an integer after each addition.
+See `Rva0025C7C0ElvenWoodChoice.cpp` under Object/SpecialPower.
+
+At `0x0025ED50` (355 B), the filter objects die at the end of the iterator's
+initialization expression, **before** the enumeration loop. Named locals that
+survive the loop change both lifetime and emitted cleanup. Genuine temporary
+virtual filters, STLport's `_STLP_NO_EXCEPTIONS` configuration, and copying the
+ObjectID to a local before `list::push_back` recovered the body. Passing a
+reference to the Object's field instead changed the allocation/load schedule.
+See `Rva0025ED50ChargeTargets.cpp`; it uses actual three-slot BFME filter
+views and verified vtables, not hand-written vptr stores or dummy predicates.
