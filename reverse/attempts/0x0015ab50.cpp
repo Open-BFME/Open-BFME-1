@@ -2,6 +2,22 @@
 // partial score=0.3 date=2026-09-09
 // Research-only semantic attempt for the BFME AIGroup formation planner.
 // Retail boundary: 0x0015AB50, 2416 bytes.
+//
+// Identity is no longer speculative.  The byte-exact
+// AIGroup::groupFollowWaypointPathAsTeam body at 0x00155A80 calls ILT
+// 0x0002E636 -> 0x0015AB50 after isReady(), passing its CommandSourceType and
+// zero.  The byte-exact AIGroup::tryGroupSpecial body at 0x001599A0 calls the
+// same ILT with its corresponding two arguments.  Together those callers
+// establish AIGroup::prepFollow rather than merely an AIGroup formation helper.
+//
+// Retail builds twelve 0x1BC-byte records and therefore probes a 0x1540-byte
+// aligned frame.  This bank compiles to 691 bytes with a 0x14E8-byte frame: it
+// models allocation, member classification, and initial formation assignment,
+// but it still omits the later pairwise offset search/swap and final offset
+// application visible in retail +0x310..+0x94B.  That missing semantic phase,
+// not an unresolved direct callee, is the current blocker; callees.py resolves
+// all twelve direct targets (including the two register-convention helpers at
+// 0x0015A2D0 and the iterator/record helper at 0x0015A390).
 
 struct Coord3D
 {
