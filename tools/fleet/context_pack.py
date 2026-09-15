@@ -18,11 +18,12 @@ import build
 import capstone
 
 _exe = None; _secs = None; _rows = None; _starts = None; _pins = None; _calls = None; _strings = None; _vt = None
+_thunks_of = None
 BASE = 0x400000
 
 
 def _load():
-    global _exe, _secs, _rows, _starts, _pins, _calls, _strings, _vt
+    global _exe, _secs, _rows, _starts, _pins, _calls, _strings, _vt, _thunks_of
     if _exe is not None:
         return
     _exe = open(build.EXE, 'rb').read(); _secs = build.pe_sections(_exe)
@@ -54,6 +55,13 @@ def _load():
                 _calls[tgt].append(lo + i)
             i = raw.find(b'\xe8', i + 1)
         json.dump(_calls, open(ci, 'w'))
+    # thunk -> body it lands on, so callers of the thunk count for the body
+    _thunks_of = collections.defaultdict(list)
+    for s0, r0 in _rows.items():
+        if int(r0['target_size'] or 0) == 5:
+            t0 = thunk_target(s0)
+            if t0 is not None:
+                _thunks_of[t0].append(s0)
     _strings = collections.defaultdict(list)
     sx = ROOT / 'reverse/string_xrefs.tsv'
     if sx.exists():
@@ -62,9 +70,13 @@ def _load():
             if len(p) >= 2:
                 for a in p[1].split(','):
                     try:
-                        _strings[int(a, 16) - BASE].append(p[0])
+                        site = int(a, 16) - BASE
                     except ValueError:
-                        pass
+                        continue
+                    o = owner(site)
+                    key = int(o['target_rva'], 16) if o else site
+                    if p[0] not in _strings[key]:
+                        _strings[key].append(p[0])
     _vt = {}
     vj = ROOT / 'build/vtable_class_rank.json'
     if vj.exists():
@@ -172,14 +184,20 @@ def pack(rva, max_items=8):
             if real is not None:
                 line += f"  => jmp 0x{real:08X} {name_of(real)}"
             out.append(line)
-    callers = _calls.get(rva, [])
+    callers = list(_calls.get(rva, []))
+    via_thunk = 0
+    for th in _thunks_of.get(rva, ()):
+        sites = _calls.get(th, [])
+        via_thunk += len(sites)
+        callers.extend(sites)
     if callers:
         named = collections.Counter()
         for site in callers:
             o = owner(site)
             if o:
                 named[(o['name'][:60], o['source'].split('/')[-1])] += 1
-        out.append(f"  callers ({len(callers)} sites): " + '; '.join(f"{n} @ {s} x{c}" for (n, s), c in named.most_common(4)))
+        how = f", {via_thunk} via ILT thunk" if via_thunk else ""
+        out.append(f"  callers ({len(callers)} sites{how}): " + '; '.join(f"{n} @ {s} x{c}" for (n, s), c in named.most_common(4)))
     if vtstore:
         out.append("  installs vtable(s): " + ', '.join(f"0x{v:08X}" for v in vtstore[:4]) + "  (tools/vtable_lookup.py names the class)")
     e = _vt.get(rva)

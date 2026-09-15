@@ -573,6 +573,88 @@ def annotate_stashes(candidates):
     return candidates
 
 
+def _is_dump_row(row):
+    """A row that fixes a boundary but holds no source: gen-dump note or a
+    MASM body. Progress counts neither, so the address is still open work."""
+    import build
+    return (build.is_scaffold_row(row)
+            or Path(row.get("source", "")).suffix.lower() in (".asm", ".s"))
+
+
+def finish_candidates(min_score=0.9):
+    """The near-landed tier: bodies with a banked attempt at or above
+    `min_score` whose address is STILL a dump.
+
+    This reads the stash directory, not the log's latest verdict. A later
+    `blocked` row on the same address does not delete the 0.95 body it
+    follows -- measured 2026-09-15: 234 such bodies were invisible to the
+    fleet's finish picker for exactly that reason, against 147 it could see.
+    The stash is the evidence; the verdict beside it says what to read first.
+    """
+    import build
+    dumps = {}
+    for row in build.load_all_function_rows():
+        if row.get("status") != "matched" or not row.get("target_rva"):
+            continue
+        if _is_dump_row(row):
+            dumps[int(row["target_rva"], 16)] = row
+    attempts_dir = re_log.RE_ATTEMPTS.parent / "attempts"
+    latest = {rva: fields[3] for rva, fields in re_log.latest_records().items()}
+    out = []
+    for path in sorted(attempts_dir.glob("0x*.cpp")) if attempts_dir.exists() else ():
+        try:
+            rva = int(path.stem, 16)
+        except ValueError:
+            continue
+        row = dumps.get(rva)
+        if row is None:
+            continue
+        # A dead-end verdict after the bank refutes the BOUNDARY (no-match,
+        # refuted, not a function); re_log retires those and so does this
+        # tier. A deferral (blocked, attempted) is a failed session, not a
+        # finding about the address, and is exactly what the stash outlives.
+        if latest.get(rva) in re_log.DEAD_END_STATUSES:
+            continue
+        found = re_log.stash_for(rva)
+        if not found:
+            continue
+        stash_path, score = found
+        if score < min_score:
+            continue
+        head = stash_path.read_text(encoding="utf-8", errors="replace").splitlines()[:1]
+        symbol = (head[0].lstrip("/").strip() if head else "") or row["name"]
+        target_rva = f"0x{rva:08X}"
+        stash_rel = (stash_path.relative_to(ROOT).as_posix()
+                     if stash_path.is_relative_to(ROOT) else stash_path.as_posix())
+        out.append({
+            "function": symbol,
+            "target_rva": target_rva,
+            "target_size": int(row.get("target_size") or 0),
+            "source": row["source"],
+            "stash": stash_rel,
+            "score": score,
+            "latest_verdict": latest.get(rva, "partial"),
+            "command": f"python3 tools/probe.py {stash_rel} '{symbol}' {target_rva}",
+        })
+    out.sort(key=lambda c: (-c["score"], -c["target_size"]))
+    return out
+
+
+def finish_choice(candidates):
+    """Draw one near-landed body, weighted by how close it already is.
+
+    Random, so concurrent agents rarely collide; weighted by score so a 0.99
+    body is drawn ten times as often as a 0.90 one. Size does not enter: the
+    remaining work is the distance from the stash, not the body."""
+    weights = [max(1, int(round((c["score"] - 0.89) * 100))) for c in candidates]
+    cutoff = secrets.randbelow(sum(weights))
+    for candidate, weight in zip(candidates, weights):
+        cutoff -= weight
+        if cutoff < 0:
+            return candidate
+    raise AssertionError("finish_choice fell through its cumulative walk")
+
+
 def stash_line(candidate):
     """The one-line pointer at a banked body, or None. Printed beside `start:`."""
     if "stash" not in candidate:
@@ -982,8 +1064,9 @@ def packet_candidates(claimed):
 
 
 def selected_queue(tier, drifts, structural, ghidra_absent, anchored, named,
-                   packets=()):
+                   packets=(), finish=()):
     queues = {
+        "finish": ("near-landed body", finish),
         "packet": ("Zero Hour work packet", packets),
         "named": ("reloc-named unclaimed function", named),
         "harvest": ("drift quick win", drifts),
@@ -993,7 +1076,8 @@ def selected_queue(tier, drifts, structural, ghidra_absent, anchored, named,
     }
     if tier:
         return queues[tier]
-    for name in ("packet", "named", "harvest", "structural", "ghidra", "anchored"):
+    for name in ("finish", "packet", "named", "harvest", "structural", "ghidra",
+                 "anchored"):
         label, candidates = queues[name]
         if candidates:
             return label, candidates
@@ -1057,6 +1141,18 @@ def named_size_label(candidate):
 
 def print_candidate(label, candidate, meta, candidates=()):
     print(f"== selected work: {label} (drawn from {meta['pool']}) ==")
+    if label == "near-landed body":
+        print(f"  {candidate['target_size']:>5}B  {candidate['function']}")
+        print(f"       {candidate['target_rva']} is still a dump ({candidate['source']}); "
+              f"a banked attempt already scores {candidate['score']}")
+        print(f"       START FROM STASH: {candidate['stash']} -- do not rewrite from scratch")
+        if candidate["latest_verdict"] != "partial":
+            print(f"       latest verdict on this address is '{candidate['latest_verdict']}': "
+                  f"read its re_attempts.log line first and try a DIFFERENT lever")
+        print(f"       start: {candidate['command']}")
+        print("       then one lever at a time on the FIRST divergence (docs/shape_levers.md); "
+              "land with add_match.py, or re-bank with an honest --score and what changed")
+        return
     if label == "Zero Hour work packet":
         print(f"  {candidate['size']:>5}B  {candidate['function']}")
         print(f"       {candidate['target_rva']} — Zero Hour's own body for this "
@@ -1125,7 +1221,8 @@ def print_candidate(label, candidate, meta, candidates=()):
 
 
 def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
-                 suppressed=0, named=(), named_note="", structural_meta=None):
+                 suppressed=0, named=(), named_note="", structural_meta=None,
+                 finish=()):
     # Dispatching off this view inverts the weighting the default draw exists to
     # apply: it is ordered by SIZE, so the top rows are the biggest bodies and
     # the worst bets. Five seats were sent at the head of this list and went
@@ -1141,6 +1238,16 @@ def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
               f"investigated (--include-logged to show)")
     if structural_meta and validator_note(structural_meta):
         print(f"  {validator_note(structural_meta)}")
+
+    if args.tier in (None, "finish"):
+        print(f"\n== 0.5 near-landed bodies: banked stash >= {args.min_score} "
+              f"({len(finish)}) ==")
+        for candidate in finish[:args.limit]:
+            print(f"  {candidate['score']:.2f} {candidate['target_size']:>5}B  "
+                  f"{candidate['function']}")
+            print(f"       stash {candidate['stash']}  latest verdict: "
+                  f"{candidate['latest_verdict']}")
+            print(f"       start: {candidate['command']}")
 
     if args.tier in (None, "named"):
         print(f"\n== 1. reloc-named unclaimed functions ({len(named)}) ==")
@@ -1210,8 +1317,11 @@ def main():
     ap.add_argument("--ranked", action="store_true",
                     help="show complete ranked queues for humans/debugging")
     ap.add_argument("--tier",
-                    choices=("packet", "named", "harvest", "structural", "ghidra", "anchored"),
+                    choices=("finish", "packet", "named", "harvest", "structural",
+                             "ghidra", "anchored"),
                     help="choose from only this task lane")
+    ap.add_argument("--min-score", type=float, default=0.9,
+                    help="finish tier: lowest banked score to serve (default 0.9)")
     ap.add_argument("--shard", type=parse_shard, metavar="INDEX/COUNT",
                     help="stable zero-based partition for concurrent workers")
     ap.add_argument("--big", action="store_true",
@@ -1244,6 +1354,8 @@ def main():
                                         big=args.big)
                   if args.tier not in ("named", "harvest", "ghidra", "anchored")
                   else [])
+    finish = (finish_candidates(args.min_score)
+              if args.tier in (None, "finish") else [])
     if args.tier in (None, "named"):
         named, named_note = reloc_named_candidates(claimed, claimed_ranges)
     else:
@@ -1295,6 +1407,7 @@ def main():
     if args.ranked and args.json:
         print(json.dumps({
             "ledger": ledger,
+            "finish": finish,
             "named_meta": named_note, "reloc_named": named,
             "drift_quick_wins": drifts,
             "structural": structural,
@@ -1309,7 +1422,8 @@ def main():
 
     if args.ranked:
         print_ranked(args, ledger, drifts, structural, ghidra_meta,
-                     ghidra_absent, suppressed, named, named_note, structural_meta)
+                     ghidra_absent, suppressed, named, named_note, structural_meta,
+                     finish)
         return
 
     packets = (packet_candidates(claimed)
@@ -1320,9 +1434,17 @@ def main():
     if not args.include_logged:
         packets, dropped_packets = drop_logged(packets)
         suppressed += dropped_packets
+    # The finish tier is never log-filtered: a deferral AFTER a banked body is
+    # the normal state of a near miss, and the stash is why it is served.
+    finish = apply_shard(finish, args.shard)
     label, candidates = selected_queue(args.tier, drifts, structural, ghidra_absent,
-                                       anchored, named, packets)
-    candidate = weighted_choice(candidates) if candidates else None
+                                       anchored, named, packets, finish)
+    if not candidates:
+        candidate = None
+    elif label == "near-landed body":
+        candidate = finish_choice(candidates)
+    else:
+        candidate = weighted_choice(candidates)
     deferred = sum(1 for c in candidates if c.get("deferred_attempts"))
     meta = {"pool": len(candidates), "suppressed_logged": suppressed,
             "deferred_pool": deferred, "shard": shard_meta}
