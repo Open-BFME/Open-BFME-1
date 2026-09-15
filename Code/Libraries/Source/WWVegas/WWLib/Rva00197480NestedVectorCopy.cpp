@@ -26,6 +26,8 @@ typedef _STL::vector<Rva00197480InnerVector,
 // return their empty allocator through the caller-provided result slot
 // (7 bytes each). Legacy generated ledger keys are retained with explicit
 // object-symbols naming the actual canonical specializations.
+// The inner _Vector_base constructor at 0x00193930 allocates point storage
+// through STLport's normal small-node/large-allocation split (100 bytes).
 template _STL::vector<Rva00197480Point,
 	_STL::allocator<Rva00197480Point> >::vector(
 	const _STL::vector<Rva00197480Point,
