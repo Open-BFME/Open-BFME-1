@@ -1,32 +1,41 @@
-// ?d_006ee520@@YAXXZ
-// partial score=0.9 date=2026-09-06
+// BFME subtitle update body at retail RVA 0x006EE520.
+// The address-qualified class keeps the unresolved original method name
+// explicit while the manager and sink access views preserve unresolved callee
+// identities at their retail addresses.
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
-// Structural BFME recovery, retail 0x006EE520 (223 bytes).
 
 // stlport
 #include <vector>
 
+class Rva006EE520;
+
 template <typename T>
 class StringBase
 {
-	public:
+	protected:
 	~StringBase();
 
-	protected:
 	void releaseBuffer();
 	void *m_data;
+
+	friend class Rva006EE520;
 };
 
 typedef StringBase<unsigned short> UnicodeString;
 
 class SubtitleEntry;
 
-class SubtitleManager
+class Rva006ED3D0TextAccess
+{
+public:
+	UnicodeString getText(int index) const;
+};
+
+class SubtitleManager : public Rva006ED3D0TextAccess
 {
 public:
 	int getStartFrame(int index) const;
 	bool hasBeenDisplayed(int index) const;
-	UnicodeString getText(int index) const;
 	unsigned int getColor(int index) const;
 	void setDisplayedStats(int index);
 
@@ -34,10 +43,14 @@ public:
 	_STL::vector<SubtitleEntry *> m_entries;
 };
 
-class SubtitleSink
+class Rva00435A40Sink
 {
 public:
-	void publish(UnicodeString text, unsigned int color);
+	void publish(const UnicodeString &text, unsigned int color);
+};
+
+class SubtitleSink : public Rva00435A40Sink
+{
 };
 
 class Rva006EE520
@@ -66,11 +79,8 @@ void Rva006EE520::update(int frame)
 		if (self->m_manager->hasBeenDisplayed(i) || frame < startFrame)
 			continue;
 
-		{
-			UnicodeString text = self->m_manager->getText(i);
-			color = self->m_manager->getColor(i);
-			self->m_sink->publish(text, color);
-		}
+		self->m_sink->publish(self->m_manager->getText(i),
+			self->m_manager->getColor(i));
 		self->m_manager->setDisplayedStats(i);
 	}
 }

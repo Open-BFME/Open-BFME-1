@@ -81862,6 +81862,7 @@ name,address,notes
 ?getText@NetChatCommandMsg@@QAE?AVUnicodeString@@XZ,0x00025338,ILT thunk; the by-value UnicodeString getter NetPacket::isRoomForChatMessage calls, beside the ledgered NetDisconnectChatCommandMsg twin
 ?getText@NetDisconnectChatCommandMsg@@QAE?AVUnicodeString@@XZ,0x00015901,ILT thunk; the by-value UnicodeString getter ConnectionManager::processDisconnectChat calls on its message
 ?getText@Rva005CB9F0StreamText@@QAE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@XZ,0x0001CA26,FX particle system stream text accessor through the retail thunk to 0x009CB9F0
+?getText@Rva006ED3D0TextAccess@@QBE?AV?$StringBase@G@@H@Z,0x006ED3D0,0x006EE520 calls the wide StringBase getter through ILT 0x00002E00; class identity remains address-qualified
 ?getText@Rva00788290Allocation@@QAE?AVUnicodeString@@XZ,0x00005380,Rva00788290Allocation APT display-text getter call uses the existing ILT
 ?getText@StreamTextAccessor@@QAE?AV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@XZ,0x0001CA26,default alpha writer stream text accessor ILT
 ?getText@SubtitleEntry@@QBE?AVAsciiString@@XZ,0x00014952,ILT thunk to the exact SubtitleEntry text getter called by SubtitleManager::getText at 0x006ED3D0
@@ -84142,6 +84143,7 @@ name,address,notes
 ?propagateMessages@MessageStream@@QAEXXZ,0x0008ADF0,ZH MessageStream::propagateMessages line for line: for each translator (+0x10 list) for each message (+0x08 list) call translator->translateGameMessage (vslot 0) and deleteInstance on DESTROY_MESSAGE(1); then TheCommandList 0x012ED5F0 ->appendMessage (vcall +0x24) for every remaining message and clear +0x08/+0x0C; ecx=TheMessageStream 0x012ED5EC at 0x0006B9CE
 ?pruneDeadWanters@OpenContain@@QAEXXZ,0x00004953,OpenContain update helper reached through the retail thunk at 0x00224560
 ?pubimbue@?$basic_streambuf@DV?$char_traits@D@_STL@@@_STL@@QAE?AVlocale@2@ABV32@@Z,0x0083FC10,retail callee decoded from assigned basic_ios imbue at 0x0053F690
+?publish@Rva00435A40Sink@@QAEXABV?$StringBase@G@@I@Z,0x00435A40,0x006EE520 passes the wide text reference and color through ILT 0x0001CCCE; class identity remains address-qualified
 ?publish@Rva005A41F0@@QAEXXZ,0x00039671,Open2 0x005A41F0 tail callee (ILT -> 0x005A3EF0)
 ?publishLanEndpoint@@YAXPAVLANGameInfo@@PADPAXH@Z,0x00049E86,LAN endpoint publisher thunk
 ?pulseHealObject@AutoHealBehavior@@QAEXPAVObject@@@Z,0x00045B2E,Open-BFME5 ILT thunk to body 0x001EECB0; same +4/+8/+0x2C/+0x30 facade as onDamage; bfmeGetBonus 0x11 then Object vcalls +0x40/+0x44
