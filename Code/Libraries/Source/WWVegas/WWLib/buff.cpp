@@ -4,7 +4,10 @@
 
 
 #include	"always.h"
+#define BFME_BUFFER_DTOR_OUT_OF_LINE
 #include	"buff.h"
+#undef BFME_BUFFER_DTOR_OUT_OF_LINE
+
 
 
 Buffer::Buffer(void * buffer, long size) :

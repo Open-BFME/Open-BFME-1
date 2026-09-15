@@ -61,7 +61,11 @@ class Buffer {
 		Buffer(void const * ptr, long size=0);
 		Buffer(long size);
 		Buffer(Buffer const & buffer);
-		~Buffer(void);
+#ifdef BFME_BUFFER_DTOR_OUT_OF_LINE
+	~Buffer(void);
+#else
+	~Buffer(void) { Reset(); }
+#endif
 
 		Buffer & operator = (Buffer const & buffer);
 		operator void * (void) const {return(BufferPtr);}
