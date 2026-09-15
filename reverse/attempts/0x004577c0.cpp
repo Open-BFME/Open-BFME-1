@@ -1,5 +1,5 @@
 // ?loadUserMaps@MapCache@@AAE_NXZ
-// partial score=0.55 date=2026-09-09
+// partial score=0.56 date=2026-09-15
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Oy- /D_STLP_USE_STATIC_LIB
 // stlport
 
@@ -225,11 +225,11 @@ Bool MapCache::loadUserMaps()
 		++it;
 	}
 
-	FilenameList filenameList;
 	FilenameListIter iter;
+	FilenameList filenameList;
+	Bool parsedAMap = FALSE;
 	AsciiString toplevelPattern;
 	toplevelPattern.format(AsciiString("%s\\"), mapDir.str());
-	Bool parsedAMap = FALSE;
 	AsciiString filenamepattern;
 	filenamepattern.format(AsciiString("*.%s"), getMapExtension().str());
 
