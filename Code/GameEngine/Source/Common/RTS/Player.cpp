@@ -4792,10 +4792,19 @@ Bool Player::isPlayerDead(void) const
 }
 
 // ------------------------------------------------------------------------------------------------
-// ?isPlayerActive@Player@@QBE_NXZ present-unmatched
+struct BfmePlayerActiveFields
+{
+	unsigned char m_prefix[0x296];
+	unsigned char m_observer;
+	unsigned char m_between[0x680 - 0x297];
+	unsigned char m_isPlayerDead;
+};
+
 Bool Player::isPlayerActive(void) const
 {
-	return !m_observer && !m_isPlayerDead;
+	const BfmePlayerActiveFields *fields =
+		reinterpret_cast<const BfmePlayerActiveFields *>(this);
+	return !fields->m_observer && !fields->m_isPlayerDead;
 }
 
 // ------------------------------------------------------------------------------------------------
