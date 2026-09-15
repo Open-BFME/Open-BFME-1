@@ -57,6 +57,16 @@ the base without changing the 532-byte caller. It is a local template
 inlining decision, not a reason to change the shared allocator or pin a
 130-byte emission to a 97-byte body.
 
+The 898-byte LevelGrant action at `0x00260180` exposed the same issue for
+object-status masks: use native `BitFlags<86>` (12 bytes), not a hand-written
+three-word struct with chained zero assignments. Native temporary construction
+removed an extra EBP lifetime. Its `0x20` store is in the second mask word,
+so the absolute bit index is **37**, not 5. Two other semantic details were
+necessary for the exact body: sequential, left-associated filter appends
+(`a.link(&b)->link(&c)`), and the query position at the primary owner's
+`this + 0xB0`, not at its nested Object pointer plus `0xB0`. Trace the receiver
+reloads independently; matching field displacements do not identify the owner.
+
 ## Model-condition bit masks: retain the native accessor layers
 
 When retail materializes a constant mask in a register (`mov eax,mask;
