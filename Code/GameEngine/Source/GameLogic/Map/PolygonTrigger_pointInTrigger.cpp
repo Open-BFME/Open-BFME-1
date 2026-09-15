@@ -6,6 +6,13 @@
 typedef bool Bool;
 typedef int Int;
 
+// BFME float-coordinate overload: the original method name is not recovered.
+// Only the three scalar coordinates are used by this TU's ABI view.
+struct Coord3D
+{
+	float x, y, z;
+};
+
 struct ICoord3D
 {
 	Int x;
@@ -47,10 +54,59 @@ protected:
 
 public:
 	Bool pointInTrigger(ICoord3D &point) const;
+	Bool bfmeContainsPointAt0018FA20(Coord3D &point) const;
 };
 
 // ?pointInTrigger@PolygonTrigger@@QBE_NAAUICoord3D@@@Z
 Bool PolygonTrigger::pointInTrigger(ICoord3D &point) const
+{
+	if (m_boundsNeedsUpdate)
+		updateBounds();
+
+	if (point.x < m_bounds.lo.x)
+		return false;
+	if (point.y < m_bounds.lo.y)
+		return false;
+	if (point.x > m_bounds.hi.x)
+		return false;
+	if (point.y > m_bounds.hi.y)
+		return false;
+
+	Bool inside = false;
+	Int i;
+	for (i = 0; i < m_numPoints; ++i)
+	{
+		TempIndexStruct pt1 = m_points[i];
+		const TempIndexStruct *src2 =
+			(i != 0) ? &m_points[i - 1] : &m_points[m_numPoints - 1];
+		TempIndexStruct pt2 = *src2;
+
+		if (pt1.y == pt2.y)
+			continue;
+		if (pt1.x < point.x && pt2.x < point.x)
+			continue;
+
+		if (pt1.y > pt2.y)
+			std::swap(pt1, pt2);
+		if (pt2.y < point.y)
+			continue;
+		if (pt1.y >= point.y)
+			continue;
+		const Int pt2x = pt2.x;
+
+		if ((pt2x - pt1.x) * (point.y - pt1.y) >=
+			(point.x - pt1.x) * (pt2.y - pt1.y))
+			inside = !inside;
+	}
+	return inside;
+}
+
+// Full367-byte body at0018FA20, distinct from the integer predicate above.
+// The same owner layout and updateBounds call, plus the matched006DFxxx
+// callers throughILT0000A7DB, establish this float-coordinate query.
+// Keeping the same TempIndexStruct and post-swap x read fixes the old reload
+// ordering near miss without changing the arithmetic or adding barriers.
+Bool PolygonTrigger::bfmeContainsPointAt0018FA20(Coord3D &point) const
 {
 	if (m_boundsNeedsUpdate)
 		updateBounds();
