@@ -242,6 +242,10 @@ int piIsOperationFinished(PEER peer, int opID);
 int PeerOperationsComplete(PEER peer, int opID);
 int piIsCallbackFinished(PEER peer, int opID);
 void peerShutdown(PEER peer);
+int piNewAuthenticateCDKeyOperation(PEER peer, const char *cdkey,
+	void *callback, void *param, int opID);
+void piAddAuthenticateCDKeyCallback(PEER peer, int result,
+	const char *message, void *callback, void *param, int opID);
 __declspec(dllimport) char *__cdecl strncpy(char *destination,
 	const char *source, unsigned int count);
 
@@ -1739,4 +1743,32 @@ void piSendPlayerUTM(PEER peer, const char *nick, const char *command,
 	sprintf(buffer, "%s %s", command, parameters);
 	chatSendUserMessageA(connection->chat, nick, buffer,
 		authenticate ? 4 : 3);
+}
+
+void peerAuthenticateCDKey(PEER peer, const char *cdkey, void *callback,
+	void *param, int blocking)
+{
+	piConnection *connection = (piConnection *)peer;
+	int success = 1;
+	int opID = piGetNextID(peer);
+
+	if (!piNewAuthenticateCDKeyOperation(peer, cdkey, callback, param, opID))
+		success = 0;
+	if (!success)
+		piAddAuthenticateCDKeyCallback(peer, 0,
+			"Error starting CD Key check", callback, param, opID);
+
+	if (blocking)
+	{
+		do
+		{
+			msleep(1);
+			piThink(peer, opID);
+		}
+		while (!PeerOperationsComplete(peer, opID) ||
+			!piIsCallbackFinished(peer, opID));
+
+		if (connection->shutdown && connection->callbackDepth == 0)
+			peerShutdown(peer);
+	}
 }
