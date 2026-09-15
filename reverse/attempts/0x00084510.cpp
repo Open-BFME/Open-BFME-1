@@ -1,5 +1,5 @@
 // ??0GlobalData@@QAE@XZ
-// partial score=0.19 date=2026-09-09
+// partial score=0.2 date=2026-09-15
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 #include <vector>
@@ -273,19 +273,19 @@ private:
 	BFMERetailAsciiString m_str_94;				///< +0x94
 	unsigned int m_98;				///< +0x98
 	BFMERetailAsciiString m_strArr_9c[4];				///< +0x9c
-	unsigned int m_ac;				///< +0xac
-	unsigned int m_bc;				///< +0xbc
-	unsigned int m_cc;				///< +0xcc
-	unsigned int m_dc;				///< +0xdc
-	unsigned int m_ec;				///< +0xec
-	unsigned int m_fc;				///< +0xfc
-	unsigned int m_10c;				///< +0x10c
-	unsigned int m_11c;				///< +0x11c
-	unsigned int m_12c;				///< +0x12c
-	unsigned int m_13c;				///< +0x13c
-	unsigned int m_14c;				///< +0x14c
-	unsigned int m_15c;				///< +0x15c
-	unsigned int m_16c;				///< +0x16c
+	unsigned int m_vertexWaterHeightClampLow[4];	///< +0xac
+	unsigned int m_vertexWaterHeightClampHi[4];	///< +0xbc
+	unsigned int m_vertexWaterAngle[4];		///< +0xcc
+	unsigned int m_vertexWaterXPosition[4];		///< +0xdc
+	unsigned int m_vertexWaterYPosition[4];		///< +0xec
+	unsigned int m_vertexWaterZPosition[4];		///< +0xfc
+	unsigned int m_vertexWaterXGridCells[4];		///< +0x10c
+	unsigned int m_vertexWaterYGridCells[4];		///< +0x11c
+	unsigned int m_vertexWaterGridSize[4];		///< +0x12c
+	unsigned int m_vertexWaterAttenuationA[4];	///< +0x13c
+	unsigned int m_vertexWaterAttenuationB[4];	///< +0x14c
+	unsigned int m_vertexWaterAttenuationC[4];	///< +0x15c
+	unsigned int m_vertexWaterAttenuationRange[4];	///< +0x16c
 	unsigned int m_180;				///< +0x180
 	unsigned int m_190;				///< +0x190
 	unsigned int m_194;				///< +0x194
@@ -309,19 +309,6 @@ private:
 	unsigned int m_1e8;				///< +0x1e8
 	unsigned int m_1ec;				///< +0x1ec
 	unsigned int m_1f0;				///< +0x1f0
-	unsigned char m_pad_b0[0xc];				///< +0xb0
-	unsigned char m_pad_c0[0xc];				///< +0xc0
-	unsigned char m_pad_d0[0xc];				///< +0xd0
-	unsigned char m_pad_e0[0xc];				///< +0xe0
-	unsigned char m_pad_f0[0xc];				///< +0xf0
-	unsigned char m_pad_100[0xc];				///< +0x100
-	unsigned char m_pad_110[0xc];				///< +0x110
-	unsigned char m_pad_120[0xc];				///< +0x120
-	unsigned char m_pad_130[0xc];				///< +0x130
-	unsigned char m_pad_140[0xc];				///< +0x140
-	unsigned char m_pad_150[0xc];				///< +0x150
-	unsigned char m_pad_160[0xc];				///< +0x160
-	unsigned char m_pad_170[0x10];				///< +0x170
 	unsigned char m_pad_184[0xc];				///< +0x184
 	unsigned char m_pad_1a0[0x4];				///< +0x1a0
 	unsigned char m_pad_1ac[0x4];				///< +0x1ac
@@ -884,19 +871,22 @@ GlobalData::GlobalData()
 	m_8c = 0;  // TODO: non-constant register value, needs re-derivation
 	m_8d = 0;
 	m_c50 = 0;
-	m_ac = 0;
-	m_bc = 0;
-	m_cc = 0;
-	m_dc = 0;
-	m_ec = 0;
-	m_fc = 0;
-	m_10c = 0;
-	m_11c = 0;
-	m_12c = 0;
-	m_13c = 0;
-	m_14c = 0;
-	m_15c = 0;
-	m_16c = 0;
+	for (unsigned int i = 0; i < 4; ++i)
+	{
+		m_vertexWaterHeightClampLow[i] = 0;
+		m_vertexWaterHeightClampHi[i] = 0;
+		m_vertexWaterAngle[i] = 0;
+		m_vertexWaterXPosition[i] = 0;
+		m_vertexWaterYPosition[i] = 0;
+		m_vertexWaterZPosition[i] = 0;
+		m_vertexWaterXGridCells[i] = 0;
+		m_vertexWaterYGridCells[i] = 0;
+		m_vertexWaterGridSize[i] = 0;
+		m_vertexWaterAttenuationA[i] = 0;
+		m_vertexWaterAttenuationB[i] = 0;
+		m_vertexWaterAttenuationC[i] = 0;
+		m_vertexWaterAttenuationRange[i] = 0;
+	}
 	m_180 = 0;
 	m_1f0 = 0;
 	m_204 = 0;
