@@ -1,0 +1,37 @@
+// Clean C++ reconstruction of retail RVA 0x00197480 (290 bytes).
+// The semantic owner is not identified; the address-labelled element type is
+// intentional.  Retail is a copy constructor for a vector of three-pointer
+// inner vectors whose point payload is three 32-bit words.
+//
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// stlport
+
+#include <vector>
+
+struct Rva00197480Point
+{
+	int words[ 3 ];
+};
+
+typedef _STL::vector<Rva00197480Point,
+	_STL::allocator<Rva00197480Point> > Rva00197480InnerVector;
+
+typedef _STL::vector<Rva00197480InnerVector,
+	_STL::allocator<Rva00197480InnerVector> > Rva00197480OuterVector;
+
+// The explicit member instantiations retain the real STLport copy-constructor
+// surface.  The nested vector is itself copied with placement construction;
+// its point loop is the vendor POD path (three dword copies).
+template _STL::vector<Rva00197480Point,
+	_STL::allocator<Rva00197480Point> >::vector(
+	const _STL::vector<Rva00197480Point,
+	_STL::allocator<Rva00197480Point> > &);
+
+template _STL::vector<Rva00197480InnerVector,
+	_STL::allocator<Rva00197480InnerVector> >::vector(
+	const _STL::vector<Rva00197480InnerVector,
+	_STL::allocator<Rva00197480InnerVector> > &);
+
+typedef char PointSizeCheck[(sizeof(Rva00197480Point) == 12) ? 1 : -1];
+typedef char InnerVectorSizeCheck[(sizeof(Rva00197480InnerVector) == 12) ? 1 : -1];
+
