@@ -50,7 +50,7 @@ void BfmeSecondGH::bfmeGoGH(void)
 		return;
 
 	BfmeStateGH *state = *(BfmeStateGH **)(base - 8);
-	BfmeOwnerGH *owner = *(BfmeOwnerGH **)(base - 0xc);
+	volatile BfmeOwnerGH *owner = *(BfmeOwnerGH **)(base - 0xc);
 	BfmeInnerGH *inner = state->m_bfmeInnerGH;
 	int now = owner->m_bfmeTimeGH;
 	int start = inner->m_bfmeStartGH;
