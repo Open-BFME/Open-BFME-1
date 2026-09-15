@@ -35,7 +35,7 @@
 // spelling tried forces the FPU residency. Next agent: try forcing register
 // pressure explicitly (e.g. an extra live GPR-typed local between the y load
 // and the n load) before re-grinding statement order again.
-class Coord3D
+struct Coord3D
 {
 public:
 	float x;
