@@ -203,6 +203,7 @@ class ResourceGatheringManager
 {
 public:
 	Object *findBestSupplyWarehouse(Object *queryObject);
+	Object *findBestSupplyCenter(Object *queryObject);
 
 private:
 	typedef _STL::list<ObjectID> objectIDList;
@@ -270,4 +271,58 @@ Object *ResourceGatheringManager::findBestSupplyWarehouse(Object *queryObject)
 	}
 
 	return bestWarehouse;
+}
+
+// ?findBestSupplyCenter@ResourceGatheringManager@@QAEPAVObject@@PAV2@@Z
+Object *ResourceGatheringManager::findBestSupplyCenter(Object *queryObject)
+{
+	Object *bestCenter = NULL;
+
+	if (queryObject == NULL || queryObject->getAI() == NULL)
+		return NULL;
+
+	SupplyTruckAIInterface *supplyTruckAI =
+		queryObject->getAI()->getSupplyTruckAIInterface();
+	if (supplyTruckAI)
+	{
+		ObjectID dockID = supplyTruckAI->getPreferredDockID();
+		Object *dock = TheGameLogic->findObjectByID(dockID);
+		if (dock)
+		{
+			static const NameKeyType key_centerUpdate =
+				NAMEKEY("SupplyCenterDockUpdate");
+			SupplyWarehouseDockUpdate *centerModule =
+				(SupplyWarehouseDockUpdate *)dock->findUpdateModule(key_centerUpdate);
+			if (centerModule &&
+				computeRelativeCost(queryObject, dock, NULL) != FLT_MAX)
+				return dock;
+		}
+	}
+
+	Real bestCost = FLT_MAX;
+	objectIDListIterator iterator = m_supplyCenters.begin();
+	while (iterator != m_supplyCenters.end())
+	{
+		Object *currentCenter =
+			TheGameLogic->findObjectByID(*iterator);
+
+		if (currentCenter == NULL)
+		{
+			iterator = m_supplyWarehouses.erase(iterator);
+		}
+		else
+		{
+			Real currentCost = computeRelativeCost(queryObject,
+				currentCenter, NULL);
+			if (currentCost < bestCost)
+			{
+				bestCenter = currentCenter;
+				bestCost = currentCost;
+			}
+
+			iterator++;
+		}
+	}
+
+	return bestCenter;
 }
