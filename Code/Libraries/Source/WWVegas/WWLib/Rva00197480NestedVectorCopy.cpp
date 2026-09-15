@@ -29,6 +29,8 @@ typedef _STL::vector<Rva00197480InnerVector,
 // The _Vector_base constructors allocate point storage (0x00193930) and
 // inner-vector storage (0x001939B0) through STLport's normal small-node/
 // large-allocation split (100 bytes each).
+// The point allocator proxy constructor at 0x001932F0 copies the initial
+// pointer after its empty allocator base is constructed (11 bytes).
 template _STL::vector<Rva00197480Point,
 	_STL::allocator<Rva00197480Point> >::vector(
 	const _STL::vector<Rva00197480Point,
