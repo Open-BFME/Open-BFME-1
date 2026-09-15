@@ -67,6 +67,16 @@ necessary for the exact body: sequential, left-associated filter appends
 `this + 0xB0`, not at its nested Object pointer plus `0xB0`. Trace the receiver
 reloads independently; matching field displacements do not identify the owner.
 
+The 777-byte DominateEnemy action at `0x0025AEE0` confirms the distinction:
+its 32-byte filter is two `BitFlags<86>` masks, not one `BitFlags<192>` mask
+despite equal total storage. Identify the installed vtable before choosing
+the mask type. Its template accessor needs an explicit null return before
+following the override; the caller still dereferences that result, as retail
+does. A signed-byte high-bit test `(value & 0x80) != 0` produces retail's `js`
+where `value < 0` produces `jl`. Finally, its local-static key initializes from
+`"TemporarilyDefectUpdate"`, not the enclosing class name: inspect string
+relocations even after a masked probe says exact.
+
 For the 806-byte GrabPassenger action at `0x0025F2D0`, finish the control-flow
 inventory before changing compiler flags: retail has **three** nearest-object
 queries, including the `0x2000` option path. Its two distance calculations need
