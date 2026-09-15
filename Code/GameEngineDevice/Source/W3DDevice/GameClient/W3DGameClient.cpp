@@ -39,6 +39,53 @@
 // SYSTEM INCLUDES ////////////////////////////////////////////////////////////
 #include <stdlib.h>
 
+// BFME's placement delete for Drawable calls the CRT free import directly.
+// The reference pool macro routes it through ::operator delete, which lands at
+// a different retail body.  Override it before any transitive include can
+// instantiate Drawable's inline pool glue.
+#include "Common/GameMemory.h"
+#pragma push_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
+#undef MEMORY_POOL_GLUE_WITHOUT_GCMP
+extern "C" void free(void *);
+#define MEMORY_POOL_GLUE_WITHOUT_GCMP(ARGCLASS) \
+protected: \
+	virtual ~ARGCLASS(); \
+public: \
+	enum ARGCLASS##MagicEnum { ARGCLASS##_GLUE_NOT_IMPLEMENTED = 0 }; \
+public: \
+	inline void *operator new(size_t s, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return MP_GLUE_ALLOCATE(ARGCLASS); \
+	} \
+public: \
+	inline void operator delete(void *p, ARGCLASS##MagicEnum e DECLARE_LITERALSTRING_ARG2) \
+	{ \
+		free(p); \
+	} \
+protected: \
+	inline void *operator new(size_t s) \
+	{ \
+		DEBUG_ASSERTCRASH(s == sizeof(ARGCLASS), ("The wrong operator new is being called; ensure all objects in the hierarchy have MemoryPoolGlue set up correctly")); \
+		return ::operator new(s); \
+	} \
+	inline void operator delete(void *p) \
+	{ \
+		::operator delete(p); \
+	} \
+private: \
+	virtual MemoryPool *getObjectMemoryPool() \
+	{ \
+		return ARGCLASS::getClassMemoryPool(); \
+	} \
+public:
+#undef MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE
+#define MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE(ARGCLASS, ARGPOOLNAME) \
+	MEMORY_POOL_GLUE_WITHOUT_GCMP(ARGCLASS) \
+	GCMP_FIND(ARGCLASS, ARGPOOLNAME)
+#include "GameClient/Drawable.h"
+#pragma pop_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
+
 // USER INCLUDES //////////////////////////////////////////////////////////////
 
 #include "Common/GameType.h"
@@ -125,7 +172,6 @@ private:
 #include "Common/RandomValue.h"
 #include "Common/GlobalData.h"
 #include "Common/GameLOD.h"
-#include "GameClient/Drawable.h"
 #include "GameClient/GameClient.h"
 #include "GameClient/GameFont.h"
 #include "GameClient/ParticleSys.h"
@@ -133,6 +179,12 @@ private:
 #include "W3DDevice/GameClient/W3DAssetManager.h"
 #include "W3DDevice/GameClient/W3DView.h"
 #include "W3DDevice/GameClient/W3DWater.h"
+
+// The placement delete is inline in the pool-glue macro.  This TU owns the
+// retail shared body, so keep its COMDAT emitted even though no constructor in
+// this source has an exception path that ODR-uses it.
+void (*bfmeDrawablePlacementDeleteAnchor)(void *, Drawable::DrawableMagicEnum) =
+	&Drawable::operator delete;
 
 #define __W3DINGAMEUI_H_
 class View;
