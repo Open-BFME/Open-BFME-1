@@ -101,7 +101,10 @@ public:
 	bool Is_Running();
 	void Execute();
 	virtual void Thread_Function();
-	unsigned char m_unmodelled[0x50];
+	// Retail g_w3dMouseThread is 0x012F9808 and m_handle is at 0x012F9858.
+	// The virtual pointer occupies the first four bytes, so the opaque body
+	// between it and m_handle is 0x4C bytes, not 0x50.
+	unsigned char m_unmodelled[0x4C];
 	MouseThreadHandle *m_handle;
 };
 
