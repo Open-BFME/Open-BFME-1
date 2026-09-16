@@ -837,3 +837,13 @@ retail 427-byte instruction shape and `0x34` frame. Twenty-nine stack-home
 operand bytes still differ, so this is a banked partial, not a conversion.
 Changing the upper-left array to a struct or reordering its declaration did
 not help; grouping its fields with the width increased the frame to `0x3C`.
+
+### Preserve nullable helper boundaries before inlining
+
+`Rva0090C280::Apply` at `0x0090C840` (264 bytes) retains an AddRef null
+guard even after its outer texture-enabled/non-null test. A separate forced-inline
+SetTexture helper with a nullable argument reproduces this guard; manually
+flattening the same operations produced a 260-byte near miss. Keep the source
+helper boundary when retail repeats a check that appears redundant. The owner
+remains address-derived; its constructor and vtable establish layout, not a
+TextureClass identity. Device slot 65 and COM AddRef/Release use stdcall.
