@@ -88352,3 +88352,4 @@ _g_Rva012D4FD0AssertCrashTemplate,0x012D4FD0,DLGTEMPLATEEX titled Assert/Crash p
 ?updateAt003FA5B0@Pathfinder@@QAEXPAVObject@@HH@Z,0x003FA5B0,address-derived member body; wrappers at 0x003D57F0 and 0x003D5810 preserve ECX through ILT 0x0000BF28; body saves receiver at +0x14 and ends ret12 at +0xF79
 ?find@Rva00646290Tree@@QAE?AURva00646290Iterator@@ABH@Z,0x0001A55A,retail tree find ILT with iterator return and key reference
 ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@0@Z,0x000441C0,retail Weapon body 0x001E6930 passes Pathfinder receiver and source goal target to ILT
+?cellCallback@ObstacleCellStruct@@QAEHPAVPathfindCell@@0HH@Z,0x00042361,ILT jumps to matched ObstacleCellStruct::cellCallback at 0x003DEBB0; Pathfinder line walker at 0x003E3190 passes from to x y and tests Int result
