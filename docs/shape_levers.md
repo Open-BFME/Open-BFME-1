@@ -337,3 +337,41 @@ return fallback;
 The same edit also fixed which callee-saved register held the argument count
 and moved the success block ahead of the failure block, so a residue that
 looked like three separate problems was one.
+
+## A frame four bytes too big: put the local in its own block
+
+When every stack displacement in the body is exactly four higher than retail's
+and nothing else differs, the frame carries one extra slot. The compiler will
+say which one. Add `/FAsc /Fa<path>.cod` to the source's `// cl:` line, compile
+once, and read the `_name$ = -NN` table at the top of the listing's function.
+That table gives every local and every `$T` temporary its frame offset.
+
+The 359-byte push button number draw at `0x00794B70` listed `_width$ = -48`
+through `_size$ = -20`. It also gave `$T470` and `$T471` a slot of their own at
+-32. Those two are the pointers MSVC keeps to each by-value `UnicodeString`
+argument so the unwind funclet can destroy it. Retail allocated `0x20` of
+locals where we allocated `0x24`. Declaring the two colours in their own block
+moved `_textColor$` onto -32 beside the two temporaries, and the body went
+exact:
+
+```cpp
+{
+    Color textColor;
+    Color dropColor;
+    getButtonTextColors( window, instData, &textColor, &dropColor );
+    ...
+    text->draw( textX, textY, 1, 1 );
+}
+```
+
+VC7.1 overlaps a compiler temporary with a user local only when the local's
+scope says the two cannot both be live. A local declared at the top of the
+function blocks the overlap even when nothing writes it until far below.
+Moving the declaration down without a block does not help. `Color textColor;`
+on the line above `getButtonTextColors` left the frame at `0x24`. So did
+dropping `register`, reordering the six declarations, and deleting a dead
+struct.
+
+The listing catches the opposite mistake too. At `0x009C0A30` we merged the
+`fild` temporary with a user integer on `[ebp-4]`. Retail kept the two apart on
+-4 and -8, so every double below them sat eight bytes lower than ours.
