@@ -1,7 +1,19 @@
 // ?W3DGadgetHorizontalSliderImageDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.68 date=2026-09-09
+// partial score=0.97 date=2026-09-16
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
-// W3DGadgetHorizontalSliderImageDraw, retail 0x00790EA0 (639 bytes).
+// W3DGadgetHorizontalSliderImageDraw, retail 0x00790EA0 (699 bytes).
+// The name comes from the W3D draw lexicon table row at 0x012BA4FC, which
+// stores the string next to the ILT thunk that jumps here. The earlier 639
+// byte extent was short: the body pops four registers, adds 0x44 to esp and
+// returns at 0x0079115A, with int3 padding after that.
+// Two levers closed the size gap. The box height is scaledWidth, not
+// boxWidth. Writing the selected fraction as two named Real locals divided
+// by each other makes the compiler emit two fild loads and a fdivp where a
+// single expression emits fild and fidiv.
+// Twenty bytes still differ at three sites, all of them scheduling choices
+// the source does not reach. Retail loads maxVal before the numerator fild,
+// puts the end.x lea before the fdivp with boxWidth as the lea base, and
+// starts the blankness sum from boxWidth rather than from size.x.
 //
 // The BFME retail slider keeps the reference callback's image-array and
 // SliderData contract, but scales the control for the active display.  The
@@ -225,9 +237,10 @@ void W3DGadgetHorizontalSliderImageDraw(GameWindow *window,
 	Int boxPadding = 1;
 	Int scaledWidth = (Int)(size.y * yMulti);
 	start.x = origin.x;
-	end.x = start.x + boxWidth;
-	Real selectedPercent = (s->position - s->minVal) /
-																								(Real)(s->maxVal - s->minVal);
+	end.x = boxWidth + start.x;
+	Real numerator = (Real)(s->position - s->minVal);
+	Real denominator = (Real)(s->maxVal - s->minVal);
+	Real selectedPercent = numerator / denominator;
 	Int maxSelectedX = origin.x + (Int)(selectedPercent * size.x);
 	while (end.x < origin.x + size.x)
 	{
@@ -240,10 +253,9 @@ void W3DGadgetHorizontalSliderImageDraw(GameWindow *window,
 	}
 
 	numHighlightBoxes = numBoxes + 1;
-	Int distanceCovered = end.x - origin.x - boxWidth;
 	highlightOffset.x = -(boxWidth + boxPadding) / 2;
 	highlightOffset.y = (Int)(scaledWidth * 0.8);
-	Int blankness = size.x - distanceCovered;
+	Int blankness = boxWidth - end.x + size.x + origin.x;
 	origin.x += blankness / 2;
 
 	Int i;
@@ -264,7 +276,7 @@ void W3DGadgetHorizontalSliderImageDraw(GameWindow *window,
 	}
 
 	start.y = origin.y;
-	end.y = start.y + boxWidth;
+	end.y = start.y + scaledWidth;
 	for (i = 0; i < numSelectedBoxes; ++i)
 	{
 		start.x = origin.x + i * (boxWidth + boxPadding);
