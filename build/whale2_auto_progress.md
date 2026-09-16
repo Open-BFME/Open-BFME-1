@@ -22,3 +22,10 @@
 - The corrected Terrain candidate is banked at score `0.36`: scoped probe `ours=9265` versus `retail=8147`, `821` relocations, `5045` non-relocation differences, and `802` relocation-layout mismatches. The prior FlatTerrain-labelled bank remains rejected evidence only.
 - The correction is not yet published; no production source, function row, pin, or unlock row changed.
 - Next: publish the correction, then work the explicit 0x007C5690 body.
+
+## 2026-09-16 - checkpoint after 0x007C5690
+
+- Commits pushed: `df77ac4e0f` (0x00960A30/0x007DF1F0) and `a3fd75789c` (corrected 0x007CE290 identity and bank). The 0x007C5690 verdict is prepared for its own publication.
+- 0x007C5690: identity resolved to `FlatTerrainShader2Stage::set`; best candidate banked at score `0.34`. Probes covered helper-only, state-cache, address-state shape, handle-aware, and late-state variants; best was `7093` versus `7909`, with `4415` non-relocation differences and `600` relocation-layout mismatches. No exact source, ledger change, pin, or unlock row.
+- Bodies landed: none. Bodies added to `reverse/unlocked.txt`: none.
+- Next: publish this verdict, then inspect `0x009B8130` from the explicit pool.

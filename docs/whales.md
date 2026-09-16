@@ -267,3 +267,10 @@ attempted all 128 generated combinations; its `throw()` variants failed
 syntax compilation and none beat the baseline. No semantic source owner,
 pin, or new unlock row is justified. The existing `reverse/unlocked.txt`
 entry `0x00934940 w3d-render` predates this attempt and was not changed.
+## 0x007C5690 - FlatTerrainShader2Stage::set
+
+- Status: banked partial, not landed. The preferred source is `reverse/attempts/0x007c5690.cpp`; the retail body is the anonymous `?d_007c5690@@YAXXZ` row in `Code/gen_asm/d_007afaa0.asm`.
+- Identity: the 7,909-byte body is `FlatTerrainShader2Stage::set(Int)`, supported by `FlatTerrainShader2Stage::init`/`reset` at `0x007C55B0`/`0x007C5600` and the flat terrain shroud/noise sequence.
+- Best gate: the best clean candidate compiled and probed at 7,093 bytes versus 7,909 retail, with 622 relocations, 4,415 non-relocation differences, and 600 relocation-layout mismatches. The target frame is `0x2b4` versus candidate `0x230`; target register setup begins `xor ebp`/`push ebp`/`mov ebx,1`, while the candidate begins `xor ebx`/`push ebx`/`mov ebp,1`.
+- Recipe: call `setTerrainTextureFilters(0)` and `(1)`, use `BFME_SET_TSS`/`BFME_SET_SAMP`/`BFME_SET_RS`, and use the proven `bfmeGet` plus direct slot-65 texture binding for the flat/noise texture routes. The retail contract has `setTerrainTextureFilters` at `0x006D4690` x2, `j_0001aded`/`bfmeGet` at `0x007C34A0` x7, `Peek_D3D_Base_Texture` x6, sampler slot 69 x14, TSS slot 67 x34, RS slot 57 x4, and texture slot 65 x6.
+- Tried: helper-only expansion (`2128` bytes), full state-cache/sampler expansion (`6696`), explicit address-state shape choices (best `6777`, score `0.3324`), and the handle-aware candidate with both address states as TSS plus the sibling late-state macro pattern (`7093`, score `0.34`). None was exact; no pin or unlock row is justified. The remaining lever is the BFME EH/frame/register and texture-handle scheduling shape.
