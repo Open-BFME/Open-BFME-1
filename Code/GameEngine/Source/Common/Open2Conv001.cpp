@@ -49,6 +49,7 @@ class Gen0053ACD0Range
 public:
 	unsigned char *begin( void ) const { return m_data; }
 	unsigned char *end( void ) const { return m_data + m_size; }
+	void advance( void ) { m_data = m_data + 1; m_size = m_size - 1; }
 	unsigned char *m_data;
 	int m_size;
 };
@@ -57,6 +58,7 @@ class Gen0053ACD0
 {
 public:
 	int peek( void ) const;
+	int get( void );
 	int m_pad;
 	Gen0053ACD0Range *m_range;
 };
@@ -66,6 +68,28 @@ int Gen0053ACD0::peek( void ) const
 {
 	if( m_range->begin() != m_range->end() )
 		return *m_range->begin();
+	return -1;
+}
+
+// ---------------------------------------------------------------------------
+// 0x0053ACF0 -- the consuming twin of peek, twenty-two bytes further on: read
+// the first byte of the same range, then step the range past it.
+//
+// The range is reached through the same this+4 pointer and the emptiness test
+// is the same computed `begin() != end()`, so the two bodies read one object.
+// The pointer is loaded a third time here, into ecx, because stepping the
+// range reads m_data and m_size back out rather than reusing the compare's
+// copy, which is what a separate advance call looks like.
+
+// @?get@Gen0053ACD0@@QAEHXZ 0x0053ACF0
+int Gen0053ACD0::get( void )
+{
+	if( m_range->begin() != m_range->end() )
+	{
+		int value = *m_range->begin();
+		m_range->advance();
+		return value;
+	}
 	return -1;
 }
 
