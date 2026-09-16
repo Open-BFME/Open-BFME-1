@@ -5,7 +5,7 @@
 struct Rva0024B7C0Object
 {
 	unsigned char unused_000[0x1FC];
-	void *contained_by;
+	void *m_field1FC;
 };
 
 struct BfmeStateAMA;
@@ -19,13 +19,13 @@ public:
 class Rva0024B7C0Owner
 {
 public:
-	void forwardIfUncontained( Rva0024B7C0Object *object,
+	void forwardIfField1FCNull( Rva0024B7C0Object *object,
 		void *context, BfmeStateAMA *state );
 };
 
-void Rva0024B7C0Owner::forwardIfUncontained( Rva0024B7C0Object *object,
+void Rva0024B7C0Owner::forwardIfField1FCNull( Rva0024B7C0Object *object,
 	void *context, BfmeStateAMA *state )
 {
-	if ( object->contained_by == 0 )
+	if ( object->m_field1FC == 0 )
 		reinterpret_cast<BfmeThingAMA *>( this )->bfmeGoAMA( object, context, state );
 }

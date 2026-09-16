@@ -93,7 +93,7 @@ Fleet landings, each scoped byte-verified and pushed through normal hooks:
 | 0x000D74B0 | 269 | Opaque hash-map snapshot transfer |
 | 0x002060B0 | 61 | Opaque indexed three-word copy |
 | 0x0046F6F0 | 206 | Slash-to-dot string utility |
-| 0x0024B7C0 | 26 | Opaque conditional containment forwarder |
+| 0x0024B7C0 | 26 | Opaque field-null forwarder |
 
 Eight donor-backed landings account for 1,372 B; the two larger near-match
 finishes account for 1,444 B. Donor work therefore had the stronger body yield,
