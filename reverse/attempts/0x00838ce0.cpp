@@ -1,21 +1,17 @@
 // ?d_00838ce0@@YAXXZ
-// partial score=0.25 date=2026-09-10
+// partial score=0.91 date=2026-09-16
 // cl: /O2 /MD /D_STLP_USE_STATIC_LIB /EHsc
 // stlport
-// STLport 4.5.3 num_get<char, istreambuf_iterator<char>>::do_get(bool&) at
-// 0x00838CE0 (704B). Identity confirmed from retail bytes: the boolalpha
-// test reads ios_base+4 bit 0x100 (_M_fmtflags), the facet pointer comes
-// from ios_base+0x44 (_M_cached_numpunct), and the two direct calls into
-// the shared SlotForward COMDATs land on numpunct<char>'s do_truename and
-// do_falsename vtable slots (0x10, 0x14, counting facet's own dtor and
-// do_decimal_point/do_thousands_sep/do_grouping ahead of them). bfmeGoSG
-// is istreambuf_iterator<char,...>::_M_getc (already matched at 0x00832940)
-// and j_0001f433 is the already-matched sbumpc thunk.
+// STLport 4.5.3 num_get<char, istreambuf_iterator<char>>::do_get(bool&).
+// The vtable at 0x0112E97C identifies the narrow num_get overload slot;
+// The vtable overloads are declared in STLport source order; MSVC 7.1 lays
+// this virtual family out in reverse declaration order, putting bool at +0x2c.
 
 #include "stlport_prefix.h"
 #include <stl/_string.h>
 #include <stl/_ios.h>
 #include <stl/_locale.h>
+#include <stl/_numpunct.h>
 
 class BfmeThingSG
 {
@@ -23,21 +19,41 @@ public:
 	void bfmeGoSG();
 };
 
-void j_0001f433();
+namespace _STL
+{
 
-class Rva00838FA0SlotForward
+class BfmeLocaleImpl
 {
 public:
-	void *forward(void *p);
+	virtual void slot0() = 0;
+	virtual void increment() = 0;
+	virtual void decrement() = 0;
 };
 
-class Rva00838FC0SlotForward
+class BfmeInlineLocale
 {
 public:
-	void *forward(void *p);
+	~BfmeInlineLocale() { m_impl->decrement(); }
+
+private:
+	BfmeLocaleImpl *m_impl;
 };
 
-_STLP_BEGIN_NAMESPACE
+class BfmeIosLocaleView
+{
+public:
+	BfmeInlineLocale getloc() const;
+};
+
+#pragma comment(linker, "/alternatename:?getloc@BfmeIosLocaleView@_STL@@QBE?AVBfmeInlineLocale@2@XZ=?getloc@ios_base@_STL@@QBE?AVlocale@2@XZ")
+
+class Rva0001F433Streambuf
+{
+public:
+	int sbumpc();
+};
+
+#pragma comment(linker, "/alternatename:?sbumpc@Rva0001F433Streambuf@_STL@@QAEHXZ=?j_0001f433@@YAXXZ")
 
 template <class CharT, class Traits>
 class istreambuf_iterator
@@ -53,7 +69,7 @@ public:
 	}
 	istreambuf_iterator &operator++()
 	{
-		j_0001f433();
+		((Rva0001F433Streambuf *)m_buf)->sbumpc();
 		m_have_c = 0;
 		return *this;
 	}
@@ -73,15 +89,11 @@ protected:
 	{
 		if (str.flags() & ios_base::boolalpha)
 		{
-			locale loc = str.getloc();
-			void *facet = (void *)str._M_numpunct_facet();
-
-			unsigned char truenameBuf[12];
-			unsigned char falsenameBuf[12];
-			((Rva00838FA0SlotForward *)facet)->forward(truenameBuf);
-			((Rva00838FC0SlotForward *)facet)->forward(falsenameBuf);
-			basic_string<CharT> &truename = *(basic_string<CharT> *)truenameBuf;
-			basic_string<CharT> &falsename = *(basic_string<CharT> *)falsenameBuf;
+			BfmeInlineLocale loc = ((BfmeIosLocaleView &)str).getloc();
+			const numpunct<CharT> &punct =
+				*(const numpunct<CharT> *)str._M_numpunct_facet();
+			const basic_string<CharT> truename = punct.truename();
+			const basic_string<CharT> falsename = punct.falsename();
 
 			bool trueOk = true;
 			bool falseOk = true;
@@ -117,9 +129,6 @@ protected:
 			if (in.equal(end))
 				err |= ios_base::eofbit;
 
-			falsename.~basic_string<CharT>();
-			truename.~basic_string<CharT>();
-
 			return in;
 		}
 		else
@@ -141,9 +150,27 @@ protected:
 
 	virtual InputIter do_get(InputIter in, InputIter end, ios_base &str,
 		ios_base::iostate &err, long &value) const;
+	virtual InputIter do_get(InputIter in, InputIter end, ios_base &str,
+		ios_base::iostate &err, unsigned short &value) const;
+	virtual InputIter do_get(InputIter in, InputIter end, ios_base &str,
+		ios_base::iostate &err, unsigned int &value) const;
+	virtual InputIter do_get(InputIter in, InputIter end, ios_base &str,
+		ios_base::iostate &err, unsigned long &value) const;
+	virtual InputIter do_get(InputIter in, InputIter end, ios_base &str,
+		ios_base::iostate &err, float &value) const;
+	virtual InputIter do_get(InputIter in, InputIter end, ios_base &str,
+		ios_base::iostate &err, double &value) const;
+	virtual InputIter do_get(InputIter in, InputIter end, ios_base &str,
+		ios_base::iostate &err, void *&value) const;
+	virtual InputIter do_get(InputIter in, InputIter end, ios_base &str,
+		ios_base::iostate &err, long double &value) const;
+	virtual InputIter do_get(InputIter in, InputIter end, ios_base &str,
+		ios_base::iostate &err, __int64 &value) const;
+	virtual InputIter do_get(InputIter in, InputIter end, ios_base &str,
+		ios_base::iostate &err, unsigned __int64 &value) const;
 };
 
 typedef istreambuf_iterator<char, char_traits<char> > NarrowIterator;
 template class num_get<char, NarrowIterator>;
 
-_STLP_END_NAMESPACE
+} // namespace _STL

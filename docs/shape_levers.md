@@ -727,3 +727,12 @@ constructing the update region, and using a positive
 form reversed the temporary-condition flag arms. The positive form preserves
 the handle's destruction before entering the draw block. Together these made
 the full function exact, including both draw paths and all five unwind states.
+
+
+For the narrow STLport `num_get` facet at vtable `0x0112E97C`, MSVC 7.1
+places the bool overload at slot 11 (`+0x2c`) when the complete overload set
+is declared in the vendor header's order. A reduced bool/long shim changed
+the fallback virtual dispatch to `+4`. Restore the full witnessed ABI before
+working on frame layout. The 2026-09-16 bank at `0x00838CE0` demonstrates this
+correction but is **not matched**: it remains 704/704 bytes with 63 differing
+stack-layout bytes. Its compiler frame is `0x24`, retail's is `0x1c`.
