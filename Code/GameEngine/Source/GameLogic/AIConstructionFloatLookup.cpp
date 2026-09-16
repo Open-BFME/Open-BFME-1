@@ -21,6 +21,33 @@ public:
 	unsigned int m_bfmeSize;
 };
 
+class Gen_001418F0
+{
+public:
+	float bfmeFindFloat(const void *key);
+
+private:
+	char m_bfmePad[0x340];
+	BfmeLookupTree m_bfmeTree;
+};
+
+extern float g_bfmeMissingFloat;
+
+float Gen_001418F0::bfmeFindFloat(const void *key)
+{
+	BfmeLookupIterator found;
+	if (m_bfmeTree.m_bfmeSize == 0)
+		return g_bfmeMissingFloat;
+	else
+	{
+		m_bfmeTree.bfmeFind(found, key);
+		if (found.m_bfmeNode == m_bfmeTree.m_bfmeHeader)
+			return g_bfmeMissingFloat;
+		else
+			return found.m_bfmeNode->m_bfmeValue;
+	}
+}
+
 class Gen_00141940
 {
 public:

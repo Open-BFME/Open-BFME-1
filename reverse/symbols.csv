@@ -75704,6 +75704,7 @@ name,address,notes
 ?bfmeFind@BfmeFinder@@QAEPAXXZ,0x000265A8,Open-BFME5 ILT the finders at 0x0015BCB0 0x00189D00 and 0x002BC050 call
 ?bfmeFind@BfmeIndexedMap@@QAE?AVBfmeIndexedMapIterator@@ABH@Z,0x00034243,address-derived keyed map find thunk
 ?bfmeFind@BfmeLookupTree@@QAEXAAUBfmeLookupIterator@@ABQBX@Z,0x00010442,AI construction tree lookup thunk reached by Gen_00141940 at 0x00141940
+?bfmeFind@BfmeLookupTree@@QAEXAAUBfmeLookupIterator@@ABQBX@Z,0x00017AF3,AI construction tree lookup thunk reached by Gen_001418F0 at 0x001418F0; target body 0x0013F920
 ?bfmeFind@GameLogicFrameSlice@@QAEPAVObject@@H@Z,0x0001F253,Open-BFME5 gated owner lookup called by 0x002875C0
 ?bfmeFind@Gen_003C02B0@@AAEPAVBfmeItemAN@@H@Z,0x00032A56,Open-BFME5 the ICF thunk (to 0x00432A56) the remove at 0x003C02B0 looks its item up through
 ?bfmeFind@MapCache@@QAEPAUMapCacheNode@@ABVAsciiString@@@Z,0x000263D7,MapCache::findMap tree lookup ILT
