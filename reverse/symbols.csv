@@ -54861,7 +54861,10 @@ name,address,notes
 ?b_00533760@@YAXXZ,0x00533760,gen-thunk body
 ?b_005337e0@@YAXXZ,0x005337E0,gen-thunk body
 ?b_00533ea0@@YAXXZ,0x00533EA0,gen-thunk body
+?Rva00533EA0@@YAXPAVGameWindow@@@Z,0x00533EA0,"the friends-list hook the online chat InitGadgets body at 0x00534A60 calls with the gadget window pushed and cleaned up by the caller, which proves the cdecl one-argument ABI; the name keeps the address"
 ?b_00534380@@YAXXZ,0x00534380,gen-thunk body
+?Rva005337E0@BfmeAptScreenOnlineChat@@QAEXXZ,0x00014182,"the ILT thunk onto 0x005337E0 that the online chat InitGadgets body at 0x00534A60 calls with ecx set to this; the receiver proves the thiscall member ABI and the name keeps the address"
+?Rva00534380@BfmeAptScreenOnlineChat@@QAEXXZ,0x00534380,"the ignore-list hook the online chat InitGadgets body at 0x00534A60 calls with ecx set to this; the receiver proves the thiscall member ABI and the name keeps the address"
 ?b_00534a30@@YAXXZ,0x00534A30,gen-thunk body
 ?b_00534a60@@YAXXZ,0x00534A60,gen-thunk body
 ?b_00534f60@@YAXXZ,0x00534F60,gen-thunk body
@@ -80939,6 +80942,7 @@ name,address,notes
 ?g_obj12F495C@@3PAXA,0x012F495C,pin
 ?g_unicode12F498C@@3VUnicodeString@@A,0x012F498C,"the UnicodeString the in-game chat InitGadgets body at 0x00515E60 copies into GadgetTextEntrySetText for the InGameChatEntry gadget; address-derived name, the variable it belongs to is not proven"
 ?g_obj12F49E4@@3PAXA,0x012F49E4,Objectives and PlayerStatus screen singleton read and written by the caller-identified constructor
+?g_obj12F49F4@@3PAXA,0x012F49F4,"the global the online chat InitGadgets body at 0x00534A60 clears on the ChatLobbies gadget; address-derived name, nothing proves what it holds"
 ?g_obj12F4B58@@3PAUBfmeObj4B5@@A,0x012F4B58,pin
 ?g_obj12F4B58@@3PAVRva0051D690Shell@@A,0x012F4B58,TheShell singleton typed for 0x0051D690
 ?g_obj12F4B58@@3PAVRva0057F100@@A,0x012F4B58,"the shell singleton typed for ?giveBack@Rva0057F100@@QAEXXZ, which the main menu credits callback at 0x0051DE70 calls on it; same address as the Rva0051D690Shell and Shell40D9 spellings"
