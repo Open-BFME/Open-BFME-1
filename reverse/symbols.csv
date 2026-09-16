@@ -80939,6 +80939,7 @@ name,address,notes
 ?g_obj12F49E4@@3PAXA,0x012F49E4,Objectives and PlayerStatus screen singleton read and written by the caller-identified constructor
 ?g_obj12F4B58@@3PAUBfmeObj4B5@@A,0x012F4B58,pin
 ?g_obj12F4B58@@3PAVRva0051D690Shell@@A,0x012F4B58,TheShell singleton typed for 0x0051D690
+?g_obj12F4B58@@3PAVRva0057F100@@A,0x012F4B58,"the shell singleton typed for ?giveBack@Rva0057F100@@QAEXXZ, which the main menu credits callback at 0x0051DE70 calls on it; same address as the Rva0051D690Shell and Shell40D9 spellings"
 ?g_obj12F4C38@@3PAXA,0x012F4C38,SpellStore screen singleton
 ?g_onlineHomeGadgetsImage@@3PBDA,0x012B7918,char* to OnlineHome/Gadgets/Image used by Home dtor 0x00545FF0
 ?g_onlineHomeGadgetsImageLevelIconMain@@3PBDA,0x012B791C,char* to OnlineHome/Gadgets/ImageLevelIconMain used by Home dtor 0x00545FF0

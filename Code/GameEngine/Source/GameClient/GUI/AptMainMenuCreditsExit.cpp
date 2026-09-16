@@ -3,21 +3,24 @@
 // BfmeAptScreenMainMenu::_bfme_creditsExit, retail 0x0051E010, 178 bytes. The
 // main menu constructor at 0x0051F3A0 pushes the selector string
 // "AptMainMenu::CreditsExit" at 0x0051F811 and loads this body's ILT thunk a
-// few bytes later, which is what names it. The body deletes the credits movie
-// sink, restores the shell music the credits roll stopped, reverses the
+// few bytes later, which is what names it. The body resets and deletes
+// TheCredits, restores the shell music the credits roll stopped, reverses the
 // MainMenuToCreditsScreen transition and puts the frame rate cap back.
 
 #include "StringInline.h"
 
-// The credits movie sink at 0x012F1260 that BfmeConv503.cpp already names.
-class BfmeSinkBOE
+// Same six virtuals, in the same order, that CreditsMenuInit_Thunk.cpp reads
+// off ??_7CreditsManager@@6B@.
+class CreditsManager
 {
 public:
-	virtual ~BfmeSinkBOE();
-	virtual void slot04();
-	virtual void slot08();
-	virtual void slot0C();
-	virtual void slot10();
+	virtual ~CreditsManager();
+	virtual void init();
+	virtual void load();
+	virtual void postProcessLoad();
+	virtual void reset();
+	virtual void update();
+	virtual void draw();
 };
 
 // Same shell singleton and same two methods Rva0051D690MainMenuHelper.cpp uses.
@@ -75,7 +78,7 @@ public:
 };
 #undef BFME_VSLOT
 
-extern BfmeSinkBOE *g_bfmeSinkBOE;
+extern CreditsManager *TheCredits;
 extern Rva0051D690Shell *g_obj12F4B58;
 extern Rva0051D690Audio *TheAudioClientUpdate;
 extern GameWindowTransitionsHandler *TheTransitionHandler;
@@ -97,11 +100,11 @@ private:
 void BfmeAptScreenMainMenu::_bfme_creditsExit( const char *name )
 {
 	(void)name;
-	if ( g_bfmeSinkBOE )
+	if ( TheCredits )
 	{
-		g_bfmeSinkBOE->slot10();
-		delete g_bfmeSinkBOE;
-		g_bfmeSinkBOE = 0;
+		TheCredits->reset();
+		delete TheCredits;
+		TheCredits = 0;
 	}
 	if ( !g_obj12F4B58 || !g_obj12F4B58->check() )
 	{
