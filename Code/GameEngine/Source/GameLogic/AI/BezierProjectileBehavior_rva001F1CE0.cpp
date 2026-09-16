@@ -34,13 +34,15 @@ public:
 	void bfmeRunCOF(void *a, void *b, void *c, void *d);
 };
 
-class ObjectCreationListStore
+class WeaponStore
 {
 public:
 	void bfmeCreate(void *owner, Object *object, void *position);
 };
 
-extern ObjectCreationListStore *TheObjectCreationListStore;
+extern WeaponStore *TheWeaponStore;
+
+#pragma comment(linker, "/alternatename:?bfmeCreate@WeaponStore@@QAEXPAXPAVObject@@0@Z=?j_00035e5e@@YAXXZ")
 
 class Gen_001EFD20
 {
@@ -123,7 +125,7 @@ Bool BezierProjectileBehavior::rva001F1CE0(Object *other)
 		if (ocl != 0)
 		{
 			Coord3D *position = &object->m_position;
-			TheObjectCreationListStore->bfmeCreate(ocl, object, position);
+			TheWeaponStore->bfmeCreate(ocl, object, position);
 		}
 	}
 	else
@@ -136,7 +138,7 @@ Bool BezierProjectileBehavior::rva001F1CE0(Object *other)
 		if (effect != 0)
 		{
 			Coord3D *position = &object->m_position;
-			TheObjectCreationListStore->bfmeCreate(effect, object, position);
+			TheWeaponStore->bfmeCreate(effect, object, position);
 		}
 	}
 

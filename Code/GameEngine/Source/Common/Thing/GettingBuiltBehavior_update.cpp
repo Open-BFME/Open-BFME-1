@@ -221,13 +221,13 @@ public:
 	Bool m_field24;
 };
 
-class ObjectCreationListStore
+class WeaponStore
 {
 public:
 	void bfmeCreate(void *list, Object *object, void *position);
 };
 
-extern ObjectCreationListStore *TheObjectCreationListStore;
+extern WeaponStore *TheWeaponStore;
 extern Real g_bfmeScaleBC;
 #define BfmeZeroRange (*(const Real *)0x01075350)
 #define BfmeObjectCreationRange (*(const Real *)0x012ADC90)
@@ -236,7 +236,7 @@ Module *__cdecl rva0036BB10FindCastleMemberBehavior(const Object *object);
 
 #pragma comment(linker, "/alternatename:?bfmeGetRecentDamageSource@Object@@QBE_NPAII@Z=?j_000402d2@@YAXXZ")
 #pragma comment(linker, "/alternatename:?checkValid@BfmeItemE63@@QAE_NXZ=?j_0004b015@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeCreate@ObjectCreationListStore@@QAEXPAXPAVObject@@0@Z=?j_00035e5e@@YAXXZ")
+#pragma comment(linker, "/alternatename:?bfmeCreate@WeaponStore@@QAEXPAXPAVObject@@0@Z=?j_00035e5e@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva0036BB10FindCastleMemberBehavior@@YAPAVModule@@PBVObject@@@Z=?j_0000e6e7@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva001FF060@GettingBuiltBehavior@@QAE_NXZ=?j_00036449@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva001FEC30@GettingBuiltBehavior@@QAEXXZ=?j_000329cf@@YAXXZ")
@@ -295,7 +295,7 @@ UpdateSleepTime GettingBuiltBehavior::update()
 		{
 			m_field34 = true;
 			if (data->m_ocl != 0)
-				TheObjectCreationListStore->bfmeCreate(data->m_ocl, object, &object->m_position);
+				TheWeaponStore->bfmeCreate(data->m_ocl, object, &object->m_position);
 		}
 
 		body = object->m_bodyModule;

@@ -75235,6 +75235,7 @@ name,address,notes
 ?bfmeCount932D@BfmeGlob932D@@QAEHPAXH@Z,0x0000C284,pin
 ?bfmeCounter@ScriptEngine@@IAEPAUScriptCounter@@VAsciiString@@@Z,0x00019ADD,counter lookup call target shared by pauseTimer and restartTimer
 ?bfmeCreate@ObjectCreationListStore@@QAEXPAXPAVObject@@0@Z,0x00035E5E,Open-BFME5 conditional object creation called by 0x0028CA70
+?bfmeCreate@WeaponStore@@QAEXPAXPAVObject@@0@Z,0x00035E5E,retail 0x0028CA70/0x001F1CE0 call the same three-pointer ILT; the 0x012EF738 receiver is proven TheWeaponStore by GameEngine init tag
 ?bfmeCreateInactiveTeam@TeamFactory@@AAEPAVTeam@@ABVAsciiString@@0@Z,0x0000D15C,retail REL32 at 0x000F7CAB targets the two-name createInactiveTeam ILT at 0x0000D15C
 ?bfmeCtorECMa@BfmeThingECMa@@QAEPAV1@XZ,0x00806300,pin
 ?bfmeCtorECMb@BfmeThingECMb@@QAEPAV1@XZ,0x008254C0,pin
