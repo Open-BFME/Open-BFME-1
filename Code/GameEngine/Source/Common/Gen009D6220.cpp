@@ -3,7 +3,9 @@
 #include <stdarg.h>
 #include <string.h>
 
-extern char g_bfmeFormatBuffer[2048];
+// This formatter has its own scratch buffer at VA 0x0134D4B8. The INI
+// exception constructor's g_bfmeFormatBuffer is the distinct VA 0x0130C650.
+extern char Rva0134D4B8FormatBuffer[2048];
 extern "C" __declspec(dllimport) int __cdecl _vsnprintf(char *, unsigned int, const char *, va_list);
 extern "C" void *__cdecl bfmeArrayNew(unsigned int);
 
@@ -21,9 +23,9 @@ extern "C" BfmeFormattedText *__cdecl bfmeFormatText(BfmeFormattedText *result, 
 	{
 		va_list args;
 		va_start(args, format);
-		int length = _vsnprintf(g_bfmeFormatBuffer, 2047, format, args);
+		int length = _vsnprintf(Rva0134D4B8FormatBuffer, 2047, format, args);
 		result->text = static_cast<char *>(bfmeArrayNew(length + 1));
-		memcpy(result->text, g_bfmeFormatBuffer, length);
+		memcpy(result->text, Rva0134D4B8FormatBuffer, length);
 		result->text[length] = 0;
 		va_end(args);
 	}
