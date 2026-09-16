@@ -295,3 +295,10 @@ entry `0x00934940 w3d-render` predates this attempt and was not changed.
 - Identity: the BFME Skirmish profile display updater is supported by the three `AptSkirmish::InitGadgets` callsites and its APT-specific labels.
 - Evidence: the stash probes at 2,614 versus 5,296 bytes with the exact `0x13c` frame, then diverges at `+0x1c` in callee-saved/register setup. Retail has 27 direct targets, including `_bfmeFormatText`, 19 Unicode formatting calls, 3 translations, and the corresponding string constructor/release ladder; the source models the visible labels but not the retail profile/global dispatch state.
 - No exact source, pin, or unlock row is justified.
+
+## 0x0073E050 - W3DView::draw
+
+- Status: blocked at the existing score `0.30`; `reverse/attempts/0x0073e050.cpp` remains scratch evidence only.
+- Identity: the body is `W3DView::draw`, supported by the `W3DDisplay::m_3DScene` path, `filterPreRender`/`filterPostRender` calls, and W3DView field accesses.
+- Evidence: retail has 13 direct targets including `DX8Wrapper::Clear` x3. The source twin probes at 1,831 versus 5,126 bytes with 57 relocations, 1,527 non-relocation differences, and 56 relocation-layout mismatches; retail begins with a no-EH `0x120` frame while the twin begins with EH and a `0x1bc` frame. The scratch bank’s relative include path is also not independently compilable.
+- No exact BFME display-global/filter ladder, pin, or unlock row is justified.

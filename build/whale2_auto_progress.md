@@ -50,3 +50,10 @@
 - 0x0057A470: retained the identity-resolved Skirmish profile updater stash at score `0.47`; exact frame but unresolved retail profile/global dispatch ladder. No exact source, pin, or unlock row.
 - Bodies landed: none. Bodies added to `reverse/unlocked.txt`: none.
 - Next: inspect `0x0073E050` from its 0.30 stash.
+
+## 2026-09-16 - checkpoint after 0x0073E050
+
+- Commits pushed: `40051c076b` (0x0057A470 blocked verdict). The 0x0073E050 evidence update is prepared for publication.
+- 0x0073E050: retained the W3DView draw twin as scratch evidence at score `0.30`; retail no-EH/display-global shape is not represented. No exact source, pin, or unlock row.
+- Bodies landed: none. Bodies added to `reverse/unlocked.txt`: none.
+- Next: inspect `0x003EEB90` from its 0.55 stash.
