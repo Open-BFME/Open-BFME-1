@@ -1,5 +1,15 @@
-// ??0BfmeBigJU@@QAE@XZ
-// partial score=0.95 date=2026-09-08
+// ??0Rva009A45A0CollisionData@@QAE@XZ
+// partial score=0.97 date=2026-09-16
+// cl: /DNDEBUG /MD /EHsc
+//
+// Rva009A45A0CollisionData::Rva009A45A0CollisionData, retail 0x009A45A0,
+// 117 bytes. CollisionManager::CollisionManager at 0x009A25B0 calls it, and
+// the 460-byte body at 0x009A2750 merges the buckets at +0x0C and +0xC068.
+// The product class name is not recovered, so the address stays in the name.
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 extern "C" void *__cdecl memset(void *d, int c, unsigned int n);
 
 class Rva009A45A0CollisionData
@@ -10,18 +20,18 @@ public:
 	volatile int m_bfme00JU;
 	volatile int m_bfme04JU;
 	volatile int m_bfme08JU;
-	int m_bfme0cJU;
-	int m_bfme10JU;
-	int m_bfme14JU;
+	volatile int m_bfme0cJU;
+	volatile int m_bfme10JU;
+	volatile int m_bfme14JU;
 	int m_bfmeA1JU[0x2b7c];
 	volatile int m_bfmeAe08JU;
 	volatile int m_bfmeAe0cJU;
 	int m_bfmeA2JU[0x494];
-	int m_bfmeC060JU;
-	int m_bfmeC064JU;
-	int m_bfmeC068JU;
-	char m_bfmeC06cJU;
-	char m_bfmeC06dJU;
+	volatile int m_bfmeC060JU;
+	volatile int m_bfmeC064JU;
+	volatile int m_bfmeC068JU;
+	volatile char m_bfmeC06cJU;
+	volatile char m_bfmeC06dJU;
 	unsigned char m_bfmePadJU[2];
 };
 
@@ -32,6 +42,8 @@ Rva009A45A0CollisionData::Rva009A45A0CollisionData()
 	m_bfme08JU = 0;
 	m_bfmeAe08JU = 0;
 	m_bfmeAe0cJU = 0;
+
+	_ReadWriteBarrier();
 
 	int *a1 = m_bfmeA1JU;
 
