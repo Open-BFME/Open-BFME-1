@@ -1,167 +1,254 @@
 // ??0W3DDefaultDraw@@QAE@PAVThing@@PBVModuleData@@@Z
-// partial score=0.88 date=2026-09-04
-// cl: /DBFME_MODULE_NO_MPO /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
-// stlport
-#define Matrix4x4 Matrix4
+// partial score=0.99 date=2026-09-16
+// cl: /DNDEBUG /MD /EHsc
 
-#include "Common/FileSystem.h"
-#include "Common/ThingTemplate.h"
-#include "GameClient/Drawable.h"
-#include "GameClient/Shadow.h"
-#include "WW3D2/RendObj.h"
-#include "W3DDevice/GameClient/Module/W3DDefaultDraw.h"
-#include "W3DDevice/GameClient/W3DDisplay.h"
-#include "W3DDevice/GameClient/W3DScene.h"
-#include "W3DDevice/GameClient/W3DShadow.h"
+// W3DDefaultDraw::W3DDefaultDraw, retail 0x007513C0, 568 bytes.
+//
+// The module registry row for W3DDefaultDraw carries 0x007513C0 in its
+// constructor column, and its factory at 0x006BEFC0 builds the module. The body
+// is Zero Hour's W3DDefaultDraw constructor with LOAD_TEST_ASSETS compiled in,
+// so the reference source at
+// reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DDefaultDraw.cpp
+// is the line-by-line model.
+//
+// BFME's render interfaces predate the Zero Hour headers, so the retail virtual
+// slots and the extended shadow descriptor stay local to this translation unit,
+// exactly as W3DDebrisDraw.cpp already keeps them.
 
-// By-value LTAName: StringBase out-of-line copy/dtor (0x887B60 / 0x887940),
-// isEmpty is the retail word-at-+4 test, str() is data+8.
-template <typename T> struct BfmeStringData
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
+typedef unsigned char Bool;
+typedef float Real;
+typedef int Int;
+
+class Thing;
+class ModuleData;
+class RenderObjClass;
+class Drawable;
+
+// The string payload BFME allocates, as
+// Code/GameEngine/Source/Common/SmallGaps/lookupNameNoCase.cpp reads it: the
+// length is a word at +4 and the characters start at +8.
+struct BfmeStringData
 {
-	int m_refCount;
+	Int m_refs;
 	unsigned short m_length;
-	unsigned short m_capacity;
-	T m_text[1];
+	unsigned short m_alloc;
+	char m_chars[1];
 };
 
-template <typename T> class StringBase
-{
-	friend class BfmeString;
-	StringBase();
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-	BfmeStringData<T> *m_data;
-};
+extern char Rva006A16B0Empty[];
 
-class BfmeString : private StringBase<char>
+template <class Character>
+class BFMERetailStringBase
 {
 public:
-	BfmeString() : StringBase<char>() {}
-	BfmeString(const BfmeString &other) : StringBase<char>(other) {}
-	~BfmeString() {}
-	const char *str(void) const { return m_data ? m_data->m_text : ""; }
-	bool isEmpty(void) const
+	~BFMERetailStringBase() { releaseBuffer(); }
+
+	Bool isEmpty() const { Int empty = (m_data == 0 || m_data->m_length == 0); return (Bool)empty; }
+	const char *str() const { return m_data ? m_data->m_chars : Rva006A16B0Empty; }
+
+private:
+	void releaseBuffer();
+
+	BfmeStringData *m_data;
+};
+
+// 0x00087A80. The override walk every Overridable shares.
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+
+
+	unsigned int m_vfptr;
+	Overridable *m_nextOverride;
+};
+
+// 0x00751390. The by-value copy of the string at +0x5C of the thing template,
+// which is the template's LTA model name.
+class Rva00751390Host
+{
+public:
+	BFMERetailStringBase<char> copyStringAt5C();
+};
+
+class Drawable
+{
+public:
+	Real getScale() const;
+
+	Rva00751390Host *getTemplate() const
 	{
-		return m_data == 0 || m_data->m_length == 0;
+		Rva00751390Host *host;
+		if (m_template == 0)
+		{
+			_ReadWriteBarrier();
+			host = 0;
+		}
+		else if (m_template->m_nextOverride == 0)
+			host = (Rva00751390Host *)m_template;
+		else
+			host = (Rva00751390Host *)m_template->m_nextOverride->getFinalOverride();
+		return host;
+	}
+
+	unsigned int m_vfptr;
+	Overridable *m_template;
+};
+
+class Shadow
+{
+public:
+	struct ShadowTypeInfo;
+};
+
+class W3DShadowManager
+{
+public:
+	Shadow *addShadow( RenderObjClass *renderObject, Shadow::ShadowTypeInfo *info, Drawable *drawable );
+};
+
+extern W3DShadowManager *TheW3DShadowManager;
+
+class SceneClass;
+
+class W3DDisplay
+{
+public:
+	static SceneClass *m_3DScene;
+};
+
+class BfmeSceneView
+{
+public:
+	__forceinline void addRenderObject( RenderObjClass *renderObject )
+	{
+		typedef void (BfmeSceneView::*Method)( RenderObjClass * );
+		(this->*(*(Method *)&(*(void ***)this)[2]))( renderObject );
 	}
 };
 
-// Overlay of ThingTemplate / Overridable: vptr, then next-override at +4.
-// getLTAName is the 32-byte +0x5C copy at 0x00751390 (thunk 0x47D16).
-class BfmeOverride
+struct BfmeTransform
+{
+	Real m_cell[12];
+};
+
+class BfmeRenderObjectView
 {
 public:
-	virtual void bfmeOverrideAnchor();
-	BfmeOverride *friend_getFinalOverride();
-	BfmeString getLTAName() const;
-	BfmeOverride *m_nextOverride;
-};
-
-class BfmeThingView
-{
-public:
-	virtual void bfmeThingAnchor();
-	BfmeOverride *m_template;
-};
-
-struct BFMEShadowTypeInfo
-{
-	char m_ShadowName[128];
-	int m_type;
-	char m_allowUpdates;
-	char m_allowWorldAlign;
-	char m_pad[2];
-	float m_sizeX;
-	float m_sizeY;
-	float m_offsetX;
-	float m_offsetY;
-	int m_unused98;
-	float m_extra9C;
-};
-
-RenderObjClass *Create_Render_Obj(const char *name, float scale, int color);
-
-// BFME RenderObjClass slots: Set_Transform at +0x54, Set_User_Data at +0x154.
-class BfmeRO
-{
-public:
-	virtual void s00(); virtual void s01(); virtual void s02(); virtual void s03();
-	virtual void s04(); virtual void s05(); virtual void s06(); virtual void s07();
-	virtual void s08(); virtual void s09(); virtual void s10(); virtual void s11();
-	virtual void s12(); virtual void s13(); virtual void s14(); virtual void s15();
-	virtual void s16(); virtual void s17(); virtual void s18(); virtual void s19();
-	virtual void s20();
-	virtual void Set_Transform(const Matrix3D &m);
-	virtual void s22(); virtual void s23(); virtual void s24(); virtual void s25();
-	virtual void s26(); virtual void s27(); virtual void s28(); virtual void s29();
-	virtual void s30(); virtual void s31(); virtual void s32(); virtual void s33();
-	virtual void s34(); virtual void s35(); virtual void s36(); virtual void s37();
-	virtual void s38(); virtual void s39(); virtual void s40(); virtual void s41();
-	virtual void s42(); virtual void s43(); virtual void s44(); virtual void s45();
-	virtual void s46(); virtual void s47(); virtual void s48(); virtual void s49();
-	virtual void s50(); virtual void s51(); virtual void s52(); virtual void s53();
-	virtual void s54(); virtual void s55(); virtual void s56(); virtual void s57();
-	virtual void s58(); virtual void s59(); virtual void s60(); virtual void s61();
-	virtual void s62(); virtual void s63(); virtual void s64(); virtual void s65();
-	virtual void s66(); virtual void s67(); virtual void s68(); virtual void s69();
-	virtual void s70(); virtual void s71(); virtual void s72(); virtual void s73();
-	virtual void s74(); virtual void s75(); virtual void s76(); virtual void s77();
-	virtual void s78(); virtual void s79(); virtual void s80(); virtual void s81();
-	virtual void s82(); virtual void s83(); virtual void s84();
-	virtual void Set_User_Data(void *value, int recursive);
-};
-
-class BfmeGlobPB
-{
-public:
-	virtual void bfmeSlotPB00();
-	virtual void bfmeSlotPB01();
-	virtual void Add_Render_Object(RenderObjClass *robj);
-};
-extern BfmeGlobPB *g_bfmeGlobPB;
-
-static BfmeOverride *bfmeWalk(Drawable *draw)
-{
-	BfmeOverride *tmpl = ((BfmeThingView *)draw)->m_template;
-	if (tmpl)
+	__forceinline void setTransform( const BfmeTransform &transform )
 	{
-		BfmeOverride *next = tmpl->m_nextOverride;
-		if (next)
-			tmpl = next->friend_getFinalOverride();
+		typedef void (BfmeRenderObjectView::*Method)( const BfmeTransform & );
+		(this->*(*(Method *)&(*(void ***)this)[21]))( transform );
 	}
-	return tmpl;
-}
+
+	__forceinline void setUserData( void *value, Bool recursive )
+	{
+		typedef void (BfmeRenderObjectView::*Method)( void *, Bool );
+		(this->*(*(Method *)&(*(void ***)this)[85]))( value, recursive );
+	}
+};
+
+struct BfmeShadowTypeInfo
+{
+	char m_shadowNames[128];
+	Int m_type;
+	Bool m_allowUpdates;
+	Bool m_allowWorldAlign;
+	unsigned char m_padding86[2];
+	Real m_sizeX;
+	Real m_sizeY;
+	Real m_offsetX;
+	Real m_offsetY;
+	Real m_unmodelled98;
+	Real m_unmodelled9c;
+	Bool m_unmodelleda0;
+};
+
+// 0x00901F80, the cdecl scaled and recoloured factory W3DDebrisDraw.cpp already
+// calls under this name.
+RenderObjClass *Create_Render_Obj( const char *name, Real scale, Int color );
+
+class DrawableModule
+{
+public:
+	DrawableModule( Thing *thing, const ModuleData *moduleData );
+	virtual ~DrawableModule();
+
+	Drawable *getDrawable() const { return m_drawable; }
+
+private:
+	unsigned int m_moduleData;
+	Drawable *m_drawable;
+};
+
+class DrawModule : public DrawableModule
+{
+public:
+	DrawModule( Thing *thing, const ModuleData *moduleData ) : DrawableModule( thing, moduleData ) { }
+};
+
+class W3DDefaultDraw : public DrawModule
+{
+public:
+	W3DDefaultDraw( Thing *thing, const ModuleData *moduleData );
+
+	virtual void doDrawModule( const BfmeTransform *transformMtx );
+	virtual void setShadowsEnabled( Bool enable );
+	virtual void setFullyObscuredByShroud( Bool fullyObscured );
+
+private:
+	RenderObjClass *m_renderObject;
+	Shadow *m_shadow;
+};
 
 // ??0W3DDefaultDraw@@QAE@PAVThing@@PBVModuleData@@@Z
-W3DDefaultDraw::W3DDefaultDraw(Thing *thing, const ModuleData *moduleData)
-	: DrawModule(thing, moduleData)
+W3DDefaultDraw::W3DDefaultDraw( Thing *thing, const ModuleData *moduleData ) : DrawModule( thing, moduleData )
 {
-	*(RenderObjClass *volatile *)&m_renderObject = 0;
-	*(Shadow *volatile *)&m_shadow = 0;
-
-	if (!bfmeWalk(getDrawable())->getLTAName().isEmpty())
+	m_renderObject = 0;
+	m_shadow = 0;
+	if (!getDrawable()->getTemplate()->copyStringAt5C().isEmpty())
 	{
-		m_renderObject = Create_Render_Obj(
-			bfmeWalk(getDrawable())->getLTAName().str(),
-			getDrawable()->getScale(),
-			0);
+		BfmeShadowTypeInfo shadowInfo;
 
-		BFMEShadowTypeInfo shadowInfo;
-		shadowInfo.m_type = (int)SHADOW_VOLUME;
+		m_renderObject = Create_Render_Obj( getDrawable()->getTemplate()->copyStringAt5C().str(),
+			getDrawable()->getScale(), 0 );
+
+		shadowInfo.m_unmodelled9c = 20.0f;
+		shadowInfo.m_unmodelleda0 = false;
+		shadowInfo.m_type = 2;
 		shadowInfo.m_sizeX = 0;
 		shadowInfo.m_sizeY = 0;
 		shadowInfo.m_offsetX = 0;
 		shadowInfo.m_offsetY = 0;
-		shadowInfo.m_unused98 = 0;
-		shadowInfo.m_extra9C = 20.0f;
-		m_shadow = TheW3DShadowManager->addShadow(m_renderObject, (Shadow::ShadowTypeInfo *)&shadowInfo, 0);
+		shadowInfo.m_unmodelled98 = 0.0f;
+		m_shadow = TheW3DShadowManager->addShadow( m_renderObject,
+			(Shadow::ShadowTypeInfo *)&shadowInfo, 0 );
 
 		if (m_renderObject)
 		{
-			g_bfmeGlobPB->Add_Render_Object(m_renderObject);
-			((BfmeRO *)m_renderObject)->Set_User_Data((char *)getDrawable() + 0x240, 0);
-			Matrix3D transform(true);
-			((BfmeRO *)m_renderObject)->Set_Transform(transform);
+			BfmeTransform transform;
+
+			((BfmeSceneView *)W3DDisplay::m_3DScene)->addRenderObject( m_renderObject );
+
+			((BfmeRenderObjectView *)m_renderObject)->setUserData(
+				(unsigned char *)getDrawable() + 0x240, false );
+
+			transform.m_cell[0] = 1.0f;
+			transform.m_cell[1] = 0.0f;
+			transform.m_cell[2] = 0.0f;
+			transform.m_cell[3] = 0.0f;
+			transform.m_cell[4] = 0.0f;
+			transform.m_cell[5] = 1.0f;
+			transform.m_cell[6] = 0.0f;
+			transform.m_cell[7] = 0.0f;
+			transform.m_cell[8] = 0.0f;
+			transform.m_cell[9] = 0.0f;
+			transform.m_cell[10] = 1.0f;
+			transform.m_cell[11] = 0.0f;
+			((BfmeRenderObjectView *)m_renderObject)->setTransform( transform );
 		}
 	}
 }
