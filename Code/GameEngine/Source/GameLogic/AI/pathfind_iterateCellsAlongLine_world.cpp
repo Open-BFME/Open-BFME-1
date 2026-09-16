@@ -17,7 +17,7 @@
 // moveAlliesAwayFromDestination, and the void* one at 0x003F1F00, whose other
 // caller is Pathfinder::tightenPath.  A third is named by its only caller:
 // Pathfinder::isAttackViewBlockedByObstacle at 0x003EA980 reaches 0x003E7E60,
-// and Zero Hour's body of that function fills a ViewAttackBlockedStruct.
+// whose seven-field record reaches the matched ObstacleCellStruct callback.
 //
 // The remaining ten user-data types are not recoverable from these bodies -- a
 // forwarder reads nothing through the pointer -- so each is named for the
@@ -48,7 +48,7 @@ struct Rva003D7440Struct;
 struct Rva003D7680Struct;
 struct Rva003D79C0Struct;
 struct Rva003DE480Struct;
-struct ViewAttackBlockedStruct;
+struct ObstacleCellStruct;
 struct Rva003E33F0Struct;
 struct Rva003E3650Struct;
 struct Rva003E7F80Struct;
@@ -84,9 +84,9 @@ public:
 			PathfindLayerEnum layer, Rva003DE480Struct *userData);	///< ILT thunk at 0x00005713
 
 	Int iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
-			PathfindLayerEnum layer, ViewAttackBlockedStruct *userData);
+			PathfindLayerEnum layer, ObstacleCellStruct *userData);
 	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
-			PathfindLayerEnum layer, ViewAttackBlockedStruct *userData);	///< ILT thunk at 0x0000CC1B
+			PathfindLayerEnum layer, ObstacleCellStruct *userData);	///< ILT thunk at 0x0000CC1B
 
 	Int iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
 			PathfindLayerEnum layer, Rva003E33F0Struct *userData);
@@ -175,7 +175,7 @@ Int Pathfinder::iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &
 
 // retail 0x003E7E60 -- forwards to the cell-space walk at 0x003E3190
 Int Pathfinder::iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
-																PathfindLayerEnum layer, ViewAttackBlockedStruct *userData)
+														PathfindLayerEnum layer, ObstacleCellStruct *userData)
 {
 	ICoord2D start, end;
 	worldToCell( &startWorld, &start );

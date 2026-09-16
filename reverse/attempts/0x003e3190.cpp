@@ -1,4 +1,4 @@
-// ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUViewAttackBlockedStruct@@@Z
+// ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUObstacleCellStruct@@@Z
 // partial score=0.94 date=2026-09-09
 // cl: /DNDEBUG /MD
 
@@ -34,10 +34,6 @@ private:
 	char m_unreconstructed[0x44];
 };
 
-struct ViewAttackBlockedStruct
-{
-};
-
 struct ObstacleCellStruct
 {
 	Int cellCallback( PathfindCell *from, PathfindCell *to, Int x, Int y );
@@ -47,7 +43,7 @@ class Pathfinder
 {
 public:
 	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
-		PathfindLayerEnum layer, ViewAttackBlockedStruct *userData );
+		PathfindLayerEnum layer, ObstacleCellStruct *userData );
 
 private:
 	char m_beforeMap[0x10];
@@ -79,7 +75,7 @@ private:
 
 Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start,
 	const ICoord2D &end, PathfindLayerEnum layer,
-	ViewAttackBlockedStruct *userData )
+	ObstacleCellStruct *userData )
 {
 	const ICoord2D *start_ptr = &start;
 	const ICoord2D *end_ptr = &end;
@@ -133,7 +129,7 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start,
 		if (to == 0)
 			return 0;
 
-		Int ret = reinterpret_cast<ObstacleCellStruct *>(userData)->cellCallback( from, to, x, y );
+		Int ret = userData->cellCallback( from, to, x, y );
 		if (ret != 0)
 			return ret;
 
