@@ -88256,3 +88256,4 @@ _g_Rva012D4FD0AssertCrashTemplate,0x012D4FD0,DLGTEMPLATEEX titled Assert/Crash p
 ?Unlock@Rva0090C710SurfaceLockView@@QAEXXZ,0x0090C7D0,address-derived ABI view for the canonical SurfaceClass Unlock used by W3DShroud::render
 ?interpolateFogLevels@W3DShroud@@IAEXPAUtagRECT@@@Z,0x0001494D,W3DShroud render helper call preserves the existing ILT thunk at 0x0001494D
 ?fillBorderShroudData@W3DShroud@@IAEXEPAVSurfaceClass@@@Z,0x00045C46,W3DShroud render helper call preserves the existing ILT thunk at 0x00045C46 to the matched BFME fill body
+??1WinInstanceData@@UAE@XZ,0x00499BD0,vftable 0x010FA338 is installed by only two bodies. The other is the matched WinInstanceData constructor at 0x00499B40. This body releases four AsciiStrings and tears down m_text m_tooltip and m_videoBuffer. The BfmeConv2016 row names the same body with a placeholder.
