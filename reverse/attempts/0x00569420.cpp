@@ -1,78 +1,117 @@
-// ?d_00569420@@YAXXZ
-// partial score=0.96 date=2026-09-08
-struct Rva006C9270GlobalData
-{
-	unsigned char m_bfmeHeadEAI[0xa9e];
-	char m_bfmeFlagEAI;
-};
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// partial score=0.84 date=2026-09-16
+//
+// BfmeAptScreenQuitMenu::_bfme_saveMenu at 0x00569420 and
+// BfmeAptScreenQuitMenu::_bfme_loadMenu at 0x005694E0, 154 bytes each. The
+// constructor at 0x0056A2F0 registers both addresses under the selector
+// strings "AptQuitMenu::SaveMenu" and "AptQuitMenu::LoadMenu", and
+// BfmeAptScreenQuitMenuConstructor.cpp already declares both method names.
+// The two bodies differ in one byte: the first argument to showAptSaveLoad is
+// 3 for save and 2 for load.
 
-struct BfmeGateEAI
-{
-	char bfmeCheckEAI();
-};
-
-struct Rva00367E30Logic
-{
-	unsigned char m_bfmeHeadEAI[0x10c];
-	int m_bfmeModeEAI;
-};
-
-class BfmeWinEAI
+class Keyboard
 {
 public:
-	virtual void bfmeSlot0EAI(int a);
-	virtual void bfmeSlot1EAI();
-	virtual void bfmeSlot2EAI();
-	virtual void bfmeSlot3EAI();
-	virtual void bfmeSlot4EAI(int a);
-	virtual void bfmeSlot5EAI();
+	bool isShift();
 };
 
-class Shell40D9
+class Rva006C9270GlobalData
 {
 public:
-	BfmeWinEAI *bfmeTopEAI();
+	unsigned char m_padding[ 0xa9e ];
+	char m_flagA9E;
 };
 
+class Rva00367E30Logic
+{
+public:
+	unsigned char m_padding[ 0x10c ];
+	int m_mode;
+};
+
+class WindowLayout
+{
+public:
+	virtual void runInit( void *userData );
+	virtual ~WindowLayout();
+	virtual void runUpdate( void *userData );
+	virtual void runShutdown( void *userData );
+	virtual void hide( int hide );
+	virtual void bringForward( void );
+};
+
+class Shell
+{
+public:
+	WindowLayout *getSaveLoadMenuLayout( void );
+};
+
+extern Keyboard *TheKeyboard;
 extern Rva006C9270GlobalData *TheWritableGlobalData;
-extern BfmeGateEAI *g_bfmeGateEAI;
 extern Rva00367E30Logic *TheBfmeGameLogic;
-extern Shell40D9 *TheShell;
+extern Shell *TheShell;
 
-void __cdecl bfmeApplyEAI(int a, int b, int c);
+void showAptSaveLoad( void *arg0, int flags, const volatile char extra );
 
 class BfmeAptScreenQuitMenu
 {
 public:
-	void _bfme_saveMenu(const char *unused);
+	void _bfme_saveMenu( const char *name );
+	void _bfme_loadMenu( const char *name );
 };
 
-void BfmeAptScreenQuitMenu::_bfme_saveMenu(const char *unused)
+void BfmeAptScreenQuitMenu::_bfme_saveMenu( const char *name )
 {
-	char flag = (TheWritableGlobalData->m_bfmeFlagEAI == 0);
+	(void)name;
+	bool useMenu = ( TheWritableGlobalData->m_flagA9E == 0 );
+	if( TheKeyboard->isShift() )
+		useMenu = !useMenu;
 
-	if (g_bfmeGateEAI->bfmeCheckEAI())
-		flag = (flag == 0);
-
-	if (flag)
+	if( useMenu )
 	{
-		int mode = TheBfmeGameLogic->m_bfmeModeEAI;
-
-		int n;
-
-		if (mode == 1 || mode == 5)
-			n = 4;
+		int mode = TheBfmeGameLogic->m_mode;
+		int flags;
+		if( mode == 1 )
+			flags = 4;
+		else if( mode == 5 )
+			flags = 4;
 		else
-			n = (mode == 2) + 1;
-
-		bfmeApplyEAI(3, n, 1);
+			flags = mode == 2 ? 2 : 1;
+		showAptSaveLoad( (void *)3, flags, 1 );
 	}
 	else
 	{
-		BfmeWinEAI *win = TheShell->bfmeTopEAI();
+		WindowLayout *layout = TheShell->getSaveLoadMenuLayout();
+		layout->runInit( 0 );
+		layout->hide( 0 );
+		layout->bringForward();
+	}
+}
 
-		win->bfmeSlot0EAI(0);
-		win->bfmeSlot4EAI(0);
-		win->bfmeSlot5EAI();
+void BfmeAptScreenQuitMenu::_bfme_loadMenu( const char *name )
+{
+	(void)name;
+	bool useMenu = ( TheWritableGlobalData->m_flagA9E == 0 );
+	if( TheKeyboard->isShift() )
+		useMenu = !useMenu;
+
+	if( useMenu )
+	{
+		int mode = TheBfmeGameLogic->m_mode;
+		int flags;
+		if( mode == 1 )
+			flags = 4;
+		else if( mode == 5 )
+			flags = 4;
+		else
+			flags = mode == 2 ? 2 : 1;
+		showAptSaveLoad( (void *)2, flags, 1 );
+	}
+	else
+	{
+		WindowLayout *layout = TheShell->getSaveLoadMenuLayout();
+		layout->runInit( 0 );
+		layout->hide( 0 );
+		layout->bringForward();
 	}
 }
