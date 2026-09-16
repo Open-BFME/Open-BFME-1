@@ -29,3 +29,10 @@
 - 0x007C5690: identity resolved to `FlatTerrainShader2Stage::set`; best candidate banked at score `0.34`. Probes covered helper-only, state-cache, address-state shape, handle-aware, and late-state variants; best was `7093` versus `7909`, with `4415` non-relocation differences and `600` relocation-layout mismatches. No exact source, ledger change, pin, or unlock row.
 - Bodies landed: none. Bodies added to `reverse/unlocked.txt`: none.
 - Next: publish this verdict, then inspect `0x009B8130` from the explicit pool.
+
+## 2026-09-16 - checkpoint after 0x009B8130
+
+- Commits pushed: `9ff170e3c8` (0x007C5690 bank and prior WHALE-2 records). The 0x009B8130 blocked verdict is prepared for its own publication.
+- 0x009B8130: VP6 MMX body reviewed from the retail prologue, callee sweep, existing stale scaffold, and aligned-frame sibling compile. No exact clean transcription, pin, or unlock row; verdict recorded as blocked with evidence.
+- Bodies landed: none. Bodies added to `reverse/unlocked.txt`: none.
+- Next: inspect `0x009D9D90` (the next explicit pool body with an existing 0.55 stash).
