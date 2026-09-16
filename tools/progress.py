@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Report how much of the retail .text we hold as source, and what else we claim.
+"""Report how much retail code we can rebuild from what the repository holds.
 
-The headline is RECOVERED AS SOURCE: bytes we could rebuild from text a human
-can read and edit, which is authored C++ plus the vendored library sources we
-compile. Everything else the ledger claims is reported beside it and never
-folded into it -- byte-true dumps of retail, prebuilt .lib files we attach, and
-machine-written C++. Total exact stays in the report as the target-definition
-number: it says which bytes have a fixed boundary, not which bytes we recovered.
+The headline includes authored C++, vendored source, generated C++ and attached
+prebuilt libraries; it excludes retail-byte dumps. Its denominator excludes
+0xCC padding. The breakdown reports each provenance separately, so ASM-to-C++
+work can also be measured by the change in authored bytes. Total exact uses
+the full .text denominator and includes dumps: it measures bounded coverage,
+not conversion progress.
 
 Every retail byte is counted once. Clean C++ ownership wins when it overlaps an
 assembly-backed row (including ICF aliases), leaving "ASM-only" as actionable
