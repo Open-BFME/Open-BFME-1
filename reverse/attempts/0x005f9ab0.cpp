@@ -2,6 +2,7 @@
 // partial score=0.99 date=2026-08-30
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 extern float GetGameClientRandomValueReal(float low, float high, char *file, int line);
+extern "C" void _WriteBarrier();
 
 namespace FXParticleSystem {
 
@@ -27,6 +28,7 @@ __forceinline LineCoord3D interpolateLine(
     const LineCoord3D &start, const LineCoord3D &delta)
 {
     *scale = rawScale;
+    _WriteBarrier();
     return LineCoord3D(0,
         start.z + *scale * delta.z,
         start.y + *scale * delta.y,
