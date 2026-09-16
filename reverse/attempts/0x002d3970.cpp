@@ -10,17 +10,20 @@ typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef bool Bool;
 
-struct Coord3DBase
+struct Coord3D
 {
+	Coord3D() {}
+	Coord3D(const Coord3D &other)
+	{
+		x = other.x;
+		y = other.y;
+		z = other.z;
+	}
+	~Coord3D() {}
+
 	Real x;
 	Real y;
 	Real z;
-};
-
-struct Coord3D : public Coord3DBase
-{
-	Coord3D();
-	~Coord3D();
 };
 
 struct WorldPosition
@@ -29,16 +32,6 @@ struct WorldPosition
 	Real y;
 	Real z;
 };
-
-// ??0Coord3D@@QAE@XZ
-Coord3D::Coord3D()
-{
-}
-
-// ??1Coord3D@@QAE@XZ
-Coord3D::~Coord3D()
-{
-}
 
 class Vector4
 {
@@ -130,18 +123,21 @@ class Thing
 public:
 	__forceinline const Coord3D *getPosition() const
 	{
-		return reinterpret_cast<const Coord3D *>(
-			reinterpret_cast<const unsigned char *>(this) + 0x38);
+		return &m_cachedPos;
 	}
 	__forceinline const Matrix3D *getTransformMatrix() const
 	{
-		return reinterpret_cast<const Matrix3D *>(
-			reinterpret_cast<const unsigned char *>(this) + 8);
+		return &m_transform;
 	}
 	void convertBonePosToWorldPos(const Coord3D *bonePos,
 		const Matrix3D *boneTransform, Coord3D *worldPos,
 		Matrix3D *worldTransform) const;
 	void setOrientation(Real angle);
+
+private:
+	unsigned char m_head[8];
+	Matrix3D m_transform;
+	Coord3D m_cachedPos;
 };
 
 class Player

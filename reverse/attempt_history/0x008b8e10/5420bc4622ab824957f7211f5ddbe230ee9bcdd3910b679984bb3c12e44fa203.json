@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "5420bc4622ab824957f7211f5ddbe230ee9bcdd3910b679984bb3c12e44fa203",
+  "symbol": "?bfmeSet1242@BfmeN1242@@QAEXHPAVBfmeE1242@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ?bfmeSet1242@BfmeN1242@@QAEXHPAVBfmeE1242@@@Z\n// partial score=0.92 date=2026-09-02\n// cl: /O2 /DNDEBUG /MD\n\nclass BfmeE1242;\n\nclass BfmeN1242\n{\npublic:\n\tvoid bfmeReserve1242(int n);\n\tvoid bfmePut1242(int i, BfmeE1242 *e);\n\tvoid bfmeSet1242(int i, BfmeE1242 *e);\n\tint size() const { return m_bfme28; }\n\tvoid setSize(int n) { m_bfme28 = n; }\n\n\tchar m_bfmePad00[0x28];\n\tint m_bfme28;\n};\n\nvoid BfmeN1242::bfmeSet1242(int i, BfmeE1242 *e)\n{\n\tint n;\n\tBfmeN1242 *self;\n\tself = this;\n\tif (i >= 0)\n\t{\n\t\tn = i + 1;\n\t\tself->bfmeReserve1242(n);\n\t\tself->bfmePut1242(i, e);\n\t\tint c = self->size();\n\t\tif (n > c)\n\t\t\tc = n;\n\t\tself->setSize(c);\n\t}\n}\n"
+}

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b815f1be804844e1725a02fc08db61622c80f3538d1a847ad80d6b24394f90fd",
+  "symbol": "?bfmeSendQK@BfmeOwnerQK@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeSendQK@BfmeOwnerQK@@QAEXXZ\n// partial score=0.95 date=2026-09-16\n// 58/58 bytes; 12 of 22 instructions differ, from two allocation/order choices:\n//   1. retail saves BOTH esi and edi before the switch; MSVC saves edi there\n//      and shrink-wraps esi into the tail, so every later displacement shifts.\n//   2. at the call retail does `mov ecx,edi` BEFORE `push esi`; MSVC pushes\n//      first and sets the receiver last.\n// Settled: the two-case subtract chain (`sub eax,0` / `je` / `dec` / `jne`)\n// comes straight from a `switch` with a `default: return;`, the sink null test\n// follows the switch, and the second call takes (item, make(item)) with the\n// make being a __stdcall taking the same item.\n// Tried: declaring both locals before the switch, and hoisting the make result\n// into its own local -- both make it worse (14 differing lines).\nvoid * __stdcall bfmeMakeQK(void *item);\n\nclass BfmeSinkQK\n{\npublic:\n\tvoid bfmeDoQK(void *item, void *made);\n};\n\nclass BfmeOwnerQK\n{\npublic:\n\tvoid bfmeSendQK(void);\n\n\tunsigned char m_bfmeHeadQK[0xf8];\n\tBfmeSinkQK *m_bfmeAQK;\n\tBfmeSinkQK *m_bfmeBQK;\n\tint m_bfmeSpareQK;\n\tint m_bfmeModeQK;\n\tvoid *m_bfmeItemQK;\n};\n\nvoid BfmeOwnerQK::bfmeSendQK(void)\n{\n\tBfmeSinkQK *sink;\n\n\tswitch (m_bfmeModeQK)\n\t{\n\tcase 0:\n\t\tsink = m_bfmeAQK;\n\t\tbreak;\n\n\tcase 1:\n\t\tsink = m_bfmeBQK;\n\t\tbreak;\n\n\tdefault:\n\t\treturn;\n\t}\n\n\tif (sink == 0)\n\t\treturn;\n\n\tvoid *item = m_bfmeItemQK;\n\n\tsink->bfmeDoQK(item, bfmeMakeQK(item));\n}\n"
+}
