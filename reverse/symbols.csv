@@ -54080,6 +54080,7 @@ name,address,notes
 ?b_005156d0@@YAXXZ,0x005156D0,gen-thunk body
 ?b_00515780@@YAXXZ,0x00515780,gen-thunk body
 ?b_00515810@@YAXXZ,0x00515810,gen-thunk body
+?Rva00515810@BfmeAptScreenInGameChat@@QAEXXZ,0x00515810,"the friends-list refresh the in-game chat InitGadgets body at 0x00515E60 calls with ecx set to this; the receiver proves the thiscall member ABI, and the method name keeps the address because nothing proves a semantic one"
 ?b_00515dd0@@YAXXZ,0x00515DD0,gen-thunk body
 ?b_00515e60@@YAXXZ,0x00515E60,gen-thunk body
 ?b_005160e0@@YAXXZ,0x005160E0,gen-thunk body
@@ -80936,6 +80937,7 @@ name,address,notes
 ?g_obj12F060C@@3PAUBfmeObj2B1@@A,0x00EF060C,pin
 ?g_obj12F1024@@3PAUBfmeObj1024@@A,0x00EF1024,pin
 ?g_obj12F495C@@3PAXA,0x012F495C,pin
+?g_unicode12F498C@@3VUnicodeString@@A,0x012F498C,"the UnicodeString the in-game chat InitGadgets body at 0x00515E60 copies into GadgetTextEntrySetText for the InGameChatEntry gadget; address-derived name, the variable it belongs to is not proven"
 ?g_obj12F49E4@@3PAXA,0x012F49E4,Objectives and PlayerStatus screen singleton read and written by the caller-identified constructor
 ?g_obj12F4B58@@3PAUBfmeObj4B5@@A,0x012F4B58,pin
 ?g_obj12F4B58@@3PAVRva0051D690Shell@@A,0x012F4B58,TheShell singleton typed for 0x0051D690
