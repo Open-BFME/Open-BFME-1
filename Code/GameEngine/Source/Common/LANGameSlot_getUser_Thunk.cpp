@@ -1,7 +1,30 @@
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/languagefilter /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/languagefilter /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?getUser@LANGameSlot@@QAEPAVLANPlayer@@XZ: Code/GameEngine/Source/GameNetwork/LANGameInfo.cpp
 
-#include "Common/UnicodeString.h"
+#include "Lib/BaseType.h"
+#define private public
+#include "string_base.h"
+#undef private
+
+#define LANUnicodeString UnicodeString
+class LANUnicodeString
+{
+public:
+	~UnicodeString()
+	{
+		reinterpret_cast<StringBase<WideChar> &>( *this ).releaseBuffer();
+	}
+
+	UnicodeString &operator=( const UnicodeString &source )
+	{
+		reinterpret_cast<StringBase<WideChar> &>( *this ).set(
+			reinterpret_cast<const StringBase<WideChar> &>( source ) );
+		return *this;
+	}
+
+private:
+	void *m_data;
+};
 
 enum SlotState
 {
