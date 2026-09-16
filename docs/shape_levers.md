@@ -652,3 +652,19 @@ destructor forwarding plus the actual `StringBase<char>::concat` length
 wrapper reproduced three separate return-value lifetimes and their shared
 cleanup tail. Do not flatten those branches into one mutable string merely
 because the filename construction looks repetitive.
+
+## Secondary-base calls and inline boolean setters
+
+In terrain initialization `0x00730590` (684 bytes), calling inherited
+`water->Set_Position(...)` reproduced the unconditional secondary-base
+adjustment. `static_cast<RenderObjClass *>(water)->Set_Position(...)` instead
+emitted a null-preserving pointer conversion before evaluating the arguments.
+Use the real inheritance and call expression, not pointer arithmetic.
+
+The same body then matched except for an eight-byte-short cloud flag update:
+direct stores in the two arms became `setne`. Restoring the actual upstream
+inline `toggleCloudLayer(Bool)` setter in both arms retained retail's branches
+and made the complete body exact. The setter is real source behavior, not a
+dummy code-generation helper. First verify all field offsets and reloads after
+calls: five missing array-stride gaps and cached owner pointers initially hid
+these two source-shape issues.
