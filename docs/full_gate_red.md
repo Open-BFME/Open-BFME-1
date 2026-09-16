@@ -27,6 +27,12 @@ did not produce a patch set while functions were red. The raw failing rows are
 preserved in docs/full_gate_red_2026-09-15.txt; reverse/reloc_names.csv was
 unchanged.
 
+After the same day's campaign (three parallel Astra lanes plus Claude):
+Functions 90 red (the ini.cpp trio landed through the baseline-tolerant hook,
+six more rows went green under it), DIR32 99 live inconsistent symbols after
+lane B's nine source fixes, `reverse/full_gate_baseline.txt` at 90 rows. The
+retired generators are deleted again and guarded (reverse/retired_paths.txt).
+
 ## The hook now compares against a baseline (2026-09-15)
 
 `.githooks/pre-commit` no longer demands a fully green gate for a header or
@@ -35,10 +41,8 @@ red now and absent from `reverse/full_gate_baseline.txt`, and on a gate that
 dies before byte comparison. The baseline is recorded once with `--record`
 on a stated revision and may only SHRINK: `--validate` refuses a staged
 baseline that adds a row, so a red cannot be hidden by writing it down. Rows
-that went green are printed so the fixing commit removes them. Until the
-baseline exists the hook behaves as before (strict), which is the state on
-2026-09-15 while the gate still exits at a compile failure (see Lane A of
-the gate campaign in build/gate_lane*.md).
+that went green are printed so the fixing commit removes them. If the
+baseline file were ever absent the hook falls back to strict.
 
 ## The 100, by what is actually wrong
 
