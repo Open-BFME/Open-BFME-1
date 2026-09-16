@@ -1,7 +1,10 @@
-// ?showFirewallPopup@BfmeAptScreenMainMenu@@QAEXH@Z
-// partial score=0.96 date=2026-09-07
+// ?_bfme_multiplayerButtonPressed@BfmeAptScreenMainMenu@@QAEXPBD@Z
+// partial score=0.96 date=2026-09-16
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// MainMenu.apt firewall popup callback, retail 0x0051DB30.
+// MainMenu.apt multiplayer button callback, retail 0x0051DB30. The main menu
+// constructor pushes the selector string "AptMainMenu::MultiplayerButtonPressed"
+// at retail 0x0051FB59 and loads this body's ILT thunk right after, so the name
+// is read off the binary rather than guessed.
 
 template <typename T> class StringBase
 {
@@ -99,7 +102,7 @@ extern Rva00579160Manager *Rva00579160TheManager;
 class BfmeAptScreenMainMenu
 {
 public:
-	void showFirewallPopup( int unused );
+	void _bfme_multiplayerButtonPressed( const char *name );
 
 private:
 	char m_unmodelled[ 0x250 ];
@@ -109,9 +112,9 @@ private:
 	bool m_enabled;
 };
 
-// ?showFirewallPopup@BfmeAptScreenMainMenu@@QAEXH@Z
-void BfmeAptScreenMainMenu::showFirewallPopup( int unused )
+void BfmeAptScreenMainMenu::_bfme_multiplayerButtonPressed( const char *name )
 {
+	(void)name;
 	if( !m_enabled || m_state.isReady() )
 	{
 		Rva00579160TheManager->fire(
