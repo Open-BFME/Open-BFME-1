@@ -7,7 +7,8 @@ acceptance check.  ``choices_for(text)`` returns the JSON shape consumed by
 
 * ``sib`` reverses one independent integer addition at a time;
 * ``register`` swaps adjacent, independent local definitions;
-* ``bool`` materialises a call result before negating it.
+* ``bool`` materialises a call result before negating it;
+* ``test`` reverses the operands of a simple bit-test condition.
 
 The first two are useful probes for the hard-lane SIB and register-order
 families.  A generated alternative is only a hypothesis: ``probe.py`` and the
@@ -19,7 +20,7 @@ or an assembly fallback.
 Usage::
 
     python3 tools/shape_family_levers.py SOURCE.cpp \
-        --families sib,register,bool > choices.json
+        --families sib,register,bool,test > choices.json
     python3 tools/shape_search.py SOURCE.cpp "MANGLED" 0xRVA --size N \
         --choices choices.json
 """
@@ -50,6 +51,59 @@ _ADD = re.compile(
 _NEGATED_CALL = re.compile(
     r"^(?P<indent>[ \t]*)return\s*!\s*(?P<call>[A-Za-z_]\w*(?:\s*::\s*[A-Za-z_]\w*)*"
     r"\s*\([^;{}]*\))\s*;[ \t]*$", re.M
+)
+_IF_LINE = re.compile(
+    r"^(?P<indent>[ \t]*)if\s*\((?P<condition>.*)\)"
+    r"(?P<tail>[ \t]*(?:\{[^\r\n]*)?)$",
+    re.M,
+)
+
+
+def _unwrap_outer_parens(value):
+    """Remove balanced outer parentheses from a small expression."""
+    value = value.strip()
+    changed = True
+    while changed and value.startswith("(") and value.endswith(")"):
+        changed = False
+        depth = 0
+        closes_at = None
+        for index, char in enumerate(value):
+            if char == "(":
+                depth += 1
+            elif char == ")":
+                depth -= 1
+                if depth == 0:
+                    closes_at = index
+                    break
+        if closes_at == len(value) - 1:
+            value = value[1:-1].strip()
+            changed = True
+    return value
+
+
+def _top_level_ampersand(value):
+    """Return the position of the only top-level bitwise ampersand."""
+    parens = brackets = 0
+    found = None
+    for index, char in enumerate(value):
+        if char == "(":
+            parens += 1
+        elif char == ")":
+            parens -= 1
+        elif char == "[":
+            brackets += 1
+        elif char == "]":
+            brackets -= 1
+        elif char == "&" and parens == 0 and brackets == 0:
+            if found is not None:
+                return None
+            found = index
+    return found
+
+
+_BIT_ATOM = re.compile(
+    r"[A-Za-z_]\w*(?:(?:\s*(?:->|\.)\s*[A-Za-z_]\w*)|"
+    r"(?:\s*\[[^\]\r\n]+\]))*"
 )
 
 
@@ -143,7 +197,54 @@ def bool_choices(text, limit=8):
     return out
 
 
-def choices_for(text, families=("sib", "register", "bool"), max_choices=12):
+def test_choices(text, limit=8):
+    """Return alternatives that reverse a simple bit-test's operands.
+
+    The parser accepts member/array expressions such as
+    ``owner->m_words[index >> 5]`` and an optional ``!= 0`` comparison.  It
+    deliberately rejects calls and compound expressions: this lever is only a
+    codegen probe for commutative TEST residues, never a semantic rewrite.
+    """
+    out = []
+    for match in _IF_LINE.finditer(text):
+        line = match.group(0)
+        if text.count(line) != 1:
+            continue
+        condition = match.group("condition").strip()
+        comparison = re.fullmatch(
+            r"(?P<expr>.+?)\s*(?P<op>!=|==)\s*0", condition
+        )
+        if comparison:
+            condition = comparison.group("expr").strip()
+            operator = comparison.group("op")
+        else:
+            operator = None
+        condition = _unwrap_outer_parens(condition)
+        split = _top_level_ampersand(condition)
+        if split is None:
+            continue
+        left = condition[:split].strip()
+        right = condition[split + 1:].strip()
+        if not left or not right:
+            continue
+        if not _BIT_ATOM.fullmatch(left) or not _BIT_ATOM.fullmatch(right):
+            continue
+        if operator:
+            new_condition = f"( {right} & {left} ) {operator} 0"
+        else:
+            new_condition = f"{right} & {left}"
+        replacement = (f"{match.group('indent')}if ( {new_condition} )"
+                       f"{match.group('tail')}")
+        if replacement == line:
+            continue
+        out.append({"before": line, "after": [replacement],
+                    "lever": "test-operand-order"})
+        if len(out) >= limit:
+            break
+    return out
+
+
+def choices_for(text, families=("sib", "register", "bool", "test"), max_choices=12):
     """Return choices in stable family order for ``shape_search.variants``."""
     out = []
     if "sib" in families:
@@ -152,13 +253,15 @@ def choices_for(text, families=("sib", "register", "bool"), max_choices=12):
         out.extend(register_choices(text, max_choices))
     if "bool" in families:
         out.extend(bool_choices(text, max_choices))
+    if "test" in families:
+        out.extend(test_choices(text, max_choices))
     return out
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("source", type=Path)
-    ap.add_argument("--families", default="sib,register,bool")
+    ap.add_argument("--families", default="sib,register,bool,test")
     ap.add_argument("--max-choices", type=int, default=12)
     args = ap.parse_args()
     if args.max_choices <= 0:

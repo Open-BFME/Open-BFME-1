@@ -48,8 +48,9 @@ shape_search BEFORE hand-iterating: it tries throw() per callee, /EHsc, _STLP_NO
 and nothrow delete[] mechanically. Read probe's experiment
 history before repeating a spelling. Record blocker=NAME for a shared missing
 callee/layout and explain what changed before retrying a banked attempt.
-For non-EH SIB, register-allocation, or call-result-boolean residues, run
-`python3 tools/shape_family_levers.py SRC.cpp --families sib,register,bool > choices.json`
+For non-EH SIB, register-allocation, call-result-boolean, or commutative TEST
+residues, run
+`python3 tools/shape_family_levers.py SRC.cpp --families sib,register,bool,test > choices.json`
 and feed the finite choices to shape_search. It is a hypothesis generator only:
 the byte gate decides, and the SIB family may remain compiler-internal after all
 choices are exhausted.
