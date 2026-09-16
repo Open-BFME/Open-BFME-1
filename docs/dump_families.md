@@ -1,0 +1,106 @@
+# Shared-global family recipes
+
+This note is the handoff for the 2026-09-16 family sweep.  It records only
+addresses and layouts supported by retail bytes, landed source, or the Zero
+Hour twin.  An anonymous dump remains anonymous until a caller, slot, string,
+or other independent witness proves its identity.
+
+## Family 13: `0x012F7FE0` / `TheTerrainRenderObject`
+
+The explicit session list contains 31 bodies (the live `dump_families.py`
+scan also reports 31, 66,570 bytes).  Every member loads VA `0x012F7FE0`.
+The existing aliases in `reverse/symbols.csv` store the same location as RVA
+`0x00EF7FE0`; `0x012F7FE0 = 0x00400000 + 0x00EF7FE0`.  `TerrainTextureMatrix.cpp`
+and the canonical `reference/shims/bfmeheightmap/.../BaseHeightMap.h` provide
+the owner witness: this is `TheTerrainRenderObject`, a
+`BaseHeightMapRenderObjClass`-compatible object.  The opaque pin
+`?g_bfmeA1087@@3PAVBfmeA1087@@A` is an address alias, not a reason to invent a
+new class name.
+
+The field-access union across the 31 retail bodies is:
+
+| offset | supported meaning | bodies that use it |
+| --- | --- | --- |
+| `+0x2FF4` | height-map pointer (`m_map`) | `0x00743520`, `0x007171F0`, `0x00763620`, `0x0071BBC0`, `0x00727E00`, `0x006EB500`, `0x007C3FD0`, `0x007CCF50`, `0x0071EEC0`, `0x007C5690`, `0x007CE290`, `0x007C7FD0` |
+| `+0x3009` | byte flag; exact semantic name not proven | `0x007446A0` |
+| `+0x301C` | maximum-height field (`m_maxHeight`) | `0x007171F0`, `0x0073E050` |
+| `+0x30B8` | shroud pointer (`m_shroud`) | `0x0071A680`, `0x006C23B0`, `0x0071A680`, `0x00742920`, `0x006DA2D0`, `0x006EB500`, `0x007C3FD0`, `0x007A7240`, `0x007A37B0`, `0x007CCF50`, `0x0071EEC0`, `0x007C5690`, `0x007CE290`, `0x007C7FD0` |
+| `+0x30BC` | adjacent taint/shroud field; semantic name not promoted here | `0x006EB500`, `0x007C5690`, `0x007C7FD0` |
+| virtual slot `+0xEC` | virtual call on the same owner | `0x00743180`, `0x00746420`, `0x007446A0` |
+| virtual slots `+0x208/+0x20C`, `+0x228`, `+0x21C/+0x234` | virtual calls on the same owner | `0x0007E9B0`, `0x006E2540`, `0x007446A0` |
+
+The `+0x120E0`/`+0x10` accesses in `0x0071BBC0` are on the pointed-to
+height map, not additional fields of the global owner.  The shared
+declaration belongs with the existing BaseHeightMap/height-map shim; do not
+add a second `BfmeA1087` header or a TU-local copy of `BaseHeightMap`.
+
+The smallest clean candidate, `0x0071A680` (140 bytes), was compiled through
+the existing `W3DShroud::getShroudTexture`/texture-handle shape.  The best
+source is banked at `reverse/attempts/0x0071a680.cpp`, score 0.95: it is
+139 bytes versus retail 140, with the remaining difference in the hidden
+handle return-slot register and temporary-handle store/destructor schedule.
+The second short candidate, `0x006EBC30` (192 bytes), is the ZH
+`W3DDisplay::setTimeOfDay` shape.  Its global prefix and both calls to the
+already exact `updateLights` helper were reproduced; the remaining clean
+probe difference is the ambient-vector register/temporary schedule and the
+verified `j_00040bc9` tail.  Neither is claimed as a source match.
+
+Recipe for an anonymous seat:
+
+1. Start from `BaseHeightMap.h` and the landed local layouts in
+   `W3DShaderManager.cpp`, `W3DDisplaySetBorderShroudLevel.cpp`, and
+   `W3DTerrainLogicRva006BE890.cpp`.
+2. Run `python3 tools/callees.py <rva> <size>` and use only those callee
+   declarations.  The `TheTerrainRenderObject` global is the existing pin;
+   no new pin is needed merely because the dump spells it `g_bfmeA1087`.
+3. Use `/DNDEBUG /MD /EHsc` and the normal WWMath/WWLib include roots.  Probe
+   one body at a time with `tools/probe.py`; the one lever that matters for
+   the lighting body is the volatile global-pointer load plus preservation of
+   the helper's VC7.1 internal EAX/EBX convention.
+4. Land an exact C++ body with `tools/add_match.py --replace-rva`; otherwise
+   bank the best clean body with `re_log.py record ... partial --stash ...
+   --score ...` and include all tried source shapes in one evidence line.
+
+## Families 14 and 15: DX8 state and `0x0134ECC8`
+
+The user-supplied family-14 and family-15 lists are subsets/overlaps of the
+live DX8 family scan.  Their shared character operand is VA `0x0134ECC8`.
+The ledger pin is correctly written as RVA `0x00F4ECC8`; do not “fix” it to a
+VA in `reverse/symbols.csv`.  The bytes and `symbols.csv` therefore agree.
+The value is one character of storage (`g_bfmeCh1035`), not a class layout.
+
+The shared DX8 declarations belong to
+`reference/shims/dx8state/DX8State.h` and the canonical WW3D2 headers.  The
+existing matched helper
+`DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name` at `0x00906FE0`, plus
+`BoxSetTexture` at `0x00905AC0`, `StringClass::Get_String` at `0x009DB890`,
+`StringClass::Free_String` at `0x009DB7A0`, and
+`TextureClass::Release_Ref` at `0x009EB7A0`, are the reusable callee
+contracts.  `0x01340534`, `0x01340568`, and `0x01340594` retain their
+canonical DX8/scorch declarations.  `0x012D9124` remains opaque.
+
+For these families the smallest useful recipe is the already matched
+`Gen_0071B1F0_ShaderStageReset.cpp` pattern: use the shared DX8 state shim,
+retain the `BoxSetTexture` handle ABI, and let the state-name helper run only
+under the snapshot/diagnostic branch.  Compile each candidate against its
+own byte range; sharing a call list does not prove its owner or method name.
+Do not use the old local `DX8Wrapper`/`StringClass` stand-ins, and do not
+promote `0x013F...` state bytes to names without a pin or field witness.
+
+No new DX8 pin or header edit was required by the VA/RVA audit.  The listed
+family bodies are consequently unlocked for the anonymous lane, while the
+pre-existing partial attempts remain the evidence for bodies that have
+already been explored.
+
+## Current next-family scan
+
+The live `python3 tools/dump_families.py --top 40` reports family 16 as
+45 bodies / 65,283 bytes, anchored on
+`UnicodeString::format` at `0x00889190`, with a 23-body overlap on the
+`StringBase<wchar_t>` constructor at `0x00888DE0`.  It is not a DX8Wrapper
+family and is the next shared-call lane after the three explicit W3D
+families.  Its smallest members are `0x005867D0` (185), `0x00591A60` (195),
+and `0x002184D0` (263); use `tools/callers_of.py`, the exact string headers,
+and `tools/callees.py` before naming any owner.  Families 17 onward should
+be skipped only when their anchor is a DX8Wrapper state/helper that belongs
+to the W3D lane.

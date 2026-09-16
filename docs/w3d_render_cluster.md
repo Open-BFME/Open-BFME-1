@@ -55,7 +55,7 @@ caller/layout witness.
 | `0x01340534` | `DX8Wrapper::D3DDevice`, `IDirect3DDevice8 *` | Proven by `dx8wrapper.cpp/.h`, the canonical pin, and 15 DIR32 references. |
 | `0x01340594` | `number_of_DX8_calls`, global `unsigned` | Proven by the canonical declaration/definition and the retail increment sites (203 callers, including `Get_Free_Texture_RAM`). |
 | `0x01340568` | `BaseHeightMapScorchStageChanges`, `unsigned` | Proven by `BaseHeightMap.cpp`, the scorch-stage pin, and the matching increment/use pattern. |
-| `0x0134ECC8` in the family dump | `g_bfmeCh1035`, single `TCHAR`/character storage | The existing symbols pin is at `0x00F4ECC8`, not `0x0134ECC8`; record this address discrepancy and recheck it before treating the pin as final. |
+| `0x0134ECC8` in the family dump | `g_bfmeCh1035`, single `TCHAR`/character storage | Proven: the retail operands use the VA `0x0134ECC8`; the symbols ledger stores its RVA `0x00F4ECC8` (`0x0134ECC8 - 0x00400000`). No pin change is required. |
 | `0x012D9124` | `Rva012D9124`, type not yet established | Shared by both families, but no name-oracle witness or unique owner is available. Keep it opaque. |
 
 The surrounding DX8Wrapper cache layout is also visible in the canonical
@@ -126,10 +126,11 @@ settled.
 
 The remaining blocker for the large members is not the shared call list: it
 is the unproven BFME-side owner/layout of the anonymous device-state globals
-(`0x012D9124`, `0x012F7FE0`, `0x01075C74`, `0x01340EC4`) and the unresolved
-`0x0134ECC8` versus `0x00F4ECC8` address discrepancy.  Until that ABI is
-witnessed, larger bodies can compile against the shim but still produce a
-plausible, byte-wrong state access or an invented identity.
+(`0x012D9124`, `0x012F7FE0`, `0x01075C74`, `0x01340EC4`).  The apparent
+`0x0134ECC8` versus `0x00F4ECC8` discrepancy is only the VA/RVA notation
+difference described above.  Until the remaining ABI is witnessed, larger
+bodies can compile against the shim but still produce a plausible,
+byte-wrong state access or an invented identity.
 
 ## Session W3D handoff (2026-09-16)
 
