@@ -150,26 +150,25 @@ checkTemplate:
 	if (target->m_template)
 	{
 		Overridable *template_ = target->m_template;
+		const Overridable *finalOverride = template_;
 		if (template_->m_nextOverride)
-		{
-			const Overridable *finalOverride =
-				template_->m_nextOverride->getFinalOverride();
-			if (finalOverride->m_flagsC8 < 0)
-				return false;
-		}
+			finalOverride = template_->m_nextOverride->getFinalOverride();
+		if (finalOverride->m_flagsC8 < 0)
+			goto checkTemplateSecond;
 	}
+	if (pathHasTarget(this, &Pathfinder::bfmeCheckAttackViewAltHelper,
+			target, &target->m_position, source, cellIds))
+		return true;
 
 checkTemplateSecond:
 	if (target->m_template)
 	{
 		Overridable *template_ = target->m_template;
+		const Overridable *finalOverride = template_;
 		if (template_->m_nextOverride)
-		{
-			const Overridable *finalOverride =
-				template_->m_nextOverride->getFinalOverride();
-			if ((finalOverride->m_flagsCC & 0x08000000) == 0)
-				goto siegeCheck;
-		}
+			finalOverride = template_->m_nextOverride->getFinalOverride();
+		if ((finalOverride->m_flagsCC & 0x08000000) == 0)
+			goto siegeCheck;
 	}
 
 	{
@@ -177,13 +176,11 @@ checkTemplateSecond:
 		if (target->m_template)
 		{
 			Overridable *template_ = target->m_template;
+			const Overridable *finalOverride = template_;
 			if (template_->m_nextOverride)
-			{
-				const Overridable *finalOverride =
-					template_->m_nextOverride->getFinalOverride();
-				if (finalOverride->m_flagsD8 & 0x00200000)
-					limit = 0.0f;
-			}
+				finalOverride = template_->m_nextOverride->getFinalOverride();
+			if (finalOverride->m_flagsD8 & 0x00200000)
+				limit = 0.0f;
 		}
 
 		Real metric = targetAttackMetric(target, &target->m_position,
@@ -196,13 +193,11 @@ checkTemplateSecond:
 	if (target->m_template)
 	{
 		Overridable *template_ = target->m_template;
+		const Overridable *finalOverride = template_;
 		if (template_->m_nextOverride)
-		{
-			const Overridable *finalOverride =
-				template_->m_nextOverride->getFinalOverride();
-			if (finalOverride->m_flagsD8 & 0x00200000)
-				return true;
-		}
+			finalOverride = template_->m_nextOverride->getFinalOverride();
+		if (finalOverride->m_flagsD8 & 0x00200000)
+			return true;
 	}
 
 	{
@@ -217,40 +212,38 @@ siegeCheck:
 	if (target->m_template)
 	{
 		Overridable *template_ = target->m_template;
+		const Overridable *finalOverride = template_;
 		if (template_->m_nextOverride)
+			finalOverride = template_->m_nextOverride->getFinalOverride();
+		if (finalOverride->m_flagsD0 & 0x10000000)
 		{
-			const Overridable *finalOverride =
-				template_->m_nextOverride->getFinalOverride();
-			if (finalOverride->m_flagsD0 & 0x10000000)
+			MemoryPool *pool = SiegeDeploySpecialPower_getPool(
+				const_cast<Object *>(target));
+			static volatile NameKeyType key =
+				TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
+			Module *module = target->findModule(key);
+			if (pool && module &&
+				isSiegeAttached((SiegeDeploySpecialPower *)module))
 			{
-				MemoryPool *pool = SiegeDeploySpecialPower_getPool(
-					const_cast<Object *>(target));
-				static volatile NameKeyType key =
-					TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
-				Module *module = target->findModule(key);
-				if (pool && module &&
-					isSiegeAttached((SiegeDeploySpecialPower *)module))
-				{
-					Coord3D poolPosition;
-					typedef void (MemoryPool::*PositionFunction)(Coord3D *);
-					union { void (*raw)(void); PositionFunction member; } positionFn;
-					positionFn.raw = j_00034a0e;
-					(pool->*positionFn.member)(&poolPosition);
+				Coord3D poolPosition;
+				typedef void (MemoryPool::*PositionFunction)(Coord3D *);
+				union { void (*raw)(void); PositionFunction member; } positionFn;
+				positionFn.raw = j_00034a0e;
+				(pool->*positionFn.member)(&poolPosition);
 
-					Real dx = poolPosition.x - goal->x;
-					Real dy = poolPosition.y - goal->y;
-					Real dz = poolPosition.z - goal->z;
-					Real range = source->m_bfmeBC;
-					typedef Real (MemoryPool::*RangeFunction)() const;
-					union { void (*raw)(void); RangeFunction member; } rangeFn;
-					rangeFn.raw = j_00049cb5;
-					Real poolRange = (pool->*rangeFn.member)();
-					if (dx < 0.0f) dx = -dx;
-					if (dy < 0.0f) dy = -dy;
-					if (dx <= poolRange + range && dy <= poolRange + range &&
-						(dz < 0.0f ? -dz : dz) <= g_Va010977E0)
-						return true;
-				}
+				Real dx = poolPosition.x - goal->x;
+				Real dy = poolPosition.y - goal->y;
+				Real dz = poolPosition.z - goal->z;
+				Real range = source->m_bfmeBC;
+				typedef Real (MemoryPool::*RangeFunction)() const;
+				union { void (*raw)(void); RangeFunction member; } rangeFn;
+				rangeFn.raw = j_00049cb5;
+				Real poolRange = (pool->*rangeFn.member)();
+				if (dx < 0.0f) dx = -dx;
+				if (dy < 0.0f) dy = -dy;
+				if (dx <= poolRange + range && dy <= poolRange + range &&
+					(dz < 0.0f ? -dz : dz) <= g_Va010977E0)
+					return true;
 			}
 		}
 	}
