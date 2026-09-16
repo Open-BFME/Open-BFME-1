@@ -88223,3 +88223,5 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ?iterateAt0025AEE0@PartitionManager@@QAE?AURva0025AEE0OwningIterator@@PBUCoord3D@@MW4IterOrderType@@PAVPartitionFilter@@_N@Z,0x009F2960,TU-local typed view of exact57B owning hidden-result wrapper used by DominateEnemy; ret18 proves hidden result plus position radius order filter and Bool stack contract
 ?healAllObjects@TeamPrototype@@QAEXXZ,0x0001BF40,additive: retail call target of the red row ?healAllObjects@Player@@QAEXXZ
 ?rva003BF580@CampaignManager@@QAE?AVAsciiString@@H@Z,0x003BF580,"address-derived name for the body ILT 0x000459DA reaches; the call site inside 0x0052B8A0 pushes one int and a hidden return buffer with ecx = the 0x012F1028 singleton the two matched isMissionObjective pins already use so it is a thiscall returning AsciiString by value"
+_Thread32First@8,0x00AFE432,kernel32.dll import stub (direct REL32 call site; see Rva0088E090ResumeOtherThreads.cpp)
+_Thread32Next@8,0x00AFE426,kernel32.dll import stub (direct REL32 call site; see Rva0088E090ResumeOtherThreads.cpp)
