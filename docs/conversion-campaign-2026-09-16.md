@@ -207,3 +207,39 @@ name. The duplicate row/source is retired. The first two hourly snapshots
 precede this race and are unaffected; the third-hour fleet tally excludes
 these 342 bytes. Ledger range union already prevented the duplicate from
 inflating the repository-wide byte metric.
+
+### Hour 3 — 17:25 UTC
+
+Snapshot `efbc72cbee`, compared with `969a884d8a`. The fleet landed nine
+new bodies totaling 2,343 bytes (+0.02415 percentage points), bringing its
+corrected cumulative contribution to 28 bodies / 7,199 bytes (+0.07420 pp).
+This excludes the concurrent 342-byte parser conversion described above.
+Fleet bytes increased 14.9% from hour 2; repository-wide authored/rebuildable
+bytes increased 3,806 (+0.03923 pp), down 17.6% from the previous hour.
+Other contributors account for 1,463 of this hour's net bytes.
+
+The snapshot holds 6,342,847 rebuildable bytes (65.38%) and 3,811,901 authored
+C++ bytes (39.29%). Generated C++, vendored source and attached libraries were
+unchanged. Total exact coverage increased 234 bytes; the remaining conversion
+gain moved already bounded assembly into verified C++. These categories are
+not interchangeable.
+
+Native STL vector assignment, float-map indexing, registry strings and
+donor-backed supplier code produced verified progress. Recovered nullable
+inline-helper structure and a native waypoint map also matched after this
+snapshot and will count in hour 4 only once pushed. A map-control reconstruction
+now has the exact 427-byte size but 29 stack-home differences: its bank and
+lifetime discovery are preserved, with zero completion credit.
+
+Hour 4 allocation favors native STL and concrete donor adaptations: string
+concatenation, waypoint maps, related parser helpers, and an AI state with a
+verified donor. Newly freed slots receive fresh destructor/cluster work.
+Persistent tiny loop-alignment, register-tail and EH-layout misses are stopped
+after their current bounded trials; useful banks remain available. The
+memory-tracker cluster has two successful scoped checks awaiting independent
+review. No slot is reserved solely to inflate agent count.
+
+All nine credited conversions passed independent scoped byte verification and
+normal commit/push hooks. Duplicate-address review led to the parser correction
+above. Concurrent pushes were handled by rebase and normal rechecking. No new
+full-repository-green claim is made. Next assessment: about 18:25 UTC.
