@@ -33,7 +33,9 @@ extern int *g_bfmeA986B;
 extern int *g_bfmeB986B;
 extern int g_bfmeZero986B;
 extern char *g_bfmePtr986B;
-extern char g_bfmeTarget986B[];
+// Zoom-filter init reads the sibling target at VA 0x013071D4. The conversion
+// helper's g_bfmeTarget986B is the distinct VA 0x013071E4 object.
+extern char Rva00F071D4Target986B[];
 
 int bfmeCheck986B(void);
 
@@ -70,7 +72,7 @@ int ScreenZoomFilter::init()
 				hr = BfmeShaderLoader16::LoadAndCreateD3DShader("shaders\\monochromezoom.nvp", &m_shader);
 				if (hr < 0)
 					return 0;
-				g_bfmePtr986B = g_bfmeTarget986B;
+				g_bfmePtr986B = Rva00F071D4Target986B;
 				m_tex.bind(BFMEGetWaterTrackTexture("circleFade.tga", 0, 0));
 				return 1;
 			}
