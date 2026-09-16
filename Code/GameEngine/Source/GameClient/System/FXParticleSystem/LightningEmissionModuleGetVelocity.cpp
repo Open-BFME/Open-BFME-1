@@ -159,4 +159,53 @@ Coord3D LightningEmissionModule::getVelocity(const Coord3D *, float speed,
 	return result;
 }
 
+// Independent Line identity evidence: retail LineEmissionVolumeModule's
+// constructor at 0x005E3480 installs vtable 0x011118A4 at its +0x18 emission
+// subobject and 0x01111890 at +0x1c, then copies the two Coord3D endpoint
+// records into enclosing-object +0x24..+0x38.  Slot 0 of 0x011118A4 is ILT
+// 0x0003266E, whose five-byte jump targets 0x005F98F0.  The named
+// LineEmissionVolumeModule createModule path independently allocates its
+// 0x3c-byte record before invoking that constructor.  This proves the owner
+// and secondary-this adjustment independently of the byte-identical body.
+class LineEmissionVolumeInfo : public EmissionVolumeInfo
+{
+protected:
+	Coord3D m_start;
+	Coord3D m_end;
+};
+
+class LineEmissionVolumeModule
+	: public DefaultParticleModule<5>, public LineEmissionVolumeInfo
+{
+public:
+	virtual Coord3D getVelocity(const Coord3D *, float speed, float radialSpeed);
+};
+
+typedef char LineEmissionVolumeInfoPrefixLayout[
+	(sizeof(LineEmissionVolumeInfo) == 0x20) ? 1 : -1];
+
+Coord3D LineEmissionVolumeModule::getVelocity(const Coord3D *, float speed,
+	float radialSpeed)
+{
+	Coord3D along;
+	along.x = m_end.x - m_start.x;
+	along.y = m_end.y - m_start.y;
+	along.z = m_end.z - m_start.z;
+	along.normalize();
+
+	Coord3D perp;
+	Coord3D up;
+	up.x = 0.0;
+	up.y = 0.0;
+	up.z = 1.0;
+	perp.crossProduct(&up, &along, &perp);
+	up.crossProduct(&along, &perp, &up);
+
+	Coord3D result;
+	result.x = perp.x * speed + up.x * radialSpeed;
+	result.y = perp.y * speed + up.y * radialSpeed;
+	result.z = perp.z * speed + up.z * radialSpeed;
+	return result;
+}
+
 }
