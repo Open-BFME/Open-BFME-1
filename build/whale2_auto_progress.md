@@ -36,3 +36,10 @@
 - 0x009B8130: VP6 MMX body reviewed from the retail prologue, callee sweep, existing stale scaffold, and aligned-frame sibling compile. No exact clean transcription, pin, or unlock row; verdict recorded as blocked with evidence.
 - Bodies landed: none. Bodies added to `reverse/unlocked.txt`: none.
 - Next: inspect `0x009D9D90` (the next explicit pool body with an existing 0.55 stash).
+
+## 2026-09-16 - checkpoint after 0x009D9D90
+
+- Commits pushed: `7a46240bd1` (0x009B8130 blocked verdict). The 0x009D9D90 evidence update is prepared for publication.
+- 0x009D9D90: retained the identity-resolved `_bfme_dumpXferStream` stash at score `0.55`; current source is 3,046/5,472 with the wrong parser/throw ladder and frame. No exact source, pin, or unlock row.
+- Bodies landed: none. Bodies added to `reverse/unlocked.txt`: none.
+- Next: inspect `0x0057A470` from its 0.47 stash.

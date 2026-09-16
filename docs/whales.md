@@ -281,3 +281,10 @@ entry `0x00934940 w3d-render` predates this attempt and was not changed.
 - Evidence: `tools/callees.py 0x009B8130 5572` resolves zero direct call targets. Retail begins with the proven `/Z7` aligned-frame prologue and `sub esp,0x1f8`, then runs a single fragment loop with one mandatory literal MMX island and a separate branch-controlled island; the context uses the `+0x24` qIndex indirection and packed scratch buffers.
 - Candidates: the existing scalar scaffold compiled to 182 versus 5,572 retail with score `0.03`; the available aligned-frame `0x009B9700` sibling compiled to 4,214 versus this target with 23 relocations and 3,794 non-relocation differences, diverging structurally at `+0x16` (`sub esp,0x1f8` versus `sub esp,0x1c8`) and using the wrong index chain/body length. No exact source, pin, or safe dump lift was found.
 - Next lever: a dedicated transcription of both retail MMX islands with the 0x1f8 frame-slot order and the qIndex lookup; reusing the sibling would assert the wrong identity.
+
+## 0x009D9D90 - _bfme_dumpXferStream
+
+- Status: blocked after reviewing the existing source-backed stash; `reverse/attempts/0x009d9d90.cpp` remains retained at score `0.55`.
+- Identity: `_bfme_dumpXferStream` is supported by the named `GameLogic::_bfme_reportDesync` caller and the BFME RTS1/RTS2 tagged transfer-stream behavior.
+- Evidence: the retail contract has 14 direct targets, including parser helpers `0x009D9110` x34 and `0x009D9160` x32, `_bfmeFormatText` x7, vector/string buffer lifetime helpers, and a `0x288` EH frame. The stash probes at 3,046 versus 5,472 bytes with 96 relocations, 2,389 non-relocation differences, 93 relocation-layout mismatches, and a `0x2f0` frame.
+- No exact parser/error-ladder source, pin, or unlock row is justified; adding the missing BFME behavior without its live format/throw contract would be invented.
