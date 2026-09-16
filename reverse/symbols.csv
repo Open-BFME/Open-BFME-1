@@ -88229,3 +88229,4 @@ _Thread32Next@8,0x00AFE426,kernel32.dll import stub (direct REL32 call site; see
 _g_Rva013373BCTimerTicks,0x013373BC,one-second tick counter incremented by the 0x0088E190 timer callback and read by the 0x0088E100 watchdog thread
 _g_Rva013373C0DialogClosed,0x013373C0,flag cleared by the 0x0088E1A0 dialog driver before it opens the dialog and set once the dialog closes
 _g_Rva013373C4DialogGeneration,0x013373C4,counter bumped by the 0x0088E1A0 dialog driver on every dialog it opens
+_g_Rva012D4FD0AssertCrashTemplate,0x012D4FD0,DLGTEMPLATEEX titled Assert/Crash passed to DialogBoxIndirectParamA by 0x0088E1A0
