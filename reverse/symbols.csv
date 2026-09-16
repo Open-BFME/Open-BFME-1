@@ -88350,3 +88350,4 @@ _g_Rva012D4FD0AssertCrashTemplate,0x012D4FD0,DLGTEMPLATEEX titled Assert/Crash p
 ?compare@Rva00518BF0Name@@QBEHABV1@@Z,0x0005FFA0,caller518BF0 via226EC; independently decoded UTF16 lexicographic compare using two four-byte string handles and word lengths; thiscall const argument ret4
 ?release@Rva00518BF0Name@@AAEXXZ,0x008881D0,caller518BF0 two temporary cleanups; matched StringBase unsigned-short release body; four-byte receiver holding refcounted UTF16 buffer
 ?updateAt003FA5B0@Pathfinder@@QAEXPAVObject@@HH@Z,0x003FA5B0,address-derived member body; wrappers at 0x003D57F0 and 0x003D5810 preserve ECX through ILT 0x0000BF28; body saves receiver at +0x14 and ends ret12 at +0xF79
+?find@Rva00646290Tree@@QAE?AURva00646290Iterator@@ABH@Z,0x0001A55A,retail tree find ILT with iterator return and key reference
