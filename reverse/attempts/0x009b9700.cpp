@@ -44,26 +44,51 @@ extern "C" void __cdecl Rva009B9700Vp6Reconstruct(
 	int start,
 	int *table)
 {
-	__declspec(align(16)) unsigned char bufEsi[0x80];
-	__declspec(align(8)) unsigned char bufEdi[0xa0];
-	__declspec(align(16)) unsigned char scratch5[8];  // ebp-0xb0
-	__declspec(align(16)) unsigned char scratch4[8];  // ebp-0xa0
-	__declspec(align(16)) unsigned char scratch3[8];  // ebp-0x90
-	int endVal;                                       // ebp-0x74
-	__declspec(align(16)) short brdB[4];              // ebp-0x70
-	unsigned int filterValPacked;                     // ebp-0x54
-	__declspec(align(16)) short brdA[4];              // ebp-0x50
-	unsigned char *ptrA;                              // ebp-0x3c
-	unsigned char *ptrB;                              // ebp-0x38
-	unsigned char *p3minus;                           // ebp-0x34
-	unsigned char *p3cur;                             // ebp-0x30
-	unsigned char *p2cur;                             // ebp-0x2c
-	int frag;                                         // ebp-0x28
-	int byteIdx;                                      // ebp-0x24
-	__declspec(align(16)) unsigned char resultB[8];   // ebp-0x20
-	__declspec(align(16)) unsigned char resultA[8];   // ebp-0x10
-
-	int st = start;
+	struct __declspec(align(16)) Rva009B9700Frame
+	{
+		unsigned char bufEsi[0x80];
+		unsigned char bufEdi[0xa0];
+		unsigned char scratch5[8];
+		unsigned char pad5[8];
+		unsigned char scratch4[8];
+		unsigned char pad4[8];
+		unsigned char scratch3[8];
+		unsigned char pad3[0x14];
+		unsigned int endVal;
+		short brdB[4];
+		unsigned char padB[0x14];
+		unsigned int filterValPacked;
+		short brdA[4];
+		unsigned char padA[0xc];
+		unsigned char *ptrA;
+		unsigned char *ptrB;
+		unsigned char *p3minus;
+		unsigned char *p3cur;
+		unsigned char *p2cur;
+		unsigned int frag;
+		int byteIdx;
+		unsigned char resultB[8];
+		unsigned char padR[8];
+		unsigned char resultA[8];
+	} frame;
+#define bufEsi frame.bufEsi
+#define bufEdi frame.bufEdi
+#define scratch5 frame.scratch5
+#define scratch4 frame.scratch4
+#define scratch3 frame.scratch3
+#define endVal frame.endVal
+#define brdB frame.brdB
+#define filterValPacked frame.filterValPacked
+#define brdA frame.brdA
+#define ptrA frame.ptrA
+#define ptrB frame.ptrB
+#define p3minus frame.p3minus
+#define p3cur frame.p3cur
+#define p2cur frame.p2cur
+#define frag frame.frag
+#define byteIdx frame.byteIdx
+#define resultB frame.resultB
+#define resultA frame.resultA
 
 	// Retail reuses eax for both the modeIndex and the two table lookups
 	// (ctx->m_modeIndex is loaded once into eax and never reloaded); write
@@ -73,6 +98,7 @@ extern "C" void __cdecl Rva009B9700Vp6Reconstruct(
 		mov eax, ctx
 		mov eax, dword ptr [eax + 0xc]
 		mov ecx, table
+		mov edx, start
 		shl eax, 2
 		mov ecx, dword ptr [eax + ecx]
 		mov filterValPacked, ecx
@@ -88,19 +114,33 @@ extern "C" void __cdecl Rva009B9700Vp6Reconstruct(
 		mov word ptr brdB[6], ax
 	}
 
-	endVal = st + count;
+	__asm {
+		mov eax, dword ptr [ebx + 18h]
+		add eax, edx
+		cmp edx, eax
+		mov dword ptr frag, edx
+		mov dword ptr endVal, eax
+		jae Rva009B9700_empty
+	}
 
-	if (st < endVal) {
-		frag = st;
-		byteIdx = endVal * 4;
-		p2cur = p2;
-		p3cur = p3;
-		p3minus = p3 - stride * 8;
+	__asm {
+		mov edx, dword ptr [ebx + 0ch]
+		lea ecx, [eax*4]
+		mov eax, dword ptr [ebx + 10h]
+		mov dword ptr byteIdx, ecx
+		mov ecx, dword ptr [ebx + 14h]
+		mov dword ptr p2cur, edx
+		lea edx, [ecx*8]
+		mov dword ptr p3cur, eax
+		sub eax, edx
+		mov dword ptr p3minus, eax
+		mov eax, dword ptr p2cur
+		mov ecx, dword ptr p3cur
+		mov dword ptr ptrA, eax
+		mov dword ptr ptrB, ecx
+	}
 
-		while (frag < endVal) {
-			ptrA = p2cur;
-			ptrB = p3cur;
-
+	do {
 			__asm {
 			push eax
 			push ebp
@@ -557,14 +597,14 @@ extern "C" void __cdecl Rva009B9700Vp6Reconstruct(
 			}
 
 			{
-				unsigned int sum1 = resultA[0] + resultA[1] + resultA[2] + resultA[3]
-					+ resultA[4] + resultA[5] + resultA[6] + resultA[7];
 				int *arr = ctx->m_accum;
+				unsigned int sum1 = resultA[6] + resultA[7] + resultA[5] + resultA[4]
+					+ resultA[3] + resultA[2] + resultA[1] + resultA[0];
 				arr[frag] += sum1;
 				{
-					unsigned int sum2 = resultB[0] + resultB[1] + resultB[2] + resultB[3]
-						+ resultB[4] + resultB[5] + resultB[6] + resultB[7];
 					int *arr2 = ctx->m_accum;
+					unsigned int sum2 = resultB[6] + resultB[7] + resultB[5] + resultB[4]
+						+ resultB[3] + resultB[2] + resultB[1] + resultB[0];
 					*(int *)((char *)arr2 + byteIdx) += sum2;
 				}
 			}
@@ -1141,14 +1181,14 @@ extern "C" void __cdecl Rva009B9700Vp6Reconstruct(
 				}
 
 				{
-					unsigned int sum1 = resultA[0] + resultA[1] + resultA[2] + resultA[3]
-						+ resultA[4] + resultA[5] + resultA[6] + resultA[7];
 					int *arr = ctx->m_accum;
+					unsigned int sum1 = resultA[6] + resultA[7] + resultA[5] + resultA[4]
+						+ resultA[3] + resultA[2] + resultA[1] + resultA[0];
 					arr[frag - 1] += sum1;
 					{
-						unsigned int sum2 = resultB[0] + resultB[1] + resultB[2] + resultB[3]
-							+ resultB[4] + resultB[5] + resultB[6] + resultB[7];
 						int *arr2 = ctx->m_accum;
+						unsigned int sum2 = resultB[6] + resultB[7] + resultB[5] + resultB[4]
+							+ resultB[3] + resultB[2] + resultB[1] + resultB[0];
 						*(int *)((char *)arr2 + byteIdx) += sum2;
 					}
 				}
@@ -1158,7 +1198,10 @@ extern "C" void __cdecl Rva009B9700Vp6Reconstruct(
 				p3minus += 8;
 				frag++;
 			}
-			byteIdx += 4;
-		}
+		byteIdx += 4;
+	} while (frag < endVal);
+
+	__asm {
+	Rva009B9700_empty:
 	}
 }
