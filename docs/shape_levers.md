@@ -533,3 +533,19 @@ The native 124-byte destructor and its 53-byte recursive erase helper were
 independently matched before adding their typed dependencies. The resulting
 constructor is exact. Its class remains address-derived: the tempting
 `DefaultModule<6>` name belongs to a different constructor and vtable.
+
+## A null-first conditional can preserve the fallback branch order
+
+The 692-byte model-name selector at `0x005F6B60` first matched its entire
+641-byte random/string path, but a local pointer assignment in the fallback
+emitted four fewer bytes. Selecting the pointer with `p ? p : nullSystem()`
+restored the size and saved register, yet inverted the two branches.
+`!p ? nullSystem() : p` retained the native conditional expression while
+putting the call in retail's fall-through path: all 692 bytes then matched.
+No volatile pointer, barrier, extra call, or manual register state was needed.
+
+Keep the owning string operations native too: visible `AsciiString` copy and
+destructor forwarding plus the actual `StringBase<char>::concat` length
+wrapper reproduced three separate return-value lifetimes and their shared
+cleanup tail. Do not flatten those branches into one mutable string merely
+because the filename construction looks repetitive.
