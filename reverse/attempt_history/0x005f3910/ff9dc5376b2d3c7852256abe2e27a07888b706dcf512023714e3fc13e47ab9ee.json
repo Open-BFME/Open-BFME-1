@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ff9dc5376b2d3c7852256abe2e27a07888b706dcf512023714e3fc13e47ab9ee",
+  "symbol": "?rva005F3910Cleanup@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.26,
+  "source": "// ?rva005F3910Cleanup@@YAXXZ\n// partial score=0.26 date=2026-09-16\n// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep\n// Scratch-only native-header release experiment.\n\n#include \"vector3.h\"\n#include \"vector4.h\"\n#include \"sharebuf.h\"\n\n#define rva005F3910Vector3 (*(ShareBufferClass<Vector3> **)0x012F6DC8)\n#define rva005F3910Vector4 (*(ShareBufferClass<Vector4> **)0x012F6DCC)\n#define rva005F3910Float (*(ShareBufferClass<float> **)0x012F6DD0)\n#define rva005F3910Byte (*(ShareBufferClass<unsigned char> **)0x012F6DD4)\n\nvoid rva005F3910Cleanup(void)\n{\n\tREF_PTR_RELEASE(rva005F3910Vector3);\n\tREF_PTR_RELEASE(rva005F3910Vector4);\n\tREF_PTR_RELEASE(rva005F3910Float);\n\tREF_PTR_RELEASE(rva005F3910Byte);\n}\n"
+}
