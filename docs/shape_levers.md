@@ -64,6 +64,20 @@ is `W3DTreeBufferRva007334B0.cpp`. No barrier, volatile access, or assembly is
 needed. This is a source-structure lever, not proof that every duplicated tail
 comes from a helper; verify each candidate independently.
 
+## Coordinate setters after matrix transforms
+
+The 1,207-byte tree toppling update at `0x00733580` uses native
+`Matrix3D::In_Place_Pre_Rotate_X/Y` and `Transform_Vector`. Copying the
+transformed vector into a separate coordinate with three direct stores gave
+1,215 bytes and an extra 12-byte stack temporary. Passing the vector through
+a layout cast removed the temporary but gave 1,205 bytes: the X result was
+stored before Y was calculated, unlike retail. Using the native
+`Coord3D::set(x, y, z)` operation after the transform matched all 1,207 bytes
+without the cast. The setter's arguments are computed before its field stores;
+do not replace it with sequential stores merely because they look equivalent.
+The witness is `W3DTreeBufferRva00733580.cpp`; the setter is defined in the
+reference `Lib/BaseType.h`.
+
 ## Constructor cleanup evidence
 
 Before changing constructor cleanup states, inspect the retail unwind map with

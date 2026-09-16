@@ -88283,3 +88283,4 @@ _g_Rva012D4FD0AssertCrashTemplate,0x012D4FD0,DLGTEMPLATEEX titled Assert/Crash p
 ?getTerrainLighting@OptionPreferences@@QAEEXZ,0x0002A14E,route=0x00090EA0; AptOptions::Cancel at 0x0055DCB0 reaches the getter through this thunk
 ?getShowProps@OptionPreferences@@QAEEXZ,0x0000BF78,route=0x00090FB0; AptOptions::Cancel at 0x0055DCB0 reaches the getter through this thunk
 ??0Rva007F6D60Child@@QAE@XZ,0x007F6D60,constructor of the 0x94 byte record that the BfmeThingDGD constructor at 0x007F7FA0 builds four of; the body itself is still the unnamed gen dump
+?getPropShroudStatusForPlayer@PartitionManager@@QBE?AW4ObjectShroudStatus@@HPBUCoord3D@@@Z,0x008F7440,Native PartitionManager.h const API; independently exact full 8-byte forwarding body loads impl at +0xC then tail-jumps to matched ShroudManagerImpl008FBA40::getPropShroudStatusForPlayer 0x008F95A0; typed caller 0x00733580
