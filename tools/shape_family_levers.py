@@ -468,6 +468,19 @@ def constant_choices(text, limit=8):
     lines = text.splitlines(keepends=True)
     out = []
     for i, line in enumerate(lines):
+        end = _function_end(lines, i)
+        if end is None:
+            continue
+        balance = 0
+        start = None
+        for j in range(end, -1, -1):
+            balance += lines[j].count("}") - lines[j].count("{")
+            if balance == 0:
+                start = j
+                break
+        if start is None or any(re.match(r"^[ \t]*(?:case\b|default\s*:)", item)
+                                for item in lines[start:i + 1]):
+            continue
         result = _RETURN_BOOL.match(line)
         if result and text.count(line) == 1:
             name = "shape_constant_%s_%d" % (result.group("value"), i)
@@ -516,6 +529,16 @@ def frame_choices(text, limit=8):
             continue
         end = _function_end(lines, i)
         if end is None or end <= i:
+            continue
+        balance = 0
+        start = None
+        for j in range(end, -1, -1):
+            balance += lines[j].count("}") - lines[j].count("{")
+            if balance == 0:
+                start = j
+                break
+        if start is None or any(re.match(r"^[ \t]*(?:case\b|default\s*:)", item)
+                                for item in lines[start:end + 1]):
             continue
         name = declaration.group("name")
         if not re.fullmatch(_STORE_RHS, declaration.group("expr").strip()):

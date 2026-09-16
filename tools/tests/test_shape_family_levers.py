@@ -108,6 +108,18 @@ LOOP_SOURCE = """int loop(int limit)
 }
 """
 
+SWITCH_SOURCE = """int switch_shape(int value)
+{
+    switch (value)
+    {
+    case 0:
+        return false;
+    default:
+        return true;
+    }
+}
+"""
+
 
 def test_sib_choice_reverses_only_a_unique_integer_addition():
     choices = shape_family_levers.choices_for(SOURCE, ("sib",))
@@ -201,6 +213,11 @@ def test_frame_choice_promotes_scalar_local():
     assert choices[0]["lever"] == "frame-array"
     assert "int shape_frame_value_2[2];" in choices[0]["after"][0]
     assert "return shape_frame_value_2[1] + 1;" in choices[0]["after"][0]
+
+
+def test_constant_and_frame_choices_skip_switch_labels():
+    assert shape_family_levers.choices_for(SWITCH_SOURCE, ("constant",)) == []
+    assert shape_family_levers.choices_for(SWITCH_SOURCE, ("frame",)) == []
 
 
 def test_choices_are_accepted_by_shape_search_variants():
