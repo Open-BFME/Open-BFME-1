@@ -43,11 +43,22 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
   string contract, 28/7 state-name calls, six `bfmeGet` texture lifetimes,
   and the two filter/matrix j-thunk routes. The candidate's `0x8C` frame and
   467 relocation-layout drifts remain the blocker.
-- Commit/push: pending for this checkpoint. No source or ledger row changed;
-  `reverse/attempts/0x007dd180.cpp`, its immutable attempt history, and the
-  fresh `partial` evidence row are ready to publish.
+- Commit/push: the `0x007DD180` verdict was published in the prior checkpoint;
+  this checkpoint adds the `0x005674F0` bank, its immutable attempt history,
+  and its fresh `partial` evidence row before publication.
 - Bodies added to `reverse/unlocked.txt`: none; both `0x007DD180 w3d-render`
   and `0x007DF1F0 w3d-render` were already present.
-- Next: publish this verdict, then work pool item `0x005674F0` and continue
-  with `python3 tools/next_work.py --ranked` above 4 KB, recording a verdict
-  for each body.
+- `0x005674F0`: matched caller proves `BfmeConsumerED::bfmeApply` with a
+  24-byte polymorphic `BfmeArgED`; the best candidate is 5,745 bytes versus
+  5,762 retail, with 420 relocations, 3,796 non-relocation differences, 269
+  masked-equal bytes, and score 0.06617. The exact 37-manager-write count,
+  41 Ascii literal count, preference offsets, and compact returned-number
+  helper are recorded; the `0x68` versus `0x64` frame and 393 relocation-layout
+  drifts remain. The streak local-copy lever was tested and rejected at 6,522
+  bytes. No unlock rows were added.
+- Commit/push: pending for this checkpoint; the fifth body's source bank,
+  `reverse/re_attempts.log`, recipe, and immutable attempt history are ready
+  to publish.
+- Next: publish this verdict, run `python3 tools/check_csv.py`, then inspect
+  `python3 tools/next_work.py --ranked` for the next open body above 4 KB not
+  listed by WHALE-2, recording a verdict for each body.

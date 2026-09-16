@@ -361,3 +361,62 @@ slot-69, slot-57, and slot-65 lowering; inline snapshot string construction;
 RAII texture lifetimes; the proven filter helper; direct j-thunk calls; and
 the two source-backed terrain matrix helper routes. No new pin or unlock row
 is justified: `reverse/unlocked.txt` already contains `0x007dd180 w3d-render`.
+
+## 0x005674F0 - BfmeConsumerED::bfmeApply
+
+Status: banked partial; the caller and the 24-byte by-value argument layout are
+supported, but no exact clean-C++ body was found. The preferred candidate is
+`reverse/attempts/0x005674f0.cpp`; the anonymous body remains the generated
+row in `Code/gen_asm/d_00563370.asm`.
+
+### Callee table
+
+| Retail target | Count | Proven identity | Evidence |
+| --- | ---: | --- | --- |
+| `0x0040BDCA` | 37 | `WindowManager::bfme_setAptText` | one write for each profile/stat APT field |
+| `0x00889190` | 35 | `UnicodeString::format` | numeric and four-faction streak formatting |
+| `0x00888400` / `0x008881D0` | 37 / 37 | `UnicodeString` copy ctor / dtor | each APT write copies and then destroys the value |
+| `0x00888BC0` / `0x00887940` | 41 / 39 | `AsciiString` literal ctor / release | APT variable labels and cleanup ladder |
+| `0x000095CA` | 8 | `SkirmishBattleHonors::getLossStreak` | current loss streak and zero-loss branch tests |
+| `0x00022273` | 4 | `SkirmishBattleHonors::getWinStreak` | current win streak in the zero-loss branch |
+| `0x0003F472` | 4 | `SkirmishBattleHonors::getBestWinStreak` | one best-streak value per faction |
+| `0x00040192` / `0x0001CE18` | 4 / 4 | `getWins` / `getLosses` | per-faction and overall counters |
+| `0x00010898 -> 0x009FA60` | 1 | `SkirmishPreferences::getUserName` | thunk-mediated call on the by-value preference tail |
+| `0x00008602 -> 0x009E130` / `0x000232C2 -> 0x009DBD0` | 1 / 1 | honors ctor / profile-date accessor | local honors object and profile-created label |
+| `0x00013403 -> 0x005672C0` / `0x0002099B -> 0x005673A0` | 1 / 1 | preference map/list assignment | caller and target offsets prove the member types |
+
+### Layout
+
+- The matched `0x0057ED70` caller passes `BfmeArgED` by value. Its copy ctor
+  at `0x0057ECF0` installs vtable `0x010806B0`, copies the base, and copies a
+  string member, proving a 24-byte polymorphic object rather than six scalar
+  integers.
+- The argument tail is `vptr +0x00`, an 8-byte map-like object at `+0x04`, a
+  4-byte gap at `+0x0c`, a Unicode string at `+0x10`, and a list/string-like
+  object at `+0x14`. The consumer uses the same preference tail at `this+0x04`:
+  map assignment through `this+0x08`, string `set` through `this+0x14`, and
+  list assignment through `this+0x18`.
+- Retail constructs four side labels (`Gondor`, `Rohan`, `Isengard`, `Mordor`),
+  fetches `Apt:Win` and `Apt:Loss`, creates `SkirmishBattleHonors`, and writes
+  the profile date, overall counters, player name, favorite side, total games,
+  and five fields per faction. The final EH cleanup order is part of the
+  byte-shape contract.
+
+### Levers tried
+
+The best candidate is 5,745 bytes versus 5,762 retail, with 420 relocations,
+3,796 non-relocation differences, 269 masked-equal bytes, and score `0.06617`.
+It gets the manager count (37), Ascii literal count (41), by-value object shape,
+preference offsets, and the compact text-first number helper. Its first raw
+divergence is the local frame: `sub esp,0x68` versus retail `sub esp,0x64`, with
+393 relocation-layout sites drifting afterward.
+
+The tried candidates were an expanded renderer-shaped body; direct versus
+returned-`UnicodeString` number formatting; label-first versus text-first
+number setup; by-value versus local-copy `SetText`; streak copy-after-label;
+and two manager calls versus one factored favorite-side branch. Direct number
+formatting and the streak local-copy form enlarged the frame substantially;
+the factored favorite branch was the useful lever because it restored the exact
+37 manager writes. The partial is banked with all candidate names and measured
+evidence in `reverse/re_attempts.log`. No shared shim, pin, or layout proof for
+a smaller neighbour was established, so `reverse/unlocked.txt` is unchanged.
