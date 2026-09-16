@@ -1,17 +1,31 @@
 // ?set@Rva0006AB10Curve@@QAEXMMHH@Z
-// partial score=0.95 date=2026-09-11
+// Rva0006AB10Curve::set inserts a function-curve point into the sorted vector.
+// The existing Rva0006AB90FunctionCurve callers and the 0x00030053 insert thunk
+// establish this method's identity and argument types.
 // cl: /DNDEBUG /MD /O2 /EHsc-
-// Retail 0x0006AB10 inserts a function-curve point into the sorted vector.
 
 struct Rva0006AA90Element
 {
 	float m_key;
 	struct Value
 	{
+		Value() {}
+
+		Value(float real, int inTangent, int outTangent)
+			: m_real(real), m_inTangent(inTangent), m_outTangent(outTangent) {}
+
 		float m_real;
 		int m_inTangent;
 		int m_outTangent;
 	} m_value;
+
+	Rva0006AA90Element(float key, const volatile Value &value)
+		: m_key(key)
+	{
+		m_value.m_real = value.m_real;
+		m_value.m_inTangent = value.m_inTangent;
+		m_value.m_outTangent = value.m_outTangent;
+	}
 };
 
 struct Rva0006AA90InsertResult
@@ -53,19 +67,15 @@ struct Rva0006AB10SetLocals
 	Rva0006AA90InsertResult m_result;
 	volatile Rva0006AA90Element::Value m_values;
 	Rva0006AA90Element m_point;
+
+	Rva0006AB10SetLocals(float time, float value, int inTangent, int outTangent)
+		: m_values(value, inTangent, outTangent), m_point(time, m_values) {}
 };
 
 void Rva0006AB10Curve::set(float time, float value, int inTangent,
 	int outTangent)
 {
-	Rva0006AB10SetLocals locals;
-	locals.m_values.m_real = value;
-	locals.m_values.m_inTangent = inTangent;
-	locals.m_values.m_outTangent = outTangent;
-	locals.m_point.m_value.m_real = locals.m_values.m_real;
-	locals.m_point.m_key = time;
-	locals.m_point.m_value.m_inTangent = locals.m_values.m_inTangent;
-	locals.m_point.m_value.m_outTangent = locals.m_values.m_outTangent;
+	Rva0006AB10SetLocals locals(time, value, inTangent, outTangent);
 	Rva0006AA90InsertResult *inserted = m_points.insertUnique(
 		&locals.m_result, locals.m_point);
 	inserted->m_second;
