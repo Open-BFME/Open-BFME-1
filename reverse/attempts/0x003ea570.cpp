@@ -200,7 +200,7 @@ checkTemplateSecond:
 		{
 			const Overridable *finalOverride =
 				template_->m_nextOverride->getFinalOverride();
-			if (finalOverride->m_flagsD8 & 0x00002000)
+			if (finalOverride->m_flagsD8 & 0x00200000)
 				return true;
 		}
 	}
