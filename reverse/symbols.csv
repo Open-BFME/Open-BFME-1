@@ -88355,3 +88355,4 @@ _g_Rva012D4FD0AssertCrashTemplate,0x012D4FD0,DLGTEMPLATEEX titled Assert/Crash p
 ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUObstacleCellStruct@@@Z,0x0000CC1B,ILT to cell-space walk at 0x003E3190; four-argument attack-view caller constructs ObstacleCellStruct and the walk calls its matched callback
 ?d_000681c0@@YAXXZ,0x000681C0,carved 0x00014475 REL32 target; matched Dict::releaseData body independently proves address and ABI
 ?d_00069070@@YAXXZ,0x00069070,carved 0x00017FB2 REL32 target; matched HorzLine vector overflow body independently proves address
+?rva005FAE40@Rva005FAE40Receiver@@QAE?AURva005C36C0Vec3@@PAXM00@Z,0x0002F4AA,address-derived member sret ABI decoded from exact 0x005C36C0 caller and matched 0x005FAE40 body via this retail ILT
