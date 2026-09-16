@@ -11027,7 +11027,15 @@ name,address,notes
 ?Cur_Chunk_ID@ChunkLoadClass@@QAEKXZ,0x009E1440
 ?Cur_Chunk_Length@ChunkLoadClass@@QAEKXZ,0x009E1450
 ?Cur_Micro_Chunk_ID@ChunkLoadClass@@QAEKXZ,0x009E14E0
+?CurrentCaps@DX8Wrapper@@1PAVDX8Caps@@A,0x01340578,Canonical DX8Wrapper static caps pointer; retail device-state callers and ZH DX8Wrapper declaration agree on this field
 ?D3DDevice@DX8Wrapper@@1PAUIDirect3DDevice8@@A,0x01340534,Canonical private DX8Wrapper static IDirect3DDevice8 pointer; actual dx8wrapper.h declaration and named render-device family plus W3DMouse draw COFF operand;campaign=36h-20260908-1018;batch=45
+?matrix_changes@DX8Wrapper@@1IA,0x0134054C,Canonical DX8Wrapper matrix-change counter; Set_Transform retail body increments this address and the ZH twin names the field
+?light_changes@DX8Wrapper@@1IA,0x0134055C,Canonical DX8Wrapper light-change counter; Set_DX8_Light retail body increments this address and the ZH twin names the field
+?texture_changes@DX8Wrapper@@1IA,0x01340560,Canonical DX8Wrapper texture-change counter; the TextureClass::Apply retail/ZH shape increments this address
+?render_state_changes@DX8Wrapper@@1IA,0x01340564,Canonical DX8Wrapper render-state counter; Set_DX8_Render_State retail body increments this address and the ZH twin names the field
+?texture_stage_state_changes@DX8Wrapper@@1IA,0x01340568,Canonical DX8Wrapper texture-stage counter; matched shader-state body increments this address and the ZH twin names the field
+?render_state_changed@DX8Wrapper@@1IA,0x0133F49C,Canonical DX8Wrapper deferred-state dirty mask; retail render-state application reads and writes this address
+?number_of_DX8_calls@@3IA,0x01340594,Canonical DX8Wrapper global DX8-call counter; the retail Set_Transform, Set_DX8_Light, and shader-state bodies increment this address
 ?DX8_Assert@@YAXXZ,0x009024F0,DX8 index-buffer lock and unlock paths call the shared retail device/thread assertion helper
 ?DebugAllocMemory@@YAPAXI@Z,0x0088EB30
 ?DebugFreeMemory@@YAXPAX@Z,0x0088EAD0
