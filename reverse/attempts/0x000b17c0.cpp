@@ -1,12 +1,63 @@
 // ?parseStreamedSoundDefinition@INI@@SAXPAV1@@Z
-// partial score=0.88 date=2026-09-10
+// partial score=0.92 date=2026-09-16
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/iniexception
+//
+// Retail 0x000B17C0 is INI::parseStreamedSoundDefinition.  The INI block registry
+// names it: BFME keeps the registry as a linked list of 12-byte rows whose head
+// is the global at VA 0x0130CE50, and the row that names this block pairs the block
+// name 'StreamedSound' with this address.
+//
+// READ THIS BEFORE EDITING.  The declaration order below is DELIBERATELY the
+// reverse of retail's, and it is the only thing in this file that is knowingly
+// wrong.  Retail declares name first and track second.  Three facts prove it.
+// The exception state store at +0x0180 drops from 1 to 0 before track is
+// released and the store at +0x0196 drops to -1 before name is released, so
+// track is EH object 1 and name is EH object 0.  Retail also zeroes name at
+// +0x004C and track at +0x0054, in that order.
+//
+// The reason the order is reversed here is the incoming argument slot.  Retail
+// parks name in it, at [esp0+4], and keeps track in the frame at [esp0-0x1C].
+// MSVC 7.1 on this toolchain always hands that slot to the SECOND of the two
+// locals, so the retail order puts track in the slot and moves every stack
+// displacement in the body.  Swapping the declarations puts name in the slot
+// and cuts the differing bytes from 298 to 88.  Whoever picks this up needs a
+// spelling that keeps retail's declaration order and still hands the slot to
+// name.
+//
+// Three walls remain, measured on 2026-09-16:
+//  * The frame is 20 bytes against retail's 16.  Retail lays the 8-byte
+//    INIException temporary at [esp0-0x1C] and puts track on top of its first
+//    dword.  Our build puts the exception temporary at the top of the frame and
+//    never overlays a named local on it.
+//  * EDI and EBP are swapped.  Retail holds ini in EDI and the
+//    InterlockedDecrement import in EBP, and reuses EDI for the defaultInfo
+//    pointer once ini is dead at +0x014A.  Ours holds ini in EBP and takes ESI
+//    for that pointer.  ESI was holding track.m_info, so our tail reloads it
+//    and retests it for null, which makes the tail 12 bytes longer than
+//    retail's.
+//  * Retail writes `cmp eax, ebx` against the zero it keeps in EBX where we
+//    write `test eax, eax`, at the two InterlockedDecrement result tests.
+//
+// Twelve spellings moved neither the slot nor the frame on 2026-09-16.  They
+// were removing the inner scope, moving the getNextToken call before the track
+// declaration, moving it after, an INIException with no destructor, a 4-byte
+// INIException, a named exception object thrown by copy, binding the
+// findAudioEventInfo result to a const reference, binding track to a const
+// reference, a braced scope around the token read, and the flag sets /O2, /Ox,
+// /O2 /Og and /O2 /Ob2.
+//
+// Three siblings are the same body with different constants, so the spelling
+// that lands this one lands all four:
+//   0x000B1360 DialogEvent     'You cannot define or override a DialogEvent in map.ini'    m_soundType = 1
+//   0x000B1590 AmbientStream   'You cannot define or override an AmbientStream in map.ini' m_soundType = 3
+//   0x000B17C0 StreamedSound   'You cannot define or override a StreamedSound in map.ini'  m_soundType = 4
+// Their default-template names are DefaultDialog, DefaultAmbientStream and
+// DefaultStreamedSound.  All four share the FieldParse table at 0x010813F8.
 
 // Retail 0x000B17C0 is INI::parseStreamedSoundDefinition from
-// Common/Audio/AudioEventRTS.cpp.  The parser creates an AudioEventInfoRef,
-// overlays the DefaultStreamedSound template, then applies the 21-field table
-// at 0x010813F8.  These local declarations preserve the BFME ABI without
-// importing the incompatible Zero Hour audio class declarations.
+// Common/Audio/AudioEventRTS.cpp.  The BFME AudioEventInfo ABI differs from
+// Zero Hour's public declaration, so only the fields and virtual calls used by
+// this parser are described here.
 
 #include <string.h>
 
@@ -154,16 +205,14 @@ private:
 void INI::parseStreamedSoundDefinition(INI *ini)
 {
 	if (ini->getLoadType() == 2)
-		throw INIException(3,
-			(const char *)0x01081B68);
+		throw INIException(3, (const char *)0x01081B68);
 
-	AsciiString name;
-	{
 	AudioEventInfoRef track;
+	AsciiString name;
 	const char *token = ini->getNextToken();
 	name.set(token);
+	track = TheAudio->newAudioEventInfo(name);
 
-		track = TheAudio->newAudioEventInfo(name);
 		BfmeA1202 *const audioInfo = track.m_info;
 		if (audioInfo != 0)
 		{
@@ -176,8 +225,6 @@ void INI::parseStreamedSoundDefinition(INI *ini)
 			}
 			audioInfo->m_audioName = name;
 			audioInfo->m_soundType = 4;
-			ini->initFromINI(audioInfo,
-				(const FieldParse *)0x010813F8);
+			ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
 		}
-	}
 }
