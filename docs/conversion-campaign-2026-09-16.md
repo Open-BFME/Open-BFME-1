@@ -62,5 +62,66 @@ The two GUI draw seats produced no byte improvement and were reassigned after
 approximately nine minutes to donor-backed bodies at 0x000D74B0 and 0x0023D130.
 Their negative experiment evidence remains in the isolated worktrees.
 
-Pending first hourly assessment. Local detailed transcripts, briefs, baseline output and
-active assignments live under `build/orchestrator-20260916/` (untracked).
+### Hour 1 — 14:25:20 to 15:25:37 UTC
+
+Snapshot: `6b2fd3a71608f2bfcac80f7fcb0489c80711f678`.
+
+| Metric | Change during interval |
+|---|---:|
+| Fleet: verified/pushed dump-to-C++ bodies | 10 |
+| Fleet: authored/rebuildable bytes | +2,816 B / +0.02902 pp |
+| All contributors: rebuildable bytes | +3,999 B / +0.04122 pp |
+| All contributors: authored C++ bytes | +4,234 B / +0.04364 pp |
+| All contributors: generated C++ bytes | -235 B |
+| All contributors: total exact coverage | +287 B |
+
+The fleet transferred existing dump ranges; it did not enlarge total exact
+coverage. Its first-hour output is slightly below the prior twelve-hour
+repository average of 3,143 authored B/hour. The populations differ, and model
+cost has not been measured, so this is context rather than a speedup claim.
+
+Fleet landings, each scoped byte-verified and pushed through normal hooks:
+
+| RVA | Bytes | Result |
+|---|---:|---|
+| 0x0021C820 | 96 | Opaque position-range dispatcher |
+| 0x0023D130 | 92 | Opaque resolver returning the witnessed subobject |
+| 0x003C2830 | 326 | Mission-objective vector Xfer; local lifetime/width lever |
+| 0x002E7410 | 225 | Opaque filtered event dispatcher |
+| 0x0071C9C0 | 397 | Opaque matrix/bounds record update |
+| 0x00346560 | 1,118 | ScriptEngine action dispatcher |
+| 0x000D74B0 | 269 | Opaque hash-map snapshot transfer |
+| 0x002060B0 | 61 | Opaque indexed three-word copy |
+| 0x0046F6F0 | 206 | Slash-to-dot string utility |
+| 0x0024B7C0 | 26 | Opaque conditional containment forwarder |
+
+Eight donor-backed landings account for 1,372 B; the two larger near-match
+finishes account for 1,444 B. Donor work therefore had the stronger body yield,
+while the script dispatcher provided the largest individual byte gain. Repeated
+GUI/register-shape passes and the TeamFactory follow-up made no progress.
+Large anonymous audio/pathfinder/MapObject investigations were stopped; one
+audio bank failed the orchestrator's independent compile and was rejected.
+Its useful evidence is recorded as `blocked`, not as a scored partial.
+
+Allocation change for hour 2: continue donor-backed INI and particle-template
+work and the constructor with a matched destructor; prefer those approaches
+for freed slots. Retain bounded library/terrain and near-match investigations
+only while they produce new byte or ABI evidence. End the long containment
+pass before another sibling; shorten unchanged near-match retries. Every slot
+remains separately claimed, with fresh worktrees based on recent master.
+The ordinary exact-donor pool is nearly exhausted, so existing near/fuzzy
+donor scans supply leads; compiler cleanup funclet counts are not treated as
+ordinary conversion work. All ten slots were occupied at the assessment.
+
+Validation: all ten landings passed scoped gates, pin consistency, and normal
+commit/push hooks. The script dispatcher's 36 tail table pointers and all
+remaining table bytes were independently checked in addition to its body.
+Initial stale-object identity checks were repaired by scoped rebuilds; an
+incidental broader check exposed pre-existing relocation failures, so no
+repository-wide green build is claimed. Reusable Xfer/x87 findings are in
+`docs/shape_levers.md`; donor and measured-bank guidance is in
+`docs/throughput-tools.md`.
+
+Local transcripts, briefs, snapshots and active assignments live under
+`build/orchestrator-20260916/` (untracked). Next assessment is due around
+16:25 UTC. The 36-hour campaign remains in progress.
