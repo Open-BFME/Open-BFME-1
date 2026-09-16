@@ -50,10 +50,10 @@ public:
 	virtual void stateBaseAnchor();
 };
 
-class Rva000250BDStateBase
+class AIFollowPathState
 {
 public:
-	Rva000250BDStateBase( void *machine, AsciiString name );
+	AIFollowPathState( StateMachine *machine, AsciiString name );
 
 	virtual void stateBaseAnchor();
 };
@@ -454,7 +454,7 @@ Rva0018AD60State::Rva0018AD60State( void *machine )
 {
 }
 
-class Rva002BDB30State : public Rva000250BDStateBase
+class Rva002BDB30State : public AIFollowPathState
 {
 public:
 	Rva002BDB30State( void *machine );
@@ -464,7 +464,8 @@ public:
 };
 
 Rva002BDB30State::Rva002BDB30State( void *machine )
-	: Rva000250BDStateBase( machine, AsciiString( "GiantBirdFollowPathState" ) ),
+	: AIFollowPathState( (StateMachine *)machine,
+		AsciiString( "GiantBirdFollowPathState" ) ),
 	  m_field0( 0x0 )
 {
 }

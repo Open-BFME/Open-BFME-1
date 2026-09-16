@@ -2,7 +2,6 @@
 ??0?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@I@Z (Code/Libraries/Source/WWVegas/WWLib/AsciiStringListCtorNothrow.cpp)
 ??0DownloadManager@@QAE@XZ (Code/GameEngine/Source/GameNetwork/DownloadManager.cpp)
 ??0LocomotorStore@@QAE@XZ (Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp)
-??0Rva002BDB30State@@QAE@PAX@Z (Code/GameEngine/Source/Common/StateSelfNamingCtorsWithFields.cpp)
 ??1?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@QAE@XZ (Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp)
 ??1DefinitionMgrClass@@UAE@XZ (Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.cpp)
 ??1DynamicAudioEventRTS@@MAE@XZ (Code/GameEngine/Source/Common/INI/INI_stl.cpp)
