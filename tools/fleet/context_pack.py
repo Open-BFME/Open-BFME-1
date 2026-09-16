@@ -242,7 +242,8 @@ def pack(rva, max_items=8):
                    "`python3 tools/eh_levers.py SRC.cpp > choices.json` + shape_search.py):")
         for line in eh["levers"]:
             out.append("      - " + line)
-        out.append("    non-EH shape choices: `python3 tools/shape_family_levers.py SRC.cpp "
+        out.append("    non-EH shape choices (including loop inversion and branch-length "
+                   "polarity): `python3 tools/shape_family_levers.py SRC.cpp "
                    "--families sib,register,bool,test,copy,store,loop,branch,constant,frame > choices.json` + shape_search.py; "
                    "probe and the byte gate still decide whether a choice is useful")
     if vtstore:

@@ -83,8 +83,12 @@ following null guard or member load, probing whether the compiler should keep
 the copy in a separate register. `store` swaps adjacent independent simple
 field stores, probing retail store scheduling without reordering a dependency.
 `loop` toggles a `while` header and an equivalent empty-init/increment `for`
-header. `branch` folds a simple boolean if/return pair. `constant` materialises
-a literal boolean return through a named temporary.
+header, and structures the narrow counted label/goto loop shape behind the
+`jle`-guard/`jl`-latch versus one `jge` branch family. `branch` tries both a
+folded boolean return and the polarity-inverted two-return form, probing
+branch length and tail placement. `constant` materialises a literal boolean
+or one-byte scalar return through a named temporary, including the
+false/true EAX-versus-byte-register choice.
 `frame` promotes a simple integer local to an indexed two-element array and
 rewrites its uses, probing the dead-dword frame shape documented above.
 Each edit is a hypothesis and `shape_search`

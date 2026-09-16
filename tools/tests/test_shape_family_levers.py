@@ -108,6 +108,26 @@ LOOP_SOURCE = """int loop(int limit)
 }
 """
 
+GOTO_LOOP_SOURCE = """int goto_loop(int n)
+{
+    int remain = n;
+    int count = 4;
+    int i = 0;
+    int current;
+loop:
+    if (i >= count) goto failed;
+    current = i++;
+    if (!isEligible(current)) goto loop;
+    if (remain <= 0) goto succeeded;
+    --remain;
+    goto loop;
+failed:
+    return -1;
+succeeded:
+    return current;
+}
+"""
+
 SWITCH_SOURCE = """int switch_shape(int value)
 {
     switch (value)
@@ -205,8 +225,9 @@ def test_loop_choice_toggles_empty_for_header():
 def test_branch_choice_folds_boolean_return_pair():
     choices = shape_family_levers.choices_for(BRANCH_SOURCE, ("branch",))
     assert len(choices) == 1
-    assert choices[0]["lever"] == "branch-return"
+    assert choices[0]["lever"] == "branch-length"
     assert "return ready != 0;" in choices[0]["after"][0]
+    assert "if ( !(ready != 0) ) return false;" in choices[0]["after"][1]
 
 
 def test_constant_choice_materialises_false():
@@ -214,6 +235,15 @@ def test_constant_choice_materialises_false():
     assert len(choices) == 1
     assert choices[0]["lever"] == "constant-materialization"
     assert "unsigned char shape_constant_false_2 = 0;" in choices[0]["after"][0]
+    assert "bool shape_constant_false_2 = false;" in choices[0]["after"][1]
+
+
+def test_constant_choice_accepts_one_byte_numeric_return():
+    source = CONSTANT_SOURCE.replace("bool constant", "char constant")
+    source = source.replace("return false;", "return 0;")
+    choices = shape_family_levers.choices_for(source, ("constant",))
+    assert len(choices) == 1
+    assert "unsigned char shape_constant_0_2 = 0;" in choices[0]["after"][0]
 
 
 def test_frame_choice_promotes_scalar_local():
@@ -222,6 +252,14 @@ def test_frame_choice_promotes_scalar_local():
     assert choices[0]["lever"] == "frame-array"
     assert "int shape_frame_value_2[2];" in choices[0]["after"][0]
     assert "return shape_frame_value_2[1] + 1;" in choices[0]["after"][0]
+
+
+def test_loop_choice_structures_narrow_goto_loop():
+    choices = shape_family_levers.choices_for(GOTO_LOOP_SOURCE, ("loop",))
+    assert len(choices) == 1
+    assert choices[0]["lever"] == "loop-inversion"
+    assert "while (i < count)" in choices[0]["after"][0]
+    assert "continue;" in choices[0]["after"][0]
 
 
 def test_constant_and_frame_choices_skip_switch_labels():

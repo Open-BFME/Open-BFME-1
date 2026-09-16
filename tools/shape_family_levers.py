@@ -12,9 +12,10 @@ acceptance check.  ``choices_for(text)`` returns the JSON shape consumed by
 * ``copy`` keeps a pointer alias live through its next guard or member load;
 * ``store`` swaps adjacent independent simple field stores;
 * ``loop`` toggles an empty-init/increment loop header between ``while`` and
-  ``for``;
-* ``branch`` folds a simple two-return boolean branch;
-* ``constant`` materialises a literal false/true return;
+  ``for``, and structures one narrow label/goto loop;
+* ``branch`` folds or polarity-inverts a simple two-return boolean branch;
+* ``constant`` materialises a literal false/true return through a one-byte
+  local;
 * ``frame`` promotes a simple scalar local to an indexed two-element array.
 
 The first two are useful probes for the hard-lane SIB and register-order
@@ -138,12 +139,35 @@ _FOR_EMPTY = re.compile(
     r"^(?P<indent>[ \t]*)for\s*\(\s*;\s*(?P<condition>[^;{}\r\n]+)"
     r"\s*;\s*\)(?P<tail>[ \t]*(?:\{[ \t]*)?)$"
 )
+_GOTO_LOOP = re.compile(
+    r"(?P<indent>^[ \t]*)(?P<loop>[A-Za-z_]\w*):[ \t]*\n"
+    r"(?P<body_indent>[ \t]+)if\s*\(\s*"
+    r"(?P<index>[A-Za-z_]\w*)\s*>=\s*(?P<bound>[A-Za-z_]\w*)\s*\)"
+    r"\s*goto\s+(?P<failed>[A-Za-z_]\w*)\s*;[ \t]*\n"
+    r"(?P=body_indent)(?P<current>[A-Za-z_]\w*)\s*=\s*"
+    r"(?P=index)\+\+[ \t]*;[ \t]*\n"
+    r"(?P=body_indent)if\s*\(\s*!\s*(?P<predicate>[^{}\r\n]+)\s*\)"
+    r"\s*goto\s+(?P=loop)\s*;[ \t]*\n"
+    r"(?P=body_indent)if\s*\(\s*(?P<remain>[A-Za-z_]\w*)\s*<=\s*0\s*\)"
+    r"\s*goto\s+(?P<succeeded>[A-Za-z_]\w*)\s*;[ \t]*\n"
+    r"(?P=body_indent)--\s*(?P=remain)\s*;[ \t]*\n"
+    r"(?P=body_indent)goto\s+(?P=loop)\s*;[ \t]*\n"
+    r"(?:[ \t]*\n)*"
+    r"(?P=indent)(?P=failed):[ \t]*\n"
+    r"(?P=body_indent)return\s+(?P<failure>[^;]+)\s*;[ \t]*\n"
+    r"(?P=indent)(?P=succeeded):[ \t]*\n"
+    r"(?P=body_indent)return\s+(?P=current)\s*;[ \t]*$",
+    re.M,
+)
 _BRANCH = re.compile(
     r"^(?P<indent>[ \t]*)if\s*\((?P<condition>[^{}\r\n]+)\)\s*"
     r"return\s+(?P<value>true|false)\s*;[ \t]*$"
 )
 _RETURN_BOOL = re.compile(
     r"^(?P<indent>[ \t]+)return\s+(?P<value>true|false)\s*;[ \t]*$"
+)
+_RETURN_SCALAR_CONSTANT = re.compile(
+    r"^(?P<indent>[ \t]+)return\s+(?P<value>[01])\s*;[ \t]*$"
 )
 _FRAME_DECL = re.compile(
     r"^(?P<indent>[ \t]+)(?P<type>unsigned int|int)\s+"
@@ -413,8 +437,32 @@ def store_choices(text, limit=8):
 
 
 def loop_choices(text, limit=8):
-    """Toggle a semantically equivalent empty-init/increment loop header."""
+    """Return bounded loop-header and one narrow loop-inversion choices."""
     out = []
+    for match in _GOTO_LOOP.finditer(text):
+        before = match.group(0)
+        if text.count(before) != 1:
+            continue
+        indent = match.group("indent")
+        body_indent = match.group("body_indent")
+        nested_indent = body_indent + "\t"
+        predicate = match.group("predicate").strip()
+        replacement = (
+            f"{indent}while ({match.group('index')} < {match.group('bound')})\n"
+            f"{indent}{{\n"
+            f"{body_indent}{match.group('current')} = {match.group('index')}++;\n"
+            f"{body_indent}if ( !{predicate} )\n"
+            f"{nested_indent}continue;\n"
+            f"{body_indent}if ({match.group('remain')} <= 0)\n"
+            f"{nested_indent}return {match.group('current')};\n"
+            f"{body_indent}--{match.group('remain')};\n"
+            f"{indent}}}\n"
+            f"{body_indent}return {match.group('failure').strip()};\n"
+        )
+        out.append({"before": before, "after": [replacement],
+                    "lever": "loop-inversion"})
+        if len(out) >= limit:
+            return out
     for line in text.splitlines(keepends=True):
         while_match = _WHILE.match(line)
         if while_match:
@@ -437,7 +485,7 @@ def loop_choices(text, limit=8):
 
 
 def branch_choices(text, limit=8):
-    """Fold a simple boolean if/return followed by the opposite return."""
+    """Fold or invert a simple boolean if/return pair."""
     lines = text.splitlines(keepends=True)
     out = []
     for i in range(len(lines) - 1):
@@ -452,15 +500,24 @@ def branch_choices(text, limit=8):
             continue
         expression = condition if first.group("value") == "true" else "!(%s)" % condition
         replacement = f"{first.group('indent')}return {expression};\n"
+        inverse_value = "false" if first.group("value") == "true" else "true"
+        inverse_tail = "true" if first.group("value") == "true" else "false"
+        inverted = (f"{first.group('indent')}if ( !({condition}) ) "
+                    f"return {inverse_value};\n"
+                    f"{second.group('indent')}return {inverse_tail};\n")
         before = lines[i] + lines[i + 1]
-        out.append({"before": before, "after": [replacement], "lever": "branch-return"})
+        alternatives = [replacement]
+        if inverted != before and inverted != replacement:
+            alternatives.append(inverted)
+        out.append({"before": before, "after": alternatives,
+                    "lever": "branch-length"})
         if len(out) >= limit:
             break
     return out
 
 
 def constant_choices(text, limit=8):
-    """Probe literal boolean-return materialisation without changing a value."""
+    """Probe one-byte literal-return materialisation without changing a value."""
     lines = text.splitlines(keepends=True)
     out = []
     for i, line in enumerate(lines):
@@ -479,19 +536,64 @@ def constant_choices(text, limit=8):
             continue
         if _unbraced_control(lines, i):
             continue
-        result = _RETURN_BOOL.match(line)
+        result = _RETURN_BOOL.match(line) or _RETURN_SCALAR_CONSTANT.match(line)
         if result and text.count(line) == 1:
+            return_type = _function_return_type(lines, i)
+            if return_type not in ("bool", "char", "signed char", "unsigned char"):
+                continue
             name = "shape_constant_%s_%d" % (result.group("value"), i)
             if name not in text:
-                value = "1" if result.group("value") == "true" else "0"
+                literal = result.group("value")
+                if literal == "true":
+                    value = "1"
+                elif literal == "false":
+                    value = "0"
+                else:
+                    value = literal
                 replacement = (f"{result.group('indent')}unsigned char {name} = {value};\n"
                                f"{result.group('indent')}return {name};\n")
-                out.append({"before": line, "after": [replacement],
+                alternatives = [replacement]
+                if return_type == "bool":
+                    bool_replacement = (
+                        f"{result.group('indent')}bool {name} = {literal};\n"
+                        f"{result.group('indent')}return {name};\n"
+                    )
+                    if bool_replacement != replacement:
+                        alternatives.append(bool_replacement)
+                out.append({"before": line, "after": alternatives,
                             "lever": "constant-materialization"})
                 if len(out) >= limit:
                     break
                 continue
     return out
+
+
+def _function_return_type(lines, index):
+    """Return a small scalar return type for the enclosing function, if known."""
+    opening = _function_open_line(lines, index)
+    if opening is None:
+        return None
+    header = " ".join(lines[max(0, opening - 8):opening + 1])
+    prefix = header.rsplit("(", 1)[0]
+    matches = list(re.finditer(
+        r"\b(unsigned\s+char|signed\s+char|unsigned\s+int|bool|char|int)\b",
+        prefix,
+    ))
+    if not matches:
+        return None
+    return re.sub(r"\s+", " ", matches[-1].group(1)).strip()
+
+
+def _function_open_line(lines, index):
+    end = _function_end(lines, index)
+    if end is None:
+        return None
+    balance = 0
+    for line_number in range(end, -1, -1):
+        balance += lines[line_number].count("}") - lines[line_number].count("{")
+        if balance == 0:
+            return line_number
+    return None
 
 
 def _function_end(lines, start):
