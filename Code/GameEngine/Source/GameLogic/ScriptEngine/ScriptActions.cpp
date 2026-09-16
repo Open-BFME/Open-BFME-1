@@ -553,6 +553,12 @@ public:
 	AIUpdateInterface *m_ai;								///< retail this+0x204
 };
 
+class BfmeX1027
+{
+public:
+	void bfmeStop1027( void );
+};
+
 // BFME's ContainModuleInterface puts getPlayerWhoEntered at vtable slot 76; the
 // reference header lands it at 49.
 class BfmeContainVtbl_130
@@ -1215,29 +1221,33 @@ void ScriptActions::doMoveToWaypoint(const AsciiString& team, const AsciiString&
 //-------------------------------------------------------------------------------------------------
 /** doNamedMoveToWaypoint */
 //-------------------------------------------------------------------------------------------------
-// ?doNamedMoveToWaypoint@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
 void ScriptActions::doNamedMoveToWaypoint(const AsciiString& unit, const AsciiString& waypoint)
 {
-	Object *theObj = TheScriptEngine->getUnitNamed( unit );
-	if (theObj) 
+	Object *theObj = ((BFMERetailScriptEngineVTable *)TheScriptEngine)->getUnitNamed( unit );
+	if (theObj)
 	{
-		Waypoint *way = TheTerrainLogic->getWaypointByName(waypoint);
-		if (!way) {
+		Waypoint *way = ((BfmeTerrainLogicVtbl_7c *)TheTerrainLogic)->getWaypointByName(waypoint);
+		if (!way)
+		{
 			return;
 		}
 
-		Coord3D destination = *way->getLocation();
+		const Coord3D *location = way->getLocation();
+		UnsignedInt destination[3];
+		destination[0] = *(const UnsignedInt *)&location->x;
+		destination[1] = *(const UnsignedInt *)&location->y;
+		destination[2] = *(const UnsignedInt *)&location->z;
 
-		AIUpdateInterface *aiUpdate = theObj->getAIUpdateInterface();
-		if (!aiUpdate) {
+		AIUpdateInterface *aiUpdate =
+			((BfmeObjectModules *)theObj)->getAIUpdateInterface();
+		if (!aiUpdate)
+		{
 			return;
 		}
-		
+
 		aiUpdate->clearWaypointQueue();
-		theObj->leaveGroup();
-		aiUpdate->chooseLocomotorSet( LOCOMOTORSET_NORMAL );
-		aiUpdate->aiMoveToPosition( &destination, CMD_FROM_SCRIPT );
-
+		((BfmeX1027 *)theObj)->bfmeStop1027();
+		aiUpdate->aiMoveToPosition((const Coord3D *)destination, CMD_FROM_SCRIPT);
 	}
 }
 
