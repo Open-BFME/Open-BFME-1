@@ -124,7 +124,7 @@ _STORE = re.compile(
     r"[A-Za-z_]\w*)|(?:\s*\[[^\]\r\n]+\]))*)\s*=\s*"
     r"(?P<rhs>[^;]+);[ \t]*$"
 )
-_STORE_RHS = re.compile(r"^[A-Za-z0-9_ \t+*/%<>.&|^~\[\]()-]+$")
+_STORE_RHS = re.compile(r"^[A-Za-z0-9_ \t+*/%<>.&|^~\[\]()-?:!]+$")
 
 
 def _in_function(lines, index):

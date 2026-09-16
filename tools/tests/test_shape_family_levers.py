@@ -131,6 +131,13 @@ def test_store_choice_swaps_independent_field_stores():
     assert "pair->second = b;\n    pair->first = a;" in choices[0]["after"][0]
 
 
+def test_store_choice_accepts_side_effect_free_conditional_rhs():
+    source = STORE_SOURCE.replace("pair->second = b;", "pair->second = (a != 0) ? -1 : 0;")
+    choices = shape_family_levers.choices_for(source, ("store",))
+    assert len(choices) == 1
+    assert "pair->second = (a != 0) ? -1 : 0;\n    pair->first = a;" in choices[0]["after"][0]
+
+
 def test_default_choices_include_store_order():
     choices = shape_family_levers.choices_for(STORE_SOURCE)
     assert any(choice["lever"] == "store-order" for choice in choices)
