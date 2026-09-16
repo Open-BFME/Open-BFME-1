@@ -103,7 +103,6 @@ void BfmeAptScreenSaveLoad::_bfme_onClosed( const char *name )
 // bytes as a standalone thunk at 0x0058990E, which is really this body's tail
 // jump, and add_match refuses a claim that starts before a scaffold it would
 // retire. Retracting that gap row unblocks the claim.
-// ?_bfme_onBttnObserveNextPlayer@BfmeAptScreenPalantir@@QAEXPBD@Z present-unmatched
 void BfmeAptScreenPalantir::_bfme_onBttnObserveNextPlayer( const char *name )
 {
 	(void)name;
