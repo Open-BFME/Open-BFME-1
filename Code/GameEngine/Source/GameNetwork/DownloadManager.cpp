@@ -33,43 +33,18 @@
 
 #include "GameClient/GameText.h"
 #include "GameNetwork/DownloadManager.h"
+#include "string_base.h"
+
+// BFME inlines UnicodeString's copy-set through the wide StringBase body at
+// 0x00888530.  The reference UnicodeString declaration otherwise leaves an
+// out-of-line UnicodeString::set call, whose ledger alias is the narrow body.
+inline void UnicodeString::set( const UnicodeString &stringSrc )
+{
+	reinterpret_cast<StringBase<WideChar> &>( *this ).set(
+		reinterpret_cast<const StringBase<WideChar> &>( stringSrc ) );
+}
 
 DownloadManager *TheDownloadManager;
-
-DownloadManager::DownloadManager()
-{
-	m_download = NEW CDownload(this);
-	m_wasError = m_sawEnd = false;
-	
-	//Added By Sadullah Nader
-	//Initializations missing and needed
-	
-	m_queuedDownloads.clear();
-	
-	//
-
-	m_statusString = TheGameText->fetch("FTP:StatusIdle");
-
-	// ----- Initialize Winsock -----
-	m_winsockInit = true;
-	WORD verReq = MAKEWORD(2, 2);
-	WSADATA wsadata;
-
-	int err = WSAStartup(verReq, &wsadata);
-	if (err != 0)
-	{
-		m_winsockInit = false;
-	}
-	else
-	{
-		if ((LOBYTE(wsadata.wVersion) != 2) || (HIBYTE(wsadata.wVersion) !=2))
-		{
-			WSACleanup();
-			m_winsockInit = false;
-		}
-	}
-
-}
 
 DownloadManager::~DownloadManager()
 {

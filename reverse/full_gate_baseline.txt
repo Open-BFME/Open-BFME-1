@@ -29,8 +29,6 @@
 ??_G?$SimpleDynVecClass@VVector3@@@@UAEPAXI@Z (Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp)
 ?Generate_Culling_Tree@MeshClass@@QAEXXZ (Code/Libraries/Source/WWVegas/WW3D2/mesh.cpp)
 ?Get_Wide_String@INIClass@@QBEABVWideStringClass@@AAV2@PBD1PBG@Z (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/ini.cpp)
-?OnError@DownloadManager@@UAEJH@Z (Code/GameEngine/Source/GameNetwork/DownloadManager.cpp)
-?OnStatusUpdate@DownloadManager@@UAEJH@Z (Code/GameEngine/Source/GameNetwork/DownloadManager.cpp)
 ?Set_Alpha_Channel@RingRenderObjClass@@QAEXABV?$LERPAnimationChannelClass@M@@@Z (Code/Libraries/Source/WWVegas/WW3D2/ringobj.cpp)
 ?Set_Color_Channel@RingRenderObjClass@@QAEXABV?$LERPAnimationChannelClass@VVector3@@@@@Z (Code/Libraries/Source/WWVegas/WW3D2/ringobj.cpp)
 ?Set_Color_Channel@SphereRenderObjClass@@QAEXABV?$LERPAnimationChannelClass@VVector3@@@@@Z (Code/Libraries/Source/WWVegas/WW3D2/sphereobj.cpp)
