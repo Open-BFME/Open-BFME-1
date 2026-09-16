@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "dae2abfcf4c32c5831681fb0847cd349449bbf2784eb58eb779d453c159243fe",
+  "symbol": "?bfmeSetERB@BfmeHostERB@@QAEXPAPAVBfmeTexERB@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?bfmeSetERB@BfmeHostERB@@QAEXPAPAVBfmeTexERB@@@Z\n// partial score=0.93 date=2026-09-16\n// ?bfmeSetERB@BfmeHostERB@@QAEXPAPAVBfmeTexERB@@@Z (identity unknown)\n// partial date=2026-09-16\n// 54/54. Every instruction matches retail. Six bytes differ because retail\n// loads the refreshed pointer into eax and derives the mask in ecx, while\n// this build loads it into ecx and derives the mask in eax.\n// Pin needed: ?bfmeReleaseERB@BfmeTexERB@@QAEXXZ,0x009EB7A0 (Release_Ref)\n\nclass BfmeTexERB\n{\npublic:\n\tvoid bfmeReleaseERB(void);\n\tvoid bfmeAddRefERB(void) { ++m_bfmeRefERB; }\n\n\tunsigned char m_bfmeHeadERB[4];\n\tunsigned short m_bfmeRefERB;\n};\n\nclass BfmeHostERB\n{\npublic:\n\tvoid bfmeSetERB(BfmeTexERB **slot);\n\n\tunsigned char m_bfmeHeadERB[0x4c];\n\tstruct BfmeSlotERB\n\t{\n\t\tBfmeTexERB *m_ptr;\n\t\tint m_mask;\n\t} m_bfmeSlotERB;\n};\n\nvoid BfmeHostERB::bfmeSetERB(BfmeTexERB **slot)\n{\n\tBfmeTexERB *value = *slot;\n\tif (value == m_bfmeSlotERB.m_ptr)\n\t\treturn;\n\tif (value != 0)\n\t\tvalue->bfmeAddRefERB();\n\tif (m_bfmeSlotERB.m_ptr != 0)\n\t\tm_bfmeSlotERB.m_ptr->bfmeReleaseERB();\n\tBfmeTexERB *fresh = *slot;\n\tBfmeSlotERB updated = { fresh, (fresh != 0) ? -1 : 0 };\n\tm_bfmeSlotERB = updated;\n}\n"
+}
