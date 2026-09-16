@@ -36,8 +36,10 @@ Zero Hour twin under reference/CnC_Generals_Zero_Hour when one is named. Iterate
 `python3 tools/probe.py SOURCE.cpp "MANGLED" 0xRVA` -- it compiles, diffs against retail
 with relocations masked, and prints a CANDIDATE cause with evidence; treat the label as
 a hint and check the evidence lines. Land with
-`python3 tools/add_match.py NAME 0xRVA SIZE SOURCE --replace-rva 0xRVA --notes "no commas"`
-(byte-verifies, auto-reverts, may wait on the ledger lock -- that is normal). If a body
+`python3 tools/add_match.py NAME 0xRVA SIZE SOURCE --notes "no commas"` (add
+`--replace-rva 0xRVA` only when replacing a generated scaffold; carved rows are
+ordinary new claims). The command byte-verifies, auto-reverts, and may wait on the
+ledger lock -- that is normal. If a body
 resists after ~40 minutes bank it:
 `python3 tools/re_log.py record SYM 0xRVA SIZE partial "evidence t=Xmin model=MODEL" --stash FILE.cpp --score 0.NN`
 and move on.
