@@ -622,7 +622,6 @@ FirewallHelperClass::FirewallBehaviorType FirewallHelperClass::getFirewallBehavi
 	return m_behavior;
 }
 
-// ?getSourcePortAllocationDelta@FirewallHelperClass@@QAEFXZ present-unmatched
 Short FirewallHelperClass::getSourcePortAllocationDelta() {
 	return m_sourcePortAllocationDelta;
 }
