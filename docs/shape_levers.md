@@ -111,6 +111,21 @@ referenced float constants and installed interface table, not just masked
 bytes. This is a source-level lifetime and expression-order lever, not a
 reason to insert floating-point assembly.
 
+## Nullable grid accessors: preserve the bounds helper
+
+`Pathfinder::getLayer` at `0x003D93A0` landed at 105 bytes after retaining
+an inline, nullable ground-cell lookup rather than flattening its four bounds
+checks into the caller. The helper returns the row address plus `y * 16`
+inside the valid extent and null otherwise; the caller checks that pointer
+before reading packed layer bits 6..11 at cell offset `+0x0c`. The earlier
+103-byte bank folded away retail's separate pointer `test` instruction.
+The landed source uses ordinary, nonvolatile storage: removing an experimental
+`volatile` qualifier still matched exactly, so volatility was not the lever.
+This helper represents only the ground-map subset of the native layer-aware
+cell accessor, not a newly discovered exported overload. Try the same source
+structure on related bounds-and-cell near misses, but verify each body rather
+than assuming the instruction will survive every inlining context.
+
 ## Model-condition bit masks: retain the native accessor layers
 
 When retail materializes a constant mask in a register (`mov eax,mask;
