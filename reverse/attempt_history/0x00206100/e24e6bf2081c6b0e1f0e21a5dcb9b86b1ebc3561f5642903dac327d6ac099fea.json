@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e24e6bf2081c6b0e1f0e21a5dcb9b86b1ebc3561f5642903dac327d6ac099fea",
+  "symbol": "?point@Rva00206100Owner@@QAEXPAUCoord3D@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.82,
+  "source": "// ?point@Rva00206100Owner@@QAEXPAUCoord3D@@H@Z\n// partial score=0.82 date=2026-09-16\n// cl: /DNDEBUG /MD\n// Retail RVA 0x00206100. Returns a three-word point by value, taken from a\n// pointer vector when the index is in range and from a fallback object at +8\n// otherwise. Nothing names the owner, so every class here is address-derived.\n\nextern \"C\" void _ReadWriteBarrier( void );\n#pragma intrinsic( _ReadWriteBarrier )\n\nstruct Coord3D\n{\n\tfloat x;\n\tfloat y;\n\tfloat z;\n};\n\nstruct Rva00206100Entry\n{\n\tunsigned char m_bfmePad000[ 0x14 ];\n\tCoord3D m_bfmePoint;\n};\n\nstruct Rva00206100Fallback\n{\n\tunsigned char m_bfmePad000[ 0x38 ];\n\tCoord3D m_bfmePoint;\n};\n\nclass Rva00206100Owner\n{\npublic:\n\tvoid point( Coord3D *out, int index );\n\n\tunsigned char m_bfmePad000[ 8 ];\n\tRva00206100Fallback *m_bfmeFallback;\n\tunsigned char m_bfmePad00C[ 0x18 ];\n\tRva00206100Entry **m_bfmeFirst;\n\tRva00206100Entry **m_bfmeLast;\n};\n\nvoid Rva00206100Owner::point( Coord3D *out, int index )\n{\n\tconst Coord3D *source;\n\n\tif( index >= 0\n\t\t&& (unsigned int)index < (unsigned int)( m_bfmeLast - m_bfmeFirst ) )\n\t{\n\t\t_ReadWriteBarrier();\n\t\tsource = &m_bfmeFirst[ index ]->m_bfmePoint;\n\t}\n\telse\n\t{\n\t\tsource = &m_bfmeFallback->m_bfmePoint;\n\t}\n\n\t*out = *source;\n}\n"
+}
