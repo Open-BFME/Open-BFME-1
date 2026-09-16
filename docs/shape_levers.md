@@ -862,7 +862,7 @@ not from a guessed STL return convention or an existing ILT label.
 ### Cleanup-bearing members recover a destructor frame
 
 The 339-byte destructor at `0x0058DBC0` previously emitted a 344-byte
-EH-prologue shape. Its unwind entries at VA `0x00C37420`/`0x00C3742B`
+EH-prologue shape. Its unwind entries at RVA `0x00C37420`/`0x00C3742B`
 prove cleanup of fields `+0x20` and `+0x24`. Modeling those as subobjects
 with conditional/unconditional delete destructors reproduces the frame;
 putting equivalent deletes only in the enclosing destructor body loses
