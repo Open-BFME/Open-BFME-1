@@ -1164,13 +1164,11 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 		bool supportDxt2 = retail->supportTextureFormat[101];
 		SupportNPatches = false;
 		retail->supportTextureFormat[100] = false;
+		// Retail reads DXT4 after both stores. Without this barrier MSVC hoists
+		// that read above them and the body comes out two bytes short.
 		_ReadWriteBarrier();
 		bool supportDxt4 = retail->supportTextureFormat[103];
-		bool supportDxtc = supportDxt5;
-		supportDxtc |= supportDxt4;
-		supportDxtc |= supportDxt3;
-		supportDxtc |= supportDxt2;
-		SupportDXTC = supportDxtc;
+		SupportDXTC = supportDxt5 | supportDxt4 | supportDxt3 | supportDxt2;
 	}
 
 	if (VendorId==VENDOR_MATROX) {
@@ -1191,8 +1189,9 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			CanDoMultiPass=false;
 
 			DXLOG(("Disabling render-to-texture on Rage Pro\r\n"));
-			char *renderToTexture = retail->supportRenderToTextureFormat;
-			memset(renderToTexture, 0, sizeof(SupportRenderToTextureFormat));
+			for (unsigned i=0;i<100;++i) {
+				SupportRenderToTextureFormat[i]=false;
+			}
 		}
 
 		// Rage 128 Pro GL is used in ATI Rage Fury Maxx
@@ -1204,8 +1203,9 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			CanDoMultiPass=false;
 
 			DXLOG(("Disabling render-to-texture on ATI Rage 128 Pro GL\r\n"));
-			char *renderToTexture = retail->supportRenderToTextureFormat;
-			memset(renderToTexture, 0, sizeof(SupportRenderToTextureFormat));
+			for (unsigned i=0;i<100;++i) {
+				SupportRenderToTextureFormat[i]=false;
+			}
 
 		}
 
@@ -1233,8 +1233,9 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			DeviceId==DEVICE_ATI_MOBILITY_R7500 ||
 			DeviceId==DEVICE_ATI_R7500) {
 			DXLOG(("Disabling render-to-texture on Radeon\r\n"));
-			char *renderToTexture = retail->supportRenderToTextureFormat;
-			memset(renderToTexture, 0, sizeof(SupportRenderToTextureFormat));
+			for (unsigned i=0;i<100;++i) {
+				SupportRenderToTextureFormat[i]=false;
+			}
 		}
 
 		// CAT-lab reported that selecting anisotorpic filtering on Radeon VE causes a lock up after a while
@@ -1261,8 +1262,9 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 
 		if (DeviceId==DEVICE_3DFX_VOODOO_3) {
 			DXLOG(("Disabling render-to-texture on Voodoo3\r\n"));
-			char *renderToTexture = retail->supportRenderToTextureFormat;
-			memset(renderToTexture, 0, sizeof(SupportRenderToTextureFormat));
+			for (unsigned i=0;i<100;++i) {
+				SupportRenderToTextureFormat[i]=false;
+			}
 		}
 	}
 

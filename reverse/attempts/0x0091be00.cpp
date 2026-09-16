@@ -1,8 +1,10 @@
 // ?Vendor_Specific_Hacks@DX8Caps@@AAEXABU_D3DADAPTER_IDENTIFIER8@@@Z
-// partial score=0.35 date=2026-09-10
+// partial score=0.99 date=2026-09-16
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
+extern "C" void _ReadWriteBarrier( void );
+#pragma intrinsic( _ReadWriteBarrier )
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -1146,12 +1148,12 @@ struct BFME_DX8Caps_VendorFields
 #undef DXLOG
 #define DXLOG(n) CapsWorkString.Format n; retail->capsLog+=CapsWorkString;
 
-// ?Vendor_Specific_Hacks@DX8Caps@@AAEXABU_D3DADAPTER_IDENTIFIER8@@@Z
+// ?Vendor_Specific_Hacks@DX8Caps@@AAEXABU_D3DADAPTER_IDENTIFIER8@@@Z present-unmatched
 void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 {
 	BFME_DX8CAPS_VENDOR_FIELDS
-	if (VendorId==VENDOR_NVIDIA) 
-  {
+	if (VendorId==VENDOR_NVIDIA)
+	{
 		if (SupportNPatches) {
 			DXLOG(("NVidia Driver reported N-Patch support, disabling.\r\n"));
 		}
@@ -1162,14 +1164,13 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 		bool supportDxt5 = retail->supportTextureFormat[104];
 		bool supportDxt3 = retail->supportTextureFormat[102];
 		bool supportDxt2 = retail->supportTextureFormat[101];
-		SupportNPatches = false;	// Driver incorrectly report N-Patch support
-		retail->supportTextureFormat[100] = false;			// DXT1 is broken on NVidia hardware
+		SupportNPatches = false;
+		retail->supportTextureFormat[100] = false;
+		// Retail reads DXT4 after both stores. Without this barrier MSVC hoists
+		// that read above them and the body comes out two bytes short.
+		_ReadWriteBarrier();
 		bool supportDxt4 = retail->supportTextureFormat[103];
-		SupportDXTC=
-			supportDxt5|
-			supportDxt4|
-			supportDxt3|
-			supportDxt2;
+		SupportDXTC = supportDxt5 | supportDxt4 | supportDxt3 | supportDxt2;
 	}
 
 	if (VendorId==VENDOR_MATROX) {
@@ -1190,7 +1191,9 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			CanDoMultiPass=false;
 
 			DXLOG(("Disabling render-to-texture on Rage Pro\r\n"));
-			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
+			for (unsigned i=0;i<100;++i) {
+				SupportRenderToTextureFormat[i]=false;
+			}
 		}
 
 		// Rage 128 Pro GL is used in ATI Rage Fury Maxx
@@ -1202,7 +1205,9 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			CanDoMultiPass=false;
 
 			DXLOG(("Disabling render-to-texture on ATI Rage 128 Pro GL\r\n"));
-			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
+			for (unsigned i=0;i<100;++i) {
+				SupportRenderToTextureFormat[i]=false;
+			}
 
 		}
 
@@ -1230,7 +1235,9 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 			DeviceId==DEVICE_ATI_MOBILITY_R7500 ||
 			DeviceId==DEVICE_ATI_R7500) {
 			DXLOG(("Disabling render-to-texture on Radeon\r\n"));
-			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
+			for (unsigned i=0;i<100;++i) {
+				SupportRenderToTextureFormat[i]=false;
+			}
 		}
 
 		// CAT-lab reported that selecting anisotorpic filtering on Radeon VE causes a lock up after a while
@@ -1257,7 +1264,9 @@ void DX8Caps::Vendor_Specific_Hacks(const D3DADAPTER_IDENTIFIER8& adapter_id)
 
 		if (DeviceId==DEVICE_3DFX_VOODOO_3) {
 			DXLOG(("Disabling render-to-texture on Voodoo3\r\n"));
-			memset(SupportRenderToTextureFormat, 0, sizeof(SupportRenderToTextureFormat));
+			for (unsigned i=0;i<100;++i) {
+				SupportRenderToTextureFormat[i]=false;
+			}
 		}
 	}
 
