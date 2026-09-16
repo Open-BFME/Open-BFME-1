@@ -827,3 +827,13 @@ slot handles the floating-point record in the matched `Rva006ABC60Xfer.cpp`.
 The hinted insertion at `0x006AB6D0` has a hidden iterator output pointer and
 `ret 0x0C`; its delegated insertion at `0x005C7490` allocates `0x18` bytes.
 Do not infer a direct scalar return or a 20-byte node from the caller alone.
+
+
+A nested scope can also recover reuse between two address-taken POD locals.
+The `positionStartSpotControls` bank at `0x0044F960` now combines the proven
+nontrivial Region3D copy ABI with a scope ending the `lr` coordinate after
+width/height calculation. VC7.1 reuses its slot for `tempPos`, restoring the
+retail 427-byte instruction shape and `0x34` frame. Twenty-nine stack-home
+operand bytes still differ, so this is a banked partial, not a conversion.
+Changing the upper-left array to a struct or reordering its declaration did
+not help; grouping its fields with the width increased the frame to `0x3C`.
