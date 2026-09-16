@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f6ff518ee198dccfb63700a1eac821ade2dba694f22187fe1b588e265b4c473b",
+  "symbol": "?DivideInternalFPF@@YAXPAUInternalFPF@@00@Z",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?DivideInternalFPF@@YAXPAUInternalFPF@@00@Z\n// partial score=0.95 date=2026-09-15\n// cl: /O2 /GS /MD /GR- /EHsc-\n#include \"emfloat.c\"\n"
+}
