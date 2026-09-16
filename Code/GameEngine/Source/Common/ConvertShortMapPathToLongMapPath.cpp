@@ -102,6 +102,8 @@ public:
 	{
 		StringBase<char>::set(reinterpret_cast<const StringBase<char> &>(other));
 	}
+
+	AsciiString &operator=(const char *text);
 };
 
 __declspec(noinline) static void ConvertShortMapPathToLongMapPath(AsciiString &mapName)
@@ -144,4 +146,41 @@ done:
 void ConvertShortMapPathToLongMapPathAnchor(AsciiString &mapName)
 {
     ConvertShortMapPathToLongMapPath(mapName);
+}
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
+struct Rva006C9270GlobalData
+{
+	unsigned char m_bfmePad000[0xB80];
+	AsciiString m_bfmeMapNameB80;
+	unsigned char m_bfmePadB84[4];
+	bool m_bfmeFlagB88;
+};
+
+extern Rva006C9270GlobalData *TheWritableGlobalData;
+
+int Rva00062CA0ParseMapName(char **arguments, int count)
+{
+	TheWritableGlobalData->m_bfmeFlagB88 = 1;
+
+	if (count > 1)
+	{
+		TheWritableGlobalData->m_bfmeMapNameB80 = arguments[1];
+		ConvertShortMapPathToLongMapPath(TheWritableGlobalData->m_bfmeMapNameB80);
+	}
+
+	return 2;
+}
+
+int Rva00062C50ParseMapName(char **arguments, int count)
+{
+	Rva006C9270GlobalData *data = TheWritableGlobalData;
+
+	if (data != 0 && count > 1)
+	{
+		data->m_bfmeMapNameB80 = arguments[1];
+		ConvertShortMapPathToLongMapPath(TheWritableGlobalData->m_bfmeMapNameB80);
+	}
+
+	return 2;
 }
