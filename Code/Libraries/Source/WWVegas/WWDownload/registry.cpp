@@ -180,6 +180,27 @@ bool setStringInRegistry( HKEY root, RegistryString path, RegistryString key, Re
 	return (returnValue == ERROR_SUCCESS);
 }
 
+bool setUnsignedIntInRegistry( HKEY root, RegistryString path, RegistryString key, unsigned int val )
+{
+	HKEY handle;
+	unsigned long type;
+	unsigned long returnValue;
+	int size;
+
+	if ((returnValue = RegCreateKeyEx( root, path.c_str(), 0, "REG_NONE",
+	                                  REG_OPTION_NON_VOLATILE, KEY_WRITE, NULL,
+	                                  &handle, NULL )) == ERROR_SUCCESS)
+	{
+		type = REG_DWORD;
+		size = 4;
+		returnValue = RegSetValueEx( handle, key.c_str(), 0, type,
+		                             (unsigned char *)&val, size );
+		RegCloseKey( handle );
+	}
+
+	return (returnValue == ERROR_SUCCESS);
+}
+
 bool SetStringInRegistry( RegistryString path, RegistryString key, RegistryString val )
 {
 	RegistryString fullPath =
