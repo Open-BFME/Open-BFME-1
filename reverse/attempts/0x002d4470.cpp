@@ -9,7 +9,7 @@
 // before attempting the newly completed upgrade, establishing the BFME
 // removal-hook identity rather than the later Zero Hour implementation name.
 
-#include "../../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "../../Code/Libraries/Source/WWVegas/WWLib/string_base.h"
 
 typedef bool Bool;
 
