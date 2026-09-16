@@ -96,6 +96,20 @@ reusing the earlier Object local. Preserve that reload and the observed
 null-target branch; do not initialize or copy coordinates on a path where
 retail does neither merely to make the reconstruction look safer.
 
+The 250-byte Lightning emission velocity method at `0x005FB220` needs the
+global, non-trivial `Coord3D` class and the emission interface's secondary
+receiver at enclosing-object `+0x18`. A trivial namespaced return struct is
+not the same ABI evidence even when its three floats fit. For the x87 body,
+retain the upstream LINE algorithm's statement order: default-construct
+`up`, assign its components `0.0, 0.0, 1.0` separately, perform the two native
+static `crossProduct` calls, then assign each result component as
+`perp.component * speed + up.component * radialSpeed` before returning the
+named `Coord3D`. Value-constructor initialization and flattened scalar
+reconstructions produced different x87 schedules. Independently verify the
+referenced float constants and installed interface table, not just masked
+bytes. This is a source-level lifetime and expression-order lever, not a
+reason to insert floating-point assembly.
+
 ## Model-condition bit masks: retain the native accessor layers
 
 When retail materializes a constant mask in a register (`mov eax,mask;
