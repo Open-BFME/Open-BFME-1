@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6cf2d082079bce7140b5b9eae0348de509817c7ad284968ca583515af80e909f",
+  "symbol": "??1Rva005E2C70@@UAE@XZ",
+  "score_kind": "author-estimate",
+  "score": 0.84,
+  "source": "// ??1Rva005E2C70@@UAE@XZ\n// partial score=0.84 date=2026-09-16\n// cl: /DNDEBUG /MD\n// The vtable stores, base offsets, and the 0x00013994 unlink tail identify\n// this body as an implicit destructor in the V3 multiple-inheritance family.\n// The fourth base wraps BfmeBaseVUQ at +0x20 and a StringBase member at +0x24.\n\nstruct GenOwner_006fa270;\n\nstruct GenNode_006fa270\n{\n\tGenOwner_006fa270 *m_owner;\n\tGenNode_006fa270 *m_prev;\n\tGenNode_006fa270 *m_next;\n\n\tvoid unlink(void);\n\n\t~GenNode_006fa270(void) { unlink(); }\n};\n\nclass V3NodeHead\n{\npublic:\n\tvirtual ~V3NodeHead() { }\n\tGenNode_006fa270 m_node;\n\tint m_unreconstructed_10;\n};\n\nclass V3Vt1110830\n{\npublic:\n\tvirtual ~V3Vt1110830() { }\n};\n\nclass V3Vt107375CWide\n{\npublic:\n\tvirtual ~V3Vt107375CWide() { }\n\tint m_unreconstructed_04;\n};\n\ntemplate <typename T>\nclass StringBase\n{\npublic:\n\t~StringBase() throw() { releaseBuffer(); }\n\tvoid *m_data;\n\nprivate:\n\tvoid releaseBuffer();\n};\n\nclass BfmeBaseVUQ\n{\npublic:\n\tvirtual ~BfmeBaseVUQ();\n};\n\nBfmeBaseVUQ::~BfmeBaseVUQ()\n{\n}\n\nclass BfmeStringBaseVUQ : public BfmeBaseVUQ\n{\n\tpublic:\n\tStringBase<char> m_str;\n};\n\n#define V3_MI_STR_DTOR(NAME) \\\n\tclass NAME : public V3NodeHead, public V3Vt1110830, public V3Vt107375CWide, public BfmeStringBaseVUQ \\\n\t{ \\\n\t}; \\\n\tvoid use##NAME() \\\n\t{ \\\n\t\tNAME t; \\\n\t}\n\nV3_MI_STR_DTOR(Rva005E2C70)\nV3_MI_STR_DTOR(Rva005E2D20)\n"
+}
