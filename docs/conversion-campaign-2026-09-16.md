@@ -123,5 +123,72 @@ repository-wide green build is claimed. Reusable Xfer/x87 findings are in
 `docs/throughput-tools.md`.
 
 Local transcripts, briefs, snapshots and active assignments live under
-`build/orchestrator-20260916/` (untracked). Next assessment is due around
-16:25 UTC. The 36-hour campaign remains in progress.
+`build/orchestrator-20260916/` (untracked). The 36-hour campaign remains in progress.
+
+
+### Hour 2 — 15:25:37 to 16:25:21 UTC
+
+Snapshot: `969a884d8a` (after synchronization and ledger validation).
+
+| Metric | Change during interval |
+|---|---:|
+| Fleet: verified/pushed dump-to-C++ bodies | 9 |
+| Fleet: authored/rebuildable bytes | +2,040 B / +0.02103 pp |
+| All contributors: rebuildable/authored bytes | +4,620 B / +0.04762 pp |
+| All contributors: generated/vendor/prebuilt bytes | 0 B |
+| All contributors: total exact coverage | 0 B |
+| Fleet cumulative | 19 bodies / 4,856 B / +0.05005 pp |
+
+Fleet byte output fell 27.6% from hour one's 2,816 B. Repository-wide authored
+output rose from 4,234 to 4,620 B; 2,580 B of this interval came from other
+contributors. Current rebuildability is 6,339,041 B of 9,702,173 non-padding
+bytes. These are transfers out of existing dumps, not new exact coverage.
+
+| RVA | Bytes | Result |
+|---|---:|---|
+| 0x00339120 | 146 | Opaque particle-template allocation |
+| 0x00900E40 | 417 | Alternate constructor with native StringClass lifetime |
+| 0x000941D0 | 233 | INI integer-definition parser |
+| 0x004525B0 | 152 | STL tree equality over string-shaped keys |
+| 0x001CCB20 | 400 | Object condition propagation |
+| 0x00606E60 | 207 | Native STL tree copy constructor |
+| 0x004233A0 | 146 | Eva position-aware trigger flag update |
+| 0x006A0730 | 169 | Pointer-key hash insertion |
+| 0x006070E0 | 170 | Native tree aggregate constructor |
+
+Native STL layouts and related constructors produced reusable evidence:
+`0x00606E60` establishes the node/payload sizes used by `0x006070E0`;
+grouping the latter's prefix subobject reproduces its exception state.
+The pointer-key insertion disproved a stale generated payload name using
+its eight-byte node allocation. The earlier 26-byte forwarder's unproven
+containment wording was corrected without claiming new bytes.
+
+The renderer and audio investigations produced independently recompiled banks,
+but no conversions. Map-image setup improved from 492 to 279 differing
+non-relocation bytes and remains 32 bytes short of its complete 659-byte
+boundary. Existing author scores were not inflated to promote the newer bank.
+The Player helper's previously disputed two-argument callee ABI was proved;
+its new 156-byte bank still differs in two register bytes and earns no progress.
+
+The fuzzy donor scan now uses the shared eligibility rules and active claims,
+streams ledger rows, caches repeated byte masks, and honors `--help`. A wider
+scan produced 14 leads before filtering and nine live/unclaimed leads afterward;
+retired and busy addresses were independently checked. This tooling contributes
+zero bytes to the completion figures.
+
+Hour 3 allocation: retain native STL map/tree and related constructor work in
+lanes 2, 5 and 10; continue the nearly exact Eva parser with header/identity
+review before its larger sibling. Lane 4 now handles a smaller file-opening
+routine from its served file. Finish the short Object and map-filter siblings
+under bounded timeboxes. Retire the renderer and texture investigations after
+the current measured probes, and move those slots to fresh donor-backed
+vector/script work. Lane 9 was stopped after a second long ABI-only W3D round
+and reassigned to a 238-byte Team lookup with a verified donor. No speculative
+helper pins or unmeasured sources were integrated.
+
+All nine landings passed independent scoped builds and normal commit/push
+hooks. The own-row sweep found 19 unique addresses backed by tracked C++.
+One push raced another contributor; rebase, ledger recheck and normal retry
+succeeded. The same repository-wide build limitation reported in hour 1
+remains; this assessment does not claim a full green gate.
+Next assessment is due around 17:25 UTC.
