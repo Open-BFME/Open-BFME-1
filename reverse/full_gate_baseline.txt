@@ -4,7 +4,6 @@
 ??1GiantBirdAIUpdate@@UAE@XZ (Code/GameEngine/Source/Common/GiantBirdAIUpdateDestructorThunk.cpp)
 ??1NameKeyGenerator@@UAE@XZ (Code/GameEngine/Source/Common/NameKeyGenerator.cpp)
 ??1W3DDisplayString@@MAE@XZ (Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp)
-??2Bucket@@SAPAXIW4BucketMagicEnum@0@@Z (Code/GameEngine/Source/Common/NameKeyGenerator.cpp)
 ??4AddInfoStruct@MixFileFactoryClass@@QAEAAU01@ABU01@@Z (Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp)
 ??4FileInfoStruct@MixFileCreator@@QAEAAU01@ABU01@@Z (Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp)
 ??A?$map@HPAU_SBServer@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHPAU_SBServer@@@_STL@@@3@@_STL@@QAEAAPAU_SBServer@@ABH@Z (Code/GameEngine/Source/GameNetwork/GameSpy/Thread/PeerThread.cpp)
