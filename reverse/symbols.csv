@@ -83542,7 +83542,6 @@ name,address,notes
 ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAURva003E81E0Struct@@@Z,0x00023DDF,ILT thunk to the cell-space line walk at 0x003E81E0 reached only from its world-space forwarder
 ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAURva003E8440Struct@@@Z,0x0001DAA2,ILT thunk to the cell-space line walk at 0x003E8440 reached only from its world-space forwarder
 ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAURva003F1CA0Struct@@@Z,0x0003EBC1,ILT thunk to the cell-space line walk at 0x003F1CA0 reached only from its world-space forwarder
-?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUViewAttackBlockedStruct@@@Z,0x0000CC1B,ILT thunk to the cell-space line walk at 0x003E3190 reached only from its world-space forwarder
 ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAVBfmeCheckMovementInfo@@@Z,0x00029DF7,isLinePassable 0x003EE8D0 cell-space walk (same ILT as Rva003E7F80Struct)
 ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAVRva003DB640Info@@@Z,0x00023DDF,lineBlocked 0x003EE850 cell-space walk (same ILT as Rva003E81E0Struct)
 ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAVRva003E5A50Info@@@Z,0x0001DAA2,lineClear 0x003EE970 cell-space walk (same ILT as Rva003E8440Struct)
