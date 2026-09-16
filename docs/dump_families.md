@@ -104,3 +104,46 @@ and `0x002184D0` (263); use `tools/callers_of.py`, the exact string headers,
 and `tools/callees.py` before naming any owner.  Families 17 onward should
 be skipped only when their anchor is a DX8Wrapper state/helper that belongs
 to the W3D lane.
+
+## Family 16: Unicode/StringBase formatting contract
+
+The live family-16 scan is 45 bodies / 65,283 bytes.  This is a shared call
+contract rather than one newly proven global owner: the anchor is
+`UnicodeString::format` at RVA `0x00889190`, and 23 members also call the wide
+`StringBase<wchar_t>` constructor at RVA `0x00888DE0`.  The common cleanup
+callee is `StringBase<wchar_t>::releaseBuffer` at `0x008881D0`; narrow-string
+members use the corresponding canonical `StringBase<char>`/`AsciiString`
+declarations.  These are existing ledger identities, not new speculative
+pins.
+
+The declaration belongs in
+`reference/shims/stringbaseunicode/Common/UnicodeString.h` and its canonical
+`StringBase` include path.  A candidate that also needs narrow strings must
+use the existing ASCII shim selected by that source; do not add a local
+UnicodeString, StringBase, or GameSpy text-object stand-in.  The working
+compile contract is `/DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+/D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC` with the relevant
+`reference/shims/stringbaseunicode` and
+`reference/shims/asciistring_downloadmanager` include roots.  Run
+`tools/callees.py` on each body first and pin only a callee whose identity is
+independently established.
+
+The smallest anonymous bodies `0x005867D0` (185) and `0x00591A60` (195) are
+not safe source owners: both have a live-in ESI contract, no named caller,
+and no clean emitter.  The first ordinary candidate, `0x002184D0`, is proven
+as `SalvageCrateCollide::executeCrateBehavior` by its vtable slot, caller, and
+callee set.  Its clean C++ bank is size-exact (263/263, 15 relocation sites)
+with six non-relocation bytes remaining: MSVC chooses EBP where retail uses
+EBX for the module-data pointer, and emits EH state 0 where retail emits 5.
+Local-order, pointer-type, declaration, and compiler-flag probes did not
+move those bytes.  This is a banked near miss, not a landed body.
+
+Recipe for the swarm: include the canonical Unicode/StringBase headers, use
+the exact by-value temporary and `format` call shape witnessed by the retail
+body, compile with the flags above, and compare the full range with the byte
+gate.  The first useful lever is preserving the canonical temporary lifetime
+through `releaseBuffer`; do not replace it with a helper or a guessed global.
+The family has a verdict for every member and is unlocked in
+`reverse/unlocked.txt` with the `fam16` tag.  Family 17 shares the wide-string
+constructor and can reuse this recipe, but still needs its own per-body
+identity and byte verdict.
