@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "27361375640f9be2a198b96c983bc8c8f68a1904a69c05c4909aa9d38e450f65",
+  "symbol": "?rva001CDBE0@Object@@QBE_NXZ",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?rva001CDBE0@Object@@QBE_NXZ\n// partial score=0.85 date=2026-09-09\n// cl: /DNDEBUG /MD /EHsc\n// True when TheGameLogic is live, testStatus(0x25) is clear, and\n// GameLogic::m_frame >= Object::m_safeOcclusionFrame at this+0x334.\n\ntypedef bool Bool;\ntypedef unsigned int UnsignedInt;\n\nenum ObjectStatusTypes\n{\n\tOBJECT_STATUS_BIT_25 = 0x25\n};\n\nclass GameLogic\n{\npublic:\n\tunsigned char m_pad[0x3c];\n\tUnsignedInt m_frame;\n};\n\nextern GameLogic *TheGameLogic;\n\nclass Object\n{\npublic:\n\tBool testStatus(ObjectStatusTypes s) const;\n\tBool rva001CDBE0() const;\n\nprivate:\n\tunsigned char m_pad[0x334];\n\tUnsignedInt m_safeOcclusionFrame;\n};\n\nBool Object::rva001CDBE0() const\n{\n\tconst GameLogic *gameLogic = TheGameLogic;\n\tif (gameLogic == 0)\n\t\treturn false;\n\tconst Object *self = this;\n\tBool bad = self->testStatus(OBJECT_STATUS_BIT_25);\n\tif (!bad)\n\t\tbad = gameLogic->m_frame < self->m_safeOcclusionFrame;\n\treturn bad ? false : true;\n}\n"
+}
