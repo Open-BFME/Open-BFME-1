@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ce75a48356f27656ec42a01213106f4908cab892c4928c8ba59b63ad4c1633b3",
+  "symbol": "?expire@Rva0017DD40Host@@QAEHXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?expire@Rva0017DD40Host@@QAEHXZ\n// partial score=0.97 date=2026-09-16\n// cl: /DNDEBUG /DWIN32 /MD /EHsc\n//\n// Retail 0x0017DD40 refuses to act until the logic frame reaches the deadline\n// at +0x24, then clears one object status bit. The callee is the ILT 0x000307E7\n// thunk that reverse/symbols.csv names Object::setStatus over a BitFlags<86>.\n// The host class name is address-derived because no vtable slot or named caller\n// reaches the body.\n\nextern \"C\" void *__cdecl memset( void *dest, int value, unsigned int count );\n\ntemplate <int N>\nclass BitFlags\n{\npublic:\n\tunsigned int m_bfmeWords[ 3 ];\n};\n\nclass GameLogic\n{\npublic:\n\tunsigned char m_bfmePad000[ 0x3c ];\n\tunsigned int m_bfmeFrame;\n};\n\nextern GameLogic *TheBfmeGameLogic;\n\nclass Object\n{\npublic:\n\tvoid setStatus( const BitFlags<86> &flags, bool set );\n};\n\nclass Rva0017DD40Host\n{\npublic:\n\tint expire();\n\nprivate:\n\tunsigned char m_bfmePad000[ 0x10 ];\n\tObject *m_bfmeInner;\n\tunsigned char m_bfmePad014[ 8 ];\n\tRva0017DD40Host *m_bfmeOwner;\n\tunsigned char m_bfmePad020[ 4 ];\n\tunsigned int m_bfmeDeadline;\n};\n\nint Rva0017DD40Host::expire()\n{\n\tif( m_bfmeDeadline < TheBfmeGameLogic->m_bfmeFrame )\n\t\treturn -1;\n\n\tObject *obj = m_bfmeOwner->m_bfmeInner;\n\n\tBitFlags<86> flags;\n\n\tmemset( flags.m_bfmeWords, 0, 12 );\n\tflags.m_bfmeWords[ 0 ] |= 0x400000;\n\n\tobj->setStatus( flags, false );\n\n\treturn 0;\n}\n"
+}

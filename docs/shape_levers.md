@@ -493,3 +493,23 @@ the two operands never survives to the encoder. Within one body retail stays
 consistent and our build does not. `0x005A0450` and `0x0078D410` each contain
 two leas of the same shape, and in both we match the second and miss the first.
 Bank the body and take another one. Do not spend a session on this byte.
+
+## A constructor's store order comes from the initializer list
+
+Retail constructors emit their stores in the order of the member-initializer
+list, and the body's statements follow after. Writing every store as a body
+statement gives MSVC one flat list to schedule, and it reorders freely. Moving
+the same stores into the initializer list pins them.
+
+An initializer list also changes how a bitfield clear compiles. A narrow bitfield initialized in the list
+compiles to a register read-modify-write, `mov cl, [esi+0x20]` then `and cl,
+0xf8` then the store back, while the same clear written in the body folds to a
+single `and byte ptr [esi+0x20], 0xf8` and loses three bytes. Declaring the
+flag word as `unsigned char m_bits : 3` and initializing it with `m_bits( 0 )`
+is what produced retail's form at `0x004945E0` (72 B, landed 2026-09-16).
+
+Do not reach for a barrier inside a constructor. `_WriteBarrier()` after a
+member store does pin that store, and on `0x004945E0` it matched the first
+sixteen bytes exactly. It also drags the implicit vptr store up to the barrier,
+and retail writes the vptr after the member stores, so the body loses more
+bytes than it gains.
