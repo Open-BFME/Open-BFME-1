@@ -1,6 +1,7 @@
 class BfmeLexEAN
 {
 public:
+	BfmeLexEAN(char *text, char *buffer, int limit);
 	int bfmeScanEAN();
 	char bfmeExpandEAN(char *out);
 	int bfmeFailEAN(int code);
@@ -13,6 +14,10 @@ public:
 	char *m_bfmeBufEAN;
 	int m_bfmeLimitEAN;
 	char *m_bfmeTailEAN;
+	int m_bfmeDepthEAN;
+	unsigned char m_bfmeSeenEAN;
+	int m_bfmeMarkEAN;
+	int m_bfmeStackEAN[0x61];
 };
 
 struct BfmeEntityEAN
@@ -24,6 +29,31 @@ struct BfmeEntityEAN
 
 extern BfmeEntityEAN g_bfmeEntityTableEAN[]; // retail 0x012B3ED0
 __declspec(dllimport) int __cdecl bfmeCmp1026(char *left, char *right, int count);
+extern "C" void *__cdecl memset(void *destination, int value, unsigned int count);
+#pragma intrinsic(memset)
+
+BfmeLexEAN::BfmeLexEAN(char *text, char *buffer, int limit)
+{
+	m_bfmeBufEAN = buffer;
+	m_bfmeLimitEAN = limit;
+	m_bfmeTailEAN = 0;
+	m_bfmeDepthEAN = 0;
+	m_bfmeSeenEAN = 0;
+	m_bfmeMarkEAN = 0;
+
+	memset(this, 0, 0x14);
+	m_bfmeLineNumberEAN = 1;
+	memset(m_bfmeStackEAN, 0, sizeof(m_bfmeStackEAN));
+
+	m_bfmePosEAN = text;
+	if (text[0] == 0x3C && text[1] == 0x3F)
+	{
+		if (bfmeCmp1026(text, "<?xml version=\"1.0\"?>", 0x15) != 0)
+			m_bfmePosEAN = 0;
+
+		m_bfmePosEAN += 0x15;
+	}
+}
 
 char BfmeLexEAN::bfmeExpandEAN(char *out)
 {
