@@ -664,3 +664,4 @@ Code/Libraries/Source/WWVegas/WW3D2/SegmentedLineRenderSegLineThunk.cpp	SegLineR
 Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Gen_007639E0_ObjectDrawLookup.cpp	UnicodeString	Code\GameEngineDevice\Source\W3DDevice\GameClient\Drawable\Draw\Gen_007639E0_ObjectDrawLookup.cpp(70) : error C2039: 'set' : is not a member of 'UnicodeString'
 Code/GameEngine/Source/GameClient/GUI/Rva0051DA30StartGameMode7.cpp	AsciiString	Functions: FAIL 1/1
 Code/GameEngine/Source/GameClient/GUI/AptMainMenuConstructor.cpp	UnicodeString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
+Code/GameEngine/Source/GameClient/CollectAssets0077F570.cpp	AsciiString	Functions: FAIL 1/1
