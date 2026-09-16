@@ -2596,6 +2596,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 //-------------------------------------------------------------------------------------------------
 /** Lan Game Options menu input callback */
 //-------------------------------------------------------------------------------------------------
+// ?WOLGameSetupMenuInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z present-unmatched
 WindowMsgHandledType WOLGameSetupMenuInput( GameWindow *window, UnsignedInt msg,
 																			 WindowMsgData mData1, WindowMsgData mData2 )
 {
