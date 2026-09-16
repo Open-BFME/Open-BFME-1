@@ -1,52 +1,147 @@
 // ?d_007ce290@@YAXXZ
-// partial score=0.12 date=2026-09-02
-// cl: /DNDEBUG /MD
-//
-// Near-miss notes for the large filter postRender bodies in
-// Code/gen_asm/d_007ccf50.asm:
-//   0x007CCF50 size 3931  FUN_00bccf50
-//   0x007CE290 size 8147  FUN_00bce290
-//   0x007D3D40 size 1817  FUN_00bd3d40
-//
-// All three are thiscall, ret 4 (one stack arg) or ret 10h (mode + Coord2D by
-// value + bool&), with C++ EH.  The 111-byte ScreenDefaultFilter::postRender
-// at 0x007D46D0 (already landed) is the small sibling: endRenderToTexture via
-// ILT 0x3FAC6, virtual set at vtable+0x14, device SetTexture at +0x104
-// (_g_bfmeO1145), blit helper ILT 0x196A0 as bfmeDrawFilterUV(-1, 0, &uv1_1),
-// virtual reset at +0x18.  The large bodies unroll many DrawImage / set-clip
-// / UnicodeString sequences (the same helper family as BfmeConv1145) instead
-// of a single blit.  Port from ZH ScreenBWFilter / ScreenCrossFadeFilter /
-// ScreenMotionBlurFilter::postRender and replace the DrawPrimitiveUP quad
-// with those helpers.  Do not lift the dump.
-
-struct Coord2D
+// partial score=0.44 date=2026-09-16
+// Candidate tested in W3DShaderManager.cpp for retail 0x007CE290.
+// Retail identity: FlatTerrainShader2Stage::set(Int), 8147 bytes.
+// Supporting BFME_SET_* and bfme* helpers remain in that TU.
+Int FlatTerrainShader2Stage::set(Int pass)
 {
-	float x;
-	float y;
-};
+	BoxSetTexture(0, (TextureBaseClass *&)bfmeGet(0));
+	BoxSetTexture(1, (TextureBaseClass *&)bfmeGet(1));
+	DX8Wrapper::Apply_Render_State_Changes();
 
-void *__cdecl bfmeEndRenderToTexture(void);
-void __cdecl bfmeDrawFilterUV(int a, int b, Coord2D *uv);
+	if (TheGlobalData && TheGlobalData->m_bilinearTerrainTex || TheGlobalData->m_trilinearTerrainTex) {
+		BFME_SET_SAMP(0, BFME_SAMP_MINFILTER, D3DTEXF_LINEAR);
+		BFME_SET_SAMP(0, BFME_SAMP_MAGFILTER, D3DTEXF_LINEAR);
+		BFME_SET_SAMP(1, BFME_SAMP_MINFILTER, D3DTEXF_LINEAR);
+		BFME_SET_SAMP(1, BFME_SAMP_MAGFILTER, D3DTEXF_LINEAR);
+	} else {
+		BFME_SET_SAMP(0, BFME_SAMP_MINFILTER, D3DTEXF_POINT);
+		BFME_SET_SAMP(0, BFME_SAMP_MAGFILTER, D3DTEXF_POINT);
+		BFME_SET_SAMP(1, BFME_SAMP_MINFILTER, D3DTEXF_POINT);
+		BFME_SET_SAMP(1, BFME_SAMP_MAGFILTER, D3DTEXF_POINT);
+	}
+	if (TheGlobalData && TheGlobalData->m_trilinearTerrainTex) {
+		BFME_SET_SAMP(0, BFME_SAMP_MIPFILTER, D3DTEXF_LINEAR);
+		BFME_SET_SAMP(1, BFME_SAMP_MIPFILTER, D3DTEXF_LINEAR);
+	} else {
+		BFME_SET_SAMP(0, BFME_SAMP_MIPFILTER, D3DTEXF_POINT);
+		BFME_SET_SAMP(1, BFME_SAMP_MIPFILTER, D3DTEXF_POINT);
+	}
 
-class ScreenFilterPostRenderLarge
-{
-public:
-	virtual int set(int mode);
-	virtual void reset();
-	bool postRender(int mode, Coord2D scroll, bool &extra);
-};
-
-bool ScreenFilterPostRenderLarge::postRender(int mode, Coord2D scroll, bool &extra)
-{
-	void *tex = bfmeEndRenderToTexture();
-	if (!tex)
-		return false;
-	if (!set(mode))
-		return false;
-	Coord2D uv;
-	uv.x = 1.0f;
-	uv.y = 1.0f;
-	bfmeDrawFilterUV(-1, 0, &uv);
-	reset();
-	return true;
+	switch (pass)
+	{
+	case 0:
+		BFME_SET_SAMP(0, BFME_SAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+		BFME_SET_SAMP(0, BFME_SAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+		BFME_SET_TSS(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		BFME_SET_TSS(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+		if (W3DShaderManager::getShaderTexture(0)) {
+			bfmeSetTexture(0, W3DShaderManager::getShaderTexture(0)->Peek_D3D_Texture());
+			BFME_SET_TSS(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+			BFME_SET_TSS(0, D3DTSS_COLORARG2, D3DTA_CURRENT);
+			BFME_SET_TSS(0, D3DTSS_COLOROP, D3DTOP_MODULATE);
+			BFME_SET_TSS(0, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+			BFME_SET_TSS(0, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
+			BFME_SET_TSS(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
+			W3DShroud *shroud;
+			if ((shroud=TheTerrainRenderObject->getShroud()) != 0)
+			{
+				D3DXMATRIX inv;
+				float det;
+				Matrix4x4 curView;
+				DX8Wrapper::_Get_DX8_Transform(D3DTS_VIEW, curView);
+				D3DXMatrixInverse(&inv, &det, (D3DXMATRIX*)&curView);
+				D3DXMATRIX scale,offset;
+				float xoffset = 0;
+				float yoffset = 0;
+				Real width=shroud->getCellWidth();
+				Real height=shroud->getCellHeight();
+				if (TheTerrainRenderObject->getMap()) {
+					xoffset = -(float)shroud->getDrawOriginX() + width;
+					yoffset = -(float)shroud->getDrawOriginY() + height;
+				}
+				D3DXMatrixTranslation(&offset, xoffset, yoffset,0);
+				width = 1.0f/(width*shroud->getTextureWidth());
+				height = 1.0f/(height*shroud->getTextureHeight());
+				D3DXMatrixScaling(&scale, width, height, 1);
+				*((D3DXMATRIX *)&curView) = (inv * offset) * scale;
+				DX8Wrapper::_Set_DX8_Transform((D3DTRANSFORMSTATETYPE )(D3DTS_TEXTURE0), *((Matrix4x4*)&curView));
+			}
+		} else {
+			BFME_SET_TSS(0, D3DTSS_COLOROP, D3DTOP_SELECTARG2);
+			BFME_SET_TSS(0, D3DTSS_TEXCOORDINDEX, 0);
+		}
+		BFME_SET_TSS(0, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+		BFME_SET_SAMP(1, BFME_SAMP_ADDRESSU, D3DTADDRESS_CLAMP);
+		BFME_SET_SAMP(1, BFME_SAMP_ADDRESSV, D3DTADDRESS_CLAMP);
+		BFME_SET_TSS(1, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		BFME_SET_TSS(1, D3DTSS_COLORARG2, D3DTA_CURRENT);
+		BFME_SET_TSS(1, D3DTSS_COLOROP, D3DTOP_MODULATE);
+		BFME_SET_TSS(1, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+		BFME_SET_TSS(1, D3DTSS_TEXCOORDINDEX, 0);
+		BFME_SET_TSS(1, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_DISABLE);
+		BFME_SET_TSS(1, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_PASSTHRU|0);
+		BFME_SET_RS(D3DRS_ALPHABLENDENABLE, false);
+		break;
+	case 1:
+		Matrix4x4 curView;
+		DX8Wrapper::_Get_DX8_Transform(D3DTS_VIEW, curView);
+		BFME_SET_TSS(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+		BFME_SET_TSS(0, D3DTSS_COLORARG2, D3DTA_DIFFUSE);
+		BFME_SET_TSS(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+		BFME_SET_TSS(0, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+		BFME_SET_TSS(0, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
+		BFME_SET_TSS(0, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
+		BFME_SET_SAMP(0, BFME_SAMP_ADDRESSU, D3DTADDRESS_WRAP);
+		BFME_SET_SAMP(0, BFME_SAMP_ADDRESSV, D3DTADDRESS_WRAP);
+		BFME_SET_RS(D3DRS_ALPHABLENDENABLE, true);
+		BFME_SET_RS(D3DRS_SRCBLEND, D3DBLEND_DESTCOLOR);
+		BFME_SET_RS(D3DRS_DESTBLEND, D3DBLEND_ZERO);
+		D3DXMATRIX inv;
+		float det;
+		D3DXMatrixInverse(&inv, &det, (D3DXMATRIX*)&curView);
+		if (W3DShaderManager::getCurrentShader() == W3DShaderManager::ST_FLAT_TERRAIN_BASE_NOISE12)
+		{
+			terrainShader2Stage.updateNoise1(((D3DXMATRIX*)&curView),&inv);
+			DX8Wrapper::_Set_DX8_Transform(D3DTS_TEXTURE0, curView);
+			BFME_SET_SAMP(0, BFME_SAMP_MINFILTER, D3DTEXF_LINEAR);
+			BFME_SET_SAMP(0, BFME_SAMP_MAGFILTER, D3DTEXF_LINEAR);
+			bfmeSetTexture(0, W3DShaderManager::getShaderTexture(2)->Peek_D3D_Texture());
+			terrainShader2Stage.updateNoise2(((D3DXMATRIX*)&curView),&inv);
+			DX8Wrapper::_Set_DX8_Transform(D3DTS_TEXTURE1, curView);
+			BFME_SET_SAMP(1, BFME_SAMP_MINFILTER, D3DTEXF_POINT);
+			BFME_SET_SAMP(1, BFME_SAMP_MAGFILTER, D3DTEXF_LINEAR);
+			BFME_SET_TSS(1, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+			BFME_SET_TSS(1, D3DTSS_COLORARG2, D3DTA_CURRENT);
+			BFME_SET_TSS(1, D3DTSS_COLOROP, D3DTOP_MODULATE);
+			BFME_SET_TSS(1, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+			BFME_SET_TSS(1, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_CAMERASPACEPOSITION);
+			BFME_SET_TSS(1, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
+			BFME_SET_SAMP(1, BFME_SAMP_ADDRESSU, D3DTADDRESS_WRAP);
+			BFME_SET_SAMP(1, BFME_SAMP_ADDRESSV, D3DTADDRESS_WRAP);
+			bfmeSetTexture(1, W3DShaderManager::getShaderTexture(3)->Peek_D3D_Texture());
+		}
+		else
+		{
+			if (W3DShaderManager::getCurrentShader() == W3DShaderManager::ST_FLAT_TERRAIN_BASE_NOISE1)
+			{
+				bfmeSetTexture(0, W3DShaderManager::getShaderTexture(2)->Peek_D3D_Texture());
+				terrainShader2Stage.updateNoise1(((D3DXMATRIX*)&curView),&inv);
+				BFME_SET_SAMP(0, BFME_SAMP_MINFILTER, D3DTEXF_LINEAR);
+				BFME_SET_SAMP(0, BFME_SAMP_MAGFILTER, D3DTEXF_LINEAR);
+			}
+			else
+			{
+				bfmeSetTexture(0, W3DShaderManager::getShaderTexture(3)->Peek_D3D_Texture());
+				terrainShader2Stage.updateNoise2(((D3DXMATRIX*)&curView),&inv);
+				BFME_SET_SAMP(1, BFME_SAMP_MINFILTER, D3DTEXF_POINT);
+				BFME_SET_SAMP(1, BFME_SAMP_MAGFILTER, D3DTEXF_LINEAR);
+			}
+			BFME_SET_TSS(1, D3DTSS_COLOROP, D3DTOP_DISABLE);
+			BFME_SET_TSS(1, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
+			DX8Wrapper::_Set_DX8_Transform(D3DTS_TEXTURE0, *((Matrix4x4*)&curView));
+		}
+		break;
+	}
+	return TRUE;
 }

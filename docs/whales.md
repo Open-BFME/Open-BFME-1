@@ -153,3 +153,10 @@ shape supported by another matched APT string initializer.
 No rows were added to `reverse/unlocked.txt`: this partial establishes the
 callee/layout hypothesis for this body, but does not land a shared shim or a
 byte-verified source body that would unlock a neighbour.
+## 0x007CE290 - FlatTerrainShader2Stage::set
+
+- Status: banked partial, not landed. The preferred source is `reverse/attempts/0x007ce290.cpp`; the retail body is the anonymous `?d_007ce290@@YAXXZ` row in `Code/gen_asm/d_007ccf50.asm`.
+- Identity: the 8,147-byte body is `FlatTerrainShader2Stage::set(Int)`, not the shorter pixel-shader setter. Retail calls `bfmeGet(0/1)` through `BoxSetTexture` and releases the handles, uses the BFME state-cache paths, and contains the terrain/shroud matrix and noise-update branches.
+- Best gate: the corrected BFME-expanded candidate compiled and probed at 7,168 bytes versus 8,147 retail, with 651 relocations, 4,403 non-relocation differences, and 632 relocation-layout sites that do not align. The earlier 2,274-byte ZH-shaped body and the old 0.12 filter-postrender stash were rejected as the wrong shape/identity.
+- Recipe: retain the `BfmeHandleCX`/`bfmeGet` declarations and expand texture-stage state through `BFME_SET_TSS`, sampler address/filter calls through `BFME_SET_SAMP` (slot 69), render states through `BFME_SET_RS` (slot 57), and terrain/noise bindings through the BFME texture slot (slot 65). The retail callee contract also points to the slot-67 TSS path and helpers at `0x007DCF00` and `0x007DCCE0`.
+- Blocker: the matrix/shroud/noise helper ABI and frame/register schedule remain unproven; no pin is justified. Do not edit `Code/gen_asm` or replace the anonymous row until a clean source is byte-exact.
