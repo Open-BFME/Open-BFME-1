@@ -68,7 +68,7 @@ declaration-order change; do not infer source order solely from scheduled loads.
 The recurring non-EH residues now have a bounded source-level front end:
 
 ```text
-python3 tools/shape_family_levers.py BODY.cpp --families sib,register,bool,test,copy,store > choices.json
+python3 tools/shape_family_levers.py BODY.cpp --families sib,register,bool,test,copy,store,loop,branch,constant,frame > choices.json
 python3 tools/shape_search.py BODY.cpp "MANGLED" 0xRVA --size N --choices choices.json
 ```
 
@@ -79,6 +79,11 @@ simple bit-test condition. `copy` inserts a typed pointer alias before one
 following null guard or member load, probing whether the compiler should keep
 the copy in a separate register. `store` swaps adjacent independent simple
 field stores, probing retail store scheduling without reordering a dependency.
+`loop` toggles a `while` header and an equivalent empty-init/increment `for`
+header. `branch` folds a simple boolean if/return pair. `constant` materialises
+a literal boolean return or zero field assignment through a named temporary.
+`frame` promotes a simple integer local to an indexed two-element array and
+rewrites its uses, probing the dead-dword frame shape documented above.
 Each edit is a hypothesis and `shape_search`
 rejects assembly injection. The five hard-lane SIB bodies
 (`0x0078D410`, `0x0078FDE0`, `0x0078FF40`, `0x007901F0`, and `0x005A0450`)

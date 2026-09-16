@@ -77,6 +77,37 @@ void stores(Pair *pair, int a, int b)
 }
 """
 
+BRANCH_SOURCE = """bool branch(int ready)
+{
+    if (ready != 0) return true;
+    return false;
+}
+"""
+
+CONSTANT_SOURCE = """bool constant()
+{
+    return false;
+}
+"""
+
+FRAME_SOURCE = """int frame(int input)
+{
+    int value = input;
+    return value + 1;
+}
+"""
+
+LOOP_SOURCE = """int loop(int limit)
+{
+    int value = 0;
+    while (value < limit)
+    {
+        ++value;
+    }
+    return value;
+}
+"""
+
 
 def test_sib_choice_reverses_only_a_unique_integer_addition():
     choices = shape_family_levers.choices_for(SOURCE, ("sib",))
@@ -141,6 +172,35 @@ def test_store_choice_accepts_side_effect_free_conditional_rhs():
 def test_default_choices_include_store_order():
     choices = shape_family_levers.choices_for(STORE_SOURCE)
     assert any(choice["lever"] == "store-order" for choice in choices)
+
+
+def test_loop_choice_toggles_empty_for_header():
+    choices = shape_family_levers.choices_for(LOOP_SOURCE, ("loop",))
+    assert len(choices) == 1
+    assert choices[0]["lever"] == "loop-header"
+    assert "for (; value < limit; )" in choices[0]["after"][0]
+
+
+def test_branch_choice_folds_boolean_return_pair():
+    choices = shape_family_levers.choices_for(BRANCH_SOURCE, ("branch",))
+    assert len(choices) == 1
+    assert choices[0]["lever"] == "branch-return"
+    assert "return ready != 0;" in choices[0]["after"][0]
+
+
+def test_constant_choice_materialises_false():
+    choices = shape_family_levers.choices_for(CONSTANT_SOURCE, ("constant",))
+    assert len(choices) == 1
+    assert choices[0]["lever"] == "constant-materialization"
+    assert "unsigned char shape_constant_false_2 = 0;" in choices[0]["after"][0]
+
+
+def test_frame_choice_promotes_scalar_local():
+    choices = shape_family_levers.choices_for(FRAME_SOURCE, ("frame",))
+    assert len(choices) == 1
+    assert choices[0]["lever"] == "frame-array"
+    assert "int shape_frame_value_2[2];" in choices[0]["after"][0]
+    assert "return shape_frame_value_2[1] + 1;" in choices[0]["after"][0]
 
 
 def test_choices_are_accepted_by_shape_search_variants():

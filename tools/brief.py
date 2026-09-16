@@ -49,8 +49,9 @@ and nothrow delete[] mechanically. Read probe's experiment
 history before repeating a spelling. Record blocker=NAME for a shared missing
 callee/layout and explain what changed before retrying a banked attempt.
 For non-EH SIB, register-allocation, call-result-boolean, commutative TEST,
-pointer-copy-lifetime, or adjacent-store-order residues, run
-`python3 tools/shape_family_levers.py SRC.cpp --families sib,register,bool,test,copy,store > choices.json`
+pointer-copy-lifetime, adjacent-store-order, loop-header, branch-return,
+constant-materialisation, or frame-array residues, run
+`python3 tools/shape_family_levers.py SRC.cpp --families sib,register,bool,test,copy,store,loop,branch,constant,frame > choices.json`
 and feed the finite choices to shape_search. It is a hypothesis generator only:
 the byte gate decides, and the SIB family may remain compiler-internal after all
 choices are exhausted.

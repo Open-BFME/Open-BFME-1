@@ -10,7 +10,12 @@ acceptance check.  ``choices_for(text)`` returns the JSON shape consumed by
 * ``bool`` materialises a call result before negating it;
 * ``test`` reverses the operands of a simple bit-test condition;
 * ``copy`` keeps a pointer alias live through its next guard or member load;
-* ``store`` swaps adjacent independent simple field stores.
+* ``store`` swaps adjacent independent simple field stores;
+* ``loop`` toggles an empty-init/increment loop header between ``while`` and
+  ``for``;
+* ``branch`` folds a simple two-return boolean branch;
+* ``constant`` materialises a literal false/true or zero assignment;
+* ``frame`` promotes a simple scalar local to an indexed two-element array.
 
 The first two are useful probes for the hard-lane SIB and register-order
 families.  A generated alternative is only a hypothesis: ``probe.py`` and the
@@ -22,7 +27,7 @@ or an assembly fallback.
 Usage::
 
     python3 tools/shape_family_levers.py SOURCE.cpp \
-        --families sib,register,bool,test,copy,store > choices.json
+        --families sib,register,bool,test,copy,store,loop,branch,constant,frame > choices.json
     python3 tools/shape_search.py SOURCE.cpp "MANGLED" 0xRVA --size N \
         --choices choices.json
 """
@@ -125,6 +130,29 @@ _STORE = re.compile(
     r"(?P<rhs>[^;]+);[ \t]*$"
 )
 _STORE_RHS = re.compile(r"^[A-Za-z0-9_ \t+*/%<>.&|^~\[\]()-?:!]+$")
+_WHILE = re.compile(
+    r"^(?P<indent>[ \t]*)while\s*\((?P<condition>[^{}\r\n]+)\)"
+    r"(?P<tail>[ \t]*(?:\{[ \t]*)?)$"
+)
+_FOR_EMPTY = re.compile(
+    r"^(?P<indent>[ \t]*)for\s*\(\s*;\s*(?P<condition>[^;{}\r\n]+)"
+    r"\s*;\s*\)(?P<tail>[ \t]*(?:\{[ \t]*)?)$"
+)
+_BRANCH = re.compile(
+    r"^(?P<indent>[ \t]*)if\s*\((?P<condition>[^{}\r\n]+)\)\s*"
+    r"return\s+(?P<value>true|false)\s*;[ \t]*$"
+)
+_RETURN_BOOL = re.compile(
+    r"^(?P<indent>[ \t]+)return\s+(?P<value>true|false)\s*;[ \t]*$"
+)
+_ZERO_ASSIGN = re.compile(
+    r"^(?P<indent>[ \t]+)(?P<lhs>[A-Za-z_]\w*(?:(?:\s*(?:->|\.)\s*"
+    r"[A-Za-z_]\w*)|(?:\s*\[[^\]\r\n]+\]))*)\s*=\s*0\s*;[ \t]*$"
+)
+_FRAME_DECL = re.compile(
+    r"^(?P<indent>[ \t]+)(?P<type>unsigned int|int)\s+"
+    r"(?P<name>[A-Za-z_]\w*)\s*=\s*(?P<expr>[^;]+);[ \t]*$"
+)
 
 
 def _in_function(lines, index):
@@ -388,7 +416,155 @@ def store_choices(text, limit=8):
     return out
 
 
-def choices_for(text, families=("sib", "register", "bool", "test", "copy", "store"), max_choices=12):
+def loop_choices(text, limit=8):
+    """Toggle a semantically equivalent empty-init/increment loop header."""
+    out = []
+    for line in text.splitlines(keepends=True):
+        while_match = _WHILE.match(line)
+        if while_match:
+            replacement = (f"{while_match.group('indent')}for (; "
+                           f"{while_match.group('condition').strip()}; )"
+                           f"{while_match.group('tail')}\n")
+        else:
+            for_match = _FOR_EMPTY.match(line)
+            if not for_match:
+                continue
+            replacement = (f"{for_match.group('indent')}while ("
+                           f"{for_match.group('condition').strip()})"
+                           f"{for_match.group('tail')}\n")
+        if replacement == line or text.count(line) != 1:
+            continue
+        out.append({"before": line, "after": [replacement], "lever": "loop-header"})
+        if len(out) >= limit:
+            break
+    return out
+
+
+def branch_choices(text, limit=8):
+    """Fold a simple boolean if/return followed by the opposite return."""
+    lines = text.splitlines(keepends=True)
+    out = []
+    for i in range(len(lines) - 1):
+        first = _BRANCH.match(lines[i])
+        second = _RETURN_BOOL.match(lines[i + 1])
+        if not first or not second or first.group("indent") != second.group("indent"):
+            continue
+        condition = first.group("condition").strip()
+        if not condition or text.count(lines[i] + lines[i + 1]) != 1:
+            continue
+        if first.group("value") == second.group("value"):
+            continue
+        expression = condition if first.group("value") == "true" else "!(%s)" % condition
+        replacement = f"{first.group('indent')}return {expression};\n"
+        before = lines[i] + lines[i + 1]
+        out.append({"before": before, "after": [replacement], "lever": "branch-return"})
+        if len(out) >= limit:
+            break
+    return out
+
+
+def constant_choices(text, limit=8):
+    """Probe literal materialisation without changing a return value."""
+    lines = text.splitlines(keepends=True)
+    out = []
+    for i, line in enumerate(lines):
+        result = _RETURN_BOOL.match(line)
+        if result and text.count(line) == 1:
+            name = "shape_constant_%s_%d" % (result.group("value"), i)
+            if name not in text:
+                value = "1" if result.group("value") == "true" else "0"
+                replacement = (f"{result.group('indent')}unsigned char {name} = {value};\n"
+                               f"{result.group('indent')}return {name};\n")
+                out.append({"before": line, "after": [replacement],
+                            "lever": "constant-materialization"})
+                if len(out) >= limit:
+                    break
+                continue
+        zero = _ZERO_ASSIGN.match(line)
+        if not zero or text.count(line) != 1:
+            continue
+        name = "shape_zero_%d" % i
+        if name in text:
+            continue
+        replacement = (f"{zero.group('indent')}int {name} = 0;\n"
+                       f"{zero.group('indent')}{zero.group('lhs').strip()} = {name};\n")
+        out.append({"before": line, "after": [replacement],
+                    "lever": "constant-materialization"})
+        if len(out) >= limit:
+            break
+    return out
+
+
+def _function_end(lines, start):
+    depth = sum(line.count("{") - line.count("}") for line in lines[:start])
+    if depth <= 0:
+        return None
+    for index in range(start, len(lines)):
+        depth += lines[index].count("{") - lines[index].count("}")
+        if depth == 0:
+            return index
+    return None
+
+
+def frame_choices(text, limit=8):
+    """Promote a simple scalar local to a live indexed two-element array."""
+    lines = text.splitlines(keepends=True)
+    out = []
+    for i, line in enumerate(lines):
+        declaration = _FRAME_DECL.match(line)
+        if not declaration or text.count(line) != 1:
+            continue
+        end = _function_end(lines, i)
+        if end is None or end <= i:
+            continue
+        name = declaration.group("name")
+        if not re.fullmatch(_STORE_RHS, declaration.group("expr").strip()):
+            continue
+        body = lines[i + 1:end]
+        if not any(re.search(r"\b" + re.escape(name) + r"\b", item) for item in body):
+            continue
+        if any(re.search(r"(?:\.|->)\s*" + re.escape(name) + r"\b", item)
+               or re.search(r"\b" + re.escape(name) + r"\s*\[", item)
+               or ("//" in item and re.search(r"\b" + re.escape(name) + r"\b", item))
+               for item in body):
+            continue
+        array_name = "shape_frame_" + name + "_%d" % i
+        if array_name in text:
+            continue
+        replacement_lines = [
+            f"{declaration.group('indent')}{declaration.group('type')} {array_name}[2];\n",
+            f"{declaration.group('indent')}{array_name}[1] = {declaration.group('expr').strip()};\n",
+        ]
+        before = line + "".join(body)
+        after_body = re.sub(r"\b" + re.escape(name) + r"\b",
+                            array_name + "[1]", "".join(body))
+        after = "".join(replacement_lines) + after_body
+        out.append({"before": before, "after": [after], "lever": "frame-array"})
+        if len(out) >= limit:
+            break
+    return out
+
+
+def _disjoint_choices(text, choices):
+    """Keep one stable hypothesis per source range for shape_search."""
+    out = []
+    occupied = []
+    for choice in choices:
+        before = choice.get("before", "")
+        if not before or text.count(before) != 1:
+            continue
+        start = text.index(before)
+        end = start + len(before)
+        if any(start < old_end and end > old_start
+               for old_start, old_end in occupied):
+            continue
+        out.append(choice)
+        occupied.append((start, end))
+    return out
+
+
+def choices_for(text, families=("sib", "register", "bool", "test", "copy", "store",
+                                "loop", "branch", "constant", "frame"), max_choices=12):
     """Return choices in stable family order for ``shape_search.variants``."""
     out = []
     if "sib" in families:
@@ -403,13 +579,21 @@ def choices_for(text, families=("sib", "register", "bool", "test", "copy", "stor
         out.extend(copy_choices(text, max_choices))
     if "store" in families:
         out.extend(store_choices(text, max_choices))
-    return out
+    if "loop" in families:
+        out.extend(loop_choices(text, max_choices))
+    if "branch" in families:
+        out.extend(branch_choices(text, max_choices))
+    if "constant" in families:
+        out.extend(constant_choices(text, max_choices))
+    if "frame" in families:
+        out.extend(frame_choices(text, max_choices))
+    return _disjoint_choices(text, out)
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("source", type=Path)
-    ap.add_argument("--families", default="sib,register,bool,test,copy,store")
+    ap.add_argument("--families", default="sib,register,bool,test,copy,store,loop,branch,constant,frame")
     ap.add_argument("--max-choices", type=int, default=12)
     args = ap.parse_args()
     if args.max_choices <= 0:
