@@ -48,6 +48,20 @@ Declaring the lower bound before the upper bound fixed all four, even though
 the optimized instruction stream loads the upper bound first. Test the small
 declaration-order change; do not infer source order solely from scheduled loads.
 
+## Constructor cleanup evidence
+
+Before changing constructor cleanup states, inspect the retail unwind map with
+`python3 tools/eh_info.py 0x<RVA>`. It prints each state's predecessor and cleanup
+instructions, resolving one ILT jump. It deliberately does not infer names or
+callee boundaries. At `0x005FFBB0`, state 0 passes the original `this` to
+`0x005E9B90`, whose two vptr stores cover offsets 0 and 4; state 1 adjusts `this`
+by 8 before calling `0x005E9AA0`; state 2 destroys the stack handle. These are
+evidence for an eight-byte composite base and a separate values base, not three
+independent four-byte bases. Inspect the full cleanup target, including branches
+after its first `ret`, before assigning its identity or boundary. The tool
+accepts only the witnessed VC7.1 prologue/handler form and fails explicitly on
+other forms. Its output is evidence for reconstruction, not byte-match proof.
+
 ## Filter construction: visible non-retaining constructors
 
 `Rva002622D0Collect.cpp` (532 bytes) initially kept a six-word mask
