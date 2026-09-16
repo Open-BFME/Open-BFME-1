@@ -102,3 +102,21 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
 - Bodies added to `reverse/unlocked.txt`: none.
 - Next: refresh `python3 tools/next_work.py --ranked` and take the next open
   dump over 4 KB not listed by WHALE-2, with exact boundary evidence.
+
+## Checkpoint - 2026-09-16 (PopulatePlayerInfoWindows verdict)
+
+- `0x004DBE80`: the ranked `PopulatePlayerInfoWindows` candidate was taken
+  through the verified BFME GameSpy and PSPlayerStats layouts. The best bank
+  emits 3,953 bytes versus 4,126 retail, with 229 relocations, 1,344
+  masked-equal bytes, 2,609 non-relocation differences, 199 relocation-layout
+  drifts, and honest score `0.326`. The callee table, stack/map layout, and
+  tested levers are recorded in `docs/whales.md`; the direct
+  `readAdditionalDisconnectsFromUserFile` call at `0x004DB0B0` and GameSpy
+  slots `+0x70/+0x90/+0x170/+0x174` are preserved in the bank.
+- No exact candidate, ledger row, pin, or shared unlock proof was found.
+  `reverse/unlocked.txt` remains unchanged. The partial verdict and immutable
+  attempt history are ready to publish.
+- Commit/push: pending for this checkpoint.
+- Next: run the ledger gate, publish this verdict with the normal pull/rebase,
+  push, and final-pull sequence, then refresh `python3 tools/next_work.py
+  --ranked` and continue with the largest eligible dump over 4 KB.

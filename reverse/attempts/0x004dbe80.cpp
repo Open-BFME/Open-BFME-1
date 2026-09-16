@@ -1,5 +1,8 @@
 // ?PopulatePlayerInfoWindows@@YAXVAsciiString@@@Z
-// partial score=0.95 date=2026-09-14
+// partial score=0.326 date=2026-09-16
+// stlport
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/psplayerstats /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Benchmark /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/psplayerstats /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Benchmark /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/campaignmanagerascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Benchmark /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWAudio /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -77,6 +80,7 @@
 #undef GameSpyPeerMessageQueueInterface
 #undef PeerRequest
 #include "GameNetwork/GameSpy/PersistentStorageDefs.h"
+#include "../../reference/shims/psplayerstats/GameNetwork/GameSpy/PersistentStorageThread.h"
 #include "GameNetwork/GameSpy/PersistentStorageThread.h"
 #include "GameNetwork/GameSpy/BuddyThread.h"
 #include "GameNetwork/GameSpy/ThreadUtils.h"
@@ -370,7 +374,75 @@ public:
 	virtual AsciiString getLocalName(void) = 0;
 	virtual void slot6C(void) = 0;
 	virtual Int getLocalProfileID(void) = 0;
+	virtual void slot74(void) = 0;
+	virtual void slot78(void) = 0;
+	virtual void slot7C(void) = 0;
+	virtual void slot80(void) = 0;
+	virtual void slot84(void) = 0;
+	virtual void slot88(void) = 0;
+	virtual void slot8C(void) = 0;
+	virtual PSPlayerStats getCachedLocalPlayerStats(void) = 0;
+	virtual void slot94(void) = 0;
+	virtual void slot98(void) = 0;
+	virtual void slot9C(void) = 0;
+	virtual void slotA0(void) = 0;
+	virtual void slotA4(void) = 0;
+	virtual void slotA8(void) = 0;
+	virtual void slotAC(void) = 0;
+	virtual void slotB0(void) = 0;
+	virtual void slotB4(void) = 0;
+	virtual void slotB8(void) = 0;
+	virtual void slotBC(void) = 0;
+	virtual void slotC0(void) = 0;
+	virtual void slotC4(void) = 0;
+	virtual void slotC8(void) = 0;
+	virtual void slotCC(void) = 0;
+	virtual void slotD0(void) = 0;
+	virtual void slotD4(void) = 0;
+	virtual void slotD8(void) = 0;
+	virtual void slotDC(void) = 0;
+	virtual void slotE0(void) = 0;
+	virtual void slotE4(void) = 0;
+	virtual void slotE8(void) = 0;
+	virtual void slotEC(void) = 0;
+	virtual void slotF0(void) = 0;
+	virtual void slotF4(void) = 0;
+	virtual void slotF8(void) = 0;
+	virtual void slotFC(void) = 0;
+	virtual void slot100(void) = 0;
+	virtual void slot104(void) = 0;
+	virtual void slot108(void) = 0;
+	virtual void slot10C(void) = 0;
+	virtual void slot110(void) = 0;
+	virtual void slot114(void) = 0;
+	virtual void slot118(void) = 0;
+	virtual void slot11C(void) = 0;
+	virtual void slot120(void) = 0;
+	virtual void slot124(void) = 0;
+	virtual void slot128(void) = 0;
+	virtual void slot12C(void) = 0;
+	virtual void slot130(void) = 0;
+	virtual void slot134(void) = 0;
+	virtual void slot138(void) = 0;
+	virtual void slot13C(void) = 0;
+	virtual void slot140(void) = 0;
+	virtual void slot144(void) = 0;
+	virtual void slot148(void) = 0;
+	virtual void slot14C(void) = 0;
+	virtual void slot150(void) = 0;
+	virtual void slot154(void) = 0;
+	virtual void slot158(void) = 0;
+	virtual void slot15C(void) = 0;
+	virtual void slot160(void) = 0;
+	virtual void slot164(void) = 0;
+	virtual void slot168(void) = 0;
+	virtual void slot16C(void) = 0;
+	virtual Int getAdditionalDisconnects(void) = 0;
+	virtual void clearAdditionalDisconnects(void) = 0;
 };
+
+// The BFME body calls the already-converted reader at retail 0x004DB0B0.
+extern Int __fastcall readAdditionalDisconnectsFromUserFile(Int playerID);
 
 // The retail ILT is entered with callee-clean stack behavior here.
 // ?GameSpyOpenOverlayShim@@YAXW4GSOverlayType@@@Z
@@ -750,21 +822,22 @@ static Int getTotalDisconnectsFromFile(Int playerID)
 
 Int GetAdditionalDisconnectsFromUserFile(Int playerID)
 {
-	Int retval = getTotalDisconnectsFromFile(playerID);
+	Int retval = readAdditionalDisconnectsFromUserFile(playerID);
 
 	if (playerID == 0) {
 		return 0;
 	}
 
-	if (TheGameSpyInfo->getAdditionalDisconnects() > 0 && !retval)
+	Rva0050D030GameSpyInfo *bfmeGameSpyInfo = (Rva0050D030GameSpyInfo *)TheGameSpyInfo;
+	if (bfmeGameSpyInfo->getAdditionalDisconnects() > 0 && !retval)
 	{
 		DEBUG_LOG(("Clearing additional disconnects\n"));
-		TheGameSpyInfo->clearAdditionalDisconnects();
+		bfmeGameSpyInfo->clearAdditionalDisconnects();
 	}
 
-	if (TheGameSpyInfo->getAdditionalDisconnects() != -1)
+	if (bfmeGameSpyInfo->getAdditionalDisconnects() != -1)
 	{
-		return TheGameSpyInfo->getAdditionalDisconnects();
+		return bfmeGameSpyInfo->getAdditionalDisconnects();
 	}
 
 	return retval;
@@ -1003,8 +1076,8 @@ static void populateBattleHonors(const PSPlayerStats& stats, Int battleHonors, I
 
 void PopulatePlayerInfoWindows( AsciiString parentWindowName )
 {
-	Int lookupID = TheGameSpyInfo->getLocalProfileID();
-	if(parentWindowName == "PopupPlayerInfo.wnd")
+    Int lookupID = ((Rva0050D030GameSpyInfo *)TheGameSpyInfo)->getLocalProfileID();
+	if(parentWindowName.compare("PopupPlayerInfo.wnd") == 0)
 	{
 		lookupID = lookAtPlayerID;
 		if (lookAtPlayerID <= 0 || !parentWOLWelcome)
@@ -1016,9 +1089,9 @@ void PopulatePlayerInfoWindows( AsciiString parentWindowName )
 	Bool weHaveStats = (stats.id != 0);
 
 	// if we don't have the stats from the server, see if we have cached stats
-	if( !weHaveStats && lookupID == TheGameSpyInfo->getLocalProfileID() )
+    if( !weHaveStats && lookupID == ((Rva0050D030GameSpyInfo *)TheGameSpyInfo)->getLocalProfileID() )
 	{
-		stats = TheGameSpyInfo->getCachedLocalPlayerStats();
+		stats = ((Rva0050D030GameSpyInfo *)TheGameSpyInfo)->getCachedLocalPlayerStats();
 
 		weHaveStats = TRUE;
 	}

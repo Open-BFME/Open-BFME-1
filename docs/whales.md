@@ -533,3 +533,70 @@ other two did not improve the useful shape. The prior bank also records the
 discarded CRC/file-loop theory, flat versus looped water initialization, and
 frame-first experiments. No exact body or safe pin was found, and no shared
 unlock proof was established; `reverse/unlocked.txt` is unchanged.
+
+## 0x004DBE80 - PopulatePlayerInfoWindows
+
+- Status: banked partial, not landed. Preferred source is
+  `reverse/attempts/0x004dbe80.cpp`, with identity supported by the WOL welcome
+  callers and the existing `PopulatePlayerInfoWindows` definition.
+- Best probe: 3,953 emitted bytes versus the corrected 4,126-byte retail
+  extent, 229 relocations, 1,344 masked-equal bytes, 2,609 non-relocation
+  differences, first non-relocation difference at `+0x28`, and 199 relocation
+  sites whose operands do not align. Honest bank score is `0.326`.
+
+### Callee table
+
+| Retail target | Calls | Resolved role |
+| --- | ---: | --- |
+| `0x00019371` | 1 | address-derived stats copy/cleanup thunk |
+| `0x00021B7A` | 1 | address-derived player-stats thunk |
+| `0x00025C1B` | 2 | address-derived stats cleanup thunk |
+| `0x00027F2A` | 3 | address-derived UI/stat thunk |
+| `0x0002C16F` | 20 | address-derived `GameWindow` update thunk |
+| `0x00035E09` | 1 | address-derived stat thunk |
+| `0x00037BD2` | 1 | address-derived stat thunk |
+| `0x0003AF6C` | 1 | address-derived rank thunk |
+| `0x0004B01A` | 1 | `AsciiString::compare(const char *)` alias `bfmeCompare1294` |
+| `0x004D9DF0` | 1 | address-derived rank/stat helper |
+| `0x004DA630` | 21 | `findWindow` |
+| `0x004DA760` | 1 | `lookupRankImage` |
+| `0x004DB0B0` | 1 | `readAdditionalDisconnectsFromUserFile`, fastcall reader |
+| `0x0082B870` | 11 | STL `_M_increment` |
+| `0x00887940` | 5 | BFME retail AsciiString release |
+| `0x00887B60` | 26 | `GameSpyGroupRoom` copy construction |
+| `0x00887C90` | 1 | `UnicodeString::set` |
+| `0x008881D0` | 2 | wide `StringBase` release |
+| `0x00888400` | 14 | wide `StringBase` copy construction |
+| `0x00888BC0` | 26 | BFME retail AsciiString literal construction |
+| `0x00888DE0` | 12 | wide `StringBase` literal construction |
+| `0x00888FF0` | 3 | `AsciiString::format` |
+| `0x00889190` | 14 | `UnicodeString::format` |
+| `0x009F6E38` | 2 | `__ftol2` |
+
+### Layout
+
+- Retail reserves frame `0x3B4`, saves `ebx/ebp/esi/edi`, clears the EH slot
+  with `ebp`, and reads `TheGameSpyInfo` through its BFME vtable. The proven
+  profile call is slot `+0x70`; cached local stats are slot `+0x90`; the
+  additional-disconnect and clear methods are slots `+0x170` and `+0x174`.
+- The BFME `PSPlayerStats` shim is required: the local stats object uses the
+  witnessed maps at wins `+0x04`, losses `+0x10`, disconnections `+0xB8`, and
+  desyncs `+0xC4`; the cached object is copied through the `+0x90` vtable
+  return into the local stack view.
+- The target's map sums use the local stats at `[esp+0x40]`, with the cached
+  return temporary at `[esp+0x200]`, then calls the already matched
+  `readAdditionalDisconnectsFromUserFile` body at `0x004DB0B0` before the
+  `+0x170/+0x174` GameSpyInfo sequence.
+
+### Levers tried
+
+The Zero Hour PopupPlayerInfo candidate, the BFME WOL-shaped bank, the BFME
+`PSPlayerStats` shim, the expanded GameSpyInfo view, the direct
+`readAdditionalDisconnectsFromUserFile` call, and `AsciiString::compare` were
+compiled as separate candidates. The ZH candidate stayed at a `0x360` frame
+and `+0x54` profile slot; the WOL bank had a `0x364` frame; the final candidate
+corrected the frame and vtable slots but still diverged in register allocation,
+temporary scheduling, and the remaining WOL/UI body. A cached GameSpyInfo
+pointer in the helper was retained because it was the best of the tested
+helper shapes. No exact candidate, semantic pin, or shared layout proof was
+found, so `reverse/unlocked.txt` is unchanged.
