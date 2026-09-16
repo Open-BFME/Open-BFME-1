@@ -1,5 +1,3 @@
-// ?parseUnitCategory@@YAXPAVINI@@PAX1PBX@Z
-// partial score=0.97 date=2026-09-16
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: the BannerUI UnitCategory INI field parser, retail 0x00584C30,
@@ -79,13 +77,3 @@ void parseUnitCategory( INI *ini, void *instance, void *store, const void *userD
 	( (_STL::vector<Open2Rec5822D0> *)store )->push_back( record );
 }
 
-// Blocked on two callee names, not on the instruction stream. probe.py reports
-// EXACT modulo relocation slots at 192 bytes. The linker cannot resolve
-// ??1Open2Rec5822D0@@QAE@XZ, the record destructor retail calls at 0x00581F30,
-// because that address carries the ledger row ??1Gen_00581F30@@QAE@XZ and five
-// gen-tgrid aliases instead. It also cannot resolve _M_insert_overflow for
-// vector<Open2Rec5822D0>, because 0x00584650 is pinned only for the
-// ProductionPrerequisite::PrereqUnitRec instantiation it shares by folding.
-// Landing this needs two address-derived pins at 0x00581F30 and 0x00584650, or
-// a TU-local shim class for the insert-overflow call like the one already
-// pinned at 0x00584650.
