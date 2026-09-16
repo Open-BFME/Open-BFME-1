@@ -460,15 +460,7 @@ WindowMsgHandledType SaveLoadMenuInput( GameWindow *window, UnsignedInt msg, Win
 					{
 						GameWindow *button = TheWindowManager->winGetWindowFromId( parent, buttonBackKey );
 						
-						//Kris: Patch 1.01 - November 12, 2003
-						//If you are in the game, then bring up the popup save menu, select a save game, click delete,
-						//hit ESC (brings you back to menu), then hit save/load again, the delete confirmation is still up
-						//and clicking on yes causes it to crash. So whenever we hit esc to leave this interface, kill
-						//the confirmation, and re-enable the listbox and buttonFrame.
-						deleteConfirm->winHide( TRUE );
-						listboxGames->winEnable( TRUE );
-						buttonFrame->winEnable( TRUE );
-
+						// BFME predates the Kris 1.01 patch that hid the delete confirmation here.
 						TheWindowManager->winSendSystemMsg( window, GBM_SELECTED, 
 																								(WindowMsgData)button, buttonBackKey );
 
