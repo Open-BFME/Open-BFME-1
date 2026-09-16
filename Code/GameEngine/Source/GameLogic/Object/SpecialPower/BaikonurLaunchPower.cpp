@@ -65,6 +65,7 @@ BaikonurLaunchPowerModuleData::BaikonurLaunchPowerModuleData( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// ?buildFieldParse@BaikonurLaunchPowerModuleData@@ present-unmatched
 /*static*/ void BaikonurLaunchPowerModuleData::buildFieldParse(MultiIniFieldParse& p)
 {
 	SpecialPowerModuleData::buildFieldParse( p );

@@ -78286,7 +78286,7 @@ name,address,notes
 ?buildFieldParse@MonsterDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0001C008,unique ILT to 0x002CDA00
 ?buildFieldParse@RailedTransportDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00014326,unique ILT to 0x002CE290
 ?buildFieldParse@RepairDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00030521,unique ILT to 0x002CECF0
-?buildFieldParse@SpecialPowerModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00022584,ILT thunk read out of BaikonurLaunchPowerModuleData::buildFieldParse call displacement; real body 0x0077D380 (d_0077d380, gen-dump)
+?buildFieldParse@W3DModelDrawModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x00022584,ILT thunk that the five ModelDraw builders call; real body 0x0077D380 named by the W3DScriptedModelDraw module data factory at 0x006BF0C0
 ?buildFieldParse@SupplyCenterDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0000CBFD,unique ILT to 0x002CF0C0
 ?buildFieldParse@SupplyWarehouseDockUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z,0x0001AAE6,unique ILT to 0x002CF680
 ?buildMasks@Rva006083A0SoundUpgrade@@QAEXPAI0@Z,0x0000F187,ILT for the existing 0x00608090 upgrade-mask builder
