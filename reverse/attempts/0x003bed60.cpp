@@ -1,4 +1,4 @@
-// ?bfmeTotalDC@BfmeHostDC@@QAEHXZ (identity unknown)
+// ?bfmeVal1025@BfmeH1025@@QAEHXZ
 // partial score=0.97 date=2026-09-07
 // 81/81 at exact size. The circular-list walk, the per-iteration 12-byte entry
 // copy (string copy ctor plus two int copies), the accumulate and the temp's
@@ -35,16 +35,16 @@ struct BfmeNodeDC
 	BfmeEntryDC m_bfmeEntryDC;
 };
 
-class BfmeHostDC
+class BfmeH1025
 {
 public:
-	int bfmeTotalDC();
+	int bfmeVal1025();
 
 	unsigned char m_bfmeHeadDC[0xc0];
 	BfmeNodeDC *m_bfmeListDC;
 };
 
-int BfmeHostDC::bfmeTotalDC()
+int BfmeH1025::bfmeVal1025()
 {
 	int total = 0;
 

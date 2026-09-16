@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "72d214d2f33dad753e10bcabed7ed36ce317838ba9e6fc1e1c195d11a855ed24",
+  "symbol": "?bfmeVal1025@BfmeH1025@@QAEHXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?bfmeVal1025@BfmeH1025@@QAEHXZ\n// partial score=0.97 date=2026-09-07\n// 81/81 at exact size. The circular-list walk, the per-iteration 12-byte entry\n// copy (string copy ctor plus two int copies), the accumulate and the temp's\n// destructor all match. The ONLY difference is the order of the two int copies:\n//   retail  mov eax,[edi+4] / mov [esp+0x14],eax / mov ecx,[edi+8] / mov [esp+0x18],ecx\n//   MSVC    mov ecx,[edi+8] / mov eax,[edi+4] / mov [esp+0x18],ecx / ...\n// i.e. retail does load-store, load-store and MSVC interleaves both loads first.\n// Writing the entry's copy constructor out by hand in field order (member-init\n// for the string, then the two assignments) does NOT change the schedule.\nclass StringBaseG\n{\npublic:\n\tStringBaseG(const StringBaseG &other);\n\n\t~StringBaseG() { releaseBuffer(); }\n\n\tvoid *m_bfmeBufDC;\n\nprivate:\n\tvoid releaseBuffer();\n};\n\nstruct BfmeEntryDC\n{\n\tStringBaseG m_bfmeTextDC;\n\tint m_bfmeCountDC;\n\tint m_bfmeOtherDC;\n};\n\nstruct BfmeNodeDC\n{\n\tBfmeNodeDC *m_bfmeNextDC;\n\tBfmeNodeDC *m_bfmePrevDC;\n\tBfmeEntryDC m_bfmeEntryDC;\n};\n\nclass BfmeH1025\n{\npublic:\n\tint bfmeVal1025();\n\n\tunsigned char m_bfmeHeadDC[0xc0];\n\tBfmeNodeDC *m_bfmeListDC;\n};\n\nint BfmeH1025::bfmeVal1025()\n{\n\tint total = 0;\n\n\tfor (BfmeNodeDC *n = m_bfmeListDC->m_bfmeNextDC; n != m_bfmeListDC; n = n->m_bfmeNextDC)\n\t{\n\t\tBfmeEntryDC e = n->m_bfmeEntryDC;\n\n\t\ttotal += e.m_bfmeCountDC;\n\t}\n\n\treturn total;\n}\n"
+}
