@@ -42,9 +42,10 @@ public:
 
 float BfmeHostEO::bfmeLimitEO()
 {
+	float dy = *(volatile float *)&m_bfmeY1EO;
 	float cap = m_bfmeCapEO;
-	float dy = m_bfmeY1EO - m_bfmeY0EO;
 	volatile float dx = m_bfmeX1EO - m_bfmeX0EO;
+	dy -= m_bfmeY0EO;
 
 	float len = (float)sqrt(dx * dx + dy * dy);
 

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3bad1711760287b72fc5bcba144cb5f9a744b5bfd0330d3641296d0701c02ee4",
+  "symbol": "?bfmeLimitEO@BfmeHostEO@@QAEMXZ",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?bfmeLimitEO@BfmeHostEO@@QAEMXZ\n// partial score=0.93 date=2026-09-16\nextern \"C\" double sqrt(double x);\n\n#pragma intrinsic(sqrt)\n\nstruct Rva006C9270GlobalData\n{\n\tunsigned char m_bfmeHeadEO[0x90];\n\tchar m_bfmeFlagEO;\n};\n\nextern Rva006C9270GlobalData *TheWritableGlobalData;\nextern float g_bfmeDirectionWeight1285;\n\nclass BfmeKeyboardEO\n{\npublic:\n\tchar bfmeIsShiftEO();\n};\n\nextern BfmeKeyboardEO *g_bfmeKeyboardEO;\n\ntemplate<class T> inline const T &bfmeMinEO(const T &a, const T &b)\n{\n\treturn a < b ? a : b;\n}\n\nclass BfmeHostEO\n{\npublic:\n\tfloat bfmeLimitEO();\n\n\tunsigned char m_bfmeHeadEO[0xc];\n\tfloat m_bfmeX0EO;\n\tfloat m_bfmeY0EO;\n\tfloat m_bfmeX1EO;\n\tfloat m_bfmeY1EO;\n\tunsigned char m_bfmeGapEO[4];\n\tfloat m_bfmeCapEO;\n};\n\nfloat BfmeHostEO::bfmeLimitEO()\n{\n\tfloat dy = *(volatile float *)&m_bfmeY1EO;\n\tfloat cap = m_bfmeCapEO;\n\tvolatile float dx = m_bfmeX1EO - m_bfmeX0EO;\n\tdy -= m_bfmeY0EO;\n\n\tfloat len = (float)sqrt(dx * dx + dy * dy);\n\n\tif (g_bfmeKeyboardEO->bfmeIsShiftEO() && TheWritableGlobalData->m_bfmeFlagEO)\n\t\t*(volatile float *)&cap = *(volatile float *)&cap * g_bfmeDirectionWeight1285;\n\n\treturn bfmeMinEO(cap, len);\n}\n"
+}
