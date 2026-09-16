@@ -25,6 +25,11 @@
 #include <stdio_streambuf>
 #include "aligned_buffer.h"
 
+namespace _STL
+{
+void rva00832100Release(void);
+}
+
 // boris : note this is repeated in <iostream>
 #ifndef _STLP_USE_NAMESPACES
 // in case of SGI iostreams, we have to rename our streams not to clash with those
@@ -116,11 +121,13 @@ long ios_base::Init::_S_count = 0;
 // by default, those are synced
 bool ios_base::_S_was_synced = true;
 
+// ??0Init@ios_base@_STL@@QAE@XZ present-unmatched
 ios_base::Init::Init() {
     if (_S_count++ == 0)
       ios_base::_S_initialize();
 }
 
+// ??1Init@ios_base@_STL@@QAE@XZ present-unmatched
 ios_base::Init::~Init() {
     if (--_S_count == 0)
       ios_base::_S_uninitialize();
@@ -169,6 +176,7 @@ _Stl_create_wfilebuf(FILE* f, ios_base::openmode mode )
 
 # endif
 
+// ?_S_initialize@ios_base@_STL@@KAXXZ present-unmatched
 void  _STLP_CALL ios_base::_S_initialize()
 {
 # if !defined(_STLP_HAS_NO_NAMESPACES) && !defined(_STLP_WINCE)
@@ -233,6 +241,9 @@ void  _STLP_CALL ios_base::_S_initialize()
 
 void _STLP_CALL ios_base::_S_uninitialize()
 {
+  if (Init::_S_count == 0)
+    return;
+
   // Note that destroying output streambufs flushes the buffers.
 
   istream* ptr_cin  = __REINTERPRET_CAST(istream*,&cin);
@@ -281,12 +292,13 @@ void _STLP_CALL ios_base::_S_uninitialize()
   _Destroy(ptr_wclog);
 
 # endif
-    if (--_Loc_init::_S_count == 0) {
-      locale::_S_uninitialize();
-    }
+    if (_Loc_init::_S_count > 0)
+      rva00832100Release();
+    --Init::_S_count;
 }
 
 
+// ?sync_with_stdio@ios_base@_STL@@SA_N_N@Z present-unmatched
 bool _STLP_CALL ios_base::sync_with_stdio(bool sync) {
 #if !defined(STLP_WINCE)
 # ifndef _STLP_HAS_NO_NAMESPACES
