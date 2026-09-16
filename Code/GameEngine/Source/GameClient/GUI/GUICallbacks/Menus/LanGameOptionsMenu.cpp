@@ -1584,3 +1584,152 @@ void PostToLanGameOptions( PostToLanGameType post )
 			return;
 	}
 }
+
+class BfmeStartPositionAddress
+{
+public:
+	BfmeStartPositionAddress() : m_ip( 0 ), m_port( 0 ) {}
+
+	UnsignedInt m_ip;
+	UnsignedShort m_port;
+};
+
+class BfmeStartPositionLANAPI
+{
+public:
+	virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0;
+	virtual void slot0C() = 0; virtual void slot10() = 0; virtual void slot14() = 0;
+	virtual void slot18() = 0; virtual void slot1C() = 0; virtual void slot20() = 0;
+	virtual void slot24() = 0; virtual void slot28() = 0; virtual void slot2C() = 0;
+	virtual void slot30() = 0; virtual void slot34() = 0; virtual void slot38() = 0;
+	virtual void slot3C() = 0; virtual void slot40() = 0; virtual void slot44() = 0;
+	virtual void slot48() = 0; virtual void slot4C() = 0;
+	virtual void RequestGameOptions( AsciiString options, Bool isPublic,
+		const BfmeStartPositionAddress &address = BfmeStartPositionAddress() ) = 0;
+	virtual void requestSerializedGameInfo( Bool unused,
+		BfmeStartPositionAddress *destination ) = 0;
+	virtual void slot58() = 0; virtual void slot5C() = 0; virtual void slot60() = 0;
+	virtual void slot64() = 0; virtual void slot68() = 0; virtual void slot6C() = 0;
+	virtual void slot70() = 0; virtual void slot74() = 0; virtual void slot78() = 0;
+	virtual void slot7C() = 0; virtual void slot80() = 0; virtual void slot84() = 0;
+	virtual void slot88() = 0; virtual void slot8C() = 0; virtual void slot90() = 0;
+	virtual void slot94() = 0; virtual void slot98() = 0; virtual void slot9C() = 0;
+	virtual void slotA0() = 0; virtual void slotA4() = 0; virtual void slotA8() = 0;
+	virtual void slotAC() = 0; virtual void slotB0() = 0; virtual void slotB4() = 0;
+	virtual void slotB8() = 0; virtual void slotBC() = 0;
+	virtual LANGameInfo *GetMyGame() = 0;
+};
+
+class BfmeStartPositionGameInfo
+{
+public:
+	virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0;
+	virtual void slot0C() = 0; virtual void slot10() = 0; virtual void slot14() = 0;
+	virtual void resetAccepted() = 0;
+};
+
+class BfmeStartPositionMap
+{
+	char m_unmodelled[ 0x58 ];
+
+public:
+	struct StartPosition
+	{
+		Int m_position;
+		char m_unmodelled[ 16 ];
+	};
+
+	StartPosition m_startPositions[ 1 ];
+};
+
+struct Rva0068D3E0Slot
+{
+	char m_unmodelled[ 0x10 ];
+	Int m_startPos;
+	Int m_playerTemplate;
+	Int m_team;
+	Int getTeam() const { return m_team; }
+	void setTeam( Int team ) { m_team = team; }
+	Int getStartPos() const { return m_startPos; }
+};
+
+class Rva0068D3E0Arr
+{
+public:
+	Rva0068D3E0Slot *at( Int index );
+};
+
+class BfmeThing935B
+{
+public:
+	char bfmeGo935B();
+};
+
+extern void rva004CAF70( void );
+
+static void rva004CB5E0Update( Int player );
+
+static void rva004CB5E0Update( Int player )
+{
+	GameWindow *combo = buttonMapStartPosition[ player ];
+	Int selected;
+	GadgetComboBoxGetSelectedPos( combo, &selected );
+	Int team = (Int)GadgetComboBoxGetItemData( combo, selected );
+	LANGameInfo *myGame = ( (BfmeStartPositionLANAPI *)TheLAN )->GetMyGame();
+	if ( myGame )
+	{
+		Rva0068D3E0Slot *slot =
+			((Rva0068D3E0Arr *)myGame)->at( player );
+		if ( team == slot->getTeam() )
+			return;
+		slot->setTeam( team );
+		( (BfmeStartPositionGameInfo *)myGame )->resetAccepted();
+		if ( ( (BfmeThing935B *)myGame )->bfmeGo935B() )
+		{
+			if ( !s_isIniting )
+			{
+				( (BfmeStartPositionGameInfo *)myGame )->resetAccepted();
+				BfmeStartPositionAddress address;
+				( (BfmeStartPositionLANAPI *)TheLAN )->requestSerializedGameInfo( TRUE, &address );
+				rva004CAF70();
+			}
+		}
+		else if ( AreSlotListUpdatesEnabled() )
+		{
+			AsciiString options;
+			options.format( "Team=%d", team );
+			( (BfmeStartPositionLANAPI *)TheLAN )->RequestGameOptions( options, TRUE );
+		}
+
+		Int startPos = slot->getStartPos();
+		if ( startPos < 0 )
+			return;
+		const MapMetaData *map = TheMapCache->findMap( myGame->getMap() );
+		if ( !map )
+			return;
+		Int mapStartPos =
+			( (BfmeStartPositionMap *)map )->m_startPositions[ startPos ].m_position;
+		if ( mapStartPos < 0 )
+			return;
+
+		Int index = 0;
+		Int count = GadgetComboBoxGetLength( combo );
+		if ( count <= 0 )
+			return;
+		while ( index < count )
+		{
+			if ( (Int)GadgetComboBoxGetItemData( combo, index ) == mapStartPos )
+			{
+				GadgetComboBoxSetSelectedPos( combo, index, FALSE );
+				return;
+			}
+			++index;
+			count = GadgetComboBoxGetLength( combo );
+		}
+	}
+}
+
+void rva004CB5E0ProbeCaller( Int player )
+{
+	rva004CB5E0Update( player );
+}
