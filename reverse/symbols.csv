@@ -11031,6 +11031,7 @@ name,address,notes
 ?Cur_Micro_Chunk_ID@ChunkLoadClass@@QAEKXZ,0x009E14E0
 ?CurrentCaps@DX8Wrapper@@1PAVDX8Caps@@A,0x01340578,Canonical DX8Wrapper static caps pointer; retail device-state callers and ZH DX8Wrapper declaration agree on this field
 ?D3DDevice@DX8Wrapper@@1PAUIDirect3DDevice8@@A,0x01340534,Canonical private DX8Wrapper static IDirect3DDevice8 pointer; actual dx8wrapper.h declaration and named render-device family plus W3DMouse draw COFF operand;campaign=36h-20260908-1018;batch=45
+?g_color12B7FC8@@3HA,0x012B7FC8,"Open-BFME the Color the score screen rename accept at 0x005710A0 passes to GadgetListBoxAddEntryText; address-derived name, the semantic identity of the global is not proven"
 ?matrix_changes@DX8Wrapper@@1IA,0x0134054C,Canonical DX8Wrapper matrix-change counter; Set_Transform retail body increments this address and the ZH twin names the field
 ?light_changes@DX8Wrapper@@1IA,0x0134055C,Canonical DX8Wrapper light-change counter; Set_DX8_Light retail body increments this address and the ZH twin names the field
 ?texture_changes@DX8Wrapper@@1IA,0x01340560,Canonical DX8Wrapper texture-change counter; the TextureClass::Apply retail/ZH shape increments this address
