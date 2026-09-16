@@ -92,6 +92,22 @@ Open2Rec3A4420::Open2Rec3A4420( const Open2Rec3A4420 &other )
 }
 
 // -------------------------------------------------------------------------
+// 0x00439370 -- 81 bytes, ctor
+class Open2Rec439370
+{
+public:
+	Open2Rec439370( const Open2Rec439370 &other );
+	AsciiString m_at00;
+	AsciiString m_at04;
+};
+
+// @??0Open2Rec439370@@QAE@ABV0@@Z 0x00439370
+Open2Rec439370::Open2Rec439370( const Open2Rec439370 &other )
+	: m_at00( other.m_at00 ), m_at04( other.m_at04 )
+{
+}
+
+// -------------------------------------------------------------------------
 // 0x004F1120 -- 158 bytes, ctor
 class Open2Rec4F1120
 {
