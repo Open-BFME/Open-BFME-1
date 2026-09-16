@@ -1,5 +1,5 @@
 // ?d_005625c0@@YAXXZ
-// partial score=0.59 date=2026-09-16
+// partial score=0.996 date=2026-09-16
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // BfmeAptScreenOptions::_bfme_onInitGadget, retail 0x005625C0, 2797 bytes.
 // The matched Options constructor at 0x00563370 pushes the selector string
@@ -9,6 +9,14 @@
 // in its own member and pushes the stored preference back into the control.
 // m_page picks the chain: page 4 is the video page and pages 2 and 3 share the
 // audio and network page.
+//
+// The body compiles to retail's 2797 bytes. Every instruction matches retail's
+// shape. Twelve bytes still differ and all twelve are stack displacements.
+// Retail keeps this function-scope UnicodeString in the window argument slot
+// and storedHeight in the lowest local, and this build swaps the two. Retail
+// keeps prefs in the slot it shares with the Resolution AsciiString and the
+// getIPstring temporary in the slot it shares with the Resolution selected
+// index, and this build swaps those.
 
 extern "C" int __cdecl strcmp( const char *left, const char *right );
 
@@ -180,9 +188,10 @@ class GameLODManager
 {
 public:
 	bool setStaticLODLevel( StaticGameLODLevel level );
+	StaticGameLODLevel getStaticLODLevel( void ) const { return m_staticLODLevel; }
 
 	unsigned char m_unmodelled_0000[ 0x16c0 ];
-	int m_staticLODLevel;								///< retail this+0x16c0
+	StaticGameLODLevel m_staticLODLevel;				///< retail this+0x16c0
 	unsigned char m_unmodelled_16c4[ 0x1708 - 0x16c4 ];
 	int m_resolutionTier;								///< retail this+0x1708
 };
@@ -304,6 +313,7 @@ void BfmeAptScreenOptions::_bfme_onInitGadget(
 	GadgetComboBoxReset( window );
 
 	UnicodeString text;
+	int storedHeight;
 
 	if ( m_page == 4 )
 	{
@@ -380,7 +390,6 @@ void BfmeAptScreenOptions::_bfme_onInitGadget(
 			AsciiString stored = m_options.m_map[ AsciiString( "Resolution" ) ];
 
 			int storedWidth;
-			int storedHeight;
 			int defaultWidth;
 			int defaultHeight;
 			if ( TheGameLODManager->m_resolutionTier <= 2 )
@@ -406,9 +415,10 @@ void BfmeAptScreenOptions::_bfme_onInitGadget(
 			}
 
 			int count = TheDisplay->getDisplayModeCount();
-			int limit = Rva0054E860( count, count );
+			int limit[ 2 ];
+			limit[ 1 ] = Rva0054E860( count, count );
 			int cursor = Rva0054E860( 0, 0 );
-			while ( Rva0054E5E0( cursor, limit ) != BFME_SEALED_EQUAL )
+			while ( Rva0054E5E0( cursor, limit[ 1 ] ) != BFME_SEALED_EQUAL )
 			{
 				int index = Rva0054E9E0( cursor, cursor );
 				int modeWidth;
@@ -442,16 +452,17 @@ void BfmeAptScreenOptions::_bfme_onInitGadget(
 			GadgetComboBoxAddEntry( window, TheGameText->fetch( "GUI:Custom" ), -1 );
 			m_comboDetail = window;
 
-			if ( TheGameLODManager->m_staticLODLevel == -1 )
+			if ( TheGameLODManager->getStaticLODLevel() == STATIC_GAME_LOD_UNKNOWN )
 			{
 				TheGameLODManager->setStaticLODLevel( (StaticGameLODLevel)
 					( (OptionPreferences *)TheGameLODManager )->getIdealStaticGameDetail() );
 			}
 			( (BfmeAptScreenSetComboFromIndex *)this )->setComboFromIndex(
-				TheGameLODManager->m_staticLODLevel );
+				TheGameLODManager->getStaticLODLevel() );
 
 			if ( !g_optByte12F4AD0 )
 				window->winEnable( false );
+			return;
 		}
 		else if ( strcmp( name, "Options::MusicVolume" ) == 0 )
 		{
@@ -494,14 +505,14 @@ void BfmeAptScreenOptions::_bfme_onInitGadget(
 			m_checkHealthBars = window;
 			unsigned char value = m_options.getAllHealthBars();
 			bfmeSetCheckBoxChecked( window, value );
-			if ( TheGameLODManager->m_staticLODLevel > 1 )
-			{
-				bfmeSetCheckBoxChecked( window, value );
-			}
-			else
+			if ( TheGameLODManager->getStaticLODLevel() <= 1 )
 			{
 				bfmeSetCheckBoxChecked( window, 1 );
 				m_checkHealthBars->winEnable( false );
+			}
+			else
+			{
+				bfmeSetCheckBoxChecked( window, value );
 			}
 		}
 		else if ( strcmp( name, "Options::AlternateMouseSetUp" ) == 0 )
@@ -515,22 +526,22 @@ void BfmeAptScreenOptions::_bfme_onInitGadget(
 			m_checkUnitDecals = window;
 			unsigned char value = m_options.getUnitDecals();
 			bfmeSetCheckBoxChecked( window, value );
-			if ( TheGameLODManager->m_staticLODLevel > 1 )
-			{
-				bfmeSetCheckBoxChecked( window, value );
-			}
-			else
+			if ( TheGameLODManager->getStaticLODLevel() <= 1 )
 			{
 				bfmeSetCheckBoxChecked( window, 0 );
 				m_checkUnitDecals->winEnable( false );
+			}
+			else
+			{
+				bfmeSetCheckBoxChecked( window, value );
 			}
 		}
 		else if ( strcmp( name, "Options::OnlineIp" ) == 0 )
 		{
 			m_comboOnlineIp = window;
-			UnicodeString address;
 			OptionPreferences *prefs = &m_options;
 			unsigned int storedIP = prefs->getOnlineIPAddress();
+			UnicodeString address;
 
 			IPEnumeration addresses;
 			EnumeratedIP *ip = addresses.getAddresses();
@@ -547,16 +558,16 @@ void BfmeAptScreenOptions::_bfme_onInitGadget(
 				ip = ip->getNext();
 			}
 
-			if ( selected < 0 )
+			if ( selected >= 0 )
+			{
+				GadgetComboBoxSetSelectedPos( m_comboOnlineIp, selected, false );
+			}
+			else
 			{
 				GadgetComboBoxSetSelectedPos( m_comboOnlineIp, 0, false );
 				if ( addresses.getAddresses() != 0 )
 					prefs->setOnlineIPAddress(
 						addresses.getAddresses()->getIPstring() );
-			}
-			else
-			{
-				GadgetComboBoxSetSelectedPos( m_comboOnlineIp, selected, false );
 			}
 		}
 		else if ( strcmp( name, "Options::Firewall" ) == 0 )
