@@ -243,3 +243,51 @@ All nine credited conversions passed independent scoped byte verification and
 normal commit/push hooks. Duplicate-address review led to the parser correction
 above. Concurrent pushes were handled by rebase and normal rechecking. No new
 full-repository-green claim is made. Next assessment: about 18:25 UTC.
+
+### Hour 4 — 18:25 UTC
+
+Snapshot `58cb9aaa35`, compared with `efbc72cbee`. The fleet pushed 16
+new bodies totaling 4,500 bytes (+0.04638 percentage points), bringing its
+corrected cumulative contribution to 44 bodies / 11,699 bytes (+0.12058 pp).
+Fleet byte yield increased 92.1% from hour 3. Repository-wide authored and
+rebuildable coverage grew 6,016 bytes (+0.06201 pp), up 58.1%; other
+contributors account for 1,516 net bytes.
+
+The snapshot holds 6,348,863 rebuildable bytes (65.44%) and 3,817,917
+authored C++ bytes (39.35%). Generated, vendored and attached-library bytes
+were unchanged. Total exact coverage rose 222 bytes; most of the conversion
+gain replaced already bounded assembly. All credited bodies passed root
+scoped verification and normal commit/push hooks. The latest 42-body audit
+found one tracked source per address; the subsequent parser and pathfinding
+callback also passed their scoped hooks. No full-repository-green claim is
+made. Concurrent push races were resolved with rebase, ledger checks and
+normal retries.
+
+Productive approaches included memory-tracker and loader-hook routines,
+a native waypoint map, a donor-backed AI state, two destructors modeled with
+witnessed member lifetimes, LAN/UI callbacks, and a pathfinding callback.
+The INI factory-vector callback landed when its created element reused the
+incoming data argument slot. The pathfinding callback required a full-width
+integer return rather than a byte return. These compiler and lifetime
+findings are recorded in the sources and `docs/shape_levers.md`. Review also
+removed two unused helper pins that had confused virtual addresses with RVAs.
+
+The donor scanner now excludes assembly-backed donor rows using the existing
+progress classifier, including mixed-source files. A wider scan found 25
+leads totaling 4,522 bytes; this is a candidate inventory, not a promise of
+conversions. Seventeen relevant progress-classifier checks passed; the test
+script later hit an existing README-heading assertion (`## Status` absent).
+A 987-byte URL builder is banked with ten EH saved-stack-pointer differences
+and a portable include path. It receives zero completion credit. Two AI
+bucket reconstructions and a constructor blocker were also preserved.
+
+Hour 5 allocation favors fresh concrete donors and successful file clusters:
+LAN player-slot selection, a waypoint callback, the remaining pathfinding
+sibling, and the nullable-helper pattern applied to a particle initializer.
+A larger Worker construction bank gets a bounded coordinate/lifetime
+investigation. The unsuccessful AI bucket lane was reassigned; constructor
+and LAN register-layout loops were closed after finite trials. Long ABI
+investigations must produce a first probe or a precise blocker, rather than
+continue searching for original semantic names. All ten CLI lanes remain
+independently assigned; no duplicate function work was introduced.
+Next assessment: about 19:25 UTC.
