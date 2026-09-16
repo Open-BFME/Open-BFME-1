@@ -1,12 +1,6 @@
-// ?query@Rva001B7E90Receiver@@QAEMPAVObject@@@Z
-// partial score=0.72 date=2026-09-10
+// ?query@BfmeSub1CC_EC3@@QAEMPAX@Z
+// Retail RVA 0x001B7E90, 297 bytes.
 // cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
-// ?query@Rva001B7E90Receiver@@QAEMPAVObject@@@Z
-//
-// Retail 0x001B7E90 is the locomotor query used by the movement dispatcher.
-// The dispatcher and the queryDivMin/queryCached siblings establish the
-// thiscall receiver and Object* argument.  Keep the override walk external:
-// retail calls the shared Overridable::getFinalOverride thunk at each walk.
 
 typedef bool Bool;
 typedef float Real;
@@ -76,10 +70,10 @@ public:
 	unsigned char m_speedUsesCondition;
 };
 
-class Rva001B7E90Receiver
+class BfmeSub1CC_EC3
 {
 public:
-	Real query(Object *object);
+	Real query(void *value);
 
 private:
 	unsigned char m_pad000[4];
@@ -101,8 +95,9 @@ extern volatile Real g_rva001B59ScaleConstantNormalAlias;
 extern volatile Real g_rva001B59ScaleConstantDamaged;
 extern volatile Real g_rva001B59ScaleConstantDamagedAlias;
 
-Real Rva001B7E90Receiver::query(Object *object)
+Real BfmeSub1CC_EC3::query(void *value)
 {
+	Object *object = static_cast<Object *>(value);
 	BodyDamageType condition = object->m_body->getDamageState();
 	Real scale = object->m_ai->m_locomotorScale;
 	BodyDamageType penalty = TheWritableGlobalData->m_movementPenaltyDamageState;
@@ -115,23 +110,22 @@ Real Rva001B7E90Receiver::query(Object *object)
 			conditionTemplate = static_cast<const LocomotorTemplate *>(
 				conditionTemplate->m_nextOverride->getFinalOverride());
 		if ((conditionTemplate->m_speedUsesCondition != 0 &&
-			 (object->m_status & 0x400000) != 0) || object->m_field1F5 != 0)
+				 (object->m_status & 0x400000) != 0) || object->m_field1F5 != 0)
 		{
 			const Overridable *speedTemplate = m_template;
 			if (speedTemplate == 0)
 			{
-				speed = g_rva001B59ScaleConstant *
-					static_cast<const LocomotorTemplate *>(speedTemplate)->m_speed;
+				speed = g_rva001B59ScaleConstantDamagedAlias * m_template->m_speed;
 			}
-			else if (speedTemplate->m_nextOverride == 0)
+			else if (speedTemplate->m_nextOverride != 0)
 			{
-				speed = g_rva001B59ScaleConstantNormalAlias;
+				speed = g_rva001B59ScaleConstant *
+					static_cast<const LocomotorTemplate *>(
+						speedTemplate->m_nextOverride->getFinalOverride())->m_speed;
 			}
 			else
 			{
-				speedTemplate = speedTemplate->m_nextOverride->getFinalOverride();
-				speed = g_rva001B59ScaleConstant *
-					static_cast<const LocomotorTemplate *>(speedTemplate)->m_speed;
+				speed = g_rva001B59ScaleConstant * m_template->m_speed;
 			}
 		}
 		else
