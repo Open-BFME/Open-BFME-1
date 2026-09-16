@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "48e91f3b7bee4f85b11b855b117591788e567e2b780199fb7fbd969620d870f0",
+  "symbol": "?bfmeAtEndYJ@BfmeHostYJ@@QAE_NI@Z",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?bfmeAtEndYJ@BfmeHostYJ@@QAE_NI@Z\n// partial score=0.98 date=2026-09-16\nnamespace _STL\n{\n\nstruct _Rb_tree_node_base\n{\n\tunsigned char m_bfmeHeadYJ[0x28];\n\tunsigned int m_bfme28YJ;\n};\n\ntemplate <class T>\nstruct _Rb_global\n{\n\tstatic _Rb_tree_node_base *_M_decrement(_Rb_tree_node_base *n);\n};\n\n}\n\nclass BfmeHostYJ\n{\npublic:\n\tbool bfmeAtEndYJ(unsigned int limit);\n\n\t_STL::_Rb_tree_node_base *m_bfme00YJ;\n\t_STL::_Rb_tree_node_base *m_bfme04YJ;\n};\n\nbool BfmeHostYJ::bfmeAtEndYJ(unsigned int limit)\n{\n\tif (m_bfme04YJ == 0)\n\t\treturn true;\n\n\tunsigned int v = _STL::_Rb_global<bool>::_M_decrement(m_bfme00YJ)->m_bfme28YJ;\n\n\treturn v < limit;\n}\n"
+}
