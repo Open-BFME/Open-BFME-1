@@ -128,15 +128,17 @@ void Pathfinder::removePos(Object *object)
 			PathfindCell *cell = getCell(layer, cellNdx.x, cellNdx.y);
 			if (cell) {
 				BFMEPathfindCellInfo *info = cell->m_info;
-				if (info && info->m_posUnitID == objectLayout->m_id) {
+				ObjectID posUnitID = info ? info->m_posUnitID : 0;
+				if (posUnitID == objectLayout->m_id) {
 					cell->setPosUnit(0, cellNdx);
 				}
 			}
-			if (layer != PATHFIND_LAYER_GROUND) {
+			if (layer != PATHFIND_LAYER_GROUND && layer < 16) {
 				cell = getCell(PATHFIND_LAYER_GROUND, cellNdx.x, cellNdx.y);
 				if (cell) {
 					BFMEPathfindCellInfo *info = cell->m_info;
-					if (info && info->m_posUnitID == objectLayout->m_id) {
+					ObjectID posUnitID = info ? info->m_posUnitID : 0;
+					if (posUnitID == objectLayout->m_id) {
 						cell->setPosUnit(0, cellNdx);
 					}
 				}
