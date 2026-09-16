@@ -218,3 +218,29 @@ a live defect still exists. Readability tests cannot collect on native Windows
 because they call `os.geteuid()`. Do not describe that broader suite as green.
 Fleet-wide accepted bytes per compute dollar and speedup magnitude remain
 unmeasured; a controlled run is the next evaluation step.
+
+
+## Donor triage observed on 2026-09-16
+
+An anonymous owner is not itself a reason to discard a measured donor. Keep an
+address-derived owner, verify each callee and field offset independently, and
+use the donor for compiler shape. Examples landed during the conversion
+campaign: 0x002E7410 (225 B) from 0x002E7530, 0x0071C9C0 (397 B) from
+0x00733000, and 0x0046F6F0 (206 B) from its inverse at 0x0046F800.
+`source_donors.py` supplies exact operand-shape hypotheses. When that pool is
+dry, existing `neartwin_scan.py` and `fuzzy_twin_scan.py` can supply a small
+number of size-tolerant leads. Filter their results through `eligibility.py`
+and current claims before assignment; their historical masks are heuristic,
+and some donors contain assembly lifts. Such donors are evidence to inspect,
+not clean C++ to copy. A scan of 562 operand-shape hits left only five below
+RVA 0x009F0000; most remaining hits were compiler cleanup funclets. A large
+hit count must not be presented as a healthy ordinary-function queue.
+
+A worker's final source must be the exact source it last compiled and probed.
+If a timebox stops an experiment after an edit, bank the earlier measured
+snapshot or record `blocked`. Do not attach the previous snapshot's score to
+the newer edit. The campaign rejected an audio candidate on this check: its
+last measured draft had 713 differing bytes, while its later bank failed to
+compile. An untracked new source or an unstaged deleted bank in a worker
+worktree is expected when the orchestrator owns staging; it is not a reason
+to rearrange a verified conversion merely to satisfy the worker's index.
