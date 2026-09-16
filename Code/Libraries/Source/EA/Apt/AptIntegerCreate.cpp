@@ -36,7 +36,9 @@ struct Rva00899560Pool
 	}
 };
 
-extern Rva008D2A30Node *Rva008D2A30Head;
+// Retail AptInteger::Create reads the adjacent pool head at 0x013387D0;
+// AptBoolean and the Rva008D2A30 chain use the distinct 0x013387D4 head.
+extern Rva008D2A30Node *Rva013387D0Head;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 extern void *(*Rva008C5D70Alloc)(unsigned int bytes);
 
@@ -61,11 +63,11 @@ public:
 
 AptInteger *AptInteger::Create(int value)
 {
-	AptInteger *object = (AptInteger *)Rva008D2A30Head;
+	AptInteger *object = (AptInteger *)Rva013387D0Head;
 
 	if (object != 0)
 	{
-		Rva008D2A30Head = (Rva008D2A30Node *)object->m_next;
+		Rva013387D0Head = (Rva008D2A30Node *)object->m_next;
 		g_rva8CD130IdleHook->addPooled((Rva008D2A30Node *)object);
 		object->m_value = value;
 		return object;
