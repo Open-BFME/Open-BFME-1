@@ -2,11 +2,14 @@
 // STLport 4.5.3
 //
 // The vtable at VA 0x0112E9B0 sits behind an RTTI complete object locator
-// naming the narrow num_put, so its slots are do_put overloads of that one
-// class.  Slot 4 calls the _M_do_put_float instantiation whose value type is
-// long double, which is the overload this body serves.  The iterator needs a
-// declared constructor so MSVC returns it through the hidden pointer retail
-// uses rather than in edx and eax.
+// naming the narrow num_put and 0x0112EA2C names the wide one, so their slots
+// are do_put overloads of those two classes.  Slot 4 of each table calls the
+// _M_do_put_float instantiation whose value type is long double, which is the
+// overload these two bodies serve.  The iterator needs a declared constructor
+// so MSVC returns it through the hidden pointer retail uses rather than in edx
+// and eax.
+
+typedef unsigned short wchar_t;
 
 namespace _STL
 {
@@ -54,5 +57,6 @@ OutputIter num_put<CharT, OutputIter>::do_put(OutputIter s, ios_base &str,
 }
 
 template class num_put<char, ostreambuf_iterator<char, char_traits<char> > >;
+template class num_put<wchar_t, ostreambuf_iterator<wchar_t, char_traits<wchar_t> > >;
 
 } // namespace _STL
