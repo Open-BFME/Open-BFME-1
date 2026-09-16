@@ -316,3 +316,23 @@ Overridable *getFinal() const
 The matched `LivingWorldRegionManager::rva003C8A50` at `0x003C8A50` shows the
 same shape from another angle. It passes `candidate->m_name` by const
 reference into an inline `compare` that reads `that.m_data` twice.
+
+## Write a bounds test as one conjunction, not four early returns
+
+VC7.1 compiles `if (a < b) return fail;` to `test ah, 1` plus `jne`, and
+`if (a > b) return fail;` to `test ah, 41h` plus `je`. Retail's 202-byte Apt
+point-in-bounds test at `0x008C6730` uses `test ah, 1` with `jne` and
+`test ah, 41h` with `jp` instead. The `jp` form also branches on an unordered
+compare, which is the jump-if-false of `a <= b`, not the jump-if-true of
+`a > b`. Writing the four tests as one conjunction produces exactly that:
+
+```cpp
+if (x >= bounds.left && x <= bounds.right
+    && y >= bounds.top && y <= bounds.bottom)
+    return AptInteger::Create(1);
+return fallback;
+```
+
+The same edit also fixed which callee-saved register held the argument count
+and moved the success block ahead of the failure block, so a residue that
+looked like three separate problems was one.
