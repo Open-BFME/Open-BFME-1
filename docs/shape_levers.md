@@ -858,3 +858,13 @@ when the reference type's initialization semantics differ; matching its size
 alone does not prove that declaration. The hinted insertion helper takes the
 hidden iterator output pointer first and pops 12 bytes. Verify this in its body,
 not from a guessed STL return convention or an existing ILT label.
+
+### Cleanup-bearing members recover a destructor frame
+
+The 339-byte destructor at `0x0058DBC0` previously emitted a 344-byte
+EH-prologue shape. Its unwind entries at VA `0x00C37420`/`0x00C3742B`
+prove cleanup of fields `+0x20` and `+0x24`. Modeling those as subobjects
+with conditional/unconditional delete destructors reproduces the frame;
+putting equivalent deletes only in the enclosing destructor body loses
+that lifetime information. The source reuses the canonical string header
+and keeps the unidentified owner and cleanup views address-derived.
