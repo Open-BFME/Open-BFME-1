@@ -145,6 +145,7 @@ def register_choices(text, limit=12):
     """
     lines = text.splitlines(keepends=True)
     out = []
+    occupied = []
     for i in range(len(lines) - 1):
         a, b = _DECL.match(lines[i]), _DECL.match(lines[i + 1])
         if not a or not b or a.group("indent") != b.group("indent"):
@@ -160,8 +161,14 @@ def register_choices(text, limit=12):
         before = lines[i] + lines[i + 1]
         if text.count(before) != 1:
             continue
+        start = text.index(before)
+        end = start + len(before)
+        if any(start < old_end and end > old_start
+               for old_start, old_end in occupied):
+            continue
         after = lines[i + 1] + lines[i]
         out.append({"before": before, "after": [after], "lever": "register-order"})
+        occupied.append((start, end))
         if len(out) >= limit:
             break
     return out
@@ -277,6 +284,7 @@ def copy_choices(text, limit=8):
     lines = text.splitlines(keepends=True)
     types = _pointer_types(text)
     out = []
+    occupied = []
     for i, line in enumerate(lines):
         assignment = _ASSIGNMENT.match(line)
         if not assignment or assignment.group("name") not in types:
@@ -297,8 +305,14 @@ def copy_choices(text, limit=8):
                 after_guard = lines[i + 1].replace(name, alias, 1)
                 after = line + alias_line + after_guard
                 if text.count(before) == 1:
+                    start = text.index(before)
+                    end = start + len(before)
+                    if any(start < old_end and end > old_start
+                           for old_start, old_end in occupied):
+                        continue
                     out.append({"before": before, "after": [after],
                                 "lever": "copy-lifetime"})
+                    occupied.append((start, end))
                     if len(out) >= limit:
                         break
                     continue
@@ -312,8 +326,14 @@ def copy_choices(text, limit=8):
                                     alias + "->", next_line, count=1)
                 after = line + alias_line + after_line
                 if text.count(before) == 1:
+                    start = text.index(before)
+                    end = start + len(before)
+                    if any(start < old_end and end > old_start
+                           for old_start, old_end in occupied):
+                        continue
                     out.append({"before": before, "after": [after],
                                 "lever": "copy-lifetime"})
+                    occupied.append((start, end))
                     if len(out) >= limit:
                         break
     return out

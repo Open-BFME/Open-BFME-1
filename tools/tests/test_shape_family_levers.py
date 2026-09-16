@@ -44,6 +44,15 @@ Node *walk(Node *start)
 }
 """
 
+CHAIN_SOURCE = """void chain(int a, int b, int c)
+{
+    int first = a;
+    int second = b;
+    int third = c;
+    use(first, second, third);
+}
+"""
+
 
 def test_sib_choice_reverses_only_a_unique_integer_addition():
     choices = shape_family_levers.choices_for(SOURCE, ("sib",))
@@ -79,6 +88,12 @@ def test_copy_choice_keeps_pointer_alias_for_guard_or_member_load():
     assert all(choice["lever"] == "copy-lifetime" for choice in choices)
     assert "Node *shape_copy_cursor_4 = cursor;" in choices[0]["after"][0]
     assert "shape_copy_cursor_7->next" in choices[1]["after"][0]
+
+
+def test_overlapping_adjacent_choices_are_suppressed():
+    choices = shape_family_levers.choices_for(CHAIN_SOURCE, ("register",))
+    assert len(choices) == 1
+    assert list(shape_search.variants(CHAIN_SOURCE, choices))
 
 
 def test_choices_are_accepted_by_shape_search_variants():
