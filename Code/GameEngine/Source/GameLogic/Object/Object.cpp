@@ -3294,7 +3294,7 @@ public:
 
 void Object::friend_notifyOfNewMapBoundary(void)
 {
-	ThePartitionManager->registerObject(this);
+	reinterpret_cast<PartitionManager *>(TheRadar)->registerObject(this);
 	reinterpret_cast<BFMEPathfinderMapShim *>( TheAI->pathfinder() )->addObjectToPathfindMap( this );
 
 	Region3D mapExtent;
