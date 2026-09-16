@@ -1,9 +1,9 @@
 // ?probe@Gen003BFB20Owner@@QAE_NPAX@Z
 // partial score=0.97 date=2026-09-12
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
 
 #define _STLP_NO_EXCEPTIONS 1
-#include "../reference/shims/stringinline/StringInline.h"
+#include "StringInline.h"
 
 extern "C" __declspec(dllimport) void *__cdecl memmove( void *destination, const void *source, unsigned int count );
 
