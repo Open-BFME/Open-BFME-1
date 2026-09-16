@@ -201,8 +201,8 @@ void W3DView::initHeightForMap()
 	m_cameraAux.slot17();
 	m_cameraAux.slot18(&m_cameraValueA, &m_positionState);
 	volatile Real *cameraScale = &m_cameraScale;
-	m_cameraValueA = m_cameraValueA * m_cameraScale;
 	m_cameraConstraintValid = false;
+	m_cameraValueA = m_cameraValueA * m_cameraScale;
 	m_cameraValueB = *cameraScale * m_cameraValueB;
 	setCameraTransform();
 

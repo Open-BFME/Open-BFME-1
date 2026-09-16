@@ -61,7 +61,7 @@ void HideInGameChatShim::run()
 
 	GameWindow *entry = chat->m_textEntry;
 	if (entry)
-		(*(UnicodeString *)0x012F498C).set( GadgetTextEntryGetText( chat->m_textEntry ) );
+		(*(UnicodeString *)0x012F498C).set( GadgetTextEntryGetText( entry ) );
 	else
 		(*(UnicodeString *)0x012F498C).set( *(const UnicodeString *)0x01336E54 );
 

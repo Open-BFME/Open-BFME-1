@@ -175,7 +175,8 @@ private:
 
 void W3DDisplay::rva006EBC30(Int tod)
 {
-    TimeOfDayLighting *timeOfDay = reinterpret_cast<TimeOfDayLighting *>(TheWritableGlobalData);
+	GlobalData *global = TheWritableGlobalData;
+	TimeOfDayLighting *timeOfDay = reinterpret_cast<TimeOfDayLighting *>(global);
     const char *lighting = reinterpret_cast<const char *>(timeOfDay[tod].data);
     const TerrainLighting *first = reinterpret_cast<const TerrainLighting *>(lighting + 0x4ac);
     const TerrainLighting *second = reinterpret_cast<const TerrainLighting *>(lighting + 0x734);
