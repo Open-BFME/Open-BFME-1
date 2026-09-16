@@ -67,14 +67,16 @@ declaration-order change; do not infer source order solely from scheduled loads.
 The recurring non-EH residues now have a bounded source-level front end:
 
 ```text
-python3 tools/shape_family_levers.py BODY.cpp --families sib,register,bool,test > choices.json
+python3 tools/shape_family_levers.py BODY.cpp --families sib,register,bool,test,copy > choices.json
 python3 tools/shape_search.py BODY.cpp "MANGLED" 0xRVA --size N --choices choices.json
 ```
 
 `sib` reverses one independent integer addition, `register` swaps adjacent
 independent local definitions, `bool` tries the documented call-result
 `unsigned char` temporary before a negation, and `test` reverses operands in a
-simple bit-test condition. Each edit is a hypothesis and `shape_search`
+simple bit-test condition. `copy` inserts a typed pointer alias before one
+following null guard or member load, probing whether the compiler should keep
+the copy in a separate register. Each edit is a hypothesis and `shape_search`
 rejects assembly injection. The five hard-lane SIB bodies
 (`0x0078D410`, `0x0078FDE0`, `0x0078FF40`, `0x007901F0`, and `0x005A0450`)
 were re-probed with their first-divergence offsets; the compiler kept the
@@ -83,6 +85,10 @@ not as a reason to add inline assembly. The two commutative TEST bodies at
 `0x002D9F90` (+0x2f) and `0x002D9F30` (+0x34) likewise remained compiler-
 canonical after the generated operand reversal; their body-level blocked
 verdicts name that offset and the exhausted `test-operand-order` lever. The
+copy-lifetime pair at `0x00347DA0` (+0x81) and `0x009F2AE0` (+0x12) also
+remained non-exact after typed alias, cast, and volatile-alias alternatives;
+the compiler still copy-propagated or selected the source register. Their
+blocked evidence names the exhausted `copy-lifetime` choices. The
 same distinction applies when a register, boolean, or TEST alternative
 produces a new shape but not a masked exact match: bank the best source and
 record the residue.

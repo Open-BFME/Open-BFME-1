@@ -31,6 +31,19 @@ BIT_SOURCE = """void check(unsigned int *words, unsigned int index, unsigned int
 }
 """
 
+COPY_SOURCE = """struct Node { Node *next; };
+Node *walk(Node *start)
+{
+    Node *cursor;
+    cursor = start;
+    if (cursor != 0)
+        return cursor;
+    cursor = start;
+    cursor = cursor->next;
+    return cursor;
+}
+"""
+
 
 def test_sib_choice_reverses_only_a_unique_integer_addition():
     choices = shape_family_levers.choices_for(SOURCE, ("sib",))
@@ -58,6 +71,14 @@ def test_test_choice_reverses_simple_bit_test_operands():
     assert all(choice["lever"] == "test-operand-order" for choice in choices)
     assert "if ( bit & words[index >> 5] )" in choices[0]["after"][0]
     assert "if ( ( bit & words[index >> 5] ) != 0 )" in choices[1]["after"][0]
+
+
+def test_copy_choice_keeps_pointer_alias_for_guard_or_member_load():
+    choices = shape_family_levers.choices_for(COPY_SOURCE, ("copy",))
+    assert len(choices) == 2
+    assert all(choice["lever"] == "copy-lifetime" for choice in choices)
+    assert "Node *shape_copy_cursor_4 = cursor;" in choices[0]["after"][0]
+    assert "shape_copy_cursor_7->next" in choices[1]["after"][0]
 
 
 def test_choices_are_accepted_by_shape_search_variants():

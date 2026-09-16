@@ -8,7 +8,8 @@ acceptance check.  ``choices_for(text)`` returns the JSON shape consumed by
 * ``sib`` reverses one independent integer addition at a time;
 * ``register`` swaps adjacent, independent local definitions;
 * ``bool`` materialises a call result before negating it;
-* ``test`` reverses the operands of a simple bit-test condition.
+* ``test`` reverses the operands of a simple bit-test condition;
+* ``copy`` keeps a pointer alias live through its next guard or member load.
 
 The first two are useful probes for the hard-lane SIB and register-order
 families.  A generated alternative is only a hypothesis: ``probe.py`` and the
@@ -20,7 +21,7 @@ or an assembly fallback.
 Usage::
 
     python3 tools/shape_family_levers.py SOURCE.cpp \
-        --families sib,register,bool,test > choices.json
+        --families sib,register,bool,test,copy > choices.json
     python3 tools/shape_search.py SOURCE.cpp "MANGLED" 0xRVA --size N \
         --choices choices.json
 """
@@ -104,6 +105,17 @@ def _top_level_ampersand(value):
 _BIT_ATOM = re.compile(
     r"[A-Za-z_]\w*(?:(?:\s*(?:->|\.)\s*[A-Za-z_]\w*)|"
     r"(?:\s*\[[^\]\r\n]+\]))*"
+)
+_POINTER_DECL = re.compile(
+    r"^(?P<indent>[ \t]+)(?P<type>[A-Za-z_]\w*(?:\s*(?:::|->)\s*[A-Za-z_]\w*)*"
+    r"\s*\*)\s*(?P<name>[A-Za-z_]\w*)\s*(?:=\s*[^;]+)?;[ \t]*$"
+)
+_ASSIGNMENT = re.compile(
+    r"^(?P<indent>[ \t]+)(?P<name>[A-Za-z_]\w*)\s*=\s*(?P<rhs>[^;]+);[ \t]*$"
+)
+_GUARD = re.compile(
+    r"^(?P<indent>[ \t]*)if\s*\(\s*(?P<name>[A-Za-z_]\w*)"
+    r"\s*(?P<comparison>!=\s*0)?\s*\)[ \t]*(?:\{)?[ \t]*$"
 )
 
 
@@ -244,7 +256,70 @@ def test_choices(text, limit=8):
     return out
 
 
-def choices_for(text, families=("sib", "register", "bool", "test"), max_choices=12):
+def _pointer_types(text):
+    """Map simple pointer locals to their declared pointer type."""
+    types = {}
+    for line in text.splitlines():
+        match = _POINTER_DECL.match(line)
+        if match:
+            types[match.group("name")] = match.group("type").strip()
+    return types
+
+
+def copy_choices(text, limit=8):
+    """Keep a pointer copy distinct from its source for one following use.
+
+    This is intentionally limited to a declared pointer local and either an
+    immediate null guard or a single member load.  The alias can change
+    register allocation, but it is not a semantic escape hatch and never
+    introduces a volatile access or an invented helper.
+    """
+    lines = text.splitlines(keepends=True)
+    types = _pointer_types(text)
+    out = []
+    for i, line in enumerate(lines):
+        assignment = _ASSIGNMENT.match(line)
+        if not assignment or assignment.group("name") not in types:
+            continue
+        name = assignment.group("name")
+        alias = "shape_copy_" + name
+        alias = "shape_copy_%s_%d" % (name, i)
+        if alias in text:
+            continue
+        indent = assignment.group("indent")
+        alias_line = (f"{indent}{types[name]}{alias} = {name};\n")
+
+        # A pointer copy followed by its own null guard.
+        if i + 1 < len(lines):
+            guard = _GUARD.match(lines[i + 1])
+            if guard and guard.group("name") == name:
+                before = line + lines[i + 1]
+                after_guard = lines[i + 1].replace(name, alias, 1)
+                after = line + alias_line + after_guard
+                if text.count(before) == 1:
+                    out.append({"before": before, "after": [after],
+                                "lever": "copy-lifetime"})
+                    if len(out) >= limit:
+                        break
+                    continue
+
+        # A pointer copy followed immediately by a member load through it.
+        if i + 1 < len(lines):
+            next_line = lines[i + 1]
+            if re.search(r"\b" + re.escape(name) + r"\s*->", next_line):
+                before = line + next_line
+                after_line = re.sub(r"\b" + re.escape(name) + r"\s*->",
+                                    alias + "->", next_line, count=1)
+                after = line + alias_line + after_line
+                if text.count(before) == 1:
+                    out.append({"before": before, "after": [after],
+                                "lever": "copy-lifetime"})
+                    if len(out) >= limit:
+                        break
+    return out
+
+
+def choices_for(text, families=("sib", "register", "bool", "test", "copy"), max_choices=12):
     """Return choices in stable family order for ``shape_search.variants``."""
     out = []
     if "sib" in families:
@@ -255,13 +330,15 @@ def choices_for(text, families=("sib", "register", "bool", "test"), max_choices=
         out.extend(bool_choices(text, max_choices))
     if "test" in families:
         out.extend(test_choices(text, max_choices))
+    if "copy" in families:
+        out.extend(copy_choices(text, max_choices))
     return out
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("source", type=Path)
-    ap.add_argument("--families", default="sib,register,bool,test")
+    ap.add_argument("--families", default="sib,register,bool,test,copy")
     ap.add_argument("--max-choices", type=int, default=12)
     args = ap.parse_args()
     if args.max_choices <= 0:
