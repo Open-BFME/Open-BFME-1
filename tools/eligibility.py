@@ -186,6 +186,34 @@ def hard_bodies(min_score=0.9, max_attempts=5, rows=None, latest=None, counts=No
     return [t for t in served if counts.get(rva_of(t[0]), 0) >= max_attempts]
 
 
+UNLOCKED = ROOT / "reverse" / "unlocked.txt"
+
+
+def unlocked_rvas(path=None):
+    """{rva:int -> tag} from reverse/unlocked.txt: dump bodies whose shared
+    blocker (a family shim, a class layout, a set of pins) a stronger session
+    has already landed, so a luna seat's context pack now proves their
+    callees. Lines are `0x%08x <tag>`; `#` comments. pick_anon adds warmth
+    for a listed body; the file is shrink-on-land, hygiene removes rows whose
+    address is no longer a dump."""
+    path = path or UNLOCKED
+    out = {}
+    if not path.exists():
+        return out
+    for line in path.read_text(encoding="utf-8", errors="replace").splitlines():
+        line = line.split("#", 1)[0].strip()
+        if not line:
+            continue
+        rva, _, tag = line.partition(" ")
+        if not rva.lower().startswith("0x"):
+            continue
+        try:
+            out[int(rva, 16)] = tag.strip()
+        except ValueError:
+            continue
+    return out
+
+
 def busy_rvas(root=None, seats_log=None):
     """Addresses a live worker owns: fleet_run leases (pid-checked) plus seats
     currently '->' on an RVA in seats.log. Lower-case '0x%08x' strings."""

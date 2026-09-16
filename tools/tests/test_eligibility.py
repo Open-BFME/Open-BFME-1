@@ -115,3 +115,12 @@ def test_hard_bodies_are_the_capped_complement(world):
     assert served == [] and [eligibility.rva_of(r) for r, _, _ in hard] == [RVA]
     assert len(eligibility.finish_bodies(0.9, rows, latest, max_attempts=4, cooldown_days=0)) == 1
     assert eligibility.hard_bodies(0.9, 4, rows, latest) == []
+
+
+def test_unlocked_rvas_parses_tags_and_ignores_comments(tmp_path):
+    f = tmp_path / "unlocked.txt"
+    f.write_text("# header" + chr(10) + "0x00354C10 w3d-render  # after DX8State.h" + chr(10)
+                 + chr(10) + "bad line" + chr(10) + "0x00001000" + chr(10), encoding="utf-8")
+    got = eligibility.unlocked_rvas(f)
+    assert got == {0x00354C10: "w3d-render", 0x1000: ""}
+    assert eligibility.unlocked_rvas(tmp_path / "missing.txt") == {}

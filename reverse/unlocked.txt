@@ -1,0 +1,4 @@
+# Dump bodies whose shared blocker a stronger session already landed.
+# `0x%08x <tag>`; pick_anon.py serves listed bodies first (+4 warmth).
+# Append when a family shim / pin set / class layout lands; remove rows
+# whose address is no longer a dump. See tools/eligibility.unlocked_rvas.

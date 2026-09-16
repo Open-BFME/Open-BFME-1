@@ -38,6 +38,9 @@ latest = eligibility.latest_verdicts()
 rows = eligibility.open_dumps(latest=latest, min_size=min_b, max_size=max_b, anonymous=True)
 busy = eligibility.busy_rvas(ROOT) | eligibility.recent_run_rvas(48, ROOT)
 attempts = eligibility.attempt_counts()
+# reverse/unlocked.txt: a session already landed the shim/pins this body's
+# family shares; the pack now proves its callees, so serve it first.
+unlocked = eligibility.unlocked_rvas()
 
 import context_pack  # noqa: E402  (loads the image once, ~20 s cold)
 
@@ -53,6 +56,7 @@ def warmth(rva):
     score += 2 * min(n_callers, 3)
     score += 1 if "BFME layout" in text else 0
     score += 1 if "landed neighbours:" in text else 0
+    score += 4 if (rva if isinstance(rva, int) else int(rva, 16)) in unlocked else 0
     return score
 
 
