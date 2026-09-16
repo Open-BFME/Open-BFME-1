@@ -1,0 +1,194 @@
+// ?subdivide@Rva007282A0@@QAEXHHHM@Z
+// partial score=0.1 date=2026-09-16
+// Scratch reconstruction for retail 0x007282A0..0x007285D5 (821 bytes).
+// The semantic owner is intentionally address-derived until the root lane
+// proves the identity and installs the final pin.
+//
+// cl: /DNDEBUG /MD /EHsc
+
+class BfmeMaskAX
+{
+public:
+    void bfmeMarkAX(int x, int y, unsigned char value);
+};
+
+class Rva007282A0Map
+{
+public:
+    int width(void) const
+    {
+        return *(const int *)((const char *)this + 0x08);
+    }
+
+    int height(void) const
+    {
+        return *(const int *)((const char *)this + 0x0c);
+    }
+
+    int count(void) const
+    {
+        return *(const int *)((const char *)this + 0x20);
+    }
+
+    unsigned short *heights(void) const
+    {
+        return *(unsigned short * const *)((const char *)this + 0x24);
+    }
+
+    int *cliffArray(void) const
+    {
+        return *(int * const *)((const char *)this + 0x94);
+    }
+
+    int drawOriginX(void) const
+    {
+        return *(const int *)((const char *)this + 0x120E0);
+    }
+
+    int drawOriginY(void) const
+    {
+        return *(const int *)((const char *)this + 0x120E4);
+    }
+
+    unsigned short heightAt(int x, int y) const
+    {
+        int index = y * width() + x;
+        if (index < 0)
+            return 0;
+        if (index >= count())
+            return 0;
+
+        unsigned short *heightData = heights();
+        if (heightData == 0)
+            return 0;
+        return heightData[index];
+    }
+
+    bool cliffAt(int x, int y) const
+    {
+        int index = (drawOriginY() + y) * width() + drawOriginX() + x;
+        if (index < 0)
+            return false;
+        if (index >= count())
+            return false;
+        return cliffArray()[index] != 0;
+    }
+};
+
+class Rva007282A0
+{
+public:
+    void subdivide(int xOffset, int yOffset, int width,
+        float errorTolerance);
+
+private:
+    int xOrigin(void) const
+    {
+        return *(const int *)((const char *)this + 0x40);
+    }
+
+    int yOrigin(void) const
+    {
+        return *(const int *)((const char *)this + 0x44);
+    }
+
+    Rva007282A0Map *map(void) const
+    {
+        return *(Rva007282A0Map * const *)((const char *)this + 0x4c);
+    }
+};
+
+// ?subdivide@Rva007282A0@@QAEXHHHM@Z
+void Rva007282A0::subdivide(int xOffset, int yOffset, int width,
+    float errorTolerance)
+{
+    Rva007282A0Map *terrainMap = map();
+    int limitX = terrainMap->width() - 1;
+    int limitY = terrainMap->height() - 1;
+    bool match = true;
+    int minX = xOrigin() + xOffset;
+    int minY = yOrigin() + yOffset;
+    int maxX = minX + width;
+    if (maxX >= limitX)
+        maxX = limitX;
+    int maxY = minY + width;
+    if (maxY >= limitY)
+        maxY = limitY;
+
+    int cornerA = terrainMap->heightAt(minX, minY);
+    int cornerB = terrainMap->heightAt(maxX, minY);
+    int cornerC = terrainMap->heightAt(maxX, maxY);
+    int cornerD = terrainMap->heightAt(minX, maxY);
+
+    int i;
+    int j;
+    for (i = 0; i <= width; ++i)
+    {
+        for (j = 0; j <= width; ++j)
+        {
+            int k = minX + i;
+            if (k >= limitX)
+                k = limitX;
+            int l = minY + j;
+            if (l >= limitY)
+                l = limitY;
+
+            if (terrainMap->cliffAt(k, l))
+            {
+                match = false;
+                break;
+            }
+
+            float u = (float)i / (float)width;
+            float v = (float)j / (float)width;
+            float predicted;
+            if (v > (1.0f - u))
+            {
+                predicted = ((cornerB - cornerC) *
+                    (1.0f - v) +
+                    (cornerD - cornerC) *
+                    (1.0f - u) + cornerC) *
+                    0.0390625f;
+            }
+            else
+            {
+                predicted = ((cornerD - cornerA) * v +
+                    (cornerB - cornerA) * u + cornerA) *
+                    0.0390625f;
+            }
+
+            int currentHeight = terrainMap->heightAt(k, l);
+            float delta = predicted - currentHeight * 0.0390625f;
+            if (delta < 0.0f)
+                delta = -delta;
+            if (delta > errorTolerance)
+            {
+                match = false;
+                break;
+            }
+        }
+    }
+
+    if (width == 1 || match)
+    {
+        int cornerMaxX = minX + width;
+        if (cornerMaxX >= limitX)
+            cornerMaxX = limitX;
+        int cornerMaxY = minY + width;
+        if (cornerMaxY >= limitY)
+            cornerMaxY = limitY;
+
+        ((BfmeMaskAX *)map())->bfmeMarkAX(minX, minY, 1);
+        ((BfmeMaskAX *)map())->bfmeMarkAX(cornerMaxX, minY, 1);
+        ((BfmeMaskAX *)map())->bfmeMarkAX(cornerMaxX, cornerMaxY, 1);
+        ((BfmeMaskAX *)map())->bfmeMarkAX(minX, cornerMaxY, 1);
+        return;
+    }
+
+    int halfWidth = width / 2;
+    subdivide(xOffset, yOffset, halfWidth, errorTolerance);
+    subdivide(xOffset, yOffset + halfWidth, halfWidth, errorTolerance);
+    subdivide(xOffset + halfWidth, yOffset, halfWidth, errorTolerance);
+    subdivide(xOffset + halfWidth, yOffset + halfWidth, halfWidth,
+        errorTolerance);
+}
