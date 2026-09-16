@@ -54863,6 +54863,10 @@ name,address,notes
 ?b_00533ea0@@YAXXZ,0x00533EA0,gen-thunk body
 ?Rva00533EA0@@YAXPAVGameWindow@@@Z,0x00533EA0,"the friends-list hook the online chat InitGadgets body at 0x00534A60 calls with the gadget window pushed and cleaned up by the caller, which proves the cdecl one-argument ABI; the name keeps the address"
 ?b_00534380@@YAXXZ,0x00534380,gen-thunk body
+?Rva0052E4C0@BfmeAptScreenOnlineChat@@QAEXPAVGameWindow@@@Z,0x0001F956,"the ILT thunk onto 0x0052E4C0 that the online chat accept button at 0x00535090 calls with ecx set to this; the receiver proves the thiscall member ABI that the __stdcall row in BfmeConv2017.cpp cannot express, and the name keeps the address"
+?Rva0052E5B0@BfmeAptScreenOnlineChat@@QAEXPAVGameWindow@@@Z,0x0001C7D3,"the ILT thunk onto 0x0052E5B0 that the online chat accept button at 0x00535090 calls with ecx set to this; the receiver proves the thiscall member ABI that the __stdcall row in BfmeConv2017.cpp cannot express, and the name keeps the address"
+?Rva0052E680@BfmeAptScreenOnlineChat@@QAEXPAVGameWindow@@@Z,0x0000E38B,"the ILT thunk onto 0x0052E680 that the online chat accept button at 0x00535090 calls with ecx set to this; the receiver proves the thiscall member ABI that the __stdcall row in BfmeAddSavedIgnoreFromEntry.cpp cannot express, and the name keeps the address"
+?Rva0052E7B0@BfmeAptScreenOnlineChat@@QAEXPAVGameWindow@@@Z,0x0000509C,"the ILT thunk onto 0x0052E7B0 that the online chat accept button at 0x00535090 calls with ecx set to this; the receiver proves the thiscall member ABI that the __stdcall row in BfmeConv2017.cpp cannot express, and the name keeps the address"
 ?Rva005337E0@BfmeAptScreenOnlineChat@@QAEXXZ,0x00014182,"the ILT thunk onto 0x005337E0 that the online chat InitGadgets body at 0x00534A60 calls with ecx set to this; the receiver proves the thiscall member ABI and the name keeps the address"
 ?Rva00534380@BfmeAptScreenOnlineChat@@QAEXXZ,0x00534380,"the ignore-list hook the online chat InitGadgets body at 0x00534A60 calls with ecx set to this; the receiver proves the thiscall member ABI and the name keeps the address"
 ?b_00534a30@@YAXXZ,0x00534A30,gen-thunk body
