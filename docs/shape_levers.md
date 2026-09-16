@@ -64,6 +64,13 @@ is `W3DTreeBufferRva007334B0.cpp`. No barrier, volatile access, or assembly is
 needed. This is a source-structure lever, not proof that every duplicated tail
 comes from a helper; verify each candidate independently.
 
+The adjacent 444-byte force application at `0x007331F0` needed the same
+inlined lookup and **separate** early returns for its two record guards.
+Combining those guards with `||` still merged a ten-byte failure tail.
+After splitting them, moving the second float multiplication before the
+state stores recovered the remaining scheduling bytes. Its native matrix
+identity/translation and typed FX calls then matched the complete body.
+
 ## Coordinate setters after matrix transforms
 
 The 1,207-byte tree toppling update at `0x00733580` uses native
