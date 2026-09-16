@@ -111,6 +111,14 @@ referenced float constants and installed interface table, not just masked
 bytes. This is a source-level lifetime and expression-order lever, not a
 reason to insert floating-point assembly.
 
+The Sphere emission-position body at `0x005FAA40` isolates a native copy
+construction lever. `Coord3D result = *FillUnitVector(&randomPoint)` compiled
+to 109 bytes and diverged at `+0x35`; spelling `Coord3D result; result =
+*FillUnitVector(&randomPoint)` invokes implicit memberwise assignment and
+compiled to the exact 117-byte retail body, including the three integer
+loads/stores before the x87 multiplies. This is an ordinary `Coord3D` lifetime
+choice; no volatility, barrier, or register forcing is involved.
+
 ## Nullable grid accessors: preserve the bounds helper
 
 `Pathfinder::getLayer` at `0x003D93A0` landed at 105 bytes after retaining
