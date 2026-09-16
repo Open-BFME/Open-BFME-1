@@ -1,4 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+extern "C" void _WriteBarrier(void);
+#pragma intrinsic(_WriteBarrier)
+
 struct Rva00899560Value;
 
 struct Rva00899560Pool
@@ -85,6 +88,7 @@ private:
 class Rva008B38D0 : public Rva008B2EF0 {
 public:
     Rva008B38D0(unsigned int argument0);
+    Rva008B38D0(const struct Rva008B38F0Input *argument0);
 };
 
 Rva008B2EF0::Rva008B2EF0(unsigned int argument0, unsigned int argument1)
@@ -92,3 +96,49 @@ Rva008B2EF0::Rva008B2EF0(unsigned int argument0, unsigned int argument1)
 
 Rva008B38D0::Rva008B38D0(unsigned int argument0)
     : Rva008B2EF0(0x21, argument0) {}
+
+struct Rva008B38F0Input
+{
+    unsigned int m_vftable;
+    unsigned int m_flags;
+    unsigned int *m_value08;
+    unsigned char m_padding0c[20];
+    void *m_value20;
+};
+
+struct Rva008B38F0Nested
+{
+    unsigned char m_padding00[8];
+    unsigned int *m_value08;
+};
+
+struct Rva008B38F0Global
+{
+    virtual void *get(unsigned int *argument0);
+};
+
+Rva008B38D0::Rva008B38D0(const Rva008B38F0Input *argument0)
+    : Rva008B2EF0(0x21, 0)
+{
+    unsigned int flags = argument0->m_flags;
+    unsigned int type = flags & 0x3f;
+    void *value;
+    if ((type == 1 || type == 0x2a) && ((((unsigned char)~(flags >> 15)) & 1) == 0))
+    {
+        Rva008B38F0Nested *source = (Rva008B38F0Nested *)argument0;
+        if (type != 1)
+        {
+            source = (Rva008B38F0Nested *)argument0->m_value20;
+        }
+        _WriteBarrier();
+        value = (*(Rva008B38F0Global **)0x01337820)->get(source->m_value08 + 2);
+    }
+    else
+    {
+        value = (*(Rva008B38F0Global **)0x01337820)->get(0);
+    }
+    if (value)
+    {
+        *(void **)((char *)this + 0x20) = value;
+    }
+}
