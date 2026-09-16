@@ -42,12 +42,43 @@ public:
 
 extern Rva002E5FF0Str Rva01336E50Str;
 
+class BfmeSharedString
+{
+public:
+	BfmeSharedString(const BfmeSharedString &other);
+	~BfmeSharedString();
+
+	void *m_data;
+};
+
+class Rva00361960
+{
+public:
+	BfmeSharedString copyString();
+
+	unsigned char m_bfmeBody[0x58];
+};
+
+class Rva00361E80Vector
+{
+public:
+	int size() const { return m_end - m_begin; }
+	Rva00361960 *begin() const { return m_begin; }
+
+	Rva00361960 *m_begin;
+	Rva00361960 *m_end;
+};
+
 class BfmeSubDVB
 {
 public:
 	void bfmeOneDVB(void *a, void *b);
 	void bfmeTwoDVB(void *a, void *b);
 	void bfmeThreeDVB(void *a, void *b);
+	BfmeSharedString bfmeTwoDVB(int index);
+
+	unsigned char m_bfmeHead[0x18];
+	Rva00361E80Vector m_bfmeVector;
 };
 
 BfmeStrFM BfmeHostFM::bfmeAtFM(int i) const
@@ -56,6 +87,17 @@ BfmeStrFM BfmeHostFM::bfmeAtFM(int i) const
 		return m_bfmeVectorFM.begin()[i].stringAt0C();
 
 	return *(const BfmeStrFM *)&Rva01336E50Str;
+}
+
+BfmeSharedString BfmeSubDVB::bfmeTwoDVB(int index)
+{
+	if (index >= 0 && (unsigned int)index <
+		(unsigned int)m_bfmeVector.size())
+	{
+		return m_bfmeVector.begin()[index].copyString();
+	}
+
+	return *(const BfmeSharedString *)&Rva01336E50Str;
 }
 
 struct BfmeThingDVB
