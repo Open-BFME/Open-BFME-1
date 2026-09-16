@@ -66,6 +66,24 @@ __declspec(noinline) Q3SortElem16 *Q3Partition004775D0(Q3SortElem16 *, Q3SortEle
 
 void Q3PartialSort004775D0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
 	Q3SortElem16 *, Q3SortCompare);
+void Q3MakeHeap004749F0(Q3SortElem16 *, Q3SortElem16 *, Q3SortCompare,
+	Q3SortElem16 *, int *);
+void Q3PopHeap004748F0(Q3SortElem16 *, Q3SortElem16 *, Q3SortElem16 *,
+	Q3SortElem16, Q3SortCompare, int *);
+void Q3SortHeap00476250(Q3SortElem16 *, Q3SortElem16 *, Q3SortCompare);
+
+// ?Q3PartialSort004775D0@@YAXPAUQ3SortElem16@@000UQ3SortCompare@@@Z
+__declspec(noinline) void Q3PartialSort004775D0(Q3SortElem16 *first,
+	Q3SortElem16 *middle, Q3SortElem16 *last, Q3SortElem16 *,
+	Q3SortCompare incomingComp)
+{
+	Q3SortCompare comp = incomingComp;
+	Q3MakeHeap004749F0(first, middle, comp, (Q3SortElem16 *)0, (int *)0);
+	for (Q3SortElem16 *current = middle; current < last; ++current)
+		if (comp(*current, *first))
+			Q3PopHeap004748F0(first, middle, current, *current, comp, (int *)0);
+	Q3SortHeap00476250(first, middle, comp);
+}
 
 __declspec(noinline) void Q3IterSwap00473BC0(Q3SortElem16 *, Q3SortElem16 *);
 

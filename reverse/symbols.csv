@@ -11537,8 +11537,10 @@ name,address,notes
 ?Q3CopyBackward00473440@@YAPAUQ3SortElem16@@PAU1@00ABUQ3IteratorCategory@@PAH@Z,0x00473440,STLport copy_backward random-access dispatch; full83B body already matched; linear_insert4757B0 calls785B with first last result const iterator-tag reference and distance pointer; owning16B assignments
 ?Q3IterSwap00473BC0@@YAXPAUQ3SortElem16@@0@Z,0x00473BC0,Parent raw full170B iter_swap; two 16B-element pointers; three dwords and StringBase<char> copy887B60 set887C90 release887940; viaILT1492A
 ?Q3LinearInsert004757B0@@YAXPAUQ3SortElem16@@0U1@UQ3SortCompare@@@Z,0x004757B0,Typed STLport linear_insert; full191B ret47586E end47586F; insertion_sort4761D0 calls3E617 with first current owning16B value comparator4B; member comparisons assignment and StringBase cleanup agree
+?Q3PopHeap004748F0@@YAXPAUQ3SortElem16@@00U1@UQ3SortCompare@@PAH@Z,0x0000561E,ILT thunk to the 167-byte 16-byte-record pop_heap body at 0x004748F0; Q3PartialSort004775D0 calls this target with the typed by-value record and comparator
 ?Q3PartialSort004775D0@@YAXPAUQ3SortElem16@@000UQ3SortCompare@@@Z,0x004768F0,Parent raw full130B partial_sort; five cdecl arguments with fourth value-type pointer as STLport _algo.c; viaILT32501
 ?Q3Partition004775D0@@YAPAUQ3SortElem16@@PAU1@0U1@UQ3SortCompare@@@Z,0x00034F95,typed call alias for the partition ILT used by Gen004775D0
+?Q3SortHeap00476250@@YAXPAUQ3SortElem16@@0UQ3SortCompare@@@Z,0x000032E7,ILT thunk to the 66-byte sort_heap body at 0x00476250; Q3PartialSort004775D0 calls this target with the typed 16-byte record range and comparator
 ?Q3UnguardedLinearInsert00473CA0@@YAXPAUQ3SortElem16@@U1@UQ3SortCompare@@@Z,0x00473CA0,STLport unguarded_linear_insert; full152B throughret473D37 end473D38; linear_insert4757B0 calls2405 with iterator by-value owning16B record and comparator4B; assignments and real string destruction
 ?QueryInterface@CConstantTable@D3DXShader@@UAGJABU_GUID@@PAPAX@Z,0x00a56226,vtable-slot ??_7CConstantTable@D3DXShader@@6B@ slot 0 anchors=21
 ?QueryInterface@CD3DXSkinInfo@@UAGJABU_GUID@@PAPAX@Z,0x00a04ea7,vtable-slot ??_7CD3DXSkinInfo@@6B@ slot 0 anchors=24
