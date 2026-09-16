@@ -25,7 +25,9 @@ void bfmeResetDynXZ()
 {
 	int i;
 
-	for (i = 0; i < 24; i++)
+	// Retail iterates 15 elements: 0x013467F0 through the exclusive end
+	// 0x01346BB0 in 0x40-byte steps.
+	for (i = 0; i < 15; i++)
 	{
 		BfmeDynBufXZ *buf = _bfmeDynBufXZ[i];
 
