@@ -204,7 +204,7 @@ class GlobalData
 {
 public:
 	unsigned char m_pad0[ 0xBB4 ];
-	unsigned char m_b0BB4;
+	unsigned char m_shellMapOn;
 	unsigned char m_pad1[ 0x20A ];
 	unsigned char m_b0DBF;
 };
@@ -522,7 +522,7 @@ BfmeAptScreenMainMenu::BfmeAptScreenMainMenu( void *context )
 		}
 		prefs.write();
 
-		if( !TheWritableGlobalData->m_b0BB4 )
+		if( !TheWritableGlobalData->m_shellMapOn )
 			m_b25a = true;
 	}
 }
