@@ -17,3 +17,11 @@
 - Next: publish the recipe and unlock list, then let the anonymous lane drain
   the 59 unlocked members while continuing the two unnamed-callee blockers and
   the unresolved receiver/layout candidate.
+
+## Pool audit: 2026-09-16 10:37 EDT
+
+- All 61 pool addresses now have a five-field verdict in
+  `reverse/re_attempts.log`. The three previously unlogged large generated
+  bodies (`0x007C34E0`, `0x007C3FD0`, `0x007C5690`) were recorded as blocked
+  after callee sweeps found 0 unnamed targets; no speculative source claims
+  were added.
