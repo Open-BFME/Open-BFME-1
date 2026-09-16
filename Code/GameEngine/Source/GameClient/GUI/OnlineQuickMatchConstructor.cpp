@@ -1,5 +1,4 @@
 // ??0BfmeAptScreenOnlineQuickMatch@@QAE@H@Z
-// partial score=0.98 date=2026-09-16
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // BfmeAptScreenOnlineQuickMatch constructor, retail 0x00559400, 755 bytes.
@@ -84,7 +83,7 @@ public:
 		Rva0050F8B0FunctorHolder callback );
 
 private:
-	int m_z04;
+	volatile int m_z04;
 	int m_z08;
 	int m_z0C;
 	int m_z10;
@@ -120,6 +119,18 @@ public:
 	int m_64;
 	int m_68;
 	int m_6C;
+};
+
+class QuickMatchFlags
+{
+public:
+	QuickMatchFlags()
+		: m_ready( 0 ), m_startRequested( 0 ), m_pad56( 0 ), m_flags( 0 ) {}
+
+	unsigned char m_ready;
+	unsigned char m_startRequested;
+	unsigned char m_pad56;
+	int m_flags;
 };
 
 class Image;
@@ -172,11 +183,7 @@ public:
 private:
 	int m_z3C;
 	Rva0002E802QuickMatchPreferences m_preferences;
-	unsigned char m_ready;
-	unsigned char m_startRequested;
-	unsigned char m_pad56;
-	unsigned char m_pad57;
-	int m_flags;
+	QuickMatchFlags m_flags;
 	Gen_004b5a50 m_slot5C;
 	int m_slot70;
 	int m_slot74;
@@ -201,16 +208,14 @@ private:
 #define TheGameSpyInfo (*(GameSpyInfo **)0x012F7194)
 #define TheWindowManager (*(void **)0x012F19E8)
 
+
 void _bfme_setAptScreenRefOnlineQuickMatch( const AsciiString &name,
 	Rva0050F840FunctorHolder callback );
 
 BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
-	: _bfme_AptGameWindow( context ), m_z3C( 0 ), m_preferences(), m_slot5C( 0 )
+	: _bfme_AptGameWindow( context ), m_z3C( 0 ), m_preferences(), m_flags(),
+	  m_slot5C( 0 )
 {
-	m_ready = 0;
-	m_startRequested = 0;
-	m_pad56 = 0;
-	m_flags = 0;
 	m_slot5C.m_60 = 0;
 	m_slot5C.m_64 = 0;
 	m_slot5C.m_68 = 0;
@@ -319,13 +324,12 @@ BfmeAptScreenOnlineQuickMatch::BfmeAptScreenOnlineQuickMatch( int context )
 
 		TheMapCache->updateCache();
 		TheGameSpyGame->slot08();
+		if( GameSpyStagingRoom *room = TheGameSpyStagingRoom )
+		{
+			room->slot00( 1 );
+			TheGameSpyStagingRoom = 0;
+		}
+		if( GameSpyInfo *info = TheGameSpyInfo )
+			info->slotB0();
 	}
-
-	if( GameSpyStagingRoom *room = TheGameSpyStagingRoom )
-	{
-		room->slot00( 1 );
-		TheGameSpyStagingRoom = 0;
-	}
-	if( GameSpyInfo *info = TheGameSpyInfo )
-		info->slotB0();
 }
