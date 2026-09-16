@@ -288,3 +288,10 @@ entry `0x00934940 w3d-render` predates this attempt and was not changed.
 - Identity: `_bfme_dumpXferStream` is supported by the named `GameLogic::_bfme_reportDesync` caller and the BFME RTS1/RTS2 tagged transfer-stream behavior.
 - Evidence: the retail contract has 14 direct targets, including parser helpers `0x009D9110` x34 and `0x009D9160` x32, `_bfmeFormatText` x7, vector/string buffer lifetime helpers, and a `0x288` EH frame. The stash probes at 3,046 versus 5,472 bytes with 96 relocations, 2,389 non-relocation differences, 93 relocation-layout mismatches, and a `0x2f0` frame.
 - No exact parser/error-ladder source, pin, or unlock row is justified; adding the missing BFME behavior without its live format/throw contract would be invented.
+
+## 0x0057A470 - BfmeAptScreenSkirmish::_bfme_updateProfileDisplay
+
+- Status: blocked at the existing score `0.47`; `reverse/attempts/0x0057a470.cpp` remains the preferred source-backed stash.
+- Identity: the BFME Skirmish profile display updater is supported by the three `AptSkirmish::InitGadgets` callsites and its APT-specific labels.
+- Evidence: the stash probes at 2,614 versus 5,296 bytes with the exact `0x13c` frame, then diverges at `+0x1c` in callee-saved/register setup. Retail has 27 direct targets, including `_bfmeFormatText`, 19 Unicode formatting calls, 3 translations, and the corresponding string constructor/release ladder; the source models the visible labels but not the retail profile/global dispatch state.
+- No exact source, pin, or unlock row is justified.

@@ -43,3 +43,10 @@
 - 0x009D9D90: retained the identity-resolved `_bfme_dumpXferStream` stash at score `0.55`; current source is 3,046/5,472 with the wrong parser/throw ladder and frame. No exact source, pin, or unlock row.
 - Bodies landed: none. Bodies added to `reverse/unlocked.txt`: none.
 - Next: inspect `0x0057A470` from its 0.47 stash.
+
+## 2026-09-16 - checkpoint after 0x0057A470
+
+- Commits pushed: `b54a6e4b30` (0x009D9D90 blocked verdict). The 0x0057A470 evidence update is prepared for publication.
+- 0x0057A470: retained the identity-resolved Skirmish profile updater stash at score `0.47`; exact frame but unresolved retail profile/global dispatch ladder. No exact source, pin, or unlock row.
+- Bodies landed: none. Bodies added to `reverse/unlocked.txt`: none.
+- Next: inspect `0x0073E050` from its 0.30 stash.
