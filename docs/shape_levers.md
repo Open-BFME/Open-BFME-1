@@ -85,6 +85,13 @@ including the register convention. Verify BOTH bodies: matching the caller's
 relocation-masked call alone does not prove its helper ABI. This is ordinary
 C++ compiler optimization, not a reason to add an assembly adapter.
 
+The same-TU visibility lever also applies to a normal member call: at
+`0x0072EEB0`, declaring `releaseTrack` externally made the caller save its
+owner in EBP. Providing the actual 137-byte definition let VC7.1 observe that
+the callee preserves ECX; the 263-byte caller then matched exactly. Check the
+callee too, and do not substitute an empty or simplified stand-in just to
+change register allocation. Witness: `TerrainTracksSystemUpdate.cpp`.
+
 ## Reload a member after a native aggregate update
 
 At `0x00733000`, native `Vector3`, `Matrix3D`, and `SphereClass` operations

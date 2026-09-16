@@ -1,23 +1,19 @@
 // ?update@TerrainTracksRenderObjClassSystem@@QAEXXZ
-// partial score=0.6 date=2026-09-03
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
+// Complete retail 0x0072EEB0..0x0072EFB7 (263 bytes), including all return paths.
+// The releaseTrack definition must be visible in this TU: VC7.1 then knows
+// that this callee preserves ECX and avoids saving the owner in EBP.
+// Both update and releaseTrack (0x0072EB60/137B) independently match retail.
+// The latter is already claimed as BfmeThingOM::bfmeDropOM and gets no new
+// coverage credit. The field layout agrees with the independent name oracle.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /Ireference/shims
 // BFME retail 0x0072EEB0: update the active terrain-track edges.
 
 typedef unsigned char Bool;
 typedef int Int;
 
-struct Vector3
-{
-	float X;
-	float Y;
-	float Z;
-};
-
-struct Vector2
-{
-	float X;
-	float Y;
-};
+#include "vector3.h"
+#include "vector2.h"
+#include "ww3d.h"
 
 struct edgeInfo
 {
@@ -48,6 +44,7 @@ public:
 	Bool m_haveCap;
 	unsigned char m_pad1[2];
 	TerrainTracksRenderObjClass *m_nextSystem;
+	TerrainTracksRenderObjClass *m_prevSystem;
 };
 
 class GlobalData
@@ -67,7 +64,8 @@ private:
 
 	unsigned char m_pad0[0x10];
 	TerrainTracksRenderObjClass *m_usedModules;
-	unsigned char m_pad1[8];
+	TerrainTracksRenderObjClass *m_freeModules;
+	unsigned char m_pad1[4];
 	Int m_maxTankTrackEdges;
 	Int m_maxTankTrackOpaqueEdges;
 	Int m_maxTankTrackFadeDelay;
@@ -75,14 +73,23 @@ private:
 
 extern GlobalData *TheGlobalData;
 
-class WW3D
-{
-public:
-	static Int Get_Sync_Time(void)
-	{
-		return *(Int *)0x0133F420;
-	}
-};
+void TerrainTracksRenderObjClassSystem::releaseTrack(TerrainTracksRenderObjClass *mod) {
+    if (!mod) return;
+    if (mod->m_nextSystem) mod->m_nextSystem->m_prevSystem=mod->m_prevSystem;
+    if (mod->m_prevSystem) mod->m_prevSystem->m_nextSystem=mod->m_nextSystem;
+    else m_usedModules=mod->m_nextSystem;
+    mod->m_prevSystem=0;
+    mod->m_nextSystem=m_freeModules;
+    if (m_freeModules) m_freeModules->m_prevSystem=mod;
+    m_freeModules=mod;
+    mod->m_haveAnchor=0;
+    mod->m_haveCap=1;
+    mod->m_topIndex=0;
+    mod->m_bottomIndex=0;
+    mod->m_activeEdgeCount=0;
+    mod->m_totalEdgesAdded=0;
+    mod->m_ownerDrawable=0;
+}
 
 void TerrainTracksRenderObjClassSystem::update(void)
 {
