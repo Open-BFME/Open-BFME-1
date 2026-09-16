@@ -534,6 +534,15 @@ independently matched before adding their typed dependencies. The resulting
 constructor is exact. Its class remains address-derived: the tempting
 `DefaultModule<6>` name belongs to a different constructor and vtable.
 
+The four-base constructor at `0x005FDE80` confirms the same lever: omitting
+the head/intermediate virtual destructors produced 148 bytes instead of 196.
+Restoring their native declarations generated the missing constructor cleanup
+and an exact body. Include the actual `DefaultPhysicsModuleInfo` header, and
+make the existing `GameClientRandomVariable::operator=` body visible inline:
+calling its out-of-line declaration instead produced 191 bytes and an extra
+call. This is a lifetime/definition-visibility issue, not a reason to write
+manual exception state or duplicate the random-variable type.
+
 ## A null-first conditional can preserve the fallback branch order
 
 The 692-byte model-name selector at `0x005F6B60` first matched its entire
