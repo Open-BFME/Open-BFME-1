@@ -420,3 +420,59 @@ the factored favorite branch was the useful lever because it restored the exact
 37 manager writes. The partial is banked with all candidate names and measured
 evidence in `reverse/re_attempts.log`. No shared shim, pin, or layout proof for
 a smaller neighbour was established, so `reverse/unlocked.txt` is unchanged.
+
+## 0x0095CE80 - StreakRendererClass::RenderStreak
+
+Status: blocked for this pass after rechecking the existing source-backed
+bank. The matched `StreakLineRender.cpp` caller proves the identity, but the
+clean candidate is not byte-exact; the preferred source remains
+`reverse/attempts/0x0095ce80.cpp` and the generated dump remains untouched.
+
+### Callee table
+
+| Retail target | Count | Proven identity | Evidence |
+| --- | ---: | --- | --- |
+| `0x00905AC0` | 1 | `BoxSetTexture` | texture bind before the draw route |
+| `0x009045E0` / `0x00906DF0` | 1 / 1 | `DX8Wrapper::Set_Index_Buffer` / `Draw_Triangles` | index setup and unsorted draw path |
+| `0x0091D350`, `0x0091D410`, `0x0091D4E0`, `0x0091D950` | 1 each | DynamicIB/WriteLock ctor and dtor | index-buffer lifetime |
+| `0x0091D9E0`, `0x0091F160`, `0x0091F240`, `0x0091F730` | 1 each | DynamicVB/WriteLock ctor and dtor | vertex-buffer lifetime |
+| `0x009212C0` / `0x0093B340` | 1 / 1 | `VertexMaterialClass::Get_Preset` / `SortingRendererClass::Insert_Triangles` | material and sorting path |
+| `0x0095CA00` | 1 | `StreakRendererClass::subdivision_util` | fractal segment subdivision |
+| `0x00B001D0` | 1 | `VectorProcessorClass::Transform` | point transform per chunk |
+| `0x009DB890` / `0x009DB7A0` | 1 / 1 | `StringClass::Get_String` / `Free_String` | snapshot/debug string wrapper |
+| `0x0000AE5C -> 0x005C600` / `0x00027A43 -> 0x0131C90` | 1 / 25 | existing ILT/thunk routes | direct call contract is known; semantic callee ownership remains address-derived |
+| `0x00904510` | 1 | address-derived render-state helper | retail call has no safer semantic pin |
+| `__chkstk` / `floor` import | 1 / 2 | compiler/runtime and MSVCR71 import | frame probe and UV wrapping |
+
+### Layout
+
+- The body begins with the proven `/Z7`-style EH frame and a retail stack
+  reservation of `0x5A84`; the bank reserves `0x5A78`. Retail saves `this` at
+  `[ebp-0x68]`, while the bank uses `[ebp-0x6c]` before the larger local arrays.
+- `StreakRendererClass` carries the texture/shader/width/color/opacity fields,
+  subdivision and noise state, texture scroll state, `Bits`, and the BFME
+  vertex-buffer pair at `+0x44/+0x48`. The render path uses the chunked point
+  arrays, subdivision stack, intersection arrays, vertex/index arrays, and
+  DynamicVB/DynamicIB lock objects.
+- The target contract is the world/view reset, UV offset update, chunked
+  transform and subdivision, edge-plane/intersection expansion, material and
+  shader setup, dynamic-buffer writes, index/vertex/texture binds, then either
+  sorted insertion or `Draw_Triangles`, followed by restoring the view matrix.
+
+### Levers tried
+
+The existing bank compiles to 12,095 bytes versus 12,206 retail, with 199
+relocations, 9,883 non-relocation differences, and 138 relocation-layout
+drifts; the stored author score is `0.6`. It restores the BFME texture-scroll,
+tile-factor, last-sync-time, UV, mapping-mode, and output-offset fields and
+removes the unsupported index-write try/catch expansion. It is not a 99%
+byte match despite the size ratio.
+
+The fresh frame-pad candidate was the only new bounded lever: a volatile
+12-byte local compiled to 12,111 bytes but left the frame at `0x5A78` and
+increased differences to 10,633 with 185 layout drifts, so it was reverted.
+Earlier evidence already covers EH/frame alternatives, clamp-loop forms,
+texture-setter visibility, register/local layout, x87 scheduling, and
+`ALLOW_TEMPORARIES`/`G7`/`/O1` variants. No unresolved callee was independently
+safe to pin, and no shared layout proof for a smaller neighbour was gained;
+`reverse/unlocked.txt` is unchanged.

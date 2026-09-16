@@ -74,3 +74,18 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
   `?RenderStreak@StreakRendererClass@@...`, 12,206 bytes, starting from its
   existing score-0.6 bank. Run `tools/callees.py` first and keep its work
   separate from the two WHALE-2 reservations.
+
+## Checkpoint - 2026-09-16 (ranked continuation)
+
+- `0x0095CE80`: the existing `StreakRendererClass::RenderStreak` bank was
+  rechecked from its complete 23-target callee contract. The best source is
+  12,095 versus 12,206 retail (score 0.6), with the known `0x5A78` versus
+  `0x5A84` frame and 138 relocation-layout drifts. A fresh volatile 12-byte
+  frame-pad candidate was compiled and rejected at 12,111 bytes with 10,633
+  non-relocation differences; the bank is retained and the new blocked verdict
+  is recorded.
+- Bodies added to `reverse/unlocked.txt`: none. No safe pin or shared layout
+  proof was established.
+- Next: inspect the ranked queue after this blocked recheck; the next eligible
+  large dump is `0x00084510` (4,499 B) unless a larger non-WHALE-2 open body is
+  exposed by the refreshed ranking.
