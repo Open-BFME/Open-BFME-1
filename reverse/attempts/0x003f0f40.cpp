@@ -138,20 +138,16 @@ Bool Pathfinder::checkForAdjust(Object *obj, const LocomotorSet &set,
 		if (templateObject != 0 && templateObject->m_nextOverride != 0)
 			templateObject = templateObject->m_nextOverride->getFinalOverride();
 		const char *objectName = templateObject->m_name.str();
-		Real groupXValue = -1.0f;
-		Real groupYValue = -1.0f;
-		Real groupZValue = -1.0f;
+		Coord3D groupValue = { -1.0f, -1.0f, -1.0f };
 		if (groupDest != 0)
 		{
-			groupXValue = groupDest->x;
-			groupYValue = groupDest->y;
-			groupZValue = groupDest->z;
+			groupValue = *groupDest;
 		}
 		bfmeRetailCritterDesyncLog(g_012ED4FC,
 			"\t\t  Pathfinder::CheckForAdjust called with: obj=%s(%d), loco=%s, isHuman=%s, cell=%d,%d, layer=%d, iRadius=%d, center=%s, groupDest=%g,%g,%g, originalZ=%g, onlyIfLayer=%d",
 			objectName, obj->m_id, set.m_name.str(), human ? "TRUE" : "FALSE",
 			x, y, layer, radius, center ? "TRUE" : "FALSE",
-			groupXValue, groupYValue, groupZValue,
+			groupValue.x, groupValue.y, groupValue.z,
 			originalZ, onlyIfLayer);
 	}
 
