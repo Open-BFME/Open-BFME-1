@@ -1,5 +1,5 @@
 // ?move@Rva001B7200Locomotor@@QAE_NPAVObject@@PAVRva001B7200TerrainResult@@@Z
-// partial score=0.94 date=2026-09-10
+// partial score=0.95 date=2026-09-16
 // cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
 // Retail 0x001B7200 is the Bool helper called by the appearance-6 mover at
 // 0x001BB530.  The caller supplies the Object and the terrain/path result
@@ -177,27 +177,25 @@ Bool Rva001B7200Locomotor::move(Object *object, Rva001B7200TerrainResult *result
 		return false;
 
 	Rva001B7200ContainModule *contain = object->m_contain;
-	if (contain == 0)
-		return false;
-	if (contain->getHordeContainInterface() == 0)
+	if (contain == 0 || contain->getHordeContainInterface() == 0)
 		return false;
 
 	Rva001B7200HordeContain *horde = contain->getHordeContainInterface();
 	Rva001B7200Path *path;
-	if (object->m_ai)
-		path = object->m_ai->m_path;
-	else
+	if (object->m_ai == 0)
 		path = 0;
-	if (path == 0)
-		return false;
+	else
+		path = object->m_ai->m_path;
+	if (path != 0)
+	{
 
 	char scratch[0x44];
-	Rva001B7200Delta *delta = reinterpret_cast<Rva001B7200Delta *>(scratch + 4);
-	Coord3D *currentPosition = reinterpret_cast<Coord3D *>(scratch + 0x10);
-	Coord3D *newPosition = reinterpret_cast<Coord3D *>(scratch + 0x1c);
+	Rva001B7200Delta *delta = reinterpret_cast<Rva001B7200Delta *>(scratch);
+	Coord3D *currentPosition = reinterpret_cast<Coord3D *>(scratch + 0x0c);
+	Coord3D *newPosition = reinterpret_cast<Coord3D *>(scratch + 0x18);
 	Rva001B7200PointInfo *point =
-		reinterpret_cast<Rva001B7200PointInfo *>(scratch + 0x28);
-	Coord3D *cachedPosition = reinterpret_cast<Coord3D *>(scratch + 4);
+		reinterpret_cast<Rva001B7200PointInfo *>(scratch + 0x24);
+	Coord3D *cachedPosition = reinterpret_cast<Coord3D *>(scratch);
 
 	path->getPathPosition(currentPosition);
 	path->computePointOnPath(object, this, point, false);
@@ -234,5 +232,7 @@ Bool Rva001B7200Locomotor::move(Object *object, Rva001B7200TerrainResult *result
 	if (point->m_objectID == 0x7fffffff)
 		return false;
 	cachedPath->advanceCachedPoint(cachedPosition);
+	return false;
+	}
 	return false;
 }
