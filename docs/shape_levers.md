@@ -782,3 +782,16 @@ The direct D3DX targets of `0x0090CAD0` are ledgered to the summer-2003
 2026-09-16 investigation corrected the interface declaration before probing,
 but remained 539/559 bytes with 428 differing non-relocation bytes. This is
 ABI evidence for future work, not a matched reconstruction.
+
+
+Before using `throw()` to remove a copy-construction EH state, check whether
+the callee is actually assignment. In the `PredefinedEvaEvent` parser at
+`0x00425C90`, existing `??0Gen_004256E0` metadata initially suggested placement
+construction. Retail `0x004256E0` copies four scalars, then calls
+`0x00424AC0` through ILT `0x000083E1`. That nested tree operation compares
+self/source and clears an existing tree: it is assignment. An address-derived
+`operator=` declaration reproduces the complete 342-byte parser without the
+incorrect construction lifetime or a `throw()` annotation. The legacy helper
+name itself still requires separate correction; do not reuse it as constructor
+evidence. The compiler's extra trailing `int3` is accepted as padding by the
+ordinary scoped gate and is not added to claimed coverage.
