@@ -37,3 +37,13 @@ def test_strings_attach_by_containing_body():
 def test_thunk_map_is_built_once_and_large():
     context_pack._load()
     assert len(context_pack._thunks_of) > 10000
+
+
+def test_callee_truncation_is_explicit():
+    # This 1885-byte renderer has 19 distinct calls. The old brief silently
+    # printed eight, hiding matrix helpers and four imported math thunks.
+    lines = context_pack.pack(0x005F6ED0)
+    assert any("11 more distinct target(s) omitted" in line for line in lines)
+    assert any("tools/callees.py 0x005F6ED0 1885" in line for line in lines)
+    full = context_pack.pack(0x005F6ED0, max_items=30)
+    assert not any("target(s) omitted" in line for line in full)

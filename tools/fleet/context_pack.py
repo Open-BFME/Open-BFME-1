@@ -219,6 +219,9 @@ def pack(rva, max_items=8):
             if real is not None:
                 line += f"  => jmp 0x{real:08X} {name_of(real)}"
             out.append(line)
+        if len(callees) > max_items:
+            out.append(f"    ... {len(callees) - max_items} more distinct target(s) omitted; "
+                       f"full inventory: python3 tools/callees.py 0x{rva:08X} {size}")
     callers = list(_calls.get(rva, []))
     via_thunk = 0
     for th in _thunks_of.get(rva, ()):
