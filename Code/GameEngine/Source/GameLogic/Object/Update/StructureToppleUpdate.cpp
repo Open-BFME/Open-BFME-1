@@ -130,6 +130,10 @@ static void parseAngleFX(INI* ini, void *instance, void * /* store */, const voi
 }
 
 //-------------------------------------------------------------------------------------------------
+// Retail 0x002A4190 held this symbol until 2026-09-16, when the table it adds
+// turned out to be the RubbleRise one at 0x010C2AB0. This copy is the Zero
+// Hour source and its own retail address is not known yet.
+// ?buildFieldParse@StructureToppleUpdateModuleData@@SAXAAVMultiIniFieldParse@@@Z present-unmatched
 /*static*/ void StructureToppleUpdateModuleData::buildFieldParse(MultiIniFieldParse& p) 
 {
   UpdateModuleData::buildFieldParse(p);
