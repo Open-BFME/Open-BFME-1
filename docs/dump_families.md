@@ -228,3 +228,25 @@ EH state and by-value string ABI remain available to MSVC.  Run
 because they occur in this family.  All 40 members now have recorded
 verdicts; no family-17 body was byte-exactly landed in this pass, and the
 17 newly unlocked rows remain available for a worker with a proven owner.
+
+## Families 33-35: scalar constants already witnessed
+
+The next audited non-DX8 groups are scalar-global families rather than
+unmodelled object layouts.  Family 33 has 49 bodies around the VA
+`0x01075C74` direction-weight constant; the source witnesses in
+`W3DTerrainLogicRva006BE890.cpp` and `PathfindSnapLineCellCallback.cpp` are
+already present.  Family 34 has 36 bodies around VA `0x0107FAC4`, the same
+`g_bfmeScaleBC` symbol whose ledger pin is the corresponding RVA
+`0x00C7FAC4`; the VA/RVA distinction is intentional.  Family 35 has 45
+bodies around VA `0x01075C70` (`g_bfmeScaleBK`), also already used by the
+terrain and AI sources.  Families 30-32 were skipped as DX8/render-heavy
+clusters despite their non-DX8-looking secondary anchors.
+
+All members of families 33-35 now have verdict evidence, including the
+newly recorded anonymous blockers at `0x003F82C0` and `0x007C2490`; the
+already matched MASM bodies remain exact but are not clean-C++ landings.  No
+new unlock rows are added for these groups because their shared constants
+already have source witnesses and their bodies overlap the earlier handoff
+rows.  Future work should replace only an identity-proven body, using the
+existing scalar declarations and the ordinary project flags; do not move or
+rename the VA/RVA pins.
