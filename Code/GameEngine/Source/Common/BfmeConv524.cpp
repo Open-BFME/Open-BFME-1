@@ -54,6 +54,36 @@ BFMERetailAsciiString bfmeDoBSD(void *what)
 	return text;
 }
 
+// The owning API is not identified; retain the body address in this
+// address-derived name.  The operation is the slash-to-dot counterpart of
+// bfmeDoBSD above.
+BFMERetailAsciiString Rva0046F6F0SlashToDot(void *what)
+{
+	char buffer[0x8000];
+	const char *source = (const char *)what;
+
+	if (source == 0)
+		source = (const char *)0x0107301c;
+	else if (*source == '/')
+		++source;
+
+	strncpy(buffer, source, 0x7fff);
+	char *cursor = buffer;
+	if (buffer[0] != 0)
+	{
+		do
+		{
+			if (*cursor == '/')
+				*cursor = '.';
+			++cursor;
+		}
+		while (*cursor != 0);
+	}
+
+	BFMERetailAsciiString text(buffer);
+	return text;
+}
+
 void bfmeDoBSD(BfmeSubBSD *sub, void *what);
 
 class BfmeThingBSD
