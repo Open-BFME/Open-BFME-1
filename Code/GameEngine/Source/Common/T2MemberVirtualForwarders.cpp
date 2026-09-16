@@ -34,16 +34,7 @@ void T2FwdHolder::f1() { m_p->s1(); }
 void T2FwdHolder::f2() { m_p->s2(); }
 void T2FwdHolder::f3() { m_p->s3(); }
 
-// The two eight-byte rows take the vptr straight off m_p, so there is no base
-// adjustment and the interface sits at offset 0.
-struct T2FwdPlainHolder
-{
-	char m_head[0xC];
-	T2FwdIface *m_p;
-
-	void g0();
-	void g1();
-};
-
-void T2FwdPlainHolder::g0() { m_p->s3(); }
-void T2FwdPlainHolder::g1() { m_p->s3(); }
+// The two eight-byte rows that used to sit here are slot 3 of the narrow and
+// the wide messages vtables at VA 0x0112FB8C and 0x0112FBB8, so they are
+// do_close and they now come from
+// Code/Libraries/Source/WWVegas/WWLib/stlport_messages_do_open.cpp.
