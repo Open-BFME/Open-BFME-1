@@ -1,5 +1,5 @@
 // ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@0@Z
-// partial score=0.25 date=2026-09-16
+// partial score=0.26 date=2026-09-16
 // cl: /DNDEBUG /MD /EHsc
 
 typedef int Int;
@@ -78,6 +78,7 @@ class MemoryPool
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern float g_Va010977E0;
+extern float g_bfmeDefaultBU;
 
 // Exact retail ILTs, used through typed member-pointer views where the owning
 // C++ class name has not yet been recovered.  The views preserve the observed
@@ -135,8 +136,9 @@ Bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source,
 		Real dy = source->m_position.y - goal->y;
 		Real dz = source->m_position.z - goal->z;
 		Real distanceSquared = dx * dx + dy * dy + dz * dz;
-		if (distanceSquared < 1.0f)
-			goto checkTemplate;
+		if (!(distanceSquared < g_bfmeDefaultBU))
+			goto checkTemplateSecond;
+		goto checkTemplate;
 	}
 
 	if (pathHasTarget(this, &Pathfinder::bfmeCheckAttackViewAltHelper,
@@ -157,6 +159,7 @@ checkTemplate:
 		}
 	}
 
+checkTemplateSecond:
 	if (target->m_template)
 	{
 		Overridable *template_ = target->m_template;
