@@ -822,12 +822,20 @@ def parse_shard(value):
 
 
 def shard_key(candidate):
-    """Return a stable key independent of queue order and processes."""
+    """Return a stable key independent of queue order and processes.
+
+    Hash the address rather than returning it. Every function in the image
+    starts on an even address, so a raw RVA modulo 2 is always 0 and
+    `--shard 1/2` served nothing while `--shard 0/2` served the whole queue.
+    tools/list_naked_candidates.py hashes its identity string the same way.
+    """
+    identity = candidate["function"]
     for field in ("target_rva", "candidate_rva"):
         value = candidate.get(field)
         if value:
-            return int(value, 16)
-    digest = hashlib.sha256(candidate["function"].encode("utf-8")).digest()
+            identity = f"0x{int(value, 16):08X}"
+            break
+    digest = hashlib.sha256(identity.encode("utf-8")).digest()
     return int.from_bytes(digest[:8], "big")
 
 
