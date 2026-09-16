@@ -14,7 +14,7 @@ acceptance check.  ``choices_for(text)`` returns the JSON shape consumed by
 * ``loop`` toggles an empty-init/increment loop header between ``while`` and
   ``for``;
 * ``branch`` folds a simple two-return boolean branch;
-* ``constant`` materialises a literal false/true or zero assignment;
+* ``constant`` materialises a literal false/true return;
 * ``frame`` promotes a simple scalar local to an indexed two-element array.
 
 The first two are useful probes for the hard-lane SIB and register-order
@@ -144,10 +144,6 @@ _BRANCH = re.compile(
 )
 _RETURN_BOOL = re.compile(
     r"^(?P<indent>[ \t]+)return\s+(?P<value>true|false)\s*;[ \t]*$"
-)
-_ZERO_ASSIGN = re.compile(
-    r"^(?P<indent>[ \t]+)(?P<lhs>[A-Za-z_]\w*(?:(?:\s*(?:->|\.)\s*"
-    r"[A-Za-z_]\w*)|(?:\s*\[[^\]\r\n]+\]))*)\s*=\s*0\s*;[ \t]*$"
 )
 _FRAME_DECL = re.compile(
     r"^(?P<indent>[ \t]+)(?P<type>unsigned int|int)\s+"
@@ -464,7 +460,7 @@ def branch_choices(text, limit=8):
 
 
 def constant_choices(text, limit=8):
-    """Probe literal materialisation without changing a return value."""
+    """Probe literal boolean-return materialisation without changing a value."""
     lines = text.splitlines(keepends=True)
     out = []
     for i, line in enumerate(lines):
@@ -495,18 +491,6 @@ def constant_choices(text, limit=8):
                 if len(out) >= limit:
                     break
                 continue
-        zero = _ZERO_ASSIGN.match(line)
-        if not zero or text.count(line) != 1:
-            continue
-        name = "shape_zero_%d" % i
-        if name in text:
-            continue
-        replacement = (f"{zero.group('indent')}int {name} = 0;\n"
-                       f"{zero.group('indent')}{zero.group('lhs').strip()} = {name};\n")
-        out.append({"before": line, "after": [replacement],
-                    "lever": "constant-materialization"})
-        if len(out) >= limit:
-            break
     return out
 
 

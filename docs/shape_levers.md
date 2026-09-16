@@ -82,7 +82,7 @@ the copy in a separate register. `store` swaps adjacent independent simple
 field stores, probing retail store scheduling without reordering a dependency.
 `loop` toggles a `while` header and an equivalent empty-init/increment `for`
 header. `branch` folds a simple boolean if/return pair. `constant` materialises
-a literal boolean return or zero field assignment through a named temporary.
+a literal boolean return through a named temporary.
 `frame` promotes a simple integer local to an indexed two-element array and
 rewrites its uses, probing the dead-dword frame shape documented above.
 Each edit is a hypothesis and `shape_search`
