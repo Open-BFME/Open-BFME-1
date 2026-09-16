@@ -41,6 +41,12 @@ a byte-exact landing on 2026-09-02. Each row states its own mechanism.
 | A shared `return x` block that retail places between the guard and the body, and ours sinks below the body (both guard branches point at the far copy and the second test comes out inverted) | Write the guard as two separate early-return statements instead of one `||` conjunction. With `if (a >= b || b - a < 1) return a;` MSVC 7.1 treats the merged return as cold and moves it past the body; with the two tests as two statements it leaves the block in source position, so the first test jumps to it and the second jumps over it. Landed the bounded string append `?rva68d730@@YAPADPAD00@Z` at 0x0068D730 (129 B) on 2026-09-16, where the conjunction left 48 differing bytes and the split guard was exact. This is the complement of the bounds-test section below, where four early returns had to become one conjunction: read the block ORDER in the diff to decide which way to go. |
 | A local class with an array member: ours stores the vtable BEFORE the EH vector constructor arguments and stores it again at the head of the inlined destructor, retail stores it once just before the `??_L` call and starts the destructor at the `??_M` arguments | Delete the user-written constructor and destructor and let the class take the compiler-generated pair. A user-written empty pair pins the vtable store to the top of each body, which also gives the constant two uses in a loop and makes MSVC hoist it into `ebp`; the implicit pair sinks the store to just before the array constructor call and emits none at the head of the destructor. Modelling the base as a polymorphic MEMBER at +0 instead fixes the destructor but leaves the constructor store early, so the base has to stay a base. Landed the 225-byte record scan `?bfmeGo7530@BfmeOwnerBR@@QAEXPAUBfmeMaskYN@@0PAVObject@@@Z` at 0x002E7530 on 2026-09-16, where the written pair cost 14 bytes and the implicit pair was exact. |
 
+For the 408-byte wind update at `0x005FE480`, the whole native body already
+matched except four EAX/EDX operand bytes loading its two float bounds.
+Declaring the lower bound before the upper bound fixed all four, even though
+the optimized instruction stream loads the upper bound first. Test the small
+declaration-order change; do not infer source order solely from scheduled loads.
+
 ## Filter construction: visible non-retaining constructors
 
 `Rva002622D0Collect.cpp` (532 bytes) initially kept a six-word mask
