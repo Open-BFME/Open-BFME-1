@@ -107,7 +107,8 @@ _BIT_ATOM = re.compile(
     r"(?:\s*\[[^\]\r\n]+\]))*"
 )
 _POINTER_DECL = re.compile(
-    r"^(?P<indent>[ \t]+)(?P<type>[A-Za-z_]\w*(?:\s*(?:::|->)\s*[A-Za-z_]\w*)*"
+    r"^(?P<indent>[ \t]+)(?P<type>(?:(?:const|volatile)\s+)*[A-Za-z_]\w*"
+    r"(?:\s*(?:::|->)\s*[A-Za-z_]\w*)*"
     r"\s*\*)\s*(?P<name>[A-Za-z_]\w*)\s*(?:=\s*[^;]+)?;[ \t]*$"
 )
 _ASSIGNMENT = re.compile(
@@ -265,12 +266,18 @@ def test_choices(text, limit=8):
 
 def _pointer_types(text):
     """Map simple pointer locals to their declared pointer type."""
-    types = {}
+    declarations = {}
     for line in text.splitlines():
         match = _POINTER_DECL.match(line)
         if match:
-            types[match.group("name")] = match.group("type").strip()
-    return types
+            declarations.setdefault(match.group("name"), []).append(
+                match.group("type").strip()
+            )
+    # A text-only scan cannot model C++ scopes.  Refuse shadowed names rather
+    # than borrowing a declaration from another block and emitting an alias
+    # with an incompatible const-qualified type.
+    return {name: values[0] for name, values in declarations.items()
+            if len(values) == 1}
 
 
 def copy_choices(text, limit=8):

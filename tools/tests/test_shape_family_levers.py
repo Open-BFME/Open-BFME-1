@@ -53,6 +53,22 @@ CHAIN_SOURCE = """void chain(int a, int b, int c)
 }
 """
 
+SHADOW_COPY_SOURCE = """struct Node { Node *next; };
+void shadow(Node *source, const Node *other)
+{
+    Node *value;
+    value = source;
+    if (value != 0)
+        return;
+    {
+        const Node *value;
+        value = other;
+        if (value != 0)
+            return;
+    }
+}
+"""
+
 
 def test_sib_choice_reverses_only_a_unique_integer_addition():
     choices = shape_family_levers.choices_for(SOURCE, ("sib",))
@@ -94,6 +110,10 @@ def test_overlapping_adjacent_choices_are_suppressed():
     choices = shape_family_levers.choices_for(CHAIN_SOURCE, ("register",))
     assert len(choices) == 1
     assert list(shape_search.variants(CHAIN_SOURCE, choices))
+
+
+def test_copy_choice_skips_shadowed_pointer_names():
+    assert shape_family_levers.choices_for(SHADOW_COPY_SOURCE, ("copy",)) == []
 
 
 def test_choices_are_accepted_by_shape_search_variants():
