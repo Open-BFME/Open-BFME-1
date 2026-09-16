@@ -120,3 +120,16 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
 - Next: run the ledger gate, publish this verdict with the normal pull/rebase,
   push, and final-pull sequence, then refresh `python3 tools/next_work.py
   --ranked` and continue with the largest eligible dump over 4 KB.
+
+## Checkpoint - 2026-09-16 (WHALE-1 pool exhausted)
+
+- The `0x004DBE80` verdict, bank, recipe, and immutable attempt history were
+  published in commit `df16e53aec` on `origin/master`. The final pull was
+  already up to date; `git status --short` was clean and `check_csv.py`, the
+  pre-commit ledger/identity checks, and the pre-push checks passed.
+- Bodies added to `reverse/unlocked.txt`: none. No body in this session landed
+  byte-exactly, and no shared shim, pin set, or class layout was proven broadly
+  enough to unlock a smaller neighbour.
+- Pool result: the refreshed `python3 tools/next_work.py --ranked` lists
+  `0x003FA5B0` next at 3,951 bytes. Therefore the requested continuation pool
+  of open dumps over 4 KB, excluding WHALE-2's reservations, is exhausted.
