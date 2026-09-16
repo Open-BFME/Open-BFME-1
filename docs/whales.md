@@ -296,6 +296,12 @@ entry `0x00934940 w3d-render` predates this attempt and was not changed.
 - Evidence: the stash probes at 2,614 versus 5,296 bytes with the exact `0x13c` frame, then diverges at `+0x1c` in callee-saved/register setup. Retail has 27 direct targets, including `_bfmeFormatText`, 19 Unicode formatting calls, 3 translations, and the corresponding string constructor/release ladder; the source models the visible labels but not the retail profile/global dispatch state.
 - No exact source, pin, or unlock row is justified.
 
+## 0x003EEB90 - Pathfinder::internal_findHierarchicalPath
+
+- Status: blocked at the existing score `0.55`; `reverse/attempts/0x003eeb90.cpp` remains scratch evidence only.
+- Identity: the BFME seven-argument internal hierarchical-path routine is supported by the matched `findGroundPath`/`findPath`/`findClosestPath` callers through thunk `0x001FA14` and the `ret 0x1c` contract.
+- Evidence: retail has 34 direct, ledger-resolved helper targets. The Zero Hour `AIPathfind.cpp` twin probes at 3,427 versus 4,836 bytes with 58 relocations, 3,037 non-relocation differences, and 55 relocation-layout mismatches; the first divergence is +0x08 (`0xec` retail frame versus `0xb4`) and the BFME `Object*`/`rawTo` argument layout. No exact BFME hierarchical-path source, pin, or unlock row is justified.
+
 ## 0x0073E050 - W3DView::draw
 
 - Status: blocked at the existing score `0.30`; `reverse/attempts/0x0073e050.cpp` remains scratch evidence only.
