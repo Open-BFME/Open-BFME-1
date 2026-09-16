@@ -1,7 +1,6 @@
 # full-gate red rows, shrink-only (tools/gate_baseline.py). One 'name (source)' per line.
 ??1?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@PAVLocomotorTemplate@@@_STL@@@3@@_STL@@QAE@XZ (Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp)
 ??1DefinitionMgrClass@@UAE@XZ (Code/Libraries/Source/WWVegas/WWSaveLoad/definitionmgr.cpp)
-??1DynamicAudioEventRTS@@MAE@XZ (Code/GameEngine/Source/Common/INI/INI_stl.cpp)
 ??1GiantBirdAIUpdate@@UAE@XZ (Code/GameEngine/Source/Common/GiantBirdAIUpdateDestructorThunk.cpp)
 ??1Locomotor@@MAE@XZ (Code/GameEngine/Source/GameLogic/Object/Locomotor.cpp)
 ??1NameKeyGenerator@@UAE@XZ (Code/GameEngine/Source/Common/NameKeyGenerator.cpp)
