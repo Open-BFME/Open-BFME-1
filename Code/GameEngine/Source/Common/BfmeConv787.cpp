@@ -59,6 +59,23 @@ public:
 	unsigned char m_bfmeBody[0x58];
 };
 
+class BfmeStrAVTV
+{
+public:
+	BfmeStrAVTV(const BfmeStrAVTV &other);
+	~BfmeStrAVTV();
+
+	char *m_bfme00;
+};
+
+class BfmeElementDVB
+{
+public:
+	BfmeStrAVTV getName() const;
+
+	unsigned char m_bfmeBody[0x58];
+};
+
 class Rva00361E80Vector
 {
 public:
@@ -69,6 +86,16 @@ public:
 	Rva00361960 *m_end;
 };
 
+class BfmeSubDVBVector
+{
+public:
+	int size() const { return m_end - m_begin; }
+	BfmeElementDVB *begin() const { return m_begin; }
+
+	BfmeElementDVB *m_begin;
+	BfmeElementDVB *m_end;
+};
+
 class BfmeSubDVB
 {
 public:
@@ -76,9 +103,14 @@ public:
 	void bfmeTwoDVB(void *a, void *b);
 	void bfmeThreeDVB(void *a, void *b);
 	BfmeSharedString bfmeTwoDVB(int index);
+	BfmeStrAVTV bfmeThreeDVB(int index);
 
 	unsigned char m_bfmeHead[0x18];
-	Rva00361E80Vector m_bfmeVector;
+	union
+	{
+		Rva00361E80Vector m_bfmeVectorTwo;
+		BfmeSubDVBVector m_bfmeVectorThree;
+	};
 };
 
 BfmeStrFM BfmeHostFM::bfmeAtFM(int i) const
@@ -92,12 +124,23 @@ BfmeStrFM BfmeHostFM::bfmeAtFM(int i) const
 BfmeSharedString BfmeSubDVB::bfmeTwoDVB(int index)
 {
 	if (index >= 0 && (unsigned int)index <
-		(unsigned int)m_bfmeVector.size())
+		(unsigned int)m_bfmeVectorTwo.size())
 	{
-		return m_bfmeVector.begin()[index].copyString();
+		return m_bfmeVectorTwo.begin()[index].copyString();
 	}
 
 	return *(const BfmeSharedString *)&Rva01336E50Str;
+}
+
+BfmeStrAVTV BfmeSubDVB::bfmeThreeDVB(int index)
+{
+	if (index >= 0 && (unsigned int)index <
+		(unsigned int)m_bfmeVectorThree.size())
+	{
+		return m_bfmeVectorThree.begin()[index].getName();
+	}
+
+	return *(const BfmeStrAVTV *)&Rva01336E50Str;
 }
 
 struct BfmeThingDVB
