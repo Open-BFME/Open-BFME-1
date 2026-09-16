@@ -9,6 +9,12 @@ history, one `git show` away.
 
 An explicit request or assigned lane overrides the queue:
 
+0. On Windows, never invoke a `.sh` file directly from PowerShell or cmd
+   (Explorer asks what to open it with and nothing runs). Use `build.cmd`
+   or `.\build.ps1` with the same arguments as `./build.sh`, and
+   `tools\fleet\launch_fleet.cmd` for the fleet; any other script goes
+   through `bash tools/x.sh`. Python is `python3` in Git Bash, `py -3` in
+   PowerShell.
 1. `git pull --rebase origin master`
 2. `python3 tools/check_csv.py` — repair ledger errors before other work
 3. `python3 tools/next_work.py` for identity and structural work; it explains

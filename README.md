@@ -44,7 +44,7 @@ The MSVC 7.1 toolchain and baseline executables are committed directly (plain gi
 
 ```bash
 ./tools/setup_hooks.sh   # enable the pre-commit byte-check (git won't do this from a clone)
-./build.sh               # verify every tracked function against retail   (.\build.ps1 on Windows)
+./build.sh               # verify every tracked function against retail   (build.cmd or .\build.ps1 on Windows, same arguments)
 ```
 
 To check a single function while iterating, pass its file or name — a few seconds instead of the full run:
