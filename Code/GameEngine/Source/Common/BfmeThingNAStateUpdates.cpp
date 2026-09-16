@@ -17,6 +17,7 @@ class BfmeThingNA
 public:
 	void bfmeOneNA(void);
 	void bfmeTwoNA(void);
+	void bfmeApplyNA(void);
 	void bfmeUpdateBNA(void);
 	void bfmeUpdateDNA(void);
 	void bfmeResetStateNA(void);
@@ -165,5 +166,24 @@ void BfmeThingNA::bfmeUpdateDNA(void)
 	}
 
 	if (!(bits & 0x20))
+		bfmeTwoNA();
+}
+
+void BfmeThingNA::bfmeApplyNA(void)
+{
+	if (m_bfmeB)
+	{
+		if (m_bfmeD)
+		{
+			if (m_bfmeBits & 0x10)
+				if (m_bfmeC)
+					return;
+
+			bfmeOneNA();
+			return;
+		}
+	}
+
+	if (!(m_bfmeBits & 0x20))
 		bfmeTwoNA();
 }
