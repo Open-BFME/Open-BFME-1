@@ -43,8 +43,8 @@ private:
 	unsigned int m_lastFireFrame;
 	unsigned int m_field28;
 	unsigned int m_reset2C;
-	unsigned int m_field30;
 	unsigned int m_maxShotCount;
+	unsigned int m_field34;
 	unsigned int m_curBarrel;
 	unsigned int m_numShotsForCurBarrel;
 	unsigned char m_pad40[0x0C];
@@ -74,10 +74,10 @@ Weapon& Weapon::operator=(const Weapon& that)
 		const int pitchLimited = (m_template->getMinTargetPitch() > -3.14159265358979323846f ||
 			m_template->getMaxTargetPitch() < 3.14159265358979323846f) ? 1 : 0;
 		this->m_pitchLimited = (unsigned char)pitchLimited;
-		this->m_maxShotCount = 0x7FFFFFFF;
+		this->m_field34 = 0x7FFFFFFF;
 		this->m_curBarrel = 0;
 		this->m_reset2C = 0;
-		this->m_field30 = that.m_field30;
+		this->m_maxShotCount = that.m_maxShotCount;
 		this->m_numShotsForCurBarrel = (unsigned int)m_template->getShotsPerBarrel();
 		this->m_reset58 = 0;
 	}
