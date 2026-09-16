@@ -1,5 +1,5 @@
 // ?doPushOutDocking@RailedTransportDockUpdate@@IAEXXZ
-// partial score=0.98 date=2026-09-12
+// partial score=0.984 date=2026-09-15
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc-
 
 // BFME's RailedTransportDockUpdate is four bytes narrower than the Zero Hour
