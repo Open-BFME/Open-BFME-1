@@ -1,5 +1,5 @@
 // ?createParticle@BfmeParticleEmissionHelper@@QAEPAVParticle@@HH@Z
-// partial score=0.55 date=2026-09-10
+// partial score=0.6 date=2026-09-16
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 //
 // The retail helper at 0x005D0530 is reached by the actual ParticleSystem
@@ -80,57 +80,65 @@ static void attachEmissionInfo(void *tail, Particle *info)
 	reinterpret_cast<AttachCall>(j_00043e91)(tail, info);
 }
 
+class Rva005D0530ParticleInfo
+{
+public:
+	__forceinline Rva005D0530ParticleInfo()
+	{
+		unsigned int zero = 0;
+		*(unsigned int *)(m_bytes + 0x04) = zero;
+		*(unsigned int *)(m_bytes + 0x08) = zero;
+		*(unsigned int *)(m_bytes + 0x0c) = zero;
+		*(unsigned int *)(m_bytes + 0x28) = zero;
+		*(unsigned int *)(m_bytes + 0x2c) = zero;
+		*(unsigned int *)(m_bytes + 0x30) = zero;
+		*(unsigned int *)(m_bytes + 0x1c) = zero;
+		*(unsigned int *)(m_bytes + 0x20) = zero;
+		*(unsigned int *)(m_bytes + 0x24) = zero;
+		*(unsigned int *)(m_bytes + 0x10) = zero;
+		*(unsigned int *)(m_bytes + 0x14) = zero;
+		*(unsigned int *)(m_bytes + 0x18) = zero;
+		*(unsigned int *)(m_bytes + 0x34) = zero;
+		*(unsigned char *)(m_bytes + 0x38) = 0;
+		*(unsigned int *)m_bytes = 0x0110FE78;
+		*(unsigned int *)(m_bytes + 0x3c) = zero;
+		*(unsigned int *)(m_bytes + 0x40) = zero;
+		*(unsigned int *)(m_bytes + 0x44) = zero;
+		*(unsigned int *)(m_bytes + 0x48) = zero;
+		*(unsigned int *)(m_bytes + 0x54) = zero;
+		*(unsigned int *)(m_bytes + 0x58) = zero;
+		*(unsigned int *)(m_bytes + 0x5c) = zero;
+		*(unsigned int *)(m_bytes + 0x60) = zero;
+	}
+
+	unsigned char m_bytes[0x68];
+};
+
 class BfmeParticleEmissionHelper
 {
 public:
-	Particle *createParticle(int particleNumber, int particleCount);
+	Particle *createParticle(int particleCount, int particleNumber);
 };
 
 // ?createParticle@BfmeParticleEmissionHelper@@QAEPAVParticle@@HH@Z
 Particle *BfmeParticleEmissionHelper::createParticle(
-	int particleNumber, int particleCount)
+	int particleCount, int particleNumber)
 {
-	unsigned char *info = (unsigned char *)::operator new(0x68);
+	Rva005D0530ParticleInfo *particleInfo = new Rva005D0530ParticleInfo;
+	unsigned char *info = (unsigned char *)particleInfo;
 	unsigned int zero = 0;
-	if (info != (unsigned char *)zero)
-	{
-		*(unsigned int *)(info + 0x04) = zero;
-		*(unsigned int *)(info + 0x08) = zero;
-		*(unsigned int *)(info + 0x0c) = zero;
-		*(unsigned int *)(info + 0x28) = zero;
-		*(unsigned int *)(info + 0x2c) = zero;
-		*(unsigned int *)(info + 0x30) = zero;
-		*(unsigned int *)(info + 0x1c) = zero;
-		*(unsigned int *)(info + 0x20) = zero;
-		*(unsigned int *)(info + 0x24) = zero;
-		*(unsigned int *)(info + 0x10) = zero;
-		*(unsigned int *)(info + 0x14) = zero;
-		*(unsigned int *)(info + 0x18) = zero;
-		*(unsigned int *)(info + 0x34) = zero;
-		*(unsigned char *)(info + 0x38) = 0;
-		*(unsigned int *)info = 0x0110FE78;
-		*(unsigned int *)(info + 0x3c) = zero;
-		*(unsigned int *)(info + 0x40) = zero;
-		*(unsigned int *)(info + 0x44) = zero;
-		*(unsigned int *)(info + 0x48) = zero;
-		*(unsigned int *)(info + 0x54) = zero;
-		*(unsigned int *)(info + 0x58) = zero;
-		*(unsigned int *)(info + 0x5c) = zero;
-		*(unsigned int *)(info + 0x60) = zero;
-	}
 
 	if ((unsigned int)particleNumber != zero)
 	{
 		Rva005D0530Coord3D scratch;
-		Rva005D0530Coord3D *positionResult = sampleEmissionPosition(
-			this, &scratch, particleCount, particleNumber);
-		Rva005D0530Coord3D *directionResult = sampleEmissionDirection(
-			this, &scratch);
 		Rva005D0530Coord3D *storedPosition =
 			(Rva005D0530Coord3D *)(info + 0x1c);
 		Rva005D0530Coord3D *storedDirection =
 			(Rva005D0530Coord3D *)(info + 0x10);
-
+		Rva005D0530Coord3D *positionResult = sampleEmissionPosition(
+			this, &scratch, particleCount, particleNumber);
+		Rva005D0530Coord3D *directionResult = sampleEmissionDirection(
+			this, &scratch);
 		*storedPosition = *positionResult;
 		*storedDirection = *directionResult;
 		Real *f0 = (Real *)((unsigned char *)this + 0xf0);
