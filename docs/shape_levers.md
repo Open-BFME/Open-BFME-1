@@ -773,3 +773,12 @@ is `0x84` bytes: a `0x10` tree header plus a four-byte key and `0x70` mapped
 value. The related tree copy constructor at `0x00606E60` independently verifies
 that layout. Keep the aggregate owner opaque; a nearby generated STL name is
 not evidence of the original enclosing class.
+
+
+Do not infer a texture interface ABI from the historical `dx8wrapper.h` name.
+The direct D3DX targets of `0x0090CAD0` are ledgered to the summer-2003
+`d3dx9.lib`. Its observed texture calls use `+0x44`, `+0x48`, `+0x4c`, and
+`+0x50`; a reduced D3D8 declaration does not supply that slot layout. The
+2026-09-16 investigation corrected the interface declaration before probing,
+but remained 539/559 bytes with 428 differing non-relocation bytes. This is
+ABI evidence for future work, not a matched reconstruction.
