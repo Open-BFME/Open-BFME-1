@@ -170,6 +170,44 @@ near-misses where their clean C++ output is not byte-exact.  The family has a
 verdict for all 44 members and is unlocked with `fam24`; no generated dump
 was edited.
 
+## Family 28: APT allocator and pooled-object contract
+
+Families 25 through 27 remain DX8/D3DX or render-state families and are
+skipped here.  Family 28 is the next non-DX8 cluster: 47 bodies / 55,537
+bytes all read the APT allocator function pointer at data `0x01337828`
+(`Rva008C5D70Alloc`).  Thirty also share the idle-pool object at
+`0x01337810`; the smaller subsets expose the existing APT string truncation,
+pooled-object constructor, and node-list contracts.  The allocator global is
+already declared by the canonical APT sources, including
+`Rva008CF3C0ParseAppend.cpp` and the APT primitive creators.
+
+This family has no single owner layout.  Use the existing EA APT headers and
+the exact pooled-object declaration for the selected body, with the normal
+`/DNDEBUG /MD /EHsc` project flags.  `tools/callees.py` must be run per body;
+the allocator pointer is not a reason to add a pin.  The smallest rows are
+anonymous APT bodies with separate owners, while the largest `0x008BF100`
+has no caller or built emitter and is recorded blocked.  All 47 members have
+verdicts and are unlocked with `fam28`; no generated body was edited.
+
+## Family 29: GameSpyInfo owner contract
+
+Family 29 is the next non-DX8 global family: 44 bodies / 54,205 bytes read
+`TheGameSpyInfo` at data `0x012F7194`.  The shared secondary witnesses are
+`TheGameSpyPeerMessageQueue`, `TheGameSpyGame`, the canonical Unicode/StringBase
+constructors, and the GameSpy message constructors/destructors.  Sixteen
+members overlap the already unlocked family-16/17 rows; those addresses stay
+listed once under their earlier tag.
+
+The owner declaration belongs in the canonical GameSpy peer definitions,
+`reference/shims/peerdefs/GameNetwork/GameSpy/PeerDefs.h` and
+`PeerDefsImplementation.h`, with any TU-local ABI view justified by an
+independent vtable slot or named caller.  Use `/DNDEBUG /MD /EHsc` and the
+existing string/GameSpy include roots.  Do not name an anonymous body merely
+because it reads `TheGameSpyInfo`; prove its method, callee ABI, and complete
+retail boundary first.  The smallest family-only rows are still
+address-derived GameSpy/Apt bodies; all 44 members now have verdicts, and the
+28 rows not already unlocked by family 16/17 are tagged `fam29`.
+
 ## Family 17: wide-string constructor overlap
 
 The next non-DX8 family in the live top-40 scan is 40 bodies / 61,958 bytes,
