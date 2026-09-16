@@ -3295,6 +3295,8 @@ name,address,notes
 ??0QueueProductionExitUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002D40C,pinharvest x1 (thunk)
 ??0QueuedDownload@@QAE@ABV0@@Z,0x000451D3,"exact retail rel32 target of the byte-verified caller; replaces a harvested pin at 0x0001005F, which is the pair<const AsciiString,ArchivedFileInfo> constructor's body"
 ??0QuickMatchPreferences@@QAE@XZ,0x0002E802
+??0Rva0002E802QuickMatchPreferences@@QAE@XZ,0x0002E802,OnlineQuickMatch constructor's +0x40 member calls this ILT; the address-derived type preserves the witnessed 0x14-byte preference layout
+??0Gen_004b5a50@@QAE@H@Z,0x0001FDCF,OnlineQuickMatch constructor initializes its +0x5C state through this address-derived constructor; the matching destructor at 0x0003EB53 closes the EH state
 ??0QuitMenuHolder@@QAE@UFunctorBinding@@@Z,0x00015870,0x0056A2F0 assigned callback-holder constructor ILT
 ??0RAMFile@@QAE@XZ,0x009E6990,pinharvest x1 (body)
 ??0ROFU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,RainOfFireUpdate ModuleFactory body calls the shared ObjectModule constructor ILT
@@ -3408,9 +3410,11 @@ name,address,notes
 ??0Rva004B2300Base@@QAE@ABV0@@Z,0x0004AAD4,Open-BFME5 fresh thiscall copy ctor at ILT of derived copy 0x004B2300
 ??0Rva004C1590Base@@QAE@ABV0@@Z,0x0003FAF8,Open-BFME5 fresh thiscall copy ctor at ILT of derived copy 0x004C1590
 ??0Rva0050F840FunctorHolder@@QAE@UFunctorBinding@@@Z,0x0003C9D9,DisconnectScreen InitGadgets binding calls the established holder constructor through this ILT
+??0Rva0050F840FunctorHolder@@QAE@UFunctorBindingSingle@@@Z,0x000367FF,OnlineQuickMatch InitGadgets registration calls this single-binding holder ILT; the 8-byte binding ABI is witnessed by the retail stores
 ??0Rva0050F840FunctorRef@@QAE@PAVFunctorTarget@@IP8FunctorTarget@@AEXXZ@Z,0x0050F840,address-derived per FunctorBindConstructors.cpp convention (no RTTI for the template): news the 0x18-byte functor wrapper with vtable 0x01104D9C (slot 1 = ?invoke@Rva0050E8F0FunctorInvoke) fills object/ctx/code/delta at +8..+0x14 stores it through ecx and addrefs; sole caller ctor 0x0050FA55 binding DisconnectScreen::InitGadgets; ILT 0x0003C9D9
 ??0Rva0050F8B0FunctorHolder@@QAE@UBfmeObjectivesFunctorBinding@@@Z,0x0000D48B,route=0x0052BCE0; Objectives and PlayerStatus constructor 0x0052C660 calls this canonical overload through the retail ILT
 ??0Rva0050F8B0FunctorHolder@@QAE@UFunctorBinding@@@Z,0x000180C5,DisconnectScreen fscommand bindings call the established holder constructor through this ILT
+??0Rva0050F8B0FunctorHolder@@QAE@UFunctorBindingSingle@@@Z,0x00013665,OnlineQuickMatch callback registrations call this single-binding holder ILT; the 8-byte binding ABI is witnessed by the retail stores
 ??0Rva0050F8B0FunctorRef@@QAE@PAVFunctorTarget@@IP8FunctorTarget@@AEXXZ@Z,0x0050F8B0,byte-identical to 0x0050F840 except vtable 0x01104DA8 (slot 1 = ?invoke@Rva0050E940FunctorInvoke); 4 callers in the ctor 0x0050FAB1 0x0050FB0C 0x0050FB67 0x0050FBC2 binding the fscommand handlers OnInitialized Quit Kick Chat::OnBttnEnterText; ILT 0x000180C5
 ??0Rva00537630String@@QAE@ABV0@@Z,0x00832150,Open-BFME5 the string copy constructor the accessor at 0x00537630 calls
 ??0Rva00572CA0FunctorRef@@QAE@PAVFunctorTarget@@IP8FunctorTarget@@AEXXZ@Z,0x00572CA0,address-derived per FunctorBindConstructors.cpp convention: news the 0x18-byte functor wrapper with vtable 0x0110A958 (slot 1 = ?invoke@Rva00571770FunctorInvoke: this=object+delta jmp code) fills object/code/delta from the 4 stack args refcount=1 and stores it through the ecx out-pointer; 7 callers in the ScoreScreen APT ctor 0x005782D6 0x00578332 0x0057838E 0x005783EA 0x00578446 0x005784A2 0x005784FE binding the fscommand handlers; ILT 0x0003E3C9
@@ -14077,6 +14081,7 @@ name,address,notes
 ?_bfme_sendStartQuickMatchRequest@BfmeAptScreenQuickMatchMenu@@QAEXPAVGameWindow@@@Z,0x00509B30,the ZH WOLQuickMatchMenuSystem GBM_SELECTED buttonStart arm (WOLQuickMatchMenu.cpp:1655-1810) extracted into a method of the same QuickMatchMenu APT object: PeerRequest type 0x10 (STARTQUICKMATCH shifted by one in BFME) maxPoints/minPoints/maxDiscons/maxPing from the gadgets findPlayerStatsByID points ladder via TheLadderList->findLadderByIndex 0x0062A430 (randomFactions +0x19 validFactions +0x20 playersPerTeam +0xc) side from ThePlayerTemplateStore discons = sum(discons)+sum(desyncs) strncpy(req.QM.pings TheGameSpyInfo->getPingString(+0x114) 17) exeCRC/iniCRC from TheWritableGlobalData+0xbc8/+0xbd4 then TheGameSpyPeerMessageQueue->addRequest 0x0050A0CB and LadderPreferences addRecentLadder/write; sole caller WOLQuickMatchMenuSystem 0x0050A588 (this=esi control pushed)
 ?_bfme_serviceHighestPriorityCheck@Eva@@AAEXXZ,0x0000F32B,ILT thunk to the retail Eva check-servicing body at 0x004237E0 called from Eva::update; unidentified beyond its shape
 ?_bfme_setAptScreenRef@@YAXABVAsciiString@@VRva0050F840FunctorHolder@@@Z,0x0003DF14,DisconnectScreen constructor registers InitGadgets through this ILT
+?_bfme_setAptScreenRefOnlineQuickMatch@@YAXABVAsciiString@@VRva0050F840FunctorHolder@@@Z,0x0003DF14,OnlineQuickMatch constructor calls this address-derived InitGadgets registration alias
 ?_bfme_setAptScreenRef@WindowManager@@QAEXABVAsciiString@@PAVRefCountClass@@@Z,0x004628E0,mechanics-derived name (no ZH twin; no string anchor): 0x00461A00 find-or-inserts the record keyed by the AsciiString in a WindowManager map then the refcounted pointer argument (+4 counter; vslot 0 deleting dtor on release) replaces the stored one with addref/release; 13 APT menu callers (0x00464080 0x0050E320 0x0050F990 ...); ILT 0x0003DF14
 ?_bfme_setEngineInputEnabled@InGameUI@@QAEX_N@Z,0x0043B260,twin of the ledgered setInputEnabled 0x0043B280: same vcall +0x120(enable &flag) but with the +0x0D flag instead of +0x0E; used by the engine (GameEngine +0x80 body 0x0006BA06/0x0006BA11 GameLogic 0x00383490 and the MSG_CLEAR_GAME_DATA poster 0x003839E0) while scripts use +0x0E
 ?_bfme_setEngineVisibility@Mouse@@QAEX_N@Z,0x005A4B50,twin of the ledgered setVisibility 0x005A4BA0: same vcall +0x5C(visible &flag) but with the +0x4DA1 flag instead of +0x4DA2; 24 engine/screen callers (GameEngine +0x80 body 0x0006BA23 startNewGame 0x003943F8 deleteLoadScreen 0x0038D688) while doDisableInput uses +0x4DA2
@@ -14086,6 +14091,7 @@ name,address,notes
 ?_bfme_shouldSkipClientFrameCall@GameEngine@@AAE_NXZ,0x000358EB,ILT entry used by GameEngine::_bfme_updateClientSubsystems for _bfme_shouldSkipClientFrame body 0x0006B830
 ?_bfme_showAptScreen@WindowManager@@QAEXABVAsciiString@@PAVRefCountClass@@@Z,0x00464ED0,mechanics-derived name: if g_theWindowManager 0x012F19E8 push_back(name) on the vector at this+8/+0xc (grow via ILT 0x0003827B) then 0x0046DA70(name) with the refcounted listener addref/release; ILT 0x000338ED
 ?_bfme_showAptScreen@_bfme_AptGameWindow@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z,0x000338ED,DisconnectScreen constructor registers its fscommand callbacks through this ILT
+?_bfme_showAptScreenOnlineQuickMatch@_bfme_AptGameWindow@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z,0x000338ED,OnlineQuickMatch constructor calls this address-derived callback registration alias
 ?_bfme_showAptScreenWithArg@WindowManager@@QAEXABVAsciiString@@PAXPAVRefCountClass@@@Z,0x00464FE0,mechanics-derived name: same shape as 0x00464ED0 on the vector at this+0x14/+0x18 and 0x0046DBC0(name; arg); ILT 0x0000ACFE
 ?_bfme_showAptScreenWithArg@_bfme_AptGameWindow@@QAEXABVAsciiString@@PAXVRva0050F920FunctorHolder@@@Z,0x0000ACFE,DisconnectScreen constructor registers its player-color providers through this ILT
 ?_bfme_showEndGameScreen@VictoryConditions@@UAEXABVAsciiString@@_N00@Z,0x0035F600,vtable 0x010E8D90 slot 18 (+0x48) via ILT 0x00008B48; BFME-only ret 0x10: (titleKey evil screenName cheerSound) -> TheGameText fetch of titleKey into APT field :VictoryDefeat via WindowManager::bfme_setAptText 0x0046CBF0 then APT ShowEndGame(evil?1:0 screenName cheer) through the /_level%d helper 0x004675F0; +0x0C=1 +0x10=timeGetTime TheDisplay+0x13C=0; call sites doVictory 0x002F1CF4 doDefeat 0x002F1E31 doLocalDefeat 0x002F1F72 update 0x0035FC2B
@@ -79543,6 +79549,7 @@ name,address,notes
 ?findGroup@ScriptEngine@@IAEPAVScriptGroup@@VAsciiString@@PAV3@@Z,0x00007AC7,Independently reviewed retail optional canonical-output pointer or boolean listener ABI
 ?findHeaderTemplate@HeaderTemplateManager@@QAEPAVHeaderTemplate@@VAsciiString@@@Z,0x0048C8C0,direct body pin: HeaderTemplateManager list lookup proven by 0x00487F80 caller and retail manager/template offsets; resolver derives ILT 0x0004881A; campaign=luna36h-20260907;lane=mid
 ?findImageByName@ImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z,0x0001D606
+?findImageByName@Rva0001D606ImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z,0x0001D606,OnlineQuickMatch constructor calls this address-derived image lookup alias
 ?findImageByName@MappedImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z,0x0001D606
 ?findImageByName@MappedImageCollectionPortraitShim@@QAEPBVImage@@ABVAsciiString@@@Z,0x0001D606,BFME portrait selector image lookup ILT
 ?findImageByName@Open2Images143730@@QAEPBVImage@@ABVAsciiString@@@Z,0x0001D606,Open2 0x00143730 portrait twin callee
@@ -85519,6 +85526,7 @@ name,address,notes
 ?updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z,0x00497640,vtable-slot ??_7ProcessAnimateWindowSlideFromRightFast@@6B@ slot 3 anchors=3
 ?updateAnimateWindow@ProcessAnimateWindowSlideFromTop@@UAE_NPAVAnimateWindow@@@Z,0x00496130,vtable-slot ??_7ProcessAnimateWindowSlideFromTop@@6B@ slot 3 anchors=3
 ?updateCache@MapCache@@QAEXXZ,0x00018F0C,isValidMap cache refresh thunk
+?updateCache@Rva00018F0CMapCache@@QAEXXZ,0x00018F0C,OnlineQuickMatch constructor calls this address-derived map cache update alias
 ?updateCachedState@BfmeStateFlagOwner@@QAEXXZ,0x0001727E,ILT thunk used by the 0x00234040 state flag refresh
 ?updateCandidateList@IMEManager@@QAEXH@Z,0x0000F27C,Independently inspected retail ILT/body ABI; GUI method receiver and argument layout verified
 ?updateCellsTouched@PartitionData@@AAEXXZ,0x008F8800,Open-BFME5 private cell-rebuild body reached by the canonical public friend_updateCellsTouched facade at 0x008F8BF0
