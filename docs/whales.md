@@ -308,3 +308,56 @@ entry `0x00934940 w3d-render` predates this attempt and was not changed.
 - Identity: the body is `W3DView::draw`, supported by the `W3DDisplay::m_3DScene` path, `filterPreRender`/`filterPostRender` calls, and W3DView field accesses.
 - Evidence: retail has 13 direct targets including `DX8Wrapper::Clear` x3. The source twin probes at 1,831 versus 5,126 bytes with 57 relocations, 1,527 non-relocation differences, and 56 relocation-layout mismatches; retail begins with a no-EH `0x120` frame while the twin begins with EH and a `0x1bc` frame. The scratch bank’s relative include path is also not independently compilable.
 - No exact BFME display-global/filter ladder, pin, or unlock row is justified.
+## 0x007DD180 - TerrainShader2Stage::set
+
+Status: banked partial; identity is supported, but no exact clean-C++ body
+was found. The preferred function-sized candidate is
+`reverse/attempts/0x007dd180.cpp`, compiled in the existing
+`W3DShaderManager.cpp` TU context. The anonymous ledger row remains
+`?d_007dd180@@YAXXZ`.
+
+### Callee table
+
+| Retail target | Count | Proven identity | Evidence |
+| --- | ---: | --- | --- |
+| `0x00904890` | 1 | `DX8Wrapper::Apply_Render_State_Changes` | `tools/callees.py 0x007DD180 6636` |
+| `0x00038389` | 2 | pinned `Rva006D4690Apply` through the ILT | matched filter-state body at `0x006D4690` and the existing pin |
+| `0x009DB890` / `0x009DB7A0` | 35 / 35 | `StringClass::Get_String` / `Free_String` | repeated snapshot-name construction and cleanup |
+| `0x00906FE0` / `0x00907BE0` | 28 / 7 | DX8 texture-stage/render-state value names | BFME snapshot expansion in the retail state-cache path |
+| `0x009FB321` | 1 | `_D3DXMatrixInverse@12` | view inverse before the noise branches |
+| `0x0001ADED` | 6 | `bfmeGet` through the existing ILT | six texture-handle acquisitions in the noise cases |
+| `0x0090DC60` / `0x009EB7A0` | 6 / 6 | `Peek_D3D_Base_Texture` / `TextureClass::Release_Ref` | paired device binds and RAII handle cleanup |
+| `0x00019BFF` / `0x000051FF` | 2 / 2 | existing j-thunks to `0x007DCCE0` / `0x007DCF00` | direct retail calls; `TerrainTextureMatrix.cpp` is source-backed for `0x007DCF00` |
+
+### Layout
+
+- `TerrainShader8Stage::set` calls `0x007DD180` for its two-stage pass-2
+  route, which supports `TerrainShader2Stage::set(Int)` without inventing a
+  semantic owner for the anonymous ledger row.
+- Retail starts with the MSVC EH handler `0x010540D3`, reserves `0xA4` bytes,
+  saves `this` in EDI, and reads the stack `pass` at `[esp+0xCC]` after the
+  two filter-helper calls. The best candidate reserves `0x8C`, so its first
+  raw divergence is the frame at `+0x15` and its `curView` local is at
+  `[esp+0x18]` instead of retail `[esp+0x34]`.
+- The pass-2 state ladder contains slot-67 texture-stage writes, slot-69
+  sampler writes, slot-57 render-state writes, direct device slot-65 texture
+  binds, one view inverse, and six short-lived texture handles. The target's
+  35/35 string calls and 28/7 state-name calls are the expanded snapshot
+  wrappers, not evidence for another class.
+
+### Levers tried
+
+The best measured candidate expands the BFME cache and sampler paths, uses
+the proven `0x006D4690` filter helper, RAII `bfmeGet` handles, and direct
+`0x00019BFF`/`0x000051FF` helper routes. It compiles to 7,083 bytes versus
+6,636 retail, with 623 relocations, 3,141 non-relocation differences, and
+3,495 masked-equal bytes (recorded score `0.5267`); 467 relocation sites do
+not align after the frame/layout drift. The alternate render-snapshot form
+using the existing `StringClass` constructor is 6,907 bytes with 3,476
+non-relocation differences and was retained in immutable attempt history.
+
+The attempted levers were the original ZH state wrappers; BFME slot-67,
+slot-69, slot-57, and slot-65 lowering; inline snapshot string construction;
+RAII texture lifetimes; the proven filter helper; direct j-thunk calls; and
+the two source-backed terrain matrix helper routes. No new pin or unlock row
+is justified: `reverse/unlocked.txt` already contains `0x007dd180 w3d-render`.

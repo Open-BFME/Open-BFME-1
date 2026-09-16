@@ -33,3 +33,21 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
 - Commit/push: pending for this checkpoint; bodies added to
   `reverse/unlocked.txt`: none.
 - Next: pull/rebase/push this verdict, then inspect and work `0x007DD180`.
+
+## Checkpoint - 2026-09-16 (WHALE-1 continuation)
+
+- `0x007DD180`: identity-supported `TerrainShader2Stage::set` candidate
+  banked as a partial. The best BFME-expanded candidate is 7,083 bytes versus
+  6,636 retail, with 3,141 non-relocation differences and 3,495 masked-equal
+  bytes (score 0.5267). Retail proves the `0xA4` EH frame, the 35/35 snapshot
+  string contract, 28/7 state-name calls, six `bfmeGet` texture lifetimes,
+  and the two filter/matrix j-thunk routes. The candidate's `0x8C` frame and
+  467 relocation-layout drifts remain the blocker.
+- Commit/push: pending for this checkpoint. No source or ledger row changed;
+  `reverse/attempts/0x007dd180.cpp`, its immutable attempt history, and the
+  fresh `partial` evidence row are ready to publish.
+- Bodies added to `reverse/unlocked.txt`: none; both `0x007DD180 w3d-render`
+  and `0x007DF1F0 w3d-render` were already present.
+- Next: publish this verdict, then work pool item `0x005674F0` and continue
+  with `python3 tools/next_work.py --ranked` above 4 KB, recording a verdict
+  for each body.
