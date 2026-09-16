@@ -158,6 +158,16 @@ def test_the_derived_store_wins_over_the_inlined_base_store():
     assert V.most_derived(body, {VTABLE, OTHER}.__contains__) == {VTABLE}
 
 
+def test_a_polymorphic_member_does_not_name_its_enclosing_class():
+    """PlayerTemplate is not polymorphic but copies a Money member at +0x1c.
+
+    The member's vtable store is real and survives the constructor.  It says
+    nothing about the identity of the enclosing copy constructor, however.
+    """
+    body = _store(VTABLE, 0x1C)
+    assert V.most_derived(body, {VTABLE}.__contains__) == set()
+
+
 def test_an_undecoded_vtable_constant_blocks_every_verdict():
     """A vtable that reached the body by a form the decoder does not read means
     which store lands last is unknown, so no verdict may rest on it."""

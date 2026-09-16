@@ -259,7 +259,11 @@ def most_derived(body, is_vtable):
 
     None means "cannot tell": a vtable constant reached this body by a form the
     decoder does not read, so which store lands last is unknown and no verdict
-    may rest on it.
+    may rest on it.  A direct store at a nonzero displacement is a base/member
+    subobject and cannot name a non-polymorphic enclosing class: PlayerTemplate's
+    copy constructor, for example, installs Money's vtable at this+0x1c.  The
+    detector is about the constructor's primary object, so only the final
+    offset-zero store may attest or contradict its class.
     """
     recognised, loose = vptr_stores(body, is_vtable)
     if loose:
@@ -267,6 +271,12 @@ def most_derived(body, is_vtable):
     last = {}
     for at, where, va in recognised:
         last[where] = (at, va)
+    # If the body installs a primary vptr, retain secondary-base stores too:
+    # one of their tables may be the only one whose slots still name the
+    # derived class.  With no offset-zero store, every recognised table is a
+    # member/subobject and none can identify the enclosing constructor.
+    if not any(displacement == 0 for _, displacement in last):
+        return set()
     return {va for _, va in last.values()}
 
 
