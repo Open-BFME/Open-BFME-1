@@ -895,3 +895,17 @@ the five-argument overflow helper at `0x005C6BF0` via ILT `0x00016AE5`.
 The canonical ASCII header also matches when the witnessed inline comparison
 is kept as a separate helper over the string's buffer layout. The factory
 list proves names at +4 and links at +0xC, not an original owner identity.
+
+### Secondary-interface donors and constructor expressions
+
+The 593-byte Worker construction body at `0x002C96D0` follows the landed
+Dozer construction shape. A nontrivial coordinate copy, the typed terrain
+virtual call, and the direct health-delta expression preserve the retail
+x87 and local-variable shape. Keep mask construction at the member-call
+site; a wrapper can move evaluation and change the emitted sequence.
+
+Identity also requires the receiver adjustment: constructor `0x002C9ED0`
+installs table VA `0x010C9DE8` at owner+`0x340`, and slot 4 reaches the body
+through ILT `0x0003DF3C`. This proves the secondary receiver and the `WDEA`
+ledger spelling. An old `WCAA` candidate pin was not that proof, even though
+the underlying body could match under an opaque local view.

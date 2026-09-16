@@ -1,10 +1,11 @@
-// ?d_002c96d0@@YAXXZ
-// partial score=0.84 date=2026-09-11
 // BFME retail 0x002C96D0, 593 bytes.
 //
 // The entry is the WorkerAIUpdate construct slot as seen through the Dozer
 // secondary interface.  The local views retain BFME's moved Worker fields and
 // secondary-interface offsets without changing the shared ZH headers.
+// Constructor RVA 0x002C9ED0 installs table 0x010C9DE8 at owner+0x340;
+// its slot 4 reaches this body through ILT 0x0003DF3C. The compiled view
+// receives that secondary this; the ledger WDEA spelling records +0x340.
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
@@ -15,17 +16,33 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
-struct Coord3D
+struct Rva002C96D0Coord3DBase
 {
 	Real x;
 	Real y;
 	Real z;
 };
 
+struct Coord3D : Rva002C96D0Coord3DBase
+{
+	Coord3D() { }
+	__forceinline Coord3D(const Coord3D &other)
+	{
+		x = other.x;
+		y = other.y;
+		z = other.z;
+	}
+};
+
 class Object;
 class Player;
 class Team;
 class ThingTemplate;
+class Thing
+{
+public:
+	void setOrientation(Real angle);
+};
 
 template <Int NUMBITS>
 class Rva002C96D0BitFlags
@@ -395,7 +412,6 @@ static __forceinline void bfmeCreateMachines(Rva002C96D0FullWorker *worker)
 	call.raw = j_0003fa53;
 	(worker->*call.member)();
 }
-
 static __forceinline Object *bfmeNewObject(Rva002C96D0ThingFactory *factory,
 	const ThingTemplate *what, Team *team,
 	const volatile ObjectStatusMaskType &statusBits, UnsignedInt extra)
@@ -451,9 +467,7 @@ static __forceinline void bfmeSetPosition(Object *object, const Coord3D *positio
 
 static __forceinline void bfmeSetOrientation(Object *object, Real angle)
 {
-	SetOrientationCallBits call;
-	call.raw = j_000399a5;
-	(((Rva002C96D0Object *)object)->*call.member)(angle);
+	((Thing *)object)->setOrientation(angle);
 }
 
 static __forceinline void bfmeFlattenTerrain(Rva002C96D0TerrainLogic *terrain,
@@ -485,7 +499,7 @@ static __forceinline void bfmeClearAndSet(Object *object,
 {
 	ClearAndSetCallBits call;
 	call.raw = j_000095ed;
-	(((Rva002C96D0Object *)object)->*call.member)(set, clear);
+	(((Rva002C96D0Object *)object)->*call.member)(clear, set);
 }
 
 static __forceinline Rva002C96D0Money *bfmeGetMoney(Player *player)
@@ -495,12 +509,12 @@ static __forceinline Rva002C96D0Money *bfmeGetMoney(Player *player)
 
 #define TheBuildAssistant (*(Rva002C96D0BuildAssistant **)0x012ED83C)
 #define TheThingFactory (*(Rva002C96D0ThingFactory **)0x012EF1D8)
-#define TheTerrainLogic (*(Rva002C96D0TerrainLogicPre **)0x012EF4CC)
+extern Rva002C96D0TerrainLogicPre *TheTerrainLogic;
 #define TheAI (*(Rva002C96D0AI **)0x012EF214)
 extern const Real g_bfmeUint32Scale;
 #define BFME_DEFAULT_HEALTH (*(const Real *)0x01075334)
 
-// ?construct@WorkerAIUpdate@@WCAA@AEPAVObject@@PBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@_N@Z
+// ?construct@WorkerAIUpdate@@WDEA@AEPAVObject@@PBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@_N@Z
 Object *Rva002C96D0WorkerAIUpdate::construct(const ThingTemplate *what,
 	const Coord3D *pos, Real angle, Player *owningPlayer, Bool isRebuild)
 {
@@ -551,10 +565,7 @@ Object *Rva002C96D0WorkerAIUpdate::construct(const ThingTemplate *what,
 	bfmeSetPosition(obj, pos);
 	bfmeSetOrientation(obj, angle);
 	bfmeFlattenTerrain((Rva002C96D0TerrainLogic *)TheTerrainLogic, obj);
-	Coord3D adjustedPos;
-	adjustedPos.z = pos->z;
-	adjustedPos.y = pos->y;
-	adjustedPos.x = pos->x;
+	Coord3D adjustedPos = *pos;
 	adjustedPos.z = TheTerrainLogic->getGroundHeight(pos->x, pos->y);
 	bfmeSetPosition(obj, &adjustedPos);
 	bfmeAddObject(TheAI->pathfinder(), obj);
@@ -563,8 +574,7 @@ Object *Rva002C96D0WorkerAIUpdate::construct(const ThingTemplate *what,
 
 	((Rva002C96D0Object *)obj)->m_constructionPercent = 0.0f;
 	Rva002C96D0BodyModule *body = ((Rva002C96D0Object *)obj)->getBodyModule();
-	Real healthDelta = -body->getHealth(0) + BFME_DEFAULT_HEALTH;
-	body->internalChangeHealth(healthDelta);
+	body->internalChangeHealth(-body->getHealth(0) + BFME_DEFAULT_HEALTH);
 
 	Rva002C96D0ClearMask clearMask;
 	Rva002C96D0SetMask setMask;
@@ -572,7 +582,9 @@ Object *Rva002C96D0WorkerAIUpdate::construct(const ThingTemplate *what,
 	clearCall.raw = j_0003d424;
 	ConstructSetCallBits setCall;
 	setCall.raw = j_00004048;
-	bfmeClearAndSet(obj,
+	ClearAndSetCallBits clearAndSet;
+	clearAndSet.raw = j_000095ed;
+	(((Rva002C96D0Object *)obj)->*clearAndSet.member)(
 		(const Rva002C96D0ModelMask &)*(setMask.*setCall.member)(0, 0x43, 0x44),
 		(const Rva002C96D0ModelMask &)*(clearMask.*clearCall.member)(0, 0x42));
 
