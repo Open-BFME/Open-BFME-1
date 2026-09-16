@@ -120,6 +120,15 @@ SWITCH_SOURCE = """int switch_shape(int value)
 }
 """
 
+MULTILINE_UNBRACED_SOURCE = """bool multiline(int value)
+{
+    if (value
+        != 0)
+        return true;
+    return false;
+}
+"""
+
 
 def test_sib_choice_reverses_only_a_unique_integer_addition():
     choices = shape_family_levers.choices_for(SOURCE, ("sib",))
@@ -218,6 +227,13 @@ def test_frame_choice_promotes_scalar_local():
 def test_constant_and_frame_choices_skip_switch_labels():
     assert shape_family_levers.choices_for(SWITCH_SOURCE, ("constant",)) == []
     assert shape_family_levers.choices_for(SWITCH_SOURCE, ("frame",)) == []
+
+
+def test_constant_choice_skips_multiline_unbraced_control():
+    choices = shape_family_levers.choices_for(MULTILINE_UNBRACED_SOURCE,
+                                              ("constant",))
+    assert len(choices) == 1
+    assert choices[0]["before"] == "    return false;\n"
 
 
 def test_choices_are_accepted_by_shape_search_variants():

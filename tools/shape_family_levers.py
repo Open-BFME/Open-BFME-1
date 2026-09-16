@@ -481,6 +481,8 @@ def constant_choices(text, limit=8):
         if start is None or any(re.match(r"^[ \t]*(?:case\b|default\s*:)", item)
                                 for item in lines[start:i + 1]):
             continue
+        if _unbraced_control(lines, i):
+            continue
         result = _RETURN_BOOL.match(line)
         if result and text.count(line) == 1:
             name = "shape_constant_%s_%d" % (result.group("value"), i)
@@ -519,6 +521,21 @@ def _function_end(lines, start):
     return None
 
 
+def _unbraced_control(lines, index):
+    """Reject two-statement edits under an unbraced control header."""
+    previous = index - 1
+    while previous >= 0 and not lines[previous].strip():
+        previous -= 1
+    if previous < 0:
+        return False
+    if lines[previous].rstrip().endswith((";", "{", "}")):
+        return False
+    # A multiline condition ends on a line that is not itself an `if` token;
+    # its lack of a statement terminator still means the next statement is
+    # the unbraced controlled body.
+    return True
+
+
 def frame_choices(text, limit=8):
     """Promote a simple scalar local to a live indexed two-element array."""
     lines = text.splitlines(keepends=True)
@@ -526,6 +543,8 @@ def frame_choices(text, limit=8):
     for i, line in enumerate(lines):
         declaration = _FRAME_DECL.match(line)
         if not declaration or text.count(line) != 1:
+            continue
+        if _unbraced_control(lines, i):
             continue
         end = _function_end(lines, i)
         if end is None or end <= i:
