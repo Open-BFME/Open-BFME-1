@@ -218,39 +218,7 @@ void MapObject::validate(void)
 	verifyValidUniqueID();
 }
 
-// ?verifyValidTeam@MapObject@@QAEXXZ present-unmatched
-void MapObject::verifyValidTeam(void)
-{
-	// if this map object has a valid team, then do nothing.
-	// if it has an invalid team, the place it on the default neutral team, (by clearing the 
-	// existing team name.)
-	Bool exists;
-	AsciiString teamName = getProperties()->getAsciiString(TheKey_originalOwner, &exists);
-	if (exists) {
-		Bool valid = false;
-
-		int numSides = TheSidesList->getNumTeams();
-
-		for (int i = 0; i < numSides; ++i) {
-			TeamsInfo *teamInfo = TheSidesList->getTeamInfo(i);
-			if (!teamInfo) {
-				continue;
-			}
-			
-			Bool itBetter;
-			AsciiString testAgainstTeamName = teamInfo->getDict()->getAsciiString(TheKey_teamName, &itBetter);
-			if (itBetter) {
-				if (testAgainstTeamName.compare(teamName) == 0) {
-					valid = true;
-				}
-			}
-		}
-
-		if (!valid) {
-			getProperties()->remove(TheKey_originalOwner);
-		}
-	}
-}
+// verifyValidTeam is byte-verified in MapObject_verifyValidTeamMethodThunk.cpp.
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/MapObject_verifyValidUniqueIDMethodThunk.cpp
 // ?verifyValidUniqueID@MapObject@@QAEXXZ present-unmatched
