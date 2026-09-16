@@ -10,8 +10,9 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
   to `0x0089E680`, a `0x2c8` frame, 178 EH cleanup states, and a final
   `hashCount` allocation tail. The ABI/name mismatch in the existing ledger
   remains explicitly documented.
-- Commit/push: pending this checkpoint; the verdict, recipe, and progress
-  file will be published together after the tracked changes are staged.
+- Commit/push: commit `fd5ee19206` is on `origin/master`. The first push
+  raced another writer once, then passed the normal rebase/retry sequence and
+  the final pull is up to date.
 - Bodies added to `reverse/unlocked.txt`: none. No shared shim, pin set, or
   byte-verified layout landed.
 - Next: inspect and work `0x007C7FD0` from its current evidence pack, then
