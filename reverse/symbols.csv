@@ -88226,3 +88226,6 @@ _doFileTransfer,0x0066CE60,additive: retail call target of the red row ?DoAnyMap
 ?rva003BF580@CampaignManager@@QAE?AVAsciiString@@H@Z,0x003BF580,"address-derived name for the body ILT 0x000459DA reaches; the call site inside 0x0052B8A0 pushes one int and a hidden return buffer with ecx = the 0x012F1028 singleton the two matched isMissionObjective pins already use so it is a thiscall returning AsciiString by value"
 _Thread32First@8,0x00AFE432,kernel32.dll import stub (direct REL32 call site; see Rva0088E090ResumeOtherThreads.cpp)
 _Thread32Next@8,0x00AFE426,kernel32.dll import stub (direct REL32 call site; see Rva0088E090ResumeOtherThreads.cpp)
+_g_Rva013373BCTimerTicks,0x013373BC,one-second tick counter incremented by the 0x0088E190 timer callback and read by the 0x0088E100 watchdog thread
+_g_Rva013373C0DialogClosed,0x013373C0,flag cleared by the 0x0088E1A0 dialog driver before it opens the dialog and set once the dialog closes
+_g_Rva013373C4DialogGeneration,0x013373C4,counter bumped by the 0x0088E1A0 dialog driver on every dialog it opens
