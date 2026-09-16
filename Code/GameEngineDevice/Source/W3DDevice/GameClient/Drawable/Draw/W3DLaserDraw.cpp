@@ -67,8 +67,7 @@
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDrawModuleData_ctor_Thunk.cpp
-// ??0W3DLaserDrawModuleData@@ present-unmatched
+// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDrawModuleDataConstructor.cpp
 W3DLaserDrawModuleData::W3DLaserDrawModuleData()
 {
 	m_innerBeamWidth = 0.0f;         //The total width of beam
