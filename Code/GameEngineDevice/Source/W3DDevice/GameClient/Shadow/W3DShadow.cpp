@@ -195,23 +195,10 @@ W3DShadowManager::~W3DShadowManager( void )
 
 /** Do one-time initilalization of shadow systems that need to be
 active for full duration of game*/
-Bool W3DShadowManager::init( void )
-{
-	Bool result=TRUE;
-
-	if	(TheW3DVolumetricShadowManager && TheW3DVolumetricShadowManager->init())
-	{
-		if (TheW3DVolumetricShadowManager->ReAcquireResources())
-			result = TRUE;
-	}
-	if ( TheW3DProjectedShadowManager && TheW3DProjectedShadowManager->init())
-	{
-		if (TheW3DProjectedShadowManager->ReAcquireResources())
-			result = TRUE;
-	}
-
-	return result;
-}
+// The complete BFME three-manager implementation is in W3DShadowManagerInit.cpp.
+// The former two-manager body matched only the interior 0x007B751E..0x007B755D,
+// not the callable entry at 0x007B7500. Keep the ambiguous submanager identities
+// address-derived until their constructor/reacquire naming conflict is resolved.
 
 /** Do per-map reset.  This frees up shadows from all objects since
 they may not exist on the next map*/
