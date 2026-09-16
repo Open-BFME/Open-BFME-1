@@ -130,3 +130,37 @@ is the unproven BFME-side owner/layout of the anonymous device-state globals
 `0x0134ECC8` versus `0x00F4ECC8` address discrepancy.  Until that ABI is
 witnessed, larger bodies can compile against the shim but still produce a
 plausible, byte-wrong state access or an invented identity.
+
+## Session W3D handoff (2026-09-16)
+
+The focused family-1-through-12 sweep contains 61 unique dump bodies. Running
+`tools/callees.py` over every member found zero unnamed direct callees for 59
+members. Those 59 are listed in `reverse/unlocked.txt` with the `w3d-render`
+tag so the anonymous lane can serve them immediately. The two exceptions are
+`0x00907960` and `0x0090AB60`; each still has one unnamed direct callee and
+remains gated until that target is independently identified.
+
+The strongest banked body is `0x007171F0` (`445/445` bytes, score `0.991`).
+Its W3DShaderManager static thunk, render-target path, shader/material calls,
+and clear sequence establish the source identity. The clean C++ body is not
+byte-exact: only four non-relocation register selections remain in the filter-4
+clear path (`+0x11C`, `+0x122`, `+0x128`, `+0x132`), with retail using EDX for
+the water-data pointer and ECX for the temporary vector address. Pointer/local,
+direct-field, helper, Release_Ref, barrier, and flag-shape probes did not move
+that allocation. The body remains banked for a future TU/register-liveness
+lever; it is not a landed match.
+
+The repeatable swarm recipe is therefore: include `DX8State.h` first, use the
+canonical `dx8wrapper.h` declarations and the eight address-backed DX8 static
+members listed above, run the callee sweep before writing, and keep any
+BFME-side state owner address-derived until a caller, slot, or layout witness
+proves its identity. Do not promote `0x012F7FE0`, `0x012D9124`, `0x01075C74`,
+or `0x01340EC4` to semantic names from adjacency alone. The focused compiler
+flags and `_STLP_NO_EXCEPTIONS`/local `throw()` rule in the recipe above are
+the known frame-stable defaults.
+
+`0x006D4690` was also compiled against the receiver-class candidates. The
+retail body is a 326-byte indirect-device state helper with no direct callees;
+the candidate named `bfmeTwoBKE` reached `314/326` with a branch/layout drift,
+and the existing callers do not prove that semantic name. It remains an
+opaque, re-servable candidate rather than a new pin or a guessed identity.
