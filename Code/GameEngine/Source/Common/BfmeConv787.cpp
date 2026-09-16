@@ -1,3 +1,47 @@
+class BfmeStrFM
+{
+public:
+	BfmeStrFM(const BfmeStrFM &other);
+	~BfmeStrFM();
+
+	unsigned char m_bfmeHeadFM[4];
+};
+
+class Rva00361E00Element
+{
+public:
+	BfmeStrFM stringAt0C() const;
+
+	unsigned char m_bfmeBodyFM[0x58];
+};
+
+class BfmeHostFMVector
+{
+public:
+	int size() const { return m_end - m_begin; }
+	Rva00361E00Element *begin() const { return m_begin; }
+
+	Rva00361E00Element *m_begin;
+	Rva00361E00Element *m_end;
+};
+
+class BfmeHostFM
+{
+public:
+	BfmeStrFM bfmeAtFM(int i) const;
+
+	unsigned char m_bfmeHeadFM[0x18];
+	BfmeHostFMVector m_bfmeVectorFM;
+};
+
+class Rva002E5FF0Str
+{
+public:
+	void *m_data;
+};
+
+extern Rva002E5FF0Str Rva01336E50Str;
+
 class BfmeSubDVB
 {
 public:
@@ -5,6 +49,14 @@ public:
 	void bfmeTwoDVB(void *a, void *b);
 	void bfmeThreeDVB(void *a, void *b);
 };
+
+BfmeStrFM BfmeHostFM::bfmeAtFM(int i) const
+{
+	if (i >= 0 && (unsigned int)i < (unsigned int)m_bfmeVectorFM.size())
+		return m_bfmeVectorFM.begin()[i].stringAt0C();
+
+	return *(const BfmeStrFM *)&Rva01336E50Str;
+}
 
 struct BfmeThingDVB
 {
