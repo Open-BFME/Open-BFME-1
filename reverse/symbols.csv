@@ -77798,7 +77798,7 @@ name,address,notes
 ?bfmeStopZJ@BfmeBaseZJ@@QAEXXZ,0x0003C740
 ?bfmeStore1173@BfmeSlot1173@@QAEXPAXH@Z,0x00802550,pin
 ?bfmeStoreAngleETH@BfmeViewETH@@QAEXM@Z,0x00037E16,pin thunk for BfmeConv1985
-?bfmeStoreQR@BfmeHostQR@@QAEXPAX0@Z,0x0001B77F,thunk to 0x00417430
+?Rva00417430AudioSelector@BfmeHostQR@@QAEXPAXH@Z,0x0001B77F,thunk to 0x00417430
 ?bfmeStoreYW@BfmePalantirYW@@QAEXABVAsciiStringYW@@0@Z,0x00030CFB,Open-BFME5 the palantir property store used by 0x00565620
 ?bfmeStoreYX@BfmePalantirYX@@QAEXABVAsciiStringYX@@ABVUnicodeStringYX@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x00565860
 ?bfmeStoreZB@BfmePalantirZB@@QAEXABVAsciiStringZB@@ABVUnicodeStringZB@@@Z,0x0000BDCA,Open-BFME5 the palantir property store used by 0x00565BB0
