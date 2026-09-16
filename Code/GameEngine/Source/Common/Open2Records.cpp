@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
-// Eleven record copy bodies over one shape: a struct whose members include an
+// Twelve record copy bodies over one shape: a struct whose members include an
 // AsciiString, copied either by its own copy constructor (__thiscall, `ret 4`,
 // returning the receiver) or through STLport's `_Construct` (__cdecl over
 // place and value, guarded by the null test placement new leaves behind).
@@ -70,6 +70,21 @@ public:
 Open2Rec134500::Open2Rec134500( const Open2Rec134500 &other )
 	: m_at00( other.m_at00 ), m_at04( other.m_at04 ), m_at08( other.m_at08 ), m_at0c( other.m_at0c ), m_at10( other.m_at10 ), m_at11( other.m_at11 )
 {
+}
+
+// -------------------------------------------------------------------------
+// 0x0014BBC0 -- 79 bytes, construct
+class Open2Rec14BBC0
+{
+public:
+	AsciiString m_at00;
+	int m_at04;
+};
+
+// @?Open2Construct14BBC0@@YAXPAVOpen2Rec14BBC0@@ABV1@@Z 0x0014BBC0
+void Open2Construct14BBC0( Open2Rec14BBC0 *place, const Open2Rec14BBC0 &value )
+{
+	new ( place ) Open2Rec14BBC0( value );
 }
 
 // -------------------------------------------------------------------------
