@@ -251,6 +251,20 @@ def test_frame_choice_skips_shadowed_scalar_name():
     assert "shape_frame_value_4[1]" in choices[0]["after"][0]
 
 
+def test_frame_choice_skips_pointer_redeclaration():
+    source = """int pointer_frame(int input)
+{
+    int value = input;
+    {
+        int *value = 0;
+        return input;
+    }
+    return value;
+}
+"""
+    assert shape_family_levers.choices_for(source, ("frame",)) == []
+
+
 def test_choices_are_accepted_by_shape_search_variants():
     choices = shape_family_levers.choices_for(SOURCE)
     variants = list(shape_search.variants(SOURCE, choices))
