@@ -3377,7 +3377,7 @@ name,address,notes
 ??0Rva00364980HeapElement@@QAE@ABU0@@Z,0x0001FE6F,REL32 copy-constructor target from 0x003649A2
 ??0Rva00365B40Record@@QAE@XZ,0x0000B30C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00365B40 calls; autopin
 ??0Rva0036CA00Str@@QAE@ABV0@@Z,0x00887C90,Open-BFME5 fresh thiscall copy ctor for 0x0036CA00 string members
-??0Rva003830C0Screen@@QAE@PAX000H@Z,0x00047F5A,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003830C0 calls; autopin
+??0Object@@QAE@PBVThingTemplate@@ABV?$BitFlags@$0FG@@@PAVTeam@@IH@Z,0x00047F5A,BFME Object constructor called by GameLogic::friend_createObject at 0x003830C0. The five-argument ABI and 0x3C4 allocation match retail 0x001D29A0.
 ??0Rva003A35A0Element@@QAE@ABU0@@Z,0x0001F573,near-twin pin: 0x003A35F0 vector<Rva003A35A0Element>::insert copy-ctor call target
 ??0Rva003A9860@@QAE@ABV0@@Z,0x00039FCC,Open-BFME5 ILT thunk to body 0x003B6950; LivingWorldCampaign copy ctor at 0x003B6BA0 copies its mission vector through it; address-derived name
 ??0Rva003B2BB0Record@@QAE@ABVAsciiString@@@Z,0x0003A0F8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B2BB0 calls; autopin
