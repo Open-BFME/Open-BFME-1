@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "cb0f194de35262492df05cc430656826fac30d6f1c16a9b17d529ebbc2c041e8",
+  "symbol": "_Rva0088DC30DialogProc@16",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// _Rva0088DC30DialogProc@16\n// partial score=0.85 date=2026-09-02\n// cl: /DNDEBUG /MD /EHs-c- /Oy-\n// Open-BFME: dialog proc. WM_INITDIALOG falls through; WM_COMMAND with\n// IDOK (1) or IDRETRY (4) calls EndDialog. Unused 0x48-byte frame.\n\ntypedef void *HWND;\ntypedef unsigned int UINT;\ntypedef unsigned int WPARAM;\ntypedef long LPARAM;\ntypedef int INT_PTR;\n\nextern \"C\" __declspec(dllimport) INT_PTR __stdcall EndDialog(HWND hDlg, INT_PTR nResult);\n\nenum\n{\n\tWM_INITDIALOG = 0x0110,\n\tWM_COMMAND = 0x0111\n};\n\n// _Rva0088DC30DialogProc@16\nextern \"C\" INT_PTR __stdcall Rva0088DC30DialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM)\n{\n\tswitch (msg)\n\t{\n\tcase WM_INITDIALOG:\n\t\treturn 0;\n\tcase WM_COMMAND:\n\t{\n\t\tunsigned short id = (unsigned short)wParam;\n\t\tif (id == 1 || id == 4)\n\t\t\tEndDialog(hDlg, id);\n\t\treturn 0;\n\t}\n\tdefault:\n\t\treturn 0;\n\t}\n}\n"
+}
