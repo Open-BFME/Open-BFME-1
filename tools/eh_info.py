@@ -7,8 +7,9 @@ This reports addresses and cleanup instructions, not guessed C++ identities.
 In constructors, receiver adjustments in the cleanup actions can distinguish
 a composite base from several independent bases. It does not decode catch
 maps or prove that a reconstruction has the correct exception behavior.
-Only the witnessed push -1 / push handler and mov eax,FuncInfo / jmp handler
-forms are accepted; unsupported prologues fail explicitly.
+Only the witnessed push -1 / push handler (optionally preceded by
+mov eax,fs:[0]) and mov eax,FuncInfo / jmp handler forms are accepted;
+unsupported prologues fail explicitly.
 """
 import argparse
 import struct
@@ -20,6 +21,11 @@ MAGIC = 0x19930520
 def unwind_info(read, rva):
     """Parse supported VC7.1 metadata using an injected read(RVA, size)."""
     prologue = read(rva, 7)
+    # Some VC7.1 frames fetch the old registration before pushing the state
+    # and handler: witnessed at 0x00732130. Accept this exact instruction,
+    # not a scan for a plausible push sequence inside arbitrary code.
+    if prologue[:6] == b"\x64\xa1\x00\x00\x00\x00":
+        prologue = read(rva + 6, 7)
     if len(prologue) != 7 or prologue[:3] != b"\x6a\xff\x68":
         raise ValueError("unsupported EH prologue (expected push -1; push handler)")
     handler = struct.unpack_from("<I", prologue, 3)[0] - IMAGE_BASE

@@ -109,7 +109,11 @@ evidence for an eight-byte composite base and a separate values base, not three
 independent four-byte bases. Inspect the full cleanup target, including branches
 after its first `ret`, before assigning its identity or boundary. The tool
 accepts only the witnessed VC7.1 prologue/handler form and fails explicitly on
-other forms. Its output is evidence for reconstruction, not byte-match proof.
+other forms. The supported registration-load-first variant begins with
+`mov eax,fs:[0]` before `push -1; push handler`: `0x00732130` has one unwind
+state whose cleanup calls `0x000FFCA0` on its local geometry object. This
+distinguishes a scoped copy requiring cleanup from raw stack storage. Its
+output is evidence for reconstruction, not byte-match proof.
 
 ## Filter construction: visible non-retaining constructors
 

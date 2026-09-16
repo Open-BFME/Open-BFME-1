@@ -23,6 +23,29 @@ def test_states_and_null_action():
         0x200, 0x300, [(0, -1, 0x500), (1, 0, None), (2, 1, 0x600)])
 
 
+def test_registration_load_before_state_push():
+    data = image()
+    data[0x100:0x10d] = b"\x64\xa1\x00\x00\x00\x00" + data[0x100:0x107]
+    assert eh_info.unwind_info(lambda r, n: data[r:r+n], 0x100) == (
+        0x200, 0x300, [(0, -1, 0x500), (1, 0, None), (2, 1, 0x600)])
+
+
+@pytest.mark.parametrize("prefix", [b"\x64\xa1\x04\x00\x00\x00", b"\x90" * 6])
+def test_unrecognized_prefix_is_not_scanned(prefix):
+    data = image()
+    data[0x100:0x10d] = prefix + data[0x100:0x107]
+    with pytest.raises(ValueError, match="unsupported EH prologue"):
+        eh_info.unwind_info(lambda r, n: data[r:r+n], 0x100)
+
+
+def test_truncated_prefixed_prologue_rejected():
+    data = image()
+    data[0x100:0x10d] = b"\x64\xa1\x00\x00\x00\x00" + data[0x100:0x107]
+    data = data[:0x10b]
+    with pytest.raises(ValueError, match="unsupported EH prologue"):
+        eh_info.unwind_info(lambda r, n: data[r:r+n], 0x100)
+
+
 @pytest.mark.parametrize("offset,value", [(0x100, 0x90), (0x200, 0x90), (0x300, 0), (0x400, 1)])
 def test_bad_metadata_rejected(offset, value):
     data = image()
