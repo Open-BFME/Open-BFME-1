@@ -62,3 +62,15 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
 - Next: publish this verdict, run `python3 tools/check_csv.py`, then inspect
   `python3 tools/next_work.py --ranked` for the next open body above 4 KB not
   listed by WHALE-2, recording a verdict for each body.
+
+## Checkpoint - 2026-09-16 (post-fifth publication)
+
+- `0x005674F0` verdict, bank, recipe, and attempt history are published in
+  commit `8b712700d6` on `origin/master`. Pre-commit passed ledger and
+  identity checks; pre-push passed pin consistency and source verification.
+- Bodies added to `reverse/unlocked.txt`: none. The fifth body's preference
+  layout and APT callee set did not prove a shared blocker for a smaller dump.
+- Next ranked open dump above 4 KB not listed by WHALE-2: `0x0095CE80`,
+  `?RenderStreak@StreakRendererClass@@...`, 12,206 bytes, starting from its
+  existing score-0.6 bank. Run `tools/callees.py` first and keep its work
+  separate from the two WHALE-2 reservations.
