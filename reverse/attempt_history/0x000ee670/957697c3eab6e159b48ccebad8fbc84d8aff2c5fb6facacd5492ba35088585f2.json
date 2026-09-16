@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "957697c3eab6e159b48ccebad8fbc84d8aff2c5fb6facacd5492ba35088585f2",
+  "symbol": "?getNthInList@ObjectTypes@@QBE?AVAsciiString@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ?getNthInList@ObjectTypes@@QBE?AVAsciiString@@H@Z\n// partial score=0.92 date=2026-09-16\n// ?getNthInList@ObjectTypes@@QBE?AVAsciiString@@H@Z\n// partial score=0.92 date=2026-09-04\n// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB /Gy /O2 /Ob1\n// stlport\n// ObjectTypes::getNthInList at 0x000EE670 (77B).\n\nclass AsciiString\n{\npublic:\n\tAsciiString(const AsciiString &);\n\nprivate:\n\tvoid *m_data;\n};\n\nextern AsciiString TheEmptyAsciiString;\n\nextern \"C\" void _ReadWriteBarrier(void);\n#pragma intrinsic(_ReadWriteBarrier)\n\nclass AsciiStringVector\n{\npublic:\n\tAsciiString *begin() const\n\t{\n\t\treturn m_begin;\n\t}\n\tunsigned int size() const { return (unsigned int)(m_finish - begin()); }\n\n\tAsciiString *m_begin;\n\tAsciiString *m_finish;\n};\n\nclass ObjectTypes\n{\npublic:\n\tunsigned int getListSize() const { return m_strings.size(); }\n\tAsciiString getNthInList(int index) const;\n\nprivate:\n\tchar m_pad[8];\n\tAsciiStringVector m_strings;\n};\n\nstatic __forceinline AsciiString getObjectTypeAt(\n\tAsciiString *begin, unsigned int index)\n{\n\treturn begin[index];\n}\n\nAsciiString ObjectTypes::getNthInList(int index) const\n{\n\tvolatile int dead = 0;\n\tunsigned int count = m_strings.size();\n\tAsciiString *__restrict begin = m_strings.begin();\n\tif (index < count)\n\t{\n\t\t_ReadWriteBarrier();\n\t\treturn getObjectTypeAt(begin, index);\n\t}\n\treturn *(const AsciiString *)&TheEmptyAsciiString;\n}\n"
+}
