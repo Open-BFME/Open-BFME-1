@@ -57,7 +57,7 @@ public:
 	CellShroudStatus getShroudStatusForPlayer(Int playerIndex, const Coord3D *position) const;
 };
 
-extern PartitionManager *ThePartitionManager;
+extern PartitionManager *TheShroudManager;
 
 class Object;
 
@@ -104,7 +104,7 @@ void FXList::doFXPos(const Coord3D *primary, const Matrix3D *primaryMtx, Real pr
 	const FXList *self = this;
 	if (!m_playEvenIfShrouded && primary)
 	{
-		if (ThePartitionManager->getShroudStatusForPlayer(
+		if (TheShroudManager->getShroudStatusForPlayer(
 			ThePlayerList->getLocalPlayer()->getPlayerIndex(), primary) != CELLSHROUD_CLEAR)
 			return;
 	}
