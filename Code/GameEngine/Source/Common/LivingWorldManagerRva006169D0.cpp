@@ -1,7 +1,20 @@
-// cl: /O2 /Ob2 /GR- /MD /EHsc /D_STLP_USE_STATIC_LIB
-// partial score=0.9 date=2026-09-08
+// ?rva006169d0@BfmeLivingWorldManager@@QAEXXZ
+// Retail RVA 0x006169D0, 389 bytes.
+//
+// BfmeLivingWorldManager owns the pointer vectors at +0x240 and +0x24C.
+// The adjacent manager methods prove the receiver.
+// Retail calls attachment slot +0x40 and item destructor 0x0061E3E0, which
+// proves the item layout.
+// Retail reads each vector through begin() during reverse cleanup loops.
+// The direct getName() expression keeps its returned string in the expected
+// temporary stack slot before the manager removes the name.
+// Retail clears each STLport vector after its cleanup loop.
 
-extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination, const void *source, unsigned int bytes);
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+
+#define _STLP_NO_EXCEPTIONS 1
+#include "Common/STLTypedefs.h"
 
 template <typename T>
 class StringBase
@@ -20,6 +33,7 @@ public:
 	BFMERetailAsciiString(const BFMERetailAsciiString &other)
 		: StringBase<char>(other) {}
 	~BFMERetailAsciiString() { releaseBuffer(); }
+	void releaseBuffer();
 
 	const char *str() const
 	{
@@ -76,57 +90,22 @@ public:
 	Rva0061E3E0Attachment *m_attachment;
 };
 
-class Rva006169D0Vector
+class BfmeHostCA
 {
 public:
-	int size() const
-	{
-		return (int)(m_end - m_begin);
-	}
-
-	Rva006169D0Item *operator[](int index) const
-	{
-		return m_begin[index];
-	}
-
-	Rva006169D0Item **begin() const
-	{
-		return m_begin;
-	}
-
-	Rva006169D0Item **end() const
-	{
-		return m_end;
-	}
-
-	void erase(Rva006169D0Item **first, Rva006169D0Item **last)
-	{
-		Rva006169D0Item **finish = m_end;
-		Rva006169D0Item **newFinish = first;
-		if (last != finish)
-		{
-			unsigned int bytes = (unsigned int)((char *)finish - (char *)last);
-			newFinish = (Rva006169D0Item **)((char *)memmove(first, last, bytes) + bytes);
-		}
-		m_end = newFinish;
-	}
-
-	Rva006169D0Item **m_begin;
-	Rva006169D0Item **m_end;
-	Rva006169D0Item **m_capacity;
+	void bfmeRemoveCA(const char *name);
 };
 
 class BfmeLivingWorldManager
 {
 public:
 	void rva00610090();
-	void removeObject(const char *name);
 	void rva006169d0();
 
 private:
 	unsigned char m_prefix[0x240];
-	Rva006169D0Vector m_first;
-	Rva006169D0Vector m_second;
+	_STL::vector<Rva006169D0Item *> m_first;
+	_STL::vector<Rva006169D0Item *> m_second;
 };
 
 void BfmeLivingWorldManager::rva006169d0()
@@ -135,14 +114,14 @@ void BfmeLivingWorldManager::rva006169d0()
 
 	for (int index = (int)m_first.size() - 1; index >= 0; --index)
 	{
-		if (m_first[index]->m_attachment != 0)
+		if (m_first.begin()[index]->m_attachment != 0)
 		{
-			m_first[index]->m_attachment->slot40();
+			m_first.begin()[index]->m_attachment->slot40();
 
-			BFMERetailAsciiString name = m_first[index]->getName();
-			removeObject(name.str());
+			reinterpret_cast<BfmeHostCA *>(this)->bfmeRemoveCA(
+				m_first.begin()[index]->getName().str());
 
-			Rva006169D0Item *item = m_first[index];
+			Rva006169D0Item *item = m_first.begin()[index];
 			if (item != 0)
 			{
 				item->destroy();
@@ -150,18 +129,20 @@ void BfmeLivingWorldManager::rva006169d0()
 			}
 		}
 	}
-	m_first.erase(m_first.begin(), m_first.end());
+	m_first.clear();
 
 	for (int index = (int)m_second.size() - 1; index >= 0; --index)
 	{
-		Rva006169D0Item *item = m_second[index];
-		if (item != 0 && item->m_attachment != 0)
-			item->m_attachment->slot40();
-		if (item != 0)
+		if (m_second.begin()[index]->m_attachment != 0)
 		{
-			item->destroy();
-			::operator delete(item);
+			m_second.begin()[index]->m_attachment->slot40();
+			Rva006169D0Item *item = m_second.begin()[index];
+			if (item != 0)
+			{
+				item->destroy();
+				::operator delete(item);
+			}
 		}
 	}
-	m_second.erase(m_second.begin(), m_second.end());
+	m_second.clear();
 }

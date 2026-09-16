@@ -4454,6 +4454,7 @@ name,address,notes
 ??1BfmeHeadCU@@QAE@XZ,0x000463AD,pin
 ??1BfmeHelperYS@@QAE@XZ,0x00887940,Open-BFME5 stand-in destructor for the static helper; referenced only by the atexit helper
 ??1BfmeItemAM@@QAE@XZ,0x00009EDA,BfmeSinkAM item destructor called by bfmeDrop at retail 0x00617A10
+?destroy@Rva006169D0Item@@QAEXXZ,0x00009EDA,opaque item destructor called by rva006169d0 at retail 0x006169D0 via ILT 0x00009EDA
 ??1BfmeLegendString@@QAE@XZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in dtor; folds with StringBase<char>::releaseBuffer
 ??1BfmeLegendStringVec@@QAE@XZ,0x000658A0,SubsystemLegend.cpp vector<AsciiString> stand-in dtor
 ??1BfmeListAZX@@QAE@XZ,0x0000E68D,Open-BFME5 first list member destructor the 0x00289B00 destructor runs
@@ -81717,6 +81718,7 @@ name,address,notes
 ?getName@AttackPriorityInfo@@QBE?AVAsciiString@@XZ,0x00047AFF,Open-BFME5 ILT to the 32-byte AttackPriorityInfo name getter body 0x001C2E20
 ?getName@BfmeGameSlot@@QBE?AVUnicodeString@@XZ,0x0003A20B,Open-BFME5 BFME GameSlot view used by the Skirmish APT player-name copier at 0x00579790
 ?getName@BfmeItemAM@@QAE?AVBFMERetailAsciiString@@XZ,0x0000510F,BfmeSinkAM item name getter called by bfmeDrop at retail 0x00617A10
+?getName@Rva006169D0Item@@QAE?AVBFMERetailAsciiString@@XZ,0x0000510F,opaque item getter called by rva006169d0 at retail 0x006169D0 via ILT 0x0000510F
 ?getName@CrateTemplate@@QBE?AVAsciiString@@XZ,0x000259D7,Open-BFME5 ILT; ?friend_findCrateTemplate@CrateSystem@@QAEPAVCrateTemplate@@VAsciiString@@@Z at 0x003795E0 compares each vector entry on the name it returns by value
 ?getName@DataChunkTableOfContents@@QAE?AVAsciiString@@I@Z,0x00002ECD,ILT thunk found directly in DataChunkInput::readDict retail bytes
 ?getName@EmotionNugget@@QBE?AVBfmeEmotionName@@XZ,0x00036DC2,addNugget call-site ILT target for the AsciiString value-return body at 0x0037CB90
