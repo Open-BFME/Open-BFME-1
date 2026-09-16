@@ -173,7 +173,8 @@ void Pathfinder::removeGoal(Object *obj)
 						cell->setGoalAircraft(0, cellNdx);
 					}
 				}
-				if (obj->getDestinationLayer() != LAYER_GROUND) {
+				if (obj->getDestinationLayer() != LAYER_GROUND &&
+					obj->getDestinationLayer() < 16) {
 					cell = (RemoveGoalCell *)getCell(
 						(PathfindLayerEnum)obj->getDestinationLayer(), i, j);
 					if (cell && cell->getGoalUnit() == objID) {
