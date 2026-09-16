@@ -2,9 +2,7 @@
 // readable body of ?getUser@LANGameSlot@@QAEPAVLANPlayer@@XZ: Code/GameEngine/Source/GameNetwork/LANGameInfo.cpp
 
 #include "Lib/BaseType.h"
-#define private public
 #include "string_base.h"
-#undef private
 
 #define LANUnicodeString UnicodeString
 class LANUnicodeString
