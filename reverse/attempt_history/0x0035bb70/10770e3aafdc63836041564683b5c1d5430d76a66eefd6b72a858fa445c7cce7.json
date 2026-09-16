@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "10770e3aafdc63836041564683b5c1d5430d76a66eefd6b72a858fa445c7cce7",
+  "symbol": "?bfmeWrapFFF@BfmeThingFFF@@QAEXPAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.6,
+  "source": "// ?bfmeWrapFFF@BfmeThingFFF@@QAEXPAX@Z\n// partial score=0.6 date=2026-09-15\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n// Retail RVA 0x0035BB70. The thunk at ILT 0x00016C3E names the callee\n// BfmeThingFFF::bfmeStepFFF, and the receiver reaching that call is this\n// body's own, so the wrapper belongs to the same class.\n\nextern \"C\" void _WriteBarrier(void);\nextern \"C\" void _ReadWriteBarrier(void);\n#pragma intrinsic(_WriteBarrier)\n#pragma intrinsic(_ReadWriteBarrier)\n\nstruct BfmeSubFFF\n{\n\tint m_bfmeSlotFFF;\n};\n\nclass BfmeThingFFF\n{\npublic:\n\tvoid bfmeWrapFFF(void *payload);\n\tvoid bfmeStepFFF(BfmeSubFFF *sub, void *payload);\n\n\tint m_bfmeHeadFFF;\n\tBfmeSubFFF m_bfmeSubFFF;\n};\n\nvoid BfmeThingFFF::bfmeWrapFFF(void *payload)\n{\n\tif (this != 0)\n\t{\n\t\t_WriteBarrier();\n\n\t\tvoid *inner = payload;\n\t\tBfmeSubFFF *sub = &m_bfmeSubFFF;\n\n\t\tbfmeStepFFF(sub, inner);\n\t\treturn;\n\t}\n\n\t_ReadWriteBarrier();\n\n\tvoid *inner = payload;\n\tBfmeSubFFF *sub = 0;\n\n\tbfmeStepFFF(sub, inner);\n}\n"
+}
