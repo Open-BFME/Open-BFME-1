@@ -1,5 +1,5 @@
 // ?report@BFMEReportDamageSource@@QAEXPAVObject@@H@Z
-// partial score=0.75 date=2026-09-10
+// partial score=0.76 date=2026-09-15
 // cl: /DNDEBUG /MD /EHsc
 //
 // BFMEReportDamageSource::report, retail RVA 0x001C9490 (426 bytes).
@@ -39,6 +39,8 @@ enum KindOfType
 class Object;
 class Team;
 class Player;
+union Rva001C9380VictimArgument;
+union Rva001C9380Argument;
 
 // upstream layout: reference/.../Include/Common/Overridable.h
 class Overridable
@@ -49,7 +51,7 @@ public:
 	Overridable *m_nextOverride;
 };
 
-// The report arm tests the high bit of the final override's word at +0xcc.
+// The report arm tests bit 15 of the final override's word at +0xcc.
 // Keeping the override chain as a real typed view gives the call at 0x22bb its
 // proven ABI while preserving the BFME field offset.
 class ThingTemplate : public Overridable
@@ -57,10 +59,9 @@ class ThingTemplate : public Overridable
 public:
 	Bool hasReportFilterFlag(void) const
 	{
-		return (m_reportFlags & 0x80000000U) != 0;
+		return (m_reportFlags & 0x8000U) != 0;
 	}
 
-private:
 	unsigned char m_pad08[0xcc - 0x08];
 	UnsignedInt m_reportFlags;
 };
@@ -121,11 +122,52 @@ private:
 class Thing
 {
 public:
+	virtual ~Thing();
+
+	const ThingTemplate *getTemplate(void) const
+	{
+		const ThingTemplate *templateObject = m_template;
+		if (templateObject == 0)
+			return 0;
+		if (templateObject->m_nextOverride != 0)
+			templateObject = (const ThingTemplate *)templateObject->m_nextOverride->getFinalOverride();
+		return templateObject;
+	}
+
 	Bool isKindOf(KindOfType kind) const;
 
-	unsigned char m_pad000[0x378];
+	Bool hasReportBeenCounted(void) const
+	{
+		return m_reported342 != 0;
+	}
+
+	void markReportCounted(void)
+	{
+		m_reported342 = 1;
+	}
+
+	ThingTemplate *m_template;
+	unsigned char m_pad08[0x214 - 0x08];
+	Object *m_containedBy;
+	unsigned char m_pad218[0x23c - 0x218];
+	Team *m_team;
+	unsigned char m_pad240[0x342 - 0x240];
+	unsigned char m_reported342;
+	unsigned char m_pad343[0x378 - 0x343];
 	UnsignedInt m_reportCount378;
 	UnsignedInt m_reportCount37c;
+};
+
+class Object : public Thing
+{
+public:
+	Team *getTeam(void) const
+	{
+		return m_team;
+	}
+
+	Relationship getRelationship(const Object *other) const;
+	void rva001c9380(Rva001C9380VictimArgument victim, Rva001C9380Argument allow);
 };
 
 union Rva001C9380VictimArgument
@@ -139,46 +181,6 @@ union Rva001C9380Argument
 {
 	Bool allow;
 	float multiplier;
-};
-
-class Object
-{
-public:
-	const ThingTemplate *getTemplate(void) const
-	{
-		const ThingTemplate *templateObject = m_template;
-		if (templateObject == 0)
-			return 0;
-		if (templateObject->m_nextOverride != 0)
-			templateObject = (const ThingTemplate *)templateObject->m_nextOverride->getFinalOverride();
-		return templateObject;
-	}
-
-	Team *getTeam(void) const
-	{
-		return m_team;
-	}
-
-	Relationship getRelationship(const Object *other) const;
-	void rva001c9380(Rva001C9380VictimArgument victim, Rva001C9380Argument allow);
-
-	Bool hasReportBeenCounted(void) const
-	{
-		return m_reported342 != 0;
-	}
-
-	void markReportCounted(void)
-	{
-		m_reported342 = 1;
-	}
-
-private:
-	unsigned char m_pad00[4];
-	ThingTemplate *m_template;
-	unsigned char m_pad08[0x23c - 0x08];
-	Team *m_team;
-	unsigned char m_pad240[0x342 - 0x240];
-	unsigned char m_reported342;
 };
 
 class StatsCollector
@@ -202,42 +204,34 @@ extern PlayerList *ThePlayerList;
 extern const char g_bfmeSideNameC1294[];
 extern const char g_bfmeSideNameD1294[];
 
-class BFMEReportDamageSource
+class BFMEReportDamageSource : public Object
 {
 public:
 	void report(Object *owner, int setting);
-
-private:
-	unsigned char m_pad000[0x214];
-	Thing *m_containedBy;
-	unsigned char m_pad218[0x23c - 0x218];
-	Team *m_team;
-	unsigned char m_pad240[0x378 - 0x240];
-	UnsignedInt m_reportCount378;
-	UnsignedInt m_reportCount37c;
 };
 
 // ?report@BFMEReportDamageSource@@QAEXPAVObject@@H@Z
 void BFMEReportDamageSource::report(Object *owner, int setting)
 {
-	if (owner->hasReportBeenCounted())
+	if (*(const unsigned char *)((const unsigned char *)owner + 0x342) != 0)
 		return;
 
+	Object *source = (Object *)this;
 	bool settingOne = setting == 1;
-	owner->markReportCounted();
+	*(unsigned char *)((unsigned char *)owner + 0x342) = 1;
 	if (!settingOne && setting != 2)
 		return;
 
 	const ThingTemplate *templateObject = owner->getTemplate();
-	if (templateObject->hasReportFilterFlag())
+	if ((*(const UnsignedInt *)((const unsigned char *)templateObject + 0xcc) & 0x8000U) != 0)
 		return;
 
 	Player *ownerPlayer = 0;
 	if (owner->getTeam() != 0)
 		ownerPlayer = owner->getTeam()->getControllingPlayer();
 	Player *sourcePlayer = 0;
-	if (m_team != 0)
-		sourcePlayer = m_team->getControllingPlayer();
+	if (source->m_team != 0)
+		sourcePlayer = source->m_team->getControllingPlayer();
 
 	StatsCollector *stats = TheStatsCollector;
 	if (stats != 0 && ThePlayerList != 0
@@ -263,19 +257,19 @@ void BFMEReportDamageSource::report(Object *owner, int setting)
 	if (ownerPlayer != 0)
 		ownerPlayer->getScoreKeeper()->addObjectBuilt(owner);
 
-	if (((Object *)this)->getRelationship(owner) != ENEMIES)
+	if (getRelationship(owner) != ENEMIES)
 		goto finish;
 	if (sourcePlayer == ownerPlayer)
 		goto finish;
 
 	if (sourcePlayer != 0)
 	{
-		++m_reportCount37c;
-		++m_reportCount378;
-		if (m_containedBy != 0 && m_containedBy->isKindOf(KINDOF_REPORT_FILTER))
+		++source->m_reportCount37c;
+		++source->m_reportCount378;
+		if (source->m_containedBy != 0 && source->m_containedBy->isKindOf(KINDOF_REPORT_FILTER))
 		{
-			++m_containedBy->m_reportCount37c;
-			++m_containedBy->m_reportCount378;
+			++source->m_containedBy->m_reportCount37c;
+			++source->m_containedBy->m_reportCount378;
 		}
 
 		sourcePlayer->getScoreKeeper()->addObjectDestroyed(owner);
@@ -296,5 +290,5 @@ finish:
 	victim.object = owner;
 	Rva001C9380Argument allow;
 	allow.allow = 0;
-	((Object *)this)->rva001c9380(victim, allow);
+	rva001c9380(victim, allow);
 }
