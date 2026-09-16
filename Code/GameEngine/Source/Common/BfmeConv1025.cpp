@@ -145,11 +145,65 @@ char bfmeGo1025F(BfmeR1025 *p)
 	return 0;
 }
 
+extern "C" void _WriteBarrier();
+
+template <typename T>
+class StringBase
+{
+public:
+	StringBase(const StringBase<T> &other);
+	~StringBase() { releaseBuffer(); }
+
+	void *m_bfmeBuffer;
+
+private:
+	void releaseBuffer();
+};
+
+typedef StringBase<unsigned short> BfmeString1025;
+
+struct BfmeEntry1025
+{
+	BfmeEntry1025(const BfmeEntry1025 &other) : m_text(other.m_text)
+	{
+		m_count = other.m_count;
+		_WriteBarrier();
+		m_other = other.m_other;
+	}
+
+	BfmeString1025 m_text;
+	int m_count;
+	int m_other;
+};
+
+struct BfmeNode1025
+{
+	BfmeNode1025 *m_next;
+	BfmeNode1025 *m_previous;
+	BfmeEntry1025 m_entry;
+};
+
 class BfmeH1025
 {
 public:
 	int bfmeVal1025(void);
+
+	char m_bfmeBeforeList[0xc0];
+	BfmeNode1025 *m_list;
 };
+
+int BfmeH1025::bfmeVal1025(void)
+{
+	int total = 0;
+	for (BfmeNode1025 *node = m_list->m_next;
+		node != m_list; node = node->m_next)
+	{
+		BfmeEntry1025 entry = node->m_entry;
+		total += entry.m_count;
+	}
+
+	return total;
+}
 
 extern BfmeH1025 *g_bfmeH1025;
 extern char g_bfmeFmt1025[];
