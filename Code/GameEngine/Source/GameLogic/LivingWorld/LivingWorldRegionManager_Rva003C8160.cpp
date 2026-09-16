@@ -1,13 +1,11 @@
 // ?rva003C8160@LivingWorldRegionManager@@QAEPAVLivingWorldRegion@@PAUCoord3D@@@Z
-// partial score=0.96 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x003C8160, 332 bytes.  The matched caller at 0x003C8B90 passes a
 // Coord3D by pointer and consumes this member's LivingWorldRegion * result.
-// The named pin for this address therefore establishes the member ABI.  The
-// body scans the current campaign's region vector, resolves each campaign
-// name plus region name through the proven state vtable, and asks the existing
-// BfmeHostESM path to place the resolved object at the supplied position.
+// The manager vtable and the existing 0x003C8A50 lookup establish the campaign
+// and region layout.  The 0x00006C5D, 0x0000FE52, and 0x00021CEC thunks route
+// the string operations and float-pair host call used by this method.
 
 #include "ascii_string.h"
 
@@ -150,6 +148,11 @@ struct LivingWorldRegionVector
 	LivingWorldRegion **m_end;
 	LivingWorldRegion **m_capacity;
 
+	LivingWorldRegion **begin() const
+	{
+		return m_begin;
+	}
+
 	LivingWorldRegion *operator[](unsigned int index) const
 	{
 		return m_begin[index];
@@ -192,10 +195,9 @@ LivingWorldRegion *LivingWorldRegionManager::rva003C8160(Coord3D *position)
 	{
 		do
 		{
-			LivingWorldRegion *region = (*regions)[index];
 			{
 				AsciiString fullName = (m_campaign->m_name + ".")
-					+ region->m_name;
+					+ regions->begin()[index]->m_name;
 				const char *text = *(const char **)&fullName;
 				if (text != 0)
 					text += 8;
@@ -214,7 +216,7 @@ LivingWorldRegion *LivingWorldRegionManager::rva003C8160(Coord3D *position)
 						thing->release();
 
 					if (ok)
-						return regions->m_begin[index];
+						return regions->begin()[index];
 				}
 			}
 
