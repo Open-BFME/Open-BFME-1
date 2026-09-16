@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1469ebaa4c291dd142ad35d14b85efee93d8c9dad347c7307b51d605c836e091",
+  "symbol": "?eraseKey@Rva0069F540Owner@@QAEXPAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.55,
+  "source": "// ?eraseKey@Rva0069F540Owner@@QAEXPAX@Z\n// partial score=0.55 date=2026-09-04\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n// Mutex-guarded walk of 8-byte pairs at +0xADC; on key match erase via vec.\n\nextern \"C\" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(\n\tvoid *hHandle, unsigned long dwMilliseconds);\nextern \"C\" __declspec(dllimport) int __stdcall ReleaseMutex(void *hMutex);\n\nstruct Rva0069F540Pair\n{\n\tvoid *m_key;\n\tchar m_rest[4];\n};\n\nstruct Rva0069F540Vec\n{\n\tRva0069F540Pair *m_begin;\n\tRva0069F540Pair *m_end;\n\tvoid erase(Rva0069F540Pair *it);\n};\n\nclass Rva0069F540Owner\n{\npublic:\n\tvoid eraseKey(void *key);\n\n\tchar m_bytes[0xae4];\n};\n\nvoid Rva0069F540Owner::eraseKey(void *key)\n{\n\tvoid *mutex = *(void **)(m_bytes + 0x95c);\n\tunsigned char held = 0;\n\tif (WaitForSingleObject(mutex, 0xFFFFFFFFu) != 0x102u)\n\t\theld = 1;\n\n\tRva0069F540Vec *vec = (Rva0069F540Vec *)(m_bytes + 0xadc);\n\tRva0069F540Pair *it = vec->m_begin;\n\tif (it != vec->m_end)\n\t{\n\t\tvoid *want = key;\n\t\tif (it->m_key != want)\n\t\t{\n\t\t\tRva0069F540Pair *limit = vec->m_end;\n\t\t\tfor (;;)\n\t\t\t{\n\t\t\t\tit = (Rva0069F540Pair *)((char *)it + 8);\n\t\t\t\tif (it == limit)\n\t\t\t\t\tgoto done;\n\t\t\t\tif (it->m_key == want)\n\t\t\t\t\tbreak;\n\t\t\t}\n\t\t}\n\t\tvec->erase(it);\n\t\tm_bytes[0x636] = 1;\n\t}\ndone:\n\tif (held)\n\t\tReleaseMutex(mutex);\n}\n"
+}

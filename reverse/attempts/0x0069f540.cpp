@@ -1,5 +1,5 @@
 // ?eraseKey@Rva0069F540Owner@@QAEXPAX@Z
-// partial score=0.55 date=2026-09-04
+// partial score=0.6 date=2026-09-15
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // Mutex-guarded walk of 8-byte pairs at +0xADC; on key match erase via vec.
 
@@ -15,8 +15,11 @@ struct Rva0069F540Pair
 
 struct Rva0069F540Vec
 {
-	Rva0069F540Pair *m_begin;
-	Rva0069F540Pair *m_end;
+	Rva0069F540Pair *m_start;
+	Rva0069F540Pair *m_finish;
+
+	Rva0069F540Pair *begin(void) const { return m_start; }
+	Rva0069F540Pair *end(void) const { return m_finish; }
 	void erase(Rva0069F540Pair *it);
 };
 
@@ -30,25 +33,24 @@ public:
 
 void Rva0069F540Owner::eraseKey(void *key)
 {
+	Rva0069F540Vec *vec = (Rva0069F540Vec *)(m_bytes + 0xadc);
 	void *mutex = *(void **)(m_bytes + 0x95c);
 	unsigned char held = 0;
 	if (WaitForSingleObject(mutex, 0xFFFFFFFFu) != 0x102u)
 		held = 1;
 
-	Rva0069F540Vec *vec = (Rva0069F540Vec *)(m_bytes + 0xadc);
-	Rva0069F540Pair *it = vec->m_begin;
-	if (it != vec->m_end)
+	Rva0069F540Pair *it = vec->begin();
+	if (it != vec->end())
 	{
-		void *want = key;
-		if (it->m_key != want)
+		if (it->m_key != key)
 		{
-			Rva0069F540Pair *limit = vec->m_end;
+			Rva0069F540Pair *limit = vec->end();
 			for (;;)
 			{
-				it = (Rva0069F540Pair *)((char *)it + 8);
+				it = it + 1;
 				if (it == limit)
 					goto done;
-				if (it->m_key == want)
+				if (it->m_key == key)
 					break;
 			}
 		}
