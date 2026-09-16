@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d4daf4374ecb8308f7c172458bb5186a5527319dc35709ee97d8f9c601110075",
+  "symbol": "?Rva00494EC0Release@@YAXPAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.87,
+  "source": "// ?Rva00494EC0Release@@YAXPAX@Z\n// partial score=0.87 date=2026-09-16\n// cl: /DNDEBUG /MD\n// Retail RVA 0x00494EC0. Looks a key up in the global map pinned as\n// ?g_bfmeMapLB@@3VBfmeMapLB@@A, clears two bits and a field on the entry it\n// finds, then erases the key. Nothing names the free function, so it keeps an\n// address-derived name.\n\nclass BfmeEntryLB\n{\npublic:\n\tunsigned char m_bfmePad000[ 8 ];\n\tint m_bfmeField008;\n\tunsigned char m_bfmePad00C[ 0x14 ];\n\tunsigned char m_bfmeFlags020;\n};\n\n// pinned at ILT 0x000089B3 and ILT 0x00013F89 in reverse/symbols.csv\nclass BfmeMapLB\n{\npublic:\n\tBfmeEntryLB **bfmeFindLB( void **key );\n\tvoid bfmeEraseLB( void **key );\n};\n\nextern BfmeMapLB g_bfmeMapLB;\n\nvoid __cdecl Rva00494EC0Release( void *key )\n{\n\tvoid *local = key;\n\tBfmeEntryLB *entry = *g_bfmeMapLB.bfmeFindLB( &local );\n\n\tif( entry )\n\t{\n\t\tentry->m_bfmeFlags020 &= 0xfc;\n\t\tentry->m_bfmeField008 = 0;\n\t\tlocal = key;\n\t\tg_bfmeMapLB.bfmeEraseLB( &local );\n\t}\n}\n"
+}
