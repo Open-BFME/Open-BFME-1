@@ -1,116 +1,91 @@
-// ?parseUnitPrereq@Rva00584C30@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.25 date=2026-09-06
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// ?parseUnitCategory@@YAXPAVINI@@PAX1PBX@Z
+// partial score=0.97 date=2026-09-16
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// stlport
+// Open-BFME: the BannerUI UnitCategory INI field parser, retail 0x00584C30,
+// 192 bytes.
+//
+// The FieldParse table at 0x0110B984 has two rows, HeroFilter and
+// UnitCategory, and the landed parseBannerUI at 0x00584D20 hands that table to
+// INI::initFromINI as BannerUI::m_fieldParseTable. Row 0x0110B994 pairs the
+// string "UnitCategory" with this body, so the field names the function. The
+// body sits directly above parseBannerUI in the image.
+//
+// It builds one twelve-byte record on the stack, fills it from the nested
+// table at 0x0110B918 whose rows are Name, PluralName and Filter, and appends
+// it to the STLport vector the store argument points at. The record's copy
+// constructor is the landed Open2Rec5822D0 copy at 0x005822D0, which already
+// models the same three members.
+#include <vector>
+#include "string_base.h"
+#include "ascii_string.h"
 
-// Open-BFME7: INI field parser at 0x00584C30 (192 B): zero-constructs a
-// twelve-byte ProductionPrerequisite::PrereqUnitRec (unit/flags/name -- the
-// generic trivial-member-ctor pin ??0HRBMD_Buffer@@QAE@XZ at 0x0003747A
-// used here as one more alias of that shared ICF-folded zero-init body),
-// runs ini->initFromINI() against the field table at VA 0x110B918, and
-// pushes the finished record onto the instance's vector<PrereqUnitRec> --
-// the exact _M_insert_overflow already matched at 0x0040F277. The nested
-// struct name is redeclared locally (the real one is private in
-// reference/CnC_Generals_Zero_Hour's ProductionPrerequisite.h) to link
-// against that mangled symbol. BFME parses each unit prerequisite as its
-// own INI sub-block, unlike Zero Hour's addUnitPrereq(AsciiString, Bool);
-// not yet byte-verified.
+class INI;
 
-inline void *operator new( unsigned int, void *p ) { return p; }
-
-class AsciiString
+struct FieldParse
 {
-public:
-	AsciiString();
-	~AsciiString();
+	const char *token;
+	void (*parse)( INI *ini, void *instance, void *store, const void *userData );
+	const void *userData;
+	int offset;
 };
-
-class ThingTemplate;
-struct FieldParse;
 
 class INI
 {
 public:
-	void initFromINI( void *instance, const FieldParse *table );
+	static void parseAsciiString( INI *ini, void *instance, void *store, const void *userData );
+	void initFromINI( void *what, const FieldParse *parseTable );
 };
 
-class ProductionPrerequisite
+class IniParseObjectFilterShim
 {
 public:
-	struct PrereqUnitRec
-	{
-		const ThingTemplate *unit;
-		int flags;
-		AsciiString name;
-	};
+	static void run( INI *ini, void *instance, void *store, const void *userData );
 };
 
-class HRBMD_Buffer
+class Gen003A0410
 {
 public:
-	HRBMD_Buffer();
+	Gen003A0410();
+
+private:
+	void *m_held;
 };
 
-extern const FieldParse Rva00584C30FieldParseTable[];
-
-namespace _STL
-{
-struct __false_type
-{
-};
-
-template <class Type>
-class allocator
-{
-};
-
-template <class Type>
-void __cdecl _Construct(Type *destination, const Type &value);
-
-template <class Type, class Allocator>
-class vector
+class Open2Rec5822D0
 {
 public:
-	Type *_M_start;
-	Type *_M_finish;
-	Type *_M_end_of_storage;
+	Open2Rec5822D0() {}
+	Open2Rec5822D0( const Open2Rec5822D0 &other );
+	~Open2Rec5822D0();
 
-	void _M_insert_overflow( Type *position, const Type &value,
-		const __false_type &, unsigned int fillLength, bool atEnd );
+	AsciiString m_at00;
+	AsciiString m_at04;
+	Gen003A0410 m_at08;
 };
+
+static const FieldParse theUnitCategoryFieldParse[] =
+{
+	{ "Name", INI::parseAsciiString, 0, 0 },
+	{ "PluralName", INI::parseAsciiString, 0, 4 },
+	{ "Filter", IniParseObjectFilterShim::run, 0, 8 },
+	{ 0, 0, 0, 0 }
+};
+
+void parseUnitCategory( INI *ini, void *instance, void *store, const void *userData )
+{
+	Open2Rec5822D0 record;
+	ini->initFromINI( &record, theUnitCategoryFieldParse );
+	( (_STL::vector<Open2Rec5822D0> *)store )->push_back( record );
 }
 
-class Rva00584C30Store
-{
-public:
-	char m_bfmeHead[ 4 ];
-	_STL::vector<ProductionPrerequisite::PrereqUnitRec, _STL::allocator<ProductionPrerequisite::PrereqUnitRec> > m_prereqUnits;
-};
-
-class Rva00584C30
-{
-public:
-	static void parseUnitPrereq( INI *ini, void *instance, void *, const void * );
-};
-
-// ?parseUnitPrereq@Rva00584C30@@SAXPAVINI@@PAX1PBX@Z
-void Rva00584C30::parseUnitPrereq( INI *ini, void *instance, void *, const void * )
-{
-	ProductionPrerequisite::PrereqUnitRec entry;
-	::new ( &entry ) HRBMD_Buffer();
-
-	ini->initFromINI( &entry, Rva00584C30FieldParseTable );
-
-	Rva00584C30Store *self = (Rva00584C30Store *)instance;
-	_STL::vector<ProductionPrerequisite::PrereqUnitRec, _STL::allocator<ProductionPrerequisite::PrereqUnitRec> > &items = self->m_prereqUnits;
-
-	if( items._M_finish != items._M_end_of_storage )
-	{
-		_STL::_Construct( items._M_finish, entry );
-		++items._M_finish;
-	}
-	else
-	{
-		items._M_insert_overflow( items._M_finish, entry,
-			_STL::__false_type(), 1, true );
-	}
-}
+// Blocked on two callee names, not on the instruction stream. probe.py reports
+// EXACT modulo relocation slots at 192 bytes. The linker cannot resolve
+// ??1Open2Rec5822D0@@QAE@XZ, the record destructor retail calls at 0x00581F30,
+// because that address carries the ledger row ??1Gen_00581F30@@QAE@XZ and five
+// gen-tgrid aliases instead. It also cannot resolve _M_insert_overflow for
+// vector<Open2Rec5822D0>, because 0x00584650 is pinned only for the
+// ProductionPrerequisite::PrereqUnitRec instantiation it shares by folding.
+// Landing this needs two address-derived pins at 0x00581F30 and 0x00584650, or
+// a TU-local shim class for the insert-overflow call like the one already
+// pinned at 0x00584650.
