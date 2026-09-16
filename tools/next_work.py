@@ -591,12 +591,17 @@ def finish_candidates(min_score=0.9):
             min_score, build.load_all_function_rows(), latest):
         rva = int(row["target_rva"], 16)
         head = stash_path.read_text(encoding="utf-8", errors="replace").splitlines()[:1]
-        symbol = (head[0].lstrip("/").strip() if head else "") or row["name"]
+        label = (head[0].lstrip("/").strip() if head else "") or row["name"]
+        # Bank headers can annotate a decorated symbol with prose such as
+        # "(identity unknown)". Keep that warning visible, but never pass it
+        # to the object-symbol lookup performed by probe.py.
+        symbol = label.split()[0] if label.startswith("?") else label
         target_rva = f"0x{rva:08X}"
         stash_rel = (stash_path.relative_to(ROOT).as_posix()
                      if stash_path.is_relative_to(ROOT) else stash_path.as_posix())
         out.append({
-            "function": symbol,
+            "function": label,
+            "symbol": symbol,
             "target_rva": target_rva,
             "target_size": int(row.get("target_size") or 0),
             "source": row["source"],

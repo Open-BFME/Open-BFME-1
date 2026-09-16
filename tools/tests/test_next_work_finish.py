@@ -2,6 +2,7 @@
 """The finish tier serves a banked stash while its address is still a dump,
 survives a later deferral, and retires on a later dead-end verdict."""
 import sys
+import shlex
 from pathlib import Path
 
 import pytest
@@ -62,6 +63,18 @@ def test_later_deferral_does_not_hide_the_stash(world):
     verdict(log, "blocked")
     got = next_work.finish_candidates(0.9)
     assert len(got) == 1 and got[0]["latest_verdict"] == "blocked"
+
+
+def test_probe_command_excludes_symbol_header_annotation(world):
+    tmp_path, _, _ = world
+    label = SYM + " (identity unknown)"
+    (tmp_path / "attempts" / f"0x{RVA:08x}.cpp").write_text(
+        f"// {label}\n// partial score=0.97 date=2026-09-15\nint x;\n",
+        encoding="utf-8")
+    candidate = next_work.finish_candidates(0.9)[0]
+    assert candidate["function"] == label
+    assert candidate["symbol"] == SYM
+    assert shlex.split(candidate["command"])[3] == SYM
 
 
 def test_later_dead_end_retires_the_address(world):
