@@ -7,6 +7,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import callees
+import pin_consistency
 
 
 def install_body(monkeypatch, body):
@@ -46,9 +47,27 @@ def test_placeholder_name_is_not_reported_as_a_typed_contract(monkeypatch, capsy
     monkeypatch.setattr(callees, "ledger_names", lambda: {0x3000: "?j_00003000@@YAXXZ"})
     monkeypatch.setattr(callees, "call_targets", lambda *_: {0x3000: 1})
     monkeypatch.setattr(callees, "read", lambda *_: b"\x90" * 5)
+    monkeypatch.setattr(callees, "import_calls", lambda *_: {})
     monkeypatch.setattr(sys, "argv", ["callees.py", "0x2000", "6"])
     assert callees.main() == 0
     output = capsys.readouterr().out
     assert "0 unnamed in function ledger" in output
     assert "not ABI proof" in output
     assert "WRONG" not in output
+
+
+def test_import_calls_use_pe_names_and_ignore_unknown_slots(monkeypatch):
+    body = bytes.fromhex("ff 15 00 30 00 00 ff 15 00 30 00 00 ff 15 00 40 00 00 c3")
+    install_body(monkeypatch, body)
+    monkeypatch.setattr(pin_consistency, "import_table",
+                        lambda: {0x3000: ("mss32.dll", "_AIL_open_stream@12")})
+    assert callees.import_calls(0x2000, len(body)) == {
+        (0x3000, "mss32.dll", "_AIL_open_stream@12"): 2}
+
+
+@pytest.mark.parametrize("body", ["b8 ff 15 00 30 90 c3", "ff 15 00 30", "ff d0 c3"])
+def test_import_inventory_respects_boundaries_and_absolute_operand(monkeypatch, body):
+    raw = bytes.fromhex(body)
+    install_body(monkeypatch, raw)
+    monkeypatch.setattr(pin_consistency, "import_table", lambda: {0x3000: ("x.dll", "f")})
+    assert not callees.import_calls(0x2000, len(raw))

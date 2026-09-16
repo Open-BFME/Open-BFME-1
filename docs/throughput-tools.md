@@ -254,3 +254,14 @@ source, including rows below the requested minimum size, so genuine C++ in a
 mixed file is retained. A `.cpp` suffix alone is not donor evidence: the
 `0x002FB170` assembly lift previously generated three misleading ScriptActions
 leads. Active claims and retired addresses still use `eligibility.py`.
+
+`tools/callees.py RVA SIZE` also lists direct calls through absolute IAT
+slots, resolving DLL/export names from the PE import directory through
+`pin_consistency.import_table()`. This is independent of ledger names.
+For example, the audio body at `0x006AEF20` calls `_AIL_open_stream@12`,
+`_AIL_stream_ms_position@12` and `_AIL_stream_loop_count@4`; their slots
+are not unknown ABI targets merely because the direct-call inventory lacks
+them. The report keeps slot VAs separate from function RVAs. It does not
+resolve arbitrary register or vtable calls, and export names do not prove
+argument types. Instruction-boundary tests cover embedded opcode bytes,
+truncation, repeated imports and non-IAT absolute calls.

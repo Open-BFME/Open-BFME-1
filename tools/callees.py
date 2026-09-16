@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Direct near calls in a retail body, with candidate function-ledger names.
+"""Direct near calls and named IAT calls in a retail body.
 
 WHY THIS EXISTS. Two seats on consecutive tier-1 candidates reported being
 blocked on "unresolved" or "unpinned" callees, and both were wrong in the same
@@ -81,6 +81,27 @@ def call_targets(rva, size):
     return collections.Counter(targets)
 
 
+def import_calls(rva, size):
+    """Resolve call [absolute IAT slot] from the PE import directory.
+
+    Keep these separate from ledger identities and register/vtable calls.
+    Decoding instructions prevents an FF 15 byte pair inside data or another
+    instruction's operand from being mistaken for a call.
+    """
+    from capstone import Cs, CS_ARCH_X86, CS_MODE_32
+    from pin_consistency import import_table
+
+    imports = import_table()
+    counts = collections.Counter()
+    body = build.read_target_bytes(rva, size)
+    for instruction in Cs(CS_ARCH_X86, CS_MODE_32).disasm(body, rva):
+        if instruction.size == 6 and instruction.bytes[:2] == b"\xff\x15":
+            slot = struct.unpack_from("<I", instruction.bytes, 2)[0]
+            if slot in imports:
+                counts[(slot, *imports[slot])] += 1
+    return counts
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -115,6 +136,12 @@ def main():
         print("  Every direct call target above has a ledger name, not necessarily a proven signature.")
     print("  Ledger names, especially generated/thunk placeholders, are not ABI proof. "
           "Verify full callee bodies and typed declarations before adding or reusing pins.")
+    imports = import_calls(rva, args.size)
+    if imports and not args.unpinned_only:
+        print("\n  Direct IAT calls (slot VA; names read from the PE import directory):")
+        for (slot, dll, name), hits in sorted(imports.items()):
+            print(f"  [{slot:#x}]  x{hits}  {dll}!{name}")
+        print("  Verify imported argument types separately; register and vtable calls are not listed.")
     return 0
 
 
