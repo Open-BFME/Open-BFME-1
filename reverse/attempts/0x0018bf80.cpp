@@ -1,5 +1,5 @@
 // ?xfer@Rva0018BF80Owner@@QAEXPAVXfer@@@Z
-// partial score=0.968 date=2026-09-15
+// partial score=0.99 date=2026-09-16
 // Scratch-only reconstruction of retail RVA 0x0018BF80 (274 bytes).
 // The semantic owner is not recovered; the address-labelled owner records
 // the proven layout and xfer operation without inventing a game-class name.
@@ -95,10 +95,10 @@ void Rva0018BF80Owner::xfer(Xfer *xfer)
 	if (xfer->skip())
 		return;
 
-	XferVersion version;
-	version.m_version = 1;
-	version.m_currentVersion = 1;
-	xfer->xferVersion(&version);
+	{
+		XferVersion version = { 1, 1 };
+		xfer->xferVersion(&version);
+	}
 
 	UnsignedShort count = static_cast<UnsignedShort>(m_first.size());
 	xfer->xferShort(&count);
@@ -109,7 +109,7 @@ void Rva0018BF80Owner::xfer(Xfer *xfer)
 		while (current != m_first.end())
 		{
 			ObjectID value = *current;
-            friend_xferObjectID(xfer, &value);
+			friend_xferObjectID(xfer, &value);
 			++current;
 		}
 	}
@@ -126,7 +126,7 @@ void Rva0018BF80Owner::xfer(Xfer *xfer)
 		while (index < count)
 		{
 			ObjectID value;
-            friend_xferObjectID(xfer, &value);
+			friend_xferObjectID(xfer, &value);
 			m_first.push_back(value);
 			++index;
 		}
