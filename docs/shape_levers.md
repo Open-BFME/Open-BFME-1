@@ -513,3 +513,21 @@ member store does pin that store, and on `0x004945E0` it matched the first
 sixteen bytes exactly. It also drags the implicit vptr store up to the barrier,
 and retail writes the vptr after the member stores, so the body loses more
 bytes than it gains.
+
+## Recover the native lifetime before forcing constructor bookkeeping
+
+At `0x005F3750` (227 B), a bank manually wrote three vtables and used
+volatile storage. Native `ParticleModule005F2CA0` and `DefaultDrawModuleInfo`
+bases reproduce the intermediate vtable and unwind-state transitions without
+those writes. The complete body must also retain its global guard, construct
+the local `AssetList` before resolving the system pointer, and insert the
+asset name whether the system was already present or came from the null-system
+accessor. Omitting these branches obscured the useful native shape.
+
+Let the local's implicit destructor reach its native STLport tree destructor.
+An external `AssetList::~AssetList` declaration gave the same instruction
+shape but invented a callee identity: retail calls the tree destructor.
+The native 124-byte destructor and its 53-byte recursive erase helper were
+independently matched before adding their typed dependencies. The resulting
+constructor is exact. Its class remains address-derived: the tempting
+`DefaultModule<6>` name belongs to a different constructor and vtable.
