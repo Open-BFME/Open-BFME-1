@@ -8,6 +8,10 @@ typedef unsigned int UnsignedInt;
 
 extern "C" void *memset(void *, int, unsigned int);
 
+// Bind the array allocation to the game's distinct operator new[] at
+// 0x00881F70; the /MD implicit declaration otherwise resolves to scalar new.
+void *__cdecl operator new[](unsigned int size);
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DWater.h
 class WaterMeshData
 {

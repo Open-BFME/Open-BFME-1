@@ -61,7 +61,6 @@
 ?dup_0075e980@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp)
 ?dup_00764790@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp)
 ?dup_0090b4e0@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp)
-?enableWaterGrid@WaterRenderObjClassEnableWaterGridShim@@QAEX_N@Z (Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/WaterRenderObjEnableWaterGrid.cpp)
 ?erase@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QAEPAUPrereqUnitRec@ProductionPrerequisite@@PAU34@0@Z (Code/GameEngine/Source/Common/RTS/ProductionPrerequisite.cpp)
 ?friend_newModuleData@MissileAIUpdate@@SAPAVModuleData@@PAVINI@@@Z (Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp)
 ?getUser@LANGameSlot@@QAEPAVLANPlayer@@XZ (Code/GameEngine/Source/Common/LANGameSlot_getUser_Thunk.cpp)
