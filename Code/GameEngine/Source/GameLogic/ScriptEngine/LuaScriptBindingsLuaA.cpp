@@ -128,8 +128,8 @@ int Rva002E5FF0ObjectFieldName( lua_State *state )
 
 int bfmeLookup_001c62b0( void *name );
 
-// ?Rva002E77F0ObjectBitTest@@YAHPAUlua_State@@@Z
-int Rva002E77F0ObjectBitTest( lua_State *state )
+// ?ObjectTestModelCondition@@YAHPAUlua_State@@@Z
+int ObjectTestModelCondition( lua_State *state )
 {
 	unsigned id = Rva00990030Lookup( state, 1 );
 	if( !id && lua_type( state, 1 ) != 1 )

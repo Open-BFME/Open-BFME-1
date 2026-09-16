@@ -1,7 +1,9 @@
 // cl: /O2 /Ob0 /MD
 
-// Lua registration string ObjectTestModelCondition points to retail 0x002E63C0.
-// The callback resolves one object and enables special model condition 9.
+// The registration table at 0x002EC990 binds the name ObjectEnterAlertState to
+// the ILT thunk at 0x0002F24D, which jumps here to 0x002E63C0: the body pushed
+// by lua_pushcclosure is the one the next lua_setglobal names. The callback
+// resolves one object and enables special model condition 9.
 
 struct Rva00990030Value
 {
@@ -41,7 +43,7 @@ public:
 	Object *findObjectByID(int value);
 };
 
-int ObjectTestModelCondition(lua_State *state)
+int ObjectEnterAlertState(lua_State *state)
 {
 	void *value = (void *)Rva00990030Lookup((Rva00990030Range *)state, 1);
 	if (!value)
