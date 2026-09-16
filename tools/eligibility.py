@@ -25,6 +25,7 @@ Rules (Claude/Astra consensus, 2026-09-15; see docs/baseline-2026-09-15.md):
 Library use only; nothing here writes.
 """
 import csv
+import bisect
 import json
 import datetime
 import re
@@ -107,15 +108,91 @@ def attempt_counts(path=None):
     return counts
 
 
-def open_dumps(rows=None, latest=None, min_size=0, max_size=None, anonymous=None):
+CARVED = ROOT / "reverse" / "carved.csv"
+
+
+def carved_rows(path=None, rows=None):
+    """Return live carved candidates shaped like ``functions.csv`` rows.
+
+    Filtering against the current ledger makes shrink-on-land immediate even
+    if a seat reads the old carved file between regeneration runs.
+    """
+    path = Path(path or CARVED)
+    if not path.exists():
+        return []
+    rows = load_rows() if rows is None else rows
+    claimed = []
+    for row in rows:
+        rva = rva_of(row)
+        try:
+            size = int(row.get("target_size") or 0)
+        except (TypeError, ValueError):
+            continue
+        if rva is not None and size > 0:
+            claimed.append((rva, rva + size))
+    claimed.sort()
+    merged = []
+    for start, end in claimed:
+        if merged and start <= merged[-1][1]:
+            merged[-1] = (merged[-1][0], max(merged[-1][1], end))
+        else:
+            merged.append((start, end))
+    claimed_starts = [start for start, _ in merged]
+    out = []
+    with path.open(newline="", encoding="utf-8", errors="replace") as fh:
+        for row in csv.DictReader(fh):
+            raw_rva = row.get("target_rva") or row.get("rva") or ""
+            rva = rva_of({"target_rva": raw_rva})
+            try:
+                size = int(row.get("target_size") or row.get("size") or 0)
+            except (TypeError, ValueError):
+                continue
+            if rva is None or size <= 0:
+                continue
+            index = bisect.bisect_right(claimed_starts, rva) - 1
+            overlap = any(0 <= candidate < len(merged) and
+                          rva < merged[candidate][1] and
+                          merged[candidate][0] < rva + size
+                          for candidate in (index, index + 1))
+            if overlap:
+                continue
+            out.append({
+                "name": row.get("name") or f"?d_{rva:08x}@@YAXXZ",
+                "export_rva": "",
+                "target_rva": f"0x{rva:08X}",
+                "target_size": str(size),
+                "source": "reverse/carved.csv",
+                "status": "carved",
+                "notes": ";".join(filter(None, (
+                    f"start={row.get('start_evidence', '')}",
+                    f"callers={row.get('callers', '0')}",
+                    f"end={row.get('end_evidence', '')}",
+                    f"ghidra={row.get('ghidra', '')}"))),
+                "start_evidence": row.get("start_evidence", ""),
+                "callers": row.get("callers", "0"),
+                "end_evidence": row.get("end_evidence", ""),
+                "ghidra": row.get("ghidra", ""),
+            })
+    return out
+
+
+def is_carved_row(row):
+    return row.get("status") == "carved" and row.get("source") == "reverse/carved.csv"
+
+
+def open_dumps(rows=None, latest=None, min_size=0, max_size=None, anonymous=None,
+               include_carved=False):
     """Dump rows that are not retired, in a size window. anonymous=True keeps
     only ?d_/?dup_/?j_ names; False keeps only named rows; None keeps both."""
     rows = load_rows() if rows is None else rows
+    if include_carved:
+        rows = list(rows) + carved_rows(rows=rows)
     latest = latest_verdicts() if latest is None else latest
     out = []
     for row in rows:
         rva = rva_of(row)
-        if rva is None or not is_dump_row(row):
+        if rva is None or not (is_dump_row(row) or
+                               (include_carved and is_carved_row(row))):
             continue
         size = int(row.get("target_size") or 0)
         if size < min_size or (max_size is not None and size > max_size):

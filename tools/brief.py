@@ -29,7 +29,7 @@ ROOT = Path(__file__).resolve().parents[1]
 
 METHOD = """
 METHOD. Read AGENTS.md, docs/matching.md and docs/shape_levers.md first. For each
-target: confirm the row still points at a .asm dump (`grep ,0xRVA, reverse/functions.csv`);
+target: confirm the row still points at a .asm dump or carved boundary (`grep ,0xRVA, reverse/functions.csv reverse/carved.csv`);
 grep reverse/symbols.csv and reverse/re_attempts.log for the RVA; use
 `python3 tools/vtable_lookup.py <vtable VA>` for owning-class questions; port from the
 Zero Hour twin under reference/CnC_Generals_Zero_Hour when one is named. Iterate with
@@ -77,11 +77,15 @@ REPORT at the end: bodies landed (name rva size), partials banked, total bytes.
 
 def load():
     rows = {}
-    for r in csv.DictReader(open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace")):
+    ledger_rows = list(csv.DictReader(open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace")))
+    for r in ledger_rows:
         try:
             rows[int(r["target_rva"], 16)] = r
         except ValueError:
             pass
+    import eligibility
+    for r in eligibility.carved_rows(rows=ledger_rows):
+        rows.setdefault(int(r["target_rva"], 16), r)
     pins = {}
     for r in csv.reader(open(ROOT / "reverse/symbols.csv", newline="", encoding="utf-8", errors="replace")):
         if len(r) > 1 and r[1].startswith("0x"):
@@ -176,7 +180,7 @@ def main():
     live, dropped, retired = [], [], []
     for rva in targets:
         r = rows.get(rva)
-        if r and eligibility.is_dump_row(r):
+        if r and (eligibility.is_dump_row(r) or eligibility.is_carved_row(r)):
             p = latest.get(rva)
             # SecuROM post-link bodies (55 89 E5 frames, opaque predicates) can never
             # byte-match clean C++; 32 sessions re-proved that at ~35 min each.

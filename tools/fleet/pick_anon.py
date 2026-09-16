@@ -35,7 +35,8 @@ lf = (ROOT / "build" / ".fleet_claims.lock").open("a")
 lock(lf, exclusive=True)
 
 latest = eligibility.latest_verdicts()
-rows = eligibility.open_dumps(latest=latest, min_size=min_b, max_size=max_b, anonymous=True)
+rows = eligibility.open_dumps(latest=latest, min_size=min_b, max_size=max_b,
+                               anonymous=True, include_carved=True)
 busy = eligibility.busy_rvas(ROOT) | eligibility.recent_run_rvas(48, ROOT)
 attempts = eligibility.attempt_counts()
 import re_log  # noqa: E402

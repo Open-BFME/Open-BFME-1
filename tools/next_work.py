@@ -638,6 +638,50 @@ def finish_choice(candidates):
     raise AssertionError("finish_choice fell through its cumulative walk")
 
 
+def carved_candidates():
+    """Open anonymous rows derived by ``carve_unclaimed.py``.
+
+    Caller evidence is warmth for this tier: it is already positive boundary
+    evidence and makes a carved body a better seat target than a blind start.
+    """
+    import eligibility
+    latest = eligibility.latest_verdicts()
+    records = re_log.latest_records()
+    out = []
+    for row in eligibility.open_dumps(latest=latest, anonymous=True,
+                                      include_carved=True):
+        if not eligibility.is_carved_row(row):
+            continue
+        rva = int(row["target_rva"], 16)
+        if eligibility.boundary_suspect(rva, records):
+            continue
+        try:
+            callers = int(row.get("callers") or 0)
+        except ValueError:
+            callers = 0
+        warmth = 2 * min(callers, 3)
+        if row.get("ghidra"):
+            warmth += 1
+        out.append({
+            "function": row["name"],
+            "symbol": row["name"],
+            "target_rva": row["target_rva"],
+            "target_size": int(row["target_size"]),
+            "size": int(row["target_size"]),
+            "source": row["source"],
+            "callers": callers,
+            "warmth": warmth,
+            "start_evidence": row.get("start_evidence", ""),
+            "end_evidence": row.get("end_evidence", ""),
+            "ghidra": row.get("ghidra", ""),
+            "notes": row.get("notes", ""),
+            "command": f"python3 tools/brief.py --rvas {row['target_rva']}",
+        })
+    out.sort(key=lambda c: eligibility.expected_bytes(c["warmth"], c["size"]),
+             reverse=True)
+    return out
+
+
 def stash_line(candidate):
     """The one-line pointer at a banked body, or None. Printed beside `start:`."""
     if "stash" not in candidate:
@@ -1055,9 +1099,10 @@ def packet_candidates(claimed):
 
 
 def selected_queue(tier, drifts, structural, ghidra_absent, anchored, named,
-                   packets=(), finish=()):
+                   packets=(), finish=(), carved=()):
     queues = {
         "finish": ("near-landed body", finish),
+        "carved": ("carved anonymous body", carved),
         "packet": ("Zero Hour work packet", packets),
         "named": ("reloc-named unclaimed function", named),
         "harvest": ("drift quick win", drifts),
@@ -1067,7 +1112,7 @@ def selected_queue(tier, drifts, structural, ghidra_absent, anchored, named,
     }
     if tier:
         return queues[tier]
-    for name in ("finish", "packet", "named", "harvest", "structural", "ghidra",
+    for name in ("finish", "carved", "packet", "named", "harvest", "structural", "ghidra",
                  "anchored"):
         label, candidates = queues[name]
         if candidates:
@@ -1144,6 +1189,16 @@ def print_candidate(label, candidate, meta, candidates=()):
         print("       then one lever at a time on the FIRST divergence (docs/shape_levers.md); "
               "land with add_match.py, or re-bank with an honest --score and what changed")
         return
+    if label == "carved anonymous body":
+        print(f"  {candidate['target_size']:>5}B  {candidate['function']}")
+        print(f"       {candidate['target_rva']} is a carved boundary from {candidate['source']}; "
+              f"start evidence: {candidate['start_evidence']}; callers: {candidate['callers']}")
+        print(f"       end evidence: {candidate['end_evidence']}"
+              + (f"; Ghidra: {candidate['ghidra']}" if candidate.get("ghidra") else ""))
+        print(f"       start: {candidate['command']}")
+        print("       boundary first with tools/dis_retail.py; use an opaque address name "
+              "unless identity is proven, then land with add_match.py")
+        return
     if label == "Zero Hour work packet":
         print(f"  {candidate['size']:>5}B  {candidate['function']}")
         print(f"       {candidate['target_rva']} — Zero Hour's own body for this "
@@ -1213,7 +1268,7 @@ def print_candidate(label, candidate, meta, candidates=()):
 
 def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
                  suppressed=0, named=(), named_note="", structural_meta=None,
-                 finish=()):
+                 finish=(), carved=()):
     # Dispatching off this view inverts the weighting the default draw exists to
     # apply: it is ordered by SIZE, so the top rows are the biggest bodies and
     # the worst bets. Five seats were sent at the head of this list and went
@@ -1240,6 +1295,15 @@ def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
                   f"{candidate['latest_verdict']}")
             print(f"       start: {candidate['command']}")
 
+    if args.tier in (None, "carved"):
+        print(f"\n== 0.75 carved anonymous bodies ({len(carved)}) ==")
+        for candidate in carved[:args.limit]:
+            print(f"  {candidate['target_size']:>5}B callers={candidate['callers']:>2} "
+                  f"{candidate['function']} {candidate['target_rva']}")
+            print(f"       {candidate['start_evidence']}; end={candidate['end_evidence']}"
+                  + (f"; ghidra={candidate['ghidra']}" if candidate.get("ghidra") else ""))
+            print(f"       start: {candidate['command']}")
+
     if args.tier in (None, "named"):
         print(f"\n== 1. reloc-named unclaimed functions ({len(named)}) ==")
         print(f"  {named_note}")
@@ -1250,7 +1314,7 @@ def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
             _print_stash(candidate)
             print(f"       start: {candidate['command']}")
 
-    if args.tier not in ("named", "structural", "ghidra"):
+    if args.tier not in ("named", "structural", "ghidra", "carved"):
         print(f"\n== 2. drift quick wins: literal-only diffs ({len(drifts)}) ==")
         for candidate in drifts[:args.limit]:
             print(f"  {candidate['aligned_pct']:>3}% {candidate['class']:<14} "
@@ -1260,7 +1324,7 @@ def print_ranked(args, ledger, drifts, structural, ghidra_meta, ghidra_absent,
             print("       fix the literal in source, then byte-verify: "
                   f"{candidate['command']}")
 
-    if args.tier not in ("named", "harvest", "ghidra"):
+    if args.tier not in ("named", "harvest", "ghidra", "carved"):
         shown = structural[:args.limit]
         print(f"\n== 3. structural reconciliation — manual RE ({len(structural)} "
               f"address(es); workflow: docs/structural.md) ==")
@@ -1308,7 +1372,7 @@ def main():
     ap.add_argument("--ranked", action="store_true",
                     help="show complete ranked queues for humans/debugging")
     ap.add_argument("--tier",
-                    choices=("finish", "packet", "named", "harvest", "structural",
+                    choices=("finish", "carved", "packet", "named", "harvest", "structural",
                              "ghidra", "anchored"),
                     help="choose from only this task lane")
     ap.add_argument("--min-score", type=float, default=0.9,
@@ -1331,7 +1395,7 @@ def main():
     ledger = check_ledger()  # exit 2 happens in there; nothing below matters if red
     import build
     drifts = (drift_quick_wins()
-              if args.tier not in ("named", "structural", "ghidra") else [])
+              if args.tier not in ("named", "structural", "ghidra", "carved") else [])
     # Every tier below asks "is this address still open work?", and a gen-dump
     # row answers yes: it pins retail's bytes and holds no source. That rule
     # lives in build.load_claim_rows and nowhere else -- deriving it here a
@@ -1349,10 +1413,12 @@ def main():
                 claimed_ranges.append((start, start + int(row["target_size"])))
     structural = (structural_candidates(claimed, claimed_names, claimed_ranges,
                                         big=args.big)
-                  if args.tier not in ("named", "harvest", "ghidra", "anchored")
+                  if args.tier not in ("named", "harvest", "ghidra", "anchored", "carved")
                   else [])
     finish = (finish_candidates(args.min_score, args.max_attempts, args.cooldown_days)
               if args.tier in (None, "finish") else [])
+    carved = (carved_candidates()
+              if args.tier in (None, "carved") else [])
     if args.tier in (None, "named"):
         named, named_note = reloc_named_candidates(claimed, claimed_ranges)
     else:
@@ -1362,7 +1428,7 @@ def main():
             claimed, claimed_names, claimed_ranges)
     else:
         anchored, anchored_note = [], "anchored tier not requested"
-    if args.tier not in ("named", "harvest", "structural", "anchored"):
+    if args.tier not in ("named", "harvest", "structural", "anchored", "carved"):
         ghidra_absent, ghidra_meta = ghidra_absent_candidates(
             claimed, claimed_names)
     else:
@@ -1377,8 +1443,9 @@ def main():
         structural, dropped_structural = drop_logged(structural)
         ghidra_absent, dropped_ghidra = drop_logged(ghidra_absent)
         anchored, dropped_anchored = drop_logged(anchored)
+        carved, dropped_carved = drop_logged(carved)
         suppressed = (dropped_named + dropped_drift + dropped_structural
-                      + dropped_ghidra + dropped_anchored)
+                      + dropped_ghidra + dropped_anchored + dropped_carved)
 
     identity_conflicts = []
     if structural:
@@ -1396,6 +1463,7 @@ def main():
     structural = apply_shard(structural, args.shard)
     ghidra_absent = apply_shard(ghidra_absent, args.shard)
     anchored = apply_shard(anchored, args.shard)
+    carved = apply_shard(carved, args.shard)
     for queue in (named, drifts, structural, ghidra_absent, anchored):
         annotate_stashes(queue)
     shard_meta = (None if args.shard is None else
@@ -1405,6 +1473,7 @@ def main():
         print(json.dumps({
             "ledger": ledger,
             "finish": finish,
+            "carved": carved,
             "named_meta": named_note, "reloc_named": named,
             "drift_quick_wins": drifts,
             "structural": structural,
@@ -1420,7 +1489,7 @@ def main():
     if args.ranked:
         print_ranked(args, ledger, drifts, structural, ghidra_meta,
                      ghidra_absent, suppressed, named, named_note, structural_meta,
-                     finish)
+                     finish, carved)
         return
 
     packets = (packet_candidates(claimed)
@@ -1435,7 +1504,7 @@ def main():
     # the normal state of a near miss, and the stash is why it is served.
     finish = apply_shard(finish, args.shard)
     label, candidates = selected_queue(args.tier, drifts, structural, ghidra_absent,
-                                       anchored, named, packets, finish)
+                                       anchored, named, packets, finish, carved)
     if not candidates:
         candidate = None
     elif label == "near-landed body":
@@ -1448,7 +1517,7 @@ def main():
     if args.json:
         meta = dict(meta, cluster=[
             c["function"] for c in cluster_of(candidate, candidates)]) \
-            if candidate else meta
+            if candidate and label != "carved anonymous body" else meta
         print(json.dumps({"ledger": ledger, "tier": label,
                           "selection": candidate, "selection_meta": meta}, indent=2))
         return

@@ -40,6 +40,8 @@ An explicit request or assigned lane overrides the queue:
    an OPAQUE name that keeps the address token (`RvaXXXXXXXX::method`,
    `?dup_XXXXXXXX`): permitted, expected, and counted by progress.py. A
    plausible GUESSED class or method name is prohibited; no gate can see it.
+   The second, boundary-evidence pool is described in `docs/carving.md` and is
+   served by `tools/carve_unclaimed.py`.
 3b. **Replacing generator-written C++ with hand-written C++ is deferred.**
    It scores +0 on the headline (generated code already compiles and is
    already counted) and it consumed the seats meant for dumps once the naked

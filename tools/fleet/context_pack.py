@@ -28,10 +28,18 @@ def _load():
         return
     _exe = open(build.EXE, 'rb').read(); _secs = build.pe_sections(_exe)
     _rows = {}
-    for r in csv.DictReader(open(ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')):
+    ledger_rows = list(csv.DictReader(open(ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')))
+    for r in ledger_rows:
         a = (r['target_rva'] or '')
         if a.startswith('0x'):
             _rows[int(a, 16)] = r
+    # Carved candidates are pseudo-rows until add_match lands a real source.
+    # Keep the current functions.csv ranges authoritative so a stale carved
+    # file cannot resurrect an address that landed between regenerations.
+    sys.path.insert(0, str(ROOT / 'tools'))
+    import eligibility
+    for r in eligibility.carved_rows(rows=ledger_rows):
+        _rows.setdefault(int(r['target_rva'], 16), r)
     _starts = sorted(_rows)
     _pins = collections.defaultdict(list)
     for l in open(ROOT / 'reverse/symbols.csv', encoding='utf-8', errors='replace'):
@@ -236,6 +244,13 @@ def pack(rva, max_items=8):
                 named[(o['name'][:60], o['source'].split('/')[-1])] += 1
         how = f", {via_thunk} via ILT thunk" if via_thunk else ""
         out.append(f"  callers ({len(callers)} sites{how}): " + '; '.join(f"{n} @ {s} x{c}" for (n, s), c in named.most_common(4)))
+    else:
+        try:
+            carved_callers = int(r.get("callers") or 0)
+        except (TypeError, ValueError):
+            carved_callers = 0
+        if carved_callers:
+            out.append(f"  callers ({carved_callers} REL32 call/jmp site(s); carved boundary evidence)")
     if eh:
         out.append("  EH FRAME: " + "; ".join(eh["signs"]))
         out.append("    levers (docs/shape_levers.md; mechanical ones via "
