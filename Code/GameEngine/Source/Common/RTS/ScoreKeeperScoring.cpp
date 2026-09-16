@@ -111,6 +111,9 @@ private:
 	Int m_heroesVetted;					// +0x11C
 	Int m_unitsVetted;					// +0x120
 	Int m_powerPoints;					// +0x124
+	// The layout witness places m_totalBuildingsBuilt here, but its sole reset
+	// witness is misaligned: retail calculateScore and reset both use +0x114
+	// for that counter. Keep this address-derived name until +0x128 is proven.
 	Int m_pad128;						// +0x128
 	Int m_regionCommandPoints;				// +0x12C
 	Int m_regionResources;					// +0x130
