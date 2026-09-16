@@ -85066,6 +85066,10 @@ name,address,notes
 ?setLosses@SkirmishBattleHonors@@QAEXVAsciiString@@H@Z,0x0009C830,BFME per-side variant of ZH SkirmishBattleHonors::setLosses: concat("Losses" at VA 0x010804E0) onto the by-value AsciiString side prefix (the callers pass Gondor/Rohan/Isengard/Mordor) then setInt ILT 0x00009B3D (pinned) -> 0x000A96F0; ret 8
 ?setLowControlBarConfig@ControlBar@@IAEXXZ,0x0002FA6D
 ?setMap@CustomMatchPreferences@@QAEXVAsciiString@@@Z,0x0003F8AA,ILT of CustomMatchPreferences map setter used by 0x005392B0
+?setMap@GameSpyStagingRoom@@QAEXVAsciiString@@@Z,0x0001B5DB,ILT to matched GameInfo setMap body used by CustomMatch map selection
+?setMapAvailability@GameSlot@@QAEX_N@Z,0x00045BC4,ILT to matched GameSlot setMapAvailability body used by CustomMatch map selection
+?setMapCRC@GameSpyStagingRoom@@QAEXI@Z,0x00040DFE,ILT to matched GameInfo setMapCRC body used by CustomMatch map selection
+?setMapSize@GameSpyStagingRoom@@QAEXI@Z,0x0001B34C,ILT to matched GameInfo setMapSize body used by CustomMatch map selection
 ?setMasks@Rva0039FF30Filter@@QAEXURva0021FC80Mask@@0@Z,0x0039FF30,TransportContain ctor21FC80 calls ILT4699D to full549B filter handle setter; two six-word masks by value; ret48 at3A0139; interned pool lifetime verified
 ?setMode@BfmeRva9140Member@@QAEXHH@Z,0x00032DEE,assigned body helper for Rva00249140
 ?setMode@BfmeRvaBA90Member@@QAEXHH@Z,0x00032DEE,assigned body helper for Rva0024BA90

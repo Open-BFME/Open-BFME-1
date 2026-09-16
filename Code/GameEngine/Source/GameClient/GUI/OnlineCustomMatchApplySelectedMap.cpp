@@ -1,12 +1,4 @@
-// ?applySelectedMap@BfmeAptScreenOnlineCustomMatch@@QAE_NVAsciiString@@@Z
-// partial score=0.72 date=2026-09-03
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-//
-// BfmeAptScreenOnlineCustomMatch apply-map, retail 0x0053D650, 304 bytes.
-// Requires TheGameSpyInfo and TheGameSpyGame. Lowercases the map name, setMap,
-// then on a MapCache hit copies CRC/size/official and calls slot 0
-// setMapAvailability(true), adjustSlotsForMap, resetAccepted, resetStartSpots,
-// and GameSpyInfo vslot +0xCC.
 
 template <typename T> class StringBase
 {
@@ -91,7 +83,7 @@ public:
 	GAMESPY_SLOT( 40 ); GAMESPY_SLOT( 41 ); GAMESPY_SLOT( 42 ); GAMESPY_SLOT( 43 );
 	GAMESPY_SLOT( 44 ); GAMESPY_SLOT( 45 ); GAMESPY_SLOT( 46 ); GAMESPY_SLOT( 47 );
 	GAMESPY_SLOT( 48 ); GAMESPY_SLOT( 49 ); GAMESPY_SLOT( 50 );
-	virtual void notifyStagingRoomMapChanged() = 0;
+	virtual void setGameOptions() = 0;
 };
 #undef GAMESPY_SLOT
 
@@ -102,18 +94,22 @@ extern MapCache *TheMapCache;
 class BfmeAptScreenOnlineCustomMatch
 {
 public:
-	bool applySelectedMap( AsciiString mapName );
+	bool applySelectedMap( const AsciiString &mapName );
 };
 
-bool BfmeAptScreenOnlineCustomMatch::applySelectedMap( AsciiString mapName )
+bool BfmeAptScreenOnlineCustomMatch::applySelectedMap( const AsciiString &mapName )
 {
-	if( !TheGameSpyInfo || !TheGameSpyGame )
+	if( !TheGameSpyInfo )
 		return false;
-	mapName.toLower();
-	TheGameSpyGame->setMap( mapName );
+	if( !TheGameSpyGame )
+		return false;
+	AsciiString lowerMap = mapName;
+	lowerMap.toLower();
+	TheGameSpyGame->setMap( lowerMap );
 	MapCache *cache = TheMapCache;
-	MapCacheNode *node = cache->find( mapName );
-	if( node != cache->m_header )
+	MapCacheNode *node = cache->find( lowerMap );
+	MapCacheNode *header = cache->m_header;
+	if( node != header )
 	{
 		TheGameSpyGame->getSlot( 0 )->setMapAvailability( true );
 		TheGameSpyGame->setMapCRC( node->m_crc );
@@ -123,6 +119,6 @@ bool BfmeAptScreenOnlineCustomMatch::applySelectedMap( AsciiString mapName )
 	TheGameSpyGame->adjustSlotsForMap();
 	TheGameSpyGame->resetAccepted();
 	TheGameSpyGame->resetStartSpots();
-	TheGameSpyInfo->notifyStagingRoomMapChanged();
+	TheGameSpyInfo->setGameOptions();
 	return true;
 }
