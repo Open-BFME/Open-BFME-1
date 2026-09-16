@@ -1,6 +1,22 @@
-// ?bfmeProvideObjectiveText@BfmeAptScreenObjectives@@QAEXPBDPAX_N@Z
-// partial score=0.96 date=2026-09-15
 // cl: /DNDEBUG /MD /EHsc
+
+// FILE: BfmeAptScreenObjectivesProvideText.cpp
+// The ObjectiveN provider of the Objectives and PlayerStatus APT screens.
+// The constructor at 0x0052C660, in AptScreenFactories.cpp, registers ILT
+// 0x0001BBA8 against the name it builds as "Objective%d", and that thunk
+// jumps here, so this is the method the constructor already declares as
+// bfmeProvideObjectiveText.
+//
+// In game mode 7 the text comes from the vector at GlobalData +0x1208.
+// Otherwise the helper at 0x0052AE20 turns the slot index into an objective
+// index and the campaign singleton at 0x012F1028 supplies the string.  A
+// non-empty string shorter than 253 characters is written to the caller's
+// buffer behind a '$'.
+//
+// Two shapes matter for the bytes.  Asking the vector for its size through an
+// inline size() loads m_finish before m_start, the order retail uses.  Reading
+// m_start through an inline begin() puts the element address in eax; indexing
+// the member directly puts it in edx.
 
 #include <string.h>
 
@@ -54,7 +70,8 @@ extern GameLogic *TheBfmeGameLogic;
 struct Rva00026AB2Vec12
 {
 	unsigned int size() const { return m_finish - m_start; }
-	AsciiString &operator[](unsigned int index) { return *(m_start + index); }
+	AsciiString *begin() { return m_start; }
+	AsciiString &operator[](unsigned int index) { return *(begin() + index); }
 
 	AsciiString *m_start;
 	AsciiString *m_finish;
