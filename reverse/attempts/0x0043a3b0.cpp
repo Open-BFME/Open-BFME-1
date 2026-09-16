@@ -1,24 +1,9 @@
-// ?parseKeyLabelList@Rva0043A3B0@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.99 date=2026-09-12
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// ?parseFontFileName@GlobalLanguage@@SAXPAVINI@@PAX1PBX@Z
+// partial score=0.99 date=2026-09-16
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
-// The parser's list, string temporaries, and pair layout identify the retail
-// callback at 0x0043A3B0. The list owner stores its sentinel pointer at +0x134.
-
-#include <new>
-
-#pragma comment(linker, "/alternatename:?releaseBuffer@UnicodeString@@AAEXXZ=?releaseBuffer@AsciiString@@AAEXXZ")
-
-class AsciiString
-{
-public:
-	AsciiString() : m_data( 0 ) {}
-	~AsciiString() { releaseBuffer(); }
-	void releaseBuffer();
-
-private:
-	void *m_data;
-};
+#include "string_base.h"
+#include "ascii_string.h"
 
 class INI
 {
@@ -26,49 +11,18 @@ public:
 	AsciiString getNextAsciiString();
 };
 
-class UnicodeString
+class Open2Rec439370
 {
 public:
-	UnicodeString() : m_data( 0 ) {}
-	~UnicodeString() { ((AsciiString *)this)->releaseBuffer(); }
-	void set( const UnicodeString &other );
+	Open2Rec439370() {}
+	Open2Rec439370( const Open2Rec439370 &other );
 
-private:
-	void *m_data;
-};
-
-struct Gen_t_00439370_k4
-{
-	UnicodeString m_value;
-};
-
-struct Gen_t_00439370_p12cd
-{
-	AsciiString m_value;
+	AsciiString m_at00;
+	AsciiString m_at04;
 };
 
 namespace _STL
 {
-
-template <class T1, class T2>
-struct pair
-{
-public:
-	pair() : first(), second() {}
-	pair( const pair &other );
-	T1 first;
-	T2 second;
-};
-
-template <class T>
-class allocator
-{
-};
-
-template <class T>
-struct _Nonconst_traits
-{
-};
 
 template <class T, class Alloc>
 class list;
@@ -94,12 +48,9 @@ struct _List_node : public _List_node_base
 	T _M_data;
 };
 
-template <class T, class Traits>
-struct _List_iterator
+template <class T>
+class allocator
 {
-	_List_iterator( _List_node_base *node ) : _M_node( node ) {}
-
-	_List_node_base *_M_node;
 };
 
 template <class T, class Alloc>
@@ -107,7 +58,6 @@ class list
 {
 public:
 	typedef _List_node<T> _Node;
-	typedef _List_iterator<T, _Nonconst_traits<T> > iterator;
 
 	_Node *_M_node;
 
@@ -133,25 +83,39 @@ private:
 
 }
 
-typedef _STL::pair<const Gen_t_00439370_k4, Gen_t_00439370_p12cd> Rva0043A3B0Pair;
+inline void *operator new( unsigned int, void *place ) { return place; }
+inline void operator delete( void *, void * ) {}
 
-struct Rva0043A3B0Store
-{
-	unsigned char m_prefix[0x134];
-	_STL::list<Rva0043A3B0Pair, _STL::allocator<Rva0043A3B0Pair> > *m_items;
-};
-
-class Rva0043A3B0
+class GlobalLanguage
 {
 public:
-	static void parseKeyLabelList( INI *ini, void *instance, void *, const void * );
+	static void parseFontFileName( INI *ini, void *instance, void *store, const void *userData );
+
+	unsigned char m_unmodelled[ 0x134 ];
+	_STL::list<Open2Rec439370, _STL::allocator<Open2Rec439370> > *m_localFonts;
 };
 
-void Rva0043A3B0::parseKeyLabelList( INI *ini, void *instance, void *, const void *)
+void GlobalLanguage::parseFontFileName( INI *ini, void *instance, void *store, const void *userData )
 {
-	Rva0043A3B0Store *self = (Rva0043A3B0Store *)instance;
+	GlobalLanguage *self = (GlobalLanguage *)instance;
 	AsciiString token = ini->getNextAsciiString();
-	Rva0043A3B0Pair entry;
-	((UnicodeString *)&entry.first)->set( *(const UnicodeString *)&token );
-	self->m_items->push_back( entry );
+	Open2Rec439370 entry;
+	entry.m_at00.set( token );
+	self->m_localFonts->push_back( entry );
 }
+
+// Six of 203 bytes differ and both residues are register choices.
+//
+// At +0x76 retail computes the address of entry into edx and we compute it
+// into eax. At +0xbf retail writes fs:[0] and then pops ebx while we pop ebx
+// first. Everything else matches, frame slots and unwind states included.
+//
+// These spellings left both residues untouched: a named const reference at the
+// call site, a source pointer inside _Construct, a named destination local, the
+// assignment operator instead of set, an inlined instance cast, a raw void*
+// local before the node cast, _M_create_node as an inline and as a forceinline
+// member, _M_insert taking the sentinel, push_back taking a pointer, _Construct
+// as a free function template, throw() on _M_allocate, and throw() on the
+// placement operator new. The flag sweep /G5 /G6 /G7 /GB /Ot /Oy /Gy /Ob1 /Oi
+// /Ow /Oa /Op /Og /GF /Gf changed nothing either, and /Os and /Oy- made the
+// body shorter and much further away.
