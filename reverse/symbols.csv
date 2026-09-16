@@ -88353,3 +88353,4 @@ _g_Rva012D4FD0AssertCrashTemplate,0x012D4FD0,DLGTEMPLATEEX titled Assert/Crash p
 ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@0@Z,0x000441C0,retail Weapon body 0x001E6930 passes Pathfinder receiver and source goal target to ILT
 ?cellCallback@ObstacleCellStruct@@QAEHPAVPathfindCell@@0HH@Z,0x00042361,ILT jumps to matched ObstacleCellStruct::cellCallback at 0x003DEBB0; Pathfinder line walker at 0x003E3190 passes from to x y and tests Int result
 ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUObstacleCellStruct@@@Z,0x0000CC1B,ILT to cell-space walk at 0x003E3190; four-argument attack-view caller constructs ObstacleCellStruct and the walk calls its matched callback
+?d_000681c0@@YAXXZ,0x000681C0,carved 0x00014475 REL32 target; matched Dict::releaseData body independently proves address and ABI

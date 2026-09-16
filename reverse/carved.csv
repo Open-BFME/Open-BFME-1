@@ -44,7 +44,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x00012F3F,5,ghidra-start,0,ghidra-size,thunk_FUN_00a6e870
 0x00013219,5,ghidra-start,0,ghidra-size,thunk_FUN_00724ac0
 0x00014470,5,ghidra-start,0,ghidra-size,thunk_FUN_007b5e20
-0x00014475,5,rel32-call/jmp;ghidra-start,8,ghidra-size,thunk_FUN_004681c0
 0x0001481C,5,ghidra-start,0,ghidra-size,thunk_FUN_004e3d80
 0x00014961,5,ghidra-start,0,ghidra-size,thunk_FUN_007b6460
 0x00014C45,1,ghidra-start,0,ghidra-size,FUN_00414c45

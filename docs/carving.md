@@ -52,16 +52,16 @@ strings, vtables, witnessed layouts, and landed neighbours remain available.
 
 The current ledger reports **1,147,215** unclaimed non-padding `.text` bytes.
 Running `python3 tools/carve_unclaimed.py --summary` on this checkout produced
-7,690 positive-evidence candidates covering 760,061 bytes (the first proof
-landing removed one five-byte candidate):
+7,689 positive-evidence candidates covering 760,056 bytes (the first two proof
+landings removed two five-byte candidates):
 
 | Size band | Candidates | Candidate bytes |
 | --- | ---: | ---: |
-| 32-299 B | 7,101 | 85,203 |
+| 32-299 B | 7,100 | 85,198 |
 | 300-999 B | 397 | 217,258 |
 | 1,000-2,499 B | 140 | 224,768 |
 | 2,500+ B | 52 | 232,832 |
-| **Total** | **7,690** | **760,061** |
+| **Total** | **7,689** | **760,056** |
 
 The candidate total is a measured, evidence-backed subset of the larger
 unclaimed denominator; bytes without a positive start and end remain unserved
