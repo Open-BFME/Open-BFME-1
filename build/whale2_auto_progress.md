@@ -60,7 +60,7 @@
 
 ## 2026-09-16 - checkpoint after 0x003EEB90
 
-- Commits pushed: `23d7284f1d` (0x0073E050 blocked verdict). The final 0x003EEB90 evidence update is prepared for publication.
+- Commits pushed: `23d7284f1d` (0x0073E050 blocked verdict) and `c1ba024f78` (0x003EEB90 blocked verdict and closing WHALE-2 evidence).
 - 0x003EEB90: retained the identity-resolved Pathfinder twin at score `0.55`; BFME seven-argument/Object* path logic and frame remain unresolved. No exact source, pin, or unlock row.
-- Pool status: all ten explicit WHALE-2 bodies have a recorded verdict; bodies landed: none; bodies added to `reverse/unlocked.txt`: none.
-- Next: publish this closing checkpoint, then report the verified remote state and the remaining recorded stashes/blockers.
+- Pool status: all nine explicit WHALE-2 bodies have a recorded verdict; bodies landed: none; bodies added to `reverse/unlocked.txt`: none.
+- Next: report the verified remote state and the remaining recorded stashes/blockers.
