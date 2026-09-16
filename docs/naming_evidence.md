@@ -259,3 +259,20 @@ source edit. That is the shape that hides defects when it goes wrong, so it want
 green full gate, a byte-verify per touched row, and one class per commit -- not a
 batch. The evidence is banked here so the next attempt starts from the list rather
 than from a survey.
+
+### Guard-machine layout witness conflict
+
+`AIGuardInnerState::onEnter` at `0x0015C570` is identified by dedicated
+vtable `0x01096160`, slot 4 via ILT `0x0003D6FE`. Its machine view uses
+`+0x4C` as the polygon receiver for `0x0018F880` and `0x0018F790`,
+`+0x50` as a three-component position, and `+0x6C` as an ID passed to
+`GameLogic::findObjectByID`. The independently matched guard scan-position
+body `0x0015C330` agrees on polygon/position offsets.
+
+The current inferred `AIGuardMachine` witness instead assigns nemesis ID
+to `+0x4C` and guard mode to `+0x50`, based on tiny setter identities at
+`0x0016A390` and `0x0016AEB0`. Those identities need a separate caller
+audit before changing the shared witness. The new state routine therefore
+uses `Rva0015C570GuardMachine` as its partial layout view; its proven method
+identity remains intact. No baseline was increased and no shared witness
+was silently rewritten to accept the new source.
