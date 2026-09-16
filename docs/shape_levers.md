@@ -17,6 +17,7 @@ a byte-exact landing on 2026-09-02. Each row states its own mechanism.
 | PMF constants `{pfn, -100, 0}` and a `[obj+0x68]` vbtable walk | `reference/shims/objectdlink/ObjectDlinkPmf.h`: Object's vbptr is inherited from a base at +0x68 (vbtable[0]==0), DLINK base at +4; pass the PMF as a value. |
 | Two parameter loads swapped: retail `mov eax,[esp+8]` (arg2) before `mov edx,[esp+4]` (arg1), body otherwise exact | The allocator claims registers in the order values are first MATERIALIZED, and a field address counts before a field load. Take the address of a field of the later-used pointer into a local before the first expression: `const float *tp = &other->m_x;` then use `tp[0]`, `tp[1]`. It folds into the addressing mode, so only the load order changes. Landed 0x001E24F0 (78 B) on 2026-09-04 after 25 min of local-definition-order and reference-parameter variants had failed. |
 | One displacement byte in `mov [esp+N],esp` (the EH saved-esp of a by-value temporary): retail N points at a LATER incoming-argument slot than ours | With no frame locals MSVC parks that saved-esp in a dead argument slot, choosing the first argument that is dead when the temporary is built. Reference the earlier argument in every expression that needs it (`(T *)b - 1` three times) instead of copying it to a local once: its slot stays live past the temporary and the allocator moves on to the next dead slot. Landed 0x002EADF0 (47 B) on 2026-09-04; class-size, typing and copy-order variants all left the byte alone. |
+| Frame the right size, but a contiguous run of locals sits on each other's slots, and reordering the declarations changes nothing | Retail holds one more object than your source, packed onto a user local that is already dead. Find the in-place update that should have produced a value and write it as an expression: `offset = offset * r * 0.5f` instead of `offset *= r; offset *= 0.5f;`. See "A run of locals on the wrong slots" below. Took `0x002C8A20` (1154 B) from 58 differing bytes to exact on 2026-09-15. |
 | Frame larger than ours by the size of a small struct (`sub esp,0xC` vs `sub esp,8`), spill slots otherwise identical, no extra stores | Retail kept an aggregate local whose stores were forwarded away but whose frame space stayed. Declare `float v[3]` (or the struct) and fill it from the calls, then build the return value from `v[0..2]`: the array gets the frame, the loads are forwarded, and the body is otherwise unchanged. A `volatile` or an address-taken scalar does NOT do it. Landed 0x005F9DE0 (65 B) on 2026-09-04. |
 | A temporary's or RAII local's destructor call (string releaseBuffer, Release_Ref reload-and-branch) sits LATER in ours than in retail, e.g. after a `return expr;` copy-construct or at the end of the enclosing block | The destructor fires at the end of the object's OWN scope. Wrap the local in its own nested `{ }` block ending where retail's destructor call sits; the rest of the body is unchanged. Landed 0x0010D940 (326 B, 137-byte diff -> exact) and 0x0071B1F0 (384 B) on 2026-09-05. |
 | Identical-looking return tails NOT merged (an extra `call` + epilogue per `return f(v).first;` site, body ~30 B long, one relocation more than retail), and a pointer loaded before an out-of-line comparator/functor call is RELOADED from memory after it | The callee is opaque: MSVC 7.1 assumes a declared-only function may write the object it gets a pointer into, so it reloads and cannot cross-jump the tails. Give the callee a VISIBLE body and `__declspec(noinline)` (`__declspec(noinline) bool operator()(const K &a, const K &b) const { return a.m_bits < b.m_bits; }`): the call stays out of line (still a REL32 to pin) but the compiler now knows it has no side effects. Landed the two 629 B SparseMatchFinder MatchMap hinted insert_unique bodies 0x001429C0 / 0x001426A0 on 2026-09-05 after key size, const-ness, ctor/dtor triviality, allocator and include-order experiments all left the body at 661 B. |
@@ -375,6 +376,56 @@ struct.
 The listing catches the opposite mistake too. At `0x009C0A30` we merged the
 `fild` temporary with a user integer on `[ebp-4]`. Retail kept the two apart on
 -4 and -8, so every double below them sat eight bytes lower than ours.
+
+## A run of locals on the wrong slots: retail had one more object
+
+Read this when the frame is the right size, every local is the right size, and
+a contiguous run of them still sits on each other's slots. The 1154-byte
+`WorkerAIUpdate::findGoodBuildOrRepairPosition` at `0x002C8A20` spent four
+sessions there. Ours listed `offset` at `esp+0x14`, `workingPosition` at
+`0x20` and `theirPosition` at `0x2c`. Retail wants `workingPosition` at
+`0x14`, `theirPosition` at `0x20` and `offset` at `0x2c`. The three slots
+above them, `bestPosition` at `0x38`, `ourPosition` at `0x44` and the options
+record at `0x50`, already agreed, and so did `sub esp,0x64`. All 58 remaining
+bytes were displacement bytes.
+
+Seven declaration orders failed, and the reason is that declaration order does
+not decide this. Swapping two declarations reordered the code and left every
+slot where it was. What decides it is how many objects the function holds. Add
+`/FAsc /Fa<path>.cod` to the `// cl:` line and read the `_name$ = -NN` table,
+then compare it against the slots the retail diff asks for. Count the objects
+retail needs. Retail wrote the scaled vector to `0x44`, the slot its own
+`ourPosition` occupied, and `ourPosition` is dead by then. That is a seventh
+object packed onto a dead sixth, and our source only had six.
+
+The source change that supplies the seventh object is one line. Ours scaled
+the vector in place:
+
+```cpp
+offset *= targetRadius;
+offset *= 0.5f;
+```
+
+Retail builds a new value instead, which MSVC materializes as a `$T`
+temporary:
+
+```cpp
+offset = offset * targetRadius * 0.5f;
+```
+
+The listing then reads `$T666 = -68` beside `_offset$ = -68` and
+`_halfOffset$ = -44` beside `_ourPosition$ = -44`, the whole run moves onto
+retail's slots, and the body goes from 58 differing bytes to 24. The same one
+line then closed the other 24 without another edit. It fixed the order of the
+three squares in the inlined `Length2`, where ours summed `Z*Z` first because
+`Z` sat in `st(0)`, and it fixed `fld offset.X; fadd workingPosition.x`, which
+ours emitted the other way round because MSVC reads `a += b` and `a = b + a`
+as the same thing and loads the destination. Neither of those is reachable by
+respelling the statement that shows the residue.
+
+So when a run of slots is rotated rather than swapped, do not respell the
+declarations. Count the objects, find the in-place update that should have
+produced a value, and write it as an expression.
 
 ## The two-register lea operand order is not a spelling
 
