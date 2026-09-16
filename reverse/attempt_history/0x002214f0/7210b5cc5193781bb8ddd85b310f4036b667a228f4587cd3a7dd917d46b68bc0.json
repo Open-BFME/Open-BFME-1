@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7210b5cc5193781bb8ddd85b310f4036b667a228f4587cd3a7dd917d46b68bc0",
+  "symbol": "?set@Rva002214F0Owner@@QAEXPAVRva002214F0Source@@H0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.79,
+  "source": "// ?set@Rva002214F0Owner@@QAEXPAVRva002214F0Source@@H0@Z\n// partial score=0.79 date=2026-09-16\n// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB\n// stlport\n// Retail RVA 0x002214F0. Clamps a count against one through STLport's max,\n// which is what the pair of lea instructions around the compare spells, then\n// copies one field out of each of the two pointer arguments. Nothing names the\n// owner, so the classes keep address-derived names.\n\n#define _STLP_NO_EXCEPTIONS 1\n#include <algorithm>\n\nclass Rva002214F0Source\n{\npublic:\n\tunsigned char m_bfmePad000[ 0x74 ];\n\tint m_bfmeField074;\n};\n\nclass Rva002214F0Owner\n{\npublic:\n\tvoid set( Rva002214F0Source *first, int count, Rva002214F0Source *second );\n\n\tunsigned char m_bfmePad000[ 0x9c ];\n\tint m_bfmeField09C;\n\tint m_bfmeField0A0;\n\tint m_bfmeField0A4;\n};\n\nvoid Rva002214F0Owner::set( Rva002214F0Source *first, int count,\n\tRva002214F0Source *second )\n{\n\tm_bfmeField0A4 = _STL::max( 1, count );\n\tm_bfmeField09C = first->m_bfmeField074;\n\tm_bfmeField0A0 = second->m_bfmeField074;\n}\n"
+}
