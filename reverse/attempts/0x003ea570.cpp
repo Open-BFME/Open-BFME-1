@@ -1,16 +1,6 @@
 // ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@ABUCoord3D@@0@Z
-// partial score=0.2 date=2026-09-10
+// partial score=0.25 date=2026-09-16
 // cl: /DNDEBUG /MD /EHsc
-//
-// BFME's goal-position attack-view overload at retail RVA 0x003EA570.
-//
-// Weapon::isGoalPosWithinAttackRange reaches this body through ILT 0x000441C0
-// with TheAI->pathfinder() in ecx and (source, goalPos, target) as the three
-// stack arguments.  The body first asks both attack-view cell walkers for the
-// ids along source -> goalPos, then applies the target-template and
-// SiegeDeploySpecialPower exceptions before doing the final horizontal check.
-// The object and template offsets below are the BFME layouts established by
-// the neighboring attack-view and weapon range bodies.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -119,9 +109,9 @@ static __forceinline Real targetAttackMetric(const Object *target,
 
 static __forceinline Bool pathHasTarget(Pathfinder *pathfinder,
 	Int (Pathfinder::*scan)(Object *, Coord3D *, void *),
-	const Object *source, const Coord3D *goalPos, const Object *target)
+	const Object *source, const Coord3D *goalPos, const Object *target,
+	UnsignedInt *cellIds)
 {
-	UnsignedInt cellIds[16];
 	Int count = (pathfinder->*scan)(const_cast<Object *>(source),
 		const_cast<Coord3D *>(goalPos), cellIds);
 	for (Int i = 0; i < count; ++i)
@@ -137,8 +127,9 @@ Bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source,
 	const Coord3D &goalPos, const Object *target)
 {
 	Coord3D *goal = const_cast<Coord3D *>(&goalPos);
+	UnsignedInt cellIds[16];
 	if (!pathHasTarget(this, &Pathfinder::bfmeCheckAttackViewHelper,
-			source, goal, target))
+			source, goal, target, cellIds))
 	{
 		Real dx = source->m_position.x - goal->x;
 		Real dy = source->m_position.y - goal->y;
@@ -149,7 +140,7 @@ Bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source,
 	}
 
 	if (pathHasTarget(this, &Pathfinder::bfmeCheckAttackViewAltHelper,
-		source, goal, target))
+		source, goal, target, cellIds))
 		return false;
 	return true;
 
@@ -174,7 +165,7 @@ checkTemplate:
 			const Overridable *finalOverride =
 				template_->m_nextOverride->getFinalOverride();
 			if ((finalOverride->m_flagsCC & 0x08000000) == 0)
-				goto finalViewCheck;
+				goto siegeCheck;
 		}
 	}
 
@@ -194,12 +185,23 @@ checkTemplate:
 
 		Real metric = targetAttackMetric(target, &target->m_position,
 			source, goal);
-		if (metric * metric > (limit + g_Va010977E0) *
-			(limit + g_Va010977E0))
-			goto finalViewCheck;
+		if (!(metric < (limit + g_Va010977E0) *
+			(limit + g_Va010977E0)))
+			goto siegeCheck;
 	}
 
-finalViewCheck:
+	if (target->m_template)
+	{
+		Overridable *template_ = target->m_template;
+		if (template_->m_nextOverride)
+		{
+			const Overridable *finalOverride =
+				template_->m_nextOverride->getFinalOverride();
+			if (finalOverride->m_flagsD8 & 0x00002000)
+				return true;
+		}
+	}
+
 	{
 		typedef Bool (Pathfinder::*Function)(const Object *, const Coord3D *);
 		union { void (*raw)(void); Function member; } fn;
@@ -208,6 +210,7 @@ finalViewCheck:
 			return true;
 	}
 
+siegeCheck:
 	if (target->m_template)
 	{
 		Overridable *template_ = target->m_template;
