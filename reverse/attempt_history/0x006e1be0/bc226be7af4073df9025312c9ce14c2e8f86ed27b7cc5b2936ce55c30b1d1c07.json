@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "bc226be7af4073df9025312c9ce14c2e8f86ed27b7cc5b2936ce55c30b1d1c07",
+  "symbol": "?Rva006E1BE0Distance@@YGMMMM@Z",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?Rva006E1BE0Distance@@YGMMMM@Z\n// partial score=0.93 date=2026-09-16\n// cl: /DNDEBUG /MD\n// Retail RVA 0x006E1BE0.\n\nstruct Rva006E1BE0Plane\n{\n\tfloat m_bfmeA;\n\tfloat m_bfmeB;\n\tfloat m_bfmeC;\n\tfloat m_bfmeD;\n};\n\nstruct Rva006E1BE0Owner\n{\n\tunsigned char m_bfmePad000[ 0x84 ];\n\tRva006E1BE0Plane m_bfmePlane;\n};\n\nextern Rva006E1BE0Owner *g_bfmeRva006E1BE0Owner;\nextern const float g_bfmeRva006E1BE0Default;\n\nfloat __stdcall Rva006E1BE0Distance( float x, float y, float z )\n{\n\tfloat result = g_bfmeRva006E1BE0Default;\n\tRva006E1BE0Owner *owner = g_bfmeRva006E1BE0Owner;\n\n\tif( owner != 0 )\n\t{\n\t\tRva006E1BE0Plane plane = owner->m_bfmePlane;\n\t\tfloat sum = plane.m_bfmeC * z;\n\n\t\tsum = sum + plane.m_bfmeB * y;\n\t\tsum = sum + plane.m_bfmeA * x;\n\t\tresult = sum + plane.m_bfmeD;\n\t}\n\n\treturn result;\n}\n"
+}
