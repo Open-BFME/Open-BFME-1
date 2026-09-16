@@ -61,6 +61,26 @@ Declaring the lower bound before the upper bound fixed all four, even though
 the optimized instruction stream loads the upper bound first. Test the small
 declaration-order change; do not infer source order solely from scheduled loads.
 
+## Hard-lane choices generator
+
+The recurring non-EH residues now have a bounded source-level front end:
+
+```text
+python3 tools/shape_family_levers.py BODY.cpp --families sib,register,bool > choices.json
+python3 tools/shape_search.py BODY.cpp "MANGLED" 0xRVA --size N --choices choices.json
+```
+
+`sib` reverses one independent integer addition, `register` swaps adjacent
+independent local definitions, and `bool` tries the documented call-result
+`unsigned char` temporary before a negation. Each edit is a hypothesis and
+`shape_search` rejects assembly injection. The five hard-lane SIB bodies
+(`0x0078D410`, `0x0078FDE0`, `0x0078FF40`, `0x007901F0`, and `0x005A0450`)
+were re-probed with their first-divergence offsets; the compiler kept the
+opposite base/index encoding, so these are recorded as an exhausted family,
+not as a reason to add inline assembly. The same distinction applies when a
+register or boolean alternative produces a new shape but not a masked exact
+match: bank the best source and record the residue.
+
 ## Search-loop failure tails
 
 At `0x007334B0` (161 bytes), embedding the state update inside the entry-search

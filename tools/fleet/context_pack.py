@@ -242,6 +242,9 @@ def pack(rva, max_items=8):
                    "`python3 tools/eh_levers.py SRC.cpp > choices.json` + shape_search.py):")
         for line in eh["levers"]:
             out.append("      - " + line)
+        out.append("    non-EH shape choices: `python3 tools/shape_family_levers.py SRC.cpp "
+                   "--families sib,register,bool > choices.json` + shape_search.py; "
+                   "probe and the byte gate still decide whether a choice is useful")
     if vtstore:
         out.append("  installs vtable(s): " + ', '.join(f"0x{v:08X}" for v in vtstore[:4]) + "  (tools/vtable_lookup.py names the class)")
     e = _vt.get(rva)

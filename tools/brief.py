@@ -48,6 +48,11 @@ shape_search BEFORE hand-iterating: it tries throw() per callee, /EHsc, _STLP_NO
 and nothrow delete[] mechanically. Read probe's experiment
 history before repeating a spelling. Record blocker=NAME for a shared missing
 callee/layout and explain what changed before retrying a banked attempt.
+For non-EH SIB, register-allocation, or call-result-boolean residues, run
+`python3 tools/shape_family_levers.py SRC.cpp --families sib,register,bool > choices.json`
+and feed the finite choices to shape_search. It is a hypothesis generator only:
+the byte gate decides, and the SIB family may remain compiler-internal after all
+choices are exhausted.
 NAMING. Ask before you invent: `python3 tools/name_oracle.py --class <C> --offset 0x2c`
 answers from the ZH<->retail layout witness and the binary's own FieldParse tables, and
 `--todo` lists placeholders the evidence can already name. The commit hook REFUSES a
