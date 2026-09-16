@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "de10e0add1dc581e89def8ccf80d45af5f6126639a08473bb3ba951d1d725103",
+  "symbol": "?refreshArmor@Rva0020E9A0ArmorCache@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?refreshArmor@Rva0020E9A0ArmorCache@@QAEXXZ\r\n// partial score=0.96 date=2026-09-04\r\n// cl: /O2\r\n\r\nextern \"C\" void _ReadWriteBarrier(void);\r\n#pragma intrinsic(_ReadWriteBarrier)\r\n\r\nclass BfmeSubInnerEFF\r\n{\r\npublic:\r\n\tvoid *bfmeGetFinalOverride();\r\n};\r\n\r\nstruct BfmeArmorSlotE9A\r\n{\r\n\tchar m_pad00[4];\r\n\tint m_value04;\r\n\tint m_value08;\r\n};\r\n\r\nclass BfmeArmorFinderE9A\r\n{\r\npublic:\r\n\tBfmeArmorSlotE9A *bfmeFindArmorE9A(const void *flags) const;\r\n\tconst BfmeArmorFinderE9A *bfmeGetFinalOverride() const\r\n\t{\r\n\t\tif (m_nextOverride)\r\n\t\t\treturn (const BfmeArmorFinderE9A *)m_nextOverride->bfmeGetFinalOverride();\r\n\t\treturn this;\r\n\t}\r\n\r\n\tchar m_pad00[4];\r\n\tBfmeSubInnerEFF *m_nextOverride;\r\n};\r\n\r\nclass Rva0020E9A0ArmorCache\r\n{\r\npublic:\r\n\tvoid refreshArmor();\r\n\r\nprivate:\r\n\tchar m_pad00[8];\r\n\tBfmeArmorFinderE9A **m_start;\r\n\tchar m_pad0C[0xD0 - 0x0C];\r\n\tint m_flags;\r\n\tBfmeArmorSlotE9A *m_cached;\r\n\tint m_valueD8;\r\n\tint m_valueDC;\r\n};\r\n\r\nvoid Rva0020E9A0ArmorCache::refreshArmor()\r\n{\r\n\tBfmeArmorFinderE9A **s = m_start;\r\n\t++s;\r\n\t_ReadWriteBarrier();\r\n\tconst BfmeArmorFinderE9A *finder = *s;\r\n\tconst BfmeArmorFinderE9A *resolved = finder ? finder->bfmeGetFinalOverride() : 0;\r\n\tBfmeArmorSlotE9A *slot = resolved->bfmeFindArmorE9A(&m_flags);\r\n\tif (slot && slot != m_cached)\r\n\t{\r\n\t\tm_valueD8 = slot->m_value04;\r\n\t\tm_valueDC = slot->m_value08;\r\n\t\tm_cached = slot;\r\n\t}\r\n}\r\n"
+}
