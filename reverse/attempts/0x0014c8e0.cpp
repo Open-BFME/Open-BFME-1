@@ -1,38 +1,23 @@
-// ?parseTemplateNameCountListEntry@Rva0014C8E0@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.95 date=2026-09-06
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME7: INI field parser at 0x0014C8E0 (196 B): INI::parseThingTemplate
-// and INI::parseInt scan a template pointer and a count into locals then an
-// (AsciiString name Int count) entry (count value-initialised) is filled and
-// pushed only when the template exists and its name at +0x20 is not empty
-// (the inline isNotEmpty reads the length word four bytes into the string
-// data) onto the list the store argument's first pointer
-// designates (STLport exceptions off: node from the static allocator the
-// element copied by the out-of-line pair _Construct body at 0x0014BBC0).
-// Address-derived names.
-
-typedef int Int;
-
-struct Rva0014C8E0StringData
-{
-	unsigned short m_refCount;
-	unsigned short m_numCharsAllocated;
-	unsigned short m_length;
-	unsigned short m_pad;
-};
-
-class Rva0014C8E0String
-{
-public:
-	Rva0014C8E0String() : m_data( 0 ) {}
-	~Rva0014C8E0String() { releaseBuffer(); }
-	void set( const Rva0014C8E0String &other );
-	bool isNotEmpty( void ) const { return m_data != 0 && m_data->m_length != 0; }
-
-private:
-	void releaseBuffer( void );
-	Rva0014C8E0StringData *m_data;
-};
+// ?parseTarget@Rva0014C8E0@@SAXPAVINI@@PAX1PBX@Z
+// partial score=0.95 date=2026-09-16
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// stlport
+// Open-BFME: the Target field parser of the AI AttackPriority block, retail
+// 0x0014C8E0, 196 bytes.
+//
+// The identity is settled by two tables. The AI FieldParse table at 0x01094B00
+// pairs 'AttackPriority' at row 0x01094CE0 with the parser at 0x0014E130, and
+// that parser is the only place in the image that reads the sub-table at
+// 0x010959F4. Row 0x01095A04 of the sub-table pairs 'Target' with this body, so
+// the field names the function. Nothing in the image names the owning class, so
+// the class name here keeps the address.
+//
+// The body reads a ThingTemplate through INI::parseThingTemplate at 0x000BAD60
+// and a count through INI::parseInt, builds an eight-byte record on the stack,
+// and appends it to the list the store argument points at. The record copy runs
+// through the landed Open2Construct14BBC0 at 0x0014BBC0.
+#include "string_base.h"
+#include "ascii_string.h"
 
 class INI
 {
@@ -41,73 +26,135 @@ public:
 	static void parseInt( INI *ini, void *instance, void *store, const void *userData );
 };
 
-struct Rva0014C8E0Template
+struct BfmeStringHeader
 {
-	char m_unreconstructed[ 0x20 ];
-	Rva0014C8E0String m_name;
+	int m_refCount;
+	unsigned short m_length;
+	unsigned short m_capacity;
 };
 
-struct Rva0014C8E0Entry
-{
-	Rva0014C8E0Entry() : m_count( 0 ) {}
-
-	Rva0014C8E0String m_name;
-	Int m_count;
-};
-
-void *__cdecl Rva0082E540NodeAllocate( unsigned int bytes );
-void __cdecl Rva0014BBC0Construct( Rva0014C8E0Entry *where, const Rva0014C8E0Entry &value );
-
-struct Rva0014C8E0ListNode
-{
-	Rva0014C8E0ListNode *m_next;
-	Rva0014C8E0ListNode *m_prev;
-	Rva0014C8E0Entry m_data;
-};
-
-class Rva0014C8E0List
+class ThingTemplate
 {
 public:
-	void push_back( const Rva0014C8E0Entry &value )
-	{
-		Rva0014C8E0ListNode *position = m_node;
-		Rva0014C8E0ListNode *node = (Rva0014C8E0ListNode *)Rva0082E540NodeAllocate( sizeof( Rva0014C8E0ListNode ) );
-		Rva0014BBC0Construct( &node->m_data, value );
-		Rva0014C8E0ListNode *previous = position->m_prev;
-		node->m_next = position;
-		node->m_prev = previous;
-		previous->m_next = node;
-		position->m_prev = node;
-	}
-
-private:
-	Rva0014C8E0ListNode *m_node;
+	unsigned char m_unmodelled[ 0x20 ];
+	BfmeStringHeader *m_name;
 };
 
-struct Rva0014C8E0Owner
+class Open2Rec14BBC0
 {
-	Rva0014C8E0List *m_entries;
+public:
+	Open2Rec14BBC0() : m_at04( 0 ) {}
+
+	AsciiString m_at00;
+	int m_at04;
 };
+
+void Open2Construct14BBC0( Open2Rec14BBC0 *place, const Open2Rec14BBC0 &value );
+
+namespace _STL
+{
+
+template <class T, class Alloc>
+class list;
+
+template <bool threads, int instance>
+class __node_alloc
+{
+	template <class T, class Alloc>
+	friend class list;
+
+	static void *_M_allocate( unsigned int bytes );
+};
+
+struct _List_node_base
+{
+	_List_node_base *_M_next;
+	_List_node_base *_M_prev;
+};
+
+template <class T>
+struct _List_node : public _List_node_base
+{
+	T _M_data;
+};
+
+template <class T>
+class allocator
+{
+};
+
+template <class T, class Alloc>
+class list
+{
+public:
+	typedef _List_node<T> _Node;
+
+	_Node *_M_node;
+
+	__forceinline void push_back( const T &value )
+	{
+		_List_node_base *at = _M_node;
+		_Node *node = (_Node *)__node_alloc<true, 0>::_M_allocate( sizeof( _Node ) );
+		Open2Construct14BBC0( &node->_M_data, value );
+		_List_node_base *before = at->_M_prev;
+		node->_M_next = at;
+		node->_M_prev = before;
+		before->_M_next = node;
+		at->_M_prev = node;
+	}
+};
+
+}
+
+typedef _STL::list<Open2Rec14BBC0, _STL::allocator<Open2Rec14BBC0> > Open2Rec14BBC0List;
 
 class Rva0014C8E0
 {
 public:
-	static void parseTemplateNameCountListEntry( INI *ini, void *instance, void *store, const void *userData );
+	static void parseTarget( INI *ini, void *instance, void *store, const void *userData );
 };
 
-// ?parseTemplateNameCountListEntry@Rva0014C8E0@@SAXPAVINI@@PAX1PBX@Z
-void Rva0014C8E0::parseTemplateNameCountListEntry( INI *ini, void *, void *store, const void * )
+void Rva0014C8E0::parseTarget( INI *ini, void *instance, void *store, const void *userData )
 {
-	const Rva0014C8E0Template *thingTemplate;
-	Int count;
-	INI::parseThingTemplate( ini, 0, &thingTemplate, 0 );
-	INI::parseInt( ini, 0, &count, 0 );
-	Rva0014C8E0Entry entry;
-	if( thingTemplate && thingTemplate->m_name.isNotEmpty() )
+	const ThingTemplate *tmpl;
+	int priority;
+
+	INI::parseThingTemplate( ini, 0, &tmpl, 0 );
+	INI::parseInt( ini, 0, &priority, 0 );
+
+	Open2Rec14BBC0 entry;
+	if( tmpl != 0 && tmpl->m_name != 0 && tmpl->m_name->m_length != 0 )
 	{
-		entry.m_name.set( thingTemplate->m_name );
-		Rva0014C8E0List *entries = ((Rva0014C8E0Owner *)store)->m_entries;
-		entry.m_count = count;
-		entries->push_back( entry );
+		entry.m_at00.set( *(const AsciiString *)&tmpl->m_name );
+		Open2Rec14BBC0List *items = *(Open2Rec14BBC0List **)store;
+		entry.m_at04 = priority;
+		items->push_back( entry );
 	}
 }
+
+// Nine of 196 bytes differ and both residues are register choices.
+//
+// At +0x6b retail loads store into eax, the count into edx and the list into
+// ecx. We load them in the same order into edx, ecx and eax. At +0xb8 retail
+// writes fs:[0] and then pops esi, while we pop esi first. Every other byte
+// matches, including the frame slots, the unwind states and the whole guard
+// chain.
+//
+// push_back needs __forceinline. Without it MSVC leaves it out of line and the
+// body comes to 177 bytes. Reading the list pointer into a local before the
+// count assignment is what fixed the load order, which took the body from
+// fourteen differing bytes to nine.
+//
+// These spellings moved neither residue: a pointer-to-pointer local, a
+// reference to the list, a comma expression, a named local for the count, the
+// assignment operator in place of set, a real AsciiString member on
+// ThingTemplate, a named reference to the source string, a free function
+// instead of a static member, allocating the node before reading the sentinel,
+// dropping the record's default constructor for an explicit zero store, and
+// value-initialising both members. The flag sweep /O1 /Os /Ot /Gy /G5 /G6 /Ob1
+// /EHs /EHa /GX /MT /MDd /Zp1 /Zp16 /GS /Gd /W4 changed nothing either.
+//
+// The 0.95 bank of 2026-09-06 stalled on the same two residues. What is new
+// here is the identity above and the two callee names, since 0x0014BBC0 now
+// carries ?Open2Construct14BBC0@@YAXPAVOpen2Rec14BBC0@@ABV1@@Z instead of a
+// gen-tgrid pair placeholder.
