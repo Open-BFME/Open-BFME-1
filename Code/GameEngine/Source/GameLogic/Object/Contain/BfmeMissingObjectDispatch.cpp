@@ -1,7 +1,9 @@
-// ?dispatchMissing@BfmeMissingObjectDispatch@@QAEXPAX0@Z
-// partial score=0.92 date=2026-09-11
-// Identity: list head at this-0xAC, dispatch tree at this+0x30 (sentinel==tree
-// header), object id at +0x74, dispatch interface at +0x204, virtual slot 120.
+// Retail 0x0023A1D0, 116 bytes.
+// The method scans the containment list, searches the dispatch tree, and calls
+// virtual slot 120 when the object ID has no tree entry.
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 struct BfmeDispatchInterface
 {
@@ -70,14 +72,22 @@ void BfmeMissingObjectDispatch::dispatchMissing(void *first, void *second)
             }
         }
 
-        if (found != (BfmeDispatchTreeNode *)tree && key < found->key)
-        {
-            found = (BfmeDispatchTreeNode *)tree;
-        }
+        _ReadWriteBarrier();
 
-        BfmeDispatchInterface *dispatch = object->dispatch;
-        if (found == (BfmeDispatchTreeNode *)*(BfmeDispatchTree *volatile *)((char *)this + 0x30) && dispatch != 0)
+        if (found == (BfmeDispatchTreeNode *)tree)
+            goto reset;
+        if (key >= found->key)
+            goto dispatch;
+reset:
+        found = (BfmeDispatchTreeNode *)tree;
+dispatch:
+
+        if (found == (BfmeDispatchTreeNode *)*(BfmeDispatchTree *volatile *)((char *)this + 0x30))
         {
+            BfmeDispatchInterface *dispatch = object->dispatch;
+            if (dispatch == 0)
+                continue;
+
             void **vtable = *(void ***)dispatch;
             BfmeDispatchMethod method = *(BfmeDispatchMethod *)&vtable[120];
             (dispatch->*method)(first, second);
