@@ -250,3 +250,21 @@ already have source witnesses and their bodies overlap the earlier handoff
 rows.  Future work should replace only an identity-proven body, using the
 existing scalar declarations and the ordinary project flags; do not move or
 rename the VA/RVA pins.
+
+## Family 39: UnicodeString empty-string global
+
+Family 39 is the remaining eligible top-40 cluster after the render-heavy
+groups: 33 bodies / 45,891 bytes share the canonical
+`UnicodeString::TheEmptyString` object at VA `0x01336E54`.  Secondary
+witnesses include the existing GadgetTextEntry, MapCache, GameSpyInfo, and
+wide-string translation contracts.  This is another shared string-global
+surface, not one common owner layout.
+
+Use `reference/shims/stringbaseunicode/Common/UnicodeString.h` and the
+existing GameSpy/GUI declarations, preserving the by-value string ABI and
+temporary cleanup.  The normal flags are `/DNDEBUG /MD /EHsc`; use
+`tools/callees.py` and named caller/vtable evidence before claiming a real
+method or adding a pin.  All 33 members have verdicts, including the newly
+recorded blocked `0x006AF840`; the 22 rows not already handed off under
+families 16, 17, 24, 28, or 29 are tagged `fam39`.  Families 36-38 and 40
+remain skipped because their shared feature sets are DX8/render-owned.
