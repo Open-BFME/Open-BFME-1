@@ -212,3 +212,58 @@ remaining BFME taint/pixel-shader expansion and state-cache/EH ladder are not
 represented by the current source. The existing `reverse/unlocked.txt` row
 `0x007c7fd0 w3d-render` establishes the shared DX8 family only; no new unlock
 row, pin, or guessed class/member name is justified.
+
+## 0x00934940 - expanded Render2D-shaped renderer
+
+Status: banked partial; identity remains unresolved and no clean-C++ body was
+byte-exact. The preferred function-sized candidate is
+`reverse/attempts/0x00934940.cpp`, compiled in the current
+`render2d.cpp` TU context. The anonymous ledger row remains
+`?d_00934940@@YAXXZ`; `Render2DClass::Render` is already caller/vtable-proven
+at `0x00933E50`, so reusing that semantic name or adding a pin would be an
+unsupported identity claim.
+
+### Callee table
+
+| Retail target | Count | Proven identity | Evidence |
+| --- | ---: | --- | --- |
+| `0x00904 (DX8Wrapper)` family | 1 each except where noted | `Set_Viewport`, `Set_Index_Buffer`, `Apply_Render_State_Changes`, `Draw_Triangles` | `tools/callees.py 0x00934940 8277` |
+| `0x00905AC0` | 9 | `BoxSetTexture` | repeated batch texture binding |
+| `0x00906FE0` | 26 | `Get_DX8_Texture_Stage_State_Value_Name` | expanded texture-state snapshot |
+| `0x00907BE0` | 13 | `Get_DX8_Render_State_Value_Name` | expanded render-state snapshot |
+| `0x0091D350`, `0x0091D410`, `0x0091D4E0`, `0x0091D950` | 1 each | `DynamicIBAccessClass` ctor/dtor and `WriteLock` | index-buffer upload |
+| `0x0091D9E0`, `0x0091F160`, `0x0091F240`, `0x0091F730` | 1 each | `BoxDynamicVBAccessClass` ctor/dtor and `WriteLock` | vertex-buffer upload |
+| `0x009212C0` | 1 | `VertexMaterialClass::Get_Preset` | material setup |
+| `0x00934820` | 1 | `Render2DClass::Reset` | renderer reset path |
+| `0x009DB890`, `0x009DB7A0` | 37 / 40 | `StringClass::Get_String` / `Free_String` | snapshot temporary strings |
+| `0x009EB7A0` | 5 | `TextureClass::Release_Ref` | texture lifetime cleanup |
+| `0x0000AE5C`, `0x00029924`, `0x00904510` | 1, 3, 1 | address-derived helpers | target contract is known; semantic names are not |
+
+### Layout
+
+- Retail opens with an MSVC EH frame, reserves `0x120` bytes, saves `this` in
+  EDI, and guards on `[this+0x1c]`; an empty collection returns its count.
+- The renderer owns a `DynamicIBAccessClass` at approximately `this+0x2c`.
+  The later batch collection starts at `this+0x38` and advances in `0x74`-byte
+  elements. Vertex and index writes use the paired dynamic-buffer access and
+  write-lock lifetimes.
+- The expanded state path snapshots DX8 texture/render state through the
+  string-name helpers, uses the DX8 transform globals around
+  `0x013410CC..0x01341104`, and calls `BoxSetTexture` nine times.
+- `d_0079dee0` calls this address at `+0x187` through an object obtained from a
+  display vtable slot. That supports a renderer interpretation but does not
+  prove the owning class or a safe pin.
+
+### Levers tried
+
+The current BFME `render2d.cpp` `Render2DClass::Render` candidate compiled to
+3,743 bytes versus 8,277 retail, with 2,548 non-relocation differences and
+1,195 masked-equal bytes, for the recorded score `0.1444`; the first
+divergence is `+0` because retail starts with `push -1`, the MSVC EH frame,
+and `sub esp,0x120`. The Zero Hour `render2d.cpp` candidate was also 3,743
+bytes with 2,553 non-relocation differences. Enabling
+`MESH_RENDER_SNAPSHOT_ENABLED` made no shape change. The mechanical EH search
+attempted all 128 generated combinations; its `throw()` variants failed
+syntax compilation and none beat the baseline. No semantic source owner,
+pin, or new unlock row is justified. The existing `reverse/unlocked.txt`
+entry `0x00934940 w3d-render` predates this attempt and was not changed.

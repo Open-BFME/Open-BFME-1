@@ -23,4 +23,13 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
   lever record is in `docs/whales.md`.
 - Commit/push: pending for this checkpoint; no ledger row or unlock row was
   changed by this body.
-- Next: pull/rebase/push this verdict, then inspect and work `0x00934940`.
+- `0x00934940`: the expanded Render2D-shaped renderer was banked as a partial.
+  Current and Zero Hour `render2d.cpp` candidates were both 3,743 bytes versus
+  8,277 retail; the best had 2,548 non-relocation differences and 1,195
+  masked-equal bytes (score 0.1444). A 128-combination mechanical EH search
+  produced only invalid syntax variants or no improvement. The existing
+  `Render2DClass::Render` identity at `0x00933E50` and the anonymous target's
+  unresolved owner make a rename or pin unsafe.
+- Commit/push: pending for this checkpoint; bodies added to
+  `reverse/unlocked.txt`: none.
+- Next: pull/rebase/push this verdict, then inspect and work `0x007DD180`.
