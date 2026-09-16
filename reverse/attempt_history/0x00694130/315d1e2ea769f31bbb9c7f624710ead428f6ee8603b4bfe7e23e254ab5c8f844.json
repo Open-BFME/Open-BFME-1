@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "315d1e2ea769f31bbb9c7f624710ead428f6ee8603b4bfe7e23e254ab5c8f844",
+  "symbol": "?d_00694130@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.64,
+  "source": "// ?d_00694130@@YAXXZ\n// partial score=0.64 date=2026-09-16\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline\n\n#include \"StringInline.h\"\n\nstruct Rva00694130AudioEventInfo\n{\n\tunsigned char m_pad00[0x84];\n\tunsigned int m_soundType;\n};\n\nclass AudioEventRTS\n{\npublic:\n\tAsciiString getFilenameForPlayPortion();\n\n\tvoid *m_vtable;\n\tAsciiString m_filenameToLoad;\n\tRva00694130AudioEventInfo *m_eventInfo;\n};\n\nclass Rva00694130Handle\n{\npublic:\n\tRva00694130Handle();\n\t~Rva00694130Handle();\n\tvoid *m_target;\n};\n\nclass Rva00694130Owner\n{\npublic:\n\tRva00694130Handle build(AudioEventRTS **event, int value);\n\tRva00694130Handle dispatch(AsciiString filename, int value);\n};\n\n#pragma comment(linker, \"/alternatename:??0Rva00694130Handle@@QAE@XZ=?j_0002833f@@YAXXZ\")\n#pragma comment(linker, \"/alternatename:??1Rva00694130Handle@@QAE@XZ=?j_000298e8@@YAXXZ\")\n#pragma comment(linker, \"/alternatename:?dispatch@Rva00694130Owner@@QAE?AVRva00694130Handle@@VAsciiString@@H@Z=?j_0003214b@@YAXXZ\")\n\nRva00694130Handle Rva00694130Owner::build(AudioEventRTS **event, int value)\n{\n\tAudioEventRTS *audioEvent = *event;\n\tif (audioEvent == 0)\n\t{\n\t\treturn Rva00694130Handle();\n\t}\n\n\tif (audioEvent->m_eventInfo == 0)\n\t{\n\t\treturn Rva00694130Handle();\n\t}\n\n\tif (audioEvent->m_eventInfo->m_soundType != 2)\n\t{\n\t\treturn Rva00694130Handle();\n\t}\n\n\tAsciiString filename = audioEvent->getFilenameForPlayPortion();\n\treturn dispatch(filename, value);\n}\n"
+}

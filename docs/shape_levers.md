@@ -741,3 +741,21 @@ the fallback virtual dispatch to `+4`. Restore the full witnessed ABI before
 working on frame layout. The 2026-09-16 bank at `0x00838CE0` demonstrates this
 correction but is **not matched**: it remains 704/704 bytes with 63 differing
 stack-layout bytes. Its compiler frame is `0x24`, retail's is `0x1c`.
+
+
+Renderer view/projection handoff `0x0078C440` is another native-header case.
+Its retail x87 schedule uses `Matrix4::Transpose()` temporaries, not scalar
+matrix assignment. The existing `DX8Wrapper::Set_Transform` inline restores
+the `0x80` frame and the exact prefix through `+0x18c`. The independently
+reprobed 2026-09-16 bank remains **unmatched**, at 628 versus 627 bytes with
+92 differing non-relocation bytes in projection stores and the tail. Adding
+an explicit extra matrix copy expands the frame to `0xc0`; it is not a fix.
+
+For the audio helper at `0x00694130`, caller pushes alone initially suggested
+an explicit output-pointer argument. Following the returned EAX and the
+caller's EH cleanup proves a nontrivial four-byte handle return: the cleanup
+uses ILT `0x000298e8`. Modeling that return restores the retail prefix, but
+`return dispatch(filename, value)` still materializes an extra temporary.
+The measured bank is **unmatched**, 219 versus 203 bytes with 73 differing
+non-relocation bytes. An explicit local-output spelling grew to 261 bytes.
+Prove the hidden return and destructor ABI before tuning return lifetimes.
