@@ -795,3 +795,17 @@ incorrect construction lifetime or a `throw()` annotation. The legacy helper
 name itself still requires separate correction; do not reuse it as constructor
 evidence. The compiler's extra trailing `int3` is accepted as padding by the
 ordinary scoped gate and is not added to claimed coverage.
+
+
+When a native STLport vector assignment gains an inline cleanup path, compare
+the donor TU's exception configuration before inventing element destructors.
+For `0x00136C10` (258 bytes; element stride `0xEC`), plain POD and special-member
+variants initially emitted 296 bytes. The verified donor at `0x003B6A40` uses
+`/O2 /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS`; adopting that configuration
+with an address-derived raw-copy element reproduced the retail instruction
+shape. Four helper dependencies were established from both aligned calls and
+independent bodies, then pinned to their actual body addresses. The assignment
+passes five cdecl arguments to the generic copy helper, although that optimized
+helper reads only the first three; a legacy three-argument declaration alone
+does not describe the caller. Likewise, the uninitialized-copy fourth argument
+is unused here, so its legacy “counter” spelling is not semantic evidence.
