@@ -3,7 +3,82 @@ class BfmePrimaryFV
 public:
 	void bfmeResetFV(void);
 	void bfmeAdvanceFV(int delta);
+
+	char m_pad00[4];
+	struct BfmeCurveSet *m_curves;
+	char m_pad08[0x1c];
+	struct Shadow *m_shadow;
 };
+
+class U4Curve006095D0
+{
+public:
+	float evaluate(int t) const;
+};
+
+struct BfmeCurveSet
+{
+	char m_pad00[0x10];
+	U4Curve006095D0 m_curve10;
+	char m_pad14[0x2b];
+	U4Curve006095D0 m_curve3c;
+	char m_pad40[0x2b];
+	U4Curve006095D0 m_curve68;
+};
+
+struct ShadowValue1704
+{
+	char m_pad00[0x20];
+	float m_value20;
+	char m_pad24[0x34];
+	float m_value58;
+	float m_value5c;
+};
+
+struct Shadow
+{
+	char m_pad00[0x58];
+	ShadowValue1704 *m_value58;
+	ShadowValue1704 *m_value5c;
+	void setOpacity(int value);
+};
+
+extern float g_bfmeUint32Scale;
+extern volatile float g_01075954;
+extern float g_bfmeScaleB3;
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
+
+inline void saveSecondFV(volatile float *out, float value)
+{
+	*out = value;
+}
+
+void BfmePrimaryFV::bfmeAdvanceFV(volatile int delta)
+{
+	volatile float scaled_second;
+
+	if (m_shadow == 0)
+		return;
+
+	BfmeCurveSet *curves = m_curves;
+	*(float *)&delta = (float)(unsigned int)delta;
+	int encoded = delta;
+	float first = curves->m_curve10.evaluate(encoded);
+	float doubled = first + first;
+	float second = curves->m_curve68.evaluate(encoded);
+	ShadowValue1704 *first_value = m_shadow->m_value58;
+	first_value->m_value5c = first_value->m_value58 = doubled;
+	ShadowValue1704 *second_value = m_shadow->m_value5c;
+	_ReadWriteBarrier();
+	second_value->m_value58 = (second *= g_01075954, doubled);
+	saveSecondFV(&scaled_second, second);
+	second_value->m_value5c = doubled;
+	int opacity = (int)(curves->m_curve3c.evaluate(encoded) * g_bfmeScaleB3);
+	m_shadow->setOpacity(opacity);
+	*(unsigned int *)&m_shadow->m_value58->m_value20 = *(unsigned int *)&scaled_second;
+	m_shadow->m_value5c->m_value20 = -scaled_second;
+}
 
 class BfmeLogicFV
 {
