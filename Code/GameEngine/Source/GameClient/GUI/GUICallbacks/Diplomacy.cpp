@@ -401,7 +401,6 @@ WindowMsgHandledType DiplomacyInput( GameWindow *window, UnsignedInt msg,
 }  // end DiplomacyInput
 
 //-------------------------------------------------------------------------------------------------
-// ?DiplomacySystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z present-unmatched
 WindowMsgHandledType DiplomacySystem( GameWindow *window, UnsignedInt msg, 
 																			 WindowMsgData mData1, WindowMsgData mData2 )
 {
