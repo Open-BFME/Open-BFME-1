@@ -1,59 +1,57 @@
-// ?bfmeSendQK@BfmeOwnerQK@@QAEXXZ (identity unknown)
-// partial score=0.95 date=2026-09-07
-// 58/58 bytes; 12 of 22 instructions differ, from two allocation/order choices:
-//   1. retail saves BOTH esi and edi before the switch; MSVC saves edi there
-//      and shrink-wraps esi into the tail, so every later displacement shifts.
-//   2. at the call retail does `mov ecx,edi` BEFORE `push esi`; MSVC pushes
-//      first and sets the receiver last.
-// Settled: the two-case subtract chain (`sub eax,0` / `je` / `dec` / `jne`)
-// comes straight from a `switch` with a `default: return;`, the sink null test
-// follows the switch, and the second call takes (item, make(item)) with the
-// make being a __stdcall taking the same item.
-// Tried: declaring both locals before the switch, and hoisting the make result
-// into its own local -- both make it worse (14 differing lines).
-void * __stdcall bfmeMakeQK(void *item);
+// ?rva001DF850@VictorySystem@@QAEXXZ
+// partial score=0.97 date=2026-09-16
+// cl: /O2 /Ob2 /G6
+// 58/58 bytes; 15 non-relocation bytes differ. Duplicating the current-player
+// assignment in both switch cases makes MSVC save ESI and EDI before the switch,
+// matching the retail prologue and branch layout. The residue is register
+// allocation (our grid/player are ESI/EDI, retail uses EDI/ESI), our player load
+// precedes the null branch, and our receiver load follows the final argument.
+// VictorySystem ownership is proven by its exact constructor layout and the
+// matched bfmeParametersForPlayer call; the method name remains address-derived.
+struct FactionVictoryParameters;
 
-class BfmeSinkQK
+class BfmeCellGrid
 {
 public:
-	void bfmeDoQK(void *item, void *made);
+	void rva001B1AD0(int playerIndex, FactionVictoryParameters *parameters);
 };
 
-class BfmeOwnerQK
+class VictorySystem
 {
 public:
-	void bfmeSendQK(void);
+	void rva001DF850(void);
+	FactionVictoryParameters *bfmeParametersForPlayer(int playerIndex);
 
-	unsigned char m_bfmeHeadQK[0xf8];
-	BfmeSinkQK *m_bfmeAQK;
-	BfmeSinkQK *m_bfmeBQK;
-	int m_bfmeSpareQK;
-	int m_bfmeModeQK;
-	void *m_bfmeItemQK;
+	unsigned char m_pad00[0xf8];
+	BfmeCellGrid *m_cellGrids[2];
+	int m_initialized;
+	int m_activeGrid;
+	int m_currentPlayer;
 };
 
-void BfmeOwnerQK::bfmeSendQK(void)
+void VictorySystem::rva001DF850(void)
 {
-	BfmeSinkQK *sink;
+	int playerIndex;
+	BfmeCellGrid *grid;
 
-	switch (m_bfmeModeQK)
+	switch (m_activeGrid)
 	{
 	case 0:
-		sink = m_bfmeAQK;
+		grid = m_cellGrids[0];
+		playerIndex = m_currentPlayer;
 		break;
 
 	case 1:
-		sink = m_bfmeBQK;
+		grid = m_cellGrids[1];
+		playerIndex = m_currentPlayer;
 		break;
 
 	default:
 		return;
 	}
 
-	if (sink == 0)
+	if (grid == 0)
 		return;
 
-	void *item = m_bfmeItemQK;
-
-	sink->bfmeDoQK(item, bfmeMakeQK(item));
+	grid->rva001B1AD0(playerIndex, bfmeParametersForPlayer(playerIndex));
 }
