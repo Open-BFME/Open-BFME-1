@@ -4778,10 +4778,12 @@ void Player::setAttackedBy( Int playerNdx )
 //-------------------------------------------------------------------------------------------------
 /** getAttackedBy */
 //-------------------------------------------------------------------------------------------------
-// ?getAttackedBy@Player@@QBE_NH@Z present-unmatched
 Bool Player::getAttackedBy( Int playerNdx ) const
 {
-	return m_attackedBy[playerNdx];
+	// BFME stores this tail array at +0x29f; the older declaration's member
+	// offset is from the Zero Hour layout and is not valid for this binary.
+	return reinterpret_cast<const Bool *>(
+		reinterpret_cast<const char *>(this) + 0x29f)[playerNdx];
 }
 
 // ------------------------------------------------------------------------------------------------
