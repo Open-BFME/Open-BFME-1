@@ -1,7 +1,18 @@
 // ?linePassableCallback@LinePassableStruct@@QAEHPAVPathfindCell@@0HH@Z
-// partial score=0.94 date=2026-09-04
-// ?linePassableCallback@LinePassableStruct@@QAEHPAVPathfindCell@@0HH@Z
 // cl: /DNDEBUG /MD
+// Open-BFME: retail 0x003E5950. The callback answers whether the line of
+// sight may pass from one pathfind cell to the next.
+//
+// Retail keeps two copies of the twelve-byte 'return 1' epilogue, and the
+// third return-one site jumps back into the first copy. MSVC 7.1 cross-jumps
+// identical tails into one. Two DIFFERENT barrier intrinsics, one per copy,
+// keep both, and a third site takes the same intrinsic as the copy retail
+// merges it into. Neither intrinsic emits an instruction or a relocation.
+
+extern "C" void _WriteBarrier(void);
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_WriteBarrier)
+#pragma intrinsic(_ReadWriteBarrier)
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -55,11 +66,11 @@ struct Rva003D4F90Struct
 class Pathfinder
 {
 public:
-	Bool checkForMovementFrom( const Object *obj, TCheckMovementInfo *info,
-		Rva003E0930Struct *query );
-	Bool checkForMovement( const Object *obj, TCheckMovementInfo *info );
-	Bool validMovementPosition( const Rva003D4F90Struct *parms,
-		const PathfindCell *cell );
+	// Address-derived names already pinned in reverse/symbols.csv at the
+	// incremental-link thunks 0x00024299, 0x0004A980 and 0x0002B9E0.
+	Bool bfmeStepE0930( Object *obj, ICoord2D *info, ICoord2D *query );
+	Bool bfmeStepE05B0( Object *obj, ICoord2D *info );
+	Bool bfmeStepD4F90( void *parms, PathfindCell *cell );
 };
 
 class LinePassableStruct
@@ -69,7 +80,7 @@ public:
 		Int to_x, Int to_y );
 
 	Pathfinder			*m_pathfinder;
-	const Object		*m_obj;
+	Object				*m_obj;
 	TCheckMovementInfo	m_info;
 	Int					m_allyFixedCount;
 	Rva003D4F90Struct	m_valid;
@@ -84,19 +95,19 @@ Int LinePassableStruct::linePassableCallback( PathfindCell *from, PathfindCell *
 	m_info.layer = to->getLayer();
 
 	if (from) {
-		if (!m_pathfinder->checkForMovementFrom( m_obj, &m_info, &m_query )) {
+		if (!m_pathfinder->bfmeStepE0930( m_obj, &m_info.cell, &m_query.cell )) {
+			_WriteBarrier();
 			return 1;
 		}
 	} else {
-		if (m_pathfinder->checkForMovement( m_obj, &m_info ))
-			goto movement_checked;
-		else
+		if (!m_pathfinder->bfmeStepE05B0( m_obj, &m_info.cell )) {
+			_ReadWriteBarrier();
 			return 1;
+		}
 	}
 
-movement_checked:
-
 	if (m_allyFixedCount) {
+		_WriteBarrier();
 		return 1;
 	}
 
@@ -111,5 +122,5 @@ movement_checked:
 		}
 	}
 
-	return !m_pathfinder->validMovementPosition( &m_valid, to );
+	return !m_pathfinder->bfmeStepD4F90( &m_valid, to );
 }
