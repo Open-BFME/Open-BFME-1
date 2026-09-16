@@ -132,19 +132,16 @@ struct Rva00923880Owner
 	void releaseStacks(void);
 };
 
-WWINLINE void bfme_render_info_construct(RenderInfoClass *, CameraClass *);
-
 // The target RenderInfoClass footprint is 0x1b8 bytes; its local base is at
 // EBP-0x1d4 because the function keeps separate stack temporaries below the
 // reserved area.  The observed leading members retain their source names.
 class RenderInfoClass
 {
 public:
-	RenderInfoClass(CameraClass *cam) { bfme_render_info_construct(this, cam); }
+	RenderInfoClass(CameraClass &cam);
 	~RenderInfoClass(void) { reinterpret_cast<Rva00923880Owner *>(this)->releaseStacks(); }
-	// The BFME field is a pointer-sized camera slot.  Keeping it as a pointer
-	// lets the local ctor adapter target the existing retail body without a
-	// compiler-generated reference initialization sequence.
+	// The BFME field is a pointer-sized camera slot.  The constructor itself
+	// lives in RenderInfoClassConstructorBfme.cpp at retail 0x00923690.
 	CameraClass *Camera;
 	float fog_scale;
 	float fog_start;
@@ -156,27 +153,6 @@ public:
 	void *Texture_Projector;
 	unsigned char m_unreconstructed_24[0x1b8 - 0x24];
 };
-
-// Existing retail ctor body at 0x00923690.  Its generated row is still
-// address-derived, but the body itself is the witnessed RenderInfo
-// initialization: ECX is this and the camera pointer is [ESP+4].
-extern void d_00923690(void);
-struct Rva00923690Call
-{
-	void invoke(CameraClass *);
-};
-
-// Existing matched owner of the retail 0x00923880 release body.  RenderInfo's
-// BFME footprint contains the two ref-counted stacks drained by this method;
-// use its proven symbol rather than inventing a second destructor pin.
-
-WWINLINE void bfme_render_info_construct(RenderInfoClass *self, CameraClass *cam)
-{
-	typedef void (Rva00923690Call::*Function)(CameraClass *);
-	union { void (*raw)(void); Function member; } fn;
-	fn.raw = d_00923690;
-	(reinterpret_cast<Rva00923690Call *>(self)->*fn.member)(cam);
-}
 
 // BFME keeps this renderer behind a pointer.  The camera member is at +4.
 class DX8MeshRendererClass
@@ -328,7 +304,7 @@ bool WW3D::Render(SceneClass *scene, CameraClass *cam,
 	WWASSERT(cam);
 
 	cam->On_Frame_Update();
-	RenderInfoClass rinfo(cam);
+	RenderInfoClass rinfo(*cam);
 	cam->Apply();
 
 	if (clear || clearz) {
