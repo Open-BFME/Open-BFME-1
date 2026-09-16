@@ -1,7 +1,4 @@
 // ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z
-// partial score=0.95 date=2026-09-14
-// cl: /DNDEBUG /MD /EHsc
-// ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z
 
 typedef int Int;
 
@@ -41,9 +38,9 @@ private:
 class BfmeEntryVector
 {
 public:
-	void **begin( void ) { return m_bfmeBegin; }
-	void **end( void ) { return m_bfmeEnd; }
-	unsigned size( void ) { return (unsigned)(m_bfmeEnd - m_bfmeBegin); }
+	void **begin( void ) const { return m_bfmeBegin; }
+	void **end( void ) const { return m_bfmeEnd; }
+	unsigned size( void ) const { return (unsigned)(m_bfmeEnd - m_bfmeBegin); }
 
 private:
 	void **m_bfmeBegin;
@@ -54,8 +51,7 @@ class BfmeAllowanceGroup
 {
 public:
 	char m_bfmeHead[0x14];
-	void **m_bfmeBegin;
-	void **m_bfmeEnd;
+	BfmeEntryVector m_bfmeEntries;
 };
 
 class BfmeSpecialPowerAllowanceStore
@@ -66,7 +62,6 @@ private:
 	BfmeGroupVector m_bfmeGroups;
 };
 
-// ?bfmeIndexOf@BfmeSpecialPowerAllowanceStore@@AAEHPBVSpecialPowerTemplate@@@Z present-unmatched
 Int BfmeSpecialPowerAllowanceStore::bfmeIndexOf( const SpecialPowerTemplate *tmpl )
 {
 	unsigned outer = m_bfmeGroups.size();
@@ -78,13 +73,12 @@ Int BfmeSpecialPowerAllowanceStore::bfmeIndexOf( const SpecialPowerTemplate *tmp
 	while (i < outer)
 	{
 		const BfmeAllowanceGroup *group = *current;
-		void **innerEnd = group->m_bfmeEnd;
-		void **innerBegin = group->m_bfmeBegin;
-		Int inner = (Int)(innerEnd - innerBegin);
+		Int inner = group->m_bfmeEntries.size();
 		Int j = 0;
 		const SpecialPowerTemplate *next;
 		if ((unsigned)inner <= 0)
 			goto nextGroup;
+		void **innerBegin = group->m_bfmeEntries.begin();
 		next = (const SpecialPowerTemplate *)tmpl->m_bfmeNextOverride;
 
 		do
@@ -108,7 +102,7 @@ Int BfmeSpecialPowerAllowanceStore::bfmeIndexOf( const SpecialPowerTemplate *tmp
 				return (Int)i;
 
 			++j;
-			inner = (Int)(group->m_bfmeEnd - group->m_bfmeBegin);
+			inner = group->m_bfmeEntries.size();
 		}
 		while ((unsigned)j < (unsigned)inner);
 
