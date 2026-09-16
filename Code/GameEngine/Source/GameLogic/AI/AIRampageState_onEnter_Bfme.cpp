@@ -1,6 +1,5 @@
-// ?onEnter@AIRampageState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.965 date=2026-09-16
 // cl: /DNDEBUG /MD /EHsc
+//
 // BFME reconstruction of AIRampageState::onEnter at retail 0x0017EA20.
 
 typedef bool Bool;
@@ -24,6 +23,8 @@ class Object;
 
 extern "C" void *memset(void *destination, int value, unsigned int count);
 #pragma intrinsic(memset)
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 template <int NUMBITS>
 class BitFlags
@@ -223,9 +224,12 @@ StateReturnType AIRampageState::onEnter()
 		return STATE_CONTINUE;
 	}
 
-	UnsignedInt when = TheBfmeGameLogic->getFrame();
+	GameLogic *logic = TheBfmeGameLogic;
+	_ReadWriteBarrier();
 	if (duration)
-		when += period;
-	m_field2c = when;
+		duration = logic->getFrame() + period;
+	else
+		duration = logic->getFrame();
+	m_field2c = duration;
 	return STATE_CONTINUE;
 }
