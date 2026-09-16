@@ -88252,3 +88252,7 @@ _g_Rva013373C4DialogGeneration,0x013373C4,counter bumped by the 0x0088E1A0 dialo
 _g_Rva012D4FD0AssertCrashTemplate,0x012D4FD0,DLGTEMPLATEEX titled Assert/Crash passed to DialogBoxIndirectParamA by 0x0088E1A0
 ?bfmeUpdate1888B0@AIFollowWaypointPathState@@QAE?AW4StateReturnType@@XZ,0x00047EEC,base class update entry the AIAttackFollowWaypointPathState update at 0x00188CD0 tail jumps to; the ILT reaches 0x001888B0 not the 0x001888D9 row of the same method
 ?computeGoal@AIFollowWaypointPathState@@QAEX_N@Z,0x00019DC1,waypoint goal recompute called with the group flag at state+0x69 from the AIAttackFollowWaypointPathState update at 0x00188CD0
+?Lock@Rva0090C710SurfaceLockView@@QAEPAXPAHHHHH@Z,0x0090C710,address-derived ABI view for the canonical SurfaceClass rectangle Lock overload used by W3DShroud::render
+?Unlock@Rva0090C710SurfaceLockView@@QAEXXZ,0x0090C7D0,address-derived ABI view for the canonical SurfaceClass Unlock used by W3DShroud::render
+?interpolateFogLevels@W3DShroud@@IAEXPAUtagRECT@@@Z,0x0001494D,W3DShroud render helper call preserves the existing ILT thunk at 0x0001494D
+?fillBorderShroudData@W3DShroud@@IAEXEPAVSurfaceClass@@@Z,0x00045C46,W3DShroud render helper call preserves the existing ILT thunk at 0x00045C46 to the matched BFME fill body
