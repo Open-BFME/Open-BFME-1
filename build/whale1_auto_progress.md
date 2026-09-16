@@ -89,3 +89,16 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
 - Next: inspect the ranked queue after this blocked recheck; the next eligible
   large dump is `0x00084510` (4,499 B) unless a larger non-WHALE-2 open body is
   exposed by the refreshed ranking.
+
+## Checkpoint - 2026-09-16 (GlobalData extent correction)
+
+- `0x00084510`: full-range callee extraction corrected the served 4,499-byte
+  estimate to the 4,621-byte retail extent. The existing constructor bank is
+  2,804 B versus 4,621 B (score 0.2), with 2,331 non-relocation differences and
+  20 relocation-layout drifts. Explicit vtable-store, virtual-destructor, and
+  `+0x9C` array-element candidates were compiled; none improved the bank. The
+  new blocked verdict records the 14-target contract, the `0x10138` frame, and
+  the unresolved first member-init wall.
+- Bodies added to `reverse/unlocked.txt`: none.
+- Next: refresh `python3 tools/next_work.py --ranked` and take the next open
+  dump over 4 KB not listed by WHALE-2, with exact boundary evidence.

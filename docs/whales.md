@@ -476,3 +476,60 @@ texture-setter visibility, register/local layout, x87 scheduling, and
 `ALLOW_TEMPORARIES`/`G7`/`/O1` variants. No unresolved callee was independently
 safe to pin, and no shared layout proof for a smaller neighbour was gained;
 `reverse/unlocked.txt` is unchanged.
+
+## 0x00084510 - GlobalData::GlobalData
+
+Status: blocked after a source-backed constructor recheck. The ranked queue
+reported 4,499 bytes, but retail disassembly proves the complete constructor
+extent is 4,621 bytes through the `ret` at `+0x120C`; the generated body was
+not edited. The preferred structural bank remains
+`reverse/attempts/0x00084510.cpp`.
+
+### Callee table
+
+| Retail target | Count | Proven identity | Evidence |
+| --- | ---: | --- | --- |
+| `0x009A1A30` | 1 | `SubsystemInterface::SubsystemInterface` | base constructor at `+0x29` |
+| `0x009F6C60` | 1 | `__chkstk` | retail reserves `0x10138` bytes |
+| `0x00887940` | 26 | `BFMERetailAsciiString::releaseBuffer` | string cleanup path |
+| `0x00887C90` | 1 | `UnicodeString::set` | one trailing Unicode member assignment |
+| `0x00887D20` | 3 | `RetailLayoutString::set` | three literal-backed member assignments |
+| `0x009F6EE4` | 5 | EH vector-constructor iterator | four-element/18-element destructible arrays |
+| `0x00881F30` | 1 | `operator new` | constructor-local allocation path |
+| `0x0000A984`, `0x0000BA64`, `0x0001B76B`, `0x00020F45`, `0x0002F923`, `0x0003747A`, `0x0003F508` | 8 | existing address-derived ILT/thunk routes | full-range `tools/callees.py 0x00084510 4621` contract |
+| `0x01359000` import | 1 | `USER32!GetDoubleClickTime` | final double-click default |
+
+### Layout
+
+- `GlobalData_newOverride_Thunk.cpp` proves the object size is `0x1290` and
+  `m_next` is at `+0x128C`; the constructor inherits an 8-byte
+  `SubsystemInterface` prefix and installs GlobalData vtable `0x0107C68C`.
+- Retail uses the four-row vertex-water arrays at `+0xAC..+0x17C`, the
+  destructible string/array members at the witnessed offsets, the three
+  `Coord3D` members at `+0xA04`, and the later string/vector/Unicode members
+  through `+0x1288`. The 50 EH states cover the base and destructible members;
+  the no-state `+0xEE0` grid ctor is a proven nothrow class.
+- The constructor reserves a `0x10138`-byte compiler frame, saves `this` at
+  `[esp+0x20]`, calls the base ctor, stores the derived vtable, initializes
+  strings/arrays/scalars in retail order, performs the `GetDoubleClickTime`
+  tail, and exits through the full EH cleanup ladder. A long `0xEE0` to
+  `0xF59` NOP region is present in retail and is not evidence for a CRC/file
+  loop; no such behavior was invented.
+
+### Levers tried
+
+The best clean draft is 2,804 bytes versus the corrected 4,621-byte retail
+extent, with 25 relocations, 2,331 non-relocation differences, 20
+relocation-layout drifts, and author score `0.2`. It includes the empirical
+`0x10138` frame, the four-iteration vertex-water initializer, recovered
+destructible-member layout, and the full store set, but it diverges at the
+first member-initialization schedule (`[esp+0x10]` versus retail `[esp+0x20]`).
+
+The tested alternatives were a virtual-destructor declaration to force the
+derived vtable, an explicit witnessed `0x0107C68C` vtable store, and a
+distinct constructor-bearing type for the `+0x9C` four-element array. The
+explicit store produced 2,813 bytes and 2,395 non-relocation differences; the
+other two did not improve the useful shape. The prior bank also records the
+discarded CRC/file-loop theory, flat versus looped water initialization, and
+frame-first experiments. No exact body or safe pin was found, and no shared
+unlock proof was established; `reverse/unlocked.txt` is unchanged.
