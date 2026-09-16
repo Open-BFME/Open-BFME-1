@@ -67,7 +67,7 @@ declaration-order change; do not infer source order solely from scheduled loads.
 The recurring non-EH residues now have a bounded source-level front end:
 
 ```text
-python3 tools/shape_family_levers.py BODY.cpp --families sib,register,bool,test,copy > choices.json
+python3 tools/shape_family_levers.py BODY.cpp --families sib,register,bool,test,copy,store > choices.json
 python3 tools/shape_search.py BODY.cpp "MANGLED" 0xRVA --size N --choices choices.json
 ```
 
@@ -76,7 +76,9 @@ independent local definitions, `bool` tries the documented call-result
 `unsigned char` temporary before a negation, and `test` reverses operands in a
 simple bit-test condition. `copy` inserts a typed pointer alias before one
 following null guard or member load, probing whether the compiler should keep
-the copy in a separate register. Each edit is a hypothesis and `shape_search`
+the copy in a separate register. `store` swaps adjacent independent simple
+field stores, probing retail store scheduling without reordering a dependency.
+Each edit is a hypothesis and `shape_search`
 rejects assembly injection. The five hard-lane SIB bodies
 (`0x0078D410`, `0x0078FDE0`, `0x0078FF40`, `0x007901F0`, and `0x005A0450`)
 were re-probed with their first-divergence offsets; the compiler kept the

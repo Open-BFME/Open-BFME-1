@@ -9,7 +9,8 @@ acceptance check.  ``choices_for(text)`` returns the JSON shape consumed by
 * ``register`` swaps adjacent, independent local definitions;
 * ``bool`` materialises a call result before negating it;
 * ``test`` reverses the operands of a simple bit-test condition;
-* ``copy`` keeps a pointer alias live through its next guard or member load.
+* ``copy`` keeps a pointer alias live through its next guard or member load;
+* ``store`` swaps adjacent independent simple field stores.
 
 The first two are useful probes for the hard-lane SIB and register-order
 families.  A generated alternative is only a hypothesis: ``probe.py`` and the
@@ -21,7 +22,7 @@ or an assembly fallback.
 Usage::
 
     python3 tools/shape_family_levers.py SOURCE.cpp \
-        --families sib,register,bool,test,copy > choices.json
+        --families sib,register,bool,test,copy,store > choices.json
     python3 tools/shape_search.py SOURCE.cpp "MANGLED" 0xRVA --size N \
         --choices choices.json
 """
@@ -118,6 +119,12 @@ _GUARD = re.compile(
     r"^(?P<indent>[ \t]*)if\s*\(\s*(?P<name>[A-Za-z_]\w*)"
     r"\s*(?P<comparison>!=\s*0)?\s*\)[ \t]*(?:\{)?[ \t]*$"
 )
+_STORE = re.compile(
+    r"^(?P<indent>[ \t]+)(?P<lhs>[A-Za-z_]\w*(?:(?:\s*(?:->|\.)\s*"
+    r"[A-Za-z_]\w*)|(?:\s*\[[^\]\r\n]+\]))*)\s*=\s*"
+    r"(?P<rhs>[^;]+);[ \t]*$"
+)
+_STORE_RHS = re.compile(r"^[A-Za-z0-9_ \t+*/%<>.&|^~\[\]()-]+$")
 
 
 def _in_function(lines, index):
@@ -346,7 +353,42 @@ def copy_choices(text, limit=8):
     return out
 
 
-def choices_for(text, families=("sib", "register", "bool", "test", "copy"), max_choices=12):
+def store_choices(text, limit=8):
+    """Return bounded swaps of adjacent independent scalar field stores."""
+    lines = text.splitlines(keepends=True)
+    out = []
+    occupied = []
+    for i in range(len(lines) - 1):
+        first, second = _STORE.match(lines[i]), _STORE.match(lines[i + 1])
+        if not first or not second or first.group("indent") != second.group("indent"):
+            continue
+        lhs1, lhs2 = first.group("lhs").strip(), second.group("lhs").strip()
+        rhs1, rhs2 = first.group("rhs").strip(), second.group("rhs").strip()
+        if lhs1 == lhs2 or not _STORE_RHS.fullmatch(rhs1) or not _STORE_RHS.fullmatch(rhs2):
+            continue
+        leaf1 = re.split(r"->|\.", lhs1)[-1]
+        leaf2 = re.split(r"->|\.", lhs2)[-1]
+        if re.search(r"\b" + re.escape(leaf1) + r"\b", rhs2):
+            continue
+        if re.search(r"\b" + re.escape(leaf2) + r"\b", rhs1):
+            continue
+        before = lines[i] + lines[i + 1]
+        if text.count(before) != 1:
+            continue
+        start = text.index(before)
+        end = start + len(before)
+        if any(start < old_end and end > old_start
+               for old_start, old_end in occupied):
+            continue
+        out.append({"before": before, "after": [lines[i + 1] + lines[i]],
+                    "lever": "store-order"})
+        occupied.append((start, end))
+        if len(out) >= limit:
+            break
+    return out
+
+
+def choices_for(text, families=("sib", "register", "bool", "test", "copy", "store"), max_choices=12):
     """Return choices in stable family order for ``shape_search.variants``."""
     out = []
     if "sib" in families:
@@ -359,13 +401,15 @@ def choices_for(text, families=("sib", "register", "bool", "test", "copy"), max_
         out.extend(test_choices(text, max_choices))
     if "copy" in families:
         out.extend(copy_choices(text, max_choices))
+    if "store" in families:
+        out.extend(store_choices(text, max_choices))
     return out
 
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("source", type=Path)
-    ap.add_argument("--families", default="sib,register,bool,test,copy")
+    ap.add_argument("--families", default="sib,register,bool,test,copy,store")
     ap.add_argument("--max-choices", type=int, default=12)
     args = ap.parse_args()
     if args.max_choices <= 0:

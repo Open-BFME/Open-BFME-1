@@ -69,6 +69,14 @@ void shadow(Node *source, const Node *other)
 }
 """
 
+STORE_SOURCE = """struct Pair { int first; int second; };
+void stores(Pair *pair, int a, int b)
+{
+    pair->first = a;
+    pair->second = b;
+}
+"""
+
 
 def test_sib_choice_reverses_only_a_unique_integer_addition():
     choices = shape_family_levers.choices_for(SOURCE, ("sib",))
@@ -114,6 +122,18 @@ def test_overlapping_adjacent_choices_are_suppressed():
 
 def test_copy_choice_skips_shadowed_pointer_names():
     assert shape_family_levers.choices_for(SHADOW_COPY_SOURCE, ("copy",)) == []
+
+
+def test_store_choice_swaps_independent_field_stores():
+    choices = shape_family_levers.choices_for(STORE_SOURCE, ("store",))
+    assert len(choices) == 1
+    assert choices[0]["lever"] == "store-order"
+    assert "pair->second = b;\n    pair->first = a;" in choices[0]["after"][0]
+
+
+def test_default_choices_include_store_order():
+    choices = shape_family_levers.choices_for(STORE_SOURCE)
+    assert any(choice["lever"] == "store-order" for choice in choices)
 
 
 def test_choices_are_accepted_by_shape_search_variants():
