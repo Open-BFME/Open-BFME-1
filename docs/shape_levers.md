@@ -883,3 +883,15 @@ This investigation also found two unused pins that confused VA with RVA:
 mentioning an ILT does not cause the resolver to subtract the image base.
 Decode the branch and inspect the target before diagnosing a missing pin;
 passing `HelpBoxText` to a helper does not prove a registration operation.
+
+### Incoming argument reuse in a vector append
+
+The 262-byte INI callback at `0x005CC4F0` uses its incoming `data` argument
+slot for the created factory result before STLport `push_back`. A separate
+local value left a 41-byte stack-displacement mismatch; retaining the owner
+pointer and assigning the result back to `data` reproduces the retail frame.
+Use the witnessed four-byte element and native vector operation, including
+the five-argument overflow helper at `0x005C6BF0` via ILT `0x00016AE5`.
+The canonical ASCII header also matches when the witnessed inline comparison
+is kept as a separate helper over the string's buffer layout. The factory
+list proves names at +4 and links at +0xC, not an original owner identity.
