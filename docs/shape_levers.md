@@ -285,3 +285,34 @@ ObjectID to a local before `list::push_back` recovered the body. Passing a
 reference to the Object's field instead changed the allocation/load schedule.
 See `Rva0025ED50ChargeTargets.cpp`; it uses actual three-slot BFME filter
 views and verified vtables, not hand-written vptr stores or dummy predicates.
+
+## Read the member again instead of caching it in a local
+
+Retail sometimes computes a sub-object address before it loads through that
+address. The 156-byte body at `0x00615FE0` reads a pointer member at +4 as
+`mov eax, [edi+8]`, `add eax, 4`, `mov eax, [eax]`. The obvious C++ spelling
+compiles to the shorter `mov eax, [ecx+4]` and shifts the rest of the body by
+two bytes. Five other spellings of the plain member load fold the same way:
+
+- a cast through `char *`
+- a cast through `unsigned int`
+- an array member that decays to a pointer
+- a second base class placed at offset 4
+- a pointer local holding `&obj->member`
+
+Caching the member in a local inside an inline accessor folds too. What splits
+the address off is reading the member several times through one accessor and
+letting VC7.1 common up the loads. This spelling reaches all 156 bytes:
+
+```cpp
+Overridable *getFinal() const
+{
+    if (m_override != 0 && m_override->m_nextOverride != 0)
+        return (Overridable *)m_override->m_nextOverride->getFinalOverride();
+    return m_override;
+}
+```
+
+The matched `LivingWorldRegionManager::rva003C8A50` at `0x003C8A50` shows the
+same shape from another angle. It passes `candidate->m_name` by const
+reference into an inline `compare` that reads `that.m_data` twice.
