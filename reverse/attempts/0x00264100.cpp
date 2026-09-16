@@ -1,5 +1,5 @@
 // ?doSpecialPower@PlayerUpgradeSpecialPower@@UAEXI@Z
-// partial score=0.95 date=2026-09-06
+// partial score=0.97 date=2026-09-16
 // ?doSpecialPower@PlayerUpgradeSpecialPower@@UAEXI@Z
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
@@ -21,6 +21,7 @@ class AsciiString
 public:
 	AsciiString(const AsciiString &);
 	~AsciiString();
+	void *m_data;
 };
 
 class UpgradeTemplate
@@ -129,7 +130,7 @@ void PlayerUpgradeSpecialPower::doSpecialPower(UnsignedInt)
 
 	startPowerRecharge();
 	_STL::vector<AsciiString> upgradeNames = primary(this)->m_moduleData->m_upgradeNames;
-	for (Int i = 0; i < (Int)(upgradeNames.end() - upgradeNames.begin()); ++i)
+	for (UnsignedInt i = 0; i < upgradeNames.size(); ++i)
 	{
 		upgrade =
 			TheUpgradeCenter->bfmeGet1095((Int)(unsigned int)(upgradeNames.begin() + i));
