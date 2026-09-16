@@ -236,6 +236,21 @@ def test_constant_choice_skips_multiline_unbraced_control():
     assert choices[0]["before"] == "    return false;\n"
 
 
+def test_frame_choice_skips_shadowed_scalar_name():
+    source = """int shadow_frame(int input)
+{
+    int value = input;
+    {
+        int value = input + 1;
+        return value;
+    }
+}
+"""
+    choices = shape_family_levers.choices_for(source, ("frame",))
+    assert len(choices) == 1
+    assert "shape_frame_value_4[1]" in choices[0]["after"][0]
+
+
 def test_choices_are_accepted_by_shape_search_variants():
     choices = shape_family_levers.choices_for(SOURCE)
     variants = list(shape_search.variants(SOURCE, choices))

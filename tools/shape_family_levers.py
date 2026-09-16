@@ -551,6 +551,8 @@ def frame_choices(text, limit=8):
             continue
         if any(re.search(r"(?:\.|->)\s*" + re.escape(name) + r"\b", item)
                or re.search(r"\b" + re.escape(name) + r"\s*\[", item)
+               or re.search(r"\b(?:int|unsigned int)\s+(?:[*&]\s*)?"
+                            + re.escape(name) + r"\b", item)
                or ("//" in item and re.search(r"\b" + re.escape(name) + r"\b", item))
                for item in body):
             continue
