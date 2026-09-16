@@ -52,6 +52,18 @@ Declaring the lower bound before the upper bound fixed all four, even though
 the optimized instruction stream loads the upper bound first. Test the small
 declaration-order change; do not infer source order solely from scheduled loads.
 
+## Search-loop failure tails
+
+At `0x007334B0` (161 bytes), embedding the state update inside the entry-search
+loop merged retail's separate not-found and invalid-entry returns. Extracting
+the search into a `__forceinline` pointer-returning member, then checking its
+result and the entry fields with separate early returns, matches all 161 bytes.
+An ordinary inline member was not inlined and produced a 120-byte caller;
+forcing this real search operation inline recovered the full body. The witness
+is `W3DTreeBufferRva007334B0.cpp`. No barrier, volatile access, or assembly is
+needed. This is a source-structure lever, not proof that every duplicated tail
+comes from a helper; verify each candidate independently.
+
 ## Constructor cleanup evidence
 
 Before changing constructor cleanup states, inspect the retail unwind map with
