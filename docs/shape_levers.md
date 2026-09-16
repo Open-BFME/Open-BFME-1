@@ -815,3 +815,15 @@ passes five cdecl arguments to the generic copy helper, although that optimized
 helper reads only the first three; a legacy three-argument declaration alone
 does not describe the caller. Likewise, the uninitialized-copy fourth argument
 is unused here, so its legacy “counter” spelling is not semantic evidence.
+
+
+For a four-byte mapped value, matching `map<AsciiString, float>` is a type
+hypothesis, not proof: a typedef does not hide `float` in the mangled name.
+At `0x006AF6D0`, float value-initialization reproduces immediate-zero stores
+missed by integer/aggregate variants. Independent support comes from caller
+`0x006B0850`: it transfers the value through Xfer slot `0x6C`, calls the map
+subscript through ILT `0xD9D1`, and stores that transferred value. The same
+slot handles the floating-point record in the matched `Rva006ABC60Xfer.cpp`.
+The hinted insertion at `0x006AB6D0` has a hidden iterator output pointer and
+`ret 0x0C`; its delegated insertion at `0x005C7490` allocates `0x18` bytes.
+Do not infer a direct scalar return or a 20-byte node from the caller alone.
