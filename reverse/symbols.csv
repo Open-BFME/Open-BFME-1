@@ -88278,3 +88278,6 @@ _g_Rva012D4FD0AssertCrashTemplate,0x012D4FD0,DLGTEMPLATEEX titled Assert/Crash p
 ?insertUnique@Rva0006AA90Vector@@QAEPAURva0006AA90InsertResult@@PCU2@ABURva0006AA90Element@@@Z,0x00030053,ILT thunk at 0x00030053 routes Rva0006AB10Curve::set to the matched sorted-vector insert body at 0x0006AA90
 ?getSourcePortAllocationDelta@FirewallHelperClass@@QAEFXZ,0x00034743,route=0x0066E850; AptOptions::RefreshNat at 0x00560030 reaches the FirewallHelperClass source port delta accessor through this thunk
 ?makeHandle@Rva005FB4D0Owner@@QAE?AVBfmeHandleERU@@XZ,0x005FB4D0,Native 12-byte handle return with hidden sret and RET4 independently reproduces all 75 bytes without volatile; constructor 0x005FFBB0 calls via 0x000438F6 and destroys returned handle at 0x001DA440; no calls or throwing operations in helper
+?bfmeSetCheckBoxChecked@@YAXPAVGameWindow@@E@Z,0x0002E875,one-byte parameter spelling of the checkbox setter body at 0x004B31D0; AptOptions::Cancel at 0x0055DCB0 hands it the preference byte with no bool conversion
+?getTerrainLighting@OptionPreferences@@QAEEXZ,0x0002A14E,route=0x00090EA0; AptOptions::Cancel at 0x0055DCB0 reaches the getter through this thunk
+?getShowProps@OptionPreferences@@QAEEXZ,0x0000BF78,route=0x00090FB0; AptOptions::Cancel at 0x0055DCB0 reaches the getter through this thunk
