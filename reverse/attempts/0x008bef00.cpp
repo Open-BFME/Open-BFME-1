@@ -1,49 +1,65 @@
 // ?bfmeDispatchDescriptor1288@BfmeSubmitter1283@@QAEXPAUBfmeDescriptor1288@@PAUBfmeContext1288@@@Z
-// partial score=0.82 date=2026-08-30
-struct BfmeStringData1288
+// partial score=0.97 date=2026-09-16
+// ?bfmeDispatchDescriptor1288@BfmeSubmitter1283@@QAEXPAUBfmeDescriptor1288@@PAUBfmeContext1288@@@Z
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+
+struct BfmeStringData3AF0
 {
 	unsigned short m_refCount;
 };
 
-struct BfmeStringPool1288
+struct BfmeStringPool3AF0
 {
 	void *m_unused;
 	void (__cdecl *free)(void *storage);
 };
 
-extern BfmeStringPool1288 *g_bfmeStringPool1284;
-extern BfmeStringData1288 g_bfmeDefaultString1284;
+extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
+extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 
-class BfmeString1288
+class BfmeStrVKI
 {
 public:
-	BfmeString1288(int value);
-
-	BfmeString1288()
+	BfmeStrVKI(const char *value)
 	{
-		m_data = &g_bfmeDefaultString1284;
-		++m_data->m_refCount;
+		bfmeSetVKI(value);
 	}
 
-	~BfmeString1288()
+	void __declspec(nothrow) bfmeSetVKI(const char *value);
+
+	BfmeStrVKI(const BfmeStrVKI &other)
 	{
-		BfmeStringData1288 *data = m_data;
+		BfmeStringData3AF0 *data = other.m_data;
+		m_data = data;
+		++data->m_refCount;
+	}
+
+	BfmeStrVKI()
+	{
+		++g_bfmeDefaultString1284.m_refCount;
+		m_data = &g_bfmeDefaultString1284;
+	}
+
+	~BfmeStrVKI()
+	{
+		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
 			g_bfmeStringPool1284->free(data);
 	}
 
-	BfmeString1288 &operator=(const BfmeString1288 &other)
+	BfmeStrVKI &operator=(const BfmeStrVKI &other)
 	{
 		++other.m_data->m_refCount;
-		BfmeStringData1288 *data = m_data;
+		BfmeStringData3AF0 *data = m_data;
 		if (--data->m_refCount == 0)
 			g_bfmeStringPool1284->free(data);
 		m_data = other.m_data;
 		return *this;
 	}
 
-private:
-	BfmeStringData1288 *m_data;
+
+	private:
+	BfmeStringData3AF0 *m_data;
 };
 
 class BfmeQuery1279
@@ -84,7 +100,7 @@ struct BfmeDescriptor1288
 	char m_values0c[0x18];
 	unsigned int m_colors24[2];
 	int m_value2c;
-	int m_string30;
+	const char *m_string30;
 	int m_value34;
 	void *m_value38;
 };
@@ -106,11 +122,10 @@ void BfmeSubmitter1283::bfmeDispatchDescriptor1288(BfmeDescriptor1288 *descripto
 	unsigned int flags = descriptor->m_flags;
 	if ((flags & 2) != 0) {
 		void *selected = context->m_lookup->m_middle->m_level->m_entries[descriptor->m_index08];
-		BfmeString1288 name;
-		BfmeString1288 *nameArgument = 0;
+		BfmeStrVKI name;
+		BfmeStrVKI *nameArgument = 0;
 		if ((descriptor->m_flags & 0x20) != 0) {
-			BfmeString1288 requestedName(descriptor->m_string30);
-			name = requestedName;
+			name = BfmeStrVKI(descriptor->m_string30);
 			nameArgument = &name;
 		}
 
@@ -132,4 +147,3 @@ void BfmeSubmitter1283::bfmeDispatchDescriptor1288(BfmeDescriptor1288 *descripto
 			(int)(flags & 0x80 ? descriptor->m_value38 : 0), descriptor->m_value2c);
 	}
 }
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
