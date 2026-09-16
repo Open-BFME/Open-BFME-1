@@ -1,5 +1,5 @@
 // ?d_0049b9b0@@YAXXZ
-// partial score=0.94 date=2026-09-11
+// partial score=0.95 date=2026-09-16
 // cl: /DNDEBUG /MD /EHsc
 
 class AsciiString
@@ -29,6 +29,17 @@ extern UpgradeCenter *TheUpgradeCenter;
 struct UpgradeMaskType
 {
 	unsigned int m_bits[6];
+
+	UpgradeMaskType &operator=(const UpgradeMaskType &other)
+	{
+		m_bits[0] = other.m_bits[0];
+		m_bits[1] = other.m_bits[1];
+		m_bits[2] = other.m_bits[2];
+		m_bits[3] = other.m_bits[3];
+		m_bits[4] = other.m_bits[4];
+		m_bits[5] = other.m_bits[5];
+		return *this;
+	}
 
 	void set(unsigned int bit)
 	{
