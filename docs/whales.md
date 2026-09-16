@@ -88,3 +88,68 @@
 - Status: banked partial, not landed. Preferred source: `reverse/attempts/0x009b9700.cpp`.
 - Gate: 4,588 bytes versus retail 4,240; frame divergence is `+0x16` (`0x1d8` retail versus `0x1f8` candidate), and the shared scalar reduction diverges at `+0x6e9`.
 - Recipe: aligned `/Z7` frame map, explicit EAX mode-index lookup, both transcribed MMX islands, pointer prelude, reverse-order scalar reductions, frame-slot padding/alignment, and register/loop-shape levers were tried. The first MMX island aligns, but frame and remaining scalar/second-island layout do not.
+# WHALE-1 recipes
+
+This file records source-level recipes and failed levers for the large dump
+bodies worked by the WHALE sessions. A recipe is reusable only when its
+callee identity and layout are supported by retail evidence; a banked recipe
+is not a byte-match.
+
+## 0x008BF100 — APT route-key registry initializer
+
+Status: banked partial; no exact clean-C++ reconstruction found.
+
+### Callee table
+
+| Retail target | Count | Proven identity | Evidence |
+| --- | ---: | --- | --- |
+| `0x0089E680` | 178 | `?bfmeSetVKI@BfmeStrVKI@@QAEXPBD@Z` | `tools/callees.py 0x008BF100 18655`; every string block calls the same `thiscall` setter |
+| `0x008C5D70` through the IAT | 1 | `Rva008C5D70Alloc` | tail allocates `hashCount * 4` bytes for the hash array |
+| `0x00891B80` through EH cleanup funclets | 178 | `?release@Rva00891B80@@QAEXXZ` | retail cleanup funclets at `0x00C593C0` onward jump to the matched release body |
+
+The ledger currently carries the generated placeholder as a no-argument
+symbol, but the retail caller at `0x00894800` pushes `[edi+0x38]` before the
+call. The clean reconstruction therefore uses `void d_008bf100(int hashCount)`;
+that ABI correction is evidence, not a semantic name claim.
+
+### Layout
+
+- `g_bfmeRouteKeys1282` is 178 consecutive 4-byte string handles at
+  `0x01338480..0x0133874b`; the first initialization loop fills two null
+  handles per iteration from `g_bfmeDefaultString1284` at `0x012D5298`.
+- The handle points at a short string header containing 16-bit reference
+  count, length, capacity, and flags. The shared pool at `0x01337A30` releases
+  the header when the count reaches zero.
+- The 178 literals are the exact `reverse/string_xrefs.tsv` order from
+  `__proto__` through `yMin`; each assignment constructs a temporary, calls
+  `bfmeSetVKI`, retains the new handle, releases the old table handle, then
+  releases the temporary.
+- Retail reserves `0x2c8` bytes after the EH registration frame and has 178
+  distinct cleanup states/temporary stack slots. The final three operations
+  allocate, zero, and publish the hash array and count.
+
+### Levers tried
+
+The best bank is the inline `BfmeStrVKI` model in
+`reverse/attempts/0x008bf100.cpp`, compiled with `/O2 /DNDEBUG /DWIN32
+/D_WINDOWS /MD /EHsc`. It reproduces the literal order, the setter call
+contract, the two-slot default initialization, reference-count release, and
+hash-array tail, but emits a 16,229-byte body with an 8-byte scratch frame
+instead of retail's 18,655-byte body and 0x2c8 frame; the masked score is
+0.2615.
+
+The candidate evidence line records the attempted alternatives: direct
+implicit assignments; explicit temporaries; renamed exact `BfmeStrVKI`;
+named locals and pair walks; raw and aggregate `0x2c8` storage; an empty
+destructor frame; `/EHsc`, `/EHa`, `/EHs`, `/GX`, `/Ob1`, `/Og-`, `/O1`,
+`/Os`, `/Od`, `/Z7`; `volatile` members/destination; packed storage; a
+declaration-only constructor; explicit copy construction/assignment; an
+out-of-class forced-inline assignment; helper functions; derived/base
+classes; distinct template types; and temporary-return factories. None
+produced retail's unique cleanup-slot permutation. Do not add a pin or hand
+edit the generated dump; the next useful attack is a source-level ABI/lifetime
+shape supported by another matched APT string initializer.
+
+No rows were added to `reverse/unlocked.txt`: this partial establishes the
+callee/layout hypothesis for this body, but does not land a shared shim or a
+byte-verified source body that would unlock a neighbour.
