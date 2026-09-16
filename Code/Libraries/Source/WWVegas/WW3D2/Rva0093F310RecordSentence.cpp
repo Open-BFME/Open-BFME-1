@@ -66,6 +66,7 @@ class Rva0093F310Owner
 public:
 	virtual void reset();
 	void Rva0093F310_Method();
+	void Rva0093F980_Method(Rva0093F310Font *font);
 
 private:
 	DynamicVectorClass<Render2DSentenceClass::SentenceDataStruct> sentence_data;
@@ -93,6 +94,41 @@ typedef char rva0093f310_sentence_vector_must_be_24[
 	(sizeof(DynamicVectorClass<Render2DSentenceClass::SentenceDataStruct>) == 24) ? 1 : -1];
 
 void Rva0093F310Owner::Rva0093F310_Method()
+{
+	int width = texture_offset_i - texture_start_x;
+	if (width > 0)
+	{
+		float char_height = font->Get_Char_Height();
+
+		Render2DSentenceClass::SentenceDataStruct sentence_data;
+		// Re-read cur_surface after each COM call: this is the retail reload
+		// sequence, not a cached helper parameter.
+		if (cur_surface)
+			cur_surface->AddRef();
+		if (sentence_data.m_surface)
+			sentence_data.m_surface->Release();
+		sentence_data.m_surface = cur_surface;
+		sentence_data.screen_left = cursor_x;
+		sentence_data.screen_right = cursor_x + width;
+		sentence_data.screen_top = cursor_y;
+		sentence_data.screen_bottom = cursor_y + char_height;
+		sentence_data.uv_left = texture_start_x;
+		sentence_data.uv_top = texture_offset_j;
+		sentence_data.uv_right = texture_offset_i;
+		sentence_data.uv_bottom = texture_offset_j + char_height;
+
+		this->sentence_data.Add(sentence_data);
+	}
+}
+
+// Retail RVA 0x0093F980..0x0093FA63 (227 bytes), complete RET 4 at +0xE0.
+// This sibling takes the ordinary Rva0093F310Font pointer as its one stack
+// argument; the native code immediately reads its height at font +0x2C and
+// reuses that argument slot for the integer-to-float conversion.  It shares
+// the 36-byte record, vector layout, and identical COM AddRef/Release reload
+// sequence with the 224-byte body above.  The method remains address-derived
+// because no original semantic overload name has been independently proven.
+void Rva0093F310Owner::Rva0093F980_Method(Rva0093F310Font *font)
 {
 	int width = texture_offset_i - texture_start_x;
 	if (width > 0)
