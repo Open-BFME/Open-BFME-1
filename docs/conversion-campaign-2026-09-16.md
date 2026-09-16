@@ -192,3 +192,18 @@ One push raced another contributor; rebase, ledger recheck and normal retry
 succeeded. The same repository-wide build limitation reported in hour 1
 remains; this assessment does not claim a full green gate.
 Next assessment is due around 17:25 UTC.
+
+
+### Concurrent parser landing correction (16:52 UTC)
+
+The post-batch address sweep found two rows for `0x00425C90` (342 bytes).
+Another contributor's `be2a7bf401` landed the parser at 16:32 UTC; our
+`7832a37766` followed at 16:36 UTC after a union merge retained both claims.
+The fleet therefore receives **zero incremental conversion bytes** for that
+parser. Its independently proved assignment ABI and string-header adoption
+are retained in one consolidated INI source, with an address-derived callback
+owner because the registry proves the block role, not the original C++ method
+name. The duplicate row/source is retired. The first two hourly snapshots
+precede this race and are unaffected; the third-hour fleet tally excludes
+these 342 bytes. Ledger range union already prevented the duplicate from
+inflating the repository-wide byte metric.

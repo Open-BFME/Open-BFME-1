@@ -1,160 +1,199 @@
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/iniexception
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// Open-BFME: readable conversion of the predefined Eva-event field parser.
+// The INI registry row at 0x012B5250 names PredefinedEvaEvent and points
+// to this callback; its field-parse table is at 0x010F1B68.  The owner remains address-derived because the
+// retail image does not expose a matched source-level method name.
 
-// The INI block registry pairs the block name 'PredefinedEvaEvent' with this
-// body.  BFME keeps that registry as a linked list of 12-byte rows whose head
-// is the global at VA 0x0130CE50, and the row at 0x012B5250 holds the name
-// string and this address.
-//
-// The block names one of the seventeen Eva events the engine ships with.  The
-// body reads that name, looks it up in the hashtable at +0x38 of the Eva
-// singleton, and rejects a name the table does not hold.  It rejects an index
-// outside the seventeen slots the same way, because the stored index is the
-// array subscript and nothing else bounds it.
-//
-// A map.ini may override an event but may not redefine event zero, which is the
-// default every other event copies from.  So a map.ini load writes into the
-// override array at +0x0C and a normal load writes into the main array at
-// +0x18.  Either way the body copies event zero over the slot first and then
-// fills the slot from the FieldParse table at 0x010F1B68, whose four fields all
-// parse as unsigned integers.
-//
-// Zero Hour declares this parser as INI::parseEvaEvent, and the sibling block
-// MiscEvaData is already named INI::parseMiscEvaData, so the name follows that
-// pattern.  The hashtable lookup is the converted _M_find at 0x004246F0 and the
-// copy is the converted 28-byte memberwise copy at 0x004256E0.  Both are
-// reached here through declarations the linker aliases onto their ledger names.
-//
-// Naming the copy source through a local pointer is what fixed the last six
-// bytes.  Reading eva->m_bfmeEvents straight into the argument left the address
-// in EDX, and retail puts it in ECX.
+#include "ascii_string.h"
 
-#include "Common/INIException.h"
+typedef int Int;
 
 struct FieldParse;
 
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase( const T *text );
-	void releaseBuffer();
-
-	struct Header
-	{
-		int m_refCount;
-		unsigned short m_length;
-		unsigned short m_capacity;
-	};
-
-	Header *m_data;
-};
-
-class AsciiString : private StringBase<char>
+// The retail wrapper is a four-byte StringBase pointer.  Its constructor and
+// release helper are already matched in string_base.cpp; keeping the wrapper
+// local preserves the exact BFMERetailAsciiString ABI used by this callback.
+class BFMERetailAsciiString
 {
 public:
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-
-	~AsciiString()
-	{
-		( (StringBase<char> *)this )->releaseBuffer();
-	}
+	BFMERetailAsciiString( const char *text );
+	~BFMERetailAsciiString() { releaseBuffer(); }
 
 	const char *str() const
 	{
-		return m_data ? (const char *)( (const char *)m_data + 8 ) : (const char *)0x0107388B;
+		return m_data ? m_data + 8 : "";
 	}
+
+private:
+	void releaseBuffer();
+	char *m_data;
 };
-
-class Rva004246F0Node
-{
-public:
-	Rva004246F0Node *m_bfmeNext;
-	AsciiString m_bfmeKey;
-	int m_bfmeValue;
-};
-
-class Rva004246F0Table
-{
-public:
-	Rva004246F0Node *find( const AsciiString &key ) const;
-};
-
-class Gen_004256E0
-{
-public:
-	Gen_004256E0( const Gen_004256E0 &that );
-
-	unsigned char m_bfmeBody[ 0x1C ];
-};
-
-class BfmeGlobal_012f142c
-{
-public:
-	unsigned char m_bfmePad000[ 0x0C ];
-	Gen_004256E0 *m_bfmeOverrides;
-	unsigned char m_bfmePad010[ 0x18 - 0x10 ];
-	Gen_004256E0 *m_bfmeEvents;
-	unsigned char m_bfmePad01C[ 0x38 - 0x1C ];
-	Rva004246F0Table m_bfmeNames;
-};
-
-extern BfmeGlobal_012f142c *TheBfmeGlobal_012f142c;
-
-inline void *operator new( unsigned int, void *where ) { return where; }
 
 class INI
 {
 public:
 	const char *getNextToken( const char *separators = 0 );
-	void initFromINI( void *what, const FieldParse *parseTable );
+	void initFromINI( void *object, const FieldParse *fieldParse );
 
-	int getLoadType( void ) const { return m_bfmeLoadType; }
-
-	static void parsePredefinedEvaEvent( INI *ini );
-
-private:
-	int m_bfmePad000;
-	int m_bfmePad004;
-	int m_bfmeLoadType;
+	Int getLoadType() const
+	{
+		return *(const Int *)((const char *)this + 8);
+	}
 };
 
-void INI::parsePredefinedEvaEvent( INI *ini )
+class INIException
 {
-	AsciiString name( ini->getNextToken() );
+public:
+	INIException( Int code, const char *message, ... );
+	INIException( const INIException &other );
 
-	const Rva004246F0Table *names = &TheBfmeGlobal_012f142c->m_bfmeNames;
-	Rva004246F0Node *node = names->find( name );
-	if ( node == 0 )
+private:
+	Int m_code;
+	const char *m_message;
+};
+
+struct Rva004246F0Value
+{
+	AsciiString m_key;
+	Int m_message;
+};
+
+struct Rva004246F0ExtractKey
+{
+	const AsciiString &operator()( const Rva004246F0Value &value ) const
+	{
+		return value.m_key;
+	}
+};
+
+namespace rts
+{
+template <class T> struct hash;
+}
+
+namespace _STL
+{
+template <class T> struct equal_to;
+template <class T> class allocator;
+
+template <class V>
+struct _Hashtable_node
+{
+	_Hashtable_node<V> *m_next;
+	V m_val;
+};
+
+template <class V, class Key, class HashFcn, class ExtractKey, class EqualKey,
+	class Alloc>
+class hashtable
+{
+public:
+	const _Hashtable_node<V> *find( const Key &key ) const
+	{
+		return _M_find( key );
+	}
+
+private:
+	template <class KT>
+	_Hashtable_node<V> *_M_find( const KT &key ) const;
+
+	char m_unmodelled[0x14];
+};
+}
+
+typedef _STL::hashtable<Rva004246F0Value, AsciiString, rts::hash<AsciiString>,
+	Rva004246F0ExtractKey, _STL::equal_to<AsciiString>,
+	_STL::allocator<Rva004246F0Value> > Rva00425C90NameMap;
+
+class Rva004256E0CopyPart
+{
+private:
+	char m_unmodelled[0x0c];
+};
+
+class Rva004256E0Record
+{
+public:
+	Rva004256E0Record &operator=( const Rva004256E0Record &other );
+
+private:
+	Int m_a;
+	Int m_b;
+	Int m_c;
+	Int m_d;
+	Rva004256E0CopyPart m_part;
+};
+
+// Retail 0x004256E0 copies four scalars then assigns its existing tree via
+// ILT 0x000083E1 -> 0x00424AC0; it is assignment, not construction.
+
+struct Rva00425C90Vector
+{
+	Rva004256E0Record *m_begin;
+	Rva004256E0Record *m_end;
+	Rva004256E0Record *m_capacity;
+
+	Rva004256E0Record &operator[]( Int index )
+	{
+		return m_begin[index];
+	}
+};
+
+class Eva
+{
+private:
+	char m_head[0x0c];
+
+public:
+	Rva00425C90Vector m_current;
+	Rva00425C90Vector m_default;
+	char m_sideSounds[0x14];
+	Rva00425C90NameMap m_defaultNames;
+};
+
+extern Eva *TheEva;
+
+class Rva00425C90PredefinedEvaEvent
+{
+public:
+	static void parse( INI *ini );
+};
+
+void Rva00425C90PredefinedEvaEvent::parse( INI *ini )
+{
+	const char *token = ini->getNextToken();
+	BFMERetailAsciiString name( token );
+	const _STL::_Hashtable_node<Rva004246F0Value> *found =
+		((Rva00425C90NameMap *)((char *)TheEva + 0x38))->find(
+			*(const AsciiString *)&name );
+
+	if ( found == 0 )
 		throw INIException( 3, "'%s' is not a predefined Eva event name", name.str() );
 
-	int index = node->m_bfmeValue;
-	if ( index < 0 || index >= 17 )
+	const Int index = found->m_val.m_message;
+	if ( index < 0 || index >= 0x11 )
 		throw INIException( 3, "'%s' is not a predefined Eva event name", name.str() );
 
-	BfmeGlobal_012f142c *eva;
-	Gen_004256E0 *target;
+	Rva004256E0Record *destination;
 	if ( ini->getLoadType() == 2 )
 	{
 		if ( index == 0 )
-			throw INIException( 3, "You cannot redefine the default Eva event in a map.ini" );
-
-		eva = TheBfmeGlobal_012f142c;
-		target = eva->m_bfmeOverrides + index;
+			throw INIException( 3,
+				"You cannot redefine the default Eva event in a map.ini" );
+		destination = ((Rva00425C90Vector *)((char *)TheEva + 0x0c))->m_begin + index;
 	}
 	else
 	{
-		eva = TheBfmeGlobal_012f142c;
-		target = eva->m_bfmeEvents + index;
+		destination = ((Rva00425C90Vector *)((char *)TheEva + 0x18))->m_begin + index;
 	}
 
+	Rva004256E0Record &record = *destination;
 	if ( index != 0 )
 	{
-		__assume( target != 0 );
-		Gen_004256E0 *defaults = eva->m_bfmeEvents;
-		new ( target ) Gen_004256E0( *defaults );
+		__assume( destination != 0 );
+		const Rva004256E0Record *source = TheEva->m_default.m_begin;
+		record = *source;
 	}
 
-	ini->initFromINI( target, (const FieldParse *)0x010F1B68 );
+	ini->initFromINI( &record, (const FieldParse *)0x010F1B68 );
 }
