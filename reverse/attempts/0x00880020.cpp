@@ -1,100 +1,109 @@
-// ?bfmeParseBE@@YAXPAVINI@@PAX1PBX@Z
-// partial score=0.65 date=2026-09-09
-extern "C" const char *const _bfmeListBE[];
+// ?d_00880020@@YAXXZ
+// partial score=0.9 date=2026-09-16
+// cl: /DNDEBUG /MD /EHs-c- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// stlport
+#include <vector>
+
+typedef bool Bool;
+typedef float Real;
 
 extern float g_bfmeDefaultBU;
 
-class BFMERetailAsciiString
+struct Coord3D
+{
+	Real x;
+	Real y;
+	Real z;
+};
+
+class AsciiString
 {
 public:
-	__forceinline BFMERetailAsciiString() throw() { m_bfmeDataBE = 0; }
-	__forceinline ~BFMERetailAsciiString() throw() { releaseBuffer(); }
+	AsciiString() { m_data = 0; }
+	AsciiString( const AsciiString &other );
+	~AsciiString() { releaseBuffer(); }
 
 private:
-	void releaseBuffer() throw();
-
-	char *m_bfmeDataBE;
+	void releaseBuffer( void );
+	void *m_data;
 };
 
 class INI
 {
 public:
-	const char *getNextToken(const char *sep) throw();
-
-	static int scanIndexList(const char *s, const char *const *list) throw();
+	static int scanIndexList( const char *token, const char *const *values );
+	const char *getNextToken( const char *seps = 0 );
 };
 
-struct BfmeFalseBE
+struct GeometryShape
 {
+	int m_type;
+	Real m_height;
+	Real m_majorRadius;
+	Real m_minorRadius;
+	Coord3D m_offset;
+	AsciiString m_name;
+	Bool m_enabled;
+	char m_pad[3];
 };
 
-struct BfmeElemBE
-{
-	void bfmeCopyBE(const BfmeElemBE &o) throw();
+class Xfer;
 
-	int m_bfme00BE;
-	float m_bfme04BE;
-	float m_bfme08BE;
-	float m_bfme0CBE;
-	int m_bfme10BE;
-	int m_bfme14BE;
-	int m_bfme18BE;
-	BFMERetailAsciiString m_bfme1CBE;
-	unsigned char m_bfme20BE;
-};
-
-class BfmeVecBE
+class Snapshot
 {
 public:
-	void overflow(BfmeElemBE *p, const BfmeElemBE &e, const BfmeFalseBE &f, unsigned int n, bool b) throw();
-
-	__forceinline void bfmePushBE(const BfmeElemBE &e) throw()
-	{
-		if (m_bfmeEndBE != m_bfmeCapBE)
-		{
-			if (m_bfmeEndBE != 0)
-				m_bfmeEndBE->bfmeCopyBE(e);
-
-			++m_bfmeEndBE;
-		}
-		else
-		{
-			BfmeFalseBE f;
-
-			overflow(m_bfmeEndBE, e, f, 1, true);
-		}
-	}
-
-	BfmeElemBE *m_bfmeBeginBE;
-	BfmeElemBE *m_bfmeEndBE;
-	BfmeElemBE *m_bfmeCapBE;
+	virtual ~Snapshot();
+	virtual void loadPostProcess();
+	virtual const char *getSnapshotName();
+	virtual void xfer( Xfer *xfer );
 };
 
-class BfmeStoreBE
+class GeometryInfo : public Snapshot
 {
 public:
-	void bfmeFinishBE() throw();
+	static void parseAdditionalGeometry( INI *ini, void *instance, void *store, const void *userData );
 
-	unsigned char m_bfmeHeadBE[0x2c];
-	BfmeVecBE m_bfme2CBE;
+private:
+	Bool m_isSmall;
+	int m_scalar08;
+	int m_scalar0c;
+	int m_scalar10;
+	int m_scalar14;
+	int m_scalar18;
+	int m_scalar1c;
+	int m_scalar20;
+	int m_scalar24;
+	int m_scalar28;
+	_STL::vector<GeometryShape> m_shapes;
+	_STL::vector<int> m_records;
+	int m_cached44;
+	int m_cached48;
+	int m_cached4c;
+	int m_cached50;
+	int m_cached54;
+	int m_cached58;
+
+	void calcBoundingStuff();
 };
 
-void bfmeParseBE(INI *ini, void *instance, void *store, const void *userData)
+static const char *const geometryNames[] = { "SPHERE", "CYLINDER", "BOX", 0 };
+
+/*static*/ void GeometryInfo::parseAdditionalGeometry( INI *ini, void *, void *store, const void * )
 {
-	BfmeElemBE e;
+	int type = INI::scanIndexList( ini->getNextToken(), geometryNames );
 
-	e.m_bfme00BE = INI::scanIndexList(ini->getNextToken(0), _bfmeListBE);
-	e.m_bfme04BE = g_bfmeDefaultBU;
-	e.m_bfme08BE = g_bfmeDefaultBU;
-	e.m_bfme0CBE = g_bfmeDefaultBU;
-	e.m_bfme10BE = 0;
-	e.m_bfme14BE = 0;
-	e.m_bfme18BE = 0;
-	e.m_bfme20BE = 1;
+	GeometryShape shape;
+	Real defaultSize = g_bfmeDefaultBU;
+	shape.m_height = defaultSize;
+	shape.m_majorRadius = defaultSize;
+	shape.m_minorRadius = defaultSize;
+	shape.m_type = type;
+	shape.m_offset.x = 0.0f;
+	shape.m_offset.y = 0.0f;
+	shape.m_offset.z = 0.0f;
+	shape.m_enabled = true;
 
-	BfmeStoreBE *o = (BfmeStoreBE *)store;
-
-	o->m_bfme2CBE.bfmePushBE(e);
-
-	o->bfmeFinishBE();
+	GeometryInfo *geometry = (GeometryInfo *)store;
+	geometry->m_shapes.push_back( shape );
+	geometry->calcBoundingStuff();
 }
