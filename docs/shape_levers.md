@@ -72,6 +72,17 @@ After splitting them, moving the second float multiplication before the
 state stores recovered the remaining scheduling bytes. Its native matrix
 identity/translation and typed FX calls then matched the complete body.
 
+## Reload a member after a native aggregate update
+
+At `0x00733000`, native `Vector3`, `Matrix3D`, and `SphereClass` operations
+matched through the sphere-center scale, but caching the scale for both center
+and radius emitted 393 bytes instead of 397. Retail consumes the cached x87
+value for the center's Z component, then reloads the record's scale for radius.
+Keep the local for `bounds.Center *= scale`, and use the member expression in
+`bounds.Radius *= records[index].scale`. This reproduces all 397 bytes without
+barriers, volatile, or assembly. Inspect the actual reload before applying this
+lever; a cached local and a member access carry different aliasing information.
+
 ## Coordinate setters after matrix transforms
 
 The 1,207-byte tree toppling update at `0x00733580` uses native
