@@ -1642,6 +1642,23 @@ public:
 	StartPosition m_startPositions[ 1 ];
 };
 
+class BfmeStartPositionVector
+{
+public:
+	const Int *begin() const { return (const Int *)this; }
+	Int size() const { return 8; }
+};
+
+class BfmeStartPositionMapVector
+{
+	char m_unmodelled[ 0x58 ];
+
+public:
+	BfmeStartPositionVector m_startPositions;
+	const Int *begin() const { return m_startPositions.begin(); }
+	Int size() const { return m_startPositions.size(); }
+};
+
 struct Rva0068D3E0Slot
 {
 	char m_unmodelled[ 0x10 ];
@@ -1666,6 +1683,11 @@ public:
 };
 
 extern void rva004CAF70( void );
+
+__forceinline LANGameInfo *bfmeStartPositionGetMyGame( BfmeStartPositionLANAPI *lan )
+{
+	return lan->GetMyGame();
+}
 
 static void rva004CB5E0Update( Int player );
 
@@ -1707,8 +1729,9 @@ static void rva004CB5E0Update( Int player )
 		const MapMetaData *map = TheMapCache->findMap( myGame->getMap() );
 		if ( !map )
 			return;
-		Int mapStartPos =
-			( (BfmeStartPositionMap *)map )->m_startPositions[ startPos ].m_position;
+		const BfmeStartPositionVector &positions =
+			( (const BfmeStartPositionMapVector *)map )->m_startPositions;
+		Int mapStartPos = positions.begin()[ startPos * ( positions.size() - 3 ) ];
 		if ( mapStartPos < 0 )
 			return;
 
@@ -1732,4 +1755,80 @@ static void rva004CB5E0Update( Int player )
 void rva004CB5E0ProbeCaller( Int player )
 {
 	rva004CB5E0Update( player );
+}
+
+static void rva004CB810StartPosition( Int player, Int startPos )
+{
+	LANGameInfo *myGame =
+		bfmeStartPositionGetMyGame( (BfmeStartPositionLANAPI *)TheLAN );
+	if ( myGame )
+	{
+		Rva0068D3E0Slot *slot =
+			((Rva0068D3E0Arr *)myGame)->at( player );
+		if ( startPos == slot->m_startPos )
+			return;
+
+		if ( startPos >= 0 )
+		{
+			for ( Int i = 0; i < MAX_SLOTS; ++i )
+			{
+				if ( i != player && myGame->getSlot( i )->getStartPos() == startPos )
+					return;
+			}
+		}
+
+		slot->m_startPos = startPos;
+		if ( ( (BfmeThing935B *)myGame )->bfmeGo935B() )
+		{
+			if ( !s_isIniting )
+			{
+				( (BfmeStartPositionGameInfo *)myGame )->resetAccepted();
+				BfmeStartPositionAddress address;
+				( (BfmeStartPositionLANAPI *)TheLAN )->requestSerializedGameInfo( TRUE, &address );
+				rva004CAF70();
+			}
+		}
+		else if ( AreSlotListUpdatesEnabled() )
+		{
+			AsciiString options;
+			options.format( "StartPos=%d", slot->getStartPos() );
+			( (BfmeStartPositionLANAPI *)TheLAN )->RequestGameOptions( options, TRUE );
+		}
+
+		GameWindow *button = buttonMapStartPosition[ player ];
+		button->winEnable( TRUE );
+		if ( startPos < 0 )
+			return;
+
+		const MapMetaData *map = TheMapCache->findMap( myGame->getMap() );
+		if ( !map )
+			return;
+		const BfmeStartPositionMapVector *mapVector =
+			(const BfmeStartPositionMapVector *)map;
+		Int mapStartPos = mapVector->begin()[ startPos * ( mapVector->size() - 3 ) ];
+		if ( mapStartPos < 0 )
+			return;
+
+		Int index = 0;
+		Int count = GadgetComboBoxGetLength( button );
+		if ( count <= 0 )
+			return;
+		while ( index < count )
+		{
+			if ( (Int)GadgetComboBoxGetItemData( button, index ) == mapStartPos )
+			{
+				GadgetComboBoxSetSelectedPos( button, index, FALSE );
+				rva004CB5E0Update( player );
+				button->winEnable( FALSE );
+				return;
+			}
+			++index;
+			count = GadgetComboBoxGetLength( button );
+		}
+	}
+}
+
+void rva004CB810ProbeCaller( Int player, Int startPos )
+{
+	rva004CB810StartPosition( player, startPos );
 }
