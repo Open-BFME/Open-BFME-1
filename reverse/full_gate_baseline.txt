@@ -53,7 +53,6 @@
 ?erase@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QAEPAUPrereqUnitRec@ProductionPrerequisite@@PAU34@0@Z (Code/GameEngine/Source/Common/RTS/ProductionPrerequisite.cpp)
 ?friend_newModuleData@MissileAIUpdate@@SAPAVModuleData@@PAVINI@@@Z (Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp)
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHI@2@@Z (Code/GameEngine/Source/GameLogic/System/GameLogicDispatch.cpp)
-?push_back@?$vector@USegInfo@W3DRopeDraw@@V?$allocator@USegInfo@W3DRopeDraw@@@_STL@@@_STL@@QAEXABUSegInfo@W3DRopeDraw@@@Z (Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/W3DRopeDraw.cpp)
 ?removeTreesAndPropsForConstruction@W3DTerrainVisual@@UAEXPBUCoord3D@@ABVGeometryInfo@@M@Z (Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisual.cpp)
 _$E11 (Code/Libraries/Source/WWVegas/WW3D2/pointgr.cpp)
 _$E14 (Code/Libraries/Source/WWVegas/WW3D2/pointgr.cpp)
