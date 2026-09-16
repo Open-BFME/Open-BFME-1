@@ -7,7 +7,7 @@ one extra instruction / different immediate width" siblings the exact-size scans
 import argparse
 import sys, json, csv, collections, difflib
 from functools import lru_cache
-sys.path.insert(0,'tools'); import build, eligibility
+sys.path.insert(0,'tools'); import build, eligibility, progress
 
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--tol', type=int, default=24)
@@ -39,19 +39,31 @@ def mask(b):
 def masked_body(rva, size):
     return mask(body(rva, size))
 
-landed=[]; dumps=[]
+landed=[]; dumps=[]; donor_rows={}
 with open('reverse/functions.csv', newline='', encoding='utf-8', errors='replace') as ledger:
     for r in csv.DictReader(ledger):
         try: rva=int(r['target_rva'],16); size=int(r['target_size'] or 0)
         except (ValueError, TypeError): continue
-        if size<minb: continue
         src=r['source']
+        is_donor = (r.get('status') == 'matched' and src.startswith('Code/')
+                    and not src.startswith(('Code/gen_', 'Code/masm_dumps'))
+                    and src.endswith(('.cpp', '.c')))
+        # Feed the shared classifier every row in a donor TU, including small
+        # rows: its single-row fallback must not mistake a mixed TU for a lift.
+        if is_donor:
+            donor_rows[(r['name'], r['target_rva'])] = (size, src)
+        if size<minb: continue
         if src.endswith('.asm') and 'gen_asm' in src:
             if (r['target_rva'].lower() not in excl
                     and eligibility.open_dumps(rows=[r], latest=latest)):
                 dumps.append((rva,size,src))
-        elif r.get('status')=='matched' and src.startswith('Code/') and not src.startswith(('Code/gen_','Code/masm_dumps')) and src.endswith(('.cpp','.c')):
+        elif is_donor:
             landed.append((size,rva,r['name'],src))
+naked = {(name, int(rva, 16))
+         for name, rva in progress.naked_cpp_rows_at(donor_rows, None)}
+donor_count = len(landed)
+landed = [row for row in landed if (row[2], row[1]) not in naked]
+print(donor_count - len(landed), "assembly-backed donor rows excluded")
 landed.sort()
 import bisect
 sizes=[x[0] for x in landed]

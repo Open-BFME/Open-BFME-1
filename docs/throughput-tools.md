@@ -247,3 +247,10 @@ last measured draft had 713 differing bytes, while its later bank failed to
 compile. An untracked new source or an unstaged deleted bank in a worker
 worktree is expected when the orchestrator owns staging; it is not a reason
 to rearrange a verified conversion merely to satisfy the worker's index.
+
+The size-tolerant `fuzzy_twin_scan.py` donor pool uses `progress.py`'s shared
+per-row naked/emit classifier. It supplies every matched row in each candidate
+source, including rows below the requested minimum size, so genuine C++ in a
+mixed file is retained. A `.cpp` suffix alone is not donor evidence: the
+`0x002FB170` assembly lift previously generated three misleading ScriptActions
+leads. Active claims and retired addresses still use `eligibility.py`.
