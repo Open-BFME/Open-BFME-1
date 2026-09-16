@@ -121,13 +121,16 @@ class MapMetaData
 {
 public:
 	UnicodeString bfme_getBaseDisplayName();
+	UnicodeString getDescription();
 
 private:
 	UnicodeString m_displayNameLabel;
-	unsigned char m_unreconstructed04[0x50 - 0x04];
+	UnicodeString m_descriptionLabel;
+	unsigned char m_unreconstructed08[0x50 - 0x08];
 	AsciiString m_fileName;
 	unsigned char m_unreconstructed54[0xF4 - 0x54];
 	UnicodeString m_cachedBaseDisplayName;
+	UnicodeString m_cachedDescription;
 };
 
 UnicodeString MapMetaData::bfme_getBaseDisplayName()
@@ -173,4 +176,31 @@ UnicodeString MapMetaData::bfme_getBaseDisplayName()
 	}
 
 	return m_cachedBaseDisplayName;
+}
+
+UnicodeString MapMetaData::getDescription()
+{
+	if (m_cachedDescription.getLength() == 0)
+	{
+		const char *slash = m_fileName.reverseFind('\\');
+		if (slash)
+		{
+			AsciiString stringFileName(m_fileName, 0,
+				(int)(slash - m_fileName.str()) + 1);
+			stringFileName.concat("map.str", 7);
+			TheGameText->initMapStringFile(stringFileName);
+		}
+
+		AsciiString label;
+		label.translate(m_descriptionLabel);
+
+		Bool exists = false;
+		m_cachedDescription.set(TheGameText->fetch(label, &exists));
+		if (!exists)
+			m_cachedDescription.set(m_descriptionLabel);
+
+		TheGameText->reset();
+	}
+
+	return m_cachedDescription;
 }
