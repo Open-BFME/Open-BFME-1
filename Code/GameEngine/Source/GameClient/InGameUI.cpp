@@ -8269,22 +8269,43 @@ Bool InGameUI::canSelectedObjectsNonAttackInteractWithObject( const Object *obje
 	return FALSE;
 }
 
-// ?getCanSelectedObjectsAttack@InGameUI@@QBE?AW4CanAttackResult@@W4ActionType@1@PBVObject@@W4SelectionRules@1@_N@Z present-unmatched
+class BfmeInGameUISelectionABI
+{
+public:
+#define BFME_IGUI_SLOT(n) virtual void slot##n() = 0;
+	BFME_IGUI_SLOT(00) BFME_IGUI_SLOT(01) BFME_IGUI_SLOT(02) BFME_IGUI_SLOT(03)
+	BFME_IGUI_SLOT(04) BFME_IGUI_SLOT(05) BFME_IGUI_SLOT(06) BFME_IGUI_SLOT(07)
+	BFME_IGUI_SLOT(08) BFME_IGUI_SLOT(09) BFME_IGUI_SLOT(10) BFME_IGUI_SLOT(11)
+	BFME_IGUI_SLOT(12) BFME_IGUI_SLOT(13) BFME_IGUI_SLOT(14) BFME_IGUI_SLOT(15)
+	BFME_IGUI_SLOT(16) BFME_IGUI_SLOT(17) BFME_IGUI_SLOT(18) BFME_IGUI_SLOT(19)
+	BFME_IGUI_SLOT(20) BFME_IGUI_SLOT(21) BFME_IGUI_SLOT(22) BFME_IGUI_SLOT(23)
+	BFME_IGUI_SLOT(24) BFME_IGUI_SLOT(25) BFME_IGUI_SLOT(26) BFME_IGUI_SLOT(27)
+	BFME_IGUI_SLOT(28) BFME_IGUI_SLOT(29) BFME_IGUI_SLOT(30) BFME_IGUI_SLOT(31)
+	BFME_IGUI_SLOT(32) BFME_IGUI_SLOT(33) BFME_IGUI_SLOT(34) BFME_IGUI_SLOT(35)
+	BFME_IGUI_SLOT(36) BFME_IGUI_SLOT(37) BFME_IGUI_SLOT(38) BFME_IGUI_SLOT(39)
+	BFME_IGUI_SLOT(40) BFME_IGUI_SLOT(41) BFME_IGUI_SLOT(42) BFME_IGUI_SLOT(43)
+	BFME_IGUI_SLOT(44) BFME_IGUI_SLOT(45) BFME_IGUI_SLOT(46) BFME_IGUI_SLOT(47)
+	BFME_IGUI_SLOT(48) BFME_IGUI_SLOT(49) BFME_IGUI_SLOT(50) BFME_IGUI_SLOT(51)
+	BFME_IGUI_SLOT(52) BFME_IGUI_SLOT(53) BFME_IGUI_SLOT(54) BFME_IGUI_SLOT(55)
+	BFME_IGUI_SLOT(56) BFME_IGUI_SLOT(57) BFME_IGUI_SLOT(58) BFME_IGUI_SLOT(59)
+	BFME_IGUI_SLOT(60) BFME_IGUI_SLOT(61) BFME_IGUI_SLOT(62)
+	virtual const DrawableList *getAllSelectedDrawables() = 0;
+#undef BFME_IGUI_SLOT
+};
+
 CanAttackResult InGameUI::getCanSelectedObjectsAttack( ActionType action, const Object *objectToInteractWith, SelectionRules rule, Bool additionalChecking ) const
 {
 	//Kris: Aug 16, 2003
 	//John McDonald added this code back in Oct 09, 2002. 
 	//Replaced it with palatable code.
-	//if( (objectToInteractWith == NULL) != (action == ACTIONTYPE_SET_RALLY_POINT)) <---BAD CODE
-	if( !objectToInteractWith && action != ACTIONTYPE_SET_RALLY_POINT || //No object to interact with (and not rally point mode)
-			 objectToInteractWith && action == ACTIONTYPE_SET_RALLY_POINT )  //Object to interact with (and rally point mode)
+	if( (objectToInteractWith == NULL) != (action == (ActionType)14) )
 	{
 		//Sanity check OR can't set a rally point over an object.
 		return ATTACKRESULT_NOT_POSSIBLE;
 	}
 
 	// get selected list of drawables
-	const DrawableList *selected = TheInGameUI->getAllSelectedDrawables();
+	const DrawableList *selected = ((BfmeInGameUISelectionABI *)TheInGameUI)->getAllSelectedDrawables();
 
 	// set up counters for rule checking
 	Int count = 0;
@@ -8305,7 +8326,8 @@ CanAttackResult InGameUI::getCanSelectedObjectsAttack( ActionType action, const 
 			case ACTIONTYPE_ATTACK_OBJECT:
 			{
 				//additionalChecking is TRUE only if force attack mode is on.
-				CanAttackResult result = 	TheActionManager->getCanAttackObject( other->getObject(), objectToInteractWith, CMD_FROM_PLAYER, 
+				Object *otherObject = *(Object **)((char *)other + 0xFC);
+				CanAttackResult result = 	TheActionManager->getCanAttackObject( otherObject, objectToInteractWith, CMD_FROM_PLAYER, 
 									additionalChecking ? ATTACK_NEW_TARGET_FORCED : ATTACK_NEW_TARGET );
 
 				if( result > bestResult )
