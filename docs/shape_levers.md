@@ -72,6 +72,19 @@ After splitting them, moving the second float multiplication before the
 state stores recovered the remaining scheduling bytes. Its native matrix
 identity/translation and typed FX calls then matched the complete body.
 
+## Compiler-private ABI: compile the static helper with its caller
+
+At `0x0072FCA0`, the track binder passed a render object in ESI, one bone
+name in ECX, and another on the stack to `computeTrackSpacing`. An external
+declaration could not reproduce this private convention; an old bank even
+declared the helper with unrelated argument types. Copy the actual static
+helper's source into the caller TU and use its real `RenderObjClass*` and
+two string arguments. With the native render-object/math headers, VC7.1
+reproduced both the 155-byte caller and the already-matched 201-byte helper,
+including the register convention. Verify BOTH bodies: matching the caller's
+relocation-masked call alone does not prove its helper ABI. This is ordinary
+C++ compiler optimization, not a reason to add an assembly adapter.
+
 ## Reload a member after a native aggregate update
 
 At `0x00733000`, native `Vector3`, `Matrix3D`, and `SphereClass` operations
