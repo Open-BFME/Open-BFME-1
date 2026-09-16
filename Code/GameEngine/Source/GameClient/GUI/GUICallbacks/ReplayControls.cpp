@@ -42,7 +42,6 @@
 //-------------------------------------------------------------------------------------------------
 /** Input procedure for the control bar */
 //-------------------------------------------------------------------------------------------------
-// ?ReplayControlInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z present-unmatched
 WindowMsgHandledType ReplayControlInput( GameWindow *window, UnsignedInt msg,
 																			WindowMsgData mData1, WindowMsgData mData2 )
 {
