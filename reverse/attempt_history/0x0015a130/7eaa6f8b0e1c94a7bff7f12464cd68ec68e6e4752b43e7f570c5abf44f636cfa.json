@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7eaa6f8b0e1c94a7bff7f12464cd68ec68e6e4752b43e7f570c5abf44f636cfa",
+  "symbol": "?bfmeSendCH@BfmeHostCH@@QAEXPAVBfmeSrcCH@@PAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?bfmeSendCH@BfmeHostCH@@QAEXPAVBfmeSrcCH@@PAX@Z\n// partial score=0.97 date=2026-09-16\n// cl: /DNDEBUG /DWIN32 /MD /EHsc\n\nclass BfmeThingCH;\n\ntypedef void *( __fastcall *BfmeMakeFnCH )( BfmeThingCH *self );\n\nclass BfmeSrcCH\n{\npublic:\n\tunsigned char m_bfmeHeadCH[ 0x1fc ];\n\tBfmeThingCH *m_bfmeTargetCH;\n};\n\nstruct BfmeReqCH\n{\n\tvoid *m_bfmeACH;\n\tunsigned char m_bfmeBCH;\n\tunsigned char m_bfmePadCH[ 3 ];\n\tBfmeSrcCH *m_bfmeCCH;\n\tBfmeSrcCH *m_bfmeDCH;\n};\n\nclass BfmeHostCH\n{\npublic:\n\tvoid bfmeSendCH( BfmeSrcCH *src, void *unused );\n\tvoid bfmeDispatchCH( BfmeReqCH *req, int mode );\n};\n\nvoid BfmeHostCH::bfmeSendCH( BfmeSrcCH *src, void *unused )\n{\n\tBfmeThingCH *t = src->m_bfmeTargetCH;\n\n\tif( t == 0 )\n\t\treturn;\n\n\tBfmeReqCH req;\n\n\treq.m_bfmeDCH = src;\n\treq.m_bfmeCCH = src;\n\n\tBfmeMakeFnCH *vft = *(BfmeMakeFnCH **)t;\n\n\treq.m_bfmeBCH = 0;\n\treq.m_bfmeACH = vft[ 81 ]( t );\n\n\tbfmeDispatchCH( &req, 0 );\n}\n"
+}
