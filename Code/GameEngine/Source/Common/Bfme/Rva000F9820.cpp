@@ -1,5 +1,7 @@
-// ?d_000f9820@@YAXXZ
-// partial score=0.97 date=2026-09-06
+// Retail 0x000F9820 (143 bytes).
+// The address-derived owner uses the matched BfmeVecVLH accessor and the
+// pinned factory, lookup, and time-calculation callees.
+
 struct Rva000F9820Record
 {
 	char pad00[0x30];
@@ -7,7 +9,7 @@ struct Rva000F9820Record
 	int value34;
 };
 
-class BfmeElemVLH
+struct BfmeElemVLH
 {
 };
 
@@ -52,13 +54,13 @@ struct BfmeGameLogic
 
 extern BfmeOtherBN *g_bfmeOtherBN;
 
-class Rva000F9820Owner : public BfmeVecVLH
+class Rva000F9820 : public BfmeVecVLH
 {
 public:
 	float getValue(int divisor, int *out);
 };
 
-float Rva000F9820Owner::getValue(int divisor, int *out)
+float Rva000F9820::getValue(int divisor, int *out)
 {
 	Rva000F9820Record *record;
 	void *key;
@@ -83,9 +85,7 @@ float Rva000F9820Owner::getValue(int divisor, int *out)
 			if (value > 0)
 			{
 				BfmeGameLogic *logic = *(BfmeGameLogic **)0x012F0898;
-				float result = (float)(unsigned int)logic->frame;
-				float numerator = result - (float)record->value30;
-				return numerator / value;
+				return ((float)(unsigned int)logic->frame - (float)record->value30) / value;
 			}
 		}
 	}
