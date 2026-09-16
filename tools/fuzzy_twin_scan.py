@@ -2,19 +2,27 @@
 """Size-tolerant twins: dump bodies within +-TOL bytes of a landed real-C++ body
 whose masked bytes align at >= RATIO similarity (difflib). Catches "same source,
 one extra instruction / different immediate width" siblings the exact-size scans miss.
-  python build/fuzzy_twin_scan.py [--tol 24] [--ratio 0.94] [--min 80] [--exclude files...]
+  python tools/fuzzy_twin_scan.py [--tol 24] [--ratio 0.94] [--min 80] [--exclude files...]
 """
+import argparse
 import sys, json, csv, collections, difflib
-sys.path.insert(0,'tools'); import build
-def arg(k,d):
-    return type(d)(sys.argv[sys.argv.index(k)+1]) if k in sys.argv else d
-tol=arg('--tol',24); ratio=arg('--ratio',0.94); minb=arg('--min',80)
-excl=set()
-if '--exclude' in sys.argv:
-    for f in sys.argv[sys.argv.index('--exclude')+1:]:
-        if f.startswith('--'): break
-        for l in open(f):
-            if l.strip(): excl.add(l.split()[0].lower())
+from functools import lru_cache
+sys.path.insert(0,'tools'); import build, eligibility
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument('--tol', type=int, default=24)
+parser.add_argument('--ratio', type=float, default=0.94)
+parser.add_argument('--min', dest='minb', type=int, default=80)
+parser.add_argument('--exclude', nargs='*', default=[], metavar='FILE')
+args = parser.parse_args()
+if args.tol < 0 or args.minb < 1 or not 0 < args.ratio <= 1:
+    parser.error('require --tol >= 0, --min >= 1, and 0 < --ratio <= 1')
+tol, ratio, minb = args.tol, args.ratio, args.minb
+excl = set(eligibility.busy_rvas())
+for filename in args.exclude:
+    with open(filename) as handle:
+        excl.update(line.split()[0].lower() for line in handle if line.strip())
+latest = eligibility.latest_verdicts()
 data=build.EXE.read_bytes(); secs=build.pe_sections(data)
 def body(rva,size):
     off=build.rva_to_file_offset(secs,rva); return data[off:off+size]
@@ -27,28 +35,34 @@ def mask(b):
             if 0x00400000<=v<0x01500000: out[i:i+4]=b'\0\0\0\0'; i+=4; continue
         i+=1
     return bytes(out)
-rows=list(csv.DictReader(open('reverse/functions.csv',newline='',encoding='utf-8',errors='replace')))
+@lru_cache(maxsize=None)
+def masked_body(rva, size):
+    return mask(body(rva, size))
+
 landed=[]; dumps=[]
-for r in rows:
-    try: rva=int(r['target_rva'],16); size=int(r['target_size'] or 0)
-    except ValueError: continue
-    if size<minb: continue
-    src=r['source']
-    if src.endswith('.asm') and 'gen_asm' in src:
-        if r['target_rva'].lower() not in excl: dumps.append((rva,size,src))
-    elif r.get('status')=='matched' and src.startswith('Code/') and not src.startswith(('Code/gen_','Code/masm_dumps')) and src.endswith(('.cpp','.c')):
-        landed.append((size,rva,r['name'],src))
+with open('reverse/functions.csv', newline='', encoding='utf-8', errors='replace') as ledger:
+    for r in csv.DictReader(ledger):
+        try: rva=int(r['target_rva'],16); size=int(r['target_size'] or 0)
+        except (ValueError, TypeError): continue
+        if size<minb: continue
+        src=r['source']
+        if src.endswith('.asm') and 'gen_asm' in src:
+            if (r['target_rva'].lower() not in excl
+                    and eligibility.open_dumps(rows=[r], latest=latest)):
+                dumps.append((rva,size,src))
+        elif r.get('status')=='matched' and src.startswith('Code/') and not src.startswith(('Code/gen_','Code/masm_dumps')) and src.endswith(('.cpp','.c')):
+            landed.append((size,rva,r['name'],src))
 landed.sort()
 import bisect
 sizes=[x[0] for x in landed]
 hits=[]
 for rva,size,src in dumps:
-    m=mask(body(rva,size)); head=m[:12]
+    m=masked_body(rva,size); head=m[:12]
     lo=bisect.bisect_left(sizes,size-tol); hi=bisect.bisect_right(sizes,size+tol)
     best=None
     for s,lrva,lname,lsrc in landed[lo:hi]:
         if s==size: continue
-        lm=mask(body(lrva,s))
+        lm=masked_body(lrva,s)
         if lm[:12]!=head: continue
         q=difflib.SequenceMatcher(None,m,lm,autojunk=False).quick_ratio()
         if q<ratio: continue

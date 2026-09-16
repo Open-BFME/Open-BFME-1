@@ -229,8 +229,11 @@ campaign: 0x002E7410 (225 B) from 0x002E7530, 0x0071C9C0 (397 B) from
 0x00733000, and 0x0046F6F0 (206 B) from its inverse at 0x0046F800.
 `source_donors.py` supplies exact operand-shape hypotheses. When that pool is
 dry, existing `neartwin_scan.py` and `fuzzy_twin_scan.py` can supply a small
-number of size-tolerant leads. Filter their results through `eligibility.py`
-and current claims before assignment; their historical masks are heuristic,
+number of size-tolerant leads. `fuzzy_twin_scan.py` now applies `eligibility.py`
+and active claims itself; recheck a result before assignment because another
+worker may claim or land it after the scan. Its argument parser handles
+`--help` without scanning, and repeated retail masks are cached for one run.
+Filter `neartwin_scan.py` results before assignment. Both masks are heuristic,
 and some donors contain assembly lifts. Such donors are evidence to inspect,
 not clean C++ to copy. A scan of 562 operand-shape hits left only five below
 RVA 0x009F0000; most remaining hits were compiler cleanup funclets. A large
