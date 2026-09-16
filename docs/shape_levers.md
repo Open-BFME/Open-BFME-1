@@ -375,3 +375,26 @@ struct.
 The listing catches the opposite mistake too. At `0x009C0A30` we merged the
 `fild` temporary with a user integer on `[ebp-4]`. Retail kept the two apart on
 -4 and -8, so every double below them sat eight bytes lower than ours.
+
+## The two-register lea operand order is not a spelling
+
+Four bodies sit at exactly one non-relocation byte, and in all four that byte
+is the SIB of a `lea` that adds two registers. Retail writes `lea edi,
+[eax+ecx]` at `0x0078D410+0x88`, `lea edi, [ecx+eax-6]` at `0x007901F0+0x9b`,
+`lea edx, [ebx+ecx]` at `0x005A0450+0xde` and `lea edx, [edi+eax]` at
+`0x0045C2F0+0x62`. Our build picks the same two registers every time and swaps
+which one is the base.
+
+Nothing in the C++ reaches it. On `0x005A0450` the addends were swapped, a
+`__forceinline` helper was added and removed, the helper was moved onto the
+sibling assignment, and the two assignments were reordered. On `0x0078D410`
+twelve forms were tried, including an unsigned round trip, an assign-then-add
+pair, a dead pre-store, an inline helper, and hoisting the locals to function
+scope. Each one left the identical byte. `/G5`, `/G6` and `/GB` reproduce it
+and `/G7` rewrites 116 bytes.
+
+MSVC commutes the addition before it picks the base, so the source order of
+the two operands never survives to the encoder. Within one body retail stays
+consistent and our build does not. `0x005A0450` and `0x0078D410` each contain
+two leas of the same shape, and in both we match the second and miss the first.
+Bank the body and take another one. Do not spend a session on this byte.
