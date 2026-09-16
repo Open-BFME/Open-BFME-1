@@ -847,3 +847,14 @@ flattening the same operations produced a 260-byte near miss. Keep the source
 helper boundary when retail repeats a check that appears redundant. The owner
 remains address-derived; its constructor and vtable establish layout, not a
 TextureClass identity. Device slot 65 and COM AddRef/Release use stdcall.
+
+### Native map donors and mapped-value constructor shape
+
+The verified float-map operator at `0x006AF6D0` led to the 191-byte waypoint
+map operator at `0x000C0D00`. A trivial 12-byte mapped struct emitted 182 bytes;
+a witnessed empty-constructor payload reproduced retail. The retail sequence
+at +0x46 copies overlapping stack dwords, not zeros. Keep the payload opaque
+when the reference type's initialization semantics differ; matching its size
+alone does not prove that declaration. The hinted insertion helper takes the
+hidden iterator output pointer first and pops 12 bytes. Verify this in its body,
+not from a guessed STL return convention or an existing ILT label.
