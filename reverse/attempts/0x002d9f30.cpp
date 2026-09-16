@@ -1,51 +1,64 @@
-// ?d_002d9f30@@YAXXZ
-// partial score=0.96 date=2026-09-08
-class BfmeTargetEVN
+// ?setCondition@Rva002D9F30Owner@@QAEXXZ
+// partial score=0.98 date=2026-09-16
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+//
+// Retail 0x002D9F30 sets one model-condition bit on the object at +8, using
+// the index held at +0x64 of the record at +4, and tail-calls the reapply. The
+// owner name is not guessed: the body has no named caller in the current
+// source surface. The helper is the existing pinned
+// BfmeOwnerVNI::bfmeApply1VNI body reached through ILT 0x0002191D.
+
+typedef unsigned int UnsignedInt;
+
+class BfmeOwnerVNI
 {
 public:
-	void bfmeNotifyEVN();
-
-	unsigned char m_bfmeHeadEVN[0x110];
-	unsigned int m_bfmeBitsEVN[8];
+	void bfmeApply1VNI();
 };
 
-class BfmeItemEVN
+class Rva002D9F30Target
 {
 public:
-	unsigned char m_bfmeHeadEVN[0x64];
-	unsigned int m_bfmeIndexEVN;
+	unsigned char m_beforeConditionWords[ 0x110 ];
+	UnsignedInt m_conditionWords[ 8 ];
 };
 
-class BfmeHostEVN
+class Rva002D9F30Record
 {
 public:
-	void bfmeMarkEVN();
-
-	int m_bfmeHeadEVN;
-	BfmeItemEVN *m_bfmeItemEVN;
-	BfmeTargetEVN *m_bfmeTargetEVN;
+	unsigned char m_beforeIndex[ 0x64 ];
+	UnsignedInt m_conditionIndex;
 };
 
-void BfmeHostEVN::bfmeMarkEVN()
+class Rva002D9F30Owner
 {
-	BfmeTargetEVN *target = m_bfmeTargetEVN;
-	BfmeItemEVN *item = m_bfmeItemEVN;
+public:
+	void setCondition();
 
-	if (target == 0 || item == 0)
+private:
+	unsigned char m_bfmePad000[ 4 ];
+	Rva002D9F30Record *m_record;
+	Rva002D9F30Target *m_target;
+};
+
+void Rva002D9F30Owner::setCondition()
+{
+	Rva002D9F30Target *target = m_target;
+	Rva002D9F30Record *record = m_record;
+
+	if( target == 0 || record == 0 )
 		return;
 
-	unsigned int index = item->m_bfmeIndexEVN;
+	UnsignedInt index = record->m_conditionIndex;
 
-	if (index == 0xffffffff)
+	if( index == 0xffffffff )
 		return;
 
-	unsigned int mask = 1 << (index & 0x1f);
-	unsigned int *slot = &target->m_bfmeBitsEVN[index >> 5];
+	UnsignedInt bit = 1U << ( index & 0x1f );
 
-	if ((*slot & mask) != 0)
+	if( ( target->m_conditionWords[ index >> 5 ] & bit ) != 0 )
 		return;
 
-	*slot = *slot | mask;
-
-	target->bfmeNotifyEVN();
+	target->m_conditionWords[ index >> 5 ] |= bit;
+	( (BfmeOwnerVNI *)target )->bfmeApply1VNI();
 }
