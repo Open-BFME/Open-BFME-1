@@ -26,3 +26,12 @@ void Rva005A00B0Owner::updateAudioFlags()
 		}
 	}
 }
+
+// ?Rva005A0130SetAllFlagVolumes@@YAXXZ
+void Rva005A0130SetAllFlagVolumes()
+{
+	for (int i = 0; i < 3; ++i) {
+		float volume = Rva005A00B0FlagVolume(i);
+		TheAudioClientUpdate->setFlagVolume(volume, 1 << i);
+	}
+}
