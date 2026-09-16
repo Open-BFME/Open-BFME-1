@@ -1,12 +1,12 @@
-// ?d_006ae650@@YAXXZ
-// partial score=0.9 date=2026-09-08
+// Scratch reconstruction for retail RVA 0x006AE650.
+// partial score=0.9 date=2026-09-16
 __declspec(dllimport) void __stdcall bfmeClose1012(void *h);
 __declspec(dllimport) int __stdcall bfmeWait1012(void *h, int t);
 
 class BfmeLockTM
 {
 public:
-	__forceinline BfmeLockTM(void *h)
+	BfmeLockTM(void *h)
 	{
 		m_bfmeOkTM = 0;
 		m_bfmeHandleTM = h;
@@ -15,7 +15,7 @@ public:
 			m_bfmeOkTM = 1;
 	}
 
-	__forceinline ~BfmeLockTM()
+	~BfmeLockTM()
 	{
 		if (m_bfmeOkTM)
 			bfmeClose1012(m_bfmeHandleTM);
@@ -25,21 +25,26 @@ public:
 	char m_bfmeOkTM;
 };
 
-struct BfmeOutTM
+template <typename T> class StringBase
 {
-	int m_bfmeATM;
-	int m_bfmeBTM;
+	void *m_data;
 };
 
-class BfmeSlotTM
+class Rva006AEE00Tree
 {
 public:
-	void bfmeFillTM(BfmeOutTM *out, int key);
+	struct InsertResult
+	{
+		void *m_iterator;
+		bool m_inserted;
+	};
 
-	unsigned char m_bfmeBodyTM[0xc];
+	void insert_unique(InsertResult *out, const StringBase<char> &key);
+
+	unsigned char m_body[0xc];
 };
 
-class BfmeHostTM
+class Rva006AE650Owner
 {
 public:
 	virtual void bfmeSlot00TM();
@@ -60,22 +65,23 @@ public:
 	virtual void bfmeSlot15TM();
 	virtual void bfmeSlot16TM();
 	virtual void bfmeSlot17TM();
-	virtual void bfmeStepTM(int a, int b);
+	virtual void bfmeStepTM(int a, int b) throw();
 
-	void bfmeRunTM(int a, int b);
+	void rva006AE650(int a, int b);
 
 	unsigned char m_bfmeHeadTM[0x958];
 	void *m_bfmeMutexTM;
-	BfmeSlotTM m_bfmeArrTM[4];
+	char m_bfmeGapTM[0x38];
+	Rva006AEE00Tree m_bfmeArrTM[4];
 };
 
-void BfmeHostTM::bfmeRunTM(int a, int b)
+void Rva006AE650Owner::rva006AE650(int a, int b)
 {
 	BfmeLockTM lock(m_bfmeMutexTM);
 
 	bfmeStepTM(a, b);
 
-	BfmeOutTM out;
-
-	m_bfmeArrTM[b].bfmeFillTM(&out, a);
+	Rva006AEE00Tree::InsertResult out;
+	m_bfmeArrTM[b].insert_unique(&out,
+		*reinterpret_cast<StringBase<char> *>(*(volatile int *)&a));
 }
