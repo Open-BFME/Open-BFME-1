@@ -1,5 +1,5 @@
 // ?notify@Rva0069F4D0Block@@QAEXPAXH@Z
-// partial score=0.72 date=2026-09-04
+// partial score=0.75 date=2026-09-15
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 void __stdcall refreshPair(int a, int b);
 void __stdcall productClamp(int index);

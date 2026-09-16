@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "df3206cd74b91cef58219b253a573c1ce1f2959b4b1f7f649e957226febd41c9",
+  "symbol": "?sweep_Rva00699AF0@@YAXH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.79,
+  "source": "// ?sweep_Rva00699AF0@@YAXH@Z\n// partial score=0.79 date=2026-09-15\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n// Guarded TheAudio sweep: three 0x1C4-byte blocks at +0xB8, each visited\n// with a (arg, 0) and (arg, 1) thiscall into the ILT at 0x00019E6B.\n// Near-miss: retail hoists lea ecx before xor esi and reuses ecx across the\n// inner calls; MSVC 7.1 reloads TheAudio/lea inside the inner loop (13B).\n\nclass Rva00699AF0Block\n{\npublic:\n\tvoid apply(void *arg, int which);\n};\n\nextern char *TheAudio;\n\nvoid sweep_Rva00699AF0(void *arg)\n{\n\tif (TheAudio)\n\t{\n\t\tvoid *held = arg;\n\t\tfor (int offset = 0; offset < 0x54C; offset += 0x1C4)\n\t\t{\n\t\t\tfor (int which = 0; which < 2; ++which)\n\t\t\t\t((Rva00699AF0Block *)(TheAudio + 0xB8 + offset))->apply(held, which);\n\t\t}\n\t}\n}\n"
+}
