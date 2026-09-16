@@ -3471,6 +3471,7 @@ name,address,notes
 ??0Rva00608FE0Element@@QAE@XZ,0x0002A48C,Open-BFME5 ILT for the SoundUpgrade record default constructor used by the SoundUpgrade field parser
 ??0Rva0060FD30Base@@QAE@ABV0@@Z,0x0000FA3D,Open-BFME5 fresh thiscall copy ctor at ILT of derived copy 0x0060FD30
 ??0Rva0061AF80Region@@QAE@ABVAsciiString@@@Z,0x0061AF80,parser allocation and vtable 0x01117258 identify the 0xF4-byte LivingWorldRegion constructor
+??0Rva0061DA30Base@@QAE@VAsciiString@@@Z,0x0001BD5B,ILT to the 252-byte body at 0x0061DA30; the by-value AsciiString base constructor that the 0x0060BEB0 derived constructor forwards a copy to; address-derived
 ??0Rva00630D00UStr@@QAE@ABV0@@Z,0x00888530,Open-BFME5 fresh thiscall copy ctor for 0x00630D00 unicode-string member
 ??0Rva00647720String@@QAE@ABV0@@Z,0x0001CB11,Open-BFME5 the string copy constructor a by-value accessor calls
 ??0Rva00647750String@@QAE@ABV0@@Z,0x0001CB11,Open-BFME5 the string copy constructor a by-value accessor calls
