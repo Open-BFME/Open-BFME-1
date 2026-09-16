@@ -81600,6 +81600,7 @@ name,address,notes
 ?getFinalOverride@BfmeControlBarOverridable@@QBEPBV1@XZ,0x000022BB,Open-BFME5 view-class spelling of the ILT already pinned as ?getFinalOverride@Overridable@@QBEPBV1@XZ; ControlBar::findNonConstCommandButton calls it through the view so the vendored inline recursive walk cannot unroll
 ?getFinalOverride@BfmeLocomotorTemplate@@QAEPAV1@XZ,0x000022BB,AODHordeContain large-unit hook reaches the existing locomotor override-chain walker
 ?getFinalOverride@BfmeOverridable@@QBEPBV1@XZ,0x000022BB,ILT to Overridable::getFinalOverride; WeaponSet::updateWeaponSet template walk
+?getFinalOverride@BfmePartitionThingTemplate@@QAEPAV1@XZ,0x000022BB,PartitionFilterThing vtable slot 1 body at 0x001DD770 checks the BFME Thing template override link at +0x04 and calls this proven override-chain ILT
 ?getFinalOverride@BfmeTeamControlOverridable@@QBEPBV1@XZ,0x000022BB,Team.cpp BFME-layout view spelling of the proven Overridable chain-walker ILT
 ?getFinalOverride@Overridable@@QAEPAV1@XZ,0x000022BB,non-const spelling of getFinalOverride ILT; callee of BfmeHost416B90::getSlot @ 0x416B90
 ?getFinalOverride@Overridable@@QBEPBV1@XZ,0x000022BB

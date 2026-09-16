@@ -5294,10 +5294,39 @@ Bool PartitionFilterPlayerAffiliation::allow( Object *other )
 }
 
 //-----------------------------------------------------------------------------
-// ?allow@PartitionFilterThing@@MAE_NPAVObject@@@Z present-unmatched
+class BfmePartitionThingTemplate
+{
+public:
+	BfmePartitionThingTemplate *getFinalOverride();
+
+	UnsignedByte m_unreconstructed_000[4];
+	BfmePartitionThingTemplate *m_nextOverride;
+};
+
+struct BfmePartitionThingHead
+{
+	UnsignedByte m_unreconstructed_000[4];
+	BfmePartitionThingTemplate *m_template;
+};
+
+struct BfmePartitionFilterThingFields
+{
+	UnsignedByte m_unreconstructed_000[8];
+	const ThingTemplate *m_tThing;
+	Bool m_match;
+};
+
 Bool PartitionFilterThing::allow( Object *other )
 {
-	return (m_tThing->isEquivalentTo(other->getTemplate()) == m_match);
+	BfmePartitionThingTemplate *otherTemplate =
+		reinterpret_cast<BfmePartitionThingHead *>(other)->m_template;
+	if (otherTemplate && otherTemplate->m_nextOverride)
+		otherTemplate = otherTemplate->m_nextOverride->getFinalOverride();
+
+	BfmePartitionFilterThingFields *self =
+		reinterpret_cast<BfmePartitionFilterThingFields *>(this);
+	return self->m_tThing->isEquivalentTo(
+		reinterpret_cast<const ThingTemplate *>(otherTemplate)) == self->m_match;
 }
 
 //-----------------------------------------------------------------------------
