@@ -1,12 +1,16 @@
-// ?onEnter@Rva00178C30State@@UAE?AW4StateReturnType@@XZ
-// partial score=0.96 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
-// BFME reconstruction of the anonymous 0x00178C30 state-entry helper.
+// The retail body at 0x00178C30 enters a move state. It keeps an
+// address-derived name because the only caller the image exposes is the
+// generated thunk at 0x0003A549, which names no class. The state fields and
+// the ILT thunks below fix its ABI. The success arm returns
+// ?onEnter@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ at 0x00172600,
+// so the owning class derives from AIInternalMoveToState.
 //
-// The adjacent ComputePath29/30/31 bodies establish the retail move-state
-// layout.  This body is kept address-derived because the retail image exposes
-// only a generated thunk caller, not a trustworthy class name.  Its ABI is
-// nevertheless fixed by the state fields and by the pinned ILT callees below.
+// The three-word position copy below stores Z, then Y, then X. MSVC 7.1 moves
+// the store the source writes first down past the `push 0x1dc9` that starts
+// the updateGoal argument list. Retail moves the Z store there, so Z has to
+// come first in the source. Writing the three stores as X, Y, Z instead left
+// six bytes different.
 
 typedef unsigned char Bool;
 
@@ -160,9 +164,9 @@ StateReturnType Rva00178C30State::onEnter()
 			((unsigned char *)owner + 0x3c);
 		register unsigned int positionZ = *(unsigned int *)
 			((unsigned char *)owner + 0x40);
-		*(unsigned int *)((unsigned char *)&localFrame.adjustedGoal + 0x00) = positionX;
-		*(unsigned int *)((unsigned char *)&localFrame.adjustedGoal + 0x04) = positionY;
 		*(unsigned int *)((unsigned char *)&localFrame.adjustedGoal + 0x08) = positionZ;
+		*(unsigned int *)((unsigned char *)&localFrame.adjustedGoal + 0x04) = positionY;
+		*(unsigned int *)((unsigned char *)&localFrame.adjustedGoal + 0x00) = positionX;
 		pathfinder = TheAI->pathfinder();
 		(pathfinder->*updateGoalCast.asMember)(
 			owner,
