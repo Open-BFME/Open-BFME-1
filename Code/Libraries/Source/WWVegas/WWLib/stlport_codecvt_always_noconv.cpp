@@ -5,8 +5,10 @@
 // '.?AV?$codecvt@DDH@_STL@@' and 0x0112EAB0 spells '.?AV?$codecvt@GDH@_STL@@'.
 // vendor/stlport/stl/_codecvt.h declares the protected virtuals as do_out,
 // do_in, do_unshift, do_encoding, do_always_noconv, do_length, do_max_length,
-// so slot 5 of each vtable is do_always_noconv.  Both bodies return true,
-// which is what a codecvt that never converts reports.
+// so slot 4 is do_encoding, slot 5 do_always_noconv and slot 7 do_max_length.
+// The always_noconv bodies return true, which is what a codecvt that never
+// converts reports, and the other four return 1, which is the fixed width such
+// a codecvt reads and writes.
 
 typedef unsigned short wchar_t;
 
@@ -28,8 +30,22 @@ class codecvt : public locale::facet
 {
 protected:
 	virtual ~codecvt();
+	virtual int do_encoding() const;
 	virtual bool do_always_noconv() const;
+	virtual int do_max_length() const;
 };
+
+template <class InternT, class ExternT, class StateT>
+int codecvt<InternT, ExternT, StateT>::do_encoding() const
+{
+	return 1;
+}
+
+template <class InternT, class ExternT, class StateT>
+int codecvt<InternT, ExternT, StateT>::do_max_length() const
+{
+	return 1;
+}
 
 template <class InternT, class ExternT, class StateT>
 bool codecvt<InternT, ExternT, StateT>::do_always_noconv() const
