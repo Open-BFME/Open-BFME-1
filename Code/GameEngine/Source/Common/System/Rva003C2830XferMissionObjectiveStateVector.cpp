@@ -1,6 +1,5 @@
 // ?Rva003C2830XferMissionObjectiveStateVector@@YAPAVXfer@@PAV1@PAV?$vector@UMissionObjectiveState@@V?$allocator@UMissionObjectiveState@@@_STL@@@_STL@@@Z
-// partial score=0.98 date=2026-09-11
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /MD /EHsc /FAsc /Fabuild/mission_objective.cod /Ireference/shims/stlp_nodealloc /Ireference/shims/asciistring_thin /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /MD /EHsc /FAsc /Fabuild/mission_objective.cod /Ireference/shims/stlp_nodealloc /Ireference/shims/asciistring_thin /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad
 // stlport
 //
 // Retail 0x003C2830, 326 bytes; same Xfer<T>Vector family as the matched
@@ -15,6 +14,10 @@
 // setMissionObjectiveVisible push_back call at the neighboring 0x003C29D0.
 // No named caller reaches this vector-xfer helper itself, so the function
 // name is address-derived like its ScienceVector sibling.
+//
+// The separate four-byte ValueStorage union is intentional. It preserves the
+// two-byte value while giving VC7.1 the same positive argument-home slot that
+// retail reuses after the vector argument has been copied into EDI.
 
 #define BFME_STLP_NODE_ALLOC
 #include <vector>
@@ -125,14 +128,19 @@ Xfer *Rva003C2830XferMissionObjectiveStateVector(Xfer *xfer, MissionObjectiveSta
 
 		vector->reserve(count);
 
-		versionStorage.value.m_visible = true;
-		versionStorage.value.m_completed = false;
+		union ValueStorage
+		{
+			MissionObjectiveState value;
+			unsigned char padding[4];
+		} valueStorage;
+		valueStorage.value.m_visible = true;
+		valueStorage.value.m_completed = false;
 		while (count != 0)
 		{
 			--count;
-			xfer->xferBool(&versionStorage.value.m_visible);
-			xfer->xferBool(&versionStorage.value.m_completed);
-			vector->push_back(versionStorage.value);
+			xfer->xferBool(&valueStorage.value.m_visible);
+			xfer->xferBool(&valueStorage.value.m_completed);
+			vector->push_back(valueStorage.value);
 		}
 	}
 	return xfer;
