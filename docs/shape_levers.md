@@ -669,3 +669,19 @@ and made the complete body exact. The setter is real source behavior, not a
 dummy code-generation helper. First verify all field offsets and reloads after
 calls: five missing array-stride gaps and cached owner pointers initially hid
 these two source-shape issues.
+
+## Native render-state inlines and conditional handle temporaries
+
+Terrain rendering `0x0072DC30` (1044 bytes) needs the actual `dx8wrapper.h`
+render-state helper, including native `StringClass` diagnostic lifetimes.
+A hand-expanded state-cache macro with raw global addresses compiled to 950
+bytes; the native header restored the complete frame and cleanup structure.
+Model the stored option at `+0x51` as its witnessed `Bool`, not an unsigned
+byte requiring another boolean conversion: this removed an early EBX save.
+
+The final 16 differing bytes had two causes: clearing the dirty flag before
+constructing the update region, and using a positive
+`if (count && returnedOwningHandle) { draw; }` block. The negated early-return
+form reversed the temporary-condition flag arms. The positive form preserves
+the handle's destruction before entering the draw block. Together these made
+the full function exact, including both draw paths and all five unwind states.
