@@ -36,7 +36,7 @@ def world(tmp_path, monkeypatch):
 
 def bank(tmp_path, score):
     (tmp_path / "attempts" / f"0x{RVA:08x}.cpp").write_text(
-        f"// {SYM}\n// partial score={score} date=2026-09-15\nint x;\n", encoding="utf-8")
+        f"// {SYM}\n// partial score={score} date=2026-09-01\nint x;\n", encoding="utf-8")
 
 
 def verdict(log, status):
@@ -69,7 +69,7 @@ def test_probe_command_excludes_symbol_header_annotation(world):
     tmp_path, _, _ = world
     label = SYM + " (identity unknown)"
     (tmp_path / "attempts" / f"0x{RVA:08x}.cpp").write_text(
-        f"// {label}\n// partial score=0.97 date=2026-09-15\nint x;\n",
+        f"// {label}\n// partial score=0.97 date=2026-09-01\nint x;\n",
         encoding="utf-8")
     candidate = next_work.finish_candidates(0.9)[0]
     assert candidate["function"] == label
@@ -99,3 +99,30 @@ def test_finish_choice_prefers_closer_bodies():
     cands = [{"score": 0.99}, {"score": 0.90}]
     draws = [next_work.finish_choice(cands)["score"] for _ in range(300)]
     assert draws.count(0.99) > draws.count(0.90) * 3
+
+
+def test_attempt_cap_hides_hammered_bodies(world):
+    tmp_path, log, _ = world
+    bank(tmp_path, "0.95")
+    for _ in range(5):
+        verdict(log, "blocked")
+    assert next_work.finish_candidates(0.9, max_attempts=5, cooldown_days=0) == []
+    assert len(next_work.finish_candidates(0.9, max_attempts=0, cooldown_days=0)) == 1
+    assert len(next_work.finish_candidates(0.9, max_attempts=6, cooldown_days=0)) == 1
+
+
+def test_cooldown_hides_a_fresh_stash_by_header_date(world):
+    import datetime
+    import eligibility
+    tmp_path, log, _ = world
+    verdict(log, "partial")
+    today = datetime.date.today().isoformat()
+    (tmp_path / "attempts" / f"0x{RVA:08x}.cpp").write_text(
+        f"// {SYM}\n// partial score=0.95 date={today}\nint x;\n", encoding="utf-8")
+    assert next_work.finish_candidates(0.9, max_attempts=0, cooldown_days=2) == []
+    assert len(next_work.finish_candidates(0.9, max_attempts=0, cooldown_days=0)) == 1
+    stale = datetime.date.today() - datetime.timedelta(days=3)
+    (tmp_path / "attempts" / f"0x{RVA:08x}.cpp").write_text(
+        f"// {SYM}\n// partial score=0.95 date={stale.isoformat()}\nint x;\n", encoding="utf-8")
+    assert len(next_work.finish_candidates(0.9, max_attempts=0, cooldown_days=2)) == 1
+    assert eligibility.stash_date(tmp_path / "attempts" / f"0x{RVA:08x}.cpp") == stale

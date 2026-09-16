@@ -46,7 +46,7 @@ def verdict(log, status):
 
 def bank(tmp_path, score):
     (tmp_path / "attempts" / f"0x{RVA:08x}.cpp").write_text(
-        f"// {SYM}\n// partial score={score} date=2026-09-15\nint x;\n", encoding="utf-8")
+        f"// {SYM}\n// partial score={score} date=2026-09-01\nint x;\n", encoding="utf-8")
 
 
 def test_dump_row_predicate_covers_note_and_suffix():
@@ -102,3 +102,16 @@ def test_recent_runs_and_attempt_counts(tmp_path, world):
     verdict(log, "blocked")
     verdict(log, "partial")
     assert eligibility.attempt_counts()[RVA] == 2
+
+
+def test_hard_bodies_are_the_capped_complement(world):
+    world_path, log = world
+    bank(world_path, "0.95")
+    for _ in range(3):
+        verdict(log, "blocked")
+    rows, latest = [row()], eligibility.latest_verdicts()
+    served = eligibility.finish_bodies(0.9, rows, latest, max_attempts=3, cooldown_days=0)
+    hard = eligibility.hard_bodies(0.9, 3, rows, latest)
+    assert served == [] and [eligibility.rva_of(r) for r, _, _ in hard] == [RVA]
+    assert len(eligibility.finish_bodies(0.9, rows, latest, max_attempts=4, cooldown_days=0)) == 1
+    assert eligibility.hard_bodies(0.9, 4, rows, latest) == []

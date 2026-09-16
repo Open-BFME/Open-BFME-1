@@ -573,9 +573,17 @@ def annotate_stashes(candidates):
     return candidates
 
 
-def finish_candidates(min_score=0.9):
+FINISH_MAX_ATTEMPTS = 5
+FINISH_COOLDOWN_DAYS = 2
+
+
+def finish_candidates(min_score=0.9, max_attempts=FINISH_MAX_ATTEMPTS,
+                      cooldown_days=FINISH_COOLDOWN_DAYS):
     """The near-landed tier: bodies with a banked attempt at or above
-    `min_score` whose address is STILL a dump.
+    `min_score` whose address is STILL a dump, tried fewer than `max_attempts`
+    times, and not re-banked in the last `cooldown_days` (0 disables either).
+    The hidden hard set is `python3 tools/next_work.py --tier finish
+    --max-attempts 0` and the lunaxhigh finish lane.
 
     This reads the stash directory, not the log's latest verdict. A later
     `blocked` row on the same address does not delete the 0.95 body it
@@ -588,7 +596,8 @@ def finish_candidates(min_score=0.9):
     latest = eligibility.latest_verdicts()
     out = []
     for row, stash_path, score in eligibility.finish_bodies(
-            min_score, build.load_all_function_rows(), latest):
+            min_score, build.load_all_function_rows(), latest,
+            max_attempts=max_attempts, cooldown_days=cooldown_days):
         rva = int(row["target_rva"], 16)
         head = stash_path.read_text(encoding="utf-8", errors="replace").splitlines()[:1]
         label = (head[0].lstrip("/").strip() if head else "") or row["name"]
@@ -1304,6 +1313,12 @@ def main():
                     help="choose from only this task lane")
     ap.add_argument("--min-score", type=float, default=0.9,
                     help="finish tier: lowest banked score to serve (default 0.9)")
+    ap.add_argument("--max-attempts", type=int, default=FINISH_MAX_ATTEMPTS,
+                    help="finish tier: hide bodies with this many verdict rows "
+                         f"(default {FINISH_MAX_ATTEMPTS}; 0 = serve the hard set too)")
+    ap.add_argument("--cooldown-days", type=int, default=FINISH_COOLDOWN_DAYS,
+                    help="finish tier: hide stashes banked this recently "
+                         f"(default {FINISH_COOLDOWN_DAYS}; 0 = no cooldown)")
     ap.add_argument("--shard", type=parse_shard, metavar="INDEX/COUNT",
                     help="stable zero-based partition for concurrent workers")
     ap.add_argument("--big", action="store_true",
@@ -1336,7 +1351,7 @@ def main():
                                         big=args.big)
                   if args.tier not in ("named", "harvest", "ghidra", "anchored")
                   else [])
-    finish = (finish_candidates(args.min_score)
+    finish = (finish_candidates(args.min_score, args.max_attempts, args.cooldown_days)
               if args.tier in (None, "finish") else [])
     if args.tier in (None, "named"):
         named, named_note = reloc_named_candidates(claimed, claimed_ranges)

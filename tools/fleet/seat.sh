@@ -33,7 +33,7 @@ run_engine() {  # $1 brief, $2 log
 
 while true; do
   if [ "${ENGINE%big}" != "$ENGINE" ]; then
-    RVA=$(python build/pick_big.py 1 | tr -d '\r' | head -1)
+    RVA=$(python tools/fleet/pick_big.py 1 | tr -d '\r' | head -1)
     [ -z "$RVA" ] && { echo "seat $SEAT: no big body picked; retry in 60s"; sleep 60; continue; }
     for PASS in 1 2 3; do
       BEFORE=$(python tools/fleet_run.py --fingerprint "$RVA" | tr -d '\r')
@@ -49,7 +49,7 @@ while true; do
     done
   elif [ "${ENGINE%class}" != "$ENGINE" ]; then
     # class lane: the dump slots of one warm vtable (most slots already landed C++)
-    python build/pick_class.py > build/.pick_class_$SEAT.txt 2>/dev/null
+    python tools/fleet/pick_class.py > build/.pick_class_$SEAT.txt 2>/dev/null
     RVAS=$(head -1 build/.pick_class_$SEAT.txt | sed 's/^RVAS: //' | tr -d '\r')
     [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no warm class picked; retry in 120s"; sleep 120; continue; }
     STEM=$(echo "$RVAS" | awk '{print $1}')
@@ -64,7 +64,7 @@ while true; do
     # mid lane: 3 bodies of 300..1000 B from one dump file whose neighbours are already C++
     case "$ENGINE" in *big*) MIDARGS="2 1000 1600";; *) MIDARGS="3 300 1000";; esac   # lunabigmid = upper window
     # shellcheck disable=SC2086
-    RVAS=$(python build/pick_mid.py $MIDARGS | tr -d '\r' | tr '\n' ' ')
+    RVAS=$(python tools/fleet/pick_mid.py $MIDARGS | tr -d '\r' | tr '\n' ' ')
     [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no mid bodies picked; retry in 60s"; sleep 60; continue; }
     STEM=$(echo "$RVAS" | awk '{print $1}')
     BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
@@ -76,7 +76,7 @@ while true; do
     echo "$(date '+%H:%M') seat $ENGINE$SEAT done $STEM" >> build/fleet_logs/seats.log
   elif [ "${ENGINE%anon}" != "$ENGINE" ]; then
     # anonymous lane: 2 anonymous dump bodies with the warmest evidence pack
-    RVAS=$(python build/pick_anon.py 2 300 2500 | tr -d '\r' | tr '\n' ' ')
+    RVAS=$(python tools/fleet/pick_anon.py 2 300 2500 | tr -d '\r' | tr '\n' ' ')
     [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no anonymous bodies picked; retry in 120s"; sleep 120; continue; }
     STEM=$(echo "$RVAS" | awk '{print $1}')
     BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
@@ -88,7 +88,7 @@ while true; do
     echo "$(date '+%H:%M') seat $ENGINE$SEAT done $RVAS" >> build/fleet_logs/seats.log
   elif [ "${ENGINE%review}" != "$ENGINE" ]; then
     # review lane: banked bodies 0.5..0.95; check what the byte gate cannot see
-    RVAS=$(python build/pick_review.py 2 0.5 0.95 | tr -d '\r' | tr '\n' ' ')
+    RVAS=$(python tools/fleet/pick_review.py 2 0.5 0.95 | tr -d '\r' | tr '\n' ' ')
     [ -z "${RVAS// /}" ] && { echo "seat $SEAT: nothing to review; retry in 300s"; sleep 300; continue; }
     STEM=$(echo "$RVAS" | awk '{print $1}')
     BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
@@ -100,18 +100,22 @@ while true; do
     echo "$(date '+%H:%M') seat $ENGINE$SEAT done $RVAS" >> build/fleet_logs/seats.log
   elif [ "${ENGINE%fin}" != "$ENGINE" ]; then
     # finish lane: 2 bodies whose banked partial scored >= 0.9, start from the stash
-    RVAS=$(python build/pick_finish.py 4 0.9 | tr -d '\r' | tr '\n' ' ')
+    # luna: fewer than 5 verdicts and not re-banked in 2 days. lunaxhigh: the
+    # hard set too (no cap, no cooldown) -- a sixth max pass on the same levers
+    # was the fleet's main occupation on 2026-09-16 (550 of 800 verdict rows).
+    if [ "${ENGINE#lunaxhigh}" != "$ENGINE" ]; then FINARGS="4 0.9 0 0"; else FINARGS="4 0.9 5 2"; fi
+    RVAS=$(python tools/fleet/pick_finish.py $FINARGS | tr -d '\r' | tr '\n' ' ')
     [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no finish bodies picked; retry in 60s"; sleep 60; continue; }
     STEM=$(echo "$RVAS" | awk '{print $1}')
     BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
     # shellcheck disable=SC2086
-    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 4 --note "NEAR-LANDED bodies: each has a banked stash scoring 0.9+ (START FROM STASH line). Do not rewrite from scratch. Compile the stash, run probe.py, and work ONLY the first divergence with one lever at a time from docs/shape_levers.md (register mirror = local definition order / loads above guard / IAT CSE; sib-order; eh-transposition; fall-through flag tail). Land with add_match.py; if still short, re-bank with an honest score and what you tried." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
+    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 4 --note "NEAR-LANDED bodies: each has a banked stash scoring 0.9+ (START FROM STASH line). Do not rewrite from scratch. Compile the stash, run probe.py, and work ONLY the first divergence with one lever at a time from docs/shape_levers.md (register mirror = local definition order / loads above guard / IAT CSE; sib-order; eh-transposition; fall-through flag tail). READ the previous evidence lines for each body in reverse/re_attempts.log first and do not repeat a lever they already report; if every lever is exhausted, bank the FIRST divergence offset and the exhausted list in one evidence line and move to the next body within 15 minutes. Land with add_match.py; if still short, re-bank with an honest score and what you tried." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
     LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
     echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $STEM" >> build/fleet_logs/seats.log
     run_engine "$BRIEF" "$LOG"
     echo "$(date '+%H:%M') seat $ENGINE$SEAT done $STEM" >> build/fleet_logs/seats.log
   else
-    FILE=$(python build/pick_file.py 12 | tr -d '\r')
+    FILE=$(python tools/fleet/pick_file.py 12 | tr -d '\r')
     [ -z "$FILE" ] && { echo "seat $SEAT: no file picked; retry in 60s"; sleep 60; continue; }
     STEM=$(basename "$FILE" .asm)
     BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"

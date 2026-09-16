@@ -18,6 +18,18 @@ waits 48 h (`recent_run_rvas`, from the immutable run records) instead of
 being claimed for ever. Measured before the change: `pick_finish.py` saw 147 of
 381 servable near-misses; `next_work.py` had no stash tier at all.
 
+The finish tier caps attempts (`finish_bodies(max_attempts=5)`) and honours a
+cooldown on the stash header date (`cooldown_days=2`, the one cross-host
+signal git carries). Measured 2026-09-16 over the last 800 verdict rows: 10
+first attempts, 259 on bodies with eight or more prior verdicts, 550 on bodies
+with six or more -- every default seat drew the same 270 near misses by
+score, which is why the headline rose 0.47 pp in 20 hours instead of more.
+`eligibility.hard_bodies()` is the hidden complement (272 bodies, 73 KB); the
+`lunaxhigh` finish lane serves it uncapped, the luna lane gets the 77 that
+are still cheap. `seat.sh` now runs the tracked `tools/fleet/pick_*.py`
+directly; the untracked `build/pick_*.py` copies were never refreshed on other
+hosts.
+
 `tools/fleet_run.py` claims are leases: pid + expiry (`FLEET_LEASE_SECONDS`,
 default session cap + 30 min). A lease is reclaimed only when expired AND the
 pid is gone; an unknown pid is never reclaimed. Takeovers are recorded in the

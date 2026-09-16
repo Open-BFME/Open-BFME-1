@@ -16,7 +16,11 @@ An explicit request or assigned lane overrides the queue:
    a dump address with a banked body scoring 0.90+ (`reverse/attempts/`).
    Measured 2026-09-15: 404 such bodies, 106 KB, 1.1 pp, each one lever from
    landing. START FROM THE STASH; a later `blocked` on the same address is a
-   failed session, not a reason to rewrite. Only a dead-end verdict
+   failed session, not a reason to rewrite. The tier hides a body after 5
+   verdict rows or a stash banked in the last 2 days (measured 2026-09-16:
+   550 of 800 verdict rows were sixth-or-later passes on the same 270 near
+   misses); `--max-attempts 0 --cooldown-days 0` shows the hard set, which
+   needs a lever nobody has tried yet, not another pass. Only a dead-end verdict
    (no-match, refuted, ...) retires an address, and that rule now lives in
    ONE place, `tools/eligibility.py`, which every picker and `brief.py`
    import. Do not re-derive "is this open work" in a new tool.

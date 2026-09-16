@@ -26,6 +26,7 @@ Library use only; nothing here writes.
 """
 import csv
 import json
+import datetime
 import re
 import time
 from pathlib import Path
@@ -127,17 +128,62 @@ def open_dumps(rows=None, latest=None, min_size=0, max_size=None, anonymous=None
     return out
 
 
-def finish_bodies(min_score=0.9, rows=None, latest=None):
+def stash_date(path):
+    """The ISO date on a stash header's second line, else None."""
+    try:
+        lines = Path(path).read_text(encoding="utf-8", errors="replace").splitlines()
+    except OSError:
+        return None
+    m = re.search(r"date=(\d{4}-\d{2}-\d{2})", lines[1]) if len(lines) > 1 else None
+    if not m:
+        return None
+    try:
+        return datetime.date.fromisoformat(m.group(1))
+    except ValueError:
+        return None
+
+
+def finish_bodies(min_score=0.9, rows=None, latest=None, max_attempts=0,
+                  counts=None, cooldown_days=0, today=None):
     """[(row, stash_path, score)] for dumps with a banked body >= min_score,
     best score first then largest. A later deferral does not hide the stash;
-    a later dead end retires it."""
+    a later dead end retires it.
+
+    Two guards keep the tier from becoming a treadmill. Measured 2026-09-16
+    over the last 800 verdict rows: 10 were first attempts, 259 were on bodies
+    already tried eight or more times, and 550 of the 800 landed on bodies
+    with six or more prior verdicts -- every default seat drew the same 270
+    near misses by score. `max_attempts` > 0 hides a body with that many
+    verdict rows (the hard set; serve it to a stronger lane on purpose, see
+    hard_bodies). `cooldown_days` > 0 hides a stash re-banked that recently,
+    which is the only cross-host signal in git: the date on the stash header.
+    """
     out = []
+    counts = counts if counts is not None else (attempt_counts() if max_attempts else {})
+    today = today or datetime.date.today()
     for row in open_dumps(rows, latest):
-        found = stash(rva_of(row))
-        if found and found[1] >= min_score:
-            out.append((row, found[0], found[1]))
+        rva = rva_of(row)
+        found = stash(rva)
+        if not found or found[1] < min_score:
+            continue
+        if max_attempts and counts.get(rva, 0) >= max_attempts:
+            continue
+        if cooldown_days:
+            banked = stash_date(found[0])
+            if banked and (today - banked).days < cooldown_days:
+                continue
+        out.append((row, found[0], found[1]))
     out.sort(key=lambda t: (-t[2], -int(t[0].get("target_size") or 0)))
     return out
+
+
+def hard_bodies(min_score=0.9, max_attempts=5, rows=None, latest=None, counts=None):
+    """The near misses finish_bodies hides under `max_attempts`: banked at or
+    above min_score, still a dump, tried at least max_attempts times. These
+    need a different lever or a reviewer, not a sixth luna pass."""
+    counts = counts if counts is not None else attempt_counts()
+    served = finish_bodies(min_score, rows, latest)
+    return [t for t in served if counts.get(rva_of(t[0]), 0) >= max_attempts]
 
 
 def busy_rvas(root=None, seats_log=None):
