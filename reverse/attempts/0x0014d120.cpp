@@ -12,7 +12,7 @@
 #include "GameLogic/PartitionManager.h"
 #include "GameLogic/ScriptEngine.h"
 
-#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "../../Code/Libraries/Source/WWVegas/WWLib/string_base.h"
 
 #include <math.h>
 
