@@ -1,161 +1,172 @@
-// d_00290520
-// partial score=0.25 date=2026-09-05
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5 WIP candidate for retail 0x00290520 (426 B), dump d_00280010.asm.
-// This is an INI field-parse callback for EmotionTrackerUpdateModuleData: it
-// reads one or two tokens, resolves an EmotionNugget by name via
-// EmotionSystem::findNugget, builds an EmotionTrackerUpdateEntry (same class
-// whose destructor is EmotionTrackerUpdateEntryDestructor.cpp -- three
-// AsciiStrings at +0x00/+0x3C/+0xF4, sizeof 0xF8, matching this body's
-// operator new(0xF8)) and appends it to the ModuleData's
-// std::vector<EmotionTrackerUpdateEntry*> m_entries at +0x30 (the same
-// vector/offset EmotionTrackerUpdateCtor.cpp iterates).
-//
-// NOT YET BYTE EXACT. Open questions (see re_attempts.log / banked notes):
-//   - g_lookup (0x0135933C) semantics: called as (token, 0x10be338) and only
-//     used as a bool; probably a keyword/table validity check before falling
-//     back to a second getNextToken.
-//   - the setter call at retail +0x10c (thunk j_0002a57c, gen_small stub,
-//     real signature unresolved) that hands the found EmotionNugget* to the
-//     new entry.
-//   - the conditional call at +0x14b (thunk j_0000452a) gated on whether the
-//     second-token branch was taken (bl flag).
-//   - which of +0x00/+0x3C/+0xF4 the name token vs the translated
-//     UnicodeString text land in.
-// Banked as a partial candidate; not landed.
+// ?d_00290520@@YAXXZ
+// partial score=0.99 date=2026-09-15
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 
-#include <new>
-
-typedef unsigned int UnsignedInt;
+#include <vector>
 
 template <typename T>
 class StringBase
 {
 	friend class AsciiString;
+	friend class BfmeEmotionName;
+
+public:
+	void set(const StringBase<T> &source);
 
 private:
-	StringBase(const T *str);				// retail 0x00888BC0 (char)
-	void releaseBuffer();					// retail 0x00887940 (char)
-
+	StringBase(const T *text);
+	void releaseBuffer();
 	void *m_data;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
 {
 public:
-	AsciiString(const char *text) : m_string(text) {}
-	~AsciiString() { m_string.releaseBuffer(); }
+	AsciiString(const char *text)
+	{
+		((StringBase<char> *)this)->StringBase<char>::StringBase(text);
+	}
+	~AsciiString()
+	{
+		((StringBase<char> *)this)->StringBase<char>::releaseBuffer();
+	}
 
-	StringBase<char> m_string;
+private:
+	void *m_data;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INIException.h
+class BfmeEmotionName : private StringBase<char>
+{
+public:
+	BfmeEmotionName(const char *text) : StringBase<char>(text) {}
+	~BfmeEmotionName()
+	{
+		((StringBase<char> *)this)->StringBase<char>::releaseBuffer();
+	}
+};
+
+class INI
+{
+public:
+	const char *getNextToken(const char *separators = 0);
+};
+
 class INIException
 {
 public:
 	INIException(int, const char *, ...);
 	INIException(const INIException &);
-};
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/INI.h
-class INI
-{
-public:
-	const char *getNextToken(const char *seps = 0);		// retail 0x00850970
+	char *m_failureMessage;
 };
-
-// Forward only -- never dereferenced here, only reinterpret_cast'd through so
-// the EmotionSystem::findNugget mangling matches the existing symbols.csv pin.
-class BfmeEmotionName;
 
 class EmotionNugget
 {
 public:
-	EmotionNugget();							// pinned ??0EmotionNugget@@QAE@XZ, retail 0x0001193C
+	EmotionNugget();
+
+private:
+	AsciiString m_name;
+	int m_04;
+	unsigned char m_08;
+	unsigned char m_09;
+	unsigned char m_pad0A[2];
+	int m_0C;
+	int m_10;
+	int m_14;
+	int m_18;
+	int m_1C;
+	int m_20;
+	int m_24;
+	int m_28;
+	unsigned char m_2C;
+	unsigned char m_2D;
+	unsigned char m_pad2E[2];
+	int m_30;
+	int m_34;
+	int m_38;
+	AsciiString m_3C;
+	int m_40;
+	unsigned char m_44;
+	unsigned char m_pad45[3];
+	int m_48;
+	int m_4C;
+	int m_50;
+	unsigned int m_54[20];
+	unsigned int m_A4[20];
+	AsciiString m_F4;
 };
 
 class EmotionSystem
 {
 public:
-	EmotionNugget *findNugget(const BfmeEmotionName &name);	// pinned, retail 0x0000C202
+	EmotionNugget *findNugget(const BfmeEmotionName &name);
 };
 
-// address-derived: VA 0x012F0878, loaded right before findNugget's ecx
-extern EmotionSystem *g_bfmeEmotionSystem0878;
+extern EmotionSystem *TheEmotionSystem;
+extern void *(__cdecl *g_lookup)(void *, void *);
 
-// address-derived: VA 0x0135933C, generic (void*, void*) -> void* lookup used
-// as a boolean gate here
-extern "C" void *(__cdecl *g_lookup)(void *, void *);
-
-class EmotionTrackerUpdateEntry
+class BfmeThingVKC
 {
 public:
-	unsigned char m_unknown00[0xF8];
+	void bfmeCopyVKC(const BfmeThingVKC &source);
 };
+
+class BfmeOtherDCE;
+
+class BfmeThingDCE
+{
+public:
+	void bfmeGoDCE(BfmeOtherDCE *other);
+};
+
+typedef BfmeThingVKC EmotionTrackerUpdateEntry;
 
 class EmotionTrackerUpdateModuleData
 {
 public:
 	unsigned char m_unknown00[0x30];
-	// std::vector<EmotionTrackerUpdateEntry *> at +0x30, matching
-	// EmotionTrackerUpdateCtor.cpp's m_entries
-	EmotionTrackerUpdateEntry **m_entriesFirst;
-	EmotionTrackerUpdateEntry **m_entriesLast;
-	EmotionTrackerUpdateEntry **m_entriesEnd;
+	std::vector<EmotionTrackerUpdateEntry *> m_entries;
 };
 
-static void bfmeAppendEmotionEntry(EmotionTrackerUpdateModuleData *data, EmotionTrackerUpdateEntry *entry)
-{
-	if (data->m_entriesLast != data->m_entriesEnd)
-	{
-		if (data->m_entriesFirst != 0)
-			*data->m_entriesLast = entry;
-		data->m_entriesLast++;
-	}
-	else
-	{
-		// retail grow path (vector<T*> _Insert_n / grow), not reproduced here
-	}
-}
-
-// address-derived name; real ZH twin unknown -- BFME-only EmotionTrackerUpdate
-// has no Zero Hour counterpart under reference/CnC_Generals_Zero_Hour.
-void bfmeParseEmotionTrackerEntry_00290520(INI *ini, void *instance, void *store, const void * /*userData*/)
+// ?Rva00290520@@YAXPAVINI@@PAX1PBX@Z
+void Rva00290520(INI *ini, void *, void *, const void *userData)
 {
 	const char *token = ini->getNextToken();
-	bool tookSecondToken = false;
+	bool hasAdditionalData = false;
 
 	if (token != 0)
 	{
-		if (!g_lookup((void *)token, (void *)0x10be338))
+		if (!g_lookup((void *)token, (void *)0x010BE338))
 		{
-			tookSecondToken = true;
+			hasAdditionalData = true;
 			token = ini->getNextToken();
 		}
 	}
 
 	if (token == 0)
-		throw INIException(3, "Expected additional data");
+		throw INIException(3, (const char *)0x010BE2F8);
 
-	EmotionNugget *nugget;
+	EmotionNugget *nugget = 0;
 	{
-		AsciiString name(token);
-		nugget = g_bfmeEmotionSystem0878->findNugget(*(const BfmeEmotionName *)&name);
+		BfmeEmotionName name(token);
+		nugget = TheEmotionSystem->findNugget(name);
 	}
 
 	if (nugget == 0)
-		throw INIException(3, "Emotion nugget not found");
+		throw INIException(3, (const char *)0x010BE2E0);
 
-	void *raw = ::operator new(0xF8);
-	EmotionTrackerUpdateEntry *entry = 0;
-	if (raw != 0)
+	EmotionTrackerUpdateEntry *entry =
+		(EmotionTrackerUpdateEntry *)new EmotionNugget;
+	entry->bfmeCopyVKC(*(const BfmeThingVKC *)nugget);
 	{
-		new (raw) EmotionNugget();
-		entry = (EmotionTrackerUpdateEntry *)raw;
+		BfmeEmotionName name(token);
+		((StringBase<char> *)entry)->set(*(const StringBase<char> *)&name);
 	}
 
-	(void)tookSecondToken;
+	if (hasAdditionalData)
+		((BfmeThingDCE *)entry)->bfmeGoDCE((BfmeOtherDCE *)ini);
 
-	bfmeAppendEmotionEntry((EmotionTrackerUpdateModuleData *)instance, entry);
+	((EmotionTrackerUpdateModuleData *)userData)->m_entries.push_back(entry);
 }
