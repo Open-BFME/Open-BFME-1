@@ -84735,6 +84735,7 @@ name,address,notes
 ?rva0060d5a0@BfmeGameCW@@QAE_NI@Z,0x0060D5A0,direct body pin: neutral BfmeGameCW source-gate ABI; retail ILT 0x00014858 is E9 to this body; campaign=luna36h-20260907;lane=mesh
 ?rva00610090@BfmeLivingWorldManager@@QAEXXZ,0x00610090,address-derived manager cleanup helper over vectors at +0x240 and +0x24C; retail ILT 0x0002A8F1 reaches this body
 ?rva00618980@Rva00618980Object@@QAEXH@Z,0x00618980,LivingWorldManager field +0x1A8 cleanup helper called by 0x00616410
+?rva00618a90@Rva00615D50Object@@QAEXXZ,0x00010186,ILT to body 0x00618A90; LivingWorldManager +0x224 mapped-object method the 0x00616110 walk calls on every non-null entry; address-derived
 ?rva0061bbb0@Rva0061C1D0Object@@QAEXXZ,0x0061BBB0,LivingWorldManager +0x194 mapped-object method; direct 0x00615850 call reaches body through ILT 0x0001447F; receiver proven by node +8 in the same native map as 0x006157C0 and 0x00615C20;campaign=luna36h-20260907;lane=expand08;model=gpt-5.6-sol-ultra
 ?rva0061c1d0@Rva0061C1D0Object@@QAEXXZ,0x0061C1D0,LivingWorldManager +0x194 mapped-object method; direct 0x006157C0 call reaches body through ILT 0x0001EF42; address-derived type and method;campaign=luna36h-20260907;lane=expand08;model=gpt-5.6-sol-ultra
 ?rva0061c2a0@Rva0061C1D0Object@@QAEXXZ,0x0061C2A0,LivingWorldManager +0x194 mapped-object method; direct 0x006159C0 call reaches body through ILT 0x0000EA6B; address-derived method on the mapped type shared with 0x006157C0 and 0x00615C20;campaign=luna36h-20260907;lane=expand08;model=gpt-5.6-sol-ultra
