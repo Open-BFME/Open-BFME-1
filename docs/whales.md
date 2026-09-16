@@ -160,3 +160,55 @@ byte-verified source body that would unlock a neighbour.
 - Best gate: the current BFME state-cache/noise candidate compiled and probed at 9,265 bytes versus 8,147 retail, with 821 relocations, 5,045 non-relocation differences, and 802 relocation-layout sites that do not align. The earlier FlatTerrain-labelled candidate was rejected as wrong identity (7,168 bytes, 651 relocations, 4,403 non-relocation differences, 632 relocation-layout drifts).
 - Recipe: retain `BFME_SET_TSS` for the proven cache path, `BFME_SET_SAMP` for sampler slot 69, `BFME_SET_RS` for render slot 57, and the `bfmeSetTexture` routes used by the one-texture noise branches. The retail callee contract includes five `BoxSetTexture` calls, slot-67 TSS calls, and helpers at `0x007DCF00` and `0x007DCCE0`.
 - Blocker: the BFME handle/EH frame schedule and matrix/noise helper ABI remain unproven; no pin is justified. Do not edit `Code/gen_asm` or replace the anonymous row until a clean source is byte-exact.
+
+## 0x007C7FD0 — FlatTerrainShaderPixelShader::set
+
+Status: banked partial; identity is supported, but no exact clean-C++ body
+was found. The preferred function-sized candidate is
+`reverse/attempts/0x007c7fd0.cpp`, compiled in the existing
+`W3DShaderManager.cpp` TU context.
+
+### Callee table
+
+| Retail target | Count | Proven identity | Evidence |
+| --- | ---: | --- | --- |
+| `0x009DB890` | 38 | `StringClass::Get_String` | repeated DX8 snapshot-name construction |
+| `0x00906FE0` | 36 | `DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name` | repeated texture-stage state logging |
+| `0x009DB7A0` | 38 | `StringClass::Free_String` | snapshot temporary cleanup |
+| `0x009FB321` | 7 | `_D3DXMatrixInverse@12` | shroud/noise projection matrices |
+| `0x00905AC0` | 1 | `BoxSetTexture` | texture state setup |
+| `0x00904890` | 2 | `DX8Wrapper::Apply_Render_State_Changes` | state-cache barriers |
+| `0x0090DC60` | 10 | `TextureBaseClass::Peek_D3D_Base_Texture` | texture binding path |
+| `0x009EB7A0` | 13 | `TextureClass::Release_Ref` | texture lifetime cleanup |
+| `0x009FACAD`, `0x009FB6F4`, `0x009FB784` | 12 total | address-derived/pinned matrix helpers | `tools/callees.py`; ABI is known, semantic names remain constrained |
+
+The remaining direct targets are the already-resolved DX8 ILT/state helpers
+listed by `tools/callees.py 0x007C7FD0 12130`; none was pinned by this body.
+
+### Layout
+
+- The body begins with an MSVC EH frame and reserves `0x320` bytes; it takes
+  one stack `pass` argument and returns with `ret 4`. ECX is saved at entry,
+  so the class-method ABI is consistent with the six-field pixel-shader
+  object, including BFME taint shader handles at `this+0x18` and `this+0x1c`.
+- Retail reads the terrain render object at `0x012F7FE0`, its shroud at
+  `+0x30b8`, and the proven DX8 device/cache globals at `0x01340534`,
+  `0x01340568`, `0x01340594`, and `0x0133F451`/related state storage.
+- The state sequence is the flat-terrain shroud transform followed by noise
+  stages, pixel-shader selection, texture/render-state writes, and a final
+  cache barrier. The repeated `Get_String`/state-name calls are the inlined
+  DX8 snapshot wrapper, not evidence for a second owner class.
+
+### Levers tried
+
+The source-backed `FlatTerrainShaderPixelShader::set` candidate compiled to
+1,811 bytes versus 12,130 retail bytes, with 1,295 non-relocation diffs and
+first divergence at `+0` (`sub esp,0x198` versus retail EH registration and
+`sub esp,0x320`); 516 masked prefix bytes were equal, for a recorded score of
+0.0425. The alternate `FlatTerrainShader2Stage::set` candidate compiled to
+2,274 bytes with 1,489 non-relocation diffs and the same `+0` frame mismatch.
+Enabling the project snapshot macro did not change either object shape. The
+remaining BFME taint/pixel-shader expansion and state-cache/EH ladder are not
+represented by the current source. The existing `reverse/unlocked.txt` row
+`0x007c7fd0 w3d-render` establishes the shared DX8 family only; no new unlock
+row, pin, or guessed class/member name is justified.

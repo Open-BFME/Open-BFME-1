@@ -15,6 +15,12 @@ Started 2026-09-16 on branch `whale1-auto` from `origin/master`.
   the final pull is up to date.
 - Bodies added to `reverse/unlocked.txt`: none. No shared shim, pin set, or
   byte-verified layout landed.
-- Next: inspect and work `0x007C7FD0` from its current evidence pack, then
-  continue the ordered WHALE-1 pool. Re-run `next_work.py --ranked` only
-  after the listed pool has recorded verdicts.
+- `0x007C7FD0`: identity-supported `FlatTerrainShaderPixelShader::set`
+  candidate banked as a partial. The best source-backed candidate is 1,811
+  bytes versus 12,130 retail, with 1,295 non-relocation differences and
+  masked score 0.0425; the alternate `FlatTerrainShader2Stage::set` is 2,274
+  bytes and also diverges at the EH/frame start. The full callee/layout/
+  lever record is in `docs/whales.md`.
+- Commit/push: pending for this checkpoint; no ledger row or unlock row was
+  changed by this body.
+- Next: pull/rebase/push this verdict, then inspect and work `0x00934940`.
