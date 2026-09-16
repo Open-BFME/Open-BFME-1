@@ -3270,8 +3270,11 @@ Int W3DBridge::getModelVertices(VertexFormatXYZNDUV1 *destination_vb, Int curVer
 
 	const Vector3 *pNormal = 	pMesh->Peek_Model()->Get_Vertex_Normal_Array();
 
-	// If we happen to have too many bridges, stop.
-	if (curVertex+numVertex+2>= W3DBridgeBuffer::MAX_BRIDGE_VERTEX) {
+	// If we happen to have too many bridges, stop.  BFME's limit is 8000, half
+	// the Zero Hour header's 12000, and it is the same 8000 the matched
+	// getModelIndices body below halves out of its own 16000 index limit.
+	const Int maxBridgeVertex = 8000;
+	if (curVertex+numVertex+2>= maxBridgeVertex) {
 		return(0);
 	}
 
