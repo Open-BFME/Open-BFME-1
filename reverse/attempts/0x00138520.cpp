@@ -1,33 +1,21 @@
 // ?newObject@ThingFactory@@QAEPAVObject@@PBVThingTemplate@@PAVTeam@@ABV?$BitFlags@$0FG@@@I@Z
-// partial score=0.97 date=2026-09-09
+// partial score=0.97 date=2026-09-15
 // cl: /DNDEBUG /MD /EHsc
 
 // ?newObject@ThingFactory@@QAEPAVObject@@PBVThingTemplate@@PAVTeam@@ABV?$BitFlags@$0FG@@@I@Z
-// Retail 0x00138520.  The BFME body uses the build-variation array at +0x2d0,
-// creates through GameLogic, then runs each behavior's create interface before
-// calling Object::initObject.  The retail string and thirteen named callers
-// identify this as ThingFactory::newObject.
-//
-// Fixed vs the prior 0.95 stash: the #pragma comment(linker,"/alternatename:
-// ...=?j_000168dd@@YAXXZ") on GameLogic::friend_createObject never took
-// effect in this build (the call stayed an unresolved self-relative e8
-// 00000000). Dropped it and pinned the mangled name directly in
-// reverse/symbols.csv instead: the thunk j_000168dd forwards to FUN_007830c0
-// = RVA 0x003830C0, which is ALREADY LANDED as the address-derived
-// ?createRva003830C0@@YGPAXPAX000@Z (Code/GameEngine/Source/GameClient/
-// Rva003830C0FourArgFactory.cpp, stdcall/4-void*, identity itself still
-// unconfirmed) -- pin_consistency reports the address consistent, multiple
-// names on one claimed address is expected. With that pin the call resolves
-// and the body reaches the exact 278-byte size with ONLY 7 lines of
-// register-choice residue left in the four-argument push sequence (extra/
-// team/statusBits shuffled through ecx/edx/eax, "this" load interleaved
-// between the first and second push) -- classified instruction/register
-// encoding mismatch, the same argument-shuttle-register class as
-// 0x0042D460. Tried: naming TheBfmeGameLogic in a local before the call
-// (regressed to 277B with an extra reload, do not retry). Re-add the
-// symbols.csv pin on ?friend_createObject@GameLogic@@QAEPAVObject@@
-// PBVThingTemplate@@ABV?$BitFlags@$0FG@@@PAVTeam@@I@Z -> 0x003830C0 before
-// touching the register residue on the next attempt.
+// Retail 0x00138520 is ThingFactory::newObject. The retail newObj string and
+// thirteen named callers prove that identity.
+
+// The body uses the build-variation array at +0x2d0 and the behavior array at
+// +0x1f0 before it initializes and logs the new Object.
+// The call through ILT 0x000168DD reaches GameLogic::friend_createObject at
+// 0x003830C0. That callee now has a verified BFME identity and source body.
+// The source matches all 278 bytes except twelve non-relocation bytes in the
+// argument shuttle before the call. Retail loads extra into ECX, team into
+// EDX, statusBits into EAX, and loads the GameLogic global between pushes.
+// Parameter-order, declaration-order, and local-alias variants did not change
+// the register sequence. The remaining difference needs a new compiler-shape
+// hypothesis, so this body stays banked for the next worker.
 
 typedef unsigned int UnsignedInt;
 
