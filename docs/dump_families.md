@@ -147,3 +147,46 @@ The family has a verdict for every member and is unlocked in
 `reverse/unlocked.txt` with the `fam16` tag.  Family 17 shares the wide-string
 constructor and can reuse this recipe, but still needs its own per-body
 identity and byte verdict.
+
+## Family 24: TerrainLogic layer-query pathfinding
+
+Families 18 through 23 in the live top-40 ranking are DX8Wrapper/render-state
+clusters and remain outside this lane.  Family 24 is the next eligible
+family: 44 bodies / 57,484 bytes share
+`TerrainLogic::getLayerForDestination` at RVA `0x001C675`.  The additional
+features include the BFME ESF check, computer-controlled query, Pathfinder
+query, terrain-step, and AI frame-state helpers.  This is a shared pathfinding
+call surface, not proof that all 44 rows have one owner.
+
+Use the existing Pathfinder/TerrainLogic declarations and the Zero Hour AI
+pathfinding headers only where the caller and vtable evidence agree.  The
+normal source flags remain `/DNDEBUG /MD /EHsc` plus the repository's standard
+include roots; run `tools/callees.py` for each body and prove every non-opaque
+callee before adding a pin.  The first three small rows (`0x0026F460` 213B,
+`0x001C86B0` 302B, and `0x003F5C70` 335B) have no safe standalone owner.  The
+named rows such as `Pathfinder::findGroundPath` and
+`Pathfinder::internalFindPath` have semantic evidence but remain banked
+near-misses where their clean C++ output is not byte-exact.  The family has a
+verdict for all 44 members and is unlocked with `fam24`; no generated dump
+was edited.
+
+## Family 17: wide-string constructor overlap
+
+The next non-DX8 family in the live top-40 scan is 40 bodies / 61,958 bytes,
+anchored on `StringBase<wchar_t>` construction at RVA `0x00888DE0`.  Twenty-
+three bodies overlap family 16 and retain the `UnicodeString::format` recipe;
+the other 17 are the family-17-only rows listed with the `fam17` tag in
+`reverse/unlocked.txt`.  The additional shared witnesses are
+`StringBaseWideAP::bfmeConcatAP` at `0x00888600`,
+`BfmeStrWVUY::bfmeTranslateVUY` at `0x008891F0`, and the existing
+`GameSpyInfo`/`MapCache` globals.  They identify the reusable string ABI, not
+a common C++ owner for every body.
+
+Use the same canonical header and compile flags as family 16.  The first
+lever is the visible wide temporary lifetime: keep the constructor,
+format/concat operation, and `releaseBuffer` teardown in the source so the
+EH state and by-value string ABI remain available to MSVC.  Run
+`tools/callees.py` per body; do not pin the address-derived helpers merely
+because they occur in this family.  All 40 members now have recorded
+verdicts; no family-17 body was byte-exactly landed in this pass, and the
+17 newly unlocked rows remain available for a worker with a proven owner.
