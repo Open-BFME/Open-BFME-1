@@ -21,7 +21,7 @@ change does not replace a shell that is already executing an older copy.
 | `vtable_rank.py` | build the vtable ranking `pick_class.py` reads; game classes have no RTTI |
 | `pick_finish.py` | claim near-landed stashes (`N MIN_SCORE MAX_ATTEMPTS COOLDOWN_DAYS`, default `2 0.9 5 2`); reads the stash on disk, not only the latest verdict; luna seats get bodies under 5 verdicts and not re-banked in 2 days, `lunaxhigh` seats get the hard set too (`0 0`) |
 | `pick_anon.py` | claim anonymous dump bodies ranked by expected bytes (size x (1 + evidence warmth): callers via thunk, strings, vtable, layout); skips boundary suspects |
-| `carve_unclaimed.py` | derive deterministic anonymous candidates from uncovered `.text` using REL32 starts, advisory Ghidra starts, and decoded terminal/padding evidence; regenerate after landings |
+| `tools/carve_unclaimed.py` | derive deterministic anonymous candidates from uncovered `.text` using REL32 starts, advisory Ghidra starts, and decoded terminal/padding evidence; regenerate after landings |
 | `pick_review.py` | claim banked bodies 0.5..0.95 for a reviewer seat (identity, layout, convention, pins) |
 | `harvest.py`, `harvest_loop.sh`, `ledger_prep.py` | the only VCS path while seats run: repair mechanical ledger states under the lock, commit, rebase in `build/wt`, push |
 | `ledger_watchdog.py` | keep the ledgers landable between harvests |

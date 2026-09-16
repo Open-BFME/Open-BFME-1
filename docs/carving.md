@@ -50,8 +50,10 @@ strings, vtables, witnessed layouts, and landed neighbours remain available.
 
 ## Live pool measurement
 
-The current ledger reports **1,147,215** unclaimed non-padding `.text` bytes.
-Running `python3 tools/carve_unclaimed.py --summary` on this checkout produced
+Before the proof landings the ledger reported **1,147,215** unclaimed
+non-padding `.text` bytes; the three five-byte landings leave **1,147,200** in
+the live `progress.py` denominator. Running `python3 tools/carve_unclaimed.py
+--summary` on this checkout produced
 7,688 positive-evidence candidates covering 760,051 bytes (the three proof
 landings removed three five-byte candidates):
 
