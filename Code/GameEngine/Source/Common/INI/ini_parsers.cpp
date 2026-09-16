@@ -77,6 +77,22 @@ void INI::parseLookupList( INI* ini, void * /*instance*/, void *store, const voi
 }
 
 //-------------------------------------------------------------------------------------------------
+void INI::parseByte( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
+{
+	const char *token = ini->getNextToken();
+	Int value = scanInt(token);
+	if (value < -128 || value > 127)
+	{
+		DEBUG_CRASH(("Bad value INI::parseByte"));
+		// retail throws a plain int 1 here, not ERROR_BUG: the ThrowInfo these sites
+		// push (0x012454C0) describes ".H" (int), and ERROR_BUG really is 0xdead0001
+		// in BFME -- ini.cpp's matched parseScience carries that immediate.
+		throw 1;
+	}
+	*(Byte *)store = (Byte)value;
+}
+
+//-------------------------------------------------------------------------------------------------
 void INI::parseUnsignedByte( INI* ini, void * /*instance*/, void *store, const void* /*userData*/ )
 {
 	const char *token = ini->getNextToken();
