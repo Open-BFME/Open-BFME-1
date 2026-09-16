@@ -1,14 +1,17 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ??0W3DLaserDrawModuleData@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDraw.cpp
-// readable body of ??1W3DLaserDrawModuleData@@: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DLaserDraw.cpp
+// The constructor at 0x001FE190 and the destructor at 0x001FE260 belong to one
+// class, so they need one declaration of it. The class carried the name
+// W3DLaserDrawModuleData until 2026-09-16 and that name was wrong. The
+// ModuleFactory registration at 0x006C0112 pushes the literal "W3DLaserDraw" at
+// 0x00D1D298 beside the data factory 0x006BF1D0, that factory allocates 0x74
+// bytes and constructs its module data at 0x00757960, and 0x00757960 installs a
+// different vtable from this body. So W3DLaserDrawModuleData is 0x74 bytes long
+// and lives at 0x00757960, while this class is something else. Its real name is
+// not known yet, so it is parked under the constructor's address. Every member
+// below is named after the offset retail stores to, because nothing here proves
+// what any of them mean.
 //
-// Constructor and destructor of one class, so they need one declaration of it.
-// Field names come from retail's own INI field table joined to upstream's parse
-// table on the key: retail supplies every offset, upstream only the word. The
-// offsets were derived from this class's declaration sequence and type sizes,
-// never read out of the old placeholder names.
-//
-// Shape: `class W3DLaserDrawModuleData : public Snapshot`. Snapshot supplies the
+// Shape: `class Rva001FE190ModuleData : public Snapshot`. Snapshot supplies the
 // single vptr store (root polymorphic, own vtable stored directly -- a
 // constructor never elides its vptr store the way a derived destructor can).
 // Three ThingRef members at +0x08/+0x0C/+0x10 default-construct to a zeroed
@@ -99,12 +102,11 @@ public:
 	virtual ~Snapshot() {}
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/Module/W3DLaserDraw.h
-class W3DLaserDrawModuleData : public Snapshot
+class Rva001FE190ModuleData : public Snapshot
 {
 public:
-	W3DLaserDrawModuleData();
-	virtual ~W3DLaserDrawModuleData();
+	Rva001FE190ModuleData();
+	virtual ~Rva001FE190ModuleData();
 
 private:
 	unsigned char m_gap0[4];
@@ -124,8 +126,8 @@ private:
 	float m_arcHeight;
 };
 
-// ??0W3DLaserDrawModuleData@@QAE@XZ
-W3DLaserDrawModuleData::W3DLaserDrawModuleData()
+// ??0Rva001FE190ModuleData@@QAE@XZ
+Rva001FE190ModuleData::Rva001FE190ModuleData()
 {
 	m_width1 = 60.0f;
 	m_count0 = 0;
@@ -140,7 +142,7 @@ W3DLaserDrawModuleData::W3DLaserDrawModuleData()
 	m_arcHeight = 1.0f;
 }
 
-// ??1W3DLaserDrawModuleData@@UAE@XZ
-W3DLaserDrawModuleData::~W3DLaserDrawModuleData()
+// ??1Rva001FE190ModuleData@@UAE@XZ
+Rva001FE190ModuleData::~Rva001FE190ModuleData()
 {
 }
