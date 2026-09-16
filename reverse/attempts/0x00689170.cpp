@@ -130,8 +130,8 @@ public:
 };
 #pragma comment(linker, "/alternatename:?bfmeEquals@Gen_000970a0@@QBEHPBV1@@Z=?j_0002a72a@@YAXXZ")
 
-extern AsciiString GameInfoToAsciiString(GameInfo *game, Bool includeSlots);
-#pragma comment(linker, "/alternatename:?GameInfoToAsciiString@@YA?AVAsciiString@@PAVGameInfo@@_N@Z=?j_0000e70a@@YAXXZ")
+extern AsciiString GameInfoToAsciiString(const GameInfo *game, Bool includeSlots);
+#pragma comment(linker, "/alternatename:?GameInfoToAsciiString@@YA?AVAsciiString@@PBVGameInfo@@_N@Z=?j_0000e70a@@YAXXZ")
 
 
 extern Bool ParseGameOptionsString(LANGameInfo *game, AsciiString options,
@@ -252,7 +252,7 @@ Bool LANAPI::_bfme_onSerializedGameInfo_00689170(
 
 	*(UnsignedInt *)((UnsignedByte *)m_currentGame + 0x39c) =
 		timeGetTime();
-	GameInfo *info = (GameInfo *)(UnsignedInt)m_currentGame;
+	const GameInfo *info = (const GameInfo *)(UnsignedInt)m_currentGame;
 	char *bufferCopy = buffer;
 	UnsignedInt sizeCopy = size;
 	const AsciiString oldOptions(GameInfoToAsciiString(
