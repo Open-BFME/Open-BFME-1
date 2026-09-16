@@ -1,16 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// Open-BFME5: the two pathfind-map object wrappers, retail 0x003D57F0 and
-// 0x003D5810, 17 bytes each. Both carried only machine byte-dump rows;
-// reverse/reloc_names.csv holds their names with identity=real.
-//
-// Neither touches this. Each forwards the object to the same helper with two
-// constants -- 1 and 0 to add, 0 and 0 to remove -- and lets the helper clean
-// the stack, so the helper is __stdcall.
+// The map update preserves the receiver in ECX and cleans three stack arguments.
 
 class Object;
 
-extern "C" void __stdcall BfmePathfindMapUpdate(Object *object, int add, int flags);
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
+class Pathfinder
+{
+public:
+	void removeObjectFromPathfindMap(Object *object);
+	void updateAt003FA5B0(Object *object, int add, int flags);
+};
 
 class BFMEPathfinderMapShim
 {
@@ -18,21 +18,14 @@ public:
 	void addObjectToPathfindMap(Object *object);
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
-class Pathfinder
-{
-public:
-	void removeObjectFromPathfindMap(Object *object);
-};
-
 // ?addObjectToPathfindMap@BFMEPathfinderMapShim@@QAEXPAVObject@@@Z
 void BFMEPathfinderMapShim::addObjectToPathfindMap(Object *object)
 {
-	BfmePathfindMapUpdate(object, 1, 0);
+	((Pathfinder *)this)->updateAt003FA5B0(object, 1, 0);
 }
 
-// ?removeObjectFromPathfindMap@Pathfinder@@QAEXPAVObject@@@Z
+// ?removeObjectFromPathfindMap@Pathfinder@@QAEXPAVObject@@@Z present-unmatched
 void Pathfinder::removeObjectFromPathfindMap(Object *object)
 {
-	BfmePathfindMapUpdate(object, 0, 0);
+	updateAt003FA5B0(object, 0, 0);
 }

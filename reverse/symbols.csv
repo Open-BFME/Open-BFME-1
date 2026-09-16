@@ -85893,7 +85893,6 @@ _ArrayReplaceAt,0x0086A290,vendored=gamespy-2004
 _ArraySearch,0x0086A2E0,additive pin for _gpiFreeTransfer call resolution
 _BfmeAtomicSwap,0x0082AD60,STLport atomic-exchange helper; three call operands in _STLP_mutex_spin<0>::_M_do_lock resolve to this body
 _BfmeNodeAllocLockAcquire,0x0082C760,Open-BFME5 the 267-byte __cdecl worker NodeAllocMutex::_M_acquire_lock forwards its this to
-_BfmePathfindMapUpdate@12,0x0000BF28,Open-BFME5 ILT the two pathfind-map object wrappers at 0x003D57F0 and 0x003D5810 forward through; it jumps to 0x003FA5B0
 _BfmeSpinSleep,0x0082BE10,STLport nanosecond backoff helper; final call operand in _STLP_mutex_spin<0>::_M_do_lock resolves to this body
 _BucketNew,0x009D5D10,vendored=gamespy-2004
 _CanReceiveOnSocket,0x00854680,vendored=gamespy-2004
@@ -88350,3 +88349,4 @@ _g_Rva012D4FD0AssertCrashTemplate,0x012D4FD0,DLGTEMPLATEEX titled Assert/Crash p
 ?getName00518BF0@GameSlot@@QBE?AVRva00518BF0Name@@XZ,0x003879C0,caller518BF0 via3A20B; independent body copies four-byte UTF16 name fromGameSlot+28 using888400 into hidden result pointer and returns it ret4; address-derived result-lifetime view
 ?compare@Rva00518BF0Name@@QBEHABV1@@Z,0x0005FFA0,caller518BF0 via226EC; independently decoded UTF16 lexicographic compare using two four-byte string handles and word lengths; thiscall const argument ret4
 ?release@Rva00518BF0Name@@AAEXXZ,0x008881D0,caller518BF0 two temporary cleanups; matched StringBase unsigned-short release body; four-byte receiver holding refcounted UTF16 buffer
+?updateAt003FA5B0@Pathfinder@@QAEXPAVObject@@HH@Z,0x003FA5B0,address-derived member body; wrappers at 0x003D57F0 and 0x003D5810 preserve ECX through ILT 0x0000BF28; body saves receiver at +0x14 and ends ret12 at +0xF79
