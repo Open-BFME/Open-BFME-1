@@ -870,3 +870,16 @@ with conditional/unconditional delete destructors reproduces the frame;
 putting equivalent deletes only in the enclosing destructor body loses
 that lifetime information. The source reuses the canonical string header
 and keeps the unidentified owner and cleanup views address-derived.
+
+The same approach lands the 240-byte destructor at `0x005927F0`: unwind
+cleanup on `this+8` and `this+0xC` identifies embedded one-word holders.
+Their normal-path cleanup inlines, but their member lifetimes determine the
+EH frame. The owner destructor is nonvirtual; adding a virtual destructor
+changed the prologue. Reuse the canonical ASCII header.
+
+This investigation also found two unused pins that confused VA with RVA:
+`0x0043FA7B` and `0x004347D9` were encoded virtual addresses, whose RVAs are
+`0x0003FA7B` and `0x000347D9`. Existing correct helper pins suffice. A label
+mentioning an ILT does not cause the resolver to subtract the image base.
+Decode the branch and inspect the target before diagnosing a missing pin;
+passing `HelpBoxText` to a helper does not prove a registration operation.

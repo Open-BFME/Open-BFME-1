@@ -9339,7 +9339,6 @@ name,address,notes
 ??1Rva004948B0Base@@UAE@XZ,0x009A1A40,Rva004948B0 SubsystemInterface-compatible base destructor
 ??1Rva0049B890Elem@@QAE@XZ,0x000351D4,ILT thunk to the vector<Gen0049B890> destructor 0x0049B890 called twelve times by 0x0049C020
 ??1Rva00590010FourString@@QAE@XZ,0x0003FA7B,ILT for the owned-record dtor used by Rva005929E0::replace
-??1Rva00592640Member@@QAE@XZ,0x0043FA7B,ILT to unmatched FUN_0098c4c0; no recovered real name/signature; pinned at the encoded call site for the Rva00592640 destructor 0x005927F0
 ??1Rva005D5D90Elem@@UAE@XZ,0x00013F2F,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x005D5D90 calls; autopin
 ??1Rva005FEA50Base@FXParticleSystem@@UAE@XZ,0x00012A67,Verified ILT to 0x005DEB40; Wind271 complete EH base cleanup; full83-byte destructor tail-unlinks tracking subobject
 ??1Rva00608FE0Element@@QAE@XZ,0x00034158,Open-BFME5 ILT for the SoundUpgrade record destructor used by the SoundUpgrade field parser
@@ -84346,7 +84345,6 @@ name,address,notes
 ?registerBannerAptCallbacks@@YAXXZ,0x0003DE6F,BannerUI init ILT to the helper that registers AptBannerUI OnBttnBanner and OnInitialized callbacks
 ?registerGameWindow@AnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z,0x00045322,ILT thunk to the window animation registration
 ?registerGameWindow@BfmeAnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z,0x00045322,Open-BFME5 view-class spelling of the ILT already pinned as ?registerGameWindow@AnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z; ControlBar::animateSpecialPowerShortcut reaches it through the view that carries the retail field offsets
-?registerHelpBoxText@Rva00579160Manager@@QAEXPAVBFMERetailAsciiString@@@Z,0x004347D9,ILT to unmatched FUN_0086def0; no recovered real name/signature; pinned at the encoded call site for the Rva00592640 destructor 0x005927F0
 ?registerItem@BfmeSinkAM@@QAEXHPAVGen_003BEA30@@H@Z,0x0001DF02,"Lead traced6176A0: handle key, item float coordinates, integer variant selects template; ret12"
 ?registerObj@BfmeMgrF1D@@QAEPAXPAX@Z,0x00028560,pin
 ?registerObject@PartitionManager@@QAEXPAVObject@@@Z,0x001086C0,Open-BFME5 callee of ?friend_notifyOfNewMapBoundary@Object@@QAEXXZ at 0x001BED80 via ILT 0x00001F5A
