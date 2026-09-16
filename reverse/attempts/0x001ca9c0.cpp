@@ -1,5 +1,5 @@
 // ?d_001ca9c0@@YAXXZ
-// partial score=0.4 date=2026-08-27
+// partial score=0.94 date=2026-09-16
 // cl: /O2 /Ob1
 // Retail 0x001CA9C0 150 bytes - attempt 1, t=14m
 // Pins:
@@ -23,11 +23,33 @@
 //  Byte diff shows register allocation mismatch (edi vs ebx) and add vs lea for host adjust, and push hoist for KindOf 2.
 //  Requires precise dummy locals to force retail's register choices (push ebx; push edi; mov edi,[esp+10]; push edi).
 
-class Rva008F7B00{ char m_pad[0xA4]; char m_slots[16]; public: char get(int) const; };
+class Rva008F7B00{ char m_pad[0xA4]; char m_slots[16]; public: char get(int); };
 class Team; enum Relationship{ENEMIES=0,NEUTRAL=1,ALLIES=2};
 class Player{ public: Relationship getRelationship(const Team*) const; };
 class PlayerList{ public: Player* getNthPlayer(int); };
 extern PlayerList *ThePlayerList;
-class Object{ public: bool isKindOf(int) const; };
-struct Module{ char _0[0x1D8]; Team* m_team; char _1[0x34C-0x1D8-4]; Rva008F7B00* m_rva; bool isAllowed(int); };
-bool Module::isAllowed(int n){ if(m_rva==0) return false; Player* p=ThePlayerList->getNthPlayer(n); Relationship r=p->getRelationship(m_team); Object* o=(Object*)((char*)this-0x64); if(r==NEUTRAL){ if(!o->isKindOf(2)) return true; if(!o->isKindOf(0xB2)) return false; return true; } else { if(!o->isKindOf(2)) return true; if(!m_rva->get(n)) return true; if(o->isKindOf(0xB2)) return true; return false; } }
+enum KindOfType{ KINDOF_2=2, KINDOF_B2=0xB2 };
+class Thing{ public: bool isKindOf(KindOfType) const; };
+struct Rva001CA9C0Owner{ char _0[0x1D8]; Team* m_team; char _1[0x34C-0x1D8-4]; Rva008F7B00* m_rva; bool rva001CA9C0(int); };
+bool Rva001CA9C0Owner::rva001CA9C0(int n){
+ if(m_rva==0) return false;
+ int playerIndex=n;
+ Player* p=ThePlayerList->getNthPlayer(playerIndex);
+ Relationship r=p->getRelationship(m_team);
+ register Thing* o;
+ const KindOfType hostKind=KINDOF_2;
+ if(r==NEUTRAL){
+  o=(Thing*)((char*)this-0x64);
+  if(!o->isKindOf(hostKind)) goto allow;
+  if(o->isKindOf(KINDOF_B2)) goto allow;
+  goto deny;
+ }
+ o=(Thing*)((char*)this-0x64);
+ if(!o->isKindOf(hostKind)) goto allow;
+ if(!m_rva->get(playerIndex)) goto allow;
+ if(o->isKindOf(KINDOF_B2)) goto allow;
+deny:
+ return false;
+allow:
+ return true;
+}
