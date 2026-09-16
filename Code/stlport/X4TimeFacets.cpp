@@ -1,3 +1,4 @@
+// cl: /MD /D_STLP_USE_STATIC_LIB
 // stlport
 /*
  * Copyright (c) 1999
