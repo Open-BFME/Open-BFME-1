@@ -53,7 +53,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x00016A63,5,ghidra-start,0,ghidra-size,thunk_FUN_00932a00
 0x00016C52,5,ghidra-start,0,ghidra-size,thunk_FUN_0068c520
 0x000178B4,5,ghidra-start,0,ghidra-size,thunk_FUN_007ab7a0
-0x00017FB2,5,rel32-call/jmp;ghidra-start,2,ghidra-size,thunk_FUN_00469070
 0x0001819C,5,ghidra-start,0,ghidra-size,thunk_FUN_00b6b010
 0x000181A1,5,ghidra-start,0,ghidra-size,thunk_FUN_00b53280
 0x00018674,5,ghidra-start,0,ghidra-size,thunk_FUN_0073a990
