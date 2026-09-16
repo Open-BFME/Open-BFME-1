@@ -3990,6 +3990,7 @@ name,address,notes
 ??1?$SimpleDynVecClass@PAVVertexMaterialClass@@@@UAE@XZ,0x0092C5E0,0x0092C670 wrapper call plus derived/base two-vtable cleanup; typed ctor and methods in decal mesh TU prove VertexMaterial pointer specialization
 ??1?$SimpleDynVecClass@VVector3@@@@UAE@XZ,0x00887940
 ??1?$StringBase@D@@AAE@XZ,0x00887940,NetCommandMsg_text.cpp setters call the destructor body directly; the ledger row at 0x0005E490 is its incremental-link thunk
+??1?$StringBase@D@@IAE@XZ,0x00887940,protected StringBase<char> destructor used by TeamFactory::findTeamPrototype
 ??1?$StringBase@G@@AAE@XZ,0x008881D0,the wide destructor body, which folds with releaseBuffer; the ledger row at 0x0005E4E0 is its incremental-link thunk
 ??1?$StringBase@G@@IAE@XZ,0x008881D0,BFME display-name getter UnicodeString forwarding-base destructor
 ??1?$SubsystemSlot@VAudioManager@@@@UAE@XZ,0x000223BD,SubsystemSlot<AudioManager> destructor ILT called by authentic scalar-deleting destructor at 0x0006F930
@@ -84910,6 +84911,7 @@ name,address,notes
 ?separate@StreamWriter@@QAEXH@Z,0x0002408C,default alpha writer separator emitter ILT
 ?set@?$HeaderTemplateStringBase@D@@AAEXABV1@@Z,0x00887C90,Open-BFME5 HeaderTemplateManager init relocation
 ?set@?$StringBase@D@@AAEXABV1@@Z,0x00887C90,BFME AIAttackState locked weapon name assignment
+?set@?$StringBase@D@@IAEXABV1@@Z,0x00887C90,protected StringBase<char>::set used by TeamFactory::findTeamPrototype
 ?set@?$StringBase@D@@AAEXPBDH@Z,0x00887D20,private StringBase<char>::set(text length) is the matched body at 0x00887D20; parser call ABI proof; campaign=luna36h-20260907;lane=mid
 ?set@?$StringBase@G@@AAEXABV1@@Z,0x00888530,callee of SkirmishPreferences::getUserName 0x0009FA60
 ?set@?$bitset@$0ED@@_STL@@QAEAAV12@IH@Z,0x00019BCD,pinharvest x1 (thunk)
