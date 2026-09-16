@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Claim N mid-size dump bodies (default 300..1000 B) from ONE dump file whose
+"""Claim N mid-size dump bodies (default 300..2500 B, largest first) from ONE dump file whose
 address neighbourhood already holds landed real C++.
 
 Why: the file lane briefs smallest-first, so 2,167 bodies / 1.13 MB in the
@@ -17,12 +17,13 @@ from pathlib import Path
 sys.path.insert(0, 'tools')
 from portable_lock import lock
 import eligibility
+import re_log
 ROOT = Path('.').resolve()
 args = [a for a in sys.argv[1:] if not a.startswith('--')]
 dry = '--dry' in sys.argv
 n_want = int(args[0]) if len(args) > 0 else 3
 min_b = int(args[1]) if len(args) > 1 else 300
-max_b = int(args[2]) if len(args) > 2 else 1000
+max_b = int(args[2]) if len(args) > 2 else 2500
 claims = ROOT / 'build' / 'fleet_mid_claimed.txt'
 lf = (ROOT / 'build' / '.fleet_claims.lock').open('a')
 lock(lf, exclusive=True)
@@ -48,8 +49,12 @@ for r in rows:
 landed.sort()
 import bisect
 
+records = re_log.latest_records()
+
+
 def blocked(rva):
-    return eligibility.retired(int(rva, 16), latest)
+    a = int(rva, 16)
+    return eligibility.retired(a, latest) or eligibility.boundary_suspect(a, records)
 
 best = None
 for f, rvas in files.items():
@@ -60,7 +65,8 @@ for f, rvas in files.items():
     n_landed = bisect.bisect_right(landed, hi) - bisect.bisect_left(landed, lo)
     score = n_landed / max(len(rvas), 1)
     if best is None or score > best[0]:
-        best = (score, f, sorted(mids, key=lambda a: size[a]))
+        # largest first: land rate is flat across 300-2,500 B, bytes are not
+        best = (score, f, sorted(mids, key=lambda a: -size[a]))
 if not best:
     sys.exit(0)
 picked = best[2][:n_want]

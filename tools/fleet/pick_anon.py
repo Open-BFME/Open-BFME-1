@@ -38,6 +38,8 @@ latest = eligibility.latest_verdicts()
 rows = eligibility.open_dumps(latest=latest, min_size=min_b, max_size=max_b, anonymous=True)
 busy = eligibility.busy_rvas(ROOT) | eligibility.recent_run_rvas(48, ROOT)
 attempts = eligibility.attempt_counts()
+import re_log  # noqa: E402
+records = re_log.latest_records()
 # reverse/unlocked.txt: a session already landed the shim/pins this body's
 # family shares; the pack now proves its callees, so serve it first.
 unlocked = eligibility.unlocked_rvas()
@@ -72,8 +74,13 @@ for row in rows:
     # a body with a lead is served however often blind sessions bounced off it
     if w == 0 and tried >= 2:
         continue
+    if eligibility.boundary_suspect(rva, records):
+        continue
     cands.append((w, int(row.get("target_size") or 0), row["target_rva"]))
-cands.sort(reverse=True)
+# bytes a session is expected to land, not evidence alone: 183 of today's 348
+# landings were under 100 B (7 KB in total) while 1,000-2,500 B bodies land at
+# the same rate for 15x the bytes per attempt (eligibility.expected_bytes).
+cands.sort(key=lambda t: eligibility.expected_bytes(t[0], t[1]), reverse=True)
 picked = [rva for _, _, rva in cands[:n_want]]
 if picked and not dry:
     with open(seats_log, "a", encoding="utf-8") as fh:

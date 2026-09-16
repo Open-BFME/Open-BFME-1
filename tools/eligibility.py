@@ -214,6 +214,36 @@ def unlocked_rvas(path=None):
     return out
 
 
+BOUNDARY_RE = re.compile(
+    r"starts in(side)? (the )?(tail|middle|interior)|starts inside|begins inside|"
+    r"tail of (a|another|the) |not a (standalone|function) boundary|no standalone|"
+    r"crosses (multiple|unrelated|into)|mid-body|interior of|"
+    r"inside (a|another) (live|landed|matched) (helper|body|function)", re.I)
+
+
+def boundary_suspect(rva, records=None):
+    """True when the latest verdict on rva is a deferral whose evidence says the
+    queued address is not a function boundary (starts in another body's tail,
+    crosses bodies, ...). Seats write those as `blocked` instead of the
+    dead-end `no-boundary`, so the address was served again: 301 bodies were
+    re-served that way for 559 later sessions (measured 2026-09-16). Pickers
+    skip suspects; nothing is retired, an explicit --rvas still serves them."""
+    records = re_log.latest_records() if records is None else records
+    fields = records.get(rva)
+    if not fields or len(fields) < 5:
+        return False
+    return fields[3] in re_log.DEFERRED_STATUSES and bool(BOUNDARY_RE.search(fields[4]))
+
+
+def expected_bytes(warmth, size):
+    """Rank key for the anonymous lane: bytes a session is expected to land.
+    Measured over 1,500 verdict rows on 2026-09-16: the land rate is flat
+    (~7%) from 100 B to 2,500 B, so bytes per attempt scale with size (4 B for
+    <100 B bodies, 94 B for 1,000-2,500 B); warmth raises the rate. Bodies
+    with no evidence at all rank last regardless of size."""
+    return (warmth > 0, size * (1 + warmth))
+
+
 def busy_rvas(root=None, seats_log=None):
     """Addresses a live worker owns: fleet_run leases (pid-checked) plus seats
     currently '->' on an RVA in seats.log. Lower-case '0x%08x' strings."""

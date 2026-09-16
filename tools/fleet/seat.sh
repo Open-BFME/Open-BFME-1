@@ -62,7 +62,7 @@ while true; do
     echo "$(date '+%H:%M') seat $ENGINE$SEAT done $STEM" >> build/fleet_logs/seats.log
   elif [ "${ENGINE%mid}" != "$ENGINE" ]; then
     # mid lane: 3 bodies of 300..1000 B from one dump file whose neighbours are already C++
-    case "$ENGINE" in *big*) MIDARGS="2 1000 1600";; *) MIDARGS="3 300 1000";; esac   # lunabigmid = upper window
+    case "$ENGINE" in *big*) MIDARGS="2 1000 2500";; *) MIDARGS="3 300 2500";; esac   # lunabigmid = upper window
     # shellcheck disable=SC2086
     RVAS=$(python tools/fleet/pick_mid.py $MIDARGS | tr -d '\r' | tr '\n' ' ')
     [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no mid bodies picked; retry in 60s"; sleep 60; continue; }

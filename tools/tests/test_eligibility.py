@@ -124,3 +124,24 @@ def test_unlocked_rvas_parses_tags_and_ignores_comments(tmp_path):
     got = eligibility.unlocked_rvas(f)
     assert got == {0x00354C10: "w3d-render", 0x1000: ""}
     assert eligibility.unlocked_rvas(tmp_path / "missing.txt") == {}
+
+
+def test_boundary_suspect_reads_latest_deferral_only(world):
+    _, log = world
+    with log.open("a", encoding="utf-8") as fh:
+        fh.write(f"{SYM}\t0x{RVA:08X}\t400\tblocked\tQueued RVA starts in the tail of a live helper and crosses unrelated bodies t=5min\n")
+    re_log._reset()
+    assert eligibility.boundary_suspect(RVA)
+    verdict(log, "partial")
+    assert not eligibility.boundary_suspect(RVA)
+    with log.open("a", encoding="utf-8") as fh:
+        fh.write(f"{SYM}\t0x{RVA:08X}\t400\tno-boundary\tstarts inside another body\n")
+    re_log._reset()
+    assert not eligibility.boundary_suspect(RVA)
+    assert not eligibility.boundary_suspect(0x1234)
+
+
+def test_expected_bytes_prefers_bytes_then_warmth():
+    assert eligibility.expected_bytes(3, 1200) > eligibility.expected_bytes(5, 90)
+    assert eligibility.expected_bytes(1, 400) > eligibility.expected_bytes(0, 2400)
+    assert eligibility.expected_bytes(2, 800) > eligibility.expected_bytes(1, 800)

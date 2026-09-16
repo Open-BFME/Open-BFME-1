@@ -36,7 +36,17 @@ pid is gone; an unknown pid is never reclaimed. Takeovers are recorded in the
 `releases` table with the reason.
 
 Lanes added to `seat.sh` / `launch_fleet.sh` (args: file big finish mid anon
-review; defaults 10 0 10 5 10 2, no net new seats):
+review; defaults since 2026-09-16 are 10 0 2 8 15 2, no net new seats):
+
+Measured 2026-09-16 over 1,500 verdict rows: the land rate is flat (~7%) from
+100 B to 2,500 B and zero above, so bytes per attempt scale with size (4 B for
+bodies under 100 B, 94 B for 1,000-2,500 B); 183 of that day's 348 landings
+were under 100 B and delivered 7 KB. `pick_anon.py` therefore ranks by
+`eligibility.expected_bytes` (size x (1 + warmth)), `pick_mid.py` serves
+300-2,500 B largest first, and the finish lane drops to 2 seats because the
+capped finish pool is ~30 bodies. Both pickers skip `boundary_suspect`
+addresses: a `blocked` verdict whose evidence says the address is not a
+function boundary (301 such bodies had been re-served for 559 sessions).
 
 - `lunaanon` -- `pick_anon.py N min max`: anonymous dump bodies ranked by what
   the evidence pack can prove (strings 3, vtable 2, callers 2 each up to 3,
