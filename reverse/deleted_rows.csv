@@ -49,6 +49,7 @@ _$E64,0x00C6B2C0,Diplomacy BriefingList initializer is not this retail vector in
 #
 # If you later PROVE one of these is real, delete its line here in the same
 # commit that re-adds the row, and say what the proof was.
+??0LightMapTerrainTextureClass@@QAE@XZ,0x006CFAE0,"False constructor identity: the matched HeightMapRenderObjClass ctor at 0x006D1C80 calls this body through ILT 0x00048BE4 as its BaseHeightMap base; ctor_vtable.py reads vtable stores 0x0111D8B8/0x0111D890 whose slots name BaseHeightMapRenderObjClass/TexProjectClass, and the matched BaseHeightMap destructor/deleting destructor at 0x006CEE90/0x006CFAB0 restore the same tables. Upstream TerrainTex.h defines LightMapTerrainTextureClass only with an AsciiString constructor, so the zero-argument claim is impossible. The surviving BaseHeightMapRenderObjClass row owns the 1304-byte range."
 ??1Display@@UAE@XZ,0x005CB360,wrong class identity superseded by ParticleSystemManager destructor evidence from both retail vtables and the FXParticleSystemManager string
 ?d_00681930@@YAXXZ,0x00681930,gen-dump placeholder superseded by the recovered Network::liteupdate identity and exact C++ body
 ?d_0067ec70@@YAXXZ,0x0067EC70,"gen-dump placeholder superseded by the byte-verified NetPacket::readGameSpyStatsAuthKeyMessage C++ body"
