@@ -217,3 +217,14 @@ WindowMsgHandledType EstablishConnectionsControlSystem(GameWindow *window, unsig
 	} // end switch
 	return MSG_HANDLED;
 }
+
+// The FunctionLexicon input table at 0x012A96E4 stores the string
+// EstablishConnectionsControlInput next to the ILT thunk 0x00432A2E, and that
+// thunk jumps to 0x004C8560. Retail parks xor eax eax then ret there, sixteen
+// bytes below the system callback above, which is where this translation unit
+// puts it.
+// ?EstablishConnectionsControlInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z 0x004C8560
+WindowMsgHandledType EstablishConnectionsControlInput(GameWindow *window, unsigned int msg,
+																											WindowMsgData mData1, WindowMsgData mData2) {
+	return MSG_IGNORED;
+}
