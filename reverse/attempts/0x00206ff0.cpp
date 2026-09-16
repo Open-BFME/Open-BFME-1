@@ -127,7 +127,7 @@ protected:
 	virtual void xfer(Xfer *xfer);
 
 private:
-	void bfmeStopDocking();
+	void stopDocking();
 	_STL::vector<SiegeDockingEntry *> m_entries;
 	Bool m_enabled;
 };
@@ -165,7 +165,7 @@ void SiegeDockingBehavior::xfer(Xfer *xfer)
 		if (index < count)
 		{
 			entries = &m_entries;
-			this->bfmeStopDocking();
+			this->stopDocking();
 			do
 			{
 				SiegeDockingEntry *entry = (SiegeDockingEntry *)operator new(sizeof(SiegeDockingEntry));
