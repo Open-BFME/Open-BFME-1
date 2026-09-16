@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "31894548901f97c0584ee46e52dd5a1bdfffff3337ffa19b3ded1247a39611c2",
+  "symbol": "?clear@Rva008A30C0Owner@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.79,
+  "source": "// ?clear@Rva008A30C0Owner@@QAEXXZ\n// partial score=0.79 date=2026-09-16\n// cl: /DNDEBUG /MD\n// Retail RVA 0x008A30C0. Pops every entry off the array at +8, clearing one\n// flag bit when the entry carries any of a mask and releasing it through\n// vtable slot two otherwise. Nothing names the owner, so both classes are\n// address-derived.\n\nclass Rva008A30C0Item\n{\npublic:\n\tvirtual void slot0();\n\tvirtual void slot1();\n\tvirtual void release();\n\n\tunsigned int m_bfmeFlags;\n};\n\nclass Rva008A30C0Owner\n{\npublic:\n\tvoid clear();\n\n\tunsigned char m_bfmePad000[ 4 ];\n\tint m_bfmeCount;\n\tRva008A30C0Item **m_bfmeItems;\n};\n\nvoid Rva008A30C0Owner::clear()\n{\n\tfor( ;; )\n\t{\n\t\tint remaining = m_bfmeCount;\n\n\t\tif( remaining == 0 )\n\t\t\tbreak;\n\n\t\tdo\n\t\t{\n\t\t\tRva008A30C0Item *item = m_bfmeItems[ --m_bfmeCount ];\n\n\t\t\tif( ( item->m_bfmeFlags & 0x0fff0000 ) > 0 )\n\t\t\t\titem->m_bfmeFlags &= 0xbfffffff;\n\t\t\telse\n\t\t\t\titem->release();\n\t\t}\n\t\twhile( --remaining != 0 );\n\t}\n}\n"
+}
