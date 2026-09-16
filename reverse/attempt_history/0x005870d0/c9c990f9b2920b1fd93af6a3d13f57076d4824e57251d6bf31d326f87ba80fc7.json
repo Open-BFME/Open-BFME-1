@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c9c990f9b2920b1fd93af6a3d13f57076d4824e57251d6bf31d326f87ba80fc7",
+  "symbol": "??0Rva005870D0Owner@@QAE@HHHHHHH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.89,
+  "source": "// ??0Rva005870D0Owner@@QAE@HHHHHHH@Z\n// partial score=0.89 date=2026-09-16\n// cl: /DNDEBUG /MD\n// Retail RVA 0x005870D0. Copies seven arguments into an object, zeroes eight\n// more fields and hands the object back in eax, which is what a constructor\n// does. No call, no relocation and nothing that names the owner, so the class\n// keeps an address-derived name.\n\nclass Rva005870D0Owner\n{\npublic:\n\tRva005870D0Owner( int a, int b, int c, int d, int e, int f, int g );\n\n\tint m_bfmeField000;\n\tint m_bfmeField004;\n\tint m_bfmeField008;\n\tint m_bfmeField00C;\n\tint m_bfmeField010;\n\tint m_bfmeField014;\n\tint m_bfmeField018;\n\tint m_bfmeField01C;\n\tint m_bfmeField020;\n\tunsigned char m_bfmeField024;\n\tunsigned char m_bfmePad025[ 3 ];\n\tint m_bfmeField028;\n\tint m_bfmeField02C;\n\tint m_bfmeField030;\n\tint m_bfmeField034;\n\tint m_bfmeField038;\n};\n\nRva005870D0Owner::Rva005870D0Owner( int a, int b, int c, int d, int e, int f,\n\tint g )\n{\n\tm_bfmeField000 = a;\n\tm_bfmeField004 = b;\n\tm_bfmeField008 = c;\n\tm_bfmeField00C = d;\n\tm_bfmeField010 = 0;\n\tm_bfmeField014 = 0;\n\tm_bfmeField018 = 0;\n\tm_bfmeField01C = 0;\n\tm_bfmeField020 = e;\n\tm_bfmeField024 = 0;\n\tm_bfmeField028 = 0;\n\tm_bfmeField02C = 0;\n\tm_bfmeField030 = 0;\n\tm_bfmeField034 = f;\n\tm_bfmeField038 = g;\n}\n"
+}
