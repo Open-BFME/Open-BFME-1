@@ -1,5 +1,5 @@
 // ?bfmeUpdateHJ@BfmeStateHJ@@QAEXD@Z
-// partial score=0.97 date=2026-09-08
+// partial score=0.98 date=2026-09-16
 extern const float BfmeZeroRange;
 
 class BfmeThingHJ
@@ -10,17 +10,17 @@ public:
 	unsigned char m_bfmeHeadHJ[4];
 	BfmeThingHJ *m_bfmeSubHJ;
 	unsigned char m_bfmeGapHJ[8];
-	int m_bfmeValueHJ;
+	void *m_bfmeValueHJ;
 };
 
 class BfmeOwnerHJ
 {
 public:
 	unsigned char m_bfmeHeadHJ[8];
-	int m_bfmeArgHJ;
+	void *m_bfmeArgHJ;
 };
 
-void bfmeCallHJ(int a, int b, int c, int d);
+void bfmeCallHJ(void *a, void *b, void *c, void *d);
 
 class BfmeStateHJ
 {
@@ -62,9 +62,9 @@ void BfmeStateHJ::bfmeUpdateHJ(char on)
 		else
 			r = bfmeDerefHJ(p);
 
-		int v = r->m_bfmeValueHJ;
-		int a = vv->m_bfme0cHJ->m_bfmeArgHJ;
-		volatile int home = v;
+		void *v = r->m_bfmeValueHJ;
+		void *a = vv->m_bfme0cHJ->m_bfmeArgHJ;
+		void * volatile home = v;
 
 		bfmeCallHJ(a, v, v, v);
 	}
