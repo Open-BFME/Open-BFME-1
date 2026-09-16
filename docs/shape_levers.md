@@ -760,3 +760,14 @@ uses ILT `0x000298e8`. Modeling that return restores the retail prefix, but
 The measured bank is **unmatched**, 219 versus 203 bytes with 73 differing
 non-relocation bytes. An explicit local-output spelling grew to 261 bytes.
 Prove the hidden return and destructor ABI before tuning return lifetimes.
+
+
+Constructor `0x006070E0` (170 bytes) lands with the native STLport `_Rb_tree`
+and a nested prefix subobject, rather than manual header-node stores. The
+matched copy constructor at `0x006071C0` witnesses `0x28` POD bytes followed
+by 109 owned pointer slots, then the tree at `+0x1dc`. Grouping the initialized
+prefix preserves the retail EH state before the tree's allocation. The node
+is `0x84` bytes: a `0x10` tree header plus a four-byte key and `0x70` mapped
+value. The related tree copy constructor at `0x00606E60` independently verifies
+that layout. Keep the aggregate owner opaque; a nearby generated STL name is
+not evidence of the original enclosing class.
