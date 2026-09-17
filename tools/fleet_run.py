@@ -213,7 +213,8 @@ def save(path, data):
 
 def execute(root, brief, legacy_log, engine, seat, command):
     body = Path(brief).read_bytes()
-    targets = [(r.lower(), int(n)) for r, n in TARGET.findall(body.decode("utf-8-sig"))]
+    # briefs quote retail sources; a cp1252 byte must not kill the seat
+    targets = [(r.lower(), int(n)) for r, n in TARGET.findall(body.decode("utf-8-sig", errors="replace"))]
     if not targets or len({r for r, _ in targets}) != len(targets):
         raise ValueError("brief must contain unique live TARGETS lines")
     run = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ-") + uuid.uuid4().hex[:12]
