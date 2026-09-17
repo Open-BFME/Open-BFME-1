@@ -35,6 +35,36 @@
 #pragma inline_recursion(on)
 #pragma inline_depth(2)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
+template <typename T>
+class StringBase
+{
+	friend class AsciiString;
+
+private:
+	StringBase(const StringBase<T> &src);
+
+	struct Header
+	{
+		int ref_count;
+		unsigned short length;
+		unsigned short capacity;
+		T data[1];
+	};
+
+	Header *m_data;
+};
+
+class AsciiString
+{
+public:
+	AsciiString(const AsciiString &other)
+	{
+		((StringBase<char> *)this)->StringBase<char>::StringBase(
+			*(const StringBase<char> *)&other);
+	}
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
 class Overridable
 {
@@ -66,6 +96,7 @@ public:
 	const AudioEventRTS *getInitiateSound(void) const;
 	const AudioEventRTS *getInitiateAtTargetSound(void) const;
 	float getRadiusCursorRadius(void) const;
+	AsciiString getPalantirMovie(void) const;
 
 private:
 	char m_unreconstructed_08[0x24 - 8];
@@ -75,6 +106,8 @@ private:
 	float m_radiusCursorRadius;						///< retail this+0x10c
 	char m_unreconstructed_110[0x115 - 0x110];
 	bool m_shortcutPower;							///< retail this+0x115
+	char m_unreconstructed_116[0x118 - 0x116];
+	AsciiString m_palantirMovie;						///< retail this+0x118
 };
 
 // ?isShortcutPower@SpecialPowerTemplate@@QBE_NXZ
@@ -107,4 +140,13 @@ float SpecialPowerTemplate::getRadiusCursorRadius(void) const
 	const SpecialPowerTemplate *self = (const SpecialPowerTemplate *)
 		const_cast<SpecialPowerTemplate *>(this)->friend_getFinalOverride();
 	return self->m_radiusCursorRadius;
+}
+
+// ?getPalantirMovie@SpecialPowerTemplate@@QBE?AVAsciiString@@XZ
+AsciiString SpecialPowerTemplate::getPalantirMovie(void) const
+{
+	const SpecialPowerTemplate *volatile unused = 0;
+	const SpecialPowerTemplate *self = (const SpecialPowerTemplate *)
+		const_cast<SpecialPowerTemplate *>(this)->friend_getFinalOverride();
+	return self->m_palantirMovie;
 }
