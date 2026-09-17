@@ -6,7 +6,7 @@
 class StringClass
 {
 	void Free_String(void);
-	char *m_data;
+	char *m_Buffer;
 public:
 	~StringClass()
 	{
@@ -31,4 +31,9 @@ private:
 // ??1DX8Caps@@QAE@XZ
 DX8Caps::~DX8Caps()
 {
+}
+
+void Force_DX8Caps_Deleting_Destructor(DX8Caps *caps)
+{
+	delete caps;
 }
