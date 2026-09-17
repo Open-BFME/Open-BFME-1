@@ -3,6 +3,7 @@
 #define Matrix4x4 Matrix4
 #include "PreRTS.h"
 #include <list>
+#include <hash_map>
 
 class Drawable;
 typedef std::list<Drawable *> DrawableList;
@@ -87,4 +88,21 @@ Bool areAllSelected(const DrawableList& listToCheck)
 			return FALSE;
 	}
 	return TRUE;
+}
+
+class ThingTemplate;
+namespace _STL {
+template <> struct hash<const ThingTemplate *>
+{
+	size_t operator()(const ThingTemplate *value) const
+	{
+		return reinterpret_cast<size_t>(value);
+	}
+};
+}
+typedef std::hash_map<const ThingTemplate *, Bool> SelectCountMap;
+
+Bool &selectionCountFor(SelectCountMap &counts, const ThingTemplate *thingTemplate)
+{
+	return counts[thingTemplate];
 }
