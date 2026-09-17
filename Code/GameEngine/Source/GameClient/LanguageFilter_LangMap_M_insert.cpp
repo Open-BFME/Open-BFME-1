@@ -22,3 +22,5 @@ template BfmeLangMapTree::iterator
 BfmeLangMapTree::_M_insert(_STL::_Rb_tree_node_base *, _STL::_Rb_tree_node_base *,
 	const _STL::pair<const UnicodeString, Bool> &, _STL::_Rb_tree_node_base *);
 
+template void BfmeLangMapTree::_M_erase(
+	_STL::_Rb_tree_node<_STL::pair<const UnicodeString, Bool> > *);
