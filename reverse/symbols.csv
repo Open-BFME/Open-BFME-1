@@ -84062,6 +84062,7 @@ name,address,notes
 ?invoke@LoadGameFadeWrapper@@UAEIM_N@Z,0x47eba,"Independent wrapper/table/callback ABI review; timed-operation pump passes elapsed float and firstCall bool, returns unsigned flags; post writes serial key and owns by-value release"
 ?invoke@Open2381C0Impl@@QAEXHPAX0@Z,0x00840F00,Open2 0x005381C0 callee
 ?invoke@Q3ScriptDispatcher@@QAEXPAUQ3ScriptMovie@@PBDH1PAX222@Z,0x004675F0,address-derived script-dispatch entry shared by the seven bool toggle wrappers; read from the REL32 at their call sites and followed through its ILT thunk
+?invoke@Rva000E5B30Fallback@@QAE_NPAVObject@@PAUCoord3D@@@Z,0x0001AB8B,local call adapter for the proven rva000E5B30 fallback thunk
 ?invoke@Rva0035BFB0CallTarget@@QAE_NPAX0@Z,0x0035BFB0,address-derived ABI name; retail 0x001916F0 calls this body through ILT 0x00035AAD with a thiscall bool two-argument shape; callee identity unknown
 ?invoke@Rva00893030Manager@@QAEXVRva00893030Ref@@PAX11@Z,0x00895C50,retail 0x00893030 calls the four-argument thiscall manager body at 0x00895C50
 ?invoke@Rva008AE770Stack@@QAEXPAXH0PAVAptValue@@H1@Z,0x008CF5A0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008AE770 calls; autopin
@@ -84571,6 +84572,7 @@ name,address,notes
 ?notify@Rva001563E0Sub@@QAEXHH@Z,0x0002363C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001563E0 calls; autopin
 ?notify@Rva00156570Sub@@QAEXHH@Z,0x0002221E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00156570 calls; autopin
 ?notify@Rva001565D0Sub@@QAEXHH@Z,0x00012774,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001565D0 calls; autopin
+?notify@Rva001565D0Sub@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z,0x00012774,local call adapter for the proven position-command thunk
 ?notify@Rva00156630Sub@@QAEXHH@Z,0x0000A5DD,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00156630 calls; autopin
 ?notify@Rva001567E0Sub@@QAEXHH@Z,0x0002B4F9,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001567E0 calls; autopin
 ?notify@Rva00156A30Sub@@QAEXHH@Z,0x00031B01,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00156A30 calls; autopin

@@ -126,6 +126,126 @@ public:
 #undef SUPPLY_TRUCK_BUSY_SLOT
 
 #pragma comment(linker, "/alternatename:?privateIdle@AIUpdateInterface@@MAEXW4CommandSourceType@@@Z=?j_0002270f@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
+#pragma comment(linker, "/alternatename:?findBestSupplyCenter@ResourceGatheringManager@@QAEPAVObject@@PAV2@@Z=?j_00045df4@@YAXXZ")
+#pragma comment(linker, "/alternatename:?findBestSupplyWarehouse@ResourceGatheringManager@@QAEPAVObject@@PAV2@@Z=?j_00015960@@YAXXZ")
+#pragma comment(linker, "/alternatename:?aiDock@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z=?j_0002221e@@YAXXZ")
+#pragma comment(linker, "/alternatename:?aiBfmeCommand19@AICommandInterface@@QAEXPBVCoord3D@@W4CommandSourceType@@@Z=?j_00012774@@YAXXZ")
+
+class Rva002C6CC0AIUpdateView
+{
+public:
+	virtual void slot000() = 0;
+	virtual void slot004() = 0;
+	virtual void slot008() = 0;
+	virtual void slot00c() = 0;
+	virtual void slot010() = 0;
+	virtual void slot014() = 0;
+	virtual void slot018() = 0;
+	virtual void slot01c() = 0;
+	virtual void slot020() = 0;
+	virtual void slot024() = 0;
+	virtual void slot028() = 0;
+	virtual void slot02c() = 0;
+	virtual void slot030() = 0;
+	virtual void slot034() = 0;
+	virtual void slot038() = 0;
+	virtual void slot03c() = 0;
+	virtual void slot040() = 0;
+	virtual void slot044() = 0;
+	virtual void slot048() = 0;
+	virtual void slot04c() = 0;
+	virtual void slot050() = 0;
+	virtual void slot054() = 0;
+	virtual void slot058() = 0;
+	virtual void slot05c() = 0;
+	virtual void slot060() = 0;
+	virtual void slot064() = 0;
+	virtual void slot068() = 0;
+	virtual void slot06c() = 0;
+	virtual void slot070() = 0;
+	virtual void slot074() = 0;
+	virtual void slot078() = 0;
+	virtual void slot07c() = 0;
+	virtual void slot080() = 0;
+	virtual void slot084() = 0;
+	virtual void slot088() = 0;
+	virtual void slot08c() = 0;
+	virtual void slot090() = 0;
+	virtual void slot094() = 0;
+	virtual void slot098() = 0;
+	virtual void slot09c() = 0;
+	virtual void slot0a0() = 0;
+	virtual void slot0a4() = 0;
+	virtual void slot0a8() = 0;
+	virtual void slot0ac() = 0;
+	virtual void slot0b0() = 0;
+	virtual void slot0b4() = 0;
+	virtual void slot0b8() = 0;
+	virtual void slot0bc() = 0;
+	virtual void slot0c0() = 0;
+	virtual void slot0c4() = 0;
+	virtual void slot0c8() = 0;
+	virtual void slot0cc() = 0;
+	virtual void slot0d0() = 0;
+	virtual void slot0d4() = 0;
+	virtual void slot0d8() = 0;
+	virtual void slot0dc() = 0;
+	virtual void slot0e0() = 0;
+	virtual void slot0e4() = 0;
+	virtual void slot0e8() = 0;
+	virtual void slot0ec() = 0;
+	virtual void slot0f0() = 0;
+	virtual void slot0f4() = 0;
+	virtual void slot0f8() = 0;
+	virtual void slot0fc() = 0;
+	virtual void slot100() = 0;
+	virtual void slot104() = 0;
+	virtual void slot108() = 0;
+	virtual void slot10c() = 0;
+	virtual void slot110() = 0;
+	virtual void slot114() = 0;
+	virtual void slot118() = 0;
+	virtual void slot11c() = 0;
+	virtual void slot120() = 0;
+	virtual void slot124() = 0;
+	virtual void slot128() = 0;
+	virtual void slot12c() = 0;
+	virtual void slot130() = 0;
+	virtual void slot134() = 0;
+	virtual void slot138() = 0;
+	virtual void slot13c() = 0;
+	virtual void slot140() = 0;
+	virtual SupplyTruckAIInterface *getSupplyTruckAIInterface() = 0;
+};
+
+class Rva002C6CC0SupplyInterfaceView
+{
+public:
+	virtual Int getNumberBoxes() const = 0;
+	virtual void slot004() const = 0;
+	virtual void slot008() const = 0;
+	virtual void slot00c() const = 0;
+	virtual Bool isAvailableForSupplying() const = 0;
+	virtual void slot014() const = 0;
+	virtual Bool slot018() const = 0;
+};
+
+class Rva001565D0Sub
+{
+public:
+	void notify(const Coord3D *destination, CommandSourceType commandSource);
+};
+
+#pragma comment(linker, "/alternatename:?notify@Rva001565D0Sub@@QAEXPBUCoord3D@@W4CommandSourceType@@@Z=?j_00012774@@YAXXZ")
+
+class Rva000E5B30Fallback
+{
+public:
+	Bool invoke(Object *owner, Coord3D *destination);
+};
+
+#pragma comment(linker, "/alternatename:?invoke@Rva000E5B30Fallback@@QAE_NPAVObject@@PAUCoord3D@@@Z=?j_0001ab8b@@YAXXZ")
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -608,50 +728,51 @@ TheInGameUI->DEBUG_addFloatingText("exiting wanting state", getMachineOwner()->g
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?update@SupplyTruckWantsToPickUpOrDeliverBoxesState@@ present-unmatched
 StateReturnType SupplyTruckWantsToPickUpOrDeliverBoxesState::update()
 {
-	Object* owner = getMachineOwner();
-	AIUpdateInterface* ownerAI = owner->getAIUpdateInterface();
+	Coord3D destination;
+	void *machine = *reinterpret_cast<void **>(reinterpret_cast<unsigned char *>(this) + 0x1c);
+	Object *owner = *reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(machine) + 0x10);
+	AIUpdateInterface *ownerAI = *reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<unsigned char *>(owner) + 0x204);
 	if (!ownerAI)
 		return STATE_FAILURE;
 
 	Player* ownerPlayer = owner->getControllingPlayer();
-	ResourceGatheringManager *manager = ownerPlayer->getResourceGatheringManager();
-
-	SupplyTruckAIInterface* update = ownerAI->getSupplyTruckAIInterface();
-	if (!update)
+	ResourceGatheringManager *manager = *reinterpret_cast<ResourceGatheringManager **>(reinterpret_cast<unsigned char *>(ownerPlayer) + 0x228);
+	if (!manager)
 		return STATE_FAILURE;
 
-	if (!update->isAvailableForSupplying())
+	Rva002C6CC0AIUpdateView *ownerAIView = reinterpret_cast<Rva002C6CC0AIUpdateView *>(ownerAI);
+	Rva002C6CC0SupplyInterfaceView *update = reinterpret_cast<Rva002C6CC0SupplyInterfaceView *>(ownerAIView->getSupplyTruckAIInterface());
+	if (update && update->isAvailableForSupplying())
 	{
-		DEBUG_CRASH(("SupplyTruckWantsToPickUpOrDeliverBoxesState: isAvailableForSupplying==false; should not get here"));
-		return STATE_FAILURE;
-	}
-
-	Int numBoxes = update->getNumberBoxes();
-	if (numBoxes > 0)
-	{
-		// want a center.
-		Object *bestCenter = manager->findBestSupplyCenter( owner );
-		if( bestCenter )
+		Int numBoxes = update->getNumberBoxes();
+		if (numBoxes > 0)
 		{
-			ownerAI->aiDock( bestCenter, CMD_FROM_AI );
+			// want a center.
+			Object *destinationObject = manager->findBestSupplyCenter( owner );
+			if (!destinationObject)
+				return STATE_FAILURE;
+			reinterpret_cast<AICommandInterface *>(reinterpret_cast<unsigned char *>(ownerAI) + 0x20)->aiDock( destinationObject, CMD_FROM_AI );
+			return STATE_SUCCESS;
+		}
+		else
+		{
+			// want a warehouse.
+			Object *destinationObject = manager->findBestSupplyWarehouse( owner );
+			if( destinationObject )
+			{
+				reinterpret_cast<AICommandInterface *>(reinterpret_cast<unsigned char *>(ownerAI) + 0x20)->aiDock( destinationObject, CMD_FROM_AI );
+				return STATE_SUCCESS;
+			}
+		}
+		if (update->slot018() && reinterpret_cast<Rva000E5B30Fallback *>(manager)->invoke(owner, &destination))
+		{
+			reinterpret_cast<Rva001565D0Sub *>(reinterpret_cast<unsigned char *>(ownerAI) + 0x20)->notify(&destination, CMD_FROM_AI);
 			return STATE_SUCCESS;
 		}
 	}
-	else
-	{
-		// want a warehouse.
-		Object* bestWarehouse = manager->findBestSupplyWarehouse( owner );
-		if( bestWarehouse )
-		{
-			ownerAI->aiDock( bestWarehouse, CMD_FROM_AI );
-			return STATE_SUCCESS;
-		}
-	}
-	return STATE_FAILURE;// we aren't going to wait right here, we will go back to base and wait for
-	// wanting to succeed some place safe.
+	return STATE_FAILURE;
 }
 
 //-------------------------------------------------------------------------------------------------
