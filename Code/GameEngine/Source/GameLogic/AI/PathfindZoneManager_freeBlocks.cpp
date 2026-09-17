@@ -1,21 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?freeBlocks@PathfindZoneManager@@AAEXXZ: Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp
 
-// Open-BFME5: PathfindZoneManager::freeBlocks, retail 0x00403760, 92 bytes. The
-// body carried only a machine byte-dump row; the symbols.csv pin names it as
-// the BFME-layout cleanup allocateBlocks runs before rebuilding.
-//
-// Two arrays go and four words are cleared. The first, at +0x23624, has an
-// element destructor, so it comes down the long way: the count read from the
-// cookie in front of the block, the eh vector destructor iterator over 0x228-
-// byte elements, then the block itself freed from four bytes below the array.
-// The second, at +0x23628, is freed with a bare operator delete and no null
-// test at all, which is what this compiler emits for a delete[] whose element
-// has no destructor.
-//
-// The store clearing the first pointer lands between the push and the call of
-// the second free; that is scheduling, not order.
-
+// Open-BFME5: PathfindZoneManager::freeBlocks at retail 0x00403760, 92 bytes.
+// The body carried only a machine byte-dump row. The symbols.csv pin names it
+// as the BFME-layout cleanup that allocateBlocks runs before rebuilding.
 // MSVC 7.1 folds `delete []` onto the scalar ??3@YAXPAX@Z unless the array
 // form is declared where it can see it; retail calls ??_V@YAXPAX@Z here.
 void operator delete[]( void *block );
@@ -26,8 +14,27 @@ public:
 	~Rva004029F0();						// ILT 0x00040138
 
 private:
-	char m_bfmeBody[0x228];
+	char m_beforeGrids[0x3c];
+	void *m_firstGrid[12][5];
+	char m_betweenGrids[8];
+	void *m_secondGrid[12][5];
+	char m_tail[4];
 };
+
+// ??1Rva004029F0@@QAE@XZ
+Rva004029F0::~Rva004029F0()
+{
+	for ( int column = 0; column < 5; ++column )
+	{
+		for ( int row = 0; row < 12; ++row )
+		{
+			delete [] m_firstGrid[row][column];
+			m_firstGrid[row][column] = 0;
+			delete [] m_secondGrid[row][column];
+			m_secondGrid[row][column] = 0;
+		}
+	}
+}
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindZoneManager
