@@ -16,12 +16,15 @@ struct BfmeCriticalSection
 extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(BfmeCriticalSection *cs);
 extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(BfmeCriticalSection *cs);
 
+extern void j_00043c57(void);
+
 typedef int Int;
 
 class Glo00EF3330
 {
 public:
 	void h004893E0(void);
+	void h00489410(void);
 
 private:
 	unsigned char m_unmodelled_000[0x30];
@@ -34,4 +37,28 @@ void Glo00EF3330::h004893E0(void)
 	EnterCriticalSection(&m_section);
 	++m_count;
 	LeaveCriticalSection(&m_section);
+}
+
+class CriticalSectionLock
+{
+public:
+	explicit CriticalSectionLock(BfmeCriticalSection *section) : m_section(section)
+	{
+		EnterCriticalSection(m_section);
+	}
+
+	~CriticalSectionLock()
+	{
+		LeaveCriticalSection(m_section);
+	}
+
+private:
+	BfmeCriticalSection *m_section;
+};
+
+void Glo00EF3330::h00489410(void)
+{
+	CriticalSectionLock lockGuard(&m_section);
+	if (--m_count <= 0)
+		j_00043c57();
 }
