@@ -6,6 +6,8 @@ struct AudioEventInfoSlice
 {
 	char m_pad[0x10];
 	float m_pitchShift;
+	char m_pad14[4];
+	float m_volume;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -57,12 +59,14 @@ class AudioEventRTS
 {
 public:
 	float getPitchShift() const;
+	float getVolume() const;
 private:
 	char m_pad0[8];
 	const AudioEventInfoSlice *m_eventInfo;
 	char m_pad1[0x14];
 	float m_pitchShift;
-	char m_pad2[8];
+	float m_volume;
+	char m_pad2[4];
 	unsigned int m_ownerID;
 	int m_ownerType;
 };
@@ -94,4 +98,33 @@ float AudioEventRTS::getPitchShift() const
 		return 0.5f;
 	}
 	return m_pitchShift;
+}
+
+float AudioEventRTS::getVolume() const
+{
+	switch (m_ownerType)
+	{
+		case 2:
+		{
+			Object *object = TheGameLogic->findObjectByID(m_ownerID);
+			if (object != 0 && (object->m_statusFlags & 0x00080000) != 0)
+				return 0.0f;
+			break;
+		}
+		case 1:
+		{
+			Drawable *drawable = TheGameClient->findDrawableByID(m_ownerID);
+			if (drawable != 0 && !drawable->m_audible)
+				return 0.0f;
+			break;
+		}
+	}
+
+	if (m_volume == -1.0f)
+	{
+		if (m_eventInfo != 0)
+			return m_eventInfo->m_volume;
+		return 0.0f;
+	}
+	return m_volume;
 }
