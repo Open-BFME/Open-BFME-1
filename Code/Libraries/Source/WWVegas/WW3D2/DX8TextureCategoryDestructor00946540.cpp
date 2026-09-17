@@ -170,3 +170,8 @@ DX8TextureCategoryClass::~DX8TextureCategoryClass()
 	if (material)
 		material->Release_Ref();
 }
+
+void Force_DX8TextureCategory_Deleting_Destructor(DX8TextureCategoryClass *category)
+{
+	delete category;
+}
