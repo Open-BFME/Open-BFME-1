@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "07b83dc522ed54fe1db1bc1466f36ee6aaf921ac52af0ce63f0a300cdc57e0ab",
+  "symbol": "?bfmeBase983@BfmeG983@@QAEXHPAXH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?bfmeBase983@BfmeG983@@QAEXHPAXH@Z\n// partial score=0.97 date=2026-09-17\n// Open-BFME5 conversion.\n// The caller at 0x004BE180 reaches this body through ILT 0x00016C2A.\n// That pin names the body BfmeG983::bfmeBase983.\n\nclass BfmeClock983\n{\npublic:\n\tvirtual void bfmeV0983();\n\tvirtual void bfmeV1983();\n\tvirtual void bfmeV2983(int a, void *b, int c);\n\n\tchar m_bfmePad983[0x1d8];\n\tBfmeClock983 *m_bfmeBack983;\n};\n\nclass BfmeG983\n{\npublic:\n\tvoid bfmeBase983(int a, void *b, int c);\n\n\tchar m_bfmePad[4];\n\tBfmeClock983 *m_bfmeA;\n\tBfmeClock983 *m_bfmeB;\n};\n\nvoid BfmeG983::bfmeBase983(int a, void *b, int c)\n{\n\tif (m_bfmeA != 0)\n\t\tm_bfmeA->bfmeV2983(a, b, c);\n\telse\n\t\tm_bfmeB->bfmeV2983(a, b, c);\n\n\tif (a == 2)\n\t{\n\t\tBfmeClock983 *front = m_bfmeA;\n\t\tBfmeClock983 *back = m_bfmeB;\n\t\tif (back == 0)\n\t\t\treturn;\n\n\t\tback->m_bfmeBack983 = front;\n\t\tm_bfmeB = 0;\n\t}\n}\n"
+}
