@@ -1,5 +1,5 @@
 // ?updatePosition@Gen0060CBB0@@AAEXXZ
-// partial score=0.9 date=2026-09-11
+// partial score=0.91 date=2026-09-16
 // cl: -I Code/GameEngine/Include/Precompiled -I Code/Libraries/Source/WWVegas/WWLib -I Code/Libraries/Source/WWVegas/WWMath -I Code/Libraries/Source/WWVegas/WWDebug -I Code/Libraries/Include
 
 #include <math.h>
@@ -61,14 +61,12 @@ private:
 // ?updatePosition@Gen0060CBB0@@AAEXXZ
 void Gen0060CBB0::updatePosition()
 {
-	Rva0060C620Coord3D frame;
-	frame.set(m_frameY, m_frameZ, m_frameX);
 	Matrix3 first;
 	Matrix3 second;
 	Matrix3 result;
-	float dx = frame.x - m_targetX;
-	float dy = frame.y - m_targetY;
-	float dz = frame.z - m_targetZ;
+	float dx = m_frameX - m_targetX;
+	float dy = m_frameY - m_targetY;
+	float dz = m_frameZ - m_targetZ;
 	float horizontal = (float)sqrt(dx * dx + dy * dy);
 	float angle = (float)atan2(-dz, horizontal);
 	float sine = (float)sin(angle);
@@ -91,8 +89,7 @@ void Gen0060CBB0::updatePosition()
 		((U4Target0060C2C0 *)m_firstTarget)->hand(&result);
 	}
 
-	float secondAngle = (float)atan2(-(frame.y - m_targetY),
-		frame.x - m_targetX);
+	float secondAngle = (float)atan2(-dy, dx);
 	float s = (float)sin(secondAngle);
 	float c = (float)cos(secondAngle);
 	second = Matrix3(
