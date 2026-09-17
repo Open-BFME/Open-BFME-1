@@ -36,14 +36,25 @@ private:
 	void *m_data;
 };
 
-class BfmeEmotionName : private StringBase<char>
+class BfmeStringLiteralBase
+{
+	friend class BfmeEmotionName;
+
+private:
+	BfmeStringLiteralBase(const char *text);
+};
+
+class BfmeEmotionName
 {
 public:
-	BfmeEmotionName(const char *text) : StringBase<char>(text) {}
-	~BfmeEmotionName()
+	BfmeEmotionName(const char *text)
 	{
-		((StringBase<char> *)this)->StringBase<char>::releaseBuffer();
+		((BfmeStringLiteralBase *)this)->BfmeStringLiteralBase::BfmeStringLiteralBase(text);
 	}
+	~BfmeEmotionName();
+
+private:
+	char *m_data;
 };
 
 class INI
@@ -131,7 +142,7 @@ public:
 };
 
 // ?Rva00290520@@YAXPAVINI@@PAX1PBX@Z
-void Rva00290520(INI *ini, void *, void *, const void *userData)
+void Rva00290520(INI *ini, void *, void *store, const void *)
 {
 	const char *token = ini->getNextToken();
 	bool hasAdditionalData = false;
@@ -168,5 +179,5 @@ void Rva00290520(INI *ini, void *, void *, const void *userData)
 	if (hasAdditionalData)
 		((BfmeThingDCE *)entry)->bfmeGoDCE((BfmeOtherDCE *)ini);
 
-	((EmotionTrackerUpdateModuleData *)userData)->m_entries.push_back(entry);
+	((EmotionTrackerUpdateModuleData *)store)->m_entries.push_back(entry);
 }
