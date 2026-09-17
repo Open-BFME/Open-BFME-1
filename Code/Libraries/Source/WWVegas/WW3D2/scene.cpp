@@ -156,6 +156,11 @@ SceneClass::~SceneClass(void)
 {
 }
 
+void forceSceneClassDeletingDestructor(SceneClass *value)
+{
+	delete value;
+}
+
 /***********************************************************************************************
  * SceneClass::Add_Render_Object -- base add function                                          *
  *                                                                                             *
