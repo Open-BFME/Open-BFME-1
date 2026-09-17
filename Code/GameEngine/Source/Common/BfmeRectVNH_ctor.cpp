@@ -15,10 +15,12 @@ public:
 	char m_bfme08;
 };
 
+// ??1BfmeBaseVNH@@UAE@XZ present-unmatched — helper emitted by the matched derived constructor; no standalone retail row is pinned yet.
 BfmeBaseVNH::~BfmeBaseVNH()
 {
 }
 
+// ??0BfmeBaseVNH@@QAE@ID@Z present-unmatched — helper emitted by the matched derived constructor; no standalone retail row is pinned yet.
 BfmeBaseVNH::BfmeBaseVNH(unsigned w, char f)
 {
 	m_bfme08 = f;
