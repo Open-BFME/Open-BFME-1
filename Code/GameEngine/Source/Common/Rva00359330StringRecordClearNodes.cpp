@@ -45,3 +45,33 @@ void clearRva00359330Nodes(Rva00359330Record *record)
 		delete node;
 	}
 }
+
+class BfmeNodeY
+{
+public:
+	~BfmeNodeY();
+	BfmeNodeY *m_next;
+};
+
+struct Rva00359530Record
+{
+	int m_previous;
+	int m_next;
+	void *m_name;
+	unsigned char m_released;
+	unsigned char m_pad;
+	unsigned short m_references;
+	BfmeNodeY *m_nodes;
+};
+
+// ?clearRva00359530Nodes@@YAXPAURva00359530Record@@@Z
+void clearRva00359530Nodes(Rva00359530Record *record)
+{
+	while (record->m_nodes)
+	{
+		BfmeNodeY *node = record->m_nodes;
+
+		record->m_nodes = record->m_nodes->m_next;
+		delete node;
+	}
+}
