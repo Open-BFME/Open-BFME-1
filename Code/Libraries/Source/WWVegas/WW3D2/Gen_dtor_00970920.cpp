@@ -28,10 +28,10 @@ private:
 	char m_pad[0x10];
 };
 
-class Gen0097D800
+class HLodDefClass
 {
 public:
-	~Gen0097D800();
+	~HLodDefClass();
 };
 
 class Gen_dtor_00970920 : public Rva009EB810TailBase
@@ -40,7 +40,7 @@ public:
 	virtual ~Gen_dtor_00970920();
 
 private:
-	Gen0097D800 *m_ptr;
+	HLodDefClass *m_ptr;
 	StringClass m_name;
 };
 

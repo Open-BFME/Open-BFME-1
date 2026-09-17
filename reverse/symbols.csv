@@ -4779,7 +4779,6 @@ name,address,notes
 ??1Gen00887940@@QAE@XZ,0x00887940,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
 ??1Gen008881D0@@QAE@XZ,0x008881D0,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
 ??1Gen0090F680@@QAE@XZ,0x0090F680,Open2 0x005F0D10 and 0x005F5500 shared destructor
-??1Gen0097D800@@QAE@XZ,0x0097D800,S3 delete-and-clear family callee destructor (address-derived name)
 ??1Gen009D8CA0@@QAE@XZ,0x009D8D00,Gen009D8CA0 cleanup; deleting destructor9D9090 calls7-bytevtable reset9D8D00; reader111980 cleanup uses same target
 ??1Gen009D8CA0@@UAE@XZ,0x009D8D00,virtual complete destructor body folded at 0x009D8D00; constructor 0x009D8CA0 installs vtable 0x01144180 whose slot zero routes through scalar wrapper 0x009D9090
 ??1Gen009DB400@@QAE@XZ,0x009DB400,S3 delete-and-clear family callee destructor (address-derived name)

@@ -37,6 +37,13 @@
 		~Gen##ADDR();                                                     \
 	};
 
+#define S3_OWNED_CALLEE_NAMED( NAME )                                     \
+	class NAME                                                            \
+	{                                                                     \
+	public:                                                               \
+		~NAME();                                                          \
+	};
+
 #define S3_DELETE_AND_CLEAR_HEAD( NAME, CALLEE )                          \
 	class NAME                                                            \
 	{                                                                     \
@@ -85,11 +92,11 @@ S3_OWNED_CALLEE( 009DB400 )
 S3_OWNED_CALLEE( 0003FA7B )
 S3_OWNED_CALLEE( 009DB4D0 )
 S3_OWNED_CALLEE( 0000D33C )
-S3_OWNED_CALLEE( 0097D800 )
+S3_OWNED_CALLEE_NAMED( HLodDefClass )
 
 S3_DELETE_AND_CLEAR_HEAD( Rva0010B990, Gen009DB400 )
 S3_DELETE_AND_CLEAR_HEAD( Rva005907F0, Gen0003FA7B )
 S3_DELETE_AND_CLEAR( Rva005929E0, Gen0003FA7B, 8 )
 S3_DELETE_AND_CLEAR_HEAD( Rva0063B190, Gen009DB4D0 )
 S3_GUARDED_DELETE_AND_CLEAR( Rva00695D60, Gen0000D33C, 2904 )
-S3_DELETE_AND_CLEAR( Rva009706B0, Gen0097D800, 20 )
+S3_DELETE_AND_CLEAR( Rva009706B0, HLodDefClass, 20 )
