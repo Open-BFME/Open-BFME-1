@@ -1253,3 +1253,13 @@ void parseSpeakerType( INI *ini, void *instance, void *store, const void* userDa
 	(*(UnsignedInt*)store) = TheAudio->translateSpeakerTypeToUnsignedInt(str);
 }
 
+class Rva005C11A0Owner
+{
+public:
+	void *value();
+};
+
+void *Rva005C11A0Owner::value()
+{
+	return this;
+}
