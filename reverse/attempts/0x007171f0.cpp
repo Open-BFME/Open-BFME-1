@@ -103,6 +103,7 @@ union Scratch
 void W3DShaderManagerStartRenderToTextureShim::start()
 {
 	Scratch slot;
+	Coord2D *dims = &slot.dims;
 	if (m_renderingToTexture || !m_newRenderSurface || !m_oldDepthSurface)
 		return;
 	if (ScreenDevice && ScreenDevice->v->TestCooperativeLevel(ScreenDevice) != 0)
@@ -124,7 +125,7 @@ void W3DShaderManagerStartRenderToTextureShim::start()
 			int alpha = (int)(BfmeGlobal_012f7fe0->getField301c() * 255.0f);
 			slot.dims.x = 1;
 			slot.dims.y = 1;
-			bfmeDrawFilterUV(0xffffff | (alpha << 24), 0, &slot.dims);
+			bfmeDrawFilterUV(0xffffff | (alpha << 24), 0, dims);
 			DX8Wrapper::Set_DX8_Render_State(168, 7);
 		}
 		else
