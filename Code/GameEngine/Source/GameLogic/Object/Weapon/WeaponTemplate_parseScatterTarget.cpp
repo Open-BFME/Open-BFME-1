@@ -13,10 +13,20 @@ struct Coord2D
 	float y;
 };
 
+struct LinearTarget
+{
+	float x;
+	float y;
+	unsigned int t;
+};
+
 class INI
 {
 public:
 	static void parseCoord2D(INI *, void *, void *, const void *);
+	const char *getNextSubToken(const char *expected);
+	static float scanReal(const char *token);
+	static unsigned int scanUnsignedInt(const char *token);
 };
 
 namespace _STL
@@ -31,6 +41,7 @@ class allocator
 };
 
 void __cdecl BfmeCoord2DConstruct(Coord2D *destination, const Coord2D &value);
+void __cdecl BfmeLinearTargetConstruct(LinearTarget *destination, const LinearTarget &value);
 
 template <class Type, class Allocator>
 class vector
@@ -55,9 +66,11 @@ public:
 class WeaponTemplate
 {
 	static void parseScatterTarget(INI *ini, void *instance, void *store, const void *userData);
+	static void parseLinearTarget(INI *ini, void *instance, void *store, const void *userData);
 
 	unsigned char m_pad_00[0x34];
 	_STL::public_vector<Coord2D, _STL::allocator<Coord2D> > m_scatterTargets;
+	_STL::public_vector<LinearTarget, _STL::allocator<LinearTarget> > m_linearTargets;
 };
 
 // ?parseScatterTarget@WeaponTemplate@@CAXPAVINI@@PAX1PBX@Z
@@ -78,6 +91,30 @@ void WeaponTemplate::parseScatterTarget(INI *ini, void *instance, void *store, c
 	else
 	{
 		items._M_insert_overflow(items._M_finish, target,
+			reinterpret_cast<const _STL::__false_type &>(instance), 1, true);
+	}
+}
+
+// ?parseLinearTarget@WeaponTemplate@@CAXPAVINI@@PAX1PBX@Z
+void WeaponTemplate::parseLinearTarget(INI *ini, void *instance, void *store, const void *userData)
+{
+	LinearTarget rec;
+	rec.x = INI::scanReal(ini->getNextSubToken("X"));
+	rec.y = INI::scanReal(ini->getNextSubToken("Y"));
+	unsigned int t = INI::scanUnsignedInt(ini->getNextSubToken("T"));
+
+	WeaponTemplate *self = (WeaponTemplate *)instance;
+	_STL::public_vector<LinearTarget, _STL::allocator<LinearTarget> > &items = self->m_linearTargets;
+	LinearTarget *end = items._M_end_of_storage;
+	rec.t = t;
+	if (items._M_finish != end)
+	{
+		_STL::BfmeLinearTargetConstruct(items._M_finish, rec);
+		++items._M_finish;
+	}
+	else
+	{
+		items._M_insert_overflow(items._M_finish, rec,
 			reinterpret_cast<const _STL::__false_type &>(instance), 1, true);
 	}
 }
