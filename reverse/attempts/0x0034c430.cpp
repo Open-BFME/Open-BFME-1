@@ -1,5 +1,5 @@
 // ?bfmeFindAAT@BfmeHostAAT@@QAEPAURva002EE330Player@@XZ
-// partial score=0.9 date=2026-09-08
+// partial score=0.95 date=2026-09-16
 struct Rva002EE330Player
 {
 	unsigned char m_bfmeHeadAAT[0x2c];
@@ -35,20 +35,20 @@ Rva002EE330Player *BfmeHostAAT::bfmeFindAAT()
 {
 	BfmeSubAAT *s = m_bfme170ACAAT;
 
-	if (s != 0)
+	if (s == 0)
+		return 0;
+
+	Rva002EE330Player *r = s->bfmeCheckAAT();
+
+	if (r != 0)
+		return r;
+
+	for (int i = 0; i < Rva002EE330ThePlayers->m_bfmeCountAAT; ++i)
 	{
-		Rva002EE330Player *r = s->bfmeCheckAAT();
+		Rva002EE330Player *p = Rva002EF110GetPlayer(i);
 
-		if (r != 0)
-			return r;
-
-		for (int i = 0; i < Rva002EE330ThePlayers->m_bfmeCountAAT; ++i)
-		{
-			Rva002EE330Player *p = Rva002EF110GetPlayer(i);
-
-			if (p->m_bfme2CAAT == 0)
-				return p;
-		}
+		if (p->m_bfme2CAAT == 0)
+			return p;
 	}
 
 	return 0;
