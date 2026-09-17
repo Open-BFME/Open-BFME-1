@@ -12,6 +12,7 @@
 class ParticleEmitterDefClass
 {
 protected:
+	virtual bool Save_Header(ChunkSaveClass &chunk_save);
 	virtual bool Save_User_Data(ChunkSaveClass &chunk_save);
 	char *Name;
 	char *UserString;
@@ -39,6 +40,26 @@ bool ParticleEmitterDefClass::Save_User_Data(ChunkSaveClass &chunk_save)
 				success = false;
 			}
 		}
+		chunk_save.End_Chunk();
+	}
+
+	return success;
+}
+
+bool ParticleEmitterDefClass::Save_Header(ChunkSaveClass &chunk_save)
+{
+	bool success = false;
+
+	if (chunk_save.Begin_Chunk(W3D_CHUNK_EMITTER_HEADER) == TRUE)
+	{
+		W3dEmitterHeaderStruct header = { 0 };
+		header.Version = W3D_CURRENT_EMITTER_VERSION;
+		::lstrcpyn(header.Name, Name, sizeof(header.Name));
+		header.Name[sizeof(header.Name) - 1] = 0;
+
+		if (chunk_save.Write(&header, sizeof(header)) == sizeof(header))
+			success = true;
+
 		chunk_save.End_Chunk();
 	}
 
