@@ -80,6 +80,7 @@ extern GameEngine *TheGameEngine;
 extern LANAPI *TheLAN;
 extern Rva00367E30Logic *TheBfmeGameLogic;
 extern void *Rva0048CD50WindowHandle;
+extern DWORD TheMessageTime;
 
 void Win32GameEngine::update(void)
 {
@@ -108,4 +109,19 @@ void Win32GameEngine::update(void)
 	}
 
 	serviceWindowsOS();
+}
+
+void Win32GameEngine::serviceWindowsOS(void)
+{
+	MSG msg;
+	int returnValue;
+
+	while (PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
+	{
+		returnValue = GetMessage(&msg, NULL, 0, 0);
+		TheMessageTime = msg.time;
+		TranslateMessage(&msg);
+		DispatchMessage(&msg);
+		TheMessageTime = 0;
+	}
 }
