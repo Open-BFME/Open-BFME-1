@@ -7,11 +7,13 @@ class Rva007FA2C0
 {
 public:
 	void walk(unsigned arg);
+	void scan(void *key);
 	void helper(void *slot, int line);
 
 private:
 	char m_pad[0x18];
 	unsigned m_18;
+	char m_pad1[0x0C];
 };
 
 void Rva007FA2C0::walk(unsigned arg)
@@ -37,4 +39,22 @@ void Rva007FA2C0::walk(unsigned arg)
 	} while (--n);
 	if (ok)
 		m_18 = best;
+}
+
+void Rva007FA2C0::scan(void *key)
+{
+	int i;
+	char *p;
+	char *slot;
+	for (i = 0, p = (char *)this + 0x28; i < 0x20; ++i, p += 0x1C)
+	{
+		if (*(void **)p == key)
+		{
+			slot = p;
+			goto found;
+		}
+	}
+	slot = 0;
+found:
+	helper(slot, (signed char)0x98);
 }
