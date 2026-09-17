@@ -1,3 +1,6 @@
+// cl: /DNDEBUG /DWIN32 /MD /EHs-c- /D_STLP_USE_STATIC_LIB
+// stlport
+
 // Two __thiscall members of one class, 0x003D08F0 (137 bytes) and 0x003D09A0
 // (120 bytes).  Both take one pointer, both decide the same way whether to run,
 // and both then walk the object's pointer pair at +0x18/+0x1C calling one member
@@ -45,6 +48,8 @@
 // string, and every callee is an unnamed body.  All names are address-derived.
 
 // --- callees, declared only -------------------------------------------------
+#include <bitset>
+
 class Y1RangeContext;
 class Y1RangeWrapper;
 
@@ -128,6 +133,21 @@ public:
 	void run( Y1RangeWrapper *wrapper );
 	void run( Y1RangeContext *context );
 };
+
+bool Gen0003C2E5::test( void *low, void *high )
+{
+	_STL::bitset<304> tmp = *reinterpret_cast<const _STL::bitset<304> *>(this);
+	tmp &= *reinterpret_cast<const _STL::bitset<304> *>(high);
+	if (tmp.any())
+		return false;
+
+	tmp = *reinterpret_cast<const _STL::bitset<304> *>(this);
+	tmp.flip();
+	tmp &= *reinterpret_cast<const _STL::bitset<304> *>(low);
+	if (tmp.any())
+		return false;
+	return true;
+}
 
 void Rva003D08F0::run( Y1RangeWrapper *wrapper )
 {
