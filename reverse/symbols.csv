@@ -85543,6 +85543,7 @@ name,address,notes
 ?rva00896AF0@Rva00896AF0Tracker@@QAEXPAVRva8CD130String@@V2@@Z,0x00896AF0,neutral Apt tracker member; direct retail call008AE70E; pointer and by-value4Bstring ret8; boundary1272B
 ?rva0089EEF0@Rva8CD130String@@QAEXII@Z,0x0089EEF0,neutral Apt string member; direct retail call008AE6D9; two32-bitargs ret8; boundary230B
 ?rva0089F010@EAStringC@@QBE?AV1@H@Z,0x0089F010,RVA-qualified EAStringC-family substring helper; raw206B ends89F0DE; thiscall hidden result pointer plus count and ret8 independently verified; no original method-name claim
+?rva008A0320@Rva008A0320String@@QAEAAV1@H@Z,0x008A0320,the 0x008AA2B0 stack string builder calls this one-argument string encoder
 ?rva008AC790@BfmeSlotState1289@@QAEXXZ,0x008AC790,Address-qualified thiscall helper; retail prologue consumes ECX and initializes receiver values at +0x48
 ?rva008AF650Implementation@@YAXHHH@Z,0x008AF650,Open-BFME5 cdecl implementation called by the 0x008C3E70 stdcall adapter
 ?rva008B2EA0Create@@YAPAVRva008B2EA0Node@@XZ,0x00892940,cdecl factory called by 0x008B2EA0
