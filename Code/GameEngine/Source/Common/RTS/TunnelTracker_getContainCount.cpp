@@ -18,6 +18,7 @@
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
+typedef float Real;
 typedef bool Bool;
 
 class Object;
@@ -45,6 +46,7 @@ class TunnelTracker
 {
 public:
 	UnsignedInt getContainCount(Int filterArg);
+	static void healObject(Object *obj, void *frames);
 
 private:
 	unsigned char m_bfmeHead[0x08 - 0x00];
@@ -72,4 +74,104 @@ UnsignedInt TunnelTracker::getContainCount(Int filterArg)
 	}
 
 	return count;
+}
+
+enum DamageType { DAMAGE_HEALING = 7 };
+enum DeathType { DEATH_NORMAL = 0, DEATH_NONE = 1 };
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameLogic/Damage.h
+struct DamageInfoInput
+{
+	char m_bfme_head[0x10];
+	DamageType m_damageType;
+	char m_bfme_pad[0x18 - 0x14];
+	DeathType m_deathType;
+	Real m_amount;
+};
+
+struct DamageInfo
+{
+	DamageInfo();
+	DamageInfoInput in;
+	char m_bfme_tail[0x5C - 0x20];
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameLogic/Module/BodyModule.h
+class BodyModuleInterface
+{
+public:
+	virtual void slot0() = 0;
+	virtual void attemptHealing(DamageInfo *damageInfo) = 0;
+	virtual void slot2() = 0;
+	virtual void slot3() = 0;
+	virtual void slot4() = 0;
+	virtual void slot5() = 0;
+	virtual Real getMaxHealth(void) const = 0;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameLogic/Object.h
+class Object
+{
+public:
+	BodyModuleInterface *getBodyModule(void) const { return m_body; }
+	UnsignedInt getContainedByFrame(void) const { return m_containedByFrame; }
+
+private:
+	char m_slice_padA[0x200];
+	BodyModuleInterface *m_body;
+	char m_slice_padB[0x21C - 0x204];
+	UnsignedInt m_containedByFrame;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameLogic/GameLogic.h
+class GameLogic
+{
+public:
+	UnsignedInt getFrame(void) const { return m_frame; }
+
+private:
+	char m_slice_pad[0x3C];
+	UnsignedInt m_frame;
+};
+
+extern GameLogic *TheGameLogic;
+
+void TunnelTracker::healObject( Object *obj, void *frames)
+{
+
+	//get the number of frames to heal
+	Real *framesForFullHeal = (Real *)frames;
+
+	// setup the healing damageInfo structure with all but the amount
+	DamageInfo healInfo;
+	healInfo.in.m_damageType = DAMAGE_HEALING;
+	healInfo.in.m_deathType = DEATH_NONE;
+
+	// get body module of the thing to heal
+	BodyModuleInterface *body = obj->getBodyModule();
+
+	// if we've been in here long enough ... set our health to max
+	if( TheGameLogic->getFrame() - obj->getContainedByFrame() >= *framesForFullHeal )
+	{
+
+		// set the amount to max just to be sure we're at the top
+		healInfo.in.m_amount = body->getMaxHealth();
+
+		// set max health
+		body->attemptHealing( &healInfo );
+
+	}  // end if
+	else
+	{
+		//
+		// given the *whole* time it would take to heal this object, lets pretend that the
+		// object is at zero health ... and give it a sliver of health as if it were at 0 health
+		// and would be fully healed at 'framesForFullHeal'
+		//
+		healInfo.in.m_amount = body->getMaxHealth() / *framesForFullHeal;
+
+		// do the healing
+		body->attemptHealing( &healInfo );
+
+	}  // end else
 }
