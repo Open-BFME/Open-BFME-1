@@ -4,6 +4,7 @@
 #include "wwstring.h"
 
 struct IDirect3D8;
+struct IDirect3DDevice8;
 struct _D3DADAPTER_IDENTIFIER8;
 enum WW3DFormat { WW3DFormat_dummy = 0 };
 
@@ -20,8 +21,11 @@ class DX8Caps
 public:
 	DX8Caps(IDirect3D8 *, const D3DCAPS8 &, WW3DFormat,
 		const _D3DADAPTER_IDENTIFIER8 &);
+	DX8Caps(IDirect3D8 *, IDirect3DDevice8 *, WW3DFormat,
+		const _D3DADAPTER_IDENTIFIER8 &);
 
 private:
+	void Init_Caps(IDirect3DDevice8 *);
 	void Compute_Caps(WW3DFormat, const _D3DADAPTER_IDENTIFIER8 &);
 
 	int m_maxDisplayWidth;
@@ -52,5 +56,17 @@ DX8Caps::DX8Caps(IDirect3D8 *direct3D, const D3DCAPS8 &caps,
 		m_supportTnL = false;
 	}
 
+	Compute_Caps(displayFormat, adapterIdentifier);
+}
+
+// ??0DX8Caps@@QAE@PAUIDirect3D8@@PAUIDirect3DDevice8@@W4WW3DFormat@@ABU_D3DADAPTER_IDENTIFIER8@@@Z
+DX8Caps::DX8Caps(IDirect3D8 *direct3D, IDirect3DDevice8 *device,
+	WW3DFormat displayFormat, const _D3DADAPTER_IDENTIFIER8 &adapterIdentifier)
+	: m_maxDisplayWidth(0),
+	  m_maxDisplayHeight(0),
+	  m_vendorId(0),
+	  m_direct3D(direct3D)
+{
+	Init_Caps(device);
 	Compute_Caps(displayFormat, adapterIdentifier);
 }
