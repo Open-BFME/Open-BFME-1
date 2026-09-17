@@ -35,12 +35,13 @@ class CommandButton
 {
 public:
 	const Image *cacheButtonImage(void);
+	const Image *getButtonImage(void) const;
 
 private:
 	char m_beforeButtonImageName[0x40];
 	AsciiString m_buttonImageName;
 	char m_beforeButtonImage[0xf0 - 0x44];
-	const Image *m_buttonImage;
+	mutable const Image *m_buttonImage;
 };
 
 const Image *CommandButton::cacheButtonImage(void)
@@ -49,4 +50,17 @@ const Image *CommandButton::cacheButtonImage(void)
 		return 0;
 
 	return m_buttonImage = TheMappedImageCollection->findImageByName(m_buttonImageName);
+}
+
+const Image *CommandButton::getButtonImage(void) const
+{
+	if (m_buttonImage)
+		return m_buttonImage;
+
+	if (m_buttonImageName.isEmpty())
+		return 0;
+
+	m_buttonImage = TheMappedImageCollection->findImageByName(m_buttonImageName);
+
+	return m_buttonImage;
 }
