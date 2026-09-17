@@ -22,15 +22,23 @@ extern GameLogic *TheGameLogic;				// 0x012F0898
 class StateMachine
 {
 public:
+	virtual void halt( void );
 	Object *getGoalObject( void );
 
 private:
-	unsigned char m_unmodelled_00[ 0x20 ];
+	unsigned char m_unmodelled_00[ 0x1c ];
 	ObjectID m_goalObjectID;				// +0x20
+	unsigned char m_unmodelled_24[ 0x1c ];
+	unsigned char m_halted;				// +0x40
 };
 
 // ?getGoalObject@StateMachine@@QAEPAVObject@@XZ
 Object *StateMachine::getGoalObject( void )
 {
 	return TheGameLogic->findObjectByID( m_goalObjectID );
+}
+
+void StateMachine::halt( void )
+{
+	m_halted = 1;
 }
