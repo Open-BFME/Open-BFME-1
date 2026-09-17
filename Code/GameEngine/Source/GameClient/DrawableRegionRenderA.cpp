@@ -134,3 +134,77 @@ void bfmeRegionRenderA( void *rawRegion, Int rawOffset, const Int rawValue )
 	}
 }
 
+struct Rva004129B0Region
+{
+	Int left;
+	Int top;
+	Int right;
+};
+
+struct Rva004129B0Offset
+{
+	Int x;
+	Int y;
+};
+
+extern void j_00017256();
+typedef void (__cdecl *Rva00411270ColorCall)( Int value, Color *colors );
+
+// ?bfmeRegionRenderB@@YAXPAXHH@Z
+void bfmeRegionRenderB( void *rawRegion, Int rawOffset, const Int rawValue )
+{
+	const Rva004129B0Offset *offset = (const Rva004129B0Offset *)(UnsignedInt)rawOffset;
+	Rva004129B0Region *region = (Rva004129B0Region *)(UnsignedInt)rawRegion;
+	Int regionLeft = region->left;
+	Color colors[4];
+	Real regionWidth = (Real)(region->right - regionLeft);
+	((Rva00411270ColorCall)j_00017256)( rawValue, colors );
+
+	UnsignedInt state = *(UnsignedInt *)0x012F13C8;
+	if( (state & 1) == 0 )
+	{
+		state |= 1;
+		*(UnsignedInt *)0x012F13C8 = state;
+		*(UnsignedInt *)0x012F13C4 = 0x7F000000;
+	}
+	if( (state & 2) == 0 )
+	{
+		state |= 2;
+		*(UnsignedInt *)0x012F13C8 = state;
+		*(UnsignedInt *)0x012F13C0 = 0xFFBA9252;
+	}
+	if( (state & 4) == 0 )
+	{
+		state |= 4;
+		*(UnsignedInt *)0x012F13C8 = state;
+		*(UnsignedInt *)0x012F13BC = 0xFF000000;
+	}
+
+	TheDisplay->drawOpenRect(
+		(Real)(regionLeft + *(const volatile Int *)&offset->x - 3),
+		(Real)(region->top + offset->y - 3),
+		regionWidth + *(const Real *)0x010828C4,
+		10.0f, 1.0f, *(UnsignedInt *)0x012F13C4 );
+
+	TheDisplay->drawOpenRect(
+		(Real)(region->left + offset->x - 2),
+		(Real)(region->top + offset->y - 2),
+		regionWidth + *(const Real *)0x01075340,
+		8.0f, 1.0f, *(UnsignedInt *)0x012F13C0 );
+
+	TheDisplay->drawFillRect(
+		(Real)(region->left + offset->x - 1),
+		(Real)(region->top + offset->y - 1),
+		regionWidth + *(const Real *)0x01088830,
+		6.0f, *(UnsignedInt *)0x012F13BC );
+
+	const Real &rawValueReal = *(const Real *)&rawValue;
+	regionWidth = *(volatile Real *)&regionWidth * rawValueReal;
+	for( Int i = 0; i < 4; ++i )
+	{
+		TheDisplay->drawFillRect(
+			(Real)(region->left + offset->x),
+			(Real)(region->top + offset->y + i),
+			regionWidth, 1.0f, colors[i] );
+	}
+}
