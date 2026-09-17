@@ -86,6 +86,7 @@ typedef MissionList::iterator MissionListIt;
 class Campaign
 {
 public:
+	Mission *getMission(AsciiString missionName);
 	Mission *getNextMission(Mission *current);
 
 private:
@@ -115,6 +116,24 @@ Mission *Campaign::getNextMission( Mission *current)
 	{
 		Mission *mission = *it;
 		if(mission->m_name.compare(name) == 0)
+			return mission;
+		++it;
+	}
+	return 0;
+}
+
+// ?getMission@Campaign@@QAEPAVMission@@VAsciiString@@@Z
+Mission *Campaign::getMission( AsciiString missionName )
+{
+	if(missionName.isEmpty())
+		return 0;
+
+	MissionListIt it;
+	it = m_missions.begin();
+	while(it != m_missions.end())
+	{
+		Mission *mission = *it;
+		if(mission->m_name.compare(missionName) == 0)
 			return mission;
 		++it;
 	}
