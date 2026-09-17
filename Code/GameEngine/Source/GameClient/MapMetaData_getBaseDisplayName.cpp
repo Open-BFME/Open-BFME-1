@@ -120,6 +120,7 @@ extern GameTextInterface *TheGameText;
 class MapMetaData
 {
 public:
+	UnicodeString getFileName() const;
 	UnicodeString bfme_getBaseDisplayName();
 	UnicodeString getDescription();
 
@@ -176,6 +177,22 @@ UnicodeString MapMetaData::bfme_getBaseDisplayName()
 	}
 
 	return m_cachedBaseDisplayName;
+}
+
+UnicodeString MapMetaData::getFileName() const
+{
+	UnicodeString result;
+	const char *slash = m_fileName.reverseFind('\\');
+	if (slash)
+	{
+		AsciiString leaf(slash + 1);
+		result.translate(leaf);
+	}
+	else
+	{
+		result.translate(m_fileName);
+	}
+	return result;
 }
 
 UnicodeString MapMetaData::getDescription()
