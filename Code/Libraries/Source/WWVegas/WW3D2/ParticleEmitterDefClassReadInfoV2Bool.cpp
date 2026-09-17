@@ -8,6 +8,7 @@
 #include "chunkio.h"
 #include "v3_rnd.h"
 #include "w3d_file.h"
+#include <stdlib.h>
 #include <string.h>
 
 // The real class has 73 virtual entries before Create_Randomizer.  These
@@ -64,7 +65,11 @@ public:
 	DECL_RVA_DUMMY(45)
 	DECL_RVA_DUMMY(46)
 	DECL_RVA_DUMMY(47)
-	DECL_RVA_DUMMY(48)
+
+protected:
+	virtual bool Read_User_Data(ChunkLoadClass &chunk_load);
+
+public:
 	DECL_RVA_DUMMY(49)
 
 protected:
@@ -99,7 +104,11 @@ public:
 	DECL_RVA_DUMMY(72)
 	virtual Vector3Randomizer *Create_Randomizer(W3dVolumeRandomizerStruct &info);
 
-	char Pad0[0x160];
+	char *Name;
+	char *UserString;
+	int UserType;
+	unsigned int Version;
+	char Pad0[0x150];
 	W3dEmitterInfoStructV2 InfoV2;
 	char PadToLineProperties[0x204 - 0x160 - sizeof(W3dEmitterInfoStructV2)];
 	W3dEmitterLinePropertiesStruct LineProperties;
@@ -129,6 +138,34 @@ bool ParticleEmitterDefClass::Read_InfoV2(ChunkLoadClass &chunk_load)
 			VelocityRandomizer = Create_Randomizer(InfoV2.VelRandom);
 			ret_val = true;
 		}
+		chunk_load.Close_Chunk();
+	}
+
+	return ret_val;
+}
+
+bool ParticleEmitterDefClass::Read_User_Data(ChunkLoadClass &chunk_load)
+{
+	bool ret_val = false;
+
+	if (chunk_load.Open_Chunk() &&
+		(chunk_load.Cur_Chunk_ID() == W3D_CHUNK_EMITTER_USER_DATA)) {
+
+		W3dEmitterUserInfoStruct user_info = { 0 };
+		if (chunk_load.Read(&user_info, sizeof(user_info)) == sizeof(user_info)) {
+			ret_val = true;
+			UserType = user_info.Type;
+
+			if (user_info.SizeofStringParam > 0) {
+				UserString = (char *)::malloc(sizeof(char) * (user_info.SizeofStringParam + 1));
+				UserString[0] = 0;
+
+				if (chunk_load.Read(UserString, user_info.SizeofStringParam) != user_info.SizeofStringParam) {
+					ret_val = false;
+				}
+			}
+		}
+
 		chunk_load.Close_Chunk();
 	}
 
