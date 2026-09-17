@@ -13,6 +13,8 @@
 typedef float Real;
 typedef bool Bool;
 
+extern "C" double __cdecl sqrt(double);
+
 struct Coord3D
 {
 	Real x;
@@ -93,9 +95,11 @@ public:
 
 class Locomotor
 {
-public:
+protected:
 	void moveTowardsPositionOther(Object *object, const Coord3D *goal,
 		Real onPathDistance, Real desiredSpeed);
+
+public:
 	Real query(Object *object);
 	Real queryDivMin40(Object *object);
 	Bool rotateTowardsPosition(Object *object, const Coord3D *goal);
@@ -125,19 +129,14 @@ static const Real kDefaultAcceleration = 0.001f;
 void Locomotor::moveTowardsPositionOther(Object *object,
 	const Coord3D *goal, Real onPathDistance, Real desiredSpeed)
 {
-	if (object == 0 || goal == 0)
-		return;
-
-	PhysicsBehavior *physics = object->getPhysics();
-	if (physics == 0)
-		return;
-
 	// The retail prologue first queries the locomotor speed and clamps against
 	// the resolved template value.  Keep the two values separate: the query is
 	// the object-dependent cap while +0x30 is the receiver's local cap.
 	Real queriedSpeed = query(object);
 	if (desiredSpeed > queriedSpeed)
 		desiredSpeed = queriedSpeed;
+
+	PhysicsBehavior *physics = object->getPhysics();
 
 	Overridable *resolved = m_template;
 	if (resolved != 0 && resolved->m_nextOverride != 0)
@@ -196,7 +195,7 @@ void Locomotor::moveTowardsPositionOther(Object *object,
 		Real length = distanceSquared;
 		if (length > kZeroRange)
 		{
-			length = (Real)1.0f / (Real)__builtin_sqrt((double)length);
+			length = (Real)1.0f / (Real)sqrt((double)length);
 			Coord3D force;
 			force.x = dx * length * forceMagnitude;
 			force.y = dy * length * forceMagnitude;
