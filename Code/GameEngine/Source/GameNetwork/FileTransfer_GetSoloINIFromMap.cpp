@@ -47,3 +47,10 @@ AsciiString GetSoloINIFromMap(AsciiString path)
 	return out;
 }
 
+AsciiString GetStrFileFromMap(AsciiString path)
+{
+	AsciiString base = GetBasePathFromPath(path);
+	AsciiString out;
+	out.format("%s\\map.str", base.str());
+	return out;
+}
