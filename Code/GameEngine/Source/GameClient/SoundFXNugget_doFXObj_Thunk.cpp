@@ -63,6 +63,8 @@ private:
 	unsigned char m_pad[0x70];
 };
 
+class Matrix3D;
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
 {
@@ -93,6 +95,8 @@ class SoundFXNugget
 {
 public:
 	virtual void doFXObj(const Object *primary, const Object *secondary) const;
+	virtual void doFXPos(const Coord3D *primary, const Matrix3D *primaryMtx,
+		float primarySpeed, const Coord3D *secondary) const;
 
 private:
 	unsigned char m_pad[0xb0];
@@ -107,6 +111,19 @@ void SoundFXNugget::doFXObj(const Object *primary, const Object *) const
 	{
 		sound.setPlayerIndex(primary->getControllingPlayer()->getPlayerIndex());
 		sound.setPosition(primary->getPosition());
+	}
+
+	TheAudio->addAudioEvent(&sound);
+}
+
+void SoundFXNugget::doFXPos(const Coord3D *primary, const Matrix3D *,
+	float, const Coord3D *) const
+{
+	AudioEventRTS sound(m_soundName, OBJECT_ID_UNUSED);
+
+	if (primary)
+	{
+		sound.setPosition(primary);
 	}
 
 	TheAudio->addAudioEvent(&sound);
