@@ -4771,7 +4771,7 @@ name,address,notes
 ??1Gen00808FB0@@UAE@XZ,0x007E86C0,Open-BFME5 the out-of-line destructor the scalar deleting destructor at 0x00808FB0 calls
 ??1Gen00809750@@UAE@XZ,0x008096F0,Open-BFME5 the out-of-line destructor the scalar deleting destructor at 0x00809750 calls
 ??1Gen0080ACD0@@UAE@XZ,0x0080A830,Open-BFME5 the out-of-line destructor the scalar deleting destructor at 0x0080ACD0 calls
-??1Gen00825550@@QAE@XZ,0x00825550,S2 non-virtual destructor called directly by the delete-argument body at 0x00823210
+??1LZHLCompressor@@QAE@XZ,0x00825550,matched LZHLCompressor complete destructor called directly by the delete-argument body at 0x00823210; vendored=lzhl-1.0
 ??1Gen008267E0@@QAE@XZ,0x008267E0,S2 non-virtual destructor called directly by the delete-argument body at 0x00823230
 ??1Gen008427F0@@QAE@XZ,0x008427F0,member destroyed by the virtual-base destructor family (R4VirtualBaseDestructors.cpp); address-derived name; identity not recovered
 ??1Gen00842970@@QAE@XZ,0x00842970,member destroyed by the virtual-base destructor family (R4VirtualBaseDestructors.cpp); address-derived name; identity not recovered
