@@ -14,6 +14,7 @@ struct Gen_t_0065f750_p12cd { char m_body[20]; };
 struct Gen_t_0058f2f0_p12cd { char m_body[12]; };
 struct Gen_t_00590820_p12cd { char m_body[12]; };
 struct Gen_t_00640d30_p12cd { char m_body[28]; };
+struct Gen_t_00653850_p12cd { char m_body[0x210]; };
 
 void BfmeDequeInitAnchor0065f230(void *place)
 {
@@ -42,4 +43,6 @@ template void _Deque_base<Gen_t_00590820_p12cd,
 	allocator<Gen_t_00590820_p12cd> >::_M_initialize_map(unsigned int);
 template void _Deque_base<Gen_t_00640d30_p12cd,
 	allocator<Gen_t_00640d30_p12cd> >::_M_initialize_map(unsigned int);
+template void _Deque_base<Gen_t_00653850_p12cd,
+	allocator<Gen_t_00653850_p12cd> >::_M_initialize_map(unsigned int);
 }
