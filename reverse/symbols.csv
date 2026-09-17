@@ -79530,6 +79530,7 @@ name,address,notes
 ?findByNameB@BfmeNamedContainer0033c340@@QAEPAVBfmeNamedItem0033c340@@ABVAsciiString@@@Z,0x0000A592,"Lead verified359DC0: name probe table+2C, equality, returns stored pointer+4 or null; ret4"
 ?findClientUpdateModule@Drawable@@QAEPAVClientUpdateModule@@W4NameKeyType@@@Z,0x00031D2C,LaserFXNugget positional dispatch call target
 ?findClosestFreeGarrisonPointIndex@BfmeGarrisonFindClosestCall@@QAEHHPBUCoord3D@@@Z,0x0002130F,TU-local ABI adapter for the verified GarrisonContain closest-point ILT; not a body identity
+?findObjectByID@BfmeInvalidGarrisonGameLogic@@QAEPAVObject@@H@Z,0x0001F253,TU-local ABI adapter for the verified GameLogic findObjectByID ILT; not a body identity
 ?findClosestFreeGarrisonPointIndex@GarrisonContain@@IAEHHPBUCoord3D@@@Z,0x0002130F,GarrisonContain closest free point ILT
 ?findClosestRepulsor@AI@@QAEPAVObject@@PBV2@M@Z,0x0002BDB4,AIMoveAwayFromRepulsorsState::onEnter direct-call ILT thunk
 ?findCommandButton@ControlBar@@AAEPBVCommandButton@@ABVAsciiString@@@Z,0x0003B59D,incremental-link thunk read out of the call displacement in populateOCLTimer
@@ -81558,6 +81559,7 @@ name,address,notes
 ?getCurrentSelectionAsAIGroup@Player@@QAEXPAVAIGroup@@@Z,0x00019222,GameLogic::deselectObject call-site target at 0x00382F96 and Player.cpp declaration prove this receiver and argument
 ?getCurrentVictim@AIUpdateInterface@@QBEPAVObject@@XZ,0x000261A2,GarrisonContain target victim ILT
 ?getCurrentVictimPos@AIUpdateInterface@@QBEPBUCoord3D@@XZ,0x00030634,GarrisonContain target position ILT
+?getCurrentWeapon@BfmeInvalidGarrisonObject@@QAEPAVWeapon@@PAW4WeaponSlotType@@@Z,0x00031A7F,TU-local ABI adapter for the verified Object getCurrentWeapon ILT; not a body identity
 ?getCurrentWeapon@BfmeOutOfWeaponRangeObject@@QAEPAVBfmeOutOfWeaponRangeWeapon@@H@Z,0x00031A7F,outOfWeaponRangeObject retail getCurrentWeapon thunk
 ?getCurrentWeapon@Object@@QAEPAVWeapon@@PAW4WeaponSlotType@@@Z,0x00031A7F,ILT thunk to 0x1BE230; pinned from TurretAI::isOwnersCurWeaponOnTurret @0x18D0D0
 ?getCursorIndex@Mouse@@QAEHABVAsciiString@@@Z,0x00043A13,harvested from parseMouseCursorDefinition (thunk)

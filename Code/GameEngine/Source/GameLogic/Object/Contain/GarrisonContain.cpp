@@ -897,49 +897,73 @@ Bool GarrisonContain::isValidContainerFor(const Object* obj, Bool checkCapacity)
 /** Any objects that are sitting at the garrison points which no longer have targets need
 	* to be moved to the center of the building and taken off the garrison point */
 // ------------------------------------------------------------------------------------------------
-// ?removeInvalidObjectsFromGarrisonPoints@GarrisonContain@@IAEXXZ present-unmatched
+class Rva001E1770ByteField
+{
+public:
+	unsigned char get() const;
+};
+
+struct BfmeInvalidGarrisonPoint
+{
+	ObjectID objectID;
+	unsigned char m_unmodelled[0x10];
+};
+
+struct BfmeInvalidGarrisonPointsView
+{
+	unsigned char m_unmodelled[0xd8];
+	BfmeInvalidGarrisonPoint points[40];
+	Int pointsInUse;
+};
+
+class BfmeInvalidGarrisonGameLogic
+{
+public:
+	Object *findObjectByID(Int id);
+};
+
+class BfmeInvalidGarrisonObject
+{
+public:
+	Weapon *getCurrentWeapon(WeaponSlotType *slot);
+};
+
+class BfmeInvalidGarrisonWeapon
+{
+public:
+	void *m_vtable;
+	Rva001E1770ByteField *m_template;
+};
+
+#pragma comment(linker, "/alternatename:?findObjectByID@BfmeInvalidGarrisonGameLogic@@QAEPAVObject@@H@Z=?j_0001f253@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getCurrentWeapon@BfmeInvalidGarrisonObject@@QAEPAVWeapon@@PAW4WeaponSlotType@@@Z=?j_00031a7f@@YAXXZ")
+
 void GarrisonContain::removeInvalidObjectsFromGarrisonPoints( void )
 {
-#if defined __DEBUG || defined _INTERNAL
-  const GarrisonContainModuleData *modData = getGarrisonContainModuleData();
-  DEBUG_ASSERTCRASH(modData->m_isEnclosingContainer, ("removeinvalidobjFromGarrisonPoint... SHOULD NOT GET HERE, since this container is non-enclosing") );
-#endif
-	Object *obj;
+	BfmeInvalidGarrisonPointsView *self =
+		reinterpret_cast<BfmeInvalidGarrisonPointsView *>(this);
+	if (self->pointsInUse == 0)
+		return;
 
-	if (m_garrisonPointsInUse == 0)
-		return;	// my, that was easy
-
-	for( Int i = 0; i < MAX_GARRISON_POINTS; ++i )
+	Int i = 0;
+	BfmeInvalidGarrisonPoint *point = self->points;
+	do
 	{
-
-		obj = m_garrisonPointData[ i ].object;
-		if( obj )
+		Object *obj = reinterpret_cast<BfmeInvalidGarrisonGameLogic *>(
+			TheGameLogic)->findObjectByID(point->objectID);
+		if (obj != NULL)
 		{
-			AIUpdateInterface *ai = obj->getAIUpdateInterface();
-
-			Bool targetIsValid = true;	// assume true for now...
-			Object *goalObject = ai->getGoalObject();
-			if( goalObject )
+			Weapon *weapon = reinterpret_cast<BfmeInvalidGarrisonObject *>(
+				obj)->getCurrentWeapon(NULL);
+			if (weapon != NULL && reinterpret_cast<BfmeInvalidGarrisonWeapon *>(
+				weapon)->m_template->get())
 			{
-				Weapon *weapon = obj->getCurrentWeapon();
-				if( !weapon || !weapon->isWithinAttackRange( obj, goalObject ) )
-				{
-					//As a garrisoned member, if our target is out of range, 
-					//then get out of the space, because someone else might
-					//be able to shoot it.
-					targetIsValid = false;
-				}
+				removeObjectFromGarrisonPoint(obj, i);
 			}
-			
-			// note that we can be attacking a position, rather than an object...
-			if( !obj->testStatus(OBJECT_STATUS_IS_ATTACKING) || !targetIsValid ) 
-			{
-				removeObjectFromGarrisonPoint( obj, i );
-			}
-
-		}  // end if
-
-	}  // end for i
+		}
+		++i;
+		++point;
+	} while (i < MAX_GARRISON_POINTS);
 
 }  // end removeInvalidObjectsFromGarrisonPoints
 
