@@ -104,3 +104,8 @@ MaterialInfoClass::~MaterialInfoClass()
 {
  Free();
 }
+
+void Force_MaterialInfoClass_Deleting_Destructor(MaterialInfoClass *material_info)
+{
+	delete material_info;
+}
