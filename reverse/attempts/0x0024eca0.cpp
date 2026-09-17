@@ -1,10 +1,13 @@
-// ?step@Rva0024ECA0Owner@@QAEXPAURva0024ECA0Object@@@Z
+// ?rva0024ECA0@Rva0024ECA0Owner@@QAEXPAURva0024ECA0Object@@@Z
 // partial score=0.94 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: address-derived. Retail 0x0024ECA0, 126B, SlaughterHordeContain's
+// Open-BFME5: address-derived method spelling. Retail 0x0024ECA0, 126B, SlaughterHordeContain's
 // +0x20 secondary-interface slot 34 (+0x88, same slot HordeGarrisonContain
 // overrides at 0x00248C60). No header source or matched caller names this
 // BFME-only virtual (reverse/re_attempts.log 0x00248C60 / 0x0024ECA0).
+// name_oracle.py and bfme_layout.py have no witnessed SlaughterHordeContain
+// member layout or method spelling. The worker's `step` spelling was therefore
+// replaced with the honest address-derived rva0024ECA0.
 //
 // Calls the already-landed bfmeAskDG (BfmeOneHundredEightySix.cpp, via its
 // thunk j_00036c05) as a thiscall member so retail's `mov ecx,esi` before the
@@ -85,12 +88,12 @@ public:
 class Rva0024ECA0Owner
 {
 public:
-	void step( Rva0024ECA0Object *obj );
+	void rva0024ECA0( Rva0024ECA0Object *obj );
 };
 
 // ?d_0024eca0@@YAXXZ -- address-derived; the real virtual name is not
 // recovered.
-void Rva0024ECA0Owner::step( Rva0024ECA0Object *obj )
+void Rva0024ECA0Owner::rva0024ECA0( Rva0024ECA0Object *obj )
 {
 	if ( obj->m_flag214 != 0 )
 		return;

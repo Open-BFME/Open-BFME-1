@@ -153,8 +153,8 @@ extern void GadgetRadioSetText(GameWindow *, UnicodeString);
 GameWindow *GameWindowManager::gogoGadgetRadioButton(GameWindow *parent,
 	RadioButtonData *data, GameFont *font, bool visual)
 {
-	RadioButtonData *radioData;
 	GameWindow *radioButton;
+	RadioButtonData *radioData;
 	if ((parent->instanceData->style & 2) == 0)
 		return 0;
 	radioButton = TheWindowManager->create(parent);

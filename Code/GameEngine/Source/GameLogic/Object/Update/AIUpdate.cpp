@@ -6204,12 +6204,14 @@ Object* AIUpdateInterface::getNextMoodTarget( Bool calledByAI, Bool calledDuring
 	unsigned char *self = reinterpret_cast<unsigned char *>(this);
 	Object *obj = *reinterpret_cast<Object **>(self + 0x08);
 	unsigned char *object = reinterpret_cast<unsigned char *>(obj);
-	unsigned char *moduleData = *reinterpret_cast<unsigned char **>(self + 0x04);
-	void *gameLogic = reinterpret_cast<void *>(TheGameLogic);
+	Coord3D scratch;
 
-	if ((object[0x344] & 1) != 0 || (object[0x344] & 8) != 0)
+	unsigned char objectFlags = object[0x344];
+	if ((objectFlags & 1) != 0)
 		return NULL;
-	if ((object[0x98] & 0x20) != 0)
+	if ((objectFlags & 8) != 0)
+		return NULL;
+	if ((*(volatile UnsignedInt *)(object + 0x98) & 0x20) != 0)
 		return NULL;
 	void *objectAi = *reinterpret_cast<void **>(object + 0x204);
 	if (objectAi != NULL && *reinterpret_cast<void **>(reinterpret_cast<unsigned char *>(objectAi) + 0x34) != NULL)
@@ -6247,6 +6249,7 @@ Object* AIUpdateInterface::getNextMoodTarget( Bool calledByAI, Bool calledDuring
 	ObjectID pending = *reinterpret_cast<ObjectID *>(self + 0x1A4);
 	if (pending != 0)
 	{
+		void *gameLogic = reinterpret_cast<void *>(TheGameLogic);
 		Object *pendingObject = rva00279A50FindObject(gameLogic, pending);
 		if (pendingObject == NULL
 			|| ((*reinterpret_cast<unsigned char *>(reinterpret_cast<unsigned char *>(pendingObject) + 0x344) & 1) != 0)
@@ -6255,6 +6258,8 @@ Object* AIUpdateInterface::getNextMoodTarget( Bool calledByAI, Bool calledDuring
 		return pendingObject;
 	}
 	*reinterpret_cast<ObjectID *>(self + 0x1A4) = (ObjectID)0;
+	unsigned char *moduleData = *reinterpret_cast<unsigned char **>(self + 0x04);
+	void *gameLogic = reinterpret_cast<void *>(TheGameLogic);
 
 	if (calledDuringIdle)
 	{
@@ -6284,9 +6289,8 @@ Object* AIUpdateInterface::getNextMoodTarget( Bool calledByAI, Bool calledDuring
 		if (body == NULL)
 			return NULL;
 		void *bodyData = *reinterpret_cast<void **>(reinterpret_cast<unsigned char *>(body) + 0x1FC);
-		Coord3D bodyPosition;
 		void *bodyResult = reinterpret_cast<Rva00279A50BodySubVtable *>(bodyData)->slot9C(
-			&bodyPosition, obj, 1);
+			&scratch, obj, 1);
 		if (!rva00279A50BodyResultTest(bodyResult)
 			|| rva00279A50ObjectIntBool(obj, 0x10))
 			return NULL;
@@ -6415,13 +6419,12 @@ Object* AIUpdateInterface::getNextMoodTarget( Bool calledByAI, Bool calledDuring
 	if (TheWritableGlobalData != NULL
 		&& *reinterpret_cast<unsigned char *>(reinterpret_cast<unsigned char *>(TheWritableGlobalData) + 0xEC8) != 0)
 	{
-		Coord3D position;
-		position.x = *reinterpret_cast<Real *>(object + 0x38);
-		position.y = *reinterpret_cast<Real *>(object + 0x3C);
-		position.z = *reinterpret_cast<Real *>(object + 0x40);
-		reinterpret_cast<Rva00279A50TerrainVtable *>(TheTerrainLogic)->slot18(position.x, position.y, 0);
+		scratch.x = *reinterpret_cast<Real *>(object + 0x38);
+		scratch.y = *reinterpret_cast<Real *>(object + 0x3C);
+		scratch.z = *reinterpret_cast<Real *>(object + 0x40);
+		reinterpret_cast<Rva00279A50TerrainVtable *>(TheTerrainLogic)->slot18(scratch.x, scratch.y, 0);
 		reinterpret_cast<Rva00279A50TacticalVtable *>(TheTacticalView)->slot30(
-			&position, rangeToFindWithin, 0xFF00FF00, 0);
+			&scratch, rangeToFindWithin, 0xFF00FF00, 0);
 	}
 
 	{
@@ -6451,14 +6454,13 @@ Object* AIUpdateInterface::getNextMoodTarget( Bool calledByAI, Bool calledDuring
 	Real attackRange = *reinterpret_cast<Real *>(moduleData + 0x2C);
 	if (attackRange <= BfmeZeroRange)
 		return NULL;
-	Coord3D delta;
-	delta.x = *reinterpret_cast<Real *>(reinterpret_cast<unsigned char *>(newVictim) + 0x38)
+	scratch.x = *reinterpret_cast<Real *>(reinterpret_cast<unsigned char *>(newVictim) + 0x38)
 		- *reinterpret_cast<Real *>(object + 0x38);
-	delta.y = *reinterpret_cast<Real *>(reinterpret_cast<unsigned char *>(newVictim) + 0x3C)
+	scratch.y = *reinterpret_cast<Real *>(reinterpret_cast<unsigned char *>(newVictim) + 0x3C)
 		- *reinterpret_cast<Real *>(object + 0x3C);
-	delta.z = *reinterpret_cast<Real *>(reinterpret_cast<unsigned char *>(newVictim) + 0x40)
+	scratch.z = *reinterpret_cast<Real *>(reinterpret_cast<unsigned char *>(newVictim) + 0x40)
 		- *reinterpret_cast<Real *>(object + 0x40);
-	if (rva00279A50CoordLength(&delta) > attackRange)
+	if (rva00279A50CoordLength(&scratch) > attackRange)
 		return NULL;
 	if (rva00279A50KindOf(obj, 0x6C))
 	{

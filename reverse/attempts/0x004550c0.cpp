@@ -1,5 +1,5 @@
 // ?writeCacheINI@MapCache@@AAEX_N@Z
-// partial score=0.71 date=2026-09-03
+// partial score=0.74 date=2026-09-17
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ivendor/stlport /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?writeCacheINI@MapCache@@AAEX_N@Z: Code/GameEngine/Source/GameClient/MapUtil.cpp
 //
@@ -8,14 +8,13 @@
 // blocks (Human/Computer/LoadAIScripts/ForcePlayerTeam/AllowedFactions).
 // MapMetaData special members stay out of line -- retail ctor/assign/dtor.
 //
-// Probe 2026-09-03: ours 1589B vs retail 1814B, frame sub esp,0x138 exact,
-// this=ebx saved at [esp+0x30], mapDir zeroed at [esp+0x10], m_buildMapCache
-// at GlobalData+0xB7D. First real miss: getMapDir/getUserMapDir hidden return
-// at [esp+0x0C] vs retail [esp+0x14] (every later [esp+N] is 8B low). Extra
-// named locals (mapKey, Coord3D pos, slash[8]) steal ebx or grow the frame.
-// PlayerPosition skip compares each 0x14 slot to a function-scope static
-// {1,1,1,-1, empty set} with the VC7 guard at 0x012F15E4 -- that inlined set
-// ctor is the missing ~225B. Do not compile MapUtil.cpp (operator new rows).
+// Probe 2026-09-17: ours 1798B vs retail 1814B, frame sub esp,0x138 exact,
+// and the STLport map/set callee inventory matches the retail contract. The
+// first non-relocation divergence is +0x110: the cleanup branch is 16 bytes
+// short, then retail spills the map-key reference after the directory-length
+// materialization. The MapMetaData 0xFC layout and PlayerPosition set are
+// witnessed by the BFME ctor/assignment bodies. Do not compile MapUtil.cpp
+// (its operator-new rows are unrelated to this isolated body).
 
 #include <stdio.h>
 #include <string.h>
@@ -177,7 +176,6 @@ private:
 // ?writeCacheINI@MapCache@@AAEX_N@Z
 void MapCache::writeCacheINI(bool userDir)
 {
-	MapCache *self = this;
 	AsciiString mapDir;
 	if (!userDir || TheWritableGlobalData->m_buildMapCache)
 		mapDir.set(getMapDir());
@@ -199,19 +197,20 @@ void MapCache::writeCacheINI(bool userDir)
 	fprintf(fp, "; /////////////////////////////////////////////////////////////////////////////\n");
 	mapDir.toLower();
 
-	register MapCache::iterator it = self->begin();
+	MapCache::iterator it = begin();
 	MapMetaData md;
-	while (it != self->end())
+	while (it != end())
 	{
+		Coord3D pos;
+		const AsciiString *mapName = &it->first;
 		const char *dir = mapDir.str();
 		Int dirLen = 0;
 		if (dir)
 			dirLen = (Int)strlen(dir);
-		if (!it->first.startsWithNoCase(dir, dirLen))
-			continue;
-
+		if (mapName->startsWithNoCase(dir, dirLen))
+		{
 		md = it->second;
-		fprintf(fp, "\nMapCache %s\n", AsciiStringToQuotedPrintable(it->first).str());
+		fprintf(fp, "\nMapCache %s\n", AsciiStringToQuotedPrintable(*mapName).str());
 		fprintf(fp, "  fileSize = %u\n", md.m_filesize);
 		fprintf(fp, "  fileCRC = %u\n", md.m_CRC);
 		fprintf(fp, "  timestampLo = %d\n", md.m_timestamp.m_lowTimeStamp);
@@ -225,7 +224,6 @@ void MapCache::writeCacheINI(bool userDir)
 		fprintf(fp, "  displayName = %s\n", UnicodeStringToQuotedPrintable(md.m_displayName).str());
 		fprintf(fp, "  description = %s\n", UnicodeStringToQuotedPrintable(md.m_description).str());
 
-		Coord3D pos;
 		WaypointMap::iterator itw = md.m_waypoints.begin();
 		while (itw != md.m_waypoints.end())
 		{
@@ -276,6 +274,7 @@ void MapCache::writeCacheINI(bool userDir)
 			fprintf(fp, "  END\n");
 		}
 		fprintf(fp, "END\n\n");
+		}
 		++it;
 	}
 
