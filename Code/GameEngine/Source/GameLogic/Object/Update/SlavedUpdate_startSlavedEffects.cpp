@@ -14,6 +14,11 @@ enum ObjectStatusTypes
 	OBJECT_STATUS_UNSELECTABLE = 3
 };
 
+enum DisabledType
+{
+	DISABLED_HELD = 3
+};
+
 template <int Bits>
 class BitFlags
 {
@@ -39,11 +44,30 @@ int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
 float bfmeCosVNB(float value);
 float bfmeSinVNB(float value);
 
+struct Coord3D
+{
+	float x;
+	float y;
+	float z;
+
+	void zero()
+	{
+		x = 0;
+		y = 0;
+		z = 0;
+	}
+};
+
 class Object
 {
 public:
 	UnsignedInt getID() const { return m_id; }
 	void setStatus(const ObjectStatusMaskType &status, Bool set);
+	void clearStatus(const ObjectStatusMaskType &status)
+	{
+		setStatus(status, false);
+	}
+	Bool clearDisabled(DisabledType type);
 
 private:
 	unsigned char m_unmodelled[0x74];
@@ -61,6 +85,7 @@ class SlavedUpdate
 {
 private:
 	void startSlavedEffects(const Object *slaver);
+	void stopSlavedEffects();
 
 public:
 	Object *getObject() const
@@ -78,9 +103,16 @@ private:
 	Object *m_object;
 	unsigned char m_unmodelled_0c[0x24 - 0x0c];
 	UnsignedInt m_slaver;
-	Real m_offsetX;
-	Real m_offsetY;
-	Real m_offsetZ;
+	union
+	{
+		struct
+		{
+			Real m_offsetX;
+			Real m_offsetY;
+			Real m_offsetZ;
+		};
+		Coord3D m_guardPointOffset;
+	};
 };
 
 void SlavedUpdate::startSlavedEffects(const Object *slaver)
@@ -101,4 +133,14 @@ void SlavedUpdate::startSlavedEffects(const Object *slaver)
 	m_offsetX += data->m_guardMaxRange * bfmeCosVNB(direction);
 	m_offsetY += data->m_guardMaxRange * bfmeSinVNB(direction);
 	getObject()->setStatus(MAKE_OBJECT_STATUS_MASK(OBJECT_STATUS_UNSELECTABLE), true);
+}
+
+// ?stopSlavedEffects@SlavedUpdate@@AAEXXZ
+void SlavedUpdate::stopSlavedEffects()
+{
+	m_slaver = 0;
+	__asm { }
+	m_guardPointOffset.zero();
+	m_object->clearStatus(MAKE_OBJECT_STATUS_MASK(OBJECT_STATUS_UNSELECTABLE));
+	m_object->clearDisabled(DISABLED_HELD);
 }
