@@ -61,6 +61,36 @@
 // twenty-one, since nothing distinguishes them.  What the null type-tag
 // arguments actually are is unobservable past their position and count.
 
+class BfmeRecAT
+{
+public:
+	int m_bfmeHead[12];
+	int m_bfmeRank;
+	char m_bfmePad[5];
+	char m_bfmeFlag;
+};
+
+class BfmeCompAT
+{
+public:
+	bool operator()(const BfmeRecAT *left, const BfmeRecAT *right) const
+	{
+		if (left->m_bfmeRank > right->m_bfmeRank)
+			return true;
+		if (left->m_bfmeRank < right->m_bfmeRank)
+			return false;
+		return left->m_bfmeFlag < right->m_bfmeFlag;
+	}
+
+	int m_bfmeState;
+};
+
+extern "C" __declspec(dllimport) void * __cdecl memmove(void *destination,
+	const void *source, unsigned int bytes);
+
+void __cdecl bfmeUnguardedInsertAT(BfmeRecAT **last, BfmeRecAT *value,
+	BfmeCompAT comp);
+
 struct Q3SortItem003CDC60
 {
 	char m_pad30[ 0x30 ];
@@ -101,6 +131,15 @@ bool Q3SortCompare::operator()( const Q3SortElem8 &left, const Q3SortElem8 &righ
 	return left.m_b < right.m_b;
 }
 
+inline Q3SortElem4 *Q3CopyBackward003CEC30(Q3SortElem4 *first,
+	Q3SortElem4 *last, Q3SortElem4 *result)
+{
+	int bytes = (char *)last - (char *)first;
+	if (bytes > 0)
+		memmove((char *)result - bytes, first, bytes);
+	return (Q3SortElem4 *)((char *)result - bytes);
+}
+
 #define BFME_FINAL_INSERTION( NAME, INSERT, UNGUARDED )                        \
 	void INSERT( Q3SortElem4 *first, Q3SortElem4 *last, Q3SortCompare comp );  \
 	void UNGUARDED( Q3SortElem4 *first, Q3SortElem4 *last, Q3SortElem4 *,      \
@@ -126,6 +165,32 @@ BFME_FINAL_INSERTION( Rva00347CD0, Gen00344970, Gen00342CE0 )
 BFME_FINAL_INSERTION( Rva003CFA00, Gen003CEC30, Gen003CDC60 )
 BFME_FINAL_INSERTION( Rva00483DA0, Gen00483B90, Gen0047E480 )
 BFME_FINAL_INSERTION( Rva00513980, Gen00513410, Gen00511B90 )
+
+// ?Gen003CEC30@@YAXPAUQ3SortElem4@@0UQ3SortCompare@@@Z
+void Gen003CEC30(Q3SortElem4 *first, Q3SortElem4 *last, Q3SortCompare comp)
+{
+	if (first != last)
+	{
+		Q3SortElem4 *cursor = first + 1;
+		while (cursor != last)
+		{
+			Q3SortElem4 value = *cursor;
+			if (comp(*first, value))
+			{
+				Q3CopyBackward003CEC30(first, cursor, cursor + 1);
+				*first = value;
+			}
+			else
+			{
+				bfmeUnguardedInsertAT(
+					reinterpret_cast<BfmeRecAT **>(cursor),
+					reinterpret_cast<BfmeRecAT *>(value.m_item),
+					*(BfmeCompAT *)&comp);
+			}
+			++cursor;
+		}
+	}
+}
 
 void Gen003CDC60( Q3SortElem4 *first, Q3SortElem4 *last, Q3SortCompare comp )
 {
