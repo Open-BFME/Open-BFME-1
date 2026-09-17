@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// PSRequest copy constructor. Layout matches the 0x210 deque stride and
-// the sibling destructor at 0x000A5490: requestType, PSPlayerStats at +4,
+// PSRequest constructors. Layout matches the 0x210 deque stride and the
+// sibling default/copy constructors: requestType, PSPlayerStats at +4,
 // four strings, two bools, lastHouse, one extra Int, results string.
 
 #include <string>
@@ -9,8 +9,10 @@
 class PSPlayerStats
 {
 public:
+	PSPlayerStats();
 	PSPlayerStats(const PSPlayerStats &other);
 	~PSPlayerStats();
+	void reset();
 
 private:
 	char m_data[0x1C4];
@@ -19,6 +21,7 @@ private:
 class PSRequest
 {
 public:
+	PSRequest();
 	PSRequest(const PSRequest &other);
 
 private:
@@ -36,6 +39,15 @@ private:
 };
 
 typedef char PSRequestSizeCheck[sizeof(PSRequest) == 0x210 ? 1 : -1];
+
+// ??0PSRequest@@QAE@XZ
+PSRequest::PSRequest()
+{
+	m_player.reset();
+	m_requestType = 0;
+	m_addDiscon = m_addDesync = false;
+	m_lastHouse = -1;
+}
 
 // ??0PSRequest@@QAE@ABV0@@Z
 PSRequest::PSRequest(const PSRequest &other)
