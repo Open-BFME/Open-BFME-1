@@ -198,10 +198,10 @@ public:
 	~Rva008881D0MultiBase();
 };
 
-class Rva0091FC10MultiBase
+class RenderObjClass
 {
 public:
-	virtual ~Rva0091FC10MultiBase();
+	virtual ~RenderObjClass();
 
 	unsigned int m_pad[ 1 ];
 };
@@ -467,6 +467,7 @@ Rva006FBAD0MultiTailDtor::~Rva006FBAD0MultiTailDtor()
 class Rva00759770MultiTailDtor : public Rva0002FF31MultiBase, public TailMixinA
 {
 public:
+	// ??1Rva00759770MultiTailDtor@@UAE@XZ present-unmatched
 	virtual ~Rva00759770MultiTailDtor();
 };
 
@@ -477,6 +478,7 @@ Rva00759770MultiTailDtor::~Rva00759770MultiTailDtor()
 class Rva0077DBE0MultiTailDtor : public Rva0002FF31MultiBase, public TailMixinA
 {
 public:
+	// ??1Rva0077DBE0MultiTailDtor@@UAE@XZ present-unmatched
 	virtual ~Rva0077DBE0MultiTailDtor();
 };
 
@@ -484,7 +486,7 @@ Rva0077DBE0MultiTailDtor::~Rva0077DBE0MultiTailDtor()
 {
 }
 
-class Rva0093BE00MultiTailDtor : public Rva0091FC10MultiBase, public TailMixinA
+class Rva0093BE00MultiTailDtor : public RenderObjClass, public TailMixinA
 {
 public:
 	virtual ~Rva0093BE00MultiTailDtor();
@@ -494,7 +496,7 @@ Rva0093BE00MultiTailDtor::~Rva0093BE00MultiTailDtor()
 {
 }
 
-class Rva00950FC0MultiTailDtor : public Rva0091FC10MultiBase, public TailMixinA
+class Rva00950FC0MultiTailDtor : public RenderObjClass, public TailMixinA
 {
 public:
 	virtual ~Rva00950FC0MultiTailDtor();

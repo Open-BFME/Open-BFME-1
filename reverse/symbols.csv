@@ -9426,7 +9426,6 @@ name,address,notes
 ??1Rva008D6320HeaderedDeleting@@UAE@XZ,0x008D5FF0,address decoded from the retail REL32 call site; name is address-derived
 ??1Rva00900FF0VecOfVec@@QAE@XZ,0x0000B109,vector shell destructor called five times by 0x00900FF0
 ??1Rva0090BC40TailBase@@UAE@XZ,0x009EB810,base destructor address decoded from the retail REL32 tail jump; name is address-derived
-??1Rva0091FC10MultiBase@@UAE@XZ,0x0091FC10,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0092B6A0TailBase@@UAE@XZ,0x0092B6A0,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0093BE00MultiBase@@UAE@XZ,0x0093BE00,base destructor address decoded from the retail REL32 tail jump; name is address-derived
 ??1Rva0093E4D0Element@@QAE@XZ,0x000470F5,8-byte vector element destructor thunk from the retail vector-constructor call
