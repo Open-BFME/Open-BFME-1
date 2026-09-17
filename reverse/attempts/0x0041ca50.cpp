@@ -1,5 +1,5 @@
 // ?drawHealthBar@Drawable@@AAEXXZ
-// partial score=0.62 date=2026-09-09
+// partial score=0.99 date=2026-09-17
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // Drawable::drawHealthBar is the no-argument BFME icon-stage body at retail
@@ -29,6 +29,12 @@ struct BfmeBody
 	virtual Real getHealth();
 	virtual void f14();
 	virtual Real getMaxHealth();
+};
+
+struct BfmeBodyVtable
+{
+	void *slots00_0c[4];
+	Real (__fastcall *getHealth)(BfmeBody *body);
 };
 
 // This is the vtable slot at +0x28 used by the raw 0x0041CA50 body.  The
@@ -199,18 +205,9 @@ private:
 	unsigned char m_pad104[0x2a8];
 	volatile char m_selected;
 
-	Bool isSelected() const
-	{
-		Bool result;
-		if (m_selected)
-			result = true;
-		else
-			result = false;
-		return result;
-	}
 	void drawHealthBar();
 
-	// Retail places a pointer to the second local region word before the
+	// Retail places a pointer to the first local region word before the
 	// ratio on the stack.  The matched target is declared as int,int in the
 	// shared TU, so this local pointer/float spelling is kept behind an
 	// alternate-name ABI shim rather than changing that shared declaration.
@@ -225,7 +222,8 @@ void Drawable::drawHealthBar()
 	if (!global->m_showObjectHealth)
 		return;
 
-	Bool selected = isSelected();
+	char selectedState = m_selected;
+	Bool selected = selectedState != 0;
 	if (!selected)
 	{
 		Object *object = m_object;
@@ -242,7 +240,10 @@ void Drawable::drawHealthBar()
 		if (!selected)
 		{
 			InGameUI *ui = TheInGameUI;
-			if (ui == 0 || ui->getMousedOverDrawableID() != m_id)
+			if (ui == 0)
+				return;
+			UnsignedInt drawableID = m_id;
+			if (ui->getMousedOverDrawableID() != drawableID)
 				return;
 		}
 	}
@@ -250,26 +251,27 @@ void Drawable::drawHealthBar()
 	Object *object = m_object;
 	if (object == 0)
 		return;
-	if (object->isKindOf((KindOfType)0x59) ||
+	if (!(object->isKindOf((KindOfType)0x59) ||
 		object->isKindOf((KindOfType)0x0b) ||
 		object->isKindOf((KindOfType)0x0a) ||
 		object->isKindOf((KindOfType)0x36) ||
 		object->isKindOf((KindOfType)0x07) ||
-		object->isKindOf((KindOfType)0xa8))
-		return;
+		object->isKindOf((KindOfType)0xa8)))
+	{
+		global = TheWritableGlobalData;
+		if (!global->m_showObjectHealthSecondary)
+			return;
+		if (!object->isKindOf((KindOfType)8) &&
+			!object->isKindOf((KindOfType)9))
+			return;
+	}
 
-	global = TheWritableGlobalData;
-	if (!global->m_showObjectHealthSecondary)
-		return;
-	if (!object->isKindOf((KindOfType)8) &&
-		!object->isKindOf((KindOfType)9))
-		return;
-	if (!object->isKindOf((KindOfType)0x95))
-		return;
-
-	Module *module = rva002B21E0FindWallUpgradeUpdate(object);
-	if (module == 0 || !module->m_interface.gate())
-		return;
+	if (object->isKindOf((KindOfType)0x95))
+	{
+		Module *module = rva002B21E0FindWallUpgradeUpdate(object);
+		if (module != 0 && !module->m_interface.gate())
+			return;
+	}
 	if (object->isKindOf((KindOfType)0x3c) ||
 		object->isKindOf((KindOfType)0x35) ||
 		object->isKindOf((KindOfType)0x87) ||
@@ -282,10 +284,13 @@ void Drawable::drawHealthBar()
 	if (maxHealth == BfmeZeroRange)
 		return;
 
-	HealthBarRegionWords region = { 0, 0 };
-	Real health = body->getHealth();
+	HealthBarRegionWords region;
+	BfmeBodyVtable &bodyVtable = **(BfmeBodyVtable **)body;
+	region.first = 0;
+	region.second = 0;
+	Real health = bodyVtable.getHealth(body);
 	if (health == BfmeZeroRange)
 		return;
 
-	bfmeRegionDispatch(&region.second, health / maxHealth);
+	bfmeRegionDispatch(&region.first, health / maxHealth);
 }
