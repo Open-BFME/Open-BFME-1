@@ -88355,3 +88355,5 @@ _g_Rva012D4FD0AssertCrashTemplate,0x012D4FD0,DLGTEMPLATEEX titled Assert/Crash p
 ?d_000681c0@@YAXXZ,0x000681C0,carved 0x00014475 REL32 target; matched Dict::releaseData body independently proves address and ABI
 ?d_00069070@@YAXXZ,0x00069070,carved 0x00017FB2 REL32 target; matched HorzLine vector overflow body independently proves address
 ?rva005FAE40@Rva005FAE40Receiver@@QAE?AURva005C36C0Vec3@@PAXM00@Z,0x0002F4AA,address-derived member sret ABI decoded from exact 0x005C36C0 caller and matched 0x005FAE40 body via this retail ILT
+?rva001AE4A0@Rva012EF4CCTerrain@@QAEXPAVBfmeX1035@@H@Z,0x001AE4A0,thiscall ICF alias of the landed free stdcall ?bfmeGo1035C@@YGXPAVBfmeX1035@@H@Z; the body reads both arguments from the stack and never reads ecx so the two spellings encode identically; caller 0x0025A9D0 materialises the 0x012EF4CC global into ecx on the call path only which is dead for a free function
+?doFXPos@FXList@@QBEXPBVCoord3D@@PBVMatrix3D@@M0@Z,0x004280D0,class-tag spelling of the landed ?doFXPos@FXList@@QBEXPBUCoord3D@@PBVMatrix3D@@M0@Z at the same address; struct and class differ only in the mangled tag letter
