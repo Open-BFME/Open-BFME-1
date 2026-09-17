@@ -22,14 +22,44 @@ struct Rva003BF540Span
 	Gen003BD7D0Node *operator[]( unsigned index ) const { return m_begin[ index ]; }
 };
 
+struct Gen003BEAF0Span
+{
+	void **m_begin;
+	void **m_end;
+
+	unsigned size() const { return m_end - m_begin; }
+};
+
+class Gen003BEAF0Owner
+{
+public:
+	char m_pad00[ 0x14 ];
+	Gen003BEAF0Span m_items;
+};
+
+class Gen_00609320
+{
+public:
+	unsigned char bfmeDisabled() const;
+};
+
+extern Gen_00609320 *g_bfmeStateDF;
+
 class Rva003BF540
 {
 public:
 	Gen003BD7D0Node *find( int id );
+	bool test();
+	bool anyReady() const;
+	bool anyMatching( int mask );
 
 private:
 	char m_pad00[ 0x0C ];
 	Rva003BF540Span m_items;
+	char m_pad14[ 0x14 ];
+	Gen003BEAF0Owner *m_at28;
+	char m_pad2C[ 0x4C ];
+	bool m_at78;
 };
 
 // ?find@Rva003BF540@@QAEPAVGen003BD7D0Node@@H@Z
@@ -43,4 +73,26 @@ Gen003BD7D0Node *Rva003BF540::find( int id )
 			return m_items.m_begin[ index ];
 	}
 	return 0;
+}
+
+// ?test@Rva003BF540@@QAE_NXZ
+bool Rva003BF540::test()
+{
+	unsigned n = m_at28->m_items.size();
+	if( n > 0 )
+	{
+		return false;
+	}
+	else
+	{
+		if( anyReady() )
+			goto no;
+		if( g_bfmeStateDF->bfmeDisabled() )
+			goto no;
+		if( anyMatching( 4 ) )
+			goto no;
+		return m_at78 ? false : true;
+no:
+		return false;
+	}
 }
