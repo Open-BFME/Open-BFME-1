@@ -68,6 +68,36 @@ template <class T> struct BFMEFactoryModuleDataChoice
 	typedef T Type;
 };
 
+// The 0x0011F9C0 ICF body calls the proven W3DModelDrawModuleData
+// constructor at 0x002136E0. Keep that constructor ABI local to this TU rather
+// than pinning the phantom MissileAIUpdateModuleData name to another class.
+class W3DModelDrawModuleDataBase
+{
+public:
+	W3DModelDrawModuleDataBase();
+	virtual ~W3DModelDrawModuleDataBase();
+
+private:
+	unsigned char m_pad[0x60];
+};
+
+class W3DModelDrawModuleData : public W3DModelDrawModuleDataBase
+{
+public:
+	W3DModelDrawModuleData();
+	virtual ~W3DModelDrawModuleData();
+
+private:
+	unsigned int m_64;
+	unsigned int m_68;
+	unsigned char m_6c;
+	unsigned char m_pad6d[3];
+	unsigned int m_70;
+	unsigned int m_74;
+	unsigned int m_78;
+	unsigned int m_7c;
+};
+
 class AIUpdateInterface;
 class AssaultTransportAIUpdate;
 class AssistedTargetingUpdate;
@@ -96,6 +126,7 @@ class KeepObjectDie;
 class LaserUpdate;
 class LifetimeUpdate;
 class LockWeaponCreate;
+class MissileAIUpdateModuleData;
 class OCLUpdate;
 class OpenContain;
 class ProductionUpdate;
@@ -303,6 +334,11 @@ BFME_FACTORY_DATA_CHOICE(UnitCrateCollideModuleData)
 BFME_FACTORY_DATA_CHOICE(UpgradeDieModuleData)
 BFME_FACTORY_DATA_CHOICE(WaveGuideUpdateModuleData)
 BFME_FACTORY_DATA_CHOICE(WorkerAIUpdateModuleData)
+
+template <> struct BFMEFactoryModuleDataChoice<MissileAIUpdateModuleData>
+{
+	typedef W3DModelDrawModuleData Type;
+};
 
 #undef BFME_FACTORY_DATA_CHOICE
 
