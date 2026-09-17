@@ -185,8 +185,9 @@ typedef Bool (*DataChunkParserPtr)(DataChunkInput &file, DataChunkInfo *info, vo
 // DataChunkInput::registerParser (0x00103840) proves the extra intrusive
 // previous-link at +0x08 ahead of the parser field at +0x0C, which parse()'s
 // direct field call (call dword ptr [ecx+0x0C]) also requires.
-struct UserParser
+class UserParser
 {
+	public:
 	virtual ~UserParser();
 	UserParser *next;					// this+0x04
 	UserParser **previous;					// this+0x08
@@ -279,6 +280,10 @@ public:
 	void readArrayOfBytes(char *ptr, Int len);
 	AsciiString readAsciiString(void);
 	NameKeyType readNameKey(void);
+	UserParser *registerParser(const AsciiString &label,
+		const AsciiString &parentLabel,
+		DataChunkParserPtr parser,
+		void *userData);
 
 	AsciiString openDataChunk(DataChunkVersionType *ver);
 	// parse()'s call site has no separate call target for this either -- it
@@ -427,4 +432,31 @@ Bool DataChunkInput::parse(void *userData)
 	}
 
 	return true;
+}
+
+UserParser *DataChunkInput::registerParser(const AsciiString &label,
+	const AsciiString &parentLabel,
+	DataChunkParserPtr parser,
+	void *userData)
+{
+	UserParser *p;
+	DataChunkInput *self = this;
+
+	p = new UserParser;
+	p->label.set(label);
+	p->parentLabel.set(parentLabel);
+	p->parser = parser;
+
+	void *ud = userData;
+	UserParser **head = &self->m_parserList;
+	p->userData = ud;
+
+	UserParser *next = *head;
+	UserParser **pn = &p->next;
+	*pn = next;
+	if (next != 0)
+		next->previous = pn;
+	p->previous = head;
+	*head = p;
+	return p;
 }
