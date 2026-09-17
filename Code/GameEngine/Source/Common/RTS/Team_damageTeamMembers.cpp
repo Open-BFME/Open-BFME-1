@@ -154,6 +154,7 @@ class Team
 {
 public:
 	Bool damageTeamMembers(Real amount);
+	Bool hasAnyBuildings(Bool bfmeFlag) const;
 
 	void *m_vptr;
 	void *m_proto;
@@ -203,3 +204,85 @@ extern void j_0002c9d5();
 
 #pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@@Z=?j_00001140@@YAXXZ")
 #pragma comment(linker, "/alternatename:??0BFMEDamageInfo@@QAE@XZ=?j_0002c9d5@@YAXXZ")
+
+#define DLINK_ITERATOR BfmeDlinkIterator
+
+#pragma comment(linker, "/alternatename:?getFinalOverride@BfmeOverridable@@QBEPBV1@@XZ=?j_000022bb@@YAXXZ")
+
+class BfmeOverridable
+{
+public:
+	const BfmeOverridable *getFinalOverride() const;
+
+	void *m_vtable;
+	BfmeOverridable *m_nextOverride;
+};
+
+class BfmeObjectTemplateView
+{
+public:
+	void *m_vptr;
+	BfmeOverridable *m_template;
+};
+
+class BfmeObjectStatusView
+{
+public:
+	unsigned char m_head[0x118];
+	unsigned char m_status118;
+};
+
+class ThingTemplate
+{
+public:
+	unsigned char m_head[0xC8];
+	unsigned int m_kindOf0;
+	unsigned int m_kindOf1;
+};
+
+static BfmeOverridable *bfmeFinalTemplate(Object *obj)
+{
+	BfmeOverridable *tmpl = ((BfmeObjectTemplateView *)obj)->m_template;
+	if (tmpl != 0 && tmpl->m_nextOverride != 0)
+		tmpl = (BfmeOverridable *)tmpl->m_nextOverride->getFinalOverride();
+	return tmpl;
+}
+
+static BfmeOverridable *bfmeFinalTemplateGuard(Object *obj)
+{
+	if (!obj)
+		return 0;
+	BfmeOverridable *tmpl = ((BfmeObjectTemplateView *)obj)->m_template;
+	if (tmpl != 0 && tmpl->m_nextOverride != 0)
+		tmpl = (BfmeOverridable *)tmpl->m_nextOverride->getFinalOverride();
+	return tmpl;
+}
+
+Bool Team::hasAnyBuildings(Bool bfmeFlag) const
+{
+	DLINK_ITERATOR<Object> iter = iterate_TeamMemberList();
+	if (iter.done())
+		return false;
+	__asm { nop }
+	for (;
+		!iter.done(); iter.advance())
+	{
+		ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplateGuard(iter.cur());
+		if ((tmpl->m_kindOf1 & 0x400000) != 0)
+			continue;
+
+		if (bfmeFlag)
+		{
+			tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
+			BfmeObjectStatusView *obj = (BfmeObjectStatusView *)iter.cur();
+			if ((tmpl->m_kindOf0 & (1u << 7)) != 0 &&
+				(obj->m_status118 & 0x0C) != 0)
+				continue;
+		}
+
+		tmpl = (ThingTemplate *)bfmeFinalTemplate(iter.cur());
+		if ((tmpl->m_kindOf0 & (1u << 7)) != 0)
+			return true;
+	}
+	return false;
+}
