@@ -31,6 +31,7 @@ public:
 	virtual Debug &operator<<(char const *);
 	Debug &operator<<(long);
 	Debug &operator<<(unsigned);
+	Debug &operator<<(unsigned long);
 	char m_pad[0x9e6c];
 	char m_prefix[16];
 	int m_radix;
@@ -48,6 +49,14 @@ Debug &Debug::operator<<(long val)
 
 // Debug::operator<<(unsigned), retail at 0x0088C100
 Debug &Debug::operator<<(unsigned val)
+{
+	char help[32 + 1];
+	AddOutput(m_prefix, strlen(m_prefix));
+	return (*this) << _ultoa(val, help, m_radix);
+}
+
+// Debug::operator<<(unsigned long), retail at 0x0088C1A0
+Debug &Debug::operator<<(unsigned long val)
 {
 	char help[32 + 1];
 	AddOutput(m_prefix, strlen(m_prefix));
