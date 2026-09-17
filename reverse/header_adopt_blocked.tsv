@@ -670,3 +670,4 @@ Code/GameEngine/Source/GameLogic/AI/Rva001FAB70ParseWayPoint.cpp	AsciiString	Cod
 Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdateModuleDataConstructor.cpp	AsciiString	Code\GameEngine\Source\GameLogic\Object\Update\StealthUpdateModuleDataConstructor.cpp(155) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
 Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva001FE190ModuleData.cpp	AsciiString	Code\GameEngineDevice\Source\W3DDevice\GameClient\Drawable\Draw\Rva001FE190ModuleData.cpp(121) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
 reverse/attempts/0x00290520.cpp	StringBase	build.sh exited 1
+Code/GameEngine/Source/Common/TGridPayloadCopy.cpp	UnicodeString	Code\GameEngine\Source\Common\TGridPayloadCopy.cpp(22) : error C2039: 'set' : is not a member of 'UnicodeString'
