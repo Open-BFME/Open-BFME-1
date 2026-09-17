@@ -15,6 +15,7 @@ public:
 	char m_bfme08;
 };
 
+// ?BfmeBaseVNI::BfmeBaseVNI present-unmatched
 BfmeBaseVNI::BfmeBaseVNI(unsigned w, char f)
 {
 	m_bfme08 = f;
@@ -23,6 +24,7 @@ BfmeBaseVNI::BfmeBaseVNI(unsigned w, char f)
 		m_bfme04 = 1;
 }
 
+// ?BfmeBaseVNI::~BfmeBaseVNI present-unmatched
 BfmeBaseVNI::~BfmeBaseVNI()
 {
 }
@@ -42,6 +44,7 @@ struct BfmeVNITree
 	BfmeVNITree();
 };
 
+// ?BfmeVNITree::BfmeVNITree present-unmatched
 BfmeVNITree::BfmeVNITree()
 {
 	header = 0;
