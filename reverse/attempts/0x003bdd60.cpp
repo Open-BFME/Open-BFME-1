@@ -1,7 +1,12 @@
-// ?bfmeLimitAdjusted@Gen_003BDD60@@QAEHXZ
+// ?rva003BDD60@Glo012F1028Type@@QAEHXZ
 // partial score=0.94 date=2026-09-09
-// ?bfmeLimitAdjusted@Gen_003BDD60@@QAEHXZ
+// ?rva003BDD60@Glo012F1028Type@@QAEHXZ
 // cl: /O2 /DNDEBUG /MD /EHsc
+// The worker's Gen_003BDD60 owner was only an address-shaped guess. The
+// 0x0000353F ILT is called as Glo012F1028Type::j_0000353f by the named
+// BfmePlayerMapState::bfmeNewMap path, and matched Glo012F1028 sources witness
+// that owner's +0x28 m_bfmeSub field. Keep the method spelling address-derived;
+// the subobject's +0x38 value is likewise opaque.
 
 class BfmeSwitchDR
 {
@@ -21,21 +26,21 @@ public:
 	int m_bfmeHighLarge;
 };
 
-class Gen_003BDD60Child
+class Rva003BDD60Sub
 {
 public:
 	char m_bfmeHead[0x38];
-	int m_bfmeValue;
+	int m_rva003BDD60Value;
 };
 
-class Gen_003BDD60
+class Glo012F1028Type
 {
 public:
-	int bfmeLimitAdjusted(void);
+	int rva003BDD60(void);
 
 private:
 	char m_bfmeHead[0x28];
-	Gen_003BDD60Child *m_bfmeChild;
+	Rva003BDD60Sub *m_bfmeSub;
 };
 
 extern BfmeSwitchDR *g_bfmeSwitchDR;
@@ -46,9 +51,9 @@ static __forceinline const int &bfmeMinDR(const int &a, const int &b)
 	return a < b ? a : b;
 }
 
-int Gen_003BDD60::bfmeLimitAdjusted(void)
+int Glo012F1028Type::rva003BDD60(void)
 {
-	Gen_003BDD60Child *child = m_bfmeChild;
+	Rva003BDD60Sub *child = m_bfmeSub;
 	if (child != 0)
 	{
 		BfmeSwitchDR *state = g_bfmeSwitchDR;
@@ -74,7 +79,7 @@ int Gen_003BDD60::bfmeLimitAdjusted(void)
 
 		int value;
 		int difference = limit - offset;
-		value = child->m_bfmeValue;
+		value = child->m_rva003BDD60Value;
 		return bfmeMinDR(value, difference);
 	}
 	return 0;

@@ -129,10 +129,8 @@ void CommandSetUpgrade::upgradeRemovalImplementation()
 		return;
 
 	Object *object = m_object;
-	const CommandSetUpgradeModuleData &data =
-		*(const CommandSetUpgradeModuleData *)m_moduleData;
-	if (object->m_commandSetStringOverride.compare(
-		data.m_triggerAlt) == 0)
+	if (object->m_commandSetStringOverride.compare(*(const AsciiString *)
+		((const char *)m_moduleData + 0x70)) == 0)
 		((Rva0022A620Obj *)object)->set((const char *)0x0107301C);
 	*(Bool *)((char *)TheControlBar + 0x24) = true;
 	setUpgradeExecuted(false);

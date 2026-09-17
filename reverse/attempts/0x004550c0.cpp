@@ -1,6 +1,6 @@
 // ?writeCacheINI@MapCache@@AAEX_N@Z
 // partial score=0.71 date=2026-09-03
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ivendor/stlport /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?writeCacheINI@MapCache@@AAEX_N@Z: Code/GameEngine/Source/GameClient/MapUtil.cpp
 //
 // Retail 0x004550C0, 1814 bytes. BFME extends ZH's writer: isScenarioMP,
@@ -19,6 +19,10 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stl/_config.h>
+#include <list>
+#include <map>
+#include <set>
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -59,11 +63,15 @@ public:
 
 	void set(const AsciiString &other);
 	void concat(const char *text, Int len);
+	void concat(const char c) { concat(&c, 1); }
 	void toLower();
 	bool startsWithNoCase(const char *text, Int len) const;
 
 	const char *str() const { return m_data ? m_data->m_text : ""; }
 };
+
+bool operator<(const AsciiString &left, const AsciiString &right);
+bool operator==(const AsciiString &left, const AsciiString &right);
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
 class UnicodeString : private StringBase<UnsignedShort>
@@ -92,41 +100,22 @@ struct WinTimeStamp
 	UnsignedInt m_highTimeStamp;
 };
 
-struct RbNode
-{
-	RbNode *left;
-	RbNode *parent;
-	RbNode *right;
-	Int color;
-	AsciiString key;
-};
-
-struct WaypointNode : RbNode
-{
-	Coord3D pos;
-};
-
-struct ListNode
-{
-	ListNode *next;
-	ListNode *prev;
-	Coord3D pos;
-};
-
-struct FactionNode : RbNode
-{
-};
-
 struct PlayerSlot
 {
 	Bool m_human;
 	Bool m_computer;
 	Bool m_loadAIScripts;
 	Int m_forcePlayerTeam;
-	FactionNode *m_factionHeader;
-	UnsignedInt m_factionCount;
-	UnsignedInt m_factionPad;
+	std::set<AsciiString> m_factions;
 };
+
+class WaypointMap : public std::map<AsciiString, Coord3D>
+{
+public:
+	Int m_numStartSpots;
+};
+
+typedef std::list<Coord3D> Coord3DList;
 
 class MapMetaData
 {
@@ -145,18 +134,12 @@ public:
 	UnsignedInt m_filesize;
 	UnsignedInt m_CRC;
 	WinTimeStamp m_timestamp;
-	WaypointNode *m_waypointHeader;
-	unsigned char m_waypointRest[0x0C];
-	ListNode *m_supplySentinel;
-	ListNode *m_techSentinel;
+	WaypointMap m_waypoints;
+	Coord3DList m_supplyPositions;
+	Coord3DList m_techPositions;
 	AsciiString m_fileName;
 	PlayerSlot m_players[8];
-	unsigned char m_tail[16];
-};
-
-struct MapNode : RbNode
-{
-	MapMetaData value;
+	unsigned char m_tail[8];
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GlobalData.h
@@ -180,11 +163,8 @@ extern FileSystem *TheFileSystem;
 AsciiString AsciiStringToQuotedPrintable(AsciiString original);
 AsciiString UnicodeStringToQuotedPrintable(UnicodeString original);
 
-RbNode *rbIncrement(RbNode *node);
-bool rbTreesEqual(RbNode *beginA, RbNode *headerA, RbNode *beginB);
-
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
-class MapCache
+class MapCache : public std::map<AsciiString, MapMetaData>
 {
 public:
 	AsciiString getUserMapDir() const;
@@ -192,30 +172,12 @@ public:
 
 private:
 	void writeCacheINI(bool userDir);
-	MapNode *m_header;
 };
-
-static bool playerSlotIsDefault(const PlayerSlot *slot)
-{
-	static PlayerSlot s_default = { 1, 1, 1, (Int)-1, 0, 0, 0 };
-	if (slot->m_human != s_default.m_human)
-		return false;
-	if (slot->m_computer != s_default.m_computer)
-		return false;
-	if (slot->m_loadAIScripts != s_default.m_loadAIScripts)
-		return false;
-	if (slot->m_forcePlayerTeam != s_default.m_forcePlayerTeam)
-		return false;
-	if (slot->m_factionCount != s_default.m_factionCount)
-		return false;
-	return rbTreesEqual(slot->m_factionHeader ? slot->m_factionHeader->left : 0,
-		slot->m_factionHeader,
-		s_default.m_factionHeader ? s_default.m_factionHeader->left : 0);
-}
 
 // ?writeCacheINI@MapCache@@AAEX_N@Z
 void MapCache::writeCacheINI(bool userDir)
 {
+	MapCache *self = this;
 	AsciiString mapDir;
 	if (!userDir || TheWritableGlobalData->m_buildMapCache)
 		mapDir.set(getMapDir());
@@ -223,8 +185,7 @@ void MapCache::writeCacheINI(bool userDir)
 		mapDir.set(getUserMapDir());
 
 	AsciiString filepath(mapDir);
-	char slash = '\\';
-	filepath.concat(&slash, 1);
+	filepath.concat('\\');
 
 	TheFileSystem->createDirectory(mapDir);
 	filepath.concat("MapCache.ini", 12);
@@ -238,18 +199,19 @@ void MapCache::writeCacheINI(bool userDir)
 	fprintf(fp, "; /////////////////////////////////////////////////////////////////////////////\n");
 	mapDir.toLower();
 
+	register MapCache::iterator it = self->begin();
 	MapMetaData md;
-	for (MapNode *it = (MapNode *)m_header->left; it != m_header; it = (MapNode *)rbIncrement(it))
+	while (it != self->end())
 	{
 		const char *dir = mapDir.str();
 		Int dirLen = 0;
 		if (dir)
 			dirLen = (Int)strlen(dir);
-		if (!it->key.startsWithNoCase(dir, dirLen))
+		if (!it->first.startsWithNoCase(dir, dirLen))
 			continue;
 
-		md = it->value;
-		fprintf(fp, "\nMapCache %s\n", AsciiStringToQuotedPrintable(it->key).str());
+		md = it->second;
+		fprintf(fp, "\nMapCache %s\n", AsciiStringToQuotedPrintable(it->first).str());
 		fprintf(fp, "  fileSize = %u\n", md.m_filesize);
 		fprintf(fp, "  fileCRC = %u\n", md.m_CRC);
 		fprintf(fp, "  timestampLo = %d\n", md.m_timestamp.m_lowTimeStamp);
@@ -263,37 +225,58 @@ void MapCache::writeCacheINI(bool userDir)
 		fprintf(fp, "  displayName = %s\n", UnicodeStringToQuotedPrintable(md.m_displayName).str());
 		fprintf(fp, "  description = %s\n", UnicodeStringToQuotedPrintable(md.m_description).str());
 
-		WaypointNode *whead = md.m_waypointHeader;
-		for (WaypointNode *w = (WaypointNode *)whead->left; w != whead; w = (WaypointNode *)rbIncrement(w))
-			fprintf(fp, "  %s = X:%2.2f Y:%2.2f Z:%2.2f\n", w->key.str(), w->pos.x, w->pos.y, w->pos.z);
+		Coord3D pos;
+		WaypointMap::iterator itw = md.m_waypoints.begin();
+		while (itw != md.m_waypoints.end())
+		{
+			pos = itw->second;
+			fprintf(fp, "  %s = X:%2.2f Y:%2.2f Z:%2.2f\n", itw->first.str(), pos.x, pos.y, pos.z);
+			++itw;
+		}
 
-		for (ListNode *n = md.m_techSentinel->next; n != md.m_techSentinel; n = n->next)
-			fprintf(fp, "  techPosition = X:%2.2f Y:%2.2f Z:%2.2f\n", n->pos.x, n->pos.y, n->pos.z);
+		Coord3DList::iterator itc3d = md.m_techPositions.begin();
+		while (itc3d != md.m_techPositions.end())
+		{
+			pos = *itc3d;
+			fprintf(fp, "  techPosition = X:%2.2f Y:%2.2f Z:%2.2f\n", pos.x, pos.y, pos.z);
+			++itc3d;
+		}
 
-		for (ListNode *n = md.m_supplySentinel->next; n != md.m_supplySentinel; n = n->next)
-			fprintf(fp, "  supplyPosition = X:%2.2f Y:%2.2f Z:%2.2f\n", n->pos.x, n->pos.y, n->pos.z);
+		itc3d = md.m_supplyPositions.begin();
+		while (itc3d != md.m_supplyPositions.end())
+		{
+			pos = *itc3d;
+			fprintf(fp, "  supplyPosition = X:%2.2f Y:%2.2f Z:%2.2f\n", pos.x, pos.y, pos.z);
+			++itc3d;
+		}
 
 		for (Int i = 0; i < 8; ++i)
 		{
 			PlayerSlot *slot = &md.m_players[i];
-			if (playerSlotIsDefault(slot))
+			static PlayerSlot s_default = { 1, 1, 1, (Int)-1 };
+			if (slot->m_human == s_default.m_human &&
+				slot->m_computer == s_default.m_computer &&
+				slot->m_loadAIScripts == s_default.m_loadAIScripts &&
+				slot->m_forcePlayerTeam == s_default.m_forcePlayerTeam &&
+				slot->m_factions == s_default.m_factions)
 				continue;
 			fprintf(fp, "  PlayerPosition %d\n", i + 1);
 			fprintf(fp, "    Human = %s\n", slot->m_human ? "Yes" : "No");
 			fprintf(fp, "    Computer = %s\n", slot->m_computer ? "Yes" : "No");
 			fprintf(fp, "    LoadAIScripts = %s\n", slot->m_loadAIScripts ? "Yes" : "No");
 			fprintf(fp, "    ForcePlayerTeam = %d\n", slot->m_forcePlayerTeam);
-			if (slot->m_factionHeader && slot->m_factionCount)
+			if (!slot->m_factions.empty())
 			{
 				fprintf(fp, "    AllowedFactions =");
-				FactionNode *fhead = slot->m_factionHeader;
-				for (FactionNode *f = (FactionNode *)fhead->left; f != fhead; f = (FactionNode *)rbIncrement(f))
-					fprintf(fp, " %s", f->key.str());
+				for (std::set<AsciiString>::iterator f = slot->m_factions.begin();
+					f != slot->m_factions.end(); ++f)
+					fprintf(fp, " %s", f->str());
 				fprintf(fp, "\n");
 			}
 			fprintf(fp, "  END\n");
 		}
 		fprintf(fp, "END\n\n");
+		++it;
 	}
 
 	fclose(fp);
