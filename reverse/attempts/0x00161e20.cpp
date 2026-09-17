@@ -1,5 +1,5 @@
 // ?checkQueuedTeams@AIPlayer@@MAEXXZ
-// partial score=0.9 date=2026-09-11
+// partial score=0.997 date=2026-09-17
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/objectdlink
 
 // BFME's AIPlayer::checkQueuedTeams, retail RVA 0x00161E20 (697 bytes).
@@ -140,13 +140,6 @@ public:
         }
 
 };
-
-static BFMERetailAsciiString *rva00161e20_teamName(TeamPrototype *prototype)
-{
-        if (prototype == 0)
-                return (BFMERetailAsciiString *)0x01336e50;
-        return &prototype->m_name;
-}
 
 class Rva00161E20ObjectIterator
 {
@@ -479,10 +472,10 @@ void Rva00161E20AIPlayer::checkQueuedTeams()
 				{
                                         BFMERetailUnicodeString outName;
                                         TeamPrototype *prototype = team->m_team->getPrototype();
-        BFMERetailAsciiString *teamName =
-                rva00161e20_teamName(prototype);
-        BFMERetailAsciiString *condition =
-                &prototype->m_productionCondition;
+        BFMERetailAsciiString *condition = &prototype->m_productionCondition;
+        BFMERetailAsciiString *teamName = prototype
+                ? &prototype->m_name
+                : (BFMERetailAsciiString *)0x01336e50;
         Script *script = TheScriptEngine->findScriptByName(
                 teamName,
                 condition,
