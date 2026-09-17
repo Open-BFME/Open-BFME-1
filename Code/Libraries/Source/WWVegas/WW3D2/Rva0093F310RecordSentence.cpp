@@ -27,7 +27,10 @@ public:
 	BfmeSurfaceResource *m_surface;
 };
 
-class Rva0093F310Font
+// Upstream Render2DSentenceClass stores a FontCharsClass pointer and calls its
+// public Get_Char_Height accessor; the +0x30 height field in this ABI witness
+// agrees with that class's retail layout.
+class FontCharsClass
 {
 public:
 	int Get_Char_Height() const { return char_height; }
@@ -61,13 +64,13 @@ public:
 
 	virtual void reset();
 	void Record_Sentence_Chunk();
-	void Rva0093F980_Method(Rva0093F310Font *font);
+	void Rva0093F980_Method(FontCharsClass *font);
 
 private:
 	DynamicVectorClass<Render2DSentenceClass::SentenceDataStruct> sentence_data;
 	char pending_surfaces[0x18];
 	char renderers[0x18];
-	Rva0093F310Font *font;
+	FontCharsClass *font;
 	float base_location_x;
 	float base_location_y;
 	float location_x;
@@ -117,13 +120,13 @@ void Render2DSentenceClass::Record_Sentence_Chunk()
 }
 
 // Retail RVA 0x0093F980..0x0093FA63 (227 bytes), complete RET 4 at +0xE0.
-// This sibling takes the ordinary Rva0093F310Font pointer as its one stack
+// This sibling takes the ordinary FontCharsClass pointer as its one stack
 // argument; the native code immediately reads its height at font +0x2C and
 // reuses that argument slot for the integer-to-float conversion.  It shares
 // the 36-byte record, vector layout, and identical COM AddRef/Release reload
 // sequence with the 224-byte body above.  The method remains address-derived
 // because no original semantic overload name has been independently proven.
-void Render2DSentenceClass::Rva0093F980_Method(Rva0093F310Font *font)
+void Render2DSentenceClass::Rva0093F980_Method(FontCharsClass *font)
 {
 	int width = texture_offset_i - texture_start_x;
 	if (width > 0)
