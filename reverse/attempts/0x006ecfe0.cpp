@@ -1,5 +1,5 @@
-// ?d_006ecfe0@@YAXXZ
-// partial score=0.92 date=2026-09-08
+// ?bfmeClearEVG@BfmeHostEVG@@QAEXXZ
+// partial score=0.98 date=2026-09-16
 class TextureEVG
 {
 public:
@@ -60,18 +60,20 @@ public:
 
 void BfmeHostEVG::bfmeClearEVG()
 {
-	BfmeRefEVG ref;
-	Render2DEVG *r = m_bfmeR2DEVG;
-
-	if (r->m_bfmeTexEVG != 0)
 	{
-		TextureEVG *tex = r->m_bfmeTexEVG;
+		BfmeRefEVG ref;
+		Render2DEVG *r = m_bfmeR2DEVG;
 
-		if (tex != 0)
-			tex->bfmeReleaseRefEVG();
+		if (r->m_bfmeTexEVG != 0)
+		{
+			TextureEVG *tex = r->m_bfmeTexEVG;
 
-		r->m_bfmeTexEVG = 0;
-		r->m_bfmeFlagEVG = r->m_bfmeTexEVG != 0 ? -1 : 0;
+			if (tex != 0)
+				tex->bfmeReleaseRefEVG();
+
+			r->m_bfmeTexEVG = 0;
+			r->m_bfmeFlagEVG = r->m_bfmeTexEVG != 0 ? -1 : 0;
+		}
 	}
 
 	m_bfmeR2DEVG->bfmeResetEVG();
