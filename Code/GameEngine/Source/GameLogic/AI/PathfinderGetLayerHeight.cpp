@@ -1,7 +1,7 @@
-// ?d_003d8940@@YAXXZ
-// partial score=0.8 date=2026-09-06
 // cl: /DNDEBUG /MD /EHs-c-
-// Pathfinder::getLayerHeight, retail 0x003D8940.
+// BFME retail RVA 0x003D8940, 511 bytes.
+// Identity is established by the matched W3DTerrainLogic::getLayerHeight
+// caller at 0x006BE2A0 through ILT 0x00029F3C.
 
 typedef float Real;
 typedef bool Bool;
@@ -78,7 +78,7 @@ public:
 	Real getLayerHeight(PathfindLayerEnum layer, const Coord3D *point,
 		Coord3D *normal);
 
-	private:
+private:
 	unsigned char m_pad858[0x243B8 - 0x85C];
 	Real m_layerHeights[64];
 };
@@ -86,37 +86,29 @@ public:
 Real Pathfinder::getLayerHeight(PathfindLayerEnum layer,
 	const Coord3D *point, Coord3D *normal)
 {
-	int actualLayer;
 	{
 		ICoord2D cell;
-		if (worldToCell(point, &cell))
+		PathfindCell *pathCell = 0;
+		if (!worldToCell(point, &cell))
+			pathCell = getCell(layer, cell.x, cell.y);
+		if (pathCell != 0 && layer != LAYER_GROUND)
 		{
-			actualLayer = 1;
-			goto dispatch_layer;
-		}
-
-		PathfindCell *pathCell = getCell(layer, cell.x, cell.y);
-		if (pathCell == 0)
-		{
-			actualLayer = 0;
-			goto dispatch_layer;
-		}
-		if (layer == LAYER_GROUND)
-			goto ground_height;
-
-		actualLayer = pathCell->getLayer();
-		if (actualLayer == layer)
-			goto dispatch_layer;
-		if (actualLayer == 0x10)
-		{
-			if (bfmeAnyBridgeAt(point))
-				goto bridge_scan;
-			actualLayer = 0;
+			int actualLayer = pathCell->getLayer();
+			if (actualLayer != layer)
+			{
+				if (actualLayer == 0x10)
+				{
+					if (bfmeAnyBridgeAt(point))
+						goto bridge_scan;
+				}
+				else
+				{
+					layer = (PathfindLayerEnum)actualLayer;
+				}
+			}
 		}
 	}
 
-dispatch_layer:
-	layer = (PathfindLayerEnum)actualLayer;
 	if (layer == LAYER_GROUND)
 		goto ground_height;
 	if (layer >= 0x11 && layer <= 0x40)
@@ -145,12 +137,13 @@ bridge_scan:
 
 		Coord3D first = *point;
 		first.x -= 10.0f;
+		first.y -= 10.0f;
 		Coord3D second = first;
-		second.y += 10.0f;
+		second.x += 20.0f;
 		Coord3D third = second;
-		third.x += 10.0f;
-		Coord3D fourth = third;
-		fourth.y += 10.0f;
+		third.y += 20.0f;
+		Coord3D fourth = first;
+		fourth.y += 20.0f;
 
 		for (bridge = m_bridgeList; bridge != 0; bridge = bridge->m_next)
 		{
