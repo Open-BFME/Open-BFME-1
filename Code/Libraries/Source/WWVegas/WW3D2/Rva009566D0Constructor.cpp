@@ -3,7 +3,8 @@
 // W3DStreakDraw constructs this segmented-line-family RenderObj child.
 // Complete primary/secondary tables contain 130/1 entries; all 17 child
 // overrides and the four-state constructor cleanup are independently audited.
-// The owner remains address-qualified: the historical class name is not proven.
+// The matched W3DStreakDraw caller and its configuration methods identify the
+// constructed object as BfmeStreakObject.
 // This TU uses the complete reconciled RenderObj interface and declares the
 // 17 raw target replacements (including its compiler-generated deleting dtor).
 #include "vector3.h"
@@ -30,10 +31,10 @@ private:
     char m_storage[0x20];
 };
 
-class Rva009566D0 : public RenderObjClass
+class BfmeStreakObject : public RenderObjClass
 {
 public:
-    Rva009566D0();
+    BfmeStreakObject();
 
     // Target primary slots 1, 2, 3, 10, 12, 59, 66, 67, 71, 73-80.
     // Signatures are taken directly from the reconciled RenderObjClass header.
@@ -60,8 +61,8 @@ private:
     Rva00974F80 m_renderer;
 };
 
-// ??0Rva009566D0@@QAE@XZ
-Rva009566D0::Rva009566D0()
+// ??0BfmeStreakObject@@QAE@XZ
+BfmeStreakObject::BfmeStreakObject()
     : m_points(0),
       m_widths(0),
       m_renderer()
