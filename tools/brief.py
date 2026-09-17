@@ -159,6 +159,9 @@ def main():
     ap.add_argument("--rvas", nargs="*", help="explicit RVAs")
     ap.add_argument("--csv", help="worklist CSV with an 'rva' column")
     ap.add_argument("--limit", type=int, default=30)
+    ap.add_argument("--max-size", type=int, default=0,
+                    help="--dump only: skip bodies above this many bytes (0 = no cap). "
+                         "Bodies over 2,500 B landed 0 of 69 attempts on 2026-09-16.")
     ap.add_argument("--note", default="", help="extra context placed at the top")
     ap.add_argument("--note-file", type=Path, help="picker output: include NOTE and its complete slot table")
     ap.add_argument("--model", default="MODEL", help="model tag for re_log evidence")
@@ -170,7 +173,8 @@ def main():
     targets = []
     if a.dump:
         want = a.dump.replace("\\", "/")
-        targets = [rva for rva, r in rows.items() if r["source"].replace("\\", "/") == want]
+        targets = [rva for rva, r in rows.items() if r["source"].replace("\\", "/") == want
+                   and (not a.max_size or int(rows[rva]["target_size"] or 0) <= a.max_size)]
         targets.sort(key=lambda v: int(rows[v]["target_size"]))
     if a.rvas:
         targets += [int(x, 16) for x in a.rvas]

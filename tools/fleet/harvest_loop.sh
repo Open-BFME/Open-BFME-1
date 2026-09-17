@@ -4,7 +4,7 @@ cd "$(dirname "$0")/.." || exit 1
 while true; do
   sleep 900
   {
-    python build/ledger_prep.py
-    python build/harvest.py "Open-BFME6: fleet harvest $(date '+%m-%d %H:%M')" || python tools/dedup_csv.py
+    python tools/fleet/ledger_prep.py
+    python tools/fleet/harvest.py "Open-BFME6: fleet harvest $(date '+%m-%d %H:%M')" || python tools/dedup_csv.py
   } >> build/fleet_logs/harvest.log 2>&1
 done

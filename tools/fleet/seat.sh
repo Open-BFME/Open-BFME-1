@@ -119,7 +119,7 @@ while true; do
     [ -z "$FILE" ] && { echo "seat $SEAT: no file picked; retry in 60s"; sleep 60; continue; }
     STEM=$(basename "$FILE" .asm)
     BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
-    python tools/brief.py --dump "$FILE" --model "$CMODEL" --limit 40 > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $FILE"; continue; }
+    python tools/brief.py --dump "$FILE" --model "$CMODEL" --limit 40 --max-size 2500 > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $FILE"; continue; }
     LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
     echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $STEM" >> build/fleet_logs/seats.log
     run_engine "$BRIEF" "$LOG"
