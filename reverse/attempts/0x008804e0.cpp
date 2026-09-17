@@ -1,5 +1,5 @@
 // ?set@GeometryInfo@@QAEXW4GeometryType@@_NMMM@Z
-// partial score=0.91 date=2026-08-31
+// partial score=0.92 date=2026-09-17
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHs-c-
 // stlport
 // Open-BFME: GeometryInfo::set, retail 0x008804E0.
@@ -60,6 +60,20 @@ public:
 
 struct BfmeElem60
 {
+	BfmeElem60(int type, RealBits height, RealBits majorRadius,
+		RealBits minorRadius)
+		: m_name()
+	{
+		m_type = type;
+		m_height = height;
+		m_majorRadius = majorRadius;
+		m_minorRadius = minorRadius;
+		m_unmodelled10 = 0;
+		m_unmodelled14 = 0;
+		m_unmodelled18 = 0;
+		m_enabled = true;
+	}
+
 	BfmeElem60()
 		: m_type(GEOMETRY_SPHERE),
 		  m_height(0x3F800000u),
@@ -79,7 +93,6 @@ struct BfmeElem60
 		m_height = other.m_height;
 		m_majorRadius = other.m_majorRadius;
 		m_minorRadius = other.m_minorRadius;
-		m_unmodelled10 = other.m_unmodelled10;
 		m_unmodelled10 = other.m_unmodelled10;
 		m_unmodelled14 = other.m_unmodelled14;
 		m_unmodelled18 = other.m_unmodelled18;
@@ -166,14 +179,10 @@ private:
 void GeometryInfo::set(GeometryType type, Bool isSmall, Real height,
 	Real majorRadius, Real minorRadius)
 {
-	BfmeElem60 shape;
-	shape.m_type = type;
-	shape.m_height = *(const RealBits *)&height;
-	shape.m_majorRadius = *(const RealBits *)&majorRadius;
-	if (type == GEOMETRY_BOX)
-		shape.m_minorRadius = *(const RealBits *)&minorRadius;
-	else
-		shape.m_minorRadius = *(const RealBits *)&majorRadius;
+	BfmeElem60 shape(type, *(const RealBits *)&height,
+		*(const RealBits *)&majorRadius,
+		type == GEOMETRY_BOX ? *(const RealBits *)&minorRadius
+			: *(const RealBits *)&majorRadius);
 	GeometryInfo *self = this;
 	BfmeVec60 *shapes = &self->m_shapes;
 	self->m_isSmall = isSmall;
