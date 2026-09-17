@@ -8,6 +8,7 @@
 
 typedef void *HINSTANCE;
 typedef int BOOL;
+typedef unsigned long DWORD;
 
 #define FALSE 0
 #define TRUE 1
@@ -16,6 +17,8 @@ typedef int BOOL;
 extern "C" void *__cdecl realloc(void *memory, unsigned int size);
 extern "C" void *__cdecl memmove(void *destination, const void *source,
 	unsigned int bytes);
+extern "C" __declspec(dllimport) void __stdcall RaiseException(
+	DWORD code, DWORD flags, DWORD argumentCount, const DWORD *arguments);
 
 class Rva009F6948Array
 {
@@ -25,6 +28,12 @@ public:
 
 namespace ATL
 {
+inline void __declspec(noreturn) _AtlRaiseException(
+	DWORD code, DWORD flags = 1)
+{
+	RaiseException(code, flags, 0, 0);
+}
+
 template <class T>
 class CSimpleArrayEqualHelper
 {
@@ -62,6 +71,13 @@ public:
 		return 1;
 	}
 
+	T& operator[](int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= m_nSize)
+			_AtlRaiseException(0xC000008C);
+		return m_aT[nIndex];
+	}
+
 	T *m_aT;
 	int m_nSize;
 	int m_nAllocSize;
@@ -69,4 +85,5 @@ public:
 
 template BOOL CSimpleArray<HINSTANCE>::Add(const HINSTANCE& t);
 template int CSimpleArray<void *, CSimpleArrayEqualHelper<void *> >::RemoveAt(int);
+template void *& CSimpleArray<void *, CSimpleArrayEqualHelper<void *> >::operator[](int);
 }
