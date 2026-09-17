@@ -64,6 +64,8 @@ public:
 		DICT_UNICODESTRING
 	};
 
+	DataType getType(NameKeyType key) const;
+	bool known(NameKeyType key, DataType type) const;
 	AsciiString getAsciiString(NameKeyType key, Bool *exists = 0) const;
 
 private:
@@ -98,4 +100,9 @@ AsciiString Dict::getAsciiString(NameKeyType key, Bool *exists /*=NULL*/) const
 	}
 	if (exists) *exists = false;
 	return AsciiString::TheEmptyString;
+}
+
+bool Dict::known(NameKeyType key, DataType type) const
+{
+	return getType(key) == type;
 }
