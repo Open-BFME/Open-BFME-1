@@ -34,6 +34,7 @@ public:
 	Debug &operator<<(unsigned long);
 	Debug &operator<<(__int64);
 	Debug &operator<<(unsigned __int64);
+	Debug &operator<<(bool);
 	char m_pad[0x9e6c];
 	char m_prefix[16];
 	int m_radix;
@@ -79,4 +80,15 @@ Debug &Debug::operator<<(unsigned __int64 val)
 	char help[64 + 1];
 	AddOutput(m_prefix, strlen(m_prefix));
 	return (*this) << _ui64toa(val, help, m_radix);
+}
+
+// Debug::operator<<(bool), retail at 0x008897C0
+Debug &Debug::operator<<(bool value)
+{
+	const char *text;
+	if (value)
+		text = "true";
+	else
+		text = "false";
+	return (*this) << text;
 }
