@@ -38,6 +38,11 @@ class DefaultProductionExitUpdate
 {
 public:
 	virtual bool getNaturalRallyPoint(Coord3D &rallyPoint, bool offset) const;
+	virtual bool getExitPosition(Coord3D &exitPosition) const;
+
+private:
+	const DefaultProductionExitUpdateModuleData *m_moduleData;
+	Object *m_object;
 };
 
 bool DefaultProductionExitUpdate::getNaturalRallyPoint(Coord3D &rallyPoint, bool offset) const
@@ -67,5 +72,24 @@ bool DefaultProductionExitUpdate::getNaturalRallyPoint(Coord3D &rallyPoint, bool
 	rallyPoint.x = p.X;
 	rallyPoint.y = p.Y;
 	rallyPoint.z = p.Z;
+	return true;
+}
+
+bool DefaultProductionExitUpdate::getExitPosition(Coord3D &exitPosition) const
+{
+	const Object *obj = m_object;
+	if (!obj)
+		return false;
+
+	const Matrix3D *transform = obj->getTransformMatrix();
+	const DefaultProductionExitUpdateModuleData *md = m_moduleData;
+
+	Vector3 loc;
+	loc.Set(md->m_unitCreatePoint.x, md->m_unitCreatePoint.y, md->m_unitCreatePoint.z);
+	transform->Transform_Vector(*transform, loc, &loc);
+
+	exitPosition.x = loc.X;
+	exitPosition.y = loc.Y;
+	exitPosition.z = loc.Z;
 	return true;
 }
