@@ -91,6 +91,7 @@ class Rva003A9860
 {
 public:
 	Rva003A9860() { m_start = 0; }
+	Rva003A9860(const Rva003A9860 &other);
 	~Rva003A9860();						// ILT 0x00037A4C
 
 	Int size(void) const { return m_finish - m_start; }
@@ -111,6 +112,7 @@ class LivingWorldCampaign : public BfmeLivingWorldCampaignBase
 {
 public:
 	LivingWorldCampaign(const AsciiString &name);
+	LivingWorldCampaign(const LivingWorldCampaign &other);
 	~LivingWorldCampaign();
 
 	void indexMissions(void);
@@ -132,6 +134,16 @@ LivingWorldCampaign::LivingWorldCampaign(const AsciiString &name) :
 	m_missions.m_endOfStorage = 0;
 	m_current = 0;
 	m_flag1C = false;
+}
+
+// ??0LivingWorldCampaign@@QAE@ABV0@@Z
+LivingWorldCampaign::LivingWorldCampaign(const LivingWorldCampaign &other) :
+	m_name(other.m_name),
+	m_field08(other.m_field08),
+	m_missions(other.m_missions),
+	m_current(other.m_current),
+	m_flag1C(other.m_flag1C)
+{
 }
 
 // ??1LivingWorldCampaign@@QAE@XZ
