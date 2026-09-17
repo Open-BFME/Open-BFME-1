@@ -22,6 +22,7 @@ class MultiplayerColorDefinition
 {
 public:
 	AsciiString getTooltipName(void) const;
+	MultiplayerColorDefinition(const MultiplayerColorDefinition &other);
 	MultiplayerColorDefinition *operator=(const MultiplayerColorDefinition &other);
 
 private:
@@ -41,4 +42,14 @@ MultiplayerColorDefinition *MultiplayerColorDefinition::operator=(
 	m_rgbValueNight = other.m_rgbValueNight;
 	m_colorNight = other.m_colorNight;
 	return this;
+}
+
+MultiplayerColorDefinition::MultiplayerColorDefinition(
+	const MultiplayerColorDefinition &other) :
+	m_tooltipName(other.m_tooltipName),
+	m_rgbValue(other.m_rgbValue),
+	m_color(other.m_color),
+	m_rgbValueNight(other.m_rgbValueNight),
+	m_colorNight(other.m_colorNight)
+{
 }
