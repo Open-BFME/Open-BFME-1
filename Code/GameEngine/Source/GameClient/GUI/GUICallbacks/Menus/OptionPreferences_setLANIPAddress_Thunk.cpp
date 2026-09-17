@@ -63,6 +63,7 @@ class OptionPreferences : public UserPreferences
 {
 public:
 	void setLANIPAddress( unsigned IP );
+	void setOnlineIPAddress( unsigned IP );
 };
 
 void OptionPreferences::setLANIPAddress( unsigned IP )
@@ -71,6 +72,16 @@ void OptionPreferences::setLANIPAddress( unsigned IP )
 	tmp.format( AsciiString( "%d.%d.%d.%d" ), IP >> 24,
 		((IP & 0xff0000) >> 16), ((IP & 0xff00) >> 8), (IP & 0xff) );
 	AsciiString key( "IPAddress" );
+	AsciiString &slot = (*this)[key];
+	slot = tmp;
+}
+
+void OptionPreferences::setOnlineIPAddress( unsigned IP )
+{
+	AsciiString tmp;
+	tmp.format( AsciiString( "%d.%d.%d.%d" ), IP >> 24,
+		((IP & 0xff0000) >> 16), ((IP & 0xff00) >> 8), (IP & 0xff) );
+	AsciiString key( "GameSpyIPAddress" );
 	AsciiString &slot = (*this)[key];
 	slot = tmp;
 }
