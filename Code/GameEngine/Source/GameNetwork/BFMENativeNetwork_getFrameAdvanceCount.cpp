@@ -61,6 +61,7 @@ public:
 	virtual bool isPacketRouter(void);
 
 	int getFrameAdvanceCount(void);
+	int getFramePacingStatus(void);
 
 private:
 	BFMEConnectionManager *m_conMgr;
@@ -133,4 +134,27 @@ int BFMENativeNetwork::getFrameAdvanceCount(void)
 
 	LastAdvanceTime = timeGetTime();
 	return 1;
+}
+
+int BFMENativeNetwork::getFramePacingStatus(void)
+{
+	if (m_state != 1)
+		return 1;
+
+	if (!isPacketRouter())
+		return m_conMgr->frameCeiling - TheGameLogic->frame + 1;
+
+	__int64 now;
+	QueryPerformanceCounter(&now);
+	m_accumulator += now - m_lastCounter;
+	m_lastCounter = now;
+
+	__int64 quantum = m_frequency / 5;
+	if (m_accumulator < quantum)
+		return 0;
+
+	if ((float)m_accumulator < (float)quantum * 1.5f)
+		return 1;
+
+	return 2;
 }
