@@ -26,3 +26,17 @@ struct AsciiComparator {
 };
 typedef _STL::map<AsciiString, PlayerInfo, AsciiComparator> PlayerInfoMap;
 template PlayerInfo& PlayerInfoMap::operator[](const AsciiString&);
+
+typedef _STL::pair<const AsciiString, PlayerInfo> BfmePlayerInfoPair;
+
+typedef _STL::_Rb_tree<AsciiString,
+	BfmePlayerInfoPair,
+	_STL::_Select1st<BfmePlayerInfoPair>,
+	AsciiComparator,
+	_STL::allocator<BfmePlayerInfoPair> > BfmePlayerInfoTree;
+
+template BfmePlayerInfoTree::iterator
+BfmePlayerInfoTree::insert_unique( BfmePlayerInfoTree::iterator, const BfmePlayerInfoPair & );
+
+template _STL::pair<BfmePlayerInfoTree::iterator, bool>
+BfmePlayerInfoTree::insert_unique( const BfmePlayerInfoPair & );
