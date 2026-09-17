@@ -46,3 +46,11 @@ AsciiString GetReadmeFromMap(AsciiString path)
 	out.format("%s\\readme.txt", base.str());
 	return out;
 }
+
+AsciiString GetINIFromMap(AsciiString path)
+{
+	AsciiString base = GetBasePathFromPath(path);
+	AsciiString out;
+	out.format("%s\\map.ini", base.str());
+	return out;
+}
