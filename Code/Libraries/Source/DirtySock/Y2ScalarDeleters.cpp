@@ -64,17 +64,20 @@ struct Gen007E9B10 : BfmeDirtyBase
 // ??0Gen007E9B10@@QAE@XZ present-unmatched   emitted only to force the vtable, and with it ??_G
 Gen007E9B10::Gen007E9B10() {}
 
-struct Gen007EB140
+// ServiceHubImpl's matching constructor, complete destructor, initializer,
+// and singleton factory already establish this scalar-deleting wrapper's
+// class identity; the other DirtySock wrappers in this TU remain opaque.
+struct ServiceHubImpl
 {
-	Gen007EB140();
-	virtual ~Gen007EB140();		// retail 0x007EA6F0
+	ServiceHubImpl();
+	virtual ~ServiceHubImpl();		// retail 0x007EA6F0
 	void operator delete( void *p, unsigned int n );
 
 	char m_bfmePad[ 0x2B0 - 4 ];
 };
 
-// ??0Gen007EB140@@QAE@XZ present-unmatched   emitted only to force the vtable, and with it ??_G
-Gen007EB140::Gen007EB140() {}
+// ??0ServiceHubImpl@@QAE@XZ present-unmatched   emitted only to force the vtable, and with it ??_G
+ServiceHubImpl::ServiceHubImpl() {}
 
 struct Gen007F1BF0 : BfmeDirtyBase
 {

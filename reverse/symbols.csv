@@ -4762,7 +4762,7 @@ name,address,notes
 ??1Gen00776240Field7C@@QAE@XZ,0x000455E8,element destructor callback for the four 12-byte members at +0x7C in Gen_t_00776240_p128pod
 ??1Gen00776240FieldB0@@QAE@XZ,0x00026AB2,destructor for the 12-byte member at +0xB0 in Gen_t_00776240_p128pod
 ??1Gen0078D1C0Registry@@UAE@XZ,0x009409F0,retail member destructor call decoded from the exact 0x0078D040 body
-??1Gen007EB140@@UAE@XZ,0x007EA6F0,Open-BFME5 the out-of-line destructor the scalar deleting destructor at 0x007EB140 calls
+??1ServiceHubImpl@@UAE@XZ,0x007EA6F0,ServiceHubImpl complete destructor called by its scalar-deleting wrapper at 0x007EB140
 ??1Gen007F4D00@@UAE@XZ,0x007F4D20,Open-BFME5 the out-of-line destructor the scalar deleting destructor at 0x007F4D00 calls
 ??1Gen007F86D0@@UAE@XZ,0x007F8090,Open-BFME5 the out-of-line destructor the scalar deleting destructor at 0x007F86D0 calls
 ??1Gen007FA290@@UAE@XZ,0x007F9C50,Open-BFME5 the out-of-line destructor the scalar deleting destructor at 0x007FA290 calls
@@ -9819,7 +9819,7 @@ name,address,notes
 ??3@YAXPAXPAUGen_uwt_0002aaa9@@@Z,0x0002AAA9,gen-uw-pin dtor target read from the retail funclet bytes
 ??3@YAXPAXPAUGen_uwt_00033d3e@@@Z,0x00033D3E,gen-uw-pin dtor target read from the retail funclet bytes
 ??3Gen007E9B10@@SAXPAXI@Z,0x007F0170,Open-BFME5 the sized member operator delete the DirtySock scalar deleting destructors call
-??3Gen007EB140@@SAXPAXI@Z,0x007F0170,Open-BFME5 the sized member operator delete the DirtySock scalar deleting destructors call
+??3ServiceHubImpl@@SAXPAXI@Z,0x007F0170,Open-BFME5 the sized member operator delete the ServiceHubImpl scalar deleting destructor calls
 ??3Gen007F1BF0@@SAXPAXI@Z,0x007F0170,Open-BFME5 the sized member operator delete the DirtySock scalar deleting destructors call
 ??3Gen007F2120@@SAXPAXI@Z,0x007F0170,Open-BFME5 the sized member operator delete the DirtySock scalar deleting destructors call
 ??3Gen007F2E30@@SAXPAXI@Z,0x007F0170,Open-BFME5 the sized member operator delete the DirtySock scalar deleting destructors call
