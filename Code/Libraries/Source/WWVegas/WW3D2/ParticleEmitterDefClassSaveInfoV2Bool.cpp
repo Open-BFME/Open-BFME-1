@@ -14,9 +14,12 @@ class ParticleEmitterDefClass
 protected:
 	virtual bool Save_Info(ChunkSaveClass &chunk_save);
 	virtual bool Save_InfoV2(ChunkSaveClass &chunk_save);
+	virtual bool Save_Line_Properties(ChunkSaveClass &chunk_save);
 	char Pad[0x14];
 	W3dEmitterInfoStruct Info;
 	W3dEmitterInfoStructV2 InfoV2;
+	char PadToLineProperties[0x204 - 0x14 - sizeof(W3dEmitterInfoStruct) - sizeof(W3dEmitterInfoStructV2)];
+	W3dEmitterLinePropertiesStruct LineProperties;
 };
 
 bool ParticleEmitterDefClass::Save_Info(ChunkSaveClass &chunk_save)
@@ -39,6 +42,20 @@ bool ParticleEmitterDefClass::Save_InfoV2(ChunkSaveClass &chunk_save)
 	if (chunk_save.Begin_Chunk(W3D_CHUNK_EMITTER_INFOV2) == TRUE)
 	{
 		if (chunk_save.Write(&InfoV2, sizeof(InfoV2)) == sizeof(InfoV2))
+		{
+			ret_val = true;
+		}
+		chunk_save.End_Chunk();
+	}
+	return ret_val;
+}
+
+bool ParticleEmitterDefClass::Save_Line_Properties(ChunkSaveClass &chunk_save)
+{
+	bool ret_val = false;
+	if (chunk_save.Begin_Chunk(W3D_CHUNK_EMITTER_LINE_PROPERTIES) == TRUE)
+	{
+		if (chunk_save.Write(&LineProperties, sizeof(LineProperties)) == sizeof(LineProperties))
 		{
 			ret_val = true;
 		}
