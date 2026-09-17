@@ -28,9 +28,12 @@ class RadiusDecal
 public:
 	void setPosition(const Coord3D &);
 	void setOpacity(float);
+	void clear();
 
 private:
-	unsigned char m_unreconstructed_00[0x10];
+	const void *m_template;
+	void *m_decal;
+	char m_unreconstructed_08[0x10 - 8];
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/DynamicShroudClearingRangeUpdate.h
@@ -38,6 +41,7 @@ class DynamicShroudClearingRangeUpdate
 {
 public:
 	void animateGridDecals();
+	void killGridDecals();
 
 private:
 	unsigned char m_unreconstructed_00[0x08];
@@ -73,4 +77,14 @@ void DynamicShroudClearingRangeUpdate::animateGridDecals()
 		m_gridDecal[decal].setOpacity(opacity);
 		angle += angleIncrement;
 	}
+}
+
+// ?killGridDecals@DynamicShroudClearingRangeUpdate@@QAEXXZ
+void DynamicShroudClearingRangeUpdate::killGridDecals()
+{
+	for (int d = 0; d < 30; ++d)
+	{
+		m_gridDecal[d].clear();
+	}
+
 }
