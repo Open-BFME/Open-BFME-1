@@ -42,6 +42,7 @@ public:
 	int m_28;
 };
 
+// ?Rva00740AE0Base::Rva00740AE0Base present-unmatched
 Rva00740AE0Base::Rva00740AE0Base()
 {
 	Gen0002A1B2 *sub = &m_sub;
