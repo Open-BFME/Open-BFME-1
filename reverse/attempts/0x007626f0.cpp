@@ -1,161 +1,196 @@
-// ?method@BfmeRva7626F0@@QAEXXZ
-// partial score=0.25 date=2026-09-05
+// ?allocateShadows@W3DModelDraw@@UAEXXZ
+// partial score=0.75 date=2026-09-16
+// Byte reconstruction of W3DModelDraw::allocateShadows.
+// Identity: primary W3DModelDraw vtable slot 12 -> ILT 0x00038393 -> 0x007626F0.
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: address-derived body, retail 0x007626F0, 363 bytes. Neighbours
-// (0x00762500 W3DModelDraw::updateSubObjectsFromShroud, 0x00762640 setHidden,
-// 0x007628C0 setFullyObscuredByShroud) and the sibling body at 0x00764290
-// (esi+0x28 == RenderObjClass* m_renderObject there) place this in the same
-// W3DDevice GameClient Drawable family; m_renderObject sits at +0x34 in THIS
-// body's own "this", 0xC further in than the +0x28 seen at 0x00764290 -- an
-// adjustor-thunk-reached interface method of the same owning object. Identity
-// of the owning class/method could not be proven within budget; landed under
-// an address-derived name per IDENTITY POLICY. Callees: ?ask@BfmeSubBIA@@QAEHXZ
-// (pinned, still a dump), ?j_0002dca4@@YAXXZ (gen-thunk, thunks_021.cpp),
-// ?bfmeForward@Gen_0043A570Target@@QAEXPAX@Z (pinned, still a dump).
 
-class BfmeSubBIA
+typedef bool Bool;
+typedef float Real;
+
+class Overridable
 {
 public:
-	void *m_vtable;
-	BfmeSubBIA *m_nextOverride;
-	int ask();
+	const Overridable *getFinalOverride() const;
+	void *m_vptr;
+	Overridable *m_nextOverride;
 };
 
-class BfmeRva7626F0Target
+struct BfmeOverrideView
 {
-public:
-	void bfmeForward(void *a);
+	Overridable *volatile m_value;
 };
 
-#define TEN_SLOTS(P) \
-	virtual void *P##0(); virtual void *P##1(); virtual void *P##2(); \
-	virtual void *P##3(); virtual void *P##4(); virtual void *P##5(); \
-	virtual void *P##6(); virtual void *P##7(); virtual void *P##8(); \
-	virtual void *P##9()
-
-class BfmeRva7626F0RenderObj
+struct BfmeDrawableView
 {
-public:
-	TEN_SLOTS(a); TEN_SLOTS(b); TEN_SLOTS(c); TEN_SLOTS(d);
-	TEN_SLOTS(e); TEN_SLOTS(f); TEN_SLOTS(g); TEN_SLOTS(h);
-	TEN_SLOTS(i);
-	virtual void *s90(); virtual void *s91(); virtual void *s92();
-	virtual void *s93(); virtual void *s94(); virtual void *s95();
-	virtual void *s96(); virtual void *s97(); virtual void *s98();
-	virtual int slot99();
+	void *m_vptr;
+	BfmeOverrideView m_template;
 };
 
-#undef TEN_SLOTS
-
-class BfmeRva7626F0Cache
+struct BfmeAsciiString
 {
-public:
-	char m_pad0[4];
-	unsigned char m_f4;
-	unsigned char m_f5;
-	char m_pad1[0x30 - 6];
-	unsigned char m_f30;
-};
-
-class BfmeRva7626F0Info
-{
-public:
-	char m_pad0[0x4c];
-	int m_f4c;
-	char m_pad1[0x3c8 - 0x50];
-	int m_f3c8;
-	int m_f3cc;
-	int m_f3d0;
-	int m_f3d4;
-	char m_pad2[0x3e0 - 0x3d8];
-	int m_f3e0;
-	int m_f3e4;
-	char m_pad3[0x482 - 0x3e8];
-	unsigned short m_f482;
-	char m_pad4[0x48d - 0x484];
-	unsigned char m_f48d;
-	unsigned char m_f48e;
-	unsigned char m_f48f;
-};
-
-extern const char g_bfmeEmptyAscii[];
-
-class BfmeRva7626F0
-{
-public:
-	void method();
-
-	char m_pad0[8];
-	BfmeSubBIA *m_head;                 // +0x08
-	char m_pad1[0x24 - 0xc];
-	void *m_arg24;                      // +0x24
-	char m_pad2[0x2d - 0x28];
-	unsigned char m_flag2d;             // +0x2d
-	unsigned char m_flag2e;             // +0x2e
-	char m_pad3[0x34 - 0x2f];
-	BfmeRva7626F0RenderObj *m_renderObject; // +0x34
-	char m_pad4[0x3c - 0x38];
-	BfmeRva7626F0Cache *m_cache;        // +0x3c
-};
-
-extern "C" char *__cdecl strcpy(char *dest, const char *src);
-
-class BfmeGlobQE7626F0
-{
-public:
-	void *build(void *localBuf, void *renderObj);
-};
-typedef void *(BfmeGlobQE7626F0::*BfmeRva7626F0BuildFn)(void *, void *);
-extern void j_0002dca4(void);
-extern BfmeGlobQE7626F0 *g_bfmeGlobQE;
-
-// ?d_007626f0@@YAXXZ
-void BfmeRva7626F0::method()
-{
-	BfmeSubBIA *nodeA = m_head->m_nextOverride;
-	BfmeSubBIA *result;
-	if (nodeA)
+	const char *str() const
 	{
-		BfmeSubBIA *nodeB = nodeA->m_nextOverride;
-		if (nodeB)
-			result = (BfmeSubBIA *)(void *)(unsigned int)nodeB->ask();
-		else
-			result = nodeA;
+		return m_data ? (const char *)(m_data + 8)
+			: (const char *)0x0107388B;
 	}
-	else
+	int m_data;
+};
+
+struct ThingTemplate : public Overridable
+{
+	const BfmeAsciiString &getShadowTextureName() const
 	{
-		result = 0;
+		return m_shadowTextureName;
 	}
-	BfmeRva7626F0Info *info = (BfmeRva7626F0Info *)result;
 
-	if (m_cache != 0)
-		return;
-	if (m_renderObject == 0)
-		return;
-	if (g_bfmeGlobQE == 0)
-		return;
-	if (info->m_f482 == 0)
-		return;
+	unsigned char m_unmodelled008[0x4c - 8];
+	BfmeAsciiString m_shadowTextureName;
+	unsigned char m_unmodelled050[0x3c8 - 0x50];
+	Real m_shadowSizeX;
+	Real m_shadowSizeY;
+	Real m_shadowOffsetX;
+	Real m_shadowOffsetY;
+	unsigned char m_unmodelled3d8[0x3e0 - 0x3d8];
+	Real m_shadowUnmodelled3e0;
+	Real m_shadowUnmodelled3e4;
+	unsigned char m_unmodelled3e8[0x482 - 0x3e8];
+	unsigned short m_shadowType;
+	unsigned char m_unmodelled484[0x48d - 0x484];
+	Bool m_shadowFlag48d;
+	Bool m_shadowFlag48e;
+	Bool m_shadowFlag48f;
+};
 
-	char localBuf[0x98];
-	const char *name = info->m_f4c ? (const char *)((char *)(unsigned int)info->m_f4c + 8) : g_bfmeEmptyAscii;
-	strcpy(localBuf, name);
+struct BfmeShadowTypeInfo
+{
+	char m_shadowName[128];
+	int m_type;
+	Bool m_allowUpdates;
+	Bool m_allowWorldAlign;
+	unsigned char m_padding086[2];
+	Real m_sizeX;
+	Real m_sizeY;
+	Real m_offsetX;
+	Real m_offsetY;
+	Real m_unmodelled98;
+	Real m_unmodelled9c;
+	Bool m_unmodelleda0;
 
-	union { void *asVoid; BfmeRva7626F0BuildFn asMember; } build;
-	build.asVoid = (void *)j_0002dca4;
-	void *cache = (g_bfmeGlobQE->*build.asMember)(localBuf, m_renderObject);
-	m_cache = (BfmeRva7626F0Cache *)cache;
-	if (!cache)
-		return;
+	BfmeShadowTypeInfo() : m_unmodelled9c(20.0f), m_unmodelleda0(false) {}
+};
 
-	m_cache->m_f30 = info->m_f48f;
-	if (info->m_f48e)
+class RenderObjClass
+{
+public:
+	#define TEN_SLOTS(P) \
+		virtual void P##0(); virtual void P##1(); virtual void P##2(); \
+		virtual void P##3(); virtual void P##4(); virtual void P##5(); \
+		virtual void P##6(); virtual void P##7(); virtual void P##8(); \
+		virtual void P##9()
+	TEN_SLOTS(a); TEN_SLOTS(b); TEN_SLOTS(c); TEN_SLOTS(d); TEN_SLOTS(e);
+	TEN_SLOTS(f); TEN_SLOTS(g); TEN_SLOTS(h); TEN_SLOTS(i);
+	virtual void s90(); virtual void s91(); virtual void s92();
+	virtual void s93(); virtual void s94(); virtual void s95();
+	virtual void s96(); virtual void s97(); virtual void s98();
+	virtual int isHidden();
+	#undef TEN_SLOTS
+};
+
+class Shadow
+{
+public:
+	void applyDrawable(void *value);
+
+	unsigned char m_unmodelled000[4];
+	Bool m_enabled;
+	Bool m_invisible;
+	unsigned char m_unmodelled006[0x30 - 6];
+	Bool m_flag030;
+};
+
+class BfmeShadowManager
+{
+public:
+	Shadow *addShadow(RenderObjClass *, BfmeShadowTypeInfo *, void *);
+};
+
+typedef Shadow *(BfmeShadowManager::*BfmeAddShadowFn)(
+	RenderObjClass *, BfmeShadowTypeInfo *, void *);
+typedef void (Shadow::*BfmeApplyDrawableFn)(void *);
+
+extern void j_000022bb();
+extern void j_0002dca4();
+extern void j_0002b526();
+#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
+
+extern "C" char *__cdecl strcpy(char *, const char *);
+
+class W3DModelDraw
+{
+public:
+	virtual void allocateShadows();
+
+	unsigned char m_unmodelled004[4];
+	BfmeDrawableView *m_drawable;
+	unsigned char m_unmodelled00c[0x24 - 0x0c];
+	void *m_drawableArgument;
+	unsigned char m_unmodelled028[0x2d - 0x28];
+	Bool m_fullyObscuredByShroud;
+	Bool m_shadowsEnabled;
+	unsigned char m_unmodelled02f[0x34 - 0x2f];
+	RenderObjClass *m_renderObject;
+	unsigned char m_unmodelled038[0x3c - 0x38];
+	Shadow *m_shadow;
+};
+
+void W3DModelDraw::allocateShadows()
+{
+	Overridable *raw = m_drawable->m_template.m_value;
+	ThingTemplate *thing;
+	if (raw == 0) {
+		thing = 0;
+	} else {
+		if (raw->m_nextOverride != 0)
+			raw = (Overridable *)raw->m_nextOverride->getFinalOverride();
+		thing = (ThingTemplate *)raw;
+	}
+
+	if (m_shadow == 0 && m_renderObject != 0 &&
+		*(BfmeShadowManager **)0x01306EEC != 0 && thing->m_shadowType != 0)
 	{
-		((BfmeRva7626F0Target *)m_cache)->bfmeForward(m_arg24);
-	}
-	m_cache->m_f5 = m_flag2d;
+		BfmeShadowTypeInfo info;
+		const char *src = thing->getShadowTextureName().str();
+		char *dst = info.m_shadowName;
+		char value;
+		do {
+			value = *src++;
+			*dst++ = value;
+		} while (value != 0);
+		info.m_allowUpdates = false;
+		info.m_allowWorldAlign = true;
+		info.m_type = thing->m_shadowType;
+		info.m_sizeX = thing->m_shadowSizeX;
+		info.m_sizeY = thing->m_shadowSizeY;
+		info.m_offsetX = thing->m_shadowOffsetX;
+		info.m_offsetY = thing->m_shadowOffsetY;
+		info.m_unmodelled98 = thing->m_shadowUnmodelled3e0;
+		info.m_unmodelled9c = thing->m_shadowUnmodelled3e4;
+		info.m_unmodelleda0 = thing->m_shadowFlag48d;
 
-	int r = m_renderObject->slot99();
-	if (r != 0 || !m_flag2e)
-		m_cache->m_f4 = 0;
+		union { void *asVoid; BfmeAddShadowFn asMember; } addShadow;
+		addShadow.asVoid = (void *)j_0002dca4;
+		m_shadow = ((*(BfmeShadowManager **)0x01306EEC)->*addShadow.asMember)(
+			m_renderObject, &info, 0);
+		if (m_shadow != 0) {
+			m_shadow->m_flag030 = thing->m_shadowFlag48f;
+			if (thing->m_shadowFlag48e) {
+				union { void *asVoid; BfmeApplyDrawableFn asMember; } apply;
+				apply.asVoid = (void *)j_0002b526;
+				(m_shadow->*apply.asMember)(m_drawableArgument);
+			}
+			m_shadow->m_invisible = m_fullyObscuredByShroud;
+			if (m_renderObject->isHidden() || !m_shadowsEnabled)
+				m_shadow->m_enabled = false;
+		}
+	}
 }
