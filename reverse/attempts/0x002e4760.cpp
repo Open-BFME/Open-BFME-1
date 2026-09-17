@@ -44,7 +44,7 @@ struct AsciiStringData
 
 #include "ascii_string.h"
 
-#include "unicode_string.h"
+#include "../../reference/shims/stringbaseunicode/Common/UnicodeString.h"
 
 class BFMERetailAsciiString
 {

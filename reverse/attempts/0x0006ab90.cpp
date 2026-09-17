@@ -19,7 +19,7 @@ public:
 class Rva0006AB90FunctionCurve
 {
 public:
-	void addKey(float time, float value, const float *inTangent, const float *outTangent);
+	void addKey(float time, volatile float value, const float *inTangent, const float *outTangent);
 
 private:
 	Rva0006AB10Curve *m_curve;
@@ -36,7 +36,7 @@ private:
 };
 
 // ?addKey@Rva0006AB90FunctionCurve@@QAEXMMPBM0@Z
-void Rva0006AB90FunctionCurve::addKey(float time, float value,
+void Rva0006AB90FunctionCurve::addKey(float time, volatile float value,
 	const float *inTangent, const float *outTangent)
 {
 	if (m_firstKey) {

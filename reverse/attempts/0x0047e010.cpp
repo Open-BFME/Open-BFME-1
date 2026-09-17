@@ -182,8 +182,17 @@ public:
 	virtual GameWindow *gogoGadgetStaticText(GameWindow *, TextData *, GameFont *, bool);
 };
 
+static __forceinline void assignLook(GameWindowManager *manager,
+	GameWindow *window, GameFont *font, bool visual)
+{
+	manager->assignDefaultGadgetLook(window, font, visual);
+}
+
 extern DisplayStringManager *TheDisplayStringManager;
 extern void GadgetStaticTextSetText(GameWindow *, UnicodeString);
+
+#pragma intrinsic(_ReadWriteBarrier)
+extern "C" void _ReadWriteBarrier(void);
 
 // Retail calls these incremental-link entry points.  Keep their established
 // named identities while selecting the actual thunk addresses used by this
@@ -196,6 +205,7 @@ GameWindow *GameWindowManager::gogoGadgetStaticText(GameWindow *parent,
 	TextData *textData, GameFont *defaultFont, bool defaultVisual)
 {
 	GameWindow *textWin;
+	TextData *data;
 
 	parent->instanceData->style &= ~0x1000;
 	if ((parent->instanceData->style & 0x80) != 0)
@@ -205,14 +215,14 @@ GameWindow *GameWindowManager::gogoGadgetStaticText(GameWindow *parent,
 		{
 			textWin->winSetOwner(parent->owner);
 
-			TextData *data = new TextData;
+			data = new TextData;
 			memcpy(data, textData, sizeof(TextData));
 			data->text = TheDisplayStringManager->newDisplayString();
 			data->text->setWordWrapCentered(
 				(parent->instanceData->status & 0x40000) != 0);
 			textWin->winSetUserData(data);
 
-			assignDefaultGadgetLook(textWin, defaultFont, defaultVisual);
+			assignLook(this, textWin, defaultFont, defaultVisual != 0);
 
 			UnicodeString text = winTextLabelToText(parent->instanceData->textLabel);
 			if (text.getLength())

@@ -41,7 +41,7 @@ public:
 	bool bfmeForward( void );
 
 private:
-	volatile ULONG_PTR m_token;
+	ULONG_PTR m_token;
 	CriticalSection m_lock;
 };
 
@@ -50,9 +50,8 @@ bool Gen_0005C450Target::bfmeForward( void )
 {
 	EnterCriticalSection( &m_lock );
 
-	ULONG_PTR token = m_token;
 	int success = 1;
-	if( token == 0 )
+	if( m_token == 0 )
 	{
 		GdiplusStartupOutput output;
 		volatile GdiplusStartupInput input = { 0 };
