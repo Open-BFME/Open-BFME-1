@@ -7,7 +7,7 @@
 #            for up to 3 sessions while it is still a dump and the last banked partial
 #            scored >= 0.5 (each session restarts from the stash)
 #   luna = codex gpt-5.6-luna at reasoning effort max; sol = codex gpt-5.6-sol medium
-cd "$(dirname "$0")/.." || exit 1
+cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)" || exit 1  # works from tools/fleet/ or a build/ copy
 ENGINE="$1"; SEAT="$2"
 case "$ENGINE" in
   lunahigh*) CMODEL=luna-high; CM="gpt-5.6-luna"; CE="high";;

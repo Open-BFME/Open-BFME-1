@@ -6,7 +6,7 @@
 # (300-2500 B, largest first) and anon (ranked by expected bytes): same 37 seats, more bytes per session.
 # Retire seats with tools/fleet/retire_seat.ps1 (pass -Seats/-Stems as @() arrays via -Command, not -File).
 # Weighted by measured bytes/session from build/fleet_logs (luna 1271, lunabig 672, lunafin 636).
-cd "$(dirname "$0")/.." || exit 1
+cd "$(git -C "$(dirname "$0")" rev-parse --show-toplevel)" || exit 1  # works from tools/fleet/ or a build/ copy
 mkdir -p build/fleet_logs
 python tools/source_donors.py --refresh || exit 1
 N=${1:-10}; B=${2:-0}; F=${3:-2}; M=${4:-8}; A=${5:-15}; R=${6:-2}
