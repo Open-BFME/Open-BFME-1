@@ -70,7 +70,7 @@ protected:
 	DECL_DUMMY(50)
 	DECL_DUMMY(51)
 	DECL_DUMMY(52)
-	virtual bool Read_Line_Properties(ChunkLoadClass &chunk_load);
+	DECL_DUMMY(53)
 	DECL_DUMMY(54)
 	DECL_DUMMY(55)
 	DECL_DUMMY(56)
@@ -96,8 +96,6 @@ private:
 	char *UserString;
 	int UserType;
 	unsigned int Version;
-	char PadToLineProperties[0x204 - 0x10];
-	W3dEmitterLinePropertiesStruct LineProperties;
 };
 #undef DECL_DUMMY
 
@@ -127,17 +125,4 @@ bool ParticleEmitterDefClass::Read_User_Data(ChunkLoadClass &chunk_load)
 	}
 
 	return ret_val;
-}
-
-bool ParticleEmitterDefClass::Read_Line_Properties(ChunkLoadClass &chunk_load)
-{
-	bool success = false;
-
-	if (chunk_load.Cur_Chunk_ID() == W3D_CHUNK_EMITTER_LINE_PROPERTIES)
-	{
-		if (chunk_load.Read(&LineProperties, sizeof(LineProperties)) == sizeof(LineProperties))
-			success = true;
-	}
-
-	return success;
 }

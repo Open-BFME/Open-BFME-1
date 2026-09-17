@@ -73,7 +73,11 @@ protected:
 public:
 	DECL_RVA_DUMMY(51)
 	DECL_RVA_DUMMY(52)
-	DECL_RVA_DUMMY(53)
+
+protected:
+	virtual bool Read_Line_Properties(ChunkLoadClass &chunk_load);
+
+public:
 	DECL_RVA_DUMMY(54)
 	DECL_RVA_DUMMY(55)
 	DECL_RVA_DUMMY(56)
@@ -97,7 +101,9 @@ public:
 
 	char Pad0[0x160];
 	W3dEmitterInfoStructV2 InfoV2;
-	char Pad1[0xf4];
+	char PadToLineProperties[0x204 - 0x160 - sizeof(W3dEmitterInfoStructV2)];
+	W3dEmitterLinePropertiesStruct LineProperties;
+	char PadAfterLineProperties[0x160 + sizeof(W3dEmitterInfoStructV2) + 0xf4 - 0x204 - sizeof(W3dEmitterLinePropertiesStruct)];
 	Vector3Randomizer *CreationVolume;
 	Vector3Randomizer *VelocityRandomizer;
 };
@@ -127,4 +133,17 @@ bool ParticleEmitterDefClass::Read_InfoV2(ChunkLoadClass &chunk_load)
 	}
 
 	return ret_val;
+}
+
+bool ParticleEmitterDefClass::Read_Line_Properties(ChunkLoadClass &chunk_load)
+{
+	bool success = false;
+
+	if (chunk_load.Cur_Chunk_ID() == W3D_CHUNK_EMITTER_LINE_PROPERTIES)
+	{
+		if (chunk_load.Read(&LineProperties, sizeof(LineProperties)) == sizeof(LineProperties))
+			success = true;
+	}
+
+	return success;
 }
