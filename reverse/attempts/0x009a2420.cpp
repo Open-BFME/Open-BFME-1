@@ -30,13 +30,19 @@ private:
 	Rva009A2420CollisionSource *m_source;
 	unsigned char m_beforeFlag[0x1c];
 	void *m_flag;
-	unsigned char m_beforeX[0xc];
-	Real m_x;
-	unsigned char m_betweenXAndY[0x10];
-	Real m_y;
-	unsigned char m_betweenYAndZ[0x10];
-	Real m_z;
-	unsigned char m_afterZ[0x40];
+	unsigned char m_beforeValue34[0xc];
+	Real m_value34;
+	unsigned char m_beforeValue48[0x10];
+	Real m_value48;
+	unsigned char m_beforeValue5c[0x10];
+	Real m_value5c;
+	unsigned char m_beforeValue70[0x10];
+	Real m_value70;
+	unsigned char m_beforeValue84[0x10];
+	Real m_value84;
+	unsigned char m_beforeValue98[0x10];
+	Real m_value98;
+	unsigned char m_beforeCachedVersion[4];
 	int m_cachedVersion;
 };
 
@@ -46,22 +52,20 @@ int Rva009A2420CollisionNode::getMovementScore(int unused)
 		return 1;
 
 	int version = m_source->getVersion();
-	if (version != m_cachedVersion)
-		goto refresh;
-	if (m_flag != 0 && unused == 0)
-		return 0;
+	if (version == m_cachedVersion)
+		goto check_cached;
 
 	refresh:
 	m_cachedVersion = version;
-	Real current[4];
+	Real current[3];
 	Real previous[3];
 	m_source->getCurrent(current);
 	m_source->getPrevious(previous);
 
 	int result = 1;
-	Real distance = (Real)fabs(m_x - previous[0]);
-	if (distance <= (Real)fabs(m_z - previous[1]))
-		distance = (Real)fabs(m_z - previous[1]);
+	Real distance = (Real)fabs(m_value34 - previous[0]);
+	if (distance <= (Real)fabs(m_value5c - previous[1]))
+		distance = (Real)fabs(m_value5c - previous[1]);
 	if (!(distance <= g_0107FAA8))
 	{
 		result = 11 - (int)((distance - g_0107FAA8) * g_010F0ADC);
@@ -69,11 +73,16 @@ int Rva009A2420CollisionNode::getMovementScore(int unused)
 			result = 10000;
 	}
 
-	if (m_flag != 0 && (unsigned char)distance == 0)
-		return 0;
-
-	m_x = previous[0];
-	m_y = current[0];
-	m_z = previous[1];
+	m_value34 = previous[0];
+	m_value48 = current[0];
+	m_value5c = previous[1];
+	m_value70 = current[1];
+	m_value84 = previous[2];
+	m_value98 = current[2];
 	return result;
+
+	check_cached:
+	if (m_flag == 0 || unused == 0)
+		goto refresh;
+	return 0;
 }
