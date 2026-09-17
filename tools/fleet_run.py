@@ -252,7 +252,7 @@ def execute(root, brief, legacy_log, engine, seat, command):
             # instead: `codex exec -` reads the prompt from stdin everywhere.
             def norm(value):
                 return value.replace("\r\n", "\n").strip()
-            text = norm(body.decode("utf-8-sig"))
+            text = norm(body.decode("utf-8-sig", errors="replace"))
             feed = None
             if any(norm(arg) == text for arg in command[1:]):
                 command = ["-" if norm(arg) == text else arg for arg in command]

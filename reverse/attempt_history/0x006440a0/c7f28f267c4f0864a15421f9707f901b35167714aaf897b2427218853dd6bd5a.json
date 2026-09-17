@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c7f28f267c4f0864a15421f9707f901b35167714aaf897b2427218853dd6bd5a",
+  "symbol": "?bfmeDoPE@BfmeThingPE@@QAEIPBDII@Z",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?bfmeDoPE@BfmeThingPE@@QAEIPBDII@Z\n// partial score=0.98 date=2026-09-14\n// cl: /Od\n// stlport\n// Search a bounded character range, returning the offset or npos.\n\n#include <stl/_algo.h>\n#include <stl/_ctraits_fns.h>\n#include <stl/char_traits.h>\n\r\nstruct BfmeRangePE\r\n{\r\n\tchar *m_bfmeAt;\t\t\t\t// 0x0\r\n\tchar *m_bfmeEnd;\t\t\t// 0x4\r\n};\r\n\r\nclass BfmeThingPE\r\n{\r\npublic:\r\n\tvoid bfmeGoPE(const BfmeRangePE *span, void *what);\r\n\r\n\tunsigned int bfmeDoPE(const char *at, unsigned int what, unsigned int many);\n\n\tconst char *m_bfmeAt;\n\tconst char *m_bfmeEnd;\n};\n\r\nvoid BfmeThingPE::bfmeGoPE(const BfmeRangePE *span, void *what)\r\n{\r\n\tbfmeDoPE(span->m_bfmeAt, (unsigned int)what,\n\t\t(unsigned int)(span->m_bfmeEnd - span->m_bfmeAt));\n}\n\n#pragma optimize(\"gty\", on)\nunsigned int BfmeThingPE::bfmeDoPE(const char *at, unsigned int what,\n\tunsigned int many)\n{\n\tconst unsigned int npos = (unsigned int)-1;\n\tconst char *first = m_bfmeAt;\n\tconst char *last = m_bfmeEnd;\n\tif (what + many <= (unsigned int)(last - first))\n\t{\n\t\tconst char *p = _STL::search(first + what, last, at, at + many,\n\t\t\t_STL::_Eq_traits<_STL::char_traits<char> >());\n\t\treturn p != last ? (unsigned int)(p - first) : npos;\n\t}\n\treturn npos;\n}\n#pragma optimize(\"\", off)\n"
+}

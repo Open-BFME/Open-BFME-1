@@ -330,19 +330,55 @@ CommandOption BattlePlanUpdate::getCommandOption() const
 // ------------------------------------------------------------------------------------------------
 /** Create vision objects for all players revealing this building to all */
 // ------------------------------------------------------------------------------------------------
-// ?createVisionObject@BattlePlanUpdate@@IAEXXZ present-unmatched
+// Retail BFME exposes the one-argument factory ABI at the ILT used below;
+// GeneralsMD's ThingFactory header adds a defaulted check parameter.
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate( const AsciiString &name );
+};
+
+typedef BitFlags<86> BattlePlanObjectStatusMaskType;
+typedef Object *(ThingFactory::*BattlePlanNewObjectCall)(
+	const ThingTemplate *, Team *, const volatile BattlePlanObjectStatusMaskType &, void *);
+extern void j_0004494a();
+
+static __forceinline Object *battlePlanNewObject( ThingFactory *factory,
+	const ThingTemplate *thingTemplate, Team *team,
+	const volatile BattlePlanObjectStatusMaskType &statusMask, void *extra )
+{
+	union { void (*raw)(); BattlePlanNewObjectCall member; } call;
+	call.raw = j_0004494a;
+	return (factory->*call.member)( thingTemplate, team, statusMask, extra );
+}
+
+struct BattlePlanCreateVisionDataRetailView
+{
+	unsigned char m_padding[ 0x9c ];
+	AsciiString m_visionObjectName;
+};
+
 void BattlePlanUpdate::createVisionObject()
 {
-	if (m_visionObjectID != INVALID_ID) // don't want two.
+	struct BattlePlanCreateVisionObjectRetailView
+	{
+		unsigned char m_padding[ 0x744 ];
+		ObjectID m_visionObjectID;
+	};
+	BattlePlanCreateVisionObjectRetailView *retail = reinterpret_cast<BattlePlanCreateVisionObjectRetailView *>( this );
+
+	if (*reinterpret_cast<volatile ObjectID *>( reinterpret_cast<char *>( retail ) + 0x744 ) != INVALID_ID) // don't want two.
 		return;
 
-	const BattlePlanUpdateModuleData *data = getBattlePlanUpdateModuleData();
-	Object *obj = getObject();
+	const BattlePlanCreateVisionDataRetailView *retailData = reinterpret_cast<const BattlePlanCreateVisionDataRetailView *>(
+		*reinterpret_cast<const BattlePlanUpdateModuleData *volatile *>( reinterpret_cast<char *>( this ) + 0x04 ) );
+	Object *obj = *reinterpret_cast<Object *volatile *>( reinterpret_cast<char *>( this ) + 0x08 );
 
 	// get template of object to create
-	const ThingTemplate *tt = TheThingFactory->findTemplate( data->m_visionObjectName );
+	const ThingTemplate *tt = reinterpret_cast<BfmeThingFactory *>( TheThingFactory )->findTemplate(
+		retailData->m_visionObjectName );
 	DEBUG_ASSERTCRASH( tt, ("BattlePlanUpdate::setStatus - Invalid vision object name '%s'\n",
-													data->m_visionObjectName.str()) );
+																												retailData->m_visionObjectName.str()) );
 
 	if (!tt)
 		return;
@@ -352,21 +388,24 @@ void BattlePlanUpdate::createVisionObject()
 	if(!pPlayer)
 		return;
 
+	Team *defaultTeam = *reinterpret_cast<Team **>( reinterpret_cast<char *>( pPlayer ) + 0x230 );
 	Object *visionObject;
+	BitFlags<86> statusMask;
 
 	// create object for this player
-	visionObject = TheThingFactory->newObject( tt, pPlayer->getDefaultTeam() );
+	visionObject = battlePlanNewObject( TheThingFactory, tt, defaultTeam, statusMask, 0 );
 	if( visionObject )
 	{
 
 		// record we have an object
-		m_visionObjectID = visionObject->getID();
+		retail->m_visionObjectID = visionObject->getID();
 
 		// set position
 		visionObject->setPosition( obj->getPosition() );
 
 		// set the shroud clearing range
-		visionObject->setShroudClearingRange( obj->getGeometryInfo().getBoundingSphereRadius() );
+		visionObject->setShroudClearingRange(
+			*reinterpret_cast<const Real *>( reinterpret_cast<const char *>( obj ) + 0xc0 ) );
 
 	}  // end if
 

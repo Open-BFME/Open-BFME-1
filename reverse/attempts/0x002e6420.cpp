@@ -42,6 +42,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
+
 class Rva002E6420Object : public Object
 {
 public:

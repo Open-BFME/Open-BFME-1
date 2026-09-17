@@ -1,13 +1,54 @@
-// ?bfmeRva000A3820@@YAXAAVSkirmishBattleHonors@@@Z
-// partial score=0.7 date=2026-09-16
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4
 #define __PLACEMENT_VEC_NEW_INLINE
-// stlport
 #include "PreRTS.h"
 #include "Common/SkirmishBattleHonors.h"
-#include "GameNetwork/GameInfo.h"
+
+enum SlotState
+{
+	SLOT_OPEN,
+	SLOT_CLOSED,
+	SLOT_EASY_AI,
+	SLOT_MED_AI,
+	SLOT_BRUTAL_AI,
+	SLOT_PLAYER
+};
+
+class GameSlot
+{
+public:
+	bool isAI() const;
+	Int getTeamNumber() const
+	{
+		return *(const Int *)((const char *)this + 0x18);
+	}
+	SlotState getState() const
+	{
+		return (SlotState)*(const Int *)((const char *)this + 4);
+	}
+};
+
+class GameInfo
+{
+public:
+	const GameSlot *getConstSlot(Int slotNum) const;
+	AsciiString getMap() const;
+	int _bfme_getMapIsOfficial() const;
+};
+
+extern GameInfo *TheGameInfo;
+
+enum
+{
+	MAX_SLOTS = 8
+};
+
+template <class T>
+inline const T &bfmeMaxRef(const T &left, const T &right)
+{
+	return left > right ? left : right;
+}
 
 class BfmeGameInfoVirtualSlots
 {
@@ -33,9 +74,8 @@ static Bool bfmeIsSlotLocalAlly(GameInfo *game, const GameSlot *slot)
 	return slot->getTeamNumber() == localSlot->getTeamNumber();
 }
 
-// The full retail behavior is the endurance-medal tail of the ZH
-// updateSkirmishBattleHonors helper.  The address-derived spelling avoids
-// claiming the private static helper's unavailable BFME source name.
+// BFME's endurance-medal update helper.  The address-derived spelling keeps
+// the private retail helper's unavailable source identity explicit.
 void bfmeRva000A3820(SkirmishBattleHonors &stats)
 {
 	Int numEasy = 0;
@@ -64,14 +104,25 @@ void bfmeRva000A3820(SkirmishBattleHonors &stats)
 		Int oldEasy = stats.getEnduranceMedal(TheGameInfo->getMap(), SLOT_EASY_AI);
 		Int oldMedium = stats.getEnduranceMedal(TheGameInfo->getMap(), SLOT_MED_AI);
 		Int oldBrutal = stats.getEnduranceMedal(TheGameInfo->getMap(), SLOT_BRUTAL_AI);
-		if (numEasy)
-			stats.setEnduranceMedal(TheGameInfo->getMap(), SLOT_EASY_AI,
-				max(oldEasy, numEasy + numMedium + numBrutal));
-		if (numMedium)
-			stats.setEnduranceMedal(TheGameInfo->getMap(), SLOT_MED_AI,
-				max(oldMedium, numMedium + numBrutal));
-		if (numBrutal)
+		if (TheGameInfo->_bfme_getMapIsOfficial() - 1 == numBrutal)
+		{
+			stats.setEnduranceMedal(TheGameInfo->getMap(), SLOT_PLAYER,
+				bfmeMaxRef(oldBrutal, numBrutal));
+		}
+		else if (numBrutal)
+		{
 			stats.setEnduranceMedal(TheGameInfo->getMap(), SLOT_BRUTAL_AI,
-				max(oldBrutal, numBrutal));
+				bfmeMaxRef(oldBrutal, numBrutal));
+		}
+		else if (numMedium)
+		{
+			stats.setEnduranceMedal(TheGameInfo->getMap(), SLOT_MED_AI,
+				bfmeMaxRef(oldMedium, numMedium + numBrutal));
+		}
+		else if (numEasy)
+		{
+			stats.setEnduranceMedal(TheGameInfo->getMap(), SLOT_EASY_AI,
+				bfmeMaxRef(oldEasy, numEasy + numMedium + numBrutal));
+		}
 	}
 }

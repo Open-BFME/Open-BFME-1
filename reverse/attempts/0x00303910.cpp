@@ -25,7 +25,7 @@ class ThingTemplate : public Overridable
 {
 public:
 	unsigned char m_unmodelled_008[0xc0];
-	unsigned int m_repairFlags;
+	unsigned int m_kindof[1];
 };
 
 enum CommandSourceType
@@ -107,11 +107,14 @@ public:
 	void *m_vptr;
 	void *m_unmodelled0;
 	void *m_unmodelled1;
-	Object *m_head;
+	struct DlinkHead
+	{
+		Object *m_head;
+	} m_dlinkhead_TeamMemberList;
 
 	BfmeDlinkIterator<Object> iterate_TeamMemberList() const
 	{
-		return BfmeDlinkIterator<Object>(m_head,
+		return BfmeDlinkIterator<Object>(m_dlinkhead_TeamMemberList.m_head,
 			Object::dlink_next_TeamMemberList);
 	}
 
@@ -177,7 +180,7 @@ void ScriptActions::doTeamRepairNearest(const AsciiString &repairTeamName,
 		const ThingTemplate *thingTemplate = bfmeGetTemplate(object);
 		if (thingTemplate && thingTemplate->m_nextOverride)
 			thingTemplate = bfmeFinalTemplate(thingTemplate->m_nextOverride);
-		if (*(const unsigned char *)&thingTemplate->m_repairFlags & 0x80)
+		if (*(const unsigned char *)&thingTemplate->m_kindof[0] & 0x80)
 		{
 			BfmeBodyModuleInterface *body = bfmeGetBody(object);
 			if (body)
@@ -200,7 +203,7 @@ void ScriptActions::doTeamRepairNearest(const AsciiString &repairTeamName,
 			const ThingTemplate *thingTemplate = bfmeGetTemplate(object);
 			if (thingTemplate && thingTemplate->m_nextOverride)
 				thingTemplate = bfmeFinalTemplate(thingTemplate->m_nextOverride);
-			if (thingTemplate->m_repairFlags & 0x4000)
+			if (thingTemplate->m_kindof[0] & 0x4000)
 			{
 				AIUpdateInterface *ai = bfmeGetAI(object);
 				if (ai)

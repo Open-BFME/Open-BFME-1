@@ -49,7 +49,8 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     # Only fleet-owned evidence and ledger-cited sources belong in this commit.
     # Never sweep unrelated docs/tools/headers or every dirty Code source.
     evidence = [p for p in ("reverse/functions.csv", "reverse/symbols.csv",
-                "reverse/re_attempts.log", "reverse/attempts", "reverse/attempt_history")
+                "reverse/re_attempts.log", "reverse/attempts", "reverse/attempt_history",
+                "reverse/deleted_rows.csv")  # tombstones: check_csv rejects a row removal without one
                 if (ROOT / p).exists()]
     run("git", "add", "-A", "--", *evidence)
     cited = set()

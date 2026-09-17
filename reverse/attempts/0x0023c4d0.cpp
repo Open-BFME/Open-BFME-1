@@ -1,9 +1,19 @@
-// ?bfmeAllMembersReady@BfmeHordeContainPoll@@QAE_NXZ
+// ?slot98@HordeContainInterface@@QAE_NXZ
 // partial score=0.94 date=2026-09-04
-// ?bfmeAllMembersReady@BfmeHordeContainPoll@@QAE_NXZ
-// Started from reverse/attempts/0x0023c4d0.cpp (score 0.94).
+// ?slot98@HordeContainInterface@@QAE_NXZ
+// Started from reverse/attempts/0x0023c4d0.cpp (score 0.94); corrected after
+// the vtable and layout review below.
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc
 // stlport
+
+// The previous bank called this BfmeHordeContainPoll::bfmeAllMembersReady.
+// That semantic name is not proven.  vtable_lookup.py places the retail body
+// in slot 38 (+0x98) of the HordeContainInterface subobject at complete-this
+// +0xe4, and HordeAIUpdate_update.cpp independently calls that slot as slot98.
+// The body is therefore kept under the witnessed slot name.  This TU models
+// the interface subobject, so its set word at local +0x30 is complete-object
+// +0x114.  The Object word at +0x114 is a condition/flags word, not Object's
+// canonical status field at +0x90.
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -99,7 +109,7 @@ class Object
 {
 public:
 	char m_bfmeHead[ 0x114 ];
-	UnsignedInt m_bfmeStatus;
+	UnsignedInt m_bfmeFlags114;
 	char m_bfmeGap[ 0x204 - 0x118 ];
 	BfmeMemberAI *m_bfmeAI;
 };
@@ -109,17 +119,17 @@ __forceinline BfmeMemberSlotState *bfmeGetSlotState( const Object *member )
 	return member->m_bfmeAI->m_bfmeSlotState;
 }
 
-class BfmeHordeContainPoll
+class HordeContainInterface
 {
 public:
-	Bool bfmeAllMembersReady( void );
+	Bool slot98( void );
 
 private:
 	char m_bfmeHead[ 0x30 ];
 	_STL::_Rb_tree_node_base *m_bfmeIdSet;
 };
 
-Bool BfmeHordeContainPoll::bfmeAllMembersReady( void )
+Bool HordeContainInterface::slot98( void )
 {
 	Bool blocked = false;
 	Bool anyResolved = false;
@@ -150,7 +160,7 @@ Bool BfmeHordeContainPoll::bfmeAllMembersReady( void )
 			queue = ((BfmeMemberSlotStateVolatile *)state)->m_bfmeQueue;
 
 			if ( queue == 0 || queue->m_bfmeCount != 1 ||
-				( member->m_bfmeStatus & 0x10000000 ) )
+				( member->m_bfmeFlags114 & 0x10000000 ) )
 				blocked = true;
 		}
 	}

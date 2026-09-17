@@ -285,12 +285,13 @@ void Drawable::drawHealthBar()
 		return;
 
 	HealthBarRegionWords region;
-	BfmeBodyVtable &bodyVtable = **(BfmeBodyVtable **)body;
+	register BfmeBodyVtable *bodyVtable = *(BfmeBodyVtable **)body;
 	region.first = 0;
 	region.second = 0;
-	Real health = bodyVtable.getHealth(body);
+	int *regionPtr = &region.first;
+	Real health = bodyVtable->getHealth(body);
 	if (health == BfmeZeroRange)
 		return;
 
-	bfmeRegionDispatch(&region.first, health / maxHealth);
+	bfmeRegionDispatch(regionPtr, health / maxHealth);
 }

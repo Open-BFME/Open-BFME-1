@@ -1,9 +1,9 @@
-// ?bfmeBuildTurnArc@Path@@QAE_NPAVRva001BDFF0@@PAVPathNode@@PBUCoord3D@@PAUBfmeArcFlags@@HMH@Z
+// ?method@Rva003FFB50Owner@@QAE_NPAVRva001BDFF0@@PAVPathNode@@PBUCoord3D@@PAUBfmeArcFlags@@HMH@Z
 // partial score=0.31 date=2026-09-02
 // cl: /DNDEBUG /MD /EHsc
-// Path::bfmeBuildTurnArc — retail 0x003FFB50, 2139 bytes.
+// Address-derived owner/method — retail 0x003FFB50, 2139 bytes.
 //
-// Identity: Path thiscall, ret 0x1c, 7 stack args, bool. PathNode at arg2
+// Identity: address-derived thiscall, ret 0x1c, 7 stack args, bool. PathNode at arg2
 // (waypoint id +0x20 == 0x7fffffff and m_nextOpti at +8). Sibling
 // Path::appendNode(PathNode*) at 0x003FE250, Path dtor at 0x003FEB80.
 //
@@ -45,6 +45,12 @@ struct Coord3DBase
 struct Coord3D : public Coord3DBase
 {
 	Coord3D &Add(const Coord3DBase &that);
+};
+
+struct Coord2D
+{
+	Real x;
+	Real y;
 };
 
 class PathNode
@@ -123,10 +129,18 @@ static const Real kPiOver16 = 0.196349546f;
 static const Real kThreePiOver2 = 4.712389f;
 static const Int kInvalidWaypoint = 0x7fffffff;
 
-class Path
+#define BfmeK1253 (*(const Real *)0x0107533C)
+#define BfmeZeroRange (*(const Real *)0x01075350)
+#define BfmeTwoPi (*(const Real *)0x01087B10)
+#define BfmeShadowScale (*(const Real *)0x0109BF3C)
+#define BfmeThreePiOver2 (*(const Real *)0x010F031C)
+#define BfmePiOver2Double (*(const double *)0x010F0320)
+#define BfmePiOver16 (*(const Real *)0x010F032C)
+
+class Rva003FFB50Owner
 {
 public:
-	Bool bfmeBuildTurnArc(Rva001BDFF0 *obj, PathNode *node, const Coord3D *facing,
+	Bool method(Rva001BDFF0 *obj, PathNode *node, const Coord3D *facing,
 		BfmeArcFlags *flags, Int surfaces, Real signLimit, Int extra);
 	void appendNode(const PathNode *source);
 	void appendNode(const Coord3D *pos, PathfindLayerEnum layer);
@@ -142,7 +156,7 @@ private:
 #define BFME_NORMALIZE(v) \
 	do { \
 		Real _len2 = (v).x * (v).x + (v).y * (v).y + (v).z * (v).z; \
-		if (_len2 != kZero) { \
+	if (_len2 != BfmeZeroRange) { \
 			Real _inv = WWMath::Inv_Sqrt(_len2); \
 			(v).x *= _inv; \
 			(v).y *= _inv; \
@@ -150,13 +164,13 @@ private:
 		} \
 	} while (0)
 
-// ?bfmeBuildTurnArc@Path@@QAE_NPAVRva001BDFF0@@PAVPathNode@@PBUCoord3D@@PAUBfmeArcFlags@@HMH@Z
-Bool Path::bfmeBuildTurnArc(Rva001BDFF0 *obj, PathNode *inNode, const Coord3D *facing,
+// ?method@Rva003FFB50Owner@@QAE_NPAVRva001BDFF0@@PAVPathNode@@PBUCoord3D@@PAUBfmeArcFlags@@HMH@Z
+Bool Rva003FFB50Owner::method(Rva001BDFF0 *obj, PathNode *inNode, const Coord3D *facing,
 	BfmeArcFlags *flags, Int surfaces, Real signLimit, Int extra)
 {
+	Rva003FFB50Owner *self = this;
 	PathNode *node = inNode;
 	PathNode *next = node->m_nextOpti;
-	Path *self = this;
 	if (node->m_waypointID == kInvalidWaypoint && next != 0)
 	{
 		Coord3D *nodePos = &node->m_pos;
@@ -166,7 +180,7 @@ Bool Path::bfmeBuildTurnArc(Rva001BDFF0 *obj, PathNode *inNode, const Coord3D *f
 		Real dx = dest.x - nodePos->x;
 		Real dy = dest.y - nodePos->y;
 		Real dz = dest.z - nodePos->z;
-		Real dist = (Real)sqrt(dx * dx + dy * dy + dz * dz) * kHalf;
+		Real dist = (Real)sqrt(dx * dx + dy * dy + dz * dz) * BfmeK1253;
 		if (dist < radius)
 			radius = dist;
 
@@ -176,27 +190,34 @@ Bool Path::bfmeBuildTurnArc(Rva001BDFF0 *obj, PathNode *inNode, const Coord3D *f
 		face.z = facing->z;
 		BFME_NORMALIZE(face);
 
-		Coord3D delta;
-		delta.x = dest.x - nodePos->x;
-		delta.y = dest.y - nodePos->y;
-		delta.z = dest.z - nodePos->z;
-		BFME_NORMALIZE(delta);
+		Int sign;
+		Real signFloat;
+		Real ang;
+		Bool keepPos;
+		Real turn;
+		Coord3D perp;
+		{
+			Coord3D delta;
+			delta.x = dest.x - nodePos->x;
+			delta.y = dest.y - nodePos->y;
+			delta.z = dest.z - nodePos->z;
+			BFME_NORMALIZE(delta);
 
-		Int sign = 1;
-		Real cross = delta.y * face.x - face.y * delta.x;
-		if (cross <= kZero)
-			sign = -1;
-		Real signFloat = (Real)sign;
-
-		Real ang = bfmeUnitAngle(&face, &delta);
-		if (ang < kPiOver16 || signFloat > signLimit)
+			sign = 1;
+			Real cross = delta.y * face.x - face.y * delta.x;
+			if (cross <= BfmeZeroRange)
+				sign = -1;
+			signFloat = (Real)sign;
+			ang = bfmeUnitAngle(&face, &delta);
+		}
+		if (ang < BfmePiOver16 || signFloat > signLimit)
 		{
 			if (!flags->useChecks)
 				self->appendNode(node);
 			return true;
 		}
 
-		Bool keepPos = true;
+		keepPos = true;
 		if (flags->flip)
 		{
 			if (sign > 0)
@@ -211,8 +232,8 @@ Bool Path::bfmeBuildTurnArc(Rva001BDFF0 *obj, PathNode *inNode, const Coord3D *f
 			}
 		}
 
-		Real turn = kPiOver2;
-		if (signFloat < kZero)
+		turn = kPiOver2;
+		if (signFloat < BfmeZeroRange)
 		{
 			keepPos = false;
 			turn = kNegPiOver2;
@@ -223,67 +244,75 @@ Bool Path::bfmeBuildTurnArc(Rva001BDFF0 *obj, PathNode *inNode, const Coord3D *f
 
 		Real s = (Real)sin(turn);
 		Real c = (Real)cos(turn);
-		Coord3D perp;
 		perp.x = face.x * c - face.y * s;
 		perp.y = face.y * c + face.x * s;
 		perp.x *= radius;
 		perp.y *= radius;
 
 		Coord3D pivot;
-		pivot.x = nodePos->x + perp.x;
-		pivot.y = nodePos->y + perp.y;
-		pivot.z = kZero;
+		pivot.x = nodePos->x;
+		pivot.y = nodePos->y;
+		pivot.x += perp.x;
+		pivot.y += perp.y;
 
-		Coord3D toDest;
-		toDest.x = dest.x - pivot.x;
-		toDest.y = dest.y - pivot.y;
-		toDest.z = dest.z;
-
-		Real negTurn = -turn;
-		Real s2 = (Real)sin(negTurn);
-		Real c2 = (Real)cos(negTurn);
 		Coord3D rot;
-		rot.x = toDest.x * c2 - toDest.y * s2;
-		rot.y = toDest.y * c2 + toDest.x * s2;
-		rot.z = toDest.z;
+		{
+			Coord3D toDest;
+			toDest.x = dest.x - pivot.x;
+			toDest.y = dest.y - pivot.y;
+			toDest.z = dest.z;
+
+			Real negTurn = -turn;
+			Real s2 = (Real)sin(negTurn);
+			Real c2 = (Real)cos(negTurn);
+			rot.x = toDest.x * c2 - toDest.y * s2;
+			rot.y = toDest.y * c2 + toDest.x * s2;
+			rot.z = toDest.z;
+		}
 		BFME_NORMALIZE(rot);
 
 		rot.x *= radius;
 		rot.y *= radius;
 
-		Coord3D farPt;
+		Coord2D farPt;
 		farPt.x = rot.x + pivot.x;
 		farPt.y = rot.y + pivot.y;
-		farPt.z = kZero;
 
-		Coord3D side = perp;
-		side.x *= -1.0f;
-		side.y *= -1.0f;
-		BFME_NORMALIZE(side);
-
-		Coord3D face2 = rot;
-		BFME_NORMALIZE(face2);
-
-		Real ang2 = bfmeUnitAngle(&face2, &side);
-		if (ang2 == signFloat)
-			turn = kTwoPi - turn;
-
-		Coord3D fromFar;
-		fromFar.x = dest.x - farPt.x;
-		fromFar.y = dest.y - farPt.y;
-		fromFar.z = kZero;
-		BFME_NORMALIZE(fromFar);
-
-		Real ang3 = bfmeUnitAngle(&face2, &fromFar);
-		ang = ang + ang3;
-		if (flags->flip)
-			ang = kTwoPi - ang;
-
-		if (ang > kThreePiOver2)
 		{
-			ang = ang - kTwoPi;
-			if (ang < kZero)
-				ang = kZero;
+			perp.x *= BfmeShadowScale;
+			perp.y *= BfmeShadowScale;
+
+			Coord3D side;
+			side.x = perp.x;
+			side.y = perp.y;
+			side.z = BfmeZeroRange;
+			BFME_NORMALIZE(side);
+
+			Coord3D face2 = rot;
+			face2.z = BfmeZeroRange;
+			BFME_NORMALIZE(face2);
+
+			Real ang2 = bfmeUnitAngle(&face2, &side);
+			if (ang2 == signFloat)
+				turn = BfmeTwoPi - turn;
+
+			Coord3D fromFar;
+			fromFar.x = dest.x - farPt.x;
+			fromFar.y = dest.y - farPt.y;
+			fromFar.z = BfmeZeroRange;
+			BFME_NORMALIZE(fromFar);
+
+			Real ang3 = bfmeUnitAngle(&face2, &fromFar);
+			ang = ang + ang3;
+		}
+		if (flags->flip)
+			ang = BfmeTwoPi - ang;
+
+		if (ang > BfmeThreePiOver2)
+		{
+			ang = ang - BfmeTwoPi;
+			if (ang < BfmeZeroRange)
+				ang = BfmeZeroRange;
 		}
 
 		Int count = bfmeScaledCount(ang, radius);
@@ -333,9 +362,9 @@ Bool Path::bfmeBuildTurnArc(Rva001BDFF0 *obj, PathNode *inNode, const Coord3D *f
 			if (created)
 				created->PathNode::PathNode(nodePos, LAYER_GROUND);
 			dest.Add(*nodePos);
-			dest.x *= kHalf;
-			dest.y *= kHalf;
-			dest.z *= kHalf;
+			dest.x *= BfmeK1253;
+			dest.y *= BfmeK1253;
+			dest.z *= BfmeK1253;
 			nodePos->x = dest.x;
 			nodePos->y = dest.y;
 			nodePos->z = dest.z;

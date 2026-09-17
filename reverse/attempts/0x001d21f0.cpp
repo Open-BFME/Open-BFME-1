@@ -9,11 +9,10 @@ struct AsciiStringBuffer
 	unsigned short m_capacity;
 };
 
-class AsciiString
-{
-private:
-	AsciiStringBuffer *m_buffer;
-};
+// Layout witness: the canonical Zero Hour-compatible declaration is used by
+// ObjectCommandButtons.cpp for this same command-set lookup path.  The local
+// buffer view above remains only for the retail length tests at +0/+4.
+#include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 class Overridable
 {

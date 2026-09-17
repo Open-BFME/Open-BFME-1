@@ -57,8 +57,8 @@ int Rva007E8B00( unsigned char *buffer, int size,
 			*p = 0;
 		}
 
-		pValue = p;
-		pTail = pValue;
+		pTail = p;
+		pValue = pTail;
 	}
 	else
 	{
@@ -77,8 +77,8 @@ int Rva007E8B00( unsigned char *buffer, int size,
 					*p = 0;
 				}
 
-				pValue = p;
-				pTail = pValue;
+				pTail = p;
+				pValue = pTail;
 				break;
 			}
 
@@ -90,8 +90,8 @@ int Rva007E8B00( unsigned char *buffer, int size,
 
 			if( Rva007E8B00ClassTable[ *p ] == 1 )
 			{
-				pValue = p;
-				pTail = pValue;
+				pTail = p;
+				pValue = pTail;
 				break;
 			}
 
@@ -108,8 +108,8 @@ int Rva007E8B00( unsigned char *buffer, int size,
 
 			if( cClassBuffer + cClassField == 2 )
 			{
-				pValue = p;
-				pTail = pValue;
+				pTail = p;
+				pValue = pTail;
 
 				for( ; *pTail >= ' '; pTail++ )
 				{
