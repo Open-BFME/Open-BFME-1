@@ -14,8 +14,12 @@
 class GlobalData
 {
 public:
+	GlobalData();
 	virtual ~GlobalData();
 	virtual void reset(void);
+
+	private:
+	GlobalData *newOverride(void);
 
 	static GlobalData *m_theOriginal;				///< retail 0x012ED5CC
 
@@ -44,3 +48,19 @@ void GlobalData::reset( void )
 
 	}
 }
+
+GlobalData *GlobalData::newOverride( void )
+{
+	GlobalData *override = new GlobalData;
+
+	// link the override to the previously created one, the link order is important here
+	// for the reset function, if you change the way things are linked
+	// for overrides make sure you update the reset function
+	override->m_next = TheWritableGlobalData;
+
+	// set this new instance as the 'most current override' where we will access all data from
+	TheWritableGlobalData = override;
+
+	return override;
+
+}  // end newOverride
