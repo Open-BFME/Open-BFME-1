@@ -7127,13 +7127,37 @@ void ScriptActions::doCreateTeamFromCapturedUnits( const AsciiString& playerName
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?doPlayerAddSkillPoints@ScriptActions@@IAEXABVAsciiString@@H@Z present-unmatched
+// The BFME body converts the integer script value before it calls the
+// two-argument rank-points routine through its ILT thunk.
+class BfmePlayerAddSkillPointsCall
+{
+public:
+	Bool addSkillPoints(float delta, Bool fromScript);
+};
+
+extern void j_000380fa();
+
+static __forceinline void bfmeAddSkillPoints(Player *player, Int delta)
+{
+	typedef Bool (BfmePlayerAddSkillPointsCall::*Function)(float, Bool);
+	union { void (*raw)(); Function member; } function;
+	function.raw = j_000380fa;
+	(reinterpret_cast<BfmePlayerAddSkillPointsCall *>(player)->*function.member)
+		((float)delta, false);
+}
+
 void ScriptActions::doPlayerAddSkillPoints(const AsciiString& playerName, Int delta)
 {
-	Player* pPlayer = TheScriptEngine->getPlayerFromAsciiString(playerName);
-	if (!pPlayer)
+	PlayerMaskType mask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)
+		->getPlayerMaskFromAsciiString(playerName, NULL);
+	if (!mask)
 		return;
-	pPlayer->addSkillPoints(delta);
+
+	do {
+		Player *player = ThePlayerList->getEachPlayerFromMask(mask);
+		if (player)
+			bfmeAddSkillPoints(player, delta);
+	} while (mask);
 }
 
 //-------------------------------------------------------------------------------------------------
