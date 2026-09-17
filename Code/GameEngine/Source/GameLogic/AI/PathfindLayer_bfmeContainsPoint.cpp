@@ -36,15 +36,23 @@ private:
 	PolygonTrigger *m_next;
 };
 
+class Bridge;
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindLayer
 {
 public:
 	Bool bfmeContainsPoint(const Coord3D *point);
+	Bool isUsed(void);
 
 private:
-	char m_bfmeHead[0x3c];
-	PolygonTrigger *m_triggers;
+	char m_bfmeHead[0x38];
+	Bridge *m_bfmeA;
+	union
+	{
+		PolygonTrigger *m_triggers;
+		Bridge *m_bfmeB;
+	};
 };
 
 // ?bfmeContainsPoint@PathfindLayer@@QAE_NPBUCoord3D@@@Z
@@ -64,4 +72,10 @@ Bool PathfindLayer::bfmeContainsPoint(const Coord3D *point)
 	}
 
 	return false;
+}
+
+// ?isUsed@PathfindLayer@@QAE_NXZ
+Bool PathfindLayer::isUsed(void)
+{
+	return m_bfmeA != 0 || m_bfmeB != 0;
 }
