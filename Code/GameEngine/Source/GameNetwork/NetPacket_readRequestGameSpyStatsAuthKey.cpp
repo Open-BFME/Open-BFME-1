@@ -28,10 +28,22 @@ public:
 	AsciiString m_text1C;
 };
 
+class BFMENetGameSpyStatsAuthKeyCommandMsg : public NetCommandMsg
+{
+public:
+	BFMENetGameSpyStatsAuthKeyCommandMsg();
+	void setText1C(AsciiString text);
+	void setText20(AsciiString text);
+
+	AsciiString m_text1C;
+	AsciiString m_text20;
+};
+
 class NetPacket
 {
 protected:
 	static NetCommandMsg *readRequestGameSpyStatsAuthKeyMessage(UnsignedByte *data, Int &i);
+	static NetCommandMsg *readGameSpyStatsAuthKeyMessage(UnsignedByte *data, Int &i);
 };
 
 NetCommandMsg *NetPacket::readRequestGameSpyStatsAuthKeyMessage(UnsignedByte *data, Int &i)
@@ -48,5 +60,34 @@ NetCommandMsg *NetPacket::readRequestGameSpyStatsAuthKeyMessage(UnsignedByte *da
 	*c = 0;
 	++i;
 	msg->setText1C(AsciiString(filename));
+	return msg;
+}
+
+NetCommandMsg *NetPacket::readGameSpyStatsAuthKeyMessage(UnsignedByte *data, Int &i)
+{
+	BFMENetGameSpyStatsAuthKeyCommandMsg *msg =
+		new BFMENetGameSpyStatsAuthKeyCommandMsg;
+	char text[256];
+	char *c = text;
+
+	while (data[i] != 0) {
+		*c = data[i];
+		++c;
+		++i;
+	}
+	*c = 0;
+	++i;
+	msg->setText1C(AsciiString(text));
+
+	c = text;
+	while (data[i] != 0) {
+		*c = data[i];
+		++c;
+		++i;
+	}
+	*c = 0;
+	++i;
+	msg->setText20(AsciiString(text));
+
 	return msg;
 }
