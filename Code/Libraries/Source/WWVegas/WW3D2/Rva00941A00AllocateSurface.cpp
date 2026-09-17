@@ -125,22 +125,11 @@ public:
 		bool operator==(const PendingSurfaceStruct &) { return false; }
 		bool operator!=(const PendingSurfaceStruct &) { return true; }
 	};
-};
 
-// Keep the native PendingSurfaceStruct Add body out-of-line at its already
-// matched address; the generic header definition is otherwise small enough
-// for this TU to inline it into the caller.
-template <>
-bool DynamicVectorClass<Render2DSentenceClass::PendingSurfaceStruct>::Add(
-	const Render2DSentenceClass::PendingSurfaceStruct &object);
-
-class Rva00941A00Owner
-{
-public:
 	virtual void reset();
-	void Rva00941A00_Method(const unsigned short *text, bool justCalcExtents);
+	private:
+	void Allocate_New_Surface(const unsigned short *text, bool justCalcExtents);
 
-private:
 	DynamicVectorClass<Render2DSentenceClass::SentenceDataStruct> sentence_data;
 	DynamicVectorClass<Render2DSentenceClass::PendingSurfaceStruct> pending_surfaces;
 	char renderers[0x18];
@@ -161,13 +150,20 @@ private:
 	unsigned short *locked_ptr;
 };
 
+// Keep the native PendingSurfaceStruct Add body out-of-line at its already
+// matched address; the generic header definition is otherwise small enough
+// for this TU to inline it into the caller.
+template <>
+bool DynamicVectorClass<Render2DSentenceClass::PendingSurfaceStruct>::Add(
+	const Render2DSentenceClass::PendingSurfaceStruct &object);
+
 typedef char rva00941a00_surface_wrapper_must_be_4[(sizeof(W3DRadarResetSurface) == 4) ? 1 : -1];
 typedef char rva00941a00_pending_surface_must_be_1c[
 	(sizeof(Render2DSentenceClass::PendingSurfaceStruct) == 0x1c) ? 1 : -1];
 typedef char rva00941a00_pending_vector_must_be_18[
 	(sizeof(DynamicVectorClass<Render2DSentenceClass::PendingSurfaceStruct>) == 0x18) ? 1 : -1];
 
-void Rva00941A00Owner::Rva00941A00_Method(
+void Render2DSentenceClass::Allocate_New_Surface(
 	const unsigned short *text, bool justCalcExtents)
 {
 	if (!justCalcExtents)
