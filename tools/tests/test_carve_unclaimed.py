@@ -35,14 +35,14 @@ def test_splitter_uses_callers_and_ret_int3_tail():
 
 
 def test_splitter_rejects_overlapping_positive_extents():
+    # Two call targets two bytes apart: the first has no decoded terminal
+    # before the second positive start, so it is not served; the second is.
     data = bytearray(0x1040)
-    data[0x1000:0x1008] = b"\x90\xc3\xcc\xcc\xcc\x90\xc3\xcc"
-    data[0x1004:0x1008] = b"\x90\xc3\xcc\xcc"
+    data[0x1000:0x1008] = bytes([0x90, 0x90, 0x90, 0x90, 0xC3, 0xCC, 0xCC, 0xCC])
     rows = carve.split_candidates(
-        data, [(0x1000, 0x1010)],
-        ghidra_sizes={0x1000: 8, 0x1004: 4},
-        validator=validator(data, {0x1000: 8, 0x1004: 4}))
-    assert [r["target_rva"] for r in rows] == ["0x00001004"]
+        data, [(0x1000, 0x1010)], calls={0x1000: [0x0F00], 0x1002: [0x0F10]},
+        validator=validator(data))
+    assert [(r["target_rva"], int(r["target_size"])) for r in rows] == [("0x00001002", 3)]
 
 
 def test_shrink_on_land_excludes_newly_claimed_gap():
@@ -92,3 +92,21 @@ def test_carved_ranking_uses_expected_bytes(monkeypatch):
 def test_progress_does_not_import_carver():
     text = (ROOT / "tools" / "progress.py").read_text(encoding="utf-8")
     assert "carve_unclaimed" not in text
+
+
+def test_ghidra_size_never_sets_the_end():
+    # Ghidra says 2 bytes; the decoded body is nop, nop, ret then int3: 3 bytes.
+    data = bytearray(0x1040)
+    data[0x1000:0x1006] = bytes([0x90, 0x90, 0xC3, 0xCC, 0xCC, 0xCC])
+    rows = carve.split_candidates(
+        data, [(0x1000, 0x1020)], ghidra_sizes={0x1000: 2},
+        validator=validator(data, {0x1000: 2}))
+    assert [(r["target_rva"], int(r["target_size"]), r["end_evidence"])
+            for r in rows] == [("0x00001000", 3, "ret+int3")]
+    # Ghidra start with no decoded terminal before the fence: not served.
+    data2 = bytearray(0x1040)
+    data2[0x1000:0x1006] = bytes([0x90, 0x90, 0x90, 0xCC, 0xCC, 0xCC])
+    rows2 = carve.split_candidates(
+        data2, [(0x1000, 0x1020)], ghidra_sizes={0x1000: 3},
+        validator=validator(data2, {0x1000: 3}))
+    assert rows2 == []

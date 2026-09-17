@@ -68,3 +68,16 @@ landings removed three five-byte candidates):
 The candidate total is a measured, evidence-backed subset of the larger
 unclaimed denominator; bytes without a positive start and end remain unserved
 until later evidence appears.
+
+## Ends are decoded, never taken from Ghidra
+
+The first eight served candidates whose end came from Ghidra's function size
+were all refuted as `no-boundary` on 2026-09-16 (0x003A2700, 0x003FEBB0,
+0x003ED070, 0x003E6EE0, 0x004CC980, 0x00713780, 0x000DA610, 0x0068C400): Ghidra
+stops 3 to 13 bytes before the real `ret`, inside the epilogue. Since then the
+carver takes an end only from a decoded terminal instruction: `ret+int3` /
+`jmp+int3` (terminal followed by padding) or `ret-tail` / `jmp-tail` (terminal
+immediately before the next positive start or the gap end, no padding between).
+A Ghidra start with no decoded terminal before the next fence is not served.
+Regenerating after the fix re-carved all eight at exactly the sizes the
+refutations measured.

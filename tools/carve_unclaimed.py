@@ -3,9 +3,9 @@
 
 The matched ledger proves ranges, not the bytes between those ranges.  This
 tool turns only positive boundary evidence into temporary anonymous rows:
-direct REL32 call/jump targets prove starts, Ghidra entries are advisory starts,
-and a decoded ``ret``/tail ``jmp`` followed by an MSVC ``int3`` run proves an
-end.  The output is deterministic and shrink-on-land: rows covered by the
+direct REL32 call/jump targets prove starts, Ghidra entries are advisory starts
+(never ends: its sizes stop short of the epilogue), and a decoded ``ret``/tail
+``jmp`` followed by an MSVC ``int3`` run proves an end.  The output is deterministic and shrink-on-land: rows covered by the
 current ledger are never emitted.
 
 ``python3 tools/carve_unclaimed.py --summary`` writes ``reverse/carved.csv``
@@ -205,11 +205,6 @@ def _terminal_end(data, rva, limit, instructions=None):
 def _end_for(data, start, gap_end, next_start, ghidra_size, instructions=None):
     """Find a candidate end without crossing another positive start."""
     hard_end = min(gap_end, next_start or gap_end)
-    if ghidra_size:
-        end = start + ghidra_size
-        if end <= hard_end:
-            return end, "ghidra-size"
-        return None
     # The first positive pad run is itself an end fence.  Decode only the
     # non-padding portion before it; the terminal instruction must be positive.
     pad = next(iter(_padding_runs(data, start, hard_end)), None)
@@ -217,6 +212,11 @@ def _end_for(data, start, gap_end, next_start, ghidra_size, instructions=None):
     result = _terminal_end(data, start, decode_end, instructions)
     if result and pad and result[0] == pad[0] and result[1].endswith("-tail"):
         return result[0], result[1].replace("-tail", "+int3")
+    # Ghidra's size is advisory for ENDS as much as for starts: the first eight
+    # served ghidra-size candidates all ended 3-13 bytes before the real ret
+    # (refuted as no-boundary on 2026-09-16, 0x003A2700 .. 0x0068C400). A
+    # candidate without a decoded terminal has no positive end and is not served.
+    del ghidra_size
     return result
 
 
