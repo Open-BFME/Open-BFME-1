@@ -54,6 +54,8 @@ R4_WIDE_ELEM( Gen00606F70, 0x1F0 )
 R4_WIDE_ELEM( Gen00695630, 0x78 )
 R4_WIDE_ELEM( Gen006EDEA0, 0x38 )
 R4_WIDE_ELEM( Gen00762250, 0x38 )
-R4_WIDE_ELEM( Gen0013C3F0, 0x128 )
+// The 0x128-byte element's destructor is the matched ModelConditionInfo body
+// at 0x0013C3F0; unique ILT 0x0002306F independently anchors that identity.
+R4_WIDE_ELEM( ModelConditionInfo, 0x128 )
 R4_WIDE_ELEM( Gen00774D40, 0xBC )
 R4_WIDE_ELEM( Gen000C3410, 0x1C )
