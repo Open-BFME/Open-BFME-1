@@ -88363,4 +88363,5 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
+??1Rva00469FC0Value@@QAE@XZ,0x00042C8F,address-derived value destructor alias for the erase cleanup call at retail 0x00469DB0
 ??0Rva0094D1E0List@@QAE@HH@Z,0x0094D1E0,constructor ABI wrapper for W3DTreeBuffer reset lists at offsets 0x1458 and 0x1480
