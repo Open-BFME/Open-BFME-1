@@ -91,30 +91,3 @@ MonsterDockUpdate::MonsterDockUpdate( Thing *thing, const ModuleData *moduleData
 	m_value8c = 0;
 	m_flag88 = true;
 }
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/NeutronMissileUpdate.h
-class NeutronMissileUpdate : public SupplyCenterDockUpdateBase
-{
-public:
-	NeutronMissileUpdate(Thing *, const ModuleData *);
-
-	// One override per polymorphic sub-object, so this class gets its own
-	// vtable for each and the constructor stores all four.
-	virtual void objectModuleAnchor();
-	virtual void behaviorAnchor();
-	virtual void updateAnchor();
-	virtual void dockAnchor();
-
-	bool m_flag88;							///< 0x88
-	bool m_flag89;							///< 0x89
-	int m_value8c;							///< 0x8c
-};
-
-// ??0NeutronMissileUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
-NeutronMissileUpdate::NeutronMissileUpdate( Thing *thing, const ModuleData *moduleData )
-	: SupplyCenterDockUpdateBase( thing, moduleData )
-{
-	m_flag89 = false;
-	m_value8c = 0;
-	m_flag88 = true;
-}
