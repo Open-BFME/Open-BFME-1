@@ -102,50 +102,55 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     # rebase + push in a clean worktree
     if not WT.exists():
         run("git", "worktree", "add", "-q", "--detach", str(WT), old)
-    run("git", "checkout", "-q", "--detach", old, cwd=WT)
-    run("git", "fetch", "-q", "origin", "master", cwd=WT)
-    rc = run("git", "rebase", "origin/master", cwd=WT, check=False).returncode
-    if rc:
-        run("git", "rebase", "--abort", cwd=WT, check=False)
-        sys.exit("harvest: rebase conflict in build/wt; hands needed")
-    # The union merge driver resurrects rows origin removed and duplicates the
-    # tail when both sides append (2026-09-17: 1,958 duplicate rows, harvest
-    # wedged for hours). Rebuild the two ledgers as origin's bytes plus this
-    # checkout's real row delta instead of trusting the text merge.
-    base = out("git", "merge-base", old, "origin/master", cwd=WT)
-    for f in ("reverse/functions.csv", "reverse/symbols.csv"):
-        key = lambda x: x.rstrip(b"\r\n")
-        was = {key(x) for x in show(base, f).splitlines(True)}
-        mine = [key(x) for x in show(old, f).splitlines(True)]
-        gone = was - set(mine)
-        theirs = show("origin/master", f).splitlines(True)
-        have = {key(x) for x in theirs}
-        term = b"\r\n" if theirs and theirs[-1].endswith(b"\r\n") else b"\n"
-        rebuilt = [x for x in theirs if key(x) not in gone]
-        if rebuilt and not rebuilt[-1].endswith(b"\n"):
-            rebuilt[-1] += term
-        for x in dict.fromkeys(mine):
-            if x and x not in was and x not in have:
-                rebuilt.append(x + term)
-        (WT / f).write_bytes(b"".join(rebuilt))
-    if subprocess.run(["git", "diff", "--quiet", "--", "reverse/functions.csv", "reverse/symbols.csv"], cwd=WT).returncode:
-        run("git", "add", "reverse/functions.csv", "reverse/symbols.csv", cwd=WT)
-        run("git", "commit", "-q", "--amend", "--no-edit", cwd=WT)
-    new = out("git", "rev-parse", "HEAD", cwd=WT)
-    if subprocess.run([sys.executable, str(WT / "tools/check_csv.py")], cwd=WT).returncode:
-        # union-merge artifacts of the rebase: exact duplicate records and mixed
-        # terminators. Repair in the worktree copy of the tools and amend.
-        env = dict(os.environ, HARVEST_HAS_LOCK="1")
-        subprocess.run([sys.executable, str(WT / "tools/fleet/dedup_keepfirst.py")], cwd=WT, env=env)
-        subprocess.run([sys.executable, str(WT / "tools/dedup_csv.py")], cwd=WT, env=env)
-        run("git", "add", "-A", "reverse", cwd=WT)
-        run("git", "commit", "-q", "--amend", "--no-edit", cwd=WT, check=False)
+    # others push every minute and the push hook takes minutes: retry the whole
+    # fetch/rebase/push instead of waiting 15 minutes for the next loop pass
+    for attempt in range(5):
+        run("git", "checkout", "-q", "--detach", old, cwd=WT)
+        run("git", "fetch", "-q", "origin", "master", cwd=WT)
+        rc = run("git", "rebase", "origin/master", cwd=WT, check=False).returncode
+        if rc:
+            run("git", "rebase", "--abort", cwd=WT, check=False)
+            sys.exit("harvest: rebase conflict in build/wt; hands needed")
+        # The union merge driver resurrects rows origin removed and duplicates the
+        # tail when both sides append (2026-09-17: 1,958 duplicate rows, harvest
+        # wedged for hours). Rebuild the two ledgers as origin's bytes plus this
+        # checkout's real row delta instead of trusting the text merge.
+        base = out("git", "merge-base", old, "origin/master", cwd=WT)
+        for f in ("reverse/functions.csv", "reverse/symbols.csv"):
+            key = lambda x: x.rstrip(b"\r\n")
+            was = {key(x) for x in show(base, f).splitlines(True)}
+            mine = [key(x) for x in show(old, f).splitlines(True)]
+            gone = was - set(mine)
+            theirs = show("origin/master", f).splitlines(True)
+            have = {key(x) for x in theirs}
+            term = b"\r\n" if theirs and theirs[-1].endswith(b"\r\n") else b"\n"
+            rebuilt = [x for x in theirs if key(x) not in gone]
+            if rebuilt and not rebuilt[-1].endswith(b"\n"):
+                rebuilt[-1] += term
+            for x in dict.fromkeys(mine):
+                if x and x not in was and x not in have:
+                    rebuilt.append(x + term)
+            (WT / f).write_bytes(b"".join(rebuilt))
+        if subprocess.run(["git", "diff", "--quiet", "--", "reverse/functions.csv", "reverse/symbols.csv"], cwd=WT).returncode:
+            run("git", "add", "reverse/functions.csv", "reverse/symbols.csv", cwd=WT)
+            run("git", "commit", "-q", "--amend", "--no-edit", cwd=WT)
         new = out("git", "rev-parse", "HEAD", cwd=WT)
         if subprocess.run([sys.executable, str(WT / "tools/check_csv.py")], cwd=WT).returncode:
-            sys.exit("harvest: rebased ledgers fail check_csv; hands needed")
-    rc = run("git", "push", "origin", f"{new}:master", cwd=WT, check=False).returncode
-    if rc:
-        sys.exit("harvest: push rejected (raced another lane); rerun")
+            # union-merge artifacts of the rebase: exact duplicate records and mixed
+            # terminators. Repair in the worktree copy of the tools and amend.
+            env = dict(os.environ, HARVEST_HAS_LOCK="1")
+            subprocess.run([sys.executable, str(WT / "tools/fleet/dedup_keepfirst.py")], cwd=WT, env=env)
+            subprocess.run([sys.executable, str(WT / "tools/dedup_csv.py")], cwd=WT, env=env)
+            run("git", "add", "-A", "reverse", cwd=WT)
+            run("git", "commit", "-q", "--amend", "--no-edit", cwd=WT, check=False)
+            new = out("git", "rev-parse", "HEAD", cwd=WT)
+            if subprocess.run([sys.executable, str(WT / "tools/check_csv.py")], cwd=WT).returncode:
+                sys.exit("harvest: rebased ledgers fail check_csv; hands needed")
+        rc = run("git", "push", "origin", f"{new}:master", cwd=WT, check=False).returncode
+        if not rc:
+            break
+    else:
+        sys.exit("harvest: push rejected 5 times (raced another lane); rerun")
 
     portable_lock.lock(h, exclusive=True)
     # Workers may land during fetch/rebase/push now. Never union-append complete
