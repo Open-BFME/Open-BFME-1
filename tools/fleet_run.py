@@ -251,8 +251,11 @@ def execute(root, brief, legacy_log, engine, seat, command):
             # ("The command line is too long"). Hand the brief over stdin
             # instead: `codex exec -` reads the prompt from stdin everywhere.
             def norm(value):
-                return value.replace("\r\n", "\n").strip()
-            text = norm(body.decode("utf-8-sig", errors="replace"))
+                # ASCII only: argv arrives through the ANSI code page, so a
+                # cp1252 byte in the brief never compares equal otherwise
+                value = value.replace("\r\n", "\n").strip()
+                return "".join(ch for ch in value if ch < "\x80")
+            text = norm(body.decode("utf-8-sig", errors="ignore"))
             feed = None
             if any(norm(arg) == text for arg in command[1:]):
                 command = ["-" if norm(arg) == text else arg for arg in command]
