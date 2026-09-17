@@ -49,6 +49,7 @@ public:
 
 	Bool test(Int idx) const { return m_bits.test(idx); }
 	void set(Int idx) { m_bits.set(idx); }
+	void reset(Int idx) { m_bits.reset(idx); }
 
 private:
 	_STL::bitset<NUMBITS>	m_bits;
@@ -65,12 +66,22 @@ class Object
 public:
 	void notifyModelConditionChanged(void);				// ILT 0x0002191D
 	void setStatus(const ObjectStatusMaskType &objectStatus, Bool set = true);	// ILT 0x000307E7
+	void clearStatus(const ObjectStatusMaskType &objectStatus) { setStatus( objectStatus, false ); }
 
 	void setModelConditionState(ModelConditionFlagType bit)
 	{
 		if (!m_conditionFlags.test(bit))
 		{
 			m_conditionFlags.set(bit);
+			notifyModelConditionChanged();
+		}
+	}
+
+	void clearModelConditionState(ModelConditionFlagType bit)
+	{
+		if (m_conditionFlags.test(bit))
+		{
+			m_conditionFlags.reset(bit);
 			notifyModelConditionChanged();
 		}
 	}
@@ -83,8 +94,9 @@ private:
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ProneUpdate.h
 class ProneUpdate
 {
-private:
+	private:
 	void startProneEffects(void);
+	void stopProneEffects(void);
 
 	Object *getObject(void) const { return m_object; }
 
@@ -97,4 +109,11 @@ void ProneUpdate::startProneEffects()
 	Object *me = getObject();
 	me->setModelConditionState( MODELCONDITION_PRONE );
 	me->setStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_NO_ATTACK ) );
+}
+
+void ProneUpdate::stopProneEffects()
+{
+	Object *me = getObject();
+	me->clearModelConditionState( MODELCONDITION_PRONE );
+	me->clearStatus( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_NO_ATTACK ) );
 }
