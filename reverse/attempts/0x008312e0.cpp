@@ -1,6 +1,6 @@
 // ?bfmeReplaceAliasedRange@Rva008312E0String@@QAEXPAD0000@Z
 // partial score=0.55 date=2026-09-17
-// cl: /Od /DNDEBUG /MD
+// cl: /Od /DNDEBUG /MD /FAsc /Fabuild\\008312e0.cod
 // BFME retail 0x008312E0, 511 bytes.
 
 #include <string.h>
@@ -28,20 +28,28 @@ public:
 #pragma comment(linker, "/alternatename:?insertRange@Rva008312E0String@@QAEXPAD0000@Z=?bfmeInsertRangeV50@@YGXPAD000@Z")
 #pragma comment(linker, "/alternatename:?replaceBase@Rva008312E0String@@QAEXPAD0000@Z=?bfmeReplaceV24@BfmeStrV24@@QAEPAV1@PAD000H@Z")
 
+union Rva008312E0Inside
+{
+	int word;
+	Bool byte;
+};
+
 void Rva008312E0String::bfmeReplaceAliasedRange(char *first, char *last,
 	char *sourceFirst, char *sourceLast, char *tag)
 {
-	char framePad[0x68];
+	char framePad[0x58];
+	int sourceLength;
+	int destinationLength;
 	char *sourcePosition = sourceFirst;
-	Bool sourceInside;
+	Rva008312E0Inside sourceInside;
 	if (sourcePosition >= m_start && sourcePosition < m_finish)
-		sourceInside = true;
+		sourceInside.word = 1;
 	else
-		sourceInside = false;
-	if (sourceInside)
+		sourceInside.word = 0;
+	if (sourceInside.byte)
 	{
-		int sourceLength = sourceLast - sourceFirst;
-		int destinationLength = last - first;
+		sourceLength = sourceLast - sourceFirst;
+		destinationLength = last - first;
 		if (destinationLength >= sourceLength)
 		{
 			char *destination = first;
@@ -53,27 +61,40 @@ void Rva008312E0String::bfmeReplaceAliasedRange(char *first, char *last,
 		else
 		{
 			char *sourceMiddle = sourceFirst + destinationLength;
-			if (sourceLast <= first || sourceFirst < last)
+			if (sourceLast <= first || sourceFirst >= last)
 			{
-				int destinationOffset = first - m_start;
-				int sourceOffset = sourceFirst - m_start;
-				insertRange(last, sourceMiddle, sourceLast, tag);
-				char *newDestination = m_start + destinationOffset;
-				if (sourceLength != 0)
-					memmove(newDestination, m_start + sourceOffset, sourceLength);
-			}
-			else
-			{
+				char insertTag[ 2 ];
+				insertTag[ 1 ] = 0;
 				char *destination = first;
 				for (char *source = sourceFirst; source != sourceMiddle;
 					++source, ++destination)
 					bfmeAssignChar(destination, source);
-				insertRange(last, sourceMiddle, sourceLast, tag);
+				insertRange(last, sourceMiddle, sourceLast, insertTag);
+			}
+			else
+			{
+				char *destinationStart = m_start;
+				int destinationOffset = first - destinationStart;
+				char *sourceStart = m_start;
+				int sourceOffset = sourceFirst - sourceStart;
+				char insertTag[ 2 ];
+				insertTag[ 1 ] = 0;
+				insertRange(last, sourceMiddle, sourceLast, insertTag);
+				char *newStart = m_start;
+				char *newBase = m_start;
+				char *newDestination = newBase + destinationOffset;
+				char *result;
+				if (sourceLength == 0)
+					result = newDestination;
+				else
+					result = (char *)memmove(
+						newDestination, m_start + sourceOffset, sourceLength);
 			}
 		}
 	}
 	else
 	{
-		replaceBase(first, last, sourceFirst, sourceLast, tag);
+		char replaceTag;
+		replaceBase(first, last, sourceFirst, sourceLast, &replaceTag);
 	}
 }

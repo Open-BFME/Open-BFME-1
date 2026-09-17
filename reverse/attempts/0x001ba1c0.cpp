@@ -1,6 +1,6 @@
 // ?behavior@Rva001BA1C0Handler@@QAE_NPAVObject@@PBUCoord3D@@@Z
 // partial score=0.15 date=2026-09-10
-// cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
+// cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc
 // BFME body at 0x001BA1C0.  The matched movement dispatcher at 0x001BC820
 // passes Object* and const Coord3D* through ILT 0x0000FEBB; the raw callee
 // returns Bool with ret 8.  The handler reads the LocomotorTemplate behavior-Z
@@ -30,6 +30,55 @@ class LocomotorTemplate : public Overridable
 public:
 	char m_pad008[0x64];
 	int m_behaviorZ;
+};
+
+// The first retail call returns the saved transform translation by hidden
+// pointer.  These are the already matched views for that concrete contract.
+class BfmeVec3CN
+{
+public:
+	BfmeVec3CN(void)
+	{
+	}
+
+	BfmeVec3CN(const BfmeVec3CN &other)
+	{
+		m_bfmeX = other.m_bfmeX;
+		m_bfmeY = other.m_bfmeY;
+		m_bfmeZ = other.m_bfmeZ;
+	}
+
+	Real m_bfmeX;
+	Real m_bfmeY;
+	Real m_bfmeZ;
+};
+
+class Gen_001B4A20
+{
+public:
+	BfmeVec3CN bfmeGetScale(void) const;
+
+private:
+	int m_bfmeHead[28];
+	Real m_bfmeScaleX;
+	int m_bfmeGapA[3];
+	Real m_bfmeScaleY;
+	int m_bfmeGapB[3];
+	Real m_bfmeScaleZ;
+};
+
+class Rva001B49E0Owner
+{
+public:
+	void setPosition(const Coord3D *position);
+
+private:
+	char m_bfmePad000[0x70];
+	Real m_bfmeRow0;
+	char m_bfmePad074[0x0c];
+	Real m_bfmeRow1;
+	char m_bfmePad084[0x0c];
+	Real m_bfmeRow2;
 };
 
 class BFMESelectionStatusBits
@@ -96,11 +145,17 @@ public:
 	// These declarations are the typed views of the concrete retail calls in
 	// this body.  Their ILT RVAs are pinned in reverse/symbols.csv.
 	void prepareBehavior();
-	void applyHeight(Coord3D *position);
 	Real getSurfaceHeight(Real x, Real y);
 	Real calculateHeight(Object *object, const Coord3D *goalPos,
 		Real surfaceHeight);
 	void refreshObjectState(Object *object);
+
+	// The target's receiver is the Locomotor layout whose saved transform is
+	// the proven +0x64 translation-column view above.
+	__forceinline void applyHeight(Coord3D *position)
+	{
+		((Rva001B49E0Owner *)this)->setPosition(position);
+	}
 
 	void *m_vtable;
 	LocomotorTemplate *m_template;
@@ -113,7 +168,8 @@ public:
 
 Bool Rva001BA1C0Handler::behavior(Object *object, const Coord3D *goalPos)
 {
-	prepareBehavior();
+	BfmeVec3CN savedScale =
+		((Gen_001B4A20 *)this)->bfmeGetScale();
 
 	Bool requiresConstantCalling = true;
 	LocomotorTemplate *locomotorTemplate = m_template;

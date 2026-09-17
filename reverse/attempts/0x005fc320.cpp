@@ -23,6 +23,10 @@
 // `if (m_fx) { ... }` block. None changed which physical register position
 // or fx received or when the lea/add executed. This looks like an MSVC 7.1
 // internal register-allocation choice not reachable from source shape alone.
+// Identity correction: the callee contract is the matched FXList family;
+// BridgeAreaEffectsFXShim was a duplicate TU-local alias from BridgeBehavior,
+// not evidence about this body's owner.  Rva005FC320 remains address-derived
+// because no caller, constructor, vtable slot, or literal names this state.
 
 struct Coord3D
 {
@@ -37,11 +41,6 @@ class FXList
 {
 public:
 	bool bfmeIsBlocked(void) const;
-};
-
-class BridgeAreaEffectsFXShim
-{
-public:
 	void doFXPos(const Coord3D *, const Matrix3D *, float, const Coord3D *) const;
 };
 
@@ -91,7 +90,7 @@ private:
 	bool m_complete;
 	char m_pad0d[7];
 	int m_threshold;
-	BridgeAreaEffectsFXShim *m_fx;
+	FXList *m_fx;
 	bool m_active;
 };
 
@@ -120,8 +119,8 @@ void Rva005FC320::update(void)
 		return;
 
 	volatile Coord3D *position = (volatile Coord3D *)context->getPosition();
-	const BridgeAreaEffectsFXShim *fx = m_fx;
-	if (fx && !((FXList *)fx)->bfmeIsBlocked())
+	const FXList *fx = m_fx;
+	if (fx && !fx->bfmeIsBlocked())
 		fx->doFXPos((const Coord3D *)position, 0, 0.0f, 0);
 
 	bool complete = m_complete;

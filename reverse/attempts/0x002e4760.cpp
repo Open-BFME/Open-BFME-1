@@ -1,6 +1,6 @@
 // ?EvaluateCondition@@YAHPAUlua_State@@@Z
 // partial score=0.97 date=2026-09-11
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc
 // The Lua binding resolves a condition template by its internal name, builds
 // the matching Condition, fills its Parameters from the Lua stack, and sends
 // it through the ScriptConditions interface.
@@ -42,9 +42,26 @@ struct AsciiStringData
 	char m_text[1];
 };
 
-#include "ascii_string.h"
+class AsciiString
+{
+public:
+	const char *str() const
+	{
+		return m_data ? m_data->m_text : (const char *)0x0107388B;
+	}
 
-#include "../../reference/shims/stringbaseunicode/Common/UnicodeString.h"
+private:
+	AsciiStringData *m_data;
+};
+
+class UnicodeString
+{
+public:
+	void set(const UnicodeString &other);
+
+private:
+	char *m_data;
+};
 
 class BFMERetailAsciiString
 {
