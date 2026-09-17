@@ -4728,7 +4728,6 @@ name,address,notes
 ??1Gen0013C200@@QAE@XZ,0x00887940,Open-BFME5 ILT the element destructor the 20-byte-stride vector at 0x0013C200 calls
 ??1Gen0013C3F0@@QAE@XZ,0x0013C3F0,element destructor called by the no-exceptions vector<T> destructor family (R4VectorDtorWideElems.cpp); address-derived name; identity not recovered
 ??1Gen001439F0@@QAE@XZ,0x0003B8FE,Open-BFME5 ILT the element destructor the 36-byte-stride vector at 0x001439F0 calls
-??1Gen00172430@@UAE@XZ,0x00172430,base class destructor tail-called by the guarded-delete destructor family (R4OwnedPointerDestructors.cpp); address-derived name; identity not recovered
 ??1Gen00196F30@@QAE@XZ,0x00196F30,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
 ??1Gen002237F0@@QAE@XZ,0x002237F0,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
 ??1Gen002360C0@@QAE@XZ,0x002360C0,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered

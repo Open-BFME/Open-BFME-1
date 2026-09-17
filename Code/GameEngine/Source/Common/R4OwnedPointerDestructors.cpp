@@ -28,7 +28,10 @@
 // offset 0 is a DIR32 operand and costs no pin; all six differ, which
 // independently confirms six types rather than one seen six times.
 //
-// IDENTITY IS NOT RECOVERED.  Every name is derived from an address.
+// The 0x00172430 base destructor is identified independently as
+// AIInternalMoveToState by its matched body, constructor, and the named state
+// destructors that route through this shared cleanup.  The other base remains
+// address-derived because no equivalent identity evidence exists for it.
 //
 // WHAT THE BYTES CANNOT DECIDE.  The type of the owned object beyond "it has a
 // virtual destructor in slot 0", and whether the padding between the vptr and
@@ -37,7 +40,7 @@
 struct GenOwned { virtual ~GenOwned(); };
 
 struct Gen000A1B30 { virtual ~Gen000A1B30(); };
-struct Gen00172430 { virtual ~Gen00172430(); };
+struct AIInternalMoveToState { virtual ~AIInternalMoveToState(); };
 
 #define R4_OWNED_PTR_MEMBERS( NAME, BASE, PAD )                               \
 	struct NAME : public BASE                                                 \
@@ -69,11 +72,11 @@ struct Gen00172430 { virtual ~Gen00172430(); };
 	}
 
 R4_OWNED_PTR_DTOR_GUARDED( Rva00173F30, Gen000A1B30, 0x20 )
-R4_OWNED_PTR_DTOR_GUARDED( Rva001780A0, Gen00172430, 0x4C )
-R4_OWNED_PTR_DTOR_GUARDED( Rva00179550, Gen00172430, 0x5C )
+R4_OWNED_PTR_DTOR_GUARDED( Rva001780A0, AIInternalMoveToState, 0x4C )
+R4_OWNED_PTR_DTOR_GUARDED( Rva00179550, AIInternalMoveToState, 0x5C )
 
 // Rva00183C10 now lives with its constructor and full 18-slot class in
 // GameLogic/AI/Rva00183AF0StateCtor.cpp.
-R4_OWNED_PTR_DTOR_PLAIN( Rva00183DC0, Gen00172430, 0x68 )
+R4_OWNED_PTR_DTOR_PLAIN( Rva00183DC0, AIInternalMoveToState, 0x68 )
 R4_OWNED_PTR_DTOR_PLAIN( Rva002B85C0, Gen000A1B30, 0x24 )
 R4_OWNED_PTR_DTOR_PLAIN( Rva002BF7D0, Gen000A1B30, 0x28 )
