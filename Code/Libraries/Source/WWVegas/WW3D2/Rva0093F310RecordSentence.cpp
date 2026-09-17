@@ -3,9 +3,8 @@
 #include "../WWLib/vector.h"
 
 // Retail RVA 0x0093F310..0x0093F3F0 (224 bytes), complete RET at +0xDF.
-// The rendering-family caller is named, but the native Record_Sentence_Chunk
-// spelling remains a lead rather than an identity proof.  Keep this body
-// address-derived until that identity is independently established.
+// The rendering-family caller and the upstream Render2DSentenceClass
+// declaration establish the native Record_Sentence_Chunk identity.
 
 class BfmeSurfaceResource
 {
@@ -28,13 +27,23 @@ public:
 	BfmeSurfaceResource *m_surface;
 };
 
-// The retail local and vector element are 36 bytes: one four-byte surface
-// wrapper followed by eight four-byte geometry values.  The canonical nested
-// spelling is intentional: DynamicVectorClass::Add below is the existing
-// verified callee whose implementation is BfmeSentenceDataVector::Add.
+class Rva0093F310Font
+{
+public:
+	int Get_Char_Height() const { return char_height; }
+
+private:
+	char pad[0x2c];
+	int char_height;
+};
+
 class Render2DSentenceClass
 {
 public:
+	// The retail local and vector element are 36 bytes: one four-byte surface
+	// wrapper followed by eight four-byte geometry values.  The canonical nested
+	// spelling is intentional: DynamicVectorClass::Add below is the existing
+	// verified callee whose implementation is BfmeSentenceDataVector::Add.
 	struct SentenceDataStruct : public W3DRadarResetSurface
 	{
 		// Native record stubs, used by the existing vector implementation.
@@ -49,23 +58,9 @@ public:
 		float uv_right;
 		float uv_bottom;
 	};
-};
 
-class Rva0093F310Font
-{
-public:
-	int Get_Char_Height() const { return char_height; }
-
-private:
-	char pad[0x2c];
-	int char_height;
-};
-
-class Rva0093F310Owner
-{
-public:
 	virtual void reset();
-	void Rva0093F310_Method();
+	void Record_Sentence_Chunk();
 	void Rva0093F980_Method(Rva0093F310Font *font);
 
 private:
@@ -93,7 +88,7 @@ typedef char rva0093f310_sentence_record_must_be_36[
 typedef char rva0093f310_sentence_vector_must_be_24[
 	(sizeof(DynamicVectorClass<Render2DSentenceClass::SentenceDataStruct>) == 24) ? 1 : -1];
 
-void Rva0093F310Owner::Rva0093F310_Method()
+void Render2DSentenceClass::Record_Sentence_Chunk()
 {
 	int width = texture_offset_i - texture_start_x;
 	if (width > 0)
@@ -128,7 +123,7 @@ void Rva0093F310Owner::Rva0093F310_Method()
 // the 36-byte record, vector layout, and identical COM AddRef/Release reload
 // sequence with the 224-byte body above.  The method remains address-derived
 // because no original semantic overload name has been independently proven.
-void Rva0093F310Owner::Rva0093F980_Method(Rva0093F310Font *font)
+void Render2DSentenceClass::Rva0093F980_Method(Rva0093F310Font *font)
 {
 	int width = texture_offset_i - texture_start_x;
 	if (width > 0)
