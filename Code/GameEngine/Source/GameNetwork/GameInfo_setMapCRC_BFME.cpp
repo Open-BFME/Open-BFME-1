@@ -92,6 +92,7 @@ public:
 
 	GameSlot *getSlot(int slotNum);
 	void setMapCRC(unsigned int mapCRC);
+	void setMapSize(unsigned int mapSize);
 
 private:
 	int m_preorderMask;
@@ -112,6 +113,33 @@ private:
 void GameInfo::setMapCRC(unsigned int mapCRC)
 {
 	m_mapCRC = mapCRC;
+	if (!TheMapCache)
+		return;
+
+	if (m_inGame && getLocalSlotNum() >= 0)
+	{
+		AsciiString lowerMap = m_mapName;
+		lowerMap.toLower();
+		MapCache *cache = TheMapCache;
+		MapCacheNode *it = cache->bfmeFind(lowerMap);
+		if (it == cache->m_head)
+		{
+			getSlot(getLocalSlotNum())->setMapAvailability(false);
+		}
+		else if (m_mapCRC != it->m_CRC)
+		{
+			getSlot(getLocalSlotNum())->setMapAvailability(false);
+		}
+		else
+		{
+			getSlot(getLocalSlotNum())->setMapAvailability(true);
+		}
+	}
+}
+
+void GameInfo::setMapSize(unsigned int mapSize)
+{
+	m_mapSize = mapSize;
 	if (!TheMapCache)
 		return;
 
