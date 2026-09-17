@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/shims/stlp_nodealloc /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -34,6 +34,60 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // USER INCLUDES //////////////////////////////////////////////////////////////////////////////////
+#define _STLP_NO_EXCEPTIONS 1
+#define BFME_STLP_NODE_ALLOC 1
+#ifndef __XFER_H_
+#define __XFER_H_
+typedef unsigned char XferVersion;
+enum XferMode
+{
+	XFER_INVALID = 0,
+	XFER_SAVE,
+	XFER_LOAD,
+	XFER_CRC
+};
+
+class Xfer
+{
+public:
+	virtual void slot00();
+	virtual bool isLoading();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void xferVersion( void *version, int currentVersion );
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual void slot17();
+	virtual void slot18();
+	virtual void slot19();
+	virtual void slot20();
+	virtual void slot21();
+	virtual void slot22();
+	virtual void slot23();
+	virtual void slot24();
+	virtual void slot25();
+	virtual void slot26();
+	virtual void slot27();
+	virtual void slot28();
+	virtual void xferUnsignedInt( unsigned int *value );
+	virtual void xferInt( int *value );
+	virtual void slot31();
+	virtual void slot32();
+	virtual void slot33();
+	virtual void slot34();
+	virtual void slot35();
+};
+#endif
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
@@ -63,6 +117,8 @@ protected: \
 private: \
 	virtual MemoryPool *getObjectMemoryPool() { return ARGCLASS::getClassMemoryPool(); } \
 public:
+
+extern void friend_xferObjectID( Xfer *xfer, ObjectID *objectID );
 
 #include "Common/BuildAssistant.h"
 #include "Common/GlobalData.h"
@@ -332,25 +388,24 @@ void BuildAssistant::update( void )
 //-------------------------------------------------------------------------------------------------
 /** Xfer the sell list. */
 //-------------------------------------------------------------------------------------------------
-// ?xferTheSellList@BuildAssistant@@ present-unmatched
 void BuildAssistant::xferTheSellList( Xfer *xfer )
 {
 	ObjectSellInfo *sellInfo;
 
 	Int count=0;
 	ObjectSellListIterator it, thisIterator;
- 	for( it = m_sellList.begin(); it != m_sellList.end(); ++it ) {
+	for( it = m_sellList.begin(); it != m_sellList.end(); ++it ) {
 		count++;
- 	}
+	}
 	xfer->xferInt(&count);
 
-	if (xfer->getXferMode() == XFER_LOAD)	{
+	if (xfer->isLoading()) {
 		m_sellList.clear();
 		Int i;
 		for (i=0; i<count; i++) {
 			// add this object to the list of objects being sold
 			sellInfo = newInstance(ObjectSellInfo);
-			xfer->xferObjectID(&sellInfo->m_id);
+			friend_xferObjectID(xfer, &sellInfo->m_id);
 			xfer->xferUnsignedInt(&sellInfo->m_sellFrame);
 			m_sellList.push_back( sellInfo );
 
@@ -359,7 +414,7 @@ void BuildAssistant::xferTheSellList( Xfer *xfer )
 		for( it = m_sellList.begin(); it != m_sellList.end(); ++it ) {
 			// get this object info
 			sellInfo = (*it);
-			xfer->xferObjectID(&sellInfo->m_id);
+			friend_xferObjectID(xfer, &sellInfo->m_id);
 			xfer->xferUnsignedInt(&sellInfo->m_sellFrame);
 			count--;
 		}
@@ -1657,4 +1712,3 @@ void BuildAssistant::sellObject( Object *obj )
 	}
 
 }  // end sellObject
-
