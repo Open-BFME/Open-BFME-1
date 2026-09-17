@@ -1,5 +1,5 @@
 // ?m002A23B0@RespawnUpdate@@QAEHXZ
-// partial score=0.744 date=2026-09-15
+// partial score=0.99 date=2026-09-17
 // cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // Owner evidence: caller 0x000FA1B0 looks up literal RespawnUpdate at
@@ -48,8 +48,12 @@ private:
 };
 int RespawnUpdate::m002A23B0()
 {
-	const RespawnUpdateModuleData *data = moduleData;
-	unsigned int level = object->state->level;
+	RespawnUpdateModuleData *data =
+		*reinterpret_cast<RespawnUpdateModuleData * volatile *>(&moduleData);
+	Rva002A23B0Object *object =
+		*reinterpret_cast<Rva002A23B0Object * volatile *>(&this->object);
+	register unsigned int level = *reinterpret_cast<volatile unsigned int *>
+		(&object->state->level);
 	const Rva002A23B0Set &levels = data->levels;
 	Rva002A23B0Set::iterator result = levels.find(Rva002A23B0Record(level));
 	Rva002A23B0Set::iterator end = levels.end();
