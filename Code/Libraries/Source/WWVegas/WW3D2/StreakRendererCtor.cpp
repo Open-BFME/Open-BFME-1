@@ -1,4 +1,6 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
+
+#include "../WWMath/vector2.h"
 
 class TextureClass;
 
@@ -6,16 +8,8 @@ class TextureClass;
 class ShaderClass
 {
 public:
-	unsigned int m_bits;
+	unsigned int ShaderBits;
 	static ShaderClass _PresetAdditiveSpriteShader;
-};
-
-class Vector2
-{
-public:
-	Vector2(float x, float y) : X(x), Y(y) {}
-	float X;
-	float Y;
 };
 
 class Vector3
@@ -42,6 +36,11 @@ class StreakRendererClass
 {
 public:
 	StreakRendererClass();
+	void Set_Merge_Intersections(int onoff);
+	void Set_Freeze_Random(int onoff);
+	void Set_Disable_Sorting(int onoff);
+	void Set_End_Caps(int onoff);
+	void Set_UV_Offset_Rate(const Vector2 &rate);
 
 private:
 	enum { DEFAULT_BITS = 1 };
@@ -79,4 +78,45 @@ StreakRendererClass::StreakRendererClass() :
 	m_vertexBufferSize(0),
 	m_vertexBuffer(0)
 {
+}
+
+void StreakRendererClass::Set_Merge_Intersections(int onoff)
+{
+	if (onoff) {
+		Bits |= 0x00000001;
+	} else {
+		Bits &= ~0x00000001;
+	}
+}
+
+void StreakRendererClass::Set_Freeze_Random(int onoff)
+{
+	if (onoff) {
+		Bits |= 0x00000002;
+	} else {
+		Bits &= ~0x00000002;
+	}
+}
+
+void StreakRendererClass::Set_Disable_Sorting(int onoff)
+{
+	if (onoff) {
+		Bits |= 0x00000004;
+	} else {
+		Bits &= ~0x00000004;
+	}
+}
+
+void StreakRendererClass::Set_End_Caps(int onoff)
+{
+	if (onoff) {
+		Bits |= 0x00000008;
+	} else {
+		Bits &= ~0x00000008;
+	}
+}
+
+void StreakRendererClass::Set_UV_Offset_Rate(const Vector2 &rate)
+{
+	UVOffsetDeltaPerMS = rate * 0.001f;
 }
