@@ -683,6 +683,7 @@ GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessa
 //-------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
+// ??0MetaMap@@QAE@XZ present-unmatched
 MetaMap::MetaMap() : 
 	m_metaMaps(NULL)
 {
