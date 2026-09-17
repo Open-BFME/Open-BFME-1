@@ -1,5 +1,5 @@
 // ?bfmeLimitEO@BfmeHostEO@@QAEMXZ
-// partial score=0.95 date=2026-09-16
+// partial score=0.97 date=2026-09-16
 extern "C" double sqrt(double x);
 
 #pragma intrinsic(sqrt)
@@ -47,11 +47,13 @@ float BfmeHostEO::bfmeLimitEO()
 	volatile float dx = m_bfmeX1EO - m_bfmeX0EO;
 	dy -= m_bfmeY0EO;
 
+	float len[2];
 	float d2 = dx * dx + dy * dy;
-	float len = (float)sqrt(d2);
+	len[0] = (float)sqrt(d2);
 
 	if (g_bfmeKeyboardEO->bfmeIsShiftEO() && TheWritableGlobalData->m_bfmeFlagEO)
 		*(volatile float *)&cap = *(volatile float *)&cap * g_bfmeDirectionWeight1285;
 
-	return bfmeMinEO(cap, len);
+	return bfmeMinEO(cap, len[0]);
 }
+
