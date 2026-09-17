@@ -37,6 +37,7 @@ private:
 class MaterialPassClass : public RefCountClass
 {
 public:
+	MaterialPassClass();
 	virtual ~MaterialPassClass();
 
 private:
@@ -46,6 +47,15 @@ private:
 	bool EnableOnTranslucentMeshes;
 	int CullVolume;
 };
+
+// ??0MaterialPassClass@@QAE@XZ
+MaterialPassClass::MaterialPassClass()
+{
+	Shader = 0;
+	Material = 0;
+	CullVolume = 0;
+	EnableOnTranslucentMeshes = true;
+}
 
 MaterialPassClass::~MaterialPassClass()
 {
