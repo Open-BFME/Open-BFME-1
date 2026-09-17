@@ -2,7 +2,7 @@
 // partial score=0.9 date=2026-09-04
 // ?d_00749b90@@YAXXZ
 // partial score=0.9 date=2026-08-29
-// cl: /Oy- /Gy
+// cl: /Gy
 // Two bit-array setters from the 0x0074xxxx run.  Identity is not recovered;
 // names are address-derived.
 //
@@ -17,6 +17,9 @@
 // They differ in where the buffer lives -- +0x28/+0x2c against +0x80/+0x84 --
 // and in one register decision that follows from it: at 0x007497A0 `this` is
 // moved out of ecx up front, because ecx has to carry the shift count later.
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 class Rva00749B90
 {
@@ -49,11 +52,13 @@ void Rva00749B90::setBit( int x, int y, char value )
 	if( (unsigned int)index >= (unsigned int)( m_end - m_begin ) )
 		return;
 
-	unsigned char *slot = m_begin + index;
+	unsigned char *slot = (unsigned char *)( index + (unsigned int)*(unsigned char *volatile *)&m_begin );
 	unsigned char mask = (unsigned char)( 1 << ( x & 7 ) );
+	int flag = value;
+	_ReadWriteBarrier();
 	unsigned char current = *slot;
 
-	if( value )
+	if( flag )
 		*slot = (unsigned char)( current | mask );
 	else
 		*slot = (unsigned char)( current & ~mask );
