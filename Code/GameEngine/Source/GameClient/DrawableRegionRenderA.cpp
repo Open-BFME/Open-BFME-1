@@ -208,3 +208,78 @@ void bfmeRegionRenderB( void *rawRegion, Int rawOffset, const Int rawValue )
 			regionWidth, 1.0f, colors[i] );
 	}
 }
+
+struct Rva00412C10Region
+{
+	Int left;
+	Int top;
+	Int right;
+};
+
+struct Rva00412C10Offset
+{
+	Int x;
+	Int y;
+};
+
+extern void j_0003b390();
+typedef void (__cdecl *Rva00411400ColorCall)( Int value, Color *colors );
+
+// ?bfmeRegionRenderC@@YAXPAXHH@Z
+void bfmeRegionRenderC( void *rawRegion, Int rawOffset, const Int rawValue )
+{
+	const Rva00412C10Offset *offset = (const Rva00412C10Offset *)(UnsignedInt)rawOffset;
+	Rva00412C10Region *region = (Rva00412C10Region *)(UnsignedInt)rawRegion;
+	const Int regionLeft = region->left;
+	Color colors[3];
+	Real regionWidth = (Real)(region->right - regionLeft);
+	((Rva00411400ColorCall)j_0003b390)( rawValue, colors );
+
+	UnsignedInt state = *(UnsignedInt *)0x012F13D8;
+	if( (state & 1) == 0 )
+	{
+		state |= 1;
+		*(UnsignedInt *)0x012F13D8 = state;
+		*(UnsignedInt *)0x012F13D4 = 0x7F000000;
+	}
+	if( (state & 2) == 0 )
+	{
+		state |= 2;
+		*(UnsignedInt *)0x012F13D8 = state;
+		*(UnsignedInt *)0x012F13D0 = 0xFFBA9252;
+	}
+	if( (state & 4) == 0 )
+	{
+		state |= 4;
+		*(UnsignedInt *)0x012F13D8 = state;
+		*(UnsignedInt *)0x012F13CC = 0xFF000000;
+	}
+
+	TheDisplay->drawOpenRect(
+		(Real)(regionLeft + *(const volatile Int *)&offset->x - 3),
+		(Real)(region->top + offset->y - 3),
+		regionWidth + *(const Real *)0x010828C4,
+		9.0f, 1.0f, *(UnsignedInt *)0x012F13D4 );
+
+	TheDisplay->drawOpenRect(
+		(Real)(region->left + offset->x - 2),
+		(Real)(region->top + offset->y - 2),
+		regionWidth + *(const Real *)0x01075340,
+		7.0f, 1.0f, *(UnsignedInt *)0x012F13D0 );
+
+	TheDisplay->drawFillRect(
+		(Real)(region->left + offset->x - 1),
+		(Real)(region->top + offset->y - 1),
+		regionWidth + *(const Real *)0x01088830,
+		5.0f, *(UnsignedInt *)0x012F13CC );
+
+	const Real &rawValueReal = *(const Real *)&rawValue;
+	regionWidth = *(volatile Real *)&regionWidth * rawValueReal;
+	for( Int i = 0; i < 3; ++i )
+	{
+		TheDisplay->drawFillRect(
+			(Real)(region->left + offset->x),
+			(Real)(region->top + offset->y + i),
+			regionWidth, 1.0f, colors[i] );
+	}
+}
