@@ -52,6 +52,11 @@ class ArchiveFile
 {
 public:
 	virtual ~ArchiveFile();
+	virtual void A1() = 0;
+	virtual void A2() = 0;
+	virtual void A3() = 0;
+	virtual void A4() = 0;
+	virtual AsciiString getName( void ) = 0;
 };
 
 typedef char Char;
@@ -143,4 +148,43 @@ Bool Win32BIGFileSystem::loadBigFilesFromDirectory( AsciiString dir, AsciiString
 	}
 
 	return actuallyAdded;
+}
+
+class Open2Elem063700
+{
+public:
+	Open2Elem063700( const Open2Elem063700 &source )
+	{
+		((AsciiString *)this)->AsciiString::AsciiString( *(const AsciiString *)&source );
+	}
+
+	~Open2Elem063700()
+	{
+		((AsciiString *)this)->AsciiString::~AsciiString();
+	}
+
+private:
+	void *m_text;
+};
+
+static const Open2Elem063700 &asElement( const AsciiString &s )
+{
+	return *(const Open2Elem063700 *)&s;
+}
+
+void Win32BIGFileSystem::closeAllArchiveFiles( void )
+{
+	std::vector<Open2Elem063700> names;
+
+	ArchiveFileMap::iterator it = m_archiveFileMap.begin();
+	while (it != m_archiveFileMap.end()) {
+		names.push_back( asElement( it->second->getName() ) );
+		++it;
+	}
+
+	std::vector<Open2Elem063700>::iterator n = names.begin();
+	while (n != names.end()) {
+		closeArchiveFile( ((const AsciiString *)&*n)->str() );
+		++n;
+	}
 }
