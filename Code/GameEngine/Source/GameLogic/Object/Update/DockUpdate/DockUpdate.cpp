@@ -360,14 +360,6 @@ void DockUpdate::onEnterReached( Object* docker )
 	}
 }
 
-// ?onDockReached@DockUpdate@@UAEXPAVObject@@@Z present-unmatched
-void DockUpdate::onDockReached( Object* docker )
-{
-	Object *me = getObject();
-	me->clearAndSetModelConditionState( MODELCONDITION_DOCKING_BEGINNING, MODELCONDITION_DOCKING_ACTIVE );
-	docker->clearAndSetModelConditionState( MODELCONDITION_DOCKING_BEGINNING, MODELCONDITION_DOCKING_ACTIVE );
-}
-
 // ?onExitReached@DockUpdate@@UAEXPAVObject@@@Z present-unmatched
 void DockUpdate::onExitReached( Object* docker )
 {
