@@ -3,6 +3,32 @@
 
 extern "C" __declspec(dllimport) int __cdecl atoi(const char *);
 
+class PlayerTemplate
+{
+	public:
+	char m_unreconstructed_00[0xBD];
+	unsigned char m_isPlayableSide;
+	char m_unreconstructed_BE[0x66];
+};
+
+class PlayerTemplateStore
+{
+public:
+	const PlayerTemplate *getNthPlayerTemplate(int index) const;
+
+	int getPlayerTemplateCount() const
+	{
+		return (int)(m_end - m_begin);
+	}
+
+private:
+	char m_pad[8];
+	PlayerTemplate *m_begin;
+	PlayerTemplate *m_end;
+};
+
+extern PlayerTemplateStore *ThePlayerTemplateStore;
+
 class AsciiStringData
 {
 public:
@@ -80,6 +106,7 @@ class SkirmishPreferences : public UserPreferences
 {
 public:
 	int getPreferredColor();
+	int getPreferredFaction();
 };
 
 int SkirmishPreferences::getPreferredColor()
@@ -96,5 +123,30 @@ int SkirmishPreferences::getPreferredColor()
 	int value = atoi(it->m_value.str());
 	if (value < -1 || value >= TheMultiplayerSettings->getNumColors())
 		value = -1;
+	return value;
+}
+
+int SkirmishPreferences::getPreferredFaction()
+{
+	PreferenceNode *it;
+	{
+		AsciiString key("PlayerTemplate");
+		it = find(key);
+	}
+
+	if (it == end())
+		return -1;
+
+	int value = atoi(it->m_value.str());
+	if (value < -2 || value >= ThePlayerTemplateStore->getPlayerTemplateCount())
+		value = -1;
+
+	if (value >= 0)
+	{
+		const PlayerTemplate *fac = ThePlayerTemplateStore->getNthPlayerTemplate(value);
+		if (fac == 0 || !fac->m_isPlayableSide)
+			value = -1;
+	}
+
 	return value;
 }
