@@ -71,9 +71,10 @@ public:
 			return (DataType)(((UnsignedInt)nk) & 0xff);
 		}
 
-		inline DataType getType() const { return getTypeFromKey(m_key); }
-		inline AsciiString *asAsciiString() { return (AsciiString *)&m_value; }
-		inline UnicodeString *asUnicodeString() { return (UnicodeString *)&m_value; }
+	inline DataType getType() const { return getTypeFromKey(m_key); }
+	inline AsciiString *asAsciiString() { return (AsciiString *)&m_value; }
+	inline UnicodeString *asUnicodeString() { return (UnicodeString *)&m_value; }
+	void setNameAndType(NameKeyType key, DataType type);
 
 		inline void clear()
 		{
@@ -123,4 +124,27 @@ void Dict::releaseData()
 		}
 		m_data = 0;
 	}
+}
+
+void Dict::DictPair::setNameAndType(NameKeyType key, DataType type)
+{
+	DataType oldType = getType();
+	if (oldType != type)
+	{
+		switch (oldType)
+		{
+			case DICT_BOOL:
+			case DICT_INT:
+			case DICT_REAL:
+				m_value = 0;
+				break;
+			case DICT_ASCIISTRING:
+				asAsciiString()->~AsciiString();
+				break;
+			case DICT_UNICODESTRING:
+				asUnicodeString()->~UnicodeString();
+				break;
+		}
+	}
+	m_key = createKey(key, type);
 }
