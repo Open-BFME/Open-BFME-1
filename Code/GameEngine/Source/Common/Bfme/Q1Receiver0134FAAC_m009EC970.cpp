@@ -17,9 +17,12 @@ class Q1Receiver0134FAAC
 public:
 	void m009EC970(Int which);
 	void m009EC9A0(Int which);
+	void m009ECA30(Int value);
 
 private:
-	unsigned char m_unmodelled_000[0x1EC];
+	unsigned char m_unmodelled_000[0x24];
+	Int m_value;
+	unsigned char m_unmodelled_028[0x1C4];
 	Bool m_flag0;						// this+0x1EC
 	Bool m_flag1;						// this+0x1ED
 	Bool m_flag2;						// this+0x1EE
@@ -65,4 +68,11 @@ void Q1Receiver0134FAAC::m009EC9A0(Int which)
 			m_flag2 = false;
 			break;
 	}
+}
+
+void Q1Receiver0134FAAC::m009ECA30(Int value)
+{
+	m_value = value;
+	if (value < 1)
+		m_value = 1;
 }
