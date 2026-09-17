@@ -33,6 +33,7 @@ public:
 	Debug &operator<<(unsigned);
 	Debug &operator<<(unsigned long);
 	Debug &operator<<(__int64);
+	Debug &operator<<(unsigned __int64);
 	char m_pad[0x9e6c];
 	char m_prefix[16];
 	int m_radix;
@@ -70,4 +71,12 @@ Debug &Debug::operator<<(__int64 val)
 	char help[64 + 1];
 	AddOutput(m_prefix, strlen(m_prefix));
 	return (*this) << _i64toa(val, help, m_radix);
+}
+
+// Debug::operator<<(unsigned __int64), retail at 0x0088C2F0
+Debug &Debug::operator<<(unsigned __int64 val)
+{
+	char help[64 + 1];
+	AddOutput(m_prefix, strlen(m_prefix));
+	return (*this) << _ui64toa(val, help, m_radix);
 }
