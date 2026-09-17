@@ -47,11 +47,11 @@ float BfmeHostEO::bfmeLimitEO()
 	volatile float dx = m_bfmeX1EO - m_bfmeX0EO;
 	dy -= m_bfmeY0EO;
 
-	float len[2];
-	len[0] = (float)sqrt(dx * dx + dy * dy);
+	float d2 = dx * dx + dy * dy;
+	float len = (float)sqrt(d2);
 
 	if (g_bfmeKeyboardEO->bfmeIsShiftEO() && TheWritableGlobalData->m_bfmeFlagEO)
 		*(volatile float *)&cap = *(volatile float *)&cap * g_bfmeDirectionWeight1285;
 
-	return bfmeMinEO(cap, len[0]);
+	return bfmeMinEO(cap, len);
 }

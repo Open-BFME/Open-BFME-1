@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a8159e01d9005a174fd101dbad05d78cfa3e36662b6bce7cf93a0767a5ca1893",
+  "symbol": "?bfmeLimitEO@BfmeHostEO@@QAEMXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?bfmeLimitEO@BfmeHostEO@@QAEMXZ\n// partial score=0.95 date=2026-09-16\nextern \"C\" double sqrt(double x);\r\n\r\n#pragma intrinsic(sqrt)\r\n\r\nstruct Rva006C9270GlobalData\r\n{\r\n\tunsigned char m_bfmeHeadEO[0x90];\r\n\tchar m_bfmeFlagEO;\r\n};\r\n\r\nextern Rva006C9270GlobalData *TheWritableGlobalData;\r\nextern float g_bfmeDirectionWeight1285;\r\n\r\nclass BfmeKeyboardEO\r\n{\r\npublic:\r\n\tchar bfmeIsShiftEO();\r\n};\r\n\r\nextern BfmeKeyboardEO *g_bfmeKeyboardEO;\r\n\r\ntemplate<class T> inline const T &bfmeMinEO(const T &a, const T &b)\r\n{\r\n\treturn a < b ? a : b;\r\n}\r\n\r\nclass BfmeHostEO\r\n{\r\npublic:\r\n\tfloat bfmeLimitEO();\r\n\r\n\tunsigned char m_bfmeHeadEO[0xc];\r\n\tfloat m_bfmeX0EO;\r\n\tfloat m_bfmeY0EO;\r\n\tfloat m_bfmeX1EO;\r\n\tfloat m_bfmeY1EO;\r\n\tunsigned char m_bfmeGapEO[4];\r\n\tfloat m_bfmeCapEO;\r\n};\r\n\r\nfloat BfmeHostEO::bfmeLimitEO()\r\n{\r\n\tfloat dy = *(volatile float *)&m_bfmeY1EO;\r\n\tfloat cap = m_bfmeCapEO;\r\n\tvolatile float dx = m_bfmeX1EO - m_bfmeX0EO;\r\n\tdy -= m_bfmeY0EO;\r\n\r\n\tfloat d2 = dx * dx + dy * dy;\n\tfloat len = (float)sqrt(d2);\r\n\r\n\tif (g_bfmeKeyboardEO->bfmeIsShiftEO() && TheWritableGlobalData->m_bfmeFlagEO)\r\n\t\t*(volatile float *)&cap = *(volatile float *)&cap * g_bfmeDirectionWeight1285;\r\n\r\n\treturn bfmeMinEO(cap, len);\r\n}\r\n"
+}
