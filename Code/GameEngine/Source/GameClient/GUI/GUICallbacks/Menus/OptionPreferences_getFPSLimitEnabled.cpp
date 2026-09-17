@@ -64,6 +64,8 @@ class GlobalData
 public:
 	unsigned char m_unreconstructed_00[0x1E];
 	bool m_fpsLimitEnabled;					///< retail this+0x1E
+	unsigned char m_unreconstructed_1F[0x70 - 0x1F];
+	bool m_buildingOcclusionEnabled;					///< retail this+0x70
 };
 
 extern GlobalData *TheWritableGlobalData;				///< retail [0x012ED5C8]
@@ -73,6 +75,7 @@ class OptionPreferences
 {
 public:
 	bool getFPSLimitEnabled(void);
+	bool getBuildingOcclusionEnabled(void);
 
 private:
 	unsigned char m_unreconstructed_00[4];
@@ -90,6 +93,25 @@ bool OptionPreferences::getFPSLimitEnabled(void)
 
 	if (it == m_prefs.end())
 		return TheWritableGlobalData->m_fpsLimitEnabled;
+
+	if (_strcmpi(it->m_value.str(), "yes") == 0)
+	{
+		return true;
+	}
+	return false;
+}
+
+// ?getBuildingOcclusionEnabled@OptionPreferences@@QAE_NXZ
+bool OptionPreferences::getBuildingOcclusionEnabled(void)
+{
+	PreferenceNode *it;
+	{
+		AsciiString key("BuildingOcclusion");
+		it = m_prefs.find(key);
+	}
+
+	if (it == m_prefs.end())
+		return TheWritableGlobalData->m_buildingOcclusionEnabled;
 
 	if (_strcmpi(it->m_value.str(), "yes") == 0)
 	{
