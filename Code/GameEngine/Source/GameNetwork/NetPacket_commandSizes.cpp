@@ -83,6 +83,19 @@ public:
 	StringBase<char> getPortableFilename(void);	// ILT thunk 0x0003D50F
 };
 
+class BFMENetRequestGameSpyStatsAuthKeyCommandMsg
+{
+public:
+	StringBase<char> getText1C(void);	// ILT thunk 0x000204D2
+};
+
+class BFMENetGameSpyStatsAuthKeyCommandMsg
+{
+public:
+	StringBase<char> getText1C(void);	// ILT thunk 0x0002F081
+	StringBase<char> getText20(void);	// ILT thunk 0x00019EC5
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/NetPacket.h
 class NetPacket
 {
@@ -91,6 +104,8 @@ protected:
 	static UnsignedInt GetChatCommandSize(NetCommandMsg *msg);
 	static UnsignedInt GetFileCommandSize(NetCommandMsg *msg);
 	static UnsignedInt GetFileAnnounceCommandSize(NetCommandMsg *msg);
+	static UnsignedInt GetRequestGameSpyStatsAuthKeyCommandSize(NetCommandMsg *msg);
+	static UnsignedInt GetGameSpyStatsAuthKeyCommandSize(NetCommandMsg *msg);
 };
 
 // ?GetDisconnectChatCommandSize@NetPacket@@KAIPAVNetCommandMsg@@@Z
@@ -170,6 +185,39 @@ UnsignedInt NetPacket::GetFileAnnounceCommandSize(NetCommandMsg *msg)
 	msglen += filemsg->getPortableFilename().getLength() + 1;	// filename and its terminator
 	msglen += sizeof(UnsignedShort);				// m_fileID
 	msglen += sizeof(UnsignedByte);					// m_playerMask
+
+	return msglen;
+}
+
+UnsignedInt NetPacket::GetRequestGameSpyStatsAuthKeyCommandSize(NetCommandMsg *msg)
+{
+	BFMENetRequestGameSpyStatsAuthKeyCommandMsg *authMsg = (BFMENetRequestGameSpyStatsAuthKeyCommandMsg *)msg;
+	UnsignedInt msglen = 0;
+	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte);		// 'T' and command type
+	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte);		// 'R' and relay
+	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte);		// 'P' and player ID
+	msglen += sizeof(UnsignedByte) + sizeof(UnsignedShort);		// 'C' and command ID
+
+	++msglen;							// 'D'
+
+	msglen += authMsg->getText1C().getLength() + 1;			// the key and its terminator
+
+	return msglen;
+}
+
+UnsignedInt NetPacket::GetGameSpyStatsAuthKeyCommandSize(NetCommandMsg *msg)
+{
+	BFMENetGameSpyStatsAuthKeyCommandMsg *authMsg = (BFMENetGameSpyStatsAuthKeyCommandMsg *)msg;
+	UnsignedInt msglen = 0;
+	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte);		// 'T' and command type
+	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte);		// 'R' and relay
+	msglen += sizeof(UnsignedByte) + sizeof(UnsignedByte);		// 'P' and player ID
+	msglen += sizeof(UnsignedByte) + sizeof(UnsignedShort);		// 'C' and command ID
+
+	++msglen;							// 'D'
+
+	msglen += authMsg->getText1C().getLength() + 1;
+	msglen += authMsg->getText20().getLength() + 1;
 
 	return msglen;
 }
