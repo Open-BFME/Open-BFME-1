@@ -30,6 +30,7 @@ private:
 
 public:
 	void friend_addParticleSystem(ParticleSystem *particleSystemToAdd);
+	void friend_removeParticleSystem(ParticleSystem *particleSystemToRemove);
 };
 
 void ParticleSystemManager::friend_addParticleSystem(ParticleSystem *particleSystemToAdd)
@@ -55,4 +56,25 @@ void ParticleSystemManager::friend_addParticleSystem(ParticleSystem *particleSys
 	UnsignedInt nextID = id + 1;
 	m_uniqueSystemID = nextID;
 	particleSystemToAdd->m_systemID = id;
+}
+
+void ParticleSystemManager::friend_removeParticleSystem(ParticleSystem *particleSystemToRemove)
+{
+	if (!particleSystemToRemove->m_inSystemList)
+		return;
+
+	if (particleSystemToRemove->m_systemNext != 0)
+		particleSystemToRemove->m_systemNext->m_systemPrev = particleSystemToRemove->m_systemPrev;
+	if (particleSystemToRemove->m_systemPrev != 0)
+		particleSystemToRemove->m_systemPrev->m_systemNext = particleSystemToRemove->m_systemNext;
+
+	if (particleSystemToRemove == m_systemListHead)
+		m_systemListHead = particleSystemToRemove->m_systemNext;
+	if (particleSystemToRemove == m_systemListTail)
+		m_systemListTail = particleSystemToRemove->m_systemPrev;
+
+	particleSystemToRemove->m_systemPrev = 0;
+	particleSystemToRemove->m_systemNext = 0;
+	particleSystemToRemove->m_inSystemList = false;
+	--m_particleSystemCount;
 }
