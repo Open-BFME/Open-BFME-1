@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
 // Retail RVA 0x00956760, full 494 bytes. This is the independent ray body
 // immediately after the 0x9566D0 child constructor. Its field layout is the
-// Streak-like child: SimpleDynVec<Vector3> at +0xC8, SimpleDynVec<float> at
+// BfmeStreakObject child: SimpleDynVec<Vector3> at +0xC8, SimpleDynVec<float> at
 // +0xD8, and a nontrivial 0x24-byte renderer tail at +0xE8. Historical owner identity is
 // unresolved; retain the address-qualified child and its proven layout.
 
@@ -31,7 +31,7 @@ typedef char Rva00956760WidthViewSizeGuard
 typedef char Rva00956760WidthViewWidthGuard
     [(offsetof(Rva00956760WidthView, Width) == 0x08) ? 1 : -1];
 
-class Rva00956760 : public RenderObjClass
+class BfmeStreakObject : public RenderObjClass
 {
 public:
     virtual bool Cast_Ray(RayCollisionTestClass &raytest);
@@ -42,8 +42,8 @@ private:
     Rva00956760WidthView LineRenderer;
 };
 
-// ?Cast_Ray@Rva00956760@@UAE_NAAVRayCollisionTestClass@@@Z
-bool Rva00956760::Cast_Ray(RayCollisionTestClass &raytest)
+// ?Cast_Ray@BfmeStreakObject@@UAE_NAAVRayCollisionTestClass@@@Z
+bool BfmeStreakObject::Cast_Ray(RayCollisionTestClass &raytest)
 {
     if ((Get_Collision_Type() & raytest.CollisionType) == 0) return false;
 
