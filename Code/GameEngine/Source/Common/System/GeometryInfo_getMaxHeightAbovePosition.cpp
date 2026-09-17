@@ -36,10 +36,24 @@ class GeometryInfo
 {
 public:
 	Real getMaxHeightAbovePosition(void) const;
+	Real getMaxHeightBelowPosition(void) const;
 
 private:
 	struct BfmeShape
 	{
+		Real getMaxHeightBelowPosition(void) const
+		{
+			switch (m_type)
+			{
+				case GEOMETRY_SPHERE:
+					return m_majorRadius;
+				case GEOMETRY_CYLINDER:
+				case GEOMETRY_BOX:
+					return 0.0f;
+			}
+			return 0.0f;
+		}
+
 		GeometryType m_type;					// +0x00
 		Real m_height;						// +0x04
 		Real m_majorRadius;					// +0x08
@@ -78,6 +92,23 @@ Real GeometryInfo::getMaxHeightAbovePosition(void) const
 
 		height += shape->m_offsetZ;
 		best = bfmeMax(height, best);
+	}
+
+	return best;
+}
+
+Real GeometryInfo::getMaxHeightBelowPosition(void) const
+{
+	Real best = 0.0f;
+
+	for (const BfmeShape *shape = m_shapes; shape != m_shapesEnd; ++shape)
+	{
+		if (!shape->m_enabled)
+			continue;
+
+		Real below = shape->getMaxHeightBelowPosition();
+
+		best = bfmeMax(below, best);
 	}
 
 	return best;
