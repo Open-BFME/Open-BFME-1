@@ -107,6 +107,8 @@ public:
 	// slot 5 and the four-argument one at slot 6.
 	virtual File *openFile( const char *filename, int access, int offset, int size ) = 0;	// slot 6 = +0x18
 	virtual File *openFile( const char *filename, int access ) = 0;					// slot 5 = +0x14
+	virtual void A5() = 0;
+	virtual bool doesFileExist( const char *filename ) const = 0;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/LocalFileSystem.h
@@ -117,6 +119,7 @@ public:
 	virtual void L1() = 0;
 	virtual File *openFile( const char *filename, int access, int offset, int size ) = 0;	// slot 3 = +0x0c
 	virtual File *openFile( const char *filename, int access ) = 0;					// slot 2 = +0x08
+	virtual bool doesFileExist( const char *filename ) const = 0;						// slot 4 = +0x10
 };
 
 extern ArchiveFileSystem *TheArchiveFileSystem;
@@ -130,6 +133,7 @@ class FileSystem
 public:
 	File *openFile( const char *filename, int access );
 	File *openFile( const char *filename, int access, int offset, int size );
+	bool doesFileExist( const char *filename ) const;
 };
 
 // ?openFile@FileSystem@@QAEPAVFile@@PBDH@Z
@@ -228,4 +232,19 @@ File *FileSystem::openFile( const char *filename, int access, int offset, int si
 	}
 
 	return file;
+}
+
+bool FileSystem::doesFileExist(const char *filename) const
+{
+	char buf[0x200];
+	do_sprintf(buf, "%s\\%s", byte_134CA48, filename);
+	if (TheArchiveFileSystem->doesFileExist(buf))
+		return true;
+	if (TheArchiveFileSystem->doesFileExist(filename))
+		return true;
+	if (TheLocalFileSystem->doesFileExist(buf))
+		return true;
+	if (TheLocalFileSystem->doesFileExist(filename))
+		return true;
+	return false;
 }
