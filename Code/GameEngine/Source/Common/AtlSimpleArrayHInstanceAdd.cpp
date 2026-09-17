@@ -14,6 +14,8 @@ typedef int BOOL;
 #define NULL 0
 
 extern "C" void *__cdecl realloc(void *memory, unsigned int size);
+extern "C" void *__cdecl memmove(void *destination, const void *source,
+	unsigned int bytes);
 
 class Rva009F6948Array
 {
@@ -49,10 +51,22 @@ public:
 		return TRUE;
 	}
 
+	BOOL RemoveAt(int nIndex)
+	{
+		if (nIndex < 0 || nIndex >= m_nSize)
+			return 0;
+		if (nIndex != (m_nSize - 1))
+			memmove(m_aT + nIndex, m_aT + nIndex + 1,
+				(m_nSize - (nIndex + 1)) * sizeof(T));
+		m_nSize--;
+		return 1;
+	}
+
 	T *m_aT;
 	int m_nSize;
 	int m_nAllocSize;
 };
 
 template BOOL CSimpleArray<HINSTANCE>::Add(const HINSTANCE& t);
+template int CSimpleArray<void *, CSimpleArrayEqualHelper<void *> >::RemoveAt(int);
 }
