@@ -1,390 +1,118 @@
-// cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift the exact retail Anim2DTemplate::parseImageSequence body to C++.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// stlport
+// The Anim2D field table in Anim2D.cpp registers this protected parser.
+// Retail places its body at RVA 0x005BB150 with a 381-byte boundary.
 
-// ?parseImageSequence@Anim2DTemplate@@KAXPAVINI@@PAX1PBX@Z
-extern "C" __declspec(naked) void bfme_Anim2DTemplateParseImageSequence_5BB150()
+typedef int Int;
+typedef unsigned short UnsignedShort;
+typedef bool Bool;
+
+template <typename T> class StringBase
 {
-    __asm {
-        __emit 0x64;
-        __emit 0xA1;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x6A;
-        __emit 0xFF;
-        __emit 0x68;
-        __emit 0x30;
-        __emit 0x94;
-        __emit 0x03;
-        __emit 0x01;
-        __emit 0x50;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x25;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xEC;
-        __emit 0x1C;
-        __emit 0x56;
-        __emit 0x8B;
-        __emit 0x74;
-        __emit 0x24;
-        __emit 0x34;
-        __emit 0x66;
-        __emit 0x8B;
-        __emit 0x46;
-        __emit 0x10;
-        __emit 0x66;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0x57;
-        __emit 0x75;
-        __emit 0x48;
-        __emit 0x8D;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x0C;
-        __emit 0x50;
-        __emit 0x8B;
-        __emit 0xCE;
-        __emit 0xE8;
-        __emit 0xEF;
-        __emit 0x7C;
-        __emit 0xA5;
-        __emit 0xFF;
-        __emit 0x8B;
-        __emit 0x00;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0xC7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x2C;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x74;
-        __emit 0x05;
-        __emit 0x83;
-        __emit 0xC0;
-        __emit 0x08;
-        __emit 0xEB;
-        __emit 0x05;
-        __emit 0xB8;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x07;
-        __emit 0x01;
-        __emit 0x50;
-        __emit 0x68;
-        __emit 0xC8;
-        __emit 0xF4;
-        __emit 0x10;
-        __emit 0x01;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x1C;
-        __emit 0x6A;
-        __emit 0x03;
-        __emit 0x51;
-        __emit 0xE8;
-        __emit 0x53;
-        __emit 0x54;
-        __emit 0x29;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x10;
-        __emit 0x68;
-        __emit 0x30;
-        __emit 0xFC;
-        __emit 0x1D;
-        __emit 0x01;
-        __emit 0x8D;
-        __emit 0x54;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0x52;
-        __emit 0xE8;
-        __emit 0x41;
-        __emit 0xBB;
-        __emit 0x43;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x34;
-        __emit 0x8D;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x50;
-        __emit 0xE8;
-        __emit 0x13;
-        __emit 0x65;
-        __emit 0x29;
-        __emit 0x00;
-        __emit 0xC7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x2C;
-        __emit 0x01;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0xC7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x38;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x33;
-        __emit 0xFF;
-        __emit 0x66;
-        __emit 0x39;
-        __emit 0x7E;
-        __emit 0x10;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x2C;
-        __emit 0x02;
-        __emit 0x76;
-        __emit 0x5D;
-        __emit 0x8D;
-        __emit 0x9B;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0x57;
-        __emit 0x74;
-        __emit 0x05;
-        __emit 0x83;
-        __emit 0xC0;
-        __emit 0x08;
-        __emit 0xEB;
-        __emit 0x05;
-        __emit 0xB8;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x07;
-        __emit 0x01;
-        __emit 0x50;
-        __emit 0x51;
-        __emit 0x89;
-        __emit 0x64;
-        __emit 0x24;
-        __emit 0x18;
-        __emit 0x8B;
-        __emit 0xCC;
-        __emit 0x68;
-        __emit 0xC0;
-        __emit 0xF4;
-        __emit 0x10;
-        __emit 0x01;
-        __emit 0xE8;
-        __emit 0xAB;
-        __emit 0xD9;
-        __emit 0x2C;
-        __emit 0x00;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x44;
-        __emit 0x51;
-        __emit 0xE8;
-        __emit 0xD1;
-        __emit 0xDD;
-        __emit 0x2C;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x0D;
-        __emit 0x24;
-        __emit 0x69;
-        __emit 0x2F;
-        __emit 0x01;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x10;
-        __emit 0x8D;
-        __emit 0x54;
-        __emit 0x24;
-        __emit 0x38;
-        __emit 0x52;
-        __emit 0xE8;
-        __emit 0xD4;
-        __emit 0x23;
-        __emit 0xA6;
-        __emit 0xFF;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0x74;
-        __emit 0x41;
-        __emit 0x50;
-        __emit 0x8B;
-        __emit 0xCE;
-        __emit 0xE8;
-        __emit 0xCF;
-        __emit 0x1C;
-        __emit 0xA6;
-        __emit 0xFF;
-        __emit 0x0F;
-        __emit 0xB7;
-        __emit 0x46;
-        __emit 0x10;
-        __emit 0x47;
-        __emit 0x3B;
-        __emit 0xF8;
-        __emit 0x7C;
-        __emit 0xA9;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x38;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x2C;
-        __emit 0x01;
-        __emit 0xE8;
-        __emit 0xEB;
-        __emit 0xC6;
-        __emit 0x2C;
-        __emit 0x00;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x08;
-        __emit 0xC7;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x2C;
-        __emit 0xFF;
-        __emit 0xFF;
-        __emit 0xFF;
-        __emit 0xFF;
-        __emit 0xE8;
-        __emit 0xDA;
-        __emit 0xC6;
-        __emit 0x2C;
-        __emit 0x00;
-        __emit 0x8B;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x24;
-        __emit 0x5F;
-        __emit 0x64;
-        __emit 0x89;
-        __emit 0x0D;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x00;
-        __emit 0x5E;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x28;
-        __emit 0xC3;
-        __emit 0x8D;
-        __emit 0x4C;
-        __emit 0x24;
-        __emit 0x10;
-        __emit 0x51;
-        __emit 0x8B;
-        __emit 0xCE;
-        __emit 0xE8;
-        __emit 0xEF;
-        __emit 0x7B;
-        __emit 0xA5;
-        __emit 0xFF;
-        __emit 0x8B;
-        __emit 0x00;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0xC6;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x2C;
-        __emit 0x03;
-        __emit 0x8D;
-        __emit 0x48;
-        __emit 0x08;
-        __emit 0x75;
-        __emit 0x05;
-        __emit 0xB9;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x07;
-        __emit 0x01;
-        __emit 0x8B;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x38;
-        __emit 0x85;
-        __emit 0xC0;
-        __emit 0x74;
-        __emit 0x05;
-        __emit 0x83;
-        __emit 0xC0;
-        __emit 0x08;
-        __emit 0xEB;
-        __emit 0x05;
-        __emit 0xB8;
-        __emit 0x8B;
-        __emit 0x38;
-        __emit 0x07;
-        __emit 0x01;
-        __emit 0x51;
-        __emit 0x50;
-        __emit 0x68;
-        __emit 0xF0;
-        __emit 0xF3;
-        __emit 0x10;
-        __emit 0x01;
-        __emit 0x8D;
-        __emit 0x54;
-        __emit 0x24;
-        __emit 0x28;
-        __emit 0x6A;
-        __emit 0x03;
-        __emit 0x52;
-        __emit 0xE8;
-        __emit 0x45;
-        __emit 0x53;
-        __emit 0x29;
-        __emit 0x00;
-        __emit 0x83;
-        __emit 0xC4;
-        __emit 0x14;
-        __emit 0x68;
-        __emit 0x30;
-        __emit 0xFC;
-        __emit 0x1D;
-        __emit 0x01;
-        __emit 0x8D;
-        __emit 0x44;
-        __emit 0x24;
-        __emit 0x20;
-        __emit 0x50;
-        __emit 0xE8;
-        __emit 0x33;
-        __emit 0xBA;
-        __emit 0x43;
-        __emit 0x00;
-    }
+	friend class AsciiString;
+
+private:
+	StringBase() : m_data(0) {}
+	StringBase(const T *text);
+	StringBase(const StringBase<T> &other);
+	~StringBase();
+
+	struct Header
+	{
+		int m_refCount;
+		unsigned short m_len;
+		unsigned short m_capacity;
+	};
+
+	Header *m_data;
+};
+
+class AsciiString : private StringBase<char>
+{
+public:
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	AsciiString(const char *text) : StringBase<char>(text) {}
+	~AsciiString() {}
+	const char *str() const
+	{
+		return m_data ? (const char *)(m_data + 1) : "";
+	}
+	void __cdecl format(AsciiString format, ...);
+};
+
+class Image {};
+
+class INI
+{
+public:
+	AsciiString getNextAsciiString();
+};
+
+class INIException
+{
+public:
+	INIException(Int, const char *message, ...);
+	INIException(const INIException &other);
+	~INIException();
+
+private:
+	char *m_message;
+	Int m_unreconstructed04;
+};
+
+class Anim2DTemplate
+{
+public:
+	AsciiString getName() const { return m_name; }
+	UnsignedShort getNumFrames() const { return m_numFrames; }
+	void storeImage(const Image *image);
+
+protected:
+	static void parseImageSequence(INI *ini, void *instance, void *store, const void *userData);
+
+private:
+	void *m_vptr;
+	Anim2DTemplate *m_nextTemplate;
+	AsciiString m_name;
+	const Image **m_images;
+	UnsignedShort m_numFrames;
+	UnsignedShort m_framesBetweenUpdates;
+	int m_animMode;
+	Bool m_randomizeStartFrame;
+};
+
+class MappedImageCollection
+{
+public:
+	const Image *findImageByName(const AsciiString &name);
+};
+
+class ImageCollection;
+extern ImageCollection *TheMappedImageCollection;
+
+void Anim2DTemplate::parseImageSequence(INI *ini, void *instance,
+	void *store, const void *userData)
+{
+	const Image *image;
+	Anim2DTemplate *animTemplate = (Anim2DTemplate *)instance;
+
+	if (animTemplate->getNumFrames() == 0) {
+		throw INIException(3,
+			"Anim2DTemplate::parseImageSequence - You must specify the number of animation frames for animation '%s' *BEFORE* specifying the image sequence name\n",
+			animTemplate->getName().str());
+	}
+
+	AsciiString imageBaseName = ini->getNextAsciiString();
+	AsciiString imageName;
+	for (Int i = 0; i < animTemplate->getNumFrames(); ++i) {
+		imageName.format("%s%03d", imageBaseName.str(), i);
+		image = ((MappedImageCollection *)TheMappedImageCollection)->findImageByName(imageName);
+		if (image == 0) {
+			throw INIException(3,
+				"Anim2DTemplate::parseImageSequence - Image '%s' not found for animation '%s'.  Check the number of images specified in INI and also make sure all the actual images exist.\n",
+				imageName.str(), animTemplate->getName().str());
+		}
+		animTemplate->storeImage(image);
+	}
 }
