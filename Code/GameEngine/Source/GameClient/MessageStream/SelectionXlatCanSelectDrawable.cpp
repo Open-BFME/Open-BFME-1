@@ -100,7 +100,7 @@ private:
 public:
     Bool isEffectivelyDead() const { return (m_effectivelyDead & 1) != 0; }
     Bool isSelectionSuppressed() const { return m_selectionSuppressed; }
-    Bool isSelectable() const;
+    Bool isMassSelectable() const;
     Bool isLocallyControlled() const;
 };
 
@@ -284,7 +284,7 @@ Bool CanSelectDrawable(const Drawable *draw, Bool dragSelecting)
     if (obj->isSelectionSuppressed())
         return FALSE;
 
-    if (!obj->isSelectable())
+    if (!obj->isMassSelectable())
         return FALSE;
 
     if (dragSelecting && !obj->isLocallyControlled())

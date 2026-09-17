@@ -83495,7 +83495,6 @@ name,address,notes
 ?isRoomForRequestPlayerLeaveMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00677950,unresolved callee for addRequestPlayerLeaveCommand (0x00679E10); ICF-identical to isRoomForDisconnectFrameMessage, real name not independently recovered
 ?isRoomForWrapperMessage@NetPacket@@IAE_NPAVNetCommandRef@@@Z,0x00044FEE,decode_calls pin for addWrapperCommand callee (ILT thunk -> body 0x00677BC0)
 ?isScienceGrantable@ScienceStore@@QBE_NW4ScienceType@@@Z,0x0003882A
-?isSelectable@Object@@QBE_NXZ,0x00001C03,CanSelectDrawable retail ILT
 ?isSignificantlyAboveTerrain@BfmeObjectCall@@QBE_NXZ,0x00019FF1,local call adapter for VeterancyCrateCollide validation
 ?isSignificantlyAboveTerrain@BfmeOutOfWeaponRangeObject@@QBE_NXZ,0x00019FF1,outOfWeaponRangeObject retail terrain test thunk
 ?isSignificantlyAboveTerrain@Object@@QBE_NXZ,0x00019FF1,pin Object isSignificantlyAboveTerrain ILT target
