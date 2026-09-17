@@ -76,12 +76,38 @@ public:
 
 	void Get_Description(SurfaceDescription &surface_desc);
 	void DrawPixel(const unsigned int x, const unsigned int y, unsigned int color);
+	unsigned int Rva008FCA30_Surface_Byte_Size() const;
 
 private:
 	BfmeSurfaceResource *D3DSurface;
 };
 
 extern void d_008fc4f0(void);
+
+// Keep the format table beside the SurfaceClass methods that consume it.  The
+// address-qualified helper name is retained because its historical verb is
+// unavailable, while its caller and exact switch body are established.
+static __declspec(noinline) unsigned int Rva008FC4F0_PixelSize(
+	const SurfaceClass::SurfaceDescription &description)
+{
+	unsigned int size = 0;
+	switch (description.Format)
+	{
+	case 21: case 22:
+		size = 4;
+		break;
+	case 20:
+		size = 3;
+		break;
+	case 23: case 24: case 25: case 26: case 29: case 30: case 40: case 51:
+		size = 2;
+		break;
+	case 27: case 28: case 41: case 50: case 52:
+		size = 1;
+		break;
+	}
+	return size;
+}
 
 // ?DrawPixel@SurfaceClass@@QAEXIII@Z
 void SurfaceClass::DrawPixel(const unsigned int x, const unsigned int y, unsigned int color)
@@ -127,4 +153,23 @@ void SurfaceClass::DrawPixel(const unsigned int x, const unsigned int y, unsigne
 	}
 
 	BFME_Surface_ErrorCode(D3DSurface->UnlockRect());
+}
+
+unsigned int SurfaceClass::Rva008FCA30_Surface_Byte_Size() const
+{
+	if (!D3DSurface)
+		return 0;
+	SurfaceDescription description;
+	const_cast<SurfaceClass *>(this)->Get_Description(description);
+	unsigned int pixelSize = Rva008FC4F0_PixelSize(description);
+	if (pixelSize)
+		return description.Width * description.Height * pixelSize;
+	if (description.Format != 0x31545844 && description.Format != 0x32545844 &&
+		description.Format != 0x33545844 && description.Format != 0x34545844 &&
+		description.Format != 0x35545844)
+		return 0;
+	unsigned int size = description.Width * description.Height;
+	if (description.Format == 0x31545844)
+		size /= 2;
+	return size;
 }
