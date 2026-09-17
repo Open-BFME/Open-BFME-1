@@ -5,6 +5,7 @@
 // _itoa into a stack buffer, then feeds the const char * stream at vtable
 // +0x38. m_prefix sits at +0x9e70 and m_radix at +0x9e80 in the retail
 // object, so the shim pads the members to those offsets.
+// The unsigned overload below shares this upstream class layout and compiler flags.
 
 #include <stdlib.h>
 #include <string.h>
@@ -29,6 +30,7 @@ public:
 	virtual void pad13();
 	virtual Debug &operator<<(char const *);
 	Debug &operator<<(long);
+	Debug &operator<<(unsigned);
 	char m_pad[0x9e6c];
 	char m_prefix[16];
 	int m_radix;
@@ -42,4 +44,12 @@ Debug &Debug::operator<<(long val)
 	char help[1 + 32 + 1];
 	AddOutput(m_prefix, strlen(m_prefix));
 	return (*this) << _itoa(val, help, m_radix);
+}
+
+// Debug::operator<<(unsigned), retail at 0x0088C100
+Debug &Debug::operator<<(unsigned val)
+{
+	char help[32 + 1];
+	AddOutput(m_prefix, strlen(m_prefix));
+	return (*this) << _ultoa(val, help, m_radix);
 }
