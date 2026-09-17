@@ -72,6 +72,7 @@ protected:
 	ScriptGroup *findGroup(AsciiString name, AsciiString *canonicalOut);
 	Script *findScript(AsciiString name, AsciiString *canonicalOut);
 	void disableScript(ScriptAction *pAction);
+	void enableScript(ScriptAction *pAction);
 
 private:
 	char m_pad[0x1708C];
@@ -93,5 +94,23 @@ void ScriptEngine::disableScript(ScriptAction *pAction)
 		AsciiString canonical =
 			((BFMEScriptEngineFlagLookup *)this)->canonicalFlagName(name);
 		m_listener->notify(name, canonical, false);
+	}
+}
+
+// ?enableScript@ScriptEngine@@IAEXPAVScriptAction@@@Z
+void ScriptEngine::enableScript(ScriptAction *pAction)
+{
+	AsciiString name = pAction->getParameter(0)->getString();
+	ScriptGroup *pGroup = findGroup(name, 0);
+	if (pGroup)
+		pGroup->setActive(true);
+	Script *pScript = findScript(name, 0);
+	if (pScript)
+		pScript->setActive(true);
+	if (m_listener)
+	{
+		AsciiString canonical =
+			((BFMEScriptEngineFlagLookup *)this)->canonicalFlagName(name);
+		m_listener->notify(name, canonical, true);
 	}
 }
