@@ -78853,6 +78853,7 @@ name,address,notes
 ?countInverseIntersection@?$BitFlags@$0BB@@@QBEHABV1@@Z,0x00003873,pinharvest x1 (thunk)
 ?countInverseIntersection@?$BitFlags@$0HF@@@QBEHABV1@@Z,0x000497D3,"ILT the SparseMatchFinder count forwarder encodes"
 ?countObjects@Player@@QAEHV?$BitFlags@$0MA@@@0@Z,0x0001FF1E,Player faction-building count helper called by evaluatePlayerHasNOrFewerFactionBuildings
+?countObjects@Rva00047172TeamCall@@QAEHV?$BitFlags@$0MA@@@0@Z,0x00047172,address-derived ABI adapter for the BFME Team counter at the retail ILT; 0x00047172 jumps to the matched body at 0x000F2770
 ?countObjects@TeamPrototype@@QAEHV?$BitFlags@$0MA@@@0@Z,0x000F40E0,Actual 151-byte TeamPrototype counter body; Player countObjects typed BitFlags192 caller encodes ILT0xCC11; two six-word masks and ret0x30; instance list at +0x274 and Team counter independently audited
 ?countObjectsByThingTemplate@Player@@QBEXHPBQBVThingTemplate@@_NPAH1@Z,0x00048D79,retail target of ProductionPrerequisite::calcNumPrereqUnitsOwned call; Player class not yet converted for this method
 ?countObjectsByThingTemplate@Team@@QBEXHPBQBVThingTemplate@@_NPAH1@Z,0x00010181,Open-BFME5 ILT thunk; ?countObjectsByThingTemplate@TeamPrototype@@QBEXHPBQBVThingTemplate@@_NPAH1@Z at 0x000F4030 hands all five arguments to it once per team on the instance list

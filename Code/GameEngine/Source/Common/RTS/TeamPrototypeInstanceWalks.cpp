@@ -181,6 +181,16 @@ private:
 	Team *m_cur;
 };
 
+// The retail ILT at 0x00047172 reaches Team::countObjects at 0x000F2770.
+// Its name uses the older BitFlags<116> decoration, but the BFME caller passes
+// two six-word values. Keep this adapter address-derived until the ABI split
+// has a source declaration that proves a semantic owner.
+class Rva00047172TeamCall
+{
+public:
+	Int countObjects(KindOfMaskType setMask, KindOfMaskType clearMask);
+};
+
 class TeamTemplateInfo
 {
 public:
@@ -198,6 +208,7 @@ public:
 	Bool hasAnyBuildings( KindOfMaskType kindOf, Bool bfmeFlag );
 	Bool hasAnyObjects( const ObjectFilter *filter, Bool bfmeFlag ) const;
 	Bool hasAnyObjects( Bool bfmeFlag );
+	Int countObjects( KindOfMaskType setMask, KindOfMaskType clearMask );
 	Team *findTeamByID( UnsignedInt teamID );
 	void damageTeamMembers( Real amount );
 	virtual void xfer( Xfer *xfer );				// vptr at +0x00
@@ -268,6 +279,17 @@ Bool TeamPrototype::hasAnyObjects( Bool bfmeFlag )
 	}
 
 	return false;
+}
+
+// ?countObjects@TeamPrototype@@QAEHV?$BitFlags@$0MA@@@0@Z
+Int TeamPrototype::countObjects( KindOfMaskType setMask, KindOfMaskType clearMask )
+{
+	Int retVal = 0;
+	for( BfmeTeamInstanceIterator iter = iterate_TeamInstanceList(); !iter.done(); iter.advance() )
+	{
+		retVal += ((Rva00047172TeamCall *)iter.cur())->countObjects( setMask, clearMask );
+	}
+	return retVal;
 }
 
 // ?findTeamByID@TeamPrototype@@QAEPAVTeam@@I@Z
