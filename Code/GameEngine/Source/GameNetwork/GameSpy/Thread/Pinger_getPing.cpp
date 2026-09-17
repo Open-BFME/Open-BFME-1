@@ -64,6 +64,14 @@ public:
 	{
 		return m_data ? &m_data->m_text[0] : g_bfmeEmptyAscii;
 	}
+	void __cdecl format(AsciiString fmt, ...);
+	void concat(const AsciiString &other)
+	{
+		const StringBase<char> *src = (const StringBase<char> *)&other;
+		((StringBase<char> *)this)->concat(
+			src->m_data ? &src->m_data->data[0] : (const char *)"",
+			src->m_data ? src->m_data->length : 0);
+	}
 
 private:
 	BfmeAsciiStringData *m_data;
@@ -73,6 +81,7 @@ class Pinger
 {
 public:
 	virtual int getPing(AsciiString hostname);
+	virtual AsciiString getPingString(int timeout);
 
 private:
 	MutexClass m_requestMutex;
@@ -94,4 +103,23 @@ int Pinger::getPing(AsciiString hostname)
 		return it->second;
 
 	return -1;
+}
+
+AsciiString Pinger::getPingString(int timeout)
+{
+	MutexClass::LockClass m(m_pingMapMutex);
+
+	AsciiString pingString;
+	AsciiString tmp;
+	for (_STL::map<_STL::string, int>::const_iterator it = m_pingMap.begin();
+		it != m_pingMap.end(); ++it)
+	{
+		int ping = it->second;
+		if (ping < 0 || ping > timeout)
+			ping = timeout;
+		ping = ping * 255 / timeout;
+		tmp.format(AsciiString("%2.2X"), ping);
+		pingString.concat(tmp);
+	}
+	return pingString;
 }
