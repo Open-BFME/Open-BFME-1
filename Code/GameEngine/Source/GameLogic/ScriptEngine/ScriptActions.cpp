@@ -4155,32 +4155,38 @@ void ScriptActions::doRevealMapEntire(const AsciiString& playerName)
 	}
 }
 
-// ?doRevealMapEntirePermanently@ScriptActions@@IAEX_NABVAsciiString@@@Z present-unmatched
+extern PartitionManager *TheShroudManager;
+
 void ScriptActions::doRevealMapEntirePermanently( Bool reveal, const AsciiString& playerName )
 {
-	Player* player = TheScriptEngine->getPlayerFromAsciiString(playerName);
-	if (player && playerName.isNotEmpty())
-	{
-		if( reveal )
-			ThePartitionManager->revealMapForPlayerPermanently( player->getPlayerIndex() );
-		else
-			ThePartitionManager->undoRevealMapForPlayerPermanently( player->getPlayerIndex() );
-	}
-	else
+	PlayerMaskType mask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)
+		->getPlayerMaskFromAsciiString(playerName, NULL);
+	if (!mask)
 	{
 		for (Int i=0; i<ThePlayerList->getPlayerCount(); ++i)
 		{
 			Player *player = ThePlayerList->getNthPlayer(i);
-			if (player->getPlayerType() == PLAYER_HUMAN)
+			if (!*reinterpret_cast<void **>(reinterpret_cast<unsigned char *>(player) + 0x2c))
 			{
-				DEBUG_LOG(("ScriptActions::doRevealMapEntirePermanently() for player %d\n", i));
-				if( reveal )
-					ThePartitionManager->revealMapForPlayerPermanently( i );
+				if (reveal)
+					TheShroudManager->revealMapForPlayerPermanently(i);
 				else
-					ThePartitionManager->undoRevealMapForPlayerPermanently( i );
+					TheShroudManager->undoRevealMapForPlayerPermanently(i);
 			}
 		}
+		return;
 	}
+
+	do {
+		Player *player = ThePlayerList->getEachPlayerFromMask(mask);
+		if (player)
+		{
+			if (reveal)
+				TheShroudManager->revealMapForPlayerPermanently(player->getPlayerIndex());
+			else
+				TheShroudManager->undoRevealMapForPlayerPermanently(player->getPlayerIndex());
+		}
+	} while (mask);
 }
 
 //-------------------------------------------------------------------------------------------------
