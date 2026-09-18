@@ -1,8 +1,3 @@
-Code/Libraries/Source/WWVegas/WWLib/INIPreprocessMacro.cpp	Code/GameEngine/Source/Common/INI/INIPreprocessMacro.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INITerrain.cpp	Code/GameEngine/Source/Common/INI/INITerrain.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INITerrainRoad.cpp	Code/GameEngine/Source/Common/INI/INITerrainRoad.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INIWaterTextureList.cpp	Code/GameEngine/Source/Common/INI/INIWaterTextureList.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INIWindowTransition.cpp	Code/GameEngine/Source/Common/INI/INIWindowTransition.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INI_getNextAsciiString_Thunk.cpp	Code/GameEngine/Source/Common/INI/INI_getNextAsciiString_Thunk.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INI_getNextQuotedAsciiString_Thunk.cpp	Code/GameEngine/Source/Common/INI/INI_getNextQuotedAsciiString_Thunk.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INI_parseBitString16.cpp	Code/GameEngine/Source/Common/INI/INI_parseBitString16.cpp	INI
