@@ -7039,6 +7039,7 @@ name,address,notes
 ??1Gen_uw_0000de68@@QAE@XZ,0x0000DE68,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uw_0000de81@@QAE@XZ,0x0000DE81,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uw_0000e746@@QAE@XZ,0x0000E746,gen-uw-pin dtor target read from the retail funclet bytes
+??1BfmeLexEAN@@QAE@XZ,0x0000E7A0,0x002EC840 EH cleanup calls the 0x0035EE50 parser flush on its BfmeLexEAN local
 ??1Gen_uw_0000e7a0@@QAE@XZ,0x0000E7A0,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uw_0000ea43@@QAE@XZ,0x0000EA43,gen-uw-pin dtor target read from the retail funclet bytes
 ??1Gen_uw_0000eea3@@QAE@XZ,0x0000EEA3,gen-uw-pin dtor target read from the retail funclet bytes
@@ -85457,6 +85458,7 @@ name,address,notes
 ?rva002BDBF0@GiantBirdFollowPathState@@QAE_NXZ,0x002BDBF0,Address-qualified helper called by vtable-proven GiantBirdFollowPathState update; ILT24884 to312B body; state+1C owner and AL boolean return with ret at2BDD27 independently verified
 ?rva002E3360ScanEventKeys@LuaScriptEngine@@QAEXXZ,0x002E3360,thiscall no-arg tail call of 0x002EC990; walks the 13 eight-byte event slots the LuaScriptEngine constructor builds at this+0x10 and calls KEYNAME on each slot whose flag byte is zero
 ?rva002EC840ParseTokenFile@LuaScriptEngine@@QAEXPBD_N@Z,0x002EC840,thiscall ret 8 body reached only from the 0x002EC990 registration site with Data\Scripts\ScriptEvents.xml; opens the file through TheFileSystem lexes it with BfmeLexEAN 0x0035ED90 and stores the second argument in the byte at this+0xb4
+?rva002EC770ParseToken@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x0000ED95,0x002EC840 passes its BfmeLexEAN parser to this helper through ILT 0x0000ED95; address-derived owner and ABI follow the direct ecx and stack argument at the aligned call site
 ?rva002ED2E0@Display@@QAEXMMMM@Z,0x000327F4,address-anchored Display movie-viewport setup called immediately before fullscreen playback
 ?rva00362360UnguardedLinearInsert@@YAXPAURva00364980HeapElement@@U1@URva00364980HeapCompare@@@Z,0x000146FA,REL32 unguarded-linear-insert target from 0x00363BAA
 ?rva00362400PushHeap@@YAXPAURva00364980HeapElement@@HHU1@URva00364980HeapCompare@@@Z,0x0002DE8E,REL32 push-heap target from 0x00363D53
