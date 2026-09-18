@@ -400,13 +400,14 @@ inline Bool inList(Int value, Int count, const Int idxList[])
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-static void buildNonDupRandomIndexList(Int range, Int count, Int idxList[])
+static void buildStructureToppleRandomIndexList(Int range, Int count, Int idxList[])
 {
 	for (Int i = 0; i < count; ++i)
 	{
 		Int idx;
 		do
 		{
+			#line 536 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\StructureToppleUpdate.cpp"
 			idx = GameLogicRandomValue(0, range-1);
 		} 
 		while (inList(idx, i, idxList));
@@ -416,10 +417,25 @@ static void buildNonDupRandomIndexList(Int range, Int count, Int idxList[])
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?doPhaseStuff@StructureToppleUpdate@@IAEXW4StructureTopplePhaseType@@PBUCoord3D@@@Z present-unmatched
+struct StructureToppleBfmeModuleDataLayout
+{
+	unsigned char m_beforeOcls[0x6c];
+	OCLVec m_ocls[ST_PHASE_COUNT];
+	UnsignedInt m_oclCount[ST_PHASE_COUNT];
+};
+
+class StructureCollapseOCLShim
+{
+public:
+	Object *create(const Object *primaryObject, const Coord3D *primaryPosition,
+		const Coord3D *secondaryPosition, UnsignedInt lifetimeFrames) const;
+};
+
 void StructureToppleUpdate::doPhaseStuff(StructureTopplePhaseType stphase, const Coord3D *target)
 {
-	const StructureToppleUpdateModuleData* d = getStructureToppleUpdateModuleData();
+	const StructureToppleBfmeModuleDataLayout *d =
+		reinterpret_cast<const StructureToppleBfmeModuleDataLayout *>(
+			getStructureToppleUpdateModuleData());
 	Int i, idx, count, listSize;
 	Int idxList[MAX_IDX];
 
@@ -427,14 +443,16 @@ void StructureToppleUpdate::doPhaseStuff(StructureTopplePhaseType stphase, const
 	if (listSize > 0)
 	{
 		count = d->m_oclCount[stphase];
-		buildNonDupRandomIndexList(listSize, count, idxList);
+		buildStructureToppleRandomIndexList(listSize, count, idxList);
 		for (i = 0; i < count; ++i)
 		{
 			idx = idxList[i];
 			const OCLVec& v = d->m_ocls[stphase];
 			DEBUG_ASSERTCRASH(idx>=0&&idx<v.size(),("bad idx"));
 			const ObjectCreationList* ocl = v[idx];
-			ObjectCreationList::create(ocl, getObject(), target, NULL, INVALID_ANGLE );
+			if (ocl != NULL)
+				reinterpret_cast<const StructureCollapseOCLShim *>(ocl)->create(
+					getObject(), target, NULL, 0);
 		}
 	}
 }

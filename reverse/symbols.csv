@@ -88385,3 +88385,4 @@ _isprint,0x009F7B8E,retail isprint import thunk; 0x007F91D0 passes four signed c
 ?get_allocator@?$vector@U?$pair@$$CBUGen_t_0013a700_k4@@UGen_t_0013a700_p12cd@@@_STL@@V?$allocator@U?$pair@$$CBUGen_t_0013a700_k4@@UGen_t_0013a700_p12cd@@@_STL@@@2@@_STL@@QBE?AV?$allocator@U?$pair@$$CBUGen_t_0013a700_k4@@UGen_t_0013a700_p12cd@@@_STL@@@2@XZ,0x0013A9D0,allocator accessor called through ILT 0x0001FBA4 by the 0x0013BB90 vector copy body
 ??0?$_Vector_base@VLivingWorldCampaignManager@@V?$allocator@VLivingWorldCampaignManager@@@_STL@@@_STL@@QAE@IABV?$allocator@VLivingWorldCampaignManager@@@1@@Z,0x0000219E
 ?get_allocator@?$vector@VLivingWorldCampaignManager@@V?$allocator@VLivingWorldCampaignManager@@@_STL@@@_STL@@QBE?AV?$allocator@VLivingWorldCampaignManager@@@2@XZ,0x00016699
+?buildStructureToppleRandomIndexList@@YAXHHQAH@Z,0x002AEFB0,StructureToppleUpdate helper identity proven by the retail call at 0x002AF6D0 and the matching 70-byte body
