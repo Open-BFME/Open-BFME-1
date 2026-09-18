@@ -88,11 +88,11 @@ private:
 
 Bool DelayedWorldTextEventModule::rva003BC1E0()
 {
-	Bool exists;
-	UnicodeString text = TheGameText->fetch( m_text, &exists );
-	if( !exists )
+	Bool textExists;
+	UnicodeString localizedText = TheGameText->fetch( m_text, &textExists );
+	if( !textExists )
 		return false;
 
-	TheInGameUI->rva0043BC10( text, false );
+	TheInGameUI->rva0043BC10( localizedText, false );
 	return true;
 }
