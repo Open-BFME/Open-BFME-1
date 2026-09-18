@@ -333,25 +333,109 @@ void AI::init( void )
 /**
  * Reset the AI system in preparation for a new map
  */
-// ?reset@AI@@UAEXXZ present-unmatched
+class BfmeTAiDataDeleteView
+{
+public:
+	virtual void deleteThis(int);
+};
+
+class BfmeTAiDataResetView
+{
+private:
+	char m_padding[0xf8];
+
+public:
+	TAiData *m_next;
+};
+
+extern "C" void Gen0002857EFreeListNode(void *, unsigned int);
+#pragma comment(linker, "/alternatename:_Gen0002857EFreeListNode=?_M_deallocate@?$__node_alloc@$00$0A@@_STL@@CAXPAXI@Z")
+
+struct BfmeAIResetGroupNode
+{
+	BfmeAIResetGroupNode *m_next;
+	BfmeAIResetGroupNode *m_previous;
+	AIGroup *m_group;
+
+	__forceinline BfmeAIResetGroupNode *findGroup(AIGroup *group)
+	{
+		BfmeAIResetGroupNode *node = m_next;
+		while (node != this && node->m_group != group)
+			node = node->m_next;
+		return node;
+	}
+};
+
+class BfmeAIResetGroupList
+{
+public:
+	__forceinline unsigned int size()
+	{
+		unsigned int count = 0;
+		BfmeAIResetGroupNode *node = m_sentinel->m_next;
+		while (node != m_sentinel)
+		{
+			node = node->m_next;
+			++count;
+		}
+		return count;
+	}
+
+	__forceinline AIGroup *front()
+	{
+		return m_sentinel->m_next->m_group;
+	}
+
+	__forceinline void erase(BfmeAIResetGroupNode *node)
+	{
+		BfmeAIResetGroupNode *next = node->m_next;
+		BfmeAIResetGroupNode *previous = node->m_previous;
+		previous->m_next = next;
+		next->m_previous = previous;
+		Gen0002857EFreeListNode(node, 0xc);
+	}
+
+	__forceinline void pop_front()
+	{
+		erase(m_sentinel->m_next);
+	}
+
+	BfmeAIResetGroupNode *m_sentinel;
+};
+
+class BfmeAIResetListView
+{
+private:
+	char m_padding[0x10];
+
+public:
+	BfmeAIResetGroupList m_groupList;
+};
+
 void AI::reset( void )
 {
 	m_pathfinder->reset();
-	while (m_aiData && m_aiData->m_next) {
+	while (m_aiData && reinterpret_cast<BfmeTAiDataResetView *>(m_aiData)->m_next) {
 		TAiData *cur = m_aiData;
-		m_aiData = m_aiData->m_next;
-		delete cur;
+		m_aiData = reinterpret_cast<BfmeTAiDataResetView *>(m_aiData)->m_next;
+		if (cur)
+			reinterpret_cast<BfmeTAiDataDeleteView *>(cur)->deleteThis(1);
 	}
-	while (m_groupList.size())
+	BfmeAIResetListView *listView = reinterpret_cast<BfmeAIResetListView *>(this);
+	while (listView->m_groupList.size())
 	{
-		AIGroup *groupToRemove = m_groupList.front();
+		AIGroup *groupToRemove = listView->m_groupList.front();
 		if (groupToRemove)
 		{
-			destroyGroup(groupToRemove);
+			BfmeAIResetGroupNode *i = listView->m_groupList.m_sentinel->findGroup(groupToRemove);
+			if (i == listView->m_groupList.m_sentinel)
+				continue;
+			listView->m_groupList.erase(i);
+			delete groupToRemove;
 		}
 		else
 		{
-			m_groupList.pop_front(); // NULL group, just kill from list.  Shouldn't really happen, but just in case.
+			listView->m_groupList.pop_front(); // NULL group, just kill from list.  Shouldn't really happen, but just in case.
 		}
 	}
 	m_nextGroupID = 0;
@@ -1075,5 +1159,3 @@ void AI::loadPostProcess( void )
 {
 
 }  // end loadPostProcess
-
-
