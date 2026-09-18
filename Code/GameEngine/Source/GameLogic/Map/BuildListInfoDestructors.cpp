@@ -1,21 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
 
-template <typename T>
-class StringBase
-{
-public:
-    ~StringBase()
-    {
-        releaseBuffer();
-    }
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-    void *m_data;
-
-private:
-    void releaseBuffer();
-};
-
-class BFMERetailAsciiString : private StringBase<char>
+// Keep the original inline destructor layer over the canonical string type:
+// direct AsciiString members exchange ESI/EDI allocation in this retail body.
+// This wrapper adds no storage and delegates the same 0x00887940 teardown.
+class BFMERetailAsciiString : public AsciiString
 {
 public:
     ~BFMERetailAsciiString() {}
@@ -30,6 +20,9 @@ public:
     virtual void loadPostProcess() = 0;
 };
 
+// Complete destructor 0x00194320 also emits scalar wrapper 0x00195550.
+// Constructor 0x00194210, its installed vtable, and named SidesList callers
+// independently establish the BuildListInfo identity and string fields.
 class BuildListInfo : public BfmeBase
 {
 public:

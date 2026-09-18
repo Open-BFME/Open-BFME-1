@@ -4773,7 +4773,7 @@ m_buildingName(AsciiString::TheEmptyString)
 /**
  BuildListInfo - Destructor - note - if linked, deletes linked items.
 */
-// byte-exact reconstruction: Code/GameEngine/Source/Common/BuildListInfoDestructorThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/BuildListInfoDestructors.cpp
 // ??1BuildListInfo@@MAE@XZ present-unmatched
 BuildListInfo::~BuildListInfo(void)
 {
