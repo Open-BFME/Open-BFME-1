@@ -120,3 +120,18 @@ void vector<Type, Allocator>::_M_insert_overflow(
 
 template class vector<unsigned short, allocator<unsigned short> >;
 }
+
+class Rva0000791EVectorOverflowThunk
+	: public _STL::vector<unsigned short, _STL::allocator<unsigned short> >
+{
+public:
+	void forward(unsigned short *position, const unsigned short &value,
+		const _STL::__true_type &tag, unsigned int fillLength, bool atEnd);
+};
+
+void Rva0000791EVectorOverflowThunk::forward(
+	unsigned short *position, const unsigned short &value,
+	const _STL::__true_type &tag, unsigned int fillLength, bool atEnd)
+{
+	_M_insert_overflow(position, value, tag, fillLength, atEnd);
+}
