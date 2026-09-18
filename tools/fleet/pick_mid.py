@@ -50,10 +50,15 @@ landed.sort()
 import bisect
 
 records = re_log.latest_records()
+attempts = eligibility.attempt_counts()
+unlocked = eligibility.unlocked_rvas()
 
 
 def blocked(rva):
     a = int(rva, 16)
+    # 5+ verdicts: 1-2% land rate per session (2026-09-17); see pick_anon
+    if attempts.get(a, 0) >= eligibility.ATTEMPT_CAP and a not in unlocked:
+        return True
     return eligibility.retired(a, latest) or eligibility.boundary_suspect(a, records)
 
 best = None

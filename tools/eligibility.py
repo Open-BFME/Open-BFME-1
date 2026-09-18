@@ -91,6 +91,12 @@ def stash(rva):
     return re_log.stash_for(rva)
 
 
+# Verdicts after which a body leaves the anonymous and mid lanes unless it is
+# unlocked. Measured 2026-09-17 over 3,000 verdicts: 5+ prior verdicts land at
+# 1-2% per session, fresh bodies at ~7%. Same number as next_work's finish cap.
+ATTEMPT_CAP = 5
+
+
 def attempt_counts(path=None):
     """{rva:int -> number of five-field verdict rows}, any status."""
     path = path or re_log.RE_ATTEMPTS

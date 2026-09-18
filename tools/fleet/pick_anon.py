@@ -75,6 +75,12 @@ for row in rows:
     # a body with a lead is served however often blind sessions bounced off it
     if w == 0 and tried >= 2:
         continue
+    # 2026-09-17: bodies with 5+ verdicts land at 1-2% per session against
+    # ~7% for fresh ones; a sixth pass on the same evidence is the treadmill
+    # the finish tier already caps. Only an unlocked body (new shared fix)
+    # earns another draw.
+    if tried >= eligibility.ATTEMPT_CAP and rva not in unlocked:
+        continue
     if eligibility.boundary_suspect(rva, records):
         continue
     cands.append((w, int(row.get("target_size") or 0), row["target_rva"]))

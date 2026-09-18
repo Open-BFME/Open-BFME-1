@@ -152,7 +152,18 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         run("git", "reset", "-q")
         sys.exit("harvest: a retired path is staged; hands needed")
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT).returncode:
-        run("git", "commit", "-q", "-m", msg + "\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>")
+        # seats' add_match and the watchdog run git here too; a transient
+        # .git/index.lock is not a hook failure, so wait it out (3 x 20 s)
+        import time
+        for attempt in range(4):
+            r = subprocess.run(["git", "commit", "-q", "-m", msg + "\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"],
+                               cwd=ROOT, capture_output=True, text=True, errors="replace")
+            if r.returncode == 0:
+                break
+            if "index.lock" not in r.stderr or attempt == 3:
+                sys.stdout.write(r.stdout); sys.stderr.write(r.stderr)
+                sys.exit("harvest: commit failed (see hook output above)")
+            time.sleep(20)
     old = out("git", "rev-parse", "HEAD")
     portable_lock.unlock(h)
 
