@@ -300,17 +300,44 @@ ShaderClass ShaderClass::_PresetAlpha2DShader(SC_ALPHA_2D);
 //         Private Functions                                               
 //-----------------------------------------------------------------------------
 
+// BFME inserted fields before the tree records and in the tail, so the Zero Hour
+// header cannot describe the offsets used by retail's otherwise shared cull body.
+struct BFMETreeCullTree
+{
+	Vector3 m_location;
+	char m_unreconstructed_00c[0x34];
+	Int m_treeType;
+	Bool m_visible;
+	char m_unreconstructed_045[3];
+	SphereClass m_bounds;
+	Real m_sortKey;
+	char m_unreconstructed_05c[0x48];
+};
+
+struct BFMETreeCullView
+{
+	char m_unreconstructed_000000[0x1548];
+	BFMETreeCullTree m_trees[12000];
+	Int m_numTrees;
+	Bool m_anythingChanged;
+	Bool m_anyPushChanged;
+	Bool m_updateAllKeys;
+	char m_unreconstructed_1e1ccf[0x1709];
+	Vector3 m_cameraLookAtVector;
+	char m_unreconstructed_1e33e4[0x53c];
+	Int m_treeIndexStep;
+};
+
 //=============================================================================
 // W3DTreeBuffer::cull
 //=============================================================================
 /** Culls the trees, marking the visible flag.  If a tree becomes visible, it sets
 it's sortKey */
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_0071D130_W3DTreeBuffer_Cull.cpp
-// ?cull@W3DTreeBuffer@@IAEXPBVCameraClass@@@Z present-unmatched
+// ?cull@W3DTreeBuffer@@IAEXPBVCameraClass@@@Z
 void W3DTreeBuffer::cull(const CameraClass * camera)
 {
-	Int curTree;
+	BFMETreeCullView *self = (BFMETreeCullView *)this;
 
 	// Calulate the vector direction that the camera is looking at.
 	Matrix3D camera_matrix = camera->Get_Transform();
@@ -318,26 +345,32 @@ void W3DTreeBuffer::cull(const CameraClass * camera)
 	float x = zmod * camera_matrix[0][2] ;
 	float y = zmod * camera_matrix[1][2] ;
 	float z = zmod * camera_matrix[2][2] ;
-	m_cameraLookAtVector.Set(x,y,z);
+	self->m_cameraLookAtVector.Set(x,y,z);
 
-	for (curTree=0; curTree<m_numTrees; curTree++) {
-		Bool doKey = false;	// We calculate the key when a tree becomes visible.
-		Bool visible = !camera->Cull_Sphere(m_trees[curTree].bounds);
-		if (visible != m_trees[curTree].visible) {
-			m_trees[curTree].visible=visible;
-			m_anythingChanged = true;
+	Int curTree;
+	for (curTree=0; curTree<self->m_numTrees; ) {
+		Bool doKey = false;
+		Bool visible = !camera->Cull_Sphere(self->m_trees[curTree].m_bounds);
+		if (visible != self->m_trees[curTree].m_visible) {
+			self->m_trees[curTree].m_visible = visible;
+			self->m_anythingChanged = true;
 			if (visible) {
 				doKey = true;
 			}
 		}
-		// Also calculate sort key if a tree is visible, and the view changed setting m_updateAllKeys to true.
-		if (doKey || (visible&&m_updateAllKeys)) {
-			// The sort key is essentially the distance of location in the direction of the 
-			// camera look at.
-			m_trees[curTree].sortKey = Vector3::Dot_Product(m_trees[curTree].location, m_cameraLookAtVector); 
+		if (doKey || (visible && self->m_updateAllKeys)) {
+			// The scoped view otherwise reverses three equivalent x87 loads under MSVC 7.1.
+			const volatile Real &locationX = self->m_trees[curTree].m_location.X;
+			const volatile Real &lookAtY = self->m_cameraLookAtVector.Y;
+			const volatile Real &lookAtZ = self->m_cameraLookAtVector.Z;
+			self->m_trees[curTree].m_sortKey =
+				locationX * self->m_cameraLookAtVector.X +
+				self->m_trees[curTree].m_location.Y * lookAtY +
+				self->m_trees[curTree].m_location.Z * lookAtZ;
 		}
+		curTree += self->m_treeIndexStep;
 	}
-	m_updateAllKeys = false;
+	self->m_updateAllKeys = false;
 }
 //=============================================================================
 // W3DTreeBuffer::getPartitionBucket
@@ -2084,7 +2117,3 @@ void W3DTreeBuffer::loadPostProcess( void )
 {
 	// empty. jba [8/11/2003]	
 }  // end loadPostProcess
-
-
-
-
