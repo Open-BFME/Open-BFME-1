@@ -438,6 +438,11 @@ void Rva0069BC20Return( void )
 {
 }
 
+// ret -- an address-derived empty leaf with no identity evidence.
+void Rva0052CF80Return( void )
+{
+}
+
 // mov eax,[ecx+4] / ret.  The field's owner is not identified.
 class Rva00220A30DwordGetter
 {
