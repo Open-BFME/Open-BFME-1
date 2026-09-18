@@ -10180,6 +10180,7 @@ name,address,notes
 ??_7AIAttackMeleeHordeWaitPathState@@6B@,0x00C97BE0,vtable whose slots name AIAttackMeleeHordeWaitPathState
 ??_7AIAttackMeleeHordeWaitState@@6B@,0x00C97B68,vtable whose slots name AIAttackMeleeHordeWaitState
 ??_7AIAttackMeleeSquishState@@6B@,0x0109A738,exact constructor for ??_GAIAttackMeleeSquishState@@MAEPAXI@Z installs this dedicated vtable
+??_7AIAttackMoveStateMachine@@6B@,0x01097468,canonical AIStates.cpp class and exact constructor 0x00181F60 independently establish the dedicated vtable stored at this+0
 ??_7AIAttackPursueTargetState@@6B@,0x0109A5C8,exact constructor 0x0017F700 installs this dedicated vtable
 ??_7AIAttackSquadState@@6B@,0x01097E30,exact constructor 0x00171330 installs this dedicated vtable
 ??_7AIAttackSwoopThenIdleStateMachine@@6B@,0x010C7460,outer this preserved in ESI at 006BF49A and vptr installed at 006BF4D3; matched factories 002BFA80 and 002C0370 name class and ctor ILT25095
