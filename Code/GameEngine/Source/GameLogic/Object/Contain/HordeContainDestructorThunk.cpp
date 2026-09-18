@@ -6,7 +6,7 @@
 // It tails into the same base destructor at 0x0003FF49 as SiegeEngineContain,
 // so it stands on the same base: OpenContain's nine vptrs (0x00, 0x0C, 0x10,
 // 0x20, 0x24, 0x28, 0x2C, 0x30, 0x34), a tenth at 0xD4, and the base ending at
-// 0xE4 -- the split SiegeEngineContainDestructorThunk.cpp establishes. Where
+// 0xE4 -- the split SiegeEngineContainDestructors.cpp establishes. Where
 // SiegeEngineContain puts a member at 0xE4, HordeContain puts an eleventh
 // polymorphic base there, then 0x2C bytes of data before its members.
 //

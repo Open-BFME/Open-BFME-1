@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// Complete destructor 0x0022B870 also emits scalar wrapper 0x0022BDB0.
+// Constructor 0x0022BC50, module name and retail destructor ILT 0x0004AB47
+// independently establish this shared class identity.
 
 // SiegeEngineContain's destructor, lifted from its MASM dump to C++.
 //
