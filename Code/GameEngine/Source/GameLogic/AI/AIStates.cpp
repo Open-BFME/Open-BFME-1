@@ -7076,7 +7076,7 @@ AIAttackState::AIAttackState( StateMachine *machine, Bool follow, Bool attacking
 }
 
 //----------------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/Rva0017CA40AIAttackStateDestructor.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIAttackStateDestructors.cpp
 // ??1AIAttackState@@MAE@XZ present-unmatched
 AIAttackState::~AIAttackState()
 {
