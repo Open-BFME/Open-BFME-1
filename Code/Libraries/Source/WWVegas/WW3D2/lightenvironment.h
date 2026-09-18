@@ -140,6 +140,12 @@ protected:
 	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/lightenvironment.h
 	struct InputLightStruct
 	{
+		InputLightStruct() :
+			Direction(0, 0, 0), Ambient(0, 0, 0), Diffuse(0, 0, 0),
+			DiffuseRejected(false), m_point(false), m_center(0, 0, 0),
+			m_innerRadius(0.0f), m_outerRadius(0.0f),
+			m_ambient(0, 0, 0), m_diffuse(0, 0, 0) {}
+
 		void				Init(const LightClass & light,const Vector3 & object_center);
 		void				Init_From_Point_Or_Spot_Light(const LightClass & light,const Vector3 & object_center);
 		void				Init_From_Directional_Light(const LightClass & light,const Vector3 & object_center);
@@ -184,4 +190,3 @@ protected:
 
 
 #endif //LIGHTENVIRONMENT_H
-

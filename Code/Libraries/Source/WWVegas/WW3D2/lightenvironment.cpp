@@ -248,9 +248,11 @@ void LightEnvironmentClass::Reset(const Vector3 & object_center,const Vector3 & 
 }
 
 
-// ?Add_Light@LightEnvironmentClass@@QAEXABVLightClass@@@Z present-unmatched
 void LightEnvironmentClass::Add_Light(const LightClass & light)
 {
+	LightEnvironmentClass *bfme = reinterpret_cast<LightEnvironmentClass *>(
+		reinterpret_cast<char *>(this) + 4);
+
 	// Jani: Don't accept lights that are almost black
 	Vector3 diff;
 	light.Get_Diffuse(&diff);
@@ -263,15 +265,15 @@ void LightEnvironmentClass::Add_Light(const LightClass & light)
 	*/
 
 	InputLightStruct new_light;
-	new_light.Init(light, ObjectCenter);
+	new_light.Init(light, bfme->ObjectCenter);
 
 	// If we have the fill light set, we also want to the diffuse light to be modified by the intensity of the light source
-	if(FillIntensity) new_light.Diffuse *= light.Get_Intensity();
+	if(bfme->FillIntensity) new_light.Diffuse *= light.Get_Intensity();
 
 	/*
 	** Add in the ambient component
 	*/
-	OutputAmbient += new_light.Ambient;
+	bfme->OutputAmbient += new_light.Ambient;
 
 	/*
 	** If not rejected, add the directional component to the active lights
@@ -279,22 +281,22 @@ void LightEnvironmentClass::Add_Light(const LightClass & light)
 	if (new_light.DiffuseRejected == false || new_light.m_point) {
 
 		// Insert the light into the sorted list of InputLights if it's contribution is greater than the any of the current number of lights
-		for (int light_index=0; light_index < LightCount; light_index++) {
-			if (new_light.Contribution() > InputLights[light_index].Contribution()) {
+		for (int light_index=0; light_index < bfme->LightCount; light_index++) {
+			if (new_light.Contribution() > bfme->InputLights[light_index].Contribution()) {
 				
 				// Move back the lights in the InputLights Array to make space for the new light.
 				// The last light might be discarded if it moves off the array as it is the weakest light in the list.
-				for (int i = LightCount; i > light_index; --i) {
-					if (i < MAX_LIGHTS) {
-						InputLights[i] = InputLights[i - 1];
-					}
+			for (int i = bfme->LightCount; i > light_index; --i) {
+				if (i < MAX_LIGHTS) {
+					bfme->InputLights[i] = bfme->InputLights[i - 1];
 				}
+			}
 
 				// Add the new light into the InputLights List where it belongs
-				InputLights[light_index] = new_light;
+			bfme->InputLights[light_index] = new_light;
 
 				// Increment the light count if we have not reach the maximum lights limit yet
-				LightCount = min(LightCount + 1, (int)MAX_LIGHTS);
+			bfme->LightCount = min(bfme->LightCount + 1, (int)MAX_LIGHTS);
 
 				// Since we have inserted a new light, we are done for this function
 				return;
@@ -302,9 +304,9 @@ void LightEnvironmentClass::Add_Light(const LightClass & light)
 		}
 
 		// If the light was not inserted but there are still spots empty in the InputLights list, insert the lights at the end of the list
-		if (LightCount < MAX_LIGHTS) {
-			InputLights[LightCount] = new_light;
-			++LightCount;
+		if (bfme->LightCount < MAX_LIGHTS) {
+			bfme->InputLights[bfme->LightCount] = new_light;
+			++bfme->LightCount;
 		}
 	}
 }
