@@ -496,3 +496,15 @@ void Rva002662E0Noop( void )
 void Rva00761CA0Noop( void )
 {
 }
+
+// xor al,al / ret.  The owning type is not identified.
+class Rva00698F10False
+{
+public:
+	bool value( void );
+};
+
+bool Rva00698F10False::value( void )
+{
+	return false;
+}
