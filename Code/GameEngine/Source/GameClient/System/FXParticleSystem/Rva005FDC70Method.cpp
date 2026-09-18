@@ -1,21 +1,17 @@
-// ?method@Rva005FDC70Owner@@QAEXXZ
-// partial score=0.95 date=2026-09-16
-// Full 293-byte boundary 0x005FDC70..0x005FDD95; no stack arguments.
-// Primary slot 1 via ILT 0x37A6 in tables 0x0111282C and 0x01112BAC;
-// matched constructors/factories 0x005E8150 and 0x005FE010 install them.
-// Complete native handle-copy/cleanup and three-vector update. Canonical
-// Coord3D addition plus scalar member multiplies gives 293/293, 14 differing
-// operand bytes, 9 aligned relocations. /Op was neutral. Original name unknown.
+// The slot-1 ILT entries at 0x0111282C and 0x01112BAC target retail RVA
+// 0x005FDC70.  Constructors at 0x005E8150 and 0x005FE010 install those
+// tables, which identifies this method as the tracked particle update.
+// The split coordinate sums preserve retail's x87 evaluation order.
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath
 
 #include "coord3d.h"
 
 inline Coord3D &Coord3D::operator+=(const Coord3DBase &that)
 {
-    x += that.x;
-    y += that.y;
-    z += that.z;
-    return *this;
+	x = *(volatile float *)&x + that.x;
+	y += that.y;
+	z = *(volatile float *)&z + that.z;
+	return *this;
 }
 
 class BfmeHandleERU;
@@ -28,8 +24,6 @@ public:
 	BfmeHandleERU *m_tail;
 };
 
-// This is the proven 12-byte tracked-handle ABI.  Its destructor is the
-// existing BfmeHandleERU::~BfmeHandleERU at the shared 0x00013994 ILT.
 class BfmeHandleERU
 {
 public:
@@ -120,12 +114,12 @@ void Rva005FDC70Owner::method()
 	float *vector = (float *)dispatch->dispatch();
 	if (vector != 0)
 	{
-		particle->m_at1C.x =
-			vector[0] + particle->m_at1C.x + particle->m_at10.x;
-		particle->m_at1C.y =
-			vector[1] + particle->m_at1C.y + particle->m_at10.y;
-		particle->m_at1C.z =
-			vector[2] + particle->m_at10.z + particle->m_at1C.z;
+		float x = vector[0] + particle->m_at1C.x;
+		particle->m_at1C.x = x + particle->m_at10.x;
+		float y = vector[1] + particle->m_at1C.y;
+		particle->m_at1C.y = y + particle->m_at10.y;
+		float z = vector[2] + particle->m_at10.z;
+		particle->m_at1C.z = z + particle->m_at1C.z;
 	}
 
 	particle->m_at04.x = 0;
