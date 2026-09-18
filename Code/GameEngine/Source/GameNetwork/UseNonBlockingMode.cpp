@@ -11,20 +11,20 @@ bool Use_Non_Blocking_Mode(void)
 	LONG regRetval;
 	DWORD bufsiz = 0;
 	DWORD type = 0;
-	DWORD value = 0;
+	DWORD nonBlockingValue = 0;
 
 	regRetval = RegOpenKeyEx(HKEY_LOCAL_MACHINE, "SOFTWARE\\Westwood\\Earth And Beyond Beta 2", 0, KEY_READ, &regKey);
 	if (regRetval != ERROR_SUCCESS)
 		return true;
 
-	bufsiz = sizeof(value);
+	bufsiz = sizeof(nonBlockingValue);
 	type = REG_DWORD;
-	regRetval = RegQueryValueEx(regKey, "UseNonBlockingFTP", 0, &type, (BYTE *)&value, &bufsiz);
+	regRetval = RegQueryValueEx(regKey, "UseNonBlockingFTP", 0, &type, (BYTE *)&nonBlockingValue, &bufsiz);
 
 	RegCloseKey(regKey);
 
 	if (regRetval != ERROR_SUCCESS || type != REG_DWORD)
 		return true;
 
-	return value != 0;
+	return nonBlockingValue != 0;
 }
