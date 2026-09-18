@@ -1,7 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: LevelGrantSpecialPower::friend_newModuleData factory.
+// LevelGrantSpecialPower factories: 0x284-byte data and 0xe8-byte instance.
+// Retail EH metadata links 0x0011FF90 to 0x00C00B00 and 0x00120010
+// to 0x00C00B20; both cleanup handlers release the failed allocation.
 
 class INI;
+class Thing;
+class Module;
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);
@@ -35,7 +39,12 @@ extern "C" void __cdecl LevelGrantSpecialPowerFieldParse(MultiIniFieldParse &par
 class LevelGrantSpecialPower
 {
 public:
+	LevelGrantSpecialPower(Thing *, const ModuleData *);
+	static Module *friend_newModuleInstance(Thing *, const ModuleData *);
 	static ModuleData *friend_newModuleData(INI *ini);
+
+private:
+	unsigned char m_pad[0xe8];
 };
 
 // ?friend_newModuleData@LevelGrantSpecialPower@@SAPAVModuleData@@PAVINI@@@Z
@@ -45,4 +54,10 @@ ModuleData *LevelGrantSpecialPower::friend_newModuleData(INI *ini)
 	if (ini)
 		ini->initFromINIMultiProc(data, &LevelGrantSpecialPowerFieldParse);
 	return (ModuleData *)data;
+}
+
+// ?friend_newModuleInstance@LevelGrantSpecialPower@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
+Module *LevelGrantSpecialPower::friend_newModuleInstance(Thing *thing, const ModuleData *data)
+{
+	return (Module *)new LevelGrantSpecialPower(thing, data);
 }
