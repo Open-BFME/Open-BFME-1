@@ -144,6 +144,7 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
                 bad.setdefault(path, []).append(func.strip())
         for path, funcs in bad.items():
             quarantine(path, funcs)
+            keep.remove(path)
         if bad:
             run("git", "add", "-A", "--", *evidence); unstage_inflight()
             print(f"harvest: quarantined {len(bad)} source(s) defining undeclared helpers: {' '.join(bad)}")
@@ -180,7 +181,7 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
             klass = re.search(r"@(Rva[0-9A-Fa-f]{8}\w*|\w+)@@", name)
             owner = None
             for src in keep:
-                if klass and klass.group(1) in (ROOT / src).read_text(encoding="utf-8", errors="replace"):
+                if klass and (ROOT / src).exists() and klass.group(1) in (ROOT / src).read_text(encoding="utf-8", errors="replace"):
                     owner = src; break
             spath = ROOT / "reverse/symbols.csv"
             rows_ = spath.read_bytes().splitlines(True)
