@@ -166,6 +166,30 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
                            why="ctor_vtable: the vtable this body leaves installed belongs to %s, not %s" % (flagged[rva], row["name"]))
                 run("git", "add", "-A", "--", *evidence); unstage_inflight()
                 print(f"harvest: quarantined {row['source']} (identity-suspect: vtable belongs to {flagged[rva]})")
+    # A seat that invents a name and pins it with route= over a body the ledger
+    # names differently fails pin consistency for the whole harvest (twice on
+    # 2026-09-17). Quarantine the source that declares that class and drop its
+    # pin rows; the verdict tells the next seat which ledger name to call.
+    r = subprocess.run([sys.executable, "tools/pin_consistency.py", "--check"], cwd=ROOT, capture_output=True, text=True, errors="replace")
+    if r.returncode and "Route pins: FAIL" in r.stdout + r.stderr:
+        import re
+        text = r.stdout + r.stderr
+        head_syms = {x.rstrip(b"\r\n") for x in show("HEAD", "reverse/symbols.csv").splitlines(True)}
+        for m in re.finditer(r"^    (\S+) 0x([0-9A-Fa-f]{8}) \(route=0x[0-9A-Fa-f]+\)\n\s+(.*)$", text, re.M):
+            name, why = m.group(1), m.group(3)
+            klass = re.search(r"@(Rva[0-9A-Fa-f]{8}\w*|\w+)@@", name)
+            owner = None
+            for src in keep:
+                if klass and klass.group(1) in (ROOT / src).read_text(encoding="utf-8", errors="replace"):
+                    owner = src; break
+            spath = ROOT / "reverse/symbols.csv"
+            rows_ = spath.read_bytes().splitlines(True)
+            spath.write_bytes(b"".join(x for x in rows_ if x.rstrip(b"\r\n") in head_syms or not x.startswith(name.encode() + b",")))
+            if owner:
+                quarantine(owner, [], why="pin gate: %s is an inadmissible route= pin (%s); call the ledger's own name for that body" % (name, why[:160]))
+                keep.remove(owner)
+            run("git", "add", "-A", "--", *evidence); unstage_inflight()
+            print(f"harvest: dropped inadmissible route pin {name}" + (f"; quarantined {owner}" if owner else ""))
     r = subprocess.run([sys.executable, "tools/check_csv.py", "--staged"], cwd=ROOT, capture_output=True, text=True, errors="replace")
     if r.returncode:
         import re
