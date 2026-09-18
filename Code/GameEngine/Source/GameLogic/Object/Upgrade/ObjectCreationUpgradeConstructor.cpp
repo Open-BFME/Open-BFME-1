@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHs-
-// Open-BFME5: lift ObjectCreationUpgrade ctor __emit thunk to clean C++.
+// Open-BFME5: ObjectCreationUpgrade constructor.
 // Retail: grandbase ctor call at +0, then the middle base at +8 (args ctor
 // call, interface vtable pairs at +0x14/+0x18, middle finals and fields 0,
 // -1, -1), then this class's fields (+0x28, byte +0x2C) and the four
@@ -25,7 +25,10 @@ public:
     virtual ~OCU_MidGrand();
 
 private:
-    unsigned int m_04;
+    // Retail 0x002D6DA8 calls ObjectModule constructor 0x00113C60
+    // on the +8 base with the same Thing/ModuleData arguments.
+    // Its 0x00113C83 store places ModuleData at this base+4.
+    const ModuleData *m_moduleData;
     unsigned char m_pad[4];
 };
 
