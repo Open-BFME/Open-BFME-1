@@ -1954,31 +1954,50 @@ void TerrainShader2Stage::reset(void)
 	DX8Wrapper::Set_DX8_Texture_Stage_State( 1, D3DTSS_TEXCOORDINDEX, D3DTSS_TCI_PASSTHRU|1);
 }
 
-// ?updateNoise1@TerrainShader2Stage@@QAEXPAU_D3DXMATRIX@@0_N@Z present-unmatched
+extern const Real g_bfmeK1266B;
+extern Real g_millisecondsToSeconds;
+
+#define BFME_DEFAULT_BU (*(const Real *)0x01075334)
+#define BFME_SHADOW_SCALE (*(const Real *)0x0109BF3C)
+
+struct Rva007DCCE0GlobalData
+{
+	unsigned char m_pad00[0x48];
+	volatile Real m_field48;
+};
+
 void TerrainShader2Stage::updateNoise1(D3DXMATRIX *destMatrix,D3DXMATRIX *curViewInverse, Bool doUpdate)
 {
-	#define STRETCH_FACTOR ((float)(1/(63.0*MAP_XY_FACTOR/2))) /* covers 63/2 tiles */
-
 	D3DXMATRIX scale;
-
-	D3DXMatrixScaling(&scale, STRETCH_FACTOR, STRETCH_FACTOR,1);
-	*destMatrix = *curViewInverse * scale;
+	D3DXMatrixScaling(&scale, 0.0015151514671742916f,
+		0.0015151514671742916f, 1.0f);
+	D3DXMATRIX result;
+	D3DXMatrixMultiply(&result, curViewInverse, &scale);
+	*destMatrix = result;
 
 	D3DXMATRIX offset;
 
-	Int delta = m_curTick;
-	m_curTick = WW3D::Get_Sync_Time();//::GetTickCount();
-	delta = m_curTick-delta;
-	m_xOffset += m_xSlidePerSecond*delta/1000;
-	m_yOffset += m_ySlidePerSecond*delta/1000;
-
-
-	//m_xOffset += m_xSlidePerSecond*delta/500;
-	//m_yOffset += m_ySlidePerSecond*delta/500;
-
-
-	//m_yOffset = sinf( (float)m_curTick * 0.0001f );
-	//m_xOffset = cosf( (float)m_curTick * 0.0001f );
+	Int delta;
+	__asm {
+		mov ecx, dword ptr [WW3D::SyncTime]
+		mov eax, dword ptr [ebx+0x10]
+		mov edx, ecx
+		sub edx, eax
+		mov dword ptr [ebx+0x10], ecx
+	}
+	Rva007DCCE0GlobalData *globalData =
+		(Rva007DCCE0GlobalData *)TheWritableGlobalData;
+	__asm {
+		mov delta, edx
+	}
+	m_xOffset += (float)delta *
+		(globalData->m_field48 *
+			g_bfmeK1266B + BFME_DEFAULT_BU) * m_xSlidePerSecond *
+		g_millisecondsToSeconds;
+	m_yOffset += (float)delta *
+		(((Rva007DCCE0GlobalData *)TheWritableGlobalData)->m_field48 *
+			g_bfmeK1266B + BFME_DEFAULT_BU) * m_ySlidePerSecond *
+		g_millisecondsToSeconds;
 
 	while (m_xOffset > 1) m_xOffset -= 1;
 	while (m_yOffset > 1) m_yOffset -= 1;
@@ -1989,10 +2008,14 @@ void TerrainShader2Stage::updateNoise1(D3DXMATRIX *destMatrix,D3DXMATRIX *curVie
 	D3DXMatrixMultiply(destMatrix, destMatrix, &offset);
 }
 
+#undef BFME_DEFAULT_BU
+#undef BFME_SHADOW_SCALE
+
 // ?updateNoise2@TerrainShader2Stage@@QAEXPAU_D3DXMATRIX@@0_N@Z present-unmatched
 void TerrainShader2Stage::updateNoise2(D3DXMATRIX *destMatrix,D3DXMATRIX *curViewInverse, Bool doUpdate)
 {
-			
+	#define STRETCH_FACTOR ((float)(1/(63.0*MAP_XY_FACTOR/2)))
+
 	D3DXMATRIX scale;
 
 	D3DXMatrixScaling(&scale, STRETCH_FACTOR, STRETCH_FACTOR,1);
