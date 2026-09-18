@@ -168,8 +168,14 @@ def destination(root, source, cls, homes, zh, zh_hdr):
         if candidate != DUMPING_GROUND and usable(candidate):
             # A header mirror proves the broad area, not that its root should
             # flatten a class already established in a deeper source family.
-            if any(n >= 2 and d.startswith(candidate + "/")
-                   for d, n in homes[cls].items()):
+            # One established descendant refines that broad answer; two are an
+            # ambiguity, not an invitation to pick the larger pile.
+            descendants = [d for d, n in homes[cls].items()
+                           if n >= 2 and d.startswith(candidate + "/")
+                           and (root / d).is_dir()]
+            if len(descendants) == 1 and homes[cls][candidate] < 2:
+                return descendants[0]
+            if descendants:
                 return None
             return candidate
     # Otherwise: where this class already keeps most of its bodies. Two or more,

@@ -124,7 +124,10 @@ Two more of the same family:
   a subdirectory that already names the file. The same applies when the file is
   elsewhere but two or more bodies already establish the class in a descendant:
   `ControlBar.h` only proves `GameClient`, while CommandSet's bodies establish
-  `GameClient/GUI/ControlBar`; the queue must not flatten that family.
+  `GameClient/GUI/ControlBar`. The queue refines a coarse mirror to that deeper
+  directory only when it is the class's sole established descendant; multiple
+  descendants are ambiguous even when one has more bodies, so the queue refuses
+  to rank them.
 * `Include/<Area>/<Sub>` was mirrored onto `Source/<Area>/<Sub>` without checking
   the mirror **exists in ZH**. It does not for `Module`: ZH keeps those bodies
   under `Object/Update` and `Object/Behavior`. 606 files were bound for an
