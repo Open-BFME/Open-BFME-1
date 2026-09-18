@@ -4,7 +4,7 @@
 #include "StringInline.h"
 
 // Partial view of the embedded preview: only its first four bytes are
-// represented here, not its total extent. AptMapPreviewMapGadgetInit.cpp
+// represented here, not its total extent. AptMapPreview.cpp
 // witnesses the receiver of ILT 0x0003EC57 as AptMapPreview, not AsciiString.
 // Raw storage avoids introducing construction/destruction obligations.
 class AptMapPreview
