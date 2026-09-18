@@ -1,19 +1,31 @@
 // cl: /DNDEBUG /MD /EHsc
 
-class HordeGarrisonContainModuleData
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
+class HordeSiegeEngineContainModuleDataBase
 {
 public:
-    HordeGarrisonContainModuleData();
-    virtual ~HordeGarrisonContainModuleData();
+    virtual ~HordeSiegeEngineContainModuleDataBase();
 
 private:
     unsigned char m_pad[0x220];
 };
 
-class RS_Member
+// Its retail complete destructor is a five-byte tail thunk, so folding the empty
+// body here must reach the independently pinned HordeSiegeEngine base directly.
+class __declspec(novtable) HordeGarrisonContainModuleData
+    : public HordeSiegeEngineContainModuleDataBase
 {
 public:
-    RS_Member();
+    HordeGarrisonContainModuleData();
+    virtual ~HordeGarrisonContainModuleData() {}
+};
+
+class AttributeHandleStandIn
+{
+public:
+    AttributeHandleStandIn();
+    ~AttributeHandleStandIn();
 
 public:
     unsigned int m_dummy;
@@ -33,10 +45,11 @@ class TunnelContainModuleData : public HordeGarrisonContainModuleData
 {
 public:
     TunnelContainModuleData();
+    virtual ~TunnelContainModuleData();
 
 private:
-    RS_Member m_member;
-    unsigned int m_b;
+    AttributeHandleStandIn m_attributeHandle;
+    AsciiString m_name;
     unsigned int m_c;
     float m_framesForFullHeal;
     unsigned char m_d;
@@ -47,10 +60,19 @@ private:
 
 // ??0TunnelContainModuleData@@QAE@XZ
 TunnelContainModuleData::TunnelContainModuleData()
-    : m_b(0), m_c(0), m_values()
+    : m_c(0), m_values()
 {
-    m_member.m_second = 0;
+    m_attributeHandle.m_second = 0;
     m_d = 0;
     m_e = 0;
     m_framesForFullHeal = 1.0f;
+}
+
+// Suppress the derived-vftable store only in the destructor. The constructor
+// above must retain it; retail teardown begins directly with member cleanup.
+class __declspec(novtable) TunnelContainModuleData;
+
+// ??1TunnelContainModuleData@@UAE@XZ
+TunnelContainModuleData::~TunnelContainModuleData()
+{
 }
