@@ -1,12 +1,14 @@
 // cl: /O2 /Ob0
 
-class Rva007B13D0G
+struct Rva007AFB50Shadow;
+
+class W3DProjectedShadowManager
 {
 public:
-	void bar(void *);
+	void rva007AFB50(Rva007AFB50Shadow *);
 };
 
-Rva007B13D0G *g_rva007b13d0;
+W3DProjectedShadowManager *g_rva007b13d0;
 
 class Rva007B13D0
 {
@@ -16,5 +18,5 @@ public:
 
 void Rva007B13D0::run()
 {
-	g_rva007b13d0->bar(this);
+	g_rva007b13d0->rva007AFB50(reinterpret_cast<Rva007AFB50Shadow *>(this));
 }

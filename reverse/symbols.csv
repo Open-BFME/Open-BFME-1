@@ -74784,7 +74784,6 @@ name,address,notes
 ?bannerAptOnButton@@YAXXZ,0x000063FC,BannerUI OnBttnBanner callback ILT
 ?bannerAptOnInitialized@@YAXXZ,0x00011B0D,BannerUI OnInitialized callback ILT
 ?bar@Rva000946B0G@@QAEXPAX@Z,0x0001A7DF,Open-BFME5 thiscall at ILT of push-this global wrapper
-?bar@Rva007B13D0G@@QAEXPAX@Z,0x000181AB,Open-BFME5 thiscall at ILT of push-this global wrapper
 ?bar@Rva007B3E60G@@QAEXPAX@Z,0x000247FD,Open-BFME5 thiscall at ILT of push-this global wrapper
 ?bar@Rva007BAA90G@@QAEXPAX@Z,0x00047F46,Open-BFME5 thiscall at ILT of push-this global wrapper
 ?base@Rva006AE150Argument@@QAEMXZ,0x0000CD3D,address-derived scaled-value base helper used by Rva006AE150Owner::compute

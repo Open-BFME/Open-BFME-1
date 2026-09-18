@@ -1,6 +1,6 @@
-// ?bar@Rva007B13D0G@@QAEXPAURva007AFB50Shadow@@@Z
-// partial score=0.97 date=2026-09-02
-// Open-BFME: Rva007B13D0G::bar, retail 0x007AFB50, 153 bytes.
+// Retail 0x007AFB50, 153 bytes. The manager constructor 0x007AF5A0
+// supplies global 0x01306DF0, which wrapper 0x007B13D0 passes as this.
+// The method name and shadow argument view remain address-qualified.
 
 class ClientFrameSubsystem
 {
@@ -44,12 +44,6 @@ public:
 
 struct W3DProjectedShadow;
 
-class W3DProjectedShadowManager
-{
-public:
-	bool recycleFromList(W3DProjectedShadow *, W3DProjectedShadow **);
-};
-
 struct Rva007AFB50Shadow
 {
 	unsigned char m_pad0[0x34];
@@ -67,10 +61,11 @@ struct Rva007AFB50Shadow
 	unsigned char m_flag85;
 };
 
-class Rva007B13D0G
+class W3DProjectedShadowManager
 {
 public:
-	void bar(Rva007AFB50Shadow *shadow);
+	bool recycleFromList(W3DProjectedShadow *, W3DProjectedShadow **);
+	void rva007AFB50(Rva007AFB50Shadow *shadow);
 
 private:
 	unsigned char m_pad0[4];
@@ -81,7 +76,7 @@ private:
 	Rva007AFB50Shadow *m_list1C;
 };
 
-void Rva007B13D0G::bar(Rva007AFB50Shadow *shadow)
+void W3DProjectedShadowManager::rva007AFB50(Rva007AFB50Shadow *shadow)
 {
 	if ((shadow->m_type & 0x0C00) && shadow->m_frame > TheGameClientClientUpdate->getFrame())
 	{
@@ -104,20 +99,20 @@ void Rva007B13D0G::bar(Rva007AFB50Shadow *shadow)
 	{
 		if (shadow->m_flag84)
 		{
-			if (reinterpret_cast<W3DProjectedShadowManager *>(this)->recycleFromList(reinterpret_cast<W3DProjectedShadow *>(shadow), reinterpret_cast<W3DProjectedShadow **>(&m_list0C)))
+			if (recycleFromList(reinterpret_cast<W3DProjectedShadow *>(shadow), reinterpret_cast<W3DProjectedShadow **>(&m_list0C)))
 				return;
 		}
 		else if (shadow->m_flag85)
 		{
-			if (reinterpret_cast<W3DProjectedShadowManager *>(this)->recycleFromList(reinterpret_cast<W3DProjectedShadow *>(shadow), reinterpret_cast<W3DProjectedShadow **>(&m_list1C)))
+			if (recycleFromList(reinterpret_cast<W3DProjectedShadow *>(shadow), reinterpret_cast<W3DProjectedShadow **>(&m_list1C)))
 				return;
 		}
 		else
 		{
-			if (reinterpret_cast<W3DProjectedShadowManager *>(this)->recycleFromList(reinterpret_cast<W3DProjectedShadow *>(shadow), reinterpret_cast<W3DProjectedShadow **>(&m_list08)))
+			if (recycleFromList(reinterpret_cast<W3DProjectedShadow *>(shadow), reinterpret_cast<W3DProjectedShadow **>(&m_list08)))
 				return;
 		}
 	}
 
-	reinterpret_cast<W3DProjectedShadowManager *>(this)->recycleFromList(reinterpret_cast<W3DProjectedShadow *>(shadow), reinterpret_cast<W3DProjectedShadow **>(&m_list04));
+	recycleFromList(reinterpret_cast<W3DProjectedShadow *>(shadow), reinterpret_cast<W3DProjectedShadow **>(&m_list04));
 }
