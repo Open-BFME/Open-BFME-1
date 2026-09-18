@@ -527,6 +527,29 @@ GridWSEnvMapperClass::GridWSEnvMapperClass(const INIClass &ini, const char *sect
 	}
 }
 
-// GridWSClassicEnvironmentMapperClass / GridWSEnvironmentMapperClass forwarding ctors are
-// omitted: they are trivial base-class forwarders that the retail build inlined at their
-// NEW_REF sites (not emitted as standalone functions), so there is nothing to byte-match.
+// Retail INI/copy constructors also emit this family's virtual destructors.
+// Their vtable slot 0 is RefCountClass::Delete_This; slot 1 is the deleting destructor.
+
+// ?dup_00969ca0@@YAXXZ
+GridWSClassicEnvironmentMapperClass::GridWSClassicEnvironmentMapperClass(const INIClass &ini, const char *section, unsigned int stage):
+	GridWSEnvMapperClass(ini,section,stage)
+{
+}
+
+// ?dup_00969cd0@@YAXXZ
+GridWSClassicEnvironmentMapperClass::GridWSClassicEnvironmentMapperClass(const GridWSEnvMapperClass & src):
+	GridWSEnvMapperClass(src)
+{
+}
+
+// ?dup_0096a100@@YAXXZ
+GridWSEnvironmentMapperClass::GridWSEnvironmentMapperClass(const INIClass &ini, const char *section, unsigned int stage):
+	GridWSEnvMapperClass(ini, section, stage)
+{
+}
+
+// ?dup_0096a130@@YAXXZ
+GridWSEnvironmentMapperClass::GridWSEnvironmentMapperClass(const GridWSEnvMapperClass & src):
+	GridWSEnvMapperClass(src)
+{
+}
