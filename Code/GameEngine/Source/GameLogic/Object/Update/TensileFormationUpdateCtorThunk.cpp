@@ -1,64 +1,111 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// Open-BFME5: TensileFormationUpdate constructor.
-
 #include <string.h>
 
 class Thing;
 class ModuleData;
-class Object;
+class BodyModuleInterface;
 
-extern "C" char TensileFormationUpdate_vtbl0;
-extern "C" char TensileFormationUpdate_vtblC;
-extern "C" char TensileFormationUpdate_vtbl10;
-
-class PB_DeepBase
+class Module
 {
 public:
-	PB_DeepBase(Thing *, const ModuleData *);
-	virtual ~PB_DeepBase();
+	virtual ~Module();
 
+private:
+	const void *m_moduleData;
+};
+
+class BehaviorModuleInterface
+{
+public:
+	virtual BodyModuleInterface *getBody() = 0;
+};
+
+enum UpdateSleepTime
+{
+	UPDATE_SLEEP_INVALID = 0
+};
+
+class UpdateModuleInterface
+{
+public:
+	virtual UpdateSleepTime update() = 0;
+};
+
+class ObjectModule : public Module
+{
+public:
+	ObjectModule(Thing *, const ModuleData *);
+
+private:
+	void *m_object;
+};
+
+class BehaviorModule : public ObjectModule, public BehaviorModuleInterface
+{
 protected:
-	void *m_f04;
-	Object *m_object;
+	BehaviorModule(Thing *thing, const ModuleData *moduleData)
+		: ObjectModule(thing, moduleData)
+	{
+	}
+
+public:
+	virtual ~BehaviorModule() {}
 };
 
-class TensileFormationUpdateIface1
+// Retail teardown restores a distinct +0x10 vtable instead of the one shared by
+// the other UpdateModule-derived classes, so this intermediate stays unnamed.
+class TensileFormationUpdateBase : public BehaviorModule, public UpdateModuleInterface
+{
+protected:
+	TensileFormationUpdateBase(Thing *thing, const ModuleData *moduleData)
+		: BehaviorModule(thing, moduleData)
+	{
+	}
+
+	unsigned int m_nextCallFrameAndPhase;
+	int m_indexInLogic;
+	unsigned int m_updateState;
+
+public:
+	virtual ~TensileFormationUpdateBase() {}
+};
+
+class TensileFormationUpdateMember
 {
 public:
-	virtual void slot();
+	TensileFormationUpdateMember()
+		: m_begin(0), m_end(0), m_capacity(0)
+	{
+	}
+
+	~TensileFormationUpdateMember();
+
+private:
+	void *m_begin;
+	void *m_end;
+	void *m_capacity;
 };
 
-class TensileFormationUpdateIface2
-{
-public:
-	virtual void slot();
-};
-
-class __declspec(novtable) TensileFormationUpdate : public PB_DeepBase,
-	public TensileFormationUpdateIface1,
-	public TensileFormationUpdateIface2
+class TensileFormationUpdate : public TensileFormationUpdateBase
 {
 public:
 	TensileFormationUpdate(Thing *, const ModuleData *);
 	virtual ~TensileFormationUpdate();
 
 private:
-	unsigned int m_formationData[0x30];
-	volatile unsigned int m_fD4;
-	volatile unsigned int m_fD8;
-	volatile unsigned int m_fDC;
+	unsigned char m_pad[0xb4];
+	TensileFormationUpdateMember m_member;
 };
 
-// ??0TensileFormationUpdate@@QAE@PAVThing@@PBVModuleData@@@Z
 TensileFormationUpdate::TensileFormationUpdate(Thing *thing, const ModuleData *moduleData)
-	: PB_DeepBase(thing, moduleData)
+	: TensileFormationUpdateBase(thing, moduleData)
 {
-	*(void *volatile *)this = &TensileFormationUpdate_vtbl0;
-	*(void *volatile *)((char *)this + 0x0c) = &TensileFormationUpdate_vtblC;
-	*(void *volatile *)((char *)this + 0x10) = &TensileFormationUpdate_vtbl10;
-	m_fD4 = 0;
-	m_fD8 = 0;
-	m_fDC = 0;
-	memset(m_formationData, 0, sizeof(m_formationData));
+	// Retail clears the three witnessed base words and contiguous derived storage
+	// in one operation.
+	memset(&m_nextCallFrameAndPhase, 0, 0xc0);
+}
+
+TensileFormationUpdate::~TensileFormationUpdate()
+{
 }
