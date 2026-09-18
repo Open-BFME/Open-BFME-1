@@ -14,7 +14,8 @@ public:
 	virtual void moduleDataAnchor();		///< vptr at 0x00
 	~ModuleData();
 
-	int m_04;
+	// name_oracle: ModuleData+0x04; Module.h get/setModuleTagNameKey.
+	int m_moduleTagNameKey;
 };
 
 class InstantDeathDieMuxData
