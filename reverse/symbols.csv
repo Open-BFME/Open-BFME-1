@@ -4812,7 +4812,7 @@ name,address,notes
 ??1BufferStraw@@UAE@XZ,0x00921790
 ??1BuildingBehavior@@MAE@XZ,0x0003C592,vtable 0x00CA2C54 slots name BuildingBehavior; protected complete destructor called by wrapper 0x001F68D0
 ??1BuildingBehaviorModuleData@@UAE@XZ,0x00016A13,public complete destructor ILT called by scalar wrapper 0x001F6D10; exact constructor 0x001F6C70 installs dedicated vtable 0x010A2C88
-??1BumpEnvTextureMapperClass@@UAE@XZ,0x0096A570,constructor 0x00969340 installs vtable 0x0113E5CC whose first slot is deleting wrapper 0x0096A550; that wrapper directly calls this scalar body
+??1BumpEnvTextureMapperClass@@UAE@XZ,0x0096A570,constructor 0x00969340 installs vtable 0x0113E5CC whose slot 1 (+4) is deleting wrapper 0x0096A550; that wrapper directly calls this scalar body
 ??1ButterflyDrawModule@FXParticleSystem@@UAE@XZ,0x0002CEB7,ButterflyDrawModule destructor ILT proven by matched createModule factory and constructor vtable 0x01111E68 slot zero reaching scalar wrapper 0x005E5C30
 ??1ButtonFlashTransition@@MAE@XZ,0x0000BF32,vtable 0x00D0C604 slots name ButtonFlashTransition; protected complete destructor called by wrapper 0x0059AAD0
 ??1CDManagerInterface@@UAE@XZ,0x00101BA0,CDManagerInterface dtor body (called by ??_G @ 0x101BB0)
@@ -4832,7 +4832,7 @@ name,address,notes
 ??1CivilianSpawnUpdateModuleData@@UAE@XZ,0x0003AE7C,destructor ILT used by the CivilianSpawnUpdateModuleData scalar-deleting destructor
 ??1CivilianSpawnUpdateModuleDataMemberA@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1CivilianSpawnUpdateModuleDataMemberB@@QAE@XZ,0x00026AB2,Open-BFME5 pin
-??1ClassicEnvironmentMapperClass@@UAE@XZ,0x00921F70,"constructor 0x00921390 installs vtable 0x0113BF90 whose first slot is deleting wrapper 0x00921F50; that wrapper directly calls this scalar body; re-added after d27ae4b7b, one-name-one-body clean"
+??1ClassicEnvironmentMapperClass@@UAE@XZ,0x00921F70,"constructor 0x00921390 installs vtable 0x0113BF90 whose slot 1 (+4) is deleting wrapper 0x00921F50; that wrapper directly calls this scalar body; re-added after d27ae4b7b, one-name-one-body clean"
 ??1ClearanceTestingSlowDeathBehaviorModuleData@@UAE@XZ,0x000018CA,destructor ILT used by the ClearanceTestingSlowDeathBehaviorModuleData scalar-deleting destructor
 ??1ClearanceTestingSlowDeathBehaviorModuleDataBase@@UAE@XZ,0x00015645,Open-BFME5 base pin
 ??1ClearanceTestingSlowDeathBehaviorModuleDataMember@@QAE@XZ,0x000309F4,Open-BFME5 pin
@@ -4936,7 +4936,7 @@ name,address,notes
 ??1DynamicPortalBehaviour@@UAE@XZ,0x00040516,exact ICF-shared complete destructor route for scalar wrapper 0x001F9150; body 0x001F8D10 and constructor/vtable identity establish class
 ??1DynamicShroudClearingRangeUpdate@@UAE@XZ,0x000465E7,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x0028E630
 ??1DynamicShroudClearingRangeUpdateModuleData@@UAE@XZ,0x0000F8C6,destructor ILT used by the DynamicShroudClearingRangeUpdateModuleData scalar-deleting destructor
-??1EdgeMapperClass@@UAE@XZ,0x00967800,constructor 0x00965710 installs vtable 0x0113E4FC whose first slot is deleting wrapper 0x009677E0; that wrapper directly calls this scalar body
+??1EdgeMapperClass@@UAE@XZ,0x00967800,constructor 0x00965710 installs vtable 0x0113E4FC whose slot 1 (+4) is deleting wrapper 0x009677E0; that wrapper directly calls this scalar body
 ??1ElvenWoodSpecialPower@@MAE@XZ,0x000253C9,destructor ILT to 0x0025B300
 ??1ElvenWoodSpecialPowerModuleData@@UAE@XZ,0x0004854A,route=0x0025CC80; vtable 0x010B4C38 slot0 deleting wrapper calls this ILT
 ??1ElvenWoodSpecialPowerModuleDataBase@@UAE@XZ,0x0001D7B4,Open-BFME5 pin
@@ -4956,7 +4956,7 @@ name,address,notes
 ??1Entry@?$HashTemplateClass@VStringClass@@PAVTextureClass@@@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
 ??1Entry@?$HashTemplateClass@VStringClass@@PAVThumbnailClass@@@@QAE@XZ,0x00013101,pinharvest x1 (thunk)
 ??1EnumeratedIP@@QAE@XZ,0x00028FB0,ILT called by IPEnumeration destructor at 0x00625040
-??1EnvironmentMapperClass@@UAE@XZ,0x00921FA0,constructor 0x00921460 installs vtable 0x0113BFD8 whose first slot is deleting wrapper 0x00921F80; that wrapper directly calls this scalar body
+??1EnvironmentMapperClass@@UAE@XZ,0x00921FA0,constructor 0x00921460 installs vtable 0x0113BFD8 whose slot 1 (+4) is deleting wrapper 0x00921F80; that wrapper directly calls this scalar body
 ??1EstablishConnectionsMenu@@MAE@XZ,0x000403E0,vtable 0x00D1A394 slots name EstablishConnectionsMenu; protected complete destructor called by wrapper 0x00670E90
 ??1EvaCheckInfoVec@@QAE@XZ,0x00002D15,ILT thunk to the retail vector<EvaCheckInfo> destructor at 0x00426220; unidentified beyond its shape
 ??1EvaEventFXNugget@@MAE@XZ,0x000231C3,vtable 0x00CF33C0 slots name EvaEventFXNugget; protected complete destructor called by wrapper 0x00428940
@@ -8679,12 +8679,12 @@ name,address,notes
 ??1GrantStealthBehaviorModuleDataMemberC@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1GrantUpgradeCreate@@MAE@XZ,0x00003175,destructor ILT to 0x0024F8B0
 ??1GrantUpgradeCreateModuleData@@UAE@XZ,0x0003DEF1,public complete destructor ILT called by scalar wrapper 0x0024FB00; exact constructor 0x0024FA80 installs dedicated vtable 0x010B17B8
-??1GridClassicEnvironmentMapperClass@@UAE@XZ,0x00922140,constructor 0x00922070 installs vtable 0x0113C0AC whose first slot is deleting wrapper 0x00922120; that wrapper directly calls this scalar body
-??1GridEnvironmentMapperClass@@UAE@XZ,0x009221D0,constructor 0x009215C0 installs vtable 0x0113C068 whose first slot is deleting wrapper 0x009221B0; that wrapper directly calls this scalar body
-??1GridTextureMapperClass@@UAE@XZ,0x009215B0,constructor 0x00966A30 installs vtable 0x0113E594 whose first slot is deleting wrapper 0x00966A90; that wrapper directly calls this scalar body
-??1GridWSClassicEnvironmentMapperClass@@UAE@XZ,0x00969C90,constructors 0x00969CA0 and 0x00969CD0 install vtable 0x0113E630 whose first slot is deleting wrapper 0x00969C70; that wrapper directly calls this scalar body
-??1GridWSEnvMapperClass@@UAE@XZ,0x009644B0,constructor 0x00969680 installs vtable 0x0113E60C whose first slot is deleting wrapper 0x009696F0; that wrapper directly calls this scalar body
-??1GridWSEnvironmentMapperClass@@UAE@XZ,0x0096A0F0,constructors 0x0096A100 and 0x0096A130 install vtable 0x0113E654 whose first slot is deleting wrapper 0x0096A0D0; that wrapper directly calls this scalar body
+??1GridClassicEnvironmentMapperClass@@UAE@XZ,0x00922140,constructor 0x00922070 installs vtable 0x0113C0AC whose slot 1 (+4) is deleting wrapper 0x00922120; that wrapper directly calls this scalar body
+??1GridEnvironmentMapperClass@@UAE@XZ,0x009221D0,constructor 0x009215C0 installs vtable 0x0113C068 whose slot 1 (+4) is deleting wrapper 0x009221B0; that wrapper directly calls this scalar body
+??1GridTextureMapperClass@@UAE@XZ,0x009215B0,constructor 0x00966A30 installs vtable 0x0113E594 whose slot 1 (+4) is deleting wrapper 0x00966A90; that wrapper directly calls this scalar body
+??1GridWSClassicEnvironmentMapperClass@@UAE@XZ,0x00969C90,constructors 0x00969CA0 and 0x00969CD0 install vtable 0x0113E630 whose slot 1 (+4) is deleting wrapper 0x00969C70; that wrapper directly calls this scalar body
+??1GridWSEnvMapperClass@@UAE@XZ,0x009644B0,constructor 0x00969680 installs vtable 0x0113E60C whose slot 1 (+4) is deleting wrapper 0x009696F0; that wrapper directly calls this scalar body
+??1GridWSEnvironmentMapperClass@@UAE@XZ,0x0096A0F0,constructors 0x0096A100 and 0x0096A130 install vtable 0x0113E654 whose slot 1 (+4) is deleting wrapper 0x0096A0D0; that wrapper directly calls this scalar body
 ??1HLodPrototypeClass@@UAE@XZ,0x000390F9,exact constructor 0x00149F60 and dedicated vtable 0x010956F4 establish the complete destructor thunk called by wrapper 0x0014ABA0
 ??1HTreeClass@@QAE@XZ,0x00952790
 ??1HeaderTemplateINI@@QAE@XZ,0x008512E0,Open-BFME5 HeaderTemplateManager init relocation
@@ -8775,7 +8775,7 @@ name,address,notes
 ??1LightningEmissionInfo@FXParticleSystem@@UAE@XZ,0x0040D7F6,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x005D6A60 calls; autopin
 ??1Line3DClass@@UAE@XZ,0x00950FC0,0x00951080 deleting wrapper directly calls this scalar destructor; neighboring exact Line3D vtable methods establish class ownership
 ??1LineEmissionVolumeModule@FXParticleSystem@@UAE@XZ,0x0001F7AD,destructor ILT used by the LineEmissionVolumeModule scalar-deleting destructor
-??1LinearOffsetTextureMapperClass@@UAE@XZ,0x009221E0,constructor 0x009667F0 installs vtable 0x0113E560 whose first slot is deleting wrapper 0x00966890; that wrapper directly calls this scalar body
+??1LinearOffsetTextureMapperClass@@UAE@XZ,0x009221E0,constructor 0x009667F0 installs vtable 0x0113E560 whose slot 1 (+4) is deleting wrapper 0x00966890; that wrapper directly calls this scalar body
 ??1List@@UAE@XZ,0x009E3110,complete List destructor reached by the scalar-deleting destructor at 0x009E3460
 ??1LivingWorldAnimObject@@UAE@XZ,0x00012AD0,LivingWorldAnimObject scalar deleting destructor calls this ILT
 ??1LivingWorldCampaign@@QAE@XZ,0x003AA7F0,Open-BFME5 destructor unwound at the end of ParseLivingWorldCampaignBlock
@@ -9037,7 +9037,7 @@ name,address,notes
 ??1RandomSoundSelectorClientBehavior@@UAE@XZ,0x0004374D,exact constructor 0x00607A30 and dedicated primary vtable 0x01115918 establish the complete destructor thunk called by wrapper 0x00607BA0
 ??1RandomSoundSelectorClientBehaviorModuleData@@UAE@XZ,0x0002D84E,authentic scalar-deleting wrapper callee ILT; routes to matched complete destructor body 0x0012BDD0
 ??1RandomSoundSelectorMap@@QAE@XZ,0x00035B34,pinned to the thunk 0x00035B34 (thunks_025.cpp) the 0x0012BDD0 destructor calls
-??1RandomTextureMapperClass@@UAE@XZ,0x00969330,constructor 0x00965C00 installs vtable 0x0113E53C whose first slot is deleting wrapper 0x00969310; that wrapper directly calls this scalar body
+??1RandomTextureMapperClass@@UAE@XZ,0x00969330,constructor 0x00965C00 installs vtable 0x0113E53C whose slot 1 (+4) is deleting wrapper 0x00969310; that wrapper directly calls this scalar body
 ??1RayEffectSystem@@UAE@XZ,0x00018467,authentic virtual RayEffectSystem destructor callee; vtable 0x01110130 and matched constructor/destructor prove identity
 ??1RecorderClass@@QAE@XZ,0x0001F55F,Full retail reviewed: 9BDF0 replay header/version/INI comparison bool with by-value string destruction ret4; 99070 recorder dtor file close/member/base cleanup
 ??1ReflectDamage@@MAE@XZ,0x00007C57,vtable 0x00CB240C slots name ReflectDamage; protected complete destructor called by wrapper 0x00251800
@@ -9068,7 +9068,7 @@ name,address,notes
 ??1RiderChangeContainModuleDataMemberF@@QAE@XZ,0x0001A401,Open-BFME5 pin
 ??1RoadType@@QAE@XZ,0x00018FCF,exact retail rel32 target of ??_ERoadType@@QAEPAXI@Z; the same row's already-matching DIR32 push of 0x00418FCF names this address as the per-element destructor
 ??1RopeInfo@ChinookCombatDropState@@QAE@XZ,0x0003D041,Open-BFME5 ILT fronts unclaimed 8-byte body 0x00191910; called by the _Destroy range loop over that element type
-??1RotateTextureMapperClass@@UAE@XZ,0x00967080,constructor 0x00964A70 installs vtable 0x0113E3F0 whose first slot is deleting wrapper 0x00967060; that wrapper directly calls this scalar body
+??1RotateTextureMapperClass@@UAE@XZ,0x00967080,constructor 0x00964A70 installs vtable 0x0113E3F0 whose slot 1 (+4) is deleting wrapper 0x00967060; that wrapper directly calls this scalar body
 ??1RousingSpeechUpdateModuleData@@UAE@XZ,0x0001CCA1,destructor ILT used by the RousingSpeechUpdateModuleData scalar-deleting destructor
 ??1RousingSpeechUpdateModuleDataBase@@UAE@XZ,0x0001980D,Open-BFME5 pin
 ??1RousingSpeechUpdateModuleDataMemberA@@QAE@XZ,0x00026AB2,Open-BFME5 pin
@@ -9360,7 +9360,7 @@ name,address,notes
 ??1SalvageCrateCollide@@MAE@XZ,0x00006578,destructor ILT to 0x00218090
 ??1SaveGameInfo@@QAE@XZ,0x0000AB78,BFME destructor call route: addGameToAvailableList +0xF3 targets ILT 0x0000AB78 -> body 0x0010D700; body releases verified SaveGameInfo fields at +0x2C,+0x24,+0x1C,+0x08,+0x04,+0x00
 ??1SaveLoadSubSystemClass@@UAE@XZ,0x0003692B,"exact retail rel32 target of the byte-verified caller; replaces a harvested pin at 0x00029555, which is ??1SmudgeManager@@UAE@XZ's own body"
-??1ScaleTextureMapperClass@@UAE@XZ,0x00921620,constructor 0x00964600 installs vtable 0x0113E3BC whose first slot is deleting wrapper 0x00964650; that wrapper directly calls this scalar body
+??1ScaleTextureMapperClass@@UAE@XZ,0x00921620,constructor 0x00964600 installs vtable 0x0113E3BC whose slot 1 (+4) is deleting wrapper 0x00964650; that wrapper directly calls this scalar body
 ??1ScaleUpTransition@@MAE@XZ,0x0002581F,vtable 0x00D0CAF4 slots name ScaleUpTransition; protected complete destructor called by wrapper 0x0059F250
 ??1ScavengerSpecialPower@@MAE@XZ,0x00028961,destructor ILT to 0x00265930
 ??1ScavengerSpecialPowerModuleData@@UAE@XZ,0x00025577,public complete destructor ILT called by scalar wrapper 0x00265AB0; exact constructor 0x00265A80 installs dedicated vtable 0x010B6FF8
@@ -9370,7 +9370,7 @@ name,address,notes
 ??1ScoreKeeper@@UAE@XZ,0x0002CD7C,exact ScoreKeeper constructor 0x000EA390 and vtable 0x01084DF0 establish the complete destructor thunk called by scalar wrapper 0x000E9FE0
 ??1ScoreRowVector@@QAE@XZ,0x00045E8F,BfmeAptScreenScoreScreen+0x264 vector<Gen00574BC0> row member; real body already landed at 0x00574BC0 (Q4VectorDtorMemberOffset.cpp) but this callsite reaches it through the incremental-link thunk
 ??1ScoreScaleUpTransition@@MAE@XZ,0x00023C2C,vtable 0x00D0CB30 slots name ScoreScaleUpTransition; protected complete destructor called by wrapper 0x0059F600
-??1ScreenMapperClass@@UAE@XZ,0x00922750,constructor 0x00922680 installs vtable 0x0113C0D0 whose first slot is deleting wrapper 0x00922730; that wrapper directly calls this scalar body
+??1ScreenMapperClass@@UAE@XZ,0x00922750,constructor 0x00922680 installs vtable 0x0113C0D0 whose slot 1 (+4) is deleting wrapper 0x00922730; that wrapper directly calls this scalar body
 ??1ScreenshotAsciiString@@QAE@XZ,0x00887940,W3DDisplay screenshot path temporary cleanup
 ??1Script@@MAE@XZ,0x0003F94F,exact constructor 0x00352BA0 and dedicated vtable 0x00CE858C establish the protected complete destructor called by wrapper 0x00355C60
 ??1ScriptAction@@UAE@XZ,0x0003492D,authentic scalar-deleting wrapper callee ILT; routes to exact complete destructor body 0x00354330
@@ -9393,7 +9393,7 @@ name,address,notes
 ??1SiegeEngineContainBase@@UAE@XZ,0x0003FF49,SiegeEngineContain/HordeSiegeEngineContain shared base destructor call target
 ??1SimpleSceneClass@@UAE@XZ,0x00943E70,Open-BFME5 RTS2DScene destructor base-call pin
 ??1SimpleSceneIterator@@UAE@XZ,0x00943CE0,0x00943CC0 occupies the destructor slot before the exact First Next Is_Done and Current_Item SimpleSceneIterator vtable entries
-??1SineLinearOffsetTextureMapperClass@@UAE@XZ,0x009670B0,constructor 0x00964D40 installs vtable 0x0113E428 whose first slot is deleting wrapper 0x00967090; that wrapper directly calls this scalar body
+??1SineLinearOffsetTextureMapperClass@@UAE@XZ,0x009670B0,constructor 0x00964D40 installs vtable 0x0113E428 whose slot 1 (+4) is deleting wrapper 0x00967090; that wrapper directly calls this scalar body
 ??1SkirmishBattleHonors@@UAE@XZ,0x0009C1E0,stores vtable 0x01080460 then tail-jumps ??1UserPreferences ILT 0x0003F25B; the same vtable is installed by the ctor 0x0009E130 which loads SkirmishStats.ini (ZH SkirmishBattleHonors.cpp:80); ILT 0x0003F6D4; deleting dtor 0x0009C1F0
 ??1SkirmishPreferences@@UAE@XZ,0x00046B82,retail incremental-link destructor call target used by the Skirmish start callback
 ??1SkirmishPreferences@@UAE@XZ,0x0009F7A0,vtable 0x010806B0 whose ctor 0x0009F7C0 loads "Skirmish.ini" (ZH SkirmishPreferences ctor) and splits the BFME "UserNames" value on commas into the list at +0x14; dtor clears that list via ILT 0x00021CD3 and frees its 0xc header node then ~UserPreferences ILT 0x0003F25B; ILT 0x00046B82
@@ -9454,7 +9454,7 @@ name,address,notes
 ??1StealthDetectorUpdateModuleDataMemberB@@QAE@XZ,0x00887940,Open-BFME5 pin
 ??1StealthUpdate@@MAE@XZ,0x0003EFC7,vtable 0x00CC457C slots name StealthUpdate; protected complete destructor called by wrapper 0x002ACD50
 ??1StealthUpgrade@@MAE@XZ,0x00012823,vtable 0x00CCDE6C slots name StealthUpgrade; protected complete destructor called by wrapper 0x002D8100
-??1StepLinearOffsetTextureMapperClass@@UAE@XZ,0x009670E0,constructor 0x00965000 installs vtable 0x0113E47C whose first slot is deleting wrapper 0x009670C0; that wrapper directly calls this scalar body
+??1StepLinearOffsetTextureMapperClass@@UAE@XZ,0x009670E0,constructor 0x00965000 installs vtable 0x0113E47C whose slot 1 (+4) is deleting wrapper 0x009670C0; that wrapper directly calls this scalar body
 ??1StopSpecialPower@@MAE@XZ,0x00046E57,destructor ILT to 0x0026B3A0
 ??1Straw@@UAE@XZ,0x009E1A90
 ??1StreakDrawModule@FXParticleSystem@@UAE@XZ,0x00019CA4,StreakDrawModule destructor ILT proven by matched createModule factory and constructor vtable 0x01111DF0 slot zero reaching scalar wrapper 0x005E5B10
@@ -9601,7 +9601,7 @@ name,address,notes
 ??1TerrainType@@UAE@XZ,0x00024442,exact TerrainType constructor 0x000A82F0 installs vtable 0x01080F0C; complete destructor body 0x000A83D0
 ??1TexBufferClass@@UAE@XZ,0x0092BAC0,matched 0x0092BA60 constructor vtable and tail jump to texture ShareBuffer base; 0x0092C0B0 wrapper call proves identity
 ??1TextOnFrameTransition@@MAE@XZ,0x0002AA9A,vtable 0x00D0CC98 slots name TextOnFrameTransition; protected complete destructor called by wrapper 0x005A03E0
-??1TextureMapperClass@@UAE@XZ,0x00921380,constructor 0x009645D0 installs vtable 0x0113BFB4 whose first slot is deleting wrapper 0x00921430; that wrapper directly calls this scalar body
+??1TextureMapperClass@@UAE@XZ,0x00921380,constructor 0x009645D0 installs vtable 0x0113BFB4 whose slot 1 (+4) is deleting wrapper 0x00921430; that wrapper directly calls this scalar body
 ??1TextureRef@@QAE@XZ,0x00975010,BfmeThingVGX texture-reference destructor call target
 ??1ThreadClass@@QAE@XZ,0x009DB530,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0063CF10 calls; autopin
 ??1ThreadClass@@UAE@XZ,0x009DB530,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0010BC80 calls; autopin
@@ -9726,9 +9726,9 @@ name,address,notes
 ??1W3DTruckDrawModuleData@@UAE@XZ,0x0001CDF0,route=0x0077F920; scalar deleting destructor call target established by retail wrapper
 ??1W3DView@@MAE@XZ,0x00044684,vtable 0x00D217A0 slots name W3DView; protected complete destructor called by wrapper 0x007463F0
 ??1W3DVolumetricShadow@@UAE@XZ,0x0001B6AD,exact constructor 0x007BA950 and dedicated vtable 0x011284CC establish the complete destructor thunk called by wrapper 0x007BDAD0
-??1WSClassicEnvironmentMapperClass@@UAE@XZ,0x00921FF0,constructor 0x009214E0 installs vtable 0x0113BFFC whose first slot is deleting wrapper 0x00921FD0; that wrapper directly calls this scalar body
-??1WSEnvMapperClass@@UAE@XZ,0x009214D0,constructor 0x00965920 installs vtable 0x0113C020 whose first slot is deleting wrapper 0x00921FB0; that wrapper directly calls this scalar body
-??1WSEnvironmentMapperClass@@UAE@XZ,0x00922060,constructor 0x00921570 installs vtable 0x0113C044 whose first slot is deleting wrapper 0x00922040; that wrapper directly calls this scalar body
+??1WSClassicEnvironmentMapperClass@@UAE@XZ,0x00921FF0,constructor 0x009214E0 installs vtable 0x0113BFFC whose slot 1 (+4) is deleting wrapper 0x00921FD0; that wrapper directly calls this scalar body
+??1WSEnvMapperClass@@UAE@XZ,0x009214D0,constructor 0x00965920 installs vtable 0x0113C020 whose slot 1 (+4) is deleting wrapper 0x00921FB0; that wrapper directly calls this scalar body
+??1WSEnvironmentMapperClass@@UAE@XZ,0x00922060,constructor 0x00921570 installs vtable 0x0113C044 whose slot 1 (+4) is deleting wrapper 0x00922040; that wrapper directly calls this scalar body
 ??1WallUpgradeUpdate@@MAE@XZ,0x0002575C,vtable 0x00CC529C slots name WallUpgradeUpdate; protected complete destructor called by wrapper 0x002B2410
 ??1WanderAIUpdateModuleData@@UAE@XZ,0x0004A2B9,WanderAIUpdateModuleData complete destructor ILT; factory/vtable and matched complete body establish this virtual destructor route through 0x001244D0 and 0x00029D02 to 0x0027E4E0
 ??1WargBehavior@@MAE@XZ,0x000299C9,vtable 0x00CA7314 slots name WargBehavior; protected complete destructor called by wrapper 0x0020DA60
@@ -9767,7 +9767,7 @@ name,address,notes
 ??1Z1Elem0013BF00@@QAE@XZ,0x0013AD00,Z1 lane: element destructor of a list<T>::clear() instantiation; address read from the retail REL32 at the clear() call site
 ??1Z1Elem0056D960@@QAE@XZ,0x0010DAE0,Z1 lane: element destructor of a list<T>::clear() instantiation; address read from the retail REL32 at the clear() call site
 ??1Z1Elem0076AE50@@QAE@XZ,0x00762EC0,Z1 lane: element destructor of a list<T>::clear() instantiation; address read from the retail REL32 at the clear() call site
-??1ZigZagLinearOffsetTextureMapperClass@@UAE@XZ,0x00967110,constructor 0x00965350 installs vtable 0x0113E4C0 whose first slot is deleting wrapper 0x009670F0; that wrapper directly calls this scalar body
+??1ZigZagLinearOffsetTextureMapperClass@@UAE@XZ,0x00967110,constructor 0x00965350 installs vtable 0x0113E4C0 whose slot 1 (+4) is deleting wrapper 0x009670F0; that wrapper directly calls this scalar body
 ??1_ENUM_VALUE@EnumParameterClass@@QAE@XZ,0x000470F5,ENUM_VALUE dtor thunk from matched VectorClass ctor 0x0093DBB0 vecctor slot
 ??1_Locale_impl@_STL@@UAE@XZ,0x00836520,STLport 4.5.3 _Locale_impl destructor called by its RTTI-identified scalar-deleting wrapper at 0x0083B310
 ??1__Named_exception@_STL@@UAE@XZ,0x0082AE40,STLport 4.5.3 __Named_exception destructor ICF body; ios_base::failure tail-call and RTTI hierarchy prove identity
