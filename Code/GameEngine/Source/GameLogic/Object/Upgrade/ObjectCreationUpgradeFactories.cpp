@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: ObjectCreationUpgrade::friend_newModuleData factory.
+// Open-BFME5: ObjectCreationUpgrade module-data and MI instance factories.
 
+class Thing;
 class INI;
 class ModuleData;
 
@@ -33,11 +34,32 @@ public:
 
 extern "C" void __cdecl ObjectCreationUpgradeFieldParse(MultiIniFieldParse &parse);
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectCreationUpgrade.h
-class ObjectCreationUpgrade
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
+class Module
 {
 public:
+	virtual ~Module() {}
+};
+
+class ObjectCreationUpgradeBase
+{
+public:
+	virtual ~ObjectCreationUpgradeBase() {}
+private:
+	unsigned char m_pad[0x4];
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectCreationUpgrade.h
+// The 48-byte instance factory returns the Module subobject at +8.
+class ObjectCreationUpgrade : public ObjectCreationUpgradeBase, public Module
+{
+public:
+	ObjectCreationUpgrade(Thing *, const ModuleData *);
+	static Module *friend_newModuleInstance(Thing *, const ModuleData *);
 	static ModuleData *friend_newModuleData(INI *ini);
+
+private:
+	unsigned char m_pad[0x24];
 };
 
 // ?friend_newModuleData@ObjectCreationUpgrade@@SAPAVModuleData@@PAVINI@@@Z
@@ -47,4 +69,10 @@ ModuleData *ObjectCreationUpgrade::friend_newModuleData(INI *ini)
 	if (ini)
 		ini->initFromINIMultiProc(data, &ObjectCreationUpgradeFieldParse);
 	return (ModuleData *)data;
+}
+
+// ?friend_newModuleInstance@ObjectCreationUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
+Module *ObjectCreationUpgrade::friend_newModuleInstance(Thing *thing, const ModuleData *data)
+{
+	return new ObjectCreationUpgrade(thing, data);
 }
