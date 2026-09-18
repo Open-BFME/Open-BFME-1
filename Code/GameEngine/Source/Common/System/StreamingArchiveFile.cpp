@@ -80,7 +80,28 @@
 //         Private Types                                                     
 //----------------------------------------------------------------------------
 
-
+class BfmeStreamingArchiveFileVtable
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual Bool openFile(File *file);
+};
 
 //----------------------------------------------------------------------------
 //         Private Data                                                     
@@ -143,8 +164,6 @@ StreamingArchiveFile::~StreamingArchiveFile()
 //=================================================================
 
 //DECLARE_PERF_TIMER(StreamingArchiveFile)
-// byte-exact reconstruction: Code/GameEngine/Source/Common/System/StreamingArchiveFile_openThunk.cpp
-// ?open@StreamingArchiveFile@@ present-unmatched
 Bool StreamingArchiveFile::open( const Char *filename, Int access )
 {
 	//USE_PERF_TIMER(StreamingArchiveFile)
@@ -155,15 +174,14 @@ Bool StreamingArchiveFile::open( const Char *filename, Int access )
 		return FALSE;
 	}	
 
-	return (open( file ) != NULL);
+	// BFME adds File::lock/unlock, moving RAMFile::open(File *) to vtable slot 17.
+	return (((BfmeStreamingArchiveFileVtable *)this)->openFile(file) != NULL);
 }
 
 //============================================================================
 // StreamingArchiveFile::open
 //============================================================================
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/System/StreamingArchiveFile_openThunk.cpp
-// ?open@StreamingArchiveFile@@ present-unmatched
 Bool StreamingArchiveFile::open( File *file )
 {
 	return TRUE;
@@ -298,4 +316,3 @@ Int StreamingArchiveFile::seek( Int pos, seekMode mode)
 	return m_curPos;
 
 }
-
