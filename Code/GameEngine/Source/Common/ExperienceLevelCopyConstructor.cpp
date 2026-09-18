@@ -11,6 +11,9 @@
 #include <string.h>
 #include <vector>
 
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 #include "ascii_string.h"
 
 typedef bool Bool;
@@ -33,6 +36,7 @@ class RadiusDecalTemplate
 public:
 	RadiusDecalTemplate();
 	~RadiusDecalTemplate();
+	void operator=(const RadiusDecalTemplate &that);
 
 private:
 	AsciiString m_name;
@@ -48,6 +52,10 @@ private:
 	UnsignedInt m_unmodelled28;
 	UnsignedInt m_unmodelled2c;
 };
+
+#pragma comment(linker, "/alternatename:??4RadiusDecalTemplate@@QAEXABV0@@Z=??4Rva00458450@@QAEXABV0@@Z")
+
+class UpgradeTemplate;
 
 struct ModelConditionFlags
 {
@@ -72,8 +80,53 @@ struct LevelUpFXInfo
 	AsciiString boneName;
 };
 
+struct LevelUpFXVectorView
+{
+	LevelUpFXInfo *m_start;
+	LevelUpFXInfo *m_finish;
+	LevelUpFXInfo *m_endOfStorage;
+
+	LevelUpFXInfo *begin()
+	{
+		return m_start;
+	}
+
+	LevelUpFXInfo *end()
+	{
+		return m_finish;
+	}
+
+	__forceinline LevelUpFXInfo *erase(
+		LevelUpFXInfo *first, LevelUpFXInfo *last)
+	{
+		LevelUpFXInfo *source = last;
+		LevelUpFXInfo *destination = first;
+		int count = (int)(m_finish - last);
+		while (count > 0)
+		{
+			*destination = *source;
+			++source;
+			++destination;
+			--count;
+		}
+
+		LevelUpFXInfo *oldFinish = m_finish;
+		for (LevelUpFXInfo *current = destination;
+			current != oldFinish; ++current)
+			current->~LevelUpFXInfo();
+		m_finish = destination;
+		return first;
+	}
+
+	__forceinline void clear()
+	{
+		erase(begin(), end());
+	}
+};
+
 typedef std::vector<AsciiString> AsciiStringVector;
 typedef std::vector<LevelUpFXInfo> LevelUpFXVector;
+typedef std::vector<const UpgradeTemplate *> UpgradeVector;
 
 class ExperienceLevel : public Overridable
 {
@@ -91,7 +144,7 @@ private:
 	AsciiStringVector m_attributeModifiers;
 	LevelUpFXVector m_levelUpFx;
 	Int m_levelUpOCL;
-	AsciiStringVector m_upgrades;
+	UpgradeVector m_upgrades;
 	ModelConditionFlags m_modelConditionState;
 	RadiusDecalTemplate m_selectionDecal;
 	Bool m_showLevelUpTint;
@@ -102,10 +155,10 @@ private:
 	Real m_levelUpTintFrequency;
 	Real m_levelUpTintAmplitude;
 	Int m_rank;
-	Bool m_informUpdateModule;
-	Bool m_singlePlayerOnly;
-	Bool m_multiPlayerOnly;
-	Int m_emotionType;
+	volatile Bool m_informUpdateModule;
+	volatile Bool m_singlePlayerOnly;
+	volatile Bool m_multiPlayerOnly;
+	volatile Int m_emotionType;
 };
 
 typedef char ExperienceLevelSizeMustBeD8[
@@ -129,4 +182,45 @@ ExperienceLevel::ExperienceLevel(const ExperienceLevel &that)
 	  m_selectionDecal()
 {
 	*this = that;
+}
+
+ExperienceLevel &ExperienceLevel::operator=(const ExperienceLevel &that)
+{
+	if (&that == this)
+		return *this;
+
+	m_name = that.m_name;
+	m_requiredExperience = that.m_requiredExperience;
+	m_experienceAward = that.m_experienceAward;
+	m_experienceAwardOwnGuysDie = that.m_experienceAwardOwnGuysDie;
+	m_targetNames = that.m_targetNames;
+	m_selectionDecal = that.m_selectionDecal;
+	m_levelUpTintColor = that.m_levelUpTintColor;
+	m_levelUpOCL = that.m_levelUpOCL;
+	m_modelConditionState = that.m_modelConditionState;
+	m_selectionDecal = that.m_selectionDecal;
+	m_showLevelUpTint = that.m_showLevelUpTint;
+	AsciiStringVector *attributeModifiers = &m_attributeModifiers;
+	m_levelUpTintPreColorTime = that.m_levelUpTintPreColorTime;
+	m_levelUpTintPostColorTime = that.m_levelUpTintPostColorTime;
+	m_levelUpTintSustainColorTime = that.m_levelUpTintSustainColorTime;
+	m_levelUpTintFrequency = that.m_levelUpTintFrequency;
+	m_levelUpTintAmplitude = that.m_levelUpTintAmplitude;
+	m_rank = that.m_rank;
+	m_informUpdateModule = that.m_informUpdateModule;
+	m_singlePlayerOnly = that.m_singlePlayerOnly;
+	m_multiPlayerOnly = that.m_multiPlayerOnly;
+	m_emotionType = that.m_emotionType;
+	_ReadWriteBarrier();
+	attributeModifiers->erase(
+		attributeModifiers->begin(), attributeModifiers->end());
+	for (unsigned int i = 0; i < that.m_attributeModifiers.size(); ++i)
+		attributeModifiers->push_back(that.m_attributeModifiers[i]);
+	m_upgrades.clear();
+	for (unsigned int i = 0; i < that.m_upgrades.size(); ++i)
+		m_upgrades.push_back(that.m_upgrades[i]);
+	((LevelUpFXVectorView *)&m_levelUpFx)->clear();
+	for (unsigned int i = 0; i < that.m_levelUpFx.size(); ++i)
+		m_levelUpFx.push_back(that.m_levelUpFx[i]);
+	return *this;
 }
