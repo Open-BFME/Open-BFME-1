@@ -1,4 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
+// Complete destructor (0x001DFF40) and its emitted scalar-deleting wrapper
+// (0x001E02F0). The constructor-installed vtable 0x0109FD8C identifies both.
 
 class SubsystemInterface
 {
