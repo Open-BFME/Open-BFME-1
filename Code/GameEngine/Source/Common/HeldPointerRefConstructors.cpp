@@ -38,7 +38,7 @@
 class RefTarget
 {
 public:
-	virtual void refPad0();
+	virtual void refRelease(bool deleteFlag);
 	virtual RefTarget *refFetch();
 };
 
@@ -53,6 +53,7 @@ public:
 	{                                                                         \
 	public:                                                                   \
 		NAME( RefSource const &source );                                      \
+		NAME &operator=( RefSource const &source );                           \
                                                                               \
 		RefTarget *m_ref;                                                     \
 	};                                                                        \
@@ -69,3 +70,12 @@ BFME_HELD_POINTER_REF( Rva005BEC00Ref )
 BFME_HELD_POINTER_REF( Rva005BEC90Ref )
 BFME_HELD_POINTER_REF( Rva005BED20Ref )
 BFME_HELD_POINTER_REF( Rva005BEDB0Ref )
+
+Rva005BEDB0Ref &Rva005BEDB0Ref::operator=( RefSource const &source )
+{
+	RefTarget *ref = source.m_held ? source.m_held->refFetch() : 0;
+	if( m_ref )
+		m_ref->refRelease( true );
+	m_ref = ref;
+	return *this;
+}
