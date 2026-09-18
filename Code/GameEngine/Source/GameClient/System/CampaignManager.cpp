@@ -282,7 +282,6 @@ Campaign *CampaignManager::getCurrentCampaign( void )
 }
 
 //-----------------------------------------------------------------------------
-// ?getCurrentMission@CampaignManager@@QAEPAVMission@@XZ present-unmatched
 Mission *CampaignManager::getCurrentMission( void )
 {
 	return m_currentMission;
