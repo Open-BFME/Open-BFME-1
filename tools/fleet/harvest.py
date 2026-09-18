@@ -65,6 +65,19 @@ def quarantine(source, funcs):
         subprocess.run([sys.executable, "tools/re_log.py", "record", r[0], r[2], r[3], "blocked", evidence], cwd=ROOT)
 
 
+def unstage_inflight():
+    """A stash whose address a live seat still leases is scratch in flight
+    (seats write reverse/attempts directly before banking); judging it wedged
+    five harvests on 2026-09-17. It is picked up once the lease ends."""
+    import fleet_run
+    live = {a.lower() for a in fleet_run.active_rvas(ROOT)}
+    inflight = [p for p in out("git", "diff", "--cached", "--name-only", "--", "reverse/attempts").splitlines()
+                if Path(p).stem.lower() in live]
+    if inflight:
+        run("git", "reset", "-q", "--", *inflight)
+        print(f"harvest: left {len(inflight)} in-flight stash(es) unstaged")
+
+
 msg = sys.argv[1] if len(sys.argv) > 1 else "Open-BFME5: fleet ledger and source snapshot"
 WT = ROOT / "build/wt"
 
@@ -90,7 +103,7 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
                 "reverse/re_attempts.log", "reverse/attempts", "reverse/attempt_history",
                 "reverse/deleted_rows.csv")  # tombstones: check_csv rejects a row removal without one
                 if (ROOT / p).exists()]
-    run("git", "add", "-A", "--", *evidence)
+    run("git", "add", "-A", "--", *evidence); unstage_inflight()
     cited = set()
     with open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8") as ledger:
         cited = {r["source"] for r in csv.DictReader(ledger) if r["status"] == "matched"
@@ -121,9 +134,9 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         for path, funcs in bad.items():
             quarantine(path, funcs)
         if bad:
-            run("git", "add", "-A", "--", *evidence)
+            run("git", "add", "-A", "--", *evidence); unstage_inflight()
             print(f"harvest: quarantined {len(bad)} source(s) defining undeclared helpers: {' '.join(bad)}")
-    r = subprocess.run([sys.executable, "tools/check_csv.py"], cwd=ROOT, capture_output=True, text=True, errors="replace")
+    r = subprocess.run([sys.executable, "tools/check_csv.py", "--staged"], cwd=ROOT, capture_output=True, text=True, errors="replace")
     if r.returncode:
         import re
         # stashes whose body landed by another route: retire them (git rm)
@@ -134,8 +147,8 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         env = dict(os.environ, HARVEST_HAS_LOCK="1")
         subprocess.run([sys.executable, "tools/dedup_csv.py"], cwd=ROOT, env=env)
         subprocess.run([sys.executable, "tools/fleet/dedup_keepfirst.py"], cwd=ROOT, env=env)
-        run("git", "add", "-A", "--", *evidence)
-        if subprocess.run([sys.executable, "tools/check_csv.py"], cwd=ROOT).returncode:
+        run("git", "add", "-A", "--", *evidence); unstage_inflight()
+        if subprocess.run([sys.executable, "tools/check_csv.py", "--staged"], cwd=ROOT).returncode:
             run("git", "reset", "-q")
             sys.exit("harvest: check_csv failing; hands needed")
     # The index may hold entries this harvest never staged (a stale branch, a
