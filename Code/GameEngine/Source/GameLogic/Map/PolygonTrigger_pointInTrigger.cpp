@@ -79,9 +79,9 @@ Bool PolygonTrigger::pointInTrigger(ICoord3D &point) const
 	for (i = 0; i < m_numPoints; ++i)
 	{
 		TempIndexStruct pt1 = m_points[i];
-		const TempIndexStruct *src2 =
+		const TempIndexStruct *previousVertex =
 			(i != 0) ? &m_points[i - 1] : &m_points[m_numPoints - 1];
-		TempIndexStruct pt2 = *src2;
+		TempIndexStruct pt2 = *previousVertex;
 
 		if (pt1.y == pt2.y)
 			continue;
@@ -94,9 +94,9 @@ Bool PolygonTrigger::pointInTrigger(ICoord3D &point) const
 			continue;
 		if (pt1.y >= point.y)
 			continue;
-		const Int pt2x = pt2.x;
+		const Int upperEndpointX = pt2.x;
 
-		if ((pt2x - pt1.x) * (point.y - pt1.y) >=
+		if ((upperEndpointX - pt1.x) * (point.y - pt1.y) >=
 			(point.x - pt1.x) * (pt2.y - pt1.y))
 			inside = !inside;
 	}
@@ -127,9 +127,9 @@ Bool PolygonTrigger::bfmeContainsPointAt0018FA20(Coord3D &point) const
 	for (i = 0; i < m_numPoints; ++i)
 	{
 		TempIndexStruct pt1 = m_points[i];
-		const TempIndexStruct *src2 =
+		const TempIndexStruct *previousVertex =
 			(i != 0) ? &m_points[i - 1] : &m_points[m_numPoints - 1];
-		TempIndexStruct pt2 = *src2;
+		TempIndexStruct pt2 = *previousVertex;
 
 		if (pt1.y == pt2.y)
 			continue;
@@ -142,9 +142,9 @@ Bool PolygonTrigger::bfmeContainsPointAt0018FA20(Coord3D &point) const
 			continue;
 		if (pt1.y >= point.y)
 			continue;
-		const Int pt2x = pt2.x;
+		const Int upperEndpointX = pt2.x;
 
-		if ((pt2x - pt1.x) * (point.y - pt1.y) >=
+		if ((upperEndpointX - pt1.x) * (point.y - pt1.y) >=
 			(point.x - pt1.x) * (pt2.y - pt1.y))
 			inside = !inside;
 	}
