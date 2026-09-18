@@ -181,7 +181,7 @@ Int OpenContain::getContainMax( void ) const
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/OpenContainDestructorThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/OpenContainDestructors.cpp
 // ??1OpenContain@@ present-unmatched
 OpenContain::~OpenContain()
 {

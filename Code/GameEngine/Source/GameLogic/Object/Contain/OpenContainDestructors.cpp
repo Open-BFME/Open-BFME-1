@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// Complete destructor 0x002262E0 naturally emits scalar wrapper 0x00227B30.
+// Constructor 0x002277A0 and the typed factories identify this class;
+// wrapper ILT 0x00039D6A independently reaches the complete body.
 // readable body of ??1OpenContain@@: Code/GameEngine/Source/GameLogic/Object/Contain/OpenContain.cpp
 
 // OpenContain's destructor, lifted from its MASM dump to C++.

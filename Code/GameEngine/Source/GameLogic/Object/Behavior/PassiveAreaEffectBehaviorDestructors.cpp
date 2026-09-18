@@ -6,7 +6,7 @@
 // vtable 0x010A5304; wrapper ILT 0x000116E4 reaches this complete body.
 //
 // The smallest instance of the module-destructor shape
-// OpenContainDestructorThunk.cpp works out in full: three vptr writes at 0x00,
+// OpenContainDestructors.cpp works out in full: three vptr writes at 0x00,
 // 0x0C and 0x10, one container member, then the inlined ~UpdateModule and
 // ~BehaviorModule vptr restores (0x109CBAC at 0x10, 0x109CB5C at 0x00,
 // 0x109CA98 at 0x0C) and the out-of-line base destructor at 0x00113D40.
