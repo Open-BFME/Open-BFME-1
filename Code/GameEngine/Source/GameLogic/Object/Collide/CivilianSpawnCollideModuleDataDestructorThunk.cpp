@@ -1,11 +1,17 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: CivilianSpawnCollideModuleData dtor.
-// Retail 67B SEH: destroy Buffer @+0x8, base vtbl store. Buffer pin 0x1A401.
+// Retail 67B SEH: release indexed handle @+0x8, base vtbl store. Handle destructor route 0x1A401 -> 0x39D550.
 
-class Buffer
+// Retail call 0x002175E8 passes owner+0x8 to ILT 0x0001A401
+// -> 0x0039D550. That body reads/writes one four-byte pool index and
+// releases its entry. The original C++ type and this member's role are unknown.
+class Rva0039D550
 {
 public:
-	~Buffer();
+	~Rva0039D550();
+
+private:
+	unsigned int m_index;
 };
 
 class CivilianSpawnCollideModuleDataBase
@@ -24,7 +30,7 @@ public:
 	virtual ~CivilianSpawnCollideModuleData();
 
 private:
-	Buffer m_buffer;
+	Rva0039D550 m_handle08;
 };
 
 // ??1CivilianSpawnCollideModuleData@@UAE@XZ

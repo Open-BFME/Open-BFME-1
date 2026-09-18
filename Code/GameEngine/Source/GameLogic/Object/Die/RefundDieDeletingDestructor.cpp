@@ -4,10 +4,16 @@
 // deleting destructor in slot zero. Its call target is the independently
 // matched RefundDieModuleData::~RefundDieModuleData body at 0x00125530.
 
-class Buffer
+// Retail call 0x00125558 passes owner+0x3c to ILT 0x0001A401
+// -> 0x0039D550. That body reads/writes one four-byte pool index and
+// releases its entry. The original C++ type and this member's role are unknown.
+class Rva0039D550
 {
 public:
-	~Buffer();
+	~Rva0039D550();
+
+private:
+	unsigned int m_index;
 };
 
 class RefundDieModuleDataBase
@@ -25,7 +31,7 @@ public:
 	virtual ~RefundDieModuleData();
 
 private:
-	Buffer m_buffer;
+	Rva0039D550 m_handle3C;
 };
 
 RefundDieModuleData::~RefundDieModuleData()
