@@ -2820,7 +2820,6 @@ name,address,notes
 ??0Gen_004b5a50@@QAE@H@Z,0x0001FDCF,OnlineQuickMatch constructor initializes its +0x5C state through this address-derived constructor; the matching destructor at 0x0003EB53 closes the EH state
 ??0Gen_006BC530@@QAE@XZ,0x006BC530,Existing25B neutral constructor body; factory6BAE20 allocates12B then reaches it via ILT2BA49; own vtable111CF68 slot8 name getter6BC550 returns W3DBuffLogic
 ??0Gen_dtor_000edca0@@QAE@XZ,0x00019CF9,Open-BFME5 DelayedLuaEventUpdate member constructor ILT pin
-??0Gen_dtor_002aaec0@@QAE@PAVThing@@PBVModuleData@@@Z,0x00013462,Open-BFME5 RousingSpeechUpdate retail base constructor ILT
 ??0Gen_dtor_007f6d20@@QAE@XZ,0x00800280,V2 lane: 8-byte element constructor placement-new'd by ?allocate@Rva007F78E0Block@@QAEXH@Z; same class the tree pins ??1Gen_dtor_007f6d20@@UAE@XZ at 0x00800290
 ??0Gen_dtor_009eb9e0@@QAE@XZ,0x009F2140,W3DRenderObjectSnapshot allocated member constructor paired with the destructor at RVA 0x009F23C0
 ??0Gen_mci_002e1140@@QAE@ABU0@@Z,0x0000B537,"stand-in second type for the pair/_Construct copies at 0x002E1140 and 0x002E1520; ILT to the 111-byte copy ctor at 0x002E0F20 those two encode"
@@ -5584,7 +5583,6 @@ name,address,notes
 ??1Gen_dtor_0029e300@@UAE@XZ,0x00010B9F,gen-dtor class destructor
 ??1Gen_dtor_002a0720@@UAE@XZ,0x00012EC7,gen-dtor class destructor
 ??1Gen_dtor_002a1170@@UAE@XZ,0x0002F162,gen-dtor class destructor
-??1Gen_dtor_002aaec0@@UAE@XZ,0x000243A7,gen-dtor class destructor
 ??1Gen_dtor_002ab080@@UAE@XZ,0x00042BA9,gen-dtor class destructor
 ??1Gen_dtor_002b2c70@@UAE@XZ,0x00005673,gen-dtor class destructor
 ??1Gen_dtor_002b3130@@UAE@XZ,0x00030E1D,gen-dtor class destructor

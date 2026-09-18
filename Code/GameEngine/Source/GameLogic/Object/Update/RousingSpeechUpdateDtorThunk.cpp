@@ -64,12 +64,18 @@ private:
     unsigned char m_pad[0x94];
 };
 
-class Gen_dtor_002aaec0 : public SpecialAbilityUpdateUpdateModule,
+// The named SpecialAbilityUpdate factory 0x001140C0 allocates 0xe8 bytes
+// and calls ILT 0x00013462 -> its matched constructor 0x002A6360.
+// RousingSpeech uses that route and destructor ILT 0x000243A7 -> 0x002AA910.
+// Preserve the BFME view: sound at +34, list at +cc, derived data at +e8.
+// The vendored Generals header puts other fields between sound and list;
+// there is no compatible Code header to adopt for this member order.
+class SpecialAbilityUpdate : public SpecialAbilityUpdateUpdateModule,
     public SpecialAbilityUpdateInterface
 {
 public:
-	Gen_dtor_002aaec0(Thing *, const ModuleData *);
-    virtual ~Gen_dtor_002aaec0();
+	SpecialAbilityUpdate(Thing *, const ModuleData *);
+    virtual ~SpecialAbilityUpdate();
 
 private:
     unsigned char m_pad[0x10];
@@ -78,7 +84,7 @@ private:
     unsigned char m_tail[0x18];
 };
 
-class RousingSpeechUpdate : public Gen_dtor_002aaec0
+class RousingSpeechUpdate : public SpecialAbilityUpdate
 {
 public:
 	RousingSpeechUpdate(Thing *, const ModuleData *);
@@ -93,7 +99,7 @@ private:
 };
 
 RousingSpeechUpdate::RousingSpeechUpdate(Thing *thing, const ModuleData *data)
-	: Gen_dtor_002aaec0(thing, data), m_a(0), m_b(0), m_c(0), m_d(0)
+	: SpecialAbilityUpdate(thing, data), m_a(0), m_b(0), m_c(0), m_d(0)
 {
 	m_speechObjectIDList.clear();
 }
