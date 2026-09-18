@@ -2,6 +2,6 @@
 
 #define SpecialPowerModule ManTheWallsSpecialPower
 #define SPECIAL_POWER_ALIAS
-#include "SpecialPowerModuleDestructorThunk.cpp"
+#include "../../../Common/SpecialPowerModuleDestructorThunk.cpp"
 #undef SPECIAL_POWER_ALIAS
 #undef SpecialPowerModule
