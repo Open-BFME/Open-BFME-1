@@ -100,9 +100,9 @@ void Rva0020CA90Owner::attack(const Coord3D *position, Int maxShots,
 		Int objectID = node->m_objectID;
 		if (objectID != 0)
 		{
-			ObjectHash::iterator it = TheGameLogic->m_objects.find(objectID);
-			if (it != TheGameLogic->m_objects.end())
-				object = (*it).second;
+			ObjectHash::iterator objectEntry = TheGameLogic->m_objects.find(objectID);
+			if (objectEntry != TheGameLogic->m_objects.end())
+				object = (*objectEntry).second;
 		}
 
 		if (object != 0 && object->m_ai != 0)
