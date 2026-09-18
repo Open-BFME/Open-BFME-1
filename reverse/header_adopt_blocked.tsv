@@ -565,7 +565,7 @@ Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva007D9940ResetStages.cpp	DX8
 Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva007DD0E0ResetStages01.cpp	DX8Wrapper	build.sh exited 2
 Code/GameEngineDevice/Source/W3DDevice/GameClient/ScreenHilightFilterPostRender.cpp	DX8Wrapper	build.sh exited 2
 Code/GameEngineDevice/Source/W3DDevice/GameClient/ScreenHilightFilterPreRender.cpp	DX8Wrapper	build.sh exited 2
-Code/GameEngine/Source/Common/Audio/MiscAudioConstructor.cpp	AsciiString	Code\GameEngine\Source\Common\Audio\MiscAudioConstructor.cpp(71) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/Audio/MiscAudio.cpp	AsciiString	Code\GameEngine\Source\Common\Audio\MiscAudioConstructor.cpp(71) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
 Code/GameEngine/Source/Common/BitFlags304BuildDescription.cpp	AsciiString	Code\GameEngine\Source\Common\BitFlags304BuildDescription.cpp(43) : error C2661: 'AsciiString::concat' : no overloaded function takes 2 arguments
 Code/GameEngine/Source/Common/BitFlags86BuildDescription.cpp	AsciiString	Code\GameEngine\Source\Common\BitFlags86BuildDescription.cpp(47) : error C2661: 'AsciiString::concat' : no overloaded function takes 2 arguments
 Code/GameEngine/Source/Common/DictPairClearThunk.cpp	AsciiString	Code\GameEngine\Source\Common\DictPairClearThunk.cpp(59) : error C2039: 'clear' : is not a member of 'UnicodeString'

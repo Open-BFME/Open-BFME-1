@@ -68,6 +68,7 @@ struct MiscAudio
 	AudioEventRTS m_lowLODShellMusic;
 
 	MiscAudio();
+	~MiscAudio();
 };
 
 // ??0MiscAudio@@QAE@XZ
@@ -104,5 +105,14 @@ MiscAudio::MiscAudio()
 	, m_enabledHotKeyPressed(AsciiString::TheEmptyString, 0)
 	, m_disabledHotKeyPressed(AsciiString::TheEmptyString, 0)
 	, m_lowLODShellMusic(AsciiString::TheEmptyString, 0)
+{
+}
+
+// Retail RVA 0x006952F0 destroys the same 32 embedded audio events.
+typedef char AudioEventSize70[(sizeof(AudioEventRTS) == 0x70) ? 1 : -1];
+typedef char MiscAudioSizeE00[(sizeof(MiscAudio) == 0xE00) ? 1 : -1];
+
+// ??1MiscAudio@@QAE@XZ
+MiscAudio::~MiscAudio()
 {
 }
