@@ -67,6 +67,35 @@ static Bool startGame = false;
 static Bool buttonPushed = false;
 static GameDifficulty s_AIDiff = DIFFICULTY_NORMAL;
 
+class BFMERetailAsciiString;
+
+template <typename T> class StringBase
+{
+	friend class BFMERetailAsciiString;
+
+private:
+	StringBase( const T *text );
+	void releaseBuffer();
+	T *m_data;
+};
+
+class BFMERetailAsciiString : private StringBase<char>
+{
+public:
+	BFMERetailAsciiString( const char *text ) : StringBase<char>( text ) {}
+	~BFMERetailAsciiString() { releaseBuffer(); }
+	const char *str() const { return m_data ? m_data + 8 : (const char *)0x0107388b; }
+};
+
+class BFMERetailScriptEngineView
+{
+public:
+	unsigned char m_unreconstructed_00000[0x17620];
+	GameDifficulty m_globalDifficulty;
+
+	GameDifficulty getGlobalDifficulty() const { return m_globalDifficulty; }
+};
+
 // BFME's pending map string moved from the Zero Hour GlobalData layout.
 static void setupGameStart(AsciiString mapName)
 {
@@ -143,8 +172,8 @@ static void shutdownComplete( WindowLayout *layout )
 
 void SetDifficultyRadioButton( void )
 {
-	AsciiString parentName( "MapSelectMenu.wnd:MapSelectMenuParent" );
-	NameKeyType parentID = TheNameKeyGenerator->nameToKey( parentName );
+	BFMERetailAsciiString parentName( "MapSelectMenu.wnd:MapSelectMenuParent" );
+	NameKeyType parentID = TheNameKeyGenerator->nameToKey( parentName.str() );
 	GameWindow *parent = TheWindowManager->winGetWindowFromId( NULL, parentID );
 
 	if (!TheScriptEngine)
@@ -153,11 +182,12 @@ void SetDifficultyRadioButton( void )
 	}
 	else
 	{
-		switch (TheScriptEngine->getGlobalDifficulty())
+		switch (((BFMERetailScriptEngineView *)TheScriptEngine)->getGlobalDifficulty())
 		{
 			case DIFFICULTY_EASY:
 			{
-				NameKeyType radioButtonEasyAIID = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:RadioButtonEasyAI") );
+				NameKeyType radioButtonEasyAIID = TheNameKeyGenerator->nameToKey(
+					BFMERetailAsciiString( "MapSelectMenu.wnd:RadioButtonEasyAI" ).str() );
 				GameWindow *radioButtonEasyAI = TheWindowManager->winGetWindowFromId( parent, radioButtonEasyAIID );			
 				GadgetRadioSetSelection(radioButtonEasyAI, FALSE);
 				s_AIDiff = DIFFICULTY_EASY;
@@ -165,7 +195,8 @@ void SetDifficultyRadioButton( void )
 			}
 			case DIFFICULTY_NORMAL:
 			{
-				NameKeyType radioButtonMediumAIID = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:RadioButtonMediumAI") );
+				NameKeyType radioButtonMediumAIID = TheNameKeyGenerator->nameToKey(
+					BFMERetailAsciiString( "MapSelectMenu.wnd:RadioButtonMediumAI" ).str() );
 				GameWindow *radioButtonMediumAI = TheWindowManager->winGetWindowFromId( parent, radioButtonMediumAIID );
 				GadgetRadioSetSelection(radioButtonMediumAI, FALSE);
 				s_AIDiff = DIFFICULTY_NORMAL;
@@ -173,7 +204,8 @@ void SetDifficultyRadioButton( void )
 			}
 			case DIFFICULTY_HARD:
 			{
-				NameKeyType radioButtonHardAIID = TheNameKeyGenerator->nameToKey( AsciiString("MapSelectMenu.wnd:RadioButtonHardAI") );
+				NameKeyType radioButtonHardAIID = TheNameKeyGenerator->nameToKey(
+					BFMERetailAsciiString( "MapSelectMenu.wnd:RadioButtonHardAI" ).str() );
 				GameWindow *radioButtonHardAI = TheWindowManager->winGetWindowFromId( parent, radioButtonHardAIID );			
 				GadgetRadioSetSelection(radioButtonHardAI, FALSE);
 				s_AIDiff = DIFFICULTY_HARD;
