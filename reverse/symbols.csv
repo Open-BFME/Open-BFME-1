@@ -3323,7 +3323,7 @@ name,address,notes
 ??0ROUMT_CopyBase@@QAE@ABV0@@Z,0x0001D435,RenderObjectUpdateModuleTemplate copy-ctor primary-base call; ILT thunk for CategoryModuleTemplate<2> copy ctor (body 0x005BF4A0)
 ??0ROUMT_OffsetBase@@QAE@ABV0@@Z,0x000310FC,RenderObjectUpdateModuleTemplate copy-ctor offset-base call; ILT thunk for RenderObjectUpdateModuleInfo copy ctor (body 0x005D92C0)
 ??0RRU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,RubbleRiseUpdate constructor calls the shared ObjectModule constructor ILT
-??0RS_Base@@QAE@XZ,0x0003F503,Open-BFME5 pin
+??0SpecialAbilityUpdateModuleData@@QAE@XZ,0x0003F503,route=0x002A5AA0; named SpecialAbilityUpdate factory 0x00114140 allocates 0x254 and calls this constructor route; LevelGrant and RousingSpeech use the same base
 ??0RS_Member@@QAE@XZ,0x0003747A,Open-BFME5 pin
 ??0RU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,RespawnUpdate ModuleFactory body calls the shared ObjectModule constructor ILT
 ??0RadarUpdate@@QAE@PAVThing@@PBVModuleData@@@Z,0x0002A013,module ctor (friend_newModuleInstance retail call target)

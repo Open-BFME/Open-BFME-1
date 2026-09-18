@@ -4,11 +4,16 @@
 // at +0x274 (inline zero ctor, out-of-line dtor) taking SEH state 0, then the
 // member object at +0x280 constructed at state 1 (trivial dtor, untracked).
 
-class RS_Base
+// BFME base view: named SpecialAbilityUpdate factory 0x00114140 allocates
+// 0x254 bytes and calls ILT 0x0003F503 -> matched constructor 0x002A5AA0.
+// This derived constructor calls that same base. Keep its witnessed size:
+// BFME puts AudioEventRTS at +8/+78/+e8/+158, unlike the vendored Generals
+// header, which begins with AsciiStrings. No compatible Code header exists.
+class SpecialAbilityUpdateModuleData
 {
 public:
-    RS_Base();
-    virtual ~RS_Base();
+    SpecialAbilityUpdateModuleData();
+    virtual ~SpecialAbilityUpdateModuleData();
 
 private:
     unsigned char m_pad[0x250];
@@ -33,7 +38,7 @@ private:
     unsigned int m_dummy;
 };
 
-class RousingSpeechUpdateModuleData : public RS_Base
+class RousingSpeechUpdateModuleData : public SpecialAbilityUpdateModuleData
 {
 public:
     RousingSpeechUpdateModuleData();
