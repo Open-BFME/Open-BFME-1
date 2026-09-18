@@ -39,9 +39,9 @@ private:
 UnsignedInt PlayerList::getPlayersMask()
 {
 	UnsignedInt mask = 0;
-	for (Int i = 0; i < m_playerCount; ++i)
+	for (Int playerIndex = 0; playerIndex < m_playerCount; ++playerIndex)
 	{
-		Player *player = getNthPlayer(i);
+		Player *player = getNthPlayer(playerIndex);
 		if (player)
 			mask |= player->getPlayerMask();
 	}
