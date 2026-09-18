@@ -22,10 +22,23 @@ struct Rva003D8C40PathfindLayer
 	Int m_height;
 };
 
+extern void j_000171e8(void);
+
 class Rva003D8C40Pathfinder
 {
 public:
 	Bool bfmePickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos);
+	__forceinline Bool worldToCell(const Coord3D *world, ICoord2D *cell)
+	{
+		typedef Bool (Rva003D8C40Pathfinder::*Method)(const Coord3D *, ICoord2D *);
+		union
+		{
+			void (*raw)(void);
+			Method member;
+		} call;
+		call.raw = j_000171e8;
+		return (this->*call.member)(world, cell);
+	}
 
 private:
 	unsigned char m_prefix[0x10];
