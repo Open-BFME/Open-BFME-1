@@ -15,8 +15,8 @@ void HTTPThinkWrapper()
 {
 	if (bfmeAsyncDNSLookupInProgress)
 	{
-		int result = bfmeAsyncGethostbyname("servserv.generals.ea.com");
-		switch (result)
+		int dnsLookupStatus = bfmeAsyncGethostbyname("servserv.generals.ea.com");
+		switch (dnsLookupStatus)
 		{
 		case 1:
 			bfmeCantConnectBeforeOnline = 1;
