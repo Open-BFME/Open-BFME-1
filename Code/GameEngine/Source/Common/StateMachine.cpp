@@ -102,6 +102,30 @@ public:
 		--num;
 	}
 };
+
+// BFME shifts State's members back four bytes: the success and failure states
+// sit at +0x08/+0x0c, the transition vector at +0x10, and the owning machine at
+// +0x1c. TransitionInfo is private to State, so the view restates its three
+// release-build fields rather than naming it.
+struct BfmeTransitionInfo
+{
+	StateTransFuncPtr test;
+	StateID toStateID;
+	void *userData;
+};
+
+struct BfmeStateFields
+{
+	UnsignedByte m_unreconstructed_00[0x08];
+	StateID m_successStateID;					///< retail this+0x08
+	StateID m_failureStateID;					///< retail this+0x0c
+	std::vector<BfmeTransitionInfo> m_transitions;	///< retail this+0x10
+	StateMachine *m_machine;					///< retail this+0x1c
+};
+
+// The normal and sleep transition walkers have independent recursion guards.
+static Int checkfortransitionsnum_twin = 0;
+
 #ifdef STATE_MACHINE_DEBUG
 //-----------------------------------------------------------------------------
 std::vector<StateID> * State::getTransitions( void ) 
@@ -125,13 +149,11 @@ std::vector<StateID> * State::getTransitions( void )
 /**
  * Given a return code, handle state transitions
  */
-// ?friend_checkForTransitions@State@@ present-unmatched
+// ?friend_checkForTransitions@State@@QAE?AW4StateReturnType@@W42@@Z
 StateReturnType State::friend_checkForTransitions( StateReturnType status )
 {
-	static Int checkfortransitionsnum = 0;
-	
-	StIncrementer inc(checkfortransitionsnum);
-	if (checkfortransitionsnum >= 20) 
+	StIncrementer inc(checkfortransitionsnum_twin);
+	if (checkfortransitionsnum_twin >= 20)
 	{
 		DEBUG_CRASH(("checkfortransitionsnum is > 20"));
 		return STATE_FAILURE;
@@ -139,59 +161,53 @@ StateReturnType State::friend_checkForTransitions( StateReturnType status )
 
 	DEBUG_ASSERTCRASH(!IS_STATE_SLEEP(status), ("Please handle sleep states prior to this"));
 
+	BfmeStateFields *self = (BfmeStateFields *)this;
+
 	// handle transitions
 	switch( status )
 	{
 		case STATE_SUCCESS:
 			// check if machine should exit
-			if (m_successStateID == EXIT_MACHINE_WITH_SUCCESS)
+			if (self->m_successStateID == EXIT_MACHINE_WITH_SUCCESS)
 			{
-				getMachine()->internalSetState( MACHINE_DONE_STATE_ID );
+				self->m_machine->internalSetState( MACHINE_DONE_STATE_ID );
 				return STATE_SUCCESS;
 			}
-			else if (m_successStateID == EXIT_MACHINE_WITH_FAILURE)
+			else if (self->m_successStateID == EXIT_MACHINE_WITH_FAILURE)
 			{
-				getMachine()->internalSetState( MACHINE_DONE_STATE_ID );
+				self->m_machine->internalSetState( MACHINE_DONE_STATE_ID );
 				return STATE_FAILURE;
 			}
 
 			// move to new state
-			return getMachine()->internalSetState( m_successStateID );
+			return self->m_machine->internalSetState( self->m_successStateID );
 
 		case STATE_FAILURE:
 			// check if machine should exit
-			if (m_failureStateID == EXIT_MACHINE_WITH_SUCCESS)
+			if (self->m_failureStateID == EXIT_MACHINE_WITH_SUCCESS)
 			{
-				getMachine()->internalSetState( MACHINE_DONE_STATE_ID );
+				self->m_machine->internalSetState( MACHINE_DONE_STATE_ID );
 				return STATE_SUCCESS;
 			}
-			else if (m_failureStateID == EXIT_MACHINE_WITH_FAILURE)
+			else if (self->m_failureStateID == EXIT_MACHINE_WITH_FAILURE)
 			{
-				getMachine()->internalSetState( MACHINE_DONE_STATE_ID );
+				self->m_machine->internalSetState( MACHINE_DONE_STATE_ID );
 				return STATE_FAILURE;
 			}
 
 			// move to new state
-			return getMachine()->internalSetState( m_failureStateID );
+			return self->m_machine->internalSetState( self->m_failureStateID );
 
 		case STATE_CONTINUE:
 
 			// check transition condition list
-			if (!m_transitions.empty())
+			if (!self->m_transitions.empty())
 			{
-				for(std::vector<TransitionInfo>::const_iterator it = m_transitions.begin(); it != m_transitions.end(); ++it)
+				for(std::vector<BfmeTransitionInfo>::const_iterator it = self->m_transitions.begin(); it != self->m_transitions.end(); ++it)
 				{
 					if (it->test( this, it->userData ))
 					{
 						// test returned true, change to associated state
-
-	#ifdef STATE_MACHINE_DEBUG
-						if (getMachine()->getWantsDebugOutput()) 
-						{
-							DEBUG_LOG(("%d '%s' -- '%s' condition '%s' returned true!\n", TheGameLogic->getFrame(), getMachineOwner()->getTemplate()->getName().str(),
-											getMachine()->getName().str(), it->description ? it->description : "[no description]"));
-						}
-	#endif
 
 						// check if machine should exit
 						if (it->toStateID == EXIT_MACHINE_WITH_SUCCESS)
@@ -204,7 +220,7 @@ StateReturnType State::friend_checkForTransitions( StateReturnType status )
 						}
 
 						// move to new state
-						return getMachine()->internalSetState( it->toStateID );
+						return self->m_machine->internalSetState( it->toStateID );
 					}
 				}
 			}
@@ -215,28 +231,13 @@ StateReturnType State::friend_checkForTransitions( StateReturnType status )
 	return STATE_CONTINUE;
 }
 
+// Keep this destination-owned STL claim after the BFME view stops calling it directly.
+template std::vector<State::TransitionInfo>::iterator std::vector<State::TransitionInfo>::begin();
+
 //-----------------------------------------------------------------------------
 /**
  * Given a return code, handle state transitions
  */
-// BFME shifts State's members back four bytes: the transition vector sits at
-// +0x10 and the owning machine at +0x1c, where the vendored header lands them at
-// +0x14 and +0x20. TransitionInfo is private to State, so the view restates its
-// three release-build fields rather than naming it.
-struct BfmeTransitionInfo
-{
-	StateTransFuncPtr test;
-	StateID toStateID;
-	void *userData;
-};
-
-struct BfmeStateFields
-{
-	UnsignedByte m_unreconstructed_00[0x10];
-	std::vector<BfmeTransitionInfo> m_transitions;		///< retail this+0x10
-	StateMachine *m_machine;				///< retail this+0x1c
-};
-
 // ?friend_checkForSleepTransitions@State@@QAE?AW4StateReturnType@@W42@@Z
 StateReturnType State::friend_checkForSleepTransitions( StateReturnType status )
 {
@@ -989,4 +990,3 @@ void StateMachine::loadPostProcess( void )
 {
 
 }  // end loadPostProcess
-
