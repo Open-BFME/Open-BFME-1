@@ -1,8 +1,3 @@
-Code/Libraries/Source/WWVegas/WWLib/INI_getNextAsciiString_Thunk.cpp	Code/GameEngine/Source/Common/INI/INI_getNextAsciiString_Thunk.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INI_getNextQuotedAsciiString_Thunk.cpp	Code/GameEngine/Source/Common/INI/INI_getNextQuotedAsciiString_Thunk.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INI_parseBitString16.cpp	Code/GameEngine/Source/Common/INI/INI_parseBitString16.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INI_parseBitString32_Thunk.cpp	Code/GameEngine/Source/Common/INI/INI_parseBitString32_Thunk.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INI_parseCampaignDefinitionMethodThunk.cpp	Code/GameEngine/Source/Common/INI/INI_parseCampaignDefinitionMethodThunk.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INI_parseMetaMapDefinition_Thunk.cpp	Code/GameEngine/Source/Common/INI/INI_parseMetaMapDefinition_Thunk.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INI_parseScienceVector.cpp	Code/GameEngine/Source/Common/INI/INI_parseScienceVector.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INI_parseSecondsToMillis.cpp	Code/GameEngine/Source/Common/INI/INI_parseSecondsToMillis.cpp	INI
