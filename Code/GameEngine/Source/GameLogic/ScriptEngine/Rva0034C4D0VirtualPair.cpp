@@ -73,12 +73,12 @@ void Rva0034C4D0Host::invokePair(void *object, Rva0034C4D0Pair *pair)
 	{
 		if (pair)
 		{
-			Rva0034C4D0Pair tmp;
-			tmp.m_a = pair->m_a;
-			tmp.m_b = pair->m_b;
-			applyPair(object, &tmp);
-			pair->m_a = tmp.m_a;
-			pair->m_b = tmp.m_b;
+			Rva0034C4D0Pair workingPair;
+			workingPair.m_a = pair->m_a;
+			workingPair.m_b = pair->m_b;
+			applyPair(object, &workingPair);
+			pair->m_a = workingPair.m_a;
+			pair->m_b = workingPair.m_b;
 		}
 	}
 }
