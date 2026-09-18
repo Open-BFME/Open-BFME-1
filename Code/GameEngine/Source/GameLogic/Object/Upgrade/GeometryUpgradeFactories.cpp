@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: GeometryUpgrade::friend_newModuleData factory.
+// Open-BFME5: GeometryUpgrade module-data and instance factories.
 
+class Module;
+class Thing;
 class INI;
 class ModuleData;
 
@@ -35,7 +37,12 @@ extern "C" void __cdecl GeometryUpgradeFieldParse(MultiIniFieldParse &parse);
 class GeometryUpgrade
 {
 public:
+	GeometryUpgrade(Thing *, const ModuleData *);
 	static ModuleData *friend_newModuleData(INI *ini);
+	static Module *friend_newModuleInstance(Thing *, const ModuleData *);
+
+private:
+	unsigned char m_pad[0x20];
 };
 
 // ?friend_newModuleData@GeometryUpgrade@@SAPAVModuleData@@PAVINI@@@Z
@@ -45,4 +52,10 @@ ModuleData *GeometryUpgrade::friend_newModuleData(INI *ini)
 	if (ini)
 		ini->initFromINIMultiProc(data, &GeometryUpgradeFieldParse);
 	return (ModuleData *)data;
+}
+
+// ?friend_newModuleInstance@GeometryUpgrade@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
+Module *GeometryUpgrade::friend_newModuleInstance(Thing *thing, const ModuleData *data)
+{
+	return (Module *)new GeometryUpgrade(thing, data);
 }
