@@ -78,9 +78,26 @@ public:
 
 extern GameLogic *TheBfmeGameLogic;
 
-class __declspec(novtable) Rva002DCBA0
+// Constructor 0x002DF2B0 builds the 0x58-byte base at offset zero. The
+// Rva002DCBA0 constructor then installs retail's 12-slot table at 0x010CECA4;
+// that table routes slot 5 through ILT 0x000031E3 to this TU's 0x002DCAE0
+// body. The address-derived declarations preserve that witnessed layout
+// without assigning a semantic class identity.
+class Made002DF2B0
 {
 public:
+    Made002DF2B0();
+    virtual void slot00() = 0;
+
+private:
+    unsigned char m_gap04[0x54];
+};
+
+class Rva002DCBA0 : public Made002DF2B0
+{
+public:
+    Rva002DCBA0();
+
     virtual void slot00() = 0;
     virtual void slot01() = 0;
     virtual void slot02() = 0;
@@ -94,10 +111,13 @@ public:
     virtual void slot10() = 0;
     virtual void slot11() = 0;
 
-    unsigned char m_gap04[0x54];
     unsigned char m_flag58;
     unsigned char m_flag59;
-
+    int m_value5C;
+    int m_value60;
+    int m_value64;
+    int m_value68;
+    float m_value6C;
 };
 
 extern void j_000229fd(void);
@@ -107,6 +127,17 @@ class Rva002DC8B0Call
 public:
     void apply(Object *found, Thing *thing);
 };
+
+Rva002DCBA0::Rva002DCBA0()
+{
+    m_flag59 = 0;
+    m_value5C = 0;
+    m_value60 = 0;
+    m_value64 = 0;
+    m_value68 = 0;
+    m_flag58 = 1;
+    m_value6C = 1.0f;
+}
 
 void Rva002DCBA0::rva002DCAE0Slot5(void *record, Thing *thing)
 {
