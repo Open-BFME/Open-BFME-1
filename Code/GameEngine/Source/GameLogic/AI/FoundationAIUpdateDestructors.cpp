@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift FoundationAIUpdate destructor to clean C++.
+// Complete destructor 0x002B9D60 and emitted scalar wrapper 0x002BA130.
+// Constructor 0x002BA040, module factories/name, and vtable 0x00CC734C
+// identify the class; wrapper ILT 0x0000E791 reaches this complete teardown.
 
 class Gen_dtor_00113f20
 {
@@ -45,7 +47,8 @@ public:
 	virtual ~UpdateModule() {}
 
 private:
-	unsigned int m_14;
+	// name_oracle: UpdateModule+0x14, layout_witness confidence 1.00.
+	unsigned int m_nextCallFrameAndPhase;
 	int m_18;
 	int m_1c;
 };
