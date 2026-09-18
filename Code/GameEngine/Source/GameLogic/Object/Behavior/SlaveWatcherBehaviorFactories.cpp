@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: SlaveWatcherBehavior::friend_newModuleData factory.
+// SlaveWatcherBehavior factories: retail 0x00117540 allocates 0x10
+// bytes for module data; 0x001174C0 allocates 0x24 for the instance.
+// Preserve both constructor views and the named INI proc contract.
 
+class Module;
+class Thing;
 class INI;
 class ModuleData;
 
@@ -35,7 +39,12 @@ extern "C" void __cdecl SlaveWatcherBehaviorFieldParse(MultiIniFieldParse &parse
 class SlaveWatcherBehavior
 {
 public:
+	SlaveWatcherBehavior(Thing *, const ModuleData *);
+	static Module *friend_newModuleInstance(Thing *, const ModuleData *);
 	static ModuleData *friend_newModuleData(INI *ini);
+
+private:
+	unsigned char m_pad[0x24];
 };
 
 // ?friend_newModuleData@SlaveWatcherBehavior@@SAPAVModuleData@@PAVINI@@@Z
@@ -45,4 +54,10 @@ ModuleData *SlaveWatcherBehavior::friend_newModuleData(INI *ini)
 	if (ini)
 		ini->initFromINIMultiProc(data, &SlaveWatcherBehaviorFieldParse);
 	return (ModuleData *)data;
+}
+
+// ?friend_newModuleInstance@SlaveWatcherBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
+Module *SlaveWatcherBehavior::friend_newModuleInstance(Thing *thing, const ModuleData *data)
+{
+	return (Module *)new SlaveWatcherBehavior(thing, data);
 }
