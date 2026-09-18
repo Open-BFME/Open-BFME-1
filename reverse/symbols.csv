@@ -79959,6 +79959,7 @@ name,address,notes
 ?erase@?$map@HUGen_005878D0FirstValue@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHUGen_005878D0FirstValue@@@_STL@@@3@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBHUGen_005878D0FirstValue@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_005878D0FirstValue@@@_STL@@@2@@2@@Z,0x00043AFE,Gen_00587D40 first map erase; the caller uses the retail ILT for the 0x18-byte integer tree
 ?erase@?$map@VAsciiString@@V1@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x000106FE,forgetLogin depth Open-BFME4+Grok
 ?erase@?$map@VAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x000488BA,forgetLogin depth Open-BFME4+Grok
+?erase@?$vector@UFactionVictoryParameters@@V?$allocator@UFactionVictoryParameters@@@_STL@@@_STL@@QAEPAUFactionVictoryParameters@@PAU3@0@Z,0x00038DED,ILT target 0x001DFE60 is the FactionVictoryParameters vector range erase called by VictorySystem::xfer at 0x001E05F0
 ?erase@?$vector@UGen003A99D0@@V?$allocator@UGen003A99D0@@@_STL@@@_STL@@QAEPAUGen003A99D0@@PAU3@0@Z,0x00020928,ILT to 0x003AF7A0 vector erase callee of Rva003B6680 converting ctor m08
 ?erase@?$vector@UGen003A9B60@@V?$allocator@UGen003A9B60@@@_STL@@@_STL@@QAEPAUGen003A9B60@@PAU3@0@Z,0x000450CA,ILT to 0x003AF800 vector erase callee of Rva003B6680 converting ctor m20
 ?erase@?$vector@UGen003A9C30@@V?$allocator@UGen003A9C30@@@_STL@@@_STL@@QAEPAUGen003A9C30@@PAU3@0@Z,0x00048C48,ILT to 0x003AF860 vector erase callee of Rva003B6680 converting ctor m2c
@@ -86487,6 +86488,7 @@ name,address,notes
 ?xfer@?$BitFlags@$0BN@@@QAEXPAVXfer@@@Z,0x000335BE,Open-BFME5 BitFlags<29>::xfer ILT thunk to body 0x001C41C0; exact 29-bit pack loop transfers a four-byte payload through Xfer::xferUser
 ?xfer@?$BitFlags@$0L@@@QAEXPAVXfer@@@Z,0x00042AC3,Open-BFME5 BitFlags<11>::xfer ILT thunk to body 0x001C4150; exact 11-bit pack loop transfers a two-byte payload through Xfer::xferUser
 ?xfer@?$BitFlags@$0MA@@@QAEXPAVXfer@@@Z,0x0000335F,Open-BFME5 BitFlags<192>::xfer ILT thunk to body 0x001C4F00; Object::xfer passes its proven six-dword upgrade-completion mask at Object+0x224
+?xfer@BfmeCellGrid@@QAE_NPAVXfer@@@Z,0x000499A9,ILT target 0x001B1C90 is the Bool-returning BfmeCellGrid transfer called by VictorySystem::xfer at 0x001E05F0
 ?xfer@DockUpdate@@MAEXPAVXfer@@@Z,0x0001D043,RailedTransportDockUpdate xfer base-call ILT to 0x002CD700
 ?xfer@DrawableModule@@MAEXPAVXfer@@@Z,0x00113E70,LaserUpdate::xfer base call resolves through the shared two-version transfer helper
 ?xfer@PathfindCell@@QAEXPAVXfer@@@Z,0x00034E3C,additive: retail call target of the red row ?xfer@Pathfinder@@UAEXPAVXfer@@@Z
