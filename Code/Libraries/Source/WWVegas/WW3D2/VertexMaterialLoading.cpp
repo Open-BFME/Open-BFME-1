@@ -164,29 +164,28 @@ bool VertexMaterialClass::Load_W3D(ChunkLoadClass & cload)
 // two INT3 bytes separate it from Parse_W3dVertexMaterialStruct at 0x00921C80.
 void VertexMaterialClass::Init_From_Material3(const W3dMaterial3Struct & mat3)
 {
-	Vector3 tmp0,tmp1,tmp2;
+	Vector3 converted_rgb,converted_coefficient,modulated_rgb;
 	
-	W3dUtilityClass::Convert_Color(mat3.DiffuseColor,&tmp0);
-	W3dUtilityClass::Convert_Color(mat3.DiffuseCoefficients,&tmp1);
-	tmp2.X = tmp0.X * tmp1.X;
-	tmp2.Y = tmp0.Y * tmp1.Y;
-	tmp2.Z = tmp0.Z * tmp1.Z;
-	Set_Diffuse(tmp2);
+	W3dUtilityClass::Convert_Color(mat3.DiffuseColor,&converted_rgb);
+	W3dUtilityClass::Convert_Color(mat3.DiffuseCoefficients,&converted_coefficient);
+	modulated_rgb.X = converted_rgb.X * converted_coefficient.X;
+	modulated_rgb.Y = converted_rgb.Y * converted_coefficient.Y;
+	modulated_rgb.Z = converted_rgb.Z * converted_coefficient.Z;
+	Set_Diffuse(modulated_rgb);
 
-	W3dUtilityClass::Convert_Color(mat3.SpecularColor,&tmp0);
-	W3dUtilityClass::Convert_Color(mat3.SpecularCoefficients,&tmp1);
-	tmp2.X = tmp0.X * tmp1.X;
-	tmp2.Y = tmp0.Y * tmp1.Y;
-	tmp2.Z = tmp0.Z * tmp1.Z;
-	Set_Specular(tmp2);
+	W3dUtilityClass::Convert_Color(mat3.SpecularColor,&converted_rgb);
+	W3dUtilityClass::Convert_Color(mat3.SpecularCoefficients,&converted_coefficient);
+	modulated_rgb.X = converted_rgb.X * converted_coefficient.X;
+	modulated_rgb.Y = converted_rgb.Y * converted_coefficient.Y;
+	modulated_rgb.Z = converted_rgb.Z * converted_coefficient.Z;
+	Set_Specular(modulated_rgb);
 
-	W3dUtilityClass::Convert_Color(mat3.EmissiveCoefficients,&tmp0);
-	Set_Emissive(tmp0);
+	W3dUtilityClass::Convert_Color(mat3.EmissiveCoefficients,&converted_rgb);
+	Set_Emissive(converted_rgb);
 
-	W3dUtilityClass::Convert_Color(mat3.AmbientCoefficients,&tmp0);
-	Set_Ambient(tmp0);
+	W3dUtilityClass::Convert_Color(mat3.AmbientCoefficients,&converted_rgb);
+	Set_Ambient(converted_rgb);
 
 	Set_Shininess(mat3.Shininess);
 	Set_Opacity(mat3.Opacity);
 }
-
