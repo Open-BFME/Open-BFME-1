@@ -27,7 +27,7 @@ def show(rev, f):
 def lines(b):
     return [x.rstrip(b"\r") for x in b.split(b"\n")]
 
-def quarantine(source, funcs):
+def quarantine(source, funcs, status="blocked", why=None):
     """Set aside a landed source the hook refuses (it defines helpers the ledger
     does not declare): move it under build/quarantine, revert the ledger rows
     that cite it and the tombstones of the rows they replaced, restore those
@@ -59,10 +59,9 @@ def quarantine(source, funcs):
     (ROOT / source).replace(dest)
     subprocess.run(["git", "reset", "-q", "--", source], cwd=ROOT)
     for r in mine:
-        evidence = ("harvest quarantine: source defines helpers the ledger does not declare (%s); "
-                    "byte-exact file kept at build/quarantine/%s on this host; declare the helpers or land them as rows, then re-land"
-                    % (", ".join(funcs)[:200], source))
-        subprocess.run([sys.executable, "tools/re_log.py", "record", r[0], r[2], r[3], "blocked", evidence], cwd=ROOT)
+        reason = why or "source defines helpers the ledger does not declare (%s); declare the helpers or land them as rows, then re-land" % ", ".join(funcs)[:200]
+        evidence = "harvest quarantine: %s; byte-exact file kept at build/quarantine/%s on this host" % (reason, source)
+        subprocess.run([sys.executable, "tools/re_log.py", "record", r[0], r[2], r[3], status, evidence], cwd=ROOT)
 
 
 def unstage_inflight():
@@ -136,6 +135,25 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         if bad:
             run("git", "add", "-A", "--", *evidence); unstage_inflight()
             print(f"harvest: quarantined {len(bad)} source(s) defining undeclared helpers: {' '.join(bad)}")
+    # A new constructor row the vtable detector contradicts fails identity_guard
+    # (shrink-only baseline) and wedges the harvest the same way. Quarantine it
+    # with an identity-suspect verdict naming the class the vtable belongs to.
+    head_names = {r[0] for r in csv.reader(show("HEAD", "reverse/functions.csv").decode("utf-8", errors="replace").splitlines())}
+    with open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace") as ledger:
+        new_ctors = {r["target_rva"].upper(): r for r in csv.DictReader(ledger)
+                     if r["name"].startswith("??0") and r["name"] not in head_names and r["status"] == "matched"}
+    if new_ctors:
+        import re
+        r = subprocess.run([sys.executable, "tools/ctor_vtable.py"], cwd=ROOT, capture_output=True, text=True, errors="replace")
+        flagged = {}
+        for m in re.finditer(r"^(0x[0-9A-Fa-f]{8}) +\d+B +(\S+)\n\s+claims (\S+); the vtable it leaves installed belongs to (\S+)", r.stdout, re.M):
+            flagged[m.group(1).upper()] = m.group(4)
+        for rva, row in new_ctors.items():
+            if rva in flagged and row["source"] in cited:
+                quarantine(row["source"], [], status="identity-suspect",
+                           why="ctor_vtable: the vtable this body leaves installed belongs to %s, not %s" % (flagged[rva], row["name"]))
+                run("git", "add", "-A", "--", *evidence); unstage_inflight()
+                print(f"harvest: quarantined {row['source']} (identity-suspect: vtable belongs to {flagged[rva]})")
     r = subprocess.run([sys.executable, "tools/check_csv.py", "--staged"], cwd=ROOT, capture_output=True, text=True, errors="replace")
     if r.returncode:
         import re
