@@ -10,15 +10,18 @@
 //
 // Two unwind states count the two destructible things standing when the call
 // that can throw is made: the base and the member.
+// The owner destructor passes the same +0x254 word directly to releaseBuffer;
+// both retail string aliases resolve through that one witnessed body.
 class RetailLayoutString
 {
 public:
 	RetailLayoutString() : m_data(0) {}
-	~RetailLayoutString();
+	~RetailLayoutString() { releaseBuffer(); }
 
 	void set(const char *text, int length);
 
 private:
+	void releaseBuffer();
 	void *m_data;
 };
 
@@ -38,6 +41,7 @@ class HeroModeSpecialAbilityUpdateModuleData : public SpecialAbilityUpdateModule
 {
 public:
 	HeroModeSpecialAbilityUpdateModuleData();
+	virtual ~HeroModeSpecialAbilityUpdateModuleData();
 
 private:
 	RetailLayoutString m_layout;
@@ -51,4 +55,12 @@ HeroModeSpecialAbilityUpdateModuleData::HeroModeSpecialAbilityUpdateModuleData()
 	m_layout.set("", 0);
 	m_258 = 0;
 	m_25c = false;
+}
+
+// Retail begins teardown with the member at +0x254, not a derived-vtable store.
+class __declspec(novtable) HeroModeSpecialAbilityUpdateModuleData;
+
+// ??1HeroModeSpecialAbilityUpdateModuleData@@UAE@XZ
+HeroModeSpecialAbilityUpdateModuleData::~HeroModeSpecialAbilityUpdateModuleData()
+{
 }
