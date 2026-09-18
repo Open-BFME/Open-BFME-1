@@ -1,36 +1,24 @@
-// cl: /DNDEBUG /MD /EHsc
-// readable body of ??0W3DTreeDrawModuleData@@QAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp
-// readable body of ??1W3DTreeDrawModuleData@@UAE@XZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DTreeDraw.cpp
-//
-// Constructor and destructor of one class, so they need one declaration of it.
-// Field names come from retail's own INI field table joined to upstream's parse
-// table on the key: retail supplies every offset, upstream only the word. The
-// offsets were derived from this class's declaration sequence and type sizes,
-// never read out of the old placeholder names.
-//
-// The destructor stores the derived vtable early, destroys the four Buffer
-// members at +0x08/+0x0c/+0x28/+0x48, then stores the base vtable. Those four
-// offsets are what the named layout below has to reproduce, and it does: the
-// destructor's own copy of this class described the runs between them as
-// m_gap1[0x18] and m_gap2[0x1c], which are exactly the six and eight named
-// fields that sit there.
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// Retail constructor 0x0077F360 (192B) and destructor 0x0077F460 (112B).
+// INI table RVA 0x00D25E40 witnesses the member offsets and names, including
+// BFME's MorphTree/MorphTime/MorphFX/TaintedTree/Fade* fields. Its four string
+// entries at +08/+0C/+28/+48 use INI::parseAsciiString (0x00851EE0).
 
-// Buffer is retail's string buffer: reverse/symbols.csv pins
-// ?clear@Buffer@@QAEXXZ to the body at 0x00887940, and that is the body the
-// destructor below calls for each of the four members. Spelling the destructor
-// inline as clear() is what emits that call -- the harvested
-// ??1Buffer@@QAE@XZ pin names the shared ILT thunk at 0x0001A401 instead, which
-// is not what this destructor calls.
-class Buffer
+#include "ascii_string.h"
+
+// Canonical bodies from ascii_string.cpp and string_base.cpp, visible here
+// to preserve retail's direct calls to StringBase<char>::releaseBuffer.
+inline AsciiString::~AsciiString()
 {
-public:
-	Buffer() : m_data(0) {}
-	~Buffer() { clear(); }
-	void clear();
+	((StringBase<char> *)this)->releaseBuffer();
+}
 
-private:
-	void *m_data;
-};
+template <typename T> inline void StringBase<T>::clear()
+{
+	releaseBuffer();
+}
+
+class FXList;
 
 class W3DTreeDrawModuleDataBase
 {
@@ -49,15 +37,15 @@ public:
 	virtual ~W3DTreeDrawModuleData();
 
 private:
-	Buffer m_modelName;
-	Buffer m_textureName;
+	AsciiString m_modelName;
+	AsciiString m_textureName;
 	unsigned int m_framesToMoveOutward;
 	unsigned int m_framesToMoveInward;
 	float m_maxOutwardMovement;
 	float m_darkening;
 	void *m_toppleFX;
 	void *m_bounceFX;
-	Buffer m_stumpName;
+	AsciiString m_stumpName;
 	float m_initialVelocityPercent;
 	float m_initialAccelPercent;
 	float m_bounceVelocityPercent;
@@ -67,14 +55,14 @@ private:
 	unsigned char m_pad3e[2];
 	unsigned int m_sinkFrames;
 	float m_sinkDistance;
-	Buffer m_bfmeName;
-	unsigned int m_bfmeFrames;
-	unsigned int m_bfmeZero;
-	bool m_doShadow;
+	AsciiString m_morphTree;
+	unsigned int m_morphTime;
+	const FXList *m_morphFX;
+	bool m_taintedTree;
 	unsigned char m_pad55[3];
-	unsigned int m_bfmeFive;
-	unsigned int m_bfmeHundredFive;
-	float m_bfmeForty;
+	unsigned int m_fadeRate;
+	unsigned int m_fadeTarget;
+	float m_fadeDistance;
 };
 
 // ??0W3DTreeDrawModuleData@@QAE@XZ
@@ -89,18 +77,18 @@ W3DTreeDrawModuleData::W3DTreeDrawModuleData() :
 	m_stumpName.clear();
 	m_killWhenToppled = true;
 	m_doTopple = false;
-	m_bfmeZero = 0;
-	m_doShadow = false;
+	m_morphFX = 0;
+	m_taintedTree = false;
 	m_initialVelocityPercent = 0.2f;
 	m_initialAccelPercent = 0.01f;
 	m_bounceVelocityPercent = 0.3f;
 	m_minimumToppleSpeed = 0.5f;
 	m_sinkFrames = 50;
 	m_sinkDistance = 20.0f;
-	m_bfmeFrames = 50;
-	m_bfmeFive = 5;
-	m_bfmeHundredFive = 105;
-	m_bfmeForty = 40.0f;
+	m_morphTime = 50;
+	m_fadeRate = 5;
+	m_fadeTarget = 105;
+	m_fadeDistance = 40.0f;
 }
 
 // ??1W3DTreeDrawModuleData@@UAE@XZ

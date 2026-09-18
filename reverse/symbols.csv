@@ -79168,7 +79168,6 @@ name,address,notes
 ?clear@BfmeVec2E@@QAEXXZ,0x00008A7B,Open-BFME5 vector clear of 0x008802E0
 ?clear@BfmeVecBE@@QAEXXZ,0x00014A06,Open-BFME5 vector clear of 0x0087FBE0
 ?clear@BfmeVecCD@@QAEXXZ,0x0000F4A2,Open-BFME5 vector clear of 0x0087FCD0
-?clear@Buffer@@QAEXXZ,0x00887940,Open-BFME5 W3DTreeDrawModuleData retail string-buffer clear pin
 ?clear@CrateTemplateCrateList@@QAEXXZ,0x000331AE,Open-BFME5 incremental-link thunk to the node-list clear body at 0x00379940 that CrateTemplate::~CrateTemplate calls twice
 ?clear@DamageFX@@QAEXXZ,0x00044297
 ?clear@DetailedArchivedDirectoryInfo@@QAEXXZ,0x009D1040,retail clear body called by ArchiveFile constructor at 0x009D10B0; direct target and map/string cleanup semantics
