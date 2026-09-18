@@ -188,3 +188,22 @@ void Rva005FCB60WriteBase(const void *self, File *file, unsigned int *flags)
 		reinterpret_cast<Rva005CB9F0StreamText *>(&stream)->getText());
 	*flags += 2;
 }
+
+// ?Rva005F2E00WriteCollisionHeader@@YAXPBXPAVFile@@PAI@Z
+void Rva005F2E00WriteCollisionHeader(const void *self, File *file,
+	unsigned int *flags)
+{
+	OutputStream stream(0x10);
+	const char *name = ((ModuleClassView *)((unsigned char *)self + 4))
+		->getClass()->name;
+	for (unsigned int indent = *flags; indent > 0; --indent)
+		reinterpret_cast<StreamWriter *>(&stream)->indent(' ');
+	reinterpret_cast<StreamWriter *>(&stream)->append(
+		FXParticleSystem::GetKey((FXParticleSystem::ModuleCategory)6));
+	reinterpret_cast<StreamWriter *>(&stream)->append(g_u4Separator);
+	reinterpret_cast<StreamWriter *>(&stream)->append(name);
+	reinterpret_cast<StreamWriter *>(&stream)->separate('\n');
+	writeStreamText(*file,
+		reinterpret_cast<Rva005CB9F0StreamText *>(&stream)->getText());
+	*flags += 2;
+}
