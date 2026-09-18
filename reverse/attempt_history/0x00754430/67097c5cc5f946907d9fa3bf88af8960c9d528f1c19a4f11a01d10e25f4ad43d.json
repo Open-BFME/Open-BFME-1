@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "67097c5cc5f946907d9fa3bf88af8960c9d528f1c19a4f11a01d10e25f4ad43d",
+  "symbol": "?Gen00754430@@YAXPAUQ3SortElem4@@0UQ3SortCompare@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?Gen00754430@@YAXPAUQ3SortElem4@@0UQ3SortCompare@@@Z\n// partial score=0.99 date=2026-09-17\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /FAsc /Fa build/candidate_00754430.cod\n// stlport\n\n#define _STLP_NO_EXCEPTIONS 1\n#include <algorithm>\n\nstruct Q3SortElem4\n{\n\tint m_value;\n};\n\nstruct BfmeCompAR\n{\n\tbool operator()(int left, int right);\n\tint m_state;\n};\n\nstruct Q3SortCompare : BfmeCompAR\n{\n};\n\nextern void bfmeUnguardedInsertAR(int *last, int value, BfmeCompAR comp);\n\nextern \"C\" __declspec(dllimport) void * __cdecl memmove(\n\tvoid *destination, const void *source, unsigned int bytes);\n\nvoid Gen00754430(Q3SortElem4 *first, Q3SortElem4 *last,\n\tQ3SortCompare comp)\n{\n\tif (first != last)\n\t{\n\t\tQ3SortElem4 *cursor = first + 1;\n\t\twhile (cursor != last)\n\t\t{\n\t\t\tint value = cursor->m_value;\n\t\t\tif (comp(value, first->m_value))\n\t\t\t{\n\t\t\t\tunsigned int bytes = (char *)cursor - (char *)first;\n\t\t\t\tif ((int)bytes > 0)\n\t\t\t\t\tmemmove((char *)(cursor + 1) - bytes, first, bytes);\n\t\t\t\tfirst->m_value = value;\n\t\t\t}\n\t\t\telse\n\t\t\t{\n\t\t\t\tbfmeUnguardedInsertAR((int *)cursor, value, *(BfmeCompAR *)&comp);\n\t\t\t}\n\t\t\t++cursor;\n\t\t}\n\t}\n}\n"
+}
