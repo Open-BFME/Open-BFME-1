@@ -6,8 +6,13 @@
 //
 // The named friend_newModuleData factory at retail 0x00121DA0 allocates 0x18
 // bytes and calls this constructor.  The eight-byte member at +0x08 owns a
-// 0x70-byte list header; its matched destructor at 0x00605E60 independently
+// 0x70-byte tree header; its matched destructor at 0x00605E60 independently
 // confirms the header pointer/count layout and releases the same allocation.
+
+// Retail erase 0x00605820 recurses through +0x0c and iterates +0x08;
+// vendor/stlport/stl/_tree.c::_M_erase and _tree.h::_M_empty_initialize
+// independently establish the tree links and red header color. Key/value
+// identities and the meaning of the float at module-data +0x14 remain unknown.
 
 namespace _STL
 {
@@ -18,36 +23,36 @@ namespace _STL
 	};
 }
 
-class AnimationSoundListHeader
+class Rva00606060TreeHeader
 {
 public:
-	unsigned char m_isData;
+	unsigned char m_color;
 	unsigned char m_pad[ 3 ];
-	void *m_first;
-	AnimationSoundListHeader *m_next;
-	AnimationSoundListHeader *m_prev;
+	void *m_parent;
+	Rva00606060TreeHeader *m_left;
+	Rva00606060TreeHeader *m_right;
 	unsigned char m_payload[ 0x70 - 0x10 ];
 };
 
-class AnimationSoundList
+class Rva00606060Tree
 {
 public:
-	AnimationSoundList()
+	Rva00606060Tree()
 	{
 		m_header = 0;
-		m_header = static_cast<AnimationSoundListHeader *>(
+		m_header = static_cast<Rva00606060TreeHeader *>(
 			_STL::__new_alloc::allocate( 0x70 ) );
 		m_count = 0;
-		m_header->m_isData = 0;
-		m_header->m_first = 0;
-		m_header->m_next = m_header;
-		m_header->m_prev = m_header;
+		m_header->m_color = 0;
+		m_header->m_parent = 0;
+		m_header->m_left = m_header;
+		m_header->m_right = m_header;
 	}
 
-	~AnimationSoundList();
+	~Rva00606060Tree();
 
 private:
-	AnimationSoundListHeader *m_header;
+	Rva00606060TreeHeader *m_header;
 	unsigned int m_count;
 };
 
@@ -68,13 +73,13 @@ public:
 	virtual ~AnimationSoundClientBehaviorModuleData();
 
 private:
-	AnimationSoundList m_animationSounds; // +0x08
+	Rva00606060Tree m_tree08; // +0x08
 	unsigned int m_unmodelled_10;
-	float m_loudestSound;
+	float m_14;
 };
 
 // ??0AnimationSoundClientBehaviorModuleData@@QAE@XZ
 AnimationSoundClientBehaviorModuleData::AnimationSoundClientBehaviorModuleData()
 {
-	m_loudestSound = 3.402823466e+38F;
+	m_14 = 3.402823466e+38F;
 }
