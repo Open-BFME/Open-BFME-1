@@ -16,7 +16,9 @@ public:
     virtual ~DelayedLuaEventUpdateBase();
 
 protected:
-    void *m_f04;
+    // ObjectModule ctor 0x00113C78 loads its second (ModuleData*) argument;
+    // 0x00113C83 stores it at this+4. Common/Module.h names m_moduleData.
+    const ModuleData *m_moduleData;
     Object *m_object;
 };
 
