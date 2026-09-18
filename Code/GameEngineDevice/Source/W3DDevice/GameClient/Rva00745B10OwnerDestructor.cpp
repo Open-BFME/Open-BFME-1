@@ -139,18 +139,18 @@ private:
 
 Rva00745B10Owner::~Rva00745B10Owner()
 {
-	Rva007461B0RefCounted *p = m_108;
-	if (p)
+	Rva007461B0RefCounted *heldReference = m_108;
+	if (heldReference)
 	{
-		if (--p->NumRefs == 0)
-			p->Delete_This();
+		if (--heldReference->NumRefs == 0)
+			heldReference->Delete_This();
 		m_108 = 0;
 	}
-	p = m_104;
-	if (p)
+	heldReference = m_104;
+	if (heldReference)
 	{
-		if (--p->NumRefs == 0)
-			p->Delete_This();
+		if (--heldReference->NumRefs == 0)
+			heldReference->Delete_This();
 		m_104 = 0;
 	}
 }
