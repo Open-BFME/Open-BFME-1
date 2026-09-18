@@ -1,6 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// DelayedLuaEventUpdate's destructor, lifted from its MASM dump to C++.
+// DelayedLuaEventUpdate's complete and scalar-deleting destructors.
+// The complete virtual destructor emits both retail bodies; the wrapper at
+// 0x0028BFC0 calls it through ILT 0x0001B531. Constructor 0x0028BEF0, the
+// factory, module name, and vtable 0x00CBD3B4 independently establish identity.
 //
 // The smallest instance of the module-destructor shape
 // OpenContainDestructorThunk.cpp works out in full: three vptr writes at 0x00,
