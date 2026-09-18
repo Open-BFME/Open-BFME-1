@@ -427,3 +427,8 @@ int Rva005B25C0DwordGetter::get( void ) const
 {
 	return m_value;
 }
+
+// ret 4 -- an address-derived callee-cleanup leaf with no identity evidence.
+void __stdcall Rva006CF9B0Pop4( void * )
+{
+}
