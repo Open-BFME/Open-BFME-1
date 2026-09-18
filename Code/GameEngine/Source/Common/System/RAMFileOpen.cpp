@@ -1,5 +1,10 @@
 // cl: /DNDEBUG /MD /EHs-c-
-// BFME's RAMFile::open(File *) body, ported from the Zero Hour twin.  The
+// Both RAMFile open overloads, ported from their authentic Zero Hour bodies.
+// Retail constructor 9D1980 installs table VA1143C58: slot 1 is open(name,
+// access) at 9D1A00 and slot 17 is open(File*) at 9D2020. The matched
+// LocalFile::convertToRAMFile body calls that constructor at 9D27C6 and then
+// passes its File pointer through slot 17 at 9D27DE (a virtual caller).
+// The
 // File declaration carries BFME's two lock slots and the proven +0x14 RAMFile
 // data layout so the virtual size/read calls retain their retail slots.
 
@@ -95,4 +100,29 @@ Bool RAMFile::open(File *file)
 
 	m_pos = 0;
 	return TRUE;
+}
+
+class FileSystem
+{
+public:
+	File *openFile( const Char *filename, Int access );
+};
+
+extern FileSystem *TheFileSystem;
+
+// ?open@RAMFile@@UAE_NPBDH@Z
+Bool RAMFile::open( const Char *filename, Int access )
+{
+	File *file = TheFileSystem->openFile( filename, access );
+
+	if ( file == NULL )
+	{
+		return FALSE;
+	}
+
+	Bool result = open( file );
+
+	file->close();
+
+	return result;
 }
