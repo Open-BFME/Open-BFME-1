@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/asciistringsetoutofline /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Ireference/shims/asciistringsetoutofline /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -31,6 +31,8 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
+#define _STLP_NO_EXCEPTIONS 1
+#define BFME_STLP_NODE_ALLOC 1
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 #include "Common/GameState.h"
 #pragma push_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
@@ -262,6 +264,49 @@ struct BfmeTeamMemberObjectView
 	{
 		return *(void *const *)((const char *)this + 0x1fc);
 	}
+};
+
+class BfmeDeleteTeamContainView
+{
+public:
+#define BFME_DELETE_TEAM_CONTAIN_SLOT(n) virtual void slot##n();
+	BFME_DELETE_TEAM_CONTAIN_SLOT(00) BFME_DELETE_TEAM_CONTAIN_SLOT(01)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(02) BFME_DELETE_TEAM_CONTAIN_SLOT(03)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(04) BFME_DELETE_TEAM_CONTAIN_SLOT(05)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(06) BFME_DELETE_TEAM_CONTAIN_SLOT(07)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(08) BFME_DELETE_TEAM_CONTAIN_SLOT(09)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(10) BFME_DELETE_TEAM_CONTAIN_SLOT(11)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(12) BFME_DELETE_TEAM_CONTAIN_SLOT(13)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(14) BFME_DELETE_TEAM_CONTAIN_SLOT(15)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(16) BFME_DELETE_TEAM_CONTAIN_SLOT(17)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(18) BFME_DELETE_TEAM_CONTAIN_SLOT(19)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(20) BFME_DELETE_TEAM_CONTAIN_SLOT(21)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(22) BFME_DELETE_TEAM_CONTAIN_SLOT(23)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(24) BFME_DELETE_TEAM_CONTAIN_SLOT(25)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(26) BFME_DELETE_TEAM_CONTAIN_SLOT(27)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(28) BFME_DELETE_TEAM_CONTAIN_SLOT(29)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(30) BFME_DELETE_TEAM_CONTAIN_SLOT(31)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(32) BFME_DELETE_TEAM_CONTAIN_SLOT(33)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(34) BFME_DELETE_TEAM_CONTAIN_SLOT(35)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(36)
+#undef BFME_DELETE_TEAM_CONTAIN_SLOT
+	virtual void removeAllContained(Bool);
+#define BFME_DELETE_TEAM_CONTAIN_SLOT(n) virtual void slot##n();
+	BFME_DELETE_TEAM_CONTAIN_SLOT(38) BFME_DELETE_TEAM_CONTAIN_SLOT(39)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(40) BFME_DELETE_TEAM_CONTAIN_SLOT(41)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(42) BFME_DELETE_TEAM_CONTAIN_SLOT(43)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(44) BFME_DELETE_TEAM_CONTAIN_SLOT(45)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(46) BFME_DELETE_TEAM_CONTAIN_SLOT(47)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(48) BFME_DELETE_TEAM_CONTAIN_SLOT(49)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(50) BFME_DELETE_TEAM_CONTAIN_SLOT(51)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(52) BFME_DELETE_TEAM_CONTAIN_SLOT(53)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(54) BFME_DELETE_TEAM_CONTAIN_SLOT(55)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(56) BFME_DELETE_TEAM_CONTAIN_SLOT(57)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(58) BFME_DELETE_TEAM_CONTAIN_SLOT(59)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(60) BFME_DELETE_TEAM_CONTAIN_SLOT(61)
+	BFME_DELETE_TEAM_CONTAIN_SLOT(62) BFME_DELETE_TEAM_CONTAIN_SLOT(63)
+#undef BFME_DELETE_TEAM_CONTAIN_SLOT
+	virtual UnsignedInt getContainCount(Bool) const;
 };
 
 class BfmeContainedTeamObject
@@ -2909,7 +2954,6 @@ const Coord3D* Team::getEstimateTeamPosition(void) const
 }
 
 // ------------------------------------------------------------------------
-// ?deleteTeam@Team@@QAEX_N@Z present-unmatched
 void Team::deleteTeam(Bool ignoreDead)
 {
 	// First off, if this Team is the Player's default team, we need to Evacuate everyone or else
@@ -2922,38 +2966,47 @@ void Team::deleteTeam(Bool ignoreDead)
 	// Of course, to prevent the exact same DLINK jumping bug, I must first record what guys I am going to
 	// Evacuate, or else after the first occupied building is emptied, he will move his Next into the
 	// same damn wrong team.
-	if( this == getControllingPlayer()->getDefaultTeam() )
+	BfmeUpdateStatePlayer *player = (BfmeUpdateStatePlayer *)getControllingPlayer();
+	Team *defaultTeam = player->m_defaultTeam;
+	if( this == defaultTeam )
 	{
 		std::list<Object *> guysToMakeEvacuate;
-		for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance()) 
+		for (BfmeDlinkIterator<BfmeObjectDlinkObject> iter =
+			((const BfmeTeamMemberListView *)this)->iterate(); !iter.done(); iter.advance()) 
 		{
-			Object *obj = iter.cur();
+			BfmeObjectDlinkObject *obj = iter.cur();
 			if (!obj) 
 				continue;
 
-			if( obj->getContain()  &&  (obj->getContain()->getContainCount() > 0) )
+			BfmeDeleteTeamContainView *contain =
+				(BfmeDeleteTeamContainView *)((BfmeTeamMemberObjectView *)obj)->getContain();
+			if( contain && contain->getContainCount( false ) > 0 )
 			{
 				// Write them all down, so the DLINK track jumping doesn't screw me up here as well.
-				guysToMakeEvacuate.push_back( obj );
+				guysToMakeEvacuate.push_back( (Object *)obj );
 			}
 		}
 
-		for( std::list<Object *>::iterator it = guysToMakeEvacuate.begin(); it != guysToMakeEvacuate.end(); /*nothing*/ )
+		for( std::list<Object *>::iterator it = guysToMakeEvacuate.begin();
+			it != guysToMakeEvacuate.end(); /*nothing*/ )
 		{
 			Object *obj = *it;
-			it++;
-			if( obj->getContain() )
+			++it;
+			BfmeDeleteTeamContainView *contain =
+				(BfmeDeleteTeamContainView *)((BfmeTeamMemberObjectView *)obj)->getContain();
+			if( contain )
 			{
-				obj->getContain()->removeAllContained();
+				contain->removeAllContained( false );
 			}
 		}
 	}
 
 	// this doesn't actually delete the team, it deletes the members of the team.
 	// the team itself will be deleted in updateState.
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance()) 
+	for (BfmeDlinkIterator<BfmeObjectDlinkObject> iter =
+		((const BfmeTeamMemberListView *)this)->iterate(); !iter.done(); iter.advance()) 
 	{
-		Object *obj = iter.cur();
+		BfmeObjectDlinkObject *obj = iter.cur();
 		if (!obj) {
 			continue;
 		}
@@ -2962,10 +3015,10 @@ void Team::deleteTeam(Bool ignoreDead)
 		// So yes, the Team will survive for a while, but it was going to anyway.  This is a script flag, so if
 		// they use it on a team with things that can't die, then yeah, the Team will last forever.  But then it is
 		// user error.
-		if( ignoreDead && obj->isEffectivelyDead() )
+		if( ignoreDead && ((BfmeTeamMemberObjectView *)obj)->isEffectivelyDead() )
 			continue; 
 
-		TheGameLogic->destroyObject(obj);
+		TheGameLogic->destroyObject((Object *)obj);
 	}
 }
 
