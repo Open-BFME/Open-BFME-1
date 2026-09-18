@@ -1,6 +1,4 @@
 // ?bfmeArenaReady@@YAXXZ
-// partial score=0.98 date=2026-09-10
-// ?bfmeArenaReady@@YAXXZ
 
 extern char *g_bfmeArenaCursor;
 
@@ -40,8 +38,10 @@ struct BfmeArenaTransform
 __declspec(noinline) void __cdecl bfmeArenaReady(void)
 {
 	BfmeArenaTransform *transform = reinterpret_cast<BfmeArenaTransform *>(g_bfmeArenaCursor);
-	BfmeArenaVec4 one(1.0f, 1.0f, 1.0f, 1.0f);
 	BfmeArenaVec4 zero(0.0f, 0.0f, 0.0f, 0.0f);
+	BfmeArenaVec4 one(1.0f, 1.0f, 1.0f, 1.0f);
+	register float oneValue = 1.0f;
+	transform->m00 = oneValue;
 	transform->m04 = 0;
 	transform->m08 = 0;
 	transform->m0c = 0;
@@ -54,10 +54,9 @@ __declspec(noinline) void __cdecl bfmeArenaReady(void)
 	transform->m30 = 0;
 	transform->m34 = 0;
 	transform->m38 = 0;
-	transform->m00 = 1.0f;
-	transform->m14 = 1.0f;
-	transform->m28 = 1.0f;
-	transform->m3c = 1.0f;
+	transform->m14 = oneValue;
+	transform->m28 = oneValue;
+	transform->m3c = oneValue;
 	transform->m40 = one;
 	transform->m50 = zero;
 }
