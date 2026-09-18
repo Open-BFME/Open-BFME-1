@@ -1,5 +1,5 @@
 // ?d_005151f0@@YAXXZ
-// partial score=0.96 date=2026-09-16
+// partial score=0.978 date=2026-09-18
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -14,11 +14,12 @@
 // callbacks. Only the three GameText labels and the second callback differ,
 // and the two retail typos in the remove labels are real.
 
-#include <vector>
-
 typedef bool Bool;
 typedef int Int;
 typedef unsigned short WideChar;
+
+
+#include <vector>
 
 extern "C" void _ReadWriteBarrier( void );
 #pragma intrinsic( _ReadWriteBarrier )
