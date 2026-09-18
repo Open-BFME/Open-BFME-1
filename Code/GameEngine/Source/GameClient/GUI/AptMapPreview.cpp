@@ -14,6 +14,14 @@ extern "C" __declspec(dllimport) int __stdcall IsBadReadPtr(
 
 class GameWindow;
 class BfmeObjENK;
+
+// Observed map metadata view: the filename string is at +0x50.
+class MapMetaData
+{
+public:
+	char m_unmodelled00[0x50];
+	AsciiString m_mapName;
+};
 void _bfme_closeAptScreen(const AsciiString &screenName);
 
 // Image constructor 0x005D2260 installs 0x0110FFEC; slot zero routes to the
@@ -86,6 +94,12 @@ class AptMapPreview
 {
 public:
 	void bfmeReset(void);
+	void rva005216B0(MapMetaData *metadata);
+	void rva00521390(MapMetaData *metadata);
+	void rva00521000(MapMetaData *metadata);
+	void bfmeSetMapTitle(MapMetaData *metadata);
+	void bfmeSetMapDescription(MapMetaData *metadata);
+	void bfmeSetMapPicture(MapMetaData *metadata);
 	void mapGadgetInit(const char *name, void *userData, GameWindow *window);
 	void rva005217A0(const AsciiString &value);
 	void picture(const Coord2D *origin, const Coord2D *extent,
@@ -213,3 +227,21 @@ void AptMapPreview::picture( const Coord2D *origin, const Coord2D *extent,
 	device->drawImage( image, left, top, right, bottom, -1, 2 );
 	device->bfmeEndBatch();
 }
+
+// Retail 0x005217A0 forwards its unchanged preview receiver here twice.
+// The leading storage is accessed through the canonical string API without
+// adding constructor or destructor obligations to this observed layout.
+void AptMapPreview::rva005216B0(MapMetaData *metadata)
+{
+	StringBase<char> *mapName = reinterpret_cast<StringBase<char> *>(m_unmodelled00);
+	if (metadata != 0)
+		mapName->set(*reinterpret_cast<const StringBase<char> *>(&metadata->m_mapName));
+	else
+		mapName->set("", 0);
+	bfmeSetMapTitle(metadata);
+	rva00521390(metadata);
+	rva00521000(metadata);
+	bfmeSetMapDescription(metadata);
+	bfmeSetMapPicture(metadata);
+}
+

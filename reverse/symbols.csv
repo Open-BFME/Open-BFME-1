@@ -75272,7 +75272,6 @@ name,address,notes
 ?bfmeAssignOT@BfmeThingOT@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAssignPL@BfmeThingPL@@QAEXPAD0@Z,0x0002B297,pin
 ?bfmeAssignVSE@BfmeStrVSE@@QAEAAV1@PBD0@Z,0x0002B297,pin
-?bfmeAssignVSH@BfmeStrVSH@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAssignVSI@BfmeStrVSI@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAssignVSJ@BfmeStrVSJ@@QAEXABV1@@Z,0x00887C90,pin
 ?bfmeAssignVSM@BfmeStrVSM@@QAEXABV1@@Z,0x00887C90,pin
@@ -78236,7 +78235,6 @@ name,address,notes
 ?bfmeSetVSD@BfmeItemVSD@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSF@BfmeStrVSF@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSG@BfmeStrVSG@@QAEXPBDH@Z,0x00887D20,pin
-?bfmeSetVSH@BfmeStrVSH@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSI@BfmeStrVSI@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSJ@BfmeStrVSJ@@QAEXPBDH@Z,0x00887D20,pin
 ?bfmeSetVSK@BfmeStrVSK@@QAEXPBDH@Z,0x00887D20,pin
@@ -78331,7 +78329,6 @@ name,address,notes
 ?bfmeStep1@Gen_0077F000@@AAEXXZ,0x00039428,Open-BFME5 ILT the three-step runner at 0x0077F000 calls first
 ?bfmeStep1@Gen_007892D0@@AAEXXZ,0x000270FC,Open-BFME5 ILT the three-step runner at 0x007892D0 calls first
 ?bfmeStep1AAY@BfmeHostAAY@@QAEXXZ,0x0001E312,Open-BFME5 ILT first teardown step of the 0x00617DB0 shutdown
-?bfmeStep1VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x0002A3B0,pin
 ?bfmeStep1_004647E0@@YAXXZ,0x0002B314,Open-BFME5 ILT the pair runner at 0x004647E0 calls first
 ?bfmeStep1_00589680@@YAXXZ,0x0003643A,Open-BFME5 ILT the pair runner at 0x00589680 calls first
 ?bfmeStep1_009A75E0@@YAXXZ,0x009B3A00,Open-BFME5 the routine the pair runner at 0x009A75E0 calls first
@@ -78340,7 +78337,6 @@ name,address,notes
 ?bfmeStep2@Gen_0077F000@@AAEXXZ,0x0002398E,Open-BFME5 ILT the three-step runner at 0x0077F000 calls second
 ?bfmeStep2@Gen_007892D0@@AAEXXZ,0x0003879E,Open-BFME5 ILT the three-step runner at 0x007892D0 calls second
 ?bfmeStep2AAY@BfmeHostAAY@@QAEXXZ,0x0003D9AB,Open-BFME5 ILT second teardown step of the 0x00617DB0 shutdown
-?bfmeStep2VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x0001A870,pin
 ?bfmeStep2_004647E0@@YAXXZ,0x00039F1D,Open-BFME5 ILT the pair runner at 0x004647E0 tail-jumps to
 ?bfmeStep2_00589680@@YAXXZ,0x000216D9,Open-BFME5 ILT the pair runner at 0x00589680 tail-jumps to
 ?bfmeStep2_009A75E0@@YAXXZ,0x009B3B40,Open-BFME5 the routine the pair runner at 0x009A75E0 tail-jumps to
@@ -78349,13 +78345,10 @@ name,address,notes
 ?bfmeStep3@Gen_0077F000@@AAEXXZ,0x0001B32E,Open-BFME5 ILT the three-step runner at 0x0077F000 tail-jumps to
 ?bfmeStep3@Gen_007892D0@@AAEXXZ,0x0004264A,Open-BFME5 ILT the three-step runner at 0x007892D0 tail-jumps to
 ?bfmeStep3AAY@BfmeHostAAY@@QAEXXZ,0x00030BF2,Open-BFME5 ILT third teardown step of the 0x00617DB0 shutdown
-?bfmeStep3VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x0000BB0E,pin
 ?bfmeStep3_250@@YAXPAX@Z,0x00862820,additive: retail call target of the red row ?bfmeCallAll250@@YAXPAX@Z
 ?bfmeStep4AAY@BfmeHostAAY@@QAEXXZ,0x000105F5,Open-BFME5 ILT fourth teardown step of the 0x00617DB0 shutdown
-?bfmeStep4VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x00045DAE,pin
 ?bfmeStep4_250@@YAXPAX@Z,0x00864280,pin
 ?bfmeStep5AAY@BfmeHostAAY@@QAEXXZ,0x00010299,Open-BFME5 ILT fifth teardown step of the 0x00617DB0 shutdown
-?bfmeStep5VSH@BfmeCfgVSH@@QAEXPAVBfmeSrcVSH@@@Z,0x000236A5,pin
 ?bfmeStep6AAY@BfmeHostAAY@@QAEXXZ,0x00010438,Open-BFME5 ILT sixth teardown step of the 0x00617DB0 shutdown
 ?bfmeStep982C@@YAXXZ,0x00785FD0,pin
 ?bfmeStep@Glo012F1024Entry@@QAEXXZ,0x00015F50,Open-BFME5 ILT thunk to body 0x003A7320; ?step@Glo012F1024Type@@QAEXXZ at 0x003B3900 tail-jumps into it on the selected 32-byte entry; address-derived name
@@ -88406,3 +88399,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??_7AISkirmishPlayer@@6B@,0x01096FB0,matched Player setPlayerType skirmish branch and constructor168660 install; destructor168710 corroborates; no RTTI claim
 ??0?$_Vector_base@VRva00762170@@V?$allocator@VRva00762170@@@_STL@@@_STL@@QAE@IABV?$allocator@VRva00762170@@@1@@Z,0x00018845,The 0x0076A690 vector copy call constructs its three-pointer base with the proven count and allocator ABI from Gen_00760CA0 at 0x00760CA0.
 ?get_allocator@Rva00776240Vector2C@@QBE?AV?$allocator@VRva00762170@@@_STL@@XZ,0x00022255,The 0x0076A690 vector copy call passes the source vector and allocator temporary to the proven identity helper at 0x00760C60.
+?rva00521390@AptMapPreview@@QAEXPAVMapMetaData@@@Z,0x00521390,pin;unchanged preview receiver and metadata argument in retail 0x005216B0; actual body ret4
+?rva00521000@AptMapPreview@@QAEXPAVMapMetaData@@@Z,0x00521000,pin;unchanged preview receiver and metadata argument in retail 0x005216B0; actual body ret4
