@@ -366,6 +366,7 @@ name,address,notes
 ??$_Construct@UGen_t_005758b0_p8cd@@U1@@_STL@@YAXPAUGen_t_005758b0_p8cd@@ABU1@@Z,0x005721B0,gen-tgrid payload member
 ??$_Construct@UGen_t_00595870_p12cd@@U1@@_STL@@YAXPAUGen_t_00595870_p12cd@@ABU1@@Z,0x0058F730,gen-tgrid payload member
 ??$_Construct@UGen_t_00617d60_p16cd@@U1@@_STL@@YAXPAUGen_t_00617d60_p16cd@@ABU1@@Z,0x00610930,gen-tgrid payload member
+??$BfmeElementConstruct@UGen_t_00617d60_p16cd@@@_STL@@YAXPAUGen_t_00617d60_p16cd@@ABU1@@Z,0x0004A296,vector insert element construction thunk
 ??$_Construct@UGen_t_006ac550_p4cd@@U1@@_STL@@YAXPAUGen_t_006ac550_p4cd@@ABU1@@Z,0x0069C370,gen-tgrid payload member
 ??$_Construct@UGen_t_007463a0_p24cd@@U1@@_STL@@YAXPAUGen_t_007463a0_p24cd@@ABU1@@Z,0x007416E0,gen-tgrid payload member
 ??$_Construct@UGen_t_00774250_p24cd@@U1@@_STL@@YAXPAUGen_t_00774250_p24cd@@ABU1@@Z,0x00768D20,gen-tgrid payload member
@@ -6899,6 +6900,7 @@ name,address,notes
 ??1Gen_t_00614570_m16cd@@QAE@XZ,0x00020018,family-emit payload member
 ??1Gen_t_00614e60_m16cd@@QAE@XZ,0x00020018,family-emit payload member
 ??1Gen_t_00615570_p16cd@@QAE@XZ,0x00020018,gen-tgrid payload member
+?_M_clear@?$vector@UGen_t_00617d60_p16cd@@V?$allocator@UGen_t_00617d60_p16cd@@@_STL@@@_STL@@IAEXXZ,0x0001FD2F,vector insert old-storage clear thunk
 ??1Gen_t_00632f00_k4@@QAE@XZ,0x0000D828,gen-tgrid payload member
 ??1Gen_t_0065ffb0_p12cd@@QAE@XZ,0x004FFEC0,gen-tgrid payload member
 ??1Gen_t_00660000_p12cd@@QAE@XZ,0x004FFF00,gen-tgrid payload member
