@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "string_base.h"
 
 #include "ascii_string.h"
 
