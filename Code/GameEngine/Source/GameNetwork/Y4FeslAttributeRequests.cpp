@@ -69,6 +69,23 @@ void __stdcall Rva007FC810( Rva007E8810Message *msg, const char *name,
 	}
 }
 
+void __stdcall Rva007FC8F0( Rva007E8810Message *msg,
+	const Rva007FC810Attribute *attributes, int numAttributes )
+{
+	int index;
+
+	msg->reset();
+	msg->m_category = 'UGDE';
+	msg->m_depth = 3;
+	for( index = 0; index < numAttributes; index++ )
+	{
+		char key[ 0x40 ] = "";
+
+		sprintf( key, "D-%s", attributes[ index ].m_key );
+		msg->addString( key, attributes[ index ].m_value );
+	}
+}
+
 void __stdcall Rva007FC990( Rva007E8810Message *msg, int pid,
 	const Rva007FC810Attribute *attributes, int numAttributes )
 {
