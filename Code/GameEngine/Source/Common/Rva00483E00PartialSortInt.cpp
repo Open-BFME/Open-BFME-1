@@ -5,7 +5,7 @@
 // Callees, in body order: gen00483480 (already declared/pinned by
 // ConstantZeroForwarders.cpp, zero-tail family), the still-unconverted
 // int-heap-adjust body at 0x0047E4F0 (reached through ILT thunk 0x0004293D),
-// and the still-unconverted sort-heap-finish body at 0x00483C20 (reached
+// and the sort-heap-finish body at 0x00483C20 (reached
 // through ILT thunk 0x000103CA). Real STLport template identity not
 // recovered.
 
@@ -34,4 +34,19 @@ void gen00483E00( void *firstArgument, void *middleArgument,
 		}
 	}
 	gen00483C20( first, middle, compare );
+}
+
+void gen00483C20( void *firstArgument, void *lastArgument, void *compareArgument )
+{
+	int *first = (int *)firstArgument;
+	int *last = (int *)lastArgument;
+	GenIntLess compare = (GenIntLess)compareArgument;
+
+	while( last - first > 1 )
+	{
+		int item = *( last - 1 );
+		*( last - 1 ) = *first;
+		gen0047E4F0( first, 0, (int)( ( last - 1 ) - first ), item, compare );
+		--last;
+	}
 }
