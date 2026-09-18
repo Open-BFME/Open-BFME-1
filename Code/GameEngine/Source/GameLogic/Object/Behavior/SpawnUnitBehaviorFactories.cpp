@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: SpawnUnitBehavior::friend_newModuleData factory.
+// Open-BFME5: SpawnUnitBehavior module-data and instance factories.
 
+class Module;
+class Thing;
 class INI;
 class ModuleData;
 
@@ -35,7 +37,12 @@ extern "C" void __cdecl SpawnUnitBehaviorFieldParse(MultiIniFieldParse &parse);
 class SpawnUnitBehavior
 {
 public:
+	SpawnUnitBehavior(Thing *, const ModuleData *);
 	static ModuleData *friend_newModuleData(INI *ini);
+	static Module *friend_newModuleInstance(Thing *, const ModuleData *);
+
+private:
+	unsigned char m_pad[0x28];
 };
 
 // ?friend_newModuleData@SpawnUnitBehavior@@SAPAVModuleData@@PAVINI@@@Z
@@ -45,4 +52,10 @@ ModuleData *SpawnUnitBehavior::friend_newModuleData(INI *ini)
 	if (ini)
 		ini->initFromINIMultiProc(data, &SpawnUnitBehaviorFieldParse);
 	return (ModuleData *)data;
+}
+
+// ?friend_newModuleInstance@SpawnUnitBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
+Module *SpawnUnitBehavior::friend_newModuleInstance(Thing *thing, const ModuleData *data)
+{
+	return (Module *)new SpawnUnitBehavior(thing, data);
 }
