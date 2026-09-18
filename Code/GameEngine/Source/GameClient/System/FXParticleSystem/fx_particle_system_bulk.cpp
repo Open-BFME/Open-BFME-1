@@ -148,7 +148,10 @@ public:
 extern const float BfmeZeroRange;
 
 void b_005f8b40();
-void b_005f8fc0();
+namespace FXParticleSystem {
+void Rva005F8FC0WriteVelocityHeader(const void *self, File *file,
+    unsigned int *flags);
+}
 void b_005fcb60();
 void b_005fff00();
 void b_005ee1d0();
@@ -167,7 +170,7 @@ public:
 };
 
 // GameClientRandomVariable xfer helper (version + distribution/min/max); lives in
-// another translation unit — resolved via reverse/symbols.csv.
+// another translation unit, resolved via reverse/symbols.csv.
 void xferRandomVariable(Xfer &xfer, GameClientRandomVariable &v);
 void xferInteger(Xfer &xfer, int &value);
 void xferRandomVariable_4570F(Xfer &xfer, GameClientRandomVariable &v);
@@ -10540,7 +10543,7 @@ void CylindricalEmissionVelocityModuleTemplate::writeINI(File &file, unsigned in
     typedef void (__cdecl *BaseWriteFunction)(const void *self, File *file, unsigned int *flags);
     typedef void (__cdecl *FinishWriteFunction)(File *file, unsigned int *flags);
 
-    reinterpret_cast<BaseWriteFunction>(b_005f8fc0)(this, &file, &flags);
+    FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
     U1Pair *value0 = (U1Pair *)((unsigned char *)this + 0x0c);
@@ -10721,7 +10724,7 @@ void OrthoEmissionVelocityModuleTemplate::writeINI(File &file, unsigned int flag
     typedef void (__cdecl *BaseWriteFunction)(const void *self, File *file, unsigned int *flags);
     typedef void (__cdecl *FinishWriteFunction)(File *file, unsigned int *flags);
 
-    reinterpret_cast<BaseWriteFunction>(b_005f8fc0)(this, &file, &flags);
+    FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
     U1Pair *value0 = (U1Pair *)((unsigned char *)this + 0x0c);
@@ -10750,7 +10753,7 @@ void OutwardEmissionVelocityModuleTemplate::writeINI(File &file, unsigned int fl
     typedef void (__cdecl *BaseWriteFunction)(const void *self, File *file, unsigned int *flags);
     typedef void (__cdecl *FinishWriteFunction)(File *file, unsigned int *flags);
 
-    reinterpret_cast<BaseWriteFunction>(b_005f8fc0)(this, &file, &flags);
+    FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
     U1Pair *value0 = (U1Pair *)((unsigned char *)this + 0x0c);
@@ -12555,7 +12558,7 @@ void SphericalEmissionVelocityModuleTemplate::writeINI(File &file, unsigned int 
     typedef void (__cdecl *BaseWriteFunction)(const void *self, File *file, unsigned int *flags);
     typedef void (__cdecl *FinishWriteFunction)(File *file, unsigned int *flags);
 
-    reinterpret_cast<BaseWriteFunction>(b_005f8fc0)(this, &file, &flags);
+    FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
     U1Pair *value = (U1Pair *)((unsigned char *)this + 0x0c);
