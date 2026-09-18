@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
-// PassiveAreaEffectBehavior's destructor, lifted from its MASM dump to C++.
+// PassiveAreaEffectBehavior complete destructor 0x002022B0 and naturally
+// emitted scalar wrapper 0x00202390. Constructor 0x00202100 installs
+// vtable 0x010A5304; wrapper ILT 0x000116E4 reaches this complete body.
 //
 // The smallest instance of the module-destructor shape
 // OpenContainDestructorThunk.cpp works out in full: three vptr writes at 0x00,
