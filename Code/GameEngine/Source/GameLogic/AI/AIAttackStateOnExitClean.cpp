@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 // stlport
-// readable body of ?onExit@AIAttackState@@UAEXW4StateExitType@@@Z: retail RVA 0x0017D050
+// readable body of ?onExit@AIAttackState@@UAEXW4StateExitType@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // The AIAttackState vtable at 0x00C9A0C8 selects this body in slot 5 through ILT 0x00020ACC.
 
 #define _STLP_NO_EXCEPTIONS 1
