@@ -1,82 +1,85 @@
-// ?bfmeUpdateHP@BfmeFadeHP@@QAEXXZ
+// ?d_0040ee90@@YAXXZ
 // partial score=0.93 date=2026-09-08
-extern const float BfmeZeroRange;
-extern float g_bfmeDefaultBU;
-extern float g_bfmeScaleB3;
+// The owner and member names below are address-derived carriers for the
+// witnessed offsets; no BfmeFadeHP identity is asserted.
+#define Rva01075350Zero (*(const float *)0x01075350)
+#define Rva01075334One (*(const float *)0x01075334)
+#define Rva01084068Scale (*(const float *)0x01084068)
 
-class BfmeSubHP
+class Rva0040E2F0State
 {
 public:
-	void bfmeApplyHP(void *o, int k, unsigned int c);
+	void call_0040E2F0(void *o, int k, unsigned int c);
 
-	int m_bfmeA0HP;
-	int m_bfmeA1HP;
-	int m_bfmeA2HP;
-	int m_bfmeA3HP;
-	int m_bfmeA4HP;
-	int m_bfmeA5HP;
+	int m_00;
+	int m_04;
+	int m_08;
+	int m_0c;
+	int m_10;
+	int m_14;
 };
 
-class BfmeFadeHP
+class Rva0040EE90Owner
 {
 public:
-	void bfmeUpdateHP();
+	void update();
 
-	unsigned char m_bfmeHeadHP[0x10c];
-	volatile int m_bfme10cHP;
-	unsigned char m_bfmeGapHP[8];
-	float m_bfme118HP;
-	float m_bfme11cHP;
-	BfmeSubHP m_bfmeSubHP;
+	unsigned char m_000[0x10c];
+	volatile int m_10c;
+	unsigned char m_110[8];
+	float m_118;
+	float m_11c;
+	Rva0040E2F0State m_120;
 };
 
-void BfmeFadeHP::bfmeUpdateHP()
+void Rva0040EE90Owner::update()
 {
 	unsigned int c = 0xffffff;
 
-	if (m_bfme11cHP > BfmeZeroRange)
+	if (m_11c > Rva01075350Zero)
 	{
-		int v = m_bfme10cHP;
+		int v = m_10c;
 
 		if (v != 0)
 		{
 			v = v - 1;
-			m_bfme10cHP = v;
-			v = (v < 0) ? 0 : v;
-			m_bfme10cHP = v;
+			m_10c = v;
+			bool nonnegative = v >= 0;
+			v &= -(int)nonnegative;
+			m_10c = v;
 
 			if (v > 0x2d)
 			{
 				v = 0x2d;
-				m_bfme10cHP = v;
 			}
+			m_10c = v;
 
 			c = 0xffffffff;
-			m_bfme11cHP = 1.0f;
+			m_11c = 1.0f;
 		}
-		else if (m_bfme11cHP > BfmeZeroRange)
+		else if (m_11c > Rva01075350Zero)
 		{
-			m_bfme11cHP = m_bfme11cHP - m_bfme118HP;
+			m_11c = m_11c - m_118;
 
-			if (m_bfme11cHP <= BfmeZeroRange)
+			if (m_11c <= Rva01075350Zero)
 			{
-				m_bfme11cHP = 0;
-				m_bfmeSubHP.m_bfmeA0HP = 0;
-				m_bfmeSubHP.m_bfmeA1HP = 0;
-				m_bfmeSubHP.m_bfmeA2HP = 0;
-				m_bfmeSubHP.m_bfmeA3HP = 0;
-				m_bfmeSubHP.m_bfmeA4HP = 0;
-				m_bfmeSubHP.m_bfmeA5HP = 0;
+				m_11c = 0;
+				m_120.m_00 = 0;
+				m_120.m_04 = 0;
+				m_120.m_08 = 0;
+				m_120.m_0c = 0;
+				m_120.m_10 = 0;
+				m_120.m_14 = 0;
 			}
 
-			float x = (g_bfmeDefaultBU < m_bfme11cHP) ? g_bfmeDefaultBU : m_bfme11cHP;
+			float x = (Rva01075334One < m_11c) ? Rva01075334One : m_11c;
 
-			m_bfme11cHP = x;
+			m_11c = x;
 
-			c = ((unsigned int)(int)(x * g_bfmeScaleB3) << 24) | 0xffffff;
+			c = ((unsigned int)(int)(x * Rva01084068Scale) << 24) | 0xffffff;
 		}
 
 		if (c & 0xff000000)
-			m_bfmeSubHP.bfmeApplyHP(this, 1, c);
+			m_120.call_0040E2F0(this, 1, c);
 	}
 }

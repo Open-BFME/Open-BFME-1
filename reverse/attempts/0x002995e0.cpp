@@ -125,8 +125,8 @@ UnsignedInt Rva002995E0::update()
 			found = true;
 	}
 
-	UnsignedInt fieldCounter = m_field20;
 	UnsignedInt frame = TheBfmeGameLogic->getFrame();
+	UnsignedInt fieldCounter = m_field20;
 
 	if (fieldCounter != 0)
 	{

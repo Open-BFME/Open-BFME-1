@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/campaignmanagerascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -846,6 +846,87 @@ void lanUpdateSlotList( void )
 	updateMapStartSpots(TheLAN->GetMyGame(), buttonMapStartPosition);
 }
 
+
+// InitLanGameGadgets reaches BFME's shifted LAN and GameWindow slots.
+class BfmeInitVirtualLanApi
+{
+public:
+    virtual void slot000() = 0;
+    virtual void slot004() = 0;
+    virtual void slot008() = 0;
+    virtual void slot00C() = 0;
+    virtual void slot010() = 0;
+    virtual void slot014() = 0;
+    virtual void slot018() = 0;
+    virtual void slot01C() = 0;
+    virtual void slot020() = 0;
+    virtual void slot024() = 0;
+    virtual void slot028() = 0;
+    virtual void slot02C() = 0;
+    virtual void slot030() = 0;
+    virtual void slot034() = 0;
+    virtual void slot038() = 0;
+    virtual void slot03C() = 0;
+    virtual void slot040() = 0;
+    virtual void slot044() = 0;
+    virtual void slot048() = 0;
+    virtual void slot04C() = 0;
+    virtual void slot050() = 0;
+    virtual void slot054() = 0;
+    virtual void slot058() = 0;
+    virtual void slot05C() = 0;
+    virtual void slot060() = 0;
+    virtual void slot064() = 0;
+    virtual void slot068() = 0;
+    virtual void slot06C() = 0;
+    virtual void slot070() = 0;
+    virtual void slot074() = 0;
+    virtual void slot078() = 0;
+    virtual void slot07C() = 0;
+    virtual void slot080() = 0;
+    virtual void slot084() = 0;
+    virtual void slot088() = 0;
+    virtual void slot08C() = 0;
+    virtual void slot090() = 0;
+    virtual void slot094() = 0;
+    virtual void slot098() = 0;
+    virtual void slot09C() = 0;
+    virtual void slot0A0() = 0;
+    virtual void slot0A4() = 0;
+    virtual void slot0A8() = 0;
+    virtual void slot0AC() = 0;
+    virtual void slot0B0() = 0;
+    virtual void slot0B4() = 0;
+    virtual void slot0B8() = 0;
+    virtual UnicodeString GetMyName( void ) = 0;
+    virtual LANGameInfo *GetMyGame( void ) = 0;
+};
+
+class BfmeInitVirtualLanGameInfo
+{
+public:
+    virtual void slot00() = 0;
+    virtual void slot04() = 0;
+    virtual void slot08() = 0;
+    virtual void slot0C() = 0;
+    virtual Bool amIHost( void ) = 0;
+    virtual Int getLocalSlotNum( void ) = 0;
+};
+
+struct BfmeInitComboBoxData
+{
+    unsigned char unused[0x28];
+    GameWindow *editBox;
+};
+
+static GameWindow *BfmeInitGadgetComboBoxGetEditBox( GameWindow *g )
+{
+    BfmeInitComboBoxData *comboBoxData = (BfmeInitComboBoxData *)g->winGetUserData();
+    if (comboBoxData && comboBoxData->editBox)
+        return comboBoxData->editBox;
+    return NULL;
+}
+
 //-------------------------------------------------------------------------------------------------
 /** Initialize the Gadgets Options Menu */
 //-------------------------------------------------------------------------------------------------
@@ -860,8 +941,6 @@ void InitLanGameGadgets( void )
 	listboxChatWindowLanGameID = TheNameKeyGenerator->nameToKey( AsciiString( "LanGameOptionsMenu.wnd:ListboxChatWindowLanGame" ) );
 	buttonEmoteID = TheNameKeyGenerator->nameToKey( AsciiString( "LanGameOptionsMenu.wnd:ButtonEmote" ) );
 	buttonSelectMapID = TheNameKeyGenerator->nameToKey( AsciiString( "LanGameOptionsMenu.wnd:ButtonSelectMap" ) );
-  checkboxLimitSuperweaponsID = TheNameKeyGenerator->nameToKey( AsciiString( "LanGameOptionsMenu.wnd:CheckboxLimitSuperweapons" ) );
-  comboBoxStartingCashID = TheNameKeyGenerator->nameToKey( AsciiString( "LanGameOptionsMenu.wnd:ComboBoxStartingCash" ) );
 	windowMapID = TheNameKeyGenerator->nameToKey( AsciiString( "LanGameOptionsMenu.wnd:MapWindow" ) );
 
 	// Initialize the pointers to our gadgets
@@ -876,21 +955,18 @@ void InitLanGameGadgets( void )
 	buttonBack = TheWindowManager->winGetWindowFromId( parentLanGameOptions,  buttonBackID);
 	DEBUG_ASSERTCRASH(buttonBack, ("Could not find the buttonBack"));
 	listboxChatWindowLanGame = TheWindowManager->winGetWindowFromId( parentLanGameOptions, listboxChatWindowLanGameID );
+if (TheLAN != NULL)
+*(void **)((char *)TheLAN + 0x5c) = listboxChatWindowLanGame;
 	DEBUG_ASSERTCRASH(listboxChatWindowLanGame, ("Could not find the listboxChatWindowLanGame"));
 	textEntryChat = TheWindowManager->winGetWindowFromId( parentLanGameOptions, textEntryChatID );
 	DEBUG_ASSERTCRASH(textEntryChat, ("Could not find the textEntryChat"));
 	textEntryMapDisplay = TheWindowManager->winGetWindowFromId( parentLanGameOptions, textEntryMapDisplayID );
 	DEBUG_ASSERTCRASH(textEntryMapDisplay, ("Could not find the textEntryMapDisplay"));
-  checkboxLimitSuperweapons = TheWindowManager->winGetWindowFromId( parentLanGameOptions, checkboxLimitSuperweaponsID );
-  DEBUG_ASSERTCRASH(checkboxLimitSuperweapons, ("Could not find the checkboxLimitSuperweapons"));
-  comboBoxStartingCash = TheWindowManager->winGetWindowFromId( parentLanGameOptions, comboBoxStartingCashID );
-  DEBUG_ASSERTCRASH(comboBoxStartingCash, ("Could not find the comboBoxStartingCash"));
-	PopulateStartingCashComboBox(comboBoxStartingCash, TheLAN->GetMyGame());
 
 	windowMap = TheWindowManager->winGetWindowFromId( parentLanGameOptions,windowMapID  );
 	DEBUG_ASSERTCRASH(windowMap, ("Could not find the LanGameOptionsMenu.wnd:MapWindow" ));
 
-	Int localSlotNum = TheLAN->GetMyGame()->getLocalSlotNum();
+	Int localSlotNum = ((BfmeInitVirtualLanGameInfo *)((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame())->getLocalSlotNum();
 	DEBUG_ASSERTCRASH(localSlotNum >= 0, ("Bad slot number!"));
 
 	//Added By Sadullah Nader
@@ -906,11 +982,11 @@ void InitLanGameGadgets( void )
 		comboBoxPlayerID[i] = TheNameKeyGenerator->nameToKey( tmpString );
 		comboBoxPlayer[i] = TheWindowManager->winGetWindowFromId( parentLanGameOptions, comboBoxPlayerID[i] );
 		GadgetComboBoxReset(comboBoxPlayer[i]);
-		GadgetComboBoxGetEditBox(comboBoxPlayer[i])->winSetTooltipFunc(playerTooltip);
+		BfmeInitGadgetComboBoxGetEditBox(comboBoxPlayer[i])->winSetTooltipFunc(playerTooltip);
 
 		if(localSlotNum == i)
 		{
-			GadgetComboBoxAddEntry(comboBoxPlayer[i],TheLAN->GetMyName(),white);
+			GadgetComboBoxAddEntry(comboBoxPlayer[i],((BfmeInitVirtualLanApi *)TheLAN)->GetMyName(),white);
 		}
 		else
 		{
@@ -924,7 +1000,7 @@ void InitLanGameGadgets( void )
 		/*
 		if(i != 0)
 		{
-			TheLAN->GetMyGame()->getLANSlot(i)->setState(SLOT_OPEN);
+			((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->getLANSlot(i)->setState(SLOT_OPEN);
 		}
 		*/
 
@@ -932,24 +1008,22 @@ void InitLanGameGadgets( void )
 		comboBoxColorID[i] = TheNameKeyGenerator->nameToKey( tmpString );
 		comboBoxColor[i] = TheWindowManager->winGetWindowFromId( parentLanGameOptions, comboBoxColorID[i] );
 		DEBUG_ASSERTCRASH(comboBoxColor[i], ("Could not find the comboBoxColor[%d]",i ));
-		PopulateColorComboBox(i, comboBoxColor, TheLAN->GetMyGame());
+		PopulateColorComboBox(i, comboBoxColor, ((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame());
 		GadgetComboBoxSetSelectedPos(comboBoxColor[i], 0);
 		
 		tmpString.format("LanGameOptionsMenu.wnd:ComboBoxPlayerTemplate%d", i);
 		comboBoxPlayerTemplateID[i] = TheNameKeyGenerator->nameToKey( tmpString );
 		comboBoxPlayerTemplate[i] = TheWindowManager->winGetWindowFromId( parentLanGameOptions, comboBoxPlayerTemplateID[i] );
 		DEBUG_ASSERTCRASH(comboBoxPlayerTemplate[i], ("Could not find the comboBoxPlayerTemplate[%d]",i ));
-		PopulatePlayerTemplateComboBox(i, comboBoxPlayerTemplate, TheLAN->GetMyGame(), TRUE);
+		PopulatePlayerTemplateComboBox(i, comboBoxPlayerTemplate, ((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame(), TRUE);
 
 		// add tooltips to the player template combobox and listbox
-		comboBoxPlayerTemplate[i]->winSetTooltipFunc(playerTemplateComboBoxTooltip);
-		GadgetComboBoxGetListBox(comboBoxPlayerTemplate[i])->winSetTooltipFunc(playerTemplateListBoxTooltip);
 
 		tmpString.format("LanGameOptionsMenu.wnd:ComboBoxTeam%d", i);
 		comboBoxTeamID[i] = TheNameKeyGenerator->nameToKey( tmpString );
 		comboBoxTeam[i] = TheWindowManager->winGetWindowFromId( parentLanGameOptions, comboBoxTeamID[i] );
 		DEBUG_ASSERTCRASH(comboBoxTeam[i], ("Could not find the comboBoxTeam[%d]",i ));
-		PopulateTeamComboBox(i, comboBoxTeam, TheLAN->GetMyGame());
+		PopulateTeamComboBox(i, comboBoxTeam, ((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame());
 
 		tmpString.clear();
 		tmpString.format("LanGameOptionsMenu.wnd:ButtonAccept%d", i); 

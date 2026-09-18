@@ -4,11 +4,13 @@
 
 class Rva00520460
 {
+	char m_pad00[ 4 ];
+	int m_value04;
+	char m_pad08[ 0xc ];
+	int m_values[ 8 ];
+
 public:
 	bool has();
-
-private:
-	unsigned char m_unmodelled[0x40];
 };
 
 class GameWindow;
@@ -26,19 +28,20 @@ public:
 private:
 	unsigned char m_head[ 0x28 ];
 	Rva00520460 m_slotRecord;
+	unsigned char m_slotRecordTail[ 0xc ];
 	GameWindow *m_first[ 8 ];
 	GameWindow *m_elements[ 8 ];
 	GameWindow *m_second[ 8 ];
 	GameWindow *m_third[ 8 ];
 	GameWindow *m_fourth[ 8 ];
-	int m_field108;
+	int m_unmodelled108;
 };
 
 bool SkirmishScreenState::shouldRefresh( void )
 {
 	if ( !m_slotRecord.has() )
 		return false;
-	if ( !m_field108 )
+	if ( !m_unmodelled108 )
 		return false;
 
 	int key = Rva005277B0( 0, 0 );

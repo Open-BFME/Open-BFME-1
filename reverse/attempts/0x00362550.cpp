@@ -1,6 +1,11 @@
 // ?handle@Gen00362760Elem@@QAEXPAX@Z
 // partial score=0.93 date=2026-09-12
-// The element callback at retail RVA 0x00362550.
+// The retail caller at 0x00362760 (ledger symbol address-derived) walks
+// 0x58-byte army elements and calls ILT 0x0001D0E8, which routes to this
+// body.  That proves the address-derived dispatch relation; no semantic
+// method name is proven, so no real-name pin is added.
+// LivingWorldArmy's +0x04 name, +0x34 count, and 0xB4 element size are
+// witnessed by INILivingWorldPlayerArmy.cpp and LivingWorldArmyAssign.cpp.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ivendor/stlport /Ireference/shims/campaignmanagerascii /Ireference/shims/moduledata /Ireference/shims/sweep /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 
 #define _STLP_USE_NEWALLOC 1
@@ -21,10 +26,7 @@ class LivingWorldArmy
 {
 public:
 	virtual ~LivingWorldArmy();
-	AsciiString getName() const
-	{
-		return *reinterpret_cast<const AsciiString *>( reinterpret_cast<const char *>( this ) + 4 );
-	}
+	AsciiString getName() const;
 
 	int getCount() const
 	{
@@ -32,8 +34,12 @@ public:
 	}
 
 private:
-	char m_unmodelled[ 0xB0 ];
+	char m_unmodelled04[ 0x2C ];
+	_STL::vector<LivingWorldArmy> m_armies;
+	char m_unmodelled3C[ 0x78 ];
 };
+
+#pragma comment(linker, "/alternatename:?getName@LivingWorldArmy@@QBE?AVAsciiString@@XZ=?j_000041d3@@YAXXZ")
 
 class Rva00362550ArmyVisitor
 {
@@ -67,18 +73,17 @@ private:
 
 void Gen00362760Elem::handle( void *visitor )
 {
-	unsigned int i = 0;
-	if( m_armies.size() == 0 )
-		return;
-
-	unsigned int offset = 0;
-	do
+	_STL::vector<LivingWorldArmy>::size_type i;
+	i = 0;
+	for( ; i < m_armies.size(); ++i )
 	{
-		LivingWorldArmy &army = *(LivingWorldArmy *)( (char *)m_armies.begin() + offset );
+		LivingWorldArmy &army = *( m_armies.begin() + i );
 		( *(Rva00362550ArmyVisitorPtr *)visitor )->visit(
 			army.getName(), army.getCount() );
-		++i;
-		offset += sizeof( LivingWorldArmy );
 	}
-	while( i < m_armies.size() );
 }
+
+// Probe result for this indexed vector shape: 220/219 bytes and 22
+// non-relocation differences.  The remaining source-shape residue is the
+// exact VC7.1 allocation of EBP as index versus EBX as byte offset together
+// with retail's EH-state/count-load order.

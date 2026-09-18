@@ -34,20 +34,12 @@ struct IRegion2D
 class Image
 {
 public:
-	Int getImageWidth(void) const { return m_imageWidth; }
-	Int getImageHeight(void) const { return m_imageHeight; }
+	Int getImageWidth(void) const { return m_imageSize.x; }
+	Int getImageHeight(void) const { return m_imageSize.y; }
 
 private:
 	unsigned char m_unreconstructed_00[0x24];
-	Int m_imageWidth;
-	Int m_imageHeight;
-};
-
-class WinInstanceData
-{
-public:
-	unsigned char m_unreconstructed_000[0x17C];
-	ICoord2D m_imageOffset; // retail this+0x17c
+	ICoord2D m_imageSize; // retail this+0x24
 };
 
 struct WinDrawData
@@ -57,21 +49,32 @@ struct WinDrawData
 	Color borderColor;
 };
 
+class WinInstanceData
+{
+public:
+	virtual ~WinInstanceData(void);
+	unsigned char m_unreconstructed_004[0x14];
+	WinDrawData m_enabledDrawData[9]; // retail this+0x18
+	unsigned char m_unreconstructed_084[0xF8];
+	ICoord2D m_imageOffset; // retail this+0x17c
+};
+
 class GameWindow
 {
 public:
+	virtual void winDrawBorder(void) = 0;
 	WinInstanceData *winGetInstanceData(void);
 	Int winGetScreenPosition(Int *x, Int *y);
 	Int winGetSize(Int *width, Int *height);
 
 	const Image *winGetEnabledImage(Int index)
 	{
-		return m_enabledDrawData[index].image;
+		return m_instData.m_enabledDrawData[index].image;
 	}
 
 private:
-	unsigned char m_unreconstructed_00[0x48];
-	WinDrawData m_enabledDrawData[9]; // retail this+0x48
+	unsigned char m_unreconstructed_04[0x2C];
+	WinInstanceData m_instData; // retail this+0x30
 };
 
 class Display
@@ -189,7 +192,7 @@ namespace Rva0059ABC0
 			start.x = origin.x + xOffset;
 			start.y = origin.y + yOffset;
 			end.y = leftEnd.y;
-			end.x = size.x / 2 + xOffset + origin.x;
+			end.x = origin.x + xOffset + size.x / 2;
 			TheDisplay->drawImage(leftImage, start.x, start.y, end.x, end.y, color);
 
 			start.y = rightStart.y;

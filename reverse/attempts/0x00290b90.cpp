@@ -9,7 +9,7 @@ class Player;
 class Emotion;
 class ModuleData;
 class EmotionTrackerUpdateEntry;
-class BfmeOverridable;
+class Overridable;
 
 struct Coord3D
 {
@@ -18,16 +18,16 @@ struct Coord3D
 	float z;
 };
 
-class BfmeOverridable
+class Overridable
 {
 public:
-	BfmeOverridable *friend_getFinalOverride();
+	Overridable *getFinalOverride() const;
 };
 
 struct Rva00290B90Template
 {
 	unsigned char m_pad00[4];
-	BfmeOverridable *m_override;
+	Overridable *m_override;
 	unsigned char m_pad08[0xc0];
 	unsigned int m_flags;
 };
@@ -49,14 +49,13 @@ class Object
 {
 public:
 	Player *getControllingPlayer() const;
-	int getLayer() const;
 
 	unsigned char m_pad00[4];
 	Rva00290B90Template *m_template;
 	unsigned char m_pad08[0x30];
 	Coord3D m_position;
 	unsigned char m_pad44[0x4c];
-	unsigned int m_flags90;
+	unsigned int m_status;
 	unsigned char m_pad94[0x17c];
 	Rva00290B90Slot *m_slot210;
 };
@@ -86,10 +85,10 @@ public:
 class GameLogic
 {
 public:
-	Object *bfmeFind1011(int id);
+	Object *findObjectByID(int id);
 };
 
-struct Rva002EE330PlayerList
+struct PlayerList
 {
 	unsigned short getPlayersWithRelationship(int index, int relation, bool flag);
 };
@@ -99,9 +98,22 @@ struct Rva002EEDA0ShroudManager
 	int lookup(const Coord3D *position, int mode, unsigned int mask);
 };
 
-extern GameLogic *TheBfmeGameLogic;
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
-extern Rva002EEDA0ShroudManager *Rva002EEDA0TheShroudManager;
+struct Gen_001BEC20
+{
+	int bfmeScale() const;
+};
+
+#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getPlayersWithRelationship@PlayerList@@QAEGHH_N@Z=?j_00044c60@@YAXXZ")
+#pragma comment(linker, "/alternatename:?lookup@Rva002EEDA0ShroudManager@@QAEHPBUCoord3D@@HI@Z=?m@Gen_008f7470@@QAEXXZ")
+#pragma comment(linker, "/alternatename:?findObjectByID@GameLogic@@QAEPAVObject@@H@Z=?j_0001f253@@YAXXZ")
+#pragma comment(linker, "/alternatename:?Rva0037C310@Rva0037C310Owner@@QAE_NHHPAVObject@@@Z=?j_000466b4@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
+#pragma comment(linker, "/alternatename:?bfmeScale@Gen_001BEC20@@QBEHXZ=?j_0003a391@@YAXXZ")
+
+#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
+#define Rva002EE330ThePlayers (*(PlayerList **)0x012ED748)
+#define Rva002EEDA0TheShroudManager (*(Rva002EEDA0ShroudManager **)0x012ED5BC)
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ObjectModule
@@ -173,7 +185,7 @@ public:
 private:
 	bool m_active[10];
 	unsigned int m_startFrame[10];
-	unsigned int m_emotionObjectIds[10];
+	unsigned int m_endFrame[10];
 	Emotion **m_emotionsBegin;
 	Emotion **m_emotionsEnd;
 	Emotion **m_emotionsCapacity;
@@ -188,7 +200,7 @@ Emotion *EmotionTrackerUpdate::Rva00290B90()
 {
 	for (;;)
 	{
-		int shroudOther = 0;
+		int shroudOther;
 		int shroudSelf = 0;
 
 		if (m_object != 0)
@@ -219,7 +231,7 @@ Emotion *EmotionTrackerUpdate::Rva00290B90()
 			if (e == m_currentEmotion && e->m_entry->m_flag0c != 0)
 			{
 				Object *held =
-					TheBfmeGameLogic->bfmeFind1011(m_emotionObjectIds[e->m_entry->m_type]);
+					TheBfmeGameLogic->findObjectByID(m_endFrame[e->m_entry->m_type]);
 				if (((Rva0037C310Owner *)e)->Rva0037C310(shroudOther, shroudSelf, held))
 					return e;
 			}
@@ -246,21 +258,22 @@ Emotion *EmotionTrackerUpdate::Rva00290B90()
 
 			if (e->m_entry->m_type == 6)
 			{
-				Object *other = TheBfmeGameLogic->bfmeFind1011(m_emotionObjectIds[6]);
+				Object *other = TheBfmeGameLogic->findObjectByID(m_endFrame[6]);
 				if (other != 0)
 				{
 					Rva00290B90Template *t = other->m_template;
 					if (t != 0 && t->m_override != 0)
-						t = (Rva00290B90Template *)t->m_override->friend_getFinalOverride();
+						t = (Rva00290B90Template *)t->m_override->getFinalOverride();
 					if ((t->m_flags & 0x2000000) == 0 &&
-						(other->m_flags90 & 0x40) == 0 &&
-						(selfLayer = m_object->getLayer()) != other->getLayer())
+						(other->m_status & 0x40) == 0 &&
+						(selfLayer = ((Gen_001BEC20 *)m_object)->bfmeScale()) !=
+							((Gen_001BEC20 *)other)->bfmeScale())
 						continue;
 				}
 			}
 
 			Object *target =
-				TheBfmeGameLogic->bfmeFind1011(m_emotionObjectIds[e->m_entry->m_type]);
+				TheBfmeGameLogic->findObjectByID(m_endFrame[e->m_entry->m_type]);
 			if (((Rva0037C310Owner *)e)->Rva0037C310(shroudOther, shroudSelf, target))
 				return e;
 		}

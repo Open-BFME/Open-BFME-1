@@ -99,22 +99,27 @@ public:
 
 
 private:
-	__declspec( nothrow ) AudioEventRTS *bfmeLookupSound( Int index ) const;
+	// The ILT is shared with generated and conflicting aliases; this member
+	// view only records the witnessed thiscall register setup.
+	const AudioEventRTS *call_0000286A( Int index ) const;
 
 };
+
+extern void *__stdcall Q1Selector0000286A( Int ordinal );
 
 AudioEventInfoRef ThingTemplate::bfmeGetAudioEventInfoForSelector( Int selector ) const
 {
 	volatile Int constructionState = 0;
+	Int requested = selector;
 	const ThingTemplate *owner = this;
 	const AudioEventRTS *sound;
 
-	switch ( selector )
+	switch ( requested )
 	{
-		case 1: sound = bfmeLookupSound( 0x5C ); break;
-		case 2: sound = bfmeLookupSound( 0x5D ); break;
-		case 3: sound = bfmeLookupSound( 0x5E ); break;
-		default: sound = bfmeLookupSound( 0x5B ); break;
+		case 1: sound = (const AudioEventRTS *)Q1Selector0000286A( 0x5C ); break;
+		case 2: sound = (const AudioEventRTS *)Q1Selector0000286A( 0x5D ); break;
+		case 3: sound = (const AudioEventRTS *)Q1Selector0000286A( 0x5E ); break;
+		default: sound = (const AudioEventRTS *)Q1Selector0000286A( 0x5B ); break;
 	}
 
 	if ( !sound )
@@ -127,10 +132,10 @@ AudioEventInfoRef ThingTemplate::bfmeGetAudioEventInfoForSelector( Int selector 
 		return AudioEventInfoRef( sound->m_eventInfo );
 	}
 
-	if ( selector == 0 || selector == 3 )
+	if ( requested == 0 || requested == 3 )
 		return AudioEventInfoRef();
 
-	sound = owner->bfmeLookupSound( 0x5B );
+	sound = owner->call_0000286A( 0x5B );
 	if ( !sound )
 		sound = &BfmeTheEmptyAudioEvent;
 

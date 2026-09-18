@@ -1,7 +1,15 @@
 // _ciCallCallback
-// partial score=0.93 date=2026-09-04
-// _ciCallCallback
-// partial score=0.93 date=2026-09-04
+// partial score=0.93 date=2026-09-17
+/* Reviewer verification: identity is established by the exact landed
+   _ciCallCallbacks caller at 0x008714F0 and the callback jump table. The
+   target-order separate cases retain the GameSpy callback signatures and the
+   retail 32-entry dword dispatch table. No pin was added or changed.
+
+   Probe result for the 369-byte boundary: the generic callback blocks and
+   every direct callee align through the boundary; the only non-relocation
+   residue is 25 bytes of ENTER_CHANNEL register coloring. MSVC emits the
+   inline jump table in the object section after the 369-byte body, so this
+   source remains banked until that register shape is solved. */
 // cl: /DNDEBUG /MD -Ireference/shims/gamespy
 /* GameSpy Chat SDK -- ciFreeCallbackData + ciCleanupCallbacks +
    ciCallCallback + ciCallCallbacks, retail 0x0086FDA0 / 0x008702F0 /

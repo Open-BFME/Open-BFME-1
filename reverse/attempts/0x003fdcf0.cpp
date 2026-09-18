@@ -31,10 +31,9 @@
 //     `const Coord3D *def` pointer alias: both same 148/153 result.
 // This reads as a genuine MSVC 7.1 register-pressure/x87-spill decision (the
 // third float loses out to eax/edx/ecx already committed to x, y and the
-// m_cpopRecentStart pointer chase) rather than a source-shape defect; no
-// spelling tried forces the FPU residency. Next agent: try forcing register
-// pressure explicitly (e.g. an extra live GPR-typed local between the y load
-// and the n load) before re-grinding statement order again.
+// m_cpopRecentStart pointer chase) rather than a source-shape defect. An
+// additional live GPR local was also tested after this bank and did not move
+// the residue; keep the address-derived method and bank the honest near miss.
 struct Coord3D
 {
 public:
@@ -47,7 +46,7 @@ class PathNode
 {
 public:
 	unsigned char m_head[8];
-	PathNode *m_nextOptimized;
+	PathNode *m_nextOpti;
 	Coord3D m_position;
 	unsigned char m_gap[8];
 	int m_waypointID;
@@ -79,19 +78,19 @@ void Path::Rva003FDCF0(Coord3D &out)
 
 	if (n != 0)
 	{
-		PathNode *a = n->m_nextOptimized;
+		PathNode *a = n->m_nextOpti;
 
 		if (a != 0)
 		{
 			p = a->m_position;
 
-			PathNode *b = a->m_nextOptimized;
+				PathNode *b = a->m_nextOpti;
 
 			if (b != 0)
 			{
 				p = b->m_position;
 
-				PathNode *c = b->m_nextOptimized;
+					PathNode *c = b->m_nextOpti;
 
 				if (c != 0 && c->m_waypointID != 0x7fffffff)
 					p = c->m_position;

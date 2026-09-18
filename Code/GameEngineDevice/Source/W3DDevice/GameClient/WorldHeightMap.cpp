@@ -211,12 +211,8 @@ RenderObjClass* MapObject::getBridgeRenderObject( BridgeTowerType type )
 
 }
 
-// ?validate@MapObject@@QAEXXZ present-unmatched
-void MapObject::validate(void)
-{
-	verifyValidTeam();
-	verifyValidUniqueID();
-}
+// ?validate@MapObject@@QAEXXZ is reconstructed in
+// MapObjectValidate.cpp; BFME's body is larger than the Zero Hour donor.
 
 // verifyValidTeam is byte-verified in MapObject_verifyValidTeamMethodThunk.cpp.
 

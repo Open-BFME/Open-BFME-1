@@ -1,9 +1,18 @@
-// ?d_00494ec0@@YAXXZ
-// partial score=0.94 date=2026-09-10
+// ?Rva00494EC0@@YAXPAX@Z
+// partial score=0.94 date=2026-09-17
 // 62/62 bytes. Every instruction, register, stack offset and relocation
 // matches retail except one adjacent transposition at +0x27: retail emits
-// `mov ecx,offset g_bfmeMapLB` and then `mov dword ptr [eax+8],0`, this body
+// `mov ecx,offset 0x00EF3354` and then `mov dword ptr [eax+8],0`, this body
 // emits them the other way round.
+//
+// Identity review: callers_of.py finds no named caller, vtable_lookup.py finds
+// no installed table reaching this body, and name_oracle.py has no witnessed
+// layout for the worker's BfmeMapLB/BfmeEntryLB names. The global at
+// 0x00EF3354 is unowned. The 0x000089B3 call reaches the matched STLport
+// hashtable operator[] body at 0x00494E40 (mapped type Open2Mapped494DA0),
+// while 0x00013F89 reaches the generated generic hash-table erase body at
+// 0x00494A20. The local view names below therefore make no Bfme class claim;
+// lookup and erase are ABI-only labels for those callees.py thunk targets.
 //
 // What made the size exact, replacing the earlier volatile-self-store bank:
 // the key is a plain local initialised from the parameter and re-assigned
@@ -33,7 +42,7 @@
 // Also ruled out (2026-09-11, identical 8-byte diff both times):
 //   * pre-materializing the erase argument into its own pointer local
 //     (`void **pkey = &key;` taken before the count store, key=p written
-//     after, `bfmeEraseLB(pkey)`) -- the this-load still lands after the
+//     after, `erase(pkey)`) -- the this-load still lands after the
 //     count store;
 //   * spelling the count store as a raw pointer cast
 //     (`*(int *)((char *)entry + 8) = 0;`) instead of the field access --
@@ -49,37 +58,37 @@
 // the key spill is the compiler's own escape spill rather than a statement --
 // but every such form measured here also drops esi and moves the slot.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-class BfmeEntryLB
+class Rva00494EC0EntryView
 {
 public:
-	unsigned char m_bfmeHeadLB[8];
-	int m_bfmeCountLB;
-	unsigned char m_bfmeGapLB[0x14];
-	unsigned char m_bfmeFlagsLB;
+	unsigned char m_at00[8];
+	int m_at08;
+	unsigned char m_at0c[0x14];
+	unsigned char m_at20;
 };
 
-class BfmeMapLB
+class Rva00494EC0MapView
 {
 public:
-	BfmeEntryLB **bfmeFindLB(void **key);
-	void bfmeEraseLB(void **key);
+	Rva00494EC0EntryView **lookup(void **key);
+	void erase(void **key);
 };
 
-extern BfmeMapLB g_bfmeMapLB;
+extern Rva00494EC0MapView g_rva00494EC0Map;
 
 void __cdecl Rva00494EC0(void *p)
 {
 	void *key = p;
 
-	BfmeEntryLB *entry = *g_bfmeMapLB.bfmeFindLB(&key);
+	Rva00494EC0EntryView *entry = *g_rva00494EC0Map.lookup(&key);
 
 	if (entry != 0)
 	{
-		entry->m_bfmeFlagsLB &= 0xfc;
-		entry->m_bfmeCountLB = 0;
+		entry->m_at20 &= 0xfc;
+		entry->m_at08 = 0;
 
 		key = p;
 
-		g_bfmeMapLB.bfmeEraseLB(&key);
+		g_rva00494EC0Map.erase(&key);
 	}
 }

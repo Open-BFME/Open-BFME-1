@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e10ec8e7d24755e4ccf7fbe98a95ed21eda4c6c516ad09f5e4012a0aa45f1896",
+  "symbol": "?shouldRefresh@SkirmishScreenState@@QAE_NXZ",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?shouldRefresh@SkirmishScreenState@@QAE_NXZ\r\n// partial score=0.93 date=2026-09-15\r\n// cl: /DNDEBUG /MD /EHsc\r\n\r\nclass Rva00520460\n{\n \tchar m_pad00[ 4 ];\n\tint m_value04;\n\tchar m_pad08[ 0xc ];\n\tint m_values[ 8 ];\n\npublic:\n\tbool has();\n};\n\r\nclass GameWindow;\n\nint __cdecl Rva005277B0( int a, int b );\r\nint __cdecl Rva00527730( int a, int b );\r\nint __cdecl Rva005278B0( int a, int b );\nint __cdecl Rva00527830( int a, int b );\n\nclass SkirmishScreenState\r\n{\r\npublic:\r\n\tbool shouldRefresh( void );\r\n\r\nprivate:\r\n\tunsigned char m_head[ 0x28 ];\n\tRva00520460 m_slotRecord;\n\tunsigned char m_slotRecordTail[ 0xc ];\n\tGameWindow *m_first[ 8 ];\r\n\tGameWindow *m_elements[ 8 ];\r\n\tGameWindow *m_second[ 8 ];\r\n\tGameWindow *m_third[ 8 ];\r\n\tGameWindow *m_fourth[ 8 ];\r\n\tint m_unmodelled108;\n};\r\n\r\nbool SkirmishScreenState::shouldRefresh( void )\r\n{\r\n\tif ( !m_slotRecord.has() )\r\n\t\treturn false;\r\n\tif ( !m_unmodelled108 )\n\t\treturn false;\r\n\r\n\tint key = Rva005277B0( 0, 0 );\n\twhile ( Rva00527730( key, (int)0xB9DC8031 ) != (int)0x66DE9C79 )\n\t{\n\t\tif ( !m_first[ (short)Rva005278B0( key, key ) ] )\n\t\t\treturn false;\n\t\tGameWindow **slot = &m_elements[ (short)Rva005278B0( key, key ) ];\r\n\t\tif ( !*slot )\r\n\t\t\treturn false;\r\n\t\tif ( !m_second[ (short)Rva005278B0( key, key ) ] )\r\n\t\t\treturn false;\r\n\t\tif ( !m_third[ (short)Rva005278B0( key, key ) ] )\n\t\t\treturn false;\n\t\tkey = Rva00527830( key, (int)0xE4CD9C42 );\n\t}\n\treturn true;\n}\n"
+}

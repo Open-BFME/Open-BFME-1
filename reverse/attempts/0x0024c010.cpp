@@ -1,9 +1,8 @@
-// ?finishReset@Rva00249C50HordeContain@@QAEXXZ
-// partial score=0.75 date=2026-09-07
+// ?d_0024c010@@YAXXZ
+// partial score=0.78 date=2026-09-17
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
-#define _STLP_USE_NEWALLOC 1
 #define _STLP_USE_STATIC_LIB 1
 #define _STLP_NO_EXCEPTIONS 1
 #define BFME_STLP_NODE_ALLOC 1
@@ -24,6 +23,16 @@ struct HordeContainTransform
 	float y;
 	unsigned char unused_28[0x0c];
 	float z;
+
+	__forceinline HordeContainTransform(const HordeContainTransform &other)
+		: x(other.x), y(other.y), z(other.z) {}
+
+	__forceinline void getTranslation(Coord3D *position) const
+	{
+		position->x = x;
+		position->y = y;
+		position->z = z;
+	}
 };
 
 class Thing
@@ -103,7 +112,7 @@ void Rva00249C50HordeContain::resetContainState()
 // ?finishReset@Rva00249C50HordeContain@@QAEXXZ
 void Rva00249C50HordeContain::finishReset()
 {
-	Rva00249C50HordeContain * volatile saved = this;
+	Rva00249C50HordeContain *saved = this;
 	BfmeMemberList output;
 	BfmeMemberList contained;
 	BfmeMemberList members(m_members);
@@ -117,11 +126,9 @@ void Rva00249C50HordeContain::finishReset()
 				member->m_contain->getHordeContainInterface();
 			if (horde != 0)
 			{
-				Thing *owner = m_owner;
 				Coord3D position;
-				position.x = owner->m_transform.x;
-				position.y = owner->m_transform.y;
-				position.z = owner->m_transform.z;
+				HordeContainTransform transform(m_owner->m_transform);
+				transform.getTranslation(&position);
 				member->setPosition(&position);
 				contained = *horde->getMemberList();
 				for (BfmeMemberList::iterator containedIt = contained.begin();
@@ -130,6 +137,5 @@ void Rva00249C50HordeContain::finishReset()
 			}
 		}
 	}
-	Rva00249C50HordeContain *restored = const_cast<Rva00249C50HordeContain *>(saved);
-	restored->resetPair(&output, &restored->m_pairState);
+	saved->resetPair(&output, &saved->m_pairState);
 }

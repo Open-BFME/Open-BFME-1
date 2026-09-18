@@ -1,39 +1,54 @@
-// ?d_0061bd90@@YAXXZ
+// ??1LivingWorldSound@@UAE@XZ
 // partial score=0.93 date=2026-09-08
-extern "C" void *bfmeVft1VUQ[];
-extern "C" void *bfmeVft2VUQ[];
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/campaignmanagerascii /ICode/Libraries/Source/WWVegas/WWLib
 
-class BfmeObjVUQ
+#include "Common/AsciiString.h"
+
+extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
+	long volatile *addend );
+
+class Xfer;
+
+class Snapshot
 {
 public:
-	virtual void bfmeCloseVUQ(int mode);
+	virtual ~Snapshot() {}
+	virtual void LoadPostProcess() = 0;
+	virtual const char *GetSnapshotName() = 0;
+	virtual void DoXfer(class Xfer &xfer) = 0;
 
-	unsigned char m_bfmeSubVUQ[0x80];
-	int m_bfmeFlagVUQ;
 };
 
-extern int (__stdcall *g_bfmeCheckVUQ)(void *sub);
-
-class BfmeRefVUQ
+class Rva00087750Counted
 {
 public:
-	__forceinline ~BfmeRefVUQ()
-	{
-		BfmeObjVUQ *p = m_bfmePtrVUQ;
+	virtual ~Rva00087750Counted();
 
-		if (p != 0 && g_bfmeCheckVUQ(p->m_bfmeSubVUQ) <= 0 && p != 0)
-			p->bfmeCloseVUQ(1);
+	void Release_Ref()
+	{
+		if (InterlockedDecrement(&m_refCount) <= 0)
+			delete this;
 	}
 
-	BfmeObjVUQ *m_bfmePtrVUQ;
+	long m_refCount;
+	unsigned char m_padding[0x7c];
+	unsigned int m_playingHandle;
+	unsigned int getPlayingHandle() const
+	{
+		return m_playingHandle;
+	}
 };
 
-class BfmeStrVUQ
+class SoundEvent
 {
 public:
-	~BfmeStrVUQ();
+	Rva00087750Counted *m_sound;
 
-	void *m_bfmeDataVUQ;
+	__forceinline ~SoundEvent()
+	{
+		if (m_sound != 0)
+			m_sound->Release_Ref();
+	}
 };
 
 class Rva005A00B0AudioClient
@@ -58,7 +73,7 @@ public:
 	virtual void bfmeSlot16VUQ();
 	virtual void bfmeSlot17VUQ();
 	virtual void bfmeSlot18VUQ();
-	virtual void bfmeStopVUQ(unsigned int mode);
+	virtual void removeAudioEvent(unsigned int handle);
 	virtual void bfmeSlot20VUQ();
 	virtual void bfmeSlot21VUQ();
 	virtual void bfmeSlot22VUQ();
@@ -66,44 +81,39 @@ public:
 	virtual void bfmeSlot24VUQ();
 	virtual void bfmeSlot25VUQ();
 	virtual void bfmeSlot26VUQ();
-	virtual void bfmeQuietVUQ(int a, int b, int c);
+	virtual void startAudio(int one, int two, int three);
 };
 
 extern Rva005A00B0AudioClient *TheAudioClientUpdate;
 
-class BfmeBaseVUQ
+class LivingWorldSound : public Snapshot
 {
 public:
-	__forceinline ~BfmeBaseVUQ() { m_bfmeVftVUQ = bfmeVft2VUQ; }
+	virtual ~LivingWorldSound();
+	virtual void LoadPostProcess();
+	virtual const char *GetSnapshotName();
+	virtual void DoXfer(Xfer &xfer);
 
-	void *volatile m_bfmeVftVUQ;
+	AsciiString m_name;
+	unsigned char m_position[0xc];
+	SoundEvent m_sound;
+	unsigned int m_flags;
+	unsigned char m_zoomRegion[0x10];
+	int m_playState;
+	bool m_shouldFade;
+	bool m_isPlaying;
+	bool m_hasPlayed;
 };
 
-class BfmeHostVUQ : public BfmeBaseVUQ
+LivingWorldSound::~LivingWorldSound()
 {
-public:
-	~BfmeHostVUQ();
-
-	BfmeStrVUQ m_bfmeNameVUQ;
-	unsigned char m_bfmePadAVUQ[0xc];
-	BfmeRefVUQ m_bfmeRefVUQ;
-	unsigned char m_bfmePadBVUQ[0x14];
-	unsigned int m_bfmeModeVUQ;
-};
-
-BfmeHostVUQ::~BfmeHostVUQ()
-{
-	m_bfmeVftVUQ = bfmeVft1VUQ;
-
-	if (TheAudioClientUpdate != 0 && m_bfmeModeVUQ >= 5)
+	if (TheAudioClientUpdate != 0 && static_cast<unsigned int>(m_playState) >= 5)
 	{
-		BfmeObjVUQ *obj = m_bfmeRefVUQ.m_bfmePtrVUQ;
-
-		if (obj != 0 && obj->m_bfmeFlagVUQ == 0)
-			TheAudioClientUpdate->bfmeQuietVUQ(1, 1, 0);
+		if (m_sound.m_sound != 0 && m_sound.m_sound->getPlayingHandle() == 0)
+			TheAudioClientUpdate->startAudio(1, 1, 0);
 		else
-			TheAudioClientUpdate->bfmeStopVUQ(m_bfmeModeVUQ);
+			TheAudioClientUpdate->removeAudioEvent(m_playState);
 
-		m_bfmeModeVUQ = 1;
+		m_playState = 1;
 	}
 }

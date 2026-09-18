@@ -1,6 +1,8 @@
-// ?d_005217a0@@YAXXZ
+// ?dup_005217a0@@YAXXZ
 // partial score=0.93 date=2026-09-05
-// Open-BFME5: map-name and preview-state update for the BfmeCfgVSH object.
+// Open-BFME5: map-name and preview-state update at an address-derived owner.
+// BfmeCfgVSH below is retained only for the independently matched helper ABI;
+// the target method's owning class is not independently witnessed.
 // cl: /DNDEBUG /MD /EHsc
 
 extern "C" __declspec(dllimport) const char *__cdecl strrchr(const char *, int);
@@ -108,7 +110,6 @@ extern MapCache *TheMapCache;
 class BfmeCfgVSH
 {
 public:
-	void bfmeSetMapVSH(const AsciiString &mapName);
 	void bfmeApplyVSH(BfmeSrcVSH *src);
 	void bfmeStep1VSH(BfmeSrcVSH *src);
 	void bfmeStep2VSH(BfmeSrcVSH *src);
@@ -122,8 +123,14 @@ public:
 	BfmeSrcVSH *m_bfme3c;
 };
 
-// ?bfmeSetMapVSH@BfmeCfgVSH@@QAEXABVAsciiString@@@Z
-void BfmeCfgVSH::bfmeSetMapVSH(const AsciiString &mapName)
+class Rva005217A0 : public BfmeCfgVSH
+{
+public:
+	void updateMapName(const AsciiString &mapName);
+};
+
+// ?updateMapName@Rva005217A0@@QAEXABVAsciiString@@@Z
+void Rva005217A0::updateMapName(const AsciiString &mapName)
 {
 	register bool state = false;
 	if (mapName.isEmpty())

@@ -1,9 +1,10 @@
-// ?bfmeResetSkyYV@@YAXXZ
+// ?dup_007A5AB0@@YAXXZ
 // partial score=0.93 date=2026-09-08
-// pins needed (CRLF):
-//   ?bfmeSetScaleYV@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x00005B0F
-//   ?bfmeSetRotationYV@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x0003F481
-//   ?bfmeSetTextureYV@WaterSkyBoxSettingsOwner@@QAEXPBVBFMERetailAsciiString@@@Z,0x000435D1
+// Identity remains opaque: callers_of.py, vtable_lookup.py, and source search
+// found no named caller, installed vtable slot, or declaration proving a
+// semantic free-function name.  Keep the address-derived identity.  The
+// owner and setter identities below are witnessed by
+// WaterRenderObjReadSkyBoxSettings.cpp and existing pins.
 class BFMERetailAsciiString
 {
 public:
@@ -17,81 +18,76 @@ private:
 	void releaseBuffer();
 };
 
-struct BfmeVec3YV
+// Vector3 and SkyBoxRenderObject::setPosition are the slot-22/layout witness
+// from WaterRenderObjReadSkyBoxSettings.cpp; this local view only exposes the
+// three fields used by this body.
+struct Vector3
 {
-	float x;
-	float y;
-	float z;
+	float X;
+	float Y;
+	float Z;
 };
 
-class BfmeSkyObjYV
+class SkyBoxRenderObject
 {
 public:
-	virtual void bfmeV0() = 0;
-	virtual void bfmeV1() = 0;
-	virtual void bfmeV2() = 0;
-	virtual void bfmeV3() = 0;
-	virtual void bfmeV4() = 0;
-	virtual void bfmeV5() = 0;
-	virtual void bfmeV6() = 0;
-	virtual void bfmeV7() = 0;
-	virtual void bfmeV8() = 0;
-	virtual void bfmeV9() = 0;
-	virtual void bfmeV10() = 0;
-	virtual void bfmeV11() = 0;
-	virtual void bfmeV12() = 0;
-	virtual void bfmeV13() = 0;
-	virtual void bfmeV14() = 0;
-	virtual void bfmeV15() = 0;
-	virtual void bfmeV16() = 0;
-	virtual void bfmeV17() = 0;
-	virtual void bfmeV18() = 0;
-	virtual void bfmeV19() = 0;
-	virtual void bfmeV20() = 0;
-	virtual void bfmeV21() = 0;
-	virtual void bfmeSetColorYV(const BfmeVec3YV *c) = 0;
+#define SKYBOX_SLOT(n) virtual void slot##n();
+	SKYBOX_SLOT(0) SKYBOX_SLOT(1) SKYBOX_SLOT(2) SKYBOX_SLOT(3)
+	SKYBOX_SLOT(4) SKYBOX_SLOT(5) SKYBOX_SLOT(6) SKYBOX_SLOT(7)
+	SKYBOX_SLOT(8) SKYBOX_SLOT(9) SKYBOX_SLOT(10) SKYBOX_SLOT(11)
+	SKYBOX_SLOT(12) SKYBOX_SLOT(13) SKYBOX_SLOT(14) SKYBOX_SLOT(15)
+	SKYBOX_SLOT(16) SKYBOX_SLOT(17) SKYBOX_SLOT(18) SKYBOX_SLOT(19)
+	SKYBOX_SLOT(20) SKYBOX_SLOT(21)
+	virtual void setPosition(const Vector3 &position);
+#undef SKYBOX_SLOT
 };
 
 class WaterSkyBoxSettingsOwner
 {
 public:
-	void bfmeSetScaleYV(const float *p);
-	void bfmeSetRotationYV(const float *p);
-	void bfmeSetTextureYV(const BFMERetailAsciiString *s);
+	void setSkyBoxScale(const float *p);
+	void setSkyBoxRotation007A15A0(const float *p);
+	void setSkyBoxTexture007A58C0(const class AsciiString *s);
 
-	unsigned char m_bfmeHeadYV[0x250];
-	BfmeSkyObjYV *m_bfme250YV;
+	unsigned char m_beforeSkyBox[0x250];
+	SkyBoxRenderObject *m_skyBox;
 };
 
 extern WaterSkyBoxSettingsOwner *TheWaterRenderObj;
 
-void bfmeResetSkyYV()
+void dup_007A5AB0()
 {
-	BfmeSkyObjYV *o = TheWaterRenderObj->m_bfme250YV;
+	SkyBoxRenderObject *o = TheWaterRenderObj->m_skyBox;
 
 	if (o != 0)
 	{
-		BfmeVec3YV zero;
+		Vector3 zero;
 
-		zero.x = 0.0f;
-		zero.y = 0.0f;
-		zero.z = 0.0f;
+		zero.X = 0.0f;
+		zero.Y = 0.0f;
+		zero.Z = 0.0f;
 
-		o->bfmeSetColorYV(&zero);
+		o->setPosition(zero);
 	}
 
 	{
 		float v = 1.0f;
 
-		TheWaterRenderObj->bfmeSetScaleYV(&v);
+		TheWaterRenderObj->setSkyBoxScale(&v);
 
 		v = 0.0f;
-		TheWaterRenderObj->bfmeSetRotationYV(&v);
+		TheWaterRenderObj->setSkyBoxRotation007A15A0(&v);
 	}
 
 	{
 		BFMERetailAsciiString name("DefaultSky");
 
-		TheWaterRenderObj->bfmeSetTextureYV(&name);
+		TheWaterRenderObj->setSkyBoxTexture007A58C0(
+			reinterpret_cast<const AsciiString *>(&name));
 	}
 }
+
+// Probe result: 189/192 bytes and 106 non-relocation bytes after EH and
+// finite shape-family searches.  The remaining source-shape residue is the
+// global load before the SEH prologue and the matching retail local-frame
+// offsets; the Vector3 zero order and setter identities are verified.

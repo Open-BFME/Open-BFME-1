@@ -279,15 +279,19 @@ void Drawable::drawHealthBar()
 		object->isKindOf((KindOfType)0x6c))
 		return;
 
+	HealthBarRegionWords region;
 	BfmeBody *body = object->m_body;
 	Real maxHealth = body->getMaxHealth();
 	if (maxHealth == BfmeZeroRange)
 		return;
 
-	Real health = body->getHealth();
-	volatile HealthBarRegionWords region = { 0, 0 };
+	BfmeBodyVtable &bodyVtable = **(BfmeBodyVtable **)body;
+	region.first = 0;
+	region.second = 0;
+	Real health = bodyVtable.getHealth(body);
 	if (health == BfmeZeroRange)
 		return;
 
-	bfmeRegionDispatch((void *)&region.first, health / maxHealth);
+	int *regionPtr = &region.first;
+	bfmeRegionDispatch(regionPtr, health / maxHealth);
 }

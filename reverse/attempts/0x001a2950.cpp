@@ -1,6 +1,7 @@
 // ?isCellEntryPoint@Bridge@@QAE_NPBURegion2D@@PAM@Z
-// partial score=0.429 date=2026-09-17
+// partial score=0.912 date=2026-09-17
 // Bridge::isCellEntryPoint, retail 0x001A2950.
+// cl: /DNDEBUG /MD /EHsc
 
 #include <math.h>
 
@@ -39,6 +40,22 @@ struct Coord3D
 			y /= len;
 			z /= len;
 		}
+	}
+};
+
+// Retail keeps the copied z members in stack slots even though the entry
+// test only consumes x/y.  The volatile member preserves those stores.
+struct Coord3DLocal
+{
+	Real x;
+	Real y;
+	volatile Real z;
+
+	Coord3DLocal(const Coord3D &that)
+	{
+		x = that.x;
+		y = that.y;
+		z = that.z;
 	}
 };
 
@@ -88,7 +105,7 @@ Bool Bridge::isCellEntryPoint(const Region2D *cell, Real *entryX)
 	bridgeVector.x *= HALF_PATHFIND_CELL_SIZE;
 	bridgeVector.y *= HALF_PATHFIND_CELL_SIZE;
 
-	Coord3D fromLeft = m_bridgeInfo.fromLeft;
+	Coord3DLocal fromLeft = m_bridgeInfo.fromLeft;
 	fromLeft.x -= bridgeVector.x;
 	fromLeft.y -= bridgeVector.y;
 	fromLeft.x += endVector.x;
@@ -100,7 +117,7 @@ Bool Bridge::isCellEntryPoint(const Region2D *cell, Real *entryX)
 	fromRight.x -= endVector.x;
 	fromRight.y -= endVector.y;
 
-	Coord3D toLeft = m_bridgeInfo.toLeft;
+	Coord3DLocal toLeft = m_bridgeInfo.toLeft;
 	toLeft.x += bridgeVector.x;
 	toLeft.y += bridgeVector.y;
 	toLeft.x += endVector.x;

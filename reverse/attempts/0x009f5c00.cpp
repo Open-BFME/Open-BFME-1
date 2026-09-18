@@ -1,5 +1,5 @@
-// ?bfmeFwd1050@BfmeP1050@@QAEPAXHHHHH@Z
-// partial score=0.15 date=2026-09-03
+// ?d_009f5c00@@YAXXZ
+// partial score=0.2 date=2026-09-17
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
@@ -58,11 +58,36 @@ struct BfmeRegion1050
 	float m_y1;
 };
 
-class BfmeFilterChain1050
+struct Rva009F56C0Element
+{
+	int m_key;
+	int m_values[5];
+};
+
+class BfmeHostER
+{
+public:
+	unsigned int bfmeIndexER(float value);
+};
+
+class BfmeHostES
+{
+public:
+	unsigned int bfmeIndexES(float value);
+};
+
+class Rva009F2AB0
 {
 public:
 	int getMask(void);
-	bool allow(void *object);
+};
+
+#pragma comment(linker, "/alternatename:?getMask@Rva009F2AB0@@QAEHXZ=?d_009f2ab0@@YAXXZ")
+
+class BfmeThingEQ
+{
+public:
+	unsigned char bfmeAskEQ(void *object);
 };
 
 struct S4SortElem24
@@ -105,9 +130,6 @@ public:
 void *bfmeFwd1050(int position, int maxDistance, int bounds,
         int distanceType, int filters);
 
-	int mapX1050(float value);
-	int mapY1050(float value);
-
 	float m_originX;
 	float m_originY;
 	unsigned char m_bfmePad08[0x10];
@@ -128,8 +150,6 @@ __forceinline int bfmeInlineCellX1050(BfmeP1050 *manager, float value)
 void *BfmeP1050::bfmeFwd1050(int position, int maxDistance, int bounds,
 	int distanceType, int filters)
 {
-	BfmeP1050 *manager = this;
-	BfmeFilterChain1050 *filterChain = (BfmeFilterChain1050 *)filters;
 	BfmeOffsetVec1050 *radius;
 	int filterMask;
 	if (distanceType != 0 && distanceType != 2 &&
@@ -137,27 +157,27 @@ void *BfmeP1050::bfmeFwd1050(int position, int maxDistance, int bounds,
 		distanceType = 0;
 	BfmeDistanceProc1050 distanceProc = bfmeDistanceProcs1050[distanceType];
 
-	if (filterChain)
-		filterMask = filterChain->getMask() * 2 + 1;
+	if (filters)
+		filterMask = ((Rva009F2AB0 *)filters)->getMask() * 2 + 1;
 	else
 		filterMask = -1;
 
-	radius = manager->m_radiusVec;
-	_STL::vector<S4SortElem24> work;
+	_STL::vector<Rva009F56C0Element> work;
+	radius = m_radiusVec;
 
 	for (int radiusCount = 17; radiusCount; --radiusCount)
 	{
 		if (filterMask & 1)
 		{
 			BfmeNode1050 *first = radius->begin();
-			int offsetCount = manager->m_radiusVec->size() / 4;
-			S4SortElem24 value;
+			int offsetCount = m_radiusVec->size() / 4;
+			Rva009F56C0Element value;
 			value.m_key = 0;
 			value.m_values[0] = (int)first;
 			value.m_values[1] = offsetCount;
 			value.m_values[2] = 0;
 			value.m_values[3] = 0;
-			value.m_values[4] = manager->m_cellCount;
+			value.m_values[4] = m_cellCount;
 			work.push_back(value);
 		}
 		++radius;
@@ -174,7 +194,7 @@ void *BfmeP1050::bfmeFwd1050(int position, int maxDistance, int bounds,
 		void *closestObject;
 		float maxDistanceSquared;
 
-		cellExtent = manager->m_cellCount * manager->m_cellSize;
+		cellExtent = m_cellCount * m_cellSize;
 		if (maxDistanceReal * cellExtent > 32766.0f)
 			maxDistanceReal = 32766.0f / cellExtent;
 
@@ -185,8 +205,8 @@ void *BfmeP1050::bfmeFwd1050(int position, int maxDistance, int bounds,
 		int maxRadiusSquared = maxRadius * maxRadius;
 
 		BfmeCoord3D1050 *source = (BfmeCoord3D1050 *)position;
-		int cellCenterX = manager->mapX1050(source->m_x);
-		int cellCenterY = manager->mapY1050(source->m_y);
+		int cellCenterX = ((BfmeHostER *)this)->bfmeIndexER(source->m_x);
+		int cellCenterY = ((BfmeHostES *)this)->bfmeIndexES(source->m_y);
 
 		BfmeRegion1050 *region = (BfmeRegion1050 *)bounds;
 		int regionX0 = 0;
@@ -195,10 +215,10 @@ void *BfmeP1050::bfmeFwd1050(int position, int maxDistance, int bounds,
 		int regionY1 = 0;
 		if (region)
 		{
-			regionX0 = manager->mapX1050(region->m_x0);
-			regionX1 = manager->mapX1050(region->m_x1);
-			regionY0 = manager->mapY1050(region->m_y0);
-			regionY1 = manager->mapY1050(region->m_y1);
+			regionX0 = ((BfmeHostER *)this)->bfmeIndexER(region->m_x0);
+			regionX1 = ((BfmeHostER *)this)->bfmeIndexER(region->m_x1);
+			regionY0 = ((BfmeHostES *)this)->bfmeIndexES(region->m_y0);
+			regionY1 = ((BfmeHostES *)this)->bfmeIndexES(region->m_y1);
 		}
 
 		S4Cmp009F4BF0 compare;
@@ -208,8 +228,9 @@ void *BfmeP1050::bfmeFwd1050(int position, int maxDistance, int bounds,
 			if (work.begin()->m_key > maxRadiusSquared)
 				break;
 
-			_STL::pop_heap(work.begin(), work.end(), compare);
-			current = *(work.end() - 1);
+			_STL::pop_heap((S4SortElem24 *)work.begin(),
+				(S4SortElem24 *)work.end(), compare);
+			current = *(S4SortElem24 *)(work.end() - 1);
 
 			BfmeNode1050 *node = (BfmeNode1050 *)current.m_values[0];
 			for (BfmeLink1050 *link = node->m_firstLink; link;
@@ -238,7 +259,7 @@ void *BfmeP1050::bfmeFwd1050(int position, int maxDistance, int bounds,
 				void *object = candidate->getObject();
 				if (!object)
 					continue;
-				if (filterChain && !filterChain->allow(object))
+				if (filters && !((BfmeThingEQ *)filters)->bfmeAskEQ(object))
 					continue;
 
 				maxDistanceSquared = distance;
@@ -248,23 +269,25 @@ void *BfmeP1050::bfmeFwd1050(int position, int maxDistance, int bounds,
 				float radiusValue = geometry->m_radius;
 
 				float xMinimumValue = candidatePosition->m_x - radiusValue;
-				int xMinimum = bfmeInlineCellX1050(manager, xMinimumValue);
+				int xMinimum = bfmeInlineCellX1050(this, xMinimumValue);
 				if (xMinimum < 0)
 					xMinimum = 0;
-				else if (manager->m_cellCount <= xMinimum)
-					xMinimum = manager->m_cellCount - 1;
+				else if (m_cellCount <= xMinimum)
+					xMinimum = m_cellCount - 1;
 
-				int xMaximum = bfmeInlineCellX1050(manager,
+				int xMaximum = bfmeInlineCellX1050(this,
 					candidatePosition->m_x + radiusValue);
 				if (xMaximum < 0)
 					xMaximum = 0;
-				else if (manager->m_cellCount <= xMaximum)
-					xMaximum = manager->m_cellCount - 1;
+				else if (m_cellCount <= xMaximum)
+					xMaximum = m_cellCount - 1;
 				int xDistance = xMinimum - cellCenterX;
 				int xDistanceMaximum = xMaximum - cellCenterX;
 
-				int yMinimum = manager->mapY1050(candidatePosition->m_y - radiusValue);
-				int yMaximum = manager->mapY1050(candidatePosition->m_y + radiusValue);
+				int yMinimum = ((BfmeHostES *)this)->bfmeIndexES(
+					candidatePosition->m_y - radiusValue);
+				int yMaximum = ((BfmeHostES *)this)->bfmeIndexES(
+					candidatePosition->m_y + radiusValue);
 				int yDistance = yMinimum - cellCenterY;
 				int yDistanceMaximum = yMaximum - cellCenterY;
 
@@ -324,7 +347,7 @@ void *BfmeP1050::bfmeFwd1050(int position, int maxDistance, int bounds,
 						if (!region || (x <= regionX1 && y <= regionY1 &&
 							x + half >= regionX0 && y + half >= regionY0))
 						{
-							S4SortElem24 child;
+							Rva009F56C0Element child;
 							child.m_key = key;
 							child.m_values[0] = (int)group;
 							child.m_values[1] = current.m_values[1] / 4;
@@ -332,7 +355,8 @@ void *BfmeP1050::bfmeFwd1050(int position, int maxDistance, int bounds,
 							child.m_values[3] = y;
 							child.m_values[4] = half;
 							work.push_back(child);
-							_STL::push_heap(work.begin(), work.end(), compare);
+							_STL::push_heap((S4SortElem24 *)work.begin(),
+								(S4SortElem24 *)work.end(), compare);
 						}
 					}
 				}

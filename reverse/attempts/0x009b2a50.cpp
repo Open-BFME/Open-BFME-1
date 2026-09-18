@@ -1,5 +1,7 @@
-// ?Rva009B2A50Vp6Filter@@YAXPAURva009B2A50Context@@PAX1@Z
-// partial score=0.22 date=2026-09-03
+// ?dup_009b2a50@@YAXPAURva009B2A50Context@@PAX1@Z
+// partial score=0.20 date=2026-09-17
+// Opaque address-derived identity: no named caller, vtable slot, or Zero Hour twin.
+// The ledger/dump claims 1832 bytes, but retail is contiguous through add esp,38; ret at 1835.
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 struct Rva009B2A50Context
@@ -24,11 +26,11 @@ typedef void (__cdecl *Rva009B2A50FilterProc)(
 	void *, void *, void *, int, int, int *);
 typedef void (__cdecl *Rva009B2A50CopyProc)(void *, void *, int);
 
-extern Rva009B2A50FilterProc g_rva009b2a50Filter;
-extern Rva009B2A50CopyProc g_rva009b2a50Copy;
-extern Rva009B2A50FilterProc g_rva009b2a50Bilinear;
+#define g_rva009b2a50Filter (*(Rva009B2A50FilterProc *)0x01356ec0)
+#define g_rva009b2a50Copy (*(Rva009B2A50CopyProc *)0x01356b44)
+#define g_rva009b2a50Bilinear (*(Rva009B2A50FilterProc *)0x01356ea0)
 
-void __cdecl Rva009B2A50Vp6Filter(
+void __cdecl dup_009b2a50(
 	Rva009B2A50Context *state, void *sourceArgument, void *destinationArgument)
 {
 	int mode = state->m_mode;
@@ -38,8 +40,7 @@ void __cdecl Rva009B2A50Vp6Filter(
 	int largeThreshold;
 	int copyThreshold;
 	int *filterTable;
-
-	if (state->m_mode >= 5) {
+	if (mode >= 5) {
 		smallThreshold = 0x180;
 		mediumThreshold = 0x900;
 		largeThreshold = 0xb40;
@@ -50,24 +51,16 @@ void __cdecl Rva009B2A50Vp6Filter(
 		largeThreshold = 0x16800;
 		copyThreshold = 0x1e000;
 	}
+	if (mode >= 5) {
+		filterTable = (int *)0x012d8058;
+	} else if (mode >= 2) {
+		filterTable = (int *)0x012d7f58;
+	} else {
+		filterTable = (int *)0x01356940;
+	}
 
-	if (state->m_mode >= 5)
-		goto profile5;
-	if (state->m_mode >= 2)
-		goto profile2;
-	filterTable = (int *)0x01356940;
-	goto profileDone;
-profile2:
-	filterTable = (int *)0x012d7f58;
-	goto profileDone;
-profile5:
-	filterTable = (int *)0x012d8058;
-profileDone:
-
-	unsigned char *source0 = (unsigned char *)sourceArgument;
-	unsigned char *destination0 = (unsigned char *)destinationArgument;
-	source0 += state->m_plane0;
-	destination0 += state->m_plane0;
+	unsigned char *source0 = (unsigned char *)sourceArgument + state->m_plane0;
+	unsigned char *destination0 = (unsigned char *)destinationArgument + state->m_plane0;
 	unsigned int inner = state->m_inner;
 	unsigned int outer = state->m_outer >> 1;
 	unsigned int width = state->m_width;
@@ -76,10 +69,10 @@ profileDone:
 	unsigned int innerIndex = 0;
 	unsigned int outerIndex = 0;
 
-	if (outer != 0) {
+	if (outer > 0) {
 		do {
 			innerIndex = 0;
-			if (inner != 0) {
+			if (inner > 0) {
 				unsigned int upOffset = (index - inner) << 2;
 				unsigned int downOffset = (index + inner) << 2;
 				int delta = (int)(destination0 - source0);
@@ -91,7 +84,7 @@ profileDone:
 						g_rva009b2a50Filter(state, source0, source0 + delta,
 							stride, alpha, filterTable);
 
-						if (downOffset > 0) {
+						if ((unsigned int)destinationArgument > 0) {
 							if (state->m_metric[index - 1] > copyThreshold)
 								goto tripleFilter0;
 						}
@@ -113,7 +106,7 @@ profileDone:
 							g_rva009b2a50Filter(state, source0, source0 + delta,
 								stride, alpha, filterTable);
 							g_rva009b2a50Filter(state, source0,
-								source0 + (unsigned int)state,
+								source0 + upOffset,
 								stride, alpha, filterTable);
 					filtered0:;
 					} else if (metric > mediumThreshold) {
@@ -141,15 +134,13 @@ profileDone:
 		} while (outerIndex < outer);
 	}
 
-	source0 = (unsigned char *)sourceArgument;
-	destination0 = (unsigned char *)destinationArgument;
-	source0 += state->m_plane0 + state->m_width;
-	destination0 += state->m_plane0 + state->m_width;
+	source0 = (unsigned char *)sourceArgument + state->m_plane0 + state->m_width;
+	destination0 = (unsigned char *)destinationArgument + state->m_plane0 + state->m_width;
 	outerIndex = 0;
-	if (outer != 0) {
+	if (outer > 0) {
 		do {
 			innerIndex = 0;
-			if (inner != 0) {
+			if (inner > 0) {
 				unsigned int upOffset = (index - inner) << 2;
 				unsigned int downOffset = (index + inner) << 2;
 				int delta = (int)(destination0 - source0);
@@ -161,7 +152,7 @@ profileDone:
 						g_rva009b2a50Filter(state, source0, source0 + delta,
 							stride, alpha, filterTable);
 
-						if (upOffset > 0) {
+						if ((unsigned int)destinationArgument > 0) {
 							if (state->m_metric[index - 1] > copyThreshold)
 								goto tripleFilter0Reverse;
 						}
@@ -183,7 +174,7 @@ profileDone:
 						g_rva009b2a50Filter(state, source0, source0 + delta,
 							stride, alpha, filterTable);
 						g_rva009b2a50Filter(state, source0,
-							source0 + (unsigned int)state,
+							source0 + downOffset,
 							stride, alpha, filterTable);
 					filtered0Reverse:;
 					} else if (metric > mediumThreshold) {
@@ -217,8 +208,8 @@ profileDone:
 	stride >>= 2;
 	unsigned int outer1 = outer;
 
-	while (outer1 != 0) {
-		if (inner != 0) {
+	while (outer1 > 0) {
+		if (inner > 0) {
 			unsigned int count = inner;
 			int delta = (int)(destination1 - source1);
 			do {
@@ -259,8 +250,8 @@ profileDone:
 	unsigned int outer2 = outer;
 	unsigned int count2 = inner;
 
-	while (outer2 != 0) {
-		if (inner != 0) {
+	while (outer2 > 0) {
+		if (inner > 0) {
 			count2 = inner;
 			int delta = (int)(destination2 - source2);
 			do {

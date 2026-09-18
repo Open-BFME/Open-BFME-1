@@ -9,7 +9,6 @@ template <typename T>
 class StringBase
 {
 	friend class AsciiString;
-	friend class BfmeEmotionName;
 
 public:
 	void set(const StringBase<T> &source);
@@ -20,41 +19,40 @@ private:
 	void *m_data;
 };
 
-class AsciiString
+class BFMERetailAsciiString
 {
 public:
-	AsciiString(const char *text)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(text);
-	}
-	~AsciiString()
-	{
-		((StringBase<char> *)this)->StringBase<char>::releaseBuffer();
-	}
+	BFMERetailAsciiString(const char *text);
+	~BFMERetailAsciiString() { releaseBuffer(); }
+	void releaseBuffer();
 
 private:
 	void *m_data;
 };
 
-class BfmeStringLiteralBase
-{
-	friend class BfmeEmotionName;
-
-private:
-	BfmeStringLiteralBase(const char *text);
-};
-
-class BfmeEmotionName
+class UnicodeString
 {
 public:
-	BfmeEmotionName(const char *text)
-	{
-		((BfmeStringLiteralBase *)this)->BfmeStringLiteralBase::BfmeStringLiteralBase(text);
-	}
-	~BfmeEmotionName();
+	void set(const UnicodeString &source);
 
 private:
-	char *m_data;
+	void *m_data;
+};
+
+class AsciiString : private BFMERetailAsciiString
+{
+public:
+	AsciiString(const char *text) : BFMERetailAsciiString(text) {}
+	~AsciiString()
+	{
+		releaseBuffer();
+	}
+};
+
+class BfmeEmotionName : private BFMERetailAsciiString
+{
+public:
+	BfmeEmotionName(const char *text) : BFMERetailAsciiString(text) {}
 };
 
 class INI
@@ -132,7 +130,18 @@ public:
 	void bfmeGoDCE(BfmeOtherDCE *other);
 };
 
-typedef BfmeThingVKC EmotionTrackerUpdateEntry;
+class EmotionTrackerUpdateEntry
+{
+public:
+	~EmotionTrackerUpdateEntry();
+
+private:
+	BFMERetailAsciiString m_first;
+	unsigned char m_pad04[0x3c - 0x04];
+	BFMERetailAsciiString m_second;
+	unsigned char m_pad40[0xf4 - 0x40];
+	BFMERetailAsciiString m_third;
+};
 
 class EmotionTrackerUpdateModuleData
 {
@@ -159,10 +168,11 @@ void Rva00290520(INI *ini, void *, void *store, const void *)
 	if (token == 0)
 		throw INIException(3, (const char *)0x010BE2F8);
 
-	EmotionNugget *nugget = 0;
+	EmotionNugget *nugget;
 	{
-		BfmeEmotionName name(token);
-		nugget = TheEmotionSystem->findNugget(name);
+		BFMERetailAsciiString name(token);
+		nugget = TheEmotionSystem->findNugget(
+			*(const BfmeEmotionName *)&name);
 	}
 
 	if (nugget == 0)
@@ -170,10 +180,10 @@ void Rva00290520(INI *ini, void *, void *store, const void *)
 
 	EmotionTrackerUpdateEntry *entry =
 		(EmotionTrackerUpdateEntry *)new EmotionNugget;
-	entry->bfmeCopyVKC(*(const BfmeThingVKC *)nugget);
+	((BfmeThingVKC *)entry)->bfmeCopyVKC(*(const BfmeThingVKC *)nugget);
 	{
-		BfmeEmotionName name(token);
-		((StringBase<char> *)entry)->set(*(const StringBase<char> *)&name);
+		BFMERetailAsciiString name(token);
+		((UnicodeString *)entry)->set(*(const UnicodeString *)&name);
 	}
 
 	if (hasAdditionalData)

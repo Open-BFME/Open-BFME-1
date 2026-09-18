@@ -1,5 +1,5 @@
 // ??0BfmeAptScreenOnlineCustomMatch@@QAE@H@Z
-// partial score=0.31 date=2026-09-14
+// partial score=0.32 date=2026-09-17
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // ??0BfmeAptScreenOnlineCustomMatch@@QAE@H@Z
@@ -130,6 +130,12 @@ class Rva00539A60FunctorHolder
 {
 public:
 	Rva00539A60FunctorHolder( FunctorBinding binding );
+	Rva00539A60FunctorHolder( const Rva00539A60FunctorHolder &other ) throw()
+		: m_ptr( other.m_ptr )
+	{
+		if( m_ptr ) ++((unsigned int *)m_ptr)[1];
+	}
+	~Rva00539A60FunctorHolder();
 
 	void *m_ptr;
 };
@@ -138,6 +144,12 @@ class Rva00539AD0FunctorHolder
 {
 public:
 	Rva00539AD0FunctorHolder( FunctorBinding binding );
+	Rva00539AD0FunctorHolder( const Rva00539AD0FunctorHolder &other ) throw()
+		: m_ptr( other.m_ptr )
+	{
+		if( m_ptr ) ++((unsigned int *)m_ptr)[1];
+	}
+	~Rva00539AD0FunctorHolder();
 
 	void *m_ptr;
 };
@@ -261,7 +273,6 @@ public:
 union CustomMatchMethodBits
 {
 	FunctorMethod member;
-	void ( *code )();
 	unsigned int words[ 2 ];
 };
 
@@ -305,7 +316,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 			( CustomMatchCallbackRegistry * )this;
 		CustomMatchMethodBits callback;
 
-		callback.code = j_00025671;
+		callback.words[0] = (unsigned int)j_00025671;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::CancelPopUpJoin" );
@@ -313,7 +324,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_0003923e;
+		callback.words[0] = (unsigned int)j_0003923e;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::CreateGame" );
@@ -321,7 +332,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_0000feb6;
+		callback.words[0] = (unsigned int)j_0000feb6;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::JoinGame" );
@@ -329,7 +340,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_0002efbe;
+		callback.words[0] = (unsigned int)j_0002efbe;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::AcceptJoinGame" );
@@ -337,7 +348,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_0002edb6;
+		callback.words[0] = (unsigned int)j_0002edb6;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::ChatEnter" );
@@ -345,7 +356,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_0000e011;
+		callback.words[0] = (unsigned int)j_0000e011;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::PlayGame" );
@@ -353,7 +364,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_000469ca;
+		callback.words[0] = (unsigned int)j_000469ca;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::Cancel" );
@@ -361,7 +372,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_00040d9a;
+		callback.words[0] = (unsigned int)j_00040d9a;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::Refresh" );
@@ -369,7 +380,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_00049cd3;
+		callback.words[0] = (unsigned int)j_00049cd3;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::OnOpenCreateDialog" );
@@ -377,7 +388,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_000431f3;
+		callback.words[0] = (unsigned int)j_000431f3;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::CancelPopUpCreate" );
@@ -385,7 +396,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_00034e23;
+		callback.words[0] = (unsigned int)j_00034e23;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::CancelPopUpHost" );
@@ -393,7 +404,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_000095e8;
+		callback.words[0] = (unsigned int)j_000095e8;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::SortName" );
@@ -401,7 +412,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_00044f9e;
+		callback.words[0] = (unsigned int)j_00044f9e;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::SortGameType" );
@@ -409,7 +420,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_0001aaeb;
+		callback.words[0] = (unsigned int)j_0001aaeb;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::SortNumPlayers" );
@@ -417,7 +428,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_0000d3d2;
+		callback.words[0] = (unsigned int)j_0000d3d2;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnline::CustomMatch::SortPing" );
@@ -425,7 +436,7 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 				Rva00539A60FunctorHolder( FunctorBinding(
 					callback.member, ( FunctorTarget * )this ) ) );
 		}
-		callback.code = j_0001f9c9;
+		callback.words[0] = (unsigned int)j_0001f9c9;
 		callback.words[ 1 ] = 0;
 		{
 			AsciiString name( "AptOnlineCustomMatch::InitGadgets" );
@@ -443,3 +454,5 @@ BfmeAptScreenOnlineCustomMatch::BfmeAptScreenOnlineCustomMatch( int a )
 	if( TheGameSpyGame )
 		TheGameSpyGame->m_flag43C = false;
 }
+
+

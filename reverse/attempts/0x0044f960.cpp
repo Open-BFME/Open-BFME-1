@@ -36,17 +36,11 @@ public:
 	Int winSetPosition(Int x, Int y);
 };
 
-struct MapExtentFields
-{
-	Coord3D lo;
-	Coord3D hi;
-};
-
 class MapMetaData
 {
 	public:
 	char m_beforeExtent[8];
-	MapExtentFields m_extent;
+	Region3D m_extent;
 };
 
 void findDrawPositions(Int startX, Int startY, Int width, Int height,
@@ -72,7 +66,7 @@ void positionStartSpotControls(GameWindow *win, GameWindow *mapWindow,
 	{
 		ICoord2D lr;
 		findDrawPositions(0, 0, winMapSize.x, winMapSize.y,
-			*(Region3D *)&mmd->m_extent, ulAddress, &lr);
+			mmd->m_extent, ulAddress, &lr);
 		smallWidth = lr.x - ul[0];
 		smallHeight = lr.y - ul[1];
 	}

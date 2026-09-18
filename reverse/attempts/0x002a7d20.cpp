@@ -1,81 +1,103 @@
-// ?bfmeGetXS@BfmeHostXS@@QAEHXZ
-// partial score=0.94 date=2026-09-08
-// pins needed (CRLF):
-//   ?bfmeFindDrawXS@Rva00367E30Logic@@QAEPAVDrawable@@PAX@Z,0x0001F253
-//   ?bfmeChainXS@BfmeOverXS@@QAEPAV1@XZ,0x00048C61
-class BfmeOverXS
+// ?getConditionalPreparationFrames@Rva002A7D20@@QBEIXZ
+// partial score=0.94 date=2026-09-17
+// ?getConditionalPreparationFrames@Rva002A7D20@@QBEIXZ
+// partial score=0.83 date=2026-09-04
+// cl: /DNDEBUG /MD
+
+enum SpecialPowerType { SPECIAL_POWER_TYPE_27 = 0x27 };
+enum KindOfType { KINDOF_6 = 6, KINDOF_62 = 0x62 };
+typedef unsigned int UnsignedInt;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
+class Overridable
 {
 public:
-	BfmeOverXS *bfmeChainXS();
-
-	unsigned char m_bfmeHeadXS[4];
-	BfmeOverXS *m_bfme04XS;
-	unsigned char m_bfmeMidXS[0xc];
-	int m_bfme14XS;
+	virtual ~Overridable();
+	Overridable *friend_getFinalOverride( void );
+	Overridable *m_nextOverride;
 };
 
-class Drawable
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/SpecialPower.h
+class SpecialPowerTemplate : public Overridable
 {
 public:
-	bool isKindOf(int kind) const;
+	unsigned char m_unmodelled_08[ 0x14 - 8 ];
+	SpecialPowerType m_specialPowerType;
 };
 
-struct Rva00367E30Logic
-{
-	Drawable *bfmeFindDrawXS(void *id);
-};
-
-extern Rva00367E30Logic *TheBfmeGameLogic;
-
-class BfmeSubXS
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
+class Thing
 {
 public:
-	unsigned char m_bfmeHeadXS[0x1d8];
-	BfmeOverXS *m_bfme1D8XS;
-	unsigned char m_bfmeMidXS[0x30];
-	int m_bfme20CXS;
+	bool isKindOf( KindOfType t ) const;
 };
 
-class BfmeHostXS
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class Object : public Thing
+{
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
+class GameLogic
 {
 public:
-	int bfmeGetXS();
-
-	unsigned char m_bfmeHeadXS[4];
-	BfmeSubXS *m_bfme04XS;
-	unsigned char m_bfmeMidXS[0xa4];
-	void *m_bfmeACXS;
+	Object *findObjectByID( int id );
 };
 
-int BfmeHostXS::bfmeGetXS()
-{
-	BfmeSubXS *sub = m_bfme04XS;
-	BfmeOverXS *base = sub->m_bfme1D8XS;
-	Drawable *obj = TheBfmeGameLogic->bfmeFindDrawXS(m_bfmeACXS);
-	BfmeOverXS *q = base->m_bfme04XS;
+extern GameLogic *TheGameLogic;
 
-	if (q != 0)
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
+class SpecialAbilityUpdateModuleData
+{
+public:
+	unsigned char m_unmodelled_000[ 0x1D8 ];
+	const SpecialPowerTemplate *m_specialPowerTemplate;
+	unsigned char m_unmodelled_1DC[ 0x20C - 0x1DC ];
+	UnsignedInt m_preparationFrames;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
+class Rva002A7D20
+{
+public:
+	UnsignedInt getConditionalPreparationFrames() const;
+
+private:
+	unsigned int m_unmodelled_00;
+	const SpecialAbilityUpdateModuleData *m_moduleData;
+	unsigned char m_unmodelled_08[ 0xAC - 8 ];
+	int m_targetID;
+};
+
+// ?getConditionalPreparationFrames@Rva002A7D20@@QBEIXZ
+UnsignedInt Rva002A7D20::getConditionalPreparationFrames() const
+{
+	int id = m_targetID;
+	const SpecialAbilityUpdateModuleData *md = m_moduleData;
+	const SpecialPowerTemplate *tmpl = md->m_specialPowerTemplate;
+	Object *target = TheGameLogic->findObjectByID( id );
+
+	Overridable *o = tmpl->m_nextOverride;
+	if( o )
 	{
-		if (q->m_bfme04XS != 0)
-			q = q->m_bfme04XS->bfmeChainXS();
-
-		base = q;
+		if( o->m_nextOverride )
+			o = o->m_nextOverride->friend_getFinalOverride();
+		tmpl = (const SpecialPowerTemplate *)o;
 	}
 
+	goto test_special;
 
-	if (base->m_bfme14XS != 0x27)
-		return sub->m_bfme20CXS;
+return_max:
+	return md->m_preparationFrames;
 
-	if (obj != 0)
-	{
-		if (obj->isKindOf(6))
-			return sub->m_bfme20CXS;
-
-		if (obj->isKindOf(0x62))
-			return sub->m_bfme20CXS;
-
-		return 0;
-	}
-
-	return sub->m_bfme20CXS;
+test_special:
+	if( tmpl->m_specialPowerType != SPECIAL_POWER_TYPE_27 )
+		goto return_max;
+	if( !target )
+		goto return_max;
+	if( target->isKindOf( KINDOF_6 ) )
+		goto return_max;
+	if( target->isKindOf( KINDOF_62 ) )
+		goto return_max;
+	return 0;
 }

@@ -1,6 +1,6 @@
 // ?bfmeReplaceAliasedRange@Rva008312E0String@@QAEXPAD0000@Z
-// partial score=0.55 date=2026-09-17
-// cl: /Od /DNDEBUG /MD /FAsc /Fabuild\\008312e0.cod
+// partial score=0.70 date=2026-09-17
+// cl: /Od /DNDEBUG /MD
 // BFME retail 0x008312E0, 511 bytes.
 
 #include <string.h>
@@ -37,9 +37,9 @@ union Rva008312E0Inside
 void Rva008312E0String::bfmeReplaceAliasedRange(char *first, char *last,
 	char *sourceFirst, char *sourceLast, char *tag)
 {
-	char framePad[0x58];
-	int sourceLength;
+	char framePad[ 0x58 ];
 	int destinationLength;
+	int sourceLength;
 	char *sourcePosition = sourceFirst;
 	Rva008312E0Inside sourceInside;
 	if (sourcePosition >= m_start && sourcePosition < m_finish)
@@ -73,16 +73,12 @@ void Rva008312E0String::bfmeReplaceAliasedRange(char *first, char *last,
 			}
 			else
 			{
-				char *destinationStart = m_start;
-				int destinationOffset = first - destinationStart;
-				char *sourceStart = m_start;
-				int sourceOffset = sourceFirst - sourceStart;
+				int destinationOffset = first - m_start;
+				int sourceOffset = sourceFirst - m_start;
 				char insertTag[ 2 ];
 				insertTag[ 1 ] = 0;
 				insertRange(last, sourceMiddle, sourceLast, insertTag);
-				char *newStart = m_start;
-				char *newBase = m_start;
-				char *newDestination = newBase + destinationOffset;
+				char *newDestination = m_start + destinationOffset;
 				char *result;
 				if (sourceLength == 0)
 					result = newDestination;

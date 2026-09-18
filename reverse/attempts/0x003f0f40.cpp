@@ -1,10 +1,15 @@
 // ?checkForAdjust@Pathfinder@@QAEEPAVObject@@ABVLocomotorSet@@EHHHHEPAUCoord3D@@PBU4@MPAPAVPathfindCell@@H@Z
-// partial score=0.65 date=2026-09-09
+// partial score=0.66 date=2026-09-17
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 //
 // BFME's 13-argument Pathfinder::checkForAdjust, retail 0x003F0F40.
-// The additional arguments are used by the BFME tighten-path callback; this is
-// a separate overload from the older eight-argument adjust cascade.
+// The extra arguments are used by the BFME tighten-path callback; this is
+// separate from the older eight-argument adjust cascade.
+//
+// Identity evidence: TightenPathCallbackInfo::cellCallback names this exact
+// 13-argument method through its ILT call.  Its retail body has the debug
+// strings below, the Pathfinder logical-extent accesses, and the established
+// BFME callee set from tools/callees.py 0x003F0F40 1496.
 
 #include <math.h>
 #pragma intrinsic(fabs)
@@ -13,11 +18,16 @@ typedef int Int;
 typedef unsigned char Bool;
 typedef float Real;
 
-extern unsigned char g_012F0239;
-extern void *g_012ED4FC;
+class CRCParameterCheck;
+
+extern bool Glo012F0239;
+extern CRCParameterCheck *TheCRCParameterCheck;
 extern const Real BfmeZeroRange;
+extern char Rva006A16B0Empty[];
 extern "C" void __cdecl bfmeRetailCritterDesyncLog(
-	void *context, const char *format, ...);
+	CRCParameterCheck *context, const char *format, ...);
+
+#define Rva0107FAA8Scale50 (*(const Real *)0x0107FAA8)
 
 struct Coord3D
 {
@@ -31,7 +41,7 @@ public:
 
 	__forceinline const char *str(void) const
 	{
-		return m_data != 0 ? m_data + 8 : "";
+		return m_data != 0 ? m_data + 8 : Rva006A16B0Empty;
 	}
 };
 
@@ -106,9 +116,9 @@ private:
 class Pathfinder
 {
 public:
-	Bool checkForAdjust(Object *obj, const LocomotorSet &set, Bool human,
-		Int x, Int y, Int layer, Int radius, Bool center, Coord3D *dest,
-		const Coord3D *groupDest, Real originalZ,
+	Bool checkForAdjust(Object *obj, const LocomotorSet &set,
+		Bool human, Int x, Int y, Int layer, Int radius, Bool center,
+		Coord3D *dest, const Coord3D *groupDest, Real originalZ,
 		PathfindCell **fromSlot, Int onlyIfLayer);
 
 	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
@@ -125,88 +135,88 @@ protected:
 	IRegion2D m_logicalExtent;
 };
 
-// ?checkForAdjust@Pathfinder@@QAEEPAVObject@@ABVLocomotorSet@@EHHHHEPAUCoord3D@@PBU4@MPAPAVPathfindCell@@H@Z
 Bool Pathfinder::checkForAdjust(Object *obj, const LocomotorSet &set,
 	Bool human, Int x, Int y, Int layer, Int radius, Bool center,
 	Coord3D *dest, const Coord3D *groupDest, Real originalZ,
 	PathfindCell **fromSlot, Int onlyIfLayer)
 {
 	Coord3D adjustDest;
-	if (g_012F0239 && g_012ED4FC)
+	Object *debugObject = obj;
+	Int cellX = x;
+	if (Glo012F0239 && TheCRCParameterCheck)
 	{
-		const Overridable *templateObject = obj->m_template;
+		const Overridable *templateObject = debugObject->m_template;
 		if (templateObject != 0 && templateObject->m_nextOverride != 0)
 			templateObject = templateObject->m_nextOverride->getFinalOverride();
 		const char *objectName = templateObject->m_name.str();
 		Coord3D groupValue = { -1.0f, -1.0f, -1.0f };
 		if (groupDest != 0)
-		{
 			groupValue = *groupDest;
-		}
-		bfmeRetailCritterDesyncLog(g_012ED4FC,
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 			"\t\t  Pathfinder::CheckForAdjust called with: obj=%s(%d), loco=%s, isHuman=%s, cell=%d,%d, layer=%d, iRadius=%d, center=%s, groupDest=%g,%g,%g, originalZ=%g, onlyIfLayer=%d",
-			objectName, obj->m_id, set.m_name.str(), human ? "TRUE" : "FALSE",
-			x, y, layer, radius, center ? "TRUE" : "FALSE",
-			groupValue.x, groupValue.y, groupValue.z,
-			originalZ, onlyIfLayer);
+			objectName, debugObject->m_id, set.m_name.str(),
+			human ? "TRUE" : "FALSE", cellX, y, layer, radius,
+			center ? "TRUE" : "FALSE", groupValue.x, groupValue.y,
+			groupValue.z, originalZ, onlyIfLayer);
 	}
 
-	PathfindCell *cell = getCell((PathfindLayerEnum)layer, x, y);
+	PathfindCell *cell = getCell((PathfindLayerEnum)layer, cellX, y);
 	if (cell == 0)
 	{
-		if (g_012F0239 && g_012ED4FC)
-			bfmeRetailCritterDesyncLog(g_012ED4FC,
+		if (Glo012F0239 && TheCRCParameterCheck)
+			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 				"        cellP is NULL, return FALSE.");
 		return 0;
 	}
 	if (cell->getType() == 2)
 	{
-		if (g_012F0239 && g_012ED4FC)
-			bfmeRetailCritterDesyncLog(g_012ED4FC,
+		if (Glo012F0239 && TheCRCParameterCheck)
+			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 				"        cellP is CLIFF, return FALSE.");
 		return 0;
 	}
 
-	if (human && g_012F0239 && g_012ED4FC)
-		bfmeRetailCritterDesyncLog(g_012ED4FC, "        isHuman is TRUE");
-	if (human && (x < m_logicalExtent.lo.x || y < m_logicalExtent.lo.y ||
-		x > m_logicalExtent.hi.x || y > m_logicalExtent.hi.y))
+	if (human && Glo012F0239 && TheCRCParameterCheck)
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+			"        isHuman is TRUE");
+	if (human && (cellX < m_logicalExtent.lo.x || y < m_logicalExtent.lo.y ||
+		cellX > m_logicalExtent.hi.x || y > m_logicalExtent.hi.y))
 	{
-		if (g_012F0239 && g_012ED4FC)
-			bfmeRetailCritterDesyncLog(g_012ED4FC,
+		if (Glo012F0239 && TheCRCParameterCheck)
+			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 				"        cell %d,%d is outside m_logicalExtent lo:%d,%d hi:%d,%d",
-				x, y, m_logicalExtent.lo.x, m_logicalExtent.lo.y,
+			cellX, y, m_logicalExtent.lo.x, m_logicalExtent.lo.y,
 				m_logicalExtent.hi.x, m_logicalExtent.hi.y);
 		return 0;
 	}
 
-	if (!bfmeInnerE6E90((void *)obj, (void *)x, (void *)y, (void *)layer,
+	if (!bfmeInnerE6E90((void *)obj, (void *)cellX, (void *)y, (void *)layer,
 		(void *)radius, (void *)center, (void **)fromSlot, 0))
 	{
-		if (g_012F0239 && g_012ED4FC)
-			bfmeRetailCritterDesyncLog(g_012ED4FC,
+		if (Glo012F0239 && TheCRCParameterCheck)
+			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 				"        CheckDestination failed, return false");
 		return 0;
 	}
-	if (g_012F0239 && g_012ED4FC)
-		bfmeRetailCritterDesyncLog(g_012ED4FC,
+	if (Glo012F0239 && TheCRCParameterCheck)
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 			"        CheckDestination passed");
 
-	adjustCoordToCell(x, y, center, adjustDest,
+	adjustCoordToCell(cellX, y, center, adjustDest,
 		(PathfindLayerEnum)cell->getLayer());
 
 	if (!obj->isKindOf(KINDOF_AIRCRAFT))
 	{
-		if (g_012F0239 && g_012ED4FC)
-			bfmeRetailCritterDesyncLog(g_012ED4FC,
+		if (Glo012F0239 && TheCRCParameterCheck)
+			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 				"        object is not kindof aircraft");
 		if (onlyIfLayer)
 		{
-			if (g_012F0239 && g_012ED4FC)
-				bfmeRetailCritterDesyncLog(g_012ED4FC,
+			if (Glo012F0239 && TheCRCParameterCheck)
+				bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 					"        onlyIfLayer=%d", onlyIfLayer);
-			Int x0 = x - radius;
-			Int x1 = x + radius + (center ? 1 : 0);
+			Int x0 = cellX - radius;
+			Int x1 = cellX + radius + (center ? 1 : 0);
 			Int y0 = y - radius;
 			Int y1 = y + radius + (center ? 1 : 0);
 			for (Int ix = x0; ix < x1; ++ix)
@@ -217,16 +227,16 @@ Bool Pathfinder::checkForAdjust(Object *obj, const LocomotorSet &set,
 						(PathfindLayerEnum)onlyIfLayer, ix, iy);
 					if (near == 0)
 					{
-						if (g_012F0239 && g_012ED4FC)
-							bfmeRetailCritterDesyncLog(g_012ED4FC,
+						if (Glo012F0239 && TheCRCParameterCheck)
+							bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 								"        ground unit failed iteration: i=%d, j=%d, cell=NULL, onlyIfLayer",
 								ix, iy, onlyIfLayer);
 						return 0;
 					}
 					if (near->getLayer() != onlyIfLayer)
 					{
-						if (g_012F0239 && g_012ED4FC)
-							bfmeRetailCritterDesyncLog(g_012ED4FC,
+						if (Glo012F0239 && TheCRCParameterCheck)
+							bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 								"        ground unit failed iteration: i=%d, j=%d, cell=VALID, cellLayer=%d, onlyIfLayer",
 								ix, iy, near->getLayer(), onlyIfLayer);
 						return 0;
@@ -234,57 +244,55 @@ Bool Pathfinder::checkForAdjust(Object *obj, const LocomotorSet &set,
 				}
 			}
 
-			if (originalZ > BfmeZeroRange)
+			if (originalZ > BfmeZeroRange &&
+				fabs(adjustDest.z - originalZ) > Rva0107FAA8Scale50)
 			{
-				if (fabs(adjustDest.z - originalZ) > 50.0f)
-				{
-					if (g_012F0239 && g_012ED4FC)
-						bfmeRetailCritterDesyncLog(g_012ED4FC,
-							"        MinasTirith check failed, return FALSE: originalZ=%g, adjustDest.z=%g",
-							originalZ, adjustDest.z);
-					return 0;
-				}
+				if (Glo012F0239 && TheCRCParameterCheck)
+					bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+						"        MinasTirith check failed, return FALSE: originalZ=%g, adjustDest.z=%g",
+						originalZ, adjustDest.z);
+				return 0;
 			}
 		}
 
 		const Coord3D *position = &obj->m_position;
 		Bool adjustedPathExists = (Bool)slowDoesPathExist(
 			obj, position, &adjustDest, 0);
-		if (g_012F0239 && g_012ED4FC)
-			bfmeRetailCritterDesyncLog(g_012ED4FC,
-				"        adjustedPathExists=%s",
-				adjustedPathExists ? "TRUE" : "FALSE");
+		if (Glo012F0239 && TheCRCParameterCheck)
+			bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
+					"        adjustedPathExists=%s",
+					adjustedPathExists ? "TRUE" : "FALSE");
 		Bool pathExists = (Bool)slowDoesPathExist(obj, position, dest, 0);
 		if (pathExists)
 		{
-			if (g_012F0239 && g_012ED4FC)
-				bfmeRetailCritterDesyncLog(g_012ED4FC,
+			if (Glo012F0239 && TheCRCParameterCheck)
+				bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 					"        QuickDoesPathExist1 succeeds");
 		}
 		else
 		{
-			if (g_012F0239 && g_012ED4FC)
-				bfmeRetailCritterDesyncLog(g_012ED4FC,
+			if (Glo012F0239 && TheCRCParameterCheck)
+				bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 					"        QuickDoesPathExist1 fails. Try adjusted destination");
 			if (slowDoesPathExist(obj, dest, &adjustDest, 0))
 			{
 				adjustedPathExists = 1;
-				if (g_012F0239 && g_012ED4FC)
-					bfmeRetailCritterDesyncLog(g_012ED4FC,
+				if (Glo012F0239 && TheCRCParameterCheck)
+					bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 						"        QuickDoesPathExist2 succeeds. adjustedPathExists");
 			}
 		}
 		if (!adjustedPathExists)
 		{
-			if (g_012F0239 && g_012ED4FC)
-				bfmeRetailCritterDesyncLog(g_012ED4FC,
+			if (Glo012F0239 && TheCRCParameterCheck)
+				bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 					"        returning false because adjustedPathExists is false");
 			return 0;
 		}
 	}
 
-	if (g_012F0239 && g_012ED4FC)
-		bfmeRetailCritterDesyncLog(g_012ED4FC,
+	if (Glo012F0239 && TheCRCParameterCheck)
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 			"        dest calculated to be %g,%g,%g and returning true",
 			adjustDest.x, adjustDest.y, adjustDest.z);
 	*dest = adjustDest;

@@ -1,5 +1,5 @@
 // ??0W3DScriptedModelDraw@@QAE@PAVThing@@PBVModuleData@@@Z
-// partial score=0.38 date=2026-09-10
+// partial score=0.41 date=2026-09-17
 // cl: /DNDEBUG /MD /EHsc /O2 /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC
 // stlport
 // BFME W3DScriptedModelDraw constructor, retail 0x00773360 (1185B).
@@ -17,26 +17,19 @@
 #include <vector>
 #include <stddef.h>
 
+
 typedef bool Bool;
 typedef int ParticleSystemID;
 
 class Thing;
 class ModuleData;
 class Matrix3D;
-class RetailLayoutString
-{
-public:
-	RetailLayoutString();
-	~RetailLayoutString();
-	void set(const char *, int);
-	void releaseBuffer();
-
-	char *m_data;
-};
-
 class AsciiString
 {
 public:
+	AsciiString() : m_data(0) {}
+	~AsciiString();
+	void set(const char *, int);
 	void releaseBuffer();
 
 	char *m_data;
@@ -46,6 +39,7 @@ class DrawModule
 {
 public:
 	DrawModule(Thing *, const ModuleData *);
+	virtual ~DrawModule();
 	virtual void drawModuleAnchor();
 
 private:
@@ -107,14 +101,6 @@ public:
 	int m_00;
 	int m_04;
 	int m_08;
-};
-
-class InlineRetailLayoutString
-{
-public:
-	InlineRetailLayoutString() : m_data(0) {}
-
-	char *m_data;
 };
 
 class RadiusDecal
@@ -247,7 +233,7 @@ public:
 	Bool m_hasTerrainDecal;
 	unsigned char m_pad31[3];
 	void *m_renderObject;
-	InlineRetailLayoutString m_modelName;
+	AsciiString m_modelName;
 	void *m_shadow;
 	void *m_terrainDecal;
 	void *m_trackRenderObject;
@@ -268,7 +254,7 @@ public:
 	Bool m_field84;
 	int m_field88;
 	_STL::set<int> m_tree;
-	InlineRetailLayoutString m_string98;
+	AsciiString m_string98;
 	int m_field9c;
 	int m_lodResult;
 	int m_lodResult2;
@@ -287,8 +273,8 @@ public:
 	RadiusDecalTemplate m_radiusDecalTemplate;
 	RadiusDecal m_radiusDecal2;
 	RadiusDecalTemplate m_radiusDecalTemplate2;
-	InlineRetailLayoutString m_string200;
-	RetailLayoutString m_strings[2];
+	AsciiString m_string200;
+	AsciiString m_strings[2];
 	int m_field20c;
 	Bool m_field210;
 	unsigned char m_pad211[3];
@@ -332,7 +318,6 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 	const ModuleData *moduleData)
 	: DrawModule(thing, moduleData)
 	, m_particleHandle()
-	, m_modelName()
 	, m_particleSystemIDs()
 	, m_member4c()
 	, m_member58()
@@ -350,7 +335,7 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 	, m_string200()
 	, m_strings()
 {
-	reinterpret_cast<RetailLayoutString *>(&m_modelName)->set("", 0);
+	((AsciiString *)((unsigned char *)this + 0x38))->set("", 0);
 	m_flag68 = 1;
 	m_ready = true;
 	m_ready2 = false;
@@ -383,9 +368,9 @@ W3DScriptedModelDraw::W3DScriptedModelDraw(Thing *thing,
 	m_lodResult = 0;
 	m_lodResult2 = 0;
 	m_fielda8 = 5;
-	reinterpret_cast<AsciiString *>(&m_string200)->releaseBuffer();
+	m_string200.releaseBuffer();
 	for (int i = 0; i < 2; ++i)
-		reinterpret_cast<AsciiString *>(&m_strings[i])->releaseBuffer();
+		m_strings[i].releaseBuffer();
 	m_field20c = 0;
 	m_field22c = 0;
 	m_field210 = false;

@@ -1,6 +1,6 @@
 // ?behavior@Rva001BA1C0Handler@@QAE_NPAVObject@@PBUCoord3D@@@Z
 // partial score=0.15 date=2026-09-10
-// cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc
+// cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
 // BFME body at 0x001BA1C0.  The matched movement dispatcher at 0x001BC820
 // passes Object* and const Coord3D* through ILT 0x0000FEBB; the raw callee
 // returns Bool with ret 8.  The handler reads the LocomotorTemplate behavior-Z
@@ -9,11 +9,75 @@
 typedef bool Bool;
 typedef float Real;
 
+class Object;
+
 struct Coord3D
 {
 	Real x;
 	Real y;
 	Real z;
+};
+
+struct Rva002E8370Entry
+{
+	Object *object;
+	unsigned unknown04;
+};
+
+struct Rva002E8370ResultData
+{
+	Rva002E8370Entry *begin;
+	Rva002E8370Entry *end;
+	Rva002E8370Entry *capacity;
+	Rva002E8370Entry *current;
+	int references;
+};
+
+struct BfmeWideResult
+{
+	Rva002E8370ResultData *value;
+	BfmeWideResult();
+	BfmeWideResult(const BfmeWideResult &other);
+	~BfmeWideResult();
+
+	Object *next(Object *&object)
+	{
+		if (value->current == value->end)
+			return 0;
+		object = (value->current++)->object;
+		return object;
+	}
+};
+
+class BfmeWideForwardC
+{
+public:
+	BfmeWideResult bfmeForwardWideC(int a, int b, int c, int d, int e);
+};
+
+#pragma comment(linker, "/alternatename:??1BfmeWideResult@@QAE@XZ=?j_0002c471@@YAXXZ")
+
+#define ThePartitionManager (*(BfmeWideForwardC **)0x012ED5B8)
+
+class GeometryInfo
+{
+public:
+	Real getMaxHeightAbovePosition() const;
+};
+
+class Rva001B95B0Owner
+{
+public:
+	Real rva001b95b0(Object *object, const Coord3D *goalPos,
+		Real surfaceHeight);
+};
+
+#pragma comment(linker, "/alternatename:?rva001b95b0@Rva001B95B0Owner@@QAEMPAVObject@@PBUCoord3D@@M@Z=?j_0001712f@@YAXXZ")
+
+struct Rva01083B5CFilter
+{
+	void *vtable;
+	Rva01083B5CFilter *next;
 };
 
 class Overridable
@@ -124,31 +188,31 @@ public:
 	void notifyModelConditionChanged();
 
 	char m_pad000[0x38];
-	Coord3D m_position;
-	char m_pad044[0xe8];
-	unsigned m_status12c;
+	Coord3D m_field038;
+	char m_pad044[0xd8];
+	char m_pad11c[4];
+	char m_pad120[0x0c];
+	unsigned m_field12c;
 	char m_pad130[0x48];
-	Coord3D m_position178;
+	Coord3D m_field178;
 	char m_pad184[2];
-	unsigned char m_status186;
+	unsigned char m_byte186;
 	char m_pad187[0x1d];
-	unsigned char m_disabledMask;
+	unsigned char m_byte1a4;
 	char m_pad1a5[0x19f];
-	unsigned m_status344;
+	unsigned m_field344;
+};
+
+class Locomotor
+{
+public:
+	Real getSurfaceHtAtPt(Real x, Real y);
 };
 
 class Rva001BA1C0Handler
 {
 public:
 	Bool behavior(Object *object, const Coord3D *goalPos);
-
-	// These declarations are the typed views of the concrete retail calls in
-	// this body.  Their ILT RVAs are pinned in reverse/symbols.csv.
-	void prepareBehavior();
-	Real getSurfaceHeight(Real x, Real y);
-	Real calculateHeight(Object *object, const Coord3D *goalPos,
-		Real surfaceHeight);
-	void refreshObjectState(Object *object);
 
 	// The target's receiver is the Locomotor layout whose saved transform is
 	// the proven +0x64 translation-column view above.
@@ -168,10 +232,13 @@ public:
 
 Bool Rva001BA1C0Handler::behavior(Object *object, const Coord3D *goalPos)
 {
+	register Bool requiresConstantCalling = true;
 	BfmeVec3CN savedScale =
 		((Gen_001B4A20 *)this)->bfmeGetScale();
-
-	Bool requiresConstantCalling = true;
+	// The retail frame reserves the observed temporary/filter area before the
+	// first dispatch.  It is intentionally uninitialised; the live branches
+	// below use only the witnessed subobjects in it.
+	char framePad[0xa8];
 	LocomotorTemplate *locomotorTemplate = m_template;
 	if (locomotorTemplate != 0 && locomotorTemplate->m_nextOverride != 0)
 		locomotorTemplate = (LocomotorTemplate *)
@@ -181,13 +248,25 @@ Bool Rva001BA1C0Handler::behavior(Object *object, const Coord3D *goalPos)
 	switch (behaviorZ)
 	{
 	case 0:
+		{
+			Coord3D position;
+			position.x = savedScale.m_bfmeX;
+			position.y = savedScale.m_bfmeY;
+			position.z = goalPos->z;
+			object->m_field178 = position;
+			object->m_byte186 = 1;
+		}
 		requiresConstantCalling = false;
 		break;
 
 	case 1:
-		if ((object->m_disabledMask & 0x90) == 0)
+		if ((object->m_byte1a4 & 8) == 0 &&
+			!((BFMESelectionStatusBits *)object)->test(0x90))
 		{
-			Coord3D position = object->m_position178;
+			Coord3D position;
+			position.x = savedScale.m_bfmeX;
+			position.y = savedScale.m_bfmeY;
+			int layer = object->getLayer();
 			Real waterHeight;
 			Real terrainHeight;
 			if (TheTerrainLogic->isUnderwater(position.x, position.y,
@@ -195,14 +274,14 @@ Bool Rva001BA1C0Handler::behavior(Object *object, const Coord3D *goalPos)
 				position.z = waterHeight;
 			else
 				position.z = TheTerrainLogic->getLayerHeight(position.x,
-					position.y, object->getLayer(), 0, true);
-			object->m_position178 = position;
+					position.y, layer, 0, true);
+			applyHeight(&position);
 		}
 		break;
 
 	case 2:
 		{
-			Coord3D position = object->m_position178;
+			Coord3D position = object->m_field178;
 			Real surfaceHeight = TheTerrainLogic->getGroundHeight(
 				position.x, position.y, 0);
 			position.z = m_preferredHeight + surfaceHeight;
@@ -213,10 +292,11 @@ Bool Rva001BA1C0Handler::behavior(Object *object, const Coord3D *goalPos)
 	case 3:
 	case 4:
 		{
-			Coord3D position = object->m_position178;
+			Coord3D position = object->m_field178;
 			Real surfaceHeight = 0.0f;
 			if (behaviorZ == 3)
-				surfaceHeight = getSurfaceHeight(position.x, position.y);
+				surfaceHeight = ((Locomotor *)this)->getSurfaceHtAtPt(
+					position.x, position.y);
 			position.z = m_preferredHeight + surfaceHeight;
 			applyHeight(&position);
 		}
@@ -225,35 +305,62 @@ Bool Rva001BA1C0Handler::behavior(Object *object, const Coord3D *goalPos)
 	case 5:
 		if (m_preferredHeight != BfmeZeroRange || (m_flags & 8) != 0)
 		{
-			Coord3D position = object->m_position178;
+			Coord3D position = object->m_field178;
 			int layer = object->getLayer();
 			if (layer == 1)
 				position.z = TheTerrainLogic->getGroundHeight(
 					position.x, position.y, 0);
 			Real desiredHeight = m_preferredHeight + position.z;
-			Real delta = desiredHeight - object->m_position178.z;
+			Real delta = desiredHeight - object->m_field178.z;
 			delta *= m_heightDamping;
-			position.z = object->m_position178.z + delta;
-			if (position.z != object->m_position178.z)
+			position.z = object->m_field178.z + delta;
+			if (position.z != object->m_field178.z)
 				applyHeight(&position);
 		}
 		break;
 
 	case 6:
+		if (m_preferredHeight != BfmeZeroRange || (m_flags & 8) != 0)
+		{
+			Coord3D position = object->m_field178;
+			Rva01083B5CFilter *filter =
+				(Rva01083B5CFilter *)(framePad + 0x40);
+			BfmeWideResult iterator =
+				((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
+					(int)&position, 0x3f800000, 1, (int)filter, 0);
+			filter->vtable = (void *)0x01083B5C;
+			filter->next = 0;
+
+			Real highestHeight = BfmeZeroRange;
+			Object *candidate;
+			while (iterator.next(candidate))
+			{
+				Real candidateHeight =
+					((GeometryInfo *)((char *)candidate + 0xac))
+						->getMaxHeightAbovePosition();
+				if (candidateHeight > highestHeight)
+					highestHeight = candidateHeight;
+			}
+			position.z = m_preferredHeight + highestHeight;
+			applyHeight(&position);
+		}
+		break;
+
 	case 7:
 	case 8:
 		if (m_preferredHeight != BfmeZeroRange || (m_flags & 8) != 0)
 		{
-			Coord3D position = object->m_position178;
+			Coord3D position = object->m_field178;
 			Real surfaceHeight = 0.0f;
 			if (behaviorZ == 6)
-				surfaceHeight = getSurfaceHeight(position.x, position.y);
+				surfaceHeight = ((Locomotor *)this)->getSurfaceHtAtPt(
+					position.x, position.y);
 			Real desiredHeight = m_preferredHeight + surfaceHeight;
 			if ((m_flags & 8) != 0)
 				desiredHeight = goalPos->z;
 			Real delta = (desiredHeight - position.z) * m_heightDamping;
 			position.z += delta;
-			if (position.z != object->m_position178.z)
+			if (position.z != object->m_field178.z)
 				applyHeight(&position);
 		}
 		break;

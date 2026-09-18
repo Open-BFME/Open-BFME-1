@@ -1,6 +1,7 @@
 // ?update@AIInternalMoveToState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.46 date=2026-09-09
+// partial score=0.8 date=2026-09-17
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// stlport
 //
 // Retail 0x00172E70: AIInternalMoveToState::update.
 //
@@ -9,6 +10,10 @@
 // +0x31e/+0x326, and Pathfinder::updateGoal carries the retail source/line
 // arguments.  Keep those facts local to this recovered sibling; the shared
 // ZH headers describe a different object layout.
+
+#define _STLP_NO_EXCEPTIONS 1
+#define _STLP_USE_STATIC_LIB 1
+#include <bitset>
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -314,6 +319,24 @@ public:
 	Bool m_retryPath;
 };
 
+template<int NUMBITS>
+class BitFlags
+{
+public:
+	Bool test(int bit) const { return m_bits._Unchecked_test(bit); }
+	Bool testWord(int bit) const
+	{
+		return (m_bits._M_getword(bit) & m_bits._S_maskbit(bit)) != 0;
+	}
+	void set(int bit) { m_bits._Unchecked_set(bit); }
+	void reset(int bit) { m_bits._Unchecked_reset(bit); }
+
+private:
+	_STL::bitset<NUMBITS> m_bits;
+};
+
+typedef BitFlags<320> ModelConditionFlags;
+
 class Object
 {
 public:
@@ -322,7 +345,7 @@ public:
 	unsigned char m_pad008[0x30];
 	Coord3D m_position;
 	unsigned char m_pad044[0xcc];
-	UnsignedInt m_modelConditionFlags[10];
+	ModelConditionFlags m_modelConditionFlags;
 	unsigned char m_pad138[0xcc];
 	AIUpdateInterface *m_ai;
 
@@ -334,22 +357,18 @@ public:
 
 	__forceinline void clearModelConditionState(ModelConditionFlagType condition)
 	{
-		UnsignedInt *word = m_modelConditionFlags + (condition >> 5);
-		UnsignedInt mask = 1u << (condition & 31);
-		if ((*word & mask) != 0)
+		if (m_modelConditionFlags.test(condition))
 		{
-			*word &= ~mask;
+			m_modelConditionFlags.reset(condition);
 			notifyModelConditionChanged();
 		}
 	}
 
 	__forceinline void setModelConditionState(ModelConditionFlagType condition)
 	{
-		UnsignedInt *word = m_modelConditionFlags + (condition >> 5);
-		UnsignedInt mask = 1u << (condition & 31);
-		if ((*word & mask) == 0)
+		if (!m_modelConditionFlags.testWord(condition))
 		{
-			*word |= mask;
+			m_modelConditionFlags.set(condition);
 			notifyModelConditionChanged();
 		}
 	}
@@ -488,9 +507,9 @@ StateReturnType AIInternalMoveToState::update()
 	}
 	else
 	{
-		Pathfinder *pathfinder = TheAI->pathfinder();
 		ModelConditionFlagType setConditionFlag = MODELCONDITION_MOVING;
 		UnsignedInt rappellingMask = 0x100;
+		Pathfinder *pathfinder = TheAI->pathfinder();
 		if (pathfinder->bfmeCellTypeTwo(
 			obj->getPosition(), (PathfindLayerEnum)obj->getLayer()))
 		{
@@ -503,7 +522,7 @@ StateReturnType AIInternalMoveToState::update()
 			else
 			{
 				setConditionFlag = MODELCONDITION_CLIMBING;
-				if ((obj->m_modelConditionFlags[1] & rappellingMask) != 0)
+				if (obj->m_modelConditionFlags.test(MODELCONDITION_RAPPELLING))
 					obj->clearModelConditionState(MODELCONDITION_RAPPELLING);
 			}
 		}
@@ -518,7 +537,7 @@ StateReturnType AIInternalMoveToState::update()
 			if (setConditionFlag == MODELCONDITION_MOVING)
 			{
 				obj->clearModelConditionState(MODELCONDITION_CLIMBING);
-				if ((obj->m_modelConditionFlags[1] & rappellingMask) != 0)
+				if (obj->m_modelConditionFlags.test(MODELCONDITION_RAPPELLING))
 					obj->clearModelConditionState(MODELCONDITION_RAPPELLING);
 			}
 
@@ -551,25 +570,29 @@ StateReturnType AIInternalMoveToState::update()
 
 	onPathDistToGoal = ai->getLocomotorDistanceToGoal();
 	curLoco = ai->m_curLocomotor;
-	if (curLoco == 0)
-		return STATE_CONTINUE;
-
-	Bool closeEnoughAtTail =
-		onPathDistToGoal < ((Locomotor *)curLoco)->m_closeEnoughDistance;
+	Bool closeEnoughAtTail;
+	closeEnoughAtTail = false;
 	Bool heightAllowsArrival = false;
-	Real preferredHeight = ((Locomotor *)curLoco)->getPreferredHeight();
-	if (preferredHeight < ai->m_pathExtraDistance)
+	if (curLoco != 0)
 	{
-		preferredHeight = ((Locomotor *)curLoco)->getPreferredHeight();
-		if (preferredHeight + preferredHeight > onPathDistToGoal)
-			heightAllowsArrival = true;
+		closeEnoughAtTail =
+			onPathDistToGoal < ((Locomotor *)curLoco)->m_closeEnoughDistance;
+		Real preferredHeight = ((Locomotor *)curLoco)->getPreferredHeight();
+		if (preferredHeight < ai->m_pathExtraDistance)
+		{
+			preferredHeight = ((Locomotor *)curLoco)->getPreferredHeight();
+			if (preferredHeight + preferredHeight > onPathDistToGoal)
+				heightAllowsArrival = true;
+		}
 	}
 
 	if (heightAllowsArrival || closeEnoughAtTail)
 	{
 		if (ai->isDoingGroundMovement())
 		{
-			Coord3D goalPos = m_goalPosition;
+			Coord3D goalPos;
+			goalPos.x = m_goalPosition.x;
+			goalPos.y = m_goalPosition.y;
 			Path *finalPath = ai->getPath();
 			if (finalPath->m_lastNode != 0)
 				goalPos = finalPath->m_lastNode->m_position;
