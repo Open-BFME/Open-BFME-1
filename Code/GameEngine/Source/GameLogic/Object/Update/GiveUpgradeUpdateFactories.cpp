@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: GiveUpgradeUpdate::friend_newModuleData factory.
+// Open-BFME5: GiveUpgradeUpdate module-data and instance factories.
 
+class Module;
+class Thing;
 class INI;
 class ModuleData;
 
@@ -35,7 +37,12 @@ extern "C" void __cdecl GiveUpgradeUpdateFieldParse(MultiIniFieldParse &parse);
 class GiveUpgradeUpdate
 {
 public:
+	GiveUpgradeUpdate(Thing *, const ModuleData *);
 	static ModuleData *friend_newModuleData(INI *ini);
+	static Module *friend_newModuleInstance(Thing *, const ModuleData *);
+
+private:
+	unsigned char m_pad[0xf0];
 };
 
 // ?friend_newModuleData@GiveUpgradeUpdate@@SAPAVModuleData@@PAVINI@@@Z
@@ -45,4 +52,10 @@ ModuleData *GiveUpgradeUpdate::friend_newModuleData(INI *ini)
 	if (ini)
 		ini->initFromINIMultiProc(data, &GiveUpgradeUpdateFieldParse);
 	return (ModuleData *)data;
+}
+
+// ?friend_newModuleInstance@GiveUpgradeUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
+Module *GiveUpgradeUpdate::friend_newModuleInstance(Thing *thing, const ModuleData *data)
+{
+	return (Module *)new GiveUpgradeUpdate(thing, data);
 }
