@@ -96,13 +96,13 @@ public:
 	bool isHuman(void) const;
 	int getStartPosition(void) const { return m_startPos; }
 	int getPlayerTemplate(void) const { return m_playerTemplate; }
-	int getColor(void) const { return m_color; }
+	int getTeamNumber(void) const { return m_teamNumber; }
 
 private:
 	unsigned char m_unmodelled[0x10];
 	int m_startPos;
 	int m_playerTemplate;
-	int m_color;
+	int m_teamNumber;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
@@ -166,7 +166,7 @@ public:
 	virtual void bfmeDispatchWindow(GameWindow *window, bool active) = 0;
 	virtual void bfmeSlot3(void) = 0;
 	virtual unsigned char bfmeSetPlayerTemplate(GameSlot *slot, int playerTemplate) = 0;
-	virtual bool bfmeSetColor(GameSlot *slot, int color) = 0;
+	virtual bool bfmeSetTeam(GameSlot *slot, int teamNumber) = 0;
 	virtual void bfmeSlot6(void) = 0;
 	virtual bool bfmeSetStartPosition(GameSlot *slot, int startPosition) = 0;
 	virtual void bfmeSlot8(void) = 0;
@@ -190,7 +190,7 @@ public:
 	int bfmeFindAvailableStartPosition(int firstIndex);
 	bool bfmeApplyStartPosition(int index, int startPosition);
 	bool bfmeApplyPlayerTemplate(int index);
-	bool bfmeApplyColor(int index);
+	bool bfmeApplyTeam(int index);
 	unsigned short bfmeCountReadyPlayers(void);
 
 private:
@@ -207,7 +207,7 @@ private:
 	unsigned char m_unmodelled19[0x0F];
 	Gen005207C0Member m_previewState;
 	unsigned char m_unmodelled29[0x43];
-	GameWindow *m_colorCombos[8];
+	GameWindow *m_teamCombos[8];
 	GameWindow *m_playerTemplateCombos[8];
 	unsigned char m_unmodelledE8[0x3C];
 	bool m_isMultiplayer;
@@ -400,10 +400,12 @@ bool MpGameSetup::bfmeApplyPlayerTemplate(int index)
 	return m_owner->bfmeSetPlayerTemplate(slot, playerTemplate);
 }
 
-// The controller validates both cached game records before applying a combo
-// box selection. The member layout is shared with bfmeRefresh above.
-// ?bfmeApplyColor@MpGameSetup@@QAE_NH@Z
-bool MpGameSetup::bfmeApplyColor(int index)
+// Named callback 0x00525AB0 binds the Team literal to this+0xA8; Color
+// uses +0x88 instead. This body compares GameSlot+0x18 and calls owner slot 5.
+// LAN slot 5 at 0x00516F00 writes that field and serializes "Team=%d".
+// bfmeApplyTeam describes the witnessed behavior, not an original spelling.
+// ?bfmeApplyTeam@MpGameSetup@@QAE_NH@Z
+bool MpGameSetup::bfmeApplyTeam(int index)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -415,17 +417,17 @@ bool MpGameSetup::bfmeApplyColor(int index)
 		return false;
 
 	m_pending = false;
-	GameWindow *combo = m_colorCombos[index];
+	GameWindow *combo = m_teamCombos[index];
 	int selected;
 	GadgetComboBoxGetSelectedPos(combo, &selected);
-	int color = (int)GadgetComboBoxGetItemData(combo, selected);
+	int teamNumber = (int)GadgetComboBoxGetItemData(combo, selected);
 	GameSlot *slot = m_first->getSlot(index);
 	if (!slot)
 		return false;
-	if (color == slot->getColor())
+	if (teamNumber == slot->getTeamNumber())
 		return false;
 
-	return m_owner->bfmeSetColor(slot, color);
+	return m_owner->bfmeSetTeam(slot, teamNumber);
 }
 
 // Count the ready, playable human slots in the validated game record.
