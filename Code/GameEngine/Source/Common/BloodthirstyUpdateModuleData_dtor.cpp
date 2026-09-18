@@ -6,7 +6,7 @@
 // 3 tracked members and the same
 // installed vtable slot as BaseUpgradeModuleDataDestructorThunk.cpp's
 // ~BaseUpgradeModuleData, but the trailing members are two AudioEventRTS
-// (ILT 0x00026F35, see Audio/AudioEventRTSDtor.cpp) plus a small non-trivial
+// (ILT 0x00026F35, see Audio/AudioEventRTSCopyAndLifetime.cpp) plus a small non-trivial
 // member whose destructor is pinned as
 // ??1AttributeModifierAuraUpdateModuleDataMemberC@@QAE@XZ.
 

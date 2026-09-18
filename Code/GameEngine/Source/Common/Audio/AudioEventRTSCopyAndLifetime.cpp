@@ -200,3 +200,9 @@ AudioEventRTS &AudioEventRTS::operator=(const AudioEventRTS &right)
 		m_objectID = right.m_objectID;
 	return *this;
 }
+
+// Retail 0x000B31F0 releases the same strings and counted event metadata.
+// ??1AudioEventRTS@@UAE@XZ
+AudioEventRTS::~AudioEventRTS()
+{
+}
