@@ -2,17 +2,11 @@
 // stlport
 //
 // WindowManager retains the first APT callback registered for each name.
-// The APT callback table starts at WindowManager+0x30; the caller-side
-// alternate name for this overload is the AptMapPreview registration ILT.
+// The APT callback table starts at WindowManager+0x30. AptMapPreview calls
+// this overload through retail ILT 0x00026328, whose body is 0x0046DE20.
 
 #include "StringInline.h"
 #include <hash_map>
-
-class BFMERetailAsciiString
-{
-private:
-	void *m_data;
-};
 
 class Rva0046C540Counted
 {
@@ -81,7 +75,7 @@ typedef std::hash_map<AsciiString, Rva0046C540Mapped,
 class WindowManager
 {
 public:
-	void registerAptCallback( const BFMERetailAsciiString &name,
+	void registerAptCallback( const AsciiString &name,
 		AptMapPreviewFunctorHolder callback );
 
 private:
@@ -89,21 +83,21 @@ private:
 	Rva0046C540Map m_callbacks;
 };
 
-// ?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VAptMapPreviewFunctorHolder@@@Z
+// ?registerAptCallback@WindowManager@@QAEXABVAsciiString@@VAptMapPreviewFunctorHolder@@@Z
 void WindowManager::registerAptCallback(
-	const BFMERetailAsciiString &name,
+	const AsciiString &name,
 	AptMapPreviewFunctorHolder callback )
 {
 	if( callback.m_ptr == 0 )
 		return;
 
 	Rva0046C540Map::iterator found = m_callbacks.find(
-		reinterpret_cast<const AsciiString &>( name ) );
+		name );
 	if( found != m_callbacks.end() && (*found).second.m_counted != 0 )
 		return;
 
 	Rva0046C540Mapped *slot = &m_callbacks[
-		reinterpret_cast<const AsciiString &>( name )];
+		name];
 	if( slot != reinterpret_cast<Rva0046C540Mapped *>( &callback ) )
 	{
 		++callback.m_ptr->m_references;

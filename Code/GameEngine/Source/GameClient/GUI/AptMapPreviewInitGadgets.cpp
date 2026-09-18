@@ -1,39 +1,12 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-template <typename T> class StringBase
+#include "ascii_string.h"
+
+// Canonical ascii_string.cpp destructor body, visible for retail inlining.
+inline AsciiString::~AsciiString()
 {
-    friend class AsciiString;
-    friend class BFMERetailAsciiString;
-
-private:
-    StringBase( const T *text );
-    StringBase( const StringBase<T> &other );
-    ~StringBase();
-
-    void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-    AsciiString( const char *text ) : StringBase<char>( text ) {}
-    AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-    ~AsciiString() {}
-};
-
-class BFMERetailAsciiString
-{
-public:
-    BFMERetailAsciiString( const char *text )
-    {
-        ((StringBase<char> *)this)->StringBase<char>::StringBase( text );
-    }
-    ~BFMERetailAsciiString() { releaseBuffer(); }
-
-private:
-    void releaseBuffer();
-    void *m_data;
-};
+	((StringBase<char> *)this)->releaseBuffer();
+}
 
 class __single_inheritance FunctorTargetSingle
 {
@@ -118,11 +91,10 @@ private:
 class WindowManager
 {
 public:
-    void registerAptCallback( const BFMERetailAsciiString &name,
+    void registerAptCallback( const AsciiString &name,
         AptMapPreviewFunctorHolder callback );
 };
 
-#pragma comment(linker, "/alternatename:?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VAptMapPreviewFunctorHolder@@@Z=?j_00026328@@YAXXZ")
 
 extern WindowManager *g_theWindowManager;
 
@@ -154,7 +126,7 @@ void AptMapPreview::initGadgets()
 
     callback.raw = (void (*)( void ))0x0040AFAB;
     {
-        BFMERetailAsciiString name( "AptMapPreview::Picture" );
+        AsciiString name( "AptMapPreview::Picture" );
         g_theWindowManager->registerAptCallback( name,
             AptMapPreviewFunctorHolder(
                 FunctorBindingSingle( callback.member, self ) ) );

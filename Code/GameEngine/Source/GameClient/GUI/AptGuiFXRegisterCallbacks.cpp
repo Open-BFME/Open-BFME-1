@@ -93,12 +93,11 @@ public:
 		int unknown1, int unknown2, int unknown3 ) = 0;
 	void registerAptCallback( const BFMERetailAsciiString &name,
 		BannerAptCallbackHolder callback );
-	void registerAptCallback( const BFMERetailAsciiString &name,
+	void registerAptCallback( const AsciiString &name,
 		AptMapPreviewFunctorHolder callback );
 };
 
 #pragma comment(linker, "/alternatename:?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VBannerAptCallbackHolder@@@Z=?j_00023083@@YAXXZ")
-#pragma comment(linker, "/alternatename:?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VAptMapPreviewFunctorHolder@@@Z=?j_00026328@@YAXXZ")
 
 extern WindowManager *g_theWindowManager;
 extern int g_guiFxWindowHandle;
@@ -124,7 +123,7 @@ void registerGuiFXCallbacks00510FA0()
 	}
 
 	{
-		BFMERetailAsciiString name( "ToolTipText" );
+		AsciiString name( "ToolTipText" );
 		g_theWindowManager->registerAptCallback( name,
 			AptMapPreviewFunctorHolder(
 				reinterpret_cast<AptGuiFxCallback>( 0x0043EF8B ) ) );

@@ -85046,7 +85046,6 @@ name,address,notes
 ?refreshTeamMember@BfmeTeamControlObject@@QAEXXZ,0x00039B5D,Team.cpp BFME-layout view spelling of the member refresh ILT to body 0x001BF380
 ?refreshTerrain@Radar@@UAEXPAVTerrainLogic@@@Z,0x0003A21A,matched W3DRadar::refreshTerrain at 0x006C4280 base call; route=0x00107240
 ?refreshTrackedLargeUnit@BfmeAODHordeContainOwner@@QAEXXZ,0x00031372,AODHordeContain large-unit hook refreshes the cached position through the 0x002302E0 body
-?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VAptMapPreviewFunctorHolder@@@Z,0x00026328,AptMapPreview initGadgets callback registry overload identified by MapGadgetInit and Picture strings
 ?registerAptCallback@WindowManager@@QAEXABVBFMERetailAsciiString@@VBannerAptCallbackHolder@@@Z,0x00023083,BannerUI APT callback registry ILT
 ?registerBannerAptCallbacks@@YAXXZ,0x0003DE6F,BannerUI init ILT to the helper that registers AptBannerUI OnBttnBanner and OnInitialized callbacks
 ?registerGameWindow@AnimateWindowManager@@QAEXPAVGameWindow@@H_NHH@Z,0x00045322,ILT thunk to the window animation registration
