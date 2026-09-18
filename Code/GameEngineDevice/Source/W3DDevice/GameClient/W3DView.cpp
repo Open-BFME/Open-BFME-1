@@ -1922,20 +1922,16 @@ void W3DView::setAngle( Real angle )
 //-------------------------------------------------------------------------------------------------
 /** Rotate the view around the horizontal (X) axis to the given angle. */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewSetPitchBfmeLayout.cpp
-// ?setPitch@W3DView@@ present-unmatched
 void W3DView::setPitch( Real angle )
 {
-	// call our base class, we are extending functionality
 	View::setPitch( angle );
 
-
-	m_doingMoveCameraOnWaypointPath = false;
-	m_doingRotateCamera = false;
-	m_doingPitchCamera = false;
-	m_doingZoomCamera = false;
-	m_doingScriptedCameraLock = false;
-	// set the camera
+	unsigned char *view_bytes = reinterpret_cast<unsigned char *>(this);
+	view_bytes[0x1DC] = 0;
+	view_bytes[0x204] = 0;
+	view_bytes[0x27C] = 0;
+	view_bytes[0x228] = 0;
+	view_bytes[0x27D] = 0;
 	setCameraTransform();
 }
 
@@ -3451,4 +3447,3 @@ void W3DView::Add_Camera_Shake (const Coord3D & position,float radius,float dura
 
 	CameraShakerSystem.Add_Camera_Shake(vpos,radius,duration,power);
 }
-
