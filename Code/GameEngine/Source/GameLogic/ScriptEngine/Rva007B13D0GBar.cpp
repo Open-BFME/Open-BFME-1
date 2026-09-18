@@ -36,10 +36,10 @@ public:
 
 extern ClientFrameSubsystem *TheGameClientClientUpdate;
 
-class Gen00459960
+class Shadow
 {
 public:
-	void setBounds(int, int, int, int, int, int, int, int);
+	void rva00459960(int, int, int, int, int, int, int, int);
 };
 
 struct W3DProjectedShadow;
@@ -91,11 +91,11 @@ void Rva007B13D0G::bar(Rva007AFB50Shadow *shadow)
 		int span = shadow->m_50;
 		int a54 = shadow->m_54;
 		if (extra == -1)
-			reinterpret_cast<Gen00459960 *>(shadow)->setBounds(0, span, a40, 0, a48, 0, span, a54);
+			reinterpret_cast<Shadow *>(shadow)->rva00459960(0, span, a40, 0, a48, 0, span, a54);
 		else
 		{
 			span -= extra;
-			reinterpret_cast<Gen00459960 *>(shadow)->setBounds(0, span, a40, 0, a48, 0, span, a54);
+			reinterpret_cast<Shadow *>(shadow)->rva00459960(0, span, a40, 0, a48, 0, span, a54);
 		}
 		return;
 	}
