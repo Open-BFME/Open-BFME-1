@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift the retail destructor to clean C++.
+// GiantBirdSlowDeathBehavior complete destructor 0x001FFC10 also emits
+// scalar wrapper 0x001FFDE0. Matched constructor 0x001FFB40 and the
+// named behavior factory independently establish this class identity.
 
 class Gen_dtor_000b33c0
 {
