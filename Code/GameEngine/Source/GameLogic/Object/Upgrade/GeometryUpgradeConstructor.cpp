@@ -59,6 +59,10 @@ class GeometryUpgrade : public GeometryUpgradeBase,
 {
 public:
 	GeometryUpgrade(Thing *thing, const ModuleData *moduleData);
+	// Complete destructor remains in GeometryUpgradeDestructor.cpp.
+	// This declaration emits the exact 0x002D58D0 scalar wrapper, whose
+	// call through ILT 0x0001C1D4 reaches the real 0x002D5900 body.
+	virtual ~GeometryUpgrade();
 
 protected:
 	AsciiString m_upgradeName;					///< retail this+0x1C
