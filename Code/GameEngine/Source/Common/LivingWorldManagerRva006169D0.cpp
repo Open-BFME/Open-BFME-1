@@ -96,6 +96,12 @@ public:
 	void bfmeRemoveCA(const char *name);
 };
 
+class BfmeB1024
+{
+public:
+	void bfmeGo1024B();
+};
+
 class BfmeLivingWorldManager
 {
 public:
@@ -107,6 +113,23 @@ private:
 	_STL::vector<Rva006169D0Item *> m_first;
 	_STL::vector<Rva006169D0Item *> m_second;
 };
+
+void BfmeLivingWorldManager::rva00610090()
+{
+	for (unsigned int index = 0; index < m_first.size(); ++index)
+	{
+		Rva006169D0Item *item = m_first.begin()[index];
+		if (item != 0)
+			((BfmeB1024 *)item)->bfmeGo1024B();
+	}
+
+	for (unsigned int index = 0; index < m_second.size(); ++index)
+	{
+		Rva006169D0Item *item = m_second.begin()[index];
+		if (item != 0)
+			((BfmeB1024 *)item)->bfmeGo1024B();
+	}
+}
 
 void BfmeLivingWorldManager::rva006169d0()
 {
