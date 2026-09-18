@@ -1,5 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// Complete destructor 0x00284AA0 and emitted scalar wrapper 0x00285490.
+// Constructor 0x00284600 installs vtable 0x010BBBB8; its slot-zero path and
+// the matched object-name/locomotor lookups identify the same module data.
+// Keep both lifecycle bodies and pointer-vector helpers in this one source.
 
 #include <vector>
 
