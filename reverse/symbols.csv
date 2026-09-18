@@ -10301,7 +10301,7 @@ name,address,notes
 ??_7BfmeOwnVUO@@6B@,0x010EC774,Open-BFME5 retail vftable stored by the 0x003B7ED0 destructor
 ??_7BfmeOwnVUP@@6B@,0x010957C4,Open-BFME5 retail vftable stored by the 0x0014B6B0 constructor
 ??_7BfmeOwnVUQ@@6B@,0x010E858C,Open-BFME5 retail derived vftable stored by the 0x00352C20 destructor
-??_7BfmeOwnVVA@@6B@,0x0110FFEC,Open-BFME5 retail vftable stored by the 0x005D2840 destructor
+??_7Image@@6B@,0x0110FFEC,matched Image constructor5D2260 and complete destructor5D2840 install; slot0 routes to proven scalar destructor5D2BD0
 ??_7BfmeOwnVVB@@6B@,0x0109BFAC,BfmeOwnVVB vftable stored by the 0x00190490 destructor
 ??_7BfmeOwnVVD@@6B@,0x0110DE48,Open-BFME5 retail derived vftable stored by the 0x005B5330 destructor
 ??_7BfmeOwnVVE@@6B@,0x0113C308,Open-BFME5 retail derived vftable stored by the 0x0092B6A0 destructor
@@ -75749,7 +75749,6 @@ name,address,notes
 ?bfmeClearVUP@BfmeStrVUP@@QAEXXZ,0x00887940,pin
 ?bfmeClearVUQ@BfmeStrVUQ@@AAEXXZ,0x00887940,pin
 ?bfmeClearVUV@BfmeStrVUV@@QAEXXZ,0x00887940,pin
-?bfmeClearVVA@BfmeStrVVA@@AAEXXZ,0x00887940,pin
 ?bfmeClearVVC@BfmeStrVVC@@AAEXXZ,0x00887940,pin
 ?bfmeClearWVSX@BfmeStrWVSX@@AAEXXZ,0x008881D0,pin
 ?bfmeClearWVUL@BfmeStrWVUL@@AAEXXZ,0x008881D0,pin
@@ -77847,7 +77846,6 @@ name,address,notes
 ?bfmeReleaseOld@Gen_00359B50@@QAEXXZ,0x00015E56,Open-BFME5 the release of the old block the vector reserve at 0x00359B50 calls after moving
 ?bfmeReleaseRef@BfmeTextureS@@QAEXXZ,0x009EB7A0,Open-BFME5 the reference release the destructor at 0x00757830 runs over its elements
 ?bfmeReleaseRefFM@BfmeTexFM@@QAEXXZ,0x009EB7A0,pin
-?bfmeReleaseRefVVA@BfmeTexVVA@@QAEXXZ,0x009EB7A0,pin
 ?bfmeReleaseSJ@BfmeThingSJ@@QAEXXZ,0x009EB7A0,pin release for BfmeConv2015
 ?bfmeReleaseThunk@BfmeRefAB@@QAEPAV1@XZ,0x00032D1C,ExperienceLevelSystem cleanup borrowed-reference release thunk
 ?bfmeReleaseULD@BfmeCurULD@@QAEXXZ,0x009EB7A0,pin
