@@ -1,4 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/shims/campaignmanagerascii /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
+// Constructors and protected scalar-deleting wrappers for the two attack-action
+// states share these exact layouts. Constructor-installed vtables 0x01097C60
+// and 0x01097DC0 route slot zero to wrappers 0x0017FE20 and 0x0017FEE0;
+// their complete destructors remain reached through ILTs 0x0000C0C7/0x00028DD0.
 
 // AIStateMachine.h names the two bool arguments and four fields. Retail ctor
 // 0x001711B7/+0x24 and 0x001711BA/+0x27 store attackingObject/forceAttacking.
@@ -28,6 +32,9 @@ class AIAttackAimAtTargetState : public State
 public:
 	AIAttackAimAtTargetState(StateMachine *machine, bool attackingObject, bool forceAttacking);
 
+protected:
+	virtual ~AIAttackAimAtTargetState();
+
 private:
 	bool m_isAttackingObject;
 	bool m_canTurnInPlace;
@@ -53,6 +60,9 @@ class AIAttackFireWeaponState : public State
 {
 public:
 	AIAttackFireWeaponState(StateMachine *machine, NotifyWeaponFiredInterface * notify);
+
+protected:
+	virtual ~AIAttackFireWeaponState();
 
 private:
 	NotifyWeaponFiredInterface * m_att;
