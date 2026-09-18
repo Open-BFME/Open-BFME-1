@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
-// Open-BFME5: retail-layout C++ conversion of the GenericObjectCreationNugget destructor.
+// Complete destructor 0x001D8220 also emits protected scalar wrapper 0x001D81F0.
+// Constructor 0x001D7D70, the parser, and named asset methods establish class
+// identity; wrapper ILT 0x0004706E reaches this complete teardown.
 
 #include "ascii_string.h"
 
