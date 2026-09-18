@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
+#include "../../../Include/GameLogic/Rva0039D550.h"
+
 // A ModuleData base supplying the vptr, then a member whose constructor is out
 // of line -- the call resolves to the existing pin for ??0RS_Member@@QAE@XZ at
 // 0x0003747A. That member is what gives this constructor its EH frame.
@@ -12,7 +14,7 @@ public:
 
 	// Declared so the base is destructible: without it MSVC emits no EH frame,
 	// because a throw from the member's constructor would have nothing to unwind.
-	~ModuleData();
+	~ModuleData() {}
 
 	int m_moduleTagNameKey;
 };
@@ -21,16 +23,17 @@ class RS_Member
 {
 public:
 	RS_Member();
-	~RS_Member();
 
 private:
-	unsigned char m_body[0x18];
+	Rva0039D550 m_handle;
+	unsigned char m_tail[0x14];
 };
 
 class ShareExperienceBehaviorModuleData : public ModuleData
 {
 public:
 	ShareExperienceBehaviorModuleData();
+	virtual ~ShareExperienceBehaviorModuleData();
 
 	virtual void moduleDataAnchor();
 
@@ -44,5 +47,14 @@ public:
 // ??0ShareExperienceBehaviorModuleData@@QAE@XZ
 ShareExperienceBehaviorModuleData::ShareExperienceBehaviorModuleData()
 	: m_08( 0 ), m_0c( 0 ), m_10( 1.0f )
+{
+}
+
+// MSVC applies novtable to subsequent out-of-line definitions while retaining
+// the ordinary declaration used above for constructor vtable emission.
+class __declspec(novtable) ShareExperienceBehaviorModuleData;
+
+// ??1ShareExperienceBehaviorModuleData@@UAE@XZ
+ShareExperienceBehaviorModuleData::~ShareExperienceBehaviorModuleData()
 {
 }
