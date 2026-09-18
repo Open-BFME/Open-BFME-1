@@ -37,13 +37,13 @@ void VictorySystem::rva001DF850(void)
 	switch (m_activeGrid)
 	{
 	case 0:
-		grid = m_cellGrids[0];
 		playerIndex = m_currentPlayer;
+		grid = m_cellGrids[0];
 		break;
 
 	case 1:
-		grid = m_cellGrids[1];
 		playerIndex = m_currentPlayer;
+		grid = m_cellGrids[1];
 		break;
 
 	default:
