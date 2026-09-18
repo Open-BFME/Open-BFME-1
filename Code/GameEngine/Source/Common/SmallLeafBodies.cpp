@@ -437,3 +437,19 @@ void __stdcall Rva006CF9B0Pop4( void * )
 void Rva0069BC20Return( void )
 {
 }
+
+// mov eax,[ecx+4] / ret.  The field's owner is not identified.
+class Rva00220A30DwordGetter
+{
+public:
+	int get( void ) const;
+
+private:
+	int m_prefix;
+	int m_value;
+};
+
+int Rva00220A30DwordGetter::get( void ) const
+{
+	return m_value;
+}
