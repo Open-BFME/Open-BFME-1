@@ -1,23 +1,9 @@
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWLib
 // Recovered map-preview description update at RVA 0x005208D0.
 // Descriptive bfme names do not claim original source spellings. The metadata
 // getter calls the cached map.str text loader, then returns its first line.
 
-template <typename T> class StringBase
-{
-    friend class UnicodeString;
-private:
-    StringBase(const StringBase<T> &other);
-    ~StringBase();
-    void *m_data;
-};
-
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-    UnicodeString(const UnicodeString &other) : StringBase<unsigned short>(other) {}
-    ~UnicodeString() {}
-};
+#include "unicode_string.h"
 
 class GameWindow;
 void GadgetListBoxReset(GameWindow *listbox);
