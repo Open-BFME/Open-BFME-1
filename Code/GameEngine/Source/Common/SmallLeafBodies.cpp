@@ -453,3 +453,19 @@ int Rva00220A30DwordGetter::get( void ) const
 {
 	return m_value;
 }
+
+// fld dword [ecx+0x14] / ret.  The field's owner is not identified.
+class Rva0073A600FloatGetter
+{
+public:
+	float get( void ) const;
+
+private:
+	char m_prefix[ 0x14 ];
+	float m_value;
+};
+
+float Rva0073A600FloatGetter::get( void ) const
+{
+	return m_value;
+}
