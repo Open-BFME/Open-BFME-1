@@ -75057,7 +75057,6 @@ name,address,notes
 ?bfmeAfterFCB@BfmeOwnFCB@@QAEXXZ,0x000098B8,pin
 ?bfmeAimBX@BfmeOwnerBX@@QAEXPAX@Z,0x0003A1A7
 ?bfmeAlloc1037@@YAPAXH@Z,0x00881F30,pin
-?bfmeAlloc1039@@YAPAXH@Z,0x00881F30,pin
 ?bfmeAlloc1046@@YAPAXH@Z,0x0082E540,pin
 ?bfmeAlloc1047@@YAPAXH@Z,0x0082E540,pin
 ?bfmeAlloc1051@@YAPAXH@Z,0x0082E540,pin
@@ -77127,7 +77126,6 @@ name,address,notes
 ?bfmeInit1029@BfmeSub1029@@QAEXXZ,0x007F01B0,pin
 ?bfmeInit1030@BfmeSub1030@@QAEXHPAH@Z,0x0003B318,pin
 ?bfmeInit1037@BfmeD1037@@QAEPAV1@PAVBfmeE1037@@@Z,0x0002D231,pin
-?bfmeInit1039@BfmeC1039@@QAEXPAVBfmeD1039@@@Z,0x00969710,pin
 ?bfmeInit1051@@YAXPAUBfmeSubN1051@@H@Z,0x0000317F,pin
 ?bfmeInit1061@BfmeB1061@@QAEXXZ,0x000165B8,pin
 ?bfmeInit1078@BfmeQ1078@@QAEXXZ,0x0001D9CB,pin
@@ -87375,8 +87373,6 @@ _bfmeVft1030A,0x00D29A9C,pin
 _bfmeVft1030B,0x00D2EB34,pin
 _bfmeVft1030C,0x00D36D58,pin
 _bfmeVft1033D,0x00D29A9C,pin
-_bfmeVft1039C,0x00D3E630,pin
-_bfmeVft1039D,0x00D3E654,pin
 _bfmeVft1043P,0x00CE7520,pin
 _bfmeVft1045A,0x00D2C308,pin
 _bfmeVft1045B,0x00D2C304,pin
