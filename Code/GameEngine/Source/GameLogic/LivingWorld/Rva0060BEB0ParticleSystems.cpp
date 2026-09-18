@@ -34,7 +34,13 @@ public:
 	ParticleSystemHandle getSlave();
 };
 
-class LivingWorldEyeTower
+// Address-qualified owner: constructor 0x0060BEB0 installs vtable 0x01115E90.
+// Slots 8/9 reach 0x0060C140/0x0060C160, which call these methods without
+// adjusting ECX. No constructor, RTTI, literal or named caller establishes
+// the former LivingWorldEyeTowerSecondaryState label. This view is limited
+// to the particle handle at +0x14; the constructor keeps its own ABI view.
+
+class Rva0060BEB0Object
 {
 public:
 	void startParticleSystems();
@@ -45,8 +51,8 @@ private:
 	ParticleSystemHandle m_particleSystem;
 };
 
-// ?startParticleSystems@LivingWorldEyeTower@@QAEXXZ
-void LivingWorldEyeTower::startParticleSystems()
+// ?startParticleSystems@Rva0060BEB0Object@@QAEXXZ
+void Rva0060BEB0Object::startParticleSystems()
 {
 	if( m_particleSystem )
 	{
@@ -56,8 +62,8 @@ void LivingWorldEyeTower::startParticleSystems()
 	}
 }
 
-// ?stopParticleSystems@LivingWorldEyeTower@@QAEXXZ
-void LivingWorldEyeTower::stopParticleSystems()
+// ?stopParticleSystems@Rva0060BEB0Object@@QAEXXZ
+void Rva0060BEB0Object::stopParticleSystems()
 {
 	if( m_particleSystem )
 	{
@@ -66,4 +72,3 @@ void LivingWorldEyeTower::stopParticleSystems()
 		m_particleSystem->stop();
 	}
 }
-
