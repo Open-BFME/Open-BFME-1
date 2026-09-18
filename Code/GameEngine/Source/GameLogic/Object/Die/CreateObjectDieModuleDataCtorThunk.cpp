@@ -28,7 +28,7 @@ class DieModuleData : public Snapshot
 {
 public:
 	DieModuleData() {}
-	virtual ~DieModuleData();
+	virtual ~DieModuleData() {}
 
 private:
 	InstantDeathDieMuxData m_dieMuxData;
@@ -42,7 +42,9 @@ public:
 	{
 	}
 
-	~CreateObjectDieOCLName();
+	// Retail destroys this AsciiString-shaped member through the narrow
+	// StringBase release body at 0x00887940.
+	~CreateObjectDieOCLName() { releaseBuffer(); }
 	void releaseBuffer();
 
 private:
@@ -67,4 +69,13 @@ CreateObjectDieModuleData::CreateObjectDieModuleData()
 {
 	m_transferPreviousHealth = 0;
 	m_ocl.releaseBuffer();
+}
+
+// MSVC applies novtable to subsequent out-of-line definitions while retaining
+// the ordinary declaration used above for constructor vtable emission.
+class __declspec(novtable) CreateObjectDieModuleData;
+
+// ??1CreateObjectDieModuleData@@UAE@XZ
+CreateObjectDieModuleData::~CreateObjectDieModuleData()
+{
 }
