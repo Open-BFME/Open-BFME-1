@@ -114,6 +114,10 @@ file is already home" has to end the search, not be skipped as a non-answer.
 
 Two more of the same family:
 
+* An inline method emitted from an included header does not make that class the
+  TU's owner. `PopupHostGame.cpp` emitted `GameInfo::setUseStats`, but both ZH
+  trees keep the exact source under the GUI menus tree. An exact ZH source path
+  now stops the move before an inferred owner can pull the file elsewhere.
 * A destination that is an **ancestor** of the current directory was accepted, so
   324 files were bound to leave `GameLogic/AI` for `GameLogic`. ZH's header tree
   is coarser than our source tree in places; answering with the parent throws away

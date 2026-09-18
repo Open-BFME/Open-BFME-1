@@ -186,6 +186,12 @@ def destination(root, source, cls, homes, zh, zh_hdr):
     return None
 
 
+def zh_keeps_source_here(root, source):
+    """Whether ZH keeps this exact source at the same path below Code/."""
+    relative = Path(source).relative_to("Code")
+    return (root / ZH / relative).is_file()
+
+
 def included_by_siblings(root):
     """Files some neighbour #includes by bare name -- they cannot be moved.
 
@@ -219,6 +225,11 @@ def build(root):
         dest = destination(root, source, cls, homes, zh, zh_hdr)
         if not dest:
             skipped["no destination the evidence supports"] += 1
+            continue
+        # Included headers can emit inline methods whose class does not own the
+        # TU. The reference keeping this exact source here is stronger evidence.
+        if zh_keeps_source_here(root, source):
+            skipped["ZH keeps this source at its current path"] += 1
             continue
         target = os.path.join(dest, os.path.basename(source))
         if (root / target).exists():
