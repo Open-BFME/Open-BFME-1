@@ -1,8 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-
-// Open-BFME5: LevelGrantSpecialPowerModuleData scalar deleting destructor.
-// The matched constructor at 0x0025FEF0 installs vtable 0x010B5CD8;
-// slot zero reaches this wrapper through ILT 0x00048E14.
+// Open-BFME5: LevelGrantSpecialPowerModuleData dtor. SEH member @+0x260 then base.
 
 // The AcceptanceFilter parse-table entry is at owner +0x260. Its constructor
 // calls ILT 0x0003747A -> 0x003A0410 and stores a four-byte pool index;
@@ -14,9 +11,8 @@ class Rva0039D550
 {
 public:
 	~Rva0039D550();
-
 private:
-	unsigned char m_pad[ 4 ];
+	unsigned char m_pad[4];
 };
 
 // Emission surrogate: this 0x260-byte prefix includes the actual 0x254-byte
@@ -25,20 +21,19 @@ class LevelGrantSpecialPowerModuleDataBase
 {
 public:
 	virtual ~LevelGrantSpecialPowerModuleDataBase();
-
 private:
-	unsigned char m_pad[ 0x25c ];
+	unsigned char m_pad[0x25c];
 };
 
-class LevelGrantSpecialPowerModuleData : public LevelGrantSpecialPowerModuleDataBase
+class __declspec(novtable) LevelGrantSpecialPowerModuleData : public LevelGrantSpecialPowerModuleDataBase
 {
 public:
-	__declspec(noinline) virtual ~LevelGrantSpecialPowerModuleData();
-
+	virtual ~LevelGrantSpecialPowerModuleData();
 private:
 	Rva0039D550 m_acceptanceFilter;
 };
 
+// ??1LevelGrantSpecialPowerModuleData@@UAE@XZ
 LevelGrantSpecialPowerModuleData::~LevelGrantSpecialPowerModuleData()
 {
 }

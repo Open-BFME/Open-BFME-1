@@ -4504,6 +4504,7 @@ name,address,notes
 ??1AttackMeleeStateMachine@@UAE@XZ,0x0000F349,complete destructor ILT called by scalar wrapper 0x0016E5A0; exact constructor 0x00180EE0 installs dedicated vtable 0x010971D0
 ??1AttackNugget@@UAE@XZ,0x00013C2D,exact AttackNugget complete destructor ILT; constructor/vtable evidence routes this through body 0x001D6D80
 ??1AttributeHandleStandIn@@QAE@XZ,0x0039D550,Open-BFME5 handle-release dtor (global-pool index) from AttributeModifierAuraUpdateModuleData dtor call site
+??1Rva0039D550@@QAE@XZ,0x0039D550,Actual body: LevelGrant destructor 0x0026001B calls ILT 0x0001A401 -> 0x0039D550 with owner+0x260; nonvirtual thiscall four-byte indexed-handle release; original type unknown
 ??1AttributeModifierAuraUpdate@@MAE@XZ,0x0002F621,destructor ILT to 0x0027FF70
 ??1AttributeModifierAuraUpdateModuleData@@UAE@XZ,0x0002BD28,destructor ILT used by the AttributeModifierAuraUpdateModuleData scalar-deleting destructor
 ??1AttributeModifierAuraUpdateModuleDataMemberA@@QAE@XZ,0x00887940,Open-BFME5 pin
