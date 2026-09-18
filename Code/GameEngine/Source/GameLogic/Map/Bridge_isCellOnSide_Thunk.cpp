@@ -92,19 +92,19 @@ Bool Bridge::isCellOnSide(const Region2D *cell)
 	toRight.x += endVector.x;
 	toRight.y += endVector.y;
 
-	Coord2D line1, line2;
-	line1.x = fromLeft.x;
-	line1.y = fromLeft.y;
-	line2.x = toLeft.x;
-	line2.y = toLeft.y;
-	if (LineInRegion(&line1, &line2, cell))
+	Coord2D sideStart, sideEnd;
+	sideStart.x = fromLeft.x;
+	sideStart.y = fromLeft.y;
+	sideEnd.x = toLeft.x;
+	sideEnd.y = toLeft.y;
+	if (LineInRegion(&sideStart, &sideEnd, cell))
 		return true;
 
-	line1.x = fromRight.x;
-	line1.y = fromRight.y;
-	line2.x = toRight.x;
-	line2.y = toRight.y;
-	if (LineInRegion(&line1, &line2, cell))
+	sideStart.x = fromRight.x;
+	sideStart.y = fromRight.y;
+	sideEnd.x = toRight.x;
+	sideEnd.y = toRight.y;
+	if (LineInRegion(&sideStart, &sideEnd, cell))
 		return true;
 
 	fromLeft.x -= endVector.x;
@@ -116,18 +116,18 @@ Bool Bridge::isCellOnSide(const Region2D *cell)
 	toRight.x += endVector.x;
 	toRight.y += endVector.y;
 
-	line1.x = fromLeft.x;
-	line1.y = fromLeft.y;
-	line2.x = toLeft.x;
-	line2.y = toLeft.y;
-	if (LineInRegion(&line1, &line2, cell))
+	sideStart.x = fromLeft.x;
+	sideStart.y = fromLeft.y;
+	sideEnd.x = toLeft.x;
+	sideEnd.y = toLeft.y;
+	if (LineInRegion(&sideStart, &sideEnd, cell))
 		return true;
 
-	line1.x = fromRight.x;
-	line1.y = fromRight.y;
-	line2.x = toRight.x;
-	line2.y = toRight.y;
-	if (LineInRegion(&line1, &line2, cell))
+	sideStart.x = fromRight.x;
+	sideStart.y = fromRight.y;
+	sideEnd.x = toRight.x;
+	sideEnd.y = toRight.y;
+	if (LineInRegion(&sideStart, &sideEnd, cell))
 		return true;
 
 	return false;
