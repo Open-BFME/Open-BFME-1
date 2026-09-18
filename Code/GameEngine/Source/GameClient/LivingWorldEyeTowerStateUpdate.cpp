@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
 
-class Gen0060CBB0
+class LivingWorldEyeTower
 {
 public:
 	void updateState();
@@ -16,7 +16,7 @@ private:
 	float m_progress;
 };
 
-void Gen0060CBB0::updateState()
+void LivingWorldEyeTower::updateState()
 {
 	switch (m_state) {
 		case 0:

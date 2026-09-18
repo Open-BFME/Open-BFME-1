@@ -15,7 +15,7 @@ public:
 
 extern "C" BfmeStateDF *g_bfmeStateDF;
 
-class Gen0060CBB0
+class LivingWorldEyeTower
 {
 private:
 	void beginState();
@@ -29,7 +29,7 @@ private:
 	float m_progress;
 };
 
-void Gen0060CBB0::beginState()
+void LivingWorldEyeTower::beginState()
 {
 	m_progress += m_rate;
 	if (m_progress >= 1.0f)

@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
-// Open-BFME: ?processItems@Gen0060CBB0@@AAEXXZ, retail 0x0060CAD0, 178B.
+// Open-BFME: ?processItems@LivingWorldEyeTower@@AAEXXZ, retail 0x0060CAD0, 178B.
 // LivingWorldEyeTower.cpp lines 366 and 374.
 // g_bfmeDefaultBU at 0x01075334 is the 1.0f used by fdivr (bytes 00 00 80 3F).
 
@@ -13,7 +13,7 @@ struct Gen0060CBB0Pair
 	float second;
 };
 
-class Gen0060CBB0
+class LivingWorldEyeTower
 {
 private:
 	void processItems();
@@ -30,7 +30,7 @@ private:
 	float m_progress2;
 };
 
-void Gen0060CBB0::processItems()
+void LivingWorldEyeTower::processItems()
 {
 	m_from = m_current;
 

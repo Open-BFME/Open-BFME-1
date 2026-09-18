@@ -1,4 +1,4 @@
-// ?applyTo@Gen0060CBB0@@AAEXIPAUGen0060CBB0Pair@@@Z
+// ?applyTo@LivingWorldEyeTower@@AAEXIPAUGen0060CBB0Pair@@@Z
 // cl: /DNDEBUG /MD /EHs /O2 /Ob2
 
 struct Gen0060CBB0Pair
@@ -42,13 +42,13 @@ public:
 	void getPosition(Gen0060CBB0Coord3D *position);
 };
 
-class Gen0060CBB0
+class LivingWorldEyeTower
 {
 private:
 	void applyTo(unsigned int targetValue, Gen0060CBB0Pair *point);
 };
 
-void Gen0060CBB0::applyTo(unsigned int targetValue, Gen0060CBB0Pair *point)
+void LivingWorldEyeTower::applyTo(unsigned int targetValue, Gen0060CBB0Pair *point)
 {
 	Gen0060C510Target *target = (Gen0060C510Target *)targetValue;
 	if (target != 0) {

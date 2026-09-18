@@ -11,7 +11,7 @@ struct Gen0060CBB0Pair
 	float second;
 };
 
-class Gen0060CBB0
+class LivingWorldEyeTower
 {
 private:
 	Gen0060CBB0Pair *getPair();
@@ -21,7 +21,7 @@ private:
 	Gen0060CBB0Pair *m_capacity;
 };
 
-Gen0060CBB0Pair *Gen0060CBB0::getPair()
+Gen0060CBB0Pair *LivingWorldEyeTower::getPair()
 {
 	static Gen0060CBB0Pair defaultPoint(1930.0f, 210.0f);
 	unsigned int count = (unsigned int)(m_end - m_begin);

@@ -6,7 +6,7 @@ struct Gen0060CBB0Pair
 	volatile unsigned int second;
 };
 
-class Gen0060CBB0
+class LivingWorldEyeTower
 {
 public:
 	void handle();
@@ -26,7 +26,7 @@ private:
 	unsigned int m_state;
 };
 
-void Gen0060CBB0::handle()
+void LivingWorldEyeTower::handle()
 {
 	Gen0060CBB0Pair *pair = getPair();
 	m_pair.first = pair->first;

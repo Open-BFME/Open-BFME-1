@@ -15087,7 +15087,6 @@ name,address,notes
 ?applyStagingRoomRefresh@BfmeAptScreenOnlineCustomMatch@@QAEXXZ,0x00022999,ILT of CustomMatch staging-list refresh callee used by 0x00544DD0
 ?applyStaticLODLevel@GameLODManager@@IAEXW4StaticGameLODLevel@@@Z,0x00036A11,ILT callee of GameLODManager::setStaticLODLevel at 0x0007EDF0
 ?applyTint@Drawable@@QAEXURGBColor@@IIIMM@Z,0x0003D352,TintDrawableFXNugget caller identifies the BFME Drawable tint-envelope setter
-?applyTo@Gen0060CBB0@@AAEXIPAUGen0060CBB0Pair@@@Z,0x00008882,target application ILT called twice by exact Living World eye tower processFrame at 0x0060C9D0
 ?applyTopplingForce@ToppleUpdate@@QAEXPBUCoord3D@@MI@Z,0x0003FC97
 ?applyUpgrade@Rva0025DF30Object@@QAEXH@Z,0x00031F7A,address-derived upgrade target read from retail RVA 0x0025DF30
 ?aptPalantirClipRadar@@YAXPBUPalantirPoint@@0@Z,0x0003E4E6,AptPalantir::ClipRadar callback ILT registered by name
@@ -74835,7 +74834,6 @@ name,address,notes
 ?beginPlayerLeave@BFMEConnectionManager@@QAEHE@Z,0x00667320,byte player ID proven by entry movzx edi byte [esp+0x28]; int result tested by Network::RelayCommandsToCommandList at 0x00682B69
 ?beginPlayerLeave@BFMEConnectionManager@@QAEHPAX@Z,0x00032957,ILT of beginPlayerLeave used by RelayCommandsToCommandList 0x00682B64
 ?beginPlayerLeave@BFMEConnectionManager@@QAEHPAX@Z,0x00667320,int-return alias of the matched QAEXPAX body; eax is PlayerLeaveCode (1=LOCAL)
-?beginState@Gen0060CBB0@@AAEXXZ,0x00014862,ILT to 0x0060CC00 identified by the exact state update at 0x0060CC70
 ?behavior@Rva001BA1C0Handler@@QAEXPAVObject@@PBUCoord3D@@@Z,0x001BA1C0,RVA-qualified typed call view; dispatcher 0x001BC820 and parent raw callee ABI verified; direct body 0x001BA1C0
 ?behavior@Rva001BA1C0Handler@@QAEXPAXPAX@Z,0x0000FEBB,ILT thunk to the 1615B body at 0x001BA1C0; post-move behaviour handler reached from 0x001BC820
 ?behavior@Rva001BA1C0Handler@@QAE_NPAXPBUCoord3D@@@Z,0x0000FEBB,ILT thunk to the 1615B body at 0x001BA1C0; returns whether constant calling is required
@@ -82428,7 +82426,6 @@ name,address,notes
 ?getOverallWinStreak@SkirmishBattleHonors@@QBEHXZ,0x0009CEA0,getInt("OverallWinStreak" at VA 0x0108053C; 0) via the pinned getInt ILT 0x000443B9; 33 B
 ?getOverallWorstLossStreak@SkirmishBattleHonors@@QBEHXZ,0x0009CFC0,getInt("OverallWorstLossStreak" at VA 0x01080584; 0) via the pinned getInt ILT 0x000443B9; 33 B
 ?getPacketRouterSlot@ConnectionManager@@QAEIXZ,0x000374B1,DisconnectManager status update packet-router gate through ILT to the existing 0x00662DE0 body
-?getPair@Gen0060CBB0@@AAEPAUGen0060CBB0Pair@@XZ,0x0001DCB4,ILT to 0x0060CA40 identified by the exact Gen0060CBB0 handle caller
 ?getPart@Rva0018B8B0Arg@@QAEPAUBfmePartCDF@@XZ,0x00017436,retail getter thunk for Rva0018B8B0Holder::apply
 ?getPath@RoadType@@QAEPAVBfmeRoadPath@@PAV2@@Z,0x00707F00,W3DRoadBuffer addMapObjects calls this on m_roadTypes[i] inside the LOAD_TEST_ASSETS path-compare loop; returns the m_texturePath(+0x20) string word by value into an untracked POD temp, folds with the getText20 accessor already ledgered here
 ?getPathLabel1@Waypoint@@QBE?AVAsciiString@@XZ,0x00041BB4,Open-BFME5 exact ILT to body 0x001A6F60; BFME Waypoint m_pathLabel1 getter
@@ -83166,7 +83163,6 @@ name,address,notes
 ?handle@Gen00605080@@QAEXXZ,0x00605080,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
 ?handle@Gen00606F70@@QAEXXZ,0x00606F70,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
 ?handle@Gen00608480@@QAEXXZ,0x00608480,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
-?handle@Gen0060CBB0@@QAEXXZ,0x0060CBB0,address-derived __thiscall callee of the guarded pointer tail-jump family; target read from the REL32 at its call site
 ?handle@Gen0060CF20@@QAEXXZ,0x0060CF20,address-derived __thiscall callee of the guarded pointer tail-jump family; target read from the REL32 at its call site
 ?handle@Gen0060F780@@QAEXXZ,0x0060F780,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
 ?handle@Gen0060F7C0@@QAEXXZ,0x0060F7C0,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
@@ -84870,10 +84866,8 @@ name,address,notes
 ?processDisconnectScreenOff@DisconnectManager@@IAEXPAVNetCommandMsg@@PAVConnectionManager@@@Z,0x0066B890
 ?processFileAnnounce@ConnectionManager@@AAEXPAVNetFileAnnounceCommandMsg@@@Z,0x0066A030,ZH twin: map +0x12118 [fileID] = getRealFilename 0x00675610; map +0x12124 [fileID] = getPlayerMask 0x00674010 via 0x006694D0; progress maps at +0x12130 set 0 for masked slots else 0x64; dispatcher case 20 arm 0x0066A5E6 -> ILT 0x000089F4
 ?processFileProgress@ConnectionManager@@AAEXPAVNetFileProgressCommandMsg@@@Z,0x00669960,ZH twin: s_fileProgressMap[playerID][fileID] = max(old;getProgress) with the 8 maps at +0x12130 stride 12 (lea ecx [edi+edx*4+0x12130]) getFileID 0x00674080 getProgress 0x006740A0 map operator[] 0x00669560; dispatcher case 21 arm 0x0066A5F7 -> ILT 0x00030373
-?processFrame@Gen0060CBB0@@AAEXXZ,0x00047F7D,ILT to 0x0060C9D0 identified by the exact state update at 0x0060CC70
 ?processGameSpyStatsAuthKeyCommand@BFMEConnectionManager@@QAEXPAX@Z,0x006645B0,dispatcher 0x0066A3F0 case 6 (GAMESPY_STATS_AUTHKEY) arm 0x0066A519 -> ILT 0x000204AF; GameInfo::getSlot(msg->playerID) through 0x012F7198; if the slot's string from 0x00638030 is empty stores getText1C 0x00675C20 / getText20 0x00675CB0 via 0x00638060 / 0x006380F0
 ?processInactiveLanMessages@@YAXXZ,0x00039202,inactive LAN message pump thunk
-?processItems@Gen0060CBB0@@AAEXXZ,0x0000685C,ILT to 0x0060CAD0 identified by the exact Gen0060CBB0 handle tail call
 ?processMouseEvent@Mouse@@AAEXH@Z,0x005A46B0,Parent full647B through ret4 at5A4934 before CCpadding; thiscall index input and60B event records at1110; updates current MouseIO4D10 and prior4D4C with left/right/middle event codes then delta; canonical Mouse processMouseEvent; createStreamMessages5A4CB3 viaILT673A
 ?processPathfindQueue@Pathfinder@@QAEXXZ,0x000313A9,GameLogic phase call at 0x0038DC0E supplies TheAI+0x0C (Pathfinder); ILT targets 716-byte RVA 0x003DC190 whose zone refresh terrain bounds 512-slot request queue object lookup and doPathfind loop match AIPathfind.cpp
 ?processPending@ShroudManagerImpl008FBA40@@AAEX_N@Z,0x008FADD0,RVA 0x008FAFD0 post-drain processing call target
@@ -86320,7 +86314,6 @@ name,address,notes
 ?updatePlayerCells008FC3B0@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl008FBA40@@H@Z,0x008FC3B0,RVA 0x008FB010 per-element player update call target
 ?updatePlayerCells008FC450@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl008FBA40@@H@Z,0x008FC450,RVA 0x008FB060 per-element alternate player update call target
 ?updatePos@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@@Z,0x00013647,Open-BFME5 ILT; called by ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z at 0x001BEBB0 on TheAI+0x0C with the object position after the layer store
-?updatePosition@Gen0060CBB0@@AAEXXZ,0x0003E19E,position update ILT called by exact Living World eye tower processFrame at 0x0060C9D0
 ?updateRecord@RecorderClass@@QAEXXZ,0x0009BFE0,zh-sweep callee pin derived from retail REL32 displacement
 ?updateScorches@BaseHeightMapScorchUpdater@@QAEXXZ,0x00032966,BaseHeightMap scorch update ILT thunk
 ?updateShadowState@W3DVolumetricShadow@@QAEXXZ,0x0001315B,render helper ILT
@@ -88397,3 +88390,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?rva00521000@AptMapPreview@@QAEXPAVMapMetaData@@@Z,0x00521000,pin;unchanged preview receiver and metadata argument in retail 0x005216B0; actual body ret4
 ??1Video@@QAE@XZ,0x000C3410,True28-byte Video destructor; named INI::parseVideoDefinition calls through ILT167CF; three canonical string members and28-byte vector stride independently witnessed.
 ?update@Rva006D5280@@QAEXPAPAVTileData@@HHH@Z,0x0002279B,retail 0x0074C690 calls ILT 0x0002279B with TileData pointer array and three ints; body 0x006D5B10 matches the helper
+?rva0060C620@LivingWorldEyeTower@@AAEXXZ,0x0060C620,pin;processFrame60C9D0 restores same EyeTower ECX before ILT3E19E; actual750B body; method address-derived
