@@ -469,3 +469,15 @@ float Rva0073A600FloatGetter::get( void ) const
 {
 	return m_value;
 }
+
+// mov eax,ecx / ret.  The owning type is not identified.
+class Rva005D1C70Identity
+{
+public:
+	Rva005D1C70Identity *identity( void );
+};
+
+Rva005D1C70Identity *Rva005D1C70Identity::identity( void )
+{
+	return this;
+}
