@@ -175,7 +175,13 @@ RiderChangeContain::~RiderChangeContain( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-void RiderChangeContain::onContaining( Object *rider, Bool wasSelected )
+class SiegeEngineContain : public TransportContain
+{
+public:
+	virtual void onContaining( Object *rider, Bool wasSelected );
+};
+
+void SiegeEngineContain::onContaining( Object *rider, Bool wasSelected )
 {
 	Bool selected = wasSelected;
 	Object *entering = rider;
