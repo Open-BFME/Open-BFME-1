@@ -1,16 +1,15 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/shims/campaignmanagerascii /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
+#include "Common/AsciiString.h"
+
 // readable body of ?onEnter@AIDockState@@UAE?AW4StateReturnType@@XZ: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 // readable body of ?onExit@AIDockState@@UAEXW4StateExitType@@@Z: Code/GameEngine/Source/GameLogic/AI/AIStates.cpp
 //
 // AIDockState::onEnter — retail 0x0016CDB0 (183B).
 // AIDockState::onExit  — retail 0x0016CEA0 (75B).
 //
-// The state's whole life cycle: onEnter builds the AIDockMachine that onExit
-// halts and deletes, so both bodies need the same state layout (the machine
-// pointer at +0x24), the same machine vtable and the same reach from the
-// state's own StateMachine to the owning Object's AI. They sat in two files
-// that each described all of it, and disagreed: one called the machine
-// AIDockMachine with fifteen slots, the other DockMachine with sixteen.
+// Construction, onEnter/onExit, and scalar deletion share one state layout.
+// The machine pointer at +0x24 is initialized by construction, populated by
+// onEnter, then halted and deleted by onExit. The +0x28 bool remains opaque.
 //
 // ZH onEnter: require a goal object with a dock interface, ignoreObstacle it,
 // new AIDockMachine, setGoalObject, initDefaultState.
@@ -112,21 +111,45 @@ public:
 	unsigned char m_machineFields04[0x44];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
-class AIDockState
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
+class State
 {
 public:
+	State(StateMachine *machine, AsciiString name);
+	virtual ~State();
+
+protected:
+	unsigned char m_stateFields04[0x18];
+	StateMachine *m_machine;
+	unsigned char m_stateFields20[4];
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
+class AIDockState : public State
+{
+public:
+	AIDockState(StateMachine *machine);
 	virtual StateReturnType onEnter();
 	virtual void onExit(StateExitType status);
 
 	Object *getMachineOwner() { return m_machine->getOwner(); }
 	Object *getMachineGoalObject() { return m_machine->getGoalObject(); }
 
-	unsigned char m_stateFields04[0x18];
-	StateMachine *m_machine;
-	unsigned char m_stateFields20[4];
+protected:
+	virtual ~AIDockState();
+
+private:
+	// name_oracle witnesses +0x24; matched onEnter/onExit use this machine.
 	AIDockMachine *m_dockMachine;
+	bool m_28;
 };
+
+// Constructor 0x00171420 installs vtable 0x01097F08. Its protected scalar
+// wrapper 0x0017FF90 calls the complete teardown through ILT 0x0002FB1C.
+AIDockState::AIDockState(StateMachine *machine) :
+	State(machine, "AIDockState"), m_dockMachine(0), m_28(false)
+{
+}
 
 StateReturnType AIDockState::onEnter()
 {
