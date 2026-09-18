@@ -19707,7 +19707,6 @@ name,address,notes
 ?b_000b5ec0@@YAXXZ,0x000B5EC0,gen-thunk body
 ?b_000b5fc0@@YAXXZ,0x000B5FC0,gen-thunk body
 ?b_000b5fd0@@YAXXZ,0x000B5FD0,gen-thunk body
-?b_000b6030@@YAXXZ,0x000B6030,gen-thunk body
 ?b_000b6500@@YAXXZ,0x000B6500,gen-thunk body
 ?b_000b6510@@YAXXZ,0x000B6510,gen-thunk body
 ?b_000b6540@@YAXXZ,0x000B6540,gen-thunk body
@@ -84736,6 +84735,7 @@ name,address,notes
 ?parse@TerrainCollisionTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x0001EA60,Open-BFME5 pin
 ?parse@TransitionDamageFXModuleDataParseFXListShim@@SAXPAVINI@@PAX1PBX@Z,0x00251ED0,TransitionDamageFXModuleData parseFXList incremental-link thunk target through a TU-local forwarding shim
 ?parse@TransitionDamageFXModuleDataParseObjectCreationListShim@@SAXPAVINI@@PAX1PBX@Z,0x00251F70,TransitionDamageFXModuleData parseObjectCreationList incremental-link thunk target through a TU-local forwarding shim
+?parseAmbientAudioProperties_000B6030@@YAXXZ,0x000B6030,"address-qualified identity: called by Object::updateObjValuesFromMapProperties and MapObject::validate; reads the SoundAmbient dictionary keys and returns a refcounted DynamicAudioEventInfo plus modified/enabled flags"
 ?parseBitString32@INI@@SAXPAV1@PAX1PBX@Z,0x00850E70
 ?parseBlock@BfmePlayerAITypeSet@@QAEXPAVINI@@@Z,0x000DEEC0,the PlayerAITypeSet member the block parser hands its INI to; unnamed in the image
 ?parseBlock@INI@@QAEXVAsciiString@@@Z,0x00851350,provisional name for the per-block dispatcher loadFile drives
