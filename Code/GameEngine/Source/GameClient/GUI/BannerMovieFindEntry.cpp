@@ -16,7 +16,7 @@ private:
 // ?find@BfmeRangeOwner@@QAEPAXH@Z
 void *BfmeRangeOwner::find(int value)
 {
-	void *end = m_end;
-	void *result = bfmeFindInRange(m_begin, end, value, &value);
-	return result == end ? 0 : result;
+	void *rangeEnd = m_end;
+	void *foundEntry = bfmeFindInRange(m_begin, rangeEnd, value, &value);
+	return foundEntry == rangeEnd ? 0 : foundEntry;
 }
