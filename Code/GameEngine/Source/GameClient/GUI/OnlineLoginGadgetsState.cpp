@@ -40,7 +40,7 @@ public:
 
 bool BfmeAptScreenOnlineLogin::_bfme_loginGadgetsState()
 {
-	AsciiString value;
-	GetStringFromRegistry( "", "Registered", value );
-	return value.compareNoCase( (const char *)0x01080FB4 ) == 0;
+	AsciiString registeredValue;
+	GetStringFromRegistry( "", "Registered", registeredValue );
+	return registeredValue.compareNoCase( (const char *)0x01080FB4 ) == 0;
 }
