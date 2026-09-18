@@ -1,7 +1,8 @@
 // cl: -I Code/Libraries/Source/WWVegas/WWLib -I Code/Libraries/Source/WWVegas/WWMath -I Code/Libraries/Source/WWVegas/WWDebug -I Code/Libraries/Source/WWVegas/WWSaveLoad -I Code/Libraries/Include
 //
-// The two `Create_Z_Rotation_Matrix3` overloads from
+// Rotation overloads from
 // Code/Libraries/Source/WWVegas/WWMath/matrix3.h, emitted out of line.
+// This TU groups Create_Z_Rotation_Matrix3 and Matrix3::Rotate_Y emitters.
 //
 // WHAT THE BYTES SHOW.  Both bodies take a hidden pointer in the first stack
 // slot, write nine floats through it at +0x00..+0x20 and return with a plain
@@ -35,17 +36,33 @@
 
 #include "matrix3.h"
 
-typedef Matrix3 ( *U4ZRotFromSinCos )( float, float );
-typedef Matrix3 ( *U4ZRotFromRadians )( float );
+typedef Matrix3 ( *CreateZRotationFromSinCos )( float, float );
+typedef Matrix3 ( *CreateZRotationFromRadians )( float );
 
-// ?u4ZRotFromSinCos@@YAP6A?AVMatrix3@@MM@ZXZ absent-from-retail
-U4ZRotFromSinCos u4ZRotFromSinCos( void )
+// ?emitCreateZRotationFromSinCos@@YAP6A?AVMatrix3@@MM@ZXZ absent-from-retail
+CreateZRotationFromSinCos emitCreateZRotationFromSinCos( void )
 {
 	return &Create_Z_Rotation_Matrix3;
 }
 
-// ?u4ZRotFromRadians@@YAP6A?AVMatrix3@@M@ZXZ absent-from-retail
-U4ZRotFromRadians u4ZRotFromRadians( void )
+// ?emitCreateZRotationFromRadians@@YAP6A?AVMatrix3@@M@ZXZ absent-from-retail
+CreateZRotationFromRadians emitCreateZRotationFromRadians( void )
 {
 	return &Create_Z_Rotation_Matrix3;
+}
+
+// Address-taking emitters for Matrix3::Rotate_Y, for the same WWINLINE reason.
+typedef void ( Matrix3::*RotateYFromRadians )( float );
+typedef void ( Matrix3::*RotateYFromSinCos )( float, float );
+
+// ?emitRotateYFromRadians@@YAP8Matrix3@@AEXM@ZXZ absent-from-retail
+RotateYFromRadians emitRotateYFromRadians( void )
+{
+	return static_cast<RotateYFromRadians>( &Matrix3::Rotate_Y );
+}
+
+// ?emitRotateYFromSinCos@@YAP8Matrix3@@AEXMM@ZXZ absent-from-retail
+RotateYFromSinCos emitRotateYFromSinCos( void )
+{
+	return static_cast<RotateYFromSinCos>( &Matrix3::Rotate_Y );
 }
