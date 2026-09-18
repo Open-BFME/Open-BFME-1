@@ -1,5 +1,4 @@
 Code/GameEngine/Source/Common/Audio/AudioEventRTSCommonInit.cpp	AsciiString	Code\GameEngine\Source\Common\Audio\AudioEventRTSCommonInit.cpp(110) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
-Code/GameEngine/Source/Common/Audio/AudioEventRTSInitFromName.cpp	AsciiString	Code\GameEngine\Source\Common\Audio\AudioEventRTSInitFromName.cpp(60) : error C2039: 'm_data' : is not a member of 'AsciiString'
 Code/GameEngine/Source/Common/Audio/Rva006B1E60ProviderState.cpp	AsciiString	Code\GameEngine\Source\Common\Audio\Rva006B1E60ProviderState.cpp(68) : error C2039: 'bfmeCompare1294' : is not a member of 'AsciiString'
 Code/GameEngine/Source/Common/Bfme5CountedClears.cpp	AsciiString	Code\GameEngine\Source\Common\Bfme5CountedClears.cpp(193) : error C3861: 'releaseBuffer': identifier not found, even with argument-dependent lookup
 Code/GameEngine/Source/Common/Bfme5HandOffClears.cpp	AsciiString	Code\GameEngine\Source\Common\Bfme5HandOffClears.cpp(167) : error C2039: 'releaseBuffer' : is not a member of 'AsciiString'

@@ -23,10 +23,10 @@ class AsciiString
 public:
 	AsciiString &operator=(const AsciiString &other);
 	void clear();
+	void set(const AsciiString &other);
 
 	static const AsciiString TheEmptyString;
 
-private:
 	char *m_data;
 };
 
@@ -47,6 +47,7 @@ public:
 class CountedPtr
 {
 public:
+	void bind(const AsciiString &name);
 	void clear(void)
 	{
 		if (m_ptr)
@@ -64,7 +65,8 @@ public:
 class AudioEventRTS
 {
 public:
-	void commonInit(void);
+	__declspec(noinline) void commonInit(void);
+	void initFromName(const AsciiString &name);
 
 private:
 	void *m_vftable;
@@ -142,4 +144,21 @@ void AudioEventRTS::commonInit(void)
 	m_loopCount = 1;
 	m_tail.clear();
 	m_int68 = -1;
+}
+
+// Retail RVA 0x000B2610, called by thin constructors via ILT 0x0004A86D.
+// ?initFromName@AudioEventRTS@@QAEXABVAsciiString@@@Z
+void AudioEventRTS::initFromName(const AsciiString &name)
+{
+	commonInit();
+	if (name.m_data)
+	{
+		m_eventName.set(*reinterpret_cast<const AsciiString *>(name.m_data + 8));
+		m_eventInfo.bind(name);
+	}
+	else
+	{
+		m_eventName.set(AsciiString::TheEmptyString);
+		m_eventInfo.clear();
+	}
 }
