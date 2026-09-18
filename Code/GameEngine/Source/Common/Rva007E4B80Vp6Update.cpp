@@ -63,17 +63,17 @@ private:
 int Rva007E4B80Vp6Stream::update(int flags)
 {
     Rva007E4B80Locals local;
-    int result = isReady() ? 2 : 0;
+    int updateStatus = isReady() ? 2 : 0;
     if (m_frame < 0) {
         reset();
     }
 
     local.flag4 = flags & 4;
-    if (local.flag4 == 0 && (result & 2) != 0) {
-        return result;
+    if (local.flag4 == 0 && (updateStatus & 2) != 0) {
+        return updateStatus;
     }
     if (!canProcess(flags)) {
-        return result;
+        return updateStatus;
     }
 
     local.frame = ((Rva007E4820FrameClock *)this)->frame(flags);
@@ -93,22 +93,22 @@ int Rva007E4B80Vp6Stream::update(int flags)
             break;
         }
         reset();
-        result |= 4;
+        updateStatus |= 4;
     }
 
     if (flags & 1) {
-        return result;
+        return updateStatus;
     }
 
     if (m_previous != m_frame) {
         advance();
         m_nested->release();
-        result |= 1;
+        updateStatus |= 1;
         reset();
         if (local.flag4 != 0 && isReady()) {
             ((Rva007E4AD0Vp6Stream *)this)->update();
         }
     }
 
-    return result;
+    return updateStatus;
 }
