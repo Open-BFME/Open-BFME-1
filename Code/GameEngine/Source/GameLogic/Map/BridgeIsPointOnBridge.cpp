@@ -99,26 +99,26 @@ bool BridgePointOnBridgeShim::test(const Coord3D *point)
 		testPt.X = point->x;
 		testPt.Y = point->y;
 		testPt.Z = point->z;
-		Vector3 left1;
-		left1.X = m_fromLeft.x;
-		left1.Y = m_fromLeft.y;
-		left1.Z = m_fromLeft.z;
-		Vector3 right1;
-		right1.X = m_fromRight.x;
-		right1.Y = m_fromRight.y;
-		right1.Z = m_fromRight.z;
-		Vector3 left2;
-		left2.X = m_toLeft.x;
-		left2.Y = m_toLeft.y;
-		left2.Z = m_toLeft.z;
-		Vector3 right2;
-		right2.X = m_toRight.x;
-		right2.Y = m_toRight.y;
-		right2.Z = m_toRight.z;
+		Vector3 fromLeft;
+		fromLeft.X = m_fromLeft.x;
+		fromLeft.Y = m_fromLeft.y;
+		fromLeft.Z = m_fromLeft.z;
+		Vector3 fromRight;
+		fromRight.X = m_fromRight.x;
+		fromRight.Y = m_fromRight.y;
+		fromRight.Z = m_fromRight.z;
+		Vector3 toLeft;
+		toLeft.X = m_toLeft.x;
+		toLeft.Y = m_toLeft.y;
+		toLeft.Z = m_toLeft.z;
+		Vector3 toRight;
+		toRight.X = m_toRight.x;
+		toRight.Y = m_toRight.y;
+		toRight.Z = m_toRight.z;
 
 		unsigned char flags;
-		if (Point_In_Triangle_2D(left1, right1, left2, testPt, 0, 1, flags))
+		if (Point_In_Triangle_2D(fromLeft, fromRight, toLeft, testPt, 0, 1, flags))
 			return true;
-		return Point_In_Triangle_2D_byte(right1, left2, right2, testPt, 0, 1, flags);
+		return Point_In_Triangle_2D_byte(fromRight, toLeft, toRight, testPt, 0, 1, flags);
 	}
 }
