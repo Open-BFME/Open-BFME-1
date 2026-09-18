@@ -508,3 +508,9 @@ bool Rva00698F10False::value( void )
 {
 	return false;
 }
+
+// xor al,al / ret -- the owning type is not identified.
+bool Rva0065EA30False( void )
+{
+	return false;
+}
