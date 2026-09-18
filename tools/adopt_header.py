@@ -205,7 +205,8 @@ def rewrite(text, name, include, incdir):
 
 def verdict(rel):
     """(rel, why-it-failed or None). An unreadable answer is a defect, not a pass."""
-    done = subprocess.run([str(ROOT / "build.sh"), rel], cwd=ROOT,
+    # through bash: on Windows a .sh is not executable (WinError 193)
+    done = subprocess.run(["bash", str(ROOT / "build.sh"), rel], cwd=ROOT,
                           capture_output=True, text=True)
     out = done.stdout + done.stderr
     if done.returncode:

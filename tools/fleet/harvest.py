@@ -167,6 +167,11 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
                            why="ctor_vtable: the vtable this body leaves installed belongs to %s, not %s" % (flagged[rva], row["name"]))
                 run("git", "add", "-A", "--", *evidence); unstage_inflight()
                 print(f"harvest: quarantined {row['source']} (identity-suspect: vtable belongs to {flagged[rva]})")
+    # A staged source or stash that redeclares a type a header owns fails the
+    # hook; adopt_header swaps in the include, byte-gates the file and records
+    # what the compiler refuses, so run it on the staged set first
+    subprocess.run([sys.executable, "tools/adopt_header.py", "--fix-staged"], cwd=ROOT, capture_output=True)
+    run("git", "add", "-A", "--", *evidence); unstage_inflight()
     # A placeholder member the evidence can already name fails the name oracle;
     # its --apply is a byte-neutral rename, so let it settle what it can first
     if keep:
