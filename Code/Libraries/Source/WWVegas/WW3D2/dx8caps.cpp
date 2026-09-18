@@ -786,36 +786,33 @@ void DX8Caps::Check_Texture_Format_Support(WW3DFormat display_format,const D3DCA
 	}
 }
 
-// ?Check_Render_To_Texture_Support@DX8Caps@@AAEXW4WW3DFormat@@ABU_D3DCAPS8@@@Z present-unmatched
+struct BFME_DX8Caps_RenderTextureFields
+{
+	char pad[0x1a7];
+	bool supportRenderToTextureFormat[100];
+	char padAfterFormats[0x2a0 - 0x20b];
+	IDirect3D8 *direct3D;
+};
+
 void DX8Caps::Check_Render_To_Texture_Support(WW3DFormat display_format,const D3DCAPS8& caps)
 {
+	BFME_DX8Caps_RenderTextureFields *retail =
+		(BFME_DX8Caps_RenderTextureFields *)this;
 	if (display_format==WW3D_FORMAT_UNKNOWN) {
-		for (unsigned i=0;i<WW3D_FORMAT_COUNT;++i) {
-			SupportRenderToTextureFormat[i]=false;
+		for (unsigned i=0;i<100;++i) {
+			retail->supportRenderToTextureFormat[i]=false;
 		}
 		return;
 	}
-	D3DFORMAT d3d_display_format=WW3DFormat_To_D3DFormat(display_format);
-	for (unsigned i=0;i<WW3D_FORMAT_COUNT;++i) {
-		if (i==WW3D_FORMAT_UNKNOWN) {
-			SupportRenderToTextureFormat[i]=false;
-		}
-		else {
-			WW3DFormat format=(WW3DFormat)i;
-			SupportRenderToTextureFormat[i]=SUCCEEDED(
-				Direct3D->CheckDeviceFormat(
-					caps.AdapterOrdinal,
-					caps.DeviceType,
-					d3d_display_format,
-					D3DUSAGE_RENDERTARGET,
-					D3DRTYPE_TEXTURE,
-					WW3DFormat_To_D3DFormat(format)));
-			if (SupportRenderToTextureFormat[i]) {
-				StringClass name(0,true);
-				Get_WW3D_Format_Name(format,name);
-				DXLOG(("Supports render-to-texture format: %s\r\n",name));
-			}
-		}
+	for (unsigned i=0;i<100;++i) {
+		retail->supportRenderToTextureFormat[i]=SUCCEEDED(
+			retail->direct3D->CheckDeviceFormat(
+				caps.AdapterOrdinal,
+				caps.DeviceType,
+				(D3DFORMAT)display_format,
+				D3DUSAGE_RENDERTARGET,
+				D3DRTYPE_TEXTURE,
+				(D3DFORMAT)i));
 	}
 }
 
