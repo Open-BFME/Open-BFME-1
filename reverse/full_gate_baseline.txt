@@ -19,7 +19,6 @@
 ?Set_Outer_Scale_Channel@RingRenderObjClass@@QAEXABV?$LERPAnimationChannelClass@VVector2@@@@@Z (Code/Libraries/Source/WWVegas/WW3D2/ringobj.cpp)
 ?Set_Scale_Channel@SphereRenderObjClass@@QAEXABV?$LERPAnimationChannelClass@VVector3@@@@@Z (Code/Libraries/Source/WWVegas/WW3D2/sphereobj.cpp)
 ?_M_clear@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@IAEXXZ (Code/GameEngine/Source/Common/ModuleInfoNuggetVector.cpp)
-?_M_fill_insert@?$vector@GV?$allocator@G@_STL@@@_STL@@QAEXPAGIABG@Z (Code/Libraries/Source/WWVegas/WWLib/vector_ushort_fill_insert.cpp)
 ?clearAiModuleInfo@ModuleInfo@@QAE_NXZ (Code/GameEngine/Source/Common/Thing/ModuleInfoClearAi.cpp)
 ?concat@AsciiString@@QAEXABV1@@Z (Code/GameEngineDevice/Source/Win32Device/Common/Win32LocalFileSystem.cpp)
 ?dup_000e2430@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp)

@@ -88402,3 +88402,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?resize@?$vector@URva00244A80Element@@V?$allocator@URva00244A80Element@@@_STL@@@_STL@@QAEXIURva00244A80Element@@@Z,0x00246850,Open-BFME5 28-byte vector by-value resize callee independently matched by its shrink and growth call contracts
 ?rva0003b313@Glo012F1028Type@@QAEXXZ,0x0003B313,address-derived BFME LivingWorld restart callback thunk
 ?set@DisabledMaskType@@QAEXIH@Z,0x0001800C,retail 0x001C81C0 calls ILT 0x0001800C with DisabledMaskType this bit and int; ZH BitFlags::set ABI
+?Rva006288F0InsertOverflow@?$vector@GV?$allocator@G@_STL@@@_STL@@IAEXPAGABGABU__true_type@2@I_N@Z,0x006288F0,address-qualified body; ECX three-pointer layout and five stack arguments; ret0x14 (20 bytes); two-byte scalar carrier only; exact existing263B object association; retail call through ILT0x4802C
