@@ -84,15 +84,15 @@ LivingWorldRegion *LivingWorldRegionManager::rva003C8A50(
 	if (count > 0)
 	{
 		BorrowedAsciiStringView query = { regionName.m_data };
-		LivingWorldRegion **it = begin;
+		LivingWorldRegion **regionCursor = begin;
 		while (index < count)
 		{
-			LivingWorldRegion *candidate = *it;
+			LivingWorldRegion *candidate = *regionCursor;
 			if (query.compare(candidate->m_name) == 0)
 				return begin[index];
 
 			++index;
-			++it;
+			++regionCursor;
 		}
 	}
 
