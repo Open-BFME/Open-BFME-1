@@ -26,20 +26,20 @@ public:
 class Rva001A3390Counter
 {
 public:
-	void consider(const Coord3D *pos, int unused);
+	void consider(const Coord3D *inputPosition, int unused);
 
 private:
 	Int m_count;
 	PolygonTrigger *m_trigger;
 };
 
-void Rva001A3390Counter::consider(const Coord3D *pos, int unused)
+void Rva001A3390Counter::consider(const Coord3D *inputPosition, int unused)
 {
-	const Coord3D *p = pos;
-	ICoord3D ic;
-	ic.x = (Int)p->x;
-	ic.y = (Int)p->y;
-	ic.z = (Int)p->z;
-	if (m_trigger->pointInTrigger(ic))
+	const Coord3D *position = inputPosition;
+	ICoord3D integerPosition;
+	integerPosition.x = (Int)position->x;
+	integerPosition.y = (Int)position->y;
+	integerPosition.z = (Int)position->z;
+	if (m_trigger->pointInTrigger(integerPosition))
 		++m_count;
 }
