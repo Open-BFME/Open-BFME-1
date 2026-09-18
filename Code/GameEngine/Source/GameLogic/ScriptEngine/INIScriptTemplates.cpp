@@ -8,7 +8,7 @@
 // Template - 0x0033D680 for actions, 0x0033D790 for conditions.
 //
 // Template is a real name with a landed constructor and destructor; the layout
-// here is TemplateCtorThunk.cpp's, unchanged, and the 0x7C frame the two bodies
+// here is Template.cpp's, unchanged, and the 0x7C frame the two bodies
 // reserve is exactly its size. The two engine members have no recoverable name,
 // so they are spelled for what these call sites prove: one Template pointer,
 // thiscall, callee-cleaned.
