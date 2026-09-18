@@ -684,6 +684,10 @@ Int playerIndexToColorIndex(Int playerIndex)
 	return result;
 }
 
+void Rva007115C0Noop(void)
+{
+}
+
 /**Utility function used to render a full screen quad with the specified color and
 stencil mask*/
 void renderStenciledPlayerColor( UnsignedInt color, UnsignedInt stencilRef, Bool clear=FALSE)
