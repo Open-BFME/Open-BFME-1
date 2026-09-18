@@ -1,7 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: RousingSpeechUpdate::friend_newModuleData factory.
+// RousingSpeechUpdate factories: 0x284-byte data and 0xfc-byte instance.
+// Retail EH metadata links 0x0011C640 to 0x00BFFDC0 and 0x0011C6C0
+// to 0x00BFFDE0; both cleanup handlers release the failed allocation.
 
 class INI;
+class Thing;
+class Module;
 class ModuleData;
 
 void *__cdecl operator new(unsigned int);
@@ -35,7 +39,12 @@ extern "C" void __cdecl RousingSpeechUpdateFieldParse(MultiIniFieldParse &parse)
 class RousingSpeechUpdate
 {
 public:
+	RousingSpeechUpdate(Thing *, const ModuleData *);
+	static Module *friend_newModuleInstance(Thing *, const ModuleData *);
 	static ModuleData *friend_newModuleData(INI *ini);
+
+private:
+	unsigned char m_pad[0xfc];
 };
 
 // ?friend_newModuleData@RousingSpeechUpdate@@SAPAVModuleData@@PAVINI@@@Z
@@ -45,4 +54,10 @@ ModuleData *RousingSpeechUpdate::friend_newModuleData(INI *ini)
 	if (ini)
 		ini->initFromINIMultiProc(data, &RousingSpeechUpdateFieldParse);
 	return (ModuleData *)data;
+}
+
+// ?friend_newModuleInstance@RousingSpeechUpdate@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
+Module *RousingSpeechUpdate::friend_newModuleInstance(Thing *thing, const ModuleData *data)
+{
+	return (Module *)new RousingSpeechUpdate(thing, data);
 }
