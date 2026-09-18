@@ -1,6 +1,8 @@
 // cl: /O2 /Ob2 /G6
 
-// One grid layout serves construction, storage reset, and point lookup.
+// One grid layout serves construction, storage reset, point lookup, object
+// accumulation, and victory-threshold evaluation. The cell layout is 0x88 bytes:
+// two sixteen-player sample arrays followed by their two masks.
 // The constructor and lookup prove the unsigned count at +0x08 and the
 // cell spacing/origin at +0x0C/+0x10; reset clears the same 0x1C-byte object.
 // Keep the existing ABI names: these BFME-specific types have no ZH twin.
@@ -58,11 +60,57 @@ void _bfme_debugRecordCallsite(Int kind);
 	message->setText(reason)->show(true); \
 } while (0)
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
+struct Coord3D
+{
+	Real x;
+	Real y;
+	Real z;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class Object
+{
+public:
+	const Coord3D *getPosition() const { return &m_position; }
+
+private:
+	unsigned char m_pad000[0x38];
+	Coord3D m_position;
+};
+
+class Gen_001de260
+{
+public:
+	Int bfmeAbove(const Real *samples, Int index) const;
+};
+
+class VictorySystem
+{
+public:
+	Gen_001de260 *bfmeParametersForPlayer(Int playerIndex);
+};
+
+extern VictorySystem *TheVictorySystem;
+
 class BfmeCell
 {
 public:
 	BfmeCell();
 	~BfmeCell();
+	void bfmeAdd(Real amount, Int firstIndex, Int secondIndex);
+
+	void clear()
+	{
+		for (UnsignedInt index = 0; index < 16; ++index)
+		{
+			m_second[index] = 0.0f;
+			m_first[index] = 0.0f;
+		}
+		m_secondMask = 0;
+		m_firstMask = 0;
+	}
+
 
 	Real m_first[16];
 	Real m_second[16];
@@ -81,6 +129,9 @@ class BfmeCellGrid
 public:
 	BfmeCellGrid(Int width, Int height, Real cellSize, Real offset);
 	void _bfme_reset();
+	Int bfmeEvaluateCells() const;
+	void bfmeApplyAtObject(const Object *object,
+		Real amount, Int firstIndex, Int secondIndex) const;
 	UnsignedInt bfmePointIndex(const BfmePoint1560 &point);
 
 private:
@@ -163,4 +214,48 @@ UnsignedInt BfmeCellGrid::bfmePointIndex(const BfmePoint1560 &point)
 			return index;
 	}
 	return 0x7fffffff;
+}
+
+void BfmeCellGrid::bfmeApplyAtObject(const Object *object,
+	Real amount, Int firstIndex, Int secondIndex) const
+{
+	const Coord3D *position = object->getPosition();
+	if (m_cellSize > 0.0f)
+	{
+		Int row = (Int)((position->y - m_offset) / m_cellSize);
+		Int index = row * m_width;
+		index += (Int)((position->x - m_offset) / m_cellSize);
+
+		if ((UnsignedInt)index < m_cellCount && index != 0x7fffffff)
+			m_cells[index].bfmeAdd(amount, firstIndex, secondIndex);
+	}
+}
+
+Int BfmeCellGrid::bfmeEvaluateCells() const
+{
+	Int affected = 0;
+	for (UnsignedInt cellIndex = 0; cellIndex < m_cellCount; ++cellIndex)
+	{
+		m_cellValues[cellIndex] = 0;
+		if (m_cells[cellIndex].m_firstMask != 0)
+		{
+			for (UnsignedInt playerIndex = 0; playerIndex < 16; ++playerIndex)
+			{
+				if ((m_cells[cellIndex].m_firstMask & (1 << playerIndex)) != 0)
+				{
+					Gen_001de260 *parameters =
+						TheVictorySystem->bfmeParametersForPlayer((Int)playerIndex);
+					if (parameters != 0 &&
+						static_cast<unsigned char>(parameters->bfmeAbove(
+							m_cells[cellIndex].m_first, (Int)playerIndex)) != 0)
+					{
+						m_cellValues[cellIndex] |= (1 << playerIndex);
+						m_cells[cellIndex].clear();
+						++affected;
+					}
+				}
+			}
+		}
+	}
+	return affected;
 }
