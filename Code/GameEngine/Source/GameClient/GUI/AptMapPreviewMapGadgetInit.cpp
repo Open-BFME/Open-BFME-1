@@ -9,7 +9,7 @@
 // reach a window into the preview object: MapInfo at +0x0C, MapDescription at
 // +0x10, MapPicture at +0x08 and CurrentMap at +0x04. CurrentMap also copies
 // up to eight of its child windows into the array at +0x14 and hides each one.
-// AptMapPreviewSetMapPicture.cpp at 0x00520E70 witnesses the Image at +0x34,
+// AptMapPreviewImages.cpp at 0x00520E70 witnesses the Image at +0x34,
 // which is where that array stops.
 
 typedef bool Bool;
@@ -37,7 +37,7 @@ public:
 void bfmeGoENK( BfmeObjENK *window, char enable );
 void BfmeGadgetListBoxSetAudioFeedback( GameWindow *listbox, Bool enable );
 
-// Layout witnessed by AptMapPreviewSetMapPicture.cpp at 0x00520E70 and by the
+// Layout witnessed by AptMapPreviewImages.cpp at 0x00520E70 and by the
 // picture callback at 0x005204F0.
 class AptMapPreview
 {

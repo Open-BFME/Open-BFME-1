@@ -1,54 +1,28 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Include
 
-// Recovered BFME map-picture loader at RVA 0x00520BB0 (431 bytes).
+// AptMapPreview image loading (0x00520BB0, 431 bytes) and selection
+// (0x00520E70, 185 bytes) share the same Image model and compile settings.
 // The descriptive _bfme_ name does not claim an original source spelling.
 // AptMapPreview's image selection caller at 0x00520E70 passes a map-name
-// string at +0x50, owns the returned Image at +0x34, and falls back to the
-// mapped image "MissingMap" when no picture is available.
+// string at MapMetaData+0x50, owns the returned Image at preview+0x34, and
+// falls back to the mapped image "MissingMap" when no picture is available.
 //
 // The Image layout and UV/size operations follow GameClient/Image.h; the
 // filename is the map path with its four-character extension replaced by
-// "_pic.tga". The string ABI below follows StringInline.h, with the two
-// existing public StringBase methods required by this body added locally.
+// "_pic.tga". String and coordinate types use their canonical headers.
 // The address-derived Rva0044F4D0 is an existing one-pointer texture-owner
 // ABI shim. Its int argument carries a filename pointer on this 32-bit target.
 //
-template <typename T> struct StringInlineData
+#include "ascii_string.h"
+#include "basetype.h"
+
+// Existing canonical implementation from string_base.cpp, kept visible for
+// the retail inlined accessor; the class itself comes from string_base.h.
+template <typename T>
+inline const T *StringBase<T>::str() const
 {
-	int m_refCount;
-	int m_length;
-	T m_text[1];
-};
-
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const T *text );
-	StringBase( const StringBase<T> &other );
-public:
-	void removeLastChar();
-	void concat(const T *, int);
-private:
-	~StringBase();
-
-	StringInlineData<T> *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-	void removeLastChar() { StringBase<char>::removeLastChar(); }
-	void concat(const char *text, int count) { StringBase<char>::concat(text, count); }
-	const char *str( void ) const { return m_data ? m_data->m_text : ""; }
-};
+    return m_data ? &m_data->data[0] : (const T *)"";
+}
 
 typedef unsigned int size_t;
 void *__cdecl operator new(size_t);
@@ -78,9 +52,6 @@ public:
 private:
     TextureClass *m_texture;
 };
-
-struct Coord2D { float x, y; };
-struct Region2D { Coord2D lo, hi; };
 
 class Image
 {
@@ -117,7 +88,7 @@ Image *_bfme_createMapPictureImage(const AsciiString &mapName)
     pictureName.removeLastChar();
     pictureName.removeLastChar();
     pictureName.removeLastChar();
-    pictureName.concat("_pic.tga", 8);
+    reinterpret_cast<StringBase<char> *>(&pictureName)->concat("_pic.tga", 8);
 
     Image *image = 0;
     if (TheFileSystem->doesFileExist(pictureName.str()))
@@ -137,4 +108,65 @@ Image *_bfme_createMapPictureImage(const AsciiString &mapName)
         image->setTextureWidth(128);
     }
     return image;
+}
+
+// Selection owns a freshly created map image and borrows the fallback.
+class MappedImageCollection
+{
+public:
+	const Image *findImageByName(const AsciiString &name);
+};
+
+extern MappedImageCollection *TheMappedImageCollection;
+extern Image *createMapPictureImage(const AsciiString &mapName);
+
+#pragma comment(linker, "/alternatename:?createMapPictureImage@@YAPAVImage@@ABVAsciiString@@@Z=?j_0004032c@@YAXXZ")
+#pragma comment(linker, "/alternatename:?findImageByName@MappedImageCollection@@QAEPBVImage@@ABVAsciiString@@@Z=?j_0001d606@@YAXXZ")
+
+class MapMetaData
+{
+private:
+	char m_unmodelled[0x50];
+
+public:
+	AsciiString m_mapName;
+};
+
+class AptMapPreview
+{
+public:
+	void bfmeSetMapPicture(MapMetaData *map);
+
+private:
+	char m_unmodelled[0x34];
+	const Image *m_picture;
+	bool m_pictureOwned; // created map image is owned; MissingMap fallback is borrowed
+};
+
+void AptMapPreview::bfmeSetMapPicture(MapMetaData *map)
+{
+	if (m_pictureOwned)
+	{
+		if (m_picture)
+		{
+			delete m_picture;
+			m_picture = 0;
+		}
+	}
+
+	Image *picture = reinterpret_cast<Image *>(map);
+	if (map)
+	{
+		picture = createMapPictureImage(map->m_mapName);
+		m_pictureOwned = true;
+	}
+	if (!picture)
+	{
+		{
+			AsciiString missingMap("MissingMap");
+			picture = (Image *)TheMappedImageCollection->findImageByName(missingMap);
+		}
+		m_pictureOwned = false;
+	}
+	m_picture = picture;
 }

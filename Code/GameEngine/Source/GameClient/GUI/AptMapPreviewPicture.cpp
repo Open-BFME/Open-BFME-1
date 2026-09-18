@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Include
 //
 // AptMapPreview::picture, retail 0x005204F0, 156 bytes.
 // AptMapPreview::initGadgets at 0x00521AE0 pushes the selector string
@@ -6,7 +6,7 @@
 // 0x0000AFAB twenty bytes later, which is what names it.
 //
 // The APT movie calls this every frame to paint the cached map picture into
-// the rectangle it hands over. AptMapPreviewSetMapPicture.cpp at 0x00520E70
+// the rectangle it hands over. AptMapPreviewImages.cpp at 0x00520E70
 // already witnesses the two fields this reads, the owned Image at +0x34 and
 // the ownership flag at +0x38.
 
@@ -15,11 +15,7 @@ extern "C" __declspec(dllimport) int __stdcall IsBadReadPtr(
 
 class Image;
 
-struct Coord2D
-{
-	float x;
-	float y;
-};
+#include "basetype.h"
 
 // The BFME display vtable, as BfmeOverlay1293_bfmeDraw1293.cpp witnesses it:
 // slot 44 opens a two-dimensional batch and slot 55 closes it. Slot 53 is the
@@ -62,7 +58,7 @@ public:
 
 extern Display * const TheDisplay;
 
-// Layout witnessed by AptMapPreviewSetMapPicture.cpp at 0x00520E70.
+// Layout witnessed by AptMapPreviewImages.cpp at 0x00520E70.
 class AptMapPreview
 {
 public:
