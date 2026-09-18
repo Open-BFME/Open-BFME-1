@@ -86,27 +86,27 @@ ParabolicEase::operator ()(Real param) const
 		param = clamp(param);
 	}
 #if 0
-	const Real v0 = 2.0f/(1.0f + out - in);
+	const Real scale = 2.0f/(1.0f + out - in);
 	if (param < m_in) {
 		// "param < in" avoids a division by zero at param = 0.0f and in = 0.0f
-		return v0*param*param/(2.0f*m_in);
+		return scale*param*param/(2.0f*m_in);
 	} else if (param <= m_out) {
 		// "param <= out" avoid a division by zero when param = 1.0f and out = 1.0f
-		return v0*(m_in/2.0f + (param - m_in));
+		return scale*(m_in/2.0f + (param - m_in));
 	} else {
-		return v0*(m_in/2.0f + (m_out - m_in) +
+		return scale*(m_in/2.0f + (m_out - m_in) +
 					 (param - m_out + (m_out*m_out - param*param)/2.0f)/(1.0f - m_out));
 	}
 #else
-	const Real v0 = 1.0f + m_out - m_in;
+	const Real denominator = 1.0f + m_out - m_in;
 	if (param < m_in) {
 		// "param < in" avoids a division by zero at param = 0.0f and in = 0.0f
-		return param*param/(v0*m_in);
+		return param*param/(denominator*m_in);
 	} else if (param <= m_out) {
 		// "param <= out" avoid a division by zero when param = 1.0f and out = 1.0f
-		return (m_in + 2.0*(param - m_in))/v0;
+		return (m_in + 2.0*(param - m_in))/denominator;
 	} else {
-		return (m_in + 2.0*(m_out - m_in) + (2.0*(param - m_out) + m_out*m_out - param*param)/(1.0f - m_out))/v0;
+		return (m_in + 2.0*(m_out - m_in) + (2.0*(param - m_out) + m_out*m_out - param*param)/(1.0f - m_out))/denominator;
 	}
 #endif
 }
