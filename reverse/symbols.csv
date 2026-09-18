@@ -4207,6 +4207,7 @@ name,address,notes
 ??1?$pair@$$CBHUGen_t_000f1c80_m4cd@@@_STL@@QAE@XZ,0x000479D3,family-emit payload member
 ??1?$pair@$$CBHUGen_t_001362a0_m4cd@@@_STL@@QAE@XZ,0x00018633,family-emit payload member
 ??1?$pair@$$CBHUGen_t_00136b90_m4cd@@@_STL@@QAE@XZ,0x00018633,family-emit payload member
+??1?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@QAE@XZ,0x00018633,ThingFactory hash erase pair destructor called at 0x00136A00
 ??1?$pair@$$CBHUGen_t_00138200_p12cd@@@_STL@@QAE@XZ,0x00136800,gen-tgrid payload member
 ??1?$pair@$$CBHUGen_t_001958b0_p8cd@@@_STL@@QAE@XZ,0x00192CA0,gen-tgrid payload member
 ??1?$pair@$$CBHUGen_t_00195a00_p8cd@@@_STL@@QAE@XZ,0x00192CA0,gen-tgrid payload member
@@ -13042,6 +13043,8 @@ name,address,notes
 ?_M_bkt_num_key@?$hashtable@URva000D6C60Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva000D6C60ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva000D6C60Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x0000E8E0,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x000D6C60 calls
 ?_M_bkt_num_key@?$hashtable@URva000F6C10Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva000F6C10ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva000F6C10Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x00032E75,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x000F6C10 calls
 ?_M_bkt_num_key@?$hashtable@URva001360E0Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva001360E0ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva001360E0Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x0002838F,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x001360E0 calls
+?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@@Z,0x0002838F,ThingFactory hash erase bucket helper called at 0x00136A1C
+?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@PAVThingTemplate@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0002838F,ThingFactory hash erase bucket-count helper called at 0x00136A1C
 ?_M_bkt_num_key@?$hashtable@URva0038ED80Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva0038ED80ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva0038ED80Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x00047B45,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x0038ED80 calls
 ?_M_bkt_num_key@?$hashtable@URva0038EE10Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva0038EE10ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva0038EE10Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x0001ECD6,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x0038EE10 calls
 ?_M_bkt_num_key@?$hashtable@URva00461250Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva00461250ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva00461250Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x00048284,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x00461250 calls
