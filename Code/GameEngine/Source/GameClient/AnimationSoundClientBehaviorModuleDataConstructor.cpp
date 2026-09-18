@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: AnimationSoundClientBehavior module-data constructor.
+// AnimationSoundClientBehavior module-data constructor 0x00606060 also
+// emits scalar wrapper 0x006060F0; vtable 0x011155E0 slot zero identifies it.
+// The complete destructor remains in AnimationSoundClientBehaviorModuleDataDestructor.cpp
+// because its retail body requires the novtable view.
 //
 // The named friend_newModuleData factory at retail 0x00121DA0 allocates 0x18
 // bytes and calls this constructor.  The eight-byte member at +0x08 owns a
