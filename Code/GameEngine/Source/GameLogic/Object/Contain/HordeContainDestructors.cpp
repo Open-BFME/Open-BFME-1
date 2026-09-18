@@ -1,7 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
-// HordeContain's destructor, lifted from its MASM dump to C++.
+// HordeContain complete destructor 0x0023EF90 also emits scalar wrapper
+// 0x002408B0. Its retail call through ILT 0x0001AB90 reaches the complete
+// body; constructor 0x0023EAF0 independently establishes the class identity.
 //
 // It tails into the same base destructor at 0x0003FF49 as SiegeEngineContain,
 // so it stands on the same base: OpenContain's nine vptrs (0x00, 0x0C, 0x10,
