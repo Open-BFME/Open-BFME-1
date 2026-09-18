@@ -15,6 +15,8 @@ struct Gen_t_0058f2f0_p12cd { char m_body[12]; };
 struct Gen_t_00590820_p12cd { char m_body[12]; };
 struct Gen_t_00640d30_p12cd { char m_body[28]; };
 struct Gen_t_00653850_p12cd { char m_body[0x210]; };
+struct Gen_t_006538b0_p12cd { char m_body[0x1f0]; };
+struct Gen_t_006543a0_p12cd { char m_body[0x1f0]; };
 // GameSpyBuddyMessageQueue calls this body for its 0x2B8-byte BuddyRequest
 // deque, and retail allocates one 0x2B8-byte element per node.
 class BuddyRequest { char m_bfmeBody[0x2B8]; };
@@ -48,6 +50,10 @@ template void _Deque_base<Gen_t_00640d30_p12cd,
 	allocator<Gen_t_00640d30_p12cd> >::_M_initialize_map(unsigned int);
 template void _Deque_base<Gen_t_00653850_p12cd,
 	allocator<Gen_t_00653850_p12cd> >::_M_initialize_map(unsigned int);
+template void _Deque_base<Gen_t_006538b0_p12cd,
+	allocator<Gen_t_006538b0_p12cd> >::_M_initialize_map(unsigned int);
+template void _Deque_base<Gen_t_006543a0_p12cd,
+	allocator<Gen_t_006543a0_p12cd> >::_M_initialize_map(unsigned int);
 template void _Deque_base<BuddyRequest,
 	allocator<BuddyRequest> >::_M_initialize_map(unsigned int);
 }
