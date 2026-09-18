@@ -75082,7 +75082,6 @@ name,address,notes
 ?bfmeAllocDIG@@YGPAXI@Z,0x00019326,pin
 ?bfmeAllocDIH@@YGPAXI@Z,0x00019326,pin
 ?bfmeAllocECMa@@YAPAXI@Z,0x007F0130,pin
-?bfmeAllocECMb@@YAPAXI@Z,0x00881F30,pin
 ?bfmeAllocEECa@@YGPAXI@Z,0x00019326,pin
 ?bfmeAllocEECb@@YGPAXI@Z,0x0002698B,pin
 ?bfmeAllocEFA@@YAPAXI@Z,0x0082E540,pin
