@@ -217,6 +217,19 @@ private:
 
 extern GameWindowTransitionsHandler *TheTransitionHandler;
 
+class BfmeTransitionHandlerDrawView
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void draw();
+};
+
 #include "GameClient/GameWindowTransitions.h"
 
 // BFME's handler gained a transition-factory map and four small state fields
@@ -1596,7 +1609,6 @@ Int GameWindowManager::drawWindow( GameWindow *window )
 //-------------------------------------------------------------------------------------------------
 /** Draw the GUI in reverse order to correlate with clicking priority */
 //-------------------------------------------------------------------------------------------------
-// ?winRepaint@GameWindowManager@@UAEXXZ present-unmatched
 void GameWindowManager::winRepaint( void )
 {
 	GameWindow *window, *next;
@@ -1606,7 +1618,10 @@ void GameWindowManager::winRepaint( void )
 	{
 		next = window->m_prev;
 
-		if( BitTest( window->m_status, WIN_STATUS_BELOW ) )
+		if( *(UnsignedInt *)((UnsignedByte *)window + 0x1f4) ==
+			*(UnsignedInt *)((UnsignedByte *)this + 0x38) &&
+			(window->m_status & 0x08000000) == 0 &&
+			(window->m_status & 0x40) != 0 )
 			drawWindow( window );
 	}
 
@@ -1615,8 +1630,10 @@ void GameWindowManager::winRepaint( void )
 	{
 		next = window->m_prev;
 
-		if (BitTest( window->m_status, WIN_STATUS_ABOVE | 
-																	 WIN_STATUS_BELOW ) == FALSE)
+		if( *(UnsignedInt *)((UnsignedByte *)window + 0x1f4) ==
+			*(UnsignedInt *)((UnsignedByte *)this + 0x38) &&
+			(window->m_status & 0x08000000) == 0 &&
+			(window->m_status & 0x60) == 0 )
 			drawWindow( window );
 	}
 
@@ -1625,12 +1642,16 @@ void GameWindowManager::winRepaint( void )
 	{
 		next = window->m_prev;
 
-		if( BitTest( window->m_status, WIN_STATUS_ABOVE ) )
+		if( *(UnsignedInt *)((UnsignedByte *)window + 0x1f4) ==
+			*(UnsignedInt *)((UnsignedByte *)this + 0x38) &&
+			(window->m_status & 0x08000000) == 0 &&
+			(window->m_status & 0x20) != 0 )
 			drawWindow( window );
 	}
 
-	if(TheTransitionHandler)
-		TheTransitionHandler->draw();
+	if( *(UnsignedInt *)((UnsignedByte *)this + 0x38) == 1 &&
+		TheTransitionHandler )
+		((BfmeTransitionHandlerDrawView *)TheTransitionHandler)->draw();
 }  // end WinRepaint
 
 //-------------------------------------------------------------------------------------------------
