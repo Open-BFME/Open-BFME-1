@@ -4,6 +4,10 @@
 // carried only a machine byte-dump row; the symbols.csv pin names it, and the
 // __copy over this element type at 0x0033A9F0 is already ledgered beside it.
 //
+// Layout names are corroborated by ScriptEngineNamedMapReveal.cpp: the matched
+// doNamedMapReveal body reads the radius at +0x08 and player name at +0x0C.
+// The reference ScriptEngine.h names the same four fields.
+//
 // Three AsciiStrings, destroyed at +0x0C, +0x04 and +0x00, which is reverse
 // declaration order. The word at +0x08 between the second and the third is left
 // alone -- whatever it is, it has no destructor.
@@ -18,16 +22,23 @@
 class NamedReveal
 {
 public:
-	~NamedReveal();
+	__declspec(noinline) ~NamedReveal();
 
 private:
-	AsciiString m_bfmeFirst;				// +0x00
-	AsciiString m_bfmeSecond;				// +0x04
-	unsigned char m_bfmePad08[0x04];			// +0x08
-	AsciiString m_bfmeThird;				// +0x0C
+	AsciiString m_revealName;				// +0x00
+	AsciiString m_waypointName;				// +0x04
+	float m_radiusToReveal;			// +0x08
+	AsciiString m_playerName;				// +0x0C
 };
 
 // ??1NamedReveal@@QAE@XZ
 NamedReveal::~NamedReveal()
 {
+}
+
+// Emit the retail scalar-deleting wrapper (RVA 0x0033AE00). Keep the complete
+// destructor out of line: retail calls it through ILT 0x000244DD.
+void forceNamedRevealDeletingDestructor(NamedReveal *value)
+{
+	delete value;
 }
