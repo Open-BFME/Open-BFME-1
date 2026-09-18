@@ -8,7 +8,7 @@ checkout's HEAD to the pushed commit, refreshing only files whose working copy
 still equals the old commit (untouched by anyone in flight). If workers advance
 the ledgers during network work, preserve their edits and defer local sync.
 """
-import csv, os, subprocess, sys
+import csv, os, re, subprocess, sys
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2 if Path(__file__).resolve().parent.name == "fleet" else 1]
 sys.path.insert(0, str(ROOT / "tools"))
@@ -322,9 +322,30 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
             new = out("git", "rev-parse", "HEAD", cwd=WT)
             if subprocess.run([sys.executable, str(WT / "tools/check_csv.py")], cwd=WT).returncode:
                 sys.exit("harvest: rebased ledgers fail check_csv; hands needed")
-        rc = run("git", "push", "origin", f"{new}:master", cwd=WT, check=False).returncode
+        # The pre-push hook byte-verifies for ~35 s while other hosts push every
+        # minute, so a direct push to master lost 6 of 6 races on 2026-09-17.
+        # Push the verified commit to a per-host scratch branch (the hook runs
+        # there), then fast-forward master on the server in one API call: the
+        # race window is a second. Hosts without gh fall back to the direct push.
+        import shutil
+        gh = shutil.which("gh")
+        if gh:
+            scratch = "fleet-" + re.sub(r"[^A-Za-z0-9]+", "-", os.environ.get("COMPUTERNAME") or os.environ.get("HOSTNAME") or "host").lower()
+            rc = run("git", "push", "-f", "origin", f"{new}:refs/heads/{scratch}", cwd=WT, check=False).returncode
+            if rc:
+                sys.exit("harvest: push refused by the pre-push hook (see above); hands needed")
+            remote = out("git", "remote", "get-url", "origin", cwd=WT)
+            repo = re.sub(r"\.git$", "", re.sub(r"^.*github\.com[:/]", "", remote))
+            ff = subprocess.run([gh, "api", "-X", "PATCH", f"repos/{repo}/git/refs/heads/master",
+                                 "-f", f"sha={new}", "-F", "force=false"], cwd=WT, capture_output=True, text=True)
+            rc = ff.returncode
+            if not rc:
+                subprocess.run(["git", "push", "-q", "origin", "--delete", scratch], cwd=WT, capture_output=True)
+        else:
+            rc = run("git", "push", "origin", f"{new}:master", cwd=WT, check=False).returncode
         if not rc:
             break
+        print(f"harvest: push raced another lane (attempt {attempt + 1}); rebasing again", flush=True)
     else:
         sys.exit("harvest: push rejected 5 times (raced another lane); rerun")
 
