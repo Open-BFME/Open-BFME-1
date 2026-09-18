@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
+// Complete destructor 0x0020B180 also emits scalar wrapper 0x0020C020.
+// Constructor 0x0020AE30 installs vtable 0x010A6CCC with the wrapper at
+// slot zero, independently establishing this shared class identity.
+//
 // SpawnBehavior's retail destructor uses the BFME-era UpdateModule layout and
 // two interface-base slots.  Keep this recovered layout in the proper source
 // family instead of changing the shared reference headers.
