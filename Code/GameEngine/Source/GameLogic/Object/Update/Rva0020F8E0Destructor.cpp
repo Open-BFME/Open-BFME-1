@@ -2,7 +2,7 @@
 // stlport
 // Destructor lifted from its MASM dump to C++, retail 0x0020F8E0, 178 bytes.
 //
-// Fuzzy twin of PhysicsBehaviorDestructorThunk.cpp (0x0029AA30, 172 B): same
+// Fuzzy twin of PhysicsBehaviorDestructors.cpp (0x0029AA30, 172 B): same
 // UpdateModule chain shape (a class-specific vptr at +0x00/+0x0C/+0x10, a
 // single std::vector<12-byte-POD> member torn down inline, then the same
 // three vptrs re-installed -- the shared BehaviorModule/PB_Iface1 constants

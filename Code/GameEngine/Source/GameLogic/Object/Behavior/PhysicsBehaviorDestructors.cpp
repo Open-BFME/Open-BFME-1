@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ivendor/stlport
 // stlport
-// ~PhysicsBehavior, lifted from its MASM dump to C++.
+// Complete destructor 0x0029AA30 also emits scalar wrapper 0x0029AC10.
+// Constructor 0x0029A880, factories, module name, and vtable family establish
+// identity; the wrapper reaches this complete teardown through ILT 0x000087D8.
 //
 // Sibling of PhysicsBehaviorCtorModuleFactoryBody.cpp: same UpdateModule chain
 // (PB_DeepBase vptr at +0x00, PB_Iface1 at +0x0c, PB_Iface2 at +0x10) and the
@@ -55,7 +57,8 @@ public:
 	virtual ~UpdateModule() {}
 
 private:
-	unsigned int m_f14;
+	// name_oracle: UpdateModule+0x14, layout_witness confidence 1.00.
+	unsigned int m_nextCallFrameAndPhase;
 	int m_f18;
 	int m_f1c;
 };
