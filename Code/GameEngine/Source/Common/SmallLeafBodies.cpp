@@ -491,3 +491,8 @@ Rva005D1C70Identity *Rva005D1C70Identity::identity( void )
 void Rva002662E0Noop( void )
 {
 }
+
+// ret.  The owning function is not identified.
+void Rva00761CA0Noop( void )
+{
+}
