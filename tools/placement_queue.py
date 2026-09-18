@@ -166,6 +166,11 @@ def destination(root, source, cls, homes, zh, zh_hdr):
         if candidate == here:
             return None
         if candidate != DUMPING_GROUND and usable(candidate):
+            # A header mirror proves the broad area, not that its root should
+            # flatten a class already established in a deeper source family.
+            if any(n >= 2 and d.startswith(candidate + "/")
+                   for d, n in homes[cls].items()):
+                return None
             return candidate
     # Otherwise: where this class already keeps most of its bodies. Two or more,
     # because one sibling elsewhere is as likely to be the misplaced file.

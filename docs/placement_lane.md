@@ -121,7 +121,10 @@ Two more of the same family:
 * A destination that is an **ancestor** of the current directory was accepted, so
   324 files were bound to leave `GameLogic/AI` for `GameLogic`. ZH's header tree
   is coarser than our source tree in places; answering with the parent throws away
-  a subdirectory that already names the file.
+  a subdirectory that already names the file. The same applies when the file is
+  elsewhere but two or more bodies already establish the class in a descendant:
+  `ControlBar.h` only proves `GameClient`, while CommandSet's bodies establish
+  `GameClient/GUI/ControlBar`; the queue must not flatten that family.
 * `Include/<Area>/<Sub>` was mirrored onto `Source/<Area>/<Sub>` without checking
   the mirror **exists in ZH**. It does not for `Module`: ZH keeps those bodies
   under `Object/Update` and `Object/Behavior`. 606 files were bound for an

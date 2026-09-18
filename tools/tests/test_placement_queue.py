@@ -10,6 +10,9 @@ import placement_queue as queue  # noqa: E402
 POPUP = "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp"
 MISPLACED = "Code/GameEngine/Source/Common/GameInfoReset.cpp"
 NETWORK = "Code/GameEngine/Source/GameNetwork"
+COMMAND_SET = "Code/GameEngine/Source/Common/BfmeConv1641.cpp"
+CLIENT = "Code/GameEngine/Source/GameClient"
+CONTROL_BAR = f"{CLIENT}/GUI/ControlBar"
 
 
 def _write(root, relative, text="// fixture\n"):
@@ -37,6 +40,27 @@ def _world(tmp_path):
     return root
 
 
+def _command_set_world(tmp_path):
+    root = tmp_path / "repo"
+    _write(root, COMMAND_SET)
+    _write(root, f"{CONTROL_BAR}/CommandSetLifetime.cpp")
+    _write(root, f"{CONTROL_BAR}/CommandSetParser.cpp")
+
+    zh_root = queue.ZH
+    _write(root, f"{zh_root}/GameEngine/Include/GameClient/ControlBar.h",
+           "class CommandSet { public: void reset(); };\n")
+    _write(root, f"{zh_root}/GameEngine/Source/GameClient/GUI/ControlBar/ControlBar.cpp")
+
+    ledger = (
+        "name,export_rva,target_rva,target_size,source,status,notes\n"
+        f"??1CommandSet@@MAE@XZ,,0x00100000,10,{COMMAND_SET},matched,\n"
+        f"??0CommandSet@@QAE@XZ,,0x00100010,10,{CONTROL_BAR}/CommandSetLifetime.cpp,matched,\n"
+        f"?parse@CommandSet@@QAEXXZ,,0x00100020,10,{CONTROL_BAR}/CommandSetParser.cpp,matched,\n"
+    )
+    _write(root, "reverse/functions.csv", ledger)
+    return root
+
+
 def test_exact_zh_source_path_outranks_an_inline_method_owner(tmp_path):
     root = _world(tmp_path)
     single, homes = queue.survey(root)
@@ -55,3 +79,18 @@ def test_a_source_without_exact_zh_path_still_moves_to_its_class(tmp_path):
     queued, _skipped = queue.build(root)
 
     assert (MISPLACED, f"{NETWORK}/GameInfoReset.cpp", "GameInfo") in queued
+
+
+def test_a_coarse_header_does_not_flatten_an_established_class_home(tmp_path):
+    root = _command_set_world(tmp_path)
+    single, homes = queue.survey(root)
+    zh = queue.zh_directories(root)
+    zh_hdr = queue.zh_header_directories(root)
+
+    assert single[COMMAND_SET] == "CommandSet"
+    assert homes["CommandSet"][CONTROL_BAR] == 2
+    assert zh_hdr["CommandSet"].replace(queue.ZH, "Code", 1) == CLIENT
+    assert queue.destination(root, COMMAND_SET, "CommandSet", homes, zh, zh_hdr) is None
+
+    queued, _skipped = queue.build(root)
+    assert all(source != COMMAND_SET for source, _target, _cls in queued)
