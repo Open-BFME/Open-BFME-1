@@ -43,14 +43,14 @@ private:
 bool BfmeAptScreenOnlineLogin::bfmeSetTextAt7C(
 	const UnicodeString &text, bool updateEnabled )
 {
-	bool result = false;
+	bool textWasSet = false;
 	if( m_textEntry )
 	{
 		if( m_dependentControl && updateEnabled )
 			bfmeSetControlEnabled( m_dependentControl, !text.isEmpty() );
 
 		GadgetTextEntrySetText( m_textEntry, text );
-		result = true;
+		textWasSet = true;
 	}
-	return result;
+	return textWasSet;
 }
