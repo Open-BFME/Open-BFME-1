@@ -86976,7 +86976,6 @@ __ehhandler$?getClassMemoryPool@WeaponSetUpgrade@@CAPAVMemoryPool@@XZ,0x00C14DFE
 __ehhandler$?getClassMemoryPool@WorkerAIUpdate@@CAPAVMemoryPool@@XZ,0x00C140BE,pool-glue cascade static (back-solved)
 __ehhandler$?parseProductionTimeChange@PlayerTemplate@@KAXPAVINI@@PAX1PBX@Z,0x00BFAB08,PlayerTemplate time-change retail exception handler
 __ftol2,0x009F6E38,MSVC float-to-int conversion helper (statically linked CRT)
-__imp_??0BfmeBaseGL@@QAE@XZ,0x00F59214,pin base ctor for BfmeConv2066
 __imp_??3BfmeElemBV@@SAXPAXI@Z,0x00F37830,Open-BFME5 the imported sized operator delete the scalar branch at 0x008A2ED0 calls
 __imp_??3BfmeElemBW@@SAXPAXI@Z,0x00F37830,Open-BFME5 the imported sized operator delete the scalar branch at 0x00892CD0 calls
 __imp_??_VBfmeElemBV@@SAXPAX@Z,0x00F3782C,Open-BFME5 the imported array operator delete the vector branch at 0x008A2ED0 calls
@@ -87451,7 +87450,6 @@ _bfmeVftEAX,0x00D28880,pin vftable for BfmeConv2013
 _bfmeVftEAZ,0x00CFA338,pin vftable for BfmeConv2016
 _bfmeVftEOA,0x00C75B08,pin
 _bfmeVftERA,0x00CEC77C,pin
-_bfmeVftGL,0x00D2E8B8,pin vftable for BfmeConv2066
 _bfmeVftGS,0x00C968B0,pin vftable for BfmeConv2070
 _bfmeVftSA,0x00C8F4F0,pin
 _bfmeVftSE,0x00D0C64C,pin
