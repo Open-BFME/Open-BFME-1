@@ -54,7 +54,7 @@ private:
 class Object
 {
 public:
-	Bool isSelectable() const;
+	Bool isMassSelectable() const;
 	void setSelectable(Bool selectable);
 	void setStatus(const ObjectStatusMaskType &status, Bool set);
 	void notifyModelConditionChanged();
@@ -94,7 +94,7 @@ typedef StateReturnType (__fastcall *Rva00174520BaseOnEnter)(Rva001744C0State *s
 StateReturnType Rva001744C0State::onEnter()
 {
 	Object *owner = m_machine->m_owner;
-	m_selectable = owner->isSelectable();
+	m_selectable = owner->isMassSelectable();
 	owner->setSelectable(false);
 
 	owner->setStatus(ObjectStatusMaskType(ObjectStatusMaskType::kInit, 68), true);
