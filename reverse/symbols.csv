@@ -85414,7 +85414,6 @@ name,address,notes
 ?run@HideInGameChatShim@@SAXXZ,0x00512670,HideInGameChat incremental-link thunk target through a TU-local forwarding shim
 ?run@IniParseObjectFilterShim@@SAXPAVINI@@PAX1PBX@Z,0x0039F470,iniParseObjectFilter incremental-link thunk target through a TU-local forwarding shim
 ?run@MessageBoxOkShim@@SAPAVGameWindow@@VUnicodeString@@0P6AXXZ@Z,0x004C6730,MessageBoxOk incremental-link thunk target through a TU-local forwarding shim
-?run@PopulateLobbyPlayerListboxShim@@SAXXZ,0x004FB500,PopulateLobbyPlayerListbox incremental-link thunk target through a TU-local forwarding shim
 ?run@RadarRefreshTerrainShim@@QAEXPAVTerrainLogic@@@Z,0x0024E990,Radar refreshTerrain incremental-link thunk target through a TU-local forwarding shim
 ?run@RefreshGameListBoxShim@@SAXPAVGameWindow@@_N@Z,0x0062E2E0,RefreshGameListBox incremental-link thunk target through a TU-local forwarding shim
 ?run@ReleaseWindowLayoutShim@@SAXPAVWindowLayout@@@Z,0x00522740,ReleaseWindowLayout incremental-link thunk target through a TU-local forwarding shim
