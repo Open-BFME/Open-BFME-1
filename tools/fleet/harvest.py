@@ -174,6 +174,17 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         if stale:
             run("git", "rm", "-q", "-f", "--ignore-unmatch", "--", *stale)
             print(f"harvest: retired {len(stale)} landed stash(es)")
+        # a scratch stash (no score header) whose seat is gone and which HEAD
+        # never held is an orphan, not evidence: set it aside for the record
+        orphans = [p for p in re.findall(r"(reverse/attempts/0x[0-9a-f]{8}\.cpp): line 2 must read", r.stdout + r.stderr)
+                   if subprocess.run(["git", "cat-file", "-e", f"HEAD:{p}"], cwd=ROOT, capture_output=True).returncode]
+        for p in orphans:
+            dest = ROOT / "build/orphan_stashes" / Path(p).name
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            subprocess.run(["git", "reset", "-q", "--", p], cwd=ROOT)
+            (ROOT / p).replace(dest)
+        if orphans:
+            print(f"harvest: set aside {len(orphans)} orphan scratch stash(es) under build/orphan_stashes")
         env = dict(os.environ, HARVEST_HAS_LOCK="1")
         subprocess.run([sys.executable, "tools/dedup_csv.py"], cwd=ROOT, env=env)
         subprocess.run([sys.executable, "tools/fleet/dedup_keepfirst.py"], cwd=ROOT, env=env)
