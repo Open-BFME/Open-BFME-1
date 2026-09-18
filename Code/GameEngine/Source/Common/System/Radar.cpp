@@ -45,6 +45,7 @@
 
 #include "GameClient/Drawable.h"
 #include "GameClient/Eva.h"
+#include "GameClient/GameClient.h"
 #include "GameClient/GameWindowManager.h"
 #include "GameClient/InGameUI.h"
 #include "GameClient/ControlBar.h"
@@ -1208,43 +1209,81 @@ void Radar::createPlayerEvent( Player *player, const Coord3D *world,
 //-------------------------------------------------------------------------------------------------
 /** Create a new radar event */
 //-------------------------------------------------------------------------------------------------
-// ?internalCreateEvent@Radar@@ present-unmatched
-void Radar::internalCreateEvent( const Coord3D *world, RadarEventType type, Real secondsToLive,
-																 const RGBAColorInt *color1, const RGBAColorInt *color2 )
+struct BfmeRadarInternalEventRef
 {
-	static Real secondsBeforeDieToFade = 0.5f;  ///< this many seconds before we hit the die frame we start to fade away
-		
-	// sanity
+	virtual void Release_Ref( bool destroy );
+	int m_refCount;
+};
+
+struct BfmeRadarInternalEvent
+{
+	RadarEventType type;
+	Bool active;
+	UnsignedInt createFrame;
+	UnsignedInt dieFrame;
+	UnsignedInt fadeFrame;
+	RGBAColorInt color1;
+	RGBAColorInt color2;
+	Coord3D worldLoc;
+	ICoord2D radarLoc;
+	Bool soundPlayed;
+	BfmeRadarInternalEventRef *ref;
+};
+
+struct BfmeRadarInternalEventStorage
+{
+	char padding00[ 0x28 ];
+	BfmeRadarInternalEvent event[ 64 ];
+	Int nextFreeRadarEvent;
+	Int lastRadarEvent;
+};
+
+#pragma comment(linker, "/alternatename:?worldToRadar@Radar@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z=?j_00026099@@YAXXZ")
+
+void Radar::internalCreateEvent( const Coord3D *world, RadarEventType type, Real secondsToLive,
+																			 const RGBAColorInt *color1, const RGBAColorInt *color2 )
+{
+	static Real secondsBeforeDieToFade = 0.5f;
+
 	if( world == NULL || color1 == NULL || color2 == NULL )
 		return;
 
-	// translate the world coord to radar coords
 	ICoord2D radar;
 	worldToRadar( world, &radar );
 
-	// add to the list of radar events
-	m_event[ m_nextFreeRadarEvent ].type = type;
-	m_event[ m_nextFreeRadarEvent ].active = TRUE;
-	m_event[ m_nextFreeRadarEvent ].createFrame = TheGameLogic->getFrame();
-	m_event[ m_nextFreeRadarEvent ].dieFrame = TheGameLogic->getFrame() + LOGICFRAMES_PER_SECOND * secondsToLive;
-	m_event[ m_nextFreeRadarEvent ].fadeFrame = m_event[ m_nextFreeRadarEvent ].dieFrame - LOGICFRAMES_PER_SECOND * secondsBeforeDieToFade;
-	m_event[ m_nextFreeRadarEvent ].color1 = *color1;
-	m_event[ m_nextFreeRadarEvent ].color2 = *color2;
-	m_event[ m_nextFreeRadarEvent ].worldLoc = *world;
-	m_event[ m_nextFreeRadarEvent ].radarLoc = radar;
-	m_event[ m_nextFreeRadarEvent ].soundPlayed = FALSE;
+	BfmeRadarInternalEventStorage *storage =
+		(BfmeRadarInternalEventStorage *)this;
+	storage->event[ storage->nextFreeRadarEvent ].type = type;
+	storage->event[ storage->nextFreeRadarEvent ].active = TRUE;
+	storage->event[ storage->nextFreeRadarEvent ].createFrame = TheGameClient->getFrame();
+	storage->event[ storage->nextFreeRadarEvent ].dieFrame =
+		TheGameClient->getFrame() + LOGICFRAMES_PER_SECOND * secondsToLive;
+	storage->event[ storage->nextFreeRadarEvent ].fadeFrame =
+		storage->event[ storage->nextFreeRadarEvent ].dieFrame -
+		LOGICFRAMES_PER_SECOND * secondsBeforeDieToFade;
+	storage->event[ storage->nextFreeRadarEvent ].color1 = *color1;
+	storage->event[ storage->nextFreeRadarEvent ].color2 = *color2;
+	storage->event[ storage->nextFreeRadarEvent ].worldLoc = *world;
+	storage->event[ storage->nextFreeRadarEvent ].radarLoc = radar;
+	storage->event[ storage->nextFreeRadarEvent ].soundPlayed = FALSE;
 
-	// record the index of this, our "last" radar event.
-	if ( type != RADAR_EVENT_BEACON_PULSE )
-		m_lastRadarEvent = m_nextFreeRadarEvent;
+	BfmeRadarInternalEventRef **ref =
+		&storage->event[ storage->nextFreeRadarEvent ].ref;
+	BfmeRadarInternalEventRef *value = *ref;
+	if( value != NULL )
+	{
+		int count = --value->m_refCount;
+		if( count <= 0 )
+			value->Release_Ref( true );
+		*ref = NULL;
+	}
 
-	//
-	// increment the next radar event index, wrapping to the beginning.  If we ever have so many
-	// events that they fill up the buffer the oldest ones will just drop off, eh ... should be fine.
-	//
-	m_nextFreeRadarEvent++;
-	if( m_nextFreeRadarEvent >= MAX_RADAR_EVENTS )
-		m_nextFreeRadarEvent = 0;
+	if( type != (RadarEventType)6 )
+		storage->lastRadarEvent = storage->nextFreeRadarEvent;
+
+	storage->nextFreeRadarEvent++;
+	if( storage->nextFreeRadarEvent >= 64 )
+		storage->nextFreeRadarEvent = 0;
 
 }  // end createEvent
 
