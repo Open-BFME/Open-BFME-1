@@ -33,11 +33,26 @@ public:
 	void releaseReferences();
 };
 
+struct GenAlphaChunk
+{
+	char m_pad[0x68];
+	GenAlphaChunk *m_next;
+	char m_pad2[0x1200 - 0x6c];
+	struct Vector
+	{
+		float x;
+		float y;
+		float z;
+	};
+	Vector m_vectors[0xa0];
+};
+
 class GenAlpha
 {
 public:
 	void h00024D2A();
 	void afterRelease();
+	GenAlphaChunk *m_first;
 };
 
 extern BfmeComUnknown *TheBfmeComA;			// 0x01306F20
@@ -59,5 +74,19 @@ void GenAlpha::h00024D2A()
 	{
 		owner->releaseReferences();
 		afterRelease();
+	}
+}
+
+// ?afterRelease@GenAlpha@@QAEXXZ
+void GenAlpha::afterRelease()
+{
+	for (GenAlphaChunk *c = m_first; c; c = c->m_next) {
+		float *z = &c->m_vectors[0].z;
+		for (int i = 0; i < 0xa0; ++i) {
+			z[-2] = 0.0f;
+			z[-1] = 0.0f;
+			z[0] = 0.0f;
+			z += 3;
+		}
 	}
 }
