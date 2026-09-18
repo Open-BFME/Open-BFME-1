@@ -20,19 +20,20 @@ public:
 	AIFollowPathState( StateMachine *machine, AsciiString name );
 
 private:
+	// Names and initial values agree with AIStateMachine.h and the BFME layout witness.
 	char m_baseFields[ 0x4C ];
-	int m_field50;
-	unsigned char m_field54;
-	unsigned char m_field55;
+	int m_index;
+	unsigned char m_adjustFinal;
+	unsigned char m_adjustFinalOverride;
 	char m_field56And57[ 2 ];
-	int m_field58;
+	int m_retryCount;
 };
 
 AIFollowPathState::AIFollowPathState( StateMachine *machine, AsciiString name )
 	: AIInternalMoveToState( machine, name ),
-	  m_field50( 0x0 ),
-	  m_field54( 0x1 ),
-	  m_field55( 0x0 ),
-	  m_field58( 0xA )
+	  m_index( 0x0 ),
+	  m_adjustFinal( 0x1 ),
+	  m_adjustFinalOverride( 0x0 ),
+	  m_retryCount( 0xA )
 {
 }
