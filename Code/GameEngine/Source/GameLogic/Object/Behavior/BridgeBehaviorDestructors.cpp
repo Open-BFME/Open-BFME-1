@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
+// The complete destructor 0x001F36A0 also emits scalar wrapper 0x001F3EE0.
+// Constructor 0x001F3390 installs vtable 0x010A2764, whose slot zero
+// identifies this same wrapper and complete-destructor pair.
+//
 // BFME's BridgeBehavior destructor uses the hash-map object lookup and the
 // 0x70-byte AudioEventRTS layout. The reference headers use the later vector
 // lookup and a 0x64-byte audio event, so this file keeps the retail ABI slices
