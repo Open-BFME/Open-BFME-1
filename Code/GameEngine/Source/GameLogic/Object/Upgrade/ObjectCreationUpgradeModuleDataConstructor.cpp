@@ -28,7 +28,7 @@ private:
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectCreationUpgrade.h
-class __declspec(novtable) ObjectCreationUpgradeModuleData : public ModuleData
+class ObjectCreationUpgradeModuleData : public ModuleData
 {
 public:
 	ObjectCreationUpgradeModuleData();
@@ -74,6 +74,8 @@ ObjectCreationUpgradeModuleData::ObjectCreationUpgradeModuleData()
 }
 
 // ??1ObjectCreationUpgradeModuleData@@UAE@XZ
+class __declspec(novtable) ObjectCreationUpgradeModuleData;
+
 ObjectCreationUpgradeModuleData::~ObjectCreationUpgradeModuleData()
 {
 }
