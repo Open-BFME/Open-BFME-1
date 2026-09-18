@@ -34,8 +34,8 @@ public:
 bool bfmeOnlineLoginIntegerInRange( const UnicodeString &text, int minimum, int maximum )
 {
 	AsciiString narrow( text );
-	int value = atoi( narrow.str() );
-	if( value < minimum || value > maximum )
+	int parsedValue = atoi( narrow.str() );
+	if( parsedValue < minimum || parsedValue > maximum )
 		return false;
 	return true;
 }
