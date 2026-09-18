@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: ObjectCreationUpgradeModuleData dtor.
-// Member @+0x10, triple BFMERetailAsciiString @+0x78/+0x7c/+0x80.
+// Member @+0x10, triple AsciiString @+0x78/+0x7c/+0x80.
 
 class ObjectCreationUpgradeModuleDataMemberA
 {
@@ -10,20 +10,9 @@ private:
 	unsigned char m_pad[0x68];
 };
 
-// Retail destroys this member with a direct call to
-// StringBase<char>::releaseBuffer (0x00887940) -- the member is a retail
-// AsciiString, not the WWLib Buffer whose own destructor is the 40-byte
-// body at 0x009E1E30, so name it the way the other lifted ModuleData
-// destructors already do.
-class BFMERetailAsciiString
-{
-public:
-	~BFMERetailAsciiString() { releaseBuffer(); }
+// The three strings destroy their buffers through retail 0x00887940.
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	void releaseBuffer();
-	unsigned char m_pad[4];
-};
 
 class ObjectCreationUpgradeModuleDataBase
 {
@@ -40,9 +29,12 @@ public:
 	virtual ~ObjectCreationUpgradeModuleData();
 private:
 	ObjectCreationUpgradeModuleDataMemberA m_a;
-	BFMERetailAsciiString m_b;
-	BFMERetailAsciiString m_c;
-	BFMERetailAsciiString m_d;
+	// Named factory 0x0011D4A0 -> callback 0x002D6D60 registers table
+	// RVA 0x00CCD6C0: RemoveUpgrade/+78, GrantUpgrade/+7c and
+	// ThingToSpawn/+80 all use INI::parseAsciiString (0x00851EE0).
+	AsciiString m_removeUpgrade;
+	AsciiString m_grantUpgrade;
+	AsciiString m_thingToSpawn;
 };
 
 // ??1ObjectCreationUpgradeModuleData@@UAE@XZ
