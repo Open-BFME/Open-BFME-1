@@ -6,7 +6,7 @@
 // +0x0C secondary base subobject that, when the global registry pointer at
 // 0x012F10D0 is non-null, calls one of that registry's methods with the
 // primary base pointer (this - 12). This is the same registry global that
-// AnimationSoundClientBehaviorDestructorThunk.cpp already reaches, and the
+// GameClient/AnimationSoundClientBehaviorDestructors.cpp already reaches, and the
 // callee at 0x00409040 has the same node layout as the named
 // AnimationSoundClientBehaviorGlobal::unregister at 0x00409140 -- but the
 // method NAME at 0x00409040 is not evidenced, so the pin below is

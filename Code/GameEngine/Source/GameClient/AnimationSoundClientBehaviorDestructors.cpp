@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift AnimationSoundClientBehavior dtor __emit thunk to clean
-// C++. Retail stores its two vtables (primary at +0, interface at +0x0C),
+// Complete destructor 0x00604B40 and emitted scalar wrapper 0x00604E60.
+// Constructor 0x00605380, module factories, and the installed vtables prove
+// identity. This family already has its data/global sources in GameClient.
+// Retail stores its two vtables (primary at +0, interface at +0x0C),
 // calls a method on the global at 0x012F10D0 with this when non-null, then
 // runs the middle base dtor (vtable store) and calls the out-of-line root
 // base dtor, all under an SEH frame.
