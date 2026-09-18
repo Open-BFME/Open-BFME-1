@@ -87,3 +87,24 @@ typedef _STL::hashtable<Rva00461250Value, AsciiString,
 	Rva00461250Table;
 
 template void Rva00461250Table::resize(unsigned int);
+
+struct Rva006A7AD0Value
+{
+	AsciiString m_key;
+	Int m_mapped;
+};
+
+struct Rva006A7AD0ExtractKey
+{
+	const AsciiString &operator()(const Rva006A7AD0Value &entry) const
+	{
+		return entry.m_key;
+	}
+};
+
+typedef _STL::hashtable<Rva006A7AD0Value, AsciiString,
+	rts::hash<AsciiString>, Rva006A7AD0ExtractKey,
+	_STL::equal_to<AsciiString>, _STL::allocator<Rva006A7AD0Value> >
+	Rva006A7AD0Table;
+
+template void Rva006A7AD0Table::resize(unsigned int);
