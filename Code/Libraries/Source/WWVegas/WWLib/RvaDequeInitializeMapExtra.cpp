@@ -1,9 +1,9 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
 // stlport
 
-// These two retail bodies are the same STLport _M_initialize_map template
-// instantiated for two independent 20-byte deque element layouts.  The
-// retail divide-by-six and 0x78 node span fix that element width exactly.
+// These retail bodies are STLport _M_initialize_map template instantiations
+// for the element layouts named below.  The node allocation and division
+// shapes fix each element width exactly.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <deque>
@@ -15,6 +15,9 @@ struct Gen_t_0058f2f0_p12cd { char m_body[12]; };
 struct Gen_t_00590820_p12cd { char m_body[12]; };
 struct Gen_t_00640d30_p12cd { char m_body[28]; };
 struct Gen_t_00653850_p12cd { char m_body[0x210]; };
+// GameSpyBuddyMessageQueue calls this body for its 0x2B8-byte BuddyRequest
+// deque, and retail allocates one 0x2B8-byte element per node.
+class BuddyRequest { char m_bfmeBody[0x2B8]; };
 
 void BfmeDequeInitAnchor0065f230(void *place)
 {
@@ -45,4 +48,6 @@ template void _Deque_base<Gen_t_00640d30_p12cd,
 	allocator<Gen_t_00640d30_p12cd> >::_M_initialize_map(unsigned int);
 template void _Deque_base<Gen_t_00653850_p12cd,
 	allocator<Gen_t_00653850_p12cd> >::_M_initialize_map(unsigned int);
+template void _Deque_base<BuddyRequest,
+	allocator<BuddyRequest> >::_M_initialize_map(unsigned int);
 }
