@@ -1,10 +1,9 @@
 // ?d_00886b00@@YAXXZ
-// partial score=0.9899 date=2026-09-16
+// partial score=0.9899 date=2026-09-18
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWDownload
 // stlport
 
 #include <string>
-#include <algorithm>
 #include <stdio.h>
 #include "registry.h"
 
@@ -27,7 +26,7 @@ void FormatURLFromRegistry( std::string& gamePatchURL, std::string& mapPatchURL,
 	GetStringFromRegistry("", "Language", language);
 	GetUnsignedIntFromRegistry("", "Version", versions[0]);
 	GetUnsignedIntFromRegistry("", "MapPackVersion", versions[1]);
-	std::transform(baseURL.begin(), baseURL.end(), baseURL.begin(), tolower);
+	d_00886ac0(baseURL.begin(), baseURL.end(), baseURL.begin(), tolower);
 
 	char buf[256];
 	_snprintf(buf, 256, "%s%s-%d.txt", baseURL.c_str(), language.c_str(), versions[0]);
