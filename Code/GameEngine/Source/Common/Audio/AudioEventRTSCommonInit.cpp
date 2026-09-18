@@ -84,8 +84,8 @@ private:
 	int m_ownerType;				// +0x30
 	Coord3D m_position;				// +0x34
 	unsigned char m_shouldFade;			// +0x40
-	unsigned char m_flag41;
-	unsigned char m_flag42;
+	unsigned char m_isLogicalAudio; // +0x41, BFME layout witness / AudioEventRTS.h
+	unsigned char m_uninterruptable; // +0x42, BFME layout witness / AudioEventRTS.h
 	unsigned char m_flag43;
 	unsigned char m_flag44;
 	unsigned char m_flag45;
@@ -117,8 +117,8 @@ void AudioEventRTS::commonInit(void)
 	m_shouldFade = 0;
 	m_ownerType = 4;
 	m_timeOfDay = zero;
-	m_flag41 = 0;
-	m_flag42 = 0;
+	m_isLogicalAudio = 0;
+	m_uninterruptable = 0;
 	m_filenameToLoad = AsciiString::TheEmptyString;
 
 	m_eventInfo.clear();
