@@ -1,7 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
-// AODHordeContain's destructor, lifted from its MASM dump to C++.
+// AODHordeContain's complete destructor and its emitted scalar-deleting
+// wrapper at 0x00231BB0 (complete-dtor ILT 0x00012E13). The constructor
+// 0x00230580, unique factories, and vtable 0x00CAE7A0 identify the class.
+// Both lifecycle bodies and their unwind/template helpers share this layout.
 //
 // Its base destructor call lands on 0x0023EF90 = HordeContain::~HordeContain,
 // and it restores exactly HordeContain's eleven vptrs (0x00, 0x0C, 0x10, 0x20,
