@@ -1,9 +1,5 @@
-// ?bfmeAccept@Gen_00168910@@AAEXPAVBfmeSeedTarget@@@Z
-// partial score=0.65 date=2026-09-09
-// The named Gen_00168910::bfmeSeed caller reaches this body through ILT
-// 0x0004B53D.  The body is a transfer of two intrusive lists and the object
-// tail; it is kept here as handoff evidence until the exact class ABI is
-// recovered.  This is not a generated or lifted body.
+// The Gen_00168910::bfmeSeed caller reaches this body through ILT 0x0004B53D.
+// The body transfers two TeamInQueue lists and the remaining object fields.
 
 typedef unsigned char UnsignedByte;
 typedef unsigned short UnsignedShort;
@@ -11,14 +7,13 @@ typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef bool Bool;
 
-struct BfmeSeedPair
-{
-	UnsignedByte m_first;
-	UnsignedByte m_second;
-};
-
 struct BfmeXferVersion
 {
+	BfmeXferVersion(UnsignedByte version, UnsignedByte currentVersion) :
+		m_version(version), m_currentVersion(currentVersion)
+	{
+	}
+
 	UnsignedByte m_version;
 	UnsignedByte m_currentVersion;
 };
@@ -29,9 +24,6 @@ struct BfmeXferException
 	Int m_tag;
 };
 
-// The constructor at retail 0x00161220 initializes this 0x30-byte node and
-// installs the already-retail table at 0x01096940.  The first list uses
-// m_next04/m_previous08; the second uses m_next0C/m_previous10.
 struct BfmeNode_00161220
 {
 	void *m_vptr;
@@ -50,6 +42,32 @@ struct BfmeNode_00161220
 	UnsignedByte m_value2A;
 	UnsignedByte m_pad2B;
 	UnsignedInt m_value2C;
+
+	Bool isInList04(BfmeNode_00161220 **head) const
+	{
+		return *head == this || m_next04 != 0 || m_previous08 != 0;
+	}
+
+	void prepend04(BfmeNode_00161220 **head)
+	{
+		m_previous08 = *head;
+		if (*head)
+			(*head)->m_next04 = this;
+		*head = this;
+	}
+
+	Bool isInList0C(BfmeNode_00161220 **head) const
+	{
+		return *head == this || m_next0C != 0 || m_previous10 != 0;
+	}
+
+	void prepend0C(BfmeNode_00161220 **head)
+	{
+		m_previous10 = *head;
+		if (*head)
+			(*head)->m_next0C = this;
+		*head = this;
+	}
 };
 
 struct BfmeContext_00168910
@@ -90,14 +108,13 @@ public:
 	virtual void slot26();
 	virtual void xferString(void *value);
 	virtual void slot28();
-	virtual void xferUnsignedInt(UnsignedInt *value);
 	virtual void xferInt(Int *value);
-	virtual void slot31();
+	virtual void xferUnsignedInt(UnsignedInt *value);
+	virtual void xferUnsignedShort(UnsignedShort *value);
 	virtual void slot32();
 	virtual void slot33();
 	virtual void slot34();
 	virtual void xferBool(Bool *value);
-	virtual void xferUnsignedShort(UnsignedShort *value);
 };
 
 extern void bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *value);
@@ -109,16 +126,37 @@ extern void j_0002fee6();
 extern void j_00008224();
 extern void j_0003e81f();
 
-typedef BfmeNode_00161220 *(__cdecl *BfmeNext04)(BfmeNode_00161220 *node);
-typedef BfmeNode_00161220 *(__cdecl *BfmeNext0C)(BfmeNode_00161220 *node);
 typedef void (__cdecl *BfmeFieldXfer)(BfmeSeedTarget *target, void *value);
+
+static BfmeNode_00161220 *bfmeNext04(BfmeNode_00161220 *node)
+{
+	typedef BfmeNode_00161220 *(BfmeNode_00161220::*Function)();
+	union
+	{
+		void (*raw)(void);
+		Function member;
+	} fn;
+	fn.raw = j_0002fee6;
+	return (node->*fn.member)();
+}
+
+static BfmeNode_00161220 *bfmeNext0C(BfmeNode_00161220 *node)
+{
+	typedef BfmeNode_00161220 *(BfmeNode_00161220::*Function)();
+	union
+	{
+		void (*raw)(void);
+		Function member;
+	} fn;
+	fn.raw = j_00008224;
+	return (node->*fn.member)();
+}
 
 class Gen_00168910
 {
-public:
+private:
 	void bfmeAccept(BfmeSeedTarget *target);
 
-private:
 	void *m_vptr;
 	BfmeNode_00161220 *m_list04;
 	BfmeNode_00161220 *m_list08;
@@ -182,61 +220,41 @@ private:
 		node->m_value28 = 0;
 		node->m_value29 = 0;
 		node->m_value2A = 0;
-		node->m_pad2B = 0;
 		node->m_value2C = 0;
-	}
-
-	static void append04(BfmeNode_00161220 **head, BfmeNode_00161220 *node)
-	{
-		if (*head == 0)
-			*head = node;
-		else
-		{
-			BfmeNode_00161220 *last = *head;
-			while (last->m_next04 != 0)
-				last = last->m_next04;
-			last->m_next04 = node;
-			node->m_previous08 = last;
-		}
-	}
-
-	static void append0C(BfmeNode_00161220 **head, BfmeNode_00161220 *node)
-	{
-		if (*head == 0)
-			*head = node;
-		else
-		{
-			BfmeNode_00161220 *last = *head;
-			while (last->m_next0C != 0)
-				last = last->m_next0C;
-			last->m_next0C = node;
-			node->m_previous10 = last;
-		}
 	}
 };
 
 void Gen_00168910::bfmeAccept(BfmeSeedTarget *target)
 {
-	BfmeXferVersion version;
-	version.m_version = 1;
-	version.m_currentVersion = 2;
-
 	if (target->skipTransfer())
 		return;
+
+	BfmeXferVersion version(1, 2);
 
 	target->xferVersion(&version);
 	bfmeHandOver_0000C9B4(target, m_field70);
 
 	UnsignedShort firstCount = 0;
 	BfmeNode_00161220 *node;
-	for (node = m_list04; node; node = ((BfmeNext04)j_0002fee6)(node))
+	node = m_list04;
+	while (node)
+	{
 		++firstCount;
+		if (node == 0)
+			break;
+		node = bfmeNext04(node);
+	}
 	target->xferUnsignedShort(&firstCount);
 
 	if (target->isStoring())
 	{
-		for (node = m_list04; node; node = ((BfmeNext04)j_0002fee6)(node))
+		for (node = m_list04; node; )
+		{
 			target->xferSnapshot(node);
+			if (node == 0)
+				break;
+			node = bfmeNext04(node);
+		}
 	}
 	else
 	{
@@ -251,23 +269,46 @@ void Gen_00168910::bfmeAccept(BfmeSeedTarget *target)
 		{
 			node = (BfmeNode_00161220 *)::operator new(0x30);
 			if (node)
-			{
 				clearNode(node);
-				append04(&m_list04, node);
-				target->xferSnapshot(node);
-			}
+			else
+				node = 0;
+			if (!node->isInList04(&m_list04))
+				node->prepend04(&m_list04);
+			target->xferSnapshot(node);
 		}
+
+		BfmeNode_00161220 *previous = 0;
+		for (node = m_list04; node; )
+		{
+			BfmeNode_00161220 *originalNext = node->m_previous08;
+			node->m_previous08 = node->m_next04;
+			node->m_next04 = originalNext;
+			previous = node;
+			node = originalNext;
+		}
+		m_list04 = previous;
 	}
 
 	UnsignedShort secondCount = 0;
-	for (node = m_list08; node; node = ((BfmeNext0C)j_00008224)(node))
+	node = m_list08;
+	while (node)
+	{
 		++secondCount;
+		if (node == 0)
+			break;
+		node = bfmeNext0C(node);
+	}
 	target->xferUnsignedShort(&secondCount);
 
 	if (target->isStoring())
 	{
-		for (node = m_list08; node; node = ((BfmeNext0C)j_00008224)(node))
+		for (node = m_list08; node; )
+		{
 			target->xferSnapshot(node);
+			if (node == 0)
+				break;
+			node = bfmeNext0C(node);
+		}
 	}
 	else
 	{
@@ -282,12 +323,24 @@ void Gen_00168910::bfmeAccept(BfmeSeedTarget *target)
 		{
 			node = (BfmeNode_00161220 *)::operator new(0x30);
 			if (node)
-			{
 				clearNode(node);
-				append0C(&m_list08, node);
-				target->xferSnapshot(node);
-			}
+			else
+				node = 0;
+			if (!node->isInList0C(&m_list08))
+				node->prepend0C(&m_list08);
+			target->xferSnapshot(node);
 		}
+
+		BfmeNode_00161220 *previous = 0;
+		for (node = m_list08; node; )
+		{
+			BfmeNode_00161220 *originalNext = node->m_previous10;
+			node->m_previous10 = node->m_next0C;
+			node->m_next0C = originalNext;
+			previous = node;
+			node = originalNext;
+		}
+		m_list08 = previous;
 	}
 
 	UnsignedInt contextValue = m_context0C->m_value24;
@@ -313,13 +366,19 @@ void Gen_00168910::bfmeAccept(BfmeSeedTarget *target)
 	target->xferObjectID(&m_field34);
 	target->xferBool((Bool *)&m_field40);
 	target->xferString(&m_field44);
-	((BfmeFieldXfer)bfmeHandOver_0000C9B4)(target, &m_field48);
-	((BfmeFieldXfer)bfmeHandOver_0000C9B4)(target, &m_field4C);
+	UnsignedInt *field = (UnsignedInt *)&m_field48;
+	Int fieldCount = 2;
+	for (; fieldCount != 0; --fieldCount)
+	{
+		((BfmeFieldXfer)bfmeHandOver_0000C9B4)(target, field);
+		++field;
+	}
 	((BfmeFieldXfer)bfmeHandOver_0000C9B4)(target, &m_field50);
 	target->xferUnsignedInt((UnsignedInt *)&m_field60);
 	target->xferBool((Bool *)&m_field64);
 	target->xferBool((Bool *)&m_field65);
 	target->xferUnsignedInt((UnsignedInt *)&m_field68);
+	target->xferObjectID(&m_field54);
 	if (version.m_currentVersion >= 2)
 		target->xferInt(&m_field6C);
 }
