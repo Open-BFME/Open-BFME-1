@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: AnimationSoundClientBehavior::friend_newModuleData factory.
+// AnimationSoundClientBehavior factories: the retail allocations are
+// 0x1c bytes for the instance (0x00121D20) and 0x18 for module data
+// (0x00121DA0). Preserve these independent constructor ABI views.
 
+class Module;
+class Thing;
 class INI;
 class ModuleData;
 
@@ -35,7 +39,12 @@ extern "C" void __cdecl AnimationSoundClientBehaviorFieldParse(MultiIniFieldPars
 class AnimationSoundClientBehavior
 {
 public:
+	AnimationSoundClientBehavior(Thing *, const ModuleData *);
+	static Module *friend_newModuleInstance(Thing *, const ModuleData *);
 	static ModuleData *friend_newModuleData(INI *ini);
+
+private:
+	unsigned char m_pad[0x1c];
 };
 
 // ?friend_newModuleData@AnimationSoundClientBehavior@@SAPAVModuleData@@PAVINI@@@Z
@@ -45,4 +54,10 @@ ModuleData *AnimationSoundClientBehavior::friend_newModuleData(INI *ini)
 	if (ini)
 		ini->initFromINIMultiProc(data, &AnimationSoundClientBehaviorFieldParse);
 	return (ModuleData *)data;
+}
+
+// ?friend_newModuleInstance@AnimationSoundClientBehavior@@SAPAVModule@@PAVThing@@PBVModuleData@@@Z
+Module *AnimationSoundClientBehavior::friend_newModuleInstance(Thing *thing, const ModuleData *data)
+{
+	return (Module *)new AnimationSoundClientBehavior(thing, data);
 }
