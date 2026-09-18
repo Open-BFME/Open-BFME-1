@@ -75585,7 +75585,7 @@ name,address,notes
 ?bfmeCallEMA@@YAXPAXPAUBfmeThingEMA@@PAUBfmeSubEMA@@@Z,0x0076E4F0,pin
 ?bfmeCallEMB@@YAXPAXP6AXXZPAPAX@Z,0x00867010,pin
 ?bfmeCallEMC@BfmeObjEMC@@QAEXPAX00@Z,0x007E8A80,pin
-?bfmeCallEMD@BfmeObjEMD@@QAEXPAX00@Z,0x00825680,pin
+?compress@LZHLCompressor@@QAEIPAEPBEI@Z,0x00825680,retail LZHLCompress 0x00823130 passes ECX handle and dst/src/size; ret12 member returns named LZHLEncoder::flush and calls named LZBuffer helpers plus compressor updateTable; canonical _lz.h signature; member body remains present-unmatched
 ?bfmeCallEMGa@@YGXPAXH@Z,0x00019E6B,pin
 ?bfmeCallEMGb@@YGXHPAX@Z,0x00019E6B,pin
 ?bfmeCallENA@BfmeThingENA@@QAEXPAX@Z,0x0004606F,pin

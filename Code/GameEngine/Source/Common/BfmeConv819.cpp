@@ -44,17 +44,6 @@ void __stdcall bfmeGoEMC(BfmeObjEMC *o, void *b, void *c)
 	o->bfmeCallEMC(g_bfmeXEMC, b, c);
 }
 
-class BfmeObjEMD
-{
-public:
-	void bfmeCallEMD(void *b, void *c, void *d);
-};
-
-void bfmeGoEMD(BfmeObjEMD *o, void *b, void *c, void *d)
-{
-	o->bfmeCallEMD(b, c, d);
-}
-
 class BfmeObjEME
 {
 public:

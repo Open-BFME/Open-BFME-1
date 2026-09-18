@@ -35,3 +35,14 @@ unsigned int LZHLCompressorCalcMaxBuf(unsigned int rawSize)
 {
     return LZHLCompressor::calcMaxBuf(rawSize);
 }
+
+// Retail 0x00823130: matched CompressFile calls this named API.
+// The member at 0x00825680 takes dst/src/size with ECX=handle, returns
+// LZHLEncoder::flush in EAX, and pops 12 argument bytes. Its named
+// LZBuffer/encoder callees and canonical declaration prove the identity;
+// the vendored member body itself remains present-unmatched.
+unsigned int LZHLCompress(void *handle, void *destination, void *source, unsigned int sourceSize)
+{
+    return static_cast<LZHLCompressor *>(handle)->compress(
+        static_cast<BYTE *>(destination), static_cast<const BYTE *>(source), sourceSize);
+}
