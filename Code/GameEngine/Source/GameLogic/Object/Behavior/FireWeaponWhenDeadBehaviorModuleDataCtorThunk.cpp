@@ -11,11 +11,22 @@
 // +0x71, WeaponOffset at +0x78); Zero Hour has no member for either, so those
 // stay offset-named.
 
+// Retail destroys the same +0x08 storage through ILT 0x0001B97D; this
+// already-pinned ABI view avoids inventing a separate mux-destructor identity.
+class UpgradeModuleDataSub
+{
+public:
+    ~UpgradeModuleDataSub();
+};
+
 class FWWDead_UpgradeMuxData
 {
 public:
     FWWDead_UpgradeMuxData();
-    ~FWWDead_UpgradeMuxData();
+    ~FWWDead_UpgradeMuxData()
+    {
+        reinterpret_cast<UpgradeModuleDataSub *>(this)->~UpgradeModuleDataSub();
+    }
 
 private:
     unsigned char m_storage[0x68];
@@ -30,17 +41,18 @@ private:
     unsigned char m_storage[0x2c];
 };
 
-class FWWDead_ModuleDataBase
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
+class ModuleData
 {
 public:
-    virtual ~FWWDead_ModuleDataBase() {}
+    virtual ~ModuleData() {}
 
 private:
-    unsigned int m_field04;
+    unsigned int m_moduleTagNameKey;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/FireWeaponWhenDeadBehavior.h
-class FireWeaponWhenDeadBehaviorModuleData : public FWWDead_ModuleDataBase
+class FireWeaponWhenDeadBehaviorModuleData : public ModuleData
 {
 public:
     FireWeaponWhenDeadBehaviorModuleData();
@@ -68,4 +80,12 @@ FireWeaponWhenDeadBehaviorModuleData::FireWeaponWhenDeadBehaviorModuleData()
     m_field78 = 0;
     m_field7c = 0;
     m_field80 = 0;
+}
+
+// Retail begins teardown with the UpgradeMuxData at +0x08.
+class __declspec(novtable) FireWeaponWhenDeadBehaviorModuleData;
+
+// ??1FireWeaponWhenDeadBehaviorModuleData@@UAE@XZ
+FireWeaponWhenDeadBehaviorModuleData::~FireWeaponWhenDeadBehaviorModuleData()
+{
 }
