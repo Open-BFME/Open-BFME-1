@@ -1,6 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
+// The complete destructor 0x002067C0 also emits scalar wrapper 0x00207200;
+// the wrapper's retail ILT call independently reaches this complete body.
+//
 // SiegeDockingBehavior's retail destructor uses the BFME UpdateModule layout,
 // with a vector at +0x24 and a nothrow stopDocking call.  Keep this recovered
 // view in the proper behavior source family instead of changing shared headers.
