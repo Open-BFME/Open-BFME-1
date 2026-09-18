@@ -54,6 +54,8 @@ public:
 class Rva00800290Buffer
 {
 public:
+	void addPadded( int size );
+	void addString( const char *text );
 	void allocate();
 
 	char *m_ptr;
@@ -86,6 +88,34 @@ public:
 	char m_bfme3c[0x30];
 	char *m_ugid;
 };
+
+struct Rva00801740Locals
+{
+	Rva00800290Buffer *buffer;
+	char buf[0x40];
+};
+
+void Rva00801EC0Owner::measure( Rva007FBEF0GameRecord *rec )
+{
+	Rva00801740Locals locals;
+	BfmeVecCZ *vector;
+	int count;
+	int i;
+	int *slot;
+
+	vector = &m_host->m_ugidKeys;
+	count = vector->m_bfmeCount;
+	locals.buffer = (Rva00800290Buffer *)&m_arena;
+	locals.buffer->addPadded( count * 4 );
+	for( i = 0; i < count; i++ )
+	{
+		slot = m_host->rva007F76D0( vector, i );
+		locals.buf[0] = 0;
+		if( rec->Rva007FBF40( (const char *)slot, locals.buf, 0x40 ) )
+			locals.buffer->addString( locals.buf );
+	}
+	locals.buffer->addString( rec->m_ugid );
+}
 
 void Rva00801EC0Owner::rva00801ec0( Rva007FBEF0GameRecord *rec )
 {
