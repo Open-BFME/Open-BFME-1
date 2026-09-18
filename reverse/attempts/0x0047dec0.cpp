@@ -3,6 +3,8 @@
 // ?gogoGadgetRadioButton@GameWindowManager@@UAEPAVGameWindow@@PAV2@PAURadioButtonData@@PAVGameFont@@_N@Z
 // BFME radio-button construction with the shared gadget setup sequence.
 
+#include <string.h>
+
 class GameWindow;
 class GameFont;
 
@@ -153,15 +155,13 @@ extern void GadgetRadioSetText(GameWindow *, UnicodeString);
 GameWindow *GameWindowManager::gogoGadgetRadioButton(GameWindow *parent,
 	RadioButtonData *data, GameFont *font, bool visual)
 {
-	GameWindow *radioButton;
-	RadioButtonData *radioData;
 	if ((parent->instanceData->style & 2) == 0)
 		return 0;
-	radioButton = TheWindowManager->create(parent);
+	GameWindow *radioButton = TheWindowManager->create(parent);
 	if (radioButton == 0)
 		return 0;
-	radioData = new RadioButtonData;
-	*radioData = *data;
+	RadioButtonData *radioData = new RadioButtonData;
+	memcpy(radioData, data, sizeof(RadioButtonData));
 	radioButton->winSetUserData(radioData);
 	radioButton->winSetOwner(parent->owner);
 	assignDefaultGadgetLook(radioButton, font, visual);
