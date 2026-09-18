@@ -4750,7 +4750,7 @@ name,address,notes
 ??1BfmeStrEAZ@@QAE@XZ,0x00887940,pin string dtor for BfmeConv2016
 ??1BfmeStrEBC@@QAE@XZ,0x00887940,pin string dtor for BfmeConv2019
 ??1BfmeStrFM@@QAE@XZ,0x00887940,address-derived BfmeHostFM result destructor; retail uses the established narrow StringBase release body
-??1BfmeStrTQ@@QAE@XZ,0x00887940,pin string dtor for BfmeConv2026
+??1BfmeStrTQ@@QAE@XZ,0x00887940,pin string dtor for AudioEventTQ_bfmeSetNameTQ
 ??1BfmeStrVSO@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTA@@QAE@XZ,0x00887940,pin
 ??1BfmeStrVTB@@QAE@XZ,0x00887940,pin
@@ -75954,7 +75954,7 @@ name,address,notes
 ?bfmeDetachESR@BfmeOwnerESR@@QAEXPAVBfmeSubESR@@@Z,0x00040737,pin
 ?bfmeDetachXP@Rva00579160Manager@@QAEXH@Z,0x000144BB,Open-BFME5 ILT window detach the 0x00470570 close-all calls
 ?bfmeDiagABB@@YGPAUBfmeNodeABB@@PAUBfmeIterABB@@PBX@Z,0x009F6D00,Open-BFME5 checked-iterator diagnostic the 0x000A1310 accessor calls when the range is empty
-?bfmeDiffersTQ@BfmeStrTQ@@QBEHABV1@@Z,0x000220C5,pin compare for BfmeConv2026
+?bfmeDiffersTQ@BfmeStrTQ@@QBEHABV1@@Z,0x000220C5,pin compare for AudioEventTQ_bfmeSetNameTQ
 ?bfmeDisabled@Gen_00609320@@QBEEXZ,0x00048C4D,ILT uchar spelling for bfmeDisabled body 0x00609320; callee of test@Rva003BF540
 ?bfmeDisconnectUJC@@YAXPAUBfmeConnUJC@@H@Z,0x008EDA20,pin
 ?bfmeDispatchA@@YAXPAUBfmeRangeValue@@HHPAX11@Z,0x000075D6,Open-BFME5 ILT the range dispatcher at 0x002610F0 calls
@@ -78205,7 +78205,7 @@ name,address,notes
 ?bfmeSetTFA@BfmeSubTFA@@QAEXH@Z,0x000348EC,pin
 ?bfmeSetTGB@BfmeSubTGB@@QAEXH@Z,0x0001E402,pin
 ?bfmeSetTMC@BfmeBoxTMC@@QAEXHHHH@Z,0x000297C6,pin
-?bfmeSetTQ@BfmeStrTQ@@QAEXABV1@@Z,0x00887C90,pin set for BfmeConv2026
+?bfmeSetTQ@BfmeStrTQ@@QAEXABV1@@Z,0x00887C90,pin set for AudioEventTQ_bfmeSetNameTQ
 ?bfmeSetTexVHA@@YAXIAAPAVBfmeTexVHA@@@Z,0x00905AC0,pin
 ?bfmeSetTextureVDA@@YAXIPAX@Z,0x00905AC0,pin
 ?bfmeSetTopVIF@@YAXPAUBfmeLuaVHR@@H@Z,0x0098FDE0,pin
@@ -87087,7 +87087,7 @@ __imp_?bfmeWait1036@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?bfmeWait1037@@YGHPAXH@Z,0x00F58F64,pin
 __imp_?doFree@BfmeFreeHelper@@QAEXXZ,0x00F596D8,pin
 __imp__AIL_enumerate_3D_providers@12,0x013595AC,Open-BFME5 retail mss32 AIL_enumerate_3D_providers import pointer
-__imp__BfmeDecTQ@4,0x00F58E54,pin decrement import for BfmeConv2026
+__imp__BfmeDecTQ@4,0x00F58E54,pin decrement import for AudioEventTQ_bfmeSetNameTQ
 __imp__BfmeFloorER,0x00F593B8,pin floor import for BfmeConv2039
 __imp__BfmeMemMove,0x0135945C,dllimport IAT for wide string insert_aux Traits::move; same slot as memmove
 __imp__EnterCriticalSection@4,0x00F58D18,retail KERNEL32 import pointer
