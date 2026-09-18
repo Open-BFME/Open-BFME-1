@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/bfmeobjectlayout /Ireference/shims/mouselayout /Ireference/shims/nat /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -27,6 +27,9 @@
 
 #include "PreRTS.h"
 
+#include "GameLogic/Object.h"
+#include "GameClient/InGameUI.h"
+
 #include "GameLogic/Damage.h"
 #include "GameLogic/Module/ContainModule.h"
 
@@ -41,6 +44,68 @@
 #include "GameClient/GameClient.h"
 #include "GameClient/Drawable.h"
 #include "GameClient/KeyDefs.h"
+
+static Bool bfmeInGameUIForceAttackMode()
+{
+	return *(const Bool *)((const char *)TheInGameUI + 0x12B1);
+}
+
+static Bool bfmeInGameUIForceMoveMode()
+{
+	return *(const Bool *)((const char *)TheInGameUI + 0x12B2);
+}
+
+static Bool bfmeInGameUIPreferSelection()
+{
+	return *(const Bool *)((const char *)TheInGameUI + 0x12B3);
+}
+
+static Bool bfmeUseAlternateMouse()
+{
+	return *(const Bool *)((const char *)TheGlobalData + 0x60);
+}
+
+static Team *bfmeObjectTeam(const Object *object)
+{
+	return *(Team * const *)((const char *)object + 0x23C);
+}
+
+static Object *bfmeDrawableObject(const Drawable *drawable)
+{
+	return *(Object * const *)((const char *)drawable + 0xFC);
+}
+
+class BFMERopeDrawableGetPositionShim
+{
+public:
+	const Coord3D *get() const;
+};
+
+class BfmeGameClientContextCommandShim
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual GameMessage::Type evaluateContextCommand(
+		Drawable *draw, const Coord3D *position,
+		CommandTranslator::CommandEvaluateType type);
+};
+
+static const Coord3D *bfmeDrawablePosition(const Drawable *drawable)
+{
+	return ((const BFMERopeDrawableGetPositionShim *)drawable)->get();
+}
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -100,8 +165,8 @@ extern Bool contextCommandForNewSelection(const DrawableList *currentlySelectedD
 	if (!(currentlySelectedDrawables && newlySelectedDrawables && outSelectionInfo))
 		return FALSE;
 
-	Bool forceFire = TheInGameUI->isInForceAttackMode();
-	Bool forceMove = TheInGameUI->isInForceMoveToMode();
+	Bool forceFire = bfmeInGameUIForceAttackMode();
+	Bool forceMove = bfmeInGameUIForceMoveMode();
 
 	if (forceFire || forceMove) {
 		return FALSE;
@@ -115,7 +180,7 @@ extern Bool contextCommandForNewSelection(const DrawableList *currentlySelectedD
 			continue;
 		}
 
-		Object *obj = (*it)->getObject();
+		Object *obj = bfmeDrawableObject(*it);
 		if (!obj) {
 			continue;
 		}
@@ -128,7 +193,7 @@ extern Bool contextCommandForNewSelection(const DrawableList *currentlySelectedD
 				++outSelectionInfo->currentCountMineBuildings;
 			}
 		} else {
-			Relationship rel = localPlayer->getRelationship(obj->getTeam());
+			Relationship rel = localPlayer->getRelationship(bfmeObjectTeam(obj));
 			if (rel == ALLIES) {
 				++outSelectionInfo->currentCountFriends;
 			} else if (rel == ENEMIES) {
@@ -149,7 +214,7 @@ extern Bool contextCommandForNewSelection(const DrawableList *currentlySelectedD
 			continue;
 		}
 
-		Object *obj = (*it)->getObject();
+		Object *obj = bfmeDrawableObject(*it);
 		if (!obj) {
 			continue;
 		}
@@ -157,7 +222,7 @@ extern Bool contextCommandForNewSelection(const DrawableList *currentlySelectedD
 		if (TheActionManager->canPlayerGarrison(localPlayer, obj, CMD_FROM_PLAYER)) {
 			++outSelectionInfo->newCountGarrisonableBuildings;
 		}
-		if (obj->isKindOf(KINDOF_CRATE)) {
+		if (obj->isKindOf((KindOfType)0x30)) {
 			++outSelectionInfo->newCountCrates;
 		}
 
@@ -168,7 +233,7 @@ extern Bool contextCommandForNewSelection(const DrawableList *currentlySelectedD
 				++outSelectionInfo->newCountMineBuildings;
 			}
 		} else {
-			Relationship rel = localPlayer->getRelationship(obj->getTeam());
+			Relationship rel = localPlayer->getRelationship(bfmeObjectTeam(obj));
 			if (rel == ALLIES) {
 				newFriendly = *it;
 				++outSelectionInfo->newCountFriends;
@@ -199,7 +264,7 @@ extern Bool contextCommandForNewSelection(const DrawableList *currentlySelectedD
 		return FALSE;
 	}
 
-	if (TheGlobalData->m_useAlternateMouse) {
+	if (bfmeUseAlternateMouse()) {
 		// context sensitive commands never apply when selecting in alternate mouse mode
 		return FALSE;
 	}
@@ -207,15 +272,15 @@ extern Bool contextCommandForNewSelection(const DrawableList *currentlySelectedD
 	if (outSelectionInfo->currentCountMine > 0) {
 		if (outSelectionInfo->newCountEnemies > 0) {
 			if (outSelectionInfo->newCountEnemies == 1 && selectionIsPoint) {
-				return TheGameClient->evaluateContextCommand(newEnemy, newEnemy->getPosition(), CommandTranslator::EVALUATE_ONLY) != GameMessage::MSG_INVALID;
+				return ((BfmeGameClientContextCommandShim *)TheGameClient)->evaluateContextCommand(newEnemy, bfmeDrawablePosition(newEnemy), CommandTranslator::EVALUATE_ONLY) != GameMessage::MSG_INVALID;
 			}
 
 			return selectionIsPoint;
 		}
 
 		if (outSelectionInfo->newCountMine > 0) {
-			if (outSelectionInfo->newCountMine == 1 && selectionIsPoint && !TheInGameUI->isInPreferSelectionMode()) {
- 				return TheGameClient->evaluateContextCommand(newMine, newMine->getPosition(), CommandTranslator::EVALUATE_ONLY) != GameMessage::MSG_INVALID;
+			if (outSelectionInfo->newCountMine == 1 && selectionIsPoint && !bfmeInGameUIPreferSelection()) {
+				return ((BfmeGameClientContextCommandShim *)TheGameClient)->evaluateContextCommand(newMine, bfmeDrawablePosition(newMine), CommandTranslator::EVALUATE_ONLY) != GameMessage::MSG_INVALID;
 			}
 
 			return FALSE;
@@ -223,7 +288,7 @@ extern Bool contextCommandForNewSelection(const DrawableList *currentlySelectedD
 
 		if (outSelectionInfo->newCountFriends > 0) {
 			if (outSelectionInfo->newCountFriends == 1 && selectionIsPoint) {
-				return TheGameClient->evaluateContextCommand(newFriendly, newFriendly->getPosition(), CommandTranslator::EVALUATE_ONLY) != GameMessage::MSG_INVALID;
+				return ((BfmeGameClientContextCommandShim *)TheGameClient)->evaluateContextCommand(newFriendly, bfmeDrawablePosition(newFriendly), CommandTranslator::EVALUATE_ONLY) != GameMessage::MSG_INVALID;
 			}
 			return FALSE;
 		}
@@ -234,7 +299,7 @@ extern Bool contextCommandForNewSelection(const DrawableList *currentlySelectedD
 
 		if (outSelectionInfo->newCountCivilians > 0) {
 			if (outSelectionInfo->newCountCivilians == 1 && selectionIsPoint) {
-				return TheGameClient->evaluateContextCommand(newCivilian, newCivilian->getPosition(), CommandTranslator::EVALUATE_ONLY) != GameMessage::MSG_INVALID;
+				return ((BfmeGameClientContextCommandShim *)TheGameClient)->evaluateContextCommand(newCivilian, bfmeDrawablePosition(newCivilian), CommandTranslator::EVALUATE_ONLY) != GameMessage::MSG_INVALID;
 			}
 			return FALSE;
 		}
