@@ -2010,7 +2010,7 @@ void AIUpdateInterface::onObjectCreated()
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/AIUpdateInterfaceDestructorThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceDestructors.cpp
 // ??1AIUpdateInterface@@ present-unmatched
 AIUpdateInterface::~AIUpdateInterface( void )
 {

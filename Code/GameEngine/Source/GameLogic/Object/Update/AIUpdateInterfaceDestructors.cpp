@@ -1,5 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ivendor/stlport
 
+// AIUpdateInterface complete destructor 0x0027EF60 also emits scalar
+// wrapper 0x0027FAC0. Constructor 0x0027F4B0 and vtable 0x00CBA8A8
+// establish class identity; this owner lives beside the AIUpdate.cpp family
+// at its reference GameLogic/Object/Update home.
+
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 #include <vector>
