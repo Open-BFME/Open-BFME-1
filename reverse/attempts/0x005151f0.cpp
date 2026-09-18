@@ -20,6 +20,9 @@ typedef bool Bool;
 typedef int Int;
 typedef unsigned short WideChar;
 
+extern "C" void _ReadWriteBarrier( void );
+#pragma intrinsic( _ReadWriteBarrier )
+
 class GameWindow;
 
 extern const char g_bfmeEmptyUnicode[];
@@ -224,9 +227,10 @@ void BfmeAptScreenInGameChat::_bfme_onBttnRemoveFriend( const char *name )
 	std::vector<Int> selected;
 	Int count = g_Rva005127A0InGameChat->rva00513BF0(
 		g_Rva005127A0InGameChat->m_friendsList, &selected, 7, true );
+	Int *ids = selected.begin();
+	_ReadWriteBarrier();
 	if( count > 0 )
 	{
-		Int *ids = selected.begin();
 		UnicodeString title = TheGameText->fetch( "APT:RemoveFirendTitle", 0 );
 		UnicodeString message;
 
@@ -234,8 +238,9 @@ void BfmeAptScreenInGameChat::_bfme_onBttnRemoveFriend( const char *name )
 		{
 			UnicodeString fmt =
 				TheGameText->fetch( "APT:RemovieFriendMessage", 0 );
+			Int id = ids[ 0 ];
 			UnicodeString buddy;
-			g_Rva005127A0InGameChat->rva00512890( ids[ 0 ], buddy );
+			g_Rva005127A0InGameChat->rva00512890( id, buddy );
 			message.format( fmt, buddy.str() );
 		}
 		else
@@ -262,9 +267,10 @@ void BfmeAptScreenInGameChat::_bfme_onBttnAddFriend( const char *name )
 	std::vector<Int> selected;
 	Int count = g_Rva005127A0InGameChat->rva00513BF0(
 		g_Rva005127A0InGameChat->m_friendsList, &selected, 7, true );
+	Int *ids = selected.begin();
+	_ReadWriteBarrier();
 	if( count > 0 )
 	{
-		Int *ids = selected.begin();
 		UnicodeString title = TheGameText->fetch( "APT:AcceptRequestTitle", 0 );
 		UnicodeString message;
 
@@ -272,8 +278,9 @@ void BfmeAptScreenInGameChat::_bfme_onBttnAddFriend( const char *name )
 		{
 			UnicodeString fmt =
 				TheGameText->fetch( "APT:AcceptRequestMessage", 0 );
+			Int id = ids[ 0 ];
 			UnicodeString buddy;
-			g_Rva005127A0InGameChat->rva00512890( ids[ 0 ], buddy );
+			g_Rva005127A0InGameChat->rva00512890( id, buddy );
 			message.format( fmt, buddy.str() );
 		}
 		else
