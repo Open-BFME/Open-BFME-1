@@ -127,10 +127,21 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
             # and takes every other landing down with it: stage it only once
             # it verifies on its own (GameLOD.cpp and sortingrenderer.cpp, 2026-09-17)
             v = subprocess.run(["bash", str(ROOT / "build.sh"), source], cwd=ROOT, capture_output=True, text=True, errors="replace")
-            if "Functions: OK" in v.stdout + v.stderr:
+            if "Functions: OK" in v.stdout + v.stderr and "FAIL" not in v.stdout + v.stderr:
                 run("git", "add", "--", source)
             else:
                 print(f"harvest: {source} does not byte-verify yet; left in flight")
+    # a cited TU may #include a sibling (.c/.inl) a seat edited for the landing;
+    # nbench1.cpp includes nbench1.c (2026-09-17): stage the include with the TU
+    import re as _re
+    staged_code = set(out("git", "diff", "--cached", "--name-only", "--", "Code").splitlines())
+    for source in changed_sources:
+        if source in staged_code or not (ROOT / source).exists():
+            continue
+        name = Path(source).name
+        for tu in staged_code:
+            if (ROOT / tu).exists() and _re.search(r'#include\s*"%s"' % _re.escape(name), (ROOT / tu).read_text(encoding="utf-8", errors="replace")):
+                run("git", "add", "--", source); print(f"harvest: staged {source}, included by {tu}"); break
     unt = out("git", "ls-files", "--others", "--exclude-standard", "Code").split()
     keep = [u for u in unt if u in cited]
     if keep:
