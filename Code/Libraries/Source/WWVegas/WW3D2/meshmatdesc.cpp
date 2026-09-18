@@ -1036,35 +1036,33 @@ void MeshMatDescClass::Configure_Material(VertexMaterialClass * mtl,int pass,boo
 	}
 }
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescClass_Do_Mappers_Need_Normals_Thunk.cpp
-// ?Do_Mappers_Need_Normals@MeshMatDescClass@@QAE_NXZ present-unmatched
 bool MeshMatDescClass::Do_Mappers_Need_Normals(void)
 {
-	if (DX8Wrapper::Is_Initted() && DX8Wrapper::Get_Current_Caps()->Support_NPatches() && WW3D::Get_NPatches_Level()>1) return true;
+	if (*reinterpret_cast<bool *>(0x0134050c)
+		&& *reinterpret_cast<bool *>(*reinterpret_cast<unsigned char **>(0x01340578) + 0x13b)
+		&& *reinterpret_cast<unsigned int *>(0x012d6d8c) > 1) {
+		return true;
+	}
 
-	for (int pass=0; pass<PassCount; pass++) {
-		/*
-		** Check the materials on this pass to see if any have mappers which require normals
-		*/
-		if (Material[pass] != NULL) {
-
+	for (int pass = 0; pass < PassCount; ++pass) {
+		if (Material[pass] != 0) {
 			if (Material[pass]->Do_Mappers_Need_Normals()) return true;
-
 		} else {
-			VertexMaterialClass * prev_mtl = NULL;
-			VertexMaterialClass * mtl = Peek_Material(pass,0);
-
-			for (int vidx=0; vidx<VertexCount; vidx++) {
-
-				mtl = Peek_Material(vidx,pass);
-				if ((mtl != prev_mtl) && (mtl != NULL)) {
-
+			VertexMaterialClass *prev_mtl = 0;
+			VertexMaterialClass *mtl;
+			for (int vidx = 0; vidx < VertexCount; ++vidx) {
+				if (MaterialArray[pass]) {
+					VertexMaterialClass **items = *reinterpret_cast<VertexMaterialClass ***>((unsigned char *)MaterialArray[pass] + 8);
+					mtl = items[vidx];
+				} else {
+					mtl = Material[pass];
+				}
+				if (mtl != prev_mtl && mtl != 0) {
 					if (mtl->Do_Mappers_Need_Normals()) return true;
 					prev_mtl = mtl;
 				}
 			}
 		}
 	}
-
 	return false;
 }
