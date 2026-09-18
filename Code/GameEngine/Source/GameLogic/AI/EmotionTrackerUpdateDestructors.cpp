@@ -1,6 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
+// Complete destructor 0x0028FCC0 and emitted scalar wrapper 0x00290190.
+// Constructor 0x00290740, typed factories, and module-name getter establish
+// the class; wrapper ILT 0x0000922D reaches the complete teardown.
 // This destructor uses the BFME-era UpdateModule and emotion-container layout.
 // Keep the recovered view in the proper source family instead of changing the
 // shared reference headers.
