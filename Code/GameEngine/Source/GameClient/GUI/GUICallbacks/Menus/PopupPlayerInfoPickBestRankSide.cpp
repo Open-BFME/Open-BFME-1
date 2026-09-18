@@ -9,14 +9,14 @@ int bfmeRankPointsFromStats( Gen_uw_00025c1b *stats, int side );
 
 int bfmePickBestRankSide( Gen_uw_00025c1b *stats )
 {
-	int p1 = bfmeRankPointsFromStats( stats, 1 );
-	int p0 = bfmeRankPointsFromStats( stats, 0 );
-	int p3 = bfmeRankPointsFromStats( stats, 3 );
-	int p2 = bfmeRankPointsFromStats( stats, 2 );
-	int idx0 = ( p1 >= p0 );
-	int pair0 = *( ( p1 > p0 ) ? &p1 : &p0 );
-	int idx1 = 2 + ( p3 >= p2 );
-	if ( pair0 < *( ( p3 > p2 ) ? &p3 : &p2 ) )
-		return idx1;
-	return idx0;
+	int side1Points = bfmeRankPointsFromStats( stats, 1 );
+	int side0Points = bfmeRankPointsFromStats( stats, 0 );
+	int side3Points = bfmeRankPointsFromStats( stats, 3 );
+	int side2Points = bfmeRankPointsFromStats( stats, 2 );
+	int firstPairSide = ( side1Points >= side0Points );
+	int firstPairPoints = *( ( side1Points > side0Points ) ? &side1Points : &side0Points );
+	int secondPairSide = 2 + ( side3Points >= side2Points );
+	if ( firstPairPoints < *( ( side3Points > side2Points ) ? &side3Points : &side2Points ) )
+		return secondPairSide;
+	return firstPairSide;
 }
