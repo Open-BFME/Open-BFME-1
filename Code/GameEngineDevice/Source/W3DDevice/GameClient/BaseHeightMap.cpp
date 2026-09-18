@@ -3242,46 +3242,6 @@ void BaseHeightMapRenderObjClass::updateViewImpassableAreas(
 	}
 }
 
-/** Generate a lookup table which can be used to generate an
-alpha value from a given set of uv coordinates.  Currently used
-for smoothing water/terrain border*/
-// ?initDestAlphaLUT@BaseHeightMapRenderObjClass@@IAEXXZ present-unmatched
-void BaseHeightMapRenderObjClass::initDestAlphaLUT(void)
-{
-	if (!m_destAlphaTexture)
-		return;
-
-	SurfaceClass *surf=m_destAlphaTexture->Get_Surface_Level();
-
-	if (surf)
-	{
-		Int pitch;
-		UnsignedInt *pData=(UnsignedInt*)surf->Lock(&pitch);
-
-		Int maxOpacity=(Int)(TheWaterTransparency->m_minWaterOpacity * 255.0f);
-		Int alpha;
-
-		if (pData)
-		{
-			//Fill texture with alpha gradient
-			for (Int x=0; x<256; x++)
-			{	
-				alpha = x;
-				if (alpha > maxOpacity)
-					alpha = maxOpacity;
-				*pData=(alpha<<24)|0x00ffffff;
-				pData++;
-			}
-			surf->Unlock();
-		}
-
-		m_destAlphaTexture->Get_Filter().Set_U_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-		m_destAlphaTexture->Get_Filter().Set_V_Addr_Mode(TextureFilterClass::TEXTURE_ADDRESS_CLAMP);
-		REF_PTR_RELEASE(surf);
-		m_currentMinWaterOpacity = TheWaterTransparency->m_minWaterOpacity;
-	}
-}
-
 //=============================================================================
 // BaseHeightMapRenderObjClass::initHeightData
 //=============================================================================
