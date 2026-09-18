@@ -88396,3 +88396,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?rva00521390@AptMapPreview@@QAEXPAVMapMetaData@@@Z,0x00521390,pin;unchanged preview receiver and metadata argument in retail 0x005216B0; actual body ret4
 ?rva00521000@AptMapPreview@@QAEXPAVMapMetaData@@@Z,0x00521000,pin;unchanged preview receiver and metadata argument in retail 0x005216B0; actual body ret4
 ??1Video@@QAE@XZ,0x000C3410,True28-byte Video destructor; named INI::parseVideoDefinition calls through ILT167CF; three canonical string members and28-byte vector stride independently witnessed.
+?update@Rva006D5280@@QAEXPAPAVTileData@@HHH@Z,0x0002279B,retail 0x0074C690 calls ILT 0x0002279B with TileData pointer array and three ints; body 0x006D5B10 matches the helper
