@@ -3406,6 +3406,7 @@ name,address,notes
 ??0Rva003525E0Pair@@QAE@ABV0@@Z,0x00024C12,Open-BFME5 fresh thiscall copy ctor at ILT of SEH 0x003525E0
 ??0Rva0035D2B0Node@@QAE@XZ,0x0004213B,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0035D2B0 calls; autopin
 ??0Rva00364980HeapElement@@QAE@ABU0@@Z,0x0001FE6F,REL32 copy-constructor target from 0x003649A2
+??0BfmeOwnVUM@@QAE@ABV0@@Z,0x0001FE6F,LivingWorldPlayerArmy xfer vector copy call reaches the BfmeOwnVUM vtable body at 0x00362F30
 ??0Rva00365B40Record@@QAE@XZ,0x0000B30C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00365B40 calls; autopin
 ??0Rva0036CA00Str@@QAE@ABV0@@Z,0x00887C90,Open-BFME5 fresh thiscall copy ctor for 0x0036CA00 string members
 ??0Rva003A35A0Element@@QAE@ABU0@@Z,0x0001F573,near-twin pin: 0x003A35F0 vector<Rva003A35A0Element>::insert copy-ctor call target
@@ -14267,6 +14268,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@URva0035AFC0Element@_STL@@V?$allocator@URva0035AFC0Element@_STL@@@2@@_STL@@IAEXPAURva0035AFC0Element@2@ABU32@ABU__false_type@2@I_N@Z,0x000396AD,route=0x0035AFC0; retail 0x0035BA20 directly calls this thunk; target has this exact matched identity
 ?_M_insert_overflow@?$vector@URva0035B130Element@_STL@@V?$allocator@URva0035B130Element@_STL@@@2@@_STL@@IAEXPAURva0035B130Element@2@ABU32@ABU__false_type@2@I_N@Z,0x0000CDEC,route=0x0035B130; retail 0x0035BA70 directly calls this thunk; target has this exact matched identity
 ?_M_insert_overflow@?$vector@URva00365020Element@@V?$allocator@URva00365020Element@@@_STL@@@_STL@@IAEXPAURva00365020Element@@ABU3@ABU__false_type@2@I_N@Z,0x0002C331,Open-BFME5 a callee of a vector push_back
+?_M_insert_overflow@?$vector@VBfmeOwnVUM@@V?$allocator@VBfmeOwnVUM@@@_STL@@@_STL@@IAEXPAVBfmeOwnVUM@@ABV3@ABU__false_type@2@I_N@Z,0x0002C331,LivingWorldPlayerArmy xfer vector overflow call reaches the 0xB4-byte STLport body at 0x003644D0
 ?_M_insert_overflow@?$vector@URva00366890Element@@V?$allocator@URva00366890Element@@@_STL@@@_STL@@IAEXPAURva00366890Element@@ABU3@ABU__false_type@2@I_N@Z,0x000345B8,Open-BFME5 a callee of a vector push_back
 ?_M_insert_overflow@?$vector@URva003A35A0Element@@V?$allocator@URva003A35A0Element@@@_STL@@@_STL@@IAEXPAURva003A35A0Element@@ABU3@ABU__false_type@2@I_N@Z,0x0002798F,Open-BFME5 a callee of a vector push_back
 ?_M_insert_overflow@?$vector@URva003A5500Element@_STL@@V?$allocator@URva003A5500Element@_STL@@@2@@_STL@@IAEXPAURva003A5500Element@2@ABU32@ABU__false_type@2@I_N@Z,0x0001B0AE,route=0x003A5500; retail 0x003A5860 calls this exact matched overflow
