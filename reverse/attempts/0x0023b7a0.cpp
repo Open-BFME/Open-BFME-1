@@ -1,5 +1,5 @@
 // ?d_0023b7a0@@YAXXZ
-// partial score=0.978 date=2026-09-16
+// partial score=0.987 date=2026-09-18
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: HordeContain interface slot 87, retail 0x0023B7A0.
 //
@@ -304,8 +304,10 @@ Object *Rva0023B7A0HordeContainView::rva0023B7A0( const Matrix3DTN *transform )
 			if ( ( (BfmeOwnFDH *)owner )->bfmeAskFDH( 0x18 ) )
 				( (Gen001C9A10 *)replacement )->handle( 0x18 );
 
-			int fresh = replacement->m_bfmeExperience->m_bfmeLevel;
-			int held = owner->m_bfmeExperience->m_bfmeLevel;
+			BfmeExperienceCounters *freshCounters = replacement->m_bfmeExperience;
+			BfmeExperienceCounters *heldCounters = owner->m_bfmeExperience;
+			int fresh = freshCounters->m_bfmeLevel;
+			int held = heldCounters->m_bfmeLevel;
 
 			TheExperienceLevelSystem->gainLevels( replacement, held - fresh, false );
 
