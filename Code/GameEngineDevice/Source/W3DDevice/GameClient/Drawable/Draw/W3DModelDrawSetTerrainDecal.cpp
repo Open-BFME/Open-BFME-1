@@ -76,10 +76,10 @@ public:
 	virtual void slot1();
 	virtual void release();
 
-	Bool m_enabled;
-	Bool m_invisible;
+	Bool m_isEnabled;
+	Bool m_isInvisibleEnabled;
 
-	void enableShadowRender(Bool value) { m_enabled = value; }
+	void enableShadowRender(Bool value) { m_isEnabled = value; }
 };
 
 class BfmeProjectedShadowManager
@@ -156,7 +156,7 @@ void W3DModelDraw::setTerrainDecal(TerrainDecalType type)
 	if (manager)
 		m_terrainDecal = manager->addDecal(m_renderObject, &info, 0, 0);
 	if (m_terrainDecal) {
-		m_terrainDecal->m_invisible = m_fullyObscuredByShroud;
+		m_terrainDecal->m_isInvisibleEnabled = m_fullyObscuredByShroud;
 		m_terrainDecal->enableShadowRender(m_flag02e && !m_flag02f);
 	}
 }
