@@ -4335,6 +4335,7 @@ name,address,notes
 ??1?$pair@$$CBVAsciiString@@URva004609B0Mapped@@@_STL@@QAE@XZ,0x0003D2B7,ILT thunk called at +0x3e of hashtable erase 0x004609B0 (node pair destructor)
 ??1?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@QAE@XZ,0x000184A3,twin of the 0x0046B840 operator[] callee for retail 0x00461A00
 ??1?$pair@$$CBVAsciiString@@URva0046AF20Mapped@@@_STL@@QAE@XZ,0x000335FA,operator[] retail temporary-pair destructor ILT; jumps to 0x00467770
+??1Rva0046AF20Value@@QAE@XZ,0x000335FA,erase at 0x0046AD10 calls the same pair-destructor ILT for the address-proven Rva0046AF20 value layout
 ??1?$pair@$$CBVAsciiString@@URva0046C000Mapped@@@_STL@@QAE@XZ,0x000258F6,operator[] retail temporary-pair destructor ILT; jumps to 0x004682A0
 ??1?$pair@$$CBVAsciiString@@URva0046C2A0Mapped@@@_STL@@QAE@XZ,0x00048C66,operator[] retail temporary-pair destructor ILT; jumps to 0x00468340
 ??1?$pair@$$CBVAsciiString@@URva0046C540Mapped@@@_STL@@QAE@XZ,0x00047B40,operator[] retail temporary-pair destructor ILT; jumps to 0x004683C0
