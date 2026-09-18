@@ -27,6 +27,44 @@ def show(rev, f):
 def lines(b):
     return [x.rstrip(b"\r") for x in b.split(b"\n")]
 
+def quarantine(source, funcs):
+    """Set aside a landed source the hook refuses (it defines helpers the ledger
+    does not declare): move it under build/quarantine, revert the ledger rows
+    that cite it and the tombstones of the rows they replaced, restore those
+    replaced rows from HEAD, and record one blocked verdict per reverted row so
+    the next seat starts from the saved file instead of from scratch."""
+    import re_log
+    def rows(text):
+        return list(csv.reader(text.decode("utf-8", errors="replace").splitlines()))
+    fpath, dpath = ROOT / "reverse/functions.csv", ROOT / "reverse/deleted_rows.csv"
+    raw = fpath.read_bytes(); term = b"\r\n" if b"\r\n" in raw[:4000] else b"\n"
+    cur = raw.splitlines(True)
+    mine = [r for r in rows(raw) if len(r) > 5 and r[4] == source]
+    rvas = {r[2].upper() for r in mine}
+    keepf = [x for x in cur if not (len(f := next(csv.reader([x.decode("utf-8", errors="replace").rstrip("\r\n")]), [])) > 5 and f[4] == source)]
+    head = show("HEAD", "reverse/functions.csv")
+    have = {x.rstrip(b"\r\n") for x in keepf}
+    for x in head.splitlines(True):
+        f = next(csv.reader([x.decode("utf-8", errors="replace").rstrip("\r\n")]), [])
+        if len(f) > 2 and f[2].upper() in rvas and x.rstrip(b"\r\n") not in have:
+            keepf.append(x.rstrip(b"\r\n") + term)   # the dump row this landing replaced
+    fpath.write_bytes(b"".join(keepf))
+    if dpath.exists():
+        draw = dpath.read_bytes(); dhead = {x.rstrip(b"\r\n") for x in show("HEAD", "reverse/deleted_rows.csv").splitlines(True)}
+        keepd = [x for x in draw.splitlines(True)
+                 if x.rstrip(b"\r\n") in dhead or not (len(f := next(csv.reader([x.decode("utf-8", errors="replace").rstrip("\r\n")]), [])) > 1 and f[1].upper() in rvas)]
+        dpath.write_bytes(b"".join(keepd))
+    dest = ROOT / "build/quarantine" / source
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    (ROOT / source).replace(dest)
+    subprocess.run(["git", "reset", "-q", "--", source], cwd=ROOT)
+    for r in mine:
+        evidence = ("harvest quarantine: source defines helpers the ledger does not declare (%s); "
+                    "byte-exact file kept at build/quarantine/%s on this host; declare the helpers or land them as rows, then re-land"
+                    % (", ".join(funcs)[:200], source))
+        subprocess.run([sys.executable, "tools/re_log.py", "record", r[0], r[2], r[3], "blocked", evidence], cwd=ROOT)
+
+
 msg = sys.argv[1] if len(sys.argv) > 1 else "Open-BFME5: fleet ledger and source snapshot"
 WT = ROOT / "build/wt"
 
@@ -66,6 +104,25 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     if keep:
         run("git", "add", "--", *keep)
     print(f"harvest: staged {len(keep)} new cited sources, skipped {len(unt)-len(keep)} in-flight")
+    # A new source that defines helpers the ledger never declares fails the
+    # pre-commit hook and, because the harvest is one commit, blocks every other
+    # landing behind it (three such files wedged this host for five hours on
+    # 2026-09-17). Quarantine it: the file goes to build/quarantine, its rows
+    # and tombstones are reverted, and a blocked verdict names the helpers.
+    if keep:
+        r = subprocess.run([sys.executable, "tools/find_declared_unmatched.py", "--fail", "--staged", *keep],
+                           cwd=ROOT, capture_output=True, text=True, errors="replace")
+        bad = {}
+        for line in (r.stdout + r.stderr).splitlines():
+            path, sep, func = line.partition(": ")
+            path = path.strip().replace("\\", "/")
+            if sep and path in keep:
+                bad.setdefault(path, []).append(func.strip())
+        for path, funcs in bad.items():
+            quarantine(path, funcs)
+        if bad:
+            run("git", "add", "-A", "--", *evidence)
+            print(f"harvest: quarantined {len(bad)} source(s) defining undeclared helpers: {' '.join(bad)}")
     r = subprocess.run([sys.executable, "tools/check_csv.py"], cwd=ROOT, capture_output=True, text=True, errors="replace")
     if r.returncode:
         import re
