@@ -15115,7 +15115,7 @@ name,address,notes
 ?arrange@ControlBarArranger@@QAEXHH@Z,0x0001949D,setSquishedControlBarConfig arrange call; ILT thunk for GameWindow::winSetPosition (body 0x004780D0)
 ?ask@BfmeSubBIA@@QAEHXZ,0x000022BB,assigned body helper for Rva0024AA70
 ?assign@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAEAAV12@PBD0@Z,0x0002B297,Open-BFME5 ILT thunk to the body already matched at 0x000A5810; the room-name assignment in ?stopHostingAlready@PeerThreadClass@@QAEXPAX@Z at 0x0064C9E0 reaches it through this thunk
-?assign@AsciiStringTarget@@QAEXABVAsciiString@@@Z,0x0003EC57,ILT thunk to AsciiString assignment body 0x005217A0
+?rva005217A0@AptMapPreview@@QAEXABVAsciiString@@@Z,0x005217A0,body reached through ILT 0x0003EC57; named AptMapPreview callback 0x00521990 preserves its receiver at 0x00521A86-0x00521A89; method identity remains address-qualified
 ?assign@BuffNuggetFXNuggetMember@@QAEXPAX0@Z,0x00024C17,ILT thunk to 0x00065960; thiscall range-assign used by BuffNuggetFXNugget ctor
 ?assign@DefaultModuleTemplate0AssignShim@FXParticleSystem@@QAEXPBX@Z,0x000111C6,DefaultModuleTemplate<0> assignment thunk used through a TU-local layout shim
 ?assign@DefaultModuleTemplate1AssignShim@FXParticleSystem@@QAEXPBX@Z,0x0001EC36,DefaultModuleTemplate<1> assignment thunk used through a TU-local layout shim

@@ -21,16 +21,10 @@ class Image;
 class BfmeObjENK;
 class AsciiString;
 
-// Every branch below ends in the 391-byte body at retail 0x005217A0, reached
-// through ILT 0x0003EC57. reverse/symbols.csv already pins that thunk as
-// AsciiStringTarget::assign, so this source calls it under the pinned name.
-// The callee takes the preview object in ECX and the AsciiString the preview
-// keeps at offset zero on the stack, which is why both operands are `this`.
-class AsciiStringTarget
-{
-public:
-	void assign( const AsciiString &value );
-};
+// Every branch below reaches the preview method at 0x005217A0 through ILT
+// 0x0003EC57. Retail preserves the original preview receiver in EBP and uses
+// it for both ECX and the offset-zero string argument at 0x00521A86-0x00521A89.
+// The owner is witnessed by the named callback; the method name is unknown.
 
 class GameWindow
 {
@@ -49,6 +43,7 @@ class AptMapPreview
 {
 public:
 	void mapGadgetInit( const char *name, void *userData, GameWindow *window );
+	void rva005217A0( const AsciiString &value );
 
 private:
 	char m_unmodelled00[ 4 ];
@@ -106,5 +101,5 @@ void AptMapPreview::mapGadgetInit( const char *name, void *userData,
 		}
 	}
 
-	( (AsciiStringTarget *)this )->assign( *(const AsciiString *)this );
+	rva005217A0( *(const AsciiString *)this );
 }

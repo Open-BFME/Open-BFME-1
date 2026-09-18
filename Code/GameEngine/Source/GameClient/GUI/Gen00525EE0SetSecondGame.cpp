@@ -3,10 +3,16 @@
 
 #include "StringInline.h"
 
-class AsciiStringTarget
+// Partial view of the embedded preview: only its first four bytes are
+// represented here, not its total extent. AptMapPreviewMapGadgetInit.cpp
+// witnesses the receiver of ILT 0x0003EC57 as AptMapPreview, not AsciiString.
+// Raw storage avoids introducing construction/destruction obligations.
+class AptMapPreview
 {
 public:
-	void assign(const AsciiString &other);
+	void rva005217A0(const AsciiString &value);
+private:
+	unsigned char m_unmodelled00[4];
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
@@ -24,19 +30,19 @@ private:
 	unsigned char m_unmodelled[0x0c];
 	GameInfo *m_second;
 	unsigned char m_unmodelled10[0x18];
-	AsciiString m_mapName;
+	AptMapPreview m_preview; // +0x28; partial embedded-object view
 };
 
-// Cache the secondary game and mirror its map name into the controller.
+// Cache the secondary game and pass its map name to the embedded preview.
 // ?bfmeSetSecondGame@Gen_00525EE0@@QAEXPAVGameInfo@@@Z
 void Gen_00525EE0::bfmeSetSecondGame(GameInfo *game)
 {
 	m_second = game;
 	if (game)
-		reinterpret_cast<AsciiStringTarget *>(&m_mapName)->assign(game->getMap());
+		m_preview.rva005217A0(game->getMap());
 	else
 	{
 		AsciiString empty("");
-		reinterpret_cast<AsciiStringTarget *>(&m_mapName)->assign(empty);
+		m_preview.rva005217A0(empty);
 	}
 }
