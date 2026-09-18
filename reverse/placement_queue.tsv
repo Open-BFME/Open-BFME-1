@@ -1,8 +1,3 @@
-Code/Libraries/Source/WWVegas/WWLib/INIDestructorThunk.cpp	Code/GameEngine/Source/Common/INI/INIDestructorThunk.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INIDrawGroupNumberDefinitionThunk.cpp	Code/GameEngine/Source/Common/INI/INIDrawGroupNumberDefinitionThunk.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INIGetNextToken.cpp	Code/GameEngine/Source/Common/INI/INIGetNextToken.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INILightPointLevel.cpp	Code/GameEngine/Source/Common/INI/INILightPointLevel.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INIMiscAudio.cpp	Code/GameEngine/Source/Common/INI/INIMiscAudio.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INIObject.cpp	Code/GameEngine/Source/Common/INI/INIObject.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INIParseDynamicAudioEventRTSThunk.cpp	Code/GameEngine/Source/Common/INI/INIParseDynamicAudioEventRTSThunk.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INIParseObjectDefinitionThunk.cpp	Code/GameEngine/Source/Common/INI/INIParseObjectDefinitionThunk.cpp	INI
