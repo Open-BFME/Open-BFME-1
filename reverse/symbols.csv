@@ -37998,7 +37998,6 @@ name,address,notes
 ?b_002c05a0@@YAXXZ,0x002C05A0,gen-thunk body
 ?b_002c05b0@@YAXXZ,0x002C05B0,gen-thunk body
 ?b_002c05c0@@YAXXZ,0x002C05C0,gen-thunk body
-?b_002c07e0@@YAXXZ,0x002C07E0,gen-thunk body
 ?b_002c0d50@@YAXXZ,0x002C0D50,gen-thunk body
 ?b_002c0e70@@YAXXZ,0x002C0E70,gen-thunk body
 ?b_002c0fd0@@YAXXZ,0x002C0FD0,gen-thunk body
@@ -84402,6 +84401,7 @@ name,address,notes
 ?lookForInnerTarget@AIGuardMachine@@QAE_NXZ,0x000317A5,Open-BFME5 retail guard inner-target scan
 ?lookForInnerTarget@AIGuardRetaliateMachine@@QAE_NXZ,0x0003F71F,Typed thiscall bool machine target lookup; retail ECX machine and AL result; ILT to15ECE0
 ?lookForInnerTarget@AITNGuardMachine@@QAE_NXZ,0x0018A240,"Root verified ILT00021D23 ->0018A240/437B; body reads owner team/template attackCommonTarget flag then stores target ID to machine+50 and scans player tunnel tracker+22C, matching AITNGuardMachine::lookForInnerTarget. Corrected caller to STLport and independently verified its complete local findBestTunnel134B plus274-byte caller."
+?lookForInnerTarget@GiantBirdGuardMachine@@QAE_NXZ,0x002C07E0,"matched GiantBirdGuardReturnState::update calls ILT 0x0002F527 to this body on m_machine; only other direct caller is the adjacent GiantBirdGuardIdleState body; body implements the distinct GiantBird override of AIGuardMachine::lookForInnerTarget and stores the selected target ID at machine+0x6C"
 ?lookup@BfmeHead416B90@@QAEPAXH@Z,0x0004775D,ILT to head indexed getter 0x001C3A00; callee of BfmeHost416B90::getSlot @ 0x416B90
 ?lookup@BfmeMgr412@@QAEPAVBfmeObj412@@PAX@Z,0x00048CCA,pin
 ?lookup@BfmeSubEntry960@@QAEHPAHPAPAX@Z,0x0002C746,pin
