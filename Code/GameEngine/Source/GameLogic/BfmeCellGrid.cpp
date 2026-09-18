@@ -1,6 +1,11 @@
 // cl: /O2 /Ob2 /G6
 
+// One grid layout serves construction, storage reset, and point lookup.
+// The constructor and lookup prove the unsigned count at +0x08 and the
+// cell spacing/origin at +0x0C/+0x10; reset clears the same 0x1C-byte object.
+// Keep the existing ABI names: these BFME-specific types have no ZH twin.
 void *__cdecl operator new[](unsigned int size);
+void __cdecl operator delete[](void *block);
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -65,10 +70,18 @@ public:
 	UnsignedInt m_secondMask;
 };
 
+struct BfmePoint1560
+{
+	Real X;
+	Real Y;
+};
+
 class BfmeCellGrid
 {
 public:
 	BfmeCellGrid(Int width, Int height, Real cellSize, Real offset);
+	void _bfme_reset();
+	UnsignedInt bfmePointIndex(const BfmePoint1560 &point);
 
 private:
 	Int m_width;
@@ -114,4 +127,40 @@ BfmeCellGrid::BfmeCellGrid(Int width, Int height, Real cellSize, Real offset)
 
 		memset(m_cellValues, 0, m_cellCount * sizeof(*m_cellValues));
 	}
+}
+
+void BfmeCellGrid::_bfme_reset()
+{
+	if (m_cells)
+	{
+		delete[] m_cells;
+		m_cells = 0;
+	}
+
+	UnsignedInt *cellValues = m_cellValues;
+
+	m_width = 0;
+	m_height = 0;
+	m_cellCount = 0;
+	m_offset = 0.0f;
+	m_cellSize = 0.0f;
+
+	if (cellValues)
+	{
+		delete[] cellValues;
+		m_cellValues = 0;
+	}
+}
+
+UnsignedInt BfmeCellGrid::bfmePointIndex(const BfmePoint1560 &point)
+{
+	if (m_cellSize > 0.0f)
+	{
+		Int row = (Int)((point.Y - m_offset) / m_cellSize);
+		Int index = row * m_width;
+		index += (Int)((point.X - m_offset) / m_cellSize);
+		if ((UnsignedInt)index < m_cellCount)
+			return index;
+	}
+	return 0x7fffffff;
 }
