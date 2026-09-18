@@ -112,7 +112,8 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     # Never sweep unrelated docs/tools/headers or every dirty Code source.
     evidence = [p for p in ("reverse/functions.csv", "reverse/symbols.csv",
                 "reverse/re_attempts.log", "reverse/attempts", "reverse/attempt_history",
-                "reverse/deleted_rows.csv")  # tombstones: check_csv rejects a row removal without one
+                "reverse/deleted_rows.csv",  # tombstones: check_csv rejects a row removal without one
+                "reverse/header_adopt_blocked.tsv")  # adopt_header records what the compiler refused
                 if (ROOT / p).exists()]
     run("git", "add", "-A", "--", *evidence); unstage_inflight()
     cited = set()
