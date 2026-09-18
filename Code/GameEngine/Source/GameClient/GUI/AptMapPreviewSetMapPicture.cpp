@@ -2,10 +2,12 @@
 
 #include "../../../../../reference/shims/stringinline/StringInline.h"
 
+// Image vtable 0x0110FFEC slot zero is the scalar-deleting destructor
+// at 0x005D2BD0; retail passes deletion flag 1, not a release count.
 class Image
 {
 public:
-	virtual void release(int count) const;
+	virtual ~Image();
 };
 
 class MappedImageCollection
@@ -37,16 +39,16 @@ public:
 private:
 	char m_unmodelled[0x34];
 	const Image *m_picture;
-	bool m_pictureValid;
+	bool m_pictureOwned; // created map image is owned; MissingMap fallback is borrowed
 };
 
 void AptMapPreview::bfmeSetMapPicture(MapMetaData *map)
 {
-	if (m_pictureValid)
+	if (m_pictureOwned)
 	{
 		if (m_picture)
 		{
-			m_picture->release(1);
+			delete m_picture;
 			m_picture = 0;
 		}
 	}
@@ -55,7 +57,7 @@ void AptMapPreview::bfmeSetMapPicture(MapMetaData *map)
 	if (map)
 	{
 		picture = createMapPictureImage(map->m_mapName);
-		m_pictureValid = true;
+		m_pictureOwned = true;
 	}
 	if (!picture)
 	{
@@ -63,7 +65,7 @@ void AptMapPreview::bfmeSetMapPicture(MapMetaData *map)
 			AsciiString missingMap("MissingMap");
 			picture = (Image *)TheMappedImageCollection->findImageByName(missingMap);
 		}
-		m_pictureValid = false;
+		m_pictureOwned = false;
 	}
 	m_picture = picture;
 }

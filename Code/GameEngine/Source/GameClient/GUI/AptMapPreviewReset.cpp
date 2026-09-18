@@ -8,6 +8,13 @@
 #include "ascii_string.h"
 
 class GameWindow;
+// Factory 0x00520BB0 calls Image's constructor, which installs 0x0110FFEC.
+// Slot zero reaches the scalar-deleting destructor at 0x005D2BD0.
+class Image
+{
+public:
+	virtual ~Image();
+};
 void _bfme_closeAptScreen(const AsciiString &screenName);
 extern "C" void *memset(void *destination, int value, unsigned int size);
 
@@ -23,12 +30,7 @@ private:
 	GameWindow *m_mapInfo;
 	GameWindow *m_mapDescription;
 	GameWindow *m_children[8];
-	class Ref
-	{
-	public:
-		virtual void release(int count);
-	};
-	Ref *m_picture;
+	Image *m_picture;
 	bool m_pictureOwned;
 	unsigned char m_unmodelled39[7];
 };
@@ -59,7 +61,7 @@ void AptMapPreview::bfmeReset(void)
 	{
 		if (m_picture)
 		{
-			m_picture->release(1);
+			delete m_picture;
 			m_picture = 0;
 			m_pictureOwned = false;
 		}
