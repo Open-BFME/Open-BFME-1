@@ -87213,7 +87213,7 @@ _bfmeCopyBB,0x00014D7B
 _bfmeCopyDB,0x000365CA
 _bfmeCtor1030,0x0000E534,pin
 _bfmeDeleteBlock,0x00881EF0,address-derived release target from the direct REL32 call at retail 0x009D1A4C
-_bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboardOpen.cpp)
+_bfmeDirectInput8Create@20,0x009F9AF0,undecorated alias for the DirectInput8Create import stub (see Win32DIKeyboard.cpp)
 _bfmeDtor1030,0x0001F951,pin
 _bfmeDtorCbDLB,0x0002083D,pin
 _bfmeDtorCbDLC,0x0003F783,pin

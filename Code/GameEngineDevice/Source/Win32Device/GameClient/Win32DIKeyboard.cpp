@@ -17,18 +17,73 @@
 **	along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-// FILE: Win32DIKeyboardOpen.cpp //////////////////////////////////////////////
-//
-// DirectInputKeyboard::openKeyboard. Declared here rather than through
-// Win32DIKeyboard.h: BFME's Keyboard base is wider than ZH's, putting
-// m_pDirectInput at +0xe1c and m_pKeyboardDevice at +0xe20, and the padding
-// below is the only part of the layout this body needs.
-//
-///////////////////////////////////////////////////////////////////////////////
+// FILE: Win32DIKeyboard.cpp
+// DirectInput keyboard lifecycle and event input share one BFME layout.
+// The ZH Win32DIKeyboard source establishes class ownership; BFME's matched
+// constructor/open/getKey bodies place the device pointers at +0xe1c/+0xe20.
+// name_oracle/layout_witness independently confirms both member names.
+// Keyboard::m_modifiers is the unsigned short at +0x8 used by the caps-lock test.
 
 #define DIRECTINPUT_VERSION 0x800
 #include <windows.h>
 #include <dinput.h>
+
+#undef DIERR_NOTACQUIRED
+#define DIERR_NOTACQUIRED 0x8007000CL
+
+enum { KEY_STATE_CAPSLOCK = 0x0200, KEYBOARD_BUFFER_SIZE = 256 };
+enum
+{
+	KEY_NONE = 0,
+	KEY_LOST = 0xff,
+    KEY_STATE_UP = 1,
+    KEY_STATE_DOWN = 2,
+};
+
+struct KeyboardIO
+{
+	enum StatusType
+	{
+		STATUS_UNUSED = 0,
+		STATUS_USED = 1,
+	};
+
+	unsigned char key;
+	unsigned char status;
+	unsigned short state;
+	unsigned int sequence;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Keyboard.h
+class Keyboard
+{
+public:
+
+	Keyboard( void );
+	virtual ~Keyboard( void );
+
+protected:
+
+	// vptr @0x0
+	char m_bfmeKeyboardHead[ 0x8 - 0x4 ];
+	unsigned short m_modifiers;								// @0x8
+	char m_bfmeKeyboardTail[ 0xe1c - 0xa ];
+
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/GameClient/Win32DIKeyboard.h
+class DirectInputKeyboard : public Keyboard
+{
+public:
+    DirectInputKeyboard( void );
+    virtual ~DirectInputKeyboard( void );
+protected:
+    void openKeyboard( void );
+    void closeKeyboard( void );
+    virtual void getKey( KeyboardIO *key );
+    LPDIRECTINPUT8 m_pDirectInput;          // @0xe1c
+    LPDIRECTINPUTDEVICE8 m_pKeyboardDevice; // @0xe20
+};
 
 extern HINSTANCE ApplicationHInstance;
 extern HWND ApplicationHWnd;
@@ -39,19 +94,23 @@ extern HWND ApplicationHWnd;
 // declaration of the same entry point.
 extern "C" HRESULT WINAPI bfmeDirectInput8Create( HINSTANCE, DWORD, REFIID, void **, IUnknown * );
 
-enum { KEYBOARD_BUFFER_SIZE = 256 };
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/Win32Device/GameClient/Win32DIKeyboard.h
-class DirectInputKeyboard
+DirectInputKeyboard::DirectInputKeyboard( void )
 {
-protected:
-	char m_bfmeKeyboardBase[0xe1c];
-	LPDIRECTINPUT8 m_pDirectInput;						// @0xe1c
-	LPDIRECTINPUTDEVICE8 m_pKeyboardDevice;		// @0xe20
 
-	void openKeyboard( void );
-	void closeKeyboard( void );
-};
+	m_pDirectInput = 0;
+	m_pKeyboardDevice = 0;
+
+
+	if( GetKeyState( VK_CAPITAL ) & 0x01 )
+	{
+		m_modifiers |= KEY_STATE_CAPSLOCK;
+	}
+	else
+	{
+		m_modifiers &= ~KEY_STATE_CAPSLOCK;
+	}
+
+}  // end DirectInputKeyboard
 
 void DirectInputKeyboard::closeKeyboard( void )
 {
@@ -137,3 +196,62 @@ void DirectInputKeyboard::openKeyboard( void )
 	hr = m_pKeyboardDevice->Acquire();
 
 }  // end openKeyboard
+
+DirectInputKeyboard::~DirectInputKeyboard( void )
+{
+
+	closeKeyboard();
+
+}  // end ~DirectInputKeyboard
+
+void DirectInputKeyboard::getKey( KeyboardIO *key )
+{
+	DIDEVICEOBJECTDATA kbdat;
+	DWORD num = 0;
+	HRESULT hr;
+
+	key->sequence = 0;
+	key->key = KEY_NONE;
+
+	if( m_pKeyboardDevice )
+	{
+		num = 1;
+		hr = m_pKeyboardDevice->Acquire();
+		if( hr == DI_OK || hr == S_FALSE )
+			hr = m_pKeyboardDevice->GetDeviceData( sizeof( DIDEVICEOBJECTDATA ),
+				&kbdat, &num, 0 );
+		switch( hr )
+		{
+		case DI_OK:
+			break;
+
+		case DIERR_INPUTLOST:
+		case DIERR_NOTACQUIRED:
+			hr = m_pKeyboardDevice->Acquire();
+			switch( hr )
+			{
+			case DIERR_INVALIDPARAM:
+			case DIERR_NOTINITIALIZED:
+			case DIERR_OTHERAPPHASPRIO:
+				break;
+
+			case DI_OK:
+			case S_FALSE:
+				key->key = KEY_LOST;
+				break;
+			}
+			return;
+
+		default:
+			return;
+		}
+
+		if( num == 0 )
+			return;
+
+		key->key = (unsigned char)(kbdat.dwOfs & 0xff);
+		key->sequence = kbdat.dwSequence;
+		key->state = (( kbdat.dwData & 0x80 ) ? KEY_STATE_DOWN : KEY_STATE_UP);
+		key->status = KeyboardIO::STATUS_UNUSED;
+	}
+}
