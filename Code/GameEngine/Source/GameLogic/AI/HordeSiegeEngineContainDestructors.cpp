@@ -1,7 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
-// HordeSiegeEngineContain's destructor, lifted from its MASM dump to C++.
+// HordeSiegeEngineContain's complete destructor and emitted scalar wrapper
+// 0x0024A6E0. Constructor 0x0024A560, complete teardown 0x0024A180, typed
+// factories, module name, and vtable 0x00CB02A8 establish the identity.
+// Wrapper ILT 0x00030099 reaches this complete destructor.
 //
 // The retail body is the ordinary compiler-generated shape: restore this
 // object's ten subobject vptrs, run the three container members in reverse
