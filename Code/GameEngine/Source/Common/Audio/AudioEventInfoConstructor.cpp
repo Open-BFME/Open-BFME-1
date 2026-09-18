@@ -6,6 +6,8 @@
 // Canonical INIAudioEventInfo.cpp has the same parser/factory/assignment flow.
 // Keep BFME layout views and unknown nested types; the Zero Hour layout differs.
 // Constants here are layout witnesses, not claims about runtime INI values.
+// Member names follow INI table 0x010813F8. Raw integer/volatile storage views
+// preserve retail code generation, including the bit patterns of float fields.
 
 // Retail 0x000B0D10: AudioEventInfo's default constructor.
 // The vtable at 0x010818CC, the matched copy constructor at 0x000B5B10, the
@@ -42,34 +44,34 @@ private:
 	volatile int m_vft;
 	volatile int m_zero;
 	volatile int m_08;
-	volatile int m_0c;
-	volatile int m_10;
-	volatile int m_14;
-	volatile int m_18;
+	volatile int m_filename;
+	volatile int m_volume;
+	volatile int m_volumeShift;
+	volatile int m_minVolume;
 	volatile int m_1c;
 	volatile int m_20;
 	One m_24;
 	volatile int m_28;
 	volatile int m_2c;
-	volatile int m_30;
-	Two m_34;
-	volatile int m_38;
-	volatile int m_3c;
-	volatile int m_40;
+	volatile int m_limit;
+	Two m_priority;
+	volatile int m_type;
+	volatile int m_control;
+	volatile int m_sounds;
 	volatile int m_44;
 	volatile int m_48;
 	volatile int m_4c;
-	volatile int m_50;
+	volatile int m_attackSounds;
 	volatile int m_54;
 	volatile int m_58;
 	volatile int m_5c;
-	volatile int m_60;
+	volatile int m_decaySounds;
 	volatile int m_64;
 	volatile int m_68;
 	volatile int m_6c;
-	volatile int m_70;
-	volatile int m_74;
-	volatile int m_78;
+	volatile int m_lowPassFreq;
+	volatile int m_minDistance;
+	volatile int m_maxDistance;
 	One m_7c;
 	One m_80;
 	Two m_84;
@@ -84,34 +86,34 @@ AudioEventInfo::AudioEventInfo()
 	m_zero = 0;
 	m_vft = 0x010818CC;
 	m_08 = 0;
-	m_0c = 0;
-	m_10 = 0x42c80000;
-	m_14 = 0;
-	m_18 = 0;
+	m_filename = 0;
+	m_volume = 0x42c80000;
+	m_volumeShift = 0;
+	m_minVolume = 0;
 	m_1c = 0;
 	m_20 = 0;
 	m_28 = 0;
 	m_2c = 0;
-	m_30 = 0x19;
-	m_34.set();
-	m_38 = 0;
-	m_3c = 0;
+	m_limit = 0x19;
+	m_priority.set();
+	m_type = 0;
+	m_control = 0;
 	m_24.set();
-	m_40 = 0;
+	m_sounds = 0;
 	m_44 = 0;
 	m_48 = 0;
 	m_4c = 0;
-	m_50 = 0;
+	m_attackSounds = 0;
 	m_54 = 0;
 	m_58 = 0;
 	m_5c = 0;
-	m_60 = 0;
+	m_decaySounds = 0;
 	m_64 = 0;
 	m_68 = 0;
 	m_6c = 0;
-	m_70 = 0;
-	m_74 = 0x42c80000;
-	m_78 = 0x447a0000;
+	m_lowPassFreq = 0;
+	m_minDistance = 0x42c80000;
+	m_maxDistance = 0x447a0000;
 	m_7c.set();
 	m_80.set();
 	m_84.set();

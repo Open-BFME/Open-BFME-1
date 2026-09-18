@@ -6,6 +6,8 @@
 // Canonical INIAudioEventInfo.cpp has the same parser/factory/assignment flow.
 // Keep BFME layout views and unknown nested types; the Zero Hour layout differs.
 // Constants here are layout witnesses, not claims about runtime INI values.
+// Member names follow INI table 0x010813F8. Raw integer/volatile storage views
+// preserve retail code generation, including the bit patterns of float fields.
 // Open-BFME7: the destructor at 0x000B0DF0 (206 B).  Own vtable 0x010818CC
 // installed at entry (real virtual dtor); base BfmeBaseASCa vtable
 // 0x010817AC ("_bfmeVftASCa") restored automatically at the tail through an
@@ -176,11 +178,11 @@ public:
 private:
 	unsigned char m_unreconstructed04[ 8 - 4 ];
 	BFMERetailAsciiString m_str08;
-	BFMERetailAsciiString m_str0C;
+	BFMERetailAsciiString m_filename;
 	unsigned char m_unreconstructed10[ 0x40 - 0x10 ];
-	Gen00018E5DMember m_member40;
-	Gen00018E5DMember m_member50;
-	Gen00018E5DMember m_member60;
+	Gen00018E5DMember m_sounds;
+	Gen00018E5DMember m_attackSounds;
+	Gen00018E5DMember m_decaySounds;
 	unsigned char m_unreconstructed70[ 0x8C - 0x70 ];
 	Rva000B0DF0VectorHolder m_vector8C;
 };

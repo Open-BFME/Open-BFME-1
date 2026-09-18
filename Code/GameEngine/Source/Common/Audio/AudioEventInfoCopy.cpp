@@ -6,6 +6,8 @@
 // Canonical INIAudioEventInfo.cpp has the same parser/factory/assignment flow.
 // Keep BFME layout views and unknown nested types; the Zero Hour layout differs.
 // Constants here are layout witnesses, not claims about runtime INI values.
+// Member names follow INI table 0x010813F8. Raw integer/volatile storage views
+// preserve retail code generation, including the bit patterns of float fields.
 // stlport
 
 // Retail 0x000B0F00, 243 bytes.  This is the copy-assignment body for the
@@ -32,18 +34,20 @@ struct Gen_t_000b0560_p8pod
 	int a[2];
 };
 
-class BfmeA1202Base
+// Layout/codegen surrogate for the opaque polymorphic prefix; no recovered
+// real base-class identity is claimed. No external rows or pins use this type.
+class AudioEventInfoOpaqueBase
 {
 	public:
-		BfmeA1202Base() : m_zero(0) {}
-		BfmeA1202Base(const BfmeA1202Base &) : m_zero(0) {}
-		virtual ~BfmeA1202Base() {}
+		AudioEventInfoOpaqueBase() : m_zero(0) {}
+		AudioEventInfoOpaqueBase(const AudioEventInfoOpaqueBase &) : m_zero(0) {}
+		virtual ~AudioEventInfoOpaqueBase() {}
 
 	private:
 		int m_zero;
 };
 
-struct AudioEventInfo : public BfmeA1202Base
+struct AudioEventInfo : public AudioEventInfoOpaqueBase
 {
 	public:
 		AudioEventInfo(const AudioEventInfo &other);
@@ -53,27 +57,27 @@ struct AudioEventInfo : public BfmeA1202Base
 	private:
 		AsciiString m_name;
 		AsciiString m_filename;
-		int m_word10;
-		int m_word14;
-		int m_word18;
+		int m_volume;
+		int m_volumeShift;
+		int m_minVolume;
 		int m_word1c;
 		int m_word20;
 		int m_word24;
 		int m_word28;
 		int m_word2c;
-		int m_word30;
-		int m_word34;
-		int m_word38;
-		int m_word3c;
-		_STL::vector<Gen_t_000b0c00_p8cd> m_vector40;
+		int m_limit;
+		int m_priority;
+		int m_type;
+		int m_control;
+		_STL::vector<Gen_t_000b0c00_p8cd> m_sounds;
 		int m_word4c;
-		_STL::vector<Gen_t_000b0c00_p8cd> m_vector50;
+		_STL::vector<Gen_t_000b0c00_p8cd> m_attackSounds;
 		int m_word5c;
-		_STL::vector<Gen_t_000b0c00_p8cd> m_vector60;
+		_STL::vector<Gen_t_000b0c00_p8cd> m_decaySounds;
 		int m_word6c;
-		int m_word70;
-		int m_word74;
-		int m_word78;
+		int m_lowPassFreq;
+		int m_minDistance;
+		int m_maxDistance;
 		int m_word7c;
 		int m_word80;
 		int m_word84;
@@ -82,30 +86,30 @@ struct AudioEventInfo : public BfmeA1202Base
 };
 
 AudioEventInfo::AudioEventInfo(const AudioEventInfo &other)
-	: BfmeA1202Base(other),
+	: AudioEventInfoOpaqueBase(other),
 	  m_name(other.m_name),
 	  m_filename(other.m_filename),
-	  m_word10(other.m_word10),
-	  m_word14(other.m_word14),
-	  m_word18(other.m_word18),
+	  m_volume(other.m_volume),
+	  m_volumeShift(other.m_volumeShift),
+	  m_minVolume(other.m_minVolume),
 	  m_word1c(other.m_word1c),
 	  m_word20(other.m_word20),
 	  m_word24(other.m_word24),
 	  m_word28(other.m_word28),
 	  m_word2c(other.m_word2c),
-	  m_word30(other.m_word30),
-	  m_word34(other.m_word34),
-	  m_word38(other.m_word38),
-	  m_word3c(other.m_word3c),
-	  m_vector40(other.m_vector40),
+	  m_limit(other.m_limit),
+	  m_priority(other.m_priority),
+	  m_type(other.m_type),
+	  m_control(other.m_control),
+	  m_sounds(other.m_sounds),
 	  m_word4c(other.m_word4c),
-	  m_vector50(other.m_vector50),
+	  m_attackSounds(other.m_attackSounds),
 	  m_word5c(other.m_word5c),
-	  m_vector60(other.m_vector60),
+	  m_decaySounds(other.m_decaySounds),
 	  m_word6c(other.m_word6c),
-	  m_word70(other.m_word70),
-	  m_word74(other.m_word74),
-	  m_word78(other.m_word78),
+	  m_lowPassFreq(other.m_lowPassFreq),
+	  m_minDistance(other.m_minDistance),
+	  m_maxDistance(other.m_maxDistance),
 	  m_word7c(other.m_word7c),
 	  m_word80(other.m_word80),
 	  m_word84(other.m_word84),
@@ -118,27 +122,27 @@ AudioEventInfo &AudioEventInfo::operator=(const AudioEventInfo &other)
 {
 	m_name = other.m_name;
 	m_filename = other.m_filename;
-	m_word10 = other.m_word10;
-	m_word14 = other.m_word14;
-	m_word18 = other.m_word18;
+	m_volume = other.m_volume;
+	m_volumeShift = other.m_volumeShift;
+	m_minVolume = other.m_minVolume;
 	m_word1c = other.m_word1c;
 	m_word20 = other.m_word20;
 	m_word24 = other.m_word24;
 	m_word28 = other.m_word28;
 	m_word2c = other.m_word2c;
-	m_word30 = other.m_word30;
-	m_word34 = other.m_word34;
-	m_word38 = other.m_word38;
-	m_word3c = other.m_word3c;
-	m_vector40 = other.m_vector40;
+	m_limit = other.m_limit;
+	m_priority = other.m_priority;
+	m_type = other.m_type;
+	m_control = other.m_control;
+	m_sounds = other.m_sounds;
 	m_word4c = other.m_word4c;
-	m_vector50 = other.m_vector50;
+	m_attackSounds = other.m_attackSounds;
 	m_word5c = other.m_word5c;
-	m_vector60 = other.m_vector60;
+	m_decaySounds = other.m_decaySounds;
 	m_word6c = other.m_word6c;
-	m_word70 = other.m_word70;
-	m_word74 = other.m_word74;
-	m_word78 = other.m_word78;
+	m_lowPassFreq = other.m_lowPassFreq;
+	m_minDistance = other.m_minDistance;
+	m_maxDistance = other.m_maxDistance;
 	m_word7c = other.m_word7c;
 	m_word80 = other.m_word80;
 	m_word84 = other.m_word84;
