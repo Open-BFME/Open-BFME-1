@@ -75,7 +75,7 @@ Win32BIGFile::Win32BIGFile()
 }
 
 //============================================================================
-// Win32BIGFile::~Win32BIGFile lives in the sibling Win32BIGFileDtor.cpp. Its
+// Win32BIGFile::~Win32BIGFile lives in the sibling Win32BIGFileLifecycle.cpp. Its
 // source body is empty, but the compiler-generated part destroys m_name and
 // m_path, and retail reaches StringBase<char>::releaseBuffer by a call where
 // this file's Zero Hour Common/AsciiString.h inlines it -- the same divergence
@@ -144,7 +144,7 @@ void Win32BIGFile::closeAllFiles( void )
 
 //============================================================================
 // Win32BIGFile::getName and Win32BIGFile::getPath live in the sibling
-// Win32BIGFileNames.cpp. Both are one `return m_name;`, but retail reaches
+// Win32BIGFileLifecycle.cpp. Both are one `return m_name;`, but retail reaches
 // StringBase<char>'s copy constructor by a call where this file's Zero Hour
 // Common/AsciiString.h inlines the refcount bump, so they only match against a
 // delegating AsciiString -- which the rest of this file's matched rows do not
