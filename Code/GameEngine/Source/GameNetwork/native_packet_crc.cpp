@@ -24,16 +24,16 @@ UnsignedInt BFMEComputeCRC(const UnsignedByte *data, UnsignedInt length, Unsigne
 {
 	if (data != 0) {
 		while (length > 0) {
-			Int hibit;
+			Int carryBit;
 			if (crc & 0x80000000) {
-				hibit = 1;
+				carryBit = 1;
 			} else {
-				hibit = 0;
+				carryBit = 0;
 			}
 			crc <<= 1;
 			crc += *data;
 			++data;
-			crc += hibit;
+			crc += carryBit;
 			--length;
 		}
 	}
