@@ -1972,23 +1972,30 @@ int IntegerArgumentIdentityThunk::identityFifth(int value) const
 struct Offset4IntegerPointerRangeThunk
 {
     unsigned char padding[4];
-    int *begin;
-    int *end;
+    int *beginPointer;
+    int *endPointer;
 
+    int *begin() const;
     int size() const;
     int sizeAlternate() const;
 };
 
+// ?begin@Offset4IntegerPointerRangeThunk@@QBEPAHXZ
+int *Offset4IntegerPointerRangeThunk::begin() const
+{
+    return beginPointer;
+}
+
 // ?d_0045e370@@YAXXZ
 int Offset4IntegerPointerRangeThunk::size() const
 {
-    return end - begin;
+    return endPointer - beginPointer;
 }
 
 // ?d_0045e4e0@@YAXXZ
 int Offset4IntegerPointerRangeThunk::sizeAlternate() const
 {
-    return end - begin;
+    return endPointer - beginPointer;
 }
 
 int integerIdentity(int value)
