@@ -1,4 +1,4 @@
-// Forty-eight __cdecl free functions that walk an array between two pointers and
+// Forty-five __cdecl free functions that walk an array between two pointers and
 // make one __thiscall member call on each element.
 //
 //     push esi / mov esi,[esp+8] / push edi / mov edi,[esp+0x10] / cmp esi,edi
@@ -14,8 +14,8 @@
 // no result read is the shape of a per-element member call, not a transform.
 // `mov edi,edi` is the compiler's own two-byte loop-alignment pad.
 //
-// THE ONLY AXES ARE THE STRIDE AND THE REL32 TARGET.  Forty-eight members over
-// sixteen distinct callees; each callee is reached at exactly one stride, so
+// THE ONLY AXES ARE THE STRIDE AND THE REL32 TARGET.  Forty-five members over
+// fifteen distinct callees; each callee is reached at exactly one stride, so
 // each becomes one element class sized to that stride, carrying that callee as
 // its member.
 //
@@ -40,7 +40,6 @@
 		}                                                                    \
 	}
 
-BFME_WALKED_ELEMENT( 000C3410, 28 )
 BFME_WALKED_ELEMENT( 000D1690, 96 )
 BFME_WALKED_ELEMENT( 000FD010, 36 )
 BFME_WALKED_ELEMENT( 0013B8E0, 20 )
@@ -102,6 +101,5 @@ BFME_MEMBER_WALK( rva00772130MemberWalk, Gen00753E80 )
 BFME_MEMBER_WALK( rva00776300MemberWalk, Gen00770F40 )
 BFME_MEMBER_WALK( rva00777FD0MemberWalk, Gen00770F40 )
 BFME_MEMBER_WALK( rva00779EE0MemberWalk, Gen00770F40 )
-BFME_MEMBER_WALK( rva0081C9E0MemberWalk, Gen000C3410 )
-BFME_MEMBER_WALK( rva0081CF10MemberWalk, Gen000C3410 )
-BFME_MEMBER_WALK( rva0081D010MemberWalk, Gen000C3410 )
+
+// Recovered Video destructor loops live in GameClient/VideoElementDestruction.cpp.

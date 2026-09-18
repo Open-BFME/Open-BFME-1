@@ -5,7 +5,8 @@
 // (reverse/exports.csv) puts Snapshot::~Snapshot at ??1Snapshot@@UAE@XZ 0x0005C520,
 // a seven-byte vptr store, while ~SightingInfo calls a 14-byte vptr-plus-release
 // body at 0x009A1A40. So the QAE spelling is this TU's view class, and it is named
-// as one -- ??1Snapshot@@QAE@XZ is pinned elsewhere at the body DamageInfo encodes.
+// as one. The unrelated nonvirtual Snapshot pin was a disproved Video-destructor
+// alias and has been retired.
 #define Snapshot BfmePartitionSnapshotBase
 /*
 **	Command & Conquer Generals Zero Hour(tm)

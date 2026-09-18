@@ -1,5 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
+// Retained upstream ZH source; its reference header has a 12-byte Video view.
+// This TU owns only unrelated RectClass/VideoStream claims. BFME's witnessed
+// 28-byte Video is defined in Code/GameEngine/Include/GameClient/Video.h;
+// its parser, lifecycle and query owners use that canonical layout.
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -159,6 +163,7 @@ void	VideoBuffer::free( void )
 // VideoPlayer::VideoPlayer
 //============================================================================
 
+// ??0VideoPlayer@@QAE@XZ present-unmatched
 VideoPlayer::VideoPlayer()
 : m_firstStream(NULL)
 {

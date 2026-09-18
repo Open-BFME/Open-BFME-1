@@ -1,9 +1,9 @@
 // cl: -GX-
 // stlport
 //
-// Ten STLport vector<T> destructors with NO exception frame at all -- the same
+// Nine STLport vector<T> destructors with NO exception frame at all -- the same
 // source shape already landed for element size 0x14 in Q4VectorDtorPlain.cpp,
-// here over ten larger element sizes:
+// here over nine larger element sizes:
 //
 //     for (p = _M_start; p != _M_finish; p += WIDTH) { mov ecx,p; call <DTOR> }
 //     n = (_M_end_of_storage - _M_start)              (magic divide by WIDTH)
@@ -19,8 +19,8 @@
 // `// cl:` directive says.  That flag is part of the evidence.
 //
 // TWO AXES, BOTH READ DIRECTLY: the element destructor's REL32 and the element
-// size.  Ten rows, ten DISTINCT destructors.  Two widths repeat (0x1C at
-// 0x00426350 and 0x0081D0F0, 0x38 at 0x006F2A70 and 0x00770650) but their
+// size. Nine element types, nine DISTINCT destructors. Width 0x38 repeats
+// (at 0x006F2A70 and 0x00770650), but their
 // destructors differ, so those are genuinely different instantiations and each
 // gets its own element type here.  The 97/103 split in body length is not a
 // third axis: 0x80 and above needs `add esi,imm32` and `imul eax,eax,imm32`
@@ -58,4 +58,4 @@ R4_WIDE_ELEM( Gen00762250, 0x38 )
 // at 0x0013C3F0; unique ILT 0x0002306F independently anchors that identity.
 R4_WIDE_ELEM( ModelConditionInfo, 0x128 )
 R4_WIDE_ELEM( Gen00774D40, 0xBC )
-R4_WIDE_ELEM( Gen000C3410, 0x1C )
+// Recovered Video lifecycle owns its distinct variants in GameClient/VideoVectorDestruction.cpp.

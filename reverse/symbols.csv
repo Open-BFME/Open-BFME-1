@@ -484,7 +484,7 @@ name,address,notes
 ??$_Construct@URva005751D0Element@_STL@@@_STL@@YAXPAURva005751D0Element@0@ABU10@@Z,0x0004A02A,Open-BFME5 the element _Construct the vector insert at 0x005751D0 calls
 ??$_Construct@URva00583B30Value@@U1@@_STL@@YAXPAURva00583B30Value@@ABU1@@Z,0x00034ED2,Open-BFME5 the value _Construct the hashtable _M_insert at 0x00583B30 calls
 ??$_Construct@URva005C5580Element@@U1@@_STL@@YAXPAURva005C5580Element@@ABU1@@Z,0x00030549,Open-BFME5 the element _Construct the list insert at 0x005C5580 calls
-??$_Construct@URva005C6730Value@@@_STL@@YAXPAURva005C6730Value@@ABU1@@Z,0x00030549,shared 12-byte-POD _Construct thunk; same target as the Rva005C5580Element/Rva005C6B20Element/Video list-insert twins
+??$_Construct@URva005C6730Value@@@_STL@@YAXPAURva005C6730Value@@ABU1@@Z,0x00030549,shared 12-byte-POD _Construct thunk; same target as the Rva005C5580Element/Rva005C6B20Element/Rva00755100Element insertion twins
 ??$_Construct@URva005C6B20Element@@U1@@_STL@@YAXPAURva005C6B20Element@@ABU1@@Z,0x00030549,Open-BFME5 the element _Construct the list push_back at 0x005C6B20 calls
 ??$_Construct@URva00614BC0Value@@U1@@_STL@@YAXPAURva00614BC0Value@@ABU1@@Z,0x0001048D,Open-BFME5 the value _Construct the hashtable _M_insert at 0x00614BC0 calls
 ??$_Construct@URva00614D10Value@@U1@@_STL@@YAXPAURva00614D10Value@@ABU1@@Z,0x00035BE8,Open-BFME5 the value _Construct the hashtable _M_insert at 0x00614D10 calls
@@ -506,7 +506,7 @@ name,address,notes
 ??$_Construct@URva007742A0Element@_STL@@@_STL@@YAXPAURva007742A0Element@0@ABU10@@Z,0x0004B26D,Open-BFME5 the element _Construct the vector insert at 0x007742A0 calls
 ??$_Construct@URva00774410Element@_STL@@@_STL@@YAXPAURva00774410Element@0@ABU10@@Z,0x00016626,Open-BFME5 the element _Construct the vector insert at 0x00774410 calls
 ??$_Construct@URva0077AEA0Element@_STL@@@_STL@@YAXPAURva0077AEA0Element@0@ABU10@@Z,0x00006FD2,Open-BFME5 the element _Construct the vector insert at 0x0077AEA0 calls
-??$_Construct@UVideo@@U1@@_STL@@YAXPAUVideo@@ABU1@@Z,0x00030549,rel32 pin for exact-ambiguous landing
+??$_Construct@URva00755100Element@@U1@@_STL@@YAXPAURva00755100Element@@ABU1@@Z,0x005C2930,Address-derived 12-byte element dependency; retail ILT route and caller ABI independently decoded; not the 28-byte BFME Video type.
 ??$_Construct@UWeaponBarrelInfo@ModelConditionInfo@@U12@@_STL@@YAXPAUWeaponBarrelInfo@ModelConditionInfo@@ABU12@@Z,0x0003B7E6,ILT thunk used by call site
 ??$_Construct@UcrateCreationEntry@@U1@@_STL@@YAXPAUcrateCreationEntry@@ABU1@@Z,0x0002E20D,CrateTemplate parser list element construction; ICF target is j_0002e20d
 ??$_Construct@UupgradePairWide@@U1@@_STL@@YAXPAUupgradePairWide@@ABU1@@Z,0x000390B3,pin near-twin _Construct<upgradePairWide> instantiation onto the matched thunk at 0x0064C412 target
@@ -774,7 +774,7 @@ name,address,notes
 ??$__copy@PAUFXBoneInfo@@PAU1@H@_STL@@YAPAUFXBoneInfo@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00003378,resweep callee back-solved
 ??$__copy@PAUFactionVictoryParameters@@PAU1@H@_STL@@YAPAUFactionVictoryParameters@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x001DE760,STLport random-access __copy over the 0x18-byte FactionVictoryParameters (AsciiString::set + 5 dwords per element; n=(last-first)/0x18); callers vector::erase 0x001DFE7B and ??0VictorySystem 0x001E025F; the element type is the retail struct name from the assert string at 0x000C32CB (iniParseFactionVictoryDefinition) rather than a Gen_t_ tag, which the closure predicate counts as anonymous; the two gen-tgrid pins on this address are placeholders for the same body
 ??$__copy@PAUGen0003B8FE@@PAU1@H@_STL@@YAPAUGen0003B8FE@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0003B967,address-derived __copy<Gen0003B8FE*> shift helper for vector::erase at 0x00147EB0
-??$__copy@PAUGen000C3410@@PAU1@H@_STL@@YAPAUGen000C3410@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0081C730,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0081CED0 calls; autopin
+??$__copy@PAUVideo@@PAU1@H@_STL@@YAPAUVideo@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0081C730,Copy over witnessed28-byte Video records; retail erase81CED0 calls body81C730; recovered from prior address-derived family.
 ??$__copy@PAUGen00196F30@@PAU1@H@_STL@@YAPAUGen00196F30@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00011B62,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00197120 calls; autopin
 ??$__copy@PAUGen003627D0@@PAU1@H@_STL@@YAPAUGen003627D0@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0004700A,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003636F0 calls; autopin
 ??$__copy@PAUGen00425060@@PAU1@H@_STL@@YAPAUGen00425060@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0081C730,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0081CED0 calls; autopin
@@ -839,7 +839,7 @@ name,address,notes
 ??$__copy@PAUQuantityModifier@@PAU1@H@_STL@@YAPAUQuantityModifier@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00021DEB,"exact retail rel32 target of the byte-verified caller; replaces a harvested pin at 0x00003378, which is __copy<FXBoneInfo*>'s own body"
 ??$__copy@PAURva00244A80Element@@PAU1@H@_STL@@YAPAURva00244A80Element@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00047960,Open-BFME5 28-byte vector resize shrink copy ILT to the existing Rva00244A80Element copy body at 0x00233A20
 ??$__copy@PAURva004262F0Elem@@PAU1@H@_STL@@YAPAURva004262F0Elem@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0001B888,address-derived __copy<Rva004262F0Elem*> shift helper for vector::erase at 0x004262F0
-??$__copy@PAUVideo@@PAU1@H@_STL@@YAPAUVideo@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000112FC
+??$__copy@PAURva00755100Element@@PAU1@H@_STL@@YAPAURva00755100Element@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00755100,Address-derived 12-byte element dependency; retail ILT route and caller ABI independently decoded; not the 28-byte BFME Video type.
 ??$__copy@PAUWeaponTemplateSet@@PAU1@H@_STL@@YAPAUWeaponTemplateSet@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0002E5F0,LuaScriptEngine::reset vector copy route to the retail 0x54-byte element helper
 ??$__copy@PAV?$BitFlags@$0HB@@@PAV1@H@_STL@@YAPAV?$BitFlags@$0HB@@@PAV1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x00024BE5,BFME PathfindZoneManager pending-cell vector clear ILT
 ??$__copy@PAV?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@PAV12@H@_STL@@YAPAV?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@0@PAV10@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000112FC,resweep callee back-solved
@@ -5052,7 +5052,6 @@ name,address,notes
 ??1Gen0004A1C4@@QAE@XZ,0x0004A1C4,Open-BFME5 ILT the element destructor the 188-byte-stride vector at 0x0013BFA0 calls
 ??1Gen000658A0@@QAE@XZ,0x000658A0,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
 ??1Gen000A1B30@@UAE@XZ,0x000A1B30,base class destructor tail-called by the guarded-delete destructor family (R4OwnedPointerDestructors.cpp); address-derived name; identity not recovered
-??1Gen000C3410@@QAE@XZ,0x000C3410,element destructor called by the no-exceptions vector<T> destructor family (R4VectorDtorWideElems.cpp); address-derived name; identity not recovered
 ??1Gen000E5300@@QAE@XZ,0x00887940,Open-BFME5 ILT the element destructor the 12-byte-stride vector at 0x000E5300 calls
 ??1Gen000FF700@@QAE@XZ,0x000FF700,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
 ??1Gen000FF7D0@@QAE@XZ,0x000FF7D0,destructible member destroyed by the two-member destructor families (R4TwoMemberDestructors.cpp / R4VptrTailDestructors.cpp); address-derived name; identity not recovered
@@ -9406,7 +9405,6 @@ name,address,notes
 ??1SmartBombTargetHomingUpdate@@MAE@XZ,0x000142A4,destructor ILT to 0x00286DC0
 ??1SmudgeManager@@UAE@XZ,0x00029555,W3DSmudgeManager destructor base call ILT
 ??1SmudgeSet@@UAE@XZ,0x000056D7,authentic virtual SmudgeSet destructor callee; vtable 0x0111017C and matched constructor/destructor prove identity
-??1Snapshot@@QAE@XZ,0x00887940,DamageInfo destructor subobject calls (packet 000c3410) -- additive pin alongside existing 0x009A1A40 row
 ??1SortingIndexBufferClass@@UAE@XZ,0x0091D300,0x0091D930 deleting destructor directly calls this class destructor
 ??1SortingNodeStruct@@QAE@XZ,0x0093B200
 ??1SoundFXNugget@@MAE@XZ,0x000020F9,vtable 0x00CF33D8 slots name SoundFXNugget; protected complete destructor called by wrapper 0x00428B20
@@ -9664,7 +9662,7 @@ name,address,notes
 ??1VeterancyCrateCollide@@MAE@XZ,0x0002CE12,destructor ILT to 0x00218C30
 ??1VictoryConditions@@UAE@XZ,0x0035F880,installs vtable 0x010E8D90 calls hideEndGameScreen 0x0035F770 then the VictoryConditionsInterface vtable 0x010E8D28 and ??1SubsystemInterface 0x009A1A40; called by the scalar deleting dtor 0x0035F8F0 via ILT 0x000087F6
 ??1VictoryParameterVector@@QAE@XZ,0x00032DD5,VictorySystem destructor member at +0xEC; ILT targets the 0x001DFD90 vector destructor
-??1Video@@QAE@XZ,0x0001642D
+??1Rva00755100Element@@QAE@XZ,0x000A5120,Address-derived 12-byte element dependency; retail ILT route and caller ABI independently decoded; not the 28-byte BFME Video type.
 ??1VideoPlayerInterface@@UAE@XZ,0x0081C520,authentic VideoPlayerInterface complete destructor; adjacent constructor 0x0081C500 and vtable 0x0112CC60 prove identity
 ??1View@@UAE@XZ,0x0003732B,View complete destructor ILT called by W3DView destructor 0x007461B0; thunk reaches the exact 14-byte View base teardown body at 0x0045C1B0 and is called by scalar wrapper 0x0045C440
 ??1VisPolyClass@@MAE@XZ,0x0002880D,exact constructor 0x007A1750 and dedicated vtable 0x00D27AC8 establish the protected complete destructor called by wrapper 0x007A01E0
@@ -13171,7 +13169,7 @@ name,address,notes
 ?_M_clear@?$vector@URva0081D280Element@@V?$allocator@URva0081D280Element@@@_STL@@@_STL@@IAEXXZ,0x0081D0F0,Open-BFME5 vector clear callee
 ?_M_clear@?$vector@US4Poly000BC2E0@@V?$allocator@US4Poly000BC2E0@@@_STL@@@_STL@@IAEXXZ,0x0002DFF1,0x004A2370 call +0x0062 ILT enters matched polymorphic vector destructor 0x000BC2E0
 ?_M_clear@?$vector@US4Poly00136170@@V?$allocator@US4Poly00136170@@@_STL@@@_STL@@IAEXXZ,0x00008A7B,0x00138D70 call +0x0062 ILT enters matched vector<S4Poly00136170> destructor body 0x00136170
-?_M_clear@?$vector@UVideo@@V?$allocator@UVideo@@@_STL@@@_STL@@IAEXXZ,0x0001E420,ILT the Video vector overflow calls at 0x006FA8B6 to clear the old buffer
+?_M_clear@?$vector@URva00755100Element@@V?$allocator@URva00755100Element@@@_STL@@@_STL@@IAEXXZ,0x006FA5B0,Address-derived 12-byte element dependency; retail ILT route and caller ABI independently decoded; not the 28-byte BFME Video type.
 ?_M_clear@?$vector@UWeaponBarrelInfo@@V?$allocator@UWeaponBarrelInfo@@@_STL@@@_STL@@IAEXXZ,0x0076AAC0,Open-BFME7 retail REL32 target the operator= body at 0x0076ACD0 calls to release the old storage before reallocating; width-60 vector teardown (Q3VectorStorageRelease.cpp)
 ?_M_clear@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXXZ,0x0001C9B8,Open-BFME5 ILT thunk to the retail AsciiString vector clear body at 0x007578F0
 ?_M_clear@?$vector@VOpen2Elem063700@@V?$allocator@VOpen2Elem063700@@@_STL@@@_STL@@IAEXXZ,0x0003588C,Open2 0x00063700 vector clear (ILT)
@@ -14305,7 +14303,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@UUpgrades@CashHackSpecialPowerModuleData@@V?$allocator@UUpgrades@CashHackSpecialPowerModuleData@@@_STL@@@_STL@@IAEXPAUUpgrades@CashHackSpecialPowerModuleData@@ABU34@ABU__false_type@2@I_N@Z,0x0000EF11
 ?_M_insert_overflow@?$vector@UUpgrades@OCLSpecialPowerModuleData@@V?$allocator@UUpgrades@OCLSpecialPowerModuleData@@@_STL@@@_STL@@IAEXPAUUpgrades@OCLSpecialPowerModuleData@@ABU34@ABU__false_type@2@I_N@Z,0x0003913F
 ?_M_insert_overflow@?$vector@UUpgrades@OCLSpecialPowerModuleData@@V?$allocator@UUpgrades@OCLSpecialPowerModuleData@@@_STL@@@_STL@@IAEXPAUUpgrades@OCLSpecialPowerModuleData@@ABU34@ABU__false_type@2@I_N@Z,0x009F36F0,result append call site encodes this ICF body
-?_M_insert_overflow@?$vector@UVideo@@V?$allocator@UVideo@@@_STL@@@_STL@@IAEXPAUVideo@@ABU3@ABU__false_type@2@I_N@Z,0x000359B3,rel32 pin for exact-ambiguous landing
+?_M_insert_overflow@?$vector@URva00755100Element@@V?$allocator@URva00755100Element@@@_STL@@@_STL@@IAEXPAURva00755100Element@@ABU3@ABU__false_type@2@I_N@Z,0x006FA7C0,Address-derived 12-byte element dependency; retail ILT route and caller ABI independently decoded; not the 28-byte BFME Video type.
 ?_M_insert_overflow@?$vector@UWeaponBarrelInfo@ModelConditionInfo@@V?$allocator@UWeaponBarrelInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXPAUWeaponBarrelInfo@ModelConditionInfo@@ABU34@ABU__false_type@2@I_N@Z,0x0003D7B2,ILT thunk used by call site
 ?_M_insert_overflow@?$vector@UWeaponRecoilInfo@W3DModelDraw@@V?$allocator@UWeaponRecoilInfo@W3DModelDraw@@@_STL@@@_STL@@IAEXPAUWeaponRecoilInfo@W3DModelDraw@@ABU34@ABU__false_type@2@I_N@Z,0x00017FB2,"ILT the push_back site encodes"
 ?_M_insert_overflow@?$vector@UtConnInfoStruct@@V?$allocator@UtConnInfoStruct@@@_STL@@@_STL@@IAEXPAUtConnInfoStruct@@ABU3@ABU__false_type@2@I_N@Z,0x0004ABF6
@@ -79459,7 +79457,6 @@ name,address,notes
 ?copy@ProductionPrerequisiteCopyShim@_STL@@SAPAVProductionPrerequisite@@PAV3@00ABUrandom_access_iterator_tag@2@PAH@Z,0x00753280,_STL __copy ProductionPrerequisite incremental-link thunk target through a TU-local forwarding shim
 ?copy@ProductionPrerequisiteUninitializedCopyShim@_STL@@SAPAXPAX00ABU__false_type@2@@Z,0x003ABB40,_STL __uninitialized_copy const ProductionPrerequisite incremental-link thunk target through a TU-local forwarding shim
 ?copy@UnsignedPairTreeCopyShim@_STL@@QAEPAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@2@PAU32@0@Z,0x0076AB10,_STL unsigned pair tree incremental-link thunk target through a TU-local forwarding shim
-?copy@VideoCopyShim@_STL@@SAPAUVideo@@PAU3@00ABUrandom_access_iterator_tag@2@PAH@Z,0x00755100,_STL __copy Video incremental-link thunk target through a TU-local forwarding shim
 ?copy@W3DAnimationInfoConstCopyShim@_STL@@SAPAXPAX00ABUrandom_access_iterator_tag@2@PAH@Z,0x003B3800,_STL __copy const W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?copy@W3DAnimationInfoCopyShim@_STL@@SAPAVW3DAnimationInfo@@PAV3@00ABUrandom_access_iterator_tag@2@PAH@Z,0x00610AF0,_STL __copy W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?copy@W3DAnimationInfoUninitializedCopyShim@_STL@@SAPAXPAX00ABU__false_type@2@@Z,0x003AA640,_STL __uninitialized_copy const W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
@@ -82897,7 +82894,6 @@ name,address,notes
 ?handle@Gen000B8570@@QAEXXZ,0x000B8570,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
 ?handle@Gen000BB6A0@@QAEXPAD@Z,0x000BB6A0,address-derived callee of the 13-byte byte-out forwarder family; target read from the REL32 at its call sites
 ?handle@Gen000BB6C0@@QAEXXZ,0x000BB6C0,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
-?handle@Gen000C3410@@QAEXXZ,0x000C3410,address-derived callee of the per-element member walk family; target read from the REL32 at its call sites
 ?handle@Gen000C7DA0@@QAEXXZ,0x000C7DA0,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
 ?handle@Gen000C7DC0@@QAEXXZ,0x000C7DC0,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
 ?handle@Gen000CEB20@@QAEXXZ,0x000CEB20,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
@@ -83811,7 +83807,6 @@ name,address,notes
 ?insert_overflow@StateTransitionInfoInsertOverflowShim@_STL@@QAEXPAUTransitionInfo@State@@ABU34@ABU__false_type@2@I_N@Z,0x002109B0,_STL vector _M_insert_overflow State::TransitionInfo incremental-link thunk target through a TU-local forwarding shim
 ?insert_overflow@UnicodeStringInsertOverflowShim@_STL@@QAEXPAVUnicodeString@@ABV3@ABU__false_type@2@I_N@Z,0x00532A00,_STL vector _M_insert_overflow UnicodeString incremental-link thunk target through a TU-local forwarding shim
 ?insert_overflow@UnsignedShortInsertOverflowShim@_STL@@QAEXPAGABGABU__true_type@2@I_N@Z,0x003C16A0,_STL vector _M_insert_overflow unsigned short incremental-link thunk target through a TU-local forwarding shim
-?insert_overflow@VideoInsertOverflowShim@_STL@@QAEXPAUVideo@@ABU3@ABU__false_type@2@I_N@Z,0x006FA7C0,_STL vector _M_insert_overflow Video incremental-link thunk target through a TU-local forwarding shim
 ?insert_overflow@W3DAnimationInfoInsertOverflowShim@_STL@@QAEXPAVW3DAnimationInfo@@ABV3@ABU__false_type@2@I_N@Z,0x00788030,_STL vector _M_insert_overflow W3DAnimationInfo incremental-link thunk target through a TU-local forwarding shim
 ?insert_overflow@WeaponTemplateSetInsertOverflowShim@_STL@@QAEXPAVWeaponTemplateSet@@ABV3@ABU__false_type@2@I_N@Z,0x002E7AA0,_STL vector _M_insert_overflow WeaponTemplateSet incremental-link thunk target through a TU-local forwarding shim
 ?insert_overflow@tConnInfoStructInsertOverflowShim@_STL@@QAEXPAUtConnInfoStruct@@ABU3@ABU__false_type@2@I_N@Z,0x00638FF0,_STL vector _M_insert_overflow tConnInfoStruct incremental-link thunk target through a TU-local forwarding shim
@@ -88401,3 +88396,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?get_allocator@Rva00776240Vector2C@@QBE?AV?$allocator@VRva00762170@@@_STL@@XZ,0x00022255,The 0x0076A690 vector copy call passes the source vector and allocator temporary to the proven identity helper at 0x00760C60.
 ?rva00521390@AptMapPreview@@QAEXPAVMapMetaData@@@Z,0x00521390,pin;unchanged preview receiver and metadata argument in retail 0x005216B0; actual body ret4
 ?rva00521000@AptMapPreview@@QAEXPAVMapMetaData@@@Z,0x00521000,pin;unchanged preview receiver and metadata argument in retail 0x005216B0; actual body ret4
+??1Video@@QAE@XZ,0x000C3410,True28-byte Video destructor; named INI::parseVideoDefinition calls through ILT167CF; three canonical string members and28-byte vector stride independently witnessed.

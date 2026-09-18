@@ -250,7 +250,7 @@ Of the 22, several alias a target that is itself invented (`BfmeHostZB`,
     LZHLCompressor      <- Gen00825550
     LZHLDecompressor    <- Gen008267E0
     HLodDefClass        <- Gen0097D800
-    DamageInfo          <- Gen000C3410
+    Video               <- Gen000C3410 (recovered; earlier DamageInfo alias was wrong)
     ServiceHubImpl      <- Gen007EB140
 
 **Why this has not been done.** Renaming a class changes the mangled name of every
@@ -276,3 +276,39 @@ audit before changing the shared witness. The new state routine therefore
 uses `Rva0015C570GuardMachine` as its partial layout view; its proven method
 identity remains intact. No baseline was increased and no shared witness
 was silently rewritten to accept the new source.
+
+
+### Video and the unrelated 12-byte template family
+
+The earlier `Gen000C3410 -> DamageInfo` entry was false. Retail
+`INI::parseVideoDefinition` (`0x000C3480`) constructs a 28-byte local, requests
+`DefaultVideoData`, passes it to `VideoPlayer::addVideo`, and destroys it through
+ILT `0x000167CF` to `0x000C3410`. That 89-byte destructor releases three strings at
+`+8`, `+4`, and `+0`; the real DamageInfo constructor instead places its output
+subobject at `+0x4C`. The canonical recovered layout is
+`Code/GameEngine/Include/GameClient/Video.h`, and its parser/destructor owner is
+`Code/GameEngine/Source/Common/INI/INIVideo.cpp`.
+
+Retail field table RVA`0x00D2CBD8` names Filename (+0), Comment (+8),
+HasSubtitles (+0xC), Volume (+0x10; percent-to-real parser), and IsDefault (+0x14).
+The three string names agree with the upstream Video declaration. The old
+`m_isLooping` name conflicted with the table. VideoPlayer::init calls the
+100-byte SubtitleManager constructor at `0x0081DA30` and stores its result at
+record +0x18 (`0x0081CC94`, `0x0081CCAC`). The getter at `0x0081CA10` reads that
+field; its exact diagnostic at VA`0x0112CD30` names
+`VideoPlayer::getSubTitleMgrForVideo`. `parseSubtitle` calls its virtual slot +0x58.
+The two query bodies read the same 28-byte table at VA`0x0130B19C`/`0x0130B1A0`.
+
+Six unrelated 12-byte template bodies, 553 bytes total, now use the address-derived
+emission surrogate `Rva00755100Element` in the STLport directory. Its string
+member reproduces the observed assignment shape; it does **not** identify the
+original semantic element. The former Video aliases at `0x000FB9C0`,
+`0x0010BDB0`, and `0x007544F0` are retired while their existing owners retain the
+ranges. The first two have exported Coord3D and GameClientRandomVariable
+identities. The retained vector<ICoord2D> owner has upstream nesting and byte
+proof; this audit did not discover a uniquely named direct retail caller.
+
+Video's no-EH vector destructor at `0x0081D0F0` retains an address-qualified
+variant claim, distinct from the existing EH body at `0x0081D040`. The three
+range helpers keep their addresses and call the actual destructor explicitly;
+there is no recovered `Video::handle` method.

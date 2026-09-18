@@ -1,11 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: DamageInfo::operator=, retail 0x00150620.
 //
-// It confirms the +0x04 offset of the embedded input block independently of
-// DamageInfoDestructorThunk.cpp: it hands DamageInfoInput::operator= the
-// address `this+4`, and separately InactiveBody::estimateDamage at 0x00213B90
-// reads m_damageType at +0xc of a DamageInfoInput where InactiveBody.cpp's
-// DamageInfo spelling has the same field at +0x10.
+// It confirms the +0x04 offset of the embedded input block: it hands
+// DamageInfoInput::operator= the address this+4. Independently, the matched
+// constructor at 0x000ED430 places output at +0x4C, and InactiveBody's damage
+// estimate reads the same input field offsets. The old 0x000C3410 destructor
+// attribution was disproved: that body destroys a 28-byte Video record.
 //
 // The output block is copied inline and field by field -- two dword moves and
 // a byte move at 0x50, 0x54, 0x58 -- which fixes both its start and its shape:
@@ -14,13 +14,8 @@
 // compiles to a twelve-byte move that copies the Bool's padding as a dword, so
 // the fields are assigned individually here to keep the byte move.
 //
-// One thing this body says that the destructor does not: it never touches
-// this+0. An implicit operator= would copy any base data member there, and
-// never copies a vtable pointer -- so either those four bytes ARE a vptr, or
-// this operator= is user-written and skips the base on purpose. The
-// destructor's reading is the first of those two, argued from the absence of a
-// vptr store; the two are not yet reconciled, so the four bytes are left
-// unnamed here rather than committed either way.
+// This assignment does not touch this+0. The constructor independently
+// establishes a vptr there; no destructor-layout inference is needed.
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 class DamageInfoInput

@@ -6,42 +6,7 @@
 // slot at +0x58, then fills it with the subtitle field table at 0x0112CDA0.
 // The error text at 0x0112CF14 identifies the callback as parseSubtitle.
 
-template <typename T> struct StringInlineData
-{
-	int m_refCount;
-	int m_length;
-	T m_text[ 1 ];
-};
-
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase() : m_data( 0 ) {}
-	StringBase( const StringBase<T> &other );
-	~StringBase();
-
-	StringInlineData<T> *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
-	~AsciiString() {}
-
-	const char *str( void ) const
-	{
-		return (const char *)m_data;
-	}
-
-	operator const char *( void ) const
-	{
-		return (const char *)m_data;
-	}
-};
+#include "../../Include/GameClient/Video.h"
 
 struct FieldParse;
 
@@ -87,7 +52,7 @@ public:
 	virtual void slot19() = 0;
 	virtual void slot20() = 0;
 	virtual void slot21() = 0;
-	virtual const void *getVideo( const AsciiString &title ) = 0;
+	virtual SubtitleManager *getSubTitleMgrForVideo( const AsciiString &title ) = 0;
 };
 
 extern VideoPlayerInterface *TheVideoPlayer;
@@ -108,7 +73,7 @@ public:
 // ?parseSubtitle@@YAXPAVINI@@PAX1PBX@Z
 void parseSubtitle( INI *ini, void *, void *, const void * )
 {
-	const void *subtitle = TheVideoPlayer->getVideo( ini->getFilename() );
+	const void *subtitle = TheVideoPlayer->getSubTitleMgrForVideo( ini->getFilename() );
 	if ( subtitle != 0 )
 	{
 		if ( ini->getNextToken( 0 ) != 0 )
