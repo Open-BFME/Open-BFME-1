@@ -75911,7 +75911,6 @@ name,address,notes
 ?bfmeCreate@WeaponStore@@QAEXPAXPAVObject@@0@Z,0x00035E5E,retail 0x0028CA70/0x001F1CE0 call the same three-pointer ILT; the 0x012EF738 receiver is proven TheWeaponStore by GameEngine init tag
 ?bfmeCreateInactiveTeam@TeamFactory@@AAEPAVTeam@@ABVAsciiString@@0@Z,0x0000D15C,retail REL32 at 0x000F7CAB targets the two-name createInactiveTeam ILT at 0x0000D15C
 ?bfmeCtorECMa@BfmeThingECMa@@QAEPAV1@XZ,0x00806300,pin
-?bfmeCtorECMb@BfmeThingECMb@@QAEPAV1@XZ,0x008254C0,pin
 ?bfmeCur1094@BfmeK1094@@QAEPAVBfmeR1094@@XZ,0x00020824,pin
 ?bfmeCurIdVHT@BfmeChunkVHT@@QAEIXZ,0x009E1440,pin
 ?bfmeCurrentCU@@YAIXZ,0x0000E3D1,ILT thunk to CurrentCU getter 0x00421E10

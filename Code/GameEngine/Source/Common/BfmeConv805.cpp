@@ -175,28 +175,13 @@ public:
 	BfmeThingECMa *bfmeCtorECMa();
 };
 
-class BfmeThingECMb
-{
-public:
-	BfmeThingECMb *bfmeCtorECMb();
-};
-
 void *__cdecl bfmeAllocECMa(unsigned int n);
-void *__cdecl bfmeAllocECMb(unsigned int n);
 
 BfmeThingECMa *bfmeGoECMa()
 {
 	void *p = bfmeAllocECMa(0x48);
 	if (p)
 		return ((BfmeThingECMa *)p)->bfmeCtorECMa();
-	return 0;
-}
-
-BfmeThingECMb *bfmeGoECMb()
-{
-	void *p = bfmeAllocECMb(0x18);
-	if (p)
-		return ((BfmeThingECMb *)p)->bfmeCtorECMb();
 	return 0;
 }
 

@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /ICode/Libraries/Source/Compression/LZHCompress/CompLibHeader
+// cl: /DNDEBUG /MD /GX- /ICode/Libraries/Source/Compression/LZHCompress/CompLibHeader
 // Retail RVA 0x00823230, 27 bytes.
 // Matched DecompressFile (0x0081E9A0) and DecompressMemory (0x0081EB80)
 // call LZHLDestroyDecompressor with the handle from LZHLCreateDecompressor.
@@ -21,4 +21,17 @@ void LZHLDestroyDecompressor(void *handle)
 void LZHLDestroyCompressor(void *handle)
 {
     delete static_cast<LZHLCompressor *>(handle);
+}
+
+// Matched CompressFile names these API calls at RVAs 0x00823110 and
+// 0x00823200. The factory allocates sizeof(LZHLCompressor)==0x18 and
+// tail-calls its matched constructor; the bound is the canonical inline.
+void *LZHLCreateCompressor()
+{
+    return new LZHLCompressor;
+}
+
+unsigned int LZHLCompressorCalcMaxBuf(unsigned int rawSize)
+{
+    return LZHLCompressor::calcMaxBuf(rawSize);
 }
