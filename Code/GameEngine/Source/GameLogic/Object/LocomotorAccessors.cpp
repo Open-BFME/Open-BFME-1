@@ -18,13 +18,13 @@
 #include "GameLogic/Locomotor.h"
 
 //-------------------------------------------------------------------------------------------------
-Locomotor* LocomotorSet::findLocomotor(LocomotorSurfaceTypeMask t)
+Locomotor* LocomotorSet::findLocomotor(LocomotorSurfaceTypeMask surfaceMask)
 {
-	for (LocomotorVector::iterator it = m_locomotors.begin(); it != m_locomotors.end(); ++it)
+	for (LocomotorVector::iterator locomotorIt = m_locomotors.begin(); locomotorIt != m_locomotors.end(); ++locomotorIt)
 	{
-		Locomotor* curLocomotor = *it;
-		if (curLocomotor && (curLocomotor->getLegalSurfaces() & t))
-			return curLocomotor;
+		Locomotor* locomotor = *locomotorIt;
+		if (locomotor && (locomotor->getLegalSurfaces() & surfaceMask))
+			return locomotor;
 	}
 	return NULL;
 }
