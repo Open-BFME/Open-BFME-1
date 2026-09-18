@@ -1,4 +1,11 @@
 // cl: /DNDEBUG /MD /EHsc
+// Identity: the unique DefaultSoundEffect parser at 0xB1030 calls the audio
+// factory through vtable slot +0x110, reaches 0x6AE710, and assigns this
+// 0x98-byte family through ILT 0x3C6D7 -> 0xB0F00. Its INI table at
+// 0x010813F8 witnesses fourteen AudioEventInfo fields, including volume+0x10.
+// Canonical INIAudioEventInfo.cpp has the same parser/factory/assignment flow.
+// Keep BFME layout views and unknown nested types; the Zero Hour layout differs.
+// Constants here are layout witnesses, not claims about runtime INI values.
 // Open-BFME7: the destructor at 0x000B0DF0 (206 B).  Own vtable 0x010818CC
 // installed at entry (real virtual dtor); base BfmeBaseASCa vtable
 // 0x010817AC ("_bfmeVftASCa") restored automatically at the tail through an
@@ -161,10 +168,10 @@ struct Rva000B0DF0VectorHolder
 	Rva000B0DF0Elem8 *m_cap;
 };
 
-class Rva000B0DF0 : public BfmeBaseASCa
+struct AudioEventInfo : public BfmeBaseASCa
 {
 public:
-	virtual ~Rva000B0DF0();
+	virtual ~AudioEventInfo();
 
 private:
 	unsigned char m_unreconstructed04[ 8 - 4 ];
@@ -178,8 +185,8 @@ private:
 	Rva000B0DF0VectorHolder m_vector8C;
 };
 
-// ??1Rva000B0DF0@@UAE@XZ
-Rva000B0DF0::~Rva000B0DF0()
+// ??1AudioEventInfo@@UAE@XZ
+AudioEventInfo::~AudioEventInfo()
 {
 	if ( TheAudioClientUpdate )
 	{

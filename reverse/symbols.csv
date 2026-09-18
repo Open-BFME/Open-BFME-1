@@ -2166,8 +2166,8 @@ name,address,notes
 ??0?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@QAE@ABU01@@Z,0x000427A8,Open-BFME7 ILT thunk the PlayerInfoMap _M_insert at 0x00633C70 calls for the node pair copy
 ??0?$pair@$$CBVAsciiString@@VRva0045EF90Object@@@_STL@@QAE@ABVAsciiString@@ABVRva0045EF90Object@@@Z,0x00041BD7,operator[] call at 0x00461C7B reaches the matched 0x0045F410 pair constructor through this ILT
 ??0?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@QAE@IABQAXABV?$allocator@PAX@1@@Z,0x0002039C,ILT the same resize calls at 0x00786930 to build the new bucket vector
-??0?$vector@UGen_t_000b0560_p8pod@@V?$allocator@UGen_t_000b0560_p8pod@@@_STL@@@_STL@@QAE@ABV01@@Z,0x0001911E,copy constructor call from BfmeA1202 copy constructor at 0x000B5B10; retail ILT target for the 0x000B0560 element vector
-??0?$vector@UGen_t_000b0c00_p8cd@@V?$allocator@UGen_t_000b0c00_p8cd@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00028D58,copy constructor call from BfmeA1202 copy constructor at 0x000B5B10; retail ILT target for the 0x000B0C00 element vector
+??0?$vector@UGen_t_000b0560_p8pod@@V?$allocator@UGen_t_000b0560_p8pod@@@_STL@@@_STL@@QAE@ABV01@@Z,0x0001911E,copy constructor call from AudioEventInfo copy constructor at 0x000B5B10; retail ILT target for the 0x000B0560 element vector
+??0?$vector@UGen_t_000b0c00_p8cd@@V?$allocator@UGen_t_000b0c00_p8cd@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00028D58,copy constructor call from AudioEventInfo copy constructor at 0x000B5B10; retail ILT target for the 0x000B0C00 element vector
 ??0?$vector@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000149DE,GeometryInfo copy constructor vector<GeometryRecord> member at retail 0x000FFD10
 ??0?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QAE@ABV01@@Z,0x00027570,route=0x000FDE60; GeometryInfo copy constructor vector<GeometryShape> member at retail 0x000FFD10
 ??0?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@@Z,0x00048667,repointed from the 0x00008DCD pinharvest guess: MapUtil.cpp _$E30 encodes 0x00048667 which jumps to the 15-byte zero-three-slots body at 0x0039D5B0 byte-equal to the ledgered vector<ICoord2D> ctor at 0x001A93A0; 0x00008DCD jumps to the 32-byte list sentinel allocation at 0x004C4500
@@ -10590,7 +10590,7 @@ name,address,notes
 ??_7RetailUpdateModuleData@@6B@,0x0108A350,UpdateModule factory vtable target
 ??_7ReverseSoundTransition@@6B@,0x00D0CAB8,vtable whose slots name ReverseSoundTransition
 ??_7RiderChangeContain@@6B@,0x010ACAF0,exact constructor 0x00229FB0 installs this dedicated vtable; slot zero ILT 0x000310AC reaches scalar wrapper 0x0022A510
-??_7Rva000B0DF0@@6B@,0x010818CC,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000B0DF0 calls; autopin
+??_7AudioEventInfo@@6B@,0x010818CC,AudioEventInfo family proven by DefaultSoundEffect parser factory assignment and14 INI witnesses; constructor and destructor install this vtable
 ??_7Rva000C8480Owner@@6B@,0x01083CA4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000C8480 calls; autopin
 ??_7Rva000E9A40@@6B@,0x01084DF0,Open-BFME5 own vtable stored by the 0x000E9A40 destructor
 ??_7Rva0014C850Store@@6B@,0x010959D4,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0014C850 calls; autopin

@@ -42,11 +42,11 @@ struct hash
 };
 }
 
-class BfmeA1202
+struct AudioEventInfo
 {
 public:
-	BfmeA1202();
-	virtual ~BfmeA1202();
+	AudioEventInfo();
+	virtual ~AudioEventInfo();
 
 	void Release_Ref(void)
 	{
@@ -63,7 +63,7 @@ class AudioEventInfoRef
 public:
 	AudioEventInfoRef(void) : m_info(0) {}
 
-	AudioEventInfoRef(BfmeA1202 *info) : m_info(info)
+	AudioEventInfoRef(AudioEventInfo *info) : m_info(info)
 	{
 		if (m_info)
 			InterlockedIncrement(&m_info->m_refCount);
@@ -75,7 +75,7 @@ public:
 			m_info->Release_Ref();
 	}
 
-	BfmeA1202 *m_info;
+	AudioEventInfo *m_info;
 };
 
 class AudioManagerMutex
@@ -103,14 +103,14 @@ private:
 	unsigned char m_held;
 };
 
-typedef _STL::hash_map<AsciiString, BfmeA1202 *, rts::hash<AsciiString>,
+typedef _STL::hash_map<AsciiString, AudioEventInfo *, rts::hash<AsciiString>,
 	_STL::equal_to<AsciiString> > Rva006A7AD0Map;
 
 struct Rva006A7AD0Node
 {
 	Rva006A7AD0Node *m_next;
 	AsciiString m_key;
-	BfmeA1202 *m_value;
+	AudioEventInfo *m_value;
 };
 
 extern void j_0000691a(void);
@@ -132,9 +132,9 @@ public:
 		return (this->*find.memberFunction)(key);
 	}
 
-	BfmeA1202 *&operator[](const AsciiString &key)
+	AudioEventInfo *&operator[](const AsciiString &key)
 	{
-		typedef BfmeA1202 *&(AudioEventInfoMap::*Lookup)(const AsciiString &);
+		typedef AudioEventInfo *&(AudioEventInfoMap::*Lookup)(const AsciiString &);
 		union LookupBits
 		{
 			void (*freeFunction)(void);
@@ -147,7 +147,7 @@ public:
 
 struct Rva006AAF10Element
 {
-	BfmeA1202 *m_info;
+	AudioEventInfo *m_info;
 
 	Rva006AAF10Element(const Rva006AAF10Element &other) : m_info(other.m_info)
 	{
@@ -187,12 +187,12 @@ AudioEventInfoRef AudioManager::newAudioEventInfo(const AsciiString &audioName)
 	Rva006A7AD0Node *node = (Rva006A7AD0Node *)m_allAudioEventInfo.findNode(audioName);
 	if (node)
 	{
-		BfmeA1202 *info = node->m_value;
+		AudioEventInfo *info = node->m_value;
 		return AudioEventInfoRef(info);
 	}
 
 	m_infoDirty = 0;
-	AudioEventInfoRef info = new BfmeA1202;
+	AudioEventInfoRef info = new AudioEventInfo;
 	m_audioInfos.push_back(*reinterpret_cast<const Rva006AAF10Element *>(&info));
 	m_allAudioEventInfo[audioName] = info.m_info;
 	return AudioEventInfoRef(m_allAudioEventInfo[audioName]);

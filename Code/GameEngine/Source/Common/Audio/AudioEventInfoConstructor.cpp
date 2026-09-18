@@ -1,9 +1,16 @@
 // cl: /DNDEBUG /MD /EHsc
+// Identity: the unique DefaultSoundEffect parser at 0xB1030 calls the audio
+// factory through vtable slot +0x110, reaches 0x6AE710, and assigns this
+// 0x98-byte family through ILT 0x3C6D7 -> 0xB0F00. Its INI table at
+// 0x010813F8 witnesses fourteen AudioEventInfo fields, including volume+0x10.
+// Canonical INIAudioEventInfo.cpp has the same parser/factory/assignment flow.
+// Keep BFME layout views and unknown nested types; the Zero Hour layout differs.
+// Constants here are layout witnesses, not claims about runtime INI values.
 
-// Retail 0x000B0D10: BfmeA1202's default constructor.
+// Retail 0x000B0D10: AudioEventInfo's default constructor.
 // The vtable at 0x010818CC, the matched copy constructor at 0x000B5B10, the
 // destructor at 0x000B0DF0, and BfmeThingCIA::bfmeInitCIA at 0x000B5450
-// identify this body as BfmeA1202's constructor.
+// identify this body as AudioEventInfo's constructor.
 // This TU keeps the byte layout local so MSVC preserves the retail stores.
 
 struct Two
@@ -26,10 +33,10 @@ struct One
 	}
 };
 
-class BfmeA1202
+struct AudioEventInfo
 {
 public:
-	BfmeA1202();
+	AudioEventInfo();
 
 private:
 	volatile int m_vft;
@@ -72,7 +79,7 @@ private:
 	volatile int m_94;
 };
 
-BfmeA1202::BfmeA1202()
+AudioEventInfo::AudioEventInfo()
 {
 	m_zero = 0;
 	m_vft = 0x010818CC;

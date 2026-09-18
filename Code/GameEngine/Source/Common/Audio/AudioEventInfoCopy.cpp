@@ -1,4 +1,11 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// Identity: the unique DefaultSoundEffect parser at 0xB1030 calls the audio
+// factory through vtable slot +0x110, reaches 0x6AE710, and assigns this
+// 0x98-byte family through ILT 0x3C6D7 -> 0xB0F00. Its INI table at
+// 0x010813F8 witnesses fourteen AudioEventInfo fields, including volume+0x10.
+// Canonical INIAudioEventInfo.cpp has the same parser/factory/assignment flow.
+// Keep BFME layout views and unknown nested types; the Zero Hour layout differs.
+// Constants here are layout witnesses, not claims about runtime INI values.
 // stlport
 
 // Retail 0x000B0F00, 243 bytes.  This is the copy-assignment body for the
@@ -9,29 +16,7 @@
 
 #include <vector>
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-	private:
-		StringBase() : m_data(0) {}
-		StringBase(const StringBase<T> &other);
-		~StringBase();
-		void set(const StringBase<T> &other);
-		void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-	public:
-		AsciiString() : StringBase<char>() {}
-		AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-		~AsciiString() {}
-		AsciiString &operator=(const AsciiString &other)
-		{
-			StringBase<char>::set(other);
-			return *this;
-		}
-};
+#include "ascii_string.h"
 
 struct Gen_t_000b0c00_p8cd
 {
@@ -58,12 +43,12 @@ class BfmeA1202Base
 		int m_zero;
 };
 
-class BfmeA1202 : public BfmeA1202Base
+struct AudioEventInfo : public BfmeA1202Base
 {
 	public:
-		BfmeA1202(const BfmeA1202 &other);
-		virtual ~BfmeA1202();
-		BfmeA1202 &operator=(const BfmeA1202 &other);
+		AudioEventInfo(const AudioEventInfo &other);
+		virtual ~AudioEventInfo();
+		AudioEventInfo &operator=(const AudioEventInfo &other);
 
 	private:
 		AsciiString m_name;
@@ -96,7 +81,7 @@ class BfmeA1202 : public BfmeA1202Base
 		_STL::vector<Gen_t_000b0560_p8pod> m_vector8c;
 };
 
-BfmeA1202::BfmeA1202(const BfmeA1202 &other)
+AudioEventInfo::AudioEventInfo(const AudioEventInfo &other)
 	: BfmeA1202Base(other),
 	  m_name(other.m_name),
 	  m_filename(other.m_filename),
@@ -129,7 +114,7 @@ BfmeA1202::BfmeA1202(const BfmeA1202 &other)
 {
 }
 
-BfmeA1202 &BfmeA1202::operator=(const BfmeA1202 &other)
+AudioEventInfo &AudioEventInfo::operator=(const AudioEventInfo &other)
 {
 	m_name = other.m_name;
 	m_filename = other.m_filename;
