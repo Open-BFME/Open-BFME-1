@@ -88378,3 +88378,4 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
+?erase@?$list@PAVRva001E4ED0Target@@V?$allocator@PAVRva001E4ED0Target@@@_STL@@@_STL@@QAE?AU?$_List_iterator@PAVRva001E4ED0Target@@U?$_Nonconst_traits@PAVRva001E4ED0Target@@@_STL@@@2@U32@0@Z,0x000379BB,retail list erase range body at 0x001E4E00 called by the proven pointer-list assignment
