@@ -432,3 +432,8 @@ int Rva005B25C0DwordGetter::get( void ) const
 void __stdcall Rva006CF9B0Pop4( void * )
 {
 }
+
+// ret -- an address-derived empty leaf with no identity evidence.
+void Rva0069BC20Return( void )
+{
+}
