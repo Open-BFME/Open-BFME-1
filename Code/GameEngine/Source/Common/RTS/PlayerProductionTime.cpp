@@ -37,9 +37,9 @@ private:
 
 Real Player::getProductionTimeChangePercent(const AsciiString &buildTemplateName) const
 {
-	BfmeResEZC *result = m_productionTimeChanges.bfmeFindEZC(
+	BfmeResEZC *productionTimeChange = m_productionTimeChanges.bfmeFindEZC(
 		(void *)&buildTemplateName);
-	if (result)
-		return result->m_bfmeF;
+	if (productionTimeChange)
+		return productionTimeChange->m_bfmeF;
 	return bfmeKEZC;
 }
