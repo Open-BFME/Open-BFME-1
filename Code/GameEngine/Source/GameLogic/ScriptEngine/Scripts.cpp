@@ -1078,7 +1078,6 @@ void Script::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@Script@@MAEXXZ present-unmatched
 void Script::loadPostProcess( void )
 {
 
