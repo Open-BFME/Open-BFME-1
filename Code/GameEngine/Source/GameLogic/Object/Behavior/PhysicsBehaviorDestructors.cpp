@@ -4,7 +4,7 @@
 // Constructor 0x0029A880, factories, module name, and vtable family establish
 // identity; the wrapper reaches this complete teardown through ILT 0x000087D8.
 //
-// Sibling of PhysicsBehaviorCtorModuleFactoryBody.cpp: same UpdateModule chain
+// Sibling of PhysicsBehaviorConstructor.cpp: same UpdateModule chain
 // (PB_DeepBase vptr at +0x00, PB_Iface1 at +0x0c, PB_Iface2 at +0x10) and the
 // same 0x60-byte compact BFME layout. The only live member at teardown is the
 // std::vector<Coord3D> m_overlapForces at +0x20 (start/finish/end_of_storage);

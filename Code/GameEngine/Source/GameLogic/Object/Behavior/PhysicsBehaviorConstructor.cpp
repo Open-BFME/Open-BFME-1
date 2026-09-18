@@ -37,7 +37,7 @@ class UpdateModule : public PB_DeepBase, public PB_Iface1, public PB_Iface2
 {
 public:
     UpdateModule(Thing *thing, const ModuleData *moduleData)
-        : PB_DeepBase(thing, moduleData), m_f14(0), m_f18(-1), m_f1c(-1) {}
+        : PB_DeepBase(thing, moduleData), m_nextCallFrameAndPhase(0), m_f18(-1), m_f1c(-1) {}
 
 protected:
     void setWakeFrame(Object *, UpdateSleepTime);
@@ -45,7 +45,8 @@ protected:
     const ModuleData *getModuleData() const { return m_moduleData; }
 
 private:
-    unsigned int m_f14;
+    // name_oracle: UpdateModule+0x14, layout_witness confidence 1.00.
+    unsigned int m_nextCallFrameAndPhase;
     int m_f18;
     int m_f1c;
 };
