@@ -27,7 +27,7 @@ run_engine() {  # $1 brief, $2 log
     # keep only non-diff lines, capped in length
     # wall-clock cap: max-effort sessions were observed running 5h on one file
     # with nothing landed; a fresh session re-briefs from the live ledger + stashes
-    python tools/fleet_run.py --brief "$1" --log "$2" --engine "$ENGINE" --seat "$SEAT" -- timeout -k 60 "${SESSION_CAP:-9000}" codex exec -m "$CM" -c "model_reasoning_effort=\"$CE\"" --sandbox danger-full-access --cd "$(pwd)" "$(cat "$1")" < /dev/null
+    python tools/fleet_run.py --brief "$1" --log "$2" --engine "$ENGINE" --seat "$SEAT" -- timeout -k 60 "${SESSION_CAP:-9000}" codex exec -m "$CM" -c "model_reasoning_effort=\"$CE\"" --sandbox danger-full-access --cd "$(pwd)" - < /dev/null  # fleet_run feeds the brief on stdin: a 30 KB brief as an argument is "Argument list too long"
   fi
 }
 

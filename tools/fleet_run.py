@@ -260,6 +260,9 @@ def execute(root, brief, legacy_log, engine, seat, command):
             if any(norm(arg) == text for arg in command[1:]):
                 command = ["-" if norm(arg) == text else arg for arg in command]
                 feed = body.decode("utf-8-sig", errors="replace").encode("utf-8")  # codex refuses invalid UTF-8
+            elif "-" in command[1:]:
+                # seat.sh now passes `-` itself; the brief still goes over stdin
+                feed = body.decode("utf-8-sig", errors="replace").encode("utf-8")
             child = subprocess.Popen(command, cwd=root, env=dict(os.environ, BFME_RUN_ID=run),
                                      stdin=subprocess.PIPE if feed else subprocess.DEVNULL,
                                      stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
