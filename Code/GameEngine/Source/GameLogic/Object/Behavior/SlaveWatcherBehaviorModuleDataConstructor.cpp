@@ -1,27 +1,44 @@
 // cl: /DNDEBUG /MD /EHsc
 
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+
 // Factory 0x00117540 passes callback VA 0x0042C115 -> 0x002072E0, which
 // registers table RVA 0x00CA63CC: GrantUpgrade at +0x08 and RemoveUpgrade
 // at +0x0c, both parsed by INI::parseAsciiString (0x00851EE0).
-// This constructor view clears the four-byte string handles directly and
-// naturally emits scalar wrapper 0x002074E0; the novtable complete destructor
-// uses the canonical AsciiString definition in its separate ABI view.
+// The witnessed ModuleData prefix is eight bytes; the two canonical
+// AsciiString handles therefore occupy the parsed offsets directly.
 
-class SlaveWatcherBehaviorModuleData
+class ModuleData
+{
+public:
+	ModuleData() {}
+	virtual ~ModuleData() {}
+
+private:
+	unsigned int m_moduleTagNameKey;
+};
+
+class SlaveWatcherBehaviorModuleData : public ModuleData
 {
 public:
 	SlaveWatcherBehaviorModuleData();
 	virtual ~SlaveWatcherBehaviorModuleData();
 
 private:
-	unsigned int m_gap4;
-	unsigned int m_grantUpgrade;
-	unsigned int m_removeUpgrade;
+	AsciiString m_grantUpgrade;
+	AsciiString m_removeUpgrade;
 };
 
 // ??0SlaveWatcherBehaviorModuleData@@QAE@XZ
 SlaveWatcherBehaviorModuleData::SlaveWatcherBehaviorModuleData()
 {
-	m_grantUpgrade = 0;
-	m_removeUpgrade = 0;
+}
+
+// MSVC applies novtable to subsequent out-of-line definitions while retaining
+// the ordinary declaration used above for constructor vtable emission.
+class __declspec(novtable) SlaveWatcherBehaviorModuleData;
+
+// ??1SlaveWatcherBehaviorModuleData@@UAE@XZ
+SlaveWatcherBehaviorModuleData::~SlaveWatcherBehaviorModuleData()
+{
 }
