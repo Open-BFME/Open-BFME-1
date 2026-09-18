@@ -148,12 +148,13 @@ __declspec(noinline) static AsciiString getMapLeafAndDirName(const AsciiString &
 {
     const char *start = in.str();
     const char *end = in.str() + in.getLength() - 1;
-    const char *p = findLastBackslashInRangeInclusive(start, end);
-    if (p)
+    const char *leafSeparator = findLastBackslashInRangeInclusive(start, end);
+    if (leafSeparator)
     {
-        const char *p2 = findLastBackslashInRangeInclusive(start, p - 1);
-        if (p2)
-            return p2 + 1;
+        const char *directorySeparator =
+            findLastBackslashInRangeInclusive(start, leafSeparator - 1);
+        if (directorySeparator)
+            return directorySeparator + 1;
         return in;
     }
     return in;
