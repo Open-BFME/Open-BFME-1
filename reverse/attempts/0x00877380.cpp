@@ -1,6 +1,9 @@
 // ?DoHuffIteration@@YAKPAD00KKPAUhuff_node@@@Z
 // partial score=0.86 date=2026-09-10
 // cl: /O2 /G7 /GS /MD /GR- /EHsc- -Ivendor/nbench
+// Retail's decoded body is 1504 bytes through ret at +0x5df.  The 1482-byte
+// ledger extent stops inside mov ecx,[esp+0x10]; the next body starts at
+// 0x00877960.  This source emits 1503 bytes, so the real size delta is -1.
 
 #include <strings.h>
 
