@@ -14,23 +14,23 @@ public:
 	{
 		float c = (float)cos(theta);
 		float s = (float)sin(theta);
-		float tmp1;
-		float tmp2;
+		float xComponent;
+		float yComponent;
 
-		tmp1 = m_row[0][0];
-		tmp2 = m_row[0][1];
-		m_row[0][0] = c * tmp1 + s * tmp2;
-		m_row[0][1] = c * tmp2 - s * tmp1;
+		xComponent = m_row[0][0];
+		yComponent = m_row[0][1];
+		m_row[0][0] = c * xComponent + s * yComponent;
+		m_row[0][1] = c * yComponent - s * xComponent;
 
-		tmp1 = m_row[1][0];
-		tmp2 = m_row[1][1];
-		m_row[1][0] = c * tmp1 + s * tmp2;
-		m_row[1][1] = c * tmp2 - s * tmp1;
+		xComponent = m_row[1][0];
+		yComponent = m_row[1][1];
+		m_row[1][0] = c * xComponent + s * yComponent;
+		m_row[1][1] = c * yComponent - s * xComponent;
 
-		tmp1 = m_row[2][0];
-		tmp2 = m_row[2][1];
-		m_row[2][0] = c * tmp1 + s * tmp2;
-		m_row[2][1] = c * tmp2 - s * tmp1;
+		xComponent = m_row[2][0];
+		yComponent = m_row[2][1];
+		m_row[2][0] = c * xComponent + s * yComponent;
+		m_row[2][1] = c * yComponent - s * xComponent;
 	}
 
 private:
