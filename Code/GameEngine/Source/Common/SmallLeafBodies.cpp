@@ -31,6 +31,23 @@ BFME_SMALL_BYTE_SETTER( Rva00516680ByteSlot8, 0x59 )
 BFME_SMALL_BYTE_SETTER( Rva006E1970ByteSlot8, 0x69 )
 BFME_SMALL_BYTE_SETTER( Rva006E1980ByteSlot8, 0x6A )
 
+// lea eax,[ecx+4] / ret -- the body proves only the address of the field at
+// this+4, so the helper keeps its identity address-derived.
+class Rva004581C0Address
+{
+public:
+	void *address();
+
+private:
+	char m_prefix[ 4 ];
+	unsigned char m_field;
+};
+
+void *Rva004581C0Address::address()
+{
+	return &m_field;
+}
+
 // mov byte ptr [<address>],<imm8> / ret -- a fixed byte written to a .data
 // global with no arguments at all.  Two members write the same global.
 extern unsigned char g_Va012D6DFC;
@@ -345,4 +362,3 @@ int * __stdcall Rva002D3630Seed( int *slot )
 	*slot = 0x7DB;
 	return slot;
 }
-
