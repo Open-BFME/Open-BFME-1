@@ -88370,3 +88370,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??1Video@@QAE@XZ,0x000C3410,True28-byte Video destructor; named INI::parseVideoDefinition calls through ILT167CF; three canonical string members and28-byte vector stride independently witnessed.
 ?update@Rva006D5280@@QAEXPAPAVTileData@@HHH@Z,0x0002279B,retail 0x0074C690 calls ILT 0x0002279B with TileData pointer array and three ints; body 0x006D5B10 matches the helper
 ?rva0060C620@LivingWorldEyeTower@@AAEXXZ,0x0060C620,pin;processFrame60C9D0 restores same EyeTower ECX before ILT3E19E; actual750B body; method address-derived
+_isprint,0x009F7B8E,retail isprint import thunk; 0x007F91D0 passes four signed character values and consumes the integer result at each aligned call site
