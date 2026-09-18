@@ -37,44 +37,44 @@ struct Rva0054EF10Tree
 
 Rva0054EF10Node *Rva0054EF10Tree::_M_lower_bound( const BfmeWideString &key ) const
 {
-	Rva0054EF10Node *y = header;
-	Rva0054EF10Node *x = y->parent;
-	if ( !x )
-		return y;
+	Rva0054EF10Node *lowerBound = header;
+	Rva0054EF10Node *node = lowerBound->parent;
+	if ( !node )
+		return lowerBound;
 
 	BfmeWideHeader *keyData = key.m_data;
 	const unsigned short *empty =
 		reinterpret_cast<const unsigned short *>( g_bfmeEmptyUnicode );
-	while ( x )
+	while ( node )
 	{
 		int thatLen = keyData ? keyData->length : 0;
 		const unsigned short *thatData = keyData ? &keyData->data[ 0 ] : empty;
-		BfmeWideHeader *nodeData = x->key.m_data;
+		BfmeWideHeader *nodeData = node->key.m_data;
 		int thisLen = nodeData ? nodeData->length : 0;
-		const unsigned short *thisData = x->key.m_data ? &x->key.m_data->data[ 0 ] : empty;
-		int n = thisLen < thatLen ? thisLen : thatLen;
-		int c = 0;
-		while ( n > 0 )
+		const unsigned short *thisData = node->key.m_data ? &node->key.m_data->data[ 0 ] : empty;
+		int remaining = thisLen < thatLen ? thisLen : thatLen;
+		int comparison = 0;
+		while ( remaining > 0 )
 		{
 			if ( *thisData != *thatData )
 			{
-				c = *thisData;
-				c -= *thatData;
+				comparison = *thisData;
+				comparison -= *thatData;
 				break;
 			}
 			++thisData;
 			++thatData;
-			--n;
+			--remaining;
 		}
-		if ( c == 0 )
-			c = thisLen - thatLen;
-		if ( c >= 0 )
+		if ( comparison == 0 )
+			comparison = thisLen - thatLen;
+		if ( comparison >= 0 )
 		{
-			y = x;
-			x = x->left;
+			lowerBound = node;
+			node = node->left;
 		}
 		else
-			x = x->right;
+			node = node->right;
 	}
-	return y;
+	return lowerBound;
 }
