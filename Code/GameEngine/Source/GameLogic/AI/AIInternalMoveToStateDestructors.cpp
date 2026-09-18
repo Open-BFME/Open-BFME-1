@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x00172430: AIInternalMoveToState removes its live movement-loop
-// audio handle before the State base destructor runs.
+// audio handle before the State base destructor runs. Its emitted scalar-
+// deleting wrapper at 0x0014F350 calls this same complete destructor via ILT.
+// Keep both bodies here rather than an empty duplicate teardown in a helper TU.
 
 typedef unsigned int AudioHandle;
 
