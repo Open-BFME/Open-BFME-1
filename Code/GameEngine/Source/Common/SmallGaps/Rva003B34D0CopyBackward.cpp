@@ -1,14 +1,14 @@
 // ??$__copy_backward@PAUGen_t_003b3cf0_p128pod@@PAU1@H@_STL@@YAPAUGen_t_003b3cf0_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z
-// partial score=0.8 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
 class UnicodeString
 {
 public:
-	void set( const UnicodeString &that );
+	void set(const UnicodeString &that);
+
 private:
-	void *m_buffer;
+	void *m_data;
 };
 
 struct Gen_t_003b3cf0_p128pod
@@ -19,11 +19,11 @@ struct Gen_t_003b3cf0_p128pod
 	UnicodeString m_c;
 	char m_flag;
 
-	Gen_t_003b3cf0_p128pod &operator=( const Gen_t_003b3cf0_p128pod &that )
+	Gen_t_003b3cf0_p128pod &operator=(const Gen_t_003b3cf0_p128pod &that)
 	{
-		m_a.set( that.m_a );
-		m_b.set( that.m_b );
-		m_c.set( that.m_c );
+		m_a.set(that.m_a);
+		m_b.set(that.m_b);
+		m_c.set(that.m_c);
 		m_flag = that.m_flag;
 		return *this;
 	}
@@ -36,14 +36,12 @@ struct random_access_iterator_tag
 };
 
 template <class InputIterator, class OutputIterator, class Distance>
-OutputIterator __copy_backward( InputIterator first, InputIterator last,
-	OutputIterator result, const random_access_iterator_tag &, Distance * )
+OutputIterator __copy_backward(InputIterator first, InputIterator last,
+	OutputIterator result, const random_access_iterator_tag &, Distance *)
 {
-	for( Distance count = last - first; count > 0; --count )
+	for (Distance count = last - first; count > 0; --count, ++first, ++result)
 	{
-		--last;
-		--result;
-		*result = *last;
+		*result = *first;
 	}
 	return result;
 }
@@ -51,5 +49,5 @@ OutputIterator __copy_backward( InputIterator first, InputIterator last,
 template Gen_t_003b3cf0_p128pod *__copy_backward<
 	Gen_t_003b3cf0_p128pod *, Gen_t_003b3cf0_p128pod *, int>(
 	Gen_t_003b3cf0_p128pod *, Gen_t_003b3cf0_p128pod *,
-	Gen_t_003b3cf0_p128pod *, const random_access_iterator_tag &, int * );
+	Gen_t_003b3cf0_p128pod *, const random_access_iterator_tag &, int *);
 }
