@@ -387,8 +387,6 @@ double iterations;              /* # of iterations */
 char *errorcontext;             /* Error context string pointer */
 int systemerror;                /* For holding error code */
 
-printf("\n\nnbench1.c: DoStringSort...\n");
-
 /*
 ** Link to global structure
 */
@@ -397,7 +395,7 @@ strsortstruct=&global_strsortstruct;
 /*
 ** Set the error context
 */
-errorcontext="CPU:String Sort";
+errorcontext=(char *)g_Rva0107301CEmptyString;
 
 /*
 ** See if we have to perform self-adjustment code
@@ -450,8 +448,6 @@ else
 		ErrorExit();
 	}
 }
-
-printf("\n\nnbench1.c: DoStringSort AllocateMemory done \n");
 
 /*
 ** All's well if we get here.  Repeatedly perform sorts until the
