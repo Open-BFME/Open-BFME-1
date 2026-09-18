@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep /Ireference/shims/campaignmanagerascii /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
 
-// Two bool arguments stored at 0x24 and 0x27, with 0x25 and 0x26 zeroed first.
+// AIStateMachine.h names the two bool arguments and four fields. Retail ctor
+// 0x001711B7/+0x24 and 0x001711BA/+0x27 store attackingObject/forceAttacking.
+// Independent onEnter 0x00183E40 clears setLocomotor at +0x26 (0x00183E96),
+// sets canTurnInPlace at +0x25 (0x00183EBA), and tests +0x24 before passing
+// +0x27 to setTurretTargetObject. The constructor zeroes both transient flags.
 #include "Common/AsciiString.h"
 
 class StateMachine;
@@ -21,21 +25,21 @@ private:
 class AIAttackAimAtTargetState : public State
 {
 public:
-	AIAttackAimAtTargetState(StateMachine *machine, bool a, bool b);
+	AIAttackAimAtTargetState(StateMachine *machine, bool attackingObject, bool forceAttacking);
 
 private:
-	bool m_24;
-	bool m_25;
-	bool m_26;
-	bool m_27;
+	bool m_isAttackingObject;
+	bool m_canTurnInPlace;
+	bool m_setLocomotor;
+	bool m_isForceAttacking;
 };
 
 // ??0AIAttackAimAtTargetState@@QAE@PAVStateMachine@@_N1@Z
-AIAttackAimAtTargetState::AIAttackAimAtTargetState(StateMachine *machine, bool a, bool b) :
+AIAttackAimAtTargetState::AIAttackAimAtTargetState(StateMachine *machine, bool attackingObject, bool forceAttacking) :
 	State(machine, "AIAttackAimAtTargetState")
 {
-	m_25 = false;
-	m_26 = false;
-	m_24 = a;
-	m_27 = b;
+	m_canTurnInPlace = false;
+	m_setLocomotor = false;
+	m_isAttackingObject = attackingObject;
+	m_isForceAttacking = forceAttacking;
 }
