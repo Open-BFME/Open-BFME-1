@@ -61,10 +61,10 @@ void Rva0024C420Owner::notifyNested(void *arg)
 	for (_STL::list<Object *>::iterator it = objects.begin();
 		 it != objects.end(); ++it)
 	{
-		Rva0024C420Result *result;
 		Rva0024C420Contain *contain = (*it)->m_contain;
 		if (contain == 0)
 			continue;
+		Rva0024C420Result *result;
 		result = contain->getResult();
 		if (result != 0)
 			result->notify(*(void **)((char *)this - 0x18), arg);
