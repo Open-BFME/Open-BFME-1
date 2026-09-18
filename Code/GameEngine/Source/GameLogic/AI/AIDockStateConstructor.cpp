@@ -29,14 +29,16 @@ public:
 	AIDockState(StateMachine *machine);
 
 private:
-	int m_24;
+	// name_oracle: AIDockState+0x24 m_dockMachine, layout_witness 1.00;
+	// independently used by matched onEnter/onExit in AIDockState.cpp.
+	StateMachine *m_dockMachine;
 	bool m_28;
 };
 
 // ??0AIDockState@@QAE@PAVStateMachine@@@Z
 AIDockState::AIDockState(StateMachine *machine) :
 	State(machine, "AIDockState"),
-	m_24(0),
+	m_dockMachine(0),
 	m_28(false)
 {
 }
