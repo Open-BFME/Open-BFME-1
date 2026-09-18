@@ -47,9 +47,11 @@ QUEUE = "reverse/placement_queue.tsv"
 # some classes really do live in Common/.
 DUMPING_GROUND = "Code/GameEngine/Source/Common"
 
-# ?method@Class@@... and ??0Class@@ / ??1Class@@ for constructors and destructors.
+# ?method@Class@@..., ??0Class@@ / ??1Class@@ constructors and destructors, and
+# ??_GClass@@ / ??_EClass@@ deleting-destructor wrappers.
 METHOD = re.compile(r"^\?([A-Za-z_]\w*)@([A-Za-z_]\w*)@@")
 STRUCTOR = re.compile(r"^\?\?[01]([A-Za-z_]\w*)@@")
+DELETING_DESTRUCTOR = re.compile(r"^\?\?_[EG]([A-Za-z_]\w*)@@")
 # A move rewrites no text, so only an include that resolves against the file's OWN
 # directory can break. That is not just `../` and `./`: a bare quoted name does it
 # too, and MSVC searches the including file's directory first.
@@ -89,6 +91,26 @@ def survey(root):
     return single, homes
 
 
+def deleting_destructor_homes(root):
+    """Class directories corroborated by exact deleting-destructor wrappers.
+
+    These directories can expose a split family, but must not nominate a home on
+    their own: doing that turned every generated wrapper into fresh queue work.
+    """
+    out = collections.defaultdict(set)
+    with open(root / "reverse/functions.csv", newline="") as fh:
+        for row in csv.DictReader(fh):
+            if row.get("status") != "matched":
+                continue
+            source = row.get("source") or ""
+            if not source.startswith(AREAS) or source.startswith("Code/gen"):
+                continue
+            hit = DELETING_DESTRUCTOR.match(row.get("name") or "")
+            if hit:
+                out[hit.group(1)].add(os.path.dirname(source))
+    return out
+
+
 def zh_directories(root):
     """class name -> the directory ZH keeps that class's source in."""
     out = {}
@@ -124,7 +146,7 @@ def zh_header_directories(root):
     return out
 
 
-def destination(root, source, cls, homes, zh, zh_hdr):
+def destination(root, source, cls, homes, zh, zh_hdr, corroborating_homes=None):
     """Where that file belongs, or None when the evidence does not say."""
     here = os.path.dirname(source)
 
@@ -188,6 +210,17 @@ def destination(root, source, cls, homes, zh, zh_hdr):
         return None
     # Otherwise: where this class already keeps most of its bodies. Two or more,
     # because one sibling elsewhere is as likely to be the misplaced file.
+    # A second alternative directory makes the placement ambiguous even when one
+    # pile is larger. Ranking that plurality let a stale identity-corrected TU
+    # pull a destructor away from its independently recovered deleting wrapper.
+    known_homes = set(homes[cls])
+    if corroborating_homes:
+        known_homes.update(corroborating_homes.get(cls, ()))
+    alternatives = [d for d in known_homes
+                    if d != here and d != DUMPING_GROUND
+                    and (root / d).is_dir()]
+    if len(alternatives) != 1:
+        return None
     ranked = [(d, n) for d, n in homes[cls].most_common()
               if n >= 2 and d != DUMPING_GROUND]
     for d, _ in ranked:
@@ -237,11 +270,14 @@ def included_by_siblings(root):
 
 def build(root):
     single, homes = survey(root)
+    corroborating_homes = deleting_destructor_homes(root)
     pinned = included_by_siblings(root)
     zh, zh_hdr = zh_directories(root), zh_header_directories(root)
     queue, skipped = [], collections.Counter()
     for source, cls in sorted(single.items()):
-        dest = destination(root, source, cls, homes, zh, zh_hdr)
+        dest = destination(
+            root, source, cls, homes, zh, zh_hdr, corroborating_homes
+        )
         if not dest:
             skipped["no destination the evidence supports"] += 1
             continue

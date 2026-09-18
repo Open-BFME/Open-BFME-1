@@ -88,8 +88,12 @@ and the evidence names a different home for it. Three sources, strongest first:
    that directory exists in ZH*. Worth files the first rule cannot see: ZH
    declares 1,264 classes across its headers and most never got a file of their
    own name.
-3. **The class already keeps two or more bodies somewhere else** — that directory.
-   One sibling elsewhere is as likely to be the misplaced file.
+3. **The class already keeps two or more bodies in one other directory** — that
+   directory. One sibling elsewhere is as likely to be the misplaced file, and
+   two alternative directories are an ambiguity rather than a plurality vote.
+   MSVC scalar/vector deleting destructors corroborate a conflicting home but do
+   not nominate one: ignoring them hid an exact destructor family split across
+   two directories and let a stale identity-corrected TU nominate a third.
 
 And three destinations are always refused: the flat `Common/` root (a class whose
 bodies mostly sit in the dumping ground is not evidence that the dumping ground is

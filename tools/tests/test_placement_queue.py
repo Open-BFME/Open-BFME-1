@@ -18,6 +18,11 @@ DOMINATE = ("Code/GameEngine/Source/GameLogic/Object/SpecialPower/"
             "DominateEnemySpecialPower_slot15.cpp")
 SPECIAL_POWER = "Code/GameEngine/Source/GameLogic/Object/SpecialPower"
 THING = "Code/GameEngine/Source/Common/Thing"
+REGION_DTOR = "Code/GameEngine/Source/GameLogic/AI/RegionOwnerDestructor.cpp"
+REGION_DELETING = (
+    "Code/GameEngine/Source/GameLogic/LivingWorld/RegionOwnerDeleting.cpp"
+)
+REGION_BEHAVIOR = "Code/GameEngine/Source/GameLogic/Object/Behavior"
 
 
 def _write(root, relative, text="// fixture\n"):
@@ -114,6 +119,25 @@ def _module_family_world(tmp_path):
     return root
 
 
+def _split_destructor_world(tmp_path):
+    root = tmp_path / "repo"
+    sources = [
+        ("??1RegionOwner@@UAE@XZ", REGION_DTOR),
+        ("??_GRegionOwner@@UAEPAXI@Z", REGION_DELETING),
+        ("?first@RegionOwner@@QAEXXZ", f"{REGION_BEHAVIOR}/First.cpp"),
+        ("?second@RegionOwner@@QAEXXZ", f"{REGION_BEHAVIOR}/Second.cpp"),
+        ("?third@RegionOwner@@QAEXXZ", f"{REGION_BEHAVIOR}/Third.cpp"),
+    ]
+    for _name, source in sources:
+        _write(root, source)
+
+    rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
+    for index, (name, source) in enumerate(sources):
+        rows.append(f"{name},,0x{0x200000 + index * 0x10:08X},10,{source},matched,\n")
+    _write(root, "reverse/functions.csv", "".join(rows))
+    return root
+
+
 def test_exact_zh_source_path_outranks_an_inline_method_owner(tmp_path):
     root = _world(tmp_path)
     single, homes = queue.survey(root)
@@ -179,3 +203,21 @@ def test_sibling_counts_do_not_split_a_module_from_its_module_data(tmp_path):
     homes["DominateEnemySpecialPowerModuleData"].clear()
     assert queue.destination(
         root, DOMINATE, "DominateEnemySpecialPower", homes, {}, {}) == THING
+
+
+def test_weak_sibling_inference_does_not_rank_split_class_homes(tmp_path):
+    root = _split_destructor_world(tmp_path)
+    single, homes = queue.survey(root)
+    deleting_homes = queue.deleting_destructor_homes(root)
+
+    assert REGION_DELETING not in single
+    assert homes["RegionOwner"][REGION_BEHAVIOR] == 3
+    assert deleting_homes["RegionOwner"] == {
+        str(Path(REGION_DELETING).parent)
+    }
+    assert queue.destination(
+        root, REGION_DTOR, "RegionOwner", homes, {}, {}, deleting_homes
+    ) is None
+
+    queued, _skipped = queue.build(root)
+    assert all(source != REGION_DTOR for source, _target, _cls in queued)
