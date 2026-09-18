@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Clean C++ body for the BFME ScriptAction destructor at 0x00354330.
 // The ScriptAction constructors and duplicate body use vtable 0x010E84E0.
+// This virtual destructor also emits the scalar-deleting wrapper at 0x00356010;
+// its retail complete-destructor call routes through ILT 0x0003492D.
 
 void __cdecl operator delete(void *);
 
