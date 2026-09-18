@@ -1,3 +1,6 @@
+// cl: -GX
+// stlport
+
 // A hundred and eighty-eight tiny __thiscall members that hand control to a
 // __thiscall member of a sub-object held at a fixed offset inside the class:
 //
@@ -29,6 +32,44 @@
 //
 // IDENTITY IS NOT RECOVERED.  Every name is derived from an address; the callee
 // pins are address-derived and additive.
+
+#include <vector>
+
+class BFMERetailAsciiString
+{
+public:
+	~BFMERetailAsciiString() { releaseBuffer(); }
+
+private:
+	void releaseBuffer();
+	char *m_data;
+};
+
+template <class T> class StringBase
+{
+public:
+	~StringBase() { releaseBuffer(); }
+
+private:
+	void releaseBuffer();
+	T *m_data;
+};
+
+struct Gen000DD310Fields
+{
+	char m_padding[0x14];
+	StringBase<unsigned short> m_wide;
+	BFMERetailAsciiString m_tail;
+};
+
+struct Gen000DD310Entry
+{
+	BFMERetailAsciiString m_ascii;
+	char m_padding[0x40];
+	Gen000DD310Fields m_fields;
+};
+
+template class _STL::vector<Gen000DD310Entry>;
 
 #define BFME_OFFSET_TAIL_CALLEE( ADDR )                                   \
 	class Gen##ADDR                                                       \
