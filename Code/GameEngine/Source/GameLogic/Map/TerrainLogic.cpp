@@ -2386,69 +2386,94 @@ Bool TerrainLogic::isUnderwater( Real x, Real y, Real *waterZ, Real *terrainZ )
 
 }
 
+// BFME moved PolygonTrigger's water-query fields and the TerrainVisual water-grid
+// slot, so the Zero Hour headers above cannot express the retail accesses.
+class BFMETerrainWaterPolygonView
+{
+public:
+	void *m_vtable;
+	BFMETerrainWaterPolygonView *m_next;
+	UnsignedByte m_unreconstructed_08[8];
+	ICoord3D *m_points;
+	Int m_numPoints;
+	UnsignedByte m_unreconstructed_18[0x1a];
+	Bool m_isWaterArea;
+
+	BFMETerrainWaterPolygonView *getNext() { return m_next; }
+	Bool isWaterArea() const { return m_isWaterArea; }
+	const ICoord3D *getPoint(Int index) const
+	{
+		if (index < 0)
+			index = 0;
+		if (index >= m_numPoints)
+			index = m_numPoints - 1;
+		return m_points + index;
+	}
+	Bool pointInTrigger(ICoord3D &point) const
+	{
+		return ((const PolygonTrigger *)this)->pointInTrigger(point);
+	}
+	const WaterHandle *getWaterHandle() const
+	{
+		return ((const PolygonTrigger *)this)->getWaterHandle();
+	}
+};
+
+struct BFMETerrainWaterPolygonTableView
+{
+	BFMETerrainWaterPolygonView *m_head;
+};
+
+class BFMETerrainWaterVisualView
+{
+public:
+	virtual void v00() = 0; virtual void v01() = 0;
+	virtual void v02() = 0; virtual void v03() = 0;
+	virtual void v04() = 0; virtual void v05() = 0;
+	virtual void v06() = 0; virtual void v07() = 0;
+	virtual void v08() = 0; virtual void v09() = 0;
+	virtual void v10() = 0; virtual void v11() = 0;
+	virtual void v12() = 0; virtual void v13() = 0;
+	virtual void v14() = 0; virtual void v15() = 0;
+	virtual void v16() = 0; virtual void v17() = 0;
+	virtual void v18() = 0; virtual void v19() = 0;
+	virtual Bool getWaterGridHeight(Real x, Real y, Real *height) = 0;
+};
+
+extern "C" BFMETerrainWaterPolygonTableView *g_bfmePolygonTriggerTable;
+extern "C" BFMETerrainWaterVisualView *g_bfmeTerrainVisual;
+extern "C" WaterHandle g_bfmeGridWaterHandle;
+
 // ------------------------------------------------------------------------------------------------
 /** Get the water table with the highest water Z value at the location */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogic_getWaterHandle.cpp
-// ?getWaterHandle@TerrainLogic@@UAEPBVWaterHandle@@MM@Z present-unmatched
+// ?getWaterHandle@TerrainLogic@@UAEPBVWaterHandle@@MM@Z
 const WaterHandle* TerrainLogic::getWaterHandle( Real x, Real y )
 {
 	const WaterHandle *waterHandle = NULL;
 	Real waterZ = 0.0f;
-	ICoord3D iLoc;
+	ICoord3D location;
 
-	iLoc.x = REAL_TO_INT_FLOOR( x + 0.5f );
-	iLoc.y = REAL_TO_INT_FLOOR( y + 0.5f );
-	iLoc.z = 0;
+	location.x = (Int)x;
+	location.y = (Int)y;
+	location.z = 0;
 
-	// Look for water areas in the polygon triggers
-	for( PolygonTrigger *pTrig = PolygonTrigger::getFirstPolygonTrigger(); 
-			 pTrig; 
-			 pTrig = pTrig->getNext() ) 
-	{
+	for (BFMETerrainWaterPolygonView *trigger = g_bfmePolygonTriggerTable->m_head;
+		trigger; trigger = trigger->getNext()) {
+		if (trigger->isWaterArea() && trigger->pointInTrigger(location) &&
+			trigger->getPoint(0)->z >= waterZ) {
+			waterZ = trigger->getPoint(0)->z;
+			waterHandle = trigger->getWaterHandle();
+		}
+	}
 
-		if( !pTrig->isWaterArea() ) 
-			continue;
-
-		// See if point is in a water area
-		if( pTrig->pointInTrigger( iLoc ) ) 
-		{
-
-			if( pTrig->getPoint( 0 )->z >= waterZ )
-			{
-
-				waterZ = pTrig->getPoint( 0 )->z;
-				waterHandle = pTrig->getWaterHandle();
-
-			}  // end if
-
-		}  // end if
-
-	}  // end for
-
-	/**@todo: Remove this after we have all water types included
-		in water triggers.  For now do special check for water grid mesh. */
 	Real meshZ;
-	if( TheTerrainVisual->getWaterGridHeight( x, y, &meshZ ) )
-	{	
-
-		//
-		// point falls on water grid, return the special handle for the grid water, since we
-		// only have one of them and don't yet support multiple gridded water sections
-		//
-		if( meshZ >= waterZ )
-		{
-
-			waterZ = meshZ;
-			waterHandle = &m_gridWaterHandle;
-
-		}  // end if
-
-	}  // end if
+	if (g_bfmeTerrainVisual->getWaterGridHeight(x, y, &meshZ) && meshZ >= waterZ) {
+		waterHandle = &g_bfmeGridWaterHandle;
+	}
 
 	return waterHandle;
-
-}  // end getWaterHandle
+}
 
 // ------------------------------------------------------------------------------------------------
 /** Get water handle by name assigned from the editor */
