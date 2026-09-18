@@ -1,4 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
+// Complete destructor 0x0036BBA0 also emits scalar wrapper 0x0036CF10.
+// Constructor 0x0036CEA0 and the wrapper's ILT 0x0003FB89 establish
+// this shared class identity. The inherited retail ABI slice is unchanged.
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameAudio.h
 class AudioManager
