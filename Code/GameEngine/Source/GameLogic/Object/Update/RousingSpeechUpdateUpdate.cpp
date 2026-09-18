@@ -1,12 +1,10 @@
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // RousingSpeechUpdate::update, retail 0x00265030, 223 bytes.
-// UpdateInterface::update is reached through the secondary vtable at
-// primary_this+0x10 (the FloatUpdate::update convention); j_000087a6 clears
-// the speech-object list on the primary object each call. On first entry it
-// stamps a wake deadline from TheBfmeGameLogic->m_frame and the module's
-// wake delay, then advances an animation frame counter each tick until the
-// deadline passes, at which point it clears Object model-condition bit 0x10
-// via notifyModelConditionChanged and sleeps forever.
+// The update interface is reached through the secondary vtable at primary+0x10.
+// The first entry sets a deadline using SpeechDuration and the current frame.
+// CreateWave enables progression by WaveWidth, capped at BonusRadius. The
+// original names of the behavior floats at +0xf4/+0xf8 remain unproven.
+// Completion clears Object model-condition bit 0x10 and sleeps forever.
 
 enum UpdateSleepTime
 {
@@ -36,19 +34,21 @@ public:
 
 extern GameLogic *TheBfmeGameLogic;
 
+// Named factory 0x0011C6C0 reaches callback 0x00264AC0 and table
+// RVA 0x00CB6BB8; the names below are witnessed at their exact offsets.
 class RousingSpeechUpdateModuleData
 {
 private:
 	unsigned char m_pad00[0x254];
 
 public:
-	float m_animationFrameLimit;
-	unsigned int m_wakeDelay;
-	unsigned int m_returnSleepTime;
+	float m_bonusRadius;
+	unsigned int m_speechDuration;
+	unsigned int m_updateInterval;
 	unsigned char m_pad260[8];
-	unsigned char m_hasAnimationFrames;
+	unsigned char m_createWave;
 	unsigned char m_pad269[3];
-	float m_animationFrameIncrement;
+	float m_waveWidth;
 };
 
 class RousingSpeechUpdatePrimary
@@ -78,8 +78,8 @@ public:
 	unsigned int m_wakeDeadline;
 	unsigned char m_hasWoken;
 	unsigned char m_padf1[3];
-	float m_previousAnimationFrame;
-	float m_animationFrames;
+	float m_0F4;
+	float m_0F8;
 };
 
 class RousingSpeechUpdate
@@ -108,28 +108,28 @@ UpdateSleepTime RousingSpeechUpdate::update()
 		RousingSpeechUpdateModuleData *moduleData =
 			*reinterpret_cast<RousingSpeechUpdateModuleData **>(secondary - 0x0c);
 		*reinterpret_cast<unsigned int *>(secondary + 0xdc) =
-			moduleData->m_wakeDelay + TheBfmeGameLogic->m_frame;
+			moduleData->m_speechDuration + TheBfmeGameLogic->m_frame;
 		secondary[0xe0] = 1;
 	}
 
 	RousingSpeechUpdateModuleData *data =
 		*reinterpret_cast<RousingSpeechUpdateModuleData **>(secondary - 0x0c);
 	if (TheBfmeGameLogic->m_frame < *reinterpret_cast<unsigned int *>(secondary + 0xdc) &&
-		!(*reinterpret_cast<float *>(secondary + 0xe4) >= data->m_animationFrameLimit))
+		!(*reinterpret_cast<float *>(secondary + 0xe4) >= data->m_bonusRadius))
 	{
-		if (data->m_hasAnimationFrames != 0)
+		if (data->m_createWave != 0)
 		{
 			*reinterpret_cast<float *>(secondary + 0xe4) =
 				*reinterpret_cast<float *>(secondary + 0xe8);
 			*reinterpret_cast<float *>(secondary + 0xe8) +=
-				data->m_animationFrameIncrement;
+				data->m_waveWidth;
 			if (*reinterpret_cast<float *>(secondary + 0xe8) >
-				data->m_animationFrameLimit)
+				data->m_bonusRadius)
 				*reinterpret_cast<float *>(secondary + 0xe8) =
-					data->m_animationFrameLimit;
+					data->m_bonusRadius;
 		}
 		primary->slot15();
-		return (UpdateSleepTime)(*reinterpret_cast<RousingSpeechUpdateModuleData **>(secondary - 0x0c))->m_returnSleepTime;
+		return (UpdateSleepTime)(*reinterpret_cast<RousingSpeechUpdateModuleData **>(secondary - 0x0c))->m_updateInterval;
 	}
 
 	Object *object = *reinterpret_cast<Object **>(secondary - 8);

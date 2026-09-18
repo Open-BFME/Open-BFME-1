@@ -31,31 +31,34 @@ public:
 	bool bfmeAskCOF();
 };
 
+// Named factory 0x0011C6C0 reaches callback 0x00264AC0 and table
+// RVA 0x00CB6BB8: BonusRadius/+254, LeaderFX/+260, CreateWave/+268,
+// and WaveWidth/+26c. Behavior floats retain offset-qualified names.
 class RousingSpeechUpdateModuleData
 {
 private:
 	unsigned char m_pad00[0x254];
 
 public:
-	float m_animationFrames;
+	float m_bonusRadius;
 
 private:
 	unsigned char m_pad258[8];
 
 public:
-	RousingFXList *m_fxList;
+	RousingFXList *m_leaderFX;
 
 private:
 	unsigned char m_pad264[4];
 
 public:
-	unsigned char m_hasAnimationFrames;
+	unsigned char m_createWave;
 
 private:
 	unsigned char m_pad269[3];
 
 public:
-	float m_animationFrameLimit;
+	float m_waveWidth;
 };
 
 class RousingSpeechUpdateBase
@@ -67,8 +70,8 @@ protected:
 	RousingObject *m_object;
 	unsigned char m_pad0c[0xe8];
 
-	unsigned int m_unused;
-	float m_animationFrames;
+	unsigned int m_0F4;
+	float m_0F8;
 };
 
 class RousingSpeechUpdate : public RousingSpeechUpdateBase
@@ -97,7 +100,7 @@ void RousingSpeechUpdate::onObjectCreated()
 	}
 
 	RousingSpeechUpdateModuleData *data = m_moduleData;
-	RousingFXList *fxList = data->m_fxList;
+	RousingFXList *fxList = data->m_leaderFX;
 	if (fxList != 0)
 	{
 		RousingObject *fxObject = m_object;
@@ -114,15 +117,15 @@ void RousingSpeechUpdate::onObjectCreated()
 		}
 	}
 
-	m_unused = 0;
-	if (data->m_hasAnimationFrames)
+	m_0F4 = 0;
+	if (data->m_createWave)
 	{
-		m_animationFrames = data->m_animationFrameLimit;
-		if (m_animationFrames > data->m_animationFrames)
-			m_animationFrames = data->m_animationFrames;
+		m_0F8 = data->m_waveWidth;
+		if (m_0F8 > data->m_bonusRadius)
+			m_0F8 = data->m_bonusRadius;
 	}
 	else
 	{
-		m_animationFrames = data->m_animationFrames;
+		m_0F8 = data->m_bonusRadius;
 	}
 }
