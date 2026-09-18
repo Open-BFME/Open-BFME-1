@@ -9,8 +9,7 @@
 // The reference ScriptEngine.h names the same four fields.
 //
 // Three AsciiStrings, destroyed at +0x0C, +0x04 and +0x00, which is reverse
-// declaration order. The word at +0x08 between the second and the third is left
-// alone -- whatever it is, it has no destructor.
+// declaration order. The radius at +0x08 needs no destruction.
 //
 // No vptr store at the top and no base call, so the class has neither. The
 // unwind slot counts down 1, 0, -1, and its middle store is a byte because the
