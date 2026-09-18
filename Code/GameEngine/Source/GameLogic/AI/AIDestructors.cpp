@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// AI::~AI at retail RVA 0x0014C3B0.
+// AI::~AI at retail RVA 0x0014C3B0 and its scalar-deleting wrapper 0x0014C600.
+// The wrapper calls this complete destructor through ILT 0x00002527; both
+// are emitted from this one definition of the AI subsystem.
 // The constructor at 0x0014C170 and vtable 0x010959A8 identify the owner.
 
 class SubsystemInterface
