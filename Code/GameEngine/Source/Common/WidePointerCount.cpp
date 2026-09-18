@@ -1,4 +1,4 @@
-// Sixteen 29-byte __thiscall const members that return a POINTER DIFFERENCE:
+// Seventeen 29-byte __thiscall const members that return a POINTER DIFFERENCE:
 //
 //     mov edx,[ecx] / push esi / mov esi,[ecx+DISP] / sub esi,edx
 //     mov eax,MAGIC / imul esi / add edx,esi / sar edx,SHIFT
@@ -40,10 +40,12 @@ WIDE_ELEMENT( 180 )
 WIDE_ELEMENT( 184 )
 WIDE_ELEMENT( 188 )
 WIDE_ELEMENT( 496 )
+WIDE_ELEMENT( 296 )
 
 WIDE_COUNT_2( 000B93F0, 112 )
 WIDE_COUNT_2( 00133150, 92 )
 WIDE_COUNT_3( 00133300, 92 )
+WIDE_COUNT_2( 0013A320, 296 )
 WIDE_COUNT_2( 0013A360, 188 )
 WIDE_COUNT_2( 00191970, 140 )
 WIDE_COUNT_2( 001C01C0, 92 )
