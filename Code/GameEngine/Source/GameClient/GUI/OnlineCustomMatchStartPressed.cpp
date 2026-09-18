@@ -119,7 +119,7 @@ public:
 };
 
 // upstream layout: Code/GameEngine/Source/GameClient/GUI/OnlineCustomMatchUnregister.cpp
-class Gen_00525EE0
+class MpGameSetup
 {
 public:
 	virtual void gen525EE0Slot0();
@@ -159,7 +159,7 @@ public:
 
 	void bfmeStartPressed( Bool everyoneReady, void *window );
 
-	Gen_00525EE0 m_setup;
+	MpGameSetup m_setup;
 	Gen000AC870Owner m_preferences;
 	Int m_field14C;
 };

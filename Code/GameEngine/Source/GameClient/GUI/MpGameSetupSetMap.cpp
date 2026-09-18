@@ -49,7 +49,7 @@ public:
 	virtual bool bfmeContains(GameInfo *game) = 0;
 };
 
-class Gen_00525EE0
+class MpGameSetup
 {
 public:
 	void bfmeRefresh(void);
@@ -69,8 +69,8 @@ private:
 
 // Update the active game's map only when its name changed and mark every
 // dependent presentation field dirty.
-// ?bfmeSetMap@Gen_00525EE0@@QAEXABVAsciiString@@@Z
-void Gen_00525EE0::bfmeSetMap(const AsciiString &mapName)
+// ?bfmeSetMap@MpGameSetup@@QAEXABVAsciiString@@@Z
+void MpGameSetup::bfmeSetMap(const AsciiString &mapName)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;

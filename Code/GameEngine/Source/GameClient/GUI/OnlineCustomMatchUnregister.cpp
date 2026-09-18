@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // BfmeAptScreenOnlineCustomMatch gadget teardown, retail 0x00538E40, 150 bytes.
-// Shuts down the +0x40 Gen_00525EE0 member, releases a GameSpyInfo object
+// Shuts down the +0x40 MpGameSetup member, releases a GameSpyInfo object
 // stored at +0x198, and unregisters AptOnlineCustomMatch::InitGadgets.
 
 template <typename T> class StringBase
@@ -38,7 +38,7 @@ public:
 	virtual ~BfmeAptScreenSecondary() {}
 };
 
-class Gen_00525EE0
+class MpGameSetup
 {
 public:
 	void bfmeShutdown();
@@ -80,7 +80,7 @@ public:
 	void unregisterInitGadgets();
 
 private:
-	Gen_00525EE0 m_setup;
+	MpGameSetup m_setup;
 	unsigned char m_prefsHead[ 0x24 ];
 	void *m_stagingObject;
 	unsigned char m_prefsMid[ 0x28 ];

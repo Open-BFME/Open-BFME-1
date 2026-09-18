@@ -22,7 +22,7 @@ public:
 	AsciiString getMap(void) const;
 };
 
-class Gen_00525EE0
+class MpGameSetup
 {
 public:
 	void bfmeSetSecondGame(GameInfo *game);
@@ -34,8 +34,8 @@ private:
 };
 
 // Cache the secondary game and pass its map name to the embedded preview.
-// ?bfmeSetSecondGame@Gen_00525EE0@@QAEXPAVGameInfo@@@Z
-void Gen_00525EE0::bfmeSetSecondGame(GameInfo *game)
+// ?bfmeSetSecondGame@MpGameSetup@@QAEXPAVGameInfo@@@Z
+void MpGameSetup::bfmeSetSecondGame(GameInfo *game)
 {
 	m_second = game;
 	if (game)

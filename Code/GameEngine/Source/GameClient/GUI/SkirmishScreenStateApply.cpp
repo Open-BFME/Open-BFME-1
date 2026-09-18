@@ -22,11 +22,6 @@ class MpGameSetup
 public:
 	void populateMapType();
 	void populateGameType();
-};
-
-class Gen_00525EE0
-{
-public:
 	void bfmeSetMap(const AsciiString &mapName);
 };
 
@@ -162,7 +157,7 @@ bool SkirmishScreenState::apply(void *gameInfo, int force)
 		bfmeFlush11();
 
 	m_member28.m_flag39 = true;
-	((Gen_00525EE0 *)this)->bfmeSetMap(m_game->getMap());
+	((MpGameSetup *)this)->bfmeSetMap(m_game->getMap());
 	EnableSlotListUpdates(true);
 
 	m_flag16 = false;

@@ -179,7 +179,7 @@ public:
 	virtual void bfmeRestoreBackground(void) = 0;
 };
 
-class Gen_00525EE0
+class MpGameSetup
 {
 public:
 	void bfmeRefresh(void);
@@ -215,10 +215,14 @@ private:
 	bool m_ready[8];
 };
 
-// The enclosing type has no exposed retail spelling; the real GameInfo,
-// MapCache, and MapMetaData identities are established independently.
-// ?bfmeRefresh@Gen_00525EE0@@QAEXXZ
-void Gen_00525EE0::bfmeRefresh(void)
+// MpGameSetup owner proof: vtable 0x0110B030 (installed by 0x0057DA50)
+// routes slots 12/13 to 0x0057D110/0x00579390. Both pass their receiver+0x25C
+// to named MpGameSetup::GadgetInit (0x00527050) and bfmeShutdown (0x005249B0).
+// Slots 2/5 and their unchanged-receiver call chains reach the other methods
+// here. GadgetInit's literal registration names the owner, not field guesses.
+// Layout below is an observed member view, not a claim of total object size.
+// ?bfmeRefresh@MpGameSetup@@QAEXXZ
+void MpGameSetup::bfmeRefresh(void)
 {
 	m_isMultiplayer = false;
 
@@ -237,8 +241,8 @@ void Gen_00525EE0::bfmeRefresh(void)
 }
 
 // Tear down the preview state and close the setup APT screen.
-// ?bfmeShutdown@Gen_00525EE0@@QAEXXZ
-void Gen_00525EE0::bfmeShutdown(void)
+// ?bfmeShutdown@MpGameSetup@@QAEXXZ
+void MpGameSetup::bfmeShutdown(void)
 {
 	if (m_backgroundVisible)
 	{
@@ -254,8 +258,8 @@ void Gen_00525EE0::bfmeShutdown(void)
 }
 
 // Restore the owner background state before dispatching the active window.
-// ?bfmeDispatchWindow@Gen_00525EE0@@QAEXPAVGameWindow@@@Z
-void Gen_00525EE0::bfmeDispatchWindow(GameWindow *window)
+// ?bfmeDispatchWindow@MpGameSetup@@QAEXPAVGameWindow@@@Z
+void MpGameSetup::bfmeDispatchWindow(GameWindow *window)
 {
 	if (m_backgroundVisible)
 	{
@@ -269,8 +273,8 @@ void Gen_00525EE0::bfmeDispatchWindow(GameWindow *window)
 
 // Prefer the local slot, except that a hosting observer is represented by the
 // first AI slot when one exists.
-// ?bfmeFindRepresentativeSlot@Gen_00525EE0@@QAEHXZ
-int Gen_00525EE0::bfmeFindRepresentativeSlot(void)
+// ?bfmeFindRepresentativeSlot@MpGameSetup@@QAEHXZ
+int MpGameSetup::bfmeFindRepresentativeSlot(void)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -296,8 +300,8 @@ int Gen_00525EE0::bfmeFindRepresentativeSlot(void)
 }
 
 // Find the next unassigned local/AI slot whose start position can be changed.
-// ?bfmeFindAvailableStartPosition@Gen_00525EE0@@QAEHH@Z
-int Gen_00525EE0::bfmeFindAvailableStartPosition(int firstIndex)
+// ?bfmeFindAvailableStartPosition@MpGameSetup@@QAEHH@Z
+int MpGameSetup::bfmeFindAvailableStartPosition(int firstIndex)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -326,8 +330,8 @@ int Gen_00525EE0::bfmeFindAvailableStartPosition(int firstIndex)
 }
 
 // Apply a unique start position and remember changes that need propagation.
-// ?bfmeApplyStartPosition@Gen_00525EE0@@QAE_NHH@Z
-bool Gen_00525EE0::bfmeApplyStartPosition(int index, int startPosition)
+// ?bfmeApplyStartPosition@MpGameSetup@@QAE_NHH@Z
+bool MpGameSetup::bfmeApplyStartPosition(int index, int startPosition)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -368,8 +372,8 @@ bool Gen_00525EE0::bfmeApplyStartPosition(int index, int startPosition)
 }
 
 // Apply the selected player-template value when it differs from the slot.
-// ?bfmeApplyPlayerTemplate@Gen_00525EE0@@QAE_NH@Z
-bool Gen_00525EE0::bfmeApplyPlayerTemplate(int index)
+// ?bfmeApplyPlayerTemplate@MpGameSetup@@QAE_NH@Z
+bool MpGameSetup::bfmeApplyPlayerTemplate(int index)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -398,8 +402,8 @@ bool Gen_00525EE0::bfmeApplyPlayerTemplate(int index)
 
 // The controller validates both cached game records before applying a combo
 // box selection. The member layout is shared with bfmeRefresh above.
-// ?bfmeApplyColor@Gen_00525EE0@@QAE_NH@Z
-bool Gen_00525EE0::bfmeApplyColor(int index)
+// ?bfmeApplyColor@MpGameSetup@@QAE_NH@Z
+bool MpGameSetup::bfmeApplyColor(int index)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -425,8 +429,8 @@ bool Gen_00525EE0::bfmeApplyColor(int index)
 }
 
 // Count the ready, playable human slots in the validated game record.
-// ?bfmeCountReadyPlayers@Gen_00525EE0@@QAEGXZ
-unsigned short Gen_00525EE0::bfmeCountReadyPlayers(void)
+// ?bfmeCountReadyPlayers@MpGameSetup@@QAEGXZ
+unsigned short MpGameSetup::bfmeCountReadyPlayers(void)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;
@@ -455,8 +459,8 @@ unsigned short Gen_00525EE0::bfmeCountReadyPlayers(void)
 }
 
 // Resolve the selected slot's start-position record in the current map.
-// ?bfmeGetStartPositionInfo@Gen_00525EE0@@QAEPBUStartPositionInfo@@H@Z
-const StartPositionInfo *Gen_00525EE0::bfmeGetStartPositionInfo(int slotIndex)
+// ?bfmeGetStartPositionInfo@MpGameSetup@@QAEPBUStartPositionInfo@@H@Z
+const StartPositionInfo *MpGameSetup::bfmeGetStartPositionInfo(int slotIndex)
 {
 	if (m_first && !m_owner->bfmeContains(m_first))
 		m_first = 0;

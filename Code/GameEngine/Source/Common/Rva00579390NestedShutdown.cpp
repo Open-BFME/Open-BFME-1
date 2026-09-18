@@ -20,7 +20,7 @@ public:
 	virtual void v1();
 };
 
-class Gen_00525EE0
+class MpGameSetup
 {
 public:
 	void bfmeShutdown(void);
@@ -42,5 +42,5 @@ void Rva00579390Owner::bfmeNestedShutdown(void)
 {
 	m_first.v3();
 	m_second.v1();
-	reinterpret_cast<Gen_00525EE0 *>(&m_second)->bfmeShutdown();
+	reinterpret_cast<MpGameSetup *>(&m_second)->bfmeShutdown();
 }
