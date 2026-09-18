@@ -182,20 +182,9 @@ void SubsystemInterfaceList::initSubsystem(SubsystemInterface* sys, const char* 
 	if (dirpath)
 		ini.loadDirectory(dirpath, TRUE, INI_LOAD_OVERWRITE, pXfer );
 
-	m_subsystems.push_back(sys);
+m_subsystems.push_back(sys);
 }
 
-//-----------------------------------------------------------------------------
-// ?postProcessLoadAll@SubsystemInterfaceList@@QAEXXZ present-unmatched
-void SubsystemInterfaceList::postProcessLoadAll()
-{
-	for (SubsystemList::iterator it = m_subsystems.begin(); it != m_subsystems.end(); ++it)
-	{
-		(*it)->postProcessLoad();
-	}
-}
-
-//-----------------------------------------------------------------------------
 // BFME's subsystem list holds eight-byte subsystem/slot PAIRS where the vendored
 // header has a plain vector<SubsystemInterface*>, and reset is at vtable +0x10
 // rather than +0x0C. The walk is otherwise the reverse iteration the reference
@@ -222,6 +211,17 @@ struct BfmeSubsystemList
 	BfmeSubsystemEntry *m_end;
 	BfmeSubsystemEntry *m_capacity;
 };
+
+//-----------------------------------------------------------------------------
+void SubsystemInterfaceList::postProcessLoadAll()
+{
+	BfmeSubsystemList *self = (BfmeSubsystemList *)this;
+
+	for (BfmeSubsystemEntry *it = self->m_begin; it != self->m_end; ++it)
+	{
+		it->m_subsystem->slot0C();
+	}
+}
 
 void SubsystemInterfaceList::resetAll()
 {
