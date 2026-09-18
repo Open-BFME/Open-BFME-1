@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// Open-BFME: AIGroup::~AIGroup, retail 0x00151D10, 246 bytes.
+// AIGroup::~AIGroup, retail 0x00151D10 (246 bytes), and its emitted
+// scalar-deleting wrapper 0x00152690 (30 bytes). One complete class
+// declaration owns both bodies; no separate wrapper-forcing TU is needed.
 //
 // The deleting-destructor thunk at 0x00152690 calls this body. The AIGroup
 // vtable and the AI::createGroup caller identify the class. The body walks the
