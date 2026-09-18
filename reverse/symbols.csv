@@ -13132,6 +13132,7 @@ name,address,notes
 ?_M_clear@?$vector@URva002949D0Element@_STL@@V?$allocator@URva002949D0Element@_STL@@@2@@_STL@@IAEXXZ,0x00011FB3,Open-BFME5 the vector _M_clear the insert at 0x002949D0 calls
 ?_M_clear@?$vector@URva0029FA20Element@_STL@@V?$allocator@URva0029FA20Element@_STL@@@2@@_STL@@IAEXXZ,0x00049157,Open-BFME5 the vector _M_clear the insert at 0x0029FA20 calls
 ?_M_clear@?$vector@URva00347900Element@_STL@@V?$allocator@URva00347900Element@_STL@@@2@@_STL@@IAEXXZ,0x00044CD8,Open-BFME5 the vector _M_clear the insert at 0x00347900 calls
+?_M_clear@?$vector@UGen_t_003491e0_p16cd@@V?$allocator@UGen_t_003491e0_p16cd@@@_STL@@@_STL@@IAEXXZ,0x00013043,retail 0x00347A50 calls the vector clear ILT and it reaches 0x00344240
 ?_M_clear@?$vector@URva0035AFC0Element@_STL@@V?$allocator@URva0035AFC0Element@_STL@@@2@@_STL@@IAEXXZ,0x0002594B,Open-BFME5 the vector _M_clear the insert at 0x0035AFC0 calls
 ?_M_clear@?$vector@URva0035B130Element@_STL@@V?$allocator@URva0035B130Element@_STL@@@2@@_STL@@IAEXXZ,0x00015E56,Open-BFME5 the vector _M_clear the insert at 0x0035B130 calls
 ?_M_clear@?$vector@URva00365020Element@@V?$allocator@URva00365020Element@@@_STL@@@_STL@@IAEXXZ,0x0002451E,Open-BFME5 ILT for vector clear at 0x003644D0
