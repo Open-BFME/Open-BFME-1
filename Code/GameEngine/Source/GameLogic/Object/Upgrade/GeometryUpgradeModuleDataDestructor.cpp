@@ -19,16 +19,8 @@ private:
 	unsigned char m_data[0x0c];
 };
 
-class BFMERetailAsciiString
-{
-public:
-	~BFMERetailAsciiString() { releaseBuffer(); }
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
-private:
-	void releaseBuffer();
-
-	char *m_data;
-};
 
 class GeometryUpgradeModuleDataPrimaryBase
 {
@@ -46,6 +38,11 @@ private:
 	GeometryUpgradeModuleDataMemberA m_base;
 };
 
+// Named factory 0x0011DFA0 passes ILT 0x0002A4C3 -> 0x002D5580.
+// Its own table at RVA 0x00CCCBC0 names ShowGeometry/+70 and
+// HideGeometry/+7c (parseAsciiStringVectorAppend), then WallBoundsMesh/+88,
+// RampMesh1/+8c and RampMesh2/+90 (parseAsciiString). The existing vector
+// ABI carriers are retained; these names come from the aligned field table.
 class __declspec(novtable) GeometryUpgradeModuleData
 	: public GeometryUpgradeModuleDataIntermediateBase
 {
@@ -53,11 +50,11 @@ public:
 	virtual ~GeometryUpgradeModuleData();
 
 private:
-	GeometryUpgradeModuleDataMemberB m_first;
-	GeometryUpgradeModuleDataMemberB m_second;
-	BFMERetailAsciiString m_name0;
-	BFMERetailAsciiString m_name1;
-	BFMERetailAsciiString m_name2;
+	GeometryUpgradeModuleDataMemberB m_showGeometry;
+	GeometryUpgradeModuleDataMemberB m_hideGeometry;
+	AsciiString m_wallBoundsMesh;
+	AsciiString m_rampMesh1;
+	AsciiString m_rampMesh2;
 };
 
 // ??1GeometryUpgradeModuleData@@UAE@XZ
