@@ -1,0 +1,8 @@
+// cl: /DNDEBUG /MD /EHsc
+
+// Retail RVA 0x000C4030 contains one return instruction and no identity evidence.
+// Keep the address in the symbol until a caller or table proves a semantic name.
+
+void Rva000C4030()
+{
+}
