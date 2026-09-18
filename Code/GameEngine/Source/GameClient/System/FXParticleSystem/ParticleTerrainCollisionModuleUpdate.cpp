@@ -46,18 +46,18 @@ public:
 	{
 		Real cosine = cos(angle);
 		Real sine = sin(angle);
-		Real tmp1 = m_row[0][0];
-		Real tmp2 = m_row[0][1];
-		m_row[0][0] = (Real)(cosine * tmp1 + sine * tmp2);
-		m_row[0][1] = (Real)(-sine * tmp1 + cosine * tmp2);
-		tmp1 = m_row[1][0];
-		tmp2 = m_row[1][1];
-		m_row[1][0] = (Real)(cosine * tmp1 + sine * tmp2);
-		m_row[1][1] = (Real)(-sine * tmp1 + cosine * tmp2);
-		tmp1 = m_row[2][0];
-		tmp2 = m_row[2][1];
-		m_row[2][0] = (Real)(cosine * tmp1 + sine * tmp2);
-		m_row[2][1] = (Real)(-sine * tmp1 + cosine * tmp2);
+		Real xComponent = m_row[0][0];
+		Real yComponent = m_row[0][1];
+		m_row[0][0] = (Real)(cosine * xComponent + sine * yComponent);
+		m_row[0][1] = (Real)(-sine * xComponent + cosine * yComponent);
+		xComponent = m_row[1][0];
+		yComponent = m_row[1][1];
+		m_row[1][0] = (Real)(cosine * xComponent + sine * yComponent);
+		m_row[1][1] = (Real)(-sine * xComponent + cosine * yComponent);
+		xComponent = m_row[2][0];
+		yComponent = m_row[2][1];
+		m_row[2][0] = (Real)(cosine * xComponent + sine * yComponent);
+		m_row[2][1] = (Real)(-sine * xComponent + cosine * yComponent);
 	}
 
 	Real m_row[3][4];
