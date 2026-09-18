@@ -1,10 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
-// Open-BFME5: the real out-of-line body of
-// __uninitialized_copy<const ModuleInfo::Nugget *, ModuleInfo::Nugget *>.
-// The sibling *UninitializedCopy*.cpp claims the 5-byte incremental-link thunk
-// at 0x0001819C that reaches it; this TU carries the body it jumps to. The
-// per-element _Construct is DECLARED WITHOUT A BODY so it stays out of line,
-// exactly as retail calls it.
+// Only opaque row dup_00772240 remains: its element construction calls
+// 0x00772160, from the string/vector family. The unrelated 0x0076B010
+// instantiation now belongs to Containers/Rva0013B8F0Vector.cpp.
+// This legacy ModuleInfo::Nugget emitter spelling is not type identity proof.
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ModuleInfo

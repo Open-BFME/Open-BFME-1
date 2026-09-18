@@ -230,7 +230,6 @@ Code/GameEngine/Source/Common/LadderList_loadLocalLaddersMethodThunk.cpp	StringB
 Code/GameEngine/Source/Common/LibraryMapParse.cpp	StringBase	Code\GameEngine\Source\Common\LibraryMapParse.cpp(46) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
 Code/GameEngine/Source/Common/LivingWorldRegionCtor.cpp	StringBase	Code\GameEngine\Source\Common\LivingWorldRegionCtor.cpp(87) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
 Code/GameEngine/Source/Common/MapTransferLoadScreenSetCurrentFilenameThunk.cpp	StringBase	Functions: FAIL 1/1
-Code/GameEngine/Source/Common/ModuleInfoNuggetVector.cpp	StringBase	Functions: FAIL 1/2
 Code/GameEngine/Source/Common/PlayerTemplate_parseProductionVeterancyLevel_Thunk.cpp	StringBase	Functions: FAIL 1/1
 Code/GameEngine/Source/Common/Q2TemporaryKeyStores.cpp	StringBase	Code\GameEngine\Source\Common\Q2TemporaryKeyStores.cpp(63) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
 Code/GameEngine/Source/Common/Q3IntrosortLoop004775D0.cpp	StringBase	Functions: FAIL 4/8
@@ -240,7 +239,6 @@ Code/GameEngine/Source/Common/Q3Median009CCB60.cpp	StringBase	Code\GameEngine\So
 Code/GameEngine/Source/Common/Q3SortCompareUnderscore.cpp	StringBase	Code\GameEngine\Source\Common\Q3SortCompareUnderscore.cpp(24) : error C2248: 'StringBase<T>::m_data' : cannot access private member declared in class 'StringBase<T>'
 Code/GameEngine/Source/Common/Q3UnguardedInsertionSort009CD1A0.cpp	StringBase	Code\GameEngine\Source\Common\Q3UnguardedInsertionSort009CD1A0.cpp(12) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
 Code/GameEngine/Source/Common/Q4Sort004566F0Comparator.cpp	StringBase	Functions: FAIL 1/1
-Code/GameEngine/Source/Common/Thing/ModuleInfoNuggetConstCopyBody.cpp	StringBase	Functions: FAIL 1/2
 Code/GameEngine/Source/Common/RTS/Player.cpp	StringBase	Code\GameEngine\Source\Common\RTS\Player.cpp(159) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
 Code/GameEngine/Source/Common/RTS/TeamPrototypeScripts.cpp	StringBase	Functions: FAIL 1/2
 Code/GameEngine/Source/Common/RecorderClassDestructor.cpp	StringBase	Code\GameEngine\Source\Common\RecorderClassDestructor.cpp(18) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
