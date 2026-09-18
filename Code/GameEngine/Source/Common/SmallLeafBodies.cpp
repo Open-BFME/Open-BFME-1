@@ -395,3 +395,19 @@ void Rva002308A0WakeState::clearAndWake( void )
 	*(unsigned char *)((char *)this + 0x11a) = 0;
 	((UpdateModule *)((char *)this - 0xe4))->setWakeFrame( object, UPDATE_SLEEP_NONE );
 }
+
+// mov eax,[ecx+4] / ret.  The field's owner is not identified.
+class Rva0044F610WordGetter
+{
+public:
+	int get( void ) const;
+
+private:
+	int m_prefix;
+	int m_value;
+};
+
+int Rva0044F610WordGetter::get( void ) const
+{
+	return m_value;
+}
