@@ -1,11 +1,6 @@
-Code/Libraries/Source/WWVegas/WWLib/INI_parseMetaMapDefinition_Thunk.cpp	Code/GameEngine/Source/Common/INI/INI_parseMetaMapDefinition_Thunk.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INI_parseScienceVector.cpp	Code/GameEngine/Source/Common/INI/INI_parseScienceVector.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INI_parseSecondsToMillis.cpp	Code/GameEngine/Source/Common/INI/INI_parseSecondsToMillis.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INI_parseShellMenuSchemeDefinitionMethodThunk.cpp	Code/GameEngine/Source/Common/INI/INI_parseShellMenuSchemeDefinitionMethodThunk.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/Keyboard.cpp	Code/GameEngine/Source/GameClient/Input/Keyboard.cpp	Keyboard
 Code/Libraries/Source/WWVegas/WWLib/KeyboardCtor.cpp	Code/GameEngine/Source/GameClient/Input/KeyboardCtor.cpp	Keyboard
 Code/Libraries/Source/WWVegas/WWLib/RAMFile.cpp	Code/GameEngine/Source/Common/System/RAMFile.cpp	RAMFile
 Code/Libraries/Source/WWVegas/WWLib/RAMFileDestructorThunk.cpp	Code/GameEngine/Source/Common/System/RAMFileDestructorThunk.cpp	RAMFile
-Code/Libraries/Source/WWVegas/WWLib/ini_subsystem.cpp	Code/GameEngine/Source/Common/INI/ini_subsystem.cpp	INI
 Code/Libraries/Source/WWVegas/WWSaveLoad/ParameterGetUiTextThunk.cpp	Code/GameEngine/Source/GameLogic/ScriptEngine/ParameterGetUiTextThunk.cpp	Parameter
 Code/Libraries/Source/WWVegas/WWSaveLoad/ParameterReadParameterThunk.cpp	Code/GameEngine/Source/GameLogic/ScriptEngine/ParameterReadParameterThunk.cpp	Parameter
