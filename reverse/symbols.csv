@@ -88404,3 +88404,6 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
+??0?$_Vector_base@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@QAE@IABV?$allocator@URva003AC170Element@@@1@@Z,0x0001826E
+??0Rva003AC170Element@@QAE@ABU0@@Z,0x0004282A
+?get_allocator@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@QBE?AV?$allocator@URva003AC170Element@@@2@XZ,0x0000F146
