@@ -88404,3 +88404,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?Rva006288F0InsertOverflow@?$vector@GV?$allocator@G@_STL@@@_STL@@IAEXPAGABGABU__true_type@2@I_N@Z,0x006288F0,address-qualified body; ECX three-pointer layout and five stack arguments; ret0x14 (20 bytes); two-byte scalar carrier only; exact existing263B object association; retail call through ILT0x4802C
 ?clearTeamsInQueue@AIPlayer@@IAEXXZ,0x00160E70,canonical two intrusive queue removals with deleteQueue callback; thiscall no arguments independently decoded
 ??_7AISkirmishPlayer@@6B@,0x01096FB0,matched Player setPlayerType skirmish branch and constructor168660 install; destructor168710 corroborates; no RTTI claim
+??0?$_Vector_base@VRva00762170@@V?$allocator@VRva00762170@@@_STL@@@_STL@@QAE@IABV?$allocator@VRva00762170@@@1@@Z,0x00018845,The 0x0076A690 vector copy call constructs its three-pointer base with the proven count and allocator ABI from Gen_00760CA0 at 0x00760CA0.
+?get_allocator@Rva00776240Vector2C@@QBE?AV?$allocator@VRva00762170@@@_STL@@XZ,0x00022255,The 0x0076A690 vector copy call passes the source vector and allocator temporary to the proven identity helper at 0x00760C60.
