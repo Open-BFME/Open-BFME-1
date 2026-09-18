@@ -310,45 +310,65 @@ GameWindow *GameWindow::findPrevLeaf( void )
 // GameWindow::findNextLeaf ===================================================
 /** Returns the next leaf of the tree */
 //=============================================================================
-// ?findNextLeaf@GameWindow@@IAEPAV1@XZ present-unmatched
+struct BfmeFindNextLeafLayout
+{
+	UnsignedByte pad0[0x08];
+	UnsignedInt status;
+	UnsignedByte pad1[0x1f8 - 0x0c];
+	BfmeFindNextLeafLayout *next;
+	UnsignedByte pad2[0x200 - 0x1fc];
+	BfmeFindNextLeafLayout *parent;
+	BfmeFindNextLeafLayout *child;
+
+	BfmeFindNextLeafLayout *findFirstLeaf()
+	{
+		BfmeFindNextLeafLayout *leaf = this;
+		while( leaf->parent )
+			leaf = leaf->parent;
+		while( leaf->child )
+			leaf = leaf->child;
+		return leaf;
+	}
+};
+
 GameWindow *GameWindow::findNextLeaf( void )
 {
-	GameWindow *leaf = this;
+	BfmeFindNextLeafLayout *leaf = (BfmeFindNextLeafLayout *)this;
 
-	if( leaf->m_next ) 
+	if( leaf->next )
 	{
 
-		if( leaf->m_next->m_status & WIN_STATUS_TAB_STOP )
-			return leaf->m_next;
+		if( leaf->next->status & WIN_STATUS_TAB_STOP )
+			return (GameWindow *)leaf->next;
 
-		for( leaf = leaf->m_next; leaf; leaf = leaf->m_child )
-			if( leaf->m_child == NULL || BitTest( leaf->m_status, 
+		for( leaf = leaf->next; leaf; leaf = leaf->child )
+			if( leaf->child == NULL || BitTest( leaf->status,
 																						WIN_STATUS_TAB_STOP ) )
-				return leaf;
+				return (GameWindow *)leaf;
 
 	}  // end if
 	else 
 	{
 
-		while( leaf->m_parent ) 
+		while( leaf->parent )
 		{
 
-			leaf = leaf->m_parent;
+			leaf = leaf->parent;
 
-			if( leaf->m_parent && leaf->m_next ) 
+			if( leaf->parent && leaf->next )
 			{
 
-				for( leaf = leaf->m_next; leaf; leaf = leaf->m_child )
-					if( leaf->m_child == NULL || 
-							BitTest( leaf->m_status, WIN_STATUS_TAB_STOP ) )
-						return leaf;
+				for( leaf = leaf->next; leaf; leaf = leaf->child )
+					if( leaf->child == NULL ||
+							BitTest( leaf->status, WIN_STATUS_TAB_STOP ) )
+						return (GameWindow *)leaf;
 
 			}  // end if
 
 		}  // end while
 
 		if( leaf )
-			return leaf->findFirstLeaf();
+			return (GameWindow *)leaf->findFirstLeaf();
 		else
 			return NULL;
 
