@@ -1,24 +1,19 @@
 // ?d_0006c180@@YAXXZ
-// partial score=0.995 date=2026-09-17
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /Ireference/shims/sweep
+// partial score=0.9953 date=2026-09-18
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Ireference/shims/sweep
 
 #include <windows.h>
 #include <string.h>
-
-typedef unsigned int UnsignedInt;
-
-typedef PROCESS_INFORMATION ProcessInformation;
-typedef STARTUPINFOA StartupInformation;
 
 extern "C" __declspec(dllimport) char *__stdcall GetEnvironmentStrings(void);
 __declspec(dllimport) void __cdecl bfmeFree1035(void *);
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
 
-class Rva6C180
+class GameEngine
 {
 public:
-	void launch(int value);
+	void Rva0006C180(int value);
 
 private:
 	char m_padding[0x10];
@@ -26,7 +21,7 @@ private:
 	HANDLE m_childProcesses[7];
 };
 
-void Rva6C180::launch(int value)
+void GameEngine::Rva0006C180(int value)
 {
 	__declspec(align(8)) char modulePath[0x200];
 
@@ -57,7 +52,7 @@ void Rva6C180::launch(int value)
 	int count = 0;
 	if (value > 0)
 	{
-		ProcessInformation processInformation;
+		PROCESS_INFORMATION processInformation;
 		int number = 1;
 		HANDLE *processSlot = m_childProcesses;
 		count = value;
@@ -82,7 +77,7 @@ void Rva6C180::launch(int value)
 			}
 			*cursor = 0;
 
-			StartupInformation startupInformation;
+			STARTUPINFOA startupInformation;
 			memset(&startupInformation, 0, sizeof(startupInformation));
 			startupInformation.cb = 0x44;
 			CreateProcessA(modulePath, commandLine, 0, 0, 0, 0x208,
