@@ -152,7 +152,7 @@ namespace FXParticleSystem {
 void Rva005F8FC0WriteVelocityHeader(const void *self, File *file,
     unsigned int *flags);
 }
-void b_005fcb60();
+void Rva005FCB60WriteBase(const void *self, File *file, unsigned int *flags);
 void b_005fff00();
 void b_005ee1d0();
 void b_005cb9f0();
@@ -10568,7 +10568,7 @@ void LifeEventModuleTemplate::writeINI(File &file, unsigned int flags) const
     typedef void (__cdecl *BaseWriteFunction)(const void *self, File *file, unsigned int *flags);
     typedef void (__cdecl *FinishWriteFunction)(File *file, unsigned int *flags);
 
-    reinterpret_cast<BaseWriteFunction>(b_005fcb60)(this, &file, &flags);
+    reinterpret_cast<BaseWriteFunction>(::Rva005FCB60WriteBase)(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
     u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114440,
@@ -12586,7 +12586,7 @@ void TerrainCollisionModuleTemplate::writeINI(File &file, unsigned int flags) co
     typedef void (__cdecl *BaseWriteFunction)(const void *self, File *file, unsigned int *flags);
     typedef void (__cdecl *FinishWriteFunction)(File *file, unsigned int *flags);
 
-    reinterpret_cast<BaseWriteFunction>(b_005fcb60)(this, &file, &flags);
+    reinterpret_cast<BaseWriteFunction>(::Rva005FCB60WriteBase)(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
     u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114504,
