@@ -16,7 +16,19 @@ import portable_lock
 
 def run(*cmd, cwd=ROOT, check=True, cap=False):
     print("$", " ".join(cmd), flush=True)
-    return subprocess.run(cmd, cwd=cwd, check=check, capture_output=cap, text=cap)
+    # seats, the watchdog and ledger_prep run git in this checkout too; a
+    # transient .git/index.lock is not a failure of ours, so wait it out
+    import time
+    for attempt in range(6):
+        r = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, errors="replace")
+        if r.returncode == 0 or "index.lock" not in (r.stderr or ""):
+            break
+        time.sleep(10)
+    if not cap:
+        sys.stdout.write(r.stdout); sys.stderr.write(r.stderr)
+    if check and r.returncode:
+        raise subprocess.CalledProcessError(r.returncode, cmd, r.stdout, r.stderr)
+    return r
 
 def out(*cmd, cwd=ROOT):
     return subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, check=True).stdout.strip()
