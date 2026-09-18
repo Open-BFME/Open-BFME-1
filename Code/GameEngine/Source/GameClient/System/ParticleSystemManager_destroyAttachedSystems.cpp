@@ -1,5 +1,4 @@
 // cl: /DNDEBUG /MD /EHsc
-// ?destroyAttachedSystems@ParticleSystemManager@@QAEXPAVObject@@@Z
 // Open-BFME: ParticleSystemManager::destroyAttachedSystems, retail
 // 0x005C3C80 (299 bytes).
 
@@ -13,7 +12,6 @@ class BfmeParticleSystemHandle
 public:
 	BfmeParticleSystemHandle(ParticleSystem *system = 0) :
 		m_system(system), m_previous(0), m_next(0) { }
-	BfmeParticleSystemHandle(const BfmeParticleSystemHandle &that);
 	BfmeParticleSystemHandle(const BfmeParticleSystemNode *node);
 	~BfmeParticleSystemHandle() throw();
 	operator bool() const { return m_system != 0; }
@@ -37,28 +35,7 @@ public:
 	ObjectID m_attachedToObjectID;
 };
 
-inline BfmeParticleSystemHandle::BfmeParticleSystemHandle(
-	const BfmeParticleSystemHandle &that)
-{
-	ParticleSystem *system = that.m_system;
-	m_system = system;
-	if (system)
-	{
-		m_previous = system->m_lastHandle;
-		m_next = 0;
-		m_system->m_lastHandle = this;
-		if (m_previous)
-			m_previous->m_next = this;
-		else
-			m_system->m_firstHandle = this;
-	}
-	else
-	{
-		m_next = 0;
-		m_previous = 0;
-	}
-}
-
+// ??1BfmeParticleSystemHandle@@QAE@XZ present-unmatched
 inline BfmeParticleSystemHandle::~BfmeParticleSystemHandle() throw()
 {
 	if (m_system)
@@ -83,6 +60,7 @@ struct BfmeParticleSystemNode
 	BfmeParticleSystemHandle m_value;
 };
 
+// ??0BfmeParticleSystemHandle@@QAE@PBUBfmeParticleSystemNode@@@Z absent-from-retail
 inline BfmeParticleSystemHandle::BfmeParticleSystemHandle(
 	const BfmeParticleSystemNode *node)
 {
@@ -145,6 +123,7 @@ private:
 	BfmeParticleSystemList m_systems;
 };
 
+// ?destroyAttachedSystems@ParticleSystemManager@@QAEXPAVObject@@@Z
 void ParticleSystemManager::destroyAttachedSystems(Object *obj)
 {
 	if (obj == 0)
