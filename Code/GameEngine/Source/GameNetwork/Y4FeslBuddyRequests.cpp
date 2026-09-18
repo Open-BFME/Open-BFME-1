@@ -134,6 +134,29 @@ void __stdcall Rva007FB510( FeslTxnMessage *msg, const char *user )
 		msg->addString( "USER", user );
 }
 
+void __stdcall Rva007FB550( FeslTxnMessage *msg, int list, const char *user,
+	const char *group, const char *lsrc, bool pres )
+{
+	msg->reset();
+	msg->m_category = 'RDEL';
+	msg->m_depth = 3;
+	switch( list )
+	{
+		case 1:
+			msg->addString( "LIST", "B" );
+			break;
+		case 2:
+			msg->addString( "LIST", "I" );
+			break;
+	}
+	msg->addString( "USER", user );
+	if( group && strlen( group ) != 0 )
+		msg->addString( "GROUP", group );
+	if( lsrc && strlen( lsrc ) != 0 )
+		msg->addString( "LSRC", lsrc );
+	msg->addString( "PRES", pres ? "Y" : "N" );
+}
+
 // ---- 'RADM' / 'MLST' / 'RDEM' ---------------------------------------------
 
 void __stdcall Rva007FB390( FeslTxnMessage *msg, const char *user,
