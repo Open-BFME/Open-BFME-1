@@ -50,12 +50,12 @@ private:
 	void *m_firstTarget;
 	unsigned int m_unused1C;
 	void *m_secondTarget;
-	volatile float m_frameX;
-	volatile float m_frameY;
-	volatile float m_frameZ;
-	volatile float m_targetX;
-	volatile float m_targetY;
-	volatile float m_targetZ;
+	float m_frameX;
+	float m_frameY;
+	float m_frameZ;
+	float m_targetX;
+	float m_targetY;
+	float m_targetZ;
 };
 
 // ?updatePosition@Gen0060CBB0@@AAEXXZ
@@ -79,9 +79,11 @@ void Gen0060CBB0::updatePosition()
 		sine * BfmeZeroRange + cosine * BfmeZeroRange,
 		cosine * BfmeZeroRange - sine, BfmeZeroRange,
 		sine * BfmeZeroRange + cosine);
+	float yaw = (float)atan2(
+		-(m_frameY - m_targetY), m_frameX - m_targetX);
 	first = Create_Z_Rotation_Matrix3(
-		(float)sin(angle - g_bfmeDefaultEG),
-		(float)cos(angle - g_bfmeDefaultEG));
+		(float)sin(yaw - g_bfmeDefaultEG),
+		(float)cos(yaw - g_bfmeDefaultEG));
 	Matrix3::Multiply(first, second, &result);
 
 	if (m_firstTarget != 0)
@@ -89,7 +91,7 @@ void Gen0060CBB0::updatePosition()
 		((U4Target0060C2C0 *)m_firstTarget)->hand(&result);
 	}
 
-	float secondAngle = (float)atan2(-dy, dx);
+	float secondAngle = (float)atan2(dz, horizontal);
 	float s = (float)sin(secondAngle);
 	float c = (float)cos(secondAngle);
 	second = Matrix3(
