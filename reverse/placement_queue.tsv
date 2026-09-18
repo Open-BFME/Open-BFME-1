@@ -1,8 +1,3 @@
-Code/Libraries/Source/WWVegas/WWLib/INIObject.cpp	Code/GameEngine/Source/Common/INI/INIObject.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INIParseDynamicAudioEventRTSThunk.cpp	Code/GameEngine/Source/Common/INI/INIParseDynamicAudioEventRTSThunk.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INIParseObjectDefinitionThunk.cpp	Code/GameEngine/Source/Common/INI/INIParseObjectDefinitionThunk.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INIParseSoundsListThunk.cpp	Code/GameEngine/Source/Common/INI/INIParseSoundsListThunk.cpp	INI
-Code/Libraries/Source/WWVegas/WWLib/INIPrepFileThunk.cpp	Code/GameEngine/Source/Common/INI/INIPrepFileThunk.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INIPreprocessMacro.cpp	Code/GameEngine/Source/Common/INI/INIPreprocessMacro.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INITerrain.cpp	Code/GameEngine/Source/Common/INI/INITerrain.cpp	INI
 Code/Libraries/Source/WWVegas/WWLib/INITerrainRoad.cpp	Code/GameEngine/Source/Common/INI/INITerrainRoad.cpp	INI
