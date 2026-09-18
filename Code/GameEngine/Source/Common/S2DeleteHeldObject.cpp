@@ -1,8 +1,8 @@
-// Five bodies built out of one statement -- `delete <pointer>` -- in the two
+// Four bodies built out of one statement -- `delete <pointer>` -- in the two
 // shapes MSVC 7.1 gives it when the deleted type has a NON-virtual destructor:
 //
 //   as a member (three rows)     push esi / mov esi,[ecx]
-//   as a free function (two)   push esi / mov esi,[esp+8]
+//   as a free function (one)   push esi / mov esi,[esp+8]
 //
 //   then, both:  test esi,esi / je end / mov ecx,esi / call <DTOR>
 //                push esi / call ??3@YAXPAX@Z / add esp,4 / end: pop esi / ret
@@ -19,8 +19,8 @@
 // the next link of a list of its own kind.  That is why it is written here as a
 // real destructor rather than a void member: the recursion has to name itself.
 //
-// IDENTITY IS NOT RECOVERED.  Names are address-derived.  The two free-form
-// rows take one pointer and are typed __cdecl because the caller pops nothing
+// IDENTITY IS NOT RECOVERED.  Names are address-derived.  The free-form row
+// takes one pointer and is typed __cdecl because the caller pops nothing
 // here and the argument sits at [esp+4] on entry.
 
 class Rva003500C0
@@ -71,8 +71,3 @@ BFME_DELETE_MEMBER( Rva0063B130, Gen009DB4D0 )
 
 // @?Rva007889D0@@YAXPAVGen0002AB5D@@@Z 0x007889D0
 BFME_DELETE_ARGUMENT( Rva007889D0, Gen0002AB5D )
-// @?Rva00823210@@YAXPAVLZHLCompressor@@@Z 0x00823210
-// The matched LZHLCompressor constructor, complete destructor, and scalar-
-// deleting destructor at 0x008254C0, 0x00825550, and 0x00823150 establish
-// this delete helper's static type.
-BFME_DELETE_ARGUMENT( Rva00823210, LZHLCompressor )

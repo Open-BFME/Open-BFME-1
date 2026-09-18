@@ -14,3 +14,11 @@ void LZHLDestroyDecompressor(void *handle)
 {
     delete static_cast<LZHLDecompressor *>(handle);
 }
+
+// Retail RVA 0x00823210, 27 bytes. Matched CompressFile at 0x0081EC50
+// calls this API with its compressor handle; retail calls the nonvirtual
+// LZHLCompressor destructor at 0x00825550 and then operator delete.
+void LZHLDestroyCompressor(void *handle)
+{
+    delete static_cast<LZHLCompressor *>(handle);
+}
