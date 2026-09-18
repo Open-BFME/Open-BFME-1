@@ -401,6 +401,12 @@ def scan(paths, staged, texts=None):
                     # case, because the next witnessed offset was 8 and the pad was 8.
                     if is_array or any((owner, o) in wit for o in range(off + 1, off + span)):
                         tally["placeholder is unknown space, not an unknown field"] += 1
+                    elif _declares(text, owner, name):
+                        # A class cannot declare the same member name at two offsets.
+                        # This means the witness and the source disagree about layout;
+                        # offering the rename would turn uncertain evidence into invalid
+                        # C++ before --apply finally refused it.
+                        tally["witness name already declared in this class"] += 1
                     else:
                         todo.append(rec)
                 else:

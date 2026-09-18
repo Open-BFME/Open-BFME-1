@@ -203,3 +203,21 @@ def test_scan_can_be_pointed_at_alternate_file_contents():
     # asserts is that the override is honoured and no disk read is attempted.
     assert not conflicts and not todo
     assert tally["members computed"] == 1
+
+
+def test_todo_refuses_a_name_already_declared_at_another_offset(monkeypatch):
+    """A duplicate member name is proof that the proposed rename is unsafe, even
+    when the placeholder and the witness otherwise qualify for --todo."""
+    path = N.ROOT / "Code/GameEngine/Source/__fixture__.cpp"
+    body = """struct ScoreKeeper {
+	int m_totalBuildingsBuilt;
+	int m_pad04;
+};
+"""
+    monkeypatch.setattr(N, "load_witness", lambda: {
+        ("ScoreKeeper", 4): ("m_totalBuildingsBuilt", 1.0, "layout_witness")})
+
+    tally, todo, conflicts = N.scan([str(path)], False, texts={path: body})
+
+    assert not conflicts and not todo
+    assert tally["witness name already declared in this class"] == 1
