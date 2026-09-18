@@ -2345,6 +2345,53 @@ public:
 	BfmePlayerAIUpdateView *m_ai;
 };
 
+class BfmeKindOfMask
+{
+public:
+	BfmeKindOfMask(Int idx1, Int idx2, Int idx3)
+	{
+		m_bits.set(idx1);
+		m_bits.set(idx2);
+		m_bits.set(idx3);
+	}
+
+	BfmeKindOfMask(Int idx1, Int idx2, Int idx3, Int idx4, Int idx5)
+	{
+		m_bits.set(idx1);
+		m_bits.set(idx2);
+		m_bits.set(idx3);
+		m_bits.set(idx4);
+		m_bits.set(idx5);
+	}
+
+private:
+	std::bitset<192> m_bits;
+};
+
+class BfmeKindOfTester
+{
+public:
+	Bool isAnyKindOf(const BfmeKindOfMask &mask) const;
+};
+
+class BfmeShroudManagerHuntView
+{
+public:
+	void getMostValuableLocation(Int playerMask, Int value,
+		Coord3D *outLocation);
+};
+
+class BfmePlayerListHuntView
+{
+public:
+	unsigned short getPlayersWithRelationship(Int playerIndex,
+		Int whichPlayerTypes, Bool exact);
+};
+
+extern PartitionManager *TheShroudManager;
+#pragma comment(linker, "/alternatename:?getMostValuableLocation@BfmeShroudManagerHuntView@@QAEXHHPAUCoord3D@@@Z=?m@Gen_008f7450@@QAEXXZ")
+#pragma comment(linker, "/alternatename:?getPlayersWithRelationship@BfmePlayerListHuntView@@QAEGHH_N@Z=?getPlayersWithRelationship@PlayerList@@QAEGHH_N@Z")
+
 extern void j_00001140();
 extern void j_000022a70();
 extern void j_000022bb();
@@ -2584,43 +2631,63 @@ void Player::friend_setSkillset(Int skillSet)
 }
 
 //=============================================================================
-// ?setUnitsShouldHunt@Player@@QAEX_NW4CommandSourceType@@@Z present-unmatched
 void Player::setUnitsShouldHunt(Bool unitsShouldHunt, CommandSourceType source)
 {
-	m_unitsShouldHunt = unitsShouldHunt;
+	struct BfmePlayerHuntFields
+	{
+		unsigned char m_unmodelled_000[0x29d];
+		volatile Bool m_unitsShouldHunt;
+	};
+	BfmePlayerHuntFields *self = (BfmePlayerHuntFields *)this;
+	self->m_unitsShouldHunt = unitsShouldHunt;
 
 	Coord3D pos;
-	ThePartitionManager->getMostValuableLocation(getPlayerIndex(), ALLOW_ENEMIES, VOT_CashValue, &pos);
-	for (PlayerTeamList::iterator it = m_playerTeamPrototypes.begin(); 
-			 it != m_playerTeamPrototypes.end(); ++it) {
-		for (DLINK_ITERATOR<Team> iter = (*it)->iterate_TeamInstanceList(); !iter.done(); iter.advance()) {
-			Team *team = iter.cur();
+	((BfmeShroudManagerHuntView *)TheShroudManager)->getMostValuableLocation(
+		((BfmePlayerListHuntView *)ThePlayerList)->getPlayersWithRelationship(
+			getPlayerIndex(), ALLOW_ENEMIES, false),
+		0, &pos);
+	struct BfmePlayerTeamListField
+	{
+		unsigned char m_unmodelled_000[0x288];
+		BfmePlayerTeamListNode *m_head;
+	};
+	BfmePlayerTeamListField *teams = (BfmePlayerTeamListField *)this;
+	for (BfmePlayerTeamListNode *it = teams->m_head->m_next;
+			it != teams->m_head; it = it->m_next) {
+		for (BfmePlayerTeamInstanceIterator iter(
+				it->m_prototype->m_teamInstanceList);
+				!iter.done(); iter.advance()) {
+			BfmePlayerTeamView *team = iter.cur();
 			if (!team) {
 				continue;
 			}
 			
-			for (DLINK_ITERATOR<Object> iterObj = team->iterate_TeamMemberList(); !iterObj.done(); iterObj.advance()) {
-				Object *obj = iterObj.cur();
+			BfmePlayerDlinkIterator<BfmePlayerObjectDlinkObject> iterObj =
+				team->iterate_TeamMemberList();
+			for (; !iterObj.done(); iterObj.advance()) {
+				BfmePlayerObjectView *obj =
+					(BfmePlayerObjectView *)iterObj.cur();
 				if (!obj) {
 					continue;
 				}
 
-				KindOfMaskType disqualifyingKindofs;
-				disqualifyingKindofs.set(KINDOF_DOZER);
-				disqualifyingKindofs.set(KINDOF_HARVESTER);
-				disqualifyingKindofs.set(KINDOF_IGNORES_SELECT_ALL);
+				BfmeKindOfMask disqualifyingKindofs(14, 16, 90);
 
-				if (obj->isAnyKindOf( disqualifyingKindofs )) {
+				if (((BfmeKindOfTester *)obj)->isAnyKindOf(
+						disqualifyingKindofs)) {
 					continue;	// Harvesters, dozers etc.
 				}
+				if (*(unsigned char *)((char *)obj + 0x94) & 0x20) {
+					continue;
+				}
 
-				obj->leaveGroup();
-				AIUpdateInterface *ai = obj->getAIUpdateInterface();
+				((Object *)obj)->leaveGroup();
+				BfmePlayerAIUpdateView *ai = obj->m_ai;
 				if (ai) {
-					if (unitsShouldHunt) {	
-						ai->aiHunt(source);
+					if (unitsShouldHunt) {
+						((AICommandInterface *)((char *)ai + 0x20))->aiHunt(source);
 					} else {
-						ai->aiIdle(source);
+						((AICommandInterface *)((char *)ai + 0x20))->aiIdle(source);
 					}
 				}
 			}
