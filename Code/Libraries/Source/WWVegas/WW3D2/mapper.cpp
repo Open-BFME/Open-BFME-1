@@ -530,25 +530,25 @@ GridWSEnvMapperClass::GridWSEnvMapperClass(const INIClass &ini, const char *sect
 // Retail INI/copy constructors also emit this family's virtual destructors.
 // Their vtable slot 0 is RefCountClass::Delete_This; slot 1 is the deleting destructor.
 
-// ?dup_00969ca0@@YAXXZ
+// ??0GridWSClassicEnvironmentMapperClass@@QAE@ABVINIClass@@PBDI@Z
 GridWSClassicEnvironmentMapperClass::GridWSClassicEnvironmentMapperClass(const INIClass &ini, const char *section, unsigned int stage):
 	GridWSEnvMapperClass(ini,section,stage)
 {
 }
 
-// ?dup_00969cd0@@YAXXZ
+// ??0GridWSClassicEnvironmentMapperClass@@QAE@ABVGridWSEnvMapperClass@@@Z
 GridWSClassicEnvironmentMapperClass::GridWSClassicEnvironmentMapperClass(const GridWSEnvMapperClass & src):
 	GridWSEnvMapperClass(src)
 {
 }
 
-// ?dup_0096a100@@YAXXZ
+// ??0GridWSEnvironmentMapperClass@@QAE@ABVINIClass@@PBDI@Z
 GridWSEnvironmentMapperClass::GridWSEnvironmentMapperClass(const INIClass &ini, const char *section, unsigned int stage):
 	GridWSEnvMapperClass(ini, section, stage)
 {
 }
 
-// ?dup_0096a130@@YAXXZ
+// ??0GridWSEnvironmentMapperClass@@QAE@ABVGridWSEnvMapperClass@@@Z
 GridWSEnvironmentMapperClass::GridWSEnvironmentMapperClass(const GridWSEnvMapperClass & src):
 	GridWSEnvMapperClass(src)
 {
