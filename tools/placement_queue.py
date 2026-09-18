@@ -116,7 +116,8 @@ def zh_directories(root):
     """class name -> the directory ZH keeps that class's source in."""
     out = {}
     for path in glob.glob(str(root / ZH) + "/**/*.cpp", recursive=True):
-        rel = os.path.relpath(path, root)
+        # Evidence and ledger paths use forward slashes on every host.
+        rel = Path(path).relative_to(root).as_posix()
         out.setdefault(os.path.basename(rel)[:-4].lower(), os.path.dirname(rel))
     return out
 
@@ -133,7 +134,7 @@ def zh_header_directories(root):
     """
     out = {}
     for path in glob.glob(str(root / ZH) + "/GameEngine/Include/**/*.h", recursive=True):
-        here = os.path.dirname(os.path.relpath(path, root))
+        here = Path(path).relative_to(root).parent.as_posix()
         mirror = here.replace("/Include/", "/Source/", 1)
         # The mirror has to be real IN ZH. Include/GameLogic/Module has no
         # Source/GameLogic/Module -- ZH keeps those bodies under Object/Update and
@@ -257,13 +258,13 @@ def included_by_siblings(root):
     """
     pinned = set()
     for path in glob.glob(str(root / "Code") + "/**/*.cpp", recursive=True):
-        here = os.path.dirname(os.path.relpath(path, root))
+        here = Path(path).relative_to(root).parent
         try:
             text = Path(path).read_text(encoding="utf-8", errors="replace")
         except OSError:
             continue
         for name in BARE_INCLUDE.findall(text):
-            target = os.path.join(here, name)
+            target = (here / name).as_posix()
             if (root / target).exists():
                 pinned.add(target)
     return pinned
@@ -307,7 +308,7 @@ def build(root):
         if zh_keeps_source_here(root, source):
             skipped["ZH keeps this source at its current path"] += 1
             continue
-        target = os.path.join(dest, os.path.basename(source))
+        target = (Path(dest) / os.path.basename(source)).as_posix()
         if (root / target).exists():
             skipped["a file of that name is already there"] += 1
             continue

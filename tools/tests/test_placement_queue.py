@@ -179,6 +179,17 @@ def test_a_malformed_placement_blocker_fails_explicitly(tmp_path):
         queue.build(root)
 
 
+def test_a_sibling_include_prevents_moving_its_source_on_every_host(tmp_path):
+    root = _world(tmp_path)
+    _write(root, "Code/GameEngine/Source/Common/GameInfoWrapper.cpp",
+           '#include "GameInfoReset.cpp"\n')
+
+    assert MISPLACED in queue.included_by_siblings(root)
+    queued, skipped = queue.build(root)
+    assert all(source != MISPLACED for source, _target, _cls in queued)
+    assert skipped["a sibling includes it by bare name"] == 1
+
+
 def test_a_coarse_header_refines_to_one_established_descendant(tmp_path):
     root = _command_set_world(tmp_path)
     single, homes = queue.survey(root)
@@ -234,7 +245,7 @@ def test_weak_sibling_inference_does_not_rank_split_class_homes(tmp_path):
     assert REGION_DELETING not in single
     assert homes["RegionOwner"][REGION_BEHAVIOR] == 3
     assert deleting_homes["RegionOwner"] == {
-        str(Path(REGION_DELETING).parent)
+        Path(REGION_DELETING).parent.as_posix()
     }
     assert queue.destination(
         root, REGION_DTOR, "RegionOwner", homes, {}, {}, deleting_homes
