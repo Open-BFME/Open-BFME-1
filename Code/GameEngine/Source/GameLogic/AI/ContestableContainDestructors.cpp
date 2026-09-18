@@ -1,7 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
-// ContestableContain's destructor, lifted from its MASM dump to C++.
+// ContestableContain's complete destructor and emitted scalar wrapper
+// 0x0021C050. Constructor 0x0021BEE0 and complete destructor 0x0021B6F0
+// share vtable 0x00CAB3C0; factory/updateObject corroborate identity.
+// The scalar wrapper reaches this teardown through ILT 0x0004A674.
 //
 // Its base destructor call lands on 0x0021D9C0, which the ledger already knows
 // as GarrisonContain::~GarrisonContain, so this class sits directly on top of
