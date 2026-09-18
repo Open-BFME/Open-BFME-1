@@ -178,6 +178,14 @@ def destination(root, source, cls, homes, zh, zh_hdr):
             if descendants:
                 return None
             return candidate
+    # A module implementation and its FooModuleData are one source family. A
+    # matched partner in the current directory is positive ownership evidence;
+    # do not let a pile of potentially misplaced Foo rows pull the pair apart.
+    suffix = "ModuleData"
+    paired = cls[:-len(suffix)] if cls.endswith(suffix) else cls + suffix
+    paired_homes = homes.get(paired, {})
+    if len(paired_homes) == 1 and paired_homes.get(here, 0):
+        return None
     # Otherwise: where this class already keeps most of its bodies. Two or more,
     # because one sibling elsewhere is as likely to be the misplaced file.
     ranked = [(d, n) for d, n in homes[cls].most_common()

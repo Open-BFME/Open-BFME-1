@@ -118,6 +118,12 @@ Two more of the same family:
   TU's owner. `PopupHostGame.cpp` emitted `GameInfo::setUseStats`, but both ZH
   trees keep the exact source under the GUI menus tree. An exact ZH source path
   now stops the move before an inferred owner can pull the file elsewhere.
+* Sibling counts cannot split a module from its colocated `<Class>ModuleData`
+  partner. Three DominateEnemy sources were repeatedly volleyed between
+  `Object/SpecialPower` and `Common/Thing`; the votes in `Common/Thing` were a
+  consequence of those moves, while the independently recovered module-data
+  constructor has its sole ledger home in `Object/SpecialPower` and positively
+  anchors the family there.
 * A destination that is an **ancestor** of the current directory was accepted, so
   324 files were bound to leave `GameLogic/AI` for `GameLogic`. ZH's header tree
   is coarser than our source tree in places; answering with the parent throws away

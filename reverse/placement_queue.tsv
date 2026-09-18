@@ -1,4 +1,3 @@
 Code/GameEngine/Source/GameLogic/AI/LivingWorldRegion_dtor.cpp	Code/GameEngine/Source/GameLogic/Object/Behavior/LivingWorldRegion_dtor.cpp	LivingWorldRegion
-Code/GameEngine/Source/GameLogic/Object/SpecialPower/DominateEnemySpecialPower_slot15.cpp	Code/GameEngine/Source/Common/Thing/DominateEnemySpecialPower_slot15.cpp	DominateEnemySpecialPower
 Code/GameEngine/Source/GameLogic/Object/Update/DynamicGeometryInfoUpdateConstructor.cpp	Code/GameEngine/Source/Common/Thing/DynamicGeometryInfoUpdateConstructor.cpp	SiegeDeployHordeSpecialPower
 Code/GameEngine/Source/GameLogic/Object/Update/GloriousChargeUpdateUpdate.cpp	Code/GameEngine/Source/Common/RTS/GloriousChargeUpdateUpdate.cpp	GloriousChargeUpdate

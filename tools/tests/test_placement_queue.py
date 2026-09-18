@@ -14,6 +14,10 @@ COMMAND_SET = "Code/GameEngine/Source/Common/BfmeConv1641.cpp"
 CLIENT = "Code/GameEngine/Source/GameClient"
 CONTROL_BAR = f"{CLIENT}/GUI/ControlBar"
 SPLIT = "Code/GameEngine/Source/Common/SplitOwner.cpp"
+DOMINATE = ("Code/GameEngine/Source/GameLogic/Object/SpecialPower/"
+            "DominateEnemySpecialPower_slot15.cpp")
+SPECIAL_POWER = "Code/GameEngine/Source/GameLogic/Object/SpecialPower"
+THING = "Code/GameEngine/Source/Common/Thing"
 
 
 def _write(root, relative, text="// fixture\n"):
@@ -89,6 +93,27 @@ def _split_home_world(tmp_path):
     return root
 
 
+def _module_family_world(tmp_path):
+    root = tmp_path / "repo"
+    sources = [
+        ("?action@DominateEnemySpecialPower@@UAEXXZ", DOMINATE),
+        ("??0DominateEnemySpecialPowerModuleData@@QAE@XZ",
+         f"{SPECIAL_POWER}/DominateEnemySpecialPowerModuleDataConstructor.cpp"),
+        ("??0DominateEnemySpecialPower@@QAE@XZ",
+         f"{THING}/DominateEnemySpecialPowerConstructor.cpp"),
+        ("?factory@DominateEnemySpecialPower@@SAXXZ",
+         f"{THING}/DominateEnemySpecialPowerFactory.cpp"),
+    ]
+    for _name, source in sources:
+        _write(root, source)
+
+    rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
+    for index, (name, source) in enumerate(sources):
+        rows.append(f"{name},,0x{0x100000 + index * 0x10:08X},10,{source},matched,\n")
+    _write(root, "reverse/functions.csv", "".join(rows))
+    return root
+
+
 def test_exact_zh_source_path_outranks_an_inline_method_owner(tmp_path):
     root = _world(tmp_path)
     single, homes = queue.survey(root)
@@ -136,3 +161,21 @@ def test_a_coarse_header_does_not_rank_multiple_descendant_homes(tmp_path):
 
     queued, _skipped = queue.build(root)
     assert all(source != SPLIT for source, _target, _cls in queued)
+
+
+def test_sibling_counts_do_not_split_a_module_from_its_module_data(tmp_path):
+    root = _module_family_world(tmp_path)
+    single, homes = queue.survey(root)
+
+    assert single[DOMINATE] == "DominateEnemySpecialPower"
+    assert homes["DominateEnemySpecialPower"][THING] == 2
+    assert homes["DominateEnemySpecialPowerModuleData"][SPECIAL_POWER] == 1
+    assert queue.destination(
+        root, DOMINATE, "DominateEnemySpecialPower", homes, {}, {}) is None
+
+    queued, _skipped = queue.build(root)
+    assert all(source != DOMINATE for source, _target, _cls in queued)
+
+    homes["DominateEnemySpecialPowerModuleData"].clear()
+    assert queue.destination(
+        root, DOMINATE, "DominateEnemySpecialPower", homes, {}, {}) == THING
