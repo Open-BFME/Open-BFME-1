@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
 
+// Complete destructor 0x00299820 and emitted scalar wrapper 0x00299A50.
+// The matched constructor at 0x002999D0, typed factories, and module-name
+// getter establish identity; wrapper ILT 0x0000806C reaches this teardown.
 // The retail object is an UpdateModule-shaped multiple-inheritance object.  The
 // declarations are deliberately TU-local: only the ABI-relevant base layout and
 // the one explicitly destroyed pointee are needed here.
