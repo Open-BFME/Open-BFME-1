@@ -1417,7 +1417,7 @@ locfourierstruct=&global_fourierstruct;
 /*
 ** Set error context string
 */
-errorcontext="FPU:Transcendental";
+errorcontext=(char *)g_Rva0107301CEmptyString;
 
 /*
 ** See if we need to do self-adjustment code.
