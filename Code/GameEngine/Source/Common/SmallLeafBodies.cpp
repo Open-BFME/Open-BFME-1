@@ -363,3 +363,35 @@ int * __stdcall Rva002D3630Seed( int *slot )
 	*slot = 0x7DB;
 	return slot;
 }
+
+// mov eax,[ecx-0xdc] / push 1 / clear byte at this+0x11a / forward to the
+// enclosing UpdateModule at this-0xe4.  The owning leaf is not identified.
+class Rva002308A0WakeState
+{
+public:
+	void clearAndWake( void );
+};
+
+class Object;
+class Rva002308A0WakeState;
+enum UpdateSleepTime
+{
+	UPDATE_SLEEP_NONE = 1
+};
+
+class UpdateModule
+{
+	friend class Rva002308A0WakeState;
+
+	protected:
+	void setWakeFrame( Object *object, UpdateSleepTime sleepTime );
+};
+
+#pragma comment(linker, "/alternatename:?setWakeFrame@UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z=?j_000157da@@YAXXZ")
+
+void Rva002308A0WakeState::clearAndWake( void )
+{
+	Object *object = *(Object **)((char *)this - 0xdc);
+	*(unsigned char *)((char *)this + 0x11a) = 0;
+	((UpdateModule *)((char *)this - 0xe4))->setWakeFrame( object, UPDATE_SLEEP_NONE );
+}
