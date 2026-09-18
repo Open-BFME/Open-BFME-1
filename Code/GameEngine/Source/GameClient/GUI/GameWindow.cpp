@@ -1433,15 +1433,16 @@ Int GameWindow::winSetTooltipFunc( GameWinTooltipFunc tooltip )
 // GameWindow::winSetCallbacks ================================================
 /** Sets the window's input, tooltip, and redraw callback functions. */
 //=============================================================================
-// ?winSetCallbacks@GameWindow@@QAEHP6A?AW4WindowMsgHandledType@@PAV1@III@ZP6AX0PAVWinInstanceData@@@ZP6AX02I@Z@Z present-unmatched
 Int GameWindow::winSetCallbacks( GameWinInputFunc input,
 																 GameWinDrawFunc draw,
 																 GameWinTooltipFunc tooltip )
 {
 
-	winSetInputFunc( input );
-	winSetDrawFunc( draw );
-	winSetTooltipFunc( tooltip );
+	if( input )
+		BFME_WIN_AT(this, 0x1e0, GameWinInputFunc) = input;
+	if( draw )
+		BFME_WIN_AT(this, 0x1e8, GameWinDrawFunc) = draw;
+	BFME_WIN_AT(this, 0x1ec, GameWinTooltipFunc) = tooltip;
 
 	return WIN_ERR_OK;
 
