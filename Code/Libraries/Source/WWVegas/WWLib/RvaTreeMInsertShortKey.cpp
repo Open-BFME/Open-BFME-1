@@ -9,11 +9,10 @@
 // incoming key with `mov ax, word ptr [ebp]` and tests it against `word ptr
 // [ebx+0x10]`.  A 16-bit key compared with `jb` is an unsigned short.
 //
-// One of the four allocates a 20-byte node -- sixteen of _Rb_tree_node_base and
-// four of value, which for a two-byte key means the value is the key padded, so
-// that tree is _Identity.  The other three allocate 24, leaving six bytes of
-// mapped type after the key at its two-byte alignment; nothing in the body says
-// what those six bytes hold, so each is a byte array named for the address.
+// One of the four allocates a 20-byte node: sixteen bytes of node base plus
+// four bytes of value storage.  Its constructor proves a two-byte key plus a
+// one-byte mapped payload.  The other three allocate 24-byte nodes, leaving
+// six bytes for mapped storage whose contents are not exposed by this body.
 
 struct BfmeRbTreeInsertAnchorHelper;
 
@@ -264,14 +263,16 @@ Rva0093FD80Tree::iterator BfmeRbTreeInsertAnchor0093FD80( Rva0093FD80Tree *tree,
 	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
 }
 
-typedef _STL::_Rb_tree<unsigned short, unsigned short,
-	_STL::_Identity<unsigned short>, _STL::less<unsigned short>,
-	_STL::allocator<unsigned short> > Rva00667BA0Tree;
+typedef _STL::pair<const unsigned short, unsigned char> Rva00667BA0Pair;
 
-// retail 0x00667BA0, a 20-byte node: the value is the key
+typedef _STL::_Rb_tree<unsigned short, Rva00667BA0Pair,
+	_STL::_Select1st<Rva00667BA0Pair>, _STL::less<unsigned short>,
+	_STL::allocator<Rva00667BA0Pair> > Rva00667BA0Tree;
+
+// retail 0x00667BA0, a 20-byte node with a byte payload
 Rva00667BA0Tree::iterator BfmeRbTreeInsertAnchor00667BA0( Rva00667BA0Tree *tree,
 	_STL::_Rb_tree_node_base *x, _STL::_Rb_tree_node_base *y,
-	const unsigned short &v, _STL::_Rb_tree_node_base *w )
+	const Rva00667BA0Pair &v, _STL::_Rb_tree_node_base *w )
 {
 	return BfmeRbTreeInsertAnchorHelper::run( tree, x, y, v, w );
 }
