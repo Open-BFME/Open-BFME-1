@@ -35,13 +35,13 @@ private:
 // ?addActionTemplate@BfmeScriptEngineTemplates@@QAEXPAVTemplate@@@Z
 void BfmeScriptEngineTemplates::addActionTemplate(Template *tmpl)
 {
-	for (int i = 0; i < 543; ++i)
+	for (int templateIndex = 0; templateIndex < 543; ++templateIndex)
 	{
-		if (m_actionTemplates[i].m_internalName.compare(tmpl->m_internalName) == 0)
+		if (m_actionTemplates[templateIndex].m_internalName.compare(tmpl->m_internalName) == 0)
 		{
-			m_actionTemplates[i].m_uiName = tmpl->m_uiName;
-			m_actionTemplates[i].m_uiName2 = tmpl->m_uiName2;
-			m_actionTemplates[i].m_helpText = tmpl->m_helpText;
+			m_actionTemplates[templateIndex].m_uiName = tmpl->m_uiName;
+			m_actionTemplates[templateIndex].m_uiName2 = tmpl->m_uiName2;
+			m_actionTemplates[templateIndex].m_helpText = tmpl->m_helpText;
 			return;
 		}
 	}
