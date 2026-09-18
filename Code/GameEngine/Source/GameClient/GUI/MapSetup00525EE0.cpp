@@ -1,45 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-// Retail's AsciiString derives from StringBase<char>: its own copy ctor is the
-// forwarder at 0x0005EE50 and it holds nothing of its own, so a caller that
-// copies a string encodes the base body at 0x00887B60 directly. The delegation
-// has to be visible here for this TU to encode the same call.
-template <typename T>
-class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase(const StringBase<T> &src);
-
-	struct Header
-	{
-		int ref_count;
-		unsigned short length;
-		unsigned short capacity;
-		T data[1];
-	};
-
-	Header *m_data;
-};
-
-class AsciiString
-{
-public:
-	AsciiString(const char *text);
-	// Retail inlines this forwarder, so the call site encodes
-	// StringBase<char>'s copy ctor at 0x00887B60 directly.
-	AsciiString(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&other);
-	}
-	~AsciiString();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
 
 class GameWindow;
 class GameSlot;
@@ -171,12 +132,21 @@ AsciiString GameInfo::getMap(void) const
 	return m_mapName;
 }
 
+struct StartPositionInfo
+{
+	unsigned char m_data[20];
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
 class MapMetaData
 {
 public:
-	unsigned char m_unmodelled[0x25];
+	unsigned char m_unmodelled[0x20];
+	int m_startPositionCount;
+	unsigned char m_unmodelled24;
 	bool m_isMultiplayer;
+	unsigned char m_unmodelled26[0x2e];
+	StartPositionInfo m_startPositions[1];
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
@@ -213,6 +183,7 @@ class Gen_00525EE0
 {
 public:
 	void bfmeRefresh(void);
+	const StartPositionInfo *bfmeGetStartPositionInfo(int slotIndex);
 	void bfmeShutdown(void);
 	void bfmeDispatchWindow(GameWindow *window);
 	int bfmeFindRepresentativeSlot(void);
@@ -481,4 +452,29 @@ unsigned short Gen_00525EE0::bfmeCountReadyPlayers(void)
 	while (--remaining);
 
 	return (unsigned short)count;
+}
+
+// Resolve the selected slot's start-position record in the current map.
+// ?bfmeGetStartPositionInfo@Gen_00525EE0@@QAEPBUStartPositionInfo@@H@Z
+const StartPositionInfo *Gen_00525EE0::bfmeGetStartPositionInfo(int slotIndex)
+{
+	if (m_first && !m_owner->bfmeContains(m_first))
+		m_first = 0;
+	if (m_second && !m_owner->bfmeContains(m_second))
+		m_second = 0;
+	if (m_first)
+	{
+		const MapMetaData *map = TheMapCache->findMap(m_first->getMap());
+		if (map)
+		{
+			GameSlot *slot = m_first->getSlot(slotIndex);
+			if (slot)
+			{
+				int position = slot->getStartPosition();
+				if (position >= 0 && position < map->m_startPositionCount)
+					return &map->m_startPositions[position];
+			}
+		}
+	}
+	return 0;
 }
