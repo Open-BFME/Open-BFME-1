@@ -99,6 +99,61 @@
 #include "WinMain.h"  /** @todo Remove this, it's only here because we
 													are using timeGetTime, but we can remove that
 													when we have our own timer */
+// BFME adds View and Display virtuals that the shared Zero Hour headers omit;
+// these scoped views preserve the witnessed slots and +0x104 camera offset.
+class BfmeW3DViewViewportVtable
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void setWidth(Int width);
+	virtual Int getWidth();
+	virtual void setHeight(Int height);
+	virtual Int getHeight();
+};
+
+class BfmeDisplayViewportVtable
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual UnsignedInt getWidth();
+	virtual UnsignedInt getHeight();
+};
+
+struct BfmeW3DViewViewportFields
+{
+	void *m_vtable;
+	unsigned char m_padding04[0x14];
+	Int m_width;
+	Int m_height;
+	Int m_originX;
+	Int m_originY;
+	unsigned char m_padding28[0x104 - 0x28];
+	CameraClass *m_3DCamera;
+};
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
@@ -206,59 +261,55 @@ W3DView::~W3DView()
 //-------------------------------------------------------------------------------------------------
 /** Sets the height of the viewport, while maintaining original camera perspective. */
 //-------------------------------------------------------------------------------------------------
-// ?setHeight@W3DView@@ present-unmatched
 void W3DView::setHeight(Int height)
 {
-	// extend View functionality
-	View::setHeight(height);
+	BfmeW3DViewViewportFields *fields = (BfmeW3DViewViewportFields *)this;
+	BfmeW3DViewViewportVtable *view = (BfmeW3DViewViewportVtable *)this;
+	fields->m_height = height;
 
 	Vector2 vMin,vMax;
-	m_3DCamera->Set_Aspect_Ratio((Real)getWidth()/(Real)height);
- 	m_3DCamera->Get_Viewport(vMin,vMax);
- 	vMax.Y=(Real)(m_originY+height)/(Real)TheDisplay->getHeight();
- 	m_3DCamera->Set_Viewport(vMin,vMax);
+	fields->m_3DCamera->Set_Aspect_Ratio((Real)view->getWidth()/(Real)height);
+	fields->m_3DCamera->Get_Viewport(vMin,vMax);
+	vMax.Y=(Real)(fields->m_originY+height)/(Real)((BfmeDisplayViewportVtable *)TheDisplay)->getHeight();
+	fields->m_3DCamera->Set_Viewport(vMin,vMax);
 }
 
 //-------------------------------------------------------------------------------------------------
 /** Sets the width of the viewport, while maintaining original camera perspective. */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewSetWidthBfmeLayout.cpp
-// ?setWidth@W3DView@@ present-unmatched
 void W3DView::setWidth(Int width)
 {
-	// extend View functionality
-	View::setWidth(width);
+	BfmeW3DViewViewportFields *fields = (BfmeW3DViewViewportFields *)this;
+	BfmeW3DViewViewportVtable *view = (BfmeW3DViewViewportVtable *)this;
+	fields->m_width = width;
 
 	Vector2 vMin,vMax;
-	m_3DCamera->Set_Aspect_Ratio((Real)width/(Real)getHeight());
- 	m_3DCamera->Get_Viewport(vMin,vMax);
- 	vMax.X=(Real)(m_originX+width)/(Real)TheDisplay->getWidth();
- 	m_3DCamera->Set_Viewport(vMin,vMax);
-
-	//we want to maintain the same scale, so we'll need to adjust the fov.
-	//default W3D fov for full-screen is 50 degrees.
-	m_3DCamera->Set_View_Plane((Real)width/(Real)TheDisplay->getWidth()*DEG_TO_RADF(50.0f),-1);
+	fields->m_3DCamera->Set_Aspect_Ratio((Real)width/(Real)view->getHeight());
+	fields->m_3DCamera->Get_Viewport(vMin,vMax);
+	vMax.X=(Real)(fields->m_originX+width)/(Real)((BfmeDisplayViewportVtable *)TheDisplay)->getWidth();
+	fields->m_3DCamera->Set_Viewport(vMin,vMax);
+	fields->m_3DCamera->Set_View_Plane((Real)width/(Real)((BfmeDisplayViewportVtable *)TheDisplay)->getWidth()*DEG_TO_RADF(50.0f),-1);
 }
 
 //-------------------------------------------------------------------------------------------------
 /** Sets location of top-left view corner on display */
 //-------------------------------------------------------------------------------------------------
-// ?setOrigin@W3DView@@ present-unmatched
 void W3DView::setOrigin( Int x, Int y)
 {
-	// extend View functionality
-	View::setOrigin(x,y);
+	BfmeW3DViewViewportFields *fields = (BfmeW3DViewViewportFields *)this;
+	BfmeW3DViewViewportVtable *view = (BfmeW3DViewViewportVtable *)this;
+	fields->m_originX = x;
+	fields->m_originY = y;
 
 	Vector2 vMin,vMax;
 
- 	m_3DCamera->Get_Viewport(vMin,vMax);
- 	vMin.X=(Real)x/(Real)TheDisplay->getWidth();
-	vMin.Y=(Real)y/(Real)TheDisplay->getHeight();
- 	m_3DCamera->Set_Viewport(vMin,vMax);
+	fields->m_3DCamera->Get_Viewport(vMin,vMax);
+	vMin.X=(Real)x/(Real)((BfmeDisplayViewportVtable *)TheDisplay)->getWidth();
+	vMin.Y=(Real)y/(Real)((BfmeDisplayViewportVtable *)TheDisplay)->getHeight();
+	fields->m_3DCamera->Set_Viewport(vMin,vMax);
 
-	// bottom-right border was also moved my this call, so force an update of extents.
-	setWidth(m_width);
-	setHeight(m_height);
+	view->setWidth(fields->m_width);
+	view->setHeight(fields->m_height);
 }
 
 //-------------------------------------------------------------------------------------------------
