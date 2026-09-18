@@ -1,5 +1,5 @@
 // ?bfmeComputeStatus@Weapon@@ABE?AW4WeaponStatus@@PA_N@Z
-// partial score=0.8365384615 date=2026-09-10
+// partial score=0.99 date=2026-09-18
 // cl: /O2 /Ob0 /DNDEBUG /MD
 
 typedef bool Bool;
@@ -84,17 +84,19 @@ WeaponStatus Weapon::bfmeComputeStatus(Bool *valid) const
 
 		if (getRemainingAmmo(false) > 0)
 			return READY_TO_FIRE;
-		const WeaponTemplate *templateForAmmo = m_template;
-		if (now < m_whenWeCanFireAgain ||
-			!templateForAmmo->m_ammo.isValid() || !bfmeAmmoReady())
+		if (now < m_whenWeCanFireAgain)
 			return OUT_OF_AMMO;
-		return READY_TO_FIRE;
+		WeaponTemplate *templateForAmmo = m_template;
+		if (!templateForAmmo->m_ammo.isValid() || !bfmeAmmoReady())
+			return OUT_OF_AMMO;
 	}
-
-	if (now < m_whenWeCanFireAgain)
+	else
 	{
-		if (!tmpl->m_ammo.isValid())
-			return m_status;
+		if (now < m_whenWeCanFireAgain)
+		{
+			if (!tmpl->m_ammo.isValid())
+				return m_status;
+		}
 	}
 
 	return getRemainingAmmo(false) > 0 ? READY_TO_FIRE : OUT_OF_AMMO;

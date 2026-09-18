@@ -1,4 +1,4 @@
-// ?getPerUnitSound@ThingTemplate@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z
+// ?getPerUnitSound@Drawable@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z
 // partial score=0.951 date=2026-09-09
 class AudioEventRTS;
 class AsciiString;
@@ -44,10 +44,11 @@ __forceinline BfmeOverridable *resolveParent(BfmeOverridable *parent)
 	return parent;
 }
 
-class ThingTemplate
+class Drawable
 {
 public:
 	const AudioEventRTS *getPerUnitSound(const AsciiString &name) const;
+	BfmePerUnitSoundEntry **getPerUnitSounds() const { return m_perUnitSounds; }
 
 private:
 	void *m_vtable;
@@ -59,11 +60,11 @@ private:
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-const AudioEventRTS *ThingTemplate::getPerUnitSound(const AsciiString &name) const
+const AudioEventRTS *Drawable::getPerUnitSound(const AsciiString &name) const
 {
 	const AsciiString *soundName = &name;
 	_ReadWriteBarrier();
-	BfmePerUnitSoundEntry **entry = m_perUnitSounds;
+	BfmePerUnitSoundEntry **entry = getPerUnitSounds();
 	if (entry != 0)
 	{
 		do
