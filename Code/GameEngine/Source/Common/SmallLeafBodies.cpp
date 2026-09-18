@@ -411,3 +411,19 @@ int Rva0044F610WordGetter::get( void ) const
 {
 	return m_value;
 }
+
+// mov eax,[ecx+4] / ret.  The field's owner is not identified.
+class Rva005B25C0DwordGetter
+{
+public:
+	int get( void ) const;
+
+private:
+	int m_prefix;
+	int m_value;
+};
+
+int Rva005B25C0DwordGetter::get( void ) const
+{
+	return m_value;
+}
