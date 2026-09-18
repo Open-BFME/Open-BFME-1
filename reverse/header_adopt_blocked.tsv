@@ -672,3 +672,4 @@ reverse/attempts/0x003f0f40.cpp	AsciiString	build.sh exited 1
 reverse/attempts/0x00527930.cpp	AsciiString	build.sh exited 1
 reverse/attempts/0x0068ef70.cpp	StringBase	build.sh exited 1
 Code/GameEngine/Source/Common/LivingWorldManagerRva006169D0.cpp	StringBase	Code\GameEngine\Source\Common\LivingWorldManagerRva006169D0.cpp(24) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
+Code/Libraries/Source/WWVegas/WWLib/RvaHashResizeGameSpyGroupRoomAt005C8870.cpp	AsciiString	Functions: FAIL 1/1
