@@ -1,8 +1,10 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
-// Lift the OptionPreferences::usesSystemMapDir naked dump to clean C++.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /ICode/Libraries/Source/WWVegas/WWLib
+// BFME OptionPreferences boolean getters. Shared preference-map layout for
+// UseSystemMapDir, HasSeenLogoMovies and HasGotOnline. The original preference
+// implementation lives in Common/UserPreferences.cpp.
 //
 // The preferences object is a string->string map, so every getter is the same
-// three steps: build the key, look it up, atoi the mapped string. The key lives
+// three steps: build the key, look it up, compare the mapped string. The key lives
 // in its own scope so it is destroyed after the lookup and before the end()
 // comparison, which is the order retail uses.
 //
@@ -15,26 +17,15 @@
 
 extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiStringData
+#include "ascii_string.h"
+
+// The retail getters inline this canonical StringBase accessor. Keep its
+// definition visible here without duplicating the shared string layout.
+template <typename T>
+inline const T *StringBase<T>::str() const
 {
-public:
-	unsigned char m_unreconstructed_00[8];
-	char m_chars[1];									///< retail this+0x08
-};
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
-{
-public:
-	AsciiString(const char *);
-	~AsciiString();
-
-	const char *str(void) const { return m_data ? m_data->m_chars : ""; }
-
-private:
-	AsciiStringData *m_data;
-};
+	return m_data ? &m_data->data[0] : (const T *)"";
+}
 
 struct PreferenceNode
 {
@@ -57,6 +48,8 @@ class OptionPreferences
 {
 public:
 	bool usesSystemMapDir(void);
+	bool hasSeenLogoMovies(void);
+	bool hasGotOnline(void);
 
 private:
 	unsigned char m_unreconstructed_00[4];
@@ -79,5 +72,38 @@ bool OptionPreferences::usesSystemMapDir(void)
 	{
 		return true;
 	}
+	return false;
+}
+
+// ?hasSeenLogoMovies@OptionPreferences@@QAE_NXZ
+bool OptionPreferences::hasSeenLogoMovies(void)
+{
+	PreferenceNode *it;
+	{
+		AsciiString key("HasSeenLogoMovies");
+		it = m_prefs.find(key);
+	}
+
+	if (it == m_prefs.end())
+		return false;
+
+	if (_strcmpi(it->m_value.str(), "yes") == 0)
+		return true;
+	return false;
+}
+
+bool OptionPreferences::hasGotOnline(void)
+{
+	PreferenceNode *it;
+	{
+		AsciiString key("HasGotOnline");
+		it = m_prefs.find(key);
+	}
+
+	if (it == m_prefs.end())
+		return false;
+
+	if (_strcmpi(it->m_value.str(), "yes") == 0)
+		return true;
 	return false;
 }

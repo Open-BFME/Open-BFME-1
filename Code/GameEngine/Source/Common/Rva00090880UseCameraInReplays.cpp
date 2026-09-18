@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 // Byte-twin of OptionPreferences::usesSystemMapDir at 0x00090780
-// (promoted__usesSystemMapDir_OptionPreferences_QAE_NXZ_00090780.cpp):
+// (OptionPreferencesFlags.cpp):
 // identical 95 bytes once relocations (and the key string literal, here
 // "UseCameraInReplays" not "UseSystemMapDir") are masked. Same PreferenceMap
 // find/end lookup shape; ?useCameraInReplays@OptionPreferences@@QAE_NXZ is
