@@ -46,7 +46,7 @@ public:
 class INIMemberA : public BfmeIniMemberInterface
 {
 public:
-	~INIMemberA(void);
+	__declspec(noinline) ~INIMemberA(void);
 
 	virtual void bfmeSlot0(void);
 
@@ -73,4 +73,10 @@ INIMemberA::~INIMemberA(void)
 		else
 			_STL::__node_alloc<true, 0>::_M_deallocate(m_bfmeStart, bytes);
 	}
+}
+
+// Retail scalar-deleting wrapper at RVA 0x009CC200.
+void DeleteINIMemberA(INIMemberA *member)
+{
+	delete member;
 }
