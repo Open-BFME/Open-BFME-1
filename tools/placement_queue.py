@@ -62,6 +62,25 @@ DELETING_DESTRUCTOR = re.compile(r"^\?\?_[EG]([A-Za-z_]\w*)@@")
 QUOTED_INCLUDE = re.compile(r'^\s*#include\s+"([^"]+)"', re.M)
 BARE_INCLUDE = re.compile(r'^\s*#include\s+"([^"/]+\.c(?:pp)?)"', re.M)
 CLASS_DECL = re.compile(r"^[ \t]*(?:class|struct)[ \t]+([A-Za-z_]\w*)\b[^;{]*\{", re.M)
+NON_CODE = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'', re.S)
+
+
+def implements_class(text, name):
+    """A matching filename alone does not establish class ownership.
+
+    Common/System/Debug.cpp implements global logging functions, whereas the
+    Debug class lives in the separate debug library. Require a class definition
+    or an out-of-line member body, ignoring comments, strings and mere calls.
+    This is conservative evidence collection, not a C++ parser.
+    """
+    code = NON_CODE.sub(" ", text)
+    if any(m.group(1).lower() == name.lower() for m in CLASS_DECL.finditer(code)):
+        return True
+    member = (r"\b" + re.escape(name)
+              + r"\s*::\s*~?[A-Za-z_]\w*\s*\((?:[^();{}]|\([^();{}]*\))*\)\s*"
+                r"(?:const\s*)?(?:throw\s*\([^)]*\)\s*)?"
+                r"(?::[^;{}]*)?\{")
+    return re.search(member, code, re.I) is not None
 
 
 def owning_class(mangled):
@@ -118,7 +137,9 @@ def zh_directories(root):
     for path in glob.glob(str(root / ZH) + "/**/*.cpp", recursive=True):
         # Evidence and ledger paths use forward slashes on every host.
         rel = Path(path).relative_to(root).as_posix()
-        out.setdefault(os.path.basename(rel)[:-4].lower(), os.path.dirname(rel))
+        name = Path(path).stem
+        if implements_class(Path(path).read_text(encoding="utf-8", errors="replace"), name):
+            out.setdefault(name.lower(), os.path.dirname(rel))
     return out
 
 

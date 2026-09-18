@@ -40,7 +40,8 @@ def _world(tmp_path):
     _write(root, f"{NETWORK}/keep-directory.txt")
 
     zh_root = queue.ZH
-    _write(root, f"{zh_root}/GameEngine/Source/GameNetwork/GameInfo.cpp")
+    _write(root, f"{zh_root}/GameEngine/Source/GameNetwork/GameInfo.cpp",
+           "void GameInfo::reset() {}\n")
     _write(root, f"{zh_root}/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupHostGame.cpp")
 
     ledger = (
@@ -158,6 +159,34 @@ def test_a_source_without_exact_zh_path_still_moves_to_its_class(tmp_path):
     queued, _skipped = queue.build(root)
 
     assert (MISPLACED, f"{NETWORK}/GameInfoReset.cpp", "GameInfo") in queued
+
+
+def test_reference_filename_does_not_move_an_unrelated_class(tmp_path):
+    root = tmp_path / "repo"
+    source = "Code/Libraries/Source/WWVegas/WWDebug/DebugAssert.cpp"
+    _write(root, source, "void Debug::AssertBegin() {}\n")
+    _write(root, "Code/GameEngine/Source/Common/System/keep.txt")
+    _write(root, f"{queue.ZH}/GameEngine/Source/Common/System/Debug.cpp",
+           '// Debug::AssertBegin() {}\n'
+           'const char *message = "Debug::AssertBegin() {}";\n'
+           'void DebugLog() { if (Debug::IsEnabled()) {} }\n')
+    _write(root, "reverse/functions.csv",
+           "name,export_rva,target_rva,target_size,source,status,notes\n"
+           f"?AssertBegin@Debug@@SAXXZ,,0x00100000,10,{source},matched,\n")
+
+    assert "debug" not in queue.zh_directories(root)
+    queued, _skipped = queue.build(root)
+    assert queued == []
+
+
+@pytest.mark.parametrize("body", [
+    "Debug::Debug() : m_enabled(true) {}",
+    "Debug::~Debug() {}",
+    "bool Debug::IsEnabled() const { return true; }",
+    "class Debug { public: void run() {} };",
+])
+def test_reference_class_implementation_is_positive_evidence(body):
+    assert queue.implements_class(body, "Debug")
 
 
 def test_a_source_rejected_by_the_placement_gate_is_not_requeued(tmp_path):
