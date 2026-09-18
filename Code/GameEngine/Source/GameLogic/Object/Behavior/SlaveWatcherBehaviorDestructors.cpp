@@ -1,5 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Constructor store at 0x00207341 writes UpdateModule+0x14; its independently
+// matched setWakeFrame callee and layout witness name m_nextCallFrameAndPhase.
+// Field +0x20 is passed to named findObjectByID by destructor 0x00207580;
+// retain its offset because the object relationship is not independently proved.
+// Complete destructor 0x00207580 also emits scalar wrapper 0x002076E0;
+// constructor 0x00207300 and vtable 0x010A64DC identify this class.
 
 class Thing;
 class ModuleData;
@@ -70,17 +75,17 @@ public:
 	virtual ~SlaveWatcherBehavior();
 
 private:
-	unsigned int m_f14;
+	unsigned int m_nextCallFrameAndPhase;
 	int m_f18;
 	int m_f1c;
-	int m_slaveID;
+	int m_objectID20;
 };
 
 SlaveWatcherBehavior::~SlaveWatcherBehavior()
 {
-	if (m_slaveID)
+	if (m_objectID20)
 	{
-		Object *slave = TheGameLogic->findObjectByID(m_slaveID);
+		Object *slave = TheGameLogic->findObjectByID(m_objectID20);
 		if (slave)
 			slave->kill(DAMAGE_NORMAL, DEATH_SLAVE_WATCHER_RELEASE);
 	}

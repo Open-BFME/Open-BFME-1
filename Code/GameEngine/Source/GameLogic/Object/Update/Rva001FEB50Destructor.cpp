@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: near-twin of ??1SlaveWatcherBehavior (0x00207580,
-// SlaveWatcherBehaviorDestructorThunk.cpp) and of ?d_002d3080 (0x002D3080,
+// SlaveWatcherBehaviorDestructors.cpp) and of ?d_002d3080 (0x002D3080,
 // Rva002D3080Destructor.cpp). Same UpdateModule chain plus one extra
 // interface base (vtable at +0x20, no intervening field-holder class), and a
 // guarded cleanup call on TheAudioClientUpdate passing a field at +0x24, then
