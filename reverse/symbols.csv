@@ -2075,6 +2075,7 @@ name,address,notes
 ??0?$_Vector_base@URva00196D90Element@@V?$allocator@URva00196D90Element@@@_STL@@@_STL@@QAE@IABV?$allocator@URva00196D90Element@@@1@@Z,0x00035B07,Rva00196D90 vector base allocation call target
 ??0?$_Vector_base@URva00197480Point@@V?$allocator@URva00197480Point@@@_STL@@@_STL@@QAE@IABV?$allocator@URva00197480Point@@@1@@Z,0x00028B28,canonical point-vector base constructor called by 00197480+A5; allocates n twelve-byte point records; body00193930 independently shape-matches100 bytes
 ??0?$_Vector_base@URva003A8DF0Record@@V?$allocator@URva003A8DF0Record@@@_STL@@@_STL@@QAE@IABV?$allocator@URva003A8DF0Record@@@1@@Z,0x0003E00E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003A8DF0 calls; autopin
+??0?$_Vector_base@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@QAE@IABV?$allocator@URva003AC170Element@@@1@@Z,0x0001826E
 ??0?$_Vector_base@URva00776240Vector60Element@@V?$allocator@URva00776240Vector60Element@@@_STL@@@_STL@@QAE@IABV?$allocator@URva00776240Vector60Element@@@1@@Z,0x0002766A,Rva00776240Vector60 copy constructor base call at 0x0076D020
 ??0?$_Vector_base@URva0077CC10Element@@V?$allocator@URva0077CC10Element@@@_STL@@@_STL@@QAE@IABV?$allocator@URva0077CC10Element@@@1@@Z,0x0013B200,vector base constructor called by the 0x0013BC80 copy body
 ??0?$_Vector_base@V?$vector@URva00197480Point@@V?$allocator@URva00197480Point@@@_STL@@@_STL@@V?$allocator@V?$vector@URva00197480Point@@V?$allocator@URva00197480Point@@@_STL@@@_STL@@@2@@_STL@@QAE@IABV?$allocator@V?$vector@URva00197480Point@@V?$allocator@URva00197480Point@@@_STL@@@_STL@@@1@@Z,0x00030427,canonical nested-vector base constructor called by 00197480+4D; allocates n twelve-byte inner-vector records; body001939B0 independently shape-matches100 bytes
@@ -3423,6 +3424,7 @@ name,address,notes
 ??0Rva0036CA00Str@@QAE@ABV0@@Z,0x00887C90,Open-BFME5 fresh thiscall copy ctor for 0x0036CA00 string members
 ??0Rva003A35A0Element@@QAE@ABU0@@Z,0x0001F573,near-twin pin: 0x003A35F0 vector<Rva003A35A0Element>::insert copy-ctor call target
 ??0Rva003A9860@@QAE@ABV0@@Z,0x00039FCC,Open-BFME5 ILT thunk to body 0x003B6950; LivingWorldCampaign copy ctor at 0x003B6BA0 copies its mission vector through it; address-derived name
+??0Rva003AC170Element@@QAE@ABU0@@Z,0x0004282A
 ??0Rva003B2BB0Record@@QAE@ABVAsciiString@@@Z,0x0003A0F8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B2BB0 calls; autopin
 ??0Rva003B7DC0Record@@QAE@XZ,0x0003D361,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B7DC0 calls; autopin
 ??0Rva003B8190Record@@QAE@XZ,0x00044823,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003B8190 calls; autopin
@@ -22836,7 +22838,6 @@ name,address,notes
 ?b_00100580@@YAXXZ,0x00100580,gen-thunk body
 ?b_00100660@@YAXXZ,0x00100660,gen-thunk body
 ?b_00100690@@YAXXZ,0x00100690,gen-thunk body
-?b_001012b0@@YAXXZ,0x001012B0,gen-thunk body
 ?b_00101820@@YAXXZ,0x00101820,gen-thunk body
 ?b_00101b30@@YAXXZ,0x00101B30,gen-thunk body
 ?b_00101b40@@YAXXZ,0x00101B40,gen-thunk body
@@ -82678,6 +82679,7 @@ name,address,notes
 ?get_allocator@?$vector@URva000FAA30Elem@@V?$allocator@URva000FAA30Elem@@@_STL@@@_STL@@QBE?AV?$allocator@URva000FAA30Elem@@@2@XZ,0x0002013A,allocator accessor call in the carved 0x000FAA30 copy body maps to the existing ret-argument helper at 0x000F9AD0
 ?get_allocator@?$vector@URva00197480Point@@V?$allocator@URva00197480Point@@@_STL@@@_STL@@QBE?AV?$allocator@URva00197480Point@@@2@XZ,0x00008580,canonical inner-vector get_allocator called by 00197480+85; hidden allocator result pointer returns unchanged; body001924A0 independently raw-matches7 bytes
 ?get_allocator@?$vector@URva003A8DF0Record@@V?$allocator@URva003A8DF0Record@@@_STL@@@_STL@@QBE?AV?$allocator@URva003A8DF0Record@@@2@XZ,0x000221E7,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003A8DF0 calls; autopin
+?get_allocator@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@QBE?AV?$allocator@URva003AC170Element@@@2@XZ,0x0000F146
 ?get_allocator@?$vector@URva0077CC10Element@@V?$allocator@URva0077CC10Element@@@_STL@@@_STL@@QBE?AV?$allocator@URva0077CC10Element@@@2@XZ,0x0013A9E0,allocator accessor called by the 0x0013BC80 copy body
 ?get_allocator@?$vector@V?$vector@URva00197480Point@@V?$allocator@URva00197480Point@@@_STL@@@_STL@@V?$allocator@V?$vector@URva00197480Point@@V?$allocator@URva00197480Point@@@_STL@@@_STL@@@2@@_STL@@QBE?AV?$allocator@V?$vector@URva00197480Point@@V?$allocator@URva00197480Point@@@_STL@@@_STL@@@2@XZ,0x0002C435,canonical outer-vector get_allocator called by 00197480+2D; hidden allocator result pointer returns unchanged; body001924D0 independently raw-matches7 bytes
 ?get_allocator@?$vector@VBfmeEntVTA@@V?$allocator@VBfmeEntVTA@@@_STL@@@_STL@@QBE?AV?$allocator@VBfmeEntVTA@@@2@XZ,0x0000BB36,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x003AACF0 calls; autopin
@@ -84524,6 +84526,7 @@ name,address,notes
 ?moveAlongWaypointPath@W3DView@@AAEXH@Z,0x0073CB10,address-derived BFME W3DView path helper
 ?moveAlongWaypointPath@W3DView@@AAEXH_N@Z,0x00741360,address-derived BFME W3DView path helper with mode
 ?moveMouse@Mouse@@IAEXHHH@Z,0x000141A5
+?moveObjectsForConstruction@BuildAssistant@@IAE_NPBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@@Z,0x001012B0,"source-proven from BuildAssistant.cpp: default/copy geometry collision iteration mine/inert/removable filters relationship test random displacement and forced AI move; sole buildObjectNow-shaped caller at 0x00101820"
 ?moveObjectsWithMe@GarrisonContain@@IAEXXZ,0x0021E970,GarrisonContain::update retail callee at +0x8f; source definition and 0x21E970 boundary establish the helper identity
 ?moveRoadSegTo@W3DRoadBuffer@@IAEXHH@Z,0x0003283F,ILT thunk -> 0x70b040 (checkLinkBefore callee)
 ?move_wt_changes@@YAXXZ,0x00875DD0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00877960 calls; autopin
@@ -88404,6 +88407,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-??0?$_Vector_base@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@QAE@IABV?$allocator@URva003AC170Element@@@1@@Z,0x0001826E
-??0Rva003AC170Element@@QAE@ABU0@@Z,0x0004282A
-?get_allocator@?$vector@URva003AC170Element@@V?$allocator@URva003AC170Element@@@_STL@@@_STL@@QBE?AV?$allocator@URva003AC170Element@@@2@XZ,0x0000F146
