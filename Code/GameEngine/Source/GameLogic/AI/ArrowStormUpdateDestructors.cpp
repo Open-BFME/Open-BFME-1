@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
+// Complete destructor 0x00257940 and emitted scalar wrapper 0x00257C70.
+// Constructor 0x002576E0, factories, module name, and vtable 0x00CB37C0
+// establish the identity; wrapper ILT 0x0003E879 reaches this teardown.
 
 #include <list>
 
