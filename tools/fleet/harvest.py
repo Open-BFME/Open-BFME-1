@@ -167,6 +167,11 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
                            why="ctor_vtable: the vtable this body leaves installed belongs to %s, not %s" % (flagged[rva], row["name"]))
                 run("git", "add", "-A", "--", *evidence); unstage_inflight()
                 print(f"harvest: quarantined {row['source']} (identity-suspect: vtable belongs to {flagged[rva]})")
+    # A placeholder member the evidence can already name fails the name oracle;
+    # its --apply is a byte-neutral rename, so let it settle what it can first
+    if keep:
+        subprocess.run([sys.executable, "tools/name_oracle.py", "--todo", "--apply", *keep], cwd=ROOT, capture_output=True)
+        run("git", "add", "--", *[k for k in keep if (ROOT / k).exists()])
     # A seat that invents a name and pins it with route= over a body the ledger
     # names differently fails pin consistency for the whole harvest (twice on
     # 2026-09-17). Quarantine the source that declares that class and drop its
