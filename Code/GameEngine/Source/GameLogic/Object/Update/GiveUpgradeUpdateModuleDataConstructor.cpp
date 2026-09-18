@@ -25,11 +25,17 @@ private:
 	unsigned int m_254;
 	unsigned int m_258;
 	unsigned int m_25c;
-	unsigned int m_260;
-	unsigned int m_264;
-	unsigned int m_268;
-	unsigned int m_26c;
-	unsigned char m_270;
+	// Named factory 0x0011AB80 passes ILT 0x00010CEE -> 0x0025D970.
+	// Its own FieldParse table at RVA 0x00CB51F0 witnesses these five
+	// names: GiveUpgradeEffect/+260, SpawnOutFX/+264, GiveUpgradeSound/+268,
+	// FadeOutSpeed/+26c and DeliverUpgrade/+270. Preserve this constructor
+	// view as raw four-byte storage: +26c is float data in parseReal
+	// (0x00852B20) and the named update body (0x0025E4B0).
+	unsigned int m_giveUpgradeEffect;
+	unsigned int m_spawnOutFX;
+	unsigned int m_giveUpgradeSound;
+	unsigned int m_fadeOutSpeed;
+	unsigned char m_deliverUpgrade;
 };
 
 // ??0GiveUpgradeUpdateModuleData@@QAE@XZ
@@ -40,9 +46,9 @@ GiveUpgradeUpdateModuleData::GiveUpgradeUpdateModuleData()
 	*reinterpret_cast<unsigned int volatile *>(&m_254) = 0;
 	*reinterpret_cast<unsigned int volatile *>(&m_258) = 0;
 	*reinterpret_cast<unsigned int volatile *>(&m_25c) = 0;
-	*reinterpret_cast<unsigned int volatile *>(&m_260) = 0;
-	*reinterpret_cast<unsigned int volatile *>(&m_264) = 0;
-	*reinterpret_cast<unsigned int volatile *>(&m_268) = 0;
-	*reinterpret_cast<unsigned char volatile *>(&m_270) = 0;
-	*reinterpret_cast<unsigned int volatile *>(&m_26c) = 0x3CCCCCCDu; // ~0.025f
+	*reinterpret_cast<unsigned int volatile *>(&m_giveUpgradeEffect) = 0;
+	*reinterpret_cast<unsigned int volatile *>(&m_spawnOutFX) = 0;
+	*reinterpret_cast<unsigned int volatile *>(&m_giveUpgradeSound) = 0;
+	*reinterpret_cast<unsigned char volatile *>(&m_deliverUpgrade) = 0;
+	*reinterpret_cast<unsigned int volatile *>(&m_fadeOutSpeed) = 0x3CCCCCCDu; // ~0.025f
 }

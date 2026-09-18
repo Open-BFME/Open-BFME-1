@@ -109,7 +109,9 @@ class GiveUpgradeUpdateModuleData
 {
 public:
 	unsigned char m_pad[0x26c];
-	float m_updateInterval;
+	// The named module-data factory reaches table RVA 0x00CB51F0;
+	// its +0x26c entry is FadeOutSpeed with INI::parseReal.
+	float m_fadeOutSpeed;
 };
 
 extern GameLogic *TheGameLogic;
@@ -161,7 +163,7 @@ UpdateSleepTime GiveUpgradeUpdate::update()
 	{
 		Object *objectForTimer = *reinterpret_cast<Object **>(rawThis - 8);
 		*reinterpret_cast<float *>(rawThis + 0xdc) -=
-			(*reinterpret_cast<GiveUpgradeUpdateModuleData **>(rawThis - 0xc))->m_updateInterval;
+			(*reinterpret_cast<GiveUpgradeUpdateModuleData **>(rawThis - 0xc))->m_fadeOutSpeed;
 		if (*reinterpret_cast<float *>(rawThis + 0xdc) < BfmeZeroRange)
 		{
 			TheGameLogic->destroyObject(objectForTimer);
