@@ -634,8 +634,20 @@ Short FirewallHelperClass::getSourcePortAllocationDelta() {
 	strcpy(nameBuf, host.str());
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/FirewallHelperClassDetectionBeginUpdateThunk.cpp
-// ?detectionBeginUpdate@FirewallHelperClass@@QAE_NXZ present-unmatched
+class FirewallHelperDetectionBeginUpdateShim
+{
+public:
+	Bool thunk();
+};
+
+// Retail gives the public symbol a separate five-byte ILT entry, so a TU-local
+// alias keeps that entry claim without replacing the readable member body.
+// ?detectionBeginUpdate@FirewallHelperClass@@QAE_NXZ
+Bool FirewallHelperDetectionBeginUpdateShim::thunk()
+{
+	return ((FirewallHelperClass *) this)->detectionBeginUpdate();
+}
+
 Bool FirewallHelperClass::detectionBeginUpdate() {
 //	UnsignedShort mangler_port = MANGLER_PORT;
 	 m_packetID = 0x7f00;
@@ -1276,84 +1288,59 @@ Bool FirewallHelperClass::detectionTest5Update() {
  * HISTORY:                                                                                    *
  *   3/15/01 4:45PM ST : Created                                                               *
  *=============================================================================================*/
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/FirewallHelper_getNATPortAllocationScheme.cpp
-// ?getNATPortAllocationScheme@FirewallHelperClass@@AAEHHPAG0AA_N1@Z present-unmatched
-// Real body 0x0066E870, 242 bytes (ghidra says 235; it stops short of the ret).
-// The algorithm below is retail's, read off that body, and it is nothing like
-// the reference's: no bubble sort, no scan over numPorts, just the first four
-// mangled ports tested for a constant stride, and if that fails, the same test
-// on the deltas against the source ports. numPorts is only ever used to bound
-// the subtract loop between the two passes.
-//
-// This compiles to retail's instruction sequence exactly, one instruction and
-// nine bytes short. Two things are left: retail keeps delta1 in eax from the
-// first subtract while this source lands it in edx, and retail lays the
-// return-0 block before the relativeDelta-only block rather than after. Both
-// are allocator and block-placement choices, not source ones.
 Int FirewallHelperClass::getNATPortAllocationScheme(Int numPorts, UnsignedShort *originalPorts, UnsignedShort *mangledPorts, Bool &relativeDelta, Bool &looksGood)
 {
-	/*
-	** BFME drops the reference's bubble sort entirely and just tests the first
-	** four mangled ports for a constant stride. Two consecutive deltas agreeing
-	** is enough to report a delta; all three agreeing is what makes it "good".
-	*/
-	Int delta1 = mangledPorts[1] - mangledPorts[0];
-	Int delta2 = mangledPorts[2] - mangledPorts[1];
-	Int delta3 = mangledPorts[3] - mangledPorts[2];
+	Int diff1 = mangledPorts[1] - mangledPorts[0];
+	Int diff2 = mangledPorts[2] - mangledPorts[1];
+	Int diff3 = mangledPorts[3] - mangledPorts[2];
 
-	if (delta1 == delta2) {
-		relativeDelta = FALSE;
-		if (delta2 == delta3) {
-			looksGood = TRUE;
-		} else {
-			looksGood = FALSE;
-		}
-		return delta1;
+	if (diff1 == diff2 && diff2 == diff3) {
+		relativeDelta = false;
+		looksGood = true;
+		return(diff1);
 	}
 
-	if (delta2 == delta3) {
-		relativeDelta = FALSE;
-		looksGood = FALSE;
-		return delta2;
+	if (diff1 == diff2) {
+		relativeDelta = false;
+		looksGood = false;
+		return(diff1);
 	}
 
-	/*
-	** No absolute stride. Convert the mangled ports to deltas against the source
-	** port they came from and look for a stride in those instead.
-	*/
-	for (Int i = 0; i < numPorts; i++) {
+	if (diff2 == diff3) {
+		relativeDelta = false;
+		looksGood = false;
+		return(diff2);
+	}
+
+	for (Int i=0 ; i<numPorts ; i++) {
 		mangledPorts[i] -= originalPorts[i];
 	}
 
-	delta1 = mangledPorts[1] - mangledPorts[0];
-	delta2 = mangledPorts[2] - mangledPorts[1];
-	delta3 = mangledPorts[3] - mangledPorts[2];
+	diff1 = mangledPorts[1] - mangledPorts[0];
+	diff2 = mangledPorts[2] - mangledPorts[1];
+	diff3 = mangledPorts[3] - mangledPorts[2];
 
-	if (delta1 == delta2) {
-		relativeDelta = TRUE;
-		if (delta2 == delta3) {
-			looksGood = TRUE;
-		} else {
-			looksGood = FALSE;
-		}
-		return delta1;
+	if (diff1 == diff2 && diff2 == diff3) {
+		relativeDelta = true;
+		looksGood = true;
+		return(diff1);
 	}
 
-	if (delta1 == delta3) {
-		relativeDelta = TRUE;
-		looksGood = FALSE;
-		return delta1;
+	if (diff1 == diff2 || diff1 == diff3) {
+		relativeDelta = true;
+		looksGood = false;
+		return(diff1);
 	}
 
-	if (delta2 == delta3) {
-		relativeDelta = TRUE;
-		looksGood = FALSE;
-		return delta2;
+	if (diff2 == diff3) {
+		relativeDelta = true;
+		looksGood = false;
+		return(diff2);
 	}
 
-	relativeDelta = FALSE;
-	looksGood = FALSE;
-	return 0;
+	looksGood = false;
+	relativeDelta = false;
+	return(0);
 }
 
 
