@@ -10,13 +10,6 @@ extern "C" void *(__cdecl *bfme_memmove_ptr)(void *dst, const void *src, unsigne
 
 extern "C" __declspec(dllimport) void * __cdecl BfmeMemMove(void *dst, const void *src, unsigned int count);
 
-struct BfmeVectorRawAK
-{
-	void **m_bfmeBeginAK;
-	void **m_bfmeEndAK;
-	void **m_bfmeCapAK;
-};
-
 class BfmeNodeAK
 {
 public:
@@ -27,14 +20,67 @@ public:
 	BfmeNodeAK *m_bfmeNextAK;
 };
 
+struct BfmeVectorRawAK
+{
+	void **m_bfmeBeginAK;
+	void **m_bfmeEndAK;
+	void **m_bfmeCapAK;
+};
+
+class BfmeNodeAKInline
+{
+public:
+	__forceinline BfmeNodeAKInline(void *key)
+		: m_bfmeValuesAK()
+	{
+		m_bfmeKeyAK = key;
+		m_bfmeValuesAK.clear();
+		m_bfmeNextAK = 0;
+	}
+
+	_STL::vector<void *> m_bfmeValuesAK;
+	void *m_bfmeKeyAK;
+	BfmeNodeAKInline *m_bfmeNextAK;
+};
+
 class BfmeListAK
 {
 public:
+	void bfmeAddAK(void *key, void *value);
 	int bfmeDropAK(void *key, void *value);
 
 	BfmeNodeAK *m_bfmeHeadAK;
 	BfmeNodeAK *m_bfmeRootAK;
 };
+
+void BfmeListAK::bfmeAddAK(void *key, void *value)
+{
+	BfmeNodeAK **root = &m_bfmeRootAK;
+	BfmeNodeAK *n = *root;
+
+	m_bfmeHeadAK = n;
+	while (n != 0)
+	{
+		if (n->m_bfmeKeyAK == key)
+			break;
+		n = n->m_bfmeNextAK;
+	}
+	if (n != 0)
+	{
+		for (unsigned int i = 0; i < n->m_bfmeValuesAK.size(); ++i)
+		{
+			if (n->m_bfmeValuesAK.begin()[i] == value)
+				return;
+		}
+		n->m_bfmeValuesAK.push_back(value);
+		return;
+	}
+	n = (BfmeNodeAK *)new BfmeNodeAKInline(key);
+	n->m_bfmeValuesAK.push_back(value);
+	if (*root != 0)
+		n->m_bfmeNextAK = *root;
+	*root = n;
+}
 
 BfmeNodeAK::BfmeNodeAK(void *key)
 	: m_bfmeValuesAK()
