@@ -123,7 +123,14 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     changed_sources = out("git", "diff", "--name-only", "--", "Code").splitlines()
     for source in changed_sources:
         if source in cited:
-            run("git", "add", "--", source)
+            # a tracked TU a seat is still editing fails the hook's byte-verify
+            # and takes every other landing down with it: stage it only once
+            # it verifies on its own (GameLOD.cpp and sortingrenderer.cpp, 2026-09-17)
+            v = subprocess.run(["bash", str(ROOT / "build.sh"), source], cwd=ROOT, capture_output=True, text=True, errors="replace")
+            if "Functions: OK" in v.stdout + v.stderr:
+                run("git", "add", "--", source)
+            else:
+                print(f"harvest: {source} does not byte-verify yet; left in flight")
     unt = out("git", "ls-files", "--others", "--exclude-standard", "Code").split()
     keep = [u for u in unt if u in cited]
     if keep:
