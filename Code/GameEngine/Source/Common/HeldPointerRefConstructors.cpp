@@ -33,7 +33,8 @@
 //
 // IDENTITY IS NOT RECOVERED.  No ledger-known vftable points at these bodies and
 // no RTTI descriptor is reachable from them, so each name is derived from its
-// own address.
+// own address.  The 46-byte assignment at 0x005BEB20 has the same held-reference
+// source and release sequence as the final assignment below.
 
 class RefTarget
 {
@@ -70,6 +71,23 @@ BFME_HELD_POINTER_REF( Rva005BEC00Ref )
 BFME_HELD_POINTER_REF( Rva005BEC90Ref )
 BFME_HELD_POINTER_REF( Rva005BED20Ref )
 BFME_HELD_POINTER_REF( Rva005BEDB0Ref )
+
+class Rva005BEB20Ref
+{
+public:
+	Rva005BEB20Ref &operator=( RefSource const &source );
+
+	RefTarget *m_ref;
+};
+
+Rva005BEB20Ref &Rva005BEB20Ref::operator=( RefSource const &source )
+{
+	RefTarget *ref = source.m_held ? source.m_held->refFetch() : 0;
+	if( m_ref )
+		m_ref->refRelease( true );
+	m_ref = ref;
+	return *this;
+}
 
 Rva005BEDB0Ref &Rva005BEDB0Ref::operator=( RefSource const &source )
 {
