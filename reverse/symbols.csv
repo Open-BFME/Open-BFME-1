@@ -9692,7 +9692,6 @@ name,address,notes
 ??1W3DMouseSurfaceRef@@QAE@XZ,0x008FC5B0,W3DMouse surface-reference destructor used by freeD3DAssets and its EH vector constructor
 ??1W3DOverlordTankDrawModuleData@@UAE@XZ,0x0003BD1D,route=0x002D36B0; scalar deleting destructor retail call targets the matched W3DOverlordTankDrawModuleData destructor through this ILT
 ??1W3DParticleSystemManager@@UAE@XZ,0x000290AA,authentic destructor callee; scalar-deleting wrapper vtable identity and ILT target prove the class
-??1W3DProjectedShadow@@QAE@XZ,0x00022962,ILT used when the projected-shadow manager explicitly destroys a recycled shadow
 ??1W3DProjectedShadowManager@@UAE@XZ,0x0001412D,exact constructor 0x007AF5A0 and dedicated vtable 0x01128404 establish the complete destructor thunk called by wrapper 0x007B4FB0
 ??1W3DProjectileStreamDraw@@UAE@XZ,0x000442D3,route=0x00369CF0; scalar deleting destructor retail call targets the matched W3DProjectileStreamDraw destructor through this ILT
 ??1W3DProjectileStreamResources@@QAE@XZ,0x00027EAD,Open-BFME5 W3DProjectileStreamDraw resource cleanup ILT pin

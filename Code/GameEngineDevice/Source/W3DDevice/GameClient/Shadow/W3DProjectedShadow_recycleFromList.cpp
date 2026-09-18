@@ -8,7 +8,7 @@ struct W3DProjectedShadow
 	int m_type;
 	unsigned char m_pad1[0x9C];
 	W3DProjectedShadow *m_next;
-	~W3DProjectedShadow(void);
+	void rva007AEC10(void);
 };
 
 class W3DProjectedShadowManager
@@ -53,7 +53,7 @@ bool W3DProjectedShadowManager::recycleFromList(W3DProjectedShadow *shadow, W3DP
 
 			shadow->m_next = m_free;
 			m_free = shadow;
-			shadow->~W3DProjectedShadow();
+			shadow->rva007AEC10();
 			return true;
 		}
 

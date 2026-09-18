@@ -16,15 +16,18 @@ public:
 	unsigned long referenceCount;
 };
 
+// Partial observed view: pool recycling calls retail 0x007AEC10 on the
+// unchanged shadow receiver. This is separate from complete destruction
+// at 0x007AFF00; retain an address-qualified method until its name is proven.
 class W3DProjectedShadow
 {
 public:
-	~W3DProjectedShadow(void);
+	void rva007AEC10(void);
 
 private:
 	unsigned char m_shadowData[0x68];
-	RefCountedShadowResource *m_shadowTexture[2];
-	RefCountedShadowResource *m_shadowProjector;
+	RefCountedShadowResource *m_references68[2];
+	RefCountedShadowResource *m_reference70;
 };
 
 static void releaseReference(RefCountedShadowResource *resource)
@@ -33,19 +36,19 @@ static void releaseReference(RefCountedShadowResource *resource)
 		resource->deleteThis();
 }
 
-W3DProjectedShadow::~W3DProjectedShadow(void)
+void W3DProjectedShadow::rva007AEC10(void)
 {
 	for (int i = 0; i < 2; ++i)
 	{
-		if (m_shadowTexture[i] != 0)
+		if (m_references68[i] != 0)
 		{
-			releaseReference(m_shadowTexture[i]);
-			m_shadowTexture[i] = 0;
+			releaseReference(m_references68[i]);
+			m_references68[i] = 0;
 		}
 	}
-	if (m_shadowProjector != 0)
+	if (m_reference70 != 0)
 	{
-		releaseReference(m_shadowProjector);
-		m_shadowProjector = 0;
+		releaseReference(m_reference70);
+		m_reference70 = 0;
 	}
 }
