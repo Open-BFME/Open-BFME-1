@@ -248,6 +248,48 @@ public:
 	Int m_frame;
 };
 
+class BfmeEvaluateContainModule
+{
+public:
+#define BFME_EVALUATE_CONTAIN_SLOT(N) virtual void slot##N() = 0
+	BFME_EVALUATE_CONTAIN_SLOT(00); BFME_EVALUATE_CONTAIN_SLOT(01); BFME_EVALUATE_CONTAIN_SLOT(02);
+	BFME_EVALUATE_CONTAIN_SLOT(03); BFME_EVALUATE_CONTAIN_SLOT(04); BFME_EVALUATE_CONTAIN_SLOT(05);
+	BFME_EVALUATE_CONTAIN_SLOT(06); BFME_EVALUATE_CONTAIN_SLOT(07); BFME_EVALUATE_CONTAIN_SLOT(08);
+	BFME_EVALUATE_CONTAIN_SLOT(09); BFME_EVALUATE_CONTAIN_SLOT(10); BFME_EVALUATE_CONTAIN_SLOT(11);
+	BFME_EVALUATE_CONTAIN_SLOT(12); BFME_EVALUATE_CONTAIN_SLOT(13); BFME_EVALUATE_CONTAIN_SLOT(14);
+	BFME_EVALUATE_CONTAIN_SLOT(15); BFME_EVALUATE_CONTAIN_SLOT(16); BFME_EVALUATE_CONTAIN_SLOT(17);
+	BFME_EVALUATE_CONTAIN_SLOT(18); BFME_EVALUATE_CONTAIN_SLOT(19); BFME_EVALUATE_CONTAIN_SLOT(20);
+	BFME_EVALUATE_CONTAIN_SLOT(21); BFME_EVALUATE_CONTAIN_SLOT(22); BFME_EVALUATE_CONTAIN_SLOT(23);
+	BFME_EVALUATE_CONTAIN_SLOT(24); BFME_EVALUATE_CONTAIN_SLOT(25); BFME_EVALUATE_CONTAIN_SLOT(26);
+	BFME_EVALUATE_CONTAIN_SLOT(27); BFME_EVALUATE_CONTAIN_SLOT(28); BFME_EVALUATE_CONTAIN_SLOT(29);
+	BFME_EVALUATE_CONTAIN_SLOT(30); BFME_EVALUATE_CONTAIN_SLOT(31); BFME_EVALUATE_CONTAIN_SLOT(32);
+	BFME_EVALUATE_CONTAIN_SLOT(33); BFME_EVALUATE_CONTAIN_SLOT(34); BFME_EVALUATE_CONTAIN_SLOT(35);
+	BFME_EVALUATE_CONTAIN_SLOT(36); BFME_EVALUATE_CONTAIN_SLOT(37); BFME_EVALUATE_CONTAIN_SLOT(38);
+	BFME_EVALUATE_CONTAIN_SLOT(39); BFME_EVALUATE_CONTAIN_SLOT(40); BFME_EVALUATE_CONTAIN_SLOT(41);
+	BFME_EVALUATE_CONTAIN_SLOT(42); BFME_EVALUATE_CONTAIN_SLOT(43); BFME_EVALUATE_CONTAIN_SLOT(44);
+	BFME_EVALUATE_CONTAIN_SLOT(45); BFME_EVALUATE_CONTAIN_SLOT(46); BFME_EVALUATE_CONTAIN_SLOT(47);
+	BFME_EVALUATE_CONTAIN_SLOT(48); BFME_EVALUATE_CONTAIN_SLOT(49); BFME_EVALUATE_CONTAIN_SLOT(50);
+	BFME_EVALUATE_CONTAIN_SLOT(51); BFME_EVALUATE_CONTAIN_SLOT(52); BFME_EVALUATE_CONTAIN_SLOT(53);
+	BFME_EVALUATE_CONTAIN_SLOT(54); BFME_EVALUATE_CONTAIN_SLOT(55); BFME_EVALUATE_CONTAIN_SLOT(56);
+	BFME_EVALUATE_CONTAIN_SLOT(57); BFME_EVALUATE_CONTAIN_SLOT(58); BFME_EVALUATE_CONTAIN_SLOT(59);
+	BFME_EVALUATE_CONTAIN_SLOT(60); BFME_EVALUATE_CONTAIN_SLOT(61); BFME_EVALUATE_CONTAIN_SLOT(62);
+	BFME_EVALUATE_CONTAIN_SLOT(63);
+#undef BFME_EVALUATE_CONTAIN_SLOT
+	virtual Int getContainCount(Int) const = 0;
+};
+
+class BfmeEvaluateUnitObject
+{
+public:
+	unsigned char m_beforeObjectID[0x74];
+	ObjectID m_objectID;
+	unsigned char m_beforeContain[0x184];
+	BfmeEvaluateContainModule *m_contain;
+
+	ObjectID getID() const { return m_objectID; }
+	BfmeEvaluateContainModule *getContain() const { return m_contain; }
+};
+
 class BfmeScriptConditionTerrainLogic
 {
 public:
@@ -2249,10 +2291,12 @@ Bool ScriptConditions::evaluatePlayerDestroyedNOrMoreBuildings(Parameter *pPlaye
 //-------------------------------------------------------------------------------------------------
 /** evaluateUnitHasEmptied */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateUnitHasEmptied@ScriptConditions@@IAE_NPAVParameter@@@Z present-unmatched
 Bool ScriptConditions::evaluateUnitHasEmptied(Parameter *pUnitParm)
 {
-	Object *object = TheScriptEngine->getUnitNamed(pUnitParm->getString());
+	BfmeScriptConditionEngine *scriptEngine =
+		*(BfmeScriptConditionEngine **)0x012F076C;
+	BfmeEvaluateUnitObject *object = reinterpret_cast<BfmeEvaluateUnitObject *>(
+		scriptEngine->getUnitNamed(*(const AsciiString *)pUnitParm));
 	if (!object) {
 		return false;
 	}
@@ -2267,10 +2311,11 @@ Bool ScriptConditions::evaluateUnitHasEmptied(Parameter *pUnitParm)
 		stats = stats->m_nextStatus;
 	}
 
-	ContainModuleInterface *cmi = object->getContain();
-	Int numPeeps = cmi ? cmi->getContainCount() : 0;
+	BfmeEvaluateContainModule *cmi = object->getContain();
+	Int numPeeps = cmi ? cmi->getContainCount(0) : 0;
 
-	UnsignedInt frameNum = TheGameLogic->getFrame();
+	UnsignedInt frameNum = reinterpret_cast<BfmeScriptConditionGameLogic *>(
+		*(void **)0x012F0898)->m_frame;
 
 
 	if (stats == NULL) 
