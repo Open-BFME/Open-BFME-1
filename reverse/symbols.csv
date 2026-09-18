@@ -3394,6 +3394,7 @@ name,address,notes
 ??0Rva002542F0String@@QAE@ABV0@@Z,0x00887B60,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002542F0 calls; autopin
 ??0Rva002542F0String@@QAE@PBD@Z,0x00888BC0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002542F0 calls; autopin
 ??0Rva00262120Entry@@QAE@ABU0@@Z,0x00261440,exact90B noinline copy constructor for the scoped16-byte Object-pointer and inner-pointer-vector entry layout
+??0Rva00283DF0ExpLevelDrawEntry@@QAE@XZ,0x00283DF0,address-derived entry constructor called immediately after the 0x34-byte allocation in the ExpLevelDraw parser; direct body pin replaces its retail ILT route
 ??0Rva002BD020AIAttackState@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z,0x0000BF3C,local ABI constructor view for the GiantBirdGuardInnerState attack-state call
 ??0Rva002C11E0StateBase@@QAE@PAXVAsciiString@@@Z,0x000035B2,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002C11E0 calls; autopin
 ??0Rva002C1260StateMachine@@QAE@PAXVAsciiString@@@Z,0x00022F5C,address-derived GiantBird state machine constructor call
@@ -84700,6 +84701,7 @@ name,address,notes
 ?parse@QuadDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00043BF8,Open-BFME5 pin
 ?parse@RenderObjectDrawTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00037713,Open-BFME5 RenderObjectDrawTemplate retail parser
 ?parse@RenderObjectUpdateTemplateParseShim@FXParticleSystem@@QAEXPAVINI@@@Z,0x00002E3C,Open-BFME5 pin
+?parse@Rva002E7E00Owner@@QAEXVAsciiString@@@Z,0x002E7E00,address-derived owner; exact matched token-dispatch body and the ExpLevelDraw call site independently prove the by-value AsciiString ABI
 ?parse@Rva00608FE0Element@@QAEXPAVINI@@@Z,0x00044210,Open-BFME5 ILT for the SoundUpgrade INI record parser
 ?parse@Rva007FF700Date@@QAEHPBD@Z,0x007FF530,Rva007FF700Date date parser from the FESL blob cursor call sites
 ?parse@Rva00800780Addr@@QAEXPBDH@Z,0x007E86D0,jabba demangler connect-reply Addr parse alias of Rva007E8760Addr::parse
