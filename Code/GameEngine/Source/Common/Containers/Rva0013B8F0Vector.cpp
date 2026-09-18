@@ -71,6 +71,29 @@ struct Rva0013B8F0Element
 	~Rva0013B8F0Element(); // actual thiscall body 0x0013B8F0
 };
 
+// These two retail copies are STLport destroy-range helpers over the same
+// observed 20-byte record.  Their calls enter the element destructor through
+// ILT 0x0002F487; the original class identity remains address-qualified.
+void Rva0013C0E0Destroy(Rva0013B8F0Element *first,
+	Rva0013B8F0Element *last)
+{
+	while (first != last)
+	{
+		first->~Rva0013B8F0Element();
+		++first;
+	}
+}
+
+void Rva0013C170Destroy(Rva0013B8F0Element *first,
+	Rva0013B8F0Element *last)
+{
+	while (first != last)
+	{
+		first->~Rva0013B8F0Element();
+		++first;
+	}
+}
+
 // Explicit instantiation owns the vector and element operations without
 // adding a synthetic caller just to make the compiler emit them.
 template _STL::vector<Rva0013B8F0Element> &

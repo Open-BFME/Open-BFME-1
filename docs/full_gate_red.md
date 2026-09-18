@@ -111,6 +111,15 @@ its destructor releases a refcount. `ModuleInfo::Nugget` is twenty bytes with an
 are different objects, so the likely defect is the element type in the source
 rather than the pin.
 
+Resolved 2026-09-18: the two observed families now have separate address-qualified
+owners, `Code/GameEngine/Source/Common/Containers/Rva0013B8F0Vector.cpp` and
+`Code/GameEngine/Source/Common/Containers/Rva007701C0Vector.cpp`. The former
+retains the string-at-+0x0C/reference-at-+0x10 records; the latter retains the
+string-at-+0/vector-at-+4 records. All 821B and 1048B of their scoped ranges
+remain byte-verified. Their original class names are still unknown; unrelated
+legacy `ModuleInfo` candidate pins were preserved. The example below records
+the earlier investigation, not an outstanding failure of the corrected clear.
+
 Ten minutes of reading produced a hypothesis, not a settled answer. Seventy-five
 of those is the shape of this campaign.
 

@@ -2298,7 +2298,6 @@ name,address,notes
 ??0BFMETransitionGroup@@QAE@XZ,0x0048AAD0,TransitionGroup constructor called by retail getNewGroup
 ??0BFMEVertexFVFInfo@@QAE@II@Z,0x00964270,VertexBufferClass retail call targets the wrapper around the 0x40-byte FVF bit-layout initializer at 0x00964150
 ??0BFMEWaterTrackTextureHandle@@QAE@ABVRva009EBCE0AssetReference@@@Z,0x0090DB70,TU-local ABI constructor alias emitted by W3DWaterTracks.cpp; alternatename targets canonical ??0Gen0090DB70@@QAE@PAX@Z at 0x0090DB70
-??0BFME_ModuleInfoNuggetCopyLayout@@QAE@ABU0@@Z,0x0004ABEC,retail ILT target for isolated ModuleInfo Nugget copy helper
 ??0BFU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,BoneFXUpdate constructor calls the shared ObjectModule constructor ILT
 ??0BPU_BaseModuleData@@QAE@XZ,0x0000F0A6,BattlePlanUpdateModuleData constructs the shared module-data base through this ILT
 ??0BaikonurLaunchPowerModuleData@@QAE@XZ,0x0001ABF9,pinharvest x1 (thunk)
@@ -8864,7 +8863,6 @@ name,address,notes
 ??1ModelConditionUpgrade@@MAE@XZ,0x000387F3,vtable 0x00CCD48C slots name ModelConditionUpgrade; protected complete destructor called by wrapper 0x002D67D0
 ??1Module@@UAE@XZ,0x00047C53,base destructor ILT used by the optimized UpdateModule teardown
 ??1ModuleDataListStandIn@@QAE@XZ,0x001468A0,Open-BFME5 list-style sentinel container dtor from AnimalAIUpdate-family ModuleData dtor call sites
-??1ModuleTagString@@QAE@XZ,0x00026AB2,ModuleInfo::Nugget m_moduleTag AsciiString-like ILT
 ??1Money@@MAE@XZ,0x000424BA,exact constructor 0x000E1540 and dedicated vtable 0x00C83D18 establish the protected complete destructor called by wrapper 0x000CD530
 ??1MoneyCrateCollide@@MAE@XZ,0x000370A6,destructor ILT to 0x00217D60
 ??1MoneyCrateCollideModuleData@@UAE@XZ,0x0002BB2A,MoneyCrateCollideModuleData complete destructor ILT; factory/vtable and matched complete body establish this virtual destructor route through 0x00126FC0 to 0x00125E40
@@ -88392,3 +88390,5 @@ _isprint,0x009F7B8E,retail isprint import thunk; 0x007F91D0 passes four signed c
 ??0?$_Vector_base@VLivingWorldCampaignManager@@V?$allocator@VLivingWorldCampaignManager@@@_STL@@@_STL@@QAE@IABV?$allocator@VLivingWorldCampaignManager@@@1@@Z,0x0000219E
 ?get_allocator@?$vector@VLivingWorldCampaignManager@@V?$allocator@VLivingWorldCampaignManager@@@_STL@@@_STL@@QBE?AV?$allocator@VLivingWorldCampaignManager@@@2@XZ,0x00016699
 ?buildStructureToppleRandomIndexList@@YAXHHQAH@Z,0x002AEFB0,StructureToppleUpdate helper identity proven by the retail call at 0x002AF6D0 and the matching 70-byte body
+?_M_clear@?$vector@URva007701C0Element@@V?$allocator@URva007701C0Element@@@_STL@@@_STL@@IAEXXZ,0x00779E60,Actual98B20-stride cleanup; canonical overflow77AEA0 calls4B74 to779E60; body calls454A3 to proven record destructor7701C0 then releases storage; original class unknown
+?_M_insert_overflow@?$vector@URva007701C0Element@@V?$allocator@URva007701C0Element@@@_STL@@@_STL@@IAEXPAURva007701C0Element@@ABU3@ABU__false_type@2@I_N@Z,0x0077AEA0,Actual287B STLport reallocating insertion; finder77BC20 and push77B9E0 call1ADBB to77AEA0; construction6FD2 to772160 and cleanup4B74 to779E60 prove this string/vector record family

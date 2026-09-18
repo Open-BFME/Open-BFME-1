@@ -102,6 +102,14 @@ Different functions at different addresses with different sizes. These are real 
 
 ---
 
+The `ModuleInfoNuggetVector.cpp` clear failure above was resolved on 2026-09-18
+by separating the actual record families into
+`Code/GameEngine/Source/Common/Containers/Rva0013B8F0Vector.cpp` and
+`Code/GameEngine/Source/Common/Containers/Rva007701C0Vector.cpp`. Their 821B and
+1048B scoped unions remain exact. This does not establish original class names
+or resolve the separately listed `ThingFactory.cpp` claims. The table retains
+the original diagnostic evidence.
+
 ### 💡 NEXT ATTEMPTS (Recommended Order)
 
 Based on team lead guidance, attempt in this order with 2-failure bound per item:
