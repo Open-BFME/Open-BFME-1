@@ -2,6 +2,8 @@
 import sys
 from pathlib import Path
 
+import pytest
+
 TOOLS = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(TOOLS))
 import placement_queue as queue  # noqa: E402
@@ -156,6 +158,25 @@ def test_a_source_without_exact_zh_path_still_moves_to_its_class(tmp_path):
     queued, _skipped = queue.build(root)
 
     assert (MISPLACED, f"{NETWORK}/GameInfoReset.cpp", "GameInfo") in queued
+
+
+def test_a_source_rejected_by_the_placement_gate_is_not_requeued(tmp_path):
+    root = _world(tmp_path)
+    _write(root, queue.BLOCKED,
+           f"{MISPLACED}\tdefines a function no ledger row declares\n")
+
+    queued, skipped = queue.build(root)
+
+    assert all(source != MISPLACED for source, _target, _cls in queued)
+    assert skipped["a previous placement gate rejected the source"] == 1
+
+
+def test_a_malformed_placement_blocker_fails_explicitly(tmp_path):
+    root = _world(tmp_path)
+    _write(root, queue.BLOCKED, f"{MISPLACED}\n")
+
+    with pytest.raises(ValueError, match="expected source<TAB>reason"):
+        queue.build(root)
 
 
 def test_a_coarse_header_refines_to_one_established_descendant(tmp_path):

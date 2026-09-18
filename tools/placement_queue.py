@@ -40,6 +40,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ZH = "reference/CnC_Generals_Zero_Hour/GeneralsMD/Code"
 AREAS = ("Code/GameEngine", "Code/Libraries", "Code/GameEngineDevice")
 QUEUE = "reverse/placement_queue.tsv"
+BLOCKED = "reverse/placement_blocked.tsv"
 # The flat root of Common/ holds 6,892 files because the conversion lane writes
 # new TUs there by default. A class whose bodies mostly sit in the dumping ground
 # is not evidence that the dumping ground is where they belong, so it is never a
@@ -268,13 +269,33 @@ def included_by_siblings(root):
     return pinned
 
 
+def blocked_sources(root):
+    """Sources a previous placement gate proved cannot move as they stand."""
+    path = root / BLOCKED
+    if not path.exists():
+        return set()
+    blocked = set()
+    for number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
+        if not line:
+            continue
+        fields = line.split("\t")
+        if len(fields) != 2 or not all(fields):
+            raise ValueError(f"{BLOCKED}:{number}: expected source<TAB>reason")
+        blocked.add(fields[0])
+    return blocked
+
+
 def build(root):
     single, homes = survey(root)
     corroborating_homes = deleting_destructor_homes(root)
     pinned = included_by_siblings(root)
+    refused = blocked_sources(root)
     zh, zh_hdr = zh_directories(root), zh_header_directories(root)
     queue, skipped = [], collections.Counter()
     for source, cls in sorted(single.items()):
+        if source in refused:
+            skipped["a previous placement gate rejected the source"] += 1
+            continue
         dest = destination(
             root, source, cls, homes, zh, zh_hdr, corroborating_homes
         )

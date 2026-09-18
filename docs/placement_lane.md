@@ -95,15 +95,23 @@ and the evidence names a different home for it. Three sources, strongest first:
    not nominate one: ignoring them hid an exact destructor family split across
    two directories and let a stale identity-corrected TU nominate a third.
 
+The queue also excludes `reverse/placement_blocked.tsv`: those sources already
+failed the placement gate at the proposed path and remain blocked until the
+underlying source-claim, compile, or byte-match defect is repaired and its row is
+removed. Serving them again only repeats a known failure that `placement_batch.py`
+would refuse anyway.
+
 And three destinations are always refused: the flat `Common/` root (a class whose
 bodies mostly sit in the dumping ground is not evidence that the dumping ground is
 where they belong), a directory that does not exist, and **any ancestor of where
 the file already is** — a file inside the destination subtree is already home.
 
-Current queue: **839 files**, down from 1,368, because 529 of those entries were
-wrong (see below). 8,096 are skipped because no evidence names a destination —
-BFME-specific classes and free functions with no ZH twin, blocked on
-identification rather than on this lane.
+The regenerated `reverse/placement_queue.tsv` and the tool's printed skip summary
+are the authoritative current state; counts become stale as other workers land
+moves and evidence guards. An empty queue means this evidence-backed lane is
+exhausted, not broken. Sources skipped because no evidence names a destination —
+primarily BFME-specific classes and free functions with no ZH twin — remain
+blocked on identification rather than on placement tooling.
 
 ## Weak evidence must never outrank strong
 
