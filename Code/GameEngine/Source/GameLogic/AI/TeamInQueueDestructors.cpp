@@ -6,12 +6,18 @@
 // at +0x31/+0x32) and nulling the list head. Unlike ZH, BFME's TeamInQueue
 // has a single base (no Snapshot subobject) and uses plain delete.
 
+// The emitted scalar wrapper routes via ILT 0x0002C1B5 to 0x00160ED0.
+// Vtable 0x00C96940 names TeamInQueue and routes slot zero via 0x000475AA.
+// WorkOrder+4: matched AIPlayer::dozerInQueue loads [edx+4] at 0x001657A0
+// and tests the ThingTemplate kind flags at +0xC8; AIPlayer.h names it m_thing.
+class ThingTemplate;
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class WorkOrder
 {
 public:
 	virtual ~WorkOrder();
-	int m_04;
+	const ThingTemplate *m_thing;
 	int m_08;
 	WorkOrder *m_next;	// +0x0c
 };
