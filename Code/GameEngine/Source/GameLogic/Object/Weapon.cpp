@@ -1541,20 +1541,6 @@ WeaponStore::WeaponStore()
 }
 
 //-------------------------------------------------------------------------------------------------
-// ??1WeaponStore@@UAE@XZ present-unmatched
-WeaponStore::~WeaponStore()
-{
-	deleteAllDelayedDamage();
-
-	for (Int i = 0; i < m_weaponTemplateVector.size(); i++)
-	{
-		WeaponTemplate* wt = m_weaponTemplateVector[i];
-		if (wt)
-			wt->deleteInstance();
-	}
-	m_weaponTemplateVector.clear();
-}
-
 //-------------------------------------------------------------------------------------------------
 // ?handleProjectileDetonation@WeaponStore@@QAEXPBVWeaponTemplate@@PBVObject@@PBUCoord3D@@I_N@Z present-unmatched
 void WeaponStore::handleProjectileDetonation(const WeaponTemplate* wt, const Object *source, const Coord3D* pos, WeaponBonusConditionFlags extraBonusFlags, Bool inflictDamage )
