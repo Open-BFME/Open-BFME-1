@@ -4594,7 +4594,7 @@ name,address,notes
 ??1BfmeBufERR@@QAE@XZ,0x00026F35,pin
 ??1BfmeCell@@QAE@XZ,0x0003DC2B,BfmeCellGrid vector cleanup calls this ILT to the 0x001B1200 cell destructor
 ??1BfmeCellGrid@@QAE@XZ,0x000046E2,VictorySystem::reset 0x001DE5B0 calls this ILT before operator delete for each non-null BfmeCellGrid; ILT target 0x001B1AC0 clears the grid allocations
-??1BfmeChainValue2@@QAE@XZ,0x000014D8,Open-BFME5 the carried value destructor the chain disposal at 0x00605820 runs
+??1Rva00605080Record@@QAE@XZ,0x000014D8,route=0x00605080; retail605820 destroys node+10 through this ILT; matched address-derived destruction prefix at node+10
 ??1BfmeChainValue@@QAE@XZ,0x000402BE,Open-BFME5 the carried value destructor the chain disposal at 0x005876D0 runs
 ??1BfmeChildA@@QAE@XZ,0x008976E0,Open-BFME5 the child destructor the teardown at 0x008AB8E0 calls
 ??1BfmeChildB@@QAE@XZ,0x0089CC70,Open-BFME5 the child destructor the teardowns at 0x008BD820 0x008BD880 and 0x008BD8E0 call
@@ -77552,7 +77552,7 @@ name,address,notes
 ?bfmeNotify@Gen_005fe880Sub@@QAEXPAVBfmeFlagTarget@@@Z,0x0000B235,Open-BFME5 ILT the refresh at 0x005FE880 calls on its sub-object
 ?bfmeNotify@Gen_005ff8d0Sub@@QAEXPAVBfmeFlagTarget@@@Z,0x0001F087,Open-BFME5 ILT the refresh at 0x005FF8D0 calls on its sub-object
 ?bfmeNotify@Gen_00600710Sub@@QAEXPAVBfmeFlagTarget@@@Z,0x00018926,Open-BFME5 ILT the refresh at 0x00600710 calls on its sub-object
-?bfmeNotify@Gen_00605820@@QAEXPAX@Z,0x000082D3,Open-BFME5 the owner notify the chain disposal at 0x00605820 calls per node
+?eraseSubtree@Rva00605820Tree@@QAEXPAURva00605820Node@@@Z,0x000082D3,route=0x00605820; retail605836 recurses on node+C with same ECX; canonical STLport _M_erase confirms right recursion
 ?bfmeNotify@Glo012F1028Sub@@QAEXXZ,0x0002DE89,Open-BFME5 ILT thunk to body 0x003CAD20; ?bfmeStep@Glo012F1024Entry@@QAEXXZ at 0x003A7320 tail-jumps into it from both arms on the sub-object at +0x28 of the global at 0x012F1028; address-derived name
 ?bfmeNotify@InGameUI@@QAEXXZ,0x00043DC9,Open-BFME5 UI notification tail-called by 0x00589940
 ?bfmeNotifyAH@BfmeOwnAH@@QAEXXZ,0x0001F181,pin
