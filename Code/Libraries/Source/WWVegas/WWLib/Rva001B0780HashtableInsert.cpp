@@ -69,10 +69,10 @@ private:
 
 	Rva001B0780Node *_M_new_node(const Rva001B0780Value &obj)
 	{
-		Rva001B0780Node *n = (Rva001B0780Node *)_STL::vectorSmallAllocate(sizeof(Rva001B0780Node));
-		n->_M_next = 0;
-		bfmeInitSubEFA(&n->_M_val, (void *)&obj);
-		return n;
+		Rva001B0780Node *node = (Rva001B0780Node *)_STL::vectorSmallAllocate(sizeof(Rva001B0780Node));
+		node->_M_next = 0;
+		bfmeInitSubEFA(&node->_M_val, (void *)&obj);
+		return node;
 	}
 
 	char m_pad0[4];						// three empty functors, padded to +0x00
@@ -84,11 +84,11 @@ Rva001B0780Value &Rva001B0780Hashtable::_M_insert(const Rva001B0780Value &obj)
 {
 	resize(_M_num_elements + 1);
 
-	size_type n = bucketOf(obj);
-	Rva001B0780Node *first = (Rva001B0780Node *)_M_buckets[n];
-	Rva001B0780Node *tmp = _M_new_node(obj);
-	tmp->_M_next = first;
-	_M_buckets[n] = tmp;
+	size_type bucketIndex = bucketOf(obj);
+	Rva001B0780Node *first = (Rva001B0780Node *)_M_buckets[bucketIndex];
+	Rva001B0780Node *node = _M_new_node(obj);
+	node->_M_next = first;
+	_M_buckets[bucketIndex] = node;
 	++_M_num_elements;
-	return tmp->_M_val;
+	return node->_M_val;
 }
