@@ -333,19 +333,6 @@ WeaponTemplate::WeaponTemplate() : m_nextTemplate(NULL)
 	m_dieOnDetonate						= FALSE;
 }
 
-//-------------------------------------------------------------------------------------------------
-// ??1WeaponTemplate@@MAE@XZ present-unmatched
-WeaponTemplate::~WeaponTemplate()
-{
-	if (m_nextTemplate) {
-		m_nextTemplate->deleteInstance();
-	}
-
-	// delete any extra-bonus that's present
-	if (m_extraBonus)
-		m_extraBonus->deleteInstance();
-}
-
 // ------------------------------------------------------------------------------------------------
 // ?reset@WeaponTemplate@@QAEXXZ present-unmatched
 void WeaponTemplate::reset( void )
