@@ -29,9 +29,9 @@ extern WindowManager *g_theWindowManager;
 // ?parchmentMapFadeLoadGame@@YAHH_N@Z
 int parchmentMapFadeLoadGame(int, bool start)
 {
-	const bool go = start;
+	const bool startRequested = start;
 	int result = 1;
-	if (go)
+	if (startRequested)
 	{
 		TheTransitionHandler->setGroup(AsciiString("PreParchmentMapFade_LoadGame"), 0);
 		if (g_obj12F4B58)
