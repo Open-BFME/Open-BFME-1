@@ -63,6 +63,9 @@ public:
 #include "Common/INI.h"
 #include "Common/INIException.h"
 #include "Common/Player.h"
+#include "Common/Science.h"
+#include "Common/UnicodeString.h"
+#include "Common/STLTypedefs.h"
 #pragma push_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
 #undef MEMORY_POOL_GLUE_WITHOUT_GCMP
 extern "C" void free(void *);
@@ -98,7 +101,45 @@ private: \
 		return ARGCLASS::getClassMemoryPool(); \
 	} \
 public:
-#include "GameLogic/RankInfo.h"
+// BFME's 0x38-byte RankInfo has five words that the Zero Hour header omits.
+class RankInfo : public Overridable
+{
+	MEMORY_POOL_GLUE_WITH_USERLOOKUP_CREATE( RankInfo, "RankInfo" );
+public:
+	RankInfo() throw();
+	RankInfo &operator=(const RankInfo &);
+
+	UnicodeString m_rankName;
+	Int m_skillPointsNeeded;
+	Int m_bfme_14;
+	Int m_bfme_18;
+	Int m_bfme_1c;
+	Int m_bfme_20;
+	Int m_bfme_24;
+	Int m_sciencePurchasePointsGranted;
+	ScienceVec m_sciencesGranted;
+};
+
+class RankInfoStore : public SubsystemInterface
+{
+public:
+	virtual ~RankInfoStore();
+
+	void init();
+	void reset();
+	void update() { }
+
+	Int getRankLevelCount() const;
+	const RankInfo* getRankInfo(Int level) const;
+	static void friend_parseRankDefinition(INI* ini);
+
+private:
+	typedef std::vector<RankInfo*> RankInfoVec;
+	RankInfoVec m_rankInfos;
+};
+
+extern RankInfoStore* TheRankInfoStore;
+
 #pragma pop_macro("MEMORY_POOL_GLUE_WITHOUT_GCMP")
 
 RankInfoStore* TheRankInfoStore = NULL;
@@ -216,4 +257,54 @@ const RankInfo* RankInfoStore::getRankInfo(Int level) const
 void INI::parseRankDefinition( INI* ini )
 {
 	RankInfoStore::friend_parseRankDefinition(ini);
+}
+
+void RankInfoStore::friend_parseRankDefinition( INI* ini )
+{
+	if (TheRankInfoStore)
+	{
+		Int rank = INI::scanInt(ini->getNextToken());
+
+		static const FieldParse myFieldParse[] =
+		{
+			{ "RankName", INI::parseAndTranslateLabel, NULL, offsetof( RankInfo, m_rankName ) },
+			{ "SkillPointsNeeded", INI::parseInt, NULL, offsetof( RankInfo, m_skillPointsNeeded ) },
+			{ "SciencesGranted", INI::parseScienceVector, NULL, offsetof( RankInfo, m_sciencesGranted ) },
+			{ "SciencePurchasePointsGranted", INI::parseUnsignedInt, NULL, offsetof( RankInfo, m_sciencePurchasePointsGranted ) },
+			{ 0, 0, 0, 0 }
+		};
+
+		if (ini->getLoadType() == INI_LOAD_CREATE_OVERRIDES)
+		{
+			if (rank < 1 || rank > TheRankInfoStore->m_rankInfos.size())
+			{
+				throw INIException( 3, "Rank not found in map.ini" );
+			}
+
+			RankInfo* info = TheRankInfoStore->m_rankInfos[rank-1];
+			if (!info)
+			{
+				throw INIException( 3, "Rank not found in map.ini" );
+			}
+
+			RankInfo* newInfo = newInstance(RankInfo);
+			info = (RankInfo*)(info->friend_getFinalOverride());
+
+			*newInfo = *info;
+			info->setNextOverride(newInfo);
+			newInfo->markAsOverride();
+
+			ini->initFromINI(newInfo, myFieldParse);
+		}
+		else
+		{
+			if (rank != TheRankInfoStore->m_rankInfos.size() + 1)
+			{
+				throw INIException( 3, "Ranks must increase monotonically" );
+			}
+			RankInfo* info = newInstance(RankInfo);
+			ini->initFromINI(info, myFieldParse);
+			TheRankInfoStore->m_rankInfos.push_back(info);
+		}
+	}
 }
