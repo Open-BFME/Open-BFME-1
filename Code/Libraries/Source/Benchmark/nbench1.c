@@ -1095,7 +1095,7 @@ static ulong DoBitfieldIteration(farulong *bitarraybase,
 		long bitoparraysize,
 		ulong *nbitops)
 {
-long i;                         /* Index */
+ulong i;                        /* Index */
 ulong bitoffset;                /* Offset into bitmap */
 ulong elapsed;                  /* Time to execute */
 /*
