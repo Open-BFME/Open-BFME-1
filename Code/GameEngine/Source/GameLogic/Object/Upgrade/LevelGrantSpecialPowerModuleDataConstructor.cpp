@@ -2,6 +2,8 @@
 
 #include <string.h>
 
+#include "../../../../Include/GameLogic/Rva0039D550.h"
+
 // BFME base view: named SpecialAbilityUpdate factory 0x00114140 allocates
 // 0x254 bytes and calls ILT 0x0003F503 -> matched constructor 0x002A5AA0.
 // This derived constructor calls that same base. Keep its witnessed size:
@@ -46,6 +48,7 @@ class LevelGrantSpecialPowerModuleData : public SpecialAbilityUpdateModuleData
 {
 public:
     LevelGrantSpecialPowerModuleData();
+    virtual ~LevelGrantSpecialPowerModuleData();
 
 private:
     volatile unsigned int m_numberOfLevels;
@@ -65,4 +68,12 @@ LevelGrantSpecialPowerModuleData::LevelGrantSpecialPowerModuleData()
     m_numberOfLevels = 1;
     memset(&m_affectsKindOf, 0, sizeof(m_affectsKindOf));
     m_useKindOf = 0;
+}
+
+class __declspec(novtable) LevelGrantSpecialPowerModuleData;
+
+// ??1LevelGrantSpecialPowerModuleData@@UAE@XZ
+LevelGrantSpecialPowerModuleData::~LevelGrantSpecialPowerModuleData()
+{
+    reinterpret_cast<Rva0039D550 *>(&m_member.m_acceptanceFilter)->~Rva0039D550();
 }
