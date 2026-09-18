@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
+// Complete destructor 0x0021D9C0 naturally emits scalar wrapper 0x0021E310.
+// Constructor 0x0021D820 and the matched method family independently identify
+// this class. Both retained bodies share this original source owner.
+//
 // The retail GarrisonContain object has OpenContain's nine polymorphic
 // subobjects followed by its 3x40 Coord3D array at offset 0x3fc.  Keep the
 // recovered layout in the proper source family so the SEH cleanup and base
