@@ -39,13 +39,13 @@ void ScriptEngine::removeObjectTypes(ObjectTypes *typesToRemove)
 	if (typesToRemove == 0)
 		return;
 
-	std::vector<ObjectTypes *>::iterator it = std::find(
+	std::vector<ObjectTypes *>::iterator objectTypesIt = std::find(
 		m_allObjectTypeLists.begin(), m_allObjectTypeLists.end(),
 		typesToRemove);
 
-	if (it == m_allObjectTypeLists.end())
+	if (objectTypesIt == m_allObjectTypeLists.end())
 		return;
 
 	typesToRemove->deleteInstance();
-	m_allObjectTypeLists.erase(it);
+	m_allObjectTypeLists.erase(objectTypesIt);
 }
