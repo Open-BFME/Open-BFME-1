@@ -5111,7 +5111,6 @@ name,address,notes
 ??1Gen009DB400@@QAE@XZ,0x009DB400,S3 delete-and-clear family callee destructor (address-derived name)
 ??1Gen009DB4D0@@QAE@XZ,0x009DB4D0,S3 delete-and-clear family callee destructor (address-derived name)
 ??1GenBase003BB1E0@@QAE@XZ,0x003BB260,base destructor tail-jumped by the vptr-only derived destructors in V4VptrDestructorTails.cpp; counterpart of the base constructor pinned at 0x003BB1E0
-??1GenRoot0082AE40@@UAE@XZ,0x0082AE40,Open-BFME5 the root destructor the /Od chain at 0x0082AE60 calls
 ??1Gen_0014C7A0@@UAE@XZ,0x0014E100,Open-BFME5 slot 0 of the table 0x010959D4; the virtual destructor of the class the ctor at 0x0014C7A0 builds
 ??1Gen_00193D50@@UAE@XZ,0x00195550,Open-BFME5 slot 0 of the table 0x0109C004
 ??1Gen_003A87D0@@UAE@XZ,0x003A88E0,Open-BFME5 slot 0 of the table 0x010EC774
@@ -10410,15 +10409,6 @@ name,address,notes
 ??_7Gen007F47E0@@6B@,0x00D2B248,Open-BFME5 vtable stored by the inline destructor folded into the scalar deleting destructor at 0x007F47E0
 ??_7Gen007FBAF0@@6B@,0x00D2BCD0,Open-BFME5 vtable stored by the inline destructor folded into the scalar deleting destructor at 0x007FBAF0
 ??_7Gen007FCF50@@6B@,0x00D2BEE8,Open-BFME5 vtable stored by the inline destructor folded into the scalar deleting destructor at 0x007FCF50
-??_7Gen0082AE60@@6B@,0x00D2E8C4,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AE60
-??_7Gen0082AE80@@6B@,0x00D2E8D0,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AE80
-??_7Gen0082AEA0@@6B@,0x00D2E8DC,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AEA0
-??_7Gen0082AEC0@@6B@,0x00D2E8E8,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AEC0
-??_7Gen0082AEE0@@6B@,0x00D2E8F4,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AEE0
-??_7Gen0082AF00@@6B@,0x00D2E900,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF00
-??_7Gen0082AF20@@6B@,0x00D2E90C,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF20
-??_7Gen0082AF40@@6B@,0x00D2E918,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF40
-??_7Gen0082AF60@@6B@,0x00D2E924,Open-BFME5 vtable restored at the head of the /Od destructor at 0x0082AF60
 ??_7Gen009D8CA0@@6B@,0x01144180,address-derived vftable operand written by the constructor at retail 0x009D8CB7
 ??_7Gen_001260D0ModuleDataVtbl@@6B@,0x00C8E998,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x001260D0 calls; autopin
 ??_7Gen_00471390@@6B@,0x010F756C,Gen_00471390 vtable installed by constructor 0x00471390; slot zero reaches complete destructor ILT 0x00023457 and scalar wrapper 0x00471850
@@ -75728,7 +75718,6 @@ name,address,notes
 ?bfmeClearNVUM@BfmeStrNVUM@@AAEXXZ,0x00887940,pin
 ?bfmeClearNVUN@BfmeStrNVUN@@AAEXXZ,0x00887940,pin
 ?bfmeClearNVUY@BfmeStrNVUY@@AAEXXZ,0x00887940,pin
-?bfmeClearPP@BfmeThingPP@@QAEXXZ,0x0082AE40,pin
 ?bfmeClearUXB@BfmeStrUXB@@QAEXXZ,0x00887940,pin
 ?bfmeClearUYA@BfmeStrUYA@@QAEXXZ,0x00887940,pin
 ?bfmeClearVHX@Rva006609D0@@AAEXXZ,0x00047686,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
@@ -76767,7 +76756,6 @@ name,address,notes
 ?bfmeFreeNodeVOA@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeNodeVOB@@YAXPAXI@Z,0x0082E5F0,pin
 ?bfmeFreeOneJT@@YAXPAX@Z,0x009A5980,pin free-one for BfmeConv2079
-?bfmeFreePP@@YAXPAX@Z,0x00881EB0,pin
 ?bfmeFreeRC@@YAXPAX@Z,0x00881EF0,pin
 ?bfmeFreeRecUNA@@YAXPAX@Z,0x00806580,pin
 ?bfmeFreeScalar@@YAXPAX@Z,0x00881EB0,Open-BFME5 the scalar free the holding-list clears at 0x0043F5D0 and 0x0043FBB0 call
@@ -83214,7 +83202,6 @@ name,address,notes
 ?handle@Gen00776AC0@@QAEXPAVFlagPairTarget@@@Z,0x00776AC0,address-derived callee of the 45-byte flag-pair-then-direct-call family; target read from the REL32 at its call sites
 ?handle@Gen00777EE0@@QAEXPAX0@Z,0x00777EE0,address-derived callee of the 13-byte field-pair forwarder family; target read from the REL32 at its call sites
 ?handle@Gen0081D040@@QAEXXZ,0x0081D040,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
-?handle@Gen0082AE40@@QAEXXZ,0x0082AE40,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen00832090@@QAEXXZ,0x00832090,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen00832740@@QAEXXZ,0x00832740,niladic __thiscall tail-jump target of an absolute-operand forwarder; address-derived name
 ?handle@Gen0083E8F0@@QAEXXZ,0x0083E8F0,address-derived tail-jump target of the node-flag updaters; thiscall on the node with no stack arguments
