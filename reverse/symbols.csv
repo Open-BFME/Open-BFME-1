@@ -10504,6 +10504,7 @@ name,address,notes
 ??_7MoneyCrateCollideModuleDataVtbl@@6B@,0x0108EAA0,MoneyCrateCollide vtbl
 ??_7MoveAwayAndCowerState@@6B@,0x0109AD88,exact constructor 0x00180450 installs this dedicated vtable; slot zero ILT 0x0001B162 reaches scalar wrapper 0x00185850
 ??_7MoveAwayPanicState@@6B@,0x0109A3E0,exact named constructor 0x0017F4A0 installs this dedicated vtable and passes AIMoveAwayPanicState
+??_7MoveOntoWallStateMachine@@6B@,0x010973F8,constructor 0x001819F0 installs this table after the StateMachine base; matched AIMoveOntoWallState onEnter and xfer callers prove the constructor identity
 ??_7OCLSpecialPowerModuleData@@6B@,0x010B6180,Parent raw ctor2631BB store and moduledatafactory120230 allocation230; vtable slot0 ILT339E2 to2637D0 deletingdtor then matched263800
 ??_7OathbreakerBody@@6BBehaviorModule@@@,0x010A8D40,primary vtable installed by the named constructor and destructor
 ??_7OathbreakerBody@@6BBehaviorModuleInterface@@@,0x010A8C78,secondary vtable at this+0x0C
