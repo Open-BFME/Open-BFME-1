@@ -148,7 +148,7 @@ LANAPI+0x8|m_lobbyPlayers|m_directConnectRemoteIP,Code/GameEngine/Source/GameNet
 LANAPI+0x8|m_lobbyPlayers|m_directConnectRemoteIP,Code/GameEngine/Source/GameNetwork/LANAPIAddPlayer.cpp,75,1.00,layout_witness
 LANAPI+0x8|m_lobbyPlayers|m_directConnectRemoteIP,Code/GameEngine/Source/GameNetwork/LANAPI_RequestChat_Thunk.cpp,197,1.00,layout_witness
 MeshGeometryClass+0x10|m_data|UserText,Code/Libraries/Source/WWVegas/WW3D2/MeshGeometryMeshModelLeafThunks.cpp,25,1.00,layout_witness
-MeshGeometryClass+0x18|m_flags|Flags,Code/Libraries/Source/WWVegas/WWLib/Rva00925030GetPlanesChecked.cpp,11,1.00,layout_witness
+MeshGeometryClass+0x18|m_flags|Flags,Code/Libraries/Source/WWVegas/WW3D2/Rva00925030GetPlanesChecked.cpp,11,1.00,layout_witness
 MeshMatDescClass+0x0|m_pass_count|PassCount,Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescClass_Reset_BFME.cpp,50,1.00,layout_witness
 MeshMatDescClass+0x0|m_pass_count|PassCount,Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescClass_ComputeRamSize.cpp,64,1.00,layout_witness
 MeshMatDescClass+0x4|m_vertex_count|VertexCount,Code/Libraries/Source/WWVegas/WW3D2/MeshMatDescClass_Reset_BFME.cpp,51,1.00,layout_witness
