@@ -115,6 +115,7 @@ class Rva000FA610
 {
 public:
 	Rva000FA610();
+	Rva000FA610(const unsigned char *source, int unused);
 	const Image *getPortrait(Player *player);
 
 	AsciiString m_name;
@@ -135,6 +136,19 @@ class Player
 public:
 	bool hasScience(ScienceType science) const;
 };
+
+Rva000FA610::Rva000FA610(const unsigned char *source, int unused)
+	: m_name(*(const AsciiString *)(source + 0x20)), m_prefix(), m_one()
+{
+	memset(&m_zero, 0, sizeof(m_zero));
+	m_value2c = *(const unsigned short *)(source + 0x47a);
+	m_value30 = -1;
+	m_value34 = (int)*(const float *)(source + 0x3bc);
+	m_flag = 0;
+	m_value3c = 0;
+	m_value40 = -1;
+	m_value44.initialize();
+}
 
 // ??0Rva000FA610@@QAE@XZ
 Rva000FA610::Rva000FA610()
