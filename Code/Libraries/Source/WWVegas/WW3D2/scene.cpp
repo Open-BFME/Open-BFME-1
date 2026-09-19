@@ -556,87 +556,62 @@ float SimpleSceneClass::Compute_Point_Visibility
  *   12/10/98  GTH : Created.                                                                 *
  *   06/27/02	KM Shader system light environment updates                                       *
  *=============================================================================================*/
-// ?Customized_Render@SimpleSceneClass@@ present-unmatched
+class BfmeSimpleSceneClassView
+{
+public:
+	virtual void slot00(void); virtual void slot01(void); virtual void slot02(void);
+	virtual void slot03(void); virtual void slot04(void); virtual void slot05(void);
+	virtual void slot06(void); virtual void slot07(void); virtual void slot08(void);
+	virtual void slot09(void); virtual void slot10(void); virtual void slot11(void);
+	virtual void slot12(void); virtual void slot13(void); virtual void slot14(void);
+	virtual void slot15(void); virtual void slot16(void); virtual void slot17(void);
+	virtual void slot18(void); virtual void slot19(void); virtual void slot20(void);
+	virtual void slot21(void); virtual void slot22(void); virtual void slot23(void);
+	virtual void slot24(void); virtual void slot25(void); virtual void slot26(void);
+	virtual void Visibility_Check(CameraClass *camera);
+
+	int m_refCount;
+	Vector3 AmbientLight;
+	char m_pad[0x48];
+	RefRenderObjListClass m_renderList;
+	RefRenderObjListClass m_updateList;
+	RefRenderObjListClass m_lightList;
+	RefRenderObjListClass m_releaseList;
+	RefRenderObjListClass m_listBC;
+	RefRenderObjListClass m_listD4;
+	RefRenderObjListClass m_visibleList;
+};
+
 void SimpleSceneClass::Customized_Render(RenderInfoClass & rinfo)
-{	
-//	SceneClass::Render(rinfo);
+{
+	BfmeSimpleSceneClassView *self = (BfmeSimpleSceneClassView *)this;
+	self->Visibility_Check(&rinfo.Camera);
 
-   // If visibility has not been checked for this scene since the last
-   // Render() call, check it (set/clear the visibility bit in all render
-   // objects in the scene).
-   if (!Visibility_Checked) {
-      // set the visibility bit in all render objects in all layers.
-	   Visibility_Check(&rinfo.Camera);
-   }
-   Visibility_Checked = false;	
-	
-	RefRenderObjListIterator it(&UpdateList);	
-
-	// allow all objects in the update list to do their "every frame" processing
-	for (it.First(); !it.Is_Done(); it.Next()) {
+	RefRenderObjListIterator it(&self->m_updateList);
+	for (; !it.Is_Done(); it.Next()) {
 		it.Peek_Obj()->On_Frame_Update();
 	}
 
-	// apply only the first four lights in the scene
-	// derived classes should use light environment
-	WWASSERT(rinfo.light_environment==NULL);
-	int count=0;
-	// Turn off lights in case we have none
-	DX8Wrapper::Set_Light(0,NULL);
-	DX8Wrapper::Set_Light(1,NULL);
-	DX8Wrapper::Set_Light(2,NULL);
-	DX8Wrapper::Set_Light(3,NULL);
+	DX8Wrapper::Set_Light(0, NULL);
+	DX8Wrapper::Set_Light(1, NULL);
+	DX8Wrapper::Set_Light(2, NULL);
+	DX8Wrapper::Set_Light(3, NULL);
 
-// (gth) WWShade only works with light environments.  We need to upgrade LightEnvironment to
-// support real point lights, etc.  It will likely just evolve into "the n most important" lights
-// rather than optimizing lights into directional lights...
-#if 0
-	for (it.First(&LightList); !it.Is_Done(); it.Next())
-	{		
-		if (count<4)
-		{
-			DX8Wrapper::Set_Light(count,*(LightClass*)it.Peek_Obj());
-		} else
-		{
-			// Simple scene only supports 4 global lights
-			WWDEBUG_SAY(("Light %d ignored\n",count));
-		}
-		count++;
-	}
-#endif
-
-	// adding light environment for new shader system
-	if (!rinfo.light_environment)
-	{
+	if (!rinfo.light_environment) {
 		static LightEnvironmentClass lenv;
 
-		lenv.Reset(Vector3(0,0,0),AmbientLight);
-
-		for (it.First(&LightList); !it.Is_Done(); it.Next()) 
-		{
-			lenv.Add_Light(*(LightClass*)it.Peek_Obj());
-		}	
+		lenv.Reset(Vector3(0, 0, 0), self->AmbientLight);
+		for (it.First(&self->m_lightList); !it.Is_Done(); it.Next()) {
+			lenv.Add_Light(*(LightClass *)it.Peek_Obj());
+		}
 		lenv.Pre_Render_Update(rinfo.Camera.Get_Transform());
-
-		rinfo.light_environment=&lenv;
+		rinfo.light_environment = &lenv;
 	}
 
-
-	// loop through all render objects in the list:
-	for (it.First(&RenderList); !it.Is_Done(); it.Next()) {
-
-		// get the render object
-		RenderObjClass * robj = it.Peek_Obj();
-
+	for (it.First(&self->m_visibleList); !it.Is_Done(); it.Next()) {
+		RenderObjClass *robj = it.Peek_Obj();
 		if (robj->Is_Really_Visible()) {
-			if (robj->Get_Render_Hook()) {
-				if (robj->Get_Render_Hook()->Pre_Render(robj, rinfo)) {
-					robj->Render(rinfo);
-				}
-				robj->Get_Render_Hook()->Post_Render(robj, rinfo);
-			} else {
-				robj->Render(rinfo);
-			}
+			robj->Render(rinfo);
 		}
 	}
 }
@@ -727,4 +702,63 @@ bool SimpleSceneIterator::Is_Done(void)
 RenderObjClass * SimpleSceneIterator::Current_Item(void)
 {
 	return RobjIterator.Peek_Obj();
+}
+
+struct BfmeSceneVectorElement
+{
+	BfmeSceneVectorElement();
+	~BfmeSceneVectorElement();
+	unsigned char bytes[0x1c];
+};
+
+struct Gen_00943CF0_Node
+{
+	Gen_00943CF0_Node *next;
+};
+
+struct Gen_uw_0002e866
+{
+	Gen_00943CF0_Node *head;
+	~Gen_uw_0002e866();
+};
+
+class BfmeSceneVector
+{
+	void clear(Gen_uw_0002e866 *objects);
+	void process(Gen_00943CF0_Node **objects);
+
+	unsigned char unused[0x18];
+	BfmeSceneVectorElement *vector;
+	int vector_max;
+	float scale;
+	unsigned int level_mask;
+
+public:
+	void Set_Level(unsigned int level);
+};
+
+void BfmeSceneVector::Set_Level(unsigned int level)
+{
+	if (level > 10)
+		return;
+
+	unsigned int mask = 1u << level;
+	if (mask == level_mask)
+		return;
+
+	level_mask = mask;
+	int count = 1;
+	while (level != 0) {
+		--level;
+		count = count * 4 + 1;
+	}
+
+	Gen_uw_0002e866 objects = {0};
+	clear(&objects);
+	if (vector)
+		delete[] vector;
+
+	vector_max = count;
+	vector = new BfmeSceneVectorElement[count];
+	process(&objects.head);
 }
