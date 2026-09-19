@@ -13153,6 +13153,7 @@ name,address,notes
 ?_M_clear@?$vector@UGen_t_006acaf0_p4cd@@V?$allocator@UGen_t_006acaf0_p4cd@@@_STL@@@_STL@@IAEXXZ,0x00532650,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_00745890_p24cd@@V?$allocator@UGen_t_00745890_p24cd@@@_STL@@@_STL@@IAEXXZ,0x00745830,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_007709c0_p24cd@@V?$allocator@UGen_t_007709c0_p24cd@@@_STL@@@_STL@@IAEXXZ,0x007707B0,gen-tgrid payload member
+?_M_clear@?$vector@UGen_t_00776080_p32cd@@V?$allocator@UGen_t_00776080_p32cd@@@_STL@@@_STL@@IAEXXZ,0x00771D80,ICF-folded vector clear body reached through ILT 0x00035DBE from 0x00774580; 32-byte stride and complete clear body verified
 ?_M_clear@?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@IAEXXZ,0x00014A06,GeometryShape vector assign callee
 ?_M_clear@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXXZ,0x00015168,ILT thunk used by call site
 ?_M_clear@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@IAEXXZ,0x000481E9,Legacy candidate spelling for the unknown20B reference/string record; actual callers771F60 and774410 use this ILT to771D00. The unrelated77AEA0 string/vector record instead calls4B74 to779E60; not proof of ModuleInfo identity
