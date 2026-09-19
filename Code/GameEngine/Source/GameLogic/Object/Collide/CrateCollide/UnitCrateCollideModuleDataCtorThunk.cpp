@@ -1,17 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-// Open-BFME5: UnitCrateCollideModuleData constructor lifted from retail.
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CrateCollide.h
-class CrateCollideModuleData
-{
-public:
-	CrateCollideModuleData();
-	virtual ~CrateCollideModuleData();
-
-private:
-	unsigned char m_data[0x50];
-};
+// Open-BFME5: UnitCrateCollideModuleData lifecycle lifted from retail.
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
 class AsciiString
@@ -22,11 +11,35 @@ public:
 	{
 	}
 
-	~AsciiString();
+	~AsciiString() { releaseBuffer(); }
 	void set(const char *text, int length);
 
 private:
+	void releaseBuffer();
+
 	char *m_data;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
+class Snapshot
+{
+public:
+	virtual ~Snapshot() {}
+};
+
+// The base string at +0x44 and the derived string at +0x58 are destroyed in
+// reverse ownership order. Keeping the base's trailing bytes explicit also
+// preserves the constructor's +0x54 derived-field boundary.
+class __declspec(novtable) CrateCollideModuleData : public Snapshot
+{
+public:
+	CrateCollideModuleData();
+	virtual ~CrateCollideModuleData() {}
+
+private:
+	unsigned char m_head[0x40];
+	AsciiString m_first;
+	unsigned char m_tail[0x0c];
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/UnitCrateCollide.h
@@ -47,4 +60,13 @@ UnitCrateCollideModuleData::UnitCrateCollideModuleData()
 {
 	m_unitCount = 0;
 	m_unitType.set("", 0);
+}
+
+// Retail elides the derived and intermediate vptr stores during teardown; the
+// final Snapshot vptr store remains observable in the inlined base destructor.
+class __declspec(novtable) UnitCrateCollideModuleData;
+
+// ??1UnitCrateCollideModuleData@@UAE@XZ
+UnitCrateCollideModuleData::~UnitCrateCollideModuleData()
+{
 }
