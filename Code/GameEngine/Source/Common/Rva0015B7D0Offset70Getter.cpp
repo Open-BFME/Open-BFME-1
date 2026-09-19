@@ -12,3 +12,16 @@ unsigned int Rva0015B7D0Offset70Getter::get_value()
 {
     return value;
 }
+
+struct Rva0015B7F0Offset28Getter
+{
+    unsigned char unused[0x1c];
+    unsigned int value;
+
+    unsigned int get_value();
+};
+
+unsigned int Rva0015B7F0Offset28Getter::get_value()
+{
+    return value;
+}
