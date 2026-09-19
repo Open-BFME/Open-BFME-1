@@ -4,7 +4,3 @@ Code/GameEngine/Source/Common/Thing/ModuleInfoClearAi.cpp	Code/GameEngine/Source
 Code/GameEngine/Source/Common/Thing/ModuleInfoClearCopiedFromDefaultEntries.cpp	Code/GameEngine/Source/GameClient/ModuleInfoClearCopiedFromDefaultEntries.cpp	ModuleInfo
 Code/GameEngine/Source/Common/Thing/ModuleInfoClearModuleDataWithTag.cpp	Code/GameEngine/Source/GameClient/ModuleInfoClearModuleDataWithTag.cpp	ModuleInfo
 Code/GameEngine/Source/GameLogic/Object/Update/DynamicGeometryInfoUpdateConstructor.cpp	Code/GameEngine/Source/GameLogic/Object/SpecialPower/DynamicGeometryInfoUpdateConstructor.cpp	SiegeDeployHordeSpecialPower
-Code/Libraries/Source/WWVegas/WWDebug/DebugIOFlat_ExpandMagic_Thunk.cpp	Code/Libraries/Source/debug/DebugIOFlat_ExpandMagic_Thunk.cpp	DebugIOFlat
-Code/Libraries/Source/WWVegas/WWDebug/DebugIONetConstructorThunk.cpp	Code/Libraries/Source/debug/DebugIONetConstructorThunk.cpp	DebugIONet
-Code/Libraries/Source/WWVegas/WWDebug/DebugIONetDestructorThunk.cpp	Code/Libraries/Source/debug/DebugIONetDestructorThunk.cpp	DebugIONet
-Code/Libraries/Source/WWVegas/WWDebug/DebugIONet_Create.cpp	Code/Libraries/Source/debug/DebugIONet_Create.cpp	DebugIONet
