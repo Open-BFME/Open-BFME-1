@@ -66,6 +66,12 @@ Rva00490350Derived::Rva00490350Derived( int arg, int token )
 		m_link->notify( arg );
 }
 
+Rva00490350Derived::~Rva00490350Derived()
+{
+	if( m_link )
+		m_link->notify( m_token );
+}
+
 class GameWindow;
 class GameWindowManager
 {
