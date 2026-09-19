@@ -13122,6 +13122,7 @@ name,address,notes
 ?_M_clear@?$vector@UGen_t_0020f660_p12pod@@V?$allocator@UGen_t_0020f660_p12pod@@@_STL@@@_STL@@IAEXXZ,0x0020F610,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_002304b0_p24cd@@V?$allocator@UGen_t_002304b0_p24cd@@@_STL@@@_STL@@IAEXXZ,0x00230450,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_00282af0_p12pod@@V?$allocator@UGen_t_00282af0_p12pod@@@_STL@@@_STL@@IAEXXZ,0x00038CEE,retail call target from _M_insert_overflow at 0x00282910
+?_M_clear@?$vector@UGen_t_002dbcb0_p8cd@@V?$allocator@UGen_t_002dbcb0_p8cd@@@_STL@@@_STL@@IAEXXZ,0x002DBCB0,caller-backed 8-byte vector clear helper
 ?_M_clear@?$vector@UGen_t_002e13b0_p12cd@@V?$allocator@UGen_t_002e13b0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x002E1330,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_002e19c0_p12cd@@V?$allocator@UGen_t_002e19c0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00043D33,Open-BFME5 target of the vector clear call in 0x002E1820
 ?_M_clear@?$vector@UGen_t_002e1a90_p12cd@@V?$allocator@UGen_t_002e1a90_p12cd@@@_STL@@@_STL@@IAEXXZ,0x002E1A10,gen-tgrid payload member
