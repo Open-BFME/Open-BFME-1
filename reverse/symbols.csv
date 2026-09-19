@@ -88451,3 +88451,7 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
+??$_Construct@VRva00244A80Element@@V1@@_STL@@YAXPAVRva00244A80Element@@ABV1@@Z,0x000128DC,retail vector element construction ILT called by 0x002459D0
+??0Rva00244A80Element@@QAE@XZ,0x0001AACD,retail 28-byte member-state constructor ILT called by 0x002459D0
+?_M_insert_overflow@?$vector@VRva00244A80Element@@V?$allocator@VRva00244A80Element@@@_STL@@@_STL@@IAEXPAVRva00244A80Element@@ABV3@ABU__false_type@2@I_N@Z,0x0000C5D6,retail vector overflow ILT called by 0x002459D0
+?applyMemberFormationState@Rva002459D0Owner@@AAEXPAVObject@@@Z,0x0000EFA2,retail formation-state helper ILT called by 0x002459D0
