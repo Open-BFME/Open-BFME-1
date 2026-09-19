@@ -107,6 +107,7 @@ BFME_DISP_ADDRESS_GETTER( Rva006948A0FieldAddress, 0x8C )
 BFME_DISP_ADDRESS_GETTER( Rva006C5580FieldAddress, 0x110 )
 BFME_DISP_ADDRESS_GETTER( Rva007EA660FieldAddress, 0x203 )
 BFME_DISP_ADDRESS_GETTER( Rva00746070FieldAddress, 0x78 )
+BFME_DISP_ADDRESS_GETTER( Rva00696310FieldAddress, 0x70 )
 
 // Six further members outside the 0x80..0x8000 window, four of them at a
 // NEGATIVE displacement.  Returning the address of a member cannot produce a
