@@ -82,6 +82,10 @@ class SpellScienceVector
 {
 public:
 	ScienceType *begin() const { return m_start; }
+	unsigned int size() const
+	{
+		return (unsigned int)( m_finish - m_start );
+	}
 
 private:
 	ScienceType *m_start;
@@ -138,7 +142,7 @@ void BfmeAptScreenSpellStore::unidentified_000062DF()
 		return;
 
 	int spell = 1;
-	char *controlOffset = (char *)0x9C;
+	int controlOffset = 0x9C;
 	SpellStorePair *field = m_fields260;
 	int remaining = 12;
 
@@ -167,7 +171,8 @@ void BfmeAptScreenSpellStore::unidentified_000062DF()
 
 		}
 
-		ScienceType science = data->getScienceVec().begin()[ 0 ];
+		ScienceType *scienceBegin = data->getScienceVec().begin();
+		ScienceType science = scienceBegin[ 0 ];
 		int cost = TheScienceStore->getSciencePurchaseCost( science );
 		{
 			UnicodeString costText;
