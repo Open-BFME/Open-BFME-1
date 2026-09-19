@@ -5,14 +5,17 @@
 // type sizes, never read out of the old placeholder names.
 
 // vptr, then five init-list members, then the RS_Member at 0x1c built out of
-// line. ModuleData carries a declared destructor so the EH frame appears.
+// line. ModuleData's inline virtual destructor restores its vptr after member
+// teardown.
+
+#include "../../../../Include/GameLogic/Rva0039D550.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
 class ModuleData
 {
 public:
 	virtual void moduleDataAnchor();
-	~ModuleData();
+	virtual ~ModuleData() {}
 
 	int m_moduleTagNameKey;
 };
@@ -21,7 +24,6 @@ class RS_Member
 {
 public:
 	RS_Member();
-	~RS_Member();
 
 private:
 	void *m_p;
@@ -32,6 +34,7 @@ class AutoDepositUpdateModuleData : public ModuleData
 {
 public:
 	AutoDepositUpdateModuleData();
+	virtual ~AutoDepositUpdateModuleData();
 
 	virtual void moduleDataAnchor();
 
@@ -47,4 +50,15 @@ public:
 AutoDepositUpdateModuleData::AutoDepositUpdateModuleData()
 	: m_depositFrame( 0 ), m_depositAmount( 0 ), m_initialCaptureBonus( 0 ), m_14( 0 ), m_18( 1.0f )
 {
+}
+
+// Retail tears down the +0x1c handle before restoring ModuleData's vptr.  The
+// late redeclaration suppresses only the redundant derived-vptr store here;
+// the complete class above retains the constructor's real field layout.
+class __declspec(novtable) AutoDepositUpdateModuleData;
+
+// ??1AutoDepositUpdateModuleData@@UAE@XZ
+AutoDepositUpdateModuleData::~AutoDepositUpdateModuleData()
+{
+	reinterpret_cast<Rva0039D550 *>(&m_1c)->~Rva0039D550();
 }
