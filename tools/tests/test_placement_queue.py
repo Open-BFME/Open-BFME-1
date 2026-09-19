@@ -295,6 +295,40 @@ def test_a_coarse_header_refines_to_one_established_descendant(tmp_path):
     assert (COMMAND_SET, f"{CONTROL_BAR}/BfmeConv1641.cpp", "CommandSet") in queued
 
 
+def test_a_coarse_header_keeps_a_source_in_its_descendant_family(tmp_path):
+    root = tmp_path / "repo"
+    current = "Code/GameEngine/Source/GameNetwork/GameSpy/Thread"
+    alternate = "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus"
+    candidate = f"{current}/PeerResponseCopies.cpp"
+    sources = [
+        ("??0PeerResponse@@QAE@ABV0@@Z", candidate),
+        ("??0PeerResponse@@QAE@XZ", f"{alternate}/PeerResponseConstructor.cpp"),
+        ("??1PeerResponse@@QAE@XZ", f"{alternate}/PeerResponseDestructor.cpp"),
+    ]
+    for _name, source in sources:
+        _write(root, source)
+
+    zh_root = queue.ZH
+    _write(root, f"{zh_root}/GameEngine/Include/GameNetwork/GameSpy/PeerThread.h",
+           "class PeerResponse { public: PeerResponse(); };\n")
+    _write(root, f"{zh_root}/GameEngine/Source/GameNetwork/GameSpy/keep-directory.txt")
+
+    rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
+    for index, (name, source) in enumerate(sources):
+        rows.append(f"{name},,0x{0x180000 + index * 0x10:08X},10,{source},matched,\n")
+    _write(root, "reverse/functions.csv", "".join(rows))
+
+    single, homes = queue.survey(root)
+    zh_hdr = queue.zh_header_directories(root)
+    assert zh_hdr["PeerResponse"].replace(queue.ZH, "Code", 1) == current.rsplit("/", 1)[0]
+    assert queue.destination(
+        root, candidate, single[candidate], homes, {}, zh_hdr
+    ) is None
+
+    queued, _skipped = queue.build(root)
+    assert all(source != candidate for source, _target, _cls in queued)
+
+
 def test_a_coarse_header_does_not_rank_multiple_descendant_homes(tmp_path):
     root = _split_home_world(tmp_path)
     single, homes = queue.survey(root)

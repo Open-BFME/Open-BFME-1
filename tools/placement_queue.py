@@ -223,11 +223,12 @@ def destination(root, source, cls, homes, zh, zh_hdr, corroborating_homes=None):
     if zh_dir:
         candidate = zh_dir.replace(ZH, "Code", 1)
         # ZH naming this very directory is the strongest evidence there is, and it
-        # says the file is already home -- stop, do not fall through. Falling
+        # says the file is already home -- including in a deeper established
+        # family -- so stop, do not fall through. Falling
         # through sent AssaultTransportAIUpdate.cpp from Object/Update/AIUpdate,
         # where ZH puts it, to GameLogic/AI on the strength of two siblings that
         # were themselves misplaced. Weak evidence must never outrank strong.
-        if candidate == here:
+        if candidate == here or here.startswith(candidate + "/"):
             return None
         if usable(candidate):
             return candidate
@@ -237,7 +238,7 @@ def destination(root, source, cls, homes, zh, zh_hdr, corroborating_homes=None):
     hdr_dir = zh_hdr.get(cls)
     if hdr_dir:
         candidate = hdr_dir.replace(ZH, "Code", 1)
-        if candidate == here:
+        if candidate == here or here.startswith(candidate + "/"):
             return None
         if candidate != DUMPING_GROUND and usable(candidate):
             # A header mirror proves the broad area, not that its root should
