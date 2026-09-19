@@ -96,3 +96,12 @@ StructureCollapseUpdateModuleData::StructureCollapseUpdateModuleData()
 	m_dieData4 = 1;
 	m_dieData9 = 1;
 }
+
+// Keep the constructor's derived-vptr store while suppressing the redundant
+// store at dtor entry, matching the retail destructor's novtable shape.
+class __declspec(novtable) StructureCollapseUpdateModuleData;
+
+// ??1StructureCollapseUpdateModuleData@@UAE@XZ
+StructureCollapseUpdateModuleData::~StructureCollapseUpdateModuleData()
+{
+}
