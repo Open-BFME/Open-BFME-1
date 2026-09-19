@@ -2182,9 +2182,36 @@ void DX8MeshRendererClass::Clear_Pending_Delete_Lists()
 // ----------------------------------------------------------------------------
 
 // ?Add_Rigid_Mesh_To_Container@@YAXPAV?$MultiListClass@VDX8FVFCategoryContainer@@@@IPAVMeshModelClass@@@Z
-// Body in dx8renderer_Add_Rigid_Mesh_To_Container.asm (exact 277B retail @ 0x009476F0).
-// C++ shape matches except class-layout offsets (SortLevel +0x1c vs +0x20; Is_Sorting +0xec
-// vs +0xe4; Rigid sizeof 0x100 vs 0xf8) — systemic MeshModel/DX8FVF layout, not leaf shape.
+struct BfmeRigidMeshSortLayout
+{
+	char prefix[0x18];
+	int flags;
+	char sort_level;
+};
+
+__declspec(noinline) void Add_Rigid_Mesh_To_Container(FVFCategoryList *container_list, unsigned fvf, MeshModelClass *mmc)
+{
+	WWASSERT(container_list);
+	DX8FVFCategoryContainer *container = NULL;
+	BfmeRigidMeshSortLayout *mesh = reinterpret_cast<BfmeRigidMeshSortLayout *>(mmc);
+	bool sorting = (mesh->flags & MeshModelClass::SORT)
+		&& WW3D::Is_Sorting_Enabled()
+		&& mesh->sort_level == 0;
+
+	FVFCategoryListIterator it(container_list);
+	while (!it.Is_Done()) {
+		container = it.Peek_Obj();
+		if (sorting == container->Is_Sorting() && container->Check_If_Mesh_Fits(mmc)) {
+			container->Add_Mesh(mmc);
+			return;
+		}
+		it.Next();
+	}
+
+	container = W3DNEW DX8RigidFVFCategoryContainer(fvf, sorting);
+	container_list->Add_Tail(container);
+	container->Add_Mesh(mmc);
+}
 
 // ----------------------------------------------------------------------------
 
