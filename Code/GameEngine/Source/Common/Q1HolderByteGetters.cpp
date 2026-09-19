@@ -53,3 +53,16 @@ Q1_HOLDER_BEFORE( Rva0021B8C0, Inner0021B8C0, 28 )
 Q1_HOLDER_BEFORE( Rva00280010, Inner00280010, 28 )
 Q1_HOLDER_BEFORE( Rva00289AD0, Inner00289AD0, 28 )
 Q1_HOLDER_AT( Rva002D4560, Inner002D4560, 4 )
+
+class Rva001E0DD0
+{
+public:
+	char get();
+
+	char m_lead[ 0x4C ];
+};
+
+char Rva001E0DD0::get()
+{
+	return m_lead[ 0x4C ];
+}
