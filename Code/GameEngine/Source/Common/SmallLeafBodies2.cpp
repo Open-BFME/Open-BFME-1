@@ -276,6 +276,18 @@ void Rva00697D40Increment( int *slot )
 	++*slot;
 }
 
+// mov eax,ecx / ret -- the body proves only that it returns its receiver.
+class Rva0006D1B0Self
+{
+public:
+	Rva0006D1B0Self *self();
+};
+
+Rva0006D1B0Self *Rva0006D1B0Self::self()
+{
+	return this;
+}
+
 // mov eax,[esp+8] / ret 8 -- the SECOND of two dword arguments returned,
 // callee cleanup and `this` never touched: __stdcall.
 int __stdcall Rva0006D1C0Second( int first, int second )
