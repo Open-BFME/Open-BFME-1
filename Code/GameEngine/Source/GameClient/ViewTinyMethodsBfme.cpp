@@ -25,6 +25,30 @@ public:
     virtual void Rva0045BB20Slot(unsigned int);
     virtual void Rva0045BB30Slot(unsigned int);
     virtual void Rva0045BB40Slot(unsigned int, unsigned int, unsigned int);
+    virtual void Rva0045BB70Slot(unsigned int);
+    virtual void Rva0045BB80Slot(unsigned int);
+    virtual void Rva0045BB90Slot(unsigned int);
+    virtual void Rva0045BBC0Slot(unsigned int, unsigned int, unsigned int,
+        unsigned int);
+    virtual int Rva0045BBD0Slot();
+    virtual int Rva0045BBE0Slot();
+    virtual void Rva0045BC20Slot(unsigned int, unsigned int);
+    virtual void Rva0045BC30Slot(unsigned int);
+    virtual void Rva0045BC50Slot(unsigned int, unsigned int, unsigned int,
+        unsigned int, unsigned int);
+    virtual void Rva0045BC60Slot(unsigned int, unsigned int, unsigned int,
+        unsigned int, unsigned int, unsigned int);
+    virtual void Rva0045BCA0Slot(unsigned int);
+    virtual void Rva0045BCB0Slot(unsigned int, unsigned int, unsigned int);
+    virtual void Rva0045BCD0Slot(unsigned int, unsigned int, unsigned int,
+        unsigned int);
+    virtual void Rva0045BCE0Slot(unsigned int, unsigned int, unsigned int,
+        unsigned int);
+    virtual void Rva0045BCF0Slot(unsigned int, unsigned int, unsigned int,
+        unsigned int);
+    virtual void Rva0045BD00Slot(unsigned int, unsigned int, unsigned int,
+        unsigned int);
+    virtual float Rva0045BD10Slot() const;
 
 private:
     unsigned char m_next[4];
@@ -76,4 +100,83 @@ void View::Rva0045BB30Slot(unsigned int)
 
 void View::Rva0045BB40Slot(unsigned int, unsigned int, unsigned int)
 {
+}
+
+void View::Rva0045BB70Slot(unsigned int)
+{
+}
+
+void View::Rva0045BB80Slot(unsigned int)
+{
+}
+
+void View::Rva0045BB90Slot(unsigned int)
+{
+}
+
+void View::Rva0045BBC0Slot(unsigned int, unsigned int, unsigned int,
+    unsigned int)
+{
+}
+
+int View::Rva0045BBD0Slot()
+{
+    return 0;
+}
+
+int View::Rva0045BBE0Slot()
+{
+    return 0;
+}
+
+void View::Rva0045BC20Slot(unsigned int, unsigned int)
+{
+}
+
+void View::Rva0045BC30Slot(unsigned int)
+{
+}
+
+void View::Rva0045BC50Slot(unsigned int, unsigned int, unsigned int,
+    unsigned int, unsigned int)
+{
+}
+
+void View::Rva0045BC60Slot(unsigned int, unsigned int, unsigned int,
+    unsigned int, unsigned int, unsigned int)
+{
+}
+
+void View::Rva0045BCA0Slot(unsigned int)
+{
+}
+
+void View::Rva0045BCB0Slot(unsigned int, unsigned int, unsigned int)
+{
+}
+
+void View::Rva0045BCD0Slot(unsigned int, unsigned int, unsigned int,
+    unsigned int)
+{
+}
+
+void View::Rva0045BCE0Slot(unsigned int, unsigned int, unsigned int,
+    unsigned int)
+{
+}
+
+void View::Rva0045BCF0Slot(unsigned int, unsigned int, unsigned int,
+    unsigned int)
+{
+}
+
+void View::Rva0045BD00Slot(unsigned int, unsigned int, unsigned int,
+    unsigned int)
+{
+}
+
+float View::Rva0045BD10Slot() const
+{
+    return *reinterpret_cast<const float *>(
+        reinterpret_cast<const char *>(this) + 0x28);
 }
