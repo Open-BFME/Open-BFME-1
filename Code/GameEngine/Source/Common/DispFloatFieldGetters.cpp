@@ -32,6 +32,20 @@
 		return m_value;                                                       \
 	}
 
+#define BFME_DISP8_FLOAT_GETTER( NAME, DISP )                                      \
+	class NAME                                                                \
+	{                                                                         \
+	public:                                                                   \
+		float get() const;                                                    \
+                                                                              \
+		char  m_lead[ DISP ];                                                 \
+		float m_value;                                                        \
+	};                                                                        \
+	float NAME::get() const                                                   \
+	{                                                                         \
+		return m_value;                                                       \
+	}
+
 BFME_DISP_FLOAT_GETTER( Rva000C9C20FloatField, 0x644 )
 BFME_DISP_FLOAT_GETTER( Rva000FB8B0FloatField, 0x258 )
 BFME_DISP_FLOAT_GETTER( Rva000FBFD0FloatField, 0x3B4 )
@@ -50,6 +64,7 @@ BFME_DISP_FLOAT_GETTER( Rva001BDB30FloatField, 0x40C )
 BFME_DISP_FLOAT_GETTER( Rva001BF3F0FloatField, 0x19C )
 BFME_DISP_FLOAT_GETTER( Rva001E0B80FloatField, 0x520 )
 BFME_DISP_FLOAT_GETTER( Rva001E0B90FloatField, 0x524 )
+BFME_DISP8_FLOAT_GETTER( Rva001E0BA0FloatField, 0x1C )
 BFME_DISP_FLOAT_GETTER( Rva001E1080FloatField, 0x398 )
 BFME_DISP_FLOAT_GETTER( Rva001ED5B0FloatField, 0x178 )
 BFME_DISP_FLOAT_GETTER( Rva001ED5C0FloatField, 0x17C )
