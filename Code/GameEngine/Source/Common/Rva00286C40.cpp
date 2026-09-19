@@ -1,18 +1,21 @@
-// ?d_00286c40@@YAXXZ
-// partial score=0.99 date=2026-09-17
-// cl: /DNDEBUG /MD /EHs-c-
-// Retail 0x00286C40.  The concrete owning update class is not proven; the
+// ?Rva00286C40@Rva00286C40Self@@QAEXPAVBfmeSeedTarget@@@Z
+// Retail 0x00286C40. The concrete owning update class is not proven, so the
 // address-derived owner preserves that uncertainty while the seed/Xfer ABI is
 // represented by the existing named callees.
+// cl: /DNDEBUG /MD /EHs-c-
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
 class BfmeSeedTarget;
+class Rva00286C40Self;
 
 class Gen_001ED0C0
 {
 public:
+	friend class Rva00286C40Self;
+
+private:
 	void bfmeAccept(BfmeSeedTarget *target);
 
 	unsigned char m_pad00[0x24];
@@ -73,10 +76,10 @@ public:
 	unsigned char m_pad00[0x70];
 };
 
-class Rva0003573DField
+class Rva000D6CF0Field
 {
 public:
-	void apply(BfmeSeedTarget *target);
+	void Rva000D6CF0(BfmeSeedTarget *target);
 };
 
 void bfmeCalcTGC(void *target, int *value);
@@ -92,7 +95,7 @@ public:
 	unsigned char m_field30[4];
 	unsigned char m_field34[8];
 	unsigned char m_field3C[4];
-	Rva0003573DField *m_field40;
+	Rva000D6CF0Field *m_field40;
 	BfmeSubAccept_0002C41C m_sub[4][4];
 	int m_field744;
 };
@@ -117,8 +120,8 @@ void Rva00286C40Self::Rva00286C40(BfmeSeedTarget *target)
 	target->takeAt78((char *)m_field40 + 8);
 	target->takeAt78((char *)m_field40 + 0xc);
 	target->takeAt6C((char *)m_field40 + 0x10);
-	((Rva0003573DField *)((char *)m_field40 + 0x14))->apply(target);
-	((Rva0003573DField *)((char *)m_field40 + 0x2c))->apply(target);
+	((Rva000D6CF0Field *)((char *)m_field40 + 0x14))->Rva000D6CF0(target);
+	((Rva000D6CF0Field *)((char *)m_field40 + 0x2c))->Rva000D6CF0(target);
 
 	bfmeCalcTGC(target, &m_field744);
 

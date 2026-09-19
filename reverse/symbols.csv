@@ -12291,6 +12291,7 @@ name,address,notes
 ?Rva000A87C0CopyConstruct@@YAXPAURva000A8820Entry@@ABU1@@Z,0x00044675,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000A8820 calls; autopin
 ?Rva000B73B0CopyConstruct@@YAXPAUCoord3D@@ABU1@@Z,0x0003FDA5,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000BF470 calls; autopin
 ?Rva000C41C0_isObjectShroudedForAction@@YA_NPBVObject@@0W4CommandSourceType@@@Z,0x000C3F80,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000C41C0 calls; autopin
+?Rva000D6CF0@Rva000D6CF0Field@@QAEXPAVBfmeSeedTarget@@@Z,0x0003573D,address-derived ABI from the 0x00286C40 call site and target body at 0x000D6CF0
 ?Rva0010C5E0XferScience@@YAPAVXfer@@PAV1@PAW4ScienceType@@@Z,0x0010C5E0,Address-qualified cdecl Xfer pointer and ScienceType pointer transfer; full 258-byte body returns Xfer pointer on both exits; actual ScienceStore calls and complete string cleanup graph audited
 ?Rva0014C090FieldParseTable@@3QBUFieldParse@@B,0x0109596C,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0014C090 calls; autopin
 ?Rva00194810@@YA?AURva0019B780Key@@ABVAsciiString@@@Z,0x00194810,support pin for pair-return key splitter used by 0x0019B780
