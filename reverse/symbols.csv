@@ -75973,6 +75973,7 @@ name,address,notes
 ?bfmeDestroy354A60@Rva0035B3D0RecordNode@@QAEXXZ,0x00354A60,direct body pin; retail 0x0035B3D0 calls through ILT 0x00028EC0 on the record+0x10 node; body adjusts this by +4 then reaches Script destructor 0x00352C20 with vtable 0x010E858C; campaign=luna36h-20260907;lane=expand01;model=gpt-5.6-sol-ultra
 ?bfmeDestroy@BfmeAptGameWindow@@QAEXXZ,0x00021FC1,APT game window base destruction helper
 ?bfmeDestroy@Gen_003AFBB0@@QAEXXZ,0x000066FE,route=0x003AFBB0; vector insertion clears existing storage through matched destroy body
+?bfmeDestroy@Gen_003B48B0@@QAEXXZ,0x003B48B0,address-derived ICF cleanup alias for the 32-byte vector insertion body at 0x003B6DF0; full body and thiscall ABI decoded independently
 ?bfmeDestroy@Rva0078AFC0Owned@@QAEXXZ,0x009EB7A0,retail reference-release callee for the assigned 0x0078AFC0 destructor
 ?bfmeDestroyAttributeEntry@@YAXPAUGen_t_0039e9d0_p128pod@@@Z,0x00015E7E,Open-BFME5 attribute pool element destroy helper ILT
 ?bfmeDestroyRange12@@YAXPAUBfmeElem12@@0PAD@Z,0x00014AA1,Open-BFME5 the element destroy helper the vector destroy at 0x006FA4E0 hands its range to
