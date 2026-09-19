@@ -1,11 +1,6 @@
 // ?finish@Rva003BEED0@@QAEXXZ
-// partial score=0.8 date=2026-09-18
+// partial score=0.9 date=2026-09-18
 // cl: /O2 /Ob1 /DNDEBUG /MD /EHsc
-//
-// Rva003BEED0::finish, retail 0x003BEC30, 167 bytes.
-// The ILT at 0x0000A754 and the seven callers identify this as the shared
-// pointer-vector refresh used by the living-world gate objects.  The first
-// callee returns the entry name through the existing StringBase copy ABI.
 
 extern void j_0004958a(void);
 extern void j_00044391(void);
@@ -63,6 +58,10 @@ struct Rva003BEC30Range
 {
 	Rva003BEC30Entry **m_begin;
 	Rva003BEC30Entry **m_end;
+	Rva003BEC30Entry **begin(void) const
+	{
+		return m_begin;
+	}
 
 	unsigned int size(void) const
 	{
@@ -83,10 +82,10 @@ public:
 
 void Rva003BEED0::finish(void)
 {
-	Rva003BEED0 *owner = this;
-	Rva003BEED0 *tierBase = this;
-	int value;
-	int index = 0;
+	register Rva003BEED0 *owner = this;
+	register Rva003BEED0 *tierBase = this;
+	register int value;
+	register int index = 0;
 	if (owner->m_entries.size() > 0)
 	{
 		union { void (*raw)(void); Rva003BEC30Invoke member; } invokeCast;
@@ -95,9 +94,9 @@ void Rva003BEED0::finish(void)
 		invokeCast.raw = j_00044391;
 		tierCast.raw = j_0002437a;
 		finishCast.raw = j_000394e6;
-			do
+		do
 		{
-			Rva003BEC30Entry *entry = owner->m_entries.m_begin[index];
+			Rva003BEC30Entry *entry = owner->m_entries.begin()[index];
 			if (entry->m_flag1d != 0)
 			{
 				{
