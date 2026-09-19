@@ -46,6 +46,10 @@ protected:
 
 class CrossFadeImage : public Transition
 {
+protected:
+	virtual ~CrossFadeImage();
+	friend void forceCrossFadeImageDeletingDestructor();
+
 public:
 	virtual void init(GameWindow *win);
 
@@ -60,6 +64,11 @@ private:
 	Int m_drawState;
 	void *m_image;
 };
+
+void forceCrossFadeImageDeletingDestructor()
+{
+	CrossFadeImage value;
+}
 
 // ?init@CrossFadeImage@@UAEXPAVGameWindow@@@Z
 void CrossFadeImage::init(GameWindow *win)
