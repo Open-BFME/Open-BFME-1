@@ -13134,6 +13134,7 @@ name,address,notes
 ?_M_clear@?$vector@UGen_t_003b1140_p12cd@@V?$allocator@UGen_t_003b1140_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00049265,Open-BFME5 target of the vector clear call in 0x003B05F0
 ?_M_clear@?$vector@UGen_t_003b1c00_p12cd@@V?$allocator@UGen_t_003b1c00_p12cd@@@_STL@@@_STL@@IAEXXZ,0x000147BD,Open-BFME5 target of the vector clear call in 0x003B14A0
 ?_M_clear@?$vector@UGen_t_003b1eb0_p12cd@@V?$allocator@UGen_t_003b1eb0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0001BEFA,Open-BFME5 target of the vector clear call in 0x003B1C50
+?_M_clear@?$vector@UGen_t_003b1bb0_p16cd@@V?$allocator@UGen_t_003b1bb0_p16cd@@@_STL@@@_STL@@IAEXXZ,0x00008837,clear thunk used by the 16-byte vector overflow body at 0x003B1340; ICF body is vector<W3DAnimationInfo>::_M_clear at 0x003B0E90
 ?_M_clear@?$vector@UGen_t_003b4920_p32cd@@V?$allocator@UGen_t_003b4920_p32cd@@@_STL@@@_STL@@IAEXXZ,0x003AFDA0,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_003b4a40_p16cd@@V?$allocator@UGen_t_003b4a40_p16cd@@@_STL@@@_STL@@IAEXXZ,0x003AFF10,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_003b4b60_p16cd@@V?$allocator@UGen_t_003b4b60_p16cd@@@_STL@@@_STL@@IAEXXZ,0x003AFF80,gen-tgrid payload member
