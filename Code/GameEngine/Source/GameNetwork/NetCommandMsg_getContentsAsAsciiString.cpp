@@ -42,6 +42,12 @@ public:
     NetCommandType type;
     int references;
 };
+// NetCommandMsg vtable 0x0111A20C slot 2 reaches the 3-byte retail body at 0x006627A0.
+bool NetCommandMsg::unknownSlot08()
+{
+    return false;
+}
+
 AsciiString NetCommandMsg::getContentsAsAsciiString()
 {
     AsciiString result;
