@@ -24,3 +24,7 @@ private:
 GameFont::GameFont()
 {
 }
+
+GameFont::~GameFont()
+{
+}
