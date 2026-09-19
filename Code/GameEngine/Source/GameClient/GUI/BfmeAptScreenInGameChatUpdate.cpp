@@ -44,12 +44,18 @@ extern void j_00023cc7( void );
 class BfmeAptScreenInGameChat
 {
 public:
+	virtual ~BfmeAptScreenInGameChat();
 	virtual int update( void );
 
 private:
 	char m_unmodelled[ 0x254 ];
 	int m_state;
 };
+
+void forceBfmeAptScreenInGameChatDeletingDestructor()
+{
+	BfmeAptScreenInGameChat value;
+}
 
 int BfmeAptScreenInGameChat::update( void )
 {
