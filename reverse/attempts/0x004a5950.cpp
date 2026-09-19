@@ -1,5 +1,5 @@
 // ?updateContextCommand@ControlBar@@AAEXXZ
-// partial score=0.11 date=2026-09-10
+// partial score=0.53 date=2026-09-18
 // cl: /DNDEBUG /MD /EHsc /Ireference/CnC_Generals_Zero_Hour/Generals/Code/Libraries/Include
 // Open-BFME: ControlBar::updateContextCommand, retail 0x004A5950 (959 bytes).
 //
@@ -21,7 +21,9 @@ enum CommandAvailability
 	COMMAND_ACTIVE = 2,
 	COMMAND_HIDDEN = 3,
 	COMMAND_NOT_READY = 4,
-	COMMAND_CANT_AFFORD = 5
+	COMMAND_CANT_AFFORD = 5,
+	COMMAND_DISABLED = 6,
+	COMMAND_UNAVAILABLE = 7
 };
 
 class Image;
@@ -218,7 +220,6 @@ public:
 void ControlBar::updateContextCommand(void)
 {
 	Object *obj = 0;
-	Int i;
 
 	if (m_currentSelectedDrawable)
 		obj = m_currentSelectedDrawable->getObject();
@@ -250,25 +251,67 @@ void ControlBar::updateContextCommand(void)
 		}
 	}
 
-	for (i = 0; i < 20; ++i)
+	Bool locallyControlled = obj ? obj->isLocallyControlled() : false;
+
+	GameWindow **commandWindow = m_commandWindows;
+	Int commandsRemaining = 20;
+	do
 	{
 		GameWindow *win;
 		const CommandButton *command;
-		if (!m_commandWindows[i])
+		if (!*commandWindow)
 			continue;
-		win = m_commandWindows[i];
+		win = *commandWindow;
 		command = (const CommandButton *)GadgetButtonGetData(win);
 		if (!command)
 			continue;
 
-		win->winClearStatus(0x04000000);
-		win->winClearStatus(0x01000000);
-		win->winClearStatus(0x40000000);
-		win->winClearStatus(0x80000000);
-
 		Real percent = 0.0f;
 		CommandAvailability availability =
 			getCommandAvailability(command, win, obj, &percent, false);
+		Bool suppressClock = false;
+		Bool inactivePlayer = false;
+		Bool replacedAvailability = false;
+
+		if (!locallyControlled)
+		{
+			if (Rva002EE330ThePlayers->m_localPlayer->isPlayerActive())
+			{
+				suppressClock = true;
+				if (availability != COMMAND_RESTRICTED &&
+					availability != COMMAND_HIDDEN)
+				{
+					replacedAvailability = true;
+					availability = COMMAND_RESTRICTED;
+				}
+			}
+			else
+			{
+				inactivePlayer = true;
+				if (availability == COMMAND_HIDDEN && win->winIsHidden())
+					continue;
+			}
+		}
+
+		if (availability == COMMAND_DISABLED &&
+			(command->getOptions() & 0x00400000) != 0 &&
+			!replacedAvailability)
+		{
+			availability = COMMAND_HIDDEN;
+		}
+
+		if (command->getCommandType() == 0x0F)
+		{
+			win->winSetStatus(0x01000000);
+			if (availability == COMMAND_HIDDEN)
+				win->winHide(true);
+			continue;
+		}
+
+		win->winClearStatus(0x00400000);
+		win->winClearStatus(0x01000000);
+		win->winClearStatus(0x40000000);
+		win->winClearStatus(0x80000000);
 
 		switch (availability)
 		{
@@ -277,13 +320,20 @@ void ControlBar::updateContextCommand(void)
 			break;
 		case COMMAND_RESTRICTED:
 			win->winEnable(false);
+			win->winSetStatus(0x80000000);
 			break;
 		case COMMAND_NOT_READY:
 			win->winEnable(false);
-			win->winSetStatus(0x80000000);
+			win->winSetStatus(0x00400000);
 			break;
 		case COMMAND_CANT_AFFORD:
+		case COMMAND_DISABLED:
 			win->winEnable(false);
+			win->winSetStatus(0x01000000);
+			break;
+		case COMMAND_UNAVAILABLE:
+			win->winEnable(false);
+			win->winSetStatus(0x80000000);
 			win->winSetStatus(0x01000000);
 			break;
 		default:
@@ -291,15 +341,19 @@ void ControlBar::updateContextCommand(void)
 			break;
 		}
 
-		if (availability == COMMAND_NOT_READY &&
-			percent != g_bfmeDefaultBU)
+		if (percent != g_bfmeDefaultBU && !suppressClock)
 		{
 			GadgetButtonDrawInverseClock(win,
 				(Int)(percent * g_bfmeScaleBC), m_buildUpClockColor);
 		}
 
-		if (command->getCommandType() != 0x0F &&
-			!command->hasOverlayStatus())
+		if (inactivePlayer && (win->winGetStatus() & 8) != 0)
+		{
+			win->winEnable(false);
+			win->winSetStatus(0x40000000);
+		}
+
+		if (!command->hasOverlayStatus())
 		{
 			((BfmeCommandButtonResolveILT *)command)->resolve();
 			GadgetButtonDrawOverlayImage(win, 0);
@@ -308,5 +362,7 @@ void ControlBar::updateContextCommand(void)
 		if (command->getOptions() & 0x00000400)
 			GadgetCheckLikeButtonSetVisualCheck(win,
 				availability == COMMAND_ACTIVE);
+
 	}
+	while (++commandWindow, --commandsRemaining != 0);
 }
