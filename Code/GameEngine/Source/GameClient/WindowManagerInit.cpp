@@ -1,11 +1,11 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
 // stlport
 //
 // WindowManager::init.  The constructor's vtable at 0x010F72A8 names this
 // body as slot 1; the slot layout and APT/vector offsets are shared with the
 // existing WindowManager constructor and destructor models.
 
-#include "../../../../reference/shims/stringinline/StringInline.h"
+#include "StringInline.h"
 
 #include <vector>
 
