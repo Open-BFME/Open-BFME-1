@@ -70,13 +70,13 @@ public:
 	{
 		Overridable *raw = (Overridable *)m_overridable;
 		const T *value;
-		if (raw == 0) {
-			value = 0;
-		} else {
+		if (raw != 0) {
 			Overridable *next = raw->m_nextOverride;
 			if (next != 0)
 				raw = (Overridable *)next->getFinalOverride();
 			value = (const T *)raw;
+		} else {
+			value = 0;
 		}
 		return value;
 	}
@@ -122,13 +122,13 @@ class BfmePlayerObjectDlinkObject : public BfmeObjectVtbl,
 	public BfmeObjectVbptrCarrier
 {
 public:
-	UnsignedByte m_tail[0x40];
-
 	const ThingTemplate *getTemplate() const
 	{
 		return m_template.operator->();
 	}
 };
+
+#define callMemberFunction(object, ptrToMember) ((object).*(ptrToMember))
 
 template <class ObjectType>
 class BfmePlayerDlinkIterator
@@ -145,7 +145,7 @@ public:
 	void advance()
 	{
 		if (m_cur)
-			m_cur = (m_cur->*m_getNext)();
+			m_cur = callMemberFunction(*m_cur, m_getNext)();
 	}
 
 private:
@@ -271,8 +271,7 @@ Bool ScriptConditions::evaluateUnitHasToggledWeapon(
 				if (!object)
 					continue;
 
-				const ThingTemplate *actual = object->getTemplate();
-				if (actual && actual->isEquivalentTo(wanted))
+				if (object->getTemplate()->isEquivalentTo(wanted))
 				{
 					Gen_001C4990 *flags = (Gen_001C4990 *)object;
 					if (flags->bfmeHasBit(0x18) ||
