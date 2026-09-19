@@ -118,6 +118,9 @@ void Rva00681A80::go() { if( m_receiver ) m_receiver->sendLoadCompleteCommand();
 class Rva007D2340 { public: void go(); char m_lead[ 8 ]; TextureClass *m_receiver; };
 void Rva007D2340::go() { if( m_receiver ) m_receiver->Release_Ref(); }
 
+class Rva007D2350 { public: void go(); char m_lead[ 8 ]; TextureClass *m_receiver; };
+void Rva007D2350::go() { if( m_receiver ) m_receiver->Release_Ref(); }
+
 BFME_GUARDED_MEMBER_CALL( Rva003BCA20, Gen003C7570, 0x28 )
 BFME_GUARDED_MEMBER_CALL( Rva0060D5E0, Gen0060CF20, 0x28c )
 BFME_GUARDED_MEMBER_CALL( Rva0060D620, LivingWorldEyeTower, 0x28c )
