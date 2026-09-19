@@ -1,12 +1,10 @@
-// ?update@BuildingBehavior@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.94 date=2026-09-18
-// ?update@BuildingBehavior@@UAE?AW4UpdateSleepTime@@XZ
-// The secondary UpdateModule interface supplies the receiver used by retail.
-// The two flags therefore sit at +0x10 and +0x11 from this adjusted pointer.
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// BuildingBehavior::update uses the secondary UpdateModule receiver.
 
 #include "ascii_string.h"
 
+extern "C" void __cdecl _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 enum UpdateSleepTime
 {
@@ -55,7 +53,7 @@ public:
 struct GlobalData
 {
 	char m_padding[0x218];
-	int m_gameMode;
+	int m_timeOfDay;
 };
 
 class BuildingBehaviorModuleData
@@ -103,7 +101,7 @@ UpdateSleepTime BuildingBehavior::update()
 			++name;
 		}
 		GlobalData *global = *(GlobalData **)0x012ed5c8;
-		if (global->m_gameMode == 4)
+		if (global->m_timeOfDay == 4)
 			sink->invoke(moduleData->m_names[0], true, 1, 0, 0);
 		((Rva001F6960 *)((char *)this - 0x10))->apply(sink, 0);
 		m_needsRefresh = false;
@@ -117,7 +115,7 @@ UpdateSleepTime BuildingBehavior::update()
 			m_started = true;
 			for (int i = 0; i < 4; ++i)
 			{
-				if ((*(GlobalData **)0x012ed5c8)->m_gameMode == 4 && i == 3)
+				if ((*(GlobalData **)0x012ed5c8)->m_timeOfDay == 4 && i == 3)
 					sink->invoke(moduleData->m_names[i], true, 1, 0, 0);
 				else if (i == 1 || i == 2)
 					sink->invoke(moduleData->m_names[i], true, 1, 0, 0);
@@ -129,6 +127,8 @@ UpdateSleepTime BuildingBehavior::update()
 			return UPDATE_SLEEP_NONE;
 		}
 	}
+
+	_ReadWriteBarrier();
 
 	if (m_started)
 	{
@@ -142,7 +142,7 @@ UpdateSleepTime BuildingBehavior::update()
 			++name;
 		}
 		GlobalData *global = *(GlobalData **)0x012ed5c8;
-		if (global->m_gameMode == 4)
+		if (global->m_timeOfDay == 4)
 			sink->invoke(moduleData->m_names[0], true, 1, 0, 0);
 		((Rva001F6960 *)((char *)this - 0x10))->apply(sink, 0);
 		sink->finish();

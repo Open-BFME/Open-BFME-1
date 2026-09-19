@@ -15089,6 +15089,7 @@ name,address,notes
 ?apply@ObjectAttemptDamageHook@@QAEXPAVDamageInfo@@@Z,0x0001491B,Open-BFME5 address-derived callee of Object::attemptDamage at 0x001D0490
 ?apply@PorcupineDamageHelper@@QAEXPAVDamageInfo@@@Z,0x0002B35A,route=0x002144D0; ABI facade for the private Porcupine damage helper
 ?apply@Rva001705A0Inner@@QAEXH_N@Z,0x0001EA24,address-derived call target from the exact lazy-owner body at 0x001705A0; ILT fronts the shared body at 0x0018BCF0
+?apply@Rva001F6960@@QAEXPAVS4Sink004135C0@@H@Z,0x0002E64A,2-argument sink apply callee of BuildingBehavior::update at 0x001F6A40; address-derived identity
 ?apply@Rva00202DF0Head@@QAEXPAVRva00202DF0Face@@H@Z,0x000157DA,address-derived callee of Rva00202DF0Part::seed; ILT to 0x002B2040
 ?apply@Rva0025CAA0ElvenWoodDispatch@@QAEXPAVRva0025CAA0Subject@@PAVRva0025CAA0Context@@@Z,0x000170DA,address-derived dispatch call from the 73-byte Elven Wood body
 ?apply@Rva0025D7E0FreezingRainDispatch@@QAEXPAVRva0025D7E0Subject@@PAVRva0025D7E0Context@@@Z,0x000170DA,address-derived dispatch target read from retail RVA 0x0025D7E0
