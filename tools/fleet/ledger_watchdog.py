@@ -15,7 +15,7 @@ Anything else is logged to build/fleet_logs/watchdog.log for the orchestrator.
 """
 import argparse, os, re, subprocess, sys, time
 from pathlib import Path
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2 if Path(__file__).resolve().parent.name == "fleet" else 1]
 sys.path.insert(0, str(ROOT / "tools"))
 import ledger_io, portable_lock
 
@@ -90,7 +90,7 @@ def repair():
                 ledger_io.atomic_write_bytes(p, new)
                 fixed += raw.count(b",0x0") - new.count(b",0x0")
         subprocess.run([sys.executable, "tools/dedup_csv.py"], cwd=ROOT, env=env, capture_output=True)
-        subprocess.run([sys.executable, "build/dedup_keepfirst.py"], cwd=ROOT, env=env, capture_output=True)
+        subprocess.run([sys.executable, "tools/fleet/dedup_keepfirst.py"], cwd=ROOT, env=env, capture_output=True)
         portable_lock.unlock(h)
     return fixed
 
