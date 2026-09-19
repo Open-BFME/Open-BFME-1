@@ -1,9 +1,5 @@
 // ?find@Rva003A2270Owner@@QAE_NABUCoord3D@@M@Z
-// partial score=0.99 date=2026-09-19
 // cl: /DNDEBUG /MD /EHsc
-// Retail 0x003A2270 scans the middle entries of a 0xB8-byte STLport vector.
-// The adjacent copy and allocator bodies establish the element width, while
-// the caller provides a coordinate and a distance limit.
 
 #include <math.h>
 typedef float Real;
@@ -79,7 +75,7 @@ Bool Rva003A2270Owner::find(const Coord3D &position, Real distance)
 		Rva003A2270Coord2D delta(it->point.x, it->point.y);
 		delta.x -= position.x;
 		delta.y -= position.y;
-		if (delta.length() <= distance)
+		if (delta.length() < distance)
 		{
 			it->point = position;
 			return true;
