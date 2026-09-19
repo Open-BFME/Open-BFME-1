@@ -114,3 +114,20 @@ Rva005BEDB0Ref &Rva005BEDB0Ref::operator=( RefSource const &source )
 	m_ref = ref;
 	return *this;
 }
+
+class Rva005BED60Ref
+{
+public:
+	Rva005BED60Ref &operator=( RefSource const &source );
+
+	RefTarget *m_ref;
+};
+
+Rva005BED60Ref &Rva005BED60Ref::operator=( RefSource const &source )
+{
+	RefTarget *ref = source.m_held ? source.m_held->refFetch() : 0;
+	if( m_ref )
+		m_ref->refRelease( true );
+	m_ref = ref;
+	return *this;
+}
