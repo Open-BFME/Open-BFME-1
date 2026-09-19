@@ -5,7 +5,7 @@
 // WindowLayout (Generals GameClient/GUI/WindowLayout.cpp). The original was
 // compiled with exception handling; BFME's set(str) wrapper folds strlen of
 // the literal into the two-arg set call.
-#include "window_layout.h"
+#include "../window_layout.h"
 
 WindowLayout::WindowLayout( void )
 {
