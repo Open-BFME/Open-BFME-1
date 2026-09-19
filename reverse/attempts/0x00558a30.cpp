@@ -1,8 +1,6 @@
 // ?rva00558A30Ready@BfmeAptScreenOnlineQuickMatch@@QAE_NXZ
-// partial score=0.7 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Open-BFME: the OnlineQuickMatch APT vtable update slot at 0x0055B9A0.
-
+// partial score=0.9 date=2026-09-19
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /FAsc /Fabuild/online_quick_match.cod
 typedef int Color;
 
 template <typename T> class StringBase
@@ -67,28 +65,33 @@ extern GameSpyConfigInterface *TheGameSpyConfig;
 extern int GameSpyColor[];
 extern int GadgetComboBoxAddEntryPopulateRemoteIPComboBox(
 	GameWindow *comboBox, PopulateRemoteIPComboBoxEntry text, int color );
+extern int GadgetComboBoxAddEntry(
+	GameWindow *comboBox, UnicodeString text, int color );
+
 
 extern void rva00558A30Reset( GameWindow *comboBox );
 extern void rva00558A30SetSelectedPos(
 	GameWindow *comboBox, int selected, bool dontHide );
 
 #pragma comment(linker, "/alternatename:?GadgetComboBoxAddEntryPopulateRemoteIPComboBox@@YAHPAVGameWindow@@VPopulateRemoteIPComboBoxEntry@@H@Z=?j_0002f338@@YAXXZ")
+#pragma comment(linker, "/alternatename:?GadgetComboBoxAddEntry@@YAHPAVGameWindow@@VUnicodeString@@H@Z=?j_0002f338@@YAXXZ")
 
-class BfmeQuickMatchPreferencesView
+class QuickMatchPreferences
 {
 public:
+	virtual ~QuickMatchPreferences();
 	int getMaxPing();
 
 private:
-	unsigned char m_unmodelled[ 0x28 ];
+	unsigned char m_unmodelled[ 0x24 ];
 };
 
-#pragma comment(linker, "/alternatename:?getMaxPing@BfmeQuickMatchPreferencesView@@QAEHXZ=?j_00038a0f@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getMaxPing@QuickMatchPreferences@@QAEHXZ=?j_00038a0f@@YAXXZ")
 
 struct BfmeQuickMatchObjectView
 {
 	unsigned char m_beforePreferences[ 0x40 ];
-	BfmeQuickMatchPreferencesView m_preferences;
+	QuickMatchPreferences m_preferences;
 	GameWindow *m_maxPing;
 };
 
@@ -105,48 +108,53 @@ public:
 
 
 private:
-	unsigned char m_unmodelled_000[ 0x54 ];
+	unsigned char m_beforePreferences[ 0x40 ];
+	QuickMatchPreferences m_preferences;
+	GameWindow *m_maxPing;
 	bool m_ready;
 	bool m_startRequested;
 };
 
 bool BfmeAptScreenOnlineQuickMatch::rva00558A30Ready()
 {
-	BfmeQuickMatchObjectView *view = (BfmeQuickMatchObjectView *)this;
-	if ( view->m_maxPing == 0 )
+	Color color;
+	BfmeAptScreenOnlineQuickMatch &view = *this;
+	int maxPingEntries;
+	if ( view.m_maxPing == 0 )
 		return false;
 
-	Color color = GameSpyColor[ 0 ];
+	color = GameSpyColor[ 0 ];
 	UnicodeString text;
-	rva00558A30Reset( view->m_maxPing );
+	rva00558A30Reset( view.m_maxPing );
 
-	s_bfmeMaxPingEntries =
+	maxPingEntries =
 		(TheGameSpyConfig->getPingTimeoutInMs() - 1) / 100;
-	s_bfmeMaxPingEntries++;
-	if ( s_bfmeMaxPingEntries > 1 )
+	maxPingEntries++;
+	s_bfmeMaxPingEntries = maxPingEntries;
+	if ( maxPingEntries > 1 )
 	{
 		int ping = 100;
-		register int remaining = s_bfmeMaxPingEntries - 1;
+		register int remaining = maxPingEntries - 1;
 		do
 		{
 			text.format(
 				TheGameText->fetch( "GUI:TimeInMilliseconds" ), ping );
 			GadgetComboBoxAddEntryPopulateRemoteIPComboBox(
-				view->m_maxPing, text, color );
+				view.m_maxPing, text, color );
 			ping += 100;
 		} while ( --remaining != 0 );
 	}
 
-	GadgetComboBoxAddEntryPopulateRemoteIPComboBox(
-		view->m_maxPing, TheGameText->fetch( "GUI:ANY" ), color );
+	GadgetComboBoxAddEntry(
+		view.m_maxPing, TheGameText->fetch( "GUI:ANY" ), color );
 
-	int selected = view->m_preferences.getMaxPing();
+	int selected = view.m_preferences.getMaxPing();
 	if ( selected < 0 )
 		selected = 0;
-	if ( selected >= s_bfmeMaxPingEntries )
-		selected = s_bfmeMaxPingEntries - 1;
+	if ( selected >= maxPingEntries )
+		selected = maxPingEntries - 1;
 	rva00558A30SetSelectedPos(
-		view->m_maxPing, selected, false );
+		view.m_maxPing, selected, false );
 
 	return true;
 }
