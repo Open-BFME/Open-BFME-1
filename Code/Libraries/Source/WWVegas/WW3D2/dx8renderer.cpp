@@ -1309,37 +1309,100 @@ void DX8FVFCategoryContainer::Insert_To_Texture_Category(
 }
 
 const unsigned MAX_ADDED_TYPE_COUNT=64;
-struct Textures_Material_And_Shader_Booking_Struct
+
+typedef void (*Rva00945B80CellFunction)(void *);
+
+class BfmeHandleCX
 {
-	TextureClass* added_textures[MeshMatDescClass::MAX_TEX_STAGES][MAX_ADDED_TYPE_COUNT];
-	VertexMaterialClass* added_materials[MAX_ADDED_TYPE_COUNT];
-	ShaderClass added_shaders[MAX_ADDED_TYPE_COUNT];
-	unsigned added_type_count;
+public:
+	TextureClass *p;
 
-	Textures_Material_And_Shader_Booking_Struct() : added_type_count(0) {}
-
-	bool Add_Textures_Material_And_Shader(TextureClass** texs, VertexMaterialClass* mat, ShaderClass shd)
+	BfmeHandleCX &operator=(const BfmeHandleCX &other)
 	{
-		for (unsigned a=0;a<added_type_count;++a) {
-			// Compare textures
-			bool all_textures_same = true;
-			for (unsigned int stage = 0; stage < MeshMatDescClass::MAX_TEX_STAGES; stage++) {
-				all_textures_same = all_textures_same && (texs[stage] == added_textures[stage][a]);
-			}
-			if (all_textures_same && Equal_Material(mat,added_materials[a]) && shd==added_shaders[a]) {
-				return false;
-			}
-		}
-		WWASSERT(added_type_count<MAX_ADDED_TYPE_COUNT);
-		for (unsigned int stage = 0; stage < MeshMatDescClass::MAX_TEX_STAGES; stage++) {
-			added_textures[stage][added_type_count]=texs[stage];
-		}
-		added_materials[added_type_count]=mat;
-		added_shaders[added_type_count]=shd;
-		added_type_count++;
-		return true;
+		if (other.p != NULL)
+			++*reinterpret_cast<unsigned short *>(reinterpret_cast<char *>(other.p) + 4);
+		if (p != NULL)
+			p->Release_Ref();
+		p = other.p;
+		return *this;
+	}
+
+	bool operator==(const BfmeHandleCX &other) const
+	{
+		return p == other.p;
 	}
 };
+
+extern void __stdcall rva00906340VecCtor(
+	void *ptr,
+	unsigned element_size,
+	int count,
+	Rva00945B80CellFunction ctor,
+	Rva00945B80CellFunction dtor);
+extern void rva00906340CellCtor(void *self);
+extern void rva00906340CellDtor(void *self);
+
+struct Textures_Material_And_Shader_Booking_Struct
+{
+	BfmeHandleCX added_textures[MeshMatDescClass::MAX_TEX_STAGES][MAX_ADDED_TYPE_COUNT];
+	VertexMaterialClass* added_materials[MAX_ADDED_TYPE_COUNT];
+	unsigned added_shader_bits[MAX_ADDED_TYPE_COUNT];
+	unsigned added_type_count;
+
+	Textures_Material_And_Shader_Booking_Struct();
+	bool Add_Textures_Material_And_Shader(BfmeHandleCX* texs, VertexMaterialClass* mat, ShaderClass shd);
+};
+
+ShaderClass Bfme_Default_Shader_For_Inline_Emission()
+{
+	return ShaderClass();
+}
+
+Textures_Material_And_Shader_Booking_Struct::Textures_Material_And_Shader_Booking_Struct()
+{
+	rva00906340VecCtor(
+		this,
+		4,
+		0x80,
+		rva00906340CellCtor,
+		rva00906340CellDtor);
+
+	for (int index = 0; index < MAX_ADDED_TYPE_COUNT; ++index)
+		added_shader_bits[index] = 0x0010441B;
+
+	added_type_count = 0;
+
+	for (int index = 0; index < MAX_ADDED_TYPE_COUNT; ++index)
+		added_materials[index] = NULL;
+}
+
+bool Textures_Material_And_Shader_Booking_Struct::Add_Textures_Material_And_Shader(
+	BfmeHandleCX* texs,
+	VertexMaterialClass* mat,
+	ShaderClass shd)
+{
+	for (unsigned index = 0; index < added_type_count; ++index) {
+		bool all_textures_same = true;
+		for (unsigned stage = 0; stage < MeshMatDescClass::MAX_TEX_STAGES; ++stage) {
+			all_textures_same =
+				all_textures_same &&
+				(texs[stage] == added_textures[stage][index]);
+		}
+		if (all_textures_same &&
+			Equal_Material(mat, added_materials[index]) &&
+			*reinterpret_cast<unsigned *>(&shd) == added_shader_bits[index]) {
+			return false;
+		}
+	}
+
+	for (unsigned stage = 0; stage < MeshMatDescClass::MAX_TEX_STAGES; ++stage) {
+		added_textures[stage][added_type_count] = texs[stage];
+	}
+	added_materials[added_type_count] = mat;
+	added_shader_bits[added_type_count] = *reinterpret_cast<unsigned *>(&shd);
+	++added_type_count;
+	return true;
+}
 
 // ?Generate_Texture_Categories@DX8FVFCategoryContainer@@IAEXAAVVertex_Split_Table@@I@Z present-unmatched
 void DX8FVFCategoryContainer::Generate_Texture_Categories(Vertex_Split_Table& split_table,unsigned vertex_offset)
@@ -1379,7 +1442,8 @@ void DX8FVFCategoryContainer::Generate_Texture_Categories(Vertex_Split_Table& sp
 			}
 			VertexMaterialClass* mat=split_table.Peek_Material(i,pass);
 			ShaderClass shader=split_table.Peek_Shader(i,pass);
-			if (!textures_material_and_shader_booking.Add_Textures_Material_And_Shader(textures,mat,shader)) continue;
+			if (!textures_material_and_shader_booking.Add_Textures_Material_And_Shader(
+				reinterpret_cast<BfmeHandleCX *>(textures),mat,shader)) continue;
 
 			Insert_To_Texture_Category(split_table,textures,mat,shader,pass,vertex_offset);
 		}
