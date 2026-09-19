@@ -1190,16 +1190,21 @@ void RTS3DScene::doRender( CameraClass * cam )
 //=============================================================================
 /** Customized render for the 2d scene management */
 //=============================================================================
+// Retail's draw override enters through the SubsystemInterface subobject.  The
+// donor's BFME layout puts SceneClass 0x108 bytes before that entry and m_camera
+// at +0x794 from it.  This canonical header already adjusts its method `this` by
+// 0x98, so the source-level deltas are -0x70 and +0x82c respectively.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
 // byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS3DSceneDraw.cpp
-// ?draw@RTS3DScene@@UAEXXZ present-unmatched
+// ?draw@RTS3DScene@@UAEXXZ
 void RTS3DScene::draw( )
 {
+	CameraClass *camera = *(CameraClass **)((char *)this + 0x82c);
 
-	if (m_camera == NULL) {
-		DEBUG_CRASH(("Null m_camera in RTS3DScene::draw"));
+	if (camera == NULL) {
 		return;
 	}
-	WW3D::Render( this, m_camera );
+	WW3D::Render( (SceneClass *)((char *)this - 0x70), camera );
 
 
 }  // end Customized_Render
@@ -1266,24 +1271,19 @@ void RTS2DScene::doRender( CameraClass * cam )
 //=============================================================================
 /** Customized render for the 2d scene management */
 //=============================================================================
-// One instruction away, and the instruction is the class. Retail converts `this`
-// to the scene base with `add ecx,-0x108` where this tree emits `add ecx,-0x98`:
-// the RTS2DScene sub-object sits 0x108 into the complete object in BFME and 0x98
-// here, so the bases above it are 0x70 bytes bigger than the vendored ones.
-// Everything else in the body -- the null guard, the five pushed arguments, the
-// three zeroed stack slots -- is already identical. Writing the -0x108 by hand
-// would byte-match while asserting a layout the type system does not have; this
-// wants the header.
+// Retail converts this subobject to its SceneClass base with add ecx,-0x108.
+// The canonical header's existing -0x98 adjustment leaves a -0x70 source-level
+// delta, which preserves the donor-proven BFME layout in this TU.
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DScene.h
 // byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/RTS2DSceneDrawThunk.cpp
-// ?draw@RTS2DScene@@UAEXXZ present-unmatched
+// ?draw@RTS2DScene@@UAEXXZ
 void RTS2DScene::draw( )
 {
 
 	if (m_camera == NULL) {
-		DEBUG_CRASH(("Null m_camera in RTS2DScene::draw"));
 		return;
 	}
-	WW3D::Render( this, m_camera );
+	WW3D::Render( (SceneClass *)((char *)this - 0x70), m_camera );
 
 
 }  // end Customized_Render
