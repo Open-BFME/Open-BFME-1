@@ -2998,80 +2998,128 @@ W3DShaderManager::W3DShaderManager(void)
 	m_currentShader=(W3DShaderManager::ShaderTypes)-1;
 }
 
+class BfmeChipsetDetector
+{
+public:
+	static void detect();
+};
+
+extern void j_0000cf8b();
+
+struct BfmeShaderManagerStatics
+{
+	DWORD m_padding00[5];
+	DWORD m_glowPixelShader;
+	DWORD m_glowVertexShader;
+	DWORD m_padding1c[2];
+	DWORD m_glowVertexDeclaration;
+};
+
+extern BfmeShaderManagerStatics g_bfmeShaderManager;
+
+class BfmeVertexShaderLoader
+{
+public:
+	static HRESULT LoadAndCreateD3DShader(const char *filename, DWORD *shader);
+};
+
+struct BfmeVertexElement
+{
+	unsigned short stream;
+	unsigned short offset;
+	unsigned char type;
+	unsigned char method;
+	unsigned char usage;
+	unsigned char usageIndex;
+};
+
+class BfmeShaderD3DDevice
+{
+public:
+	virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
+	virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1c();
+	virtual void slot20(); virtual void slot24(); virtual void slot28(); virtual void slot2c();
+	virtual void slot30(); virtual void slot34(); virtual void slot38(); virtual void slot3c();
+	virtual void slot40(); virtual void slot44(); virtual void slot48(); virtual void slot4c();
+	virtual void slot50(); virtual void slot54(); virtual void slot58(); virtual void slot5c();
+	virtual void slot60(); virtual void slot64(); virtual void slot68(); virtual void slot6c();
+	virtual void slot70(); virtual void slot74(); virtual void slot78(); virtual void slot7c();
+	virtual void slot80(); virtual void slot84(); virtual void slot88(); virtual void slot8c();
+	virtual void slot90(); virtual void slot94(); virtual void slot98(); virtual void slot9c();
+	virtual void slota0(); virtual void slota4(); virtual void slota8(); virtual void slotac();
+	virtual void slotb0(); virtual void slotb4(); virtual void slotb8(); virtual void slotbc();
+	virtual void slotc0(); virtual void slotc4(); virtual void slotc8(); virtual void slotcc();
+	virtual void slotd0(); virtual void slotd4(); virtual void slotd8(); virtual void slotdc();
+	virtual void slote0(); virtual void slote4(); virtual void slote8(); virtual void slotec();
+	virtual void slotf0(); virtual void slotf4(); virtual void slotf8(); virtual void slotfc();
+	virtual void slot100(); virtual void slot104(); virtual void slot108(); virtual void slot10c();
+	virtual void slot110(); virtual void slot114(); virtual void slot118(); virtual void slot11c();
+	virtual void slot120(); virtual void slot124(); virtual void slot128(); virtual void slot12c();
+	virtual void slot130(); virtual void slot134(); virtual void slot138(); virtual void slot13c();
+	virtual void slot140(); virtual void slot144(); virtual void slot148(); virtual void slot14c();
+	virtual void slot150(); virtual void slot154();
+	virtual HRESULT __stdcall CreateVertexShader(
+		const BfmeVertexElement *declaration, DWORD *shader);
+};
+
+typedef W3DShaderInterface **BfmeMasterShaderEntry;
+typedef W3DFilterInterface **BfmeMasterFilterEntry;
+typedef BfmeMasterShaderEntry BfmeMasterShaderList[100];
+typedef BfmeMasterFilterEntry BfmeMasterFilterList[100];
+
+#define BFME_MASTER_SHADER_LIST (*(BfmeMasterShaderList *)0x012BAE40)
+#define BFME_MASTER_FILTER_LIST (*(BfmeMasterFilterList *)0x012BAE60)
+#define BFME_GLOW_VERTEX_DECLARATION (*(DWORD *)0x012F9D24)
+#define BFME_GLOW_VERTEX_SHADER (*(DWORD *)0x012F9D18)
+#define BFME_GLOW_PIXEL_SHADER (*(DWORD *)0x012F9D14)
+
 // W3DShaderManager::init =======================================================
-/** Walk through all shaders and find versions suitable for current hardware */
-//=============================================================================
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_00718E90_W3DShaderManager_Init.cpp
-// ?init@W3DShaderManager@@SAXXZ present-unmatched
 void W3DShaderManager::init(void)
 {
-	int i,j;
-
-	D3DSURFACE_DESC desc;
-	// For now, check & see if we are gf3 or higher on the food chain.
-
-	ChipsetType res=DC_UNKNOWN;
-	if ((res=W3DShaderManager::getChipset()) != 0)
-	{
-		m_currentChipset = res;	//cache the current chipset.
-
-		//Some of our effects require an offscreen render target, so try creating it here.
-		HRESULT hr=DX8Wrapper::_Get_D3D_Device8()->GetRenderTarget(&m_oldRenderSurface);
-
-		m_oldRenderSurface->GetDesc(&desc);
-
-		hr=DX8Wrapper::_Get_D3D_Device8()->CreateTexture(desc.Width,desc.Height,1,D3DUSAGE_RENDERTARGET,desc.Format,D3DPOOL_DEFAULT,&m_renderTexture);
-
-		if (hr != S_OK)
-		{
-			if (m_oldRenderSurface) m_oldRenderSurface->Release();
-			m_oldRenderSurface = NULL;
-			m_renderTexture = NULL;
-		} else {
-			hr = m_renderTexture->GetSurfaceLevel(0, &m_newRenderSurface);
-			if (hr != S_OK)
-			{
-				if (m_renderTexture) m_renderTexture->Release();
-				m_renderTexture = NULL;
-				m_newRenderSurface = NULL;
-			}	else {
-				hr = DX8Wrapper::_Get_D3D_Device8()->GetDepthStencilSurface(&m_oldDepthSurface);
-				if (hr != S_OK)
-				{
-					if (m_newRenderSurface) m_newRenderSurface->Release();
-					if (m_renderTexture) m_renderTexture->Release();
-					m_renderTexture = NULL;
-					m_newRenderSurface = NULL;
-					m_oldDepthSurface = NULL;
-				}
-			}
-		}
-	}
+	BfmeChipsetDetector::detect();
+	j_0000cf8b();
 
 	W3DShaderInterface **shaders;
-
-	for (i=0; MasterShaderList[i] != NULL; i++)
-	{	
-		shaders=MasterShaderList[i];
-		for (j=0; shaders[j] != NULL; j++)
-		{
+	for (Int i = 0; BFME_MASTER_SHADER_LIST[i] != 0; ++i) {
+		shaders = BFME_MASTER_SHADER_LIST[i];
+		for (Int j = 0; shaders[j] != 0; ++j) {
 			if (shaders[j]->init())
-				break;	//found a working shader
+				break;
 		}
 	}
+
 	W3DFilterInterface **filters;
-
-	for (i=0; MasterFilterList[i] != NULL; i++)
-	{	
-		filters=MasterFilterList[i];
-		for (j=0; filters[j] != NULL; j++)
-		{
+	for (Int i = 0; BFME_MASTER_FILTER_LIST[i] != 0; ++i) {
+		filters = BFME_MASTER_FILTER_LIST[i];
+		for (Int j = 0; filters[j] != 0; ++j) {
 			if (filters[j]->init())
-				break;	//found a working shader
+				break;
 		}
 	}
 
-	DEBUG_LOG(("ShaderManager ChipsetID %d\n", res));
+	if (*(unsigned char *)((char *)*(void **)0x012ED5C8 + 0x28) == 0 &&
+		*(Int *)0x012F9CF8 >= 3) {
+		BfmeVertexElement declaration[] = {
+			{ 0, 0, 3, 0, 0, 0 },
+			{ 0, 0x10, 4, 0, 0x0a, 0 },
+			{ 0, 0x14, 1, 0, 5, 0 },
+			{ 0xff, 0, 0x11, 0, 0, 0 }
+		};
+		if (g_bfmeShaderManager.m_glowVertexDeclaration == 0) {
+			BfmeShaderD3DDevice *device = *(BfmeShaderD3DDevice **)0x01340534;
+			if (device->CreateVertexShader(
+				declaration, &g_bfmeShaderManager.m_glowVertexDeclaration) < 0)
+				g_bfmeShaderManager.m_glowVertexDeclaration = 0;
+		}
+
+		if (BfmeVertexShaderLoader::LoadAndCreateD3DShader(
+			"shaders\\Glow.vso", &BFME_GLOW_VERTEX_SHADER) < 0)
+			BFME_GLOW_VERTEX_SHADER = 0;
+
+		if (BfmeShaderLoader::LoadAndCreateD3DShader(
+			"shaders\\Glow.pso", &BFME_GLOW_PIXEL_SHADER) < 0)
+			BFME_GLOW_PIXEL_SHADER = 0;
+	}
 }
 
 // W3DShaderManager::shutdown =======================================================
