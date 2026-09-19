@@ -13,7 +13,7 @@ extern "C" void *__cdecl memset(void *, int, unsigned int);
 class GameEngine
 {
 public:
-	void Rva0006C180(int value);
+	void Rva0006C180(void *value);
 
 private:
 	char m_padding[0x10];
@@ -21,16 +21,16 @@ private:
 	HANDLE m_childProcesses[7];
 };
 
-void GameEngine::Rva0006C180(int value)
+void GameEngine::Rva0006C180(void *value)
 {
 	__declspec(align(8)) char modulePath[0x200];
 
 	if (m_childProcessCount > 0)
 		return;
-	if (value < 1)
+	if ((int)value < 1)
 		return;
-	if (value > 7)
-		value = 7;
+	if ((int)value > 7)
+		value = (void *)7;
 
 	GetModuleFileNameA(0, modulePath, 0x200);
 	char *environment = GetEnvironmentStrings();
@@ -50,13 +50,13 @@ void GameEngine::Rva0006C180(int value)
 	char *environmentCopy;
 	environmentCopy = (char *)malloc(environmentLength);
 	int count = 0;
-	if (value > 0)
+	if ((int)value > 0)
 	{
 		PROCESS_INFORMATION processInformation;
 		int number = 1;
 		HANDLE *processSlot = m_childProcesses;
-		count = value;
-		for (int remaining = value; remaining > 0; --remaining)
+		count = (int)value;
+		for (int remaining = (int)value; remaining > 0; --remaining)
 		{
 			char *cursor = environmentCopy;
 			cursor += sprintf(cursor, "_EA_RTS_HEADLESS=%i", number) + 1;
