@@ -113,6 +113,7 @@ enum { MAX_COMMANDS_PER_SET = 20 };
 class Object
 {
 public:
+	Bool b_001c4710() const;
 	Bool bfmeCanUseCommandButton(const CommandButton *button) const;
 	Bool bfmeHasMineClearingCommand() const;
 
@@ -125,10 +126,34 @@ public:
 private:
 	void *m_vtable;
 	Overridable *m_template;			// +0x004
-	unsigned char m_unmodelled_008[0x328 - 0x08];
+	unsigned char m_unmodelled_008[0x28c - 0x08];
+	volatile UnsignedInt m_28c;
+	unsigned char m_unmodelled_290[0x328 - 0x290];
 	AsciiStringBuffer *m_commandSetFallback;	// +0x328
 	AsciiStringBuffer *m_commandSetOverride;	// +0x32C
 };
+
+// The caller in Rva00459060SelectionFlags.cpp names this as an Object method.
+// The command-set and command-button thunks provide the remaining call-site evidence.
+Bool Object::b_001c4710() const
+{
+	unsigned int flags = m_28c;
+	unsigned char shifted = (unsigned char)(flags >> 6);
+	if (shifted & 1)
+		return true;
+
+	const CommandSet *set = TheControlBar->findCommandSet(getCommandSetString());
+	if (set != 0)
+	{
+		for (Int index = 0; index < MAX_COMMANDS_PER_SET; ++index)
+		{
+			const CommandButton *button = set->getCommandButton(index);
+			if (button != 0 && (*((const unsigned char *)button + 0x18) & 0x10) != 0)
+				return true;
+		}
+	}
+	return false;
+}
 
 // ?bfmeCanUseCommandButton@Object@@QBE_NPBVCommandButton@@@Z
 //
