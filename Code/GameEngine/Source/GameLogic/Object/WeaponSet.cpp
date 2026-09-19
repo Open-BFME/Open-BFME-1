@@ -218,81 +218,237 @@ void WeaponSet::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@WeaponSet@@MAEXPAVXfer@@@Z present-unmatched
-void WeaponSet::xfer( Xfer *xfer )
+struct BfmeWeaponVersion
 {
-	// version
-	const XferVersion currentVersion = 1;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
+	unsigned char data[2];
+};
 
-	if (xfer->getXferMode() == XFER_LOAD)
+struct BfmeWeaponFormattedText
+{
+	char *text;
+	int tag;
+};
+
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString() { m_data = NULL; }
+	~BFMERetailAsciiString() { releaseBuffer(); }
+
+	void *m_data;
+
+private:
+	void releaseBuffer();
+};
+
+extern "C" BfmeWeaponFormattedText *__cdecl bfmeFormatText(
+	BfmeWeaponFormattedText *, int, const char *, ...);
+extern void __declspec(noreturn) __stdcall _CxxThrowException(void *, void *);
+
+class BfmeWeaponSetXferView
+{
+public:
+	virtual void slot00();
+	virtual bool IsLoading();
+	virtual bool IsStoring();
+	virtual bool IsCRC();
+	virtual bool IsLightCRC();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual BfmeWeaponSetXferView &xferUser(void *, unsigned int);
+	virtual BfmeWeaponSetXferView &xferVersion(BfmeWeaponVersion &);
+	virtual void slot11();
+	virtual void xferSnapshot(void *);
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual void slot17();
+	virtual void slot18();
+	virtual void slot19();
+	virtual void slot20();
+	virtual void slot21();
+	virtual void slot22();
+	virtual void slot23();
+	virtual void slot24();
+	virtual void slot25();
+	virtual BfmeWeaponSetXferView &xferAsciiString(AsciiString &);
+	virtual void slot27();
+	virtual void slot28();
+	virtual BfmeWeaponSetXferView &xferUnsignedInt(unsigned int &);
+	virtual BfmeWeaponSetXferView &xferInt(int &);
+	virtual BfmeWeaponSetXferView &xferUnsignedShort(unsigned short &);
+	virtual void slot32();
+	virtual void slot33();
+	virtual void slot34();
+	virtual BfmeWeaponSetXferView &xferBool(bool &);
+};
+
+class BfmeWeaponSetFlags
+{
+public:
+	BfmeWeaponSetFlags() : bits(0) {}
+	void xfer(BfmeWeaponSetXferView *xfer);
+	unsigned int bits;
+};
+
+#pragma comment(linker, "/alternatename:?xfer@BfmeWeaponSetFlags@@QAEXPAVBfmeWeaponSetXferView@@@Z=?j_00044ce7@@YAXXZ")
+
+class BfmeThingFactory
+{
+public:
+	const ThingTemplate *findTemplate(const AsciiString &name);
+};
+
+#pragma comment(linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ")
+
+class BfmeThingLP
+{
+public:
+	void *bfmeTestLP(unsigned int *flags);
+};
+
+class BfmeWeaponStore
+{
+public:
+	Weapon *allocateNewWeapon(const WeaponTemplate *weaponTemplate, WeaponSlotType slot) const;
+};
+
+extern void xferObjectID0010C3C0(Xfer *xfer, unsigned int *value);
+
+struct BfmeWeaponTemplateSetView
+{
+	const ThingTemplate *thingTemplate;
+	BfmeWeaponSetFlags flags;
+	const WeaponTemplate *templates[4];
+};
+
+struct BfmeWeaponSetView
+{
+	void *vtable;
+	const WeaponTemplateSet *templateSet;
+	Weapon *weapons[4];
+};
+
+#define BfmeThingFactoryGlobal (*(BfmeThingFactory **)0x012EF1D8)
+#define BfmeWeaponStoreGlobal (*(BfmeWeaponStore **)0x012EF738)
+
+typedef const ThingTemplate *(WeaponTemplateSet::*BfmeWeaponTemplateGetter)() const;
+// The matched inline accessor must remain emitted while this TU owns its row.
+static volatile BfmeWeaponTemplateGetter bfmeWeaponTemplateGetter =
+	&WeaponTemplateSet::friend_getThingTemplate;
+
+static inline bool bfmeWeaponNameIsNotEmpty(const BFMERetailAsciiString &name)
+{
+	void *data = name.m_data;
+	return data != NULL && *reinterpret_cast<const unsigned short *>(
+		reinterpret_cast<const unsigned char *>(data) + 4) != 0;
+}
+
+// The existing WeaponSet declaration and its four-slot destructor prove the
+// object layout. The retail Xfer calls prove the BFME virtual slots below.
+// ?xfer@WeaponSet@@MAEXPAVXfer@@@Z
+void WeaponSet::xfer(Xfer *xfer)
+{
+	BfmeWeaponSetView *weaponSet = reinterpret_cast<BfmeWeaponSetView *>(this);
+	BfmeWeaponSetXferView *bfme = reinterpret_cast<BfmeWeaponSetXferView *>(xfer);
+
+	if (bfme->IsLightCRC())
+		return;
+
 	{
-		AsciiString ttName;
-		WeaponSetFlags wsFlags;
+		BfmeWeaponVersion version = { { 1, 1 } };
+		bfme->xferVersion(version);
+	}
 
-		xfer->xferAsciiString(&ttName);
-		wsFlags.xfer( xfer );
+	if (bfme->IsLoading())
+	{
+		BFMERetailAsciiString templateName;
+		BfmeWeaponSetFlags flags;
 
-		if (ttName.isEmpty())
+		bfme->xferAsciiString(reinterpret_cast<AsciiString &>(templateName));
+		flags.xfer(bfme);
+		if (!bfmeWeaponNameIsNotEmpty(templateName))
 		{
-			m_curWeaponTemplateSet = NULL;
+			weaponSet->templateSet = NULL;
 		}
 		else
 		{
-			const ThingTemplate* tt = TheThingFactory->findTemplate(ttName);
-			if (tt == NULL)
-				throw INI_INVALID_DATA;
+			const ThingTemplate *thingTemplate = BfmeThingFactoryGlobal->findTemplate(
+				reinterpret_cast<AsciiString &>(templateName));
+			if (thingTemplate == NULL)
+			{
+				BfmeWeaponFormattedText error;
+				bfmeFormatText(&error, 5, 0);
+				_CxxThrowException(&error, (void *)0x011DFE5C);
+			}
 
-			m_curWeaponTemplateSet = tt->findWeaponTemplateSet(wsFlags);
-			if (m_curWeaponTemplateSet == NULL)
-				throw INI_INVALID_DATA;
+			weaponSet->templateSet = reinterpret_cast<const WeaponTemplateSet *>(
+				reinterpret_cast<BfmeThingLP *>(const_cast<ThingTemplate *>(thingTemplate))->bfmeTestLP(&flags.bits));
+			if (weaponSet->templateSet == NULL)
+			{
+				BfmeWeaponFormattedText error;
+				bfmeFormatText(&error, 5, 0);
+				_CxxThrowException(&error, (void *)0x011DFE5C);
+			}
 		}
 	}
-	else if (xfer->getXferMode() == XFER_SAVE)
+	else
 	{
-		AsciiString ttName;				// leave 'em empty in case we're null
-		WeaponSetFlags wsFlags;
-		if (m_curWeaponTemplateSet != NULL)
+		BFMERetailAsciiString templateName;
+		BfmeWeaponSetFlags flags;
+		if (weaponSet->templateSet != NULL)
 		{
-			const ThingTemplate* tt = m_curWeaponTemplateSet->friend_getThingTemplate();
-			if (tt == NULL)
-				throw INI_INVALID_DATA;
-		
-			ttName = tt->getName();
-			wsFlags = m_curWeaponTemplateSet->friend_getWeaponSetFlags();
+			const ThingTemplate *thingTemplate =
+				reinterpret_cast<const BfmeWeaponTemplateSetView *>(weaponSet->templateSet)->thingTemplate;
+			if (thingTemplate == NULL)
+			{
+				BfmeWeaponFormattedText error;
+				bfmeFormatText(&error, 5, 0);
+				_CxxThrowException(&error, (void *)0x011DFE5C);
+			}
+			reinterpret_cast<AsciiString &>(templateName) = *reinterpret_cast<const AsciiString *>(
+				reinterpret_cast<const unsigned char *>(thingTemplate) + 0x20);
+			flags.bits = reinterpret_cast<const BfmeWeaponTemplateSetView *>(
+				weaponSet->templateSet)->flags.bits;
 		}
-		xfer->xferAsciiString(&ttName);
-		wsFlags.xfer( xfer );
+		bfme->xferAsciiString(reinterpret_cast<AsciiString &>(templateName));
+		flags.xfer(bfme);
 	}
 
-	for (Int i = 0; i < WEAPONSLOT_COUNT; ++i)
+	for (int i = 0; i < 4; ++i)
 	{
-		Bool hasWeaponInSlot = (m_weapons[i] != NULL);
-		xfer->xferBool(&hasWeaponInSlot);
+		bool hasWeaponInSlot = weaponSet->weapons[i] != NULL;
+		bfme->xferBool(hasWeaponInSlot);
 		if (hasWeaponInSlot)
 		{
-			if (xfer->getXferMode() == XFER_LOAD && m_weapons[i] == NULL)
+			if (bfme->IsLoading() && weaponSet->weapons[i] == NULL)
 			{
-				const WeaponTemplate* wt = m_curWeaponTemplateSet->getNth((WeaponSlotType)i);
-				if (wt==NULL) {
-					DEBUG_CRASH(("xfer backwards compatibility code - old save file??? jba."));
-					wt = m_curWeaponTemplateSet->getNth((WeaponSlotType)0);
-				}
-				m_weapons[i] = TheWeaponStore->allocateNewWeapon(wt, (WeaponSlotType)i);
+				const BfmeWeaponTemplateSetView *templateSet =
+					reinterpret_cast<const BfmeWeaponTemplateSetView *>(weaponSet->templateSet);
+				const WeaponTemplate *weaponTemplate = templateSet->templates[i];
+				if (weaponTemplate == NULL)
+					weaponTemplate = templateSet->templates[0];
+				weaponSet->weapons[i] = BfmeWeaponStoreGlobal->allocateNewWeapon(
+					weaponTemplate, (WeaponSlotType)i);
 			}
-			xfer->xferSnapshot(m_weapons[i]);
+			bfme->xferSnapshot(weaponSet->weapons[i]);
 		}
 	}
-	xfer->xferUser(&m_curWeapon, sizeof(m_curWeapon));
-	xfer->xferUser(&m_curWeaponLockedStatus, sizeof(m_curWeaponLockedStatus));
-	xfer->xferUnsignedInt(&m_filledWeaponSlotMask);
-	xfer->xferInt(&m_totalAntiMask);
-	xfer->xferBool(&m_hasDamageWeapon);
-	xfer->xferBool(&m_hasDamageWeapon);
 
-	m_totalDamageTypeMask.xfer(xfer);// BitSet has built in xfer
+	for (int i = 0; i < 4; ++i)
+		bfme->xferBool(*reinterpret_cast<bool *>(reinterpret_cast<unsigned char *>(this) + 0x2E + i));
 
+	bfme->xferUser(reinterpret_cast<unsigned char *>(this) + 0x18, 4);
+	bfme->xferUser(reinterpret_cast<unsigned char *>(this) + 0x1C, 4);
+	bfme->xferUnsignedInt(*reinterpret_cast<unsigned int *>(reinterpret_cast<unsigned char *>(this) + 0x20));
+	bfme->xferInt(*reinterpret_cast<int *>(reinterpret_cast<unsigned char *>(this) + 0x24));
+	bfme->xferUnsignedInt(*reinterpret_cast<unsigned int *>(reinterpret_cast<unsigned char *>(this) + 0x28));
+	bfme->xferBool(*reinterpret_cast<bool *>(reinterpret_cast<unsigned char *>(this) + 0x2D));
+	bfme->xferBool(*reinterpret_cast<bool *>(reinterpret_cast<unsigned char *>(this) + 0x2C));
+	xferObjectID0010C3C0(xfer, reinterpret_cast<unsigned int *>(reinterpret_cast<unsigned char *>(this) + 0x34));
 }
 
 // ------------------------------------------------------------------------------------------------

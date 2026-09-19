@@ -86549,6 +86549,7 @@ name,address,notes
 ?xfer@?$BitFlags@$0L@@@QAEXPAVXfer@@@Z,0x00042AC3,Open-BFME5 BitFlags<11>::xfer ILT thunk to body 0x001C4150; exact 11-bit pack loop transfers a two-byte payload through Xfer::xferUser
 ?xfer@?$BitFlags@$0MA@@@QAEXPAVXfer@@@Z,0x0000335F,Open-BFME5 BitFlags<192>::xfer ILT thunk to body 0x001C4F00; Object::xfer passes its proven six-dword upgrade-completion mask at Object+0x224
 ?xfer@BfmeCellGrid@@QAE_NPAVXfer@@@Z,0x000499A9,ILT target 0x001B1C90 is the Bool-returning BfmeCellGrid transfer called by VictorySystem::xfer at 0x001E05F0
+?xfer@BfmeWeaponSetFlags@@QAEXPAVBfmeWeaponSetXferView@@@Z,0x00044CE7,WeaponSet::xfer calls the flags transfer ILT with the aligned BfmeWeaponSetFlags and Xfer view ABI
 ?xfer@DockUpdate@@MAEXPAVXfer@@@Z,0x0001D043,RailedTransportDockUpdate xfer base-call ILT to 0x002CD700
 ?xfer@DrawableModule@@MAEXPAVXfer@@@Z,0x00113E70,LaserUpdate::xfer base call resolves through the shared two-version transfer helper
 ?xfer@PathfindCell@@QAEXPAVXfer@@@Z,0x00034E3C,additive: retail call target of the red row ?xfer@Pathfinder@@UAEXPAVXfer@@@Z
