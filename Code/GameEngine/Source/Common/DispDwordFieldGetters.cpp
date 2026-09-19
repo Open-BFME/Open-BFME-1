@@ -123,6 +123,7 @@ BFME_DISP_DWORD_GETTER( Rva00746040DwordField, 0x110 )
 BFME_DISP_DWORD_GETTER( Rva00751AD0DwordField, 0x2F0 )
 BFME_DISP_DWORD_GETTER( Rva007B8160DwordField, 0x2094 )
 BFME_DISP_DWORD_GETTER( Rva007F6250DwordField, 0x2D8 )
+BFME_DISP_DWORD_GETTER( Rva0014FD80DwordField, 0x31C )
 
 // Ten further members whose displacement is outside the 0x80..0x8000 window the
 // block above covers.  The largest, 0x2A7CB0, is far too big to be an ordinary
