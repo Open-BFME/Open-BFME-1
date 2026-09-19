@@ -1,0 +1,14 @@
+// Retail RVA 0x005380C0 returns the dword at offset 0x5C.
+// The carved boundary proves the field offset, but no evidence names its
+// owning class.
+
+class Rva005380C0DwordField
+{
+public:
+	unsigned int get() const;
+};
+
+unsigned int Rva005380C0DwordField::get() const
+{
+	return *(const unsigned int *)((const char *)this + 0x5C);
+}
