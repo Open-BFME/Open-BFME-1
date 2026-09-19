@@ -261,18 +261,20 @@ struct BfmeStatusMask3
 class BfmeStatusFilter
 {
 public:
-	BfmeStatusFilter(Int mustBeSetBit, Int mustBeClearBit)
+	__forceinline BfmeStatusFilter(Int mustBeSetBit, Int mustBeClearBit)
 	{
-		BfmeStatusMask3 mustBeSet(BfmeStatusMask3::kInit, mustBeSetBit);
-		BfmeStatusMask3 mustBeClear(BfmeStatusMask3::kInit, mustBeClearBit);
+		unsigned int mustBeSet[3] = {0, 0, 0};
+		unsigned int mustBeClear[3] = {0, 0, 0};
+		mustBeSet[mustBeSetBit >> 5] |= 1 << (mustBeSetBit & 31);
+		mustBeClear[mustBeClearBit >> 5] |= 1 << (mustBeClearBit & 31);
 		m_vftable = (void *)0x010956D4;
 		m_next = NULL;
-		m_maskA = mustBeSet.m_word[0];
-		m_maskB = mustBeSet.m_word[1];
-		m_maskC = mustBeSet.m_word[2];
-		m_maskD = mustBeClear.m_word[0];
-		m_maskE = mustBeClear.m_word[1];
-		m_maskF = mustBeClear.m_word[2];
+		m_maskA = mustBeSet[0];
+		m_maskB = mustBeSet[1];
+		m_maskC = mustBeSet[2];
+		m_maskD = mustBeClear[0];
+		m_maskE = mustBeClear[1];
+		m_maskF = mustBeClear[2];
 	}
 
 	void * volatile m_vftable;

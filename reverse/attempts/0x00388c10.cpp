@@ -102,7 +102,11 @@ public:
     virtual UnicodeString fetch(const char*,bool*);
 };
 extern GameText*TheGameText;
-void bfmeShowDesyncDialog(int,const UnicodeString&,const UnicodeString&);
+extern void __cdecl bfmeMakeZB(void*,void*,void*);
+__forceinline void bfmeShowDesyncDialog(int code,const UnicodeString&first,const UnicodeString&second)
+{
+    bfmeMakeZB((void*)code,(void*)&first,(void*)&second);
+}
 class DesyncUI {
 public:
     virtual void slot0(); virtual void slot1(); virtual void slot2(); virtual void slot3(); virtual void slot4();
