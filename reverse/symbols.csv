@@ -9201,6 +9201,7 @@ name,address,notes
 ??1Rva00459D50Member@@QAE@XZ,0x0001A933,ILT thunk to the tgrid member destructor 0x00459D50 called by 0x007461B0
 ??1Rva0045C1B0Base@@UAE@XZ,0x0003732B,ILT thunk to the primary base destructor 0x0045C1B0 called at the end of 0x007461B0
 ??1Rva0045C9E0CameraMarker@@QAE@XZ,0x00028984,BFME camera marker node destructor ILT called by list clear
+??1Rva00469D20Value@@QAE@XZ,0x00014C68,address-derived value destructor alias for the erase cleanup call at retail 0x00469B10
 ??1Rva00469FC0Value@@QAE@XZ,0x00042C8F,address-derived value destructor alias for the erase cleanup call at retail 0x00469DB0
 ??1Rva0046AF20Value@@QAE@XZ,0x000335FA,erase at 0x0046AD10 calls the same pair-destructor ILT for the address-proven Rva0046AF20 value layout
 ??1Rva0046C330Value@@QAE@XZ,0x00047B40,the erase at 0x0046C330 destroys its address-derived value through the retail pair destructor thunk
