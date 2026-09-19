@@ -209,6 +209,47 @@ def test_reference_class_implementation_is_positive_evidence(body):
     assert queue.implements_class(body, "Debug")
 
 
+def test_exact_multiclass_zh_source_prevents_a_weak_sibling_reversal(tmp_path):
+    root = tmp_path / "repo"
+    official = (f"{queue.ZH}/GameEngineDevice/Source/W3DDevice/GameClient/"
+                "WorldHeightMap.cpp")
+    canonical = "Code/GameEngineDevice/Source/W3DDevice/GameClient"
+    alternate = "Code/GameEngine/Source/GameLogic/Map"
+    candidate = f"{canonical}/MapObjectVerify.cpp"
+    sources = [
+        ("?verify@MapObject@@QAEXXZ", candidate),
+        ("?alternateA@MapObject@@QAEXXZ", f"{alternate}/AlternateA.cpp"),
+        ("?alternateB@MapObject@@QAEXXZ", f"{alternate}/AlternateB.cpp"),
+    ]
+    for _name, source in sources:
+        _write(root, source)
+    _write(
+        root,
+        official,
+        "void WorldHeightMap::reset() {}\n"
+        "// void MentionOnly::fromComment() {}\n"
+        'const char *text = "void MentionOnly::fromString() {}";\n'
+        "void helper() { MentionOnly::fromCall(); }\n"
+        "void MapObject::verifyValidTeam() {}\n",
+    )
+    rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
+    for index, (name, source) in enumerate(sources):
+        rows.append(f"{name},,0x{0x500000 + index * 0x10:08X},10,{source},matched,\n")
+    _write(root, "reverse/functions.csv", "".join(rows))
+
+    single, homes = queue.survey(root)
+    assert queue.destination(
+        root, candidate, single[candidate], homes, {}, {}
+    ) == alternate
+
+    zh = queue.zh_directories(root)
+    assert zh["mapobject"].replace(queue.ZH, "Code", 1) == canonical
+    assert "mentiononly" not in zh
+
+    queued, _skipped = queue.build(root)
+    assert all(source != candidate for source, _target, _cls in queued)
+
+
 def test_a_source_rejected_by_the_placement_gate_is_not_requeued(tmp_path):
     root = _world(tmp_path)
     _write(root, queue.BLOCKED,

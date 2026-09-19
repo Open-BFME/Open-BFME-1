@@ -67,6 +67,18 @@ QUOTED_INCLUDE = re.compile(r'^\s*#include\s+"([^"]+)"', re.M)
 BARE_INCLUDE = re.compile(r'^\s*#include\s+"([^"/]+\.c(?:pp)?)"', re.M)
 CLASS_DECL = re.compile(r"^[ \t]*(?:class|struct)[ \t]+([A-Za-z_]\w*)\b[^;{]*\{", re.M)
 NON_CODE = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'', re.S)
+OUT_OF_LINE_DEFINITION = re.compile(
+    r"\b(?P<class>[A-Za-z_]\w*)\s*::\s*~?[A-Za-z_]\w*\s*"
+    r"\((?:[^();{}]|\([^();{}]*\))*\)\s*"
+    r"(?:const\s*)?(?:throw\s*\([^)]*\)\s*)?"
+    r"(?::[^;{}]*)?\{"
+)
+
+
+def out_of_line_classes(text):
+    """Classes with member definitions in this source, excluding mere mentions."""
+    code = NON_CODE.sub(" ", text)
+    return {match.group("class") for match in OUT_OF_LINE_DEFINITION.finditer(code)}
 
 
 def implements_class(text, name):
@@ -80,11 +92,7 @@ def implements_class(text, name):
     code = NON_CODE.sub(" ", text)
     if any(m.group(1).lower() == name.lower() for m in CLASS_DECL.finditer(code)):
         return True
-    member = (r"\b" + re.escape(name)
-              + r"\s*::\s*~?[A-Za-z_]\w*\s*\((?:[^();{}]|\([^();{}]*\))*\)\s*"
-                r"(?:const\s*)?(?:throw\s*\([^)]*\)\s*)?"
-                r"(?::[^;{}]*)?\{")
-    return re.search(member, code, re.I) is not None
+    return any(owner.lower() == name.lower() for owner in out_of_line_classes(text))
 
 
 def owning_class(mangled):
@@ -144,12 +152,23 @@ def deleting_destructor_homes(root):
 def zh_directories(root):
     """class name -> the directory ZH keeps that class's source in."""
     out = {}
+    secondary = collections.defaultdict(set)
     for path in glob.glob(str(root / ZH) + "/**/*.cpp", recursive=True):
         # Evidence and ledger paths use forward slashes on every host.
         rel = Path(path).relative_to(root).as_posix()
         name = Path(path).stem
-        if implements_class(Path(path).read_text(encoding="utf-8", errors="replace"), name):
+        text = Path(path).read_text(encoding="utf-8", errors="replace")
+        if implements_class(text, name):
             out.setdefault(name.lower(), os.path.dirname(rel))
+        for owner in out_of_line_classes(text):
+            secondary[owner.lower()].add(os.path.dirname(rel))
+    # An official TU may own several classes: WorldHeightMap.cpp, for example,
+    # also defines MapObject. Only accept secondary ownership when every actual
+    # out-of-line definition agrees on one directory; calls and textual mentions
+    # were removed before extraction and cannot nominate a destination.
+    for owner, directories in secondary.items():
+        if owner not in out and len(directories) == 1:
+            out[owner] = next(iter(directories))
     return out
 
 
