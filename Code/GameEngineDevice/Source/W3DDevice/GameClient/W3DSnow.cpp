@@ -47,6 +47,135 @@ struct POINTVERTEX
     Vector3 v;	//center of particle.
 };
 
+class BfmeOverridable
+{
+public:
+	const BfmeOverridable *getFinalOverride(void) const;
+
+	void *m_vtable;
+	const BfmeOverridable *m_nextOverride;
+};
+
+class BfmeSnowOverride : public BfmeOverridable
+{
+public:
+	unsigned char m_pad08[4];
+	const char *m_snowTextureData;
+	unsigned char m_pad10[0x38 - 0x10];
+	unsigned char m_usePointSprites;
+	unsigned char m_snowEnabled;
+
+	const char *snowTextureName(void) const
+	{
+		return m_snowTextureData ? m_snowTextureData + 8 :
+			(const char *)0x0107388B;
+	}
+};
+
+extern BfmeSnowOverride *g_bfmeGlo012F15F8;
+
+static const BfmeSnowOverride *walkSnowOverride(const BfmeSnowOverride *setting)
+{
+	if (setting == 0)
+		return 0;
+	if (setting->m_nextOverride)
+		return (const BfmeSnowOverride *)setting->m_nextOverride->getFinalOverride();
+	return setting;
+}
+
+void W3DRadarResetLock(void);
+void W3DRadarResetUnlock(void);
+
+class BfmeSnowResetLock
+{
+public:
+	BfmeSnowResetLock(void) { W3DRadarResetLock(); }
+	~BfmeSnowResetLock(void) { W3DRadarResetUnlock(); }
+};
+
+class BfmeSnowDeviceCaps
+{
+	unsigned char m_pad[0x273];
+
+public:
+	unsigned char m_supportPointSprites;
+};
+
+extern BfmeSnowDeviceCaps *g_bfmeCaps1340578;
+
+class BfmeSnowDevice
+{
+public:
+	virtual void slot00(void); virtual void slot04(void);
+	virtual void slot08(void); virtual void slot0c(void);
+	virtual void slot10(void); virtual void slot14(void);
+	virtual void slot18(void); virtual void slot1c(void);
+	virtual void slot20(void); virtual void slot24(void);
+	virtual void slot28(void); virtual void slot2c(void);
+	virtual void slot30(void); virtual void slot34(void);
+	virtual void slot38(void); virtual void slot3c(void);
+	virtual void slot40(void); virtual void slot44(void);
+	virtual void slot48(void); virtual void slot4c(void);
+	virtual void slot50(void); virtual void slot54(void);
+	virtual void slot58(void); virtual void slot5c(void);
+	virtual void slot60(void); virtual void slot64(void);
+	virtual int __stdcall CreateVertexBuffer(unsigned length, unsigned usage,
+		unsigned fvf, unsigned pool, void **vertexBuffer, void *sharedHandle);
+};
+
+extern BfmeSnowDevice *g_bfmeDevice1340534;
+
+class BFMEWaterTrackTexture
+{
+public:
+	void Release_Ref(void);
+};
+
+class BFMEWaterTrackTextureHandle
+{
+public:
+	TextureClass *m_texture;
+
+	~BFMEWaterTrackTextureHandle(void)
+	{
+		if (m_texture)
+			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+	}
+};
+
+extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
+	char *name, int mipCount, int format);
+
+static inline void BFMEAssignSnowTexture(
+	TextureClass *&destination, const BFMEWaterTrackTextureHandle &texture)
+{
+	if (texture.m_texture)
+		++*(unsigned short *)((char *)texture.m_texture + 4);
+	if (destination)
+		((BFMEWaterTrackTexture *)destination)->Release_Ref();
+	destination = texture.m_texture;
+}
+
+class BfmeW3DSnowManagerLayout
+{
+public:
+	unsigned char m_pad00[0x3d];
+	unsigned char m_visible;
+	unsigned char m_pad3e[0x68 - 0x3e];
+	DX8IndexBufferClass *m_indexBuffer;
+	TextureClass *m_snowTexture;
+	void *m_vertexBufferD3D;
+	int m_dwBase;
+	int m_dwFlush;
+	int m_dwDiscard;
+};
+
+class Gen0045A970_00723FB0
+{
+public:
+	void releaseResources(void);
+};
+
 // ??0W3DSnowManager@@ present-unmatched
 W3DSnowManager::W3DSnowManager(void)
 {
@@ -82,74 +211,65 @@ void W3DSnowManager::ReleaseResources(void)
 	REF_PTR_RELEASE(m_indexBuffer);
 }
 
-/** (Re)allocates all W3D/D3D assets after a reset.. */
-// ?ReAcquireResources@W3DSnowManager@@ present-unmatched
+// ?ReAcquireResources@W3DSnowManager@@QAE_NXZ
 Bool W3DSnowManager::ReAcquireResources(void)
 {
-	ReleaseResources();
+	BfmeSnowResetLock lock;
+	((Gen0045A970_00723FB0 *)this)->releaseResources();
 
-	if (!TheWeatherSetting->m_snowEnabled)
-		return TRUE;	//no need for resources if snow is disabled.
+	BfmeW3DSnowManagerLayout *layout = (BfmeW3DSnowManagerLayout *)this;
+	register const BfmeSnowOverride *base = g_bfmeGlo012F15F8;
+	register const BfmeSnowOverride *setting = walkSnowOverride(base);
+	if (setting->m_snowEnabled == 0 || layout->m_visible == 0)
+		return true;
 
-	if (TheWeatherSetting->m_usePointSprites && DX8Wrapper::Get_Current_Caps()->Support_PointSprites())
+	setting = walkSnowOverride(base);
+	register const BfmeSnowOverride *current = base;
+	if (setting->m_usePointSprites != 0 &&
+		g_bfmeCaps1340578->m_supportPointSprites != 0)
 	{
-		LPDIRECT3DDEVICE8 m_pDev=DX8Wrapper::_Get_D3D_Device8();
-
-		DEBUG_ASSERTCRASH(m_pDev, ("Trying to ReAquireResources on W3DSnowManager without device"));
-
-		if (m_VertexBufferD3D == NULL)
-		{	// Create vertex buffer
-
-			if (FAILED(m_pDev->CreateVertexBuffer
-			(
-				SNOW_BUFFER_SIZE*sizeof(POINTVERTEX),
-				D3DUSAGE_WRITEONLY|D3DUSAGE_DYNAMIC|D3DUSAGE_POINTS, 
-				D3DFVF_POINTVERTEX,
-				D3DPOOL_DEFAULT, 
-				&m_VertexBufferD3D
-			)))
-				return FALSE;
+		BfmeSnowDevice *device = g_bfmeDevice1340534;
+		if (layout->m_vertexBufferD3D == 0)
+		{
+			if (device->CreateVertexBuffer(
+				0x10000, 0x248, 0x42, 0, &layout->m_vertexBufferD3D, 0) < 0)
+				return false;
+			current = g_bfmeGlo012F15F8;
 		}
 	}
 	else
 	{
-		m_indexBuffer=NEW_REF(DX8IndexBufferClass,(SNOW_BATCH_SIZE *6));	//allocate 2 triangles per flake, each with 3 indices.
+		layout->m_indexBuffer = ::new DX8IndexBufferClass(
+			0x3000, DX8IndexBufferClass::USAGE_DEFAULT);
 
-		// Fill up the IB with static vertex indices that will be used for all smudges.
 		{
-			DX8IndexBufferClass::WriteLockClass lockIdxBuffer(m_indexBuffer);
-			UnsignedShort *ib=lockIdxBuffer.Get_Index_Array();
-			//quad of 4 triangles:
-			//	0-----3
-			//  |\   /|
-			//  |  X  |
-			//	|/   \|
-			//  1-----2
-			Int vbCount=0;
-			for (Int i=0; i<SNOW_BATCH_SIZE; i++)
+			IndexBufferClass::WriteLockClass lockIndex(
+				(IndexBufferClass *)layout->m_indexBuffer, 0);
+			unsigned short *ib = lockIndex.Get_Index_Array();
+			int vbCount = 0;
+			for (int i = 0; i < 0x800; ++i)
 			{
-				//Top
-				ib[0]=vbCount+3;
-				ib[1]=vbCount;
-				ib[2]=vbCount+2;
-				//Bottom
-				ib[3]=vbCount+2;
-				ib[4]=vbCount;
-				ib[5]=vbCount+1;
-		
+				ib[0] = (unsigned short)(vbCount + 3);
+				ib[1] = (unsigned short)vbCount;
+				ib[2] = (unsigned short)(vbCount + 2);
+				ib[3] = (unsigned short)(vbCount + 2);
+				ib[4] = (unsigned short)vbCount;
+				ib[5] = (unsigned short)(vbCount + 1);
 				vbCount += 4;
-				ib+=6;
+				ib += 6;
 			}
 		}
+		current = g_bfmeGlo012F15F8;
 	}
 
-	m_snowTexture = WW3DAssetManager::Get_Instance()->Get_Texture(TheWeatherSetting->m_snowTexture.str());
-
-	m_dwBase = SNOW_BUFFER_SIZE;
-	m_dwDiscard = SNOW_BUFFER_SIZE;
-	m_dwFlush = SNOW_BATCH_SIZE;
-
-	return TRUE;
+	register const BfmeSnowOverride *finalSetting = walkSnowOverride(current);
+	BFMEAssignSnowTexture(
+		layout->m_snowTexture,
+		BFMEGetWaterTrackTexture((char *)finalSetting->snowTextureName(), 0, 0));
+	layout->m_dwBase = 0x1000;
+	layout->m_dwDiscard = 0x1000;
+	layout->m_dwFlush = 0x800;
+	return true;
 }
 
 // ?updateIniSettings@W3DSnowManager@@ present-unmatched
