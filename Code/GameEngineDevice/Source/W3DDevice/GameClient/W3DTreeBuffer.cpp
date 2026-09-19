@@ -377,20 +377,30 @@ void W3DTreeBuffer::cull(const CameraClass * camera)
 //=============================================================================
 /** Returns the bucket index into m_areaPartition for a given location. */
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_0071BFC0_GetPartitionBucket.cpp
-// ?getPartitionBucket@W3DTreeBuffer@@IBEHABUCoord3D@@@Z present-unmatched
+// BFME's 50-by-50 partition array leaves the bounds at 0x1440; the ZH header's
+// 100-by-100 array moves this field, so only this retail-witnessed prefix is used.
+struct BFMETreePartitionView
+{
+	char m_unreconstructed_0000[0x1440];
+	Region2D m_bounds;
+};
+
+extern "C" __declspec(dllimport) double __cdecl floor(double);
+
 Int W3DTreeBuffer::getPartitionBucket(const Coord3D &pos) const
 {
+	const BFMETreePartitionView *self = reinterpret_cast<const BFMETreePartitionView *>(this);
 	Real x = pos.x;
 	Real y = pos.y;
-	if (x<m_bounds.lo.x) x = m_bounds.lo.x;
-	if (y<m_bounds.lo.y) y = m_bounds.lo.y;
-	if (x>m_bounds.hi.x) x = m_bounds.hi.x;
-	if (y>m_bounds.hi.y) y = m_bounds.hi.y;
-	Int xIndex = REAL_TO_INT_FLOOR ( (x/(m_bounds.hi.x-m_bounds.lo.x)) * (PARTITION_WIDTH_HEIGHT-0.1f) );
-	Int yIndex = REAL_TO_INT_FLOOR ( (y/(m_bounds.hi.y-m_bounds.lo.y)) * (PARTITION_WIDTH_HEIGHT-0.1f) );
-	DEBUG_ASSERTCRASH(xIndex>=0 && yIndex>=0 && xIndex<PARTITION_WIDTH_HEIGHT && yIndex<PARTITION_WIDTH_HEIGHT, ("Invalid range."));
-	return yIndex*PARTITION_WIDTH_HEIGHT + xIndex;
+	if (x<self->m_bounds.lo.x) x = self->m_bounds.lo.x;
+	if (y<self->m_bounds.lo.y) y = self->m_bounds.lo.y;
+	if (x>self->m_bounds.hi.x) x = self->m_bounds.hi.x;
+	if (y>self->m_bounds.hi.y) y = self->m_bounds.hi.y;
+	Real xRatio = (x/(self->m_bounds.hi.x-self->m_bounds.lo.x)) * (50-0.1f);
+	Int xIndex = fast_float2long_round((Real)floor((double)(xRatio)));
+	Real yRatio = (y/(self->m_bounds.hi.y-self->m_bounds.lo.y)) * (50-0.1f);
+	Int yIndex = fast_float2long_round((Real)floor((double)(yRatio)));
+	return yIndex*50 + xIndex;
 }
 
 //=============================================================================
