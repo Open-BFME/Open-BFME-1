@@ -169,6 +169,171 @@ public:
 	virtual void setGUICommand(const void *cmd) = 0;
 };
 
+// The BFME object grew two context-parent slots and moved the selected-draw
+// state one word past the Zero Hour layout.  Keep this view local to the
+// reconstruction so the real ControlBar header remains untouched.
+struct BfmeContextSwitchControlBarView
+{
+	char pad00[0x34];
+	GameWindow *contextParent[10];
+	Drawable *currentSelectedDrawable;
+	ControlBarContext currContext;
+	char pad64[0x9c];
+	GameWindow *commandWindows[20];
+	char pad150[0x1a0];
+	void *contextOverlay;
+};
+
+struct BfmeContextSwitchSelectionState
+{
+	void *chat;
+	Drawable *oldSelected;
+};
+
+class BfmeSourceCB
+{
+public:
+	char m_bfmeHead[0x74];
+	int m_bfmeValue;
+};
+
+class Gen_004AFA80
+{
+public:
+	void bfmeTake(BfmeSourceCB *source);
+
+private:
+	int m_bfmeHead[7];
+	int m_bfmeValue;
+};
+
+struct BfmeContextSwitchDrawableView
+{
+	char pad00[0xfc];
+	BfmeSourceCB *object;
+};
+
+// Calls in the context arms are deliberately declaration-only.  This keeps
+// each retail call boundary visible to the compiler instead of inlining an
+// already-converted sibling body into this large dispatcher.
+extern void j_0000d495(void);
+extern void j_0000efe8(void);
+extern void j_0001df4d(void);
+extern void j_00034581(void);
+class Rva0049E780Calls {
+public:
+    void commandSignature(Object *, Bool);
+    void multiSignature(void);
+    __forceinline void populateCommand(Object *object, Bool refresh) {
+        typedef void (Rva0049E780Calls::*Method)(Object *, Bool);
+        union { void (*raw)(void); Method member; } call;
+        call.raw = j_0000d495;
+        (this->*call.member)(object, refresh);
+    }
+    __forceinline void populateStructureInventory(Object *object, Bool refresh) {
+        typedef void (Rva0049E780Calls::*Method)(Object *, Bool);
+        union { void (*raw)(void); Method member; } call;
+        call.raw = j_0001df4d;
+        (this->*call.member)(object, refresh);
+    }
+    __forceinline void populateOCLTimer(Object *object) {
+        typedef void (Rva0049E780Calls::*Method)(Object *);
+        union { void (*raw)(void); Method member; } call;
+        call.raw = j_00034581;
+        (this->*call.member)(object);
+    }
+    __forceinline void populateMultiSelect(void) {
+        typedef void (Rva0049E780Calls::*Method)(void);
+        union { void (*raw)(void); Method member; } call;
+        call.raw = j_0000efe8;
+        (this->*call.member)();
+    }
+};
+
+class BfmeContextSwitchBfmeTransitionMD
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot01(void) = 0;
+	virtual void slot02(void) = 0;
+	virtual void slot03(void) = 0;
+	virtual void slot04(void) = 0;
+};
+
+class BfmeContextSwitchInGameUI : public BFMERetailInGameUIVTable
+{
+public:
+	virtual void slot47(void) = 0;
+	virtual void slot48(void) = 0;
+	virtual void slot49(void) = 0;
+	virtual void slot50(void) = 0;
+	virtual void slot51(void) = 0;
+	virtual void slot52(void) = 0;
+	virtual void slot53(void) = 0;
+	virtual void slot54(void) = 0;
+	virtual void slot55(void) = 0;
+	virtual void slot56(void) = 0;
+	virtual void slot57(void) = 0;
+	virtual void slot58(void) = 0;
+	virtual void slot59(void) = 0;
+	virtual void slot60(void) = 0;
+	virtual void slot61(void) = 0;
+	virtual void slot62(void) = 0;
+	virtual void slot63(void) = 0;
+	virtual void slot64(void) = 0;
+	virtual void slot65(void) = 0;
+	virtual void slot66(void) = 0;
+	virtual void slot67(void) = 0;
+	virtual void slot68(void) = 0;
+	virtual void slot69(void) = 0;
+	virtual void slot70(void) = 0;
+	virtual void setRadiusCursorNone(void) = 0;
+};
+
+class BfmeContextSwitchOverlaySink
+{
+public:
+	virtual void slot00(void) = 0;
+	virtual void slot01(void) = 0;
+	virtual void slot02(void) = 0;
+	virtual void slot03(void) = 0;
+	virtual void slot04(void) = 0;
+};
+
+class BfmeContextSwitchGameLogicView
+{
+public:
+	char pad00[0x10c];
+	Int mode;
+};
+
+class Rva0058C040
+{
+public:
+	void invoke(void);
+};
+
+extern void j_00018f2f(void);
+extern void j_0003367c(void);
+
+class BfmeTransitionMD;
+class Rva005127A0InGameChat;
+class Glo012F4B98Type;
+extern BfmeTransitionMD *g_bfmeTransitionMD;
+extern Rva005127A0InGameChat *g_Rva005127A0InGameChat;
+extern void *g_obj12F4C38;
+extern Glo012F4B98Type *Glo012F4B98;
+// No recovered source name exists for this retail selection cache.
+extern volatile Drawable *g_Rva012F340C;
+#define BFME_CONTEXT_TRANSITION ((BfmeContextSwitchBfmeTransitionMD *)g_bfmeTransitionMD)
+#define BFME_CONTEXT_INGAME_UI ((BfmeContextSwitchInGameUI *)TheInGameUI)
+#define BFME_CONTEXT_IN_GAME_CHAT g_Rva005127A0InGameChat
+#define BFME_CONTEXT_OBJECT_12F4C38 g_obj12F4C38
+#define BFME_CONTEXT_GAME_LOGIC ((BfmeContextSwitchGameLogicView *)TheGameLogic)
+#define BFME_CONTEXT_GLO_12F4B98 ((Rva0058C040 *)Glo012F4B98)
+#define BFME_CONTEXT_SELECTION_CACHE g_Rva012F340C
+
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
@@ -2079,6 +2244,188 @@ CBCommandStatus ControlBar::processContextSensitiveButtonTransition( GameWindow 
 //-------------------------------------------------------------------------------------------------
 // ?switchToContext@ControlBar@@IAEXW4ControlBarContext@@PAVDrawable@@@Z
 // Retail switchToContext starts at RVA 0x0049E780; old 0x0049E901 claim was interior.
+
+void ControlBar::switchToContext(ControlBarContext context, Drawable *draw)
+{
+	BfmeContextSwitchControlBarView *self = (BfmeContextSwitchControlBarView *)this;
+	ControlBarContext incomingContext = context;
+	Drawable *incomingDraw = draw;
+	Bool changed;
+	if (incomingContext == self->currContext)
+	{
+		changed = false;
+		if (incomingDraw != self->currentSelectedDrawable)
+			changed = true;
+	}
+	else
+	{
+		changed = true;
+	}
+
+	Object *drawObject = incomingDraw ? (Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object : 0;
+
+	BfmeContextSwitchBfmeTransitionMD *transition = BFME_CONTEXT_TRANSITION;
+	if (transition != 0)
+		transition->slot04();
+	BfmeContextSwitchInGameUI *inGameUI = BFME_CONTEXT_INGAME_UI;
+	inGameUI->setRadiusCursorNone();
+
+	if (incomingDraw != BFME_CONTEXT_SELECTION_CACHE &&
+		incomingDraw != self->currentSelectedDrawable)
+		((BfmeContextSwitchOverlaySink *)self->contextOverlay)->slot04();
+
+	BfmeContextSwitchSelectionState state;
+	state.oldSelected = self->currentSelectedDrawable;
+	self->currentSelectedDrawable = incomingDraw;
+	state.chat = BFME_CONTEXT_IN_GAME_CHAT;
+	if (state.chat == 0)
+	{
+		BFME_CONTEXT_SELECTION_CACHE = state.oldSelected;
+		if (BFME_CONTEXT_OBJECT_12F4C38 == 0 && BFME_CONTEXT_GAME_LOGIC != 0 &&
+			BFME_CONTEXT_GAME_LOGIC->mode != 8 && BFME_CONTEXT_GAME_LOGIC->mode != 4)
+			TheWindowManager->winSetFocus(0);
+	}
+	else
+	{
+		BFME_CONTEXT_SELECTION_CACHE = state.oldSelected;
+	}
+
+	((Gen_004AFA80 *)self->contextOverlay)->bfmeTake((BfmeSourceCB *)drawObject);
+	showRallyPoint(0);
+
+	switch ((Int)incomingContext)
+	{
+	case 0:
+	case 4:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(true);
+		self->contextParent[9]->winHide(true);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		{
+			GameWindow **window = self->commandWindows;
+			Int count = 20;
+			do
+			{
+				if (*window != 0)
+					(*window)->winClearStatus(0x800000);
+				++window;
+				--count;
+			} while (count != 0);
+		}
+		break;
+
+	case 1:
+		self->contextParent[2]->winHide(false);
+		self->contextParent[9]->winHide(false);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		((Rva0049E780Calls *)this)->populateCommand((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object, changed);
+		break;
+
+	case 2:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(false);
+		self->contextParent[9]->winHide(false);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		((Rva0049E780Calls *)this)->populateStructureInventory((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object, false);
+		break;
+	case 3:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(false);
+		self->contextParent[9]->winHide(false);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		((Rva0049E780Calls *)this)->populateStructureInventory((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object, true);
+		break;
+	case 5:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(true);
+		self->contextParent[9]->winHide(true);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(false);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		populateBeacon((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object);
+		break;
+	case 6:
+		self->contextParent[2]->winHide(true);
+		self->contextParent[9]->winHide(false);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		populateUnderConstruction((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object);
+		break;
+	case 10:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(true);
+		self->contextParent[9]->winHide(true);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(false);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		((Rva0049E780Calls *)this)->populateOCLTimer((Object *)((BfmeContextSwitchDrawableView *)incomingDraw)->object);
+		break;
+
+	case 7:
+		self->contextParent[2]->winHide(false);
+		self->contextParent[9]->winHide(false);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(true);
+		((Rva0049E780Calls *)this)->populateMultiSelect();
+		break;
+	case 9:
+		if (BFME_CONTEXT_GLO_12F4B98 != 0)
+			((Rva0058C040 *)BFME_CONTEXT_GLO_12F4B98)->invoke();
+		self->contextParent[2]->winHide(true);
+		self->contextParent[9]->winHide(true);
+		self->contextParent[3]->winHide(true);
+		self->contextParent[4]->winHide(true);
+		self->contextParent[5]->winHide(true);
+		self->contextParent[8]->winHide(true);
+		self->contextParent[6]->winHide(true);
+		self->contextParent[7]->winHide(false);
+		populateObserverList();
+		break;
+	default:
+		break;
+	}
+
+	self->currContext = incomingContext;
+}
 
 // BFME adds a FIFTH border type Zero Hour does not have. Retail's jump table
 // covers switch values 1 through 5 as an identity map, so the arms are in source
