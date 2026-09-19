@@ -3931,7 +3931,6 @@ void ControlBarScheme::drawBackground( Coord2D multi, ICoord2D offset )
 //
 // Constructor for the manager
 //-----------------------------------------------------------------------------
-// ??0ControlBarSchemeManager@@QAE@XZ present-unmatched
 ControlBarSchemeManager::ControlBarSchemeManager( void )
 {
 	m_currentScheme = NULL;
@@ -3942,8 +3941,6 @@ ControlBarSchemeManager::ControlBarSchemeManager( void )
 //
 // Destructor for the Manager
 //-----------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarSchemeManagerBodies.cpp
-// ??1ControlBarSchemeManager@@QAE@XZ present-unmatched
 ControlBarSchemeManager::~ControlBarSchemeManager( void )
 {
 	ControlBarSchemeList::iterator it = m_schemeList.begin();

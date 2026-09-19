@@ -14998,7 +14998,6 @@ name,address,notes
 ?allocate@__new_alloc@_STL@@SAPAXI@Z,0x0082E540,stlport static-lib allocate (SEH body; not operator new @ 0x881F30)
 ?allocateBibBuffers@W3DBibBuffer@@IAEXXZ,0x006D69D0,W3DBibBuffer ctor call via ILT 0x00024D66; releases old buffers and creates 0x142 vertex and index buffers using sizes at +4/+12
 ?allocateBridgeBuffers@W3DBridgeBuffer@@AAEXXZ,0x0002EF2D,W3DBridgeBuffer::allocateBridgeBuffers via ILT thunk
-?allocateControlBarSchemeListNode@@YAPAXI@Z,0x0082E540,ControlBarSchemeManager scheme-list sentinel allocator
 ?allocateFromW3DMemPool@@YAPAXPAXH@Z,0x00881F30,packet 00921eba callee pin
 ?allocateGeometry006e@Render2DClass@@AAEPAUBfmeRenderVertex@@IIPAPAKPAK@Z,0x009369A0,BFME Render2D batch allocator called by the six-color Add_Quad body at 0x006E7210
 ?allocateID@DataChunkTableOfContents@@QAEIABVAsciiString@@@Z,0x0003EAA4,DataChunkOutput::writeNameKey retail ILT call target for DataChunkTableOfContents::allocateID body at 0x00103D60
@@ -79600,7 +79599,6 @@ name,address,notes
 ?deallocate@?$BfmeNodeAllocator@$00$0A@@@SAXPAXI@Z,0x0082E5F0,Pathfinder reset node allocator alias
 ?deallocate@?$__node_alloc@$00$0A@@_STL@@SAXPAXI@Z,0x0001D35E,Open-BFME5 ILT the wide basic_string reserve at 0x00839590 frees the old block through
 ?deallocate@BfmeStartNodeAllocAccess@@SAXPAXI@Z,0x0082E5F0,MainMenuUtils list allocator forwards the retail node-size deallocator
-?deallocateControlBarSchemeListNode@@YAXPAXI@Z,0x0082E5F0,ControlBarSchemeManager scheme-list node deallocator
 ?debugDefeat@ScriptEngine@@QAEXXZ,0x000184D5,ILT for the ScriptEngine debug defeat action at 0x00337100
 ?debugVictory@ScriptEngine@@QAEXXZ,0x000240BE,ILT for the ScriptEngine debug victory action at 0x00337080
 ?decompress@AdaptiveDeltaMotionChannelClass@@AAEXKPAM@Z,0x00977DB0,AdaptiveDeltaMotionChannelClass getframe retail two-argument decompress

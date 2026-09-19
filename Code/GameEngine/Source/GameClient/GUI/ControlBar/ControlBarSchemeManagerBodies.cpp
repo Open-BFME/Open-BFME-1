@@ -1,12 +1,9 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
-// readable body of ??1ControlBarSchemeManager@@QAE@XZ: Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarScheme.cpp
 //
-// Three consecutive ControlBarSchemeManager bodies -- they sit at 0x004AE850,
-// 0x004AE920 and 0x004AEA00, in that order, which is the order they were
-// written in:
+// Two consecutive ControlBarSchemeManager parser bodies sit at 0x004AE920 and
+// 0x004AEA00, in the order they were written:
 //
-//   ~ControlBarSchemeManager  0x004AE850  166 B  QAE
 //   parseImagePart            0x004AE920  172 B  SAX (static)
 //   parseAnimatingPart        0x004AEA00  219 B  SAX (static)
 //
@@ -14,8 +11,7 @@
 // one part, hands it to INI::initFromINI to be filled from the block being
 // read, clamps the layer it asks for into 0..5 and files it under that layer.
 // The animating one additionally keeps the animation itself on the scheme's
-// animation list. The destructor is the other end of the same ownership: it
-// deletes every scheme the manager built and drops the current one.
+// animation list.
 //
 // Split apart, ControlBarSchemeImage was 0x18 anonymous bytes and a layer in
 // one file and five named fields and a layer in the next -- the same 0x18, one
@@ -83,8 +79,6 @@ extern const unsigned char g_controlBarSchemeAnimationFieldParse[];
 class ControlBarSchemeManager
 {
 public:
-	~ControlBarSchemeManager();
-
 	static void __cdecl parseImagePart(INI *, void *, void *, const void *);
 	static void __cdecl parseAnimatingPart(INI *, void *, void *, const void *);
 
@@ -94,23 +88,6 @@ private:
 	float m_multiplierY;
 	_STL::list<ControlBarScheme *> m_schemeList;
 };
-
-// ??1ControlBarSchemeManager@@QAE@XZ
-ControlBarSchemeManager::~ControlBarSchemeManager()
-{
-	_STL::list<ControlBarScheme *>::iterator it = m_schemeList.begin();
-	while (it != m_schemeList.end())
-	{
-		ControlBarScheme *scheme = *it;
-		if (scheme)
-		{
-			delete scheme;
-		}
-		it++;
-	}
-	m_schemeList.clear();
-	m_currentScheme = 0;
-}
 
 // ?parseImagePart@ControlBarSchemeManager@@SAXPAVINI@@PAX1PBX@Z
 void __cdecl ControlBarSchemeManager::parseImagePart(INI *ini, void *instance,
