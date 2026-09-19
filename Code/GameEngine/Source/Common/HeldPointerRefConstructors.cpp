@@ -72,6 +72,15 @@ BFME_HELD_POINTER_REF( Rva005BEC90Ref )
 BFME_HELD_POINTER_REF( Rva005BED20Ref )
 BFME_HELD_POINTER_REF( Rva005BEDB0Ref )
 
+Rva005BEA50Ref &Rva005BEA50Ref::operator=( RefSource const &source )
+{
+	RefTarget *ref = source.m_held ? source.m_held->refFetch() : 0;
+	if( m_ref )
+		m_ref->refRelease( true );
+	m_ref = ref;
+	return *this;
+}
+
 class Rva005BEB20Ref
 {
 public:
