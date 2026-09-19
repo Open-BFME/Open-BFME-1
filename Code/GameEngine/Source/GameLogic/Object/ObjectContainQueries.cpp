@@ -84,6 +84,7 @@ class AttributeModifierPoolUpdate
 {
 public:
 	Bool applyAttributeModifier(const AsciiString &name, Int duration);
+	Bool getAttributeModifierBonus(Int which, Real *out);
 	Bool getAttributeModifierMultiplier(Int which, Real *out);
 };
 
@@ -154,6 +155,7 @@ class Object
 {
 public:
 	Bool applyAttributeModifier(const AsciiString &name, Int duration);
+	Bool getAttributeModifierBonus(Int which, Real *out) const;
 	Bool getAttributeModifierMultiplier(Int which, Real *out) const;
 	Int bfmeGetHordeMemberCount() const;
 	Real bfmeGetCrewSpeedMultiplier() const;
@@ -220,6 +222,15 @@ Bool Object::getAttributeModifierMultiplier(Int which, Real *out) const
 	if (pool == 0)
 		return false;
 	return pool->getAttributeModifierMultiplier(which, out);
+}
+
+// ?getAttributeModifierBonus@Object@@QBE_NHPAM@Z
+Bool Object::getAttributeModifierBonus(Int which, Real *out) const
+{
+	AttributeModifierPoolUpdate *pool = findAttributeModifierPoolUpdate();
+	if (pool == 0)
+		return false;
+	return pool->getAttributeModifierBonus(which, out);
 }
 
 // ?bfmeGetHordeMemberCount@Object@@QBEHXZ
