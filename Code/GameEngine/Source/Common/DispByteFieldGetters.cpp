@@ -154,6 +154,19 @@ BFME_DISP_BYTE_GETTER( Rva007460E0ByteField, 0x248E )
 BFME_DISP_BYTE_GETTER( Rva00746110ByteField, 0x2438 )
 BFME_DISP_BYTE_GETTER( Rva007D0A90ByteField, 0x272 )
 BFME_DISP_BYTE_GETTER( Rva007DCBC0ByteField, 0x306C )
+class Rva00642C30ByteField
+{
+public:
+	unsigned int get() const;
+
+	char m_lead[0x3E4];
+	unsigned char m_value;
+};
+
+unsigned int Rva00642C30ByteField::get() const
+{
+	return m_value;
+}
 BFME_DISP_BYTE_GETTER( Rva00910F30ByteField, 0x271 )
 
 // Four further members whose displacement is outside the 0x80..0x8000 window
