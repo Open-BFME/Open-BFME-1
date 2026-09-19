@@ -1,7 +1,7 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME5: lift LookupSmallRankImage to clean C++.
 
-#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "ascii_string.h"
 
 typedef int Int;
 
