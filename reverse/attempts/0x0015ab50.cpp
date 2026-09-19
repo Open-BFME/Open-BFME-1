@@ -1,23 +1,12 @@
 // ?prepFollow@AIGroup@@QAEXW4CommandSourceType@@H@Z
-// partial score=0.3 date=2026-09-09
-// Research-only semantic attempt for the BFME AIGroup formation planner.
-// Retail boundary: 0x0015AB50, 2416 bytes.
+// partial score=0.4 date=2026-09-19
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// Open-BFME: AIGroup::prepFollow, retail 0x0015AB50, 2416 bytes.
 //
-// Identity is no longer speculative.  The byte-exact
-// AIGroup::groupFollowWaypointPathAsTeam body at 0x00155A80 calls ILT
-// 0x0002E636 -> 0x0015AB50 after isReady(), passing its CommandSourceType and
-// zero.  The byte-exact AIGroup::tryGroupSpecial body at 0x001599A0 calls the
-// same ILT with its corresponding two arguments.  Together those callers
-// establish AIGroup::prepFollow rather than merely an AIGroup formation helper.
-//
-// Retail builds twelve 0x1BC-byte records and therefore probes a 0x1540-byte
-// aligned frame.  This bank compiles to 691 bytes with a 0x14E8-byte frame: it
-// models allocation, member classification, and initial formation assignment,
-// but it still omits the later pairwise offset search/swap and final offset
-// application visible in retail +0x310..+0x94B.  That missing semantic phase,
-// not an unresolved direct callee, is the current blocker; callees.py resolves
-// all twelve direct targets (including the two register-convention helpers at
-// 0x0015A2D0 and the iterator/record helper at 0x0015A390).
+// Identity is established by the exact groupFollowWaypointPathAsTeam and
+// tryGroupSpecial callers through ILT 0x0002E636.  This first source pass is
+// the banked semantic reconstruction; the retail body also contains the
+// formation comparison/swap phase after the initial record fill.
 
 struct Coord3D
 {
@@ -41,6 +30,13 @@ public:
 
 class Object;
 
+class BfmeAIUpdateInterface
+{
+public:
+	unsigned char m_unreconstructed_00[4];
+	void *m_locomotor;
+};
+
 enum CommandSourceType { BFME_COMMAND_SOURCE };
 
 class SimpleObjectIterator
@@ -52,6 +48,9 @@ public:
 	virtual Object *next();
 	void insert(Object *obj, float numeric);
 	void sort(int order);
+
+private:
+	unsigned char m_unreconstructed_04[0x0c];
 };
 
 class Object
@@ -70,8 +69,9 @@ public:
 	float getPosX(void) const { return m_position.x; }
 	float getPosY(void) const { return m_position.y; }
 	void *getAI(void) { return m_ai; }
+	BfmeAIUpdateInterface *getAIUpdateInterface(void);
 
-	private:
+private:
 	virtual ~Object();
 	const ThingTemplate *m_template;
 	unsigned char m_unreconstructed_08[0x38 - 0x08];
@@ -79,6 +79,8 @@ public:
 	unsigned char m_unreconstructed_44[0x204 - 0x44];
 	void *m_ai;
 };
+
+#pragma comment(linker, "/alternatename:?getAIUpdateInterface@Object@@QAEPAVBfmeAIUpdateInterface@@XZ=?j_00021017@@YAXXZ")
 
 struct BfmeListNodeBase
 {
@@ -90,6 +92,8 @@ struct BfmeMemberNode : public BfmeListNodeBase
 {
 	Object *m_bfmeValue;
 };
+
+extern void j_00044dfa(void);
 
 class AIGroup
 {
@@ -103,7 +107,9 @@ private:
 
 struct BfmeFormationRecord
 {
-	BfmeFormationRecord() : m_columns(0), m_memberCount(0), m_active(0) { }
+	void initialize(void);
+	void computeCenter(float *out);
+	void computeSlot(float *out, int selector);
 
 	int m_columns;
 	unsigned char m_unreconstructed_04[0x120 - 0x04];
@@ -113,24 +119,54 @@ struct BfmeFormationRecord
 	unsigned char m_unreconstructed_1b9[0x1bc - 0x1b9];
 };
 
+struct BfmePrepScratch
+{
+	unsigned char m_unreconstructed_00[0x10];
+	float m_centerOffset[2];
+	unsigned char m_unreconstructed_18[0x14];
+	int m_formationID;
+	unsigned char m_unreconstructed_30[4];
+	float m_slotOffset[2];
+	unsigned char m_unreconstructed_3c[0x1c];
+};
+
+struct BfmePrepFrame
+{
+	BfmePrepScratch m_scratch;
+	BfmeFormationRecord m_records[12];
+};
+
 struct BfmeFormationTable
 {
 	unsigned char m_unreconstructed_00[0xb0];
 	int m_defaultColumns;
 };
 
-struct BfmeAIFormationState
+#pragma comment(linker, "/alternatename:?initialize@BfmeFormationRecord@@QAEXXZ=?j_00044dfa@@YAXXZ")
+#pragma comment(linker, "/alternatename:?computeCenter@BfmeFormationRecord@@QAEXPAM@Z=?j_00045818@@YAXXZ")
+#pragma comment(linker, "/alternatename:?computeSlot@BfmeFormationRecord@@QAEXPAMH@Z=?j_0001fe74@@YAXXZ")
+
+enum FormationID
 {
-	unsigned char m_unreconstructed_00[0x14];
-	BfmeFormationTable *m_formationTable;
+	BFME_NO_FORMATION_ID = -1
 };
 
-extern BfmeAIFormationState *TheAI;
+class AI
+{
+public:
+	FormationID getNextFormationID(void);
+	unsigned char m_unreconstructed_00[0x14];
+	BfmeFormationTable *m_aiData;
+};
+
+extern AI *TheAI;
+
+#pragma comment(linker, "/alternatename:?getNextFormationID@AI@@QAE?AW4FormationID@@XZ=?j_00025743@@YAXXZ")
 
 struct BfmeFormationUnitAI
 {
 	unsigned char m_unreconstructed_00[0x1cc];
-	void *m_locomotor;
+	BfmeAIUpdateInterface *m_locomotor;
 };
 
 static int bfmeFormationFootprint(const Object *obj)
@@ -151,11 +187,16 @@ void AIGroup::prepFollow(CommandSourceType cmdSource, int unused)
 	(void)cmdSource;
 	(void)unused;
 
-	SimpleObjectIterator *nearCenter = new SimpleObjectIterator;
+	AIGroup *group = this;
+	__declspec(align(8)) BfmePrepFrame frame;
+	frame.m_scratch.m_formationID = (int)TheAI->getNextFormationID();
 	SimpleObjectIterator *nearFormation = new SimpleObjectIterator;
-	BfmeFormationRecord records[12];
+	SimpleObjectIterator *nearCenter = new SimpleObjectIterator;
+	BfmeFormationRecord *records = frame.m_records;
+	for (int i = 0; i < 12; ++i)
+		records[i].initialize();
 
-	int columns = TheAI->m_formationTable->m_defaultColumns;
+	int columns = TheAI->m_aiData->m_defaultColumns;
 	if (columns < 2)
 		columns = 2;
 	if (columns > 6)
@@ -163,10 +204,10 @@ void AIGroup::prepFollow(CommandSourceType cmdSource, int unused)
 	for (int i = 0; i < 12; ++i)
 		records[i].m_columns = columns;
 
-	const float centerX = *(const float *)((const unsigned char *)this + 0x28);
-	const float centerY = *(const float *)((const unsigned char *)this + 0x2c);
-	for (BfmeListNodeBase *it = m_bfmeMembers->m_bfmeNext;
-		it != m_bfmeMembers;
+	const float centerX = *(const float *)((const unsigned char *)group + 0x28);
+	const float centerY = *(const float *)((const unsigned char *)group + 0x2c);
+	for (BfmeListNodeBase *it = group->m_bfmeMembers->m_bfmeNext;
+		it != group->m_bfmeMembers;
 		it = it->m_bfmeNext)
 	{
 		Object *obj = ((BfmeMemberNode *)it)->m_bfmeValue;
@@ -184,49 +225,101 @@ void AIGroup::prepFollow(CommandSourceType cmdSource, int unused)
 	nearCenter->sort(1);
 	nearFormation->sort(1);
 
+	int specialCount = 0;
 	int recordCount = 0;
 	for (Object *obj = nearCenter->first(); obj; obj = nearCenter->next())
 	{
-		BfmeFormationUnitAI *unitAI =
-			(BfmeFormationUnitAI *)obj->getAI();
-		if (unitAI == 0 || unitAI->m_locomotor == 0)
+		BfmeAIUpdateInterface *update = obj->getAIUpdateInterface();
+		if (update == 0 || update->m_locomotor == 0)
 			continue;
 
 		int footprint = bfmeFormationFootprint(obj);
-		if (footprint > 1)
-			++recordCount;
+		recordCount += footprint;
+
+		const ThingTemplate *tmpl = obj->getTemplate();
+		if (tmpl != 0)
+		{
+			int formationClass =
+				*(const int *)((const unsigned char *)tmpl + 0x74);
+			if (formationClass >= 4 && formationClass <= 6)
+				++specialCount;
+		}
 	}
 
 	int selectedRecords = (recordCount + columns - 1) / columns;
-	if (selectedRecords < 1)
-		selectedRecords = 1;
 	if (selectedRecords > 12)
 		selectedRecords = 12;
 
+	int pass = 0;
 	int recordIndex = 0;
-	for (Object *obj = nearFormation->first(); obj && recordIndex < selectedRecords;
-		obj = nearFormation->next())
+	while (pass < 13)
 	{
-		BfmeFormationUnitAI *unitAI =
-			(BfmeFormationUnitAI *)obj->getAI();
-		if (unitAI == 0 || unitAI->m_locomotor == 0)
-			continue;
-
-		BfmeFormationRecord &record = records[recordIndex];
-		int slot = record.m_memberCount;
-		if (slot >= 0 && slot < 36)
+		for (Object *obj = nearFormation->first(); obj;
+			obj = nearFormation->next())
 		{
-			record.m_members[slot] = obj;
-			++record.m_memberCount;
-			*(unsigned int *)((unsigned char *)obj + 0x31c) =
-				(unsigned int)recordIndex;
-			*(float *)((unsigned char *)obj + 0x320) =
-				(float)(slot % record.m_columns);
-			*(float *)((unsigned char *)obj + 0x324) =
-				(float)(slot / record.m_columns);
-		}
-		if (record.m_memberCount >= 36)
+			BfmeFormationUnitAI *unitAI =
+				(BfmeFormationUnitAI *)obj->getAI();
+			if (unitAI == 0 || unitAI->m_locomotor == 0)
+				continue;
+
+			const ThingTemplate *tmpl = obj->getTemplate();
+			if (tmpl == 0 || *(const int *)((const unsigned char *)tmpl + 0x74)
+				!= pass)
+				continue;
+
+			BfmeFormationRecord &record = records[recordIndex];
+			int slot = record.m_memberCount;
+			*(unsigned int *)((unsigned char *)obj + 0x31c) = 0;
+			if (slot < 36)
+			{
+				record.m_members[slot] = obj;
+				++record.m_memberCount;
+				record.m_active = 0;
+			}
+
 			++recordIndex;
+			if (recordIndex >= selectedRecords)
+				recordIndex = 0;
+		}
+		++pass;
+	}
+
+	frame.m_scratch.m_centerOffset[0] = 0.0f;
+	frame.m_scratch.m_centerOffset[1] = 0.0f;
+	frame.m_scratch.m_slotOffset[0] = 0.0f;
+	frame.m_scratch.m_slotOffset[1] = 0.0f;
+	if (selectedRecords > 0)
+	{
+		records[0].computeCenter(frame.m_scratch.m_centerOffset);
+		if ((specialCount & 1) != 0)
+		{
+			frame.m_scratch.m_centerOffset[0] +=
+				*(const float *)((const unsigned char *)TheAI->m_aiData + 0xa8);
+			frame.m_scratch.m_centerOffset[1] += (float)pass;
+		}
+		else
+		{
+			frame.m_scratch.m_centerOffset[0] =
+				-frame.m_scratch.m_centerOffset[0];
+			frame.m_scratch.m_centerOffset[1] +=
+				*(const float *)((const unsigned char *)TheAI->m_aiData + 0xa8);
+		}
+
+		for (int i = 0; i < selectedRecords; ++i)
+		{
+			records[i].computeSlot(frame.m_scratch.m_slotOffset,
+				frame.m_scratch.m_formationID);
+			for (Object *obj = nearFormation->first(); obj;
+				obj = nearFormation->next())
+			{
+				if (*(unsigned int *)((unsigned char *)obj + 0x31c) != 0)
+					continue;
+				float *objectX = (float *)((unsigned char *)obj + 0x320);
+				float *objectY = (float *)((unsigned char *)obj + 0x324);
+				*objectX += frame.m_scratch.m_slotOffset[0];
+				*objectY += frame.m_scratch.m_slotOffset[1];
+			}
+		}
 	}
 
 	delete nearFormation;

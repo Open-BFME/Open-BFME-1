@@ -1,5 +1,5 @@
 // ?getNextMoodTarget@AIUpdateInterface@@QAEPAVObject@@_N0@Z
-// partial score=0.17 date=2026-09-17
+// partial score=0.2 date=2026-09-19
 // Best focused source for RVA 0x00279A50. Extracted from AIUpdate.cpp after the final
 // non-EH lever pass; helper adapters and the method body are preserved verbatim.
 
@@ -398,7 +398,8 @@ Object* AIUpdateInterface::getNextMoodTarget( Bool calledByAI, Bool calledDuring
 		return NULL;
 	if ((objectFlags & 8) != 0)
 		return NULL;
-	if ((*(volatile UnsignedInt *)(object + 0x98) & 0x20) != 0)
+	UnsignedInt objectStatus = *reinterpret_cast<UnsignedInt *>(object + 0x98);
+	if ((objectStatus & 0x20) != 0)
 		return NULL;
 	void *objectAi = *reinterpret_cast<void **>(object + 0x204);
 	if (objectAi != NULL && *reinterpret_cast<void **>(reinterpret_cast<unsigned char *>(objectAi) + 0x34) != NULL)
