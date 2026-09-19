@@ -138,7 +138,7 @@ public:
 	virtual void slot0A4() = 0;
 	virtual void slot0A8() = 0;
 	virtual void slot0AC() = 0;
-	virtual void slot0B0() = 0;
+	virtual void leaveStagingRoom() = 0;
 	virtual void slot0B4() = 0;
 	virtual void slot0B8() = 0;
 	virtual void slot0BC() = 0;
@@ -155,6 +155,22 @@ public:
 	virtual void unregisterTextWindow( GameWindow *window ) = 0;
 	virtual Int addText( UnicodeString message, Color c, GameWindow *win ) = 0;
 };
+
+class BfmeWOLGameSpyStagingRoom
+{
+public:
+	virtual void slot000() = 0;
+	virtual void slot004() = 0;
+	virtual void reset() = 0;
+};
+
+class Rva00537C00
+{
+public:
+	void set();
+};
+
+extern Rva00537C00 *s_popBackExtra;
 
 class BfmeWOLMapSelectLayout
 {
@@ -404,23 +420,25 @@ WindowLayout *WOLMapSelectLayout = NULL;
 
 void PopBackToLobby( void )
 {
-	// delete TheNAT, its no good for us anymore.
 	delete TheNAT;
 	TheNAT = NULL;
 
-	if (TheGameSpyInfo) // this can be blown away by a disconnect on the map transfer screen
+	if (TheGameSpyInfo)
 	{
-		TheGameSpyInfo->getCurrentStagingRoom()->reset();
-		TheGameSpyInfo->leaveStagingRoom();
-		//TheGameSpyInfo->joinBestGroupRoom();
+		((BfmeWOLGameSpyStagingRoom *)
+			((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom())->reset();
+		((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->leaveStagingRoom();
 	}
 
-	DEBUG_LOG(("PopBackToLobby() - parentWOLGameSetup is %X\n", parentWOLGameSetup));
 	if (parentWOLGameSetup)
 	{
 		nextScreen = "Menus/WOLCustomLobby.wnd";
 		TheShell->pop();
+		return;
 	}
+
+	if (s_popBackExtra)
+		s_popBackExtra->set();
 }
 
 void updateMapStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], Bool onLoadScreen = FALSE );
@@ -3042,4 +3060,3 @@ WindowMsgHandledType WOLGameSetupMenuSystem( GameWindow *window, UnsignedInt msg
 	}//Switch
 	return MSG_HANDLED;
 }//WindowMsgHandledType WOLGameSetupMenuSystem( GameWindow *window, UnsignedInt msg, 
-
