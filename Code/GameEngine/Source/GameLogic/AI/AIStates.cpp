@@ -1144,6 +1144,132 @@ const Waypoint *AIStateMachine::getGoalWaypoint()
 	return m_goalWaypoint;
 }
 
+struct Rva001704D0AIUpdate
+{
+	void **m_vtable;
+	char m_unknown[0x204 - 4];
+
+	void notifyStateMachineChanged()
+	{
+		typedef void (__fastcall *Notify)(Rva001704D0AIUpdate *);
+		((Notify)m_vtable[0x224 / 4])(this);
+	}
+};
+
+struct Rva001704D0Object
+{
+	char m_unknown[0x204];
+	Rva001704D0AIUpdate *m_ai;
+};
+
+class Rva001704D0AIStateMachine
+{
+	char m_unknown[0x0c];
+	Rva001704D0Object *m_owner;
+	char m_gap14[0x44];
+	void *m_temporaryState;
+	int m_temporaryStateFrameEnd;
+
+public:
+	virtual StateReturnType resetToDefaultState();
+};
+
+void j_00027566();
+void j_0000705e();
+
+typedef void (__fastcall *Rva001704D0Clear)(Rva001704D0AIStateMachine *);
+typedef StateReturnType (__fastcall *Rva001704D0Reset)(Rva001704D0AIStateMachine *);
+
+StateReturnType Rva001704D0AIStateMachine::resetToDefaultState()
+{
+	if (m_temporaryState)
+	{
+		if (m_temporaryStateFrameEnd == -1)
+			return STATE_CONTINUE;
+
+		((Rva001704D0Clear)j_00027566)(this);
+	}
+	{
+		StateReturnType result = ((Rva001704D0Reset)j_0000705e)(this);
+		Rva001704D0Object *owner = m_owner;
+		Rva001704D0AIUpdate *ai = owner->m_ai;
+		if (ai)
+			ai->notifyStateMachineChanged();
+		return result;
+	}
+}
+
+struct Rva00170520State
+{
+	void *m_vtable;
+	int m_id;
+};
+
+struct Rva00170520AIUpdate
+{
+	void **m_vtable;
+	char m_unknown[0x224 - 4];
+
+	void notifyStateMachineChanged()
+	{
+		typedef void (__fastcall *Notify)(Rva00170520AIUpdate *);
+		((Notify)m_vtable[0x224 / 4])(this);
+	}
+};
+
+struct Rva00170520Object
+{
+	char m_unknown[0x204];
+	Rva00170520AIUpdate *m_ai;
+};
+
+class Rva00170520StateMachineBase
+{
+protected:
+	char m_unknown[0x0c];
+	Rva00170520Object *m_owner;
+	char m_gap14[8];
+
+public:
+	virtual StateReturnType setState(unsigned int newStateID);
+};
+
+class Rva00170520AIStateMachine : public Rva00170520StateMachineBase
+{
+	Rva00170520State *m_currentState;
+	char m_gap20[0x38];
+	void *m_temporaryState;
+	int m_temporaryStateFrameEnd;
+
+public:
+	virtual StateReturnType setState(unsigned int newStateID);
+};
+
+typedef void (__fastcall *Rva00170520Clear)(Rva00170520AIStateMachine *);
+
+StateReturnType Rva00170520AIStateMachine::setState(unsigned int newStateID)
+{
+	if (m_temporaryState)
+	{
+		if (m_temporaryStateFrameEnd == -1)
+			return STATE_CONTINUE;
+
+		((Rva00170520Clear)j_00027566)(this);
+	}
+
+	int oldStateID;
+	if (m_currentState)
+		oldStateID = m_currentState->m_id;
+	else
+		oldStateID = 0xF423F;
+
+	StateReturnType result = ((StateMachine *)this)->StateMachine::setState(newStateID);
+	Rva00170520AIUpdate *ai = m_owner->m_ai;
+	if (ai && oldStateID != newStateID)
+		ai->notifyStateMachineChanged();
+	return result;
+}
+
 //----------------------------------------------------------------------------------------------------------
 // ?clear@AIStateMachine@@UAEXXZ present-unmatched
 void AIStateMachine::clear()
