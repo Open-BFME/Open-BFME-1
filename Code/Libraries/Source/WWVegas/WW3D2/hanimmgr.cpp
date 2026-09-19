@@ -465,3 +465,17 @@ HAnimClass * HAnimManagerIterator::Get_Current_Anim( void )
 	return (HAnimClass *)Get_Current(); 
 }
 
+class Rva007B9BB0Owner
+{
+public:
+	int getIndex() const;
+
+private:
+	char m_pad[8];
+	int m_index;
+};
+
+int Rva007B9BB0Owner::getIndex() const
+{
+	return m_index;
+}
