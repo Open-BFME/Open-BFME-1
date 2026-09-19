@@ -13113,6 +13113,7 @@ name,address,notes
 ?_M_clear@?$vector@UGen_t_00152530_p12pod@@V?$allocator@UGen_t_00152530_p12pod@@@_STL@@@_STL@@IAEXXZ,0x000B7880,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_0019e270_p12cd@@V?$allocator@UGen_t_0019e270_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00041709,retail call from the proven 0x0019E030 vector growth body reaches the existing ICF-equivalent 12-byte vector clear at 0x0019D970
 ?_M_clear@?$vector@UGen_t_001ac070_p48cd@@V?$allocator@UGen_t_001ac070_p48cd@@@_STL@@@_STL@@IAEXXZ,0x001AC010,gen-tgrid payload member
+?_M_clear@?$vector@UGen_t_001da8b0_p12cd@@V?$allocator@UGen_t_001da8b0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0000D0FD,retail 0x001D8410 vector growth call reaches the pinned clear thunk; the independent call site proves this ABI
 ?_M_clear@?$vector@UGen_t_001e71d0_p12pod@@V?$allocator@UGen_t_001e71d0_p12pod@@@_STL@@@_STL@@IAEXXZ,0x001E7180,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_001efe90_p12cd@@V?$allocator@UGen_t_001efe90_p12cd@@@_STL@@@_STL@@IAEXXZ,0x000B7880,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_001fa830_p12cd@@V?$allocator@UGen_t_001fa830_p12cd@@@_STL@@@_STL@@IAEXXZ,0x0000DC60,Open-BFME5 target of the vector clear call in 0x001FA5B0
@@ -52953,6 +52954,7 @@ name,address,notes
 ?b_004a4090@@YAXXZ,0x004A4090,gen-thunk body
 ?b_004a4240@@YAXXZ,0x004A4240,gen-thunk body
 ?b_004a5950@@YAXXZ,0x004A5950,gen-thunk body
+?b_004a5e30@@YAXXZ,0x004A5E30,address-derived target retained for gen_small/thunks_005.cpp j_0000d495; retail E9 96 89 49 00 at 0x0000D495 resolves here; semantic identity ControlBar::populateCommand(Object* Bool) proven by matched switchToContext caller in f3566cdce0
 ?b_004a64f0@@YAXXZ,0x004A64F0,gen-thunk body
 ?b_004a6500@@YAXXZ,0x004A6500,gen-thunk body
 ?b_004a6510@@YAXXZ,0x004A6510,gen-thunk body
@@ -88425,4 +88427,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-?b_004a5e30@@YAXXZ,0x004A5E30,address-derived target retained for gen_small/thunks_005.cpp j_0000d495; retail E9 96 89 49 00 at 0x0000D495 resolves here; semantic identity ControlBar::populateCommand(Object* Bool) proven by matched switchToContext caller in f3566cdce0
