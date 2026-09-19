@@ -789,11 +789,69 @@ WW3DErrorType WW3D::Set_Device_Resolution(int width,int height,int bits,int wind
  *   3/24/98    GTH : Created.                                                                 *
  *   1/25/2001  gth : converted to dx8                                                         *
  *=============================================================================================*/
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/Common/System/WW3D_Get_Render_Target_Resolution.cpp
-// ?Get_Render_Target_Resolution@WW3D@@ present-unmatched
-void WW3D::Get_Render_Target_Resolution(int & set_w,int & set_h,int & set_bits,bool & set_windowed)
+void W3DRadarResetLock(void);
+void W3DRadarResetUnlock(void);
+
+class BfmeRadarResetGuard
 {
-	DX8Wrapper::Get_Render_Target_Resolution(set_w,set_h,set_bits,set_windowed);
+public:
+	BfmeRadarResetGuard() { W3DRadarResetLock(); }
+	~BfmeRadarResetGuard() { W3DRadarResetUnlock(); }
+};
+
+struct BfmeDisplayModeInfo
+{
+	char m_bfmeHead[0x18];
+	int m_bfmeWidth;
+	int m_bfmeHeight;
+};
+
+// BFME queries device slot +0x30 under the reset lock; the inherited wrapper exposes neither ABI.
+class BfmeRenderDevice
+{
+public:
+	virtual long __stdcall bfmeSlot00(void) = 0;
+	virtual long __stdcall bfmeSlot04(void) = 0;
+	virtual long __stdcall bfmeSlot08(void) = 0;
+	virtual long __stdcall bfmeSlot0C(void) = 0;
+	virtual long __stdcall bfmeSlot10(void) = 0;
+	virtual long __stdcall bfmeSlot14(void) = 0;
+	virtual long __stdcall bfmeSlot18(void) = 0;
+	virtual long __stdcall bfmeSlot1C(void) = 0;
+	virtual long __stdcall bfmeSlot20(void) = 0;
+	virtual long __stdcall bfmeSlot24(void) = 0;
+	virtual long __stdcall bfmeSlot28(void) = 0;
+	virtual long __stdcall bfmeSlot2C(void) = 0;
+	virtual long __stdcall bfmeGetModeInfo(BfmeDisplayModeInfo *info) = 0;
+};
+
+extern BfmeRenderDevice *TheBfmeRenderDevice;
+extern int BfmeRenderWidth;
+extern int BfmeRenderHeight;
+extern int BfmeRenderBitDepth;
+extern bool BfmeRenderWindowed;
+
+void WW3D::Get_Render_Target_Resolution(int &width, int &height, int &bitDepth, bool &windowed)
+{
+	if (TheBfmeRenderDevice)
+	{
+		BfmeRadarResetGuard guard;
+		BfmeDisplayModeInfo info;
+
+		TheBfmeRenderDevice->bfmeGetModeInfo(&info);
+
+		width = info.m_bfmeWidth;
+		height = info.m_bfmeHeight;
+		bitDepth = BfmeRenderBitDepth;
+		windowed = BfmeRenderWindowed;
+	}
+	else
+	{
+		width = BfmeRenderWidth;
+		height = BfmeRenderHeight;
+		bitDepth = BfmeRenderBitDepth;
+		windowed = BfmeRenderWindowed;
+	}
 }
 
 
