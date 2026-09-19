@@ -675,3 +675,4 @@ Code/GameEngine/Source/Common/LivingWorldManagerRva006169D0.cpp	StringBase	Code\
 Code/Libraries/Source/WWVegas/WWLib/RvaHashResizeGameSpyGroupRoomAt005C8870.cpp	AsciiString	Functions: FAIL 1/1
 Code/Libraries/Source/WWVegas/WWLib/RvaHashResizeAsciiString0045FFD0.cpp	AsciiString	Functions: FAIL 1/1
 Code/GameEngine/Source/GameClient/Terrain/TerrainRoadTypeSetDamageToFXStringILT.cpp	AsciiString	Functions: FAIL 1/1
+reverse/attempts/0x00558be0.cpp	AsciiString	build.sh exited 1
