@@ -79019,6 +79019,7 @@ name,address,notes
 ?canonicalFlagName@Open2Lookup344B20@@AAE?AVAsciiString@@ABV2@@Z,0x00036336,Open2 0x00344B20 flag lookup callee
 ?captureScreen@W3DDisplay@@IAEXPADI@Z,0x006EA890,callee pin for the W3DDisplay screenshot wrapper; captures the front buffer into the caller-owned image using the retail helper body
 ?cell@BfmeGridWM@@QAEXHH@Z,0x00023B14,Open-BFME5 grid cell thiscall used by 0x0074C890 nested walk
+?cellCallback@ExamineCellsStruct@@QAEHPAVPathfindCell@@0HH@Z,0x00010532,ILT to the member-ified examineCellsCallback body at 0x003E0DD0; Pathfinder::examineNeighboringCells supplies the ExamineCellsStruct payload
 ?cellCallback@ObstacleCellStruct@@QAEHPAVPathfindCell@@0HH@Z,0x00042361,ILT jumps to matched ObstacleCellStruct::cellCallback at 0x003DEBB0; Pathfinder line walker at 0x003E3190 passes from to x y and tests Int result
 ?changeBattlePlan@Player@@QAEXW4BattlePlanStatus@@HPAVBattlePlanBonuses@@@Z,0x000D8080,Open-BFME5 retail identity; exact clean C++ body
 ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z,0x0002847F,Bridge::updateDamageState calls the existing ILT thunk for both closed and open transitions
