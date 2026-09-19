@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME: GameSpyCloseOverlay, retail 0x00627AD0, 90 bytes.
+// Open-BFME: GameSpyCloseOverlayShim, retail 0x00627AD0, 90 bytes.
 //
 // The reference's body with its per-overlay logging compiled out, which leaves
 // one arm of the switch standing: the options overlay, and only when it is
@@ -52,7 +52,7 @@ public:
 
 extern WindowLayout *overlayLayouts[GSOVERLAY_MAX];		// 0x012F70B4
 
-void GameSpyCloseOverlay( GSOverlayType overlay )
+void GameSpyCloseOverlayShim( GSOverlayType overlay )
 {
 	switch(overlay)
 	{
