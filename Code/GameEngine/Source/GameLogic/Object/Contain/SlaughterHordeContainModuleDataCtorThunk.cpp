@@ -8,8 +8,9 @@
 // remaining fields begin.
 //
 // The base constructor takes no arguments and is called rather than inlined, so
-// it is declared without a body; this class stores its own vptr, so it is not
-// novtable.
+// it is declared without a body. The derived class must not be novtable because
+// its constructor stores the derived vptr; its inherited virtual destructor is
+// intentionally implicit, which emits the matching member-array and base cleanup.
 class HordeSiegeEngineContainModuleData
 {
 public:
