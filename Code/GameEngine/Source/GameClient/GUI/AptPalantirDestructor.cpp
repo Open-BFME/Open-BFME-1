@@ -239,3 +239,16 @@ Rva0079D1D0AptPalantir::~Rva0079D1D0AptPalantir()
 		m_member510 = 0;
 	}
 }
+
+class AptPalantir
+{
+public:
+	virtual ~AptPalantir();
+};
+
+__declspec(noinline) AptPalantir::~AptPalantir() {}
+
+void Force_AptPalantir_Deleting_Destructor(AptPalantir *palantir)
+{
+	delete palantir;
+}
