@@ -11,3 +11,13 @@ public:
 void Rva002F08E0Owner::ret12(int, int, int)
 {
 }
+
+class Rva002F0900Owner
+{
+public:
+	void ret12(int, int, int);
+};
+
+void Rva002F0900Owner::ret12(int, int, int)
+{
+}
