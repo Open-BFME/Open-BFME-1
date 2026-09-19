@@ -3515,18 +3515,17 @@ void W3DView::shake( const Coord3D *epicenter, CameraShakeType shakeType )
 /** Transformt he screen pixel coord passed in, to a world coordinate at the specified
 	* z value */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewScreenToWorldAtZ.cpp
-// ?screenToWorldAtZ@W3DView@@ present-unmatched
 void W3DView::screenToWorldAtZ( const ICoord2D *s, Coord3D *w, Real z )
 {
 	Vector3 rayStart, rayEnd;
-	
-	getPickRay( s, &rayStart, &rayEnd );
-	w->x = Vector3::Find_X_At_Z( z, rayStart, rayEnd );
-	w->y = Vector3::Find_Y_At_Z( z, rayStart, rayEnd );
-	w->z = z;
 
-}  // end screenToWorldAtZ
+	getPickRay(s, &rayStart, &rayEnd);
+	if (rayStart.Z - z < 120.0f)
+		z = rayStart.Z - 120.0f;
+	w->x = Vector3::Find_X_At_Z(z, rayStart, rayEnd);
+	w->y = Vector3::Find_Y_At_Z(z, rayStart, rayEnd);
+	w->z = z;
+}
 
 // ?cameraEnableSlaveMode@W3DView@@ present-unmatched
 void W3DView::cameraEnableSlaveMode(const AsciiString & objectName, const AsciiString & boneName)
@@ -3562,8 +3561,6 @@ void W3DView::cameraDisableRealZoomMode(void) //WST added 10/18/2002
 	updateView();
 }
 
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView_AddCameraShakeThunk.cpp
-// ?Add_Camera_Shake@W3DView@@ present-unmatched
 void W3DView::Add_Camera_Shake (const Coord3D & position,float radius,float duration,float power) //WST added 11/13/02
 {
 	Vector3 vpos;
@@ -3572,6 +3569,6 @@ void W3DView::Add_Camera_Shake (const Coord3D & position,float radius,float dura
 	vpos.Y = position.y;
 	vpos.Z = position.z;
 
-
-	CameraShakerSystem.Add_Camera_Shake(vpos,radius,duration,power);
+	(*(CameraShakeSystemClass **)&CameraShakerSystem)->Add_Camera_Shake(
+		vpos, radius, duration, power);
 }
