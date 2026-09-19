@@ -101,6 +101,7 @@ struct Rva002BC260Coord3D
 		z = z * value;
 		return *this;
 	}
+
 };
 
 static __forceinline Rva002BC260Coord3D operator*(

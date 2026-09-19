@@ -1,8 +1,64 @@
 // ?examineNeighboringCells@Pathfinder@@IAEHPAVPathfindCell@@0ABVLocomotorSet@@_N2HABUICoord2D@@PBVObject@@H@Z
-// partial score=0.2 date=2026-09-17
+// partial score=0.2 date=2026-09-19
+// stlport
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/terrainlogic /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // Extracted best available source body for the partial at 0x003E6EE0.
 // The owning TU remains the Zero Hour twin under Code/GameEngine/Source/GameLogic/AI.
-+Int Pathfinder::examineNeighboringCells(PathfindCell *parentCell, PathfindCell *goalCell, const LocomotorSet& locomotorSet, 
+
+#define Matrix4x4 Matrix4
+#include "PreRTS.h"
+#include "GameLogic/AIPathfind.h"
+#include "Common/PerfTimer.h"
+#include "Common/Player.h"
+#include "Common/CRCDebug.h"
+#include "Common/GlobalData.h"
+#include "Common/LatchRestore.h"
+#include "Common/ThingTemplate.h"
+#include "Common/ThingFactory.h"
+#include "GameClient/Line2D.h"
+#include "GameLogic/AI.h"
+#include "GameLogic/GameLogic.h"
+#include "GameLogic/Locomotor.h"
+#include "GameLogic/Module/ContainModule.h"
+#include "GameLogic/Module/AIUpdate.h"
+#include "GameLogic/Module/PhysicsUpdate.h"
+#include "GameLogic/Object.h"
+#include "GameLogic/PartitionManager.h"
+#include "GameLogic/TerrainLogic.h"
+#include "GameLogic/Weapon.h"
+#include "Common/UnitTimings.h"
+#include "Common/Xfer.h"
+#include "Common/XferCRC.h"
+#include "Common/PerfMetrics.h"
+
+struct TCheckMovementInfo
+{
+	ICoord2D cell;
+	PathfindLayerEnum layer;
+	Int radius;
+	Bool centerInCell;
+	Bool considerTransient;
+	LocomotorSurfaceTypeMask acceptableSurfaces;
+	Int allyFixedCount;
+	Bool enemyFixed;
+	Bool allyMoving;
+	Bool allyGoal;
+};
+
+struct ExamineCellsStruct
+{
+	Pathfinder *thePathfinder;
+	const LocomotorSet *theLoco;
+	Bool centerInCell;
+	Bool isHuman;
+	Int radius;
+	const Object *obj;
+	PathfindCell *goalCell;
+};
+
+const Int COST_ORTHOGONAL = 10;
+const Int COST_DIAGONAL = 14;
+Int Pathfinder::examineNeighboringCells(PathfindCell *parentCell, PathfindCell *goalCell, const LocomotorSet& locomotorSet, 
 																				 Bool isHuman, Bool centerInCell, Int radius, const ICoord2D &startCellNdx,
 																				 const Object *obj, Int attackDistance)
 {
