@@ -1364,10 +1364,8 @@ void NetPacket::FillBufferWithDestroyPlayerCommand(UnsignedByte *buffer, NetComm
 	offset += sizeof(UnsignedInt);
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_fill.cpp
-// ?FillBufferWithKeepAliveCommand@NetPacket@@KAXPAEPAVNetCommandRef@@@Z present-unmatched
 void NetPacket::FillBufferWithKeepAliveCommand(UnsignedByte *buffer, NetCommandRef *msg) {
-	NetKeepAliveCommandMsg *cmdMsg = (NetKeepAliveCommandMsg *)(msg->getCommand());
+	NetKeepAliveCommandMsg *cmdMsg = (NetKeepAliveCommandMsg *)(((BfmeNetCommandRef *)msg)->m_command);
 	UnsignedShort offset = 0;
 
 	// If necessary, put the NetCommandType into the packet.
@@ -1379,7 +1377,7 @@ void NetPacket::FillBufferWithKeepAliveCommand(UnsignedByte *buffer, NetCommandR
 // If necessary, put the relay into the packet.
 	buffer[offset] = 'R';
 	++offset;
-	UnsignedByte newRelay = msg->getRelay();
+	UnsignedByte newRelay = ((BfmeNetCommandRef *)msg)->m_relay;
 	memcpy(buffer+offset, &newRelay, sizeof(UnsignedByte));
 	offset += sizeof(UnsignedByte);
 
