@@ -88416,3 +88416,5 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
+?get_allocator@?$vector@UGen_t_000b0c00_p8cd@@V?$allocator@UGen_t_000b0c00_p8cd@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_t_000b0c00_p8cd@@@2@XZ,0x0002234A,AudioEventInfo vector copy at 0x000B5A30 calls the get_allocator ILT and the thunk body is Gen_000b51f0 at 0x000B51F0
+??0?$_Vector_base@UGen_t_000b0c00_p8cd@@V?$allocator@UGen_t_000b0c00_p8cd@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_t_000b0c00_p8cd@@@1@@Z,0x000133DB,AudioEventInfo vector copy at 0x000B5A30 calls the vector base constructor ILT and the thunk body is at 0x000B52C0
