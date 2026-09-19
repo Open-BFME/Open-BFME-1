@@ -2,6 +2,6 @@
 
 #define SpecialPowerModule ProductionSpeedBonus
 #define SPECIAL_POWER_ALIAS
-#include "../GameLogic/Object/SpecialPower/SpecialPowerModuleDestructorThunk.cpp"
+#include "SpecialPowerModuleDestructorThunk.cpp"
 #undef SPECIAL_POWER_ALIAS
 #undef SpecialPowerModule
