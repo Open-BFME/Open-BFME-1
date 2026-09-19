@@ -54,6 +54,19 @@
 
 #include <io.h>
 
+// BFME's File vtable omits the pool-glue slot in the vendored header; the
+// complete retail File-family tables place seek at slot 5.
+class BFMERetailFileVTable
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual Int seek( Int bytes, File::seekMode mode );
+};
+
 //-------------------------------------------------------------------------------------------------
 /** Game file access.  At present this allows us to access test assets, assets from
 	* legacy GDI assets, and the current flat directory access for textures, models etc */
@@ -399,8 +412,6 @@ int GameFileClass::Read(void *buffer, int len)
 //-------------------------------------------------------------------------------------------------
 /** Seek. */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/GameFileClassSeek.cpp
-// ?Seek@GameFileClass@@UAEHHH@Z present-unmatched
 int GameFileClass::Seek(int pos, int dir) 
 {
 	File::seekMode mode = File::CURRENT;
@@ -411,7 +422,7 @@ int GameFileClass::Seek(int pos, int dir)
 		case SEEK_END: mode = File::END; break;
 	}
 	if (m_theFile) {
-		return m_theFile->seek(pos, mode);
+		return reinterpret_cast<BFMERetailFileVTable *>(m_theFile)->seek(pos, mode);
 	}
 	return 0xFFFFFFFF;
 }
@@ -501,4 +512,3 @@ void W3DFileSystem::Return_File( FileClass *file )
 {
 	delete file;
 }
-
