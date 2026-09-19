@@ -243,6 +243,11 @@ private:
 
 typedef char W3DLightDraw_light_must_be_at_0x0C[(sizeof(DrawModule) == 0x0C) ? 1 : -1];
 
+Bool DrawModule::rva00750210() const
+{
+	return true;
+}
+
 W3DLightDraw::~W3DLightDraw()
 {
 	m_light->setEnabled(false);
