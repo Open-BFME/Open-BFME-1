@@ -95,7 +95,19 @@ public:
 	virtual void initReverseAnimateWindow( AnimateWindow *, UnsignedInt );
 
 	UnsignedInt m_maxDuration;
+
+protected:
+	virtual ~ProcessAnimateWindowSlideFromBottomTimed();
+
+private:
+	friend void forceProcessAnimateWindowSlideFromBottomTimedDeletingDestructor();
 };
+
+// Instantiation makes MSVC emit the protected scalar-deleting destructor at 0x00496830.
+void forceProcessAnimateWindowSlideFromBottomTimedDeletingDestructor()
+{
+	ProcessAnimateWindowSlideFromBottomTimed value;
+}
 
 // ?initReverseAnimateWindow@ProcessAnimateWindowSlideFromBottomTimed@@UAEXPAVAnimateWindow@@I@Z
 void ProcessAnimateWindowSlideFromBottomTimed::initReverseAnimateWindow( AnimateWindow *animWin,
