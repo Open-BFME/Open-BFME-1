@@ -1036,12 +1036,23 @@ struct BfmeNetFrameCommandMsg
 };
 
 // BFME packs the destination port next to the address instead of leaving it
-// after m_lastFrame, so every member from m_numCommands on sits later than the
-// reference class puts it: four bytes for the two words, two for the trailing
-// bytes.
+// after m_lastFrame, so the reference class cannot express the retail store
+// offsets used by init and the command builders below.
+struct BfmeNetPacketAddress
+{
+	BfmeNetPacketAddress() { m_ip = 0; m_port = 0; }
+
+	UnsignedInt m_ip;
+	UnsignedShort m_port;
+};
+
 struct BfmeNetPacketFields
 {
-	UnsignedByte m_unreconstructed_00[0x1f0];
+	UnsignedByte m_unreconstructed_00[0x04];
+	UnsignedByte m_packet[0x1dc];
+	Int m_packetLen;
+	BfmeNetPacketAddress m_dest;
+	Int m_numCommands;
 	NetCommandRef *m_lastCommand;			///< retail this+0x1f0
 	UnsignedInt m_lastFrame;			///< retail this+0x1f4
 	UnsignedShort m_lastCommandID;			///< retail this+0x1f8
@@ -2074,22 +2085,21 @@ NetPacket::~NetPacket() {
 /**
  * Initialize all the member variable values.
  */
-// byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/NetPacket_init.cpp
-// ?init@NetPacket@@QAEXXZ present-unmatched
 void NetPacket::init() {
-	m_addr = 0;
-	m_port = 0;
-	m_numCommands = 0;
-	m_packetLen = 0;
-	m_packet[0] = 0;
+	BfmeNetPacketFields *self = (BfmeNetPacketFields *)this;
+	BfmeNetPacketAddress dest;
+	self->m_dest = dest;
+	self->m_numCommands = 0;
+	self->m_packetLen = 0;
+	self->m_packet[0] = 0;
 
-	m_lastPlayerID = 0;
-	m_lastFrame = 0;
-	m_lastCommandID = 0;
-	m_lastCommandType = 0;
-	m_lastRelay = 0;
+	self->m_lastPlayerID = 0;
+	self->m_lastFrame = 0;
+	self->m_lastCommandID = 0;
+	self->m_lastCommandType = 0;
+	self->m_lastRelay = 0;
 
-	m_lastCommand = NULL;
+	self->m_lastCommand = NULL;
 }
 
 // ?reset@NetPacket@@QAEXXZ present-unmatched

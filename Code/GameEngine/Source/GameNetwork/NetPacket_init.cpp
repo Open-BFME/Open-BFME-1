@@ -1,6 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // readable body of ??0NetPacket@@: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
-// readable body of ?init@NetPacket@@QAEXXZ: Code/GameEngine/Source/GameNetwork/NetPacket.cpp
 
 // NetPacket::init, 0x00677700, 82 bytes.
 //
