@@ -2430,6 +2430,7 @@ name,address,notes
 ??0BfmeElemBX@@QAE@XZ,0x00017BD9,ILT thunk: BfmeOwnVVB element (AsciiString-sized) default ctor used by the vector constructor iterator in 0x001903F0/0x00190340
 ??0BfmeElemCU@@QAE@XZ,0x00892B80,pin
 ??0BfmeElemVVD@@QAE@XZ,0x00418A07,pin (additive; also pinned as ??0BfmeS1059@@QAE@XZ via thunks_011.cpp -> FUN_00796AD0; used as the array-new-ctor for LookAtTranslator::m_viewLocation)
+??0BfmeErasedValue_00627200@@QAE@ABV0@@Z,0x006270C0,MainMenuUtils queue payload copy uses the six-string retail copy body
 ??0BfmeErr1042@@QAE@XZ,0x00013A8E,retail ctor ILT used by MessageBox callbacks at 0x00522470 and 0x005224C0
 ??0BfmeErr1043@@QAE@XZ,0x00013A8E,pin
 ??0BfmeErr2_1043@@QAE@XZ,0x000180D9,pin
@@ -79597,6 +79598,7 @@ name,address,notes
 ?damageTeamMembers@Team@@QAE_NM@Z,0x0000D148,ILT to Team::damageTeamMembers 0x000F33F0; TeamPrototype::damageTeamMembers at 0x000F41A0 calls it per instance
 ?deallocate@?$BfmeNodeAllocator@$00$0A@@@SAXPAXI@Z,0x0082E5F0,Pathfinder reset node allocator alias
 ?deallocate@?$__node_alloc@$00$0A@@_STL@@SAXPAXI@Z,0x0001D35E,Open-BFME5 ILT the wide basic_string reserve at 0x00839590 frees the old block through
+?deallocate@BfmeStartNodeAllocAccess@@SAXPAXI@Z,0x0082E5F0,MainMenuUtils list allocator forwards the retail node-size deallocator
 ?deallocateControlBarSchemeListNode@@YAXPAXI@Z,0x0082E5F0,ControlBarSchemeManager scheme-list node deallocator
 ?debugDefeat@ScriptEngine@@QAEXXZ,0x000184D5,ILT for the ScriptEngine debug defeat action at 0x00337100
 ?debugVictory@ScriptEngine@@QAEXXZ,0x000240BE,ILT for the ScriptEngine debug victory action at 0x00337080
@@ -79758,6 +79760,7 @@ name,address,notes
 ?doUpdate@BfmeTarget78E@@QAEXPAX@Z,0x00038F8C,pin
 ?do_mid_forward@@YAXH@Z,0x00875400,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00877960 calls; autopin
 ?doit@Rva00202DF0Doer@@QAEXH@Z,0x00043C8E,address-derived callee of Rva00202DF0Part::seed; ILT to 0x00410BD0
+?downloadNextQueuedFile@BfmeStartDownloadManager@@QAEJXZ,0x00627370,MainMenuUtils ABI view calls the proven DownloadManager advance body
 ?downloadNextQueuedFile@DownloadManager@@QAEJXZ,0x00038F00,ILT thunk used by call site
 ?downloadNextQueuedFile@DownloadManagerDownloadNextQueuedFileShim@@QAEJXZ,0x00627370,DownloadManager::downloadNextQueuedFile incremental-link thunk target through a TU-local forwarding shim
 ?draw@Drawable@@QAEXPAVView@@@Z,0x00003873,pinharvest x1 (thunk)
@@ -84998,6 +85001,7 @@ name,address,notes
 ?queryRva001C9980@Object@@QAE_NXZ,0x00019B5F,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
 ?queryRva001CAEE0@Object@@QBE_NPBVPlayer@@@Z,0x00003B1B,Full50B1CAEE0 reads nullable viewer+2C; this matched caller supplies Player from DF4A0; typed ABI without legacy Object cast
 ?queue@TransportQueueSendShim@@QAE_NIGPBEH@Z,0x00683830,Transport queueSend incremental-link thunk target through a TU-local forwarding shim
+?queueFileForDownload@BfmeStartDownloadManager@@QAEXVBfmeStartAsciiString@@00000_N@Z,0x00627810,MainMenuUtils ABI view calls the proven DownloadManager queue body
 ?queuePacket@LANAPI@@QAEXPAVLANAPIRequestPacket@@H@Z,0x0002B599,RequestLobbyLeave packet call; ILT thunk for LANAPI::sendMessage body 0x00684CF0
 ?queueSend@BfmeTransportQueueShim@@QAE_NPBUBfmeTransportAddress@@PBEH@Z,0x00049F80,LANAPI::sendMessage BFME transport queue ILT through TU-local address shim
 ?queueSend@NATProbeTransport@@QAEXABUNATProbeAddress@@PBEH@Z,0x00049F80,NAT sendAProbe transport queue ILT thunk

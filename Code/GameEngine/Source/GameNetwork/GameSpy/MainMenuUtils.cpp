@@ -1,6 +1,16 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// cl: /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /D_STLP_NO_EXCEPTIONS /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
+#define BFME_ASCIISTRING_CSTR_CTOR_NOINLINE
+#ifdef _STLP_USE_STATIC_LIB
+#undef _STLP_USE_STATIC_LIB
+#endif
+#ifdef BFME_STLP_NODE_ALLOC
+#undef BFME_STLP_NODE_ALLOC
+#endif
+#ifdef _STLP_NO_EXCEPTIONS
+#undef _STLP_NO_EXCEPTIONS
+#endif
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -80,6 +90,163 @@ static Bool s_asyncDNSThreadDone = TRUE;
 static Bool s_asyncDNSThreadSucceeded = FALSE;
 static Bool s_asyncDNSLookupInProgress = FALSE;
 static HANDLE s_asyncDNSThreadHandle = NULL;
+
+struct Rva012F49B4Thing
+{
+	char m_pad[0x259];
+	Bool m_flagAt259;
+};
+
+extern Rva012F49B4Thing *g_rva012F49B4;
+
+class BfmeStartDownloadingLayout
+{
+public:
+	virtual void runInit( void *userData = NULL );
+	virtual ~BfmeStartDownloadingLayout();
+	virtual void runUpdate( void *userData );
+	virtual void runShutdown( void *userData );
+	virtual void hide( Bool hide );
+	virtual void bringForward( void );
+};
+
+class BfmeStartAsciiString;
+
+class BfmeStartWindowManager
+{
+public:
+	virtual void slot00( void );
+	virtual void slot01( void );
+	virtual void slot02( void );
+	virtual void slot03( void );
+	virtual void slot04( void );
+	virtual void slot05( void );
+	virtual void slot06( void );
+	virtual void slot07( void );
+	virtual void slot08( void );
+	virtual void slot09( void );
+	virtual void slot10( void );
+	virtual void slot11( void );
+	virtual void slot12( void );
+	virtual void slot13( void );
+	virtual void slot14( void );
+	virtual void slot15( void );
+	virtual void slot16( void );
+	virtual void slot17( void );
+	virtual void slot18( void );
+	virtual void slot19( void );
+	virtual void slot20( void );
+	virtual void slot21( void );
+	virtual void slot22( void );
+	virtual void slot23( void );
+	virtual void slot24( void );
+	virtual void slot25( void );
+	virtual void slot26( void );
+	virtual BfmeStartDownloadingLayout *winCreateLayout( BfmeStartAsciiString layoutName );
+};
+
+template <typename T> class StringBase
+{
+friend class BfmeStartAsciiString;
+
+private:
+	StringBase( const T *text );
+	StringBase( const StringBase &other );
+	~StringBase();
+
+	void *m_data;
+};
+
+class BfmeStartAsciiString : private StringBase<char>
+{
+public:
+	BfmeStartAsciiString( const char *text )
+		: StringBase<char>( text ) {}
+	BfmeStartAsciiString( const BfmeStartAsciiString &other )
+		: StringBase<char>( other ) {}
+	~BfmeStartAsciiString() {}
+};
+
+class BfmeErasedValue_00627200
+{
+public:
+	BfmeErasedValue_00627200( const BfmeErasedValue_00627200 &other );
+	~BfmeErasedValue_00627200();
+
+	BfmeStartAsciiString server;
+	BfmeStartAsciiString userName;
+	BfmeStartAsciiString password;
+	BfmeStartAsciiString file;
+	BfmeStartAsciiString localFile;
+	BfmeStartAsciiString regKey;
+	Bool tryResume;
+};
+
+class BfmeStartNodeAllocAccess
+{
+public:
+	static void deallocate( void *memory, unsigned int bytes );
+};
+
+template <typename T> class BfmeStartNodeAllocator
+{
+public:
+	typedef T value_type;
+	typedef T *pointer;
+	typedef const T *const_pointer;
+	typedef size_t size_type;
+
+	template <typename U> struct rebind
+	{
+		typedef BfmeStartNodeAllocator<U> other;
+	};
+
+	BfmeStartNodeAllocator() {}
+
+	pointer allocate( size_type count, const void * = NULL ) const
+	{
+		return (pointer)_STL::__node_alloc<true, 0>::allocate(
+			count * sizeof(value_type));
+	}
+
+	void deallocate( pointer memory, size_type count ) const
+	{
+		BfmeStartNodeAllocAccess::deallocate(memory, count * sizeof(value_type));
+	}
+
+	void construct( pointer place, const value_type &value ) const
+	{
+		new (place) value_type(value);
+	}
+
+	void destroy( pointer place ) const
+	{
+		place->~value_type();
+	}
+};
+
+namespace _STL
+{
+template <typename T, typename U>
+inline BfmeStartNodeAllocator<U> &__stl_alloc_rebind(
+	BfmeStartNodeAllocator<T> &allocator, const U *)
+{
+	return (BfmeStartNodeAllocator<U> &)allocator;
+}
+}
+
+typedef std::list<BfmeErasedValue_00627200,
+	BfmeStartNodeAllocator<BfmeErasedValue_00627200> > BfmeStartDownloadList;
+
+class BfmeStartDownloadManager
+{
+public:
+	void queueFileForDownload( BfmeStartAsciiString server,
+		BfmeStartAsciiString username, BfmeStartAsciiString password,
+		BfmeStartAsciiString file, BfmeStartAsciiString localfile,
+		BfmeStartAsciiString regkey, Bool tryResume );
+	long downloadNextQueuedFile( void );
+};
 enum {
 	LOOKUP_INPROGRESS,
 	LOOKUP_FAILED,
@@ -96,31 +263,41 @@ static void reallyStartPatchCheck( void );
 // someone has hit a button allowing downloads to start
 void StartDownloadingPatches( void )
 {
-	if (queuedDownloads.empty())
+	BfmeStartDownloadList &downloadQueue =
+		*(BfmeStartDownloadList *)&queuedDownloads;
+	if (downloadQueue.empty())
 	{
-		HandleCanceledDownload();
+		Rva012F49B4Thing *state = g_rva012F49B4;
+		if (state)
+			state->m_flagAt259 = FALSE;
 		return;
 	}
 
-	WindowLayout *layout;
-	layout = TheWindowManager->winCreateLayout( AsciiString( "Menus/DownloadMenu.wnd" ) );
+	BfmeStartDownloadingLayout *layout;
+	layout = ((BfmeStartWindowManager *)TheWindowManager)->winCreateLayout(
+		BfmeStartAsciiString( "Menus/DownloadMenu.wnd" ) );
 	layout->runInit();
 	layout->hide( FALSE );
 	layout->bringForward();
-	HandleCanceledDownload(FALSE);
+	Rva012F49B4Thing *state = g_rva012F49B4;
+	if (state)
+		state->m_flagAt259 = FALSE;
 	DEBUG_ASSERTCRASH(TheDownloadManager, ("No download manager!"));
-	if (TheDownloadManager)
+	if (TheDownloadManager == NULL)
+		return;
+	else
 	{
-		std::list<QueuedDownload>::iterator it = queuedDownloads.begin();
-		while (it != queuedDownloads.end())
+		std::list<BfmeErasedValue_00627200>::iterator it = downloadQueue.begin();
+		while (it != downloadQueue.end())
 		{
-			QueuedDownload q = *it;
-			TheDownloadManager->queueFileForDownload(q.server, q.userName, q.password,
+			BfmeErasedValue_00627200 q = *it;
+			((BfmeStartDownloadManager *)TheDownloadManager)->queueFileForDownload(
+				q.server, q.userName, q.password,
 				q.file, q.localFile, q.regKey, q.tryResume);
-			queuedDownloads.pop_front();
-			it = queuedDownloads.begin();
+			downloadQueue.pop_front();
+			it = downloadQueue.begin();
 		}
-		TheDownloadManager->downloadNextQueuedFile();
+		((BfmeStartDownloadManager *)TheDownloadManager)->downloadNextQueuedFile();
 	}
 }
 
