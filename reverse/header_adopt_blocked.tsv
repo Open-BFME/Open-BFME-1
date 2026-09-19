@@ -337,7 +337,7 @@ Code/GameEngine/Source/GameNetwork/Rva0068A900LANAPIOnPlayerLeave.cpp	StringBase
 Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapResetTerrainUpdateMacroTexture.cpp	StringBase	Code\GameEngineDevice\Source\W3DDevice\GameClient\BaseHeightMapResetTerrainUpdateMacroTexture.cpp(13) : error C2248: 'StringBase<T>::~StringBase' : cannot access private member declared in class 'StringBase<T>'
 Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva0076D850DoSingleBoneName.cpp	StringBase	Code\GameEngineDevice\Source\W3DDevice\GameClient\Drawable\Draw\Rva0076D850DoSingleBoneName.cpp(39) : error C2039: 'm_length' : is not a member of 'StringBase<T>::Header'
 Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawModuleData_parseEmbedPortal.cpp	StringBase	Code\GameEngineDevice\Source\W3DDevice\GameClient\Drawable\Draw\W3DModelDrawModuleData_parseEmbedPortal.cpp(42) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
-Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DAnimationInfoConstCopyBody.cpp	StringBase	Functions: FAIL 1/1
+Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DAnimationInfoConstCopyBody.cpp	StringBase	Functions: FAIL 1/1
 Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DPropBufferRemovePropsForConstruction.cpp	StringBase	Functions: FAIL 1/1
 Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewBuildCameraTransformBfme.cpp	StringBase	Functions: FAIL 1/1
 Code/Libraries/Source/WWVegas/WWLib/Gen_t_00776240CopyConstructor.cpp	StringBase	Code\Libraries\Source\WWVegas\WWLib\Gen_t_00776240CopyConstructor.cpp(15) : error C2248: 'StringBase<T>::StringBase' : cannot access private member declared in class 'StringBase<T>'
