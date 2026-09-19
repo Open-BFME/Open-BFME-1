@@ -44,6 +44,7 @@ private:
 	_STL::list<ControlBarSchemeImage *> layer[6];
 public:
 	void drawBackground(Coord2D multi, ICoord2D offset);
+	void drawForeground(Coord2D multi, ICoord2D offset);
 };
 
 void ControlBarScheme::drawBackground(Coord2D multi, ICoord2D offset)
@@ -73,6 +74,40 @@ void ControlBarScheme::drawBackground(Coord2D multi, ICoord2D offset)
 			TheDisplay->prepare();
 			display.drawImage(image, startX, startY, endX, endY, 0xFFFFFFFFu, 2);
 			display.finish();
+			++it;
+		}
+	}
+}
+
+void ControlBarScheme::drawForeground(Coord2D multi, ICoord2D offset)
+{
+	for (int layerIndex = 2; layerIndex >= 0; --layerIndex)
+	{
+		_STL::list<ControlBarSchemeImage *>::iterator it = layer[layerIndex].begin();
+		while (it != layer[layerIndex].end())
+		{
+			ControlBarSchemeImage *schemeImage = *it;
+			if (schemeImage == 0)
+			{
+				++it;
+				continue;
+			}
+			void *image = schemeImage->image;
+			if (image == 0)
+			{
+				++it;
+				continue;
+			}
+			{
+			float endY = (schemeImage->position.y + schemeImage->size.y) * multi.y + offset.y;
+			float endX = (schemeImage->position.x + schemeImage->size.x) * multi.x + offset.x;
+			float startY = schemeImage->position.y * multi.y + offset.y;
+			float startX = schemeImage->position.x * multi.x + offset.x;
+			Display *display = TheDisplay;
+			TheDisplay->prepare();
+			display->drawImage(image, startX, startY, endX, endY, 0xFFFFFFFFu, 2);
+			display->finish();
+			}
 			++it;
 		}
 	}
