@@ -15,3 +15,13 @@ EmptyCopyAssignThunk &EmptyCopyAssignThunk::assignAlternate(const EmptyCopyAssig
 {
     return *this;
 }
+
+struct Rva0006C780CopyAssign
+{
+    Rva0006C780CopyAssign &returnThis();
+};
+
+Rva0006C780CopyAssign &Rva0006C780CopyAssign::returnThis()
+{
+    return *this;
+}
