@@ -28349,7 +28349,6 @@ name,address,notes
 ?b_0019ff20@@YAXXZ,0x0019FF20,gen-thunk body
 ?b_001a0290@@YAXXZ,0x001A0290,gen-thunk body
 ?b_001a0320@@YAXXZ,0x001A0320,gen-thunk body
-?b_001a0390@@YAXXZ,0x001A0390,gen-thunk body
 ?b_001a0dc0@@YAXXZ,0x001A0DC0,gen-thunk body
 ?b_001a0de0@@YAXXZ,0x001A0DE0,gen-thunk body
 ?b_001a0df0@@YAXXZ,0x001A0DF0,gen-thunk body
@@ -84893,6 +84892,7 @@ name,address,notes
 ?prepareAt002A9850@DominateEnemySpecialPower@@QAEXXZ,0x002A9850,address-derived no-argument primary-this view; DominateEnemy primary slot15 calls ILT3FA30 and full body2A9850 saves ECX then returns plain RET after its cleanup call
 ?prepareAt002A9850@LevelGrantSpecialPower@@QAEXXZ,0x002A9850,address-labelled direct-body view of common no-argument thiscall helper reached through ILT3FA30 by LevelGrant slot15; entry saves ECX as primary owner; original method name unresolved
 ?prepareFinish@Rva56E070StateOwner@@QAEXXZ,0x00006B3B,address-scoped state-owner preparation ILT observed in retail 0x0056FD30
+?prepareForMP_or_Skirmish@SidesList@@QAEXXZ,0x001A0390,exact GameLogic::startNewGame call position and authentic SidesList source prove identity
 ?prepareRemoval@Gen0002857EOwner@@QAEXPAVGen0002857E@@@Z,0x0001902E,cleanup helper called by Gen0002857EOwner::destroy
 ?prepareStop@MouseThreadGuardOwner@@QAEXXZ,0x0001E7F4,W3DMouse redraw-mode stop preparation ILT
 ?prependCells@Pathfinder@@QAEXPAVPath@@PBUCoord3D@@PAVPathfindCell@@_N@Z,0x0000AF24,ILT to the body at 0x003DD930; ZH twin; called by Pathfinder::buildActualPath at 0x003E10F0
