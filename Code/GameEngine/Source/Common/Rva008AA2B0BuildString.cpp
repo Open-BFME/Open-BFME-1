@@ -79,6 +79,31 @@ public:
 	BfmeStringData3AF0 *m_data;
 };
 
+class BfmeStrEAW
+{
+public:
+	BfmeStrEAW()
+	{
+		m_data = &g_bfmeDefaultString1284;
+		++m_data->m_refCount;
+	}
+
+	~BfmeStrEAW()
+	{
+		BfmeStringData3AF0 *data = m_data;
+		if (--data->m_refCount == 0)
+			g_bfmeStringPool1284->free(data);
+	}
+
+	BfmeStringData3AF0 *m_data;
+};
+
+class BfmeHostEAW
+{
+public:
+	void bfmeFillEAW(BfmeStrEAW *out);
+};
+
 class BfmeStrVKK
 {
 public:
@@ -135,13 +160,61 @@ struct Rva008AE770Stack
 
 extern Rva008AE770Stack Rva008AE770TheStack;
 
-class AptValue
+class AptValue : public BfmeHostEAW
 {
 public:
 	int toInteger() const;
 };
 
 extern AptValue **g_bfmeArr1233;
+
+Rva008C3B60Node *rva008AA130(BfmeHostEAW *first, int count)
+{
+	EAStringC result;
+	first->bfmeFillEAW((BfmeStrEAW *)&result);
+	int index = 0;
+	if (count > 0)
+	{
+		do
+		{
+			{
+				BfmeStrEAW text;
+				AptValue *value = g_bfmeArr1233[
+					Rva008AE770TheStack.m_count - index - 1];
+				value->bfmeFillEAW(&text);
+				((BfmeStrVKJ *)&result)->bfmeAssignVKJ(
+					*(const BfmeStrVKJ *)&text);
+			}
+			++index;
+		} while (index < count);
+	}
+
+	Rva008C3B60Node *node = Rva008C3B60Head;
+	if (node != 0)
+	{
+		Rva008C3B60Head = node->m_next;
+		g_bfmeRegistryVNF->addOrClear(node);
+		if (node->m_data != &g_bfmeDefaultString1284)
+			((BfmeStrVKK *)&node->m_data)->bfmeTruncVKK(0);
+	}
+	else
+	{
+		void *raw = Rva008C5D70Alloc(0x10);
+		Rva008A9B00 *fresh;
+		if (raw != 0)
+			fresh = new (raw) Rva008A9B00();
+		else
+			fresh = 0;
+		node = (Rva008C3B60Node *)fresh;
+	}
+
+	++result.m_data->m_refCount;
+	BfmeStringData3AF0 *old = node->m_data;
+	if (--old->m_refCount == 0)
+		g_bfmeStringPool1284->free(old);
+	node->m_data = result.m_data;
+	return node;
+}
 
 Rva008C3B60Node *rva008AA2B0(int unused, int count)
 {
