@@ -66,6 +66,10 @@
 // named by Rva003CD260 and uses the BFME seed slots at vtable offsets 0x78,
 // 0x88 and 0x8C.
 
+class Gen0003C2E5;
+class Gen00008E68;
+class Y1WrappedContext;
+
 class Y1ForEachArg
 {
 public:
@@ -105,6 +109,61 @@ public:
 	virtual void bfmeSlot33(void);
 	virtual void bfmeTakeAt88(void *item);
 	virtual void bfmeTakeAt8C(void *item);
+
+};
+
+class Gen0003C2E5
+{
+public:
+	bool test( void *low, void *high );
+};
+
+class Gen00008E68
+{
+public:
+	bool test( void *low, void *high );
+};
+
+class Gen00003B1B
+{
+public:
+	bool check( int mode );
+};
+
+extern void j_00023f6a();
+extern void j_00006d20();
+extern void j_00025c75();
+
+class Y1WrappedContext
+{
+public:
+	char m_lead[ 0x90 ];
+	Gen00008E68 m_second;
+	char m_mid[ 0x7F ];
+	Gen0003C2E5 m_first;
+};
+
+class Y1CallContext
+{
+public:
+	char m_lead[ 8 ];
+	Y1WrappedContext *m_context;
+	char m_pad0C[ 0x24 ];
+	Gen0003C2E5 *getInlineFirst() const
+	{
+		return reinterpret_cast<Gen0003C2E5 *>(
+			reinterpret_cast<char *>( const_cast<Y1CallContext *>( this ) ) + 0x30 );
+	}
+	char m_pad34[ 0x24 ];
+	Gen00008E68 *getInlineSecond() const
+	{
+		return reinterpret_cast<Gen00008E68 *>(
+			reinterpret_cast<char *>( const_cast<Y1CallContext *>( this ) ) + 0x58 );
+	}
+	char m_pad5C[ 0x10 ];
+	unsigned char m_contextFlag;
+
+	Y1WrappedContext *getContext() const { return m_context; }
 };
 
 class BfmeSeedTarget;
@@ -176,7 +235,88 @@ public:
 			( *it )->call( arg );                                             \
 	}
 
-Y1_FOREACH_PTR_GUARDED_ARG( Rva003D0F60, Gen0001C184 )
+class Gen0001C184
+{
+public:
+	char m_lead[ 0x18 ];
+	void **m_begin;
+	void **m_end;
+	char m_pad20[ 4 ];
+	char m_lowA[ 0x28 ];
+	char m_highA[ 0x28 ];
+	char m_lowB[ 0x0C ];
+	char m_highB[ 0x16 ];
+	unsigned char m_gate;
+
+	void call( Y1ForEachArg *arg );
+};
+
+class Rva003D0F60
+{
+public:
+	char m_lead[ 0x0C ];
+	Gen0001C184 **m_begin;
+	Gen0001C184 **m_end;
+	char m_mid[ 0x20 ];
+	bool m_done;
+
+	void run( Y1ForEachArg *arg );
+};
+
+void Rva003D0F60::run( Y1ForEachArg *arg )
+{
+	if ( m_done )
+		return;
+	Gen0001C184 **end = m_end;
+	for ( Gen0001C184 **it = m_begin; it != end; ++it )
+		( *it )->call( arg );
+}
+
+class Y1DispatchItem
+{
+};
+
+typedef void ( Y1DispatchItem::*Y1Callback )( Y1ForEachArg * );
+
+void Gen0001C184::call( Y1ForEachArg *arg )
+{
+	Y1CallContext *context = reinterpret_cast<Y1CallContext *>( arg );
+	bool first = context->getContext()->m_first.test( m_lowA, m_highA )
+			&& context->getContext()->m_second.test( m_lowB, m_highB );
+	bool second = context->getInlineFirst()->test( m_lowA, m_highA )
+			&& context->getInlineSecond()->test( m_lowB, m_highB );
+
+	if ( m_gate )
+	{
+		if ( reinterpret_cast<Gen00003B1B *>( context->getContext() )->check( 0 ) )
+			first = false;
+		if ( context->m_contextFlag )
+			second = false;
+	}
+
+	union
+	{
+		void ( *raw )();
+		Y1Callback member;
+	} callback;
+	callback.raw = 0;
+	if ( first )
+	{
+		if ( second )
+			callback.raw = j_00023f6a;
+		else
+			callback.raw = j_00006d20;
+	}
+	else if ( second )
+		callback.raw = j_00025c75;
+
+	if ( callback.raw == 0 )
+		return;
+	for ( Y1DispatchItem **it = (Y1DispatchItem **)m_begin;
+		it != (Y1DispatchItem **)m_end; ++it )
+		( ( *it )->*callback.member )( arg );
+}
+
 Y1_FOREACH_PTR_GUARDED_ARG( Rva003D0FA0, Gen00041FE7 )
 Y1_FOREACH_PTR_GUARDED_ARG( Rva003D0FE0, Gen0000C4F0 )
 
