@@ -1,7 +1,9 @@
-// ?Gen00344970@@YAXPAUQ3SortElem4@@0UQ3SortCompare@@@Z
-// partial score=0.95 date=2026-09-18
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
-// stlport
+
+// The caller in Q3IntrosortFamilies.cpp uses this STLport insertion sort
+// for four-byte elements.  Retail calls Q4Sort0034BFC0 for the guarded
+// comparison and then calls the shared linear-insert helper for the other
+// branch.
 
 extern "C" __declspec(dllimport) void * __cdecl memmove(
 	void *destination, const void *source, unsigned int bytes);
@@ -18,11 +20,6 @@ struct Q3SortElem4
 
 struct Q3SortCompare
 {
-	bool operator()(Q3SortElem4 left, Q3SortElem4 right) const
-	{
-		return ((const Q4Sort0034BFC0 *)this)->operator()(
-			left.m_value, right.m_value);
-	}
 };
 
 struct BfmeInsertCompareA
@@ -52,7 +49,8 @@ void Gen00344970(Q3SortElem4 *first, Q3SortElem4 *last,
 	for (Q3SortElem4 *i = first + 1; i != last; ++i)
 	{
 		Q3SortElem4 value = *i;
-		if (comp(value, *first))
+		Q4Sort0034BFC0 &compare = *(Q4Sort0034BFC0 *)&last;
+		if (compare(value.m_value, first->m_value))
 		{
 			q3CopyBackward(i + 1, first, i);
 			*first = value;
