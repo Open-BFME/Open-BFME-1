@@ -1,6 +1,6 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
-#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "ascii_string.h"
 
 class RecorderClass
 {
