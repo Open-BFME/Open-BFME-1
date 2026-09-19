@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
-// readable body of ?tossSegments@W3DRopeDraw@@AAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/W3DRopeDraw.cpp
-// readable body of ?xfer@W3DRopeDraw@@MAEXPAVXfer@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/W3DRopeDraw.cpp
+// readable body of ?tossSegments@W3DRopeDraw@@AAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DRopeDraw.cpp
+// readable body of ?xfer@W3DRopeDraw@@MAEXPAVXfer@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DRopeDraw.cpp
 // Open-BFME5: convert the retail W3DRopeDraw destructor to clean C++.
 
 #include <vector>
