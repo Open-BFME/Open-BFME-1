@@ -496,33 +496,53 @@ Real WeaponTemplate::getUnmodifiedAttackRange() const
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/WeaponTemplate_getDelayBetweenShots.cpp
-// ?getDelayBetweenShots@WeaponTemplate@@QBEHABVWeaponBonus@@@Z present-unmatched
+// BFME keeps two reload bounds before the delay bounds; the Zero Hour header
+// has only one reload value, so use the witnessed retail offsets locally.
+struct BfmeWeaponTemplateFireTimingView
+{
+	unsigned char m_prefix[0x4b0];
+	Int m_minClipReloadTime;
+	Int m_maxClipReloadTime;
+	Int m_minDelayBetweenShots;
+	Int m_maxDelayBetweenShots;
+};
+
 Int WeaponTemplate::getDelayBetweenShots(const WeaponBonus& bonus) const 
 {
-	// yes, divide, not multiply; the larger the rate-of-fire bonus, the shorter
-	// we want the delay time to be.
+	const BfmeWeaponTemplateFireTimingView *self =
+		(const BfmeWeaponTemplateFireTimingView *)this;
 	Int delayToUse;
-	if( m_minDelayBetweenShots == m_maxDelayBetweenShots )
-		delayToUse = m_minDelayBetweenShots; // Random number thing doesn't like this case
+	if (self->m_minDelayBetweenShots == self->m_maxDelayBetweenShots)
+		delayToUse = self->m_minDelayBetweenShots;
 	else
-		delayToUse = GameLogicRandomValue( m_minDelayBetweenShots, m_maxDelayBetweenShots );
+		delayToUse = GetGameLogicRandomValue(
+			self->m_minDelayBetweenShots,
+			self->m_maxDelayBetweenShots,
+			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Weapon.cpp",
+			845);
 
-	Real bonusROF = bonus.getField(WeaponBonus::RATE_OF_FIRE);
-	//CRCDEBUG_LOG(("WeaponTemplate::getDelayBetweenShots() - min:%d max:%d val:%d, bonusROF=%g/%8.8X\n",
-		//m_minDelayBetweenShots, m_maxDelayBetweenShots, delayToUse, bonusROF, AS_INT(bonusROF)));
-
-	return REAL_TO_INT_FLOOR(delayToUse / bonusROF); 
+	return fast_float2long_round((Real)floor((double)(
+		(Real)delayToUse / bonus.getField(WeaponBonus::RATE_OF_FIRE))));
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/WeaponTemplate_getClipReloadTime.cpp
-// ?getClipReloadTime@WeaponTemplate@@QBEHABVWeaponBonus@@@Z present-unmatched
 Int WeaponTemplate::getClipReloadTime(const WeaponBonus& bonus) const 
 {
-	// yes, divide, not multiply; the larger the rate-of-fire bonus, the shorter
-	// we want the reload time to be.
-	return REAL_TO_INT_FLOOR(m_clipReloadTime / bonus.getField(WeaponBonus::RATE_OF_FIRE));	
+	const BfmeWeaponTemplateFireTimingView *self =
+		(const BfmeWeaponTemplateFireTimingView *)this;
+	Int reloadTime;
+	if (self->m_minClipReloadTime == self->m_maxClipReloadTime)
+		reloadTime = self->m_minClipReloadTime;
+	else
+		reloadTime = GetGameLogicRandomValue(
+			self->m_minClipReloadTime,
+			self->m_maxClipReloadTime,
+			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Weapon.cpp",
+			863);
+
+	reloadTime -= reloadTime % 3;
+	return fast_float2long_round((Real)floor((double)(
+		(Real)reloadTime / bonus.getField(WeaponBonus::RATE_OF_FIRE))));
 }
 
 //-------------------------------------------------------------------------------------------------
