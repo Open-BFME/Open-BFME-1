@@ -341,8 +341,8 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
             ff = subprocess.run([gh, "api", "-X", "PATCH", f"repos/{repo}/git/refs/heads/master",
                                  "-f", f"sha={new}", "-F", "force=false"], cwd=WT, capture_output=True, text=True)
             rc = ff.returncode
-            if not rc:
-                subprocess.run(["git", "push", "-q", "origin", "--delete", scratch], cwd=WT, capture_output=True)
+            # Retain the per-host checkpoint so the next harvest updates an
+            # existing ref instead of repeating the slow branch-creation push.
         else:
             rc = run("git", "push", "origin", f"{new}:master", cwd=WT, check=False).returncode
         if not rc:
