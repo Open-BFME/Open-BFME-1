@@ -222,26 +222,46 @@ static Int getTotalDisconnectsFromFile(Int playerID)
 	return retval;	
 }
 
+struct BfmeDisconnectQueue;
+
+typedef int (__fastcall *BfmeGetDisconnectCount)(BfmeDisconnectQueue *queue);
+typedef void (__fastcall *BfmeRefreshDisconnectCount)(BfmeDisconnectQueue *queue);
+
+struct BfmeDisconnectQueueVtable
+{
+	void *m_beforeCount[0x170 / sizeof(void *)];
+	BfmeGetDisconnectCount m_getCount;
+	BfmeRefreshDisconnectCount m_refreshCount;
+};
+
+struct BfmeDisconnectQueue
+{
+	BfmeDisconnectQueueVtable *m_vtable;
+
+	int getCount() { return m_vtable->m_getCount(this); }
+	void refreshCount() { m_vtable->m_refreshCount(this); }
+};
+
+int __fastcall readAdditionalDisconnectsFromUserFile(int playerID);
+
+static BfmeDisconnectQueue *getDisconnectQueue()
+{
+	return *reinterpret_cast<BfmeDisconnectQueue **>(0x012F7194);
+}
+
 Int GetAdditionalDisconnectsFromUserFile(Int playerID)
 {
-	Int retval = getTotalDisconnectsFromFile(playerID);
-
-	if (playerID == 0) {
+	int fileCount = readAdditionalDisconnectsFromUserFile(playerID);
+	if (playerID == 0)
 		return 0;
-	}
 
-	if (TheGameSpyInfo->getAdditionalDisconnects() > 0 && !retval)
-	{
-		DEBUG_LOG(("Clearing additional disconnects\n"));
-		TheGameSpyInfo->clearAdditionalDisconnects();
-	}
+	if (getDisconnectQueue()->getCount() > 0 && fileCount == 0)
+		getDisconnectQueue()->refreshCount();
 
-	if (TheGameSpyInfo->getAdditionalDisconnects() != -1)
-	{
-		return TheGameSpyInfo->getAdditionalDisconnects();
-	}
+	if (getDisconnectQueue()->getCount() != -1)
+		return getDisconnectQueue()->getCount();
 
-	return retval;
+	return fileCount;
 }
 
 void GetAdditionalDisconnectsFromUserFile(PSPlayerStats *stats)

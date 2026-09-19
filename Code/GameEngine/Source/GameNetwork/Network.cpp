@@ -166,12 +166,141 @@ class BFMEConnectionManager
 public:
 	void sendChat(UnicodeString text, Int playerMask);
 	void sendProgressCommand(Int percent);
+	bool hasPacketRouterFrameStall(void);
+	bool areFrameCommandsComplete(UnsignedInt frame, bool debugSpewage);
 
 	// BFME grew the connection manager before its disconnect manager pointer;
 	// the published Zero Hour header does not describe this offset.
-	char m_bfmePad[0x120e0];
+	char m_bfmePad[0x1205c];
+	Int m_frameCeiling;
+	char m_bfmePadAfterFrameCeiling[0x80];
 	DisconnectManager *m_disconnectManager;
 };
+
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
+extern int g_networkTimingOverruns;
+
+struct BFMEGameLogicFrame
+{
+	char unknown[0x3C];
+	UnsignedInt frame;
+};
+
+class BFMENativeNetwork
+{
+public:
+	virtual void slot00(void); virtual void slot01(void); virtual void slot02(void);
+	virtual void slot03(void); virtual void slot04(void); virtual void slot05(void);
+	virtual void slot06(void); virtual void slot07(void); virtual void slot08(void);
+	virtual void updateNetwork(bool flush);
+	virtual void slot10(void); virtual void slot11(void); virtual void slot12(void);
+	virtual void slot13(void); virtual void slot14(void); virtual void slot15(void);
+	virtual void slot16(void); virtual void slot17(void); virtual void slot18(void);
+	virtual void slot19(void); virtual void slot20(void); virtual void slot21(void);
+	virtual void slot22(void); virtual void slot23(void); virtual void slot24(void);
+	virtual void slot25(void); virtual void slot26(void); virtual void slot27(void);
+	virtual void slot28(void); virtual void slot29(void); virtual void slot30(void);
+	virtual void slot31(void); virtual void slot32(void); virtual void slot33(void);
+	virtual void slot34(void); virtual bool isPacketRouter(void);
+
+	int getFrameAdvanceCount(void);
+	int getFramePacingStatus(void);
+
+private:
+	BFMEConnectionManager *m_conMgr;
+	int m_state;
+	__int64 m_frequency;
+	__int64 m_lastCounter;
+	__int64 m_accumulator;
+	bool m_stallTimerRunning;
+	char m_pad29[3];
+	int m_stallCount;
+};
+
+#define TheBFMEGameLogicFrame (*(BFMEGameLogicFrame **)0x012F0898)
+#define BFMEStallStartTime (*(unsigned int *)0x012F7718)
+#define BFMELastAdvanceTime (*(unsigned int *)0x012F771C)
+#define BFMELastStallFrame (*(unsigned int *)0x012F7728)
+
+int BFMENativeNetwork::getFrameAdvanceCount(void)
+{
+	if (m_state != 1)
+		return 1;
+
+	if (!isPacketRouter()) {
+		if (TheBFMEGameLogicFrame->frame == 0)
+			return 1;
+
+		if (!m_stallTimerRunning) {
+			BFMEStallStartTime = timeGetTime();
+			m_stallTimerRunning = 1;
+		}
+
+		int allowance = m_conMgr->m_frameCeiling - TheBFMEGameLogicFrame->frame + 1;
+		if (allowance > 0) {
+			if (!m_conMgr->areFrameCommandsComplete(TheBFMEGameLogicFrame->frame, 0)) {
+				updateNetwork(0);
+				return 0;
+			}
+			m_stallTimerRunning = 0;
+			return allowance;
+		}
+
+		if (TheBFMEGameLogicFrame->frame != BFMELastStallFrame) {
+			++m_stallCount;
+			BFMELastStallFrame = TheBFMEGameLogicFrame->frame;
+		}
+		return allowance;
+	}
+
+	if (m_conMgr->hasPacketRouterFrameStall()) {
+		m_accumulator = 0;
+		return 0;
+	}
+
+	__int64 now;
+	QueryPerformanceCounter((LARGE_INTEGER *)&now);
+	m_accumulator += now - m_lastCounter;
+	m_lastCounter = now;
+
+	__int64 quantum = m_frequency / 5;
+	if (m_accumulator < quantum)
+		return 0;
+
+	m_accumulator -= quantum;
+	if (m_accumulator > m_frequency * 2) {
+		++g_networkTimingOverruns;
+		m_accumulator = 0;
+	} else {
+		g_networkTimingOverruns = 0;
+	}
+
+	BFMELastAdvanceTime = timeGetTime();
+	return 1;
+}
+
+int BFMENativeNetwork::getFramePacingStatus(void)
+{
+	if (m_state != 1)
+		return 1;
+
+	if (!isPacketRouter())
+		return m_conMgr->m_frameCeiling - TheBFMEGameLogicFrame->frame + 1;
+
+	__int64 now;
+	QueryPerformanceCounter((LARGE_INTEGER *)&now);
+	m_accumulator += now - m_lastCounter;
+	m_lastCounter = now;
+
+	__int64 quantum = m_frequency / 5;
+	if (m_accumulator < quantum)
+		return 0;
+
+	if ((float)m_accumulator < (float)quantum * 1.5f)
+		return 1;
+
+	return 2;
+}
 
 // BFME's normal chat path forwards the by-value text and player mask through
 // the expanded connection manager.  The retail body is the vtable slot-20
