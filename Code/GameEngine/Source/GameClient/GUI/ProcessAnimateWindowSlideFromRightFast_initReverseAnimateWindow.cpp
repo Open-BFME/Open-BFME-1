@@ -65,13 +65,21 @@ private:
 
 class ProcessAnimateWindowSlideFromRightFast
 {
-public:
+protected:
 	virtual ~ProcessAnimateWindowSlideFromRightFast();
+	friend void forceProcessAnimateWindowSlideFromRightFastDeletingDestructor();
+
+public:
 	virtual void initAnimateWindow(AnimateWindow *);
 	virtual void initReverseAnimateWindow(AnimateWindow *, UnsignedInt);
 	virtual Bool updateAnimateWindow(AnimateWindow *);
 	virtual Bool reverseAnimateWindow(AnimateWindow *);
 };
+
+void forceProcessAnimateWindowSlideFromRightFastDeletingDestructor()
+{
+	ProcessAnimateWindowSlideFromRightFast value;
+}
 
 extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
 
@@ -104,4 +112,3 @@ void ProcessAnimateWindowSlideFromRightFast::initReverseAnimateWindow(
 	tempPos.y = pos.y;
 	window->setStartPos(tempPos);
 }
-
