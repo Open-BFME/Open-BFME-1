@@ -147,6 +147,18 @@ BFME_SMALL_STRIDE_INDEX( Rva0049B2F0StrideIndex, 0x70 )
 BFME_SMALL_STRIDE_INDEX( Rva00581A10StrideIndex, 0x1C )
 BFME_SMALL_STRIDE_INDEX( Rva0075CFE0StrideIndex, 0x38 )
 
+// mov eax,ecx / ret -- the body proves only a self-pointer return.
+class Rva00360B70
+{
+public:
+	Rva00360B70 *self();
+};
+
+Rva00360B70 *Rva00360B70::self()
+{
+	return this;
+}
+
 // mov eax,[ecx-<BACK>] / add eax,<OFFSET> / ret -- a pointer read at a
 // NEGATIVE displacement and advanced by a constant.  The object at
 // (this - BACK) is only witnessed as a pointer sitting at offset 0.
