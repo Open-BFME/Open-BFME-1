@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?parseFontDesc@GlobalLanguage@@: Code/GameEngine/Source/Common/INI/GlobalLanguage.cpp
+// readable body of ?parseFontDesc@GlobalLanguage@@: Code/GameEngine/Source/GameClient/GlobalLanguage.cpp
 // Open-BFME: GlobalLanguage::parseFontDesc, retail 0x00439150, 136 bytes. The
 // body carried no ledger row; its name sat on a 5-byte thunk.
 //

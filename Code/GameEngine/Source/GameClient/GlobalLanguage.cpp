@@ -61,7 +61,7 @@
 #include "Common/Registry.h"
 #include "GameClient/GlobalLanguage.h"
 #include "Common/Filesystem.h"
-#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 //-----------------------------------------------------------------------------
 // DEFINES ////////////////////////////////////////////////////////////////////
