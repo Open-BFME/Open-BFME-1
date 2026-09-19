@@ -1693,60 +1693,149 @@ StateReturnType AIIdleState::onEnter()
 	return STATE_CONTINUE;
 }
 
+class BfmeIdleAIUpdate : public BFMEVirtualSlots<96>
+{
+public:
+	virtual Bool isIdle() const = 0;
+	virtual void slot097() = 0;
+	virtual void slot098() = 0;
+	virtual void slot099() = 0;
+	virtual void slot100() = 0;
+	virtual void slot101() = 0;
+	virtual void slot102() = 0;
+	virtual void slot103() = 0;
+	virtual void slot104() = 0;
+	virtual void slot105() = 0;
+	virtual void slot106() = 0;
+	virtual void slot107() = 0;
+	virtual void slot108() = 0;
+	virtual void slot109() = 0;
+	virtual void slot110() = 0;
+	virtual void slot111() = 0;
+	virtual void slot112() = 0;
+	virtual void slot113() = 0;
+	virtual void slot114() = 0;
+	virtual void slot115() = 0;
+	virtual void slot116() = 0;
+	virtual void slot117() = 0;
+	virtual void slot118() = 0;
+	virtual void slot119() = 0;
+	virtual void slot120() = 0;
+	virtual void slot121() = 0;
+	virtual void setLocomotorGoalNone() = 0;
+	virtual Bool isDoingGroundMovement() const = 0;
+};
+
+struct BfmeIdleObject
+{
+	unsigned char m_padding000[0x38];
+	Coord3D m_position;
+	unsigned char m_padding044[0x50];
+	unsigned char m_status;
+	unsigned char m_padding095[0x204 - 0x95];
+	BfmeIdleAIUpdate *m_ai;
+	unsigned char m_padding208[0x214 - 0x208];
+	BfmeIdleObject *m_containedBy;
+};
+
+struct BfmeIdleStateMachine
+{
+	unsigned char m_padding000[0x10];
+	BfmeIdleObject *m_owner;
+};
+
+struct BfmeIdleStateView
+{
+	unsigned char m_padding000[0x1c];
+	BfmeIdleStateMachine *m_machine;
+	unsigned char m_padding020[7];
+	Bool m_inited;
+};
+
+class BfmeIdlePathfinder
+{
+public:
+	void removeGoal(Object *obj);
+	void updateGoal(Object *obj, const Coord3D *pos, Int layer,
+		const char *file, Int line);
+};
+
+struct BfmeIdleAI
+{
+	unsigned char m_padding000[0x0c];
+	BfmeIdlePathfinder *m_pathfinder;
+};
+
+class BfmeIdleGoalResult : public BFMEVirtualSlots<118>
+{
+public:
+	virtual void notifyIdle() = 0;
+};
+
+class BfmeAIUpdateVictimThunk
+{
+public:
+	void clearCurrentVictim(const Object *victim);
+};
+
+extern const Real BfmeZeroRange;
+extern void j_0002be77();
+extern void j_0003a391();
+
+typedef BfmeIdleGoalResult *(__fastcall *BfmeGetIdleGoal)(BfmeIdleObject *);
+typedef Int (__fastcall *BfmeGetLayer)(BfmeIdleObject *);
+
 //----------------------------------------------------------------------------------------------
-// ?doInitIdleState@AIIdleState@@AAEXXZ present-unmatched
 void AIIdleState::doInitIdleState()
 {
-	// Only do it once, but do it in the update cause onEnter for idle is called during object creation.  jba.
-
-	if (!m_inited)
+	BfmeIdleStateView *self = (BfmeIdleStateView *)this;
+	if (!self->m_inited)
 		return;
 
-	m_inited = false;
+	self->m_inited = false;
+	BfmeIdleObject *obj = self->m_machine->m_owner;
+	BfmeIdleAIUpdate *ai = obj->m_ai;
+	Bool updateGoal = true;
 
-	Object *obj = getMachineOwner();
-	AIUpdateInterface *ai = obj->getAI();
-	const Locomotor* loco = ai->getCurLocomotor();
-	Bool ultraAccurate = (loco != NULL && loco->isUltraAccurate());
-#define NO_STOP_AND_SLIDE
-	if (ai->isIdle() && ai->isDoingGroundMovement()) 
+	if ((obj->m_status & 0x20) != 0)
 	{
-		/*
-
-			You may be asking yourself, "If I'm in an idle state, how can I be doing ground movement?"
-
-			answer from jba:
-
-			If a unit is moving, and you hit stop, it forces it into the idle state.  
-			Depending where it is, it may be between pathfind grids.  
-			This is a bad thing. 
-			So it "cheat moves", to the nearest grid. 
-			Also, for locos the "close enough" distance is 1 or so. 
-			So it moves the rest of the way to it's goal location by cheating.
-
-		*/
-		// Update the goal.
-		Coord3D goalPos = *obj->getPosition();
-		// but only if we have a valid position.
-		if (goalPos.x || goalPos.y || goalPos.z)
+		BfmeIdleObject *containedBy = obj->m_containedBy;
+		updateGoal = false;
+		if (containedBy)
 		{
-			TheAI->pathfinder()->updateGoal(obj, &goalPos, obj->getLayer());
-			if (!ultraAccurate && TheAI->pathfinder()->goalPosition(obj, &goalPos)) 
-			{
-				if (TheGameLogic->getFrame()<=1) {
-					obj->setPosition(&goalPos);
-				} else {
-#ifdef STOP_AND_SLIDE
-					ai->setFinalPosition(&goalPos);
-#endif
-				}
-				TheAI->pathfinder()->updateGoal(obj, &goalPos, obj->getLayer());
-			}
+			BfmeIdleAIUpdate *containedAI = containedBy->m_ai;
+			if (containedAI)
+				updateGoal = containedAI->isIdle();
+		}
+	}
+
+	BfmeIdleGoalResult *idleGoal =
+		((BfmeGetIdleGoal)j_0002be77)(obj);
+	if (idleGoal)
+	{
+		idleGoal->notifyIdle();
+		updateGoal = false;
+		((BfmeIdleAI *)TheAI)->m_pathfinder->removeGoal((Object *)obj);
+	}
+
+	if (ai->isIdle() && ai->isDoingGroundMovement() && updateGoal)
+	{
+		Coord3D goalPos = { obj->m_position.x, obj->m_position.y,
+			obj->m_position.z };
+		if (goalPos.x != BfmeZeroRange || goalPos.y != BfmeZeroRange ||
+			goalPos.z != BfmeZeroRange)
+		{
+			BfmeIdlePathfinder *pathfinder =
+				((BfmeIdleAI *)TheAI)->m_pathfinder;
+			pathfinder->updateGoal((Object *)obj, &goalPos,
+				((BfmeGetLayer)j_0003a391)(obj),
+				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp",
+				1996);
 		}
 	}
 
 	ai->setLocomotorGoalNone();
-	ai->setCurrentVictim(NULL);	 
+	((BfmeAIUpdateVictimThunk *)ai)->clearCurrentVictim(NULL);
 }
 
 //----------------------------------------------------------------------------------------------

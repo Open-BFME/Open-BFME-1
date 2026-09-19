@@ -85223,6 +85223,7 @@ name,address,notes
 ?removeDrawableFromLookupTable@GameClient@@QAEXPAVDrawable@@@Z,0x0004819E,Open-BFME5 setID retail REL32 pin
 ?removeEntry@ProductionUpdate@@AAEXPAVProductionEntry@@@Z,0x0002F3C4,ProductionUpdate destructor queue-drain call target
 ?removeFromBuildList@SidesInfo@@QAEHPAVBuildListInfo@@@Z,0x0000A5A6
+?removeGoal@BfmeIdlePathfinder@@QAEXPAVObject@@@Z,0x00015D02,TU-local ABI adapter for the Pathfinder removeGoal ILT called by retail AIIdleState::doInitIdleState
 ?removeGoal@Pathfinder@@QAEXPAVObject@@@Z,0x00015D02,AIMoveAndTightenState::onEnter retail REL32 call target
 ?removeInvalidObjectsFromGarrisonPoints@GarrisonContain@@IAEXXZ,0x0021EA10,GarrisonContain::update retail callee at +0x5d; source definition and 0x21EA10 boundary establish the helper identity
 ?removeLastChar@UnicodeString@@QAEXXZ,0x00888840,BFME UnicodeString trim helper called by HostDirectConnectGame
@@ -86380,6 +86381,7 @@ name,address,notes
 ?updateFadeLevel@ScreenCrossFadeFilter@@IAE_NXZ,0x00006D0C
 ?updateFades@ScriptEngine@@IAEXXZ,0x0000F8DF,BFME ScriptEngine fade update body called via ILT
 ?updateFormationMembers@BfmeAODHordeContainOwner@@QAEXXZ,0x00010D6B,ILT thunk used by AOD formation update
+?updateGoal@BfmeIdlePathfinder@@QAEXPAVObject@@PBUCoord3D@@HPBDH@Z,0x000294E2,TU-local ABI adapter for the five-argument Pathfinder updateGoal ILT called by retail AIIdleState::doInitIdleState
 ?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@HPBDH@Z,0x003E9720,address-derived five-argument pathfinder refresh used by 0x002BDF10
 ?updateGoal@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@W4PathfindLayerEnum@@PBDH@Z,0x003E9720,BFME five-argument updateGoal called by GiantBirdNormalFlightState::onExit at 0x002BE180; source file and line are encoded in the retail call
 ?updateHiddenStatus@Drawable@@AAEXXZ,0x0004A160,ILT to Drawable hidden status refresh called by setDrawableHidden
