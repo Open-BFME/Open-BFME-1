@@ -12071,6 +12071,7 @@ name,address,notes
 ?LZHLDecompress@@YAHPAXPAEPAIPBE2@Z,0x00823190,LZH-Light decompression wrapper
 ?LZHLDestroyCompressor@@YAXPAX@Z,0x00823210,LZH-Light compressor destroy wrapper
 ?LZHLDestroyDecompressor@@YAXPAX@Z,0x00823230,LZH-Light decompressor destroy wrapper
+?LanGameOptionsMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,0x004CDF20,identity: exact message cases LAN globals callees and matched same-TU neighbors; clean source exists but structural drift remains
 ?Lerp@Matrix3D@@SAXABV1@0MAAV1@@Z,0x008D8480,static Matrix3D::Lerp called by W3DView lerpCameraOneFrame at 0x00740600
 ?Load@INIClass@@QAEHAAVStraw@@@Z,0x009E4680
 ?LoadAndCreateD3DShader@BfmeShaderLoader16@@SAHPBDPAI@Z,0x00016CB6,ILT of 2-arg LoadAndCreateD3DShader from ScreenZoomFilter::init
@@ -53737,7 +53738,6 @@ name,address,notes
 ?b_004cc980@@YAXXZ,0x004CC980,gen-thunk body
 ?b_004cd470@@YAXXZ,0x004CD470,gen-thunk body
 ?b_004cda50@@YAXXZ,0x004CDA50,gen-thunk body
-?b_004cdf20@@YAXXZ,0x004CDF20,gen-thunk body
 ?b_004ce790@@YAXXZ,0x004CE790,gen-thunk body
 ?b_004ce7a0@@YAXXZ,0x004CE7A0,gen-thunk body
 ?b_004ce7b0@@YAXXZ,0x004CE7B0,gen-thunk body
