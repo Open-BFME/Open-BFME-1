@@ -54,6 +54,8 @@
 #include <wwprofile.h>
 #include <algorithm>
 
+extern unsigned char *BfmeCurrentCaps;
+
 // BFME stores the eight texture references in RenderStateStruct as owning
 // handles.  The Zero Hour header exposes them as raw pointers, which has the
 // same layout but makes VC7 emit a hand-written release loop instead of the
@@ -383,15 +385,17 @@ void SortingRendererClass::Insert_Triangles(
 //
 // ----------------------------------------------------------------------------
 
+#define BFME_RELEASE_REFS(x) { if (x) { x->Release_Ref(); x = 0; } }
+
 void Release_Refs(SortingNodeStruct* state)
 {
 	int i;
 	for (i=0;i<MAX_VERTEX_STREAMS;++i) {
-		REF_PTR_RELEASE(state->sorting_state.vertex_buffers[i]);
+		BFME_RELEASE_REFS(state->sorting_state.vertex_buffers[i]);
 	}
-	REF_PTR_RELEASE(state->sorting_state.index_buffer);
-	REF_PTR_RELEASE(state->sorting_state.material);
-	for (i=0;i<DX8Wrapper::Get_Current_Caps()->Get_Max_Textures_Per_Pass();++i) 
+	BFME_RELEASE_REFS(state->sorting_state.index_buffer);
+	BFME_RELEASE_REFS(state->sorting_state.material);
+	for (i=0;i<*(const int *)(BfmeCurrentCaps+0x278);++i)
 	{
 		state->sorting_state.Textures[i].Clear();
 	}
