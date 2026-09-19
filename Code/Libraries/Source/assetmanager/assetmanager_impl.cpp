@@ -1,3 +1,4 @@
+// Recovered asset-manager bodies grouped by reciprocal WorldBuilder placement.
 // Retail RVA 0x009F0D40, 265 bytes; identity is address-derived.
 // The matched Rva009EBB20 forwarder in Q1GlobalGuardedForwarders.cpp proves
 // this receiver and one-argument ABI. No original game class name is claimed.
@@ -75,6 +76,8 @@ extern "C" __declspec(dllimport) void __stdcall EnterCriticalSection(
 	CRITICAL_SECTION *lock);
 extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(
 	CRITICAL_SECTION *lock);
+extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long);
+extern volatile bool g_q1Flag0134FAA8;
 
 class Q1ReceiverLockGuard
 {
@@ -94,17 +97,75 @@ public:
 class Q1Receiver0134FAAC
 {
 public:
+	void m009EC970(int which);
+	void m009EC9A0(int which);
+	void m009ECA30(int value);
 	void m009F0D40(int value);
 	void m009EFD40(Q1ReceiverLocalSet *set);
 
 private:
-	unsigned char m_unmodelled_000[0x2C];
+	unsigned char m_unmodelled_000[0x24];
+	int m_value;
+	unsigned char m_unmodelled_028[4];
 	unsigned char m_lock_02C[0x18];
 	Q1ReceiverHashTable m_table;
 	// Retail lock is at +0x60; the STL hash map at +0x44 occupies 20 bytes.
 	unsigned char m_unmodelled_058[8];
 	unsigned char m_lock_060[0x18];
+	unsigned char m_unmodelled_078[0x174];
+	bool m_flag0;
+	bool m_flag1;
+	bool m_flag2;
 };
+
+void Q1Receiver0134FAAC::m009EC970(int which)
+{
+	switch (which)
+	{
+		case 0:
+			m_flag0 = true;
+			break;
+		case 1:
+			m_flag1 = true;
+			break;
+		case 2:
+			m_flag2 = true;
+			break;
+	}
+}
+
+void Q1Receiver0134FAAC::m009EC9A0(int which)
+{
+	switch (which)
+	{
+		case 0:
+			g_q1Flag0134FAA8 = false;
+			if (g_q1Flag0134FAA8)
+			{
+				m_flag0 = false;
+				break;
+			}
+			m_flag0 = false;
+		spin:
+			Sleep(1);
+			if (!g_q1Flag0134FAA8)
+				goto spin;
+			break;
+		case 1:
+			m_flag1 = false;
+			break;
+		case 2:
+			m_flag2 = false;
+			break;
+	}
+}
+
+void Q1Receiver0134FAAC::m009ECA30(int value)
+{
+	m_value = value;
+	if (value < 1)
+		m_value = 1;
+}
 
 void Q1Receiver0134FAAC::m009F0D40(int value)
 {
@@ -126,4 +187,30 @@ void Q1Receiver0134FAAC::m009F0D40(int value)
 
 		++current;
 	}
+}
+
+class BfmeThingXS
+{
+public:
+	unsigned char bfmeMarkXS(int which) const;
+
+private:
+	unsigned char m_bfmeHead[0x1ec];
+	unsigned char m_bfmeFirst;
+	unsigned char m_bfmeSecond;
+	unsigned char m_bfmeThird;
+};
+
+unsigned char BfmeThingXS::bfmeMarkXS(int which) const
+{
+	switch (which)
+	{
+		case 0:
+			return m_bfmeFirst;
+		case 1:
+			return m_bfmeSecond;
+		case 2:
+			return m_bfmeThird;
+	}
+	return 0;
 }

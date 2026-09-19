@@ -1,12 +1,15 @@
 // ?lookup@Rva008838F0Owner@@QAEHIPAPAXI@Z
-// Address-derived identity from the complete retail hash-bucket and copy
-// shape; no semantic owner name is claimed.
+// The tracker owner identity remains address-derived; reciprocal placement and
+// the neighboring owner methods establish the original memorypool TU.
 // cl: /O2 /DNDEBUG /MD
 
 extern "C" __declspec(dllimport) void __stdcall Rva01358D18Enter(void *lock);
 extern "C" __declspec(dllimport) void __stdcall Rva01358E74Leave(void *lock);
+extern "C" __declspec(dllimport) void __stdcall Rva01358D0CReset(void *section);
 extern "C" __declspec(dllimport) void *__stdcall GetProcessHeap(void);
 extern "C" __declspec(dllimport) void *__stdcall HeapAlloc(void *heap, unsigned long flags, unsigned long bytes);
+extern "C" __declspec(dllimport) int __stdcall HeapFree(
+	void *heap, unsigned long flags, void *block);
 extern "C" __declspec(dllimport) void __stdcall InitializeCriticalSection(void *section);
 extern "C" unsigned char g_rva01336CE8[];
 
@@ -27,6 +30,7 @@ class Rva008838F0Owner
 {
 public:
 	Rva008838F0Owner(void *owner, void **table);
+	~Rva008838F0Owner();
 	int lookup(unsigned int key, void **dest, unsigned int limit);
 	bool isValidBlock(int type, void *block);
 
@@ -123,4 +127,57 @@ bool Rva008838F0Owner::isValidBlock(int type, void *block)
 	if (m_lock != 0)
 		Rva01358E74Leave(m_lock);
 	return true;
+}
+
+struct Rva00883220Node
+{
+	Rva00883220Node *m_next;
+	char m_pad04[0x10];
+	void *m_value14;
+};
+
+Rva008838F0Owner::~Rva008838F0Owner()
+{
+	if (m_lock != 0)
+		Rva01358D18Enter(m_lock);
+
+	m_disabled = 1;
+
+	if (m_lock != 0)
+	{
+		Rva01358E74Leave(m_lock);
+		Rva01358D0CReset(m_lock);
+		HeapFree(GetProcessHeap(), 0, m_lock);
+		m_lock = 0;
+	}
+
+	Rva00883220Node **bucket =
+		reinterpret_cast<Rva00883220Node **>(m_buckets);
+	unsigned int bucketCount = 0x2b7b;
+	do
+	{
+		Rva00883220Node *node = *bucket;
+		while (node != 0)
+		{
+			Rva00883220Node *next = node->m_next;
+			if (node->m_value14 != 0)
+				HeapFree(GetProcessHeap(), 0, node->m_value14);
+			HeapFree(GetProcessHeap(), 0, node);
+			node = next;
+		}
+		*bucket = 0;
+		++bucket;
+		--bucketCount;
+	} while (bucketCount != 0);
+
+	Rva00883220Node *node = reinterpret_cast<Rva00883220Node *>(m_current);
+	while (node != 0)
+	{
+		Rva00883220Node *next = node->m_next;
+		if (node->m_value14 != 0)
+			HeapFree(GetProcessHeap(), 0, node->m_value14);
+		HeapFree(GetProcessHeap(), 0, node);
+		node = next;
+	}
+	m_current = 0;
 }

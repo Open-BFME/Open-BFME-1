@@ -1,8 +1,7 @@
-// ??0Rva003E6200Info@@QAE@PAVPathfinder@@PAVObject@@PAXPBUCoord3D@@H@Z
-// partial score=0.95 date=2026-09-03
 // cl: /DNDEBUG /MD
 //
-// Retail 0x003E6200: five-argument pathfinding query payload constructor.
+// The two adjacent destination-query payload constructors map reciprocally to
+// this original Pathfinder TU.
 
 typedef int Int;
 typedef unsigned char Bool;
@@ -33,7 +32,8 @@ public:
 class TerrainLogic
 {
 public:
-	PathfindLayerEnum getLayerForDestination(Object *obj, const Coord3D *pos);
+	PathfindLayerEnum getLayerForDestination(Object *obj,
+		const Coord3D *pos);
 };
 
 extern TerrainLogic *TheTerrainLogic;
@@ -51,6 +51,62 @@ class Pathfinder
 public:
 	void bfmeQuery(Object *obj, Int *radius, Bool *center);
 };
+
+class Rva003E6110Info
+{
+public:
+	Rva003E6110Info(Pathfinder *pathfinder, Object *obj, void *arg3,
+		const Coord3D *pos, const Coord3D *groupPos, Int arg6, Int arg7);
+
+	Pathfinder * volatile m_pathfinder;
+	Object * volatile m_obj;
+	void * volatile m_arg3;
+	Bool m_notComputer;
+	Bool m_center;
+	Int m_radius;
+	const Coord3D * m_groupPos;
+	Int m_layer;
+	Int volatile m_arg6;
+	Int m_pad20;
+	Int m_pad24;
+	Int m_zero28;
+	Int volatile m_arg7;
+	Coord3D m_pos;
+};
+
+Rva003E6110Info::Rva003E6110Info(Pathfinder *pathfinder, Object *obj,
+	void *arg3, const Coord3D *pos, const Coord3D *groupPos, Int arg6,
+	Int arg7)
+{
+	m_pathfinder = pathfinder;
+	m_arg3 = arg3;
+	m_groupPos = groupPos;
+	m_arg6 = arg6;
+	m_obj = obj;
+	m_arg7 = arg7;
+	m_zero28 = 0;
+
+	Coord3D *destination = &m_pos;
+	destination->x = pos->x;
+	destination->y = pos->y;
+	destination->z = pos->z;
+
+	Int notComputer;
+	if (m_obj->getControllingPlayer() != 0 &&
+		m_obj->getControllingPlayer()->m_playerType == 1)
+		notComputer = 0;
+	else
+		notComputer = 1;
+	m_notComputer = notComputer;
+
+	(*(Pathfinder * volatile *)&m_pathfinder)->bfmeQuery(m_obj, &m_radius,
+		&m_center);
+	m_layer = TheTerrainLogic->getLayerForDestination(obj,
+		(const Coord3D *)&m_pos);
+	if (m_groupPos != 0)
+		m_layer = TheTerrainLogic->getLayerForDestination(0,
+			(const Coord3D *)m_groupPos);
+}
 
 class Rva003E6200Info
 {
@@ -92,12 +148,14 @@ Rva003E6200Info::Rva003E6200Info(Pathfinder *pathfinder, Object *obj, void *arg3
 	m_pos.z = pos->z;
 
 	Int notComputer;
-	if (m_obj->getControllingPlayer() != 0 && m_obj->getControllingPlayer()->m_playerType == 1)
+	if (m_obj->getControllingPlayer() != 0 &&
+		m_obj->getControllingPlayer()->m_playerType == 1)
 		notComputer = 0;
 	else
 		notComputer = 1;
 	m_notComputer = notComputer;
 
-	(*(Pathfinder * volatile *)&m_pathfinder)->bfmeQuery(m_obj, &m_radius, &m_center);
+	(*(Pathfinder * volatile *)&m_pathfinder)->bfmeQuery(m_obj, &m_radius,
+		&m_center);
 	m_layer = TheTerrainLogic->getLayerForDestination(o, c);
 }
