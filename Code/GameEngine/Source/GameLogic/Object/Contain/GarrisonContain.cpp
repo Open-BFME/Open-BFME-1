@@ -216,6 +216,34 @@ public:
 		const Coord3D *targetPos );
 };
 
+struct BfmeGarrisonPointPlacementData
+{
+	ObjectID object;
+	ObjectID targetID;
+	UnsignedInt placeFrame;
+	unsigned char m_unmodelled_00c[8];
+};
+
+struct BfmeGarrisonPlacementView
+{
+	unsigned char m_unmodelled_000[0xd8];
+	BfmeGarrisonPointPlacementData pointData[40];
+	Int pointsInUse;
+	Coord3D points[3][40];
+};
+
+struct BfmeGarrisonObjectIDView
+{
+	unsigned char m_unmodelled_000[0x74];
+	ObjectID id;
+};
+
+struct BfmeGarrisonGameLogicFrameView
+{
+	unsigned char m_unmodelled_000[0x3c];
+	UnsignedInt frame;
+};
+
 class BfmeOutOfWeaponRangeWeapon
 {
 public:
@@ -399,85 +427,33 @@ Int GarrisonContain::getObjectGarrisonPointIndex( Object *obj )
 // ------------------------------------------------------------------------------------------------
 /** Put the object at the specified garrison point by index */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Contain/GarrisonContain_putObjectAtGarrisonPoint.cpp
-// ?putObjectAtGarrisonPoint@GarrisonContain@@ present-unmatched
 void GarrisonContain::putObjectAtGarrisonPoint( Object *obj, 
-																								ObjectID targetID,
-																								Int conditionIndex, 
-																								Int pointIndex )
+																ObjectID targetID,
+																Int conditionIndex,
+																Int pointIndex )
 {
-	DEBUG_ASSERTCRASH(m_garrisonPointsInitialized, ("garrisonPoints are not inited"));
+	BfmeGarrisonPlacementView *self = (BfmeGarrisonPlacementView *)this;
 
-	// sanity
 	if( obj == NULL || pointIndex < 0 || pointIndex >= MAX_GARRISON_POINTS ||
 			conditionIndex < 0 || conditionIndex >= MAX_GARRISON_POINT_CONDITIONS )
-	{
-
-		DEBUG_CRASH(( "GarrisionContain::putObjectAtGarrisionPoint - Invalid arguments\n" ));
 		return;
 
-	}  // end if
-
-	// make sure this point is empty
-	if( m_garrisonPointData[ pointIndex ].object != NULL )
-	{
-
-		DEBUG_CRASH(( "GarrisonContain::putObjectAtGarrisonPoint - Garrison Point '%d' is not empty\n", 
-									pointIndex ));
+	if( self->pointData[ pointIndex ].object != INVALID_ID )
 		return;
 
-	}  // end if
+	const Coord3D &pt = self->points[ conditionIndex ][ pointIndex ];
+	Coord3D pos;
+	pos = pt;
 
-	// get the position we're going to use 
-	Coord3D pos = m_garrisonPoint[ conditionIndex ][ pointIndex ];
-
-	// set the object position
 	obj->setPosition( &pos );
 
-	// save the data for being place at this point
-	m_garrisonPointData[ pointIndex	].object = obj;
-	m_garrisonPointData[ pointIndex	].targetID = targetID;
-	m_garrisonPointData[ pointIndex	].placeFrame = TheGameLogic->getFrame();
-	++m_garrisonPointsInUse;
-
-	//
-	// create a drawable that has a gun barrel which will show there is an object at this
-	// garrison point ready to shoot
-	//
-	static const ThingTemplate *muzzle = TheThingFactory->findTemplate( "GarrisonGun" );
-	DEBUG_ASSERTCRASH( muzzle, ("Warning, Object 'GarrisonGun' not found and is need for Garrison gun effects\n") );
-	if( muzzle && isEnclosingContainerFor( obj ) )// If we are showing the contained, we need no gun barrel drawable added
-	{
-		Drawable *draw = TheThingFactory->newDrawable( muzzle );
-		if( draw )
-		{
-
-			// set position of the drawable at the garrison fire point
-			draw->setPosition( &pos );
-
-			// record the drawable in our data array
-			m_garrisonPointData[ pointIndex ].effect = draw;
-			m_garrisonPointData[ pointIndex ].lastEffectFrame = 0;
-
-			//Copy shroud status from our container.
-			Drawable *containerDrawable=getObject()->getDrawable();
-			if (containerDrawable)
-				draw->setFullyObscuredByShroud(containerDrawable->getFullyObscuredByShroud());
-
-		}  // end if
-
-	}  // end if
-
-/*
-UnicodeString msg;
-msg.format( L"Added object '%S'(%d) to point '%d'", 
-						obj->getTemplate()->getName().str(),
-						obj->getID(),
-						pointIndex );
-TheInGameUI->message( msg );
-*/
-
-}  // end putObjectAtGarrisonPoint
+	self->pointData[ pointIndex ].object =
+		((BfmeGarrisonObjectIDView *)obj)->id;
+	self->pointData[ pointIndex ].targetID = targetID;
+	self->pointData[ pointIndex ].placeFrame =
+		((BfmeGarrisonGameLogicFrameView *)TheGameLogic)->frame;
+	++self->pointsInUse;
+}
 
 // ------------------------------------------------------------------------------------------------
 /** Given the current state of the structure, return the condition index we are to use
