@@ -18,6 +18,16 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
+enum WindowVideoPlayType
+{
+	WINDOW_PLAY_MOVIE_ONCE = 0
+};
+
+enum WindowVideoStates
+{
+	WINDOW_VIDEO_STATE_STOP = 1
+};
+
 class VideoBuffer;
 
 #include "ascii_string.h"
@@ -54,14 +64,25 @@ public:
 class WindowVideo
 {
 public:
+	WindowVideo();
 	~WindowVideo();
 
 private:
-	char m_bfme_head[4];					// this+0x00, untouched
+	WindowVideoPlayType m_playType;				// this+0x00
 	GameWindow *m_win;					// this+0x04
 	VideoBuffer *m_videoBuffer;				// this+0x08
 	AsciiString m_movieName;				// this+0x0C
+	WindowVideoStates m_state;
 };
+
+WindowVideo::WindowVideo()
+{
+	m_playType = WINDOW_PLAY_MOVIE_ONCE;
+	m_win = 0;
+	m_videoBuffer = 0;
+	m_movieName.clear();
+	m_state = WINDOW_VIDEO_STATE_STOP;
+}
 
 WindowVideo::~WindowVideo( void )
 {
