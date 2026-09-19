@@ -264,7 +264,7 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         # .git/index.lock is not a hook failure, so wait it out (3 x 20 s)
         import time
         for attempt in range(4):
-            r = subprocess.run(["git", "commit", "-q", "-m", msg + "\n\nCo-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"],
+            r = subprocess.run(["git", "commit", "-q", "-m", msg],
                                cwd=ROOT, capture_output=True, text=True, errors="replace")
             if r.returncode == 0:
                 break
