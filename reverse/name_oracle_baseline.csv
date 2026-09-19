@@ -265,7 +265,7 @@ PlayerList+0x14|m_neutralPlayer|m_players,Code/GameEngine/Source/Common/RTS/Play
 PlayerList+0x14|m_neutral|m_players,Code/GameEngine/Source/Common/RTS/TeamFactoryCtorThunk.cpp,121,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/Common/StatsCollector.cpp,142,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/Common/BfmeConv892.cpp,37,1.00,layout_witness
-PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/Common/PlayerAdjustLivingWorldBounty.cpp,21,1.00,layout_witness
+PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/Common/RTS/PlayerAdjustLivingWorldBounty.cpp,21,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/Common/DrawableBFME.cpp,103,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/Common/ControlBar_onPlayerRankChanged_Thunk.cpp,46,1.00,layout_witness
 PlayerList+0xc|m_localPlayer|m_local,Code/GameEngine/Source/GameClient/EvaEventFXNugget_doFXObj_Thunk.cpp,57,1.00,layout_witness
