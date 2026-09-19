@@ -34,6 +34,20 @@
 		return m_value;                                                       \
 	}
 
+#define BFME_DISP_REAL_GETTER( NAME, DISP )                                  \
+	class NAME                                                               \
+	{                                                                        \
+	public:                                                                  \
+		float get() const;                                                   \
+                                                                            \
+		char  m_lead[ DISP ];                                               \
+		float m_value;                                                       \
+	};                                                                       \
+	float NAME::get() const                                                   \
+	{                                                                        \
+		return m_value;                                                      \
+	}
+
 BFME_DISP_DWORD_GETTER( Rva000C7C20DwordField, 0x4B4 )
 BFME_DISP_DWORD_GETTER( Rva000C88E0DwordField, 0x370 )
 BFME_DISP_DWORD_GETTER( Rva00133C10DwordField, 0x38C )
@@ -115,6 +129,7 @@ BFME_DISP_DWORD_GETTER( Rva00695E70DwordField, 0x958 )
 BFME_DISP_DWORD_GETTER( Rva00695F10DwordField, 0x618 )
 BFME_DISP_DWORD_GETTER( Rva006C0830DwordField, 0x30B8 )
 BFME_DISP_DWORD_GETTER( Rva006C0840DwordField, 0x30BC )
+BFME_DISP_REAL_GETTER( Rva006C0850RealField, 0x10 )
 BFME_DISP_DWORD_GETTER( Rva006E7AF0DwordField, 0x30C4 )
 BFME_DISP_DWORD_GETTER( Rva0073A660DwordField, 0x858 )
 BFME_DISP_DWORD_GETTER( Rva0073A760DwordField, 0x868 )
