@@ -1057,7 +1057,7 @@ bool Debug::SkipNext(void)
   return e->status==Skip;
 }
 
-// byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWDebug/DebugAssertBeginThunk.cpp
+// byte-exact reconstruction: Code/Libraries/Source/debug/DebugAssertBeginThunk.cpp
 // ?AssertBegin@Debug@@SAAAV1@PBDH0@Z present-unmatched
 Debug& Debug::AssertBegin(const char *file, int line, const char *expr)
 {
