@@ -2067,6 +2067,7 @@ name,address,notes
 ??0?$_Vector_base@UBfmeSortElem20TailElement@@V?$allocator@UBfmeSortElem20TailElement@@@_STL@@@_STL@@QAE@IABV?$allocator@UBfmeSortElem20TailElement@@@1@@Z,0x002E3EA0,proven direct body reached by the E9 ILT at 0x0001D11A; typed vector-base call in BfmeSortElem20Tail copy constructor; additive body candidate follows the ILT for retail callsite encoding; campaign=luna36h-20260907; lane=mesh
 ??0?$_Vector_base@UGen_003A8BE0@@V?$allocator@UGen_003A8BE0@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_003A8BE0@@@1@@Z,0x000429BA,vector base constructor call target from retail 0x003AB280
 ??0?$_Vector_base@UGen_003AB860Elem@@V?$allocator@UGen_003AB860Elem@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_003AB860Elem@@@1@@Z,0x000430EF,vector base constructor call target from retail 0x003AB860 (twin of 0x003AB280)
+??0?$_Vector_base@UGen_t_000b0c00_p8cd@@V?$allocator@UGen_t_000b0c00_p8cd@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_t_000b0c00_p8cd@@@1@@Z,0x000133DB,AudioEventInfo vector copy at 0x000B5A30 calls the vector base constructor ILT and the thunk body is at 0x000B52C0
 ??0?$_Vector_base@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QAE@IABV?$allocator@UGeometryRecord@@@1@@Z,0x00017D05,exact GeometryRecord vector copy constructor calls this base constructor through the retail ILT to 0x000FD2B0
 ??0?$_Vector_base@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QAE@IABV?$allocator@UGeometryShape@@@1@@Z,0x00007B08,route=0x000FD230; exact GeometryShape vector copy constructor calls this base constructor through the retail ILT
 ??0?$_Vector_base@UP6Elem003B1A80@@V?$allocator@UP6Elem003B1A80@@@_STL@@@_STL@@QAE@IABV?$allocator@UP6Elem003B1A80@@@1@@Z,0x00003490,vector base constructor call target from retail 0x003AA270
@@ -47329,7 +47330,6 @@ name,address,notes
 ?b_00404230@@YAXXZ,0x00404230,gen-thunk body
 ?b_00404280@@YAXXZ,0x00404280,gen-thunk body
 ?b_00404290@@YAXXZ,0x00404290,gen-thunk body
-?b_004042c0@@YAXXZ,0x004042C0,gen-thunk body
 ?b_004048c0@@YAXXZ,0x004048C0,gen-thunk body
 ?b_004048e0@@YAXXZ,0x004048E0,gen-thunk body
 ?b_004048f0@@YAXXZ,0x004048F0,gen-thunk body
@@ -78872,6 +78872,7 @@ name,address,notes
 ?bfmeXferSiegeType@@YAXPAVXfer@@PAX@Z,0x00012508,retail SiegeDockingBehavior::xfer calls the 0x0010C440 enum forwarder through ILT 0x00012508
 ?bfmeZDeltaToCenter@BfmeBoundaryGeometry3D@@QBEMXZ,0x0087DBF0,GeometryInfo-compatible vertical center offset
 ?bfmeZeroKX@@YGXPAUBfmeVec3KX@@@Z,0x0002990B,pin
+?bfmeZonePhase004042C0@PathfindZoneManager@@AAEXPAPAVPathfindCell@@ABUIRegion2D@@@Z,0x004042C0,address-derived private zone phase; class and ABI proven by calculateZones state caller
 ?bfme_appendGameOverDetails@GameLogic@@QAEXXZ,0x00387A50,once-only (+0x68 flag): formats Game Over Details and per slot Victory/Defeat frame Quit frame (graceful|voted out|n/a) from the PlayerLeaveStatus[8] records at +0x1b0 copying status into Player+0x484 and appending to the last AsciiString of the vector at +0x54..+0x58; ecx = this = GameLogic at the call 0x00397789; the ledger name ?endMenu@EstablishConnectionsMenu@@ for this 657 B body is wrong; reached via ILT 0x0004A10B
 ?bfme_bindAptText@WindowManager@@QAEXABVAsciiString@@ABVUnicodeString@@PAVAptTextListener@@@Z,0x00023362,Rva00788290Allocation destructor calls the existing APT listener bind ILT
 ?bfme_getDescriptionFirstLine@MapMetaData@@QAE?AVUnicodeString@@XZ,0x000036BB,ILT to 0x00452000; obtains cached map.str text and returns its prefix before the first newline
@@ -82678,6 +82679,7 @@ name,address,notes
 ?get_allocator@?$vector@UGen_003A8BE0@@V?$allocator@UGen_003A8BE0@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_003A8BE0@@@2@XZ,0x00035A4E,allocator accessor call target from retail 0x003AB280
 ?get_allocator@?$vector@UGen_003AB860Elem@@V?$allocator@UGen_003AB860Elem@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_003AB860Elem@@@2@XZ,0x00047C3A,allocator accessor call target from retail 0x003AB860
 ?get_allocator@?$vector@UGen_t_00069cc0_p16cd@@V?$allocator@UGen_t_00069cc0_p16cd@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_t_00069cc0_p16cd@@@2@XZ,0x000698B0,allocator accessor call target from retail 0x00069F00
+?get_allocator@?$vector@UGen_t_000b0c00_p8cd@@V?$allocator@UGen_t_000b0c00_p8cd@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_t_000b0c00_p8cd@@@2@XZ,0x0002234A,AudioEventInfo vector copy at 0x000B5A30 calls the get_allocator ILT and the thunk body is Gen_000b51f0 at 0x000B51F0
 ?get_allocator@?$vector@UGeometryRecord@@V?$allocator@UGeometryRecord@@@_STL@@@_STL@@QBE?AV?$allocator@UGeometryRecord@@@2@XZ,0x00013336,exact GeometryRecord vector copy constructor calls this allocator accessor through the retail ILT to 0x000FCB10
 ?get_allocator@?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@QBE?AV?$allocator@UGeometryShape@@@2@XZ,0x000353FF,route=0x000FCB00; exact GeometryShape vector copy constructor calls this allocator accessor through the retail ILT
 ?get_allocator@?$vector@UP6Elem003B1A80@@V?$allocator@UP6Elem003B1A80@@@_STL@@@_STL@@QBE?AV?$allocator@UP6Elem003B1A80@@@2@XZ,0x0003013E,allocator accessor call target from retail 0x003AA270
@@ -88416,5 +88418,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-?get_allocator@?$vector@UGen_t_000b0c00_p8cd@@V?$allocator@UGen_t_000b0c00_p8cd@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_t_000b0c00_p8cd@@@2@XZ,0x0002234A,AudioEventInfo vector copy at 0x000B5A30 calls the get_allocator ILT and the thunk body is Gen_000b51f0 at 0x000B51F0
-??0?$_Vector_base@UGen_t_000b0c00_p8cd@@V?$allocator@UGen_t_000b0c00_p8cd@@@_STL@@@_STL@@QAE@IABV?$allocator@UGen_t_000b0c00_p8cd@@@1@@Z,0x000133DB,AudioEventInfo vector copy at 0x000B5A30 calls the vector base constructor ILT and the thunk body is at 0x000B52C0
