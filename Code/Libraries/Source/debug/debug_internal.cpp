@@ -27,7 +27,7 @@
 //
 // Implementation of internal code
 //////////////////////////////////////////////////////////////////////////////
-#include "_pch.h"
+#include "../WWVegas/WWDebug/_pch.h"
 
 void DebugInternalAssert(const char *file, int line, const char *expr)
 {

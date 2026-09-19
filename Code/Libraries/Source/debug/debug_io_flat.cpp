@@ -29,7 +29,7 @@
 //
 // Debug I/O class flat (flat or split log file)
 //////////////////////////////////////////////////////////////////////////////
-#include "_pch.h"
+#include "../WWVegas/WWDebug/_pch.h"
 #include <stdlib.h>
 #include <new>      // needed for placement new prototype
 

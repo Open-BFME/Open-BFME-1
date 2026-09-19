@@ -29,7 +29,7 @@
 //
 // Debug class implementation
 //////////////////////////////////////////////////////////////////////////////
-#include "_pch.h"
+#include "../WWVegas/WWDebug/_pch.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

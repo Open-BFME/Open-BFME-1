@@ -29,13 +29,13 @@
 //
 // Stack walker
 //////////////////////////////////////////////////////////////////////////////
-#include "_pch.h"
+#include "../WWVegas/WWDebug/_pch.h"
 #include "dbghelp.h"
 
 // Definitions to allow run-time linking to the dbghelp.dll functions.
 
 #define DBGHELP(name,ret,par) typedef ret (WINAPI *name##Type) par;
-#include "debug_stack.inl"
+#include "../WWVegas/WWDebug/debug_stack.inl"
 #undef DBGHELP
 
 #define DBGHELP(name,ret,par) name##Type _##name;
@@ -43,7 +43,7 @@ static union
 {
   struct  
   {
-#include "debug_stack.inl"
+#include "../WWVegas/WWDebug/debug_stack.inl"
   };
   unsigned funcPtr[1];
 } gDbg;
@@ -52,7 +52,7 @@ static union
 #define DBGHELP(name,ret,par) #name,
 static char const *DebughelpFunctionNames[] =
 {
-#include "debug_stack.inl"
+#include "../WWVegas/WWDebug/debug_stack.inl"
 	NULL
 };
 #undef DBGHELP

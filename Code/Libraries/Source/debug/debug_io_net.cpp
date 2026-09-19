@@ -29,7 +29,7 @@
 //
 // Debug I/O class net (Network destination via named pipe)
 //////////////////////////////////////////////////////////////////////////////
-#include "_pch.h"
+#include "../WWVegas/WWDebug/_pch.h"
 #include <new>      // needed for placement new prototype
 
 // byte-exact reconstruction: Code/Libraries/Source/WWVegas/WWDebug/DebugIONetConstructorThunk.cpp
