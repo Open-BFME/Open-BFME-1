@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 //
 // BFME's lobby team list is the Zero Hour PopulateTeamComboBox shape with a
 // fixed four-team loop and the BFME init guard.
@@ -7,6 +8,8 @@ typedef unsigned short WideChar;
 typedef bool Bool;
 typedef int Int;
 typedef int Color;
+
+#include <vector>
 
 template <typename T> struct Rva006239C0StringData
 {
@@ -88,12 +91,53 @@ public:
 	{
 		return *(const Color *)((const char *)this + 0x10);
 	}
+
+	AsciiString getTooltipName() const;
+};
+
+class MultiplayerColorList
+{
+public:
+	Int size() const
+	{
+		return m_size;
+	}
+
+	Int m_size;
+	char m_unmodelled[4];
 };
 
 class MultiplayerSettings
 {
 public:
+	Int getNumColors()
+	{
+		if (m_numColors == 0)
+			m_numColors = m_colorList.size();
+		return m_numColors;
+	}
+
 	MultiplayerColorDefinition *getColor(Int which);
+
+private:
+	char m_unmodelled[0x34];
+	MultiplayerColorList m_colorList;
+	Int m_numColors;
+};
+
+class GameSlot
+{
+public:
+	Int getColor() const
+	{
+		return *(const Int *)((const char *)this + 0x0C);
+	}
+};
+
+class GameInfo
+{
+public:
+	GameSlot *getSlot(Int slot);
 };
 
 extern GameTextInterface *TheGameText;
@@ -101,12 +145,69 @@ extern MultiplayerSettings *TheMultiplayerSettings;
 extern int g_Va012F49D4;
 
 extern void GadgetComboBoxReset(GameWindow *comboBox);
+extern Int GadgetComboBoxGetLength(GameWindow *comboBox);
 extern Int GadgetComboBoxAddEntry(GameWindow *comboBox, UnicodeString text,
 	Color color);
 extern void GadgetComboBoxSetItemData(GameWindow *comboBox, Int item,
 	void *data);
 extern void GadgetComboBoxSetSelectedPos(GameWindow *comboBox, Int item,
 	Bool dontHide);
+
+// ?PopulateColorComboBox@@YAXHQAPAVGameWindow@@PAVGameInfo@@_N@Z
+void PopulateColorComboBox(Int comboBox, GameWindow *comboArray[],
+	GameInfo *myGame, Bool isObserver)
+{
+	if (g_Va012F49D4)
+		return;
+
+	Int i;
+	Int numColors = TheMultiplayerSettings->getNumColors();
+	UnicodeString colorName;
+	_STL::vector<bool> availableColors(numColors, true);
+	Int newIndex;
+
+	for (i = 0; i < 8; i++)
+	{
+		GameSlot *slot = myGame->getSlot(i);
+		if (slot && (i != comboBox) && (slot->getColor() >= 0)
+			&& (slot->getColor() < numColors))
+		{
+			availableColors[slot->getColor()] = false;
+		}
+	}
+
+	Bool wasObserver = (GadgetComboBoxGetLength(comboArray[comboBox]) == 1);
+	GadgetComboBoxReset(comboArray[comboBox]);
+
+	MultiplayerColorDefinition *def =
+		TheMultiplayerSettings->getColor(-1);
+	newIndex = GadgetComboBoxAddEntry(comboArray[comboBox],
+		isObserver ? TheGameText->fetch("GUI:None")
+		           : TheGameText->fetch("GUI:???"),
+		def->getColor());
+	GadgetComboBoxSetItemData(comboArray[comboBox], newIndex, (void *)-1);
+
+	if (isObserver)
+	{
+		GadgetComboBoxSetSelectedPos(comboArray[comboBox], 0, false);
+		return;
+	}
+
+	for (Int c = 0; c < numColors; ++c)
+	{
+		def = TheMultiplayerSettings->getColor(c);
+		if (!def || availableColors[c] == false)
+			continue;
+
+		colorName = TheGameText->fetch(def->getTooltipName().str());
+		newIndex = GadgetComboBoxAddEntry(comboArray[comboBox], colorName,
+			def->getColor());
+		GadgetComboBoxSetItemData(comboArray[comboBox], newIndex, (void *)c);
+	}
+
+	if (wasObserver)
+		GadgetComboBoxSetSelectedPos(comboArray[comboBox], 0, false);
+}
 
 // ?PopulateTeamComboBox@@YAXHQAPAVGameWindow@@PAVGameInfo@@_N@Z
 void PopulateTeamComboBox(Int comboBox, GameWindow *comboArray[],
