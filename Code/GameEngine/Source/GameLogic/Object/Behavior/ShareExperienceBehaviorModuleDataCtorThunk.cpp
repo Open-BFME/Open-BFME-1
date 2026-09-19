@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 
-#include "../../../Include/GameLogic/Rva0039D550.h"
+#include "../../../../Include/GameLogic/Rva0039D550.h"
 
 // A ModuleData base supplying the vptr, then a member whose constructor is out
 // of line -- the call resolves to the existing pin for ??0RS_Member@@QAE@XZ at
