@@ -99,6 +99,17 @@ BFME_CHAIN_AT( Rva00233D60ChainedDword, 0x4, int )
 BFME_CHAIN_INNER( Rva00233D70ChainedDword, 0x14, int )
 BFME_CHAIN_AT( Rva00233D70ChainedDword, 0x4, int )
 
+class Rva00233D50Dword
+{
+public:
+	int get() const;
+};
+
+int Rva00233D50Dword::get() const
+{
+	return *(const int *)((const char *)this + 4);
+}
+
 BFME_CHAIN_INNER( Rva0026A930ChainedDword, 0x8, int )
 BFME_CHAIN_BEFORE( Rva0026A930ChainedDword, 0x20, int )
 
@@ -176,4 +187,3 @@ BFME_CHAIN_AT( Rva002D6D30ChainedByte, 0xC, unsigned char )
 
 BFME_CHAIN_INNER( Rva0058B600ChainedByte, 0x10, unsigned char )
 BFME_CHAIN_AT( Rva0058B600ChainedByte, 0x4, unsigned char )
-
