@@ -83810,6 +83810,7 @@ name,address,notes
 ?initialize@DeathStatusFlags@@QAEXHHHHHH@Z,0x00034CE8,SlowDeathBehavior DeathFlags status mask initializer ILT
 ?initialize@Rva00016FAE@@QAEXXZ,0x00016FAE,Rva000FA610 constructor member call resolves through the retail ILT thunk
 ?initialize@Rva002BC260Global@@QAEXPAX00000@Z,0x0000A795,address-derived six-argument goal initializer used by 0x002BC260
+?initialize@Rva00473900@@AAEXPA_NH@Z,0x0000CDB0,address-derived proxy initializer call view for Rva00473900
 ?initialize@Rva007B12F0Base@@QAEXXZ,0x0000AF38,member-initializer view of the proven Rva007B12F0 base initialization target
 ?initialize@Rva14BAD0List@@QAEPAU1@PADH@Z,0x00021C42,Open-BFME5 RVA 14BAD0 list head initializer thunk pin
 ?initializeArray@BfmeThingCDE@@QAEXH@Z,0x008F7E20,CDE node array initializer called by the owner allocator at 0x008FA850
