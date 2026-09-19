@@ -1,6 +1,0 @@
-Code/GameEngine/Source/Common/RTS/FXModuleDataParseParticleSystemThunks.cpp	Code/GameEngine/Source/GameLogic/Object/Update/FXModuleDataParseParticleSystemThunks.cpp	BoneFXUpdateModuleData
-Code/GameEngine/Source/Common/RubbleRiseUpdateModuleDataDestructorThunk.cpp	Code/GameEngine/Source/GameLogic/Object/Update/RubbleRiseUpdateModuleDataDestructorThunk.cpp	RubbleRiseUpdateModuleData
-Code/GameEngine/Source/Common/Thing/ModuleInfoClearAi.cpp	Code/GameEngine/Source/GameClient/ModuleInfoClearAi.cpp	ModuleInfo
-Code/GameEngine/Source/Common/Thing/ModuleInfoClearCopiedFromDefaultEntries.cpp	Code/GameEngine/Source/GameClient/ModuleInfoClearCopiedFromDefaultEntries.cpp	ModuleInfo
-Code/GameEngine/Source/Common/Thing/ModuleInfoClearModuleDataWithTag.cpp	Code/GameEngine/Source/GameClient/ModuleInfoClearModuleDataWithTag.cpp	ModuleInfo
-Code/GameEngine/Source/GameLogic/Object/Update/DynamicGeometryInfoUpdateConstructor.cpp	Code/GameEngine/Source/GameLogic/Object/SpecialPower/DynamicGeometryInfoUpdateConstructor.cpp	SiegeDeployHordeSpecialPower
