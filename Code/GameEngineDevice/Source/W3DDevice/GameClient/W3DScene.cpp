@@ -565,52 +565,88 @@ void RTS3DScene::renderOneObject(RenderInfoClass &rinfo, RenderObjClass *robj, I
 
 /**Generate a predefined light environment(s) that will be applied to many objects.  Useful for things like totally fogged
 objects and most generaic map objects that are not lit by dynamic lights.*/
-// ?updateFixedLightEnvironments@RTS3DScene@@ present-unmatched
+// ?updateFixedLightEnvironments@RTS3DScene@@IAEXAAVRenderInfoClass@@@Z
+// BFME keeps the lighting state at offsets that differ from the Zero Hour
+// header.  The retail body uses the three environment objects at +0x160,
+// +0x388, and +0x5b0, with the light arrays immediately before them.
 void RTS3DScene::updateFixedLightEnvironments(RenderInfoClass & rinfo)
 {
-	//Figure out how dimly lit fogged objects should be compared to fully lit.
-	Real foggedLightFrac = (Real)TheGlobalData->m_fogAlpha/(Real)TheGlobalData->m_clearAlpha;
-	Real infantryLightScale;
-	if( TheGlobalData->m_scriptOverrideInfantryLightScale != -1.0f )
-		infantryLightScale = TheGlobalData->m_scriptOverrideInfantryLightScale;
-	else
-		infantryLightScale = TheGlobalData->m_infantryLightScale[TheGlobalData->m_timeOfDay];
-	
-	//Generate the default light environment
-	m_defaultLightEnv.Reset(Vector3(0,0,0), Get_Ambient_Light());
-	m_foggedLightEnv.Reset(Vector3(0,0,0), Get_Ambient_Light()*foggedLightFrac);
+	struct BfmeGlobalDataView
+	{
+		unsigned char pad[0xc84];
+		unsigned char fogAlpha;
+		unsigned char clearAlpha;
+	};
+	struct BfmeLightEnvironmentView
+	{
+		unsigned char data[0x228];
 
-	Vector3 oldDiffuse, oldAmbient;
-	for (Int globalLightIndex = 0; globalLightIndex < m_numGlobalLights; globalLightIndex++)
-	{	m_defaultLightEnv.Add_Light(*m_globalLight[globalLightIndex]);
-		//copy default lighting for infantry so we can tweak it.
-		*m_infantryLight[globalLightIndex]=*m_globalLight[globalLightIndex];
-		m_infantryLight[globalLightIndex]->Set_Transform(m_globalLight[globalLightIndex]->Get_Transform());
+		LightEnvironmentClass *asLightEnvironment(void)
+		{
+			return reinterpret_cast<LightEnvironmentClass *>(this);
+		}
+	};
+	struct BfmeLightStateView
+	{
+		unsigned char pad[0x12c];
+		LightClass *globalLight[4];
+		LightClass *scratchLight;
+		Vector3 infantryAmbient;
+		LightClass *infantryLight[4];
+		Int numGlobalLights;
+		BfmeLightEnvironmentView defaultLightEnv;
+		BfmeLightEnvironmentView foggedLightEnv;
+		BfmeLightEnvironmentView ambientLightEnv;
+		unsigned char infantryLightEnvironmentFlag;
+	};
+	class BfmeSceneAmbientView
+	{
+	public:
+		virtual void slot00(void);
+		virtual void slot01(void);
+		virtual void slot02(void);
+		virtual void slot03(void);
+		virtual void slot04(void);
+		virtual void slot05(void);
+		virtual void slot06(void);
+		virtual const Vector3 &Get_Ambient_Light(void);
+	};
 
-		m_globalLight[globalLightIndex]->Get_Diffuse(&oldDiffuse);
-		m_globalLight[globalLightIndex]->Get_Ambient(&oldAmbient);
-    oldDiffuse *= infantryLightScale; 
-    oldAmbient *= infantryLightScale; 
-    static Vector3 id (1.0f, 1.0f, 1.0f);
-    oldDiffuse.Cap_Absolute_To(id);
-    oldAmbient.Cap_Absolute_To(id);
-		m_infantryLight[globalLightIndex]->Set_Ambient(oldAmbient);//CLAMPED
-		m_infantryLight[globalLightIndex]->Set_Diffuse(oldDiffuse);//CLAMPED
+	BfmeGlobalDataView *global = reinterpret_cast<BfmeGlobalDataView *>(TheWritableGlobalData);
+	BfmeLightStateView *state = reinterpret_cast<BfmeLightStateView *>(this);
 
-		//copy the normal light for fog so we can modify it
-		m_scratchLight->Set_Transform(m_globalLight[globalLightIndex]->Get_Transform());
-		//modify light with attenuated value to adjust for fog.
-		m_globalLight[globalLightIndex]->Get_Diffuse(&oldDiffuse);
-		m_scratchLight->Set_Diffuse(oldDiffuse*foggedLightFrac);
-		m_globalLight[globalLightIndex]->Get_Ambient(&oldAmbient);
-		m_scratchLight->Set_Ambient(oldAmbient*foggedLightFrac);
-		m_foggedLightEnv.Add_Light(*m_scratchLight);
+	Real foggedLightFrac = (Real)global->clearAlpha / (Real)global->fogAlpha;
+	BfmeSceneAmbientView *sceneView = reinterpret_cast<BfmeSceneAmbientView *>(this);
+	state->defaultLightEnv.asLightEnvironment()->Reset(Vector3(0, 0, 0),
+		sceneView->Get_Ambient_Light());
+
+	state->foggedLightEnv.asLightEnvironment()->Reset(Vector3(0, 0, 0),
+		sceneView->Get_Ambient_Light() * foggedLightFrac);
+	state->ambientLightEnv.asLightEnvironment()->Reset(Vector3(0, 0, 0),
+		state->infantryAmbient);
+
+	Vector3 oldLightColor;
+	for (Int globalLightIndex = 0; globalLightIndex < state->numGlobalLights; globalLightIndex++)
+	{
+		state->defaultLightEnv.asLightEnvironment()->Add_Light(*state->globalLight[globalLightIndex]);
+		if (state->infantryLight[globalLightIndex])
+			state->ambientLightEnv.asLightEnvironment()->Add_Light(*state->infantryLight[globalLightIndex]);
+
+		state->scratchLight->Set_Transform(state->globalLight[globalLightIndex]->Get_Transform());
+
+		state->globalLight[globalLightIndex]->Get_Diffuse(&oldLightColor);
+		state->scratchLight->Set_Diffuse(oldLightColor * foggedLightFrac);
+		state->globalLight[globalLightIndex]->Get_Ambient(&oldLightColor);
+		state->scratchLight->Set_Ambient(oldLightColor * foggedLightFrac);
+		state->foggedLightEnv.asLightEnvironment()->Add_Light(*state->scratchLight);
 	}
 
-	m_defaultLightEnv.Pre_Render_Update(rinfo.Camera.Get_Transform());
-	m_foggedLightEnv.Pre_Render_Update(rinfo.Camera.Get_Transform());
-
-	m_infantryAmbient = Get_Ambient_Light();// * infantryLightScale;	//for now don't adjust ambient so that we don't lose directional lighting.
+	state->defaultLightEnv.asLightEnvironment()->Pre_Render_Update(rinfo.Camera.Get_Transform());
+	state->defaultLightEnv.data[0] = state->infantryLightEnvironmentFlag;
+	state->foggedLightEnv.asLightEnvironment()->Pre_Render_Update(rinfo.Camera.Get_Transform());
+	state->foggedLightEnv.data[0] = state->infantryLightEnvironmentFlag;
+	state->ambientLightEnv.asLightEnvironment()->Pre_Render_Update(rinfo.Camera.Get_Transform());
+	state->ambientLightEnv.data[0] = state->infantryLightEnvironmentFlag;
 }
 
 /**Generate custom rendering passes for each potential player color.  This is currently only used
