@@ -1,5 +1,5 @@
 // ?Rva00941700_Method@Rva00941700Owner@@QAEXPAVFontCharsClass@@PBGPAG_N@Z
-// partial score=0.97 date=2026-09-17
+// partial score=0.99 date=2026-09-19
 // cl: /DNDEBUG /MD /EHsc
 
 void __cdecl operator delete[](void *) throw();
@@ -153,8 +153,9 @@ void Rva00941700Owner::Rva00941700_Method(
 		const FontCharsClassCharDataStruct *data = font->Get_Char_Data(glyphs[index]);
 		int char_width;
 		if (data != 0) {
-			char_width = data->ExtraSpacing;
-			char_width += data->Width;
+			int extra_spacing = data->ExtraSpacing;
+			int width = data->Width;
+			char_width = width + extra_spacing;
 		}
 		else
 			char_width = 0;
