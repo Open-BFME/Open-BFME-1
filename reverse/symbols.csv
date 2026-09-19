@@ -78469,6 +78469,9 @@ name,address,notes
 ?bfmeStrERA@BfmeOtherERA@@QAEXPBD@Z,0x00888BC0,pin
 ?bfmeStrlenV51@@YAIPAD@Z,0x00006B9A,Open-BFME5 strlen pin for 0x00831EA0
 ?bfmeStrlenV55@@YAIPAD@Z,0x00006B9A,Open-BFME5 strlen pin for 0x00831CE0
+?bfmeStructureToppleNormalizeAngle@@YAMM@Z,0x0000991C,TU-local ABI adapter for the verified normalizeAngle ILT called by retail beginStructureTopple
+?bfmeStructureToppleRandom@@YAHHHPADH@Z,0x00001BAE,TU-local ABI adapter for the verified GetGameLogicRandomValue ILT called by retail beginStructureTopple
+?bfmeStructureToppleRandomReal@@YAMMMPADH@Z,0x0002CCA5,TU-local ABI adapter for the witnessed random-real call target in retail beginStructureTopple
 ?bfmeSub1224@BfmeA1224@@QAEPAVBfmeE1224@@H@Z,0x00899430,pin
 ?bfmeSubVIY@BfmeThingVIY@@QAEXPAVBfmeMsgVIX@@PAX1@Z,0x007F1400,pin
 ?bfmeSubVJC@BfmeThingVJC@@QAEXPAVBfmeMsgVJC@@PAX1@Z,0x007F1800,pin
@@ -79769,6 +79772,7 @@ name,address,notes
 ?doShroudReveal@PartitionManager@@QAEXPBUCoord3D@@MI@Z,0x008F7680,Open-BFME5 direct body call; ?doNamedMapReveal@ScriptEngine@@QAEXABVAsciiString@@@Z at 0x0034D200 ends in it with the waypoint location the reveal radius and the resolved player mask
 ?doSkyBoxSet@@YAX_N@Z,0x00029AC8
 ?doSpecialPowerAtLocation@SpecialPowerModuleInterface@@QAEXPAVSpecialPowerLocation@@PAVSpecialPowerCommandOptions@@@Z,0x000170DA,ILT of 0x0026A620; the shared SpecialPowerModule location entry point the ElvenWood override chains to
+?doToppleStartFX@BfmeStructureToppleUpdateCall@@QAEXPAVObject@@PBVDamageInfo@@@Z,0x000475F0,TU-local ABI adapter for the verified StructureToppleUpdate FX ILT called by retail beginStructureTopple
 ?doToppleStartFX@StructureToppleUpdate@@IAEXPAVObject@@PBVDamageInfo@@@Z,0x000475F0,retail beginStructureTopple FX helper ILT
 ?doUnfreezeTime@ScriptEngine@@QAEXXZ,0x00037524,ILT thunk for doUnfreezeTime body 0x336F10
 ?doUpdate@BfmeTarget78E@@QAEXPAX@Z,0x00038F8C,pin
@@ -80269,6 +80273,7 @@ name,address,notes
 ?findObjectByID@BFMEObjectLookup@@QAEPAVObject@@W4ObjectID@@@Z,0x0001F253,alias of the GameLogic enum spelling pinned below; AIUpdate.cpp reaches the lookup through a view class because the reference GameLogic.h inlines it
 ?findObjectByID@BfmeActiveBodySetGameLogic@@QAEPAVObject@@H@Z,0x0001F253,ActiveBody::setIndestructible tower lookup helper ILT
 ?findObjectByID@BfmeInvalidGarrisonGameLogic@@QAEPAVObject@@H@Z,0x0001F253,TU-local ABI adapter for the verified GameLogic findObjectByID ILT; not a body identity
+?findObjectByID@BfmeStructureToppleGameLogicCall@@QAEPAVObject@@H@Z,0x0001F253,TU-local ABI adapter for the verified GameLogic findObjectByID ILT called by retail beginStructureTopple
 ?findObjectByID@GameLogic@@QAEPAVObject@@H@Z,0x0001F253,ILT thunk to GameLogic::findObjectByID
 ?findObjectByID@GameLogic@@QAEPAVObject@@W4ObjectID@@@Z,0x0001F253,enum ABI spelling used by AIDockProcessDockState::findMyDrone; same matched ILT as the int-decorated overload
 ?findOrCreateIndex@Rva00359330StringRecordTable@@AAEHPAVAsciiString@@@Z,0x000333C5,address-derived table index insertion helper used by 0x0035CC50
@@ -86048,6 +86053,7 @@ name,address,notes
 ?setVisionRange@BfmeBattlePlanVisionSetter@@QAEXM@Z,0x000228E0,BattlePlanUpdate retail ILT reaches exact BFME +0x194 setter body at 0x001BF3A0
 ?setVoteFrame@NetDisconnectVoteCommandMsg@@QAEXI@Z,0x000436C1,ILT thunk; real body 0xA73D50
 ?setWakeFrame@ALU_UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
+?setWakeFrame@BfmeStructureToppleUpdateCall@@QAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,TU-local ABI adapter for the verified UpdateModule wake-frame ILT called by retail beginStructureTopple
 ?setWakeFrame@GBB_UpdateModule@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
 ?setWakeFrame@HordeAIUpdateBase@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
 ?setWakeFrame@HordeWorkerAIUpdateBase@@IAEXPAVObject@@W4UpdateSleepTime@@@Z,0x000157DA,UpdateModule::setWakeFrame via ILT thunk
@@ -86204,6 +86210,7 @@ name,address,notes
 ?texture_stage_state_changes@DX8Wrapper@@1IA,0x01340568,Canonical DX8Wrapper texture-stage counter; matched shader-state body increments this address and the ZH twin names the field
 ?tick@Rva005A41F0@@QAEXXZ,0x0001CD82,Open2 0x005A41F0 callee (ILT -> 0x005A40E0)
 ?timeOutGameStart@GameLogic@@QAEXXZ,0x00383730,mov byte [ecx+0x148] = 1 is m_forceGameStartByTimeOut (follows m_progressComplete[8] at +0x120 and m_progressCompleteTimeout[8] at +0x128); ZH GameLogic::timeOutGameStart; called with ecx = TheGameLogic from BFMEConnectionManager::processIncomingCommand case 17 (NETCOMMANDTYPE_TIMEOUTSTART) at 0x0066A590 via ILT 0x00012AA8
+?toAngle@BfmeStructureToppleCoord2DCall@@QBEMXZ,0x00046E52,TU-local ABI adapter for the verified Coord2D toAngle ILT called by retail beginStructureTopple
 ?toInteger@AptValue@@QAEHXZ,0x00898300,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008B6D70 calls; autopin
 ?toInteger@AptValue@@QBEHXZ,0x00898300,EA Apt 2.00.00 integer coercion called by the ActionScript BitAnd handler
 ?toInteger@Rva8CD3F0Value@@QBEHXZ,0x00898300,address-derived alias of AptValue integer coercion called by 0x008CD3F0

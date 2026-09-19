@@ -163,8 +163,202 @@ static void parseAngleFX(INI* ini, void *instance, void * /* store */, const voi
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?beginStructureTopple@StructureToppleUpdate@@IAEXPBVDamageInfo@@@Z
-// Body in StructureToppleUpdate_beginStructureTopple.asm (exact 499B retail @ 0x2AFD30).
+class BfmeGeometryInfo
+{
+public:
+	Real boxMajorRadius() const;
+	Real boxMinorRadius() const;
+};
+
+struct BfmeStructureToppleUpdateView
+{
+	unsigned char m_padding00[4];
+	const void *moduleData;
+	Object *object;
+	unsigned char m_padding0c[0x18];
+	UnsignedInt toppleFrame;
+	Coord2D toppleDirection;
+	Int toppleState;
+	Real toppleVelocity;
+	Real accumulatedAngle;
+	Real structuralIntegrity;
+	Real lastCrushedLocation;
+	Int nextBurstFrame;
+	Coord3D delayBurstLocation;
+	Real buildingHeight;
+};
+
+struct BfmeStructureToppleModuleDataView
+{
+	unsigned char m_padding00[0x34];
+	Int minToppleDelay;
+	Int maxToppleDelay;
+	unsigned char m_padding3c[0x28];
+	Int minToppleBurstDelay;
+	Int maxToppleBurstDelay;
+	unsigned char m_padding6c[0x48];
+	Real toppleAngle;
+};
+
+struct BfmeStructureToppleDamageInfoView
+{
+	unsigned char m_padding00[8];
+	Int sourceID;
+};
+
+struct BfmeStructureToppleGameLogicView
+{
+	unsigned char m_padding00[0x3c];
+	UnsignedInt frame;
+};
+
+struct BfmeStructureToppleObjectView
+{
+	unsigned char m_padding00[0x38];
+	Coord3D position;
+	Real orientation;
+	unsigned char m_padding48[0x64];
+	BfmeGeometryInfo geometry;
+};
+
+class BfmeStructureToppleScriptEngineView
+{
+public:
+	virtual void v00(); virtual void v01(); virtual void v02(); virtual void v03();
+	virtual void v04(); virtual void v05(); virtual void v06(); virtual void v07();
+	virtual void v08(); virtual void v09(); virtual void v10(); virtual void v11();
+	virtual void v12(); virtual void v13(); virtual void v14(); virtual void v15();
+	virtual void v16(); virtual void v17(); virtual void v18(); virtual void v19();
+	virtual void v20(); virtual void v21(); virtual void v22(); virtual void v23();
+	virtual void v24(); virtual void v25(); virtual void v26(); virtual void v27();
+	virtual void v28(); virtual void v29(); virtual void v30(); virtual void v31();
+	virtual void v32(); virtual void v33(); virtual void v34(); virtual void v35();
+	virtual void v36(); virtual void v37(); virtual void v38(); virtual void v39();
+	virtual void v40(); virtual void v41(); virtual void v42(); virtual void v43();
+	virtual void v44(); virtual void v45(); virtual void v46(); virtual void v47();
+	virtual void v48(); virtual void v49(); virtual void v50();
+	virtual void adjustToppleDirection(Object *, Coord2D *);
+};
+
+class BfmeStructureToppleTerrainView
+{
+public:
+	virtual void v00(); virtual void v01(); virtual void v02();
+	virtual void v03(); virtual void v04(); virtual void v05();
+	virtual Real getGroundHeight(Real, Real, Coord3D *) const;
+};
+
+class BfmeStructureToppleGameLogicCall
+{
+public:
+	Object *findObjectByID(Int);
+};
+
+class BfmeStructureToppleCoord2DCall
+{
+public:
+	Real toAngle() const;
+};
+
+class BfmeStructureToppleUpdateCall
+{
+public:
+	void doToppleStartFX(Object *, const DamageInfo *);
+	void setWakeFrame(Object *, UpdateSleepTime);
+};
+
+extern Int bfmeStructureToppleRandom(Int, Int, char *, Int);
+extern Real bfmeStructureToppleRandomReal(Real, Real, char *, Int);
+extern Real bfmeStructureToppleNormalizeAngle(Real);
+
+extern const float g_01075954;
+
+void StructureToppleUpdate::beginStructureTopple(const DamageInfo *damageInfo)
+{
+	BfmeStructureToppleUpdateView *self =
+		(BfmeStructureToppleUpdateView *)this;
+	const BfmeStructureToppleModuleDataView *d =
+		(const BfmeStructureToppleModuleDataView *)self->moduleData;
+
+	if (d != 0)
+	{
+		UnsignedInt now =
+			((BfmeStructureToppleGameLogicView *)TheGameLogic)->frame;
+		self->toppleFrame = now + bfmeStructureToppleRandom(
+			d->minToppleDelay, d->maxToppleDelay,
+			(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\StructureToppleUpdate.cpp",
+			135);
+
+		Object *attacker =
+			((BfmeStructureToppleGameLogicCall *)TheGameLogic)->findObjectByID(
+				((const BfmeStructureToppleDamageInfoView *)damageInfo)->sourceID);
+		Object *building = self->object;
+		BfmeStructureToppleObjectView *buildingView =
+			(BfmeStructureToppleObjectView *)building;
+		Real toppleAngle;
+
+		if (d->toppleAngle != -9.876540184020996f)
+		{
+			toppleAngle = d->toppleAngle;
+			toppleAngle *= *(volatile const Real *)&g_01075954;
+			toppleAngle += buildingView->orientation;
+			if (bfmeStructureToppleRandom(0, 2,
+				(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\StructureToppleUpdate.cpp",
+				145) < 1)
+				toppleAngle += 2 * 3.14159265359f;
+			toppleAngle = bfmeStructureToppleNormalizeAngle(toppleAngle);
+		}
+		else if (attacker == 0)
+		{
+			toppleAngle = bfmeStructureToppleRandomReal(
+				0.0f, 2 * 3.14159265359f,
+				(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\StructureToppleUpdate.cpp",
+				151);
+		}
+		else
+		{
+			const Coord3D *attackerPos =
+				&((BfmeStructureToppleObjectView *)attacker)->position;
+			const Coord3D *buildingPos = &buildingView->position;
+			self->toppleDirection.x = buildingPos->x - attackerPos->x;
+			self->toppleDirection.y = buildingPos->y - attackerPos->y;
+			toppleAngle =
+				((const BfmeStructureToppleCoord2DCall *)&self->toppleDirection)->toAngle();
+			toppleAngle += bfmeStructureToppleRandomReal(
+				-3.14159265359f / 8, 3.14159265359f / 8,
+				(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\StructureToppleUpdate.cpp",
+				164);
+		}
+
+		self->toppleDirection.x = Cos(toppleAngle);
+		self->toppleDirection.y = Sin(toppleAngle);
+		((BfmeStructureToppleScriptEngineView *)TheScriptEngine)->
+			adjustToppleDirection(self->object, &self->toppleDirection);
+
+		Real majorRadius = buildingView->geometry.boxMajorRadius();
+		Real minorRadius = buildingView->geometry.boxMinorRadius();
+		Real averageRadius = (majorRadius + minorRadius) / 2;
+		Real explosionRadius = averageRadius * *(const double *)0x010af378;
+		self->delayBurstLocation.x = buildingView->position.x +
+			explosionRadius * Cos(toppleAngle);
+		self->delayBurstLocation.y = buildingView->position.y +
+			explosionRadius * Sin(toppleAngle);
+		self->delayBurstLocation.z =
+			((BfmeStructureToppleTerrainView *)TheTerrainLogic)->getGroundHeight(
+				self->delayBurstLocation.x, self->delayBurstLocation.y, 0);
+
+		((BfmeStructureToppleUpdateCall *)this)->doToppleStartFX(
+			building, damageInfo);
+		self->nextBurstFrame = now + bfmeStructureToppleRandom(
+			d->minToppleBurstDelay, d->maxToppleBurstDelay,
+			(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\StructureToppleUpdate.cpp",
+			181);
+
+		self->toppleState = 1;
+		((BfmeStructureToppleUpdateCall *)this)->setWakeFrame(
+			self->object, UPDATE_SLEEP_NONE);
+	}
+}
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
@@ -236,13 +430,6 @@ void StructureToppleUpdate::doAngleFX(Real curAngle, Real newAngle)
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // theta is the angle of the building with respect to the ground.
-class BfmeGeometryInfo
-{
-public:
-	Real boxMajorRadius() const;
-	Real boxMinorRadius() const;
-};
-
 struct BfmeStructureToppleModuleData
 {
 	unsigned char padding[0x60];
