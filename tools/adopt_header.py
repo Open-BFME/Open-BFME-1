@@ -256,7 +256,7 @@ def offenders(paths):
     for rel in paths:
         if rel in exempt:
             continue
-        text = (ROOT / rel).read_text(encoding="utf-8", newline="", errors="replace")
+        text = (ROOT / rel).read_text(encoding="utf-8", errors="replace")
         for kind in ENFORCED:
             spec = headers().get(kind)
             if spec and not blocker(text, kind, spec[2]):
@@ -297,7 +297,7 @@ def fix_staged(jobs):
     kinds = dict(bad)
     for rel, kind in bad:
         include, incdir, _ = headers()[kind]
-        text = (ROOT / rel).read_text(encoding="utf-8", newline="")
+        text = (ROOT / rel).read_text(encoding="utf-8")
         (ROOT / rel).write_text(rewrite(text, kind, include, incdir),
                                 encoding="utf-8", newline="")
     kept, rejected = gate([rel for rel, _ in bad], jobs)
@@ -355,7 +355,7 @@ def main():
             break
         if rel in known:
             continue
-        text = (ROOT / rel).read_text(encoding="utf-8", newline="")
+        text = (ROOT / rel).read_text(encoding="utf-8")
         if blocker(text, args.type, want, args.partial):
             continue
         # --type picks the FILE; once picked, every covered type in it is
