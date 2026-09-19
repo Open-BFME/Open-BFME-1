@@ -80061,6 +80061,7 @@ name,address,notes
 ?evaluateAsVisibleCliff@BaseHeightMapRenderObjClass@@QAE_NHHM@Z,0x00004AFC,BaseHeightMap visible-cliff evaluator ILT thunk
 ?evaluateBezSegmentAtT@BezierSegment@@QBEXMPAUCoord3D@@@Z,0x000059ED
 ?evaluateNamedInsideArea@ScriptConditions@@IAE_NPAVParameter@@0@Z,0x0000696F
+?evaluateNamedInsideArea@ScriptConditions@@QAE_NPAVParameter@@0@Z,0x003247A0,matched ScriptConditions evaluateNamedInsideArea body used by the incremental-link tail at 0x0000696F
 ?evaluateTeamInsideAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z,0x00013219
 ?evaluateTeamInsideAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z,0x0004A8E0
 ?execute@BfmeSub58_E80@@QAE_NPAXH@Z,0x0001DA34,pin
