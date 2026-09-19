@@ -159,6 +159,17 @@ Rva00360B70 *Rva00360B70::self()
 	return this;
 }
 
+class Rva0073D990
+{
+public:
+	Rva0073D990 *self();
+};
+
+Rva0073D990 *Rva0073D990::self()
+{
+	return this;
+}
+
 // mov eax,[ecx-<BACK>] / add eax,<OFFSET> / ret -- a pointer read at a
 // NEGATIVE displacement and advanced by a constant.  The object at
 // (this - BACK) is only witnessed as a pointer sitting at offset 0.
