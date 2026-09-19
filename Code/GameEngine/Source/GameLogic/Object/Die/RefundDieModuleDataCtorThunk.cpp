@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
+#include "../../../../Include/GameLogic/Rva0039D550.h"
+
 // Open-BFME5: RefundDieModuleData constructor lifted from retail.
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
@@ -27,7 +29,7 @@ class DieModuleData : public Snapshot
 {
 public:
 	DieModuleData() {}
-	virtual ~DieModuleData();
+	virtual ~DieModuleData() {}
 
 private:
 	InstantDeathDieMuxData m_dieMuxData;
@@ -37,7 +39,10 @@ class RS_Member
 {
 public:
 	RS_Member();
-	~RS_Member();
+	~RS_Member() {}
+
+private:
+	unsigned int m_handle;
 };
 
 class RefundDieModuleData : public DieModuleData
@@ -58,4 +63,15 @@ RefundDieModuleData::RefundDieModuleData()
 {
 	m_refundMinimum = 0;
 	m_refundPercent = 0;
+}
+
+// MSVC applies novtable to this out-of-line definition while retaining the
+// ordinary declaration above for constructor vtable emission.
+class __declspec(novtable) RefundDieModuleData;
+
+// ??1RefundDieModuleData@@UAE@XZ
+RefundDieModuleData::~RefundDieModuleData()
+{
+	(reinterpret_cast<Rva0039D550 *>(reinterpret_cast<unsigned char *>(this) + 0x3c))
+		->~Rva0039D550();
 }
