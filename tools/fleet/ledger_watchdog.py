@@ -37,6 +37,16 @@ def row_checks_only():
              and "source not in git" not in l]   # in-flight sources are normal, not corruption
     return probs
 
+def idle_stashes():
+    """Do not repair drafts while their worker still owns the address."""
+    files = list((ROOT / "reverse/attempts").glob("0x*.cpp"))
+    if not files:
+        return []
+    import eligibility
+    busy = eligibility.busy_rvas(ROOT)
+    return [f for f in files if f.stem.lower() not in busy]
+
+
 def stash_headers():
     """Workers keep writing stashes without the required line 2
     '// partial score=<0..1> date=<iso>'; check_csv then blocks every harvest.
@@ -51,7 +61,7 @@ def stash_headers():
     except OSError:
         return 0
     n = 0
-    for f in (ROOT / "reverse/attempts").glob("0x*.cpp"):
+    for f in idle_stashes():
         try:
             t = f.read_text(encoding="utf-8", errors="replace").splitlines()
         except OSError:
@@ -101,7 +111,7 @@ def main():
     a = ap.parse_args()
     good = re.compile(r"^// partial score=(0(?:\.\d+)?|1(?:\.0+)?) date=\d{4}-\d{2}-\d{2}$")
     def stash_needs_fix():
-        for f in (ROOT / "reverse/attempts").glob("0x*.cpp"):
+        for f in idle_stashes():
             try:
                 t = f.read_text(encoding="utf-8", errors="replace").splitlines()
             except OSError:
