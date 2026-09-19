@@ -88459,3 +88459,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??0Rva00244A80Element@@QAE@XZ,0x0001AACD,retail 28-byte member-state constructor ILT called by 0x002459D0
 ?_M_insert_overflow@?$vector@VRva00244A80Element@@V?$allocator@VRva00244A80Element@@@_STL@@@_STL@@IAEXPAVRva00244A80Element@@ABV3@ABU__false_type@2@I_N@Z,0x0000C5D6,retail vector overflow ILT called by 0x002459D0
 ?applyMemberFormationState@Rva002459D0Owner@@AAEXPAVObject@@@Z,0x0000EFA2,retail formation-state helper ILT called by 0x002459D0
+?_M_insert_overflow@?$vector@U?$pair@VAsciiString@@PAVObject@@@_STL@@V?$allocator@U?$pair@VAsciiString@@PAVObject@@@_STL@@@2@@_STL@@IAEXPAU?$pair@VAsciiString@@PAVObject@@@2@ABU32@ABU__false_type@2@I_N@Z,0x00347900,Rva00349A30 exact createNamedCache vector growth callee proven by reference NamedRequest pair and retail ILT 0x0002B5C6
+?erase@?$vector@U?$pair@VAsciiString@@PAVObject@@@_STL@@V?$allocator@U?$pair@VAsciiString@@PAVObject@@@_STL@@@2@@_STL@@QAEPAU?$pair@VAsciiString@@PAVObject@@@2@PAU32@0@Z,0x003440C0,Rva00349A30 exact createNamedCache clear callee via retail ILT 0x0004B420 and matched ICF vector erase body
