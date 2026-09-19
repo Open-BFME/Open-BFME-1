@@ -2086,6 +2086,7 @@ name,address,notes
 ??0?$_Vector_base@VGen_00193D50@@V?$allocator@VGen_00193D50@@@_STL@@@_STL@@QAE@IABV?$allocator@VGen_00193D50@@@1@@Z,0x0002F194,vector copy at 0x00195C40 calls the retail 0x8C-byte vector base constructor
 ??0?$_Vector_base@VGen_003A87D0@@V?$allocator@VGen_003A87D0@@@_STL@@@_STL@@QAE@IABV?$allocator@VGen_003A87D0@@@1@@Z,0x003A7790,vector base constructor called through ILT 0x00021DFA by the 0x003AAB40 vector copy body
 ??0?$_Vector_base@VGen_003A8910@@V?$allocator@VGen_003A8910@@@_STL@@@_STL@@QAE@IABV?$allocator@VGen_003A8910@@@1@@Z,0x003A7870,retail 0x003AAC20 calls this 32-byte vector base constructor
+??0?$_Vector_base@VGen_003A8A70@@V?$allocator@VGen_003A8A70@@@_STL@@@_STL@@QAE@IABV?$allocator@VGen_003A8A70@@@1@@Z,0x003A7B10,retail 0x003AADF0 calls this proven 0x14-byte sized-vector constructor through ILT 0x0003D16D
 ??0?$_Vector_base@VLivingWorldCampaignManager@@V?$allocator@VLivingWorldCampaignManager@@@_STL@@@_STL@@QAE@IABV?$allocator@VLivingWorldCampaignManager@@@1@@Z,0x0000219E
 ??0?$_Vector_base@VRva003BABE0Record@@V?$allocator@VRva003BABE0Record@@@_STL@@@_STL@@QAE@IABV?$allocator@VRva003BABE0Record@@@1@@Z,0x0002428A,vector base constructor call target from retail 0x003AB9F0 and the proven 36-byte record copy
 ??0?$_Vector_base@VRva00762170@@V?$allocator@VRva00762170@@@_STL@@@_STL@@QAE@IABV?$allocator@VRva00762170@@@1@@Z,0x00018845,The 0x0076A690 vector copy call constructs its three-pointer base with the proven count and allocator ABI from Gen_00760CA0 at 0x00760CA0.
@@ -82702,6 +82703,7 @@ name,address,notes
 ?get_allocator@?$vector@VGen_00193D50@@V?$allocator@VGen_00193D50@@@_STL@@@_STL@@QBE?AV?$allocator@VGen_00193D50@@@2@XZ,0x00008201,vector copy at 0x00195C40 calls the retail allocator accessor thunk
 ?get_allocator@?$vector@VGen_003A87D0@@V?$allocator@VGen_003A87D0@@@_STL@@@_STL@@QBE?AV?$allocator@VGen_003A87D0@@@2@XZ,0x003A66C0,allocator accessor called through ILT 0x0004A4D0 by the 0x003AAB40 vector copy body
 ?get_allocator@?$vector@VGen_003A8910@@V?$allocator@VGen_003A8910@@@_STL@@@_STL@@QBE?AV?$allocator@VGen_003A8910@@@2@XZ,0x003A66D0,retail 0x003AAC20 calls this accessor directly before its vector base constructor
+?get_allocator@?$vector@VGen_003A8A70@@V?$allocator@VGen_003A8A70@@@_STL@@@_STL@@QBE?AV?$allocator@VGen_003A8A70@@@2@XZ,0x003A6700,retail 0x003AADF0 calls this proven ret-argument allocator accessor through ILT 0x000404FD
 ?get_allocator@?$vector@VLivingWorldCampaignManager@@V?$allocator@VLivingWorldCampaignManager@@@_STL@@@_STL@@QBE?AV?$allocator@VLivingWorldCampaignManager@@@2@XZ,0x00016699
 ?get_allocator@?$vector@VRva003BABE0Record@@V?$allocator@VRva003BABE0Record@@@_STL@@@_STL@@QBE?AV?$allocator@VRva003BABE0Record@@@2@XZ,0x00044DA0,allocator accessor call target from retail 0x003AB9F0 and the proven Gen_003a66f0 identity helper
 ?get_allocator@BfmeSortElem20Tail@@QBE?AV?$allocator@UBfmeSortElem20TailElement@@@_STL@@XZ,0x002E3E90,proven direct body reached by the E9 ILT at 0x0001EE66; typed allocator handoff in BfmeSortElem20Tail copy constructor; additive body candidate follows the ILT for retail callsite encoding; campaign=luna36h-20260907; lane=mesh
