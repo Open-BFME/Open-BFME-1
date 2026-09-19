@@ -7,6 +7,8 @@ extern "C" {
 	unsigned int __stdcall ImmGetProperty(void *hkl, unsigned int index);
 }
 
+void __cdecl operator delete []( void *memory );
+
 class GameFont
 {
 public:
@@ -17,6 +19,7 @@ public:
 class GameWindow
 {
 public:
+	void close(bool closeWindow);
 	void winHide(bool hide);
 	int winBringToTop(void);
 	int winGetScreenPosition(int *x, int *y);
@@ -52,6 +55,14 @@ public:
 	virtual void slot54(); virtual void slot55(); virtual void slot56();
 	virtual void slot57(); virtual void slot58();
 	virtual int winSetModal(GameWindow *window);
+	virtual int winUnsetModal(GameWindow *window);
+};
+
+class Rva0048D530CandidateString
+{
+public:
+	~Rva0048D530CandidateString();
+	char m_data[4];
 };
 
 class Display
@@ -74,6 +85,9 @@ public:
 	void resizeCandidateWindow(int pageSize);
 	void openCandidateList(int candidateFlags);
 
+protected:
+	void closeCandidateList(int candidateFlags);
+
 private:
 	char m_pad00[0x0C];
 	GameWindow *m_window;
@@ -81,11 +95,31 @@ private:
 	int m_indexBase;
 	char m_pad3030[0x3034 - 0x3030];
 	int m_pageSize;
-	char m_pad3038[0x3044 - 0x3038];
+	char m_pad3038[0x303c - 0x3038];
+	int m_candidateCount;
+	Rva0048D530CandidateString *m_candidateString;
 	bool m_unicodeIME;
 	char m_pad3045[0x304C - 0x3045];
 	GameWindow *m_candidateWindow;
 };
+
+// ?closeCandidateList@IMEManager@@IAEXH@Z
+void IMEManager::closeCandidateList(int candidateFlags)
+{
+	if (m_candidateWindow != 0)
+	{
+		m_candidateWindow->close(true);
+		TheWindowManager->winUnsetModal(m_candidateWindow);
+	}
+
+	if (m_candidateString != 0)
+	{
+		delete [] m_candidateString;
+		m_candidateString = 0;
+	}
+
+	m_candidateCount = 0;
+}
 
 void IMEManager::openCandidateList(int candidateFlags)
 {
