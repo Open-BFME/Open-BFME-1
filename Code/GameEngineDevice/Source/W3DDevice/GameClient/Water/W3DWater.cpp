@@ -45,12 +45,13 @@ extern "C" __declspec(dllimport) long __stdcall D3DXAssembleShader(const char *,
 										 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
 #include "stdio.h"
+// The BFME texture ABI hides the upstream inline ref-count release behind the retail out-of-line call.
+#include "../../../../../Libraries/Source/WWVegas/WW3D2/texture.h"
 #include "W3DDevice/GameClient/W3DWater.h"
 #include "W3DDevice/GameClient/heightmap.h"
 #include "W3DDevice/GameClient/W3DShroud.h"
 #include "W3DDevice/GameClient/W3DWaterTracks.h"
 #include "W3DDevice/GameClient/W3DAssetManager.h"
-#include "texture.h"
 #include "assetmgr.h"
 #include "rinfo.h"
 #include "camera.h"
@@ -1244,81 +1245,88 @@ void WaterRenderObjClass::updateRenderTargetTextures(CameraClass *cam)
 //-------------------------------------------------------------------------------------------------
 /** Renders the reflected scene into an offscreen texture. */
 //-------------------------------------------------------------------------------------------------
-// ?renderMirror@WaterRenderObjClass@@IAEXPAVCameraClass@@@Z present-unmatched
+// Retail gives the temporary depth target ref-counted ownership; the upstream
+// one-argument call loses that lifetime and selects a different overload shape.
+// Retail reads +0x400 here, while the shared upstream layout places the field elsewhere.
+struct BFMEWaterRenderObjOffset400View
+{
+	char BeforeOffset400[0x400];
+	Int Value;
+};
+
+class WaterTextureRef
+{
+public:
+	TextureBaseClass *Pointer;
+
+	WaterTextureRef(void) : Pointer(0) {}
+	~WaterTextureRef(void)
+	{
+		if (Pointer != 0)
+			Pointer->Release_Ref();
+	}
+};
+
 void WaterRenderObjClass::renderMirror(CameraClass *cam)
 {
-#ifdef EXTENDED_STATS
-	if (DX8Wrapper::stats.m_disableWater) {
-		return;
+	Matrix3D OldCameraMatrix = cam->Get_Transform();
+	Matrix4 FullMatrix4(cam->Get_Transform());
+	Vector3 WaterNormal(0, 0, 1);
+	Vector4 WaterPlane(WaterNormal.X, WaterNormal.Y, WaterNormal.Z, m_level);
+	Vector3 rRight, rUp, rN, rPos;
+
+	Matrix4 FullMatrix(FullMatrix4.Transpose());
+
+	Real axis_distance = Vector3::Dot_Product((Vector3 &)FullMatrix[0], WaterNormal);
+	rRight = (Vector3 &)FullMatrix[0] - (2.0f * axis_distance * WaterNormal);
+
+	axis_distance = Vector3::Dot_Product((Vector3 &)FullMatrix[1], WaterNormal);
+	rUp = (Vector3 &)FullMatrix[1] - (2.0f * axis_distance * WaterNormal);
+
+	axis_distance = Vector3::Dot_Product((Vector3 &)FullMatrix[2], WaterNormal);
+	rN = (Vector3 &)FullMatrix[2] - (2.0f * axis_distance * WaterNormal);
+
+	axis_distance = Vector3::Dot_Product((Vector3 &)FullMatrix[3], WaterNormal);
+	axis_distance -= WaterPlane.W;
+	rPos = (Vector3 &)FullMatrix[3] - (2.0f * axis_distance * WaterNormal);
+
+	Matrix3D reflectedTransform(rRight, rUp, rN, rPos);
+
+	{
+		WaterTextureRef ztexture;
+		DX8Wrapper::Set_Render_Target_With_Z((TextureClass *)&m_pReflectionTexture, (ZTextureClass *)&ztexture);
 	}
-#endif
-	Matrix3D	OldCameraMatrix=cam->Get_Transform();
-	Matrix4x4	FullMatrix4(cam->Get_Transform());	//copy 3x4 matrix into a 4x4
-	Vector3		WaterNormal(0,0,1);	//normal of plane used for reflection
-	Vector4		WaterPlane(WaterNormal.X,WaterNormal.Y,WaterNormal.Z,m_level);
-	Vector3		rRight,rUp,rN,rPos;	//orientation and translation vectors of camera
 
-	Matrix4x4	FullMatrix(FullMatrix4.Transpose());	//swap rows/columns
+	WW3D::Begin_Render(false, true, Vector3(0.0f, 0.0f, 0.0f));
 
-	//reflect camera right vector
-	Real axis_distance=Vector3::Dot_Product((Vector3&)FullMatrix[0],WaterNormal);
-	rRight = (Vector3&)FullMatrix[0] - (2.0f*axis_distance*WaterNormal);
+	cam->Set_Transform(reflectedTransform);
 
-	//reflect camera up vector
-	axis_distance=Vector3::Dot_Product((Vector3&)FullMatrix[1],WaterNormal);
-	rUp = (Vector3&)FullMatrix[1] - (2.0f*axis_distance*WaterNormal);
+	Vector2 vMin, vMax, vOldMax, vOldMin;
+	cam->Get_Viewport(vOldMin, vOldMax);
+	vMax.X = vMax.Y = 1.0f;
+	vMin.X = vMin.Y = 0.0f;
+	cam->Set_Viewport(vMin, vMax);
 
-	//reflect camera n vector
-	axis_distance=Vector3::Dot_Product((Vector3&)FullMatrix[2],WaterNormal);
-	rN = (Vector3&)FullMatrix[2] - (2.0f*axis_distance*WaterNormal);
+	cam->Apply();
 
-	//reflect camera position
-	axis_distance=Vector3::Dot_Product((Vector3&)FullMatrix[3],WaterNormal);	//distance cam to origin
-	axis_distance -= WaterPlane.W;	// subtract mirror plane distance to get distance camera to plane
-	rPos = (Vector3&)FullMatrix[3] - (2.0f*axis_distance*WaterNormal);
-
-	//generate a new camera matrix from reflected vectors
-	Matrix3D reflectedTransform(rRight,rUp,rN,rPos);
-
-
-	DX8Wrapper::Set_Render_Target_With_Z((TextureClass*)m_pReflectionTexture);
-
-	// Clear the backbuffer
-// ?Begin_Render@WW3D@@ present-unmatched
-	WW3D::Begin_Render(false,true,Vector3(0.0f,0.0f,0.0f));	//clearing only z-buffer since background always filled with clouds
-
-	cam->Set_Transform( reflectedTransform );
-
-	//Force reflected image to be drawn into full texture size - not a viewport inside texture.
-	Vector2 vMin,vMax,vOldMax,vOldMin;
- 	cam->Get_Viewport(vOldMin,vOldMax);
- 	vMax.X=vMax.Y=1.0f;
-	vMin.X=vMin.Y=0.0f;
- 	cam->Set_Viewport(vMin,vMax);
-
-	cam->Apply();	//force an update of all the camera dependent parameters like frustum clip planes
-
-	//flip the winding order of polygons to draw the reflected back sides.
 	ShaderClass::Invert_Backface_Culling(true);
 
-	// Render the scene
 	renderSky();
-	if (m_tod == TIME_OF_DAY_NIGHT)
+	if (((BFMEWaterRenderObjOffset400View *)this)->Value == 4)
 		renderSkyBody(&reflectedTransform);
 
-	WW3D::Render(m_parentScene,cam);
+	WW3D::Render(m_parentScene, cam);
 
-	cam->Set_Transform(OldCameraMatrix);	//restore original non-reflected matrix
- 	cam->Set_Viewport(vOldMin,vOldMax);
+	cam->Set_Transform(OldCameraMatrix);
+	cam->Set_Viewport(vOldMin, vOldMax);
 
-	cam->Apply();	//force an update of all the camera dependent parameters like frustum clip planes
+	cam->Apply();
 
 	ShaderClass::Invert_Backface_Culling(false);
 
 	WW3D::End_Render(false);
 
-	// Change the rendertarget back to the main backbuffer
-	DX8Wrapper::Set_Render_Target((IDirect3DSurface8 *)NULL);
+	DX8Wrapper::Set_Render_Target((IDirect3DSurface8 *)NULL, false);
 }
 
 //-------------------------------------------------------------------------------------------------
