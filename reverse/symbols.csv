@@ -3400,6 +3400,7 @@ name,address,notes
 ??0Rva000A19E0StateBase@@QAE@PAXVAsciiString@@@Z,0x000035B2,base constructor thunk address decoded from the retail REL32 call site; name is address-derived
 ??0Rva000DFBD0PlayerStorage@@QAE@H@Z,0x00041943,PlayerList constructor's retail 0x6a4-byte storage allocation routes through this ILT
 ??0Rva000FAA30Elem@@QAE@ABU0@@Z,0x0004845F,element copy call in the carved 0x000FAA30 copy body maps to the retail 96-byte record copy thunk at 0x000F9FF0
+??0Rva00124F60AllocatorProxy@@QAE@PBXI@Z,0x00124F60,Relationship node allocator proxy body decoded from Player.cpp
 ??0Rva0014F280StateBase@@QAE@PAXVAsciiString@@@Z,0x00032182,the same base ctor thunk as ??0AIInternalMoveToState@@QAE@PAXVAsciiString@@@Z; three TUs still spell the shim class after its address and need this spelling until they can be renamed too
 ??0Rva0016CF40Machine@@QAE@PAVObject@@@Z,0x0003FE4F,ILT thunk: machine ctor called by the xfer twin 0x0016CF40 (sibling of AIDockMachine); real ctor at 0x0015FE90 still an unconverted dump
 ??0Rva0016D9C0Machine@@QAE@PAVObject@@@Z,0x0000715D,ILT thunk: machine ctor called by the xfer twin 0x0016D9C0 (sibling of AIGuardRetaliateMachine)
