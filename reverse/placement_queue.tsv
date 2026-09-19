@@ -1,0 +1,10 @@
+Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionCtor.cpp	Code/GameEngine/Source/GameLogic/Object/Behavior/LivingWorldRegionCtor.cpp	LivingWorldRegion
+Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegion_dtor.cpp	Code/GameEngine/Source/GameLogic/Object/Behavior/LivingWorldRegion_dtor.cpp	LivingWorldRegion
+Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdateModuleDataParseFXListThunk.cpp	Code/GameEngine/Source/Common/RTS/BoneFXUpdateModuleDataParseFXListThunk.cpp	BoneFXUpdateModuleData
+Code/GameEngine/Source/GameLogic/Object/Update/BoneFXUpdateModuleDataParseObjectCreationListThunk.cpp	Code/GameEngine/Source/Common/RTS/BoneFXUpdateModuleDataParseObjectCreationListThunk.cpp	BoneFXUpdateModuleData
+Code/GameEngineDevice/Source/W3DDevice/GameClient/Render2DSentenceClassReset.cpp	Code/Libraries/Source/WWVegas/WW3D2/Render2DSentenceClassReset.cpp	Render2DSentenceClass
+Code/GameEngineDevice/Source/W3DDevice/GameClient/Render2DSentenceClass_ctor.cpp	Code/Libraries/Source/WWVegas/WW3D2/Render2DSentenceClass_ctor.cpp	Render2DSentenceClass
+Code/Libraries/Source/WWVegas/WWDebug/DebugIOFlat_ExpandMagic_Thunk.cpp	Code/Libraries/Source/debug/DebugIOFlat_ExpandMagic_Thunk.cpp	DebugIOFlat
+Code/Libraries/Source/WWVegas/WWDebug/DebugIONetConstructorThunk.cpp	Code/Libraries/Source/debug/DebugIONetConstructorThunk.cpp	DebugIONet
+Code/Libraries/Source/WWVegas/WWDebug/DebugIONetDestructorThunk.cpp	Code/Libraries/Source/debug/DebugIONetDestructorThunk.cpp	DebugIONet
+Code/Libraries/Source/WWVegas/WWDebug/DebugIONet_Create.cpp	Code/Libraries/Source/debug/DebugIONet_Create.cpp	DebugIONet
