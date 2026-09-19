@@ -328,6 +328,27 @@ struct BFMETreeCullView
 	Int m_treeIndexStep;
 };
 
+// Several matched neighbors witness this older linked generation independently:
+// its records begin at 0x1B0, use a 0xE8 stride, and end at the 0x2A7CB0 count.
+struct BFMETreeLegacyTree
+{
+	Vector3 m_location;
+	char m_unreconstructed_00c[0x34];
+	Int m_treeType;
+	char m_unreconstructed_044[4];
+	SphereClass m_bounds;
+	DrawableID m_drawableID;
+	char m_unreconstructed_05c[0x8c];
+};
+
+struct BFMETreeLegacyView
+{
+	char m_unreconstructed_000000[0x1b0];
+	BFMETreeLegacyTree m_trees[12000];
+	Int m_numTrees;
+	Bool m_anythingChanged;
+};
+
 //=============================================================================
 // W3DTreeBuffer::cull
 //=============================================================================
@@ -1367,19 +1388,16 @@ void W3DTreeBuffer::clearAllTrees(void)
 //=============================================================================
 /** Removes a tree.  */
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferRemoveTree.cpp
-// ?removeTree@W3DTreeBuffer@@QAEXW4DrawableID@@@Z present-unmatched
 void W3DTreeBuffer::removeTree(DrawableID id)
 {
-	Int i;
-	for (i=0; i<m_numTrees; i++) {
-		if (m_trees[i].drawableID == id) {
-			m_trees[i].location = Vector3(0,0,0);
-			m_trees[i].treeType = DELETED_TREE_TYPE;
-			// Translate the bounding sphere of the model.
-			m_trees[i].bounds.Center = Vector3(0,0,0);
-			m_trees[i].bounds.Radius = 1;
-			m_anythingChanged = true;
+	BFMETreeLegacyView *self = reinterpret_cast<BFMETreeLegacyView *>(this);
+	for (Int i = 0; i < self->m_numTrees; ++i) {
+		if (self->m_trees[i].m_drawableID == id) {
+			self->m_trees[i].m_location = Vector3(0, 0, 0);
+			self->m_trees[i].m_treeType = DELETED_TREE_TYPE;
+			self->m_trees[i].m_bounds.Center = Vector3(0, 0, 0);
+			self->m_trees[i].m_bounds.Radius = 1;
+			self->m_anythingChanged = true;
 		}
 	}
 }
