@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 #include <new>
-#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 // Open-BFME5: LivingWorldCampaignManager's copy constructor and virtual
 // destructor. Four AsciiString members and the eight-byte gap between the

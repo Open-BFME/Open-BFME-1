@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /MD /EHsc
-#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 class AsciiString
 {
