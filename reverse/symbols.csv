@@ -37669,7 +37669,6 @@ name,address,notes
 ?b_002b5510@@YAXXZ,0x002B5510,gen-thunk body
 ?b_002b55d0@@YAXXZ,0x002B55D0,gen-thunk body
 ?b_002b5600@@YAXXZ,0x002B5600,gen-thunk body
-?b_002b5800@@YAXXZ,0x002B5800,gen-thunk body
 ?b_002b5cc0@@YAXXZ,0x002B5CC0,gen-thunk body
 ?b_002b6240@@YAXXZ,0x002B6240,gen-thunk body
 ?b_002b62a0@@YAXXZ,0x002B62A0,gen-thunk body
@@ -85903,6 +85902,7 @@ name,address,notes
 ?setMode@Rva00785FD0Renderer@@QAIXH@Z,0x0003DDED,ILT __fastcall mode setter used by 0x00785FD0
 ?setMouseLimits@Mouse@@UAEXXZ,0x00002A63
 ?setMouseText@Mouse@@QAEXVUnicodeString@@PBURGBAColorInt@@1@Z,0x0002FBD0,ILT thunk to body 0x005A5950
+?setMyState@DeployStyleAIUpdate@@AAEXW4DeployStateTypes@@@Z,0x002B5800,Generals one-argument DeployStyle state transition; exact source and same-TU neighbors prove identity
 ?setName@BFMETransitionGroup@@QAEXVBFMETransitionAsciiString@@@Z,0x00489B60,retail TransitionGroup::setName
 ?setName@Image@@QAEXVAsciiString@@@Z,0x0003EDBA,thunk to 0x000C2420; the body is byte-identical to three other setName instantiations so the call site is what pins it - the MappedImage parser at 0x000C2480 calls this one
 ?setName@MapObject@@QAEXABVAsciiString@@@Z,0x0004340F,handleNameChange at 0x00388970 calls the MapObject name setter ILT; WorldHeightMap.cpp provides the matching setter body
