@@ -27,6 +27,19 @@ struct BfmeAttributePlainBlock
 	unsigned int m_values[6];
 };
 
+// Retail 0x0039D2D0, reached through ILT 0x00010604 as the
+// BfmeAttributePlainBlock equality helper.
+bool BfmeAttributePlainBlock::operator==(
+		const BfmeAttributePlainBlock &other) const
+{
+	for (unsigned int i = 0; i < 6; ++i)
+	{
+		if (m_values[i] != other.m_values[i])
+			return false;
+	}
+	return true;
+}
+
 struct Gen_t_0039e9d0_p128pod
 {
 	Rva0076F980Mid m_names;
