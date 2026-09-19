@@ -18,6 +18,7 @@ private:
 class Gen0078D1C0 : public Gen0078D1C0Base
 {
 public:
+	Gen0078D1C0();
 	virtual ~Gen0078D1C0() {}
 
 private:
@@ -29,6 +30,7 @@ private:
 class GameWindow
 {
 public:
+	GameWindow();
 	virtual ~GameWindow();
 
 protected:
@@ -39,11 +41,17 @@ protected:
 class Rva0078D270GameWindowHost : public GameWindow
 {
 public:
+	Rva0078D270GameWindowHost();
 	virtual ~Rva0078D270GameWindowHost();
 
 private:
 	Gen0078D1C0 m_embedded;
 };
+
+Rva0078D270GameWindowHost::Rva0078D270GameWindowHost()
+{
+	m_embeddedPointer = &m_embedded;
+}
 
 Rva0078D270GameWindowHost::~Rva0078D270GameWindowHost()
 {
