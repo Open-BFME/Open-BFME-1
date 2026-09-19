@@ -12,7 +12,7 @@ class Module
 public:
 	virtual void moduleAnchor();
 
-private:
+protected:
 	const ModuleData *m_moduleData;
 	void *m_drawable;
 };
@@ -68,6 +68,15 @@ public:
 extern GameClient *TheGameClient;
 extern Real GetGameClientRandomValueReal(Real low, Real high, char *file, int line);
 
+struct RandomSoundSelectorClientBehaviorModuleDataView
+{
+	char m_pad000[0x1C8];
+	Real m_chance;
+	UnsignedInt m_selectedValue;
+	unsigned char m_selectedFlag;
+	unsigned char m_rerollOnEveryFrame;
+};
+
 class RandomSoundSelectorClientBehavior : public ClientUpdateModule, public SoundSelectorInterface
 {
 public:
@@ -76,6 +85,7 @@ public:
 	virtual void selectSound();
 
 private:
+	void reroll();
 	Real m_randomSelection;
 	UnsignedInt m_lastFrame;
 };
@@ -93,4 +103,21 @@ RandomSoundSelectorClientBehavior::RandomSoundSelectorClientBehavior(
 		m_lastFrame = TheGameClient->getFrame();
 	else
 		m_lastFrame = 0;
+}
+
+// ?reroll@RandomSoundSelectorClientBehavior@@AAEXXZ
+void RandomSoundSelectorClientBehavior::reroll()
+{
+	RandomSoundSelectorClientBehaviorModuleDataView *moduleData =
+		(RandomSoundSelectorClientBehaviorModuleDataView *)m_moduleData;
+	if (moduleData->m_rerollOnEveryFrame && TheGameClient &&
+		TheGameClient->getFrame() != m_lastFrame)
+	{
+		m_randomSelection = GetGameClientRandomValueReal(
+			0.0f,
+			1.0f,
+			"F:\\bfme\\Code\\gameengine\\Source\\GameClient\\Drawable\\Behavior\\RandomSoundSelectorClientBehavior.cpp",
+			114);
+		m_lastFrame = TheGameClient->getFrame();
+	}
 }
