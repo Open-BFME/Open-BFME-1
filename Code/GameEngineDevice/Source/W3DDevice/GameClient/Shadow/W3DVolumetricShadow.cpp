@@ -629,6 +629,61 @@ void W3DVolumetricShadowManager::loadTerrainShadows(void)
 
 #endif //DO_TERRAIN_SHADOW_VOLUMES
 
+// BFME's MeshClass has two render-object view slots after Class_ID; the
+// recovered HLOD path uses the later slot, which the Zero Hour headers omit.
+class BfmeMeshRenderObjView
+{
+public:
+	virtual void Slot_00(void);
+	virtual void Slot_04(void);
+	virtual void Slot_08(void);
+	virtual int Class_ID(void) const;
+	virtual RenderObjClass *Mesh_View_10(void);
+	virtual RenderObjClass *Mesh_View_14(void);
+};
+
+#define BFME_HLOD_EIGHT_SLOTS(a, b, c, d, e, f, g, h) \
+	virtual void Slot_##a(void); virtual void Slot_##b(void); \
+	virtual void Slot_##c(void); virtual void Slot_##d(void); \
+	virtual void Slot_##e(void); virtual void Slot_##f(void); \
+	virtual void Slot_##g(void); virtual void Slot_##h(void);
+
+class BfmeHLodRenderObjView
+{
+public:
+	BFME_HLOD_EIGHT_SLOTS(000, 001, 002, 003, 004, 005, 006, 007)
+	BFME_HLOD_EIGHT_SLOTS(008, 009, 010, 011, 012, 013, 014, 015)
+	BFME_HLOD_EIGHT_SLOTS(016, 017, 018, 019, 020, 021, 022, 023)
+	BFME_HLOD_EIGHT_SLOTS(024, 025, 026, 027, 028, 029, 030, 031)
+	BFME_HLOD_EIGHT_SLOTS(032, 033, 034, 035, 036, 037, 038, 039)
+	BFME_HLOD_EIGHT_SLOTS(040, 041, 042, 043, 044, 045, 046, 047)
+	BFME_HLOD_EIGHT_SLOTS(048, 049, 050, 051, 052, 053, 054, 055)
+	BFME_HLOD_EIGHT_SLOTS(056, 057, 058, 059, 060, 061, 062, 063)
+	BFME_HLOD_EIGHT_SLOTS(064, 065, 066, 067, 068, 069, 070, 071)
+	BFME_HLOD_EIGHT_SLOTS(072, 073, 074, 075, 076, 077, 078, 079)
+	virtual int Get_LOD_Count(void) const;
+	BFME_HLOD_EIGHT_SLOTS(081, 082, 083, 084, 085, 086, 087, 088)
+	BFME_HLOD_EIGHT_SLOTS(089, 090, 091, 092, 093, 094, 095, 096)
+	BFME_HLOD_EIGHT_SLOTS(097, 098, 099, 100, 101, 102, 103, 104)
+	BFME_HLOD_EIGHT_SLOTS(105, 106, 107, 108, 109, 110, 111, 112)
+	BFME_HLOD_EIGHT_SLOTS(113, 114, 115, 116, 117, 118, 119, 120)
+	BFME_HLOD_EIGHT_SLOTS(121, 122, 123, 124, 125, 126, 127, 128)
+	BFME_HLOD_EIGHT_SLOTS(129, 130, 131, 132, 133, 134, 135, 136)
+	virtual void Slot_137(void);
+	virtual int Get_Lod_Model_Count(int lod_index) const;
+	virtual RenderObjClass *Peek_Lod_Model(int lod_index, int model_index) const;
+};
+
+#undef BFME_HLOD_EIGHT_SLOTS
+
+class BfmeW3DShadowGeometryLayout
+{
+public:
+	unsigned char m_opaque[0x2094];
+	Int m_meshCount;
+	Int m_numTotalsVerts;
+};
+
 /** This class will wrap any shadow casting geometry with additional
 data needed for efficient shadow volume generation.  The W3DVolumetricShadowManager
 will allocate these structures and hash them for quick re-use on other
@@ -646,6 +701,7 @@ class W3DShadowGeometry : public RefCountClass, public	HashableClass
 		Int init (RenderObjClass *robj);
 		Int initFromHLOD (RenderObjClass *robj);	///<initialize the geometry from a W3D HLOD object.
 		Int initFromMesh (RenderObjClass *robj);///<initialize the geometry from a W3D Mesh object.
+		Int initFromMesh (RenderObjClass *robj, Int mesh_index, W3DShadowGeometry *parent_geometry);
 
 		const char *		Get_Name(void) const	{ return m_namebuf;}
 		void				Set_Name(const char *name)
@@ -669,165 +725,28 @@ class W3DShadowGeometry : public RefCountClass, public	HashableClass
   
 #define MAX_SHADOW_VOLUME_VERTS 16384
 
-// ?initFromHLOD@W3DShadowGeometry@@QAEHPAVRenderObjClass@@@Z present-unmatched
+// ?initFromHLOD@W3DShadowGeometry@@QAEHPAVRenderObjClass@@@Z
 Int W3DShadowGeometry::initFromHLOD(RenderObjClass *robj)
 {
-	HLodClass *hlod=(HLodClass *)robj;
-	//locations of parent vertices inside the vertex array after duplicate
-	//vertices are removed.
-	UnsignedShort vertParent[MAX_SHADOW_VOLUME_VERTS];
+	BfmeHLodRenderObjView *hlod = (BfmeHLodRenderObjView *)robj;
+	BfmeW3DShadowGeometryLayout *layout = (BfmeW3DShadowGeometryLayout *)this;
 
-	Int i,j,k,newVertexCount;
+	layout->m_numTotalsVerts = 0;
+	layout->m_meshCount = 0;
 
-	Int top = hlod->Get_LOD_Count()-1;
-	W3DShadowGeometryMesh *geomMesh=&m_meshList[m_meshCount];
-
-	m_numTotalsVerts=0;
-
-	for (i = 0; i < hlod->Get_Lod_Model_Count(top); i++)
+	Int top = hlod->Get_LOD_Count() - 1;
+	for (Int i = 0; i < hlod->Get_Lod_Model_Count(top); ++i)
 	{
-		if (hlod->Peek_Lod_Model(top,i) && hlod->Peek_Lod_Model(top,i)->Class_ID() == RenderObjClass::CLASSID_MESH)
+		if (hlod->Peek_Lod_Model(top, i) != 0 &&
+			hlod->Peek_Lod_Model(top, i)->Class_ID() == RenderObjClass::CLASSID_MESH)
 		{
-			DEBUG_ASSERTCRASH(m_meshCount < MAX_SHADOW_CASTER_MESHES, ("Too many shadow sub-meshes"));
-
-			geomMesh->m_mesh = (MeshClass *)hlod->Peek_Lod_Model(top,i);
-			geomMesh->m_meshRobjIndex=i;
-
-//			if (!geomMesh->m_mesh->Peek_Model()->Get_Flag(MeshGeometryClass::CAST_SHADOW))
-//				continue; // CNC3 (gth) Only cast shadows from meshes with the shadow flag ENABLED!
-
-			if ((geomMesh->m_mesh->Is_Alpha() || geomMesh->m_mesh->Is_Translucent()) && !geomMesh->m_mesh->Peek_Model()->Get_Flag(MeshGeometryClass::CAST_SHADOW))
-				continue; //transparent meshes that don't have forced shadows will not cast volumetric shadows
-			// CNC3 (gth) skin meshes should never cast a volumetric shadow
-			if (geomMesh->m_mesh->Peek_Model()->Get_Flag(MeshGeometryClass::SKIN)) 
-				continue;
-
-			MeshModelClass *mm = geomMesh->m_mesh->Peek_Model();
-			geomMesh->m_numVerts=mm->Get_Vertex_Count();
-			geomMesh->m_verts=mm->Get_Vertex_Array();
-			geomMesh->m_numPolygons=mm->Get_Polygon_Count();
-			geomMesh->m_polygons=mm->Get_Polygon_Array();
-
-			if (geomMesh->m_numVerts > MAX_SHADOW_VOLUME_VERTS)
-				return FALSE;	//too many vertices to process
-
-			//reset index of all vertices
-			memset(vertParent,0xffffffff,sizeof(vertParent));
-			newVertexCount=geomMesh->m_numVerts;
-			//Find all duplicated vertices.
-			for (j=0; j<geomMesh->m_numVerts; j++)
-			{
-				if (vertParent[j] != 0xffff)
-					continue;	//this vertex has already been processed
-
-				const Vector3 *v_curr=&geomMesh->m_verts[j];
-
-				for (k=j+1; k<geomMesh->m_numVerts; k++)
-				{
-					Vector3 len(*v_curr - geomMesh->m_verts[k]);
-					if (len.Length2() == 0)
-					{	//found duplicate vertex
-						vertParent[k]=j;
-						newVertexCount--;	//decrease total vertices since duplicate found.
-					}
-				}
-				vertParent[j]=j;	//first instance of new vertex
-			}
-			geomMesh->m_parentVerts = NEW UnsignedShort[geomMesh->m_numVerts];
-			memcpy(geomMesh->m_parentVerts,vertParent,sizeof(UnsignedShort)*geomMesh->m_numVerts);
-			geomMesh->m_numVerts=newVertexCount;	//adjust actual vertex count to ignore duplicates
-			m_numTotalsVerts += newVertexCount;
-			geomMesh->m_parentGeometry = this;
-
-			// build our neighboring polygon information
-//			geomMesh->buildPolygonNeighbors();
-			
-			geomMesh++;
-			m_meshCount++;
+			RenderObjClass *mesh =
+				((BfmeMeshRenderObjView *)hlod->Peek_Lod_Model(top, i))->Mesh_View_14();
+			initFromMesh(mesh, i, this);
 		}
-
-		
-#if (1) //(cnc3)(gth) Support for ShaderMeshes!
-// I'm coding this as a completely independent block rather than re-factoring the code above
-// because it will probably save us pain in future merges.
-		if (hlod->Peek_Lod_Model(top,i) && hlod->Peek_Lod_Model(top,i)->Class_ID() == RenderObjClass::CLASSID_SHDMESH)
-		{
-			DEBUG_ASSERTCRASH(m_meshCount < MAX_SHADOW_CASTER_MESHES, ("Too many shadow sub-meshes"));
-
-			ShdMeshClass * shd_mesh = (ShdMeshClass *)hlod->Peek_Lod_Model(top,i);
-
-			for (int sub_mesh_index=0; sub_mesh_index < shd_mesh->Get_Sub_Mesh_Count(); sub_mesh_index++) {
-				ShdSubMeshClass * sub_mesh = shd_mesh->Peek_Sub_Mesh(sub_mesh_index);
-
-				if (!sub_mesh->Get_Flag(MeshGeometryClass::CAST_SHADOW))
-					continue; // CNC3 (gth) Only cast shadows from meshes with the shadow flag ENABLED!
-
-				//transparent meshes that don't have forced shadows will not cast volumetric shadows
-				if (shd_mesh->Is_Translucent() && !sub_mesh->Get_Flag(MeshGeometryClass::CAST_SHADOW))
-					continue; 
-
-				// skin meshes should never cast a volumetric shadow
-				if (sub_mesh->Get_Flag(MeshGeometryClass::SKIN)) 
-					continue;
-
-				geomMesh->m_mesh = NULL; //hope this doesn't cause problems!
-				geomMesh->m_meshRobjIndex=i;
-
-				// Count the polygons and vertices 
-				geomMesh->m_numVerts = sub_mesh->Get_Vertex_Count();
-				geomMesh->m_numPolygons = sub_mesh->Get_Polygon_Count();
-
-				geomMesh->m_verts=sub_mesh->Get_Vertex_Array();
-				geomMesh->m_polygons=sub_mesh->Get_Polygon_Array();
-
-				if (geomMesh->m_numVerts > MAX_SHADOW_VOLUME_VERTS)
-					return FALSE;	//too many vertices to process
-
-				//reset index of all vertices
-				memset(vertParent,0xffffffff,sizeof(vertParent));
-				newVertexCount=geomMesh->m_numVerts;
-				//Find all duplicated vertices.
-				for (j=0; j<geomMesh->m_numVerts; j++)
-				{
-					if (vertParent[j] != 0xffff)
-						continue;	//this vertex has already been processed
-
-					const Vector3 *v_curr=&geomMesh->m_verts[j];
-
-					for (k=j+1; k<geomMesh->m_numVerts; k++)
-					{
-						Vector3 len(*v_curr - geomMesh->m_verts[k]);
-						if (len.Length2() == 0)
-						{	//found duplicate vertex
-							vertParent[k]=j;
-							newVertexCount--;	//decrease total vertices since duplicate found.
-						}
-					}
-					vertParent[j]=j;	//first instance of new vertex
-				}
-				geomMesh->m_parentVerts = new UnsignedShort[geomMesh->m_numVerts];
-				memcpy(geomMesh->m_parentVerts,vertParent,sizeof(UnsignedShort)*geomMesh->m_numVerts);
-				geomMesh->m_numVerts=newVertexCount;	//adjust actual vertex count to ignore duplicates
-				m_numTotalsVerts += newVertexCount;
-				geomMesh->m_parentGeometry = this;
-
-				// build our neighboring polygon information
-//				geomMesh->buildPolygonNeighbors();
-				
-				geomMesh++;
-				m_meshCount++;
-
-			}
-		}
-#endif //(cnc3)(gth) Support for ShaderMeshes!
-	
 	}
-	
-//	for (i = 0; i < AdditionalModels.Count(); i++) {
-//		res |= AdditionalModels[i].Model->Cast_Ray(raytest);
-//	}
 
-	return m_meshCount != 0;
+	return layout->m_meshCount != 0;
 }
 
 // ?initFromMesh@W3DShadowGeometry@@QAEHPAVRenderObjClass@@@Z present-unmatched
