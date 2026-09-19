@@ -71,3 +71,31 @@ void __stdcall Rva007FC3B0( Rva007E8810Message *msg, int lid, bool favOnly,
 	msg->addString( "FAV-PLAYER-UID", favPlayerUid );
 	msg->addString( "FAV-GAME-UID", favGameUid );
 }
+
+void __stdcall Rva007FC290( Rva007E8810Message *msg, bool favOnly,
+	bool notFull, bool notPrivate, int minSize,
+	const Rva007FC3B0Filter *attributes, unsigned int numAttributes,
+	const char *favPlayer, const char *favGame, const char *favPlayerUid,
+	const char *favGameUid )
+{
+	unsigned int index;
+
+	msg->reset();
+	msg->m_category = 'LLST';
+	msg->m_depth = 3;
+	msg->addBool( "FILTER-FAV-ONLY", favOnly );
+	msg->addBool( "FILTER-NOT-FULL", notFull );
+	msg->addBool( "FILTER-NOT-PRIVATE", notPrivate );
+	msg->addInt( "FILTER-MIN-SIZE", minSize );
+	for( index = 0; index < numAttributes; index++ )
+	{
+		char key[ 0x40 ] = "";
+
+		sprintf( key, "FILTER-ATTR-%s", attributes[ index ].m_key );
+		msg->addString( key, attributes[ index ].m_value );
+	}
+	msg->addString( "FAV-PLAYER", favPlayer );
+	msg->addString( "FAV-GAME", favGame );
+	msg->addString( "FAV-PLAYER-UID", favPlayerUid );
+	msg->addString( "FAV-GAME-UID", favGameUid );
+}
