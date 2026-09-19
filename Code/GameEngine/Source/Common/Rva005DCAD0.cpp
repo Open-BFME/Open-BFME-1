@@ -16,3 +16,19 @@ void *Rva005DCAD0::reset()
 	m_value = 0;
 	return oldValue;
 }
+
+class Rva005DCB60Value
+{
+public:
+	unsigned int takeAndClear();
+
+private:
+	unsigned int m_value;
+};
+
+unsigned int Rva005DCB60Value::takeAndClear()
+{
+	unsigned int oldValue = m_value;
+	m_value = 0;
+	return oldValue;
+}
