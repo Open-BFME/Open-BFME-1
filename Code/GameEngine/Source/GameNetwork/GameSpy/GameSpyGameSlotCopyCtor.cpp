@@ -63,8 +63,11 @@ private:
 	AsciiString m_extra74;
 };
 
+// ?slot0@GameSpyGameSlot@@ absent-from-retail vtable-layout stub retained for the copy-ctor TU.
 void GameSpyGameSlot::slot0(void) {}
+// ?slot1@GameSpyGameSlot@@ absent-from-retail vtable-layout stub retained for the copy-ctor TU.
 void GameSpyGameSlot::slot1(void) {}
+// ?slot2@GameSpyGameSlot@@ absent-from-retail vtable-layout stub retained for the copy-ctor TU.
 void GameSpyGameSlot::slot2(void) {}
 
 inline void *operator new(unsigned int, void *place) { return place; }
