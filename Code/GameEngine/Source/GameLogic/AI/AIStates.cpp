@@ -8361,6 +8361,48 @@ void AIEnterState::onExit( StateExitType status )
 	}
 }
 
+struct BfmeMoveEnterObjectView
+{
+	unsigned char m_padding000[0x204];
+	BFMEAIUpdateCommandSource *m_ai;
+};
+
+class AIMoveToPositionAndEnterState : public AIMoveToState
+{
+public:
+	virtual StateReturnType update();
+};
+
+struct BfmeMoveEnterStateView
+{
+	unsigned char m_padding000[0x1c];
+	StateMachine *m_machine;
+};
+
+//----------------------------------------------------------------------------------------------------------
+StateReturnType AIMoveToPositionAndEnterState::update()
+{
+	BfmeMoveEnterStateView *self = (BfmeMoveEnterStateView *)this;
+	Object *owner = *(Object **)((char *)self->m_machine + 0x10);
+	BfmeMoveEnterObjectView *obj = (BfmeMoveEnterObjectView *)owner;
+	Object *goal = self->m_machine->getGoalObject();
+	BFMEAIUpdateCommandSource *ai = obj->m_ai;
+	if (ai && !((BFMEActionManager *)TheActionManager)->canEnterObject(
+		(Object *)obj, goal, ai->getLastCommandSource(), CHECK_CAPACITY, 0))
+		return STATE_FAILURE;
+
+	StateReturnType result = AIMoveToState::update();
+	if (result == STATE_SUCCESS)
+	{
+		owner = *(Object **)((char *)self->m_machine + 0x10);
+		ai = ((BfmeMoveEnterObjectView *)owner)->m_ai;
+		goal = self->m_machine->getGoalObject();
+		((AICommandInterface *)((char *)ai + 0x20))->aiEnter(
+			goal, ai->getLastCommandSource());
+	}
+	return result;
+}
+
 //----------------------------------------------------------------------------------------------------------
 StateReturnType AIEnterState::update()
 {
