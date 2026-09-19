@@ -112,7 +112,7 @@ static Real heightToSpeed(Real height)
 } 
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PhysicsBehaviorModuleDataCtorThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorModuleDataCtorThunk.cpp
 // ??0PhysicsBehaviorModuleData@@QAE@XZ present-unmatched
 PhysicsBehaviorModuleData::PhysicsBehaviorModuleData()
 {
@@ -207,7 +207,7 @@ static void parseFrictionPerSec( INI* ini, void * /*instance*/, void *store, con
 const Real INVALID_VEL_MAG = -1.0f;
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/PhysicsBehaviorConstructor.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Update/PhysicsBehaviorConstructor.cpp
 // ??0PhysicsBehavior@@QAE@PAVThing@@PBVModuleData@@@Z present-unmatched
 PhysicsBehavior::PhysicsBehavior( Thing *thing, const ModuleData* moduleData ) : UpdateModule( thing, moduleData )
 {
