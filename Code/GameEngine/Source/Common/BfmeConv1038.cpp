@@ -1,4 +1,41 @@
+// cl: /O2 /DNDEBUG /MD
 // Open-BFME5 conversions.
+
+struct Rva008BD5B0Key
+{
+	int unused;
+	int value;
+};
+
+struct Rva008BD5B0Item
+{
+	char pad[0x50];
+	Rva008BD5B0Key *key;
+};
+
+class Rva008BD5B0
+{
+public:
+	void insert(Rva008BD5B0Item *item);
+
+	Rva008BD5B0Item *items[32];
+	int count;
+};
+
+void Rva008BD5B0::insert(Rva008BD5B0Item *item)
+{
+	int index = 0;
+	if (count > 0)
+	{
+		int value = item->key->value;
+		while (index < count && items[index]->key->value >= value)
+			++index;
+	}
+	for (int i = count; i > index; --i)
+		items[i] = items[i - 1];
+	items[index] = item;
+	++count;
+}
 
 class BfmeB1038
 {
@@ -165,4 +202,3 @@ void BfmeI1038::bfmeGo1038I(void)
 		m_bfmeFn = 0;
 	}
 }
-
