@@ -196,10 +196,10 @@ and a `csv` round-trip flattens them, which `check_csv` rejects. Repoint the
 source column by byte replacement, anchored on the surrounding commas so a path
 that is a prefix of another cannot be hit.
 
-**Some files cannot be committed anywhere.** `PathfinderCellPredicates.cpp`
-defines two helpers that no ledger row declares, so the hook rejects it wherever
-it sits. That predates this lane and needs a source repair or proven row, not a
-move.
+**A red source cannot be fixed by moving it.** If the hook rejects a file at
+every path, repair its underlying source-claim, compile, or byte-match defect
+before serving it again. The blocker register prevents the placement lane from
+repeating the same failed move in the meantime.
 
 ## What this lane cannot fix
 

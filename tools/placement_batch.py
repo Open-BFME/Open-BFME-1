@@ -160,10 +160,9 @@ def main():
 def land(moved, rows):
     """Commit, returning whatever the hook names. Bounded rounds, not hope.
 
-    Some files cannot be committed at ANY path: PathfinderCellPredicates.cpp
-    defines two helpers that no ledger row declares. That predates this lane and
-    needs a source repair or proven row, not a move, so it goes back where it was
-    and the rest of the batch still lands.
+    A source that fails the gate at every path needs its underlying source-claim,
+    compile, or byte defect repaired before it can move. Return that source and
+    record the blocker so the rest of the batch can still land.
     """
     for _ in range(4):
         git("add", "reverse/functions.csv", *[t for _, t in moved])
