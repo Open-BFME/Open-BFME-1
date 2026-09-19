@@ -86427,6 +86427,7 @@ name,address,notes
 ?visit@Rva21ABF0Worker@@QAEXPAX@Z,0x00003288,address-derived ring value visitor ILT thunk
 ?voteForPlayerDisconnect@BFMEConnectionManager@@QAEXH@Z,0x00663750,cross-slice: ZH ConnectionManager::voteForPlayerDisconnect: if (m_disconnectManager at +0x120e0) m_disconnectManager->voteForPlayerDisconnect(slot this) = ledger 0x0066BAE0; ILT 0x0003AB3E
 ?voteForPlayerDisconnect@Network@@UAEXH@Z,0x00682270,vtable 0x0111A968 slot 31 (+0x7C) via ILT 0x0003D1F4; if (m_conMgr) { conMgr 0x00663750 (= ConnectionManager::voteForPlayerDisconnect forwarding to ?voteForPlayerDisconnect@DisconnectManager 0x0066BAE0 through conMgr+0x120E0); TheGameLogic 0x00383BC0(slot 2) } = ZH voteForPlayerDisconnect plus a BFME leave-record; callers disconnect menu 0x0050E72F 0x0050F23E and updateDisconnectStatus@DisconnectManager 0x0066C678
+?w3dSmudgeManagerReleaseResources@@YAXXZ,0x00722190,source alias for the proven W3DSmudgeManager ReleaseResources body used by the 0x000309CC ILT
 ?waitForTransition@Rva0048B0E0TransitionHandler@@QAEXXZ,0x0004B18C,Rva0048B0E0 transition wait thunk
 ?winBringToTop@GameWindow@@QAEHXZ,0x0000FE66
 ?winClearStatus@GameWindow@@QAEII@Z,0x00027B24
