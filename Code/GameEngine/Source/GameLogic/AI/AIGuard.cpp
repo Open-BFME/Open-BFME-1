@@ -667,32 +667,196 @@ void AIGuardReturnState::loadPostProcess( void )
 {
 }  // end loadPostProcess
 
+struct BfmeGuardAIData
+{
+	unsigned char m_padding00[0x44];
+	UnsignedInt m_guardEnemyReturnScanRate;
+};
+
+struct BfmeGuardAI
+{
+	Pathfinder *pathfinder() const
+	{
+		return m_pathfinder;
+	}
+
+	BfmeGuardAIData *getAiData() const
+	{
+		return m_aiData;
+	}
+
+	unsigned char m_padding00[0x0c];
+	Pathfinder *m_pathfinder;
+	unsigned char m_padding10[4];
+	BfmeGuardAIData *m_aiData;
+};
+
+template <Int N>
+class BfmeGuardVirtualSlots : public BfmeGuardVirtualSlots<N - 1>
+{
+public:
+	virtual void unusedSlot(char (*)[N]);
+};
+
+template <>
+class BfmeGuardVirtualSlots<0>
+{
+};
+
+class BfmeGuardAIUpdate : public BfmeGuardVirtualSlots<123>
+{
+public:
+	virtual Bool isDoingGroundMovement() const;
+
+	const LocomotorSet &getLocomotorSet() const
+	{
+		return *(const LocomotorSet *)((const char *)this + 0x1a8);
+	}
+};
+
+class BfmeGuardAIUpdateCallTarget
+{
+public:
+	void destroyPath();
+};
+
+struct BfmeGuardObject
+{
+	const Coord3D *getPosition() const
+	{
+		return (const Coord3D *)((const char *)this + 0x38);
+	}
+
+	BfmeGuardAIUpdate *getAIUpdateInterface() const
+	{
+		return *(BfmeGuardAIUpdate *const *)((const char *)this + 0x204);
+	}
+};
+
+class BfmeGuardStateMachine
+{
+public:
+	virtual void unusedSlot();
+	unsigned char m_padding04[0x0c];
+	BfmeGuardObject *m_owner;
+};
+
+class BfmeGuardMachine : public BfmeGuardStateMachine
+{
+public:
+	void getGuardScanPos(Coord3D *out);
+};
+
+struct BfmeGuardReturnStateView
+{
+	unsigned char m_padding00[0x1c];
+	BfmeGuardStateMachine *m_machine;
+	unsigned char m_padding20[4];
+	Coord3D m_goalPosition;
+	unsigned char m_padding30[0x1c];
+	Bool m_adjustsDestination;
+	unsigned char m_padding4d[3];
+	UnsignedInt m_nextReturnScanTime;
+};
+
+extern GameLogic *TheBfmeGameLogic;
+extern Int GetGameLogicRandomValue(Int minimum, Int maximum, char *file, Int line);
+extern Real g_bfmeK1266C;
+extern unsigned char g_012F0239;
+extern void *g_012ED4FC;
+extern void j_0000314d();
+extern void j_000065e1();
+extern void j_00017099();
+extern void j_00036aa2();
+extern void j_0003a17a();
+
 //--------------------------------------------------------------------------------------
-// ?onEnter@AIGuardReturnState@@ present-unmatched
 StateReturnType AIGuardReturnState::onEnter( void )
 {
-	UnsignedInt now = TheGameLogic->getFrame();
-	m_nextReturnScanTime = now + GameLogicRandomValue(0, TheAI->getAiData()->m_guardEnemyReturnScanRate);
+	BfmeGuardReturnStateView *self = (BfmeGuardReturnStateView *)this;
+	UnsignedInt now = TheBfmeGameLogic->getFrame();
+	self->m_nextReturnScanTime = now + GetGameLogicRandomValue(
+		0, ((BfmeGuardAI *)TheAI)->getAiData()->m_guardEnemyReturnScanRate,
+		(char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIGuard.cpp",
+		901);
 
-// no, no, no, don't do this in onEnter, unless you like really slow maps. (srj)
-//	if (getGuardMachine()->lookForInnerTarget()) 
-//		return STATE_FAILURE; // early termination because we found a target.
-
-	Object* targetToGuard = getGuardMachine()->findTargetToGuardByID();
-	m_goalPosition = targetToGuard ? *targetToGuard->getPosition() : *getGuardMachine()->getPositionToGuard();
-
-	const PolygonTrigger *area = getGuardMachine()->getAreaToGuard();
-	if (area) 
 	{
-		area->getCenterPoint(&m_goalPosition);
+		Coord3D goalPosition;
+		typedef Coord3D *(BfmeGuardMachine::*GetGuardScanPosCall)(Coord3D *);
+		union
+		{
+			void *asVoid;
+			GetGuardScanPosCall asMember;
+		} getGuardScanPosCast;
+		getGuardScanPosCast.asVoid = (void *)j_00017099;
+		Coord3D *scanPosition = (((BfmeGuardMachine *)self->m_machine)->*
+			getGuardScanPosCast.asMember)(&goalPosition);
+		self->m_goalPosition = *scanPosition;
 	}
-	AIUpdateInterface *ai = getMachineOwner()->getAIUpdateInterface(); 
-	if (ai && ai->isDoingGroundMovement()) 
+
+	register BfmeGuardObject *owner = self->m_machine->m_owner;
+	Coord3D &goal = self->m_goalPosition;
+	if (!owner)
+		goto doEnter;
 	{
-		TheAI->pathfinder()->adjustDestination(getMachineOwner(), ai->getLocomotorSet(), &m_goalPosition);
+		Coord3D delta;
+		delta.x = owner->getPosition()->x;
+		delta.y = owner->getPosition()->y;
+		delta.z = owner->getPosition()->z;
+		delta.x -= goal.x;
+		delta.y -= goal.y;
+		delta.z -= goal.z;
+		typedef Real (Coord3D::*GetLengthEstimateCall)() const;
+		union
+		{
+			void *asVoid;
+			GetLengthEstimateCall asMember;
+		} getLengthEstimateCast;
+		getLengthEstimateCast.asVoid = (void *)j_00036aa2;
+		if (!((delta.*getLengthEstimateCast.asMember)() < g_bfmeK1266C))
+			goto doEnter;
 	}
-	setAdjustsDestination(true);
+	goto returnSuccess;
+
+doEnter:
+	BfmeGuardAIUpdate *ai = owner->getAIUpdateInterface();
+	if (ai)
+	{
+		if (ai->isDoingGroundMovement())
+		{
+			((BfmeGuardAI *)TheAI)->pathfinder()->adjustDestination((Object *)self->m_machine->m_owner,
+				ai->getLocomotorSet(), &goal, 0);
+		}
+		typedef void (BfmeGuardAIUpdateCallTarget::*DestroyPathCall)();
+		union
+		{
+			void *asVoid;
+			DestroyPathCall asMember;
+		} destroyPathCast;
+		destroyPathCast.asVoid = (void *)j_000065e1;
+		(((BfmeGuardAIUpdateCallTarget *)ai)->*destroyPathCast.asMember)();
+	}
+
+	typedef void (BfmeGuardStateMachine::*SetGoalPositionCall)(const Coord3D *);
+	union
+	{
+		void *asVoid;
+		SetGoalPositionCall asMember;
+	} setGoalPositionCast;
+	setGoalPositionCast.asVoid = (void *)j_0000314d;
+	(self->m_machine->*setGoalPositionCast.asMember)(&goal);
+
+	if (g_012F0239 && g_012ED4FC)
+	{
+		typedef void (__cdecl *CritterDesyncLog)(void *, const char *);
+		((CritterDesyncLog)j_0003a17a)(g_012ED4FC,
+			"CritterDesync: setAdjustDestination(TRUE) 3");
+	}
+	self->m_adjustsDestination = true;
 	return AIInternalMoveToState::onEnter();
+
+returnSuccess:
+	return STATE_SUCCESS;
 }
 
 //--------------------------------------------------------------------------------------
