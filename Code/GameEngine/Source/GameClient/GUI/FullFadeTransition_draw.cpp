@@ -102,6 +102,7 @@ extern Real g_bfmeScaleB3;
 class Transition
 {
 public:
+	virtual ~Transition();
 	virtual void init(void *win);
 	virtual void update(Int frame);
 	virtual void reverse();
@@ -118,6 +119,10 @@ protected:
 
 class FullFadeTransition : public Transition
 {
+protected:
+	virtual ~FullFadeTransition();
+	friend void forceFullFadeTransitionDeletingDestructor();
+
 public:
 	virtual void draw();
 
@@ -129,6 +134,11 @@ private:
 	Real m_percent;
 	Int m_drawState;
 };
+
+void forceFullFadeTransitionDeletingDestructor()
+{
+	FullFadeTransition value;
+}
 
 // ?draw@FullFadeTransition@@UAEXXZ
 void FullFadeTransition::draw()
