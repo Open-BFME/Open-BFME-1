@@ -252,6 +252,10 @@ void DrawModule::rva00750020(UnsignedInt)
 {
 }
 
+void DrawModule::rva00750190(UnsignedInt, UnsignedInt)
+{
+}
+
 W3DLightDraw::~W3DLightDraw()
 {
 	m_light->setEnabled(false);
