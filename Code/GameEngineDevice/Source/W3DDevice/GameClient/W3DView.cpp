@@ -39,6 +39,12 @@
 #include <stdlib.h>
 #include <windows.h>
 
+// BFME added this nonvirtual notifier after the shared Zero Hour declaration;
+// injecting it on this TU's first include keeps the vendored header unchanged.
+#define forceUnfreezeTime(argument) notifyCameraChange(argument); void forceUnfreezeTime(argument)
+#include "GameLogic/ScriptEngine.h"
+#undef forceUnfreezeTime
+
 // USER INCLUDES //////////////////////////////////////////////////////////////////////////////////
 #include "Common/BuildAssistant.h"
 #include "Common/GlobalData.h"
@@ -72,7 +78,6 @@
 #include "GameLogic/Module/ContainModule.h"
 #include "GameLogic/Module/OpenContain.h"
 #include "GameLogic/Object.h"
-#include "GameLogic/ScriptEngine.h"
 #include "GameLogic/TerrainLogic.h"									///< @todo This should be TerrainVisual (client side)
 #include "Common/AudioEventInfo.h"
 
@@ -154,6 +159,91 @@ struct BfmeW3DViewViewportFields
 	CameraClass *m_3DCamera;
 };
 
+// BFME inserted view state that the shared Zero Hour header does not expose;
+// keeping its witnessed offsets here prevents that ABI from leaking to other TUs.
+struct BfmeCameraCoord2D
+{
+	Real x;
+	Real y;
+};
+
+struct BfmeCameraCoord3D
+{
+	Real x;
+	Real y;
+	Real z;
+};
+
+struct BfmeCameraRegion2D
+{
+	BfmeCameraCoord2D lo;
+	BfmeCameraCoord2D hi;
+};
+
+struct BfmeW3DViewCameraFields
+{
+	unsigned char m_padding0000[0x0C];
+	BfmeCameraCoord3D m_pos;
+	unsigned char m_padding0018[0x44 - 0x18];
+	bool m_applyCameraConstraints;
+	unsigned char m_padding0045[0x6C - 0x45];
+	Real m_FOV;
+	unsigned char m_padding0070[0x104 - 0x70];
+	CameraClass *m_3DCamera;
+	unsigned char m_padding0108[0x23C8 - 0x108];
+	bool m_cameraHasMovedSinceRequest;
+	unsigned char m_padding23C9[0x23FC - 0x23C9];
+	BfmeCameraRegion2D m_cameraConstraint;
+	bool m_cameraConstraintValid;
+
+	const BfmeCameraCoord3D *getPosition() const { return &m_pos; }
+	void setPosition(const BfmeCameraCoord3D *position) { m_pos = *position; }
+};
+
+// These debug-camera fields are present in BFME but absent from the shared
+// Zero Hour GlobalData definition used by this translation unit.
+struct BfmeGlobalDataCameraFields
+{
+	unsigned char m_padding0000[0xA28];
+	Real m_maxCameraHeight;
+	unsigned char m_padding0A2C[0xED0 - 0xA2C];
+	bool m_debugCamera;
+	unsigned char m_padding0ED1[3];
+	Real m_debugCameraFOV;
+	Real m_debugCameraAngle;
+};
+
+#define BFME_UNUSED_VIRTUALS_16(prefix) \
+	virtual void prefix##0(); virtual void prefix##1(); virtual void prefix##2(); virtual void prefix##3(); \
+	virtual void prefix##4(); virtual void prefix##5(); virtual void prefix##6(); virtual void prefix##7(); \
+	virtual void prefix##8(); virtual void prefix##9(); virtual void prefix##a(); virtual void prefix##b(); \
+	virtual void prefix##c(); virtual void prefix##d(); virtual void prefix##e(); virtual void prefix##f()
+
+// BFME's terrain primary vtable places updateCenter at slot 0x21c, three
+// entries after the Zero Hour declaration included above.
+class BfmeTerrainCameraUpdateVtable
+{
+public:
+	BFME_UNUSED_VIRTUALS_16(slot000_);
+	BFME_UNUSED_VIRTUALS_16(slot040_);
+	BFME_UNUSED_VIRTUALS_16(slot080_);
+	BFME_UNUSED_VIRTUALS_16(slot0c0_);
+	BFME_UNUSED_VIRTUALS_16(slot100_);
+	BFME_UNUSED_VIRTUALS_16(slot140_);
+	BFME_UNUSED_VIRTUALS_16(slot180_);
+	BFME_UNUSED_VIRTUALS_16(slot1c0_);
+	virtual void slot200();
+	virtual void slot204();
+	virtual void slot208();
+	virtual void slot20c();
+	virtual void slot210();
+	virtual void slot214();
+	virtual void slot218();
+	virtual void updateCenter(CameraClass *camera, RefRenderObjListIterator *lights);
+};
+
+#undef BFME_UNUSED_VIRTUALS_16
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
@@ -175,6 +265,12 @@ static const Real DRAWABLE_OVERSCAN = 75.0f;  ///< 3D world coords of how much t
 //=================================================================================================
 inline Real minf(Real a, Real b) { if (a < b) return a; else return b; }
 inline Real maxf(Real a, Real b) { if (a > b) return a; else return b; }
+__forceinline Real clampf(Real value, Real lo, Real hi)
+{
+	if (value < lo) return lo;
+	if (value > hi) return hi;
+	return value;
+}
 
 //-------------------------------------------------------------------------------------------------
 // Normalizes angle to +- PI.
@@ -645,76 +741,57 @@ void W3DView::getPickRay(const ICoord2D *screen, Vector3 *rayStart, Vector3 *ray
 //-------------------------------------------------------------------------------------------------
 /** set the transform matrix of m_3DCamera, based on m_pos & m_angle */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewSetCameraTransformBfme.cpp
-// ?setCameraTransform@W3DView@@ present-unmatched
 void W3DView::setCameraTransform( void )
 {
-	m_cameraHasMovedSinceRequest = true;
-	Matrix3D cameraTransform( 1 );
-	
-	Real nearZ, farZ;
-	// m_3DCamera->Get_Clip_Planes(nearZ, farZ);
-	// Set the near to MAP_XY_FACTOR.  Improves zbuffer resolution.
-	nearZ = MAP_XY_FACTOR; 
-	farZ = 1200.0f;
+	BfmeW3DViewCameraFields *fields = (BfmeW3DViewCameraFields *)this;
+	fields->m_cameraHasMovedSinceRequest = true;
+	Matrix3D cameraTransform( true );
 
-	if (m_useRealZoomCam)	//WST 10.19.2002
+	fields->m_3DCamera->Set_Clip_Planes(
+		10.0f, ((BfmeGlobalDataCameraFields *)TheWritableGlobalData)->m_maxCameraHeight * 1800.0f);
+
+	if (!fields->m_cameraConstraintValid)
 	{
-		if (m_FXPitch<0.95f)
-		{
-			farZ = farZ / m_FXPitch; //Extend far Z when we pitch up for RealZoomCam
-		}
+		buildCameraTransform( &cameraTransform );
+		fields->m_3DCamera->Set_Transform( cameraTransform );
+		calcCameraConstraints();
 	}
+
+	if (fields->m_cameraConstraintValid && fields->m_applyCameraConstraints)
+	{
+		BfmeCameraCoord3D pos;
+		pos.x = fields->getPosition()->x;
+		pos.y = fields->getPosition()->y;
+		pos.z = fields->getPosition()->z;
+		pos.x = clampf( pos.x, fields->m_cameraConstraint.lo.x,
+			fields->m_cameraConstraint.hi.x );
+		pos.y = clampf( pos.y, fields->m_cameraConstraint.lo.y,
+			fields->m_cameraConstraint.hi.y );
+		fields->setPosition(&pos);
+	}
+
+	if (((BfmeGlobalDataCameraFields *)TheWritableGlobalData)->m_debugCamera)
+		fields->m_3DCamera->Set_View_Plane(
+			((BfmeGlobalDataCameraFields *)TheWritableGlobalData)->m_debugCameraFOV, -1.0f);
 	else
-	{
-		if ((TheGlobalData && TheGlobalData->m_drawEntireTerrain) || (m_FXPitch<0.95f || m_zoom>1.05))
-		{	//need to extend far clip plane so entire terrain can be visible
-			farZ *= MAP_XY_FACTOR;
-		}
-	}
+		fields->m_3DCamera->Set_View_Plane(fields->m_FOV, -1.0f);
 
-	m_3DCamera->Set_Clip_Planes(nearZ, farZ);
-#if defined(_DEBUG) || defined(_INTERNAL)
-	if (TheGlobalData->m_useCameraConstraints)
-#endif
-	{
-		if (!m_cameraConstraintValid)
-		{
-			buildCameraTransform(&cameraTransform);
-			m_3DCamera->Set_Transform( cameraTransform );
-			calcCameraConstraints();
-		}
-		DEBUG_ASSERTLOG(m_cameraConstraintValid,("*** cam constraints are not valid!!!\n"));
-
-		if (m_cameraConstraintValid)
-		{
-			Coord3D pos = *getPosition();
-			pos.x = maxf(m_cameraConstraint.lo.x, pos.x);
-			pos.x = minf(m_cameraConstraint.hi.x, pos.x);
-			pos.y = maxf(m_cameraConstraint.lo.y, pos.y);
-			pos.y = minf(m_cameraConstraint.hi.y, pos.y);
-			setPosition(&pos);
-		}
-	}
-
-#if defined(_DEBUG) || defined(_INTERNAL)
-	m_3DCamera->Set_View_Plane( m_FOV, -1 );
-#endif
-
-	// rebuild it (even if we just did it due to camera constraints)
 	buildCameraTransform( &cameraTransform );
-	m_3DCamera->Set_Transform( cameraTransform );
+	if (((BfmeGlobalDataCameraFields *)TheWritableGlobalData)->m_debugCamera)
+		cameraTransform.Rotate_Y(
+			((BfmeGlobalDataCameraFields *)TheWritableGlobalData)->m_debugCameraAngle);
+	fields->m_3DCamera->Set_Transform( cameraTransform );
 
-	if (TheTerrainRenderObject) 
+	if (TheTerrainRenderObject)
 	{
-		RefRenderObjListIterator *it = W3DDisplay::m_3DScene->createLightsIterator();
-		TheTerrainRenderObject->updateCenter(m_3DCamera, it);
-		if (it) 
-		{
-		 W3DDisplay::m_3DScene->destroyLightsIterator(it);
-		 it = NULL;
-		}
+		RefRenderObjListIterator *iterator = W3DDisplay::m_3DScene->createLightsIterator();
+		((BfmeTerrainCameraUpdateVtable *)TheTerrainRenderObject)->updateCenter(
+			fields->m_3DCamera, iterator);
+		if (iterator)
+			W3DDisplay::m_3DScene->destroyLightsIterator(iterator);
 	}
+
+	TheScriptEngine->notifyCameraChange();
 }
 
 //-------------------------------------------------------------------------------------------------
