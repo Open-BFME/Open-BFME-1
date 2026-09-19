@@ -3,9 +3,17 @@
 class AptPlayerStatus
 {
 public:
+	virtual ~AptPlayerStatus();
 	virtual int input(unsigned int message, unsigned int key, unsigned int state);
 	void ReturnToGame(const char *argument);
 };
+
+__declspec(noinline) AptPlayerStatus::~AptPlayerStatus() {}
+
+void Force_AptPlayerStatus_Deleting_Destructor(AptPlayerStatus *status)
+{
+	delete status;
+}
 
 enum
 {
