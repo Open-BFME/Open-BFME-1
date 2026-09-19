@@ -82301,6 +82301,7 @@ name,address,notes
 ?getFinalOverride@BfmeTeamControlOverridable@@QBEPBV1@XZ,0x000022BB,Team.cpp BFME-layout view spelling of the proven Overridable chain-walker ILT
 ?getFinalOverride@Overridable@@QAEPAV1@XZ,0x000022BB,non-const spelling of getFinalOverride ILT; callee of BfmeHost416B90::getSlot @ 0x416B90
 ?getFinalOverride@Overridable@@QBEPBV1@XZ,0x000022BB
+?getFinalOverride@Rva000F4640Overridable@@QBEPBV1@XZ,0x000022BB,address-derived override view used by Team targetable count; retail call at 0x000F4640 reaches the same const override ILT
 ?getFinalOverride@Rva226790Template@@QAEPAV1@XZ,0x000022BB,address-derived template override-chain ILT thunk
 ?getFinalOverride@Rva226800Overridable@@QAEPAV1@XZ,0x000022BB,Rva226800 template override ILT
 ?getFinalOverride@ThingTemplate@@QAEPAV1@XZ,0x000022BB,ILT 0x000022BB fence-width override walk from shouldProjectileCollideWith
