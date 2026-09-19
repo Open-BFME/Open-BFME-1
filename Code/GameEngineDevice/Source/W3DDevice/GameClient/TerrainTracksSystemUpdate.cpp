@@ -58,6 +58,7 @@ class TerrainTracksRenderObjClassSystem
 {
 public:
 	void update(void);
+	void Reset(void);
 
 private:
 	void releaseTrack(TerrainTracksRenderObjClass *mod);
@@ -133,6 +134,21 @@ void TerrainTracksRenderObjClassSystem::update(void)
 			if (mod->m_activeEdgeCount == 0 && !mod->m_bound)
 				releaseTrack(mod);
 		}
+		mod = nextMod;
+	}
+}
+
+// ?Reset@TerrainTracksRenderObjClassSystem@@QAEXXZ
+// Retail 0x0072F000 walks the used list while releaseTrack relinks each node.
+void TerrainTracksRenderObjClassSystem::Reset(void)
+{
+	TerrainTracksRenderObjClass *nextMod;
+	TerrainTracksRenderObjClass *mod = m_usedModules;
+
+	while (mod)
+	{
+		nextMod = mod->m_nextSystem;
+		releaseTrack(mod);
 		mod = nextMod;
 	}
 }
