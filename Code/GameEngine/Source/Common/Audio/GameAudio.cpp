@@ -706,6 +706,12 @@ Bool AudioManager::isCurrentlyPlaying( AudioHandle audioEvent )
 	return true;
 }
 
+// ?Rva0020DCA0Noop@@YGXXZ
+// The carved body has two unused stack arguments and returns with ret 8.
+void __stdcall Rva0020DCA0Noop( void *, void * )
+{
+}
+
 //-------------------------------------------------------------------------------------------------
 // ?translateSpeakerTypeToUnsignedInt@AudioManager@@ present-unmatched
 UnsignedInt AudioManager::translateSpeakerTypeToUnsignedInt( const AsciiString& speakerType )
