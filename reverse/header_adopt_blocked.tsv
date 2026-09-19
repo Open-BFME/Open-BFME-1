@@ -167,7 +167,7 @@ Code/GameEngine/Source/GameLogic/Object/Update/ToppleUpdateApplyTopplingForce.cp
 Code/GameEngine/Source/GameLogic/Object/Update/TransportAIUpdateModuleData_ctor_Thunk.cpp	AsciiString	Code\GameEngine\Source\GameLogic\Object\Update\TransportAIUpdateModuleData_ctor_Thunk.cpp(137) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
 Code/GameEngine/Source/GameLogic/Object/Update/UpdateModuleModuleData_ctor_Thunk.cpp	AsciiString	Code\GameEngine\Source\GameLogic\Object\Update\UpdateModuleModuleData_ctor_Thunk.cpp(137) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
 Code/GameEngine/Source/GameLogic/Object/Update/WanderAIUpdateModuleData_ctor_Thunk.cpp	AsciiString	Code\GameEngine\Source\GameLogic\Object\Update\WanderAIUpdateModuleData_ctor_Thunk.cpp(137) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
-Code/GameEngine/Source/GameLogic/Rva0019BC00SetFields.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameLogic/Map/Rva0019BC00SetFields.cpp	AsciiString	Functions: FAIL 1/1
 Code/GameEngine/Source/GameLogic/ScriptEngine/BfmeScriptCondAreaGate.cpp	AsciiString	z:\home\wacket\Projects\Open-BFME\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
 Code/GameEngine/Source/GameLogic/ScriptEngine/LuaCurDrawableSetTransitionAnimState.cpp	AsciiString	Functions: FAIL 1/1
 Code/GameEngine/Source/GameLogic/ScriptEngine/LuaScriptBindingsLuaA.cpp	AsciiString	Code\GameEngine\Source\GameLogic\ScriptEngine\LuaScriptBindingsLuaA.cpp(285) : error C2039: 'm_data' : is not a member of 'AsciiString'
