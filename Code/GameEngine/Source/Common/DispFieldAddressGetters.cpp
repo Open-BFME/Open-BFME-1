@@ -1,4 +1,4 @@
-// 68 seven-byte __thiscall members with one shape:
+// 69 seven-byte __thiscall members with one shape:
 //
 //     lea eax,[ecx+<DISP>] / ret
 //
@@ -61,6 +61,7 @@ BFME_DISP_ADDRESS_GETTER( Rva0022A070FieldAddress, 0xC4 )
 BFME_DISP_ADDRESS_GETTER( Rva00232080FieldAddress, 0x9C )
 BFME_DISP_ADDRESS_GETTER( Rva00294E90FieldAddress, 0x198 )
 BFME_DISP_ADDRESS_GETTER( Rva0029BEE0FieldAddress, 0x98 )
+BFME_DISP_ADDRESS_GETTER( Rva0029BEC0FieldAddress, 0x10 )
 BFME_DISP_ADDRESS_GETTER( Rva0029C0D0FieldAddress, 0x2E8 )
 BFME_DISP_ADDRESS_GETTER( Rva002BB900FieldAddress, 0x498 )
 BFME_DISP_ADDRESS_GETTER( Rva002D40D0FieldAddress, 0x328 )
