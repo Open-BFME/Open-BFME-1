@@ -257,3 +257,13 @@ void Remove_Accelerator(HACCEL accelerator)
 		}
 	}
 }
+
+class Rva00558540
+{
+public:
+	void noop(void *, void *);
+};
+
+void Rva00558540::noop(void *, void *)
+{
+}
