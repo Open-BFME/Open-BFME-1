@@ -141,6 +141,26 @@ def _split_destructor_world(tmp_path):
     return root
 
 
+def _established_split_family_world(tmp_path, cls, current, alternate):
+    root = tmp_path / "repo"
+    sources = [
+        (f"?currentA@{cls}@@QAEXXZ", f"{current}/CurrentA.cpp"),
+        (f"??_G{cls}@@UAEPAXI@Z", f"{current}/CurrentDeleting.cpp"),
+        (f"?alternateA@{cls}@@QAEXXZ", f"{alternate}/AlternateA.cpp"),
+        (f"?alternateB@{cls}@@QAEXXZ", f"{alternate}/AlternateB.cpp"),
+        (f"?alternateC@{cls}@@QAEXXZ", f"{alternate}/AlternateC.cpp"),
+        (f"?candidate@{cls}@@QAEXXZ", f"{current}/Candidate.cpp"),
+    ]
+    for _name, source in sources:
+        _write(root, source)
+
+    rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
+    for index, (name, source) in enumerate(sources):
+        rows.append(f"{name},,0x{0x300000 + index * 0x10:08X},10,{source},matched,\n")
+    _write(root, "reverse/functions.csv", "".join(rows))
+    return root
+
+
 def test_exact_zh_source_path_outranks_an_inline_method_owner(tmp_path):
     root = _world(tmp_path)
     single, homes = queue.survey(root)
@@ -263,7 +283,32 @@ def test_sibling_counts_do_not_split_a_module_from_its_module_data(tmp_path):
 
     homes["DominateEnemySpecialPowerModuleData"].clear()
     assert queue.destination(
-        root, DOMINATE, "DominateEnemySpecialPower", homes, {}, {}) == THING
+        root, DOMINATE, "DominateEnemySpecialPower", homes, {}, {}) is None
+
+
+def test_weak_sibling_inference_never_moves_back_into_legacy_common(tmp_path):
+    root = tmp_path / "repo"
+    current = "Code/GameEngine/Source/GameClient/System"
+    legacy = "Code/GameEngine/Source/Common/System"
+    candidate = f"{current}/RadarCandidate.cpp"
+    sources = [
+        ("?candidate@Radar@@QAEXXZ", candidate),
+        ("?legacyA@Radar@@QAEXXZ", f"{legacy}/LegacyA.cpp"),
+        ("?legacyB@Radar@@QAEXXZ", f"{legacy}/LegacyB.cpp"),
+        ("?legacyC@Radar@@QAEXXZ", f"{legacy}/LegacyC.cpp"),
+    ]
+    for _name, source in sources:
+        _write(root, source)
+    rows = ["name,export_rva,target_rva,target_size,source,status,notes\n"]
+    for index, (name, source) in enumerate(sources):
+        rows.append(f"{name},,0x{0x400000 + index * 0x10:08X},10,{source},matched,\n")
+    _write(root, "reverse/functions.csv", "".join(rows))
+
+    single, homes = queue.survey(root)
+    assert single[candidate] == "Radar"
+    assert queue.destination(root, candidate, "Radar", homes, {}, {}) is None
+    queued, _skipped = queue.build(root)
+    assert all(source != candidate for source, _target, _cls in queued)
 
 
 def test_weak_sibling_inference_does_not_rank_split_class_homes(tmp_path):
@@ -282,3 +327,33 @@ def test_weak_sibling_inference_does_not_rank_split_class_homes(tmp_path):
 
     queued, _skipped = queue.build(root)
     assert all(source != REGION_DTOR for source, _target, _cls in queued)
+
+
+@pytest.mark.parametrize("cls,current,alternate", [
+    (
+        "LivingWorldRegion",
+        "Code/GameEngine/Source/GameLogic/LivingWorld",
+        "Code/GameEngine/Source/GameLogic/Object/Behavior",
+    ),
+    (
+        "BoneFXUpdateModuleData",
+        "Code/GameEngine/Source/GameLogic/Object/Update",
+        "Code/GameEngine/Source/Common/RTS",
+    ),
+])
+def test_sibling_counts_do_not_move_an_established_split_family(
+        tmp_path, cls, current, alternate):
+    root = _established_split_family_world(tmp_path, cls, current, alternate)
+    single, homes = queue.survey(root)
+    candidate = f"{current}/Candidate.cpp"
+    deleting_homes = queue.deleting_destructor_homes(root)
+
+    assert homes[cls][current] == 2
+    assert homes[cls][alternate] == 3
+    assert deleting_homes[cls] == {current}
+    assert queue.destination(
+        root, candidate, cls, homes, {}, {}, deleting_homes
+    ) is None
+
+    queued, _skipped = queue.build(root)
+    assert all(source != candidate for source, _target, _cls in queued)

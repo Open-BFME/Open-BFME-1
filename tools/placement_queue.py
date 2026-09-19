@@ -47,6 +47,10 @@ BLOCKED = "reverse/placement_blocked.tsv"
 # destination inferred from sibling counts. ZH naming it explicitly still counts:
 # some classes really do live in Common/.
 DUMPING_GROUND = "Code/GameEngine/Source/Common"
+LEGACY_DONOR_ROOTS = (
+    DUMPING_GROUND,
+    "Code/GameEngineDevice/Source/W3DDevice/Common",
+)
 
 # ?method@Class@@..., ??0Class@@ / ??1Class@@ constructors and destructors, and
 # ??_GClass@@ / ??_EClass@@ deleting-destructor wrappers.
@@ -89,6 +93,12 @@ def owning_class(mangled):
         return hit.group(2)
     hit = STRUCTOR.match(mangled or "")
     return hit.group(1) if hit else None
+
+
+def is_legacy_donor(directory):
+    """Whether weak sibling counts may drain, but never nominate, this tree."""
+    return any(directory == root or directory.startswith(root + "/")
+               for root in LEGACY_DONOR_ROOTS)
 
 
 def survey(root):
@@ -231,6 +241,16 @@ def destination(root, source, cls, homes, zh, zh_hdr, corroborating_homes=None):
     paired_homes = homes.get(paired, {})
     if len(paired_homes) == 1 and paired_homes.get(here, 0):
         return None
+    # A deleting-destructor wrapper independently corroborates the current
+    # directory.  When that directory also has a real family and another
+    # directory has one, sibling counts cannot decide which family owns this
+    # file: ranking the larger pile moved LivingWorldRegion and
+    # BoneFXUpdateModuleData thunks away from their intentional homes.
+    corroborated_here = (corroborating_homes or {}).get(cls, ())
+    if (homes[cls][here] >= 2 and here in corroborated_here and any(
+            count >= 2 and directory != here
+            for directory, count in homes[cls].items())):
+        return None
     # Otherwise: where this class already keeps most of its bodies. Two or more,
     # because one sibling elsewhere is as likely to be the misplaced file.
     # A second alternative directory makes the placement ambiguous even when one
@@ -240,12 +260,12 @@ def destination(root, source, cls, homes, zh, zh_hdr, corroborating_homes=None):
     if corroborating_homes:
         known_homes.update(corroborating_homes.get(cls, ()))
     alternatives = [d for d in known_homes
-                    if d != here and d != DUMPING_GROUND
+                    if d != here and not is_legacy_donor(d)
                     and (root / d).is_dir()]
     if len(alternatives) != 1:
         return None
     ranked = [(d, n) for d, n in homes[cls].most_common()
-              if n >= 2 and d != DUMPING_GROUND]
+              if n >= 2 and not is_legacy_donor(d)]
     for d, _ in ranked:
         # The class already keeps two or more bodies HERE: the file is home, and
         # the search stops. Treating "here" as a non-answer and falling through to
