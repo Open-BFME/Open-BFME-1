@@ -170,6 +170,21 @@ Rva0073D990 *Rva0073D990::self()
 	return this;
 }
 
+class Rva00255350DwordAt4
+{
+public:
+	int get() const;
+
+private:
+	char m_prefix[ 4 ];
+	int m_value;
+};
+
+int Rva00255350DwordAt4::get() const
+{
+	return m_value;
+}
+
 // mov eax,[ecx-<BACK>] / add eax,<OFFSET> / ret -- a pointer read at a
 // NEGATIVE displacement and advanced by a constant.  The object at
 // (this - BACK) is only witnessed as a pointer sitting at offset 0.
