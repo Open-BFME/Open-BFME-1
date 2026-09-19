@@ -22,6 +22,21 @@ BFME_PTR_MEMBER_OFFSET( Rva003CC700PtrOffset, 0x4, 0x8 )
 BFME_PTR_MEMBER_OFFSET( Rva0058B580PtrOffset, 0x4, 0x70 )
 BFME_PTR_MEMBER_OFFSET( Rva005A7400PtrOffset, 0x4, 0x70 )
 
+class Rva00160B90Field8
+{
+public:
+	int get() const;
+
+private:
+	char m_unmodelled[ 0x8 ];
+	int m_value;
+};
+
+int Rva00160B90Field8::get() const
+{
+	return m_value;
+}
+
 // mov eax,[ecx+<LEAD>] / fld dword ptr [eax+<INNER>] / ret -- the chained
 // getter of ChainedFieldGetters.cpp with a float at the far end; the `fld`
 // opcode is what makes it a float and not a dword.
