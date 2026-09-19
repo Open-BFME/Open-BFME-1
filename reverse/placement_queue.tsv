@@ -3,15 +3,6 @@ Code/GameEngine/Source/Common/RubbleRiseUpdateModuleDataDestructorThunk.cpp	Code
 Code/GameEngine/Source/Common/Thing/ModuleInfoClearAi.cpp	Code/GameEngine/Source/GameClient/ModuleInfoClearAi.cpp	ModuleInfo
 Code/GameEngine/Source/Common/Thing/ModuleInfoClearCopiedFromDefaultEntries.cpp	Code/GameEngine/Source/GameClient/ModuleInfoClearCopiedFromDefaultEntries.cpp	ModuleInfo
 Code/GameEngine/Source/Common/Thing/ModuleInfoClearModuleDataWithTag.cpp	Code/GameEngine/Source/GameClient/ModuleInfoClearModuleDataWithTag.cpp	ModuleInfo
-Code/GameEngine/Source/GameClient/System/RadarCtorThunk.cpp	Code/GameEngine/Source/Common/System/RadarCtorThunk.cpp	Radar
-Code/GameEngine/Source/GameClient/System/RadarIsRadarWindowThunk.cpp	Code/GameEngine/Source/Common/System/RadarIsRadarWindowThunk.cpp	Radar
-Code/GameEngine/Source/GameClient/System/RadarLocalPixelToRadar.cpp	Code/GameEngine/Source/Common/System/RadarLocalPixelToRadar.cpp	Radar
-Code/GameEngine/Source/GameClient/System/RadarTryEvent.cpp	Code/GameEngine/Source/Common/System/RadarTryEvent.cpp	Radar
-Code/GameEngine/Source/GameClient/System/RadarTryInfiltrationEventThunk.cpp	Code/GameEngine/Source/Common/System/RadarTryInfiltrationEventThunk.cpp	Radar
-Code/GameEngine/Source/GameClient/System/RadarTryUnderAttackEventThunk.cpp	Code/GameEngine/Source/Common/System/RadarTryUnderAttackEventThunk.cpp	Radar
-Code/GameEngine/Source/GameClient/System/Radar_createPlayerEvent.cpp	Code/GameEngine/Source/Common/System/Radar_createPlayerEvent.cpp	Radar
-Code/GameEngine/Source/GameClient/System/Radar_newMap_Thunk.cpp	Code/GameEngine/Source/Common/System/Radar_newMap_Thunk.cpp	Radar
-Code/GameEngine/Source/GameClient/System/Radar_refreshTerrain.cpp	Code/GameEngine/Source/Common/System/Radar_refreshTerrain.cpp	Radar
 Code/GameEngine/Source/GameLogic/Object/Update/DynamicGeometryInfoUpdateConstructor.cpp	Code/GameEngine/Source/GameLogic/Object/SpecialPower/DynamicGeometryInfoUpdateConstructor.cpp	SiegeDeployHordeSpecialPower
 Code/Libraries/Source/WWVegas/WWDebug/DebugIOFlat_ExpandMagic_Thunk.cpp	Code/Libraries/Source/debug/DebugIOFlat_ExpandMagic_Thunk.cpp	DebugIOFlat
 Code/Libraries/Source/WWVegas/WWDebug/DebugIONetConstructorThunk.cpp	Code/Libraries/Source/debug/DebugIONetConstructorThunk.cpp	DebugIONet
