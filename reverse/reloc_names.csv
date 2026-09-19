@@ -85,7 +85,7 @@ name,target_rva,target_size,source,notes
 ??$__copy_backward@PAUGen_t_000de650_p128pod@@PAU1@H@_STL@@YAPAUGen_t_000de650_p128pod@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000DE490,74,Code/gen_small/tgrid_133.cpp,reloc-derived;call-sites=1;identity=generated
 ?_M_insert_overflow@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@IAEXPAUEvaSideSounds@@ABU3@ABU__false_type@2@I_N@Z,0x000DEA80,267,Code/GameEngine/Source/GameClient/Eva.cpp,reloc-derived;call-sites=1;identity=real
 ?parseBlock@BfmePlayerAITypeSet@@QAEXPAVINI@@@Z,0x000DEEC0,578,Code/GameEngine/Source/Common/INI/INIPlayerAIType.cpp,reloc-derived;call-sites=1;identity=real
-??1PlayerTemplate@@QAE@XZ,0x000E27A0,702,Code/GameEngine/Source/Common/PlayerTemplateVectorDestructor.cpp,reloc-derived;call-sites=8;identity=real
+??1PlayerTemplate@@QAE@XZ,0x000E27A0,702,Code/GameEngine/Source/Common/RTS/PlayerTemplateVectorDestructor.cpp,reloc-derived;call-sites=8;identity=real
 ??0PlayerTemplate@@QAE@ABV0@@Z,0x000E2E50,918,Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,reloc-derived;call-sites=2;identity=real
 ??4PlayerTemplate@@QAEAAV0@ABV0@@Z,0x000E32D0,903,Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp,reloc-derived;call-sites=1;identity=real
 ?_M_insert_overflow@?$vector@UGen_t_000e5750_p12cd@@V?$allocator@UGen_t_000e5750_p12cd@@@_STL@@@_STL@@IAEXPAUGen_t_000e5750_p12cd@@ABU3@ABU__false_type@2@I_N@Z,0x000E5580,281,Code/gen_small/tgrid_103.cpp,reloc-derived;call-sites=1;identity=generated
