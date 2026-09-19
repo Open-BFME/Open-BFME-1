@@ -158,3 +158,4 @@ void LANAPI::handleRequestJoin( LANMessage *msg, UnsignedInt senderIP )
 	sendMessage(&reply, responseIP);
 	RequestGameOptions(GenerateGameOptionsString(), true);
 }
+
