@@ -269,7 +269,7 @@ name,target_rva,target_size,source,notes
 ??1Gen_dtor_001f8a70@@UAE@XZ,0x001F8340,32,Code/gen_small/dtors_002.cpp,reloc-derived;call-sites=1;identity=generated
 ??0?$pair@$$CBUGen_t_001f95d0_k4@@UGen_t_001f95d0_p12cd@@@_STL@@QAE@ABU01@@Z,0x001F9520,76,Code/gen_small/tgrid_107.cpp,reloc-derived;call-sites=1;identity=generated
 ?_M_insert_overflow@?$vector@UGen_t_001fa030_p8pod@@V?$allocator@UGen_t_001fa030_p8pod@@@_STL@@@_STL@@IAEXPAUGen_t_001fa030_p8pod@@ABU3@ABU__false_type@2@I_N@Z,0x001F9E80,302,Code/gen_small/tgrid_133.cpp,reloc-derived;call-sites=1;identity=generated
-??1CritterEmitterUpdateModuleDataUnknownB4@@QAE@XZ,0x001FA220,203,Code/GameEngine/Source/Common/CritterEmitterUpdateModuleDataDestructorThunk.cpp,reloc-derived;call-sites=1;identity=real
+??1CritterEmitterUpdateModuleDataUnknownB4@@QAE@XZ,0x001FA220,203,Code/GameEngine/Source/GameLogic/Object/Update/CritterEmitterUpdateModuleDataDestructorThunk.cpp,reloc-derived;call-sites=1;identity=real
 ?_M_insert_overflow@?$vector@UGen_t_001fa830_p12cd@@V?$allocator@UGen_t_001fa830_p12cd@@@_STL@@@_STL@@IAEXPAUGen_t_001fa830_p12cd@@ABU3@ABU__false_type@2@I_N@Z,0x001FA5B0,281,Code/gen_small/tgrid_107.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_001fad50@@UAE@XZ,0x001FAD80,25,Code/gen_small/dtors_002.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_001fc680@@UAE@XZ,0x001FC330,56,Code/gen_small/dtors_002.cpp,reloc-derived;call-sites=1;identity=generated

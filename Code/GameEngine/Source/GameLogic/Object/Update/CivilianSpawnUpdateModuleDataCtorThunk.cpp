@@ -1,7 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
 // BFME member layouts cross-checked against the exact destructor at
-// Code/GameEngine/Source/Common/CivilianSpawnUpdateModuleDataDestructorThunk.cpp.
+// Code/GameEngine/Source/GameLogic/Object/Update/CivilianSpawnUpdateModuleDataDestructorThunk.cpp.
 class CivilianSpawnUpdateModuleDataMemberA
 {
 public:
