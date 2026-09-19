@@ -311,7 +311,26 @@ struct BFMETreeCullTree
 	char m_unreconstructed_045[3];
 	SphereClass m_bounds;
 	Real m_sortKey;
-	char m_unreconstructed_05c[0x48];
+	DrawableID m_drawableID;
+	Real m_pushAside;
+	Real m_pushAsideDelta;
+	Real m_pushAsideSin;
+	Real m_pushAsideCos;
+	ObjectID m_pushAsideSource;
+	UnsignedInt m_lastFrameUpdated;
+	char m_unreconstructed_078[0x2c];
+};
+
+struct BFMETreePushData
+{
+	char m_unreconstructed_000[0x10];
+	UnsignedInt m_framesToMoveOutward;
+};
+
+struct BFMETreePushType
+{
+	BFMETreePushData *m_data;
+	char m_unreconstructed_004[0x58];
 };
 
 struct BFMETreeCullView
@@ -327,6 +346,20 @@ struct BFMETreeCullView
 	char m_unreconstructed_1e33e4[0x53c];
 	Int m_treeIndexStep;
 };
+
+struct BFMETreePushView
+{
+	char m_unreconstructed_000000[0x1548];
+	BFMETreeCullTree m_trees[12000];
+	Int m_numTrees;
+	Bool m_anythingChanged;
+	Bool m_anyPushChanged;
+	Bool m_updateAllKeys;
+	char m_unreconstructed_1e1ccf[0x25];
+	BFMETreePushType m_treeTypes[64];
+};
+
+extern GameLogic *TheBfmeGameLogic;
 
 // Several matched neighbors witness this older linked generation independently:
 // its records begin at 0x1B0, use a 0xE8 stride, and end at the 0x2A7CB0 count.
@@ -1594,38 +1627,42 @@ Bool W3DTreeBuffer::updateTreePosition(DrawableID id, Coord3D location, Real ang
 //=============================================================================
 /** Push sideways tree or grass. */
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Gen_0071CBB0_W3DTreeBuffer_PushAsideTree.cpp
-// ?pushAsideTree@W3DTreeBuffer@@QAEXW4DrawableID@@PBUCoord3D@@1W4ObjectID@@@Z present-unmatched
 void W3DTreeBuffer::pushAsideTree(DrawableID id, const Coord3D *pusherPos, 
 																	const Coord3D *pusherDirection, ObjectID pusherID )
 {
-	Int i;
-	for (i=0; i<m_numTrees; i++) {
-		if (m_trees[i].drawableID == id) {
-			UnsignedInt lastFrame = m_trees[i].lastFrameUpdated;
-			m_trees[i].lastFrameUpdated = TheGameLogic->getFrame();
-			if(m_trees[i].pushAsideSource == pusherID) {
-				if (m_trees[i].lastFrameUpdated - lastFrame < 3)
-					return; // already pushing. [5/28/2003]
+	if (*(const UnsignedByte *)((const char *)TheWritableGlobalData + 0x18) == 0)
+		return;
+
+	BFMETreePushView *self = reinterpret_cast<BFMETreePushView *>(this);
+	for (Int i = 0; i < self->m_numTrees; ++i) {
+		BFMETreeCullTree *tree = &self->m_trees[i];
+		if (tree->m_drawableID == id) {
+			UnsignedInt lastFrame = tree->m_lastFrameUpdated;
+			tree->m_lastFrameUpdated = TheBfmeGameLogic->getFrame();
+			if (tree->m_pushAsideSource == pusherID) {
+				if (tree->m_lastFrameUpdated - lastFrame < 3)
+					return;
 			}
 
-			if(m_trees[i].pushAside != 0.0f) {
-				return; // already pushing. [5/28/2003]
-			}
-			m_trees[i].pushAsideSource = pusherID;
+			if (tree->m_pushAside != 0.0f)
+				return;
+
+			tree->m_pushAsideSource = pusherID;
 			Coord3D delta;
-			delta.set(m_trees[i].location.X, m_trees[i].location.Y, m_trees[i].location.Z);
+			delta.set(tree->m_location.X, tree->m_location.Y, tree->m_location.Z);
 			delta.sub(pusherPos);
-
-			if (pusherDirection->x*delta.y - pusherDirection->y*delta.x > 0.0f) {
-				m_trees[i].pushAsideCos = -pusherDirection->y;
-				m_trees[i].pushAsideSin = pusherDirection->x;
+			if (pusherDirection->x * delta.y - pusherDirection->y * delta.x > 0.0f) {
+				tree->m_pushAsideCos = -pusherDirection->y;
+				tree->m_pushAsideSin = pusherDirection->x;
 			} else {
-				m_trees[i].pushAsideCos = pusherDirection->y;
-				m_trees[i].pushAsideSin = -pusherDirection->x;
+				tree->m_pushAsideCos = pusherDirection->y;
+				tree->m_pushAsideSin = -pusherDirection->x;
 			}
-			m_anyPushChanged = true;
-			m_trees[i].pushAsideDelta = 1.0f/(Real)m_treeTypes[m_trees[i].treeType].m_data->m_framesToMoveOutward;
+
+			self->m_anyPushChanged = true;
+			tree->m_pushAsideDelta = 1.0f /
+				((Real)self->m_treeTypes[tree->m_treeType].m_data->m_framesToMoveOutward *
+				*(Real *)((char *)this + 0x1e3910));
 		}
 	}
 }
