@@ -44,6 +44,28 @@ public:
 	virtual void slot1();
 };
 
+class ClientSubsystem
+{
+public:
+	virtual void slot00(); virtual void slot04();
+	virtual void slot08(); virtual void slot0C();
+	virtual void slot10(); virtual void slot14();
+	virtual void slot18(); virtual void slot1C();
+	virtual void slot20(); virtual void slot24();
+	virtual void slot28(); virtual void slot2C();
+	virtual void slot30(); virtual void slot34();
+	virtual void slot38(); virtual void slot3C();
+	virtual void slot40(); virtual void slot44();
+	virtual void slot48(); virtual void slot4C();
+	virtual void slot50(); virtual void slot54();
+	virtual void slot58(); virtual void slot5C();
+	virtual void slot60(); virtual void slot64();
+	virtual void slot68();
+	virtual void slot6c( int a, int b, int c );
+};
+
+extern ClientSubsystem *TheAudioClientUpdate;
+
 class MultiPlayerLoadScreen : public Rva00490470
 {
 public:
@@ -72,4 +94,16 @@ MultiPlayerLoadScreen::MultiPlayerLoadScreen()
 		m_playerSide[ i ] = 0;
 		m_playerLookup[ i ] = -1;
 	}
+}
+
+MultiPlayerLoadScreen::~MultiPlayerLoadScreen()
+{
+	for ( int i = 0; i < 8; ++i )
+	{
+		m_progressBars[ i ] = 0;
+		m_playerNames[ i ] = 0;
+		m_playerSide[ i ] = 0;
+		m_playerLookup[ i ] = -1;
+	}
+	TheAudioClientUpdate->slot6c( 2, 1, 0 );
 }
