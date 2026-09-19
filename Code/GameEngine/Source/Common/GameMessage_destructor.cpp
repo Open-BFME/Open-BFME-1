@@ -10,10 +10,6 @@ public:
 	GameMessageArgument *m_next;
 };
 
-void GameMessageArgument::deleteInstance(int)
-{
-}
-
 class GameMessageList
 {
 public:

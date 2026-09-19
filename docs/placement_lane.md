@@ -196,11 +196,10 @@ and a `csv` round-trip flattens them, which `check_csv` rejects. Repoint the
 source column by byte replacement, anchored on the surrounding commas so a path
 that is a prefix of another cannot be hit.
 
-**Some files cannot be committed anywhere.** `GameMessage_destructor.cpp` defines
-`GameMessageArgument::deleteInstance` and `AIGuardReturnState_onEnter_Bfme.cpp`
-defines `AIGuardReturnState::onEnter`; neither is declared in the ledger, so the
-hook rejects them wherever they sit. That predates this lane and needs a ledger
-row, not a move.
+**Some files cannot be committed anywhere.** `PathfinderCellPredicates.cpp`
+defines two helpers that no ledger row declares, so the hook rejects it wherever
+it sits. That predates this lane and needs a source repair or proven row, not a
+move.
 
 ## What this lane cannot fix
 

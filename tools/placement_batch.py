@@ -160,9 +160,9 @@ def main():
 def land(moved, rows):
     """Commit, returning whatever the hook names. Bounded rounds, not hope.
 
-    Some files cannot be committed at ANY path: GameMessage_destructor.cpp defines
-    GameMessageArgument::deleteInstance and no ledger row declares it. That
-    predates this lane and needs a row, not a move, so it goes back where it was
+    Some files cannot be committed at ANY path: PathfinderCellPredicates.cpp
+    defines two helpers that no ledger row declares. That predates this lane and
+    needs a source repair or proven row, not a move, so it goes back where it was
     and the rest of the batch still lands.
     """
     for _ in range(4):
