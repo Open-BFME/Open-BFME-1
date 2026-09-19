@@ -502,48 +502,62 @@ Coord3D DockUpdate::computeApproachPosition( Int positionIndex, Object *forWhom 
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-// ?loadDockPositions@DockUpdate@@IAEXXZ present-unmatched
+class DockUpdateDrawableObject
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual Drawable *getDrawable() const;
+};
+
+class BFMEDrawableBoneQuery
+{
+public:
+	Int getPristineBonePositions(const char *boneNamePrefix, Int startIndex,
+		Coord3D *positions, Matrix3D *transforms, Int maxBones, Int extra) const;
+};
+
+class DockUpdateApproachBone : public Coord3D
+{
+public:
+	DockUpdateApproachBone();
+	~DockUpdateApproachBone();
+};
+
 void DockUpdate::loadDockPositions()
 {
 	Object *obj = getObject();
-	Drawable *myDrawable = obj->getDrawable();
+	Drawable *myDrawable = reinterpret_cast<DockUpdateDrawableObject *>(obj)->getDrawable();
 
-	if (myDrawable)
+	if (myDrawable != NULL)
 	{
-		//Patch 1.03 - Kris - Jan 19, 2005
-		//Some of the GLASupplyStash assets still have docking bones in them. When found, the docking positions must be 
-		//observed. This occurs when upgrading to fortified structures which still have the bones. This has the negative
-		//side-effect of workers suddenly slowing down their gathering rate. The proper fix would be to remove the bones
-		//from the assets, but the artists could not find the original max files, hence the code solution. 
-		if( !obj->isKindOf( KINDOF_IGNORE_DOCKING_BONES ) )
+		reinterpret_cast<BFMEDrawableBoneQuery *>(myDrawable)->getPristineBonePositions( "DockStart", 0, &m_enterPosition, NULL, 1, 0);
+		reinterpret_cast<BFMEDrawableBoneQuery *>(myDrawable)->getPristineBonePositions( "DockAction", 0, &m_dockPosition, NULL, 1, 0);
+		reinterpret_cast<BFMEDrawableBoneQuery *>(myDrawable)->getPristineBonePositions( "DockEnd", 0, &m_exitPosition, NULL, 1, 0);
+		if( m_numberApproachPositions != DYNAMIC_APPROACH_VECTOR_FLAG )
 		{
-
-			myDrawable->getPristineBonePositions( "DockStart", 0, &m_enterPosition, NULL, 1);
-			myDrawable->getPristineBonePositions( "DockAction", 0, &m_dockPosition, NULL, 1);
-			myDrawable->getPristineBonePositions( "DockEnd", 0, &m_exitPosition, NULL, 1);
-			if( m_numberApproachPositions != DYNAMIC_APPROACH_VECTOR_FLAG )
+			DockUpdateApproachBone approachBones[DEFAULT_APPROACH_VECTOR_SIZE];
+			m_numberApproachPositionBones = reinterpret_cast<BFMEDrawableBoneQuery *>(myDrawable)->getPristineBonePositions( "DockWaiting", 1, reinterpret_cast<Coord3D *>(approachBones), NULL, m_numberApproachPositions, 0);
+			if( m_numberApproachPositions == m_approachPositions.size() )
 			{
-				// Dynamic means no bones
-				Coord3D approachBones[DEFAULT_APPROACH_VECTOR_SIZE];
-				m_numberApproachPositionBones = myDrawable->getPristineBonePositions( "DockWaiting", 1, approachBones, NULL, m_numberApproachPositions);
-				if( m_numberApproachPositions == m_approachPositions.size() )//safeguard: will always be true
+				for( Int copyIndex = 0; copyIndex < m_numberApproachPositions; ++copyIndex )
 				{
-					for( Int copyIndex = 0; copyIndex < m_numberApproachPositions; ++copyIndex )
-					{
-						m_approachPositions[copyIndex] = approachBones[copyIndex];
-					}
+					m_approachPositions[copyIndex] = approachBones[copyIndex];
 				}
 			}
-			else
-				m_numberApproachPositionBones = 0;
-
-			m_positionsLoaded = TRUE;
 		}
 		else
-		{
 			m_numberApproachPositionBones = 0;
-			m_positionsLoaded = TRUE;
-		}
+
+		m_positionsLoaded = TRUE;
 	}
 }
 
