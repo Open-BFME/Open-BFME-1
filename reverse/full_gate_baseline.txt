@@ -9,7 +9,6 @@
 ??_EEntry@?$HashTemplateClass@VStringClass@@PAVHTreeClass@@@@QAEPAXI@Z (Code/Libraries/Source/WWVegas/WW3D2/htreemgr.cpp)
 ??_EEntry@?$HashTemplateClass@VStringClass@@PAVTextureClass@@@@QAEPAXI@Z (Code/Libraries/Source/WWVegas/WW3D2/assetmgr.cpp)
 ??_EEntry@?$HashTemplateClass@VStringClass@@PAVThumbnailClass@@@@QAEPAXI@Z (Code/Libraries/Source/WWVegas/WW3D2/texturethumbnail.cpp)
-??_G?$SimpleDynVecClass@VVector3@@@@UAEPAXI@Z (Code/GameEngineDevice/Source/W3DDevice/GameClient/Water/W3DWater.cpp)
 ?Get_Wide_String@INIClass@@QBEABVWideStringClass@@AAV2@PBD1PBG@Z (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/ini.cpp)
 ?Set_Alpha_Channel@RingRenderObjClass@@QAEXABV?$LERPAnimationChannelClass@M@@@Z (Code/Libraries/Source/WWVegas/WW3D2/ringobj.cpp)
 ?Set_Color_Channel@RingRenderObjClass@@QAEXABV?$LERPAnimationChannelClass@VVector3@@@@@Z (Code/Libraries/Source/WWVegas/WW3D2/ringobj.cpp)
