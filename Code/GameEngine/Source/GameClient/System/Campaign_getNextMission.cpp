@@ -139,3 +139,17 @@ Mission *Campaign::getMission( AsciiString missionName )
 	}
 	return 0;
 }
+
+// Address-qualified clean-C++ carrier for the retail ILT entry at 0x0003236C.
+// The two CampaignManager call sites and the jump target independently prove
+// that this is the getNextMission thiscall route.
+class Rva0003236CGetNextMissionThunk : public Campaign
+{
+public:
+	Mission *forward(Mission *current);
+};
+
+Mission *Rva0003236CGetNextMissionThunk::forward(Mission *current)
+{
+	return getNextMission(current);
+}
