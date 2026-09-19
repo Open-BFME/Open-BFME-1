@@ -552,3 +552,9 @@ bool Rva0065EA30False( void )
 {
 	return false;
 }
+
+// xor al,al / ret -- the owning type is not identified.
+bool Rva0065EA20False( void )
+{
+	return false;
+}
