@@ -9,3 +9,13 @@ public:
 void Rva00219620Owner::ret4(int)
 {
 }
+
+class Rva00232200Owner
+{
+public:
+	void ret4(int);
+};
+
+void Rva00232200Owner::ret4(int)
+{
+}
