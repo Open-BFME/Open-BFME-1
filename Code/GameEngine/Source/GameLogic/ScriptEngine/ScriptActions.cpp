@@ -1195,25 +1195,128 @@ void ScriptActions::doDamageTeamMembers(const AsciiString& team, Real amount)
 //-------------------------------------------------------------------------------------------------
 /** doMoveToWaypoint */
 //-------------------------------------------------------------------------------------------------
-// ?doMoveToWaypoint@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
+class Rva00047172TeamCall
+{
+public:
+	typedef BitFlags<192> BfmeKindOfMaskType;
+	Int countObjects(BfmeKindOfMaskType setMask, BfmeKindOfMaskType clearMask);
+};
+
+class Rva0003B570AICall
+{
+public:
+	AIGroup *createGroup(void);
+};
+
+class Rva00022EC1TeamCall
+{
+public:
+	void getTeamAsAIGroup(AIGroup *group);
+};
+
+struct Rva0015A190Packet
+{
+	void *m_first;
+	unsigned char m_flag;
+	void *m_objA;
+	void *m_objB;
+};
+
+class Rva0015A190OwnerCall
+{
+public:
+	void applyOrFallback(void *position, Int command, void *objectA, void *objectB);
+	void applyPacket(void *packet, Int command);
+};
+
+class BfmeWaypointLocation
+{
+public:
+	unsigned char m_beforeLocation[0xc];
+	Coord3D m_location;
+};
+
+extern void j_00047172(void);
+extern void j_0001102c(void);
+extern void j_00048c43(void);
+extern void j_0003b570(void);
+extern void j_00022ec1(void);
+
 void ScriptActions::doMoveToWaypoint(const AsciiString& team, const AsciiString& waypoint)
 {
-	Team *theTeam = TheScriptEngine->getTeamNamed( team );
+	Team *theTeam = ((BfmeScriptEngineVtbl_44 *)TheScriptEngine)->getTeamNamed(team);
 
 	// The team is the team based on the name, and the calling team (if any) and the team that
 	// triggered the condition.  jba. :)
 	if (theTeam) {
-		AIGroup* theGroup = TheAI->createGroup();
+		union
+		{
+			void (*raw)(void);
+			AIGroup *(Rva0003B570AICall::*member)(void);
+		} createGroupCall;
+		createGroupCall.raw = j_0003b570;
+		AIGroup *theGroup = (reinterpret_cast<Rva0003B570AICall *>(TheAI)->*
+			createGroupCall.member)();
 		if (!theGroup) {
 			return;
 		}
 
-		theTeam->getTeamAsAIGroup(theGroup);
-		Waypoint *way = TheTerrainLogic->getWaypointByName(waypoint);
+		union
+		{
+			void (*raw)(void);
+			void (Rva00022EC1TeamCall::*member)(AIGroup *);
+		} getTeamAsAIGroupCall;
+		getTeamAsAIGroupCall.raw = j_00022ec1;
+		(reinterpret_cast<Rva00022EC1TeamCall *>(theTeam)->*
+			getTeamAsAIGroupCall.member)(theGroup);
+		union
+		{
+			void (*raw)(void);
+			Int (Rva00047172TeamCall::*member)(Rva00047172TeamCall::BfmeKindOfMaskType,
+				Rva00047172TeamCall::BfmeKindOfMaskType);
+		} countCall;
+		countCall.raw = j_00047172;
+		Int count = (reinterpret_cast<Rva00047172TeamCall *>(theTeam)->*
+			countCall.member)(
+			*(const Rva00047172TeamCall::BfmeKindOfMaskType *)&KINDOFMASK_NONE,
+			*(const Rva00047172TeamCall::BfmeKindOfMaskType *)&KINDOFMASK_NONE);
+
+		Waypoint *way = ((BfmeTerrainLogicVtbl_7c *)TheTerrainLogic)->getWaypointByName(waypoint);
 		if (way) {
-			Coord3D destination = *way->getLocation();
-			//DEBUG_LOG(("Moving team to waypoint %f, %f, %f\n", destination.x, destination.y, destination.z));
- 			theGroup->groupMoveToPosition( &destination, false, CMD_FROM_SCRIPT );
+			Coord3D destination;
+			BfmeWaypointLocation *bfmeWay =
+				reinterpret_cast<BfmeWaypointLocation *>(way);
+			destination.x = bfmeWay->m_location.x;
+			destination.y = bfmeWay->m_location.y;
+			destination.z = bfmeWay->m_location.z;
+			Int command = 1;
+
+			if (count > 1) {
+				union
+				{
+					void (*raw)(void);
+					void (Rva0015A190OwnerCall::*member)(void *, Int, void *, void *);
+				} applyCall;
+				applyCall.raw = j_0001102c;
+				(reinterpret_cast<Rva0015A190OwnerCall *>(theGroup)->*
+					applyCall.member)(&destination, command, 0,
+					reinterpret_cast<void *>(command));
+			} else {
+				Rva0015A190Packet packet;
+				packet.m_first = &destination;
+				packet.m_flag = 0;
+				packet.m_objA = 0;
+				packet.m_objB = 0;
+
+				union
+				{
+					void (*raw)(void);
+					void (Rva0015A190OwnerCall::*member)(void *, Int);
+				} applyCall;
+				applyCall.raw = j_00048c43;
+				(reinterpret_cast<Rva0015A190OwnerCall *>(theGroup)->*
+					applyCall.member)(&packet, command);
+			}
 		}
 	}
 }
