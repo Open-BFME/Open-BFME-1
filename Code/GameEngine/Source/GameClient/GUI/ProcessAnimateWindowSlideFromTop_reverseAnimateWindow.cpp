@@ -64,6 +64,10 @@ private:
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ProcessAnimateWindow.h
 class ProcessAnimateWindowSlideFromTop
 {
+protected:
+	virtual ~ProcessAnimateWindowSlideFromTop();
+	friend void forceProcessAnimateWindowSlideFromTopDeletingDestructor();
+
 public:
 	virtual void initReverseAnimateWindow( AnimateWindow *, UnsignedInt );
 	virtual void initAnimateWindow( AnimateWindow * );
@@ -76,6 +80,11 @@ private:
 	Real m_slowDownRatio;
 	Real m_speedUpRatio;
 };
+
+void forceProcessAnimateWindowSlideFromTopDeletingDestructor()
+{
+	ProcessAnimateWindowSlideFromTop value;
+}
 
 extern "C" UnsignedInt __stdcall bfme_timeGetTime( void );
 
@@ -125,4 +134,3 @@ Bool ProcessAnimateWindowSlideFromTop::reverseAnimateWindow( AnimateWindow *anim
 	animWin->setVel(vel);
 	return false;
 }
-
