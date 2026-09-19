@@ -74,8 +74,11 @@ private:
 
 class ProcessAnimateWindowSlideFromBottom
 {
-public:
+protected:
 	virtual ~ProcessAnimateWindowSlideFromBottom();
+	friend void forceProcessAnimateWindowSlideFromBottomDeletingDestructor();
+
+public:
 	virtual void initAnimateWindow(AnimateWindow *);
 	virtual void initReverseAnimateWindow(AnimateWindow *, UnsignedInt);
 	virtual Bool updateAnimateWindow(AnimateWindow *);
@@ -87,6 +90,11 @@ private:
 	Real m_slowDownRatio;
 	Real m_speedUpRatio;
 };
+
+void forceProcessAnimateWindowSlideFromBottomDeletingDestructor()
+{
+	ProcessAnimateWindowSlideFromBottom value;
+}
 
 extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
 extern const Real BfmeShadowScale;
