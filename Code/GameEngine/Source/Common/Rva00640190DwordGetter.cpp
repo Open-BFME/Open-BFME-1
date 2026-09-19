@@ -28,3 +28,17 @@ int Rva006401B0DwordGetter::get() const
 {
 	return m_value;
 }
+
+class Rva00703BB0DwordGetter
+{
+public:
+	int get() const;
+
+	char m_lead[0x1C];
+	int m_value;
+};
+
+int Rva00703BB0DwordGetter::get() const
+{
+	return m_value;
+}
