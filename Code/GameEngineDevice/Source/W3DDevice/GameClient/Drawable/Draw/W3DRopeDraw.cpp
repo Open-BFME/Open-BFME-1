@@ -131,15 +131,26 @@ void W3DRopeDraw::tossSegments()
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/W3DRopeDraw_initRopeParms.cpp
-// ?initRopeParms@W3DRopeDraw@@UAEXMMABURGBColor@@MMM@Z present-unmatched
+// byte-exact reconstruction: this TU
+// ?initRopeParms@W3DRopeDraw@@UAEXMMABURGBColor@@MMM@Z
+static const Real &bfmeMax(const Real &a, const Real &b)
+{
+	return a > b ? a : b;
+}
+
+static const Real &bfmeMin(const Real &a, const Real &b)
+{
+	return a < b ? a : b;
+}
+
 void W3DRopeDraw::initRopeParms(Real length, Real width, const RGBColor& color, Real wobbleLen, Real wobbleAmp, Real wobbleRate)
-{ 
-	m_maxLen = max(1.0f, length);
+{
+	const Real one = 1.0f;
+	m_maxLen = bfmeMax(one, length);
 	m_curLen = 0.0f;
 	m_width = width;
 	m_color = color;
-	m_wobbleLen = min(m_maxLen, wobbleLen);
+	m_wobbleLen = bfmeMin(m_maxLen, wobbleLen);
 	m_wobbleAmp = wobbleAmp;
 	m_wobbleRate = wobbleRate;
 	m_curZOffset = 0.0f;
