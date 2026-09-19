@@ -61,6 +61,7 @@
 #include "Common/Registry.h"
 #include "GameClient/GlobalLanguage.h"
 #include "Common/Filesystem.h"
+#include "../../../../Libraries/Source/WWVegas/WWLib/string_base.h"
 
 //-----------------------------------------------------------------------------
 // DEFINES ////////////////////////////////////////////////////////////////////
@@ -213,14 +214,13 @@ Int GlobalLanguage::adjustFontSize(Int theFontSize)
 }
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameClient/FontDescCtor.cpp
-// ??0FontDesc@@ present-unmatched
 FontDesc::FontDesc(void)
 {
-	name = "Arial Unicode MS";	///<name of font
+	// BFME calls the length-aware StringBase member omitted by the vendored AsciiString declaration.
+	reinterpret_cast<StringBase<char> *>(&name)->set("Arial Unicode MS", 16);
 	size = 12;			///<point size
 	bold = FALSE;			///<is bold?
 }
 //-----------------------------------------------------------------------------
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 //-----------------------------------------------------------------------------
-
