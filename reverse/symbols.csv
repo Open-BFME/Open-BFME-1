@@ -33467,7 +33467,6 @@ name,address,notes
 ?b_00230980@@YAXXZ,0x00230980,gen-thunk body
 ?b_00230ae0@@YAXXZ,0x00230AE0,gen-thunk body
 ?b_00230bf0@@YAXXZ,0x00230BF0,gen-thunk body
-?b_002310f0@@YAXXZ,0x002310F0,gen-thunk body
 ?b_00231980@@YAXXZ,0x00231980,gen-thunk body
 ?b_00231bb0@@YAXXZ,0x00231BB0,gen-thunk body
 ?b_00231be0@@YAXXZ,0x00231BE0,gen-thunk body
@@ -79323,6 +79322,7 @@ name,address,notes
 ?compress@LZHLCompressor@@QAEIPAEPBEI@Z,0x00825680,retail LZHLCompress 0x00823130 passes ECX handle and dst/src/size; ret12 member returns named LZHLEncoder::flush and calls named LZBuffer helpers plus compressor updateTable; canonical _lz.h signature; member body remains present-unmatched
 ?compute@BridgeGetBridgeHeightShim@@QAEMPBUCoord3D@@PAU2@@Z,0x001A7520,Bridge getBridgeHeight incremental-link thunk target through a TU-local forwarding shim
 ?compute@Rva0018CF10Owner@@QBEMPBURva0018CF10Point@@0@Z,0x0002CEEE,pin; ILT of bfmeBoundaryDistanceSquared3D used by Rva0018CF10Owner::distanceSquaredTo
+?computeAODFormationPosition_002310F0@@YAXXZ,0x002310F0,"address-qualified identity: AODHordeContain +0xE4 interface vtable 0x010AE230 slot 7 override; Horde and Horse tables route this slot to base 0x002458B0; writes a three-float member formation destination"
 ?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z,0x0001D7C8
 ?computeBonus@Weapon@@IBEXPBVObject@@IAAVWeaponBonus@@@Z,0x00024591,Open-BFME5 ILT; called by ?getAttackRange@Weapon@@QBEMPBVObject@@@Z at 0x001E2B50 with the source object a zero flag word and the default-constructed bonus block
 ?computeFirst@Rva000E92B0Owner@@AAEHXZ,0x0000D67A,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x000E92B0 calls; autopin
@@ -82390,6 +82390,7 @@ name,address,notes
 ?getModelVertices@W3DBridgeGetModelVerticesShim@@QAEHPAUVertexFormatXYZNDUV1@@HMAAVVector3@@111ABVMatrix3D@@PAVMeshClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x006D7EA0,W3DBridge incremental-link thunk target through a TU-local forwarding shim
 ?getMoodMatrixActionAdjustment@AIUpdateInterface@@QBEIW4MoodMatrixAction@@@Z,0x0002B30F,AI idle mood adjustment thunk
 ?getMoodMatrixValue@AIUpdateInterface@@QBEIXZ,0x0001BB3F,AIUpdate retail caller and pristine mood-filter body identify ILT to 0x00279780
+?getMostValuableLocation@BfmeShroudManagerHuntView@@QAEXHHPAUCoord3D@@@Z,0x008F7450,retail forwarder called by Player::setUnitsShouldHunt at 0x000D8C60
 ?getNATPortAllocationScheme@FirewallHelperClass@@AAEHHPAG0AA_N1@Z,0x00012F3F
 ?getNATPortAllocationScheme@FirewallHelperClassGetNATPortAllocationSchemeShim@@QAEHHPAG0AA_N1@Z,0x0066E870,FirewallHelperClass incremental-link thunk target through a TU-local forwarding shim
 ?getName00518BF0@GameSlot@@QBE?AVRva00518BF0Name@@XZ,0x003879C0,caller518BF0 via3A20B; independent body copies four-byte UTF16 name fromGameSlot+28 using888400 into hidden result pointer and returns it ret4; address-derived result-lifetime view
@@ -82481,6 +82482,7 @@ name,address,notes
 ?getPlayerMaskFromAsciiString@BfmeScriptEngine_getPlayerMaskFromAsciiString@@QAEGABVAsciiString@@PA_N@Z,0x0004B290,ILT doSetMoney player-mask resolver (body 0x34CB60)
 ?getPlayerName@ConnectionManager@@QAE?AVUnicodeString@@H@Z,0x00012A62,DisconnectManager::disconnectPlayer direct-call ILT thunk
 ?getPlayerStructureBounds@AIPlayer@@SAXPAURegion2D@@H@Z,0x000362AA,Open-BFME5 ILT at guardSupplyCenter 0x0016694A; static helper receives the local bounds and enemy player index
+?getPlayersWithRelationship@BfmePlayerListHuntView@@QAEGHH_N@Z,0x00044C60,retail relationship helper called by Player::setUnitsShouldHunt at 0x000D8C60
 ?getPlayersWithRelationship@PlayerList@@QAEGHH_N@Z,0x00044C60,ILT of BFME 3-arg getPlayersWithRelationship body 0x000DF5A0
 ?getPlayersWithRelationship@Rva002EE330PlayerList@@QAEGHH_N@Z,0x00044C60,same 3-arg mask lookup as the PlayerList spelling already pinned here; typed onto the address-derived class the global at 0x012ED748 names
 ?getPoints@SkirmishBattleHonors@@QBEHVAsciiString@@@Z,0x0009C410,by-value side prefix + "Points" at VA 0x01080498 then getInt ILT 0x000443B9 (pinned) -> 0x000A9490 with default 0; ret 4; ZH SkirmishBattleHonors::getPoints
@@ -88407,5 +88409,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-?getMostValuableLocation@BfmeShroudManagerHuntView@@QAEXHHPAUCoord3D@@@Z,0x008F7450,retail forwarder called by Player::setUnitsShouldHunt at 0x000D8C60
-?getPlayersWithRelationship@BfmePlayerListHuntView@@QAEGHH_N@Z,0x00044C60,retail relationship helper called by Player::setUnitsShouldHunt at 0x000D8C60
