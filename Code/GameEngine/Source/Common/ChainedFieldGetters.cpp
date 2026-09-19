@@ -110,6 +110,17 @@ int Rva00233D50Dword::get() const
 	return *(const int *)((const char *)this + 4);
 }
 
+class Rva002BA020Dword
+{
+public:
+	int get() const;
+};
+
+int Rva002BA020Dword::get() const
+{
+	return *(const int *)((const char *)this + 4);
+}
+
 BFME_CHAIN_INNER( Rva0026A930ChainedDword, 0x8, int )
 BFME_CHAIN_BEFORE( Rva0026A930ChainedDword, 0x20, int )
 
