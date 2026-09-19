@@ -4165,26 +4165,30 @@ void ScriptActions::doRevealMapEntirePermanently( Bool reveal, const AsciiString
 //-------------------------------------------------------------------------------------------------
 /** doShroudMapEntire */
 //-------------------------------------------------------------------------------------------------
-// ?doShroudMapEntire@ScriptActions@@IAEXABVAsciiString@@@Z present-unmatched
 void ScriptActions::doShroudMapEntire(const AsciiString& playerName)
 {
-	Player* player = TheScriptEngine->getPlayerFromAsciiString(playerName);
-	if (player && playerName.isNotEmpty())
-	{
-		ThePartitionManager->shroudMapForPlayer( player->getPlayerIndex() );
-	}
-	else
+	PlayerMaskType mask = ((BfmeScriptEngine_getPlayerMaskFromAsciiString *)TheScriptEngine)
+		->getPlayerMaskFromAsciiString(playerName, NULL);
+	if (!mask)
 	{
 		for (Int i=0; i<ThePlayerList->getPlayerCount(); ++i)
 		{
 			Player *player = ThePlayerList->getNthPlayer(i);
-			if (player->getPlayerType() == PLAYER_HUMAN)
+			if (!*reinterpret_cast<void **>(reinterpret_cast<unsigned char *>(player) + 0x2c))
 			{
-				DEBUG_LOG(("ScriptActions::doShroudMapEntire() for player %d\n", i));
-				ThePartitionManager->shroudMapForPlayer( i );
+				TheShroudManager->shroudMapForPlayer(i);
 			}
 		}
+		return;
 	}
+
+	do {
+		Player *player = ThePlayerList->getEachPlayerFromMask(mask);
+		if (player)
+		{
+			TheShroudManager->shroudMapForPlayer(player->getPlayerIndex());
+		}
+	} while (mask);
 }
 
 //-------------------------------------------------------------------------------------------------

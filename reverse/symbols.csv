@@ -86074,6 +86074,7 @@ name,address,notes
 ?showScreen@DisconnectMenu@@QAEXXZ,0x0050E9A0,ZH DisconnectMenu::showScreen twin: HideDiplomacy 0x0052ADE0 / HideInGameChat 0x00512670 / 0x00598F30 (ZH HideQuitMenu position; ledger name hidePurchaseScience is suspect) / HideSaveLoadMenu 0x005696D0 then UI singleton 0x012F148C slot +0x150(1) then TheWindowManager 0x012F1B40 slot +0x6C (winCreateLayout position) with literal DisconnectScreen.apt 0x01087A9C stored to 0x012F4960 and layout slot 0(0); this-less like hideScreen; sole caller DisconnectManager::turnOnScreen 0x0066BFE4; ILT 0x00020144
 ?showShellMap@Shell@@QAEX_N@Z,0x0057FB40,temporary bridge for the reviewable void-signature retraction; removed with the proven Bool replacement
 ?showSpellStore@AptPalantir@@QAEXXZ,0x00040CAA,AptPalantir OnBttnSpellStore dispatcher
+?shroudMapForPlayer@PartitionManager@@QAEXH@Z,0x008F7410,retail direct call from ScriptActions::doShroudMapEntire at 0x002EEF40; facade forwards the player index to updatePlayerCells008FB060
 ?shutdown@GameResultsThread@@QAEXXZ,0x009DB5A0,Open-BFME5 GameResultsQueue worker shutdown
 ?shutdown@GameResultsThreadWide@@QAEXXZ,0x009DB5A0,near-twin pin of shutdown@GameResultsThread for GameResultsQueueDestructorWide.cpp
 ?shutdown@TerrainTracksRenderObjClassSystem@@QAEXXZ,0x0002C6E7
