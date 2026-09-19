@@ -81,6 +81,21 @@ char *Rva0026C190Field4::get() const
 	return m_value;
 }
 
+class Rva00719F70Field4
+{
+public:
+	char *get() const;
+
+private:
+	char m_unmodelled[ 0x4 ];
+	char *m_value;
+};
+
+char *Rva00719F70Field4::get() const
+{
+	return m_value;
+}
+
 // mov eax,[ecx+<LEAD>] / fld dword ptr [eax+<INNER>] / ret -- the chained
 // getter of ChainedFieldGetters.cpp with a float at the far end; the `fld`
 // opcode is what makes it a float and not a dword.
