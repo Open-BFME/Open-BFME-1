@@ -60,6 +60,12 @@ private:
 
 class ProcessAnimateWindowSlideFromTopFast
 {
+protected:
+	virtual ~ProcessAnimateWindowSlideFromTopFast();
+
+private:
+	friend void forceProcessAnimateWindowSlideFromTopFastDeletingDestructor();
+
 public:
 	virtual void initReverseAnimateWindow(AnimateWindow *, UnsignedInt);
 	virtual void initAnimateWindow(AnimateWindow *);
@@ -72,6 +78,12 @@ private:
 	Real m_slowDownRatio;
 	Real m_speedUpRatio;
 };
+
+// Instantiation makes MSVC emit the protected scalar-deleting destructor at 0x00497970.
+void forceProcessAnimateWindowSlideFromTopFastDeletingDestructor()
+{
+	ProcessAnimateWindowSlideFromTopFast value;
+}
 
 extern "C" UnsignedInt __stdcall bfme_timeGetTime(void);
 
