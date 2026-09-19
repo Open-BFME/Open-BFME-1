@@ -12,6 +12,28 @@ public:
 	void bfmeAdd1095(BfmeZ1095B *z, int k);
 };
 
+class Upgrade;
+class UpgradeTemplate;
+enum UpgradeStatusType
+{
+	UPGRADE_STATUS_INVALID,
+	UPGRADE_STATUS_IN_PRODUCTION,
+	UPGRADE_STATUS_COMPLETE
+};
+
+class Player
+{
+public:
+	Upgrade *addUpgrade(const UpgradeTemplate *upgradeTemplate,
+		UpgradeStatusType status);
+};
+
+void BfmeR1095::bfmeAdd1095(BfmeZ1095B *z, int k)
+{
+	((Player *)this)->addUpgrade((const UpgradeTemplate *)z,
+		(UpgradeStatusType)k);
+}
+
 class BfmeD1095A
 {
 public:
