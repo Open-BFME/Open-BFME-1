@@ -98,3 +98,8 @@ SkirmishScreenState::~SkirmishScreenState()
 	if (TheSkirmishScreenState == this)
 		TheSkirmishScreenState = 0;
 }
+
+void forceSkirmishScreenStateDelete(SkirmishScreenState *state)
+{
+	delete state;
+}
