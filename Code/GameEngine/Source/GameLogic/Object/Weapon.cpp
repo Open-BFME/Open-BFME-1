@@ -3453,82 +3453,160 @@ void Weapon::crc( Xfer *xfer )
 	* Version Info:
 	* 1: Initial version */
 // ------------------------------------------------------------------------------------------------
-// ?xfer@Weapon@@MAEXPAVXfer@@@Z present-unmatched
+struct BfmeWeaponVersion
+{
+	unsigned char data[2];
+};
+
+union BfmeWeaponVersionStorage
+{
+	BfmeWeaponVersion version;
+	unsigned char padding[4];
+};
+
+struct BfmeWeaponFormattedText
+{
+	char *text;
+	int tag;
+};
+
+extern "C" BfmeWeaponFormattedText *__cdecl bfmeFormatText(
+	BfmeWeaponFormattedText *result, int tag, const char *format, ...);
+extern void __declspec(noreturn) __stdcall _CxxThrowException(
+	void *object, void *throwInfo);
+
+class BfmeWeaponXferView
+{
+public:
+	virtual void slot00();
+	virtual bool IsLoading();
+	virtual bool IsStoring();
+	virtual bool IsCRC();
+	virtual bool IsLightCRC();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual BfmeWeaponXferView &slot09(void *, unsigned int);
+	virtual BfmeWeaponXferView &xferVersion(BfmeWeaponVersion &);
+	virtual BfmeWeaponXferView &slot11();
+	virtual BfmeWeaponXferView &slot12();
+	virtual BfmeWeaponXferView &slot13();
+	virtual BfmeWeaponXferView &slot14();
+	virtual BfmeWeaponXferView &slot15();
+	virtual BfmeWeaponXferView &slot16();
+	virtual BfmeWeaponXferView &slot17();
+	virtual BfmeWeaponXferView &slot18();
+	virtual BfmeWeaponXferView &slot19();
+	virtual BfmeWeaponXferView &slot20();
+	virtual BfmeWeaponXferView &slot21();
+	virtual BfmeWeaponXferView &slot22();
+	virtual BfmeWeaponXferView &slot23();
+	virtual BfmeWeaponXferView &slot24();
+	virtual BfmeWeaponXferView &slot25();
+	virtual BfmeWeaponXferView &xferAsciiString(AsciiString &);
+	virtual BfmeWeaponXferView &slot27();
+	virtual BfmeWeaponXferView &slot28();
+	virtual BfmeWeaponXferView &xferUnsignedInt(unsigned int &);
+	virtual BfmeWeaponXferView &xferInt(int &);
+	virtual BfmeWeaponXferView &xferUnsignedShort(unsigned short &);
+	virtual BfmeWeaponXferView &slot32();
+	virtual BfmeWeaponXferView &slot33();
+	virtual BfmeWeaponXferView &slot34();
+	virtual BfmeWeaponXferView &xferBool(bool &);
+};
+
+class Rva00034045NameAccessor
+{
+public:
+	AsciiString getName() const;
+};
+
+#pragma comment(linker, "/alternatename:?getName@Rva00034045NameAccessor@@QBE?AVAsciiString@@XZ=?j_00034045@@YAXXZ")
+
+struct BfmeWeaponLayout
+{
+	char vftable[8];
+	const WeaponTemplate *m_template;
+	ObjectID m_projectileStreamID;
+	WeaponSlotType m_wslot;
+	WeaponStatus m_status;
+	unsigned int m_ammoInClip;
+	unsigned int m_whenWeCanFireAgain;
+	unsigned int m_whenPreAttackFinished;
+	unsigned int m_whenLastReloadStarted;
+	unsigned int m_lastFireFrame;
+	unsigned int m_suspendFXFrame;
+	unsigned int m_maxShotCountLegacy;
+	unsigned int m_gameFrame;
+	int m_maxShotCount;
+	int m_curBarrel;
+	int m_numShotsForCurBarrel;
+	std::vector<Int> m_scatterTargetsUnused;
+	bool m_pitchLimited;
+	char m_pitchPadding[3];
+	unsigned int m_field50;
+	int m_field54;
+	int m_field58;
+};
+
+typedef char BfmeWeaponLayoutTemplateOffset[(offsetof(BfmeWeaponLayout, m_template) == 8) ? 1 : -1];
+typedef char BfmeWeaponLayoutVectorOffset[(offsetof(BfmeWeaponLayout, m_scatterTargetsUnused) == 0x44) ? 1 : -1];
+
+extern void friend_xferObjectID(Xfer *xfer, ObjectID *objectID);
+extern void bfmeWeaponSlotXfer(Xfer *xfer, void *value);
+extern void bfmeWeaponStatusXfer(Xfer *xfer, void *value);
+#pragma comment(linker, "/alternatename:?bfmeWeaponSlotXfer@@YAXPAVXfer@@PAX@Z=?j_0002bfa8@@YAXXZ")
+#pragma comment(linker, "/alternatename:?bfmeWeaponStatusXfer@@YAXPAVXfer@@PAX@Z=?j_000399dc@@YAXXZ")
+
 void Weapon::xfer( Xfer *xfer )
 {
-	// version
-	const XferVersion currentVersion = 3;
-	XferVersion version = currentVersion;
-	xfer->xferVersion( &version, currentVersion );
+	BfmeWeaponLayout *weapon = reinterpret_cast<BfmeWeaponLayout *>(this);
+	BfmeWeaponXferView *bfme = reinterpret_cast<BfmeWeaponXferView *>(xfer);
+	unsigned short scatterCount;
+	BfmeWeaponVersionStorage versionStorage;
+	versionStorage.version.data[0] = 1;
+	versionStorage.version.data[1] = 2;
+	bfme->xferVersion(versionStorage.version);
 
-	if (version >= 2)
+	AsciiString tmplName = reinterpret_cast<const Rva00034045NameAccessor *>(weapon->m_template)->getName();
+	bfme->xferAsciiString(tmplName);
+	if (bfme->IsLoading())
 	{
-		AsciiString tmplName = m_template->getName();
-		xfer->xferAsciiString(&tmplName);
-		if (xfer->getXferMode() == XFER_LOAD)
+		weapon->m_template = TheWeaponStore->findWeaponTemplate(tmplName);
+		if (weapon->m_template == NULL)
 		{
-			m_template = TheWeaponStore->findWeaponTemplate(tmplName);
-			if (m_template == NULL)
-				throw INI_INVALID_DATA;
+			BfmeWeaponFormattedText error;
+			bfmeFormatText(&error, 5, 0);
+			_CxxThrowException(&error, (void *)0x011DFE5C);
 		}
 	}
 
-	// slot
-	xfer->xferUser( &m_wslot, sizeof( WeaponSlotType ) );
+	friend_xferObjectID(xfer, &weapon->m_projectileStreamID);
+	bfmeWeaponSlotXfer(xfer, &weapon->m_wslot);
+	bfme->xferUnsignedInt(weapon->m_ammoInClip);
+	bfme->xferUnsignedInt(weapon->m_whenWeCanFireAgain);
+	bfme->xferUnsignedInt(weapon->m_whenPreAttackFinished);
+	bfme->xferUnsignedInt(weapon->m_whenLastReloadStarted);
+	bfme->xferUnsignedInt(weapon->m_lastFireFrame);
+	bfme->xferUnsignedInt(weapon->m_suspendFXFrame);
+	bfme->xferUnsignedInt(weapon->m_maxShotCountLegacy);
+	bfme->xferInt(weapon->m_maxShotCount);
+	bfme->xferInt(weapon->m_curBarrel);
+	bfme->xferInt(weapon->m_numShotsForCurBarrel);
 
-	// status
-	xfer->xferUser( &m_status, sizeof( WeaponStatus ) );
-
-	// ammo
-	xfer->xferUnsignedInt( &m_ammoInClip );
-
-	// when can fire again
-	xfer->xferUnsignedInt( &m_whenWeCanFireAgain );
-
-	// wehn pre attack finished
-	xfer->xferUnsignedInt( &m_whenPreAttackFinished );
-
-	// when last reload started
-	xfer->xferUnsignedInt( &m_whenLastReloadStarted );
-
-	// last fire frame
-	xfer->xferUnsignedInt( &m_lastFireFrame );
-
-	// suspendFXFrame, this affects client only
-	if ( version >= 3 )
-		xfer->xferUnsignedInt( &m_suspendFXFrame );
-	else
-		m_suspendFXFrame = 0;
-
-	// projectile stream object
-	xfer->xferObjectID( &m_projectileStreamID );
-
-	// laser object
-	ObjectID laserIDUnused = INVALID_ID;
-	xfer->xferObjectID( &laserIDUnused );
-
-	// max shot count
-	xfer->xferInt( &m_maxShotCount );
-
-	// current barrel
-	xfer->xferInt( &m_curBarrel );
-
-	// num shots for current barrel
-	xfer->xferInt( &m_numShotsForCurBarrel );
-
-	// scatter targets unused
-	UnsignedShort scatterCount = m_scatterTargetsUnused.size();
-	xfer->xferUnsignedShort( &scatterCount );
+	scatterCount = weapon->m_scatterTargetsUnused.size();
+	bfme->xferUnsignedShort(scatterCount);
 	Int intData;
-	if( xfer->getXferMode() == XFER_SAVE )	
+	if (bfme->IsStoring())
 	{
 		std::vector< Int >::const_iterator it;
 
-		for( it = m_scatterTargetsUnused.begin(); it != m_scatterTargetsUnused.end(); ++it )
+		for (it = weapon->m_scatterTargetsUnused.begin(); it != weapon->m_scatterTargetsUnused.end(); ++it)
 		{
 
 			intData = *it;
-			xfer->xferInt( &intData );
+			bfme->xferInt(intData);
 
 		}  // end for, it
 
@@ -3537,23 +3615,28 @@ void Weapon::xfer( Xfer *xfer )
 	{
 
 		// sanity, the scatter targets must be empty
-		m_scatterTargetsUnused.clear();
+		weapon->m_scatterTargetsUnused.clear();
 
-		for( UnsignedShort i = 0; i < scatterCount; ++i )
+		for (unsigned short i = 0; i < scatterCount; ++i)
 		{
 
-			xfer->xferInt( &intData );
-			m_scatterTargetsUnused.push_back( intData );
+			bfme->xferInt(intData);
+			weapon->m_scatterTargetsUnused.push_back(intData);
 
 		}  // end for, i
 
 	}  // end else, load
 
-	// pitch limited
-	xfer->xferBool( &m_pitchLimited );
-
-	// leech weapon range active
-	xfer->xferBool( &m_leechWeaponRangeActive );
+	bfme->xferBool(weapon->m_pitchLimited);
+	bfme->xferUnsignedInt(weapon->m_field50);
+	bfme->xferInt(weapon->m_field54);
+	if (!bfme->IsLightCRC())
+	{
+		bfmeWeaponStatusXfer(xfer, &weapon->m_status);
+		bfme->xferUnsignedInt(weapon->m_gameFrame);
+	}
+	if (versionStorage.version.data[1] >= 2)
+		bfme->xferInt(weapon->m_field58);
 
 }  // end xfer
 

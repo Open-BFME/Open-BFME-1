@@ -78856,6 +78856,8 @@ name,address,notes
 ?bfmeWakeAutoPickup@Object@@QAEXH@Z,0x00004930,Open-BFME5 Object helper ILT thunk to body 0x001BFEF0; MSG_WAKE_AUTO_PICKUP dispatch and AutoPickUpUpdate vtables prove button-number selection and wake semantics
 ?bfmeWalkWorldCells@Pathfinder@@QAEHABUICoord2D@@0HPAPBUCoord3D@@@Z,0x0004ACBE,Open-BFME5 world-cell walk ILT used by 0x003DAC20
 ?bfmeWalkZC@BfmeOverZC@@QAEPAV1@XZ,0x000022BB,BfmeHostZC::bfmeHeightZC override walk callee from retail 0x0076CDD0
+?bfmeWeaponSlotXfer@@YAXPAVXfer@@PAX@Z,0x0002BFA8,Weapon::xfer retail call at 0x001E8DC5
+?bfmeWeaponStatusXfer@@YAXPAVXfer@@PAX@Z,0x000399DC,Weapon::xfer retail call at 0x001E8F36
 ?bfmeWinEHR@@YAPAXPAVBfmeObjEHR@@@Z,0x00010901,pin
 ?bfmeWrite@BfmeSetupRecord@@QAEXPBDH@Z,0x007E8A10,Open-BFME5 the write the two-field setup stubs call twice
 ?bfmeWrite@BfmeSetupTarget@@QAEXPBDH@Z,0x007E8A10,Open-BFME5 the member the setup stubs at 0x007E95A0 and siblings finish with
@@ -82417,6 +82419,7 @@ name,address,notes
 ?getName@LANGameInfo@@QAE?AVUnicodeString@@XZ,0x00041FC9,Open-BFME5 ILT target read from the RequestAccept call displacement at 0x0068614B
 ?getName@LivingWorldArmy@@QBE?AVAsciiString@@XZ,0x000041D3,currentCommandPoints retail call at 0x00361A1D invokes the LivingWorldArmy name-getter ILT thunk
 ?getName@LivingWorldPlayerArmy@@QAE?AVAsciiString@@XZ,0x0004B470,findArmy retail call at 0x003B440F invokes the ILT thunk for the player-army name getter
+?getName@Rva00034045NameAccessor@@QBE?AVAsciiString@@XZ,0x00034045,Weapon::xfer retail call at 0x001E8D50
 ?getName@Rva0016F9E0WeaponNameShim@@QBE?AVAsciiString@@XZ,0x00027A48,BFME AIAttackState locked weapon name thunk
 ?getName@Rva006169D0Item@@QAE?AVBFMERetailAsciiString@@XZ,0x0000510F,opaque item getter called by rva006169d0 at retail 0x006169D0 via ILT 0x0000510F
 ?getName@Rva007409A0@@QBE?AVAsciiString@@XZ,0x00022386,ILT called by 0x007409A0 copy-assign; body 0x00740970 ICF with CrateTemplate getName
