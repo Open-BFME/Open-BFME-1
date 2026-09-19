@@ -22,6 +22,20 @@ BFME_PTR_MEMBER_OFFSET( Rva003CC700PtrOffset, 0x4, 0x8 )
 BFME_PTR_MEMBER_OFFSET( Rva0058B580PtrOffset, 0x4, 0x70 )
 BFME_PTR_MEMBER_OFFSET( Rva005A7400PtrOffset, 0x4, 0x70 )
 
+class Rva00643100PtrOffset
+{
+public:
+	char *get() const;
+
+private:
+	char *m_base;
+};
+
+char *Rva00643100PtrOffset::get() const
+{
+	return m_base + 0x10;
+}
+
 class Rva00160B90Field8
 {
 public:
