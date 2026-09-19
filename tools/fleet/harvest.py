@@ -309,7 +309,9 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
             (WT / f).write_bytes(b"".join(rebuilt))
         if subprocess.run(["git", "diff", "--quiet", "--", "reverse/functions.csv", "reverse/symbols.csv"], cwd=WT).returncode:
             run("git", "add", "reverse/functions.csv", "reverse/symbols.csv", cwd=WT)
-            run("git", "commit", "-q", "--amend", "--no-edit", cwd=WT)
+            # Rebuilding can erase a harvest whose only change was row order.
+            # Keep its checkpoint even when no content delta remains.
+            run("git", "commit", "-q", "--amend", "--no-edit", "--allow-empty", cwd=WT)
         new = out("git", "rev-parse", "HEAD", cwd=WT)
         if subprocess.run([sys.executable, str(WT / "tools/check_csv.py")], cwd=WT).returncode:
             # union-merge artifacts of the rebase: exact duplicate records and mixed
