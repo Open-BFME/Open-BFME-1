@@ -8,6 +8,20 @@
 // friend_updateCellsTouched facade at 0x008F8BF0.  The ZH header and source
 // supply the method identity and geometry algorithm; the BFME dirty-list
 // facade supplies the actual named caller chain.
+//
+// 2026-09-19 retail-tail audit: this ZH reconstruction emits only 357 bytes
+// against BFME's 959-byte body.  BFME does not resume at the canonical
+// worldToCell/getCellAt sequence after the fill.  At +0x188 it computes the
+// current cell pair with floor((position-origin)*inverseCellSize), compares
+// PartitionData+0xB4/+0xB8 and the +0xDC validity byte, then maintains an
+// undo-reveal record (+0xBC/+0xC0), two reveal slots (+0xC4..+0xD8), and calls
+// the shroud manager helpers at 0x008FA010/0x008FA070/0x008FBCB0.  It finally
+// stores the new cell pair, calls the Object interface's cell-change slot,
+// clears sixteen dwords at +0x24, and destroys the 0x34-byte local shape.
+// The direct caller chain proves this remains PartitionData::updateCellsTouched,
+// but name_oracle has no witnesses for the BFME-only +0xB4..+0xDC fields and
+// the local-shape builder at 0x0087E190 is still unmatched.  Those layouts and
+// signatures must be recovered before adding the missing tail as clean C++.
 
 #include "GameLogic/GhostObject.h"
 #include "GameLogic/Object.h"
