@@ -2192,33 +2192,6 @@ void ScriptActions::updateNamedAttackPrioritySet(const AsciiString& unitName, co
 //-------------------------------------------------------------------------------------------------
 /** updateTeamAttackPrioritySet */
 //-------------------------------------------------------------------------------------------------
-// ?updateTeamAttackPrioritySet@ScriptActions@@IAEXABVAsciiString@@0@Z present-unmatched
-void ScriptActions::updateTeamAttackPrioritySet(const AsciiString& teamName, const AsciiString& attackPrioritySet)
-{
-	Team *team = TheScriptEngine->getTeamNamed(teamName);
-
-	if (!team) {
-		return;
-	}
-
-	const AttackPriorityInfo *info = TheScriptEngine->getAttackInfo(attackPrioritySet);
-	
-	if (info->getName().isNotEmpty()) {
-		team->setAttackPriorityName(info->getName());
-	}
-
-	// Set team member's attack priority.
-	for (DLINK_ITERATOR<Object> iter = team->iterate_TeamMemberList(); !iter.done(); iter.advance())
-	{
-		Object *obj = iter.cur();
-		AIUpdateInterface *ai = obj->getAIUpdateInterface();
-		if (!ai) {
-			continue;
-		}
-		ai->setAttackInfo(info);
-	}
-}
-
 //-------------------------------------------------------------------------------------------------
 /** updateBaseConstructionSpeed */
 //-------------------------------------------------------------------------------------------------

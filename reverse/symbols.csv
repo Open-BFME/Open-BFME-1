@@ -85781,6 +85781,7 @@ name,address,notes
 ?setAptPalantirAlertVisible@@YAXH_N@Z,0x0001136A,AptPalantir alert visibility action thunk
 ?setAscii@Rva003A5450@@QAEXABVAsciiString@@@Z,0x00028CF9,Open-BFME5 ILT called by the exact 0x003C1C50 item builder with its ASCII-string argument
 ?setAsciiString@Dict@@QAEPAVAsciiString@@V2@@Z,0x00009304,Dict setAsciiString used by MapObject::setWaypointName
+?setAttackPriorityName@Team@@QAEXVAsciiString@@@Z,0x00012A4E,Team.cpp declaration and direct retail call prove the Team attack-priority setter target
 ?setAttitude@AIGroup@@QAEXW4AttitudeType@@@Z,0x00040D95,ILT to matched body 0x00150FE0; callee of updateTeamSetAttitude 0x002F29E0
 ?setAttitude@AIUpdateInterface@@QAEXW4AttitudeType@@@Z,0x00030553,Open-BFME5 ILT thunk to body 0x0027DEF0 in the AIUpdate range; ?setAttitude@AIGroup@@QAEXW4AttitudeType@@@Z at 0x00150FE0 calls it on each member AI read from Object+0x204
 ?setBestWinStreak@SkirmishBattleHonors@@QAEXVAsciiString@@H@Z,0x0009CBF0,BFME per-side variant of ZH SkirmishBattleHonors::setBestWinStreak: concat("BestWinStreak" at VA 0x01080504) onto the by-value AsciiString side prefix (the callers pass Gondor/Rohan/Isengard/Mordor) then setInt ILT 0x00009B3D (pinned) -> 0x000A96F0; ret 8
