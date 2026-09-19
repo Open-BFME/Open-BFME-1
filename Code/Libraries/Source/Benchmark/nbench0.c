@@ -999,7 +999,7 @@ return((double)0.0);
 static void output_string(char *buffer)
 {
 
-printf("%s",buffer);
+OutputDebugStringA(buffer);
 /*if(write_to_file!=0)
 		fprintf(global_ofile,"%s",buffer);*/
 return;
