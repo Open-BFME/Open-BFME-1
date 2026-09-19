@@ -4,7 +4,7 @@
 // readable body of ?format_va@UnicodeString@@: Code/GameEngine/Source/Common/System/UnicodeString.cpp
 // readable body of ?freeBytes@AsciiString@@: Code/GameEngine/Source/Common/System/AsciiString.cpp
 // readable body of ?set@UnicodeString@@: Code/GameEngine/Source/Common/System/UnicodeString.cpp
-#include "string_base.h"
+#include "../WWVegas/WWLib/string_base.h"
 
 // The original translation unit linked the dynamic CRT, so CRT calls that are
 // not compiler intrinsics (e.g. wcslen) go through the import table. Defining
