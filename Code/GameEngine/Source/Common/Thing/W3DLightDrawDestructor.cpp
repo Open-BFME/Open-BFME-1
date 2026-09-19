@@ -248,6 +248,10 @@ Bool DrawModule::rva00750210() const
 	return true;
 }
 
+void DrawModule::rva00750020(UnsignedInt)
+{
+}
+
 W3DLightDraw::~W3DLightDraw()
 {
 	m_light->setEnabled(false);
