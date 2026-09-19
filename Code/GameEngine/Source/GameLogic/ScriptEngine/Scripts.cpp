@@ -108,6 +108,25 @@ public:
 static Script *s_mtScript = NULL;
 static ScriptGroup *s_mtGroup = NULL;
 
+// The carved body at 0x001FC3D0 is a second copy of Script::getAction.
+// Script::setAction stores at +0x28, setFalseAction stores at +0x2C, and
+// setNextScript stores at +0x30, which proves the member layout.
+class Rva001FC3D0ScriptAction
+{
+public:
+	ScriptAction *getAction(void) const;
+
+private:
+	char m_prefix[0x28];
+	ScriptAction *m_action;
+};
+
+// ?getAction@Rva001FC3D0ScriptAction@@QBEPAVScriptAction@@XZ
+ScriptAction *Rva001FC3D0ScriptAction::getAction(void) const
+{
+	return m_action;
+}
+
 //
 // These strings must be in the same order as they are in their definitions 
 // (See SHELL_SCRIPT_HOOK_* )
