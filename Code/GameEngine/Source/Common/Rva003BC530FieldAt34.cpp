@@ -14,3 +14,17 @@ void *Rva003BC530Owner::fieldAt34()
 {
 	return (char *)this + 0x34;
 }
+
+class Rva003BC5A0Owner
+{
+public:
+	void *fieldAt54();
+
+private:
+	char m_beforeField[0x54];
+};
+
+void *Rva003BC5A0Owner::fieldAt54()
+{
+	return (char *)this + 0x54;
+}
