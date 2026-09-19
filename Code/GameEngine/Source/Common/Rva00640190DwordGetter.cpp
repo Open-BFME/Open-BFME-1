@@ -15,3 +15,16 @@ int Rva00640190Owner::get() const
 {
 	return m_value;
 }
+
+class Rva006401B0DwordGetter
+{
+public:
+	int get() const;
+
+	int m_value;
+};
+
+int Rva006401B0DwordGetter::get() const
+{
+	return m_value;
+}
