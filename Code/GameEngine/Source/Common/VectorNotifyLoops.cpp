@@ -67,3 +67,30 @@ BFME_VECTOR_NOTIFY_LOOP( Rva005C0830List )
 BFME_VECTOR_NOTIFY_LOOP( Rva005C08F0List )
 BFME_VECTOR_NOTIFY_LOOP( Rva005C2690List )
 BFME_VECTOR_NOTIFY_LOOP( Rva005C2760List )
+
+// Retail 0x005C2660: a separate opaque vector loop that dispatches slot 1.
+// Its only recovered identity evidence is the address and the ILT at
+// 0x00034A18, so the type and method retain the address token.
+class Rva005C2660Item
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+};
+
+class Rva005C2660List
+{
+public:
+	void dispatchAll();
+
+	Rva005C2660Item **m_begin;
+	Rva005C2660Item **m_end;
+};
+
+void Rva005C2660List::dispatchAll()
+{
+	for (Rva005C2660Item **it = m_begin; it != m_end; ++it)
+	{
+		(*it)->slot01();
+	}
+}
