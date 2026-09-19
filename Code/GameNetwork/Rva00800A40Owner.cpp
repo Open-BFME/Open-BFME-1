@@ -1,5 +1,5 @@
-// ?rva00800a40@Rva00800920Owner@@QAEHPAXEH@Z
-// partial score=0.65 date=2026-09-18
+// cl: /GX- /GS
+
 struct Rva00800A40Input
 {
 	int m_00;
@@ -21,7 +21,7 @@ struct Rva00800A40Diag
 	virtual void fail(const char *expression, const char *file, int line);
 };
 
-extern Rva00800A40Diag *Rva007EB810Get();
+extern int Rva007EB810Get();
 
 struct Rva00800A40Slot
 {
@@ -53,9 +53,8 @@ public:
 	int rva00800a40(void *input, unsigned char flag, int value);
 };
 
-// ?rva00800a40@Rva00800920Owner@@QAEHPAXEH@Z
 int Rva00800920Owner::rva00800a40(
-	void *input, unsigned char flag, int value)
+	void *input, unsigned char flag, volatile int value)
 {
 	if (m_14)
 	{
@@ -63,32 +62,40 @@ int Rva00800920Owner::rva00800a40(
 		return 0;
 	}
 
-	Rva00800A40Input *record = (Rva00800A40Input *)input;
-	if (record->m_04 != 0)
-		Rva007EB810Get()->fail(
+	Rva00800A40Input &record = *(Rva00800A40Input *)input;
+	if (record.m_04 != 0)
+		reinterpret_cast<Rva00800A40Diag *>(Rva007EB810Get())->fail(
 			(const char *)0x0112c31c, (const char *)0x0112c2b0, 0x4d);
 
 	int index;
-	for (index = 0; index < 8 && m_slots[index].m_00 != 0; ++index)
+	for (index = 0; index < 8; ++index)
 	{
+		if (m_slots[index].m_00 == 0)
+			goto found_slot;
 	}
+	goto no_slot;
 
 	Rva00800A40Slot *slot = 0;
-	if (index < 8)
-		slot = &m_slots[index];
+	found_slot:
+	slot = &m_slots[index];
+	goto check_slot;
 
+	no_slot:
+	slot = 0;
+	check_slot:
 	if (slot == 0)
-		Rva007EB810Get()->fail(
+	{
+		reinterpret_cast<Rva00800A40Diag *>(Rva007EB810Get())->fail(
 			(const char *)0x0111c2a0, (const char *)0x0112c2b0, 0x54);
-
-	m_0c->send(-0x65, value);
+		m_0c->send(-0x65, value);
+	}
 	slot->m_00 = m_18;
 	++m_18;
 	slot->m_04 = 0;
 	slot->m_0c = value;
-	slot->m_14 = record->m_04;
-	slot->m_18 = record->m_08;
-	slot->m_1c = record->m_0c;
+	slot->m_14 = record.m_04;
+	slot->m_18 = record.m_08;
+	slot->m_1c = record.m_0c;
 	slot->m_20 = 0;
 	slot->m_08 = flag;
 	++m_1f4;
