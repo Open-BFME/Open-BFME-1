@@ -171,7 +171,7 @@ public:
 			++m_ptr->m_refCount;
 	}
 private:
-	ScoreProviderWrapper * volatile m_ptr;
+	ScoreProviderWrapper *m_ptr;
 };
 
 struct ScoreInitWrapper
@@ -253,8 +253,8 @@ union ScoreScreenMethodBits
 __forceinline FunctorMethod scoreScreenMethodFromThunk( void (*code)( void ) )
 {
 	ScoreScreenMethodBits bits;
-	bits.raw.code = code;
 	bits.raw.delta = 0;
+	bits.raw.code = code;
 	return bits.method;
 }
 
