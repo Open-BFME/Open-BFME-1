@@ -199,6 +199,11 @@ Rva004AB900Self *Rva004AB900Self::get()
 	return this;
 }
 
+// ?Rva004AB910NoOp@@YAXXZ
+void Rva004AB910NoOp()
+{
+}
+
 class Rva004AFB10RootDword
 {
 public:
