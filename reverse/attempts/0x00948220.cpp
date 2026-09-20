@@ -1,5 +1,5 @@
 // ?Change_Polygon_Renderer_Material@DX8FVFCategoryContainer@@QAEXAAV?$MultiListClass@VDX8PolygonRendererClass@@@@PAVVertexMaterialClass@@1I@Z
-// partial score=0.62 date=2026-09-10
+// partial score=0.66 date=2026-09-20
 // Scratch bank for the full real C++ attempt at retail RVA 0x00948220.
 // Canonical production source: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp.
 // This excerpt is intentionally not compiled; the production source was restored clean.
@@ -59,6 +59,36 @@
 #include "dx8caps.h"
 #include "dx8rendererdebugger.h"
 
+class BfmeHandleCX
+{
+public:
+	TextureClass *p;
+
+	BfmeHandleCX() : p(NULL) {}
+	~BfmeHandleCX();
+
+	BfmeHandleCX &operator=(const BfmeHandleCX &other)
+	{
+		if (other.p != NULL)
+			++*reinterpret_cast<unsigned short *>(reinterpret_cast<char *>(other.p) + 4);
+		if (p != NULL)
+			p->Release_Ref();
+		p = other.p;
+		return *this;
+	}
+
+	bool operator==(const BfmeHandleCX &other) const
+	{
+		return p == other.p;
+	}
+};
+
+class Gen_00945490
+{
+public:
+	BfmeHandleCX bfmeGet(int stage) const throw();
+};
+
 // --- Change_Polygon_Renderer_Material excerpt ---
 // ?Change_Polygon_Renderer_Material@DX8FVFCategoryContainer@@QAEXAAV?$MultiListClass@VDX8PolygonRendererClass@@@@PAVVertexMaterialClass@@1I@Z present-unmatched
 void DX8FVFCategoryContainer::Change_Polygon_Renderer_Material(
@@ -91,14 +121,14 @@ void DX8FVFCategoryContainer::Change_Polygon_Renderer_Material(
 					DX8TextureCategoryClass* dest_tex_category=Find_Matching_Texture_Category(new_vmat,pass,src_tex_category);
 
 					if (!dest_tex_category) {
-						TextureClass * tmp_textures[MeshMatDescClass::MAX_TEX_STAGES];
+						BfmeHandleCX tmp_textures[MeshMatDescClass::MAX_TEX_STAGES];
 						for (int s=0;s<MeshMatDescClass::MAX_TEX_STAGES;++s) {
-							tmp_textures[s]=src_tex_category->Peek_Texture(s);
-						}						
+							tmp_textures[s]=reinterpret_cast<const Gen_00945490 *>(src_tex_category)->bfmeGet(s);
+						}
 
 						DX8TextureCategoryClass * new_tex_category=W3DNEW DX8TextureCategoryClass(
 							this,
-							tmp_textures,
+							reinterpret_cast<TextureClass **>(tmp_textures),
 							src_tex_category->Get_Shader(),
 							const_cast<VertexMaterialClass*>(new_vmat),
 							pass);
@@ -112,7 +142,8 @@ void DX8FVFCategoryContainer::Change_Polygon_Renderer_Material(
 						TextureCategoryListIterator tex_it(&texture_category_list[pass]);
 						while (!tex_it.Is_Done()) {
 							// Categorize according to first stage's texture for now
-							if (tex_it.Peek_Obj()->Peek_Texture(0) == tmp_textures[0]) {
+							BfmeHandleCX texture = reinterpret_cast<const Gen_00945490 *>(tex_it.Peek_Obj())->bfmeGet(0);
+							if (texture.p == tmp_textures[0].p) {
 								texture_category_list[pass].Add_After(new_tex_category,tex_it.Peek_Obj());
 								found_similar_category = true;
 								break;
