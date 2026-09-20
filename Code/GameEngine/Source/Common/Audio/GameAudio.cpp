@@ -1293,3 +1293,8 @@ public:
 void Rva000E4410Noop::noop()
 {
 }
+
+// ?Rva00691C20Noop@@YAXXZ
+void Rva00691C20Noop()
+{
+}
