@@ -131,8 +131,29 @@ void FontLibrary::unlinkFont( GameFont *font )
 //-------------------------------------------------------------------------------------------------
 /** Delete all font data, DO NOT throw an exception ... the destructor uses this */
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/FontLibrary_deleteAllFonts.cpp
-// ?deleteAllFonts@FontLibrary@@IAEXXZ present-unmatched
+class BfmeGameFontDeleteLayout
+{
+public:
+	virtual void deleteInstance( Int destroy ) = 0;
+};
+
+class BfmeFontLibraryReleaseLayout
+{
+public:
+	virtual ~BfmeFontLibraryReleaseLayout();
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0c() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1c() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
+	virtual void releaseFontData( GameFont *font ) = 0;
+};
+
+// ?deleteAllFonts@FontLibrary@@IAEXXZ
 void FontLibrary::deleteAllFonts( void )
 {
 	GameFont *font;
@@ -148,10 +169,11 @@ void FontLibrary::deleteAllFonts( void )
 		unlinkFont( font );
 
 		// release font data
-		releaseFontData( font );
+		reinterpret_cast< BfmeFontLibraryReleaseLayout * >( this )->releaseFontData( font );
 
 		// delete the font list element
-		font->deleteInstance();
+		if( font )
+			reinterpret_cast< BfmeGameFontDeleteLayout * >( font )->deleteInstance( 1 );
 
 	}  // end while
 
@@ -163,6 +185,7 @@ void FontLibrary::deleteAllFonts( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// ??0FontLibrary@@QAE@XZ present-unmatched
 FontLibrary::FontLibrary( void )
 {
 
