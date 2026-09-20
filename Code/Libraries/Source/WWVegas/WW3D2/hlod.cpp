@@ -142,6 +142,9 @@ class CameraClass;
 #include "sphere.h"
 #include "boxrobj.h"
 
+#define BfmeZeroRange (*(const float *)0x01075350)
+#define g_bfmeDefaultBU (*(float *)0x01075334)
+
 
 /*
 ** Loader Instance
@@ -3570,16 +3573,46 @@ void HLodClass::Update_Sub_Object_Transforms(void)
 
 			robj->Set_Transform(HTree->Get_Transform(bone)); 
 			robj->Set_Animation_Hidden(!HTree->Get_Visibility(bone));
+			float fade = (*reinterpret_cast<PivotClass **>(
+				reinterpret_cast<char *>(HTree) + 0x14))[bone].PivotFade;
+			if (fade < g_bfmeDefaultBU) {
+				robj->_bfme_ro_set_98(fade);
+			}
 			robj->Update_Sub_Object_Transforms();
 		}
 	}
 
 	for (model = 0; model < AdditionalModels.Count(); model++) {
 
-		RenderObjClass * robj = AdditionalModels[model].Model;
-		int bone = AdditionalModels[model].BoneIndex;
-
-		robj->Set_Transform(HTree->Get_Transform(bone)); 
+		const Vector3 &offset = AdditionalModels[model].Offset;
+		RenderObjClass * robj;
+		robj = AdditionalModels[model].Model;
+		int bone;
+		bone = AdditionalModels[model].BoneIndex;
+		if (offset.X != BfmeZeroRange ||
+				offset.Y != BfmeZeroRange ||
+				offset.Z != BfmeZeroRange) {
+			Matrix3D transform = HTree->Get_Transform(bone);
+			transform[0][3] +=
+				(transform[0][2] * offset.Z + transform[0][1] * offset.Y) +
+				transform[0][0] * offset.X;
+			float sum = transform[1][0] * offset.X;
+			sum = sum + transform[1][1] * offset.Y;
+			sum = sum + transform[1][2] * offset.Z;
+			transform[1][3] += sum;
+			sum = transform[2][0] * offset.X;
+			sum = sum + transform[2][1] * offset.Y;
+			sum = sum + transform[2][2] * offset.Z;
+			transform[2][3] += sum;
+			robj->Set_Transform(transform);
+		} else {
+			robj->Set_Transform(HTree->Get_Transform(bone));
+		}
+		float fade = (*reinterpret_cast<PivotClass **>(
+				reinterpret_cast<char *>(HTree) + 0x14))[bone].PivotFade;
+		if (fade < g_bfmeDefaultBU) {
+			robj->_bfme_ro_set_98(fade);
+		}
 		robj->Set_Animation_Hidden(!HTree->Get_Visibility(bone));
 		robj->Update_Sub_Object_Transforms();
 	}
