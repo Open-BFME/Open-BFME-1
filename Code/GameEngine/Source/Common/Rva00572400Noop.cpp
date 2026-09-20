@@ -4,3 +4,8 @@
 void d_00572400()
 {
 }
+
+// ?Rva00072400NoOp@@YAXXZ
+void Rva00072400NoOp()
+{
+}
