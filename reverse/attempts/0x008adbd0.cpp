@@ -1,5 +1,5 @@
 // ?bfmeEmit1236@BfmeB1236@@QAEXPAXH0@Z
-// partial score=0.17 date=2026-09-17
+// partial score=0.2 date=2026-09-21
 // cl: /O2 /Oy /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // ?bfmeEmit1236@BfmeB1236@@QAEXPAXH0@Z
 //
@@ -406,6 +406,11 @@ void BfmeB1236::bfmeEmit1236(void *a, int unused, void *c)
 				(char *)first.m_data + 8);
 
 			created->release();
+			return;
+		}
+		else
+		{
+			state->m_bfme24.bfmeAdd1038((int)a, (int)c);
 			return;
 		}
 	}
