@@ -170,6 +170,11 @@ Rva004AB8C0Self *Rva004AB8C0Self::get()
 	return this;
 }
 
+// ?Rva004AB8D0NoOp@@YAXXZ
+void Rva004AB8D0NoOp()
+{
+}
+
 class Rva004AB8E0Self
 {
 public:
