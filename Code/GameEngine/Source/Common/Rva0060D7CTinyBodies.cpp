@@ -64,6 +64,11 @@ const void *Rva0060D8F0Self::get() const
 	return this;
 }
 
+// ?Rva0060D8E0Noop@@YAXXZ
+void Rva0060D8E0Noop()
+{
+}
+
 class Rva0060DB20DwordField
 {
 	char m_lead[0x10];
