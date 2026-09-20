@@ -152,7 +152,17 @@ struct Rva0045C120Owner
 // ?call1@Rva0045C120Owner@@QAEXH@Z
 void Rva0045C120Owner::call1(int value)
 {
-    (void)value;
+	(void)value;
+}
+
+struct Rva0045C130Owner
+{
+	void call0();
+};
+
+// ?call0@Rva0045C130Owner@@QAEXXZ
+void Rva0045C130Owner::call0()
+{
 }
 
 struct Rva0045C1A0Owner
