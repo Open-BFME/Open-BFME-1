@@ -85509,6 +85509,8 @@ name,address,notes
 ?run@WideRunner@@QAEXPAVWideCall@@PBDHHHHHH@Z,0x00015235,incremental-link thunk to 0x004675F0; __thiscall with eight stack args (ret 0x20); address-derived name
 ?run@WinInstanceDataInitShim@@QAEXXZ,0x00499850,WinInstanceData init incremental-link thunk target through a TU-local forwarding shim
 ?run@XferRandomVariableShim@@SAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0010C4D0,xferRandomVariable incremental-link thunk target through a TU-local forwarding shim
+?rva0000903ETarget@@YAXXZ,0x000A8170,TU-local clean-C++ alias for the independently proven ParticleSysBoneInfo vector-clear body
+?rva00009052Target@@YAXXZ,0x002EB770,TU-local clean-C++ alias for the independently proven Gen002E9E10 vector insert-overflow body
 ?rva00010a23@Rva00010A23Target@@QAEXPAXMH@Z,0x00010A23,Address-derived callee ABI from the retail call at 0x002D7890; three explicit arguments are tail pointer, Real ratio, and int extra
 ?rva0001895d@Rva00615D50Object@@QAE?AUCoord3D@@XZ,0x0001895D,ILT to body 0x006186C0; the 0x00615D50 lookup calls it for the object world position
 ?rva000190ABTransform@@YGHH@Z,0x000190AB,Open-BFME5 integer transform called by the 0x007E4AA0 threshold predicate
