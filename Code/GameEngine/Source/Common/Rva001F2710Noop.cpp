@@ -4,3 +4,7 @@
 void Rva001F2710Noop()
 {
 }
+
+void Rva001F2720Noop()
+{
+}
