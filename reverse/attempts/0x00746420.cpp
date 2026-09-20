@@ -1,5 +1,5 @@
 // ?screenToTerrain@W3DView@@UAE_NPBUICoord2D@@PAUCoord3D@@_N@Z
-// partial score=0.68 date=2026-09-09
+// partial score=0.72 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ivendor/stlport /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 // BFME W3DView::screenToTerrain at retail 0x00746420 (full 787 bytes).
@@ -23,7 +23,7 @@ struct BfmePosRequest
 {
 	ICoord2D first;
 	Coord3D second;
-	Int bfmePadding;
+	Bool found;
 };
 
 typedef std::vector<BfmePosRequest> BfmePosRequests;
@@ -51,8 +51,8 @@ public:
 Bool W3DView::screenToTerrain(const ICoord2D *screen, Coord3D *world,
 	Bool terrainOnly)
 {
-	register Coord3D *out = world;
 	register const ICoord2D *pixel = screen;
+	register Coord3D *out = world;
 
 	if (pixel == NULL || out == NULL || TheTerrainRenderObject == NULL)
 		return FALSE;
@@ -75,7 +75,7 @@ Bool W3DView::screenToTerrain(const ICoord2D *screen, Coord3D *world,
 				m_locationRequests[i].first.y == pixel->y)
 			{
 				*out = m_locationRequests[i].second;
-				return TRUE;
+				return m_locationRequests[i].found;
 			}
 		}
 	}
@@ -117,6 +117,7 @@ Bool W3DView::screenToTerrain(const ICoord2D *screen, Coord3D *world,
 		BfmePosRequest request;
 		request.first = *pixel;
 		request.second = *out;
+		request.found = found;
 		m_locationRequests.push_back(request);
 	}
 
