@@ -1,9 +1,10 @@
 // ?d_002e6850@@YAXXZ
-// partial score=0.991 date=2026-09-19
-// The carved 0x002E6850 body is a Lua audio-event binding.  Its caller and
-// callee inventory prove the Lua argument checks, GameLogic object lookup,
-// AudioEventRTS construction, and result push, but no public semantic name.
+// partial score=0.994 date=2026-09-20
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// Open-BFME7: the carved 0x002E6850 body is a Lua audio-event binding.  Its
+// caller and callee inventory prove the Lua argument checks, GameLogic
+// object lookup, AudioEventRTS construction, and result push, but no public
+// semantic name. Address-derived where identity is unknown.
 
 struct lua_State;
 extern "C" int lua_gettop(lua_State *state);
@@ -13,7 +14,7 @@ extern "C" void lua_pushnil(lua_State *state);
 extern "C" void lua_pushnumber(lua_State *state, double value);
 
 typedef int Int;
-extern float g_bfmeUint32Scale;
+extern float g_bfmeUint32Scale; // retail 0x01075358 (2^32 conversion fixup)
 
 enum ObjectID
 {
@@ -105,7 +106,7 @@ int Rva002E6850(lua_State *state)
 		unsigned result = TheAudioClientUpdate->addAudioEvent(&event);
 		if (result >= 5)
 		{
-			lua_pushnumber(state, (double)result);
+			lua_pushnumber(state, (double)(float)result);
 		}
 		else
 		{
