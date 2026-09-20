@@ -1,5 +1,5 @@
 // ?computeAttackPath@AIUpdateInterface@@AAE_NPAVPathfindServicesInterface@@PBVObject@@PBUCoord3D@@@Z
-// partial score=0.19 date=2026-09-17
+// partial score=0.55 date=2026-09-20
 // ?computeAttackPath@AIUpdateInterface@@AAE_NPAVPathfindServicesInterface@@PBVObject@@PBUCoord3D@@@Z
 // Extracted from Code/GameEngine/Source/GameLogic/Object/Update/AIUpdate.cpp.
 // This is the best semantic candidate; its complete TU remains the source of
@@ -7,29 +7,35 @@
 Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServices, const Object *victim, const Coord3D* victimPos )
 {
 	//CRCDEBUG_LOG(("AIUpdateInterface::computeAttackPath() for object %d\n", getObject()->getID()));
-	// See if it has been too soon.
-	if (m_pathTimestamp >= TheGameLogic->getFrame()-2) 
+	BFMEApproachPathFields *layout = reinterpret_cast<BFMEApproachPathFields *>(this);
+	const BFMENeedToRotateFields *fields = reinterpret_cast<const BFMENeedToRotateFields *>(this);
+	LocomotorSet *locomotorSet = reinterpret_cast<LocomotorSet *>(reinterpret_cast<char *>(this) + 0x1A8);
+	if (layout->m_path)
 	{
-		// jba intense debug
-		//CRCDEBUG_LOG(("Info - RePathing very quickly %d, %d.\n", m_pathTimestamp, TheGameLogic->getFrame()));
-		if (m_path && m_isBlockedAndStuck) 
+		BFMEComputeAttackPoint point;
+		Object *pathObject = layout->m_object;
+		typedef void (BFMENeedToRotatePath::*ComputePointCall)(Object *, BFMELocomotorOverride *, BFMEComputeAttackPoint *, Bool);
+		union { void *asVoid; ComputePointCall asMember; } pointCast;
+		pointCast.asVoid = (void *)j_00008a9e;
+		(reinterpret_cast<BFMENeedToRotatePath *>(layout->m_path)->*pointCast.asMember)(
+			pathObject, fields->m_curLocomotor, &point, FALSE);
+		if (point.m_waypointID != INVALID_WAYPOINT_ID)
 		{
-			setIgnoreCollisionTime(2*LOGICFRAMES_PER_SECOND);
-			m_blockedFrames = 0;
-			m_isBlocked = FALSE;
-			m_isBlockedAndStuck = FALSE;
+			layout->m_pathTimestamp = TheGameLogic->getFrame();
+			layout->m_blockedFrames = 0;
+			layout->m_isBlockedAndStuck = FALSE;
 			return TRUE;
 		}
 	}
 	Bool landBound = FALSE;
 	// Note - if a truck happens to pop into the air and gets a move to command, it still
 	// needs to pathfind.  So only skip pathfinding for airborne things that can fly... jba.
-	if (!(m_locomotorSet.getValidSurfaces() & LOCOMOTORSURFACE_AIR))
+	if (!(reinterpret_cast<const BFMEQuickPathFields *>(this)->getValidLocomotorSurfaces() & LOCOMOTORSURFACE_AIR))
 	{
 		landBound = TRUE;
 	}
 
-	Object* source = getObject();
+	Object* source = layout->m_object;
 	if (!victim && !victimPos) 
 	{
 		return FALSE;
@@ -37,7 +43,10 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 
 	PathfindLayerEnum victimLayer = LAYER_GROUND;
 	if (victim) {
-		victimLayer = victim->getLayer();
+		typedef Int (Rva0003A391Object::*GetLayerCall)() const;
+		union { void *asVoid; GetLayerCall asMember; } layerCast;
+		layerCast.asVoid = (void *)j_0003a391;
+		victimLayer = (PathfindLayerEnum)(reinterpret_cast<const Rva0003A391Object *>(victim)->*layerCast.asMember)();
 	}
 
 	Weapon *weapon = source->getCurrentWeapon();
@@ -49,7 +58,10 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 
 	if (victim != NULL)
 	{
-		if (weapon->isWithinAttackRange(source, victim))
+		typedef Bool (Rva0002E85CWeapon::*AttackRangeCall)(const Object *, const Object *, Int) const;
+		union { void *asVoid; AttackRangeCall asMember; } rangeCast;
+		rangeCast.asVoid = (void *)j_0002e85c;
+		if ((reinterpret_cast<const Rva0002E85CWeapon *>(weapon)->*rangeCast.asMember)(source, victim, 0))
 		{
 			Bool viewBlocked = FALSE;
 			if (isDoingGroundMovement() && !victim->isSignificantlyAboveTerrain()) 
@@ -65,7 +77,10 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 	}
 	else if (victimPos != NULL)
 	{
-		if (weapon->isWithinAttackRange(source, victimPos))
+		typedef Bool (Rva0003A4E5Weapon::*GoalRangeCall)(const Object *, const Coord3D *, const Object *, const Coord3D *, Int) const;
+		union { void *asVoid; GoalRangeCall asMember; } goalRangeCast;
+		goalRangeCast.asVoid = (void *)j_0003a4e5;
+		if ((reinterpret_cast<const Rva0003A4E5Weapon *>(weapon)->*goalRangeCast.asMember)(source, source->getPosition(), NULL, victimPos, 0))
 		{
 			Bool viewBlocked = FALSE;
 			if (isDoingGroundMovement()) 
@@ -80,27 +95,41 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 	}
 
 	// Contact weapon
-	if (weapon->isContactWeapon()) 
+	typedef Bool (Rva0000B8ACTemplate::*IsContactCall)() const;
+	union { void *asVoid; IsContactCall asMember; } contactCast;
+	contactCast.asVoid = (void *)j_0000b8ac;
+	Rva0000B8ACTemplate *weaponTemplate = *(Rva0000B8ACTemplate **)((char *)weapon + 4);
+	if ((weaponTemplate->*contactCast.asMember)())
 	{
-		Coord3D tmp = *victimPos;
+		Coord3D tmp;
+		tmp.x = victimPos->x;
+		tmp.y = victimPos->y;
+		tmp.z = victimPos->z;
 		destroyPath();
-		if (this->getCurLocomotor()) 
+		BFMELocomotorOverride *curLocomotor = reinterpret_cast<BFMELocomotorOverride *>(fields->m_curLocomotor);
+		if (curLocomotor)
 		{
-			getCurLocomotor()->setNoSlowDownAsApproachingDest(TRUE);
+			bfmeEnableNoSlowDown(curLocomotor);
 		}
+		if (g_012F0239 && g_012ED4FC)
+			((BFMEPathDebugLogFunction)j_0003a17a)(g_012ED4FC, (const char *)0x010BA158);
 		Bool ok = computePath(pathServices, &tmp);
-		if (m_path==NULL) return false;
+		if (layout->m_path==NULL) return false;
 		Real dx, dy;
-		dx = victimPos->x - m_path->getLastNode()->getPosition()->x;
-		dy = victimPos->y - m_path->getLastNode()->getPosition()->y;
+		BFMEPathNodeView *lastNode = *reinterpret_cast<BFMEPathNodeView **>(
+			reinterpret_cast<char *>(layout->m_path) + 0x08);
+		dx = victimPos->x - lastNode->m_position.x;
+		dy = victimPos->y - lastNode->m_position.y;
 		if (sqr(dx)+sqr(dy) < sqr(PATHFIND_CELL_SIZE_F*3)) {
-			if (m_path) 
+			if (layout->m_path) 
 			{
-				m_path->updateLastNode(victimPos);
+				layout->m_path->updateLastNode(victimPos);
 			}
 		}
-		dx = source->getPosition()->x - m_path->getLastNode()->getPosition()->x;
-		dy = source->getPosition()->y - m_path->getLastNode()->getPosition()->y;
+		lastNode = *reinterpret_cast<BFMEPathNodeView **>(
+			reinterpret_cast<char *>(layout->m_path) + 0x08);
+		dx = source->getPosition()->x - lastNode->m_position.x;
+		dy = source->getPosition()->y - lastNode->m_position.y;
 		if (sqr(dx)+sqr(dy) < sqr(PATHFIND_CELL_SIZE_F)) {
 			destroyPath();
 			return false;
@@ -111,12 +140,17 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 	Coord3D localVictimPos;
 	if (victim != NULL)
 	{
-		if (victim->isKindOf(KINDOF_BRIDGE)) 
+		if (victim->isKindOf((KindOfType)0x16)) 
 		{
 			TBridgeAttackInfo info;
 			TheTerrainLogic->getBridgeAttackPoints(victim, &info);
-			Real distSqr1 = ThePartitionManager->getDistanceSquared( source, &info.attackPoint1, FROM_BOUNDINGSPHERE_3D );
-			Real distSqr2 = ThePartitionManager->getDistanceSquared( source, &info.attackPoint2, FROM_BOUNDINGSPHERE_3D );
+			typedef Real (Rva0002CEEEBoundaryObject::*BoundaryDistanceCall)(const Coord3D *, const Coord3D *) const;
+			union { void *asVoid; BoundaryDistanceCall asMember; } distanceCast;
+			distanceCast.asVoid = (void *)j_0002ceee;
+			Real distSqr1 = (reinterpret_cast<const Rva0002CEEEBoundaryObject *>(source)->*distanceCast.asMember)(
+				source->getPosition(), &info.attackPoint1);
+			Real distSqr2 = (reinterpret_cast<const Rva0002CEEEBoundaryObject *>(source)->*distanceCast.asMember)(
+				source->getPosition(), &info.attackPoint2);
 			if (distSqr2<distSqr1) {
 				localVictimPos = info.attackPoint2;
 			} else {
@@ -133,7 +167,8 @@ Bool AIUpdateInterface::computeAttackPath( PathfindServicesInterface *pathServic
 		localVictimPos = *victimPos;
 	}
 
-	localVictimPos.z = TheTerrainLogic->getLayerHeight( localVictimPos.x, localVictimPos.y, victimLayer );
+	localVictimPos.z = reinterpret_cast<const Rva00275F30TerrainLogic *>(TheTerrainLogic)->getLayerHeight(
+		localVictimPos.x, localVictimPos.y, victimLayer, NULL, TRUE );
 
 	if (getObject()->isAboveTerrain() && !landBound)
 	{
