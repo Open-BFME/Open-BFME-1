@@ -1,6 +1,6 @@
 // ?syncTimers@Rva0073C120Owner@@QAEXXZ
-// partial score=0.9 date=2026-09-06
-struct Rva0073C120Owner {
+struct Rva0073C120Owner
+{
 	char m_pad[0x28];
 	float m_time;
 	char m_pad2[0x1c8 - 0x2c];
@@ -19,6 +19,7 @@ struct Rva0073C120Owner {
 	int m_mode;
 	void syncTimers();
 };
+
 void Rva0073C120Owner::syncTimers()
 {
 	if (m_enabled) {
@@ -30,8 +31,13 @@ void Rva0073C120Owner::syncTimers()
 	}
 	if (m_mode != 1)
 		return;
-	if (m_slotCount <= 0)
+	if (*(volatile int *)((char *)this + 0x22f0) <= 0)
 		return;
-	for (int i = 0; i < m_slotCount; ++i)
+	int i = 0;
+	do
+	{
 		m_slots[i] = m_seed;
+		++i;
+	}
+	while (i < m_slotCount);
 }
