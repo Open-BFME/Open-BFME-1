@@ -1,5 +1,5 @@
 // ?populateMultiSelect@ControlBar@@IAEXXZ
-// partial score=0.75 date=2026-09-11
+// partial score=0.77 date=2026-09-20
 // cl: /DNDEBUG /MD /EHsc
 
 // What the control bar shows for the object the player has selected, and the
@@ -283,9 +283,21 @@ struct Rva004A9300SelectedNode
 	Drawable *m_drawable;
 };
 
+typedef Rva004A9300SelectedNode *Rva004A9300SelectedIterator;
+
 struct Rva004A9300SelectedList
 {
 	Rva004A9300SelectedNode *m_node;
+
+	Rva004A9300SelectedIterator begin(void) const
+	{
+		return m_node->m_next;
+	}
+
+	Rva004A9300SelectedIterator end(void) const
+	{
+		return m_node;
+	}
 };
 
 class Rva004A9300InGameUI
@@ -853,14 +865,13 @@ void ControlBar::populateMultiSelect(void)
 	Rva004A9300SelectedList *selectedDrawables =
 		(Rva004A9300SelectedList *)
 		((Rva004A9300InGameUI *)TheInGameUI)->getAllSelectedDrawables();
-	Rva004A9300SelectedNode *head = selectedDrawables->m_node;
-	Rva004A9300SelectedNode *node = head->m_next;
 	Drawable *bestDrawable = 0;
 	Int bestScore = 0;
 
-	while (node != head)
+	for (Rva004A9300SelectedIterator it = selectedDrawables->begin();
+		it != selectedDrawables->end(); it = it->m_next)
 	{
-		Drawable *draw = node->m_drawable;
+		Drawable *draw = it->m_drawable;
 		Object *object = draw->getObject();
 
 		if (object != 0)
@@ -891,7 +902,6 @@ void ControlBar::populateMultiSelect(void)
 			}
 		}
 
-		node = node->m_next;
 	}
 
 	if (bestDrawable != 0)
@@ -922,10 +932,10 @@ void ControlBar::populateMultiSelect(void)
 			m_commandWindows[i]->winHide(true);
 	}
 
-	node = head->m_next;
-	while (node != head)
+	for (Rva004A9300SelectedIterator it = selectedDrawables->begin();
+		it != selectedDrawables->end(); it = it->m_next)
 	{
-		Drawable *draw = node->m_drawable;
+		Drawable *draw = it->m_drawable;
 		Object *object = draw->getObject();
 		const ThingTemplate *thingTemplate = object->getTemplate();
 		if (thingTemplate && thingTemplate->m_nextOverride)
@@ -939,7 +949,6 @@ void ControlBar::populateMultiSelect(void)
 			((*(const UnsignedInt *)((const char *)object + 0x90) &
 			0x00080000) != 0))
 		{
-			node = node->m_next;
 			continue;
 		}
 
@@ -982,7 +991,6 @@ void ControlBar::populateMultiSelect(void)
 				portrait = 0;
 		}
 
-		node = node->m_next;
 	}
 
 	rva004A9300SetPortrait((Rva004A9300SetPortrait *)this, portraitObj);
