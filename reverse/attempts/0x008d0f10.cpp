@@ -1,5 +1,5 @@
 // ?d_008d0f10@@YAXXZ
-// partial score=0.3 date=2026-09-17
+// partial score=0.34 date=2026-09-20
 // ?run@Rva008D0F10@@SAXPAVRva008D0F10State@@PAURva008D0F10Context@@@Z
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
@@ -252,7 +252,7 @@ void Rva008D0F10::run(Rva008D0F10State *state,
 
 	count = apt(under)->toInteger();
 	if (current->isUndefined())
-		goto undefined_middle;
+		goto invoke_result;
 
 	state->m_stack38[state->m_count30] =
 		reinterpret_cast<Rva008D0F10Value *>(context->m_value04);
@@ -421,6 +421,7 @@ dispatch_result:
 		releaseCurrent = true;
 	}
 
+	invoke_result:
 	if (reinterpret_cast<Rva00899C20Node *>(current)->rva00899C20() != 0)
 	{
 		Rva008D0F10Value *pending =
