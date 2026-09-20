@@ -1,5 +1,5 @@
 // ?d_0048fc90@@YAXXZ
-// partial score=0.55 date=2026-09-10
+// partial score=0.68 date=2026-09-20
 // A clear that destroys its range through an out-of-line helper before
 // emptying the vector.
 //
@@ -58,12 +58,14 @@ public:
 };
 
 class UnicodeString;
+class BfmeDisplayStringFC;
 
 template <typename Char>
 struct BfmeStringDataFC
 {
 	int m_refCount;
-	int m_length;
+	unsigned short m_length;
+	unsigned short m_capacity;
 	Char m_text[1];
 };
 
@@ -75,11 +77,12 @@ class BfmeStringBaseFC
 public:
 	BfmeStringBaseFC() : m_data(0) {}
 	BfmeStringBaseFC(const BfmeStringBaseFC &other);
-	~BfmeStringBaseFC();
+	~BfmeStringBaseFC() { releaseBuffer(); }
 	void concat(const Char *text, int length);
 
 protected:
 	BfmeStringDataFC<Char> *m_data;
+	void releaseBuffer();
 };
 
 class UnicodeString : private BfmeStringBaseFC<unsigned short>
@@ -101,7 +104,53 @@ public:
 	{
 		BfmeStringBaseFC<unsigned short>::concat(text, length);
 	}
+	void clear()
+	{
+		BfmeStringBaseFC<unsigned short>::releaseBuffer();
+	}
 };
+
+namespace _STL
+{
+template <bool threads, int instance>
+class __node_alloc
+{
+public:
+	static void _M_deallocate(void *block, unsigned int bytes);
+};
+}
+
+struct BfmeLocalVecFC
+{
+	int *m_start;
+	int *m_finish;
+	int *m_end;
+
+	BfmeLocalVecFC() : m_start(0), m_finish(0), m_end(0) {}
+	~BfmeLocalVecFC()
+	{
+		if (m_start != 0) {
+			unsigned int bytes = (unsigned int)((char *)m_end -
+				(char *)m_start);
+			if (bytes > 0x80)
+				::operator delete(m_start);
+			else
+				_STL::__node_alloc<true, 0>::_M_deallocate(m_start, bytes);
+		}
+	}
+};
+
+struct BfmeLineInfoFC
+{
+	int m_height;
+	int m_width;
+	BfmeLocalVecFC *m_position;
+	BfmeDisplayStringFC *m_display;
+	UnicodeString m_text;
+	int m_unknown14;
+};
+
+extern "C" __declspec(dllimport) int __cdecl iswspace(unsigned short c);
 
 class BfmeThingDispatchFC
 {
@@ -120,10 +169,19 @@ public:
 	virtual void prepare();
 };
 
+class BfmeDisplayFC;
+class BfmeClientFC;
+class BfmeDisplayManagerFC;
+
 class BfmeDisplayStringFC
 {
 public:
 	virtual void slot0();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0c();
+	virtual void slot10();
+	virtual void slot14();
 	virtual void setFont(void *font);
 };
 
@@ -149,33 +207,44 @@ struct BfmeLayoutElementFC
 	void *m_measure;
 	int m_unused;
 	int m_offset;
+	int m_extra0c;
+	int m_extra10;
+	int m_extra14;
 };
 
-extern BfmeDisplayManagerFC *TheDisplayStringManager;
-extern void *TheDisplay;
-extern void *TheGameClient;
-extern float g_bfmeUint32Scale;
+struct BfmeLayoutRangeFC
+{
+	BfmeLayoutElementFC **m_first;
+	BfmeLayoutElementFC **m_last;
+};
+
+#define TheDisplayStringManager (*(BfmeDisplayManagerFC **)0x012f12cc)
+#define TheDisplay (*(BfmeDisplayFC **)0x012f1270)
+#define TheGameClient (*(BfmeClientFC **)0x012f1464)
+#define g_bfmeUint32Scale (*(float *)0x01075358)
+#define g_bfmeDisplayScale (*(float *)0x010f9aa8)
 extern void j_0001ad25();
 extern void j_0000badc();
 extern void j_0001d30e();
 
 class Gen_0048FA30;
-typedef void (Gen_0048FA30::*BfmeAddLineFC)(const UnicodeString *line);
-typedef void (Gen_0048FA30::*BfmeFlushLineFC)(int *position, int line,
+typedef void (Gen_0048FA30::*BfmeAddLineFC)(const BfmeLineInfoFC *line);
+typedef void (Gen_0048FA30::*BfmeFlushLineFC)(BfmeLineInfoFC *position, int line,
 	const UnicodeString *text);
 typedef BfmeLayoutFC (__cdecl *BfmeLayoutCallFC)(BfmeLayoutElementFC **first,
 	BfmeLayoutElementFC **last, BfmeLayoutFC layout);
-union BfmeAddLineCastFC { void (*raw)(); BfmeAddLineFC member; };
-union BfmeFlushLineCastFC { void (*raw)(); BfmeFlushLineFC member; };
-union BfmeLayoutCastFC { void (*raw)(); BfmeLayoutCallFC function; };
+union BfmeAddLineCastFC { void *asVoid; BfmeAddLineFC member; };
+union BfmeFlushLineCastFC { void *asVoid; BfmeFlushLineFC member; };
+union BfmeLayoutCastFC { void *asVoid; BfmeLayoutCallFC function; };
 
 class Gen_0048FA30
 {
 public:
 	void bfmeClear(void);
 	void bfmeForward(const UnicodeString &text, int force);
-	void bfmeAddLine(const UnicodeString *line);
-	void bfmeFlushLine(int *position, int line, const UnicodeString *text);
+	void bfmeAddLine(const BfmeLineInfoFC *line);
+	void bfmeFlushLine(BfmeLineInfoFC *position, int line,
+		const UnicodeString *text);
 
 private:
 	int m_bfmeHead[2];					// +0x00
@@ -206,8 +275,8 @@ public:
 	virtual void slot00(); virtual void slot04(); virtual void slot08();
 	virtual void slot0c(); virtual void slot10(); virtual void slot14();
 	virtual void slot18(); virtual void slot1c(); virtual void slot20();
-	virtual void slot24(); virtual void slot28(); virtual void slot2c();
-	virtual int getWidth(); virtual int getHeight();
+	virtual void slot24(); virtual void slot28();
+	virtual int getMetric();
 };
 
 class BfmeClientFC
@@ -232,12 +301,13 @@ void Gen_0048FA30::bfmeForward(const UnicodeString &source, int force)
 	if (text.length() == 0)
 		return;
 
-	int width = ((BfmeDisplayFC *)TheDisplay)->getWidth() / 2;
+	int width = ((BfmeDisplayFC *)TheDisplay)->getMetric() / 2;
 	if (width < 0)
 		width += (int)g_bfmeUint32Scale;
-	int height = ((BfmeDisplayFC *)TheDisplay)->getHeight();
+	int height = ((BfmeDisplayFC *)TheDisplay)->getMetric();
 	if (height < 0)
 		height += (int)g_bfmeUint32Scale;
+	int scaledHeight = (int)((float)height * g_bfmeDisplayScale);
 	m_bfmeCount = ((BfmeClientFC *)TheGameClient)->getFrame();
 	if (force) {
 		m_bfmeIndex = m_bfmeCount + force * 0x1e;
@@ -253,31 +323,80 @@ void Gen_0048FA30::bfmeForward(const UnicodeString &source, int force)
 		return;
 	display->setFont(*(void **)((char *)m_bfmeTarget + 4));
 
+	BfmeLocalVecFC position;
+	BfmeLineInfoFC info;
+	info.m_height = scaledHeight;
+	info.m_width = (int)force;
+	info.m_position = &position;
+	info.m_display = display;
+	info.m_unknown14 = 0;
 	UnicodeString line;
-	int position[4] = { 0, 0, 0, height };
 	int lineNumber = 0;
 	const unsigned short *chars = text.text();
-	for (int i = 0; i < text.length(); ++i) {
-		unsigned short ch = chars ? chars[i] : 0;
-		if (ch == 0x20) {
-			++lineNumber;
-		} else if (ch == 0x0a) {
-			BfmeAddLineCastFC add = { j_0001ad25 };
-			(this->*add.member)(&line);
-			lineNumber = 0;
-		} else {
-			line.concat(chars + i, 1);
+	int index = 0;
+	bool atWhitespace = true;
+	unsigned short ch = chars ? chars[0] : 0;
+	while (index < text.length()) {
+		if (atWhitespace) {
+			if (iswspace(ch)) {
+				if (ch == 0x20) {
+					++lineNumber;
+				} else if (ch == 0x0a) {
+					BfmeAddLineCastFC add;
+					add.asVoid = (void *)j_0001ad25;
+					(this->*add.member)(&info);
+					lineNumber = 0;
+				}
+				++index;
+				ch = chars ? chars[index] : 0;
+				continue;
+			}
+			atWhitespace = false;
 		}
+		if (iswspace(ch)) {
+		BfmeFlushLineCastFC flush;
+		flush.asVoid = (void *)j_0000badc;
+		(this->*flush.member)(&info, lineNumber, &line);
+		line.clear();
+		lineNumber = 0;
+		atWhitespace = true;
+			continue;
+		}
+		line.concat(&ch, 1);
+		++index;
+		ch = chars ? chars[index] : 0;
 	}
-	if (line.length() != 0) {
-		BfmeFlushLineCastFC flush = { j_0000badc };
-		(this->*flush.member)(position, lineNumber, &line);
+	if (!atWhitespace) {
+		BfmeFlushLineCastFC flush;
+		flush.asVoid = (void *)j_0000badc;
+		(this->*flush.member)(&info, lineNumber, &line);
 	}
+	BfmeAddLineCastFC add;
+	add.asVoid = (void *)j_0001ad25;
+	(this->*add.member)(&info);
 
-	BfmeLayoutElementFC **first = (BfmeLayoutElementFC **)m_bfmeVector.m_bfmeStart;
-	BfmeLayoutElementFC **last = (BfmeLayoutElementFC **)m_bfmeVector.m_bfmeFinish;
-	BfmeLayoutCastFC layout = { j_0001d30e };
-	BfmeLayoutFC result = layout.function(first, last, BfmeLayoutFC(position[3]));
-	(void)result;
+	BfmeLayoutCastFC layout;
+	layout.asVoid = (void *)j_0001d30e;
+	int x = 100;
+	int childWidth = *(int *)((char *)(*(int *)(m_bfmeTarget->m_bfmeHead + 1)) + 0x10);
+	float xStep = (float)childWidth * *(float *)0x109b46c;
+	for (int *it = m_bfmeVector.m_bfmeStart;
+		it != m_bfmeVector.m_bfmeFinish; ++it) {
+		BfmeLayoutRangeFC *range = *(BfmeLayoutRangeFC **)it;
+		BfmeLayoutElementFC **first = range->m_first;
+		BfmeLayoutElementFC **last = range->m_last;
+		x = (int)((float)x + xStep);
+		int offset = 0x14;
+		for (BfmeLayoutElementFC **item = first; item != last; ++item) {
+			BfmeLayoutElementFC *element = *item;
+			element->m_extra10 = offset;
+			offset += element->m_extra0c;
+			element->m_extra14 = x;
+		}
+		BfmeLayoutFC result = layout.function(first, last,
+			BfmeLayoutFC(x));
+		(void)result;
+		x += 0x1e;
+	}
 	TheDisplayStringManager->freeDisplayString(display);
 }
