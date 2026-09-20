@@ -1,5 +1,5 @@
 // ??0ControlBar@@QAE@XZ
-// partial score=0.55 date=2026-09-16
+// partial score=0.6 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2
 
 typedef unsigned int UnsignedInt;
@@ -105,7 +105,6 @@ private:
 
 ControlBar::ControlBar(void)
 {
-    int i;
     f028 = 0;
     f02c = 0;
     f030 = 0;
@@ -123,6 +122,7 @@ ControlBar::ControlBar(void)
     f24c = 0;
     f264 = 0;
     f268 = 0;
+    int i;
     for (i = 0; i < 20; ++i)
         a1f0[i] = 0;
     f060 = 0;
@@ -134,17 +134,51 @@ ControlBar::ControlBar(void)
     f024 = 0;
     f26c = 0x64000000;
     f294 = 0x64000000;
-    f034 = f038 = f03c = f040 = f044 = f048 = f04c = f050 = f054 = f058 = 0;
+    f034 = 0;
+    f038 = 0;
+    f03c = 0;
+    f040 = 0;
+    f044 = 0;
+    f048 = 0;
+    f04c = 0;
+    f050 = 0;
+    f054 = 0;
+    f058 = 0;
     for (i = 0; i < 20; ++i) {
         a100[i] = 0;
         a1a0[i] = 0;
         a150[i] = 0;
     }
-    f09c = f0a0 = f0a4 = f0a8 = f0ac = f0b0 = f0b4 = f0b8 = f0bc = f0c0 = f0c4 = f0c8 = 0;
-    f0cc = f0e0 = f0d0 = f0e4 = f0d4 = f0e8 = f0d8 = f0ec = f0dc = f0f0 = 0;
-    f0fc = f0f8 = f098 = 0;
-    f074 = f078 = f090 = f094 = 0;
-    f05c = f060 = f064 = 0;
+    f09c = 0;
+    f0a0 = 0;
+    f0a4 = 0;
+    f0a8 = 0;
+    f0ac = 0;
+    f0b0 = 0;
+    f0b4 = 0;
+    f0b8 = 0;
+    f0bc = 0;
+    f0c0 = 0;
+    f0c4 = 0;
+    f0c8 = 0;
+    f0cc = 0;
+    f0e0 = 0;
+    f0d0 = 0;
+    f0e4 = 0;
+    f0d4 = 0;
+    f0e8 = 0;
+    f0d8 = 0;
+    f0ec = 0;
+    f0dc = 0;
+    f0f0 = 0;
+    f098 = f0f8 = f0fc = (int)this;
+    f074 = 0;
+    f078 = 0;
+    f090 = 0;
+    f094 = 0;
+    f05c = 0;
+    f060 = 0;
+    f064 = 0;
     f068 = -1.0f;
     f06c = 0;
     resetContainData();
@@ -153,12 +187,25 @@ ControlBar::ControlBar(void)
     f00c = 0;
     f014 = 0;
     f010 = 0;
-    f2a0 = f2a4 = f2a8 = f2ac = f2b0 = f2b4 = 0;
-    f2c0 = f2c4 = f2bc = 0;
+    f2a0 = 0;
+    f2a4 = 0;
+    f2a8 = 0;
+    f2ac = 0;
+    f2b0 = 0;
+    f2b4 = 0;
+    f2c0 = 0;
+    f2c4 = 0;
+    f2bc = 0;
     f240 = 0;
-    f280 = f284 = f288 = f28c = f290 = 0xffffff;
+    f280 = 0xffffff;
+    f284 = 0xffffff;
+    f288 = 0xffffff;
+    f28c = 0xffffff;
+    f290 = 0xffffff;
     f2e0 = 0;
-    f2e4 = f2e8 = f2ec = 0;
+    f2e4 = 0;
+    f2e8 = 0;
+    f2ec = 0;
     f2f0 = new Gen_004B1670;
     f2f0->init();
 }
