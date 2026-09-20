@@ -1,11 +1,14 @@
 // ?rva00538530@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
-// partial score=0.9 date=2026-09-19
+// partial score=0.93 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
 // stlport
 //
 // BfmeAptScreenOnlineCustomMatch ping labels, retail 0x00538530, 279 bytes.
 // The caller and the two format strings identify this as the Host and Join
 // gadget ping update. The slot layout places the integer ping at +0x54.
+// Retail passes the loop index as the third sprintf argument and caches its
+// IAT target in EBX. This body preserves that semantic argument and explicit
+// import-pointer call; the remaining mismatch is a four-byte pointer spill.
 
 #include "StringInline.h"
 
@@ -14,7 +17,7 @@ typedef bool Bool;
 extern "C" void _ReadWriteBarrier( void );
 #pragma intrinsic( _ReadWriteBarrier )
 
-extern "C" __declspec(dllimport) int __cdecl sprintf(
+extern "C" int (__cdecl *_imp__sprintf)(
 	char *destination, const char *format, ... );
 
 class GameSlot
@@ -133,6 +136,7 @@ void BfmeAptScreenOnlineCustomMatch::rva00538530()
 	format = (const char *)0x01107308;
 	if ( !hostFormat )
 		format = (const char *)0x01107334;
+	int (__cdecl *formatter)( char *, const char *, ... ) = _imp__sprintf;
 	for ( int i = 0; i < 8; ++i )
 	{
 		GameSlot *slot = room->getSlot( i );
@@ -140,7 +144,7 @@ void BfmeAptScreenOnlineCustomMatch::rva00538530()
 			continue;
 		GameSpyGameSlot *gameSlot = (GameSpyGameSlot *)slot->slot2();
 		char buffer[ 0x58 ];
-		sprintf( buffer, format, 0 );
+		formatter( buffer, format, i );
 		void *image = 0;
 		if ( slot->isHuman() )
 			image = picker()->pick( *(int *)((char *)gameSlot + 0x54) );
