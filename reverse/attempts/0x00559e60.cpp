@@ -1,12 +1,9 @@
+// ?d_00559e60@@YAXXZ
+// partial score=0.65 date=2026-09-20
 // ?rva00559E60Ready@BfmeAptScreenOnlineQuickMatch@@QAE_NXZ
-// partial score=0.55 date=2026-09-10
+// structural trial: keep StringBase destruction visible to MSVC 7.1
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-//
-// Open-BFME: the OnlineQuickMatch APT side-combo population callback at
-// retail 0x00559E60 (787 bytes).  This is the side-list sibling of update()
-// and uses the embedded preference/gadget layout proven by the neighboring
-// OnlineQuickMatch callbacks.
 
 #define _STLP_USE_NEWALLOC 1
 
@@ -21,7 +18,7 @@ template <typename T> struct StringInlineData
 {
 	int m_refCount;
 	int m_length;
-	T m_text[ 1 ];
+	T m_text[1];
 };
 
 template <typename T> class StringBase
@@ -97,16 +94,9 @@ public:
 	int winEnable( Bool enable );
 };
 
-class PopulateRemoteIPComboBoxEntry : public UnicodeString
-{
-public:
-	PopulateRemoteIPComboBoxEntry( const UnicodeString &source )
-		: UnicodeString( source ) {}
-};
-
 extern void gadgetComboBoxReset( GameWindow *comboBox );
 extern int GadgetComboBoxAddEntryPopulateRemoteIPComboBox(
-	GameWindow *comboBox, PopulateRemoteIPComboBoxEntry text, int color );
+	GameWindow *comboBox, UnicodeString text, int color );
 extern void GadgetComboBoxGetSelectedPos( GameWindow *comboBox, int *selected );
 extern void *GadgetComboBoxGetItemData( GameWindow *comboBox, int selected );
 extern void GadgetComboBoxSetItemData(
@@ -207,13 +197,6 @@ extern MultiplayerSettings *TheMultiplayerSettings;
 
 class BfmeAptScreenOnlineQuickMatch
 {
-public:
-	void update();
-	bool rva005588E0Ready();
-	bool rva00558A30Ready();
-	bool rva00559E60Ready();
-	void _bfme_sendStartQuickMatchRequest();
-
 private:
 	unsigned char m_beforePreferences[ 0x40 ];
 	QuickMatchPreferences m_preferences;
@@ -227,22 +210,10 @@ private:
 	GameWindow *m_side;
 	GameWindow *m_connectionSpeed;
 	GameWindow *m_ladder;
+
+public:
+	bool rva00559E60Ready();
 };
-
-void BfmeAptScreenOnlineQuickMatch::update()
-{
-	if ( !m_ready && rva005588E0Ready() && rva00558A30Ready()
-		&& rva00559E60Ready() )
-	{
-		m_ready = true;
-	}
-
-	if ( m_startRequested )
-	{
-		_bfme_sendStartQuickMatchRequest();
-		m_startRequested = false;
-	}
-}
 
 bool BfmeAptScreenOnlineQuickMatch::rva00559E60Ready()
 {
@@ -257,6 +228,7 @@ bool BfmeAptScreenOnlineQuickMatch::rva00559E60Ready()
 	const LadderInfo *li = TheLadderList->findLadderByIndex( ladderID );
 
 	Int numPlayerTemplates = ThePlayerTemplateStore->getPlayerTemplateCount();
+	UnicodeString randomText;
 
 	gadgetComboBoxReset( m_side );
 
