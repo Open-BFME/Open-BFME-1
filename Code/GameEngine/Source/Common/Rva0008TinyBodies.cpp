@@ -379,3 +379,8 @@ void *Rva00097950Self::get()
 void d_0008a680(void)
 {
 }
+
+// ?Rva005C1290Noop@@YAXXZ
+void Rva005C1290Noop(void)
+{
+}
