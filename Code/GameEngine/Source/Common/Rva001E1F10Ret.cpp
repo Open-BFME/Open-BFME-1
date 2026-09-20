@@ -9,3 +9,8 @@ void b_001e1f10(void)
 void Rva001E1F00Noop(void)
 {
 }
+
+// The carved boundary at 0x001E1F20 contains one return instruction.
+void Rva001E1F20Noop(void)
+{
+}
