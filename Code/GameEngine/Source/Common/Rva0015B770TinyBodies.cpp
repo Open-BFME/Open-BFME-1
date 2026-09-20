@@ -172,6 +172,17 @@ void Rva0015BCA0NoOp::body( unsigned int value )
 {
 }
 
+class Rva0015BC20NoOp
+{
+public:
+	void noop();
+};
+
+// ?noop@Rva0015BC20NoOp@@QAEXXZ
+void Rva0015BC20NoOp::noop()
+{
+}
+
 class Rva0015BD00NoOp
 {
 public:
