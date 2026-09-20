@@ -331,3 +331,8 @@ unsigned char Rva00642BC0Body::method() const
 {
 	return m_value;
 }
+
+// ?d_00630b00@@YAXXZ
+void d_00630b00()
+{
+}
