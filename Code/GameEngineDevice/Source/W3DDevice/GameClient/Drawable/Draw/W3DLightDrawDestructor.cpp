@@ -227,6 +227,7 @@ protected:
 
 public:
 	virtual UnsignedInt getModuleNameKey() const;                     // 04 -> 0x007586F0
+	virtual void rva00113B60();                                      // 07 -> 0x00113B60
 	virtual void doDrawModule(const Matrix3D *transform);             // 09 -> 0x00758890
 	virtual void setShadowsEnabled(Bool enabled);                     // 10 -> 0x00758530
 	virtual void releaseShadows();                                    // 11 -> 0x00758560
@@ -253,6 +254,10 @@ void DrawModule::rva00750020(UnsignedInt)
 }
 
 void DrawModule::rva00750190(UnsignedInt, UnsignedInt)
+{
+}
+
+void W3DLightDraw::rva00113B60()
 {
 }
 
