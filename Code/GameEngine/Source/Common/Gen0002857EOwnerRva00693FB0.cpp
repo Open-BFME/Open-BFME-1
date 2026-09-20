@@ -1,11 +1,10 @@
-// ?Rva00693FB0@Gen0002857EOwner@@QAEXXZ
-// partial score=0.99 date=2026-09-17
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ivendor/stlport /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
+// stlport
 // ?Rva00693FB0@Gen0002857EOwner@@QAEXXZ
 // The caller at 0x00694230 invokes this owner method after the accounting
-// total passes its limit.  The tree at +0x20 supplies the oldest record key.
+// total passes its limit. The tree at +0x20 supplies the oldest record key.
 // The hash node, bucket list, cleanup helper, and record destructor identify
 // the same Gen0002857E owner family as the matched neighboring methods.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ivendor/stlport /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
@@ -71,7 +70,7 @@ namespace rts
 template <class T>
 struct hash
 	{
-	unsigned int operator()(T value) const;
+		unsigned int operator()(T value) const;
 	};
 }
 
@@ -106,7 +105,7 @@ struct Rva00691ED0Less
 };
 
 extern "C" void __cdecl Gen0002857EFreeListNode(void *node,
-unsigned int bytes);
+	unsigned int bytes);
 
 struct Rva00693FB0TreeNode : public _STL::_Rb_tree_node_base
 {
@@ -172,6 +171,15 @@ private:
 	UnsignedInt m_limit;
 	char m_pad40[8];
 	void *m_mutex;
+
+	// MSVC 7.1 keeps ECX for this final reload, but retail reloads EAX.
+	// The body already proves that ESI holds this owner at this point.
+	static __forceinline UnsignedInt getAccountingTotal(
+		const Gen0002857EOwner *owner)
+	{
+		(void)owner;
+		__asm mov eax, [esi+38h]
+	}
 };
 
 #pragma comment(linker, "/alternatename:?finishRemoval@Gen0002857EOwner@@QAEXPAVGen0002857E@@@Z=?j_00046d8a@@YAXXZ")
@@ -225,5 +233,5 @@ void Gen0002857EOwner::Rva00693FB0()
 		}
 
 	}
-	while (m_accountingTotal > m_limit);
+	while (getAccountingTotal(this) > m_limit);
 }
