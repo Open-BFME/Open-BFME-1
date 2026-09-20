@@ -1,5 +1,5 @@
 // ?Change_Polygon_Renderer_Material@DX8FVFCategoryContainer@@QAEXAAV?$MultiListClass@VDX8PolygonRendererClass@@@@PAVVertexMaterialClass@@1I@Z
-// partial score=0.66 date=2026-09-20
+// partial score=0.7 date=2026-09-20
 // Scratch bank for the full real C++ attempt at retail RVA 0x00948220.
 // Canonical production source: Code/Libraries/Source/WWVegas/WW3D2/dx8renderer.cpp.
 // This excerpt is intentionally not compiled; the production source was restored clean.
@@ -65,7 +65,11 @@ public:
 	TextureClass *p;
 
 	BfmeHandleCX() : p(NULL) {}
-	~BfmeHandleCX();
+	~BfmeHandleCX() throw()
+	{
+		if (p != NULL)
+			p->Release_Ref();
+	}
 
 	BfmeHandleCX &operator=(const BfmeHandleCX &other)
 	{
