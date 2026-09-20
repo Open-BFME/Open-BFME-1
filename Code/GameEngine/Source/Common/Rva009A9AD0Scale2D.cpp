@@ -1,6 +1,5 @@
-// ?Rva009A9AD0Scale2D@@YAXPAEHIH0HII0EIIIII@Z
-// partial score=0.84 date=2026-09-16
-// Clean reconstruction of the VPx Scale2D helper at retail RVA 0x009A9AD0.
+// VPx Scale2D conversion recovered from the retail codec body at RVA 0x009A9AD0.
+// Callback bodies at 0x009A9980 and 0x009A9A20 use the witnessed Scale1D ABI.
 // cl: /DNDEBUG /MD /O2
 
 #include <string.h>
@@ -8,6 +7,13 @@
 typedef unsigned char Byte;
 typedef void (__cdecl *Scale1D)( const Byte *, int, unsigned int, unsigned int,
 	Byte *, int, unsigned int, unsigned int );
+
+extern void __cdecl Rva009A9980( const Byte *, int, unsigned int, unsigned int,
+	Byte *, int, unsigned int, unsigned int );
+extern void __cdecl Rva009A9A20( const Byte *, int, unsigned int, unsigned int,
+	Byte *, int, unsigned int, unsigned int );
+extern void __cdecl bfmeCopyColAA90( Byte *, int, int, int,
+	Byte *, int, int, int );
 
 void Rva009A9AD0Scale2D(
 	Byte *source,
@@ -26,21 +32,21 @@ void Rva009A9AD0Scale2D(
 	unsigned int vratio,
 	unsigned int interlaced )
 {
-	int i, j, k;
-	int bands;
-	int destBandHeight;
-	int sourceBandHeight;
-	Scale1D scaleVertical = (Scale1D)0x00DA9980;
-	Scale1D scaleHorizontal = (Scale1D)0x00DA9980;
-	Scale1D scaleTwoToOne = (Scale1D)0x00DA9A90;
+	unsigned int i, j, k;
+	unsigned int bands;
+	unsigned int destBandHeight;
+	unsigned int sourceBandHeight;
+	Scale1D scaleVertical = Rva009A9980;
+	Scale1D scaleHorizontal = Rva009A9980;
+	Scale1D scaleTwoToOne = (Scale1D)bfmeCopyColAA90;
 	if( hscale == 2 && hratio == 1 )
 		scaleHorizontal = scaleTwoToOne;
 	if( vscale == 2 && vratio == 1 )
-		scaleVertical = interlaced ? scaleTwoToOne : (Scale1D)0x00DA9A20;
+		scaleVertical = interlaced ? scaleTwoToOne : Rva009A9A20;
 
 	if( sourceHeight == destHeight )
 	{
-		for( k = 0; k < (int)destHeight; ++k )
+		for( k = 0; k < destHeight; ++k )
 		{
 			scaleHorizontal( source, 1, hscale, sourceWidth + 1,
 				dest, 1, hratio, destWidth );
@@ -69,7 +75,7 @@ void Rva009A9AD0Scale2D(
 	{
 		for( i = 1; i < sourceBandHeight + 1; ++i )
 		{
-			if( k * sourceBandHeight + i < (int)sourceHeight )
+			if( k * sourceBandHeight + i < sourceHeight )
 				scaleHorizontal( source + i * sourcePitch, 1, hscale, sourceWidth + 1,
 					tempArea + i * destPitch, 1, hratio, destWidth );
 			else
@@ -77,7 +83,7 @@ void Rva009A9AD0Scale2D(
 					tempArea + ( i - 1 ) * destPitch, destPitch );
 		}
 
-		for( j = 0; j < (int)destWidth; ++j )
+		for( j = 0; j < destWidth; ++j )
 			scaleVertical( &tempArea[j], destPitch, vscale, sourceBandHeight + 1,
 				&dest[j], destPitch, vratio, destBandHeight );
 
