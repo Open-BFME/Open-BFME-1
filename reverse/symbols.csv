@@ -88510,3 +88510,6 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ??1RvaThreadBase@@QAE@XZ,0x009DB530,additive: retail call target of the red row ??1Rva0064D320PeerThread@@QAE@XZ
 ?structureCollapseUpdateTarget@@YAXXZ,0x002AE200,address-derived alias for the matched StructureCollapseUpdate constructor used by the 0x0004A345 thunk
 ?bfmeConv1940194@BfmeThingEW@@QAEXXZ,0x0026FDE0,still-dump callee reached alongside bfmeSwapEW from the flags-98 Team block at 0x001C6E00
+?clear@?$vector@URva00746420Record@@V?$allocator@URva00746420Record@@@_STL@@@_STL@@QAEXXZ,0x0004219A,retail ILT 0x0004219A routes to vector clear body 0x00745800; 24-byte record payload proven by 0x007416E0
+?erase@?$vector@URva00746420Record@@V?$allocator@URva00746420Record@@@_STL@@@_STL@@QAEPAURva00746420Record@@PAU3@0@Z,0x00040129,retail ILT 0x00040129 routes to vector erase body 0x007457C0; 24-byte record payload proven by target loop
+?push_back@?$vector@URva00746420Record@@V?$allocator@URva00746420Record@@@_STL@@@_STL@@QAEXABURva00746420Record@@@Z,0x00044495,retail ILT 0x00044495 routes to vector push_back body 0x007463A0; 24-byte record payload proven by 0x007416E0

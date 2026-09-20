@@ -1,38 +1,79 @@
-// ?screenToTerrain@W3DView@@UAE_NPBUICoord2D@@PAUCoord3D@@_N@Z
-// partial score=0.72 date=2026-09-20
+// BFME W3DView::screenToTerrain at retail RVA 0x00746420.
+// Vtable slot, ABI, cache record layout, and callee contracts are established by reverse evidence.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ivendor/stlport /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
-// stlport
-// BFME W3DView::screenToTerrain at retail 0x00746420 (full 787 bytes).
-//
-// The shipped ZH header has the two-argument void method, but BFME's vtable
-// slot 89 is a three-argument Bool method.  The extra terrainOnly argument is
-// proven by the retail ret 0xc and by the FireWeapon, InGameUI, and Miles
-// screen-center shims.  Keep this reconstruction TU-local until the exact
-// symbol and cache layout have been independently verified.
 
 #include "Common/BuildAssistant.h"
 #include "Common/STLTypedefs.h"
 #include "GameClient/Drawable.h"
 #include "GameClient/View.h"
-#include "GameLogic/TerrainLogic.h"
 #include "W3DDevice/GameClient/BaseHeightMap.h"
 #include <coltest.h>
 #include <lineseg.h>
 
-struct BfmePosRequest
+struct Rva00746420Record
 {
 	ICoord2D first;
 	Coord3D second;
 	Bool found;
 };
 
-typedef std::vector<BfmePosRequest> BfmePosRequests;
+typedef std::vector<Rva00746420Record> Rva00746420Records;
 
-struct BfmeCastResult
+class Bridge;
+
+class TerrainLogic
 {
-	Int bfmePadding;
-	CastResultStruct result;
+public:
+	virtual void _tl_00(void) = 0;
+	virtual void _tl_01(void) = 0;
+	virtual void _tl_02(void) = 0;
+	virtual void _tl_03(void) = 0;
+	virtual void _tl_04(void) = 0;
+	virtual void _tl_05(void) = 0;
+	virtual void _tl_06(void) = 0;
+	virtual void _tl_07(void) = 0;
+	virtual void _tl_08(void) = 0;
+	virtual void _tl_09(void) = 0;
+	virtual void _tl_10(void) = 0;
+	virtual void _tl_11(void) = 0;
+	virtual void _tl_12(void) = 0;
+	virtual void _tl_13(void) = 0;
+	virtual void _tl_14(void) = 0;
+	virtual void _tl_15(void) = 0;
+	virtual void _tl_16(void) = 0;
+	virtual void _tl_17(void) = 0;
+	virtual void _tl_18(void) = 0;
+	virtual void _tl_19(void) = 0;
+	virtual void _tl_20(void) = 0;
+	virtual void _tl_21(void) = 0;
+	virtual void _tl_22(void) = 0;
+	virtual void _tl_23(void) = 0;
+	virtual void _tl_24(void) = 0;
+	virtual void _tl_25(void) = 0;
+	virtual void _tl_26(void) = 0;
+	virtual void _tl_27(void) = 0;
+	virtual void _tl_28(void) = 0;
+	virtual void _tl_29(void) = 0;
+	virtual void _tl_30(void) = 0;
+	virtual void _tl_31(void) = 0;
+	virtual void _tl_32(void) = 0;
+	virtual void _tl_33(void) = 0;
+	virtual void _tl_34(void) = 0;
+	virtual void _tl_35(void) = 0;
+	virtual void _tl_36(void) = 0;
+	virtual Bridge *getFirstBridge(void) = 0;
+	virtual void _tl_38(void) = 0;
+	virtual void _tl_39(void) = 0;
+	virtual void _tl_40(void) = 0;
+	virtual void _tl_41(void) = 0;
+	virtual Bool pickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos);
+	virtual void _tl_43(void) = 0;
+	virtual void _tl_44(void) = 0;
+	virtual void deleteBridge(Bridge *bridge);
+	virtual void updateBridgeDamageStates(void);
 };
+
+extern TerrainLogic *TheTerrainLogic;
 
 class W3DView
 {
@@ -40,12 +81,12 @@ public:
 	virtual Bool screenToTerrain(const ICoord2D *screen, Coord3D *world,
 		Bool terrainOnly);
 
+	private:
 	void getPickRay(const ICoord2D *screen, Vector3 *rayStart, Vector3 *rayEnd);
 
-	private:
 	unsigned char m_padding04[0x23c8 - 4];
 	Bool m_cameraHasMovedSinceRequest;
-	BfmePosRequests m_locationRequests;
+	Rva00746420Records m_locationRequests;
 };
 
 Bool W3DView::screenToTerrain(const ICoord2D *screen, Coord3D *world,
@@ -80,41 +121,50 @@ Bool W3DView::screenToTerrain(const ICoord2D *screen, Coord3D *world,
 		}
 	}
 
-	Vector3 rayStart, rayEnd;
+	Vector3 rayEnd, rayStart;
 	LineSegClass lineseg;
-	BfmeCastResult castResult;
+	CastResultStruct castResult;
 	Vector3 intersection(0, 0, 0);
 	Bool found = FALSE;
 
-	getPickRay(pixel, &rayStart, &rayEnd);
-	lineseg.Set(rayStart, rayEnd);
-	RayCollisionTestClass raytest(lineseg, &castResult.result);
+	getPickRay(pixel, &rayEnd, &rayStart);
+	lineseg.Set(rayEnd, rayStart);
+	RayCollisionTestClass raytest(lineseg, &castResult);
 
 	if (TheTerrainRenderObject->Cast_Ray(raytest))
 	{
-		intersection = castResult.result.ContactPoint;
+		intersection = castResult.ContactPoint;
 		found = TRUE;
 	}
 
 	if (!terrainOnly)
 	{
 		Vector3 bridgePt;
-		Drawable *bridge = TheTerrainLogic->pickBridge(rayStart, rayEnd,
+		Bool bridge = TheTerrainLogic->pickBridge(rayEnd, rayStart,
 			&bridgePt);
-		if (bridge != NULL && bridgePt.Z > intersection.Z)
+		if (bridge != NULL && (!found || bridgePt.Z > intersection.Z))
 		{
 			intersection = bridgePt;
 			found = TRUE;
 		}
 	}
 
-	out->x = intersection.X;
-	out->y = intersection.Y;
-	out->z = intersection.Z;
+	if (found)
+	{
+		out->x = intersection.X;
+		out->y = intersection.Y;
+		out->z = intersection.Z;
+	}
+	else
+	{
+		out->x = rayStart.X;
+		out->y = rayStart.Y;
+		out->z = rayStart.Z;
+	}
 
 	if (!terrainOnly)
 	{
-		BfmePosRequest request;
+		Rva00746420Record request;
 		request.first = *pixel;
 		request.second = *out;
 		request.found = found;
@@ -123,3 +173,4 @@ Bool W3DView::screenToTerrain(const ICoord2D *screen, Coord3D *world,
 
 	return found;
 }
+
