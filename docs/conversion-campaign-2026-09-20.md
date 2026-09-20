@@ -96,3 +96,15 @@ after one lane recorded five `blocked` verdicts in fifteen minutes.
 
 Hour 2 allocation: all seven seats on small carved bodies with callers
 (lanes C3-C8, C5b) and the deep lane E on the SidesList parse callback.
+
+### Hours 2-4 — 18:30Z to 22:00Z (interrupted)
+
+At 18:48Z every Sonnet seat hit the account's session usage limit (reset
+22:00Z); all seven lanes died mid-body and the orchestrator waited. Snapshot at
+22:01Z compared with the fleet base: fleet 8 bodies / 2,571 B (one more since
+hour 1: 0x001C6E00, 214 B, lane C4); repository-wide +8,386 B / +0.09 pp
+(67.04% -> 67.13%), of which +3,323 B is new total-exact coverage; other
+contributors added ~5.8 KB during the outage. Three worktrees kept unverified
+candidates (0x0023A380, 0x001A12D0, 0x00364E70) that the resumed lanes start
+from. Restart at 22:05Z with four seats instead of seven so the next usage
+window lasts ~3 hours instead of ~1.5.
