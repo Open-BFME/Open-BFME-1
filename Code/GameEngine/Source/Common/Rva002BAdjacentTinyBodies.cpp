@@ -207,3 +207,8 @@ int __cdecl Rva002C8290(void)
 void __stdcall Rva002C82B0(int)
 {
 }
+
+// ?dup_002BBBF0@@YAXXZ
+void dup_002BBBF0(void)
+{
+}
