@@ -1,10 +1,6 @@
 // ?levelBar@BfmeAptScreenSkirmish@@QAEXXZ
-// partial score=0.55 date=2026-09-09
-// ?levelBar@BfmeAptScreenSkirmish@@QAEXXZ
-// Retail 0x0057C340.  AptSkirmish registers this callback for the four
-// LevelBar gadgets.  It formats the current/next-level APT keys for each
-// faction and refreshes the corresponding level icon.
-// cl: /O2 /Ob0 /DNDEBUG /MD /EHsc
+// Retail 0x0057C340. Formats four faction level-bar strings and icons.
+// cl: /O2 /Ob2 /DNDEBUG /MD /EHsc
 
 template <typename T> struct StringInlineData
 {
@@ -29,7 +25,7 @@ private:
 class AsciiString : private StringBase<char>
 {
 public:
-	AsciiString() : StringBase<char>() {}
+	__forceinline AsciiString() { m_data = 0; }
 	AsciiString( const char *text ) : StringBase<char>( text ) {}
 	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
 	~AsciiString() {}
@@ -44,8 +40,7 @@ struct LevelBarTextTarget
 {
 	void invoke( AsciiString, AsciiString, AsciiString );
 };
-typedef void (LevelBarTextTarget::*SetLevelText)(
-	AsciiString, AsciiString, AsciiString );
+typedef void (LevelBarTextTarget::*SetLevelText)( AsciiString, AsciiString, AsciiString );
 
 struct LevelBarIconTarget
 {
@@ -68,16 +63,13 @@ public:
 
 #define LEVEL_BAR_FOR_SIDE( side, length, currentKey, nextKey, imageIndex ) \
 	{ \
-		AsciiString sideName; \
 		sideName.set( side, length ); \
-		AsciiString current( currentKey ); \
-		current.format( sideName ); \
-		AsciiString next( nextKey ); \
-		next.format( sideName ); \
+		next.format( AsciiString( currentKey ) ); \
+		current.format( AsciiString( nextKey ) ); \
 		union { void (*asFunction)(); SetLevelText asMember; } textCast; \
 		textCast.asFunction = j_0001e812; \
 		(reinterpret_cast<LevelBarTextTarget *>( this )->*textCast.asMember)( \
-			current, next, sideName ); \
+			sideName, next, current ); \
 		union { void (*asFunction)(); SetLevelIcon asMember; } iconCast; \
 		iconCast.asFunction = j_00028c2c; \
 		(reinterpret_cast<LevelBarIconTarget *>( this )->*iconCast.asMember)( \
@@ -86,6 +78,9 @@ public:
 
 void BfmeAptScreenSkirmish::levelBar()
 {
+	AsciiString sideName;
+	AsciiString next;
+	AsciiString current;
 	LEVEL_BAR_FOR_SIDE( g_bfmeSideNameA1294, 6,
 		"APT:CurrentLevelA", "APT:NextLevelA", 0 );
 	LEVEL_BAR_FOR_SIDE( g_bfmeSideNameB1294, 5,
