@@ -13,6 +13,17 @@ bool Rva0022FD00False::get() const
 	return false;
 }
 
+class Rva0022FDA0Ret
+{
+public:
+	void run();
+};
+
+// ?run@Rva0022FDA0Ret@@QAEXXZ
+void Rva0022FDA0Ret::run()
+{
+}
+
 class Rva0022FD60Self
 {
 public:
