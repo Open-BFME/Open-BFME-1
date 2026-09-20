@@ -376,3 +376,8 @@ char *Rva0029BED0::getAddress() const
 {
 	return const_cast<char *>(&m_value);
 }
+
+// ?Rva0028F0F0Noop@@YAXXZ
+void Rva0028F0F0Noop()
+{
+}
