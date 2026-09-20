@@ -221,7 +221,6 @@ void PlayerHealSpecialPower::doSpecialPowerAtObject(Object *target,
 	Object *owner =
 		((PlayerHealSpecialPowerBase *)((char *)this - 0x10))->m_object;
 	UnsignedInt disabledMask = owner->m_disabledMask;
-	volatile UnsignedInt stackReserve;
 	Object *volatile savedOwner;
 	savedOwner = owner;
 	if (disabledMask != 0)
