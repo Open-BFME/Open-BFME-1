@@ -141,7 +141,6 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start,
 		if (ret != 0)
 			return ret;
 
-		from = to;
 		if (num < 0)
 		{
 			num += numadd;
@@ -154,6 +153,7 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start,
 			x += xinc1;
 			y += yinc1;
 		}
+		from = to;
 	}
 
 	return 0;
