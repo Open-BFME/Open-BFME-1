@@ -1,5 +1,5 @@
 // ??0BfmeTmpACH@@QAE@PAX@Z
-// partial score=0.78 date=2026-09-19
+// partial score=0.82 date=2026-09-19
 // cl: /EHsc
 
 namespace _STL
@@ -120,6 +120,7 @@ public:
 
 	BfmeRefRecord *m_begin;
 	BfmeRefRecord *m_end;
+	int m_allocator;
 };
 
 class BfmeBaseCH
@@ -166,9 +167,10 @@ BfmeTmpACH::BfmeTmpACH(void *value)
 	: BfmeBaseCH(),
 	  m_bfmeMemCH(value)
 {
-	BfmeInputCH *source = (BfmeInputCH *)value;
+	const BfmeInputCH *source;
+	source = (const BfmeInputCH *)value;
 	Rva0019BC70Tree::iterator current(source->m_bfmeHeadCH.m_header->m_left);
-	Rva0019BC70Tree::iterator end(
+	volatile Rva0019BC70Tree::iterator end(
 		(_STL::_Rb_tree_node_base *)source->m_bfmeHeadCH.m_header);
 	while (current.m_node != end.m_node)
 	{
