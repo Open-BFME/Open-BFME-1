@@ -901,7 +901,7 @@ static void handleTeamSelection(int index)
 	Int team, selIndex;
 	GadgetComboBoxGetSelectedPos(combo, &selIndex);
 	team = (Int)GadgetComboBoxGetItemData(combo, selIndex);
-	GameInfo *myGame = TheGameSpyInfo->getCurrentStagingRoom();
+	GameInfo *myGame = ((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 
 	if (myGame)
 	{
@@ -911,12 +911,12 @@ static void handleTeamSelection(int index)
 
 		slot->setTeamNumber(team);
 
-		if (TheGameSpyInfo->amIHost())
+		if (((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->amIHost())
 		{
 			// send around a new slotlist
-			myGame->resetAccepted();
-			TheGameSpyInfo->setGameOptions();
-			WOLDisplaySlotList();
+			((BfmeTemplateSelectionGameInfo *)myGame)->resetAccepted();
+			((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->setGameOptions();
+			j_00006942();
 		}
 		else
 		{
@@ -929,8 +929,8 @@ static void handleTeamSelection(int index)
 			req.peerRequestType = PeerRequest::PEERREQUEST_UTMPLAYER;
 			req.UTM.isStagingRoom = TRUE;
 			req.id = "REQ/";
-			req.nick = hostName.str();
-			req.options = options.str();
+			req.nick = BfmeStartAsciiString(hostName);
+			req.options = BfmeStartAsciiString(options);
 			TheGameSpyPeerMessageQueue->addRequest(req);
 		}
 	}
