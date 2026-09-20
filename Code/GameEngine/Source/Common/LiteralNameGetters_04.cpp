@@ -95,6 +95,17 @@ BFME_LITERAL_NAME_GETTER( Rva005E61F0Named, "ParticleWindModuleInfo" )
 BFME_LITERAL_NAME_GETTER( Rva005E7330Named, "DefaultModule<CAT_ALPHA>" )
 BFME_LITERAL_NAME_GETTER( Rva005E73F0Named, "DefaultParticleAlphaModuleInfo" )
 BFME_LITERAL_NAME_GETTER( Rva005E74D0Named, "DefaultParticleModule<CAT_ALPHA>" )
+
+class Rva005E74C0Noop
+{
+public:
+	void run();
+};
+
+void Rva005E74C0Noop::run()
+{
+}
+
 BFME_LITERAL_NAME_GETTER( Rva005E75F0Named, "DefaultModule<CAT_UPDATE>" )
 BFME_LITERAL_NAME_GETTER( Rva005E76B0Named, "DefaultParticleUpdateModuleInfo" )
 BFME_LITERAL_NAME_GETTER( Rva005E77F0Named, "DefaultParticleModule<CAT_UPDATE>" )
