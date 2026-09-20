@@ -1,5 +1,5 @@
 // ?append@Rva003BABE0Owner@@QAEXPAVRva003BABE0Record@@@Z
-// partial score=0.82 date=2026-09-19
+// partial score=0.98 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
 // Open-BFME7: the region reinforcement append routine at retail 0x003B25D0.
 // ParseRegionReinforcementBlock proves the owner and record relationship. The
@@ -145,9 +145,10 @@ void Rva003BABE0Owner::append( Rva003BABE0Record *record )
 			return;
 	}
 
-	if( records.finish() != records.end_of_storage() )
+	Rva003BABE0Record *finish = records.finish();
+	if( finish != records.end_of_storage() )
 	{
-		new ( records.finish() ) Rva003BABE0Record( *record );
+		new ( finish ) Rva003BABE0Record( *record );
 		++records.m_finish;
 	}
 	else
