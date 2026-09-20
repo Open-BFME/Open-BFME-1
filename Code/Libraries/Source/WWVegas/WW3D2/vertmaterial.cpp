@@ -75,6 +75,14 @@ public:
 
 static unsigned int unique=1;
 
+struct BfmeVertexMaterialCaps
+{
+	char pad_to_device_id[0x28c];
+	unsigned int device_id;
+	char pad_to_vendor_id[8];
+	unsigned int vendor_id;
+};
+
 VertexMaterialClass* VertexMaterialClass::Presets[VertexMaterialClass::PRESET_COUNT];
 
 #ifdef DYN_MAT8
@@ -1052,7 +1060,6 @@ WW3DErrorType VertexMaterialClass::Save_W3D(ChunkSaveClass & csave)
 	return WW3D_ERROR_OK;
 }
 
-// ?Apply@VertexMaterialClass@@ABEXXZ present-unmatched
 void VertexMaterialClass::Apply(void) const
 {
 	int i;
@@ -1074,6 +1081,22 @@ void VertexMaterialClass::Apply(void) const
 		} else {
 			DX8Wrapper::Set_DX8_Texture_Stage_State(i,D3DTSS_TEXCOORDINDEX,D3DTSS_TCI_PASSTHRU | UVSource[i]);	
 			DX8Wrapper::Set_DX8_Texture_Stage_State(i,D3DTSS_TEXTURETRANSFORMFLAGS,D3DTTFF_DISABLE);		
+		}
+	}
+
+	BfmeVertexMaterialCaps *caps =
+		*(BfmeVertexMaterialCaps **)0x01340578;
+	if (caps && caps->vendor_id == 2 &&
+		(caps->device_id == 0x5144 ||
+		 (caps->device_id >= 0x5157 && caps->device_id <= 0x515a))) {
+		if ((Mapper[0] == NULL) != (Mapper[1] == NULL)) {
+			unsigned int stage = Mapper[0] != NULL;
+			Matrix4x4 identity;
+			identity.Make_Identity();
+			DX8Wrapper::Set_Transform(
+				(D3DTRANSFORMSTATETYPE)(D3DTS_TEXTURE0 + stage), identity);
+			DX8Wrapper::Set_DX8_Texture_Stage_State(
+				stage, D3DTSS_TEXTURETRANSFORMFLAGS, D3DTTFF_COUNT2);
 		}
 	}
 }
