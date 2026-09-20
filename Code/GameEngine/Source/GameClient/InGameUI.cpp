@@ -2760,7 +2760,6 @@ void InGameUI::createMoveHint( const GameMessage *msg )
 //-------------------------------------------------------------------------------------------------
 /** An attack command has occurred, start graphical "hint". */
 //-------------------------------------------------------------------------------------------------
-// ?createAttackHint@InGameUI@@UAEXPBVGameMessage@@@Z present-unmatched
 void InGameUI::createAttackHint( const GameMessage *msg )
 {
 
