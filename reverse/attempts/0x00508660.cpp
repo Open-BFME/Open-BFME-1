@@ -1,5 +1,5 @@
 // ?PopulateQMLadderListBox@BfmeAptScreenQuickMatchMenu@@QAEXPAVGameWindow@@@Z
-// partial score=0.62 date=2026-09-10
+// partial score=0.64 date=2026-09-20
 // Candidate source excerpt for
 // ?PopulateQMLadderListBox@BfmeAptScreenQuickMatchMenu@@QAEXPAVGameWindow@@@Z
 // Retail boundary: 0x00508660..0x00508B56 (1254 bytes).
@@ -56,6 +56,19 @@ private:
 	GameWindow *m_parentStats;
 };
 
+// Structural retry used stringbaseunicode and asciistring_copyctor_outofline.
+static Bool BfmeLadderAddressEqual(const AsciiString &left, const AsciiString &right)
+{
+	const unsigned char *leftData = *(const unsigned char * const *)&left;
+	const unsigned char *rightData = *(const unsigned char * const *)&right;
+	unsigned int leftLength = leftData ? *(const unsigned short *)(leftData + 4) : 0;
+	unsigned int rightLength = rightData ? *(const unsigned short *)(rightData + 4) : 0;
+	const char *leftText = leftData ? (const char *)(leftData + 8) : "";
+	const char *rightText = rightData ? (const char *)(rightData + 8) : "";
+	unsigned int count = leftLength < rightLength ? leftLength : rightLength;
+	return memcmp(leftText, rightText, count) == 0 && leftLength == rightLength;
+}
+
 void BfmeAptScreenQuickMatchMenu::PopulateQMLadderListBox( GameWindow *win )
 {
 	if (!m_ladder)
@@ -100,7 +113,7 @@ void BfmeAptScreenQuickMatchMenu::PopulateQMLadderListBox( GameWindow *win )
 	{
 		AsciiString addr = cit->second.address;
 		UnsignedShort port = cit->second.port;
-		if (addr == lastLadderAddr && port == lastLadderPort)
+		if (BfmeLadderAddressEqual(addr, lastLadderAddr) && port == lastLadderPort)
 			continue;
 		const LadderInfo *info = TheLadderList->findLadder( addr, port );
 		if (isValidLadder(info) && usedLadders.find(info) == usedLadders.end())
