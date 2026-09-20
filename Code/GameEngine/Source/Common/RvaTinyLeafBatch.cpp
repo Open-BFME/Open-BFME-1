@@ -331,3 +331,8 @@ bool Rva002E3270Owner::isFalse() const
 {
 	return false;
 }
+
+// ?d_002e2ca0@@YAXXZ
+extern "C" __declspec(noinline) void Rva002E2CA0Noop()
+{
+}
