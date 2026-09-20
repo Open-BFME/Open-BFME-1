@@ -94,6 +94,11 @@ bool Rva00285750False(void)
 	return false;
 }
 
+// ?Rva002878B0Empty@@YAXXZ
+void Rva002878B0Empty(void)
+{
+}
+
 // ?Rva002857A0Ret4@@YGXPAX@Z
 void __stdcall Rva002857A0Ret4(void *unused)
 {
