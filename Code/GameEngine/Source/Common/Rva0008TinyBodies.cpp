@@ -384,3 +384,8 @@ void d_0008a680(void)
 void Rva005C1290Noop(void)
 {
 }
+
+// ?dup_005c12a0@@YAXXZ
+void dup_005c12a0(void)
+{
+}
