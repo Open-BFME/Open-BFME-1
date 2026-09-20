@@ -1,5 +1,5 @@
 // ?bfmeTail938A@BfmeGlob938A@@QAEXH@Z
-// partial score=0.35 date=2026-09-19
+// partial score=0.39 date=2026-09-20
 // cl: /DNDEBUG /MD /EHsc
 // BFME-only observer-player cycling method.  The receiver global is the same
 // address as ThePlayers; the address-derived class/name is retained because
@@ -81,7 +81,6 @@ extern ShroudManager *TheShroudManager;
 extern TaintManager *TheTaintManager;
 void d_0003f431(int, int, int);
 void d_0001d98a();
-void __stdcall destroyNotify(void *);
 
 class SubsystemInterface {
 public:
@@ -100,6 +99,7 @@ public:
 class BfmeGlob938A : public SubsystemInterface, public Snapshot {
 public:
     void bfmeTail938A(int forward);
+    void destroyNotify(Player *player);
 
     Player *m_local;
     int m_playerCount;
