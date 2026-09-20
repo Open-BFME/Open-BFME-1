@@ -1,5 +1,4 @@
 // ?Record_Texture_End@@YAXXZ
-// partial score=0.99 date=2026-09-19
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // BFME Debug_Statistics::Record_Texture_End at RVA 0x00937900.
 // The Debug_Statistics::End_Statistics caller and the reverse/symbols.csv pin
@@ -164,11 +163,17 @@ void Record_Texture_End()
 			if ( texture.Peek() != 0 )
 			{
 				unsigned bytes = texture.Get_Texture_Memory_Usage();
-				if ( texture.Peek() != 0
-					&& reinterpret_cast<TextureStateView *>( texture.Peek() )->Is_Initialized() )
-					textureStatisticsString += "  ";
-				else
+				if ( texture.Peek() == 0 )
+					goto texture_status_missing;
+				bool initialized;
+				initialized = reinterpret_cast<TextureStateView *>( texture.Peek() )->Is_Initialized();
+				if ( initialized == false )
+					goto texture_status_missing;
+				textureStatisticsString += "  ";
+				goto texture_status_done;
+				texture_status_missing:
 					textureStatisticsString += g_bfmeName1053;
+				texture_status_done: ;
 				workingString.Format( "%4.4dkb         ", bytes / 1024 );
 				textureStatisticsString += workingString;
 			}
