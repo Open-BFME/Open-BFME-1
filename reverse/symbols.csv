@@ -85513,6 +85513,7 @@ name,address,notes
 ?run@WideRunner@@QAEXPAVWideCall@@PBDHHHHHH@Z,0x00015235,incremental-link thunk to 0x004675F0; __thiscall with eight stack args (ret 0x20); address-derived name
 ?run@WinInstanceDataInitShim@@QAEXXZ,0x00499850,WinInstanceData init incremental-link thunk target through a TU-local forwarding shim
 ?run@XferRandomVariableShim@@SAXAAVXfer@@AAVGameClientRandomVariable@@@Z,0x0010C4D0,xferRandomVariable incremental-link thunk target through a TU-local forwarding shim
+?rva00008837Target@@YAXXZ,0x003B0E90,TU-local clean-C++ alias for the independently proven W3DAnimationInfo vector-clear body
 ?rva0000903ETarget@@YAXXZ,0x000A8170,TU-local clean-C++ alias for the independently proven ParticleSysBoneInfo vector-clear body
 ?rva00009052Target@@YAXXZ,0x002EB770,TU-local clean-C++ alias for the independently proven Gen002E9E10 vector insert-overflow body
 ?rva00010a23@Rva00010A23Target@@QAEXPAXMH@Z,0x00010A23,Address-derived callee ABI from the retail call at 0x002D7890; three explicit arguments are tail pointer, Real ratio, and int extra
