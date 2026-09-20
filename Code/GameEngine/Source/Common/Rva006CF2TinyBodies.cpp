@@ -136,6 +136,10 @@ void Rva006CF510Owner::invoke(int)
 {
 }
 
+void Rva006CF530()
+{
+}
+
 class Rva006CF5B0Owner
 {
 public:
