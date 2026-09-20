@@ -153,6 +153,11 @@ Rva00258350Self *Rva00258350Self::self()
 	return this;
 }
 
+// ?Rva00258390Noop@@YAXXZ
+void Rva00258390Noop()
+{
+}
+
 class Rva00258550Dword
 {
 public:
