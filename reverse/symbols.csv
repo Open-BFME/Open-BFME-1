@@ -88470,3 +88470,4 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
+?run@Rva000AB6D0QuickMatchCtor@@QAEXXZ,0x000AB6D0,address-derived forwarding target for the proven QuickMatchPreferences constructor
