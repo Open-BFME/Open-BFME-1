@@ -394,3 +394,8 @@ void dup_005c12a0(void)
 void dup_00579640(void)
 {
 }
+
+// ?dup_0008a980@@YAXXZ
+void dup_0008a980(void)
+{
+}
