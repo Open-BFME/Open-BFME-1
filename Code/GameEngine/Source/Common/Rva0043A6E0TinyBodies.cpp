@@ -322,6 +322,17 @@ Rva0044FCA0Body *Rva0044FCA0Body::body()
 	return this;
 }
 
+class Rva0044FCC0Body
+{
+public:
+	void body();
+};
+
+// ?body@Rva0044FCC0Body@@QAEXXZ
+void Rva0044FCC0Body::body()
+{
+}
+
 class Rva0044FF30Body
 {
 public:
