@@ -88516,3 +88516,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?ScienceVectorInsertOverflow@@YAXXZ,0x000BC600,shim callee pinned to the verified ScienceType vector overflow body used by ILT 0x00023588
 ?findSpecialAbilityUpdate@BfmePlayerObjectDlinkObject@@QBEPAVSpecialAbilityUpdateView@@H@Z,0x0004B4FC,Open-BFME5 view-class spelling of the ILT already pinned as ?findSpecialAbilityUpdate@Object@@QBEPAVSpecialAbilityUpdate@@W4SpecialPowerType@@@Z; ScriptConditionsRva00326DA0.cpp calls it through the view so the in-TU definition cannot inline
 ?unidentified_001BFE20@BfmePlayerObjectDlinkObject@@QBEPAVRva00326C00FoundSlot36@@XZ,0x0000D3B9,Open-BFME5 view-class spelling of the ILT already pinned as ?unidentified_001BFE20@Object@@QBEPAXXZ (ObjectTeamAndPlayer.cpp); ScriptConditionsRva00326C00.cpp calls it through the view so the in-TU definition cannot inline
+?bfmeLookup46C7D0@Rva00579160Manager@@QAEPAXH@Z,0x00008FEE,pin
