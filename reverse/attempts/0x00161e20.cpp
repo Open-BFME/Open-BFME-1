@@ -279,7 +279,16 @@ public:
 	typedef TeamInQueue *(TeamInQueue::*GetNextFunc)();
 
 	TeamInQueueIterator(TeamInQueue *cur, GetNextFunc getNext)
-		: m_cur(cur), m_getNext(getNext) {}
+		: m_cur(cur)
+	{
+		union
+		{
+			GetNextFunc pmf;
+			unsigned int raw;
+		} value;
+		value.raw = 0x0042FEE6;
+		m_getNext = value.pmf;
+	}
 
 	void advance()
 	{
@@ -356,7 +365,7 @@ struct Rva00161E20ObjectAIView
 	AIUpdateInterface *m_ai;
 };
 
-class Rva00161E20AIPlayer
+class AIPlayer
 {
 public:
 	virtual void s00(); virtual void s01(); virtual void s02(); virtual void s03();
@@ -407,7 +416,7 @@ private:
 };
 
 // ?checkQueuedTeams@AIPlayer@@MAEXXZ
-void Rva00161E20AIPlayer::checkQueuedTeams()
+void AIPlayer::checkQueuedTeams()
 {
 	{
 		for (TeamInQueueIterator iter = iterate_TeamBuildQueue();
