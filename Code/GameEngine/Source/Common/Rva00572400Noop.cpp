@@ -1,0 +1,6 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD
+
+// ?d_00572400@@YAXXZ
+void d_00572400()
+{
+}
