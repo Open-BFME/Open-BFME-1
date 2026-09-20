@@ -4,3 +4,15 @@
 void Rva0052CFC0Noop()
 {
 }
+
+void Rva0052CFD0Noop()
+{
+}
+
+void Rva0052CFE0Noop()
+{
+}
+
+void Rva0052D2B0Noop()
+{
+}
