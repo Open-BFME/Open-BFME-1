@@ -1,5 +1,51 @@
 // _Rva00812690
+// partial score=0.64 date=2026-09-20
+// cl: /Od /GZ /GS /MD /DNDEBUG
+// _Rva00812690
 // partial score=0.62 date=2026-09-09
+struct Rva007FD4E0Socket;
+struct Rva00812220Entry
+{
+	char m_gap0[ 0x08 ];
+	char m_nameA[ 0x20 ];
+	char m_nameB[ 0x20 ];
+	char m_detail[ 0xC0 ];
+	char m_templates[ 0x7C ];
+	char m_substitution[ 0x10 ];
+	int m_value;
+	int m_extra;
+	int m_pending;
+	char m_gap1A0[ 4 ];
+};
+struct Rva00812320Module
+{
+	char m_gap0[ 0x28 ];
+	struct Rva00812220Entry *m_first;
+	struct Rva00812220Entry *m_end;
+	int m_ready;
+	char m_gap34[ 4 ];
+	struct Rva007FD4E0Socket *m_socket;
+	char m_peer[ 0x10 ];
+	int m_active;
+};
+extern char g_Rva012C499CTag[];
+int Rva007FEB00( void *lock );
+int Rva008125C0( struct Rva00812320Module *context );
+int Rva007FDA50( struct Rva007FD4E0Socket *socket, char *buffer, int length,
+	int flags, void *from, int *fromLength );
+int Rva007FE310( void *host, int hostLength, const void *inet, int inetLength );
+unsigned int Rva007FEA00( void );
+int Rva00811CE0( const char *a, const char *b );
+char *Rva007FF860( const unsigned char *address, char *destination, int size );
+int Rva007FD920( struct Rva007FD4E0Socket *socket, const char *buffer,
+	int length, int flags, void *to, int toLength );
+void Rva007FECB0( void *list );
+void bfmeGo1019C( int value );
+void * __cdecl memset( void *dest, int c, unsigned int count );
+void * __cdecl memcpy( void *dest, const void *src, unsigned int count );
+int __cdecl memcmp( const void *left, const void *right, unsigned int count );
+char * __cdecl strcpy( char *dest, const char *src );
+
 int __cdecl Rva00812690( struct Rva007FD4E0Socket *socket, int reason,
 	void *data )
 {
@@ -35,8 +81,14 @@ int __cdecl Rva00812690( struct Rva007FD4E0Socket *socket, int reason,
 			fromLength = 0x10;
 			result = Rva007FDA50( object->m_socket, packet, 0x180, 0,
 				from, &fromLength );
-			if ( result > 0 && packet[ 8 ] != 0 )
+			if ( result > 0 )
 			{
+				if ( packet[ 8 ] != 0 )
+					goto receive_packet;
+				goto receive_guard_fail;
+			}
+			goto receive_guard_fail;
+	receive_packet:
 				Rva007FE310( base, 0x10, from, 0x10 );
 				status = 0;
 				if ( *( unsigned short * )base == *( unsigned short * )from )
@@ -122,11 +174,11 @@ int __cdecl Rva00812690( struct Rva007FD4E0Socket *socket, int reason,
 							| (unsigned char)base[ 1 ] ) << 8
 							| (unsigned char)base[ 2 ] ) << 8
 							| (unsigned char)base[ 3 ] );
-					Rva007FF860( entry->m_substitution, from );
+					Rva007FF860( from, entry->m_substitution, 0x10 );
 					object->m_active++;
 				}
 				continue;
-			}
+	receive_guard_fail:
 			goto expire;
 		}
 
