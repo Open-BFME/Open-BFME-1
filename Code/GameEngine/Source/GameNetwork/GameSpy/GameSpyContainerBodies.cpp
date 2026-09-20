@@ -136,6 +136,12 @@ public:
 	void push_back_aux(void const *x);
 };
 
+class DequePushBackAuxValueThunksShim
+{
+public:
+	void push_back_aux(void const *x);
+};
+
 class Rva0002F6A3PingRequestThunk
 {
 public:
@@ -148,6 +154,12 @@ public:
 	void _M_push_back_aux_v(PingResponse const &value);
 };
 
+class Rva0002217EGameResultsRequestThunk
+{
+public:
+	void _M_push_back_aux_v(GameResultsRequest const &value);
+};
+
 void Rva0002F6A3PingRequestThunk::_M_push_back_aux_v(PingRequest const &value)
 {
 	((DequePingRequestThunkShim *)this)->push_back_aux((void const *)&value);
@@ -156,6 +168,13 @@ void Rva0002F6A3PingRequestThunk::_M_push_back_aux_v(PingRequest const &value)
 void Rva0003C650PingResponseThunk::_M_push_back_aux_v(PingResponse const &value)
 {
 	((DequePingResponseThunkShim *)this)->push_back_aux((void const *)&value);
+}
+
+void Rva0002217EGameResultsRequestThunk::_M_push_back_aux_v(
+	GameResultsRequest const &value)
+{
+	((DequePushBackAuxValueThunksShim *)this)->push_back_aux(
+		(void const *)&value);
 }
 }
 
