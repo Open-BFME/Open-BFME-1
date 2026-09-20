@@ -335,3 +335,9 @@ Rva00191B20Identity *Rva00191B20Identity::getThis()
 {
 	return this;
 }
+
+// Retail RVA 0x00191AC0 contains only ret.
+// The carved boundary proves a cdecl no-op, but the binary does not prove a semantic owner.
+void Rva00191AC0Noop()
+{
+}
