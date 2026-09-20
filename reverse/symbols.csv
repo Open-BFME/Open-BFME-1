@@ -88520,3 +88520,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?bfmeLookup46C7D0@Rva00579160Manager@@QAEPAXH@Z,0x00008FEE,pin
 ?getMode@Rva0046F3D0ModeSource@@QAEHXZ,0x0046F280,pin
 ?handle@Handler@@QAEXH@Z,0x0081D520,pin
+?rva000032a6Target@@YAXXZ,0x003AA480,TU-local clean-C++ alias for the matched HideShowSubObjInfo uninitialized-copy body used by the 0x000032A6 tail thunk
