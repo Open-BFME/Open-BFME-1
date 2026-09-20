@@ -84394,6 +84394,7 @@ name,address,notes
 ?load@INI@@QAEXVAsciiString@@HHPAX@Z,0x00853CB0,retail INI::load(file loadType reload xfer); called by the subsystem loader at 0x000BB310
 ?load@INI@@QAEXVAsciiString@@HPAVXfer@@P6AXPAV1@@Z@Z,0x00853CB0,Retail853CE3 stores thirdarg toINI s_xfer130CE54;853D5F calls fourtharg cdecl with INI pointer. Corrects old reload/xfer labels
 ?load@INI@@QAEXVBFMERetailAsciiString@@00HH@Z,0x00853B30,retail five-argument INI entry point called by the FX particle-system loader
+?load@INI@@QAE_NVBFMERetailAsciiString@@00HH@Z,0x00853B30,retail FX particle-system caller and exact five-argument body return shape prove this bool entry point
 ?load@MapCacheLoadStandardMapsShim@@QAEXXZ,0x004507A0,MapCache loadStandardMaps incremental-link thunk target through a TU-local forwarding shim
 ?load@MapCacheLoadUserMapsShim@@QAE_NXZ,0x004577C0,MapCache loadUserMaps incremental-link thunk target through a TU-local forwarding shim
 ?load@UserPreferences@@UAE_NVAsciiString@@@Z,0x00014308,QuickMatchPreferences retail constructor call ILT reaches UserPreferences::load at 0x000A9230
@@ -84801,6 +84802,7 @@ name,address,notes
 ?parseInt@INI@@SAXPAV1@PAX1PBX@Z,0x00852A60
 ?parseLadder@@YAPAVLadderInfo@@VAsciiString@@@Z,0x0062AD50,checkLadder direct call at 0x0062BCDC and the file-local parser in GameNetwork/GameSpy/LadderDefs.cpp
 ?parseLine@INI@@IAEXVAsciiString@@@Z,0x00851350,BFME factors the per-line block dispatch out of load - name is ours
+?parseLine@INI@@IAEXVBFMERetailAsciiString@@@Z,0x00851350,address-derived line parser call with the retail AsciiString ABI
 ?parseMappedImage@INI@@SAXPAV1@PAX1PBX@Z,0x0000FC3B
 ?parseObjectCreationList@INI@@SAXPAV1@PAX1PBX@Z,0x0003CBA0
 ?parseParticleSystem@BoneFXParseParticleSystemShim@@SAXPAVINI@@PAX1PBX@Z,0x00287E40,BoneFXUpdateModuleData::parseParticleSystem incremental-link thunk target through a TU-local forwarding shim
@@ -84913,6 +84915,7 @@ name,address,notes
 ?preloadAssets@ParticleSystemManager@@UAEXW4TimeOfDay@@@Z,0x005cb720,vtable-slot ??_7W3DParticleSystemManager@@6BSubsystemInterface@@@ slot 14 anchors=7
 ?prep@BfmeSub1CC_EC3@@QAEMPAUMat12@@@Z,0x00024EA6,ILT thunk to 0x001B5860 the copyMatrixAndGo prep at 0x001B9C50
 ?prep@Rva0026CBE0Owner@@QAEXXZ,0x000392B1,Open-BFME6 ILT prep callee of 0x0026CBE0
+?prepFile@INI@@IAEXVBFMERetailAsciiString@@H@Z,0x00853610,address-derived five-argument INI loader call with the retail AsciiString ABI
 ?prepFollow@AIGroup@@QAEXW4CommandSourceType@@H@Z,0x0002E636,AIGroup prep before follow-as-team walk; body 0x0015AB50
 ?prepSpecial@AIGroup@@QAEXXZ,0x00006258,ILT to 0x00150A10 from tryGroupSpecial 0x001599A0
 ?prepare@Rva0019BC00Owner@@QAEXH@Z,0x00020D97,ILT thunk to 0x00197750 prepare before field writes
@@ -85631,6 +85634,7 @@ name,address,notes
 ?rva0082ADB0Fill@@YAXPAD0ABD@Z,0x0082ADB0,callee of rva0082BE60FillN; STLport fill at the ICF alias
 ?rva0082C6E0CopyValues@@YAPAURva0082C6E0Value@@PAU1@00@Z,0x00018179,0x0082C6E0 vector erase trivial-copy thunk;target=0x00065E30
 ?rva0082C760Acquire@@YAXPAVNodeAllocMutex@_STL@@@Z,0x0082C760,node_alloc real acquire called by _M_acquire_lock
+?rva00851BF0@@YA_NVBFMERetailAsciiString@@0PBD@Z,0x00851BF0,address-derived line filter called with two retail AsciiString values and the line buffer
 ?rva008836F0@Rva008838F0Owner@@QAEXPAXPADI@Z,0x008836F0,caller0x882580 via direct call; independently decoded tracker lookup by block pointer then diagnostic output and unsigned capacity; thiscall three stack args ret12 at+0x28; address-derived owner shared with matched constructor
 ?rva00896AF0@Rva00896AF0Tracker@@QAEXPAVRva8CD130String@@V2@@Z,0x00896AF0,neutral Apt tracker member; direct retail call008AE70E; pointer and by-value4Bstring ret8; boundary1272B
 ?rva0089EEF0@Rva8CD130String@@QAEXII@Z,0x0089EEF0,neutral Apt string member; direct retail call008AE6D9; two32-bitargs ret8; boundary230B
