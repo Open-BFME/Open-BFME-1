@@ -1,6 +1,9 @@
 // ?bfmeGetYA@BfmeHostYA@@QAEMXZ
-// partial score=0.99 date=2026-09-09
-// pin needed: ?bfmeApplyYA@LocomotorOverridable@@QAEHPAVPlayer@@H@Z,0x0004B01F
+// The BfmeHostYA vtable and the LocomotorOverridable fields at +0x04 and
+// +0x23c prove the identity. Retail calls getControllingPlayer, follows the
+// override chain through getFinalOverride, then calls ThingTemplate's
+// calcTimeToBuild with mode -1.
+
 class Player;
 
 class LocomotorOverridable
@@ -27,24 +30,6 @@ public:
 extern const float BfmeZeroRange;
 extern float g_bfmeDefaultBU;
 
-static __forceinline ThingTemplate *bfmeFinalYA(LocomotorOverridable *p)
-{
-	ThingTemplate *overrideObject;
-	if (p == 0)
-	{
-		overrideObject = 0;
-	}
-	else
-	{
-		LocomotorOverridable *next = p->m_bfme04YA;
-		if (next == 0)
-			overrideObject = (ThingTemplate *)p;
-		else
-			overrideObject = (ThingTemplate *)next->friend_getFinalOverride();
-	}
-	return overrideObject;
-}
-
 class BfmeHostYA
 {
 public:
@@ -67,6 +52,17 @@ float BfmeHostYA::bfmeGetYA()
 	if (pl == 0)
 		return BfmeZeroRange;
 
-	ThingTemplate *finalOverride = bfmeFinalYA(m_bfme04YA);
-	return g_bfmeDefaultBU / (float)finalOverride->calcTimeToBuild(pl, -1);
+	int buildTime;
+	if (m_bfme04YA == 0)
+	{
+		buildTime = ((ThingTemplate *)0)->calcTimeToBuild(pl, -1);
+	}
+	else
+	{
+		ThingTemplate *finalOverride = (ThingTemplate *)m_bfme04YA;
+		if (finalOverride->m_bfme04YA != 0)
+			finalOverride = (ThingTemplate *)finalOverride->m_bfme04YA->friend_getFinalOverride();
+		buildTime = finalOverride->calcTimeToBuild(pl, -1);
+	}
+	return g_bfmeDefaultBU / (float)buildTime;
 }
