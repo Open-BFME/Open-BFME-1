@@ -18,8 +18,7 @@ typedef bool Bool;
 template <typename T> struct BfmeStringData
 {
 	int m_refs;
-	UnsignedShort m_length;
-	UnsignedShort m_capacity;
+	int m_length;
 	T m_text[1];
 };
 
@@ -30,7 +29,7 @@ template <typename T> class StringBase
 protected:
 	StringBase() : m_data(0) {}
 	StringBase(const StringBase<T> &other);
-	~StringBase() { releaseBuffer(); }
+	~StringBase();
 	void set(const StringBase<T> &other) throw();
 	void releaseBuffer();
 	BfmeStringData<T> *m_data;
@@ -51,7 +50,8 @@ public:
 
 	const char *str() const
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		return m_data ? (const char *)((unsigned char *)m_data + 8)
+			: (const char *)0x0107388B;
 	}
 };
 
@@ -115,11 +115,11 @@ public:
 	virtual Bool isStoring();
 	virtual void slot03();
 	virtual Bool isLightCRC();
-	virtual void slot05();
-	virtual void slot06();
-	virtual void slot07();
+	virtual Int beginBlock(const char *name);
+	virtual void endBlock();
+	virtual void skipBlock(const char *name);
 	virtual void slot08();
-	virtual void slot09();
+	virtual void xferUser(void *data, UnsignedInt size);
 	virtual void xferVersion(BfmeGameStateMapXferVersion *version);
 	virtual void slot11();
 	virtual void xferSnapshot(Snapshot *snapshot);
@@ -205,6 +205,50 @@ extern GameClient *TheGameClient;
 extern GlobalData *TheGlobalData;
 extern GlobalData *TheWritableGlobalData;
 extern SkirmishGameInfo *TheSkirmishGameInfo;
+
+class File
+{
+public:
+	enum SeekMode { START, CURRENT, END };
+	virtual void slot00();
+	virtual void slot01();
+	virtual void close() = 0;
+	virtual Int read(void *, Int) = 0;
+	virtual Int write(const void *, Int) = 0;
+	virtual Int seek(Int, SeekMode) = 0;
+};
+
+class FileSystem
+{
+public:
+	File *openFile(const char *name, Int mode);
+};
+
+#define TheFileSystem (*(FileSystem **)0x0134CB48)
+
+struct XferException
+{
+	void *text;
+	int tag;
+};
+
+extern "C" XferException *__cdecl bfmeFormatText(
+	XferException *result, int tag, const char *format, ...);
+extern void __declspec(noreturn) __stdcall _CxxThrowException(
+	void *object, void *throwInfo);
+extern "C" __declspec(dllimport) void *__cdecl bfmeFopenVIF(
+	const char *name, const char *mode);
+extern "C" __declspec(dllimport) unsigned int __cdecl fwrite(
+	const void *buffer, unsigned int size, unsigned int count, void *stream);
+extern "C" __declspec(dllimport) unsigned int __cdecl fread(
+	void *buffer, unsigned int size, unsigned int count, void *stream);
+extern "C" __declspec(dllimport) int __cdecl fseek(
+	void *stream, long offset, int origin);
+extern "C" __declspec(dllimport) long __cdecl ftell(void *stream);
+extern "C" __declspec(dllimport) int __cdecl fclose(void *stream);
+extern "C" __declspec(dllimport) void __cdecl bfmeFreeUXB(void *stream);
+void *__cdecl operator new[](unsigned int size);
+void __cdecl operator delete[](void *memory);
 
 static void embedPristineMap(AsciiString map, Xfer *xfer);
 static void embedInUseMap(AsciiString map, Xfer *xfer);
@@ -354,18 +398,106 @@ void GameStateMap::xfer(Xfer *xfer)
 
 __declspec(noinline) static void embedPristineMap(AsciiString map, Xfer *xfer)
 {
-	if (xfer == 0)
-		map.str();
+	File *file = TheFileSystem->openFile(map.str(), 0x41);
+	if (file == 0)
+	{
+		XferException error;
+		bfmeFormatText(&error, 5, 0);
+		_CxxThrowException(&error, (void *)0x011DFE5C);
+	}
+
+	Int fileSize = file->seek(0, File::END);
+	file->seek(0, File::START);
+	char *buffer = (char *)::operator new[](fileSize);
+	if (buffer == 0)
+	{
+		XferException error;
+		bfmeFormatText(&error, 5, 0);
+		_CxxThrowException(&error, (void *)0x011DFE5C);
+	}
+
+	if (file->read(buffer, fileSize) != fileSize)
+	{
+		::operator delete[](buffer);
+		XferException error;
+		bfmeFormatText(&error, 5, 0);
+		_CxxThrowException(&error, (void *)0x011DFE5C);
+	}
+
+	file->close();
+	xfer->beginBlock("PristineMap");
+	xfer->xferUser(buffer, fileSize);
+	xfer->endBlock();
+	::operator delete[](buffer);
 }
 
-__declspec(noinline) static void embedInUseMap(AsciiString map, Xfer *xfer)
+static void embedInUseMap(AsciiString map, Xfer *xfer)
 {
-	if (xfer == 0)
-		map.str();
+	void *fp = bfmeFopenVIF(map.str(), "rb");
+	if (fp == 0)
+	{
+		XferException error;
+		bfmeFormatText(&error, 5, 0);
+		_CxxThrowException(&error, (void *)0x011DFE5C);
+	}
+
+	fseek(fp, 0, 2);
+	Int fileSize = (Int)ftell(fp);
+	fseek(fp, 0, 0);
+	char *buffer = (char *)::operator new[](fileSize);
+	if (buffer == 0)
+	{
+		XferException error;
+		bfmeFormatText(&error, 5, 0);
+		_CxxThrowException(&error, (void *)0x011DFE5C);
+	}
+
+	if (fread(buffer, 1, fileSize, fp) != (unsigned int)fileSize)
+	{
+		::operator delete[](buffer);
+		XferException error;
+		bfmeFormatText(&error, 5, 0);
+		_CxxThrowException(&error, (void *)0x011DFE5C);
+	}
+
+	xfer->beginBlock("EmbeddedMap");
+	xfer->xferUser(buffer, fileSize);
+	xfer->endBlock();
+	fclose(fp);
+	::operator delete[](buffer);
 }
 
 __declspec(noinline) static void extractAndSaveMap(AsciiString map, Xfer *xfer)
 {
-	if (xfer == 0)
-		map.str();
+	UnsignedInt dataSize;
+	void *fp = bfmeFopenVIF(map.str(), "w+b");
+	if (fp == 0)
+	{
+		XferException error;
+		bfmeFormatText(&error, 5, 0);
+		_CxxThrowException(&error, (void *)0x011DFE5C);
+	}
+
+	xfer->beginBlock("EmbeddedMap");
+	xfer->xferUnsignedInt(&dataSize);
+	char *buffer = (char *)::operator new[](dataSize);
+	if (buffer == 0)
+	{
+		XferException error;
+		bfmeFormatText(&error, 5, 0);
+		_CxxThrowException(&error, (void *)0x011DFE5C);
+	}
+
+	xfer->xferUser(buffer, dataSize);
+	if (fwrite(buffer, 1, dataSize, fp) != dataSize)
+	{
+		::operator delete[](buffer);
+		XferException error;
+		bfmeFormatText(&error, 5, 0);
+		_CxxThrowException(&error, (void *)0x011DFE5C);
+	}
+
+	bfmeFreeUXB(fp);
+	xfer->endBlock();
+	::operator delete[](buffer);
 }
