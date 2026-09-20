@@ -147,3 +147,8 @@ private:
 AODHordeContain::~AODHordeContain()
 {
 }
+
+// ?Rva006432D0Noop@@YAXXZ
+void Rva006432D0Noop(void)
+{
+}
