@@ -275,6 +275,11 @@ char *Rva0043B250Owner::get()
     return (char *)this + 0x18;
 }
 
+// ?d_0042ec50@@YAXXZ
+void d_0042ec50()
+{
+}
+
 class Rva0043CAD0Owner
 {
 public:
