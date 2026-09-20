@@ -155,7 +155,8 @@ void Rva00941700Owner::Rva00941700_Method(
 		if (data != 0) {
 			int extra_spacing = data->ExtraSpacing;
 			int width = data->Width;
-			char_width = width + extra_spacing;
+			char_width = extra_spacing;
+			char_width = char_width + width;
 		}
 		else
 			char_width = 0;
