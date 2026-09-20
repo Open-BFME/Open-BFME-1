@@ -4,3 +4,7 @@
 void Rva005E2F50NoOp(void)
 {
 }
+
+void Rva005E2F60NoOp(void)
+{
+}
