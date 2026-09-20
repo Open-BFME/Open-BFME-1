@@ -88476,3 +88476,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?rva0001fe92Target@@YAXXZ,0x003AFE10,address-derived alias for the matched ProductionPrerequisite vector clear body used by the 0x0001FE92 tail thunk
 ??0?$_Vector_base@UOpen2Elem7716A0@@V?$allocator@UOpen2Elem7716A0@@@_STL@@@_STL@@QAE@IABV?$allocator@UOpen2Elem7716A0@@@1@@Z,0x00760B20,retail vector copy base constructor call at 0x0076CF20
 ?getHeightAboveTerrainOrWater@Rva0073A6C0Thing@@QBEMXZ,0x00005948,address-derived helper pin from the complete 0x0073A6C0 call and matched Thing body at 0x001324A0
+?ji_009f6fac@@YANPBD@Z,0x009F6FAC,typed cdecl atof import alias used by the exact 0x008921B0 wrapper; existing import thunk jumps directly to CRT atof
