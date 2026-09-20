@@ -1,5 +1,5 @@
 // ?createGame@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
-// partial score=0.74 date=2026-09-04
+// partial score=0.76 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // BfmeAptScreenOnlineCustomMatch::createGame, retail 0x0053E390, 992 bytes.
@@ -295,6 +295,7 @@ void BfmeAptScreenOnlineCustomMatch::createGame()
 {
 	PeerRequest req;
 	UnicodeString nameText = GadgetTextEntryGetText( m_nameEntry );
+	int i = 0;
 	LanguageFilter *filter = TheLanguageFilter;
 	if( filter )
 		filter->filterLine( nameText );
@@ -305,7 +306,6 @@ void BfmeAptScreenOnlineCustomMatch::createGame()
 	req.peerRequestType = 9;
 
 	const unsigned short *wide = nameText.str();
-	int i = 0;
 	while( wide[ i ] )
 		++i;
 	req.text.assign( wide, wide + i );

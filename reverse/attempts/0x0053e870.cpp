@@ -1,5 +1,5 @@
 // ?joinSelectedStagingRoom@BfmeAptScreenOnlineCustomMatch@@QAEXXZ
-// partial score=0.58 date=2026-09-04
+// partial score=0.62 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // BfmeAptScreenOnlineCustomMatch::joinSelectedStagingRoom, retail 0x0053E870,
@@ -259,7 +259,6 @@ private:
 void BfmeAptScreenOnlineCustomMatch::joinSelectedStagingRoom()
 {
 	int selected = 0;
-	int selectedID = 0;
 	if( m_joining )
 		return;
 
@@ -273,8 +272,8 @@ void BfmeAptScreenOnlineCustomMatch::joinSelectedStagingRoom()
 		return;
 	}
 
-	selectedID = (int)GadgetListBoxGetItemData( m_gameList, selected, 0 );
-	if( selectedID <= 0 )
+	selected = (int)GadgetListBoxGetItemData( m_gameList, selected, 0 );
+	if( selected <= 0 )
 	{
 		GSMessageBoxOk( TheGameText->fetch( "GUI:Error", 0 ),
 			TheGameText->fetch( "GUI:NoGameInfo", 0 ), 0 );
@@ -282,7 +281,7 @@ void BfmeAptScreenOnlineCustomMatch::joinSelectedStagingRoom()
 	}
 
 	StagingRoomMap *rooms = TheGameSpyInfo->getStagingRoomList();
-	StagingRoomMapIterator it = rooms->find( selectedID );
+	StagingRoomMapIterator it = rooms->find( selected );
 	if( it.m_node == rooms->m_header )
 		return;
 
@@ -346,7 +345,7 @@ void BfmeAptScreenOnlineCustomMatch::joinSelectedStagingRoom()
 	if( room->m_hasPassword )
 	{
 		void *movie = m_host->m_movie;
-		m_selectedID = selectedID;
+		m_selectedID = selected;
 		g_theWindowManager->add( movie, "CallChild", 1,
 			"EnterPassword", 0, 0, 0, 0 );
 		applyPreferredGameNamePassword( 0 );
@@ -354,7 +353,7 @@ void BfmeAptScreenOnlineCustomMatch::joinSelectedStagingRoom()
 		return;
 	}
 
-	TheGameSpyInfo->markAsStagingRoomJoiner( selectedID );
+	TheGameSpyInfo->markAsStagingRoomJoiner( selected );
 	( (Gen004D4880 *)TheGameSpyGame )->bfmeSet( room->getGameName() );
 	TheGameSpyGame->setLadderIP( room->getLadderIP() );
 	TheGameSpyGame->m_ladderPort = room->m_ladderPort;
@@ -362,7 +361,7 @@ void BfmeAptScreenOnlineCustomMatch::joinSelectedStagingRoom()
 	PeerRequest req;
 	req.peerRequestType = 0xB;
 	req.text = it.m_node->m_room->getGameName().str();
-	req.m_stagingRoomId = selectedID;
+	req.m_stagingRoomId = selected;
 	req.password = "";
 	TheGameSpyPeerMessageQueue->addRequest( req );
 	m_state = 0xB;
