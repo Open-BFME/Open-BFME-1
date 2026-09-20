@@ -134,7 +134,6 @@ inline LZHASH LZHLCompressor::_updateTable( LZHASH hash, const BYTE* src, LZPOS 
     return hash;
     }
 
-// ?compress@LZHLCompressor@@QAEIPAEPBEI@Z present-unmatched -- see ../PROVENANCE.txt:
 // upstream compiles 1,741 bytes here (1,747 at branch tip); retail's body at
 // 0x00825680 is 1,724, and no compiler flag reaches it. EA's divergence.
 size_t LZHLCompressor::compress( BYTE* dst, const BYTE* src, size_t sz )
@@ -171,10 +170,10 @@ size_t LZHLCompressor::compress( BYTE* dst, const BYTE* src, size_t sz )
         int maxRaw = min( srcLeft - LZMATCH, LZHLEncoder::maxRaw );
         #ifdef LZLAZYMATCH
         int    lazyMatchLen = 0;
-        int    lazyMatchHashPos = 0;
-        LZPOS  lazyMatchBufPos = 0;
-        int    lazyMatchNRaw = 0;
-        LZHASH lazyMatchHash = 0;
+        int    lazyMatchHashPos;
+        LZPOS  lazyMatchBufPos;
+        int    lazyMatchNRaw;
+        LZHASH lazyMatchHash;
         BOOL   lazyForceMatch = FALSE;
         #endif
         for(;;)
