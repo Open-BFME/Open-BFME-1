@@ -31,6 +31,16 @@ struct FontCharsGDIState
 	HDC dc;
 };
 
+struct Gen_uw_0093c330
+{
+	HDC device_context;
+	HGDIOBJ old_object;
+	~Gen_uw_0093c330()
+	{
+		SelectObject(device_context, old_object);
+	}
+};
+
 #define TheFontCharsGDIState (*(FontCharsGDIState **)0x0134AEAC)
 
 struct FontCharsClassCharDataStruct
@@ -90,7 +100,9 @@ const FontCharsClassCharDataStruct *FontCharsClass::loadCharacterData(
 	}
 
 	HDC dc = TheFontCharsGDIState->dc;
-	HGDIOBJ old_font = SelectObject(dc, font);
+	Gen_uw_0093c330 old_font;
+	old_font.device_context = dc;
+	old_font.old_object = SelectObject(dc, font);
 	const int samples = sample_width;
 	const int sample_area = samples * samples;
 	const int half_sample_area = sample_area / 2;
@@ -176,6 +188,5 @@ const FontCharsClassCharDataStruct *FontCharsClass::loadCharacterData(
 	data->buffer = current_buffer->buffer + current_pixel_offset;
 	character_data[character] = reinterpret_cast<int>(data);
 	current_pixel_offset += glyph_width * character_height;
-	SelectObject(dc, old_font);
 	return data;
 }
