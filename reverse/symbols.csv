@@ -88506,3 +88506,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ??1RvaStagingServerMap@@QAE@XZ,0x000196AF,additive: retail call target of the red row ??1Rva0064D320PeerThread@@QAE@XZ
 ??1RvaStatsMap@@QAE@XZ,0x0002FB2B,additive: retail call target of the red row ??1Rva0064D320PeerThread@@QAE@XZ
 ??1RvaThreadBase@@QAE@XZ,0x009DB530,additive: retail call target of the red row ??1Rva0064D320PeerThread@@QAE@XZ
+?structureCollapseUpdateTarget@@YAXXZ,0x002AE200,address-derived alias for the matched StructureCollapseUpdate constructor used by the 0x0004A345 thunk
