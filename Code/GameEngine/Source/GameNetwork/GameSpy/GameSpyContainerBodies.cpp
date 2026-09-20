@@ -123,6 +123,23 @@ namespace _STL
 // Not inlined in this build: the element is built through a call.
 template <>
 void _Construct(PeerResponse *p, const PeerResponse &val);
+
+class DequePingRequestThunkShim
+{
+public:
+	void push_back_aux(void const *x);
+};
+
+class Rva0002F6A3PingRequestThunk
+{
+public:
+	void _M_push_back_aux_v(PingRequest const &value);
+};
+
+void Rva0002F6A3PingRequestThunk::_M_push_back_aux_v(PingRequest const &value)
+{
+	((DequePingRequestThunkShim *)this)->push_back_aux((void const *)&value);
+}
 }
 
 // deque<PeerRequest>::pop_front, retail 0x006486F0, 80 bytes: destroy the front
