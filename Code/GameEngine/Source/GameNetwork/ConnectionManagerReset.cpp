@@ -1,17 +1,19 @@
 // ?reset@ConnectionManager@@QAEXXZ
-// partial score=0.91 date=2026-09-20
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 template <class Type>
 class StringBase
 {
+	void releaseBuffer();
+
 public:
 	~StringBase()
 	{
 		releaseBuffer();
 	}
-
-	void releaseBuffer();
 
 	Type *m_buffer;
 };
@@ -124,12 +126,12 @@ void ConnectionManager::reset()
 	Connection *connection;
 	for (i = 0; i < 8; ++i)
 	{
-		connection = m_connections[i];
-		if (connection != 0)
-		{
-			connection->deleteInstance();
-			m_connections[i] = 0;
-		}
+		Connection *current = m_connections[i];
+		if (current == 0)
+			continue;
+		connection = current;
+		connection->deleteInstance();
+		m_connections[i] = 0;
 	}
 
 	for (i = 0; i < 8; ++i)
@@ -146,13 +148,14 @@ void ConnectionManager::reset()
 		m_pendingCommands = new NetCommandList;
 		m_pendingCommands->reset();
 	}
-	else
-	{
-		m_pendingCommands->reset();
-	}
+	_ReadWriteBarrier();
+	m_pendingCommands->reset();
 
 	if (m_relayedCommands == 0)
+	{
 		m_relayedCommands = new NetCommandList;
+		m_relayedCommands->reset();
+	}
 	m_relayedCommands->reset();
 
 	if (m_wrapperList == 0)
