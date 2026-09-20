@@ -114,6 +114,11 @@ Rva00337520 *Rva00337520::get()
 	return this;
 }
 
+// ?Rva00337530NoOp@@YAXXZ
+void Rva00337530NoOp()
+{
+}
+
 class Rva00337710
 {
 public:
