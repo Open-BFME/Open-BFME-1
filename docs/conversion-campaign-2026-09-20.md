@@ -108,3 +108,21 @@ contributors added ~5.8 KB during the outage. Three worktrees kept unverified
 candidates (0x0023A380, 0x001A12D0, 0x00364E70) that the resumed lanes start
 from. Restart at 22:05Z with four seats instead of seven so the next usage
 window lasts ~3 hours instead of ~1.5.
+
+### Hour 5 — 22:00Z to 23:05Z (four seats)
+
+Snapshot compared with fleet base `9daa1c571c`: fleet 11 bodies / 3,653 B
+cumulative; this hour 3 bodies / 1,082 B. Repository-wide +11,812 B /
++0.12 pp (67.04% -> 67.16%) since the fleet base, +4,491 B of it new
+total-exact coverage.
+
+| RVA | Bytes | Lane | Result |
+|---|---:|---|---|
+| 0x000D3BE0 | 418 | C9r | STLport hashtable<Value,AsciiString>::resize instantiation |
+| 0x00326C00 | 332 | C8r | ScriptConditions two-parameter predicate |
+| 0x00326DA0 | 332 | C8r | Its twin, landed from the first one's source |
+
+Four seats banked seven further candidates (0.27-0.87) without landing
+them. The carved pool with a known caller and at most one prior attempt is
+now fully assigned; the next seats draw 100-300 B gen_asm dump bodies ranked
+by landed-neighbour density.
