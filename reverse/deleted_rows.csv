@@ -23856,7 +23856,6 @@ dup_59eb90,0x0059EB90,"not AttackNugget: its constructor target is 0x0059EB00 no
 ?bfmeEnsure005E8420@@YAXXZ,0x005E8420,"compiler-local _$E4 resolves here to 0x01070800, versus 0x01070480 in Bfme5FunctionStatics.cpp and 0x00401C99 in fx_particle_system_module_keys.cpp; the external-looking label is not one retail function"
 ?bfmeEnsure005E8450@@YAXXZ,0x005E8450,"compiler-local _$E6 resolves here to 0x010707F0, versus 0x01070470 in Bfme5FunctionStatics.cpp and 0x0043290C in fx_particle_system_module_keys.cpp; the external-looking label is not one retail function"
 ?bfmeEnsure005E8630@@YAXXZ,0x005E8630,"compiler-local _$E26 resolves here to 0x01070750, versus 0x0106FEF0 in WOLLobbyMenu.cpp; the external-looking label is not one retail function"
-?bfmeEnsure005E8660@@YAXXZ,0x005E8660,"compiler-local _$E28 resolves here to 0x01070740, versus 0x0106FEF0 in MainMenuUtils.cpp; the external-looking label is not one retail function"
 ?d_003aee70@@YAXXZ,0x003AEE70,"gen-dump placeholder superseded by the recovered identity ?bfmeEnter@Glo012F1024Item@@QAEXXZ in Code/GameEngine/Source/Common/Glo012F1024Entry_bfmeStep.cpp"
 ?d_001e1ca0@@YAXXZ,0x001E1CA0,"gen-dump placeholder superseded by the recovered identity ?bfmeApplyBonuses@WeaponBonusSet@@QBEXIAAVWeaponBonus@@@Z in Code/GameEngine/Source/GameLogic/Object/Weapon/Weapon_computeBonus.cpp"
 ?d_00497ce0@@YAXXZ,0x00497CE0,"gen-dump placeholder superseded by the recovered identity ?bfmeAttach@BfmeQuickMatchScreenBase@@AAEXPAX@Z in Code/GameEngine/Source/GameClient/GUI/BfmeQuickMatchScreenBaseConstructor.cpp"
