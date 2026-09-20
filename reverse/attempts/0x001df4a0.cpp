@@ -186,7 +186,6 @@ void VictorySystem::_bfme_newMap(void)
 					-(m_cellSize * BFME_HALF));
 			}
 		}
-	}
 
 	m_cellBonusRadius = m_cellBonusRadius > BFME_ONE ?
 		m_cellBonusRadius : BFME_ONE;
@@ -201,26 +200,28 @@ void VictorySystem::_bfme_newMap(void)
 		UnsignedInt *faction = m_playerFaction;
 		do
 		{
-			Bool excluded = false;
-			Player *player = Rva002EE330ThePlayers->getNthPlayer(playerIndex);
-			AsciiString side(player->m_side);
-			UnsignedInt index =
-				_bfme_findFactionVictoryParametersIndex(side);
-			if (side.isEmpty() ||
-				side.compareNoCase("Observer") == 0 ||
-				side.compareNoCase("Civilian") == 0)
-				excluded = true;
-
-			if (index == 0x7fffffff)
 			{
-				AsciiString defaultSide("Default");
-				index = _bfme_findFactionVictoryParametersIndex(defaultSide);
-			}
+				Bool excluded = false;
+				Player *player = Rva002EE330ThePlayers->getNthPlayer(playerIndex);
+				AsciiString side(player->m_side);
+				UnsignedInt index =
+					_bfme_findFactionVictoryParametersIndex(side);
+				if (side.isEmpty() ||
+					side.compareNoCase("Observer") == 0 ||
+					side.compareNoCase("Civilian") == 0)
+					excluded = true;
 
-			if (index != 0x7fffffff)
-				*faction = index | (excluded ? 0x80000000 : 0);
-			else
-				*faction = 0;
+				if (index == 0x7fffffff)
+				{
+					AsciiString defaultSide("Default");
+					index = _bfme_findFactionVictoryParametersIndex(defaultSide);
+				}
+
+				if (index != 0x7fffffff)
+					*faction = index | (excluded ? 0x80000000 : 0);
+				else
+					*faction = 0;
+			}
 
 			++playerIndex;
 			++faction;
@@ -229,4 +230,5 @@ void VictorySystem::_bfme_newMap(void)
 	}
 
 	m_initialized = true;
+}
 }
