@@ -10,3 +10,8 @@ public:
 void Rva003A6050Owner::rva003a6050()
 {
 }
+
+// ?b_003a6020@@YAXXZ at retail RVA 0x003A6020.
+__declspec(noinline) void b_003a6020()
+{
+}
