@@ -137,3 +137,33 @@ No new bodies landed this session. All four RVAs remain at their prior
 was needed since nothing changed about them (this session worked entirely
 in the untracked `build/sib_experiment/` scratch harness plus one revert-only
 probe against the existing stash).
+
+## Addendum, 2026-09-20 (orchestrator): flag and spelling sweep on 0x0045C2F0
+
+Against the 229-byte `View::getScreenCornerWorldPointsAtZ` witness (one byte:
+retail `lea edx,[edi+eax]`, ours `[eax+edi]`, `edi` = `viewWidth` from the
+earlier `getWidth()` call, `eax` = `origin.x` just reloaded), every variant
+below left the byte unchanged and the other 228 exact:
+
+- declaration order: `origin` before or after `viewWidth`/`viewHeight`, and
+  all six locals declared after both calls;
+- operand types: `unsigned viewWidth`, `(unsigned)` / `(long)` casts on
+  either addend, an all-unsigned sum cast back to `Int`; `(short)` changed
+  the body shape (231 B, 139 diffs) without touching the SIB;
+- receiving `getOrigin` into two scalar locals instead of an `ICoord2D`,
+  declared before or after the width/height locals;
+- a named `Int right = origin.x + viewWidth` computed once and stored twice;
+- holding width/height in an `ICoord2D dims` aggregate instead of scalars;
+- flags appended to the `// cl:` line: `/Zi`, `/Z7`, `/Ob0`, `/Ob1`, `/Ot`,
+  `/Oi`, `/Op`, `/Oa`, `/Ow`, `/GF`, `/Gy`, `/Gs`, `/Zp1`, `/Zp4`, `/Zp8`,
+  `/Zp16`, `/J`, `/GS-`, `/Og`, `/Ox`, `/Gr`, `/Zc:forScope-`, `/Gm`, `/Gi`,
+  `/GX-`, `/GT`, `/GA`, `/EHa`, `/EHs` all reproduce the same 229 bytes;
+  `/Oy-`, `/Os`, `/O1`, `/Od`, `/Ge` change the whole body and `/GL` breaks
+  the object reader.
+
+Retail's choice here is "the OLDER value is the base" (`viewWidth` was
+materialized first); ours is the opposite, and in the isolated probes of the
+first section ours also picked the older value as base. So the ranking is
+not a property of the source at all in this body. The remaining untested
+hypothesis is a different `c2.dll` build (retail may not be 13.10.3077 RTM
+for every TU); nothing else reachable from this toolchain moves the byte.
