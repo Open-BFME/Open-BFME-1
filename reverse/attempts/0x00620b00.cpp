@@ -1,5 +1,5 @@
 // ?adjustSlotsForMap@GameInfo@@UAEXXZ
-// partial score=0.55 date=2026-09-11
+// partial score=0.6 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/gameinfo /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad
 // stlport
 
@@ -70,6 +70,18 @@ inline bool operator<(const AsciiString &left, const AsciiString &right)
 	return left.compareNoCase(right) < 0;
 }
 
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString() : m_data(0) {}
+	~BFMERetailAsciiString() { releaseBuffer(); }
+	void clear() { releaseBuffer(); }
+
+private:
+	void releaseBuffer();
+	void *m_data;
+};
+
 #include "PreRTS.h"
 
 typedef int Int;
@@ -95,8 +107,28 @@ enum
 
 struct GameSlotConnectInfo
 {
-	Int m_nat;
+	Int m_unused;
 	UnsignedShort m_port;
+	char m_padding[2];
+};
+
+struct GameSlotConnectStorage
+{
+	GameSlotConnectStorage &operator=(const GameSlotConnectInfo &that)
+	{
+		*(unsigned int *)this = *(const unsigned int *)&that.m_port;
+		return *this;
+	}
+
+	UnsignedShort m_port;
+	char m_padding[2];
+};
+
+struct Rva00620B00ResetConnectInfo
+{
+	int m_unused;
+	UnsignedShort m_port;
+	char m_padding[2];
 };
 
 class GameTextInterface
@@ -120,31 +152,9 @@ extern GameTextInterface *TheGameText;
 class GameSlot
 {
 public:
+	GameSlot();
 	GameSlot(const GameSlot &other);
-
-	virtual void reset()
-	{
-		m_state = SLOT_CLOSED;
-		m_isAccepted = false;
-		m_hasMap = true;
-		m_color = -1;
-		m_startPos = -1;
-		m_playerTemplate = -1;
-		m_teamNumber = -1;
-		m_connectInfo.m_nat = 1;
-		m_bfme38 = 0;
-		m_bfme40 = false;
-		m_connectInfo.m_port = 0;
-		m_isMuted = false;
-		m_origPlayerTemplate = -1;
-		m_origStartPos = -1;
-		m_origColor = -1;
-	}
-
-	GameSlot()
-	{
-		reset();
-	}
+	void reset();
 
 	void setState(SlotState state,
 		UnicodeString name = UnicodeString::TheEmptyString,
@@ -190,6 +200,7 @@ public:
 			}
 		}
 		m_connectInfo = *connectInfo;
+		m_ip = 0;
 	}
 
 	Bool isOccupied() const
@@ -205,6 +216,7 @@ public:
 	}
 
 protected:
+	void *m_vtable;
 	SlotState m_state;
 	Bool m_isAccepted;
 	Bool m_hasMap;
@@ -215,14 +227,46 @@ protected:
 	Int m_teamNumber;
 	Int m_origColor;
 	Int m_origStartPos;
-	Int m_origPlayerTemplate;
-	UnicodeString m_name;
-	AsciiString m_IP;
-	GameSlotConnectInfo m_connectInfo;
-	UnsignedInt m_bfme38;
-	UnsignedInt m_bfme3c;
-	UnsignedByte m_bfme40;
+		Int m_origPlayerTemplate;
+		UnicodeString m_name;
+		BFMERetailAsciiString m_slotNameKeyText;
+		UnsignedInt m_ip;
+		GameSlotConnectStorage m_connectInfo;
+		Int m_nat;
+		UnsignedInt m_lastFrameInGame;
+	Bool m_disconnected;
 };
+
+GameSlot::GameSlot()
+	: m_vtable((void *)0x01075D50),
+	  m_name(),
+	  m_slotNameKeyText()
+{
+	reset();
+}
+
+void GameSlot::reset()
+{
+	int emptyValue = -1;
+	m_color = (m_state = SLOT_CLOSED, m_isAccepted = false,
+		m_hasMap = true, emptyValue);
+	Rva00620B00ResetConnectInfo emptyConnectInfo;
+	emptyConnectInfo.m_port = 0;
+	*(volatile unsigned int *)&m_connectInfo =
+		*(const unsigned int *)&emptyConnectInfo.m_port;
+	m_startPos = emptyValue;
+	m_playerTemplate = emptyValue;
+	m_teamNumber = emptyValue;
+	m_nat = 1;
+	m_lastFrameInGame = 0;
+	m_disconnected = false;
+	m_ip = 0;
+	m_isMuted = false;
+	m_origPlayerTemplate = emptyValue;
+	m_origStartPos = emptyValue;
+	m_origColor = emptyValue;
+	m_slotNameKeyText.clear();
+}
 
 class MapMetaData
 {
@@ -295,7 +339,10 @@ void Rva00620B00GameInfo::adjustSlotsForMap()
 				if (!(slot->isOccupied()))
 				{
 					GameSlot newSlot;
-					newSlot.setState(SLOT_OPEN);
+					GameSlotConnectInfo connectInfo;
+					connectInfo.m_port = 0;
+					newSlot.setState(SLOT_OPEN, UnicodeString::TheEmptyString,
+						(const GameSlotConnectInfo *)&connectInfo);
 					reinterpret_cast<GameInfo *>(this)->setSlot(i, newSlot);
 					++numPlayerSlots;
 				}
@@ -305,7 +352,10 @@ void Rva00620B00GameInfo::adjustSlotsForMap()
 				if (!(slot->isOccupied()))
 				{
 					GameSlot newSlot;
-					newSlot.setState(SLOT_CLOSED);
+					GameSlotConnectInfo connectInfo;
+					connectInfo.m_port = 0;
+					newSlot.setState(SLOT_CLOSED, UnicodeString::TheEmptyString,
+						(const GameSlotConnectInfo *)&connectInfo);
 					reinterpret_cast<GameInfo *>(this)->setSlot(i, newSlot);
 				}
 			}
