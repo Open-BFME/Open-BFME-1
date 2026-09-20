@@ -124,6 +124,16 @@ void *Rva00751D90::value() const
 	return 0;
 }
 
+class Rva00751DC0
+{
+public:
+	void invoke();
+};
+
+void Rva00751DC0::invoke()
+{
+}
+
 class Rva00752000
 {
 public:
