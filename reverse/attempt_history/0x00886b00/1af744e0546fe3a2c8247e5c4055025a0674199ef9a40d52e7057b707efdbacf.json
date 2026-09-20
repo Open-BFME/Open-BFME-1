@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1af744e0546fe3a2c8247e5c4055025a0674199ef9a40d52e7057b707efdbacf",
+  "symbol": "?d_00886b00@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9899,
+  "source": "// ?d_00886b00@@YAXXZ\n// partial score=0.9899 date=2026-09-20\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWDownload\n// stlport\n\n#include <string>\n#include <stdio.h>\n#include \"registry.h\"\n\nextern \"C\" __declspec(dllimport) int __cdecl tolower(int character);\n\nextern char *d_00886ac0(const char *start, const char *end, char *dst,\n\tint (*func)(int));\n\nvoid FormatURLFromRegistry( std::string& gamePatchURL, std::string& mapPatchURL,\n\tstd::string& configURL, std::string& motdURL )\n{\n\tstd::string sku = \"lotrbfme\";\n\tstd::string language = \"ENGLISH\";\n\tunsigned int versions[2] = { 0, 0 };\n\tstd::string baseURL = \"http://servserv.generals.ea.com/servserv/\";\n\tbaseURL.append(sku);\n\tbaseURL.append(\"/\");\n\n\tGetStringFromRegistry(\"\", \"BaseURL\", baseURL);\n\tGetStringFromRegistry(\"\", \"Language\", language);\n\tGetUnsignedIntFromRegistry(\"\", \"Version\", versions[0]);\n\tGetUnsignedIntFromRegistry(\"\", \"MapPackVersion\", versions[1]);\n\td_00886ac0(baseURL.begin(), baseURL.end(), baseURL.begin(), tolower);\n\n\tchar buf[256];\n\t_snprintf(buf, 256, \"%s%s-%d.txt\", baseURL.c_str(), language.c_str(), versions[0]);\n\tgamePatchURL = buf;\n\t_snprintf(buf, 256, \"%smaps-%d.txt\", baseURL.c_str(), versions[1]);\n\tmapPatchURL = buf;\n\t_snprintf(buf, 256, \"%sconfig.txt\", baseURL.c_str());\n\tconfigURL = buf;\n\t_snprintf(buf, 256, \"%sMOTD-%s.txt\", baseURL.c_str(), language.c_str());\n\tmotdURL = buf;\n}\n"
+}
