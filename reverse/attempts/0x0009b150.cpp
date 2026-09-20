@@ -1,6 +1,7 @@
 // ?playbackFile@RecorderClass@@QAE_NVAsciiString@@@Z
-// partial score=0.57 date=2026-09-18
+// partial score=0.92 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /MD /O2 /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
+// stlport
 
 #define _STLP_USE_STATIC_LIB 1
 #define _STLP_NO_EXCEPTIONS 1
@@ -66,8 +67,9 @@ public:
 
 private:
 	void *m_vtable;
+	Int m_state;
 	Int m_crcInterval;
-	char m_gap08[0x48 - 0x08];
+	char m_gap0c[0x4c - 0x0c];
 	UnsignedInt m_seed;
 };
 
