@@ -226,6 +226,11 @@ Rva00570680Body *Rva00570680Body::body()
 	return this;
 }
 
+// ?b_00570690@@YAXXZ
+void b_00570690(void)
+{
+}
+
 class Rva005706A0Body
 {
 public:
