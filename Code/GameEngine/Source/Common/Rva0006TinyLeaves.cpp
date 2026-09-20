@@ -1,6 +1,10 @@
 // cl: /O2 /DNDEBUG /MD
 // Address-derived C++ leaves recovered from carved boundaries.
 
+void Rva0007F670()
+{
+}
+
 class Rva0006C6C0Self { public: void *get(); };
 // ?get@Rva0006C6C0Self@@QAEPAXXZ
 void *Rva0006C6C0Self::get() { return this; }
