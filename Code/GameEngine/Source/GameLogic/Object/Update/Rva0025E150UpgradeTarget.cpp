@@ -80,6 +80,7 @@ public:
 class Rva0025E150UpgradeFilter : public PartitionFilter
 {
 public:
+	// ??0Rva0025E150UpgradeFilter@@QAE@PAUBfmeNodeND@@@Z
 	explicit Rva0025E150UpgradeFilter(BfmeNodeND *node)
 		: m_node(node) {}
 	virtual ~Rva0025E150UpgradeFilter() {}
