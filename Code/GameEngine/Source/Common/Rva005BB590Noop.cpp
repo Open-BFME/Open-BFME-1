@@ -4,3 +4,8 @@
 void Rva005BB590Noop()
 {
 }
+
+// ?Rva005BB560Noop@@YAXXZ
+void Rva005BB560Noop()
+{
+}
