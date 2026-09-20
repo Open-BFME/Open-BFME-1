@@ -31,3 +31,14 @@ void BfmePlayerTemplateVectorInsertAnchor(_STL::vector<PlayerTemplate> &v, const
 {
 	v.insert(v.begin(), value);
 }
+
+class Rva0001481CPlayerTemplateVectorDtorThunk
+{
+public:
+	void forward();
+};
+
+void Rva0001481CPlayerTemplateVectorDtorThunk::forward()
+{
+	(( _STL::vector<PlayerTemplate> *)this)->~vector();
+}
