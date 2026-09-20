@@ -489,10 +489,9 @@ Real WeaponTemplate::getMinimumAttackRange() const
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getUnmodifiedAttackRange@WeaponTemplate@@QBEMXZ present-unmatched
 Real WeaponTemplate::getUnmodifiedAttackRange() const
 {
-	return m_attackRange;
+	return *(const Real *)((const char *)this + 0x14);
 }
 
 //-------------------------------------------------------------------------------------------------
