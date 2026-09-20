@@ -500,17 +500,55 @@ void BoneFXUpdate::killRunningParticleSystems() {
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // This function is going to suck lots of time, should only be called once.
-// ?resolveBoneLocations@BoneFXUpdate@@MAEXXZ present-unmatched
+class BoneFXUpdateResolveObject
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0C() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1C() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
+	virtual void *getDrawable() const = 0;
+};
+
+class BFMEDrawableBoneQuery
+{
+public:
+	Int getPristineBonePositions(const char *boneNamePrefix, Int startIndex,
+		Coord3D *positions, Matrix3D *transforms, Int maxBones, Int extra) const;
+};
+
+struct BoneFXUpdateResolveListInfo
+{
+	AsciiString boneName;
+	char m_pad[0x20];
+};
+
+struct BoneFXUpdateResolveModuleData
+{
+	char m_header[0x0c];
+	BoneFXUpdateResolveListInfo m_fxList[BODYDAMAGETYPE_COUNT][BONE_FX_MAX_BONES];
+	int m_damageOCLTypes;
+	BoneFXUpdateResolveListInfo m_OCL[BODYDAMAGETYPE_COUNT][BONE_FX_MAX_BONES];
+	int m_damageParticleTypes;
+	BoneFXUpdateResolveListInfo m_particleSystem[BODYDAMAGETYPE_COUNT][BONE_FX_MAX_BONES];
+};
+
 void BoneFXUpdate::resolveBoneLocations() {
 	Int i;
-	const BoneFXUpdateModuleData *d = getBoneFXUpdateModuleData();
-	Object *building = getObject();
+	void *building = *(void **)((char *)this + 8);
+	const BoneFXUpdateResolveModuleData *d = *(const BoneFXUpdateResolveModuleData **)((char *)this + 4);
 	if (building == NULL) {
 		DEBUG_ASSERTCRASH(building != NULL, ("There is no object?"));
 		return;
 	}
 
-	Drawable *drawable = building->getDrawable();
+	void *drawable = reinterpret_cast<BoneFXUpdateResolveObject *>(building)->getDrawable();
 	if (drawable == NULL) {
 		DEBUG_ASSERTCRASH(drawable != NULL, ("There is no drawable?"));
 	}
@@ -520,22 +558,28 @@ void BoneFXUpdate::resolveBoneLocations() {
 	}
 
 	for (i = 0; i < BONE_FX_MAX_BONES; ++i) {
-		if (d->m_fxList[m_curBodyState][i].locInfo.boneName.compare(AsciiString::TheEmptyString) != 0) 
+		if (d->m_fxList[m_curBodyState][i].boneName.compare(AsciiString::TheEmptyString) != 0) 
 		{
-			const BoneFXListInfo *info = &(d->m_fxList[m_curBodyState][i]);
-			drawable->getPristineBonePositions(info->locInfo.boneName.str(), 0, &m_FXBonePositions[m_curBodyState][i], NULL, 1);
+			const BoneFXUpdateResolveListInfo *info = &(d->m_fxList[m_curBodyState][i]);
+			char *data = *(char **)&info->boneName;
+			const char *boneName = data ? data + 8 : "";
+			reinterpret_cast<BFMEDrawableBoneQuery *>(drawable)->getPristineBonePositions(boneName, 0, &m_FXBonePositions[m_curBodyState][i], NULL, 1, 0);
 		}
 
-		if (d->m_OCL[m_curBodyState][i].locInfo.boneName.compare(AsciiString::TheEmptyString) != 0) 
+		if (d->m_OCL[m_curBodyState][i].boneName.compare(AsciiString::TheEmptyString) != 0) 
 		{
-			const BoneOCLInfo *info = &(d->m_OCL[m_curBodyState][i]);
-			drawable->getPristineBonePositions(info->locInfo.boneName.str(), 0, &m_OCLBonePositions[m_curBodyState][i], NULL, 1);
+			const BoneFXUpdateResolveListInfo *info = &(d->m_OCL[m_curBodyState][i]);
+			char *data = *(char **)&info->boneName;
+			const char *boneName = data ? data + 8 : "";
+			reinterpret_cast<BFMEDrawableBoneQuery *>(drawable)->getPristineBonePositions(boneName, 0, &m_OCLBonePositions[m_curBodyState][i], NULL, 1, 0);
 		}
 
-		if (d->m_particleSystem[m_curBodyState][i].locInfo.boneName.compare(AsciiString::TheEmptyString) != 0) 
+		if (d->m_particleSystem[m_curBodyState][i].boneName.compare(AsciiString::TheEmptyString) != 0) 
 		{
-			const BoneParticleSystemInfo *info = &(d->m_particleSystem[m_curBodyState][i]);
-			drawable->getPristineBonePositions(info->locInfo.boneName.str(), 0, &m_PSBonePositions[m_curBodyState][i], NULL, 1);
+			const BoneFXUpdateResolveListInfo *info = &(d->m_particleSystem[m_curBodyState][i]);
+			char *data = *(char **)&info->boneName;
+			const char *boneName = data ? data + 8 : "";
+			reinterpret_cast<BFMEDrawableBoneQuery *>(drawable)->getPristineBonePositions(boneName, 0, &m_PSBonePositions[m_curBodyState][i], NULL, 1, 0);
 		}
 	}
 	m_bonesResolved[m_curBodyState] = TRUE;
