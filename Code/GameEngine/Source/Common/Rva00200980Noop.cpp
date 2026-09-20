@@ -4,3 +4,8 @@
 void Rva00200980Noop(void)
 {
 }
+
+// The carved retail body at 0x00200990 contains only a return instruction.
+void Rva00200990Noop(void)
+{
+}
