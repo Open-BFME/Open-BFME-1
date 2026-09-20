@@ -6,3 +6,8 @@
 void Rva001129E0Noop()
 {
 }
+
+// ?Rva001129F0Noop@@YAXXZ
+void Rva001129F0Noop()
+{
+}
