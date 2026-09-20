@@ -130,15 +130,32 @@ public:
 	void push_back_aux(void const *x);
 };
 
+class DequePingResponseThunkShim
+{
+public:
+	void push_back_aux(void const *x);
+};
+
 class Rva0002F6A3PingRequestThunk
 {
 public:
 	void _M_push_back_aux_v(PingRequest const &value);
 };
 
+class Rva0003C650PingResponseThunk
+{
+public:
+	void _M_push_back_aux_v(PingResponse const &value);
+};
+
 void Rva0002F6A3PingRequestThunk::_M_push_back_aux_v(PingRequest const &value)
 {
 	((DequePingRequestThunkShim *)this)->push_back_aux((void const *)&value);
+}
+
+void Rva0003C650PingResponseThunk::_M_push_back_aux_v(PingResponse const &value)
+{
+	((DequePingResponseThunkShim *)this)->push_back_aux((void const *)&value);
 }
 }
 
