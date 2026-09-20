@@ -314,3 +314,13 @@ void DamageFXStore::update()
 	dfx.clear();
 	ini->initFromINI(&dfx, dfx.getFieldParse());
 }
+
+class Rva000CB630Noop
+{
+public:
+	void noop();
+};
+
+void Rva000CB630Noop::noop()
+{
+}
