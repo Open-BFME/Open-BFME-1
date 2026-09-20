@@ -1,16 +1,19 @@
 // ?d_003aa980@@YAXXZ
-// partial score=0.9 date=2026-09-18
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// partial score=0.84 date=2026-09-20
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // The carved body at retail 0x003AA980 copies an STLport vector of eight-byte
-// records. The record vtable is 0x010EC76C, which the landed
-// Rva003B7BA0Record parser identifies, and its AsciiString copy uses the
-// established GameSpyGroupRoom copy address at 0x00887B60.
+// polymorphic records. The 8-byte element layout (vptr at +0, an AsciiString
+// member at +4 whose copy ctor is the retail StringBase<char> copy
+// constructor at 0x00887B60, shared/ICF'd with GameSpyGroupRoom's copy ctor)
+// matches the landed Gen_t_003a9110_p8vs pattern at 0x003a8670/0x003a9110
+// (Construct_003a9110.cpp). The vtable installed is 0x010EC76C.
 
 #include <new>
 #include "ascii_string.h"
 
+// 8-byte polymorphic payload: vptr at +0, an AsciiString at +4.
 struct Gen_t_003a75c0_p8cd
 {
 	virtual ~Gen_t_003a75c0_p8cd() {}
@@ -31,11 +34,6 @@ namespace _STL
 		T *m_start;
 		T *m_finish;
 		T *m_storage;
-		unsigned size() const { return (unsigned)(m_finish - m_start); }
-		T *begin() { return m_start; }
-		const T *begin() const { return m_start; }
-		T *end() { return m_finish; }
-		const T *end() const { return m_finish; }
 	};
 
 	template <typename T, typename Alloc = allocator<T> > class vector;
@@ -52,7 +50,6 @@ namespace _STL
 
 		allocator_type get_allocator() const;
 		vector( const vector &other );
-
 	};
 
 	vector<Gen_t_003a75c0_p8cd,
@@ -62,7 +59,7 @@ namespace _STL
 		: Base( (unsigned)(other.m_finish - other.m_start),
 			other.get_allocator() )
 	{
-		T *destination = begin();
+		T *destination = m_start;
 		const T *end = other.m_finish;
 		const T *source = other.m_start;
 		while ( source != end )
