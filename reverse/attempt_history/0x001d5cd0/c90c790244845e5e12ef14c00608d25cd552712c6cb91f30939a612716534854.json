@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c90c790244845e5e12ef14c00608d25cd552712c6cb91f30939a612716534854",
+  "symbol": "?clear@Rva001D5CD0Owner@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.7,
+  "source": "// ?clear@Rva001D5CD0Owner@@QAEXXZ\n// partial score=0.7 date=2026-09-20\n// cl: /DNDEBUG /MD\n\nclass W3DProjectileStreamResources\n{\npublic:\n\t__declspec(noinline) void erase(void *, void *);\n\tvoid *begin()\n\t{\n\t\treturn m_first;\n\t}\n\n\tvoid *end()\n\t{\n\t\treturn m_last;\n\t}\n\n\tvoid *m_first;\n\tvoid *m_last;\n};\n\nclass Rva001D5CD0Owner\n{\npublic:\n\tvoid clear();\n\nprivate:\n\tchar m_padding[0x20];\n\tW3DProjectileStreamResources m_resources;\n};\n\n// ?clear@Rva001D5CD0Owner@@QAEXXZ\nvoid Rva001D5CD0Owner::clear()\n{\n\tm_resources.erase(m_resources.begin(), m_resources.end());\n}\n"
+}
