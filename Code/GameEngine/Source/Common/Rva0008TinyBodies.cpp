@@ -353,6 +353,11 @@ void d_00421e90(void)
 {
 }
 
+// ?d_005c1270@@YAXXZ
+void d_005c1270(void)
+{
+}
+
 class Rva00097950Self
 {
 public:
