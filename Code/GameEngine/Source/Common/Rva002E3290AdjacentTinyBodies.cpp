@@ -1,6 +1,11 @@
 // Opaque address-derived leaf bodies recovered from complete carved extents.
 // cl: /O2 /DNDEBUG /MD
 
+// ?Rva002F1310Noop@@YAXXZ
+void Rva002F1310Noop()
+{
+}
+
 class Rva002E3290False
 {
 public:
