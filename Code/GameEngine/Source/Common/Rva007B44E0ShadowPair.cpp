@@ -39,6 +39,12 @@ private:
 	BfmeB1050 *m_second;
 };
 
+class Rva007B44E0ShadowPair
+{
+public:
+	void finishInitialize(void);
+};
+
 Bool BfmeB1159::initialize(void)
 {
 	BfmeB1050 *resource = new BfmeB1050;
@@ -92,4 +98,8 @@ Bool BfmeB1159::initialize(void)
 
 	bfmeGo1159();
 	return true;
+}
+
+void Rva007B44E0ShadowPair::finishInitialize(void)
+{
 }
