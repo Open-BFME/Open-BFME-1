@@ -1,5 +1,5 @@
 // ?createParticle@BfmeParticleEmissionHelper@@QAEPAVParticle@@HH@Z
-// partial score=0.6 date=2026-09-16
+// partial score=0.65 date=2026-09-20
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2
 //
 // The retail helper at 0x005D0530 is reached by the actual ParticleSystem
@@ -39,45 +39,70 @@ struct Rva005D0530Coord3D
 	Real z;
 };
 
+class Rva005C36C0Owner
+{
+public:
+	Rva005D0530Coord3D *sample(
+		Rva005D0530Coord3D *, int, int);
+};
+
+class Rva005C3630Owner
+{
+public:
+	Rva005D0530Coord3D *sample(
+		Rva005D0530Coord3D *, Rva005D0530Coord3D *);
+};
+
+struct BfmeOutAC;
+
+class BfmeNextAC
+{
+public:
+	void bfmeSendAC(BfmeOutAC *);
+};
+
+class Rva005D0530LinkTail
+{
+public:
+	virtual unsigned int getValue();
+};
+
 class Rva005D0530Link
 {
 public:
-	virtual void slot00();
-	virtual void slot01();
-	virtual void slot02();
-	virtual void slot03();
-	virtual void slot04();
-	virtual unsigned int slot05();
+	unsigned char m_head[0x14];
+	Rva005D0530LinkTail m_tail;
 };
 
 static Rva005D0530Coord3D *sampleEmissionPosition(
 	void *system, Rva005D0530Coord3D *out, int count, int number)
 {
-	typedef Rva005D0530Coord3D *(__fastcall *SampleCall)(
-		void *, Rva005D0530Coord3D *, int, int);
-	return reinterpret_cast<SampleCall>(j_0001cfc6)(
-		system, out, count, number);
+	return reinterpret_cast<Rva005C36C0Owner *>(system)->sample(
+		out, count, number);
 }
 
 static Rva005D0530Coord3D *sampleEmissionDirection(
-	void *system, Rva005D0530Coord3D *out)
+	void *system, Rva005D0530Coord3D *out,
+	Rva005D0530Coord3D *position)
 {
-	typedef Rva005D0530Coord3D *(__fastcall *DirectionCall)(
-		void *, Rva005D0530Coord3D *);
-	return reinterpret_cast<DirectionCall>(j_0000c2bb)(system, out);
+	return reinterpret_cast<Rva005C3630Owner *>(system)->sample(out, position);
 }
 
-static unsigned int readLinkValue(Rva005D0530Link *link)
+static __forceinline void copyCoord3D(
+	Rva005D0530Coord3D *source, Rva005D0530Coord3D *destination)
 {
-	if (link == 0)
-		return 0;
-	return link->slot05();
+	struct Raw {
+		unsigned int x;
+		unsigned int y;
+		unsigned int z;
+	};
+	*(Raw *)destination = *(const Raw *)source;
 }
 
 static void attachEmissionInfo(void *tail, Particle *info)
 {
-	typedef void (__fastcall *AttachCall)(void *, Particle *);
-	reinterpret_cast<AttachCall>(j_00043e91)(tail, info);
+	reinterpret_cast<BfmeNextAC *>(tail)->bfmeSendAC(
+		reinterpret_cast<BfmeOutAC *>(info));
 }
 
 class Rva005D0530ParticleInfo
@@ -131,15 +156,15 @@ Particle *BfmeParticleEmissionHelper::createParticle(
 	if ((unsigned int)particleNumber != zero)
 	{
 		Rva005D0530Coord3D scratch;
-		Rva005D0530Coord3D *storedPosition =
-			(Rva005D0530Coord3D *)(info + 0x1c);
-		Rva005D0530Coord3D *storedDirection =
-			(Rva005D0530Coord3D *)(info + 0x10);
 		Rva005D0530Coord3D *positionResult = sampleEmissionPosition(
 			this, &scratch, particleCount, particleNumber);
-		Rva005D0530Coord3D *directionResult = sampleEmissionDirection(
-			this, &scratch);
+		Rva005D0530Coord3D *storedPosition =
+			(Rva005D0530Coord3D *)(info + 0x1c);
 		*storedPosition = *positionResult;
+		Rva005D0530Coord3D *directionResult = sampleEmissionDirection(
+			this, &scratch, storedPosition);
+		Rva005D0530Coord3D *storedDirection =
+			(Rva005D0530Coord3D *)(info + 0x10);
 		*storedDirection = *directionResult;
 		Real *f0 = (Real *)((unsigned char *)this + 0xf0);
 		Real *f1 = (Real *)((unsigned char *)this + 0x100);
@@ -151,15 +176,17 @@ Particle *BfmeParticleEmissionHelper::createParticle(
 			if (*(unsigned char *)((unsigned char *)this + 0x1a9) !=
 				(unsigned char)zero)
 			{
-				Rva005D0530Coord3D *current =
-					(Rva005D0530Coord3D *)((unsigned char *)this + 0x148);
-				Rva005D0530Coord3D *previous =
-					(Rva005D0530Coord3D *)((unsigned char *)this + 0x154);
-				*previous = *current;
+			Rva005D0530Coord3D *current =
+				(Rva005D0530Coord3D *)((unsigned char *)this + 0x148);
+			Rva005D0530Coord3D *previous =
+				(Rva005D0530Coord3D *)((unsigned char *)this + 0x154);
+			copyCoord3D(current, previous);
 				*(unsigned char *)((unsigned char *)this + 0x1a9) = 0;
 			}
 
-			Real ratio = (Real)particleNumber / (Real)particleCount;
+			Real originalZ = *(Real *)(info + 0x18);
+			Real originalY = *(Real *)(info + 0x14);
+			Real ratio = (Real)particleCount / (Real)particleNumber;
 			Real blend = g_bfmeDefaultBU - ratio;
 			Rva005D0530Coord3D *current =
 				(Rva005D0530Coord3D *)((unsigned char *)this + 0x148);
@@ -182,8 +209,8 @@ Particle *BfmeParticleEmissionHelper::createParticle(
 			*(Real *)(info + 0x24) = transformedZ - delta.z;
 
 			Real dx = *(Real *)(info + 0x10);
-			Real dy = *(Real *)(info + 0x14);
-			Real dz = *(Real *)(info + 0x18);
+			Real dy = originalY;
+			Real dz = originalZ;
 		*(Real *)(info + 0x10) =
 				dz * f0[2] + dy * f0[1] + dx * f0[0];
 			*(Real *)(info + 0x14) =
@@ -198,7 +225,16 @@ Particle *BfmeParticleEmissionHelper::createParticle(
 
 		Rva005D0530Link *link = *(Rva005D0530Link **)(
 			(unsigned char *)this + 0x1b0);
-		*(unsigned int *)(info + 0x3c) = readLinkValue(link);
+		if (link != 0)
+		{
+			Rva005D0530LinkTail *tail =
+				(Rva005D0530LinkTail *)((unsigned char *)link + 0x14);
+			*(unsigned int *)(info + 0x3c) = tail->getValue();
+		}
+		else
+		{
+			*(unsigned int *)(info + 0x3c) = zero;
+		}
 		attachEmissionInfo((unsigned char *)this + 0x1b4, (Particle *)info);
 
 		GameClientRandomVariable *damping =
