@@ -1,6 +1,6 @@
 // ?update@WindowVideoManager@@UAEXXZ
 // partial score=0.82 date=2026-09-09
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Source/GameClient /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME5: byte-exact clean C++ implementation of the retail
 // WindowVideoManager::update, retail 0x00499050, 301 bytes.
