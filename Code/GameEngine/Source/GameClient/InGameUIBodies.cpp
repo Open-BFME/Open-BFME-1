@@ -31,6 +31,16 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
+class Rva0043AAE0Noop
+{
+public:
+	void noop();
+};
+
+void Rva0043AAE0Noop::noop()
+{
+}
+
 struct ICoord2D { Int x, y; };
 struct Coord3D { float x, y, z; };
 class Object;
