@@ -1,5 +1,5 @@
 // ?xfer@Player@@MAEXPAVXfer@@@Z
-// partial score=0.4 date=2026-09-20
+// partial score=0.41 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DZH_EMIT_POOL_GLUE /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -212,6 +212,7 @@ void Player::xfer( Xfer *baseXfer )
 	{
 		char *const self = reinterpret_cast<char *>(this);
 		Money &m_money = *reinterpret_cast<Money *>(self + 0x30);
+		Money &m_income = *reinterpret_cast<Money *>(self + 0x48);
 		Upgrade *&m_upgradeList = *reinterpret_cast<Upgrade **>(self + 0x54);
 		Bool &m_bfmeField681 = *reinterpret_cast<Bool *>(self + 0x681);
 		UpgradeMaskType &m_upgradesInProgress = *reinterpret_cast<UpgradeMaskType *>(self + 0x74);
@@ -243,6 +244,7 @@ void Player::xfer( Xfer *baseXfer )
 
 	// money
 	xfer->xferSnapshot( &m_money );
+	xfer->xferSnapshot( &m_income );
 
 	// upgrade list count
 	upgradeCount = (UnsignedShort)zero;
