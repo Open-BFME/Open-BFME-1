@@ -1,5 +1,5 @@
 // ?d_0018a470@@YAXXZ
-// partial score=0.96 date=2026-09-08
+// partial score=0.97 date=2026-09-20
 class BfmeThingEBE;
 
 class BfmeSubEBE
@@ -91,8 +91,9 @@ int BfmeHostEBE::bfmeStartEBE()
 
 	AI *ai = TheAI->m_bfmeSubEBE;
 	int frame = logic->m_bfmeFrameEBE;
+	int delay = ai->m_bfmeDelayEBE;
 
-	m_bfmeTimeEBE = ai->m_bfmeDelayEBE + frame;
+	m_bfmeTimeEBE = delay + frame;
 
 	m_bfmeStateEBE = new BfmeStateEBE(m_bfmeOwnerEBE, 0, 1, 0, &m_bfmeDataEBE);
 
@@ -100,3 +101,6 @@ int BfmeHostEBE::bfmeStartEBE()
 
 	return m_bfmeStateEBE->bfmeRunEBE() != 0 ? -1 : 0;
 }
+
+// The delay local reduces the register residue to five non-relocation bytes.
+// Generated callers still do not prove a production owner or method name.
