@@ -48,6 +48,32 @@
 		return m_value;                                                      \
 	}
 
+class Rva00412F40DwordField
+{
+public:
+	int get() const;
+	int m_value;
+};
+
+// ?get@Rva00412F40DwordField@@QBEHXZ
+int Rva00412F40DwordField::get() const
+{
+	return m_value;
+}
+
+class Rva00427A90DwordField
+{
+public:
+	int get() const;
+	int m_value;
+};
+
+// ?get@Rva00427A90DwordField@@QBEHXZ
+int Rva00427A90DwordField::get() const
+{
+	return m_value;
+}
+
 BFME_DISP_DWORD_GETTER( Rva000C7C20DwordField, 0x4B4 )
 BFME_DISP_DWORD_GETTER( Rva000C88E0DwordField, 0x370 )
 BFME_DISP_DWORD_GETTER( Rva00133C10DwordField, 0x38C )
@@ -92,10 +118,26 @@ BFME_DISP_DWORD_GETTER( Rva003D5060DwordField, 0x318 )
 BFME_DISP_DWORD_GETTER( Rva003D5A60DwordField, 0x444 )
 BFME_DISP_DWORD_GETTER( Rva004107B0DwordField, 0x438 )
 BFME_DISP_DWORD_GETTER( Rva004107D0DwordField, 0x458 )
+// ?get@Rva00410740DwordField@@QBEHXZ
+BFME_DISP_DWORD_GETTER( Rva00410740DwordField, 0x28 )
 BFME_DISP_DWORD_GETTER( Rva00410800DwordField, 0x430 )
+// ?get@Rva00410820DwordField@@QBEHXZ
+BFME_DISP_DWORD_GETTER( Rva00410820DwordField, 0x0C )
 BFME_DISP_DWORD_GETTER( Rva00410830DwordField, 0x7C8 )
 BFME_DISP_DWORD_GETTER( Rva00410850DwordField, 0x7D0 )
 BFME_DISP_DWORD_GETTER( Rva00410870DwordField, 0x24 )
+// ?get@Rva00410880DwordField@@QBEHXZ
+BFME_DISP_DWORD_GETTER( Rva00410880DwordField, 0x28 )
+// ?get@Rva00410900DwordField@@QBEHXZ
+BFME_DISP_DWORD_GETTER( Rva00410900DwordField, 0x38 )
+// ?get@Rva00410910DwordField@@QBEHXZ
+BFME_DISP_DWORD_GETTER( Rva00410910DwordField, 0x3C )
+// Rva00412F40DwordField is defined above because MSVC rejects a zero-sized lead array.
+// ?get@Rva00410430DwordField@@QBEHXZ
+BFME_DISP_DWORD_GETTER( Rva00410430DwordField, 0x14 )
+// ?get@Rva00422720DwordField@@QBEHXZ
+BFME_DISP_DWORD_GETTER( Rva00422720DwordField, 0x04 )
+// Rva00427A90DwordField is defined above because MSVC rejects a zero-sized lead array.
 BFME_DISP_DWORD_GETTER( Rva0043B130DwordField, 0x534 )
 BFME_DISP_DWORD_GETTER( Rva0043B140DwordField, 0x538 )
 BFME_DISP_DWORD_GETTER( Rva0043B4E0DwordField, 0x564 )
@@ -132,6 +174,8 @@ BFME_DISP_DWORD_GETTER( Rva00695F10DwordField, 0x618 )
 BFME_DISP_DWORD_GETTER( Rva006C0830DwordField, 0x30B8 )
 BFME_DISP_DWORD_GETTER( Rva006C0840DwordField, 0x30BC )
 BFME_DISP_REAL_GETTER( Rva006C0850RealField, 0x10 )
+// ?get@Rva00410920RealField@@QBEMXZ
+BFME_DISP_REAL_GETTER( Rva00410920RealField, 0x48 )
 BFME_DISP_DWORD_GETTER( Rva006E7AF0DwordField, 0x30C4 )
 BFME_DISP_DWORD_GETTER( Rva0073A660DwordField, 0x858 )
 BFME_DISP_DWORD_GETTER( Rva0073A760DwordField, 0x868 )
