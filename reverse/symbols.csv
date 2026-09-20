@@ -525,6 +525,7 @@ name,address,notes
 ??$_Construct@VPingResponse@@V1@@_STL@@YAXPAVPingResponse@@ABV1@@Z,0x0003C9E8
 ??$_Construct@VPlayerTemplate@@V1@@_STL@@YAXPAVPlayerTemplate@@ABV1@@Z,0x00024321,Open-BFME5 PlayerTemplate construction ILT
 ??$_Construct@VProductionPrerequisite@@V1@@_STL@@YAXPAVProductionPrerequisite@@ABV1@@Z,0x0003AA26,resweep callee back-solved
+??$_Construct@VRva00244A80Element@@V1@@_STL@@YAXPAVRva00244A80Element@@ABV1@@Z,0x000128DC,retail vector element construction ILT called by 0x002459D0
 ??$_Construct@VW3DAnimationInfo@@V1@@_STL@@YAXPAVW3DAnimationInfo@@ABV1@@Z,0x00033AAA,ILT thunk used by call site
 ??$_Destroy@PAUEvaMessageInfo@@@_STL@@YAXPAUEvaMessageInfo@@0@Z,0x0003AA8A,0x004263D0 call +0x00bb ILT enters matched 28-byte member walk body 0x004261F0
 ??$_Destroy@PAUGen00762250@@@_STL@@YAXPAUGen00762250@@0@Z,0x00025D33,0x00770830 call +0x00bb ILT enters matched width-56 member walk body 0x0076F8C0
@@ -2665,6 +2666,7 @@ name,address,notes
 ??0DWSU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,DelayedWeaponSetUpgradeUpdate calls the shared ObjectModule constructor ILT
 ??0DX8IndexBufferClass@@QAE@GW4UsageType@0@@Z,0x0091D0A0,BFME DynamicIB unsigned-short constructor call-site identity; retail direct call at 0x006D7885 and source definition in dx8indexbuffer.cpp
 ??0DX8IndexBufferClass@@QAE@IW4UsageType@0@@Z,0x0091D0A0,BFME DynamicIB uint-width call-site ABI alias for the unsigned-short constructor
+??0DX8TextureCategoryClass@@QAE@PAVDX8FVFCategoryContainer@@PAPAVTextureClass@@VShaderClass@@PAVVertexMaterialClass@@H@Z,0x00946460,retail Insert_To_Texture_Category call at 0x009485C0 passes container textures shader material and pass to the existing DX8TextureCategoryClass constructor
 ??0DamDie@@QAE@PAVThing@@PBVModuleData@@@Z,0x0001D3AE,pinharvest x1 (thunk)
 ??0DamDieModuleData@@QAE@XZ,0x0004A426,ModuleFactory ILT thunk to 0x001F7810; the byte-verified retail caller encodes it
 ??0DamageInfo@@QAE@XZ,0x0002C9D5,Open-BFME5 the thunk Object kill constructs its DamageInfo through; Zero Hour names the same constructor
@@ -3411,6 +3413,7 @@ name,address,notes
 ??0Rva0019AFF0Temp@@QAE@PAX@Z,0x001985E0,ICF-shared body also reached as the constructor call in rva0019aff0
 ??0Rva001A62D0TerrainQueryResult@@QAE@XZ,0x001A31B0,typed 24-byte terrain query result constructor; independently exact 26B emission initializes zero zero zero zero 10000000.0f null
 ??0Rva00244A80Element@@QAE@ABU0@@Z,0x00038334,Open-BFME5 0x002403E0 element copy constructor ILT
+??0Rva00244A80Element@@QAE@XZ,0x0001AACD,retail 28-byte member-state constructor ILT called by 0x002459D0
 ??0Rva0024D190Base@@QAE@XZ,0x0003D055,base of disputed ICF-shared constructor at 0x0024D190
 ??0Rva002542F0String@@QAE@ABV0@@Z,0x00887B60,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002542F0 calls; autopin
 ??0Rva002542F0String@@QAE@PBD@Z,0x00888BC0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002542F0 calls; autopin
@@ -11386,6 +11389,7 @@ name,address,notes
 ?Add_Light@LightEnvironmentClass@@QAEXABVLightClass@@@Z,0x0094B8A0,light collection method called by SimpleSceneClass::Customized_Render
 ?Add_Line@Render2DClass@@QAEXABVVector2@@0MK@Z,0x0002A92D,Render2DClass::Add_Outline four direct calls to the retail link thunk
 ?Add_Line@Render2DClass@@QAEXABVVector2@@0MKK@Z,0x000409E4,BFME W3DDisplay two-color drawLine callee; ILT to the retail Add_Line body at 0x006E7750
+?Add_Mesh@DX8TextureCategoryClass@@QAEIAAVVertex_Split_Table@@IIPAVIndexBufferClass@@I@Z,0x009471F0,retail Insert_To_Texture_Category calls the existing DX8TextureCategoryClass Add_Mesh body twice with its proven split table index buffer and pass arguments
 ?Add_Object@PredictiveLODOptimizerClass@@SAXPAVRenderObjClass@@@Z,0x0097A512,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0097A360 calls; autopin
 ?Add_Prototype_Impl@AssetRegistry@@QAEXPAX@Z,0x009EF1A0,Add_Prototype thiscall impl body
 ?Add_Quad@Render2DClass@@QAEXABVRectClass@@0KKKK@Z,0x0004183A,retail ILT thunk to the six-argument quad body at 0x006E7210
@@ -13075,6 +13079,7 @@ name,address,notes
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@URva004609B0Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@URva004609B0Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@URva004609B0Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0003068E,ILT thunk called at +0x25 of hashtable erase 0x004609B0 (bucket index)
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@URva00461A00Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x00048284,caller-proven bucket helper for the AptScreenRef hash erase at 0x00461040; same retail 0x00048284 call target as matched 0x00461A00 map family
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@URva0046C000Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@URva0046C000Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@URva0046C000Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0003497D,carved 0x0046BDF0 erase body calls this key and bucket-count overload; matched 0x0046C000 insert proves the same AsciiString mapped specialization
+?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@URva0046C2A0Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@URva0046C2A0Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@URva0046C2A0Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x00467A40,decoded target call pushes key and bucket count; body 0x00467A40 is complete ret 8 bucket helper
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0004004D,BuildableStatus key-erase bucket helper emitted by this TU; the ILT resolves to 0x006A1060
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@W4BuildableStatus@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0004004D,rel32 pin for exact-ambiguous landing
 ?_M_bkt_num_key@?$hashtable@URva000B8AE0Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva000B8AE0ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva000B8AE0Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x000103F7,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x000B8AE0 calls
@@ -13093,7 +13098,6 @@ name,address,notes
 ?_M_bkt_num_key@?$hashtable@URva0046AF20Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva0046AF20ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva0046AF20Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x00016B9E,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x0046AF20 calls
 ?_M_bkt_num_key@?$hashtable@URva0046C000Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva0046C000ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva0046C000Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x0003497D,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x0046C000 calls
 ?_M_bkt_num_key@?$hashtable@URva0046C2A0Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva0046C2A0ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva0046C2A0Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x0003458B,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x0046C2A0 calls
-?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@URva0046C2A0Mapped@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@URva0046C2A0Mapped@@@_STL@@@2@U?$equal_to@VAsciiString@@@2@V?$allocator@U?$pair@$$CBVAsciiString@@URva0046C2A0Mapped@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x00467A40,decoded target call pushes key and bucket count; body 0x00467A40 is complete ret 8 bucket helper
 ?_M_bkt_num_key@?$hashtable@URva0046C330Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva0046C330ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva0046C330Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x0000DF62,the erase at 0x0046C330 calls the same retail bucket helper as the 0x0046C540 insert
 ?_M_bkt_num_key@?$hashtable@URva0046C540Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva0046C540ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva0046C540Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x0000DF62,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x0046C540 calls
 ?_M_bkt_num_key@?$hashtable@URva00583B30Value@@VAsciiString@@U?$hash@VAsciiString@@@rts@@URva00583B30ExtractKey@@U?$equal_to@VAsciiString@@@_STL@@V?$allocator@URva00583B30Value@@@7@@_STL@@ABEIABVAsciiString@@I@Z,0x0003F00D,Open-BFME5 the hashtable _M_bkt_num_key the _M_insert at 0x00583B30 calls
@@ -13111,10 +13115,10 @@ name,address,notes
 ?_M_clear@?$vector@UGen_t_00068fa0_p12cd@@V?$allocator@UGen_t_00068fa0_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00068F50,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_000b0c00_p8cd@@V?$allocator@UGen_t_000b0c00_p8cd@@@_STL@@@_STL@@IAEXXZ,0x000B0B90,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_000de9e0_p16cd@@V?$allocator@UGen_t_000de9e0_p16cd@@@_STL@@@_STL@@IAEXXZ,0x000DE970,gen-tgrid payload member
+?_M_clear@?$vector@UGen_t_000e5750_p12cd@@V?$allocator@UGen_t_000e5750_p12cd@@@_STL@@@_STL@@IAEXXZ,0x000E53D0,retail target at 0x000E5580 calls this matched ICF clear body through ILT 0x0003BBBA
 ?_M_clear@?$vector@UGen_t_000e8340_p12cd@@V?$allocator@UGen_t_000e8340_p12cd@@@_STL@@@_STL@@IAEXXZ,0x000BDCA0,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_000ffa60_p16cd@@V?$allocator@UGen_t_000ffa60_p16cd@@@_STL@@@_STL@@IAEXXZ,0x000FEB70,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_00138360_p12cd@@V?$allocator@UGen_t_00138360_p12cd@@@_STL@@@_STL@@IAEXXZ,0x000E53D0,gen-tgrid payload member
-?_M_clear@?$vector@UGen_t_000e5750_p12cd@@V?$allocator@UGen_t_000e5750_p12cd@@@_STL@@@_STL@@IAEXXZ,0x000E53D0,retail target at 0x000E5580 calls this matched ICF clear body through ILT 0x0003BBBA
 ?_M_clear@?$vector@UGen_t_00152530_p12pod@@V?$allocator@UGen_t_00152530_p12pod@@@_STL@@@_STL@@IAEXXZ,0x000B7880,gen-tgrid payload member
 ?_M_clear@?$vector@UGen_t_0019a890_p16cd@@V?$allocator@UGen_t_0019a890_p16cd@@@_STL@@@_STL@@IAEXXZ,0x00198030,ICF-equivalent vector clear callee used by 0x00199B20
 ?_M_clear@?$vector@UGen_t_0019e270_p12cd@@V?$allocator@UGen_t_0019e270_p12cd@@@_STL@@@_STL@@IAEXXZ,0x00041709,retail call from the proven 0x0019E030 vector growth body reaches the existing ICF-equivalent 12-byte vector clear at 0x0019D970
@@ -14099,6 +14103,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@PBVWeaponTemplate@@V?$allocator@PBVWeaponTemplate@@@_STL@@@_STL@@IAEXPAPBVWeaponTemplate@@ABQBV3@ABU__true_type@2@I_N@Z,0x0002E65E,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002098B0 calls; autopin
 ?_M_insert_overflow@?$vector@U?$pair@PAVSubsystemInterface@@PAX@_STL@@V?$allocator@U?$pair@PAVSubsystemInterface@@PAX@_STL@@@2@@_STL@@IAEXPAU?$pair@PAVSubsystemInterface@@PAX@2@ABU32@ABU__false_type@2@I_N@Z,0x009A1E50,vector<pair<SubsystemInterface* void*>> growth path called by SubsystemInterfaceList::initSubsystem
 ?_M_insert_overflow@?$vector@U?$pair@UICoord2D@@UCoord3D@@@_STL@@V?$allocator@U?$pair@UICoord2D@@UCoord3D@@@_STL@@@2@@_STL@@IAEXPAU?$pair@UICoord2D@@UCoord3D@@@2@ABU32@ABU__false_type@2@I_N@Z,0x00009052,pinharvest x1 (thunk)
+?_M_insert_overflow@?$vector@U?$pair@VAsciiString@@PAVObject@@@_STL@@V?$allocator@U?$pair@VAsciiString@@PAVObject@@@_STL@@@2@@_STL@@IAEXPAU?$pair@VAsciiString@@PAVObject@@@2@ABU32@ABU__false_type@2@I_N@Z,0x00347900,Rva00349A30 exact createNamedCache vector growth callee proven by reference NamedRequest pair and retail ILT 0x0002B5C6
 ?_M_insert_overflow@?$vector@U?$pair@W4ObjectID@@I@_STL@@V?$allocator@U?$pair@W4ObjectID@@I@_STL@@@2@@_STL@@IAEXPAU?$pair@W4ObjectID@@I@2@ABU32@ABU__false_type@2@I_N@Z,0x00004F93,retail REL32 pin for ScriptActions ObjectID pair vector push_back
 ?_M_insert_overflow@?$vector@U?$pair@W4ObjectID@@W41@@_STL@@V?$allocator@U?$pair@W4ObjectID@@W41@@_STL@@@2@@_STL@@IAEXPAU?$pair@W4ObjectID@@W41@@2@ABU32@ABU__false_type@2@I_N@Z,0x00022AF7,rel32 pin for exact-ambiguous landing
 ?_M_insert_overflow@?$vector@UAnimSet@GenericObjectCreationNugget@@V?$allocator@UAnimSet@GenericObjectCreationNugget@@@_STL@@@_STL@@IAEXPAUAnimSet@GenericObjectCreationNugget@@ABU34@ABU__false_type@2@I_N@Z,0x0000DB2F,resweep callee back-solved
@@ -14370,6 +14375,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@VOpen2Rec5822D0@@V?$allocator@VOpen2Rec5822D0@@@_STL@@@_STL@@IAEXPAVOpen2Rec5822D0@@ABV3@ABU__false_type@2@I_N@Z,0x00584650,vector growth for the same 12-byte record; this body calls _Construct at 0x00582750 which calls the Open2Rec5822D0 copy constructor at 0x005822D0; the parser at 0x00584C30 reaches it through ILT 0x0000F277
 ?_M_insert_overflow@?$vector@VPlayerTemplate@@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@IAEXPAVPlayerTemplate@@ABV3@ABU__false_type@2@I_N@Z,0x0003059E
 ?_M_insert_overflow@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@IAEXPAVProductionPrerequisite@@ABV3@ABU__false_type@2@I_N@Z,0x0001AEB0,parsePrerequisiteScience TU-local weak vector helper
+?_M_insert_overflow@?$vector@VRva00244A80Element@@V?$allocator@VRva00244A80Element@@@_STL@@@_STL@@IAEXPAVRva00244A80Element@@ABV3@ABU__false_type@2@I_N@Z,0x0000C5D6,retail vector overflow ILT called by 0x002459D0
 ?_M_insert_overflow@?$vector@VRva00369860StatePointer@@V?$allocator@VRva00369860StatePointer@@@_STL@@@_STL@@IAEXPAVRva00369860StatePointer@@ABV3@ABU__false_type@2@I_N@Z,0x00033DAC,Rva0036B7C0 parser retail call at 0x0036B8E4 uses this ICF-folded STLport insertion thunk
 ?_M_insert_overflow@?$vector@VS4Elem007746E0@@V?$allocator@VS4Elem007746E0@@@_STL@@@_STL@@IAEXPAVS4Elem007746E0@@ABV3@ABU__false_type@2@I_N@Z,0x0002F05E,44-byte S4 vector overflow alias used by the time-of-day parser
 ?_M_insert_overflow@?$vector@VUnicodeString@@V?$allocator@VUnicodeString@@@_STL@@@_STL@@IAEXPAVUnicodeString@@ABV3@ABU__false_type@2@I_N@Z,0x00016A63
@@ -15128,6 +15134,7 @@ name,address,notes
 ?applyDisconnectVote@BfmeDisconnectVoteSender@@QAEXHIHPAVConnectionManager@@@Z,0x000215AD,alias of the DisconnectManager spelling pinned below; voteForPlayerDisconnect reaches applyDisconnectVote through a view class because both callees are defined earlier in the same TU and MSVC inlines them where retail calls
 ?applyDisconnectVote@DisconnectManager@@IAEXHIHPAVConnectionManager@@@Z,0x000215AD,ILT thunk to DisconnectManager::applyDisconnectVote at 0x0066B910
 ?applyFirst@Rva002D9510Target@@QAEXPAVRva002D9510Value@@@Z,0x00031F75,address-derived first target updater called by retail 0x002D9510
+?applyMemberFormationState@Rva002459D0Owner@@AAEXPAVObject@@@Z,0x0000EFA2,retail formation-state helper ILT called by 0x002459D0
 ?applyModelCondition_002FDEF0@@YAXPAVObject@@H_N@Z,0x002FDEF0,TU-local outlined helper for the exact TEAM_SET_MODELCONDITION body; reconstruction alias; not historical identity
 ?applyMotiveForce@PhysicsBehavior@@QAEXPBUCoord3D@@@Z,0x0002A284,ILT thunk to PhysicsBehavior::applyMotiveForce at 0x0029AC40
 ?applyNamed@ScriptEngine@@QAEXPAX0@Z,0x00340F10,ScriptEngine named-apply callee of walkNamed
@@ -79014,6 +79021,7 @@ name,address,notes
 ?callAt0025ED50@Rva0025EF90Owner@@QAEXXZ,0x0025ED50,caller0025EF90+20 viaILT4507F passes sameECX receiver no stackargs; full355B callee appends ObjectIDs into this+E8 list and ends RET0
 ?callAt002A9850@Rva0025EF90Owner@@QAEXXZ,0x002A9850,caller0025EF90+19 viaILT3FA30 passes liveECX receiver no stackargs; body RET0 at+516; neutral address-labelled method not legacy destructor identity
 ?callJ3775e@@YAPAXPBD@Z,0x0003775E,local cdecl adapter to Lua event lookup thunk
+?callRva001D02C0@Rva001D02C0Object@@QAEXHHH@Z,0x001D02C0,decoded thiscall helper ABI from target 0x002FABE0; call-site ILT 0x00049D73 is auto-discovered
 ?call_0002105d@AssaultTransportAIUpdateBase@@IAEXXZ,0x0002105D,unnamed body 0x002B4320 via ILT thunk
 ?call_00030887@Object@@QAEXH@Z,0x00030887,unnamed body 0x001C7E60 via ILT thunk
 ?call_002234A0@Rva0021B200ListOwner@@QAEXP6AXPAX0@Z0I@Z,0x002234A0,neutral body pin for 0x0021B200 continuation; retail ILT=0x0003D0D7 resolves to this body; campaign=luna36h-20260907;lane=shaders;model=gpt-5.6-luna
@@ -80001,6 +80009,7 @@ name,address,notes
 ?erase@?$map@HUGen_005878D0FirstValue@@U?$less@H@_STL@@V?$allocator@U?$pair@$$CBHUGen_005878D0FirstValue@@@_STL@@@3@@_STL@@QAEXU?$_Rb_tree_iterator@U?$pair@$$CBHUGen_005878D0FirstValue@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_005878D0FirstValue@@@_STL@@@2@@2@@Z,0x00043AFE,Gen_00587D40 first map erase; the caller uses the retail ILT for the 0x18-byte integer tree
 ?erase@?$map@VAsciiString@@V1@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@V1@@_STL@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x000106FE,forgetLogin depth Open-BFME4+Grok
 ?erase@?$map@VAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@U?$less@VAsciiString@@@3@V?$allocator@U?$pair@$$CBVAsciiString@@V?$list@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAEIABVAsciiString@@@Z,0x000488BA,forgetLogin depth Open-BFME4+Grok
+?erase@?$vector@U?$pair@VAsciiString@@PAVObject@@@_STL@@V?$allocator@U?$pair@VAsciiString@@PAVObject@@@_STL@@@2@@_STL@@QAEPAU?$pair@VAsciiString@@PAVObject@@@2@PAU32@0@Z,0x003440C0,Rva00349A30 exact createNamedCache clear callee via retail ILT 0x0004B420 and matched ICF vector erase body
 ?erase@?$vector@UFactionVictoryParameters@@V?$allocator@UFactionVictoryParameters@@@_STL@@@_STL@@QAEPAUFactionVictoryParameters@@PAU3@0@Z,0x00038DED,ILT target 0x001DFE60 is the FactionVictoryParameters vector range erase called by VictorySystem::xfer at 0x001E05F0
 ?erase@?$vector@UGen003A99D0@@V?$allocator@UGen003A99D0@@@_STL@@@_STL@@QAEPAUGen003A99D0@@PAU3@0@Z,0x00020928,ILT to 0x003AF7A0 vector erase callee of Rva003B6680 converting ctor m08
 ?erase@?$vector@UGen003A9B60@@V?$allocator@UGen003A9B60@@@_STL@@@_STL@@QAEPAUGen003A9B60@@PAU3@0@Z,0x000450CA,ILT to 0x003AF800 vector erase callee of Rva003B6680 converting ctor m20
@@ -88457,10 +88466,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-??$_Construct@VRva00244A80Element@@V1@@_STL@@YAXPAVRva00244A80Element@@ABV1@@Z,0x000128DC,retail vector element construction ILT called by 0x002459D0
-??0Rva00244A80Element@@QAE@XZ,0x0001AACD,retail 28-byte member-state constructor ILT called by 0x002459D0
-?_M_insert_overflow@?$vector@VRva00244A80Element@@V?$allocator@VRva00244A80Element@@@_STL@@@_STL@@IAEXPAVRva00244A80Element@@ABV3@ABU__false_type@2@I_N@Z,0x0000C5D6,retail vector overflow ILT called by 0x002459D0
-?applyMemberFormationState@Rva002459D0Owner@@AAEXPAVObject@@@Z,0x0000EFA2,retail formation-state helper ILT called by 0x002459D0
-?_M_insert_overflow@?$vector@U?$pair@VAsciiString@@PAVObject@@@_STL@@V?$allocator@U?$pair@VAsciiString@@PAVObject@@@_STL@@@2@@_STL@@IAEXPAU?$pair@VAsciiString@@PAVObject@@@2@ABU32@ABU__false_type@2@I_N@Z,0x00347900,Rva00349A30 exact createNamedCache vector growth callee proven by reference NamedRequest pair and retail ILT 0x0002B5C6
-?erase@?$vector@U?$pair@VAsciiString@@PAVObject@@@_STL@@V?$allocator@U?$pair@VAsciiString@@PAVObject@@@_STL@@@2@@_STL@@QAEPAU?$pair@VAsciiString@@PAVObject@@@2@PAU32@0@Z,0x003440C0,Rva00349A30 exact createNamedCache clear callee via retail ILT 0x0004B420 and matched ICF vector erase body
-?callRva001D02C0@Rva001D02C0Object@@QAEXHHH@Z,0x001D02C0,decoded thiscall helper ABI from target 0x002FABE0; call-site ILT 0x00049D73 is auto-discovered
