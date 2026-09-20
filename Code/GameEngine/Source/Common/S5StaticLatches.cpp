@@ -171,7 +171,6 @@ void bfmeEnsure005E83F0( void )
 	static BfmeLatch005E83F0 s_latch;
 }
 
-// ?bfmeEnsure005E8420@@YAXXZ present-unmatched; guard 0x00EF6C48, atexit helper 0x00C70800
 void bfmeEnsure005E8420( void )
 {
 	static BfmeLatch005E8420 s_latch;
