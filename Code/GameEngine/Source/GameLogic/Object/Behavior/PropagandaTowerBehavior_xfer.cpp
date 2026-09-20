@@ -1,5 +1,3 @@
-// ?xfer@PropagandaTowerBehavior@@MAEXPAVXfer@@@Z
-// partial score=0.95 date=2026-09-19
 // cl: /DNDEBUG /MD /EHsc
 
 typedef unsigned char UnsignedByte;
@@ -89,13 +87,19 @@ private:
 	ObjectTracker *m_insideList;
 };
 
+union XferLocal
+{
+	XferVersion version;
+	XferException error;
+};
+
 // ?xfer@PropagandaTowerBehavior@@MAEXPAVXfer@@@Z
 void PropagandaTowerBehavior::xfer(Xfer *xfer)
 {
-	{
-		XferVersion version = { 1, 1 };
-		xfer->xferVersion(&version);
-	}
+	XferLocal local;
+	local.version.current = 1;
+	local.version.minimum = 1;
+	xfer->xferVersion(&local.version);
 	UpdateModule::xfer(xfer);
 	xfer->xferUnsignedInt(&m_lastScanFrame);
 
@@ -118,9 +122,8 @@ void PropagandaTowerBehavior::xfer(Xfer *xfer)
 	{
 		if (m_insideList != 0)
 		{
-			XferException error;
-			bfmeFormatText(&error, 5, 0);
-			_CxxThrowException(&error, &g_rva005c5100ThrowInfo);
+			bfmeFormatText(&local.error, 5, 0);
+			_CxxThrowException(&local.error, &g_rva005c5100ThrowInfo);
 		}
 
 		for (UnsignedShort i = 0; i < insideCount; ++i)
