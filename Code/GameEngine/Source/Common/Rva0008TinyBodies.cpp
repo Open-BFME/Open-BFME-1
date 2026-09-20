@@ -313,6 +313,11 @@ unsigned int Rva00097170Dword::get() const
     return m_value;
 }
 
+// ?d_00094c50@@YAXXZ
+void d_00094c50(void)
+{
+}
+
 class Rva00097950Self
 {
 public:
