@@ -98,9 +98,11 @@ HRESULT CDownload::DownloadFile( LPCSTR server, LPCSTR username, LPCSTR password
 
 // ?PumpMessages@CDownload@@QAEJXZ present-unmatched
 
-extern int(__cdecl *g_bfmeNowVNH)();
+extern unsigned int(__cdecl *g_bfmeNowVNH)();
 
 extern "C" __declspec(dllimport) long __stdcall MulDiv(long, long, long);
+extern "C" __declspec(dllimport) int __cdecl _strnicmp(
+	const char *left, const char *right, unsigned int count);
 
 class Rva00884DownloadListener
 {
@@ -156,7 +158,7 @@ enum
 HRESULT CDownload::PumpMessages()
 {
 	int iResult = 0;
-	int timetaken = 0;
+	unsigned int timetaken = 0;
 	int averagetimepredicted = -1;
 	static int reenter = 0;
 

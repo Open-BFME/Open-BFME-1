@@ -1,44 +1,147 @@
 // ?PumpMessages@CDownload@@QAEJXZ
-// partial score=0.45 date=2026-09-09
-// slot0/4 of CDownload vtable @0x01117B30. Continues the 0.45 stash (which itself fixed
-// signed/unsigned division to reach +0000..+0084 exact). This session: (1) added the
-// explicit `extern "C" __declspec(dllimport) int __cdecl _strnicmp(...)` declaration used
-// elsewhere in this codebase (parseModelConditionFlags.cpp, CftpRecvReply.cpp) -- without it
-// tools/explain_mismatch.py's guarded-DIR32-import check for __imp___strnicmp cannot even be
-// evaluated meaningfully (it fails on a garbage IAT-RVA lookup regardless, because the guard
-// reads retail bytes at the SAME FILE OFFSET as our compiled __imp___strnicmp relocation site,
-// and our function is still 18B short of retail well before that offset -- so the guard is a
-// symptom of the still-open +0x85 issue below, not a separate bug; fixing the declaration is
-// still correct hygiene and should be kept). (2) also made `timetaken` unsigned int (matching
-// m_TimeStarted's type from the prior fix; consistent with retail's unsigned division, and
-// does not change bytes yet since it's used downstream of the still-open blocker). NO byte
-// progress this session -- confirmed prior worker's +0085 finding is still exactly the wall:
-// retail hoists Listener (this+0x5c4) into ESI and reuses it as the OnError-call receiver
-// across the vtable deref+call ('mov esi,[esi+0x5c4]; mov edx,[esi]; push 2; mov ecx,esi;
-// call [edx]' -- 15 bytes), ours computes it straight into ECX and skips the extra
-// register-to-register copy ('mov ecx,[esi+0x5c4]; mov edx,[ecx]; push 2; call [edx]' --
-// 13 bytes, 2B shorter per occurrence, ~9 occurrences across the function = the 18B gap).
-// NEW NEGATIVE RESULTS this session (both regress, do not retry):
-//   (a) hoisting `Rva00884DownloadListener *listener = ...Listener;` unconditionally at the
-//       TOP of the function (before or after the `reenter` reentrancy guard, before the
-//       DOWNLOADSTATUS_GO block) breaks the ALREADY-EXACT +0000..+0084 prefix: MSVC adds a
-//       THIRD callee-saved register push (ebx) to the prologue -- even on the immediate
-//       `if (reenter != 0) return ...;` path that never touches Listener -- because MSVC's
-//       register allocation is a whole-function pass sensitive to every local's existence,
-//       not just its live range. Confirmed twice (before and after the guard-check line).
-//   (b) hoisting the SAME local scoped to just the CONNECTING block (declared right after
-//       `iResult = ...ConnectToServer(...)`, used by only the FTP_FAILED sub-branch) makes
-//       MSVC load Listener EAGERLY right after the call, before the `iResult == FTP_SUCCEEDED`
-//       branch test -- retail loads it lazily, only inside the failure branch. Wrong shape,
-//       and the register is STILL ecx-based, not esi. The prior worker's "scoped inside just
-//       the OnError block" attempt (also zero effect) plus this attempt now rule out every
-//       plain local-declaration placement tried so far for this single call site.
-// REMAINING IDEA (not tried): AGENTS.md explicitly warns this class of pure register-choice
-// residue (no operand/shape difference, only WHICH register + an extra mov) is often NOT
-// source-controllable at /O2. Before spending more time on locals, try the doc's G-flag sweep
-// (/G5 /G6 /G7 /Ot /Og /Oy-) once, or accept this as the residue floor for this body.
-// compiled 1047B vs target 1065B (18B short, unchanged from the 0.45 stash). t=40min
-// model=sonnet score=0.45
+// partial score=0.45 date=2026-09-20
+// slot0/4 of CDownload vtable @0x01117B30. Continuing the 0.45 stash (5th session on this
+// body). This session synced the actual Code/ TU (CDownloadDownloadFile.cpp) with the prior
+// stash's two fixes -- `unsigned int timetaken` and the explicit `_strnicmp` dllimport decl --
+// which were sitting only in the stash and not yet applied to the tree; that alone reproduces
+// the 0.45/1047B state exactly (verified: `python3 tools/probe.py ... 0x00884EC0` -> 1047 vs
+// 1065, 18B short, identical evidence to the prior bank).
+// NEW THIS SESSION (both negative):
+//   (a) Declared a `Rva00884DownloadListener *listener = ...Listener;` local scoped to the
+//       INNERMOST block, immediately adjacent to the call, at all four call sites that show
+//       the ESI-reuse pattern below (CONNECTING-fail OnError, LOGIN-fail OnError, FINDFILE-fail
+//       OnError, and the DOWNLOADSTATUS_DOWNLOADING OnStatusUpdate wrapped in its own `{ }`).
+//       This is narrower than both prior sessions' placements (top-of-function, and top-of-
+//       CONNECTING-block-before-the-branch-test): the local's live range here is confined to a
+//       single straight-line tail with no intervening branch. Zero byte effect -- probe.py
+//       reports the identical 1047B/18B-short result, same first-diff evidence at +0x85.
+//       MSVC 7.1's register allocator clearly does not key off block-local declaration scope at
+//       all for this call; reverted (kept out of the committed tree to keep the diff minimal).
+//   (b) `python3 tools/shape_family_levers.py CDownloadDownloadFile.cpp --families
+//       sib,register,bool,test,copy,store,loop,branch,constant,frame` produced only 6 choices,
+//       ALL store-reorder pairs (independent field-clear statement swaps) -- none touch the
+//       Listener/OnError call sites at all, because the family detector keys off adjacent
+//       independent stores, not virtual-call receiver materialization. Ran shape_search.py over
+//       all 6 choices (8 trial combinations via the plateau search) anyway: no improving
+//       candidate, confirmed by evidence.json.
+// ROOT-CAUSE REFINEMENT (disassembled the full retail 1065B body via dis_retail.py, mapped all
+// 9 Listener/vtable call sites): the "this dies right after this call -> retail hoists Listener
+// into ESI, then copies to ECX" pattern is NOT a uniform, source-visible rule. It holds for
+// +0x85 (OnError/COULDNOTCONNECT), +0xf6 (OnError/LOGINFAILED), +0x163 (OnError/NOSUCHFILE) and
+// +0x268 (OnStatusUpdate/DOWNLOADING) -- all early in the function, before EBX/EBP get pushed at
+// +0x118/+0x119. But the OTHER "this-dies-immediately" call, OnError(DOWNLOADEVENT_TCPERROR) at
+// +0x389 (reached by a forward jump from the DOWNLOADING block, physically laid out AFTER the
+// m_predictionTimes averaging block, with EBX/EBP already pushed and EDI repurposed to cache
+// g_bfmeNowVNH's function pointer instead of a stable 0-constant), uses the SAME direct
+// ECX-load shape our code already produces -- no ESI hoist. So the lever is not "does `this`
+// die after the call": something about EBX/EBP occupancy or EDI's changed role by that point in
+// the whole-function allocation pass flips the choice back. This is exactly the class of
+// residue AGENTS.md/docs/shape_levers.md calls compiler-internal register-identity choice, now
+// confirmed non-uniform even within one function, across 5 independent sessions (t=70,45,40,7
+// and this one) with zero net byte movement since the 0.5->0.45 signed/unsigned fix landed.
+// Everything else in the body (control flow, member offsets, enum values, all 5 Cftp callees,
+// the two OnEnd/OnQueryResume/OnProgressUpdate calls with a pre-loaded ECX across intervening
+// field-clear stores) is confirmed correct against the disassembly line-by-line; the ONLY open
+// residue is this register-choice gap. compiled 1047B vs target 1065B (18B short, unchanged).
+// t=35min model=claude-sonnet-5 score=0.45
+
+// cl: /DNDEBUG /MD /EHs-c- /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWLib
+// WWDownload Download.cpp CDownload::DownloadFile.
+
+#include "PreRTS.h"
+#include <direct.h>
+#include <string.h>
+#include <sys/stat.h>
+
+typedef const char *LPCSTR;
+typedef long HRESULT;
+
+enum
+{
+	DOWNLOADSTATUS_DONE = 0,
+	DOWNLOADSTATUS_GO = 1,
+	DOWNLOADSTATUS_FINDINGFILE = 4,
+	DOWNLOAD_STATUSERROR = 0x80040002,
+	DOWNLOAD_PARAMERROR = 0x80040001
+};
+
+class Rva00885980Class
+{
+public:
+	int d_00885980( void );
+};
+
+class CDownload
+{
+public:
+	HRESULT DownloadFile( LPCSTR server, LPCSTR username, LPCSTR password,
+		LPCSTR file, LPCSTR localfile, LPCSTR regkey, bool tryresume );
+	HRESULT PumpMessages();
+
+private:
+	char m_vtable[4];
+	char m_Server[256];
+	char m_Login[64];
+	char m_Password[64];
+	char m_File[256];
+	char m_LocalFile[256];
+	char m_LastLocalFile[256];
+	char m_RegKey[256];
+	int m_Status;
+	int m_TimeStarted;
+	int m_StartPosition;
+	int m_FileSize;
+	int m_BytesRead;
+	bool m_TryResume;
+	int m_predictions;
+	int m_predictionTimes[8];
+	void *m_Ftp;
+	void *Listener;
+};
+
+HRESULT CDownload::DownloadFile( LPCSTR server, LPCSTR username, LPCSTR password,
+	LPCSTR file, LPCSTR localfile, LPCSTR regkey, bool tryresume )
+{
+	if( ( m_Status != DOWNLOADSTATUS_DONE ) && ( m_Status != DOWNLOADSTATUS_FINDINGFILE ) )
+	{
+		return DOWNLOAD_STATUSERROR;
+	}
+
+	if( m_Status == DOWNLOADSTATUS_FINDINGFILE )
+	{
+		if( ( strcmp( m_Server, server ) ) || ( strcmp( m_Login, username ) ) )
+		{
+			( (Rva00885980Class *)m_Ftp )->d_00885980();
+			m_Status = DOWNLOADSTATUS_DONE;
+		}
+	}
+
+	if( ( server == NULL ) || ( username == NULL ) ||
+		( password == NULL ) || ( file == NULL ) ||
+		( localfile == NULL ) || ( regkey == NULL ) )
+	{
+		return DOWNLOAD_PARAMERROR;
+	}
+
+	_mkdir( "download" );
+
+	strncpy( m_Server, server, sizeof( m_Server ) );
+	strncpy( m_Login, username, sizeof( m_Login ) );
+	strncpy( m_Password, password, sizeof( m_Password ) );
+	strncpy( m_File, file, sizeof( m_File ) );
+	strncpy( m_LocalFile, localfile, sizeof( m_LocalFile ) );
+	strncpy( m_LastLocalFile, localfile, sizeof( m_LastLocalFile ) );
+	strncpy( m_RegKey, regkey, sizeof( m_RegKey ) );
+	m_TryResume = tryresume;
+	m_StartPosition = 0;
+
+	if( m_Status != DOWNLOADSTATUS_FINDINGFILE )
+	{
+		m_Status = DOWNLOADSTATUS_GO;
+	}
+
+	return 0;
+}
 
 // ?PumpMessages@CDownload@@QAEJXZ present-unmatched
 
