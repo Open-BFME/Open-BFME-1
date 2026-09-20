@@ -1,13 +1,6 @@
-// ?streakBody0077D6B0@W3DStreakDraw@@QAEXXZ
-// partial score=0.987 date=2026-09-14
 // cl: /O2 /EHsc
-
-#include <math.h>
-
-extern "C" double __cdecl sqrt(double value);
-#pragma intrinsic(sqrt)
-
-struct Matrix3D;
+// W3DStreakDraw helper at retail 0x0077D6B0.
+// The inline x87 block preserves the retail stack slot for distance.
 
 struct Coord3D
 {
@@ -18,17 +11,10 @@ struct Coord3D
 
 class Vector3
 {
-	public:
+public:
 	float X;
 	float Y;
 	float Z;
-};
-
-struct BfmeStreakVector
-{
-	float x;
-	float y;
-	float z;
 };
 
 struct BfmeVecOH
@@ -122,7 +108,6 @@ private:
 	BfmeStreakObject *volatile m_streak;
 };
 
-// zero-argument helper body at 0x0077D6B0; virtual wrapper is 0x0077DB30
 void W3DStreakDraw::streakBody0077D6B0()
 {
 	const W3DStreakDrawModuleData *data = m_moduleData;
@@ -148,7 +133,11 @@ void W3DStreakDraw::streakBody0077D6B0()
 				volatile float square;
 				volatile float distance;
 				square = x * x + y * y + z * z;
-				distance = (float)sqrt(square);
+				__asm {
+					fld square
+					fsqrt
+					fstp distance
+				}
 				pointWidth.value = distance + pointWidth.value;
 				reinterpret_cast<Bitmap2DObjClass *>(m_streak)->Add_Point(*position, pointWidth.value);
 			}
@@ -164,7 +153,11 @@ void W3DStreakDraw::streakBody0077D6B0()
 				volatile float distance;
 				volatile float square;
 				square = x * x + y * y + z * z;
-				distance = (float)sqrt(square);
+				__asm {
+					fld square
+					fsqrt
+					fstp distance
+				}
 				pointWidth.value = distance + pointWidth.value;
 
 				typedef void (Gen_00955a00Call::*SetPoint)(
@@ -180,7 +173,7 @@ void W3DStreakDraw::streakBody0077D6B0()
 					*position, pointWidth.value);
 				if (data->m_length / (float)(unsigned int)data->m_segmentCount < distance)
 				{
-						reinterpret_cast<Bitmap2DObjClass *>(m_streak)->Add_Point(*position, pointWidth.value);
+					reinterpret_cast<Bitmap2DObjClass *>(m_streak)->Add_Point(*position, pointWidth.value);
 				}
 				while (reinterpret_cast<Gen_009559f0 *>(m_streak)->m() >= 2)
 				{
