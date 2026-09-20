@@ -16,6 +16,10 @@ void *Rva000C9E10FirstPointer::get() { return m_value; }
 class Rva000C9E20Self { public: Rva000C9E20Self *get(); };
 Rva000C9E20Self *Rva000C9E20Self::get() { return this; }
 
+class Rva000C9E30NoOp { public: void noop(); };
+// ?noop@Rva000C9E30NoOp@@QAEXXZ
+void Rva000C9E30NoOp::noop() { }
+
 class Rva000C9EC0FirstPointer { public: void *get(); private: void *m_value; };
 void *Rva000C9EC0FirstPointer::get() { return m_value; }
 
