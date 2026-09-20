@@ -189,6 +189,14 @@ void *Rva001B4BD0Self::get()
 	return this;
 }
 
+// Retail RVA 0x001B4BE0 is a one-byte carved no-op.  No semantic owner is
+// proven, so this source keeps the function name address-derived.
+
+// ?Rva001B4BE0Noop@@YAXXZ
+void Rva001B4BE0Noop(void)
+{
+}
+
 struct Rva001B4C10Address
 {
 	void *get() const;
