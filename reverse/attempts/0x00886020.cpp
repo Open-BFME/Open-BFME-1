@@ -1,5 +1,5 @@
 // ?FindFile@Rva00884Ftp@@QAEJPBDPAH@Z
-// partial score=0.5 date=2026-09-19
+// partial score=0.9 date=2026-09-19
 // cl: /DNDEBUG /MD /EHs-c- /O2 /Ob2
 // WWDownload FTP.CPP Cftp::FindFile.
 
@@ -38,6 +38,8 @@ enum
 	FTPSTAT_SENTLIST = 150,
 	FTPSTAT_LISTDATAOPEN = 160,
 	FTPSTAT_LISTDATARECVD = 170,
+	FTPSTAT_LISTDATAREADY = 171,
+	FTPSTAT_SIZING = 172,
 	FTPREPLY_CWDOK = 250,
 	FTPREPLY_OPENASCII = 150,
 	FTPREPLY_COMPLETE = 226
@@ -48,7 +50,14 @@ class Cftp
 public:
 	HRESULT RecvReply(const char *reply, int size, int *replyCode);
 	int SendNewPort(void);
+	int RecvData(char *data, int size)
+	{
+		return recv(m_iDataSocket, data, size, 0);
+	}
 
+private:
+	int m_iCommandSocket;
+	int m_iDataSocket;
 };
 
 class Rva00885920Class
@@ -99,6 +108,7 @@ HRESULT Rva00884Ftp::FindFile(LPCSTR szRemoteFileName, int *piSize)
 	static char *listline = g_listline;
 	int i, iReply;
 	char ext[10];
+	int sendingCwdStatus = FTPSTAT_SENDINGCWD;
 	Rva01358EA8Function callback;
 	time_t (__cdecl *timeFunction)(time_t *) =
 		*(time_t (__cdecl **)(time_t *))0x013594F0;
@@ -128,13 +138,13 @@ HRESULT Rva00884Ftp::FindFile(LPCSTR szRemoteFileName, int *piSize)
 		if (send(m_iCommandSocket, command, 6 + strlen(m_szRemoteFilePath), 0) > 0) {
 			callback((const void *)0x01132E90);
 			callback((const void *)command);
-			m_iStatus = FTPSTAT_SENDINGCWD;
+			m_iStatus = sendingCwdStatus;
 		} else {
 			return FTP_TRYING;
 		}
 	}
 
-	if (m_iStatus == FTPSTAT_SENDINGCWD) {
+	if (m_iStatus == sendingCwdStatus) {
 		HRESULT reply = ((Cftp *)this)->RecvReply(command, 256, &iReply);
 		if ((reply == FTP_SUCCEEDED) && (iReply == 550)) {
 			m_findStart = 0;
@@ -147,7 +157,7 @@ HRESULT Rva00884Ftp::FindFile(LPCSTR szRemoteFileName, int *piSize)
 
 	if (m_iStatus == FTPSTAT_SENTCWD) {
 		i = 0;
-		while (((Cftp *)this)->SendNewPort() == FTP_TRYING) {
+		for (; ((Cftp *)this)->SendNewPort() == FTP_TRYING; ) {
 			++i;
 			if (i == 1000)
 				return FTP_TRYING;
@@ -185,7 +195,7 @@ HRESULT Rva00884Ftp::FindFile(LPCSTR szRemoteFileName, int *piSize)
 	}
 
 	if (m_iStatus == FTPSTAT_LISTDATAOPEN) {
-		recv(m_iDataSocket, listline, 256, 0);
+		((Cftp *)this)->RecvData(listline, 256);
 		if (strlen(listline) == 0)
 			return FTP_TRYING;
 		m_iStatus = FTPSTAT_LISTDATARECVD;
@@ -195,10 +205,31 @@ HRESULT Rva00884Ftp::FindFile(LPCSTR szRemoteFileName, int *piSize)
 		if ((((Cftp *)this)->RecvReply(command, 256, &iReply) != FTP_SUCCEEDED) ||
 			(iReply != FTPREPLY_COMPLETE))
 			return FTP_TRYING;
-		m_iStatus = FTPSTAT_FILEFOUND;
+		m_iStatus = FTPSTAT_LISTDATAREADY;
 	}
 
 	((Rva00885980Class *)this)->d_00885960();
+
+	if (m_iStatus == FTPSTAT_LISTDATAREADY) {
+		sprintf(command, (const char *)0x01132EF8, m_szRemoteFileName);
+		if (((Rva00885920Class *)this)->d_00885530(
+				command, 7 + strlen(m_szRemoteFileName)) < 0)
+			return FTP_TRYING;
+		m_iStatus = FTPSTAT_SIZING;
+	}
+
+	if (m_iStatus == FTPSTAT_SIZING) {
+		if ((((Cftp *)this)->RecvReply(command, 256, &iReply) != FTP_SUCCEEDED) ||
+			(iReply != 213))
+			return FTP_TRYING;
+
+		*(int *)0x012D4D68 = -1;
+		if (sscanf(command, (const char *)0x01132EF0,
+				&i, (int *)0x012D4D68) != 2)
+			*(int *)0x012D4D68 = -1;
+	}
+
+	m_iStatus = FTPSTAT_FILEFOUND;
 	m_findStart = 0;
 
 	if (strncmp(listline, m_szRemoteFileName, sizeof(m_szRemoteFileName)) == 0)
