@@ -257,6 +257,11 @@ void *Rva00122270Self::get() const
 	return (void *)this;
 }
 
+// ?Rva00122280Noop@@YAXXZ
+void Rva00122280Noop()
+{
+}
+
 class Rva001222A0Self
 {
 public:
