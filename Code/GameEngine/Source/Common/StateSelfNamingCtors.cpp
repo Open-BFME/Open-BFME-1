@@ -1,5 +1,5 @@
 // cl: /ICode/Libraries/Source/WWVegas/WWLib
-// 24 forty-six-byte __thiscall constructors with one shape:
+// 25 forty-six-byte __thiscall constructors with one shape:
 //
 //     push ecx / push esi / push ecx / mov esi,ecx / mov [esp+8],esp /
 //     mov ecx,esp / push <offset literal> /
@@ -39,7 +39,7 @@
 // once the class names are recovered from somewhere that actually witnesses
 // them.
 //
-// 2 distinct base constructors, 24 bodies.  Each base is reached through an
+// 2 distinct base constructors, 25 bodies.  Each base is reached through an
 // incremental-link thunk and is pinned in `reverse/symbols.csv` at that thunk's
 // address, which is what the retail displacement encodes; the bodies they jump
 // to are 0x000A19E0 and 0x0014F280.
@@ -89,6 +89,7 @@ BFME_STATE_SELF_NAMING_CTOR( Rva00171540State, Rva000A19E0StateBase, "AIHordeExi
 BFME_STATE_SELF_NAMING_CTOR( Rva00171930State, Rva000A19E0StateBase, "AICowerState" )
 BFME_STATE_SELF_NAMING_CTOR( Rva001719A0State, Rva000A19E0StateBase, "AIQuarrelState" )
 BFME_STATE_SELF_NAMING_CTOR( Rva0018ACA0State, Rva000A19E0StateBase, "AITNGuardIdleState" )
+BFME_STATE_SELF_NAMING_CTOR( Rva00180050State, AIInternalMoveToState, "AICombineState" )
 BFME_STATE_SELF_NAMING_CTOR( Rva002B77F0State, Rva000A19E0StateBase, "DozerPrimaryGoingHomeState" )
 BFME_STATE_SELF_NAMING_CTOR( Rva002C6100State, Rva000A19E0StateBase, "SupplyTruckWantsToPickUpOrDeliverBoxesState" )
 BFME_STATE_SELF_NAMING_CTOR( Rva002C6170State, Rva000A19E0StateBase, "RegroupingState" )
