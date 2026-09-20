@@ -135,20 +135,58 @@ struct BfmeSubFDE
 	virtual void bfmeV5();
 	virtual void bfmeV6();
 	virtual void bfmeV7();
-	virtual void *bfmeVirt8FDE();
+	virtual int bfmeVirt8FDE();
+};
+
+struct BfmeEntry
+{
+	char m_bfmeFields[4];
+};
+
+class BfmeEntrySink
+{
+public:
+	void bfmeApply(BfmeEntry *entry, unsigned char kind, int active,
+		int mode, int enabled);
 };
 
 struct BfmeHeldFDE
 {
-	unsigned char m_bfmeHead[0x200];
+	virtual void bfmeV0();
+	virtual void bfmeV1();
+	virtual void bfmeV2();
+	virtual void bfmeV3();
+	virtual void bfmeV4();
+	virtual void bfmeV5();
+	virtual void bfmeV6();
+	virtual void bfmeV7();
+	virtual void bfmeV8();
+	virtual void bfmeV9();
+	virtual BfmeEntrySink *bfmeSinkFDE();
+	unsigned char m_bfmeHead[0x1fc];
 	BfmeSubFDE *m_bfmeS;
+};
+
+struct BfmeRangeFDE
+{
+	BfmeEntry *m_bfmeBegin;
+	BfmeEntry *m_bfmeEnd;
+	void *m_bfmeUnused;
+};
+
+struct BfmeTableFDE
+{
+	unsigned char m_bfmeHead[0xfd4];
+	BfmeRangeFDE m_bfmeFirst[4];
+	BfmeRangeFDE m_bfmeSecond[4];
 };
 
 struct BfmeThingFDE
 {
 	void bfmeGoFDE();
-	void bfmeUseFDE(void *r);
-	unsigned char m_bfmeHead[8];
+	void bfmeUseFDE(int r);
+	unsigned char m_bfmeHead[4];
+	BfmeTableFDE *m_bfmeTable;
 	BfmeHeldFDE *m_bfmeP;
 };
 
@@ -160,6 +198,40 @@ void BfmeThingFDE::bfmeGoFDE()
 		BfmeSubFDE *s = h->m_bfmeS;
 		if (s)
 			bfmeUseFDE(s->bfmeVirt8FDE());
+	}
+}
+
+void BfmeThingFDE::bfmeUseFDE(int r)
+{
+	BfmeHeldFDE *held = m_bfmeP;
+	if (held != 0)
+	{
+		BfmeEntrySink *sink = held->bfmeSinkFDE();
+		if (sink != 0)
+		{
+			BfmeTableFDE *table = m_bfmeTable;
+			BfmeEntry *first = table->m_bfmeFirst[r].m_bfmeBegin;
+			BfmeEntry **firstEnd = &table->m_bfmeFirst[r].m_bfmeEnd;
+			if (first != *firstEnd)
+			{
+				do
+				{
+					sink->bfmeApply(first, 0, 1, 0, 0);
+					++first;
+				} while (first != *firstEnd);
+			}
+
+			BfmeEntry *second = table->m_bfmeSecond[r].m_bfmeBegin;
+			BfmeEntry **secondEnd = &table->m_bfmeSecond[r].m_bfmeEnd;
+			if (second != *secondEnd)
+			{
+				do
+				{
+					sink->bfmeApply(second, 1, 1, 0, 0);
+					++second;
+				} while (second != *secondEnd);
+			}
+		}
 	}
 }
 
@@ -181,4 +253,3 @@ char BfmeThingFDH::bfmeGoFDH(void *unused)
 		return false;
 	return o->bfmeAskFDH(0x13) == 0;
 }
-
