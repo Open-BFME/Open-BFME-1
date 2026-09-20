@@ -99,7 +99,7 @@ void Glo00EF4988::h005143D0()
 	GameWindow *list = m_list;
 	Int count = ((BfmeAptScreenInGameChat *)this)->rva00513BF0(
 		list, &values, 7, true );
-	if (count)
+	if (count > 0)
 	{
 		int *begin = values.m_begin;
 		int *it = begin;
