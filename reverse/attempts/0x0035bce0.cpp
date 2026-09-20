@@ -1,5 +1,5 @@
 // ?rva0035bce0@BfmeThingFFF@@QAEXPAPAURva0035BCE0Entry@@PAU2@@Z
-// partial score=0.16 date=2026-09-20
+// partial score=0.43 date=2026-09-20
 // Address-derived reconstruction of retail 0x0035BCE0 (carved, 201 B).
 // The three stack/register fields on the second argument (next-link at +0,
 // table index at +4, target version at +8) match the ListNode shape proven
@@ -67,8 +67,8 @@ private:
 void BfmeThingFFF::rva0035bce0(Rva0035BCE0Entry **listSlot, Rva0035BCE0Entry *entry)
 {
 	Rva0035BCE0TableRow *tableEntry = &m_table[entry->m_tableIndex];
+	int version = tableEntry->m_version;
 	Rva00354A00Node *node = tableEntry->m_head;
-	short version = tableEntry->m_version;
 	int targetVersion = entry->m_targetVersion;
 	if (version > targetVersion)
 	{
