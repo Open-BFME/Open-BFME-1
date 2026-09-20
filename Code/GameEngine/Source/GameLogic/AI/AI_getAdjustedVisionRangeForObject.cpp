@@ -218,3 +218,15 @@ Real AI::getAdjustedVisionRangeForObject(const Object *object, Int flags)
 
 	return range;
 }
+
+class Rva002BD020AI
+{
+public:
+	static Real getAdjustedVisionRangeForObject(const Object *object, Int flags);
+};
+
+// ?getAdjustedVisionRangeForObject@Rva002BD020AI@@SAMPBVObject@@H@Z
+Real Rva002BD020AI::getAdjustedVisionRangeForObject(const Object *object, Int flags)
+{
+	return AI::getAdjustedVisionRangeForObject(object, flags);
+}
