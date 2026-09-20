@@ -58,12 +58,12 @@ public:
 class W3DDisplay
 {
 private:
-	unsigned char m_pad00[0x184];
+	unsigned char m_pad00[0x180];
 	void *m_state;
 	BfmeDisplaySlot10State *m_entries;
 
 public:
-	Bool bfmeDisplaySlot10();
+	virtual Bool bfmeDisplaySlot10();
 };
 
 // ?bfmeDisplaySlot10@W3DDisplay@@UAE_NXZ
