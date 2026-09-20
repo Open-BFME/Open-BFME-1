@@ -1,4 +1,5 @@
 // ?h00514560@Glo00EF4988@@QAEXXZ
+// partial score=0.70 date=2026-09-20
 // cl: /DNDEBUG /MD /EHsc
 
 class GameWindow;
