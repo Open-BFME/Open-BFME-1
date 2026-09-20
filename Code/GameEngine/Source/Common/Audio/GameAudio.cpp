@@ -1283,3 +1283,13 @@ void *Rva005C11A0Owner::value()
 {
 	return this;
 }
+
+class Rva000E4410Noop
+{
+public:
+	void noop();
+};
+
+void Rva000E4410Noop::noop()
+{
+}
