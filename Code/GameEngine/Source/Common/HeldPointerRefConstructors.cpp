@@ -98,6 +98,23 @@ Rva005BEB20Ref &Rva005BEB20Ref::operator=( RefSource const &source )
 	return *this;
 }
 
+class Rva005BEBB0Ref
+{
+public:
+	Rva005BEBB0Ref &operator=( RefSource const &source );
+
+	RefTarget *m_ref;
+};
+
+Rva005BEBB0Ref &Rva005BEBB0Ref::operator=( RefSource const &source )
+{
+	RefTarget *ref = source.m_held ? source.m_held->refFetch() : 0;
+	if( m_ref )
+		m_ref->refRelease( true );
+	m_ref = ref;
+	return *this;
+}
+
 class Rva005BEA00Ref
 {
 public:
