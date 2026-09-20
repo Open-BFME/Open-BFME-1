@@ -67142,6 +67142,7 @@ name,address,notes
 ?b_006922a0@@YAXXZ,0x006922A0,gen-thunk body
 ?b_006922d0@@YAXXZ,0x006922D0,gen-thunk body
 ?b_006922e0@@YAXXZ,0x006922E0,gen-thunk body
+?begin@Rva006925D0Wrapper@@QAEXPAX@Z,0x006922E0,carved 0x006925D0 wrapper calls the matched 0x006922E0 body through a one-pointer thiscall declaration
 ?b_00692350@@YAXXZ,0x00692350,gen-thunk body
 ?b_006923a0@@YAXXZ,0x006923A0,gen-thunk body
 ?b_006923f0@@YAXXZ,0x006923F0,gen-thunk body
