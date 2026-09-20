@@ -50,3 +50,21 @@ bool T4Host002E4D60::equals( const T4Host002E4D60 &other ) const
 	}
 	return true;
 }
+
+class Rva001C03D0Array
+{
+public:
+	bool equals( const Rva001C03D0Array &other ) const;
+private:
+	Int m_val[ 10 ];
+};
+
+bool Rva001C03D0Array::equals( const Rva001C03D0Array &other ) const
+{
+	for ( unsigned int i = 0; i < 10; i++ )
+	{
+		if ( m_val[ i ] != other.m_val[ i ] )
+			return false;
+	}
+	return true;
+}
