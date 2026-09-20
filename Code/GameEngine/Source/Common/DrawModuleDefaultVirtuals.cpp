@@ -17,6 +17,7 @@ public:
 	virtual void rva0074FFF0(UnsignedInt);
 	virtual void rva00750000(UnsignedInt);
 	virtual void rva00750030(UnsignedInt, UnsignedInt);
+	virtual void rva00750040();
 	virtual void rva00750050(UnsignedInt);
 	virtual void rva00750060(UnsignedInt);
 	virtual void rva00750070(UnsignedInt);
@@ -64,6 +65,11 @@ void DrawModule::rva00750000(UnsignedInt)
 
 // ?rva00750030@DrawModule@@UAEXII@Z
 void DrawModule::rva00750030(UnsignedInt, UnsignedInt)
+{
+}
+
+// ?rva00750040@DrawModule@@UAEXXZ
+void DrawModule::rva00750040()
 {
 }
 
