@@ -1,5 +1,5 @@
 // ?reset@ConnectionManager@@QAEXXZ
-// partial score=0.9 date=2026-09-19
+// partial score=0.91 date=2026-09-20
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 template <class Type>
@@ -22,6 +22,11 @@ public:
 	NetCommandList();
 	virtual ~NetCommandList();
 	void reset();
+
+private:
+	void *m_first;
+	void *m_last;
+	void *m_lastMessageInserted;
 };
 
 class NetCommandWrapperList
@@ -31,6 +36,9 @@ public:
 	virtual ~NetCommandWrapperList();
 	void init();
 	void reset();
+
+private:
+	void *m_list;
 };
 
 class Transport
@@ -134,8 +142,14 @@ void ConnectionManager::reset()
 	}
 
 	if (m_pendingCommands == 0)
+	{
 		m_pendingCommands = new NetCommandList;
-	m_pendingCommands->reset();
+		m_pendingCommands->reset();
+	}
+	else
+	{
+		m_pendingCommands->reset();
+	}
 
 	if (m_relayedCommands == 0)
 		m_relayedCommands = new NetCommandList;
