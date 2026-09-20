@@ -81,3 +81,41 @@ BFME_INDEXED_LIST_TAIL_WALKER( Rva003517B0 )
 BFME_INDEXED_LIST_TAIL_WALKER( Rva003517F0 )
 BFME_INDEXED_LIST_TAIL_WALKER( Rva00351890 )
 BFME_INDEXED_LIST_TAIL_WALKER( Rva003518D0 )
+
+struct Rva00351860Owner
+{
+	char m_padding00[ 0x0c ];
+	unsigned int m_entries;
+	char m_padding10[ 0x0c ];
+	int m_index;
+
+	void rva00351860();
+};
+
+static __forceinline void rva00351860Clear(unsigned int offset,
+	unsigned int pointer)
+{
+	*(unsigned char *)(offset + pointer) = 0;
+}
+
+static __forceinline int rva00351860Read(unsigned int offset,
+	unsigned int pointer)
+{
+	return *(int *)(offset + pointer);
+}
+
+// ?rva00351860@Rva00351860Owner@@QAEXXZ
+void Rva00351860Owner::rva00351860()
+{
+	int index = m_index;
+	if (index != -1)
+	{
+		do
+		{
+			rva00351860Clear((unsigned int)(index * 20 + 0x0c),
+				m_entries);
+			index = rva00351860Read((unsigned int)(index * 20), m_entries);
+		}
+		while (index != -1);
+	}
+}
