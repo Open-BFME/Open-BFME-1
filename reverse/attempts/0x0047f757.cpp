@@ -1,5 +1,23 @@
 // ?gogoGadgetComboBox@GameWindowManager@@UAEPAVGameWindow@@PAV2@IHHHHPAVWinInstanceData@@PAU_ComboBoxData@@PAVGameFont@@_N@Z
 // partial score=0.62 date=2026-09-10
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/gamewindowlist /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+
+#define BFME_STLP_NODE_ALLOC 1
+#define _STLP_USE_STATIC_LIB 1
+#define _STLP_NO_EXCEPTIONS 1
+#include "PreRTS.h"
+
+#include <string.h>
+
+#include "GameClient/GameWindowManager.h"
+#include "GameClient/GameWindow.h"
+#include "GameClient/Gadget.h"
+#include "GameClient/GadgetComboBox.h"
+#include "GameClient/GadgetListBox.h"
+#include "GameClient/GadgetTextEntry.h"
+#include "GameClient/GadgetPushButton.h"
+
 GameWindow *GameWindowManager::gogoGadgetComboBox( GameWindow *parent,
 																					 UnsignedInt status,
 																					 Int x,
