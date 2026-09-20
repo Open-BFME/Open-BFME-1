@@ -4,3 +4,8 @@
 void b_001e1f10(void)
 {
 }
+
+// ?Rva001E1F00Noop@@YAXXZ
+void Rva001E1F00Noop(void)
+{
+}
