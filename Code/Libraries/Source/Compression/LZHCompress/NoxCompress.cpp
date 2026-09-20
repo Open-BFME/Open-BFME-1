@@ -219,3 +219,32 @@ Bool DecompressMemory(void *inBufferVoid, Int inSize, void *outBufferVoid, Int& 
 	outSize = rawSize;
 	return true;
 }
+
+Bool CompressMemory(void *inBufferVoid, Int inSize, void *outBufferVoid, Int& outSize)
+{
+	UnsignedByte *inBuffer = (UnsignedByte *)inBufferVoid;
+	UnsignedByte *outBuffer = (UnsignedByte *)outBufferVoid;
+	UnsignedInt rawSize = 0;
+	UnsignedInt compressedSize = 0, compressed = 0, i = 0;
+	LZHL_CHANDLE compressor;
+	UnsignedInt blocklen;
+
+	if ((inBuffer == 0) || (outBuffer == 0) || (inSize < 4) || (outSize == 0))
+		return false;
+
+	rawSize = inSize;
+
+	compressor = LZHLCreateCompressor();
+	for (i = 0; i < rawSize; i += BLOCKSIZE)
+	{
+		blocklen = min((UnsignedInt)BLOCKSIZE, rawSize - i);
+		compressed = LZHLCompress(compressor, outBuffer + compressedSize, inBuffer + i, blocklen);
+		compressedSize += compressed;
+	}
+
+	LZHLDestroyCompressor(compressor);
+
+	outSize = compressedSize;
+
+	return true;
+}
