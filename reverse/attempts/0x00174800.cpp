@@ -1,0 +1,241 @@
+// ?d_00174800@@YAXXZ
+// partial score=0.67 date=2026-09-20
+// cl: /DNDEBUG /MD
+//
+// Retail 0x00174800: an AIInternalMoveToState-derived state's onEnter().
+// The state-machine owner and its AI update are fetched, a critter-desync
+// log line is emitted when TheCRCParameterCheck is live, and -- when the
+// AI's byte flag at +0x336 is set -- the state notes TheAI's agent list,
+// computes a fixed-distance offset from the owner toward the (normalized)
+// direction away from the goal object, requests a path there, then chains
+// to the shared AIInternalMoveToState::onEnter(). When the flag is clear
+// the state just flips its own continue/wait bookkeeping and returns
+// STATE_CONTINUE without chaining to the base. Address-derived class and
+// field names where identity is unknown; landed twins
+// Rva00174730State_update.cpp / Rva00174A20State_update.cpp establish the
+// AIInternalMoveToState machine/adjustDestinations layout reused here.
+
+typedef unsigned char Bool;
+
+enum StateReturnType
+{
+	STATE_CONTINUE = 0,
+	STATE_FAILURE = -2
+};
+
+// Local minimal Coord3D: method declared, not defined, so the call links
+// against the already-matched ?normalize@Coord3D@@QAEXXZ (coord3d.cpp).
+struct Coord3D
+{
+	float x;
+	float y;
+	float z;
+
+	void normalize(void);
+};
+
+class Rva00174800Object;
+
+struct Rva00174800StateMachine
+{
+	unsigned char m_pad00[0x10];
+	Rva00174800Object *m_owner;
+};
+
+// Local minimal AIUpdateInterface: requestPath declared, not defined, so
+// the call links against the already-matched
+// ?requestPath@AIUpdateInterface@@QAEXPAUCoord3D@@_N@Z (AIUpdate.cpp).
+class AIUpdateInterface
+{
+public:
+	void requestPath(Coord3D *pos, Bool immediately);
+};
+
+// BFME AIUpdateInterface::chooseLocomotorSet is vtable +0x1fc (slot 127);
+// still a dump, so the call goes through the padded vtable shape rather
+// than a linked symbol (same trick as AIUpdate.cpp's own reconstruction).
+class AIUpdateInterface_Slot127
+{
+public:
+	virtual void _pad0(void) = 0;	virtual void _pad1(void) = 0;
+	virtual void _pad2(void) = 0;	virtual void _pad3(void) = 0;
+	virtual void _pad4(void) = 0;	virtual void _pad5(void) = 0;
+	virtual void _pad6(void) = 0;	virtual void _pad7(void) = 0;
+	virtual void _pad8(void) = 0;	virtual void _pad9(void) = 0;
+	virtual void _pad10(void) = 0;	virtual void _pad11(void) = 0;
+	virtual void _pad12(void) = 0;	virtual void _pad13(void) = 0;
+	virtual void _pad14(void) = 0;	virtual void _pad15(void) = 0;
+	virtual void _pad16(void) = 0;	virtual void _pad17(void) = 0;
+	virtual void _pad18(void) = 0;	virtual void _pad19(void) = 0;
+	virtual void _pad20(void) = 0;	virtual void _pad21(void) = 0;
+	virtual void _pad22(void) = 0;	virtual void _pad23(void) = 0;
+	virtual void _pad24(void) = 0;	virtual void _pad25(void) = 0;
+	virtual void _pad26(void) = 0;	virtual void _pad27(void) = 0;
+	virtual void _pad28(void) = 0;	virtual void _pad29(void) = 0;
+	virtual void _pad30(void) = 0;	virtual void _pad31(void) = 0;
+	virtual void _pad32(void) = 0;	virtual void _pad33(void) = 0;
+	virtual void _pad34(void) = 0;	virtual void _pad35(void) = 0;
+	virtual void _pad36(void) = 0;	virtual void _pad37(void) = 0;
+	virtual void _pad38(void) = 0;	virtual void _pad39(void) = 0;
+	virtual void _pad40(void) = 0;	virtual void _pad41(void) = 0;
+	virtual void _pad42(void) = 0;	virtual void _pad43(void) = 0;
+	virtual void _pad44(void) = 0;	virtual void _pad45(void) = 0;
+	virtual void _pad46(void) = 0;	virtual void _pad47(void) = 0;
+	virtual void _pad48(void) = 0;	virtual void _pad49(void) = 0;
+	virtual void _pad50(void) = 0;	virtual void _pad51(void) = 0;
+	virtual void _pad52(void) = 0;	virtual void _pad53(void) = 0;
+	virtual void _pad54(void) = 0;	virtual void _pad55(void) = 0;
+	virtual void _pad56(void) = 0;	virtual void _pad57(void) = 0;
+	virtual void _pad58(void) = 0;	virtual void _pad59(void) = 0;
+	virtual void _pad60(void) = 0;	virtual void _pad61(void) = 0;
+	virtual void _pad62(void) = 0;	virtual void _pad63(void) = 0;
+	virtual void _pad64(void) = 0;	virtual void _pad65(void) = 0;
+	virtual void _pad66(void) = 0;	virtual void _pad67(void) = 0;
+	virtual void _pad68(void) = 0;	virtual void _pad69(void) = 0;
+	virtual void _pad70(void) = 0;	virtual void _pad71(void) = 0;
+	virtual void _pad72(void) = 0;	virtual void _pad73(void) = 0;
+	virtual void _pad74(void) = 0;	virtual void _pad75(void) = 0;
+	virtual void _pad76(void) = 0;	virtual void _pad77(void) = 0;
+	virtual void _pad78(void) = 0;	virtual void _pad79(void) = 0;
+	virtual void _pad80(void) = 0;	virtual void _pad81(void) = 0;
+	virtual void _pad82(void) = 0;	virtual void _pad83(void) = 0;
+	virtual void _pad84(void) = 0;	virtual void _pad85(void) = 0;
+	virtual void _pad86(void) = 0;	virtual void _pad87(void) = 0;
+	virtual void _pad88(void) = 0;	virtual void _pad89(void) = 0;
+	virtual void _pad90(void) = 0;	virtual void _pad91(void) = 0;
+	virtual void _pad92(void) = 0;	virtual void _pad93(void) = 0;
+	virtual void _pad94(void) = 0;	virtual void _pad95(void) = 0;
+	virtual void _pad96(void) = 0;	virtual void _pad97(void) = 0;
+	virtual void _pad98(void) = 0;	virtual void _pad99(void) = 0;
+	virtual void _pad100(void) = 0;	virtual void _pad101(void) = 0;
+	virtual void _pad102(void) = 0;	virtual void _pad103(void) = 0;
+	virtual void _pad104(void) = 0;	virtual void _pad105(void) = 0;
+	virtual void _pad106(void) = 0;	virtual void _pad107(void) = 0;
+	virtual void _pad108(void) = 0;	virtual void _pad109(void) = 0;
+	virtual void _pad110(void) = 0;	virtual void _pad111(void) = 0;
+	virtual void _pad112(void) = 0;	virtual void _pad113(void) = 0;
+	virtual void _pad114(void) = 0;	virtual void _pad115(void) = 0;
+	virtual void _pad116(void) = 0;	virtual void _pad117(void) = 0;
+	virtual void _pad118(void) = 0;	virtual void _pad119(void) = 0;
+	virtual void _pad120(void) = 0;	virtual void _pad121(void) = 0;
+	virtual void _pad122(void) = 0;	virtual void _pad123(void) = 0;
+	virtual void _pad124(void) = 0;	virtual void _pad125(void) = 0;
+	virtual void _pad126(void) = 0;
+	virtual int slot127(int wst) = 0;
+};
+
+class Rva00174800Object
+{
+public:
+	unsigned char m_pad00[0x38];
+	Coord3D m_position;
+	unsigned char m_pad44[0x204 - 0x44];
+	AIUpdateInterface *m_ai;
+};
+
+extern "C" void j_0000e570(void);
+typedef Rva00174800Object *(__fastcall *Rva00174800GetGoal)(Rva00174800StateMachine *);
+
+extern "C" void j_0003a17a(void);
+typedef void (__cdecl *Rva00174800CritterDesyncLog)(void *, const char *);
+
+// Reused from BfmeConv1780.cpp: TheAI->m_bfmeAgentGK->bfmeNoteGK(item) is
+// the already-matched call this body makes through the same pinned dump.
+class BfmeItemGK;
+
+class BfmeAgentGK
+{
+public:
+	void bfmeNoteGK(BfmeItemGK *item);
+};
+
+class AI
+{
+public:
+	unsigned char m_pad0c[0x0c];
+	BfmeAgentGK *m_bfmeAgentGK;
+};
+
+extern AI *TheAI;						// retail 0x012EF214
+extern void *TheCRCParameterCheck;		// retail 0x012ED4FC
+extern bool Glo012F0239;				// retail 0x012F0239
+extern float g_Rva01096C50;			// retail 0x01096C50 = 40.0f, unpinned scale constant
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
+class AIInternalMoveToState
+{
+public:
+	virtual StateReturnType onEnter();
+
+protected:
+	unsigned char m_pad04[0x18];
+	Rva00174800StateMachine *m_machine;	// +0x1c
+	unsigned char m_pad20[0x4c - 0x20];
+	unsigned char m_adjustDestinations;	// +0x4c
+	unsigned char m_pad4d[0x50 - 0x4d];
+	unsigned int m_field50;					// +0x50, address-derived
+	unsigned char m_checkForPath;			// +0x54
+	unsigned char m_pad55[0x58 - 0x55];
+	unsigned char m_field58;					// +0x58, address-derived
+};
+
+class Rva00174800State : public AIInternalMoveToState
+{
+public:
+	virtual StateReturnType onEnter();
+};
+
+static void rva00174800_log(const char *message)
+{
+	if (Glo012F0239 && TheCRCParameterCheck)
+		((Rva00174800CritterDesyncLog)j_0003a17a)(TheCRCParameterCheck, message);
+}
+
+StateReturnType Rva00174800State::onEnter()
+{
+	rva00174800_log("CritterDesync: setAdjustDestination(FALSE) 16");
+
+	Rva00174800StateMachine *machine = m_machine;
+	m_adjustDestinations = 0;
+	Rva00174800Object *owner = machine->m_owner;
+	Rva00174800Object *goal = ((Rva00174800GetGoal)j_0000e570)(machine);
+	AIUpdateInterface *ai = m_machine->m_owner->m_ai;
+	if (!goal || !ai)
+		return STATE_FAILURE;
+
+	((AIUpdateInterface_Slot127 *)ai)->slot127(9);
+
+	if (*((unsigned char *)ai + 0x336))
+	{
+		m_field50 = 1;
+		m_checkForPath = 1;
+		m_field58 = 0;
+
+		TheAI->m_bfmeAgentGK->bfmeNoteGK((BfmeItemGK *)owner);
+
+		float ox = owner->m_position.x;
+		float oy = owner->m_position.y;
+		float oz = owner->m_position.z;
+
+		Coord3D diff;
+		diff.x = ox - goal->m_position.x;
+		diff.y = oy - goal->m_position.y;
+		diff.z = oz - goal->m_position.z;
+		diff.normalize();
+
+		Coord3D dest;
+		dest.x = ox + diff.x * g_Rva01096C50;
+		dest.y = oy + diff.y * g_Rva01096C50;
+		dest.z = oz + diff.z * g_Rva01096C50;
+
+		ai->requestPath(&dest, 1);
+	}
+	else
+	{
+		m_checkForPath = 0;
+		m_field58 = 1;
+		return STATE_CONTINUE;
+	}
+
+	return AIInternalMoveToState::onEnter();
+}
