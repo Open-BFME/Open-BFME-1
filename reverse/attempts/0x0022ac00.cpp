@@ -1,5 +1,5 @@
 // ?rva0022AC00@RiderChangeContain@@UAEXPAVObject@@@Z
-// partial score=0.58 date=2026-09-10
+// partial score=0.62 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc-
 //
 // The secondary RiderChangeContain interface at 0x0022AC00 is installed by
@@ -441,9 +441,11 @@ riderDone:
 
 	data->m_fieldE8 = TheBfmeGameLogic->m_frame;
 
-	ObjectStatusMaskType selectedStatus = {};
-	selectedStatus.m_bits[0] |= 8;
-	containingObject->setStatus(selectedStatus, true);
+	{
+		ObjectStatusMaskType selectedStatus = {};
+		selectedStatus.m_bits[0] |= 8;
+		containingObject->setStatus(selectedStatus, true);
+	}
 
 	UnsignedInt scuttleState = data->m_scuttleState;
 	UnsignedInt scuttleWord = scuttleState >> 5;
@@ -458,7 +460,9 @@ riderDone:
 	if (((BfmeHordeMember *)containingObject->aiUpdate())->bfmeBlocksFormationRefresh())
 		return;
 
-	ObjectStatusMaskType formationStatus = {};
-	formationStatus.m_bits[0] |= 0x10000;
-	containingObject->setStatus(formationStatus, true);
+	{
+		ObjectStatusMaskType formationStatus = {};
+		formationStatus.m_bits[0] |= 0x10000;
+		containingObject->setStatus(formationStatus, true);
+	}
 }
