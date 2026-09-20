@@ -1,5 +1,5 @@
 // ?d_003664a0@@YAXXZ
-// partial score=0.95 date=2026-09-18
+// partial score=0.97 date=2026-09-20
 // cl: /EHsc /MD /O2 /GR- /EHsc- /D_STLP_USE_STATIC_LIB
 // stlport
 
@@ -84,10 +84,13 @@ void Rva003664A0Collection::handle( _STL::vector< void * > &output )
 	{
 		self->m_playerArmies[ i ] = self->m_playerArmies[ i ];
 		Rva00366060 *army = self->m_playerArmies.begin() + i;
-		if( army->m_startingCommandPoints == 1 ||
-			army->m_startingCommandPoints == 4 ||
-			!army->m_unmodelled4C )
-			output.push_back( (void *)(long)army->m_index );
+		if( army->m_startingCommandPoints == 1 )
+			continue;
+		if( army->m_startingCommandPoints == 4 )
+			continue;
+		if( army->m_unmodelled4C )
+			continue;
+		output.push_back( (void *)(long)army->m_index );
 	}
 }
 
