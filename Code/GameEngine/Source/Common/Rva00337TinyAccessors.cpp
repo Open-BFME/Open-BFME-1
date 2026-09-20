@@ -119,6 +119,11 @@ void Rva00337530NoOp()
 {
 }
 
+// ?Rva00337570NoOp@@YAXXZ
+void Rva00337570NoOp()
+{
+}
+
 class Rva00337710
 {
 public:
