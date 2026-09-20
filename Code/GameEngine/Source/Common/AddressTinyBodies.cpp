@@ -283,6 +283,17 @@ Rva00251A30Body *Rva00251A30Body::body()
 	return this;
 }
 
+class Rva00251A50Body
+{
+public:
+	void body();
+};
+
+// ?body@Rva00251A50Body@@QAEXXZ
+void Rva00251A50Body::body()
+{
+}
+
 class Rva00251AB0Body
 {
 public:
