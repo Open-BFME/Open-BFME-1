@@ -8,9 +8,13 @@
 // destructor at 0x003BA580.  Address-derived names.
 
 #define _STLP_NO_EXCEPTIONS 1
+#include <new>
 #include <vector>
 
 #include "string_base.h"
+
+extern "C" int __cdecl memcmp( const void *, const void *, unsigned int );
+#pragma intrinsic(memcmp)
 
 class AsciiString
 {
@@ -21,6 +25,29 @@ public:
 	{
 		((StringBase<char> *)this)->StringBase<char>::StringBase(
 			*(const StringBase<char> *)&other);
+	}
+
+	const char *str() const
+	{
+		return m_text ? m_text + 8 : (const char *)0x0107388B;
+	}
+
+	int getLength() const
+	{
+		return m_text ? *(const unsigned short *)( m_text + 4 ) : 0;
+	}
+
+	int compare( const AsciiString &other ) const
+	{
+		int otherLength = other.getLength();
+		const char *otherData = other.str();
+		int thisLength = getLength();
+		const char *thisData = str();
+		int count = thisLength < otherLength ? thisLength : otherLength;
+		int result = memcmp( thisData, otherData, count );
+		if( result != 0 )
+			return result;
+		return thisLength - otherLength;
 	}
 	~AsciiString();
 
@@ -96,6 +123,7 @@ public:
 	Rva003BABE0Record();
 	Rva003BABE0Record( const Rva003BABE0Record &other );
 	virtual ~Rva003BABE0Record();
+	__declspec( noinline ) AsciiString getRegionName();
 
 private:
 	AsciiString m_regionName;
@@ -110,6 +138,56 @@ private:
 
 typedef char Rva003BABE0RecordSizeMustBe24[
 	sizeof( Rva003BABE0Record ) == 0x24 ? 1 : -1];
+
+inline bool operator==( const AsciiString &left, const AsciiString &right )
+{
+	return left.compare( right ) == 0;
+}
+
+AsciiString Rva003BABE0Record::getRegionName()
+{
+	return m_regionName;
+}
+
+namespace _STL
+{
+struct __false_type
+{
+};
+
+template <> class vector<Rva003BABE0Record,
+	allocator<Rva003BABE0Record> >
+{
+public:
+	Rva003BABE0Record *begin() const
+	{
+		return m_start;
+	}
+
+	Rva003BABE0Record *finish() const
+	{
+		return m_finish;
+	}
+
+	Rva003BABE0Record *end_of_storage() const
+	{
+		return m_end_of_storage;
+	}
+
+	unsigned int size() const
+	{
+		return (unsigned int)( m_finish - m_start );
+	}
+
+	void _M_insert_overflow( Rva003BABE0Record *position,
+		const Rva003BABE0Record &value, const __false_type &, unsigned int fillLength,
+		bool atEnd );
+
+	Rva003BABE0Record *m_start;
+	Rva003BABE0Record *m_finish;
+	Rva003BABE0Record *m_end_of_storage;
+};
+}
 
 // ??0Rva003BABE0Record@@QAE@XZ
 Rva003BABE0Record::Rva003BABE0Record()
@@ -147,6 +225,31 @@ class Rva003BABE0Owner
 public:
 	void append( Rva003BABE0Record *record );
 };
+
+// ?append@Rva003BABE0Owner@@QAEXPAVRva003BABE0Record@@@Z
+void Rva003BABE0Owner::append( Rva003BABE0Record *record )
+{
+	_STL::vector<Rva003BABE0Record> &records =
+		*reinterpret_cast<_STL::vector<Rva003BABE0Record> *>(
+			reinterpret_cast<char *>( this ) + 0x60 );
+	for( unsigned int index = 0; index < records.size(); ++index )
+	{
+		if( records.begin()[ index ].getRegionName() == record->getRegionName() )
+			return;
+	}
+
+	if( records.m_finish != records.m_end_of_storage )
+	{
+		Rva003BABE0Record *finish = records.m_finish;
+		new ( finish ) Rva003BABE0Record( *record );
+		++records.m_finish;
+	}
+	else
+	{
+		records._M_insert_overflow( records.m_finish, *record,
+			reinterpret_cast<const _STL::__false_type &>( record ), 1, true );
+	}
+}
 
 // ?ParseRegionReinforcementBlock@@YAXPAVINI@@PAX1PBX@Z
 void ParseRegionReinforcementBlock( INI *ini, void *instance, void *, const void * )

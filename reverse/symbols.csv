@@ -88492,3 +88492,5 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?_M_push_back_aux_v@?$deque@PAU_SBServer@@V?$allocator@PAU_SBServer@@@_STL@@@_STL@@IAEXABQAU_SBServer@@@Z,0x000399D7,exact SBServer pointer deque growth call in 0x00648220
 ?push_back@?$deque@PAU_SBServer@@V?$allocator@PAU_SBServer@@@_STL@@@_STL@@QAEXABQAU_SBServer@@@Z,0x00012C51,exact SBServer pointer deque append call in 0x00648220
 ?removeServerFromMap@PeerThreadClass@Rva00647F90@@QAEHPAU_SBServer@@@Z,0x0000252C,exact helper ABI from the matched 0x00647F90 body used in 0x00648220
+?getRegionName@Rva003BABE0Record@@QAE?AVAsciiString@@XZ,0x0001073F,record getter ILT called twice by Rva003BABE0Owner::append at 0x003B25D0
+?_M_insert_overflow@?$vector@VRva003BABE0Record@@V?$allocator@VRva003BABE0Record@@@_STL@@@_STL@@QAEXPAVRva003BABE0Record@@ABV3@ABU__false_type@2@I_N@Z,0x00038424,record vector overflow ILT called by Rva003BABE0Owner::append at 0x003B25D0
