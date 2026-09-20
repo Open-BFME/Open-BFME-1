@@ -1,5 +1,5 @@
 // ?render@W3DShroud@@QAEXPAVCameraClass@@@Z
-// partial score=0.64 date=2026-09-16
+// partial score=0.69 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /ICode/GameEngine/Include /ICode/GameEngine/Source /ICode/Libraries/Include /ICode/Libraries/Source /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib /ICode/GameEngineDevice/Include /ICode/GameEngineDevice/Source /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Main
 // BFME W3DShroud::render, retail 0x0071BBC0.
 //
@@ -186,8 +186,8 @@ void W3DShroud::render(CameraClass *cam)
 	visEndX = m_numCellsX;
 	visEndY = m_numCellsY;
 
-	m_drawOriginX = m_cellWidth * BfmeZeroRange;
-	m_drawOriginY = m_cellHeight * BfmeZeroRange;
+	m_drawOriginX = BfmeZeroRange * m_cellWidth;
+	m_drawOriginY = BfmeZeroRange * m_cellHeight;
 
 	ShroudFilter *filter =
 		reinterpret_cast<ShroudTexture *>(&m_dstTexture)->getFilter();
@@ -212,6 +212,7 @@ void W3DShroud::render(CameraClass *cam)
 			reinterpret_cast<SurfaceClass *>(&surface));
 	}
 
+	UnsignedShort *src = m_shroudData;
 	int pitch;
 	UnsignedShort *dst = (UnsignedShort *)
 		reinterpret_cast<Rva0090C710SurfaceLockView *>(&surface)->Lock(
@@ -220,7 +221,6 @@ void W3DShroud::render(CameraClass *cam)
 	if (visEndY > 0)
 	{
 		int row_bytes = visEndX * (int)sizeof(UnsignedShort);
-		UnsignedShort *src = m_shroudData;
 		for (int y = 0; y < visEndY; ++y)
 		{
 			memcpy(dst, src, row_bytes);
