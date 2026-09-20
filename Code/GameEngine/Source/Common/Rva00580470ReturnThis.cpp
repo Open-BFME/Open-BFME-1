@@ -10,3 +10,13 @@ void *Rva00580470::method()
 {
 	return this;
 }
+
+struct Rva007D36F0
+{
+	void *method();
+};
+
+void *Rva007D36F0::method()
+{
+	return this;
+}
