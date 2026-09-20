@@ -56,6 +56,7 @@ struct IntAt1C8h { char m_leading[ 0x1C8 ]; int  m_value; };
 struct IntAt1CCh { char m_leading[ 0x1CC ]; int  m_value; };
 
 struct BoolAt41h  { char m_leading[ 0x41 ]; bool m_value; };
+struct BoolAt42h  { char m_leading[ 0x42 ]; bool m_value; };
 struct BoolAt50h  { char m_leading[ 0x50 ]; bool m_value; };
 struct BoolAt51h  { char m_leading[ 0x51 ]; bool m_value; };
 struct BoolAt52h  { char m_leading[ 0x52 ]; bool m_value; };
@@ -95,6 +96,22 @@ struct BoolAt118h { char m_leading[ 0x118 ]; bool m_value; };
 		return 0;                                       \
 	}
 
+#define R2_GUARDED_FIELD_GET_TRUE( NAME, POINTEE )     \
+	class NAME                                          \
+	{                                                   \
+	public:                                             \
+		POINTEE *m_pointee;                             \
+		bool get();                                     \
+	};                                                  \
+	bool NAME::get()                                    \
+	{                                                   \
+		if ( m_pointee )                                \
+		{                                               \
+			return m_pointee->m_value;                  \
+		}                                               \
+		return 1;                                       \
+	}
+
 #define R2_GUARDED_FIELD_GET_BACK( NAME, BACK, POINTEE, TYPE )  \
 	class NAME                                                \
 	{                                                         \
@@ -131,6 +148,7 @@ R2_GUARDED_FIELD_GET( Rva00642C80, 0x64, BoolAt51h, bool )
 R2_GUARDED_FIELD_GET( Rva00642CA0, 0x64, BoolAt50h, bool )
 R2_GUARDED_FIELD_GET_HEAD( Rva00694900, IntAt2Ch, int )
 R2_GUARDED_FIELD_GET_HEAD( Rva00694AA0, BoolAt41h, bool )
+R2_GUARDED_FIELD_GET_TRUE( Rva00694AB0, BoolAt42h )
 R2_GUARDED_FIELD_GET_HEAD( Rva00694AD0, IntAt3Ch, int )
 
 // The three back-reference members.
