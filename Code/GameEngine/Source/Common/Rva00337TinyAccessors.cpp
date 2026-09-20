@@ -238,3 +238,22 @@ unsigned int Rva00337AD0::get() const
 {
 	return m_value;
 }
+
+// The remaining complete one-byte leaves in this address cluster have no
+// independently named callers.  Keep them uniquely address-qualified.
+#define BFME_ADDRESS_NOOP(rva) void rva##Noop(void) {}
+
+BFME_ADDRESS_NOOP(rva00337840)
+BFME_ADDRESS_NOOP(rva00337870)
+BFME_ADDRESS_NOOP(rva003378A0)
+BFME_ADDRESS_NOOP(rva003378D0)
+BFME_ADDRESS_NOOP(rva003379C0)
+BFME_ADDRESS_NOOP(rva003379D0)
+BFME_ADDRESS_NOOP(rva003379E0)
+BFME_ADDRESS_NOOP(rva003379F0)
+BFME_ADDRESS_NOOP(rva00337A00)
+BFME_ADDRESS_NOOP(rva00337AB0)
+BFME_ADDRESS_NOOP(rva00337AE0)
+BFME_ADDRESS_NOOP(rva00337B70)
+
+#undef BFME_ADDRESS_NOOP
