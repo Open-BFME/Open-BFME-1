@@ -4,3 +4,8 @@
 void b_0033a2d0()
 {
 }
+
+// ?b_0033a2c0@@YAXXZ at retail RVA 0x0033A2C0.
+__declspec(noinline) void b_0033a2c0()
+{
+}
