@@ -346,3 +346,8 @@ bool Rva003CC510::body() const
 void d_003cc460()
 {
 }
+
+// ?Rva003CC450Noop@@YAXXZ
+void Rva003CC450Noop()
+{
+}
