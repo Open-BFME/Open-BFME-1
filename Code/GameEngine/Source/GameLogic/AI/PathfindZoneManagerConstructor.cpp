@@ -1,9 +1,6 @@
 // ??0PathfindZoneManager@@QAE@XZ
-// partial score=0.96 date=2026-09-19
 // cl: /DNDEBUG /MD /EHsc
 // Byte-exact reconstruction of the BFME PathfindZoneManager constructor.
-
-
 
 typedef unsigned short zoneStorageType;
 
@@ -57,14 +54,16 @@ class Rva00406510Vector
 {
 public:
 	Rva00406510Vector()
-		: m_start(0), m_finish(0), m_end(0)
 	{
+		m_start = 0;
+		m_finish = 0;
+		m_end = 0;
 	}
 	~Rva00406510Vector();
 
-	private:
-	void *m_start;
-	void *m_finish;
+private:
+	void * volatile m_start;
+	void * volatile m_finish;
 	void *m_end;
 };
 
