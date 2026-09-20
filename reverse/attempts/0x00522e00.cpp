@@ -1,5 +1,5 @@
 // ??0Gen00522E00@@QAE@XZ
-// partial score=0.85 date=2026-09-09
+// partial score=0.9466 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // Gen00522E00 constructor (the AptGuiFX MessageBox screen host), retail
@@ -47,6 +47,15 @@ public:
 
 class Gen00522E00;
 
+struct Rva00522E00FunctorBinding
+{
+	Rva00522E00FunctorBinding( Gen00522E00 *target, unsigned int method )
+		: m_target( target ), m_method( method ) {}
+
+	Gen00522E00 *m_target;
+	unsigned int m_method;
+};
+
 class FunctorWrapperHead
 {
 public:
@@ -54,30 +63,29 @@ public:
 
 	virtual void anchor();
 
-	volatile unsigned int m_refCount;
+	unsigned int m_refCount;
 };
 
 class Rva00522E00FunctorWrapper : public FunctorWrapperHead
 {
 public:
-	Rva00522E00FunctorWrapper( Gen00522E00 *target, unsigned int method )
-		: m_target( target ), m_method( method ) {}
+	Rva00522E00FunctorWrapper( const Rva00522E00FunctorBinding &binding )
+		: m_binding( binding ) {}
 
-	Gen00522E00 *m_target;
-	unsigned int m_method;
+	Rva00522E00FunctorBinding m_binding;
 };
 
 class Rva00522E00FunctorHolder
 {
 public:
-	Rva00522E00FunctorHolder( Gen00522E00 *target, unsigned int method )
+	__forceinline Rva00522E00FunctorHolder( Rva00522E00FunctorBinding binding )
 	{
-		m_ptr = new Rva00522E00FunctorWrapper( target, method );
+		m_ptr = new Rva00522E00FunctorWrapper( binding );
 		if( m_ptr != 0 )
 			++m_ptr->m_refCount;
 	}
 
-	Rva00522E00FunctorWrapper * volatile m_ptr;
+	Rva00522E00FunctorWrapper *m_ptr;
 };
 
 class Gen_dtor_004654c0
@@ -86,9 +94,27 @@ public:
 	virtual ~Gen_dtor_004654c0();
 };
 
+class Rva00522E00RefPtr3C
+{
+public:
+	Rva00522E00RefPtr3C() {}
+	~Rva00522E00RefPtr3C();
+
+	void *m_ptr;
+};
+
+class Rva00522E00RefPtr40
+{
+public:
+	Rva00522E00RefPtr40() {}
+	~Rva00522E00RefPtr40();
+
+	void *m_ptr;
+};
+
 extern Gen00522E00 *g_bfmeThingCB;			// retail 0x012F49D0
 
-class Gen00522E00 : public Gen_dtor_004654c0
+class __declspec(novtable) Gen00522E00 : public Gen_dtor_004654c0
 {
 public:
 	Gen00522E00();
@@ -99,8 +125,8 @@ public:
 private:
 	int m_04, m_08, m_0c, m_10, m_14, m_18, m_1c, m_20, m_24, m_28, m_2c, m_30, m_34;
 	int m_38;
-	void *m_3c;
-	void *m_40;
+	Rva00522E00RefPtr3C m_3c;
+	Rva00522E00RefPtr40 m_40;
 	int m_44;
 	bool m_48;
 	bool m_49;
@@ -109,52 +135,52 @@ private:
 // ??0Gen00522E00@@QAE@XZ
 Gen00522E00::Gen00522E00()
 	: m_04( 0 ), m_08( 0 ), m_0c( 0 ), m_10( 0 ), m_14( 0 ), m_18( 0 ), m_1c( 0 ),
-	  m_20( 0 ), m_24( 0 ), m_28( 0 ), m_2c( 0 ), m_30( 0 ), m_34( 0 ),
-	  m_38( 4 ), m_3c( 0 ), m_40( 0 ), m_44( -1 ), m_48( false ), m_49( false )
+	  m_20( 0 ), m_24( 0 ), m_28( 0 ), m_2c( 0 )
 {
+	m_30 = 0;
+	*(const void **)this = (const void *)0x01106938;
+	m_34 = 0;
+	m_38 = 4;
+	m_3c.m_ptr = 0;
+	m_40.m_ptr = 0;
+	m_44 = -1;
+	m_48 = false;
+	m_49 = false;
 	if( g_bfmeThingCB == 0 )
 	{
 		g_bfmeThingCB = this;
 
 		{
 			AsciiString name( "AptGuiFX::MessageBoxOk" );
-			Rva00522E00FunctorHolder callback( this, 0x00407F04 );
-			showAptScreen( name, callback );
+			showAptScreen( name, Rva00522E00FunctorBinding( this, 0x00407F04 ) );
 		}
 		{
 			AsciiString name( "AptGuiFX::MessageBoxCancel" );
-			Rva00522E00FunctorHolder callback( this, 0x00433F5F );
-			showAptScreen( name, callback );
+			showAptScreen( name, Rva00522E00FunctorBinding( this, 0x00433F5F ) );
 		}
 		{
 			AsciiString name( "AptGuiFX::MessageBoxYes" );
-			Rva00522E00FunctorHolder callback( this, 0x0041398A );
-			showAptScreen( name, callback );
+			showAptScreen( name, Rva00522E00FunctorBinding( this, 0x0041398A ) );
 		}
 		{
 			AsciiString name( "AptGuiFX::MessageBoxNo" );
-			Rva00522E00FunctorHolder callback( this, 0x004365C5 );
-			showAptScreen( name, callback );
+			showAptScreen( name, Rva00522E00FunctorBinding( this, 0x004365C5 ) );
 		}
 		{
 			AsciiString name( "AptGuiFX::MessageBoxShowing" );
-			Rva00522E00FunctorHolder callback( this, 0x00438465 );
-			showAptScreen( name, callback );
+			showAptScreen( name, Rva00522E00FunctorBinding( this, 0x00438465 ) );
 		}
 		{
 			AsciiString name( "AptGuiFX::MessageBoxShown" );
-			Rva00522E00FunctorHolder callback( this, 0x0042924E );
-			showAptScreen( name, callback );
+			showAptScreen( name, Rva00522E00FunctorBinding( this, 0x0042924E ) );
 		}
 		{
 			AsciiString name( "AptGuiFX::MessageBoxHiding" );
-			Rva00522E00FunctorHolder callback( this, 0x0042C381 );
-			showAptScreen( name, callback );
+			showAptScreen( name, Rva00522E00FunctorBinding( this, 0x0042C381 ) );
 		}
 		{
 			AsciiString name( "AptGuiFX::MessageBoxHidden" );
-			Rva00522E00FunctorHolder callback( this, 0x00444198 );
-			showAptScreen( name, callback );
+			showAptScreen( name, Rva00522E00FunctorBinding( this, 0x00444198 ) );
 		}
 	}
 }
