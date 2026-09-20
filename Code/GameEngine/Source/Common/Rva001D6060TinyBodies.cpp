@@ -28,6 +28,11 @@ bool __cdecl Rva001D6340( void )
 	return false;
 }
 
+// ?d_001d6350@@YAXXZ
+void d_001d6350( void )
+{
+}
+
 // ?Rva001D6360@@YA_NXZ
 bool __cdecl Rva001D6360( void )
 {
