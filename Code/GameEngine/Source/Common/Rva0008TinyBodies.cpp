@@ -374,3 +374,8 @@ void *Rva00097950Self::get()
 {
     return this;
 }
+
+// ?d_0008a680@@YAXXZ
+void d_0008a680(void)
+{
+}
