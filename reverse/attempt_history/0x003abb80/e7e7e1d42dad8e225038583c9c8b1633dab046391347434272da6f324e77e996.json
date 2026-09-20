@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e7e7e1d42dad8e225038583c9c8b1633dab046391347434272da6f324e77e996",
+  "symbol": "?d_003abb80@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.935,
+  "source": "// ?d_003abb80@@YAXXZ\n// partial score=0.935 date=2026-09-20\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline\n// stlport\n\n#define _STLP_NO_EXCEPTIONS 1\n#include <vector>\n#include \"StringInline.h\"\n\nstruct Rva003AB460Tree\n{\n\tint m_raw[3];\n\tRva003AB460Tree(const Rva003AB460Tree &other);\n};\n\nclass Rva003BA660Record\n{\npublic:\n\tvirtual void slot();\n\tRva003BA660Record( const Rva003BA660Record &other )\n\t\t: m_04( other.m_04 ), m_08( other.m_08 ), m_tree( other.m_tree )\n\t{\n\t}\n\tint m_04;\n\tchar m_08;\n\tRva003AB460Tree m_tree;\n};\n\ntemplate _STL::vector<Rva003BA660Record, _STL::allocator<Rva003BA660Record> >::vector(\n\tconst _STL::vector<Rva003BA660Record, _STL::allocator<Rva003BA660Record> > &);\n"
+}
