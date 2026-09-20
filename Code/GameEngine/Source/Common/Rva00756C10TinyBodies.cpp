@@ -199,6 +199,12 @@ Rva00759F20Self *Rva00759F20Self::identity()
 	return this;
 }
 
+// The carved boundary at 0x00759F30 contains one ret byte. Its address-derived
+// name keeps the identity because no semantic owner is proven.
+void b_00759f30()
+{
+}
+
 class Rva0075AF40DwordField
 {
 public:
