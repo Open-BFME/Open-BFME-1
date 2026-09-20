@@ -75257,6 +75257,7 @@ name,address,notes
 ?bfmeAsk979A@@YGDH@Z,0x000063F2,pin
 ?bfmeAsk993B@BfmeAskB993@@QAEDXZ,0x00008ED1,pin
 ?bfmeAskAIA@BfmeThingAIA@@QAE_NH@Z,0x0003251F,pin
+?has@Rva0021F4E0Owner@@QAE_NH@Z,0x0003251F,opaque ABI alias for the proven readiness predicate call at 0x0021F4E0
 ?bfmeAskAMB@BfmeGateAMB@@QAE_NPAXPAUBfmeKeyAMB@@@Z,0x000357D8,pin
 ?bfmeAskAOA@BfmeThingAOA@@QAE_NXZ,0x0002C714,pin
 ?bfmeAskBBC@@YA_NXZ,0x0002C82C,pin
@@ -84911,6 +84912,7 @@ name,address,notes
 ?preTeamDestroy@Rva000F4250PlayerCall@@QAEXPBVTeam@@@Z,0x00014DCB,Team destructor retail call via proven ILT
 ?prefMapIncrement@@YAPAUPrefMapNodeShim@@PAU1@@Z,0x0082B870,alias for the STL tree stepper already pinned here as _Rb_global<bool>::_M_increment
 ?preflight@HordeTransportContain@@QBE_NPAVObject@@_N@Z,0x000237B8,HordeTransportContain validity preflight helper reaches retail 0x00226A80
+?test@Rva0021F4E0Sub@@QAE_NPAX0@Z,0x000237B8,opaque ABI alias for the proven readiness predicate call at 0x0021F4E0
 ?preflight@Rva00249310Owner@@QAE_NPAVRva00249310Object@@_N@Z,0x0002C836,secondary interface preflight call uses the existing incremental thunk
 ?preloadAssets@ParticleSystemManager@@UAEXW4TimeOfDay@@@Z,0x005cb720,vtable-slot ??_7W3DParticleSystemManager@@6BSubsystemInterface@@@ slot 14 anchors=7
 ?prep@BfmeSub1CC_EC3@@QAEMPAUMat12@@@Z,0x00024EA6,ILT thunk to 0x001B5860 the copyMatrixAndGo prep at 0x001B9C50
