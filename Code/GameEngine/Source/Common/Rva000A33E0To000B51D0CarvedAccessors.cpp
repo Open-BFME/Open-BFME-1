@@ -357,3 +357,8 @@ float Rva000B51D0::fieldAt78() const
 {
 	return m_value;
 }
+
+// ?Rva000A35A0Noop@@YAXXZ
+void Rva000A35A0Noop()
+{
+}
