@@ -3,6 +3,10 @@
 extern "C" int __cdecl memcmp(const void *, const void *, unsigned int);
 #pragma intrinsic(memcmp)
 
+void Rva000644B0()
+{
+}
+
 class Rva0005C180Field
 {
 public:
