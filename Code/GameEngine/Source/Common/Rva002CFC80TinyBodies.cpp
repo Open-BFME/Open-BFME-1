@@ -255,6 +255,11 @@ int Rva0034FFF0::getField1C() const
 	return *(const int *)((const char *)this + 0x1C);
 }
 
+// ?Rva00350000Empty@@YAXXZ
+void Rva00350000Empty()
+{
+}
+
 class Rva00350010
 {
 public:
