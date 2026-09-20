@@ -88513,3 +88513,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?clear@?$vector@URva00746420Record@@V?$allocator@URva00746420Record@@@_STL@@@_STL@@QAEXXZ,0x0004219A,retail ILT 0x0004219A routes to vector clear body 0x00745800; 24-byte record payload proven by 0x007416E0
 ?erase@?$vector@URva00746420Record@@V?$allocator@URva00746420Record@@@_STL@@@_STL@@QAEPAURva00746420Record@@PAU3@0@Z,0x00040129,retail ILT 0x00040129 routes to vector erase body 0x007457C0; 24-byte record payload proven by target loop
 ?push_back@?$vector@URva00746420Record@@V?$allocator@URva00746420Record@@@_STL@@@_STL@@QAEXABURva00746420Record@@@Z,0x00044495,retail ILT 0x00044495 routes to vector push_back body 0x007463A0; 24-byte record payload proven by 0x007416E0
+?ScienceVectorInsertOverflow@@YAXXZ,0x000BC600,shim callee pinned to the verified ScienceType vector overflow body used by ILT 0x00023588
