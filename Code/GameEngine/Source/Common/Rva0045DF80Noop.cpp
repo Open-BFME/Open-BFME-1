@@ -10,3 +10,8 @@ void Rva0045DF80Noop()
 void Rva0045DF60Noop()
 {
 }
+
+// Retail RVA 0x0045DF40 contains only ret.
+void Rva0045DF40Noop()
+{
+}
