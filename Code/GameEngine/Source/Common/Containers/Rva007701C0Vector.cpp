@@ -122,3 +122,12 @@ Rva007701C0Element *Rva0077BC20Owner::findOrCreateRecord(const AsciiString &name
 
 	return &m_info[m_info.size() - 1];
 }
+
+// ?Rva0001F735CopyThunk@@YAPAURva007701C0Element@@PAU1@00ABUrandom_access_iterator_tag@_STL@@PAH@Z
+Rva007701C0Element *Rva0001F735CopyThunk(
+	Rva007701C0Element *first, Rva007701C0Element *last,
+	Rva007701C0Element *result,
+	const _STL::random_access_iterator_tag &tag, int *distance)
+{
+	return _STL::__copy(first, last, result, tag, distance);
+}
