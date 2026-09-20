@@ -1,9 +1,6 @@
 // ?Find_Asset@AssetRegistry@@QAE?AVAssetReference@@PBD@Z
-// partial score=0.85 date=2026-09-10
+// partial score=0.9 date=2026-09-19
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: AssetRegistry::Find_Asset, retail 0x009EEC60 (185 bytes).
-// TEA-locked NameKeyGenerator bucket lookup; reuses the bfmeEnterTEA/
-// bfmeLeaveTEA imports already pinned by Rva00886F10TeaLock.cpp.
 
 enum NameKeyType
 {
@@ -22,8 +19,8 @@ struct BfmeLockTEA
 	bool m_armed;
 };
 
-extern "C" __declspec(dllimport) void __stdcall bfmeEnterTEA(BfmeLockTEA* lock);
-extern "C" __declspec(dllimport) void __stdcall bfmeLeaveTEA(BfmeLockTEA* lock);
+extern "C" __declspec(dllimport) void __stdcall bfmeEnterTEA( BfmeLockTEA *lock );
+extern "C" __declspec(dllimport) void __stdcall bfmeLeaveTEA( BfmeLockTEA *lock );
 
 class TEAGuard
 {
@@ -50,8 +47,27 @@ public:
 struct AssetRegistryNode
 {
 	AssetRegistryNode *m_next;
-	NameKeyType m_key;
+	volatile NameKeyType m_key;
 	void *m_asset;
+};
+
+class AssetRegistryBuckets
+{
+public:
+	AssetRegistryNode **begin()
+	{
+		return m_begin;
+	}
+
+	unsigned int size() const
+	{
+		return (unsigned int)( m_end - m_begin );
+	}
+
+private:
+	AssetRegistryNode **m_begin;
+	AssetRegistryNode **m_end;
+	AssetRegistryNode **m_capacity;
 };
 
 class AssetRegistry
@@ -60,27 +76,33 @@ public:
 	AssetReference Find_Asset( const char *name );
 
 private:
-	unsigned char m_unmodelled_000[0x2C];
+	char m_pad_000[0x2c];
 	BfmeLockTEA m_lock;
-	AssetRegistryNode **m_buckets;
-	AssetRegistryNode **m_bucketsEnd;
-	unsigned char m_unmodelled_050[0x1A0];
+	AssetRegistryBuckets m_buckets;
+	char m_pad_054[0x19c];
 	NameKeyGenerator *m_nameKeyGenerator;
 };
 
 AssetReference AssetRegistry::Find_Asset( const char *name )
 {
+	volatile int state = 0;
 	AssetReference result;
 	TEAGuard lock( &m_lock );
+	NameKeyType key = NAMEKEY_INVALID;
 
-	NameKeyType key = m_nameKeyGenerator->nameToLowercaseKey( name );
+	key = m_nameKeyGenerator->nameToLowercaseKey( name );
 	if ( key != NAMEKEY_INVALID )
 	{
-		unsigned int bucketCount = (unsigned int)( m_bucketsEnd - m_buckets );
-		AssetRegistryNode *node = m_buckets[(unsigned int)key % bucketCount];
-		while ( node && node->m_key != key )
+		unsigned int bucketCount = m_buckets.size();
+		AssetRegistryNode *node = m_buckets.begin()[(unsigned int)key % bucketCount];
+		while ( node )
+		{
+			if ( node->m_key == key )
+				goto found;
 			node = node->m_next;
+		}
 
+	found:
 		if ( node )
 		{
 			result.m_object = node->m_asset;
@@ -88,7 +110,6 @@ AssetReference AssetRegistry::Find_Asset( const char *name )
 			return result;
 		}
 	}
-
 	result.m_object = 0;
 	return result;
 }
