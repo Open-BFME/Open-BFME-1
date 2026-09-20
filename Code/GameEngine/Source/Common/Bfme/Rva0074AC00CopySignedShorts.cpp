@@ -14,3 +14,14 @@ extern "C" int *__cdecl rva0074AC00CopySignedShorts(
 		*output = *current;
 	return output;
 }
+
+class Rva0074AC40NoOp
+{
+public:
+	void noop();
+};
+
+// ?noop@Rva0074AC40NoOp@@QAEXXZ
+void Rva0074AC40NoOp::noop()
+{
+}
