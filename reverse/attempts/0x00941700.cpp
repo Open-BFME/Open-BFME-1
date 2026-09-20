@@ -3,7 +3,7 @@
 // cl: /DNDEBUG /MD /EHsc
 
 void __cdecl operator delete[](void *) throw();
-#include "../WWLib/vector.h"
+#include "../../Code/Libraries/Source/WWVegas/WWLib/vector.h"
 
 // The caller at 0x00941C60 supplies the font, UTF-16 text, glyph storage, and
 // a calculation-only flag.  The method name remains address-derived because
