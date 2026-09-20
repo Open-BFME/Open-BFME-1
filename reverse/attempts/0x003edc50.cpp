@@ -1,5 +1,5 @@
 // ?getAircraftPath@Pathfinder@@QAEPAVPath@@PBVObject@@PBUCoord3D@@@Z
-// partial score=0.86 date=2026-09-10
+// partial score=0.87 date=2026-09-20
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // BFME Pathfinder::getAircraftPath, retail RVA 0x003EDC50.
 //
@@ -16,8 +16,8 @@ struct Coord3D
 {
 	Coord3D &operator=(const Coord3D &other)
 	{
-		x = other.x;
 		y = other.y;
+		x = other.x;
 		z = other.z;
 		return *this;
 	}
@@ -157,8 +157,8 @@ public:
 	{
 		m_next = 0;
 		m_previous = 0;
-		m_nextOptimized = 0;
 		m_position = *position;
+		m_nextOptimized = 0;
 		m_layer = layer;
 		m_canOptimize = false;
 		m_costSoFar = 0x7fffffff;
@@ -171,8 +171,8 @@ public:
 
 	void append(PathNode *newNode)
 	{
-		newNode->m_next = m_next;
 		newNode->m_previous = this;
+		newNode->m_next = m_next;
 		if (newNode->m_next)
 			newNode->m_next->m_previous = newNode;
 		m_next = newNode;
@@ -303,7 +303,8 @@ Path *Pathfinder::getAircraftPath(const Object *obj, const Coord3D *to)
 	}
 
 	curNode = thePath->getFirstNode();
-	while (curNode && curNode->getNext())
+	PathNode *curNodeCopy = curNode;
+	while (curNode && curNodeCopy->getNext())
 	{
 		curNode->setNextOptimized(curNode->getNext());
 		curNode = curNode->getNext();
