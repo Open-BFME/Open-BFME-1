@@ -1,5 +1,5 @@
 // ?rva003B9200ContainsAny@Rva003B9100@@QBE_NPBV1@@Z
-// partial score=0.15 date=2026-09-20
+// partial score=0.86 date=2026-09-20
 // The adjacent exact Rva003B9100::contains body proves both objects own the
 // same vector<AsciiString> layout. Retail passes the address of each element
 // to the other owner's contains method and returns on the first shared name.
@@ -28,9 +28,13 @@ private:
 
 bool Rva003B9100::rva003B9200ContainsAny(const Rva003B9100 *other) const
 {
-	for (unsigned int i = 0; i < m_vec.size(); ++i)
+	const Rva003B9100 *receiver = other;
+	const Rva003B9100 *owner = this;
+	const _STL::vector<AsciiString> &values = owner->m_vec;
+	const AsciiString *item = values.begin();
+	for (unsigned int i = 0; i < values.size(); ++i, ++item)
 	{
-		if (other->contains(m_vec[i]))
+		if (receiver->contains(*item))
 			return true;
 	}
 	return false;
