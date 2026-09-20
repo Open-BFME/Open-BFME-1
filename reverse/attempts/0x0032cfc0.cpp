@@ -1,5 +1,5 @@
 // ?evaluateTypeSighted@ScriptConditions@@IAE_NPAVParameter@@00@Z
-// partial score=0.2 date=2026-09-20
+// partial score=0.26 date=2026-09-20
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Byte-matched BFME reconstruction of the TYPE_SIGHTED condition body.
 // stlport
