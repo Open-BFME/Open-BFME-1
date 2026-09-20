@@ -1,5 +1,5 @@
 // ?fetch@GameTextManager@@UAE?AVUnicodeString@@PBDPA_N@Z
-// partial score=0.78 date=2026-09-10
+// partial score=0.84 date=2026-09-20
 // scratch only: BFME StringBase ABI view for GameTextManager::fetch.
 // Retail target: 0x00437F60, 622 bytes.  Not a production source.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep
@@ -20,6 +20,8 @@ typedef int LanguageID;
 #define DEBUG_ASSERTCRASH(condition, message) ((void)0)
 
 extern int __cdecl stricmp(const char *, const char *);
+
+extern void bfmeDoSixRC(void *, void *, void *, void *, void *, int);
 
 template <typename T> struct StringData
 {
@@ -88,7 +90,7 @@ public:
         return m_data ? m_data->m_text : 0;
     }
 
-    bool operator==(const UnicodeString &other) const
+    __forceinline bool operator==(const UnicodeString &other) const
     {
         const WideChar *left = str();
         const WideChar *right = other.str();
@@ -115,6 +117,11 @@ struct StringLookUp
 {
     AsciiString *label;
     StringInfo *info;
+};
+
+struct StringLookUpCompare
+{
+    void *state;
 };
 
 inline bool operator<(const StringLookUp &left, const StringLookUp &right)
@@ -209,17 +216,34 @@ UnicodeString GameTextManager::fetch(const Char *label, Bool *exists)
     }
 
     StringLookUp *lookUp;
-    StringLookUp key;
     AsciiString lb;
     lb = label;
-    key.info = NULL;
-    key.label = &lb;
-
-    lookUp = Binary_Search(m_stringLUT, m_textCount, key);
-
-    if (lookUp == NULL && m_mapStringLUT && m_mapTextCount)
+    union
     {
-        lookUp = Binary_Search(m_mapStringLUT, m_mapTextCount, key);
+        StringLookUp *range[2];
+        unsigned char comparator[4];
+    } result;
+    result.comparator[0] = FALSE;
+
+    bfmeDoSixRC(result.range, m_stringLUT, m_stringLUT + m_textCount,
+        (void *)&label, *(void **)result.comparator, 0);
+    if (result.range[0] == result.range[1])
+    {
+        lookUp = NULL;
+        if (m_mapStringLUT && m_mapTextCount)
+        {
+            result.comparator[0] = FALSE;
+            bfmeDoSixRC(result.range, m_mapStringLUT, m_mapStringLUT + m_mapTextCount,
+                (void *)&label, *(void **)result.comparator, 0);
+            if (result.range[0] == result.range[1])
+                lookUp = NULL;
+            else
+                lookUp = result.range[0];
+        }
+    }
+    else
+    {
+        lookUp = result.range[0];
     }
 
     if (lookUp == NULL)
