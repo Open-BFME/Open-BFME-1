@@ -68,6 +68,10 @@ void Rva005C0730Owner::invoke( void * )
 {
 }
 
+void rva005c0720()
+{
+}
+
 bool Rva005C09E0()
 {
 	return true;
