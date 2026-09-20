@@ -197,6 +197,12 @@ void *Rva00232AD0Owner::getField00232AD0()
 	return m_field00;
 }
 
+// Retail RVA 0x00232A90 contains only ret.
+// The carved boundary proves a cdecl no-op, but the binary does not prove a semantic owner.
+void Rva00232A90Noop()
+{
+}
+
 class Rva00232B20Owner
 {
 public:
