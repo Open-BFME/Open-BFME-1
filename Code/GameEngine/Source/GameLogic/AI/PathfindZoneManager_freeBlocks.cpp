@@ -8,18 +8,63 @@
 // form is declared where it can see it; retail calls ??_V@YAXPAX@Z here.
 void operator delete[]( void *block );
 
+struct Rva004029F0GridExtent
+{
+	short width;
+	short height;
+};
+
 class Rva004029F0
 {
 public:
+	Rva004029F0();						// ILT 0x0004A4E4
 	~Rva004029F0();						// ILT 0x00040138
 
 private:
-	char m_beforeGrids[0x3c];
-	void *m_firstGrid[12][5];
-	char m_betweenGrids[8];
-	void *m_secondGrid[12][5];
-	char m_tail[4];
+	int m_field00;
+	unsigned char m_field04;
+	unsigned char m_field05;
+	unsigned char m_pad06[2];
+	int m_ints[12];
+	Rva004029F0GridExtent m_firstGridExtent;	// +0x38
+	void *m_firstGrid[12][5];			// +0x3c
+	unsigned char m_field12c;
+	unsigned char m_pad12d[3];
+	Rva004029F0GridExtent m_secondGridExtent;	// +0x130
+	void *m_secondGrid[12][5];			// +0x134
+	unsigned char m_field224;
+	unsigned char m_pad225[3];
 };
+
+// ??0Rva004029F0@@QAE@XZ
+Rva004029F0::Rva004029F0()
+{
+	m_field04 = 1;
+	m_field00 = 0;
+	m_field05 = 0;
+
+	for ( int i = 0; i < 12; ++i )
+	{
+		m_ints[i] = 0;
+	}
+
+	m_secondGridExtent.width = 0;
+	m_firstGridExtent.width = 0;
+	m_secondGridExtent.height = 0;
+	m_firstGridExtent.height = 0;
+
+	for ( int column = 0; column < 5; ++column )
+	{
+		for ( int row = 0; row < 12; ++row )
+		{
+			m_secondGrid[row][column] = 0;
+			m_firstGrid[row][column] = 0;
+		}
+	}
+
+	m_field224 = 0;
+	m_field12c = 0;
+}
 
 // ??1Rva004029F0@@QAE@XZ
 Rva004029F0::~Rva004029F0()
