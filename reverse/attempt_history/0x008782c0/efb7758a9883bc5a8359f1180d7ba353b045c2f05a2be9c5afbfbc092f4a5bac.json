@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "efb7758a9883bc5a8359f1180d7ba353b045c2f05a2be9c5afbfbc092f4a5bac",
+  "symbol": "?DoHuffman@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?DoHuffman@@YAXXZ\n// partial score=0.95 date=2026-09-20\n// ?DoHuffman@@YAXXZ\n// Authentic BYTEmark nbench DoHuffman reconstruction at retail RVA 0x008782C0.\n// cl: /O2 /G7 /GS /MD /GR- /EHsc- -Ivendor/nbench\n#define randnum d_008790b0\n#define abs_randwc bfmeRandomPositive\n#include \"../../Code/Libraries/Source/Benchmark/nbench1.c\"\n"
+}
