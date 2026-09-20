@@ -4,6 +4,8 @@ typedef int Int;
 typedef int Color;
 typedef unsigned char Bool;
 
+#define FALSE 0
+
 struct ICoord2D
 {
 	Int x;
