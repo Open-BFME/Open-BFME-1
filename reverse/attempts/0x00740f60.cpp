@@ -1,5 +1,5 @@
 // ?setupWaypointPath@W3DView@@AAEXH_NMM@Z
-// partial score=0.68 date=2026-09-11
+// partial score=0.7 date=2026-09-20
 // BFME W3DView waypoint-path setup.
 //
 // The retail body at 0x00740F60 is the private four-argument companion used
@@ -215,9 +215,9 @@ void W3DView::setupWaypointPath(Int shutter, Bool orient, Real easeIn,
 
     Int lastAngle = m_cameraPath.m_numWaypoints - 1;
     if (lastAngle - 1 >= 4) {
-        Int groups = ((lastAngle - 5) >> 2) + 1;
-        Real *angle = &path->m_cameraAngles[lastAngle - 2];
-        Int remaining = groups;
+        unsigned groups = ((unsigned)(lastAngle - 5) >> 2) + 1;
+        Real *angle = &path->m_cameraAngles[lastAngle - 1];
+        lastAngle -= groups * 4;
         do {
             Real smoothed = *angle;
             angle -= 4;
@@ -233,26 +233,28 @@ void W3DView::setupWaypointPath(Int shutter, Bool orient, Real easeIn,
             smoothed = angle[1] + angle[3];
             smoothed *= g_bfmeK1253;
             angle[3] = smoothed;
-            --remaining;
-        } while (remaining != 0);
+            --groups;
+        } while (groups != 0);
     }
 
     if (lastAngle > 1) {
-        Real *angle = &path->m_cameraAngles[lastAngle + 1];
-        Int remaining = lastAngle - 1;
+        Real *angle = &path->m_cameraAngles[lastAngle];
         do {
+            --lastAngle;
+            Real smoothed = angle[-1];
             --angle;
-            Real smoothed = angle[0] + angle[1];
+            --lastAngle;
+            smoothed += angle[1];
             smoothed *= g_bfmeK1253;
             angle[1] = smoothed;
-            --remaining;
-        } while (remaining != 0);
+        } while (lastAngle != 1);
     }
 
     Int lastWaypoint = m_cameraPath.m_numWaypoints;
+    WaypointRecord *finalWaypoint = &m_cameraPath.m_waypoints[lastWaypoint];
     Coord3D finalPos;
-    finalPos.x = m_cameraPath.m_waypoints[lastWaypoint].position.x;
-    finalPos.y = m_cameraPath.m_waypoints[lastWaypoint].position.y;
+    finalPos.x = finalWaypoint->position.x;
+    finalPos.y = finalWaypoint->position.y;
     m_cameraPath.m_initialGroundHeight = m_groundLevel;
 
     Real finalGround =
