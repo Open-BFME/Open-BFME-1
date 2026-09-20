@@ -85,6 +85,17 @@ Rva0048E680Self *Rva0048E680Self::body()
 	return this;
 }
 
+class Rva0048E690Empty
+{
+public:
+	void body();
+};
+
+// ?body@Rva0048E690Empty@@QAEXXZ
+void Rva0048E690Empty::body()
+{
+}
+
 class Rva00490240DwordField
 {
 public:
