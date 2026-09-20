@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "155a44de64b4d562bf69fdb8267b20683d7588e00a5c5f0a49e6a34c59f70728",
+  "symbol": "?solve@PartitionSolver@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.603,
+  "source": "// ?solve@PartitionSolver@@QAEXXZ\n// partial score=0.603 date=2026-09-20\n// ?solve@PartitionSolver@@QAEXXZ\n// Authentic PartitionSolver source wrapper for corrected 809-byte retail extent.\n// cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Source/Common /ICode/Libraries/Source/WWVegas/WWMath\n// stlport\n#include \"../../Code/GameEngine/Source/GameLogic/AI/partition_solver.cpp\"\n"
+}

@@ -57,7 +57,7 @@ Some info about partioning problems:
 #include "prerts.h"
 #include "coord.h"	// This must go first in EVERY cpp file int the GameEngine
 
-#include "partition_solver.h"
+#include "../../Code/GameEngine/Source/GameLogic/AI/partition_solver.h"
 
 static Bool greater_than(PairObjectIDAndUInt a, PairObjectIDAndUInt b)
 {
