@@ -341,3 +341,8 @@ bool Rva003CC510::body() const
 {
 	return false;
 }
+
+// ?d_003cc460@@YAXXZ
+void d_003cc460()
+{
+}
