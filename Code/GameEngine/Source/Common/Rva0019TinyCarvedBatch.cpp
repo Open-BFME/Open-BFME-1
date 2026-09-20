@@ -314,6 +314,11 @@ Rva001A41D0Owner *Rva001A41D0Owner::identity()
     return this;
 }
 
+// ?Rva001A41E0Noop@@YAXXZ
+void Rva001A41E0Noop()
+{
+}
+
 class Rva001A4260Owner
 {
 public:
