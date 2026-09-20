@@ -9,3 +9,7 @@ void b_0033a2d0()
 __declspec(noinline) void b_0033a2c0()
 {
 }
+
+void b_0033a2b0()
+{
+}
