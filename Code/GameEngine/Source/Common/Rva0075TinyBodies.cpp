@@ -47,6 +47,16 @@ void Rva00751820::invoke(int value)
 	(void)value;
 }
 
+class Rva00751810
+{
+public:
+	void invoke();
+};
+
+void Rva00751810::invoke()
+{
+}
+
 class Rva00751B50
 {
 	char m_pad[4];
