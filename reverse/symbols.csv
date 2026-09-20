@@ -88488,3 +88488,7 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the direct tail jump at 0x00049AA3; the target row identifies ??0UpgradeModuleModuleData@@QAE@XZ
 ?rva00039577Target@@YAXXZ,0x000A78A0,TU-local clean-C++ alias for the matched ParticleSysBoneInfo const-source copy body used by the 0x00039577 tail thunk
 ?cellCallback@TightenPathCallbackInfo@@QAEHPAVPathfindCell@@0HH@Z,0x0002839E,route=0x003F1840; iterateCellsAlongLine at 0x003F1F00 calls the matched callback through this ILT
+?_M_initialize_map@?$_Deque_base@PAU_SBServer@@V?$allocator@PAU_SBServer@@@_STL@@@_STL@@IAEXI@Z,0x00018502,exact SBServer pointer deque initialization call in 0x00648220
+?_M_push_back_aux_v@?$deque@PAU_SBServer@@V?$allocator@PAU_SBServer@@@_STL@@@_STL@@IAEXABQAU_SBServer@@@Z,0x000399D7,exact SBServer pointer deque growth call in 0x00648220
+?push_back@?$deque@PAU_SBServer@@V?$allocator@PAU_SBServer@@@_STL@@@_STL@@QAEXABQAU_SBServer@@@Z,0x00012C51,exact SBServer pointer deque append call in 0x00648220
+?removeServerFromMap@PeerThreadClass@Rva00647F90@@QAEHPAU_SBServer@@@Z,0x0000252C,exact helper ABI from the matched 0x00647F90 body used in 0x00648220

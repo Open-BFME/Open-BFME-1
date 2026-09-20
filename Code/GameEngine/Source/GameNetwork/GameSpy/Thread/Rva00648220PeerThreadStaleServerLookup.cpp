@@ -1,5 +1,5 @@
-// ?d_00648220@@YAXXZ
-// partial score=0.78 date=2026-09-10
+// ?lookupServer@Rva00648220PeerThreadMapView@@QAEHPAU_SBServer@@@Z
+// Retail RVA 0x00648220, complete 978-byte recovery with ret 4.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 //
@@ -12,6 +12,7 @@
 // +0x20c std::map layout are the ones used by the canonical PeerThread.cpp
 // body and by the neighboring matched addServerToMap body.
 
+#include <deque>
 #include <map>
 #include <string>
 #include <string.h>
@@ -47,6 +48,7 @@ extern "C"
 	UnsignedInt SBServerGetPrivateInetAddress(SBServer server);
 	UnsignedShort SBServerGetPrivateQueryPort(SBServer server);
 	UnsignedInt SBServerGetPublicInetAddress(SBServer server);
+	int SBServerHasBasicKeys(SBServer server);
 }
 
 class PeerResponse
@@ -125,10 +127,12 @@ public:
 			Int profileID[8];
 			Int faction[8];
 			Int color[8];
-			Int numPlayers;
-			Int numObservers;
-			Int maxPlayers;
-			Int percentComplete;
+		Int numPlayers;
+		Int numObservers;
+		Int maxPlayers;
+		// Retail stores an additional unnamed dword before percentComplete.
+		Int Rva00648220StagingWord204;
+		Int percentComplete;
 		} stagingRoom;
 
 		Int words[143];
@@ -158,6 +162,21 @@ public:
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 
+#pragma comment(linker, "/alternatename:?_M_initialize_map@?$_Deque_base@PAU_SBServer@@V?$allocator@PAU_SBServer@@@_STL@@@_STL@@IAEXI@Z=?j_00018502@@YAXXZ")
+#pragma comment(linker, "/alternatename:?_M_push_back_aux_v@?$deque@PAU_SBServer@@V?$allocator@PAU_SBServer@@@_STL@@@_STL@@IAEXABQAU_SBServer@@@Z=?j_000399d7@@YAXXZ")
+#pragma comment(linker, "/alternatename:?push_back@?$deque@PAU_SBServer@@V?$allocator@PAU_SBServer@@@_STL@@@_STL@@QAEXABQAU_SBServer@@@Z=?j_00012c51@@YAXXZ")
+
+namespace Rva00647F90
+{
+class PeerThreadClass
+{
+public:
+	Int removeServerFromMap(SBServer server);
+};
+}
+
+#pragma comment(linker, "/alternatename:?removeServerFromMap@PeerThreadClass@Rva00647F90@@QAEHPAU_SBServer@@@Z=?j_0000252c@@YAXXZ")
+
 #pragma comment(linker, "/alternatename:??0PeerResponse@@QAE@XZ=?j_00042069@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1PeerResponse@@QAE@XZ=?j_00044733@@YAXXZ")
 
@@ -183,12 +202,12 @@ __forceinline Int Rva00648220PeerThreadMapView::addServerToMap(SBServer server)
 Int Rva00648220PeerThreadMapView::lookupServer(SBServer server)
 {
 	char tmp[10] = "";
-	const char *newName = SBServerGetStringValueA(server, "gamename", tmp);
+	const char *newName = SBServerGetStringValueA(server, "hostname", tmp);
 	UnsignedInt newPrivateIP = SBServerGetPrivateInetAddress(server);
 	UnsignedShort newPrivatePort = SBServerGetPrivateQueryPort(server);
 	UnsignedInt newPublicIP = SBServerGetPublicInetAddress(server);
 
-	SBServer serverToRemove = NULL;
+	std::deque<SBServer> serversToRemove;
 
 	for (std::map<Int, SBServer>::iterator it = m_stagingServers.begin();
 		it != m_stagingServers.end(); ++it)
@@ -197,9 +216,13 @@ Int Rva00648220PeerThreadMapView::lookupServer(SBServer server)
 		{
 			return it->first;
 		}
+		else if (!SBServerHasBasicKeys(it->second))
+		{
+			serversToRemove.push_back(it->second);
+		}
 		else
 		{
-			const char *oldName = SBServerGetStringValueA(it->second, "gamename", tmp);
+			const char *oldName = SBServerGetStringValueA(it->second, "hostname", tmp);
 			UnsignedInt oldPrivateIP = SBServerGetPrivateInetAddress(it->second);
 			UnsignedShort oldPrivatePort = SBServerGetPrivateQueryPort(it->second);
 			UnsignedInt oldPublicIP = SBServerGetPublicInetAddress(it->second);
@@ -208,28 +231,21 @@ Int Rva00648220PeerThreadMapView::lookupServer(SBServer server)
 				oldPublicIP == newPublicIP &&
 				oldPrivatePort == newPrivatePort)
 			{
-				serverToRemove = it->second;
+				serversToRemove.push_back(it->second);
 			}
 		}
 	}
 
-	if (serverToRemove)
+	while (!serversToRemove.empty())
 	{
-		Int removedID = 0;
-		for (std::map<Int, SBServer>::iterator it = m_stagingServers.begin();
-			it != m_stagingServers.end(); ++it)
-		{
-			if (it->second == serverToRemove)
-			{
-				removedID = it->first;
-				m_stagingServers.erase(it);
-				break;
-			}
-		}
+		SBServer serverToRemove = serversToRemove.front();
+		serversToRemove.pop_front();
+		Rva00647F90::PeerThreadClass *peer =
+			(Rva00647F90::PeerThreadClass *)this;
 
 		PeerResponse resp;
 		resp.peerResponseType = PeerResponse::PEERRESPONSE_STAGINGROOM;
-		resp.stagingRoom.id = removedID;
+		resp.stagingRoom.id = peer->removeServerFromMap(serverToRemove);
 		resp.stagingRoom.action = PEER_REMOVE;
 		resp.stagingRoom.isStaging = true;
 		resp.stagingRoom.percentComplete = -1;
