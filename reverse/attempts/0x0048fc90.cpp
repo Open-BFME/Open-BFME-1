@@ -1,4 +1,7 @@
 // ?d_0048fc90@@YAXXZ
+// partial score=0.7 date=2026-09-20
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /FAsc /Fabuild/worker-evidence/target-unsigned-return.cod
+// ?d_0048fc90@@YAXXZ
 // partial score=0.68 date=2026-09-20
 // A clear that destroys its range through an out-of-line helper before
 // emptying the vector.
@@ -255,6 +258,9 @@ private:
 	int m_bfmeState;					// +0x20
 };
 
+#pragma comment(linker, "/alternatename:?bfmeAddLine@Gen_0048FA30@@QAEXPBUBfmeLineInfoFC@@@Z=?j_0001ad25@@YAXXZ")
+#pragma comment(linker, "/alternatename:?bfmeFlushLine@Gen_0048FA30@@QAEXPAVBfmeLineInfoFC@@HPBVUnicodeString@@@Z=?j_0000badc@@YAXXZ")
+
 // ?bfmeClear@Gen_0048FA30@@QAEXXZ
 void Gen_0048FA30::bfmeClear(void)
 {
@@ -276,7 +282,7 @@ public:
 	virtual void slot0c(); virtual void slot10(); virtual void slot14();
 	virtual void slot18(); virtual void slot1c(); virtual void slot20();
 	virtual void slot24(); virtual void slot28();
-	virtual int getMetric();
+	virtual unsigned int getMetric();
 };
 
 class BfmeClientFC
@@ -301,13 +307,9 @@ void Gen_0048FA30::bfmeForward(const UnicodeString &source, int force)
 	if (text.length() == 0)
 		return;
 
-	int width = ((BfmeDisplayFC *)TheDisplay)->getMetric() / 2;
-	if (width < 0)
-		width += (int)g_bfmeUint32Scale;
-	int height = ((BfmeDisplayFC *)TheDisplay)->getMetric();
-	if (height < 0)
-		height += (int)g_bfmeUint32Scale;
-	int scaledHeight = (int)((float)height * g_bfmeDisplayScale);
+	float width = (float)(((BfmeDisplayFC *)TheDisplay)->getMetric() / 2);
+	float height = (float)((BfmeDisplayFC *)TheDisplay)->getMetric();
+	int scaledHeight = (int)(height * g_bfmeDisplayScale);
 	m_bfmeCount = ((BfmeClientFC *)TheGameClient)->getFrame();
 	if (force) {
 		m_bfmeIndex = m_bfmeCount + force * 0x1e;
@@ -325,8 +327,8 @@ void Gen_0048FA30::bfmeForward(const UnicodeString &source, int force)
 
 	BfmeLocalVecFC position;
 	BfmeLineInfoFC info;
-	info.m_height = scaledHeight;
-	info.m_width = (int)force;
+	info.m_height = (int)width;
+	info.m_width = scaledHeight;
 	info.m_position = &position;
 	info.m_display = display;
 	info.m_unknown14 = 0;
@@ -342,9 +344,7 @@ void Gen_0048FA30::bfmeForward(const UnicodeString &source, int force)
 				if (ch == 0x20) {
 					++lineNumber;
 				} else if (ch == 0x0a) {
-					BfmeAddLineCastFC add;
-					add.asVoid = (void *)j_0001ad25;
-					(this->*add.member)(&info);
+					this->bfmeAddLine(&info);
 					lineNumber = 0;
 				}
 				++index;
@@ -354,9 +354,7 @@ void Gen_0048FA30::bfmeForward(const UnicodeString &source, int force)
 			atWhitespace = false;
 		}
 		if (iswspace(ch)) {
-		BfmeFlushLineCastFC flush;
-		flush.asVoid = (void *)j_0000badc;
-		(this->*flush.member)(&info, lineNumber, &line);
+		this->bfmeFlushLine(&info, lineNumber, &line);
 		line.clear();
 		lineNumber = 0;
 		atWhitespace = true;
@@ -367,13 +365,9 @@ void Gen_0048FA30::bfmeForward(const UnicodeString &source, int force)
 		ch = chars ? chars[index] : 0;
 	}
 	if (!atWhitespace) {
-		BfmeFlushLineCastFC flush;
-		flush.asVoid = (void *)j_0000badc;
-		(this->*flush.member)(&info, lineNumber, &line);
+		this->bfmeFlushLine(&info, lineNumber, &line);
 	}
-	BfmeAddLineCastFC add;
-	add.asVoid = (void *)j_0001ad25;
-	(this->*add.member)(&info);
+	this->bfmeAddLine(&info);
 
 	BfmeLayoutCastFC layout;
 	layout.asVoid = (void *)j_0001d30e;
