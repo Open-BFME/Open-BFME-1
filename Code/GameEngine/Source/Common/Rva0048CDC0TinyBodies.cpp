@@ -96,6 +96,17 @@ void Rva0048E690Empty::body()
 {
 }
 
+class Rva0048E6A0Noop
+{
+public:
+	void body();
+};
+
+// ?body@Rva0048E6A0Noop@@QAEXXZ
+void Rva0048E6A0Noop::body()
+{
+}
+
 class Rva00490240DwordField
 {
 public:
