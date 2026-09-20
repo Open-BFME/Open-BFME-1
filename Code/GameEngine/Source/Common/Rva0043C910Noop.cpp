@@ -4,3 +4,8 @@
 void Rva0043C910Noop(void)
 {
 }
+
+// ?dup_0043C930@@YAXXZ
+void dup_0043C930(void)
+{
+}
