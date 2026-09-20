@@ -15,3 +15,19 @@ float Rva001E0BE0FloatGetter::get( void ) const
 {
 	return m_value;
 }
+
+class Rva001E0BF0FloatGetter
+{
+public:
+	float get( void ) const;
+
+private:
+	char m_padding[ 0x78 ];
+	float m_value;
+};
+
+// ?get@Rva001E0BF0FloatGetter@@QBEMXZ
+float Rva001E0BF0FloatGetter::get( void ) const
+{
+	return m_value;
+}
