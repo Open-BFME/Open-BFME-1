@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "dca75c4185da7182d1e23ae2aa1e4bf9cf6f9c7312e3eba1f88da340f567f75e",
+  "symbol": "?Rva00351830IndexedListMark@Rva00351830Holder@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.99,
+  "source": "// ?Rva00351830IndexedListMark@Rva00351830Holder@@QAEXXZ\n// partial score=0.99 date=2026-09-20\n// cl: /DNDEBUG /MD /EHsc\n\nstruct Rva00351830Record\n{\n\tint m_next;\n\tint m_value04;\n\tint m_value08;\n\tunsigned char m_marked;\n\tunsigned char m_padding0D[ 7 ];\n};\n\nclass Rva00351830Holder\n{\npublic:\n\tvoid mark();\n\nprivate:\n\tunsigned char m_padding00[ 0x0C ];\n\tunsigned int m_records;\n\tunsigned char m_padding10[ 0x0C ];\n\tint m_index;\n};\n\nvoid Rva00351830Holder::mark()\n{\n\tint index = m_index;\n\tif (index != -1)\n\t{\n\t\tdo\n\t\t{\n\t\t\tindex *= 20;\n\t\t\t*reinterpret_cast<unsigned char *>(index + m_records + 0x0C) = 1;\n\t\t\tindex = *reinterpret_cast<int *>(index + m_records);\n\t\t} while (index != -1);\n\t}\n}\n"
+}
