@@ -208,6 +208,11 @@ void *Rva006DAF00Identity::self()
 	return this;
 }
 
+// ?Rva006DAF10Noop@@YAXXZ
+void Rva006DAF10Noop(void)
+{
+}
+
 int rva_006dafe0_identity(int value)
 {
 	return value;
