@@ -27914,3 +27914,4 @@ __RTC_CheckEsp	0x009F7502	3	blocked	retail helper is jne ret and consumes caller
 The current source emits 640 bytes against retail's 843 bytes.
 Earlier reconstructions preserve the calls and list walk but save EBX and EBP after the light-CRC guard instead of at entry.
 t=1min model=luna-5 blocker=compiler-prologue-register-schedule
+?xfer@Team@@MAEXPAVXfer@@@Z	0x000F3550	843	blocked	Team::xfer identity is proven by the retail transfer calls, Team field offsets, and the existing Team.cpp serializer. The current source emits 640 bytes against retail's 843 bytes. Earlier reconstructions preserve the calls and list walk but save EBX and EBP after the light-CRC guard instead of at entry. t=1min model=luna-5 blocker=compiler-prologue-register-schedule
