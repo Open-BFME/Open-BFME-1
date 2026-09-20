@@ -88484,3 +88484,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?ji_009f6fac@@YANPBD@Z,0x009F6FAC,typed cdecl atof import alias used by the exact 0x008921B0 wrapper; existing import thunk jumps directly to CRT atof
 ?bitFlags116Parse@@YAXXZ,0x00129810,local zero-argument alias for the proven BitFlags<116>::parseFromINI tail target at 0x00129810
 _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the direct tail jump at 0x00049AA3; the target row identifies ??0UpgradeModuleModuleData@@QAE@XZ
+?rva00039577Target@@YAXXZ,0x000A78A0,TU-local clean-C++ alias for the matched ParticleSysBoneInfo const-source copy body used by the 0x00039577 tail thunk
