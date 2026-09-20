@@ -1770,3 +1770,13 @@ void ObjectCreationListStore::addObjectCreationNugget(ObjectCreationNugget* nugg
 {
 	ObjectCreationListStore::parseObjectCreationListDefinition(ini);
 }
+
+class Rva0036DAE0Noop
+{
+public:
+	void noop();
+};
+
+void Rva0036DAE0Noop::noop()
+{
+}
