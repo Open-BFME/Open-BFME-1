@@ -536,6 +536,11 @@ void Rva0026A750Noop( void )
 }
 
 // ret.  The owning function is not identified.
+void Rva00745750Noop( void )
+{
+}
+
+// ret.  The owning function is not identified.
 void Rva00761CA0Noop( void )
 {
 }
