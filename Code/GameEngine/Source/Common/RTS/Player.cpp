@@ -2112,14 +2112,18 @@ void Player::healAllObjects()
 }
 
 //=============================================================================
-// ?iterateObjects@Player@@QBEXP6AXPAVObject@@PAX@Z1@Z present-unmatched
+// ?iterateObjects@Player@@QBEXP6AXPAVObject@@PAX@Z1@Z
+// The five-byte void decoration forwards to the matched int-return body at
+// 0x000CDCF0. The symbol pins and 28 callers prove this thunk's identity.
+class PlayerIterateObjectsShim
+{
+public:
+	void iterateObjects( ObjectIterateFunc func, void *userData ) const;
+};
+
 void Player::iterateObjects( ObjectIterateFunc func, void *userData ) const
 {
-	for (PlayerTeamList::const_iterator it = m_playerTeamPrototypes.begin(); 
-			 it != m_playerTeamPrototypes.end(); ++it)
-	{	
-		(*it)->iterateObjects( func, userData );
-	}
+	((const PlayerIterateObjectsShim *)this)->iterateObjects(func, userData);
 }
 
 // BFME's team-prototype list sits at +0x288; the vendored header lands it at
