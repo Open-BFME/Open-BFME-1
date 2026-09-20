@@ -82,6 +82,39 @@ BFME_INDEXED_LIST_TAIL_WALKER( Rva003517F0 )
 BFME_INDEXED_LIST_TAIL_WALKER( Rva00351890 )
 BFME_INDEXED_LIST_TAIL_WALKER( Rva003518D0 )
 
+// The 20-byte records at +0x0C form an indexed linked list.  The landed
+// neighbours establish the record stride and the chain index at +0x1C.
+class Rva00351830Holder
+{
+public:
+	void Rva00351830IndexedListMark();
+
+private:
+	char m_padding00[ 0x0C ];
+	unsigned char *m_records;
+	char m_padding10[ 0x0C ];
+	int m_index;
+};
+
+// ?Rva00351830IndexedListMark@Rva00351830Holder@@QAEXXZ
+void Rva00351830Holder::Rva00351830IndexedListMark()
+{
+	unsigned char mark = 1;
+	int index = m_index;
+	if (index != -1)
+	{
+		unsigned int p = (unsigned int)m_records;
+		do
+		{
+			unsigned int i = (unsigned int)index * 20;
+			*(unsigned char *)(i + p + 0x0C) = mark;
+			p = (unsigned int)m_records;
+			index = *(int *)(i + p);
+		}
+		while (index != -1);
+	}
+}
+
 struct Rva00351860Owner
 {
 	char m_padding00[ 0x0c ];
