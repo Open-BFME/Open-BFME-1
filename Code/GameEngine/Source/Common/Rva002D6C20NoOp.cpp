@@ -13,3 +13,7 @@ void Rva00606910(void)
 void Rva0043A120(void)
 {
 }
+
+void Rva005D4C10(void)
+{
+}
