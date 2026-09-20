@@ -1,43 +1,37 @@
-// ?rva003B9200Contains@Rva003B9200Owner@@QAE_NPAVRva003B9200Predicate@@@Z
-// partial score=0.4 date=2026-09-06
-// ?rva003B9200Contains@Rva003B9200Owner@@QBE_NPAVRva003B9200Predicate@@@Z
-// Address-derived: linear scan over a pointer array [m_begin, m_end) (4-byte
-// elements), calling the already-named thunk 0x000202BB as pred->matches(*it)
-// for each element; returns true on the first match, false if the array is
-// exhausted. The element count is recomputed from m_begin/m_end every
-// iteration rather than cached, matching retail's re-read.
-class Rva003B9200Predicate
+// ?rva003B9200ContainsAny@Rva003B9100@@QBE_NPBV1@@Z
+// partial score=0.15 date=2026-09-20
+// The adjacent exact Rva003B9100::contains body proves both objects own the
+// same vector<AsciiString> layout. Retail passes the address of each element
+// to the other owner's contains method and returns on the first shared name.
+// cl: /DNDEBUG /MD /EHs-c- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// stlport
+#include <vector>
+
+struct BfmeStringData;
+
+class AsciiString
 {
 public:
-	bool matches(void *element);
+	BfmeStringData *m_data;
 };
 
-class Rva003B9200Owner
+class Rva003B9100
 {
 public:
-	unsigned char m_pad0[0xc];
-	void **m_begin;
-	char *m_end;
+	bool contains(const AsciiString &name) const;
+	bool rva003B9200ContainsAny(const Rva003B9100 *other) const;
 
-	bool rva003B9200Contains(Rva003B9200Predicate *pred);
+private:
+	char m_pad[0x0C];
+	_STL::vector<AsciiString> m_vec;
 };
 
-bool Rva003B9200Owner::rva003B9200Contains(Rva003B9200Predicate *pred)
+bool Rva003B9100::rva003B9200ContainsAny(const Rva003B9100 *other) const
 {
-	void **it = m_begin;
-	int count = (int)(m_end - (char *)m_begin) >> 2;
-	if (count <= 0)
-		return false;
-
-	int i = 0;
-	do
+	for (unsigned int i = 0; i < m_vec.size(); ++i)
 	{
-		if (pred->matches(*it))
+		if (other->contains(m_vec[i]))
 			return true;
-		count = (int)(m_end - (char *)m_begin) >> 2;
-		++i;
-		++it;
-	} while (i < count);
-
+	}
 	return false;
 }
