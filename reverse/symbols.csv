@@ -88495,3 +88495,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?getRegionName@Rva003BABE0Record@@QAE?AVAsciiString@@XZ,0x0001073F,record getter ILT called twice by Rva003BABE0Owner::append at 0x003B25D0
 ?_M_insert_overflow@?$vector@VRva003BABE0Record@@V?$allocator@VRva003BABE0Record@@@_STL@@@_STL@@QAEXPAVRva003BABE0Record@@ABV3@ABU__false_type@2@I_N@Z,0x00038424,record vector overflow ILT called by Rva003BABE0Owner::append at 0x003B25D0
 ?initialize@Rva00473930@@AAEXPA_NH@Z,0x0000E7CD,initializer thunk proven by the 0x00473930 retail call
+?markZonesDirty@PathfindZoneManager@@QAEXPBUIRegion2D@@_N@Z,0x00015307,pointer-and-Bool spelling of the same ILT the ledgered _N0 row pins; retail 0x003F7D10+0x2a4 calls 0x00015307 which jumps to the markZonesDirty body at 0x004030D0
