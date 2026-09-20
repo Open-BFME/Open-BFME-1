@@ -106,41 +106,6 @@ SpawnBehavior::SpawnBehavior( Thing *thing, const ModuleData* moduleData )
 } 
 
 // ------------------------------------------------------------------------------------------------
-// ?onDelete@SpawnBehavior@@ present-unmatched
-void SpawnBehavior::onDelete()
-{
-	const SpawnBehaviorModuleData *modData = getSpawnBehaviorModuleData();
-
-	// destroy anything that we have spawned that is not already dead
-	if( modData->m_spawnedRequireSpawner )
-	{
-		Object *obj;
-
-		for( objectIDListIterator it = m_spawnIDs.begin(); it != m_spawnIDs.end(); /*empty*/ )
-		{
-
-			// get object
-			obj = TheGameLogic->findObjectByID( *it );
-
-			// increment iterator incase the id list is alterd because what we're about to do
-			++it;
-
-			//
-			// destroy this if it's alive, in the usual case this object "dies" and is
-			// not "destroyed".  on *death* we *KILL* our spawned things, but this is here
-			// and will *DESTROY* our spawned things if we ourselves are destroyed and they
-			// are still alive (such a case would be calling destroy object on us directly)
-			//
-			if( obj && obj->isEffectivelyDead() == FALSE )	
-				TheGameLogic->destroyObject( obj );
-
-		}  // end for, it
-
-	}  // end if
-		
-}
-
-// ------------------------------------------------------------------------------------------------
 // ?onDie@SpawnBehavior@@ present-unmatched
 void SpawnBehavior::onDie( const DamageInfo *damageInfo )
 {
