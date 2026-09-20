@@ -140,6 +140,11 @@ Rva00472780Owner *Rva00472780Owner::identity()
 	return this;
 }
 
+// ?Rva00472790NoOp@@YAXXZ
+void Rva00472790NoOp()
+{
+}
+
 class Rva004727B0Owner
 {
 public:
