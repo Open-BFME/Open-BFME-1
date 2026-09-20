@@ -55,6 +55,25 @@ BFME_BYTE_OUT_CALLEE( 006FA400 )
 BFME_BYTE_OUT_CALLEE( 007683D0 )
 BFME_BYTE_OUT_CALLEE( 00768590 )
 
+class Gen_002011d0
+{
+public:
+	void *m( int value );
+};
+
+class Rva002085F0ByteOutForwarder : public Gen_002011d0
+{
+public:
+	void invoke();
+};
+
+// ?invoke@Rva002085F0ByteOutForwarder@@QAEXXZ
+void Rva002085F0ByteOutForwarder::invoke()
+{
+	char result;
+	m( (int)&result );
+}
+
 BFME_BYTE_OUT_FORWARDER( Rva00110DE0ByteOutForwarder, Gen00110D40 )
 BFME_BYTE_OUT_FORWARDER( Rva00127AB0ByteOutForwarder, Gen00127440 )
 BFME_BYTE_OUT_FORWARDER( Rva001964C0ByteOutForwarder, Gen000657E0 )
