@@ -88519,3 +88519,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?unidentified_001BFE20@BfmePlayerObjectDlinkObject@@QBEPAVRva00326C00FoundSlot36@@XZ,0x0000D3B9,Open-BFME5 view-class spelling of the ILT already pinned as ?unidentified_001BFE20@Object@@QBEPAXXZ (ObjectTeamAndPlayer.cpp); ScriptConditionsRva00326C00.cpp calls it through the view so the in-TU definition cannot inline
 ?bfmeLookup46C7D0@Rva00579160Manager@@QAEPAXH@Z,0x00008FEE,pin
 ?getMode@Rva0046F3D0ModeSource@@QAEHXZ,0x0046F280,pin
+?handle@Handler@@QAEXH@Z,0x0081D520,pin
