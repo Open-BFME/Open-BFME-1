@@ -178,3 +178,20 @@ __declspec(naked) BannerCarrierUpdate::BannerCarrierUpdate(Thing*, const ModuleD
         _emit 0C3h
     }
 }
+
+class Rva000287C7FactoryCtorTarget
+{
+public:
+	void construct();
+};
+
+class Rva000287C7FactoryCtorThunk
+{
+public:
+	void operator()();
+};
+
+void Rva000287C7FactoryCtorThunk::operator()()
+{
+	((Rva000287C7FactoryCtorTarget *)this)->construct();
+}

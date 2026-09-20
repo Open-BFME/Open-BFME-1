@@ -79451,6 +79451,7 @@ name,address,notes
 ?construct@RenderObjectUpdateTemplateCopyCtorShim@FXParticleSystem@@QAEXPBX@Z,0x00018101,RenderObjectUpdateModuleTemplate copy constructor thunk used through a TU-local layout shim
 ?construct@RenderObjectUpdateTemplateCtorShim@FXParticleSystem@@QAEXXZ,0x00035490,RenderObjectUpdateModuleTemplate constructor thunk used through a TU-local layout shim
 ?construct@Rva0012A170ModuleData@@QAEPAV1@XZ,0x00012233,address-derived spelling for the module-data constructor thunk called by the 0x0012A170 factory
+?construct@Rva000287C7FactoryCtorTarget@@QAEXXZ,0x00285F10,address-derived forwarding target for the constructor ILT at 0x000287C7
 ?construct@Rva0019A1D0Member@@QAEPAV1@H@Z,0x00196D90,local return-valued declaration for the matched member constructor body
 ?construct@Rva00412140@@QAEPAV1@XZ,0x00037475,ILT to Rva00412140 ctor 0x00412140; callee of BfmeHost4164E0::setFlagged @ 0x4164E0
 ?construct@Rva005E5E60CtorShim@@QAEXAAURva005E5E60Sys@@PBX@Z,0x000151FE,Open-BFME5 near-twin of LightningDrawModuleCtorShim::construct; forwards to ILT thunk at 0x000151FE
