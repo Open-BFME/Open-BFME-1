@@ -36,10 +36,24 @@ void BfmeA1024::bfmeGo1024A(int k, int h)
 class BfmeN1024
 {
 public:
-	void bfmeDrop1024(int id);
+	__declspec(noinline) void bfmeDrop1024(int id);
 };
 
 extern BfmeN1024 *g_bfmeN1024;
+
+enum ParticleSystemID { RvaParticleSystemIDInvalid = 0 };
+
+class ParticleSystemManager
+{
+public:
+	void destroyParticleSystemByID(ParticleSystemID id);
+};
+
+void BfmeN1024::bfmeDrop1024(int id)
+{
+	((ParticleSystemManager *)this)->destroyParticleSystemByID(
+		(ParticleSystemID)id);
+}
 
 class BfmeList1024
 {
