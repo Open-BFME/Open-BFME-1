@@ -180,3 +180,13 @@ float View::Rva0045BD10Slot() const
     return *reinterpret_cast<const float *>(
         reinterpret_cast<const char *>(this) + 0x28);
 }
+
+class Rva0045BB50Noop
+{
+public:
+	void noop();
+};
+
+void Rva0045BB50Noop::noop()
+{
+}
