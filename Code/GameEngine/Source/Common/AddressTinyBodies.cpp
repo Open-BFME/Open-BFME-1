@@ -336,3 +336,339 @@ int Rva00254640Body::body() const
 {
 	return m_value;
 }
+
+class Rva00367D40Body
+{
+public:
+	unsigned char body() const;
+};
+
+// ?body@Rva00367D40Body@@QBEEXZ
+unsigned char Rva00367D40Body::body() const
+{
+	return 0;
+}
+
+class Rva00368340Body
+{
+public:
+	int body() const;
+
+private:
+	int m_value;
+};
+
+// ?body@Rva00368340Body@@QBEHXZ
+int Rva00368340Body::body() const
+{
+	return m_value;
+}
+
+class Rva0036AD80Body
+{
+	char m_padding[0x18];
+	int m_value;
+
+public:
+	int body() const;
+};
+
+// ?body@Rva0036AD80Body@@QBEHXZ
+int Rva0036AD80Body::body() const
+{
+	return m_value;
+}
+
+class Rva0036ADA0Body
+{
+	char m_padding[0x44];
+	char m_value;
+
+public:
+	char *body();
+};
+
+// ?body@Rva0036ADA0Body@@QAEPADXZ
+char *Rva0036ADA0Body::body()
+{
+	return &m_value;
+}
+
+class Rva0036AE30Body
+{
+public:
+	Rva0036AE30Body *body();
+};
+
+// ?body@Rva0036AE30Body@@QAEPAV1@XZ
+Rva0036AE30Body *Rva0036AE30Body::body()
+{
+	return this;
+}
+
+class Rva0036AE40Body
+{
+public:
+	int body() const;
+
+private:
+	int m_value;
+};
+
+// ?body@Rva0036AE40Body@@QBEHXZ
+int Rva0036AE40Body::body() const
+{
+	return m_value;
+}
+
+class Rva0036D090Body
+{
+	char m_padding[4];
+	int m_value;
+
+public:
+	int body() const;
+};
+
+// ?body@Rva0036D090Body@@QBEHXZ
+int Rva0036D090Body::body() const
+{
+	return m_value;
+}
+
+class Rva0036D0D0Body
+{
+	char m_padding[4];
+	int m_value;
+
+public:
+	int body() const;
+};
+
+// ?body@Rva0036D0D0Body@@QBEHXZ
+int Rva0036D0D0Body::body() const
+{
+	return m_value;
+}
+
+class Rva0037D0C0Body
+{
+	char m_padding[0x0C];
+	char m_value;
+
+public:
+	char *body();
+};
+
+// ?body@Rva0037D0C0Body@@QAEPADXZ
+char *Rva0037D0C0Body::body()
+{
+	return &m_value;
+}
+
+class Rva0037D1D0Body
+{
+public:
+	Rva0037D1D0Body *body();
+};
+
+// ?body@Rva0037D1D0Body@@QAEPAV1@XZ
+Rva0037D1D0Body *Rva0037D1D0Body::body()
+{
+	return this;
+}
+
+class Rva0037D1F0Body
+{
+public:
+	Rva0037D1F0Body *body();
+};
+
+// ?body@Rva0037D1F0Body@@QAEPAV1@XZ
+Rva0037D1F0Body *Rva0037D1F0Body::body()
+{
+	return this;
+}
+
+class Rva0037D230Body
+{
+public:
+	Rva0037D230Body *body();
+};
+
+// ?body@Rva0037D230Body@@QAEPAV1@XZ
+Rva0037D230Body *Rva0037D230Body::body()
+{
+	return this;
+}
+
+class Rva0037D260Body
+{
+public:
+	Rva0037D260Body *body();
+};
+
+// ?body@Rva0037D260Body@@QAEPAV1@XZ
+Rva0037D260Body *Rva0037D260Body::body()
+{
+	return this;
+}
+
+class Rva0037D2D0Body
+{
+	int m_value;
+
+public:
+	int body() const;
+};
+
+// ?body@Rva0037D2D0Body@@QBEHXZ
+int Rva0037D2D0Body::body() const
+{
+	return m_value;
+}
+
+class Rva0037D300Body
+{
+public:
+	Rva0037D300Body *body();
+};
+
+// ?body@Rva0037D300Body@@QAEPAV1@XZ
+Rva0037D300Body *Rva0037D300Body::body()
+{
+	return this;
+}
+
+class Rva0037D330Body
+{
+	int m_value;
+
+public:
+	int body() const;
+};
+
+// ?body@Rva0037D330Body@@QBEHXZ
+int Rva0037D330Body::body() const
+{
+	return m_value;
+}
+
+class Rva0037D380Body
+{
+public:
+	Rva0037D380Body *body();
+};
+
+// ?body@Rva0037D380Body@@QAEPAV1@XZ
+Rva0037D380Body *Rva0037D380Body::body()
+{
+	return this;
+}
+
+class Rva0037D8F0Body
+{
+public:
+	Rva0037D8F0Body *body();
+};
+
+// ?body@Rva0037D8F0Body@@QAEPAV1@XZ
+Rva0037D8F0Body *Rva0037D8F0Body::body()
+{
+	return this;
+}
+
+class Rva0037D900Body
+{
+public:
+	Rva0037D900Body *body();
+};
+
+// ?body@Rva0037D900Body@@QAEPAV1@XZ
+Rva0037D900Body *Rva0037D900Body::body()
+{
+	return this;
+}
+
+class Rva0037D910Body
+{
+public:
+	Rva0037D910Body *body();
+};
+
+// ?body@Rva0037D910Body@@QAEPAV1@XZ
+Rva0037D910Body *Rva0037D910Body::body()
+{
+	return this;
+}
+
+class Rva0037D950Body
+{
+public:
+	Rva0037D950Body *body();
+};
+
+// ?body@Rva0037D950Body@@QAEPAV1@XZ
+Rva0037D950Body *Rva0037D950Body::body()
+{
+	return this;
+}
+
+class Rva00396800Body
+{
+	char m_padding[0x14];
+	int m_value;
+
+public:
+	int body() const;
+};
+
+// ?body@Rva00396800Body@@QBEHXZ
+int Rva00396800Body::body() const
+{
+	return m_value;
+}
+
+class Rva0039B840Body
+{
+	char m_padding[4];
+	int m_value;
+
+public:
+	int body() const;
+};
+
+// ?body@Rva0039B840Body@@QBEHXZ
+int Rva0039B840Body::body() const
+{
+	return m_value;
+}
+
+class Rva0039B850Body
+{
+	int m_value;
+
+public:
+	int body() const;
+};
+
+// ?body@Rva0039B850Body@@QBEHXZ
+int Rva0039B850Body::body() const
+{
+	return m_value;
+}
+
+class Rva0039B880Body
+{
+	char m_padding[4];
+	int m_value;
+
+public:
+	int body() const;
+};
+
+// ?body@Rva0039B880Body@@QBEHXZ
+int Rva0039B880Body::body() const
+{
+	return m_value;
+}
