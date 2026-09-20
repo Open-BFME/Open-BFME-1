@@ -1,5 +1,5 @@
 // ?xfer@GameStateMap@@UAEXPAVXfer@@@Z
-// partial score=0.64 date=2026-09-10
+// partial score=0.65 date=2026-09-20
 // Scratch-only BFME ABI probe for GameStateMap::xfer.  This file is not a
 // production source or ledger claim.
 
@@ -31,7 +31,7 @@ protected:
 	StringBase() : m_data(0) {}
 	StringBase(const StringBase<T> &other);
 	~StringBase() { releaseBuffer(); }
-	void set(const StringBase<T> &other);
+	void set(const StringBase<T> &other) throw();
 	void releaseBuffer();
 	BfmeStringData<T> *m_data;
 };
