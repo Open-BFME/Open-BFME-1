@@ -69,6 +69,11 @@ void Rva0060D8E0Noop()
 {
 }
 
+// ?Rva0060D900NoOp@@YAXXZ
+void Rva0060D900NoOp()
+{
+}
+
 class Rva0060DB20DwordField
 {
 	char m_lead[0x10];
