@@ -31,6 +31,11 @@ private:
 };
 }
 
+// ?d_003A5DB0@@YAXXZ
+void d_003A5DB0()
+{
+}
+
 class Rva003A5D90Dword
 {
 public:
