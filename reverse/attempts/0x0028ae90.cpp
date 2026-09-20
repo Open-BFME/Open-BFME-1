@@ -1,7 +1,12 @@
 // ?scanClosestTarget@CommandButtonHuntUpdate@@IAEPAVObject@@XZ
-// partial score=0.55 date=2026-09-10
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.6 date=2026-09-20
+// cl: /O2 /Oy /DNDEBUG /DWIN32 /D_WINDOWS /MD
+// stlport
 
+#define _STLP_USE_STATIC_LIB 1
+#define BFME_STLP_NODE_ALLOC 1
+#define __PLACEMENT_VEC_NEW_INLINE
+#include <vector>
 #include <math.h>
 
 // CommandButtonHuntUpdate::huntSpecialPower, retail 0x0028B490, 133 bytes.
@@ -158,22 +163,12 @@ struct BfmeWideResultItem
 	UnsignedInt m_distance;
 };
 
-class BfmeWideVector
-{
-public:
-	BfmeWideResultItem *m_start;
-	BfmeWideResultItem *m_finish;
-	BfmeWideResultItem *m_end;
-
-	BfmeWideResultItem *finish() const
-	{
-		return m_finish;
-	}
-};
+void __cdecl bfmeFreeScalar(void *block);
+void __cdecl bfmeDeallocate(void *block, unsigned int bytes);
 
 struct BfmeWideResultPayload
 {
-	BfmeWideVector m_items;
+	std::vector<BfmeWideResultItem> m_items;
 	BfmeWideResultItem *m_cursor;
 	Int m_refCount;
 };
@@ -187,10 +182,7 @@ struct BfmeWideResult
 		BfmeWideResultPayload *payload = m_value;
 		--payload->m_refCount;
 		if (payload->m_refCount == 0)
-		{
-			::operator delete(payload->m_items.m_start);
-			::operator delete(payload);
-		}
+			delete payload;
 	}
 };
 
@@ -305,18 +297,8 @@ public:
 	virtual ~Overridable();
 	Overridable *getFinalOverride();
 	const Overridable *getFinalOverride() const;
-	Overridable *friend_getFinalOverride()
-	{
-		if (m_nextOverride)
-			return m_nextOverride->friend_getFinalOverride();
-		return this;
-	}
-	const Overridable *friend_getFinalOverride() const
-	{
-		if (m_nextOverride)
-			return m_nextOverride->friend_getFinalOverride();
-		return this;
-	}
+	Overridable *friend_getFinalOverride();
+	const Overridable *friend_getFinalOverride() const;
 
 	Overridable *m_nextOverride;
 };
@@ -473,87 +455,88 @@ Object *CommandButtonHuntUpdate::scanClosestTarget()
 	const CommandButtonHuntUpdateModuleData *data =
 		(const CommandButtonHuntUpdateModuleData *)m_moduleData;
 	Object *me = getObject();
-
-	PartitionFilterAlive aliveFilter;
-	PartitionFilterSameMapStatus filterMapStatus(me);
-	PartitionFilterRelationship filterTeam(me, 1, false);
-	PartitionFilter *filters = aliveFilter.link(&filterMapStatus);
+	const SpecialPowerTemplate *spTemplate =
+		m_commandButton->getSpecialPowerTemplate();
+	if (spTemplate == 0)
+		return 0;
 
 	Bool isCaptureBuilding = false;
 	Bool isPlaceExplosive = false;
-	const SpecialPowerTemplate *spTemplate =
-		m_commandButton->getSpecialPowerTemplate();
 	if (spTemplate->getSpecialPowerType() == (SpecialPowerType)0x1d)
 		isCaptureBuilding = true;
 	if (spTemplate->getSpecialPowerType() == (SpecialPowerType)0x17 ||
 		spTemplate->getSpecialPowerType() == (SpecialPowerType)0x19)
 		isPlaceExplosive = true;
+	PartitionFilterAlive aliveFilter;
+	PartitionFilterSameMapStatus filterMapStatus(me);
+	PartitionFilterRelationship filterTeam(me, 1, false);
+	aliveFilter.link(&filterMapStatus);
 	if (!isCaptureBuilding)
-		filters->link(&filterTeam);
+		aliveFilter.link(&filterTeam);
 
 	Int positionBits = (Int)(const void *)me->getPosition();
 	Int rangeBits = *(const Int *)&data->m_scanRange;
 
 	BfmeWideResult result =
-		ThePartitionManager->bfmeForwardWideC(
-			positionBits, rangeBits, 0, (Int)(const void *)filters, 1);
+	ThePartitionManager->bfmeForwardWideC(
+		positionBits, rangeBits, 0, (Int)(const void *)&aliveFilter, 1);
 
 	AIUpdateInterface *ai =
 		*(AIUpdateInterface **)((unsigned char *)me + 0x204);
 	const AttackPriorityInfo *info = ai ? ai->m_attackInfo : 0;
-	if (!me->getSpecialPowerModule(spTemplate))
-		return 0;
-
 	Object *bestTarget = 0;
 	Int effectivePriority = 0;
 	Int actualPriority = 0;
 	BfmeWideResultPayload *payload = result.m_value;
-	for (BfmeWideResultItem *item = payload->m_cursor;
-		item != payload->m_items.finish(); ++item)
+	if (me->getSpecialPowerModule(spTemplate))
 	{
-		Object *other = item->m_object;
-		payload->m_cursor = item + 1;
-		if (!other)
-			continue;
-		if (isCaptureBuilding)
+		for (BfmeWideResultItem *item = payload->m_cursor;
+			item != payload->m_items.end(); ++item)
 		{
-			if (me->getControllingPlayer() == other->getControllingPlayer())
+			Object *other = item->m_object;
+			payload->m_cursor = item + 1;
+			if (!other)
 				continue;
-			if (me->getRelationship(other) == RELATIONSHIP_ALLIES)
+			if (isCaptureBuilding)
+			{
+				if (me->getControllingPlayer() == other->getControllingPlayer())
+					continue;
+				if (me->getRelationship(other) == RELATIONSHIP_ALLIES)
+					continue;
+			}
+			if (!TheActionManager->canDoSpecialPowerAtObject(
+				me, other, CMD_FROM_AI, spTemplate, 0, true))
 				continue;
-		}
-		if (!TheActionManager->canDoSpecialPowerAtObject(
-			me, other, CMD_FROM_AI, spTemplate, 0, true))
-			continue;
-		if (isPlaceExplosive)
-		{
-			Real range = spTemplate->getViewObjectRange();
-			PartitionFilterSamePlayer filterPlayer(me->getControllingPlayer());
-			KindOfMaskType mustBeSet(KindOfMaskType::kInit, KINDOF_MINE);
-			KindOfMaskType mustBeClear;
-			PartitionFilterAcceptByKindOf filterKind(mustBeSet, mustBeClear);
-			if (ThePartitionManager->getClosestObject(
-				(const Coord3D *)((const unsigned char *)other + 0x38), range,
-				2, filterKind.link(&filterPlayer)))
+			if (isPlaceExplosive)
+			{
+				Real range = spTemplate->getViewObjectRange();
+				PartitionFilterSamePlayer filterPlayer(me->getControllingPlayer());
+				KindOfMaskType mustBeSet(KindOfMaskType::kInit, KINDOF_MINE);
+				KindOfMaskType mustBeClear;
+				PartitionFilterAcceptByKindOf filterKind(mustBeSet, mustBeClear);
+				if (ThePartitionManager->getClosestObject(
+					(const Coord3D *)((const unsigned char *)other + 0x38), range,
+					2, filterKind.link(&filterPlayer)))
+					continue;
+			}
+			Real distance = (Real)sqrt(me->getDistanceSquared(other));
+			Int curPriority = (Int)(data->m_scanRange - distance);
+			if (info)
+				curPriority = info->getPriority(other->getTemplate());
+			if (curPriority == 0)
 				continue;
-		}
-		Real distance = (Real)sqrt(me->getDistanceSquared(other));
-		Int curPriority = (Int)(data->m_scanRange - distance);
-		if (info)
-			curPriority = info->getPriority(other->getTemplate());
-		if (curPriority == 0)
-			continue;
-		Int modifier = (Int)(distance /
-			TheAI->m_aiData->m_attackPriorityDistanceModifier);
-		Int modPriority = curPriority - modifier;
-		if (modPriority < 1)
-			modPriority = 1;
-		if (modPriority > effectivePriority ||
-			(modPriority == effectivePriority && curPriority > actualPriority))
-		{
-			effectivePriority = modPriority;
-			actualPriority = curPriority;
-			bestTarget = other;
+			Int modifier = (Int)(distance /
+				TheAI->m_aiData->m_attackPriorityDistanceModifier);
+			Int modPriority = curPriority - modifier;
+			if (modPriority < 1)
+				modPriority = 1;
+			if (modPriority > effectivePriority ||
+				(modPriority == effectivePriority && curPriority > actualPriority))
+			{
+				effectivePriority = modPriority;
+				actualPriority = curPriority;
+				bestTarget = other;
+			}
 		}
 	}
 	return bestTarget;
