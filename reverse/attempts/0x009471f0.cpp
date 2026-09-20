@@ -1,5 +1,5 @@
 // ?Add_Mesh@DX8TextureCategoryClass@@QAEIAAVVertex_Split_Table@@IIPAVIndexBufferClass@@I@Z
-// partial score=0.62 date=2026-09-10
+// partial score=0.99 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep /Ibuild/toolchains/dx81/include
 /*
 ** Command & Conquer Generals Zero Hour(tm)
@@ -173,8 +173,8 @@ unsigned DX8TextureCategoryClass::Add_Mesh(
 				if (first_polygon == 0xffff)
 					first_polygon = (unsigned short)i;
 				idx = (unsigned short)(src_indices[i][0] + vertex_offset);
-				vmin = MIN(vmin, idx);
 				last_polygon = (unsigned short)i;
+				vmin = MIN(vmin, idx);
 				vmax = MAX(vmax, idx);
 				*dst_indices++ = idx;
 				idx = (unsigned short)(src_indices[i][1] + vertex_offset);
