@@ -37,6 +37,7 @@ public:
 	Object *friend_createObject(const ThingTemplate *thing,
 		const ObjectStatusMaskType &statusBits, Team *team, UnsignedInt extra);
 };
+
 class CRCParameterCheck;
 class AsciiString
 {
