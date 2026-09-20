@@ -3,3 +3,7 @@
 void Rva00664130(void)
 {
 }
+
+void Rva00664140(void)
+{
+}
