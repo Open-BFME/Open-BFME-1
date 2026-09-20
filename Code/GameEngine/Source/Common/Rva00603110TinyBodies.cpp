@@ -88,6 +88,11 @@ unsigned int Rva00606990Field::get() const
 	return m_value;
 }
 
+// ?Rva006069D0Noop@@YAXXZ
+void Rva006069D0Noop(void)
+{
+}
+
 class Rva00607DD0FieldAddress
 {
 public:
