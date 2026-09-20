@@ -88475,3 +88475,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?get_allocator@?$vector@UOpen2Elem7716A0@@V?$allocator@UOpen2Elem7716A0@@@_STL@@@_STL@@QBE?AV?$allocator@UOpen2Elem7716A0@@@2@XZ,0x00760AE0,retail vector copy allocator result call at 0x0076CF20
 ?rva0001fe92Target@@YAXXZ,0x003AFE10,address-derived alias for the matched ProductionPrerequisite vector clear body used by the 0x0001FE92 tail thunk
 ??0?$_Vector_base@UOpen2Elem7716A0@@V?$allocator@UOpen2Elem7716A0@@@_STL@@@_STL@@QAE@IABV?$allocator@UOpen2Elem7716A0@@@1@@Z,0x00760B20,retail vector copy base constructor call at 0x0076CF20
+?getHeightAboveTerrainOrWater@Rva0073A6C0Thing@@QBEMXZ,0x00005948,address-derived helper pin from the complete 0x0073A6C0 call and matched Thing body at 0x001324A0
