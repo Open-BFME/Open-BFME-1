@@ -118,6 +118,10 @@ public:
 	UnsignedInt m_secondMask;
 };
 
+BfmeCell::~BfmeCell()
+{
+}
+
 struct BfmePoint1560
 {
 	Real X;
