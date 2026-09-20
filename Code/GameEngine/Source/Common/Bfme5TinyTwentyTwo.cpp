@@ -120,15 +120,15 @@ void Gen_001BFD40::bfmeSetDeadline(unsigned int milliseconds)
 class Gen_001C4990
 {
 public:
-	int bfmeHasBit(int bit) const;
+	bool bfmeHasBit(int bit) const;
 
 private:
 	int m_bfmeHead[167];					// +0x000
 	unsigned int m_bfmeMask;				// +0x29C
 };
 
-// ?bfmeHasBit@Gen_001C4990@@QBEHH@Z
-int Gen_001C4990::bfmeHasBit(int bit) const
+// ?bfmeHasBit@Gen_001C4990@@QBE_NH@Z
+bool Gen_001C4990::bfmeHasBit(int bit) const
 {
 	return (m_bfmeMask & (1 << (bit & 31))) != 0;
 }

@@ -1,5 +1,4 @@
 // ?evaluateUnitHasToggledWeapon@ScriptConditions@@IAE_NPAVParameter@@0@Z
-// partial score=0.91 date=2026-09-19
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // ScriptConditions::evaluateUnitHasToggledWeapon at retail RVA 0x0032CB00.
@@ -52,7 +51,12 @@ class Overridable
 {
 public:
 	virtual ~Overridable();
-	const Overridable *getFinalOverride() const;
+	const Overridable *getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
 	Overridable *m_nextOverride;
 };
 
@@ -68,20 +72,12 @@ class BfmeOverride
 public:
 	const T *operator->() const
 	{
-		Overridable *raw = (Overridable *)m_overridable;
-		const T *value;
-		if (raw != 0) {
-			Overridable *next = raw->m_nextOverride;
-			if (next != 0)
-				raw = (Overridable *)next->getFinalOverride();
-			value = (const T *)raw;
-		} else {
-			value = 0;
-		}
-		return value;
+		if (!m_overridable)
+			return 0;
+		return (const T *)m_overridable->getFinalOverride();
 	}
 
-	const T *volatile m_overridable;
+	const T *m_overridable;
 };
 
 class BfmeObjectVirtualTail
@@ -215,7 +211,7 @@ struct BfmePlayerTeamListField
 class Gen_001C4990
 {
 public:
-	Int bfmeHasBit(Int bit) const;
+	Bool bfmeHasBit(Int bit) const;
 };
 
 class BfmeObjectStatusView
@@ -290,5 +286,5 @@ Bool ScriptConditions::evaluateUnitHasToggledWeapon(
 #pragma comment(linker, "/alternatename:?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ=?j_00022a70@@YAXXZ")
 #pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
 #pragma comment(linker, "/alternatename:?isEquivalentTo@ThingTemplate@@QBE_NPBV1@@Z=?j_0003e80b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeHasBit@Gen_001C4990@@QBEHH@Z=?j_000225f7@@YAXXZ")
+#pragma comment(linker, "/alternatename:?bfmeHasBit@Gen_001C4990@@QBE_NH@Z=?j_000225f7@@YAXXZ")
 #pragma comment(linker, "/alternatename:?findTemplate@BfmeThingFactory@@QAEPBVThingTemplate@@ABVAsciiString@@@Z=?j_00028560@@YAXXZ")
