@@ -107,21 +107,24 @@ protected:
 
 struct Gen_t_0019a890_p16cd
 {
+	// next/previous are the intrusive list links this body threads; the
+	// three words after them are only zero-filled here, so they keep
+	// offset names until a body reads them.
 	short next;
 	short previous;
-	short reserved;
-	short free;
-	int generation;
+	short word_4;
+	short word_6;
+	int dword_8;
 	Dict dict;
 
 	Gen_t_0019a890_p16cd()
-		: next(0), previous(0), reserved(0), free(0), generation(0), dict()
+		: next(0), previous(0), word_4(0), word_6(0), dword_8(0), dict()
 	{
 	}
 
 	__forceinline Gen_t_0019a890_p16cd(const Gen_t_0019a890_p16cd &other)
-		: next(other.next), previous(other.previous), reserved(other.reserved),
-		  free(other.free), generation(other.generation), dict(other.dict)
+		: next(other.next), previous(other.previous), word_4(other.word_4),
+		  word_6(other.word_6), dword_8(other.dword_8), dict(other.dict)
 	{
 	}
 };
