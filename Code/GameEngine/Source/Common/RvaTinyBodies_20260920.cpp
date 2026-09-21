@@ -322,3 +322,8 @@ void Rva001222F0Noop()
 void Rva0040B1B0Noop()
 {
 }
+
+// ?Rva0040B1C0Noop@@YAXXZ
+void Rva0040B1C0Noop()
+{
+}
