@@ -6,3 +6,8 @@
 void Rva003BE890()
 {
 }
+
+// ?Rva003BE880@@YAXXZ
+void Rva003BE880()
+{
+}
