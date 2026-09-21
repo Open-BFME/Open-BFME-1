@@ -1,5 +1,5 @@
 // ?repairStructure@AIPlayer@@UAEXW4ObjectID@@@Z
-// partial score=0.75 date=2026-09-09
+// partial score=0.76 date=2026-09-21
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: AIPlayer::repairStructure, retail 0x00165070, 101 bytes.
 //
@@ -28,6 +28,29 @@
 // `structuresInQueue() = n + 1` with `++structuresInQueue()` (compiles to
 // retail's direct `inc dword ptr [esi+0x60]` but then drops ebp entirely,
 // a worse match at 50 diff bytes). This 24-byte version is the best found.
+//
+// 2026-09-21 session (sonnet-5): the real BFME source is present-unmatched
+// in AIPlayer.cpp (m_structuresToRepair/m_structuresInQueue at +0x4c/+0x64,
+// with an isKindOf(KINDOF_BRIDGE) guard and a plain `m_structuresInQueue++`
+// tail) but it targets a LATER build: Object::isKindOf is a real out-of-line
+// virtual call through Thing::getTemplate (Thing_isKindOf.cpp), not
+// eliminable, so a binary with no isKindOf call at this site cannot come
+// from that exact source, and compiling that source directly here produces
+// a fully inlined findObjectByID and +4-shifted fields that do not match
+// this RVA at all. Re-tried and rejected this session: dropping the `n`
+// local entirely and reading structuresInQueue() at every use site (compiles
+// 4 bytes SHORTER, drops the ebp reload the loop needs, 50 diffs -- this is
+// what the present-unmatched source's tail shape actually produces, and it
+// still mirrors ebx/edx the wrong way); declaring `ObjectID id =
+// structureObj->getID();` explicitly (before OR after `n`) instead of
+// letting the compiler hoist it out of the loop condition (42 diffs, worse,
+// loses the ebp reload too); `unsigned int n` instead of `int n` (no change,
+// still 24 diffs); a `volatile` qualifier on structuresInQueue()'s int or on
+// getID()'s ObjectID field, and a `_ReadWriteBarrier()` after computing `n`
+// (all three regress to 50-55 diffs, same ebp-reload loss). The ebx/edx
+// mirror looks like a pure MSVC 7.1 allocator preference with no available
+// source lever; every variant that changes it also loses the loop's ebp
+// reload, which is worse. Leaving the 24-diff form banked.
 
 class Object;
 enum ObjectID { OBJECTID_INVALID = 0 };
