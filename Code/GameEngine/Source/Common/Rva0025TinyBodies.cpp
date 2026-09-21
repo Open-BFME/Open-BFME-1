@@ -158,6 +158,11 @@ void Rva00258390Noop()
 {
 }
 
+// ?Rva00258720Noop@@YAXXZ
+void Rva00258720Noop()
+{
+}
+
 class Rva00258550Dword
 {
 public:
