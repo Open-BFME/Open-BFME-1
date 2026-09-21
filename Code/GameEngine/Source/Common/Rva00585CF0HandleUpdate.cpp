@@ -1,7 +1,9 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib /I.
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #include <algorithm>
+#include "Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "reference/shims/stringbaseunicode/Common/UnicodeString.h"
 // Retail 0x00585CF0: preserve the banked type/member labels and keep
 // address tokens on unproven method identities. The range at +24/+28
 // is searched for zero by STL __find at 0x005853B0. Its empty iterator
@@ -40,6 +42,7 @@ public:
 	void bfmeUpdateYF_00585CF0(BfmeHandleYF h);
 	void bfmeNoteYF_00585C20(BfmeHandleYF h);
 	void rva00585D60(BfmeHandleYF h);
+	void rva00585E90(BfmeHandleYF h);
 };
 
 void BfmeHostYF::bfmeUpdateYF_00585CF0(BfmeHandleYF h)
@@ -135,5 +138,32 @@ void BfmeHostYF::rva00585D60(BfmeHandleYF h)
 		g_bfmeGameCW->rva0060D4C0(0);
 		TheMouse->bfmeSetCursorAAX(1);
 		((Rva003BCA20*)Glo012F1028)->go();
+	}
+}
+
+struct Rva00579160Manager {
+	unsigned int rva0046B2A0(const AsciiString &name);
+};
+extern Rva00579160Manager *Rva00579160TheManager;
+void _bfme_setLivingWorldRegionName(int index, const UnicodeString &text);
+void _bfme_setLivingWorldRegionBonus(int index, const UnicodeString &text);
+void Open2SendNotice51B050(int index);
+// Retail 0x00585E90: event 1 formats the witnessed portrait key, erases
+// that manager entry, clears both region labels, and stores state 4.
+void BfmeHostYF::rva00585E90(BfmeHandleYF h)
+{
+	BfmeObjYF *o = h.m_bfmePtrYF;
+	bfmeNoteYF_00585C20(h);
+	const int *end = o->m_bfme28YF;
+	const int *begin = o->m_bfme24YF;
+	int id = o->m_bfme10YF;
+	if (std::find(begin, end, 1) != end) {
+		AsciiString name;
+		name.format("Popup%d/ButtonClip/Portrait", id);
+		Rva00579160TheManager->rva0046B2A0(name);
+		_bfme_setLivingWorldRegionName(id, UnicodeString::TheEmptyString);
+		_bfme_setLivingWorldRegionBonus(id, UnicodeString::TheEmptyString);
+		Open2SendNotice51B050(id);
+		o->m_bfme30YF = 4;
 	}
 }
