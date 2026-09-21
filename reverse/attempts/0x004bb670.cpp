@@ -1,5 +1,5 @@
-// ?d_004bb670@@YAXXZ
-// partial score=0.96 date=2026-09-11
+// ?Rva004BB670GadgetListBoxAddEntryTextLines@@YAHPAVGameWindow@@VUnicodeString@@HHH_N@Z
+// partial score=0.98 date=2026-09-21
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // The BFME-only helper at 0x004BB670 splits a UnicodeString at newlines and
 // appends each resulting line through GadgetListBoxAddEntryText.  The original
@@ -59,21 +59,23 @@ int Rva004BB670GadgetListBoxAddEntryTextLines( GameWindow *listbox,
 
 	for ( int offset = 8, i = 0; i <= length; ++i, offset += 2 )
 	{
-		unsigned short character = text.data() ?
-			*(unsigned short *)((unsigned char *)text.data() + offset) : 0;
-		if ( character != 0x000A && character != 0 )
+		if ( i < length )
 		{
-			line.concat( &character, 1 );
+			unsigned short character = text.data() ?
+				*(unsigned short *)((unsigned char *)text.data() + offset) : 0;
+			if ( character != 0x000A && character != 0 )
+			{
+				line.concat( &character, 1 );
+				continue;
+			}
 		}
-		else
-		{
-			if ( line.isEmpty() )
-				line.concat( (const unsigned short *)L" ", 1 );
 
-			GadgetListBoxAddEntryText( listbox, line, color, row++, column, overwrite );
-			++rowsAdded;
-			line.releaseBuffer();
-		}
+		if ( line.isEmpty() )
+			line.concat( (const unsigned short *)L" ", 1 );
+
+		GadgetListBoxAddEntryText( listbox, line, color, row++, column, overwrite );
+		++rowsAdded;
+		line.releaseBuffer();
 	}
 
 	return rowsAdded;
