@@ -36,14 +36,34 @@ if ! python3 tools/conversion_gate.py "$base" HEAD; then
     exit 1
 fi
 
-mapfile -t delta < <(python3 tools/delta_sources.py --range "$base" HEAD)
+# mapfile cannot see the exit status of a process substitution, so a
+# delta_sources crash used to read as "no ledger claims" and the PR was
+# reported VERIFIED with nothing byte-verified. Run it to a file first, as
+# .githooks/pre-push does.
+delta_out=$(mktemp)
+if ! python3 tools/delta_sources.py --range "$base" HEAD > "$delta_out"; then
+    rm -f "$delta_out"
+    echo "PR #$pr FAILED: delta_sources could not list the changed claims" >&2
+    restore
+    exit 1
+fi
+mapfile -t delta < "$delta_out"
+rm -f "$delta_out"
 
 # The third gate with the same blind spot the hooks had: a reverse/symbols.csv
 # PIN DELETION changes no functions.csv row, so the delta above is empty for it
 # while claimed rows across the tree lose their REL32 candidate and go red.
 # d27ae4b7b reached master with 1,599 deletions and a two-file byte-verify.
 if ! git diff --quiet "$base" HEAD -- reverse/symbols.csv; then
-    mapfile -t pin_delta < <(python3 tools/delta_sources.py --range "$base" HEAD --pins)
+    pin_delta_out=$(mktemp)
+    if ! python3 tools/delta_sources.py --range "$base" HEAD --pins > "$pin_delta_out"; then
+        rm -f "$pin_delta_out"
+        echo "PR #$pr FAILED: delta_sources --pins could not list the affected sources" >&2
+        restore
+        exit 1
+    fi
+    mapfile -t pin_delta < "$pin_delta_out"
+    rm -f "$pin_delta_out"
     mapfile -t delta < <(printf '%s\n' "${delta[@]}" "${pin_delta[@]}" | sed '/^$/d' | sort -u)
 fi
 
