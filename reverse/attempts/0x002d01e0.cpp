@@ -60,7 +60,7 @@ public:
 	virtual void slot10();
 	virtual void slot14();
 	virtual void slot18();
-	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer, Bool clip, Bool useBuildings);
+	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer, Coord3D *normal, Bool clip);
 };
 
 extern TerrainLogic *TheTerrainLogic;
