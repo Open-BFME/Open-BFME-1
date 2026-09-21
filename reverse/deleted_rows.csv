@@ -27566,3 +27566,4 @@ _$E27,0x00C6B2C0,stale MainMenuUtils static initializer claim removed; the same 
 ?Rva00465FC0Noop@@YAXXZ,0x00465FC0,"duplicate over-claim retracted: an equivalent claim for the same one-byte ret landed first upstream while this branch was in review"
 ?Rva0063FEC0Noop@@YAXXZ,0x0063FEC0,"duplicate over-claim retracted: an equivalent claim for the same one-byte ret landed first upstream while this branch was in review"
 ?Rva0063FEE0Noop@@YAXXZ,0x0063FEE0,"duplicate over-claim retracted: an equivalent claim for the same one-byte ret landed first upstream while this branch was in review"
+?bfmeCopyInto_00134BB0@@YAXPBUBfmeCopyElem_00134BB0@@0PAU1@PAI@Z,0x00133F50,"void-typed naked asm lift retracted: the body returns the destination end pointer so the void ABI was wrong and the clean pointer-returning C++ replacement follows in the next commit"
