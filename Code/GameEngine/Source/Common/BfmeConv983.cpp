@@ -5,7 +5,7 @@ class BfmeClock983
 public:
 	virtual void bfmeV0983();
 	virtual void bfmeV1983();
-	virtual void bfmeV2983();
+	virtual int bfmeV2983(int a, void *b, int c);
 	virtual void bfmeV3983();
 	virtual void bfmeV4983();
 	virtual void bfmeV5983();
@@ -47,7 +47,10 @@ public:
 	virtual void bfmeV41983();
 	virtual void bfmeV42983();
 	virtual void bfmeV43983();
-	virtual void bfmeNote983(int a);
+	virtual void bfmeNote983(BfmeClock983 *a);
+
+	char m_bfmePad983[0x1d8];
+	BfmeClock983 *m_bfmeBack983;
 };
 
 extern BfmeClock983 *g_bfmeClock983;
@@ -56,16 +59,38 @@ class BfmeG983
 {
 public:
 	void bfmeGo983(int a, void *b, int c);
-	void bfmeBase983(int a, void *b, int c);
+	__declspec(noinline) int bfmeBase983(int a, void *b, int c);
 
-	char m_bfmePad[8];
-	int m_bfmeVal;
+	char m_bfmePad[4];
+	BfmeClock983 *m_bfmeA;
+	BfmeClock983 *m_bfmeB;
 };
 
 void BfmeG983::bfmeGo983(int a, void *b, int c)
 {
 	if (a == 0x1b && b)
-		g_bfmeClock983->bfmeNote983(m_bfmeVal);
+		g_bfmeClock983->bfmeNote983(m_bfmeB);
 
 	bfmeBase983(a, b, c);
+}
+
+int BfmeG983::bfmeBase983(int a, void *b, int c)
+{
+	int result;
+	if (m_bfmeA != 0)
+		result = m_bfmeA->bfmeV2983(a, b, c);
+	else
+		result = m_bfmeB->bfmeV2983(a, b, c);
+
+	if (a == 2)
+	{
+		BfmeClock983 *front = m_bfmeA;
+		BfmeClock983 *back = m_bfmeB;
+		if (back == 0)
+			return result;
+
+		back->m_bfmeBack983 = front;
+		m_bfmeB = 0;
+	}
+	return result;
 }
