@@ -2,3 +2,7 @@
 void Rva000EE260Noop(void)
 {
 }
+
+void Rva000EE250Noop(void)
+{
+}
