@@ -88525,3 +88525,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?rva000181a1Target@@YAXXZ,0x00753280,TU-local clean-C++ alias for the matched ProductionPrerequisite copy body used by the 0x000181A1 tail thunk
 ?rva000251D0Target@@YAXXZ,0x006A3DB0,TU-local clean-C++ alias for the matched HideShowSubObjInfo vector insert-overflow body used by the 0x000251D0 tail thunk
 ?rva000097CDTarget@@YAXXZ,0x0036D980,TU-local clean-C++ alias for the matched DeliverPayloadNugget Payload copy body used by the 0x000097CD tail thunk
+?valueThunk@Rva000F72D0FrameCachedValue@@QAEMM@Z,0x00004CC8,ILT alias for Rva000F72D0FrameCachedValue::value used by the 0x00345910 script-parameter evaluator
