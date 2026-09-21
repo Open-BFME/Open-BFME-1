@@ -593,6 +593,12 @@ void Rva0037D3A0Noop()
 {
 }
 
+// Retail 0x0042F270 is a one-byte ret target called by the generated thunk at
+// 0x0003F7A1.  No caller or identity table proves a semantic owner.
+void Rva0042F270Noop()
+{
+}
+
 class Rva0037D8F0Body
 {
 public:
