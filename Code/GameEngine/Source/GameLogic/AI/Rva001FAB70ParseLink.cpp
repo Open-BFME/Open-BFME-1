@@ -33,7 +33,7 @@ public:
 		else
 		{
 			thisLength = 0;
-			thisText = (const char *)0x0107388b;
+			thisText = "";
 		}
 		int otherLength = 3;
 		int length = thisLength < otherLength ? thisLength : otherLength;
