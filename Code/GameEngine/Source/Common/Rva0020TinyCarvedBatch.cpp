@@ -93,6 +93,11 @@ float Rva0020DC60Owner::get(void) const
 	return m_value;
 }
 
+// ?Rva0020DC70Noop@@YAXXZ
+void Rva0020DC70Noop(void)
+{
+}
+
 class Rva0020DC90Owner
 {
 public:
