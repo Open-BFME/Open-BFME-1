@@ -117,6 +117,11 @@ Rva000A8A00 *Rva000A8A00::getThis()
 	return this;
 }
 
+// ?Rva000A89D0Noop@@YAXXZ
+void Rva000A89D0Noop()
+{
+}
+
 class Rva000A8A40
 {
 public:
