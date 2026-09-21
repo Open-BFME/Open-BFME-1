@@ -4,3 +4,8 @@
 void Rva006966D0Empty(void)
 {
 }
+
+// ?Rva006966F0Noop@@YAXXZ
+void Rva006966F0Noop(void)
+{
+}
