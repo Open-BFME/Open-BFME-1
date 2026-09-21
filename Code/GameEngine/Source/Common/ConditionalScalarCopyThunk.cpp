@@ -11,3 +11,8 @@ void conditionalScalarCopyAlternate(unsigned long *destination, const unsigned l
         *destination = *source;
     }
 }
+
+// The carved boundary at 0x0036CAD0 contains one ret and no known semantic owner.
+void b_0036cad0()
+{
+}
