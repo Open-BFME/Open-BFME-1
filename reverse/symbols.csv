@@ -621,6 +621,7 @@ name,address,notes
 ??$_M_allocate_and_copy@PBUGen_t_006bea40_p8pod@@@?$vector@UGen_t_006bea40_p8pod@@V?$allocator@UGen_t_006bea40_p8pod@@@_STL@@@_STL@@IAEPAUGen_t_006bea40_p8pod@@IPBU2@0@Z,0x006BE9C0,gen-tgrid payload member
 ??$_M_allocate_and_copy@PBUGeometryShape@@@?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@IAEPAUGeometryShape@@IPBU2@0@Z,0x00048464,GeometryShape vector assign callee
 ??$_M_allocate_and_copy@PBUHideShowSubObjInfo@ModelConditionInfo@@@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEPAUHideShowSubObjInfo@ModelConditionInfo@@IPBU23@0@Z,0x00030D69,ILT thunk used by call site
+?rva00030d69Target@@YAXXZ,0x003B4C80,TU-local clean-C++ alias for the matched HideShowSubObjInfo allocate-and-copy body used by the 0x00030D69 tail thunk
 ??$_M_allocate_and_copy@PBUICoord2D@@@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@IAEPAUICoord2D@@IPBU2@0@Z,0x009F5370,decoded from vector assign call site
 ??$_M_allocate_and_copy@PBUNugget@ModuleInfo@@@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@IAEPAUNugget@ModuleInfo@@IPBU23@0@Z,0x000313AE,resweep callee back-solved
 ??$_M_allocate_and_copy@PBUParticleSysBoneInfo@@@?$vector@UParticleSysBoneInfo@@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@IAEPAUParticleSysBoneInfo@@IPBU2@0@Z,0x000286AA,pinharvest x1 (thunk)
