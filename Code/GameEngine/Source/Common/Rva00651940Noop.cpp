@@ -5,3 +5,7 @@
 void Rva00651940Noop()
 {
 }
+
+void Rva00651990Noop()
+{
+}
