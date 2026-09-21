@@ -1,9 +1,20 @@
 // ?d_006b1b40@@YAXXZ
-// partial score=0.82 date=2026-09-18
+// partial score=0.88 date=2026-09-21
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x006B1B40: BFME Miles sample filter setup reached by the
 // PlayingAudio sample-start helper at 0x006B3E30.  The address-qualified
 // method name preserves the BFME fork's one-reference argument shape.
+// Size now matches retail exactly (332B): the delay-block "value = 0.0"
+// reset and the reverb-off "wet" argument must be literal 0.0f, not a
+// load of the Rva006B1B40Zero global -- retail bakes both as an immediate
+// (mov [esp+N],0 / push 0) since MSVC treats a true float literal as a
+// compile-time bit pattern instead of a memory dereference.
+// Remaining 41 non-reloc bytes are pure MSVC 7.1 register-allocation
+// residue (ecx/edx/eax permutations and one fld operand-order swap in the
+// fade divide and the delay/reverb argument setup); confirmed resistant to
+// declaration-order, named-temp, and comparison-operand-order rewrites --
+// each left the compiled shape hash unchanged, so treat as compiler-
+// internal scheduling, not a semantic or layout error.
 
 typedef float Real;
 typedef unsigned char Bool;
@@ -132,8 +143,7 @@ void Rva006B1B40MilesAudioManager::rva006B1B40InitFilters(
 	getPitchScale.freeGetPitchScale = ::j_00027124;
 	volatile Real pitchScale =
 		(playing->m_event->*getPitchScale.memberGetPitchScale)();
-	Real pitchZero = Rva006B1B40Zero;
-	if (pitchScale == pitchZero)
+	if (pitchScale == Rva006B1B40Zero)
 	{
 	}
 	else
@@ -149,7 +159,7 @@ void Rva006B1B40MilesAudioManager::rva006B1B40InitFilters(
 		Real value = playing->m_event->m_delay;
 		_AIL_set_sample_processor(sample, 1, delayFilter);
 		_AIL_set_filter_sample_preference(sample, "Mono Delay Time", &value);
-		value = Rva006B1B40Zero;
+		value = 0.0f;
 		_AIL_set_filter_sample_preference(sample, "Mono Delay", &value);
 		_AIL_set_filter_sample_preference(sample, "Mono Delay Mix", &value);
 	}
@@ -158,5 +168,5 @@ void Rva006B1B40MilesAudioManager::rva006B1B40InitFilters(
 		_AIL_set_sample_reverb_levels(sample, playing->m_event->m_info->m_reverbDry,
 			playing->m_event->m_info->m_reverbWet);
 	else
-		_AIL_set_sample_reverb_levels(sample, 1.0f, Rva006B1B40Zero);
+		_AIL_set_sample_reverb_levels(sample, 1.0f, 0.0f);
 }
