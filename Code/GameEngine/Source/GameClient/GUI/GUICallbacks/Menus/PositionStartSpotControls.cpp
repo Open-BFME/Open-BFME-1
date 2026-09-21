@@ -1,5 +1,6 @@
 // ?positionStartSpotControls@@YAXPAVGameWindow@@0PAUCoord3D@@PAVMapMetaData@@QAPAV1@@Z
-// partial score=0.93 date=2026-09-16
+// Retail 0x0044F960, 427 bytes. Coordinate-calculation locals end before
+// the overlap loop so VC7.1 reuses their stack slots as retail does.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /FAsc /Fabuild/rva0044f960.cod /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 typedef int Int;
@@ -55,30 +56,30 @@ void positionStartSpotControls(GameWindow *win, GameWindow *mapWindow,
 	if (!win || !mmd || !mapWindow || !buttonMapStartPositions)
 		return;
 
-	Int ul[2];
-	ICoord2D *ulAddress = (ICoord2D *)ul;
 	ICoord2D winMapSize, winMapPos, gadgetPos;
 	Int gadgetSize[2];
 	mapWindow->winGetSize(&winMapSize.x, &winMapSize.y);
 	mapWindow->winGetScreenPosition(&winMapPos.x, &winMapPos.y);
 	win->winGetSize(&gadgetSize[0], &gadgetSize[1]);
-	Int smallWidth, smallHeight;
 	{
+		Int ul[2];
+		ICoord2D *ulAddress = (ICoord2D *)ul;
+		Int smallWidth, smallHeight;
 		ICoord2D lr;
 		findDrawPositions(0, 0, winMapSize.x, winMapSize.y,
 			mmd->m_extent, ulAddress, &lr);
 		smallWidth = lr.x - ul[0];
 		smallHeight = lr.y - ul[1];
-	}
 
-	Real position;
-	position = (pos->x - mmd->m_extent.lo.x) /
-		(mmd->m_extent.hi.x - mmd->m_extent.lo.x);
+		Real position;
+		position = (pos->x - mmd->m_extent.lo.x) /
+			(mmd->m_extent.hi.x - mmd->m_extent.lo.x);
 		gadgetPos.x = (position * smallWidth) - gadgetSize[0] / 2 + ul[0];
 
-	position = (pos->y - mmd->m_extent.lo.y) /
-		(mmd->m_extent.hi.y - mmd->m_extent.lo.y);
-	gadgetPos.y = ((1 - position) * smallHeight) - gadgetSize[1] / 2 + ul[1];
+		position = (pos->y - mmd->m_extent.lo.y) /
+			(mmd->m_extent.hi.y - mmd->m_extent.lo.y);
+		gadgetPos.y = ((1 - position) * smallHeight) - gadgetSize[1] / 2 + ul[1];
+	}
 
 	for (Int i = 0; i < MAX_SLOTS; ++i)
 	{
