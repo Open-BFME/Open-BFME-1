@@ -30,6 +30,11 @@ Rva00282F40 *Rva00282F40::self(void)
 	return this;
 }
 
+// The carved boundary at 0x00282F50 contains only a return.
+void Rva00282F50Noop(void)
+{
+}
+
 class Rva00282F70
 {
 public:
