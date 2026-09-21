@@ -9,3 +9,8 @@ public:
 void Rva002C91D0::m(int)
 {
 }
+
+// ?Rva002C91E0Noop@@YAXXZ
+void Rva002C91E0Noop()
+{
+}
