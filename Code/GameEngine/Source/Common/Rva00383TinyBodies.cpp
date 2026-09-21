@@ -116,6 +116,11 @@ void Rva00383E70Noop(void)
 {
 }
 
+// The carved boundary at 0x00383E80 contains only a return.
+void Rva00383E80Noop(void)
+{
+}
+
 class Rva00383E90Self
 {
 public:
