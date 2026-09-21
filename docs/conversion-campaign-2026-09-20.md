@@ -341,3 +341,14 @@ verdict (306 bodies / 197 KB), triaging each list for landed same-class
 siblings before writing anything. Identity found this hour without a
 landing: GeometryInfo::DoXfer at 0x00880600 (vtable slot 3, three landed
 constructors install the table).
+
+### Hour 25 — 19:02Z to 20:02Z (one to two seats)
+
+No fleet landing; six banks (0.83 at 0x0036FF70, a CastleMember query at
+exact size with an esi/edi + eax/edx role swap; 0.87 at 0x002D2790 with an
+x87 operand-order residue). Fleet 49 bodies / 11,018 B cumulative;
+repository-wide +29,330 B / +0.30 pp (67.04% -> 67.34%). Seat count
+reduced to one: a zero-yield session still spends a verdict on every body
+it touches, and the two residue classes that stop nearly every remaining
+candidate (callee-saved register role swaps; x87 operand order) have no
+lever this campaign found.
