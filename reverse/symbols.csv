@@ -88530,3 +88530,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?g_bfmeStateDF@@3PAVBfmeHostESM@@A,0x012F7048,BfmeThingBOC::bfmeTailBOC receiver for bfmeRunESM; reuses the 0x012F7048 global already pinned as Gen_00609320/BfmeStateDF
 ?unlinkChain@Rva009A36F0Owner@@QAEXPAVRva009A36F0Thing@@@Z,0x009A3630,address-derived direct pin for the still-dump 190B chain-unlinker called from Rva009A36F0Owner::apply (ecx=this thiscall one arg=thing per retail push esi before the call)
 ?destroyDirect@Rva009A45A0CollisionData@@QAEXXZ,0x009A2390,TU-local non-destructor alias for the matched CollisionData dtor body so the pseudo-destructor-call ABI quirk does not apply; same address as the real ??1Rva009A45A0CollisionData@@QAE@XZ
+?rva000481e9Target@@YAXXZ,0x00771D00,TU-local clean-C++ alias for the matched vector clear body used by the 0x000481E9 tail thunk
