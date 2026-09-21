@@ -2754,3 +2754,10 @@ void Rva0045E720Noop()
 void Rva0045E470Noop()
 {
 }
+
+// ?Rva0045CFE0Noop@@YAXXZ
+// Retail 0x0045CFE0 contains only ret. The carved boundary proves an empty
+// cdecl body, but no evidence identifies its owner.
+void Rva0045CFE0Noop()
+{
+}
