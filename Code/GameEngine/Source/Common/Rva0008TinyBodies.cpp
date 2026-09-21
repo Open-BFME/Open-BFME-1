@@ -211,6 +211,11 @@ void *Rva00094C60Self::get()
     return this;
 }
 
+// The carved boundary at 0x00094C70 contains only a return.
+void Rva00094C70Noop()
+{
+}
+
 class Rva00095010False
 {
 public:
