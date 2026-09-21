@@ -342,3 +342,9 @@ int Rva003A5D80Body::body() const
 {
 	return m_value;
 }
+
+// The carved boundary at 0x003A5D60 contains one ret byte.
+// No semantic owner is proven, so the name keeps the retail address.
+void Rva003A5D60Noop()
+{
+}
