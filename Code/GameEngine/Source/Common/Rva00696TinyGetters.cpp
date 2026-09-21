@@ -298,3 +298,8 @@ void *Rva00696D60::get()
 {
 	return this;
 }
+
+// ?Rva00696BC0Noop@@YAXXZ
+void Rva00696BC0Noop()
+{
+}
