@@ -4,8 +4,8 @@
 //
 // The matched callers identify this as BfmeNodeDX::bfmeEmit1281.  The
 // receiver and the node-detail offsets are witnessed by the callers and by
-// the retail body.  The remaining Apt node/value owners stay address-shaped;
-// no semantic class name is asserted for them.
+// the retail body.  The remaining Apt node/value owners use names derived from
+// their addresses, so no semantic class name is asserted for them.
 
 extern void *(__cdecl *Rva008C5D70Alloc)(unsigned int bytes);
 extern void (__cdecl *TheBfmeFree)(void *storage, unsigned int bytes) throw();
@@ -22,21 +22,20 @@ extern void __cdecl bfmeRemove(BfmeItemDX *item);
 class Rva8CBC80Derived
 {
 public:
-	static __forceinline void *operator new(unsigned int bytes) throw()
+	virtual ~Rva8CBC80Derived();
+
+	static void *operator new(unsigned int)
 	{
-		char *storage = (char *)Rva008C5D70Alloc(bytes + 8);
+		char *storage = (char *)Rva008C5D70Alloc(0x20);
 		storage += 8;
 		bfmePush((BfmeItemDX *)storage);
 		return storage;
 	}
 
-	static void operator delete(void *storage, unsigned int bytes)
-	{
-		bfmeRemove((BfmeItemDX *)storage);
-		TheBfmeFree((char *)storage - 8, bytes + 8);
-	}
+	static void operator delete(void *storage, unsigned int bytes);
 
 	Rva8CBC80Derived();
+	unsigned int m_flags;
 	char m_payload[0x18];
 };
 
@@ -163,7 +162,7 @@ public:
 	virtual void slot18();
 	virtual void slot19();
 
-	bool bfmeEmit1281(int mode, void *tail, int enabled);
+	void bfmeEmit1281(int mode, void *tail, int enabled);
 
 	unsigned int m_flags;
 	char m_padding08[0x50 - 0x08];
@@ -243,6 +242,8 @@ extern void d_008cced0(void);
 class Gen_008A0D60
 {
 public:
+	Gen_008A0D60() {}
+
 	__forceinline ~Gen_008A0D60()
 	{
 		if (m_buffer != 0)
@@ -278,7 +279,7 @@ static __forceinline AptValue *bfmeLookupOpaque(AptValue *value, void *key)
 	return (value->*thunk.typed)(key);
 }
 
-bool BfmeNodeDX::bfmeEmit1281(int mode, void *tail, int enabled)
+void BfmeNodeDX::bfmeEmit1281(int mode, void *tail, int enabled)
 {
 	bool changed = false;
 	BfmeNodeDX *self = this;
@@ -287,7 +288,7 @@ bool BfmeNodeDX::bfmeEmit1281(int mode, void *tail, int enabled)
 	{
 		flags >>= 15;
 		if ((((unsigned char)~flags) & 1) == 0)
-			return changed;
+			return;
 	}
 
 	Rva008D22C0Detail *detail = (Rva008D22C0Detail *)self->m_detail;
@@ -482,5 +483,5 @@ bool BfmeNodeDX::bfmeEmit1281(int mode, void *tail, int enabled)
 		}
 	}
 
-	return changed;
+	return;
 }
