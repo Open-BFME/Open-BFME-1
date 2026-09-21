@@ -307,3 +307,26 @@ Gen_t_00605630Tree::iterator Rva00605F00InsertEqual(Gen_t_00605630Tree *tree,
 {
 	return tree->insert_equal(v);
 }
+
+// Retail 0x00606040: the same ECX tree calls insert_equal through ILT
+// 0x0000AAB5 and copies its one-pointer iterator into the hidden result.
+// Preserve an address-derived owner: the wrapper class identity is unproven.
+
+struct Rva00606040Iterator
+{
+	_STL::_Rb_tree_node_base *m_node;
+	Rva00606040Iterator(const Gen_t_00605630Tree::iterator &value)
+		: m_node(value._M_node) {}
+};
+
+class Rva00606040Tree
+{
+	Gen_t_00605630Tree m_tree;
+public:
+	Rva00606040Iterator insert(const Gen_t_00605630Value &value);
+};
+
+Rva00606040Iterator Rva00606040Tree::insert(const Gen_t_00605630Value &value)
+{
+	return m_tree.insert_equal(value);
+}
