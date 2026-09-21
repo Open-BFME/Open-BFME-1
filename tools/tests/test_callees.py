@@ -48,6 +48,7 @@ def test_placeholder_name_is_not_reported_as_a_typed_contract(monkeypatch, capsy
     monkeypatch.setattr(callees, "call_targets", lambda *_: {0x3000: 1})
     monkeypatch.setattr(callees, "read", lambda *_: b"\x90" * 5)
     monkeypatch.setattr(callees, "import_calls", lambda *_: {})
+    monkeypatch.setattr(callees, "decoded_extent", lambda *_: 6)
     monkeypatch.setattr(sys, "argv", ["callees.py", "0x2000", "6"])
     assert callees.main() == 0
     output = capsys.readouterr().out
@@ -71,3 +72,28 @@ def test_import_inventory_respects_boundaries_and_absolute_operand(monkeypatch, 
     install_body(monkeypatch, raw)
     monkeypatch.setattr(pin_consistency, "import_table", lambda: {0x3000: ("x.dll", "f")})
     assert not callees.import_calls(0x2000, len(raw))
+
+
+def run_main(monkeypatch, body):
+    install_body(monkeypatch, body)
+    monkeypatch.setattr(callees, "ledger_names", lambda: {})
+    monkeypatch.setattr(callees, "import_calls", lambda *_: {})
+    monkeypatch.setattr(sys, "argv", ["callees.py", "0x2000", str(len(body))])
+    return callees.main()
+
+
+def test_a_fully_decoded_body_has_no_warning(monkeypatch, capsys):
+    body = bytes.fromhex("e8") + struct.pack("<i", 0x100) + bytes.fromhex("c3")
+    assert run_main(monkeypatch, body) == 0
+    assert "INCOMPLETE" not in capsys.readouterr().out
+
+
+def test_decoding_that_stops_early_is_reported(monkeypatch, capsys):
+    # call; two undecodable bytes; a second call the linear decode never reaches
+    body = (bytes.fromhex("e8") + struct.pack("<i", 0x100) + bytes.fromhex("0f04")
+            + bytes.fromhex("e8") + struct.pack("<i", 0x200) + bytes.fromhex("c3"))
+    install_body(monkeypatch, body)
+    assert callees.decoded_extent(0x2000, len(body)) == 5
+    assert run_main(monkeypatch, body) == 3
+    output = capsys.readouterr().out
+    assert "INCOMPLETE INVENTORY" in output and "+0x5 of 0xD" in output

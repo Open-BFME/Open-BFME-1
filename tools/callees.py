@@ -22,6 +22,9 @@ takes a bare address and never needs a row.
     python3 tools/callees.py 0x004DBE80 4126
     python3 tools/callees.py 0x00757E70 982 --unpinned-only
 
+Exit status 3 and a WARNING line mean decoding did not reach the requested size,
+so the listing is incomplete.
+
 Read it BEFORE writing the body, but verify the callee contract independently.
 Generated dumps and thunks can have placeholder void signatures unrelated to
 the actual ABI. A ledger name is neither signature proof nor a symbols.csv pin.
@@ -81,6 +84,21 @@ def call_targets(rva, size):
     return collections.Counter(targets)
 
 
+def decoded_extent(rva, size):
+    """Bytes of the body that linear decoding covers before it stops.
+
+    capstone ends the stream at the first byte it cannot decode and says
+    nothing, so an inline jump table or padding inside the extent used to cut
+    the inventory short while the listing still read as complete.
+    """
+    from capstone import Cs, CS_ARCH_X86, CS_MODE_32
+    body = build.read_target_bytes(rva, size)
+    end = 0
+    for instruction in Cs(CS_ARCH_X86, CS_MODE_32).disasm(body, rva):
+        end = instruction.address + instruction.size - rva
+    return end
+
+
 def import_calls(rva, size):
     """Resolve call [absolute IAT slot] from the PE import directory.
 
@@ -136,13 +154,17 @@ def main():
         print("  Every direct call target above has a ledger name, not necessarily a proven signature.")
     print("  Ledger names, especially generated/thunk placeholders, are not ABI proof. "
           "Verify full callee bodies and typed declarations before adding or reusing pins.")
+    covered = decoded_extent(rva, args.size)
+    if covered != args.size:
+        print(f"\n  WARNING: INCOMPLETE INVENTORY. Decoding stopped at +0x{covered:X} of 0x{args.size:X} "
+              f"bytes (inline data, padding or a wrong size); calls after that point are NOT listed.")
     imports = import_calls(rva, args.size)
     if imports and not args.unpinned_only:
         print("\n  Direct IAT calls (slot VA; names read from the PE import directory):")
         for (slot, dll, name), hits in sorted(imports.items()):
             print(f"  [{slot:#x}]  x{hits}  {dll}!{name}")
         print("  Verify imported argument types separately; register and vtable calls are not listed.")
-    return 0
+    return 0 if covered == args.size else 3
 
 
 if __name__ == "__main__":
