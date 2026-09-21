@@ -25,3 +25,8 @@ public:
 void Rva0074AC40NoOp::noop()
 {
 }
+
+// ?Rva0074AC30NoOp@@YAXXZ
+void Rva0074AC30NoOp()
+{
+}
