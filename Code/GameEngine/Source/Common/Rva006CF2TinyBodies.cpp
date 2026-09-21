@@ -115,6 +115,11 @@ void Rva006CF4D0Owner::invoke(int)
 {
 }
 
+// ?Rva006CF430Noop@@YAXXZ
+void Rva006CF430Noop()
+{
+}
+
 class Rva006CF500Owner
 {
 public:
