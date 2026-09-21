@@ -5,3 +5,8 @@
 void Rva002E2D90(void)
 {
 }
+
+// Retail 0x002E2DB0 is another isolated one-byte return body.
+void Rva002E2DB0(void)
+{
+}
