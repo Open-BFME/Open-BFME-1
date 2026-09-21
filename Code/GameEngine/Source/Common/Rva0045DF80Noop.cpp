@@ -20,3 +20,8 @@ void Rva0045DF40Noop()
 void Rva0045DFB0Noop()
 {
 }
+
+// ?Rva0045DFC0Noop@@YAXXZ
+void Rva0045DFC0Noop()
+{
+}
