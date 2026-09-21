@@ -4,3 +4,8 @@
 void Rva0036D300Noop()
 {
 }
+
+// ?Rva0036D310Noop@@YAXXZ
+void Rva0036D310Noop()
+{
+}
