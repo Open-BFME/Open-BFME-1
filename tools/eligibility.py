@@ -39,20 +39,31 @@ ROOT = Path(__file__).resolve().parents[1]
 ANON_RE = re.compile(r"^\?(d|dup|j)_[0-9a-fA-F]{8}@@")
 
 
-def load_rows(path=None, tries=4):
+class LedgerUnreadable(RuntimeError):
+    """functions.csv could not be read whole; an empty ledger is not an answer."""
+
+
+def load_rows(path=None, tries=4, wait=1):
     """functions.csv rows, retrying a torn read while another lane writes."""
     path = path or ROOT / "reverse/functions.csv"
+    reason = "no read was tried"
     for _ in range(tries):
         try:
             with open(path, newline="", encoding="utf-8", errors="replace") as fh:
-                rows = list(csv.DictReader(fh))
-            if all(r.get("source") is not None and r.get("target_rva") is not None
-                   for r in rows):
+                reader = csv.DictReader(fh)
+                rows, short = [], None
+                for row in reader:
+                    if short is None and (row.get("source") is None
+                                          or row.get("target_rva") is None):
+                        short = reader.line_num
+                    rows.append(row)
+            if short is None:
                 return rows
-        except OSError:
-            pass
-        time.sleep(1)
-    return []
+            reason = f"line {short} has fewer columns than the header"
+        except OSError as exc:
+            reason = f"{type(exc).__name__}: {exc}"
+        time.sleep(wait)
+    raise LedgerUnreadable(f"{path}: {reason} (after {tries} reads)")
 
 
 def rva_of(row):
