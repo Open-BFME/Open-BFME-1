@@ -3,3 +3,7 @@
 void Rva007D4FF0Noop()
 {
 }
+
+void Rva007D5000Noop()
+{
+}
