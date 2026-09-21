@@ -1,5 +1,5 @@
 // ?ObjectSpy@@YAHPAUlua_State@@@Z
-// partial score=0.84 date=2026-09-19
+// partial score=0.85 date=2026-09-21
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 extern "C" void _ReadWriteBarrier(void);
@@ -65,33 +65,32 @@ int ObjectSpy(lua_State *state)
 		goto invalid;
 
 	Object *object;
+	Object *objectSpill;
 	object = TheGameLogic->findObjectByID(objectID);
+	objectSpill = object;
+	_ReadWriteBarrier();
+	*(Object * volatile *)&objectSpill = object;
+	_ReadWriteBarrier();
 	if (object == 0)
 		return 0;
-	_ReadWriteBarrier();
-	*(Object * volatile *)&object = object;
-	_ReadWriteBarrier();
 
 	unsigned targetID = Rva00990030Lookup(state, 2);
 	if (targetID == 0)
 		goto invalid;
 
 	{
-		register unsigned nameKey;
-		register unsigned targetKey;
-		register Object *target;
-		target = TheGameLogic->findObjectByID(targetID);
+		register Object *target = TheGameLogic->findObjectByID(targetID);
 		if (target == 0)
 			return 0;
 
-		nameKey = TheNameKeyGenerator->nameToKey(lua_tostring(state, 3));
+		register unsigned nameKey = TheNameKeyGenerator->nameToKey(lua_tostring(state, 3));
 		if (g_bfmeOwnerBR->bfmeFind(nameKey) == 0)
 		{
 			bfmeGoTGD(reinterpret_cast<int>(state));
 			return 0;
 		}
 
-		targetKey = NAMEKEY(lua_tostring(state, 4));
+		register unsigned targetKey = NAMEKEY(lua_tostring(state, 4));
 		if (g_bfmeOwnerBR->bfmeFind(targetKey) == 0)
 		{
 			bfmeGoTGD(reinterpret_cast<int>(state));
