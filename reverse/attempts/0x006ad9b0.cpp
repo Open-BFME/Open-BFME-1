@@ -1,5 +1,5 @@
 // ?Rva006AD9B0GetAllowAudioReinitialize@@YA_NXZ
-// partial score=0.95 date=2026-09-21
+// partial score=0.966 date=2026-09-21
 //
 // Free-standing helper: builds a fresh OptionPreferences (which loads
 // Options.ini in its own constructor), looks up the AllowAudioReinitialize
@@ -32,55 +32,41 @@
 // string literals verified against the retail image: key = 0x0111C2A8
 // "AllowAudioReinitialize", compares = 0x0111C2A0 "false", 0x010EBA88 "no"
 //
-// PROBE STATE: 234/234 bytes, 11 non-reloc byte(s) differ (score ~0.953).
+// PROBE STATE: 234/234 bytes, 8 non-reloc byte(s) differ (score ~0.966).
 // Every remaining diff is the SAME 4-byte esp offset shift (our locals start
-// at esp+8, retail's at esp+0xc) plus one downstream `lea [esi+0x14]; push`
-// vs `add esi,0x14; push esi` register-reuse choice at +0x57 that seems to
-// follow from it. Sizing OptionPreferences (4 + PreferenceMap{m_end+pad})
-// larger/smaller only grows/shrinks the TAIL of the frame -- it never moves
-// this base offset, so the missing 4 bytes belong to something in the
-// [[esp, esp+0xc) region below `key`/`prefs`, not to PreferenceMap/
-// OptionPreferences's own size. Tried and did NOT move the offset: `it`
-// declared before/after `prefs`, an unused int local, `(void)&it`, and a
-// `PreferenceNode * volatile it` (which also drops the esi caching entirely
-// and makes things much worse -- revert that idea).
+// at esp+8, retail's at esp+0xc). The current declarations model the polymorphic
+// OptionPreferences object with PreferenceMap at this+4 and keep the
+// iterator as a one-pointer object. That model preserves the 234-byte body and fixes the
+// downstream `lea [esi+0x14]; push` shape, but it does not move the four-byte
+// local base offset. Declaring `it` before or after `prefs`, adding an unused
+// int, taking `(void)&it`, and using a volatile `it` also did not move the
+// offset. The volatile form drops ESI caching and makes the body much worse.
 //
-// LINKAGE CAVEAT for the next worker: this file declares its own local
-// `AsciiString` with an undefined `AsciiString(const char *)` and
-// `AsciiString(const AsciiString &)`. The REAL `AsciiString` class
-// (Code/Libraries/Source/WWVegas/WWLib/ascii_string.h) already has ITS OWN
-// matched constructors at DIFFERENT addresses (??0AsciiString@@QAE@PBD@Z ->
-// 0x0005EE70 via ILT 0x00012C42; ??0AsciiString@@QAE@ABV0@@Z -> 0x0005EE50
-// via ILT 0x000416AF) -- NOT the 0x00888BC0/0x00887B60 StringBase base
-// constructors this retail body actually calls. probe.py cannot see this
-// (it masks relocation operands) but add_match.py's full byte gate will.
-// The fix is almost certainly: construct through `BFMERetailAsciiString`
-// (ctor matched at 0x00888BC0) and `GameSpyGroupRoom` (copy ctor matched at
-// 0x00887B60) instead of `AsciiString`, while STILL getting an automatic,
-// EH-tracked destructor call -- a `key.releaseBuffer()`/`value.releaseBuffer()`
-// MANUAL call compiles WITHOUT the `mov byte/dword ptr [esp+0x28], 0/-1`
-// EH-state-clear store retail has right before +0x91/+0xc2 (tried this,
-// verified the instruction is simply missing), so the local must stay a true
-// scope-exit-destroyed object, not a manually released one. `AsciiString`
-// keeps the correct `~AsciiString()`/`compareNoCase` addresses (0x00887940 and
-// 0x00075E00 via ILT 0x000405E8 are both already pinned under that class
-// name) -- only the two constructors need to come from elsewhere. A
-// placement-new through `BFMERetailAsciiString`/`GameSpyGroupRoom` into
-// storage typed/aliased as `AsciiString`, still relying on `AsciiString`'s
-// own scope-exit destructor call, is the next thing to try; a bare
-// `(AsciiString*)&raw` cast without placement-new does NOT invoke the right
-// constructor at all so is not sufficient by itself.
+// The StringBase<char> model below is intentional. Its inline AsciiString
+// constructors select the retail StringBase constructor and copy bodies at
+// 0x00888BC0 and 0x00887B60, while releaseBuffer() selects 0x00887940. The
+// compareNoCase member keeps the pinned AsciiString ILT at 0x000405E8.
 
-class AsciiString
+template <typename T> class StringBase
+{
+	friend class AsciiString;
+
+private:
+	StringBase(const T *text);
+	StringBase(const StringBase &other);
+	void releaseBuffer();
+
+	void *m_data;
+};
+
+class AsciiString : private StringBase<char>
 {
 public:
-	AsciiString(const char *s);
-	AsciiString(const AsciiString &that);
-	~AsciiString();
+	AsciiString(const char *s) : StringBase<char>(s) {}
+	AsciiString(const AsciiString &that) : StringBase<char>(that) {}
+	~AsciiString() { releaseBuffer(); }
 
 	int compareNoCase(const char *s) const throw();
-
-	char *m_text;
 };
 
 struct PreferenceNode
@@ -95,24 +81,49 @@ public:
 	PreferenceNode *find(const AsciiString &) const throw();
 	PreferenceNode *end(void) const { return m_end; }
 
-	PreferenceNode *m_end;								///< retail this+0x00
-	unsigned char m_unreconstructed_04[0x10];
+	PreferenceNode *m_end;
+	unsigned char m_unreconstructed_04[8];
 };
 
 class OptionPreferences
 {
 public:
 	OptionPreferences(void);
-	~OptionPreferences();
+	virtual ~OptionPreferences();
 
-	unsigned char m_unreconstructed_00[4];
-	PreferenceMap m_prefs;								///< retail this+0x04
+	PreferenceMap m_prefs;
+	unsigned char m_unreconstructed_10[8];
+};
+
+class PreferenceIterator
+{
+public:
+	PreferenceIterator(void) : m_node(0) {}
+
+	PreferenceIterator &operator=(PreferenceNode *node)
+	{
+		m_node = node;
+		return *this;
+	}
+
+	bool operator!=(PreferenceNode *node) const
+	{
+		return m_node != node;
+	}
+
+	PreferenceNode *operator->(void) const
+	{
+		return m_node;
+	}
+
+private:
+	PreferenceNode *m_node;
 };
 
 bool Rva006AD9B0GetAllowAudioReinitialize(void)
 {
-	PreferenceNode *it;
 	OptionPreferences prefs;
+	PreferenceIterator it;
 
 	{
 		AsciiString key("AllowAudioReinitialize");
