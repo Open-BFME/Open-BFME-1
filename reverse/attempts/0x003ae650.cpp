@@ -1,5 +1,5 @@
 // ?j_00010712@Glo012F1024Item@@QAEXXZ
-// partial score=0.91 date=2026-09-01
+// partial score=0.97 date=2026-09-21
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
 
 #include "StringInline.h"
@@ -27,6 +27,7 @@ class BfmeElem36Vector
 {
 public:
 	unsigned int bfmeSize(void) const;
+	Glo012F1024Record *bfmeBegin(void) const { return m_bfmeBegin; }
 
 	Glo012F1024Record *m_bfmeBegin;
 	Glo012F1024Record *m_bfmeEnd;
@@ -197,10 +198,26 @@ public:
 		char byte;
 		int word;
 	};
+	class NameStorage
+	{
+	public:
+		char m_bfmeNameRaw[sizeof(AsciiString)];
+	};
 	BfmeByteWord m_bfmeByte22;
 	BfmeByteWord m_bfmeByte21;
 	BfmeByteWord m_bfmeByte20;
-	AsciiString m_bfmeName;
+	NameStorage m_bfmeNameStorage;
+
+	Glo012F1024Scratch(void) {}
+	~Glo012F1024Scratch(void)
+	{
+		m_bfmeName().~AsciiString();
+	}
+
+	AsciiString &m_bfmeName(void)
+	{
+		return *(AsciiString *)m_bfmeNameStorage.m_bfmeNameRaw;
+	}
 };
 
 class BfmeGlobal_012f706c
@@ -227,6 +244,11 @@ public:
 };
 
 extern Gen_003bcb40 *g_Gen003bcb40;
+
+static int BfmeAsciiStringAddress(const AsciiString &value)
+{
+	return (int)&value;
+}
 
 class Rva0060D5E0
 {
@@ -322,11 +344,10 @@ void Glo012F1024Item::j_00010712(void)
 		 ++index)
 	{
 		Glo012F1024Scratch scratch;
-		char *records = (char *)m_bfmeRecords.m_bfmeBegin;
+		Glo012F1024Record *records = m_bfmeRecords.bfmeBegin();
 		Glo012F1024Record *record =
-			(Glo012F1024Record *)(records +
-				(index * sizeof(Glo012F1024Record)));
-		AsciiString *name = record->GetName(&scratch.m_bfmeName);
+			records + index;
+		AsciiString *name = record->GetName(&scratch.m_bfmeName());
 		scratch.m_bfmeByte22.byte = record->m_bfmeByte22;
 		scratch.m_bfmeByte21.byte = record->m_bfmeByte21;
 		scratch.m_bfmeByte20.byte = record->m_bfmeByte20;
@@ -338,8 +359,8 @@ void Glo012F1024Item::j_00010712(void)
 			record->m_bfmeAt18,
 			record->m_bfmeAt1C,
 			scratch.m_bfmeByte20.word,
-			scratch.m_bfmeByte21.word,
-			scratch.m_bfmeByte22.word);
+			 scratch.m_bfmeByte21.word,
+			 scratch.m_bfmeByte22.word);
 	}
 }
 
@@ -351,7 +372,7 @@ void Glo012F1024Item::j_00019eca(void)
 		User *user = g_bfmeGlobal_012f1024->getUser(m_bfmeNames.bfmeBegin() + index);
 		if (user != 0)
 		{
-			g_Gen003bcb40->m(user->GetName());
+			g_Gen003bcb40->m(BfmeAsciiStringAddress(user->GetName()));
 			user->bfmeEnter();
 		}
 	}
