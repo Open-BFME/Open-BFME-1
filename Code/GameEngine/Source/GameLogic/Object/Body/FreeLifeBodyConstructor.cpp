@@ -94,3 +94,8 @@ FreeLifeBody::FreeLifeBody( Thing *thing, const ModuleData *moduleData )
 FreeLifeBody::~FreeLifeBody()
 {
 }
+
+// The carved retail body at 0x002132E0 contains only ret.
+void Rva002132E0Noop(void)
+{
+}
