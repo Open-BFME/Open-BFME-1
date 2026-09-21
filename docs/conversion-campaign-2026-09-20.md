@@ -303,3 +303,18 @@ body the fleet landed today) and 0x006AD590 (155 B, an audio
 priority/volume adjuster resumed from an interrupted candidate).
 Repository-wide +21,707 B / +0.22 pp (67.04% -> 67.26%) since the fleet
 base; +7,281 B of that is new total-exact coverage.
+
+### Hour 20 — 14:03Z to 15:03Z (three to four seats)
+
+No fleet landing this hour; nine banks, the best a 0.99 at 0x004BCCE0
+(402 B command-button progress dispatcher: two isolated eax/edx register
+picks for a vtable pointer) and a 0.97 at 0x002D8C10. Fleet 48 bodies /
+10,769 B cumulative; repository-wide +22,155 B / +0.23 pp (67.04% ->
+67.27%) since the fleet base. Two prior author-estimated scores of 0.78
+were re-measured at 0.27 and 0.44 and corrected in the log. Levers
+recorded this hour: `extern const T NAME;` for a fixed-VA aggregate
+constant (folds each dword to an absolute address where a cast copies
+through a register loop); dropping a long-lived duplicate pointer local to
+pull `this` back into retail's register; a named float local to keep the
+x87 value across a branch; an implicit destructor with per-member owner
+wrappers to remove a spurious vtable store.
