@@ -263,3 +263,13 @@ with at most one prior verdict. Two identities were recovered without a
 landing (Player::processAddTeamGameMessage at 0x000D2A60 from its landed
 neighbours; an ICF-shared SpecialPowerModule::getPercentReady override at
 0x0026AAC0 from five vtables) and banked at 0.29 / 0.74.
+
+### Hour 15 — 09:02Z to 10:02Z (three seats)
+
+Fleet 45 bodies / 10,077 B cumulative; this hour 1 body / 322 B
+(0x00210730, opaque owner method). Repository-wide +19,362 B / +0.20 pp
+(67.04% -> 67.24%) since the fleet base. Six more banks (0.15-0.89); the
+0.89 at 0x007647D0 (W3DScriptedModelDraw transform update, 313 B) differs
+only by an ecx/edx register swap across two field copies. Seats in the
+250-400 B band land about one body per session and stop at ~45 minutes,
+so a fourth seat is added for the rest of this usage window.
