@@ -348,6 +348,11 @@ void d_003b2d50(void)
 {
 }
 
+// ?d_003b2d40@@YAXXZ
+void d_003b2d40(void)
+{
+}
+
 // ?d_00630e90@@YAXXZ
 void d_00630e90(void)
 {
