@@ -387,6 +387,11 @@ void *Rva0025DAD0ReturnThis::get()
 	return this;
 }
 
+// ?Rva0025DAE0Noop@@YAXXZ
+__declspec(noinline) void Rva0025DAE0Noop()
+{
+}
+
 class Rva0025DBA0Field
 {
 public:
