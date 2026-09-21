@@ -48,7 +48,6 @@ question: that is UNKNOWN, never clean. So is any failure to evaluate.
 Exit status is 0 for clean and 1 for dirty or unknown, so a script can gate on
 it; the verdict and its reasons go to stdout either way.
 """
-import os
 import sys
 from pathlib import Path
 
@@ -61,15 +60,7 @@ CLEAN, DIRTY, UNKNOWN = "clean", "dirty", "unknown"
 
 def pid_alive(pid):
     """True if the pid exists, None when the question cannot be answered."""
-    try:
-        os.kill(pid, 0)
-    except ProcessLookupError:
-        return False
-    except PermissionError:
-        return True          # somebody else's process, but it exists
-    except OSError:
-        return None
-    return True
+    return B.pid_alive(pid)
 
 
 def markers():

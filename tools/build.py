@@ -2595,6 +2595,45 @@ def main(only=None):
     print("\nFULL GATE: OK — every check green")
 
 
+def pid_alive(pid):
+    """True if the pid exists, None when the question cannot be answered."""
+    if sys.platform.startswith("win"):
+        return _pid_alive_windows(pid)
+    try:
+        os.kill(pid, 0)
+    except ProcessLookupError:
+        return False
+    except PermissionError:
+        return True          # somebody else's process, but it exists
+    except OSError:
+        return None
+    return True
+
+
+def _pid_alive_windows(pid):
+    """os.kill(pid, 0) is no existence test on Windows: signal 0 is
+    CTRL_C_EVENT there, and a dead pid raises a plain OSError, so every marker
+    a killed build left behind read as "cannot tell" and was never cleared.
+    Ask the kernel instead."""
+    import ctypes
+    kernel32 = ctypes.WinDLL("kernel32", use_last_error=True)
+    handle = kernel32.OpenProcess(0x1000, False, int(pid))   # PROCESS_QUERY_LIMITED_INFORMATION
+    if not handle:
+        error = ctypes.get_last_error()
+        if error == 87:          # ERROR_INVALID_PARAMETER: no such process
+            return False
+        if error == 5:           # ERROR_ACCESS_DENIED: it exists, it is not ours
+            return True
+        return None
+    try:
+        code = ctypes.c_ulong()
+        if not kernel32.GetExitCodeProcess(handle, ctypes.byref(code)):
+            return None
+        return code.value == 259   # STILL_ACTIVE
+    finally:
+        kernel32.CloseHandle(handle)
+
+
 def run_marked(argv):
     """main(), bracketed by the in-flight marker tools/object_cache.py reads."""
     marker = INFLIGHT_DIR / str(os.getpid())
@@ -2617,12 +2656,8 @@ def run_marked(argv):
             for stale in INFLIGHT_DIR.glob("*"):
                 if stale == marker or not stale.name.isdigit():
                     continue
-                try:
-                    os.kill(int(stale.name), 0)
-                except ProcessLookupError:
+                if pid_alive(int(stale.name)) is False:
                     stale.unlink(missing_ok=True)
-                except OSError:
-                    pass
     finally:
         if marker is not None:
             marker.unlink(missing_ok=True)
