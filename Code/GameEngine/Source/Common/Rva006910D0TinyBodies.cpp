@@ -91,6 +91,11 @@ Rva00691730 *Rva00691730::method()
 	return this;
 }
 
+// The carved boundary at 0x00691750 contains only a return.
+void Rva00691750Noop(void)
+{
+}
+
 class Rva00691770
 {
 public:
@@ -336,4 +341,3 @@ AudioEventInfoHash::iterator Rva006925D0::method()
 {
 	return begin();
 }
-
