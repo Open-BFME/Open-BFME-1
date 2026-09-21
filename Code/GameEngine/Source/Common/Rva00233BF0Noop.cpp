@@ -4,3 +4,8 @@
 void Rva00233BF0Noop()
 {
 }
+
+// Retail RVA 0x00233BD0 contains only ret.
+void b_00233bd0()
+{
+}
