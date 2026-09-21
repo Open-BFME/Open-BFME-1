@@ -11,7 +11,13 @@ struct bidirectional_iterator_tag : public forward_iterator_tag {};
 struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 
 template <class T>
-class allocator {};
+class allocator
+{
+public:
+	allocator(void) {}
+	allocator(const allocator &) {}
+	~allocator(void) {}
+};
 
 template <class T>
 class char_traits {};
@@ -23,10 +29,10 @@ __forceinline const T &min(const T &left, const T &right)
 }
 
 template <class Pointer, class Value, class Alloc>
-class _STLP_alloc_proxy
+class _STLP_alloc_proxy : public Alloc
 {
 public:
-	_STLP_alloc_proxy(const Alloc &, Pointer p) : _M_data(p) {}
+	_STLP_alloc_proxy(const Alloc &a, Pointer p) : Alloc(a), _M_data(p) {}
 
 	Pointer _M_data;
 };
@@ -41,6 +47,7 @@ public:
 		: _M_start(0), _M_finish(0), _M_end_of_storage(a, (T *)0) {}
 
 	~_String_base(void);
+	void _M_throw_out_of_range(void) const;
 
 	T *_M_start;
 	T *_M_finish;
@@ -48,7 +55,7 @@ public:
 };
 
 template <class CharT, class Traits, class Alloc>
-class basic_string : public _String_base<CharT, Alloc>
+class basic_string : protected _String_base<CharT, Alloc>
 {
 public:
 	typedef allocator<CharT> allocator_type;
@@ -63,8 +70,6 @@ public:
 	}
 
 private:
-	void _M_throw_out_of_range(void);
-
 	void _M_range_initialize(const CharT *f, const CharT *l,
 		const forward_iterator_tag &);
 
@@ -84,8 +89,10 @@ basic_string<CharT, Traits, Alloc>::basic_string(
 	if (pos > s.size())
 		this->_M_throw_out_of_range();
 	else
+	{
 		_M_range_initialize(s._M_start + pos,
 			s._M_start + pos + (min)(n, s.size() - pos));
+	}
 }
 
 }
