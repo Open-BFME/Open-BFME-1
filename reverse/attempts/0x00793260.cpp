@@ -1,10 +1,12 @@
-// ?d_00793260@@YAXXZ
-// partial score=0.35 date=2026-09-09
+// ?W3DGadgetProgressBarDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
+// partial score=0.37 date=2026-09-21
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // W3DGadgetProgressBarDraw, retail 0x00793260 (553 bytes).
 //
 // This is the standard (non-image) ProgressBar body from the real
-// W3DProgressBar.cpp.  BFME's WinDrawData arrays are four bytes later than the
+// W3DProgressBar.cpp; the sibling image-draw variant W3DGadgetProgressBarImageDraw
+// is matched at 0x00793A60 from the same source file, which backs this body's
+// identity too. BFME's WinDrawData arrays are four bytes later than the
 // vendored Zero Hour slice used by the normal headers, so this TU keeps the
 // BFME ABI view local: enabled/disabled/hilite bases are +0x48/+0xB4/+0x120,
 // with { image, color, borderColor } entries and the bar data at index 4.
@@ -13,6 +15,14 @@
 //
 // The manager's three rectangle/line calls are also kept in the local ABI
 // slice.  Their slots are +0xF8, +0xFC, and +0x100 in the BFME vtable.
+//
+// shape_search found that swapping the enabled-branch barColor/barBorder
+// assignment order (vs. the ZH source's natural order) closes the size gap
+// from 538B to 552B (retail 553B) -- shape_family_levers/shape_search
+// exhausted the mechanical choices after that. Remaining residue: retail
+// keeps `progress` live in ebx across the whole body; this candidate gets ebp
+// instead, cascading a register-allocation-driven offset shift through
+// every later instruction even though total size is within 1 byte.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -166,8 +176,8 @@ void W3DGadgetProgressBarDraw(GameWindow *window, WinInstanceData *instData)
 	{
 		backColor = GadgetProgressBarGetEnabledColor(window);
 		backBorder = GadgetProgressBarGetEnabledBorderColor(window);
-		barColor = GadgetProgressBarGetEnabledBarColor(window);
 		barBorder = GadgetProgressBarGetEnabledBarBorderColor(window);
+		barColor = GadgetProgressBarGetEnabledBarColor(window);
 	}
 
 	if (backBorder != WIN_COLOR_UNDEFINED)
