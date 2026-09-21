@@ -76,3 +76,8 @@ void INILineBuffer::clear( void )
 		m_buffer = NULL;
 	}
 }
+
+// ?Rva001F9140NoOp@@YAXXZ
+void Rva001F9140NoOp()
+{
+}
