@@ -309,3 +309,8 @@ void *Rva0047D760Owner::getThis() const
 {
     return (void *)this;
 }
+
+// The carved retail body at 0x0047D770 contains only ret.
+void Rva0047D770Noop()
+{
+}
