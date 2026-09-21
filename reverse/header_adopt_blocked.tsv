@@ -677,3 +677,4 @@ Code/Libraries/Source/WWVegas/WWLib/RvaHashResizeAsciiString0045FFD0.cpp	AsciiSt
 Code/GameEngine/Source/GameClient/Terrain/TerrainRoadTypeSetDamageToFXStringILT.cpp	AsciiString	Functions: FAIL 1/1
 reverse/attempts/0x00558be0.cpp	AsciiString	build.sh exited 1
 Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/UnitCrateCollideModuleDataCtorThunk.cpp	AsciiString	Code\GameEngine\Source\GameLogic\Object\Collide\CrateCollide\UnitCrateCollideModuleDataCtorThunk.cpp(46) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
+reverse/attempts/0x0023b9f0.cpp	AsciiString	build.sh exited 1

@@ -1,6 +1,30 @@
 // ?drop@Gen003C8A50@@QAEXPAVGen003C8A50Result@@@Z
-// partial score=0.62 date=2026-09-20
+// partial score=0.955 date=2026-09-20
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+//
+// PROGRESS 2026-09-20 (opus): 657B/396-diff -> 673B(size-exact)/30-diff.
+// Closed the 16-byte gap and the "second notification EDX/EAX + omitted stack
+// store" blocker that stalled seven prior sessions.  Two levers:
+//   1) Gen003C8A50Result::m_name lives at +0x28, and the second Flareup payload
+//      is spelled (int)&found->m_name (NOT (int)found+0x28).  Retail spills that
+//      pointer (mov [esp+0x2c],eax at +009c) because it is a common subexpression
+//      with the later found->m_name.compare() receiver; the CSE both forces EAX
+//      (materialized before the constant 1) and emits the spill store.  This is
+//      the retail stack store the bank omitted.
+//   2) The third loop's guard must load holder->m_end into a register the same
+//      way the back-edge does.  Caching it in a local (last = holder->m_end;
+//      if(it!=last){do..while}) makes the guard `mov eax,[ebp+34]; cmp ebx,eax`
+//      which lets MSVC emit a 16-byte-aligned rotated loop pre-header
+//      (jmp 0xd0 + npad).  That alignment pre-header IS the bulk of the 16 bytes.
+// RESIDUE (30 bytes, not reached): a frame-slot COLORING swap -- the holder
+// preserve slot and the inlined invoke `b` temp are transposed (ours _holder$=-56
+// / $T1179=-52; retail wants them swapped) -- plus the downstream scratch-register
+// naming in the Evenglow notify0C/notify04 calls (payload EAX vs our ECX, key-addr
+// ECX vs our EDX) and the 2-instruction compare self-address reg (EDX vs EAX,
+// reconverges immediately).  The EDX/EAX scratch choice for the FOUND call was
+// reachable (fixed via CSE, lever 1); the Evenglow-cluster scratch naming
+// cascades from the coloring swap and did not yield to inline/no-local/frame/
+// register/loop shape sweeps.
 void * __cdecl operator new( unsigned int size );
 void __cdecl f_00881eb0( void *block );
 class BfmeReportWeightScaleHolder
@@ -105,9 +129,8 @@ public:
 class Gen003C8A50Result
 {
 public:
+	char m_pad00[ 0x28 ];
 	AsciiString m_name;
-	char m_pad04[ 0x24 ];
-	int m_payload;
 };
 
 struct Gen003C8A50HookSlot
@@ -166,24 +189,28 @@ void Gen003C8A50::drop( Gen003C8A50Result *found )
 	}
 
 	owner->notify0C( AsciiString( "ConqueredEffectFlareup" ),
-		(int)found + 0x28, 1 );
+		(int)&found->m_name, 1 );
 
 	it = holder->m_begin;
-	for( ; it != holder->m_end; ++it )
+	last = holder->m_end;
+	if( it != last )
 	{
-		int fn = (int)(*it)->m_atB4;
-		int result = invokeGen003C8A50( fn, fn );
-		if( result == 1 )
+		do
 		{
-			if( found->m_name.compare( (*it)->m_name ) != 0 )
+			int fn = (int)(*it)->m_atB4;
+			int result = invokeGen003C8A50( fn, fn );
+			if( result == 1 )
 			{
-				owner->notify0C( AsciiString( "ConqueredEffectEvenglow" ),
-					(int)((char *)*it + 0x28), 1 );
-				continue;
+				if( found->m_name.compare( (*it)->m_name ) != 0 )
+				{
+					owner->notify0C( AsciiString( "ConqueredEffectEvenglow" ),
+						(int)((char *)*it + 0x28), 1 );
+					continue;
+				}
 			}
-		}
-		owner->notify0C( AsciiString( "ConqueredEffectEvenglow" ),
-			(int)((char *)*it + 0x28), 0 );
+			owner->notify0C( AsciiString( "ConqueredEffectEvenglow" ),
+				(int)((char *)*it + 0x28), 0 );
+		} while( ++it, it != holder->m_end );
 	}
 
 	owner->notify04( AsciiString( "ConqueredEffectFlareup" ), 1 );

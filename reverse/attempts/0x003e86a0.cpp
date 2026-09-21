@@ -1,5 +1,5 @@
 // ?getMoveAwayFromPath@Pathfinder@@QAEPAVPath@@PAVObject@@0PAV2@01@Z
-// partial score=0.2 date=2026-09-17
+// partial score=0.25 date=2026-09-20
 // cl: /DNDEBUG /MD
 //
 // Retail 0x003E86A0: Pathfinder::getMoveAwayFromPath.
@@ -8,6 +8,30 @@
 // shared Zero Hour header puts m_isMapReady at a different offset and cannot
 // describe the indexed BFME open-list slots.  All out-of-line calls below are
 // made through the retail ILT names reported by tools/callees.py.
+//
+// PROGRESS 2026-09-20: FRAME BLOCKER FIXED. The prior 0.2 bank used a 0xBC
+// frame vs retail 0xB4 (8 bytes = 2 dwords too many). Root cause: the local
+// TCheckMovementInfo (BfmeMovementInfo) was sized 36 bytes with four trailing
+// fields (m_allyFixedCount + 3 bools) that BFME does not have. Retail's struct
+// spans exactly 0x1c = 28 bytes (cell[8], layer, radius, centerInCell byte,
+// considerTransient byte, +2 pad, acceptableSurfaces, ignoreObstacle), stored
+// at esp+0x8c..0xa8 in the retail dump. Trimming it to 28 bytes makes
+// `sub esp,0xb4` byte-match and moves the first divergence from +8 to +24.
+//
+// REMAINING BLOCKER (register/slot cascade, ~1175 bytes still differ):
+// retail keeps obj in EBX and &obj->position (obj+0x38) in EDI; our build
+// consistently assigns obj->EDI and &pos->EBX (a clean ebx<->edi swap that
+// cascades through nearly every instruction). Retail also RELOADS obj from
+// [ebp+8] inside the while-loop (at +0x508 and +0x5ac) because the
+// pathToAvoid2 node loop reuses EBX as its node pointer, breaking obj's live
+// range; our loop keeps obj live in EDI throughout, so EDI is never freed for
+// the loop's currentInfo temporary. Consequently our local-slot packing also
+// diverges (getRadiusAndCenter outputs land at esp+0x27/0x64 vs retail
+// 0x13/0x24). Tried and REJECTED (no register flip): separating &pos into a
+// named objPos local, giving obj a named local copy, and CSE'd-inline vs
+// named-pointer variants. This is a global-allocator/loop-pressure match, not
+// a single source-shape lever; next worker must induce obj's in-loop reload
+// (free EDI in the loop) to reproduce retail's ebx=obj / edi=currentInfo.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -114,10 +138,6 @@ public:
 	Bool m_considerTransient;
 	Int m_acceptableSurfaces;
 	Int m_ignoreObstacle;
-	Int m_allyFixedCount;
-	Bool m_enemyFixed;
-	Bool m_allyMoving;
-	Bool m_allyGoal;
 };
 
 class BfmeStepInfo
@@ -586,12 +606,12 @@ Path *Pathfinder::getMoveAwayFromPath(Object *obj, Object *otherObj,
 		startPos.x += g_bfmeK1266C;
 	}
 
+	const Coord3D *objPos = (const Coord3D *)((const unsigned char *)obj + 0x38);
 	ICoord2D startCellNdx;
 	worldToCell(this, &startPos, &startCellNdx);
 	Int layer = objectLayer(obj);
 	ICoord2D parentCellNdx;
-	worldToCell(this, (const Coord3D *)((const unsigned char *)obj + 0x38),
-		&parentCellNdx);
+	worldToCell(this, objPos, &parentCellNdx);
 	PathfindCell *parentCell = getCell(this, layer, parentCellNdx.x,
 		parentCellNdx.y);
 	if (parentCell == 0)
