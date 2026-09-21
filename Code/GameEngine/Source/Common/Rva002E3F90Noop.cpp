@@ -7,6 +7,13 @@ void Rva002E3F90Noop()
 {
 }
 
+// ?Rva002E3F80Noop@@YAXXZ
+// The carved boundary at RVA 0x002E3F80 contains only ret before int3
+// padding, so this body keeps an address-derived name.
+void Rva002E3F80Noop()
+{
+}
+
 // ?Rva002E4FB0Noop@@YAXXZ
 // The carved boundary at RVA 0x002E4FB0 contains only ret before int3
 // padding, so this body keeps an address-derived name.
