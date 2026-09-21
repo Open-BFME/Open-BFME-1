@@ -1,0 +1,129 @@
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /I.
+// ?scan@Rva003D86E0Scanner@@QAEDHH@Z
+// Retail 003D86E0, 478 bytes; the 003E5010 caller supplies this work record.
+// Its owner is unproven, so retain the bank's address-derived identity.
+// The complete body checks every cell in the window, including packed layer
+// compatibility, movement eligibility, and terrain height side effects.
+// Callees are the landed PathfindLayer::getCell, Pathfinder::bfmeStepD4F90,
+// and Pathfinder::iterateCellsAlongLine. TerrainLogic's canonical header
+// supplies the independently witnessed getLayerHeight slot at vtable+0x1c.
+// Coordinate comparison through the aggregate operator preserves retail's
+// reloads and register lifetime; spelling the two scalar comparisons does not.
+// stlport
+#include "PreRTS.h"
+#include "Code/GameEngine/Include/GameLogic/TerrainLogic.h"
+inline bool operator!=(const ICoord2D &a, const ICoord2D &b)
+{
+    return a.x != b.x || a.y != b.y;
+}
+// The landed line walker accepts this address but never reads the object.
+struct Rva003D7010Struct
+{
+};
+class PathfindCell
+{
+  public:
+    char m_pad[12];
+    unsigned int m_word;
+};
+class PathfindLayer
+{
+  public:
+    PathfindCell *getCell(Int x, Int y);
+    char m_pad[0x44];
+};
+class Pathfinder
+{
+  public:
+    bool bfmeStepD4F90(void *state, PathfindCell *cell);
+    Int iterateCellsAlongLine(const ICoord2D &, const ICoord2D &, PathfindLayerEnum,
+                              Rva003D7010Struct *);
+    __forceinline PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y)
+    {
+        if (x >= m_extent.lo.x && x <= m_extent.hi.x && y >= m_extent.lo.y && y <= m_extent.hi.y)
+        {
+            if (layer > 1 && layer <= 15)
+            {
+                PathfindCell *cell = m_layers[layer].getCell(x, y);
+                if (cell)
+                    return cell;
+            }
+            return &m_map[x][y];
+        }
+        return 0;
+    }
+
+  private:
+    char m_beforeMap[0x10];
+    PathfindCell **m_map;
+    struct
+    {
+        ICoord2D lo, hi;
+    } m_extent;
+    char m_beforeLayers[0x85c - 0x24];
+    PathfindLayer m_layers[16];
+};
+class Rva003D86E0Scanner
+{
+  public:
+    char scan(Int a, Int b);
+
+  private:
+    Pathfinder *m_pathfinder;
+    void *m_field04;
+    Int m_resultX, m_resultY;
+    PathfindLayerEnum m_layer;
+    Int m_field14;
+    Int m_cachedCellA, m_cachedCellB;
+    // Existing bank names retained; these are lower and upper extents on both axes.
+    Int m_originX, m_originY;
+};
+char Rva003D86E0Scanner::scan(Int a, Int b)
+{
+    for (Int x = a - m_originX; x < a + m_originY; ++x)
+    {
+        for (Int y = b - m_originX; y < b + m_originY; ++y)
+        {
+            PathfindCell *cell = m_pathfinder->getCell(m_layer, x, y);
+            if (!cell)
+                return false;
+            Int type = (cell->m_word >> 6) & 0x3f;
+            Int requested = m_field14;
+            if (requested != type)
+            {
+                if (requested == 1)
+                {
+                    if (type != 16)
+                        return false;
+                }
+                else if (requested != 16)
+                {
+                    if ((requested >= 17 && requested <= 64) || (requested >= 2 && requested <= 15))
+                        if (type != 16)
+                            return false;
+                }
+            }
+            if (!m_pathfinder->bfmeStepD4F90(m_field04, cell))
+                return false;
+            Coord3D position;
+            position.x = x * 10 + 5.0f;
+            position.y = y * 10 + 5.0f;
+            TheTerrainLogic->getLayerHeight(position.x, position.y, (PathfindLayerEnum)type, 0,
+                                            true);
+        }
+    }
+    m_resultX = a;
+    m_resultY = b;
+    if (m_field14 == 1 || m_field14 >= 16)
+    {
+        if (*(ICoord2D *)&m_resultX != *(ICoord2D *)&m_cachedCellA)
+        {
+            Rva003D7010Struct data;
+            if (m_pathfinder->iterateCellsAlongLine(*(ICoord2D *)&m_resultX,
+                                                    *(ICoord2D *)&m_cachedCellA,
+                                                    (PathfindLayerEnum)m_field14, &data))
+                return false;
+        }
+    }
+    return true;
+}
