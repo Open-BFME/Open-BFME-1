@@ -54,6 +54,11 @@ bool Rva00113AA0()
 	return true;
 }
 
+// ?Rva00113AB0Noop@@YAXXZ
+void Rva00113AB0Noop()
+{
+}
+
 // ?Rva00113AD0@@YGXH@Z
 void __stdcall Rva00113AD0(int)
 {
