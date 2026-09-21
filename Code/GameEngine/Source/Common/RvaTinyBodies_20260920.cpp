@@ -297,3 +297,8 @@ void *Rva001222E0Self::get() const
 {
 	return (void *)this;
 }
+
+// The carved boundary proves a one-byte ret-only body at 0x001222F0.
+void Rva001222F0Noop()
+{
+}
