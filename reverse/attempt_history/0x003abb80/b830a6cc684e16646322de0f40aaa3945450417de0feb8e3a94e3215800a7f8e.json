@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b830a6cc684e16646322de0f40aaa3945450417de0feb8e3a94e3215800a7f8e",
+  "symbol": "??0?$vector@VRva003BA660Record@@V?$allocator@VRva003BA660Record@@@_STL@@@_STL@@QAE@ABV01@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.935,
+  "source": "// ??0?$vector@VRva003BA660Record@@V?$allocator@VRva003BA660Record@@@_STL@@@_STL@@QAE@ABV01@@Z\n// partial score=0.935 date=2026-09-21\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline\n// stlport\n//\n// The retail body at 0x003ABB80 copies a vector of 36-byte records. The\n// record vtable at VA 0x010EC84C identifies Rva003BA660Record, and the loop\n// calls its 24-byte Rva003AB460Tree member copy constructor.\n\n#define _STLP_NO_EXCEPTIONS 1\n#include <vector>\n#include \"StringInline.h\"\n\nstruct Rva003AB460Tree\n{\n\tint m_raw[3];\n\tRva003AB460Tree(const Rva003AB460Tree &other);\n};\n\nclass Rva003BA660Record\n{\npublic:\n\tvirtual void slot();\n\tRva003BA660Record(const Rva003BA660Record &other)\n\t\t: m_04(other.m_04), m_08(other.m_08), m_tree(other.m_tree)\n\t{\n\t}\n\tint m_04;\n\tchar m_08;\n\tRva003AB460Tree m_tree;\n};\n\ntemplate _STL::vector<Rva003BA660Record,\n\t_STL::allocator<Rva003BA660Record> >::vector(\n\tconst _STL::vector<Rva003BA660Record,\n\t_STL::allocator<Rva003BA660Record> > &);\n"
+}
