@@ -293,3 +293,13 @@ seats' conclusion stands: such banks are identification gaps, not lever
 problems. Restart at 13:05Z with four seats: cluster bodies near today's
 landings, the 250-450 B and 400-600 B warm pools, and twice-attempted
 carved bodies with stashes.
+
+### Hour 19 — 13:00Z to 14:03Z (four seats)
+
+Fleet 48 bodies / 10,769 B cumulative; this hour 2 bodies / 436 B:
+0x00328680 (281 B, ScriptConditions::evaluatePlayerHasNOrFewerBases, from
+the cluster lane that seeds each seat with bodies within 0x800 bytes of a
+body the fleet landed today) and 0x006AD590 (155 B, an audio
+priority/volume adjuster resumed from an interrupted candidate).
+Repository-wide +21,707 B / +0.22 pp (67.04% -> 67.26%) since the fleet
+base; +7,281 B of that is new total-exact coverage.
