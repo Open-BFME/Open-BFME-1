@@ -1,0 +1,5 @@
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+
+void Rva00466010NoOp()
+{
+}
