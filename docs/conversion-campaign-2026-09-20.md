@@ -126,3 +126,30 @@ Four seats banked seven further candidates (0.27-0.87) without landing
 them. The carved pool with a known caller and at most one prior attempt is
 now fully assigned; the next seats draw 100-300 B gen_asm dump bodies ranked
 by landed-neighbour density.
+
+### Hour 6 — 23:05Z to 00:05Z (four seats)
+
+Fleet 20 bodies / 4,963 B cumulative; this hour 9 bodies / 1,310 B, every
+one a 126-168 B gen_asm dump in an address range dense with landed C++
+(lanes D2-D5). Repository-wide +13,212 B / +0.14 pp (67.04% -> 67.18%)
+since the fleet base.
+
+| RVA | Bytes | Result |
+|---|---:|---|
+| 0x0081EDD0 | 168 | CompressMemory |
+| 0x0016DF90 | 160 | Opaque Object lookup |
+| 0x007AE900 | 149 | Opaque Coord3D evaluator |
+| 0x0046F3D0 | 149 | DrawImageAt (mode-source variant) |
+| 0x002D49E0 | 147 | CostModifierUpgrade::upgradeImplementation |
+| 0x004942C0 | 146 | Opaque run() |
+| 0x0046F060 | 137 | DrawImageAt |
+| 0x0026FA80 | 128 | Opaque evaluate(int) |
+| 0x002C5240 | 126 | AI command dispatcher sharing the landed Rva002C45E0 vtable |
+
+The warm-neighbourhood dump picker (100-300 B, at most one prior verdict,
+ranked by landed rows within 0x1000 bytes) is the campaign's best lane by
+landings per seat-hour; the carved lane's remaining bodies (400-600 B) are
+now mostly banked at 0.1-0.5. Twelve more bodies were banked this hour,
+three of them at 0.92-0.93 with single register-role or SIB residues.
+Recurring unsolved lever reported by four bodies: MSVC 7.1's choice of
+which branch falls through to a shared return tail.
