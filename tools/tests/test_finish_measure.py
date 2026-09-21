@@ -60,3 +60,24 @@ def test_ensure_respects_its_budget(tmp_path, monkeypatch):
     assert len(cache) == 2
     assert len(finish_measure.ensure(bodies, budget=10)) == 5
     assert finish_measure.load().keys() == cache.keys() | finish_measure.load().keys()
+
+
+NOT_IN_OBJECT = """compile  reused verified dependency cache
+symbol   ?d_00689170@@YAXXZ
+result   NOT IN OBJECT -- the TU compiled, but defines no symbol by that name.
+nearest  defined symbols in this object (copy the exact one):
+         ??1AsciiString@@QAE@XZ
+         ?_bfme_onSerializedGameInfo_00689170@LANAPI@@UAE_NPAUTransportAddress@@HPADI@Z
+         ??0AsciiString@@QAE@PBD@Z
+         ?_bfme_handleHasMap_0068ACF0@LANAPI@@IAEXPAULANMessage@@PBUTransportAddress@@@Z
+         __ehhandler$?_bfme_onSerializedGameInfo_00689170@LANAPI@@UAE_NPAUTransportAddress@@HPADI@Z
+hint     the class/namespace/const-ness/calling convention in the mangled name must match the C++ you wrote;
+"""
+
+
+def test_a_ledger_name_in_the_header_is_not_a_compile_failure():
+    names = finish_measure.fallback_symbols(NOT_IN_OBJECT, 0x00689170)
+    assert names[0].startswith("?_bfme_onSerializedGameInfo_00689170@")     # the address-tagged one first
+    assert not any(n.startswith("__ehhandler") for n in names)
+    assert names[-1].startswith("??")                                        # constructors and destructors last
+    assert finish_measure.fallback_symbols(NEAR, 0x10) == []

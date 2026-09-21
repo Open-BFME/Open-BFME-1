@@ -55,6 +55,24 @@ def parse(text):
                 quality=round(max(0.0, 1.0 - distance / max(retail, 1)), 4))
 
 
+NEAREST = re.compile(r"^\s{6,}(\S+)\s*$", re.M)
+
+
+def fallback_symbols(text, rva, limit=5):
+    """A stash header usually names the LEDGER symbol (`?d_00689170@@YAXXZ`), while
+    the C++ in it defines the real one. probe.py then says NOT IN OBJECT and lists
+    what the object does define. Measuring that as "does not compile" ranked 150
+    good stashes last. Candidates: the address-tagged symbol first, then the rest;
+    never an EH handler or a compiler-generated helper."""
+    if "NOT IN OBJECT" not in text:
+        return []
+    block = text.split("nearest", 1)[-1].split("hint", 1)[0]
+    names = [n for n in NEAREST.findall(block) if not n.startswith(("__", "$", "??_"))]
+    tag = f"{rva:08x}"
+    names.sort(key=lambda n: (tag not in n.lower(), n.startswith(("??0", "??1"))))
+    return names[:limit]
+
+
 def load():
     try:
         return json.loads(CACHE.read_text(encoding="utf-8"))
@@ -74,12 +92,22 @@ def measure(rva, path, timeout=180):
     if not symbol:
         return dict(compiles=False, quality=0.0, note="stash line 1 names no symbol")
     env = {k: v for k, v in os.environ.items() if k not in ("BFME_RUN_DIR", "BFME_RUN_ID")}  # measuring is not working on it
+    def probe(name):
+        return subprocess.run([sys.executable, str(ROOT / "tools/probe.py"), str(path), name, f"0x{rva:08X}"],
+                              cwd=ROOT, capture_output=True, text=True, errors="replace", timeout=timeout, env=env).stdout
     try:
-        done = subprocess.run([sys.executable, str(ROOT / "tools/probe.py"), str(path), symbol, f"0x{rva:08X}"],
-                              cwd=ROOT, capture_output=True, text=True, errors="replace", timeout=timeout, env=env)
+        text = probe(symbol)
+        best = parse(text)
+        # the object is cached after the first compile, so each retry is cheap
+        for name in fallback_symbols(text, rva):
+            other = dict(parse(probe(name)), symbol=name)
+            if other["compiles"] and other["quality"] >= best["quality"]:
+                best = other
+        if not best["compiles"] and "NOT IN OBJECT" in text:
+            best = dict(best, note="compiles, but no defined symbol measures against this body")
     except subprocess.TimeoutExpired:
         return dict(compiles=False, quality=0.0, note="probe timed out")
-    return parse(done.stdout)
+    return best
 
 
 def current(cache, rva, path):
