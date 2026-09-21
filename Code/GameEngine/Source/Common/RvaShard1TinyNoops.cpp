@@ -5,6 +5,7 @@ void Rva00466AB0Noop() {}
 void Rva003FE430Noop() {}
 void Rva00403910Noop() {}
 void Rva0013A350Noop() {}
+void Rva0013A390Noop() {}
 void Rva007134F0Noop() {}
 void Rva00068A00Noop() {}
 void Rva00765580Noop() {}
