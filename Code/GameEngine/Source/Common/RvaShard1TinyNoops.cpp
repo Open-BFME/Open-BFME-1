@@ -24,3 +24,5 @@ void Rva00235C00Noop() {}
 void Rva00235B70Noop() {}
 void Rva00235B80Noop() {}
 void Rva00235CB0Noop() {}
+void Rva00351C90Noop() {}
+void Rva0008F440Noop() {}
