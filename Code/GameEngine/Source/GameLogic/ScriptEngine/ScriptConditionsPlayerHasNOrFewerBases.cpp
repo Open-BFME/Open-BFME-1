@@ -1,5 +1,5 @@
-// ?d_00328680@@YAXXZ
-// partial score=0.9 date=2026-09-19
+// ?evaluatePlayerHasNOrFewerBases@ScriptConditions@@IAE_NPAVParameter@@0@Z
+// BFME PLAYER_HAS_N_OR_FEWER_BASES script condition, retail 0x00328680, 281 B.
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -11,7 +11,7 @@ typedef float Real;
 typedef unsigned short PlayerMaskType;
 typedef unsigned int UnsignedInt;
 
-template <int NUMBITS>
+template <size_t NUMBITS>
 class BitFlags
 {
 	_STL::bitset<NUMBITS> m_bits;
@@ -123,7 +123,8 @@ public:
 #define TheScriptEngine (*(ScriptEngine **)0x012F076C)
 #define ThePlayerList (*(PlayerList **)0x012ED748)
 #define g_bfmeK1266C (*(const Real *)0x01075344)
-#define KINDOFMASK_NONE (*(const KindOfMaskType *)0x012ED8B8)
+
+extern const KindOfMaskType KINDOFMASK_NONE;
 
 Bool ScriptConditions::evaluatePlayerHasNOrFewerBases(
 	Parameter *baseCountParm, Parameter *playerParm)
