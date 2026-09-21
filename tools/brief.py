@@ -28,7 +28,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 
 METHOD = """
-METHOD. Read AGENTS.md, docs/matching.md and docs/shape_levers.md first. For each
+METHOD. Read AGENTS.md and docs/matching.md first. docs/shape_levers.md is a 97 KB
+reference, not reading: open the sections a target's LEVER SECTIONS line names, and
+`grep -n "^## " docs/shape_levers.md` for the first divergence you meet. The HISTORY
+block under a target is every earlier verdict on it: do not repeat a lever it lists. For each
 target: confirm the row still points at a .asm dump or carved boundary (`grep ,0xRVA, reverse/functions.csv reverse/carved.csv`);
 grep reverse/symbols.csv and reverse/re_attempts.log for the RVA; use
 `python3 tools/vtable_lookup.py <vtable VA>` for owning-class questions; port from the
@@ -108,7 +111,83 @@ def load():
     return rows, pins, latest, near
 
 
-def describe(rva, rows, pins, latest, near):
+LEVER_WORDS = {   # blocker family -> words that mark a relevant docs/shape_levers.md heading
+    "regalloc": ("register", "lea ", "reload", "caching", "read the member", "operand order", "local"),
+    "stack-slot": ("frame", "locals", "slot", "own block", "temporar", "lifetime"),
+    "eh": ("cleanup", "lifetime", "destructor", "constructor", "unwind", "exception"),
+    "layout": ("member", "accessor", "layout", "aggregate", "base"),
+    "codegen-order": ("order", "conjunction", "conditional", "branch", "early return", "switch", "loop"),
+    "inline": ("inline", "helper", "accessor"),
+    "callee": ("helper", "abi", "thunk", "secondary-base"),
+    "identity": ("abi", "deleting-destructor", "visibility"),
+    "float": ("float", "matrix", "coordinate"),
+    "stl": ("container", "stl", "filter construction"),
+}
+_history = None
+_headings = None
+
+
+def history(rva):
+    """Every live verdict row for one body, oldest first: [(status, evidence)]."""
+    global _history
+    if _history is None:
+        _history = {}
+        log = ROOT / "reverse/re_attempts.log"
+        if log.exists():
+            for line in log.read_text(encoding="utf-8", errors="replace").splitlines():
+                fields = line.split("\t")
+                if len(fields) < 5 or fields[3] not in re_log.VERDICT_STATUSES:
+                    continue
+                try:
+                    _history.setdefault(int(fields[1], 16), []).append((fields[3], fields[4]))
+                except ValueError:
+                    pass
+    return _history.get(rva, [])
+
+
+def lever_sections(families, limit=6):
+    global _headings
+    if _headings is None:
+        doc = ROOT / "docs/shape_levers.md"
+        _headings = [l[3:].strip() for l in doc.read_text(encoding="utf-8", errors="replace").splitlines()
+                     if l.startswith("## ")] if doc.exists() else []
+    words = [w for f in families for w in LEVER_WORDS.get(f, ())]
+    return [h for h in _headings if any(w in h.lower() for w in words)][:limit]
+
+
+def digest(rva, depth):
+    """What earlier sessions already established, so this one does not pay to
+    rediscover it. The brief used to carry the latest verdict cut to 220
+    characters and an instruction to go and read the log."""
+    import blockers
+    rows = history(rva)
+    if not rows:
+        return []
+    counts = {}
+    for status, _ in rows:
+        counts[status] = counts.get(status, 0) + 1
+    scores = [float(m) for _, ev in rows for m in re.findall(r"score=([01](?:\.\d+)?)", ev)]
+    families = list(dict.fromkeys(f for _, ev in rows for f in blockers.families(ev)))
+    head = f"    HISTORY: {len(rows)} verdict(s) (" + ", ".join(f"{n} {s}" for s, n in counts.items()) + ")"
+    if scores:
+        head += f"; best author score {max(scores):.2f}"
+    if families:
+        head += "; blockers named: " + ", ".join(families)
+    out = [head]
+    shown, seen = rows[-depth:], set()
+    for index, (status, ev) in enumerate(shown, len(rows) - len(shown) + 1):
+        text = re.sub(r"\s+", " ", ev).strip()
+        if text[:120] in seen:       # a re-bank that says the same thing
+            continue
+        seen.add(text[:120])
+        out.append(f"      #{index} {status}: {text[:420]}")
+    sections = lever_sections(families)
+    if sections:
+        out.append("    LEVER SECTIONS (docs/shape_levers.md): " + " | ".join(sections))
+    return out
+
+
+def describe(rva, rows, pins, latest, near, depth=5):
     r = rows[rva]
     parts = [f"- 0x{rva:08X} {r['target_size']}B {r['name']} (dump {Path(r['source']).name})"]
     real = [n for n, _ in pins.get(rva, []) if not re.match(r"^\?(d_|b_|j_|dup_)", n)]
@@ -119,7 +198,7 @@ def describe(rva, rows, pins, latest, near):
         ev = p[4]
         st = re.search(r"stash=(\S+)", ev)
         sc = re.search(r"score=([0-9.]+)", ev)
-        parts.append(f"    last attempt ({p[3]}{', score ' + sc.group(1) if sc else ''}): {ev[:220]}")
+        parts += digest(rva, depth) or [f"    last attempt ({p[3]}{', score ' + sc.group(1) if sc else ''}): {ev[:220]}"]
         if st and (ROOT / st.group(1)).exists():
             parts.append(f"    START FROM STASH: {st.group(1)}")
     if rva in near:
@@ -213,7 +292,9 @@ def main():
         out.append(f"(Already landed by other lanes and removed from this brief: {len(dropped)} body/bodies.)")
     out.append("TARGETS:")
     for rva in live:
-        out.append(describe(rva, rows, pins, latest, near))
+        # a one-to-four body brief can afford the last five verdicts per body;
+        # a 12-to-40 body brief gets the last two so it stays readable
+        out.append(describe(rva, rows, pins, latest, near, depth=5 if len(live) <= 4 else 2))
     out.append(METHOD.replace("model=MODEL", f"model={a.model}"))
     print("\n".join(out))
     print(f"[brief: {len(live)} live target(s), {sum(int(rows[v]['target_size']) for v in live)} bytes; {len(dropped)} dropped as stale; {len(retired)} retired by a dead-end verdict]", file=sys.stderr)

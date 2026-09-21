@@ -80,14 +80,35 @@ class TranscriptFilterTests(unittest.TestCase):
             self.assertNotIn(lines[3], logged)
             self.assertEqual(len(logged[3]), 400)
             record = json.loads((log_path.parent / "record.json").read_text())
-            self.assertEqual(record["status"], "finished")
+            # a worker that dies at once having worked on nothing is aborted:
+            # its targets must not cool down (eligibility.recent_run_rvas)
+            self.assertEqual(record["status"], "aborted")
+            self.assertEqual(record["touched"], [])
+            self.assertTrue(fleet_run.aborted(record))
             self.assertEqual(record["exit_code"], 7)
             with contextlib.closing(original_connect(root)) as database:
                 self.assertEqual(database.execute("SELECT rva FROM claims").fetchall(), [])
 
 
-if __name__ == "__main__":
-    unittest.main()
+class TouchedTests(unittest.TestCase):
+    def test_tools_mark_the_bodies_a_run_worked_on(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            directory = Path(temporary)
+            (directory / "record.json").write_text("{}", encoding="utf-8")
+            with patch.dict(fleet_run.os.environ, {"BFME_RUN_DIR": str(directory)}):
+                fleet_run.mark_touched(0x123456)
+                fleet_run.mark_touched("0x00123456")
+                fleet_run.mark_touched("not hex")          # never raises
+            self.assertEqual(fleet_run.touched_rvas(directory), ["0x00123456"])
+            touched = dict(status="finished", exit_code=1, seconds=5, touched=["0x00123456"])
+            self.assertFalse(fleet_run.aborted(touched))   # it failed, but it worked first
+            self.assertFalse(fleet_run.aborted(dict(status="finished", exit_code=0, seconds=5)))
+            self.assertFalse(fleet_run.aborted(dict(status="finished", exit_code=1, seconds=4000)))
+
+    def test_without_a_run_nothing_is_written(self):
+        with patch.dict(fleet_run.os.environ, {}, clear=False):
+            fleet_run.os.environ.pop("BFME_RUN_DIR", None)
+            fleet_run.mark_touched(0x10)                    # manual use: no-op
 
 
 class LeaseTests(unittest.TestCase):

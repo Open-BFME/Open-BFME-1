@@ -89,6 +89,37 @@ def unstage_inflight():
         print(f"harvest: left {len(inflight)} in-flight stash(es) unstaged")
 
 
+# The pre-commit hook's placement rule (.githooks/pre-commit): a NEW source
+# outside these trees fails the commit, and a harvest is one commit.
+OFFICIAL = ("Code/GameEngine/", "Code/GameEngineDevice/", "Code/Libraries/", "Code/gen_small/",
+            "Code/gen_asm/", "Code/masm_dumps/", "reference/shims/", "reference/CnC_Generals_Zero_Hour/",
+            "tools/tests/", "build/toolchains/", "mods/", "reverse/attempts/")
+# Written while this harvest owns the index. A harvest that dies between
+# staging and commit leaves its own staged set behind, and every later pass
+# then refused it as "another writer's" (2026-09-18 to 09-21: three days, the
+# whole backlog of one host). The marker tells our leftovers from a stranger's.
+MARKER = ROOT / "build/.harvest_staged"
+
+
+def unstage():
+    run("git", "reset", "-q")
+    MARKER.unlink(missing_ok=True)
+
+
+def alarm(text):
+    """One greppable line for the orchestrator; the harvest log is 5 MB of routine."""
+    import time
+    log = ROOT / "build/fleet_logs/harvest_alarm.log"
+    log.parent.mkdir(parents=True, exist_ok=True)
+    with log.open("a", encoding="utf-8") as handle:
+        handle.write(time.strftime("%Y-%m-%d %H:%M ") + text.splitlines()[0][:300] + "\n")
+
+
+def hands(text):
+    alarm(text)
+    sys.exit(text)
+
+
 msg = sys.argv[1] if len(sys.argv) > 1 else "Open-BFME5: fleet ledger and source snapshot"
 WT = ROOT / "build/wt"
 
@@ -101,7 +132,13 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     # under the lock no seat can land, so a stash deleted by add_match since the
     # last commit is restored here and retired below without racing a seat
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT).returncode:
-        sys.exit("harvest: existing staged work belongs to another writer; leaving it untouched")
+        if not MARKER.exists():
+            hands("harvest: existing staged work belongs to another writer; leaving it untouched")
+        # both locks are ours, so no harvester and no landing is in progress:
+        # this is the index of a harvest that died. The working tree is the
+        # source of truth; unstage and stage again from it.
+        print("harvest: unstaging the leftovers of a harvest that died mid-commit")
+        unstage()
     dependencies = out("git", "diff", "--name-only", "--", "*.h", "*.hpp", "reference", "tools", ".githooks", "AGENTS.md")
     untracked_headers = out("git", "ls-files", "--others", "--exclude-standard", "--", "Code/*.h", "Code/*.hpp", "reference")
     if dependencies or untracked_headers:
@@ -115,6 +152,7 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
                 "reverse/deleted_rows.csv",  # tombstones: check_csv rejects a row removal without one
                 "reverse/header_adopt_blocked.tsv")  # adopt_header records what the compiler refused
                 if (ROOT / p).exists()]
+    MARKER.write_text(str(os.getpid()), encoding="ascii")
     run("git", "add", "-A", "--", *evidence); unstage_inflight()
     cited = set()
     with open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8") as ledger:
@@ -144,6 +182,13 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
                 run("git", "add", "--", source); print(f"harvest: staged {source}, included by {tu}"); break
     unt = out("git", "ls-files", "--others", "--exclude-standard", "Code").split()
     keep = [u for u in unt if u in cited]
+    # placement first: the hook refuses a new source outside the official tree
+    # and takes every other landing down with it (Code/stlport/, 2026-09-18)
+    for path in [k for k in keep if not k.startswith(OFFICIAL)]:
+        quarantine(path, [], why="placement: %s is outside the official source tree (AGENTS.md 'File placement'); "
+                                 "move it under an official Code/ path and re-land" % path)
+        keep.remove(path)
+        print(f"harvest: quarantined {path} (outside the official tree)")
     if keep:
         run("git", "add", "--", *keep)
     print(f"harvest: staged {len(keep)} new cited sources, skipped {len(unt)-len(keep)} in-flight")
@@ -186,6 +231,25 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
                            why="ctor_vtable: the vtable this body leaves installed belongs to %s, not %s" % (flagged[rva], row["name"]))
                 run("git", "add", "-A", "--", *evidence); unstage_inflight()
                 print(f"harvest: quarantined {row['source']} (identity-suspect: vtable belongs to {flagged[rva]})")
+    # A new forwarder-sized body named like its family's real method is the
+    # other identity_guard detector that wedged a harvest (a 5-byte thunk named
+    # `construct`, 2026-09-18). Quarantine what size_outlier indicts among the
+    # rows this harvest adds; rows already in HEAD are the baseline's business.
+    with open(ROOT / "reverse/functions.csv", newline="", encoding="utf-8", errors="replace") as ledger:
+        new_rows = [r for r in csv.DictReader(ledger) if r["status"] == "matched"
+                    and r["name"] not in head_names and r["source"] in cited]
+    if new_rows:
+        import re
+        r = subprocess.run([sys.executable, "tools/size_outlier.py"], cwd=ROOT, capture_output=True, text=True, errors="replace")
+        for m in re.finditer(r"^\s*(\d+)B vs family median\s+(\d+)B\s+(\S+)\s+(\S+)\s+callers exist, none same-method", r.stdout, re.M):
+            size, median, method, klass = m.groups()
+            for row in new_rows:
+                if row["target_size"] == size and row["name"].startswith(f"?{method}@{klass}") and (ROOT / row["source"]).exists():
+                    quarantine(row["source"], [], status="identity-suspect",
+                               why="size_outlier: %sB body named %s, family median %sB, no same-method or same-class caller; "
+                                   "name it for what it forwards to" % (size, method, median))
+                    run("git", "add", "-A", "--", *evidence); unstage_inflight()
+                    print(f"harvest: quarantined {row['source']} (identity-suspect: size outlier {method})")
     # A staged source or stash that redeclares a type a header owns fails the
     # hook; adopt_header swaps in the include, byte-gates the file and records
     # what the compiler refuses, so run it on the staged set first
@@ -244,8 +308,8 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         subprocess.run([sys.executable, "tools/fleet/dedup_keepfirst.py"], cwd=ROOT, env=env)
         run("git", "add", "-A", "--", *evidence); unstage_inflight()
         if subprocess.run([sys.executable, "tools/check_csv.py", "--staged"], cwd=ROOT).returncode:
-            run("git", "reset", "-q")
-            sys.exit("harvest: check_csv failing; hands needed")
+            unstage()
+            hands("harvest: check_csv failing; hands needed")
     # The index may hold entries this harvest never staged (a stale branch, a
     # crashed writer). f43040e9c5 committed 19 deliberately deleted generator
     # files that way. Commit only what a harvest is allowed to own, and never
@@ -254,11 +318,11 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
     allowed = tuple(evidence)
     stray = [p for p in staged if not p.startswith(allowed) and p not in cited]
     if stray:
-        run("git", "reset", "-q")
-        sys.exit("harvest: index holds paths a harvest may not commit; hands needed:\n  " + "\n  ".join(stray))
+        unstage()
+        hands("harvest: index holds paths a harvest may not commit; hands needed:\n  " + "\n  ".join(stray))
     if subprocess.run([sys.executable, "tools/retired_guard.py", "--staged"], cwd=ROOT).returncode:
-        run("git", "reset", "-q")
-        sys.exit("harvest: a retired path is staged; hands needed")
+        unstage()
+        hands("harvest: a retired path is staged; hands needed")
     if subprocess.run(["git", "diff", "--cached", "--quiet"], cwd=ROOT).returncode:
         # seats' add_match and the watchdog run git here too; a transient
         # .git/index.lock is not a hook failure, so wait it out (3 x 20 s)
@@ -270,8 +334,13 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
                 break
             if "index.lock" not in r.stderr or attempt == 3:
                 sys.stdout.write(r.stdout); sys.stderr.write(r.stderr)
-                sys.exit("harvest: commit failed (see hook output above)")
+                # leave nothing staged: the next pass must be able to try again
+                # (it quarantines what it can name) instead of refusing our index
+                unstage()
+                why = [l for l in (r.stdout + r.stderr).splitlines() if "PRE-COMMIT FAILED" in l]
+                hands("harvest: commit failed: " + (why[-1] if why else "see hook output above"))
             time.sleep(20)
+    MARKER.unlink(missing_ok=True)
     old = out("git", "rev-parse", "HEAD")
     portable_lock.unlock(h)
 
@@ -286,7 +355,7 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         rc = run("git", "rebase", "origin/master", cwd=WT, check=False).returncode
         if rc:
             run("git", "rebase", "--abort", cwd=WT, check=False)
-            sys.exit("harvest: rebase conflict in build/wt; hands needed")
+            hands("harvest: rebase conflict in build/wt; hands needed")
         # The union merge driver resurrects rows origin removed and duplicates the
         # tail when both sides append (2026-09-17: 1,958 duplicate rows, harvest
         # wedged for hours). Rebuild the two ledgers as origin's bytes plus this
@@ -323,19 +392,20 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
             run("git", "commit", "-q", "--amend", "--no-edit", cwd=WT, check=False)
             new = out("git", "rev-parse", "HEAD", cwd=WT)
             if subprocess.run([sys.executable, str(WT / "tools/check_csv.py")], cwd=WT).returncode:
-                sys.exit("harvest: rebased ledgers fail check_csv; hands needed")
+                hands("harvest: rebased ledgers fail check_csv; hands needed")
         # The pre-push hook byte-verifies for ~35 s while other hosts push every
         # minute, so a direct push to master lost 6 of 6 races on 2026-09-17.
         # Push the verified commit to a per-host scratch branch (the hook runs
         # there), then fast-forward master on the server in one API call: the
         # race window is a second. Hosts without gh fall back to the direct push.
         import shutil
-        gh = shutil.which("gh")
+        # HARVEST_NO_GH: a remote that is not GitHub (the test fixture, a mirror)
+        gh = None if os.environ.get("HARVEST_NO_GH") else shutil.which("gh")
         if gh:
             scratch = "fleet-" + re.sub(r"[^A-Za-z0-9]+", "-", os.environ.get("COMPUTERNAME") or os.environ.get("HOSTNAME") or "host").lower()
             rc = run("git", "push", "-f", "origin", f"{new}:refs/heads/{scratch}", cwd=WT, check=False).returncode
             if rc:
-                sys.exit("harvest: push refused by the pre-push hook (see above); hands needed")
+                hands("harvest: push refused by the pre-push hook (see above); hands needed")
             remote = out("git", "remote", "get-url", "origin", cwd=WT)
             repo = re.sub(r"\.git$", "", re.sub(r"^.*github\.com[:/]", "", remote))
             ff = subprocess.run([gh, "api", "-X", "PATCH", f"repos/{repo}/git/refs/heads/master",

@@ -104,6 +104,38 @@ def test_recent_runs_and_attempt_counts(tmp_path, world):
     assert eligibility.attempt_counts()[RVA] == 2
 
 
+def test_only_touched_targets_cool_down_and_aborted_runs_cool_nothing(tmp_path):
+    def run(name, **record):
+        directory = tmp_path / "build" / "fleet_runs" / name
+        directory.mkdir(parents=True)
+        record.setdefault("start", time.time() - 60)
+        (directory / "record.json").write_text(json.dumps(record), encoding="utf-8")
+    two = [["0x00000010", 10], ["0x00000020", 10]]
+    run("worked", status="finished", exit_code=0, seconds=4000, targets=two, touched=["0x00000010"])
+    run("quota", status="finished", exit_code=1, seconds=3, targets=[["0x00000030", 10]], touched=[])
+    run("legacy-quota", status="finished", exit_code=1, seconds=3, targets=[["0x00000040", 10]])
+    run("live", status="running", targets=[["0x00000050", 10]], touched=[])
+    assert eligibility.recent_run_rvas(1, tmp_path) == {"0x00000010", "0x00000050"}
+
+
+def test_servable_applies_every_lane_rule(tmp_path, world, monkeypatch):
+    world_path, log = world
+    ok = eligibility.servable(tmp_path)
+    assert ok(RVA) and ok(RVA + 0x10)
+    directory = tmp_path / "build" / "fleet_runs" / "r1"
+    directory.mkdir(parents=True)
+    (directory / "record.json").write_text(json.dumps(dict(
+        start=time.time() - 60, status="finished", exit_code=0, seconds=4000,
+        targets=[[f"0x{RVA:08x}", 400]], touched=[f"0x{RVA:08x}"])), encoding="utf-8")
+    assert not eligibility.servable(tmp_path)(RVA)          # a run just worked on it
+    assert eligibility.servable(tmp_path, hours=0)(RVA)
+    for _ in range(eligibility.ATTEMPT_CAP):
+        verdict(log, "blocked")
+    assert not eligibility.servable(tmp_path, hours=0)(RVA)  # attempt cap
+    monkeypatch.setattr(eligibility, "unlocked_rvas", lambda path=None: {RVA})
+    assert eligibility.servable(tmp_path, hours=0)(RVA)      # reopened on purpose
+
+
 def test_hard_bodies_are_the_capped_complement(world):
     world_path, log = world
     bank(world_path, "0.95")

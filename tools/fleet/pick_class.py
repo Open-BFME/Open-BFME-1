@@ -6,18 +6,24 @@ few dump slots left. The landed siblings prove the layout and pins; the vtable
 slot index maps each dump body to a virtual in declaration order of the ZH twin
 header, which is identity evidence no single-body brief has.
 
-  python build/pick_class.py            # claim best unclaimed vtable, print RVAS line + NOTE
-  python build/pick_class.py --dry      # no claim
-  python build/pick_class.py --vt 0x0113eb94 --dry
+  python tools/fleet/pick_class.py            # best servable vtable, print RVAS line + NOTE
+  python tools/fleet/pick_class.py --dry      # do not mark the pick in seats.log
+  python tools/fleet/pick_class.py --vt 0x0113eb94 --dry
 Output: first line "RVAS: 0x.. 0x..", then "NOTE: <one paragraph>".
-Claims in build/fleet_class_claimed.txt under the fleet claims lock."""
-import csv, re, sys, json, subprocess, collections
+
+A slot is served under the same rules as every other lane
+(eligibility.servable: leases, the 48 h touched cooldown, the attempt cap,
+dead ends, suspect boundaries, unlocked.txt). The old permanent claim file
+build/fleet_class_claimed.txt is no longer read or written: a vtable served
+once was excluded for ever, whether or not its session landed anything."""
+import csv, re, sys, json, subprocess, collections, time
 from pathlib import Path
 sys.path.insert(0, 'tools')
 from portable_lock import lock
-from fleet_run import active_rvas
 from class_context import find_header
+import eligibility
 ROOT = Path('.').resolve()
+MAX_SLOTS = 8   # seat.sh briefs at most 8 bodies; do not lease what is not briefed
 dry = '--dry' in sys.argv
 want_vt = None
 if '--vt' in sys.argv:
@@ -26,9 +32,8 @@ rank = json.load(open(ROOT / 'build/vtable_class_rank.json'))
 # Reuse known context before opening a larger anonymous vtable. This is a
 # scheduling hypothesis, not identity evidence; live rows still filter below.
 rank.sort(key=lambda e: (bool(e.get('names')), e['landed'] / max(e['slots'], 1), e['dump_b']), reverse=True)
-claims = ROOT / 'build/fleet_class_claimed.txt'
 lf = (ROOT / 'build/.fleet_claims.lock').open('a'); lock(lf, exclusive=True)
-taken = {int(l.strip(), 16) for l in claims.read_text().splitlines() if l.strip()} if claims.exists() else set()
+ok = eligibility.servable(ROOT)
 fn = {}
 for r in csv.DictReader(open(ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')):
     a = (r['target_rva'] or '').lower()
@@ -42,11 +47,9 @@ def klass(n):
     m = re.match(r'\?[^@]+@([A-Za-z_][A-Za-z0-9_]*)@@', n or '')
     return m.group(1) if m else None
 chosen = None
-active = active_rvas(ROOT)
 for e in rank:
     if want_vt and e['vt'] != want_vt: continue
-    if e['vt'] in taken and not want_vt: continue
-    live = [a for a in e['dump_rvas'] if fn.get(a, {}).get('source', '').endswith('.asm') and f'0x{a:08x}' not in active]
+    live = [a for a in e['dump_rvas'] if a in fn and eligibility.is_dump_row(fn[a]) and ok(a)][:MAX_SLOTS]
     if not live: continue
     chosen = (e, live); break
 if not chosen:
@@ -74,6 +77,9 @@ note = (f"WARM CLASS {name}: retail vtable at VA 0x{vt:08X} ({len(slots)} slots,
         f"ZH twin header: {zh or 'not found'} ({len(virt)} virtuals parsed in declaration order; MSVC lays out single-inheritance vtables in declaration order after the base class's slots, so align the ZH list against the LANDED slots first to find the base-slot offset, then read the dump slots' names off it). "
         f"Open the landed sibling sources for this vtable and reuse their class definition, cl: flags and pins verbatim. Slot table:\n" + "\n".join(lines))
 if not dry:
-    with open(claims, 'a') as h: h.write(f'0x{vt:08x}\n')
+    # the same in-flight mark the other pickers leave: busy_rvas reads it until
+    # the seat logs "done", which covers the gap before fleet_run takes the lease
+    with open(ROOT / 'build' / 'fleet_logs' / 'seats.log', 'a') as h:
+        h.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(f'0x{a:08x}' for a in live)}\n")
 print('RVAS: ' + ' '.join(f'0x{a:08X}' for a in live))
 print('NOTE: ' + note)

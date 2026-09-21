@@ -308,6 +308,8 @@ def main():
     name = args.name
     try:
         rva = int(args.target_rva, 16)
+        from fleet_run import mark_touched
+        mark_touched(rva)
     except ValueError:
         fail(f"target_rva '{args.target_rva}' is not hex (expected e.g. 0x00812340)")
     try:

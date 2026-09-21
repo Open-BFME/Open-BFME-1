@@ -11,7 +11,7 @@ repairs the mechanical cases:
   * exact duplicate records                            -> build/dedup_keepfirst.py
 Anything else is logged to build/fleet_logs/watchdog.log for the orchestrator.
 
-  python build/ledger_watchdog.py --interval 300
+  python tools/fleet/ledger_watchdog.py --interval 300
 """
 import argparse, os, re, subprocess, sys, time
 from pathlib import Path

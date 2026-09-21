@@ -10,7 +10,7 @@ slot, a witnessed layout, landed neighbours -- so a seat starts on a body with
 a lead, not a blob. Prior attempts count against a body only when the pack
 still has nothing new to say about it.
 
-  python build/pick_anon.py [N] [min_bytes] [max_bytes] [--dry]
+  python tools/fleet/pick_anon.py [N] [min_bytes] [max_bytes] [--dry]
 Prints RVAs one per line; the pick is recorded in seats.log ('seat pick ->')
 so a concurrent picker sees it busy. The durable claim is fleet_run's lease.
 """

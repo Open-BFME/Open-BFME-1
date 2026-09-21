@@ -327,6 +327,29 @@ def expected_bytes(warmth, size):
     return (warmth > 0, size * (1 + warmth))
 
 
+def servable(root=None, hours=48):
+    """The one predicate every lane should ask before serving a dump body:
+    returns ok(rva:int) -> bool. False while a live worker owns the body, for
+    `hours` after a run worked on it, once it has ATTEMPT_CAP verdicts (unless
+    reverse/unlocked.txt reopens it), after a dead end, and while its boundary
+    is suspect. pick_class had its own rules -- a permanent claim file and
+    none of the rest -- so a vtable served once was never served again."""
+    root = root or ROOT
+    taken = {int(a, 16) for a in busy_rvas(root) | recent_run_rvas(hours, root)}
+    latest = latest_verdicts()
+    records = re_log.latest_records()
+    attempts = attempt_counts()
+    unlocked = unlocked_rvas()
+
+    def ok(rva):
+        if rva in taken:
+            return False
+        if attempts.get(rva, 0) >= ATTEMPT_CAP and rva not in unlocked:
+            return False
+        return not (retired(rva, latest) or boundary_suspect(rva, records))
+    return ok
+
+
 def busy_rvas(root=None, seats_log=None):
     """Addresses a live worker owns: fleet_run leases (pid-checked) plus seats
     currently '->' on an RVA in seats.log. Lower-case '0x%08x' strings."""
@@ -347,10 +370,17 @@ def busy_rvas(root=None, seats_log=None):
 
 
 def recent_run_rvas(hours=48, root=None):
-    """Addresses any immutable fleet run targeted in the last `hours`: the
-    honest replacement for append-only claim files. A body a session just
-    left is not served again until the window passes or its stash changes."""
+    """Addresses a fleet run WORKED ON in the last `hours`: the honest
+    replacement for append-only claim files. A body a session just left is
+    not served again until the window passes or its stash changes.
+
+    Only touched targets cool down (fleet_run.mark_touched, written by probe,
+    re_log and add_match). A brief lists up to 14 bodies and a session works
+    on one or two; the rest go straight back to the queue. An aborted run
+    (quota, network) cools nothing. A record from before touch tracking has
+    no `touched` key and keeps the old meaning: every target."""
     root = root or ROOT
+    import fleet_run
     cutoff = time.time() - hours * 3600
     out = set()
     runs = root / "build" / "fleet_runs"
@@ -361,6 +391,10 @@ def recent_run_rvas(hours=48, root=None):
             data = json.loads(record.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue
-        if data.get("start", 0) >= cutoff:
-            out |= {r.lower() for r, _ in data.get("targets", [])}
+        if data.get("start", 0) < cutoff or fleet_run.aborted(data):
+            continue
+        targets = {r.lower() for r, _ in data.get("targets", [])}
+        if "touched" in data and data.get("status") != "running":
+            targets &= {r.lower() for r in data["touched"]}
+        out |= targets
     return out

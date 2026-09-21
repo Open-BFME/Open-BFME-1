@@ -177,6 +177,43 @@ def run_tag(text):
     return text
 
 
+ABORT_SECONDS = int(os.environ.get("FLEET_ABORT_SECONDS", "300"))
+
+
+def mark_touched(rva):
+    """probe, re_log and add_match call this: the run really worked on `rva`.
+    Only touched targets cool down afterwards (eligibility.recent_run_rvas);
+    the rest of the brief returns to the queue. Never raises: bookkeeping
+    must not break the tool a worker is running."""
+    directory = os.environ.get("BFME_RUN_DIR", "")   # set by execute() for its worker
+    if not directory:
+        return
+    try:
+        number = rva if isinstance(rva, int) else int(str(rva), 16)
+        directory = Path(directory)
+        if directory.is_dir() and (directory / "record.json").exists():
+            with (directory / "touched.txt").open("a", encoding="ascii") as handle:
+                handle.write(f"0x{number:08x}\n")
+    except (OSError, ValueError):
+        pass
+
+
+def touched_rvas(directory):
+    try:
+        return sorted(set((Path(directory) / "touched.txt").read_text(encoding="ascii").split()))
+    except OSError:
+        return []
+
+
+def aborted(record):
+    """A run that died at once and worked on nothing (quota, network, a bad
+    command line). 2,680 of these on 2026-09-18 cooled 1,796 bodies for 48 h."""
+    return (record.get("status") == "aborted"
+            or (record.get("exit_code") not in (0, None)
+                and (record.get("seconds") or ABORT_SECONDS) < ABORT_SECONDS
+                and not record.get("touched")))
+
+
 def stash_fingerprint(rva):
     import re_log
     stash = re_log.stash_for(rva)
@@ -263,7 +300,7 @@ def execute(root, brief, legacy_log, engine, seat, command):
             elif "-" in command[1:]:
                 # seat.sh now passes `-` itself; the brief still goes over stdin
                 feed = body.decode("utf-8-sig", errors="replace").encode("utf-8")
-            child = subprocess.Popen(command, cwd=root, env=dict(os.environ, BFME_RUN_ID=run),
+            child = subprocess.Popen(command, cwd=root, env=dict(os.environ, BFME_RUN_ID=run, BFME_RUN_DIR=str(directory)),
                                      stdin=subprocess.PIPE if feed else subprocess.DEVNULL,
                                      stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             if feed:
@@ -302,6 +339,9 @@ def execute(root, brief, legacy_log, engine, seat, command):
     finally:
         record.update(end=time.time())
         record["seconds"] = record["end"] - record["start"]
+        record["touched"] = touched_rvas(directory)
+        if record.get("status") == "finished" and aborted(record):
+            record["status"] = "aborted"
         save(directory / "record.json", record)
         # A detached surviving child still owns its bodies. Do not time it out
         # of the registry and hand them to another worker.

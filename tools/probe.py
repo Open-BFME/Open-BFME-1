@@ -202,6 +202,8 @@ def main():
     rva = int(a.rva, 16)
     if a.va:
         rva -= 0x400000
+    from fleet_run import mark_touched
+    mark_touched(rva)   # only bodies a run worked on cool down afterwards
     src = Path(a.source)
     src = src if src.is_absolute() else (ROOT / src).resolve()
     from experiment_store import compile_cached, record_result

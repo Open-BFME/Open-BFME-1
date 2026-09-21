@@ -210,7 +210,11 @@ def test_a_cache_entry_under_another_hash_is_recomputed_never_served(tmp_path):
     assert header_blob in json.loads(counts.read_text())["files"]
 
 
-@pytest.mark.skipif(os.geteuid() == 0, reason="root reads through chmod 000")
+# os.geteuid does not exist on Windows, where chmod 000 does not stop a read
+# either; evaluating it at import time broke collection of this file and of
+# test_readability_guard.py on every Windows host.
+@pytest.mark.skipif(not hasattr(os, "geteuid") or os.geteuid() == 0,
+                    reason="root (and Windows) read through chmod 000")
 def test_an_unreadable_source_aborts_instead_of_totalling_the_rest(tmp_path):
     root = world(tmp_path)
     blocked = root / AREA / "alpha.cpp"

@@ -94,10 +94,11 @@ def main():
         record = json.loads(path.read_text(encoding="utf-8"))
         runs.append({key: record.get(key) for key in ("id", "engine", "seat", "status", "seconds", "exit_code", "usage")})
         runs[-1]["published_ledger_bytes"] = accepted.get(record["id"], 0)
+    import blockers as vocabulary
     blockers = {}
     for rva, fields in re_log.latest_records().items():
-        for blocker in re.findall(r"(?:^|\s)blocker=([^\s]+)", fields[4]):
-            blockers.setdefault(blocker, set()).add(f"0x{rva:08x}")
+        for family in vocabulary.families(fields[4]):     # free-text spellings share a family
+            blockers.setdefault(family, set()).add(f"0x{rva:08x}")
     print(json.dumps(dict(ref=revision, metric="published ledger attribution; not a fresh byte verification or compute cost",
                           runs=runs, blockers={k: sorted(v) for k, v in sorted(blockers.items(), key=lambda kv: -len(kv[1]))}), indent=2))
 

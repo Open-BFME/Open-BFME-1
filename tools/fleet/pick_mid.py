@@ -9,9 +9,10 @@ rate more than doubles when siblings in the same file are already C++ (their
 class layout, pins and callees are worked out). A file is scored by landed
 real-C++ rows inside its address range per remaining dump body.
 
-  python build/pick_mid.py [N] [min_bytes] [max_bytes] [--dry]
-Prints RVAs one per line; claims go to build/fleet_mid_claimed.txt under the
-fleet claims lock (same pattern as pick_big.py)."""
+  python tools/fleet/pick_mid.py [N] [min_bytes] [max_bytes] [--dry]
+Prints RVAs one per line. A pick is marked in build/fleet_logs/seats.log under
+the fleet claims lock until the seat logs "done"; leases and the 48 h touched
+cooldown (tools/eligibility.py) replace the old append-only claim file."""
 import csv, re, sys, time
 from pathlib import Path
 sys.path.insert(0, 'tools')
@@ -24,7 +25,6 @@ dry = '--dry' in sys.argv
 n_want = int(args[0]) if len(args) > 0 else 3
 min_b = int(args[1]) if len(args) > 1 else 300
 max_b = int(args[2]) if len(args) > 2 else 2500
-claims = ROOT / 'build' / 'fleet_mid_claimed.txt'
 lf = (ROOT / 'build' / '.fleet_claims.lock').open('a')
 lock(lf, exclusive=True)
 # live leases and seats, plus anything a run touched in the last 48 h; the

@@ -25,6 +25,16 @@ def repository(tmp_path):
         (root / name).mkdir(parents=True)
     shutil.copy2(TOOLS / "fleet/harvest.py", root / "tools/fleet/harvest.py")
     shutil.copy2(TOOLS / "portable_lock.py", root / "tools/portable_lock.py")
+    # harvest.py imports fleet_run (in-flight leases) and re_log (quarantine
+    # verdicts) and runs retired_guard; without them every test here died on
+    # ModuleNotFoundError before reaching what it meant to test
+    shutil.copy2(TOOLS / "fleet_run.py", root / "tools/fleet_run.py")
+    (root / "tools/re_log.py").write_text(
+        "import sys\nfrom pathlib import Path\n"
+        "if sys.argv[1:2] == ['record']:\n"
+        "    with (Path(__file__).resolve().parents[1] / 'reverse/re_attempts.log').open('a') as h:\n"
+        "        h.write(' '.join(sys.argv[2:]) + chr(10))\n")
+    (root / "tools/retired_guard.py").write_text("# nothing is retired in this fixture\n")
     (root / "tools/fleet/ledger_prep.py").write_text("# no repairs needed in this fixture\n")
     (root / "tools/check_csv.py").write_text(
         "from pathlib import Path\nimport sys\n"
@@ -38,7 +48,9 @@ def repository(tmp_path):
     (root / "reverse/symbols.csv").write_text("name,address,notes\n")
     (root / "reverse/re_attempts.log").write_text("")
     (root / "Code/foo.cpp").write_text("int foo(){return 1;}\n")
-    (root / ".gitignore").write_text("build/\nreverse/.*.lock\nhooks/\n")
+    # a changed cited source is staged only once it byte-verifies on its own
+    (root / "build.sh").write_text('echo "Functions: OK"\n', newline="\n")
+    (root / ".gitignore").write_text("build/\nbuild.sh\nreverse/.*.lock\nhooks/\n")
     git(root, "add", "--", "tools", "reverse", "Code", ".gitignore")
     git(root, "commit", "-m", "fixture")
     remote = tmp_path / "remote.git"
@@ -49,8 +61,10 @@ def repository(tmp_path):
 
 
 def harvest(root):
+    # the fixture's remote is a bare directory: `gh api` cannot fast-forward it
     return subprocess.run([sys.executable, "tools/fleet/harvest.py", "test harvest"],
-                          cwd=root, capture_output=True, text=True, timeout=45)
+                          cwd=root, capture_output=True, text=True, timeout=45,
+                          env=dict(os.environ, HARVEST_NO_GH="1"))
 
 
 def test_rebased_worktree_validator_blocks_publication(repository, tmp_path):
@@ -116,3 +130,42 @@ def test_uncommitted_shared_dependency_cannot_contaminate_verification(repositor
     assert result.returncode != 0
     assert "changed shared dependencies" in result.stderr
     assert git(remote, "rev-parse", "master") == before
+
+
+def test_own_leftover_index_is_recovered_not_refused(repository):
+    """A harvest that died between staging and commit left its index behind;
+    every later pass refused it as another writer's (2026-09-18, three days)."""
+    root, remote = repository
+    (root / "reverse/re_attempts.log").write_text("late evidence\n")
+    git(root, "add", "reverse/re_attempts.log")
+    (root / "build/.harvest_staged").write_text("1234")
+    result = harvest(root)
+    assert result.returncode == 0, result.stdout + result.stderr
+    assert "unstaging the leftovers" in result.stdout
+    assert "late evidence" in git(remote, "show", "master:reverse/re_attempts.log")
+    assert not (root / "build/.harvest_staged").exists()
+
+
+def test_source_outside_the_official_tree_is_quarantined_not_fatal(repository):
+    root, remote = repository
+    (root / "Code/stlport").mkdir()
+    (root / "Code/stlport/bad.cpp").write_text("int bad(){return 2;}\n")
+    (root / "Code/GameEngine").mkdir()
+    (root / "Code/GameEngine/good.cpp").write_text("int good(){return 3;}\n")
+    with (root / "reverse/functions.csv").open("a") as ledger:
+        ledger.write("bad,,0x2000,8,Code/stlport/bad.cpp,matched,\n"
+                     "good,,0x3000,8,Code/GameEngine/good.cpp,matched,\n")
+    result = harvest(root)
+    assert result.returncode == 0, result.stdout + result.stderr
+    pushed = git(remote, "show", "master:reverse/functions.csv")
+    assert "good.cpp" in pushed and "bad.cpp" not in pushed
+    assert (root / "build/quarantine/Code/stlport/bad.cpp").exists()
+    assert "placement" in (root / "reverse/re_attempts.log").read_text()
+
+
+def test_hands_needed_exit_writes_an_alarm_line(repository):
+    root, _ = repository
+    (root / "private.txt").write_text("another writer")
+    git(root, "add", "private.txt")
+    assert harvest(root).returncode != 0
+    assert "another writer" in (root / "build/fleet_logs/harvest_alarm.log").read_text()

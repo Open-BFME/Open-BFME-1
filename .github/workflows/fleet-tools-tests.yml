@@ -1,0 +1,66 @@
+name: Fleet tooling tests
+
+# The pure-Python tests of the scheduling and harvest tooling: eligibility,
+# pickers, run records and leases, blocker vocabulary, finish measurement,
+# attempt retention, harvest transactions, operator-doc consistency. They need
+# no compiler and no retail image. The byte gate (MSVC 7.1 under Wine, the
+# retail executable) is NOT run here; it stays in the commit and push hooks.
+#
+# Until this workflow existed the only CI was the README progress bar, and two
+# of the harvest tests had been failing on every host since harvest.py started
+# importing fleet_run: nothing ran them.
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'tools/**'
+      - '.github/workflows/fleet-tools-tests.yml'
+  pull_request:
+    paths:
+      - 'tools/**'
+      - '.github/workflows/fleet-tools-tests.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fleet-tools-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # the ledgers are large; the tests build their own fixtures
+          sparse-checkout: |
+            tools
+            reverse/unlocked.txt
+            docs/shape_levers.md
+            .github
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --quiet pytest
+      - name: Configure git identity for fixture repositories
+        run: |
+          git config --global user.name 'fleet-tools-tests'
+          git config --global user.email 'fleet-tools-tests@example.invalid'
+          git config --global init.defaultBranch master
+      - name: Fleet tooling tests
+        run: >
+          python -m pytest -q -p no:cacheprovider
+          tools/tests/test_eligibility.py
+          tools/tests/test_fleet_run.py
+          tools/tests/test_harvest_transactions.py
+          tools/tests/test_blockers.py
+          tools/tests/test_finish_measure.py
+          tools/tests/test_fleet_docs_consistency.py
+          tools/tests/test_re_log_partial.py
+          tools/tests/test_re_log_pruning.py
+          tools/tests/test_setup_local_fleet.py

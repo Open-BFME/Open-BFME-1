@@ -486,7 +486,10 @@ def _record(argv):
     symbol, rva_text, size_text, status = argv[0], argv[1], argv[2], argv[3]
     evidence = " ".join(argv[4:])
     from fleet_run import run_tag
-    evidence = run_tag(evidence)
+    import blockers
+    # one vocabulary: blocker=x becomes blocker=<family>/x so pick_blocker.py
+    # can cluster a shared problem (680 spellings of 14 families, 2026-09-21)
+    evidence = run_tag(blockers.normalise(evidence))
     if status not in VERDICT_STATUSES and status != VOID_STATUS:
         raise SystemExit(
             f"unknown status {status!r}. Dead ends: {sorted(DEAD_END_STATUSES)}; "
@@ -500,6 +503,8 @@ def _record(argv):
             f"A void that matches no row is a typo about a typo, and would sit "
             f"in the log forever looking like it had retracted something.")
     int(rva_text, 16), int(size_text)          # fail loudly on malformed fields
+    from fleet_run import mark_touched
+    mark_touched(int(rva_text, 16))
     if (stash_text is None) != (score_text is None):
         raise SystemExit(
             "--stash and --score are one pair: a banked body nothing can rank "

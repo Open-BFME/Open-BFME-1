@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # A fleet seat: keeps one engine busy. $1 = engine, $2 = seat id.
 #   engines: grok | sol | luna        -> claim a whole dump file (>= 12 bodies), smallest first
+#            lunaclass               -> the open dump slots of one warm vtable, worked as a unit (pick_class.py)
+#            lunablock               -> up to 12 open bodies that share one blocker family (pick_blocker.py)
 #            lunaanon                -> 2 anonymous dump bodies, warmest evidence pack first (pick_anon.py)
 #            lunareview              -> review 2 banked bodies 0.5..0.95 for identity/layout/convention (pick_review.py)
 #            grokbig | solbig | lunabig -> claim ONE large body (1KB..2.5KB) and stay on it
@@ -19,7 +21,7 @@ case "$ENGINE" in
 esac
 BIGNOTE="LARGE body. You have this whole session for it; previous sessions may have banked a stash (START FROM STASH line) -- continue from it, do not restart from scratch. Identify class and callees first (vtable_lookup.py, symbols.csv pins, ZH twin), get the control-flow skeleton compiling, then iterate with probe.py on the FIRST divergence only, one lever at a time (docs/shape_levers.md). Before you stop, ALWAYS bank your best attempt with re_log.py --stash and an honest --score; the next session resumes from it."
 
-run_engine() {  # $1 brief, $2 log
+engine_once() {  # $1 brief, $2 log
   if [ "${ENGINE#grok}" != "$ENGINE" ]; then
     python tools/fleet_run.py --brief "$1" --log "$2" --engine "$ENGINE" --seat "$SEAT" -- timeout -k 60 "${SESSION_CAP:-9000}" "$HOME/.grok/bin/grok.exe" -p "$(cat "$1")" --always-approve --output-format plain < /dev/null
   else
@@ -29,6 +31,28 @@ run_engine() {  # $1 brief, $2 log
     # with nothing landed; a fresh session re-briefs from the live ledger + stashes
     python tools/fleet_run.py --brief "$1" --log "$2" --engine "$ENGINE" --seat "$SEAT" -- timeout -k 60 "${SESSION_CAP:-9000}" codex exec -m "$CM" -c "model_reasoning_effort=\"$CE\"" --sandbox danger-full-access --cd "$(pwd)" - < /dev/null  # fleet_run feeds the brief on stdin: a 30 KB brief as an argument is "Argument list too long"
   fi
+}
+
+# A session that dies at once (quota, network, a bad command line) must not spin:
+# on 2026-09-18 a usage limit produced 2,680 instant failures in one day, each
+# one picking fresh targets. Back off 60 s doubling to 30 min; a usage-limit
+# message goes straight to 30 min. fleet_run marks such a run "aborted", so its
+# targets do not cool down.
+FAST_FAILS=0
+run_engine() {  # $1 brief, $2 log
+  local began=$SECONDS rc out wait
+  engine_once "$1" "$2"; rc=$?
+  if [ "$rc" -ne 0 ] && [ $((SECONDS - began)) -lt "${FLEET_ABORT_SECONDS:-300}" ]; then
+    FAST_FAILS=$((FAST_FAILS + 1))
+    wait=$((60 << (FAST_FAILS > 5 ? 5 : FAST_FAILS - 1))); [ "$wait" -gt 1800 ] && wait=1800
+    out=$(sed -n 2p "$2" 2>/dev/null | tr -d '\r')   # fleet_run leaves a pointer to the transcript
+    grep -q -i -E 'usage limit|rate limit|quota' "$out" "$2" 2>/dev/null && wait=1800
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT fast failure $FAST_FAILS (exit $rc); backing off ${wait}s" >> build/fleet_logs/seats.log
+    sleep "${FLEET_BACKOFF_OVERRIDE:-$wait}"
+  else
+    FAST_FAILS=0
+  fi
+  return "$rc"
 }
 
 while true; do
@@ -57,9 +81,24 @@ while true; do
     # shellcheck disable=SC2086
     python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 8 --note-file "build/.pick_class_$SEAT.txt" --note "Work the class as a unit: reuse landed slot sources and align the proposed ZH order against proven slots. Verify each name against the body's own bytes before pinning it (tools/pin_consistency.py --symbol NAME first, --check after). Probe EXACT is masked shape only; add_match.py must verify relocations before landing. Bank close bodies with re_log.py partial --stash --score." > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
     LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
-    echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $STEM" >> build/fleet_logs/seats.log
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $RVAS" >> build/fleet_logs/seats.log
     run_engine "$BRIEF" "$LOG"
-    echo "$(date '+%H:%M') seat $ENGINE$SEAT done $STEM" >> build/fleet_logs/seats.log
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT done $RVAS" >> build/fleet_logs/seats.log
+  elif [ "${ENGINE%block}" != "$ENGINE" ]; then
+    # blocker lane: the largest cluster of open bodies whose latest verdict names the same
+    # blocker family (tools/blockers.py). One session looks for the shared lever, then
+    # lists the bodies it reopens in reverse/unlocked.txt for the ordinary lanes.
+    python tools/fleet/pick_blocker.py 12 > build/.pick_blocker_$SEAT.txt 2>/dev/null
+    RVAS=$(head -1 build/.pick_blocker_$SEAT.txt | sed 's/^RVAS: //' | tr -d '\r')
+    [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no shared blocker of 5+ bodies; retry in 600s"; sleep 600; continue; }
+    STEM=$(echo "$RVAS" | awk '{print $1}')
+    BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
+    # shellcheck disable=SC2086
+    python tools/brief.py --rvas $RVAS --model "$CMODEL" --limit 12 --note-file "build/.pick_blocker_$SEAT.txt" > "$BRIEF" 2>/dev/null || { echo "seat $SEAT: brief failed for $RVAS"; continue; }
+    LOG="build/fleet_logs/seat_${ENGINE}${SEAT}_${STEM}.log"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT -> $RVAS" >> build/fleet_logs/seats.log
+    run_engine "$BRIEF" "$LOG"
+    echo "$(date '+%H:%M') seat $ENGINE$SEAT done $RVAS" >> build/fleet_logs/seats.log
   elif [ "${ENGINE%mid}" != "$ENGINE" ]; then
     # mid lane: 3 bodies of 300..1000 B from one dump file whose neighbours are already C++
     case "$ENGINE" in *big*) MIDARGS="2 1000 2500";; *) MIDARGS="3 300 2500";; esac   # lunabigmid = upper window

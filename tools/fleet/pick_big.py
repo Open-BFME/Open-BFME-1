@@ -13,7 +13,6 @@ sys.path.insert(0, 'tools')
 from portable_lock import lock
 import eligibility
 ROOT = Path('.').resolve()
-claims = ROOT / 'build' / 'fleet_big_claimed.txt'
 n_want = int(sys.argv[1]) if len(sys.argv) > 1 else 2
 min_bytes = int(sys.argv[2]) if len(sys.argv) > 2 else 1000
 max_bytes = int(sys.argv[3]) if len(sys.argv) > 3 else 2500

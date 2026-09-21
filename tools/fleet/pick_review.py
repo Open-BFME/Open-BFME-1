@@ -11,7 +11,7 @@ Serves: dump addresses whose banked stash scores in [--min, --max) (default
 0.5..0.95), latest verdict a deferral, not busy, not reviewed in the last 48 h.
 Highest score first. Prints RVAs one per line.
 
-  python build/pick_review.py [N] [min] [max] [--dry]
+  python tools/fleet/pick_review.py [N] [min] [max] [--dry]
 """
 import sys
 import time

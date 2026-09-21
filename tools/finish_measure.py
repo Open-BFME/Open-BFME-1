@@ -1,0 +1,146 @@
+#!/usr/bin/env python3
+"""Measure banked stashes with the compiler, so the finish lane ranks on fact.
+
+pick_finish.py ordered its queue by the `score=0.xx` a worker typed into the
+stash header. docs and brief.py both say that number is an author estimate;
+the compiler's answer is authoritative. This module compiles a stash through
+tools/probe.py (about 2 s, dependency-cached), reads the measured distance
+from retail, and keeps it in build/finish_measured.json keyed by the stash
+body hash, so an unchanged stash is never measured twice.
+
+  python tools/finish_measure.py [--min-score 0.9] [--limit N]   # fill the cache
+  python tools/finish_measure.py --report                          # author score vs measured
+
+quality: 1.0 for EXACT, else 1 - (differing bytes + 2 x size error) / retail
+size, floored at 0; 0 when the stash no longer compiles. `first` is the offset
+of the first divergence: deep is nearly done, +0 is a different function.
+"""
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import subprocess
+import sys
+import time
+
+ROOT = Path(__file__).resolve().parents[1]
+CACHE = ROOT / "build" / "finish_measured.json"
+SIZE = re.compile(r"^size\s+ours=(\d+) retail=(\d+)", re.M)
+DIFFS = re.compile(r"^diffs\s+(\d+) non-reloc byte\(s\); first at \+(\d+)", re.M)
+
+
+def body_hash(path):
+    # the two header lines carry the author score and date, not the hypothesis
+    return hashlib.sha256(b"\n".join(Path(path).read_bytes().splitlines()[2:])).hexdigest()
+
+
+def symbol_of(path):
+    first = Path(path).read_text(encoding="utf-8", errors="replace").splitlines()[:1]
+    return first[0][2:].strip() if first and first[0].startswith("//") else ""
+
+
+def parse(text):
+    """Probe output -> measurement dict. Pure, so it can be tested without a compiler."""
+    size = SIZE.search(text)
+    if not size:
+        return dict(compiles=False, quality=0.0)
+    ours, retail = int(size.group(1)), int(size.group(2))
+    if "result   EXACT" in text:
+        return dict(compiles=True, ours=ours, retail=retail, diffs=0, first=retail, quality=1.0)
+    diffs = DIFFS.search(text)
+    count, first = (int(diffs.group(1)), int(diffs.group(2))) if diffs else (retail, 0)
+    distance = count + 2 * abs(ours - retail)
+    return dict(compiles=True, ours=ours, retail=retail, diffs=count, first=first,
+                quality=round(max(0.0, 1.0 - distance / max(retail, 1)), 4))
+
+
+def load():
+    try:
+        return json.loads(CACHE.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def save(cache):
+    CACHE.parent.mkdir(parents=True, exist_ok=True)
+    tmp = CACHE.with_suffix(".tmp%d" % os.getpid())
+    tmp.write_text(json.dumps(cache, indent=1, sort_keys=True), encoding="utf-8")
+    os.replace(tmp, CACHE)
+
+
+def measure(rva, path, timeout=180):
+    symbol = symbol_of(path)
+    if not symbol:
+        return dict(compiles=False, quality=0.0, note="stash line 1 names no symbol")
+    env = {k: v for k, v in os.environ.items() if k not in ("BFME_RUN_DIR", "BFME_RUN_ID")}  # measuring is not working on it
+    try:
+        done = subprocess.run([sys.executable, str(ROOT / "tools/probe.py"), str(path), symbol, f"0x{rva:08X}"],
+                              cwd=ROOT, capture_output=True, text=True, errors="replace", timeout=timeout, env=env)
+    except subprocess.TimeoutExpired:
+        return dict(compiles=False, quality=0.0, note="probe timed out")
+    return parse(done.stdout)
+
+
+def current(cache, rva, path):
+    """The cached measurement of this exact stash body, else None."""
+    entry = cache.get(f"0x{rva:08x}")
+    try:
+        return entry if entry and entry.get("hash") == body_hash(path) else None
+    except OSError:
+        return None
+
+
+def ensure(bodies, budget=8, cache=None):
+    """bodies: [(rva:int, stash_path)]. Measure up to `budget` unmeasured ones
+    (first come first served: pass them best author score first) and return
+    the cache. A picker calls this with a small budget, so the cache fills over
+    a few picks; run this file for the bulk pass."""
+    cache = load() if cache is None else cache
+    changed = 0
+    for rva, path in bodies:
+        if changed >= budget:
+            break
+        if current(cache, rva, path) is None:
+            cache[f"0x{rva:08x}"] = dict(measure(rva, path), hash=body_hash(path), at=time.time())
+            changed += 1
+    if changed:
+        save(cache)
+    return cache
+
+
+def rank_key(cache, rva, path, score, size):
+    """Sort key, best first. Measured bodies outrank unmeasured ones; among the
+    measured the compiler's quality decides, then the deeper first divergence,
+    then bytes. The author score only orders what nobody has measured yet."""
+    entry = current(cache, rva, path)
+    if entry is None:
+        return (1, -score, -size)
+    return (0, -entry["quality"], -entry.get("first", 0) / max(entry.get("retail", 1), 1), -size)
+
+
+def main():
+    sys.path.insert(0, str(ROOT / "tools"))
+    import eligibility
+    args = sys.argv[1:]
+    floor = float(args[args.index("--min-score") + 1]) if "--min-score" in args else 0.9
+    limit = int(args[args.index("--limit") + 1]) if "--limit" in args else 10 ** 6
+    bodies = [(eligibility.rva_of(row), path, score) for row, path, score in eligibility.finish_bodies(floor)]
+    if "--report" in args:
+        cache = load()
+        rows = [(score, current(cache, rva, path), rva) for rva, path, score in bodies]
+        measured = [(s, e, r) for s, e, r in rows if e]
+        print(f"{len(measured)} of {len(rows)} finish stashes measured")
+        broken = sum(1 for _, e, _ in measured if not e["compiles"])
+        exact = sum(1 for _, e, _ in measured if e["quality"] == 1.0)
+        over = sum(1 for s, e, _ in measured if s - e["quality"] > 0.2)
+        print(f"  no longer compile: {broken}   EXACT already: {exact}   author score > measured by 0.2+: {over}")
+        for s, e, r in sorted(measured, key=lambda t: t[0] - t[1]["quality"], reverse=True)[:15]:
+            print(f"  0x{r:08X} author {s:.3f} measured {e['quality']:.3f} diffs={e.get('diffs', '-')} first=+{e.get('first', '-')}")
+        return
+    cache = ensure([(rva, path) for rva, path, _ in bodies], budget=limit)
+    print(f"finish_measure: {sum(1 for rva, path, _ in bodies if current(cache, rva, path))} of {len(bodies)} measured")
+
+
+if __name__ == "__main__":
+    main()

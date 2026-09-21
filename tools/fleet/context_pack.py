@@ -266,7 +266,7 @@ def pack(rva, max_items=8):
     e = _vt.get(rva)
     if e:
         cls = e['names'][0][0] if e['names'] else '?'
-        out.append(f"  vtable slot: member of vtable 0x{e['vt']:08X} ({cls}; {e['landed']} slots landed, {e['dump_n']} still dumps) -> python build/pick_class.py --vt 0x{e['vt']:08X} --dry for the slot table")
+        out.append(f"  vtable slot: member of vtable 0x{e['vt']:08X} ({cls}; {e['landed']} slots landed, {e['dump_n']} still dumps) -> python tools/fleet/pick_class.py --vt 0x{e['vt']:08X} --dry for the slot table")
     if fields:
         out.append("  this-relative fields in the first 0x40 bytes: " + ', '.join(f"+0x{d:X}" for d, _ in sorted(fields.items())[:12]))
     lay = layout_lines(rva, e)
