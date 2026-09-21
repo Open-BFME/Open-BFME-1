@@ -15,3 +15,7 @@ void Rva0006C7C0::noop()
 void Rva0006C7E0Noop()
 {
 }
+
+void Rva0006C830Noop()
+{
+}
