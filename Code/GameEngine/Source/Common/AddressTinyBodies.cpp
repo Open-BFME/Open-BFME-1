@@ -536,6 +536,11 @@ Rva0037D260Body *Rva0037D260Body::body()
 	return this;
 }
 
+// ?Rva0037D270Noop@@YAXXZ
+void Rva0037D270Noop()
+{
+}
+
 class Rva0037D2D0Body
 {
 	int m_value;
