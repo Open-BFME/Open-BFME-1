@@ -5,3 +5,7 @@
 void Rva0036C140Noop(void)
 {
 }
+
+void Rva0036C130Noop(void)
+{
+}
