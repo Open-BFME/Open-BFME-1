@@ -233,3 +233,13 @@ own TU; near-twins of landed bodies. What does not: banked near-misses at
 whose residue is a single SIB byte, a register-role swap or a loop-head
 alignment pad. The SIB base/index rule remains unreachable from clean C++
 and from every compiler flag tried (`docs/sib_lea_experiments.md`).
+
+### Hour 13 — 06:05Z to 08:00Z (third outage)
+
+Four more bodies landed before the seats hit the usage limit again at
+~06:40Z (reset 08:00Z): 0x001ABBB0 (168 B, Waypoint gate), 0x00465D50
+(137 B), 0x000D4360 (116 B), 0x000D3DF0 (111 B, BitFlags<181>::xfer).
+Fleet 40 bodies / 8,746 B cumulative; repository-wide +17,897 B / +0.18 pp
+(67.04% -> 67.23%) since the fleet base. Three worktrees kept unverified
+candidates (0x008CF3C0, 0x00006D20, 0x000FB2E0) for the resumed seats.
+Restart at 08:05Z with three seats.
