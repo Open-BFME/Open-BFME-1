@@ -203,6 +203,11 @@ void Rva00232A90Noop()
 {
 }
 
+// Retail RVA 0x00232980 contains only ret.
+void Rva00232980Noop()
+{
+}
+
 class Rva00232B20Owner
 {
 public:
