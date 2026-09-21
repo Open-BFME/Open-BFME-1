@@ -319,6 +319,11 @@ void Rva001A41E0Noop()
 {
 }
 
+// ?Rva001A42C0Noop@@YAXXZ
+void Rva001A42C0Noop()
+{
+}
+
 class Rva001A4260Owner
 {
 public:
