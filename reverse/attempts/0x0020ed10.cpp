@@ -1,6 +1,18 @@
 // ?createParticleSystems@ActiveBody@@IAEXABVAsciiString@@PBVParticleSystemTemplate@@H@Z
-// partial score=0.74 date=2026-09-10
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.57 date=2026-09-21
+// ZH twin reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp:976-1077
+// Real Coord3D (Code/Libraries/Source/WWVegas/WWMath/coord3d.h) has a non-trivial
+// ctor/dtor, so the local bonePositions[16] array needs the compiler-generated
+// eh-vector-constructor-iterator (??_L) -- that call was missing from the
+// earlier hand-rolled Coord3D stand-in, which is why that attempt came up 64B
+// short. Including the real header restores it. memset() zero-fill for
+// usedBoneIndices beats the {false} aggregate initializer (244 vs 275
+// non-reloc diffs) but neither reproduces retail's clean 4x dword zero-store;
+// frame is still 0xEC vs retail 0xE8 -- /FAsc showed both ours and retail
+// spill `this` to the stack (not the culprit); the extra slot is still open.
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath
+
+#include <string.h>
 
 typedef bool Bool;
 typedef int Int;
@@ -11,21 +23,7 @@ enum ParticleSystemID
 	INVALID_PARTICLE_SYSTEM_ID = 0
 };
 
-struct Coord3DBase
-{
-	float x;
-	float y;
-	float z;
-};
-
-// BFME's Coord3D is non-trivial.  These are the retail-named constructor and
-// destructor declarations; their matched bodies live in WWMath/coord3d.cpp.
-struct Coord3D : public Coord3DBase
-{
-public:
-	Coord3D();
-	~Coord3D();
-};
+#include "coord3d.h"
 
 class Matrix3D;
 
@@ -172,7 +170,8 @@ void ActiveBody::createParticleSystems(const AsciiString &boneBaseName,
 	if (numBones < maxSystems)
 		maxSystems = numBones;
 
-	Bool usedBoneIndices[MAX_BONES] = { false };
+	Bool usedBoneIndices[MAX_BONES];
+	memset(usedBoneIndices, 0, sizeof(usedBoneIndices));
 
 	const Coord3D *pos;
 	for (Int i = 0; i < maxSystems; ++i)
