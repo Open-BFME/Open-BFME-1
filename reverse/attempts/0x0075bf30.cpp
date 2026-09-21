@@ -11,10 +11,10 @@
 // parameter home slot ([[param-slot-is-the-buffer]],
 // [[parameter-home-slot-reuse]]), the call is virtual slot 30 on `this`, and the
 // two early returns share the shrink-wrapped pop edi / pop esi tails.
-class BfmeItemZD
+class ObjectAttemptDamageFlagHook
 {
 public:
-	int bfmeValueZD();
+	int value();
 
 	unsigned char m_bfmeHeadZD[0x38];
 	unsigned char m_bfmeAtZD[0xc];
@@ -25,16 +25,16 @@ class BfmeHolderZD
 {
 public:
 	unsigned char m_bfmeHeadZD[0xfc];
-	BfmeItemZD *m_bfmeItemZD;
+	ObjectAttemptDamageFlagHook *m_bfmeItemZD;
 };
 
-class BfmeSubZD
+class RadiusDecalTemplate
 {
 public:
-	void bfmeTakeZD(void *arg);
+	void operator=(const RadiusDecalTemplate &other);
 };
 
-class BfmeOwnerZD
+class BfmeSenderZD
 {
 public:
 	virtual void bfmeV00ZD();
@@ -68,13 +68,17 @@ public:
 	virtual void bfmeV28ZD();
 	virtual void bfmeV29ZD();
 	virtual void bfmeSendZD(void *at, int value, int *out);
+	};
 
+	class BfmeOwnerZD : public BfmeSenderZD
+	{
+	public:
 	void bfmeApplyZD(void *arg);
 
 	unsigned char m_bfmeHeadZD[4];
 	BfmeHolderZD *m_bfmeHolderZD;
 	unsigned char m_bfmeMidZD[0x1c0];
-	BfmeSubZD m_bfmeSubZD;
+	RadiusDecalTemplate m_bfmeSubZD;
 };
 
 void BfmeOwnerZD::bfmeApplyZD(void *arg)
@@ -82,14 +86,16 @@ void BfmeOwnerZD::bfmeApplyZD(void *arg)
 	if (arg == 0)
 		return;
 
-	m_bfmeSubZD.bfmeTakeZD(arg);
+	m_bfmeSubZD = *(RadiusDecalTemplate *)arg;
 
-	BfmeItemZD *item = m_bfmeHolderZD->m_bfmeItemZD;
+	ObjectAttemptDamageFlagHook *item = m_bfmeHolderZD->m_bfmeItemZD;
 
 	if (item == 0)
 		return;
 
-	int value = item->bfmeValueZD();
+	int value = item->value();
+	int itemValue;
+	itemValue = item->m_bfme44ZD;
 
-	bfmeSendZD(item->m_bfmeAtZD, item->m_bfme44ZD, &value);
+	bfmeSendZD(item->m_bfmeAtZD, itemValue, &value);
 }
