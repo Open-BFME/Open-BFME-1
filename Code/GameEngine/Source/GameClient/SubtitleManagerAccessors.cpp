@@ -271,3 +271,8 @@ SubtitleEntry *subtitleCopy(SubtitleEntry *first, SubtitleEntry *last,
 	}
 	return result;
 }
+
+// ?Rva006EE700Noop@@YAXXZ
+void Rva006EE700Noop()
+{
+}
