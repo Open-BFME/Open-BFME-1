@@ -40,11 +40,11 @@ public:
 };
 extern UpgradeCenter *TheUpgradeCenter;
 
+extern void __declspec(noreturn) __stdcall _CxxThrowException( void *object, void *throwInfo );
+
 struct Gen_t_000bc840_m4pod { int a[1]; };
 bool operator==(const Gen_t_000bc840_m4pod&, const Gen_t_000bc840_m4pod&);
 bool operator<(const Gen_t_000bc840_m4pod&, const Gen_t_000bc840_m4pod&);
-
-extern void __declspec(noreturn) __stdcall _CxxThrowException( void *object, void *throwInfo );
 
 class Rva000BCFA0
 {

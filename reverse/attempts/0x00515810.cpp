@@ -168,7 +168,8 @@ void BfmeAptScreenInGameChat::Rva00515810()
 			(Int)GadgetListBoxGetItemData( m_friendsList, selectedIndices[i], 0 ) );
 	}
 
-	Int previousTopIndex = GadgetListBoxGetTopVisibleEntry( m_friendsList );
+	Int previousTopIndex;
+	previousTopIndex = GadgetListBoxGetTopVisibleEntry( m_friendsList );
 	GadgetListBoxReset( m_friendsList );
 	std::vector<Gen_t_00513940_m4pod> records;
 	BuddyInfoMap *buddies = TheGameSpyInfo->getBuddyMap();

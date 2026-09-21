@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3b54891b55f266a8497a787353fb1e49f0589da29f08bd0726daed4d1a75aefa",
+  "symbol": "?d_002eeda0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?d_002eeda0@@YAXXZ\n// partial score=0.9 date=2026-09-21\nclass ScriptEngine { public: int resolvePlayerMask(int param, int flag); };\nextern ScriptEngine* TheScriptEngine;\nstruct Rva002EE330Player { char m_pad[0x24]; int m_index; char m_pad2[0x2c - 0x28]; int m_isLocalOnly;  };\nstruct Rva002EE330PlayerList { char m_pad[0x10]; int m_count; Rva002EE330Player* nextFromMask(unsigned short* mask); };\nextern Rva002EE330PlayerList* Rva002EE330ThePlayers;\nRva002EE330Player* __stdcall Rva002EF110GetPlayer(int index);\nstruct Rva002EEDA0ShroudManager { void revealMapForPlayer(int index); };\nextern Rva002EEDA0ShroudManager* Rva002EEDA0TheShroudManager;\nvoid __stdcall scriptPlayers002EEDA0RevealMap(int param)\n{\n\tparam = TheScriptEngine->resolvePlayerMask(param, 0);\n\tif (!(unsigned short)param) {\n\t\tfor (int i = 0; i < Rva002EE330ThePlayers->m_count; ++i) {\n\t\t\tRva002EE330Player* player = Rva002EF110GetPlayer(i);\n\t\t\tif (!player->m_isLocalOnly)\n\t\t\t\tRva002EEDA0TheShroudManager->revealMapForPlayer(i);\n\t\t}\n\t\treturn;\n\t}\n\twhile ((unsigned short)param) {\n\t\tRva002EE330Player* player = Rva002EE330ThePlayers->nextFromMask((unsigned short*)&param);\n\t\tif (player)\n\t\t\tRva002EEDA0TheShroudManager->revealMapForPlayer(player->m_index);\n\t}\n}\n"
+}
