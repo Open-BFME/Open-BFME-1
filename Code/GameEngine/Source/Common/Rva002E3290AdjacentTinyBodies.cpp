@@ -6,6 +6,11 @@ void Rva002F1310Noop()
 {
 }
 
+// ?Rva002F1320Noop@@YAXXZ
+void Rva002F1320Noop()
+{
+}
+
 class Rva002E3290False
 {
 public:
