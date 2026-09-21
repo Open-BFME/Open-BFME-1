@@ -2740,3 +2740,10 @@ FluentNoOpThunk *FluentNoOpThunk::ignoreFortyFirst(int)
 {
     return this;
 }
+
+// ?Rva0045E720Noop@@YAXXZ
+// Retail 0x0045E720 contains only ret. The carved boundary and generated thunk
+// caller prove an empty cdecl body, but no evidence identifies its owner.
+void Rva0045E720Noop()
+{
+}
