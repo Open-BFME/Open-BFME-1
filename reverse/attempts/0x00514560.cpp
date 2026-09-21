@@ -3,6 +3,11 @@
 // cl: /DNDEBUG /MD /EHsc
 
 class GameWindow;
+class BfmeAptScreenInGameChat
+{
+public:
+    int rva00513BF0(GameWindow *window, void *values, int kind, bool enabled);
+};
 void __cdecl operator delete(void *);
 namespace _STL { template <bool threads, int instance> class __node_alloc { public: static void _M_deallocate(void *, unsigned); }; }
 
@@ -63,7 +68,6 @@ class Glo00EF4988
 {
 public:
     void h00514560();
-    int rva00513BF0(GameWindow *window, Rva00514560IntVector *values, int kind, bool enabled);
 
 private:
     unsigned char m_unmodelled000[0x250];
@@ -79,6 +83,7 @@ private:
 
 void Glo00EF4988::h00514560()
 {
+    int *begin;
     Rva00514560IntVector values;
 
     if (m_addDirty || m_addEnabled) {
@@ -93,10 +98,16 @@ void Glo00EF4988::h00514560()
         Rva00579160TheManager->fire(m_target, "DisableRemoveButton", 0, 0, 0, 0, 0, 0);
     }
 
-    if (rva00513BF0(m_window, &values, 7, true) > 0) {
-        int *begin = values.begin();
+    if (((BfmeAptScreenInGameChat *)this)->rva00513BF0(
+            m_window, &values, 7, true) > 0) {
+        begin = values.begin();
         int *end = values.end();
-        for (int *it = begin; it != end; ++it)
-            TheGameSpyInfo->bfmeSlot72(*it);
+        if (begin != end) {
+            int *it = begin;
+            do {
+                TheGameSpyInfo->bfmeSlot72(*it);
+                ++it;
+            } while (it != end);
+        }
     }
 }
