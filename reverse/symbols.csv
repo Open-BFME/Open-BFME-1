@@ -88555,3 +88555,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?b_000CC2C0@@YAXXZ,0x000CC2C0,synthetic cdecl alias for the proven Player::enableRadar body used by the 0x00043207 ILT thunk
 ??0Rva001812B0AIHordeMachine@@QAE@PAVObject@@PAVAIAttackState@@VAsciiString@@@Z,0x000268DC,retail factory call at 0x00184110 reaches this ILT; address-derived constructor identity
 ??0Rva00180810AIAttackMachine@@QAE@PAVObject@@PAVAIAttackState@@VAsciiString@@EEE@Z,0x00010EBF,retail factory call at 0x00184110 reaches this ILT; address-derived constructor identity
+?rvaElemClose@Rva006A9800This@@QAEXPAVRva006A9800Elem@@@Z,0x0003B741,ILT thunk called from the 0x006A9800 array-element cleanup loop as this->rvaElemClose(elem); jumps to retail 0x006A5080, still an unnamed dump
