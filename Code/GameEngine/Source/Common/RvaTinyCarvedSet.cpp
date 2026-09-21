@@ -261,6 +261,11 @@ void *Rva000E43C0ReturnThis::get()
 	return this;
 }
 
+// The carved boundary proves a one-byte ret-only body at 0x000E43D0.
+void Rva000E43D0()
+{
+}
+
 class Rva000E43E0Field
 {
 public:
