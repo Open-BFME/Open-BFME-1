@@ -216,6 +216,11 @@ void Rva00094C70Noop()
 {
 }
 
+// Retail RVA 0x00094CA0 contains only ret.
+void Rva00094CA0Noop()
+{
+}
+
 class Rva00095010False
 {
 public:
