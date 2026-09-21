@@ -327,3 +327,56 @@ void Rva0040B1B0Noop()
 void Rva0040B1C0Noop()
 {
 }
+
+// Three immediate stores into the first three dwords and `this` left in eax:
+// a constructor of a flat POD whose middle field starts at -1.  The carved
+// extent at 0x00350020 is 23 bytes and holds nothing else.
+class Rva00350020Record
+{
+public:
+	Rva00350020Record();
+
+private:
+	int m_00;
+	int m_04;
+	int m_08;
+};
+
+// ??0Rva00350020Record@@QAE@XZ
+Rva00350020Record::Rva00350020Record()
+{
+	m_00 = 0;
+	m_04 = -1;
+	m_08 = 0;
+}
+
+extern "C" void *__cdecl memset(void *, int, unsigned int);
+#pragma intrinsic(memset)
+
+// Retail clears the six dwords at +0x04 through a `lea edx,[eax+4]` base and
+// then writes +0x20..+0x28 straight off eax.  Six plain field assignments, an
+// inline clear member, a nested constructor and a pointer helper all fold the
+// base back into each store; only a memset over the run makes MSVC 7.1
+// materialise the address once (docs/shape_levers.md, the nested-array row).
+class Rva007E8540Owner
+{
+public:
+	Rva007E8540Owner();
+
+private:
+	int m_00;
+	int m_slots[6];
+	int m_1C;
+	int m_20;
+	int m_24;
+	int m_28;
+};
+
+// ??0Rva007E8540Owner@@QAE@XZ
+Rva007E8540Owner::Rva007E8540Owner()
+{
+	memset(m_slots, 0, sizeof(m_slots));
+	m_20 = 0;
+	m_24 = 0;
+	m_28 = 0;
+}
