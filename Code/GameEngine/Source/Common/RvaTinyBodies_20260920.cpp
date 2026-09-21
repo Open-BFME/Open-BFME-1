@@ -302,3 +302,8 @@ void *Rva001222E0Self::get() const
 void Rva001222F0Noop()
 {
 }
+
+// The carved boundary at 0x0040B1B0 contains only a return.
+void Rva0040B1B0Noop()
+{
+}
