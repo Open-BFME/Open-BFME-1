@@ -346,3 +346,8 @@ Rva0075E500Self *Rva0075E500Self::identity()
 void Rva00758560Noop()
 {
 }
+
+// ?Rva00757BA0Noop@@YAXXZ
+void Rva00757BA0Noop()
+{
+}
