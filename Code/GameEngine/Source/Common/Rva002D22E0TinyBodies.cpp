@@ -1,6 +1,12 @@
 // Opaque leaf bodies recovered from carved boundaries.
 // Each owner keeps its retail address in the class name because identity is unproven.
 
+class Rva002B6470
+{
+public:
+	void method(void);
+};
+
 class Rva002D22E0
 {
 public:
@@ -185,6 +191,11 @@ class Rva002D7B00
 public:
 	bool method(void) const;
 };
+
+// ?method@Rva002B6470@@QAEXXZ
+void Rva002B6470::method(void)
+{
+}
 
 // ?method@Rva002D22E0@@QBEHXZ
 int Rva002D22E0::method(void) const
