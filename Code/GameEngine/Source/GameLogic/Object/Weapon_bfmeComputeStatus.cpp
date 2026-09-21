@@ -1,6 +1,16 @@
 // ?bfmeComputeStatus@Weapon@@ABE?AW4WeaponStatus@@PA_N@Z
-// partial score=0.99 date=2026-09-18
+// Weapon::bfmeComputeStatus, retail RVA 0x001E5550 (208 bytes).
+// Identity is proven by the named Weapon callers and the adjacent landed
+// Weapon methods.  The barrier is compiler-only: it preserves the retail
+// shared READY return block without adding an instruction.
 // cl: /O2 /Ob0 /DNDEBUG /MD
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
+// The descriptor validity call uses the existing ObjectFilter ABI and ILT
+// identity at 0x000413B2; the alias preserves the bank's field spelling.
+#pragma comment(linker, "/alternatename:?bfmeAmmoReady@Weapon@@QBE_NXZ=?j_0001b9a0@@YAXXZ")
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
@@ -22,11 +32,12 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-class BfmeAmmoDescriptor
+class ObjectFilter
 {
 public:
 	Bool isValid() const;
 };
+typedef ObjectFilter BfmeAmmoDescriptor;
 
 class WeaponTemplate
 {
@@ -83,20 +94,22 @@ WeaponStatus Weapon::bfmeComputeStatus(Bool *valid) const
 		}
 
 		if (getRemainingAmmo(false) > 0)
+		{
+			_ReadWriteBarrier();
 			return READY_TO_FIRE;
+		}
 		if (now < m_whenWeCanFireAgain)
 			return OUT_OF_AMMO;
 		WeaponTemplate *templateForAmmo = m_template;
 		if (!templateForAmmo->m_ammo.isValid() || !bfmeAmmoReady())
 			return OUT_OF_AMMO;
+		return READY_TO_FIRE;
 	}
-	else
+
+	if (now < m_whenWeCanFireAgain)
 	{
-		if (now < m_whenWeCanFireAgain)
-		{
-			if (!tmpl->m_ammo.isValid())
-				return m_status;
-		}
+		if (!tmpl->m_ammo.isValid())
+			return m_status;
 	}
 
 	return getRemainingAmmo(false) > 0 ? READY_TO_FIRE : OUT_OF_AMMO;

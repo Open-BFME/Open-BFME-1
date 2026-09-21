@@ -74898,6 +74898,7 @@ name,address,notes
 ?bfmeAETC@BfmeBaseETC@@QAEXPAX00@Z,0x00015BC2,pin
 ?bfmeAbortAbility@SpecialAbilityUpdate@@QAEXXZ,0x0001466E,Open-BFME5 ILT thunk to body 0x002A5A30; exact helper dispatches SpecialAbilityUpdate onExit(false true)
 ?bfmeAbove@Gen_001de260@@QBEHPBMH@Z,0x000473C5,ILT to the exact landed integer threshold predicate at 0x001DE260
+?bfmeAmmoReady@Weapon@@QBE_NXZ,0x0001B9A0,0x001E5550 calls the established bfmeAmmoReady const-this bool ABI through the existing ILT; target body is the landed 0x001E5520 bool helper
 ?bfmeAccept@BfmeSinkA@@QAEXPAVBfmeFlagTarget@@@Z,0x008815A0,Open-BFME5 the sink the describe at 0x00881040 hands its target to
 ?bfmeAccept@BfmeSinkB@@QAEXPAVBfmeFlagTarget@@@Z,0x008FB0B0,Open-BFME5 the sink the describe at 0x008F7650 hands its target to
 ?bfmeAccept@BfmeSinkC@@QAEXPAVBfmeFlagTarget@@@Z,0x009A2FC0,Open-BFME5 the sink the describe at 0x009A2700 hands its target to
