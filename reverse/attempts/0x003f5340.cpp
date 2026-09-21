@@ -1,32 +1,49 @@
 // ?d_003f5340@@YAXXZ
-// partial score=0.5 date=2026-09-11
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
-// PARTIAL, score ~0.5. Algorithm and both callee ABIs are confirmed correct
-// (see reverse/re_attempts.log); byte gap is in codegen shape, not identity.
-// Residual, from tools/probe.py at 0x003F5340:
-//  - object is 508B vs retail 527B; first diff at +0x84.
-//  - the "delta" local (reuses P1's own dead argument stack slot) and the
-//    "step" local (a genuine sub-esp,8 frame slot, init 4, += 8/ring) have
-//    their store shapes SWAPPED from retail: retail stores delta's initial 1
-//    directly to memory (`mov dword ptr [slot],1`, no register) and step's
-//    initial 4 through eax (`mov eax,4; mov [slot],eax`); this candidate
-//    does the opposite. Tried and ruled out: separating delta's declaration
-//    statement, declaring step inside vs. outside the `if(radius>0)` guard,
-//    declaring both before the guard -- none changed the register choice.
-//  - deeper in the first ring, retail's per-arm distance test uses
-//    eax/ecx (`mov eax,edi; mov ecx,ebx; imul eax,edi; imul ecx,ebx; add
-//    eax,ecx; cmp eax,esi`) where this candidate uses edx/eax for the same
-//    computation -- a real register-allocation difference, not just an
-//    offset shift from the delta/step gap above.
-//  - retail re-tests the frame "step" slot for <=0 (dead code: step only
-//    grows) between EVERY pair of arm loops (e.g. `mov eax,[esp+0x10];
-//    test eax,eax; jle` right after the first arm's inner loop closes,
-//    at +0xe1..+0xe7); this candidate does not emit that recheck at all.
-//    That recheck recurring per arm (not just once per ring) suggests the
-//    real source may factor the ring into a shared per-arm helper/loop
-//    rather than four independent unrolled `for` statements -- worth
-//    trying before another register-shuffle pass.
-
+// partial score=0.55 date=2026-09-21
+// model=Sonnet 5
+// Algorithm and callee ABIs confirmed (see prior re_attempts.log entry, score=0.5).
+// THIS REVISION fixes two real structural bugs the 0.5 candidate had (found by
+// walking tools/dis_retail.py 0x003F5340 527 instruction-by-instruction):
+//  - retail does NOT do "delta++" twice (once after arm2, once after arm4).
+//    It keeps the persistent `delta` slot [esp+0x1c] UNCHANGED for the whole
+//    ring: arm1/arm2 use `count = delta`, arm3/arm4 use a SCRATCH `count =
+//    delta + 1` (computed fresh each time, never written back), and only at
+//    the very end of the ring does it do a single `delta += 2` (`add dword
+//    ptr [esp+0x1c], 2` at +0x1df). The old candidate's double delta++
+//    happened to be numerically equivalent this ring but drifts the byte
+//    shape entirely.
+//  - retail has an `if (best != 0) return true;` at the END of every ring
+//    (+0x1db..+0x1dd, tests esi) -- i.e. once ANY hit is found in the current
+//    ring it returns immediately rather than continuing to search further
+//    (correct closest-first early-out). The old candidate never returned
+//    true from the ring search at all.
+//  - retail also wraps arm1+arm2 in a nested `if (step > 0) { arm1; if
+//    (step > 0) { arm2; } }` guard (dead at runtime, step only grows, but
+//    it IS emitted -- confirmed by tracing jump targets: the ring-start
+//    check at +0x93 and the post-arm1 check at +0xe7 both jump to the SAME
+//    address, +0x137, which is the post-arm2 guard's own test -- i.e. two
+//    nested ifs whose false edges both fall through to the code right after
+//    the block). Reproducing this pair-1 guard fixed the +0x53 eax/ecx
+//    register choice for the `radius` reload to match retail exactly.
+// RESIDUAL after all of the above: object is 526B vs retail 527B (size now
+// within 1 byte!), first diff still at +0x62: retail stores `delta`'s
+// initial value with a bare `mov dword ptr [slot], 1` (no register), while
+// every source shape tried here (combined decl+init, split decl-then-assign,
+// reordering vs best/dx/dy, scoping `step` inside vs outside the `if`)
+// still routes it through a register (`mov ecx,1; mov [slot],ecx`) --
+// `step`'s init (`mov eax,4` then store) matches retail already, so the
+// asymmetry is specific to `delta`. This single register-vs-immediate
+// choice is the entire remaining gap; because it's a 1-byte-shorter
+// encoding it shifts every relative branch after +0x62, which is why the
+// non-reloc diff count still looks large (382B) despite the size gap being
+// almost closed. NEXT LEVER TO TRY: something about how many other locals
+// are simultaneously "dead" at the point of the delta=1 store -- possibly
+// initializing `best`/`dx`/`dy` via memset-style zero-fill (single wider
+// store) frees up whatever register pressure is currently forcing `delta`
+// through ecx, or the second arm-pair (arm3/arm4) may need its OWN
+// `if (step >= 0)` guard pair (tried in an intermediate revision, made size
+// overshoot to 542B, so probably wrong shape -- but not exhaustively ruled
+// out with the pair-1 fix combined).
 
 typedef bool Bool;
 typedef int Int;
@@ -89,26 +106,31 @@ extern "C" Bool __stdcall Rva003F5340(const ICoord2D *center, Int radius, void *
 		{
 			radius -= step + 2;
 			Int count;
-			for (count = delta; count > 0; count--)
+			if (step > 0)
 			{
-				dx++;
-				if (best == 0 || dx * dx + dy * dy < best)
+				for (count = delta; count > 0; count--)
 				{
-					if ((tester->*fn.member)(center->x + dx, center->y + dy))
-						best = dx * dx + dy * dy;
+					dx++;
+					if (best == 0 || dx * dx + dy * dy < best)
+					{
+						if ((tester->*fn.member)(center->x + dx, center->y + dy))
+							best = dx * dx + dy * dy;
+					}
+				}
+				if (step > 0)
+				{
+					for (count = delta; count > 0; count--)
+					{
+						dy++;
+						if (best == 0 || dx * dx + dy * dy < best)
+						{
+							if ((tester->*fn.member)(center->x + dx, center->y + dy))
+								best = dx * dx + dy * dy;
+						}
+					}
 				}
 			}
-			for (count = delta; count > 0; count--)
-			{
-				dy++;
-				if (best == 0 || dx * dx + dy * dy < best)
-				{
-					if ((tester->*fn.member)(center->x + dx, center->y + dy))
-						best = dx * dx + dy * dy;
-				}
-			}
-			delta++;
-			for (count = delta; count > 0; count--)
+			for (count = delta + 1; count > 0; count--)
 			{
 				dx--;
 				if (best == 0 || dx * dx + dy * dy < best)
@@ -117,7 +139,7 @@ extern "C" Bool __stdcall Rva003F5340(const ICoord2D *center, Int radius, void *
 						best = dx * dx + dy * dy;
 				}
 			}
-			for (count = delta; count > 0; count--)
+			for (count = delta + 1; count > 0; count--)
 			{
 				dy--;
 				if (best == 0 || dx * dx + dy * dy < best)
@@ -126,7 +148,9 @@ extern "C" Bool __stdcall Rva003F5340(const ICoord2D *center, Int radius, void *
 						best = dx * dx + dy * dy;
 				}
 			}
-			delta++;
+			if (best != 0)
+				return true;
+			delta += 2;
 			step += 8;
 		} while (radius > 0);
 	}
