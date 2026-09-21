@@ -303,3 +303,9 @@ void *Rva001D6030Self::get() const
 {
 	return (void *)this;
 }
+
+// The carved retail boundary at 0x00191BD0 contains only ret.
+// No caller or identity table proves a semantic owner, so the name keeps the address.
+void Rva00191BD0Noop(void)
+{
+}
