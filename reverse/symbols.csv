@@ -86761,6 +86761,7 @@ _BucketNew,0x009D5D10,vendored=gamespy-2004
 _CanReceiveOnSocket,0x00854680,vendored=gamespy-2004
 _CanSendOnSocket,0x00854700,vendored=gamespy-2004
 _CreateToolhelp32Snapshot@8,0x00AFE3F6,kernel32.dll import stub (direct REL32 call site; see Rva00882140PatchAllModules.cpp)
+_customMatchPreferencesCtorTarget,0x000AB7F0,additive linker alias for the proven CustomMatchPreferences constructor thunk target at 0x0000B0F5
 _D3DXMatrixInverse@12,0x009FB321
 _D3DXMatrixMultiply@12,0x009FACAD,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x0C retail slot0x012DBE04
 _D3DXMatrixScaling@16,0x009FB6F4,d3dx9.lib d3dxmath.obj public dispatch stub; FastTable+0x84 retail slot0x012DBE7C; init at0x009FB6C6
