@@ -307,6 +307,11 @@ void Rva00200930()
 {
 }
 
+// Retail 0x00261000 is a one-byte standalone ret with no proven semantic identity.
+void Rva00261000()
+{
+}
+
 // ?get@Rva00200940Dword@@QBEIXZ
 unsigned int Rva00200940Dword::get() const
 {
