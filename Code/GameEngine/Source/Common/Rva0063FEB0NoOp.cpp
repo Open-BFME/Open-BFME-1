@@ -12,3 +12,8 @@ void Rva0063FEB0NoOp()
 void Rva0063FEC0NoOp()
 {
 }
+
+// ?Rva0063FED0NoOp@@YAXXZ
+void Rva0063FED0NoOp()
+{
+}
