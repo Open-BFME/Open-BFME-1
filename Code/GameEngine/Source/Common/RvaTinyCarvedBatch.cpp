@@ -125,6 +125,11 @@ bool Rva001487E0False()
 	return false;
 }
 
+// Retail RVA 0x001487F0 contains only ret.
+void Rva001487F0Noop()
+{
+}
+
 class Rva0014A850Owner
 {
 public:
