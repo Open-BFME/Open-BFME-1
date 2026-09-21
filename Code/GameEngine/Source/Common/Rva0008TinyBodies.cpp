@@ -383,6 +383,11 @@ void d_005c1270(void)
 {
 }
 
+// The carved boundary at 0x005C1280 contains only ret.
+void Rva005C1280Noop(void)
+{
+}
+
 // ?d_0060d930@@YAXXZ
 void d_0060d930(void)
 {
