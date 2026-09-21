@@ -70,3 +70,12 @@ Type *vector<Type, Allocator>::_M_allocate_and_copy(
 template W3DAnimationInfo *vector<W3DAnimationInfo, allocator<W3DAnimationInfo> >::_M_allocate_and_copy<const W3DAnimationInfo *>(
 	unsigned int, const W3DAnimationInfo *, const W3DAnimationInfo *);
 }
+
+extern void rva0003D3C5Target(void);
+
+#pragma comment(linker, "/alternatename:?rva0003D3C5Target@@YAXXZ=??$_M_allocate_and_copy@PBVW3DAnimationInfo@@@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEPAVW3DAnimationInfo@@IPBV2@0@Z")
+
+void j_0003D3C5(void)
+{
+	rva0003D3C5Target();
+}
