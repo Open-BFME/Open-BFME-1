@@ -36,6 +36,11 @@ void d_003A5DB0()
 {
 }
 
+// Retail 0x003A5DA0 contains only ret.
+void Rva003A5DA0Noop()
+{
+}
+
 class Rva003A5D90Dword
 {
 public:
