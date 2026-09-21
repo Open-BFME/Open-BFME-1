@@ -361,3 +361,15 @@ fewer landed rows within 0x1000) — the pool every earlier seat skipped
 because the picker ranked by landed-neighbour density. Fleet 50 bodies /
 11,163 B cumulative; repository-wide +30,038 B / +0.31 pp (67.04% ->
 67.35%) since the fleet base.
+
+### Hour 27 — 21:03Z to 22:04Z (four seats, cold pools)
+
+Two landings: 0x006A9800 (216 B, graphics resource cleanup with a tail
+jump through function-pointer globals) and 0x00245B20 (156 B,
+HordeContain owner method). Fleet 52 bodies / 11,535 B cumulative;
+repository-wide +33,832 B / +0.35 pp (67.04% -> 67.39%) since the fleet
+base. The seats now draw from three pools the density ranking had never
+served: cold 100-450 B (five or fewer landed rows within 0x1000), cool
+100-450 B (eight or fewer), and cold 450-900 B — 176 bodies / 69 KB in
+total. Identity there comes from callees, string literals, callers_of.py
+and the Zero Hour twin instead of neighbours.
