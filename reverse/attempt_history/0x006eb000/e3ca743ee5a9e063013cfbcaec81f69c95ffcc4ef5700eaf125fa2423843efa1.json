@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e3ca743ee5a9e063013cfbcaec81f69c95ffcc4ef5700eaf125fa2423843efa1",
+  "symbol": "?d_006eb000@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_006eb000@@YAXXZ\n// partial score=0.95 date=2026-09-21\n// 54/54; only the two tail stores are transposed (retail +0x4c then +0x50).\r\n// Pin needed: ?bfmeReleaseERB@BfmeTexERB@@QAEXXZ,0x009EB7A0 (Release_Ref)\r\nclass BfmeTexERB\r\n{\r\npublic:\r\n\tvoid bfmeReleaseERB(void);\r\n\tvoid bfmeAddRefERB(void) { ++m_bfmeRefERB; }\r\n\r\n\tunsigned char m_bfmeHeadERB[4];\r\n\tunsigned short m_bfmeRefERB;\r\n};\r\n\r\nclass BfmeHostERB\r\n{\r\npublic:\r\n\tvoid bfmeSetERB(BfmeTexERB **slot);\r\n\r\n\tunsigned char m_bfmeHeadERB[0x4c];\r\n\tBfmeTexERB *m_bfmeTexERB;\r\n\tint m_bfmeMaskERB;\r\n};\r\n\r\nvoid BfmeHostERB::bfmeSetERB(BfmeTexERB **slot)\r\n{\r\n\tBfmeTexERB *value = *slot;\r\n\tif (value == m_bfmeTexERB)\r\n\t\treturn;\r\n\tif (value != 0)\r\n\t\tvalue->bfmeAddRefERB();\r\n\tif (m_bfmeTexERB != 0)\n\t\tm_bfmeTexERB->bfmeReleaseERB();\n\tBfmeTexERB *fresh = *slot;\n\tm_bfmeMaskERB = (fresh != 0) ? -1 : 0;\n\tm_bfmeTexERB = fresh;\n}\n"
+}
