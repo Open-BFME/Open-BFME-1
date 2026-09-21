@@ -5,3 +5,8 @@
 void b_00128f60()
 {
 }
+
+// The carved retail body at 0x00128F50 contains only ret.
+void Rva00128F50Noop()
+{
+}
