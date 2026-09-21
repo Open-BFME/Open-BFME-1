@@ -113,3 +113,9 @@ void Gen_0018F210::bfmeSetC(int value)
 
 	m_bfmeC = value;
 }
+
+// The carved retail boundary at 0x000EC5D0 contains only ret.
+// No caller or identity table proves a semantic owner, so the name keeps the address.
+void Rva000EC5D0Noop(void)
+{
+}
