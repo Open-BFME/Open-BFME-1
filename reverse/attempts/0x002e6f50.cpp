@@ -1,21 +1,62 @@
 // ?ObjectSpy@@YAHPAUlua_State@@@Z
-// partial score=0.85 date=2026-09-21
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
+// partial score=0.95 date=2026-09-21
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ze
 
 struct lua_State;
 
-extern "C" const char *lua_tostring(lua_State *state, int index);
+unsigned Rva00990030Lookup(lua_State *, int);
+extern "C" const char *lua_tostring(lua_State *, int);
 
-unsigned Rva00990030Lookup(lua_State *state, int index);
-void __cdecl bfmeLogMsg574(const char *message);
-void __cdecl bfmeNotify2_574(void *object, void *parameter);
+// matches reference/shims/namekeygenerator/Common/NameKeyGenerator.h exactly;
+// NameKeyType must mangle as the enum (W4NameKeyType), not a plain unsigned,
+// to match ?NAMEKEY@@YA?AW4NameKeyType@@PBD@Z (0x000B9810, functions.csv) and
+// ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z (0x0008FFC0)
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0,
+	NAMEKEY_MAX = 1 << 23,
+	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
+class NameKeyGenerator
+{
+public:
+	NameKeyType nameToKey(const char *name);
+};
+
+extern NameKeyGenerator *TheNameKeyGenerator;
+
+NameKeyType NAMEKEY(const char *name);
+
+void bfmeLogMsg574(const char *message);
+// ?bfmeNotify2_574@@YAXPAX0@Z (reverse/symbols.csv pin @0x0000630C): both args
+// are void*, not lua_State* -- lua_State* mangles differently and does not resolve.
+void bfmeNotify2_574(void *state, void *parameter);
+// ?bfmeGoTGD@@YAXH@Z (reverse/functions.csv, 0x002E55A0): takes an int, not a
+// lua_State* -- the lua_State* spelling does not match the landed body's name.
 void bfmeGoTGD(int state);
-unsigned NAMEKEY(const char *name);
 
-class Object;
+struct BfmeArgED8
+{
+	unsigned char pad[0x74];
+	void *val74;
+};
+
+struct BfmeThingED8
+{
+	void doProcess(BfmeArgED8 *arg, NameKeyType eventKey, NameKeyType spyKey);
+};
+
+#pragma comment(linker, "/alternatename:?doProcess@BfmeThingED8@@QAEXPAUBfmeArgED8@@II@Z=?doProcess@BfmeThingED8@@QAEXPAUBfmeArgED8@@@Z")
+
+class Object
+{
+	unsigned char m_prefix[0x204];
+
+public:
+	BfmeThingED8 *m_module204;
+};
 
 class GameLogic
 {
@@ -23,92 +64,75 @@ public:
 	Object *findObjectByID(int id);
 };
 
-class NameKeyGenerator
+extern GameLogic *TheGameLogic;
+
+struct BfmeObj2B1
 {
-public:
-	unsigned nameToKey(const char *name);
+	unsigned char m_data[0x78];
 };
 
-class Gen_002E3AB0
+extern BfmeObj2B1 *g_obj12F060C;
+
+struct BfmeCallJ63
 {
-public:
+	void *invoke(void *event);
+};
+
+struct Gen_002E3AB0
+{
 	int *bfmeFind(int key);
 };
 
-struct BfmeArgED8
-{
-};
-
-class BfmeThingED8
-{
-public:
-	void doProcess(BfmeArgED8 *state, unsigned nameKey, unsigned targetKey);
-};
-
-#pragma comment(linker, "/alternatename:?doProcess@BfmeThingED8@@QAEXPAUBfmeArgED8@@II@Z=?doProcess@BfmeThingED8@@QAEXPAUBfmeArgED8@@@Z")
-
-struct Object
-{
-	unsigned char m_pad00[0x204];
-	void *m_field204;
-};
-
-#define TheGameLogic (*(GameLogic **)0x012F0898)
-#define TheNameKeyGenerator (*(NameKeyGenerator **)0x012ED600)
-#define g_bfmeOwnerBR (*(Gen_002E3AB0 **)0x012F060C)
-
+// The Lua registration table at 0x002EC990 pairs this body with ObjectSpy.
 // ?ObjectSpy@@YAHPAUlua_State@@@Z
 int ObjectSpy(lua_State *state)
 {
 	unsigned objectID = Rva00990030Lookup(state, 1);
 	if (objectID == 0)
-		goto invalid;
-
-	Object *object;
-	Object *objectSpill;
-	object = TheGameLogic->findObjectByID(objectID);
-	objectSpill = object;
-	_ReadWriteBarrier();
-	*(Object * volatile *)&objectSpill = object;
-	_ReadWriteBarrier();
-	if (object == 0)
-		return 0;
-
-	unsigned targetID = Rva00990030Lookup(state, 2);
-	if (targetID == 0)
-		goto invalid;
+		goto debugMode;
 
 	{
-		register Object *target = TheGameLogic->findObjectByID(targetID);
+		Object *object = TheGameLogic->findObjectByID(objectID);
+		if (object == 0)
+			return 0;
+
+		unsigned targetID = Rva00990030Lookup(state, 2);
+		if (targetID == 0)
+			goto debugMode;
+
+		Object *target = TheGameLogic->findObjectByID(targetID);
 		if (target == 0)
 			return 0;
 
-		register unsigned nameKey = TheNameKeyGenerator->nameToKey(lua_tostring(state, 3));
-		if (g_bfmeOwnerBR->bfmeFind(nameKey) == 0)
+		const char *eventName = lua_tostring(state, 3);
+		NameKeyType eventKey = TheNameKeyGenerator->nameToKey(eventName);
+		if (reinterpret_cast<BfmeCallJ63 *>(g_obj12F060C)->invoke(
+				(void *)eventKey) == 0)
 		{
 			bfmeGoTGD(reinterpret_cast<int>(state));
 			return 0;
 		}
 
-		register unsigned targetKey = NAMEKEY(lua_tostring(state, 4));
-		if (g_bfmeOwnerBR->bfmeFind(targetKey) == 0)
+		const char *spyName = lua_tostring(state, 4);
+		NameKeyType spyKey = NAMEKEY(spyName);
+		if (reinterpret_cast<Gen_002E3AB0 *>(g_obj12F060C)->bfmeFind(spyKey) == 0)
 		{
 			bfmeGoTGD(reinterpret_cast<int>(state));
 			return 0;
 		}
 
-		BfmeThingED8 *processor = reinterpret_cast<BfmeThingED8 *>(target->m_field204);
-		if (processor != 0)
+		if (target->m_module204 != 0)
 		{
-			processor->doProcess(
-				reinterpret_cast<BfmeArgED8 *>(state), targetKey, nameKey);
+			target->m_module204->doProcess(
+				reinterpret_cast<BfmeArgED8 *>(object), eventKey, spyKey);
 		}
+
+		return 0;
 	}
 
-	return 0;
-
-	invalid:
-	bfmeLogMsg574(reinterpret_cast<const char *>(0x010CF6F0));
+debugMode:
+	bfmeLogMsg574(
+		"\nEntering LUA debug mode.  Type ? for help, 'cont' to exit debug mode\n");
 	bfmeNotify2_574(state, 0);
 	return 0;
 }
