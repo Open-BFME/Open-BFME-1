@@ -326,3 +326,18 @@ One landing before the usage limit hit again at ~15:35Z (reset 18:00Z):
 cumulative; repository-wide +25,321 B / +0.26 pp (67.04% -> 67.30%) since
 the fleet base. Restart at 18:05Z with three seats on the resumed lists
 (100-700 B warm dumps and the untouched 600-900 B carved pool).
+
+### Hour 24 — 18:00Z to 19:02Z (three seats)
+
+No fleet landing; nine banks. Fleet 49 bodies / 11,018 B cumulative;
+repository-wide +29,315 B / +0.30 pp (67.04% -> 67.34%) since the fleet
+base, +10,985 B of it new total-exact coverage. The 100-700 B warm-dump
+pool with at most two prior verdicts is exhausted of tractable bodies:
+what remains there is x87 interpolation chains, split tail fragments,
+SecuROM stubs, register-mirror residues and hand-written SSE dispatch (one
+Bink body reaches exact bytes only as `naked` asm and is correctly refused
+by the anti-lift gate). Seats move to the 500-800 B pool with one prior
+verdict (306 bodies / 197 KB), triaging each list for landed same-class
+siblings before writing anything. Identity found this hour without a
+landing: GeometryInfo::DoXfer at 0x00880600 (vtable slot 3, three landed
+constructors install the table).
