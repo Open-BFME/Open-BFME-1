@@ -5,3 +5,8 @@
 void dup_0043d2f0()
 {
 }
+
+// ?dup_0043d310@@YAXXZ
+void dup_0043d310()
+{
+}
