@@ -4,3 +4,7 @@
 void Rva00383040Noop()
 {
 }
+
+void Rva00383030Noop()
+{
+}
