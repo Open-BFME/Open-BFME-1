@@ -5,3 +5,10 @@
 void Rva0063FEB0NoOp()
 {
 }
+
+// ?Rva0063FEC0NoOp@@YAXXZ
+// The carved boundary at RVA 0x0063FEC0 contains only ret before int3
+// padding, so this body keeps an address-derived name.
+void Rva0063FEC0NoOp()
+{
+}
