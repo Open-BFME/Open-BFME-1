@@ -64,3 +64,5 @@ jobs:
           tools/tests/test_re_log_partial.py
           tools/tests/test_re_log_pruning.py
           tools/tests/test_setup_local_fleet.py
+          tools/tests/test_zh_fuzzy_twins.py
+          tools/tests/test_ghidra_decompile.py

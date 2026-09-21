@@ -10,6 +10,19 @@ regenerate only if the baseline changes (it shouldn't).
 1. Install Ghidra (https://github.com/NationalSecurityAgency/ghidra/releases) and a JDK 21.
    Note: Ghidra 12 dropped bundled Jython — these scripts are Java, run via `-scriptPath`.
 
+## Decompiling (optional, any OS)
+
+`python tools/ghidra_decompile.py 0xRVA [0xRVA ...]` (or `./ghdec 0xRVA`) prints, per function, the references to
+its entry, its direct callees and Ghidra's decompile. `--out DIR` writes one `<rva>.c` per function. It finds Ghidra
+in `$GHIDRA_INSTALL_DIR` or `build/toolchains/ghidra_*`, and a JDK in `$JAVA_HOME`, `build/toolchains/jdk-*` or on
+`PATH`; both are plain unpacked archives, no installer. Analyze once per host (about 13 minutes on a desktop):
+
+    python tools/ghidra_decompile.py --analyze
+
+The project is written to `build/toolchains/bfme_ghidra` (untracked). A call costs about 10 s of JVM start-up, so
+pass several RVAs at once. The output is a DRAFT of control flow, call order and argument passing. Ghidra's names
+and types are invented; decompiled C is never byte-match proof and never identity evidence (AGENTS.md).
+
 ## Regenerate (≈3 min)
 Run from the repo root; replace `$EXE` with `baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe`:
 
