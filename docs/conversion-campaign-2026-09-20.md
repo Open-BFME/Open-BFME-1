@@ -373,3 +373,11 @@ served: cold 100-450 B (five or fewer landed rows within 0x1000), cool
 100-450 B (eight or fewer), and cold 450-900 B — 176 bodies / 69 KB in
 total. Identity there comes from callees, string literals, callers_of.py
 and the Zero Hour twin instead of neighbours.
+
+### Hour 28 — 22:04Z to 23:00Z (sixth outage)
+
+One landing, 0x00244F00 (210 B, HordeContain-family owner method), before
+the usage limit hit again at ~22:30Z (reset 23:00Z). Fleet 53 bodies /
+11,745 B cumulative; repository-wide +36,471 B / +0.38 pp (67.04% ->
+67.42%) since the fleet base, +13,506 B of it new total-exact coverage.
+Restart at 23:05Z with four seats on the resumed cold-pool lists.
