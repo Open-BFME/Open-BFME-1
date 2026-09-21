@@ -4,6 +4,10 @@ void __cdecl Rva000B9950NoOp()
 {
 }
 
+void __cdecl Rva000B9960NoOp()
+{
+}
+
 // ?b_000b9970@@YAXXZ at retail RVA 0x000B9970.
 __declspec(noinline) void b_000b9970()
 {
