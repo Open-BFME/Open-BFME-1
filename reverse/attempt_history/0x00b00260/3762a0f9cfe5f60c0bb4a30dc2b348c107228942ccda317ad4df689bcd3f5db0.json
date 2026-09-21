@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "3762a0f9cfe5f60c0bb4a30dc2b348c107228942ccda317ad4df689bcd3f5db0",
+  "symbol": "?rva00B00260RotateVec3Array@@YAXPAVVector3@@PBV1@ABVMatrix3D@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.96,
+  "source": "// ?rva00B00260RotateVec3Array@@YAXPAVVector3@@PBV1@ABVMatrix3D@@H@Z\n// partial score=0.96 date=2026-09-04\n// cl: /DNDEBUG /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep\n\n#include \"vector3.h\"\n#include \"matrix3d.h\"\n\nclass Rva00B00260MatrixView : public Matrix3D\n{\npublic:\n\tstatic __forceinline void rotateArray(Vector3 *out, const Vector3 *in,\n\t\tconst Matrix3D &matrix, int count)\n\t{\n\t\tconst Rva00B00260MatrixView &m =\n\t\t\t(const Rva00B00260MatrixView &)matrix;\n\t\twhile (count--)\n\t\t{\n\t\t\tfloat x = m[0][2] * in->Z;\n\t\t\tfloat row0y = m[0][1];\n\t\t\tx += row0y * in->Y;\n\t\t\tx += m[0][0] * in->X;\n\t\t\tout->X = x;\n\t\t\tfloat y = m[1][0] * in->X;\n\t\t\ty += m[1][2] * in->Z;\n\t\t\ty += m[1][1] * in->Y;\n\t\t\tout->Y = y;\n\t\t\tfloat z = m.Row[2].X * in->X;\n\t\t\tz += m.Row[2].Y * in->Y;\n\t\t\tz += m.Row[2].Z * in->Z;\n\t\t\tout->Z = z;\n\t\t\t++in;\n\t\t\t++out;\n\t\t}\n\t}\n};\n\nvoid rva00B00260RotateVec3Array(Vector3 *out, const Vector3 *in,\n\tconst Matrix3D &mtx, int count)\n{\n\tint n = count;\n\tVector3 *d = out;\n\tconst Vector3 *s = in;\n\n\tif (n <= 0)\n\t\treturn;\n\n\tRva00B00260MatrixView::rotateArray(d, s, mtx, n);\n}\n"
+}
