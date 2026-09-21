@@ -1309,6 +1309,11 @@ void Rva00698EB0Noop()
 {
 }
 
+// ?Rva00698EC0Noop@@YAXXZ
+void Rva00698EC0Noop()
+{
+}
+
 // ?Rva0013D3B0Noop@@YAXXZ
 void Rva0013D3B0Noop()
 {
