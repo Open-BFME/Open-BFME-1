@@ -187,6 +187,11 @@ void *Rva007520C0::value()
 	return this;
 }
 
+// ?Rva007520D0@@YAXXZ
+void Rva007520D0()
+{
+}
+
 class Rva00752100
 {
 public:
