@@ -11,3 +11,8 @@ void Rva00749020Noop()
 void Rva00749030Noop()
 {
 }
+
+// ?Rva00749040Noop@@YAXXZ
+void Rva00749040Noop()
+{
+}
