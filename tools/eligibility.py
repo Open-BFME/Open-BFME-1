@@ -97,8 +97,25 @@ def stash(rva):
 ATTEMPT_CAP = 5
 
 
+QUICK_LOOK_MINUTES = 10
+_MINUTES = re.compile(r"(?:^|\s)t=(\d+)")
+
+
+def quick_look(status, evidence):
+    """A `blocked` row with no banked body from a session that spent at most
+    QUICK_LOOK_MINUTES on it: somebody looked, nobody tried. 4,954 bodies got
+    one of these (median 2 minutes, "no named caller") mostly before opaque
+    names were allowed. Where a real session came back later, 45% landed; 1,812
+    (403 KB) were never revisited because the look counted as an attempt."""
+    if status != "blocked" or "stash=" in evidence:
+        return False
+    minutes = _MINUTES.search(evidence)
+    return bool(minutes) and int(minutes.group(1)) <= QUICK_LOOK_MINUTES
+
+
 def attempt_counts(path=None):
-    """{rva:int -> number of five-field verdict rows}, any status."""
+    """{rva:int -> number of five-field verdict rows}. A quick look is not an
+    attempt (see quick_look); every other status counts."""
     path = path or re_log.RE_ATTEMPTS
     counts = {}
     if not path.exists():
@@ -109,6 +126,8 @@ def attempt_counts(path=None):
             try:
                 rva = int(f[1], 16)
             except ValueError:
+                continue
+            if quick_look(f[3], f[4]):
                 continue
             counts[rva] = counts.get(rva, 0) + 1
     return counts
@@ -318,13 +337,49 @@ def boundary_suspect(rva, records=None):
     return fields[3] in re_log.DEFERRED_STATUSES and bool(BOUNDARY_RE.search(fields[4]))
 
 
-def expected_bytes(warmth, size):
+def neighbour_density(rows=None, k=6, min_size=60):
+    """density(rva:int) -> share of the 2k nearest ledger bodies (by address,
+    >= min_size bytes, generated rows ignored) that are landed authored C++,
+    or None with fewer than four neighbours. Landed neighbours are what a
+    session actually reuses: the class, its layout, the callee declarations."""
+    rows = load_rows() if rows is None else rows
+    known = []
+    for row in rows:
+        rva = rva_of(row)
+        if rva is None or row.get("status") != "matched" or int(row.get("target_size") or 0) < min_size:
+            continue
+        source = row["source"]
+        if is_dump_row(row):
+            known.append((rva, False))
+        elif source.endswith((".cpp", ".c")) and not source.startswith("Code/gen_"):
+            known.append((rva, True))
+    known.sort()
+    addresses = [a for a, _ in known]
+
+    def density(rva):
+        i = bisect.bisect_left(addresses, rva)
+        near = [landed for a, landed in known[max(0, i - k):i] + known[i:i + k + 1] if a != rva][:2 * k]
+        return sum(near) / len(near) if len(near) >= 4 else None
+    return density
+
+
+def neighbour_prior(density):
+    """Land rate of attempted 300-2,500 B bodies by neighbour density, measured
+    2026-09-21 over 2,267 bodies: 7% below a quarter landed, 17%, 20%, and 50%
+    where three quarters or more of the neighbours are landed C++."""
+    if density is None:
+        return 0.15
+    return (0.07, 0.17, 0.20, 0.50)[min(int(density * 4), 3)]
+
+
+def expected_bytes(warmth, size, density=None):
     """Rank key for the anonymous lane: bytes a session is expected to land.
     Measured over 1,500 verdict rows on 2026-09-16: the land rate is flat
     (~7%) from 100 B to 2,500 B, so bytes per attempt scale with size (4 B for
-    <100 B bodies, 94 B for 1,000-2,500 B); warmth raises the rate. Bodies
-    with no evidence at all rank last regardless of size."""
-    return (warmth > 0, size * (1 + warmth))
+    <100 B bodies, 94 B for 1,000-2,500 B); warmth raises the rate, and so
+    does a landed neighbourhood (neighbour_prior). Bodies with no evidence at
+    all rank last regardless of size."""
+    return (warmth > 0, size * (1 + warmth) * neighbour_prior(density) / 0.15)
 
 
 def servable(root=None, hours=48):

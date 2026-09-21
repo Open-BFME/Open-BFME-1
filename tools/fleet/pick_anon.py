@@ -44,6 +44,7 @@ records = re_log.latest_records()
 # reverse/unlocked.txt: a session already landed the shim/pins this body's
 # family shares; the pack now proves its callees, so serve it first.
 unlocked = eligibility.unlocked_rvas()
+density = eligibility.neighbour_density()
 
 import context_pack  # noqa: E402  (loads the image once, ~20 s cold)
 
@@ -59,6 +60,8 @@ def warmth(rva):
     score += 2 * min(n_callers, 3)
     score += 1 if "BFME layout" in text else 0
     score += 1 if "landed neighbours:" in text else 0
+    # a Zero Hour function of the same shape: a class to test and a source to start from
+    score += 3 if "ZH fuzzy twin (strong" in text else 2 if "ZH fuzzy twin (plausible" in text else 0
     score += 4 if (rva if isinstance(rva, int) else int(rva, 16)) in unlocked else 0
     return score
 
@@ -83,16 +86,19 @@ for row in rows:
         continue
     if eligibility.boundary_suspect(rva, records):
         continue
-    cands.append((w, int(row.get("target_size") or 0), row["target_rva"]))
+    cands.append((w, int(row.get("target_size") or 0), row["target_rva"], density(rva)))
 # bytes a session is expected to land, not evidence alone: 183 of today's 348
 # landings were under 100 B (7 KB in total) while 1,000-2,500 B bodies land at
 # the same rate for 15x the bytes per attempt (eligibility.expected_bytes).
-cands.sort(key=lambda t: eligibility.expected_bytes(t[0], t[1]), reverse=True)
-picked = [rva for _, _, rva in cands[:n_want]]
+# ... and a landed neighbourhood: the anonymous lane landed 2 bodies in 71 real
+# sessions on one host while the mid lane, which picks inside landed
+# neighbourhoods, landed 15 in 26 (eligibility.neighbour_prior).
+cands.sort(key=lambda t: eligibility.expected_bytes(t[0], t[1], t[3]), reverse=True)
+picked = [c[2] for c in cands[:n_want]]
 if picked and not dry:
     with open(seats_log, "a", encoding="utf-8") as fh:
         fh.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(picked)}\n")
 print("\n".join(picked))
 if dry:
-    for w, sz, rva in cands[:n_want]:
-        print(f"# {rva} {sz}B warmth={w} attempts={attempts.get(int(rva, 16), 0)}", file=sys.stderr)
+    for w, sz, rva, d in cands[:n_want]:
+        print(f"# {rva} {sz}B warmth={w} neighbours_landed={'?' if d is None else format(d, '.2f')} attempts={attempts.get(int(rva, 16), 0)}", file=sys.stderr)

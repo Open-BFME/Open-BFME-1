@@ -171,6 +171,17 @@ def layout_lines(rva, vt_entry, limit=10):
         m = re.match(r'\?[^@]*@((?:\?\$[^@]+@)?[A-Za-z_0-9]+)@', n)
         if m and m.group(1) not in classes:
             classes.append(m.group(1))
+    # no vtable, no pin: the class of a strong or plausible ZH fuzzy twin is the
+    # best lead an anonymous body has, and layout/offset drift is what 79% of
+    # failed anonymous sessions name
+    if not classes:
+        twin = (_twins or {}).get(rva) if _twins is not None else None
+        if twin is None and _twins is None:
+            zh_twin_lines(rva); twin = (_twins or {}).get(rva)
+        if twin and twin['similarity'] >= 0.7:
+            m = re.match(r'\?[^@]*@((?:\?\$[^@]+@)?[A-Za-z_0-9]+)@', twin['symbol'])
+            if m:
+                classes.append(m.group(1))
     out = []
     for cls in classes[:2]:
         rows = [r for r in _layouts.get(cls, []) if r['bfme'] != r['zh'] and r['votes'] >= 1.5 and r['confidence'] >= 0.6]
@@ -286,7 +297,38 @@ def pack(rva, max_items=8):
                 nb.append(f"0x{_starts[j]:08X} {n['name'][:50]} @ {n['source'].split('/')[-1]}")
     if nb:
         out.append("  landed neighbours: " + '; '.join(nb))
+    out += zh_twin_lines(rva)
     return out
+
+
+_twins = None
+
+
+def zh_twin_lines(rva):
+    """reverse/zh_fuzzy_twins.tsv: the compiled Zero Hour function whose SHAPE is
+    closest to this body (tools/zh_fuzzy_twins.py). Exact-byte matching never
+    placed it because BFME changed the code; the shape still names a class to
+    test and a source to start from. A hypothesis, never identity evidence."""
+    global _twins
+    if _twins is None:
+        try:
+            sys.path.insert(0, str(ROOT / 'tools'))
+            import zh_fuzzy_twins
+            _twins = zh_fuzzy_twins.load_twins()
+        except Exception:  # noqa: BLE001  (a missing table must not break a brief)
+            _twins = {}
+    twin = _twins.get(rva)
+    if not twin:
+        return []
+    # share of top-1 answers that were right on 1,742 bodies whose twin is known (2026-09-21)
+    sure = ("strong, right ~95% of the time" if twin['similarity'] >= 0.8 and twin['margin'] >= 0.05
+            else "plausible, right ~85% of the time" if twin['similarity'] >= 0.7
+            else "weak, right ~70% of the time")
+    return [f"  ZH fuzzy twin ({sure}: shape similarity {twin['similarity']:.2f}, {twin['margin']:.2f} over the runner-up): "
+            f"{twin['symbol'][:120]}",
+            f"      source: {twin['source']}",
+            "      HYPOTHESIS ONLY. Start from that source and its class; BFME moved members (tools/bfme_layout.py CLASS) and "
+            "added code. Pin the real name only after a caller, vtable slot or literal proves it; otherwise land under an opaque name."]
 
 
 if __name__ == '__main__':

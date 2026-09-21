@@ -33,7 +33,6 @@ taken = eligibility.busy_rvas(ROOT) | eligibility.recent_run_rvas(48, ROOT)
 latest = eligibility.latest_verdicts()
 rows = eligibility.load_rows()
 
-landed = []          # rvas of real C++ rows
 files = {}           # dump file -> [rvas of remaining dump rows]
 size = {}
 for r in rows:
@@ -44,10 +43,6 @@ for r in rows:
     if eligibility.is_dump_row(r):
         files.setdefault(src, []).append(rva)
         size[rva] = int(r['target_size'] or 0)
-    elif r.get('status') == 'matched' and not src.startswith('Code/gen_'):
-        landed.append(int(rva, 16))
-landed.sort()
-import bisect
 
 records = re_log.latest_records()
 attempts = eligibility.attempt_counts()
@@ -61,17 +56,30 @@ def blocked(rva):
         return True
     return eligibility.retired(a, latest) or eligibility.boundary_suspect(a, records)
 
+# Score the BODIES, not the file's address span. A catch-all dump file
+# (Code/gen_small/dumps_000.cpp holds bodies from 0x005ADC10 to 0x009B58F0)
+# spans every landed row in the image, so span/len scored it 492 against ~1
+# for a real file and it won every pick: three unrelated bodies, no shared
+# neighbourhood. eligibility.neighbour_density asks each body how many of its
+# 12 nearest ledger rows are landed C++ (50% land rate at >= 0.75, 7% below 0.25).
+density = eligibility.neighbour_density(rows)
+WINDOW = 0x8000          # bodies served together must be close enough to share context
 best = None
 for f, rvas in files.items():
     mids = [a for a in rvas if min_b <= size[a] <= max_b and a not in taken and not blocked(a)]
     if len(mids) < n_want:
         continue
-    lo = min(int(a, 16) for a in rvas); hi = max(int(a, 16) for a in rvas)
-    n_landed = bisect.bisect_right(landed, hi) - bisect.bisect_left(landed, lo)
-    score = n_landed / max(len(rvas), 1)
-    if best is None or score > best[0]:
-        # largest first: land rate is flat across 300-2,500 B, bytes are not
-        best = (score, f, sorted(mids, key=lambda a: -size[a]))
+    mids.sort(key=lambda a: int(a, 16))
+    for i in range(len(mids) - n_want + 1):
+        group = mids[i:i + n_want]
+        if int(group[-1], 16) - int(group[0], 16) > WINDOW:
+            continue
+        shares = [density(int(a, 16)) or 0.0 for a in group]
+        # expected landed bytes of the group: size x measured land rate
+        score = sum(size[a] * eligibility.neighbour_prior(d) for a, d in zip(group, shares))
+        if best is None or score > best[0]:
+            # largest first: land rate is flat across 300-2,500 B, bytes are not
+            best = (score, f, sorted(group, key=lambda a: -size[a]))
 if not best:
     sys.exit(0)
 picked = best[2][:n_want]
@@ -80,4 +88,5 @@ if not dry:
         h.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(picked)}\n")
 print('\n'.join(picked))
 if dry:
-    print(f'# file {best[1]} landed-neighbour score {best[0]:.2f}', file=sys.stderr)
+    print(f'# file {best[1]} expected landed bytes {best[0]:.0f}; neighbours landed: '
+          + ' '.join(f"{density(int(a, 16)) or 0:.2f}" for a in picked), file=sys.stderr)

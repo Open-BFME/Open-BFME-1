@@ -13,7 +13,7 @@ change does not replace a shell that is already executing an older copy.
 
 | Script | Role |
 |---|---|
-| `launch_fleet.sh N B F M A R C K` | start N file-lane, B big-body, F finish-lane, M mid-lane, A anonymous-lane, R reviewer, C class-lane and K blocker-lane seats plus the watchdog and harvest loop (defaults `6 0 2 8 15 2 4 1`) |
+| `launch_fleet.sh N B F M A R C K` | start N file-lane, B big-body, F finish-lane, M mid-lane, A anonymous-lane, R reviewer, C class-lane and K blocker-lane seats plus the watchdog and harvest loop (defaults `6 0 2 12 11 2 4 1`) |
 | `seat.sh ENGINE SEAT` | one seat loop; engines `luna`, `lunamid`, `lunaclass`, `lunablock`, `lunafin`, `lunabig`, `lunaanon`, `lunareview`, `lunaxhigh*`, `solhigh*`, `grok*`; SESSION_CAP default 150 min; a session that fails inside `FLEET_ABORT_SECONDS` (300) backs the seat off 60 s doubling to 30 min (30 min at once on a usage-limit message) |
 | `pick_file.py` | claim a dump file, ordered by landed-neighbour density (46.5% vs 19.5% land rate) |
 | `pick_big.py` | claim one large body (1000..2500 B), fewest prior attempts first then largest; the `*big` seat stays on it for up to 3 sessions while its stash keeps changing |
@@ -24,6 +24,7 @@ change does not replace a shell that is already executing an older copy.
 | `pick_finish.py` | claim near-landed stashes (`N MIN_SCORE MAX_ATTEMPTS COOLDOWN_DAYS`, default `2 0.9 5 2`); ranks on the compiler's measurement of the stash (`tools/finish_measure.py`, cached in `build/finish_measured.json`), the author score only orders what is not measured yet; luna seats get bodies under 5 verdicts and not re-banked in 2 days, `lunaxhigh` seats get the hard set too (`0 0`) |
 | `pick_anon.py` | claim anonymous dump bodies ranked by expected bytes (size x (1 + evidence warmth): callers via thunk, strings, vtable, layout); skips boundary suspects |
 | `tools/carve_unclaimed.py` | derive deterministic anonymous candidates from uncovered `.text` using REL32 starts, advisory Ghidra starts, and decoded terminal/padding evidence; regenerate after landings |
+| `tools/zh_fuzzy_twins.py` | shape-match open bodies against compiled Zero Hour functions that exact-byte matching never placed; writes the tracked `reverse/zh_fuzzy_twins.tsv` (340 bodies, 240 KB on 2026-09-21; ~95% right at similarity 0.8+ with a 0.05 margin), which `context_pack.py` shows as a hypothesis together with the twin class's BFME layout. Needs the host-local ZH objects (`tools/zh_sweep.py`); rerun after a large batch of landings |
 | `pick_review.py` | claim banked bodies 0.5..0.95 for a reviewer seat (identity, layout, convention, pins) |
 | `harvest.py`, `harvest_loop.sh`, `ledger_prep.py` | the only VCS path while seats run: repair mechanical ledger states under the lock, commit, rebase in `build/wt`, push |
 | `ledger_watchdog.py` | keep the ledgers landable between harvests |

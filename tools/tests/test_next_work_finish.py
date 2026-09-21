@@ -41,7 +41,7 @@ def bank(tmp_path, score):
 
 def verdict(log, status):
     with log.open("a", encoding="utf-8") as fh:
-        fh.write(f"{SYM}\t0x{RVA:08X}\t76\t{status}\tevidence t=5min\n")
+        fh.write(f"{SYM}\t0x{RVA:08X}\t76\t{status}\tevidence t=35min\n")
     re_log._reset()
 
 
