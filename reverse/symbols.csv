@@ -88541,6 +88541,7 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ??0?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000CE890,ICF alias of Gen_000ce890 copy ctor; vector<ObjectID> copy construction used by Player::addAIGroupToCurrentSelection
 ?rva0002cca5Target@@YAMMMPADH@Z,0x00096DD0,address-qualified forwarding target for the GetGameLogicRandomValueReal ILT at 0x0002CCA5
 ?rva0000f727Target@@YAXXZ,0x005C76A0,address-qualified forwarding target for the ParticleSystemTemplate hash lookup ILT at 0x0000F727
+?rva0001e902Target@@YAXXZ,0x002CF800,TU-local clean-C++ alias for the matched SupplyWarehouseDockUpdate constructor used by the 0x0001E902 incremental-link thunk
 ?rva0003D3C5Target@@YAXXZ,0x003B5000,TU-local alias for the matched W3DAnimationInfo allocate-and-copy body reached by the 0x0003D3C5 incremental-link thunk
 ??$__uninitialized_copy@PAUBfmeElemVKN@@PAU1@@_STL@@YAPAUBfmeElemVKN@@PAU1@00ABU__false_type@0@@Z,0x0013D9F0,retail call target from the proven BfmeElemVKN vector overflow body at 0x00143E50
 ??0BFMERetailAsciiString@@QAE@ABV0@@Z,0x00887B60,same StringBase<char> copy-ctor body already pinned as ??0GameSpyGroupRoom@@QAE@ABV0@@Z and matched under ??0?$StringBase@D@@AAE@ABV0@@Z; BFMERetailAsciiString already carries the matching ctor(char*) 0x00888BC0 and releaseBuffer/dtor 0x00887940 pins for this same shim class
