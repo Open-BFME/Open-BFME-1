@@ -9,3 +9,8 @@ struct Rva00367B70
 void Rva00367B70::method()
 {
 }
+
+// ?Rva00367B50Noop@@YAXXZ
+void Rva00367B50Noop()
+{
+}
