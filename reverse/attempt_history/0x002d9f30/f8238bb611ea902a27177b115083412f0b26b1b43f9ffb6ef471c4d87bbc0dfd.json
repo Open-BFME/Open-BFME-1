@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f8238bb611ea902a27177b115083412f0b26b1b43f9ffb6ef471c4d87bbc0dfd",
+  "symbol": "?setCondition@Rva002D9F30Owner@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?setCondition@Rva002D9F30Owner@@QAEXXZ\n// partial score=0.98 date=2026-09-21\n// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-\n//\n// Retail 0x002D9F30 sets one model-condition bit on the object at +8, using\n// the index held at +0x64 of the record at +4, and tail-calls the reapply. The\n// owner name is not guessed: the body has no named caller in the current\n// source surface. The helper is the existing pinned\n// BfmeOwnerVNI::bfmeApply1VNI body reached through ILT 0x0002191D.\n\ntypedef unsigned int UnsignedInt;\n\nclass BfmeOwnerVNI\n{\npublic:\n\tvoid bfmeApply1VNI();\n};\n\nclass Rva002D9F30Target\n{\npublic:\n\tunsigned char m_beforeConditionWords[ 0x110 ];\n\tUnsignedInt m_conditionWords[ 8 ];\n};\n\nclass Rva002D9F30Record\n{\npublic:\n\tunsigned char m_beforeIndex[ 0x64 ];\n\tUnsignedInt m_conditionIndex;\n};\n\nclass Rva002D9F30Owner\n{\npublic:\n\tvoid setCondition();\n\nprivate:\n\tunsigned char m_bfmePad000[ 4 ];\n\tRva002D9F30Record *m_record;\n\tRva002D9F30Target *m_target;\n};\n\nvoid Rva002D9F30Owner::setCondition()\n{\n\tRva002D9F30Target *target = m_target;\n\tRva002D9F30Record *record = m_record;\n\n\tif( target == 0 || record == 0 )\n\t\treturn;\n\n\tUnsignedInt index = record->m_conditionIndex;\n\n\tif( index == 0xffffffff )\n\t\treturn;\n\n\tUnsignedInt bit = 1U << ( index & 0x1f );\n\n\tif( ( target->m_conditionWords[ index >> 5 ] & bit ) != 0 )\n\t\treturn;\n\n\ttarget->m_conditionWords[ index >> 5 ] |= bit;\n\t( (BfmeOwnerVNI *)target )->bfmeApply1VNI();\n}\n"
+}
