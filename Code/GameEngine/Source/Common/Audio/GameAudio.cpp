@@ -174,6 +174,13 @@ static const FieldParse audioSettingsFieldParseTable[] =
 // Singleton TheAudio /////////////////////////////////////////////////////////////////////////////
 AudioManager *TheAudio = NULL;
 
+// ?Rva00200DE0Noop@@YAXXZ
+// Retail RVA 0x00200DE0 contains a single ret byte at a carved boundary.
+// The generated thunk caller does not prove a semantic owner, so the name keeps the address.
+void Rva00200DE0Noop()
+{
+}
+
 
 // AudioManager Device Independent functions //////////////////////////////////////////////////////
 // ??0AudioManager@@ present-unmatched
