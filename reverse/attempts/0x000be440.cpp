@@ -1,30 +1,18 @@
-// ?parsePrerequisiteScienceOrGroup@@YAXPAVINI@@PAVProductionPrerequisite@@PAXPBX@Z
-// partial score=0.15 date=2026-09-21
+// ?d_000be440@@YAXXZ
+// partial score=0.3065 date=2026-09-21
+// Scratch only: nested STLport science-group parser for RVA 0x000BE440.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-//
-// Open-BFME: anonymous carved body at 0x000BE440 (522 bytes). Retail parses
-// Science prerequisites with an "OR" grouping extension over ZH's plain
-// parsePrerequisiteScience (ParsePrerequisiteScienceThunk.cpp): tokens are
-// read from the INI stream, "None" clears and stops, "OR" starts a new
-// PrereqUnitRec group (via the already-matched gen_asm helper
-// d_000be300, which indexes/grows the 12-byte-element m_prereqUnits
-// vector), otherwise each token is looked up through
-// ScienceStore::friend_lookupScience and appended to the current group's
-// science list via the generated _M_insert_overflow thunk
-// (0x00023588, Rva00023588ScienceVectorInsertThunk). At end of input the
-// working ICoord2D-shaped group storage is compacted (divide-by-3 element
-// count, vector<ICoord2D>::operator= copy per group) and the scratch
-// vector-of-vectors is torn down. The exact 3-int meaning of PrereqUnitRec
-// and the group compaction step are not independently proven; d_000be300
-// remains an opaque (but already byte-matched) gen_asm callee.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
+extern "C" __declspec(dllimport) int __cdecl _strcmpi(
+	const char *left, const char *right);
+
 enum ScienceType
 {
-	SCIENCE_INVALID = 0
+	SCIENCE_INVALID = -1
 };
 
 class INI
@@ -41,61 +29,109 @@ public:
 
 extern ScienceStore *TheScienceStore;
 
-extern "C" void *(__cdecl *g_lookup)(void *table, const char *key);
+typedef _STL::vector<ScienceType> ScienceVec;
+typedef _STL::vector<ScienceVec> ScienceGroupVec;
 
-struct PrereqUnitRec
+// STLport's three pointer vector layout is witnessed by the native callee
+// contracts in this body.  These are views over the real containers, not
+// replacement storage.
+struct Rva000BE440ScienceVecLayout
 {
-	unsigned int m_data[3];
+	ScienceType *begin;
+	ScienceType *finish;
+	ScienceType *capacity;
 };
 
-class ProductionPrerequisite
+struct Rva000BE440GroupVecLayout
+{
+	ScienceVec *begin;
+	ScienceVec *finish;
+	ScienceVec *capacity;
+};
+
+class Rva000BE440Store
 {
 public:
-	_STL::vector<PrereqUnitRec> m_prereqUnits;
-	_STL::vector<ScienceType> m_prereqSciences;
-	_STL::vector<ScienceType> m_unused;
+	void resizeGroups(unsigned count, ScienceVec value);
+	ScienceGroupVec m_groups;
 };
 
-extern "C" void d_000be300(ProductionPrerequisite *self, int index);
+#pragma comment(linker, "/alternatename:?resizeGroups@Rva000BE440Store@@QAEXIV?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@@Z=?j_0004835b@@YAXXZ")
 
-extern "C" void Rva00023588ScienceVectorInsertThunk(
-	_STL::vector<ScienceType> *v, ScienceType const *value, int a, int b);
-
-// address-derived identity: only caller/method name unproven; matches the
-// gen-thunk queue entry at 0x000083BE
-void __cdecl parsePrerequisiteScienceOrGroup(INI *ini,
-	ProductionPrerequisite *prereq, void *, const void *)
+// ?Rva000BE440@@YAXPAVINI@@PAX1PBX@Z
+void __cdecl Rva000BE440(INI *ini, void *, void *store,
+	const void *)
 {
-	d_000be300(prereq, 1);
+	Rva000BE440Store *self = (Rva000BE440Store *)store;
+	self->resizeGroups(1, ScienceVec());
+	ScienceVec *current = &self->m_groups.back();
 
 	const char *token = ini->getNextTokenOrNull(0);
+	if (token == 0)
+		goto finish;
 
 	while (token != 0)
 	{
-		if (g_lookup((void *)0x1082eec, token))
+		if (_strcmpi(token, "None") == 0)
 		{
-			// "None": clear and stop entirely.
-			break;
+			current->clear();
+			goto finish;
 		}
 
-		if (!g_lookup((void *)0x1082f50, token))
+		if (_strcmpi(token, "OR") == 0)
 		{
-			// Plain science token: append to the vector at the current
-			// working PrereqUnitRec, growing it through d_000be300 when
-			// it is the first token of a new group.
-			if (((void **)&prereq->m_prereqUnits)[0] != ((void **)&prereq->m_prereqUnits)[1])
-			{
-				ScienceType science = TheScienceStore->friend_lookupScience(token);
-				Rva00023588ScienceVectorInsertThunk(
-					&prereq->m_prereqSciences, &science, 1, 1);
-			}
-
-			token = ini->getNextTokenOrNull(0);
-			continue;
+			self->m_groups.push_back(ScienceVec());
+			current = &self->m_groups.back();
+		}
+		else
+		{
+			if (current->begin() == current->end())
+				goto finish;
+			self->m_groups.push_back(ScienceVec());
+			current = &self->m_groups.back();
+			ScienceType science = TheScienceStore->friend_lookupScience(token);
+			current->push_back(science);
 		}
 
-		// "OR": start a new group.
-		d_000be300(prereq, 1);
 		token = ini->getNextTokenOrNull(0);
 	}
+
+finish:
+	Rva000BE440ScienceVecLayout *currentLayout =
+		(Rva000BE440ScienceVecLayout *)current;
+	ScienceType *source = currentLayout->finish;
+	ScienceType *destination = currentLayout->begin;
+	int count = (int)(currentLayout->finish - source);
+	if (count > 0)
+	{
+		do
+		{
+			*destination++ = *source++;
+			--count;
+		} while (count > 0);
+	}
+	currentLayout->finish = destination;
+	if (currentLayout->begin != currentLayout->finish)
+		return;
+
+	Rva000BE440GroupVecLayout *groups =
+		(Rva000BE440GroupVecLayout *)&self->m_groups;
+	ScienceVec *sourceGroup = groups->finish;
+	ScienceVec *destinationGroup = groups->begin;
+	unsigned int groupCount = (unsigned int)(
+		(char *)sourceGroup - (char *)sourceGroup) / sizeof(ScienceVec);
+	while (groupCount > 0)
+	{
+		*destinationGroup = *sourceGroup;
+		++sourceGroup;
+		++destinationGroup;
+		--groupCount;
+	}
+	ScienceVec *group = destinationGroup;
+	while (group != groups->finish)
+	{
+		group->~ScienceVec();
+		++group;
+	}
+	groups->finish = destinationGroup;
 }
