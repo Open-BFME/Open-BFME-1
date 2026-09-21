@@ -67,7 +67,12 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
     # rows in GameWindowManager.cpp. pre-commit already byte-verifies every
     # staged Code/*.cpp for exactly this reason; --no-verify skips pre-commit
     # entirely, so the push gate has to repeat it.
-    mapfile -t edited < <(python3 - "$base" "$local_sha" <<'PY'
+    # Same trap as the two delta_sources calls around it: a process substitution
+    # hides this script's exit status, so a crash read as "no edited sources" and
+    # the push went out with those translation units unverified.
+    edited_out=$(mktemp)
+    python3 - "$base" "$local_sha" > "$edited_out" <<'PY' \
+        || { rm -f "$edited_out"; fail "listing the edited claimed sources (see above)"; }
 import csv, io, subprocess, sys
 base, rev = sys.argv[1], sys.argv[2]
 
@@ -85,7 +90,8 @@ sys.stdout.reconfigure(newline="\n")
 for path in sorted(set(touched) & claimed):
     print(path)
 PY
-    )
+    mapfile -t edited < "$edited_out"
+    rm -f "$edited_out"
 
     # A reverse/symbols.csv pin DELETION reddens rows in files the range never
     # touches: it removes a REL32 candidate, and every claimed row whose retail
