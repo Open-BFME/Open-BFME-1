@@ -711,3 +711,10 @@ int Rva0039B880Body::body() const
 {
 	return m_value;
 }
+
+// ?Rva0042F280Noop@@YAXXZ
+// Retail 0x0042F280 contains only ret. The carved boundary and generated thunk
+// caller prove an empty cdecl body, but no evidence identifies its owner.
+void Rva0042F280Noop()
+{
+}
