@@ -16,3 +16,8 @@ void *Rva00489480Owner::get()
 void b_00489490(void)
 {
 }
+
+// The carved boundary at 0x004894B0 contains one ret and no known semantic owner.
+void b_004894b0(void)
+{
+}
