@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "e6ac55cf1e378ce533d96db0723f762d37913b16b85c230d35b454b36bab68cc",
+  "symbol": "?d_008bd230@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.95,
+  "source": "// ?d_008bd230@@YAXXZ\n// partial score=0.95 date=2026-09-04\nclass BfmeNode1279;\n\nclass BfmeQuery1279\n{\npublic:\n\tvoid bfmeQuery1279(void *value, int zero, void **other, void **result);\n\tBfmeNode1279 *bfmeInsert1279(void *value, BfmeNode1279 *node);\n};\n\nclass BfmeNode1279\n{\npublic:\n\tvirtual void bfmeLinked1279() = 0;\n\tchar m_padding04[0x08 - 0x04];\n\tvoid *m_value;\n\tchar m_padding0c[0x54 - 0x0c];\n\tBfmeNode1279 *m_previous;\n\tBfmeNode1279 *m_next;\n};\n\nBfmeNode1279 *BfmeQuery1279::bfmeInsert1279(void *value, BfmeNode1279 *node)\n{\n\tvoid *const originalValue = value;\n\tvoid *other;\n\tbfmeQuery1279(value, 0, &value, &other);\n\tBfmeNode1279 *previous = (BfmeNode1279 *)value;\n\tnode->m_next = previous->m_next;\n\tnode->m_previous = previous;\n\tnode->bfmeLinked1279();\n\tif (node->m_next)\n\t\tnode->m_next->m_previous = node;\n\tnode->m_previous->m_next = node;\n\tnode->m_value = originalValue;\n\treturn node;\n}\n"
+}
