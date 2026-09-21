@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "bf43fb674c8ebc5186b7e82efb7f59d68ea8ee48b6447bb09b9ff5d62e27a1c9",
+  "symbol": "??0?$basic_fstream@DV?$char_traits@D@_STL@@@_STL@@QAE@PBDHJ@Z",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ??0?$basic_fstream@DV?$char_traits@D@_STL@@@_STL@@QAE@PBDHJ@Z\n// partial score=0.94 date=2026-09-21\n// cl: /EHsc /MD /D_STLP_USE_STATIC_LIB\n// stlport\n// STLport 4.5 basic_fstream<char>(const char*, openmode, long) pathname\n// constructor, retail RVA 0x0084C6F0.  Its wide-character twin\n// (0x0084D0A0, StreamConstructorInstantiations.cpp) forwards its own\n// `protection` argument straight through to _M_open(name, mode, protection).\n// This narrow instantiation does not: it always passes the literal 0x80\n// default (filebuf_type::_S_default_pmode) to _M_open regardless of what\n// the caller passed, so it needs its own explicit specialization instead of\n// the generic vendored template body.\n#include <fstream>\n\ntemplate <>\n_STL::basic_fstream<char, _STL::char_traits<char> >::basic_fstream(\n\tconst char *__s, _STL::ios_base::openmode __m, long /*__protection*/) :\n\t_STL::basic_ios<char, _STL::char_traits<char> >(),\n\t_STL::basic_iostream<char, _STL::char_traits<char> >(0),\n\t_M_buf()\n{\n\tthis->init(&_M_buf);\n\tif (!_M_buf.open(__s, __m, 0x80))\n\t\tthis->setstate(_STL::ios_base::failbit);\n}\n\n// force emission of the specialization above\ntemplate _STL::basic_fstream<char, _STL::char_traits<char> >::basic_fstream(\n\tconst char*, _STL::ios_base::openmode, long);\n"
+}
