@@ -1,20 +1,26 @@
 // ?d_0089e2b0@@YAXXZ
-// partial score=0.78 date=2026-09-17
+// partial score=0.40 date=2026-09-21
 // ?Replace@EAStringC@@QAEHPBD0@Z
-// Recovered from the EAStringC family and the retail Replace body at 0x0089E2B0.
+// Supersedes an earlier "score=0.78" self-report on this RVA that
+// re-verification with probe.py and shape_search showed was inflated
+// (real score ~0.27): see reverse/re_attempts.log for the 0x0089E2B0
+// history.
+// Recovered from the EAStringC family (proven class shape from
+// EAStringCTrimRight.cpp / EAStringCReserveCtor.cpp) and the retail
+// Replace body at 0x0089E2B0.  Minimizes named locals (no separate
+// destinationStart/oldData) to reduce register pressure toward retail's
+// edi=this/ebp=findLength register schedule.  Retail still keeps 'find'
+// in ebx (this compiles it into esi) and its frame is one dword (4B)
+// larger -- retail caches one more persistent value across the whole
+// function than this shape does; shape_family_levers/eh_levers found no
+// further mechanical lever from here as of this attempt.
 // cl: /O2 /DNDEBUG /MD /EHsc
 
 extern "C" char *__cdecl strstr(const char *, const char *);
-extern "C" void *__cdecl memcpy(void *, const void *, unsigned int);
+extern "C" void *__cdecl memcpy(void *destination, const void *source, unsigned int bytes);
 extern "C" unsigned int __cdecl strlen(const char *);
 
-struct BfmeAllocVKJ
-{
-	void *(__cdecl *allocate)(unsigned int);
-	void (__cdecl *free)(void *);
-};
-
-extern BfmeAllocVKJ *g_bfmeAllocVKJ;
+#pragma intrinsic(memcpy)
 
 struct BfmeStringPool3AF0
 {
@@ -24,55 +30,42 @@ struct BfmeStringPool3AF0
 
 extern BfmeStringPool3AF0 *g_bfmeStringPool1284;
 
-struct EAStringData
+class EAStringC
 {
-	unsigned short m_refCount;
-	unsigned short m_size;
-	unsigned short m_maxSize;
-	unsigned short m_hash;
-};
-
-template <typename T> class StringBase
-{
-	protected:
-	EAStringData *m_data;
-	StringBase() {}
+	public:
+	class StringDataC
+	{
+	public:
+		unsigned short m_uRefCount;
+		unsigned short m_uSize;
+		unsigned short m_uMaxSize;
+		unsigned short m_uHash;
+	};
 
 	private:
-	StringBase(const StringBase &other) : m_data(other.m_data)
-	{
-		++m_data->m_refCount;
-	}
-
-	StringBase(EAStringData *data) : m_data(data)
-	{
-		++m_data->m_refCount;
-	}
-
-	protected:
-	void releaseBuffer()
-	{
-		EAStringData *data = m_data;
-		if (--data->m_refCount == 0)
-			g_bfmeStringPool1284->free(data);
-	}
-
-	~StringBase() { releaseBuffer(); }
-
-	friend class EAStringC;
-};
-
-class EAStringC : private StringBase<char>
-{
-	typedef EAStringData StringDataC;
+	StringDataC *m_pData;
 
 	char *GetInternalBuffer() const
 	{
-		return reinterpret_cast<char *>(m_data) + sizeof(StringDataC);
+		return reinterpret_cast<char *>(m_pData) + sizeof(StringDataC);
 	}
 
-public:
-	EAStringC(unsigned int size);
+	public:
+	EAStringC(unsigned int nSize);
+
+	EAStringC(const EAStringC &other)
+		: m_pData(other.m_pData)
+	{
+		++m_pData->m_uRefCount;
+	}
+
+	__forceinline ~EAStringC()
+	{
+		StringDataC *data = m_pData;
+		if (--data->m_uRefCount == 0)
+			g_bfmeStringPool1284->free(data);
+	}
+
 	int Replace(const char *find, const char *replacement);
 };
 
@@ -84,24 +77,24 @@ int EAStringC::Replace(const char *find, const char *replacement)
 
 	int replacementLength = strlen(replacement);
 
-	const char *source = GetInternalBuffer();
 	int count = 0;
-	const char *match = strstr(source, find);
-	while (match != 0)
+	const char *match = strstr(GetInternalBuffer(), find);
+	if (match != 0)
 	{
-		++count;
-		match = strstr(match + findLength, find);
+		do
+		{
+			++count;
+			match = strstr(match + findLength, find);
+		} while (match != 0);
 	}
 	if (count == 0)
 		return 0;
 
-	register int newLength = m_data->m_size
-		+ (replacementLength - findLength) * count;
+	int newLength = m_pData->m_uSize + (replacementLength - findLength) * count;
 	EAStringC result(newLength);
-	StringDataC *oldData = m_data;
 	char *destination = result.GetInternalBuffer();
 	char *destinationStart = destination;
-	source = GetInternalBuffer();
+	const char *source = GetInternalBuffer();
 
 	for (int remaining = count; remaining > 0; --remaining)
 	{
@@ -117,20 +110,19 @@ int EAStringC::Replace(const char *find, const char *replacement)
 		destination += replacementLength;
 	}
 
-	int tailLength = newLength
-		- static_cast<int>(destination - destinationStart);
+	int tailLength = newLength - static_cast<int>(destination - destinationStart);
 	if (tailLength != 0)
 	{
 		memcpy(destination, source, tailLength);
 		destination += tailLength;
 	}
 	*destination = 0;
-	result.m_data->m_size = static_cast<unsigned short>(newLength);
-	result.m_data->m_hash = 0;
+	result.m_pData->m_uSize = static_cast<unsigned short>(newLength);
+	result.m_pData->m_uHash = 0;
 
-	++result.m_data->m_refCount;
-	if (--oldData->m_refCount == 0)
-		g_bfmeStringPool1284->free(oldData);
-	m_data = result.m_data;
+	++result.m_pData->m_uRefCount;
+	if (--m_pData->m_uRefCount == 0)
+		g_bfmeStringPool1284->free(m_pData);
+	m_pData = result.m_pData;
 	return count;
 }
