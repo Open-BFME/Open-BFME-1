@@ -97,6 +97,11 @@ Rva001E1E30Self *Rva001E1E30Self::self(void)
 	return this;
 }
 
+// The carved boundary at 0x001E1E40 contains only ret.
+void Rva001E1E40Noop(void)
+{
+}
+
 // ?Rva001E1EA0Pop4@@YGXPAX@Z
 void __stdcall Rva001E1EA0Pop4(void *)
 {
