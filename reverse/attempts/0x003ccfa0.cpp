@@ -1,42 +1,61 @@
 // ?bfmeAtABL@BfmeGridABL@@QAEPAUBfmeCellABL@@MM@Z
 // partial score=0.9 date=2026-09-09
-struct BfmeCellABL
+struct Rva003D1380Elem
 {
-	unsigned char m_bfmeBodyABL[0x3c];
+	unsigned char m_body[0x3c];
 };
 
-struct BfmeInfoABL
+struct Rva003D2B80Coord
 {
-	unsigned char m_bfmeHeadABL[0xc];
-	float m_bfme0CABL;
+	float x;
+	float y;
 };
 
-class BfmeGridABL
+template <typename T>
+struct Rva003D2B80Entries
+{
+	T *m_begin;
+	T *m_end;
+	T *m_capacity;
+
+	T *begin() const { return m_begin; }
+	int size() const { return (int)(m_end - m_begin); }
+};
+
+class Rva003D2B80Source
 {
 public:
-	BfmeCellABL *bfmeAtABL(float x, float y);
+	unsigned char m_pad00[0xc];
+	volatile float m_step;
+	};
 
-	float m_bfme00ABL;
-	float m_bfme04ABL;
-	BfmeCellABL *m_bfme08ABL;
-	BfmeCellABL *m_bfme0CABL;
-	unsigned char m_bfmeGapABL[4];
-	BfmeInfoABL *m_bfme14ABL;
-	int m_bfme18ABL;
+class Rva003D2B80Child
+{
+public:
+	float m_originX;
+	float m_originY;
+	Rva003D2B80Entries<Rva003D1380Elem> m_entries;
+	Rva003D2B80Source *m_source;
+	int m_count;
+
+	Rva003D1380Elem *lookup(Rva003D2B80Coord coord);
 };
 
-BfmeCellABL *BfmeGridABL::bfmeAtABL(float x, float y)
+Rva003D1380Elem *Rva003D2B80Child::lookup(Rva003D2B80Coord coord)
 {
-	float fx = x - m_bfme00ABL;
-	float cs = m_bfme14ABL->m_bfme0CABL;
-	float fy = y - m_bfme04ABL;
+	register Rva003D2B80Child *self = this;
+	float fx = coord.x;
+	fx -= self->m_originX;
+	float cs = self->m_source->m_step;
+	float fy = coord.y;
+	fy -= self->m_originY;
 
 	int col = (int)(fx / cs);
 
 	if (col < 0)
 		return 0;
 
-	int w = m_bfme18ABL;
+	int w = self->m_count;
 
 	if (col >= w)
 		return 0;
@@ -46,8 +65,8 @@ BfmeCellABL *BfmeGridABL::bfmeAtABL(float x, float y)
 	if (idx < 0)
 		return 0;
 
-	if ((unsigned int)idx >= (unsigned int)(m_bfme0CABL - m_bfme08ABL))
+	if ((unsigned int)idx >= (unsigned int)self->m_entries.size())
 		return 0;
 
-	return m_bfme08ABL + idx;
+	return self->m_entries.begin() + idx;
 }
