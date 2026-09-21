@@ -318,3 +318,11 @@ through a register loop); dropping a long-lived duplicate pointer local to
 pull `this` back into retail's register; a named float local to keep the
 x87 value across a branch; an implicit destructor with per-member owner
 wrappers to remove a spurious vtable store.
+
+### Hours 21-23 — 15:03Z to 18:00Z (fifth outage)
+
+One landing before the usage limit hit again at ~15:35Z (reset 18:00Z):
+0x00225960 (249 B, opaque owner method). Fleet 49 bodies / 11,018 B
+cumulative; repository-wide +25,321 B / +0.26 pp (67.04% -> 67.30%) since
+the fleet base. Restart at 18:05Z with three seats on the resumed lists
+(100-700 B warm dumps and the untouched 600-900 B carved pool).
