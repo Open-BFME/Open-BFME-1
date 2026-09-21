@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f9da669d4cab00010080c2c5d9f0a994ba02919009aca251813ea4fed9684a79",
+  "symbol": "??0?$vector@UGen_t_003aafe0@@V?$allocator@UGen_t_003aafe0@@@_STL@@@_STL@@QAE@ABV01@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.63,
+  "source": "// ??0?$vector@UGen_t_003aafe0@@V?$allocator@UGen_t_003aafe0@@@_STL@@@_STL@@QAE@ABV01@@Z\n// partial score=0.63 date=2026-09-21\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB\n// stlport\n\n// Retail 0x003AAFE0 copies a vector whose elements are a 16-byte record: an\n// AsciiString-like field at +0 (copied through the ICF-shared GameSpyGroupRoom\n// copy constructor, same as Rva000F6C10Value in Rva000F1E00HashResize.cpp) and\n// three plain dwords at +4/+8/+c.  Matching the register allocation (edi=other,\n// ebp=this) takes the template-instantiation shape used by\n// BfmeGen003A8910VectorCopy.cpp (_STLP_NO_EXCEPTIONS + <vector>) rather than\n// the manually declared _Vector_base used by Rva003AADF0VectorCopy.cpp, which\n// compiles the empty-vector early-out into a separate merged tail.\n\n#define _STLP_NO_EXCEPTIONS 1\n#include <vector>\n\nclass Gen_t_003aafe0Str\n{\npublic:\n\tGen_t_003aafe0Str(const Gen_t_003aafe0Str &other);\n\t~Gen_t_003aafe0Str(void);\n\nprivate:\n\tchar *m_bfmeData;\n};\n\n#pragma comment(linker, \"/alternatename:??0Gen_t_003aafe0Str@@QAE@ABV0@@Z=??0GameSpyGroupRoom@@QAE@ABV0@@Z\")\n\nstruct Gen_t_003aafe0\n{\n\tGen_t_003aafe0Str m_bfmeStr;\n\tint m_bfme04;\n\tint m_bfme08;\n\tint m_bfme0c;\n};\n\ntemplate _STL::vector<Gen_t_003aafe0, _STL::allocator<Gen_t_003aafe0> >::vector(\n\tconst _STL::vector<Gen_t_003aafe0, _STL::allocator<Gen_t_003aafe0> > &);\n"
+}
