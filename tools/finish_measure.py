@@ -58,7 +58,7 @@ def parse(text):
 NEAREST = re.compile(r"^\s{6,}(\S+)\s*$", re.M)
 
 
-def fallback_symbols(text, rva, limit=5):
+def fallback_symbols(text, rva, limit=16):
     """A stash header usually names the LEDGER symbol (`?d_00689170@@YAXXZ`), while
     the C++ in it defines the real one. probe.py then says NOT IN OBJECT and lists
     what the object does define. Measuring that as "does not compile" ranked 150
@@ -69,8 +69,43 @@ def fallback_symbols(text, rva, limit=5):
     block = text.split("nearest", 1)[-1].split("hint", 1)[0]
     names = [n for n in NEAREST.findall(block) if not n.startswith(("__", "$", "??_"))]
     tag = f"{rva:08x}"
-    names.sort(key=lambda n: (tag not in n.lower(), n.startswith(("??0", "??1"))))
+    # a reconstruction with helper templates defines many address-tagged symbols
+    # (0x003E8E10 had eleven); plain members and functions before templates
+    names.sort(key=lambda n: (tag not in n.lower(), n.startswith("??$"), n.startswith(("??0", "??1"))))
     return names[:limit]
+
+
+def ledger_size(rva):
+    sys.path.insert(0, str(ROOT / "tools"))
+    import probe
+    try:
+        return probe.ledger_size(rva) or 0
+    except Exception:  # noqa: BLE001
+        return 0
+
+
+def object_symbols(path, retail_size, limit=3):
+    """probe.py lists only the few names nearest the one asked for; a body with
+    helper templates (0x003E8E10 defines eleven tagged symbols) hides the real
+    one. Read the cached object instead: the function symbols whose code size
+    is closest to retail's."""
+    try:
+        sys.path.insert(0, str(ROOT / "tools"))
+        import build
+        from experiment_store import compile_cached
+        obj, _ = compile_cached(Path(path).resolve())
+        sized = []
+        for symbol in build.read_object_symbols(Path(obj).read_bytes()):
+            name = symbol["name"]
+            if symbol["section"] <= 0 or not name.startswith("?") or name.startswith(("??_", "?$S")):
+                continue
+            try:
+                sized.append((abs(len(build.read_object_symbol_bytes(obj, name)[0]) - retail_size), name))
+            except Exception:  # noqa: BLE001  (data symbols, labels)
+                continue
+        return [name for _, name in sorted(sized)[:limit]]
+    except Exception:  # noqa: BLE001  (no compiler on this host: fall back to probe's list)
+        return []
 
 
 def load():
@@ -99,9 +134,12 @@ def measure(rva, path, timeout=180):
         text = probe(symbol)
         best = parse(text)
         # the object is cached after the first compile, so each retry is cheap
-        for name in fallback_symbols(text, rva):
+        for name in (object_symbols(path, best.get("retail") or ledger_size(rva)) or fallback_symbols(text, rva))                 if "NOT IN OBJECT" in text else []:
             other = dict(parse(probe(name)), symbol=name)
-            if other["compiles"] and other["quality"] >= best["quality"]:
+            # the body is the symbol closest to retail's size, then the best quality
+            if other["compiles"] and (not best["compiles"] or
+                                      (abs(other["ours"] - other["retail"]), -other["quality"]) <
+                                      (abs(best["ours"] - best["retail"]), -best["quality"])):
                 best = other
         if not best["compiles"] and "NOT IN OBJECT" in text:
             best = dict(best, note="compiles, but no defined symbol measures against this body")
