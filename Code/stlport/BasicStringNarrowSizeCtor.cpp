@@ -1,6 +1,6 @@
-// ??0?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAE@PBDIABV?$allocator@D@1@@Z
-// partial score=0.975 date=2026-09-16
 // cl: /Od /EHsc /Ob2
+// stlport
+// STLport basic_string<char> size constructor at retail RVA 0x00830860.
 
 namespace _STL
 {
@@ -22,6 +22,19 @@ struct input_iterator_tag
 struct forward_iterator_tag : public input_iterator_tag
 {
 };
+
+template <class T>
+__forceinline void reserveSlots(T *)
+{
+}
+
+__forceinline void reserveSlots(void)
+{
+	char padding0[4];
+	char padding1[4];
+	reserveSlots(padding0);
+	reserveSlots(padding1);
+}
 
 template <class Pointer, class Value, class Alloc>
 class _STLP_alloc_proxy
@@ -58,7 +71,12 @@ public:
 	basic_string(const CharT *, size_type, const allocator_type &);
 
 private:
-	void _M_range_initialize(const CharT *, const CharT *, const forward_iterator_tag &);
+	template <class InputIterator>
+	void _M_range_initialize(InputIterator, InputIterator, const forward_iterator_tag &);
+	__forceinline void _M_range_initialize(const CharT *first, const CharT *last)
+	{
+		_M_range_initialize(first, last, forward_iterator_tag());
+	}
 };
 
 template <class CharT, class Traits, class Alloc>
@@ -66,9 +84,8 @@ basic_string<CharT, Traits, Alloc>::basic_string(
 	const CharT *text, size_type count, const allocator_type &a)
 	: _String_base<CharT, Alloc>(a)
 {
-	char padding0[4];
-	char padding1[4];
-	_M_range_initialize(text, text + count, forward_iterator_tag());
+	_M_range_initialize(text, text + count);
+	reserveSlots();
 }
 
 template basic_string<char, char_traits<char>, allocator<char> >::basic_string(
