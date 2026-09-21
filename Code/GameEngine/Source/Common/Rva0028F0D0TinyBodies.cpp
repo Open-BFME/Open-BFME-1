@@ -103,6 +103,11 @@ Rva00293190 *Rva00293190::returnThis()
 	return this;
 }
 
+// The carved boundary at 0x002931D0 contains one ret and no known semantic owner.
+void b_002931d0()
+{
+}
+
 class Rva00293250
 {
 public:
