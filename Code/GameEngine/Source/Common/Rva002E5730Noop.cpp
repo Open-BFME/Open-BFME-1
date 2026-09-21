@@ -2,6 +2,10 @@
 // The carved boundary and generated thunk caller prove an empty cdecl body.
 
 // ?Rva002E5720Noop@@YAXXZ
+void Rva002E5710Noop()
+{
+}
+
 void Rva002E5720Noop()
 {
 }
