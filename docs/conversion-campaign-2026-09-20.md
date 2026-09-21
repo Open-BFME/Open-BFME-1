@@ -162,3 +162,19 @@ after ~2.5 hours of the second window. One more body landed before the cut:
 TU). Fleet cumulative 21 bodies / 5,142 B; repository-wide +13,931 B /
 +0.14 pp (67.04% -> 67.18%) since the fleet base, +5,121 B of it new
 total-exact coverage. Restart at 03:05Z with three seats.
+
+### Hour 10 — 03:00Z to 04:03Z (three seats)
+
+Fleet 25 bodies / 6,153 B cumulative; this hour 4 bodies / 1,011 B, all
+250-255 B gen_asm dumps from the warm-neighbourhood pool. Repository-wide
++14,992 B / +0.15 pp (67.04% -> 67.20%) since the fleet base.
+
+| RVA | Bytes | Result |
+|---|---:|---|
+| 0x0084BA90 | 255 | STLport basic_ofstream<char> fd constructor |
+| 0x001AAC30 | 255 | bfmeLookupByName (AsciiString -> entry) |
+| 0x0046DA70 | 251 | WindowManager::bindShown |
+| 0x0090CF90 | 250 | Texture-base constructor (Rva006D51B0 family) |
+
+Three seats this window so the usage budget spreads over the whole reset
+period instead of ~2.5 hours; landings per seat-hour are unchanged.
