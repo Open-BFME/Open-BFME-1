@@ -14382,6 +14382,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@VS4Elem007746E0@@V?$allocator@VS4Elem007746E0@@@_STL@@@_STL@@IAEXPAVS4Elem007746E0@@ABV3@ABU__false_type@2@I_N@Z,0x0002F05E,44-byte S4 vector overflow alias used by the time-of-day parser
 ?_M_insert_overflow@?$vector@VUnicodeString@@V?$allocator@VUnicodeString@@@_STL@@@_STL@@IAEXPAVUnicodeString@@ABV3@ABU__false_type@2@I_N@Z,0x00016A63
 ?_M_insert_overflow@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEXPAVW3DAnimationInfo@@ABV3@ABU__false_type@2@I_N@Z,0x00037024,ILT thunk used by call site
+?rva00037024Target@@YAXXZ,0x00788030,TU-local clean-C++ alias for the matched W3DAnimationInfo vector overflow body used by the 0x00037024 tail thunk
 ?_M_insert_overflow@?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@IAEXPAVWeaponTemplateSet@@ABV3@ABU__false_type@2@I_N@Z,0x0001636F
 ?_M_insert_overflow@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@IAEXPAW4ObjectID@@ABW43@ABU__false_type@2@I_N@Z,0x00010B8B,retail REL32 pin for DockUpdate reserveApproachPosition
 ?_M_insert_overflow@?$vector@W4ParticleSystemID@@V?$allocator@W4ParticleSystemID@@@_STL@@@_STL@@IAEXPAW4ParticleSystemID@@ABW43@ABU__false_type@2@I_N@Z,0x0003E63F,Reviewed full retail callee: 5BDE00 coordinate stores CC/DC/EC and clears1A4; 288AF0 four-byte vector overflow with count/atend andret20
