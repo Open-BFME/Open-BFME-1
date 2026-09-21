@@ -1,5 +1,5 @@
 // ?rva0023d430@Rva0023D430Owner@@QAEXPAUCoord3D@@0@Z
-// partial score=0.24 date=2026-09-20
+// partial score=0.33 date=2026-09-21
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc
 // stlport
 // Retail 0x0023D430, 598 bytes. The owner and operation remain address-derived.
