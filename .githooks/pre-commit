@@ -59,6 +59,7 @@ python3 tools/conversion_gate.py HEAD : || fail "conversion direction (see above
 python3 tools/retired_guard.py --staged || fail "retired path re-added (see above)"
 
 staged_sources=()
+staged_c_sources=()
 ledger_changed=0
 pins_changed=0
 wide_change=0
@@ -67,6 +68,11 @@ attempts_changed=0
 while IFS= read -r path; do
     case "$path" in
         Code/*.cpp) staged_sources+=("$path") ;;
+        # 216 C sources carry ledger rows (GameSpy, Lua). pre-push byte-verifies an
+        # edited one; this hook only collected *.cpp, so such an edit left through
+        # the early exit below with nothing verified. Kept apart from
+        # staged_sources, whose other consumers parse C++.
+        Code/*.c) staged_c_sources+=("$path") ;;
         reverse/pin_consistency_baseline.csv) baseline_changed=1 ;;
         # symbols.csv gets its own flag as well as ledger_changed: a PIN
         # DELETION is byte-verified by a different query than a ledger row is,
@@ -107,7 +113,8 @@ while IFS= read -r path; do
     esac
 done < <(git diff --cached --name-only --diff-filter=A | grep -E '\.(cpp|c|h|hpp|asm)$' || true)
 
-if [ "${#staged_sources[@]}" -eq 0 ] && [ "$ledger_changed" -eq 0 ] \
+if [ "${#staged_sources[@]}" -eq 0 ] && [ "${#staged_c_sources[@]}" -eq 0 ] \
+   && [ "$ledger_changed" -eq 0 ] \
    && [ "$wide_change" -eq 0 ] && [ "$baseline_changed" -eq 0 ] \
    && [ "$attempts_changed" -eq 0 ]; then
     exit 0
@@ -129,7 +136,7 @@ fi
 # The build verifies file contents on disk; refuse if a file being committed
 # also has unstaged edits, or we would be proving the wrong bytes.
 dirty=()
-for path in "${staged_sources[@]}"; do
+for path in "${staged_sources[@]}" "${staged_c_sources[@]}"; do
     if ! git diff --quiet -- "$path"; then
         dirty+=("$path")
     fi
@@ -175,7 +182,7 @@ fi
 
 # 3) Verify changed claims and callers whose callable candidates disappear.
 declare -A verify_set=()
-for path in "${staged_sources[@]}"; do verify_set["$path"]=1; done
+for path in "${staged_sources[@]}" "${staged_c_sources[@]}"; do verify_set["$path"]=1; done
 delta_out=$(mktemp)
 python3 tools/delta_sources.py --staged > "$delta_out" \
     || { rm -f "$delta_out"; fail "delta_sources (see above)"; }
