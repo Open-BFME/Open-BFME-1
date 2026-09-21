@@ -273,3 +273,23 @@ Fleet 45 bodies / 10,077 B cumulative; this hour 1 body / 322 B
 only by an ecx/edx register swap across two field copies. Seats in the
 250-400 B band land about one body per session and stop at ~45 minutes,
 so a fourth seat is added for the rest of this usage window.
+
+### Hours 16-18 — 10:02Z to 13:00Z (fourth outage)
+
+One landing before the seats hit the usage limit again at ~11:00Z (reset
+13:00Z): 0x000D2CE0 (256 B, Player::addAIGroupToCurrentSelection), closed
+by `#define _STLP_NO_EXCEPTIONS 1` ahead of `<vector>` — found by
+`eh_levers.py` + `shape_search.py` in two trials. Fleet 46 bodies /
+10,333 B cumulative; repository-wide +19,871 B / +0.20 pp (67.04% ->
+67.25%) since the fleet base.
+
+Two research rounds on the whole-body callee-saved register mirror (the
+residue behind at least eight of today's banks) found the mechanism — an
+embedded `this+N` sub-object reused across two or more calls takes ESI
+and demotes `this`; only genuine loop structure changes the ranking; extra
+or folded uses of `this` and first-use order do nothing — but no clean-C++
+reversal. Written up in `docs/register_mirror_experiments.md`. The
+seats' conclusion stands: such banks are identification gaps, not lever
+problems. Restart at 13:05Z with four seats: cluster bodies near today's
+landings, the 250-450 B and 400-600 B warm pools, and twice-attempted
+carved bodies with stashes.
