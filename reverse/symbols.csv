@@ -88540,3 +88540,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?rva0001819cTarget@@YAXXZ,0x0076B010,TU-local clean-C++ alias for the matched Rva0013B8F0 uninitialized-copy body used by the 0x0001819C tail thunk
 ??0?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000CE890,ICF alias of Gen_000ce890 copy ctor; vector<ObjectID> copy construction used by Player::addAIGroupToCurrentSelection
 ?rva0002cca5Target@@YAMMMPADH@Z,0x00096DD0,address-qualified forwarding target for the GetGameLogicRandomValueReal ILT at 0x0002CCA5
+?rva0000f727Target@@YAXXZ,0x005C76A0,address-qualified forwarding target for the ParticleSystemTemplate hash lookup ILT at 0x0000F727
