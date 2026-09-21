@@ -68,3 +68,14 @@ void __cdecl Rva000BE440(INI *ini, void *, void *store, const void *)
     if (current->empty())
         self->m_groups.clear();
 }
+
+// Retail000BE300,211B. The by-value argument is destroyed in this callee.
+// Keep the native erase/insert branches explicit: calling vector::resize
+// adds an out-of-line wrapper in this STLport version.
+void Rva000BE440Store::resizeGroups(unsigned count, ScienceVec value)
+{
+    if (count < m_groups.size())
+        m_groups.erase(m_groups.begin() + count, m_groups.end());
+    else
+        m_groups.insert(m_groups.end(), count - m_groups.size(), value);
+}
