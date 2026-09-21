@@ -10,3 +10,8 @@ void Rva0055BEA0Noop()
 void Rva0055BEB0Noop()
 {
 }
+
+// ?Rva0055BD30Noop@@YAXXZ
+void Rva0055BD30Noop()
+{
+}
