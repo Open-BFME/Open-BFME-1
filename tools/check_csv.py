@@ -241,7 +241,10 @@ def check_functions(raw, problems, sources_ok, deleted=None):
                             f"byte-prove it — remove its line from reverse/deleted_rows.csv "
                             f"in the same commit.")
 
-        key = (name, target_rva)
+        # Keyed on the parsed address: the ledger spells it three ways
+        # (0x0015B830, 0x0015b830, 0x1005), and a union merge or a hand edit can
+        # land the same claim twice under two of them.
+        key = (name, rva)
         if key in seen_exact:
             problems.append(f"functions.csv line {i}: exact duplicate row for {name} @ {target_rva}. "
                             + DUP_FIX)
@@ -387,7 +390,13 @@ def check_attempts(spec, problems, *, functions_raw=None, sources_ok=None):
     for row in csv.reader(io.StringIO(functions_raw.decode(
             "utf-8", errors="replace"))):
         if len(row) == 7 and row[5] == "matched":
-            matched.setdefault(row[2].lower(), []).append((row[0], row[4]))
+            # A stash is named by the canonical lowercase address, whatever
+            # spelling the ledger row uses for it.
+            try:
+                address = f"0x{int(row[2], 16):08x}"
+            except ValueError:
+                continue
+            matched.setdefault(address, []).append((row[0], row[4]))
 
     blobs = read_blobs((ROOT / rel for rel in paths
                         if ATTEMPT_NAME.match(rel[len(ATTEMPTS_DIR):])), spec)
