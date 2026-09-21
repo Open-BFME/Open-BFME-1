@@ -13,6 +13,12 @@ public:
 	virtual ~BuffOwned();
 };
 
+class Rva0040AD80ReferenceState
+{
+public:
+	void releaseReferences();
+};
+
 class BuffEntryTail : public SubsystemInterface
 {
 public:
@@ -33,6 +39,12 @@ private:
 	char m_middle[0x10];
 	BuffEntryTail m_tail;
 };
+
+// ?Rva00015479Cleanup@BuffEntryTail@@QAEXXZ
+void BuffEntryTail::cleanup()
+{
+	reinterpret_cast<Rva0040AD80ReferenceState *>(this)->releaseReferences();
+}
 
 BuffEntry::~BuffEntry()
 {
