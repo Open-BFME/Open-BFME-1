@@ -351,3 +351,8 @@ void d_003cc460()
 void Rva003CC450Noop()
 {
 }
+
+// ?Rva003CC470Noop@@YAXXZ
+void Rva003CC470Noop()
+{
+}
