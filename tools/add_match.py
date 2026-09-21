@@ -46,10 +46,15 @@ BOUNDARY_ENV = {
 BOUNDARY_BATCH_FILE_ENV = "ADDMATCH_BOUNDARY_BATCH_FILE"
 
 
+SCAFFOLD_NOTE = re.compile(r"(?:gen-dump|gen-thunk)\s*(?:$|[;,])")
+
+
 def replaceable_scaffold(row):
     """Only supported placeholders, never arbitrary generated/unwind claims."""
     notes = row["notes"].lstrip()
-    if notes.startswith(("gen-dump", "gen-thunk")):
+    # Whole token, as build.is_scaffold_row reads it: a row of real C++ whose
+    # note begins "gen-dump conversion; ..." is a claim, not a placeholder.
+    if SCAFFOLD_NOTE.match(notes):
         return True
     return (notes.split(";", 1)[0] == "gen-tgrid" and
             re.fullmatch(r"Code/gen_small/tgrid_\d+\.cpp", row["source"]) is not None)

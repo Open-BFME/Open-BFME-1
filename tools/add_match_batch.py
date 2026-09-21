@@ -171,7 +171,7 @@ def main():
             if len(at) != 1:
                 add_match.fail(f"line {c['line']}: replace_rva 0x{old:08X} matches "
                                f"{len(at)} live rows; it retires exactly one")
-            if not at[0]["notes"].lstrip().startswith(("gen-dump", "gen-thunk")):
+            if not add_match.SCAFFOLD_NOTE.match(at[0]["notes"].lstrip()):
                 add_match.fail(
                     f"line {c['line']}: replace_rva 0x{old:08X} is {at[0]['name']} "
                     f"({at[0]['source']}), not a generated scaffold row",
