@@ -36,6 +36,11 @@ void *Rva001B20C0Address::get() const
 	return (void *)((const char *)this + 0x58);
 }
 
+// ?Rva001B20A0Noop@@YAXXZ
+void Rva001B20A0Noop()
+{
+}
+
 // ?Rva001B2AE0Noop@@YGXPAX@Z
 void __stdcall Rva001B2AE0Noop(void *)
 {
