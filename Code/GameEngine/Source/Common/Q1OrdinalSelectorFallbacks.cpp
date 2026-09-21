@@ -31,6 +31,12 @@ extern Q1Fallback012F1318 g_q1Fallback012F1318;
 
 void *__stdcall Q1Selector0000286A( int ordinal );
 
+// The independently carved boundary immediately before this family is a
+// one-byte return. No semantic identity is asserted beyond its address.
+void Rva00417110()
+{
+}
+
 #define Q1_SELECT_OR_FALLBACK( NAME, ORDINAL )                            \
 	void *NAME();                                                         \
 	void *NAME()                                                          \
