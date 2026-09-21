@@ -88558,3 +88558,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?rvaElemClose@Rva006A9800This@@QAEXPAVRva006A9800Elem@@@Z,0x0003B741,ILT thunk called from the 0x006A9800 array-element cleanup loop as this->rvaElemClose(elem); jumps to retail 0x006A5080, still an unnamed dump
 ?rva0023cdd0@Rva0023CDD0Owner@@QAEHHPAH@Z,0x0003087D,ILT thunk called from 0x00245B20 (rva00245b20); jumps to retail 0x0023CDD0, still an unnamed dump
 ?test@BfmeCellTesterRva003F5340@@QAE_NHH@Z,0x003F2B60, predicate called five times by 0x003F5340; target independently reads receiver ECX and two int stack args then returns AL with ret8; address-derived existing bank ABI
+??0Gen_t_001fa830_p12cd@@QAE@ABU0@@Z,0x0003D915
