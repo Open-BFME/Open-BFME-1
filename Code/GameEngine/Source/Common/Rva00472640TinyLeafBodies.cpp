@@ -238,3 +238,8 @@ bool Rva00472DC0False()
 {
 	return false;
 }
+
+// ?Rva00472750NoOp@@YAXXZ
+void Rva00472750NoOp()
+{
+}
