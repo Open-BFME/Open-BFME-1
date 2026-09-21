@@ -380,3 +380,32 @@ Rva007E8540Owner::Rva007E8540Owner()
 	m_24 = 0;
 	m_28 = 0;
 }
+
+// One dword argument, `ret 4` and `this` returned in eax: a constructor that
+// parks its pointer argument and, when it is not null, raises a plain
+// non-interlocked count at +0x28 of the pointee.  The store happens before the
+// branch, which is assignment-then-guard source order.  Complete carved extent
+// at 0x00427A50.
+class Rva00427A50Target
+{
+public:
+	char m_lead[0x28];
+	int m_refCount;
+};
+
+class Rva00427A50Holder
+{
+public:
+	Rva00427A50Holder(Rva00427A50Target *target);
+
+private:
+	Rva00427A50Target *m_target;
+};
+
+// ??0Rva00427A50Holder@@QAE@PAVRva00427A50Target@@@Z
+Rva00427A50Holder::Rva00427A50Holder(Rva00427A50Target *target)
+{
+	m_target = target;
+	if (target != 0)
+		target->m_refCount++;
+}

@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "80d634f1349449531fc8662960cc0824e1bb2d80663824ceae2d4dc6ecbaede5",
+  "symbol": "?rva0013A070@@YAHPBEH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.87,
+  "source": "// ?rva0013A070@@YAHPBEH@Z\n// partial score=0.87 date=2026-09-22\n// Retail 0x0013A070, 53 bytes, a carved extent with one caller.  A __cdecl\n// little-endian byte-run decoder: accumulate bytes[i] * scale into an int and\n// shift the scale left by eight each step.  Size, control flow, the jle guard,\n// the loop-alignment lea nop at +0x1A, the imul/shl/inc sequence and the whole\n// epilogue reproduce exactly.  Seven bytes differ and every one of them is the\n// SAME ecx/edx mirror: retail zeroes the index into edx and puts the scale\n// constant in ecx, VC7.1 does the reverse.\n//\n// Exhausted here: local definition order both ways, a split declaration with\n// the scale initialised in the for-init, a while loop with the increment in the\n// body, a comma for-init carrying both, unsigned versus signed scale, and the\n// multiply operands reversed.  tools/shape_family_levers.py offers exactly one\n// choice for this shape (the two definition orders) and both are above.\n\nint rva0013A070(const unsigned char *bytes, int count)\n{\n\tint value = 0;\n\tunsigned int scale = 1;\n\n\tfor (int i = 0; i < count; i++)\n\t{\n\t\tvalue += bytes[i] * scale;\n\t\tscale <<= 8;\n\t}\n\n\treturn value;\n}\n"
+}
