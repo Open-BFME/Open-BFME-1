@@ -77809,6 +77809,7 @@ name,address,notes
 ?bfmePut1242@BfmeN1242@@QAEXHPAVBfmeE1242@@@Z,0x008B84C0,pin
 ?bfmeQuery1040@@YAXHPAH@Z,0x00008945,pin
 ?bfmeQuery1279@BfmeQuery1279@@QAEXPAXHPAPAX1@Z,0x008BD0F0,address-derived query method called by the 0x008BD4D0 forwarding body
+?bfmeInsert1279@BfmeQuery1279@@QAEPAVBfmeNestedBE@@HPAV2@@Z,0x008BD230,caller at 0x008930C0 and the 75-byte body prove the list insertion method
 ?bfmeQuery932C@BfmeSub932C@@QAEEXZ,0x00048928,pin
 ?bfmeQuery@BfmeFilterObject@@QAE_NPAVPlayer@@@Z,0x00020824,Open-BFME5 ILT the object query in Rva2225E0Filter::accepts at 0x003A04A0 goes through
 ?bfmeQuery@Gen01304B64@@QAEHXZ,0x0003B02A,ILT thunk to 0x00755A70

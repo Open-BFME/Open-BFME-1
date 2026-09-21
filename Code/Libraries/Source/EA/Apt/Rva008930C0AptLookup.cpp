@@ -40,10 +40,25 @@ class BfmeQuery1279
 {
 public:
 	BfmeNestedBE *m_root;
-	void bfmeInsert1279(int value, BfmeNestedBE *node);
+	void bfmeQuery1279(void *value, int zero, void **other, void **result);
+	BfmeNestedBE *bfmeInsert1279(int value, BfmeNestedBE *node);
 };
 
-extern void d_008bd230(void);
+BfmeNestedBE *BfmeQuery1279::bfmeInsert1279(int value, BfmeNestedBE *node)
+{
+	void *previousValue;
+	void *other;
+	bfmeQuery1279((void *)value, 0, &previousValue, &other);
+	BfmeNestedBE *previous = (BfmeNestedBE *)previousValue;
+	node->m_bfme58 = previous->m_bfme58;
+	node->m_bfme54 = previous;
+	node->bfmeLinked1284();
+	if (node->m_bfme58)
+		node->m_bfme58->m_bfme54 = node;
+	node->m_bfme54->m_bfme58 = node;
+	node->m_bfme08 = value;
+	return node;
+}
 
 struct Rva008930C0Holder
 {
@@ -72,14 +87,7 @@ BfmeNestedBE *Rva008930C0AptLookup(int value)
 
 			BfmeNestedBE *newNode = new BfmeNestedBE(0x13, 0, 0);
 			newNode->setLookupFlags();
-			typedef void (BfmeQuery1279::*InsertFn)(int, BfmeNestedBE *);
-			union
-			{
-				void (*raw)(void);
-				InsertFn member;
-			} fn;
-			fn.raw = d_008bd230;
-			(g_bfmeHolderBU->m_query->*fn.member)(value, newNode);
+			g_bfmeHolderBU->m_query->bfmeInsert1279(value, newNode);
 			return newNode;
 		}
 	}
