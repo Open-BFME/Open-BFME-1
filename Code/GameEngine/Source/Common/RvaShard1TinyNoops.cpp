@@ -67,3 +67,6 @@ void Rva00207B30Noop() {}
 void Rva001DE410Noop() {}
 void Rva001E3B10Noop() {}
 void Rva0021A520Noop() {}
+void Rva00133A30Noop() {}
+void Rva00192180Noop() {}
+void Rva00192590Noop() {}
