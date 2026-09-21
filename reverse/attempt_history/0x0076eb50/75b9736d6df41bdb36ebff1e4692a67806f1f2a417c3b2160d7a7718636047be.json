@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "75b9736d6df41bdb36ebff1e4692a67806f1f2a417c3b2160d7a7718636047be",
+  "symbol": "?method@Rva0076EB50@@QAE?AVBFMERetailAsciiString@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9,
+  "source": "// ?method@Rva0076EB50@@QAE?AVBFMERetailAsciiString@@H@Z\n// partial score=0.9 date=2026-09-21\nclass BFMERetailAsciiString\r\n{\r\npublic:\r\n\tBFMERetailAsciiString() { m_data = 0; }\r\n\tBFMERetailAsciiString(const char *s);\r\n\t~BFMERetailAsciiString();\r\n\r\nprivate:\r\n\tvoid *m_data;\r\n};\r\n\r\nclass Rva0076EB50Item\r\n{\r\npublic:\r\n\tvirtual void slot0();\r\n\tvirtual void slot1();\r\n\tvirtual const char *slot2();\r\n};\r\n\r\nclass Rva0076EB50Entry\r\n{\r\npublic:\r\n\tRva0076EB50Item *m_item;\r\n\tunsigned char m_padding[0x18];\r\n};\r\n\r\nclass Rva0076CAF0ConditionalDispatch\r\n{\r\npublic:\r\n\tvoid target();\r\n};\r\n\r\nextern int g_Va012F8064;\r\n\r\nclass Rva0076EB50\r\n{\r\npublic:\r\n\tBFMERetailAsciiString method(int i);\r\n\r\n\tunsigned char m_padding00[0x90];\r\n\tint m_stamp90;\r\n\tunsigned char m_padding94[0x3c];\r\n\tRva0076EB50Entry m_entriesD0[3];\r\n};\r\n\r\nBFMERetailAsciiString Rva0076EB50::method(int i)\r\n{\r\n\tRva0076CAF0ConditionalDispatch *owner =\r\n\t\t(Rva0076CAF0ConditionalDispatch *)((char *)this - 0xc);\r\n\r\n\tif (g_Va012F8064 != m_stamp90)\r\n\t\towner->target();\r\n\r\n\tif (i < 0)\r\n\t\treturn BFMERetailAsciiString();\r\n\tif ((unsigned int)i >= 3)\r\n\t\treturn BFMERetailAsciiString();\r\n\tif (m_entriesD0[i].m_item != 0)\r\n\t\treturn BFMERetailAsciiString(m_entriesD0[i].m_item->slot2());\r\n\r\n\treturn BFMERetailAsciiString();\r\n}\r\n"
+}

@@ -1,4 +1,4 @@
-// ?bfmeGetNameXX@BfmeHolderXX@@QAE?AVBFMERetailAsciiString@@H@Z
+// ?method@Rva0076EB50@@QAE?AVBFMERetailAsciiString@@H@Z
 // partial score=0.9 date=2026-09-08
 class BFMERetailAsciiString
 {
@@ -11,52 +11,54 @@ private:
 	void *m_data;
 };
 
-class BfmeItemXX
+class Rva0076EB50Item
 {
 public:
-	virtual void bfmeVt0XX();
-	virtual void bfmeVt1XX();
-	virtual const char *bfmeNameXX();
+	virtual void slot0();
+	virtual void slot1();
+	virtual const char *slot2();
 };
 
-class BfmeElemXX
+class Rva0076EB50Entry
 {
 public:
-	BfmeItemXX *m_bfmeItemXX;
-	unsigned char m_bfmeGapXX[0x18];
+	Rva0076EB50Item *m_item;
+	unsigned char m_padding[0x18];
 };
 
-class BfmeOwnerXX
+class Rva0076CAF0ConditionalDispatch
 {
 public:
-	void bfmeRefreshXX();
+	void target();
 };
 
 extern int g_Va012F8064;
 
-class BfmeHolderXX
+class Rva0076EB50
 {
 public:
-	BFMERetailAsciiString bfmeGetNameXX(int i);
+	BFMERetailAsciiString method(int i);
 
-	unsigned char m_bfmeGapXX[0x90];
-	int m_bfmeStampXX;
-	unsigned char m_bfmeGap2XX[0x3c];
-	BfmeElemXX m_bfmeArrXX[3];
+	unsigned char m_padding00[0x90];
+	int m_stamp90;
+	unsigned char m_padding94[0x3c];
+	Rva0076EB50Entry m_entriesD0[3];
 };
 
-BFMERetailAsciiString BfmeHolderXX::bfmeGetNameXX(int i)
+BFMERetailAsciiString Rva0076EB50::method(int i)
 {
-	BfmeOwnerXX *owner = (BfmeOwnerXX *)((char *)this - 0xc);
+	Rva0076CAF0ConditionalDispatch *owner =
+		(Rva0076CAF0ConditionalDispatch *)((char *)this - 0xc);
 
-	if (g_Va012F8064 != m_bfmeStampXX)
-		owner->bfmeRefreshXX();
+	if (g_Va012F8064 != m_stamp90)
+		owner->target();
 
-	if (i >= 0 && i < 3)
-	{
-		if (m_bfmeArrXX[i].m_bfmeItemXX != 0)
-			return BFMERetailAsciiString(m_bfmeArrXX[i].m_bfmeItemXX->bfmeNameXX());
-	}
+	if (i < 0)
+		return BFMERetailAsciiString();
+	if ((unsigned int)i >= 3)
+		return BFMERetailAsciiString();
+	if (m_entriesD0[i].m_item != 0)
+		return BFMERetailAsciiString(m_entriesD0[i].m_item->slot2());
 
 	return BFMERetailAsciiString();
 }
