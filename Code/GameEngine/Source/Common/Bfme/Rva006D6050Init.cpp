@@ -15,7 +15,9 @@ public:
 	char m_body[0x34];
 };
 
-#pragma comment(linker, "/alternatename:??0Rva006D6050TextureBase@@QAE@IIIIII@Z=?d_0090cf90@@YAXXZ")
+// Shared base body, now matched as Rva006D51B0Ctor.cpp's
+// ??0Rva006D51B0TextureBase@@QAE@IIIIII@Z (retail 0x0090CF90).
+#pragma comment(linker, "/alternatename:??0Rva006D6050TextureBase@@QAE@IIIIII@Z=??0Rva006D51B0TextureBase@@QAE@IIIIII@Z")
 
 class Rva006D6050
 {
