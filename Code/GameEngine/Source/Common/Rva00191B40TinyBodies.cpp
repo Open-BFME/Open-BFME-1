@@ -2,6 +2,11 @@
 // Their owners are limited to the receiver offsets proven by retail access.
 // cl: /DNDEBUG /MD
 
+// ?Rva00191B30Noop@@YAXXZ
+void Rva00191B30Noop(void)
+{
+}
+
 class Rva00191B40Self
 {
 public:
