@@ -126,6 +126,7 @@ public:
 	UnsignedInt getRemainingAmmo(Bool countReloadingAsEmpty) const;
 	void rebuildScatterTargets();
 	Int getStatusAmmo() const;
+	const WeaponTemplate *getTemplate() const { return m_template; }
 
 	char m_unreconstructed_00[4];
 	const WeaponTemplate *m_template;
@@ -167,31 +168,29 @@ __forceinline long fast_float2long_round(float value)
 
 void Weapon::setClipPercentFull(Real percent, Bool allowReduction)
 {
-	if (m_template->getClipSize() == 0)
+	if (getTemplate()->getClipSize() == 0)
 		return;
 
-	percent = (Real)floor((double)m_template->getClipSize() * percent);
+	percent = (Real)floor((double)getTemplate()->getClipSize() * percent);
 	volatile Int ammo;
 	__asm {
 		fld [percent]
 		fistp [ammo]
 	}
 
-	ObjectFilter *filter = m_template->getAmmoFilter();
+	ObjectFilter *filter = getTemplate()->getAmmoFilter();
 	AmmoModule *module;
-	if (!filter->isValid())
-		goto fallbackAmmo;
+	if (filter->isValid())
 	{
 		Object *projectileStream = TheGameLogic->findObjectByID(m_projectileStreamID);
-		if (projectileStream)
-			module = (AmmoModule *)projectileStream->m_ammoModule;
-		else
-			module = 0;
+		module = projectileStream ? (AmmoModule *)projectileStream->m_ammoModule : 0;
 	}
+	else
+		module = 0;
 
 	if (module)
 	{
-		if (ammo > module->getRemainingAmmo(m_template->getAmmoFilter()))
+			if (ammo > module->getRemainingAmmo(getTemplate()->getAmmoFilter()))
 			goto updateAmmo;
 		goto checkReduction;
 	}

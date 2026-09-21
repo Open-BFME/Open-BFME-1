@@ -198,15 +198,6 @@ public:
 	void Set_Texture(TextureClass *texture);
 };
 
-// Retail calls the existing +0xE0 offset-tail thunk here.  Keeping the
-// receiver as the thunk's ABI view preserves the call to Rva0094F960 rather
-// than inventing a direct SegmentedLineClass::Set_Texture call.
-class Rva0094F960
-{
-public:
-	void invoke(void);
-};
-
 class Vector3
 {
 public:
@@ -447,7 +438,8 @@ W3DLaserDraw::W3DLaserDraw( Thing *thing, const ModuleData* moduleData ) :
 			SegmentedLineClass *line = m_line3D[ index ];
 			if( line )
 			{
-				((Rva0094F960 *)line)->invoke();
+				((SegLineRendererClass *)line)->Set_Texture(
+					(TextureClass *)m_textureVector.begin());
 				line->Set_Shader( BfmeShaderPresetAdditive );
 				line->Set_Width( width );
 				line->Set_Color( Vector3( red, green, blue ) );

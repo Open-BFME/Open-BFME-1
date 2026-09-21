@@ -78,9 +78,7 @@ static __forceinline void rva0023d850SetPosition(Thing *thing,
 static __forceinline void rva0023d850SetOrientation(Thing *thing,
 	float angle)
 {
-	union { void (*raw)(); ThingSetOrientationCall member; } call;
-	call.raw = j_000399a5;
-	(thing->*call.member)(angle);
+	thing->setOrientation(angle);
 }
 
 class Rva0023D850HordeContainView
