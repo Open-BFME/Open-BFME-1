@@ -102,6 +102,11 @@ void *Rva0017C9C0Offset16Address::get() const
 	return (char *)this + 0x10;
 }
 
+// The carved retail body at 0x0017C9B0 contains only ret.
+void Rva0017C9B0Noop()
+{
+}
+
 class Rva0017C9F0ByteAt46
 {
 public:
