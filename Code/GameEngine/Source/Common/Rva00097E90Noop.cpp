@@ -4,3 +4,8 @@
 void Rva00097E90Noop()
 {
 }
+
+// The carved boundary at 0x00097E60 contains only ret.
+void Rva00097E60Noop()
+{
+}
