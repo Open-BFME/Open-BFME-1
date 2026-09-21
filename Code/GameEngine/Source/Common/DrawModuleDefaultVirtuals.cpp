@@ -11,6 +11,7 @@ typedef float Real;
 class DrawModule
 {
 public:
+	virtual void rva0074FF80();
 	virtual void rva0074FFB0(UnsignedInt);
 	virtual void rva0074FFC0(UnsignedInt);
 	virtual void rva0074FFE0(Real);
@@ -38,6 +39,11 @@ public:
 	virtual void rva007501F0(UnsignedInt);
 	virtual void rva00750200(UnsignedInt);
 };
+
+// ?rva0074FF80@DrawModule@@UAEXXZ
+void DrawModule::rva0074FF80()
+{
+}
 
 // ?rva0074FFB0@DrawModule@@UAEXI@Z
 void DrawModule::rva0074FFB0(UnsignedInt)
