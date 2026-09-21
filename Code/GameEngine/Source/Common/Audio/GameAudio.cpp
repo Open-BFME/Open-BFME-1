@@ -181,6 +181,11 @@ void Rva00200DE0Noop()
 {
 }
 
+// ?Rva0060F9E0Noop@@YAXXZ
+void Rva0060F9E0Noop()
+{
+}
+
 
 // AudioManager Device Independent functions //////////////////////////////////////////////////////
 // ??0AudioManager@@ present-unmatched
