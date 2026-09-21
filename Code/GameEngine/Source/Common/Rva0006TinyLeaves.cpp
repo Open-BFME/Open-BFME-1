@@ -5,6 +5,11 @@ void Rva0007F670()
 {
 }
 
+// ?Rva0007F680@@YAXXZ
+void Rva0007F680()
+{
+}
+
 class Rva0006C6C0Self { public: void *get(); };
 // ?get@Rva0006C6C0Self@@QAEPAXXZ
 void *Rva0006C6C0Self::get() { return this; }
