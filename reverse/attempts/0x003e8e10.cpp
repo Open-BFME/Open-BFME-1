@@ -1,14 +1,18 @@
 // ?d_003e8e10@@YAXXZ
-// partial score=0.464902807775 date=2026-09-21
+// partial score=0.546976241900648 date=2026-09-21
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/pathfind
-// Astra complete structural reconstruction, retail RVA 0x003E8E10 (1852 bytes).
-// See ANALYSIS.md for every call/edge/layout and the single static-init EH state.
-// Partial, not an exact match. All 38 retail calls and all observed paths are modeled.
-// Calling views use address-derived types and the independently decoded ILT targets.
-// Native /EHsc emits the ONE static-initialization unwind state; no invented destructor.
-// Priority: keep the retail E8 frame and call structure before tuning registers/locals.
-// P063 before cleanup: 1846 bytes; 979 non-reloc differing bytes; first +0x35.
-// The full callee contract and every retail basic block are in ANALYSIS.md.
+// Astra round 2: retail RVA 0x003E8E10, independently bounded at 1852 bytes.
+// PARTIAL ONLY: R091 shape is 1859 bytes, 825 masked byte differences,
+// score 0.546976241900648. It reserves EC instead of retail E8.
+// Round-1 call/CFG/layout evidence: docs/analysis/0x003e8e10.md.
+// Round-2 slot/register evidence and rejected hypotheses:
+// build/astra_3e8e10/round2/{REPORT,SLOTS,REGISTERS,PROGRESS}.md.
+// Natural C++ only. All 38 witnessed calls and the one native static-init
+// unwind state remain. Address-derived views bind the verified retail ILTs.
+// Returning the source coordinate by value naturally spills sourceCell and
+// changes register competition. This is a tested lever, NOT proof that retail
+// used this accessor or the displacement/center local aggregate.
+// Still missing: retail's search-output/spill overlap and original scheduling.
 #define private protected
 #include "GameLogic/AIPathfind.h"
 #undef private
@@ -151,12 +155,11 @@ class Rva003E8E10 : public Pathfinder
 public:
     __forceinline PathfindCell *rvaCell(PathfindLayerEnum layer, const ICoord2D &c)
     {
-        const int y = c.y;
         if (c.x >= m_extent.lo.x && c.x <= m_extent.hi.x &&
-            y >= m_extent.lo.y && y <= m_extent.hi.y)
+            c.y >= m_extent.lo.y && c.y <= m_extent.hi.y)
         {
 
-            const int x = c.x;
+            const int x = c.x, y = c.y;
             if (layer > 1 && layer <= 15)
             {
                 PathfindCell *cell = RVA_CALL(Rva3FBAB0,&m_layers[layer],j_000105cd)(x,y);
@@ -166,6 +169,8 @@ public:
         }
         return 0;
     }
+    __forceinline ICoord2D rvaCoordinates(const Coord3D *position)
+    { ICoord2D c; RVA_CALL(Rva3D7EC0,this,j_000171e8)(position,&c); return c; }
     bool run(Rva003E8E10Object *s, Rva001E6930 *w, Rva003E8E10Arg3 *l,
              Coord3D *q, Rva003E8E10Object *t);
 };
@@ -184,8 +189,8 @@ bool Rva003E8E10::run(Rva003E8E10Object *s, Rva001E6930 *w,
 
     // +075..1A6: C03..C09, direction and conditional displacement.
     int radius;
-    bool center;
-    RVA_CALL(Rva3DEE30,this,j_000461ff)(s,&radius,&center);
+    struct Displacement { Coord3D v; bool center; } displacement;
+    RVA_CALL(Rva3DEE30,this,j_000461ff)(s,&radius,&displacement.center);
     Coord3D a; a.x=sp->x; a.y=sp->y; a.z=sp->z;
     Coord3D direction;
     RVA_CALL(Rva132190,s,j_00005ee3)(&direction);
@@ -194,32 +199,30 @@ bool Rva003E8E10::run(Rva003E8E10Object *s, Rva001E6930 *w,
     a.x += direction.x;
     a.y += direction.y;
     a.z += direction.z;
-    Coord3D v;
-    v.x = a.x - q->x;
-    v.y = a.y - q->y;
-    v.z = 0.0f;
-    RVA_CALL(Rva0FB930,&v,j_0002bd82)();
-    v.x *= 10.0f;
-    v.y *= 10.0f;
-    v.z *= 10.0f;
+    displacement.v.x = a.x - q->x;
+    displacement.v.y = a.y - q->y;
+    displacement.v.z = 0.0f;
+    RVA_CALL(Rva0FB930,&displacement.v,j_0002bd82)();
+    displacement.v.x *= 10.0f;
+    displacement.v.y *= 10.0f;
+    displacement.v.z *= 10.0f;
 
     if ((t->rvaTemplate()->rvaC8() & 0x80) || (t->rvaTemplate()->uCC & 0x08000000))
         if (!(t->rvaTemplate()->uD8 & 0x00200000))
-            RVA_CALL(Rva3E3B20,this,j_0000187a)(s,t,&v);
+            RVA_CALL(Rva3E3B20,this,j_0000187a)(s,t,&displacement.v);
 
     // +1A7..720: at most two passes; the second starts with zero displacement.
-    int retry = 0;
-    do
+    for (int retry=0; retry<2; ++retry)
     {
         RVA_CALL(Rva1C0010,t,j_00027bc9)(q);
         if (t->rvaTemplate()->uD8 & 0x00200000)
         {
-            v.x = 0.0f; v.y = 0.0f; v.z = 0.0f;
+            displacement.v.x = 0.0f; displacement.v.y = 0.0f; displacement.v.z = 0.0f;
         }
-        q->x += v.x;
-        q->y += v.y;
-        q->z += v.z;
-        if (!center)
+        q->x += displacement.v.x;
+        q->y += displacement.v.y;
+        q->z += displacement.v.z;
+        if (!displacement.center)
         {
             q->x += 5.0f;
             q->y += 5.0f;
@@ -232,8 +235,7 @@ bool Rva003E8E10::run(Rva003E8E10Object *s, Rva001E6930 *w,
         ICoord2D unusedCell;
         RVA_CALL(Rva3D7EC0,this,j_000171e8)(&a,&unusedCell);
         int sourceLayer = RVA_CALL(Rva1BEC20,s,j_0003a391)();
-        ICoord2D c2;
-        RVA_CALL(Rva3D7EC0,this,j_000171e8)(&a,&c2);
+        const ICoord2D &c2 = rvaCoordinates(&a);
         PathfindCell *sourceCell = rvaCell((PathfindLayerEnum)sourceLayer,c2);
         if (!sourceCell) return false;
 
@@ -260,7 +262,7 @@ bool Rva003E8E10::run(Rva003E8E10Object *s, Rva001E6930 *w,
         if (zone == RVA_CALL(Rva4033E0,zones,j_0004375c)(&m,(unsigned int)*(unsigned short*)((char*)destCell+8)))
         {
             PathfindCell *cellOut;
-            if (Rva003DF580Call(this,s,c.x,c.y,layer,radius,center,&cellOut,false))
+            if (Rva003DF580Call(this,s,c.x,c.y,layer,radius,displacement.center,&cellOut,false))
             {
                 bool zero = cellOut == 0;
                 if (zero && RVA_CALL(Rva1E6930,w,j_0003a4e5)(s,&s->position,t,q,0.0f))
@@ -282,7 +284,7 @@ bool Rva003E8E10::run(Rva003E8E10Object *s, Rva001E6930 *w,
 
         // +584..6BF: first context initialized inline, second via C37 (ret 0x30).
         Rva003D5670Context k1;
-        Rva003D5670Inline(&k1,this,&m,s,t,w,radius,center,sourceSpecial,zone,layer,q,special);
+        Rva003D5670Inline(&k1,this,&m,s,t,w,radius,displacement.center,sourceSpecial,zone,layer,q,special);
         ICoord2D searchCell;
         typedef bool (Rva003E8E10CallReceiver::*Search)(ICoord2D*,int,ICoord2D*,Rva003D5670Context*,int);
         Search search = Rva003E8E10Pmf<Search>(j_00036994);
@@ -292,13 +294,12 @@ bool Rva003E8E10::run(Rva003E8E10Object *s, Rva001E6930 *w,
         {
             Rva003D5670Context k2;
             if ((((Rva003E8E10CallReceiver*)this)->*search)(&c,100,&searchCell,
-                Rva003D5670Call(&k2,this,&m,s,t,w,radius,center,sourceSpecial,zone,1,q,special),1))
+                Rva003D5670Call(&k2,this,&m,s,t,w,radius,displacement.center,sourceSpecial,zone,1,q,special),1))
                 return true;
         }
         // The unordered x87 result follows the false-return path too.
-        if (!(v.x*v.x + v.y*v.y > 1.0f)) return false;
-        ++retry;
-        v.x = 0.0f; v.y = 0.0f; v.z = 0.0f;
-    } while (retry < 2);
+        if (!(displacement.v.x*displacement.v.x + displacement.v.y*displacement.v.y > 1.0f)) return false;
+        displacement.v.x = 0.0f; displacement.v.y = 0.0f; displacement.v.z = 0.0f;
+    }
     return false;
 }
