@@ -108,6 +108,11 @@ float Rva0045BF10Owner::get() const
     return *(const float *)((const char *)this + 0x70);
 }
 
+// ?Rva0045BF30NoOp@@YAXXZ
+void Rva0045BF30NoOp()
+{
+}
+
 struct Rva0045BF50Owner
 {
     void call1(int value);
