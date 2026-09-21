@@ -358,6 +358,11 @@ void d_00421e90(void)
 {
 }
 
+// ?Rva005C1260Noop@@YAXXZ
+void Rva005C1260Noop(void)
+{
+}
+
 // ?d_005c1270@@YAXXZ
 void d_005c1270(void)
 {
