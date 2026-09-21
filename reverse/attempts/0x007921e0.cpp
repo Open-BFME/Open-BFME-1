@@ -149,7 +149,7 @@ public:
 extern BfmeListDisplay *TheDisplay;
 extern GameWindowManager *TheWindowManager;
 
-static void drawHiliteBar(const Image *left, const Image *right,
+__declspec(noinline) static void drawHiliteBar(const Image *left, const Image *right,
 	const Image *center, Int startX, Int startY, Int endX, Int endY)
 {
 	ICoord2D barWindowSize;
@@ -202,7 +202,12 @@ static void drawHiliteBar(const Image *left, const Image *right,
 	TheWindowManager->winDrawImage(left, start.x, start.y, end.x, end.y);
 
 	start = rightStart;
-	end.x = rightSize.x + (start.x * 1);
+	end.x = start.x + ((Int *)&rightSize)[0];
 	end.y = start.y + barWindowSize.y;
 	TheWindowManager->winDrawImage(right, start.x, start.y, end.x, end.y);
+}
+
+__declspec(noinline) void retainDrawHiliteBar(void)
+{
+	drawHiliteBar(0, 0, 0, 0, 0, 0, 0);
 }
