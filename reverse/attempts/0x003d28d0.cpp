@@ -1,11 +1,12 @@
 // ?d_003d28d0@@YAXXZ
-// partial score=0.16 date=2026-09-21
-// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// partial score=0.24 date=2026-09-21
+// cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Include/Precompiled
 // stlport
 
+#include "PreRTS.h"
 #include <vector>
 
-extern "C" double __cdecl ceil(double value);
+extern "C" __declspec(dllimport) double __cdecl ceil(double value);
 
 extern const float g_bfmeDefaultBU;
 extern const float g_bfmeK1253;
@@ -83,24 +84,25 @@ Rva003D2B80Child::Rva003D2B80Child(Rva003D2B80Source *source,
 {
 	float scale = g_bfmeDefaultBU;
 	m_source = source;
-	scale /= source->m_step;
+	float step = source->m_step;
+	scale /= step;
 
-	float first = (float)ceil((double)(source->m_0a0 - corner[0]) * scale);
-	int firstCount = (int)first;
+	float first = (float)ceil((double)((source->m_0a0 - corner[0]) * scale));
+	int firstCount = fast_float2long_round(first);
 	m_count = firstCount;
-	float second = (float)ceil((double)(source->m_0a4 - corner[1]) * scale);
-	int secondCount = (int)second;
+	float second = (float)ceil((double)((source->m_0a4 - corner[1]) * scale));
+	int secondCount = fast_float2long_round(second);
 
 	m_entries.reserve(firstCount * secondCount);
 
-	float halfStep = source->m_step * g_bfmeK1253;
+	float halfStep = step * g_bfmeK1253;
 	for (int y = 0; y < secondCount; ++y)
 	{
-		float yPosition = (float)y * source->m_step + corner[1] + halfStep;
+		float yPosition = (float)y * step + corner[1] + halfStep;
 		for (int x = 0; x < m_count; ++x)
 		{
 			Gen003D1380Elem element;
-			element.m_00 = (float)x * source->m_step + halfStep + corner[0];
+			element.m_00 = (float)x * step + halfStep + corner[0];
 			element.m_04 = yPosition;
 			element.m_08 = source;
 			element.m_0c = 0;
