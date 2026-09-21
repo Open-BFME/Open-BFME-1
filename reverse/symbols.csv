@@ -88542,3 +88542,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?rva0002cca5Target@@YAMMMPADH@Z,0x00096DD0,address-qualified forwarding target for the GetGameLogicRandomValueReal ILT at 0x0002CCA5
 ?rva0000f727Target@@YAXXZ,0x005C76A0,address-qualified forwarding target for the ParticleSystemTemplate hash lookup ILT at 0x0000F727
 ?rva0003D3C5Target@@YAXXZ,0x003B5000,TU-local alias for the matched W3DAnimationInfo allocate-and-copy body reached by the 0x0003D3C5 incremental-link thunk
+??$__uninitialized_copy@PAUBfmeElemVKN@@PAU1@@_STL@@YAPAUBfmeElemVKN@@PAU1@00ABU__false_type@0@@Z,0x0013D9F0,retail call target from the proven BfmeElemVKN vector overflow body at 0x00143E50
