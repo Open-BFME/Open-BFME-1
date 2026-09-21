@@ -5,3 +5,8 @@
 void Rva0028F660(void)
 {
 }
+
+// Retail 0x0028F670 is another isolated one-byte return body.
+void Rva0028F670(void)
+{
+}
