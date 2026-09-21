@@ -46,12 +46,14 @@ extern Rva009B3800Filter g_rva01356EC4;
 void __cdecl Rva009B3800PlaneCopy(
 	Rva009B3800Context *ctx, int sourceOffset, int destinationOffset)
 {
-	int secondCount = (int)ctx->m_height;
-	int firstCount = (int)ctx->m_width;
+	int secondCount;
+	int firstCount;
 	int plane = 0;
 	int *bounding;
 	unsigned char *base;
 	unsigned int stride;
+	secondCount = (int)ctx->m_height;
+	firstCount = (int)ctx->m_width;
 
 	if (ctx->m_mode >= 2)
 		bounding = g_rva01356E64(ctx, g_rva01356A9C[ctx->m_tableIndex]);
