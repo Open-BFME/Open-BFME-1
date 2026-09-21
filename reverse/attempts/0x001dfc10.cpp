@@ -66,30 +66,28 @@ private:
 class BfmeCellGrid
 {
 public:
-};
-
-class BfmeObjectCall
-{
-public:
-	Player *getControllingPlayer() const;
-};
-
-class BFMEActionThing
-{
-public:
-	bool isKindOf(Int kind) const;
-};
-
-class BfmeGridApplyAtObject
-{
-public:
-	void apply(const Object *object, Real amount, Int firstIndex,
+	void bfmeApplyAtObject(const Object *object, Real amount, Int firstIndex,
 		Int secondIndex) const;
 };
 
 struct FactionVictoryParameters
 {
 	char m_data[24];
+};
+
+class SubsystemInterface
+{
+public:
+	virtual ~SubsystemInterface();
+
+private:
+	void *m_name;
+};
+
+class Snapshot
+{
+public:
+	virtual ~Snapshot();
 };
 
 class FactionVictoryParametersVector
@@ -106,13 +104,18 @@ private:
 	FactionVictoryParameters *m_storageEnd;
 };
 
-class VictorySystem
+class VictorySystem : public SubsystemInterface, public Snapshot
 {
 public:
 	void bfmeNotifyObject(Object *object, DamageInfo *damageInfo);
 
 private:
-	char m_pad00[0x24];
+	Int m_cellSize;
+	Int m_field10;
+	Real m_firstScale;
+	Real m_secondScale;
+	Real m_field1c;
+	Real m_field20;
 	Int m_playerParameterIndex[16];
 	BfmeCell m_rootCell;
 	FactionVictoryParametersVector m_parameters;
@@ -128,13 +131,13 @@ void VictorySystem::bfmeNotifyObject(Object *object, DamageInfo *damageInfo)
 	if ((object->m_privateStatus & 8) != 0)
 		return;
 
-	Object *source = ((GameLogicFrameSlice *)TheBfmeGameLogic)->bfmeFind(
+	const Object *source = ((GameLogicFrameSlice *)TheBfmeGameLogic)->bfmeFind(
 		damageInfo->m_sourceID);
 	if (source == 0)
 		return;
 
-	Player *objectPlayer = ((BfmeObjectCall *)object)->getControllingPlayer();
-	Player *sourcePlayer = ((BfmeObjectCall *)source)->getControllingPlayer();
+	Player *objectPlayer = object->getControllingPlayer();
+	Player *sourcePlayer = source->getControllingPlayer();
 	if (objectPlayer == 0)
 		return;
 
@@ -148,8 +151,8 @@ void VictorySystem::bfmeNotifyObject(Object *object, DamageInfo *damageInfo)
 
 	FactionVictoryParameters *parameters = &m_parameters[(UnsignedInt)parameterIndex];
 	Real amount;
-	if (((BFMEActionThing *)object)->isKindOf(0xa) ||
-		((BFMEActionThing *)object)->isKindOf(0x59))
+	if (object->isKindOf((KindOfType)0xa) ||
+		object->isKindOf((KindOfType)0x59))
 		amount = *(Real *)((char *)parameters + 0x14);
 	else
 		amount = 1.0f;
@@ -161,7 +164,7 @@ void VictorySystem::bfmeNotifyObject(Object *object, DamageInfo *damageInfo)
 	do
 	{
 		if (*grid != 0)
-			((BfmeGridApplyAtObject *)*grid)->apply(object, amount, objectPlayerIndex,
+			(*grid)->bfmeApplyAtObject(object, amount, objectPlayerIndex,
 				sourcePlayer->getPlayerIndex());
 		++grid;
 	}
