@@ -10,3 +10,8 @@ void d_005d4c40(void)
 void d_005d4c20(void)
 {
 }
+
+// The carved retail body at 0x005D4C30 contains only ret.
+void Rva005D4C30Noop(void)
+{
+}
