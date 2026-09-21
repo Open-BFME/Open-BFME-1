@@ -7,6 +7,11 @@ void Rva00191B30Noop(void)
 {
 }
 
+// ?Rva00191BF0Noop@@YAXXZ
+void Rva00191BF0Noop()
+{
+}
+
 class Rva00191B40Self
 {
 public:
