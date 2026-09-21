@@ -1,53 +1,28 @@
-// ?dispatch@BfmeOwnerBR@@QAEXPAXPAVObject@@00@Z
-// partial score=0.45 date=2026-09-10
-// Open-BFME5 conversions.
-
-class BfmeGlob939A
-{
-public:
-	virtual void bfmeSlot939A00();
-	virtual void bfmeSlot939A01();
-	virtual void bfmeSlot939A02();
-	virtual void bfmeSlot939A03();
-	virtual void bfmeTail939A();
-};
-
-extern BfmeGlob939A *g_bfme939GlobA;
-void bfmeCall939A(void);
-
-void bfmeGo939A(void)
-{
-	bfmeCall939A();
-	g_bfme939GlobA->bfmeTail939A();
-}
-
-class Object;
-class DelayedLuaEventList;
-
-struct BfmeElem939B
-{
-	int m_bfmeA;
-	int m_bfmeB;
-};
-
-class BfmeOwnerBR
-{
-public:
-	void bfmeGo939B(int i, Object *object, DelayedLuaEventList *events);
-	void bfmeTail939B(BfmeElem939B *e, Object *object, DelayedLuaEventList *events);
-	void dispatch(void *recordData, Object *object, void *argument2,
-		void *argument3);
-	char m_bfmePad[0x10];
-	BfmeElem939B m_bfmeArr[1];
-};
-
-void BfmeOwnerBR::bfmeGo939B(int i, Object *object, DelayedLuaEventList *events)
-{
-	bfmeTail939B(&m_bfmeArr[i], object, events);
-}
-
-struct lua_State;
-struct BfmeQ1039;
+// ?dispatch@Rva002E5A70Call@@QAEXPAXPAVObject@@00@Z
+// partial score=0.28 date=2026-09-21
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// stlport
+//
+// Retail 0x002E5A70, 549 bytes. The matched caller
+// Code/GameEngine/Source/Common/Rva002E0E30RecordDispatch.cpp reaches this
+// body through ILT thunk j_000122a6 (0x000122A6 -> FUN_006e5a70, i.e. this
+// RVA) as `Rva002E5A70Call::dispatch(void *recordData, Object *object,
+// void *argument2, void *argument3)`; that file is landed and already fixes
+// this body's ABI, so the class stays the SAME opaque name it uses rather
+// than the unproven "BfmeOwnerBR" a prior attempt guessed (BfmeOwnerBR's own
+// landed member bfmeGo939B/bfmeTail939B at 0x002E7650/0x002E76xx take a
+// different argument shape -- an int record index, not a raw recordData
+// pointer -- so that identity does not actually fit this body).
+//
+// The Lua event body itself: reads a recursion-depth guard at +0xb0, the
+// lua_State* at +8, looks up the object's event source, resolves the event
+// name through a per-owner lookup thunk, pushes the object/argument2 as Lua
+// values, walks up to three BfmeLuaEventArgument records (kind 1 = resolve
+// by ObjectID, 2 = bool literal, 3 = float literal), and calls the Lua
+// function when it found a name. AsciiString eventName(*name) is the
+// canonical by-value string shape (reference/shims/stringinline) -- the
+// prior attempt's hand-rolled StringBase<T> did not resolve to the real
+// matched releaseBuffer body at 0x00887940.
 
 template <class T>
 class StringBase
@@ -70,11 +45,9 @@ public:
 	~AsciiString() { releaseBuffer(); }
 };
 
-class GameLogic
-{
-public:
-	Object *bfmeFind1011(int id);
-};
+class Object;
+struct lua_State;
+struct BfmeQ1039;
 
 class BfmeEventNameLookup
 {
@@ -95,11 +68,16 @@ extern "C" void lua_call(lua_State *state, int arguments, int results);
 extern "C" void lua_settop(lua_State *state, int index);
 extern "C" void *g_activeObj12F0610;
 
+class GameLogic
+{
+public:
+	Object *bfmeFind1011(int id);
+};
+
 extern GameLogic *TheBfmeGameLogic;
 extern void bfmeGo1039E(BfmeQ1039 *q, int value);
 extern void j_00033078(void);
 extern void j_000454e4(void);
-extern void j_00028bb9(void);
 extern void j_0003ebad(void);
 
 struct BfmeLuaEventArgument
@@ -127,7 +105,14 @@ static __forceinline AsciiString *bfmeLookupEventName(void *owner,
 		recordData, hasEventName);
 }
 
-static __forceinline void bfmePushLuaValue(BfmeOwnerBR *owner,
+class Rva002E5A70Call
+{
+public:
+	void dispatch(void *recordData, Object *object, void *argument2,
+		void *argument3);
+};
+
+static __forceinline void bfmePushLuaValue(Rva002E5A70Call *owner,
 	lua_State *state, void *value)
 {
 	typedef void (BfmeLuaValuePush::*Function)(lua_State *, void *);
@@ -152,7 +137,7 @@ static __forceinline void bfmeNotifyLuaEvent(const char *name)
 	fn.typed(name);
 }
 
-void BfmeOwnerBR::dispatch(void *recordData, Object *object,
+void Rva002E5A70Call::dispatch(void *recordData, Object *object,
 	void *argument2, void *argument3)
 {
 	if (*(int *)((char *)this + 0xb0) > 10)
@@ -236,99 +221,4 @@ void BfmeOwnerBR::dispatch(void *recordData, Object *object,
 		bfmeNotifyLuaEvent((const char *)0x010CF754);
 		g_activeObj12F0610 = 0;
 	}
-}
-
-class BfmeGlob939C
-{
-public:
-	virtual void bfmeSlot939C00();
-	virtual void bfmeSlot939C01();
-	virtual void bfmeSlot939C02();
-	virtual void bfmeSlot939C03();
-	virtual void bfmeSlot939C04();
-	virtual void bfmeSlot939C05();
-	virtual void bfmeSlot939C06();
-	virtual void bfmeSlot939C07();
-	virtual void bfmeSlot939C08();
-	virtual void bfmeSlot939C09();
-	virtual void bfmeSlot939C10();
-	virtual void bfmeSlot939C11();
-	virtual void bfmeSlot939C12();
-	virtual void bfmeSlot939C13();
-	virtual void bfmeSlot939C14();
-	virtual void bfmeSlot939C15();
-	virtual void bfmeSlot939C16();
-	virtual void bfmeSlot939C17();
-	virtual void bfmeSlot939C18();
-	virtual void bfmeSlot939C19();
-	virtual void bfmeSlot939C20();
-	virtual void bfmeSlot939C21();
-	virtual void bfmeSlot939C22();
-	virtual void bfmeSlot939C23();
-	virtual void bfmeSlot939C24();
-	virtual void bfmeSlot939C25();
-	virtual void bfmeSlot939C26();
-	virtual void bfmeSlot939C27();
-	virtual void bfmeSlot939C28();
-	virtual void bfmeSlot939C29();
-	virtual void bfmeSlot939C30();
-	virtual int bfmeVirt939C(int f);
-};
-
-extern BfmeGlob939C *g_bfme939GlobC;
-
-int bfmeGo939C(void)
-{
-	int r = g_bfme939GlobC->bfmeVirt939C(0);
-	return r == 0;
-}
-
-class BfmeGlob939D
-{
-public:
-	char bfmeCall939D();
-};
-
-extern BfmeGlob939D *g_bfme939GlobD;
-
-int __stdcall bfmeGo939D(char v)
-{
-	char r = g_bfme939GlobD->bfmeCall939D();
-	return (char)(r - v) == 0;
-}
-
-extern char g_bfme939Str[];
-
-class BfmeSub939E
-{
-public:
-	void bfmeCall939E(int *out, char *s);
-};
-
-void bfmeGo939E(BfmeSub939E *a)
-{
-	int tmp;
-	a->bfmeCall939E(&tmp, g_bfme939Str);
-}
-
-class BfmeSub939G
-{
-public:
-	void bfmeCall939G();
-	void *m_bfmeP;
-};
-
-class BfmeThing939G
-{
-public:
-	void bfmeGo939G(void *a);
-	char m_bfmePad[8];
-	BfmeSub939G m_bfmeSub;
-};
-
-void BfmeThing939G::bfmeGo939G(void *a)
-{
-	BfmeSub939G *s = &m_bfmeSub;
-	if (!a && s->m_bfmeP)
-		s->bfmeCall939G();
 }
