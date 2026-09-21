@@ -88536,3 +88536,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?run@Glo012F4B98Type@@QAEXXZ,0x00589680,alternatename-aliased onto already-landed bfmeRun_00589680; Gen_006091B0::bfmeSetEnabled loads Glo012F4B98 into ECX before this call even though the callee ignores it (identical-code-folding residue)
 ?poke@BfmeGameCW@@QAEXH@Z,0x0060D5D0,alternatename-aliased onto already-landed Rva0060D5D0Noop; Gen_006091B0::bfmeSetEnabled reloads g_bfmeGameCW into ECX before this tail call even though the callee ignores it (identical-code-folding residue)
 ?rva0001819cTarget@@YAXXZ,0x0076B010,TU-local clean-C++ alias for the matched Rva0013B8F0 uninitialized-copy body used by the 0x0001819C tail thunk
+??0?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QAE@ABV01@@Z,0x000CE890,ICF alias of Gen_000ce890 copy ctor; vector<ObjectID> copy construction used by Player::addAIGroupToCurrentSelection

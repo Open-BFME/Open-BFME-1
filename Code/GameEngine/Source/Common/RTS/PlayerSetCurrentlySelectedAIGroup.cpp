@@ -10,6 +10,7 @@
 // stlport
 
 #define _STLP_USE_STATIC_LIB
+#define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
 typedef int Int;
@@ -109,6 +110,26 @@ void Player::setCurrentlySelectedAIGroup(AIGroup *group)
 	if (group != NULL)
 	{
 		((Rva0018B8B0Holder *)m_currentSelection)->apply((Rva0018B8B0Arg *)group, true);
+	}
+}
+
+// ?addAIGroupToCurrentSelection@Player@@QAEXPAVAIGroup@@@Z
+void Player::addAIGroupToCurrentSelection(AIGroup *group)
+{
+	if (group == NULL)
+		return;
+
+	if (m_currentSelection == NULL)
+	{
+		m_currentSelection = new Gen_0018B850;
+	}
+
+	VecObjectID ids(group->getAllIDs());
+	int count = (int)ids.size();
+	ObjectID *base = ids.begin();
+	for (int i = 0; i < count; ++i)
+	{
+		((Rva0018B9A0Holder *)m_currentSelection)->addObjectID(base[i]);
 	}
 }
 
