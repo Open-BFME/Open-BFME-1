@@ -34,6 +34,7 @@ public:
 	virtual void *rva00750160();
 	virtual void rva00750180(UnsignedInt);
 	virtual Bool rva007501A0() const;
+	virtual void rva007501E0();
 	virtual void rva007501F0(UnsignedInt);
 	virtual void rva00750200(UnsignedInt);
 };
@@ -162,6 +163,11 @@ void DrawModule::rva00750180(UnsignedInt)
 Bool DrawModule::rva007501A0() const
 {
 	return false;
+}
+
+// DrawModule vtable slot 54 identifies this body at retail 0x007501E0.
+void DrawModule::rva007501E0()
+{
 }
 
 // ?rva007501F0@DrawModule@@UAEXI@Z
