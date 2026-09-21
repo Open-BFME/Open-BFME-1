@@ -99,3 +99,106 @@ extern "C" Bool __stdcall Rva003F5340(const ICoord2D *center, Int radius, void *
 	}
 	return false;
 }
+
+// _Rva003F4F70@16
+// Retail sibling: same independently verified predicate and logger; adds a
+// selected-cell output as its third argument and returns with ret 0x10.
+extern "C" Bool __stdcall Rva003F4F70(const ICoord2D *center, Int radius, ICoord2D *found, void *userData)
+{
+	if (Glo012F0239 && TheCRCParameterCheck)
+	{
+		bfmeRetailCritterDesyncLog(
+			TheCRCParameterCheck,
+			"\t\tIterateCircular1 called with center=%d,%d, maxCells=%d",
+			center->x,
+			center->y,
+			radius);
+	}
+
+	BfmeCellTesterRva003F5340 *tester = (BfmeCellTesterRva003F5340 *)userData;
+
+	if (tester->test(center->x, center->y))
+	{
+		if (Glo012F0239 && TheCRCParameterCheck)
+			bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "\t\tfunc succeeded found=%d,%d", center->x, center->y);
+		found->x = center->x;
+		found->y = center->y;
+		return true;
+	}
+	if (Glo012F0239 && TheCRCParameterCheck)
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "\t\tfunc failed");
+
+	Int best = 0;
+	Int dx = 0, dy = 0;
+	Int delta = 1;
+	if (radius > 0)
+	{
+		do
+		{
+			radius -= 4 * delta + 2;
+			Int count;
+			for (count = delta; count > 0; count--)
+			{
+				dx++;
+				if (best == 0 || dx * dx + dy * dy < best)
+				{
+					if (tester->test(center->x + dx, center->y + dy))
+					{
+						best = dx * dx + dy * dy;
+						found->x = center->x + dx;
+						found->y = center->y + dy;
+					}
+				}
+			}
+			for (count = delta; count > 0; count--)
+			{
+				dy++;
+				if (best == 0 || dx * dx + dy * dy < best)
+				{
+					if (tester->test(center->x + dx, center->y + dy))
+					{
+						best = dx * dx + dy * dy;
+						found->x = center->x + dx;
+						found->y = center->y + dy;
+					}
+				}
+			}
+
+			for (count = 0; count <= delta; count++)
+			{
+				dx--;
+				if (best == 0 || dx * dx + dy * dy < best)
+				{
+					if (tester->test(center->x + dx, center->y + dy))
+					{
+						best = dx * dx + dy * dy;
+						found->x = center->x + dx;
+						found->y = center->y + dy;
+					}
+				}
+			}
+			for (count = 0; count <= delta; count++)
+			{
+				dy--;
+				if (best == 0 || dx * dx + dy * dy < best)
+				{
+					if (tester->test(center->x + dx, center->y + dy))
+					{
+						best = dx * dx + dy * dy;
+						found->x = center->x + dx;
+						found->y = center->y + dy;
+					}
+				}
+			}
+			if (best != 0) {
+				if (Glo012F0239 && TheCRCParameterCheck)
+					bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "\t\tbest return true. found=%d,%d", found->x, found->y);
+				return true;
+			}
+			delta += 2;
+		} while (radius > 0);
+	}
+	if (Glo012F0239 && TheCRCParameterCheck)
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "\t\ttotal failure. found=%d,%d", found->x, found->y);
+	return false;
+}
