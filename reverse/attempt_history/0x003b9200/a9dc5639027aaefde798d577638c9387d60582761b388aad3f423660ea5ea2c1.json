@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "a9dc5639027aaefde798d577638c9387d60582761b388aad3f423660ea5ea2c1",
+  "symbol": "?rva003B9200ContainsAny@Rva003B9100@@QBE_NPBV1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.86,
+  "source": "// ?rva003B9200ContainsAny@Rva003B9100@@QBE_NPBV1@@Z\n// partial score=0.86 date=2026-09-21\n// The adjacent exact Rva003B9100::contains body proves both objects own the\n// same vector<AsciiString> layout. Retail passes the address of each element\n// to the other owner's contains method and returns on the first shared name.\n// cl: /DNDEBUG /MD /EHs-c- /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS\n// stlport\n#include <vector>\n\nstruct BfmeStringData;\n\nclass AsciiString\n{\npublic:\n\tBfmeStringData *m_data;\n};\n\nclass Rva003B9100\n{\npublic:\n\tbool contains(const AsciiString &name) const;\n\tbool rva003B9200ContainsAny(const Rva003B9100 *other) const;\n\nprivate:\n\tchar m_pad[0x0C];\n\t_STL::vector<AsciiString> m_vec;\n};\n\nbool Rva003B9100::rva003B9200ContainsAny(const Rva003B9100 *other) const\n{\n\tconst Rva003B9100 *receiver = other;\n\tconst Rva003B9100 *owner = this;\n\tconst _STL::vector<AsciiString> &values = owner->m_vec;\n\tconst AsciiString *item = values.begin();\n\tfor (unsigned int i = 0; i < values.size(); ++i, ++item)\n\t{\n\t\tif (receiver->contains(*item))\n\t\t\treturn true;\n\t}\n\treturn false;\n}\n"
+}
