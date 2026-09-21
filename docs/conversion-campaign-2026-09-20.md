@@ -178,3 +178,23 @@ Fleet 25 bodies / 6,153 B cumulative; this hour 4 bodies / 1,011 B, all
 
 Three seats this window so the usage budget spreads over the whole reset
 period instead of ~2.5 hours; landings per seat-hour are unchanged.
+
+### Hour 11 — 04:03Z to 05:05Z (three seats)
+
+Fleet 30 bodies / 7,044 B cumulative; this hour 5 bodies / 891 B.
+Repository-wide +15,977 B / +0.16 pp (67.04% -> 67.21%) since the fleet
+base; +5,265 B of that is new total-exact coverage.
+
+| RVA | Bytes | Result |
+|---|---:|---|
+| 0x0084C8F0 | 248 | STLport basic_fstream<char> pathname constructor (plain explicit instantiation) |
+| 0x0036E420 | 246 | Castle canUnpack |
+| 0x0051BCE0 | 173 | Opaque stdcall callback |
+| 0x006ACE90 | 113 | addNamedRoom |
+| 0x00463BA0 | 111 | Opaque Coord2D/text draw helper |
+
+Two STLport near-twins (0x0084C6F0, 0x0084CEA0) banked at 0.94: ICF
+near-twins of the fstream constructor that hardcode a default argument,
+and any out-of-class specialization or new derived class picks up a spare
+hidden virtual-base parameter (`ret 0x10` vs `ret 0xc`) that a single-TU
+compile cannot elide.
