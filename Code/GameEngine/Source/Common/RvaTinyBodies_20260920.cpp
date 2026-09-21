@@ -16,6 +16,11 @@ unsigned int Rva000FDB30Dword::get() const
 	return m_value;
 }
 
+// The carved boundary at 0x000957F0 contains only a return.
+void Rva000957F0Noop()
+{
+}
+
 class Rva00101B30Dword
 {
 public:
