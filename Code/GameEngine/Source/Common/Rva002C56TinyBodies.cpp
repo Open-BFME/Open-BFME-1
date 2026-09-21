@@ -139,6 +139,11 @@ int Rva002C61E0::method() const
 	return 0;
 }
 
+// Retail 0x002C6230 is a one-byte standalone ret with no proven semantic identity.
+void Rva002C6230()
+{
+}
+
 class Rva002C6250
 {
 public:
