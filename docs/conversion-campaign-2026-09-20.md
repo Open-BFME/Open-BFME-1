@@ -198,3 +198,38 @@ near-twins of the fstream constructor that hardcode a default argument,
 and any out-of-class specialization or new derived class picks up a spare
 hidden virtual-base parameter (`ret 0x10` vs `ret 0xc`) that a single-TU
 compile cannot elide.
+
+### Hour 12 — 05:05Z to 06:05Z (three seats)
+
+Fleet 36 bodies / 8,214 B cumulative; this hour 6 bodies / 1,170 B.
+Repository-wide +17,227 B / +0.18 pp (67.04% -> 67.22%) since the fleet
+base; +5,345 B of that is new total-exact coverage.
+
+| RVA | Bytes | Result |
+|---|---:|---|
+| 0x006EB070 | 252 | Render2DClass::Add_Tri (real identity, sibling of the landed Add_Quad) |
+| 0x007F2C10 | 249 | GameSpy rank-period serializer |
+| 0x001C6640 | 248 | BitFlags<116>::xfer (explicit instantiation, exact on the first probe) |
+| 0x0016D270 | 153 | Opaque invoke() |
+| 0x001FCA90 | 151 | Opaque invoke() returning bool |
+| 0x009A36F0 | 117 | Opaque apply(param) |
+
+## Mid-campaign comparison (12.6 hours in)
+
+| Window | Rebuildable | Authored C++ | Total exact |
+|---|---:|---:|---:|
+| Prior 12 h (61d14457a8..ea5778798f, all contributors) | +13,287 B / +0.14 pp | +13,319 B | +7,846 B |
+| Campaign 17:29Z..06:05Z (all contributors) | +17,227 B / +0.18 pp | +15,334 B | +5,345 B |
+| of which the fleet's landings | 8,214 B in 36 bodies | | |
+
+About 5.5 of the 12.6 hours were lost to two account usage-limit resets
+(18:48Z-22:00Z and 00:30Z-03:00Z), during which no seat could run. Per
+active seat-hour the fleet lands ~1 body / ~230 B. What works: 100-250 B
+gen_asm dumps with at most two prior verdicts, ranked by landed C++ within
+0x1000 bytes, with the neighbours' sources as donors; STLport and BitFlags
+template instantiations named in `reloc_names.csv`, instantiated in their
+own TU; near-twins of landed bodies. What does not: banked near-misses at
+0.97+ with five or more prior verdicts, bodies over ~600 B, and any body
+whose residue is a single SIB byte, a register-role swap or a loop-head
+alignment pad. The SIB base/index rule remains unreachable from clean C++
+and from every compiler flag tried (`docs/sib_lea_experiments.md`).
