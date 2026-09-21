@@ -88553,3 +88553,5 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?b_002c07e0@@YAXXZ,0x002C07E0,gen-thunk body
 ?tg_004c4500@@YAXXZ,0x004C4500,retail 0x00008DCD is an exact 5-byte jump to the matched STLport list<int> constructor at this address; the address-derived thunk calls this proven target
 ?b_000CC2C0@@YAXXZ,0x000CC2C0,synthetic cdecl alias for the proven Player::enableRadar body used by the 0x00043207 ILT thunk
+??0Rva001812B0AIHordeMachine@@QAE@PAVObject@@PAVAIAttackState@@VAsciiString@@@Z,0x000268DC,retail factory call at 0x00184110 reaches this ILT; address-derived constructor identity
+??0Rva00180810AIAttackMachine@@QAE@PAVObject@@PAVAIAttackState@@VAsciiString@@EEE@Z,0x00010EBF,retail factory call at 0x00184110 reaches this ILT; address-derived constructor identity
