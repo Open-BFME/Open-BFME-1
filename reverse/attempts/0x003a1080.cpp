@@ -26,10 +26,10 @@ public:
 	int m_bfme28JG;
 	unsigned char m_bfmeGap1JG[0xc];
 	int m_bfme38JG;
-	int m_bfme3cJG;
-	int m_bfme40JG;
+	volatile int m_bfme3cJG;
+	volatile int m_bfme40JG;
 	char m_bfme44JG;
-	char m_bfme45JG;
+	volatile char m_bfme45JG;
 	char m_bfme46JG;
 	unsigned char m_bfmePad1JG[1];
 	int m_bfme48JG;
