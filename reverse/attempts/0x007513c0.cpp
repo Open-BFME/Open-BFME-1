@@ -82,15 +82,18 @@ public:
 	Rva00751390Host *getTemplate() const
 	{
 		Rva00751390Host *host;
-		if (m_template == 0)
+		if (m_template != 0)
+		{
+			if (m_template->m_nextOverride == 0)
+				host = (Rva00751390Host *)m_template;
+			else
+				host = (Rva00751390Host *)m_template->m_nextOverride->getFinalOverride();
+		}
+		else
 		{
 			_ReadWriteBarrier();
 			host = 0;
 		}
-		else if (m_template->m_nextOverride == 0)
-			host = (Rva00751390Host *)m_template;
-		else
-			host = (Rva00751390Host *)m_template->m_nextOverride->getFinalOverride();
 		return host;
 	}
 
