@@ -118,3 +118,8 @@ private:
 ContestableContain::~ContestableContain()
 {
 }
+
+// ?Rva0036C180NoOp@@YAXXZ
+void Rva0036C180NoOp()
+{
+}
