@@ -352,3 +352,12 @@ reduced to one: a zero-yield session still spends a verdict on every body
 it touches, and the two residue classes that stop nearly every remaining
 candidate (callee-saved register role swaps; x87 operand order) have no
 lever this campaign found.
+
+### Hour 26 — 20:02Z to 21:03Z (one seat)
+
+One landing: 0x005A9BD0 (145 B, stdcall holder predicate) from a seat given
+the nine remaining COLD small bodies (100-220 B, one prior verdict, four or
+fewer landed rows within 0x1000) — the pool every earlier seat skipped
+because the picker ranked by landed-neighbour density. Fleet 50 bodies /
+11,163 B cumulative; repository-wide +30,038 B / +0.31 pp (67.04% ->
+67.35%) since the fleet base.
