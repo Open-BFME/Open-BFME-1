@@ -21,3 +21,9 @@ void Rva00580350Noop()
 void Rva005803A0Noop()
 {
 }
+
+// The carved boundary at 0x005803B0 contains one ret byte.
+// No semantic owner is proven, so the name keeps the retail address.
+void Rva005803B0Noop()
+{
+}
