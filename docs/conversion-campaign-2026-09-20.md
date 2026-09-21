@@ -243,3 +243,23 @@ Fleet 40 bodies / 8,746 B cumulative; repository-wide +17,897 B / +0.18 pp
 (67.04% -> 67.23%) since the fleet base. Three worktrees kept unverified
 candidates (0x008CF3C0, 0x00006D20, 0x000FB2E0) for the resumed seats.
 Restart at 08:05Z with three seats.
+
+### Hour 14 — 08:00Z to 09:02Z (three seats)
+
+Fleet 44 bodies / 9,755 B cumulative; this hour 4 bodies / 1,009 B.
+Repository-wide +18,967 B / +0.20 pp (67.04% -> 67.24%) since the fleet
+base.
+
+| RVA | Bytes | Result |
+|---|---:|---|
+| 0x002D4850 | 309 | CostModifierUpgrade::onCapture (real identity, third body of that file family) |
+| 0x0089D4C0 | 238 | Apt string-list predicate |
+| 0x0051BB80 | 236 | Opaque update(int) virtual |
+| 0x006091B0 | 226 | Opaque setEnabled(bool) |
+
+The 100-250 B warm pool is spent (its tail is SecuROM stubs and split tail
+fragments that no calling convention expresses); seats move to 250-400 B
+with at most one prior verdict. Two identities were recovered without a
+landing (Player::processAddTeamGameMessage at 0x000D2A60 from its landed
+neighbours; an ICF-shared SpecialPowerModule::getPercentReady override at
+0x0026AAC0 from five vtables) and banked at 0.29 / 0.74.
