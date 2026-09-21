@@ -176,6 +176,13 @@ void *Rva007520A0::value()
 	return this;
 }
 
+// ?Rva007520B0Noop@@YAXXZ
+// Retail RVA 0x007520B0 contains a single ret byte at a carved boundary.
+// The generated thunk caller does not prove a semantic owner, so the name keeps the address.
+void Rva007520B0Noop()
+{
+}
+
 class Rva007520C0
 {
 public:
