@@ -88550,3 +88550,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?construct@CostModifierUpgradeModuleDataCtorShim@@QAEXXZ,0x002D4B30,Declaration-only forwarder callee; CostModifierUpgrade factory ILT 0x0002B062 reaches the complete constructor body
 ?b_001012b0@@YAXXZ,0x001012B0,gen-thunk body
 ?b_002c07e0@@YAXXZ,0x002C07E0,gen-thunk body
+?tg_004c4500@@YAXXZ,0x004C4500,retail 0x00008DCD is an exact 5-byte jump to the matched STLport list<int> constructor at this address; the address-derived thunk calls this proven target
