@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "b4ecc775d379e9786db3746f903674edf11c86e4ef646da1901bd8b2f47558fe",
+  "symbol": "cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD",
+  "score_kind": "author-estimate",
+  "score": 0.23,
+  "source": "// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\n// partial score=0.23 date=2026-09-21\nstruct Coord3D\n{\n\tfloat x;\n\tfloat y;\n\tfloat z;\n};\n\nextern float g_bfmeK1253;\t// retail 0x0107533C\n\nclass Rva00711130Target\n{\npublic:\n\tchar m_pad0[0xd8];\n\tCoord3D m_pos1;\t\t// +0xd8\n\tCoord3D m_pos2;\t\t// +0xe4\n};\n\nclass Rva00711130Holder\n{\npublic:\n\tvoid rva00711130(const Coord3D *point, bool subtract);\n\n\tchar m_pad[0x12c];\n\tRva00711130Target *m_target;\n};\n\nvoid Rva00711130Holder::rva00711130(const Coord3D *point, bool subtract)\n{\n\tRva00711130Target *target = m_target;\n\n\tfloat pos2y = target->m_pos2.y;\n\tfloat pos2x = target->m_pos2.x;\n\tfloat pos2z = target->m_pos2.z;\n\tfloat pos1x = target->m_pos1.x;\n\tfloat pos1y = target->m_pos1.y;\n\tfloat pos1z = target->m_pos1.z;\n\n\tif (subtract)\n\t{\n\t\ttarget->m_pos2.x = pos2x - point->x;\n\t\ttarget->m_pos2.y = pos2y - point->y;\n\t\ttarget->m_pos2.z = pos2z - point->z;\n\t\ttarget->m_pos1.x = pos1x - point->x * g_bfmeK1253;\n\t\ttarget->m_pos1.y = pos1y - point->y * g_bfmeK1253;\n\t\ttarget->m_pos1.z = pos1z - point->z * g_bfmeK1253;\n\t}\n\telse\n\t{\n\t\ttarget->m_pos2.x = pos2x + point->x;\n\t\ttarget->m_pos2.y = pos2y + point->y;\n\t\ttarget->m_pos2.z = pos2z + point->z;\n\t\ttarget->m_pos1.x = pos1x + point->x * g_bfmeK1253;\n\t\ttarget->m_pos1.y = pos1y + point->y * g_bfmeK1253;\n\t\ttarget->m_pos1.z = pos1z + point->z * g_bfmeK1253;\n\t}\n}\n"
+}
