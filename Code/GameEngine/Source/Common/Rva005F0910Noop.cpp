@@ -4,3 +4,8 @@
 void b_005f0910(void)
 {
 }
+
+// The carved boundary at 0x005F0950 contains only a return.
+void Rva005F0950Noop(void)
+{
+}
