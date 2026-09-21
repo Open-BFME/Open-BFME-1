@@ -13,6 +13,11 @@ void *Rva007839A0::get()
 	return this;
 }
 
+// The carved boundary at 0x007839E0 contains only a return.
+void Rva007839E0Noop(void)
+{
+}
+
 class Rva007839F0
 {
 public:
