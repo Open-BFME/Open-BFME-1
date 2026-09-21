@@ -60,7 +60,8 @@ void PathfindLayer::bfmeNotifyPlain()
 		{
 			PathfindCell *cell = &m_cells[x][y];
 			cell->m_flags &= 0xFFFC0FFF;
-			cell->m_flags = (cell->m_flags & ~0xFC0) | (m_layer << 6);
+			cell->m_flags = cell->m_flags ^
+				((cell->m_flags ^ (m_layer << 6)) & 0xFC0);
 
 			Coord2D topLeft;
 			topLeft.x = (x + m_xOrigin) * g_bfmePathfindCellSize;
@@ -84,7 +85,8 @@ void PathfindLayer::bfmeNotifyPlain()
 				++count;
 
 			cell->reset();
-			cell->m_flags = (cell->m_flags & ~0xFC0) | (m_layer << 6);
+			cell->m_flags = cell->m_flags ^
+				((cell->m_flags ^ (m_layer << 6)) & 0xFC0);
 			cell->setType(5);
 			if (count > 0)
 				cell->setType(0);
