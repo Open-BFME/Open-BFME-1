@@ -204,6 +204,11 @@ void *Rva006795D0Self::identity() const
 	return (void *)this;
 }
 
+// ?Rva006795E0NoOp@@YAXXZ
+void Rva006795E0NoOp()
+{
+}
+
 class Rva00681D60Dword
 {
 public:
