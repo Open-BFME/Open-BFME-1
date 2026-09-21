@@ -84707,6 +84707,7 @@ name,address,notes
 ?onExit@AIFollowPathState@@UAEXW4StateExitType@@@Z,0x00008990,AIFollowPathState base exit thunk; base vftable 0x00C9A9F0 slot 6 is ?update@AIFollowPathState@@
 ?onExit@AIInternalMoveToState@@UAEXW4StateExitType@@@Z,0x00029311
 ?onExit@AIInternalMoveToStateOnExitShim@@QAEXW4StateExitType@@@Z,0x00172D80,AIInternalMoveToState::onExit incremental-link thunk target through a TU-local forwarding shim
+?rva00029311Target@@YAXXZ,0x00172D80,TU-local clean-C++ alias for the matched AIInternalMoveToState onExit body used by the 0x00029311 tail thunk
 ?onExit@Rva00172D80StateBase@@UAEXH@Z,0x00029311,ILT to the assigned 0x00172D80 body called by the state exit cleanup at 0x001741B0
 ?onExit@Rva002985D0Update@@AAEX_N0@Z,0x0000F975,Open-BFME5 near-twin sibling of SpecialAbilityUpdate::onExit; reuses the pinned ILT at 0x0000F975
 ?onExit@Rva002BDF10Base@@UAEXW4StateExitType@@@Z,0x00008990,address-derived GiantBird-family base exit thunk used by 0x002BDF10
