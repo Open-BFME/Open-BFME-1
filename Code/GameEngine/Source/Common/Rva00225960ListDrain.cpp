@@ -1,5 +1,3 @@
-// ?d_00225960@@YAXXZ
-// partial score=0.78 date=2026-09-21
 // ?rva00225960@Rva00225960Owner@@QAEXXZ [retail body 0x00225960, 249 bytes]
 // Address-derived: an OpenContain-family method that asserts an empty
 // "active" list (this+0x38, list<Object*>), then drains a "pending" list of
@@ -10,7 +8,6 @@
 // the same bfmeFormatText(tag=5)+_CxxThrowException(assert-style) call.
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
-#define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
@@ -36,10 +33,10 @@ extern "C" BfmeFormattedText225960 *__cdecl bfmeFormatText(
 extern void __declspec(noreturn) __stdcall _CxxThrowException(void *object, void *throwInfo);
 extern "C" char g_rva005c5100ThrowInfo;
 
-class Gen_001ef410
+class BfmeA987
 {
 public:
-	void m();
+	void bfmeBase987();
 };
 
 class Rva00225960Owner
@@ -68,7 +65,7 @@ void Rva00225960Owner::rva00225960()
 {
 	void *owner = m_owner;
 
-	((Gen_001ef410 *)this)->m();
+	((BfmeA987 *)this)->bfmeBase987();
 
 	if (!m_activeList.empty()) {
 		BfmeFormattedText225960 buf;
