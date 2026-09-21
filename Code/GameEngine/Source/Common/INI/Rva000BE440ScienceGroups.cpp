@@ -39,6 +39,7 @@ class Rva000BE440Store
 {
   public:
     void resizeGroups(unsigned count, ScienceVec value);
+    void Rva000BE410(unsigned count);
     ScienceGroupVec m_groups;
 };
 
@@ -78,4 +79,11 @@ void Rva000BE440Store::resizeGroups(unsigned count, ScienceVec value)
         m_groups.erase(m_groups.begin() + count, m_groups.end());
     else
         m_groups.insert(m_groups.end(), count - m_groups.size(), value);
+}
+
+// Retail000BE410,34B: ECX is the live vector receiver, not a stdcall argument.
+// The empty native vector is constructed in the outgoing by-value slot.
+void Rva000BE440Store::Rva000BE410(unsigned count)
+{
+    resizeGroups(count, ScienceVec());
 }
