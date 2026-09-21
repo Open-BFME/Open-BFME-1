@@ -246,6 +246,11 @@ bool Rva0025A360False::get()
 	return false;
 }
 
+// ?Rva0025A370Noop@@YAXXZ
+void Rva0025A370Noop()
+{
+}
+
 class Rva0025A3D0Byte
 {
 public:
