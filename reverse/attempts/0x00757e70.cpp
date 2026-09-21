@@ -105,6 +105,7 @@ extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
 	Char *name, Int mipCount, Int format);
 
 class Thing;
+class Matrix3D;
 class ModuleData
 {
 	char m_pad00[8];
@@ -169,6 +170,7 @@ class DrawModule : public DrawableModule
 {
 public:
 	DrawModule(Thing *thing, const ModuleData *moduleData);
+	virtual void doDrawModule(const Matrix3D *transform) = 0;
 };
 
 class LaserDrawInterface
@@ -357,8 +359,10 @@ class W3DLaserDraw : public DrawModule, public LaserDrawInterface
 {
 public:
 	W3DLaserDraw(Thing *thing, const ModuleData *moduleData);
+	virtual void doDrawModule(const Matrix3D *transform);
 
 protected:
+	virtual ~W3DLaserDraw(void);
 	SegmentedLineClass **m_line3D;
 	std::vector<BFMEWaterTrackTextureHandle> m_textureVector;
 	Real m_textureAspectRatio;
@@ -376,6 +380,7 @@ extern void GameGetColorComponentsReal(
 W3DLaserDraw::W3DLaserDraw( Thing *thing, const ModuleData* moduleData ) :
 	DrawModule( thing, moduleData ),
 	m_line3D(NULL),
+	m_textureVector(),
 	m_textureAspectRatio(1.0f),
 	m_selfDirty(TRUE),
 	m_field28(0),
@@ -383,13 +388,14 @@ W3DLaserDraw::W3DLaserDraw( Thing *thing, const ModuleData* moduleData ) :
 	m_field30(m_moduleData->m_field48)
 {
 	const W3DLaserDrawModuleData *data = m_moduleData;
+	const std::vector<AsciiString> *textureNames = &data->m_textureNames;
 
 	m_params = data->m_params;
 
-	Int numTextures = data->m_textureNames.size();
+	Int numTextures = textureNames->size();
 	for (Int i = 0; i < numTextures; i++)
 	{
-		Char *name = data->m_textureNames[i].str();
+		Char *name = (textureNames->begin() + i)->str();
 		BFMEWaterTrackTextureHandle handle = BFMEGetWaterTrackTexture(name, 0, 0);
 		if (handle.m_texture)
 		{
@@ -444,7 +450,7 @@ W3DLaserDraw::W3DLaserDraw( Thing *thing, const ModuleData* moduleData ) :
 				line->Set_Width( width );
 				line->Set_Color( Vector3( red, green, blue ) );
 				line->Set_UV_Offset_Rate( Vector2(0.0f, data->m_scrollRate) );
-				if( m_textureVector[0].m_texture )
+				if( m_textureVector.begin()->m_texture )
 				{
 					line->Set_Texture_Mapping_Mode(SegLineRendererClass::TILED_TEXTURE_MAP);
 				}
