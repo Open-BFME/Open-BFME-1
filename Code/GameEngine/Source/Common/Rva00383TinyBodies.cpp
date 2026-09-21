@@ -89,6 +89,11 @@ Rva00383E30Self *Rva00383E30Self::self()
 	return this;
 }
 
+// ?Rva00383E50Noop@@YAXXZ
+void Rva00383E50Noop(void)
+{
+}
+
 class Rva00383E60Self
 {
 public:
