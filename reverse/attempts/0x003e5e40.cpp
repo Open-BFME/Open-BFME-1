@@ -1,189 +1,106 @@
-// ?rva003E5E40@Pathfinder@@QAEEPAVObject@@@Z
-// partial score=0.1 date=2026-09-16
-// cl: /DNDEBUG /MD
-//
-// Retail 0x003E5E40: address-derived Pathfinder footprint query.  The owner
-// and method identity are not named by a caller, but the Pathfinder layout and
-// all five called ABIs are independently witnessed by the adjacent bodies.
-
-typedef int Int;
-typedef unsigned int ObjectID;
-typedef unsigned char Bool;
-
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
+// ?query@Footprint003E5E40@@QAE_NPAUObject003E5E40@@@Z
+// partial score=0.9565217391304348 date=2026-09-21
+// cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /Ireference/shims/pathfind
+// Continued from reverse/attempts/0x003e5e40.cpp using analyst pack 1b/1c.
+// Full 460-byte body and 0x2C local frame. Remaining: 20 EBX/EDI operand bytes.
+// Stack overlap is witnessed in retail: radius at SP+14 becomes the row-byte
+// offset; coordinate.x at SP+24 becomes the first row. Bounds keeps the original
+// 8-byte conversion output followed by the column limit and 12-byte position.
+// These are local scratch lifetimes, not a claim about a game-object layout.
+#define Coord3D PathfindCoord003E5E40
+#define private public
+#include "GameLogic/AIPathfind.h"
+#undef private
+#undef Coord3D
+#include "coord3d.h"
+inline Coord3D::Coord3D() {}
+inline Coord3D::~Coord3D() {}
+extern void j_000461ff();
+extern void j_000171e8();
+extern void j_0001c675();
+extern void j_000105cd();
+extern void j_00010ea1();
+extern void *TheTerrainLogic;
+class Call003E5E40 {};
+template<class P> __forceinline P pointer003E5E40(void (*f)()) {
+    union { void (*raw)(); P member; } u;
+    u.raw=f; return u.member;
+}
+#define CALL(T,obj,fn) (((Call003E5E40*)(obj))->*pointer003E5E40<T>(fn))
+struct Object003E5E40 {
+    char u00[0x38]; Coord3D position;
+    char u44[0x74-0x44]; unsigned m_id;
 };
-
-struct ICoord2D
-{
-	Int x;
-	Int y;
+struct Info003E5E40 {
+    char u00[0x14]; unsigned goalUnitID,posUnitID;
 };
-
-enum PathfindLayerEnum
-{
-	LAYER_INVALID = 0,
-	LAYER_GROUND = 1
-};
-
-extern const float g_bfmeK1266C;
-
-class Object
-{
+typedef void (Call003E5E40::*RadiusCall)(Object003E5E40*,int*,bool*);
+typedef bool (Call003E5E40::*WorldCall)(const Coord3D*,ICoord2D*);
+typedef int (Call003E5E40::*LayerCall)(Object003E5E40*,const Coord3D*);
+typedef PathfindCell* (Call003E5E40::*CellCall)(int,int);
+typedef bool (Call003E5E40::*ComputerCall)();
+class Footprint003E5E40 : public Pathfinder {
 public:
-	Bool bfmeIsComputerControlled(void) const;
-	const Coord3D *getPosition(void) const { return &m_position; }
-
-	char m_prefix[0x38];
-	Coord3D m_position;
-	char m_middle[0x74 - 0x44];
-	ObjectID m_id;
+    bool query(Object003E5E40 *object);
+    __forceinline PathfindCell *cellAt(int layer,int x,int y,const int &rowBytes) {
+        if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
+            y >= m_extent.lo.y && y <= m_extent.hi.y) {
+            if (layer > 1 && layer <= 15) {
+                PathfindCell *cell=CALL(CellCall,&m_layers[layer],j_000105cd)(x,y);
+                if (cell) return cell;
+            }
+            return (PathfindCell*)((char*)m_map[x]+rowBytes);
+        }
+        return 0;
+    }
 };
-
-class PathfindCellInfo
+bool Footprint003E5E40::query(Object003E5E40 *object)
 {
-public:
-	char m_prefix[0x14];
-	ObjectID m_goalUnitID;
-	ObjectID m_posUnitID;
-};
-
-class PathfindCell
-{
-public:
-	Int getType(void) const
-	{
-		return m_packed & 7;
-	}
-
-	unsigned char getAircraftGoalByte(void) const
-	{
-		return (unsigned char)(m_packed >> 21);
-	}
-
-	PathfindCellInfo *m_info;
-	Int m_unused04;
-	Int m_unused08;
-	unsigned int m_packed;
-};
-
-class PathfindLayer
-{
-public:
-	PathfindCell *getCell(Int x, Int y);
-
-	char m_body[0x44];
-};
-
-class TerrainLogic
-{
-public:
-	PathfindLayerEnum getLayerForDestination(Object *object,
-		const Coord3D *position);
-};
-
-extern TerrainLogic *TheTerrainLogic;
-
-class Pathfinder
-{
-public:
-	void bfmeQuery(Object *object, Int *radius, Bool *center);
-	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
-	Bool rva003E5E40(Object *object);
-
-	__forceinline PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y)
-	{
-		if (x >= m_extentLoX && x <= m_extentHiX &&
-			y >= m_extentLoY && y <= m_extentHiY)
-		{
-			if (layer > LAYER_GROUND && layer <= 15)
-			{
-				PathfindCell *cell = m_layers[layer].getCell(x, y);
-				if (cell != 0)
-					return cell;
-			}
-			return &m_map[x][y];
-		}
-		return 0;
-	}
-
-private:
-	char m_prefix[0x10];
-	PathfindCell **m_map;
-	Int m_extentLoX;
-	Int m_extentLoY;
-	Int m_extentHiX;
-	Int m_extentHiY;
-	char m_middle[0x85c - 0x24];
-	PathfindLayer m_layers[16];
-};
-
-Bool Pathfinder::rva003E5E40(Object *object)
-{
-	Bool center;
-	Int radius;
-	Coord3D position;
-	ICoord2D cell;
-	bfmeQuery(object, &radius, &center);
-
-	const Coord3D *objectPosition = object->getPosition();
-	position = *objectPosition;
-	if (!center)
-	{
-		position.x += g_bfmeK1266C;
-		position.y += g_bfmeK1266C;
-	}
-
-	if (worldToCell(&position, &cell))
-		return false;
-
-	PathfindLayerEnum layer =
-		TheTerrainLogic->getLayerForDestination(object, objectPosition);
-	Int numCellsAbove = radius;
-	if (center)
-		++numCellsAbove;
-
-	ObjectID objectID = object->m_id;
-	Int x;
-	Int y;
-	for (x = cell.x - radius;
-		x < cell.x + numCellsAbove;
-		++x)
-	{
-		for (y = cell.y - radius;
-			y < cell.y + numCellsAbove;
-			++y)
-		{
-			PathfindCell *pathCell = getCell(layer, x, y);
-			if (pathCell == 0)
-				return false;
-
-			if (pathCell->getType() == 5)
-				return false;
-
-			if ((pathCell->getAircraftGoalByte() & 1) != 0 &&
-				object->bfmeIsComputerControlled())
-				return false;
-
-			if (pathCell->getType() == 4)
-				return false;
-
-			if ((pathCell->m_packed & 0x38) != 0)
-			{
-				PathfindCellInfo *info = pathCell->m_info;
-				ObjectID goalUnitID = info != 0 ? info->m_goalUnitID : 0;
-				if (goalUnitID == objectID || goalUnitID == 0)
-					continue;
-
-				ObjectID posUnitID = info != 0 ? info->m_posUnitID : 0;
-				if (posUnitID == goalUnitID)
-					return false;
-			}
-		}
-	}
-
-	return true;
+    bool center;
+    union { int radius; int rowBytes; } work;
+    const Coord3D *objectPosition=&object->position;
+    {
+        bool centerOutput;
+        CALL(RadiusCall,this,j_000461ff)(object,&work.radius,&centerOutput);
+        center=centerOutput;
+    }
+    struct Bounds { ICoord2D coordinate; int endX; Coord3D position; } bounds;
+    bounds.position.x=objectPosition->x; bounds.position.y=objectPosition->y; bounds.position.z=objectPosition->z;
+    if (!center) {
+        bounds.position.x+=5.0f;
+        bounds.position.y+=5.0f;
+    }
+    if (CALL(WorldCall,this,j_000171e8)(&bounds.position,&bounds.coordinate)) return false;
+    int layer=CALL(LayerCall,TheTerrainLogic,j_0001c675)(object,objectPosition);
+    int above=work.radius;
+    if (center) ++above;
+    unsigned id=object->m_id;
+    int x=bounds.coordinate.x-work.radius;
+    bounds.endX=above+bounds.coordinate.x;
+    if (x>=bounds.endX) return true;
+    bounds.coordinate.x=bounds.coordinate.y-work.radius;
+    int endY=bounds.coordinate.y+above;
+    for (;x<bounds.endX;++x) {
+        int y=bounds.coordinate.x;
+        if (y<endY) {
+          work.rowBytes=y*16;
+          do {
+            PathfindCell *cell=cellAt(layer,x,y,work.rowBytes);
+            if (!cell) return false;
+            if (cell->getType()==5) return false;
+            if (((unsigned char)(cell->m_packed>>21)&1) && CALL(ComputerCall,object,j_00010ea1)()) return false;
+            if (cell->getType()==4) return false;
+            if (cell->m_packed&0x38) {
+                Info003E5E40 *info=(Info003E5E40*)cell->m_info;
+                unsigned goal=info ? info->goalUnitID : 0;
+                if (goal==id || goal==0) goto nextCell;
+                unsigned occupied=info ? info->posUnitID : 0;
+                if (occupied==goal) return false;
+            }
+nextCell:
+            ++y; work.rowBytes+=16;
+          } while (y<endY);
+        }
+    }
+    return true;
 }
