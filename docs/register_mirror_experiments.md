@@ -174,3 +174,112 @@ spellings.
 No new bodies landed. `reverse/re_attempts.log` is unchanged by this
 session; this file documents scratch-only work in the untracked
 `build/regmirror/` directory.
+
+## R2b follow-up, 2026-09-21: testing a WEIGHT-based allocator hypothesis
+
+R2's Finding 3 pinned the trigger (an adjusted `this+N` sub-object address
+reused as receiver for 2+ calls evicts `this` from ESI to EDI) but found no
+source respelling that reverses it. This session's hypothesis: the
+allocator ranks candidates by a WEIGHT (use count, multiplied by loop
+depth) into a fixed register preference order, so changing the RELATIVE
+weight of `this` vs. the interior pointer — without changing the emitted
+instructions — might flip the assignment. Reused R2's harness
+(`build/regmirror/`, new `probe7.cpp`, 11 variants) on the probe4 `Owner::y2`
+shape (baseline: this=EDI, interior=ESI, 3 interior calls).
+
+| variant | uses(this) | uses(interior) | loop | this-reg | interior-reg | stream identical to y2? |
+|---|---|---|---|---|---|---|
+| y2 (baseline) | ~4 (2 fields, re-read on divergent paths) | 3 calls | no | EDI | ESI | (baseline) |
+| t1 (+1 real this-use, opaque call) | 5 | 3 | no | EDI | ESI | no (extra call) |
+| t2 (+2) | 6 | 3 | no | EDI | ESI | no |
+| t3 (+3) | 7 | 3 | no | EDI | ESI | no |
+| f1 (dup field read, CSE'd to 0 net loads) | +1 syntactic / 0 net | 3 | no | EDI | ESI | no (opaque call on the dup remains) |
+| f2 (`this` into empty `__forceinline` helper, fully eliminated) | +1 syntactic / 0 net asm | 3 | no | EDI | ESI | **yes, byte-identical** |
+| l1 (interior called once, in a real 2-iteration loop) | ~3 | 1 static / 2 dynamic | yes (real) | **EBX** | EDI | no |
+| l2 (same loop, trip count 1, compiler-unrolled away) | ~3 | 1 call, not cached | no (unrolled) | **ESI** | (not cached; re-`lea`'d inline) | no |
+| e1 (this-use first, equalized weight) | 2 | 3 | no | EDI | ESI | no (branch removed) |
+| e2 (interior calls first, this-use only after) | 2 | 3 | no | EDI | ESI | no |
+| g1 (3-way: this, interior, independent `m_other` ptr via 2 calls) | ~3 | interior 2 / m_other 2 | no | EDI | ESI (interior); **m_other gets no register at all**, reloaded from `[this+N]` at each call site | no |
+
+### Conclusions
+
+1. **Real extra uses of `this` don't matter, up to +3.** t1-t3 show the
+   allocator's decision is insensitive to `this`'s raw use count over this
+   range; the interior keeps ESI regardless. The "weight" is not a simple
+   use-count tally that source-level padding can tip.
+2. **Uses that the optimizer folds away have zero effect, confirmed with a
+   byte-identical control** (f2: `ignoreThis(this)` through an empty
+   `__forceinline` vanishes completely — 0x21..0x51 in `f2`'s listing is
+   instruction-for-instruction identical to `y2`'s, including the register
+   assignment). This proves the allocator's ranking runs on the
+   **post-DCE/post-CSE live IR**, not raw source use counts — so *no*
+   optimizer-folded-use lever (dead branch, redundant read, no-op helper,
+   `(void)this`) can ever move the needle, because by the time the
+   allocator ranks candidates the fold has already happened. This closes
+   off that entire branch of the hypothesis definitively rather than just
+   empirically for these two probes.
+3. **First-use order doesn't matter** (e1 vs e2: interior-first still
+   loses to nothing — `this` is EDI and interior is ESI either way),
+   confirming/extending R2's guard-order-invariance finding: it is not a
+   tie-break-by-order rule, because there is no tie to break — the interior
+   unconditionally outranks `this` once it is called 2+ times through an
+   adjusted address, independent of textual position.
+4. **Loop depth is the one lever that actually moves the needle, but only
+   when the loop survives to final code.** `l1` (genuine 2-iteration loop)
+   is dramatic: `this` drops two full slots to EBX, the loop induction
+   variable — a trivial `int i`, otherwise the lowest-weight value in the
+   function — claims ESI outright, and the loop-invariant interior address
+   takes EDI. `l2` (same source shape, but a constant trip count of 1 that
+   the compiler recognizes and unrolls before allocation) collapses back to
+   the single-call outcome (`this` keeps ESI, interior isn't cached at
+   all) — matching R2's `probe6.cpp` `q1`. So loop-depth weighting, like
+   the fold case above, is computed on the **final optimized loop
+   structure**, not on the presence of `for`/`while` syntax. This is a
+   real, reproducible lever in the abstract, but it requires the function
+   to actually iterate — it cannot be added to a body whose real control
+   flow is a fixed sequence of distinct calls (as both target RVAs are)
+   without changing the instruction stream, so it is not usable as a
+   same-bytes respelling trick here.
+5. **A plain (non-adjusted) pointer member reused across 2+ calls competes
+   for nothing** (g1's `m_other`): even with two calls exactly like the
+   interior's, it never earns a callee-saved register at all when an
+   adjusted sub-object is already in play — it's simply reloaded from
+   `[this+N]` at each call site. This reinforces R2's probe6 result and
+   suggests the real ranking is closer to a **rematerialization-cost
+   model** (cache only what's nontrivial/expensive to recompute — an
+   arithmetic `lea this+N` — not a free memory load) than a naive
+   use-count weight, which independently explains why `this` itself
+   (equally "free" to reload, it's the incoming `ecx`) can still lose its
+   preferred register: the model isn't ranking `this` against the interior
+   by cost, it's specifically privileging the adjusted-address value.
+
+**Overall: the WEIGHT-based hypothesis as stated is refuted for the
+non-loop case.** Every lever that only changes source-level use counts,
+use order, or adds-then-removes instructions (folded uses) left the
+assignment untouched. The single lever that does work (real loop
+iteration) is a structural/semantic change, not a respelling, and doesn't
+fit either target body's actual control flow (distinct calls to different
+vtable slots, not a repeated call over an index). This corroborates R2's
+closing guidance: the fix is not a source-shape lever inside the current
+reconstructed body at all.
+
+### Applied to the two banked targets
+
+- `0x0021AC30` (`Owner::invoke`, `reverse/attempts/0x0021ac30.cpp`, score
+  0.77): body shape is exactly the probe4/probe7 `y2`/`t*`/`e*` case (this
+  + interior called via `slot49`/`slot64`/`slot68`, no loop, no
+  candidate for a real iteration) — none of this session's positive or
+  negative results give it a usable lever. Not re-attempted past the
+  harness stage; still banked at 0.77, no new probe.py run needed since no
+  new lever applies.
+- `0x0027ACF0` (`AIUpdateInterface::...MoodTargetCheck`,
+  `reverse/attempts/0x0027acf0.cpp`, score 0.5): three-register case
+  (retail this=EBX, ours=EDI), which is the same class `g1` models here,
+  but g1 shows the third competing pointer just doesn't get cached at all
+  rather than reproducing a three-way EBX/EDI/ESI split — this session's
+  harness doesn't reproduce that residue's exact shape, so no lever from
+  this table applies to it either without a dedicated repro (left for a
+  future seat, not attempted here given the time budget).
+
+No bodies landed this session. `build/regmirror/probe7.cpp` is
+untracked scratch (same pattern as probe1-6), not part of this commit.
