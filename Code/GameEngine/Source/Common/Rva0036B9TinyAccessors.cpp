@@ -191,3 +191,8 @@ Rva0036C0A0 *Rva0036C0A0::value()
 {
 	return this;
 }
+
+// ?Rva0036C090Noop@@YAXXZ
+void Rva0036C090Noop(void)
+{
+}
