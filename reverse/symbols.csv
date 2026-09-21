@@ -88522,3 +88522,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?handle@Handler@@QAEXH@Z,0x0081D520,pin
 ?rva000032a6Target@@YAXXZ,0x003AA480,TU-local clean-C++ alias for the matched HideShowSubObjInfo uninitialized-copy body used by the 0x000032A6 tail thunk
 ??0Rva003A35A0Element@@QAE@XZ,0x00022F0C,near-twin pin: 0x003A39C0 vector<Rva003A35A0Element>::insert-wrapper default-ctor call target (same ILT thunk chain as the 0x3A18D0 body)
+?rva000181a1Target@@YAXXZ,0x00753280,TU-local clean-C++ alias for the matched ProductionPrerequisite copy body used by the 0x000181A1 tail thunk
