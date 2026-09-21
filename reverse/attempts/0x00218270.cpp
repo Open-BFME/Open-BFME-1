@@ -1,4 +1,4 @@
-// ?bfmeSweepKQ@@YGXPAVBfmeWrapKQ@@@Z (identity unknown)
+// ?Rva00218270Sweep@@YGXPAVRva00218270Wrap@@@Z (owner identity unknown)
 // partial score=0.92 date=2026-09-07
 // 81/81 bytes. Shape is settled and both copies of the inlined next() line up:
 // the first next() must be PEELED (`thing = next(); while (thing) { ...; thing
@@ -12,57 +12,58 @@
 // on `jmp` + padding where retail has a 3-byte `lea ecx,[ecx]` align nop.
 // 15 of 30 instructions differ, all by register name only. /G7, /Oy and /Ob1
 // change nothing. ecx/edx-flip class.
-class BfmeSubKQ
+class ExperienceTracker
 {
 public:
-	void bfmeDoKQ(int first, int second, int third);
+	bool gainExpForLevel(int levelsToGain, bool canScaleForBonus,
+		bool provideFeedback);
 };
 
-class BfmeThingKQ
+class Rva00218270Thing
 {
 public:
-	unsigned char m_bfmeHeadKQ[0x210];
-	BfmeSubKQ *m_bfmeSubKQ;
+	unsigned char m_unmodelled[0x210];
+	ExperienceTracker *m_experienceTracker;
 };
 
-struct BfmeSlotKQ
+struct Rva00218270Slot
 {
-	BfmeThingKQ *m_bfmeThingKQ;
-	int m_bfmeSpareKQ;
+	Rva00218270Thing *m_thing;
+	int m_unmodelled;
 };
 
-class BfmeCursorKQ
+class Rva00218270Cursor
 {
 public:
-	BfmeThingKQ *bfmeNextKQ(void)
+	Rva00218270Thing *next(void)
 	{
 		if (m_bfmeCurKQ == m_bfmeEndKQ)
 			return 0;
 
-		return (m_bfmeCurKQ++)->m_bfmeThingKQ;
+		return (m_bfmeCurKQ++)->m_thing;
 	}
 
 	int m_bfmeHeadKQ;
-	BfmeSlotKQ *m_bfmeEndKQ;
+	Rva00218270Slot *m_bfmeEndKQ;
 	int m_bfmeSpareKQ;
-	BfmeSlotKQ *m_bfmeCurKQ;
+	Rva00218270Slot *m_bfmeCurKQ;
 };
 
-class BfmeWrapKQ
+class Rva00218270Wrap
 {
 public:
-	BfmeCursorKQ *m_bfmeCursorKQ;
+	Rva00218270Cursor *m_cursor;
 };
 
-void __stdcall bfmeSweepKQ(BfmeWrapKQ *wrap)
+void __stdcall Rva00218270Sweep(Rva00218270Wrap *wrap)
 {
-	BfmeThingKQ *thing = wrap->m_bfmeCursorKQ->bfmeNextKQ();
+	Rva00218270Thing *thing = wrap->m_cursor->next();
 
 	while (thing)
 	{
-		if (thing->m_bfmeSubKQ)
-			thing->m_bfmeSubKQ->bfmeDoKQ(1, 1, 0);
+		if (thing->m_experienceTracker)
+			thing->m_experienceTracker->gainExpForLevel(1, true, false);
 
-		thing = wrap->m_bfmeCursorKQ->bfmeNextKQ();
+		thing = wrap->m_cursor->next();
 	}
 }

@@ -1,5 +1,5 @@
 // ?getBoundingSphereRadius@GeometryShape@@QBEMXZ
-// partial score=0.92 date=2026-08-31
+// partial score=0.92 date=2026-09-17
 // cl: /DNDEBUG /MD /EHsc
 
 #include <math.h>
@@ -40,30 +40,31 @@ private:
 
 Real GeometryShape::getBoundingSphereRadius() const
 {
-	volatile Real compilerZero = 0.0f;
+	Real result = 0.0f;
 	switch (m_type)
 	{
+		case GEOMETRY_SPHERE:
+			result = sqrt(geometrySqr(m_centerOffset.x) +
+				geometrySqr(m_centerOffset.y) +
+				geometrySqr(m_centerOffset.z)) + m_majorRadius;
+			break;
+
 		case GEOMETRY_CYLINDER:
-			return sqrt(
+			result = sqrt(
 				geometrySqr(sqrt(geometrySqr(m_centerOffset.x) +
 					geometrySqr(m_centerOffset.y)) + m_majorRadius) +
 				geometrySqr(fabs(m_centerOffset.z) + m_height * 0.5)) +
 				sqrt(geometrySqr(m_centerOffset.x) +
 					geometrySqr(m_centerOffset.y) +
 					geometrySqr(m_centerOffset.z));
+			break;
 
-		case GEOMETRY_SPHERE:
-			return sqrt(geometrySqr(m_centerOffset.x) +
-				geometrySqr(m_centerOffset.y) +
-				geometrySqr(m_centerOffset.z)) + m_majorRadius;
-
-		default:
-			if (m_type != GEOMETRY_BOX)
-				return compilerZero;
+		case GEOMETRY_BOX:
+			result = sqrt(
+				geometrySqr(fabs(m_centerOffset.x) + m_majorRadius) +
+				geometrySqr(fabs(m_centerOffset.y) + m_minorRadius) +
+				geometrySqr(fabs(m_centerOffset.z) + m_height * 0.5));
+			break;
 	}
-
-	return sqrt(
-		geometrySqr(fabs(m_centerOffset.x) + m_majorRadius) +
-		geometrySqr(fabs(m_centerOffset.y) + m_minorRadius) +
-		geometrySqr(fabs(m_centerOffset.z) + m_height * 0.5));
+	return result;
 }

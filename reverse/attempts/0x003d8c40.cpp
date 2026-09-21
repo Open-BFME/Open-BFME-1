@@ -1,13 +1,25 @@
-// "?d_003d8c40@@YAXXZ"
-// partial score=0.25 date=2026-09-11
+// ?bfmePickBridge@Pathfinder@@QAE_NABVVector3@@0PAV2@@Z
+// partial score=0.26 date=2026-09-17
+// "?bfmePickBridge@Pathfinder@@QAE_NABVVector3@@0PAV2@@Z"
+// Probe copy of the banked attempt, with the three retail callee contracts
+// declared under their actual classes.
 // cl: /DNDEBUG /MD /EHs-c- /Ireference/shims/pathfind /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
-// BFME Pathfinder bridge and elevated-layer picker.
 
 #include "vector3.h"
-#include "GameLogic/AIPathfind.h"
 
 typedef float Real;
 typedef bool Bool;
+typedef int Int;
+
+struct ICoord2D { Int x, y; };
+struct IRegion2D { ICoord2D lo, hi; };
+struct Coord3D { Real x, y, z; };
+
+struct PathfindCell
+{
+	unsigned char m_prefix[0x0c];
+	unsigned int m_flags;
+};
 
 class Bridge
 {
@@ -15,38 +27,28 @@ public:
 	Bool pickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos);
 };
 
-struct Rva003D8C40PathfindLayer
+class PathfindLayer
 {
+	public:
 	unsigned char m_prefix[0x3c];
 	void *m_active;
 	Int m_height;
+
+	PathfindCell *getCell(Int x, Int y);
 };
 
-extern void j_000171e8(void);
-
-class Rva003D8C40Pathfinder
+class Pathfinder
 {
 public:
 	Bool bfmePickBridge(const Vector3 &from, const Vector3 &to, Vector3 *pos);
-	__forceinline Bool worldToCell(const Coord3D *world, ICoord2D *cell)
-	{
-		typedef Bool (Rva003D8C40Pathfinder::*Method)(const Coord3D *, ICoord2D *);
-		union
-		{
-			void (*raw)(void);
-			Method member;
-		} call;
-		call.raw = j_000171e8;
-		return (this->*call.member)(world, cell);
-	}
+	Bool worldToCell(const Coord3D *pos, ICoord2D *cell);
 
-private:
 	unsigned char m_prefix[0x10];
 	PathfindCell **m_map;
 	IRegion2D m_extent;
 	unsigned char m_toBridgeList[0x858 - 0x24];
 	Bridge *m_bridgeList;
-	Rva003D8C40PathfindLayer m_layers[16];
+	PathfindLayer m_layers[16];
 	unsigned char m_toBridgeHeights[0x243f8 - 0xc9c];
 	Int m_bridgeHeightCount;
 	Real *m_bridgeHeights;
@@ -54,16 +56,19 @@ private:
 
 #define BFME_PICK_BEST_LIMIT (*(const Real *)0x01084C3C)
 
-// ?bfmePickBridge@Pathfinder@@QAE_NABVVector3@@0PAV2@@Z
-Bool Rva003D8C40Pathfinder::bfmePickBridge(const Vector3 &from,
+Bool Pathfinder::bfmePickBridge(const Vector3 &from,
 	const Vector3 &to, Vector3 *pos)
 {
+	Vector3 bridgePos;
+	Vector3 candidate;
+	Vector3 delta;
+	Coord3D worldPosition;
+	ICoord2D cellCoord;
 	Bridge *bridge = m_bridgeList;
 	Real bestMetric = 3.402823466e+38f;
 
 	while (bridge != 0)
 	{
-		Vector3 bridgePos;
 		if (bridge->pickBridge(from, to, &bridgePos))
 		{
 			Real metric = Vector3::Quick_Distance(bridgePos, from);
@@ -83,15 +88,12 @@ Bool Rva003D8C40Pathfinder::bfmePickBridge(const Vector3 &from,
 		do
 		{
 			Real heightValue = *height;
-			Vector3 candidate;
-			Vector3 delta;
 			Vector3::Subtract(to, from, &delta);
 			Real t = (heightValue - from.Z) / delta.Z;
 			delta *= t;
 			Vector3::Add(from, delta, &candidate);
-			Coord3D worldPosition = *reinterpret_cast<const Coord3D *>(&candidate);
+			worldPosition = *reinterpret_cast<const Coord3D *>(&candidate);
 
-			ICoord2D cellCoord;
 			if (!worldToCell(&worldPosition, &cellCoord) &&
 				cellCoord.x >= m_extent.lo.x && cellCoord.x <= m_extent.hi.x &&
 				cellCoord.y >= m_extent.lo.y && cellCoord.y <= m_extent.hi.y)
@@ -118,20 +120,17 @@ Bool Rva003D8C40Pathfinder::bfmePickBridge(const Vector3 &from,
 
 	for (Int index = 2; index <= 15; ++index)
 	{
-		Rva003D8C40PathfindLayer *layer = &m_layers[index];
+		PathfindLayer *layer = &m_layers[index];
 		if (layer->m_active == 0)
 			continue;
 
 		Real height = (Real)layer->m_height;
-		Vector3 candidate;
-		Vector3 delta;
 		Vector3::Subtract(to, from, &delta);
 		Real t = (height - from.Z) / delta.Z;
 		delta *= t;
 		Vector3::Add(from, delta, &candidate);
-		Coord3D worldPosition = *reinterpret_cast<const Coord3D *>(&candidate);
+		worldPosition = *reinterpret_cast<const Coord3D *>(&candidate);
 
-		ICoord2D cellCoord;
 		if (worldToCell(&worldPosition, &cellCoord))
 			continue;
 		if (cellCoord.x < m_extent.lo.x || cellCoord.x > m_extent.hi.x ||
@@ -140,8 +139,7 @@ Bool Rva003D8C40Pathfinder::bfmePickBridge(const Vector3 &from,
 
 		PathfindCell *cell;
 		if (index > 1 && index <= 15)
-			cell = reinterpret_cast<PathfindLayer *>(&m_layers[index])->getCell(
-				cellCoord.x, cellCoord.y);
+			cell = m_layers[index].getCell(cellCoord.x, cellCoord.y);
 		else
 			cell = &m_map[cellCoord.x][cellCoord.y];
 		if (cell == 0)

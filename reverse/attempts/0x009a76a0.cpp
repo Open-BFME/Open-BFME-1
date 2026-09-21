@@ -1,5 +1,5 @@
 // ?bfmeGo76A0@@YAXHPAHPAXHHH1@Z
-// partial score=0.92 date=2026-09-09
+// partial score=0.85 date=2026-09-17
 // cl: /DNDEBUG /MD /O2
 
 extern int g_bfmeTableC7E0;
@@ -12,7 +12,8 @@ void __cdecl bfmeGo76A0(int delta, int *table, void *p2, int a, int b, int c, vo
 {
 	if ((unsigned int)b > 0)
 	{
-		int columnCount = c;
+		int shape_frame_columnCount_14[2];
+		shape_frame_columnCount_14[1] = c;
 		const int *weights = (const int *)p3;
 		int rowCount = b;
 		unsigned char *sourcePointer = (unsigned char *)delta;
@@ -20,7 +21,7 @@ void __cdecl bfmeGo76A0(int delta, int *table, void *p2, int a, int b, int c, vo
 		do
 		{
 			int column = 0;
-			if ((unsigned int)columnCount > 0)
+			if ((unsigned int)shape_frame_columnCount_14[1] > 0)
 			{
 				unsigned char *previous = sourcePointer - a;
 				unsigned char *next = sourcePointer + a;
@@ -42,11 +43,11 @@ void __cdecl bfmeGo76A0(int delta, int *table, void *p2, int a, int b, int c, vo
 					++previous;
 					++column;
 				}
-				while ((unsigned int)column < (unsigned int)columnCount);
+				while ((unsigned int)column < (unsigned int)shape_frame_columnCount_14[1]);
 			}
 
-			sourcePointer += (int)p2 - columnCount;
-			table += columnCount;
+			sourcePointer += (int)p2 - shape_frame_columnCount_14[1];
+			table += shape_frame_columnCount_14[1];
 		}
 		while (--rowCount != 0);
 	}

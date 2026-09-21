@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f5bab7850cf4c1d7a067ce6dd53acca11e74c83cd20485cb26c87aedaf4ca980",
+  "symbol": "?Rva00516660@@YA_NPAVGameWindow@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.92,
+  "source": "// ?Rva00516660@@YA_NPAVGameWindow@@@Z\r\n// partial score=0.92 date=2026-09-04\r\n// cl: /O2 /Ob0\r\n\r\n// cdecl GameWindow helper @ 0x00516660, 25 bytes.\r\n// Calls winGetUserData (ILT 0x00046538) and returns whether the unsigned\r\n// shorts at user-data +0x1E and +0x1C differ.\r\n\r\n// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/GameWindow.h\r\nclass GameWindow\r\n{\r\npublic:\r\n\tvoid *winGetUserData(void);\r\n};\r\n\r\nstruct Rva00516660User\r\n{\r\n\tchar m_lead[0x1C];\r\n\tunsigned short m_at1C;\r\n\tunsigned short m_at1E;\r\n};\r\n\r\n// ?Rva00516660@@YA_NPAVGameWindow@@@Z\r\nbool Rva00516660(GameWindow *window)\r\n{\r\n\tRva00516660User *user = (Rva00516660User *)window->winGetUserData();\r\n\tunsigned short a = user->m_at1E;\r\n\treturn a != user->m_at1C;\r\n}\r\n"
+}

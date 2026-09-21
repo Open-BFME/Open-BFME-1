@@ -4,6 +4,7 @@
 #include <windows.h>
 
 
+
 // Not declared by the sweep shim's windows.h.
 extern "C" __declspec(dllimport) UINT __stdcall SetDIBColorTable(HDC, UINT, UINT, const RGBQUAD *);
 

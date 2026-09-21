@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "cfe1482bc9b56038576485480f6adcc776174e4e196c88f544124e51b5412c0f",
+  "symbol": "?process@Gen003BDE80Element@@QAEXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?process@Gen003BDE80Element@@QAEXXZ\n// partial score=0.93 date=2026-09-18\n// The caller and pin-consistency evidence identify this body as the element\n// process reached by Rva003BDE80Owner::processAll.  The two byte fields are\n// retained as offsets only; no semantic class or member name is asserted.\nextern void j_0000285b(void);\n\nclass Rva012F1028\n{\npublic:\n\tvoid j_00003ab7();\n};\n\nextern Rva012F1028 *g_012F1028;\n\nclass Gen003BDE80Element\n{\npublic:\n\tvoid process();\n\tvoid j_00049355();\n\tvoid j_00020509(bool on);\n\n\tunsigned char m_prefix1C[0x1c];\n\tunsigned char m_byte1C;\n\tunsigned char m_gap1D[2];\n\tunsigned char m_byte1F;\n};\n\n// Keep the source-level thiscall receiver/argument shape while routing each\n// call to the exact retail ILT thunk reported by tools/callees.py.\n#pragma comment(linker, \"/alternatename:?j_00049355@Gen003BDE80Element@@QAEXXZ=?j_00049355@@YAXXZ\")\n#pragma comment(linker, \"/alternatename:?j_00020509@Gen003BDE80Element@@QAEX_N@Z=?j_00020509@@YAXXZ\")\n#pragma comment(linker, \"/alternatename:?j_00003ab7@Rva012F1028@@QAEXXZ=?j_00003ab7@@YAXXZ\")\n\nvoid Gen003BDE80Element::process()\n{\n\tif (m_byte1C == 0)\n\t\tj_0000285b();\n\n\tunsigned char b = m_byte1C;\n\tint prev = b;\n\n\tif (b != 0)\n\t\tj_00049355();\n\n\tunsigned char cur = m_byte1C;\n\n\tif (prev != 0 && cur == 0 && m_byte1F != 0)\n\t{\n\t\tg_012F1028->j_00003ab7();\n\t\tm_byte1F = 0;\n\t}\n\n\tj_00020509((bool)!!(prev || cur));\n}\n"
+}

@@ -62,12 +62,12 @@ int BfmeHostYH::bfmeApplyYH()
 	if (m_bfme24YH < TheBfmeGameLogic->m_bfme3CYH)
 		return -1;
 
-	Object *obj = m_bfme1CYH->m_bfme10YH;
-
 	ModelConditionFlags flags;
 
 	memset(flags.m_bfmeBitsYH, 0, 12);
 	flags.m_bfmeBitsYH[0] |= 0x400000;
+
+	Object *obj = m_bfme1CYH->m_bfme10YH;
 
 	obj->applyRva1C7370(flags, false);
 

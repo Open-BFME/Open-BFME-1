@@ -1,11 +1,13 @@
-// ?d_005fa450@@YAXXZ
+// ?Rva005FA450Draw@PointEmissionVolumeModule@FXParticleSystem@@UAEXMMM@Z
 // partial score=0.91 date=2026-09-17
-// Retail proves a __stdcall helper with three float ABI arguments. It fills
-// two native Coord3D values, raises one Z value by the double at RVA
-// 0x00C7FD90, and calls the tactical-view vtable at slot 11 with the color
-// 0xCCAAFFFF and a zero flag.
-// The address-derived name remains intentional because no named caller or
-// owning class proves the identity.
+// The primary PointEmissionVolumeModule vtable at 0x011122E0 carries the
+// 0x0001E22C ILT in slot 4; vtable_lookup ties that table to the Point module
+// constructor and initializePointEmissionVolumeModule.  The method name is
+// address-derived because no historical semantic name is proven.  The
+// constructor witnesses a 0x24-byte object with secondary tables at +0x14,
+// +0x18, and +0x1c, but this body reads no module member.
+namespace FXParticleSystem {
+
 struct Coord3DBase
 {
 	float x;
@@ -26,28 +28,39 @@ public:
 	~Coord3D() {}
 };
 
-class TacticalViewRva005FA450
+class View
 {
 public:
-	virtual void v00();
-	virtual void v01();
-	virtual void v02();
-	virtual void v03();
-	virtual void v04();
-	virtual void v05();
-	virtual void v06();
-	virtual void v07();
-	virtual void v08();
-	virtual void v09();
-	virtual void v10();
-	virtual void drawLine(Coord3D *from, Coord3D *to,
-		unsigned int colour, int flag);
+	virtual void slot00(); virtual void slot04(); virtual void slot08();
+	virtual void slot0C(); virtual void slot10(); virtual void slot14();
+	virtual void slot18(); virtual void slot1C(); virtual void slot20();
+	virtual void slot24(); virtual void slot28();
+	virtual void Rva0045BA00Slot(const Coord3D *from, const Coord3D *to,
+		unsigned int colour, unsigned int flags);
 };
 
-extern TacticalViewRva005FA450 *TheTacticalViewRva005FA450;
+class PointEmissionVolumeModule
+{
+public:
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void Rva005FA450Draw(float x, float y, float z);
+	virtual void slot05();
+	virtual void slot06();
+
+private:
+	// The constructor witness makes the primary view 0x24 bytes.  The
+	// secondary vptrs at +0x14/+0x18/+0x1c are intentionally not modelled in
+	// this method-only ABI view because the body never dereferences this.
+	unsigned char opaquePrimaryTail[0x20];
+};
+
+extern View *TheTacticalView;
 extern const double g_liftK;
 
-void __stdcall Rva005FA450DrawLine(float x, float y, float z)
+void PointEmissionVolumeModule::Rva005FA450Draw(float x, float y, float z)
 {
 	Coord3D lifted;
 	Coord3D ground;
@@ -60,6 +73,8 @@ void __stdcall Rva005FA450DrawLine(float x, float y, float z)
 	lifted.y = y;
 	lifted.z = (float)(z + g_liftK);
 
-	TheTacticalViewRva005FA450->drawLine(&ground, &lifted,
+	TheTacticalView->Rva0045BA00Slot(&ground, &lifted,
 		0xccaaffff, 0);
 }
+
+} // namespace FXParticleSystem

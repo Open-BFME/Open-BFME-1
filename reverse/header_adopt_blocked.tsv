@@ -561,7 +561,6 @@ Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva007D9940ResetStages.cpp	DX8
 Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva007DD0E0ResetStages01.cpp	DX8Wrapper	build.sh exited 2
 Code/GameEngineDevice/Source/W3DDevice/GameClient/ScreenHilightFilterPostRender.cpp	DX8Wrapper	build.sh exited 2
 Code/GameEngineDevice/Source/W3DDevice/GameClient/ScreenHilightFilterPreRender.cpp	DX8Wrapper	build.sh exited 2
-Code/GameEngine/Source/Common/Audio/MiscAudio.cpp	AsciiString	Code\GameEngine\Source\Common\Audio\MiscAudioConstructor.cpp(71) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
 Code/GameEngine/Source/Common/BitFlags304BuildDescription.cpp	AsciiString	Code\GameEngine\Source\Common\BitFlags304BuildDescription.cpp(43) : error C2661: 'AsciiString::concat' : no overloaded function takes 2 arguments
 Code/GameEngine/Source/Common/BitFlags86BuildDescription.cpp	AsciiString	Code\GameEngine\Source\Common\BitFlags86BuildDescription.cpp(47) : error C2661: 'AsciiString::concat' : no overloaded function takes 2 arguments
 Code/GameEngine/Source/Common/DictPairClearThunk.cpp	AsciiString	Code\GameEngine\Source\Common\DictPairClearThunk.cpp(59) : error C2039: 'clear' : is not a member of 'UnicodeString'
@@ -666,15 +665,25 @@ Code/GameEngine/Source/GameLogic/AI/Rva001FAB70ParseWayPoint.cpp	AsciiString	Cod
 Code/GameEngine/Source/GameLogic/Object/Update/StealthUpdateModuleDataConstructor.cpp	AsciiString	Code\GameEngine\Source\GameLogic\Object\Update\StealthUpdateModuleDataConstructor.cpp(155) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
 Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva001FE190ModuleData.cpp	AsciiString	Code\GameEngineDevice\Source\W3DDevice\GameClient\Drawable\Draw\Rva001FE190ModuleData.cpp(121) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
 reverse/attempts/0x00290520.cpp	StringBase	build.sh exited 1
-Code/GameEngine/Source/Common/TGridPayloadCopy.cpp	UnicodeString	Code\GameEngine\Source\Common\TGridPayloadCopy.cpp(22) : error C2039: 'set' : is not a member of 'UnicodeString'
 reverse/attempts/0x003d1a60.cpp	AsciiString	build.sh exited 1
 reverse/attempts/0x003f0f40.cpp	AsciiString	build.sh exited 1
 reverse/attempts/0x00527930.cpp	AsciiString	build.sh exited 1
 reverse/attempts/0x0068ef70.cpp	StringBase	build.sh exited 1
-Code/GameEngine/Source/Common/LivingWorldManagerRva006169D0.cpp	StringBase	Code\GameEngine\Source\Common\LivingWorldManagerRva006169D0.cpp(24) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
 Code/Libraries/Source/WWVegas/WWLib/RvaHashResizeGameSpyGroupRoomAt005C8870.cpp	AsciiString	Functions: FAIL 1/1
 Code/Libraries/Source/WWVegas/WWLib/RvaHashResizeAsciiString0045FFD0.cpp	AsciiString	Functions: FAIL 1/1
 Code/GameEngine/Source/GameClient/Terrain/TerrainRoadTypeSetDamageToFXStringILT.cpp	AsciiString	Functions: FAIL 1/1
 reverse/attempts/0x00558be0.cpp	AsciiString	build.sh exited 1
 Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/UnitCrateCollideModuleDataCtorThunk.cpp	AsciiString	Code\GameEngine\Source\GameLogic\Object\Collide\CrateCollide\UnitCrateCollideModuleDataCtorThunk.cpp(46) : error C2661: 'AsciiString::set' : no overloaded function takes 2 arguments
 reverse/attempts/0x0023b9f0.cpp	AsciiString	build.sh exited 1
+Code/GameEngine/Source/Common/Audio/AudioEventRTSInitFromName.cpp	AsciiString	Code\GameEngine\Source\Common\Audio\AudioEventRTSInitFromName.cpp(60) : error C2039: 'm_data' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/ModuleInfoNuggetVector.cpp	StringBase	Functions: FAIL 1/2
+Code/GameEngine/Source/Common/RTS/ModuleInfoNuggetConstCopyBody.cpp	StringBase	Functions: FAIL 1/2
+Code/GameEngine/Source/Common/Audio/MiscAudioConstructor.cpp	AsciiString	Code\GameEngine\Source\Common\Audio\MiscAudioConstructor.cpp(71) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
+Code/GameEngine/Source/Common/Thing/Rva0077BDF0Parse.cpp	StringBase	Code\GameEngine\Source\Common\Thing\Rva0077BDF0Parse.cpp(45) : error C2248: 'StringBase<T>::__ctor' : cannot access private member declared in class 'StringBase<T>'
+reverse/attempts/0x0013c720.cpp	UnicodeString	build.sh exited 1
+reverse/attempts/0x002284d0.cpp	StringBase	build.sh exited 1
+reverse/attempts/0x003b34d0.cpp	UnicodeString	build.sh exited 1
+reverse/attempts/0x0054ff80.cpp	UnicodeString	build.sh exited 1
+reverse/attempts/0x00552c40.cpp	UnicodeString	build.sh exited 1
+reverse/attempts/0x0056f1f0.cpp	UnicodeString	build.sh exited 1
+reverse/attempts/0x00757e70.cpp	AsciiString	build.sh exited 1

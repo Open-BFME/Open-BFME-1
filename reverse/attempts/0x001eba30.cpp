@@ -1,5 +1,5 @@
 // ?setWeaponLock@WeaponSet@@QAE_NW4WeaponSlotType@@W4WeaponLockType@@@Z
-// partial score=0.92 date=2026-09-10
+// partial score=0.92 date=2026-09-17
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: WeaponSet::setWeaponLock, retail 0x001EBA30, 214 bytes.
 //

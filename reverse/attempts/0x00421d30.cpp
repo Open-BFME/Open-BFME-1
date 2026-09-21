@@ -1,6 +1,6 @@
-// ??0BfmeSettingsZV@@QAE@XZ
+// ??0Rva00421D30@@QAE@XZ (owner identity unknown)
 // partial score=0.92 date=2026-09-08
-class BfmeVec3ZV
+class Rva00421D30Vec
 {
 public:
 	float m_bfmeXZV;
@@ -8,10 +8,10 @@ public:
 	float m_bfmeZZV;
 };
 
-class BfmeSettingsZV
+class Rva00421D30
 {
 public:
-	BfmeSettingsZV();
+	Rva00421D30();
 
 	float m_bfme00ZV;
 	float m_bfme04ZV;
@@ -23,15 +23,15 @@ public:
 	float m_bfme1CZV;
 	float m_bfme20ZV;
 	float m_bfme24ZV;
-	BfmeVec3ZV m_bfme28ZV;
-	BfmeVec3ZV m_bfme34ZV;
-	BfmeVec3ZV m_bfme40ZV;
+	Rva00421D30Vec m_bfme28ZV;
+	Rva00421D30Vec m_bfme34ZV;
+	Rva00421D30Vec m_bfme40ZV;
 	float m_bfme4CZV;
 	float m_bfme50ZV;
 	float m_bfme54ZV;
 };
 
-BfmeSettingsZV::BfmeSettingsZV()
+Rva00421D30::Rva00421D30()
 {
 	m_bfme34ZV.m_bfmeXZV = 0.5f;
 	m_bfme34ZV.m_bfmeYZV = 0.5f;

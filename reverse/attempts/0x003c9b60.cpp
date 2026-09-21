@@ -1,4 +1,4 @@
-// ?parseLivingWorldRegionCampaign@@YAXPAVINI@@@Z
+// ?Rva003C9B60Parse@@YAXPAVINI@@@Z
 // partial score=0.92 date=2026-09-16
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
@@ -51,10 +51,11 @@
 // the parser body, swapped the manager into EBP and the token into EDI to match
 // retail.
 
-// Four callees need pins if this ever lands. They are the region constructor at
-// 0x003C9670 through the link thunk at 0x0004602E, the unnamed pass at
-// 0x003C7A40 through 0x0002E88E, Gen003C7B10Owner::step at 0x003C7B10 through
-// 0x00019984, and the vector overflow body at 0x003C90D0 through 0x0001A0FF.
+// The retail body calls the four targets through their existing ILT symbols.
+// The constructor and Gen003C7B10Owner::step already have verified source
+// identities. The other two bodies remain anonymous, so these aliases keep
+// their address-derived source names and route only to the witnessed ILTs;
+// they are not semantic pins.
 
 
 #include "string_base.h"
@@ -88,9 +89,18 @@ private:
 class Gen003C7B10Owner
 {
 public:
-	void rva003C7A40();
 	void step();
 };
+
+class Rva003C7A40Owner
+{
+public:
+	void rva003C7A40();
+};
+
+#pragma comment(linker, "/alternatename:??0LivingWorldRegion@@QAE@ABVAsciiString@@@Z=?j_0004602e@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva003C7A40@Rva003C7A40Owner@@QAEXXZ=?j_0002e88e@@YAXXZ")
+#pragma comment(linker, "/alternatename:?_M_insert_overflow@?$vector@PAVLivingWorldRegion@@V?$allocator@PAVLivingWorldRegion@@@_STL@@@_STL@@IAEXPAPAVLivingWorldRegion@@ABQAV3@ABU__false_type@2@I_N@Z=?j_0001a0ff@@YAXXZ")
 
 class LivingWorldRegionManager;
 
@@ -161,7 +171,7 @@ __forceinline void LivingWorldRegionManager::add( LivingWorldRegion *region )
 	m_regions.push_back( region );
 }
 
-void parseLivingWorldRegionCampaign( INI *ini )
+void Rva003C9B60Parse( INI *ini )
 {
 	LivingWorldRegionManager *manager = Glo012F1028->m_regionManager;
 
@@ -171,7 +181,7 @@ void parseLivingWorldRegionCampaign( INI *ini )
 
 	ini->initFromINI( region, (const FieldParse *)0x010EDC48 );
 
-	( (Gen003C7B10Owner *)region )->rva003C7A40();
+	( (Rva003C7A40Owner *)region )->rva003C7A40();
 	( (Gen003C7B10Owner *)region )->step();
 
 	manager->add( region );

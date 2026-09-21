@@ -1,12 +1,10 @@
-// ?bfmeInitTWB@BfmeThingTWB@@QAEPAV1@XZ
-// partial score=0.92 date=2026-09-13
-// Open-BFME5: BfmeThingTWB's constructor, retail 0x007F6D60. Pairs with the
-// matched destructor bfmeDelTWB (BfmeConv1325.cpp, same g_bfmeVftATWB vtable
-// at +0), which proves the class. Installs its own vtable, zeroes the fields
-// bfmeDelTWB also re-zeroes, resets the +0x1c byte buffer (jabba's
-// Rva00800290Buffer, Y2FeslBufferAndChain.cpp) via its Gen_00800280 ctor
-// helper, and builds two SnapshotDupReplica-shaped records at +0x2c and
-// +0x3c through the matched dup_7e86b0 base constructor.
+// ??0Rva007F6D60Child@@QAE@XZ
+// partial score=0.93 date=2026-09-18
+// Reviewer correction: the named BfmeThingTWB identity was not unique. The
+// caller BfmeThingDGDConstructor.cpp constructs four Rva007F6D60Child-sized
+// records, and its child destructor witnesses the 0x0112B5C4 vtable and the
+// same +0x1c buffer / nested-record prefix. Keep the caller-backed child
+// constructor identity; the nested record class names remain unproven.
 
 extern void *g_bfmeVftATWB[];
 extern const char g_Rva0107301CEmptyString[];
@@ -29,13 +27,13 @@ public:
 	void append( const char *text );
 };
 
-class BfmeThingTWB
+class Rva007F6D60Child
 {
 public:
-	BfmeThingTWB *bfmeInitTWB();
+	Rva007F6D60Child();
 };
 
-BfmeThingTWB *BfmeThingTWB::bfmeInitTWB()
+Rva007F6D60Child::Rva007F6D60Child()
 {
 	char *obj1 = (char *)this + 0x1c;
 
@@ -69,5 +67,4 @@ BfmeThingTWB *BfmeThingTWB::bfmeInitTWB()
 	*(volatile int *)( (char *)this + 0x28 ) = 0;
 	*(volatile unsigned char *)( (char *)this + 0x6c ) = 0;
 
-	return this;
 }

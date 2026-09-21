@@ -1,69 +1,99 @@
-// ?bfmeApplyGN@BfmeSelfGN@@QAE_NH@Z
-// partial score=0.92 date=2026-09-08
-class BfmeNodeGN
-{
-public:
-	BfmeNodeGN *bfmeGetGN();
-	float bfmeComputeGN(int v);
+// ?chooseLocomotorSet@AIUpdateInterface@@UAE_NW4LocomotorSetType@@@Z
+// partial score=0.93 date=2026-09-18
+// Reviewer correction: the prior BfmeSelfGN label was refuted by the
+// canonical AIUpdate mapping and the Zero-Hour chooseLocomotorSet twin.
+// This bank keeps the worker's recovered retail offsets and control flow;
+// only the identity and the witnessed override-chain types are corrected.
 
-	unsigned char m_bfmeHeadGN[4];
-	BfmeNodeGN *m_bfmeSubGN;
+typedef bool Bool;
+typedef float Real;
+
+enum LocomotorSetType
+{
+	LOCOMOTORSET_NORMAL = 0,
+	LOCOMOTORSET_NORMAL_UPGRADED = 1
 };
 
-class BfmeOwnerGN
+class Overridable
 {
 public:
-	unsigned char m_bfmeGapGN[4];
-	BfmeNodeGN *volatile m_bfmeNodeGN;
+	const Overridable *getFinalOverride() const;
+	void *m_vtable;
+	const Overridable *m_nextOverride;
 };
 
-class BfmeSelfGN
+class Gen_001418F0
 {
 public:
-	bool bfmeApplyGN(int v);
-	bool bfmeCheckGN(int v);
-	void bfmeBeginGN();
-
-	unsigned char m_bfmeHeadGN[8];
-	BfmeOwnerGN *m_bfmeOwnerGN;
-	unsigned char m_bfmeGap2GN[0x1c4];
-	int m_bfmeValueGN;
-	float m_bfmeResultGN;
-	unsigned char m_bfmeGap3GN[0x14f];
-	char m_bfmeFlagAGN;
-	unsigned char m_bfmeGap4GN[0xf];
-	char m_bfmeFlagBGN;
+	Real bfmeFindFloat(const void *key);
 };
 
-static __forceinline BfmeNodeGN *bfmeDerefGN(BfmeNodeGN *p)
+struct BFMEChooseLocomotorFields
 {
-	if (p->m_bfmeSubGN != 0)
-		return p->m_bfmeSubGN->bfmeGetGN();
+	unsigned char m_unreconstructed_000[0x1D0];
+	LocomotorSetType m_curLocomotorSet;
+	Real m_unreconstructed_1D4;
+	unsigned char m_unreconstructed_1D8[0x327 - 0x1D8];
+	Bool m_upgradedLocomotors;
+	unsigned char m_unreconstructed_328[0x337 - 0x328];
+	Bool m_unreconstructed_337;
+};
 
-	return 0;
-}
-
-bool BfmeSelfGN::bfmeApplyGN(int v)
+struct BFMEChooseLocomotorKey
 {
-	if (v == 0 && m_bfmeFlagAGN != 0)
-		v = 1;
+	unsigned char m_unreconstructed_000[0x1D0];
+	const void *m_key;
+};
 
-	if (v == m_bfmeValueGN)
+class BFMEChooseLocomotorObject
+{
+public:
+	char m_unreconstructed_000[4];
+	const Overridable *m_template;
+};
+
+class BFMEChooseLocomotorObjectSlot
+{
+public:
+	char m_unreconstructed_000[8];
+	BFMEChooseLocomotorObject *m_object;
+};
+
+class AIUpdateInterface
+{
+public:
+	virtual Bool chooseLocomotorSet(LocomotorSetType wst);
+	Bool chooseLocomotorSetExplicit(LocomotorSetType wst);
+	void chooseGoodLocomotorFromCurrentSet();
+};
+
+Bool AIUpdateInterface::chooseLocomotorSet(LocomotorSetType wst)
+{
+	BFMEChooseLocomotorFields *fields = reinterpret_cast<BFMEChooseLocomotorFields *>(this);
+	if (wst == LOCOMOTORSET_NORMAL && fields->m_upgradedLocomotors)
+		wst = LOCOMOTORSET_NORMAL_UPGRADED;
+
+	if (wst == fields->m_curLocomotorSet)
 		return true;
 
-	if (m_bfmeFlagBGN == 0 && bfmeCheckGN(v))
+	if (fields->m_unreconstructed_337 == false && chooseLocomotorSetExplicit(wst))
 	{
-		bfmeBeginGN();
+		chooseGoodLocomotorFromCurrentSet();
 
-		BfmeNodeGN *n = m_bfmeOwnerGN->m_bfmeNodeGN;
-		BfmeNodeGN *r = (n != 0) ? bfmeDerefGN(n) : 0;
+		BFMEChooseLocomotorObject *object = reinterpret_cast<BFMEChooseLocomotorObjectSlot *>(this)->m_object;
+		const Overridable *const volatile *templateSlot = &object->m_template;
+		const Overridable *d = *templateSlot;
+		const Overridable *f;
+		if (d == 0)
+			f = d;
+		else
+			f = d->m_nextOverride ? d->m_nextOverride->getFinalOverride() : d;
 
-		m_bfmeResultGN = r->bfmeComputeGN(m_bfmeValueGN);
-
+		fields->m_unreconstructed_1D4 =
+			reinterpret_cast<Gen_001418F0 *>(const_cast<Overridable *>(f))->bfmeFindFloat(
+				reinterpret_cast<BFMEChooseLocomotorKey *>(this)->m_key);
 		return true;
 	}
-	else
-	{
-		return false;
-	}
+
+	return false;
 }

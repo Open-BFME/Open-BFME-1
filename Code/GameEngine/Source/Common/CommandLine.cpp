@@ -1251,55 +1251,8 @@ static CommandLineParam params[] =
 
 };
 
-// parseCommandLine ===========================================================
-/** Parse command-line parameters. */
-//=============================================================================
-void parseCommandLine(int argc, char *argv[])
-{
-	// To parse command-line parameters, we loop through a table holding arguments
-	// and functions to handle them.  Comparisons can be case-(in)sensitive, and
-	// can check the entire string (for testing the presence of a flag) or check
-	// just the start (for a key=val argument).  The handling function can also
-	// look at the next argument(s), to accomodate multi-arg parameters, e.g. "-p 1234".
-	int arg=1, param;
-	Bool found;
-
-#ifdef DEBUG_LOGGING
-	DEBUG_LOG(("Command-line args:"));
-	int debugFlags = DebugGetFlags();
-	DebugSetFlags(debugFlags & ~DEBUG_FLAG_PREPEND_TIME); // turn off timestamps
-	for (arg=1; arg<argc; arg++)
-	{
-		DEBUG_LOG((" %s", argv[arg]));
-	}
-	DEBUG_LOG(("\n"));
-	DebugSetFlags(debugFlags); // turn timestamps back on iff they were on before
-	arg = 1;
-#endif // DEBUG_LOGGING
-
-	while (arg<argc)
-	{
-		// Look at arg #i
-		found = false;
-		for (param=0; !found && param<sizeof(params)/sizeof(params[0]); ++param)
-		{
-			int len = strlen(params[param].name);
-			int len2 = strlen(argv[arg]);
-			if (len2 != len)
-				continue;
-			if (!strnicmp(argv[arg], params[param].name, len))
-			{
-				arg += params[param].func(argv+arg, argc-arg);
-				found = true;
-			}
-		}	// for
-		if (!found)
-		{
-			arg++;
-		}
-	}
-
-	TheArchiveFileSystem->loadMods();
-}
+// parseCommandLine is defined by the byte-matched retail reconstruction in
+// ParseCommandLine.cpp.  The release parser above remains available as the
+// source of the shared option handlers and their declarations.
 
 

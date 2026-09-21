@@ -1,5 +1,6 @@
 // ?d_007f49e0@@YAXXZ
 // partial score=0.91 date=2026-09-11
+// cl: /O2 /GS
 #include <string.h>
 
 class Rva007EB810Diag
@@ -29,7 +30,9 @@ public:
 	virtual void send(const void *address, const void *data, int length, bool reliable);
 };
 
-struct Rva007F49E0Fap
+// The vtable proves slot 3 of 0x0112B3FC; it does not prove a named owner
+// class. Keep the owner and packet type address-derived until that evidence exists.
+struct Rva007F49E0Packet
 {
 	int m_sequence;
 	int m_type;
@@ -41,10 +44,10 @@ struct Rva007F49E0Fap
 	unsigned int m_mode;
 };
 
-class Rva007F49E0AriesUdp
+class Rva007F49E0VtableSlot3
 {
 public:
-	int send( Rva007F49E0Fap *fap );
+	virtual int send( Rva007F49E0Packet *fap );
 
 private:
 	char m_pad00[ 4 ];
@@ -54,7 +57,7 @@ private:
 	unsigned int m_sequence;
 };
 
-int Rva007F49E0AriesUdp::send( Rva007F49E0Fap *fap )
+int Rva007F49E0VtableSlot3::send( Rva007F49E0Packet *fap )
 {
 	unsigned char packet[ 0x200 ];
 	unsigned int pos = fap->m_size + 12;

@@ -1,12 +1,13 @@
 // ?privateFireWeapon@Weapon@@QAE_NPBVObject@@PBUCoord3D@@0H1HHHPAH@Z
-// partial score=0.33 date=2026-09-04
+// partial score=0.33 date=2026-09-17
 // cl: /DNDEBUG /MD /O2 /Ob2 /GX-
 // Open-BFME5: Weapon::privateFireWeapon, retail 0x001E9FD0 size 1253.
 // extraBonusFlags then source, then bitcast WeaponBonus ctor. Stub-only
 // (no later locals) emits eax=0x3f800000 stores and edx=extra; the full
 // body steals the schedule: frame 0x24 vs 0x20, esi=this not ebp, extra
-// loaded after the six stores. Linear helper 0x001E49E0 is ecx=vec
-// eax=index edi=source esi=out (144B x87 sin/cos + getGroundHeight).
+// loaded after the six stores. ObjectFilter is the witnessed 8-byte field at
+// WeaponTemplate+0x4e8. Linear helper 0x001E49E0 is a proven custom ABI:
+// ecx=targets, eax=index, edi=source, esi=out (144B x87 sin/cos + ground).
 
 struct Coord3D
 {
@@ -42,6 +43,8 @@ class ObjectFilter
 {
 public:
 	bool isValid() const;
+
+	char m_pad[8];
 };
 
 class Drawable
@@ -218,149 +221,149 @@ bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 	int isDetonation, int ignoreRanges, int extraBonusFlags,
 	int *projectileID)
 {
-	unsigned extra = (unsigned)extraBonusFlags;
 	const Object *src = source;
+	const unsigned extra = (unsigned)extraBonusFlags;
+	Weapon *self = this;
 	WeaponBonus bonus;
 	computeBonus(src, extra, bonus);
 
 	if (projectileID)
 		*projectileID = 0;
 
-	if (!m_template)
+	if (!self->m_template)
 		return false;
 
-	const Object *vic = victim;
-	if (m_template->m_requestAssistRange != g_bfmeZeroCY && vic)
-		processRequestAssistance(src, vic);
+	if (self->m_template->m_requestAssistRange != g_bfmeZeroCY && victim)
+		self->processRequestAssistance(src, victim);
 
-	if (m_template->m_isLeechRangeWeapon)
+	if (self->m_template->m_isLeechRangeWeapon)
 	{
-		int timing = (int)(float)m_template->m_timingExtra;
+		int timing = (int)(float)self->m_template->m_timingExtra;
 		int one = 1;
 		int *add = timing < 1 ? &one : &timing;
-		m_leechWeaponRangeActive = TheGameLogic->getFrame() + *add;
+		self->m_leechWeaponRangeActive = TheGameLogic->getFrame() + *add;
 	}
 
 	bool cacheOk = true;
-	WeaponStatus st = bfmeComputeStatus(&cacheOk);
-	if (cacheOk && m_status != (unsigned)st)
-		m_status = (unsigned)st;
+	WeaponStatus st = self->bfmeComputeStatus(&cacheOk);
+	if (cacheOk && self->m_status != (unsigned)st)
+		self->m_status = (unsigned)st;
 	if (st != READY_TO_FIRE)
 		return false;
 
 	unsigned now = TheGameLogic->getFrame();
 	bool reloaded = false;
-	int delay = m_template->getDelayBetweenShots(bonus);
+	int delay = self->m_template->getDelayBetweenShots(bonus);
 
-	if (m_template->m_filter.isValid())
+	if (self->m_template->m_filter.isValid())
 	{
-		Object *srcObj = TheGameLogic->findObjectByID(m_sourceId);
+		Object *srcObj = TheGameLogic->findObjectByID(self->m_sourceId);
 		FilterSink *sink = srcObj ? srcObj->m_filterSink : 0;
 		if (sink)
-			sink->apply(&m_template->m_filter);
+			sink->apply(&self->m_template->m_filter);
 	}
 
-	if (m_ammoInClip == 0)
+	if (self->m_ammoInClip == 0)
 		return reloaded;
 
-	int barrels = src->getDrawable()->getBarrelCount(m_wslot);
-	if (m_curBarrel >= barrels)
+	int barrels = src->getDrawable()->getBarrelCount(self->m_wslot);
+	if (self->m_curBarrel >= barrels)
 	{
-		m_curBarrel = 0;
-		m_numShotsForCurBarrel = m_template->m_shotsPerBarrel;
+		self->m_curBarrel = 0;
+		self->m_numShotsForCurBarrel = self->m_template->m_shotsPerBarrel;
 	}
 
 	Coord3D *aimed = (Coord3D *)&bonus;
 	if (isDetonation)
 	{
-		m_template->bfmeTellLO(this, src, vic, &bonus);
+		self->m_template->bfmeTellLO(self, src, victim, &bonus);
 	}
-	else if (m_template->m_linearTargets.m_end != m_template->m_linearTargets.m_begin)
+	else if (self->m_template->m_linearTargets.m_end != self->m_template->m_linearTargets.m_begin)
 	{
-		int n = (int)(m_template->m_linearTargets.m_end
-			- m_template->m_linearTargets.m_begin) / 12;
+		int n = (int)(self->m_template->m_linearTargets.m_end
+			- self->m_template->m_linearTargets.m_begin) / 12;
 		int i = 0;
 		while (i < n)
 		{
-			m_template->m_linearTargets.aim((int)m_linearIndex, src, aimed);
-			if (!m_template->m_linearGate || m_linearIndex)
+			self->m_template->m_linearTargets.aim((int)self->m_linearIndex, src, aimed);
+			if (!self->m_template->m_linearGate || self->m_linearIndex)
 			{
-				m_template->fireWeaponTemplate(src, m_wslot, m_curBarrel,
-					vic, aimed, bonus, isDetonation, ignoreRanges,
-					this, projectileID, 1);
+				self->m_template->fireWeaponTemplate(src, self->m_wslot, self->m_curBarrel,
+					victim, aimed, bonus, isDetonation, ignoreRanges,
+					self, projectileID, 1);
 			}
-			int flag = ((int *)(m_template->m_linearTargets.m_begin
-				+ m_linearIndex * 12))[2];
-			m_linearIndex = (m_linearIndex + 1) % n;
+			int flag = ((int *)(self->m_template->m_linearTargets.m_begin
+				+ self->m_linearIndex * 12))[2];
+			self->m_linearIndex = (self->m_linearIndex + 1) % n;
 			if (flag)
 				break;
 			++i;
 		}
 	}
-	else if (m_scatterEnd - m_scatterBegin)
+	else if (self->m_scatterEnd - self->m_scatterBegin)
 	{
 		const Coord3D *pos = victimPos;
-		if (vic)
+		if (victim)
 		{
-			pos = &vic->m_position;
-			vic = 0;
+			pos = &victim->m_position;
+			victim = 0;
 		}
 		*aimed = *pos;
 		int pick = GetGameLogicRandomValue(
 			0,
-			(int)(m_scatterEnd - m_scatterBegin) - 1,
+			(int)(self->m_scatterEnd - self->m_scatterBegin) - 1,
 			"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Weapon.cpp",
 			2915);
-		int index = m_scatterBegin[pick];
-		float scalar = m_template->m_scatterScalar;
-		Coord2D off = m_template->m_scatterTargets.m_begin[index];
+		int index = self->m_scatterBegin[pick];
+		float scalar = self->m_template->m_scatterScalar;
+		Coord2D off = self->m_template->m_scatterTargets.m_begin[index];
 		aimed->x += off.x * scalar;
 		aimed->y += off.y * scalar;
 		aimed->z = TheTerrainLogic->getGroundHeight(aimed->x, aimed->y, 0);
-		m_scatterBegin[pick] = m_scatterEnd[-1];
-		--m_scatterEnd;
-		m_template->fireWeaponTemplate(src, m_wslot, m_curBarrel,
-			vic, aimed, bonus, isDetonation, ignoreRanges,
-			this, projectileID, 1);
+		self->m_scatterBegin[pick] = self->m_scatterEnd[-1];
+		--self->m_scatterEnd;
+		self->m_template->fireWeaponTemplate(src, self->m_wslot, self->m_curBarrel,
+			victim, aimed, bonus, isDetonation, ignoreRanges,
+			self, projectileID, 1);
 	}
 	else
 	{
-		m_template->fireWeaponTemplate(src, m_wslot, m_curBarrel,
-			vic, victimPos, bonus, isDetonation, ignoreRanges,
-			this, projectileID, 1);
+		self->m_template->fireWeaponTemplate(src, self->m_wslot, self->m_curBarrel,
+			victim, victimPos, bonus, isDetonation, ignoreRanges,
+			self, projectileID, 1);
 	}
 
-	--m_ammoInClip;
-	--m_maxShotCount;
-	--m_numShotsForCurBarrel;
-	m_lastFireStamp = now;
-	if (m_numShotsForCurBarrel <= 0)
+	--self->m_ammoInClip;
+	--self->m_maxShotCount;
+	--self->m_numShotsForCurBarrel;
+	self->m_lastFireStamp = now;
+	if (self->m_numShotsForCurBarrel <= 0)
 	{
-		++m_curBarrel;
-		m_numShotsForCurBarrel = m_template->m_shotsPerBarrel;
+		++self->m_curBarrel;
+		self->m_numShotsForCurBarrel = self->m_template->m_shotsPerBarrel;
 	}
 
-	if (getRemainingAmmo(false) == 0)
+	if (self->getRemainingAmmo(false) == 0)
 	{
-		if (m_template->m_reloadType == 0)
+		if (self->m_template->m_reloadType == 0)
 		{
-			reloadAmmo(src);
+			self->reloadAmmo(src);
 			reloaded = true;
 			return reloaded;
 		}
-		if (m_status != OUT_OF_AMMO)
-			m_status = OUT_OF_AMMO;
-		if (!m_template->m_filter.isValid())
-			m_whenWeCanFireAgain = 0x7fffffff;
+		if (self->m_status != OUT_OF_AMMO)
+			self->m_status = OUT_OF_AMMO;
+		if (!self->m_template->m_filter.isValid())
+			self->m_whenWeCanFireAgain = 0x7fffffff;
 		return reloaded;
 	}
 
-	if (m_status != BETWEEN_FIRING_SHOTS)
-		m_status = BETWEEN_FIRING_SHOTS;
-	m_whenWeCanFireAgain = now + (unsigned)delay;
-	m_projectileStreamID = now;
+	if (self->m_status != BETWEEN_FIRING_SHOTS)
+		self->m_status = BETWEEN_FIRING_SHOTS;
+	self->m_whenWeCanFireAgain = now + (unsigned)delay;
+	self->m_projectileStreamID = now;
 
-	WeaponSet *ws = (WeaponSet *)((char *)src + 0x264);
+	WeaponSet *ws = (WeaponSet *)((char *)source + 0x264);
 	if (ws->isReloadTimeShared())
 	{
 		for (int slot = 0; slot < 4; ++slot)
@@ -368,7 +371,7 @@ bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 			Weapon *w = ws->getWeaponInWeaponSlot(slot);
 			if (w)
 			{
-				w->m_whenWeCanFireAgain = m_whenWeCanFireAgain;
+				w->m_whenWeCanFireAgain = self->m_whenWeCanFireAgain;
 				if (w->m_status != BETWEEN_FIRING_SHOTS)
 					w->m_status = BETWEEN_FIRING_SHOTS;
 			}
@@ -377,7 +380,7 @@ bool Weapon::privateFireWeapon(const Object *source, const Coord3D *sourcePos,
 
 	int extraTime = (int)(float)m_template->m_timingExtra;
 	if (extraTime > 0)
-		m_whenLastReloadStarted = TheGameLogic->getFrame() + (unsigned)extraTime;
+		self->m_whenLastReloadStarted = TheGameLogic->getFrame() + (unsigned)extraTime;
 
 	return reloaded;
 }
