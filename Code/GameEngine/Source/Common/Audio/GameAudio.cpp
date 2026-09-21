@@ -1321,6 +1321,11 @@ void Rva00698EC0Noop()
 {
 }
 
+// The carved retail body at 0x00698ED0 contains only ret.
+void Rva00698ED0Noop()
+{
+}
+
 // ?Rva0013D3B0Noop@@YAXXZ
 void Rva0013D3B0Noop()
 {
