@@ -377,3 +377,7 @@ BFME_ADJUSTOR_THUNK( Rva009F27D0, 8 )
 void Rva005E2780Noop(void)
 {
 }
+
+void Rva000DFA50Noop(void)
+{
+}
