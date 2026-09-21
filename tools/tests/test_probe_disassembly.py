@@ -91,3 +91,27 @@ def test_cli_displays_real_instructions_after_shifted_call(tmp_path, monkeypatch
     assert "candidate relocation-layout-drift" in output
     assert "0001 e8 11 22 33 44" in output
     assert "call 0x44332217" in output
+
+
+BODY = bytes.fromhex("8b 44 24 04 85 c0 74 03 c2 04 00 33 c0 c2 04 00")
+
+
+def test_short_extent_hint_names_a_size_that_stops_before_the_end():
+    hint = probe.short_extent_hint(BODY + bytes.fromhex("cc cc cc cc"), 13, BODY, [])
+    assert "size 13 stops 3 byte(s) before the end" in hint
+    assert "--replace-rva" in hint
+
+
+def test_short_extent_hint_ignores_relocation_slots():
+    compiled = bytes.fromhex("e8 00 00 00 00 c2 04 00")
+    retail = bytes.fromhex("e8 11 22 33 44 c2 04 00")
+    assert probe.short_extent_hint(retail, 5, compiled, [(1, 0x14, "_call")])
+
+
+@pytest.mark.parametrize("following,size", [
+    (BODY, 16),  # the size already covers the body
+    (BODY[:13] + bytes.fromhex("c2 08 00"), 13),  # the tail differs from retail
+    (BODY[:14], 13),  # retail ends before the compiled body does
+])
+def test_short_extent_hint_stays_silent_without_full_equality(following, size):
+    assert probe.short_extent_hint(following, size, BODY, []) is None

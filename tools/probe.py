@@ -90,6 +90,19 @@ def masked(data, relocs):
     return bytes(d)
 
 
+def short_extent_hint(following, size, compiled, relocs):
+    """Say when the whole compiled body equals retail past the requested size.
+    `following` holds the retail bytes from the function start."""
+    if len(compiled) <= size or len(following) < len(compiled):
+        return None
+    if masked(compiled, relocs) != masked(following[:len(compiled)], relocs):
+        return None
+    return (f"ours equals retail over all {len(compiled)} bytes, so size {size} "
+            f"stops {len(compiled) - size} byte(s) before the end of this body; "
+            "suspect the recorded size, not the source. A proven size correction "
+            "goes through add_match.py --replace-rva with --boundary-evidence")
+
+
 def diagnostic_streams(retail, compiled, relocs):
     """Decode original bytes; normalize only corresponding address operands.
 
@@ -254,6 +267,10 @@ def main():
         return
     first = diffs[0] if diffs else min(len(compiled), size)
     print(f"diffs    {len(diffs)} non-reloc byte(s); first at +{first}")
+    hint = short_extent_hint(image[off: off + len(compiled)], size, compiled, relocs)
+    if hint:
+        print("result   MATCHES PAST THE SIZE: " + hint)
+        return
 
     (ret_raw, our_raw, ret_ins, our_ins, ret_diag, our_diag,
      unmapped) = diagnostic_streams(retail, compiled, relocs)
