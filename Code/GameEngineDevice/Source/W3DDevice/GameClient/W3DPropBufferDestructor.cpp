@@ -90,3 +90,8 @@ W3DPropBuffer::~W3DPropBuffer()
 	release(m_light);
 	release(m_propShroudMaterialPass);
 }
+
+// ?d_00702fa0@@YAXXZ
+void d_00702fa0()
+{
+}
