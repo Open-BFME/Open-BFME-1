@@ -1,6 +1,8 @@
 // ??0BfmeCtxYY@@QAE@PAXPAVBfmeObjYY@@PAVBfmeCfgYY@@DD@Z
 // partial score=0.97 date=2026-09-08
 // pin needed: ?bfmeQueryYY@BfmeObjYY@@QAEDXZ,0x00010EA1
+extern "C" void _ReadWriteBarrier();
+
 class LocomotorOverridable
 {
 public:
@@ -50,15 +52,15 @@ public:
 	BfmeObjYY *m_bfme04YY;
 	BfmeCfgYY *m_bfme08YY;
 	int m_bfme0CYY;
-	char m_bfme10YY;
+	volatile char m_bfme10YY;
 	char m_bfme11YY;
 	unsigned char m_bfmeGapYY[2];
-	int m_bfme14YY;
+	volatile int m_bfme14YY;
 	char m_bfme18YY;
-	char m_bfme19YY;
+	volatile char m_bfme19YY;
 	char m_bfme1AYY;
 	char m_bfme1BYY;
-	char m_bfme1CYY;
+	volatile char m_bfme1CYY;
 };
 
 BfmeCtxYY::BfmeCtxYY(void *a, BfmeObjYY *o, BfmeCfgYY *c, char d, char e)
@@ -71,11 +73,11 @@ BfmeCtxYY::BfmeCtxYY(void *a, BfmeObjYY *o, BfmeCfgYY *c, char d, char e)
 	char f = bfmeFinalYY(o->m_bfme04YY)->m_bfme4CCYY;
 	char q = o->bfmeQueryYY();
 	int cv = c->m_bfme10YY;
-	char dv = d;
-	char ev = e;
-
 	m_bfme11YY = q;
+	char dv = d;
 	m_bfme0CYY = cv;
+	_ReadWriteBarrier();
+	char ev = e;
 	m_bfme10YY = (f == 0);
 	m_bfme14YY = n - 1;
 	m_bfme19YY = dv;
