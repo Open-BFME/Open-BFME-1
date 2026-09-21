@@ -292,3 +292,8 @@ unsigned int Rva00589BD0Dword::get() const
 {
     return m_value;
 }
+
+// The carved retail body at 0x00579140 contains only ret.
+void Rva00579140Noop(void)
+{
+}
