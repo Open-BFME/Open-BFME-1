@@ -50,3 +50,8 @@ int Rva003BC9A0::advance()
 		return 0;
 	return ++m_at18;
 }
+
+// The carved boundary at 0x003BC990 contains only a return.
+void Rva003BC990Noop()
+{
+}
