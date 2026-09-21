@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "5717c5e936461ae1a1d63bf457c5e59b5cd20447b0c8552fe66f96bf63104318",
+  "symbol": "?rva003a39c0@Rva003A39C0Owner@@QAEXPBH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.45,
+  "source": "// ?rva003a39c0@Rva003A39C0Owner@@QAEXPBH@Z\n// partial score=0.45 date=2026-09-21\n// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS\n// stlport\n\n// retail RVA 0x003A39C0. A temporary Rva003A35A0Element (the same 184-byte\n// STLport vector element already landed at 0x003A35F0,\n// Rva003A35F0VectorInsert.cpp) is default-constructed through the pinned\n// 0x22F0C ctor, its first three dwords overwritten from the incoming\n// pointer argument, and the result inserted at this->m_bfmeCount+2 into the\n// vector at this+0x2C. No named caller, owner class or field identity is\n// available, so the owner and fields are address-derived.\n\n#include <vector>\n\nstruct Rva003A35A0Element\n{\n\tint words[46];\n\n\tRva003A35A0Element();\n\tRva003A35A0Element(const Rva003A35A0Element &);\n\t~Rva003A35A0Element();\n\tRva003A35A0Element &operator=(const Rva003A35A0Element &other);\n};\n\ntemplate class _STL::vector<Rva003A35A0Element>;\n\nstruct Rva003A39C0Owner\n{\n\tvoid rva003a39c0(const int *src);\n\n\tunsigned char m_bfmeHead[0x20];\n\tint m_bfmeCount;\t\t\t\t\t// +0x20\n\tunsigned char m_bfmeGap[0x2c - 0x20 - 4];\n\t_STL::vector<Rva003A35A0Element> m_bfmeVec;\t// +0x2c\n};\n\n// retail RVA 0x003A39C0\nvoid Rva003A39C0Owner::rva003a39c0(const int *src)\n{\n\tRva003A35A0Element temp;\n\n\ttemp.words[0] = src[0];\n\ttemp.words[1] = src[1];\n\ttemp.words[2] = src[2];\n\n\tm_bfmeVec.insert(m_bfmeVec.begin() + (m_bfmeCount + 2), temp);\n}\n"
+}
