@@ -88570,3 +88570,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?b_004042c0@@YAXXZ,0x004042C0,address-derived gen-thunk target; retail ILT0003260A E9+003D1CB1 proves body004042C0; restores unresolved existing thunk
 ?rva003C4740@Glo012F1028Type@@QAEXXZ,0x003C4740,RVA00585D60+B8 ILT18318; callee reads ECX manager+28/+34 and bare ret; semantic method unknown
 ?rva0060D4C0@BfmeGameCW@@QAEXPAX@Z,0x0060D4C0,RVA00585D60+BD loads singleton receiver then pushes null and calls ILT2752; callee ignores receiver and consumes one pointer with ret4
+?rva0014d120@@YGPAVObject@@PAV1@MHHH@Z,0x0014D120,ABI-only pin (stdcall, params owner*,Real,Int,Int,Int, returns Object*) for 0x00177720 callee dependency; identity unproven, SEH-heavy 1951B body not analysed
