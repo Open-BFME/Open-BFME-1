@@ -174,3 +174,23 @@ def test_no_tool_decides_dumpness_by_source_path():
         "a dump is a gen-dump note, never a directory -- 349 of them live in "
         "Code/gen_small/dumps_000.cpp. Ask build.is_scaffold_row or "
         "build.load_claim_rows instead:\n  " + "\n  ".join(offences))
+
+
+def test_the_marker_is_a_whole_token_not_a_prefix_of_free_text(build):
+    # Ten rows of real C++ carried notes such as "gen-dump conversion; ..." and
+    # were served as open dumps by every picker, because the test was a prefix.
+    assert build.is_scaffold_row({"notes": "gen-dump"})
+    assert build.is_scaffold_row({"notes": "gen-dump;size=40"})
+    assert build.is_scaffold_row({"notes": " gen-dump , carved"})
+    assert not build.is_scaffold_row({"notes": "gen-dump conversion; 64-slot refcounted table"})
+    assert not build.is_scaffold_row({"notes": "gen-dump converted to address-derived name"})
+    assert not build.is_scaffold_row({"notes": "gen-dumped"})
+    assert not build.is_scaffold_row({"notes": None})
+    assert not build.is_scaffold_row({})
+
+
+def test_no_row_of_real_source_passes_as_a_dump(build):
+    with (build.ROOT / "reverse" / "functions.csv").open(newline="", encoding="utf-8", errors="replace") as fh:
+        wrong = [row["target_rva"] for row in csv.DictReader(fh)
+                 if build.is_scaffold_row(row) and not row["source"].startswith("Code/gen_")]
+    assert not wrong, f"{len(wrong)} rows outside Code/gen_ read as dumps: {wrong[:5]}"
