@@ -88532,3 +88532,5 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?destroyDirect@Rva009A45A0CollisionData@@QAEXXZ,0x009A2390,TU-local non-destructor alias for the matched CollisionData dtor body so the pseudo-destructor-call ABI quirk does not apply; same address as the real ??1Rva009A45A0CollisionData@@QAE@XZ
 ?rva000481e9Target@@YAXXZ,0x00771D00,TU-local clean-C++ alias for the matched vector clear body used by the 0x000481E9 tail thunk
 ?rva0000f277Target@@YAXXZ,0x00584650,TU-local clean-C++ alias for the matched PrereqUnitRec vector overflow body used by the 0x0000F277 tail thunk
+?run@Glo012F4B98Type@@QAEXXZ,0x00589680,alternatename-aliased onto already-landed bfmeRun_00589680; Gen_006091B0::bfmeSetEnabled loads Glo012F4B98 into ECX before this call even though the callee ignores it (identical-code-folding residue)
+?poke@BfmeGameCW@@QAEXH@Z,0x0060D5D0,alternatename-aliased onto already-landed Rva0060D5D0Noop; Gen_006091B0::bfmeSetEnabled reloads g_bfmeGameCW into ECX before this tail call even though the callee ignores it (identical-code-folding residue)
