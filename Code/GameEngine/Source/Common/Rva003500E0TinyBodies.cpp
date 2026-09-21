@@ -41,6 +41,11 @@ Rva00350160Body *Rva00350160Body::body()
 	return this;
 }
 
+// ?Rva00350150Noop@@YAXXZ
+void Rva00350150Noop()
+{
+}
+
 class Rva003501B0Body
 {
 public:
