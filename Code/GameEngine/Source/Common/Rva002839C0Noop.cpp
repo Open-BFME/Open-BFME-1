@@ -4,3 +4,8 @@
 void Rva002839C0Noop()
 {
 }
+
+// The carved boundary at 0x002839B0 contains only a return.
+void Rva002839B0Noop()
+{
+}
