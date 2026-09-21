@@ -225,6 +225,11 @@ bool Rva00749510False::value() const
 	return false;
 }
 
+// ?Rva00749650NoOp@@YAXXZ
+void Rva00749650NoOp()
+{
+}
+
 class Rva00749640False
 {
 public:
