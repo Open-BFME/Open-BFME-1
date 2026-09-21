@@ -1,15 +1,10 @@
-// ?scanTurnRates@Rva0024D520@@QAE_NM@Z
-// partial score=0.45 date=2026-09-20
 // cl: /DNDEBUG /MD /EHsc
-// Carved body at retail RVA 0x0024D520 (160 B).  A this-relative accessor at
-// this-0xC4 supplies a vtable whose slot 0x104 (index 65) returns a list-like
-// container; each node's payload (at node+8) is an object walked through the
-// pinned guarded-field getter at 0x001BE010 (class Rva001BE010::get, called
-// twice per element) and Locomotor::getMaxTurnRate(Object*) at 0x001B5860,
-// with the running turn rate normalized through normalizeAngle at 0x001056F0
-// and compared against the global BfmeZeroRange at VA 0x01075350.
-// Identity of the owning class/method is not proven (no caller, no vtable
-// install site); every name below is address-derived.
+
+// Retail RVA 0x0024D520 has a 160-byte thiscall body with one float argument.
+// The carved boundary proves the start and the ret 4 ending.
+// The owner and method name remain unknown, so the source keeps the RVA in its name.
+
+#include <math.h>
 
 typedef float Real;
 
@@ -25,7 +20,7 @@ struct Rva0024D520List
 	Rva0024D520Node *head;
 };
 
-extern const float BfmeZeroRange;
+extern const Real BfmeZeroRange;
 
 class Rva0024D520Base
 {
@@ -56,12 +51,24 @@ public:
 	int get();
 };
 
-class Object;
+class Locomotor;
+
+class Object
+{
+public:
+	unsigned char m_leading[0x44];
+	volatile Real m_field44;
+
+	Real getField44() const
+	{
+		return m_field44;
+	}
+};
 
 class Locomotor
 {
 public:
-	Real getMaxTurnRate(Object *obj) const;
+	Real getMaxTurnRate(Object *object) const;
 };
 
 Real normalizeAngle(Real angle);
@@ -69,39 +76,37 @@ Real normalizeAngle(Real angle);
 class Rva0024D520
 {
 public:
-	bool scanTurnRates(float threshold);
+	bool method(float threshold);
 };
 
-bool Rva0024D520::scanTurnRates(float threshold)
+bool Rva0024D520::method(float threshold)
 {
-	Rva0024D520Base *base = (Rva0024D520Base *)((char *)this - 0xC4);
+	Rva0024D520Base *base =
+		(Rva0024D520Base *)((char *)this - 0xC4);
 	Rva0024D520List *list = base->getList();
 
 	Real lastTurnRate = 0.0f;
+	Object *object;
 
-	for (Rva0024D520Node *node = list->head->next; node != list->head; node = node->next)
+	for (Rva0024D520Node *node = list->head->next;
+		node != list->head;
+		node = node->next)
 	{
-		if (!(BfmeZeroRange > lastTurnRate))
-			continue;
+		object = (Object *)node->payload;
 
-		Object *object = (Object *)node->payload;
-
-		if (!((Rva001BE010 *)object)->get())
-			continue;
-
-		Locomotor *loco = (Locomotor *)((Rva001BE010 *)object)->get();
-		lastTurnRate = loco->getMaxTurnRate(object);
-
-		Real diff = normalizeAngle(threshold - lastTurnRate);
-		if (diff < 0.0f)
-			diff = -diff;
-
-		if (diff >= threshold)
+		if (lastTurnRate == BfmeZeroRange &&
+			((Rva001BE010 *)object)->get())
 		{
-			if (node->next == list->head)
-				return false;
-			continue;
+			Object *argument = object;
+			lastTurnRate =
+				((Locomotor *)((Rva001BE010 *)object)->get())->getMaxTurnRate(argument);
 		}
+
+		Real diff = normalizeAngle(threshold - object->getField44());
+		diff = (Real)fabs(diff);
+
+		if (diff > lastTurnRate)
+			return false;
 	}
 
 	return true;
