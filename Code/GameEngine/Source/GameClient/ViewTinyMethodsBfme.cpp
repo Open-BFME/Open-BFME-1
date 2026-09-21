@@ -28,6 +28,7 @@ public:
     virtual void Rva0045BB70Slot(unsigned int);
     virtual void Rva0045BB80Slot(unsigned int);
     virtual void Rva0045BB90Slot(unsigned int);
+    virtual void Rva0045BBB0Slot();
     virtual void Rva0045BBC0Slot(unsigned int, unsigned int, unsigned int,
         unsigned int);
     virtual int Rva0045BBD0Slot();
@@ -111,6 +112,10 @@ void View::Rva0045BB80Slot(unsigned int)
 }
 
 void View::Rva0045BB90Slot(unsigned int)
+{
+}
+
+void View::Rva0045BBB0Slot()
 {
 }
 
