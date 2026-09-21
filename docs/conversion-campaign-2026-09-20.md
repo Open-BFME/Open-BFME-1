@@ -153,3 +153,12 @@ now mostly banked at 0.1-0.5. Twelve more bodies were banked this hour,
 three of them at 0.92-0.93 with single register-role or SIB residues.
 Recurring unsolved lever reported by four bodies: MSVC 7.1's choice of
 which branch falls through to a shared return tail.
+
+### Hours 7-9 — 00:05Z to 03:00Z (second outage)
+
+The four seats hit the session usage limit again at 00:30Z (reset 03:00Z),
+after ~2.5 hours of the second window. One more body landed before the cut:
+0x00605F00 (179 B, STLport `_Rb_tree::insert_equal` instantiated in its own
+TU). Fleet cumulative 21 bodies / 5,142 B; repository-wide +13,931 B /
++0.14 pp (67.04% -> 67.18%) since the fleet base, +5,121 B of it new
+total-exact coverage. Restart at 03:05Z with three seats.
