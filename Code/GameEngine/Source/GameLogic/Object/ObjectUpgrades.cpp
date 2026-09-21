@@ -55,6 +55,63 @@ public:
 	Player *getControllingPlayer() const;
 };
 
+struct AffectedByUpgradeMask
+{
+	UnsignedInt m_bits[6];
+
+	AffectedByUpgradeMask() {}
+	__forceinline AffectedByUpgradeMask(const AffectedByUpgradeMask &other)
+	{
+		for (UnsignedInt i = 0; i < 6; ++i)
+			m_bits[i] = other.m_bits[i];
+	}
+
+	__forceinline AffectedByUpgradeMask &operator|=(const AffectedByUpgradeMask &other)
+	{
+		m_bits[0] |= other.m_bits[0];
+		m_bits[1] |= other.m_bits[1];
+		m_bits[2] |= other.m_bits[2];
+		m_bits[3] |= other.m_bits[3];
+		m_bits[4] |= other.m_bits[4];
+		m_bits[5] |= other.m_bits[5];
+		return *this;
+	}
+
+	__forceinline void set(UnsignedInt bit)
+	{
+		m_bits[bit >> 5] |= 1 << (bit & 31);
+	}
+
+	__forceinline Bool test(UnsignedInt bit) const
+	{
+		return (m_bits[bit >> 5] & (1 << (bit & 31))) != 0;
+	}
+
+	__forceinline void clear()
+	{
+		UnsignedInt *bits = m_bits;
+		bits[0] = 0;
+		bits[1] = 0;
+		bits[2] = 0;
+		bits[3] = 0;
+		bits[4] = 0;
+		bits[5] = 0;
+	}
+};
+
+class Player
+{
+public:
+	AffectedByUpgradeMask getCompletedUpgradeMask() const
+	{
+		return m_completedUpgrades;
+	}
+
+private:
+	unsigned char m_unmodelled000[0x8c];
+	AffectedByUpgradeMask m_completedUpgrades;
+};
+
 // The upgrade module every upgrade-bearing behaviour hands back.  The class name
 // is not free: reverse/functions.csv pins the reset helper below as
 // ?Rva002D9A70Invoke@@YAXPAVRva002D9A70Object@@@Z, and that spelling is what makes
@@ -155,6 +212,16 @@ private:
 	UnsignedInt m_upgradeIndex;			// +0x20
 };
 
+class AffectedByUpgradeModuleInterface
+{
+public:
+	virtual Bool bfmeSlot0() = 0;
+	virtual void bfmeSlot1() = 0;
+	virtual Bool wouldUpgrade(const AffectedByUpgradeMask &) const = 0;
+	virtual void bfmeSlot3() = 0;
+	virtual Bool isSubObjectsUpgrade() = 0;
+};
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
 template <unsigned int NUMBITS>
 class BitFlags
@@ -191,6 +258,7 @@ class Object
 {
 public:
 	Bool hasUpgradeMask(UnsignedInt bit) const;
+	Bool affectedByUpgrade(const UpgradeTemplate *upgrade) const;
 	void bfmeMarkUpgradeCompleted(const UpgradeTemplate *upgrade);
 	void bfmeRefreshCompletedUpgrades();
 	void bfmeResetAllUpgrades();
@@ -225,6 +293,33 @@ Bool Object::hasUpgradeMask(UnsignedInt bit) const
 	}
 
 	return m_objectUpgradesCompleted.test(bit);
+}
+
+// ?affectedByUpgrade@Object@@QBE_NPBVUpgradeTemplate@@@Z
+Bool Object::affectedByUpgrade(const UpgradeTemplate *upgradeT) const
+{
+	Player *player = m_team ? m_team->getControllingPlayer() : 0;
+	if (!player)
+		return false;
+
+	player = reinterpret_cast<Player *>(
+		reinterpret_cast<unsigned char *>(player) + 0x8c);
+	AffectedByUpgradeMask mask =
+		*reinterpret_cast<const AffectedByUpgradeMask *>(player);
+	mask |= *reinterpret_cast<const AffectedByUpgradeMask *>(
+		&m_objectUpgradesCompleted);
+	mask.set(upgradeT->getUpgradeIndex());
+
+	for (BehaviorModule **module = m_behaviors; *module; ++module)
+	{
+		BehaviorModuleInterface *behavior = reinterpret_cast<BehaviorModuleInterface *>(
+			reinterpret_cast<unsigned char *>(*module) + 0xc);
+		AffectedByUpgradeModuleInterface *upgrade =
+			reinterpret_cast<AffectedByUpgradeModuleInterface *>(behavior->getUpgrade());
+		if (upgrade && upgrade->wouldUpgrade(mask) && !upgrade->isSubObjectsUpgrade())
+			return true;
+	}
+	return false;
 }
 
 // ?bfmeMarkUpgradeCompleted@Object@@QAEXPBVUpgradeTemplate@@@Z
