@@ -302,6 +302,10 @@ void *Rva0006C3F0Self::get()
 	return this;
 }
 
+void Rva0006C400Noop(void)
+{
+}
+
 class Rva0006C580Self
 {
 public:
