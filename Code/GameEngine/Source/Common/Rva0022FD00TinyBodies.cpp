@@ -50,6 +50,17 @@ int Rva0022FD80Dword::get() const
 	return m_value;
 }
 
+class Rva0022FF00Ret
+{
+public:
+	void run();
+};
+
+// ?run@Rva0022FF00Ret@@QAEXXZ
+void Rva0022FF00Ret::run()
+{
+}
+
 class Rva0022FF30Dword
 {
 	char m_padding[4];
