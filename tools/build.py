@@ -1595,6 +1595,67 @@ def _linear_boundary_decode(compiled, claimed_size):
     return instructions, None, uncertain
 
 
+def _flow_boundary_issue(compiled, claimed_size, relocs=()):
+    """Judge the claimed end by the instructions control flow provably reaches.
+
+    The linear decode above stops at the first ``ret`` or ``jmp``, so in a body
+    with an early return it never arrives at the claimed end: of 290 retail
+    extents that stop short of their function, it reported 61. Following the
+    direct branches from the entry reaches the rest without guessing. Only code
+    is ever decoded here: a relocated branch (its displacement is not final)
+    and an indirect one (an inline table may follow) end their path unfollowed.
+
+    Two facts are reported. A reached instruction that straddles the claimed
+    end is cut by it. A reached instruction that ends exactly on the claimed
+    end and is no transfer of control runs on into bytes the claim omits; a
+    ``call`` there may be noreturn, so it counts only when a stack-restoring
+    epilogue follows, and padding after the end is never evidence.
+    """
+    try:
+        from capstone import Cs, CS_ARCH_X86, CS_MODE_32
+    except ImportError as exc:
+        raise SystemExit(
+            "new C++ claim boundary check needs the capstone package") from exc
+
+    decoder = Cs(CS_ARCH_X86, CS_MODE_32)
+    decoder.detail = True
+    relocated = {offset for offset, _rtype, _symbol in relocs}
+    seen = set()
+    work = [0]
+    while work:
+        cursor = work.pop()
+        while 0 <= cursor < claimed_size and cursor not in seen:
+            instruction = next(decoder.disasm(compiled[cursor : cursor + 15], cursor, 1), None)
+            if instruction is None:
+                break
+            seen.add(cursor)
+            end = cursor + instruction.size
+            text = f"{instruction.mnemonic} {instruction.op_str}".strip()
+            if end > claimed_size:
+                return (f"claim of {claimed_size} bytes cuts instruction "
+                        f"at +0x{cursor:X}..+0x{end:X} ({text}), which control flow "
+                        "reaches from the entry")
+            if _is_return(instruction) or instruction.mnemonic in {"ud2", "int3", "hlt"}:
+                break
+            target = _branch_target(instruction)
+            fixed = not any(cursor <= offset < end for offset in relocated)
+            if target is not None and fixed and 0 <= target < claimed_size:
+                work.append(target)
+            if instruction.mnemonic == "jmp":
+                break
+            if end == claimed_size and claimed_size < len(compiled):
+                if instruction.mnemonic == "call":
+                    if _decode_epilogue(compiled, claimed_size) is None:
+                        break
+                elif compiled[claimed_size] in (0xCC, 0x90):
+                    break
+                return (f"claim of {claimed_size} bytes ends after +0x{cursor:X} ({text}), "
+                        "which is no transfer of control, so execution runs on into "
+                        "bytes the claim omits")
+            cursor = end
+    return None
+
+
 def claimed_boundary_issue(compiled, claimed_size, relocs=()):
     """Return only conservative, locally demonstrable boundary evidence.
 
@@ -1623,7 +1684,7 @@ def claimed_boundary_issue(compiled, claimed_size, relocs=()):
         evidence = _fallthrough_into_omitted_epilogue(
             instructions, compiled, claimed_size)
     if evidence is None:
-        return None
+        return _flow_boundary_issue(compiled, claimed_size, relocs)
 
     branch, target, epilogue = evidence
     suffix = ", ".join(

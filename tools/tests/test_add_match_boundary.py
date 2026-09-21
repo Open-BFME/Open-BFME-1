@@ -266,3 +266,50 @@ def test_bytes_after_backward_unconditional_jump_are_not_linear_code():
     # The unconditional back edge has no fallthrough. Following section bytes
     # cannot establish a split executable instruction in the claimed body.
     check(bytes.fromhex("ebfe b801"), 4)
+
+
+# test ecx,ecx; jne +1; ret; add esp,0x18; ret 4 -- an early return in front of
+# the real end, which is where the linear decode gives up.
+EARLY_RETURN = bytes.fromhex("85c9 7501 c3 83c418 c20400")
+
+
+def test_end_before_the_final_ret_is_rejected_behind_an_early_return():
+    assert build._linear_boundary_decode(EARLY_RETURN, 8)[2], "fixture must defeat the linear decode"
+    message = rejected(EARLY_RETURN, 8)
+    assert "add esp, 0x18" in message and "runs on" in message
+
+
+def test_cut_instruction_is_rejected_behind_an_early_return():
+    message = rejected(EARLY_RETURN, 7)
+    assert "cuts instruction" in message and "+0x5..+0x8" in message
+
+
+def test_complete_body_with_an_early_return_is_accepted():
+    check(EARLY_RETURN, len(EARLY_RETURN))
+    check(EARLY_RETURN + bytes.fromhex("cccccc"), len(EARLY_RETURN))
+
+
+def test_call_at_the_end_followed_by_another_function_is_left_alone():
+    # early return; then a call that may be noreturn; the next bytes open a new frame
+    body = bytes.fromhex("85c9 7501 c3 e8 00000000") + bytes.fromhex("55 8bec 5d c3")
+    check(body, 10, relocs=[(6, build.REL32, "?fail@@YAXXZ")])
+
+
+def test_call_at_the_end_followed_by_its_own_epilogue_is_rejected():
+    body = bytes.fromhex("85c9 7501 c3 e8 00000000 5e c20400")
+    message = rejected(body, 10, relocs=[(6, build.REL32, "?log@@YAXXZ")])
+    assert "call" in message
+
+
+def test_relocated_and_indirect_branches_are_not_followed():
+    # jmp through a table: the bytes behind it are data and must not be judged
+    table = bytes.fromhex("85c9 7501 c3 ff2485 00000000") + bytes.fromhex("ffffffff")
+    check(table, 12, relocs=[(8, 0x0006, "$L100")])
+    # a relocated jcc has no final displacement; its zero offset is not an edge
+    relocated = bytes.fromhex("0f85 00000000 c3") + bytes.fromhex("83c404 c3")
+    check(relocated, 7, relocs=[(2, build.REL32, "?elsewhere@@YAXXZ")])
+
+
+def test_end_followed_by_padding_is_not_evidence():
+    body = bytes.fromhex("85c9 7501 c3 83c418") + bytes.fromhex("cccccccc")
+    check(body, 8)
