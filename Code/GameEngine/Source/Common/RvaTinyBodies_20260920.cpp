@@ -272,6 +272,11 @@ void Rva001222B0Noop()
 {
 }
 
+// The carved boundary at 0x00234CA0 contains only a return.
+void Rva00234CA0Noop()
+{
+}
+
 class Rva001222A0Self
 {
 public:
