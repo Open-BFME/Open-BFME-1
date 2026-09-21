@@ -299,3 +299,8 @@ unsigned int Rva005BD4E0Field::get() const
 {
 	return m_value;
 }
+
+// The carved retail body at 0x005BD4B0 contains only ret.
+void Rva005BD4B0Noop(void)
+{
+}
