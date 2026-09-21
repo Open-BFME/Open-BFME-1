@@ -6,3 +6,8 @@
 void Rva00465F60NoOp( void )
 {
 }
+
+// ?Rva00465F70NoOp@@YAXXZ
+void Rva00465F70NoOp( void )
+{
+}
