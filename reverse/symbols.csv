@@ -88568,3 +88568,5 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?bfmeNoteYF_00585C20@BfmeHostYF@@QAEXUBfmeHandleYF@@@Z,0x00585C20,RVA00585CF0+0B ILT36D7C; callee reads one-pointer value argument and ret4; owner unknown
 ??$__find@PBHH@_STL@@YAPBHPBH0ABHABUrandom_access_iterator_tag@0@@Z,0x005853B0,RVA00585CF0+2A ILT449A4; independently decoded four-element unrolled equality search and pointer return; tag unused
 ?b_004042c0@@YAXXZ,0x004042C0,address-derived gen-thunk target; retail ILT0003260A E9+003D1CB1 proves body004042C0; restores unresolved existing thunk
+?rva003C4740@Glo012F1028Type@@QAEXXZ,0x003C4740,RVA00585D60+B8 ILT18318; callee reads ECX manager+28/+34 and bare ret; semantic method unknown
+?rva0060D4C0@BfmeGameCW@@QAEXPAX@Z,0x0060D4C0,RVA00585D60+BD loads singleton receiver then pushes null and calls ILT2752; callee ignores receiver and consumes one pointer with ret4
