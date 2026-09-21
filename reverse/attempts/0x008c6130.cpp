@@ -87,8 +87,8 @@ void BfmePoolXA::bfmeSetupXA(BfmeSpecXA *s)
 	int g = s->m_bfme44XA;
 	int h = s->m_bfme40XA;
 
-	m_bfme4CXA = h;
 	m_bfme50XA = g;
+	m_bfme4CXA = h;
 	int *base = (int *)Rva008C5D70Alloc(h * g * 4);
 
 	m_bfme54XA = base;
