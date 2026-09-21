@@ -1,5 +1,5 @@
 // ?xfer@GarrisonContain@@MAEXPAVXfer@@@Z
-// partial score=0.95 date=2026-09-17
+// partial score=0.98 date=2026-09-21
 // Partial clean C++ reconstruction for retail RVA 0x0021DAA0.
 // The owner is GarrisonContain::xfer: constructor 0x0021D820 installs
 // vtable 0x010AB818 and slot 3 reaches this RVA.  The surrounding source
@@ -29,12 +29,12 @@ struct BfmeGarrisonXferVersion
 {
 	UnsignedByte m_version;
 	UnsignedByte m_currentVersion;
+	UnsignedByte m_padding[2];
 };
 
 struct XferException
 {
 	char *text;
-	Int tag;
 };
 
 class Team
@@ -152,7 +152,6 @@ void GarrisonContain::xfer(Xfer *xfer)
 		reinterpret_cast<BfmeGarrisonXferTarget *>(xfer);
 	BfmeGarrisonXferView *self =
 		reinterpret_cast<BfmeGarrisonXferView *>(this);
-	Int i;
 
 	reinterpret_cast<BfmeBase002298B0 *>(this)->xferBase2298B0(xfer);
 	if (target->isLightCRC())
@@ -169,10 +168,10 @@ void GarrisonContain::xfer(Xfer *xfer)
 	{
 		if (teamID)
 		{
+			XferException error;
 			self->m_originalTeam = TheTeamFactory->findTeamByID(teamID);
 			if (self->m_originalTeam == 0)
 			{
-				XferException error;
 				bfmeFormatText(&error, 5, 0);
 				_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
 			}
@@ -181,6 +180,7 @@ void GarrisonContain::xfer(Xfer *xfer)
 			self->m_originalTeam = 0;
 	}
 
+	Int i;
 	target->xferBool(&self->m_hideGarrisonedStateFromNonallies);
 	UnsignedShort pointDataCount = MAX_GARRISON_POINTS;
 	target->xferUnsignedShort(&pointDataCount);
