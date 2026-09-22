@@ -19,6 +19,18 @@ extern void rva0001D5F7Target(void);
 extern void rva0001D7C8Target(void);
 extern void rva0001E8D0Target(void);
 extern void rva0001F717Target(void);
+extern void rva0001FFEBTarget(void);
+extern void rva00020DCETarget(void);
+extern void rva00027B06Target(void);
+extern void rva000284A7Target(void);
+extern void rva000286AATarget(void);
+extern void rva0002A22FTarget(void);
+extern void rva0002C3D6Target(void);
+extern void rva0002F5B3Target(void);
+extern void rva0002F95ATarget(void);
+extern void rva0003025BTarget(void);
+extern void rva0003059ETarget(void);
+extern void rva000328C6Target(void);
 
 #pragma comment(linker, "/alternatename:?rva0000113BTarget@@YAXXZ=?Rva007849C0Clear@@YAXPAURva007849C0Owner@@@Z")
 #pragma comment(linker, "/alternatename:?rva00006555Target@@YAXXZ=?end@?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QBE?AU?$_List_iterator@PAVDrawable@@U?$_Const_traits@PAVDrawable@@@_STL@@@2@XZ")
@@ -35,6 +47,18 @@ extern void rva0001F717Target(void);
 #pragma comment(linker, "/alternatename:?rva0001D7C8Target@@YAXXZ=?computeApproachPosition@DockUpdate@@IAE?AUCoord3D@@HPAVObject@@@Z")
 #pragma comment(linker, "/alternatename:?rva0001E8D0Target@@YAXXZ=??0RepairDockUpdate@@QAE@PAVThing@@PBVModuleData@@@Z")
 #pragma comment(linker, "/alternatename:?rva0001F717Target@@YAXXZ=?begin@?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QBE?AU?$_List_iterator@PAVDrawable@@U?$_Const_traits@PAVDrawable@@@_STL@@@2@XZ")
+#pragma comment(linker, "/alternatename:?rva0001FFEBTarget@@YAXXZ=??$__uninitialized_copy@PBVProductionPrerequisite@@PAV1@@_STL@@YAPAVProductionPrerequisite@@PBV1@0PAV1@ABU__false_type@0@@Z")
+#pragma comment(linker, "/alternatename:?rva00020DCETarget@@YAXXZ=??0CommandButtonHuntUpdate@@QAE@PAVThing@@PBVModuleData@@@Z")
+#pragma comment(linker, "/alternatename:?rva00027B06Target@@YAXXZ=??0SupplyCenterProductionExitUpdate@@QAE@PAVThing@@PBVModuleData@@@Z")
+#pragma comment(linker, "/alternatename:?rva000284A7Target@@YAXXZ=?clear@TeamFactory@@QAEXXZ")
+#pragma comment(linker, "/alternatename:?rva000286AATarget@@YAXXZ=??$_M_allocate_and_copy@PBUParticleSysBoneInfo@@@?$vector@UParticleSysBoneInfo@@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@IAEPAUParticleSysBoneInfo@@IPBU2@0@Z")
+#pragma comment(linker, "/alternatename:?rva0002A22FTarget@@YAXXZ=?get@Rva006003D0@@QBEMXZ")
+#pragma comment(linker, "/alternatename:?rva0002C3D6Target@@YAXXZ=?get@Rva00784A40@@QBEPAXXZ")
+#pragma comment(linker, "/alternatename:?rva0002F5B3Target@@YAXXZ=?b_00784AA0@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva0002F95ATarget@@YAXXZ=?findUpgrade@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z")
+#pragma comment(linker, "/alternatename:?rva0003025BTarget@@YAXXZ=??0BattlePlanUpdateModuleData@@QAE@XZ")
+#pragma comment(linker, "/alternatename:?rva0003059ETarget@@YAXXZ=?_M_insert_overflow@?$vector@VPlayerTemplate@@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@IAEXPAVPlayerTemplate@@ABV3@ABU__false_type@2@I_N@Z")
+#pragma comment(linker, "/alternatename:?rva000328C6Target@@YAXXZ=??0FireWeaponWhenDeadBehavior@@QAE@PAVThing@@PBVModuleData@@@Z")
 
 void j_0000113B(void)
 {
@@ -109,4 +133,64 @@ void j_0001E8D0(void)
 void j_0001F717(void)
 {
 	rva0001F717Target();
+}
+
+void j_0001FFEB(void)
+{
+	rva0001FFEBTarget();
+}
+
+void j_00020DCE(void)
+{
+	rva00020DCETarget();
+}
+
+void j_00027B06(void)
+{
+	rva00027B06Target();
+}
+
+void j_000284A7(void)
+{
+	rva000284A7Target();
+}
+
+void j_000286AA(void)
+{
+	rva000286AATarget();
+}
+
+void j_0002A22F(void)
+{
+	rva0002A22FTarget();
+}
+
+void j_0002C3D6(void)
+{
+	rva0002C3D6Target();
+}
+
+void j_0002F5B3(void)
+{
+	rva0002F5B3Target();
+}
+
+void j_0002F95A(void)
+{
+	rva0002F95ATarget();
+}
+
+void j_0003025B(void)
+{
+	rva0003025BTarget();
+}
+
+void j_0003059E(void)
+{
+	rva0003059ETarget();
+}
+
+void j_000328C6(void)
+{
+	rva000328C6Target();
 }
