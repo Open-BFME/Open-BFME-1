@@ -156,3 +156,53 @@ int CurDrawablePrevAnimation(lua_State *state)
 	}
 	return 1;
 }
+
+typedef unsigned char Bool;
+
+extern double g_bfmeSubB3;
+
+// The status word this binding tests sits at +0x90 of the target record, inside
+// the run LuaTargetRecord already declares as padding, so reading it through an
+// accessor keeps that layout and the rows above it unchanged.
+class LuaTargetStatus
+{
+public:
+	Bool test(int bit) const
+	{
+		return (Bool)((m_bits[(unsigned int)bit >> 5] & (1u << (bit & 31))) != 0);
+	}
+
+	Bool isKindOf(int bit) const
+	{
+		return test(bit);
+	}
+
+private:
+	unsigned int m_lead[0x24];
+	unsigned int m_bits[2];
+};
+
+// ?rva002E7740@@YAHPAUlua_State@@@Z
+int rva002E7740(lua_State *state)
+{
+	LuaDrawableLink *drawable = g_obj12F060C->m_drawable;
+	if (drawable != 0) {
+		LuaTargetOwner *owner = drawable->m_owner;
+		if (owner != 0 && lua_gettop(state) > 0) {
+			Bool hit = 0;
+			const char *name = lua_tostring(state, 1);
+			LuaTargetStatus *status = (LuaTargetStatus *)owner->m_target;
+			int bit = BitFlags<45>::getSingleBitFromName(name);
+			if (bit != -1)
+				hit = status->isKindOf(bit);
+
+			if (hit) {
+				lua_pushnumber(state, g_bfmeSubB3);
+				return 1;
+			}
+		}
+	}
+
+	lua_pushnil(state);
+	return 1;
+}
