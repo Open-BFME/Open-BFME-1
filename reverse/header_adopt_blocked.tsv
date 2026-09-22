@@ -687,3 +687,4 @@ reverse/attempts/0x0054ff80.cpp	UnicodeString	build.sh exited 1
 reverse/attempts/0x00552c40.cpp	UnicodeString	build.sh exited 1
 reverse/attempts/0x0056f1f0.cpp	UnicodeString	build.sh exited 1
 reverse/attempts/0x00757e70.cpp	AsciiString	build.sh exited 1
+Code/GameEngine/Source/Common/Gen_004916D0DisplayMethod.cpp	AsciiString	build.sh exited 1
