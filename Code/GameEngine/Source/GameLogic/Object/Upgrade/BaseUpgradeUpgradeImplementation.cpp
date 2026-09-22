@@ -1,14 +1,25 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // Open-BFME: BaseUpgrade::upgradeImplementation -- retail 0x002D3970, 578 bytes.
 //
-// Identity: the body reads its module data at this-0xc and its Object at this-8,
-// the BaseUpgrade layout proven by the matched neighbours ??_GBaseUpgrade@@MAEPAXI@Z
-// at 0x002D3900 and ??0BaseUpgradeModuleData@@QAE@XZ at 0x002D3C50 (vtable 0x00CCC0EC).
-// It builds the module data's building template at a pristine bone of the owning
-// object and hands the result to Player::onStructureCreated, which is what a base
-// upgrade does.
+// Identity: slot 9 (+0x24) of the vtable at VA 0x010CBFD8 is ILT 0x00044FCB,
+// which jumps to 0x002D3970. ??0BaseUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z at
+// 0x002D3800 installs that vtable into its second base subobject
+// (`mov [esi+0x10], 0x10cbfd8` at +0x21), so this body is the BaseUpgrade
+// override reached through that subobject -- which is why it reads its module
+// data at this-0xc and its Object at this-8. (The primary ??_7BaseUpgrade@@6B@
+// at VA 0x010CC0EC, installed at +0x14 of the same ctor, does NOT hold this
+// slot; do not cite it for this identity.)
+//
+// It builds the module data's building template at a pristine bone of the
+// owning object and hands the result to the body behind ILT 0x0003AA8F, which
+// is what a base upgrade does.
+//
+// Module data layout, read straight off retail: the vptr occupies +0x00, the
+// building-template name is at +0x70 (`lea ecx, [ebx+0x70]` at +0x50), the
+// placement-prefix string at +0x74 (`mov ebx, [ebx+0x74]` at +0xa8) and the
+// placement index at +0x78 (`mov esi, [ebx+0x78]` at +0xa5).
 //
 // Coord3D::set(Real,Real,Real) is the Zero Hour spelling
 // (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h:385);
@@ -18,10 +29,28 @@
 
 #include <bitset>
 
+#include "ascii_string.h"
+
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef bool Bool;
+
+// Retail's empty-string sentinel: `mov ebx, 0x107388b` at +0xb4 is a DIR32
+// relocation to ?Rva006A16B0Empty@@3PADA (reverse/symbols.csv, 0x0107388B).
+extern char Rva006A16B0Empty[];
+
+// Retail inlines the whole of AsciiString::str() here -- +0xa8..+0xb9 is
+// `mov ebx,[ebx+0x74]; test ebx,ebx; je; add ebx,8; jmp; mov ebx,0x107388b`.
+// ascii_string.h's str() forwards to StringBase<char>::str(), which has an
+// out-of-line body, so calling it would emit a call where retail has the test
+// and the add. Read the one data pointer the header's layout puts at +0x0 and
+// do the +8 to the Header's data[] in line, which is what retail emitted.
+static const char *inlineStr(const AsciiString &s)
+{
+	const char *text = *reinterpret_cast<const char *const *>(&s);
+	return text ? text + 8 : Rva006A16B0Empty;
+}
 
 struct Coord3D
 {
@@ -41,13 +70,6 @@ struct Coord3D
 		z = az;
 	}
 
-	Real x;
-	Real y;
-	Real z;
-};
-
-struct WorldPosition
-{
 	Real x;
 	Real y;
 	Real z;
@@ -79,27 +101,6 @@ private:
 struct WorldMatrix
 {
 	Real m[12];
-};
-
-struct BfmeAsciiStringData
-{
-	unsigned short m_refCount;
-	unsigned short m_numCharsAllocated;
-	unsigned short m_len;
-	unsigned short m_pad;
-};
-
-class AsciiString
-{
-public:
-	const char *str() const
-	{
-		return m_data ? reinterpret_cast<const char *>(m_data + 1) :
-			reinterpret_cast<const char *>(0x0107388B);
-	}
-
-private:
-	BfmeAsciiStringData *m_data;
 };
 
 class BaseUpgradeModuleData
@@ -136,8 +137,6 @@ public:
 		Coord3D *positions, Matrix3D *transforms, Int maxBones, Int extra) const;
 };
 
-class Drawable;
-
 class Thing
 {
 public:
@@ -163,9 +162,13 @@ private:
 class Player
 {
 public:
-	void onStructureCreated(Object *builder, Object *structure);
-
-	__forceinline Team *getDefaultTeam() const
+	// `mov eax, [ebp+0x230]` at +0x19f, where ebp is the controlling player.
+	// tools/name_oracle.py --class Player --offset 0x230 has no witness for
+	// this field, so the name stays offset-derived. Zero Hour's
+	// Player::getDefaultTeam (reference/CnC_Generals_Zero_Hour/GeneralsMD/
+	// Code/GameEngine/Include/Common/Player.h) is the likely identity; that is
+	// a lead, not a claim this TU makes.
+	__forceinline Team *team230() const
 	{
 		return const_cast<Team *>(*reinterpret_cast<Team * const *>(
 			reinterpret_cast<const unsigned char *>(this) + 0x230));
@@ -220,12 +223,31 @@ extern ThingFactory *TheThingFactory;
 extern AI *TheAI;
 extern void j_0003aa8f();
 
-typedef void (Player::*OnStructureCreatedCall)(Object *builder, Object *structure);
+// Retail's tail call, at +0x202: `push esi; push edi; mov ecx, ebp;
+// call 0x43aa8f` -- ILT 0x0003AA8F, which jumps to 0x000D4770. That is a
+// thiscall on the controlling player (ecx) with the owning object and the new
+// structure on the stack. The ledger already owns the body at the other end
+// under an address-derived name -- reverse/functions.csv:
+// `?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z,,0x000D4770,91,
+// Code/GameEngine/Source/Common/Rva000D4770InterfaceDispatch.cpp,matched` --
+// and that row spells it __stdcall with no receiver, which is consistent with
+// the body (it reads both operands off the stack and never touches ecx). So
+// this TU makes no claim about the callee's identity beyond its address: the
+// member-pointer pun below is only the mechanism that reproduces retail's
+// `mov ecx, ebp` plus the two pushes, and the name is the address.
+//
+// Zero Hour has Player::onStructureCreated(Object *builder, Object *structure)
+// at reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/
+// Common/Player.h:459, which fits the shape exactly. That is evidence for a
+// future rename of 0x000D4770 -- one
+// that would have to settle the ledger row's __stdcall spelling too -- not an
+// identity asserted here.
+typedef void (Player::*Rva000D4770Call)(Object *builder, Object *structure);
 
-union OnStructureCreatedCallBits
+union Rva000D4770CallBits
 {
 	void (*raw)();
-	OnStructureCreatedCall member;
+	Rva000D4770Call member;
 };
 
 class BaseUpgrade
@@ -259,7 +281,7 @@ void BaseUpgrade::upgradeImplementation()
 	Coord3D bonePositions[32];
 	Matrix3D boneTransforms[32];
 	Int placementIndex = moduleData->m_placementIndex;
-	const char *prefix = moduleData->m_placementPrefix.str();
+	const char *prefix = inlineStr(moduleData->m_placementPrefix);
 	Int boneCount = drawable->getPristineBonePositions(
 		prefix, 1, bonePositions, boneTransforms, 32, 0);
 
@@ -294,16 +316,16 @@ void BaseUpgrade::upgradeImplementation()
 		orientation = thing->getTransformMatrix()->Get_Z_Rotation();
 	}
 
-	Team *defaultTeam = player->getDefaultTeam();
+	Team *team230 = player->team230();
 	ObjectStatusMaskType status;
 	Object *newObject = TheThingFactory->newObject(
-		thingTemplate, defaultTeam, status, 0);
+		thingTemplate, team230, status, 0);
 	newObject->setProducer(object);
 	newObject->setBuilder(object);
 	newObject->setPosition(reinterpret_cast<const Coord3D *>(&position));
 	reinterpret_cast<Thing *>(newObject)->setOrientation(orientation);
 	TheAI->m_pathfinder->addObjectToPathfindMap(newObject);
-	OnStructureCreatedCallBits call;
+	Rva000D4770CallBits call;
 	call.raw = j_0003aa8f;
 	(player->*call.member)(object, newObject);
 }
