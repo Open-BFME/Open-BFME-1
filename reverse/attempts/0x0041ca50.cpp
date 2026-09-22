@@ -1,6 +1,7 @@
 // ?drawHealthBar@Drawable@@AAEXXZ
-// partial score=0.99 date=2026-09-17
+// partial score=0.996 date=2026-09-22
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// ?drawHealthBar@Drawable@@AAEXXZ  retail 0x0041CA50 511 bytes
 //
 // Drawable::drawHealthBar is the no-argument BFME icon-stage body at retail
 // 0x0041CA50 (511 bytes).  Its ILT is named by drawIconUI's case-0 caller.
@@ -31,10 +32,18 @@ struct BfmeBody
 	virtual Real getMaxHealth();
 };
 
+// Both body queries go through this explicit view of the body vtable rather
+// than through BfmeBody's virtual declarations.  Retail loads the vtable into
+// a scratch register as its own instruction and then emits the two region
+// zero stores BETWEEN that load and the call; a C++ virtual call keeps the
+// load welded to the call, so the stores land on the wrong side of it.
+// Slot 0x14 is not used by this body and is left address-derived.
 struct BfmeBodyVtable
 {
 	void *slots00_0c[4];
 	Real (__fastcall *getHealth)(BfmeBody *body);
+	void *slot14;
+	Real (__fastcall *getMaxHealth)(BfmeBody *body);
 };
 
 // This is the vtable slot at +0x28 used by the raw 0x0041CA50 body.  The
@@ -281,7 +290,8 @@ void Drawable::drawHealthBar()
 
 	HealthBarRegionWords region;
 	BfmeBody *body = object->m_body;
-	Real maxHealth = body->getMaxHealth();
+	BfmeBodyVtable &maxVtable = **(BfmeBodyVtable **)body;
+	Real maxHealth = maxVtable.getMaxHealth(body);
 	if (maxHealth == BfmeZeroRange)
 		return;
 
