@@ -1,12 +1,30 @@
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: the this-0x20 contain companion's reaction at retail 0x0024CE60.
 //
-// Identity is address-derived. Only the anonymous ILT thunk 0x0001A31B reaches
-// this body, and callers_of/find_emitter/name_oracle name no owner. What the
-// body itself proves: its receiver is the +0x20 companion of the object that
-// owns the landed 0x0024BA90 and 0x0024CDB0 update members, which is the same
-// pairing Rva0024CDB0::update spells from the other side as
+// IDENTITY IS UNKNOWN. It is NOT address-derived, and an earlier banner and
+// commit message here claimed that it was; this note corrects them.
+// `python3 tools/callers_of.py 0x0024CE60` finds no named caller -- only the
+// anonymous ILT thunk 0x0001A31B reaches this body -- and find_emitter and
+// name_oracle name no owner either.
+//
+// The emitted symbol `BfmeHostCK::bfmeReactCK(BfmeSrcCK *)` is an INHERITED
+// PLACEHOLDER, not evidence. BfmeHostCK, bfmeReactCK and BfmeSrcCK belong to
+// the retired generator's invented `Bfme*` family -- see
+// docs/naming_evidence.md lines 243-244, which lists sibling spellings
+// `BfmeHostZB` and `BfmeOwnVVE` as invented targets. The spelling survives
+// only because the reverse/functions.csv row was landed under it, and renaming
+// a matched row needs a separate retraction pass. The honest address-token
+// form for this body is `Rva0024CE60::react`. Nothing in the image has been
+// checked against the `BfmeHostCK`/`bfmeReactCK`/`BfmeSrcCK` names: the next
+// reader must treat them as UNVERIFIED, not as recovered identity.
+//
+// What the body itself DOES prove: its receiver is the +0x20 companion of the
+// object that owns the landed 0x0024BA90 and 0x0024CDB0 update members, which
+// is the same pairing Rva0024CDB0::update spells from the other side as
 // ((BfmeRvaCDB0Callback *)((char *)this + 0x20))->finish(member, 0).
+//
+// The TU-local shim types below are named from this address, not guessed: they
+// assert only the offsets and vtable slots the bytes witness.
 //
 // Shape note for the next reader: the slot-17 finish call is ONE statement in
 // a shared tail, not one per arm. Writing it inside each arm compiles the
@@ -15,10 +33,11 @@
 // The explicit `else { return; }` is what lets both arms fall into that tail.
 // The secondary base is still recomputed per arm: hoisting the cast above the
 // branch computes `add esi,-0x20` once and breaks both arms.
-class BfmeThingCK;
+class Rva0024CE60Thing;
 class BfmeSrcCK;
 
-class BfmeThingCK
+// Reached through Rva0024CE60Owner's vslot 0x68; only its vslot 0x100 is called.
+class Rva0024CE60Thing
 {
 public:
 	virtual void bfmeSlot000T();
@@ -85,10 +104,11 @@ public:
 	virtual void bfmeSlot061T();
 	virtual void bfmeSlot062T();
 	virtual void bfmeSlot063T();
-	virtual void bfmeMarkCK();
+	virtual void bfmeMarkCK();	// vslot 0x100
 };
 
-class BfmeOwnerCK
+// The BfmeSrcCK +0x1FC pointee; only its vslot 0x68 is called.
+class Rva0024CE60Owner
 {
 public:
 	virtual void bfmeSlot000O();
@@ -117,10 +137,11 @@ public:
 	virtual void bfmeSlot023O();
 	virtual void bfmeSlot024O();
 	virtual void bfmeSlot025O();
-	virtual BfmeThingCK *bfmeGetCK();
+	virtual Rva0024CE60Thing *bfmeGetCK();	// vslot 0x68
 };
 
-class BfmeSubCK
+// The this-0x20 secondary base; only its vslot 0x44 is called (slot 17).
+class Rva0024CE60Sub
 {
 public:
 	virtual void bfmeSlot000S();
@@ -140,7 +161,7 @@ public:
 	virtual void bfmeSlot014S();
 	virtual void bfmeSlot015S();
 	virtual void bfmeSlot016S();
-	virtual void bfmeFinishCK();
+	virtual void bfmeSlot017S();	// vslot 0x44, the shared-tail finish call
 };
 
 // The two non-virtual forwards are the landed members of the same this-0x20
@@ -164,12 +185,14 @@ public:
 class BfmeSrcCK
 {
 public:
-	unsigned char m_bfmeHeadCK[0x94];
-	unsigned char m_bfmeFlagsCK;
-	unsigned char m_bfmeMidCK[0x167];
-	BfmeOwnerCK *m_bfmeOwnerCK;
-	unsigned char m_bfmeTailCK[0x14];
-	int m_bfmeGuardCK;
+	// Pads are never read by this body; each is named for the offset it starts
+	// at, per the `char pad[N]` convention in docs/naming_evidence.md:66.
+	unsigned char pad00[0x94];
+	unsigned char m_bfmeFlagsCK;	// +0x94, tested against 0x20
+	unsigned char pad95[0x167];
+	Rva0024CE60Owner *m_bfmeOwnerCK;	// +0x1FC
+	unsigned char pad200[0x14];
+	int m_bfmeGuardCK;	// +0x214, early-out when nonzero
 };
 
 class BfmeHostCK
@@ -183,19 +206,19 @@ void BfmeHostCK::bfmeReactCK(BfmeSrcCK *src)
 	if (src->m_bfmeGuardCK != 0)
 		return;
 
-	BfmeOwnerCK *owner = src->m_bfmeOwnerCK;
-	BfmeThingCK *thing;
-	BfmeSubCK *sub;
+	Rva0024CE60Owner *owner = src->m_bfmeOwnerCK;
+	Rva0024CE60Thing *thing;
+	Rva0024CE60Sub *sub;
 
 	if (owner != 0 && (thing = owner->bfmeGetCK()) != 0)
 	{
 		thing->bfmeMarkCK();
-		sub = (BfmeSubCK *)((char *)this - 0x20);
+		sub = (Rva0024CE60Sub *)((char *)this - 0x20);
 		((Rva0024BA90 *)sub)->update((BfmeRvaBA90Member *)src);
 	}
 	else if ((src->m_bfmeFlagsCK & 0x20) != 0)
 	{
-		sub = (BfmeSubCK *)((char *)this - 0x20);
+		sub = (Rva0024CE60Sub *)((char *)this - 0x20);
 		((Rva0024CDB0 *)sub)->update((BfmeRvaCDB0Member *)src);
 	}
 	else
@@ -203,5 +226,5 @@ void BfmeHostCK::bfmeReactCK(BfmeSrcCK *src)
 		return;
 	}
 
-	sub->bfmeFinishCK();
+	sub->bfmeSlot017S();
 }

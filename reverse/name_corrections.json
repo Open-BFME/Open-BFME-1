@@ -138,5 +138,35 @@
     "after_sha256": "451088403bcc9077ff7c41c9e88ab451a07ac38e6aeeeebe3cfa0368519a85e1",
     "evidence": "docs/naming_evidence.md",
     "reason": "query was a bare virtual-slot name with no witness; the slot index (0x100) is the only evidence, and the new name states exactly that"
+  },
+  {
+    "old_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+    "old_name": "BfmeOwnerCK",
+    "new_name": "Rva0024CE60Owner",
+    "before_sha256": "637f939d39759436cff38a1b8b56d1d35a2a85b66c76cab3b47dbeaf1f841bea",
+    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "BfmeOwnerCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Owner. Not part of the emitted symbol."
+  },
+  {
+    "old_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+    "old_name": "BfmeSubCK",
+    "new_name": "Rva0024CE60Sub",
+    "before_sha256": "637f939d39759436cff38a1b8b56d1d35a2a85b66c76cab3b47dbeaf1f841bea",
+    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "BfmeSubCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Sub. Not part of the emitted symbol."
+  },
+  {
+    "old_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+    "old_name": "BfmeThingCK",
+    "new_name": "Rva0024CE60Thing",
+    "before_sha256": "637f939d39759436cff38a1b8b56d1d35a2a85b66c76cab3b47dbeaf1f841bea",
+    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "BfmeThingCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Thing. Not part of the emitted symbol."
   }
 ]
