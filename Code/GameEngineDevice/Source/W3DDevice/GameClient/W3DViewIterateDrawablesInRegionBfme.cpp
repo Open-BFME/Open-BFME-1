@@ -1,16 +1,22 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // BFME W3DView::iterateDrawablesInRegion, retail 0x0073BB10 (544B).
 //
-// Identity: W3DView vtable 0x011217A0 slot 10 holds this address, the named
-// iterate/pick callers reach it, and the Zero Hour twin (reference/
+// Identity: W3DView vtable 0x011217A0 slot 10 holds this address through
+// the ILT thunk at VA 0x00440755 (ledger ?j_00040755), and the body follows
+// the Zero Hour twin's spine and slot order (reference/
 // CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/W3DDevice/
-// GameClient/W3DView.cpp) has the same spine: normalize the screen region,
-// pick a single drawable when the region is a point, then walk
-// TheGameClient's drawable list projecting each centre through the camera.
+// GameClient/W3DView.cpp): normalize the screen region, pick a single
+// drawable when the region is a point, then walk TheGameClient's drawable
+// list projecting each centre through the camera.  tools/callers_of.py finds
+// no named direct caller.
 //
-// BFME moved m_3DCamera to +0x104 (tools/bfme_layout.py W3DView) and replaced
-// Zero Hour's literal 1.0f with the g_bfmeDefaultBU global at 0x01075334; the
-// pick call also ORs 0x100 into the pick-type mask.
+// BFME moved m_3DCamera to +0x104 (tools/bfme_layout.py W3DView), and the
+// pick call ORs 0x100 into the pick-type mask.
+//
+// TheGameClient is typed ClientRoot4120 to follow reverse/symbols.csv and the
+// landed Rva006957E0ElapsedMs.cpp spelling (VA 0x012F1464); its slot 12 is the
+// proven ?firstDrawable@GameClient@@ at 0x004318B0 (reverse/functions.csv,
+// GameClient vtable 0x01120468).
 //
 // Shape note: the pick-type mask must be computed into its own local before
 // the pickDrawable call.  Spelled inline as an argument, MSVC 7.1 hoists the
@@ -18,15 +24,12 @@
 // candidate and permutes ESI/EDI for `this` and screenRegion across 53 bytes.
 
 typedef int Int;
-typedef unsigned int UnsignedInt;
 typedef float Real;
 typedef bool Bool;
 
 #define NULL 0
 #define TRUE true
 #define FALSE false
-
-extern Real g_bfmeDefaultBU;
 
 struct ICoord2D
 {
@@ -86,7 +89,6 @@ public:
 
 enum PickType
 {
-	PICK_TYPE_NONE = 0
 };
 
 class Drawable
@@ -95,8 +97,12 @@ public:
 	const Coord3D *getPosition() const;
 	Drawable *getNextDrawable() const
 	{
-		return *reinterpret_cast<Drawable *const *>(reinterpret_cast<const unsigned char *>(this) + 0x104);
+		return m_nextDrawable;
 	}
+
+private:
+	unsigned char m_padding[0x104];
+	Drawable *m_nextDrawable;
 };
 
 class ClientRoot4120
@@ -183,10 +189,10 @@ Int W3DView::iterateDrawablesInRegion(IRegion2D *screenRegion,
 			regionIsPoint = TRUE;
 		}
 
-		normalizedRegion.lo.x = ((Real)(screenRegion->lo.x - view->m_originX) / (Real)view->getWidth()) * 2.0f - g_bfmeDefaultBU;
-		normalizedRegion.lo.y = -(((Real)(screenRegion->hi.y - view->m_originY) / (Real)view->getHeight()) * 2.0f - g_bfmeDefaultBU);
-		normalizedRegion.hi.x = ((Real)(screenRegion->hi.x - view->m_originX) / (Real)view->getWidth()) * 2.0f - g_bfmeDefaultBU;
-		normalizedRegion.hi.y = -(((Real)(screenRegion->lo.y - view->m_originY) / (Real)view->getHeight()) * 2.0f - g_bfmeDefaultBU);
+		normalizedRegion.lo.x = ((Real)(screenRegion->lo.x - view->m_originX) / (Real)view->getWidth()) * 2.0f - 1.0f;
+		normalizedRegion.lo.y = -(((Real)(screenRegion->hi.y - view->m_originY) / (Real)view->getHeight()) * 2.0f - 1.0f);
+		normalizedRegion.hi.x = ((Real)(screenRegion->hi.x - view->m_originX) / (Real)view->getWidth()) * 2.0f - 1.0f;
+		normalizedRegion.hi.y = -(((Real)(screenRegion->lo.y - view->m_originY) / (Real)view->getHeight()) * 2.0f - 1.0f);
 	}
 
 	Drawable *onlyDrawableToTest = NULL;
