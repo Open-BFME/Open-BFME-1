@@ -4,3 +4,8 @@
 void Rva003D5C20Noop()
 {
 }
+
+// The carved boundary at 0x003D5C30 contains only a retail ret instruction.
+void Rva003D5C30Noop()
+{
+}
