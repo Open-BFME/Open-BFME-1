@@ -1,12 +1,16 @@
 // ?Rva009B3800PlaneCopy@@YAXPAURva009B3800Context@@HH@Z
-// partial score=0.94 date=2026-09-17
-// Retail 0x009B3800: three-plane VP6 copy/filter helper.
+// Retail 0x009B3800 (503 bytes): three-plane VP6 copy/filter helper.
 //
-// The routine is reached by the anonymous VP6 grid driver at 0x009A6130.
-// Its identity is not recovered beyond the codec role, so the source and
-// function name retain the retail address rather than claiming a class.
-// The context offsets are the same plane layout witnessed by the adjacent
-// Rva009AF200/Rva009AF320 drivers.
+// Reached only from the anonymous VP6 grid driver at 0x009A6130 (2 sites).
+// Identity is not recovered beyond the codec role, so the function and the
+// context keep the retail address token rather than claiming a class name.
+// The context offsets are the plane layout already witnessed by the landed
+// siblings Rva009AF200CopyPlanes.cpp and Rva009AF320CopyPlanes.cpp
+// (m_mode 0x00, m_tableIndex 0x0C, m_planeY/U/V 0x78/0x7C/0x80,
+// m_width 0x90, m_height 0x94, m_strideY 0x98, m_strideUV 0x9C).
+//
+// All seven relocations are DIR32 data references (the two bounding tables and
+// the three indirect callback slots); there are no direct calls and no pins.
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 extern "C" void * __cdecl memcpy(void *, const void *, unsigned int);
@@ -46,20 +50,24 @@ extern Rva009B3800Filter g_rva01356EC4;
 void __cdecl Rva009B3800PlaneCopy(
 	Rva009B3800Context *ctx, int sourceOffset, int destinationOffset)
 {
-	int secondCount;
-	int firstCount;
-	int plane = 0;
+	unsigned char *base = 0;
+	int firstCount = (int)ctx->m_width;
+	int secondCount = (int)ctx->m_height;
+	int plane;
 	int *bounding;
-	unsigned char *base;
-	unsigned int stride;
-	secondCount = (int)ctx->m_height;
-	firstCount = (int)ctx->m_width;
+	unsigned int stride = 0;
+	int mode = ctx->m_mode;
+	int tableIndex = ctx->m_tableIndex;
+	int selector;
 
-	if (ctx->m_mode >= 2)
-		bounding = g_rva01356E64(ctx, g_rva01356A9C[ctx->m_tableIndex]);
+	if (mode >= 2)
+		selector = g_rva01356A9C[tableIndex];
 	else
-		bounding = g_rva01356E64(ctx, g_rva011428E8[ctx->m_tableIndex]);
+		selector = g_rva011428E8[tableIndex];
 
+	bounding = g_rva01356E64(ctx, selector);
+
+	plane = 0;
 	do
 	{
 		switch (plane)
@@ -84,12 +92,13 @@ void __cdecl Rva009B3800PlaneCopy(
 			break;
 		}
 
-		memcpy(base + destinationOffset, base + sourceOffset, stride * 8);
+		unsigned char *dest = base + destinationOffset;
+		memcpy(dest, base + sourceOffset, stride * 8);
 
 		if (firstCount > 1)
 		{
+			unsigned char *cursor = dest + 6;
 			int count = firstCount - 1;
-			unsigned char *cursor = base + destinationOffset + 6;
 			do
 			{
 				g_rva01356E84(ctx, cursor, stride, bounding);
@@ -106,13 +115,14 @@ void __cdecl Rva009B3800PlaneCopy(
 			int rows = secondCount - 1;
 			do
 			{
-				memcpy(base + destinationOffset, base + sourceOffset, stride * 8);
-				g_rva01356EC4(ctx, base + destinationOffset, stride, bounding);
+				unsigned char *rowDest = base + destinationOffset;
+				memcpy(rowDest, base + sourceOffset, stride * 8);
+				g_rva01356EC4(ctx, rowDest, stride, bounding);
 
 				if (firstCount > 1)
 				{
+					unsigned char *cursor = rowDest + 8;
 					int count = firstCount - 1;
-					unsigned char *cursor = base + destinationOffset + 8;
 					do
 					{
 						g_rva01356E84(ctx, cursor - 2, stride, bounding);
