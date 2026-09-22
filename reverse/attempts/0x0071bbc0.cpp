@@ -17,7 +17,7 @@
 typedef unsigned char UnsignedByte;
 typedef unsigned short UnsignedShort;
 
-extern "C" __declspec(dllimport) double __cdecl BfmeFloorER(double value);
+extern "C" __declspec(dllimport) double __cdecl floor(double value);
 
 extern const float BfmeZeroRange;
 extern const float g_bfmeDirectionWeight1285;
@@ -151,7 +151,7 @@ static __forceinline long BfmeFloatToLong(float value)
 
 static __forceinline float BfmeFloor(float value)
 {
-	return (float)BfmeFloorER((double)value);
+	return (float)floor((double)value);
 }
 
 void W3DShroud::render(CameraClass *cam)
