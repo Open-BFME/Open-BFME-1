@@ -390,3 +390,17 @@ opposite fall-through) and 0x00767B30 (248 B). Fleet 55 bodies / 12,143 B
 cumulative; repository-wide +40,659 B / +0.42 pp (67.04% -> 67.46%) since
 the fleet base, +14,630 B of it new total-exact coverage. The cold 450-900
 B slice landed nothing: at that size the `this`-register residue returns.
+
+### Hour 30 — 00:02Z to 01:03Z (two to three seats, cool pools)
+
+One landing: 0x006FD550 (294 B, base destructor of the class installing
+vtable 0x011207C0). New lever from it: when retail's destructor carries an
+SEH frame that a flat reconstruction never triggers, a tiny local guard
+struct whose constructor stores the vtable pointer and whose destructor
+forwards to the base-destructor thunk, constructed as the first statement,
+makes MSVC emit the exact prologue, vtable store and EH-state order. Fleet
+56 bodies / 12,437 B cumulative; repository-wide +42,926 B / +0.44 pp
+(67.04% -> 67.48%) since the fleet base, +15,614 B of it new total-exact
+coverage. Eight further banks this hour, several with newly proven
+identities (BfmeAptScreenOnlineLogin slot 4, GiantBirdAIUpdate slot 0x58,
+an Object vtable slot at 0x001CEE10 via the matched Object constructor).
