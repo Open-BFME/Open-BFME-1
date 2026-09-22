@@ -1,8 +1,19 @@
-// ?initHeightForMap@W3DView@@UAEXXZ
-// partial score=0.99 date=2026-09-16
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
-// Scratch only.  BFME W3DView::initHeightForMap, retail 0x00743520.
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+//
+// BFME W3DView::initHeightForMap, retail 0x00743520.
+//
+// Identity: the Zero Hour twin (reference/CnC_Generals_Zero_Hour/GeneralsMD/
+// Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DView.cpp:2378) has the
+// same spine -- ground height from TheTerrainLogic, a MAX_GROUND_LEVEL clamp,
+// the camera offsets, m_cameraConstraintValid = false, setCameraTransform().
+// The landed neighbours W3DViewResetCameraBfme.cpp (0x00743640) and
+// W3DViewBuildCameraTransformBfme.cpp witness the same W3DView offsets
+// (m_pos 0x0C, m_positionState 0x28, m_cameraScale 0xA0, m_cameraValueA 0x23D8,
+// m_cameraValueB 0x23DC, m_groundLevel 0x23F8, the 0x240C flag byte and the
+// CameraResetAux sub-object at 0x24B8).  name_oracle witnesses m_groundLevel
+// at 0x23F8 and m_cameraConstraintValid at 0x240C.
 
+#include "StringInline.h"
 
 typedef float Real;
 typedef bool Bool;
@@ -14,12 +25,18 @@ struct Coord3D
 	Real z;
 };
 
+// The embedded scalar field at this+0x2448.  The ledger spells its two entry
+// points on two different address-derived classes, so both are declared here
+// and the object is cast to whichever one owns the call:
+//   ?initialize@Rva0045A000@@QAEXPBGHHHH@Z  0x0045A000 (ILT 0x00021549)
+//   ?bfmeReset@Gen_00459F00@@QAEXXZ         0x00459F00 (ILT 0x0002386C)
+// The parameter names come from the landed callee,
+// Code/GameEngine/Source/Common/Rva0045A000ScalarField.cpp.
 class Rva0045A000
 {
 public:
 	void initialize(const unsigned short *source, int unused,
 		int sourceWidth, int sourceHeight, int state);
-	void bfmeReset();
 
 private:
 	void *m_begin;
@@ -32,13 +49,10 @@ private:
 	Bool m_ready;
 };
 
-// The retail caller evaluates these five values in this order while the
-// callee's ABI receives them as (source, unused, width, height, state).
-class Rva0045A000InitOrder
+class Gen_00459F00
 {
 public:
-	void initialize(int state, int height, int width, int unused,
-		const unsigned short *source);
+	void bfmeReset();
 };
 
 class CameraResetAux
@@ -65,16 +79,20 @@ public:
 	virtual void slot18(Real *value, unsigned *position);
 };
 
+// Retail pushes the five map fields right to left, so the field each one
+// feeds is fixed by the callee's own parameter list: +0x24 is the sample
+// source (the only pointer in the decorated ABI), +0x20 the ignored second
+// argument, +0x08 the source width, +0x0C the source height, +0x10 the state.
 class BfmeHeightMap
 {
 public:
 	unsigned char m_padding00[0x08];
 	int m_width;
-	int m_unused;
-	const unsigned short *m_source;
-	unsigned char m_padding14[0x20 - 0x14];
 	int m_height;
 	int m_state;
+	unsigned char m_padding14[0x20 - 0x14];
+	int m_unused;
+	const unsigned short *m_source;
 };
 
 class BfmeA1087
@@ -84,26 +102,9 @@ public:
 	BfmeHeightMap *m_map;
 };
 
-template <typename T>
-class StringBase
-{
-protected:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-
-private:
-	void releaseBuffer();
-	void *m_data;
-};
-
-class BFMERetailAsciiString : private StringBase<char>
-{
-public:
-	BFMERetailAsciiString(const char *text) : StringBase<char>(text) {}
-	~BFMERetailAsciiString() {}
-};
-
+// Slot 6 (+0x18) and slot 36 (+0x90) are the two this body calls; the landed
+// Code/GameEngine/Source/Common/Rva006DF650TriggerArea.cpp already names the
+// +0x90 virtual getTriggerAreaByName and calls it on this same singleton.
 class TerrainLogic
 {
 public:
@@ -143,7 +144,7 @@ public:
 	virtual void slot33();
 	virtual void slot34();
 	virtual void slot35();
-	virtual void *getTriggerAreaByName(class BFMERetailAsciiString name);
+	virtual void *getTriggerAreaByName(AsciiString name);
 };
 
 extern BfmeA1087 *g_bfmeA1087;
@@ -171,26 +172,22 @@ private:
 	unsigned char m_padding240D[0x2448 - 0x240D];
 	Rva0045A000 m_heightField;
 	unsigned char m_padding2468[0x24AC - 0x2468];
-	int m_field24AC;
+	void *m_altCameraTrigger;
 	unsigned char m_padding24B0[0x24B8 - 0x24B0];
 	CameraResetAux m_cameraAux;
 
 	void setCameraTransform();
 };
 
-#pragma comment(linker, "/alternatename:?bfmeReset@Rva0045A000@@QAEXXZ=?bfmeReset@Gen_00459F00@@QAEXXZ")
-#pragma comment(linker, "/alternatename:?setCameraTransform@W3DView@@AAEXXZ=?j_000312a0@@YAXXZ")
-
 void W3DView::initHeightForMap()
 {
-	m_heightField.bfmeReset();
+	reinterpret_cast<Gen_00459F00 *>(&m_heightField)->bfmeReset();
 
 	BfmeHeightMap *map = g_bfmeA1087->m_map;
 	if (map != 0)
 	{
-		reinterpret_cast<Rva0045A000InitOrder *>(&m_heightField)->initialize(
-			map->m_state, map->m_height, map->m_width, map->m_unused,
-			map->m_source);
+		m_heightField.initialize(map->m_source, map->m_unused, map->m_width,
+			map->m_height, map->m_state);
 	}
 
 	m_groundLevel = TheTerrainLogic->getGroundHeight(m_pos.x, m_pos.y, 0);
@@ -200,12 +197,12 @@ void W3DView::initHeightForMap()
 
 	m_cameraAux.slot17();
 	m_cameraAux.slot18(&m_cameraValueA, &m_positionState);
-	volatile Real *cameraScale = &m_cameraScale;
+	m_cameraValueA *= m_cameraScale;
+	m_cameraValueB = m_cameraScale * m_cameraValueB;
 	m_cameraConstraintValid = false;
-	m_cameraValueA = m_cameraValueA * m_cameraScale;
-	m_cameraValueB = *cameraScale * m_cameraValueB;
 	setCameraTransform();
 
-	m_field24AC = (int)TheTerrainLogic->getTriggerAreaByName(
-		BFMERetailAsciiString((const char *)0x01121748));
+	// 0x01121748 is the retail literal "AltCamera".
+	m_altCameraTrigger = TheTerrainLogic->getTriggerAreaByName(
+		AsciiString((const char *)0x01121748));
 }
