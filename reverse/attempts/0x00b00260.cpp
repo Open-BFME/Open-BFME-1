@@ -1,5 +1,5 @@
 // ?rva00B00260RotateVec3Array@@YAXPAVVector3@@PBV1@ABVMatrix3D@@H@Z
-// partial score=0.98 date=2026-09-21
+// partial score=0.99 date=2026-09-22
 // cl: /DNDEBUG /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep
 
 #include "vector3.h"
@@ -24,9 +24,9 @@ public:
 			y += m[1][2] * in->Z;
 			y += m[1][1] * in->Y;
 			out->Y = y;
-			float z = m.Row[2].X * in->X;
+			float z = m.Row[2].Z * in->X;
 			z += m.Row[2].Y * in->Y;
-			z += m.Row[2].Z * in->Z;
+			z += m.Row[2].X * in->Z;
 			out->Z = z;
 			++in;
 			++out;
