@@ -298,5 +298,35 @@
     "after_sha256": "86cec15095130def196c1d9b97a135df9dfb7ef842183203f9ce6ec19e030b6c",
     "evidence": "reverse/attempt_history/0x000f9ff0/naming-review.md",
     "reason": "Independent96-byte vector-element callers prove only an opaque record; the old synthetic library pair/key/value inference is unsupported. Preserve all established member labels and the independently matched Gen_000F9C60 identity; see exact caller and layout review."
+  },
+  {
+    "old_path": "reverse/attempts/0x0026b9d0.cpp",
+    "new_path": "reverse/attempts/0x0026b9d0.cpp",
+    "old_name": "BitFlags128",
+    "new_name": "Rva000C3DD0Mask",
+    "before_sha256": "1d4c976bec99fc021104fa831841578f75eeb6bc58b99d04fbc0e69a04c6eebb",
+    "after_sha256": "3ea3c74db7c6b44c314891b6fc8fcdafd91de70402d5742d4896e922f6466f0c",
+    "evidence": "reverse/attempt_history/0x0026b9d0/20260922-review.md",
+    "reason": "Physical six-word mask copies and selectedbit151 refute the old four-word128-bit shim; preserve unknown logical width with an address-qualified storage view."
+  },
+  {
+    "old_path": "reverse/attempts/0x0026b9d0.cpp",
+    "new_path": "reverse/attempts/0x0026b9d0.cpp",
+    "old_name": "Coord3D",
+    "new_name": "Rva0026B9D0Entry",
+    "before_sha256": "1d4c976bec99fc021104fa831841578f75eeb6bc58b99d04fbc0e69a04c6eebb",
+    "after_sha256": "3ea3c74db7c6b44c314891b6fc8fcdafd91de70402d5742d4896e922f6466f0c",
+    "evidence": "reverse/attempt_history/0x0026b9d0/20260922-review.md",
+    "reason": "False pairing: native included Coord3D retains its identity; new8-byte iterator vector entry is unrelated to the removed12-byte local Coord3D duplicate."
+  },
+  {
+    "old_path": "reverse/attempts/0x0026b9d0.cpp",
+    "new_path": "reverse/attempts/0x0026b9d0.cpp",
+    "old_name": "adapter",
+    "new_name": "rva001AC3D0",
+    "before_sha256": "1d4c976bec99fc021104fa831841578f75eeb6bc58b99d04fbc0e69a04c6eebb",
+    "after_sha256": "3ea3c74db7c6b44c314891b6fc8fcdafd91de70402d5742d4896e922f6466f0c",
+    "evidence": "reverse/attempt_history/0x0026b9d0/20260922-review.md",
+    "reason": "False pairing: TerrainLogicP48::adapter remains unchanged for001A64F0; newly recovered001AC3D0 is a distinct two-argument call target."
   }
 ]
