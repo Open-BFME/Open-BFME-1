@@ -1,12 +1,18 @@
-// ?drawAmmo@Drawable@@AAEXXZ
-// partial score=0.95 date=2026-09-10
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-
-// BFME's no-argument Drawable ammo-pip pass.  The retail body is the helper
-// reached from the group-3/4 icon dispatch at 0x00414BE0.  This TU keeps the
-// BFME-only offsets local: the neighbouring ZH source has an argument-taking
-// variant, while this build reads the cached Drawable health-bar origin and
-// supplies the extra image-draw mode used by the BFME display vtable.
+// ?drawAmmo@Drawable@@AAEXXZ  retail 0x00414BE0 478 bytes
+//
+// BFME's no-argument Drawable ammo-pip pass, reached from the group-3/4 icon
+// dispatch in Drawable::drawIconUI.  The Zero Hour twin
+// (reference/.../GameClient/Drawable.cpp Drawable::drawAmmo) takes the health
+// bar region as an argument; this build reads the cached health-bar origin out
+// of the Drawable instead and passes an extra draw mode to Display::drawImage.
+//
+// The engine singletons are referenced through their pinned decorated symbols
+// rather than literal addresses: a literal-address deref aliases the
+// address-taken Coord3D local, which pushed every global load out of retail's
+// schedule.  `scale` is the SCALE_ICONS_WITH_ZOOM_ML-off branch of the twin --
+// it folds to 1.0f, but it is what puts the bounding-sphere load ahead of the
+// screen-offset load at +0x125.
 
 typedef unsigned char Bool;
 typedef int Int;
@@ -17,6 +23,12 @@ struct Coord3D
 	Real x;
 	Real y;
 	Real z;
+};
+
+struct Coord2D
+{
+	Real x;
+	Real y;
 };
 
 struct ICoord2D
@@ -48,14 +60,14 @@ public:
 
 class Object
 {
-	public:
+public:
 	unsigned char m_unreconstructed_00[0x38];
 	Coord3D m_position;
 	unsigned char m_unreconstructed_44[0xac - 0x44];
 	GeometryInfo m_geometryInfo;
 
 	Player *getControllingPlayer() const;
-	Bool getAmmoPipShowingInfo(Int &numTotal, Int &numFull) const;
+	bool getAmmoPipShowingInfo(Int &numTotal, Int &numFull) const;
 	const Coord3D *getPosition() const
 	{
 		return &m_position;
@@ -66,7 +78,7 @@ class Object
 	}
 };
 
-class BfmeInGameUI
+class InGameUI
 {
 public:
 	virtual void slot00(); virtual void slot01(); virtual void slot02();
@@ -100,7 +112,7 @@ public:
 	virtual Int getMousedOverDrawableID() const;
 };
 
-class BfmeTacticalView
+class View
 {
 public:
 	virtual void slot00(); virtual void slot01(); virtual void slot02();
@@ -132,10 +144,10 @@ public:
 	virtual void slot78(); virtual void slot79(); virtual void slot80();
 	virtual void slot81(); virtual void slot82(); virtual void slot83();
 	virtual void slot84(); virtual void slot85(); virtual void slot86();
-	virtual Int worldToScreen(Coord3D *world, ICoord2D *screen);
+	virtual Int worldToScreen(const Coord3D *world, ICoord2D *screen);
 };
 
-class BfmeDisplay
+class Display
 {
 public:
 	virtual void slot00(); virtual void slot01(); virtual void slot02();
@@ -160,29 +172,33 @@ public:
 		Real endX, Real endY, Int color, Int mode);
 };
 
-struct BfmeGlobalData
+class GlobalData
 {
+public:
 	unsigned char m_unreconstructed_0000[0x1c0];
-	Real m_ammoPipWorldOffsetX;
-	Real m_ammoPipWorldOffsetY;
-	Real m_ammoPipWorldOffsetZ;
-	unsigned char m_unreconstructed_1cc[0x1dc - 0x1cc];
-	Real m_ammoPipScreenOffsetY;
-	unsigned char m_unreconstructed_1e0[0xa8d - 0x1e0];
+	Coord3D m_ammoPipWorldOffset;
+	unsigned char m_unreconstructed_01cc[0x1d8 - 0x1cc];
+	Coord2D m_ammoPipScreenOffset;
+	unsigned char m_unreconstructed_01e0[0xa8d - 0x1e0];
 	Bool m_showObjectHealth;
 };
 
-struct BfmePlayerList
+struct Rva002EE330PlayerList
 {
 	unsigned char m_unreconstructed_00[0x0c];
 	Player *m_localPlayer;
 };
 
-#define TheGlobalData (*(BfmeGlobalData **)0x012ed5c8)
-#define ThePlayerList (*(BfmePlayerList **)0x012ed748)
-#define TheInGameUI (*(BfmeInGameUI **)0x012f148c)
-#define TheTacticalView (*(BfmeTacticalView **)0x012f1600)
-#define TheDisplay (*(BfmeDisplay **)0x012f1270)
+extern GlobalData *TheWritableGlobalData;
+extern InGameUI *TheInGameUI;
+extern View *TheTacticalView;
+extern Display *TheDisplay;
+extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+
+#define TheGlobalData TheWritableGlobalData
+#define ThePlayerList Rva002EE330ThePlayers
+
+// 0x012F12D4 / 0x012F12D8 carry no ledger pin: address-derived, kept literal.
 #define s_fullAmmo (*(const Image **)0x012f12d4)
 #define s_emptyAmmo (*(const Image **)0x012f12d8)
 
@@ -198,13 +214,9 @@ class Drawable
 		return *(Int *)((char *)this + 0x100);
 	}
 
-	private:
+private:
 	void drawAmmo();
 };
-
-#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getAmmoPipShowingInfo@Object@@QBE_NAAH0@Z=?j_0001858e@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getMaxHeightAbovePosition@GeometryInfo@@QBE_MXZ=?j_0003c7e0@@YAXXZ")
 
 // ?drawAmmo@Drawable@@AAEXXZ
 void Drawable::drawAmmo()
@@ -216,7 +228,7 @@ void Drawable::drawAmmo()
 
 	if (!*(Bool *)((char *)this + 0x3ac))
 	{
-		BfmeInGameUI *ui = TheInGameUI;
+		InGameUI *ui = TheInGameUI;
 		if (!ui)
 			return;
 		Int drawableID = getID();
@@ -239,36 +251,35 @@ void Drawable::drawAmmo()
 	if (!emptyAmmo)
 		return;
 
-	Int boxWidth = (Int)((Real)emptyAmmo->m_imageWidth);
-	Int boxHeight = (Int)((Real)emptyAmmo->m_imageHeight);
-
-	const BfmeGlobalData *globalData;
-	Coord3D pos = {
-		obj->m_position.x,
-		(globalData = TheGlobalData, obj->m_position.y),
-		obj->m_position.z
-	};
-	pos.x += globalData->m_ammoPipWorldOffsetX;
-	pos.y += globalData->m_ammoPipWorldOffsetY;
-	pos.z += TheGlobalData->m_ammoPipWorldOffsetZ +
-		obj->getGeometryInfo().getMaxHeightAbovePosition();
+	// SCALE_ICONS_WITH_ZOOM_ML is off in this build.
+	Real scale = 1.0f;
+	Int boxWidth = (Int)((Real)emptyAmmo->m_imageWidth * scale);
+	Int boxHeight = (Int)((Real)emptyAmmo->m_imageHeight * scale);
 
 	ICoord2D screenCenter;
-	BfmeTacticalView *tacticalView = TheTacticalView;
-	if (tacticalView->worldToScreen(&pos, &screenCenter) != 0)
+	Coord3D pos = {
+		obj->m_position.x,
+		obj->m_position.y,
+		obj->m_position.z
+	};
+	pos.x += TheGlobalData->m_ammoPipWorldOffset.x;
+	pos.y += TheGlobalData->m_ammoPipWorldOffset.y;
+	pos.z += TheGlobalData->m_ammoPipWorldOffset.z +
+		obj->getGeometryInfo().getMaxHeightAbovePosition();
+	if (TheTacticalView->worldToScreen(&pos, &screenCenter) != 0)
 		return;
 
-	Real bounding = obj->getGeometryInfo().getBoundingSphereRadius();
+	Real bounding = obj->getGeometryInfo().getBoundingSphereRadius() * scale;
 	Int posx = *(Int *)((char *)this + 0x3c4);
 	Int posy = screenCenter.y +
-		(Int)(TheGlobalData->m_ammoPipScreenOffsetY * bounding);
+		(Int)(TheGlobalData->m_ammoPipScreenOffset.y * bounding);
 
 	for (Int i = 0; i < numTotal; ++i)
 	{
 		const Image *image = s_fullAmmo;
 		if (i >= numFull)
 			image = s_emptyAmmo;
-		BfmeDisplay *display = TheDisplay;
+		Display *display = TheDisplay;
 		display->drawImage(image,
 			(Real)posx, (Real)(posy + 1),
 			(Real)(posx + boxWidth), (Real)(posy + 1 + boxHeight), -1, 2);
