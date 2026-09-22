@@ -146,8 +146,8 @@ typedef Bool (Rva0060D480CampaignGate::*OpenCall)() const;
 typedef Bool (Rva003BF540::*AllowedCall)();
 typedef Bool (Gen00609320::*DisabledCall)() const;
 typedef Bool (Rva003BF540::*ReadyCall)() const;
-typedef AsciiString *(Gen003BD7D0Node::*CopyCall)(AsciiString *);
-typedef int (Rva00367E30Logic::*LookupCall)(AsciiString *);
+typedef StringBase<char> *(Gen003BD7D0Node::*CopyCall)(StringBase<char> *);
+typedef int (Rva00367E30Logic::*LookupCall)(StringBase<char> *);
 typedef AsciiString *(Rva00367E30Logic::*BuildCall)(AsciiString *, void *);
 typedef AsciiString &(AsciiString::*AssignCall)(const char *);
 typedef Rva003BD770 *(Rva003BD770::*MessageCtor)(
@@ -199,15 +199,15 @@ static Bool ownerIsReady(const Rva003BF540 *self)
 	return (self->*call.member)();
 }
 
-static AsciiString *copyOwnerName(Gen003BD7D0Node *owner,
-	AsciiString *out)
+static StringBase<char> *copyOwnerName(Gen003BD7D0Node *owner,
+	StringBase<char> *out)
 {
 	RawMember<CopyCall> call;
 	call.raw = j_0004958a;
 	return (owner->*call.member)(out);
 }
 
-static int lookupOwner(Rva00367E30Logic *logic, AsciiString *name)
+static int lookupOwner(Rva00367E30Logic *logic, StringBase<char> *name)
 {
 	RawMember<LookupCall> call;
 	call.raw = j_00045c87;
