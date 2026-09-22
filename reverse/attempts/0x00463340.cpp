@@ -1,5 +1,5 @@
 // ?bfmeStep1_004647E0@@YAXXZ
-// partial score=0.35 date=2026-09-09
+// partial score=0.36 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Scratch reconstruction for the ASM-backed S3 helper at retail RVA 0x00463340.
 
@@ -135,7 +135,7 @@ struct S3RefMap
 	void add(S3Registration *registration);
 };
 
-static S3Tree *const s_tree = reinterpret_cast<S3Tree *>(0x012F19CC);
+extern S3Tree Rva012F19CCTree;
 static S3Guard **const s_guard = reinterpret_cast<S3Guard **>(0x012F198C);
 static WindowManager **const s_windowManager =
 	reinterpret_cast<WindowManager **>(0x012F19E8);
@@ -147,7 +147,7 @@ extern GameWindowManager *TheWindowManager;
 
 void bfmeStep1_004647E0(void)
 {
-	S3Node *header = s_tree->m_header;
+	S3Node *header = Rva012F19CCTree.m_header;
 	S3Node *node = reinterpret_cast<S3Node *>(header->m_left);
 	while (node != header)
 	{
@@ -156,13 +156,13 @@ void bfmeStep1_004647E0(void)
 			reinterpret_cast<_STL::_Rb_tree_node_base *>(node)));
 	}
 
-	if (s_tree->m_nodeCount != 0)
+	if (Rva012F19CCTree.m_nodeCount != 0)
 	{
-		s_tree->erase(reinterpret_cast<S3Node *>(header->m_parent));
+		Rva012F19CCTree.erase(reinterpret_cast<S3Node *>(header->m_parent));
 		header->m_left = header;
 		header->m_parent = 0;
 		header->m_right = header;
-		s_tree->m_nodeCount = 0;
+		Rva012F19CCTree.m_nodeCount = 0;
 	}
 
 	S3Guard *guard = *s_guard;
