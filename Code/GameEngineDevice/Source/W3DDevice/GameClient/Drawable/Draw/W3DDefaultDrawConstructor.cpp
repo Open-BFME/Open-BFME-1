@@ -1,5 +1,4 @@
 // ??0W3DDefaultDraw@@QAE@PAVThing@@PBVModuleData@@@Z
-// partial score=0.99 date=2026-09-16
 // cl: /DNDEBUG /MD /EHsc
 
 // W3DDefaultDraw::W3DDefaultDraw, retail 0x007513C0, 568 bytes.
@@ -14,9 +13,13 @@
 // BFME's render interfaces predate the Zero Hour headers, so the retail virtual
 // slots and the extended shadow descriptor stay local to this translation unit,
 // exactly as W3DDebrisDraw.cpp already keeps them.
-
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
+//
+// The override walk is the Zero Hour header's own recursive inline
+// (reference/.../Code/GameEngine/Include/Common/Overridable.h): the compiler
+// expands one level at each getTemplate() call and calls the out-of-line copy
+// for the tail, which is what retail's 0x00087A80 walker is. Hand-expanding
+// that level instead puts the merged pointer in EAX; letting MSVC inline it
+// reproduces retail's xor ecx,ecx null arm and shared mov ecx,eax merge.
 
 typedef unsigned char Bool;
 typedef float Real;
@@ -59,7 +62,12 @@ private:
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const;
+	const Overridable *getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
 
 
 	unsigned int m_vfptr;
@@ -81,20 +89,9 @@ public:
 
 	Rva00751390Host *getTemplate() const
 	{
-		Rva00751390Host *host;
-		if (m_template != 0)
-		{
-			if (m_template->m_nextOverride == 0)
-				host = (Rva00751390Host *)m_template;
-			else
-				host = (Rva00751390Host *)m_template->m_nextOverride->getFinalOverride();
-		}
-		else
-		{
-			_ReadWriteBarrier();
-			host = 0;
-		}
-		return host;
+		if (!m_template)
+			return 0;
+		return (Rva00751390Host *)m_template->getFinalOverride();
 	}
 
 	unsigned int m_vfptr;
