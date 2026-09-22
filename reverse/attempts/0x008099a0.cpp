@@ -1,5 +1,5 @@
 // ?finish@Rva0080A940Owner@@QAE_NXZ
-// partial score=0.76 date=2026-09-09
+// partial score=0.77 date=2026-09-22
 // cl: /O2 /GX- /GS
 //
 // Retail 0x0080A940: fill a FESL game-browser record from a message -- TID,
@@ -174,7 +174,7 @@ bool Rva0080A940Owner::finish()
 	char response[ 0x1000 ];
 	char messageBuffer[ 0x80 ];
 	int result = 0;
-	char * volatile cursor = response;
+	char *cursor = response;
 	register char *nullPointer = 0;
 	int remaining = Rva0080F180( owner->m_field0c,
 		reinterpret_cast< Rva007EA650FieldAddress * >(
