@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "afeaef3e62e9d48997fb71a0706d1b2adabb58697922f414f0b24c5890eb2aab",
+  "symbol": "?count@Rva00271AE0Owner@@QAEHXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?count@Rva00271AE0Owner@@QAEHXZ\n// partial score=0.97 date=2026-09-04\n// ?count@Rva00271AE0Owner@@QAEHXZ\n// partial score=0.96 date=2026-09-03\n// cl: /DNDEBUG /MD\n\nclass Rva00271AE0Named\n{\npublic:\n\tvirtual void bfmeAnchor(void);\n\n\tint getID(void) const { return m_id; }\n\n\tint m_id;\n};\n\nclass Rva00271AE0Host\n{\npublic:\n\tchar m_pad00[0x1c];\n\tRva00271AE0Named *m_fallback;\n\tchar m_pad20[0x44 - 0x20];\n\tchar *m_begin;\n\tchar *m_end;\n\tchar m_pad4c[0x58 - 0x4c];\n\tRva00271AE0Named *m_primary;\n};\n\nclass Rva00271AE0Owner\n{\npublic:\n\tint count(void);\n\nprivate:\n\tchar m_pad00[0x30];\n\tRva00271AE0Host *m_host;\n};\n\nint Rva00271AE0Owner::count(void)\n{\n\tRva00271AE0Named *named = m_host->m_primary;\n\tint id = named != 0 ? named->getID() : 0xF423F;\n\tif (id == 0xF423F)\n\t{\n\t\tnamed = m_host->m_fallback;\n\t\tid = named != 0 ? named->getID() : 0xF423F;\n\t}\n\tif (id != 6)\n\t\treturn 0;\n\treturn (m_host->m_end - m_host->m_begin) / 6;\n}\n"
+}
