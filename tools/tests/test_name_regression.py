@@ -396,3 +396,23 @@ def test_retained_class_spelling_does_not_hide_unrelated_method_rename():
     }
     """
     assert ('BfmeThingESN', 'Rva00256AE0') in N.regressions(before, after)
+
+
+@pytest.mark.parametrize('spelling', ['__declspec', '_declspec'])
+@pytest.mark.parametrize('attribute', ['naked', 'noinline', 'novtable'])
+def test_compiler_attribute_is_not_a_name_lost_during_conversion(spelling, attribute):
+    before = f'{spelling}({attribute}) void d_004af520() {{ __asm {{ ret }} }}'
+    after = 'typedef char Check[sizeof(Rva00344C50CounterMap) == 12 ? 1 : -1];'
+    assert N.regressions(before, after) == []
+
+
+def test_attribute_spelling_does_not_exempt_an_actual_function_name():
+    before = '__declspec(naked) void generated() {}\nvoid naked() {}'
+    after = '__declspec(naked) void generated() {}\nvoid Rva00123456() {}'
+    assert ('naked', 'Rva00123456') in N.regressions(before, after)
+
+
+def test_attribute_does_not_exempt_the_function_it_annotates():
+    before = '__declspec(naked) void calculateScore() {}'
+    after = '__declspec(naked) void Rva00123456() {}'
+    assert ('calculateScore', 'Rva00123456') in N.regressions(before, after)

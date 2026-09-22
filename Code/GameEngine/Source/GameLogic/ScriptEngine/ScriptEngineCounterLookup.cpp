@@ -43,13 +43,18 @@ template<> struct less<Rva00344C50Key>
 
 typedef std::map<Rva00344C50Key, ScriptCounter> Rva00344C50CounterMap;
 
+typedef std::map<Rva00344C50Key, bool> Rva00344F40FlagMap;
+typedef char CounterMapHasRetailSize[sizeof(Rva00344C50CounterMap) == 12 ? 1 : -1];
+
 class ScriptEngine
 {
 	char m_beforeCounterMap[0x16040];
 	Rva00344C50CounterMap m_counters;
+	Rva00344F40FlagMap m_flags;
 
 protected:
 	ScriptCounter *bfmeCounter(AsciiString name);
+	bool *bfmeFlagForWrite(AsciiString name);
 };
 
 ScriptCounter *ScriptEngine::bfmeCounter(AsciiString name)
@@ -59,5 +64,18 @@ ScriptCounter *ScriptEngine::bfmeCounter(AsciiString name)
 	ScriptCounter initial = {0, false, false};
 	std::pair<Rva00344C50CounterMap::iterator, bool> result =
 		m_counters.insert(std::make_pair(key, initial));
+	return &result.first->second;
+}
+
+// The adjacent writable-flag getter uses the same key and lifetime sequence.
+// Matched setFlag/evaluateFlag callers prove bool storage, and retail uses
+// the next twelve-byte map at +1604C. Its native insert_unique is00341C70.
+bool *ScriptEngine::bfmeFlagForWrite(AsciiString name)
+{
+	AsciiString canonical = ((BfmeScriptEngineSlashName *)this)->bfmeName(name);
+	Rva00344C50Key key(canonical, name);
+	bool initial = false;
+	std::pair<Rva00344F40FlagMap::iterator, bool> result =
+		m_flags.insert(std::make_pair(key, initial));
 	return &result.first->second;
 }

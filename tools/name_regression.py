@@ -86,7 +86,13 @@ def regressions(before, after):
                               old_pos > 0 and new_pos > 0 and
                               old[old_pos - 1] in ('class', 'struct') and
                               new[new_pos - 1] == 'namespace')
-                if downgrade(x, y) and not moved_type:
+                # A bare MSVC attribute can align with a new sizeof operand.
+                # Exempt this occurrence, not real identifiers named "naked".
+                compiler_attribute = (
+                    old_pos >= 2 and old_pos + 1 < len(old) and
+                    old[old_pos - 2] in ('__declspec', '_declspec') and
+                    old[old_pos - 1] == '(' and old[old_pos + 1] == ')')
+                if downgrade(x, y) and not moved_type and not compiler_attribute:
                     found.add((x, y))
     left, right = layouts(before), layouts(after)
     for owner, members in left.items():
