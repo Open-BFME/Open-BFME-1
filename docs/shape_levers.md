@@ -964,3 +964,16 @@ reproduces retail's returned-pointer temporary in EAX and all 332B. The lookup
 behavior follows the existing Overridable contract; no padding instruction or
 member-function-pointer union is needed. See
 [living-world boundary evidence](living_world_parser_boundary.md).
+
+## A free-call declaration can conceal a live receiver
+
+At RVA `0035E710`, the bank declared a five-argument `__stdcall` free
+function and its three-argument helper the same way. Twenty blocked verdicts
+attributed its missing byte to register allocation and loop alignment. But
+the physical helper `0035E5A0` (ILT `0000CEC8`) preserves incoming ECX in
+EBX and addresses that receiver at +0C/+18. The caller leaves ECX intact.
+Declaring both as members of an opaque address-derived owner restores the
+retail ESI save/restore and loop NOP: 56/56 bytes, one operand byte remaining
+(`mov eax,[edx]` versus `[eax]` after `mov edx,eax`). This is an improved
+bank, not an exact conversion. Inspect the callee's use of incoming ECX
+before treating an unused-in-the-caller ECX as a spare register.

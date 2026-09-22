@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "511e3ccf7bbd9de52b9f68a024ef8e5fe9c775ff01d6df64d357cde7809bff04",
+  "symbol": "?bfmeUnlinkZN@Rva0035E710Owner@@QAEXPAXPAPAUBfmeNodeZN@@PAU2@00@Z",
+  "score_kind": "author-estimate",
+  "score": 0.98,
+  "source": "// ?bfmeUnlinkZN@Rva0035E710Owner@@QAEXPAXPAPAUBfmeNodeZN@@PAU2@00@Z\n// partial score=0.98 date=2026-09-22\nstruct BfmeNodeZN\n{\n\tBfmeNodeZN *m_bfmeNextZN;\n};\n\nclass Rva0035E710Owner {\npublic:\n void bfmeDoZN(void *a, BfmeNodeZN **link, void *what);\n void bfmeUnlinkZN(void *a, BfmeNodeZN **link, BfmeNodeZN *target, void *fallback, void *chosen);\n};\n\nvoid Rva0035E710Owner::bfmeUnlinkZN(void *a, BfmeNodeZN **link, BfmeNodeZN *target,\n                            void *fallback, void *chosen)\n{\n\tBfmeNodeZN *cur = *link;\n\n\twhile (cur != target)\n\t{\n\t\tif (cur == 0)\n\t\t\treturn;\n\n\t\tlink = &cur->m_bfmeNextZN;\n\t\tcur = *link;\n\t}\n\n\tbfmeDoZN(a, link, chosen != 0 ? chosen : fallback);\n}\n"
+}
