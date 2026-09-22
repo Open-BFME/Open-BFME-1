@@ -171,6 +171,10 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         sys.exit("harvest: changed shared dependencies need a separate verified commit; not sweeping them into fleet work")
     subprocess.run([sys.executable, "tools/fleet/ledger_prep.py"], cwd=ROOT,
                    env=dict(os.environ, HARVEST_HAS_LOCK="1"), check=True)
+    # ledger_prep runs dedup_csv, which sorts: restore HEAD order before anything
+    # is staged (2026-09-22: the sorted file made name_regression pair InGameUI.cpp
+    # with Rva0042TinyBodies.cpp and report 14 bogus regressions).
+    minimal_diff_ledgers()
     # Only fleet-owned evidence and ledger-cited sources belong in this commit.
     # Never sweep unrelated docs/tools/headers or every dirty Code source.
     evidence = [p for p in ("reverse/functions.csv", "reverse/symbols.csv",

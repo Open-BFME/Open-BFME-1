@@ -1,12 +1,20 @@
-// ?bfmeAdd1226@BfmeR1226@@QAEXPAX0H@Z
-// partial score=0.78 date=2026-09-04
-// ?bfmeAdd1226@BfmeR1226@@QAEXPAX0H@Z
-// partial score=0.78 date=2026-09-02
-// ?bfmeAdd1226@BfmeR1226@@QAEXPAX0H@Z
+// ?d_008cced0@@YAXXZ
+// partial score=0.7733333333333333 date=2026-09-22
+// ?run@Rva008CCED0BytecodeRunner@@QAEPAEPAX0H@Z
+// Retail 008CCED0: thiscall; 3 stack dwords; ret 0C; EAX cursor.
+// Analyst docs/analysis/0x008cf740.md plus full entry-to-retail-ret disassembly.
+// Context: +00 cursor +04 receiver +08 held value +0C stop cursor +10 lookup +14 stop byte.
+// makeValue -> 008CC940 thiscall six args ret18 pointer result;
+// popValues -> 008A0CF0 thiscall count ret4 (including zero on bounded path);
+// Rva8CCED0IdleHook::run -> 008A30C0 thiscall zero args.
+// Globals: opcode table VA012D5A68; marker holder VA01338700;
+// fallback pointer VA013379BC; idle hook pointer VA01337810.
+// Resume: first divergence +A5 branch placement; 373/375B 81 positional differences.
+// The volatile parameter/local preserve retail reloads and the reused argument stack slot.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // bounded Apt bytecode execution helper, retail 0x008CCED0 (375 bytes).
 
-class BfmeR1226Value
+class Rva008CCED0BytecodeRunnerValue
 {
 public:
 	virtual void addRef();
@@ -19,22 +27,22 @@ public:
 	unsigned m_flags;
 };
 
-class BfmeR1226;
-struct BfmeR1226ExecContext
+class Rva008CCED0BytecodeRunner;
+struct Rva008CCED0BytecodeRunnerExecContext
 {
 	unsigned char *m_cursor;
 	int m_unknown04;
-	BfmeR1226Value *m_heldValue;
+	Rva008CCED0BytecodeRunnerValue *m_heldValue;
 	unsigned char *m_end;
-	BfmeR1226Value *m_created;
+	Rva008CCED0BytecodeRunnerValue *m_created;
 	bool m_stopped;
 };
 
-typedef void (__cdecl *BfmeR1226Opcode)(BfmeR1226 *, BfmeR1226ExecContext *);
+typedef void (__cdecl *Rva008CCED0BytecodeRunnerOpcode)(Rva008CCED0BytecodeRunner *, Rva008CCED0BytecodeRunnerExecContext *);
 
-extern BfmeR1226Opcode g_bfmeR1226Opcodes[];
+extern Rva008CCED0BytecodeRunnerOpcode g_bfmeR1226Opcodes[];
 extern int g_rva8CCED0RouteMarker;
-extern BfmeR1226Value *g_bfmeFallbackDB;
+extern Rva008CCED0BytecodeRunnerValue *g_bfmeFallbackDB;
 
 class Rva8CCED0IdleHook
 {
@@ -46,15 +54,15 @@ public:
 
 extern Rva8CCED0IdleHook *g_rva8CD130IdleHook;
 
-class BfmeR1226
+class Rva008CCED0BytecodeRunner
 {
 public:
-	void bfmeAdd1226(void *code, void *value, int limit);
-	BfmeR1226Value *makeValue(BfmeR1226Value *value, int zero, void *marker,
+	unsigned char *run(void *code, void *value, int limit);
+	Rva008CCED0BytecodeRunnerValue *makeValue(Rva008CCED0BytecodeRunnerValue *value, int zero, void *marker,
 		int one1, int one2, int zero2);
 	void popValues(int count);
 
-	void pushValue(BfmeR1226Value *value)
+	void pushValue(Rva008CCED0BytecodeRunnerValue *value)
 	{
 		m_stack[m_count++] = value;
 		if (!value->maxRefCountHit())
@@ -63,88 +71,86 @@ public:
 
 	int m_count;
 	int m_unused;
-	BfmeR1226Value **m_stack;
+	Rva008CCED0BytecodeRunnerValue **m_stack;
 	char m_gap0c[0x24];
 	int m_ownedCount;
 	int m_ownedCapacity;
-	BfmeR1226Value **m_ownedValues;
+	Rva008CCED0BytecodeRunnerValue **m_ownedValues;
 	char m_gap3c[0x40];
 	int m_stop;
 	int m_savedStackBase;
 };
 
-void BfmeR1226::bfmeAdd1226(void *code, void *valueArgument, volatile int limit)
+unsigned char *Rva008CCED0BytecodeRunner::run(void *code, void *valueArgument, volatile int limit)
 {
 	unsigned char *start = (unsigned char *)code;
 	if (limit == -1)
 	{
-		m_ownedValues[m_ownedCount++] = (BfmeR1226Value *)valueArgument;
-		((BfmeR1226Value *)valueArgument)->addRef();
+		m_ownedValues[m_ownedCount++] = (Rva008CCED0BytecodeRunnerValue *)valueArgument;
+		((Rva008CCED0BytecodeRunnerValue *)valueArgument)->addRef();
 	}
-	BfmeR1226Value *value = (BfmeR1226Value *)valueArgument;
+	Rva008CCED0BytecodeRunnerValue *value = (Rva008CCED0BytecodeRunnerValue *)valueArgument;
 
 	int zero = 0;
-	BfmeR1226ExecContext execute;
+	Rva008CCED0BytecodeRunnerExecContext execute;
 	execute.m_unknown04 = (int)value;
-	execute.m_heldValue = (BfmeR1226Value *)zero;
+	execute.m_heldValue = (Rva008CCED0BytecodeRunnerValue *)zero;
 	execute.m_cursor = start;
 	execute.m_end = (unsigned char *)zero;
 	execute.m_created = makeValue(value, zero, &g_rva8CCED0RouteMarker, 1, 1, zero);
 	execute.m_stopped = (bool)zero;
 	volatile int oldStackBase = m_savedStackBase;
-	bool stopped = false;
+	int bound;
 	m_savedStackBase = m_count;
 	for (;;)
 	{
 		if (m_stop != zero)
+		{
+			bound = limit;
 			break;
+		}
 		if (execute.m_end != (unsigned char *)zero && execute.m_cursor == execute.m_end)
 		{
 			execute.m_heldValue->release();
-			execute.m_heldValue = (BfmeR1226Value *)zero;
+			execute.m_heldValue = (Rva008CCED0BytecodeRunnerValue *)zero;
 			execute.m_end = (unsigned char *)zero;
 		}
 
 		unsigned opcode = *execute.m_cursor++;
+		bound = limit;
 		if (execute.m_stopped)
-			goto afterExecution;
-		if (limit >= zero && execute.m_cursor - start > limit)
-			goto pushFallback;
+			break;
+		if (bound >= zero && execute.m_cursor - start > bound)
+		{
+			pushValue(g_bfmeFallbackDB);
+			break;
+		}
 		if (opcode == (unsigned)zero)
 		{
-			if (limit < zero)
-				goto afterExecution;
-			goto pushFallback;
+			if (bound >= zero)
+				pushValue(g_bfmeFallbackDB);
+			break;
 		}
 		g_bfmeR1226Opcodes[opcode](this, &execute);
 	}
-
-afterExecution:
-	if (m_count > m_savedStackBase)
-	{
-		int excess = m_count - m_savedStackBase;
-		if (limit >= zero)
-			--excess;
-		if (excess > zero)
-			popValues(excess);
-	}
-	goto finishCleanup;
-
-pushFallback:
-	pushValue(g_bfmeFallbackDB);
-	goto afterExecution;
+	int count = m_count;
+	if (bound >= zero && count > m_savedStackBase)
+		popValues(count - m_savedStackBase - 1);
+	else if (count > m_savedStackBase)
+		popValues(count - m_savedStackBase);
 
 finishCleanup:
 	m_savedStackBase = oldStackBase;
 
-	if (limit == -1)
+	if (bound == -1)
 	{
 		m_ownedValues[m_ownedCount - 1]->release();
 		--m_ownedCount;
 	}
 
-	if ((m_count == zero || (m_count == 1 && m_stack[zero] == g_bfmeFallbackDB)) &&
+	if ((m_count == zero || (m_count == 1 && m_stack[m_count - 1] == g_bfmeFallbackDB)) &&
 		g_rva8CD130IdleHook->m_enabled != zero)
 		g_rva8CD130IdleHook->run();
 
+	return execute.m_cursor;
 }
