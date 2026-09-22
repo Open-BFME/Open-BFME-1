@@ -195,10 +195,6 @@ class W3DDefaultDraw : public DrawModule
 public:
 	W3DDefaultDraw( Thing *thing, const ModuleData *moduleData );
 
-	virtual void doDrawModule( const BfmeTransform *transformMtx );
-	virtual void setShadowsEnabled( Bool enable );
-	virtual void setFullyObscuredByShroud( Bool fullyObscured );
-
 private:
 	RenderObjClass *m_renderObject;
 	Shadow *m_shadow;

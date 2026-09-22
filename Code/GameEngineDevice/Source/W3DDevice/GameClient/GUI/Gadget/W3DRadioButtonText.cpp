@@ -93,7 +93,17 @@ public:
 };
 
 // drawRadioButtonText ========================================================
-/** Draw the text for a RadioButton */
+/** Draw the text for a RadioButton.
+ *  Retail 0x00796310 (289 B) is this same-TU static, so VC7.1 passes its two
+ *  parameters in registers: window arrives in ECX (it becomes the `this` of
+ *  every GameWindow accessor call) and instData in EAX (+0x05 mov ebx,eax then
+ *  +0x07 mov esi,[ebx+0x19c] = WinInstanceData::m_text); the caller at
+ *  0x00796480+0x1f8 loads them the same way. An earlier note stated the
+ *  opposite assignment; the disassembly above is the correct one. That
+ *  convention only reproduces beside in-TU callers, which is why the two draw
+ *  callbacks below restate Gadget/W3DRadioButton.cpp's definitions; they stay
+ *  unclaimed near misses on their gen_asm rows (0x00796480, 0x00796710), the
+ *  same arrangement W3DPushButton and W3DStaticText already use. */
 //=============================================================================
 static void drawRadioButtonText( GameWindow *window, WinInstanceData *instData )
 {
