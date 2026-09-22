@@ -1,8 +1,26 @@
+// ?handleGameStart@LANAPI@@IAEXPAULANMessage@@I@Z
+// partial score=0.92 date=2026-09-21
 // ?d_0068bfa0@@YAXXZ
-// partial score=0.9 date=2026-09-11
+// partial: every retail instruction reproduced in order; frame is one slot too big
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
 
 // BFME LANAPI::handleGameStart, retail 0x0068BFA0, 285 bytes.
+//
+// 2026-09-21: the handler is an if/ELSE, not the sequential flow the earlier
+// bank had.  Retail's `eb 47 jmp +0xf9` at +0xb0 skips the OnPlayerLeave /
+// removeGame / delete teardown when onSerializedGameInfo returns true, so the
+// teardown is the else arm.  With that corrected every retail instruction,
+// register and immediate is reproduced in order; only the frame differs.
+// /FAsc listing: ours reads
+//     _options$536 = -16 / __$EHRec$ = -12 / _msg$ = 8 / $T585 = 12 /
+//     $T584 = 12 / _senderIP$ = 12
+// Retail allocates NOTHING (`add esp,0xc`, no `push ecx`): it puts the
+// long-lived string on _senderIP$ (esp+0x1c) and both short temporaries on
+// _msg$ (esp+0x18).  VC7.1 hands dead incoming-argument homes to compiler
+// TEMPORARIES before named locals and prefers the highest free home, so the
+// two branch temporaries take senderIP's home first and `options` -- whose
+// range covers the `mov eax,[esp+0x18]` read of msg -- can reach neither home
+// and gets a fresh slot.  That extra `push ecx` is the whole 286-vs-285.
 // The update jump table at 0x00A87A28 routes this handler through ILT
 // 0x0001529E. The handler compares the sender's address pair, passes the
 // serialized game-info payload through vtable slot 39, and tears down the
@@ -118,13 +136,16 @@ void LANAPI::handleGameStart(LANMessage *msg, UnsignedInt senderIP)
 				GenerateGameOptionsString();
 				OnGameStart();
 			}
-			OnPlayerLeave(m_name);
-			removeGame(m_currentGame);
-			LANGameInfo *gameToDelete = m_currentGame;
-			if (gameToDelete)
-				delete gameToDelete;
-			m_currentGame = 0;
-			m_inLobby = true;
+			else
+			{
+				OnPlayerLeave(m_name);
+				removeGame(m_currentGame);
+				LANGameInfo *gameToDelete = m_currentGame;
+				if (gameToDelete)
+					delete gameToDelete;
+				m_currentGame = 0;
+				m_inLobby = true;
+			}
 		}
 	}
 }
