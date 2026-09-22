@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "06c07c346b97424aca7aa2ac48737f0f7c4a238085490797da63e78c87dad2f1",
+  "symbol": "?bfmeEraseAAF@BfmeHostAAF@@QAE_NPAX_N@Z",
+  "score_kind": "author-estimate",
+  "score": 0.45,
+  "source": "// ?bfmeEraseAAF@BfmeHostAAF@@QAE_NPAX_N@Z\n// partial score=0.45 date=2026-09-22\nstruct BfmeStrAAF\n{\n\t~BfmeStrAAF();\n\n\tvoid *m_bfmeDataAAF;\n};\n\nstruct BfmeNodeAAF\n{\n\tBfmeNodeAAF *m_bfmeNextAAF;\n\tBfmeNodeAAF *m_bfmePrevAAF;\n\tBfmeStrAAF m_bfmeStrAAF;\n};\n\nstruct BfmeIterAAF\n{\n\tBfmeIterAAF(BfmeNodeAAF *n) { m_bfmeNodeAAF = n; }\n\tBfmeIterAAF(const BfmeIterAAF &o) throw() { m_bfmeNodeAAF = o.m_bfmeNodeAAF; }\n\n\tBfmeNodeAAF *m_bfmeNodeAAF;\n};\n\nBfmeIterAAF bfmeFindAAF(BfmeIterAAF first, BfmeIterAAF last, void *value, void *tag);\n\nnamespace _STL\n{\n\nclass __node_alloc\n{\npublic:\n\tstatic void _M_deallocate(void *p, unsigned int n);\n};\n\n}\n\nclass BfmeHostAAF\n{\npublic:\n\tbool bfmeEraseAAF(void *key, bool doErase);\n\n\tunsigned char m_bfmeHeadAAF[0x17260];\n\tBfmeNodeAAF *m_bfme17260AAF;\n};\n\nbool BfmeHostAAF::bfmeEraseAAF(void *key, bool doErase)\n{\n\tBfmeIterAAF lastIt(m_bfme17260AAF);\n\tBfmeIterAAF firstIt(m_bfme17260AAF->m_bfmeNextAAF);\n\tBfmeNodeAAF *n = bfmeFindAAF(firstIt, lastIt, key, &doErase).m_bfmeNodeAAF;\n\n\tif (n == m_bfme17260AAF)\n\t\treturn false;\n\n\tif (!doErase)\n\t\treturn true;\n\n\tBfmeNodeAAF *pv = n->m_bfmePrevAAF;\n\tBfmeNodeAAF *nx = n->m_bfmeNextAAF;\n\n\tpv->m_bfmeNextAAF = nx;\n\tnx->m_bfmePrevAAF = pv;\n\n\tn->m_bfmeStrAAF.~BfmeStrAAF();\n\t_STL::__node_alloc::_M_deallocate(n, 12);\n\n\treturn true;\n}\n"
+}
