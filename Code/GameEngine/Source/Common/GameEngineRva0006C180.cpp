@@ -1,5 +1,3 @@
-// ?d_0006c180@@YAXXZ
-// partial score=0.9953 date=2026-09-18
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /Ireference/shims/sweep
 
 #include <windows.h>
@@ -10,15 +8,31 @@ __declspec(dllimport) void __cdecl bfmeFree1035(void *);
 extern "C" void *__cdecl memset(void *, int, unsigned int);
 #pragma intrinsic(memset)
 
+typedef int BOOL;
+typedef unsigned char EngineBool;
+
+struct AsciiStringLayout
+{
+	void *m_data;
+};
+
+// layout mirrors the landed sibling
+// Code/GameEngine/Source/Common/GameEngineTerminateChildProcesses.cpp
 class GameEngine
 {
 public:
+	virtual void slot00(void);
+
 	void Rva0006C180(void *value);
 
 private:
-	char m_padding[0x10];
-	int m_childProcessCount;
-	HANDLE m_childProcesses[7];
+	AsciiStringLayout m_name;       // 0x04, inherited SubsystemInterface::m_name
+	int m_maxFPS;                   // 0x08
+	EngineBool m_quitting;          // 0x0C
+	EngineBool m_isActive;          // 0x0D
+	char m_alignment0E[2];
+	int m_childProcessCount;        // 0x10
+	HANDLE m_childProcesses[7];     // 0x14
 };
 
 void GameEngine::Rva0006C180(void *value)
@@ -55,7 +69,6 @@ void GameEngine::Rva0006C180(void *value)
 		PROCESS_INFORMATION processInformation;
 		int number = 1;
 		HANDLE *processSlot = m_childProcesses;
-		count = (int)value;
 		for (int remaining = (int)value; remaining > 0; --remaining)
 		{
 			char *cursor = environmentCopy;
@@ -84,6 +97,7 @@ void GameEngine::Rva0006C180(void *value)
 				environmentCopy, 0, &startupInformation, &processInformation);
 			*processSlot++ = processInformation.hProcess;
 			++number;
+			++count;
 		}
 	}
 
