@@ -1,7 +1,21 @@
-// ?iterateDrawablesInRegion@W3DView@@UAEHPAUIRegion2D@@P6A_NPAVDrawable@@PAX@Z2@Z
-// partial score=0.9 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Scratch BFME-layout probe for W3DView::iterateDrawablesInRegion.
+// BFME W3DView::iterateDrawablesInRegion, retail 0x0073BB10 (544B).
+//
+// Identity: W3DView vtable 0x011217A0 slot 10 holds this address, the named
+// iterate/pick callers reach it, and the Zero Hour twin (reference/
+// CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Source/W3DDevice/
+// GameClient/W3DView.cpp) has the same spine: normalize the screen region,
+// pick a single drawable when the region is a point, then walk
+// TheGameClient's drawable list projecting each centre through the camera.
+//
+// BFME moved m_3DCamera to +0x104 (tools/bfme_layout.py W3DView) and replaced
+// Zero Hour's literal 1.0f with the g_bfmeDefaultBU global at 0x01075334; the
+// pick call also ORs 0x100 into the pick-type mask.
+//
+// Shape note: the pick-type mask must be computed into its own local before
+// the pickDrawable call.  Spelled inline as an argument, MSVC 7.1 hoists the
+// vtable load above the Rva00459060 call into EBX, which adds a call-crossing
+// candidate and permutes ESI/EDI for `this` and screenRegion across 53 bytes.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -85,7 +99,7 @@ public:
 	}
 };
 
-class GameClient
+class ClientRoot4120
 {
 public:
 	virtual void slot00() = 0;
@@ -113,9 +127,9 @@ private:
 	Bool m_forceAttackMode;
 };
 
-extern GameClient *TheGameClient;
+extern ClientRoot4120 *TheGameClient;
 extern InGameUI *TheInGameUI;
-extern UnsignedInt getPickTypesForContext(Bool forceAttackMode);
+extern int Rva00459060(bool forceAttackMode);	///< ILT 0x0000F2C2 -> 0x00459060
 
 class W3DView
 {
@@ -178,8 +192,8 @@ Int W3DView::iterateDrawablesInRegion(IRegion2D *screenRegion,
 	Drawable *onlyDrawableToTest = NULL;
 	if (regionIsPoint)
 	{
-		onlyDrawableToTest = view->pickDrawable(&screenRegion->lo, TRUE,
-			(PickType)(getPickTypesForContext(TheInGameUI->isInForceAttackMode()) | 0x100));
+		PickType pickType = (PickType)(Rva00459060(TheInGameUI->isInForceAttackMode()) | 0x100);
+		onlyDrawableToTest = view->pickDrawable(&screenRegion->lo, TRUE, pickType);
 		if (onlyDrawableToTest == NULL)
 		{
 			return 0;

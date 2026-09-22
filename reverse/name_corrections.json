@@ -888,5 +888,15 @@
   "after_sha256": "7933ef63b832307fa5afb4adedf89e60afc759380a10d36e5ccfee943b22dd16",
   "evidence": "reverse/symbols.csv",
   "reason": "0x0107FAA8 has no symbols.csv pin (searched and absent); the macro name follows the address-derived-constant precedent set by Code/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp line 16 rather than inventing a pin. g_0107FAA8 was the bank author's placeholder spelling with no ledger backing."
+ },
+ {
+  "old_path": "reverse/attempts/0x0073bb10.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewIterateDrawablesInRegionBfme.cpp",
+  "old_name": "getPickTypesForContext",
+  "new_name": "Rva00459060",
+  "before_sha256": "79194bbf965698246b6fe07b2f2518c4f368082518748276ef79f6e4c1ca865b",
+  "after_sha256": "c43d11fbbfbd9ed92d48b8286ceabd792e1d16ded54296838cfe24590cf80282",
+  "evidence": "reverse/functions.csv",
+  "reason": "getPickTypesForContext was the bank's semantic spelling for the callee reached through ILT 0x0000F2C2; that decorated name is in neither ledger, so the call could not resolve. reverse/functions.csv holds the body at 0x00459060 as ?Rva00459060@@YAH_N@Z (returning int), which the landed matched caller PickDrawableStructConstructor.cpp also spells, so the TU uses that ledger identity."
  }
 ]

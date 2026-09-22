@@ -2263,7 +2263,6 @@ void W3DView::screenToWorld( const ICoord2D *s, Coord3D *w )
 	* the test are returned.
 	Screen coordinates assumed in absolute values relative to full display resolution. */
 //-------------------------------------------------------------------------------------------------
-// ?iterateDrawablesInRegion@W3DView@@ present-unmatched
 Int W3DView::iterateDrawablesInRegion( IRegion2D *screenRegion,
 																			 Bool (*callback)( Drawable *draw, void *userData ),
 																			 void *userData )
