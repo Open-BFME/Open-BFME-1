@@ -1,6 +1,7 @@
 // ?isLocationSafe@AIPlayer@@QAE_NPBUCoord3D@@PBVThingTemplate@@@Z
-// partial score=0.55 date=2026-09-09
+// partial score=0.56 date=2026-09-22
 // Open-BFME5 conversions.
+// cl: /DNDEBUG /MD /EHsc /FAsc /Fabuild/target_00163030_base.cod
 //
 // AIPlayer::isLocationSafe, retail RVA 0x00163030, 388 bytes, SEH-framed.
 //
@@ -115,16 +116,42 @@ struct VptrZeroBlock24
 class Rva00160BE0VptrZeroBlockObject : public PartitionFilter
 {
 public:
-	Rva00160BE0VptrZeroBlockObject(const VptrZeroBlock24 &first, const VptrZeroBlock24 &second);
+	__declspec(nothrow) Rva00160BE0VptrZeroBlockObject(const VptrZeroBlock24 &first, const VptrZeroBlock24 &second);
+	~Rva00160BE0VptrZeroBlockObject(void)
+	{
+		m_vptr = 0x01083B5C;
+	}
 
 	VptrZeroBlock24 m_first;
 	VptrZeroBlock24 m_second;
 };
 
+__declspec(noinline) __declspec(nothrow) Rva00160BE0VptrZeroBlockObject::Rva00160BE0VptrZeroBlockObject(
+	const VptrZeroBlock24 &first, const VptrZeroBlock24 &second)
+	: m_first(first), m_second(second)
+{
+}
+
 // Pinned as ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B (BFME 192-bit
 // KindOfMask, 24 bytes -- matches VptrZeroBlock24's size).
-template <unsigned int NUMBITS> class BitFlags;
+template <unsigned int NUMBITS> class BitFlags : public VptrZeroBlock24
+{
+public:
+	enum BogusInitType { kInit = 0 };
+
+	BitFlags(BogusInitType, unsigned int bit)
+	{
+		m_dword_00 = 0;
+		m_dword_04 = 0;
+		m_dword_08 = 0;
+		m_dword_0C = 0;
+		m_dword_10 = 0;
+		m_dword_14 = 0;
+		((unsigned int *)this)[bit >> 5] |= 1U << (bit & 31);
+	}
+};
 extern const BitFlags<192> KINDOFMASK_NONE;
+
 
 class PartitionFilterInsignificantBuildings : public PartitionFilter
 {
@@ -229,36 +256,17 @@ public:
 
 Bool AIPlayer::isLocationSafe(const Coord3D *pos, const ThingTemplate *tthing)
 {
-	if (!tthing)
-		return false;
+	Bool safe = false;
+	if (tthing != 0)
+	{
 
 	Real radius = tthing->getBoundingCircleRadius() + TheAI->m_aiData->m_supplyCenterSafeRadius;
 
-	VptrZeroBlock24 harvesterMask;
-	harvesterMask.m_dword_00 = 0;
-	harvesterMask.m_dword_08 = 0;
-	harvesterMask.m_dword_0C = 0;
-	harvesterMask.m_dword_10 = 0;
-	harvesterMask.m_dword_14 = 0;
-	unsigned int harvesterBit = 0;
-	harvesterBit |= 0x4000;
-	harvesterMask.m_dword_04 = harvesterBit;
-
 	Rva00160BE0VptrZeroBlockObject filterHarvesters(
-		harvesterMask, reinterpret_cast<const VptrZeroBlock24 &>(KINDOFMASK_NONE));
-
-	VptrZeroBlock24 dozerMask;
-	dozerMask.m_dword_00 = 0;
-	dozerMask.m_dword_08 = 0;
-	dozerMask.m_dword_0C = 0;
-	dozerMask.m_dword_10 = 0;
-	dozerMask.m_dword_14 = 0;
-	unsigned int dozerBit = 0;
-	dozerBit |= 0x10000;
-	dozerMask.m_dword_04 = dozerBit;
+ 	BitFlags<192>(BitFlags<192>::kInit, 46), KINDOFMASK_NONE);
 
 	Rva00160BE0VptrZeroBlockObject filterDozer(
-		dozerMask, reinterpret_cast<const VptrZeroBlock24 &>(KINDOFMASK_NONE));
+		BitFlags<192>(BitFlags<192>::kInit, 48), KINDOFMASK_NONE);
 
 	PartitionFilterInsignificantBuildings filterInsignificant(true, false);
 	BfmeFilterV0109685C filterUnknownV685C(m_player, false);
@@ -272,7 +280,7 @@ Bool AIPlayer::isLocationSafe(const Coord3D *pos, const ThingTemplate *tthing)
 					filterDozer.link(&filterHarvesters)))));
 
 	Object *enemy = ThePartitionManager->getClosestObject(pos, radius, 3, filters);
-	if (enemy)
-		return false;
-	return true;
+		safe = enemy == 0;
+	}
+	return safe;
 }
