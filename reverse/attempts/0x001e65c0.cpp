@@ -1,5 +1,5 @@
 // ?getAimPosition@WeaponTemplate@@QAEPAUCoord3D@@PAU2@PBVObject@@1H@Z
-// partial score=0.52 date=2026-09-10
+// partial score=0.52 date=2026-09-22
 // cl: /DNDEBUG /MD /EHsc
 
 // BFME WeaponTemplate::getAimPosition, retail RVA 0x001E65C0 (444 bytes).
@@ -132,7 +132,7 @@ Coord3D *WeaponTemplate::getAimPosition(Coord3D *result,
 	}
 	else
 	{
-		if (weaponSlot != 0)
+		if ((unsigned char)weaponSlot != 0)
 		{
 			Int seed = GetGameLogicRandomValue(0, 0xBC614E, g_bfmeFmt1041,
 				0x62D);
