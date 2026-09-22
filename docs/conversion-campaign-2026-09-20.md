@@ -415,3 +415,19 @@ Fleet 57 bodies / 12,703 B cumulative; repository-wide +44,369 B / +0.46 pp
 (67.04% -> 67.50%) since the fleet base, +15,622 B of it new total-exact
 coverage. The cool pool widened to twelve landed rows within 0x1000 still
 holds 530 bodies / 141 KB with at most two prior verdicts.
+
+### Hour 32 — 02:03Z to 03:03Z (two seats, fresh cool bodies)
+
+Five landings / 1,232 B — the best hour since hour 6, from seats given
+FRESH cool-region bodies (at most one prior verdict, fourteen or fewer
+landed rows within 0x1000). Fleet 62 bodies / 13,935 B cumulative;
+repository-wide +49,505 B / +0.51 pp (67.04% -> 67.55%) since the fleet
+base, +17,113 B of it new total-exact coverage.
+
+| RVA | Bytes | Symbol |
+|---|---:|---|
+| 0x00520670 | 257 | ??0AptMapPreview@@QAE@XZ |
+| 0x005EFD60 | 404 | ??0T1Base_005EFD60@@QAE@PAX0@Z |
+| 0x003BEC30 | 167 | ?finish@Rva003BEED0@@QAEXXZ |
+| 0x0019BA40 | 331 | ?append@Rva0019BE80TeamRec@@QAEHPBVDict@@@Z |
+| 0x0075BF30 | 73 | ?apply@Rva0075BF30Forwarder@@QAEXPAX@Z |
