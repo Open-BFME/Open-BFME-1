@@ -1929,7 +1929,15 @@ Field table `0x01116000` — 71 fields
 
 Parsed by `0x00614F50`
 
-_No field table: this block parses its body directly._
+Field table `0x01116D18`, returned by the getter at `0x006185F0`:
+
+| Field | Offset | Parser RVA |
+|---|---|---|
+| `ObjectType` | `0x00C` | `0x00851050` |
+| `DefaultFlashValue` | `0x010` | `0x00852B20` |
+| `FlashVariation` | `0x014` | `0x00852B20` |
+
+See [boundary and identity evidence](living_world_parser_boundary.md).
 
 ### `LivingWorldPlayerArmy`
 

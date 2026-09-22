@@ -4,8 +4,9 @@
 // The constructor at 0x0061BF00 proves mapped identity and 0x34-byte size.
 // Native find and operator[] preserve the iterator/temporary structure absent
 // from the old opaque-method bank; this also fixes its three-register cycle.
-// Index 0x006150F0 is independently exact at142B, but currently overlaps an
-// older mislabeled naked lift. It is a dependency pin, not a coverage claim.
+// Index0x006150F0 is independently exact at142B and has its own ledger row.
+// The overlapping naked lift was retired with parser614F50; boundary evidence
+// is recorded in docs/living_world_parser_boundary.md.
 // _M_find: ILT0002DB0A ->00613AE0; _M_insert: ILT00004435 ->00614BC0.
 // Both take thiscall references; node key is +4 and mapped value is +8.
 #define _STLP_NO_EXCEPTIONS 1
