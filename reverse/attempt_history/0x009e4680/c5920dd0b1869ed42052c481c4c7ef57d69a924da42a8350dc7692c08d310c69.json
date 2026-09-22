@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "c5920dd0b1869ed42052c481c4c7ef57d69a924da42a8350dc7692c08d310c69",
+  "symbol": "?Load@INIClass@@QAEHAAVStraw@@@Z",
+  "score_kind": "author-estimate",
+  "score": 1.0,
+  "source": "// ?Load@INIClass@@QAEHAAVStraw@@@Z\n// partial score=1.0 date=2026-09-22\n// cl: /DNDEBUG /D_WINDOWS /MD /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep /EHsc\n// Exact target candidate: /EHsc applied to the existing full INIClass TU.\n#include \"../Code/Libraries/Source/WWVegas/WWLib/ini.cpp\"\n"
+}
