@@ -88663,3 +88663,8 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?rva00010B2CTarget@@YAXXZ,0x0028DC60,address-qualified ILT route; destination independently matched as PropagandaTowerBehaviorModuleData constructor
 ?rva00011E87Target@@YAXXZ,0x000BF260,address-qualified ILT route; destination independently matched as Coord3D list insert-dispatch body
 ?rva00014470Target@@YAXXZ,0x003B5E20,address-qualified ILT route; destination independently matched as ProductionPrerequisite vector allocate-and-copy body
+?friend_getAIModuleInfo@ThingTemplate@@QAEPAVAIUpdateModuleData@@XZ,0x00030A44,001BD0D0 ThingTemplate receiver; ILT to13FB60 module-info scan matches released friend_getAIModuleInfo
+?bfmeResetANB@ThingTemplate@@QAEXW4LocomotorSetType@@PBVLocomotorTemplate@@@Z,0x00015749,001BD0D0 set then LocomotorTemplate pointer; ILT to147560 clears/appends map at34C; ret8
+?bfmeGoDST@ThingTemplate@@QAEXW4LocomotorSetType@@M@Z,0x000174FE,001BD0D0 set then Speed value; FieldParse names Speed with parseReal; ILT to146270 stores map at340; ret8
+?lookup@Rva001B70E0LocomotorStore@@QAEPBVLocomotorTemplate@@ABVAsciiString@@@Z,0x00045007,001BD0D0 witnessed member-call view; ILT to1B70E0 accepts stringref and returns template; optimized callee reloads storeglobal; ret4
+?TheRva001B70E0LocomotorStore@@3PAVRva001B70E0LocomotorStore@@A,0x012EF504,Store global independently loaded by001BD0D0 and001B70E0; VA
