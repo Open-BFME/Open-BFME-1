@@ -1,6 +1,6 @@
 // ?parseTarget@Rva0014C8E0@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.95 date=2026-09-16
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// partial score=0.974489796 date=2026-09-21
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: the Target field parser of the AI AttackPriority block, retail
 // 0x0014C8E0, 196 bytes.
@@ -51,59 +51,10 @@ public:
 
 void Open2Construct14BBC0( Open2Rec14BBC0 *place, const Open2Rec14BBC0 &value );
 
-namespace _STL
-{
-
-template <class T, class Alloc>
-class list;
-
-template <bool threads, int instance>
-class __node_alloc
-{
-	template <class T, class Alloc>
-	friend class list;
-
-	static void *_M_allocate( unsigned int bytes );
-};
-
-struct _List_node_base
-{
-	_List_node_base *_M_next;
-	_List_node_base *_M_prev;
-};
-
-template <class T>
-struct _List_node : public _List_node_base
-{
-	T _M_data;
-};
-
-template <class T>
-class allocator
-{
-};
-
-template <class T, class Alloc>
-class list
-{
-public:
-	typedef _List_node<T> _Node;
-
-	_Node *_M_node;
-
-	__forceinline void push_back( const T &value )
-	{
-		_List_node_base *at = _M_node;
-		_Node *node = (_Node *)__node_alloc<true, 0>::_M_allocate( sizeof( _Node ) );
-		Open2Construct14BBC0( &node->_M_data, value );
-		_List_node_base *before = at->_M_prev;
-		node->_M_next = at;
-		node->_M_prev = before;
-		before->_M_next = node;
-		at->_M_prev = node;
-	}
-};
-
+#include <list>
+namespace _STL {
+template <> __forceinline void _Construct<Open2Rec14BBC0, Open2Rec14BBC0>(Open2Rec14BBC0 *place, const Open2Rec14BBC0 &value) { Open2Construct14BBC0(place, value); }
+template <> __forceinline void list<Open2Rec14BBC0, allocator<Open2Rec14BBC0> >::push_back(const Open2Rec14BBC0 &value) { insert(end(), value); }
 }
 
 typedef _STL::list<Open2Rec14BBC0, _STL::allocator<Open2Rec14BBC0> > Open2Rec14BBC0List;
@@ -132,29 +83,7 @@ void Rva0014C8E0::parseTarget( INI *ini, void *instance, void *store, const void
 	}
 }
 
-// Nine of 196 bytes differ and both residues are register choices.
-//
-// At +0x6b retail loads store into eax, the count into edx and the list into
-// ecx. We load them in the same order into edx, ecx and eax. At +0xb8 retail
-// writes fs:[0] and then pops esi, while we pop esi first. Every other byte
-// matches, including the frame slots, the unwind states and the whole guard
-// chain.
-//
-// push_back needs __forceinline. Without it MSVC leaves it out of line and the
-// body comes to 177 bytes. Reading the list pointer into a local before the
-// count assignment is what fixed the load order, which took the body from
-// fourteen differing bytes to nine.
-//
-// These spellings moved neither residue: a pointer-to-pointer local, a
-// reference to the list, a comma expression, a named local for the count, the
-// assignment operator in place of set, a real AsciiString member on
-// ThingTemplate, a named reference to the source string, a free function
-// instead of a static member, allocating the node before reading the sentinel,
-// dropping the record's default constructor for an explicit zero store, and
-// value-initialising both members. The flag sweep /O1 /Os /Ot /Gy /G5 /G6 /Ob1
-// /EHs /EHa /GX /MT /MDd /Zp1 /Zp16 /GS /Gd /W4 changed nothing either.
-//
-// The 0.95 bank of 2026-09-06 stalled on the same two residues. What is new
-// here is the identity above and the two callee names, since 0x0014BBC0 now
-// carries ?Open2Construct14BBC0@@YAXPAVOpen2Rec14BBC0@@ABV1@@Z instead of a
-// gen-tgrid pair placeholder.
+// Native list and force-inlined native push_back preserve the retail FS restore
+// before pop ESI. Five bytes remain in the store/priority/list register shuttle
+// at +0x6b..+0x79. The _Construct specialization delegates to the already-landed
+// Open2Construct14BBC0; no new pin is required by this reconstruction.

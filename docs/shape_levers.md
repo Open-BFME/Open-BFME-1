@@ -925,3 +925,23 @@ rethrows. Restoring that `try` around the update call, and ending the temporary
 entry's scope before updating the free head, matched all 331 parent bytes with
 native STLport and Dict headers. Stack padding and exception-flag sweeps had
 missed this behavior; the following catch remains a separate ledger extent.
+
+Native containers can change caller register allocation without changing its
+operations. At `0x006155E0` the opaque map-method bank had a three-register
+cycle across a 150-byte get-or-create body. The constructor independently
+identified the mapped value as `LivingWorldSound*`; native
+`hash_map<AsciiString, LivingWorldSound*>` find/index operations reproduce all
+150 bytes. Its 142-byte index helper also probes exact, but an older overlapping
+naked lift prevents claiming that helper until the boundary is repaired.
+
+At `0x0077D150`, native vector `insert`/`push_back` removes synthetic stack pads
+and supplies the placement-copy exception state, landing 437 bytes. The first
+record member is a narrow string and the next forty bytes are condition bits,
+independently witnessed by the default and copy constructors. Preserve those
+contracts and include the canonical string header; a misleading old alias is
+not identity evidence.
+
+Native list also fixes the FS-restore/pop ordering in the banked Target parser
+`0x0014C8E0` (nine differences reduced to five) and font parser `0x0043A3B0`
+(six reduced to two). Those residuals remain unlanded; do not treat this lever
+as a guarantee or repeat old register-only sweeps.
