@@ -1,5 +1,10 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/asciistring_outofline /Ireference/shims/iniexception /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// ?parseFX@BridgeBehaviorModuleData@@SAXPAVINI@@PAX1PBX@Z
+// Retail 0x001F5500: BridgeDieFX FieldParse row at VA 0x010A28D0
+// in table 0x010A28B0; its ILT 0x0002FE32 jumps to this body.
+// Native STLport list preserves retail exception-frame restoration order.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Ireference/shims/asciistring_outofline /Ireference/shims/iniexception /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 
+// stlport
 #include "Common/AsciiString.h"
 #include "Common/INIException.h"
 
@@ -35,78 +40,21 @@ public:
 	static void parseFX( INI *, void *, void *, const void * );
 };
 
+struct BridgeFXInfo
+{
+    const FXList *fx;
+    TimeAndLocationInfo timeAndLocationInfo;
+};
+
+#include <list>
+
 namespace _STL
 {
-
-class __new_alloc
-{
-public:
-static void *__cdecl allocate( unsigned int bytes );
-};
-
-template <class T1, class T2>
-void __cdecl _Construct( T1 *destination, const T2 &value );
-
-template <class T>
-class allocator
-{
-};
-
-struct _List_node_base
-{
-	_List_node_base *m_next;
-	_List_node_base *m_previous;
-};
-
-template <class T>
-struct _List_node : public _List_node_base
-{
-	T m_data;
-};
-
-template <class T>
-struct _List_iterator
-{
-	_List_iterator( _List_node_base *node ) : m_node( node ) {}
-
-	_List_node_base *m_node;
-};
-
-template <class T, class Allocator>
-class list
-{
-public:
-	typedef _List_node<T> Node;
-
-	Node *m_node;
-
-	__forceinline void push_back( const T &value )
-	{
-		_List_node_base *at = m_node;
-		Node *node = (Node *)__new_alloc::allocate( sizeof( Node ) );
-		_Construct( &node->m_data, value );
-
-		_List_node_base *before = at->m_previous;
-		node->m_next = at;
-		node->m_previous = before;
-		before->m_next = node;
-		at->m_previous = node;
-	}
-};
-
+// Retail calls this instantiation out of line through ILT 0x00007C84.
+// Body 0x001F32A0 checks destination, copies the first eight bytes, then
+// constructs the narrow string at +8 via 0x00887B60. Keep that boundary.
+template <> void _Construct<BridgeFXInfo, BridgeFXInfo>(BridgeFXInfo *, const BridgeFXInfo &);
 }
-
-struct Rva001F52F0Element
-{
-	FXList *fx;
-	UnsignedInt delay;
-	AsciiString boneName;
-
-	~Rva001F52F0Element()
-	{
-		boneName.~AsciiString();
-	}
-};
 
 struct BoneNameSlot
 {
@@ -135,24 +83,13 @@ static void parseTimeAndLocationInfo( INI *ini, void *instance, TimeAndLocationI
 	}
 }
 
-// ?keepParseTimeAndLocationInfo absent-from-retail
-static __declspec( noinline ) void keepParseTimeAndLocationInfo( INI *ini, void *instance, TimeAndLocationInfo *info )
+void BridgeBehaviorModuleData::parseFX( INI *ini, void *instance, void *store, const void * )
 {
-	parseTimeAndLocationInfo( ini, instance, info );
-}
-
-void (* volatile keepParseTimeAndLocationInfoAnchor)( INI *, void *, TimeAndLocationInfo * ) =
-	keepParseTimeAndLocationInfo;
-
-// ?parseFX_unlanded absent-from-retail
-#if 0
-void BridgeBehaviorModuleData::parseFX_unlanded( INI *ini, void *instance, void *store, const void * )
-{
+	BridgeFXInfo item;
 	const char *token;
-	Rva001F52F0Element item;
 	item.fx = 0;
-	_STL::list<Rva001F52F0Element, _STL::allocator<Rva001F52F0Element> > *bridgeFXList =
-		(_STL::list<Rva001F52F0Element, _STL::allocator<Rva001F52F0Element> > *)store;
+	_STL::list<BridgeFXInfo, _STL::allocator<BridgeFXInfo> > *bridgeFXList =
+		(_STL::list<BridgeFXInfo, _STL::allocator<BridgeFXInfo> > *)store;
 
 	const char *sepsColon = *(const char **)((const char *)ini + 0x41C);
 	token = ini->getNextToken( sepsColon );
@@ -162,7 +99,6 @@ void BridgeBehaviorModuleData::parseFX_unlanded( INI *ini, void *instance, void 
 	FXList *fx;
 	INI::parseFXList( ini, instance, &fx, 0 );
 	item.fx = fx;
-	parseTimeAndLocationInfo( ini, instance, (TimeAndLocationInfo *)( (char *)&item + 4 ) );
+	parseTimeAndLocationInfo( ini, instance, &item.timeAndLocationInfo );
 	bridgeFXList->push_back( item );
 }
-#endif
