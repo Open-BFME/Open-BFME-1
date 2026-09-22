@@ -88738,3 +88738,4 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?rva00107A50@Radar@@QAEXPAVObject@@@Z,0x00107A50,Object setTeam001C6F10+137 via ILT11383; Radar receiver and Object argument; independently matched72B radar color refresh ret4
 ?Rva01336E50EmptyString@@3VAsciiString@@B,0x01336E50,Narrow empty-string object used by both nullable TeamPrototype name accessors in Object setTeam001C6F10; one-word AsciiString view
 ?rva001DE2A0@BfmeCell@@QAEXPBUCoord3D@@MHPAX@Z,0x00004D27,BfmeCellGrid sweep 0x001B1AD0 calls this ILT to the exact 0x001DE2A0 cell body; this is &m_cells[index] so the 16-float pair at +0/+0x40 is the BfmeCell sample array
+?downloadFile@DownloadManager@@UAEJVAsciiString@@00000_N@Z,0x00626B10,target 0x004C8010 calls the complete seven-string virtual download helper through ILT 0x000370FB

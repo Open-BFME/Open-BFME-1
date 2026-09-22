@@ -2,6 +2,52 @@
 // getErrorString retail4C7970 is recovered in NetworkStringGetterIdentities.cpp from this OnError caller.
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
+
+#include <string.h>
+#define ASCIISTRING_H
+#include "string_base.h"
+
+class AsciiString : private StringBase<char>
+{
+public:
+	static AsciiString TheEmptyString;
+	AsciiString() : StringBase<char>() {}
+	AsciiString(const char *text) : StringBase<char>(text) {}
+	AsciiString(const AsciiString &other) : StringBase<char>(other) {}
+	~AsciiString() {}
+
+	const char *str() const
+	{
+		return m_data ? m_data->data : "";
+	}
+
+	const char *reverseFind(char character) const
+	{
+		const char *start = m_data ? m_data->data : "";
+		const char *cursor = start + (m_data ? m_data->length : 0);
+		while (cursor != start)
+		{
+			--cursor;
+			if (*cursor == character)
+				return cursor;
+		}
+		return 0;
+	}
+
+	__forceinline void set(const char *text)
+	{
+		((StringBase<char> *)this)->set(text, text ? strlen(text) : 0);
+	}
+
+	int compareNoCase(const AsciiString &other) const;
+
+	void __cdecl format(AsciiString format, ...);
+};
+
+inline bool operator==(const AsciiString &left, const AsciiString &right)
+{
+	return left.compareNoCase(right) == 0;
+}
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -70,8 +116,6 @@
 // 0x00888400 (??0?$StringBase@G@@AAE@ABV0@@Z) directly. The vendored
 // UnicodeString.h leaves the copy ctor declared and undefined, so without this
 // cl emits an out-of-line call to ??0UnicodeString@@QAE@ABV0@@Z instead.
-#include "string_base.h"
-
 inline UnicodeString::UnicodeString(const UnicodeString &stringSrc)
 {
 	((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
@@ -188,7 +232,31 @@ private:
 };
 
 // ?downloadFile@DownloadManagerMunkee@@UAEJVAsciiString@@00000_N@Z
-// Body in DownloadMenu_downloadFile.asm (exact 805B retail).
+HRESULT DownloadManagerMunkee::downloadFile( AsciiString server, AsciiString username, AsciiString password, AsciiString file, AsciiString localfile, AsciiString regkey, Bool tryResume )
+{
+	if (strstr(localfile.str(), "patches\\") != NULL)
+	{
+		m_shouldQuitOnSuccess = true;
+	}
+
+	if (staticTextFile)
+	{
+		AsciiString bob = file;
+		const char *tmp = bob.reverseFind('/');
+		if (tmp)
+			bob.set(tmp + 1);
+		tmp = bob.reverseFind('\\');
+		if (tmp)
+			bob.set(tmp + 1);
+
+		UnicodeString fileString;
+		fileString.translate(bob);
+		GadgetStaticTextSetText(staticTextFile, fileString);
+	}
+
+	password.format("-%s", password.str());
+	return DownloadManager::downloadFile( server, username, password, file, localfile, regkey, tryResume );
+}
 HRESULT DownloadManagerMunkee::OnError( Int error )
 {
 	HRESULT ret = DownloadManager::OnError( error );
