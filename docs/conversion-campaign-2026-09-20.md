@@ -431,3 +431,13 @@ base, +17,113 B of it new total-exact coverage.
 | 0x003BEC30 | 167 | ?finish@Rva003BEED0@@QAEXXZ |
 | 0x0019BA40 | 331 | ?append@Rva0019BE80TeamRec@@QAEHPBVDict@@@Z |
 | 0x0075BF30 | 73 | ?apply@Rva0075BF30Forwarder@@QAEXPAX@Z |
+
+### Hour 33 — 03:03Z to 04:04Z (two seats, fresh cool bodies)
+
+Two landings: 0x00747670 (202 B, WorldHeightMap draw-origin clamp) and
+0x00895C50 (211 B, Apt manager invoke). Fleet 64 bodies / 14,348 B
+cumulative; repository-wide +51,552 B / +0.53 pp (67.04% -> 67.57%) since
+the fleet base, +18,363 B of it new total-exact coverage. Ten banks this
+hour, two at 0.92 and 0.87; one seat found an "opaque" target already
+living unclaimed in a committed source (`MapUtil.cpp`'s `resetMap`) —
+check for that before writing anything new.
