@@ -75,13 +75,14 @@ private:
 	T *Referent;
 };
 
-// In this TU the record is filled as plain data (the vector's own Add takes
-// the reference when it copies the element); the extra reference retail holds
-// across the Add call is a local handle copy kept in a register.
+// The record is default-constructed and then assigned, exactly as the Zero
+// Hour statistics.cpp does it (tss.tex=t; tss.usage_count=1; ...).  The
+// DynamicVectorClass template body is visible here because the retail source
+// includes the vector header: with Add's body in scope MSVC 7.1 keeps the
+// referent in edi across the call and folds the freshly default-constructed
+// handle's release check, which is what reproduces retail's 159 bytes.
 struct TextureStatisticsStruct
 {
-	TextureStatisticsStruct(RefCountPtr<TextureClass> const &tex_, int usage, int change)
-		: tex(tex_), usage_count(usage), change_count(change) {}
 	RefCountPtr<TextureClass> tex;
 	int usage_count;
 	int change_count;
@@ -92,6 +93,7 @@ class VectorClass
 {
 public:
 	virtual ~VectorClass();
+	virtual bool Resize(int size, T const *array = 0);
 	int Length() const { return VectorMax; }
 	T &operator[](int index) { return Vector[index]; }
 protected:
@@ -106,11 +108,31 @@ template<class T>
 class DynamicVectorClass : public VectorClass<T>
 {
 public:
+	virtual bool Resize(int size, T const *array = 0);
 	bool Add(T const &object);
 protected:
 	int ActiveCount;
 	int GrowthStep;
 };
+
+template<class T>
+bool DynamicVectorClass<T>::Add(T const &object)
+{
+	if (ActiveCount >= this->Length())
+	{
+		if ((this->IsAllocated || !this->VectorMax) && GrowthStep > 0)
+		{
+			if (!Resize(this->Length() + GrowthStep))
+				return false;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	(*this)[ActiveCount++] = object;
+	return true;
+}
 
 class Debug_Statistics
 {
@@ -156,7 +178,10 @@ static bool Find_Record_Texture(RefCountPtr<TextureClass> const &t)
 
 static void Add_Record_Texture(RefCountPtr<TextureClass> const &t)
 {
-	const TextureStatisticsStruct s(t, 1, 1);
+	TextureStatisticsStruct s;
+	s.tex = t;
+	s.usage_count = 1;
+	s.change_count = 1;
 	texture_statistics.Add(s);
 	texture_count++;
 	if (t.Is_Lightmap()) lightmap_texture_count++;
