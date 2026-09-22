@@ -1142,22 +1142,26 @@ static void StartPressed(void)
 //-------------------------------------------------------------------------------------------------
 void WOLDisplayGameOptions( void )
 {
-	GameSpyStagingRoom *theGame = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *theGame =
+		((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 	if (!parentWOLGameSetup || !theGame)
 		return;
 
 	const GameSlot *localSlot = NULL;
-	if (theGame->getLocalSlotNum() >= 0)
-		localSlot = theGame->getConstSlot(theGame->getLocalSlotNum());
+	if (((BfmeVirtualStagingRoom *)theGame)->getLocalSlotNum() >= 0)
+		localSlot = theGame->getConstSlot(
+			((BfmeVirtualStagingRoom *)theGame)->getLocalSlotNum());
 
-	const MapMetaData *md = TheMapCache->findMap(TheGameSpyInfo->getCurrentStagingRoom()->getMap());
+	const MapMetaData *md = TheMapCache->findMap(
+		((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom()->getMap());
 	if (md && localSlot && localSlot->hasMap())
 	{
 		GadgetStaticTextSetText(textEntryMapDisplay, md->m_displayName);
 	}
 	else
 	{
-		AsciiString s = TheGameSpyInfo->getCurrentStagingRoom()->getMap();
+		AsciiString s =
+			((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom()->getMap();
 		if (s.reverseFind('\\'))
 		{
 			s = s.reverseFind('\\') + 1;
@@ -1167,52 +1171,9 @@ void WOLDisplayGameOptions( void )
 		GadgetStaticTextSetText(textEntryMapDisplay, mapDisplay);
 	}
 	WOLPositionStartSpots();
-	updateMapStartSpots(TheGameSpyInfo->getCurrentStagingRoom(), buttonMapStartPosition);
-
-  //If our display does not match the current state of game settings, update the checkbox.
-  Bool isUsingStats = TheGameSpyInfo->getCurrentStagingRoom()->getUseStats() ? TRUE : FALSE;
-  if (GadgetCheckBoxIsChecked(checkBoxUseStats) != isUsingStats)
-  {
-  	GadgetCheckBoxSetChecked(checkBoxUseStats, isUsingStats);
-    checkBoxUseStats->winSetTooltip( TheGameText->fetch( isUsingStats ? "TOOLTIP:UseStatsOn" : "TOOLTIP:UseStatsOff" ) );
-  }
-
-  Bool oldFactionsOnly = theGame->oldFactionsOnly();
-  if (GadgetCheckBoxIsChecked(checkBoxLimitArmies) != oldFactionsOnly)
-  {
-    GadgetCheckBoxSetChecked(checkBoxLimitArmies, oldFactionsOnly);
-    // Repopulate the lists of available armies, since the old list is now wrong
-    for (Int i = 0; i < MAX_SLOTS; i++)
-    {
-      PopulatePlayerTemplateComboBox(i, comboBoxPlayerTemplate, theGame, theGame->getAllowObservers() );      
-
-      // Make sure selections are up to date on all machines
-      handlePlayerTemplateSelection(i) ;
-    }
-  }
-
-  // Note: must check if checkbox is already correct to avoid infinite recursion
-  Bool limitSuperweapons = (theGame->getSuperweaponRestriction() != 0);
-  if ( limitSuperweapons != GadgetCheckBoxIsChecked(checkBoxLimitSuperweapons))
-    GadgetCheckBoxSetChecked( checkBoxLimitSuperweapons, limitSuperweapons );
-  
-  Int itemCount = GadgetComboBoxGetLength(comboBoxStartingCash);
-  for ( Int index = 0; index < itemCount; index++ )
-  {
-    Int value  = (Int)GadgetComboBoxGetItemData(comboBoxStartingCash, index);
-    if ( value == theGame->getStartingCash().countMoney() )
-    {
-      // Note: must check if combobox is already correct to avoid infinite recursion
-      Int selectedIndex;
-      GadgetComboBoxGetSelectedPos( comboBoxStartingCash, &selectedIndex );
-      if ( index != selectedIndex )
-        GadgetComboBoxSetSelectedPos(comboBoxStartingCash, index, TRUE);
-
-      break;
-    }
-  }
-  
-  DEBUG_ASSERTCRASH( index < itemCount, ("Could not find new starting cash amount %d in list", theGame->getStartingCash().countMoney() ) );
+	updateMapStartSpots(
+		((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom(),
+		buttonMapStartPosition);
 }
 
 

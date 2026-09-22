@@ -88721,3 +88721,5 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?run@Rva008CF740@@QAEXPAVRva008CF740Value@@0H@Z,0x008CF740,opaque hub ABI: docs/analysis/0x008cf740.md; 00893410+01C9 pushes count then callable then receiver and loads global S into ECX; hub ret0C; native/script dispatch identity remains address-derived
 ?rva008A18C0@Rva008A1940Queue@@QAEXXZ,0x008A18C0,opaque queue helper: caller 008A1940+009A/+025C loads queue ECX; 128B target saves ECX to ESI reads +0C/+10 releases values and ends plain ret at +007F; no stack inputs
 ?angle0075F210@AttachmentTransform007629F0@@QAE_NPAM@Z,0x0075F210,opaque helper; independently decoded 349B body ECX receiver and ret4; success +146 stores float output and +148 returns AL1; caller007629F0+E0 via ILT00035684; body pin supplies image-derived thunk automatically
+?WOLPositionStartSpots@@YAXXZ,0x004F19F0,WOLGameSetupMenu source definition and WOLDisplayGameOptions aligned call prove direct BFME body
+?updateMapStartSpots@@YAXPAVGameInfo@@QAPAVGameWindow@@_N@Z,0x004559A0,Generals source signature and WOLDisplayGameOptions aligned three-argument call prove direct BFME body
