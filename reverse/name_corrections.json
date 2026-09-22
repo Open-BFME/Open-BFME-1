@@ -1,842 +1,842 @@
 [
-  {
-    "old_path": "reverse/attempts/0x006155e0.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManagerRva006155E0.cpp",
-    "old_name": "bfmeGetEQV",
-    "new_name": "rva006155e0",
-    "before_sha256": "e6a074540255bcf19cfe1c465d1ab5160075b7c50962ea9d776a2380c9f8e0d7",
-    "after_sha256": "905b0b39ca9c1ec2c491ff447704555a4d54d16d876064b28b84782a916b6f26",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "bfmeGetEQV is a Bfme<Verb><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 243-244 describe (BfmeHostZB, BfmeOwnVVE); its verdict rows in reverse/re_attempts.log carry (identity unknown). The landed rva006155e0 keeps the address token as AGENTS.md requires for an unproven method; no descriptive identity existed to preserve."
-  },
-  {
-    "old_path": "reverse/attempts/0x0075bf30.cpp",
-    "new_path": "Code/GameEngine/Source/Common/Rva0075BF30Forwarder.cpp",
-    "old_name": "BfmeHolderZD",
-    "new_name": "Rva0075BF30Holder",
-    "before_sha256": "292087e060f55af30f92000ccd208c20993ecf79a1a6f47823ea84c86b0452b1",
-    "after_sha256": "ab7431c2bfff4a13416021b403feb88387610c5f9aff64637b3ae3ff5e72e5a5",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeHolderZD is a Bfme<Role><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 243-244 describe; 0x0075BF30 has no named caller, owning TU or vtable owner (reverse/re_attempts.log), so the landed class keeps the address token instead. Same opaque identity, spelled per AGENTS.md."
-  },
-  {
-    "old_path": "reverse/attempts/0x0075bf30.cpp",
-    "new_path": "Code/GameEngine/Source/Common/Rva0075BF30Forwarder.cpp",
-    "old_name": "BfmeOwnerZD",
-    "new_name": "Rva0075BF30Forwarder",
-    "before_sha256": "292087e060f55af30f92000ccd208c20993ecf79a1a6f47823ea84c86b0452b1",
-    "after_sha256": "ab7431c2bfff4a13416021b403feb88387610c5f9aff64637b3ae3ff5e72e5a5",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeOwnerZD is a Bfme<Role><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 243-244 describe; 0x0075BF30 has no named caller, owning TU or vtable owner (reverse/re_attempts.log), so the landed class keeps the address token instead. Same opaque identity, spelled per AGENTS.md."
-  },
-  {
-    "old_path": "reverse/attempts/0x0075bf30.cpp",
-    "new_path": "Code/GameEngine/Source/Common/Rva0075BF30Forwarder.cpp",
-    "old_name": "BfmeSenderZD",
-    "new_name": "Rva0075BF30Forwarder",
-    "before_sha256": "292087e060f55af30f92000ccd208c20993ecf79a1a6f47823ea84c86b0452b1",
-    "after_sha256": "ab7431c2bfff4a13416021b403feb88387610c5f9aff64637b3ae3ff5e72e5a5",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeSenderZD is a Bfme<Role><Suffix> generator placeholder for the same receiver as BfmeOwnerZD (the bank split one this into two shim classes); docs/naming_evidence.md lines 243-244 class that family as invented. The landed TU folds both into the address-token class Rva0075BF30Forwarder."
-  },
-  {
-    "old_path": "reverse/attempts/0x008956c0.cpp",
-    "new_path": "reverse/attempts/0x008956c0.cpp",
-    "old_name": "Gen_008956C0",
-    "new_name": "Rva008956C0List",
-    "before_sha256": "42b19cddc505508fdbf2b0bd0f2ec17218f0b0580ae860d43853b813490e9ea6",
-    "after_sha256": "61c20a7ca08a90169c0053f7e792d84b85ecd8e3f1c91f282d750d0fdaebb85b",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "Gen_008956C0 is a generator-minted Gen* placeholder (docs/naming_evidence.md: GENERATOR-minted names are anonymous by design, not identities). The re-banked body keeps the address token as Rva008956C0List; no descriptive identity existed to preserve."
-  },
-  {
-    "old_path": "reverse/attempts/0x008956c0.cpp",
-    "new_path": "reverse/attempts/0x008956c0.cpp",
-    "old_name": "Gen_008956C0Node",
-    "new_name": "Rva008956C0Node",
-    "before_sha256": "42b19cddc505508fdbf2b0bd0f2ec17218f0b0580ae860d43853b813490e9ea6",
-    "after_sha256": "61c20a7ca08a90169c0053f7e792d84b85ecd8e3f1c91f282d750d0fdaebb85b",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "Gen_008956C0Node is a generator-minted Gen* placeholder (docs/naming_evidence.md: GENERATOR-minted names are anonymous by design, not identities). The re-banked body keeps the address token as Rva008956C0Node; no descriptive identity existed to preserve."
-  },
-  {
-    "old_path": "reverse/attempts/0x00172e70.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
-    "old_name": "BfmeSub1CC_EC3",
-    "new_name": "Rva001B7E90Receiver",
-    "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
-    "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeSub1CC_EC3 is a Bfme<Role><Suffix> generator placeholder (docs/naming_evidence.md lines 243-244 family); the type is only the receiver of the call at 0x001B7E90 and no caller, vtable or literal names it, so the address-keeping name is the self-labelling floor the rule asks for"
-  },
-  {
-    "old_path": "reverse/attempts/0x00172e70.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
-    "old_name": "getLocomotorDistanceToGoal",
-    "new_name": "rva002774c0",
-    "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
-    "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "the ledger's only pin at 0x002774C0 is the ABI-only ?rva002774c0@AIUpdateInterface@@QAEMXZ (symbols.csv: x87 jump-table dispatch); the converted source calls the ledger's own name as the route-pin gate requires; the Zero Hour method name was never pinned at that address and a pin is a separate evidence-backed claim"
-  },
-  {
-    "old_path": "reverse/attempts/0x00172e70.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
-    "old_name": "m_arrivalState",
-    "new_name": "m_field160",
-    "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
-    "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "m_arrivalState occurs in no Zero Hour header and not in reverse/zh_offsets.json (0 hits); the bank guessed it; the self-labelling offset name follows docs/naming_evidence.md until a witness names AIUpdateInterface+0x160"
-  },
-  {
-    "old_path": "reverse/attempts/0x00172e70.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
-    "old_name": "m_closeEnoughDistance",
-    "new_name": "m_field038",
-    "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
-    "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "m_closeEnoughDistance occurs in no Zero Hour header and not in reverse/zh_offsets.json (0 hits); the bank guessed it; Locomotor+0x38 stays self-labelling until witnessed"
-  },
-  {
-    "old_path": "reverse/attempts/0x0027a5e0.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceLoadPostProcess.cpp",
-    "old_name": "m_attackInfoName",
-    "new_name": "m_string1f4",
-    "before_sha256": "e1f8c7c7b1488074931817847ad605dd591afdff4a12c170889fce6dbc4f34a8",
-    "after_sha256": "249fdd26e57ce8447cf79940ad57283a533c01f833e429fc02d0611076ec455e",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "m_attackInfoName occurs in no Zero Hour header and not in reverse/zh_offsets.json (0 hits); the verdict row for 0x0027A5E0 in reverse/re_attempts.log proves the class (AIUpdateInterface, DIR32 __FILE__ literal) but not this member; self-labelling until witnessed"
-  },
-  {
-    "old_path": "reverse/attempts/0x003e9720.cpp",
-    "new_path": "reverse/attempts/0x003e9720.cpp",
-    "old_name": "ContainModuleInterface",
-    "new_name": "Rva003E9720ContainView",
-    "before_sha256": "ea04f1dc4f0072bef1933db902d2b7ffda10db5c848fef712d77c094c16df926",
-    "after_sha256": "451088403bcc9077ff7c41c9e88ab451a07ac38e6aeeeebe3cfa0368519a85e1",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "the hub analysis docs/analysis/0x003e9720.md proves only a virtual call through slot 0x100 on the pointer at Object+contain; no caller, vtable owner or literal ties it to ContainModuleInterface, so the bank's identity claim is withdrawn to a self-labelling name"
-  },
-  {
-    "old_path": "reverse/attempts/0x003e9720.cpp",
-    "new_path": "reverse/attempts/0x003e9720.cpp",
-    "old_name": "floor",
-    "new_name": "rva00069750",
-    "before_sha256": "ea04f1dc4f0072bef1933db902d2b7ffda10db5c848fef712d77c094c16df926",
-    "after_sha256": "451088403bcc9077ff7c41c9e88ab451a07ac38e6aeeeebe3cfa0368519a85e1",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "0x00069750 is pinned only as ?b_00069750@@YAXXZ (gen-thunk body) in reverse/symbols.csv; there is no CRT floor pin at that address; the bank asserted the CRT identity without a pin, the analysis keeps the address until one is landed"
-  },
-  {
-    "old_path": "reverse/attempts/0x003e9720.cpp",
-    "new_path": "reverse/attempts/0x003e9720.cpp",
-    "old_name": "query",
-    "new_name": "rva003E9720Slot100",
-    "before_sha256": "ea04f1dc4f0072bef1933db902d2b7ffda10db5c848fef712d77c094c16df926",
-    "after_sha256": "451088403bcc9077ff7c41c9e88ab451a07ac38e6aeeeebe3cfa0368519a85e1",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "query was a bare virtual-slot name with no witness; the slot index (0x100) is the only evidence, and the new name states exactly that"
-  },
-  {
-    "old_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
-    "old_name": "BfmeOwnerCK",
-    "new_name": "Rva0024CE60Owner",
-    "before_sha256": "637f939d39759436cff38a1b8b56d1d35a2a85b66c76cab3b47dbeaf1f841bea",
-    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeOwnerCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Owner. Not part of the emitted symbol."
-  },
-  {
-    "old_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
-    "old_name": "BfmeSubCK",
-    "new_name": "Rva0024CE60Sub",
-    "before_sha256": "637f939d39759436cff38a1b8b56d1d35a2a85b66c76cab3b47dbeaf1f841bea",
-    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeSubCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Sub. Not part of the emitted symbol."
-  },
-  {
-    "old_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
-    "old_name": "BfmeThingCK",
-    "new_name": "Rva0024CE60Thing",
-    "before_sha256": "637f939d39759436cff38a1b8b56d1d35a2a85b66c76cab3b47dbeaf1f841bea",
-    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeThingCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Thing. Not part of the emitted symbol."
-  },
-  {
-    "old_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
-    "old_name": "OnStructureCreatedCall",
-    "new_name": "Rva000D4770Call",
-    "before_sha256": "5aa157374820a5f2ad0c4e4f0c167efc6016beb8d8ceb8b31b8f76fbfbf4cf4f",
-    "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
-    "evidence": "reverse/functions.csv",
-    "reason": "OnStructureCreatedCall asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770Call and ZH Player.h:459 is recorded only as evidence for a future rename of that row."
-  },
-  {
-    "old_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
-    "old_name": "OnStructureCreatedCallBits",
-    "new_name": "Rva000D4770CallBits",
-    "before_sha256": "5aa157374820a5f2ad0c4e4f0c167efc6016beb8d8ceb8b31b8f76fbfbf4cf4f",
-    "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
-    "evidence": "reverse/functions.csv",
-    "reason": "OnStructureCreatedCallBits asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770CallBits and ZH Player.h:459 is recorded only as evidence for a future rename of that row."
-  },
-  {
-    "old_path": "reverse/attempts/0x0024ce60.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
-    "old_name": "BfmeOwnerCK",
-    "new_name": "Rva0024CE60Owner",
-    "before_sha256": "27bbed162739f5d02e179c143d4aa41b2dee75a738a99822172fcdbb94db3059",
-    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeOwnerCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Owner. Not part of the emitted symbol. (range entry: bank -> landed source)"
-  },
-  {
-    "old_path": "reverse/attempts/0x0024ce60.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
-    "old_name": "BfmeSubCK",
-    "new_name": "Rva0024CE60Sub",
-    "before_sha256": "27bbed162739f5d02e179c143d4aa41b2dee75a738a99822172fcdbb94db3059",
-    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeSubCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Sub. Not part of the emitted symbol. (range entry: bank -> landed source)"
-  },
-  {
-    "old_path": "reverse/attempts/0x0024ce60.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
-    "old_name": "BfmeThingCK",
-    "new_name": "Rva0024CE60Thing",
-    "before_sha256": "27bbed162739f5d02e179c143d4aa41b2dee75a738a99822172fcdbb94db3059",
-    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeThingCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Thing. Not part of the emitted symbol. (range entry: bank -> landed source)"
-  },
-  {
-    "old_path": "reverse/attempts/0x002d3970.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
-    "old_name": "OnStructureCreatedCall",
-    "new_name": "Rva000D4770Call",
-    "before_sha256": "5841a80880100a95760426026d60ba16148d8be01356798153ed58e395a7613a",
-    "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
-    "evidence": "reverse/functions.csv",
-    "reason": "OnStructureCreatedCall asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770Call and ZH Player.h:459 is recorded only as evidence for a future rename of that row. (range entry: bank -> landed source)"
-  },
-  {
-    "old_path": "reverse/attempts/0x002d3970.cpp",
-    "new_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
-    "old_name": "OnStructureCreatedCallBits",
-    "new_name": "Rva000D4770CallBits",
-    "before_sha256": "5841a80880100a95760426026d60ba16148d8be01356798153ed58e395a7613a",
-    "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
-    "evidence": "reverse/functions.csv",
-    "reason": "OnStructureCreatedCallBits asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770CallBits and ZH Player.h:459 is recorded only as evidence for a future rename of that row. (range entry: bank -> landed source)"
-  },
-  {
-    "old_path": "reverse/attempts/0x006087e0.cpp",
-    "new_path": "reverse/attempts/0x006087e0.cpp",
-    "old_name": "StringInlineData",
-    "new_name": "Rva006087E0Mask",
-    "before_sha256": "ba75967e6864c2d1f9cf567a836615bf502fcf7c210d09b2e9534a98b009b9d8",
-    "after_sha256": "dfb149a3357c083f83adac9d6471521e44b4539c43cebb83d91effdbff8e4c94",
-    "evidence": "reverse/attempt_history/0x006087e0/naming-review.md",
-    "reason": "Canonical ascii_string.h replaces duplicate local string declarations; the independently witnessed six-word mask is an unrelated new declaration, not a rename of StringInlineData."
-  },
-  {
-    "old_path": "reverse/attempts/0x000f1030.cpp",
-    "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
-    "old_name": "m_bfmeDataFK",
-    "new_name": "m_unknown_1bd",
-    "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
-    "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
-    "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
-    "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
-  },
-  {
-    "old_path": "reverse/attempts/0x000f1030.cpp",
-    "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
-    "old_name": "m_bfmeGapFK",
-    "new_name": "m_unknown_00c",
-    "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
-    "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
-    "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
-    "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
-  },
-  {
-    "old_path": "reverse/attempts/0x000f1030.cpp",
-    "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
-    "old_name": "m_bfmeHeadFK",
-    "new_name": "m_unknown_000",
-    "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
-    "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
-    "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
-    "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
-  },
-  {
-    "old_path": "reverse/attempts/0x000f1030.cpp",
-    "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
-    "old_name": "m_bfmeHeadFK",
-    "new_name": "m_unknown_008",
-    "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
-    "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
-    "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
-    "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
-  },
-  {
-    "old_path": "reverse/attempts/0x000f9ff0.cpp",
-    "new_path": "Code/GameEngine/Source/Common/Rva000F9FF0Copy.cpp",
-    "old_name": "pair",
-    "new_name": "Rva000F9FF0",
-    "before_sha256": "736f5a17259d3097ecd88089b5c1c604cc916fb64a5cc54274f7b4b5d3012580",
-    "after_sha256": "86cec15095130def196c1d9b97a135df9dfb7ef842183203f9ce6ec19e030b6c",
-    "evidence": "reverse/attempt_history/0x000f9ff0/naming-review.md",
-    "reason": "Independent96-byte vector-element callers prove only an opaque record; the old synthetic library pair/key/value inference is unsupported. Preserve all established member labels and the independently matched Gen_000F9C60 identity; see exact caller and layout review."
-  },
-  {
-    "old_path": "reverse/attempts/0x0026b9d0.cpp",
-    "new_path": "reverse/attempts/0x0026b9d0.cpp",
-    "old_name": "BitFlags128",
-    "new_name": "Rva000C3DD0Mask",
-    "before_sha256": "1d4c976bec99fc021104fa831841578f75eeb6bc58b99d04fbc0e69a04c6eebb",
-    "after_sha256": "3ea3c74db7c6b44c314891b6fc8fcdafd91de70402d5742d4896e922f6466f0c",
-    "evidence": "reverse/attempt_history/0x0026b9d0/20260922-review.md",
-    "reason": "Physical six-word mask copies and selectedbit151 refute the old four-word128-bit shim; preserve unknown logical width with an address-qualified storage view."
-  },
-  {
-    "old_path": "reverse/attempts/0x0026b9d0.cpp",
-    "new_path": "reverse/attempts/0x0026b9d0.cpp",
-    "old_name": "Coord3D",
-    "new_name": "Rva0026B9D0Entry",
-    "before_sha256": "1d4c976bec99fc021104fa831841578f75eeb6bc58b99d04fbc0e69a04c6eebb",
-    "after_sha256": "3ea3c74db7c6b44c314891b6fc8fcdafd91de70402d5742d4896e922f6466f0c",
-    "evidence": "reverse/attempt_history/0x0026b9d0/20260922-review.md",
-    "reason": "False pairing: native included Coord3D retains its identity; new8-byte iterator vector entry is unrelated to the removed12-byte local Coord3D duplicate."
-  },
-  {
-    "old_path": "reverse/attempts/0x0026b9d0.cpp",
-    "new_path": "reverse/attempts/0x0026b9d0.cpp",
-    "old_name": "adapter",
-    "new_name": "rva001AC3D0",
-    "before_sha256": "1d4c976bec99fc021104fa831841578f75eeb6bc58b99d04fbc0e69a04c6eebb",
-    "after_sha256": "3ea3c74db7c6b44c314891b6fc8fcdafd91de70402d5742d4896e922f6466f0c",
-    "evidence": "reverse/attempt_history/0x0026b9d0/20260922-review.md",
-    "reason": "False pairing: TerrainLogicP48::adapter remains unchanged for001A64F0; newly recovered001AC3D0 is a distinct two-argument call target."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cced0.cpp",
-    "new_path": "reverse/attempts/0x008cced0.cpp",
-    "old_name": "BfmeR1226",
-    "new_name": "Rva008CCED0BytecodeRunner",
-    "before_sha256": "a0eeef5979c241f392105b063dda532d0eb16600d2570336f978a63918264e6d",
-    "after_sha256": "26b152615e429f150cdcde99a5fd1bc5573d2fe1f4ab617968296f41836530ef",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeR1226* is a Bfme<Token><Number> generator placeholder family of the kind docs/naming_evidence.md describes (invented, not recovered); the prior bank's verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank keeps the address token Rva008CCED0 as AGENTS.md requires for an unproven identity; no descriptive identity existed to preserve."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cced0.cpp",
-    "new_path": "reverse/attempts/0x008cced0.cpp",
-    "old_name": "BfmeR1226ExecContext",
-    "new_name": "Rva008CCED0BytecodeRunnerExecContext",
-    "before_sha256": "a0eeef5979c241f392105b063dda532d0eb16600d2570336f978a63918264e6d",
-    "after_sha256": "26b152615e429f150cdcde99a5fd1bc5573d2fe1f4ab617968296f41836530ef",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeR1226* is a Bfme<Token><Number> generator placeholder family of the kind docs/naming_evidence.md describes (invented, not recovered); the prior bank's verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank keeps the address token Rva008CCED0 as AGENTS.md requires for an unproven identity; no descriptive identity existed to preserve."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cced0.cpp",
-    "new_path": "reverse/attempts/0x008cced0.cpp",
-    "old_name": "BfmeR1226Opcode",
-    "new_name": "Rva008CCED0BytecodeRunnerOpcode",
-    "before_sha256": "a0eeef5979c241f392105b063dda532d0eb16600d2570336f978a63918264e6d",
-    "after_sha256": "26b152615e429f150cdcde99a5fd1bc5573d2fe1f4ab617968296f41836530ef",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeR1226* is a Bfme<Token><Number> generator placeholder family of the kind docs/naming_evidence.md describes (invented, not recovered); the prior bank's verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank keeps the address token Rva008CCED0 as AGENTS.md requires for an unproven identity; no descriptive identity existed to preserve."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cced0.cpp",
-    "new_path": "reverse/attempts/0x008cced0.cpp",
-    "old_name": "BfmeR1226Value",
-    "new_name": "Rva008CCED0BytecodeRunnerValue",
-    "before_sha256": "a0eeef5979c241f392105b063dda532d0eb16600d2570336f978a63918264e6d",
-    "after_sha256": "26b152615e429f150cdcde99a5fd1bc5573d2fe1f4ab617968296f41836530ef",
-    "evidence": "docs/naming_evidence.md",
-    "reason": "BfmeR1226* is a Bfme<Token><Number> generator placeholder family of the kind docs/naming_evidence.md describes (invented, not recovered); the prior bank's verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank keeps the address token Rva008CCED0 as AGENTS.md requires for an unproven identity; no descriptive identity existed to preserve."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "AptActionInterpreter",
-    "new_name": "Rva008CF740",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "AptFunctionBody",
-    "new_name": "Rva008CF740D1",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "AptFunctionBody",
-    "new_name": "Rva008CF740D2",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "AptStringBlock",
-    "new_name": "Rva008CF740Block",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "AptValue",
-    "new_name": "Rva008CF740Value",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "abortValue",
-    "new_name": "m_7C",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "append",
-    "new_name": "rva008CC690",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "argumentCount",
-    "new_name": "m_04",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "arguments",
-    "new_name": "m_08",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "arguments",
-    "new_name": "m_0C",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "body",
-    "new_name": "m_30",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "byteCode",
-    "new_name": "m_18",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "byteCodeSize",
-    "new_name": "m_0C",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "constantCount",
-    "new_name": "m_10",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "constantCount",
-    "new_name": "m_14",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "constantCount",
-    "new_name": "m_5C",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "constantPool",
-    "new_name": "m_14",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "constantPool",
-    "new_name": "m_18",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "constantPool",
-    "new_name": "m_60",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "flags",
-    "new_name": "m_04",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "frameCapacity",
-    "new_name": "m_10",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "frameCount",
-    "new_name": "m_0C",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "frames",
-    "new_name": "m_14",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "gap08",
-    "new_name": "m_08",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "gap18",
-    "new_name": "m_18",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "gap64",
-    "new_name": "m_64",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "makeValue",
-    "new_name": "rva008CC940",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "registerBase",
-    "new_name": "m_54",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "registerDepth",
-    "new_name": "m_48",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "registerDepth",
-    "new_name": "m_5C",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "registerWidth",
-    "new_name": "m_50",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "registers",
-    "new_name": "m_58",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "runStream",
-    "new_name": "rva008CCED0",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "runtime",
-    "new_name": "m_20",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "scope",
-    "new_name": "m_28",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "scope",
-    "new_name": "m_30",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "scopeCapacity",
-    "new_name": "m_3C",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "scopeCount",
-    "new_name": "m_30",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "scopes",
-    "new_name": "m_38",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "scopes",
-    "new_name": "m_44",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "stack",
-    "new_name": "m_08",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "stackCapacity",
-    "new_name": "m_00",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "stackCount",
-    "new_name": "m_00",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "state",
-    "new_name": "m_60",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "stringCapacity",
-    "new_name": "m_50",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x008cf740.cpp",
-    "new_path": "reverse/attempts/0x008cf740.cpp",
-    "old_name": "stringCount",
-    "new_name": "m_3C",
-    "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
-    "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
-    "evidence": "docs/analysis/0x008cf740.md",
-    "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
-  },
-  {
-    "old_path": "reverse/attempts/0x00743520.cpp",
-    "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewInitHeightForMapBfme.cpp",
-    "old_name": "m_height",
-    "new_name": "m_unused",
-    "before_sha256": "16c417be107d35c28b59f4d7429605a81731a8467a95effa2dbe1fc2b2d15d88",
-    "after_sha256": "44f1212ad571f5e544e611c09eb5b27c816ca110cf3b5bfede0f7ef68fdaca25",
-    "evidence": "reverse/functions.csv",
-    "reason": "parameter 2 of Rva0045A000::initialize is the ignored int; retail pushes map+0x20 as argument 2, so BfmeHeightMap+0x20 is the unused field, not the height field"
-  }
+ {
+  "old_path": "reverse/attempts/0x006155e0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManagerRva006155E0.cpp",
+  "old_name": "bfmeGetEQV",
+  "new_name": "rva006155e0",
+  "before_sha256": "e6a074540255bcf19cfe1c465d1ab5160075b7c50962ea9d776a2380c9f8e0d7",
+  "after_sha256": "905b0b39ca9c1ec2c491ff447704555a4d54d16d876064b28b84782a916b6f26",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bfmeGetEQV is a Bfme<Verb><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 243-244 describe (BfmeHostZB, BfmeOwnVVE); its verdict rows in reverse/re_attempts.log carry (identity unknown). The landed rva006155e0 keeps the address token as AGENTS.md requires for an unproven method; no descriptive identity existed to preserve."
+ },
+ {
+  "old_path": "reverse/attempts/0x0075bf30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva0075BF30Forwarder.cpp",
+  "old_name": "BfmeHolderZD",
+  "new_name": "Rva0075BF30Holder",
+  "before_sha256": "292087e060f55af30f92000ccd208c20993ecf79a1a6f47823ea84c86b0452b1",
+  "after_sha256": "ab7431c2bfff4a13416021b403feb88387610c5f9aff64637b3ae3ff5e72e5a5",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeHolderZD is a Bfme<Role><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 243-244 describe; 0x0075BF30 has no named caller, owning TU or vtable owner (reverse/re_attempts.log), so the landed class keeps the address token instead. Same opaque identity, spelled per AGENTS.md."
+ },
+ {
+  "old_path": "reverse/attempts/0x0075bf30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva0075BF30Forwarder.cpp",
+  "old_name": "BfmeOwnerZD",
+  "new_name": "Rva0075BF30Forwarder",
+  "before_sha256": "292087e060f55af30f92000ccd208c20993ecf79a1a6f47823ea84c86b0452b1",
+  "after_sha256": "ab7431c2bfff4a13416021b403feb88387610c5f9aff64637b3ae3ff5e72e5a5",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeOwnerZD is a Bfme<Role><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 243-244 describe; 0x0075BF30 has no named caller, owning TU or vtable owner (reverse/re_attempts.log), so the landed class keeps the address token instead. Same opaque identity, spelled per AGENTS.md."
+ },
+ {
+  "old_path": "reverse/attempts/0x0075bf30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva0075BF30Forwarder.cpp",
+  "old_name": "BfmeSenderZD",
+  "new_name": "Rva0075BF30Forwarder",
+  "before_sha256": "292087e060f55af30f92000ccd208c20993ecf79a1a6f47823ea84c86b0452b1",
+  "after_sha256": "ab7431c2bfff4a13416021b403feb88387610c5f9aff64637b3ae3ff5e72e5a5",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeSenderZD is a Bfme<Role><Suffix> generator placeholder for the same receiver as BfmeOwnerZD (the bank split one this into two shim classes); docs/naming_evidence.md lines 243-244 class that family as invented. The landed TU folds both into the address-token class Rva0075BF30Forwarder."
+ },
+ {
+  "old_path": "reverse/attempts/0x008956c0.cpp",
+  "new_path": "reverse/attempts/0x008956c0.cpp",
+  "old_name": "Gen_008956C0",
+  "new_name": "Rva008956C0List",
+  "before_sha256": "42b19cddc505508fdbf2b0bd0f2ec17218f0b0580ae860d43853b813490e9ea6",
+  "after_sha256": "61c20a7ca08a90169c0053f7e792d84b85ecd8e3f1c91f282d750d0fdaebb85b",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "Gen_008956C0 is a generator-minted Gen* placeholder (docs/naming_evidence.md: GENERATOR-minted names are anonymous by design, not identities). The re-banked body keeps the address token as Rva008956C0List; no descriptive identity existed to preserve."
+ },
+ {
+  "old_path": "reverse/attempts/0x008956c0.cpp",
+  "new_path": "reverse/attempts/0x008956c0.cpp",
+  "old_name": "Gen_008956C0Node",
+  "new_name": "Rva008956C0Node",
+  "before_sha256": "42b19cddc505508fdbf2b0bd0f2ec17218f0b0580ae860d43853b813490e9ea6",
+  "after_sha256": "61c20a7ca08a90169c0053f7e792d84b85ecd8e3f1c91f282d750d0fdaebb85b",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "Gen_008956C0Node is a generator-minted Gen* placeholder (docs/naming_evidence.md: GENERATOR-minted names are anonymous by design, not identities). The re-banked body keeps the address token as Rva008956C0Node; no descriptive identity existed to preserve."
+ },
+ {
+  "old_path": "reverse/attempts/0x00172e70.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
+  "old_name": "BfmeSub1CC_EC3",
+  "new_name": "Rva001B7E90Receiver",
+  "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
+  "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeSub1CC_EC3 is a Bfme<Role><Suffix> generator placeholder (docs/naming_evidence.md lines 243-244 family); the type is only the receiver of the call at 0x001B7E90 and no caller, vtable or literal names it, so the address-keeping name is the self-labelling floor the rule asks for"
+ },
+ {
+  "old_path": "reverse/attempts/0x00172e70.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
+  "old_name": "getLocomotorDistanceToGoal",
+  "new_name": "rva002774c0",
+  "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
+  "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the ledger's only pin at 0x002774C0 is the ABI-only ?rva002774c0@AIUpdateInterface@@QAEMXZ (symbols.csv: x87 jump-table dispatch); the converted source calls the ledger's own name as the route-pin gate requires; the Zero Hour method name was never pinned at that address and a pin is a separate evidence-backed claim"
+ },
+ {
+  "old_path": "reverse/attempts/0x00172e70.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
+  "old_name": "m_arrivalState",
+  "new_name": "m_field160",
+  "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
+  "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "m_arrivalState occurs in no Zero Hour header and not in reverse/zh_offsets.json (0 hits); the bank guessed it; the self-labelling offset name follows docs/naming_evidence.md until a witness names AIUpdateInterface+0x160"
+ },
+ {
+  "old_path": "reverse/attempts/0x00172e70.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
+  "old_name": "m_closeEnoughDistance",
+  "new_name": "m_field038",
+  "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
+  "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "m_closeEnoughDistance occurs in no Zero Hour header and not in reverse/zh_offsets.json (0 hits); the bank guessed it; Locomotor+0x38 stays self-labelling until witnessed"
+ },
+ {
+  "old_path": "reverse/attempts/0x0027a5e0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceLoadPostProcess.cpp",
+  "old_name": "m_attackInfoName",
+  "new_name": "m_string1f4",
+  "before_sha256": "e1f8c7c7b1488074931817847ad605dd591afdff4a12c170889fce6dbc4f34a8",
+  "after_sha256": "249fdd26e57ce8447cf79940ad57283a533c01f833e429fc02d0611076ec455e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "m_attackInfoName occurs in no Zero Hour header and not in reverse/zh_offsets.json (0 hits); the verdict row for 0x0027A5E0 in reverse/re_attempts.log proves the class (AIUpdateInterface, DIR32 __FILE__ literal) but not this member; self-labelling until witnessed"
+ },
+ {
+  "old_path": "reverse/attempts/0x003e9720.cpp",
+  "new_path": "reverse/attempts/0x003e9720.cpp",
+  "old_name": "ContainModuleInterface",
+  "new_name": "Rva003E9720ContainView",
+  "before_sha256": "ea04f1dc4f0072bef1933db902d2b7ffda10db5c848fef712d77c094c16df926",
+  "after_sha256": "451088403bcc9077ff7c41c9e88ab451a07ac38e6aeeeebe3cfa0368519a85e1",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the hub analysis docs/analysis/0x003e9720.md proves only a virtual call through slot 0x100 on the pointer at Object+contain; no caller, vtable owner or literal ties it to ContainModuleInterface, so the bank's identity claim is withdrawn to a self-labelling name"
+ },
+ {
+  "old_path": "reverse/attempts/0x003e9720.cpp",
+  "new_path": "reverse/attempts/0x003e9720.cpp",
+  "old_name": "floor",
+  "new_name": "rva00069750",
+  "before_sha256": "ea04f1dc4f0072bef1933db902d2b7ffda10db5c848fef712d77c094c16df926",
+  "after_sha256": "451088403bcc9077ff7c41c9e88ab451a07ac38e6aeeeebe3cfa0368519a85e1",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "0x00069750 is pinned only as ?b_00069750@@YAXXZ (gen-thunk body) in reverse/symbols.csv; there is no CRT floor pin at that address; the bank asserted the CRT identity without a pin, the analysis keeps the address until one is landed"
+ },
+ {
+  "old_path": "reverse/attempts/0x003e9720.cpp",
+  "new_path": "reverse/attempts/0x003e9720.cpp",
+  "old_name": "query",
+  "new_name": "rva003E9720Slot100",
+  "before_sha256": "ea04f1dc4f0072bef1933db902d2b7ffda10db5c848fef712d77c094c16df926",
+  "after_sha256": "451088403bcc9077ff7c41c9e88ab451a07ac38e6aeeeebe3cfa0368519a85e1",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "query was a bare virtual-slot name with no witness; the slot index (0x100) is the only evidence, and the new name states exactly that"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+  "old_name": "BfmeOwnerCK",
+  "new_name": "Rva0024CE60Owner",
+  "before_sha256": "637f939d39759436cff38a1b8b56d1d35a2a85b66c76cab3b47dbeaf1f841bea",
+  "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeOwnerCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Owner. Not part of the emitted symbol."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+  "old_name": "BfmeSubCK",
+  "new_name": "Rva0024CE60Sub",
+  "before_sha256": "637f939d39759436cff38a1b8b56d1d35a2a85b66c76cab3b47dbeaf1f841bea",
+  "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeSubCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Sub. Not part of the emitted symbol."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+  "old_name": "BfmeThingCK",
+  "new_name": "Rva0024CE60Thing",
+  "before_sha256": "637f939d39759436cff38a1b8b56d1d35a2a85b66c76cab3b47dbeaf1f841bea",
+  "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeThingCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Thing. Not part of the emitted symbol."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
+  "old_name": "OnStructureCreatedCall",
+  "new_name": "Rva000D4770Call",
+  "before_sha256": "5aa157374820a5f2ad0c4e4f0c167efc6016beb8d8ceb8b31b8f76fbfbf4cf4f",
+  "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
+  "evidence": "reverse/functions.csv",
+  "reason": "OnStructureCreatedCall asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770Call and ZH Player.h:459 is recorded only as evidence for a future rename of that row."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
+  "old_name": "OnStructureCreatedCallBits",
+  "new_name": "Rva000D4770CallBits",
+  "before_sha256": "5aa157374820a5f2ad0c4e4f0c167efc6016beb8d8ceb8b31b8f76fbfbf4cf4f",
+  "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
+  "evidence": "reverse/functions.csv",
+  "reason": "OnStructureCreatedCallBits asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770CallBits and ZH Player.h:459 is recorded only as evidence for a future rename of that row."
+ },
+ {
+  "old_path": "reverse/attempts/0x0024ce60.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+  "old_name": "BfmeOwnerCK",
+  "new_name": "Rva0024CE60Owner",
+  "before_sha256": "27bbed162739f5d02e179c143d4aa41b2dee75a738a99822172fcdbb94db3059",
+  "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeOwnerCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Owner. Not part of the emitted symbol. (range entry: bank -> landed source)"
+ },
+ {
+  "old_path": "reverse/attempts/0x0024ce60.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+  "old_name": "BfmeSubCK",
+  "new_name": "Rva0024CE60Sub",
+  "before_sha256": "27bbed162739f5d02e179c143d4aa41b2dee75a738a99822172fcdbb94db3059",
+  "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeSubCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Sub. Not part of the emitted symbol. (range entry: bank -> landed source)"
+ },
+ {
+  "old_path": "reverse/attempts/0x0024ce60.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+  "old_name": "BfmeThingCK",
+  "new_name": "Rva0024CE60Thing",
+  "before_sha256": "27bbed162739f5d02e179c143d4aa41b2dee75a738a99822172fcdbb94db3059",
+  "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeThingCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Thing. Not part of the emitted symbol. (range entry: bank -> landed source)"
+ },
+ {
+  "old_path": "reverse/attempts/0x002d3970.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
+  "old_name": "OnStructureCreatedCall",
+  "new_name": "Rva000D4770Call",
+  "before_sha256": "5841a80880100a95760426026d60ba16148d8be01356798153ed58e395a7613a",
+  "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
+  "evidence": "reverse/functions.csv",
+  "reason": "OnStructureCreatedCall asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770Call and ZH Player.h:459 is recorded only as evidence for a future rename of that row. (range entry: bank -> landed source)"
+ },
+ {
+  "old_path": "reverse/attempts/0x002d3970.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
+  "old_name": "OnStructureCreatedCallBits",
+  "new_name": "Rva000D4770CallBits",
+  "before_sha256": "5841a80880100a95760426026d60ba16148d8be01356798153ed58e395a7613a",
+  "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
+  "evidence": "reverse/functions.csv",
+  "reason": "OnStructureCreatedCallBits asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770CallBits and ZH Player.h:459 is recorded only as evidence for a future rename of that row. (range entry: bank -> landed source)"
+ },
+ {
+  "old_path": "reverse/attempts/0x006087e0.cpp",
+  "new_path": "reverse/attempts/0x006087e0.cpp",
+  "old_name": "StringInlineData",
+  "new_name": "Rva006087E0Mask",
+  "before_sha256": "ba75967e6864c2d1f9cf567a836615bf502fcf7c210d09b2e9534a98b009b9d8",
+  "after_sha256": "dfb149a3357c083f83adac9d6471521e44b4539c43cebb83d91effdbff8e4c94",
+  "evidence": "reverse/attempt_history/0x006087e0/naming-review.md",
+  "reason": "Canonical ascii_string.h replaces duplicate local string declarations; the independently witnessed six-word mask is an unrelated new declaration, not a rename of StringInlineData."
+ },
+ {
+  "old_path": "reverse/attempts/0x000f1030.cpp",
+  "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
+  "old_name": "m_bfmeDataFK",
+  "new_name": "m_unknown_1bd",
+  "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
+  "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
+  "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
+  "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
+ },
+ {
+  "old_path": "reverse/attempts/0x000f1030.cpp",
+  "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
+  "old_name": "m_bfmeGapFK",
+  "new_name": "m_unknown_00c",
+  "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
+  "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
+  "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
+  "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
+ },
+ {
+  "old_path": "reverse/attempts/0x000f1030.cpp",
+  "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
+  "old_name": "m_bfmeHeadFK",
+  "new_name": "m_unknown_000",
+  "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
+  "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
+  "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
+  "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
+ },
+ {
+  "old_path": "reverse/attempts/0x000f1030.cpp",
+  "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
+  "old_name": "m_bfmeHeadFK",
+  "new_name": "m_unknown_008",
+  "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
+  "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
+  "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
+  "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
+ },
+ {
+  "old_path": "reverse/attempts/0x000f9ff0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva000F9FF0Copy.cpp",
+  "old_name": "pair",
+  "new_name": "Rva000F9FF0",
+  "before_sha256": "736f5a17259d3097ecd88089b5c1c604cc916fb64a5cc54274f7b4b5d3012580",
+  "after_sha256": "86cec15095130def196c1d9b97a135df9dfb7ef842183203f9ce6ec19e030b6c",
+  "evidence": "reverse/attempt_history/0x000f9ff0/naming-review.md",
+  "reason": "Independent96-byte vector-element callers prove only an opaque record; the old synthetic library pair/key/value inference is unsupported. Preserve all established member labels and the independently matched Gen_000F9C60 identity; see exact caller and layout review."
+ },
+ {
+  "old_path": "reverse/attempts/0x0026b9d0.cpp",
+  "new_path": "reverse/attempts/0x0026b9d0.cpp",
+  "old_name": "BitFlags128",
+  "new_name": "Rva000C3DD0Mask",
+  "before_sha256": "1d4c976bec99fc021104fa831841578f75eeb6bc58b99d04fbc0e69a04c6eebb",
+  "after_sha256": "3ea3c74db7c6b44c314891b6fc8fcdafd91de70402d5742d4896e922f6466f0c",
+  "evidence": "reverse/attempt_history/0x0026b9d0/20260922-review.md",
+  "reason": "Physical six-word mask copies and selectedbit151 refute the old four-word128-bit shim; preserve unknown logical width with an address-qualified storage view."
+ },
+ {
+  "old_path": "reverse/attempts/0x0026b9d0.cpp",
+  "new_path": "reverse/attempts/0x0026b9d0.cpp",
+  "old_name": "Coord3D",
+  "new_name": "Rva0026B9D0Entry",
+  "before_sha256": "1d4c976bec99fc021104fa831841578f75eeb6bc58b99d04fbc0e69a04c6eebb",
+  "after_sha256": "3ea3c74db7c6b44c314891b6fc8fcdafd91de70402d5742d4896e922f6466f0c",
+  "evidence": "reverse/attempt_history/0x0026b9d0/20260922-review.md",
+  "reason": "False pairing: native included Coord3D retains its identity; new8-byte iterator vector entry is unrelated to the removed12-byte local Coord3D duplicate."
+ },
+ {
+  "old_path": "reverse/attempts/0x0026b9d0.cpp",
+  "new_path": "reverse/attempts/0x0026b9d0.cpp",
+  "old_name": "adapter",
+  "new_name": "rva001AC3D0",
+  "before_sha256": "1d4c976bec99fc021104fa831841578f75eeb6bc58b99d04fbc0e69a04c6eebb",
+  "after_sha256": "3ea3c74db7c6b44c314891b6fc8fcdafd91de70402d5742d4896e922f6466f0c",
+  "evidence": "reverse/attempt_history/0x0026b9d0/20260922-review.md",
+  "reason": "False pairing: TerrainLogicP48::adapter remains unchanged for001A64F0; newly recovered001AC3D0 is a distinct two-argument call target."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cced0.cpp",
+  "new_path": "reverse/attempts/0x008cced0.cpp",
+  "old_name": "BfmeR1226",
+  "new_name": "Rva008CCED0BytecodeRunner",
+  "before_sha256": "a0eeef5979c241f392105b063dda532d0eb16600d2570336f978a63918264e6d",
+  "after_sha256": "26b152615e429f150cdcde99a5fd1bc5573d2fe1f4ab617968296f41836530ef",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeR1226* is a Bfme<Token><Number> generator placeholder family of the kind docs/naming_evidence.md describes (invented, not recovered); the prior bank's verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank keeps the address token Rva008CCED0 as AGENTS.md requires for an unproven identity; no descriptive identity existed to preserve."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cced0.cpp",
+  "new_path": "reverse/attempts/0x008cced0.cpp",
+  "old_name": "BfmeR1226ExecContext",
+  "new_name": "Rva008CCED0BytecodeRunnerExecContext",
+  "before_sha256": "a0eeef5979c241f392105b063dda532d0eb16600d2570336f978a63918264e6d",
+  "after_sha256": "26b152615e429f150cdcde99a5fd1bc5573d2fe1f4ab617968296f41836530ef",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeR1226* is a Bfme<Token><Number> generator placeholder family of the kind docs/naming_evidence.md describes (invented, not recovered); the prior bank's verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank keeps the address token Rva008CCED0 as AGENTS.md requires for an unproven identity; no descriptive identity existed to preserve."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cced0.cpp",
+  "new_path": "reverse/attempts/0x008cced0.cpp",
+  "old_name": "BfmeR1226Opcode",
+  "new_name": "Rva008CCED0BytecodeRunnerOpcode",
+  "before_sha256": "a0eeef5979c241f392105b063dda532d0eb16600d2570336f978a63918264e6d",
+  "after_sha256": "26b152615e429f150cdcde99a5fd1bc5573d2fe1f4ab617968296f41836530ef",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeR1226* is a Bfme<Token><Number> generator placeholder family of the kind docs/naming_evidence.md describes (invented, not recovered); the prior bank's verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank keeps the address token Rva008CCED0 as AGENTS.md requires for an unproven identity; no descriptive identity existed to preserve."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cced0.cpp",
+  "new_path": "reverse/attempts/0x008cced0.cpp",
+  "old_name": "BfmeR1226Value",
+  "new_name": "Rva008CCED0BytecodeRunnerValue",
+  "before_sha256": "a0eeef5979c241f392105b063dda532d0eb16600d2570336f978a63918264e6d",
+  "after_sha256": "26b152615e429f150cdcde99a5fd1bc5573d2fe1f4ab617968296f41836530ef",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeR1226* is a Bfme<Token><Number> generator placeholder family of the kind docs/naming_evidence.md describes (invented, not recovered); the prior bank's verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank keeps the address token Rva008CCED0 as AGENTS.md requires for an unproven identity; no descriptive identity existed to preserve."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "AptActionInterpreter",
+  "new_name": "Rva008CF740",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "AptFunctionBody",
+  "new_name": "Rva008CF740D1",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "AptFunctionBody",
+  "new_name": "Rva008CF740D2",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "AptStringBlock",
+  "new_name": "Rva008CF740Block",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "AptValue",
+  "new_name": "Rva008CF740Value",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "abortValue",
+  "new_name": "m_7C",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "append",
+  "new_name": "rva008CC690",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "argumentCount",
+  "new_name": "m_04",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "arguments",
+  "new_name": "m_08",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "arguments",
+  "new_name": "m_0C",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "body",
+  "new_name": "m_30",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "byteCode",
+  "new_name": "m_18",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "byteCodeSize",
+  "new_name": "m_0C",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "constantCount",
+  "new_name": "m_10",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "constantCount",
+  "new_name": "m_14",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "constantCount",
+  "new_name": "m_5C",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "constantPool",
+  "new_name": "m_14",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "constantPool",
+  "new_name": "m_18",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "constantPool",
+  "new_name": "m_60",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "flags",
+  "new_name": "m_04",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "frameCapacity",
+  "new_name": "m_10",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "frameCount",
+  "new_name": "m_0C",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "frames",
+  "new_name": "m_14",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "gap08",
+  "new_name": "m_08",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "gap18",
+  "new_name": "m_18",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "gap64",
+  "new_name": "m_64",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "makeValue",
+  "new_name": "rva008CC940",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "registerBase",
+  "new_name": "m_54",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "registerDepth",
+  "new_name": "m_48",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "registerDepth",
+  "new_name": "m_5C",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "registerWidth",
+  "new_name": "m_50",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "registers",
+  "new_name": "m_58",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "runStream",
+  "new_name": "rva008CCED0",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "runtime",
+  "new_name": "m_20",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "scope",
+  "new_name": "m_28",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "scope",
+  "new_name": "m_30",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "scopeCapacity",
+  "new_name": "m_3C",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "scopeCount",
+  "new_name": "m_30",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "scopes",
+  "new_name": "m_38",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "scopes",
+  "new_name": "m_44",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "stack",
+  "new_name": "m_08",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "stackCapacity",
+  "new_name": "m_00",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "stackCount",
+  "new_name": "m_00",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "state",
+  "new_name": "m_60",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "stringCapacity",
+  "new_name": "m_50",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf740.cpp",
+  "new_path": "reverse/attempts/0x008cf740.cpp",
+  "old_name": "stringCount",
+  "new_name": "m_3C",
+  "before_sha256": "00395a3273e71c8abeaeb55f96dbbd3cd80e1bfb615604e37bdd64e14ec9e8b0",
+  "after_sha256": "caae342593ab42607aa965a48e1f43c083424c436d4ddd4ffaccaaebfd2f4455",
+  "evidence": "docs/analysis/0x008cf740.md",
+  "reason": "The 2026-09-02 bank (score 0.47) named this body AptActionInterpreter::callFunction and gave its objects descriptive field names (scope, stack, stringCount, ...) that no landed source, pin or witness proves; its verdict rows in reverse/re_attempts.log carry identity unknown. The 2026-09-22 analyst bank (score 0.81, docs/analysis/0x008cf740.md) tables every accessed offset with its witnessing instructions and marks meaning unknown where nothing proves it, so AGENTS.md requires the address-derived m_XX names. No proven identity is lost; the guessed names remain in the 2026-09-02 bank in history."
+ },
+ {
+  "old_path": "reverse/attempts/0x00743520.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewInitHeightForMapBfme.cpp",
+  "old_name": "m_height",
+  "new_name": "m_unused",
+  "before_sha256": "16c417be107d35c28b59f4d7429605a81731a8467a95effa2dbe1fc2b2d15d88",
+  "after_sha256": "44f1212ad571f5e544e611c09eb5b27c816ca110cf3b5bfede0f7ef68fdaca25",
+  "evidence": "reverse/functions.csv",
+  "reason": "parameter 2 of Rva0045A000::initialize is the ignored int; retail pushes map+0x20 as argument 2, so BfmeHeightMap+0x20 is the unused field, not the height field"
+ }
 ]
