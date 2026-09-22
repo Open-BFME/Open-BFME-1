@@ -88671,3 +88671,4 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?rva0000113BTarget@@YAXXZ,0x007849C0,address-qualified ILT route; destination independently matched as Rva007849C0Clear
 ?rva00006555Target@@YAXXZ,0x00784A60,address-qualified ILT route; destination independently matched as the Drawable list end accessor
 ?rva00007D06Target@@YAXXZ,0x00633900,address-qualified ILT route; destination independently matched as the AsciiString tree lower-bound body
+?_M_insert_overflow@?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@IAEXPAPBVLocomotorTemplate@@ABQBV3@ABU__true_type@2@I_N@Z,0x00141F70,native pointer-vector insertion; matched001BD0D0 parser proves LocomotorTemplate element and00147560 setter; native265B helper independently exact at00141F70; caller reaches via ILT0002545A
