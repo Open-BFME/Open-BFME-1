@@ -88696,3 +88696,15 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?rva0003025BTarget@@YAXXZ,0x00204ED0,address-qualified ILT route; destination independently matched at 0x00204ED0
 ?rva0003059ETarget@@YAXXZ,0x000E4000,address-qualified ILT route; destination independently matched at 0x000E4000
 ?rva000328C6Target@@YAXXZ,0x001FBC70,address-qualified ILT route; destination independently matched at 0x001FBC70
+?rva00034711Target@@YAXXZ,0x002AF1E0,address-qualified ILT route; destination independently matched at 0x002AF1E0
+?rva00035B6BTarget@@YAXXZ,0x0079A2C0,address-qualified ILT route; destination independently matched at 0x0079A2C0
+?rva00035FF8Target@@YAXXZ,0x00784B10,address-qualified ILT route; destination independently matched at 0x00784B10
+?rva0003713CTarget@@YAXXZ,0x000904E0,address-qualified ILT route; destination independently matched at 0x000904E0
+?rva00038B77Target@@YAXXZ,0x001A60F0,address-qualified ILT route; destination independently matched at 0x001A60F0
+?rva0003A382Target@@YAXXZ,0x00295B20,address-qualified ILT route; destination independently matched at 0x00295B20
+?rva0003B688Target@@YAXXZ,0x00761B70,address-qualified ILT route; destination independently matched at 0x00761B70
+?rva0003C2BDTarget@@YAXXZ,0x000CC1C0,address-qualified ILT route; destination independently matched at 0x000CC1C0
+?rva0003EC7ATarget@@YAXXZ,0x0008FD30,address-qualified ILT route; destination independently matched at 0x0008FD30
+?rva000410ABTarget@@YAXXZ,0x004B6D40,address-qualified ILT route; destination independently matched at 0x004B6D40
+?rva000417EFTarget@@YAXXZ,0x003B3800,address-qualified ILT route; destination independently matched at 0x003B3800
+?rva00041F1FTarget@@YAXXZ,0x00787E80,address-qualified ILT route; destination independently matched at 0x00787E80

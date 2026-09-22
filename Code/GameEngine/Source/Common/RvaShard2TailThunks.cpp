@@ -31,6 +31,18 @@ extern void rva0002F95ATarget(void);
 extern void rva0003025BTarget(void);
 extern void rva0003059ETarget(void);
 extern void rva000328C6Target(void);
+extern void rva00034711Target(void);
+extern void rva00035B6BTarget(void);
+extern void rva00035FF8Target(void);
+extern void rva0003713CTarget(void);
+extern void rva00038B77Target(void);
+extern void rva0003A382Target(void);
+extern void rva0003B688Target(void);
+extern void rva0003C2BDTarget(void);
+extern void rva0003EC7ATarget(void);
+extern void rva000410ABTarget(void);
+extern void rva000417EFTarget(void);
+extern void rva00041F1FTarget(void);
 
 #pragma comment(linker, "/alternatename:?rva0000113BTarget@@YAXXZ=?Rva007849C0Clear@@YAXPAURva007849C0Owner@@@Z")
 #pragma comment(linker, "/alternatename:?rva00006555Target@@YAXXZ=?end@?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QBE?AU?$_List_iterator@PAVDrawable@@U?$_Const_traits@PAVDrawable@@@_STL@@@2@XZ")
@@ -59,6 +71,18 @@ extern void rva000328C6Target(void);
 #pragma comment(linker, "/alternatename:?rva0003025BTarget@@YAXXZ=??0BattlePlanUpdateModuleData@@QAE@XZ")
 #pragma comment(linker, "/alternatename:?rva0003059ETarget@@YAXXZ=?_M_insert_overflow@?$vector@VPlayerTemplate@@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@IAEXPAVPlayerTemplate@@ABV3@ABU__false_type@2@I_N@Z")
 #pragma comment(linker, "/alternatename:?rva000328C6Target@@YAXXZ=??0FireWeaponWhenDeadBehavior@@QAE@PAVThing@@PBVModuleData@@@Z")
+#pragma comment(linker, "/alternatename:?rva00034711Target@@YAXXZ=??0StructureToppleUpdate@@QAE@PAVThing@@PBVModuleData@@@Z")
+#pragma comment(linker, "/alternatename:?rva00035B6BTarget@@YAXXZ=?W3DCommandBarTopDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z")
+#pragma comment(linker, "/alternatename:?rva00035FF8Target@@YAXXZ=?dup_00784b10@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva0003713CTarget@@YAXXZ=??0OptionPreferences@@QAE@XZ")
+#pragma comment(linker, "/alternatename:?rva00038B77Target@@YAXXZ=?addWaypointLink@TerrainLogic@@IAEXHH@Z")
+#pragma comment(linker, "/alternatename:?rva0003A382Target@@YAXXZ=??0HijackerUpdate@@QAE@PAVThing@@PBVModuleData@@@Z")
+#pragma comment(linker, "/alternatename:?rva0003B688Target@@YAXXZ=??$__copy@PBURva0013B8F0Element@@PAU1@H@_STL@@YAPAURva0013B8F0Element@@PBU1@0PAU1@ABUrandom_access_iterator_tag@0@PAH@Z")
+#pragma comment(linker, "/alternatename:?rva0003C2BDTarget@@YAXXZ=?disableRadar@Player@@QAEXXZ")
+#pragma comment(linker, "/alternatename:?rva0003EC7ATarget@@YAXXZ=?keyToName@NameKeyGenerator@@QAE?AVAsciiString@@W4NameKeyType@@@Z")
+#pragma comment(linker, "/alternatename:?rva000410ABTarget@@YAXXZ=?GadgetListBoxSetColors@@YAXPAVGameWindow@@HHHHHHHHHHHH@Z")
+#pragma comment(linker, "/alternatename:?rva000417EFTarget@@YAXXZ=??$__copy@PBVW3DAnimationInfo@@PAV1@H@_STL@@YAPAVW3DAnimationInfo@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z")
+#pragma comment(linker, "/alternatename:?rva00041F1FTarget@@YAXXZ=?_M_insert_overflow@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@IAEXPAVProductionPrerequisite@@ABV3@ABU__false_type@2@I_N@Z")
 
 void j_0000113B(void)
 {
@@ -193,4 +217,64 @@ void j_0003059E(void)
 void j_000328C6(void)
 {
 	rva000328C6Target();
+}
+
+void j_00034711(void)
+{
+	rva00034711Target();
+}
+
+void j_00035B6B(void)
+{
+	rva00035B6BTarget();
+}
+
+void j_00035FF8(void)
+{
+	rva00035FF8Target();
+}
+
+void j_0003713C(void)
+{
+	rva0003713CTarget();
+}
+
+void j_00038B77(void)
+{
+	rva00038B77Target();
+}
+
+void j_0003A382(void)
+{
+	rva0003A382Target();
+}
+
+void j_0003B688(void)
+{
+	rva0003B688Target();
+}
+
+void j_0003C2BD(void)
+{
+	rva0003C2BDTarget();
+}
+
+void j_0003EC7A(void)
+{
+	rva0003EC7ATarget();
+}
+
+void j_000410AB(void)
+{
+	rva000410ABTarget();
+}
+
+void j_000417EF(void)
+{
+	rva000417EFTarget();
+}
+
+void j_00041F1F(void)
+{
+	rva00041F1FTarget();
 }
