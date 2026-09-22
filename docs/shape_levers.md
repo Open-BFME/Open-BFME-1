@@ -975,8 +975,12 @@ EBX and addresses that receiver at +0C/+18. The caller leaves ECX intact.
 Declaring both as members of an opaque address-derived owner restores the
 retail ESI save/restore and loop NOP: 56/56 bytes, one operand byte remaining
 (`mov eax,[edx]` versus `[eax]` after `mov edx,eax`). This is an improved
-bank, not an exact conversion. Inspect the callee's use of incoming ECX
-before treating an unused-in-the-caller ECX as a spare register.
+bank at that point. With the ABI corrected, expressing the walk directly as
+`while (*link != target) { if (!*link) return; link = &(*link)->next; }`
+also fixes the last operand and lands all56B. The direct link-slot spelling
+had no power to fix the original wrong calling convention. Production source:
+`Code/GameEngine/Source/Common/Rva0035E710LinkWalk.cpp`. Inspect the callee's
+use of incoming ECX before treating an unused-in-the-caller ECX as spare.
 
 The same audit **lands** `003F0EC0` (43B). Its bank forwarded six stack
 arguments plus zero to `003EEB90` through ILT `0001FA14`, declaring both
