@@ -77004,6 +77004,7 @@ name,address,notes
 ?bfmeGoD820@BfmeHelpD820@@QAEXPAVObject@@PBUCoord3D@@H@Z,0x00002B49,ILT to FUN_005bb090 used by 0x0026D820
 ?bfmeGoDGE@BfmeGlobal_012f706c@@QAEXPAX0@Z,0x00035779,call-site callee candidate for Glo012F1024Item::j_00040c32; the global at 0x012F706C is loaded into thiscall ecx and the body matches the existing bfmeGoDGE stdcall routine at 0x00612610
 ?bfmeGoDPB@@YA?AVBfmeOtherDPB@@ABVAsciiString@@AB_N@Z,0x00023A33,ILT thunk called by ScriptEngine::setHumanImpassableArea 0x003476F0 (record helper returning by value)
+?bfmeGoDQF@BfmeThingDQF@@QAE?AVBfmeOtherDQF@@XZ,0x0097E2C0,by-value return mangling of the landed ?bfmeGoDQF@BfmeThingDQF@@QAEPAVBfmeOtherDQF@@PAV2@@Z at the same address; ParticleEmitterClass Build_Definition 0x0097FD70 calls 0x0097E2C0 directly at +0x67 and MSVC mangles the hidden sret slot as a by-value return there; same body same ABI
 ?bfmeGoEBF@W3DView@@QAEXXZ,0x0045CB70,neutral direct W3DView ABI view; verified body pin for the BFME EBF reset helper; constructor 0x00745B10/vftable 0x011217A0 proves owner identity; campaign=luna36h-20260907;lane=particle
 ?bfmeGoFBAThunk@BfmeThingFBA@@QAEMPAX@Z,0x0000B816,ILT alias for the cached-float helper used by the 0x00323B70 condition
 ?bfmeGoHI@BfmeThingHI@@QAEXHHH@Z,0x000378F8,ILT to BfmeThingHI::bfmeGoHI body at 0x00609800; called by Rva003BDC50

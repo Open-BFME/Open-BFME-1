@@ -68,6 +68,54 @@ bool ParticleEmitterClass::DebugDisable = false;
 // which is initialized to the state of DefaultRemoveOnComplete.
 bool ParticleEmitterClass::DefaultRemoveOnComplete = true;
 
+// BFME's emitter path obtains the texture name through a companion object.
+// These local views preserve its ABI without changing shared WW3D headers.
+class BfmeOtherDQF
+{
+public:
+	TextureClass *m_texture;
+
+	~BfmeOtherDQF(void)
+	{
+		if (m_texture != NULL) {
+			m_texture->Release_Ref();
+		}
+	}
+};
+
+class BfmeSubDQF
+{
+public:
+	void bfmeCallDQF(BfmeOtherDQF *other);
+};
+
+class BfmeThingDQF
+{
+public:
+	BfmeOtherDQF bfmeGoDQF(void);
+	unsigned char m_bfmeHead[0x130];
+	BfmeSubDQF *m_bfmeSub;
+};
+
+class Rva00988F00Owner
+{
+public:
+	unsigned char m_pad00[0x20c];
+	void *m_data20C;
+	float field2C(void) const;
+};
+
+class BfmeHandleCX
+{
+public:
+	StringClass Get_Texture_Name(void) const;
+};
+
+static float (ParticleEmitterClass::* const keep_merge_abort)(void) const =
+	&ParticleEmitterClass::Get_Merge_Abort_Factor;
+static float (ParticleEmitterClass::* const keep_texture_tile)(void) const =
+	&ParticleEmitterClass::Get_Texture_Tile_Factor;
+
 
 ParticleEmitterClass::ParticleEmitterClass(float emit_rate, unsigned int burst_size,
 			Vector3Randomizer *pos_rnd, Vector3 base_vel, Vector3Randomizer *vel_rnd, float out_vel,
@@ -734,11 +782,11 @@ ParticleEmitterClass::Build_Definition (void) const
 	WWASSERT (pdefinition != NULL);
 	if (pdefinition != NULL) {
 		
-		// Set the texture's filename
-		TextureClass *ptexture = Get_Texture ();
-		if (ptexture != NULL) {
-			pdefinition->Set_Texture_Filename (ptexture->Get_Texture_Name());
-			REF_PTR_RELEASE(ptexture);
+		// The conversion helper constructs a one-pointer texture holder in place.
+		BfmeOtherDQF texture_name = ((BfmeThingDQF *)this)->bfmeGoDQF ();
+		if (texture_name.m_texture != NULL) {
+			pdefinition->Set_Texture_Filename (
+				((BfmeHandleCX *)&texture_name)->Get_Texture_Name ());
 		}
 		
 		// Now fill the definition with data from this emitter instance
@@ -836,8 +884,8 @@ ParticleEmitterClass::Build_Definition (void) const
 		pdefinition->Set_End_Caps(Are_End_Caps_Enabled());
 		pdefinition->Set_Subdivision_Level(Get_Subdivision_Level());
 		pdefinition->Set_Noise_Amplitude(Get_Noise_Amplitude());
-		pdefinition->Set_Merge_Abort_Factor(Get_Merge_Abort_Factor());
-		pdefinition->Set_Texture_Tile_Factor(Get_Texture_Tile_Factor());
+		pdefinition->Set_Merge_Abort_Factor(Buffer->Get_Texture_Tile_Factor());
+		pdefinition->Set_Texture_Tile_Factor(((Rva00988F00Owner *)Buffer)->field2C());
 		pdefinition->Set_UV_Offset_Rate(Get_UV_Offset_Rate());
 
 	}
