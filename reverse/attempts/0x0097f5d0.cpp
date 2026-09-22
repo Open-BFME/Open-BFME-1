@@ -214,9 +214,17 @@ public:
 class BFMEWaterTrackTextureHandle
 {
 public:
+	BFMEWaterTrackTextureHandle() : m_texture(0) {}
+	BFMEWaterTrackTextureHandle(const BFMEWaterTrackTextureHandle &other)
+		: m_texture(other.m_texture)
+	{
+		if (m_texture)
+			++*(unsigned short *)((char *)m_texture + 4);
+	}
+
 	TextureClass *m_texture;
 
-	~BFMEWaterTrackTextureHandle(void)
+	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
 			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
@@ -227,42 +235,15 @@ extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
 	char *name, int mipCount, int format);
 
 static inline void BFMEAssignWaterTrackTexture(
-	TextureClass **destination,
+	TextureClass *&destination,
 	const BFMEWaterTrackTextureHandle &texture)
 {
 	if (texture.m_texture)
 		++*(unsigned short *)((char *)texture.m_texture + 4);
-	if (*destination)
-		((BFMEWaterTrackTexture *)*destination)->Release_Ref();
-	*destination = texture.m_texture;
+	if (destination)
+		((BFMEWaterTrackTexture *)destination)->Release_Ref();
+	destination = texture.m_texture;
 }
-
-class BFMETextureRef
-{
-public:
-	BFMETextureRef(void) : m_texture(NULL) {}
-
-	~BFMETextureRef(void)
-	{
-		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
-		m_texture = NULL;
-	}
-
-	BFMETextureRef &operator=(const BFMEWaterTrackTextureHandle &texture)
-	{
-		if (texture.m_texture)
-			++*(unsigned short *)((char *)texture.m_texture + 4);
-		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
-		m_texture = texture.m_texture;
-		return *this;
-	}
-
-	TextureClass *get(void) const { return m_texture; }
-
-	TextureClass *m_texture;
-};
 
 
 ParticleEmitterClass *
@@ -270,10 +251,10 @@ ParticleEmitterClass *
 ParticleEmitterClass::Create_From_Definition (const ParticleEmitterDefClass &definition)
 {
 	// Attempt to load the texture for this emitter
-	BFMETextureRef ptexture;
 	const char *ptexture_filename = definition.Get_Texture_Filename ();
+	TextureClass *ptexture = NULL;
 	if (ptexture_filename && ptexture_filename[0]) {
-		ptexture = BFMEGetWaterTrackTexture((char *)ptexture_filename, 0, 0);
+		BFMEAssignWaterTrackTexture(ptexture, BFMEGetWaterTrackTexture((char *)ptexture_filename, 0, 0));
 	}
 
 	// Assume failure
@@ -328,7 +309,7 @@ ParticleEmitterClass::Create_From_Definition (const ParticleEmitterDefClass &def
 																definition.Get_Acceleration (),
 																definition.Get_Lifetime (),
 																definition.Get_Future_Start_Time(),
-															ptexture.get(),
+															ptexture,
 																shader, 
 																definition.Get_Max_Emissions (),
 																0,
@@ -354,6 +335,11 @@ ParticleEmitterClass::Create_From_Definition (const ParticleEmitterDefClass &def
 	pemitter->Set_Name (definition.Get_Name ());
 
 	// release our reference to particle texture.
+	if (ptexture) {
+		((BFMEWaterTrackTexture *)ptexture)->Release_Ref();
+		ptexture = 0;
+	}
+
 	// Return a pointer to the new emitter
 	return pemitter;
 }
