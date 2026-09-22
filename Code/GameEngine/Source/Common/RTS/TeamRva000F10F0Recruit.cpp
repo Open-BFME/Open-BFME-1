@@ -134,7 +134,9 @@ public:
 	unsigned char m_unknown_008[0x38 - 0x08];
 	float m_x;
 	float m_y;
-	unsigned char m_unknown_040[0x1a4 - 0x40];
+	unsigned char m_unknown_040[0x88 - 0x40];
+	Object *m_next;
+	unsigned char m_unknown_08c[0x1a4 - 0x8c];
 	unsigned char m_disabledBits;
 	unsigned char m_unknown_1a5[0x204 - 0x1a5];
 	AIUpdateInterface *m_aiUpdateInterface;
@@ -149,6 +151,9 @@ public:
 	Player *getControllingPlayer() const;
 };
 
+class GameLogic { public: Object *getFirstObject(); };
+extern GameLogic *TheBfmeGameLogic;
+
 class Team
 {
 public:
@@ -159,6 +164,8 @@ public:
 	unsigned char m_unknown_032[0xe4 - 0x32];
 	Bool m_isRecruitabilitySet;
 	Bool m_isRecruitable;
+
+	Bool Rva000F12B0(const ThingTemplate *desired, int minimum);
 
 	Bool Rva000F10F0(Object **recruit, float *distanceSquared,
 		Object *candidate, ThingTemplate *desired, Coord3D *teamHome);
@@ -224,4 +231,55 @@ Bool Team::Rva000F10F0(Object **recruit, float *distanceSquared,
 	*distanceSquared = dx * dx + dy * dy;
 	*recruit = candidate;
 	return true;
+}
+
+// Retail000F12B0/297B counts the same eligible recruitment candidates.
+// GameLogic::getFirstObject follows ILT000358BE to00383090 (this+A8);
+// the Object forward link at+88 is witnessed as m_next.
+Bool Team::Rva000F12B0(const ThingTemplate *desired, int minimum)
+{
+	Player *myPlayer = getControllingPlayer();
+	int count = 0;
+	for (Object *candidate = TheBfmeGameLogic->getFirstObject();
+		candidate != 0; candidate = candidate->m_next)
+	{
+		if (!candidate->getTemplate()->isEquivalentTo(desired))
+		{
+			if (!isInBuildVariations(desired, candidate->getTemplate()))
+				continue;
+		}
+
+		if (candidate->getControllingPlayer() != myPlayer)
+			continue;
+
+		Team *candidateTeam = candidate->m_team;
+		Bool isDefaultTeam = false;
+		if (candidateTeam == myPlayer->m_defaultTeam)
+			isDefaultTeam = true;
+		if (!candidateTeam->m_active)
+			continue;
+
+		TeamPrototype *candidatePrototype = candidateTeam->m_prototype;
+		if (candidatePrototype->m_productionPriority >=
+			m_prototype->m_productionPriority)
+			continue;
+
+		Bool teamIsRecruitable = isDefaultTeam;
+		if (candidatePrototype->m_isAIRecruitable)
+			teamIsRecruitable = true;
+		if (candidateTeam->m_isRecruitabilitySet)
+			teamIsRecruitable = candidateTeam->m_isRecruitable;
+		if (!teamIsRecruitable)
+			continue;
+
+		if (candidate->m_aiUpdateInterface != 0 &&
+			!candidate->m_aiUpdateInterface->m_recruitable)
+			continue;
+		if ((candidate->m_disabledBits & 8) != 0)
+			continue;
+
+		++count;
+
+	}
+	return count >= minimum;
 }
