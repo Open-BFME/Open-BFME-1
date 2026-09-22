@@ -838,5 +838,15 @@
   "after_sha256": "44f1212ad571f5e544e611c09eb5b27c816ca110cf3b5bfede0f7ef68fdaca25",
   "evidence": "reverse/functions.csv",
   "reason": "parameter 2 of Rva0045A000::initialize is the ignored int; retail pushes map+0x20 as argument 2, so BfmeHeightMap+0x20 is the unused field, not the height field"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManagerUpdate.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManagerUpdate.cpp",
+  "old_name": "GameLogicFp",
+  "new_name": "Rva00367E30Logic",
+  "before_sha256": "2f341ef81655b77c59595cb8c07b690ca9e2d865b787ac8a5c184de5b8d0cd28",
+  "after_sha256": "e72066c007e162515575367143c1612f62b7963e4b3db1a84c9d5f8a5b7ee65c",
+  "evidence": "reverse/symbols.csv",
+  "reason": "GameLogicFp was a TU-local shim named after the real GameLogic class for the global at 0x012F0898, which reverse/symbols.csv types ?TheBfmeGameLogic@@3PAURva00367E30Logic@@A; the shim now carries that ledger type name (Rva00367E30Logic), keeping only the witnessed m_fp at +0x1A0."
  }
 ]

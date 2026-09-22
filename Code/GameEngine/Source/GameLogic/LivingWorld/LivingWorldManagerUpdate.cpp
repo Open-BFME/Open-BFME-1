@@ -26,9 +26,13 @@
 #include "Common/STLTypedefs.h"
 #include <hash_map>
 
-class GameLogicFp
+// reverse/symbols.csv types the global at 0x012F0898 as
+// ?TheBfmeGameLogic@@3PAURva00367E30Logic@@A, so the TU-local shim carries that
+// address-derived struct name (landed TUs spell it the same way, e.g.
+// GameLogic/Rva0058BB30CommandState.cpp).  +0x1A0 is the FP-mode nesting count:
+// the body calls setFPMode when it is zero, then increments it.
+struct Rva00367E30Logic
 {
-public:
 	char m_pad00[0x1A0];
 	int m_fp;
 };
@@ -95,7 +99,11 @@ public:
 	virtual void slot08() = 0;
 	virtual void slot0C() = 0;
 	virtual void slot10() = 0;
-	virtual void finish() = 0;
+	// Slot 0x14, the vcall at retail +0x11f.  No evidence names it: the only
+	// methods reverse/symbols.csv gives this class -- report, run, after,
+	// notifyTarget -- are all mangled QAE (public NON-virtual __thiscall), so
+	// none of them can be a vtable slot.  Slot-derived until something names it.
+	virtual void slot14() = 0;
 };
 
 extern unsigned char Rva00563970GetFlag();
@@ -112,7 +120,10 @@ public:
 	virtual void slot00() = 0;
 	virtual void slot04() = 0;
 	virtual void slot08() = 0;
-	virtual void update() = 0;
+	// Slot 0x0C, the `call [edx+0xc]` at retail +0x88, reached once per mapped
+	// object per manager tick.  A per-object tick is plausible but unproven --
+	// nothing names this slot -- so it stays slot-derived.
+	virtual void slot0C() = 0;
 };
 
 // void * mapped type: reverse/symbols.csv pins retail's shared hashtable::begin
@@ -134,14 +145,17 @@ public:
 
 private:
 	char m_pad00[0x210];
-	Rva006174D0Map m_objects;
+	// No witness for +0x210 (tools/name_oracle.py --class BfmeLivingWorldManager
+	// --offset 0x210 has none), and the landed sibling's m_objects is the
+	// AsciiString-keyed map at +0x194, not this one -- offset-keyed spelling.
+	Rva006174D0Map m_map210;
 	char m_pad224[0x64];
 	bool m_flag288;
 	char m_pad289[3];
 	LivingWorldEyeTower *m_eyeTower;
 };
 
-#define TheBfmeGameLogic (*(GameLogicFp **)0x012F0898)
+#define TheBfmeGameLogic (*(Rva00367E30Logic **)0x012F0898)
 #define TheState (*(Rva006174D0State **)0x012F7048)
 #define TheGlobal012F1028 (*(Rva003BF540 **)0x012F1028)
 #define TheGlobal012F19E8 (*(BfmeC977 **)0x012F19E8)
@@ -151,7 +165,7 @@ private:
 // ?update@BfmeLivingWorldManager@@QAEXXZ
 void BfmeLivingWorldManager::update()
 {
-	GameLogicFp *logic = TheBfmeGameLogic;
+	Rva00367E30Logic *logic = TheBfmeGameLogic;
 	int *fp = &logic->m_fp;
 	if (*fp == 0)
 		setFPMode();
@@ -172,10 +186,10 @@ void BfmeLivingWorldManager::update()
 	if (m_eyeTower)
 		m_eyeTower->updateState();
 
-	Rva006174D0Map::iterator it(m_objects.begin());
-	for (; it != m_objects.end(); ++it)
+	Rva006174D0Map::iterator it(m_map210.begin());
+	for (; it != m_map210.end(); ++it)
 	{
-		((Rva006174D0Object *)it->second)->update();
+		((Rva006174D0Object *)it->second)->slot0C();
 	}
 
 	if (!m_flag288 && TheState->m_field04 == 1
@@ -188,8 +202,8 @@ void BfmeLivingWorldManager::update()
 	}
 
 	Glo012F4B98Type *global012F4B98 = TheGlobal012F4B98;
-	global012F4B98->finish();
-	GameLogicFp *logicExit = TheBfmeGameLogic;
+	global012F4B98->slot14();
+	Rva00367E30Logic *logicExit = TheBfmeGameLogic;
 	--logicExit->m_fp;
 
 	void *desyncSink = CritterDesyncSink;
