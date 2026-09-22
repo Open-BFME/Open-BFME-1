@@ -1,5 +1,6 @@
 """Historical identity survives an RVA bank move and an owner-name change."""
 import json
+import subprocess
 import sys
 from pathlib import Path
 
@@ -244,3 +245,56 @@ def test_authored_source_and_shim_suffixes(repo, path):
     commit(repo)
     put(repo, path, AFTER)
     assert len(N.check(repo, 'HEAD', ':')[0]) == 4
+
+
+HOOKS = Path(__file__).resolve().parents[2] / '.githooks'
+
+
+def hook_fixture(repo):
+    # Unrelated gates are inert; run the real hook to verify that it refuses
+    # unreviewed checker code even if that local checker would return success.
+    for tool in ('name_regression', 'name_oracle', 'check_case_collisions',
+                 'conversion_gate', 'check_csv', 'retired_guard'):
+        put(repo, f'tools/{tool}.py', 'raise SystemExit(0)\n')
+    put(repo, 'Code/Names.cpp', BEFORE)
+    return commit(repo)
+
+
+def run_hook(repo, hook, old):
+    head = git(repo, 'rev-parse', 'HEAD').strip()
+    refs = f'refs/heads/main {head} refs/heads/main {old}\n' if hook == 'pre-push' else ''
+    return subprocess.run(['bash', str(HOOKS / hook)], cwd=repo,
+                          input=refs, text=True, capture_output=True)
+
+
+@pytest.mark.parametrize('hook', ['pre-commit', 'pre-push'])
+@pytest.mark.parametrize('checker', ['name_regression', 'name_oracle'])
+def test_real_hooks_refuse_unstaged_checker_changes(repo, hook, checker):
+    old = hook_fixture(repo)
+    put(repo, 'Code/Names.cpp', AFTER)
+    if hook == 'pre-push':
+        commit(repo)
+    put(repo, f'tools/{checker}.py', 'raise SystemExit(0)  # unreviewed\n', stage=False)
+    result = run_hook(repo, hook, old)
+    assert result.returncode != 0
+    assert 'name checker differs from' in result.stderr
+    assert f'tools/{checker}.py' in result.stderr
+
+
+@pytest.mark.parametrize('hook', ['pre-commit', 'pre-push'])
+def test_real_hooks_refuse_an_untracked_checker(repo, hook):
+    old = hook_fixture(repo)
+    git(repo, 'rm', '--cached', 'tools/name_regression.py')
+    put(repo, 'Code/Names.cpp', AFTER)
+    if hook == 'pre-push':
+        commit(repo)
+    result = run_hook(repo, hook, old)
+    assert result.returncode != 0
+    assert 'name checker differs from' in result.stderr
+
+
+def test_real_commit_hook_allows_checker_matching_index(repo):
+    old = hook_fixture(repo)
+    put(repo, 'docs/change.md', 'Unrelated documentation.\n')
+    result = run_hook(repo, 'pre-commit', old)
+    assert result.returncode == 0, result.stdout + result.stderr

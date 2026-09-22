@@ -56,6 +56,11 @@ fi
 # clean-C++ ledger row repointed back at assembly.
 python3 tools/conversion_gate.py HEAD : || fail "conversion direction (see above)"
 # Historical names survive source moves and opaque owner renames.
+# Execute the reviewed checker, not an unstaged local experiment.
+for checker in tools/name_regression.py tools/name_oracle.py; do
+    git cat-file -e ":$checker" && git diff --quiet -- "$checker" \
+        || fail "name checker differs from staged snapshot: $checker; stage or revert its edits"
+done
 python3 tools/name_regression.py HEAD : || fail "descriptive names regressed (see above)"
 # A deliberately deleted file may not come back by accident (reverse/retired_paths.txt).
 python3 tools/retired_guard.py --staged || fail "retired path re-added (see above)"

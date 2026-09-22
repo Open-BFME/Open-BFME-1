@@ -338,3 +338,7 @@ that independently refutes the old identity; `reason` explains that evidence.
 The record applies only to those exact snapshots and that name pair. It is not
 a reusable exemption or a growable count baseline. Review the evidence with the
 correction: the check can enforce its presence, not prove the identity for you.
+
+The hooks also require the checker and its layout walker to match the staged
+index (commit) or outgoing commit (push), so an unstaged tool experiment cannot
+silently change the verdict on the reviewed source.
