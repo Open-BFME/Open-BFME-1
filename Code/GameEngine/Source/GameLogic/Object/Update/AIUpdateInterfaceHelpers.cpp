@@ -9,7 +9,7 @@
 //
 //   ?getCurLocomotorSpeed@   0x0026EC30,  29 bytes
 //   ?setQueueForPathTime@    0x0026ECA0,  83 bytes
-//   ?computeQuickPath@       0x002712D0, 154 bytes
+//   ?Rva002712D0@            0x002712D0, 154 bytes
 //   ?setGoalPositionClipped@ 0x00273DE0, 334 bytes
 //   ?privateGetHealed@       0x0027DE10,  50 bytes
 //   ?getLastCommandSource@   0x0027F460,   4 bytes
@@ -25,7 +25,7 @@
 // offset by accident of arithmetic and says nothing about where the bases are.
 // One layout below, with the bases named.
 //
-// computeQuickPath's BfmeVirtualSlots<122> is what pins setLocomotorGoalNone to
+// Rva002712D0's BfmeVirtualSlots<122> is what pins setLocomotorGoalNone to
 // its retail vtable slot, so it is declared first and UpdateModule contributes
 // no virtual of its own; the rest of the virtuals here are past it and their
 // slots are not evidence of anything.
@@ -41,7 +41,7 @@
 // the same word a third way, as an opaque object they call set() on with
 // m_object as the argument.)
 //
-// One more offset lands twice here: computeQuickPath's m_isBlockedAndStuck at
+// One more offset lands twice here: Rva002712D0's m_isBlockedAndStuck at
 // +0x326 is the same byte the command handlers clear on every order.
 
 typedef bool Bool;
@@ -241,7 +241,7 @@ public:
 	virtual CommandSourceType getLastCommandSource() const;
 	virtual void notifyVictimIsDead();
 
-	Bool computeQuickPath( const Coord3D *destination );
+	virtual void Rva002712D0( const Coord3D *destination );
 	Real getCurLocomotorSpeed();
 	Real getFormationMovementSpeed( Object *object );
 	void setQueueForPathTime( int frames );
@@ -313,10 +313,14 @@ void AIUpdateInterface::setQueueForPathTime( int frames )
 	m_queueForPathFrame = frames ? (TheGameLogic->getFrame() + frames) : 0;
 }
 
-// ?computeQuickPath@AIUpdateInterface@@QAE_NPBUCoord3D@@@Z
+// 0x002712D0 is AIUpdateInterface vtable slot 125 (ILT 0x0002FFF9 in 13
+// AIUpdateInterface tables) and returns nothing; it has no Zero Hour twin
+// and no named caller, so it keeps its address token. It was previously
+// claimed as computeQuickPath, whose real body is 0x00274B60 (ILT 0x00029375).
+// ?Rva002712D0@AIUpdateInterface@@UAEXPBUCoord3D@@@Z
 // Retail falls out of the function without setting a return value, which is
 // what the disabled 4716 above is for.
-Bool AIUpdateInterface::computeQuickPath(const Coord3D *destination)
+void AIUpdateInterface::Rva002712D0(const Coord3D *destination)
 {
 	Object *object = getObject();
 

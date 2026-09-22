@@ -938,5 +938,15 @@
   "after_sha256": "a67c11f29722ec4681ac021870ec438eab18d8ee044b74dd1e56a52b0c2108fc",
   "evidence": "reverse/symbols.csv",
   "reason": "GameClientFunctorHolder1Middle was the earlier bank's guessed spelling for the WindowManager::bfmeBindRva004650F0 holder parameter at 0x0000F31C, and it did not resolve. reverse/symbols.csv's only pin for that address mangles the parameter type as Rva0050F8B0FunctorHolder (?bfmeBindRva004650F0@WindowManager@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z), so the re-banked source keeps the address-derived spelling the linked symbol already commits to instead of the unresolved guess."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceHelpers.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceHelpers.cpp",
+  "old_name": "computeQuickPath",
+  "new_name": "Rva002712D0",
+  "before_sha256": "39433058cf29b9f97268d3731a8c82e20add61dcf5dfef182d39582b459a3189",
+  "after_sha256": "8aed4c9b135e097980c2d7b8565c922c6b5e313efb3c19b04973826c9a24f54c",
+  "evidence": "reverse/symbols.csv",
+  "reason": "computeQuickPath is pinned in reverse/symbols.csv at ILT 0x00029375, which jumps to 0x00274B60, not to this body; 0x002712D0 is AIUpdateInterface vtable slot 125 (ILT 0x0002FFF9), void-shaped, with no Zero Hour twin or named caller, so it takes the address-token name Rva002712D0."
  }
 ]
