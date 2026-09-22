@@ -188,5 +188,55 @@
     "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
     "evidence": "reverse/functions.csv",
     "reason": "OnStructureCreatedCallBits asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770CallBits and ZH Player.h:459 is recorded only as evidence for a future rename of that row."
+  },
+  {
+    "old_path": "reverse/attempts/0x0024ce60.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+    "old_name": "BfmeOwnerCK",
+    "new_name": "Rva0024CE60Owner",
+    "before_sha256": "27bbed162739f5d02e179c143d4aa41b2dee75a738a99822172fcdbb94db3059",
+    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "BfmeOwnerCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Owner. Not part of the emitted symbol. (range entry: bank -> landed source)"
+  },
+  {
+    "old_path": "reverse/attempts/0x0024ce60.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+    "old_name": "BfmeSubCK",
+    "new_name": "Rva0024CE60Sub",
+    "before_sha256": "27bbed162739f5d02e179c143d4aa41b2dee75a738a99822172fcdbb94db3059",
+    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "BfmeSubCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Sub. Not part of the emitted symbol. (range entry: bank -> landed source)"
+  },
+  {
+    "old_path": "reverse/attempts/0x0024ce60.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0024CE60.cpp",
+    "old_name": "BfmeThingCK",
+    "new_name": "Rva0024CE60Thing",
+    "before_sha256": "27bbed162739f5d02e179c143d4aa41b2dee75a738a99822172fcdbb94db3059",
+    "after_sha256": "3e390dba6e9e02e9ae5f9c6e1906ef869b3d9576559fa66451bece73343c352d",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "BfmeThingCK is a TU-local shim type from the retired generator's invented Bfme<Role><Suffix> family (docs/naming_evidence.md lines 243-244 class BfmeHostZB/BfmeOwnVVE as invented); the body at 0x0024CE60 has no named caller, so the shim keeps only the witnessed offsets under the address token Rva0024CE60Thing. Not part of the emitted symbol. (range entry: bank -> landed source)"
+  },
+  {
+    "old_path": "reverse/attempts/0x002d3970.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
+    "old_name": "OnStructureCreatedCall",
+    "new_name": "Rva000D4770Call",
+    "before_sha256": "5841a80880100a95760426026d60ba16148d8be01356798153ed58e395a7613a",
+    "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
+    "evidence": "reverse/functions.csv",
+    "reason": "OnStructureCreatedCall asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770Call and ZH Player.h:459 is recorded only as evidence for a future rename of that row. (range entry: bank -> landed source)"
+  },
+  {
+    "old_path": "reverse/attempts/0x002d3970.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/Object/Upgrade/BaseUpgradeUpgradeImplementation.cpp",
+    "old_name": "OnStructureCreatedCallBits",
+    "new_name": "Rva000D4770CallBits",
+    "before_sha256": "5841a80880100a95760426026d60ba16148d8be01356798153ed58e395a7613a",
+    "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
+    "evidence": "reverse/functions.csv",
+    "reason": "OnStructureCreatedCallBits asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770CallBits and ZH Player.h:459 is recorded only as evidence for a future rename of that row. (range entry: bank -> landed source)"
   }
 ]
