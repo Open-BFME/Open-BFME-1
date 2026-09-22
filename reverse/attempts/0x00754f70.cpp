@@ -1,5 +1,5 @@
 // ??0Rva00754F70Owner@@QAE@XZ
-// partial score=0.79 date=2026-09-06
+// partial score=0.81 date=2026-09-22
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
 // stlport
 // Open-BFME7: default constructor zero-initializing nine int members and one
@@ -44,10 +44,10 @@ Rva00754F70Owner::Rva00754F70Owner() :
 	m_f4( 0 ),
 	m_f8( 0 )
 {
-	m_f10 = 0;
 	m_f14 = 0;
-	m_f18 = 0;
+	m_f10 = 0;
 	m_f1c = 0;
+	m_f18 = 0;
 	m_f20 = 0;
 	m_f24 = 0;
 }
