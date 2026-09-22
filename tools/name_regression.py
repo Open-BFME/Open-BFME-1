@@ -23,7 +23,10 @@ CORRECTIONS = 'reverse/name_corrections.json'
 SOURCE = ('.cpp', '.cc', '.cxx', '.c', '.h', '.hh', '.hpp', '.hxx')
 TOKEN = re.compile(r'//[^\n]*|/\*.*?\*/|"(?:\\.|[^"\\])*"|\'(?:\\.|[^\'\\])*\'|[A-Za-z_]\w*|0[xX][0-9a-fA-F]+|\d+|[^\s]', re.S)
 IDENT = re.compile(r'^[A-Za-z_]\w*$')
-OPAQUE = re.compile(r'^(?:Rva[0-9a-f]{8}|(?:d|dup|j|sub|FUN|Gen_t)_[0-9a-f]{8}|(?:rva|func|fn)_?[0-9a-f]{8})', re.I)
+OPAQUE = re.compile(
+    r'^(?:Rva[0-9a-f]{8}|(?:d|dup|j|sub|FUN)_[0-9a-f]{8}|'
+    r'Gen_?[0-9a-f]{8}|Gen_t_[0-9a-f]{8}|'
+    r'(?:rva|func|fn)_?[0-9a-f]{8})', re.I)
 KEYWORDS = set('void bool char short int long float double signed unsigned const volatile static extern class struct public private protected return true false nullptr typedef typename auto Bool Byte Short UnsignedByte UnsignedShort WideChar Int UnsignedInt UnsignedInt32 Real Int64 UnsignedInt64'.split())
 ADDRESS = re.compile(r'(?:rva|0x|(?:^|_)\s*)([0-9a-f]{8})(?![0-9a-f])', re.I)
 
@@ -50,6 +53,119 @@ def downgrade(old, new):
 
 def tokens(text):
     return [t for t in TOKEN.findall(text) if not t.startswith(('//', '/*', '"', "'"))]
+
+
+FUNCTION_DECL_TAIL = {
+    ';', '{', '=', ':', 'const', 'volatile', 'noexcept', 'override',
+    'final', 'try', '->',
+}
+FUNCTION_PREFIX_BLOCKERS = {
+    '(', '[', '{', '}', ';', ',', '=', 'return', 'if', 'while', 'for',
+    'switch', 'case', 'throw', 'new', 'delete', 'sizeof', 'decltype',
+    '?', '.', '&', '*', '+', '-', '!', '~', '#',
+}
+
+
+def _paren_pairs(values):
+    stack = []
+    pairs = {}
+    for index, value in enumerate(values):
+        if value == '(':
+            stack.append(index)
+        elif value == ')' and stack:
+            pairs[stack.pop()] = index
+    return pairs
+
+
+def _declaration_prefix(values, name_index):
+    """Return the tokens before a possible qualified function name.
+
+    A qualified call such as `Owner::run()` has no return-type prefix, while a
+    definition such as `void Owner::run()` does.  Keeping that distinction
+    prevents the declaration pass from pairing arbitrary calls.
+    """
+    start = name_index
+    while (start >= 3 and values[start - 2:start] == [':', ':']
+           and IDENT.fullmatch(values[start - 3])):
+        start -= 3
+    boundary = start - 1
+    while boundary >= 0 and values[boundary] not in (';', '{', '}', '(', '[', ']', ','):
+        boundary -= 1
+    return values[boundary + 1:start]
+
+
+
+def _is_function_declaration(values, name_index, open_index, close_index):
+    name = values[name_index]
+    if not IDENT.fullmatch(name) or name in KEYWORDS or name == 'operator':
+        return False
+    if name_index + 1 != open_index:
+        return False
+    previous = values[name_index - 1] if name_index else ''
+    if previous in FUNCTION_PREFIX_BLOCKERS:
+        return False
+    if previous == '>' and name_index >= 2 and values[name_index - 2] == '-':
+        return False
+    if previous == ':' and not (name_index >= 2 and values[name_index - 2] == ':'):
+        return False
+    if previous == ':':
+        prefix = _declaration_prefix(values, name_index)
+        if not prefix or any(value in FUNCTION_PREFIX_BLOCKERS for value in prefix):
+            return False
+    if close_index + 1 < len(values) and values[close_index + 1] not in FUNCTION_DECL_TAIL:
+        return False
+    return True
+
+
+def _function_declarations(values):
+    declarations = {}
+    for open_index, close_index in _paren_pairs(values).items():
+        name_index = open_index - 1
+        if name_index >= 0 and _is_function_declaration(
+                values, name_index, open_index, close_index):
+            declarations[name_index] = (open_index, close_index)
+    return declarations
+
+
+def _equal_token_alignment(old, new):
+    alignment = {}
+    for tag, a, b, c, d in difflib.SequenceMatcher(
+            None, old, new, autojunk=False).get_opcodes():
+        if tag == 'equal':
+            alignment.update({a + offset: c + offset for offset in range(b - a)})
+    return alignment
+
+
+def _function_declaration_regressions(old, new):
+    """Find only declaration names whose parameter boundaries remain aligned.
+
+    The ordinary token pass intentionally handles equal-sized identifier
+    substitutions.  This narrower pass covers a declaration when a return
+    type, storage class, or calling convention also changes and makes the
+    surrounding replacement unequal.  Exact parameter tokens plus aligned
+    opening and closing parentheses are required; there is no name-only
+    pairing across removed/added functions or overloads.
+    """
+    old_declarations = _function_declarations(old)
+    new_declarations = _function_declarations(new)
+    alignment = _equal_token_alignment(old, new)
+    found = set()
+    for old_name_index, (old_open, old_close) in old_declarations.items():
+        new_open = alignment.get(old_open)
+        new_close = alignment.get(old_close)
+        if new_open is None or new_close is None:
+            continue
+        if old[old_open:old_close + 1] != new[new_open:new_close + 1]:
+            continue
+        candidates = [
+            new_name_index for new_name_index, (candidate_open, candidate_close)
+            in new_declarations.items()
+            if candidate_open == new_open and candidate_close == new_close
+            and downgrade(old[old_name_index], new[new_name_index])
+        ]
+        if len(candidates) == 1:
+            found.add((old[old_name_index], new[candidates[0]]))
+    return found
 
 
 def layouts(text):
@@ -94,6 +210,7 @@ def regressions(before, after):
                     old[old_pos - 1] == '(' and old[old_pos + 1] == ')')
                 if downgrade(x, y) and not moved_type and not compiler_attribute:
                     found.add((x, y))
+    found.update(_function_declaration_regressions(old, new))
     left, right = layouts(before), layouts(after)
     for owner, members in left.items():
         if owner in right:

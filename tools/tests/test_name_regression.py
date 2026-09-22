@@ -72,6 +72,64 @@ def test_descriptive_to_opaque_token_substitution(old, new):
     assert (old, new) in N.regressions(f'int {old}();', f'int {new}();')
 
 
+@pytest.mark.parametrize('before,after', [
+    (
+        'void calculateScore() {}',
+        'static int Rva00123456() { return 0; }',
+    ),
+    (
+        'class Known { public: void calculateScore(); };',
+        'class Known { public: void __cdecl Rva00123456(); };',
+    ),
+])
+def test_function_declaration_rename_survives_signature_prefix_change(before, after):
+    assert ('calculateScore', 'Rva00123456') in N.regressions(before, after)
+
+
+@pytest.mark.parametrize('name', ['Gen_00123456', 'Gen00123456'])
+def test_address_derived_gen_spellings_are_opaque(name):
+    assert N.opaque(name)
+    assert ('calculateScore', name) in N.regressions(
+        'void calculateScore();', f'void {name}();')
+
+
+def test_function_declaration_guard_does_not_pair_retained_or_added_functions():
+    before = 'void calculateScore();'
+    retained = 'static int calculateScore();'
+    added = 'void calculateScore(); static int Rva00123456();'
+    assert N.regressions(before, retained) == []
+    assert N.regressions(before, added) == []
+
+
+def test_function_declaration_guard_does_not_pair_ambiguous_overloads():
+    before = 'void calculateScore(int); void calculateScore(float);'
+    after = 'void Rva00123456(double); void Rva00654321(char);'
+    assert N._function_declaration_regressions(N.tokens(before), N.tokens(after)) == set()
+
+
+def test_function_declaration_guard_does_not_pair_calls_or_attributes():
+    call_before = 'void run() { calculateScore(); }'
+    call_after = 'void run() { Rva00123456(); }'
+    qualified_call_before = 'void run() { if (Owner::calculateScore()) {} }'
+    qualified_call_after = 'void run() { if (Owner::Rva00123456()) {} }'
+    attribute_before = '__declspec(naked) void generated() {}'
+    attribute_after = '__declspec(Rva00123456) void generated() {}'
+    assert ('calculateScore', 'Rva00123456') in N.regressions(call_before, call_after)
+    assert N._function_declaration_regressions(N.tokens(call_before), N.tokens(call_after)) == set()
+    assert ('calculateScore', 'Rva00123456') in N.regressions(qualified_call_before, qualified_call_after)
+    assert N._function_declaration_regressions(N.tokens(qualified_call_before), N.tokens(qualified_call_after)) == set()
+    assert N.regressions(attribute_before, attribute_after) == []
+
+
+def test_shifted_layout_does_not_invent_field_pairings():
+    before = 'class Known { int m_count; int m_total; };'
+    after = 'class Rva00123456 { char pad; int m_field0; int m_field4; };'
+    findings = N.regressions(before, after)
+    assert ('Known', 'Rva00123456') in findings
+    assert ('m_count', 'm_field0') not in findings
+    assert ('m_total', 'm_field4') not in findings
+
+
 def test_unknown_member_type_does_not_hide_simple_rename():
     a = 'class Known {\nUnknown m_events;\n};'
     b = a.replace('m_events', 'm_field20')
@@ -416,3 +474,9 @@ def test_attribute_does_not_exempt_the_function_it_annotates():
     before = '__declspec(naked) void calculateScore() {}'
     after = '__declspec(naked) void Rva00123456() {}'
     assert ('calculateScore', 'Rva00123456') in N.regressions(before, after)
+
+
+def test_qualified_definition_return_type_change():
+    assert ('calculateScore', 'Rva00123456') in N.regressions(
+        'void Owner::calculateScore() {}',
+        'static int Owner::Rva00123456() { return 0; }')
