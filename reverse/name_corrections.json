@@ -1,0 +1,62 @@
+[
+  {
+    "old_path": "reverse/attempts/0x006155e0.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManagerRva006155E0.cpp",
+    "old_name": "bfmeGetEQV",
+    "new_name": "rva006155e0",
+    "before_sha256": "e6a074540255bcf19cfe1c465d1ab5160075b7c50962ea9d776a2380c9f8e0d7",
+    "after_sha256": "905b0b39ca9c1ec2c491ff447704555a4d54d16d876064b28b84782a916b6f26",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "bfmeGetEQV is a Bfme<Verb><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 243-244 describe (BfmeHostZB, BfmeOwnVVE); its verdict rows in reverse/re_attempts.log carry (identity unknown). The landed rva006155e0 keeps the address token as AGENTS.md requires for an unproven method; no descriptive identity existed to preserve."
+  },
+  {
+    "old_path": "reverse/attempts/0x0075bf30.cpp",
+    "new_path": "Code/GameEngine/Source/Common/Rva0075BF30Forwarder.cpp",
+    "old_name": "BfmeHolderZD",
+    "new_name": "Rva0075BF30Holder",
+    "before_sha256": "292087e060f55af30f92000ccd208c20993ecf79a1a6f47823ea84c86b0452b1",
+    "after_sha256": "ab7431c2bfff4a13416021b403feb88387610c5f9aff64637b3ae3ff5e72e5a5",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "BfmeHolderZD is a Bfme<Role><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 243-244 describe; 0x0075BF30 has no named caller, owning TU or vtable owner (reverse/re_attempts.log), so the landed class keeps the address token instead. Same opaque identity, spelled per AGENTS.md."
+  },
+  {
+    "old_path": "reverse/attempts/0x0075bf30.cpp",
+    "new_path": "Code/GameEngine/Source/Common/Rva0075BF30Forwarder.cpp",
+    "old_name": "BfmeOwnerZD",
+    "new_name": "Rva0075BF30Forwarder",
+    "before_sha256": "292087e060f55af30f92000ccd208c20993ecf79a1a6f47823ea84c86b0452b1",
+    "after_sha256": "ab7431c2bfff4a13416021b403feb88387610c5f9aff64637b3ae3ff5e72e5a5",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "BfmeOwnerZD is a Bfme<Role><Suffix> generator placeholder, the invented family docs/naming_evidence.md lines 243-244 describe; 0x0075BF30 has no named caller, owning TU or vtable owner (reverse/re_attempts.log), so the landed class keeps the address token instead. Same opaque identity, spelled per AGENTS.md."
+  },
+  {
+    "old_path": "reverse/attempts/0x0075bf30.cpp",
+    "new_path": "Code/GameEngine/Source/Common/Rva0075BF30Forwarder.cpp",
+    "old_name": "BfmeSenderZD",
+    "new_name": "Rva0075BF30Forwarder",
+    "before_sha256": "292087e060f55af30f92000ccd208c20993ecf79a1a6f47823ea84c86b0452b1",
+    "after_sha256": "ab7431c2bfff4a13416021b403feb88387610c5f9aff64637b3ae3ff5e72e5a5",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "BfmeSenderZD is a Bfme<Role><Suffix> generator placeholder for the same receiver as BfmeOwnerZD (the bank split one this into two shim classes); docs/naming_evidence.md lines 243-244 class that family as invented. The landed TU folds both into the address-token class Rva0075BF30Forwarder."
+  },
+  {
+    "old_path": "reverse/attempts/0x008956c0.cpp",
+    "new_path": "reverse/attempts/0x008956c0.cpp",
+    "old_name": "Gen_008956C0",
+    "new_name": "Rva008956C0List",
+    "before_sha256": "42b19cddc505508fdbf2b0bd0f2ec17218f0b0580ae860d43853b813490e9ea6",
+    "after_sha256": "61c20a7ca08a90169c0053f7e792d84b85ecd8e3f1c91f282d750d0fdaebb85b",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "Gen_008956C0 is a generator-minted Gen* placeholder (docs/naming_evidence.md: GENERATOR-minted names are anonymous by design, not identities). The re-banked body keeps the address token as Rva008956C0List; no descriptive identity existed to preserve."
+  },
+  {
+    "old_path": "reverse/attempts/0x008956c0.cpp",
+    "new_path": "reverse/attempts/0x008956c0.cpp",
+    "old_name": "Gen_008956C0Node",
+    "new_name": "Rva008956C0Node",
+    "before_sha256": "42b19cddc505508fdbf2b0bd0f2ec17218f0b0580ae860d43853b813490e9ea6",
+    "after_sha256": "61c20a7ca08a90169c0053f7e792d84b85ecd8e3f1c91f282d750d0fdaebb85b",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "Gen_008956C0Node is a generator-minted Gen* placeholder (docs/naming_evidence.md: GENERATOR-minted names are anonymous by design, not identities). The re-banked body keeps the address token as Rva008956C0Node; no descriptive identity existed to preserve."
+  }
+]
