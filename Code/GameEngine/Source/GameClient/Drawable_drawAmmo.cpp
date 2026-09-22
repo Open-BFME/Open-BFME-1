@@ -4,8 +4,16 @@
 // BFME's no-argument Drawable ammo-pip pass, reached from the group-3/4 icon
 // dispatch in Drawable::drawIconUI.  The Zero Hour twin
 // (reference/.../GameClient/Drawable.cpp Drawable::drawAmmo) takes the health
-// bar region as an argument; this build reads the cached health-bar origin out
-// of the Drawable instead and passes an extra draw mode to Display::drawImage.
+// bar region as an argument; this build takes none and reads two Drawable
+// fields directly, and passes an extra draw mode to Display::drawImageCore.
+//
+// What this body proves about those two fields is only how it uses them:
+// Drawable+0x3ac is a Bool that, when clear, gates the draw behind the
+// moused-over check, and Drawable+0x3c4 is the Int the pip row starts at in
+// screen X.  The landed sibling Code/GameEngine/Source/GameClient/
+// DrawableVisualState.cpp:218 names Drawable+0x3c4 m_emoticonRegionLeft (an
+// icon-region left edge, consistent with the use here); this body does not
+// witness a name for +0x3ac, so it is left address-derived.
 //
 // The engine singletons are referenced through their pinned decorated symbols
 // rather than literal addresses: a literal-address deref aliases the
@@ -40,8 +48,10 @@ struct ICoord2D
 struct Image
 {
 	unsigned char m_unreconstructed_00[0x24];
-	Int m_imageWidth;
-	Int m_imageHeight;
+	// tools/name_oracle.py --class Image --offset 0x24 -> m_imageSize
+	// (confidence 1.00, layout_witness); same shape as the landed
+	// Code/GameEngine/Source/GameClient/System/Anim2DDrawing.cpp:96.
+	ICoord2D m_imageSize;
 };
 
 class Player
@@ -109,12 +119,28 @@ public:
 	virtual void slot75(); virtual void slot76(); virtual void slot77();
 	virtual void slot78(); virtual void slot79(); virtual void slot80();
 	virtual void slot81(); virtual void slot82();
-	virtual Int getMousedOverDrawableID() const;
+	// Slot 83 (+0x14c).  The ZH twin calls TheInGameUI->getMousedOverDrawableID()
+	// here, but the BFME InGameUI vtable has not been walked to confirm that slot
+	// carries it, so the slot keeps the address-derived spelling the landed
+	// siblings use (Code/GameEngine/Source/Common/Rva0048E480Update.cpp:51,
+	// Code/GameEngine/Source/GameLogic/Object/Die/RefundDieOnDie.cpp:179).
+	// Only the return type is witnessed here: retail compares eax to the ID.
+	virtual Int slot83() const;
 };
 
 class View
 {
 public:
+	// reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/
+	// GameClient/View.h:87
+	enum WorldToScreenReturn
+	{
+		WTS_INSIDE_FRUSTUM = 0,
+		WTS_OUTSIDE_FRUSTUM,
+		WTS_INVALID,
+		WTS_COUNT
+	};
+
 	virtual void slot00(); virtual void slot01(); virtual void slot02();
 	virtual void slot03(); virtual void slot04(); virtual void slot05();
 	virtual void slot06(); virtual void slot07(); virtual void slot08();
@@ -144,7 +170,13 @@ public:
 	virtual void slot78(); virtual void slot79(); virtual void slot80();
 	virtual void slot81(); virtual void slot82(); virtual void slot83();
 	virtual void slot84(); virtual void slot85(); virtual void slot86();
-	virtual Int worldToScreen(const Coord3D *world, ICoord2D *screen);
+	// Slot 87 (+0x15c).  ??_7W3DView@@6B@ (reverse/symbols.csv, 0x00D217A0)
+	// slot 87 -> ILT 0x00044F44 -> 0x0073BA10 =
+	// ?worldToScreenTriReturn@W3DView@@UAE?AW4WorldToScreenReturn@View@@
+	// PBUCoord3D@@PAUICoord2D@@@Z (landed).  ZH View.h:200 worldToScreen is a
+	// NON-virtual inline wrapper over this; only the TriReturn form is virtual.
+	virtual WorldToScreenReturn worldToScreenTriReturn(const Coord3D *world,
+		ICoord2D *screen);
 };
 
 class Display
@@ -168,7 +200,12 @@ public:
 	virtual void slot45(); virtual void slot46(); virtual void slot47();
 	virtual void slot48(); virtual void slot49(); virtual void slot50();
 	virtual void slot51(); virtual void slot52();
-	virtual void drawImage(const Image *image, Real startX, Real startY,
+	// Slot 53 (+0xd4).  Named after the landed siblings that already claim this
+	// slot: Code/GameEngine/Source/GameClient/System/Anim2DDrawing.cpp:75 and
+	// Code/GameEngine/Source/GameClient/GUI/FadeImage_draw.cpp:72 (also
+	// W3DGameWindow.cpp:42 and Rva0046F3D0DrawImageAt.cpp:74).  drawImage is the
+	// non-virtual begin/core/end wrapper; retail calls the core slot directly.
+	virtual void drawImageCore(const Image *image, Real startX, Real startY,
 		Real endX, Real endY, Int color, Int mode);
 };
 
@@ -232,7 +269,7 @@ void Drawable::drawAmmo()
 		if (!ui)
 			return;
 		Int drawableID = getID();
-		if (ui->getMousedOverDrawableID() != drawableID)
+		if (ui->slot83() != drawableID)
 			return;
 	}
 
@@ -253,8 +290,8 @@ void Drawable::drawAmmo()
 
 	// SCALE_ICONS_WITH_ZOOM_ML is off in this build.
 	Real scale = 1.0f;
-	Int boxWidth = (Int)((Real)emptyAmmo->m_imageWidth * scale);
-	Int boxHeight = (Int)((Real)emptyAmmo->m_imageHeight * scale);
+	Int boxWidth = (Int)((Real)emptyAmmo->m_imageSize.x * scale);
+	Int boxHeight = (Int)((Real)emptyAmmo->m_imageSize.y * scale);
 
 	ICoord2D screenCenter;
 	Coord3D pos = {
@@ -266,7 +303,10 @@ void Drawable::drawAmmo()
 	pos.y += TheGlobalData->m_ammoPipWorldOffset.y;
 	pos.z += TheGlobalData->m_ammoPipWorldOffset.z +
 		obj->getGeometryInfo().getMaxHeightAbovePosition();
-	if (TheTacticalView->worldToScreen(&pos, &screenCenter) != 0)
+	// retail: test eax,eax / jne bail -- 0 (WTS_INSIDE_FRUSTUM) is the keep-going
+	// case, so the sense here is the TriReturn enum's, not ZH's Bool wrapper.
+	if (TheTacticalView->worldToScreenTriReturn(&pos, &screenCenter) !=
+		View::WTS_INSIDE_FRUSTUM)
 		return;
 
 	Real bounding = obj->getGeometryInfo().getBoundingSphereRadius() * scale;
@@ -280,7 +320,7 @@ void Drawable::drawAmmo()
 		if (i >= numFull)
 			image = s_emptyAmmo;
 		Display *display = TheDisplay;
-		display->drawImage(image,
+		display->drawImageCore(image,
 			(Real)posx, (Real)(posy + 1),
 			(Real)(posx + boxWidth), (Real)(posy + 1 + boxHeight), -1, 2);
 		posx += boxWidth + 1;
