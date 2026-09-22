@@ -12,10 +12,11 @@
 //
 // Shape note (docs/shape_levers.md, constant materialisation): retail puts
 // `xor ebx,ebx` between the `this` copy and the deferred `push edi`. That
-// position is reached only when the FIRST leading word is written from the
-// constructor's member-initialiser list and the other four are written from
-// the body. Initialising all five from the list hoists the xor above
-// `push esi` (five bytes off); writing all five from the body sinks it below
+// position is reached only when the FIRST leading word is written during
+// member construction -- here the inlined AsciiString default constructor at
+// +0x24 -- and the other four are written from the body. Initialising all
+// five before the body hoists the xor above `push esi` (five bytes off);
+// writing all five from the body sinks it below
 // the EH `this` spill (seven bytes off), which is where twelve earlier
 // sessions stalled.
 
@@ -29,14 +30,19 @@ void * __cdecl operator new(unsigned int);
 class GameWindow;
 class Image;
 
-#include "string_base.h"
+#include "ascii_string.h"
 
 // 0x00887D20 carries the ledger's own name for the narrow set(), which is a
-// C++ alias of ?set@?$StringBase@D@@QAEXPBDH@Z.
+// C++ alias of ?set@?$StringBase@D@@QAEXPBDH@Z. The class is AsciiString's
+// layout under the ledger's spelling: one heap pointer, and the ledger's
+// ??1RetailLayoutString@@QAE@XZ is the same ILT 0x0000D828 as ~AsciiString.
 class RetailLayoutString
 {
 public:
 	void set(const char *text, int length);
+
+private:
+	char *m_text;
 };
 
 // Field names follow the landed model in MapMetaData_ctor.cpp; the extent
@@ -59,42 +65,37 @@ public:
 	char m_unmodelled54[0xa8];
 };
 
-// preview+0x14..+0x33. The gadget-callback witness quoted in AptMapPreview.cpp
-// reads this span as eight window pointers. Retail's unwind map additionally
-// keeps a destructor state live over it from before the metadata allocation,
-// so the span is modelled as a destructible record parked under its address:
-// dropping the destructor costs the second frame slot and seven bytes of the
-// prologue. What that destructor releases is not proven here.
-class Rva00520670Children
-{
-public:
-	~Rva00520670Children();
-
-	GameWindow *m_children[8];
-};
-
 // Empty literals the constructor seeds the metadata strings with. The narrow
-// one carries the ledger's address-derived name; the wide one at 0x01088AF4
-// (two zero bytes ahead of L"UserDataLeafName") has no pin yet.
-extern const UnsignedShort g_Rva01088AF4EmptyWideString[];
+// one carries the ledger's address-derived name. The wide one is the pinned
+// empty wide literal at 0x01088AF4: retail .rdata holds four zero bytes there,
+// immediately ahead of L"UserDataLeafName" at 0x01088AF8. MSVC 7.1 wchar_t is
+// unsigned short, so the literal's element type is G in the mangled callee.
+extern const unsigned short g_Rva01088AF4EmptyWideString[];
 extern const char g_Rva0107301CEmptyString[];
 extern __declspec(dllimport) unsigned __cdecl bfmeLenVGI(const UnsignedShort *text);
 
 // Layout witnessed by AptMapPreview.cpp: windows at +04..+10, the image at
-// +34 and its owned flag at +38. +00 and +39 stay unmodelled; +3C is the
-// metadata this constructor allocates.
+// +34 and its owned flag at +38. +39 stays unmodelled; +3C is the metadata
+// this constructor allocates. +0x00 is an AsciiString, named by retail's own
+// unwind map rather than guessed: tools/eh_info.py 0x00520670 shows state 0's
+// cleanup at 0x00C2FEE0 loading the `this` spill ([ebp-0x14]) into ecx and
+// jumping to ILT 0x0000D828 -> 0x0005EE90 = ??1AsciiString@@QAE@XZ. Its
+// inlined default constructor is the `mov [esi],ebx` at +0x24, and that
+// destructor state is what keeps the second frame slot live. The span at
+// +0x14..+0x33 is read as eight window pointers by the gadget-callback
+// witness quoted in AptMapPreview.cpp.
 class AptMapPreview
 {
 public:
 	AptMapPreview();
 
 private:
-	int m_unmodelled00;
+	AsciiString m_string00;
 	GameWindow *m_currentMap;
 	GameWindow *m_mapPicture;
 	GameWindow *m_mapInfo;
 	GameWindow *m_mapDescription;
-	Rva00520670Children m_children;
+	GameWindow *m_children[8];
 	const Image *m_picture;
 	bool m_pictureOwned;
 	bool m_unmodelled39;
@@ -104,7 +105,6 @@ private:
 
 // ??0AptMapPreview@@QAE@XZ
 AptMapPreview::AptMapPreview()
-	: m_unmodelled00(0)
 {
 	m_currentMap = 0;
 	m_mapPicture = 0;
