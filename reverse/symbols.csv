@@ -88668,3 +88668,6 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?bfmeGoDST@ThingTemplate@@QAEXW4LocomotorSetType@@M@Z,0x000174FE,001BD0D0 set then Speed value; FieldParse names Speed with parseReal; ILT to146270 stores map at340; ret8
 ?lookup@Rva001B70E0LocomotorStore@@QAEPBVLocomotorTemplate@@ABVAsciiString@@@Z,0x00045007,001BD0D0 witnessed member-call view; ILT to1B70E0 accepts stringref and returns template; optimized callee reloads storeglobal; ret4
 ?TheRva001B70E0LocomotorStore@@3PAVRva001B70E0LocomotorStore@@A,0x012EF504,Store global independently loaded by001BD0D0 and001B70E0; VA
+?rva0000113BTarget@@YAXXZ,0x007849C0,address-qualified ILT route; destination independently matched as Rva007849C0Clear
+?rva00006555Target@@YAXXZ,0x00784A60,address-qualified ILT route; destination independently matched as the Drawable list end accessor
+?rva00007D06Target@@YAXXZ,0x00633900,address-qualified ILT route; destination independently matched as the AsciiString tree lower-bound body
