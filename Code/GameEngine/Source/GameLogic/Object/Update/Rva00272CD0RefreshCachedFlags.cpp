@@ -4,7 +4,10 @@
 // The owner is address-derived: this+0x08 is an Object* (same slot the landed
 // AIUpdateInterface bodies in Code/GameEngine/Source/GameLogic/AI/AIWaypointPathStates.cpp
 // use), but no named caller, vtable slot or string proves a semantic method
-// name, so the class keeps the address token.
+// name, so the class keeps the address token. The class word Updater and the
+// method word refreshCachedFlags are descriptors of what the body does (its only
+// caller is the anonymous ?d_00273f90 via ILT 0x00016888), kept alongside the
+// Rva00272CD0 address token rather than claimed as retail identity.
 //
 // What the body itself proves:
 //   this+0x248  a 40-byte cache compared with ??9ModelConditionFlags@@QBE_NABV0@@Z
@@ -72,8 +75,9 @@ private:
 extern GameLogic *TheBfmeGameLogic;
 
 // The two change dispatchers the ledger already holds at 0x002E7410 and
-// 0x002E7530. Both are reached through the one singleton at 0x012F060C, so the
-// ABI-carrying declarations are stacked rather than cast between.
+// 0x002E7530. Both run with this = g_bfmeOwnerBR (0x012F060C) and walk
+// neighbouring vectors (+0x98, +0xA4) of that one object; no base-class
+// relationship between the two ledger class names is claimed.
 class BfmeBlockVKQ;
 struct BfmeMaskYN;
 
@@ -83,7 +87,7 @@ public:
 	void dispatch(BfmeBlockVKQ *fresh, BfmeBlockVKQ *cached, Object *object);
 };
 
-class BfmeOwnerBR : public Rva002E7410
+class BfmeOwnerBR
 {
 public:
 	void bfmeGo7530(BfmeMaskYN *fresh, BfmeMaskYN *cached, Object *object);
@@ -122,7 +126,9 @@ void Rva00272CD0Updater::refreshCachedFlags()
 
 	if (m_cachedModelConditionFlags248 != conditions)
 	{
-		g_bfmeOwnerBR->dispatch(
+		// The ledger names the two methods on different address-derived classes
+		// although both run on the one object at 0x012F060C.
+		reinterpret_cast<Rva002E7410 *>(g_bfmeOwnerBR)->dispatch(
 			(BfmeBlockVKQ *)&conditions,
 			(BfmeBlockVKQ *)&m_cachedModelConditionFlags248,
 			object);
