@@ -64,26 +64,36 @@ struct Gen_p24pod
 	unsigned char second;
 };
 
+// Element of the list at +0x4: the body only frees its 0x14-byte nodes, so
+// nothing names what an entry holds. Same spelling as the landed sibling
+// AptPalantirHeroSelectorResetSlots.cpp.
+struct Rva0058D930ListEntry
+{
+	unsigned char bytes[ 12 ];
+};
+
 // Layout witnessed by the constructor at 0x00595AC0, landed as
-// ??0AptPalantirHeroSelector@@QAE@XZ.
+// ??0AptPalantirHeroSelector@@QAE@XZ. The destructor reads only m_list04 and
+// m_window; the other members keep offset spellings because nothing here
+// witnesses what they hold.
 class AptPalantirHeroSelector : public FunctorTargetSingle
 {
 public:
 	~AptPalantirHeroSelector();
 
 private:
-	struct HeroListEntry
-	{
-		unsigned char bytes[ 12 ];
-	};
-
-	bool m_active;
-	_STL::list<HeroListEntry> m_heroes;
-	Gen_p24pod m_slots[ 17 ];
-	bool m_selectAll;
+	bool m_field00;
+	_STL::list<Rva0058D930ListEntry> m_list04;
+	Gen_p24pod m_field08[ 17 ];
+	bool m_field1A0;
 	GameWindow *m_window;
 };
 
+// The destructor role is proven (the GameClient dtor 0x00596500+0x2F6 calls
+// ILT 0x60D7 -> 0x00591D60 on esi+0x2B8, and the GameClient ctor builds this
+// object at +0x2B8), while the class name AptPalantirHeroSelector is inherited
+// from the 2026-09-08 ctor landing and is not independently verified (no RTTI;
+// the string "HeroSelector" does not occur in the EXE).
 // ??1AptPalantirHeroSelector@@QAE@XZ
 AptPalantirHeroSelector::~AptPalantirHeroSelector()
 {
