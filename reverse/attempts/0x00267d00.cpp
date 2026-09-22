@@ -14,7 +14,7 @@
 //   +0x33 -> ILT 0x00020847  UNPINNED, routes to the 390-byte sibling dump 0x00267B10
 //   +0x47 -> ILT 0x00011F77  ?isEmpty@FXList@@QBE_NXZ                      (body 0x0042DAA0)
 //   +0x5c -> ILT 0x0001BB21  ?doFXPos@FXList@@QBEXPBUCoord3D@@PBVMatrix3D@@M0@Z (body 0x004280D0)
-// Three of the four now resolve; `rva00267B10` is address-derived and still needs a
+// Three of the four now resolve; `bfmeHaltCO` is address-derived and still needs a
 // pin at 0x00020847 with route=0x00267B10 before this row can land.
 //
 // That contract also identifies the receiver: `this` is a Generals ObjectModule --
@@ -69,16 +69,16 @@ class Object
 public:
 	void notifyModelConditionChanged(void);
 
-	unsigned char m_unmodelled000[0x38];
+	unsigned char m_bfmeHeadCO[0x38];
 	Coord3D m_coord038;
-	unsigned char m_unmodelled044[0x130 - 0x44];
-	Int m_dword130;
+	unsigned char m_bfmeMidCO[0x130 - 0x44];
+	Int m_bfmeFlagsCO;
 };
 
 class BfmeDataCO
 {
 public:
-	unsigned char m_unmodelled000[0x264];
+	unsigned char m_bfmeHeadCO[0x264];
 	const FXList *m_fx264;
 };
 
@@ -86,9 +86,9 @@ class BfmeHostCO
 {
 public:
 	void bfmeStopCO(char quiet);
-	void rva00267B10(Int mode);
+	void bfmeHaltCO(Int mode);
 
-	unsigned char m_unmodelled000[4];
+	unsigned char m_bfmeHeadCO[4];
 	const BfmeDataCO *m_moduleData;
 	Object *m_object;
 };
@@ -96,18 +96,18 @@ public:
 void BfmeHostCO::bfmeStopCO(char quiet)
 {
 	Object *obj = m_object;
-	Int status = obj->m_dword130;
+	Int status = obj->m_bfmeFlagsCO;
 
 	if ((status & 0x800) == 0)
 		return;
 
-	obj->m_dword130 = status & ~0x800;
+	obj->m_bfmeFlagsCO = status & ~0x800;
 	obj->notifyModelConditionChanged();
 
 	if (quiet != 0)
 		return;
 
-	rva00267B10(1);
+	bfmeHaltCO(1);
 
 	const FXList *fx = m_moduleData->m_fx264;
 

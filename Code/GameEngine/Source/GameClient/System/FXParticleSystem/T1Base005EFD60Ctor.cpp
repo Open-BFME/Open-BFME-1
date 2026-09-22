@@ -33,7 +33,7 @@ class T1A1_005DD290
 public:
     T1A1_005DD290(void *a, void *b);
     virtual void s0();
-    int m_pad[4];
+    int m_storage[4];
 };
 
 // The two bare-vptr bases at +0x14 and +0x18.  Only their width and the fact

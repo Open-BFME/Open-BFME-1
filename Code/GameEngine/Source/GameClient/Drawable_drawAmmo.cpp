@@ -220,7 +220,7 @@ public:
 	Bool m_showObjectHealth;
 };
 
-struct Rva002EE330PlayerList
+struct BfmePlayerList
 {
 	unsigned char m_unreconstructed_00[0x0c];
 	Player *m_localPlayer;
@@ -230,7 +230,7 @@ extern GlobalData *TheWritableGlobalData;
 extern InGameUI *TheInGameUI;
 extern View *TheTacticalView;
 extern Display *TheDisplay;
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+extern BfmePlayerList *Rva002EE330ThePlayers;
 
 #define TheGlobalData TheWritableGlobalData
 #define ThePlayerList Rva002EE330ThePlayers

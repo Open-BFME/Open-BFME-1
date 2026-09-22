@@ -104,7 +104,7 @@ class GameLogic
 public:
 	UnsignedInt getFrame() const { return m_frame; }
 
-	unsigned char m_pad[0x3C];
+	unsigned char m_bfmeHeadYO[0x3C];
 	UnsignedInt m_frame;
 };
 

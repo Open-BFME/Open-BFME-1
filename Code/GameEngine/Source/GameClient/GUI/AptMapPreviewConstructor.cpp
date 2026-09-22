@@ -90,7 +90,7 @@ public:
 	AptMapPreview();
 
 private:
-	AsciiString m_string00;
+	AsciiString m_baseString;
 	GameWindow *m_currentMap;
 	GameWindow *m_mapPicture;
 	GameWindow *m_mapInfo;
@@ -98,7 +98,7 @@ private:
 	GameWindow *m_children[8];
 	const Image *m_picture;
 	bool m_pictureOwned;
-	bool m_unmodelled39;
+	bool m_flag39;
 	char m_padding3a[2];
 	MapMetaData *m_mapData;
 };
@@ -112,7 +112,7 @@ AptMapPreview::AptMapPreview()
 	m_mapDescription = 0;
 	m_picture = 0;
 	m_pictureOwned = false;
-	m_unmodelled39 = false;
+	m_flag39 = false;
 	m_mapData = 0;
 	memset(&m_children, 0, sizeof(m_children));
 	m_mapData = new MapMetaData;

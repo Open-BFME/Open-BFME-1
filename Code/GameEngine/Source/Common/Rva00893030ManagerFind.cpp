@@ -62,10 +62,10 @@ extern "C" int memcmp(const void *a, const void *b, unsigned int n);
 struct BfmeStringData3AF0
 {
 public:
-	unsigned short m_word0;
+	unsigned short m_refCount;
 	unsigned short m_length;
-	unsigned short m_word4;
-	unsigned short m_word6;
+	unsigned short m_capacity;
+	unsigned short m_flags;
 	char m_data[1];
 };
 

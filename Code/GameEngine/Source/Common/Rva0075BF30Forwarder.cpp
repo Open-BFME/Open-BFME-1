@@ -18,15 +18,15 @@ class ObjectAttemptDamageFlagHook
 public:
 	int value();
 
-	unsigned char m_pad00[0x38];
-	unsigned char m_at38[0xc];
-	int m_value44;
+	unsigned char m_bfmeHeadZD[0x38];
+	unsigned char m_bfmeAtZD[0xc];
+	int m_bfme44ZD;
 };
 
 class Rva0075BF30Holder
 {
 public:
-	unsigned char m_pad00[0xfc];
+	unsigned char m_bfmeHeadZD[0xfc];
 	ObjectAttemptDamageFlagHook *m_itemFC;
 };
 
@@ -73,9 +73,9 @@ public:
 
 	void apply(void *arg);
 
-	unsigned char m_pad04[4];
+	unsigned char m_bfmeHeadZD[4];
 	Rva0075BF30Holder *m_holder08;
-	unsigned char m_pad0C[0x1c0];
+	unsigned char m_bfmeMidZD[0x1c0];
 	RadiusDecalTemplate m_sub1CC;
 };
 
@@ -94,6 +94,6 @@ void Rva0075BF30Forwarder::apply(void *arg)
 	{
 		int value = item->value();
 
-		slot30(item->m_at38, item->m_value44, &value);
+		slot30(item->m_bfmeAtZD, item->m_bfme44ZD, &value);
 	}
 }
