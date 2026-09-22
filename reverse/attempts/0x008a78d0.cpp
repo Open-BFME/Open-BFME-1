@@ -107,6 +107,28 @@ extern const char g_rva0113666c[9];
 
 extern BfmeA1029 *g_rva01337abc;
 
+extern void *Rva00897640(unsigned int bytes);
+
+class Rva008A78D0Owned1029
+{
+public:
+	static void *operator new(unsigned int bytes)
+	{
+		return Rva00897640(bytes);
+	}
+
+	__forceinline Rva008A78D0Owned1029(int value)
+	{
+		BfmeA1029 *obj = ((BfmeA1029 *)this)->bfmeGo1029A(value);
+		g_rva01337abc = obj;
+
+		Rva008991B0Flags *flags = (Rva008991B0Flags *)obj;
+		flags->m_bfmeBits = (flags->m_bfmeBits & 0xffffc07f) | 0x40;
+	}
+
+	char m_storage[0x24];
+};
+
 struct Rva00891B80Block
 {
 	unsigned short m_ref;
@@ -232,24 +254,12 @@ void *Rva008A78D0Owner::bfmeGetOrCreateDefault(int unused, void **arg2)
 
 	if (memcmp((const char *)*arg2 + 8, g_rva0113666c, 9) == 0)
 	{
-		extern void *Rva00897640(unsigned int bytes);
-
 		BfmeA1029 *obj = g_rva01337abc;
 
 		if (obj == 0)
 		{
-			obj = (BfmeA1029 *)Rva00897640(0x24);
-
-			if (obj != 0)
-				obj = obj->bfmeGo1029A(0xca62a0);
-
-			g_rva01337abc = obj;
-
-			Rva008991B0Flags *flags = (Rva008991B0Flags *)obj;
-			flags->m_bfmeBits = (flags->m_bfmeBits & 0xffffc07f) | 0x40;
-
-			((Rva008A78D0VBase *)obj)->bfmeNotify();
-
+			new Rva008A78D0Owned1029(0xca62a0);
+			((Rva008A78D0VBase *)g_rva01337abc)->bfmeNotify();
 			obj = g_rva01337abc;
 		}
 
