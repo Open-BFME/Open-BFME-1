@@ -3,11 +3,24 @@
 // class stays address-qualified.  Boundary is independently proven: RET 4 at
 // +0xF9 with INT3 padding at +0xFC.
 //
-// The node caches a source object's version at +0xA0 and six coordinates at
-// +0x34/+0x48/+0x5C/+0x70/+0x84/+0x98 (previous/current interleaved).  The
-// 50.0f threshold at 0x0107FAA8 has no ledger pin, so it is referenced through
-// its absolute address the same way Rva006FCC10NormalizedRange.cpp does; the
-// scale at 0x010F0ADC is pinned as ?BfmeShadowZLimit@@3MB.
+// Naming: "Collision" has neighbourhood support -- the CollisionManager ctor
+// sits at 0x009A25B0, and Rva009A45A0CollisionData's dtor 0x009A2390 is also
+// called by the same caller 0x009A3AD0.  "Node" and "Source" are descriptors
+// only.  The method word getMovementScore is an unproven descriptor, kept
+// because the matched row landed under that symbol; the class carries the
+// address token.  The bytes show only this: return 1 with no source; return 0
+// when slot05's int equals the cached int at +0xA0 while +0x24 is non-null and
+// the bool argument is set; otherwise 11 - ftol((max(|d0|,|d1|) - 50.0f) *
+// BfmeShadowZLimit), unsigned-clamped at 10000, or 1 below the threshold.  That
+// value could equally be an update interval or a priority countdown.
+//
+// The node caches the source's slot05 int at +0xA0 and six Reals: slot01's
+// Real[3] output at +0x34/+0x5C/+0x84 (the first two are diffed against the
+// fresh output before being overwritten) and slot00's Real[3] output at
+// +0x48/+0x70/+0x98.  The 50.0f threshold at 0x0107FAA8 has no ledger pin, so
+// it is referenced through its absolute address the same way
+// Rva006FCC10NormalizedRange.cpp does; the scale at 0x010F0ADC is the pinned
+// BfmeShadowZLimit global (symbols.csv ?BfmeShadowZLimit@@3MB).
 //
 // cl: /O2 /DNDEBUG /MD /EHs-c-
 
@@ -18,12 +31,15 @@ typedef float Real;
 class Rva009A2420CollisionSource
 {
 public:
-	virtual void getCurrent(Real *value) = 0;
-	virtual void getPrevious(Real *value) = 0;
+	// Slots 0 and 1 each fill a caller-provided Real[3]; nothing in the bytes
+	// says which is current and which is previous.
+	virtual void slot00(Real *value) = 0;
+	virtual void slot01(Real *value) = 0;
 	virtual void v02() = 0;
 	virtual void v03() = 0;
 	virtual void v04() = 0;
-	virtual int getVersion() = 0;
+	// Slot 5 (+0x14) returns an int compared against the cached int at +0xA0.
+	virtual int slot05() = 0;
 };
 
 // 0x0107FAA8 carries no symbols.csv pin; reference it by address rather than
@@ -38,7 +54,7 @@ public:
 	unsigned int getMovementScore(bool allowCache);
 
 private:
-	void *m_link;
+	unsigned char m_beforeSource[4];
 	Rva009A2420CollisionSource *m_source;
 	unsigned char m_beforeFlag[0x1c];
 	void *m_flag;
@@ -63,7 +79,7 @@ unsigned int Rva009A2420CollisionNode::getMovementScore(bool allowCache)
 	if (m_source == 0)
 		return 1;
 
-	int version = m_source->getVersion();
+	int version = m_source->slot05();
 	if (version != m_cachedVersion)
 		m_cachedVersion = version;
 	else if (m_flag != 0 && allowCache)
@@ -71,8 +87,8 @@ unsigned int Rva009A2420CollisionNode::getMovementScore(bool allowCache)
 
 	Real current[3];
 	Real previous[3];
-	m_source->getCurrent(current);
-	m_source->getPrevious(previous);
+	m_source->slot00(current);
+	m_source->slot01(previous);
 
 	unsigned int score = 1;
 	Real deltaX = (Real)fabs(m_value34 - previous[0]);
