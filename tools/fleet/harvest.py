@@ -39,6 +39,32 @@ def show(rev, f):
 def lines(b):
     return [x.rstrip(b"\r") for x in b.split(b"\n")]
 
+def minimal_diff_ledgers(base="HEAD", cwd=ROOT):
+    """Rewrite functions.csv / symbols.csv as BASE's byte order plus the real
+    row delta. dedup_csv.py sorts, and seats re-sort segments; a reordered
+    file is a whole-file diff (6,236 changed lines for 19 landings on
+    2026-09-22) that made the pre-commit name_regression scan spawn two git
+    processes per changed row (over an hour) and that the union merge driver
+    turns into duplicate rows on rebase. Same algorithm as build/ledger_minimal_diff.py."""
+    for f in ("reverse/functions.csv", "reverse/symbols.csv"):
+        head = subprocess.run(["git", "show", f"{base}:{f}"], cwd=cwd, capture_output=True).stdout.splitlines(True)
+        if not head:
+            continue
+        cur = (cwd / f).read_bytes().splitlines(True)
+        key = lambda x: x.rstrip(b"\r\n")
+        hs, cs = {key(x) for x in head}, {key(x) for x in cur}
+        term = b"\r\n" if head[-1].endswith(b"\r\n") else b"\n"
+        merged = [x for x in head if key(x) in cs]
+        if merged and not merged[-1].endswith(b"\n"):
+            merged[-1] += term
+        seen = set()
+        for x in cur:
+            k = key(x)
+            if k and k not in hs and k not in seen:
+                seen.add(k); merged.append(k + term)
+        (cwd / f).write_bytes(b"".join(merged))
+        print(f"{f}: {base} order kept; removed {len(hs - cs)} added {len(seen)}", flush=True)
+
 def quarantine(source, funcs, status="blocked", why=None):
     """Set aside a landed source the hook refuses (it defines helpers the ledger
     does not declare): move it under build/quarantine, revert the ledger rows
@@ -306,6 +332,7 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         env = dict(os.environ, HARVEST_HAS_LOCK="1")
         subprocess.run([sys.executable, "tools/dedup_csv.py"], cwd=ROOT, env=env)
         subprocess.run([sys.executable, "tools/fleet/dedup_keepfirst.py"], cwd=ROOT, env=env)
+        minimal_diff_ledgers()
         run("git", "add", "-A", "--", *evidence); unstage_inflight()
         if subprocess.run([sys.executable, "tools/check_csv.py", "--staged"], cwd=ROOT).returncode:
             unstage()
