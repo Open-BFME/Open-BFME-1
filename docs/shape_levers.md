@@ -931,8 +931,8 @@ operations. At `0x006155E0` the opaque map-method bank had a three-register
 cycle across a 150-byte get-or-create body. The constructor independently
 identified the mapped value as `LivingWorldSound*`; native
 `hash_map<AsciiString, LivingWorldSound*>` find/index operations reproduce all
-150 bytes. Its 142-byte index helper also probes exact, but an older overlapping
-naked lift prevents claiming that helper until the boundary is repaired.
+150 bytes. Its 142-byte index helper was initially blocked by an overlapping
+naked lift; the verified boundary repair described below now lands it too.
 
 At `0x0077D150`, native vector `insert`/`push_back` removes synthetic stack pads
 and supplies the placement-copy exception state, landing 437 bytes. The first
@@ -945,3 +945,22 @@ Native list also fixes the FS-restore/pop ordering in the banked Target parser
 `0x0014C8E0` (nine differences reduced to five) and font parser `0x0043A3B0`
 (six reduced to two). Those residuals remain unlanded; do not treat this lever
 as a guarantee or repeat old register-only sweeps.
+
+Three more native-container callers closed after that investigation:
+`0x00347DA0` (143B) uses the native hash iterator's increment, eliminating a
+synthetic volatile bucket load/barrier and fixing the final copied-node test;
+`0x0022DA50` (223B) uses native list insertion and the canonical string header,
+fixing the four-byte EH epilogue residue; `0x00494EC0` (62B) keeps its two local
+key copies but uses the native const-reference lookup/erase calls, fixing the
+ECX-load/count-store order that opaque pointer-to-key declarations hid. The
+last helper's plain-parameter spelling is only 48B: use the observed temporary
+lifetime, not an arbitrary register-local rewrite. Callee bodies and mapped
+pointer usage were independently verified before pinning each native spelling.
+
+At `0x00614F50`, manually splitting the two override-lookup branches gave 330B
+because the direct clone call pushed ESI. An inline lookup which returns
+`next->friend_getFinalOverride()` or `this`, consumed by the clone call,
+reproduces retail's returned-pointer temporary in EAX and all 332B. The lookup
+behavior follows the existing Overridable contract; no padding instruction or
+member-function-pointer union is needed. See
+[living-world boundary evidence](living_world_parser_boundary.md).
