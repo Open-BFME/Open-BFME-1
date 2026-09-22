@@ -55,6 +55,8 @@ fi
 # its own gate: no new naked/__emit bodies outside Code/gen_small/, and no
 # clean-C++ ledger row repointed back at assembly.
 python3 tools/conversion_gate.py HEAD : || fail "conversion direction (see above)"
+# Historical names survive source moves and opaque owner renames.
+python3 tools/name_regression.py HEAD : || fail "descriptive names regressed (see above)"
 # A deliberately deleted file may not come back by accident (reverse/retired_paths.txt).
 python3 tools/retired_guard.py --staged || fail "retired path re-added (see above)"
 

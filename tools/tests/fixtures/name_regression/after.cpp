@@ -8,17 +8,18 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-class GameLODManager
+class Rva00695E20LodView
 {
 public:
 	char m_padding0[0x174];
-	bool m_rowFlags[2][8];
+	bool m_field174[2][8];
 	char m_padding1[0x16cc - 0x184];
 
 public:
-	int m_activeRow;
+	int m_field16CC;
 };
 
+class GameLODManager;
 extern GameLODManager *TheGameLODManager;
 
 class Rva00695E20LodGate
@@ -28,14 +29,15 @@ public:
 
 private:
 	char m_padding0[0xb60];
-	int m_lodSelector;
+	int m_fieldB60;
 };
 
 bool Rva00695E20LodGate::check() const
 {
-    if (m_lodSelector > 0 && m_lodSelector <= 5)
+    if (m_fieldB60 > 0 && m_fieldB60 <= 5)
     {
-        GameLODManager *lod = TheGameLODManager;
+        Rva00695E20LodView *lod =
+            reinterpret_cast<Rva00695E20LodView *>(TheGameLODManager);
         if (!lod)
         {
             // Instruction-free barrier keeps the shared true return before
@@ -44,10 +46,10 @@ bool Rva00695E20LodGate::check() const
             _ReadWriteBarrier();
             return true;
         }
-        int row = lod->m_activeRow;
+        int row = lod->m_field16CC;
         if (row < 0 || row >= 2)
             return true;
-        return lod->m_rowFlags[row][0];
+        return lod->m_field174[row][0];
     }
     return false;
 }

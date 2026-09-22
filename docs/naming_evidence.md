@@ -312,3 +312,29 @@ Video's no-EH vector destructor at `0x0081D0F0` retains an address-qualified
 variant claim, distinct from the existing EH body at `0x0081D040`. The three
 range helpers keep their addresses and call the actual destructor explicitly;
 there is no recovered `Video::handle` method.
+
+## Preserve names when landing or moving a body
+
+`tools/name_regression.py OLD NEW` (`NEW` may be `:` for the staged index)
+compares descriptive names with address/offset placeholders. Both commit and
+push hooks run it. It links files by path, Git rename, and the function RVA in
+changed ledger rows or address-bearing filenames, including an existing bank
+under `reverse/attempts/`. Renaming the owning class cannot hide a regression
+behind an unknown `(class, offset)` witness key. Comments retaining the old
+name do not count as preserving its declaration.
+
+This is a historical regression check, not proof that an inherited name is right.
+It checks aligned identifier substitutions and unambiguous layouts that
+`name_oracle` can compute; it is not a complete C++ semantic rename detector.
+A semantic rename supported by better evidence remains permitted. Do not replace
+an established name with an opaque name merely to land a matching body.
+
+An intentional descriptive-to-opaque identity correction requires an entry in
+`reverse/name_corrections.json` (a JSON list). Each entry contains `old_path`,
+`new_path`, `old_name`, `new_name`, `before_sha256`, `after_sha256`, `evidence`,
+and `reason`. Hashes are SHA-256 of the exact UTF-8 source snapshots, including
+line endings. `evidence` names a nonempty tracked file under `docs/` or `reverse/`
+that independently refutes the old identity; `reason` explains that evidence.
+The record applies only to those exact snapshots and that name pair. It is not
+a reusable exemption or a growable count baseline. Review the evidence with the
+correction: the check can enforce its presence, not prove the identity for you.
