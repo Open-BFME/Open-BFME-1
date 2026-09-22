@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6b8f5efc7398e2894916dadbe50e11b075f6a9966eeb5156137ed1190623959c",
+  "symbol": "?DivideInternalFPF@@YAXPAUInternalFPF@@00@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9975,
+  "source": "// ?DivideInternalFPF@@YAXPAUInternalFPF@@00@Z\n// partial score=0.9975 date=2026-09-21\n// cl: /O2 /GS /MD /GR- /EHsc- -ICode/Libraries/Source/Benchmark -Ivendor/nbench\n#include \"emfloat.c\"\n"
+}
