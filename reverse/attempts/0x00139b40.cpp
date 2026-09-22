@@ -1,4 +1,4 @@
-// ?newTemplate@BfmeThingFactory@@QAEPAVThingTemplate@@ABVAsciiString@@@Z
+// ?newTemplate@ThingFactory@@QAEPAVThingTemplate@@ABVAsciiString@@@Z
 // partial score=0.45 date=2026-09-06
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // BFME factory allocation at RVA 0x00139B40.
@@ -68,7 +68,7 @@ class Rva00137E80Map { public:
  ThingTemplate *&operator[](const AsciiString &);
 };
 extern unsigned char rva_00eed611_copyState;
-class BfmeThingFactory { public:
+class ThingFactory { public:
  const ThingTemplate *findTemplate(const AsciiString &);
  ThingTemplate *newTemplate(const AsciiString &);
  bool exists(const AsciiString &name) { if(!strncmp(name.str(),"***TESTING",10)) return true; return map.find(name)!=0; }
@@ -83,7 +83,7 @@ class BfmeThingFactory { public:
  }
  unsigned char prefix[8]; ThingTemplate *head; unsigned short nextID; unsigned short pad; Rva00137E80Map map;
 };
-ThingTemplate *BfmeThingFactory::newTemplate(const AsciiString &name) {
+ThingTemplate *ThingFactory::newTemplate(const AsciiString &name) {
  ThingTemplate *t=new ThingTemplate;
  initializeDefault(t);
  unsigned int identifier=nextID;
