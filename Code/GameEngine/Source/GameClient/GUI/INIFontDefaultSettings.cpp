@@ -1,5 +1,4 @@
 // ?parseFontDefaultSettings@@YAXPAVINI@@@Z
-// partial score=0.92 date=2026-09-16
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/asciistring_downloadmanager
 
 // The block registry names 0x00477320 as FontDefaultSettings. The FieldParse
@@ -35,21 +34,15 @@ extern "C" __declspec( dllimport ) double __cdecl atof( const char *text );
 class FontLibrary;
 extern FontLibrary *TheFontLibrary;
 
+// ?BfmeZeroRange@@3MB, the shared 0.0f constant at 0x01075350.
+extern const Real BfmeZeroRange;
+
 class RefCounted
 {
 public:
 	virtual void release( unsigned int count );
 
 	int m_references;
-};
-
-class Rva00476440 : public RefCounted
-{
-public:
-	Rva00476440();
-
-private:
-	char m_data[ 0x10 ];
 };
 
 class __declspec( novtable ) FontDefaultSettings : public RefCounted
@@ -68,21 +61,6 @@ extern void j_000067a8();
 extern void j_0001ab6d();
 extern void j_0002e622();
 
-class Rva00476440Ref;
-class FontDefaultSettingsRef;
-
-class FontNameMapRoute
-{
-public:
-	typedef Rva00476440Ref * (FontNameMapRoute::*Call)( const AsciiString & );
-};
-
-class FontSizeMapRoute
-{
-public:
-	typedef FontDefaultSettingsRef * (FontSizeMapRoute::*Call)( const int & );
-};
-
 static __forceinline void releaseSettings( RefCounted *settings )
 {
 	if ( --settings->m_references <= 0 )
@@ -90,32 +68,6 @@ static __forceinline void releaseSettings( RefCounted *settings )
 		settings->release( 1 );
 	}
 }
-
-class Rva00476440Ref
-{
-public:
-	Rva00476440Ref( Rva00476440 *value ) : m_value( value )
-	{
-		if ( m_value != 0 )
-			++m_value->m_references;
-	}
-
-	Rva00476440Ref &operator=( Rva00476440 *value )
-	{
-		if ( value != m_value )
-		{
-			if ( m_value != 0 )
-				releaseSettings( m_value );
-			m_value = 0;
-			m_value = value;
-			if ( m_value != 0 )
-				++m_value->m_references;
-		}
-		return *this;
-	}
-
-	Rva00476440 *m_value;
-};
 
 class FontDefaultSettingsRef
 {
@@ -150,6 +102,57 @@ public:
 	FontDefaultSettings *m_value;
 };
 
+// The retail destructor at 0x00476440 releases a ref-counted pointer at +0x08
+// and an out-of-line member at +0x0C; operator new here asks for 0x18 bytes.
+class Rva00476440 : public RefCounted
+{
+public:
+	Rva00476440();
+
+	FontDefaultSettingsRef m_ref08;
+	char m_data[ 0x0C ];
+};
+
+class Rva00476440Ref
+{
+public:
+	Rva00476440Ref( Rva00476440 *value ) : m_value( value )
+	{
+		if ( m_value != 0 )
+			++m_value->m_references;
+	}
+
+	Rva00476440Ref &operator=( Rva00476440 *value )
+	{
+		if ( value != m_value )
+		{
+			if ( m_value != 0 )
+			{
+				releaseSettings( m_value );
+				m_value = 0;
+			}
+			m_value = value;
+			if ( m_value != 0 )
+				++m_value->m_references;
+		}
+		return *this;
+	}
+
+	Rva00476440 *m_value;
+};
+
+class FontNameMapRoute
+{
+public:
+	typedef Rva00476440Ref * (FontNameMapRoute::*Call)( const AsciiString & );
+};
+
+class FontSizeMapRoute
+{
+public:
+	typedef FontDefaultSettingsRef * (FontSizeMapRoute::*Call)( const int & );
+};
+
 // ?parseFontDefaultSettings@@YAXPAVINI@@@Z
 void __cdecl parseFontDefaultSettings( INI *ini )
 {
@@ -160,7 +163,7 @@ void __cdecl parseFontDefaultSettings( INI *ini )
 	if ( token != 0 )
 	{
 		pointSize.value = (Real)atof( token );
-		if ( pointSize.value <= *(const Real *)0x01075350 )
+		if ( pointSize.value <= BfmeZeroRange )
 			throw INIException( 3, "Invalid font point size specified: %f.  Must be greater than or equal to 1", pointSize.value );
 	}
 
@@ -177,14 +180,18 @@ void __cdecl parseFontDefaultSettings( INI *ini )
 		*nameSlot = new Rva00476440;
 	}
 
-	if ( pointSize.value >= 0.0f )
+	if ( pointSize.value >= BfmeZeroRange )
 	{
-		Rva00476440 *table = nameSlot->m_value;
 		int size = (int)pointSize.value;
+		Rva00476440 *table = nameSlot->m_value;
 		union { void (*address)(); FontSizeMapRoute::Call member; } findSize =
 			{ j_0001ab6d };
 		FontDefaultSettingsRef *sizeSlot =
 			( ( (FontSizeMapRoute *)((char *)table + 0x0C) )->*findSize.member )( size );
 		*sizeSlot = settings;
+	}
+	else
+	{
+		nameSlot->m_value->m_ref08 = settings;
 	}
 }
