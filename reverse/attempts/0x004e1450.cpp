@@ -215,9 +215,8 @@ void PopulateReplayFileListbox(GameWindow *listbox)
 		Rva004E1450RecorderClass::ReplayHeader header;
 		header.forPlayback = FALSE;
 		header.filename = asciistr;
-		Bool success = TheRecorder && TheMapCache &&
-			((Rva004E1450RecorderClass *)TheRecorder)->readReplayHeader( header );
-		if (success)
+		if (TheRecorder && TheMapCache &&
+			((Rva004E1450RecorderClass *)TheRecorder)->readReplayHeader( header ))
 		{
 			Rva004E1450ReplayGameInfo info;
 			if (ParseAsciiStringToGameInfo( (GameInfo *)&info, header.gameOptions, TRUE ))
