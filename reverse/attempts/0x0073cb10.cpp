@@ -1,5 +1,5 @@
 // ?moveAlongWaypointPath@W3DView@@AAEXH@Z
-// partial score=0.26 date=2026-09-17
+// partial score=0.27 date=2026-09-22
 // cl: /DNDEBUG /MD /EHs-c- /ICode/Libraries/Source/WWVegas/WWLib
 // BFME W3DView::moveAlongWaypointPath, retail 0x0073CB10.
 //
@@ -41,6 +41,14 @@ struct Coord3D
 	Real x;
 	Real y;
 	Real z;
+
+	Coord3D() {}
+	Coord3D(const Coord3D &other)
+	{
+		x = other.x;
+		y = other.y;
+		z = other.z;
+	}
 };
 
 struct Coord2D
@@ -84,8 +92,7 @@ public:
 class Rva00740440CameraPath : public Rva00740AE0Base
 {
 public:
-	Rva00740AE0Elem waypoints[255];
-	Rva00740AE0Elem extraWaypoints[4];
+	Rva00740AE0Elem waypoints[259];
 	Real cameraAngles[255];
 	Real waySegmentLengths[0x101];
 	Real totalDistance;
@@ -101,7 +108,7 @@ public:
 	void reset();
 };
 
-class Rva00742DF0Sub
+class Rva006DF550
 {
 public:
 	virtual void slot00();
@@ -122,7 +129,7 @@ public:
 	virtual void slot15();
 	virtual void slot16();
 	virtual void slot17();
-	virtual void apply(void *value, Int mode);
+	virtual void rva006DF110(Coord3D *out, Real *angle);
 };
 
 extern void updateMinMax(Real *minimum, Real value, Real *maximum);
@@ -186,7 +193,7 @@ private:
 	Region2D cameraConstraint;
 	Bool cameraConstraintValid;
 	char padding240D[0x24B8 - 0x240D];
-	Rva00742DF0Sub cameraLimits;
+	Rva006DF550 cameraLimits;
 };
 
 #undef BFME_W3D_SLOT
@@ -208,7 +215,7 @@ void W3DView::moveAlongWaypointPath(Int milliseconds)
 		freezeTimeForCameraMovement = false;
 		angle = cameraPath.cameraAngles[cameraPath.numWaypoints];
 		groundLevel = cameraPath.groundEnd;
-		cameraLimits.apply(&cameraOffset, 0);
+		cameraLimits.rva006DF110(&cameraOffset, 0);
 		cameraOffset.x *= scale;
 		cameraOffset.y *= scale;
 		Rva00740AE0Elem *finalWaypoint =
@@ -274,7 +281,7 @@ void W3DView::moveAlongWaypointPath(Int milliseconds)
 		cameraPath.timeMultiplier[cameraPath.curSegment + 1] * factor2;
 	timeMultiplierValue = REAL_TO_INT_FLOOR(g_bfmeK1253 + interpolatedTimeMultiplier);
 	groundLevel = cameraPath.groundStart * factor1 + cameraPath.groundEnd * factor2;
-	cameraLimits.apply(&cameraOffset, 0);
+	cameraLimits.rva006DF110(&cameraOffset, 0);
 	cameraOffset.x *= scale;
 	cameraOffset.y *= scale;
 

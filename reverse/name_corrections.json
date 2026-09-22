@@ -868,5 +868,15 @@
   "after_sha256": "76dfe4982483e7e0e2f44d34602e6f1fe69a43bc819859b3f660b3f6c737d193",
   "evidence": "reverse/functions.csv",
   "reason": "BfmeParticleBufferFields was the bank author's invented name for the object whose accessor at 0x00988F00 Build_Definition calls; reverse/functions.csv already matches that body as ?field2C@Rva00988F00Owner@@QBEMXZ from Code/GameEngine/Source/Common/Rva005C3510FloatAccessors.cpp with the same public const Real() ABI and the same +0x20C pointer layout. The landed address-derived owner name is the established one and the bank name claimed a particle-buffer identity no evidence supports; using it resolves the call with no pin. (range entry: bank -> landed source)"
+ },
+ {
+  "old_path": "reverse/attempts/0x0073cb10.cpp",
+  "new_path": "reverse/attempts/0x0073cb10.cpp",
+  "old_name": "apply",
+  "new_name": "rva006DF110",
+  "before_sha256": "966a125296a998765e6453a29c22eafd27cbe71cc3c47563889050980d8fd878",
+  "after_sha256": "778a93deaa94b5a625738eafaa9729f2e6d310442669c319b50800bdb54ac9ce",
+  "evidence": "reverse/functions.csv",
+  "reason": "apply was the earlier bank author's invented name for the camera-limit method this body calls through slot +0x48; reverse/functions.csv matches that body at 0x006DF110 as ?rva006DF110@Rva006DF550@@QAEXPAUBfmeCoord6DF110@@PAM@Z from Code/GameEngine/Source/Common/Rva006DF110Coordinate.cpp. The bank now carries the landed address-derived name and with it the ledger's argument shape, a coordinate pointer and a Real pointer instead of void* and Int, which is the correction the measurement rests on. (range entry: bank -> bank)"
  }
 ]
