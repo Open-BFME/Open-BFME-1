@@ -85979,7 +85979,7 @@ name,address,notes
 ?setObserverWindows@@YAXPAVPlayer@@H@Z,0x004E3720,ZH setObserverWindows(Player* Int): i<0||i>=8 returns; StaticTextPlayer%d gets getPlayerDisplayName + winHide(FALSE) + winSetEnabledTextColors(0xffffffff) when player else winHide(TRUE); the 9 stat windows winHide(TRUE); GameWindowWinner%d winHide(FALSE) + winSetEnabledImage(getPlayerTemplate()->getSideIconImage 0x000E0B80); ILT 0x00033483; sole caller grabMultiPlayerInfo 0x004E8230 for isPlayerObserver players
 ?setOpacity@RadiusDecal@@QAEXM@Z,0x0003F2A1
 ?setOpacity@Shadow@@QAEXH@Z,0x0000DC7E,REL32 pin from W3DModelDraw terrain-decal setter
-?setOrRestoreTeam@Object@@IAEXPAVTeam@@_N@Z,0x0002BF2B,pinharvest x1 (thunk)
+?setOrRestoreTeam@Object@@IAEXPAVTeam@@_N@Z,0x001D4530,Object slot21 wrapper001D5D90 calls ILT0002C566 to this581B body; released setOrRestoreTeam sequence independently aligned; replaces refuted pinharvest0002BF2B which reaches setScriptStatus
 ?setOrientation@Thing@@QAEXM@Z,0x000399A5
 ?setOrientation@ThingSetOrientationShim@@QAEXM@Z,0x00132E40,Thing::setOrientation incremental-link thunk target through a TU-local forwarding shim
 ?setOverallBestWinStreak@SkirmishBattleHonors@@QAEXH@Z,0x0009CED0,setInt("OverallBestWinStreak" at VA 0x01080550; val) via the pinned setInt ILT 0x00009B3D; 36 B; ZH SkirmishBattleHonors setter shape
@@ -88732,3 +88732,4 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ??0Rva000FB210Element@@QAE@PAVObject@@@Z,0x000FA1B0,96B record constructor; physical350B body dereferences input Object+210 and copies Object+224; caller002A30D0 +17B passes Object pointer through FB2E0
 ??1Gen_000F9C60@@QAE@XZ,0x000CFA40,opaque28B subobject destructor at record+44; FB2E0 +AA calls ILT2671F to matched77B destructor; same subobject copied by matched115B Gen_000F9C60 constructor
 ?d_00955a00@@YAXXZ,0x00955A00,Address-only compatibility name retained for matched W3DStreakDrawBody direct call at0077D6B0; physical71B point-update body now matched as bfmeSetWG@BfmeStreakObject
+?getAttackPriorityName@TeamPrototype@@QBE?AVAsciiString@@XZ,0x001C42B0,By-value4B AsciiString copy from TeamPrototype+270; aligned setOrRestoreTeam001D4530 call sites00FC and011E plus released Team.h getter; hidden return pointer ret4
