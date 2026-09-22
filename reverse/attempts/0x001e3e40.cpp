@@ -7,10 +7,13 @@
 extern "C" double __cdecl sqrt(double value);
 #pragma intrinsic(sqrt)
 
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
+
 struct Coord3D
 {
 	Coord3D() {}
-	Coord3D(float xValue, float yValue, float zValue) : x(xValue), y(yValue), z(zValue) {}
+	Coord3D(float zValue, float yValue, float xValue) : x(xValue), y(yValue), z(zValue) {}
 
 	float x;
 	float y;
@@ -38,8 +41,9 @@ Coord3D Object::computeBoundaryVector2D(const Object *other) const
 	float distance = (float)sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
 	float combinedRadius = other->m_boundingCircleRadius + m_boundingCircleRadius;
 	if (distance <= combinedRadius)
-		return Coord3D(BfmeZeroRange, BfmeZeroRange, BfmeZeroRange);
+	{ return Coord3D(BfmeZeroRange, BfmeZeroRange, BfmeZeroRange); }
 
-	float scale = (distance - combinedRadius) / distance;
-	return Coord3D(delta.x * scale, delta.y * scale, delta.z * scale);
+	_ReadWriteBarrier();
+	volatile float scale = (distance - combinedRadius) / distance;
+	return Coord3D(delta.z * scale, delta.y * scale, delta.x * scale);
 }
