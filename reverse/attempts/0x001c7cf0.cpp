@@ -1,6 +1,7 @@
 // ?rva001C7CF0@Object@@QAEXMMMABVAsciiString@@@Z
-// partial score=0.993 date=2026-09-21
-// ?rva001C7CF0@Object@@QAEXMMMABVAsciiString@@@Z
+// partial score=1.0 date=2026-09-21
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// stlport
 // BFME Object launch-force helper. Retail 0x001C7CF0, 295 bytes.
 // The body proves its own contents: it reads the physics module at Object+0x208
 // (m_physics), bails on the byte at PhysicsBehavior+0x5c, resolves the template
@@ -18,12 +19,11 @@
 // list is the one the landed INI parser ActiveBodyParseDamageCreationList.cpp
 // scans at VA 0x012AE2C4, which corroborates the index meaning.
 //
-// RESIDUE (2 of 295 bytes): at +0xf0 retail loads the table entry into ECX and
-// pushes ECX; VC7.1 hands us EAX. Length-identical, so every other byte lines
-// up. Nineteen loop/receiver/table/helper spellings all normalise to EAX --
-// see the verdict line before spending another seat on the letter.
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
-// stlport
+// The search loop calls StringBase<char>::compare through the receiver
+// directly rather than through AsciiString::compare. That matters for bytes:
+// ascii_string.h's AsciiString::compare is a delegating inline, and the extra
+// inline level makes VC7.1 hand the pushed table entry EAX. Dropping it gives
+// retail's "mov ecx,[edi*4+0x12ad04c]; push ecx" at +0xf0, the last residue.
 
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
@@ -195,7 +195,7 @@ void Object::rva001C7CF0(Real angleDegrees,
 	Int index = 0;
 	for (Int i = 0; i < 3; ++i)
 	{
-		if (rockName.compare(theRockNames[i]) == 0)
+		if (((const StringBase<char> *)&rockName)->compare(theRockNames[i]) == 0)
 		{
 			index = i;
 			break;
