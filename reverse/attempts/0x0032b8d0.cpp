@@ -264,45 +264,48 @@ Bool ScriptConditions::evaluateSkirmishSpecialPowerIsReady(
 	if (!mask)
 		return false;
 
-	Player *player = ThePlayerList->getEachPlayerFromMask(mask);
-	if (!player)
-		return false;
-
-	BfmePlayerView *bfmePlayer = reinterpret_cast<BfmePlayerView *>(player);
-	BfmePlayerTeamNode *teamIt = bfmePlayer->m_teams->m_next;
-	while (teamIt != bfmePlayer->m_teams)
+	BfmeDlinkPmf pmf = {
+		(BfmeDlinkNext)j_00001140, -100, 0};
+	while (mask)
 	{
-		BfmeTeamPrototype *prototype = teamIt->m_prototype;
-		BfmeTeam *team = prototype->m_instances;
-		while (team)
+		Player *player = ThePlayerList->getEachPlayerFromMask(mask);
+		if (!player)
+			break;
+
+		BfmePlayerView *bfmePlayer = reinterpret_cast<BfmePlayerView *>(player);
+		BfmePlayerTeamNode *teamIt = bfmePlayer->m_teams->m_next;
+		while (teamIt != bfmePlayer->m_teams)
 		{
-			BfmeDlinkPmf pmf = {
-				(BfmeDlinkNext)j_00001140, -100, 0};
-			BfmeDlinkIterator objects(team->m_head, pmf);
-			for (; !objects.done(); objects.advance())
+			BfmeTeamPrototype *prototype = teamIt->m_prototype;
+			BfmeTeam *team = prototype->m_instances;
+			while (team)
 			{
-				BfmeObject *object = objects.cur();
-				BfmeObjectFields *fields =
-					reinterpret_cast<BfmeObjectFields *>(object);
-				if (fields->m_status[0] & 4 || fields->m_flags)
-					continue;
+				BfmeDlinkIterator objects(team->m_head, pmf);
+				for (; !objects.done(); objects.advance())
+				{
+					BfmeObject *object = objects.cur();
+					BfmeObjectFields *fields =
+						reinterpret_cast<BfmeObjectFields *>(object);
+					if (fields->m_status[0] & 4 || fields->m_flags)
+						continue;
 
-				BfmeSpecialPowerModuleView *module =
-					bfmeGetSpecialPowerModule(object, power);
-				if (!module || !bfmeCanUseSpecialPower(
-					(BfmeSpecialPowerStoreView *)TheSpecialPowerStore,
-					object, power))
-					continue;
-				if (module->isReady())
-					return true;
+					BfmeSpecialPowerModuleView *module =
+						bfmeGetSpecialPowerModule(object, power);
+					if (!module || !bfmeCanUseSpecialPower(
+						(BfmeSpecialPowerStoreView *)TheSpecialPowerStore,
+						object, power))
+						continue;
+					if (module->isReady())
+						return true;
 
-				UnsignedInt readyFrame = module->getReadyFrame();
-				if (readyFrame < nextFrame)
-					nextFrame = readyFrame;
+					UnsignedInt readyFrame = module->getReadyFrame();
+					if (readyFrame < nextFrame)
+						nextFrame = readyFrame;
+				}
+				team = bfmeNextTeam(team);
 			}
-			team = bfmeNextTeam(team);
+			teamIt = teamIt->m_next;
 		}
-		teamIt = teamIt->m_next;
 	}
 
 	powerParameter->m_cachedValue = nextFrame;
