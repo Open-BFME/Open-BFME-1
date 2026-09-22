@@ -288,5 +288,15 @@
     "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
     "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
     "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
+  },
+  {
+    "old_path": "reverse/attempts/0x000f9ff0.cpp",
+    "new_path": "Code/GameEngine/Source/Common/Rva000F9FF0Copy.cpp",
+    "old_name": "pair",
+    "new_name": "Rva000F9FF0",
+    "before_sha256": "736f5a17259d3097ecd88089b5c1c604cc916fb64a5cc54274f7b4b5d3012580",
+    "after_sha256": "86cec15095130def196c1d9b97a135df9dfb7ef842183203f9ce6ec19e030b6c",
+    "evidence": "reverse/attempt_history/0x000f9ff0/naming-review.md",
+    "reason": "Independent96-byte vector-element callers prove only an opaque record; the old synthetic library pair/key/value inference is unsupported. Preserve all established member labels and the independently matched Gen_000F9C60 identity; see exact caller and layout review."
   }
 ]
