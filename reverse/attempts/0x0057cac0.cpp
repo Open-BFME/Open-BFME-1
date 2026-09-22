@@ -1,8 +1,10 @@
 // ?_bfme_refreshProfile@BfmeAptScreenSkirmish@@QAEXXZ
-// partial score=0.75 date=2026-09-06
+// partial score=0.98 date=2026-09-22
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail 0x0057CAC0: AptSkirmish profile-combo refresh callback.
+
+extern const char g_bfmeEmptyUnicode[];
 
 template <typename T> class StringBase
 {
@@ -28,9 +30,9 @@ private:
 	__forceinline int compareNoCase( const StringBase<T> &other ) const throw()
 	{
 		const int otherLength = other.m_data ? other.m_data->length : 0;
-		const T *otherText = other.m_data ? other.m_data->text : (const T *)L"";
+		const T *otherText = other.m_data ? other.m_data->text : (const T *)g_bfmeEmptyUnicode;
 		const int thisLength = m_data ? m_data->length : 0;
-		const T *thisText = m_data ? m_data->text : (const T *)L"";
+		const T *thisText = m_data ? m_data->text : (const T *)g_bfmeEmptyUnicode;
 		const int commonLength = thisLength < otherLength ? thisLength : otherLength;
 		const int result = compareNoCaseRaw( thisText, otherText, commonLength );
 		return result == 0 ? thisLength - otherLength : result;
@@ -167,9 +169,8 @@ void BfmeAptScreenSkirmish::_bfme_refreshProfile()
 		GadgetComboBoxAddEntryPopulateRemoteIPComboBox(
 			m_profileCombo, profile, -1 );
 
-		UnicodeString current = m_preferences.getUserName();
-		if( ( (const StringBase<unsigned short> *)&current )->compareNoCase(
-			*(const StringBase<unsigned short> *)&profile ) == 0 )
+		if( ( (const StringBase<unsigned short> *)&profile )->compareNoCase(
+			*(const StringBase<unsigned short> *)&m_preferences.getUserName() ) == 0 )
 			GadgetComboBoxSetSelectedPos( m_profileCombo, index, false );
 
 		node = node->next;
