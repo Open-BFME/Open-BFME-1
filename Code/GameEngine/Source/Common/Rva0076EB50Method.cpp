@@ -1,5 +1,11 @@
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
+
+// The method name remains address-qualified because no caller proves a
+// semantic owner. The body reads the shared stale-cache stamp through the
+// dispatcher subobject at this-0xc, then returns an item name by value.
+//
 // ?method@Rva0076EB50@@QAE?AVBFMERetailAsciiString@@H@Z
-// partial score=0.9 date=2026-09-08
+
 class BFMERetailAsciiString
 {
 public:
@@ -30,6 +36,9 @@ class Rva0076CAF0ConditionalDispatch
 {
 public:
 	void target();
+
+	unsigned char padding[0x9c];
+	int stamp;
 };
 
 extern int g_Va012F8064;
@@ -50,15 +59,17 @@ BFMERetailAsciiString Rva0076EB50::method(int i)
 	Rva0076CAF0ConditionalDispatch *owner =
 		(Rva0076CAF0ConditionalDispatch *)((char *)this - 0xc);
 
-	if (g_Va012F8064 != m_stamp90)
+	int currentStamp = owner->stamp;
+	if (g_Va012F8064 != currentStamp)
 		owner->target();
 
 	if (i < 0)
 		return BFMERetailAsciiString();
 	if ((unsigned int)i >= 3)
 		return BFMERetailAsciiString();
-	if (m_entriesD0[i].m_item != 0)
-		return BFMERetailAsciiString(m_entriesD0[i].m_item->slot2());
+	Rva0076EB50Item *&item = m_entriesD0[i].m_item;
+	if (item != 0)
+		return BFMERetailAsciiString(item->slot2());
 
 	return BFMERetailAsciiString();
 }
