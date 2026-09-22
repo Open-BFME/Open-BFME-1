@@ -1,6 +1,9 @@
 // ?ObjectSpy@@YAHPAUlua_State@@@Z
-// partial score=0.95 date=2026-09-21
+// partial score=0.98 date=2026-09-21
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ze
+// ?ObjectSpy@@YAHPAUlua_State@@@Z, retail RVA 0x002E6F50.
+// Identity: the Lua registration table at 0x002EC990 pairs this body with the
+// "ObjectSpy" script-function name.
 
 struct lua_State;
 
@@ -43,12 +46,16 @@ struct BfmeArgED8
 	void *val74;
 };
 
+// 0x0026ED80 is a 22-byte thiscall stub that rewrites its FIRST stack argument
+// (arg->val74), adds 0x204 to ecx and tail-jmps through ILT 0x000283F8 to
+// 0x002E2110, whose epilogue is `ret 0xc`: three stack arguments, of which the
+// stub passes slots 2 and 3 through untouched.  Its ledger row in
+// Code/GameEngine/Source/Common/BfmeConv818.cpp still spells it with one
+// argument, which is the ABI defect this body's last relocation trips over.
 struct BfmeThingED8
 {
-	void doProcess(BfmeArgED8 *arg, NameKeyType eventKey, NameKeyType spyKey);
+	void doProcess(BfmeArgED8 *arg, NameKeyType key1, NameKeyType key2);
 };
-
-#pragma comment(linker, "/alternatename:?doProcess@BfmeThingED8@@QAEXPAUBfmeArgED8@@II@Z=?doProcess@BfmeThingED8@@QAEXPAUBfmeArgED8@@@Z")
 
 class Object
 {
@@ -66,12 +73,11 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-struct BfmeObj2B1
-{
-	unsigned char m_data[0x78];
-};
+// reverse/symbols.csv names RVA 0x00EF060C (VA 0x012F060C) TheLuaScriptEngine:
+// GameEngine::init at 0x00079F36 pushes it into initSubsystem<LuaScriptEngine>.
+class LuaScriptEngine;
 
-extern BfmeObj2B1 *g_obj12F060C;
+extern LuaScriptEngine *TheLuaScriptEngine;
 
 struct BfmeCallJ63
 {
@@ -83,8 +89,6 @@ struct Gen_002E3AB0
 	int *bfmeFind(int key);
 };
 
-// The Lua registration table at 0x002EC990 pairs this body with ObjectSpy.
-// ?ObjectSpy@@YAHPAUlua_State@@@Z
 int ObjectSpy(lua_State *state)
 {
 	unsigned objectID = Rva00990030Lookup(state, 1);
@@ -106,7 +110,7 @@ int ObjectSpy(lua_State *state)
 
 		const char *eventName = lua_tostring(state, 3);
 		NameKeyType eventKey = TheNameKeyGenerator->nameToKey(eventName);
-		if (reinterpret_cast<BfmeCallJ63 *>(g_obj12F060C)->invoke(
+		if (reinterpret_cast<BfmeCallJ63 *>(TheLuaScriptEngine)->invoke(
 				(void *)eventKey) == 0)
 		{
 			bfmeGoTGD(reinterpret_cast<int>(state));
@@ -115,7 +119,7 @@ int ObjectSpy(lua_State *state)
 
 		const char *spyName = lua_tostring(state, 4);
 		NameKeyType spyKey = NAMEKEY(spyName);
-		if (reinterpret_cast<Gen_002E3AB0 *>(g_obj12F060C)->bfmeFind(spyKey) == 0)
+		if (reinterpret_cast<Gen_002E3AB0 *>(TheLuaScriptEngine)->bfmeFind(spyKey) == 0)
 		{
 			bfmeGoTGD(reinterpret_cast<int>(state));
 			return 0;
