@@ -4,8 +4,8 @@
 // call sites that body loads the global at 0x012F1028 into ECX before calling
 // the 0x0001713E thunk, proving this member's receiver.  The member at +0x28
 // is kept as a LivingWorldRegionManager view: its first call is the reviewed
-// rva003C8160 member, while the four-pointer operation at 0x003C9CB0 remains
-// an address-derived existing body reached through its generated d_ symbol.
+// rva003C8160 member; the four-pointer operation at 0x003C9CB0 is the
+// address-derived rva003C9CB0 member converted alongside it.
 
 extern "C" void *__cdecl memcpy(void *, const void *, unsigned int);
 #pragma intrinsic(memcpy)
@@ -43,33 +43,15 @@ class LivingWorldRegionManager
 {
 public:
 	LivingWorldRegion *rva003C8160(Coord3D *position);
-};
-
-// Retail 0x003C9CB0 is an address-derived existing body, not a recovered
-// manager method name.  Its prologue copies ECX to EDI, consumes four pointer
-// arguments, and returns with `ret 0x10`; call it through a typed thiscall
-// member view while retaining the body's existing d_003c9cb0 symbol.
-extern void d_003c9cb0(void);
-
-class LivingWorldRegionManagerC9CB0Call
-{
-public:
-	void submit(void *first, void *second, void *third, void *fourth);
+	// Retail 0x003C9CB0: address-derived four-pointer method, converted in
+	// LivingWorld/LivingWorldRegionManager_Rva003C9CB0.cpp (ret 0x10).
+	void rva003C9CB0(void *first, void *second, void *third, void *fourth);
 };
 
 static __forceinline void callRva003C9CB0(LivingWorldRegionManager *manager,
 	void *first, void *second, void *third, void *fourth)
 {
-	typedef void (LivingWorldRegionManagerC9CB0Call::*Function)(
-		void *, void *, void *, void *);
-	union
-	{
-		void (*raw)(void);
-		Function member;
-	} fn;
-	fn.raw = d_003c9cb0;
-	(reinterpret_cast<LivingWorldRegionManagerC9CB0Call *>(manager)->*fn.member)(
-		first, second, third, fourth);
+	manager->rva003C9CB0(first, second, third, fourth);
 }
 
 class Glo012F1028Type

@@ -1,5 +1,3 @@
-// ?rva003C9CB0@LivingWorldRegionManager@@QAEXPAX000@Z
-// partial score=1.0 date=2026-09-21
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
