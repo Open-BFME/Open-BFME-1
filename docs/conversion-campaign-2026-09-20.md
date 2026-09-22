@@ -441,3 +441,53 @@ the fleet base, +18,363 B of it new total-exact coverage. Ten banks this
 hour, two at 0.92 and 0.87; one seat found an "opaque" target already
 living unclaimed in a committed source (`MapUtil.cpp`'s `resetMap`) —
 check for that before writing anything new.
+
+## Closing summary — 36 hours (17:12Z 2026-09-20 to 05:12Z 2026-09-22)
+
+Measured with `python3 tools/progress.py ea5778798f..origin/master` (the
+17:07Z start snapshot to the end snapshot, all contributors):
+
+| Metric | Prior 12 h | This 36 h |
+|---|---:|---:|
+| Rebuildable non-padding code | +13,287 B / +0.14 pp (66.90% -> 67.04%) | +62,031 B / +0.64 pp (67.04% -> 67.68%) |
+| Authored C++ | +13,319 B | +60,138 B |
+| Total exact coverage (new bytes) | +7,846 B | +18,610 B |
+| ASM-only exact (dumps converted) | -5,441 B | -43,421 B |
+
+Fleet share: 64 byte-exact bodies / 14,348 B in 377 commits (300+ of them
+banked evidence: stashes, corrected scores, proven identities and pins),
+across roughly 45 Sonnet seat-sessions and ~19 hours of usable seat time —
+the other ~17 hours were six account usage-limit outages. Per active
+seat-hour the fleet landed about one body / 230 B; the repository-wide rate
+over the 36 hours (1,720 B/hour) was 1.6x the prior twelve hours' 1,107.
+
+What produced landings, in order of yield: 100-250 B gen_asm dumps with at
+most one prior verdict in address ranges dense with landed C++ (hour 6: nine
+bodies); template instantiations named in `reloc_names.csv` (BitFlags<N>::xfer
+for N=116 and 181, STLport hashtable resize, ofstream/fstream constructors,
+_Rb_tree insert_equal) instantiated in their own TU; same-class siblings and
+near-twins of landed bodies; and — once the dense pool was drained — the
+COLD and COOL regions the density ranking had never served (hour 32: five
+bodies). Small carved bodies with a known caller landed early; carved bodies
+over 600 B, banked near-misses at 0.97+ with five or more prior verdicts, and
+vtable slots of 700-1,000 B with prior banks landed nothing.
+
+Breakthrough attempts: two research seats on the SIB base/index byte and two
+on the callee-saved register-letter mirror — the residues behind the 14 KB
+SegLine body, the GUI draw family and dozens of today's 0.9+ banks — found
+reproducible mechanisms in isolation but no clean-C++ reversal; the
+orchestrator's flag sweep on a one-byte witness was also negative
+(`docs/sib_lea_experiments.md`, `docs/register_mirror_experiments.md`). New
+levers that did land bodies are recorded in the hourly sections above
+(`_STLP_NO_EXCEPTIONS` before `<vector>`; `extern const T` for fixed-VA
+aggregates; branch-polarity flips; the destructor guard-struct for SEH
+frames; `(char)call()` for byte tests; one-expression call arguments;
+address-derived names where prior verdicts refused to name a body).
+
+Orchestration lessons: give each seat an explicit wall-clock budget (Sonnet
+otherwise stops at ~45 minutes believing 2.5 hours have passed); forbid any
+verdict under 25 minutes without a compilable candidate (cheap `blocked`
+verdicts consumed the five-verdict cap on bodies that later landed); run
+three or four seats so a usage window lasts; and re-rank the picker when a
+pool stops yielding — the same bodies re-served to a fresh seat almost never
+land, while an unserved pool does.
