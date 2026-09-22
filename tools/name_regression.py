@@ -67,11 +67,22 @@ def layouts(text):
 def regressions(before, after):
     found = set()
     old, new = tokens(before), tokens(after)
+    # Moving a retained type before a new namespace can align its old
+    # declaration with the namespace declaration. That is not a type rename.
+    type_definition = re.compile(r'\b(?:class|struct)\s+([A-Za-z_]\w*)[^;{}]*\{')
+    namespace_definition = re.compile(r'\bnamespace\s+([A-Za-z_]\w*)\s*\{')
+    old_text, new_text = ' '.join(old), ' '.join(new)
+    retained_types = (set(type_definition.findall(old_text)) &
+                      set(type_definition.findall(new_text)))
+    added_namespaces = (set(namespace_definition.findall(new_text)) -
+                        set(namespace_definition.findall(old_text)))
     # Exact token alignment handles functions, locals and declarations even
     # when the surrounding class is not sizeable. Comments cannot preserve a name.
     for tag, a, b, c, d in difflib.SequenceMatcher(None, old, new, autojunk=False).get_opcodes():
         if tag == 'replace' and b - a == d - c:
-            found.update((x, y) for x, y in zip(old[a:b], new[c:d]) if downgrade(x, y))
+            found.update((x, y) for x, y in zip(old[a:b], new[c:d])
+                         if downgrade(x, y) and
+                         not (x in retained_types and y in added_namespaces))
     left, right = layouts(before), layouts(after)
     for owner, members in left.items():
         if owner in right:

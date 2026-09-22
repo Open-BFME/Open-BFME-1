@@ -992,3 +992,15 @@ left the helper declaration wrong and missed this lever. The helper returns
 with `ret 1C` at `003EFE7E`; its generated ledger extent ends earlier, so
 read through the actual return when checking the ABI. Production source:
 `Code/GameEngine/Source/Common/Rva003F0EC0Forward.cpp`.
+
+## A three-word flag record may be native BitFlags
+
+RVA `00256AE0` resisted three immediate stores versus retail's zero-register
+and OR sequence. The local is `BitFlags<86>(kInit,29)`, as independently
+witnessed by matched neighboring `00256970`, `002569B0`, `002569F0` and
+`Object::setStatus` at `001C7370`. Its STLport bitset constructor reproduces
+the exact initialization. The preceding notify also needs the incoming thing
+as receiver: ILT `0000A3B2` reaches `001BF4D0`, which reads `[ecx+1E8]`.
+Correcting that free-call declaration and using the native mask lands108B
+without volatile, barriers or padded structs. Bank names remain in
+`Rva00256AE0StatusAttach.cpp`; the unknown owner is address-qualified.

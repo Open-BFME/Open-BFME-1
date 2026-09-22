@@ -298,3 +298,79 @@ def test_real_commit_hook_allows_checker_matching_index(repo):
     put(repo, 'docs/change.md', 'Unrelated documentation.\n')
     result = run_hook(repo, 'pre-commit', old)
     assert result.returncode == 0, result.stdout + result.stderr
+
+
+def test_reordered_retained_class_is_not_renamed_to_added_namespace():
+    before = """
+    class Logic {
+    public:
+        int find(int);
+     };
+     extern Logic *global;
+    
+    class Thing {
+    public:
+        char m_head[0x74];
+     int m_identifier;
+     };
+    
+    class Host {
+    public:
+        void run(Thing *thing);
+     char m_head[8];
+     int *m_object;
+     char m_middle[0x14];
+     int m_identifier;
+     };
+    
+    void Host::run(Thing *thing) { int old = m_identifier;
+     if(old) { int result = global->find(old);
+     if (!result) m_identifier=0;
+     } if(thing) { m_identifier=thing->m_identifier;
+     notify(m_object);
+     send(m_object);
+     } }
+    """
+    after = """
+    class Thing {
+    public:
+        void forward(int *m_object);
+     char m_head[0x74];
+     int m_identifier;
+     };
+    
+    class Logic {
+    public:
+        int find(int);
+     };
+     extern Logic *global;
+    
+    namespace Rva00256AE0 {
+    class Host {
+    public:
+        void run(Thing *thing);
+     char m_head[8];
+     int *m_object;
+     char m_middle[0x14];
+     int m_identifier;
+     };
+    
+    void Host::run(Thing *thing) { int old = m_identifier;
+     if(old) { int result = global->find(old);
+     if (!result) m_identifier=0;
+     } if(thing) { m_identifier=thing->m_identifier;
+     thing->forward(m_object);
+     send(m_object);
+     } }
+    }
+    """
+    assert N.regressions(before, after) == []
+    # Keeping the type does not exempt a real member-name regression.
+    changed = after.replace('int m_identifier;', 'int m_at74;', 1)
+    assert ('m_identifier', 'm_at74') in N.regressions(before, changed)
+
+
+def test_forward_declaration_does_not_preserve_renamed_type():
+    before = 'class Thing {\nint m_count;\n};'
+    after = 'class Thing;\nnamespace Rva00123456 {\nclass Rva00123456Type {\nint m_count;\n};\n}'
+    assert ('Thing', 'Rva00123456Type') in N.regressions(before, after)

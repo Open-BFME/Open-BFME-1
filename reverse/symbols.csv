@@ -88595,3 +88595,5 @@ _Rva0084ED20Tail,0x0084ED20,STLport 4.5.3 Win32 locale weekday/month name lookup
 ?rva0000EF5CTarget@@YAXXZ,0x00202F40,No-argument tail-thunk view of independently matched PropagandaTowerBehavior constructor body
 ?rva0002F095Target@@YAXXZ,0x0076AB10,No-argument tail-thunk view of independently matched STL unsigned-pair tree copy body
 ?rva000399A5Target@@YAXXZ,0x00132E40,No-argument tail-thunk view of independently matched Thing::setOrientation body
+?bfmeAttachESN@BfmeHostESN@Rva00256AE0@@QAEXPAVBfmeObjESN@@@Z,0x002569F0,RVA00256AE0 helper via ILT0003DE5B; same owner ECX; pointer stack arg; clears owner+20 and native Object status bit29 on owner+8; preserves bank bfmeAttachESN label
+?bfmeForward@BfmeThingESN@@QAEXPAVObject@@@Z,0x001BF4D0,RVA00256AE0 member forward via ILT0000A3B2; receiver is incoming thing; reads this+1E8 then forwards Object pointer through ILT0000FD35; ret4; corrected free stdcall bank ABI
