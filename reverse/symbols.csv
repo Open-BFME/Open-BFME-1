@@ -79786,6 +79786,7 @@ name,address,notes
 ?doParticleSystemAtBone@BoneFXUpdate@@IAEXPBVParticleSystemTemplate@@PBUCoord3D@@@Z,0x00019420,BoneFXUpdate update helper ILT called by update at 0x00289580
 ?doPhaseStuff@StructureCollapseUpdate@@IAEXW4StructureCollapsePhaseType@@PBUCoord3D@@@Z,0x00022872,StructureCollapse initial-phase ILT thunk
 ?doPhaseStuff@StructureToppleUpdate@@IAEXW4StructureTopplePhaseType@@PBUCoord3D@@@Z,0x00022AAC,StructureTopple delay FX final phase call thunk
+?doProcess@BfmeThingED8@@QAEXPAUBfmeArgED8@@W4NameKeyType@@1@Z,0x0026ED80,ObjectSpy call pushes three arguments; the 22-byte stub rewrites arg->val74 and tail-jumps through ILT 0x000283F8 to the three-argument body
 ?doPush@Shell@@IAEXVAsciiString@@@Z,0x00026792,Shell doPush ILT reached by Shell::shutdownComplete
 ?doRepopulateBuildTooltipLayout@ControlBar@@QAEXXZ,0x004C1320,Open-BFME5 the zero-argument member repopulateBuildTooltipLayout tail-jumps to; unnamed in the image
 ?doSend@Connection@@QAEI_N@Z,0x00661F10,BFME doSend with a Bool six-packet cap (stop after count exceeds five): MaxQuitFlushTime add ecx 0x7530 at 0x00661F57; NetCommandList::reset 0x006731A0; m_retryTime +0x1C; CommandRequiresAck 0x00682DB0; inlined doRetryMetrics 10s window on +0x354; Transport::queueSend 0x00683830; callers flushConnections 0x00663708 and update 0x0066ADB1 via ILT 0x00013633

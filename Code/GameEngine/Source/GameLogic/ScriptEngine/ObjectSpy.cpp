@@ -1,19 +1,11 @@
-// ?ObjectSpy@@YAHPAUlua_State@@@Z
-// partial score=0.98 date=2026-09-21
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ze
-// ?ObjectSpy@@YAHPAUlua_State@@@Z, retail RVA 0x002E6F50.
-// Identity: the Lua registration table at 0x002EC990 pairs this body with the
-// "ObjectSpy" script-function name.
+// The Lua registration table at 0x002EC990 pairs this callback with ObjectSpy.
 
 struct lua_State;
 
 unsigned Rva00990030Lookup(lua_State *, int);
 extern "C" const char *lua_tostring(lua_State *, int);
 
-// matches reference/shims/namekeygenerator/Common/NameKeyGenerator.h exactly;
-// NameKeyType must mangle as the enum (W4NameKeyType), not a plain unsigned,
-// to match ?NAMEKEY@@YA?AW4NameKeyType@@PBD@Z (0x000B9810, functions.csv) and
-// ?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z (0x0008FFC0)
 enum NameKeyType
 {
 	NAMEKEY_INVALID = 0,
@@ -21,7 +13,6 @@ enum NameKeyType
 	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/NameKeyGenerator.h
 class NameKeyGenerator
 {
 public:
@@ -33,11 +24,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 NameKeyType NAMEKEY(const char *name);
 
 void bfmeLogMsg574(const char *message);
-// ?bfmeNotify2_574@@YAXPAX0@Z (reverse/symbols.csv pin @0x0000630C): both args
-// are void*, not lua_State* -- lua_State* mangles differently and does not resolve.
 void bfmeNotify2_574(void *state, void *parameter);
-// ?bfmeGoTGD@@YAXH@Z (reverse/functions.csv, 0x002E55A0): takes an int, not a
-// lua_State* -- the lua_State* spelling does not match the landed body's name.
 void bfmeGoTGD(int state);
 
 struct BfmeArgED8
@@ -46,12 +33,6 @@ struct BfmeArgED8
 	void *val74;
 };
 
-// 0x0026ED80 is a 22-byte thiscall stub that rewrites its FIRST stack argument
-// (arg->val74), adds 0x204 to ecx and tail-jmps through ILT 0x000283F8 to
-// 0x002E2110, whose epilogue is `ret 0xc`: three stack arguments, of which the
-// stub passes slots 2 and 3 through untouched.  Its ledger row in
-// Code/GameEngine/Source/Common/BfmeConv818.cpp still spells it with one
-// argument, which is the ABI defect this body's last relocation trips over.
 struct BfmeThingED8
 {
 	void doProcess(BfmeArgED8 *arg, NameKeyType key1, NameKeyType key2);
@@ -73,10 +54,7 @@ public:
 
 extern GameLogic *TheGameLogic;
 
-// reverse/symbols.csv names RVA 0x00EF060C (VA 0x012F060C) TheLuaScriptEngine:
-// GameEngine::init at 0x00079F36 pushes it into initSubsystem<LuaScriptEngine>.
 class LuaScriptEngine;
-
 extern LuaScriptEngine *TheLuaScriptEngine;
 
 struct BfmeCallJ63
@@ -128,7 +106,7 @@ int ObjectSpy(lua_State *state)
 		if (target->m_module204 != 0)
 		{
 			target->m_module204->doProcess(
-				reinterpret_cast<BfmeArgED8 *>(object), eventKey, spyKey);
+					reinterpret_cast<BfmeArgED8 *>(object), eventKey, spyKey);
 		}
 
 		return 0;
