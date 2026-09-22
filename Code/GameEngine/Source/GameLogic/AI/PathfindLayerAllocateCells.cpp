@@ -1,9 +1,30 @@
 // ?bfmeAllocateCells@PathfindLayer@@QAEXPBUIRegion2D@@@Z
-// partial score=0.94 date=2026-09-10
 // cl: /O2 /DNDEBUG /MD /EHsc
-// BFME PathfindLayer::allocateCells (retail 0x003FBED0). No m_bridge falls
-// back to a PolygonTrigger chain bounding box via the same getBounds slot,
-// whose out param is really an IRegion2D (ICF-folded onto Bridge's name).
+// BFME PathfindLayer::allocateCells (retail 0x003FBED0, 767 bytes).
+//
+// Identity: the Zero Hour twin PathfindLayer::allocateCells (AIPathfind.cpp:3371)
+// reproduces this body statement for statement; the landed PathfindLayer
+// neighbours in this directory witness m_bridge at +0x38 and the PolygonTrigger
+// chain at +0x3C (PathfindLayer_bfmeContainsPoint.cpp, PathfindLayerXfer.cpp).
+// BFME added a fallback: with no m_bridge, the bounding box is unioned over the
+// PolygonTrigger chain through the same getBounds slot, whose out parameter is
+// really an IRegion2D (ICF-folded onto Bridge's name), so the members arrive as
+// ints and `fild` converts them.
+//
+// THE CELL-SIZE CONSTANT IS A POOLED LITERAL, NOT A GLOBAL.  Retail reads the
+// subtrahend and the multiplier from ONE address, 0x01075C70, which lives in
+// .rdata and holds cd cc cc 3d == 0.1f.  That is MSVC's pooled `__real@3dcccccd`
+// for the two constants ZH spells as PATHFIND_CELL_SIZE_F/100 and
+// 1/PATHFIND_CELL_SIZE_F -- equal only because the cell size is 10.  Spelling it
+// as an opaque `extern float` instead hides the value from the optimiser, which
+// then cannot put it on the right of `fadd`, and the four floor/ceil expressions
+// come out with their operands commuted (`fld const; fadd var` for retail's
+// `fld var; fadd const`).  That single wrong spelling was the whole 40-byte
+// residue that twelve earlier passes read as x87 scheduling.
+//
+// ZH uses the INT macro here (PATHFIND_CELL_SIZE == 10), so its `/100` term is
+// integer division and subtracts nothing; BFME uses the float macro, which is
+// why retail really does subtract 0.1f.  AIPathfind.h:439-440 defines both.
 
 typedef int Int;
 typedef float Real;
@@ -11,8 +32,10 @@ typedef float Real;
 extern "C" __declspec(dllimport) double __cdecl floor(double);
 extern "C" __declspec(dllimport) double __cdecl ceil(double);
 
-extern "C" float g_bfmeScaleBK;
+// reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h:440
+#define PATHFIND_CELL_SIZE_F 10.0f
 
+// reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 __forceinline long fast_float2long_round(float f)
 {
 	long i;
@@ -56,6 +79,11 @@ private:
 	unsigned char m_opaque[0x10];
 };
 typedef PathfindCell *PathfindCellP;
+
+// Forward-declaring the array overload (as the sibling PathfindZoneManagerConstructor.cpp
+// does) keeps the compiler from folding `new T[n]` into a call to scalar operator new;
+// retail links both `new[]` expressions below to ??_U@YAPAXI@Z (mem_ops.cpp), not ??2@YAPAXI@Z.
+void *operator new[](unsigned int size);
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindLayer
@@ -112,12 +140,12 @@ void PathfindLayer::bfmeAllocateCells(const IRegion2D *extent)
 	}
 
 	Int maxX, maxY;
-	m_xOrigin = fast_float2long_round((float)floor((double)((bridgeBounds.lo.x - g_bfmeScaleBK) * g_bfmeScaleBK)));
-	m_yOrigin = fast_float2long_round((float)floor((double)((bridgeBounds.lo.y - g_bfmeScaleBK) * g_bfmeScaleBK)));
+	m_xOrigin = fast_float2long_round((float)floor((double)((bridgeBounds.lo.x - PATHFIND_CELL_SIZE_F/100) / PATHFIND_CELL_SIZE_F)));
+	m_yOrigin = fast_float2long_round((float)floor((double)((bridgeBounds.lo.y - PATHFIND_CELL_SIZE_F/100) / PATHFIND_CELL_SIZE_F)));
 	m_width = 0;
 	m_height = 0;
-	maxX = fast_float2long_round((float)ceil((double)((bridgeBounds.hi.x + g_bfmeScaleBK) * g_bfmeScaleBK)));
-	maxY = fast_float2long_round((float)ceil((double)((bridgeBounds.hi.y + g_bfmeScaleBK) * g_bfmeScaleBK)));
+	maxX = fast_float2long_round((float)ceil((double)((bridgeBounds.hi.x + PATHFIND_CELL_SIZE_F/100) / PATHFIND_CELL_SIZE_F)));
+	maxY = fast_float2long_round((float)ceil((double)((bridgeBounds.hi.y + PATHFIND_CELL_SIZE_F/100) / PATHFIND_CELL_SIZE_F)));
 
 	// Pad with 1 extra.
 	m_xOrigin--;
