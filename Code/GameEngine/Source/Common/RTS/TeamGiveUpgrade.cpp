@@ -1,19 +1,68 @@
-// ?giveUpgrade@Team@@QAEXPBVUpgradeTemplate@@@Z
-// partial score=0.95 date=2026-09-04
-// ?giveUpgrade@Team@@QAEXPBVUpgradeTemplate@@@Z
-// partial score=0.95 date=2026-09-04
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
-// Open-BFME5: Team::giveUpgrade, retail 0x000ED9D0, 102 bytes.
-// ILT 0x0002DA5B jumps here. Object DLINK PMF + contain/+0x1FC UpgradeSink
-// (+0x68) + sink giveUpgrade at +0xAC; else Object::giveUpgrade ILT 0x1A97E.
-// Best /O2 for+continue: 107B; entire body matches retail after removing the
-// 5-byte eb03/lea loop-align pad at +0x1B (retail has none). /O1 /Os rewrite
-// the prologue; /Gy- + leading pad does not move COMDAT-relative align.
-// Same DCE/align family as hasAnyBuildFacility advance wall.
-
-#include "ObjectDlinkPmf.h"
+//
+// Team::giveUpgrade at retail RVA 0x000ED9D0 (102 bytes). ILT 0x0002DA5B jumps
+// here and ScriptActions::doTeamUpgrade (0x002F5B80) is the sole caller.
+// The body walks Team+0x0C through the BFME Object DLINK PMF, and for each
+// member prefers the contain module's upgrade sink (Object+0x1FC, contain
+// vtable +0x68, sink vtable +0xAC) over Object::giveUpgrade (ILT 0x0001A97E ->
+// 0x001C9F70).
+//
+// The ZH Team.cpp member walks (Team::deleteTeam, Team::countObjectsByKind)
+// open every non-trivial loop body with "Object *obj = iter.cur(); if (!obj)
+// continue;". Restoring that guard is what removes the five-byte eb03/lea
+// loop-alignment pad at +0x1B that sixteen earlier attempts measured: the
+// redundant test folds into the loop's own exit test, but it costs the loop
+// head its alignment bonus, so MSVC 7.1 stops padding it. The small sibling
+// Team::healAllObjects (0x000EDA50) has no such guard and retail pads it,
+// which is why the pad is not a toolchain difference.
 
 typedef bool Bool;
+
+class UpgradeTemplate;
+class Object;
+
+// This is the proven ObjectDlinkPmf.h layout, kept TU-local so Object can also
+// carry the pinned Object::giveUpgrade declaration. The vbptr carrier is
+// inherited at +0x68 and introduces the virtual base at its own +0, so the
+// inherited dlink base remains at +0x04 and therefore encodes the PMF
+// {pfn=0x00401140, delta=-100, vbindex=0}.
+class BfmeObjectVirtualTail
+{
+public:
+	unsigned char m_vt[4];
+};
+
+class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
+{
+public:
+	unsigned char m_carrier[4];
+};
+
+class BfmeObjectVtbl
+{
+public:
+	virtual void bfmeObjectSlot0(void);
+};
+
+class BfmeObjectDlinkBase
+{
+public:
+	Object *dlink_next_TeamMemberList(void) const;
+};
+
+class BfmeObjectDlinkPad
+{
+public:
+	unsigned char m_pad[0x64];
+};
+
+class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
+	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
+{
+public:
+	void giveUpgrade(const UpgradeTemplate *upgradeT);
+	unsigned char m_tail[0x40];
+};
 
 #define callMemberFunction(object,ptrToMember)  ((object).*(ptrToMember))
 
@@ -32,8 +81,8 @@ public:
 	OBJCLASS* cur() const { return m_cur; }
 };
 
-class UpgradeTemplate;
-
+// Only the slot the body calls is named; the leading slots are spacers, not an
+// identity claim on the contain and upgrade-sink interfaces.
 class BfmeUpgradeSink
 {
 public:
@@ -70,12 +119,12 @@ public:
 	virtual BfmeUpgradeSink *getUpgradeSink() = 0;
 };
 
+// The +0x1FC contain slot witnessed by Object::giveUpgrade at 0x001C9F70.
 class BfmeObjectContainView
 {
 public:
 	unsigned char m_head[0x1FC];
 	ContainModuleInterface *m_contain;
-	void giveUpgrade(const UpgradeTemplate *upgrade);
 };
 
 class Team
@@ -89,13 +138,15 @@ public:
 	}
 };
 
-
-
 void Team::giveUpgrade(const UpgradeTemplate *upgrade)
 {
 	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
 	{
-		ContainModuleInterface *contain = ((BfmeObjectContainView *)iter.cur())->m_contain;
+		Object *obj = iter.cur();
+		if (!obj)
+			continue;
+
+		ContainModuleInterface *contain = ((BfmeObjectContainView *)obj)->m_contain;
 		if (contain != 0)
 		{
 			BfmeUpgradeSink *sink = contain->getUpgradeSink();
@@ -105,6 +156,6 @@ void Team::giveUpgrade(const UpgradeTemplate *upgrade)
 				continue;
 			}
 		}
-		((BfmeObjectContainView *)iter.cur())->giveUpgrade(upgrade);
+		obj->giveUpgrade(upgrade);
 	}
 }
