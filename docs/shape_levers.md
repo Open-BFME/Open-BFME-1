@@ -1004,3 +1004,15 @@ as receiver: ILT `0000A3B2` reaches `001BF4D0`, which reads `[ecx+1E8]`.
 Correcting that free-call declaration and using the native mask lands108B
 without volatile, barriers or padded structs. Bank names remain in
 `Rva00256AE0StatusAttach.cpp`; the unknown owner is address-qualified.
+
+## A caller may rely on the visible callee preserving ECX
+
+RVA `0035E510` calls `003527B0` then `0035C9C0` without reloading ECX.
+The second helper consumes the receiver, so declaring it free `__stdcall`
+is wrong. A member declaration alone adds a receiver reload absent in retail.
+The first helper already has a verified71B C++ body (`markReleased`) that
+preserves ECX. Putting the caller in that same translation unit lets MSVC
+observe the real body and omit the reload. No special register contract is
+asserted. Native `std::swap` then resolves the two-field store schedule and
+lands108B. Both caller and original helper are reverified; the source is
+`Rva003527B0TablesMarkReleased.cpp`, with no duplicate helper definition.
