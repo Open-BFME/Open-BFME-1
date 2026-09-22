@@ -1,5 +1,3 @@
-// ?rva001C7CF0@Object@@QAEXMMMABVAsciiString@@@Z
-// partial score=1.0 date=2026-09-21
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // BFME Object launch-force helper. Retail 0x001C7CF0, 295 bytes.
