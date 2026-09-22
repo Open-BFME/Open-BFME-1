@@ -430,6 +430,13 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         gh = None if os.environ.get("HARVEST_NO_GH") else shutil.which("gh")
         if gh:
             scratch = "fleet-" + re.sub(r"[^A-Za-z0-9]+", "-", os.environ.get("COMPUTERNAME") or os.environ.get("HOSTNAME") or "host").lower()
+            # The pre-push hook ranges from the remote's CURRENT sha of the ref
+            # being pushed. A scratch branch left from yesterday makes that range
+            # span every commit origin took since (15 other hosts' name
+            # regressions refused this host's push on 2026-09-22). Delete it
+            # first: a deletion is hook-exempt, and the hook then ranges from
+            # merge-base with origin/master, i.e. this commit only.
+            run("git", "push", "-q", "origin", f":refs/heads/{scratch}", cwd=WT, check=False, cap=True)
             rc = run("git", "push", "-f", "origin", f"{new}:refs/heads/{scratch}", cwd=WT, check=False).returncode
             if rc:
                 hands("harvest: push refused by the pre-push hook (see above); hands needed")
