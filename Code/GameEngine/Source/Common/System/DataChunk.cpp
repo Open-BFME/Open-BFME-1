@@ -45,6 +45,7 @@
 #undef MEMORY_POOL_GLUE_WITHOUT_GCMP
 extern "C" void free(void *);
 #define MEMORY_POOL_GLUE_WITHOUT_GCMP(ARGCLASS) \
+friend class DataChunkInput; \
 protected: \
 	virtual ~ARGCLASS(); \
 public: \
@@ -788,7 +789,6 @@ AsciiString DataChunkInput::openDataChunk(DataChunkVersionType *ver )
 }
 
 // close chunk and move to start of next chunk
-// ?closeDataChunk@DataChunkInput@@QAEXXZ present-unmatched
 void DataChunkInput::closeDataChunk( void )
 {										
 	if (m_chunkStack == NULL)
@@ -808,7 +808,9 @@ void DataChunkInput::closeDataChunk( void )
 	// pop the chunk off the stack
 	InputChunk *c = m_chunkStack;
 	m_chunkStack = m_chunkStack->next;
-	c->deleteInstance();
+	// Retail001029D0 invokes InputChunk's deleting destructor directly
+	// (vtable0108631C slot0 ->001026F0), without the ZH pool-release path.
+	delete c;
 }
 
 

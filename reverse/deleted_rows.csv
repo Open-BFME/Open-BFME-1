@@ -27665,3 +27665,4 @@ _$E27,0x00C6B2C0,stale MainMenuUtils static initializer claim removed; the same 
 ?apply2@Rva005222A0Host@@QAEXH@Z,0x00522360,owner unified as Gen00522E00 by constructor callback binding; byte-identical body retained
 ?apply3@Rva005222A0Host@@QAEXH@Z,0x005223C0,owner unified as Gen00522E00 by constructor callback binding; byte-identical body retained
 ?apply@Rva00522420Host@@QAEXH@Z,0x00522420,owner unified as Gen00522E00 by constructor callback binding; byte-identical body retained
+?d_001029d0@@YAXXZ,0x001029D0,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?closeDataChunk@DataChunkInput@@QAEXXZ, a gate-required claim from Code/GameEngine/Source/Common/System/DataChunk.cpp over the same 81-byte range. The Code/gen_asm/d_000fb610.asm scaffold reproduces those bytes but carries no identity."
