@@ -1,6 +1,7 @@
 // ?parseSidesDataChunk@Rva0019BE80SidesList@@QAE_NAAVDataChunkInput@@PAUDataChunkInfo@@@Z
-// partial score=0.25 date=2026-09-20
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.7067669 date=2026-09-22
+// ?parseSidesDataChunk@Rva0019BE80SidesList@@QAE_NAAVDataChunkInput@@PAUDataChunkInfo@@@Z
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
 // Retail 0x0019BF40: SidesList's DataChunk parse callback -- the BFME variant
 // of ZH SidesList::ParseSidesDataChunk (reference/CnC_Generals_Zero_Hour/
 // GeneralsMD/Code/GameEngine/Source/GameLogic/Map/SidesList.cpp:243-319).
@@ -23,6 +24,14 @@
 // PlayerScriptsList registration/parse/script-retrieval tail entirely (ZH
 // always ran it). info->version is a 16-bit field (word compares throughout).
 
+// Corrected attempt, 2026-09-22: 1195/1197 bytes, 351 masked differences.
+// This remains evidence, not matched source. The native Coord3D copy/assignment
+// variant is the closest measured candidate; its D8-byte frame differs from
+// retail CC. The released POD Coord3D variant has the right CC frame but is
+// 1179 bytes with 603 differences. Neither establishes the inlined type family.
+// See reverse/attempt_history/0x0019bf40/20260922-review.md for the independently
+// decoded behavior fixes and the unresolved coordinate-copy contract.
+
 typedef int Int;
 
 enum ErrorCode
@@ -41,26 +50,22 @@ private:
 	void *m_data;
 };
 
-class BFMERetailAsciiString
+#include "ascii_string.h"
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+#include "coord3d.h"
+inline Coord3D::Coord3D() {}
+inline Coord3D::~Coord3D() {}
+inline Coord3D::Coord3D(const Coord3D &that) { x=that.x; y=that.y; z=that.z; }
+inline Coord3DBase &Coord3DBase::operator=(const Coord3DBase &that)
 {
-public:
-	~BFMERetailAsciiString();
-
-private:
-	void *m_data;
-};
-
-class AsciiString : public BFMERetailAsciiString
+    struct Raw { unsigned int x,y,z; };
+    *(Raw *)this=*(const Raw *)&that;
+    return *this;
+}
+inline Coord3D &Coord3D::operator=(const Coord3D &that)
 {
-public:
-};
-
-class UnicodeString : public BFMERetailAsciiString
-{
-public:
-	void set(const UnicodeString &other);
-};
-
+    Coord3DBase *base=this; *base=that; return *this;
+}
 struct DataChunkInfo
 {
 	AsciiString m_label;			// +0x00
@@ -79,33 +84,28 @@ public:
 	bool parse(void *userData);
 };
 
+class Q1Forwardee0000871A { public: void handle(int node); };
 class BfmeParserRegistrationVE
 {
 public:
-	void *m_vftable;			// +0x00
-	void *m_table;				// +0x04
-	void *m_parser;				// +0x08
+    virtual ~BfmeParserRegistrationVE()
+    {
+        ((Q1Forwardee0000871A *)m_table)->handle((int)m_parser);
+    }
+    virtual bool parse(DataChunkInput &, DataChunkInfo *) = 0;
+protected:
+    DataChunkInput *m_table;
+    void *m_parser;
 };
-
 class Rva00352810ParserRegistration : public BfmeParserRegistrationVE
 {
 public:
-	Rva00352810ParserRegistration(void *dataContext, void *localList,
-		DataChunkInput *table, AsciiString *labelOverride);
-
+    Rva00352810ParserRegistration(void *dataContext, void *localList,
+        DataChunkInput *table, AsciiString *labelOverride);
+    virtual bool parse(DataChunkInput &, DataChunkInfo *);
 private:
-	void *m_0c;				// +0x0c
-	void *m_10;				// +0x10
-};
-
-// Unlink-and-delete of the UserParser node registered above; the retail body
-// inlines BfmeParserRegistrationVE's destructor as (a) a vtable reset to the
-// base class's vftable and (b) this call on the node stored at m_parser.
-// `this` is never read inside handle() -- only the stack-passed node matters.
-class Q1Forwardee0000871A
-{
-public:
-	void handle(int node);
+    void *m_0c;
+    void *m_10;
 };
 
 class ScriptList
@@ -142,23 +142,19 @@ private:
 	unsigned char m_pad0c[0x0c];		// +0x0c..+0x18 (Rva0019BE80UnicodeStrings)
 };
 
-// operator new(0x8c) is retail's exact allocation size for one BuildListInfo;
-// placement-constructing into that raw block (rather than `new BuildListInfo`,
-// whose sizeof we cannot reproduce without the full class) keeps the call
-// shape -- push 0x8c; call operator new; null check; call ctor -- identical.
-inline void *operator new(unsigned int, void *place) { return place; }
-
 class BuildListInfo
 {
 public:
 	virtual ~BuildListInfo();
 	BuildListInfo();
+    void setLocation(Coord3D loc) { m_location=loc; }
+    void setBuildingName(AsciiString name) { m_buildingName=name; }
+    void setTemplateName(AsciiString name) { m_templateName=name; }
+    void setScript(AsciiString name) { m_script=name; }
 
 	AsciiString m_buildingName;		// +0x04 (after the compiler's own vptr)
 	AsciiString m_templateName;		// +0x08
-	float m_locX;				// +0x0c
-	float m_locY;				// +0x10
-	float m_locZ;				// +0x14
+	Coord3D m_location; // +0x0c
 	unsigned char m_pad18[8];		// +0x18..+0x20
 	float m_angle;				// +0x20
 	unsigned char m_initiallyBuilt;	// +0x24
@@ -170,7 +166,10 @@ public:
 	unsigned char m_whiner;			// +0x38
 	unsigned char m_unsellable;		// +0x39
 	unsigned char m_repairable;		// +0x3a
+    unsigned char m_remaining3b[0x8c-0x3b];
 };
+
+typedef char BuildListSize[sizeof(BuildListInfo)==0x8c?1:-1];
 
 class Rva0019BE80SidesList
 {
@@ -179,6 +178,7 @@ public:
 
 private:
 	void clearSideStorageAt0019B4C0();
+    BfmeItemCMC *getSideInfo(int index) { return index>=0 && index<m_numSides ? &m_sides[index] : 0; }
 
 	unsigned char m_prefix[0x28];
 	int m_numSides;				// +0x28
@@ -202,6 +202,8 @@ bool Rva0019BE80SidesList::parseSidesDataChunk(DataChunkInput &file, DataChunkIn
 
 	if (info->m_version >= 6)
 		m_flag668 = (file.readByte() != 0) ? 1 : 0;
+    else
+        m_flag668 = 1;
 
 	Int count = file.readInt();
 	clearSideStorageAt0019B4C0();		// TheSidesList->emptySides();
@@ -215,8 +217,9 @@ bool Rva0019BE80SidesList::parseSidesDataChunk(DataChunkInput &file, DataChunkIn
 
 		if (m_numSides < 32)
 		{
-			m_sides[m_numSides].bfmeInitCMC((void *)&d);
-			m_numSides = m_numSides + 1;
+			int oldCount=m_numSides;
+            m_numSides=oldCount+1;
+            m_sides[oldCount].bfmeInitCMC((void *)&d);
 		}
 
 		Int buildCount = file.readInt();
@@ -225,36 +228,24 @@ bool Rva0019BE80SidesList::parseSidesDataChunk(DataChunkInput &file, DataChunkIn
 
 		for (Int j = 0; j < buildCount; j++)
 		{
-			void *raw = ::operator new(0x8c);
-			BuildListInfo *pBuildList = 0;
-			if (raw)
-				pBuildList = ::new (raw) BuildListInfo();
+			BuildListInfo *pBuildList = new BuildListInfo();
 
-			{
-				AsciiString buildingName = file.readAsciiString();
-				((UnicodeString *)&pBuildList->m_buildingName)->set(*(UnicodeString *)&buildingName);
-			}
-			{
-				AsciiString templateName = file.readAsciiString();
-				((UnicodeString *)&pBuildList->m_templateName)->set(*(UnicodeString *)&templateName);
-			}
+			pBuildList->setBuildingName(file.readAsciiString());
+			pBuildList->setTemplateName(file.readAsciiString());
 
-			float locX = file.readReal();
-			float locY = file.readReal();
-			file.readReal();		// loc.z read then forced to ground level
-			pBuildList->m_locX = locX;
-			pBuildList->m_locY = locY;
-			pBuildList->m_locZ = 0.0f;
+            Coord3D loc;
+            loc.x=file.readReal();
+            loc.y=file.readReal();
+            loc.z=file.readReal();
+            loc.z=0;
+            pBuildList->setLocation(loc);
 			pBuildList->m_angle = file.readReal();
 			pBuildList->m_initiallyBuilt = (file.readByte() != 0) ? 1 : 0;
 			pBuildList->m_numRebuilds = file.readInt();
 
 			if (info->m_version >= 3)
 			{
-				{
-					AsciiString script = file.readAsciiString();
-					((UnicodeString *)&pBuildList->m_script)->set(*(UnicodeString *)&script);
-				}
+				pBuildList->setScript(file.readAsciiString());
 				pBuildList->m_health = file.readInt();
 				pBuildList->m_whiner = (file.readByte() != 0) ? 1 : 0;
 				pBuildList->m_unsellable = (file.readByte() != 0) ? 1 : 0;
@@ -264,7 +255,7 @@ bool Rva0019BE80SidesList::parseSidesDataChunk(DataChunkInput &file, DataChunkIn
 			// SidesInfo::addToBuildList(pBuildList, j), inlined; the side
 			// pointer is the same bounds-checked getSideInfo(i) accessor
 			// shape used at the tail script-retrieval loop below.
-			BfmeItemCMC *side = (i < m_numSides) ? &m_sides[i] : 0;
+			BfmeItemCMC *side = getSideInfo(i);
 			BuildListInfo *pCur = 0;
 			Int position = j;
 			while (position)
@@ -297,10 +288,10 @@ bool Rva0019BE80SidesList::parseSidesDataChunk(DataChunkInput &file, DataChunkIn
 
 	if (info->m_version >= 2 && info->m_version < 5)
 	{
-		Int teamCount = file.readInt();
+		count = file.readInt();
 		m_teamrec.clear();
 		m_skirmishTeamrec.clear();
-		for (Int t = 0; t < teamCount; t++)
+		for (Int t = 0; t < count; t++)
 		{
 			Dict teamDict = file.readDict();
 			m_teamrec.append(&teamDict);
@@ -311,7 +302,8 @@ bool Rva0019BE80SidesList::parseSidesDataChunk(DataChunkInput &file, DataChunkIn
 		return true;
 
 	ScriptList *scripts[32];
-	Rva00352810ParserRegistration reg((void *)0, (void *)&scripts[0], &file, (AsciiString *)info);
+	count=0;
+	Rva00352810ParserRegistration reg((void *)&scripts[0], (void *)&count, &file, (AsciiString *)info);
 
 	if (!file.parse(0))
 		throw ERROR_CORRUPT_FILE_FORMAT;
@@ -320,10 +312,10 @@ bool Rva0019BE80SidesList::parseSidesDataChunk(DataChunkInput &file, DataChunkIn
 	{
 		if (k < m_numSides)
 		{
-			ScriptList *pSL = m_sides[k].m_scripts;
+			ScriptList *pSL = getSideInfo(k)->m_scripts;
 			if (pSL)
 				delete pSL;
-			m_sides[k].m_scripts = scripts[k];
+			getSideInfo(k)->m_scripts = scripts[k];
 		}
 		else
 		{
@@ -333,8 +325,6 @@ bool Rva0019BE80SidesList::parseSidesDataChunk(DataChunkInput &file, DataChunkIn
 		scripts[k] = 0;
 	}
 
-	reg.m_vftable = (void *)0x0107C7D0;
-	((Q1Forwardee0000871A *)this)->handle((int)reg.m_parser);
 
 	return true;
 }
