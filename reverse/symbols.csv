@@ -88647,3 +88647,7 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?rva0000A47ATarget@@YAXXZ,0x00231A00,address-qualified ILT route; destination independently matched as FlightDeckInfo vector insert-overflow body
 ?rva0000DFBCTarget@@YAXXZ,0x002D7DD0,address-qualified ILT route; destination independently matched as StatusBitsUpgrade constructor
 ?rva0000E43ATarget@@YAXXZ,0x0063C910,address-qualified ILT route; destination independently matched as BuddyThreadClass message callback
+??0?$LatchRestore@VAsciiString@@@@QAE@AAVAsciiString@@ABV1@@Z,0x00339DA0,native released template; aligned00343780 call; independently exact99B ctor with StringBase set and witnessed vtable
+??1?$LatchRestore@VAsciiString@@@@UAE@XZ,0x00339E20,native released template; aligned00343780 cleanup; independently exact86B destructor restores saved string then releases it
+??_7?$LatchRestore@VAsciiString@@@@6B@,0x010E7688,ctor00339DA0 and dtor00339E20 install this vtable; first entry ILT0001D499 targets independently exact native deleting destructor00339FA0
+?Rva0033C290@ScriptEngine@@IAEPAVRva00355950Arr@@PAVAsciiString@@@Z,0x0033C290,00343780+8D sets ECX to ScriptEngine and passes canonical AsciiString pointer; target132B reads string and scans player-key table; pointer return and ret4 independently decoded
