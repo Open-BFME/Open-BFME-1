@@ -1,9 +1,17 @@
-// ?rva001FE910@GettingBuiltBehavior@@QAEXXZ
-// partial score=0.95 date=2026-09-09
-// Retail 0x001FE910, 76 bytes.  The neighboring matched methods, constructor
-// at 0x001FE380, and object fields at +0x08 and +0x24 identify this helper as
-// GettingBuiltBehavior.  The two pinned calls and the audio vtable slot match
-// the retail body without a generated instruction sequence.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+//
+// Retail 0x001FE910, 76 bytes: GettingBuiltBehavior::onDelete.
+// GettingBuiltBehavior's vtable 0x00CA46F4 (installed by the constructor at
+// 0x001FE380) holds ILT 0x00044AC6 -> 0x001FE910 in slot 8.  Slot 8 is
+// onDelete in the landed HordeContain (vtable 0x010AF2C8) and OpenContain
+// tables, and slots 5, 6, 7 and 10 are the same shared Module defaults in both
+// tables.  The body finds the producer by Object+0x78 (m_producerID in the
+// layout witness), pokes its slot-0x14 interface and releases the looping
+// audio handle at +0x24 (the constructor stores 1 there).
+//
+// Read the producer ID straight off m_object: an Object local or an inline
+// ID accessor lets VC7.1 reuse EAX for the ID and hoist the GameLogic load
+// above the push, where retail loads the ID into ECX.
 
 typedef unsigned int UnsignedInt;
 
@@ -11,12 +19,7 @@ class Object
 {
 public:
 	char m_pad00[0x78];
-	UnsignedInt m_objectID;
-
-	__forceinline UnsignedInt getID() const
-	{
-		return m_objectID;
-	}
+	UnsignedInt m_producerID;
 };
 
 class BfmeY982
@@ -38,8 +41,7 @@ public:
 	Object *findObjectByID(int id);
 };
 
-class Rva00367E30Logic;
-extern Rva00367E30Logic *TheBfmeGameLogic;
+extern GameLogic *TheBfmeGameLogic;
 
 class AudioClientUpdate
 {
@@ -71,20 +73,27 @@ extern AudioClientUpdate *TheAudioClientUpdate;
 class GettingBuiltBehavior
 {
 public:
-	void rva001FE910();
+	virtual ~GettingBuiltBehavior();
+	virtual void vslot04();
+	virtual void vslot08();
+	virtual void vslot0c();
+	virtual void vslot10();
+	virtual void vslot14();
+	virtual void vslot18();
+	virtual void vslot1c();
+	virtual void onDelete();
 
 private:
-	char m_pad00[8];
+	char m_pad04[4];
 	Object *m_object;
 	char m_pad0c[0x18];
 	UnsignedInt m_audioHandle;
 };
 
-void GettingBuiltBehavior::rva001FE910()
+void GettingBuiltBehavior::onDelete()
 {
-	Object *object = m_object;
-	if (BfmeY982 *target = (BfmeY982 *)((GameLogic *)TheBfmeGameLogic)->findObjectByID(
-		(int)object->getID()))
+	if (BfmeY982 *target = (BfmeY982 *)TheBfmeGameLogic->findObjectByID(
+		(int)m_object->m_producerID))
 	{
 		BfmeY982 *production = target->bfmeConv982B();
 		if (production != 0)
