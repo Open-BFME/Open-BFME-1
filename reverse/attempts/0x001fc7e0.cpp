@@ -1,5 +1,5 @@
 // ?bfmeSetYD@BfmeThingYD@@QAEXH@Z
-// partial score=0.85 date=2026-09-01
+// partial score=0.86 date=2026-09-22
 struct BfmeClockYD
 {
 	unsigned char m_bfmeHead[0x3c];
@@ -8,7 +8,7 @@ struct BfmeClockYD
 
 extern BfmeClockYD *g_bfmeClockYD;
 
-class AsciiString
+class AudioEventInfoRef
 {
 public:
 	void *m_bfmeData;
@@ -19,11 +19,11 @@ enum ObjectID
 	BFME_OBJECT_ID_UNUSED = 0
 };
 
-class BfmeAudioEventRTS
+class AudioEventRTS
 {
 public:
-	BfmeAudioEventRTS(const AsciiString &eventName, ObjectID ownerID);
-	~BfmeAudioEventRTS();
+	AudioEventRTS(const AudioEventInfoRef &eventInfo, ObjectID ownerID);
+	~AudioEventRTS();
 	unsigned char m_bfmeTail[0x70];
 };
 
@@ -47,7 +47,7 @@ public:
 	virtual void bfmeUnused14();
 	virtual void bfmeUnused15();
 	virtual void bfmeUnused16();
-	virtual int addAudioEvent(const BfmeAudioEventRTS *event);
+	virtual int addAudioEvent(const AudioEventRTS *event);
 };
 
 extern ClientSubsystem *TheAudioClientUpdate;
@@ -55,9 +55,9 @@ extern ClientSubsystem *TheAudioClientUpdate;
 struct BfmeSoundSetYD
 {
 	unsigned char m_bfmeHead[0x18];
-	AsciiString m_bfmeEventName;
+	AudioEventInfoRef m_bfmeEventName;
 	unsigned char m_bfmeGap[4];
-	AsciiString m_bfmeEventNameTwo;
+	AudioEventInfoRef m_bfmeEventNameTwo;
 };
 
 struct BfmeOwnerYD
@@ -106,12 +106,13 @@ void BfmeThingYD::bfmeSetYD(int what)
 		return;
 
 	BfmeSoundSetYD *soundSet = m_bfmeSoundSet;
+	BfmeOwnerYD *owner = m_bfmeOwner;
 	switch (what)
 	{
 	case 0:
 		if (soundSet->m_bfmeEventName.m_bfmeData != 0)
 		{
-			BfmeAudioEventRTS event(soundSet->m_bfmeEventName, m_bfmeOwner->m_bfmeOwnerID);
+			AudioEventRTS event(soundSet->m_bfmeEventName, owner->m_bfmeOwnerID);
 			ClientSubsystem *audio = TheAudioClientUpdate;
 			m_bfmeAudioHandle = audio->addAudioEvent(&event);
 		}
@@ -120,7 +121,7 @@ void BfmeThingYD::bfmeSetYD(int what)
 	case 2:
 		if (soundSet->m_bfmeEventNameTwo.m_bfmeData != 0)
 		{
-			BfmeAudioEventRTS event(soundSet->m_bfmeEventNameTwo, m_bfmeOwner->m_bfmeOwnerID);
+			AudioEventRTS event(soundSet->m_bfmeEventNameTwo, owner->m_bfmeOwnerID);
 			ClientSubsystem *audio = TheAudioClientUpdate;
 			m_bfmeAudioHandle = audio->addAudioEvent(&event);
 		}
