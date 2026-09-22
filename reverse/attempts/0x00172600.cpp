@@ -1,27 +1,19 @@
-// ?onEnter@AIInternalMoveToStateOnEnterShim@@QAE?AW4StateReturnType@@XZ
-// partial score=0.25 date=2026-09-17
-// partial reconstruction for retail RVA 0x00172600, size 1524 bytes.
-//
-// Boundary: dis_retail.py reaches the contiguous epilogue at +0x5F3
-// (ret at +0x5F3, no jump-table/data bytes inside the 0x5F4-byte extent).
-// Identity: the 0x00021E27 ILT is named by the 26 derived-state callers as
-// AIInternalMoveToState::onEnter; the CritterDesync format strings in this
-// body name the same method.  The emitted symbol remains the row's shim name
-// so this bank does not overclaim a second source owner.
-//
-// Proved layout/evidence used here: State::m_machine +0x1C; the AI owner at
-// StateMachine+0x10; AIUpdate::m_curLocomotor +0x1CC, its locomotor-set view
-// +0x1A8 and virtual slot 117 +0x1D4; Object template +0x04, position +0x38,
-// id +0x74, immobile flags +0x94, model-condition words +0x110 and AI +0x204;
-// state goal +0x24, ambient handle +0x40, waiting +0x4D and retry +0x4E.
-// The 21 direct retail callees are retained by their printed address thunks;
-// no unprinted semantic callee name is introduced.  Debug/audio/pathfinding
-// control flow and all literal strings are transcribed from the retail body.
-// The distance/condition interpretation is the remaining reconstruction
-// assumption: the x87 max-plus-min expression selects the blah1/blah2 arms,
-// while the called helper ABIs and field offsets are independently witnessed.
+// ?d_00172600@@YAXXZ
+// partial score=0.9973753280839895 date=2026-09-22
+// cl: /Ob1 /ICode/Libraries/Source/WWVegas/WWMath /FAsc /Fabuild/hub_00172600/current.cod
+// Complete hub reconstruction, retail RVA 0x00172600 (1524 bytes).
+// Symbol: ?onEnter@AIInternalMoveToStateOnEnterShim@@QAE?AW4StateReturnType@@XZ
+// See ANALYSIS.md for independently witnessed identities, layouts and ABIs.
+// No assembly and no new callee pin. Existing j_ routes are ABI adapters.
+// Retail frame is aligned8, alloc32, saved EBX/frame-EBP/ESI/EDI; no EH.
+// Probe output is authoritative about how closely this source emits that shape.
+#define _STLP_NO_EXCEPTIONS 1
+#define _STLP_USE_STATIC_LIB 1
+// stlport
+#include <bitset>
+#include <math.h>
 
-typedef unsigned char Bool;
+typedef bool Bool;
 typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef float Real;
@@ -33,12 +25,27 @@ enum StateReturnType
 	STATE_FAILURE = -2
 };
 
-struct Coord3D
+#include "coord3d.h"
+
+// Real member implementations from Code/Libraries/Source/WWVegas/WWMath/coord3d.cpp.
+// Kept in this TU so VC7.1 can inline the actual coordinate operations.
+inline Coord3D::Coord3D() {}
+inline Coord3D::~Coord3D() {}
+inline Coord3D::Coord3D(const Coord3D &that) { x=that.x; y=that.y; z=that.z; }
+inline Coord3D &Coord3D::Sub2D(const Coord3DBase &that) { x-=that.x; y-=that.y; return *this; }
+inline Coord3D &Coord3D::Sub2D(const Coord3DBase &left, const Coord3DBase &right)
 {
-	Real x;
-	Real y;
-	Real z;
-};
+    x = left.x - right.x;
+    y = left.y - right.y;
+    return *this;
+}
+inline float Coord3D::GetLengthEstimate2D() const
+{
+    float ax = fabs(x);
+    float ay = fabs(y);
+    if (ax > ay) return ax + 0.25f * ay;
+    return ay + 0.25f * ax;
+}
 
 class Object;
 class Rva00172600AIUpdate;
@@ -68,6 +75,18 @@ public:
 	void *m_name;
 };
 
+template<int N>
+class Rva00172600Flags {
+public:
+    bool testWord(unsigned int bit) const {
+        if (bits._M_getword(bit) & bits._S_maskbit(bit)) return true;
+        return false;
+    }
+    void set(unsigned int bit) { bits._Unchecked_set(bit); }
+private:
+    _STL::bitset<N> bits;
+};
+
 class Object
 {
 public:
@@ -80,10 +99,18 @@ public:
 	unsigned char m_pad78[0x1c];
 	UnsignedInt m_status;
 	unsigned char m_pad98[0x78];
-	UnsignedInt m_condition110;
-	UnsignedInt m_condition114;
-	unsigned char m_pad118[0xec];
+	Rva00172600Flags<320> m_condition;
+	unsigned char m_pad138[0x204 - 0x138];
 	Rva00172600AIUpdate *m_ai;
+	void notifyModelConditionChanged();
+    __forceinline void setCondition(unsigned int flag) {
+        if (!m_condition.testWord(flag)) {
+            m_condition.set(flag);
+            notifyModelConditionChanged();
+        }
+    }
+    Rva00172600AIUpdate *getAI() const { return m_ai; }
+	Coord3D *getPosition() { return &m_position; }
 };
 
 template<int N>
@@ -131,13 +158,13 @@ class Rva00172600StateWithComputePath
  	: public Rva00172600VirtualSlots<17>
 {
 public:
-	virtual Bool slot17() = 0;
+	virtual bool slot17() = 0;
 };
 
-class AIInternalMoveToStateOnEnterShim
+class AIInternalMoveToStateOnEnterShim : public Rva00172600StateWithComputePath
 {
 public:
-	unsigned char m_pad00[0x1c];
+	unsigned char m_pad04[0x18];
 	Rva00172600StateMachine *m_machine;
 	unsigned char m_pad20[4];
 	Coord3D m_goalPosition;
@@ -149,6 +176,7 @@ public:
 	Bool m_waitingForPath;
 	Bool m_tryOneMoreRepath;
 
+	Object *getMachineOwner() const { return m_machine->m_owner; }
 	StateReturnType onEnter();
 };
 
@@ -202,8 +230,8 @@ public:
 	Int rva0001c675(Object *, Coord3D *);
 	void rva0001c7e2(Int);
 	void rva0002191d();
-	Bool rva00027ffc(Object *, void *, Coord3D *, Int);
-	void rva000294e2(Object *, Coord3D *, Int);
+	Bool rva00027ffc(Object *, void *, Coord3D *, const Coord3D *);
+	void rva000294e2(Object *, Coord3D *, Int, const char *, Int);
 	void rva0002b3f0();
 	Bool rva0003251f(Int);
 	Real rva000333ac();
@@ -216,22 +244,22 @@ public:
 #pragma comment(linker, "/alternatename:?rva000022bb@Rva00172600Calls@@QAEPAVRva00172600Override@@XZ=?j_000022bb@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva0000979b@Rva00172600Calls@@QAEXXZ=?j_0000979b@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva0000ebab@Rva00172600Calls@@QAEXH@Z=?j_0000ebab@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00010109@Rva00172600Calls@@QAEEXZ=?j_00010109@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva00010109@Rva00172600Calls@@QAE_NXZ=?j_00010109@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva0001246d@Rva00172600Calls@@QAEXXZ=?j_0001246d@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva00012486@Rva00172600Calls@@QAEXXZ=?j_00012486@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva0001a36b@Rva00172600Calls@@QAEHXZ=?j_0001a36b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0001c26f@Rva00172600Calls@@QAEEPAUCoord3D@@H@Z=?j_0001c26f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0001c675@Rva00172600Calls@@QAEHPAVObject@@PAUCoord3D@@@Z=?j_0001c675@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva0001c26f@Rva00172600Calls@@QAE_NPAVCoord3D@@H@Z=?j_0001c26f@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva0001c675@Rva00172600Calls@@QAEHPAVObject@@PAVCoord3D@@@Z=?j_0001c675@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva0001c7e2@Rva00172600Calls@@QAEXH@Z=?j_0001c7e2@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva0002191d@Rva00172600Calls@@QAEXXZ=?j_0002191d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00027ffc@Rva00172600Calls@@QAEEPAVObject@@PAXPAUCoord3D@@H@Z=?j_00027ffc@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva000294e2@Rva00172600Calls@@QAEXPAVObject@@PAUCoord3D@@H@Z=?j_000294e2@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva00027ffc@Rva00172600Calls@@QAE_NPAVObject@@PAXPAVCoord3D@@PBV3@@Z=?j_00027ffc@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva000294e2@Rva00172600Calls@@QAEXPAVObject@@PAVCoord3D@@HPBDH@Z=?j_000294e2@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva0002b3f0@Rva00172600Calls@@QAEXXZ=?j_0002b3f0@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0003251f@Rva00172600Calls@@QAEEH@Z=?j_0003251f@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva0003251f@Rva00172600Calls@@QAE_NH@Z=?j_0003251f@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva000333ac@Rva00172600Calls@@QAEMXZ=?j_000333ac@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00034c16@Rva00172600Calls@@QAEXPAVObject@@PAUCoord3D@@@Z=?j_00034c16@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva00034c16@Rva00172600Calls@@QAEXPAVObject@@PAVCoord3D@@@Z=?j_00034c16@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva0003a391@Rva00172600Calls@@QAEHXZ=?j_0003a391@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00046ad3@Rva00172600Calls@@QAEEPAVObject@@@Z=?j_00046ad3@@YAXXZ")
+#pragma comment(linker, "/alternatename:?rva00046ad3@Rva00172600Calls@@QAE_NPAVObject@@@Z=?j_00046ad3@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva00048ca7@Rva00172600Calls@@QAEXM@Z=?j_00048ca7@@YAXXZ")
 
 StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
@@ -242,24 +270,23 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		m_ambientPlayingHandle = 1;
 	}
 
-	Rva00172600StateMachine *machine = m_machine;
-	Object *owner = machine->m_owner;
-	Rva00172600AIUpdate *ai = owner->m_ai;
+	Object *owner = getMachineOwner();
+	Rva00172600AIUpdate *ai = owner->getAI();
 	m_waitingForPath = ai->m_waitingForPath;
 
 	if (g_012F0239 && g_012ED4FC)
 	{
 		Rva00172600Template *templateForLog = owner->m_template;
+		UnsignedInt objectId = owner->m_id;
 		if (templateForLog != 0 && templateForLog->m_override != 0)
 		{
 			templateForLog = (Rva00172600Template *)
 			((Rva00172600Calls *)templateForLog->m_override)->rva000022bb();
 		}
-		const char *objectName = (const char *)0x0107388b;
-		if (templateForLog != 0 && templateForLog->m_name != 0)
-			objectName = (const char *)templateForLog->m_name + 8;
+		const char *objectName = templateForLog->m_name ?
+            (const char *)templateForLog->m_name + 8 : (const char *)0x0107388b;
 		((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-			(const char *)0x01098e70, objectName, owner->m_id,
+			(const char *)0x01098e70, objectName, objectId,
 			m_goalPosition.x, m_goalPosition.y, m_goalPosition.z);
 	}
 
@@ -273,7 +300,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		return STATE_FAILURE;
 	}
 
-	Real locomotorDistance =
+	Real queryFloat =
 		((Rva00172600Calls *)ai)->rva000333ac();
 	void *currentLocomotor = ai->m_curLocomotor;
 	if (currentLocomotor != 0)
@@ -327,16 +354,17 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 				m_goalPosition.y, m_goalPosition.z);
 		}
 
-		Int layer = ((Rva00172600Calls *)TheTerrainLogic)->rva0001c675(
-			owner, &m_goalPosition);
 		((Rva00172600Calls *)pathfinder)->rva000294e2(owner,
-			&m_goalPosition, layer);
+			&m_goalPosition,
+			((Rva00172600Calls *)TheTerrainLogic)->rva0001c675(owner, &m_goalPosition),
+			(const char *)0x0109769c, 0x909);
 		if (g_012F0239 && g_012ED4FC)
 		{
 			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
 				(const char *)0x01098b38, m_goalPosition.x,
 				m_goalPosition.y, m_goalPosition.z);
 		}
+		((Rva00172600Calls *)pathfinder)->rva0001c7e2(0);
 	}
 	else if (g_012F0239 && g_012ED4FC)
 	{
@@ -344,20 +372,13 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			(const char *)0x01098ad8);
 	}
 
-	Real deltaX = owner->m_position.x - m_goalPosition.x;
-	Real deltaY = owner->m_position.y - m_goalPosition.y;
-	if (deltaX < 0.0f)
-		deltaX = -deltaX;
-	if (deltaY < 0.0f)
-		deltaY = -deltaY;
-	Real lengthEstimate;
-	if (deltaX < deltaY)
-		lengthEstimate = deltaY + deltaX * g_01083B6C;
-	else
-		lengthEstimate = deltaX + deltaY * g_01083B6C;
+	Coord3D *position = owner->getPosition();
+	Coord3D delta(*position);
+	delta.Sub2D(m_goalPosition);
+	Real lengthEstimate = delta.GetLengthEstimate2D();
 
 	Bool startSound;
-	if (lengthEstimate >= g_01098AD4)
+	if (lengthEstimate > g_01098AD4)
 	{
 		startSound = 1;
 		if (g_012F0239 && g_012ED4FC)
@@ -367,16 +388,10 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 				m_goalPosition.y, m_goalPosition.z);
 		}
 
-		Bool distanceArm = false;
 		if (currentLocomotor != 0 &&
-			((Rva00172600Calls *)currentLocomotor)->rva00046ad3(owner))
-		{
-			if (m_waitingForPath ||
-				locomotorDistance >= *(Real *)((unsigned char *)currentLocomotor + 0x38))
-				distanceArm = true;
-		}
-
-		if (distanceArm)
+			((Rva00172600Calls *)currentLocomotor)->rva00046ad3(owner) &&
+			(m_waitingForPath ||
+			 queryFloat > *(Real *)((unsigned char *)currentLocomotor + 0x38)))
 		{
 			if (g_012F0239 && g_012ED4FC)
 			{
@@ -387,16 +402,9 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			Rva00172600Pathfinder *pathfinder = TheAI->m_pathfinder;
 			Int layer = ((Rva00172600Calls *)owner)->rva0003a391();
 			Bool onCellTypeTwo = ((Rva00172600Calls *)pathfinder)->rva0001c26f(
-				&owner->m_position, layer);
-			Int condition = onCellTypeTwo ? 0x66 : 0x3c;
-			UnsignedInt *conditionWord = (UnsignedInt *)
-				((unsigned char *)owner + 0x110 + (condition >> 5) * 4);
-			UnsignedInt conditionBit = 1u << (condition & 0x1f);
-			if ((*conditionWord & conditionBit) == 0)
-			{
-				*conditionWord |= conditionBit;
-				((Rva00172600Calls *)owner)->rva0002191d();
-			}
+				position, layer);
+			UnsignedInt condition = onCellTypeTwo ? 0x66 : 0x3c;
+			owner->setCondition(condition);
 		}
 		else if (((Rva00172600Calls *)owner)->rva0003251f(0xe) &&
 			((Rva00172600Calls *)owner)->rva0003251f(0x10))
@@ -407,19 +415,14 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 					(const char *)0x01098998, m_goalPosition.x,
 					m_goalPosition.y, m_goalPosition.z);
 			}
-			UnsignedInt *conditionWord = (UnsignedInt *)
-				((unsigned char *)owner + 0x114);
-			if ((*conditionWord & 0x10000000) == 0)
-			{
-				*conditionWord |= 0x10000000;
-				((Rva00172600Calls *)owner)->rva0002191d();
-			}
+			owner->setCondition(0x3c);
 		}
-		else if (g_012F0239 && g_012ED4FC)
+		else
 		{
-			((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
-				(const char *)0x01098938, m_goalPosition.x,
-				m_goalPosition.y, m_goalPosition.z);
+			if (g_012F0239 && g_012ED4FC)
+				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
+					(const char *)0x01098938, m_goalPosition.x,
+					m_goalPosition.y, m_goalPosition.z);
 		}
 	}
 	else
@@ -440,7 +443,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			m_goalPosition.y, m_goalPosition.z);
 	}
 
-	if (!((Rva00172600StateWithComputePath *)this)->slot17())
+if (!slot17())
 	{
 		if (g_012F0239 && g_012ED4FC)
 		{
@@ -465,3 +468,11 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		((Rva00172600Calls *)this)->rva0002b3f0();
 	return STATE_CONTINUE;
 }
+
+#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
+
+// ABI-compatible local spellings resolve to independently witnessed global pins.
+#pragma comment(linker, "/alternatename:?g_012F0239@@3EA=?Glo012F0239@@3_NA")
+#pragma comment(linker, "/alternatename:?g_012ED4FC@@3PAXA=?TheCRCParameterCheck@@3PAVCRCParameterCheck@@A")
+#pragma comment(linker, "/alternatename:?g_01098AD4@@3MA=g_bfmeOffsetDF")
+#pragma comment(linker, "/alternatename:?TheAudioClientUpdate@@3PAVRva005A00B0AudioClient@@A=?TheAudioClientUpdate@@3PAURva005A00B0AudioClient@@A")
