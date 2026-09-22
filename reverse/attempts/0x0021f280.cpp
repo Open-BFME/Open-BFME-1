@@ -1,5 +1,5 @@
-// ?d_0021f280@@YAXXZ
-// partial score=0.6 date=2026-09-20
+// ?getObjectGarrisonPointIndex@GarrisonContain@@UAEHW4ObjectID@@@Z
+// partial score=0.7 date=2026-09-22
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // Retail 0x0021F280: GarrisonContain slot 26 ObjectID lookup.
 // stlport
@@ -139,38 +139,44 @@ Int GarrisonContain::getObjectGarrisonPointIndex(ObjectID objectID)
 	if (object == 0)
 		return -1;
 
-	ObjectContainModuleInterface *contain = object->m_contain;
-	if (contain == 0)
-		return -1;
-
-	HordeContainInterface *hordeContain =
-		contain->getHordeContainInterface();
-	if (hordeContain == 0)
-		return -1;
-
+	GarrisonPointData *point = m_garrisonPointData;
+	for (Int i = 0; i < 40; ++i, ++point)
 	{
-		char listStorage[16];
-		::new (listStorage) ContainedItemsList(
-			hordeContain->getContainList());
-
-		for (ContainedItemsList::const_iterator it =
-			reinterpret_cast<ContainedItemsList *>(listStorage)->begin();
-			it != reinterpret_cast<ContainedItemsList *>(listStorage)->end();
-			++it)
+		ObjectContainModuleInterface *contain = object->m_contain;
+		if (contain != 0)
 		{
-			ObjectID containedID = (*it)->getID();
-			for (Int i = 0; i < 40; ++i)
+			HordeContainInterface *hordeContain =
+				contain->getHordeContainInterface();
+			if (hordeContain != 0)
 			{
-				if (m_garrisonPointData[i].objectID == containedID)
+				char listStorage[16];
+				::new (listStorage) ContainedItemsList(
+					hordeContain->getContainList());
+
+				for (ContainedItemsList::const_iterator it =
+					reinterpret_cast<ContainedItemsList *>(listStorage)->begin();
+					it != reinterpret_cast<ContainedItemsList *>(listStorage)->end();
+					++it)
 				{
-					destroyContainedItemsList(
-						reinterpret_cast<ContainedItemsList *>(listStorage));
-					return i;
+					ObjectID containedID = (*it)->getID();
+					for (Int j = 0; j < 40; ++j)
+					{
+						if (m_garrisonPointData[j].objectID == containedID)
+						{
+							destroyContainedItemsList(
+								reinterpret_cast<ContainedItemsList *>(listStorage));
+							return j;
+						}
+					}
 				}
+				destroyContainedItemsList(
+					reinterpret_cast<ContainedItemsList *>(listStorage));
 			}
 		}
-		destroyContainedItemsList(
-			reinterpret_cast<ContainedItemsList *>(listStorage));
+		else if (point->objectID == objectID)
+		{
+			return i;
+		}
 	}
 
 	return -1;
