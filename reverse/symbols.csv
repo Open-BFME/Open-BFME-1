@@ -88728,3 +88728,4 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ??0Rva000FB210Element@@QAE@ABU0@@Z,0x000F9FF0,96B record copy; matched Rva000F9FF0Copy.cpp independently proves layout and copy ABI; FB2E0 +60 calls ILT4845F to this body
 ??0Rva000FB210Element@@QAE@PAVObject@@@Z,0x000FA1B0,96B record constructor; physical350B body dereferences input Object+210 and copies Object+224; caller002A30D0 +17B passes Object pointer through FB2E0
 ??1Gen_000F9C60@@QAE@XZ,0x000CFA40,opaque28B subobject destructor at record+44; FB2E0 +AA calls ILT2671F to matched77B destructor; same subobject copied by matched115B Gen_000F9C60 constructor
+?d_00955a00@@YAXXZ,0x00955A00,Address-only compatibility name retained for matched W3DStreakDrawBody direct call at0077D6B0; physical71B point-update body now matched as bfmeSetWG@BfmeStreakObject
