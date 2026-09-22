@@ -88605,3 +88605,5 @@ _Rva0084ED20Tail,0x0084ED20,STLport 4.5.3 Win32 locale weekday/month name lookup
 __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011DFFFC type011DFFDC RTTI012A716C names ErrorCode; native ERROR_BAD_ARG throw in setDefaultState000A12B0
 ?evaluateCounter@ScriptEngine@@IAE_NPAVCondition@@@Z,0x003457F0,condition dispatcher00346300 COUNTER arm via ILT00046B96; ECX saved EDI and named counter lookup00019ADD then six comparisons match upstream evaluateCounter
 ?TheScriptConditions@@3PAVScriptConditionsInterface@@A,0x00EF06B0,dispatcher00346300 default loads VA012F06B0 then evaluateCondition vslot24; ScriptEngine init00340B80 installs ScriptConditions ctor00324490 here
+?rva000119E1Target@@YAXXZ,0x001B6920,No-argument tail-thunk view of independently matched LocomotorStore::newLocomotor body
+?rva00022683Target@@YAXXZ,0x001039C0,No-argument tail-thunk view of independently matched DataChunkInput::readDict body
