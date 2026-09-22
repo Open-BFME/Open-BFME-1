@@ -7,9 +7,11 @@
 // vtable +0x68, sink vtable +0xAC) over Object::giveUpgrade (ILT 0x0001A97E ->
 // 0x001C9F70).
 //
-// The ZH Team.cpp member walks (Team::deleteTeam, Team::countObjectsByKind)
-// open every non-trivial loop body with "Object *obj = iter.cur(); if (!obj)
-// continue;". Restoring that guard is what removes the five-byte eb03/lea
+// The ZH Team.cpp member walks open every non-trivial loop body with
+// "Object *obj = iter.cur(); if (!obj) continue;". Verified witnesses, both in
+// reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/
+// RTS/Team.cpp: Team::deleteTeam (lines 2262-2266) and Team::evacuateTeam
+// (lines 2404-2410). Restoring that guard is what removes the five-byte eb03/lea
 // loop-alignment pad at +0x1B that sixteen earlier attempts measured: the
 // redundant test folds into the loop's own exit test, but it costs the loop
 // head its alignment bonus, so MSVC 7.1 stops padding it. The small sibling
@@ -21,8 +23,10 @@ typedef bool Bool;
 class UpgradeTemplate;
 class Object;
 
-// This is the proven ObjectDlinkPmf.h layout, kept TU-local so Object can also
-// carry the pinned Object::giveUpgrade declaration. The vbptr carrier is
+// Byte-identical to the skeleton in reference/shims/objectdlink/ObjectDlinkPmf.h
+// and kept TU-local only because this TU must add a member (the pinned
+// Object::giveUpgrade declaration) to Object, which including the header cannot
+// do -- not a redeclaration of a covered type. The vbptr carrier is
 // inherited at +0x68 and introduces the virtual base at its own +0, so the
 // inherited dlink base remains at +0x04 and therefore encodes the PMF
 // {pfn=0x00401140, delta=-100, vbindex=0}.
@@ -81,8 +85,12 @@ public:
 	OBJCLASS* cur() const { return m_cur; }
 };
 
-// Only the slot the body calls is named; the leading slots are spacers, not an
-// identity claim on the contain and upgrade-sink interfaces.
+// The leading slots are spacers, not an identity claim on the contain and
+// upgrade-sink interfaces. The two slots the body actually calls are spelled
+// slotNN after their vtable INDEX (the Object_containPairDispatch.cpp
+// convention for this same contain vtable): the evidence proves the call
+// offsets and that slot 26 returns a pointer, and nothing more, so no semantic
+// method name is asserted for either. BfmeUpgradeSink is self-labelling.
 class BfmeUpgradeSink
 {
 public:
@@ -101,9 +109,16 @@ public:
 	virtual void _s36() = 0; virtual void _s37() = 0; virtual void _s38() = 0;
 	virtual void _s39() = 0; virtual void _s40() = 0; virtual void _s41() = 0;
 	virtual void _s42() = 0;
-	virtual void giveUpgrade(const UpgradeTemplate *upgrade) = 0;
+	// Sink vtable +0xAC == index 43. Takes the caller's UpgradeTemplate*; the
+	// sink's own name for it is unknown, so the slot index is the name.
+	virtual void slot43(const UpgradeTemplate *upgrade) = 0;
 };
 
+// ContainModuleInterface is the real ZH class name and its +0x1FC placement in
+// Object is witnessed, but ZH's ContainModuleInterface (see
+// reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/
+// GameLogic/Module/ContainModule.h) has NO member at this slot at all -- the
+// BFME vtable is longer than ZH's. So the slot keeps its index for a name.
 class ContainModuleInterface
 {
 public:
@@ -116,7 +131,9 @@ public:
 	virtual void _c18() = 0; virtual void _c19() = 0; virtual void _c20() = 0;
 	virtual void _c21() = 0; virtual void _c22() = 0; virtual void _c23() = 0;
 	virtual void _c24() = 0; virtual void _c25() = 0;
-	virtual BfmeUpgradeSink *getUpgradeSink() = 0;
+	// Contain vtable +0x68 == index 26. All the evidence gives is "returns a
+	// pointer"; the returned object is used only as the sink below.
+	virtual BfmeUpgradeSink *slot26() = 0;
 };
 
 // The +0x1FC contain slot witnessed by Object::giveUpgrade at 0x001C9F70.
@@ -149,10 +166,10 @@ void Team::giveUpgrade(const UpgradeTemplate *upgrade)
 		ContainModuleInterface *contain = ((BfmeObjectContainView *)obj)->m_contain;
 		if (contain != 0)
 		{
-			BfmeUpgradeSink *sink = contain->getUpgradeSink();
+			BfmeUpgradeSink *sink = contain->slot26();
 			if (sink != 0)
 			{
-				sink->giveUpgrade(upgrade);
+				sink->slot43(upgrade);
 				continue;
 			}
 		}
