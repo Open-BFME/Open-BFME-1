@@ -1,5 +1,5 @@
 // ?groupDoSpecialPowerAtObject@AIGroup@@QAEXIPAVObject@@IW4CommandSourceType@@@Z
-// partial score=0.65 date=2026-09-11
+// partial score=0.66 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // Open-BFME: BFME's ordered special-power-at-object group dispatch,
@@ -122,15 +122,20 @@ void Rva00152110AIGroup::groupDoSpecialPowerAtObject(
 		entry.m_object = object;
 		entry.m_distance = distance;
 		_STL::list<BfmeDistanceEntry>::iterator at = sorted.begin();
-		for (; at != sorted.end(); ++at)
+		for (;;)
 		{
-			if (at->m_distance > entry.m_distance)
+			if (at == sorted.end())
+			{
+				sorted.push_back(entry);
 				break;
+			}
+			if (at->m_distance > entry.m_distance)
+			{
+				sorted.insert(at, entry);
+				break;
+			}
+			++at;
 		}
-		if (at == sorted.end())
-			sorted.push_back(entry);
-		else
-			sorted.insert(at, entry);
 	}
 
 	for (_STL::list<BfmeDistanceEntry>::iterator j = sorted.begin();
