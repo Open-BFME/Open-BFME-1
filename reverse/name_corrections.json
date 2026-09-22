@@ -898,5 +898,15 @@
   "after_sha256": "c43d11fbbfbd9ed92d48b8286ceabd792e1d16ded54296838cfe24590cf80282",
   "evidence": "reverse/functions.csv",
   "reason": "getPickTypesForContext was the bank's semantic spelling for the callee reached through ILT 0x0000F2C2; that decorated name is in neither ledger, so the call could not resolve. reverse/functions.csv holds the body at 0x00459060 as ?Rva00459060@@YAH_N@Z (returning int), which the landed matched caller PickDrawableStructConstructor.cpp also spells, so the TU uses that ledger identity."
+ },
+ {
+  "old_path": "reverse/attempts/0x003240f0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsCastleObjectTypes.cpp",
+  "old_name": "bfmeTestERN",
+  "new_name": "rva00370340",
+  "before_sha256": "510f1a4bb1382845141cf43a952840aa77e92976598be7fc1a1c5d6601d8e84d",
+  "after_sha256": "9490ec7de8546188eb5721e4f9387199473f74b5cc2705113893cd6923cafb1b",
+  "evidence": "reverse/functions.csv",
+  "reason": "reverse/functions.csv holds the body at 0x00370340 as ?rva00370340@CastleBehavior@@QAE_NPAVObjectTypes@@@Z; this spelling is forced because the ledger's matched callee is already named that, so the TU spells the callee identically"
  }
 ]
