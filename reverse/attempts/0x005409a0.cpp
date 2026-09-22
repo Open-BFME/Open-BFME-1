@@ -1,5 +1,5 @@
 // ?dup_005409a0@@YAXXZ
-// partial score=0.27 date=2026-09-17
+// partial score=0.3 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
 //
@@ -15,12 +15,12 @@
 // but do not prove a source-level owner for this body.
 
 #include "StringInline.h"
-#include <string>
-#include <vector>
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
+
+extern "C" unsigned int strlen( const char *text );
 
 // StringInline.h supplies the proven one-pointer BFME string layout and its
 // inline forwarding copy/dtor shape.  These empty operation views only expose
@@ -60,9 +60,9 @@ public:
 class Rva005409A0Slot
 {
 public:
-	void copyRoom( const Rva005409A0GameSpyGroupRoom &room );
-	void clearOrSet( int value );
-	void setMapAvailable( int value );
+	void setPingString( AsciiString pingString );
+	void setState( int state, UnicodeString name, const void *connectInfo );
+	void setMapAvailability( bool value );
 	UnicodeString getName();
 
 	unsigned char m_pad[ 8 ];
@@ -86,11 +86,14 @@ public:
 	virtual void slot14();
 	virtual void slot18();
 	virtual void slot1C();
-	virtual void applyMap();
+	virtual void adjustSlotsForMap();
 
 	Rva005409A0Slot *getSlot( int index );
+	void setMap( AsciiString mapName );
 	void setMapCRC( int value );
 	void setMapSize( int value );
+	int getMapCRC() const;
+	int getMapSize() const;
 };
 
 class Rva005409A0Game
@@ -182,7 +185,7 @@ public:
 	virtual void slot108();
 	virtual void slot10C();
 	virtual void slot110();
-	virtual Rva005409A0GameSpyGroupRoom *slot114();
+	virtual const AsciiString &getPingString();
 	virtual void slot118();
 	virtual void slot11C();
 	virtual void slot120();
@@ -218,11 +221,32 @@ public:
 	void popImmediate();
 };
 
+class Rva005409A0StlStr
+{
+public:
+	Rva005409A0StlStr &assign( const char *first, const char *last );
+
+private:
+	char m_bytes[ 12 ];
+};
+
 class Rva005409A0QueueRequest
 {
 public:
-	unsigned char m_data[ 0x194 ];
+	Rva005409A0QueueRequest();
+	~Rva005409A0QueueRequest();
+	int peerRequestType;
+	Rva005409A0StlStr nick;
+	char m_mid[ 0x24 ];
+	Rva005409A0StlStr id;
+	Rva005409A0StlStr options;
+	char m_pad4C[ 0xE4 - 0x4C ];
+	unsigned char m_isStagingRoom;
+	char m_tail[ 0x194 - 0xE5 ];
 };
+
+typedef char Rva005409A0QueueRequestSizeCheck[
+	sizeof( Rva005409A0QueueRequest ) == 0x194 ? 1 : -1 ];
 
 class Rva005409A0PeerQueue
 {
@@ -247,21 +271,15 @@ class Rva005409A0OptionPreferences
 public:
 	Rva005409A0OptionPreferences();
 	~Rva005409A0OptionPreferences();
-	int value();
+	int getFirewallBehavior();
 };
 
 class Rva005409A0CustomMatchPreferences
 {
 public:
-	int value( int key );
-	int value();
-	void getMap( AsciiString &destination );
-};
-
-class Rva005409A0LocalHelper
-{
-public:
-	void initialize();
+	int getPreferredColor();
+	int getPreferredFaction();
+	AsciiString getPreferredMap();
 };
 
 class Rva005409A0MapNode
@@ -357,6 +375,7 @@ extern Rva005409A0NAT *TheNAT;
 extern Rva005409A0MapCache *TheMapCache;
 extern Rva005409A0WindowManager *TheWindowManager;
 extern Rva005409A0Manager *TheManager;
+extern const UnicodeString Rva005409A0EmptyUnicodeString;
 
 void Rva005409A0CloseOverlays();
 void Rva005409A0MessageBox( UnicodeString title, UnicodeString body );
@@ -418,69 +437,89 @@ void Rva005409A0Screen::run()
 	{
 		Rva005409A0OptionPreferences optionPreferences;
 		Rva005409A0CustomMatchPreferences &preferences = m_preferences;
-		localSlot->m_preferredColor = preferences.value( 6 );
-		localSlot->m_playerTemplate = preferences.value();
+		localSlot->m_preferredColor = preferences.getPreferredColor();
+		localSlot->m_playerTemplate = preferences.getPreferredFaction();
 		if( localSlot->m_playerTemplate <= -2 )
 			localSlot->m_startPosition = -1;
-		localSlot->m_ping = optionPreferences.value();
+		localSlot->m_ping = optionPreferences.getFirewallBehavior();
 
-		Rva005409A0GameSpyGroupRoom currentRoom( *TheGameSpyInfo->slot114() );
-		localSlot->copyRoom( currentRoom );
-		Rva005409A0LocalHelper helper;
-		helper.initialize();
+		AsciiString pingString = TheGameSpyInfo->getPingString();
+		localSlot->setPingString( pingString );
 
 		for( int index = 0; index < 8; ++index )
 		{
 			Rva005409A0Slot *slot = room->getSlot( index );
-			UnicodeString empty;
-			slot->clearOrSet( 0 );
+			slot->setState( 0, Rva005409A0EmptyUnicodeString, 0 );
 		}
 
-		AsciiString mapName;
-		preferences.getMap( mapName );
+		AsciiString mapName = preferences.getPreferredMap();
 		asciiOps( &mapName )->toLower();
 		Rva005409A0MapNode *node = TheMapCache->find( mapName );
 		if( node != TheMapCache->m_header )
 		{
-			localSlot->setMapAvailable( 1 );
+			localSlot->setMapAvailability( true );
 			room->setMapCRC( node->m_crc );
 			room->setMapSize( node->m_fileSize );
-			room->applyMap();
+			room->adjustSlotsForMap();
 		}
 	}
 	else
 	{
 		Rva005409A0OptionPreferences optionPreferences;
-		Rva005409A0LocalHelper helper;
-		helper.initialize();
 		UnicodeString hostName = localSlot->getName();
 		AsciiString asciiName;
 		asciiOps( &asciiName )->translate( hostName );
 
 		Rva005409A0QueueRequest request;
-		AsciiString option1;
-		AsciiString option2;
-		AsciiString option3;
-		AsciiString option4;
-		AsciiString option5;
-		AsciiString option6;
-		asciiOps( &option1 )->format( AsciiString( "PlayerTemplate=%d" ),
-			m_preferences.value( 0 ) );
-		asciiOps( &option2 )->format( AsciiString( "Color=%d" ),
-			m_preferences.value( 1 ) );
-		asciiOps( &option3 )->format( AsciiString( "NAT=%d" ),
-			optionPreferences.value() );
-		asciiOps( &option4 )->format( AsciiString( "Ping=%s" ),
-			asciiName.str() );
-		asciiOps( &option5 )->format( AsciiString( "Map=%s" ),
-			asciiName.str() );
-		asciiOps( &option6 )->format( AsciiString( "Players=%d" ), 8 );
+		request.peerRequestType = 0xD;
+		request.m_isStagingRoom = 1;
+		request.id.assign( "REQ/", "REQ/" + 4 );
+		const char *nickString = asciiName.str();
+		request.nick.assign( nickString, nickString + strlen( nickString ) );
+		AsciiString options;
 
+		asciiOps( &options )->format( AsciiString( "PlayerTemplate=%d" ),
+			m_preferences.getPreferredFaction() );
+		const char *optionString = options.str();
+		request.options.assign( optionString,
+			optionString + strlen( optionString ) );
 		TheGameSpyPeerMessageQueue->addRequest( request );
+
+		asciiOps( &options )->format( AsciiString( "Color=%d" ),
+			m_preferences.getPreferredColor() );
+		optionString = options.str();
+		request.options.assign( optionString,
+			optionString + strlen( optionString ) );
 		TheGameSpyPeerMessageQueue->addRequest( request );
+
+		asciiOps( &options )->format( AsciiString( "NAT=%d" ),
+			optionPreferences.getFirewallBehavior() );
+		optionString = options.str();
+		request.options.assign( optionString,
+			optionString + strlen( optionString ) );
 		TheGameSpyPeerMessageQueue->addRequest( request );
+
+		asciiOps( &options )->format( AsciiString( "Ping=%s" ),
+			TheGameSpyInfo->getPingString().str() );
+		optionString = options.str();
+		request.options.assign( optionString,
+			optionString + strlen( optionString ) );
 		TheGameSpyPeerMessageQueue->addRequest( request );
+
+		asciiOps( &options )->format( AsciiString( "LadderRank1v1=%d" ),
+			*(int *)0x012F73D0 );
+		optionString = options.str();
+		request.options.assign( optionString,
+			optionString + strlen( optionString ) );
 		TheGameSpyPeerMessageQueue->addRequest( request );
+
+		room->setMapCRC( room->getMapCRC() );
+		room->setMapSize( room->getMapSize() );
+		asciiOps( &options )->format( AsciiString( "LadderRank2v2=%d" ),
+			*(int *)0x012F73D4 );
+		optionString = options.str();
+		request.options.assign( optionString,
+			optionString + strlen( optionString ) );
 		TheGameSpyPeerMessageQueue->addRequest( request );
 	}
 
