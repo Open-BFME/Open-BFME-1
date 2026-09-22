@@ -908,5 +908,25 @@
   "after_sha256": "9490ec7de8546188eb5721e4f9387199473f74b5cc2705113893cd6923cafb1b",
   "evidence": "reverse/functions.csv",
   "reason": "reverse/functions.csv holds the body at 0x00370340 as ?rva00370340@CastleBehavior@@QAE_NPAVObjectTypes@@@Z; this spelling is forced because the ledger's matched callee is already named that, so the TU spells the callee identically"
+ },
+ {
+  "old_path": "reverse/attempts/0x0058d930.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/AptPalantirHeroSelectorResetSlots.cpp",
+  "old_name": "BfmeParamBC",
+  "new_name": "Rva0058D930ListEntry",
+  "before_sha256": "5c1adaddd2c6dfa45592ed3f790c5c80e169701d31f891b77cc032c68d98d041",
+  "after_sha256": "46eae15b632b9c5dfeca3977701f0d5013edd3c50dc14df96f84fa357523d018",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeParamBC came from the retired generator's invented Bfme<Verb><Suffix>/role family (docs/naming_evidence.md lines 243-244); the body at 0x0058D930 is reached only from the anonymous d_00595e60, so no caller, vtable or string names it and it keeps the address token Rva0058D930ListEntry, as the earlier verdict in reverse/re_attempts.log for rva0058d930 had already concluded."
+ },
+ {
+  "old_path": "reverse/attempts/0x0058d930.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/AptPalantirHeroSelectorResetSlots.cpp",
+  "old_name": "bfmeResetBC",
+  "new_name": "rva0058d930",
+  "before_sha256": "5c1adaddd2c6dfa45592ed3f790c5c80e169701d31f891b77cc032c68d98d041",
+  "after_sha256": "46eae15b632b9c5dfeca3977701f0d5013edd3c50dc14df96f84fa357523d018",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bfmeResetBC came from the retired generator's invented Bfme<Verb><Suffix>/role family (docs/naming_evidence.md lines 243-244); the body at 0x0058D930 is reached only from the anonymous d_00595e60, so no caller, vtable or string names it and it keeps the address token rva0058d930, as the earlier verdict in reverse/re_attempts.log for rva0058d930 had already concluded."
  }
 ]
