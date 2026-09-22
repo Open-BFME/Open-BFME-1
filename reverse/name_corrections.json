@@ -848,5 +848,15 @@
   "after_sha256": "e72066c007e162515575367143c1612f62b7963e4b3db1a84c9d5f8a5b7ee65c",
   "evidence": "reverse/symbols.csv",
   "reason": "GameLogicFp was a TU-local shim named after the real GameLogic class for the global at 0x012F0898, which reverse/symbols.csv types ?TheBfmeGameLogic@@3PAURva00367E30Logic@@A; the shim now carries that ledger type name (Rva00367E30Logic), keeping only the witnessed m_fp at +0x1A0."
+ },
+ {
+  "old_path": "reverse/attempts/0x006174d0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManagerUpdate.cpp",
+  "old_name": "GameLogicFp",
+  "new_name": "Rva00367E30Logic",
+  "before_sha256": "b89c8eef40bcfa40ddf03f042a6df49ce0b198271d26d4228a8a5fb76c1148e4",
+  "after_sha256": "e72066c007e162515575367143c1612f62b7963e4b3db1a84c9d5f8a5b7ee65c",
+  "evidence": "reverse/symbols.csv",
+  "reason": "GameLogicFp was a TU-local shim named after the real GameLogic class for the global at 0x012F0898, which reverse/symbols.csv types ?TheBfmeGameLogic@@3PAURva00367E30Logic@@A; the shim now carries that ledger type name (Rva00367E30Logic), keeping only the witnessed m_fp at +0x1A0. (range entry: bank -> landed source)"
  }
 ]
