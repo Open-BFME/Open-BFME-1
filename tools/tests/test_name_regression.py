@@ -374,3 +374,25 @@ def test_forward_declaration_does_not_preserve_renamed_type():
     before = 'class Thing {\nint m_count;\n};'
     after = 'class Thing;\nnamespace Rva00123456 {\nclass Rva00123456Type {\nint m_count;\n};\n}'
     assert ('Thing', 'Rva00123456Type') in N.regressions(before, after)
+
+
+def test_retained_class_spelling_does_not_hide_unrelated_method_rename():
+    before = """
+    class BfmeThingESN { public: int m_bfme74ESN; };
+    class BfmeHostESN {
+    public:
+        void BfmeThingESN();
+    };
+    void BfmeHostESN::BfmeThingESN() {}
+    """
+    after = """
+    class BfmeThingESN { public: int m_bfme74ESN; };
+    namespace Rva00256AE0 {
+    class BfmeHostESN {
+    public:
+        void Rva00256AE0();
+    };
+    void BfmeHostESN::Rva00256AE0() {}
+    }
+    """
+    assert ('BfmeThingESN', 'Rva00256AE0') in N.regressions(before, after)

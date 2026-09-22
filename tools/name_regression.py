@@ -80,9 +80,14 @@ def regressions(before, after):
     # when the surrounding class is not sizeable. Comments cannot preserve a name.
     for tag, a, b, c, d in difflib.SequenceMatcher(None, old, new, autojunk=False).get_opcodes():
         if tag == 'replace' and b - a == d - c:
-            found.update((x, y) for x, y in zip(old[a:b], new[c:d])
-                         if downgrade(x, y) and
-                         not (x in retained_types and y in added_namespaces))
+            for offset, (x, y) in enumerate(zip(old[a:b], new[c:d])):
+                old_pos, new_pos = a + offset, c + offset
+                moved_type = (x in retained_types and y in added_namespaces and
+                              old_pos > 0 and new_pos > 0 and
+                              old[old_pos - 1] in ('class', 'struct') and
+                              new[new_pos - 1] == 'namespace')
+                if downgrade(x, y) and not moved_type:
+                    found.add((x, y))
     left, right = layouts(before), layouts(after)
     for owner, members in left.items():
         if owner in right:
