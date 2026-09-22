@@ -88592,3 +88592,6 @@ _Rva0084ED20Tail,0x0084ED20,STLport 4.5.3 Win32 locale weekday/month name lookup
 ?erase@?$hashtable@U?$pair@QAXPAVRva00494EC0EntryView@@@_STL@@PAXURva00494EC0Hash@@U?$_Select1st@U?$pair@QAXPAVRva00494EC0EntryView@@@_STL@@@2@U?$equal_to@PAX@2@V?$allocator@U?$pair@QAXPAVRva00494EC0EntryView@@@_STL@@@2@@_STL@@QAEIABQAX@Z,0x00494A20,Native hash callee of00494EC0 independently146B exact; identity hash and12B nodes proved by actualbody; caller dereferences pointer mapped value
 ?bfmeInnerEQC@Rva003F0EC0Owner@@QAEH_NIPAXPBX2I0@Z,0x003EEB90,RVA003F0EC0 helper through ILT0001FA14; live ECX saved003EEBA3 and receiver+8 read003EEBCB; ret1C003EFE7E; args0/6 byte predicates; arg2 object pointer; args3/4 float addresses; args1/5 opaque dwords
 ?bfmeDoZN@Rva0035E710Owner@@QAEXPAXPAPAUBfmeNodeZN@@0@Z,0x0035E5A0,RVA0035E710 helper; ILT0000CEC8 decodes here; ECX saved EBX0035E5B6 and receiver+0C/+18 accessed; three pointer stack args; opaque identity preserves bank label with corrected member ABI
+?rva0000EF5CTarget@@YAXXZ,0x00202F40,No-argument tail-thunk view of independently matched PropagandaTowerBehavior constructor body
+?rva0002F095Target@@YAXXZ,0x0076AB10,No-argument tail-thunk view of independently matched STL unsigned-pair tree copy body
+?rva000399A5Target@@YAXXZ,0x00132E40,No-argument tail-thunk view of independently matched Thing::setOrientation body
