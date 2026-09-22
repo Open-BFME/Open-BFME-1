@@ -3153,13 +3153,16 @@ Int WorldHeightMap::countTiles(InputStream *pStr, Bool *halfTile)
 	return(0);
 }
 /*Break down a .tga file into a collection of tiles.  numRows * numRows total tiles.*/
-// ?readTiles@WorldHeightMap@@SA_NPAVInputStream@@PAPAVTileData@@H@Z present-unmatched
+// BFME reads a whole TGA row into the shared buffer at 0x01303808 and walks
+// it as BGRA, where Zero Hour decoded pixel by pixel through a 4-byte local.
+extern UnsignedByte g_bfmeTgaRow01303808[];
+
 Bool WorldHeightMap::readTiles(InputStream *pStr, TileData **tiles, Int numRows)
 {
 	TTargaHeader hdr;
 	pStr->read(&hdr, sizeof(hdr));
 	Int tileWidth = hdr.imageWidth/TILE_PIXEL_EXTENT;
-	Int tileHeight = hdr.imageHeight/TILE_PIXEL_EXTENT; 
+	Int tileHeight = hdr.imageHeight/TILE_PIXEL_EXTENT;
 
 	if (hdr.imageHeight==TILE_PIXEL_EXTENT/2) {
 		tileHeight = 1;
@@ -3171,69 +3174,46 @@ Bool WorldHeightMap::readTiles(InputStream *pStr, TileData **tiles, Int numRows)
 	if (tileWidth<numRows && tileHeight<numRows) {
 		return(false);
 	}
-	Bool compressed = false;
-	if (hdr.imageType & 0x08) {
-		compressed = true;
-	}
-	int row = 0;
-	int column = 0;
+	if (hdr.imageType & 0x08) return(false);
+	if (hdr.imageWidth > 0x400) return(false);
 	int bytesPerPixel = (hdr.pixelDepth+7)/8;
 	if (bytesPerPixel < 3) return(false);
 	if (bytesPerPixel > 4) return(false);
-	int i;
-	for (i=0; i<numRows*numRows; i++) {
-		if (tiles[i] == NULL) 
-			tiles[i] = MSGNEW("WorldHeightMap_readTiles") TileData;	
+	for (int i=0; i<numRows*numRows; i++) {
+		if (tiles[i] == NULL)
+			tiles[i] = MSGNEW("WorldHeightMap_readTiles") TileData;
 	}
-	UnsignedByte buf[4];
-	int repeatCount = 0;
-//	Bool read = false;
-	Bool running = false;
-	for (row = 0; row < numRows*TILE_PIXEL_EXTENT; row++) {
-		for (column=0; column<hdr.imageWidth; column++) {
+	for (int row = 0; row < numRows*TILE_PIXEL_EXTENT; row++) {
+		UnsignedByte *source = g_bfmeTgaRow01303808;
+		if (row < hdr.imageHeight) {
+			pStr->read(g_bfmeTgaRow01303808, hdr.imageWidth*bytesPerPixel);
+		}
+		for (int column=0; column<hdr.imageWidth && column<numRows*TILE_PIXEL_EXTENT; column++) {
 			UnsignedByte r, g, b, a;
 			if (row < hdr.imageHeight) {
-				if (compressed && repeatCount==0) {
-					UnsignedByte flag;
-					pStr->read(&flag, 1);
-					repeatCount = flag&0x7f;
-					repeatCount++;
-					if (flag&0x80) {
-						running = true;
-						pStr->read(buf, bytesPerPixel);
-					} else {
-						running = false;
-					}
-				}
-				if (compressed) repeatCount--;
-				if (!running) {
-					pStr->read(buf, bytesPerPixel);
-				}
-				r = buf[2]; g = buf[1]; b = buf[0];
+				r = source[2];
+				g = source[1];
+				b = source[0];
 				if (bytesPerPixel==4) {
-					a = buf[3];
+					a = source[3];
 				} else {
-					a = 255;// solid alpha.
+					a = 255;
 				}
+				source += bytesPerPixel;
 			} else {
 				r = g = b = a = 0;
 			}
-			if (column >= (numRows*TILE_PIXEL_EXTENT)) continue;
 			int tileNdx = (column/TILE_PIXEL_EXTENT) + numRows*(row/TILE_PIXEL_EXTENT);
 			int pixelNdx = (column%TILE_PIXEL_EXTENT) + TILE_PIXEL_EXTENT*(row%TILE_PIXEL_EXTENT);
-
 			UnsignedByte *pixel = tiles[tileNdx]->getDataPtr();
-
 			pixel += pixelNdx*TILE_BYTES_PER_PIXEL;
-			*pixel++ = b; 
+			*pixel++ = b;
 			*pixel++ = g;
 			*pixel++ = r;
-			*pixel = a; 
-
+			*pixel = a;
 		}
-		DEBUG_ASSERTCRASH(repeatCount==0, ("Invalid tga."));
 	}
-	for (i=0; i<numRows*numRows; i++) {
+	for (int i=0; i<numRows*numRows; i++) {
 		tiles[i]->updateMips();
 	}
 	return(true);
