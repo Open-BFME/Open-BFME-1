@@ -42,10 +42,10 @@ int Rva00271AE0Owner::count(void)
 	int id = named != 0 ? named->getID() : 0xF423F;
 	if (id == 0xF423F)
 	{
-		named = m_host->m_fallback;
-		id = named != 0 ? named->getID() : 0xF423F;
+		id = m_host->m_fallback != 0
+			? m_host->m_fallback->getID() : 0xF423F;
 	}
 	if (id != 6)
 		return 0;
-	return (m_host->m_end - m_host->m_begin) / 6;
+	return (m_host->m_end - m_host->m_begin) / 12;
 }
