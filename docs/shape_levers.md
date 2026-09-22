@@ -977,3 +977,14 @@ retail ESI save/restore and loop NOP: 56/56 bytes, one operand byte remaining
 (`mov eax,[edx]` versus `[eax]` after `mov edx,eax`). This is an improved
 bank, not an exact conversion. Inspect the callee's use of incoming ECX
 before treating an unused-in-the-caller ECX as a spare register.
+
+The same audit **lands** `003F0EC0` (43B). Its bank forwarded six stack
+arguments plus zero to `003EEB90` through ILT `0001FA14`, declaring both
+functions free `__stdcall`. The helper saves incoming ECX at `003EEBA3`,
+then reads receiver+8 at `003EEBCB`. Correcting **both** declarations to
+member `__thiscall` and retaining the original source-field local reproduces
+all43B, including the resolved call. A prior caller-only member spelling
+left the helper declaration wrong and missed this lever. The helper returns
+with `ret 1C` at `003EFE7E`; its generated ledger extent ends earlier, so
+read through the actual return when checking the ABI. Production source:
+`Code/GameEngine/Source/Common/Rva003F0EC0Forward.cpp`.
