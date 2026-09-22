@@ -1,5 +1,6 @@
 // cl: /O2
 //
+// Constructor00522E00 binds this member to its complete Gen00522E00 receiver.
 // Fourth 66B twin of the d_0050fec0.asm cluster documented in
 // Rva005222A0NoteCalls.cpp: skip-if-null then BfmeErr1043 throw + vslot 1,
 // this one with imm 1 (apply0=0x005222A0, apply1=0x00522300 (this file),
@@ -45,7 +46,7 @@ private:
 	Rva005222A0Iface *m_p;
 };
 
-class Rva00522300Host
+class Gen00522E00
 {
 public:
 	void apply1(int unused);
@@ -57,8 +58,8 @@ private:
 	Rva005222A0Ptr m_3C;
 };
 
-// ?apply1@Rva00522300Host@@QAEXH@Z
-void Rva00522300Host::apply1(int)
+// ?apply1@Gen00522E00@@QAEXH@Z
+void Gen00522E00::apply1(int)
 {
 	Rva005222A0Iface *p = m_3C;
 	m_38 = 4;

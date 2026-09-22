@@ -1,5 +1,7 @@
 // cl: /O2
 //
+// Owner unified by constructor00522E00: its typed callbacks bind the same
+// complete receiver; the Showing registration names the former opaque apply.
 // Cluster on d_0050fec0.asm: skip-if-null then BfmeErr1042 throw + vslot 1.
 // Three 66B twins at +0x3C (imm 0/2/3) and a 52B sibling at +0x40 (imm 0).
 // Same throw ILT/ThrowInfo as BfmeA1042::bfmeGo1042B at 0x00521EE0.
@@ -43,22 +45,24 @@ private:
 	Rva005222A0Iface *m_p;
 };
 
-class Rva005222A0Host
+class Gen00522E00
 {
 public:
 	void apply0(int unused);
 	void apply2(int unused);
 	void apply3(int unused);
+	void messageBoxShowing(int unused);
 
 private:
 	char m_lead[0x34];
 	int m_34;
 	int m_38;
 	Rva005222A0Ptr m_3C;
+	Rva005222A0Ptr m_40;
 };
 
-// ?apply0@Rva005222A0Host@@QAEXH@Z
-void Rva005222A0Host::apply0(int)
+// ?apply0@Gen00522E00@@QAEXH@Z
+void Gen00522E00::apply0(int)
 {
 	Rva005222A0Iface *p = m_3C;
 	m_38 = 4;
@@ -67,8 +71,8 @@ void Rva005222A0Host::apply0(int)
 		m_3C->apply(0);
 }
 
-// ?apply2@Rva005222A0Host@@QAEXH@Z
-void Rva005222A0Host::apply2(int)
+// ?apply2@Gen00522E00@@QAEXH@Z
+void Gen00522E00::apply2(int)
 {
 	Rva005222A0Iface *p = m_3C;
 	m_38 = 4;
@@ -77,8 +81,8 @@ void Rva005222A0Host::apply2(int)
 		m_3C->apply(2);
 }
 
-// ?apply3@Rva005222A0Host@@QAEXH@Z
-void Rva005222A0Host::apply3(int)
+// ?apply3@Gen00522E00@@QAEXH@Z
+void Gen00522E00::apply3(int)
 {
 	Rva005222A0Iface *p = m_3C;
 	m_38 = 4;
@@ -87,18 +91,8 @@ void Rva005222A0Host::apply3(int)
 		m_3C->apply(3);
 }
 
-class Rva00522420Host
-{
-public:
-	void apply(int unused);
-
-private:
-	char m_lead[0x40];
-	Rva005222A0Ptr m_40;
-};
-
-// ?apply@Rva00522420Host@@QAEXH@Z
-void Rva00522420Host::apply(int)
+// ?messageBoxShowing@Gen00522E00@@QAEXH@Z
+void Gen00522E00::messageBoxShowing(int)
 {
 	if (m_40)
 		m_40->apply(0);

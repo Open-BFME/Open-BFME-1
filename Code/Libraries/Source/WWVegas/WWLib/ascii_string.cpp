@@ -50,7 +50,9 @@ AsciiString::AsciiString(const char *str, int len)
     ((StringBase<char> *)this)->StringBase<char>::StringBase(str, len);
 }
 
-AsciiString::~AsciiString()
+// Callers that expose this identical forwarding body emit an inline COMDAT.
+// Keep the canonical emission inline too so MSVC links one destructor.
+inline AsciiString::~AsciiString()
 {
     ((StringBase<char> *)this)->releaseBuffer();
 }

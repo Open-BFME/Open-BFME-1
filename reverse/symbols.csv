@@ -88609,3 +88609,17 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?rva00022683Target@@YAXXZ,0x001039C0,No-argument tail-thunk view of independently matched DataChunkInput::readDict body
 ?begin@?$hashtable@U?$pair@$$CBVAsciiString@@UWindowRecord@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UWindowRecord@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@UWindowRecord@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBVAsciiString@@UWindowRecord@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@UWindowRecord@@@_STL@@@2@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UWindowRecord@@@_STL@@@2@U?$equal_to@VAsciiString@@@6@V?$allocator@U?$pair@$$CBVAsciiString@@UWindowRecord@@@_STL@@@2@@2@XZ,0x0045FA00,native WindowRecord map; aligned00462B40 call plus independently exact emitted dependency
 ?_M_bkt_num_key@?$hashtable@U?$pair@$$CBVAsciiString@@UWindowRecord@@@_STL@@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@UWindowRecord@@@_STL@@@2@U?$equal_to@VAsciiString@@@5@V?$allocator@U?$pair@$$CBVAsciiString@@UWindowRecord@@@_STL@@@2@@_STL@@ABEIABVAsciiString@@I@Z,0x0045F5C0,native WindowRecord map; aligned00462B40 call plus independently exact emitted dependency
+??_7Gen00522E00@@6B@,0x00D06938,matched complete destructor005225F0 installs same primary vtable
+??_7Rva00522E00FunctorWrapper@@6B@,0x00D0692C,wrapper ctor00522570; slots deleting destructor005225B0 and callback invoker005225A0
+?g_bfmeThingCB@@3PAVGen00522E00@@A,0x00EF49D0,singleton set by00522E00 and cleared by matched complete destructor005225F0
+?showAptScreen@Gen00522E00@@QAEXABVAsciiString@@VRva00522E00FunctorHolder@@@Z,0x00464ED0,matched AptScreenShow registration; thiscall string-ref and callee-owned four-byte ref-counted callback holder
+?apply0@Gen00522E00@@QAEXH@Z,0x00007F04,route=0x005222A0; typed callback address in00522E00; matched method takes unused int and bound complete receiver
+?apply1@Gen00522E00@@QAEXH@Z,0x00033F5F,route=0x00522300; typed callback address in00522E00; matched method takes unused int and bound complete receiver
+?apply2@Gen00522E00@@QAEXH@Z,0x0001398A,route=0x00522360; typed callback address in00522E00; matched method takes unused int and bound complete receiver
+?apply3@Gen00522E00@@QAEXH@Z,0x000365C5,route=0x005223C0; typed callback address in00522E00; matched method takes unused int and bound complete receiver
+?messageBoxShowing@Gen00522E00@@QAEXH@Z,0x00038465,route=0x00522420; typed callback address in00522E00; matched method takes unused int and bound complete receiver
+?messageBoxShown@Gen00522E00@@QAEXH@Z,0x0002924E,route=0x00522470; typed callback address in00522E00; matched method takes unused int and bound complete receiver
+?messageBoxHiding@Gen00522E00@@QAEXH@Z,0x0002C381,route=0x005224C0; typed callback address in00522E00; matched method takes unused int and bound complete receiver
+?messageBoxHidden@Gen00522E00@@QAEXH@Z,0x00044198,route=0x00522830; typed callback address in00522E00; matched method takes unused int and bound complete receiver
+??1Rva00522E00RefPtr3C@@QAE@XZ,0x004C5790,constructor00522E00 retail unwind map receiver offset independently proves reference release; matched26B physical body
+??1Rva00522E00RefPtr40@@QAE@XZ,0x0051E6E0,constructor00522E00 retail unwind map receiver offset independently proves reference release; matched26B physical body
