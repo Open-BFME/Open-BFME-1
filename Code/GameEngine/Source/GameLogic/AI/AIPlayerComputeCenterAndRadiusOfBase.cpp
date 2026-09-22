@@ -1,5 +1,4 @@
-// ?computeCenterAndRadiusOfBase@AIPlayer@@IAEXPAUCoord3D@@PAM@Z
-// partial score=0.8 date=2026-09-17
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIPlayerComputeCenterAndRadiusOfBase.cpp
 // ?computeCenterAndRadiusOfBase@AIPlayer@@IAEXPAUCoord3D@@PAM@Z
 // cl: /O2 /DNDEBUG /MD /EHsc
 
@@ -53,14 +52,18 @@ public:
 	virtual ~BuildListInfo();
 	AsciiString getTemplateName() const;
 	const Coord3D *getLocation() const { return &m_location; }
-	BuildListInfo *getNext() const { return m_next; }
+	// The link at +0x2c is read through the offset: the layout witness for this
+	// class names +0x28 and +0x2c both m_numRebuilds and omits the list link.
+	BuildListInfo *getNext() const
+	{
+		return *(BuildListInfo *const *)((const char *)this + 0x2c);
+	}
 
 private:
 	unsigned char m_buildingName[4];
 	unsigned char m_templateName[4];
 	Coord3D m_location;
-	unsigned char m_gap18[0x14];
-	BuildListInfo *m_next;
+	unsigned char m_gap18[0x18];
 };
 
 class Player
@@ -146,10 +149,11 @@ void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *center, Real *radius)
 		const ThingTemplate *bldgPlan = TheThingFactory->findTemplate(name);
 		if (!bldgPlan)
 			continue;
-		Real posX[1];
-		posX[0] = info->getLocation()->x;
-		Real dx = posX[0] - center->x;
-		Real dy = info->getLocation()->y - center->y;
+		Coord3D pos;
+		pos.x = info->getLocation()->x;
+		pos.y = info->getLocation()->y;
+		Real dx = pos.x - center->x;
+		Real dy = pos.y - center->y;
 		if (dx < 0.0f)
 			dx = -dx;
 		if (dy < 0.0f)
@@ -163,3 +167,5 @@ void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *center, Real *radius)
 	}
 	*radius = (Real)sqrt(maxRadSqr);
 }
+
+
