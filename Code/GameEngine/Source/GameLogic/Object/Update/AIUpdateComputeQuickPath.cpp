@@ -1,5 +1,3 @@
-// ?computeQuickPath@AIUpdateInterface@@QAE_NPBUCoord3D@@@Z
-// partial score=0.987 date=2026-09-22
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 #include <bitset>
@@ -14,12 +12,13 @@
 // (Path::bfmeOptimizeDir, the same pass Pathfinder::buildActualPath runs),
 // and one more AI virtual (slot 117) runs after the timestamp.
 //
-// Residue (7 bytes at +0x160): retail hoists the load of the object's
-// position y above the store of pos.x; here the store comes first. It follows
-// &pos escaping into prependNode: passing pos by value (test only) reorders
-// it, and none of copy ctor / member stores / set() / Coord2D copy / temp copy
-// / scope moves did. The ledger row at 0x002712D0 also carries this mangled
-// name (a different body); landing needs that row re-homed first.
+// Path::prependNode is defined here, visible and noinline (the lever that
+// landed setPathFromWaypoint 0x00270B40): with an opaque declaration the load
+// of the object's position y sinks below the store of pos.x (7 bytes at
+// +0x160), because VC7.1 cannot see that &pos is copied rather than retained.
+// The helper independently matches all 104 bytes at 0x0026E4D0. The ledger
+// row at 0x002712D0 also carries this mangled name (a different body);
+// landing needs that row re-homed first.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -31,6 +30,7 @@ struct Coord3D
 {
 	Coord3D() {}
 	Coord3D( const Coord3D &c ) : x(c.x), y(c.y), z(c.z) {}
+	Coord3D &operator=( const Coord3D &c ) { x = c.x; y = c.y; z = c.z; return *this; }
 
 	Real x, y, z;
 };
@@ -151,6 +151,17 @@ public:
 class PathNode
 {
 public:
+	PathNode( const Coord3D *pos, PathfindLayerEnum layer )
+	{
+		m_next = 0;
+		m_prev = 0;
+		m_nextOpti = 0;
+		m_pos = *pos;
+		m_layer = layer;
+		m_canOptimize = false;
+		m_costSoFar = 0x7FFFFFFF;
+	}
+
 	PathNode *getNext( void ) { return m_next; }
 	PathNode *getNextOptimized( void ) const { return m_nextOpti; }
 	const Coord3D *getPosition( void ) const { return &m_pos; }
@@ -161,6 +172,11 @@ private:
 	PathNode *m_prev;						// +0x04
 	PathNode *m_nextOpti;					// +0x08
 	Coord3D m_pos;							// +0x0C
+	PathfindLayerEnum m_layer;				// +0x18
+	Bool m_canOptimize;						// +0x1C
+	Int m_costSoFar;						// +0x20
+
+	friend class Path;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
@@ -168,7 +184,7 @@ class Path
 {
 public:
 	Path();									// ILT 0x000335B4
-	void prependNode( const Coord3D *pos, PathfindLayerEnum layer );	// ILT 0x0002B7F1
+	__declspec(noinline) void prependNode( const Coord3D *pos, PathfindLayerEnum layer );	// 0x0026E4D0
 	void bfmeOptimizeDir( const Object *obj, const Coord3D *dir,
 		LocomotorSurfaceTypeMask acceptableSurfaces, Bool blocked );	// ILT 0x00049DEB
 	PathNode *getFirstNode( void ) { return m_path; }
@@ -186,8 +202,25 @@ protected:
 private:
 	PathNode *m_path;						// +0x04
 	PathNode *m_pathTail;					// +0x08
-	char m_unmodelled_0C[0x24 - 0x0C];
+	Bool m_isOptimized;						// +0x0C
+	char m_unmodelled_0D[0x24 - 0x0D];
 };
+
+// Visible so VC7.1 sees the coordinate is copied, not retained (the same lever
+// as setPathFromWaypoint 0x00270B40); independently matches 0x0026E4D0.
+void Path::prependNode( const Coord3D *pos, PathfindLayerEnum layer )
+{
+	PathNode *node = new PathNode( pos, layer );
+	PathNode *head = m_path;
+	node->m_nextOpti = head;
+	node->m_next = head;
+	if (head)
+		head->m_prev = node;
+	m_path = node;
+	m_isOptimized = false;
+	if (m_pathTail == 0)
+		m_pathTail = node;
+}
 
 class Object;
 
