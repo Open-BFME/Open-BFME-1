@@ -1,5 +1,5 @@
 // ?setFlipRecursive@W3DTerrainBackground@@IAEXHHH@Z
-// partial score=0.23 date=2026-09-16
+// partial score=0.24 date=2026-09-22
 // cl: /DNDEBUG /MD /EHsc
 // Full retail729700/792. BFME adds cliff/bit-plane tests and aligned corners.
 class Rva00729370BitPlane { public: bool test(int,int) const; };
@@ -50,7 +50,8 @@ protected:
     void setFlipRecursive(int,int,int);
 };
 void W3DTerrainBackground::setFlipRecursive(int xOffset,int yOffset,int width) {
-    int limitX=m_map->width-1;
+    int limitX[2];
+    limitX[1]=m_map->width-1;
     int limitY=m_map->height-1;
     bool match=true;
     int minX=m_xOrigin+xOffset;
@@ -61,7 +62,7 @@ void W3DTerrainBackground::setFlipRecursive(int xOffset,int yOffset,int width) {
     for(int i=0;i<=width;i+=m_78) {
         for(int j=0;j<=width;j+=m_78) {
             int k=minX+i;
-            k=k<limitX?k:limitX;
+            k=k<limitX[1]?k:limitX[1];
             int l=minY+j;
             l=l<limitY?l:limitY;
             if(cornerHeight!=map->getHeight(k,l) || map->isCliffMappedTexture(k,l)) {
@@ -76,7 +77,7 @@ void W3DTerrainBackground::setFlipRecursive(int xOffset,int yOffset,int width) {
     }
     if(width==m_78 || match) {
         int maxX=minX+width;
-        maxX=maxX<limitX?maxX:limitX;
+        maxX=maxX<limitX[1]?maxX:limitX[1];
         int maxY=minY+width;
         maxY=maxY<limitY?maxY:limitY;
         int savedOriginY=m_yOrigin;
