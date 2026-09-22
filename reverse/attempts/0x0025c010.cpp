@@ -111,10 +111,8 @@ void *Rva0025C7C0Owner::applyAt0025C010(Rva0025C7C0Location *location,const Asci
             float extra=thingTemplate->m_assetScale;
             if (thingTemplate->wordD0&0x20000000) {
                 TheTerrainLogic->placeAt001AD080(thingTemplate,reinterpret_cast<const Coord3D *>(location),&matrix,extra);
-                return 0;
             } else if (thingTemplate->wordD0&0x40000000) {
                 TheTerrainLogic->placeAt001A7A90(thingTemplate,reinterpret_cast<const Coord3D *>(location),&matrix,extra);
-                return 0;
             } else {
                 TheTerrainLogic->placeAt001A34C0(thingTemplate,reinterpret_cast<const Coord3D *>(location),&matrix,extra);
             }
