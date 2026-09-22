@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/ini_bfme /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/iniexception /Ireference/shims/asciistring8outofline /Ireference/shims/ini_bfme /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -46,6 +46,7 @@
 #include "Common/GameCommon.h"
 #include "Common/GlobalData.h"
 #include "Common/INI.h"
+#include "Common/INIException.h"
 #include "Common/MessageStream.h"
 #include "Common/Module.h"
 #include "Common/ModuleFactory.h"
@@ -320,80 +321,137 @@ const ModuleInfo::Nugget *ModuleInfo::getNuggetWithTag( const AsciiString& tag )
 // ------------------------------------------------------------------------------------------------
 /** Add this module info to the thing template */
 // ------------------------------------------------------------------------------------------------
-// ?addModuleInfo@ModuleInfo@@QAEXPAVThingTemplate@@ABVAsciiString@@1PBVModuleData@@H_N3@Z present-unmatched
+struct Entry
+{
+	AsciiString first;
+	AsciiString m_moduleTag;
+	const ModuleData *second;
+	Int interfaceMask;
+	Bool copiedFromDefault;
+	Bool inheritable;
+};
+
+struct Rva0013E5D0Nugget
+{
+	AsciiString first;
+	AsciiString m_moduleTag;
+	const ModuleData *second;
+	Int interfaceMask;
+	Bool copiedFromDefault;
+	Bool inheritable;
+
+	Rva0013E5D0Nugget(const AsciiString &n, const AsciiString &moduleTag,
+		const ModuleData *d, Int i, Bool inh)
+		: first(n), m_moduleTag(moduleTag), second(d), interfaceMask(i),
+		  copiedFromDefault(false), inheritable(inh)
+	{
+	}
+};
+
+struct BfmeModuleInfoLayout
+{
+	std::vector<Rva0013E5D0Nugget> m_info;
+};
+
+class Container
+{
+public:
+	Entry *find(const AsciiString &name) const;
+};
+
+class ThingTemplateAccess : public ThingTemplate
+{
+public:
+	using ThingTemplate::removeModuleInfo;
+};
+
 void ModuleInfo::addModuleInfo(ThingTemplate *thingTemplate, 
-															 const AsciiString& name, 
+																	 const AsciiString& name,
 															 const AsciiString& moduleTag, 
 															 const ModuleData* data, 
 															 Int interfaceMask, 
 															 Bool inheritable,
                                Bool overrideableByLikeKind)
 {
-
-	//
-	// there must be a module tag present, and it must be unique across all module infos
-	// for this thing template
-	//
-#if defined(_DEBUG) || defined(_INTERNAL)
-	// get module info
-	const Nugget *nugget;
-	
-	nugget = thingTemplate->getBehaviorModuleInfo().getNuggetWithTag( moduleTag );
-	if( nugget != NULL )
+	const UnsignedByte overrideable = reinterpret_cast<const UnsignedByte &>(overrideableByLikeKind);
+	Entry *nugget = reinterpret_cast<Container *>((char *)thingTemplate + 0x294)->find(moduleTag);
+	if (nugget != NULL)
 	{
+		if (overrideable)
+		{
+			{
+				AsciiString clearedModuleName;
+            static_cast<ThingTemplateAccess *>(thingTemplate)->removeModuleInfo(moduleTag, clearedModuleName);
+			}
+		}
+		else
+		{
+			throw INIException(3,
+				"addModuleInfo - ERROR defining module '%s' on thing template '%s'. The module '%s' has the tag '%s' which must be unique among all modules for this object, but the tag '%s' is also already on behavior module '%s' within this object.\n\nPlease make unique tag names within an object definition.",
+				name.str(), reinterpret_cast<const AsciiString *>((const char *)thingTemplate + 0x20)->str(), name.str(),
+				moduleTag.str(), moduleTag.str(), nugget->first.str());
+		}
+	}
 
-		// compare this nugget tag against the tag for the new data we're going to submit
-		DEBUG_ASSERTCRASH( nugget->m_moduleTag != moduleTag,
-											 ("addModuleInfo - ERROR defining module '%s' on thing template '%s'.  The module '%s' has the tag '%s' which must be unique among all modules for this object, but the tag '%s' is also already on module '%s' within this object.\n\nPlease make unique tag names within an object definition\n",
-												name.str(),
-												thingTemplate->getName().str(),
-												name.str(),
-												moduleTag.str(),
-												moduleTag.str(),
-												nugget->first.str()) );
-
-		// srj sez: prevent people from ignoring this.
-		throw INI_INVALID_DATA;
-	}  // end if
-
-	nugget = thingTemplate->getDrawModuleInfo().getNuggetWithTag( moduleTag );
-	if( nugget != NULL )
+	nugget = reinterpret_cast<Container *>((char *)thingTemplate + 0x2a0)->find(moduleTag);
+	if (nugget != NULL)
 	{
+		if (!overrideable || nugget->first.compare(name) != 0)
+		{
+			throw INIException(3,
+				"addModuleInfo - ERROR defining module '%s' on thing template '%s'. The module '%s' has the tag '%s' which must be unique among all modules for this object, but the tag '%s' is also already on draw module '%s' within this object.\n\nPlease make unique tag names within an object definition.",
+				name.str(), reinterpret_cast<const AsciiString *>((const char *)thingTemplate + 0x20)->str(), name.str(),
+				moduleTag.str(), moduleTag.str(), nugget->first.str());
+		}
+		{
+			AsciiString clearedModuleName;
+        static_cast<ThingTemplateAccess *>(thingTemplate)->removeModuleInfo(moduleTag, clearedModuleName);
+		}
+	}
 
-		// compare this nugget tag against the tag for the new data we're going to submit
-		DEBUG_ASSERTCRASH( nugget->m_moduleTag != moduleTag,
-											 ("addModuleInfo - ERROR defining module '%s' on thing template '%s'.  The module '%s' has the tag '%s' which must be unique among all modules for this object, but the tag '%s' is also already on module '%s' within this object.\n\nPlease make unique tag names within an object definition\n",
-												name.str(),
-												thingTemplate->getName().str(),
-												name.str(),
-												moduleTag.str(),
-												moduleTag.str(),
-												nugget->first.str()) );
-
-		// srj sez: prevent people from ignoring this.
-		throw INI_INVALID_DATA;
-	}  // end if
-
-	nugget = thingTemplate->getClientUpdateModuleInfo().getNuggetWithTag( moduleTag );
-	if( nugget != NULL )
+	nugget = reinterpret_cast<Container *>((char *)thingTemplate + 0x2ac)->find(moduleTag);
+	if (nugget != NULL)
 	{
+		if (overrideable)
+		{
+			{
+				AsciiString clearedModuleName;
+            static_cast<ThingTemplateAccess *>(thingTemplate)->removeModuleInfo(moduleTag, clearedModuleName);
+			}
+		}
+		else
+		{
+			throw INIException(3,
+				"addModuleInfo - ERROR defining module '%s' on thing template '%s'. The module '%s' has the tag '%s' which must be unique among all modules for this object, but the tag '%s' is also already on update module '%s' within this object.\n\nPlease make unique tag names within an object definition.",
+				name.str(), reinterpret_cast<const AsciiString *>((const char *)thingTemplate + 0x20)->str(), name.str(),
+				moduleTag.str(), moduleTag.str(), nugget->first.str());
+		}
+	}
 
-		// compare this nugget tag against the tag for the new data we're going to submit
-		DEBUG_ASSERTCRASH( nugget->m_moduleTag != moduleTag,
-											 ("addModuleInfo - ERROR defining module '%s' on thing template '%s'.  The module '%s' has the tag '%s' which must be unique among all modules for this object, but the tag '%s' is also already on module '%s' within this object.\n\nPlease make unique tag names within an object definition\n",
-												name.str(),
-												thingTemplate->getName().str(),
-												name.str(),
-												moduleTag.str(),
-												moduleTag.str(),
-												nugget->first.str()) );
-		// srj sez: prevent people from ignoring this.
-		throw INI_INVALID_DATA;
-	}  // end if
+	nugget = reinterpret_cast<Container *>((char *)thingTemplate + 0x2b8)->find(moduleTag);
+	if (nugget != NULL)
+	{
+		if (overrideable)
+		{
+			{
+				AsciiString clearedModuleName;
+            static_cast<ThingTemplateAccess *>(thingTemplate)->removeModuleInfo(moduleTag, clearedModuleName);
+			}
+		}
+		else
+		{
+			throw INIException(3,
+				"addModuleInfo - ERROR defining module '%s' on thing template '%s'. The module '%s' has the tag '%s' which must be unique among all modules for this object, but the tag '%s' is also already on client behavior module '%s' within this object.\n\nPlease make unique tag names within an object definition.",
+				name.str(), reinterpret_cast<const AsciiString *>((const char *)thingTemplate + 0x20)->str(), name.str(),
+				moduleTag.str(), moduleTag.str(), nugget->first.str());
+		}
+	}
 
-#endif
-
-	m_info.push_back(Nugget(name, moduleTag, data, interfaceMask, inheritable, overrideableByLikeKind));
+	reinterpret_cast<BfmeModuleInfoLayout *>(this)->m_info.push_back(
+		Rva0013E5D0Nugget(name, moduleTag, data, interfaceMask, inheritable));
+	if (0)
+		m_info.push_back(Nugget(name, moduleTag, data, interfaceMask,
+			inheritable, overrideableByLikeKind));
 
 }
 
