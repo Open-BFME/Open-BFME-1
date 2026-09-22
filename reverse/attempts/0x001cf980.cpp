@@ -1,6 +1,13 @@
-// ?query@Rva001CF980@@QAEPAXXZ
-// partial score=0.92 date=2026-09-04
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// ?queryAt001CF980@Object@@QAEPAVRva001CF980Result@@XZ
+// partial score=0.95 date=2026-09-22
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /Ireference/shims/bfmeobject /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// Retail RVA 0x001CF980..0x001CF9D2 (82 bytes): Object::queryAt001CF980.
+// Name and signature come from the matched caller at 0x0025AEE0
+// (DominateEnemySpecialPower_slot15.cpp) and its reverse/symbols.csv pin.
+// Selects this when template flag 0x1000 is set, else Object+0x214 when it is
+// KINDOF 0x6C, then tail-calls slot 0x68 of the selected m_contain.
+// The two inline helpers are what move the selected object into EAX and the
+// contain pointer into ECX; a single flat body keeps the object in ESI.
 
 enum KindOfType
 {
@@ -21,6 +28,8 @@ public:
 	char m_gap[0xD4 - 8];
 	unsigned m_flags_d4;
 };
+
+class Rva001CF980Result;
 
 class Rva001CF980Iface
 {
@@ -51,7 +60,7 @@ public:
 	virtual void *slot23();
 	virtual void *slot24();
 	virtual void *slot25();
-	virtual void *slot26();
+	virtual Rva001CF980Result *slot26();
 };
 
 class Thing
@@ -62,22 +71,25 @@ public:
 private:
 	virtual ~Thing();
 	Rva001CF980Thing *m_template;
-	friend class Rva001CF980;
+	friend class Object;
 };
 
-class Rva001CF980 : public Thing
+class Object : public Thing
 {
 public:
-	void *query();
+	Rva001CF980Result *queryAt001CF980();
 
 private:
+	Object *selectedObjectAt001CF980();
+	Rva001CF980Result *containSlot68At001CF980();
+
 	char m_gap_1fc[0x1FC - 8];
-	Rva001CF980Iface *m_iface;
+	Rva001CF980Iface *m_contain;
 	char m_gap_214[0x214 - 0x200];
-	Rva001CF980 *m_other;
+	Object *m_other;
 };
 
-void *Rva001CF980::query()
+inline Object *Object::selectedObjectAt001CF980()
 {
 	Rva001CF980Thing *thing = m_template;
 	if (thing)
@@ -85,16 +97,26 @@ void *Rva001CF980::query()
 		if (thing->m_nextOverride)
 			thing = (Rva001CF980Thing *)thing->m_nextOverride->getFinalOverride();
 	}
-	const Rva001CF980 *obj = this;
-	if ((thing->m_flags_d4 & 0x1000) == 0)
-	{
-		obj = m_other;
-		if (!obj)
-			return 0;
-		if (!obj->isKindOf(KINDOF_0x6C))
-			return 0;
-	}
-	if (obj && obj->m_iface)
-		return obj->m_iface->slot26();
+	if (thing->m_flags_d4 & 0x1000)
+		return this;
+	Object *obj = m_other;
+	if (obj && obj->isKindOf(KINDOF_0x6C))
+		return obj;
+	return 0;
+}
+
+inline Rva001CF980Result *Object::containSlot68At001CF980()
+{
+	Rva001CF980Iface *contain = m_contain;
+	if (contain)
+		return contain->slot26();
+	return 0;
+}
+
+Rva001CF980Result *Object::queryAt001CF980()
+{
+	Object *obj = selectedObjectAt001CF980();
+	if (obj)
+		return obj->containSlot68At001CF980();
 	return 0;
 }
