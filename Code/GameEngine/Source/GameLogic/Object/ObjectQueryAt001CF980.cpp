@@ -1,5 +1,3 @@
-// ?queryAt001CF980@Object@@QAEPAVRva001CF980Result@@XZ
-// partial score=0.95 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /Ireference/shims/bfmeobject /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // Retail RVA 0x001CF980..0x001CF9D2 (82 bytes): Object::queryAt001CF980.
 // Name and signature come from the matched caller at 0x0025AEE0
@@ -80,38 +78,37 @@ public:
 	Rva001CF980Result *queryAt001CF980();
 
 private:
-	Object *selectedObjectAt001CF980();
-	Rva001CF980Result *containSlot68At001CF980();
+	// Two in-class helpers the body decomposes into; neither has a retail
+	// address of its own (both are inlined into 0x001CF980).
+	Object *selectedObjectAt001CF980()
+	{
+		Rva001CF980Thing *thing = m_template;
+		if (thing)
+		{
+			if (thing->m_nextOverride)
+				thing = (Rva001CF980Thing *)thing->m_nextOverride->getFinalOverride();
+		}
+		if (thing->m_flags_d4 & 0x1000)
+			return this;
+		Object *obj = m_other;
+		if (obj && obj->isKindOf(KINDOF_0x6C))
+			return obj;
+		return 0;
+	}
+
+	Rva001CF980Result *containSlot68At001CF980()
+	{
+		Rva001CF980Iface *contain = m_contain;
+		if (contain)
+			return contain->slot26();
+		return 0;
+	}
 
 	char m_gap_1fc[0x1FC - 8];
 	Rva001CF980Iface *m_contain;
 	char m_gap_214[0x214 - 0x200];
 	Object *m_other;
 };
-
-inline Object *Object::selectedObjectAt001CF980()
-{
-	Rva001CF980Thing *thing = m_template;
-	if (thing)
-	{
-		if (thing->m_nextOverride)
-			thing = (Rva001CF980Thing *)thing->m_nextOverride->getFinalOverride();
-	}
-	if (thing->m_flags_d4 & 0x1000)
-		return this;
-	Object *obj = m_other;
-	if (obj && obj->isKindOf(KINDOF_0x6C))
-		return obj;
-	return 0;
-}
-
-inline Rva001CF980Result *Object::containSlot68At001CF980()
-{
-	Rva001CF980Iface *contain = m_contain;
-	if (contain)
-		return contain->slot26();
-	return 0;
-}
 
 Rva001CF980Result *Object::queryAt001CF980()
 {
