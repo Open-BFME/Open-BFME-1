@@ -381,3 +381,12 @@ the usage limit hit again at ~22:30Z (reset 23:00Z). Fleet 53 bodies /
 11,745 B cumulative; repository-wide +36,471 B / +0.38 pp (67.04% ->
 67.42%) since the fleet base, +13,506 B of it new total-exact coverage.
 Restart at 23:05Z with four seats on the resumed cold-pool lists.
+
+### Hour 29 — 23:00Z to 00:02Z (four seats, cold pools)
+
+Two landings: 0x006FE140 (150 B, shadow-enable toggle; closed by a
+branch-polarity flip, `if (!x) {..} else {..}` where MSVC had picked the
+opposite fall-through) and 0x00767B30 (248 B). Fleet 55 bodies / 12,143 B
+cumulative; repository-wide +40,659 B / +0.42 pp (67.04% -> 67.46%) since
+the fleet base, +14,630 B of it new total-exact coverage. The cold 450-900
+B slice landed nothing: at that size the `this`-register residue returns.
