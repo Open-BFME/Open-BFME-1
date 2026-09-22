@@ -1,5 +1,5 @@
 // ?checkRepairsPending@CastleBehavior@@QAE_NXZ
-// partial score=0.65 date=2026-09-21
+// partial score=0.96 date=2026-09-22
 // present-unmatched
 //
 // No named caller (one ILT-mediated site, unnamed). This+0xa0/+0xa5 and
@@ -43,6 +43,8 @@
 
 typedef int Int;
 typedef bool Bool;
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 enum KindOfType { KINDOF_COMMANDCENTER = 14 };
 
 class GlobalData
@@ -135,18 +137,15 @@ Bool CastleBehavior::checkRepairsPending(void)
 	GameLogic *logic = TheGameLogic;
 	unsigned int frame = (unsigned int)logic->m_frame;
 
-	float thresholdF;
-	if (data)
-	{
-		float scaled = data->m_rva00371B00Threshold;
-		thresholdF = scaled * g_rva00371B00ThresholdScale;
-	}
-	else
-		thresholdF = g_rva00371B00FallbackThreshold;
-	unsigned int threshold = (unsigned int)(Int)thresholdF;
+	unsigned int threshold = (unsigned int)(Int)(data ?
+		data->m_rva00371B00Threshold * 5.0f :
+		g_rva00371B00FallbackThreshold);
 
 	if (frame < threshold)
+	{
+		_ReadWriteBarrier();
 		return false;
+	}
 
 	Object *lead = logic->findObjectByID(m_leadObjectID);
 	if (!lead)
@@ -164,11 +163,12 @@ Bool CastleBehavior::checkRepairsPending(void)
 		{
 			Object *chainOwner = TheGameLogic->findObjectByID(
 				*(Int *)((char *)lead + 0x7c));
-			if (chainOwner && (*(unsigned char *)((char *)chainOwner + 0x344) & 1))
-			{
-				if (chainOwner->isKindOf(KINDOF_COMMANDCENTER))
-					m_leadFlag = true;
-			}
+		if (!chainOwner ||
+			(*(unsigned char *)((char *)chainOwner + 0x344) & 1))
+		{
+			if (!chainOwner || chainOwner->isKindOf(KINDOF_COMMANDCENTER))
+				m_leadFlag = true;
+		}
 		}
 		if (*(unsigned int *)((char *)lead + 0x114) & 0x8000000)
 			m_leadFlag = true;
