@@ -73,11 +73,13 @@ void BfmeAnimationHolder::applyUniformPayload(int value)
 	payload.m_value8 = primary->m_values[8];
 	payload.m_value9 = primary->m_values[9];
 	payload.m_value10 = primary->m_values[10];
+	int valueCopy = value;
+	payload.m_value7 = valueCopy;
+	BfmeUniformPayloadReceiver *callTarget = m_primary;
+	payload.m_value11 = valueCopy;
 	payload.m_value3 = value;
-	payload.m_value7 = value;
-	payload.m_value11 = value;
 
-	m_primary->applyPayload(&payload);
+	callTarget->applyPayload(&payload);
 	if (m_secondary != 0)
 		m_secondary->applyPayload(&payload);
 }
