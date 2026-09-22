@@ -1016,3 +1016,28 @@ observe the real body and omit the reload. No special register contract is
 asserted. Native `std::swap` then resolves the two-field store schedule and
 lands108B. Both caller and original helper are reverified; the source is
 `Rva003527B0TablesMarkReleased.cpp`, with no duplicate helper definition.
+
+
+## Tail-call switches can hide a live receiver
+
+`00346300` looked like a free stdcall switch whose only mismatch was ECX
+versus EDX for the index. All three tail-call targets consume incoming ECX:
+`003457F0` saves it in EDI, while `00345D60` and `00345FE0` save it in ESI.
+They are ScriptEngine counter, flag and timer evaluators. Restoring the
+caller and helpers to member declarations makes the index use EDX and lands
+92B as `ScriptEngine::evaluateCondition`. The upstream switch and witnessed
+`Condition::m_conditionType` prove the identities; the extent includes its
+five-entry jump table at `00346348`. A tool listing only E8 calls misses
+these E9 tail calls. Decode each target before calling the residue regalloc.
+
+## Native throws need the retail exception type
+
+`000A12B0` is `StateMachine::setDefaultState`, independently named by the
+matched GiantBirdGuardMachine constructor. Native map find plus a throw
+reproduces69B. Instruction matching alone cannot distinguish throwing int
+from throwing ErrorCode: both match with their relocation slots masked.
+Retail ThrowInfo VA `011E0004` leads through catchable array `011DFFFC` and
+type `011DFFDC` to RTTI `012A716C`, whose name is `.?AW4ErrorCode@@`.
+Using `Common/Errors.h` and `throw ERROR_BAD_ARG` preserves the actual
+exception type and resolves the metadata relocation. Do not keep an opaque
+"diagnostic" call or infer the type from the immediate value alone.
