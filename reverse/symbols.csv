@@ -12323,7 +12323,7 @@ name,address,notes
 ?Rva0033e040@ScriptEngine@@IAEXPAVScriptAction@@@Z,0x0033E040,address-derived callee identity from executeActions retail ILT 0x0000E5CF and thiscall action argument shape
 ?Rva00343780@ScriptEngine@@IAEXPAVScriptAction@@@Z,0x00343780,address-derived callee identity from executeActions retail ILT 0x00030A3A and thiscall action argument shape
 ?Rva00345910@ScriptEngine@@IAEXPAVScriptAction@@_N@Z,0x00345910,address-derived BFME helper identity from executeActions retail ILT 0x000087E7 and bool argument shape
-?Rva00345a50@ScriptEngine@@IAEXPAVScriptAction@@_N11@Z,0x00345A50,address-derived BFME helper identity from executeActions retail ILT 0x0000757C and three bool argument shape
+?Rva00345a50@ScriptEngine@@IAEXPAVScriptAction@@H_N1@Z,0x00345A50,matched executeActions via ILT0000757C; retail +85 and +134 read 32-bit random mode and distinguish 0/1/other; final two arguments byte-tested
 ?Rva00365B40RecordFieldParseTable@@3QBUFieldParse@@B,0x010E8FE8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00365B40 calls; autopin
 ?Rva0037AD00LookupEmotionType@@YAHPBD@Z,0x000448AF,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0037AD00 calls; autopin
 ?Rva0037AD60LookupEmotionAIType@@YAHPBD@Z,0x000070A9,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0037AD60 calls; autopin

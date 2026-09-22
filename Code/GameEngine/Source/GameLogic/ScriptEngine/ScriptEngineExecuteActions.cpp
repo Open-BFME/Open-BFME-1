@@ -65,7 +65,7 @@ protected:
 	void setPriorityKind(ScriptAction *action);
 	void setPriorityDefault(ScriptAction *action);
 	protected:
-	void Rva00345a50(ScriptAction *action, bool a, bool b, bool c);
+	void Rva00345a50(ScriptAction *action, int randomMode, bool copyCounter, bool seconds);
 	void Rva00345910(ScriptAction *action, bool enabled);
 	void executeActions(ScriptAction *head);
 };
