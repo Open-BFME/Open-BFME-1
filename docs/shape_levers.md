@@ -915,3 +915,12 @@ installs table VA `0x010C9DE8` at owner+`0x340`, and slot 4 reaches the body
 through ILT `0x0003DF3C`. This proves the secondary receiver and the `WDEA`
 ledger spelling. An old `WCAA` candidate pin was not that proof, even though
 the underlying body could match under an opaque local view.
+
+For an EBP-framed body that saves ESP but whose bank has no `try`, inspect the
+retail FuncInfo's try-block map as well as its unwind map. At `0x0019BA40`,
+`eh_info.py 0x0019BA43` skips the three-byte EBP prefix; FuncInfo `0x00DF5E78`
+then leads to a catch-all at `0x0019BB8B` that clears the entry's Dict and
+rethrows. Restoring that `try` around the update call, and ending the temporary
+entry's scope before updating the free head, matched all 331 parent bytes with
+native STLport and Dict headers. Stack padding and exception-flag sweeps had
+missed this behavior; the following catch remains a separate ledger extent.

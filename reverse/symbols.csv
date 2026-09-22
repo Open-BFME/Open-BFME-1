@@ -88573,3 +88573,4 @@ _UpgradeModuleModuleDataCtor,0x00128D20,address-derived object alias for the dir
 ?rva0014d120@@YGPAVObject@@PAV1@MHHH@Z,0x0014D120,ABI-only pin (stdcall, params owner*,Real,Int,Int,Int, returns Object*) for 0x00177720 callee dependency; identity unproven, SEH-heavy 1951B body not analysed
 ?rva0046B2A0@Rva00579160Manager@@QAEIABVAsciiString@@@Z,0x0046B2A0,RVA00585E90+88 ILT47B31; body adds ECX+6C and tailjumps ILT37B00 to matched hashtable erase469DB0; const AsciiString reference and unsigned count return
 _Rva0084ED20Tail,0x0084ED20,STLport 4.5.3 Win32 locale weekday/month name lookup (LOCALE_SLANGUAGE GetLocaleInfoA then ConvertFromACP table dispatch); sibling of pinned _Rva0084DE40Tail
+?updateTeam@Rva0019BE80TeamRec@@QAEXH@Z,0x0019B850,ILT000026EE independently jumps here; witnessed call at0019BB41; target reads ECX vector at+0C and one signed entry index and returns ret4; retained address-derived bank owner
