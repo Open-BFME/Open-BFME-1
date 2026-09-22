@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2160279be971dce3130bb5505c0171ba2621f5a04472d0fdfe01d2df951d4d7e",
+  "symbol": "?parseFontFileName@GlobalLanguage@@SAXPAVINI@@PAX1PBX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.990147783,
+  "source": "// ?parseFontFileName@GlobalLanguage@@SAXPAVINI@@PAX1PBX@Z\n// partial score=0.990147783 date=2026-09-21\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib\n// stlport\n#include \"string_base.h\"\n#include \"ascii_string.h\"\n\nclass INI\n{\npublic:\n\tAsciiString getNextAsciiString();\n};\n\nclass Open2Rec439370\n{\npublic:\n\tOpen2Rec439370() {}\n\tOpen2Rec439370( const Open2Rec439370 &other );\n\n\tAsciiString m_at00;\n\tAsciiString m_at04;\n};\n\n#include <list>\n\nclass GlobalLanguage\n{\npublic:\n\tstatic void parseFontFileName( INI *ini, void *instance, void *store, const void *userData );\n\n\tunsigned char m_unmodelled[ 0x134 ];\n\t_STL::list<Open2Rec439370, _STL::allocator<Open2Rec439370> > *m_localFonts;\n};\n\nvoid GlobalLanguage::parseFontFileName( INI *ini, void *instance, void *store, const void *userData )\n{\n\tGlobalLanguage *self = (GlobalLanguage *)instance;\n\tAsciiString token = ini->getNextAsciiString();\n\tOpen2Rec439370 entry;\n\tentry.m_at00.set( token );\n\tself->m_localFonts->push_back( entry );\n}\n\n// Native STLport list resolves the FS restore / EBX epilogue mismatch.\n// Two non-relocation bytes remain: entry address uses EAX instead of EDX\n// at +0x76/+0x7a. Visible noinline landed copy constructor was neutral.\n"
+}
