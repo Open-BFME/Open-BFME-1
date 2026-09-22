@@ -132,17 +132,6 @@ public:
 	int m_08;
 };
 
-// updateSubObjectsFromShroud proves that the first payload dword at list-node
-// +0x08 is a ParticleSystemID.  Retail's constructor allocates 0x1c-byte list
-// nodes, so the BFME tracker payload is 20 bytes (the links consume 8 bytes).
-// The remaining four dwords have no independent identity in this constructor;
-// keep them opaque until a tracker body proves their meaning.
-struct BfmeParticleSystemTracker
-{
-	ParticleSystemID m_id;
-	unsigned char m_opaque[16];
-};
-
 class BfmeZeroFields10
 {
 public:
@@ -237,7 +226,7 @@ public:
 	void *m_shadow;
 	void *m_terrainDecal;
 	void *m_trackRenderObject;
-	_STL::list<BfmeParticleSystemTracker> m_particleSystemIDs;
+	_STL::list<ParticleSystemID> m_particleSystemIDs;
 	Gen_uwm_00034329 m_member4c;
 	Gen_uwm_00034329 m_member58;
 	Bool m_ready;
@@ -308,8 +297,6 @@ typedef char W3DScriptedModelDraw_strings_check
 	[(offsetof(W3DScriptedModelDraw, m_string200) == 0x200) ? 1 : -1];
 typedef char W3DScriptedModelDraw_string_array_check
 	[(offsetof(W3DScriptedModelDraw, m_strings) == 0x204) ? 1 : -1];
-typedef char BfmeParticleSystemTracker_size_check
-	[(sizeof(BfmeParticleSystemTracker) == 0x14) ? 1 : -1];
 typedef char W3DScriptedModelDraw_zero_packet_check
 	[(offsetof(W3DScriptedModelDraw, m_zero148) == 0x148) ? 1 : -1];
 
