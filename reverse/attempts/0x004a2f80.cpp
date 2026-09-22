@@ -1,5 +1,5 @@
 // ?update@ControlBar@@UAEXXZ
-// partial score=0.42 date=2026-09-15
+// partial score=0.65 date=2026-09-22
 // BFME ControlBar::update reconstruction, retail RVA 0x004A2F80.
 // This TU deliberately models only the BFME fields and callable interfaces
 // witnessed by the retail body; the shipped ZH class layout is much larger.
@@ -115,7 +115,8 @@ protected:
 	char m_pad34[0x28];
 	Drawable *m_currentSelectedDrawable;              // +5C
 	Int m_currContext;                                // +60
-	char m_pad64[0x9C];
+	char m_pad64[0x98];
+	GameWindow *m_specialPowerShortcutParent;          // +FC
 	GameWindow *m_commandWindows[20];                 // +100
 	char m_pad150[0x128];
 	GameWindow *m_buildToolTipLayout;                 // +278
@@ -137,10 +138,10 @@ void ControlBar::update()
 		if (window && !window->winIsHidden()) window->winHide(true);
 	}
 	if (m_shortcutAnimateManager) m_shortcutAnimateManager->update();
-	if (m_shortcutAnimateManager && m_currentSelectedDrawable &&
+	if (m_shortcutAnimateManager && m_specialPowerShortcutParent &&
 		m_shortcutAnimateManager->m_finished && m_shortcutAnimateManager->m_reversed &&
-		!m_currentSelectedDrawable->m_object)
-		((GameWindow *)m_currentSelectedDrawable)->winHide(true);
+		!m_specialPowerShortcutParent->winIsHidden())
+		m_specialPowerShortcutParent->winHide(true);
 	if (m_buildToolTipLayout && !m_buildToolTipLayout->m_hidden) {
 		m_buildToolTipLayout->runUpdate();
 		m_showBuildToolTipLayout = false;
