@@ -11,6 +11,9 @@ extern void rva0000CC3ETarget(void);
 extern void rva0000A47ATarget(void);
 extern void rva0000DFBCTarget(void);
 extern void rva0000E43ATarget(void);
+extern void rva00010B2CTarget(void);
+extern void rva00011E87Target(void);
+extern void rva00014470Target(void);
 extern void rva000119E1Target(void);
 extern void rva00022683Target(void);
 extern void rva0002F095Target(void);
@@ -23,6 +26,9 @@ extern void rva000399A5Target(void);
 #pragma comment(linker, "/alternatename:?rva0000A47ATarget@@YAXXZ=?_M_insert_overflow@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXPAUFlightDeckInfo@FlightDeckBehavior@@ABU34@ABU__false_type@2@I_N@Z")
 #pragma comment(linker, "/alternatename:?rva0000DFBCTarget@@YAXXZ=??0StatusBitsUpgrade@@QAE@PAVThing@@PBVModuleData@@@Z")
 #pragma comment(linker, "/alternatename:?rva0000E43ATarget@@YAXXZ=?messageCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPRecvBuddyMessageArg@@@Z")
+#pragma comment(linker, "/alternatename:?rva00010B2CTarget@@YAXXZ=??0PropagandaTowerBehaviorModuleData@@QAE@XZ")
+#pragma comment(linker, "/alternatename:?rva00011E87Target@@YAXXZ=??$_M_insert_dispatch@U?$_List_iterator@UCoord3D@@U?$_Const_traits@UCoord3D@@@_STL@@@_STL@@@?$list@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEXU?$_List_iterator@UCoord3D@@U?$_Nonconst_traits@UCoord3D@@@_STL@@@1@U?$_List_iterator@UCoord3D@@U?$_Const_traits@UCoord3D@@@_STL@@@1@1ABU__false_type@1@@Z")
+#pragma comment(linker, "/alternatename:?rva00014470Target@@YAXXZ=??$_M_allocate_and_copy@PBUPrereqUnitRec@ProductionPrerequisite@@@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@IAEPAUPrereqUnitRec@ProductionPrerequisite@@IPBU23@0@Z")
 #pragma comment(linker, "/alternatename:?rva000119E1Target@@YAXXZ=?newLocomotor@LocomotorStore@@QBEPAVLocomotor@@PBVLocomotorTemplate@@@Z")
 #pragma comment(linker, "/alternatename:?rva00022683Target@@YAXXZ=?readDict@DataChunkInput@@QAE?AVDict@@XZ")
 #pragma comment(linker, "/alternatename:?rva0002F095Target@@YAXXZ=?copy@UnsignedPairTreeCopyShim@_STL@@QAEPAU?$_Rb_tree_node@U?$pair@$$CBGE@_STL@@@2@PAU32@0@Z")
@@ -61,6 +67,21 @@ void j_0000DFBC(void)
 void j_0000E43A(void)
 {
 	rva0000E43ATarget();
+}
+
+void j_00010B2C(void)
+{
+	rva00010B2CTarget();
+}
+
+void j_00011E87(void)
+{
+	rva00011E87Target();
+}
+
+void j_00014470(void)
+{
+	rva00014470Target();
 }
 
 void j_000119E1(void)

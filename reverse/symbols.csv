@@ -88660,3 +88660,6 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?substring0089FBC0@Rva8CD130String@@QAE?AV1@HH@Z,0x0089FBC0,Opaque UTF8 substring handle result; 008AAB20+13E receiver local handle and hidden-result then start and count; callee +41 reads handle +29 constructs output and +3D/+100/+1BD ret12 with EAX output
 ?suffix0089FAC0@Rva8CD130String@@QBE?AV1@H@Z,0x0089FAC0,opaque string suffix; caller 008C7950+116..120 passes start and hidden result; callee reads ECX handle at +19 and int at +1; constructs empty at +C5 or forwards byte offset to landed EAStringC::Mid at +E6; EAX=result; ret8 at +DB/+F2
 ??_7?$LatchRestore@PAVTeam@@@@6B@,0x00CE75AC,003433F0 native Team-pointer latch vptr; slot0 VA0041976D routes to independently matched39B deleting destructor003377A0
+?rva00010B2CTarget@@YAXXZ,0x0028DC60,address-qualified ILT route; destination independently matched as PropagandaTowerBehaviorModuleData constructor
+?rva00011E87Target@@YAXXZ,0x000BF260,address-qualified ILT route; destination independently matched as Coord3D list insert-dispatch body
+?rva00014470Target@@YAXXZ,0x003B5E20,address-qualified ILT route; destination independently matched as ProductionPrerequisite vector allocate-and-copy body
