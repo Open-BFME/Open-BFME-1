@@ -18,6 +18,9 @@
 #include "PreRTS.h"
 #include "Common/AsciiString.h"
 
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 typedef int Int;
 typedef float Real;
 
@@ -144,11 +147,12 @@ GameFont *FontLibraryBFMERetail::bfmeBuildFont(AsciiString *name, Real size,
 	} thunk;
 	thunk.function = j_00001ed3;
 	(this->*thunk.member)(&fontName, &size, &style);
-
+	unsigned char styleValue = style;
+	_ReadWriteBarrier();
 	GameFont *font;
 	for (font = m_fontList; font != NULL; font = font->next)
 	{
-		if (font->pointSize == size && font->style == style &&
+		if (font->pointSize == size && font->style == styleValue &&
 				font->weight == weight && font->nameString.compare(fontName) == 0)
 			return font;
 	}
@@ -160,7 +164,7 @@ GameFont *FontLibraryBFMERetail::bfmeBuildFont(AsciiString *name, Real size,
 
 	font->nameString = fontName;
 	font->pointSize = size;
-	font->style = style;
+	font->style = styleValue;
 	font->fontData = NULL;
 	font->weight = weight;
 
