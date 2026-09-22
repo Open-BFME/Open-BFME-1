@@ -75192,6 +75192,7 @@ name,address,notes
 ?bfmeAppendAAV@BfmeMsgAAV@@QAEXH@Z,0x00001370,Open-BFME5 ILT message append the 0x004D1B00 shutdown calls three times
 ?bfmeAppendFN@BfmeBufFN@@QAEXPBD@Z,0x008002C0,pin append for BfmeConv2048
 ?bfmeAppendV16@BfmeStrV16@@QAEXID@Z,0x00012396,Open-BFME5 append n chars thunk for 0x0082FB10
+?append@?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@QAEAAV12@ID@Z,0x00012396,retail ILT 0x00012396 reaches independently landed 0x0053C0C0 body; thiscall append size_type char ret 8
 ?bfmeAppendV36@BfmeStrV36@@QAEXPAD00@Z,0x00011522,Open-BFME5 append-range pin for 0x00830F00
 ?bfmeAppendVCB@BfmeBufVCB@@QAEXPBD@Z,0x008002C0,pin
 ?bfmeAppendVFD@BfmeBufVFD@@QAEXPBD@Z,0x008002C0,pin
