@@ -378,6 +378,11 @@ void PlayerRelationMap::loadPostProcess( void )
 
 }  // end loadPostProcess
 
+// The carved boundary at 0x000E6120 contains only a return.
+void Rva000E6120Noop(void)
+{
+}
+
 //=============================================================================
 Player::Player( Int playerIndex )
 {
