@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "32abf068fd93da07dedd57b4288cd454f90a069e69bd9a651ce55921df06a0e1",
+  "symbol": "?WOLGameSetupMenuInit@@YAXPAVWindowLayout@@PAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.89,
+  "source": "// ?WOLGameSetupMenuInit@@YAXPAVWindowLayout@@PAX@Z\n// partial score=0.89 date=2026-09-22\n// Current candidate is preserved in the adjacent full source file.\n// Its final client-control removal was not compiled after STOP_WORKER appeared.\n#include \"../../build/target-004f52c0/WOLGameSetupMenu_no_old.cpp\"\n"
+}
