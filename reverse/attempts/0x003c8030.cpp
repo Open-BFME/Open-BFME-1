@@ -122,9 +122,14 @@ public:
 
 BfmeThingYU * __stdcall bfmeFindYU(void *a, void *b, void *c);
 
+__forceinline void *reloadArg003C8030(void *volatile *value)
+{
+	return *value;
+}
+
 void __stdcall bfmeReleaseYU(void *a, void *b, void *c, char flag)
 {
-	BfmeThingYU *thing = bfmeFindYU(a, b, c);
+	BfmeThingYU *thing = bfmeFindYU(reloadArg003C8030(&a), b, c);
 
 	if (thing == 0)
 		return;
