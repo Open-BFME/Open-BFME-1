@@ -1,14 +1,26 @@
-// ?update@BfmeLivingWorldManager@@QAEXXZ
-// partial score=0.99 date=2026-09-08
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 
 // Open-BFME: retail RVA 0x006174D0, 369 bytes.
 //
-// The retail string xref names this body LivingWorldManager::update.  The
-// adjacent constructor, cleanup, particle, and map methods use the same
-// manager.  This update advances its integer-keyed object map, updates the
-// eye-tower state, and handles the cursor transition after the map pass.
+// BfmeLivingWorldManager::update.
+//
+// Method name: the body passes the literal at 0x01116C60 to the CRC desync log,
+// and that literal is "POTENTIAL DESYNC: Forced into EnterLogic State.
+// (LivingWorldManager::update)" -- retail naming this very function.
+// Owner: at +0x3e the body calls 0x00616110 on its own `this` (the landed
+// ?rva00616110@BfmeLivingWorldManager, LivingWorldManagerRva00616110.cpp), and
+// the pointer it tests at this+0x28C is the LivingWorldEyeTower the landed
+// 0x0060C510 applyTo row already records as "parsed object +28C reached by
+// manager6174D0".  The body advances the manager's integer-keyed object map,
+// updates the eye-tower state, and handles the cursor transition after the pass.
+//
+// Codegen note: the entry CRC-desync guard must read the sink into a LOCAL
+// before testing it.  Reading the global twice (guard, then argument) leaves
+// MSVC 7.1 allocating ECX for the hash-table begin() hidden return slot at
+// +0x67; hoisting it selects EAX, as retail does.  Everything else in the body
+// is invariant under that choice -- ten earlier passes permuted the loop and
+// iterator spelling instead and stayed two bytes short.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include "Common/STLTypedefs.h"
@@ -21,7 +33,6 @@ public:
 	int m_fp;
 };
 
-extern GameLogicFp *TheBfmeGameLogic;
 extern void setFPMode();
 
 class BfmeHostDQ
@@ -36,7 +47,7 @@ public:
 	void resetAll();
 };
 
-class Gen0060CBB0
+class LivingWorldEyeTower
 {
 public:
 	void updateState();
@@ -91,7 +102,6 @@ extern unsigned char Rva00563970GetFlag();
 extern void ShowControlBar(int show);
 extern void j_00004c3c();
 extern void j_000231f0();
-extern void j_00047dc5();
 extern void j_0003a17a();
 
 extern Mouse *TheMouse;
@@ -105,7 +115,11 @@ public:
 	virtual void update() = 0;
 };
 
-typedef _STL::hash_map<int, Rva006174D0Object *> Rva006174D0Map;
+// void * mapped type: reverse/symbols.csv pins retail's shared hashtable::begin
+// body at 0x00611610 under this instantiation, and ICF gives every int-keyed
+// pointer map that same body.  The element's own type is applied at the single
+// place the body uses it, below.
+typedef _STL::hash_map<int, void *> Rva006174D0Map;
 
 struct Rva006174D0State
 {
@@ -124,9 +138,10 @@ private:
 	char m_pad224[0x64];
 	bool m_flag288;
 	char m_pad289[3];
-	Gen0060CBB0 *m_eyeTower;
+	LivingWorldEyeTower *m_eyeTower;
 };
 
+#define TheBfmeGameLogic (*(GameLogicFp **)0x012F0898)
 #define TheState (*(Rva006174D0State **)0x012F7048)
 #define TheGlobal012F1028 (*(Rva003BF540 **)0x012F1028)
 #define TheGlobal012F19E8 (*(BfmeC977 **)0x012F19E8)
@@ -142,10 +157,11 @@ void BfmeLivingWorldManager::update()
 		setFPMode();
 	++*fp;
 
-	if (CritterDesyncSink)
+	void *desyncSinkEnter = CritterDesyncSink;
+	if (desyncSinkEnter)
 	{
 		((void (__cdecl *)(void *, const char *))j_0003a17a)(
-			CritterDesyncSink, (const char *)0x01116C60);
+			desyncSinkEnter, (const char *)0x01116C60);
 	}
 
 	((void (__fastcall *)(BfmeLivingWorldManager *))j_00004c3c)(this);
@@ -159,7 +175,7 @@ void BfmeLivingWorldManager::update()
 	Rva006174D0Map::iterator it(m_objects.begin());
 	for (; it != m_objects.end(); ++it)
 	{
-		it->second->update();
+		((Rva006174D0Object *)it->second)->update();
 	}
 
 	if (!m_flag288 && TheState->m_field04 == 1
@@ -173,7 +189,8 @@ void BfmeLivingWorldManager::update()
 
 	Glo012F4B98Type *global012F4B98 = TheGlobal012F4B98;
 	global012F4B98->finish();
-	--TheBfmeGameLogic->m_fp;
+	GameLogicFp *logicExit = TheBfmeGameLogic;
+	--logicExit->m_fp;
 
 	void *desyncSink = CritterDesyncSink;
 	if (desyncSink)
