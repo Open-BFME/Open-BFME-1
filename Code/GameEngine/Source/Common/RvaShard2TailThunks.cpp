@@ -43,6 +43,13 @@ extern void rva0003EC7ATarget(void);
 extern void rva000410ABTarget(void);
 extern void rva000417EFTarget(void);
 extern void rva00041F1FTarget(void);
+extern void rva00042BB3Target(void);
+extern void rva00043A9ATarget(void);
+extern void rva00049431Target(void);
+extern void rva0004A0B1Target(void);
+extern void rva0004A8E0Target(void);
+extern void rva0004B01ATarget(void);
+extern void rva0004B510Target(void);
 
 #pragma comment(linker, "/alternatename:?rva0000113BTarget@@YAXXZ=?Rva007849C0Clear@@YAXPAURva007849C0Owner@@@Z")
 #pragma comment(linker, "/alternatename:?rva00006555Target@@YAXXZ=?end@?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QBE?AU?$_List_iterator@PAVDrawable@@U?$_Const_traits@PAVDrawable@@@_STL@@@2@XZ")
@@ -83,6 +90,13 @@ extern void rva00041F1FTarget(void);
 #pragma comment(linker, "/alternatename:?rva000410ABTarget@@YAXXZ=?GadgetListBoxSetColors@@YAXPAVGameWindow@@HHHHHHHHHHHH@Z")
 #pragma comment(linker, "/alternatename:?rva000417EFTarget@@YAXXZ=??$__copy@PBVW3DAnimationInfo@@PAV1@H@_STL@@YAPAVW3DAnimationInfo@@PBV1@0PAV1@ABUrandom_access_iterator_tag@0@PAH@Z")
 #pragma comment(linker, "/alternatename:?rva00041F1FTarget@@YAXXZ=?_M_insert_overflow@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@IAEXPAVProductionPrerequisite@@ABV3@ABU__false_type@2@I_N@Z")
+#pragma comment(linker, "/alternatename:?rva00042BB3Target@@YAXXZ=?_M_copy@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@AAEPAU?$_Rb_tree_node@U?$pair@$$CBHI@_STL@@@2@PAU32@0@Z")
+#pragma comment(linker, "/alternatename:?rva00043A9ATarget@@YAXXZ=??0BezierSegment@@QAE@XZ")
+#pragma comment(linker, "/alternatename:?rva00049431Target@@YAXXZ=?get@Rva000928E0Self@@QAEPAXXZ")
+#pragma comment(linker, "/alternatename:?rva0004A0B1Target@@YAXXZ=?_M_push_back_aux_v@?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@IAEXABVGameResultsResponse@@@Z")
+#pragma comment(linker, "/alternatename:?rva0004A8E0Target@@YAXXZ=?evaluateTeamInsideAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z")
+#pragma comment(linker, "/alternatename:?rva0004B01ATarget@@YAXXZ=?compare@?$StringBase@D@@QBEHPBD@Z")
+#pragma comment(linker, "/alternatename:?rva0004B510Target@@YAXXZ=??0FireSpreadUpdate@@QAE@PAVThing@@PBVModuleData@@@Z")
 
 void j_0000113B(void)
 {
@@ -277,4 +291,39 @@ void j_000417EF(void)
 void j_00041F1F(void)
 {
 	rva00041F1FTarget();
+}
+
+void j_00042BB3(void)
+{
+	rva00042BB3Target();
+}
+
+void j_00043A9A(void)
+{
+	rva00043A9ATarget();
+}
+
+void j_00049431(void)
+{
+	rva00049431Target();
+}
+
+void j_0004A0B1(void)
+{
+	rva0004A0B1Target();
+}
+
+void j_0004A8E0(void)
+{
+	rva0004A8E0Target();
+}
+
+void j_0004B01A(void)
+{
+	rva0004B01ATarget();
+}
+
+void j_0004B510(void)
+{
+	rva0004B510Target();
 }

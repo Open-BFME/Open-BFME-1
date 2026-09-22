@@ -88708,3 +88708,10 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?rva000410ABTarget@@YAXXZ,0x004B6D40,address-qualified ILT route; destination independently matched at 0x004B6D40
 ?rva000417EFTarget@@YAXXZ,0x003B3800,address-qualified ILT route; destination independently matched at 0x003B3800
 ?rva00041F1FTarget@@YAXXZ,0x00787E80,address-qualified ILT route; destination independently matched at 0x00787E80
+?rva00042BB3Target@@YAXXZ,0x000AAC70,address-qualified ILT route; destination independently matched at 0x000AAC70
+?rva00043A9ATarget@@YAXXZ,0x000B6D00,address-qualified ILT route; destination independently matched at 0x000B6D00
+?rva00049431Target@@YAXXZ,0x000928E0,address-qualified ILT route; destination independently matched at 0x000928E0
+?rva0004A0B1Target@@YAXXZ,0x006421D0,address-qualified ILT route; destination independently matched at 0x006421D0
+?rva0004A8E0Target@@YAXXZ,0x00324670,address-qualified ILT route; destination independently matched at 0x00324670
+?rva0004B01ATarget@@YAXXZ,0x000A2BB0,address-qualified ILT route; destination independently matched at 0x000A2BB0
+?rva0004B510Target@@YAXXZ,0x002926C0,address-qualified ILT route; destination independently matched at 0x002926C0
