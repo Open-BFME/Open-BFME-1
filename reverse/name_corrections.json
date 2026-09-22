@@ -58,5 +58,85 @@
     "after_sha256": "61c20a7ca08a90169c0053f7e792d84b85ecd8e3f1c91f282d750d0fdaebb85b",
     "evidence": "docs/naming_evidence.md",
     "reason": "Gen_008956C0Node is a generator-minted Gen* placeholder (docs/naming_evidence.md: GENERATOR-minted names are anonymous by design, not identities). The re-banked body keeps the address token as Rva008956C0Node; no descriptive identity existed to preserve."
+  },
+  {
+    "old_path": "reverse/attempts/0x00172e70.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
+    "old_name": "BfmeSub1CC_EC3",
+    "new_name": "Rva001B7E90Receiver",
+    "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
+    "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "BfmeSub1CC_EC3 is a Bfme<Role><Suffix> generator placeholder (docs/naming_evidence.md lines 243-244 family); the type is only the receiver of the call at 0x001B7E90 and no caller, vtable or literal names it, so the address-keeping name is the self-labelling floor the rule asks for"
+  },
+  {
+    "old_path": "reverse/attempts/0x00172e70.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
+    "old_name": "getLocomotorDistanceToGoal",
+    "new_name": "rva002774c0",
+    "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
+    "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "the ledger's only pin at 0x002774C0 is the ABI-only ?rva002774c0@AIUpdateInterface@@QAEMXZ (symbols.csv: x87 jump-table dispatch); the converted source calls the ledger's own name as the route-pin gate requires; the Zero Hour method name was never pinned at that address and a pin is a separate evidence-backed claim"
+  },
+  {
+    "old_path": "reverse/attempts/0x00172e70.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
+    "old_name": "m_arrivalState",
+    "new_name": "m_field160",
+    "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
+    "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "m_arrivalState occurs in no Zero Hour header and not in reverse/zh_offsets.json (0 hits); the bank guessed it; the self-labelling offset name follows docs/naming_evidence.md until a witness names AIUpdateInterface+0x160"
+  },
+  {
+    "old_path": "reverse/attempts/0x00172e70.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/AI/AIInternalMoveToStateUpdate00172E70.cpp",
+    "old_name": "m_closeEnoughDistance",
+    "new_name": "m_field038",
+    "before_sha256": "9e7077e959e8a90764e673a47c5dcfd1ce83656676bbd68e2fd420f981b6c1b8",
+    "after_sha256": "dfb1460657218c5ed38af5192668abdfbf91e56bc4c1636985e39677d3d6f2bc",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "m_closeEnoughDistance occurs in no Zero Hour header and not in reverse/zh_offsets.json (0 hits); the bank guessed it; Locomotor+0x38 stays self-labelling until witnessed"
+  },
+  {
+    "old_path": "reverse/attempts/0x0027a5e0.cpp",
+    "new_path": "Code/GameEngine/Source/GameLogic/Object/Update/AIUpdateInterfaceLoadPostProcess.cpp",
+    "old_name": "m_attackInfoName",
+    "new_name": "m_string1f4",
+    "before_sha256": "e1f8c7c7b1488074931817847ad605dd591afdff4a12c170889fce6dbc4f34a8",
+    "after_sha256": "249fdd26e57ce8447cf79940ad57283a533c01f833e429fc02d0611076ec455e",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "m_attackInfoName occurs in no Zero Hour header and not in reverse/zh_offsets.json (0 hits); the verdict row for 0x0027A5E0 in reverse/re_attempts.log proves the class (AIUpdateInterface, DIR32 __FILE__ literal) but not this member; self-labelling until witnessed"
+  },
+  {
+    "old_path": "reverse/attempts/0x003e9720.cpp",
+    "new_path": "reverse/attempts/0x003e9720.cpp",
+    "old_name": "ContainModuleInterface",
+    "new_name": "Rva003E9720ContainView",
+    "before_sha256": "ea04f1dc4f0072bef1933db902d2b7ffda10db5c848fef712d77c094c16df926",
+    "after_sha256": "451088403bcc9077ff7c41c9e88ab451a07ac38e6aeeeebe3cfa0368519a85e1",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "the hub analysis docs/analysis/0x003e9720.md proves only a virtual call through slot 0x100 on the pointer at Object+contain; no caller, vtable owner or literal ties it to ContainModuleInterface, so the bank's identity claim is withdrawn to a self-labelling name"
+  },
+  {
+    "old_path": "reverse/attempts/0x003e9720.cpp",
+    "new_path": "reverse/attempts/0x003e9720.cpp",
+    "old_name": "floor",
+    "new_name": "rva00069750",
+    "before_sha256": "ea04f1dc4f0072bef1933db902d2b7ffda10db5c848fef712d77c094c16df926",
+    "after_sha256": "451088403bcc9077ff7c41c9e88ab451a07ac38e6aeeeebe3cfa0368519a85e1",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "0x00069750 is pinned only as ?b_00069750@@YAXXZ (gen-thunk body) in reverse/symbols.csv; there is no CRT floor pin at that address; the bank asserted the CRT identity without a pin, the analysis keeps the address until one is landed"
+  },
+  {
+    "old_path": "reverse/attempts/0x003e9720.cpp",
+    "new_path": "reverse/attempts/0x003e9720.cpp",
+    "old_name": "query",
+    "new_name": "rva003E9720Slot100",
+    "before_sha256": "ea04f1dc4f0072bef1933db902d2b7ffda10db5c848fef712d77c094c16df926",
+    "after_sha256": "451088403bcc9077ff7c41c9e88ab451a07ac38e6aeeeebe3cfa0368519a85e1",
+    "evidence": "docs/naming_evidence.md",
+    "reason": "query was a bare virtual-slot name with no witness; the slot index (0x100) is the only evidence, and the new name states exactly that"
   }
 ]

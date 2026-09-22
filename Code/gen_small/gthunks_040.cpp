@@ -144,7 +144,7 @@ void b_0022ece0();
 void b_0022ef60();
 void b_00230060();
 void b_00230290();
-void b_002310f0();
+void computeAODFormationPosition_002310F0();
 void b_002338c0();
 void b_00233be0();
 void b_00234ae0();
@@ -516,7 +516,7 @@ void j_000242b7() { b_006be020(); }
 void j_000242bc() { b_00753160(); }
 void j_000242c1() { b_00472770(); }
 void j_000242c6() { b_006df040(); }
-void j_000242cb() { b_002310f0(); }
+void j_000242cb() { computeAODFormationPosition_002310F0(); }
 void j_000242d0() { b_0040c110(); }
 void j_000242da() { b_00191ca0(); }
 void j_000242df() { b_000e6ac0(); }
