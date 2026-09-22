@@ -242,62 +242,78 @@ GameWindow *GameWindow::findLastLeaf( void )
 // GameWindow::findPrevLeaf ===================================================
 /** Returns the prev leaf of the tree */
 //=============================================================================
-// ?findPrevLeaf@GameWindow@@IAEPAV1@XZ present-unmatched
+class Rva00477E60
+{
+public:
+	Rva00477E60 *walk();
+};
+
 GameWindow *GameWindow::findPrevLeaf( void )
 {
-	GameWindow *leaf = this;
+	struct BfmeFindPrevLeafLayout
+	{
+		UnsignedByte pad0[0x08];
+		UnsignedInt status;
+		UnsignedByte pad1[0x1f8 - 0x0c];
+		BfmeFindPrevLeafLayout *next;
+		BfmeFindPrevLeafLayout *prev;
+		BfmeFindPrevLeafLayout *parent;
+		BfmeFindPrevLeafLayout *child;
+	};
 
-	if( leaf->m_prev ) 
+	BfmeFindPrevLeafLayout *leaf = (BfmeFindPrevLeafLayout *)this;
+
+	if( leaf->prev )
 	{
 
-		leaf = leaf->m_prev;
+		leaf = leaf->prev;
 
-		while( leaf->m_child && 
-					 BitTest( leaf->m_status, WIN_STATUS_TAB_STOP ) == FALSE ) 
+		while( leaf->child &&
+						 BitTest( leaf->status, WIN_STATUS_TAB_STOP ) == FALSE )
 		{
 
-			leaf = leaf->m_child;
+			leaf = leaf->child;
 
-			while( leaf->m_next )
-				leaf = leaf->m_next;
+			while( leaf->next )
+				leaf = leaf->next;
 
 		}  // end while
 
-		return leaf;
+		return (GameWindow *)leaf;
 
 	}   // end if
 	else 
 	{
 
-		while( leaf->m_parent ) 
+		while( leaf->parent )
 		{
 
-			leaf = leaf->m_parent;
+			leaf = leaf->parent;
 
-			if( leaf->m_parent && leaf->m_prev ) 
+			if( leaf->parent && leaf->prev )
 			{
 
-				leaf = leaf->m_prev;
+				leaf = leaf->prev;
 
-				while( leaf->m_child && 
-							 BitTest( leaf->m_status, WIN_STATUS_TAB_STOP ) == FALSE ) 
+				while( leaf->child &&
+							 BitTest( leaf->status, WIN_STATUS_TAB_STOP ) == FALSE )
 				{
 
-					leaf = leaf->m_child;
+					leaf = leaf->child;
 
-					while( leaf->m_next )
-						leaf = leaf->m_next;
+					while( leaf->next )
+						leaf = leaf->next;
 
 				}  // end while
 
-				return leaf;
+				return (GameWindow *)leaf;
 
 			}  // end if
 
 		}  // end while
 
 		if( leaf )
-			return leaf->findLastLeaf();
+			return (GameWindow *)((Rva00477E60 *)leaf)->walk();
 		else
 			return NULL;
 
