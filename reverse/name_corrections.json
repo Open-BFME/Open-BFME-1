@@ -238,5 +238,15 @@
     "after_sha256": "2fd16f13d3a46fce8c231f6b680290e6da6b31f780c4018015881be2860531d9",
     "evidence": "reverse/functions.csv",
     "reason": "OnStructureCreatedCallBits asserted Player::onStructureCreated for the call through ILT 0x0003AA8F to 0x000D4770, but reverse/functions.csv already owns that body as ?rva000D4770InterfaceDispatch@@YGXPAVThing@@PAVObject@@@Z (Rva000D4770InterfaceDispatch.cpp); the pun is renamed to the address token Rva000D4770CallBits and ZH Player.h:459 is recorded only as evidence for a future rename of that row. (range entry: bank -> landed source)"
+  },
+  {
+    "old_path": "reverse/attempts/0x006087e0.cpp",
+    "new_path": "reverse/attempts/0x006087e0.cpp",
+    "old_name": "StringInlineData",
+    "new_name": "Rva006087E0Mask",
+    "before_sha256": "ba75967e6864c2d1f9cf567a836615bf502fcf7c210d09b2e9534a98b009b9d8",
+    "after_sha256": "dfb149a3357c083f83adac9d6471521e44b4539c43cebb83d91effdbff8e4c94",
+    "evidence": "reverse/attempt_history/0x006087e0/naming-review.md",
+    "reason": "Canonical ascii_string.h replaces duplicate local string declarations; the independently witnessed six-word mask is an unrelated new declaration, not a rename of StringInlineData."
   }
 ]

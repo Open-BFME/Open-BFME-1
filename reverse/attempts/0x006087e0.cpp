@@ -1,75 +1,23 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS
-// partial score=0.58 date=2026-09-08
-// Open-BFME: SoundUpgrade record INI parser, retail 0x006087E0 (374 bytes).
+// ?parse@Rva00608FE0Element@@QAEXPAVINI@@@Z
+// partial score=0.9411764705882353 date=2026-09-22
+// ?parse@Rva00608FE0Element@@QAEXPAVINI@@@Z
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
+// stlport
+// scratch reconstruction of retail 0x006087E0; not a tracked source claim
+// Retail callee evidence: erase=0x0065960 via ILT 0x00024C17, token=0x008509C0,
+// overflow=0x0063700 via ILT 0x0003827B, releaseBuffer=0x00887940,
+// StringBase<char> copy=0x00887B60 and cstr ctor=0x00888BC0,
+// getVoiceFieldParse=0x0013CE10 via ILT 0x0002698B, add=0x00850920,
+// initFromINIMulti=0x00851910, and buildMasks=0x00608090 via ILT 0x0000F187.
+// The 0x210-byte record lifetime is matched by ctor/copy/dtor at
+// 0x006086E0/0x006089C0/0x00608480 (ILT 0x0002A48C/0x00042339/0x00034158).
 
-#define _STLP_NO_EXCEPTIONS 1
-
-template <typename T> struct StringInlineData
-{
-	int m_refCount;
-	int m_length;
-	T m_text[1];
-};
-
-template <typename T> class StringBase
-{
-protected:
-	StringBase() : m_data(0) {}
-	StringInlineData<T> *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const char *text);
-	AsciiString(const AsciiString &other);
-	~AsciiString();
-};
-
-inline void *operator new(unsigned int, void *place)
-{
-	return place;
-}
-
-inline void operator delete(void *, void *)
-{
-}
-
-struct SoundUpgradeFalseType
-{
-};
-
-class SoundUpgradeVector
-{
-public:
-	AsciiString *m_start;
-	AsciiString *m_finish;
-	AsciiString *m_end;
-
-	AsciiString *begin() { return m_start; }
-	AsciiString *end() { return m_finish; }
-	AsciiString *erase(AsciiString *, AsciiString *);
-	void _M_insert_overflow(AsciiString *, const AsciiString &,
-		const SoundUpgradeFalseType &, unsigned int, bool);
-
-	void push_back(const AsciiString &value)
-	{
-		if (m_finish != m_end)
-		{
-			new (m_finish) AsciiString(value);
-			++m_finish;
-		}
-		else
-		{
-			SoundUpgradeFalseType tag;
-			_M_insert_overflow(m_finish, value, tag, 1, true);
-		}
-	}
-};
-
-#pragma comment(linker, "/alternatename:?erase@SoundUpgradeVector@@QAEPAVAsciiString@@PAV2@0@Z=?j_00024c17@@YAXXZ")
-#pragma comment(linker, "/alternatename:?_M_insert_overflow@SoundUpgradeVector@@QAEXPAVAsciiString@@ABV2@ABVSoundUpgradeFalseType@@I_N@Z=?j_0003827b@@YAXXZ")
+#include <new>
+#include <bitset>
+struct Rva006087E0Mask { _STL::bitset<192> bits; void clear() { bits.reset(); } };
+#include <stl/_config.h>
+#include <vector>
+#include "ascii_string.h"
 
 struct FieldParse;
 
@@ -103,42 +51,41 @@ public:
 
 extern const FieldParse *getVoiceFieldParse();
 
+class Rva006083A0SoundUpgrade
+{
+public:
+	void buildMasks(unsigned int *first, unsigned int *second);
+};
+
+#pragma comment(linker, "/alternatename:?buildMasks@Rva006083A0SoundUpgrade@@QAEXPAI0@Z=?j_0000f187@@YAXXZ")
+
 class Rva00608FE0Element
 {
 public:
+	Rva00608FE0Element();
+	Rva00608FE0Element(const Rva00608FE0Element &);
+	~Rva00608FE0Element();
+
 	void parse(INI *ini);
-	void finish(void *, void *);
 
 private:
-	int m_values0[6];
-	int m_values18[6];
-	SoundUpgradeVector m_soundNames;
-	SoundUpgradeVector m_otherNames;
-	unsigned char m_member48[0x1B4];
-	unsigned char m_member1FC[0x0C];
-	int m_field208;
-	unsigned char m_field20C;
-	unsigned char m_padding20D[3];
+	Rva006087E0Mask m_values0;
+	Rva006087E0Mask m_values18;
+	_STL::vector<AsciiString, _STL::allocator<AsciiString> > m_soundNames;
+	_STL::vector<AsciiString, _STL::allocator<AsciiString> > m_otherNames;
+	unsigned char m_tail[0x1c8];
 };
 
-#pragma comment(linker, "/alternatename:?finish@Rva00608FE0Element@@QAEXPAX0@Z=?j_0000f187@@YAXXZ")
+#pragma comment(linker, "/alternatename:??0Rva00608FE0Element@@QAE@XZ=?j_0002a48c@@YAXXZ")
+#pragma comment(linker, "/alternatename:??0Rva00608FE0Element@@QAE@ABU0@@Z=?j_00042339@@YAXXZ")
+#pragma comment(linker, "/alternatename:??1Rva00608FE0Element@@QAE@XZ=?j_00034158@@YAXXZ")
 
 void Rva00608FE0Element::parse(INI *ini)
 {
 	m_soundNames.erase(m_soundNames.begin(), m_soundNames.end());
-	m_values0[0] = 0;
-	m_values0[1] = 0;
-	m_values0[2] = 0;
-	m_values0[3] = 0;
-	m_values0[4] = 0;
-	m_values0[5] = 0;
+	m_values0.clear();
 	m_otherNames.erase(m_otherNames.begin(), m_otherNames.end());
-	m_values18[0] = 0;
-	m_values18[1] = 0;
-	m_values18[2] = 0;
-	m_values18[3] = 0;
-	m_values18[4] = 0;
-	m_values18[5] = 0;
+	m_values18.clear();
 
 	for (const char *token = ini->getNextTokenOrNull(0); token != 0;
 		token = ini->getNextTokenOrNull(0))
@@ -152,10 +99,10 @@ void Rva00608FE0Element::parse(INI *ini)
 	fields.add(getVoiceFieldParse(), 0x48);
 	ini->initFromINIMulti(this, fields);
 
-	if (*(void **)0x00EEF188 != 0)
+	if (*(void **)0x012EF188 != 0)
 	{
-		unsigned char localA[0x20];
-		unsigned char localB[0x1C];
-		finish(localA, localB);
+		unsigned int localA[6];
+		unsigned int localB[6];
+		reinterpret_cast<Rva006083A0SoundUpgrade *>(this)->buildMasks(localA, localB);
 	}
 }
