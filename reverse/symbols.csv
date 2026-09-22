@@ -88733,3 +88733,7 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ??1Gen_000F9C60@@QAE@XZ,0x000CFA40,opaque28B subobject destructor at record+44; FB2E0 +AA calls ILT2671F to matched77B destructor; same subobject copied by matched115B Gen_000F9C60 constructor
 ?d_00955a00@@YAXXZ,0x00955A00,Address-only compatibility name retained for matched W3DStreakDrawBody direct call at0077D6B0; physical71B point-update body now matched as bfmeSetWG@BfmeStreakObject
 ?getAttackPriorityName@TeamPrototype@@QBE?AVAsciiString@@XZ,0x001C42B0,By-value4B AsciiString copy from TeamPrototype+270; aligned setOrRestoreTeam001D4530 call sites00FC and011E plus released Team.h getter; hidden return pointer ret4
+?rva002E4180@Rva0012F060COwner@@QAEXPAVObject@@@Z,0x002E4180,Object setTeam001C6F10+FD via ILT358A; ECX global012F060C and one Object pointer; physical247B Lua owner method ret4
+?rva002E4030@Rva0012F060COwner@@QAEXPAVObject@@@Z,0x002E4030,Object setTeam001C6F10+109 via ILT143D0; ECX global012F060C and one Object pointer; physical269B Lua owner method ret4
+?rva00107A50@Radar@@QAEXPAVObject@@@Z,0x00107A50,Object setTeam001C6F10+137 via ILT11383; Radar receiver and Object argument; independently matched72B radar color refresh ret4
+?Rva01336E50EmptyString@@3VAsciiString@@B,0x01336E50,Narrow empty-string object used by both nullable TeamPrototype name accessors in Object setTeam001C6F10; one-word AsciiString view
