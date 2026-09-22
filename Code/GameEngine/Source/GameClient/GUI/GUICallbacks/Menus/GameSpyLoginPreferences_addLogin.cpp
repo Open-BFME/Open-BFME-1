@@ -1,12 +1,22 @@
 // ?addLogin@GameSpyLoginPreferences@@QAEXVAsciiString@@000@Z
-// partial score=0.44 date=2026-09-15
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
+#define __new_alloc BFMEHeaderNewAlloc
 #include <map>
 #include <list>
 #include <algorithm>
 #include <new>
+#undef __new_alloc
+
+namespace _STL
+{
+class __new_alloc
+{
+public:
+	static void *allocate(unsigned int size);
+};
+}
 
 template <class T> class StringBase
 {
@@ -33,6 +43,40 @@ public:
 	bool operator==(const AsciiString &other) const { return m_data == other.m_data; }
 	bool operator<(const AsciiString &other) const;
 };
+
+struct BFMEFindStringHeader
+{
+	int refCount;
+	unsigned short length;
+	unsigned short capacity;
+	char data[1];
+};
+
+struct BFMEFindAsciiStringView
+{
+	BFMEFindStringHeader *m_data;
+
+	int compare(const BFMEFindAsciiStringView &string) const
+	{
+		const BFMEFindAsciiStringView *self = this;
+		const BFMEFindAsciiStringView *that = &string;
+		int thatLen = that->m_data ? that->m_data->length : 0;
+		const char *thatData = that->m_data ? &that->m_data->data[0] : (const char *)"";
+		int thisLen = self->m_data ? self->m_data->length : 0;
+		const char *thisData = self->m_data ? &self->m_data->data[0] : (const char *)"";
+		int n = thisLen < thatLen ? thisLen : thatLen;
+		int c = memcmp(thisData, thatData, n);
+		if (c != 0)
+			return c;
+		return thisLen - thatLen;
+	}
+};
+
+inline bool operator==(const BFMEFindAsciiStringView &a,
+	const BFMEFindAsciiStringView &b)
+{
+	return a.compare(b) == 0;
+}
 
 typedef std::list<AsciiString> AsciiStringList;
 struct BfmeAsciiListNode
@@ -67,16 +111,21 @@ private:
 void GameSpyLoginPreferences::addLogin(AsciiString email, AsciiString nick,
 	AsciiString password, AsciiString date)
 {
-	if (std::find(m_emailNickMap[email].begin(), m_emailNickMap[email].end(), nick)
-		== m_emailNickMap[email].end())
+	if (std::find(
+		reinterpret_cast<std::list<BFMEFindAsciiStringView> &>(m_emailNickMap[email]).begin(),
+		reinterpret_cast<std::list<BFMEFindAsciiStringView> &>(m_emailNickMap[email]).end(),
+		reinterpret_cast<const BFMEFindAsciiStringView &>(nick))
+		== reinterpret_cast<std::list<BFMEFindAsciiStringView> &>(m_emailNickMap[email]).end())
 	{
 		AsciiStringList &list = m_emailNickMap[email];
-		BfmeAsciiListNode *node = (BfmeAsciiListNode *)_STL::__new_alloc::allocate(12);
-		new (&node->value) AsciiString(nick);
 		BfmeAsciiListNode *sentinel = *(BfmeAsciiListNode **)&list;
+		BfmeAsciiListNode *node = (BfmeAsciiListNode *)_STL::__new_alloc::allocate(12);
+		AsciiString *value = &node->value;
+		new (value) AsciiString(nick);
+		BfmeAsciiListNode *previous = sentinel->previous;
 		node->next = sentinel;
-		node->previous = sentinel->previous;
-		sentinel->previous->next = node;
+		node->previous = previous;
+		previous->next = node;
 		sentinel->previous = node;
 	}
 	m_emailPasswordMap[email] = password;
