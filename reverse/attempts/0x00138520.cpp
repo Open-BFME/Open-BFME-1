@@ -1,5 +1,6 @@
 // ?newObject@ThingFactory@@QAEPAVObject@@PBVThingTemplate@@PAVTeam@@ABV?$BitFlags@$0FG@@@I@Z
-// partial score=0.97 date=2026-09-15
+// partial score=0.971223021583 date=2026-09-22
+// ?newObject@ThingFactory@@QAEPAVObject@@PBVThingTemplate@@PAVTeam@@ABV?$BitFlags@$0FG@@@I@Z
 // cl: /DNDEBUG /MD /EHsc
 
 // ?newObject@ThingFactory@@QAEPAVObject@@PBVThingTemplate@@PAVTeam@@ABV?$BitFlags@$0FG@@@I@Z
@@ -10,12 +11,13 @@
 // +0x1f0 before it initializes and logs the new Object.
 // The call through ILT 0x000168DD reaches GameLogic::friend_createObject at
 // 0x003830C0. That callee now has a verified BFME identity and source body.
-// The source matches all 278 bytes except twelve non-relocation bytes in the
-// argument shuttle before the call. Retail loads extra into ECX, team into
-// EDX, statusBits into EAX, and loads the GameLogic global between pushes.
-// Parameter-order, declaration-order, and local-alias variants did not change
-// the register sequence. The remaining difference needs a new compiler-shape
-// hypothesis, so this body stays banked for the next worker.
+// Resumed with the analyst pack docs/analysis/0x001d88c0.md.
+// The status mask is three DWORDs, as both hub calls independently witness.
+// Native StringInline and a symbolic GameLogic global preserve the full body.
+// Measured: 278 bytes; 8 masked byte differences, including a displaced DIR32.
+// This is the same unresolved argument register schedule, not an instruction
+// improvement over the old 12-byte residue with a literal global address.
+// Compiler tuning and per-argument compiler barriers did not resolve it.
 
 typedef unsigned int UnsignedInt;
 
@@ -23,7 +25,7 @@ template <int N>
 class BitFlags
 {
 public:
-	UnsignedInt m_words[6];
+	UnsignedInt m_words[3];
 };
 
 typedef BitFlags<86> ObjectStatusMaskType;
@@ -39,11 +41,7 @@ public:
 };
 
 class CRCParameterCheck;
-class AsciiString
-{
-public:
-	void *m_data;
-};
+#include "../../reference/shims/stringinline/StringInline.h"
 
 class ThingTemplate
 {
@@ -121,7 +119,7 @@ extern "C" void __cdecl bfmeRetailCritterDesyncLog(
 	CRCParameterCheck *check, const char *format, ...);
 
 #define BFME_NEW_OBJECT_DEBUG (*(unsigned char *)0x012EF1DC)
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
+extern GameLogic *TheGameLogic;
 
 Object *ThingFactory::newObject(const ThingTemplate *tmplate, Team *team,
 	const ObjectStatusMaskType &statusBits, UnsignedInt extra)
@@ -146,7 +144,7 @@ Object *ThingFactory::newObject(const ThingTemplate *tmplate, Team *team,
 			tmplate = replacement;
 	}
 
-	Object *obj = TheBfmeGameLogic->friend_createObject(
+	Object *obj = TheGameLogic->friend_createObject(
 		tmplate, statusBits, team, extra);
 
 	for (BehaviorModule **m = obj->m_behaviors; *m != 0; ++m)
@@ -167,11 +165,7 @@ Object *ThingFactory::newObject(const ThingTemplate *tmplate, Team *team,
 	if (g_012ED4FC != 0)
 	{
 		UnsignedInt id = obj->m_id;
-		char *name = (char *)tmplate->m_name.m_data;
-		if (name != 0)
-			name += 8;
-		else
-			name = (char *)Rva006A16B0Empty;
+		const char *name = tmplate->m_name.str();
 		((void (__cdecl *)(void *, const char *, ...))j_0003a17a)(
 			g_012ED4FC, "newObj %s id %i", name, id);
 	}
