@@ -1,7 +1,20 @@
-// ?upgradeImplementation@BaseUpgrade@@MAEXXZ
-// partial score=0.96 date=2026-09-11
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+//
+// Open-BFME: BaseUpgrade::upgradeImplementation -- retail 0x002D3970, 578 bytes.
+//
+// Identity: the body reads its module data at this-0xc and its Object at this-8,
+// the BaseUpgrade layout proven by the matched neighbours ??_GBaseUpgrade@@MAEPAXI@Z
+// at 0x002D3900 and ??0BaseUpgradeModuleData@@QAE@XZ at 0x002D3C50 (vtable 0x00CCC0EC).
+// It builds the module data's building template at a pristine bone of the owning
+// object and hands the result to Player::onStructureCreated, which is what a base
+// upgrade does.
+//
+// Coord3D::set(Real,Real,Real) is the Zero Hour spelling
+// (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h:385);
+// passing the three coordinates by value through it is what makes MSVC 7.1 keep y and z
+// on the x87 stack (fld/fstp) while x stays in eax for the cross-jumped `mov [esp+0x14],eax`
+// tail at +0x192 -- the residue every earlier attempt on this address was left with.
 
 #include <bitset>
 
@@ -20,6 +33,13 @@ struct Coord3D
 		z = other.z;
 	}
 	~Coord3D() {}
+
+	void set(Real ax, Real ay, Real az)
+	{
+		x = ax;
+		y = ay;
+		z = az;
+	}
 
 	Real x;
 	Real y;
@@ -263,18 +283,14 @@ void BaseUpgrade::upgradeImplementation()
 		(reinterpret_cast<const Thing *>(object))->convertBonePosToWorldPos(
 			0, &boneTransforms[placementIndex], 0,
 			reinterpret_cast<Matrix3D *>(&worldTransform));
-		position.z = worldTransform.m[11];
-		position.y = worldTransform.m[7];
-		position.x = worldTransform.m[3];
+		position.set(worldTransform.m[3], worldTransform.m[7], worldTransform.m[11]);
 		orientation = reinterpret_cast<const Matrix3D *>(&worldTransform)->Get_Z_Rotation();
 	}
 	else
 	{
 		const Thing *thing = reinterpret_cast<const Thing *>(object);
 		const Coord3D *objectPosition = thing->getPosition();
-		position.z = objectPosition->z;
-		position.y = objectPosition->y;
-		position.x = objectPosition->x;
+		position.set(objectPosition->x, objectPosition->y, objectPosition->z);
 		orientation = thing->getTransformMatrix()->Get_Z_Rotation();
 	}
 
