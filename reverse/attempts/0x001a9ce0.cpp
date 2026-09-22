@@ -1,66 +1,140 @@
 // ??0Bridge@@QAE@PAVObject@@@Z
-// partial score=0.20 date=2026-09-10
-// Bridge::Bridge(Object *bridgeObj), retail 0x001A9CE0 size 1412.
-//
-// Identity is not in doubt: pinned via ILT 0x00047C0D, which the landed
-// Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp:1744 caller
-// (TerrainLogic::addLandmarkBridgeToLogic) already calls through a forward
-// declaration (BfmeBridgeNode::BfmeBridgeNode(Object*), comment
-// "retail ILT 0x00047c0d"). reverse/symbols.csv already carries the pin.
-//
-// A readable draft already lives in the same TU as this constructor's
-// natural home, Code/GameEngine/Source/GameLogic/Map/TerrainLogic.cpp
-// lines 344-454 (Bridge::Bridge(Object *bridgeObj), tagged
-// "??0Bridge@@ present-unmatched"). It compiles against the file's real
-// #include chain and produces 1528 B against retail's 1412 B, 1206
-// non-relocation bytes differing, first divergence at +0x23 -- i.e. almost
-// immediately, not a late near-miss. Do not re-type it; open that file.
-//
-// Bridge's exact 0x90-byte layout is already PROVEN, not guessed: the
-// landed, matched Code/GameEngine/Source/GameLogic/Map/BridgeIsPointOnBridge.cpp
-// (BridgePointOnBridgeShim) gives it field-for-field --
-//   +0x00 vptr (void*)              +0x28 fromLeft (Coord3D)
-//   +0x04 m_next (void*)            +0x34 fromRight (Coord3D)
-//   +0x08 m_templateName (void*)    +0x40 toLeft (Coord3D)
-//   +0x0C from (Coord3D)            +0x4C toRight (Coord3D)
-//   +0x18 to (Coord3D)              +0x58 bridgeIndex/curDamageState/
-//   +0x24 bridgeWidth (float)             bridgeObjectID/towerObjectID[4]/
-//                                          damageStateChanged (0x20 span)
-//   +0x78 m_bounds (Region2D, 16B)  +0x88 m_layer (int)   +0x8C m_extra
-//
-// The divergence is the vtable install. Retail's ctor writes
-// `mov dword ptr [esi], 0x109c354` early (VA 0x0109C354); tools/vtable_lookup.py
-// 0x0109C354 shows one slot -> 0x0040db43 (a j_ thunk) and names the two
-// other retail sites that install the same constant: the sibling ctor
-// Bridge(BridgeInfo&,Dict*,AsciiString) at 0x001A98A0 (already landed, but
-// only as a naked __emit lift -- Bridge_ctor_Thunk.cpp -- so it is not a
-// real-C++ precedent either) and a generated destructor stub at 0x001A7350
-// (Gen_dtor_001a7350.cpp, 101B, still ungenerated real C++). No file in
-// this tree yet WRITES that vtable pointer as real C++, and no
-// reverse/symbols.csv pin exists for VA 0x0109C354. The landed
-// BridgePointOnBridgeShim sidesteps this entirely by modelling the slot as
-// a plain, never-assigned `void *m_vptr` data member -- it only READS the
-// object, so it never had to solve the install. This ctor cannot dodge it:
-// landing requires either (a) a real virtual base whose compiler-synthesised
-// vtable happens to byte-match 0x0109C354's single-slot shape, or (b) an
-// extern data symbol pinned/patched to that VA whose address the ctor
-// stores explicitly. Neither is done here.
-//
-// Ruled out: compiling the ctor against the file's real TerrainLogic.h
-// class (public MemoryPoolObject with `virtual ~MemoryPoolObject(){}` from
-// reference/shims/sweep/Common/GameMemory.h) does NOT reproduce the retail
-// vtable-install instruction at the same program point; the compiled
-// prologue takes a different shape (an extra `push edi` / different
-// register zeroing order) from the very first divergent byte, so the
-// mismatch is not merely the DIR32 payload value.
-//
-// Untouched downstream: even with the vtable solved, the tower-creation
-// loop (BRIDGE_TOWERS is live in this BFME body, unlike the GeneralsMD
-// reference where it is #if 0'd out) calls Object::getTemplate,
-// Object::getPosition, Object::getOrientation, GeometryInfo::getMajorRadius/
-// getMinorRadius, ThingTemplate::getTowerObjectName and
-// Bridge::createTower (itself only a naked lift at
-// Code/GameEngine/Source/GameLogic/Bridge_createTower_Thunk.cpp) -- none of
-// these were found matched or pinned in reverse/functions.csv /
-// reverse/symbols.csv, so even a byte-correct shim would still fail the
-// unresolved-call gate on first build. t=25min model=Claude Sonnet 5
+// partial score=0.25 date=2026-09-22
+// cl: /ICode/GameEngine/Include /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/GameEngine/Source/Common/System /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// stlport
+
+#include "PreRTS.h"
+#include "Common/ThingFactory.h"
+#include "Common/ThingTemplate.h"
+#include "GameClient/TerrainRoads.h"
+#include "GameLogic/AIPathfind.h"
+#include "GameLogic/Object.h"
+#include "GameLogic/Module/BodyModule.h"
+
+struct BridgeInfo
+{
+	Coord3D from, to;
+	Real bridgeWidth;
+	Coord3D fromLeft, fromRight, toLeft, toRight;
+	Int bridgeIndex;
+	BodyDamageType curDamageState;
+	ObjectID bridgeObjectID;
+	ObjectID towerObjectID[BRIDGE_MAX_TOWERS];
+	Bool damageStateChanged;
+};
+
+class Bridge
+{
+public:
+	Bridge(Object *bridgeObj);
+	Object *createTower(Coord3D *worldPos, BridgeTowerType towerPos,
+		const ThingTemplate *towerTemplate, Object *bridge);
+
+private:
+	void *m_vptr;
+	Bridge *m_next;
+	AsciiString m_templateName;
+	BridgeInfo m_bridgeInfo;
+	Region2D m_bounds;
+	PathfindLayerEnum m_layer;
+	void *m_extra;
+};
+
+Bridge::Bridge(Object *bridgeObj) : m_vptr((void *)0x0109C354), m_next(NULL)
+{
+	m_templateName = bridgeObj->getTemplate()->getName();
+
+	DEBUG_ASSERTLOG( bridgeObj->getGeometryInfo().getGeomType()==GEOMETRY_BOX, ("Bridges need to be rectangles.\n"));
+
+	const Coord3D *pos = bridgeObj->getPosition();
+	Real angle = bridgeObj->getOrientation();
+
+	Real halfsizeX = bridgeObj->getGeometryInfo().getMajorRadius();
+	Real halfsizeY = bridgeObj->getGeometryInfo().getMinorRadius();
+	m_bridgeInfo.bridgeWidth = 2*halfsizeY;
+
+	Real c = (Real)Cos(angle);
+	Real s = (Real)Sin(angle);
+
+	m_bridgeInfo.fromLeft.set(pos->x-halfsizeX*c-halfsizeY*s, pos->y + halfsizeY*c - halfsizeX*s, pos->z);
+	m_bridgeInfo.toLeft.set(pos->x+halfsizeX*c-halfsizeY*s, pos->y + halfsizeY*c + halfsizeX*s, pos->z);
+	m_bridgeInfo.fromRight.set(pos->x-halfsizeX*c+halfsizeY*s, pos->y - halfsizeY*c - halfsizeX*s, pos->z);
+	m_bridgeInfo.toRight.set(pos->x+halfsizeX*c+halfsizeY*s, pos->y - halfsizeY*c + halfsizeX*s, pos->z);
+
+	m_bridgeInfo.from.x = (m_bridgeInfo.fromLeft.x + m_bridgeInfo.fromRight.x)/2.0f;
+	m_bridgeInfo.from.y = (m_bridgeInfo.fromLeft.y + m_bridgeInfo.fromRight.y)/2.0f;
+	m_bridgeInfo.from.z = (m_bridgeInfo.fromLeft.z + m_bridgeInfo.fromRight.z)/2.0f;
+
+	m_bridgeInfo.to.x = (m_bridgeInfo.toLeft.x + m_bridgeInfo.toRight.x)/2.0f;
+	m_bridgeInfo.to.y = (m_bridgeInfo.toLeft.y + m_bridgeInfo.toRight.y)/2.0f;
+	m_bridgeInfo.to.z = (m_bridgeInfo.toLeft.z + m_bridgeInfo.toRight.z)/2.0f;
+
+	m_bounds.lo.x = m_bridgeInfo.fromLeft.x;
+	m_bounds.lo.y = m_bridgeInfo.fromLeft.y;
+	m_bounds.hi = m_bounds.lo;
+	if (m_bounds.lo.x > m_bridgeInfo.fromRight.x) m_bounds.lo.x = m_bridgeInfo.fromRight.x;
+	if (m_bounds.lo.y > m_bridgeInfo.fromRight.y) m_bounds.lo.y = m_bridgeInfo.fromRight.y;
+	if (m_bounds.hi.x < m_bridgeInfo.fromRight.x) m_bounds.hi.x = m_bridgeInfo.fromRight.x;
+	if (m_bounds.hi.y < m_bridgeInfo.fromRight.y) m_bounds.hi.y = m_bridgeInfo.fromRight.y;
+	if (m_bounds.lo.x > m_bridgeInfo.toLeft.x) m_bounds.lo.x = m_bridgeInfo.toLeft.x;
+	if (m_bounds.lo.y > m_bridgeInfo.toLeft.y) m_bounds.lo.y = m_bridgeInfo.toLeft.y;
+	if (m_bounds.hi.x < m_bridgeInfo.toLeft.x) m_bounds.hi.x = m_bridgeInfo.toLeft.x;
+	if (m_bounds.hi.y < m_bridgeInfo.toLeft.y) m_bounds.hi.y = m_bridgeInfo.toLeft.y;
+	if (m_bounds.lo.x > m_bridgeInfo.toRight.x) m_bounds.lo.x = m_bridgeInfo.toRight.x;
+	if (m_bounds.lo.y > m_bridgeInfo.toRight.y) m_bounds.lo.y = m_bridgeInfo.toRight.y;
+	if (m_bounds.hi.x < m_bridgeInfo.toRight.x) m_bounds.hi.x = m_bridgeInfo.toRight.x;
+	if (m_bounds.hi.y < m_bridgeInfo.toRight.y) m_bounds.hi.y = m_bridgeInfo.toRight.y;
+
+	m_bridgeInfo.curDamageState = BODY_PRISTINE;
+	m_bridgeInfo.bridgeObjectID = bridgeObj->getID();
+
+	AsciiString bridgeTemplateName = bridgeObj->getTemplate()->getName();
+	TerrainRoadType *bridgeTemplate = TheTerrainRoads->findBridge( bridgeTemplateName );
+	if( bridgeTemplate == NULL ) {
+		DEBUG_LOG(( "*** Bridge Template Not Found '%s'.", bridgeTemplateName ));
+		return;
+	}
+
+	Coord2D v;
+	v.x = m_bridgeInfo.toLeft.x - m_bridgeInfo.toRight.x;
+	v.y = m_bridgeInfo.toLeft.y - m_bridgeInfo.toRight.y;
+	v.normalize();
+
+	Coord3D towerPos[BRIDGE_MAX_TOWERS];
+	towerPos[BRIDGE_TOWER_FROM_LEFT] = m_bridgeInfo.fromLeft;
+	towerPos[BRIDGE_TOWER_FROM_RIGHT] = m_bridgeInfo.fromRight;
+	towerPos[BRIDGE_TOWER_TO_LEFT] = m_bridgeInfo.toLeft;
+	towerPos[BRIDGE_TOWER_TO_RIGHT] = m_bridgeInfo.toRight;
+
+	Real offset = PATHFIND_CELL_SIZE_F/2.0f;
+	const ThingTemplate *towerTemplate;
+	BridgeTowerType type;
+	Object *tower;
+	for( Int i = 0; i < BRIDGE_MAX_TOWERS; ++i )
+	{
+		type = (BridgeTowerType)i;
+		towerTemplate = TheThingFactory->findTemplate( bridgeTemplate->getTowerObjectName( type ) );
+		if (towerTemplate) {
+			offset = towerTemplate->getTemplateGeometryInfo().getMajorRadius();
+		}
+		Coord3D pos = towerPos[type];
+		switch( type )
+		{
+			case BRIDGE_TOWER_FROM_LEFT:
+			case BRIDGE_TOWER_TO_LEFT:
+				pos.x += v.x*offset;
+				pos.y += v.y*offset;
+				break;
+			case BRIDGE_TOWER_FROM_RIGHT:
+			case BRIDGE_TOWER_TO_RIGHT:
+				pos.x -= v.x*offset;
+				pos.y -= v.y*offset;
+				break;
+		}
+		tower = createTower( &pos, type, towerTemplate, bridgeObj );
+		if( tower )
+			m_bridgeInfo.towerObjectID[i] = tower->getID();
+	}
+
+	m_next = NULL;
+}
