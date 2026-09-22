@@ -248,5 +248,45 @@
     "after_sha256": "dfb149a3357c083f83adac9d6471521e44b4539c43cebb83d91effdbff8e4c94",
     "evidence": "reverse/attempt_history/0x006087e0/naming-review.md",
     "reason": "Canonical ascii_string.h replaces duplicate local string declarations; the independently witnessed six-word mask is an unrelated new declaration, not a rename of StringInlineData."
+  },
+  {
+    "old_path": "reverse/attempts/0x000f1030.cpp",
+    "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
+    "old_name": "m_bfmeDataFK",
+    "new_name": "m_unknown_1bd",
+    "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
+    "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
+    "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
+    "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
+  },
+  {
+    "old_path": "reverse/attempts/0x000f1030.cpp",
+    "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
+    "old_name": "m_bfmeGapFK",
+    "new_name": "m_unknown_00c",
+    "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
+    "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
+    "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
+    "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
+  },
+  {
+    "old_path": "reverse/attempts/0x000f1030.cpp",
+    "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
+    "old_name": "m_bfmeHeadFK",
+    "new_name": "m_unknown_000",
+    "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
+    "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
+    "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
+    "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
+  },
+  {
+    "old_path": "reverse/attempts/0x000f1030.cpp",
+    "new_path": "Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp",
+    "old_name": "m_bfmeHeadFK",
+    "new_name": "m_unknown_008",
+    "before_sha256": "27271555230e1ca3e1c6c5d8a3544ecac9eb4724827f734242e2dddd9924404a",
+    "after_sha256": "0a0740104b6a72215d0ac2f28f622b978ff37012ae0b7f95cbd6fc77148afc14",
+    "evidence": "reverse/attempt_history/0x000f1030/naming-review.md",
+    "reason": "Canonical string and native template/vector declarations replace the old helper-only shim; this removed string/prefix field is falsely paired with unrelated padding newly introduced for the actual Team caller. See the field-by-field review."
   }
 ]
