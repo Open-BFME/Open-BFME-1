@@ -878,5 +878,15 @@
   "after_sha256": "778a93deaa94b5a625738eafaa9729f2e6d310442669c319b50800bdb54ac9ce",
   "evidence": "reverse/functions.csv",
   "reason": "apply was the earlier bank author's invented name for the camera-limit method this body calls through slot +0x48; reverse/functions.csv matches that body at 0x006DF110 as ?rva006DF110@Rva006DF550@@QAEXPAUBfmeCoord6DF110@@PAM@Z from Code/GameEngine/Source/Common/Rva006DF110Coordinate.cpp. The bank now carries the landed address-derived name and with it the ledger's argument shape, a coordinate pointer and a Real pointer instead of void* and Int, which is the correction the measurement rests on. (range entry: bank -> bank)"
+ },
+ {
+  "old_path": "reverse/attempts/0x009a2420.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/Rva009A2420CollisionNodeMovementScore.cpp",
+  "old_name": "g_0107FAA8",
+  "new_name": "Rva009A2420MoveThreshold",
+  "before_sha256": "f0a1eec07a25f3e910b5edbcb2c593819726c135f75c9b334b97dd73a7dded74",
+  "after_sha256": "7933ef63b832307fa5afb4adedf89e60afc759380a10d36e5ccfee943b22dd16",
+  "evidence": "reverse/symbols.csv",
+  "reason": "0x0107FAA8 has no symbols.csv pin (searched and absent); the macro name follows the address-derived-constant precedent set by Code/GameEngine/Source/Common/Rva006FCC10NormalizedRange.cpp line 16 rather than inventing a pin. g_0107FAA8 was the bank author's placeholder spelling with no ledger backing."
  }
 ]
