@@ -1,16 +1,31 @@
 // ?d_003f6090@@YAXXZ
-// partial score=0.7635726795096323 date=2026-09-22
-// Complete reconstruction of Pathfinder::adjustDestination at 003F6090.
-// Partial only: final receipts live in build/worker_174e10_176f70_3f6090.
-// Start from the supplied bank; actual same-TU helper visibility restores
-// global caching and non-retaining output-reference lifetimes. The included
-// radius helper retains its already verified x87 conversion implementation.
-// 26B override, 297B radius and 775B ring helper bodies were separately probed.
-// The native coordinate and temporary fallback payload recover frame A4.
-// All generated routes below are ABI adapters, not new semantic identities.
-// cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /FAsc /Fabuild/worker_174e10_176f70_3f6090/3f6090.cod
-// Experimental reconstruction; no production claim until the complete gate.
+// partial score=1.0 date=2026-09-22
+// MASKED-EXACT PARTIAL ONLY: 1142/1142 bytes, zero masked differences.
+// add_match.py failed on nine unresolved callee aliases and reverted its row.
+// /alternatename directives below are NOT consumed by the custom byte linker.
+// The aliases differ from existing ledger identities: Coord3D class V versus
+// struct U, namespaced radius helper, address-derived ring members and cost.
+// Do not add speculative pins: route_verdict requires the exact symbol to
+// name the matched target. Needs canonical callee declaration integration.
+// Best measured source preserved here; no production claim.
+// Pathfinder::adjustDestination -- retail RVA 003F6090, 1142 bytes.
+// Identity: named callers through ILT 00027FFC; the analyst hub 002417E0
+// passes Pathfinder in ECX and Object, embedded AI+1A8 LocomotorSet,
+// mutable Coord3D and nullable group Coord3D on the stack; AL/ret16.
+// The complete frame is A4; the query records are 60 bytes (003E6110).
+// The ring helpers consume four / three arguments and return AL; the
+// observed caller also supplies Pathfinder in ECX, although 003F4F70
+// does not read that receiver. The visible ring body is compiler context.
+// Reconstruction shaping, not a claim about original source spelling:
+// volatile reads keep found.y in EBX and reload the object argument at
+// +310/+321; zero-instruction barriers preserve the first success tail
+// shared by the +2E7 and +36B branches, separate from the allied tail.
+// The included already matched radius body and recursive override walker
+// expose genuine callee effects; their call routes remain retail ILTs.
+// cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath 
 #include <math.h>
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
 // The already landed helper is included unchanged to expose its non-retaining
 // output-reference contract. It remains a separate, independently checked body.
 namespace RadiusContract003DEE30 {
@@ -205,7 +220,7 @@ Bool Pathfinder::adjustDestination(Object *obj,const LocomotorSet &locomotorSet,
  if (obj->getTemplate()->m_flagsC8 & 0x2000000) {
   if (Glo012F0239 && TheCRCParameterCheck)
    bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"  projectile return TRUE");
-  return true;
+  _ReadWriteBarrier(); return true;
  }
  Bool center;
  Coord3D adjustDest;
@@ -237,17 +252,17 @@ Bool Pathfinder::adjustDestination(Object *obj,const LocomotorSet &locomotorSet,
  Rva003E6110Info info(this,obj,(void *)&locomotorSet,dest,groupDest,height.bits,layer);
  ICoord2D found;
  if (rva003F4F70(&cell,400,&found,&info)) {
-  Int foundY=found.y;
+  Int foundY=*(const volatile Int*)&found.y;
   if (Glo012F0239 && TheCRCParameterCheck)
    bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"  got %d,%d",found.x,foundY);
   adjustCoordToCell(found.x,foundY,center,*dest,(PathfindLayerEnum)info.m_layer);
-  if (!groupDest) return true;
+  if (!groupDest) {_ReadWriteBarrier();return true;}
   if (Glo012F0239 && TheCRCParameterCheck)
    bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"        groupDest tighten path case...");
-  tightenPath(obj,locomotorSet,dest,groupDest);
-  Int cost=rva003E11E0(obj,locomotorSet,groupDest,dest);
+  tightenPath(*(Object *const volatile*)&obj,locomotorSet,dest,groupDest);
+  Int cost=rva003E11E0(*(Object *const volatile*)&obj,locomotorSet,groupDest,dest);
   Int distance=(Int)fabs(groupDest->x-adjustDest.x)+(Int)fabs(groupDest->y-adjustDest.y);
-  if (!(distance*1.4f<cost)) return true;
+  if (!(distance*1.4f<cost)) {_ReadWriteBarrier();return true;}
   if (Glo012F0239 && TheCRCParameterCheck)
    bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"        badGroup = true in tighten case");
  }

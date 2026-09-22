@@ -27728,3 +27728,4 @@ _$E27,0x00C6B2C0,stale MainMenuUtils static initializer claim removed; the same 
 
 ?d_00893410@@YAXXZ,0x00893410,gen-dump placeholder retracted: range owned by real C++ ?rva00893410InvokeStrings@@YAXPBDPAD0HZZ landed by the fleet
 ?d_008a1940@@YAXXZ,0x008A1940,gen-dump placeholder retracted: range owned by real C++ ?flush@Rva008A1940Queue@@QAEXXZ landed by the fleet
+?d_0024e310@@YAXXZ,0x0024E310,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?apply@MemberTurnAndGoal0024E310@@QAEXPAUMemberObject0024E310@@PBVCoord3D@@M_N@Z, a gate-required claim from Code/GameEngine/Source/GameLogic/Object/Contain/HordeContain/MemberTurnAndGoal0024E310.cpp over the same 728-byte range. The Code/gen_asm/d_0024e310.asm scaffold reproduces those bytes but carries no identity."
