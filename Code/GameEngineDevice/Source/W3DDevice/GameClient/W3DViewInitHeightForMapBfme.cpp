@@ -79,27 +79,43 @@ public:
 	virtual void slot18(Real *value, unsigned *position);
 };
 
-// Retail pushes the five map fields right to left, so the field each one
-// feeds is fixed by the callee's own parameter list: +0x24 is the sample
-// source (the only pointer in the decorated ABI), +0x20 the ignored second
-// argument, +0x08 the source width, +0x0C the source height, +0x10 the state.
-class BfmeHeightMap
+// The object at +0x2FF4 of the terrain render object is WorldHeightMap: the
+// landed W3DTerrainLogicExtent.cpp (0x006BE190) reads the same slot as
+// BfmeTerrainRenderObject::m_bfmeMap (line 64), BaseHeightMapEvaluateVisible-
+// Cliff.cpp:42 types that slot `WorldHeightMap *`, and so does
+// BaseHeightMap.cpp:1687.  The fields below are named from that layout witness,
+// not from the callee's parameter list:
+//   +0x08 m_width       name_oracle 1.00; BaseHeightMap.cpp:1691 reads it as x
+//   +0x0C m_height      BaseHeightMap.cpp:1692 reads it as y, next to the width
+//                       above; TaintBufferInit.cpp:66
+//   +0x10 m_borderSize  TaintBufferInit.cpp:67, W3DTerrainVisualBfme.cpp:86,
+//                       W3DTerrainLogicExtent.cpp:55 (getBorderSizeInline)
+//   +0x20 m_dataSize    name_oracle 1.00; BaseHeightMapEvaluateVisibleCliff.cpp:30
+//   +0x24 m_data        name_oracle 1.00; same TU line 31, UnsignedShort *
+// Retail pushes all five right to left into the scalar field's initialize, so
+// the callee's own parameter names (source, unused, sourceWidth, sourceHeight,
+// state) describe how the callee uses them, not what this object calls them.
+// Declared TU-locally, as every other landed WorldHeightMap reader does: the
+// only WorldHeightMap.h in the tree is the Zero Hour upstream copy under
+// reference/, which is not on this TU's include path and carries the ZH layout
+// rather than the BFME one witnessed here.
+class WorldHeightMap
 {
 public:
 	unsigned char m_padding00[0x08];
 	int m_width;
 	int m_height;
-	int m_state;
+	int m_borderSize;
 	unsigned char m_padding14[0x20 - 0x14];
-	int m_unused;
-	const unsigned short *m_source;
+	int m_dataSize;
+	unsigned short *m_data;
 };
 
 class BfmeA1087
 {
 public:
 	unsigned char m_padding00[0x2FF4];
-	BfmeHeightMap *m_map;
+	WorldHeightMap *m_map;
 };
 
 // Slot 6 (+0x18) and slot 36 (+0x90) are the two this body calls; the landed
@@ -183,11 +199,11 @@ void W3DView::initHeightForMap()
 {
 	reinterpret_cast<Gen_00459F00 *>(&m_heightField)->bfmeReset();
 
-	BfmeHeightMap *map = g_bfmeA1087->m_map;
+	WorldHeightMap *map = g_bfmeA1087->m_map;
 	if (map != 0)
 	{
-		m_heightField.initialize(map->m_source, map->m_unused, map->m_width,
-			map->m_height, map->m_state);
+		m_heightField.initialize(map->m_data, map->m_dataSize, map->m_width,
+			map->m_height, map->m_borderSize);
 	}
 
 	m_groundLevel = TheTerrainLogic->getGroundHeight(m_pos.x, m_pos.y, 0);
