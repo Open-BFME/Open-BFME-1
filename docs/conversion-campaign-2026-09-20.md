@@ -404,3 +404,14 @@ makes MSVC emit the exact prologue, vtable store and EH-state order. Fleet
 coverage. Eight further banks this hour, several with newly proven
 identities (BfmeAptScreenOnlineLogin slot 4, GiantBirdAIUpdate slot 0x58,
 an Object vtable slot at 0x001CEE10 via the matched Object constructor).
+
+### Hour 31 — 01:03Z to 02:03Z (one to two seats, cool pools)
+
+One landing: 0x002BA240 (266 B, offset-tail-thunk family handler landed
+under its real one-argument `ret 4` signature with an address-derived
+class). A 0.99 bank at 0x0027A5E0 (348 B, AIUpdateInterface member proved
+by a `__FILE__` literal; one `pop ebx` scheduled an instruction late).
+Fleet 57 bodies / 12,703 B cumulative; repository-wide +44,369 B / +0.46 pp
+(67.04% -> 67.50%) since the fleet base, +15,622 B of it new total-exact
+coverage. The cool pool widened to twelve landed rows within 0x1000 still
+holds 530 bodies / 141 KB with at most two prior verdicts.
