@@ -928,5 +928,15 @@
   "after_sha256": "46eae15b632b9c5dfeca3977701f0d5013edd3c50dc14df96f84fa357523d018",
   "evidence": "docs/naming_evidence.md",
   "reason": "bfmeResetBC came from the retired generator's invented Bfme<Verb><Suffix>/role family (docs/naming_evidence.md lines 243-244); the body at 0x0058D930 is reached only from the anonymous d_00595e60, so no caller, vtable or string names it and it keeps the address token rva0058d930, as the earlier verdict in reverse/re_attempts.log for rva0058d930 had already concluded."
+ },
+ {
+  "old_path": "reverse/attempts/0x00597fc0.cpp",
+  "new_path": "reverse/attempts/0x00597fc0.cpp",
+  "old_name": "GameClientFunctorHolder1Middle",
+  "new_name": "Rva0050F8B0FunctorHolder",
+  "before_sha256": "cb9c24367936843f379ad7526242e2cd53cf4fbb6680159f111ca44bbfbeb35a",
+  "after_sha256": "a67c11f29722ec4681ac021870ec438eab18d8ee044b74dd1e56a52b0c2108fc",
+  "evidence": "reverse/symbols.csv",
+  "reason": "GameClientFunctorHolder1Middle was the earlier bank's guessed spelling for the WindowManager::bfmeBindRva004650F0 holder parameter at 0x0000F31C, and it did not resolve. reverse/symbols.csv's only pin for that address mangles the parameter type as Rva0050F8B0FunctorHolder (?bfmeBindRva004650F0@WindowManager@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z), so the re-banked source keeps the address-derived spelling the linked symbol already commits to instead of the unresolved guess."
  }
 ]

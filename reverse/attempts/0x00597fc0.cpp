@@ -1,5 +1,5 @@
 // ??0GameClient@@QAE@XZ
-// partial score=0.9 date=2026-09-03
+// partial score=0.988 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWMath
 // stlport
 
@@ -19,8 +19,8 @@ struct GameClientCoordValues
 
 struct GameClientStateFields
 {
-	volatile unsigned int m_18;
-	volatile unsigned short m_1c;
+	unsigned int m_18;
+	unsigned short m_1c;
 	unsigned char m_pad[2];
 };
 
@@ -56,7 +56,16 @@ public:
 	virtual void loadPostProcess() {}
 };
 
-typedef AsciiString BFMERetailAsciiString;
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString(const char *text);
+	~BFMERetailAsciiString() { releaseBuffer(); }
+
+private:
+	void releaseBuffer();
+	void *m_data;
+};
 
 struct Gen_t_0058f2f0_p12cd
 {
@@ -264,10 +273,10 @@ public:
 	GameClientFunctorBinding m_binding;
 };
 
-class GameClientFunctorHolder0
+class PalantirPlayerSideHolder
 {
 public:
-	__forceinline GameClientFunctorHolder0(GameClientFunctorBinding binding)
+	__forceinline PalantirPlayerSideHolder(GameClientFunctorBinding binding)
 	{
 		m_ptr = new GameClientFunctorWrapper0(binding);
 		if (m_ptr != 0)
@@ -277,10 +286,10 @@ public:
 	GameClientFunctorWrapper0 *m_ptr;
 };
 
-class GameClientFunctorHolder1Middle
+class Rva0050F8B0FunctorHolder
 {
 public:
-	__forceinline GameClientFunctorHolder1Middle(GameClientFunctorBinding binding)
+	__forceinline Rva0050F8B0FunctorHolder(GameClientFunctorBinding binding)
 	{
 		m_ptr = new GameClientFunctorWrapper1(binding);
 		if (m_ptr != 0)
@@ -290,10 +299,10 @@ public:
 	GameClientFunctorWrapper1 *m_ptr;
 };
 
-class GameClientFunctorHolder1Last
+class BannerAptCallbackHolder
 {
 public:
-	__forceinline GameClientFunctorHolder1Last(GameClientFunctorBinding binding)
+	__forceinline BannerAptCallbackHolder(GameClientFunctorBinding binding)
 	{
 		m_ptr = new GameClientFunctorWrapper1(binding);
 		if (m_ptr != 0)
@@ -307,11 +316,11 @@ class WindowManager
 {
 public:
 	void registerPalantirPlayerSide(const BFMERetailAsciiString &name,
-		int unknown, GameClientFunctorHolder0 callback);
-	void registerPalantirCallback(const BFMERetailAsciiString &name,
-		GameClientFunctorHolder1Middle callback);
+		int unknown, PalantirPlayerSideHolder callback);
+	void bfmeBindRva004650F0(const AsciiString &name,
+		Rva0050F8B0FunctorHolder callback);
 	void registerAptCallback(const BFMERetailAsciiString &name,
-		GameClientFunctorHolder1Last callback);
+		BannerAptCallbackHolder callback);
 };
 
 extern WindowManager *g_theWindowManager;
@@ -351,7 +360,7 @@ private:
 	GameClientMember92640 m_488;
 
 	GameClientTailFields m_tail;
-	BFMERetailAsciiString m_4d8;
+	AsciiString m_4d8;
 	Coord2D m_4dc[4];
 	GameClientList m_4fc;
 	unsigned int m_508;
@@ -366,8 +375,11 @@ GameClient::GameClient()
 {
 	GameClientFunctorMethod callback;
 	j_0002c2a5();
-	m_state.m_18 = 0;
-	m_state.m_1c = 0;
+	{
+		GameClientStateFields zero = {};
+		m_state.m_18 = zero.m_18;
+		m_state.m_1c = zero.m_1c;
+	}
 	{
 		callback =
 			(GameClientFunctorMethod)&GameClientCallbackSource::onMinLOD;
@@ -380,9 +392,9 @@ GameClient::GameClient()
 	{
 		callback =
 			(GameClientFunctorMethod)&GameClientCallbackSource::onPlayerMagicButtonClip;
-		BFMERetailAsciiString name(
+		AsciiString name(
 			"Palantir/PalantirButtons/Buttons/PlayerMagic/ButtonClip/");
-		g_theWindowManager->registerPalantirCallback(name,
+		g_theWindowManager->bfmeBindRva004650F0(name,
 			GameClientFunctorBinding(callback,
 				(GameClientFunctorTarget *)this));
 	}
@@ -390,9 +402,9 @@ GameClient::GameClient()
 	{
 		callback =
 			(GameClientFunctorMethod)&GameClientCallbackSource::onOptions;
-		BFMERetailAsciiString name(
+		AsciiString name(
 			"Palantir/PalantirButtons/Buttons/Options");
-		g_theWindowManager->registerPalantirCallback(name,
+		g_theWindowManager->bfmeBindRva004650F0(name,
 			GameClientFunctorBinding(callback,
 				(GameClientFunctorTarget *)this));
 	}
@@ -400,9 +412,9 @@ GameClient::GameClient()
 	{
 		callback =
 			(GameClientFunctorMethod)&GameClientCallbackSource::onObjectivesButtonClip;
-		BFMERetailAsciiString name(
+		AsciiString name(
 			"Palantir/PalantirButtons/Buttons/Objectives/ButtonClip/");
-		g_theWindowManager->registerPalantirCallback(name,
+		g_theWindowManager->bfmeBindRva004650F0(name,
 			GameClientFunctorBinding(callback,
 				(GameClientFunctorTarget *)this));
 	}
@@ -410,9 +422,9 @@ GameClient::GameClient()
 	{
 		callback =
 			(GameClientFunctorMethod)&GameClientCallbackSource::onPlayerPowerCap;
-		BFMERetailAsciiString name(
+		AsciiString name(
 			"Palantir/PalantirButtons/Buttons/PlayerPowerCap/");
-		g_theWindowManager->registerPalantirCallback(name,
+		g_theWindowManager->bfmeBindRva004650F0(name,
 			GameClientFunctorBinding(callback,
 				(GameClientFunctorTarget *)this));
 	}
@@ -420,9 +432,9 @@ GameClient::GameClient()
 	{
 		callback =
 			(GameClientFunctorMethod)&GameClientCallbackSource::onNextPlayerButton;
-		BFMERetailAsciiString name(
+		AsciiString name(
 			"Palantir/ObserverStuff/NextPlayerBttn");
-		g_theWindowManager->registerPalantirCallback(name,
+		g_theWindowManager->bfmeBindRva004650F0(name,
 			GameClientFunctorBinding(callback,
 				(GameClientFunctorTarget *)this));
 	}
@@ -430,9 +442,9 @@ GameClient::GameClient()
 	{
 		callback =
 			(GameClientFunctorMethod)&GameClientCallbackSource::onPriorPlayerButton;
-		BFMERetailAsciiString name(
+		AsciiString name(
 			"Palantir/ObserverStuff/PriorPlayerBttn");
-		g_theWindowManager->registerPalantirCallback(name,
+		g_theWindowManager->bfmeBindRva004650F0(name,
 			GameClientFunctorBinding(callback,
 				(GameClientFunctorTarget *)this));
 	}
@@ -479,13 +491,9 @@ GameClient::GameClient()
 
 	Coord2D *point = m_4dc;
 	Coord2D *end = (Coord2D *)&m_4fc;
-	volatile GameClientCoordValues zero;
+	GameClientCoordValues zero;
 	zero.x = 0.0f;
 	zero.y = 0.0f;
-	while (point != end)
-	{
-		point->x = zero.x;
-		point->y = zero.y;
-		++point;
-	}
+	for (; point != end; ++point)
+		*(GameClientCoordValues *)point = zero;
 }
