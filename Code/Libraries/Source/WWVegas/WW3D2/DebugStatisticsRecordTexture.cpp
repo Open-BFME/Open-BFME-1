@@ -13,6 +13,18 @@
 // latest_texture is such a handle, and the RECORD_TEXTURE_NONE path clears it
 // instead of copying t. The statics live in this TU's .data in the retail
 // order (texture_change_count 0x01346DF8 ... texture_statistics 0x01346E78).
+//
+// Honesty note on the two handle predicates: what is WITNESSED here is only
+// that the retail body calls 0x0090C620 and 0x0090C630 with the handle in ecx
+// (tools/callees.py 0x00937CC0 159). Both targets are 3-byte `xor al,al; ret`
+// stubs, carried in the function ledger under their address-derived names
+// ?m@Gen_0090c620@@QAE_NXZ / ?m@Gen_0090c630@@QAE_NXZ. The pre-existing
+// reverse/symbols.csv pins that spell them Is_Lightmap / Is_Procedural are
+// POSITIONAL INFERENCE from the Zero Hour statistics.cpp shape (first call
+// gates lightmap_texture_count, second gates procedural_texture_count) -- the
+// bodies themselves prove nothing about the names. Those spellings are kept
+// because renaming a pin is out of scope for this TU, not because the identity
+// is proven; a caller that names either symbol would outrank the inference.
 
 class TextureBaseClass
 {
@@ -76,26 +88,62 @@ private:
 };
 
 // The record is default-constructed and then assigned, exactly as the Zero
-// Hour statistics.cpp does it (tss.tex=t; tss.usage_count=1; ...).  The
-// DynamicVectorClass template body is visible here because the retail source
-// includes the vector header: with Add's body in scope MSVC 7.1 keeps the
-// referent in edi across the call and folds the freshly default-constructed
-// handle's release check, which is what reproduces retail's 159 bytes.
+// Hour statistics.cpp does it (tss.tex=t; tss.usage_count=1; ...), and then
+// handed to DynamicVectorClass::Add, which retail calls out of line at
+// 0x00937810 (tools/callees.py 0x00937CC0 159).
+//
+// That container lives in TextureStatisticsVector.cpp, which owns the
+// 0x00937810 row and explicitly instantiates
+// DynamicVectorClass<TextureStatisticsStruct>::Add. The retail source includes
+// the vector header in both places, and MSVC 7.1 needs Add's body in scope
+// here to keep the referent in edi across the call and fold the freshly
+// default-constructed handle's release check -- that is what reproduces
+// retail's 159 bytes, so the body below cannot be dropped to a declaration.
+//
+// Because the body IS here, this TU implicitly instantiates the same
+// ?Add@?$DynamicVectorClass@UTextureStatisticsStruct@@@@QAE_NABU1@@Z the
+// owning TU instantiates explicitly, so the class declarations and the Add
+// body below are copied from TextureStatisticsVector.cpp token for token --
+// in particular the SIX virtuals in the sibling's order (dtor, operator==,
+// Resize, Clear, ID, ID), which puts Resize in slot 2. An abbreviated
+// two-virtual shim here would compile Add's `Resize(...)` against slot 1 and
+// emit a two-entry vftable under the sibling's mangled name: two different
+// definitions of one entity, with the linker free to keep either.
+//
+// Nothing below is a new identity: every member is declared or defined exactly
+// as the owning TU declares or defines it.
 struct TextureStatisticsStruct
 {
 	RefCountPtr<TextureClass> tex;
 	int usage_count;
 	int change_count;
+
+	bool operator==(TextureStatisticsStruct const &other) const
+	{
+		return tex == other.tex;
+	}
+	bool operator!=(TextureStatisticsStruct const &other) const
+	{
+		return tex != other.tex;
+	}
 };
 
 template<class T>
 class VectorClass
 {
 public:
+	VectorClass(unsigned size, T const *array);
+	VectorClass(VectorClass const &);
 	virtual ~VectorClass();
+	VectorClass &operator=(VectorClass const &);
+	virtual bool operator==(VectorClass const &) const;
 	virtual bool Resize(int size, T const *array = 0);
+	virtual void Clear();
+	virtual int ID(T const *ptr);
+	virtual int ID(T const &object);
 	int Length() const { return VectorMax; }
 	T &operator[](int index) { return Vector[index]; }
+
 protected:
 	T *Vector;
 	int VectorMax;
@@ -108,8 +156,14 @@ template<class T>
 class DynamicVectorClass : public VectorClass<T>
 {
 public:
+	DynamicVectorClass(unsigned size = 0, T const *array = 0);
+	virtual ~DynamicVectorClass();
 	virtual bool Resize(int size, T const *array = 0);
+	virtual void Clear();
+	virtual int ID(T const *ptr);
+	virtual int ID(T const &object);
 	bool Add(T const &object);
+
 protected:
 	int ActiveCount;
 	int GrowthStep;
