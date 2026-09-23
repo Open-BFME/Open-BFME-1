@@ -1,5 +1,5 @@
 // ?d_003d28d0@@YAXXZ
-// partial score=0.24 date=2026-09-21
+// partial score=0.255 date=2026-09-23
 // cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Include/Precompiled
 // stlport
 
@@ -101,8 +101,9 @@ Rva003D2B80Child::Rva003D2B80Child(Rva003D2B80Source *source,
 		float yPosition = (float)y * step + corner[1] + halfStep;
 		for (int x = 0; x < m_count; ++x)
 		{
+			float xPosition = (float)x * step + halfStep + corner[0];
 			Gen003D1380Elem element;
-			element.m_00 = (float)x * step + halfStep + corner[0];
+			element.m_00 = xPosition;
 			element.m_04 = yPosition;
 			element.m_08 = source;
 			element.m_0c = 0;
