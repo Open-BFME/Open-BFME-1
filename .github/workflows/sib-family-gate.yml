@@ -1,0 +1,89 @@
+name: Scoped gates for coordinate constructor fixes
+on:
+  push:
+    branches: [research/sib-20260923-d302e8d]
+    paths: ['.github/workflows/sib-family-gate.yml']
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: windows-2022
+    timeout-minutes: 12
+    steps:
+      - run: git config --global core.longpaths true
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout: |
+            tools
+            Code
+            reference/shims
+            build/toolchains
+            baselines/bfme1/workshop-vanilla-1.03
+            reverse/attempts
+            reverse/attempt_support
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.11'
+      - run: python -m pip install capstone==5.0.3
+      - name: Verify and stage only ephemeral proposed conversions
+        shell: bash
+        run: |
+          python -u - <<'PY'
+          from pathlib import Path
+          import hashlib,json,re,subprocess,sys
+          root=Path.cwd();sys.path.insert(0,str(root/'tools'))
+          import build
+          out=root/'build/coordinate_family_proof';out.mkdir(parents=True,exist_ok=True)
+          cases=[
+           (0x0045C2F0,229,'?getScreenCornerWorldPointsAtZ@View@@UAEXPAUCoord3D@@000M@Z','Code/GameEngine/Source/GameClient/ViewScreenCornerWorldPointsAtZBfme.cpp'),
+           (0x005A0450,363,'?drawTypeText@@YAXPAVGameWindow@@PAVDisplayString@@@Z','Code/GameEngine/Source/GameClient/GUI/Transitions/TextTypeTransitionDrawTypeTextBfme.cpp'),
+           (0x0078D410,557,'?W3DGameWinDefaultDraw@@YGXPAVGameWindow@@PAVWinInstanceData@@@Z','Code/GameEngineDevice/Source/W3DDevice/GameClient/GUI/W3DGameWinDefaultDrawBfme.cpp')]
+          symbols=build.load_symbol_map();results=[];created=[]
+          for rva,size,name,destination in cases:
+              source=root/destination
+              assert not source.exists(),destination
+              old=(root/f'reverse/attempts/0x{rva:08x}.cpp').read_text()
+              text=re.sub(r'struct ICoord2D\s*\{\s*Int x;\s*Int y;\s*\};','#include "icoord.h"\n// Same empty constructor as the matched WWMath/icoord.cpp definition.\ninline ICoord2D::ICoord2D() {}',old,count=1)
+              assert text!=old,'missing expected POD coordinate'
+              if rva==0x0045C2F0:
+                  text=re.sub(r'^\s*volatile char \*viewWidthPointer = .*?;\s*$','',text,flags=re.M)
+                  text=text.replace('(Int)(origin.x + (unsigned)viewWidthPointer)','origin.x + viewWidth')
+                  text=re.sub(r'struct Coord3D\s*\{\s*Real x;\s*Real y;\s*Real z;\s*\};','struct Coord3D;',text,count=1)
+              text=re.sub(r'^// partial.*\n','',text,flags=re.M)
+              text=re.sub(r'^(// cl:[^\n]*)',r'\1 /ICode/Libraries/Source/WWVegas/WWMath',text,count=1,flags=re.M)
+              text='// SPDX-License-Identifier: GPL-3.0-or-later\n'+text
+              assert not re.search(r'\b(?:volatile|__asm|__emit|naked)\b',text)
+              source.parent.mkdir(parents=True,exist_ok=True);source.write_text(text,encoding='utf-8',newline='\n')
+              created.append(destination)
+              # The normal add_match command runs the scoped source/byte/string gate,
+              # writes the tombstone, and retires the old stash only after success.
+              command=[sys.executable,'tools/add_match.py',name,hex(rva),str(size),destination,'--replace-rva',hex(rva),'--notes','Existing bank identity and callee contracts retained; canonical ICoord2D empty construction visible; full-sized byte-exact C++; no new pins and no assembly']
+              process=subprocess.run(command,cwd=root,capture_output=True,text=True,errors='replace',timeout=150)
+              log=process.stdout+process.stderr
+              (out/f'0x{rva:08x}.gate.txt').write_text(log,encoding='utf-8')
+              print(log,flush=True)
+              assert process.returncode==0,{'rva':hex(rva),'exit':process.returncode}
+              row={'name':name,'target_rva':hex(rva),'target_size':str(size),'source':destination,'status':'matched','notes':''}
+              obj=build.row_object(row)
+              raw,relocs=build.read_object_symbol_bytes(obj,name);raw=raw.rstrip(b'\xcc')
+              q=build.compile_function(row,symbols,obj,retain_compiled=True);target=build.read_target_bytes(rva,size)
+              result={'rva':hex(rva),'symbol':name,'source':destination,'size':len(raw),'target_size':size,'resolved_differences':sum(a!=b for a,b in zip(q['bytes'],target)),'resolved_exact':q['bytes']==target,'relocations':len(relocs),'relocation_tuples':relocs,'unresolved':q['unresolved'],'masked':q['masked'],'boundary_issue':build.claimed_boundary_issue(raw,size,relocs),'source_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),'resolved_sha256':hashlib.sha256(q['bytes']).hexdigest(),'target_sha256':hashlib.sha256(target).hexdigest(),'normal_add_match_scoped_gate_passed':True,'remote_master_changed':False}
+              assert len(raw)==size and result['resolved_exact'] and not q['unresolved'] and not q['masked'] and not result['boundary_issue'],result
+              (out/f'0x{rva:08x}.json').write_text(json.dumps(result,indent=2),encoding='utf-8')
+              (out/source.name).write_text(source.read_text(),encoding='utf-8',newline='\n')
+              results.append(result);print('RESULT',json.dumps(result),flush=True)
+          # Include new files in the review patch without committing or pushing anything.
+          subprocess.run(['git','add','-N','--',*created],cwd=root,check=True)
+          patch=subprocess.check_output(['git','diff','--binary','HEAD','--',*created,'reverse/functions.csv','reverse/deleted_functions.csv','reverse/functions_deleted.csv','reverse/attempts/0x0045c2f0.cpp','reverse/attempts/0x005a0450.cpp','reverse/attempts/0x0078d410.cpp'],cwd=root)
+          (out/'coordinate-constructor-fixes.patch').write_bytes(patch)
+          (out/'summary.json').write_text(json.dumps({'cases':results,'total_bytes':sum(x['size'] for x in results),'all_scoped_gates_passed':True,'full_tree_gate_run':False,'merged':False,'research_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()},indent=2),encoding='utf-8')
+          print('SUMMARY: three scoped add_match gates passed; 1149 bytes in proposed source conversions; no remote source or ledger writes.',flush=True)
+          PY
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        if: always()
+        with:
+          name: coordinate-constructor-fixes-review
+          path: build/coordinate_family_proof/
+          retention-days: 7
