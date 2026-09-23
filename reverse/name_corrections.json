@@ -1498,5 +1498,15 @@
   "after_sha256": "a2d24d230bb6de64602b038ddcee0b05d0c8a0123958fda4222218517491bcd6",
   "evidence": "reverse/re_attempts.log",
   "reason": "GameWindow was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived Rva004A2F80LayoutView because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0074cfa0.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMapGetTerrainTexture.cpp",
+  "old_name": "TextureBaseClass",
+  "new_name": "Rva0074CDD0",
+  "before_sha256": "0b5dbd59a7843bd9815d342a1e2716c8f809d54bf0a373598b87b9188fd73309",
+  "after_sha256": "f4512f2bdbe6d2c4e6de5533b05e3716c63daee1528ed114d2e5ae44c97d2432",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "TextureBaseClass was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived Rva0074CDD0 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
  }
 ]
