@@ -1,5 +1,5 @@
 // ?onObjectCreated@GateOpenAndCloseBehavior@@UAEXXZ
-// partial score=0.79 date=2026-09-22
+// partial score=0.8 date=2026-09-23
 // Scratch-only follow-up for retail RVA 0x001FD780 (381 bytes).
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
 // Identity remains GateOpenAndCloseBehavior::onObjectCreated: vtable
@@ -41,10 +41,10 @@ __forceinline int StringBase<char>::compare(const char *str, int len) const
 {
 	const int myLen = m_data ? m_data->length : 0;
 	const char *data = m_data ? &m_data->data[0] : "";
-	int result = memcmp(data, str, myLen < len ? myLen : len);
-	if (result == 0)
-		result = myLen - len;
-	return result;
+	int byteOrder = memcmp(data, str, myLen < len ? myLen : len);
+	if (byteOrder != 0)
+		return byteOrder;
+	return myLen - len;
 }
 
 typedef int ObjectID;
