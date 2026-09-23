@@ -1,5 +1,5 @@
-// ?d_0081d600@@YAXXZ
-// partial score=0.91 date=2026-09-23
+// ?parseLineTable@SubtitleManager@@SAXPAVINI@@PAX1PBX@Z
+// partial score=0.947 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /FAsc /Fabuild/subtitle_line_table.cod
 
 #include "../../Code/GameEngine/Include/GameClient/Video.h"
@@ -20,6 +20,9 @@ public:
 	INIException(int argumentCount, const char *format, ...);
 	INIException(const INIException &other);
 	~INIException();
+
+	char *mFailureMessage;
+	int m_argumentCount;
 };
 
 class SubtitleManager
@@ -69,9 +72,8 @@ extern const float Rva0112CF08LineTableStep;
 void SubtitleManager::parseLineTable(INI *ini, void *, void *store, const void *)
 {
 	SubtitleManager *manager = TheVideoPlayer->getSubTitleMgrForVideo(ini->getFilename());
-	if (manager == 0 || store == 0)
-		throw INIException(9, "Could not locate SubTitleManager for %s", ini->getFilename());
-
+	if (manager != 0 && store != 0)
+	{
 	manager->m_enabled = true;
 	volatile float lastValue = -FLT_MAX;
 	int index = 0;
@@ -88,5 +90,10 @@ void SubtitleManager::parseLineTable(INI *ini, void *, void *store, const void *
 		lastValue = value;
 		lineTable[index] = value;
 		++index;
+	}
+	}
+	else
+	{
+		throw INIException(9, "Could not locate SubTitleManager for %s", ini->getFilename());
 	}
 }
