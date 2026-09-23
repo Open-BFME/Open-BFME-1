@@ -33,13 +33,21 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          # Most pushes contain a few commits; avoid fetching the full 1.3 GB
+          # history for every naming check. Deepen only for an older PR base.
+          fetch-depth: 256
+          sparse-checkout: |
+            tools/name_history.py
+            tools/name_regression.py
+            tools/name_oracle.py
+          sparse-checkout-cone-mode: false
       - name: Check pushed commits
         if: github.event_name == 'push'
         env:
           BEFORE: ${{ github.event.before }}
           AFTER: ${{ github.sha }}
         run: |
+          git merge-base "$BEFORE" "$AFTER" >/dev/null 2>&1 || git fetch --unshallow --no-tags origin
           python3 tools/name_history.py "$BEFORE" "$AFTER"
           python3 tools/name_regression.py "$BEFORE" "$AFTER"
       - name: Check pull request commits
@@ -48,5 +56,6 @@ jobs:
           BEFORE: ${{ github.event.pull_request.base.sha }}
           AFTER: ${{ github.event.pull_request.head.sha }}
         run: |
+          git merge-base "$BEFORE" "$AFTER" >/dev/null 2>&1 || git fetch --unshallow --no-tags origin
           python3 tools/name_history.py "$BEFORE" "$AFTER"
           python3 tools/name_regression.py "$BEFORE" "$AFTER"
