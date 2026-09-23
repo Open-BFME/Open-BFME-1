@@ -1818,5 +1818,16 @@
   "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
   "evidence": "reverse/re_attempts.log",
   "reason": "m_zoom was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme40 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+}
+,
+ {
+  "old_path": "reverse/attempts/0x001c7200.cpp",
+  "new_path": "reverse/attempts/0x001c7200.cpp",
+  "old_name": "m_reject",
+  "new_name": "m_byte5C",
+  "before_sha256": "cf7fab71956f072e06703f77e6c4ffe333df7e887837e098b12bc5a2c2470de4",
+  "after_sha256": "ef9b5a05babfcd2e4f97d5668bdc847453881efe15b9668aaf91f5b6e50745ac",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "The existing Object_rva001C7CF0.cpp reads PhysicsBehavior::m_byte5C at relative +0x5c. The earlier draft called that byte m_reject. The re_attempts row records the corrected name."
  }
 ]
