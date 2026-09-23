@@ -1,114 +1,216 @@
-// ?refreshCells@Rva006C23B0@@QAEXHH@Z
-// partial score=0.1 date=2026-09-05
-// cl: /DNDEBUG /MD /EHsc
-// ?d_006c23b0@@YAXXZ (Code/gen_asm/d_0069c4f0.asm), size 690.
-//
-// RVA-derived reconstruction, identity NOT proven. `this` is believed to be
-// W3DRadar (neighbours 0x006C2710 setShroudLevel / 0x006C3170 drawEvents are
-// both W3DRadar; the naked lift at 0x006C2710 also reads [g_bfmeA1087+0x30b8]
-// -- the SAME global+offset this body reads -- so both are W3DRadar methods
-// gated on the same "shroud enabled" pointer). Embedded sub-object at
-// this+0x1494 answers getSurfaceLevel/bfmeAskGN/bfmeAskEF -- looks like a
-// W3DRadarResetTexture member (matches the pinned getSurfaceLevel call).
-//
-// Structural notes for the next worker:
-//   Two int stack args (ret 0xc pops 3 dwords total incl. one more) define a
-//   world-space rect; getSurfaceLevel() fills a local W3DRadarResetSurface
-//   with per-axis scale/offset floats (+0x10/+0x14 read as floats). Those,
-//   combined with __ftol2-heavy fixed-point math and bfmeAskGN/bfmeAskEF
-//   (BfmeThingGN/BfmeThingEF, both returning an int bias added before the
-//   final ftol2), produce a 2D cell bounding box [minX..maxX]x[minY..maxY]
-//   clamped to [0,0x80). It then double-loops the box calling the
-//   still-dumped 0x008FCF40 (690B, unexplored) per cell with (row, col,
-//   &localSurface). At the end it destructs the local W3DRadarResetSurface
-//   (target 0x0090E670's sibling dtor at 0x0090C5B0) and calls a global
-//   bfmeUnlock1179 (target 0x00D05B10) -- a shroud-buffer lock/unlock pair
-//   opened only when the this+0x30b8-style global pointer is non-null.
-//
-// Not byte-matched: this is a compiling skeleton only, banked as partial.
-// The exact float expression order (fmul/fild/ftol2 sequencing) was not
-// reproduced -- see docs/shape_levers.md x87 reassociation notes before the
-// next attempt.
+// ?refreshCells@Rva006C23B0@@QAEXHHH@Z
+// partial score=0.3 date=2026-09-23
+// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// Revised from the saved 0x006C23B0 body using the current matched helper contracts.
 
-struct Rva006C23B0Surface
+class BfmeA1087;
+extern BfmeA1087 *g_bfmeA1087;
+
+struct Rva006C23B0Grid
 {
-	unsigned char m_pad[0x10];
-	float m_scaleX;
-	float m_scaleY;
-	unsigned char m_tail[0x24];
+	unsigned char pad00[0x10];
+	float cellWidth;
+	float cellHeight;
 };
 
-class Rva006C23B0SubTexture
+struct Rva006C23B0GlobalView
+{
+	unsigned char pad00[0x30b8];
+	Rva006C23B0Grid *grid;
+};
+
+class Coord3D;
+class ICoord2D;
+
+class Radar
 {
 public:
-	Rva006C23B0Surface getSurfaceLevel();
+	bool worldToRadar(const Coord3D *world, ICoord2D *radar);
+};
+
+#pragma comment(linker, "/alternatename:?worldToRadar@Radar@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z=?j_00026099@@YAXXZ")
+
+class Rva00106F20Radar
+{
+public:
+	void computeAspect(float *xRatio, float *yRatio);
+
+private:
+	struct Coord3D
+	{
+		float x;
+		float y;
+		float z;
+	};
+
+	struct Region3D
+	{
+		Coord3D lo;
+		Coord3D hi;
+	};
+
+	unsigned char pad00[0x143c];
+	Region3D mapExtent;
+};
+
+#pragma comment(linker, "/alternatename:?computeAspect@Rva00106F20Radar@@QAEXPAM0@Z=?j_0000827e@@YAXXZ")
+
+class W3DRadarResetSurface
+{
+public:
+	~W3DRadarResetSurface();
+
+private:
+	void *surface;
+};
+
+typedef char CheckResetSurfaceSize[sizeof(W3DRadarResetSurface) == 4 ? 1 : -1];
+
+class W3DRadarResetTexture
+{
+public:
+	W3DRadarResetSurface getSurfaceLevel();
+
+private:
+	void *texture;
+};
+
+typedef char CheckResetTextureSize[sizeof(W3DRadarResetTexture) == 4 ? 1 : -1];
+
+class BfmeThingGN
+{
+public:
 	int bfmeAskGN();
+};
+
+class BfmeThingEF
+{
+public:
 	int bfmeAskEF();
 };
 
+class SurfaceClass
+{
+public:
+	void rva008FCF40(unsigned x, unsigned y, unsigned value);
+
+private:
+	void *D3DSurface;
+};
+
 extern void W3DRadarResetLock(void);
-extern int __ftol2(void);
-extern void j_00026099(void);
-extern void j_0000827e(void);
+extern char bfmeUnlock1179(void);
+
+class Rva006C23B0Lock
+{
+public:
+	Rva006C23B0Lock() { W3DRadarResetLock(); }
+	~Rva006C23B0Lock() { bfmeUnlock1179(); }
+};
+
+extern float g_bfmeUint32Scale;
+extern float g_bfmeDefaultBU;
+extern const float g_bfmeK1253;
+
+struct Rva006C23B0WorldPoint
+{
+	float x;
+	float y;
+	float z;
+};
+
+struct Rva006C23B0RadarPoint
+{
+	int x;
+	int y;
+};
 
 class Rva006C23B0
 {
 public:
-	void refreshCells(int arg1, int arg2);
+	void refreshCells(int cellX, int cellY, int status);
 
 private:
-	unsigned char m_pad[0x1494];
-	Rva006C23B0SubTexture m_texture;
+	unsigned char pad00[0x1494];
+	W3DRadarResetTexture texture;
 };
 
-extern void *g_bfmeA1087;
-
-void Rva006C23B0::refreshCells(int arg1, int arg2)
+void Rva006C23B0::refreshCells(int cellX, int cellY, int status)
 {
-	void *shroud = *(void **)((char *)g_bfmeA1087 + 0x30b8);
-	if (shroud == 0)
+	BfmeA1087 *global = g_bfmeA1087;
+	Rva006C23B0Grid *grid = 0;
+	if (global != 0)
+		grid = ((Rva006C23B0GlobalView *)global)->grid;
+	if (grid == 0)
 		return;
 
-	W3DRadarResetLock();
+	Rva006C23B0Lock lock;
 
-	Rva006C23B0Surface surface = m_texture.getSurfaceLevel();
+	W3DRadarResetSurface surface = texture.getSurfaceLevel();
 
-	float sx = surface.m_scaleX;
-	float sy = surface.m_scaleY;
+	int mapMinX = (int)(grid->cellWidth * (float)cellX);
+	int mapMinY = (int)(grid->cellHeight * (float)cellY);
+	int mapMaxX = (int)(grid->cellWidth * (float)(cellX + 1));
+	int mapMaxY = (int)(grid->cellHeight * (float)(cellY + 1));
 
-	int minX = (int)(sx * (float)arg1);
-	int maxX = (int)(sx * (float)(arg1 + 1));
-	int minY = (int)(sy * (float)arg2);
-	int maxY = (int)(sy * (float)(arg2 + 1));
+	Rva006C23B0WorldPoint world;
+	Rva006C23B0RadarPoint radar;
+	Radar *radarThis = (Radar *)this;
+	world.x = (float)mapMinX;
+	world.y = (float)mapMinY;
+	radarThis->worldToRadar((const Coord3D *)&world, (ICoord2D *)&radar);
+	int radarMinX = radar.x;
+	int radarMinY = radar.y;
 
-	int bias1 = m_texture.bfmeAskGN();
-	if (bias1 < 0)
-		minX += bias1;
+	world.x = (float)mapMaxX;
+	world.y = (float)mapMaxY;
+	radarThis->worldToRadar((const Coord3D *)&world, (ICoord2D *)&radar);
+	int radarMaxX = radar.x;
+	int radarMaxY = radar.y;
 
-	int bias2 = m_texture.bfmeAskEF();
-	if (bias2 < 0)
-		minY += bias2;
+	float xRatio;
+	float yRatio;
+	((Rva00106F20Radar *)this)->computeAspect(&xRatio, &yRatio);
 
-	if (maxX > 0x80)
-		maxX = 0x80;
-	if (maxY > 0x80)
-		maxY = 0x80;
-	if (minX < 0)
-		minX = 0;
-	if (minY < 0)
-		minY = 0;
-
-	extern void refreshCell(int, int, Rva006C23B0Surface *);
-	for (int y = minY; y <= maxY; ++y)
+	if (xRatio > yRatio)
 	{
-		for (int x = minX; x <= maxX; ++x)
+		radarMinY = (int)(radarMinY * yRatio);
+		radarMaxY = (int)(radarMaxY * yRatio);
+		int north = ((BfmeThingGN *)&texture)->bfmeAskGN();
+		if (north < 0)
 		{
-			if (x < 0 || y < 0 || x >= 0x80 || y >= 0x80)
-				continue;
-			refreshCell(x, y, &surface);
+			float correction = ((float)north + g_bfmeUint32Scale) *
+				((g_bfmeDefaultBU - yRatio) * g_bfmeK1253);
+			radarMinY = (int)(radarMinY + correction);
+			radarMaxY = (int)(radarMaxY + correction);
 		}
 	}
 
-	extern void bfmeUnlock1179(void);
-	bfmeUnlock1179();
+	radarMinX = (int)(radarMinX * xRatio);
+	radarMaxX = (int)(radarMaxX * xRatio);
+	int east = ((BfmeThingEF *)&texture)->bfmeAskEF();
+	if (east < 0)
+	{
+		float correction = ((float)east + g_bfmeUint32Scale) *
+			((g_bfmeDefaultBU - xRatio) * g_bfmeK1253);
+		radarMinX = (int)(radarMinX + correction);
+		radarMaxX = (int)(radarMaxX + correction);
+	}
+
+	unsigned char alpha;
+	if (status == 2)
+		alpha = 0xff;
+	else
+		alpha = status == 1 ? 0x7f : 0;
+
+	for (int y = radarMinY; y <= radarMaxY; ++y)
+	{
+		for (int x = radarMinX; x <= radarMaxX; ++x)
+		{
+			if (x < 0 || y < 0 || x >= 0x80 || y >= 0x80)
+				continue;
+			((SurfaceClass *)&surface)->rva008FCF40(x, y, alpha);
+		}
+	}
+
 }
