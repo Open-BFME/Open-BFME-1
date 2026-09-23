@@ -1849,5 +1849,15 @@
   "old_name": "BfmeAnimationReceiver",
   "new_name": "Rva0061E230Receiver",
   "reason": "The 0x0061E230 verdict rows establish only virtual slots and a Matrix3D transform, with no owner or receiver class name. BfmeAnimationReceiver was a bank-local role guess, not independently named. The landed receiver retains the address token."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameLogic/W3DRenderObjectSnapshotCtor.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameLogic/W3DRenderObjectSnapshotCtor.cpp",
+  "old_name": "m_data",
+  "new_name": "m_pad09",
+  "before_sha256": "f526d72c61add5bb5ad50aa3395d73fd494a730a697b057114f99dd947197fdb",
+  "after_sha256": "915abb538b92d7384804c1baec36495d1a453e122d3cdbd63e6f9d3d1c780b6e",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "The old m_data array covered the full 0x1F4-byte object from offset 0. Retail stores m_active at +0x8 and constructs m_map0c at +0x0C, so m_pad09 names only the three alignment bytes between them."
  }
 ]
