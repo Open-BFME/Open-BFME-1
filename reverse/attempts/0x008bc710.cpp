@@ -1,3 +1,5 @@
+// ?bfmeFallback1281@BfmeSlotDispatcher1281@@QAEXPAXHH@Z
+// partial score=0.0 date=2026-09-22
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 extern "C" int __cdecl isdigit(int value);
@@ -471,6 +473,11 @@ private:
 	char m_padding000[0x820];
 	int m_count;
 	void *m_slots[64];
+	char m_unreconstructed924[0x1240 - 0x924];
+	BfmeEntrySource1282 *m_source1240;
+	char m_unreconstructed1244[0x126c - 0x1244];
+	BfmeEntry1282 *m_current126c;
+	int m_active1270;
 };
 
 void BfmeSlotDispatcher1281::bfmeDispatchSlots1281(int enabled, int mode, void *tail)
@@ -526,5 +533,34 @@ void BfmeSlotDispatcher1281::bfmeRouteEncoded1281(unsigned int encoded)
 		bfmeFallback1281(result, group, slot);
 }
 
+// Retail 0x008BC710, decoded extent 1415 bytes.  The caller at 0x008BCCC0
+// proves the argument ABI; the state and transition paths below are still a
+// partial reconstruction of the long switch.
+void BfmeSlotDispatcher1281::bfmeFallback1281(void *result, int group, int slot)
+{
+	if (group == 0) {
+		if (m_current126c == 0) {
+			m_active1270 = slot != 1;
+			return;
+		}
+		if (m_active1270 == 0 && slot == 0) {
+			m_active1270 = 1;
+			reinterpret_cast<BfmeBroadcast1285 *>(this)->bfmeAdvance1285();
+		}
+		if (slot == 1 && m_active1270 != 0) {
+			m_active1270 = 0;
+			reinterpret_cast<BfmeBroadcast1285 *>(this)->bfmeAdvance1285();
+			if (m_current126c != 0 && m_source1240 != m_current126c->m_source4c) {
+				reinterpret_cast<BfmeBroadcast1282 *>(this)->bfmeBroadcast1282(m_current126c, 1);
+				return;
+			}
+		}
+		return;
+	}
+	if ((group == 1 || group == 2 || group == 14 || group == 15) &&
+		m_active1270 == 0 && slot == 0 && result != 0) {
+		m_current126c = reinterpret_cast<BfmeEntry1282 *>(result);
+	}
+}
 
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD

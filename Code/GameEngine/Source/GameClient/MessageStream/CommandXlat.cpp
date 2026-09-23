@@ -111,8 +111,8 @@ public:
     virtual void slot09(); // vtable +0x24
     virtual void slot0A(); // vtable +0x28
     virtual void slot0B(); // vtable +0x2C
-    virtual void __cdecl message(UnicodeString,...); // vtable +0x30
-    virtual void __cdecl message(AsciiString,...); // vtable +0x34
+    virtual void __cdecl message(UnicodeString,...); // MSVC overloaded slot +0x34
+    virtual void __cdecl message(AsciiString,...); // MSVC overloaded slot +0x30
     virtual void slot0E(); // vtable +0x38
     virtual void slot0F(); // vtable +0x3C
     virtual void slot10(); // vtable +0x40

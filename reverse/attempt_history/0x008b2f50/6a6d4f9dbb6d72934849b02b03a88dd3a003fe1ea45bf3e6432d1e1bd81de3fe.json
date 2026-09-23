@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6a6d4f9dbb6d72934849b02b03a88dd3a003fe1ea45bf3e6432d1e1bd81de3fe",
+  "symbol": "?Rva008B2F50@Rva008993E0Owner@@QAEPAXPAX0@Z",
+  "score_kind": "author-estimate",
+  "score": 0.0,
+  "source": "// ?Rva008B2F50@Rva008993E0Owner@@QAEPAXPAX0@Z\n// partial score=0.0 date=2026-09-22\n// Partial reconstruction of retail vtable slot 10 at 0x008B2F50.\n// Only the first dispatch arm is represented; the remaining arms need work.\ntypedef unsigned int Word;\nclass Rva008993E0Owner {\npublic:\n    char pad[0x20];\n    void *Rva008B2F50(void *text, void *context);\n};\nextern \"C\" Word * __cdecl rva008D5DC0(const char *, unsigned short);\nextern \"C\" void * __cdecl rva00897640(unsigned int);\nextern \"C\" void * __cdecl rva00899FC0(void *);\nvoid *Rva008993E0Owner::Rva008B2F50(void *text, void *context)\n{\n    if (!text) return 0;\n    Word *source = reinterpret_cast<Word *>(context);\n    Word *kind = rva008D5DC0(reinterpret_cast<const char *>(*source + 8),\n                              *reinterpret_cast<unsigned short *>(*source + 2));\n    if (!kind) return 0;\n    if (kind[1] == 1) {\n        void *&singleton = *reinterpret_cast<void **>(0x01338360);\n        if (!singleton) {\n            void *memory = rva00897640(0x24);\n            singleton = memory ? rva00899FC0(memory) : 0;\n            if (singleton) {\n                Word *flags = reinterpret_cast<Word *>(singleton) + 1;\n                *flags = (*flags & 0xffffc07f) | 0x40;\n            }\n        }\n        return singleton;\n    }\n    return 0;\n}\n"
+}
