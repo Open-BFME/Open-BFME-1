@@ -1,5 +1,5 @@
-// ?compute@Rva00166A80@@QAE_NPBXPAUCoord3D@@HM@Z
-// partial score=0.75 date=2026-09-18
+// ?computeSuperweaponTarget@AIPlayer@@UAE_NPBVSpecialPowerTemplate@@PAUCoord3D@@HM@Z
+// partial score=0.76 date=2026-09-23
 // cl: /DNDEBUG /MD /EHsc
 
 typedef bool Bool;
@@ -56,7 +56,7 @@ class Rva00166A80
 public:
 	static void getPlayerStructureBounds(Region2D *bounds, Int playerNdx);
 	static Int getPlayerSuperweaponValue(Coord3D *center, Int playerNdx,
-		Real radius, Bool includeMilitaryUnits);
+		Real radius);
 	static Bool findPositionAround(const Coord3D *center,
 		const FindPositionOptions *options, Coord3D *result);
 
@@ -65,7 +65,7 @@ public:
 };
 
 #pragma comment(linker, "/alternatename:?getPlayerStructureBounds@Rva00166A80@@SAXPAURegion2D@@H@Z=?j_000362aa@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getPlayerSuperweaponValue@Rva00166A80@@SAHPAUCoord3D@@HM_N@Z=?j_000255db@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getPlayerSuperweaponValue@Rva00166A80@@SAHPAUCoord3D@@HM@Z=?j_000255db@@YAXXZ")
 #pragma comment(linker, "/alternatename:?findPositionAround@Rva00166A80@@SA_NPBUCoord3D@@PBUFindPositionOptions@@PAU2@@Z=?j_00026c4c@@YAXXZ")
 
 struct Rva00166A80Override
@@ -123,7 +123,7 @@ Bool Rva00166A80::compute(const void *power, Coord3D *retPos, Int playerNdx,
 				pos.y = bounds.lo.y + (bounds.height() * y) / yCount;
 				pos.z = 0;
 				Int curCash = getPlayerSuperweaponValue(&pos, playerNdx,
-					2 * weaponRadius, true);
+					2 * weaponRadius);
 				if (curCash > cash)
 				{
 					cash = curCash;
@@ -143,10 +143,10 @@ Bool Rva00166A80::compute(const void *power, Coord3D *retPos, Int playerNdx,
 		for (y = 0; y < yCount; ++y)
 		{
 			pos.x = bestPos.x + (x - 5) * (weaponRadius * g_bfmeScaleBK);
-			pos.y = bestPos.y + (x - 5) * (weaponRadius * g_bfmeScaleBK);
+			pos.y = bestPos.y + (y - 5) * (weaponRadius * g_bfmeScaleBK);
 			pos.z = 0;
 			Int curCash = getPlayerSuperweaponValue(&pos, playerNdx,
-				weaponRadius, true);
+				weaponRadius);
 			if (curCash > cash)
 			{
 				cash = curCash;
