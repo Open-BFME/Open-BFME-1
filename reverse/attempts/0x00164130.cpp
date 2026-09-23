@@ -1,8 +1,9 @@
-// ?getPlayerSuperweaponValue@AIPlayer@@SAHPAUCoord3D@@HM@Z
+// ?getPlayerSuperweaponValue@AIPlayer@@KAHPAUCoord3D@@HM@Z
 // partial score=0.98 date=2026-09-09
-// Retail 0x00164130/502: BFME's three-argument superweapon target value.
-// The player-team traversal, override lookup, kind flags, and retail calls
-// identify this as the BFME overload distinct from the four-argument ZH body.
+// The retail body at 0x00164130 traverses player teams and values nearby objects.
+// The three-argument AIPlayer method in reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp uses the same traversal and cost calculation.
+// The current GeneralsMD AIPlayer header declares a four-argument overload in an access section that emits KAH.
+// The bank declares the three-argument overload in that section too.
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
 
 #include <math.h>
@@ -274,7 +275,7 @@ extern Real g_bfmeDefaultBU;
 
 class AIPlayer
 {
-public:
+protected:
 	static Int getPlayerSuperweaponValue(Coord3D *center, Int playerNdx, Real radius);
 };
 
@@ -334,12 +335,12 @@ Int AIPlayer::getPlayerSuperweaponValue(Coord3D *center, Int playerNdx, Real rad
 						finalTemplateForCost = templateForCost;
 
 				templateForCostDone:
-					Real value = calcCostForTemplate(finalTemplateForCost, pPlayer);
+					Real cost = calcCostForTemplate(finalTemplateForCost, pPlayer);
 					if ((pObj->getTemplate()->m_kindOf & 0x20000) != 0)
-						value = value / 10;
-					if (value > 3000)
-						value = value / 10;
-					cash += factor * value;
+						cost = cost / 10;
+					if (cost > 3000)
+						cost = cost / 10;
+					cash += factor * cost;
 				}
 			}
 		}
