@@ -1238,5 +1238,15 @@
   "after_sha256": "82be076421ed67ce6c2ff556479fd886d3e7999a6fe5a9b0dc1acdf9d2638054",
   "evidence": "reverse/re_attempts.log",
   "reason": "The vtable and matched state source identify the enclosing class as AITNGuardInnerState. The old m_bfmePadAEBE label came from the fabricated bank and has no layout evidence behind it. The body models the four bytes at +0x20 without assigning them a meaning, so it uses m_at20."
+ },
+ {
+  "old_path": "reverse/attempts/0x003e2f30.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/PathfinderIterateCellsAlongLineCallbacks.cpp",
+  "old_name": "ExamineCellsStruct",
+  "new_name": "Rva003D61C0",
+  "before_sha256": "d16da7c20ad50e53231d0a36cf4b8669ceb8da3a1b43ab2f000b26e5b7b1a601",
+  "after_sha256": "376d5ccdc47d518755ad649595df6db74d4d5dbcebee3ab7c8bc53d82145a5bc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "No rename happened: ExamineCellsStruct is kept verbatim in the new file as the 0x003E2F30 walk's user-data type and its callback owner (?cellCallback@ExamineCellsStruct@@ pinned to ILT 0x00010532). The token diff pairs it with Rva003D61C0 only because that already-matched snapLine callback class (0x003DCD80, PathfindSnapLineCellCallback.cpp) is declared at the same position in the multi-walk file."
  }
 ]

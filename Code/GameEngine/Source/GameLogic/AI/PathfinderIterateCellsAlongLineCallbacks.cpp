@@ -1,14 +1,16 @@
 // cl: /DNDEBUG /MD
 //
-// Six of retail's cell-space Pathfinder::iterateCellsAlongLine instances, one
+// Eight of retail's cell-space Pathfinder::iterateCellsAlongLine instances, one
 // 478-byte body each, byte-identical apart from the callback they call:
 //
 //   0x003DE480  ILT 0x00005713  Rva003DE480Struct       -> Rva003D61C0::cellCallback
+//   0x003E2F30  ILT 0x00031C50  ExamineCellsStruct      -> ExamineCellsStruct::cellCallback
 //   0x003E33F0  ILT 0x00013DC2  GroundPathPassableInfo  -> GroundPathPassableStruct::cellCallback
 //   0x003E7F80  ILT 0x00029DF7  BfmeCheckMovementInfo   -> Rva003E5820Info::examine
 //   0x003E81E0  ILT 0x00023DDF  Rva003DB640Info         -> LinePassableStruct::linePassableCallback
 //   0x003E8440  ILT 0x0001DAA2  Rva003E5A50Info         -> Rva003E5A50Info::rva003e5b80
 //   0x003F1CA0  ILT 0x0003EBC1  Rva003F1CA0Struct       -> Rva003EE9F0::run
+//   0x003F1F00  ILT 0x000190B0  void (tightenPath)      -> TightenPathCallbackInfo::cellCallback
 //
 // Retail drops ZH's CellAlongLineProc parameter and instantiates the walk per
 // user-data type (see pathfind_iterateCellsAlongLine_world.cpp); the walk
@@ -50,6 +52,17 @@ private:
 };
 
 class Rva003D61C0
+{
+public:
+	Int cellCallback( PathfindCell *from, PathfindCell *to, Int x, Int y );
+};
+
+struct ExamineCellsStruct
+{
+	Int cellCallback( PathfindCell *from, PathfindCell *to, Int x, Int y );
+};
+
+class TightenPathCallbackInfo
 {
 public:
 	Int cellCallback( PathfindCell *from, PathfindCell *to, Int x, Int y );
@@ -111,7 +124,13 @@ public:
 	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
 		PathfindLayerEnum layer, Rva003F1CA0Struct *userData );
 	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
+		PathfindLayerEnum layer, ExamineCellsStruct *userData );
+	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
 		PathfindLayerEnum layer, ObstacleCellStruct *userData );
+
+protected:
+	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
+		PathfindLayerEnum layer, void *userData );
 
 private:
 	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
@@ -265,4 +284,18 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &en
 {
 	return walkCellsAlongLine<ObstacleCellStruct, &ObstacleCellStruct::cellCallback>(
 		start, end, layer, userData );
+}
+
+Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
+	PathfindLayerEnum layer, ExamineCellsStruct *userData )
+{
+	return walkCellsAlongLine<ExamineCellsStruct, &ExamineCellsStruct::cellCallback>(
+		start, end, layer, userData );
+}
+
+Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
+	PathfindLayerEnum layer, void *userData )
+{
+	return walkCellsAlongLine<TightenPathCallbackInfo, &TightenPathCallbackInfo::cellCallback>(
+		start, end, layer, (TightenPathCallbackInfo *)userData );
 }
