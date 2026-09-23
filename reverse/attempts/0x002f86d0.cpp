@@ -1,5 +1,5 @@
 // ?doSetPlayersNearestUnitOfTypeToReference@ScriptActions@@IAEXABVAsciiString@@PAVScriptActionParameter@@0@Z
-// partial score=0.98 date=2026-09-21
+// partial score=0.985 date=2026-09-23
 // ?doSetPlayersNearestUnitOfTypeToReference@ScriptActions@@IAEXABVAsciiString@@PAVScriptActionParameter@@0@Z
 // TEAM_SET_PLAYERS_NEAREST_UNIT_OF_TYPE_TO_REFERENCE at retail RVA 0x002F86D0.
 // The action binds the nearest object of a type to a named unit reference.
