@@ -1,5 +1,5 @@
 // ?xfer@GarrisonContain@@MAEXPAVXfer@@@Z
-// partial score=0.98 date=2026-09-21
+// partial score=0.99007 date=2026-09-23
 // Partial clean C++ reconstruction for retail RVA 0x0021DAA0.
 // The owner is GarrisonContain::xfer: constructor 0x0021D820 installs
 // vtable 0x010AB818 and slot 3 reaches this RVA.  The surrounding source
@@ -35,6 +35,17 @@ struct BfmeGarrisonXferVersion
 struct XferException
 {
 	char *text;
+	Int tag;
+};
+
+union BfmeGarrisonXferWorking
+{
+	XferException error;
+	struct
+	{
+		Int loopCount;
+		UnsignedInt teamID;
+	} values;
 };
 
 class Team
@@ -162,22 +173,24 @@ void GarrisonContain::xfer(Xfer *xfer)
 	version.m_currentVersion = 1;
 	target->xferVersion(&version);
 
-	UnsignedInt teamID = self->m_originalTeam ? self->m_originalTeam->getID() : 0;
-	target->xferUnsignedInt(&teamID);
-	if (target->isLoading())
 	{
-		if (teamID)
+		BfmeGarrisonXferWorking working;
+		working.values.teamID = self->m_originalTeam ? self->m_originalTeam->getID() : 0;
+		target->xferUnsignedInt(&working.values.teamID);
+		if (target->isLoading())
 		{
-			XferException error;
-			self->m_originalTeam = TheTeamFactory->findTeamByID(teamID);
-			if (self->m_originalTeam == 0)
+			if (working.values.teamID)
 			{
-				bfmeFormatText(&error, 5, 0);
-				_CxxThrowException(&error, &g_guardTargetTypeThrowInfo);
+				self->m_originalTeam = TheTeamFactory->findTeamByID(working.values.teamID);
+				if (self->m_originalTeam == 0)
+				{
+					bfmeFormatText(&working.error, 5, 0);
+					_CxxThrowException(&working.error, &g_guardTargetTypeThrowInfo);
+				}
 			}
+			else
+				self->m_originalTeam = 0;
 		}
-		else
-			self->m_originalTeam = 0;
 	}
 
 	Int i;
