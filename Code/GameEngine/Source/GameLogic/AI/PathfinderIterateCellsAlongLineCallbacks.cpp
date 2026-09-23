@@ -54,6 +54,12 @@ public:
 	Int cellCallback( PathfindCell *from, PathfindCell *to, Int to_x, Int to_y );
 };
 
+struct ObstacleCellStruct
+{
+public:
+	Int cellCallback( PathfindCell *from, PathfindCell *to, Int x, Int y );
+};
+
 class Rva003E5820Info
 {
 public:
@@ -94,6 +100,8 @@ public:
 		PathfindLayerEnum layer, Rva003E5A50Info *userData );
 	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
 		PathfindLayerEnum layer, Rva003F1CA0Struct *userData );
+	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
+		PathfindLayerEnum layer, ObstacleCellStruct *userData );
 
 private:
 	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
@@ -233,4 +241,11 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &en
 {
 	return walkCellsAlongLine<Rva003EE9F0, &Rva003EE9F0::run>(
 		start, end, layer, (Rva003EE9F0 *)userData );
+}
+
+Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
+	PathfindLayerEnum layer, ObstacleCellStruct *userData )
+{
+	return walkCellsAlongLine<ObstacleCellStruct, &ObstacleCellStruct::cellCallback>(
+		start, end, layer, userData );
 }
