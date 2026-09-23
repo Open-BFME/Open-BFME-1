@@ -988,5 +988,15 @@
   "after_sha256": "49ceb3d362f9ff9cff175bbc59cb4b668d4c927fb883d21ba7c84b29be6d0678",
   "evidence": "docs/naming_evidence.md",
   "reason": "The 17-entry array at +0x8 is never read by the destructor and has no layout witness, so its semantic name is unsupported here."
+ },
+ {
+  "old_path": "reverse/attempts/0x001c7530.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Object_rva001C7530.cpp",
+  "old_name": "bfmeGetNonnegativePreferredLocomotorHeight",
+  "new_name": "rva001c7530",
+  "before_sha256": "29c5c67a67004167122e58e0ad4858558c59e22cc6baff590711d8d3f8ef3035",
+  "after_sha256": "51d8614ba1ef37da945b5f6d6403da29fd483dfe727268ad30968338a7d3cc76",
+  "evidence": "reverse/symbols.csv",
+  "reason": "Alignment artifact of this bank-to-source move: Object::bfmeGetNonnegativePreferredLocomotorHeight is still declared unchanged; the real change is the bank's opaque Rva001C7530::scan becoming Object::rva001c7530, the spelling reverse/symbols.csv already pins at 0x001C7530 (?rva001c7530@Object@@QAE_NXZ), with the owner proven because the walked pointer is passed to that Object method and m_template/m_ai are read."
  }
 ]
