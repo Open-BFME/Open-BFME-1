@@ -281,7 +281,7 @@ protected:
 	char m_pad020[0x24 - 0x20];
 	Coord3D m_goalPosition;					// +0x24
 	char m_pad030[0x4c - 0x30];
-	Bool m_adjustsDestination;				// +0x4c
+	Bool m_adjustDestinations;				// +0x4c
 	Bool m_waitingForPath;					// +0x4d
 	char m_pad04e[0x50 - 0x4e];
 	Coord3D m_prevVictimPos;				// +0x50
@@ -337,7 +337,7 @@ Bool AIAttackApproachTargetState::computePath()
 		Object *victim = getMachineGoalObject();
 		m_prevVictimPos = *victim->getPosition();
 		CRCDEBUG_LOG("CritterDesync: setAdjustDestination(TRUE) 18");
-		m_adjustsDestination = true;
+		m_adjustDestinations = true;
 
 		Bool usePathfinder = false;
 		if (!source->isKindOf((KindOfType)58))	// BFME kind index 58; name unproven
@@ -358,7 +358,7 @@ Bool AIAttackApproachTargetState::computePath()
 			// Weapon is basically a contact weapon, so let the attacker pathfind into the target.
 			ai->ignoreObstacle(victim);
 			CRCDEBUG_LOG("CritterDesync: setAdjustDestination(FALSE) 19");
-			m_adjustsDestination = false;
+			m_adjustDestinations = false;
 			CALL(SetPathExtraDistance, ai, j_0000ebab)(100.0f);
 			TheAI->m_pathfinder->adjustDestination(getMachineOwner(), ai->m_locomotorSet,
 				&m_goalPosition, 0);
@@ -400,7 +400,7 @@ Bool AIAttackApproachTargetState::computePath()
 
 	// goal position.
 	CRCDEBUG_LOG("CritterDesync: setAdjustDestination(TRUE) 20");
-	m_adjustsDestination = true;
+	m_adjustDestinations = true;
 	m_stopIfInRange = false;
 	m_goalPosition = *getMachineGoalPosition();
 	if (!forceRepath)
