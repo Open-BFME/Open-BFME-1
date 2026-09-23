@@ -1,37 +1,24 @@
 // ?rva00190f10@Rva00190F10Owner@@QAE_NPAXPAVRva00190F10Arg@@@Z
-// partial score=0.46 date=2026-09-21
+// partial score=0.95 date=2026-09-22
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x00190F10, 398 bytes.
 //
-// After the proven guard at 0x00190700 (Code/gen carved row, still a dump;
-// reached through j_00013b10) passes, this allocates and constructs a
-// BfmeOwnVVB(id, (void*)4) -- same two-argument constructor landed at
-// Code/GameEngine/Source/Common/BfmeOwnVVBConstructors.cpp -- appends four
-// BfmeVector3BG values through the already-landed
-// Code/GameEngine/Source/Common/Bfme5IndexedVector3Setter.cpp inline
-// (reusing one scratch BfmeVector3BG with only the X component overwritten
-// for two of the four appends, matching the retail partial-store pattern),
-// threads the new node onto this-relative +0xc via its own inherited
-// m_nodes field (a singly-linked chain built through each node's own +4
-// slot, exactly the tail-cursor idiom BfmeOwnVVBConstructors/Destructor
-// already prove), then rescans the +0x10-rooted chain to keep m_id ahead of
-// every node's own m_id and republishes that into the global id counter
-// g_bfmeBFAE (0x012ACB4C) and the dirty flag g_bfmeDirtyBG (0x012EF418).
+// BFME split of the tail of Zero Hour's
+// PolygonTrigger::ParsePolygonTriggersDataChunk (GameLogic/Map/PolygonTrigger.cpp):
+// after the proven guard at 0x00190700 (carved, still a dump; reached through
+// j_00013b10) passes, a version-1 chunk (DataChunkInfo::version, the word at
+// +8) gets the default water-area trigger: BfmeOwnVVB(id, (void*)4) -- the
+// two-argument constructor landed in BfmeOwnVVBConstructors.cpp --, the
+// inlined bfmeSetA(true) of Bfme5SmallAccessors.cpp (g_bfmeDirtyBG |= 1; byte
+// +0x32 = 1), then four bfmeAppendVector3 corner points
+// (-300,-300,7) (X+300,-300,7) (X+300,Y+300,7) (-300,Y+300,7) where X/Y are
+// GlobalData's m_waterExtentX/m_waterExtentY (+0x80/+0x84). The node is
+// threaded on the +0xc tail cursor through its own +4 link, the +0x10-rooted
+// chain is rescanned to keep m_id ahead of every node's +0xc id, and m_id+1 is
+// republished into the global id counter g_bfmeBFAE.
 
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-
-#include "string_base.h"
-
-inline void *operator new(unsigned int, void *p) { return p; }
-
-class AsciiString : public StringBase<char>
-{
-public:
-	AsciiString() { }
-	~AsciiString() { }
-};
+#include "ascii_string.h"
 
 class BfmeElemBX
 {
@@ -60,6 +47,8 @@ public:
 	BfmeOwnVVB(int id, void *arg);
 	virtual ~BfmeOwnVVB();
 
+	int getID() const { return m_id; }
+
 private:
 	void init(void *arg);
 	AsciiString m_name;
@@ -84,17 +73,27 @@ struct BfmeVector3BG
 extern int g_bfmeDirtyBG;
 
 // upstream layout: Code/GameEngine/Source/Common/Bfme5IndexedVector3Setter.cpp
+// and Code/GameEngine/Source/Common/Bfme5SmallAccessors.cpp (bfmeSetA, +0x32)
 class Gen_0018F210
 {
 public:
+	void bfmeSetA(bool value)
+	{
+		g_bfmeDirtyBG |= 1;
+		m_bfmeA = value;
+	}
 	void bfmeAppendVector3(const BfmeVector3BG *value);
+
+private:
+	char m_bfmeHead[0x32];		// +0x00
+	bool m_bfmeA;				// +0x32
 };
 
 struct Rva006C9270GlobalDataXY
 {
 	unsigned char m_bfmeHead[0x80];
-	float m_x;			// +0x80
-	float m_y;			// +0x84
+	float m_waterExtentX;		// +0x80
+	float m_waterExtentY;		// +0x84
 };
 extern Rva006C9270GlobalDataXY *TheWritableGlobalData;
 
@@ -103,11 +102,13 @@ extern Rva006C9270GlobalDataXY *TheWritableGlobalData;
 class Rva00190700Guard
 {
 public:
-	Bool guard(void *argA, void *argB);	// retail 0x00190700
+	bool guard(void *argA, void *argB);	// retail 0x00190700
 };
 
 // The second parameter's own +8 word is gated to ==1 before the append
-// logic runs; the owning class is unproven, so only that one field is kept.
+// logic runs (the Zero Hour twin tests DataChunkInfo::version ==
+// K_TRIGGERS_VERSION_1 there); the class is not proven in BFME, so only
+// that one field is kept.
 class Rva00190F10Arg
 {
 public:
@@ -118,7 +119,7 @@ public:
 class Rva00190F10Owner : public Rva00190700Guard
 {
 public:
-	Bool rva00190f10(void *argA, Rva00190F10Arg *argB);
+	bool rva00190f10(void *argA, Rva00190F10Arg *argB);
 
 private:
 	char m_pad00[0xc];
@@ -127,32 +128,26 @@ private:
 	int m_id;					// +0x14
 };
 
-// ?rva00190f10@Rva00190F10Owner@@QAE_NPAXPAURva00190F10Arg@@@Z
-Bool Rva00190F10Owner::rva00190f10(void *argA, Rva00190F10Arg *argB)
+// ?rva00190f10@Rva00190F10Owner@@QAE_NPAXPAVRva00190F10Arg@@@Z
+bool Rva00190F10Owner::rva00190f10(void *argA, Rva00190F10Arg *argB)
 {
 	if (!guard(argA, argB))
 		return false;
 
-	const unsigned short one = 1;
-	if (argB->m_flag == one)
+	if (argB->m_flag == 1)
 	{
-		BfmeOwnVVB *node = new BfmeOwnVVB(m_id, (void *)4);
-		m_id = m_id + 1;
-
-		g_bfmeDirtyBG |= 1;
+		BfmeOwnVVB *node = new BfmeOwnVVB(m_id++, (void *)4);
+		((Gen_0018F210 *)node)->bfmeSetA(true);
 
 		BfmeVector3BG vec;
 		vec.x = -300;
 		vec.y = -300;
 		vec.z = 7;
 		((Gen_0018F210 *)node)->bfmeAppendVector3(&vec);
-
-		vec.x = (int)(TheWritableGlobalData->m_x + 300.0f);
+		vec.x = 300 + TheWritableGlobalData->m_waterExtentX;
 		((Gen_0018F210 *)node)->bfmeAppendVector3(&vec);
-
-		vec.x = (int)(TheWritableGlobalData->m_y + 300.0f);
+		vec.y = 300 + TheWritableGlobalData->m_waterExtentY;
 		((Gen_0018F210 *)node)->bfmeAppendVector3(&vec);
-
 		vec.x = -300;
 		((Gen_0018F210 *)node)->bfmeAppendVector3(&vec);
 
@@ -160,25 +155,16 @@ Bool Rva00190F10Owner::rva00190f10(void *argA, Rva00190F10Arg *argB)
 		m_tailCursor = &node->m_nodes;
 	}
 
-	if (*m_scanCursor != 0)
+	while (*m_scanCursor)
 	{
-		do
-		{
-			BfmeOwnVVB *scanNode = *m_scanCursor;
-			if (scanNode != 0)
-			{
-				int scanId = *(int *)((char *)scanNode + 0xc);
-				if (scanId > m_id)
-					m_id = scanId;
-			}
-
-			m_scanCursor = scanNode ? &scanNode->m_nodes : 0;
-		} while (m_scanCursor != 0 && *m_scanCursor != 0);
+		if ((*m_scanCursor)->getID() > m_id)
+			m_id = (*m_scanCursor)->getID();
+		m_scanCursor = *m_scanCursor ? &(*m_scanCursor)->m_nodes : 0;
 	}
 
 	if (m_id + 1 > g_bfmeBFAE)
 		g_bfmeBFAE = m_id + 1;
 
-	g_bfmeDirtyBG |= one;
-	return one != 0;
+	g_bfmeDirtyBG |= 1;
+	return true;
 }
