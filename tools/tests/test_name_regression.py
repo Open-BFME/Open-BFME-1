@@ -146,6 +146,19 @@ def test_function_declaration_guard_does_not_pair_calls_or_attributes():
     assert N.regressions(attribute_before, attribute_after) == []
 
 
+def test_removed_template_helper_is_not_renamed_to_new_plain_class():
+    before = ('template <bool threads, int instance> class __node_alloc '
+              '{ public: static void deallocate(void *, unsigned); };')
+    after = 'class Rva0009F820Host { public: ProfileList copyStringAt14(); };'
+    assert N.regressions(before, after) == []
+
+
+def test_template_class_rename_still_catches_downgrade():
+    before = 'template <typename T> class Named { public: int m_count; };'
+    after = 'template <typename T> class Rva00123456 { public: int m_count; };'
+    assert ('Named', 'Rva00123456') in N.regressions(before, after)
+
+
 def test_shifted_layout_does_not_invent_field_pairings():
     before = 'class Known { int m_count; int m_total; };'
     after = 'class Rva00123456 { char pad; int m_field0; int m_field4; };'

@@ -136,6 +136,24 @@ def _equal_token_alignment(old, new):
     return alignment
 
 
+def _templated_type_declaration(values, name_index):
+    """Whether a class/struct name immediately follows a template prefix."""
+    if name_index < 2 or values[name_index - 1] not in ('class', 'struct'):
+        return False
+    end = name_index - 2
+    if values[end] != '>':
+        return False
+    depth = 0
+    for index in range(end, -1, -1):
+        if values[index] == '>':
+            depth += 1
+        elif values[index] == '<':
+            depth -= 1
+            if depth == 0:
+                return index > 0 and values[index - 1] == 'template'
+    return False
+
+
 def _function_declaration_regressions(old, new):
     """Find only declaration names whose parameter boundaries remain aligned.
 
@@ -208,7 +226,15 @@ def regressions(before, after):
                     old_pos >= 2 and old_pos + 1 < len(old) and
                     old[old_pos - 2] in ('__declspec', '_declspec') and
                     old[old_pos - 1] == '(' and old[old_pos + 1] == ')')
-                if downgrade(x, y) and not moved_type and not compiler_attribute:
+                # A removed template helper can align with a newly added plain
+                # class at the same location.  Its template prefix makes that
+                # declaration pairing ambiguous; other uses and matching
+                # layouts are still checked independently.
+                template_mismatch = (
+                    _templated_type_declaration(old, old_pos) !=
+                    _templated_type_declaration(new, new_pos))
+                if (downgrade(x, y) and not moved_type and
+                        not compiler_attribute and not template_mismatch):
                     found.add((x, y))
     found.update(_function_declaration_regressions(old, new))
     left, right = layouts(before), layouts(after)

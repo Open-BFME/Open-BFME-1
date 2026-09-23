@@ -1,8 +1,28 @@
 // ?_bfme_refreshProfile@BfmeAptScreenSkirmish@@QAEXXZ
-// partial score=0.98 date=2026-09-22
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.9978 date=2026-09-23
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// stlport
 //
 // Retail 0x0057CAC0: AptSkirmish profile-combo refresh callback.
+// Evidence: the matched close, persona-accept, persona-remove, and gadget-init
+// callers invoke this member on BfmeAptScreenSkirmish. The two APT profile
+// labels in retail are NewProfile and DeleteProfile. The preference subobject
+// is at +0x3ac and the combo pointer at +0x420, as in the matched caller TUs.
+//
+// ABI evidence: retail's 0x0009F820 helper is the source-backed
+// Rva0009F820Host::copyStringAt14 accessor; the list cleanup target
+// 0x0009F2F0 is STLport's UnicodeString list clear (12-byte nodes). Physical
+// callees at 0x004B39D0, 0x004B4F40, and 0x004B3C70 confirm reset, by-value
+// string add, and (window, index, bool) selection signatures. The matched
+// SkirmishPreferences::getUserName body returns UnicodeString by value.
+//
+// Best probe: ours=456, retail=456, 24 relocations, one nonreloc byte. The
+// only mismatch is the receiver displacement in `lea ecx,[esp+...]` at +0xdc
+// (byte +0xdf: retail 0x2c, ours 0x1c). compareNoCaseRaw at 0x0009ECA0 does
+// not read ECX; no caller/source evidence identifies which valid object the
+// original expression used, so this final source-shape choice remains open.
+
+#include <list>
 
 extern const char g_bfmeEmptyUnicode[];
 
@@ -56,40 +76,20 @@ public:
 	}
 };
 
-struct ProfileNode
+class ProfileList : public std::list<UnicodeString>
 {
-	ProfileNode *next;
-	ProfileNode *previous;
-	UnicodeString value;
 };
 
-template <bool threads, int instance> class __node_alloc
+class Rva0009F820Host
 {
 public:
-	static void _M_deallocate( void *memory, unsigned int bytes );
+	ProfileList copyStringAt14();
+
 };
 
-class ProfileList
+class SkirmishPreferences
 {
 public:
-	ProfileList( const ProfileList &other );
-
-	void bfmeClear();
-
-	ProfileNode *m_head;
-
-	__forceinline ~ProfileList()
-	{
-		bfmeClear();
-		if( m_head != 0 )
-			__node_alloc<true, 0>::_M_deallocate( m_head, 0x0c );
-	}
-};
-
-class RvaSkirmishPreferences
-{
-public:
-	ProfileList getProfileList();
 	UnicodeString getUserName();
 
 private:
@@ -126,8 +126,8 @@ extern void j_000480f4();
 #pragma comment(linker, "/alternatename:?GadgetComboBoxReset@@YAXPAVGameWindow@@@Z=?j_00007004@@YAXXZ")
 #pragma comment(linker, "/alternatename:?GadgetComboBoxAddEntryPopulateRemoteIPComboBox@@YAHPAVGameWindow@@VPopulateRemoteIPComboBoxEntry@@H@Z=?j_0002f338@@YAXXZ")
 #pragma comment(linker, "/alternatename:?GadgetComboBoxSetSelectedPos@@YAXPAVGameWindow@@H_N@Z=?j_000439c3@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getProfileList@RvaSkirmishPreferences@@QAE?AVProfileList@@XZ=?j_00008bc0@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getUserName@RvaSkirmishPreferences@@QAE?AVUnicodeString@@XZ=?j_00010898@@YAXXZ")
+#pragma comment(linker, "/alternatename:?copyStringAt14@Rva0009F820Host@@QAE?AVProfileList@@XZ=?j_00008bc0@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getUserName@SkirmishPreferences@@QAE?AVUnicodeString@@XZ=?j_00010898@@YAXXZ")
 
 class GameTextInterface
 {
@@ -147,7 +147,7 @@ public:
 
 private:
 	char m_unmodelled_00[ 0x3ac ];
-	RvaSkirmishPreferences m_preferences;
+	SkirmishPreferences m_preferences;
 	char m_unmodelled_3cc[ 0x54 ];
 	GameWindow *m_profileCombo;
 };
@@ -159,13 +159,14 @@ void BfmeAptScreenSkirmish::_bfme_refreshProfile()
 {
 	GadgetComboBoxReset( m_profileCombo );
 
-	ProfileList profiles = m_preferences.getProfileList();
-	ProfileNode *node = profiles.m_head->next;
+	ProfileList profiles =
+		((Rva0009F820Host *)&m_preferences)->copyStringAt14();
+	std::list<UnicodeString>::iterator node = profiles.begin();
 	UnicodeString profile;
 	int index = 0;
-	while( node != profiles.m_head )
+	while( node != profiles.end() )
 	{
-		profile = node->value;
+		profile = *node;
 		GadgetComboBoxAddEntryPopulateRemoteIPComboBox(
 			m_profileCombo, profile, -1 );
 
@@ -173,7 +174,7 @@ void BfmeAptScreenSkirmish::_bfme_refreshProfile()
 			*(const StringBase<unsigned short> *)&m_preferences.getUserName() ) == 0 )
 			GadgetComboBoxSetSelectedPos( m_profileCombo, index, false );
 
-		node = node->next;
+		++node;
 		++index;
 	}
 
