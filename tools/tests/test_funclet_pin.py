@@ -92,6 +92,47 @@ def compile_row(obj, pin, **kwargs):
     return build.compile_function(make_row(pin, **kwargs), {}, obj)
 
 
+def test_tail_jump_target_breaks_identical_funclet_prefix_tie(monkeypatch):
+    """The INI Load cleanup prefixes tie, but only one jumps to CacheStraw."""
+    rva = 0x00C61580
+    destination = 0x009E1FC0
+    target = bytes.fromhex("8d8d94efffffe9") + struct.pack("<i", destination - rva - 11)
+    row = {"target_rva": f"0x{rva:08X}"}
+    relocs = {
+        "$L8386": [(7, build.REL32, "??1CacheStraw@@UAE@XZ")],
+        "$L8408": [(7, build.REL32, "??1Straw@@UAE@XZ")],
+    }
+    monkeypatch.setattr(build, "read_object_symbol_bytes",
+                        lambda _path, label, _size: (target, relocs[label]))
+    monkeypatch.setattr(build, "load_symbol_map", lambda: {
+        "??1CacheStraw@@UAE@XZ": [destination],
+        "??1Straw@@UAE@XZ": [0x009E1A90],
+    })
+
+    assert build.funclet_tail_jump_candidates(
+        Path("unused.obj"), row, target, list(relocs)) == ["$L8386"]
+
+
+def test_tail_jump_tie_break_requires_unique_route(monkeypatch):
+    rva = 0x00C615DB
+    destination = 0x009E2070
+    target = bytes.fromhex("8d8d58ffffffe9") + struct.pack("<i", destination - rva - 11)
+    row = {"target_rva": f"0x{rva:08X}"}
+    relocs = {label: [(7, build.REL32, symbol)] for label, symbol in (
+        ("$L9639", "??1BufferPipe@@UAE@XZ"),
+        ("$L9684", "??1Pipe@@UAE@XZ"),
+    )}
+    monkeypatch.setattr(build, "read_object_symbol_bytes",
+                        lambda _path, label, _size: (target, relocs[label]))
+    monkeypatch.setattr(build, "load_symbol_map", lambda: {
+        "??1BufferPipe@@UAE@XZ": [destination],
+        "??1Pipe@@UAE@XZ": [destination],
+    })
+
+    assert build.funclet_tail_jump_candidates(
+        Path("unused.obj"), row, target, list(relocs)) == list(relocs)
+
+
 def test_a_renumbered_pin_is_re_identified_from_the_parents_group(tmp_path):
     """The reported failure: the group shifted, so the pin names a longer body."""
     obj = write_object(tmp_path / "renumbered.obj",

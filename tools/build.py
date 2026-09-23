@@ -1310,6 +1310,29 @@ def funclet_candidates(path, row, target):
             in funclet_scan(path, row, target) if held]
 
 
+def funclet_tail_jump_candidates(path, row, target, labels):
+    """Resolve a masked-prefix tie when retail's final jump names the callee.
+
+    Several EH cleanup labels start with the same LEA and have a relocated JMP
+    where retail has a concrete displacement. The symbol on that relocation is
+    independent evidence: it must resolve to the retail jump target. A tie that
+    survives this check remains ambiguous.
+    """
+    if len(target) < 5 or target[-5] != 0xE9:
+        return []
+    destination = (int(row["target_rva"], 16) + len(target)
+                   + struct.unpack_from("<i", target, len(target) - 4)[0])
+    symbol_map = load_symbol_map()
+    matches = []
+    for label in labels:
+        _body, relocs = read_object_symbol_bytes(path, label, len(target))
+        tail_symbols = [symbol for offset, rtype, symbol in relocs
+                        if offset == len(target) - 4 and rtype == REL32]
+        if len(tail_symbols) == 1 and destination in symbol_map.get(tail_symbols[0], ()):
+            matches.append(label)
+    return matches
+
+
 def read_funclet(row, object_symbol, output, target):
     """The bytes of a gen-funclet row's body, and a note when the pin was stale.
 
@@ -1330,6 +1353,12 @@ def read_funclet(row, object_symbol, output, target):
     scan = funclet_scan(output, row, target)
     hits = [name for name, _bodylen, _surviving, held in scan if held]
     if len(hits) > 1:
+        routed = funclet_tail_jump_candidates(output, row, target, hits)
+        if len(routed) == 1:
+            compiled, relocs = read_object_symbol_bytes(output, routed[0], len(target))
+            return compiled, relocs, (
+                f"{object_symbol} was renumbered; retail's tail jump target "
+                f"identifies {routed[0]} in the object built now")
         raise SystemExit(funclet_refusal(
             row, object_symbol, scan, len(target),
             f"does not hold this funclet and {len(hits)} bodies in the parent's group "
