@@ -1,5 +1,5 @@
 // ?evaluateUnitIsAttackedAndCannotRetaliate@ScriptConditions@@IAE_NPAVParameter@@@Z
-// partial score=0.75 date=2026-09-11
+// partial score=0.8 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
 // readable body of ?evaluateUnitIsAttackedAndCannotRetaliate@ScriptConditions@@IAE_NPAVParameter@@@Z
 
@@ -93,7 +93,7 @@ public:
 	}
 };
 
-class ScriptEngine
+class ScriptActionParameter;class ScriptEngine
 {
 public:
 	virtual void slot00(void) = 0;
@@ -122,7 +122,7 @@ public:
 	virtual void slot23(void) = 0;
 	virtual void slot24(void) = 0;
 	virtual void slot25(void) = 0;
-	virtual Object *getUnitNamed(Parameter *) = 0;
+	virtual Object *resolveUnit(ScriptActionParameter *) = 0;
 };
 
 class GameLogic
@@ -148,8 +148,8 @@ public:
 	{
 		m_vptr = (void *)0x010956C4;
 		m_object = object;
-		m_flags = 2;
-		m_state = 0;
+		m_commandSource = 2;
+		m_attackType = 0;
 	}
 
 	__forceinline ~RelationshipFilter(void)
@@ -160,8 +160,8 @@ public:
 	void *m_vptr;
 	void *m_next;
 	Object *m_object;
-	Int m_flags;
-	Bool m_state;
+	Int m_commandSource;
+	Int m_attackType;
 };
 
 class ScriptConditions
@@ -179,56 +179,58 @@ extern void j_00004c37(void);
 // ?evaluateUnitIsAttackedAndCannotRetaliate@ScriptConditions@@IAE_NPAVParameter@@@Z
 Bool ScriptConditions::evaluateUnitIsAttackedAndCannotRetaliate(Parameter *pUnitParm)
 {
-	Object *theObj = TheScriptEngine->getUnitNamed(pUnitParm);
-	if (!theObj)
-		return false;
+    Object *theObj = TheScriptEngine->resolveUnit((ScriptActionParameter *)pUnitParm);
+    if (theObj)
+    {
+        AIUpdateInterface *ai = theObj->getAIUpdateInterface();
+        if (ai)
+        {
+            if (ai->isIdle())
+            {
+                BodyModuleInterface *body = theObj->getBodyModule();
+                if (!body)
+                    return false;
 
-	AIUpdateInterface * volatile ai = theObj->getAIUpdateInterface();
-	if (!ai)
-		return false;
-	if (!ai->isIdle())
-		return false;
+                if (body->getLastDamageTimestamp() + 0x19 < TheBfmeGameLogic->m_frame)
+                    return false;
 
-	BodyModuleInterface *body = theObj->getBodyModule();
-	if (!body)
-		return false;
+                const unsigned char *lastDamage =
+                    (const unsigned char *)body->getLastDamageInfo();
+                if (!lastDamage)
+                    return false;
 
-	if (body->getLastDamageTimestamp() + 0x19 < TheBfmeGameLogic->m_frame)
-		return false;
+                typedef Object *(GameLogic::*FindObjectCall)(Int);
+                union
+                {
+                    void (*raw)(void);
+                    FindObjectCall member;
+                } findObject;
+                findObject.raw = j_0001f253;
+                Object *attacker = (TheBfmeGameLogic->*findObject.member)(
+                    *(const Int *)(lastDamage + 8));
+                if (!attacker)
+                    return false;
+                if (attacker->isEffectivelyDead())
+                    return false;
 
-	const unsigned char *lastDamage =
-		(const unsigned char *)body->getLastDamageInfo();
-	if (!lastDamage)
-		return false;
+                RelationshipFilter filter(theObj);
+                if (!((BfmeThingEQ *)&filter)->bfmeAskEQ(attacker))
+                    return true;
 
-	typedef Object *(GameLogic::*FindObjectCall)(Int);
-	union
-	{
-		void (*raw)(void);
-		FindObjectCall member;
-	} findObject;
-	findObject.raw = j_0001f253;
-	Object *attacker = (TheBfmeGameLogic->*findObject.member)(
-		*(const Int *)(lastDamage + 8));
-	if (!attacker)
-		return false;
-	if (attacker->isEffectivelyDead())
-		return false;
+                typedef Bool (AIUpdateInterface::*QuickPathCall)(const Coord3D *) const;
+                union
+                {
+                    void (*raw)(void);
+                    QuickPathCall member;
+                } quickPath;
+                quickPath.raw = j_00018eb2;
+                if ((ai->*quickPath.member)(attacker->getPosition()))
+                    return false;
 
-	RelationshipFilter filter(theObj);
-	if (!((BfmeThingEQ *)&filter)->bfmeAskEQ(attacker))
-		return true;
-
-	typedef Bool (AIUpdateInterface::*QuickPathCall)(const Coord3D *) const;
-	union
-	{
-		void (*raw)(void);
-		QuickPathCall member;
-	} quickPath;
-	quickPath.raw = j_00018eb2;
-	if ((ai->*quickPath.member)(attacker->getPosition()))
-		return false;
-
-	typedef Bool (__cdecl *CanAttackCall)(void *, void *);
-	return !((CanAttackCall)j_00004c37)(attacker, theObj);
+                typedef Bool (__cdecl *CanAttackCall)(void *, void *);
+                return !((CanAttackCall)j_00004c37)(theObj, attacker);
+            }
+        }
+    }
+    return false;
 }
