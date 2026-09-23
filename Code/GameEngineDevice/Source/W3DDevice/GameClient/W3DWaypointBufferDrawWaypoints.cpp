@@ -1,5 +1,3 @@
-// ?drawWaypoints@W3DWaypointBuffer@@QAEXAAVRenderInfoClass@@@Z
-// partial score=0.95 date=2026-09-22
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 //
