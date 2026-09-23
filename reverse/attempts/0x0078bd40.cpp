@@ -1,30 +1,18 @@
 // ?Flush@Rva00785FD0Renderer@@QAEXXZ
-// partial score=0.19 date=2026-09-21
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode
+// partial score=0.2 date=2026-09-23
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /ICode /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug
 // stlport
 
+#define Matrix4x4 Matrix4
+#define __PLACEMENT_VEC_NEW_INLINE
+#include "dx8wrapper.h"
 #include "Libraries/Source/WWVegas/WWMath/matrix4.h"
 
-class TextureBaseClass;
-
-class ShaderClass
+class ShaderClassAccess : public ShaderClass
 {
 public:
-	ShaderClass(unsigned value) : bits(value) {}
-	unsigned bits;
-};
-
-class DX8Wrapper
-{
-public:
-	static bool Has_Stencil(void);
-	static void Set_DX8_Render_State(unsigned state, unsigned value);
-};
-
-class BfmeTextureRelease
-{
-public:
-	void Release_Ref(void);
+	ShaderClassAccess(unsigned value) : ShaderClass(value) {}
+	unsigned &Bits(void) { return ShaderBits; }
 };
 
 class BfmeHandleCX
@@ -36,7 +24,7 @@ public:
 	}
 
 private:
-	BfmeTextureRelease *m_texture;
+	void *m_texture;
 };
 
 extern void bfmeGo930G(void *, int);
@@ -69,7 +57,7 @@ private:
 	Matrix4 m_view;
 	Matrix4 m_projection;
 	void *m_vertexBuffer;
-	unsigned m_vertexOffset;
+	int m_vertexOffset;
 	int m_vertexCount;
 	unsigned m_reserved;
 };
@@ -89,10 +77,10 @@ void Rva00785FD0Renderer::Flush(void)
 	if (m_modeChanged)
 	{
 		unsigned shaderBits = m_mode == 2 ? 0x0101837 : 0x01098B7;
-		ShaderClass shader(shaderBits);
+		ShaderClassAccess shader(shaderBits);
 		if (m_texture)
-			shader.bits |= 0x10000;
-		shader.bits &= 0xFFE3FFFF;
+			shader.Bits() |= 0x10000;
+		shader.Bits() &= 0xFFE3FFFF;
 
 		if (DX8Wrapper::Has_Stencil())
 		{
@@ -125,13 +113,13 @@ void Rva00785FD0Renderer::Flush(void)
 			float worldZ = Rva00785FD0Half;
 			if (m_mode == 2)
 			{
-				shader.bits |= 0x0F;
+				shader.Bits() |= 0x0F;
 				worldZ = Rva00785FD0ModeTwoValue;
 			}
 			else if (m_mode == 1)
 			{
-				shader.bits &= 0xFFFFFFF3;
-				shader.bits |= 3;
+				shader.Bits() &= 0xFFFFFFF3;
+				shader.Bits() |= 3;
 			}
 			m_world[2][3] = worldZ;
 		}
