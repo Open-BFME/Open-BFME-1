@@ -1461,8 +1461,8 @@ void PopBackToLobby( void )
 }
 
 void updateMapStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], Bool onLoadScreen = FALSE );
-void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow);
-void positionStartSpots(AsciiString mapName, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow);
+void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow, Bool onLoadScreen = FALSE);
+void positionStartSpots(AsciiString mapName, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow, Bool onLoadScreen = FALSE);
 void WOLPositionStartSpots( void )
 {
 	GameWindow *win = windowMap;
@@ -1503,7 +1503,7 @@ void WOLPositionStartSpots( void )
 
 	} else {
 		DEBUG_ASSERTCRASH(win != NULL, ("no map preview window"));
-		positionStartSpots( TheGameSpyInfo->getCurrentStagingRoom(), buttonMapStartPosition, win);
+		positionStartSpots( ((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom(), buttonMapStartPosition, win);
 	}
 }
 static void savePlayerInfo( void )
