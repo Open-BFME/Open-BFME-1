@@ -1,5 +1,5 @@
-// ?d_006b1ce0@@YAXXZ
-// partial score=0.95 date=2026-09-21
+// ?initFilters3D@Rva006B3F90Owner@@QAEXPAURva006B3F90Wrapper@@PBUCoord3D@@@Z
+// partial score=0.9501661129568106 date=2026-09-23
 // ?d_006b1ce0@@YAXXZ
 // partial score~0.95 date=2026-09-21
 // Retail 0x006B1CE0: Rva006B3F90Owner::initFilters3D(Wrapper*, const Coord3D*),
@@ -55,8 +55,8 @@ extern void j_00027124();
 extern void j_000445d0();
 extern void j_0002e60e();
 
-#define Rva006B1CE0One (*(const Real *)0x01075334)
-#define Rva006B1CE0Zero (*(const Real *)0x01075350)
+#define Rva006B3F90One (*(const Real *)0x01075334)
+#define Rva006B3F90Zero (*(const Real *)0x01075350)
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
 struct Coord3D
@@ -66,42 +66,42 @@ struct Coord3D
 	Real z;
 };
 
-struct Rva006B1CE0AudioInfo
+struct Rva006B3F90AudioInfo
 {
 	char m_pad00[0x70];
 	Real m_lowPassFreq;
 };
 
-class Rva006B1CE0AudioEvent
+class Rva006B3F90AudioEvent
 {
 public:
 	char m_pad00[8];
-	Rva006B1CE0AudioInfo *m_audioInfo;
+	Rva006B3F90AudioInfo *m_audioInfo;
 };
 
-struct Rva006B1CE0Inner
+struct Rva006B3F90Inner
 {
 	char m_pad00[8];
 	int m_index;
 	int m_type;
 	char m_pad10[4];
-	Rva006B1CE0AudioEvent *m_audioEvent;
+	Rva006B3F90AudioEvent *m_audioEvent;
 	char m_pad18[0x10];
 	Real m_fadeFrame;
 };
 
-struct Rva006B1CE0Wrapper
+struct Rva006B3F90Wrapper
 {
-	Rva006B1CE0Inner *m_inner;
+	Rva006B3F90Inner *m_inner;
 };
 
-struct Rva006B1CE0Settings
+struct Rva006B3F90Settings
 {
 	char m_pad00[0x3c];
 	int m_fadeAudioFrames;
 };
 
-struct Rva006B1CE0SampleEntry
+struct Rva006B3F90SampleEntry
 {
 	char m_pad00[4];
 	unsigned int m_sample;
@@ -119,57 +119,57 @@ private:
 	char m_basePad[8];
 };
 
-class Rva006B1CE0Owner : public Rva006AE150Owner
+class Rva006B3F90Owner : public Rva006AE150Owner
 {
 public:
-	void rva006B1CE0InitFilters3D(
-		Rva006B1CE0Wrapper *wrapper, const Coord3D *position);
+	void initFilters3D(
+		Rva006B3F90Wrapper *wrapper, const Coord3D *position);
 
 private:
-	Rva006B1CE0Settings *m_settings;
+	Rva006B3F90Settings *m_settings;
 	char m_pad10[0xb34];
-	Rva006B1CE0SampleEntry *m_samples;
+	Rva006B3F90SampleEntry *m_samples;
 
-	typedef Bool (Rva006B1CE0Owner::*Rva006B1CE0IsOnScreenFn)(
+	typedef Bool (Rva006B3F90Owner::*Rva006B3F90IsOnScreenFn)(
 		const Coord3D *position);
 
 	Bool rva006B1CE0IsOnScreen(const Coord3D *position)
 	{
-		return (this->*(Rva006B1CE0IsOnScreenFn &)(
+		return (this->*(Rva006B3F90IsOnScreenFn &)(
 			(*(void ***)this)[0x184 / 4]))(position);
 	}
 
-	typedef void (Rva006B1CE0Owner::*Rva006B1CE0Opaque445D0)(
-		Rva006B1CE0Wrapper *, Real *);
-	__forceinline void rva006B1CE0CallOpaque445D0(Rva006B1CE0Wrapper *wrapper, Real *value)
+	typedef void (Rva006B3F90Owner::*Rva006B3F90Opaque445D0)(
+		Rva006B3F90Wrapper *, Real *);
+	__forceinline void rva006B1CE0CallOpaque445D0(Rva006B3F90Wrapper *wrapper, Real *value)
 	{
 		union
 		{
 			void (*freeFn)();
-			Rva006B1CE0Opaque445D0 memberFn;
+			Rva006B3F90Opaque445D0 memberFn;
 		} fn;
 		fn.freeFn = ::j_000445d0;
 		(this->*fn.memberFn)(wrapper, value);
 	}
 
-	typedef void (Rva006B1CE0Owner::*Rva006B1CE0Opaque2E60E)(
-		Rva006B1CE0Wrapper *);
-	__forceinline void rva006B1CE0CallOpaque2E60E(Rva006B1CE0Wrapper *wrapper)
+	typedef void (Rva006B3F90Owner::*Rva006B3F90Opaque2E60E)(
+		Rva006B3F90Wrapper *);
+	__forceinline void rva006B1CE0CallOpaque2E60E(Rva006B3F90Wrapper *wrapper)
 	{
 		union
 		{
 			void (*freeFn)();
-			Rva006B1CE0Opaque2E60E memberFn;
+			Rva006B3F90Opaque2E60E memberFn;
 		} fn;
 		fn.freeFn = ::j_0002e60e;
 		(this->*fn.memberFn)(wrapper);
 	}
 };
 
-void Rva006B1CE0Owner::rva006B1CE0InitFilters3D(
-	Rva006B1CE0Wrapper *wrapper, const Coord3D *position)
+void Rva006B3F90Owner::initFilters3D(
+	Rva006B3F90Wrapper *wrapper, const Coord3D *position)
 {
-	Rva006B1CE0Inner *inner = wrapper->m_inner;
+	Rva006B3F90Inner *inner = wrapper->m_inner;
 
 	unsigned int sample;
 	switch (inner->m_type)
@@ -187,19 +187,19 @@ void Rva006B1CE0Owner::rva006B1CE0InitFilters3D(
 		break;
 	}
 
-	Rva006B1CE0AudioEvent *event = inner->m_audioEvent;
+	Rva006B3F90AudioEvent *event = inner->m_audioEvent;
 	Real volume = compute((Rva006AE150Argument *)event, 1);
 	Real fade = 1.0f - ((Real)wrapper->m_inner->m_fadeFrame /
 		(Real)m_settings->m_fadeAudioFrames);
-	if (fade < Rva006B1CE0Zero)
-		fade = Rva006B1CE0Zero;
-	else if (fade > Rva006B1CE0One)
-		fade = Rva006B1CE0One;
+	if (fade < Rva006B3F90Zero)
+		fade = Rva006B3F90Zero;
+	else if (fade > Rva006B3F90One)
+		fade = Rva006B3F90One;
 	volume = volume * fade;
 
 	AIL_set_3D_sample_volume(sample, volume);
 
-	typedef Real (Rva006B1CE0AudioEvent::*GetPitchScale)(void) const;
+	typedef Real (Rva006B3F90AudioEvent::*GetPitchScale)(void) const;
 	union
 	{
 		void (*freeGetPitchScale)();
@@ -208,16 +208,16 @@ void Rva006B1CE0Owner::rva006B1CE0InitFilters3D(
 	getPitchScale.freeGetPitchScale = ::j_00027124;
 	Real pitchScale =
 		(inner->m_audioEvent->*getPitchScale.memberGetPitchScale)();
-	if (pitchScale != Rva006B1CE0Zero)
+	if (pitchScale != Rva006B3F90Zero)
 	{
 		int rate = (int)(AIL_3D_sample_playback_rate(sample) * pitchScale);
 		AIL_set_3D_sample_playback_rate(sample, rate);
 	}
 
-	if (inner->m_audioEvent->m_audioInfo->m_lowPassFreq > Rva006B1CE0Zero &&
+	if (inner->m_audioEvent->m_audioInfo->m_lowPassFreq > Rva006B3F90Zero &&
 		!rva006B1CE0IsOnScreen(position))
 		AIL_set_3D_sample_occlusion(sample,
-			Rva006B1CE0One - inner->m_audioEvent->m_audioInfo->m_lowPassFreq);
+			Rva006B3F90One - inner->m_audioEvent->m_audioInfo->m_lowPassFreq);
 	else
 		AIL_set_3D_sample_occlusion(sample, 0.0f);
 
