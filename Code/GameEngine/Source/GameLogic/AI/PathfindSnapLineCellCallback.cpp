@@ -22,8 +22,9 @@ struct Rva003FD060TerrainLogic
 
 extern Rva003FD060TerrainLogic *TheTerrainLogic;
 
-struct PathfindCell
+class PathfindCell
 {
+public:
 	unsigned char m_bfmeHeadABE[0xc];
 	unsigned int m_bfme0CABE;
 
