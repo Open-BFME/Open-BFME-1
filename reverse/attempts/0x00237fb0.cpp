@@ -1,29 +1,13 @@
-// ?rva00237fb0@Rva00237FB0Owner@@QAEXPAVRva00237FB0Param@@@Z
-// partial score=0.23 date=2026-09-21
-// Retail 0x00237FB0, 413 bytes.
+// ?copyMembersToList@Rva00237FB0Owner@@QAEXPAV?$list@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@@Z
+// partial score=0.92 date=2026-09-23
+// cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB /EHsc /FAsc /Fabuild/rva00237fb0_inline_header.cod
 // stlport
-//
-// 'this'-0xC4 holds a HordeContain-family interface pointer (same family as
-// Code/GameEngine/Source/GameLogic/Object/Contain/Rva0023A380HordeContainLookup.cpp
-// and CaveContainChangeTeamOnAllConnectedCaves.cpp's BfmeK1101::getContainerList
-// idiom: the interface's vtable+0x104 slot returns a pointer directly onto an
-// embedded _STL::list<Object*>). The single caller-supplied parameter is
-// itself both a list pointer (its own contained list, used to receive the
-// copies) and, at +0x30, a HordeContain member-index tree owner (same
-// BfmeMemberIndexNode/_M_increment shape as Rva0023A380HordeContainLookup.cpp).
-//
-// Shape: (1) copy every element of the -0xC4 interface's list into the
-// parameter's own list; (2) walk the parameter's own +0x30 member-index tree,
-// resolve each node's key through TheBfmeGameLogic's inlined hash and append
-// the resolved Object* into that same list; (3) walk the -0xC4 interface's
-// list a second time, calling vtable slot 0xa0 on each element into a fresh
-// throwaway list, then destroy that temporary list
-// (Code/GameEngine/Source/GameLogic/Object/Contain/HordeContainDestructors.cpp's
-// tg_000cebd0 target). No caller or vtable owner is proven, so the class
-// names below keep the address token.
+// The body at 0x00237FB0 reads a member index at this+0x30.
+// It reads a member list through the interface at this-0xC4 and calls slot 40 on this.
+// The evidence does not identify the owning class, so the type keeps the retail address.
 
+typedef int Int;
 typedef unsigned int UnsignedInt;
-class Object;
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
@@ -31,11 +15,13 @@ class Object;
 #include <hash_map>
 #include <list>
 
+class Object;
+
 typedef _STL::list<Object *> BfmeMemberList;
 typedef _STL::hash_map<UnsignedInt, Object *, _STL::hash<UnsignedInt>,
 	_STL::equal_to<UnsignedInt> > BfmeObjectPtrHash;
 
-class BfmeGameLogicInline
+class GameLogic
 {
 public:
 	__forceinline Object *findObjectByID(UnsignedInt key)
@@ -51,7 +37,7 @@ public:
 	char m_head[0xb0];
 	BfmeObjectPtrHash m_objectHash;
 };
-extern BfmeGameLogicInline *TheBfmeGameLogicInline;
+extern GameLogic *TheBfmeGameLogic;
 
 struct BfmeMemberIndexNode
 {
@@ -64,7 +50,7 @@ struct BfmeMemberIndexNode
 
 namespace _STL
 {
-struct _Rb_tree_node_base { };
+struct _Rb_tree_node_base;
 
 template <class T>
 struct _Rb_global
@@ -73,100 +59,87 @@ struct _Rb_global
 };
 }
 
-// Address-derived: only vtable slot 0x104/4 (index 65) is proven.
-#define RVA00237FB0_IFACE_SLOT(n) virtual void slot##n();
-class Rva00237FB0SourceIface
+#define RVA00237FB0_SOURCE_SLOT(N) virtual void slot##N() = 0;
+class Rva00237FB0MemberSource
 {
 public:
-	RVA00237FB0_IFACE_SLOT(00) RVA00237FB0_IFACE_SLOT(01) RVA00237FB0_IFACE_SLOT(02) RVA00237FB0_IFACE_SLOT(03)
-	RVA00237FB0_IFACE_SLOT(04) RVA00237FB0_IFACE_SLOT(05) RVA00237FB0_IFACE_SLOT(06) RVA00237FB0_IFACE_SLOT(07)
-	RVA00237FB0_IFACE_SLOT(08) RVA00237FB0_IFACE_SLOT(09) RVA00237FB0_IFACE_SLOT(10) RVA00237FB0_IFACE_SLOT(11)
-	RVA00237FB0_IFACE_SLOT(12) RVA00237FB0_IFACE_SLOT(13) RVA00237FB0_IFACE_SLOT(14) RVA00237FB0_IFACE_SLOT(15)
-	RVA00237FB0_IFACE_SLOT(16) RVA00237FB0_IFACE_SLOT(17) RVA00237FB0_IFACE_SLOT(18) RVA00237FB0_IFACE_SLOT(19)
-	RVA00237FB0_IFACE_SLOT(20) RVA00237FB0_IFACE_SLOT(21) RVA00237FB0_IFACE_SLOT(22) RVA00237FB0_IFACE_SLOT(23)
-	RVA00237FB0_IFACE_SLOT(24) RVA00237FB0_IFACE_SLOT(25) RVA00237FB0_IFACE_SLOT(26) RVA00237FB0_IFACE_SLOT(27)
-	RVA00237FB0_IFACE_SLOT(28) RVA00237FB0_IFACE_SLOT(29) RVA00237FB0_IFACE_SLOT(30) RVA00237FB0_IFACE_SLOT(31)
-	RVA00237FB0_IFACE_SLOT(32) RVA00237FB0_IFACE_SLOT(33) RVA00237FB0_IFACE_SLOT(34) RVA00237FB0_IFACE_SLOT(35)
-	RVA00237FB0_IFACE_SLOT(36) RVA00237FB0_IFACE_SLOT(37) RVA00237FB0_IFACE_SLOT(38) RVA00237FB0_IFACE_SLOT(39)
-	virtual UnsignedInt callSlot40(void);	// index 40, vtable+0xa0
-	RVA00237FB0_IFACE_SLOT(41) RVA00237FB0_IFACE_SLOT(42) RVA00237FB0_IFACE_SLOT(43) RVA00237FB0_IFACE_SLOT(44)
-	RVA00237FB0_IFACE_SLOT(45) RVA00237FB0_IFACE_SLOT(46) RVA00237FB0_IFACE_SLOT(47) RVA00237FB0_IFACE_SLOT(48)
-	RVA00237FB0_IFACE_SLOT(49) RVA00237FB0_IFACE_SLOT(50) RVA00237FB0_IFACE_SLOT(51) RVA00237FB0_IFACE_SLOT(52)
-	RVA00237FB0_IFACE_SLOT(53) RVA00237FB0_IFACE_SLOT(54) RVA00237FB0_IFACE_SLOT(55) RVA00237FB0_IFACE_SLOT(56)
-	RVA00237FB0_IFACE_SLOT(57) RVA00237FB0_IFACE_SLOT(58) RVA00237FB0_IFACE_SLOT(59) RVA00237FB0_IFACE_SLOT(60)
-	RVA00237FB0_IFACE_SLOT(61) RVA00237FB0_IFACE_SLOT(62) RVA00237FB0_IFACE_SLOT(63) RVA00237FB0_IFACE_SLOT(64)
-	virtual BfmeMemberList *getMemberList();	// index 65, vtable+0x104
+	RVA00237FB0_SOURCE_SLOT(00) RVA00237FB0_SOURCE_SLOT(01) RVA00237FB0_SOURCE_SLOT(02) RVA00237FB0_SOURCE_SLOT(03)
+	RVA00237FB0_SOURCE_SLOT(04) RVA00237FB0_SOURCE_SLOT(05) RVA00237FB0_SOURCE_SLOT(06) RVA00237FB0_SOURCE_SLOT(07)
+	RVA00237FB0_SOURCE_SLOT(08) RVA00237FB0_SOURCE_SLOT(09) RVA00237FB0_SOURCE_SLOT(10) RVA00237FB0_SOURCE_SLOT(11)
+	RVA00237FB0_SOURCE_SLOT(12) RVA00237FB0_SOURCE_SLOT(13) RVA00237FB0_SOURCE_SLOT(14) RVA00237FB0_SOURCE_SLOT(15)
+	RVA00237FB0_SOURCE_SLOT(16) RVA00237FB0_SOURCE_SLOT(17) RVA00237FB0_SOURCE_SLOT(18) RVA00237FB0_SOURCE_SLOT(19)
+	RVA00237FB0_SOURCE_SLOT(20) RVA00237FB0_SOURCE_SLOT(21) RVA00237FB0_SOURCE_SLOT(22) RVA00237FB0_SOURCE_SLOT(23)
+	RVA00237FB0_SOURCE_SLOT(24) RVA00237FB0_SOURCE_SLOT(25) RVA00237FB0_SOURCE_SLOT(26) RVA00237FB0_SOURCE_SLOT(27)
+	RVA00237FB0_SOURCE_SLOT(28) RVA00237FB0_SOURCE_SLOT(29) RVA00237FB0_SOURCE_SLOT(30) RVA00237FB0_SOURCE_SLOT(31)
+	RVA00237FB0_SOURCE_SLOT(32) RVA00237FB0_SOURCE_SLOT(33) RVA00237FB0_SOURCE_SLOT(34) RVA00237FB0_SOURCE_SLOT(35)
+	RVA00237FB0_SOURCE_SLOT(36) RVA00237FB0_SOURCE_SLOT(37) RVA00237FB0_SOURCE_SLOT(38) RVA00237FB0_SOURCE_SLOT(39)
+	RVA00237FB0_SOURCE_SLOT(40) RVA00237FB0_SOURCE_SLOT(41) RVA00237FB0_SOURCE_SLOT(42) RVA00237FB0_SOURCE_SLOT(43)
+	RVA00237FB0_SOURCE_SLOT(44) RVA00237FB0_SOURCE_SLOT(45) RVA00237FB0_SOURCE_SLOT(46) RVA00237FB0_SOURCE_SLOT(47)
+	RVA00237FB0_SOURCE_SLOT(48) RVA00237FB0_SOURCE_SLOT(49) RVA00237FB0_SOURCE_SLOT(50) RVA00237FB0_SOURCE_SLOT(51)
+	RVA00237FB0_SOURCE_SLOT(52) RVA00237FB0_SOURCE_SLOT(53) RVA00237FB0_SOURCE_SLOT(54) RVA00237FB0_SOURCE_SLOT(55)
+	RVA00237FB0_SOURCE_SLOT(56) RVA00237FB0_SOURCE_SLOT(57) RVA00237FB0_SOURCE_SLOT(58) RVA00237FB0_SOURCE_SLOT(59)
+	RVA00237FB0_SOURCE_SLOT(60) RVA00237FB0_SOURCE_SLOT(61) RVA00237FB0_SOURCE_SLOT(62) RVA00237FB0_SOURCE_SLOT(63)
+	RVA00237FB0_SOURCE_SLOT(64)
+	virtual const BfmeMemberList &getMemberList() const = 0;
 };
-#undef RVA00237FB0_IFACE_SLOT
+#undef RVA00237FB0_SOURCE_SLOT
 
+#define RVA00237FB0_OWNER_SLOT(N) virtual void slot##N() = 0;
 class Rva00237FB0Owner
 {
 public:
-	BfmeMemberList *sourceList() const
-	{
-		void *ifaceThis = (char *)this - 0xc4;
-		void *vtbl = *(void **)ifaceThis;
-		void *slotAddr = *(void **)((char *)vtbl + 0x104);
-		typedef BfmeMemberList *(Rva00237FB0Owner::*Fn)();
-		union { void (*raw)(void); Fn member; } u;
-		u.raw = (void (*)(void))slotAddr;
-		return (((Rva00237FB0Owner *)ifaceThis)->*u.member)();
-	}
+	RVA00237FB0_OWNER_SLOT(00) RVA00237FB0_OWNER_SLOT(01) RVA00237FB0_OWNER_SLOT(02) RVA00237FB0_OWNER_SLOT(03)
+	RVA00237FB0_OWNER_SLOT(04) RVA00237FB0_OWNER_SLOT(05) RVA00237FB0_OWNER_SLOT(06) RVA00237FB0_OWNER_SLOT(07)
+	RVA00237FB0_OWNER_SLOT(08) RVA00237FB0_OWNER_SLOT(09) RVA00237FB0_OWNER_SLOT(10) RVA00237FB0_OWNER_SLOT(11)
+	RVA00237FB0_OWNER_SLOT(12) RVA00237FB0_OWNER_SLOT(13) RVA00237FB0_OWNER_SLOT(14) RVA00237FB0_OWNER_SLOT(15)
+	RVA00237FB0_OWNER_SLOT(16) RVA00237FB0_OWNER_SLOT(17) RVA00237FB0_OWNER_SLOT(18) RVA00237FB0_OWNER_SLOT(19)
+	RVA00237FB0_OWNER_SLOT(20) RVA00237FB0_OWNER_SLOT(21) RVA00237FB0_OWNER_SLOT(22) RVA00237FB0_OWNER_SLOT(23)
+	RVA00237FB0_OWNER_SLOT(24) RVA00237FB0_OWNER_SLOT(25) RVA00237FB0_OWNER_SLOT(26) RVA00237FB0_OWNER_SLOT(27)
+	RVA00237FB0_OWNER_SLOT(28) RVA00237FB0_OWNER_SLOT(29) RVA00237FB0_OWNER_SLOT(30) RVA00237FB0_OWNER_SLOT(31)
+	RVA00237FB0_OWNER_SLOT(32) RVA00237FB0_OWNER_SLOT(33) RVA00237FB0_OWNER_SLOT(34) RVA00237FB0_OWNER_SLOT(35)
+	RVA00237FB0_OWNER_SLOT(36) RVA00237FB0_OWNER_SLOT(37) RVA00237FB0_OWNER_SLOT(38) RVA00237FB0_OWNER_SLOT(39)
+	virtual UnsignedInt applyMember(Object *) = 0;
 
-	UnsignedInt callSlot40(Object *arg)
-	{
-		void *ifaceThis = (char *)this - 0xc4;
-		void *vtbl = *(void **)ifaceThis;
-		void *slotAddr = *(void **)((char *)vtbl + 0xa0);
-		typedef UnsignedInt (Rva00237FB0Owner::*Fn)(Object *);
-		union { void (*raw)(void); Fn member; } u;
-		u.raw = (void (*)(void))slotAddr;
-		return (((Rva00237FB0Owner *)ifaceThis)->*u.member)(arg);
-	}
-
-	void rva00237fb0(class Rva00237FB0Param *param);
-};
-
-class Rva00237FB0Param
-{
-public:
-	BfmeMemberList *asList() { return (BfmeMemberList *)this; }
-	BfmeMemberIndexNode *memberIndex() { return m_memberIndex; }
+	void copyMembersToList(BfmeMemberList *output);
 
 private:
-	char m_pad[0x30];
-	BfmeMemberIndexNode *m_memberIndex;	// +0x30
+	char m_pad[0x2c];
+	BfmeMemberIndexNode *m_memberIndex;
 };
+#undef RVA00237FB0_OWNER_SLOT
 
-// ?rva00237fb0@Rva00237FB0Owner@@QAEXPAVRva00237FB0Param@@@Z
-void Rva00237FB0Owner::rva00237fb0(Rva00237FB0Param *param)
+void Rva00237FB0Owner::copyMembersToList(BfmeMemberList *output)
 {
-	BfmeMemberList *src = sourceList();
-	BfmeMemberList *dst = param->asList();
+	const BfmeMemberList &members =
+		((Rva00237FB0MemberSource *)((char *)this - 0xc4))->getMemberList();
 
-	for (BfmeMemberList::iterator it = src->begin(); it != src->end(); ++it)
+	for (BfmeMemberList::const_iterator it = members.begin(); it != members.end(); ++it)
 	{
-		dst->push_back(*it);
+		output->push_back(*it);
 	}
 
-	BfmeMemberIndexNode *entry = param->memberIndex()->m_next;
-	BfmeMemberIndexNode *header = param->memberIndex();
-	while (entry != header)
+	BfmeMemberIndexNode *entry = m_memberIndex->m_next;
+	while (entry != m_memberIndex)
 	{
 		UnsignedInt key = entry->m_key;
-		Object *resolved = TheBfmeGameLogicInline->findObjectByID(key);
-		if (resolved != 0)
-			dst->push_back(resolved);
+		Object *object = TheBfmeGameLogic->findObjectByID(key);
+		if (object != 0)
+			output->push_back(object);
 
 		entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
 			(_STL::_Rb_tree_node_base *)entry);
 	}
 
 	BfmeMemberList temp;
-	for (BfmeMemberList::iterator it2 = src->begin(); it2 != src->end(); ++it2)
+	for (BfmeMemberList::const_iterator it = members.begin(); it != members.end(); ++it)
 	{
-		Object *obj = *it2;
-		callSlot40(obj);
-		temp.push_back(obj);
+		temp.push_back(*it);
+	}
+
+	for (BfmeMemberList::iterator it = temp.begin(); it != temp.end(); ++it)
+	{
+		applyMember(*it);
 	}
 }
+
+// ?copyMembersToList@Rva00237FB0Owner@@QAEXPAV?$list@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@@Z

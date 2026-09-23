@@ -1,5 +1,5 @@
 // ?query@Footprint003E5E40@@QAE_NPAUObject003E5E40@@@Z
-// partial score=0.9565217391304348 date=2026-09-21
+// partial score=0.96 date=2026-09-23
 // cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /Ireference/shims/pathfind
 // Continued from reverse/attempts/0x003e5e40.cpp using analyst pack 1b/1c.
 // Full 460-byte body and 0x2C local frame. Remaining: 20 EBX/EDI operand bytes.
