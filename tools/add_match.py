@@ -56,8 +56,11 @@ def replaceable_scaffold(row):
     # note begins "gen-dump conversion; ..." is a claim, not a placeholder.
     if SCAFFOLD_NOTE.match(notes):
         return True
-    return (notes.split(";", 1)[0] == "gen-tgrid" and
-            re.fullmatch(r"Code/gen_small/tgrid_\d+\.cpp", row["source"]) is not None)
+    kind = notes.split(";", 1)[0]
+    return ((kind == "gen-tgrid" and
+             re.fullmatch(r"Code/gen_small/tgrid_\d+\.cpp", row["source"]) is not None)
+            or (kind == "gen-shim" and
+                re.fullmatch(r"Code/gen_small/fam_\d+\.cpp", row["source"]) is not None))
 
 
 def fail(*lines):

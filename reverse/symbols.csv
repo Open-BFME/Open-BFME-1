@@ -14185,7 +14185,6 @@ name,address,notes
 ?_M_insert_overflow@?$vector@UGen_t_00294cb0_p8cd@@V?$allocator@UGen_t_00294cb0_p8cd@@@_STL@@@_STL@@IAEXPAUGen_t_00294cb0_p8cd@@ABU3@ABU__false_type@2@I_N@Z,0x002949D0,gen-tgrid payload member
 ?_M_insert_overflow@?$vector@UGen_t_0029fc70_p8cd@@V?$allocator@UGen_t_0029fc70_p8cd@@@_STL@@@_STL@@IAEXPAUGen_t_0029fc70_p8cd@@ABU3@ABU__false_type@2@I_N@Z,0x0029FA20,gen-tgrid payload member
 ?_M_insert_overflow@?$vector@UGen_t_002b0940_p8pod@@V?$allocator@UGen_t_002b0940_p8pod@@@_STL@@@_STL@@IAEXPAUGen_t_002b0940_p8pod@@ABU3@ABU__false_type@2@I_N@Z,0x002B0710,gen-tgrid payload member
-?_M_insert_overflow@?$vector@UGen_t_002d8990_m4pod@@V?$allocator@UGen_t_002d8990_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_002d8990_m4pod@@ABU3@ABU__false_type@2@I_N@Z,0x002D8820,family-emit payload member
 ?_M_insert_overflow@?$vector@UGen_t_002dc5f0_p8pod@@V?$allocator@UGen_t_002dc5f0_p8pod@@@_STL@@@_STL@@IAEXPAUGen_t_002dc5f0_p8pod@@ABU3@ABU__false_type@2@I_N@Z,0x002DC3D0,gen-tgrid payload member
 ?_M_insert_overflow@?$vector@UGen_t_002e19c0_p12cd@@V?$allocator@UGen_t_002e19c0_p12cd@@@_STL@@@_STL@@IAEXPAUGen_t_002e19c0_p12cd@@ABU3@ABU__false_type@2@I_N@Z,0x002E1820,gen-tgrid payload member
 ?_M_insert_overflow@?$vector@UGen_t_002e20c0_p12cd@@V?$allocator@UGen_t_002e20c0_p12cd@@@_STL@@@_STL@@IAEXPAUGen_t_002e20c0_p12cd@@ABU3@ABU__false_type@2@I_N@Z,0x002E1DA0,gen-tgrid payload member
@@ -88865,3 +88864,4 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?registerWindowLayout@InGameUI@@QAEXPAVWindowLayout@@@Z,0x000178AA,ShowDiplomacy retail call at 0x004C4140 through ILT
 ?updateBuddyInfo@@YAXXZ,0x0002549B,ShowDiplomacy retail call at 0x004C418B through ILT
 ?get_allocator@?$vector@UGen_t_003a75c0_p8cd@@V?$allocator@UGen_t_003a75c0_p8cd@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_t_003a75c0_p8cd@@@2@XZ,0x00013FC5,route=0x003A66A0; Retail vector copy 0x003AA980 passes this source vector and result slot to the ILT. The routed body returns the result slot.
+?_M_insert_overflow@?$vector@PAURva002D8C10Record@@V?$allocator@PAURva002D8C10Record@@@_STL@@@_STL@@IAEXPAPAURva002D8C10Record@@ABQAU3@ABU__true_type@2@I_N@Z,0x00007711,route=0x002D8820; UpgradeTexture parser ILT call to native pointer-vector body

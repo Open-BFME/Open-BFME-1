@@ -98,11 +98,32 @@ def test_tgrid_replacement_keeps_transaction_and_tombstone(tmp_path, monkeypatch
         assert "same 32-byte range" in tombstone[2]
 
 
+@pytest.mark.parametrize("gate", [0, 1])
+def test_gen_shim_replacement_keeps_transaction_and_tombstone(tmp_path, monkeypatch, gate):
+    scaffold = DUMP.replace("Code/gen_asm/d_00abcd00.asm", "Code/gen_small/fam_001.cpp").replace(
+        "gen-dump;ghidra=FUN_00eacd00", "gen-shim;family=f265_b7a8aa")
+    functions, deleted, source = arrange(tmp_path, monkeypatch, gate=gate, scaffold=scaffold)
+    before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
+    if gate:
+        with pytest.raises(SystemExit):
+            add_match.main()
+        assert (functions.read_bytes(), deleted.read_bytes(), source.read_bytes()) == before
+    else:
+        add_match.main()
+        assert REAL in functions.read_text()
+        tombstone = list(csv.reader(io.StringIO(deleted.read_text())))[-1]
+        assert "gen-shim scaffold placeholder" in tombstone[2]
+        assert "same 32-byte range" in tombstone[2]
+
+
 @pytest.mark.parametrize("notes,path", [
     ("gen-tgrid;template=vec_p16cd", "Code/Real.cpp"),
     ("gen-tgrid-other", "Code/gen_small/tgrid_109.cpp"),
     ("gen-uw;parent=0x00123456", "Code/gen_small/uw_gen_001.cpp"),
     ("authored", "Code/gen_small/tgrid_109.cpp"),
+    ("gen-shim;family=f265_b7a8aa", "Code/Real.cpp"),
+    ("gen-shim-other", "Code/gen_small/fam_001.cpp"),
+    ("gen-alias;family=f265_b7a8aa", "Code/gen_small/fam_001.cpp"),
 ])
 def test_tgrid_support_does_not_admit_real_or_unwind_claims(
         tmp_path, monkeypatch, notes, path):
