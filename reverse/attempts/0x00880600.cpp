@@ -1,178 +1,173 @@
 // ?DoXfer@GeometryInfo@@UAEXAAVXfer@@@Z
-// partial score=0.07 date=2026-09-21
-// ?DoXfer@GeometryInfo@@UAEXAAVXfer@@@Z [retail body 0x00880600]
-// GeometryInfo's vtable 0x01086138 slot 3 (Snapshot::DoXfer); slots 0-2 are
-// still dumps but the GeometryInfo identity is proven by vtable_lookup.py:
-// the SAME vtable is installed by the already-matched
-// GeometryInfoDefaultConstructor.cpp / GeometryInfoCopyConstructor.cpp /
-// GeometryInfoConstructor.cpp. Field offsets +0x2c (m_shapes, a BfmeVec60 of
-// BfmeElem60 -- the identical element type Rva00880260Resize.cpp already
-// matched) and the resize() call itself are shared with those files.
-// Xfer vtable slots cross-checked against the independently matched
-// Rva001C2E50Xfer.cpp: xferVersion=+0x28, xferInt=+0x78, xferBool=+0x8c.
-// The string "GeometryType" at 0x01132a70 names the tagged xfer call used
-// for BfmeElem60's leading enum field.
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// partial score=0.27 date=2026-09-23
+// ?DoXfer@GeometryInfo@@UAEXAAVXfer@@@Z
+// GeometryInfo vtable 0x01086138 slot 3; same table is installed by the matched constructors.
+// Element declaration follows the matched GeometryParseType and vector copy/fill helpers.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Include/Common /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
+#include "snapshot.h"
+#include "xfer.h"
+#include "coord3d.h"
 
-typedef bool Bool;
-typedef float Real;
-typedef int Int;
-typedef unsigned int UnsignedInt;
-typedef unsigned char UnsignedByte;
-
-class XferVersionRec
+struct BfmeCoord3D
 {
-public:
-	XferVersionRec(UnsignedByte major, UnsignedByte minor) : m_major(major), m_minor(minor) {}
-	UnsignedByte m_major;
-	UnsignedByte m_minor;
+	__forceinline BfmeCoord3D() throw() : x(0.0f), y(0.0f), z(0.0f) {}
+
+	float x;
+	float y;
+	float z;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Xfer.h
-// Slot order proven against Rva001C2E50Xfer.cpp (matched): xferVersion@10,
-// xferInt@30, xferBool@35. Slot 4 (+0x10), 24 (+0x60), 27 (+0x6c) and 36
-// (+0x90) have no independent identity yet; address-derived names.
-class Xfer
+class BfmeAsciiString
 {
 public:
-	virtual void slot00();
-	virtual void slot01();
-	virtual void slot02();
-	virtual void slot03();
-	virtual Bool slot04();
-	virtual void slot05();
-	virtual void slot06();
-	virtual void slot07();
-	virtual void slot08();
-	virtual void slot09();
-	virtual void xferVersion(XferVersionRec &value);
-	virtual void slot11();
-	virtual void slot12();
-	virtual void slot13();
-	virtual void slot14();
-	virtual void slot15();
-	virtual void slot16();
-	virtual void slot17();
-	virtual void slot18();
-	virtual void slot19();
-	virtual void slot20();
-	virtual void slot21();
-	virtual void slot22();
-	virtual void slot23();
-	virtual void slot24(void *value);
-	virtual void slot25();
-	virtual void slot26();
-	virtual void slot27(Real *value);
-	virtual void slot28();
-	virtual void slot29();
-	virtual void xferInt(Int *value);
-	virtual void slot31();
-	virtual void slot32();
-	virtual void slot33();
-	virtual void slot34();
-	virtual void xferBool(Bool *value);
-	virtual void slot36(const char *tag, void *data, Int size);
-};
+	__forceinline BfmeAsciiString() throw() : m_data(0) {}
 
-// upstream layout matches Rva00880260Resize.cpp (matched ?resize@BfmeVec60@@...)
-struct BfmeTail60
-{
-	char *m_p;
-	void release();
+private:
+	char *m_data;
 };
 
 struct BfmeElem60
 {
-	BfmeElem60() : m_00(0), m_04(1.0f), m_08(1.0f), m_0C(1.0f), m_10(0), m_14(0), m_18(0), m_20(1)
+	__forceinline BfmeElem60() throw()
+		: m_type(0), m_height(1.0f), m_majorRadius(1.0f),
+		  m_minorRadius(1.0f), m_center(), m_name(), m_enabled(true)
 	{
-		m_1C.m_p = 0;
 	}
 
-	Int m_00;
-	Real m_04;
-	Real m_08;
-	Real m_0C;
-	Real m_10;
-	Int m_14;
-	Int m_18;
-	BfmeTail60 m_1C;
-	char m_20;
-	char m_pad[3];
+	__forceinline BfmeElem60(const BfmeElem60 &other) throw()
+	{
+		m_type = other.m_type;
+		m_height = other.m_height;
+		m_majorRadius = other.m_majorRadius;
+		m_minorRadius = other.m_minorRadius;
+		m_center = other.m_center;
+		m_name = other.m_name;
+		m_enabled = other.m_enabled;
+	}
+
+	int m_type;
+	float m_height;
+	float m_majorRadius;
+	float m_minorRadius;
+	BfmeCoord3D m_center;
+	BfmeAsciiString m_name;
+	bool m_enabled;
+	unsigned char m_padding[3];
 };
 
 class BfmeVec60
 {
 public:
-	void resize(UnsignedInt n, BfmeElem60 value);
+	void resize(unsigned int count, BfmeElem60 value) throw();
 
-	BfmeElem60 *_M_start;
-	BfmeElem60 *_M_finish;
-	BfmeElem60 *_M_end_of_storage;
+	BfmeElem60 *m_begin;
+	BfmeElem60 *m_end;
+	BfmeElem60 *m_capacity;
 };
 
-class GeometryInfo
+class Rva00880600Xfer36View
 {
 public:
-	virtual ~GeometryInfo();
-	virtual void slot1();
-	virtual void slot2();
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual void slot17() = 0;
+	virtual void slot18() = 0;
+	virtual void slot19() = 0;
+	virtual void slot20() = 0;
+	virtual void slot21() = 0;
+	virtual void slot22() = 0;
+	virtual void slot23() = 0;
+	virtual void slot24() = 0;
+	virtual void slot25() = 0;
+	virtual void slot26() = 0;
+	virtual void slot27() = 0;
+	virtual void slot28() = 0;
+	virtual void slot29() = 0;
+	virtual void slot30() = 0;
+	virtual void slot31() = 0;
+	virtual void slot32() = 0;
+	virtual void slot33() = 0;
+	virtual void slot34() = 0;
+	virtual void slot35() = 0;
+	virtual void slot36(const char *tag, void *data, unsigned int size) = 0;
+};
+
+class GeometryInfo : public Snapshot
+{
+public:
 	virtual void DoXfer(Xfer &xfer);
 
 private:
-	char m_pad00[4];
-	Bool m_flagA;
-	char m_pad05[0x0B];
-	Real m_realA;
-	Real m_realB;
-	UnsignedByte m_byteC;
-	char m_pad19[0x0B];
-	Real m_realD;
-	Real m_realE;
+	bool m_isSmall;
+	unsigned char m_pad05[3];
+	int m_scalar08;
+	int m_scalar0c;
+	float m_scalar10;
+	float m_scalar14;
+	Coord3DBase m_coord18;
+	float m_scalar24;
+	float m_scalar28;
 	BfmeVec60 m_shapes;
-	char m_pad38[0x0C];
-	UnsignedByte m_byteE;
-	char m_pad45[0x0B];
-	UnsignedByte m_byteF;
+	unsigned char m_records[0x0C];
+	Coord3DBase m_coord44;
+	Coord3DBase m_coord50;
 };
 
 void GeometryInfo::DoXfer(Xfer &xfer)
 {
-	if (xfer.slot04())
+	if (xfer.IsLightCRC())
 		return;
 
-	XferVersionRec version(1, 2);
-	xfer.xferVersion(version);
+	Xfer::Version version;
+	version.data[0] = 1;
+	version.data[1] = 2;
+	xfer == version;
 
-	xfer.xferBool(&m_flagA);
+	xfer == m_isSmall;
 
-	UnsignedInt shapeCount = (UnsignedInt)(m_shapes._M_finish - m_shapes._M_start);
-	xfer.xferInt((Int *)&shapeCount);
+	int shape_frame_shapeCount_140[2];
+		shape_frame_shapeCount_140[1] = (int)(m_shapes.m_end - m_shapes.m_begin);
+	xfer == shape_frame_shapeCount_140[1];
 
-	m_shapes.resize(shapeCount, BfmeElem60());
+	m_shapes.resize((unsigned int)shape_frame_shapeCount_140[1], BfmeElem60());
 
-	if ((Int)shapeCount > 0)
+	if (shape_frame_shapeCount_140[1] > 0)
 	{
-		BfmeElem60 *shape = m_shapes._M_start;
-		for (UnsignedInt i = 0; i < shapeCount; ++i, ++shape)
+		BfmeElem60 *shape = m_shapes.m_begin;
+		volatile int i = 0;
+		do
 		{
-			xfer.slot36("GeometryType", &shape->m_00, sizeof(Int));
-			xfer.slot27(&shape->m_04);
-			xfer.slot27(&shape->m_08);
-			xfer.slot27(&shape->m_0C);
-			xfer.slot24(&shape->m_10);
+			((Rva00880600Xfer36View &)xfer).slot36("GeometryType", &shape->m_type, sizeof(int));
+			xfer == shape->m_height;
+			xfer == shape->m_majorRadius;
+			xfer == shape->m_minorRadius;
+			xfer == (Coord3DBase &)shape->m_center;
 
-			if (version.m_minor > 1)
-			{
-				xfer.xferBool((Bool *)&shape->m_20);
-			}
-		}
+			if (version.data[1] > 1)
+				xfer == shape->m_enabled;
+		} while (++i, ++shape, i < shape_frame_shapeCount_140[1]);
 	}
 
-	xfer.slot27(&m_realA);
-	xfer.slot27(&m_realB);
-	xfer.slot27(&m_realD);
-	xfer.slot27(&m_realE);
-	xfer.slot24(&m_byteC);
-	xfer.slot24(&m_byteE);
-	xfer.slot24(&m_byteF);
+	xfer == m_scalar10;
+	xfer == m_scalar14;
+	xfer == m_scalar24;
+	xfer == m_scalar28;
+	xfer == m_coord18;
+	xfer == m_coord44;
+	xfer == m_coord50;
 }
