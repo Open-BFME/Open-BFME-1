@@ -432,13 +432,53 @@ static const char * findGameMessageNameByType(GameMessage::Type type)
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?translateGameMessage@MetaEventTranslator@@UAE?AW4GameMessageDisposition@@PBVGameMessage@@@Z present-unmatched
+// BFME translation: verified vtable VA 0x0110F050 slot 0 -> ILT
+// 0x0000C248 -> RVA 0x005B6BA0. The following views retain retail offsets
+// without changing the Zero Hour interfaces used by the other methods.
+namespace Rva005B6BA0MessageTypes {
+const GameMessage::Type RawKeyDown = (GameMessage::Type)21;
+const GameMessage::Type RawKeyUp = (GameMessage::Type)22;
+const GameMessage::Type RawMouseEnd = (GameMessage::Type)20;
+const GameMessage::Type MiddleDown = (GameMessage::Type)10;
+const GameMessage::Type MiddleDoubleClick = (GameMessage::Type)11;
+const GameMessage::Type MiddleUp = (GameMessage::Type)12;
+const GameMessage::Type RightDown = (GameMessage::Type)14;
+const GameMessage::Type RightDoubleClick = (GameMessage::Type)15;
+const GameMessage::Type RightUp = (GameMessage::Type)16;
+const GameMessage::Type LeftClick = (GameMessage::Type)23;
+const GameMessage::Type LeftDoubleClick = (GameMessage::Type)24;
+const GameMessage::Type MiddleClick = (GameMessage::Type)25;
+const GameMessage::Type MiddleClickDouble = (GameMessage::Type)26;
+const GameMessage::Type RightClick = (GameMessage::Type)27;
+const GameMessage::Type RightClickDouble = (GameMessage::Type)28;
+}
+
+// Retail MetaMapRec has no MemoryPoolObject vptr; its witnessed fields
+// are m_next +0, m_meta +4, m_key +8, transition +C, modifiers +10, usable +14.
+struct Rva005B6BA0MapView {
+ const Rva005B6BA0MapView *m_next;
+ GameMessage::Type m_meta;
+ MappableKeyType m_key;
+ MappableKeyTransition m_transition;
+ MappableKeyModState m_modState;
+ CommandUsableInType m_usableIn;
+};
+struct Rva005B6BA0StreamView {
+ virtual void slot00(); virtual void slot04(); virtual void slot08();
+ virtual void slot0C(); virtual void slot10(); virtual void slot14();
+ virtual void slot18(); virtual void slot1C(); virtual void slot20();
+ virtual void slot24(); virtual void slot28(); virtual void slot2C();
+ virtual void slot30();
+ virtual GameMessage *appendMessage(GameMessage::Type);
+ virtual GameMessage *insertMessage(GameMessage::Type, GameMessage *);
+};
+extern const void *Rva005B6BA0Global012F7048;
 GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessage *msg)
 {
 	GameMessageDisposition disp = KEEP_MESSAGE;
 	GameMessage::Type t = msg->getType();
 
-	if (t == GameMessage::MSG_RAW_KEY_DOWN || t == GameMessage::MSG_RAW_KEY_UP)
+	if (t == Rva005B6BA0MessageTypes::RawKeyDown || t == Rva005B6BA0MessageTypes::RawKeyUp)
 	{
 		MappableKeyType key = (MappableKeyType)msg->getArgument(0)->integer;
 		Int keyState = msg->getArgument(1)->integer;
@@ -463,7 +503,7 @@ GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessa
 		}
 
 
-    for (const MetaMapRec *map = TheMetaMap->getFirstMetaMapRec(); map; map = map->m_next)
+    for (const Rva005B6BA0MapView *map = (const Rva005B6BA0MapView *)TheMetaMap->getFirstMetaMapRec(); map; map = map->m_next)
 		{
 			DEBUG_ASSERTCRASH(map->m_meta > GameMessage::MSG_BEGIN_META_MESSAGES && 
 				map->m_meta < GameMessage::MSG_END_META_MESSAGES, ("hmm, expected only meta-msgs here"));
@@ -502,7 +542,7 @@ GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessa
 					)
 			{
 				//DEBUG_LOG(("Frame %d: MetaEventTranslator::translateGameMessage() Mods-only change: %s\n", TheGameLogic->getFrame(), findGameMessageNameByType(map->m_meta)));
-				/*GameMessage *metaMsg =*/ TheMessageStream->appendMessage(map->m_meta);
+				/*GameMessage *metaMsg =*/ ((Rva005B6BA0StreamView *)TheMessageStream)->appendMessage(map->m_meta);
 				disp = DESTROY_MESSAGE;
 				break;
 			}
@@ -528,29 +568,10 @@ GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessa
 				else
 				{
 
-          // THIS IS A GREASY HACK... MESSAGE SHOULD BE HANDLED IN A TRANSLATOR, BUT DURING CINEMATICS THE TRANSLATOR IS DISABLED
-          if( map->m_meta ==  GameMessage::MSG_META_TOGGLE_FAST_FORWARD_REPLAY)
-		      {
-				#if defined(_ALLOW_DEBUG_CHEATS_IN_RELEASE)//may be defined in GameCommon.h
-			      if( TheGlobalData )
-				#else
-				  if( TheGlobalData && TheGameLogic->isInReplayGame())
-				#endif
-			      {
-	            if ( TheWritableGlobalData )
-                TheWritableGlobalData->m_TiVOFastMode = 1 - TheGlobalData->m_TiVOFastMode;
-
-              if ( TheInGameUI )
-  				      TheInGameUI->message( TheGlobalData->m_TiVOFastMode ? TheGameText->fetch("GUI:FF_ON") : TheGameText->fetch("GUI:FF_OFF") );
-			      }  
-			      disp = KEEP_MESSAGE; // cause for goodness sake, this key gets used a lot by non-replay hotkeys
-			      break;
-		      }  
-
-
-					/*GameMessage *metaMsg =*/ TheMessageStream->appendMessage(map->m_meta);
+/*GameMessage *metaMsg =*/ ((Rva005B6BA0StreamView *)TheMessageStream)->appendMessage(map->m_meta);
 					//DEBUG_LOG(("Frame %d: MetaEventTranslator::translateGameMessage() normal: %s\n", TheGameLogic->getFrame(), findGameMessageNameByType(map->m_meta)));
 				}
+				if (*((const bool *)Rva005B6BA0Global012F7048 + 8)) break;
 				disp = DESTROY_MESSAGE;
 				break;
 			}
@@ -558,7 +579,7 @@ GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessa
 
 
 
-		if (t == GameMessage::MSG_RAW_KEY_DOWN)
+		if (t == Rva005B6BA0MessageTypes::RawKeyDown)
     {
 			m_lastKeyDown = key;
 
@@ -581,19 +602,19 @@ GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessa
 	}
 
 
-	if (t > GameMessage::MSG_RAW_MOUSE_BEGIN && t < GameMessage::MSG_RAW_MOUSE_END )
+	if (t > GameMessage::MSG_RAW_MOUSE_BEGIN && t < Rva005B6BA0MessageTypes::RawMouseEnd )
 	{
 		Int index = 0;
 		switch (t)
 		{
 			case GameMessage::MSG_RAW_MOUSE_LEFT_BUTTON_DOWN:
-			case GameMessage::MSG_RAW_MOUSE_MIDDLE_BUTTON_DOWN:
-			case GameMessage::MSG_RAW_MOUSE_RIGHT_BUTTON_DOWN:
+			case Rva005B6BA0MessageTypes::MiddleDown:
+			case Rva005B6BA0MessageTypes::RightDown:
 			{
 				// Fill out which the current mouse down position
-				if (t == GameMessage::MSG_RAW_MOUSE_MIDDLE_BUTTON_DOWN)
+				if (t == Rva005B6BA0MessageTypes::MiddleDown)
 					index = 1;
-				else if (t == GameMessage::MSG_RAW_MOUSE_RIGHT_BUTTON_DOWN)
+				else if (t == Rva005B6BA0MessageTypes::RightDown)
 					index = 2;
 				// else index == 0
 				m_mouseDownPosition[index] = msg->getArgument(0)->pixel;
@@ -603,12 +624,12 @@ GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessa
 			}
 
 			case GameMessage::MSG_RAW_MOUSE_LEFT_DOUBLE_CLICK:
-			case GameMessage::MSG_RAW_MOUSE_MIDDLE_DOUBLE_CLICK:
-			case GameMessage::MSG_RAW_MOUSE_RIGHT_DOUBLE_CLICK:
+			case Rva005B6BA0MessageTypes::MiddleDoubleClick:
+			case Rva005B6BA0MessageTypes::RightDoubleClick:
 			{
-				if (t == GameMessage::MSG_RAW_MOUSE_MIDDLE_DOUBLE_CLICK)
+				if (t == Rva005B6BA0MessageTypes::MiddleDoubleClick)
 					index = 1;
-				else if (t == GameMessage::MSG_RAW_MOUSE_RIGHT_DOUBLE_CLICK)
+				else if (t == Rva005B6BA0MessageTypes::RightDoubleClick)
 					index = 2;
 				// else index == 0
 
@@ -617,15 +638,15 @@ GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessa
 			}
 
 			case GameMessage::MSG_RAW_MOUSE_LEFT_BUTTON_UP:
-			case GameMessage::MSG_RAW_MOUSE_MIDDLE_BUTTON_UP:
-			case GameMessage::MSG_RAW_MOUSE_RIGHT_BUTTON_UP:
+			case Rva005B6BA0MessageTypes::MiddleUp:
+			case Rva005B6BA0MessageTypes::RightUp:
 			{
 				ICoord2D location = msg->getArgument(0)->pixel;
 
 				// Fill out which the current mouse down position
-				if (t == GameMessage::MSG_RAW_MOUSE_MIDDLE_BUTTON_UP)
+				if (t == Rva005B6BA0MessageTypes::MiddleUp)
 					index = 1;
-				else if (t == GameMessage::MSG_RAW_MOUSE_RIGHT_BUTTON_UP)
+				else if (t == Rva005B6BA0MessageTypes::RightUp)
 					index = 2;
 				// else index == 0
 
@@ -633,32 +654,32 @@ GameMessageDisposition MetaEventTranslator::translateGameMessage(const GameMessa
 				if (t == GameMessage::MSG_RAW_MOUSE_LEFT_BUTTON_UP) 
 				{
 					if (m_nextUpShouldCreateDoubleClick[index])
-						newMessage = TheMessageStream->insertMessage(GameMessage::MSG_MOUSE_LEFT_DOUBLE_CLICK, const_cast<GameMessage*>(msg));
+						newMessage = ((Rva005B6BA0StreamView *)TheMessageStream)->insertMessage(Rva005B6BA0MessageTypes::LeftDoubleClick, const_cast<GameMessage*>(msg));
 					else
-						newMessage = TheMessageStream->insertMessage(GameMessage::MSG_MOUSE_LEFT_CLICK, const_cast<GameMessage*>(msg));
+						newMessage = ((Rva005B6BA0StreamView *)TheMessageStream)->insertMessage(Rva005B6BA0MessageTypes::LeftClick, const_cast<GameMessage*>(msg));
 					m_nextUpShouldCreateDoubleClick[index] = FALSE;
 				} 
-				else if (t == GameMessage::MSG_RAW_MOUSE_MIDDLE_BUTTON_UP)
+				else if (t == Rva005B6BA0MessageTypes::MiddleUp)
 				{
 					if (m_nextUpShouldCreateDoubleClick[index])
-						newMessage = TheMessageStream->insertMessage(GameMessage::MSG_MOUSE_MIDDLE_DOUBLE_CLICK, const_cast<GameMessage*>(msg));
+						newMessage = ((Rva005B6BA0StreamView *)TheMessageStream)->insertMessage(Rva005B6BA0MessageTypes::MiddleClickDouble, const_cast<GameMessage*>(msg));
 					else
-						newMessage = TheMessageStream->insertMessage(GameMessage::MSG_MOUSE_MIDDLE_CLICK, const_cast<GameMessage*>(msg));
+						newMessage = ((Rva005B6BA0StreamView *)TheMessageStream)->insertMessage(Rva005B6BA0MessageTypes::MiddleClick, const_cast<GameMessage*>(msg));
 					m_nextUpShouldCreateDoubleClick[index] = FALSE;
 				}
-				else if (t == GameMessage::MSG_RAW_MOUSE_RIGHT_BUTTON_UP) 
+				else if (t == Rva005B6BA0MessageTypes::RightUp) 
 				{
 					if (m_nextUpShouldCreateDoubleClick[index])
-						newMessage = TheMessageStream->insertMessage(GameMessage::MSG_MOUSE_RIGHT_DOUBLE_CLICK, const_cast<GameMessage*>(msg));
+						newMessage = ((Rva005B6BA0StreamView *)TheMessageStream)->insertMessage(Rva005B6BA0MessageTypes::RightClickDouble, const_cast<GameMessage*>(msg));
 					else
-						newMessage = TheMessageStream->insertMessage(GameMessage::MSG_MOUSE_RIGHT_CLICK, const_cast<GameMessage*>(msg));
+						newMessage = ((Rva005B6BA0StreamView *)TheMessageStream)->insertMessage(Rva005B6BA0MessageTypes::RightClick, const_cast<GameMessage*>(msg));
 					m_nextUpShouldCreateDoubleClick[index] = FALSE;
 				}
 
 				IRegion2D pixelRegion;
 				buildRegion( &m_mouseDownPosition[index], &location, &pixelRegion );
-				if (abs(pixelRegion.hi.x - pixelRegion.lo.x) < TheMouse->m_dragTolerance &&
-						abs(pixelRegion.hi.y - pixelRegion.lo.y) < TheMouse->m_dragTolerance)
+				if (abs(pixelRegion.hi.x - pixelRegion.lo.x) < (*(const UnsignedInt *)((const char *)TheMouse + 0x10EC)) &&
+						abs(pixelRegion.hi.y - pixelRegion.lo.y) < (*(const UnsignedInt *)((const char *)TheMouse + 0x10EC)))
 				{
 					pixelRegion.hi.x = pixelRegion.lo.x;
 					pixelRegion.hi.y = pixelRegion.lo.y;

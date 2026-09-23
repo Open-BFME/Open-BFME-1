@@ -1,20 +1,19 @@
 // ?update@ControlBar@@UAEXXZ
-// partial score=0.65 date=2026-09-22
+// partial score=1.0 date=2026-09-23
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
+// ?update@ControlBar@@UAEXXZ
 // BFME ControlBar::update reconstruction, retail RVA 0x004A2F80.
+// Based on the existing bank; completed temporary string lifetime, context
+// dispatch, and final update. Code ends at 0x004A3204; its ten-entry switch
+// table ends at 0x004A322C before INT3 padding (684 bytes total).
+// The retail vtable at VA 0x010FB890 has update at +0x0C through ILT 0x23FB5.
 // This TU deliberately models only the BFME fields and callable interfaces
 // witnessed by the retail body; the shipped ZH class layout is much larger.
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 
-class BFMERetailAsciiString {
-public:
-	BFMERetailAsciiString(const char *text);
-	~BFMERetailAsciiString();
-	const char *str() const { return m_data ? m_data + 8 : ""; }
-private:
-	char *m_data;
-};
+#include "StringInline.h"
 
 class UpdateManager {
 public:
@@ -29,18 +28,24 @@ public:
 class AnimateWindowManager : public UpdateManager {
 public:
 	char m_pad04[12];
-	Bool m_finished;
-	Bool m_reversed;
+	Bool m_needsUpdate;
+	Bool m_reverse;
 };
-class ControlBarSchemeManager { public: void update(); };
+class ControlBarSchemeManager { public: void go(); };
 
+class GameWindow {
+public:
+	Bool winIsHidden();
+	Int winHide(Bool hide);
+};
+
+// The tooltip layout is polymorphic in BFME; the ZH WindowLayout header
+// instead inlines callbacks. Preserve only its witnessed virtual interface.
 class GameWindow {
 public:
 	virtual void slot0() = 0;
 	virtual void slot1() = 0;
-	virtual void runUpdate() = 0;
-	Bool winIsHidden();
-	Int winHide(Bool hide);
+	virtual void runUpdate(void *) = 0;
 	char m_pad04[16];
 	Bool m_hidden;
 };
@@ -78,12 +83,17 @@ public:
 	virtual UnsignedInt getFrame() = 0;
 #undef SLOT
 };
-class PlayerList { public: Player *getLocalPlayer(); };
+class BfmeMemberRV;
+class BfmeThingRV { public: BfmeMemberRV *bfmePickRV(); };
+class BfmeHostZA { public: void bfmeTickZA(); };
+class BfmeThingZC { public: void bfmeTailZC(); };
+class Gen_004a37d0 { public: void m(); };
+enum ControlBarContext { CB_CONTEXT_NONE = 0 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
 extern GameWindowManager *TheWindowManager;
 extern GameClient *TheGameClient;
-extern PlayerList *Rva002EE330ThePlayers;
+extern BfmeThingRV *Rva004A2F80Players;
 extern void *g_obj12F4C38;
 void *GadgetButtonGetData(GameWindow *window);
 
@@ -97,19 +107,27 @@ protected:
 	void updateSpecialPowerShortcut();
 	void evaluateContextUI();
 	void populateSpecialPowerShortcut(Player *player);
+	public:
 	void repopulateBuildTooltipLayout();
+protected:
 	void updateContextPurchaseScience();
 	void updateContextMultiSelect();
-	void updateContextCommand();
+	
 	void updateContextStructureInventory();
-	void switchToContext(Int context, Drawable *drawable);
+	
+	
+	void updateContextUnderConstruction();
+private:
+	void updateContextOCLTimer();
+protected:
+	void switchToContext(ControlBarContext context, Drawable *drawable);
 
 	char m_pad04[4];
 	UpdateManager *m_videoManager;                    // +08
 	AnimateWindowManager *m_animateWindowManager;     // +0C
 	AnimateWindowManager *m_shortcutAnimateManager;   // +10
 	char m_pad14[0x10];
-	Bool m_isObserverCommandBar;                      // +24
+	Bool m_UIDirty;                      // +24
 	char m_pad25[0x0B];
 	ControlBarSchemeManager *m_controlBarSchemeManager; // +30
 	char m_pad34[0x28];
@@ -121,29 +139,34 @@ protected:
 	char m_pad150[0x128];
 	GameWindow *m_buildToolTipLayout;                 // +278
 	Bool m_showBuildToolTipLayout;                    // +27C
+	char m_pad27D[0x73];
+	UpdateManager *m_rva2F0;
 };
 
 void ControlBar::update()
 {
 	getStarImage();
 	updateRadarAttackGlow();
-	if (m_controlBarSchemeManager) m_controlBarSchemeManager->update();
+	if (m_controlBarSchemeManager) m_controlBarSchemeManager->go();
 	if (m_videoManager) m_videoManager->update();
 	if (m_animateWindowManager) m_animateWindowManager->update();
-	if (m_animateWindowManager && !m_animateWindowManager->m_finished &&
-		m_animateWindowManager->m_reversed) {
-		BFMERetailAsciiString name("ControlBar.wnd:ControlBarParent");
-		GameWindow *window = TheWindowManager->winGetWindowFromId(0,
-			TheNameKeyGenerator->nameToKey(name.str()));
+	if (m_animateWindowManager && !m_animateWindowManager->m_needsUpdate &&
+		m_animateWindowManager->m_reverse) {
+		Int id;
+		{
+			AsciiString name("ControlBar.wnd:ControlBarParent");
+			id = TheNameKeyGenerator->nameToKey(name.str());
+		}
+		GameWindow *window = TheWindowManager->winGetWindowFromId(0, id);
 		if (window && !window->winIsHidden()) window->winHide(true);
 	}
 	if (m_shortcutAnimateManager) m_shortcutAnimateManager->update();
 	if (m_shortcutAnimateManager && m_specialPowerShortcutParent &&
-		m_shortcutAnimateManager->m_finished && m_shortcutAnimateManager->m_reversed &&
+		!m_shortcutAnimateManager->m_needsUpdate && m_shortcutAnimateManager->m_reverse &&
 		!m_specialPowerShortcutParent->winIsHidden())
 		m_specialPowerShortcutParent->winHide(true);
 	if (m_buildToolTipLayout && !m_buildToolTipLayout->m_hidden) {
-		m_buildToolTipLayout->runUpdate();
+		m_buildToolTipLayout->runUpdate(0);
 		m_showBuildToolTipLayout = false;
 	}
 	updateSpecialPowerShortcut();
@@ -157,9 +180,9 @@ void ControlBar::update()
 	}
 	if (g_obj12F4C38 && *((unsigned char *)g_obj12F4C38 + 0x259))
 		updateContextPurchaseScience();
-	if (m_isObserverCommandBar) {
+	if (m_UIDirty) {
 		evaluateContextUI();
-		populateSpecialPowerShortcut(Rva002EE330ThePlayers->getLocalPlayer());
+		populateSpecialPowerShortcut((Player *)Rva004A2F80Players->bfmePickRV());
 		repopulateBuildTooltipLayout();
 	}
 	if (m_currContext == 7) {
@@ -167,13 +190,17 @@ void ControlBar::update()
 		return;
 	}
 	if (!m_currentSelectedDrawable || !m_currentSelectedDrawable->m_object) {
-		if (!m_currContext && m_currentSelectedDrawable)
-			switchToContext(0, 0);
-		return;
+		if (m_currContext || m_currentSelectedDrawable)
+			switchToContext(CB_CONTEXT_NONE, 0);
 	}
 	switch (m_currContext) {
-		case 1: updateContextCommand(); break;
+		case 1: ((BfmeThingZC *)this)->bfmeTailZC(); break;
 		case 2: updateContextStructureInventory(); break;
-		default: break;
+		case 3: ((BfmeHostZA *)this)->bfmeTickZA(); break;
+		case 4: evaluateContextUI(); break;
+		case 5: ((Gen_004a37d0 *)this)->m(); break;
+		case 6: updateContextUnderConstruction(); break;
+		case 10: updateContextOCLTimer(); break;
 	}
+	m_rva2F0->update();
 }

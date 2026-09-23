@@ -2784,7 +2784,7 @@ Int GadgetListBoxGetTopVisibleEntry( GameWindow *window )
 // Retail's adjust-top helper at 0x004B7DC0 takes its top row in EAX and
 // (window, updateSlider) on the stack. The single register move supplies that
 // compiler-private argument; the rest of this wrapper is ordinary C++.
-extern void d_004b7dc0();
+void Rva004B7DC0(GameWindow *, Int, Int);   // landed 2026-09-23 (GadgetListBoxInput.cpp), was the dump d_004b7dc0
 
 void GadgetListBoxSetTopVisibleEntry( GameWindow *window, Int newPos )
 {
@@ -2792,7 +2792,7 @@ void GadgetListBoxSetTopVisibleEntry( GameWindow *window, Int newPos )
 		return;
 
 	__asm mov eax, newPos
-	((void (__cdecl *)(GameWindow *, Int))d_004b7dc0)( window, 1 );
+	((void (__cdecl *)(GameWindow *, Int))Rva004B7DC0)( window, 1 );
 }
 
 //-------------------------------------------------------------------------------------------------

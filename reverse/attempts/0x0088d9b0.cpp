@@ -1,5 +1,5 @@
 // ?rva0088D9B0@DebugExceptionhandler@@CAXAAVDebug@@PAU_EXCEPTION_POINTERS@@@Z
-// partial score=0.998 date=2026-09-22
+// partial score=0.9984251968503937 date=2026-09-23
 //
 // 634 of the 635 retail bytes. ONE byte differs, at +0x20C: retail encodes the
 // inner byte read as `movzx eax, byte ptr [edi + ebx]` (SIB base EDI, index

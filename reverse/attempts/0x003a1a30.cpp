@@ -1,5 +1,5 @@
 // ?bfmeCheckGK@BfmeMgrGK@@QAE_NPAVBfmeObjGK@@_NPAM@Z
-// partial score=0.945 date=2026-09-22
+// partial score=0.9452296819787986 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
 // BFME 1.03 RVA 0x003A1A30, 566 bytes.

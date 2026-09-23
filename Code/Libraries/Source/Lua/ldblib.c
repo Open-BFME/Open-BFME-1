@@ -43,6 +43,11 @@ static void settabsi (lua_State *L, const char *i, int v) {
 }
 
 
+/* BFME reconstruction: retail's table constructor takes a requested size.
+   This is the same two-argument API used by f_luaopen in lstate.c; the
+   address-derived spelling is retained until its original name is known. */
+extern void bfmeGoUPC (lua_State *L, int n);
+
 static int getinfo (lua_State *L) {
   lua_Debug ar;
   const char *options = luaL_opt_string(L, 2, "flnSu");
@@ -62,7 +67,7 @@ static int getinfo (lua_State *L) {
     luaL_argerror(L, 1, "function or level expected");
   if (!lua_getinfo(L, options, &ar))
     luaL_argerror(L, 2, "invalid option");
-  lua_newtable(L);
+  bfmeGoUPC(L, 0);
   for (; *options; options++) {
     switch (*options) {
       case 'S':
