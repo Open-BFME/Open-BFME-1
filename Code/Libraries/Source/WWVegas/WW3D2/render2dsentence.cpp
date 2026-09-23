@@ -1260,26 +1260,8 @@ Render2DSentenceClass::Build_Sentence (const WCHAR *text, int *hkX, int *hkY)
 //	FontCharsClass
 //
 ////////////////////////////////////////////////////////////////////////////////////
-// ??0FontCharsClass@@QAE@XZ present-unmatched
-FontCharsClass::FontCharsClass (void) :
-	OldGDIFont(	NULL ),
-	OldGDIBitmap( NULL ),
-	GDIFont( NULL ),
-	GDIBitmap( NULL ),
-	GDIBitmapBits ( NULL ),
-	MemDC( NULL ),
-	CurrPixelOffset( 0 ),
-	PointSize( 0 ),
-	CharHeight( 0 ),
-	UnicodeCharArray( NULL ),
-	FirstUnicodeChar( 0xFFFF ),
-	LastUnicodeChar( 0 ),
-	IsBold (false)
-{
-	AlternateUnicodeFont = NULL;
-	::memset( ASCIICharArray, 0, sizeof (ASCIICharArray) );
-	return ;
-}
+// The constructor lives in FontCharsClassConstructorBFME.cpp; keep this buffer list instantiated here.
+template class DynamicVectorClass<FontCharsBuffer *>;
 
 
 ////////////////////////////////////////////////////////////////////////////////////
