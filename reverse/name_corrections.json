@@ -1038,5 +1038,15 @@
   "after_sha256": "a0e559df0360ccfe22513d457dcd3d1d60d6f94cb8cc6ad2a8c2333f4a119b43",
   "evidence": "reverse/functions.csv",
   "reason": "The row in reverse/functions.csv at 0x00887B60 labels GameSpyGroupRoom's constructor as a C++ alias of StringBase<char>'s copy constructor. The only caller at 0x006059F0 is still a dump, so it does not identify this object as GameSpyGroupRoom."
+ },
+ {
+  "old_path": "reverse/attempts/0x00769490.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/Rva00769490AssetListCollect.cpp",
+  "old_name": "BfmeShadowPart",
+  "new_name": "Gen_002DDCC0Target",
+  "before_sha256": "4a4e3f3d26257f661469a17bddb4265d41e9d501b5191cb6b3b34bc9fa909557",
+  "after_sha256": "58b14236f1a7c819f9889b24f8ca0eb34ff4ccc363ab266d4199069595d5d85c",
+  "evidence": "reverse/symbols.csv",
+  "reason": "the pin bfmeForward at Gen_002DDCC0Target 0x00022D86 (ILT thunk to body 0x00428250) is the (void*,void*) forwarder the matched AssetList walkers use; arg1 here is an AssetList pointer so the ShadowPart (float,float) alias does not fit"
  }
 ]
