@@ -719,7 +719,6 @@ TheInGameUI->DEBUG_addFloatingText("entering wanting state", getMachineOwner()->
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?onExit@SupplyTruckWantsToPickUpOrDeliverBoxesState@@ present-unmatched
 void SupplyTruckWantsToPickUpOrDeliverBoxesState::onExit(StateExitType status)
 {
 #ifdef DEBUG_SUPPLY_STATE
