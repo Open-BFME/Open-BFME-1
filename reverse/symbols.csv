@@ -12545,7 +12545,6 @@ name,address,notes
 ?Rva009A74D0@@YAXXZ,0x009A74D0,codec spread-table slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A7950@@YAXPAHPAGHHHHPBH@Z,0x009A7950,VP6 four-tap filter callee of Rva009A79D0/Rva009A7FE0Vp6Filter; unclaimed and blocked in re_attempts.log
 ?Rva009A7B00@@YAXXZ,0x009A7B00,codec spread-table slot filler (generic tier); no ghidra boundary or identity yet
-?Rva009A7F60@@YAXPAHPAGHHHHPBH@Z,0x009A7F60,VP6 four-tap filter callee of Rva009A7FE0Vp6Filter; unclaimed sibling of 0x009A7950
 ?Rva009A8110@@YAXXZ,0x009A8110,codec spread-table slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A91D0@@YAXXZ,0x009A91D0,codec dispatch outlier slot filler (generic tier); no ghidra boundary or identity yet
 ?Rva009A92D0@@YAXXZ,0x009A92D0,codec dispatch slot7 filler (generic tier); no ghidra boundary or identity yet

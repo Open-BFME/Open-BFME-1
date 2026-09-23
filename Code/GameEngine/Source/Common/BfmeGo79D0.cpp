@@ -5,7 +5,7 @@ extern int g_bfmeTableC7E0;
 extern void __cdecl Rva009A7950(
 	int *, unsigned short *, int, int, int, int, const int *);
 extern void __cdecl Rva009A7F60(
-	int *, unsigned short *, int, int, int, int, const int *);
+	int *, unsigned char *, int, int, int, int, const int *);
 
 // Scalar VP6 8x8 interpolation helper at retail RVA 0x009A79D0.
 void __cdecl Rva009A79D0Vp6Filter(
@@ -71,5 +71,5 @@ void __cdecl Rva009A7FE0Vp6Filter(
 	}
 	while (rows != 0);
 
-	Rva009A7F60(&g_bfmeTableC7E0, destination, 8, 8, 8, 8, verticalWeights);
+	Rva009A7F60(&g_bfmeTableC7E0, (unsigned char *)destination, 8, 8, 8, 8, verticalWeights);
 }
