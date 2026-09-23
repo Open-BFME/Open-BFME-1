@@ -1418,5 +1418,15 @@
   "after_sha256": "4f98e0816001f25214dce47c005c61762e965b358380de1a3d3a56839ecef564",
   "evidence": "reverse/re_attempts.log",
   "reason": "The attempt log proves a Coord3D at Object+0x38 and a flag word at Object+0x130 but names no field between them. The source labels that byte range by offset."
+ },
+ {
+  "old_path": "Code/gen_small/tgrid_001.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/Rva00443F60Selection.cpp",
+  "old_name": "Gen_p4pod",
+  "new_name": "Rva00443F60Data",
+  "before_sha256": "ef5c001581156fdbda176c54d8218867b968a11819f34cd38441bde13cb1dbcd",
+  "after_sha256": "54b4a687e990847bb95c7f0caff6a32bb3cf4a7d6e7fb6557a94cf54f92577ff",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "Gen_p4pod is a generator placeholder token from Code/gen_small/tgrid_001.cpp (the Gen_<token> family docs/naming_evidence.md describes), not a recovered identity; the landed source uses the address-derived name Rva00443F60Data as AGENTS.md requires."
  }
 ]
