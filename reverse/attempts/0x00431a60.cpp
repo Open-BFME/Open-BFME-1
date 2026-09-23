@@ -1,5 +1,5 @@
 // ?rva00431A60@GameClient@@UAEXPAVFrustumClass@@MP6AXPAVDrawable@@PAX@Z2@Z
-// partial score=0.96 date=2026-09-22
+// partial score=0.9607843137254902 date=2026-09-23
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
 // GameClient virtual at retail 0x00431A60 (357B), address-derived method name.
 //

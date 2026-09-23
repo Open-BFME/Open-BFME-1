@@ -1,5 +1,29 @@
 // ?read_v3_materials@MeshModelClass@@IAE_NAAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z
-// partial score=0.43 date=2026-09-22
+// partial score=0.4640883977900553 date=2026-09-23
+// ?read_v3_materials@MeshModelClass@@IAE_NAAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z
+// Resumed from reverse/attempts/0x0096f5b0.cpp; reconstruction, NOT a match.
+// Copyright 2025 Electronic Arts Inc.; GPL-3.0-or-later, as in the source twin.
+// Identity: MeshModelClass::read_chunks call at RVA 0x0096FFEA, the matching
+// GeneralsMD meshmdlio.cpp algorithm, and the landed Add_Legacy_Material caller ABI.
+// Decoded extent: 1448 bytes. RET 8 at +0x58B precedes the cold failure tail;
+// the final JMP at +0x5A6 ends at +0x5A8, followed by eight INT3 bytes.
+//
+// Changes from the saved body: ordinary new (retail does not branch to Error
+// on allocation failure), full-expression texture temporaries, the real
+// chunk/texture/vertex-material headers, private context callee declarations,
+// and the MeshModel forwarding setters from the source twin.
+//
+// Remaining wall: retail keeps the current texture in ESI across the chunk
+// loop and early failures before assignment skip its null cleanup. This body
+// reloads the texture on failure and has two additional cleanup entry paths.
+// The stack frame is now the correct 0x57C and the local offsets agree.
+// Instruction alignment (not acceptance) identifies a 13-byte deficit before
+// the default-material setters and ten additional bytes in failure cleanup.
+// Assignment visibility, base/derived handle destructors, destructor-local
+// pointer copies, ChunkLoad throw annotations, /Ob1, /G6, /GX, /EHsc- do not
+// fix the residue. /Oa, /Ow, /Og-, /G7 and /EHa diverge further.
+// No assembly, byte emission or volatile shaping is used.
+
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas/WWDebug /Ireference/shims/sweep /Ibuild/toolchains/dx81/include
 #include "w3d_file.h"
 #include "vector.h"
@@ -9,28 +33,9 @@
 #include "d3d8.h"
 #include <new.h>
 
-class ChunkLoadClass
-{
-public:
-	unsigned long Cur_Chunk_ID();
-	unsigned long Cur_Chunk_Length();
-	unsigned long Read(void *, unsigned long);
-	bool Open_Chunk();
-	bool Close_Chunk();
-};
+#include "chunkio.h"
 
-class TextureClass
-{
-public:
-	void Add_Ref() { ++*reinterpret_cast<unsigned short *>(reinterpret_cast<char *>(this) + 4); }
-	void Release_Ref();
-};
-
-class BFMEWaterTrackTexture
-{
-public:
-	void Release_Ref();
-};
+#include "texture.h"
 
 class BFMEWaterTrackTextureHandle
 {
@@ -44,13 +49,12 @@ public:
 	~BFMEWaterTrackTextureHandle()
 	{
 		if (m_texture)
-			((BFMEWaterTrackTexture *)m_texture)->Release_Ref();
+			m_texture->Release_Ref();
 	}
 	TextureClass *m_texture;
 };
 
 extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(char *, int, int);
-extern const float BfmeZeroRange;
 
 class BfmeHandleCX
 {
@@ -76,58 +80,19 @@ public:
 	TextureClass *p;
 };
 
-class VertexMaterialClass
-{
-	int RefCount;
-	D3DMATERIAL8 *Material;
-	unsigned int Flags;
-	unsigned char _before_name[0x1c - 0x10];
-	StringClass Name;
-	unsigned char _before_dirty[0x68 - 0x20];
-	bool CRCDirty;
-public:
-	virtual void Delete_This();
-	VertexMaterialClass();
-	void Init_From_Material3(const W3dMaterial3Struct &);
-	void Set_Name(const char *name) { Name = name; }
-	void Get_Diffuse(Vector3 *color) const;
-	void Set_Ambient(const Vector3 &color)
-	{
-		CRCDirty = true;
-		Material->Ambient.r = color.X;
-		Material->Ambient.g = color.Y;
-		Material->Ambient.b = color.Z;
-	}
-	void Set_Diffuse(const Vector3 &color)
-	{
-		CRCDirty = true;
-		Material->Diffuse.r = color.X;
-		Material->Diffuse.g = color.Y;
-		Material->Diffuse.b = color.Z;
-	}
-	void Release_Ref() { if (--*reinterpret_cast<int *>(reinterpret_cast<char *>(this) + 4) == 0) Delete_This(); }
-};
+#include "vertmaterial.h"
 
-class BfmeTexVGS
-{
-};
-
-class BfmeMeshVGT
-{
-public:
-	void bfmeSetVGT(BfmeTexVGS **source, int pass, int stage);
-};
-
-class MeshMatDescClass : public BfmeMeshVGT
+class MeshMatDescClass
 {
 public:
 	void Set_Single_Material(VertexMaterialClass *, int);
 	void Set_Single_Shader(ShaderClass, int);
+	void Set_Single_Texture(const BfmeHandleCX &, int, int);
 };
 
 class MeshLoadContextClass
 {
-	public:
+public:
 	struct LegacyMaterialClass;
 	W3dMeshHeader3Struct Header;
 	W3dTexCoordStruct *TexCoords;
@@ -140,20 +105,15 @@ class MeshLoadContextClass
 	DynamicVectorClass<VertexMaterialClass *> VertexMaterials;
 	DynamicVectorClass<unsigned long> VertexMaterialCrcs;
 	DynamicVectorClass<BfmeHandleCX> Textures;
-public:
+private:
+	friend class MeshModelClass;
 	void Add_Legacy_Material(ShaderClass, VertexMaterialClass *, const BfmeHandleCX &);
-	BfmeHandleCX Peek_Texture(int index) const;
-	int Vertex_Material_Count() const { return VertexMaterials.Count(); }
-	int Texture_Count() const { return Textures.Count(); }
-	int Shader_Count() const { return Shaders.Count(); }
-	VertexMaterialClass *Peek_Vertex_Material(int index) const { return VertexMaterials[index]; }
-	ShaderClass Peek_Shader(int index) const { return Shaders[index]; }
-};
-
-class Gen_0096D080
-{
-public:
-	BfmeHandleCX bfmeGet(int index) const;
+	BfmeHandleCX Peek_Texture(int index);
+	int Vertex_Material_Count() { return VertexMaterials.Count(); }
+	int Texture_Count() { return Textures.Count(); }
+	int Shader_Count() { return Shaders.Count(); }
+	VertexMaterialClass *Peek_Vertex_Material(int index) { return VertexMaterials[index]; }
+	ShaderClass Peek_Shader(int index) { return Shaders[index]; }
 };
 
 class MeshModelClass
@@ -164,8 +124,11 @@ class MeshModelClass
 	MeshMatDescClass *DefMatDesc;
 	MeshMatDescClass *AlternateMatDesc;
 	MeshMatDescClass *CurMatDesc;
-	protected:
+protected:
 	bool read_v3_materials(ChunkLoadClass &, MeshLoadContextClass *);
+	void Set_Single_Texture(const BfmeHandleCX &tex,int pass=0,int stage=0) { CurMatDesc->Set_Single_Texture(tex,pass,stage); }
+	void Set_Single_Material(VertexMaterialClass *vmat,int pass=0) { CurMatDesc->Set_Single_Material(vmat,pass); }
+	void Set_Single_Shader(ShaderClass shader,int pass=0) { CurMatDesc->Set_Single_Shader(shader,pass); }
 	void Set_Flag(int flag, bool onoff) { if (onoff) Flags |= flag; else Flags &= ~flag; }
 };
 
@@ -175,7 +138,6 @@ bool MeshModelClass::read_v3_materials(ChunkLoadClass &cload, MeshLoadContextCla
 		if (!cload.Open_Chunk()) goto Error;
 		if (cload.Cur_Chunk_ID() != W3D_CHUNK_MATERIAL3) goto Error;
 
-		void *raw_vmat;
 		VertexMaterialClass *vmat = 0;
 		ShaderClass shader(0x0010441b);
 		BfmeHandleCX texture;
@@ -190,9 +152,7 @@ bool MeshModelClass::read_v3_materials(ChunkLoadClass &cload, MeshLoadContextCla
 		W3dMaterial3Struct material;
 		if (cload.Cur_Chunk_ID() != W3D_CHUNK_MATERIAL3_INFO) goto Error;
 		if (cload.Read(&material, sizeof(material)) != sizeof(material)) goto Error;
-		raw_vmat = ::operator new(sizeof(VertexMaterialClass));
-		if (!raw_vmat) goto Error;
-		vmat = new(raw_vmat) VertexMaterialClass;
+		vmat = new VertexMaterialClass;
 		vmat->Init_From_Material3(material);
 		vmat->Set_Name(name);
 		shader.Init_From_Material3(material);
@@ -213,13 +173,12 @@ bool MeshModelClass::read_v3_materials(ChunkLoadClass &cload, MeshLoadContextCla
 				if (cload.Cur_Chunk_ID() != W3D_CHUNK_MAP3_INFO) goto Error;
 				if (cload.Read(&mapinfo, sizeof(mapinfo)) != sizeof(mapinfo)) goto Error;
 				if (!cload.Close_Chunk()) goto Error;
-				BFMEWaterTrackTextureHandle loaded = BFMEGetWaterTrackTexture(filename, 0, 0);
-				texture = loaded;
+				texture = BFMEGetWaterTrackTexture(filename, 0, 0);
 				shader.Set_Texturing(ShaderClass::TEXTURING_ENABLE);
 			} else if (cload.Cur_Chunk_ID() == W3D_CHUNK_MATERIAL3_SI_MAP) {
 				Vector3 diffuse;
 				vmat->Get_Diffuse(&diffuse);
-				if (diffuse == Vector3(BfmeZeroRange, BfmeZeroRange, BfmeZeroRange)) {
+				if (diffuse == Vector3(0, 0, 0)) {
 					char filename[0x200];
 					if (!cload.Open_Chunk()) goto Error;
 					if (cload.Cur_Chunk_ID() != W3D_CHUNK_MAP3_FILENAME) goto Error;
@@ -231,8 +190,7 @@ bool MeshModelClass::read_v3_materials(ChunkLoadClass &cload, MeshLoadContextCla
 					if (cload.Cur_Chunk_ID() != W3D_CHUNK_MAP3_INFO) goto Error;
 					if (cload.Read(&mapinfo, sizeof(mapinfo)) != sizeof(mapinfo)) goto Error;
 					if (!cload.Close_Chunk()) goto Error;
-					BFMEWaterTrackTextureHandle loaded = BFMEGetWaterTrackTexture(filename, 0, 0);
-					texture = loaded;
+					texture = BFMEGetWaterTrackTexture(filename, 0, 0);
 					shader.Set_Texturing(ShaderClass::TEXTURING_ENABLE);
 					shader.Set_Dst_Blend_Func(ShaderClass::DSTBLEND_ONE);
 					shader.Set_Src_Blend_Func(ShaderClass::SRCBLEND_ONE);
@@ -255,14 +213,12 @@ bool MeshModelClass::read_v3_materials(ChunkLoadClass &cload, MeshLoadContextCla
 	}
 
 	if (context->Vertex_Material_Count() >= 1)
-		CurMatDesc->Set_Single_Material(context->Peek_Vertex_Material(0), 0);
+		Set_Single_Material(context->Peek_Vertex_Material(0), 0);
 	if (context->Texture_Count() >= 1) {
-		BfmeHandleCX texture = reinterpret_cast<const Gen_0096D080 *>(context)->bfmeGet(0);
-		reinterpret_cast<BfmeMeshVGT *>(CurMatDesc)->bfmeSetVGT(
-			reinterpret_cast<BfmeTexVGS **>(&texture.p), 0, 0);
+		Set_Single_Texture(context->Peek_Texture(0), 0, 0);
 	}
 	if (context->Shader_Count() >= 1)
-		CurMatDesc->Set_Single_Shader(context->Peek_Shader(0), 0);
+		Set_Single_Shader(context->Peek_Shader(0), 0);
 	return true;
 
 Error:

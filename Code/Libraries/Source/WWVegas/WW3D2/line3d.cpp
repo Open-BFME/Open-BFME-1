@@ -208,6 +208,7 @@ Line3DClass & Line3DClass::operator = (const Line3DClass & that)
 		Color=that.Color;
 		for (int i=0; i<8; i++)
 			vert[i]=that.vert[i];
+		SortLevel = that.SortLevel;
 	}
 
 	return * this;
