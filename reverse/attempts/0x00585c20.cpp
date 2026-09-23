@@ -1,5 +1,5 @@
 // ?rva00585c20@Rva00585C20Owner@@QAEXPAURva00585C20Param@@@Z
-// partial score=0.91975 date=2026-09-21
+// partial score=0.9259 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 // retail RVA 0x00585C20. this->m_10 is a log id; this->m_18 a coordinate the
@@ -68,6 +68,6 @@ void Rva00585C20Owner::rva00585c20(Rva00585C20Param *p)
 		outXY[0] = -1000;
 		outXY[1] = -1000;
 	}
-	p->m_cachedX = outXY[0];
 	p->m_cachedY = outXY[1];
+	p->m_cachedX = outXY[0];
 }
