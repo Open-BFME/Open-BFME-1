@@ -1,42 +1,47 @@
-// ?onDestroy@Object@@QAEXXZ
-// partial score=0.9 date=2026-09-06
-// cl: /DNDEBUG /MD /EHsc
-// BFME Object::onDestroy, retail 0x001C6D00, 194 bytes.
+// cl: /O2 /Ob2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// Object::onDestroy, retail 0x001C6D00, 194 bytes.
+// The Zero Hour twin (GameLogic/Object/Object.cpp Object::onDestroy) opens with
+// the same containment farewell (m_containedBy->getContain()->removeFromContain)
+// and ends with the same m_behaviors onDelete walk (BehaviorModule slot 8).
+// BFME inserts the power-influence release (controlling player of the current
+// team or of m_originalTeamName) and the five Drawable forward4125F0 calls.
+// m_status is the BitFlags<86> status mask the layout witness places at
+// Object+0x90 (matched GameLogic::destroyObject 0x0038B0C0 reads it there);
+// the tested bit 61 lives in its second dword.
+// Object vtable 0x0109EE58 slot 9 reaches this body through ILT 0x0001E295,
+// and the matched GameLogic::destroyObject ends with that +0x24 call, as the
+// Zero Hour destroyObject ends with obj->onDestroy().
 
 typedef bool Bool;
+
+#include "ascii_string.h"
 
 class Object;
 
 class Player
 {
 public:
-	void bfmeObjectLeavingInfluence(Object *object);
-};
-
-class AsciiString
-{
-private:
-	void *m_buffer;
+	void bfmeObjectLeavingInfluence(Object *object); // retail ILT 0x0000EACA
 };
 
 class Team
 {
 public:
-	Player *bfmeGetControllingPlayer() const;
+	Player *getControllingPlayer() const; // retail ILT 0x0002369B -> 0x000EC8F0
 };
 
 class TeamFactory
 {
 public:
-	Team *findTeam(const AsciiString &name);
+	Team *findTeam(const AsciiString &name); // retail ILT 0x000273EF -> 0x000F8290
 };
 
-extern TeamFactory *TheTeamFactory;
+extern TeamFactory *TheTeamFactory; // VA 0x012ED810
 
 class Drawable
 {
 public:
-	void forward4125F0(int slot, Bool immediately);
+	void forward4125F0(int slot, Bool immediately); // retail ILT 0x00039BAD
 };
 
 class ContainModule
@@ -107,16 +112,16 @@ public:
 	virtual void slot06() = 0;
 	virtual void slot07() = 0;
 	virtual void slot08() = 0;
-	virtual void slot09() = 0;
-	virtual Drawable *getDrawable() = 0;
+	virtual void onDestroy(); // slot 9: GameLogic::destroyObject 0x0038B0C0 calls +0x24
+	virtual Drawable *getDrawable() const = 0; // slot 10, 0x001BE440
 
-	void onDestroy();
 	BehaviorModule **getBehaviorModules() { return m_behaviors; }
+	ContainModule *getContain() const { return m_contain; }
 
 private:
-	unsigned char m_pad004[0x90];
-	unsigned int m_status;
-	unsigned char m_pad098[0x158];
+	unsigned char m_pad004[0x8c];
+	unsigned int m_status[3];
+	unsigned char m_pad09c[0x154];
 	BehaviorModule **m_behaviors;
 	unsigned char m_pad1f4[0x08];
 	ContainModule *m_contain;
@@ -131,20 +136,20 @@ private:
 
 void Object::onDestroy()
 {
-	Player *player;
-	BehaviorModule **module;
-
-	if (m_containedBy && m_containedBy->m_contain)
-		m_containedBy->m_contain->removeFromContain(this, false);
+	// Zero Hour Object::onDestroy spells the containment guard through the
+	// inline getContain() accessor; that spelling is what gives MSVC 7.1
+	// retail's register schedule (behavior walk in ESI, not the dying EDI).
+	if (m_containedBy && m_containedBy->getContain())
+		m_containedBy->getContain()->removeFromContain(this, false);
 
 	if (m_powerInfluenceActive)
 	{
-		player = m_team ? m_team->bfmeGetControllingPlayer() : 0;
-		if ((m_status & 0x20000000) != 0)
+		Player *player = m_team ? m_team->getControllingPlayer() : 0;
+		if ((m_status[1] & 0x20000000) != 0)
 		{
 			Team *originalTeam = TheTeamFactory->findTeam(m_originalTeamName);
 			if (originalTeam)
-				player = originalTeam->bfmeGetControllingPlayer();
+				player = originalTeam->getControllingPlayer();
 		}
 		if (player)
 		{
@@ -160,8 +165,6 @@ void Object::onDestroy()
 			drawable->forward4125F0(slot, true);
 	}
 
-	for (module = *reinterpret_cast<BehaviorModule ***>(reinterpret_cast<char *>(this) + 0x1f0);
-	     *module;
-	     ++module)
+	for (BehaviorModule **module = m_behaviors; *module; ++module)
 		(*module)->onDelete();
 }
