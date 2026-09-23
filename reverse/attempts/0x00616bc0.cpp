@@ -1,63 +1,74 @@
 // ?bfmeLinkXB@BfmeBaseXB@@QAEXPAVBfmeItemXB@@@Z
-// partial score=0.33 date=2026-09-21
+// partial score=0.95 date=2026-09-22
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// stlport
 // Retail RVA 0x00616BC0, 557 bytes.
 //
-// The named caller and ILT identify this as BfmeBaseXB::bfmeLinkXB, while the
-// item and value classes remain the established opaque ABI names.  The map at
-// +0x194 is the native STLport AsciiString-keyed table witnessed by the
-// adjacent LivingWorld bodies.  Its node is {next, key, BfmeItemEQV *}; the
-// lookup body returns that node, so the mapped value is read at +8.
+// The named caller 0x00616E80 (BfmeHolderXB::bfmeOnXB) reaches this body
+// through ILT 0x0001CDD7, pinned as BfmeBaseXB::bfmeLinkXB.  The receiver's
+// +0x194 table is the native STLport AsciiString-keyed LivingWorldSound map
+// the landed siblings 0x006155E0 and 0x006157C0 use: _M_find is 0x00613AE0
+// (ILT 0x0002DB0A), begin is 0x006115A0 (ILT 0x00009561), node key +4 and
+// mapped pointer +8.  The +0x1A4 dword is the table's element count.
 //
-// The two branches intentionally retain the native temporary lifetimes: the
-// first has a per-iteration key, and the second has a copied mapped key inside
-// the iterator loop.  The resulting cleanup states are part of the ABI shape.
-
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /FAsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
-// stlport
-
+// A missing key allocates 0x34 bytes, runs the LivingWorldSound constructor
+// 0x0061BF00 and stores vtable 0x01116AC0: the inline constructor of the
+// class whose out-of-line copy is U4Ctor0060D640 (0x0060D640).
+//
+// The saving loop copies each sound's name and releases it only after the
+// inline ++it (its by-value hash copy is released first), so the copy
+// outlives the increment: the iterator advances inside the body.
 #define _STLP_NO_EXCEPTIONS 1
-#include "Common/STLTypedefs.h"
 #include <hash_map>
+#include "StringInline.h"
 
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString() : m_bfmeBufXB(0) {}
-	BFMERetailAsciiString(const BFMERetailAsciiString &other);
-	~BFMERetailAsciiString() { releaseBuffer(); }
-
-	bool operator==(const BFMERetailAsciiString &other) const
-	{
-		return strcmp((const char *)m_bfmeBufXB,
-			(const char *)other.m_bfmeBufXB) == 0;
-	}
-
-	void *m_bfmeBufXB;
-
-private:
-	void releaseBuffer();
-};
-
+// upstream: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/STLTypedefs.h
 namespace rts
 {
-	template<> struct hash<BFMERetailAsciiString>
+	template<class T> struct hash
 	{
-		size_t operator()(BFMERetailAsciiString ast) const
+		size_t operator()(T value) const
 		{
-			std::hash<const char *> tmp;
-			return tmp((const char *)ast.m_bfmeBufXB);
+			_STL::hash<const char *> tmp;
+			return tmp(value.str());
 		}
 	};
 }
 
-class BfmeItemEQV
+bool operator==(const AsciiString &, const AsciiString &);
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Snapshot.h
+class Snapshot
 {
 public:
-	BfmeItemEQV(void *key);
+	Snapshot() {}
+	virtual ~Snapshot() {}
+	virtual void LoadPostProcess() = 0;
+	virtual const char *GetSnapshotName() = 0;
+	virtual void DoXfer(void *xfer) = 0;
+};
 
-	void *m_vtable;
-	BFMERetailAsciiString m_key;
+// 0x34 bytes: Code/GameEngine/Source/GameLogic/LivingWorld/Rva006155E0SoundLookup.cpp
+class LivingWorldSound : public Snapshot
+{
+public:
+	LivingWorldSound(const AsciiString &name);
+	virtual ~LivingWorldSound();
+	virtual void LoadPostProcess();
+	virtual const char *GetSnapshotName();
+	virtual void DoXfer(void *xfer);
+
+	AsciiString m_name;
 	unsigned char m_rest[0x2c];
+};
+
+typedef LivingWorldSound BfmeItemEQV;
+
+// vtable 0x01116AC0; out-of-line constructor 0x0060D640
+class U4Ctor0060D640 : public LivingWorldSound
+{
+public:
+	U4Ctor0060D640(const AsciiString &name) : LivingWorldSound(name) {}
 };
 
 class BfmeItemXB
@@ -89,16 +100,15 @@ public:
 	virtual void bfmeV23XB();
 	virtual void bfmeV24XB();
 	virtual void bfmeV25XB();
-	virtual void bfmeV26XB(BFMERetailAsciiString *key);
+	virtual void bfmeV26XB(AsciiString *key);
 	virtual void bfmeV27XB();
 	virtual void bfmeV28XB();
 	virtual void bfmeV29XB();
-	virtual void bfmeV30XB(void *out);
+	virtual void bfmeV30XB(int *count);
 };
 
-typedef _STL::hash_map<BFMERetailAsciiString, BfmeItemEQV *,
-	rts::hash<BFMERetailAsciiString>, _STL::equal_to<BFMERetailAsciiString> >
-	BfmeMapXB;
+typedef _STL::hash_map<AsciiString, BfmeItemEQV *,
+	rts::hash<AsciiString>, _STL::equal_to<AsciiString> > BfmeMapXB;
 
 class BfmeBaseXB
 {
@@ -108,7 +118,6 @@ public:
 private:
 	unsigned char m_prefix[0x194];
 	BfmeMapXB m_items;
-	void *m_field1a4;
 };
 
 void BfmeBaseXB::bfmeLinkXB(BfmeItemXB *item)
@@ -120,22 +129,14 @@ void BfmeBaseXB::bfmeLinkXB(BfmeItemXB *item)
 
 		for (int index = 0; index < count; ++index)
 		{
-			BFMERetailAsciiString key;
+			AsciiString key;
 			item->bfmeV26XB(&key);
 
 			BfmeMapXB::iterator found = m_items.find(key);
 			if (found == m_items.end())
 			{
-				BfmeItemEQV *value = new BfmeItemEQV(&key);
-				if (value != 0)
-				{
-					value->m_vtable = (void *)0x01116ac0;
-					item->bfmeV12XB(value);
-				}
-				else
-				{
-					item->bfmeV12XB(0);
-				}
+				BfmeItemEQV *value = new U4Ctor0060D640(key);
+				item->bfmeV12XB(value);
 			}
 			else
 			{
@@ -145,15 +146,16 @@ void BfmeBaseXB::bfmeLinkXB(BfmeItemXB *item)
 	}
 	else
 	{
-		void *field = m_field1a4;
-		item->bfmeV30XB(&field);
+		int count = m_items.size();
+		item->bfmeV30XB(&count);
 
-		for (BfmeMapXB::iterator it = m_items.begin();
-			it != m_items.end(); ++it)
+		BfmeMapXB::iterator it = m_items.begin();
+		while (it != m_items.end())
 		{
-			BFMERetailAsciiString key(it->second->m_key);
+			AsciiString key = it->second->m_name;
 			item->bfmeV26XB(&key);
 			item->bfmeV12XB(it->second);
+			++it;
 		}
 	}
 }
