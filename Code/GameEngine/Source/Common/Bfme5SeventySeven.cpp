@@ -1,23 +1,5 @@
-// Three more: four global clears, the getter matching an earlier setter, and
+// Two more: the getter matching an earlier setter, and
 // another bounds-checked cell address.
-
-extern "C" void * __cdecl memset(void *destination, int value, unsigned int bytes);
-
-#pragma intrinsic(memset)
-
-extern int g_bfmeFirstFD[];					// retail 0x01353520
-extern int g_bfmeSecondFD[];					// retail 0x01354E60
-extern int g_bfmeThirdFD[];					// retail 0x01354C00
-extern int g_bfmeFourthFD[];					// retail 0x013549E0
-
-// ?bfmeClearAll@@YAXXZ
-void __cdecl bfmeClearAll(void)
-{
-	memset(g_bfmeFirstFD, 0, 0x230 * 4);
-	memset(g_bfmeSecondFD, 0, 0x230 * 4);
-	memset(g_bfmeThirdFD, 0, 0x80 * 4);
-	memset(g_bfmeFourthFD, 0, 0x80 * 4);
-}
 
 class BfmeEntryFA
 {
