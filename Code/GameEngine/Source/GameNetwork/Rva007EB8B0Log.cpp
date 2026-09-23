@@ -20,7 +20,7 @@ extern "C"
 class Rva007EB8B0Log
 {
 public:
-	virtual void v0();
+	virtual void setFields_007EB760(int valueAt08, int valueAt04);
 	virtual void emit(char *buf);
 	void bfmeSetSizeVLR(int size);
 
@@ -41,4 +41,14 @@ void Rva007EB8B0(Rva007EB8B0Log *self, unsigned int need, const char *fmt, ...)
 			"!mVarArgBuffer[mVarArgBufferSize - 1]",
 			"\\views\\feslbuild_main\\jabba\\fesl\\source\\debug.cpp",
 			123);
+}
+
+// Retail vtable 0x01129D30 slot 0 points directly to RVA 0x007EB760.
+// Slots 2-4 are the matched log/assert/error methods in this class family.
+// Both boundaries are padded; the complete 17-byte body ends in ret 8.
+// The field meanings remain unproven, so preserve their witnessed offsets.
+void Rva007EB8B0Log::setFields_007EB760(int valueAt08, int valueAt04)
+{
+	m_04 = valueAt04;
+	m_08 = valueAt08;
 }
