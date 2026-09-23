@@ -1,5 +1,3 @@
-// ?Rva0035D460@@YAXPAURva00359530Record@@PBU1@@Z
-// partial score=0.97 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // Open-BFME: Rva0035D460(dest, src) -- retail 0x0035D460, cdecl, 577 bytes in
