@@ -114,6 +114,8 @@ def load_library():
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--calibrate", action="store_true")
+    ap.add_argument("--census", action="store_true",
+                    help="also scan build/gap_census.csv bodies >= 600 B (unclaimed .text, extents estimated)")
     a = ap.parse_args()
     import build
     import eligibility
@@ -155,6 +157,23 @@ def main():
         got = best(retail(rva, size), size, library, index)
         if got and got[0] >= FLOOR:
             found.append((rva, size, got[0], got[1], got[2], sources[got[2]]))
+    if a.census:
+        # unclaimed .text has no ledger row, so open_dumps never sees it; the census
+        # (tools/gap_census.py) proves starts and estimates extents to the next start,
+        # good enough for a shape match (2026-09-23: 390 bodies >= 600 B, 677 KB)
+        import csv
+        held = {eligibility.rva_of(r) for r in rows if eligibility.rva_of(r) is not None}
+        seen = {f[0] for f in found}
+        n_census = 0
+        with (ROOT / "build/gap_census.csv").open(newline="") as fh:
+            for r in csv.DictReader(fh):
+                rva, size = int(r["rva"], 16), int(r["size"])
+                if size < 600 or rva in held or rva in seen:
+                    continue
+                got = best(retail(rva, size), size, library, index)
+                if got and got[0] >= FLOOR:
+                    found.append((rva, size, got[0], got[1], got[2], sources[got[2]])); n_census += 1
+        print(f"census: {n_census} unclaimed bodies with a twin >= {FLOOR}", flush=True)
     found.sort()
     with OUT.open("w", encoding="utf-8", newline="\n") as handle:
         handle.write(HEADER)

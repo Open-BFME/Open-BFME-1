@@ -62,6 +62,7 @@ def main():
     ap.add_argument("--per-session", type=int, default=3)
     ap.add_argument("--cap-hours", type=float, default=3.0)
     ap.add_argument("--dry", action="store_true")
+    ap.add_argument("--twins-only", action="store_true", help="serve only bodies with a Zero Hour shape twin")
     a = ap.parse_args()
     import eligibility
     census = ROOT / "build/gap_census.csv"
@@ -74,6 +75,8 @@ def main():
             rva = int(e["rva"], 16)
             if rva not in slots or not e["cls"].startswith(("Rva", "Gen_", "Bfme", "PAV", "PBU", "T2", "K")):
                 slots[rva] = e
+    import zh_fuzzy_twins
+    twins = zh_fuzzy_twins.load_twins()   # rva -> similarity/margin/symbol/source; census rows via --census
     rows = {eligibility.rva_of(r) for r in eligibility.load_rows() if eligibility.rva_of(r) is not None}
     busy = eligibility.busy_rvas(ROOT) | eligibility.recent_run_rvas(48, ROOT)
     attempts = eligibility.attempt_counts()
@@ -87,9 +90,15 @@ def main():
                 continue
             s = slots.get(rva)
             known = s is not None and not s["cls"].startswith(("Rva", "Gen_", "Bfme", "PAV", "PBU", "T2", "K", "_STL"))
+            tw = twins.get(rva)
+            # a Zero Hour shape twin is a class to test and a source to start from: the two
+            # giants that landed on 2026-09-23 both had one (Opus review: 13 KB/h vs 0.6 KB/h without)
             warmth = (4 if known else 2 if s else 0) + (2 if "call" in ev else 0) + (1 if "ghidra" in ev else 0) \
-                + (1 if "prologue_after_int3" in ev else 0) - attempts.get(rva, 0)
-            cands.append((warmth, size, rva, ev, s))
+                + (1 if "prologue_after_int3" in ev else 0) - attempts.get(rva, 0) \
+                + (6 if tw and tw["similarity"] >= 0.8 else 3 if tw and tw["similarity"] >= 0.6 else 0)
+            if a.twins_only and not tw:
+                continue
+            cands.append((warmth, size, rva, ev, s, tw))
     # warm first, then bytes; neighbours in one seat share context, so group by address after ranking the seeds
     cands.sort(key=lambda c: (-c[0], -c[1]))
     picked = cands[: a.seats * a.per_session]
@@ -97,8 +106,9 @@ def main():
     groups = [picked[i:i + a.per_session] for i in range(0, len(picked), a.per_session)]
     if a.dry:
         for g in groups:
-            for w, size, rva, ev, s in g:
-                print(f"0x{rva:08X} {size:5} B warmth={w} {'|'.join(ev)} {s['cls'] + ' slot ' + str(s['slot']) + ' vt ' + s['vt'] if s else ''}")
+            for w, size, rva, ev, s, tw in g:
+                print(f"0x{rva:08X} {size:5} B warmth={w} {'|'.join(ev)} {s['cls'] + ' slot ' + str(s['slot']) + ' vt ' + s['vt'] if s else ''}"
+                      f"{' twin ' + tw['symbol'] + ' ' + format(tw['similarity'], '.2f') if tw else ''}")
             print("--")
         return
     import fleet_run
@@ -107,8 +117,11 @@ def main():
     for i, g in enumerate(groups):
         seat = chr(ord("A") + i)
         lines = [NOTE.format(model=MODEL, effort=EFFORT, cap=a.cap_hours), "", "TARGETS"]
-        for w, size, rva, ev, s in g:
+        for w, size, rva, ev, s, tw in g:
             hint = f"vtable {s['vt']} slot {s['slot']} class {s['cls']}" if s else "no vtable slot found"
+            if tw:
+                hint += (f"; ZH shape twin {tw['symbol']} similarity {tw['similarity']:.2f} margin {tw['margin']:.2f} "
+                         f"source {tw['source']} (a hypothesis to test, not identity by itself)")
             lines.append(f"- 0x{rva:08X} {size}B ?d_{rva:08x}@@YAXXZ (unclaimed; start evidence {'|'.join(ev)}; extent estimated; {hint})")
         brief = ROOT / "build" / f"brief_gapseat_{stamp}_{seat}.txt"
         brief.write_text("\n".join(lines) + "\n", encoding="utf-8")
