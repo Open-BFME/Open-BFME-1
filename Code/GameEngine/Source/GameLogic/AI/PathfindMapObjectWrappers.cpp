@@ -8,20 +8,14 @@ class Object;
 class Pathfinder
 {
 public:
+	void addObjectToPathfindMap(Object *object);
 	void removeObjectFromPathfindMap(Object *object);
 	void updateAt003FA5B0(Object *object, int add, int flags);
 };
 
-class BFMEPathfinderMapShim
+void Pathfinder::addObjectToPathfindMap(Object *object)
 {
-public:
-	void addObjectToPathfindMap(Object *object);
-};
-
-// ?addObjectToPathfindMap@BFMEPathfinderMapShim@@QAEXPAVObject@@@Z
-void BFMEPathfinderMapShim::addObjectToPathfindMap(Object *object)
-{
-	((Pathfinder *)this)->updateAt003FA5B0(object, 1, 0);
+	updateAt003FA5B0(object, 1, 0);
 }
 
 void Pathfinder::removeObjectFromPathfindMap(Object *object)
