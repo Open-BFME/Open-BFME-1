@@ -387,9 +387,46 @@ with open(ROOT / "reverse/.add_match.lock", "a+") as h:
         run("git", "checkout", "-q", "--detach", old, cwd=WT)
         run("git", "fetch", "-q", "origin", "master", cwd=WT)
         rc = run("git", "rebase", "origin/master", cwd=WT, check=False).returncode
-        if rc:
-            run("git", "rebase", "--abort", cwd=WT, check=False)
-            hands("harvest: rebase conflict in build/wt; hands needed")
+        while rc:
+            # resolve what the fleet's registers always conflict on (the ledgers are
+            # rebuilt from origin + delta below anyway): append-only registers by union,
+            # reverse/name_corrections.json as a list union, a stash by "our commit is the
+            # later word" (deleted if we retired it, else our bank). Anything else: hands.
+            conflicts = out("git", "diff", "--name-only", "--diff-filter=U", cwd=WT).split()
+            def resolvable(c):
+                return c.endswith((".tsv", ".log", ".csv")) or c == "reverse/name_corrections.json" or c.startswith("reverse/attempts/")
+            if not conflicts or not all(resolvable(c) for c in conflicts):
+                run("git", "rebase", "--abort", cwd=WT, check=False)
+                hands("harvest: rebase conflict in build/wt on " + " ".join(conflicts) + "; hands needed")
+            for c in conflicts:
+                if c == "reverse/name_corrections.json":
+                    import json
+                    def side(n):
+                        raw = subprocess.run(["git", "show", f":{n}:{c}"], cwd=WT, capture_output=True, text=True, errors="replace").stdout
+                        return json.loads(raw) if raw.strip() else []
+                    seen, merged = set(), []
+                    for e in side(2) + side(3):
+                        k = json.dumps(e, sort_keys=True)
+                        if k not in seen:
+                            seen.add(k); merged.append(e)
+                    (WT / c).write_text(json.dumps(merged, indent=1) + "\n", encoding="utf-8")
+                elif c.startswith("reverse/attempts/"):
+                    if subprocess.run(["git", "show", f":3:{c}"], cwd=WT, capture_output=True).returncode:
+                        run("git", "rm", "-q", "-f", "--", c, cwd=WT); continue
+                    run("git", "checkout", "--theirs", "--", c, cwd=WT)
+                else:
+                    raw = (WT / c).read_bytes(); keep, seen = [], set()
+                    for line in raw.splitlines(True):
+                        if line.startswith((b"<<<<<<<", b"=======", b">>>>>>>")):
+                            continue
+                        k = line.rstrip(b"\r\n")
+                        if k in seen:
+                            continue
+                        seen.add(k); keep.append(line)
+                    (WT / c).write_bytes(b"".join(keep))
+                run("git", "add", "--", c, cwd=WT)
+            rc = subprocess.run(["git", "rebase", "--continue"], cwd=WT, capture_output=True, text=True,
+                                env=dict(os.environ, GIT_EDITOR="true")).returncode
         # The union merge driver resurrects rows origin removed and duplicates the
         # tail when both sides append (2026-09-17: 1,958 duplicate rows, harvest
         # wedged for hours). Rebuild the two ledgers as origin's bytes plus this
