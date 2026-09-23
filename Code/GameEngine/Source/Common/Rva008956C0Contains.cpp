@@ -1,16 +1,7 @@
-// ?contains008956C0@Rva008956C0List@@QAEHVRefHandle008956C0@@@Z
-// partial score=0.91 date=2026-09-21
+// At 0x008956C0, retail walks a linked list and returns 1 when its call to
+// 0x00895510 returns nonzero. No caller or vtable names the owner, so its
+// class name retains the retail address.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// 0x008956C0 -- Rva008956C0List::contains008956C0
-//
-// The handle is a BY-VALUE PARAMETER, not a local: retail never increments the
-// candidate refcount on entry, yet decrements it (and runs the sized delete)
-// on BOTH exits with the EH state driven to -1 first.  Under the MSVC ABI the
-// callee destroys by-value class parameters, so that pair of epilogue
-// destructor blocks IS the parameter's destructor.  ret 4 pops the one-pointer
-// handle.  The per-iteration `push ecx / mov eax,esp / mov [esp+0xc],esp /
-// mov [eax],edi / inc [edi]` is the copy constructor building the argument for
-// 0x00895510 in place plus the unwind registration of that temporary.
 
 extern void (*TheBfmeFree)(void *p, unsigned int bytes);	// retail 0x01337830
 
@@ -52,10 +43,8 @@ public:
 	BfmeDropObjectA *m_object;				// +0x00
 };
 
-// Address-derived: the retail row for 0x00895510 is still the dump placeholder
-// ?d_00895510@@YAXXZ, so the TU references that exact decorated name and casts
-// it to the receiver/argument shape the aligned call site proves (ECX receiver
-// read from entry+0x04, one by-value handle on the stack, int result tested).
+// The aligned call uses ECX for the receiver, passes one handle on the stack,
+// tests an int result, and returns with four argument bytes popped.
 void __cdecl d_00895510(void);					// retail 0x00895510
 
 class Rva00895510Receiver;
@@ -66,6 +55,11 @@ typedef int (__fastcall *Rva00895510Fn)(Rva00895510Receiver *,
 class Rva008956C0Entry
 {
 public:
+	Rva00895510Receiver *getReceiver(void) const
+	{
+		return m_receiver;
+	}
+
 	void *m_dword0;						// +0x00
 	Rva00895510Receiver *m_receiver;			// +0x04
 };
@@ -95,7 +89,7 @@ int Rva008956C0List::contains008956C0(RefHandle008956C0 candidate)
 	{
 		do
 		{
-			if (((Rva00895510Fn)d_00895510)(node->m_entry->m_receiver,
+			if (((Rva00895510Fn)d_00895510)(node->m_entry->getReceiver(),
 				candidate))
 				return 1;
 
