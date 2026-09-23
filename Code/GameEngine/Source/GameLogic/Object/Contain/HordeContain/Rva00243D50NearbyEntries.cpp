@@ -2,7 +2,7 @@
 // stlport
 // Retail 0x00243D50 (carved 268B, ret 4): walk an STLport map<int,int> of object
 // IDs at +0x30; offer each object in its AI's range to the target's contain
-// (vtable +0x88), otherwise ask the AI (vtable +0x180) and issue aiEnter.
+// (vtable +0x88, slot 34), otherwise if the AI isIdle (vtable +0x180) issue aiEnter.
 // Owner identity unproven: the sole caller reaches it through an ILT thunk.
 
 #define _STLP_NO_EXCEPTIONS 1
@@ -30,7 +30,9 @@ public:
 	RVA243D50_SLOT(24); RVA243D50_SLOT(25); RVA243D50_SLOT(26); RVA243D50_SLOT(27);
 	RVA243D50_SLOT(28); RVA243D50_SLOT(29); RVA243D50_SLOT(30); RVA243D50_SLOT(31);
 	RVA243D50_SLOT(32); RVA243D50_SLOT(33);
-	virtual void acceptNearbyObject(Object *object) = 0;
+	// slot 34 (+0x88): HordeGarrisonContain vtable 0x010AFB40 overrides it with
+	// ILT 0x000061BD -> 0x00248C60, ledger ?step@Rva00248C60Owner (address-derived).
+	virtual void slot34(Object *object) = 0;
 #undef RVA243D50_SLOT
 };
 
@@ -73,7 +75,9 @@ public:
 	RVA243D50_AI_SLOT(84); RVA243D50_AI_SLOT(85); RVA243D50_AI_SLOT(86); RVA243D50_AI_SLOT(87);
 	RVA243D50_AI_SLOT(88); RVA243D50_AI_SLOT(89); RVA243D50_AI_SLOT(90); RVA243D50_AI_SLOT(91);
 	RVA243D50_AI_SLOT(92); RVA243D50_AI_SLOT(93); RVA243D50_AI_SLOT(94); RVA243D50_AI_SLOT(95);
-	virtual bool canEnterObject() = 0;
+	// slot 96 (+0x180) is AIUpdateInterface::isIdle: AIGroupStatePredicates.cpp,
+	// AutoFindHealingUpdate.cpp:174, DozerAIUpdate.cpp:1156.
+	virtual bool isIdle( void ) = 0;
 #undef RVA243D50_AI_SLOT
 
 	unsigned char pad004[0x1c];
@@ -149,7 +153,7 @@ void Rva00243D50Owner::processNearbyEntries00243D50(Object *target)
 						Rva00243D50Contain *contain = target->contain;
 						if (contain)
 						{
-							contain->acceptNearbyObject(object);
+							contain->slot34(object);
 							goto next_entry;
 						}
 					}
@@ -157,7 +161,7 @@ void Rva00243D50Owner::processNearbyEntries00243D50(Object *target)
 			}
 
 			Rva00243D50AI *ai = object->ai;
-			if (ai && ai->canEnterObject())
+			if (ai && ai->isIdle())
 				ai->command.aiEnter(target, CMD_FROM_AI);
 		}
 
