@@ -1,4 +1,99 @@
 // ?End_Scene@DX8Wrapper@@SAX_N@Z
+// partial score=0.83 date=2026-09-23
+// cl: /ICode/Libraries/Source/WWVegas/WW3D2 /Ireference/shims/dx8wrapper /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
+#define Matrix4x4 Matrix4  // BFME renamed it
+#define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
+// stlport
+// readable body of ?Set_Index_Buffer@DX8Wrapper@@: Code/Libraries/Source/WWVegas/WW3D2/sortingrenderer.cpp
+// readable body of ?Set_Vertex_Buffer@DX8Wrapper@@: Code/Libraries/Source/WWVegas/wwshade/shdrenderer.cpp
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/***********************************************************************************************
+ ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
+ ***********************************************************************************************
+ *                                                                                             *
+ *                 Project Name : WW3D                                                         *
+ *                                                                                             *
+ *                     $Archive:: /Commando/Code/ww3d2/dx8wrapper.cpp                         $*
+ *                                                                                             *
+ *              Original Author:: Jani Penttinen                                               *
+ *                                                                                             *
+ *                      $Author:: Kenny Mitchell                                               * 
+ *                                                                                             * 
+ *                     $Modtime:: 08/05/02 1:27p                                              $*
+ *                                                                                             *
+ *                    $Revision:: 170                                                         $*
+ *                                                                                             *
+ * 06/26/02 KM Matrix name change to avoid MAX conflicts                                       *
+ * 06/27/02 KM Render to shadow buffer texture support														*
+ * 06/27/02 KM Shader system updates																				*
+ * 08/05/02 KM Texture class redesign 
+ *---------------------------------------------------------------------------------------------*
+ * Functions:                                                                                  *
+ *   DX8Wrapper::_Update_Texture -- Copies a texture from system memory to video memory        *
+ * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+
+//#define CREATE_DX8_MULTI_THREADED
+//#define CREATE_DX8_FPU_PRESERVE
+#define WW3D_DEVTYPE D3DDEVTYPE_HAL
+
+#include "dx8wrapper.h"
+#include "dx8webbrowser.h"
+#include "dx8fvf.h"
+#include "dx8vertexbuffer.h"
+#include "dx8indexbuffer.h"
+#include "dx8renderer.h"
+#include "ww3d.h"
+#include "camera.h"
+#include "wwstring.h"
+#include "matrix4.h"
+#include "vertmaterial.h"
+#include "rddesc.h"
+#include "lightenvironment.h"
+#include "statistics.h"
+#include "registry.h"
+#include "boxrobj.h"
+#include "pointgr.h"
+#include "render2d.h"
+#include "sortingrenderer.h"
+#include "shattersystem.h"
+#include "light.h"
+#include "assetmgr.h"
+#include "textureloader.h"
+#include "missingtexture.h"
+#include "thread.h"
+#include <stdio.h>
+#include <D3dx8core.h>
+#include "pot.h"
+#include "wwprofile.h"
+#include "ffactory.h"
+#include "dx8caps.h"
+#include "formconv.h"
+#include "dx8texman.h"
+#include "bound.h"
+#include "dx8webbrowser.h"
+
+#include "shdlib.h"
+
+extern void bfmeEndSceneTouch00958910(void *);
+// ?End_Scene@DX8Wrapper@@SAX_N@Z
 // partial score=0.82 date=2026-09-10
 // ?End_Scene@DX8Wrapper@@SAX_N@Z
 // Best bounded reconstruction banked by lane20; source fragment only.
@@ -12,6 +107,13 @@ extern void __cdecl Rva009DB560Sleep(unsigned int);
 extern VertexBufferClass *Rva01341120VertexBuffers[];
 extern IndexBufferClass *Rva01341128IndexBuffer;
 
+class BfmeHandleCX
+{
+public:
+    TextureClass *p;
+    ~BfmeHandleCX(void) { if (p) p->Release_Ref(); }
+};
+
 void DX8Wrapper::End_Scene(bool flip_frames)
 {
     unsigned saved_scene_state = *reinterpret_cast<unsigned *>(0x013405c4);
@@ -19,7 +121,7 @@ void DX8Wrapper::End_Scene(bool flip_frames)
     *reinterpret_cast<unsigned *>(0x013405c4) = 0;
     reinterpret_cast<BfmeEndSceneDevice *>(D3DDevice)->vtable->EndScene(reinterpret_cast<BfmeEndSceneDevice *>(D3DDevice));
     ++number_of_DX8_calls;
-    DX8WebBrowser::Render(0);
+    bfmeEndSceneTouch00958910(0);
     if (flip_frames) {
         int result = reinterpret_cast<BfmeEndSceneDevice *>(D3DDevice)->vtable->Present(reinterpret_cast<BfmeEndSceneDevice *>(D3DDevice), 0, 0, 0, 0);
         ++number_of_DX8_calls;
@@ -50,7 +152,10 @@ void DX8Wrapper::End_Scene(bool flip_frames)
     *reinterpret_cast<unsigned *>(0x0133f49c) |= 0x20000;
     TextureBaseClass **textures = reinterpret_cast<TextureBaseClass **>(0x01340ec8);
     for (int i = 0; i < CurrentCaps->Get_Max_Textures_Per_Pass(); ++i) {
-        if (textures[i]) textures[i]->Release_Ref();
+        BfmeHandleCX texture;
+        texture.p = reinterpret_cast<TextureClass *>(textures[i]);
+        if (texture.p) texture.p->Release_Ref();
+        texture.p = 0;
         textures[i] = 0;
         *reinterpret_cast<unsigned *>(0x0133f49c) |= 0x40 << i;
     }
