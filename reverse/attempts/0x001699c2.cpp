@@ -1,5 +1,5 @@
 // ?recruitSpecificAITeam@AIPlayer@@UAEXPAVTeamPrototype@@M@Z
-// partial score=0.19 date=2026-09-20
+// partial score=0.34 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHa /ICode/Libraries/Source/WWVegas/WWLib
 // BFME reconstruction of AIPlayer::recruitSpecificAITeam.
 
@@ -105,7 +105,7 @@ class Team
 {
 public:
 	virtual ~Team();
-	Bool hasAnyObjects(Bool flag) const;
+	Bool hasAnyObjects(Bool flag);
 	Object *tryToRecruit(const ThingTemplate *thing, const Coord3D *home,
 		Real radius);
 
@@ -246,11 +246,11 @@ class GameLogic
 {
 };
 
-class AIPlayer
+class AISkirmishPlayer
 {
 public:
-	virtual void recruitSpecificAITeam(Real recruitRadius,
-		TeamPrototype *teamProto, const Coord3D *position);
+	virtual void recruitSpecificAITeam(TeamPrototype *teamProto,
+		Real recruitRadius, const Coord3D *position);
 
 private:
 	TeamInQueue *m_buildQueueHead;
@@ -266,24 +266,30 @@ extern void j_00028ce0();
 extern void j_0003436a();
 extern void j_000391ee();
 
-static Team *bfmeFindTeam(TeamFactory *factory, const AsciiString &name,
+#define TheTeamFactory (*(TeamFactory **)0x012ED810)
+#define TheThingFactory (*(ThingFactory **)0x012EF1D8)
+#define TheScriptEngine (*(ScriptEngine **)0x012F076C)
+#define TheGameLogic (*(GameLogic **)0x012F0898)
+#define g_bfmeDefaultBU (*(const Real *)0x01075334)
+
+static Team *bfmeFindTeam(const AsciiString &name,
 	const AsciiString &owner)
 {
 	typedef Team *(TeamFactory::*Call)(const AsciiString &,
 		const AsciiString &);
 	union { void (*raw)(void); Call member; } target;
 	target.raw = j_000391ee;
-	return (factory->*target.member)(name, owner);
+	return (TheTeamFactory->*target.member)(name, owner);
 }
 
-static Team *bfmeCreateInactiveTeam(TeamFactory *factory,
-	const AsciiString &owner, const AsciiString &name)
+static Team *bfmeCreateInactiveTeam(const AsciiString &owner,
+	const AsciiString &name)
 {
 	typedef Team *(TeamFactory::*Call)(const AsciiString &,
 		const AsciiString &);
 	union { void (*raw)(void); Call member; } target;
 	target.raw = j_0000d15c;
-	return (factory->*target.member)(owner, name);
+	return (TheTeamFactory->*target.member)(owner, name);
 }
 
 static Bool bfmeHasAnyObjects(Team *team, Bool flag)
@@ -304,13 +310,12 @@ static Object *bfmeTryToRecruit(Team *team, const ThingTemplate *thing,
 	return (team->*target.member)(thing, home, radius);
 }
 
-static const ThingTemplate *bfmeFindTemplate(ThingFactory *factory,
-	const AsciiString &name)
+static const ThingTemplate *bfmeFindTemplate(const AsciiString &name)
 {
 	typedef const ThingTemplate *(ThingFactory::*Call)(const AsciiString &);
 	union { void (*raw)(void); Call member; } target;
 	target.raw = j_00028560;
-	return (factory->*target.member)(name);
+	return (TheThingFactory->*target.member)(name);
 }
 
 static void bfmeAppendDebugMessage(ScriptEngine *engine,
@@ -331,14 +336,8 @@ static void bfmeMoveToPosition(AICommandInterface *command,
 	(command->*target.member)(position, commandSource);
 }
 
-#define TheTeamFactory (*(TeamFactory **)0x012ED810)
-#define TheThingFactory (*(ThingFactory **)0x012EF1D8)
-#define TheScriptEngine (*(ScriptEngine **)0x012F076C)
-#define TheGameLogic (*(GameLogic **)0x012F0898)
-#define g_bfmeDefaultBU (*(const Real *)0x01075334)
-
-void AIPlayer::recruitSpecificAITeam(Real recruitRadius,
-	TeamPrototype *teamProto, const Coord3D *position)
+void AISkirmishPlayer::recruitSpecificAITeam(TeamPrototype *teamProto,
+	Real recruitRadius, const Coord3D *position)
 {
 	if (recruitRadius < g_bfmeDefaultBU)
 		recruitRadius = 99999.0f;
@@ -347,13 +346,13 @@ void AIPlayer::recruitSpecificAITeam(Real recruitRadius,
 	{
 		if (teamProto->getIsSingleton())
 		{
-			Team *singletonTeam = bfmeFindTeam(TheTeamFactory,
-				teamProto->getName(), teamProto->getOwnerName());
-			if (singletonTeam && bfmeHasAnyObjects(singletonTeam, false))
+			Team *singletonTeam = TheTeamFactory->findTeam(
+				teamProto->getOwnerName(), teamProto->getName());
+			if (singletonTeam && singletonTeam->hasAnyObjects(false))
 			{
 				AsciiString teamStr = "Unable to recruit singleton team '";
 				teamStr.concat("' because team already exists.");
-				bfmeAppendDebugMessage(TheScriptEngine, teamStr, false);
+				TheScriptEngine->AppendDebugMessage(teamStr, false);
 				return;
 			}
 		}
@@ -363,54 +362,55 @@ void AIPlayer::recruitSpecificAITeam(Real recruitRadius,
 			AsciiString teamStr = "Error : team '";
 			teamStr.concat(teamProto->getName());
 			teamStr.concat("' has no Home Position (or Origin).");
-			bfmeAppendDebugMessage(TheScriptEngine, teamStr, false);
+			TheScriptEngine->AppendDebugMessage(teamStr, false);
 		}
 
-		Team *theTeam = bfmeCreateInactiveTeam(TheTeamFactory,
+		Team *theTeam = TheTeamFactory->bfmeCreateInactiveTeam(
 			teamProto->getOwnerName(), teamProto->getName());
 		AsciiString teamName = teamProto->getName();
 		teamName.concat(" - Recruiting.");
-		bfmeAppendDebugMessage(TheScriptEngine, teamName, false);
+		TheScriptEngine->AppendDebugMessage(teamName, false);
 
 		const BfmeUnitInfoCursor *unitInfo = teamProto->getUnitInfo();
-		Int i = 0;
+		Int i;
 		Int unitsRecruited = 0;
-		while (i < teamProto->getTemplateInfo()->m_numUnitsInfo)
+		for (i = 0; i < teamProto->getTemplateInfo()->m_numUnitsInfo; i++)
 		{
-			const ThingTemplate *thing = bfmeFindTemplate(TheThingFactory,
+			const ThingTemplate *thing = TheThingFactory->findTemplate(
 				unitInfo[i].unitThingName);
 			if (thing)
 			{
 				Int count = unitInfo[i].maxUnits;
 				while (count > 0)
 				{
-					Object *unit = bfmeTryToRecruit(theTeam, thing,
+					Object *unit = theTeam->tryToRecruit(thing,
 						&teamProto->getTemplateInfo()->m_homeLocation,
 						recruitRadius);
-					if (!unit)
+					if (unit)
+					{
+						++unitsRecruited;
+						AsciiString teamStr = "Team '";
+						teamStr.concat(theTeam->getPrototype()->getName());
+						teamStr.concat("' recruits ");
+						teamStr.concat(thing->getName());
+						teamStr.concat(" from team '");
+						teamStr.concat(unit->getTeam()->getPrototype()->getName());
+						teamStr.concat("'");
+						TheScriptEngine->AppendDebugMessage(teamStr, false);
+
+						unit->setTeam(theTeam);
+						AIUpdateInterface *ai = unit->getAIUpdateInterface();
+						if (ai)
+							ai->m_command.aiMoveToPosition(
+								&teamProto->getTemplateInfo()->m_homeLocation, 2);
+					}
+					else
+					{
 						break;
-
-					++unitsRecruited;
-					AsciiString teamStr = "Team '";
-					teamStr.concat(theTeam->getPrototype()->getName());
-					teamStr.concat("' recruits ");
-					teamStr.concat(thing->getName());
-					teamStr.concat(" from team '");
-					teamStr.concat(unit->getTeam()->getPrototype()->getName());
-					teamStr.concat("'");
-					bfmeAppendDebugMessage(TheScriptEngine, teamStr, false);
-
-					unit->setTeam(theTeam);
-					AIUpdateInterface *ai = unit->getAIUpdateInterface();
-					if (ai)
-						bfmeMoveToPosition(&ai->m_command,
-							&teamProto->getTemplateInfo()->m_homeLocation, 2);
-
-					--count;
+					}
+					count--;
 				}
 			}
-			++i;
-			++unitInfo;
 		}
 
 		if (unitsRecruited > 0)
@@ -428,7 +428,7 @@ void AIPlayer::recruitSpecificAITeam(Real recruitRadius,
 			team->m_team = theTeam;
 			AsciiString teamName = teamProto->getName();
 			teamName.concat(" - Finished recruiting.");
-			bfmeAppendDebugMessage(TheScriptEngine, teamName, false);
+			TheScriptEngine->AppendDebugMessage(teamName, false);
 		}
 		else
 		{
@@ -436,7 +436,7 @@ void AIPlayer::recruitSpecificAITeam(Real recruitRadius,
 				delete theTeam;
 			AsciiString teamName = teamProto->getName();
 			teamName.concat(" - Recruited 0 units, disbanding.");
-			bfmeAppendDebugMessage(TheScriptEngine, teamName, false);
+			TheScriptEngine->AppendDebugMessage(teamName, false);
 		}
 	}
 }
