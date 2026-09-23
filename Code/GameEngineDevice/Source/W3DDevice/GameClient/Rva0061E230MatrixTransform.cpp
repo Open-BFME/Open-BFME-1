@@ -1,5 +1,8 @@
-// ?Rva0061E230@BfmeAnimationHolder@@QAEXXZ
-// partial score=1.0 date=2026-09-23
+// 0x0061E230: matrix transform body reached through ILT 0x00005B78.
+// The owning class and virtual methods have no proved semantic names; the
+// address-qualified facades keep the identity and field offsets explicit.
+// The early exits and final path leave no defined return value, so this is
+// modelled as a void no-argument thiscall. The body matches retail exactly.
 // cl: /DNDEBUG /MD /EHsc /I Code/Libraries/Source/WWVegas/WWLib /I Code/Libraries/Source/WWVegas/WWMath /I Code/Libraries/Source/WWVegas/WWDebug /I Code/Libraries/Source/WWVegas/WWSaveLoad /I Code/Libraries/Include
 
 #include "matrix3.h"
@@ -8,7 +11,7 @@
 extern const float BfmeZeroRange;
 extern const float g_rva001B5860TwoPi;
 
-class BfmeAnimationReceiver
+class Rva0061E230Receiver
 {
 public:
 	virtual void slot00(void); virtual void slot01(void);
@@ -21,22 +24,22 @@ public:
 	virtual void slot14(void); virtual void slot15(void);
 	virtual void slot16(void); virtual void slot17(void);
 	virtual void slot18(void); virtual void slot19(void);
-	virtual void updatePayload(void);
-	virtual void applyPayload(const Matrix3D *payload);
+	virtual void slot20(void);
+	virtual void slot21(const Matrix3D *payload);
 
-	unsigned char m_beforePayload[0x14];
-	Matrix3D m_payload;
+	unsigned char m_beforeMatrix18[0x14];
+	Matrix3D m_matrix18;
 };
 
-class BfmeAnimationHolder
+class Rva0061E230Owner
 {
 public:
 	void Rva0061E230(void);
 
 private:
 	unsigned char m_beforeReceivers[8];
-	BfmeAnimationReceiver *m_primary;
-	BfmeAnimationReceiver *m_secondary;
+	Rva0061E230Receiver *m_primary;
+	Rva0061E230Receiver *m_secondary;
 	unsigned char m_beforeRotationState[0x6c];
 	unsigned char m_rotationEnabled;
 	unsigned char m_gap7d[3];
@@ -45,10 +48,10 @@ private:
 	float m_angle88;
 };
 
-// ?Rva0061E230@BfmeAnimationHolder@@QAEXXZ
-void BfmeAnimationHolder::Rva0061E230(void)
+// ?Rva0061E230@Rva0061E230Owner@@QAEXXZ
+void Rva0061E230Owner::Rva0061E230(void)
 {
-	BfmeAnimationReceiver *primary = m_primary;
+	Rva0061E230Receiver *primary = m_primary;
 	if (primary == 0)
 		return;
 	if (m_rotationEnabled == 0)
@@ -62,10 +65,10 @@ void BfmeAnimationHolder::Rva0061E230(void)
 
 	Matrix3 rotation(true);
 	rotation.Rotate_Z(angle);
-	primary->updatePayload();
-	Matrix3D payload(primary->m_payload);
+	primary->slot20();
+	Matrix3D payload(primary->m_matrix18);
 	payload.Set_Rotation(rotation);
-	m_primary->applyPayload(&payload);
+	m_primary->slot21(&payload);
 	if (m_secondary != 0)
-		m_secondary->applyPayload(&payload);
+		m_secondary->slot21(&payload);
 }

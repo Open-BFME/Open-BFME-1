@@ -1829,5 +1829,25 @@
   "after_sha256": "ef9b5a05babfcd2e4f97d5668bdc847453881efe15b9668aaf91f5b6e50745ac",
   "evidence": "reverse/re_attempts.log",
   "reason": "The existing Object_rva001C7CF0.cpp reads PhysicsBehavior::m_byte5C at relative +0x5c. The earlier draft called that byte m_reject. The re_attempts row records the corrected name."
+ },
+ {
+  "old_path": "reverse/attempts/0x0061e230.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva0061E230MatrixTransform.cpp",
+  "before_sha256": "032e5d9baa56eae38132a3ef171a5ccad2232be97681d9a3023eadfb536115fe",
+  "after_sha256": "00f61ebb633e5e2a48bf4f77c241ba4a62adf85cd0539e4b35306d45d1125a51",
+  "evidence": "reverse/re_attempts.log",
+  "old_name": "BfmeAnimationHolder",
+  "new_name": "Rva0061E230Owner",
+  "reason": "The 0x0061E230 verdict rows report no trusted owner, named caller, owning vtable, or Zero Hour declaration. BfmeAnimationHolder was a bank-local guess from a matrix transform, not established identity. The landed owner retains the address token as docs/naming_evidence.md requires."
+ },
+ {
+  "old_path": "reverse/attempts/0x0061e230.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva0061E230MatrixTransform.cpp",
+  "before_sha256": "032e5d9baa56eae38132a3ef171a5ccad2232be97681d9a3023eadfb536115fe",
+  "after_sha256": "00f61ebb633e5e2a48bf4f77c241ba4a62adf85cd0539e4b35306d45d1125a51",
+  "evidence": "reverse/re_attempts.log",
+  "old_name": "BfmeAnimationReceiver",
+  "new_name": "Rva0061E230Receiver",
+  "reason": "The 0x0061E230 verdict rows establish only virtual slots and a Matrix3D transform, with no owner or receiver class name. BfmeAnimationReceiver was a bank-local role guess, not independently named. The landed receiver retains the address token."
  }
 ]
