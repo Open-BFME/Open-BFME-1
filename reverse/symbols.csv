@@ -88778,3 +88778,4 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?rva005A9C90@CommandTranslator@@AAEXPBVGameMessage@@@Z,0x005A9C90,CommandXlat witnessed call 0x5b091b; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
 ?test@Rva003968A0@@QAE_NXZ,0x003968A0,CommandXlat witnessed call 0x5b0e41; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
 ?test@Rva004891C0@@QBE_NXZ,0x004891C0,CommandXlat witnessed call 0x5b034d; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva003db900@Pathfinder@@QAEHPAVPathfindCell@@0@Z,0x0003A828,ILT to the body at 0x003DB900; called with ECX=GroundCellsStruct.thePathfinder and (cell and goalCell) by the byte-matched 0x003E2620 ground-cells line walk; address-derived name
