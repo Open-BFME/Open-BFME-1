@@ -21,7 +21,8 @@ for root,_,files in os.walk('Code'):
             except: continue
             for m in MARK.findall(t): markers.setdefault(m,[]).append(p)
 prefix=[m for m in markers if m.endswith('@@')]
-claimed={l.strip().lower() for l in open('build/fleet_mid_claimed.txt')}
+claimed_path='build/fleet_mid_claimed.txt'
+claimed={l.strip().lower() for l in open(claimed_path)} if os.path.exists(claimed_path) else set()
 lat={}
 for l in open('reverse/re_attempts.log',encoding='utf-8',errors='replace'):
     p=l.rstrip('\n').split('\t')
