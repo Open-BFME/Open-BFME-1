@@ -88819,3 +88819,5 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?getRadiusAndCenter@Pathfinder@RadiusContract003DEE30@@IAEXPBVObject@2@AAHAA_N@Z,0x003DEE30,Address-scoped contract spelling of matched Pathfinder radius helper; retail ILT 0x000461FF resolves to this 297-byte body
 ?tightenPath@Pathfinder@@IAEXPAVObject@@ABVLocomotorSet@@PAVCoord3D@@PBV4@@Z,0x003F5FD0,Coord3D class-tag ABI view of matched Pathfinder helper; caller 0x003F6090+0x319 passes ECX and four stack arguments
 ?worldToCell@Pathfinder@@QAE_NPBVCoord3D@@PAUICoord2D@@@Z,0x003D7EC0,Coord3D class-tag ABI view of matched Pathfinder helper; caller 0x003F6090+0x193 passes ECX and two stack arguments
+?slot34@Rva00278F20@@QAEXPAVObject@@HW4CommandSourceType@@@Z,0x00278F20,address-derived AI-update slot 34 callee; ILT 0x0003DCF3; thiscall ret 0xc tail-called by the byte-matched TransportAIUpdate::privateForceAttackObject 0x002C7330
+?slot36@Rva0027DB50@@QAEXPBUCoord3D@@HW4CommandSourceType@@@Z,0x0027DB50,address-derived AI-update slot 36 callee; ILT 0x0003F698; thiscall ret 0xc tail-called by the byte-matched TransportAIUpdate::privateAttackPosition 0x002C7410

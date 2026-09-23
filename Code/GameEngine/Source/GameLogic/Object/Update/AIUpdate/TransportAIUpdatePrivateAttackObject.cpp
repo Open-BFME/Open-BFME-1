@@ -3,7 +3,9 @@
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 
-// TransportAIUpdate::privateAttackObject, retail 0x002C7250 (177 bytes).
+// TransportAIUpdate::privateAttackObject, retail 0x002C7250 (177 bytes), and
+// its slot 34/36 siblings privateForceAttackObject (0x002C7330, ILT 0x0001FFDC)
+// and privateAttackPosition (0x002C7410, ILT 0x0003AE77), each 177 bytes.
 //
 // Identity: vtable 0x010C96A0 is the table the landed TransportAIUpdate
 // constructor (0x002C7020) installs; this body is its slot 30 (+0x78) via ILT
@@ -40,6 +42,7 @@ enum KindOfType { KINDOF_BIT56 = 56 };
 enum DisabledType { DISABLED_BIT2 = 2, DISABLED_BIT4 = 4 };
 
 class Object;
+struct Coord3D;
 typedef _STL::list<Object *> ContainedItemsList;
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
@@ -155,6 +158,8 @@ class AICommandInterface
 public:
 	virtual void slot00();
 	void aiAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType cmdSource);
+	void aiForceAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType cmdSource);
+	void aiAttackPosition(const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource);
 };
 
 class AIUpdateInterfaceModuleHead
@@ -174,17 +179,31 @@ protected:
 	virtual void privateAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType cmdSource);
 };
 
-// Opaque callee identity at the witnessed AI-update slot 30 body.
+// Opaque callee identities at the witnessed AI-update slot 30/34/36 bodies.
 class Rva00278D50
 {
 public:
 	void slot30(Object *victim, Int maxShotsToFire, CommandSourceType cmdSource);
 };
 
+class Rva00278F20
+{
+public:
+	void slot34(Object *victim, Int maxShotsToFire, CommandSourceType cmdSource);
+};
+
+class Rva0027DB50
+{
+public:
+	void slot36(const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource);
+};
+
 class TransportAIUpdate : public AIUpdateInterface
 {
 protected:
 	virtual void privateAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType cmdSource);
+	virtual void privateForceAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType cmdSource);
+	virtual void privateAttackPosition(const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource);
 };
 
 void TransportAIUpdate::privateAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType cmdSource )
@@ -221,4 +240,76 @@ void TransportAIUpdate::privateAttackObject( Object *victim, Int maxShotsToFire,
 	}
 
 	((Rva00278D50 *)this)->slot30( victim, maxShotsToFire, cmdSource );
+}
+
+void TransportAIUpdate::privateForceAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType cmdSource )
+{
+	ContainModuleInterface* contain = getObject()->getContain();
+	if( contain != 0  &&  contain->isPassengerAllowedToFire() )
+	{
+		if( cmdSource == CMD_FROM_PLAYER  ||  cmdSource == CMD_FROM_SCRIPT )
+		{
+			const ContainedItemsList *passengerList = contain->getContainedItemsList();
+			ContainedItemsList::const_iterator passengerIterator;
+			passengerIterator = passengerList->begin();
+
+			while( passengerIterator != passengerList->end() )
+			{
+				Object *passenger = *passengerIterator;
+				//Advance to the next iterator
+				passengerIterator++;
+
+				if ( passenger->isKindOf( KINDOF_BIT56 ) )
+				{
+					if( passenger->isDisabledByType( DISABLED_BIT2 ) 
+						|| passenger->isDisabledByType( DISABLED_BIT4 ) )
+						continue;
+				}
+				
+				AIUpdateInterface *passengerAI = passenger->getAIUpdateInterface();
+				if( passengerAI )
+				{
+					passengerAI->aiForceAttackObject( victim, maxShotsToFire, cmdSource );
+				}
+			}
+		}
+	}
+
+	((Rva00278F20 *)this)->slot34( victim, maxShotsToFire, cmdSource );
+}
+
+void TransportAIUpdate::privateAttackPosition( const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource )
+{
+	ContainModuleInterface* contain = getObject()->getContain();
+	if( contain != 0  &&  contain->isPassengerAllowedToFire() )
+	{
+		if( cmdSource == CMD_FROM_PLAYER  ||  cmdSource == CMD_FROM_SCRIPT )
+		{
+			const ContainedItemsList *passengerList = contain->getContainedItemsList();
+			ContainedItemsList::const_iterator passengerIterator;
+			passengerIterator = passengerList->begin();
+
+			while( passengerIterator != passengerList->end() )
+			{
+				Object *passenger = *passengerIterator;
+				//Advance to the next iterator
+				passengerIterator++;
+
+				if ( passenger->isKindOf( KINDOF_BIT56 ) )
+				{
+					if( passenger->isDisabledByType( DISABLED_BIT2 ) 
+						|| passenger->isDisabledByType( DISABLED_BIT4 ) )
+						continue;
+				}
+				
+				AIUpdateInterface *passengerAI = passenger->getAIUpdateInterface();
+				if( passengerAI )
+				{
+					passengerAI->aiAttackPosition( pos, maxShotsToFire, cmdSource );
+				}
+			}
+		}
+	}
+
+	((Rva0027DB50 *)this)->slot36( pos, maxShotsToFire, cmdSource );
 }
