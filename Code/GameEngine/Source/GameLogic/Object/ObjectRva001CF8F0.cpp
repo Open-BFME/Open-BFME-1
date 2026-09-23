@@ -1,8 +1,7 @@
 // ?rva001CF8F0@Object@@QAEX_N@Z
-// partial score=0.92 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc-
 // stlport
-// Object status/model-condition helper at retail RVA 0x001CF8F0 (111 bytes).
+// Object status/model-condition helper at retail RVA 0x001CF8F0 (114 bytes).
 // ObjectSetChanting is the named caller; the public Object method spelling is
 // not recovered, so the implementation keeps an address-derived name.
 
@@ -25,14 +24,6 @@ public:
 	UnsignedInt m_bits[3];
 };
 
-class KindOfFlags
-{
-public:
-	UnsignedInt m_unused0 : 20;
-	UnsignedInt m_alwaysVisible : 1;
-	UnsignedInt m_unused1 : 11;
-};
-
 class Overridable
 {
 public:
@@ -41,15 +32,18 @@ public:
 	const Overridable *getFinalOverride() const;
 };
 
+// The landed Thing::isKindOf view witnesses +0xC8 and dynamic indexing;
+// ordinal 108 reads the fourth word. The full bitset extent is unknown.
 class ThingTemplate : public Overridable
 {
 public:
-	unsigned char m_pad08[0xd4 - 0x08];
-	KindOfFlags m_kindof;
-
+	unsigned char m_pad08[0xc8 - 0x08];
 	__forceinline Bool isKindOf(Int kind) const
 	{
-		return (m_kindof.m_alwaysVisible != 0) && (kind == 20);
+		const UnsignedInt ordinal = (UnsignedInt)kind;
+		const UnsignedInt *word = reinterpret_cast<const UnsignedInt *>(
+			reinterpret_cast<const char *>(this) + 0xc8 + 4 * (ordinal >> 5));
+		return (*word & (1u << (ordinal & 31))) != 0;
 	}
 };
 
@@ -94,9 +88,7 @@ void Object::rva001CF8F0(Bool flag)
 				reinterpret_cast<const ThingTemplate *>(
 					thingTemplate->m_nextOverride->getFinalOverride()));
 		}
-		const UnsignedInt kindOf = *reinterpret_cast<const volatile UnsignedInt *>(
-			reinterpret_cast<const char *>(thingTemplate) + 0xd4);
-		if (!(kindOf & (1u << 20)))
+		if (!thingTemplate->isKindOf(108))
 			return;
 	}
 }
