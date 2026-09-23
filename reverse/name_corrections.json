@@ -1428,5 +1428,25 @@
   "after_sha256": "54b4a687e990847bb95c7f0caff6a32bb3cf4a7d6e7fb6557a94cf54f92577ff",
   "evidence": "docs/naming_evidence.md",
   "reason": "Gen_p4pod is a generator placeholder token from Code/gen_small/tgrid_001.cpp (the Gen_<token> family docs/naming_evidence.md describes), not a recovered identity; the landed source uses the address-derived name Rva00443F60Data as AGENTS.md requires."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp",
+  "old_name": "GameMessage",
+  "new_name": "Rva005B6BA0MessageTypes",
+  "before_sha256": "dd57a85a6175a4d6de095d3273190c7e427bc259fa4c7fe35e53c098d5249763",
+  "after_sha256": "95eff40820a1bc7244e88dcc3154cbb5b258fd8ad607a142a46c8842b893aa83",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "GameMessage is the Zero Hour type; the BFME body landed at 0x005B6BA0 (MetaEventTranslator, reverse/re_attempts.log) reads a layout that differs from the ZH header, so the source models it as the address-derived Rva005B6BA0MessageTypes rather than asserting the ZH type; no proof of the BFME type name exists, per AGENTS.md."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/MessageStream/MetaEvent.cpp",
+  "old_name": "MetaMapRec",
+  "new_name": "Rva005B6BA0MapView",
+  "before_sha256": "dd57a85a6175a4d6de095d3273190c7e427bc259fa4c7fe35e53c098d5249763",
+  "after_sha256": "95eff40820a1bc7244e88dcc3154cbb5b258fd8ad607a142a46c8842b893aa83",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "MetaMapRec is the Zero Hour type; the BFME body landed at 0x005B6BA0 (MetaEventTranslator, reverse/re_attempts.log) reads a layout that differs from the ZH header, so the source models it as the address-derived Rva005B6BA0MapView rather than asserting the ZH type; no proof of the BFME type name exists, per AGENTS.md."
  }
 ]
