@@ -1,12 +1,9 @@
-// ?d_0077b3f0@@YAXXZ
-// partial score=0.9859387923904053 date=2026-09-22
 // cl: /O2 /Ob2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /Ireference/shims/sweep /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
-// Hub RVA 0077B3F0, 1209 bytes. Analyst reconstruction; NOT a matched claim.
-// Symbol: ?method@Rva0077B3F0@@QAEXPBVMatrix3D@@@Z
-// See ANALYSIS.md for every branch/call and the independently checked ABIs.
-// The retail prologue has a 0x4C frame, conditional ESI/EBP/EBX/EDI saves,
-// no EH registration, and ret 4. Native local lifetimes target that frame.
-// No asm, emit, synthetic instruction padding, or omitted calls.
+
+// Retail body at RVA 0x0077B3F0, 1209 bytes.
+// The owner class is not proven; this address-derived view avoids assigning a false identity.
+// ABI and the 0x4C frame follow the direct calls and retail boundary.
+
 #include "matrix3d.h"
 #include "ascii_string.h"
 #include <stddef.h>
@@ -253,9 +250,11 @@ void Rva0077B3F0::method(const Matrix3D *transform)
     if (data->MultiPlayerOnly && g_va012F0898->i10c != 1 && g_va012F0898->i10c != 5)
         return;
     if (data->HighDetailOnly && u0a0) return;
-    b084 = false;
+    // Preserve retail order: clear the update byte before testing the state byte.
+    volatile U8 *fieldBytes = (volatile U8 *)this;
+    fieldBytes[0x84] = 0;
 
-    if ((b164 & 0x10) && rva0077B3F0NameNotEmpty(data->WadingParticleSys))
+    if ((fieldBytes[0x164] & 0x10) && rva0077B3F0NameNotEmpty(data->WadingParticleSys))
     {
         const Vector3 translation = transform->Get_Translation();
         Rva0077B3F0Coord pos;

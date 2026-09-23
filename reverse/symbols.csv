@@ -88874,3 +88874,25 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?_M_insert_overflow@?$vector@UGen_t_001ac070_p48cd@@V?$allocator@UGen_t_001ac070_p48cd@@@_STL@@@_STL@@IAEXPAUGen_t_001ac070_p48cd@@ABU3@ABU__false_type@2@I_N@Z,0x00021E04,retail xferTerrainState at 0x001AD370+0x549 push_back on the vector at this+0x55C whose reserve is the Gen_t_001ac070_p48cd row at 0x001AC070 reaches this matched Gen_t_001acec0_p48cd insert-overflow body through this thunk
 ?_M_insert_overflow@?$vector@URva00364E70SelectedPointer@@V?$allocator@URva00364E70SelectedPointer@@@_STL@@@_STL@@IAEXPAURva00364E70SelectedPointer@@ABU3@ABU__false_type@2@I_N@Z,0x00363890,target 0x00364E70 calls ILT 0x0002634B with a pointer; decoded helper copies one four-byte payload
 ?begin@?$hashtable@U?$pair@$$CBHUGen_t_009f14c0_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_009f14c0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_009f14c0_p12cd@@@_STL@@@2@@_STL@@QAE?AU?$_Ht_iterator@U?$pair@$$CBHUGen_t_009f14c0_p12cd@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHUGen_t_009f14c0_p12cd@@@_STL@@@2@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_009f14c0_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_009f14c0_p12cd@@@_STL@@@2@@2@XZ,0x009EE0F0,pin
+?rva005CFF50@@YAPAVRva0077B3F0Particle@@XZ,0x00001B18,Rva0077B3F0 call-site ABI; +0x0E2 REL32 reaches ILT 0x00001B18 to matched body 0x005CFF50
+?rva005BDE00@Rva0077B3F0Particle@@QAEXPBURva0077B3F0Coord@@@Z,0x00021832,Rva0077B3F0 call-site ABI; +0x0EE REL32 reaches ILT 0x00021832 to matched body 0x005BDE00
+?rva005C9F90@Rva0077B3F0Manager@@QBEPAURva0077B3F0Template@@ABVAsciiString@@@Z,0x00015267,Rva0077B3F0 call-site ABI; +0x112 REL32 reaches ILT 0x00015267 to matched body 0x005C9F90
+?rva005C3A30@Rva0077B3F0Manager@@QAE?AVRva0077B3F0Handle@@PBURva0077B3F0Template@@_N@Z,0x0000EBE7,Rva0077B3F0 call-site ABI; +0x129 REL32 reaches ILT 0x0000EBE7 to matched body 0x005C3A30
+?rva005C21D0@Rva0077B3F0HandleBase@@QAEAAV1@ABV1@@Z,0x0000FA3D,Rva0077B3F0 call-site ABI; +0x131 REL32 reaches ILT 0x0000FA3D to matched body 0x005C21D0
+??1Rva0077B3F0Handle@@QAE@XZ,0x00013994,Rva0077B3F0 call-site ABI; +0x13A REL32 reaches ILT 0x00013994 to matched body 0x001DA440
+?rva005BDD90@Rva0077B3F0Particle@@QAEXXZ,0x0000FFD3,Rva0077B3F0 call-site ABI; +0x167 REL32 reaches ILT 0x0000FFD3 to matched body 0x005BDD90
+?rva005C1FB0@Rva0077B3F0Particle@@QAEXXZ,0x0000E525,Rva0077B3F0 call-site ABI; +0x18E REL32 reaches ILT 0x0000E525 to matched body 0x005C1FB0
+?rva005C2240@Rva0077B3F0HandleBase@@QAEXXZ,0x00015640,Rva0077B3F0 call-site ABI; +0x195 REL32 reaches ILT 0x00015640 to matched body 0x005C2240
+?rva0076C080@Rva0077B3F0@@QAEXXZ,0x00024F5F,Rva0077B3F0 call-site ABI; +0x1AA REL32 reaches ILT 0x00024F5F to address-derived body 0x0076C080
+?rva007629F0@Rva0077B3F0@@QAEXAAVMatrix3D@@@Z,0x00026350,Rva0077B3F0 call-site ABI; +0x282 REL32 reaches ILT 0x00026350 to matched body 0x007629F0
+?rva007397E0@@YA_NPAVRva0077B3F0Render@@MMM@Z,0x0002C9DA,Rva0077B3F0 call-site ABI; +0x331 REL32 reaches ILT 0x0002C9DA to generated body 0x007397E0
+?rva0075F400@Rva0077B3F0@@QAEXXZ,0x00043329,Rva0077B3F0 call-site ABI; +0x34E REL32 reaches ILT 0x00043329 to generated body 0x0075F400
+?rva00779F10@Rva0077B3F0@@QAEXXZ,0x00041D80,Rva0077B3F0 call-site ABI; +0x355 REL32 reaches ILT 0x00041D80 to generated body 0x00779F10
+?rva0076EFF0@Rva0077B3F0@@QAEXXZ,0x00042929,Rva0077B3F0 call-site ABI; +0x3EE REL32 reaches ILT 0x00042929 to address-derived body 0x0076EFF0
+?rva0075EF90@Rva0077B3F0Tint@@QAEAAV1@ABV1@@Z,0x00019187,Rva0077B3F0 call-site ABI; +0x3B8 REL32 reaches ILT 0x00019187 to matched body 0x0075EF90
+?rva00411EF0@Rva0077B3F0Drawable@@QAEXXZ,0x0001C21F,Rva0077B3F0 call-site ABI; +0x3BF REL32 reaches ILT 0x0001C21F to matched body 0x00411EF0
+?rva00421830@Rva0077B3F0Drawable@@QAEXPAX@Z,0x00003873,Rva0077B3F0 call-site ABI; +0x3C8 REL32 reaches ILT 0x00003873 to matched body 0x00421830; this is not the false BitFlags owner pin
+?rva0082B870@@YAPAURva0077B3F0Node@@PAU1@@Z,0x0082B870,Rva0077B3F0 call-site ABI; +0x3CE REL32 reaches matched STLport tree increment body 0x0082B870
+?rva0075C9F0@Rva0077B3F0@@QAEXPAVRva0077B3F0Render@@@Z,0x00016671,Rva0077B3F0 call-site ABI; +0x49B REL32 reaches ILT 0x00016671 to matched body 0x0075C9F0
+?rva004585F0@Rva0077B3F0Radius@@QAEXXZ,0x0003FC15,Rva0077B3F0 call-site ABI; +0x4A6 REL32 reaches ILT 0x0003FC15 to matched body 0x004585F0
+?rva0075F810@Rva0077B3F0@@QAEXXZ,0x000495A3,Rva0077B3F0 call-site ABI; +0x4AD REL32 reaches ILT 0x000495A3 to matched body 0x0075F810
