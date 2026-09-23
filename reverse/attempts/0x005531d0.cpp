@@ -1,5 +1,5 @@
 // ?_bfme_refreshLoginState@BfmeAptScreenOnlineLogin@@QAEXXZ
-// partial score=0.72 date=2026-09-07
+// partial score=0.9833 date=2026-09-23
 // ?_bfme_refreshLoginState@BfmeAptScreenOnlineLogin@@QAEXXZ
 //
 // Retail ILT 0x000371FF is called by the matched
@@ -76,7 +76,7 @@ struct PreferenceNode
 class PreferenceMap
 {
 public:
-	PreferenceNode *find( const AsciiString &key ) const;
+	PreferenceNode *find( const AsciiString &key ) const throw();
 	PreferenceNode *end() const { return m_end; }
 
 private:
