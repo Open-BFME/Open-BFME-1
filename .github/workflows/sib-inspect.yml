@@ -1,0 +1,54 @@
+name: Inspect renderer residue
+on:
+  push:
+    branches: [research/sib-20260923-d302e8d]
+    paths: ['.github/workflows/sib-inspect.yml']
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: windows-2022
+    timeout-minutes: 5
+    steps:
+      - run: git config --global core.longpaths true
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout: |
+            tools
+            build/toolchains
+            baselines/bfme1/workshop-vanilla-1.03
+            reverse/attempts
+            reverse/attempt_support
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install capstone==5.0.3
+      - name: Reproduce and inspect both saved candidates
+        shell: bash
+        run: |
+          python -u - <<'PY'
+          from pathlib import Path
+          import hashlib,urllib.request
+          u='https://raw.githubusercontent.com/Open-BFME/Open-BFME-1/010683a09c21c158a15f250bc1cc86fc1a9667cb/.github/research/sib_probe.py'
+          b=urllib.request.urlopen(u,timeout=30).read()
+          assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()=='d021c7de108224c53583b8920ab7ba29e7d090ed'
+          prefix=b.decode().split('seed_masks=',1)[0].replace("(OUT/'driver_source.json').write_text(json.dumps({'source':Path(__file__).read_text()},indent=2),encoding='utf-8')",'')
+          exec(compile(prefix,'pinned_research_harness','exec'))
+          import capstone
+          md=capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_32)
+          for tag,mask in [('nine',[19,41]),('sixteen',[19,29,35,40,41,53,58])]:
+              text=source_for(mask);r=evaluate((tag,text,mask))
+              print('CANDIDATE',tag,json.dumps({k:v for k,v in r.items() if k not in ('raw_hex','retail_hex','relocation_tuples')}),flush=True)
+              data,relocs=build.read_object_symbol_bytes(OUT/(tag+'.obj'),SYM)
+              for label,code in [('retail',retail),('ours',data)]:
+                  for ins in md.disasm(code,0):
+                      if any(abs(ins.address-i)<18 for i in r.get('offsets',[])):
+                          print('ASM',tag,label,hex(ins.address),ins.bytes.hex(),ins.mnemonic,ins.op_str,flush=True)
+          for i,m in enumerate(atoms):
+              line=original.count('\n',0,m.start())+1
+              print('ATOM',i,'line',line,original[max(0,m.start()-55):m.end()+65].replace('\n',' '),flush=True)
+          for i,line in enumerate(original.splitlines(),1):
+              if 170<=i<=355:print('SOURCE',i,line,flush=True)
+          PY
