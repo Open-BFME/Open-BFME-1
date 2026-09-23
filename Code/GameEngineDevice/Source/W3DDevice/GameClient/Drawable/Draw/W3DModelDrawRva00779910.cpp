@@ -61,8 +61,8 @@ private:
 	unsigned char m_unmodelled14[0x34 - 0x14];
 	RenderObjClass *m_renderObject;                         // +0x034
 	unsigned char m_unmodelled38[0x130 - 0x38];
-	std::vector<Gen_t_00777e90_p32cd> m_field130;      // +0x130
-	std::vector<std::string> m_field13C;           // +0x13C
+	std::vector<Gen_t_00777e90_p32cd> m_boneFollowers;      // +0x130
+	std::vector<std::string> m_releasedBoneNames;           // +0x13C
 };
 
 // ?rva00779910@W3DModelDraw@@QAEXXZ
@@ -71,15 +71,15 @@ void W3DModelDraw::rva00779910()
 	if (m_pointer10 == 0 || m_renderObject == 0)
 		return;
 
-	std::vector<Gen_t_00777e90_p32cd>::iterator it = m_field130.begin();
-	while (it != m_field130.end())
+	std::vector<Gen_t_00777e90_p32cd>::iterator it = m_boneFollowers.begin();
+	while (it != m_boneFollowers.end())
 	{
 		if (it->m_countdown <= 0)
 		{
-			m_field13C.push_back(it->m_boneName);
+			m_releasedBoneNames.push_back(it->m_boneName);
 			W3DDisplay::m_3DScene->Remove_Render_Object(it->m_renderObject);
 			it->m_renderObject->Release_Ref();
-			it = m_field130.erase(it);
+			it = m_boneFollowers.erase(it);
 			continue;
 		}
 
