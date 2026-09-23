@@ -1,5 +1,5 @@
 // ?ParseScriptListDataChunk@ScriptList@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
-// partial score=0.87 date=2026-09-20
+// partial score=0.99 date=2026-09-23
 // ?ParseScriptListDataChunk@ScriptList@@SA_NAAVDataChunkInput@@PAUDataChunkInfo@@PAX@Z
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringbaseascii/Common /ICode/Libraries/Source/WWVegas/WWLib
 //
@@ -118,28 +118,40 @@ private:
 	char m_pad[0x4c];
 };
 
-class Rva00350F50ParserRegistration
+class BfmeInnerCN
 {
 public:
-	Rva00350F50ParserRegistration( void *dataContext, void *localList, DataChunkInput *table, AsciiString *labelOverride );
-	~Rva00350F50ParserRegistration();
+	void bfmeCloseCN( void *value );
+};
+
+class BfmeParserRegistrationVE
+{
+public:
+	~BfmeParserRegistrationVE()
+	{
+		m_vftable = (void *)0x0107C7D0;
+		((BfmeInnerCN *)m_table)->bfmeCloseCN( m_parser );
+	}
 protected:
 	void *m_vftable;
 	DataChunkInput *m_table;
 	void *m_parser;
+};
+
+class Rva00350F50ParserRegistration : public BfmeParserRegistrationVE
+{
+public:
+	Rva00350F50ParserRegistration( void *dataContext, void *localList, DataChunkInput *table, AsciiString *labelOverride );
+private:
 	void *m_0c;
 	void *m_10;
 };
 
-class Rva00352AB0ParserRegistration
+class Rva00352AB0ParserRegistration : public BfmeParserRegistrationVE
 {
 public:
 	Rva00352AB0ParserRegistration( void *dataContext, void *localList, DataChunkInput *table, AsciiString *labelOverride );
-	~Rva00352AB0ParserRegistration();
-protected:
-	void *m_vftable;
-	DataChunkInput *m_table;
-	void *m_parser;
+private:
 	void *m_0c;
 	void *m_10;
 };

@@ -1,5 +1,5 @@
-// ?d_004cf440@@YAXXZ
-// partial score=0.35 date=2026-09-17
+// ?LanLobbyMenuInit@@YAXPAVWindowLayout@@PAX@Z
+// partial score=0.8 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseascii /Ireference/shims/stringbaseunicode /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -379,8 +379,71 @@ static void playerTooltip(GameWindow *window,
 //-------------------------------------------------------------------------------------------------
 /** Initialize the Lan Lobby Menu */
 //-------------------------------------------------------------------------------------------------
+class Rva004CF440LANAPIView
+{
+public:
+	virtual void slot00( void ) = 0;
+	virtual void slot01( void ) = 0;
+	virtual void slot02( void ) = 0;
+	virtual void slot03( void ) = 0;
+	virtual void slot04( void ) = 0;
+	virtual void slot05( void ) = 0;
+	virtual void slot06( void ) = 0;
+	virtual void slot07( void ) = 0;
+	virtual void slot08( void ) = 0;
+	virtual void slot09( void ) = 0;
+	virtual void slot10( void ) = 0;
+	virtual void slot11( void ) = 0;
+	virtual void slot12( void ) = 0;
+	virtual void slot13( void ) = 0;
+	virtual void slot14( void ) = 0;
+	virtual void slot15( void ) = 0;
+	virtual void slot16( void ) = 0;
+	virtual void slot17( void ) = 0;
+	virtual void slot18( void ) = 0;
+	virtual void slot19( void ) = 0;
+	virtual void slot20( void ) = 0;
+	virtual void slot21( void ) = 0;
+	virtual void slot22( void ) = 0;
+	virtual void slot23( void ) = 0;
+	virtual void slot24( void ) = 0;
+	virtual void slot25( void ) = 0;
+	virtual void slot26( void ) = 0;
+	virtual void slot27( void ) = 0;
+	virtual void slot28( void ) = 0;
+	virtual void slot29( void ) = 0;
+	virtual void slot30( void ) = 0;
+	virtual void slot31( void ) = 0;
+	virtual void slot32( void ) = 0;
+	virtual void slot33( void ) = 0;
+	virtual void slot34( void ) = 0;
+	virtual void slot35( void ) = 0;
+	virtual void slot36( void ) = 0;
+	virtual void slot37( void ) = 0;
+	virtual void slot38( void ) = 0;
+	virtual void slot39( void ) = 0;
+	virtual void slot40( void ) = 0;
+	virtual void slot41( void ) = 0;
+	virtual void slot42( void ) = 0;
+	virtual void slot43( void ) = 0;
+	virtual void slot44( void ) = 0;
+	virtual void slot45( void ) = 0;
+	virtual void slot46( void ) = 0;
+	virtual void slot47( void ) = 0;
+	virtual LANGameInfo *GetMyGame( void ) = 0;
+};
+
 void LanLobbyMenuInit( WindowLayout *layout, void *userData )
 {
+	if ( TheLAN != NULL && ((Rva004CF440LANAPIView *)TheLAN)->GetMyGame() != NULL &&
+		*(const unsigned char *)( (const char *)((Rva004CF440LANAPIView *)TheLAN)->GetMyGame() + 0x0D ) )
+	{
+		TheShell->popImmediate();
+		delete TheLAN;
+		TheLAN = NULL;
+		return;
+	}
+
 	LANnextScreen = NULL;
 	LANbuttonPushed = false;
 	LANisShuttingDown = false;

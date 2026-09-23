@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "86a8650dfa903f5c396bda398dd60be1978ecfb9785cd2b48075c036992a87cd",
+  "symbol": "?d_003abb80@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.975,
+  "source": "// ?d_003abb80@@YAXXZ\n// partial score=0.975 date=2026-09-23\n// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline\n// stlport\n\n#define _STLP_NO_EXCEPTIONS 1\n#include <vector>\n#include \"StringInline.h\"\n\nextern \"C\" void _ReadWriteBarrier(void);\n#pragma intrinsic(_ReadWriteBarrier)\n\nstruct Rva003AB460Tree\n{\n\tint m_raw[3];\n\tRva003AB460Tree(const Rva003AB460Tree &other);\n};\n\nstruct Rva003ABB80Prefix\n{\n\tint m_04;\n\tRva003ABB80Prefix(const Rva003ABB80Prefix &other)\n\t\t: m_04( other.m_04 )\n\t{\n\t\t_ReadWriteBarrier();\n\t}\n};\n\nclass Rva003BA660Record\n{\npublic:\n\tvirtual void slot();\n\tRva003BA660Record( const Rva003BA660Record &other )\n\t\t: m_prefix( other.m_prefix ), m_08( other.m_08 ), m_tree( other.m_tree )\n\t{\n\t}\n\tRva003ABB80Prefix m_prefix;\n\tchar m_08;\n\tRva003AB460Tree m_tree;\n};\n\ntemplate _STL::vector<Rva003BA660Record, _STL::allocator<Rva003BA660Record> >::vector(\n\tconst _STL::vector<Rva003BA660Record, _STL::allocator<Rva003BA660Record> > &);\n"
+}
