@@ -24,7 +24,6 @@ void BFMEPathfinderMapShim::addObjectToPathfindMap(Object *object)
 	((Pathfinder *)this)->updateAt003FA5B0(object, 1, 0);
 }
 
-// ?removeObjectFromPathfindMap@Pathfinder@@QAEXPAVObject@@@Z present-unmatched
 void Pathfinder::removeObjectFromPathfindMap(Object *object)
 {
 	updateAt003FA5B0(object, 0, 0);
