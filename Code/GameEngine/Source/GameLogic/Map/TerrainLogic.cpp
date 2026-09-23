@@ -1954,20 +1954,54 @@ PathfindLayerEnum TerrainLogic::getHighestLayerForDestination(const Coord3D *pos
 //-------------------------------------------------------------------------------------------------
 /** Determines whether the object interacts with the bridge on specified layer. */
 //-------------------------------------------------------------------------------------------------
-// ?objectInteractsWithBridgeLayer@TerrainLogic@@UBE_NPAVObject@@H_N@Z present-unmatched
+// BFME places the first-bridge accessor at vtable slot 37 (+0x94).
+class BfmeTerrainFirstBridgeDispatch
+{
+public:
+	virtual void slot00() const = 0;
+	virtual void slot01() const = 0;
+	virtual void slot02() const = 0;
+	virtual void slot03() const = 0;
+	virtual void slot04() const = 0;
+	virtual void slot05() const = 0;
+	virtual void slot06() const = 0;
+	virtual void slot07() const = 0;
+	virtual void slot08() const = 0;
+	virtual void slot09() const = 0;
+	virtual void slot10() const = 0;
+	virtual void slot11() const = 0;
+	virtual void slot12() const = 0;
+	virtual void slot13() const = 0;
+	virtual void slot14() const = 0;
+	virtual void slot15() const = 0;
+	virtual void slot16() const = 0;
+	virtual void slot17() const = 0;
+	virtual void slot18() const = 0;
+	virtual void slot19() const = 0;
+	virtual void slot20() const = 0;
+	virtual void slot21() const = 0;
+	virtual void slot22() const = 0;
+	virtual void slot23() const = 0;
+	virtual void slot24() const = 0;
+	virtual void slot25() const = 0;
+	virtual void slot26() const = 0;
+	virtual void slot27() const = 0;
+	virtual void slot28() const = 0;
+	virtual void slot29() const = 0;
+	virtual void slot30() const = 0;
+	virtual void slot31() const = 0;
+	virtual void slot32() const = 0;
+	virtual void slot33() const = 0;
+	virtual void slot34() const = 0;
+	virtual void slot35() const = 0;
+	virtual void slot36() const = 0;
+	virtual Bridge *getFirstBridge() const = 0;
+};
+
 Bool TerrainLogic::objectInteractsWithBridgeLayer(Object *obj, Int layer, Bool considerBridgeHealth) const
 {
 	if (layer == LAYER_GROUND) return false;
-	if (layer == LAYER_WALL) {
-		if (obj->getLayer() == LAYER_WALL) {
-			return true; // objects on the wall can't fall off :)
-		}
-		if (TheAI->pathfinder()->isPointOnWall(obj->getPosition())) {
-			return true;
-		}
-		return false;
-	}
-	Bridge *pBridge = getFirstBridge();
+	Bridge *pBridge = reinterpret_cast<const BfmeTerrainFirstBridgeDispatch *>(this)->getFirstBridge();
 
 	while (pBridge ) {
 		if (pBridge->getLayer() == layer) {
