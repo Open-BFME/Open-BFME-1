@@ -71,6 +71,7 @@ protected:
 class W3DDisplay
 {
 public:
+	virtual int getDisplayModeCount();
 	virtual void rva006EB3E0(int modeIndex, int *xres, int *yres,
 		int *bitDepth);
 };
@@ -102,4 +103,26 @@ void W3DDisplay::rva006EB3E0(int modeIndex, int *xres, int *yres,
 			++numResolutions;
 		}
 	}
+}
+
+// W3DDisplay vtable 0x0111EDD0 slot 18 reaches 0x006EB1C0 via ILT
+// 0x00011090. Display.h declares getDisplayModeCount immediately before
+// getDisplayModeDescription. Capstone: ret at +0x1b1 followed by int3.
+// Retail float operands contain 0x3faaa993 (1.3333f) and 0x3c23d70a (0.01f).
+int W3DDisplay::getDisplayModeCount()
+{
+	const RenderDeviceDescClass &devDesc = DX8Wrapper::Get_Render_Device_Desc(0);
+	const Rva006EB3E0DynamicVector<Rva006EB3E0ResolutionDesc> &resolutions =
+		devDesc.Enumerate_Resolutions();
+	int numResolutions = 0;
+	for (int res = 0; res < resolutions.Count(); ++res)
+	{
+		if (resolutions[res].BitDepth >= 24 && resolutions[res].Width >= 800 &&
+			fabs((float)resolutions[res].Width / (float)resolutions[res].Height -
+				1.3333f) < 0.01f)
+		{
+			++numResolutions;
+		}
+	}
+	return numResolutions;
 }
