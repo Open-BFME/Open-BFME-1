@@ -53,34 +53,34 @@ static __forceinline void eraseAsciiStringRange(
 	vector.m_finish = destination;
 }
 
-class ModuleDataListStandIn
+class ModuleDataTreeStandIn
 {
-	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/LISTNODE.H
+	// upstream layout: vendor/stlport/stl/_tree.h
 	struct Node
 	{
-		unsigned char m_flag;
+		unsigned char m_color;
 		unsigned char m_pad[3];
-		unsigned int m_value;
-		Node *m_next;
-		Node *m_prev;
+		Node *m_parent;
+		Node *m_left;
+		Node *m_right;
 		unsigned char m_unused[0x10];
 	};
 
-	Node *m_node;
+	Node *m_header;
 	unsigned int m_count;
 	unsigned int m_reserved;
 public:
-	ModuleDataListStandIn()
+	ModuleDataTreeStandIn()
 	{
-		m_node = 0;
-		m_node = (Node *)_STL::_Node_alloc::allocate(sizeof(Node));
+		m_header = 0;
+		m_header = (Node *)_STL::_Node_alloc::allocate(sizeof(Node));
 		m_count = 0;
-		m_node->m_flag = 0;
-		m_node->m_value = 0;
-		m_node->m_next = m_node;
-		m_node->m_prev = m_node;
+		m_header->m_color = 0;
+		m_header->m_parent = 0;
+		m_header->m_left = m_header;
+		m_header->m_right = m_header;
 	}
-	~ModuleDataListStandIn();
+	~ModuleDataTreeStandIn();
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Module.h
@@ -98,7 +98,7 @@ public:
 	virtual ~WanderAIUpdateModuleData();
 
 private:
-	ModuleDataListStandIn m_list;
+	ModuleDataTreeStandIn m_tree;
 	int *m_owned[2];
 	int m_delay;
 	int m_unknown20;
