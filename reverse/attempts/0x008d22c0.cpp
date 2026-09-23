@@ -162,7 +162,7 @@ public:
 	virtual void slot18();
 	virtual void slot19();
 
-	void bfmeEmit1281(int mode, void *tail, int enabled);
+	bool bfmeEmit1281(int mode, void *tail, int enabled);
 
 	unsigned int m_flags;
 	char m_padding08[0x50 - 0x08];
@@ -279,7 +279,7 @@ static __forceinline AptValue *bfmeLookupOpaque(AptValue *value, void *key)
 	return (value->*thunk.typed)(key);
 }
 
-void BfmeNodeDX::bfmeEmit1281(int mode, void *tail, int enabled)
+bool BfmeNodeDX::bfmeEmit1281(int mode, void *tail, int enabled)
 {
 	bool changed = false;
 	BfmeNodeDX *self = this;
@@ -288,7 +288,7 @@ void BfmeNodeDX::bfmeEmit1281(int mode, void *tail, int enabled)
 	{
 		flags >>= 15;
 		if ((((unsigned char)~flags) & 1) == 0)
-			return;
+			return changed;
 	}
 
 	Rva008D22C0Detail *detail = (Rva008D22C0Detail *)self->m_detail;
@@ -483,5 +483,5 @@ void BfmeNodeDX::bfmeEmit1281(int mode, void *tail, int enabled)
 		}
 	}
 
-	return;
+	return changed;
 }
