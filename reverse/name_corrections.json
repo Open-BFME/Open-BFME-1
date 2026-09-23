@@ -1468,5 +1468,15 @@
   "after_sha256": "680e8687a9afb33534baf77f8348400c629fc7ce236b399dccb7c360d17d8e8a",
   "evidence": "reverse/re_attempts.log",
   "reason": "GameWindow was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived Rva004A2F80LayoutView because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0020c750.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Behavior/SpawnBehaviorUpdate.cpp",
+  "old_name": "SpawnBehaviorPrimary",
+  "new_name": "Rva0020C750Primary",
+  "before_sha256": "3c59a70b9c1b705196adf872904184ed55dbed2a835b286fcb13cf787e94d4b4",
+  "after_sha256": "8e6819032980a5e666018ad55d65381710e5ef106ec11cbf07a5805dff78d3ab",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "SpawnBehaviorPrimary was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived Rva0020C750Primary because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
  }
 ]
