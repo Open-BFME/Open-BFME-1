@@ -13,6 +13,11 @@ row), bank the rest.
 
   python build/gap_census.py                       # refresh the census first
   python tools/fleet/gap_seats.py N [min_b] [max_b] [--cap-hours H] [--dry]
+  python tools/fleet/gap_seats.py N --map [--lanes astra-finish,twin] [--dry]
+
+--map serves build/unclaimed_map/map.csv instead of the raw census: capstone-resolved sizes, identity with grade
+and witness, Zero Hour source, twin, lane and rank (expected exact bytes per seat-hour); docs/analysis/unclaimed_map.md
+explains the lanes. Eligibility is tools/eligibility.servable(), the one predicate every picker uses.
 """
 import argparse
 import csv
@@ -54,6 +59,65 @@ def codex_command(cap_seconds):
             'model_reasoning_effort="%s"' % EFFORT, "--sandbox", "danger-full-access", "--cd", str(ROOT), "-"]
 
 
+def map_candidates(a):
+    """[(rank, size, rva, hint)] from build/unclaimed_map/map.csv, servable bodies only."""
+    import eligibility
+    path = ROOT / "build/unclaimed_map/map.csv"
+    if not path.exists():
+        sys.exit("no build/unclaimed_map/map.csv: build the map first (build/unclaimed_map/*.py)")
+    ok = eligibility.servable(ROOT)
+    rows = {eligibility.rva_of(r) for r in eligibility.load_rows() if eligibility.rva_of(r) is not None}
+    lanes = set(a.lanes.split(","))
+    out = []
+    with path.open(newline="", encoding="utf-8") as fh:
+        for r in csv.DictReader(fh):
+            rva, size = int(r["rva"], 16), int(r["size"])
+            if r["lane"] not in lanes or not (a.min_b <= size <= a.max_b) or rva in rows or not ok(rva):
+                continue
+            hint = f"lane {r['lane']} rank {r['rank']}; size {r['size_confidence']} confidence"
+            if r["identity"]:
+                hint += f"; identity {r['identity_grade']}: {r['identity']} ({r['identity_evidence']})"
+            if r["zh_source"]:
+                hint += f"; ZH source {r['zh_source']}"
+            if r["twin"]:
+                hint += f"; ZH shape twin {r['twin']} {r['twin_sim']} (hypothesis)"
+            if r["notes"]:
+                hint += f"; {r['notes']}"
+            out.append((int(r["rank"]), size, rva, hint))
+    out.sort()
+    return out
+
+
+def serve_map(a):
+    picked = map_candidates(a)[: a.seats * a.per_session]
+    groups = [picked[i:i + a.per_session] for i in range(0, len(picked), a.per_session)]
+    if a.dry:
+        for g in groups:
+            for rank, size, rva, hint in g:
+                print(f"0x{rva:08X} {size:5} B {hint[:220]}")
+            print("--")
+        return
+    import fleet_run
+    procs = []
+    stamp = time.strftime("%H%M")
+    for i, g in enumerate(groups):
+        seat = chr(ord("A") + i)
+        lines = [NOTE.format(model=MODEL, effort=EFFORT, cap=a.cap_hours), "", "TARGETS"]
+        for rank, size, rva, hint in g:
+            lines.append(f"- 0x{rva:08X} {size}B ?d_{rva:08x}@@YAXXZ (unclaimed; size from the capstone map, verify; {hint})")
+        brief = ROOT / "build" / f"brief_mapseat_{stamp}_{seat}.txt"
+        brief.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        log = ROOT / "build" / "fleet_logs" / f"seat_astramap{seat}_{stamp}.log"
+        cmd = [sys.executable, str(ROOT / "tools/fleet_run.py"), "--brief", str(brief), "--log", str(log),
+               "--engine", "astramap", "--seat", seat, "--", *codex_command(int(a.cap_hours * 3600))]
+        procs.append(subprocess.Popen(cmd, cwd=ROOT, stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL))
+        print(f"seat {seat}: " + " ".join(f"0x{c[2]:08X}({c[1]}B)" for c in g), flush=True)
+        time.sleep(3)
+    for p in procs:
+        p.wait()
+    print("all seats ended", flush=True)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("seats", type=int)
@@ -63,7 +127,12 @@ def main():
     ap.add_argument("--cap-hours", type=float, default=3.0)
     ap.add_argument("--dry", action="store_true")
     ap.add_argument("--twins-only", action="store_true", help="serve only bodies with a Zero Hour shape twin")
+    ap.add_argument("--map", action="store_true", help="serve build/unclaimed_map/map.csv by lane and rank")
+    ap.add_argument("--lanes", default="astra-finish,twin,class-slot,anon-mid",
+                    help="with --map: comma-separated lanes to serve (map.csv 'lane' column)")
     a = ap.parse_args()
+    if a.map:
+        return serve_map(a)
     import eligibility
     census = ROOT / "build/gap_census.csv"
     if not census.exists():
