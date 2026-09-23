@@ -1,6 +1,12 @@
-// ?d_003d79c0@@YAXXZ
-// partial score=0.23 date=2026-09-20
 // cl: /DNDEBUG /MD
+//
+// Retail 0x003D79C0, 566 bytes: the cell-space Pathfinder::iterateCellsAlongLine
+// instance reached through ILT 0x00016103 from its world-space forwarder and from
+// Pathfinder::bfmeAdjustLOSPoints. The shared Bresenham walk of
+// PathfinderIterateCellsAlongLineCallbacks.cpp with its callback inlined: the
+// first cell whose layer field falls outside 0x11..0x40 stops the walk and
+// records that cell's centre and terrain height in the user data.
+// IDENTITY OF THE USER-DATA STRUCT IS NOT RECOVERED; its name is address-derived.
 
 extern "C" int __cdecl abs(int n);
 #pragma intrinsic(abs)
@@ -63,7 +69,7 @@ struct Rva003D79C0Struct
 	Real z;
 };
 
-class Rva003D79C0Pathfinder
+class Pathfinder
 {
 public:
 	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
@@ -101,18 +107,12 @@ extern Rva003FD060TerrainLogic *TheTerrainLogic;
 extern const Real g_bfmeK1253;
 extern const Real g_bfmeDirectionWeight1285;
 
-Int Rva003D79C0Pathfinder::iterateCellsAlongLine(const ICoord2D &start,
+Int Pathfinder::iterateCellsAlongLine(const ICoord2D &start,
 	const ICoord2D &end, PathfindLayerEnum layer,
 	Rva003D79C0Struct *userData)
 {
-	const ICoord2D *start_ptr = &start;
-	const ICoord2D *end_ptr = &end;
-	Int end_x = end_ptr->x;
-	Int x = start_ptr->x;
-	Int delta_x = abs(end_x - x);
-	Int y = start_ptr->y;
-	Int end_y = end_ptr->y;
-	Int delta_y = abs(end_y - y);
+	Int delta_x = abs( end.x - start.x );
+	Int delta_y = abs( end.y - start.y );
 
 	Int xinc2, yinc1, xinc1, numpixels, numadd, den;
 	Int yinc2, num;
@@ -139,33 +139,34 @@ Int Rva003D79C0Pathfinder::iterateCellsAlongLine(const ICoord2D &start,
 		xinc1 = 1;
 	}
 
-	if (start.x > end_x)
+	if (start.x > end.x)
 	{
 		xinc2 = -xinc2;
 		xinc1 = -1;
 	}
-	if (start.y > end_y)
+	if (start.y > end.y)
 	{
 		yinc2 = -yinc2;
 		yinc1 = -1;
 	}
 
+	Int x = start.x;
+	Int y = start.y;
 	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
 	{
-		register PathfindCell *cell = getCell(layer, x, y);
-		if (cell == 0)
+		PathfindCell *to = getCell( layer, x, y );
+		if (to == 0)
 			return 0;
 
-		unsigned int layerWord = cell->m_packed;
-		Int cellLayer = (layerWord >> 6) & 0x3f;
-		if (cellLayer >= 0x11 && cellLayer <= 0x40)
+		Int cellLayer = to->getLayer();
+		if (cellLayer < 0x11 || cellLayer > 0x40)
 		{
-			userData->x = ((Real)x + g_bfmeK1253) * g_bfmeDirectionWeight1285;
-			userData->y = ((Real)y + g_bfmeK1253) * g_bfmeDirectionWeight1285;
-			layerWord = cell->m_packed;
-			userData->z = TheTerrainLogic->bfmeHeightABE(
-				userData->x, userData->y,
-				(PathfindLayerEnum)((layerWord >> 6) & 0x3f), 0, true);
+			PathfindLayerEnum hitLayer = (PathfindLayerEnum)to->getLayer();
+			Real wx = ((Real)x + g_bfmeK1253) * g_bfmeDirectionWeight1285;
+			userData->x = wx;
+			Real wy = ((Real)y + g_bfmeK1253) * g_bfmeDirectionWeight1285;
+			userData->y = wy;
+			userData->z = TheTerrainLogic->bfmeHeightABE( wx, wy, hitLayer, 0, true );
 			return 1;
 		}
 
