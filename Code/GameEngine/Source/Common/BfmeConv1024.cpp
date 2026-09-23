@@ -144,14 +144,7 @@ class BfmeTab1024
 public:
 	int bfmeFind1024(int k);
 	void bfmeAdd1024(int k, int v);
-	void Rva0089DBC0(int key, int value);
 };
-
-void BfmeTab1024::Rva0089DBC0(int key, int value)
-{
-	if (!bfmeFind1024(key))
-		bfmeAdd1024(key, value);
-}
 
 struct BfmeMap1024
 {
