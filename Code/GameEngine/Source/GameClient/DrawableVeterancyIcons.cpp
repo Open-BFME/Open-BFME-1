@@ -1,21 +1,24 @@
-// ?rva00420360@Drawable@@QAEX_NH@Z
-// partial score=0.98 date=2026-09-22
 // cl: /DNDEBUG /MD /EHs-c-
+// ?rva00420360@Drawable@@QAEX_NH@Z
 
 // Retail 0x00420360, 627 bytes, thiscall, ret 8.
 //
 // Owner: the only caller is 0x00420670, which the matched Drawable::drawIconUI
 // dispatch (0x00420AC0) reaches through ILT 0x00038AAA; it forwards its own
 // Drawable `this` through ILT 0x0001FC53 with (Bool, Int). This body hands the
-// same `this` to Drawable::getHealthBoxPosition (0x0041FCE0 via ILT 0x000239ED).
-// The method name is not proven, so it keeps the address.
+// same `this` to the Drawable member at 0x0041FCE0 (via ILT 0x000239ED), which
+// fills a Coord3D with the object position raised by the geometry height plus
+// a template offset (default 10.0f). That is the shape of ZH
+// Object::getHealthBoxPosition, but the BFME Drawable-level name is not
+// proven, so both this body and that callee keep their addresses.
 //
-// What it draws: the four image pointers at 0x012F12F4..0x012F1300 are filled
-// by the init code at 0x004161B0 from TheMappedImageCollection with the literals
-// "Good_Vet", "Good_Vet_Dot", "Evil_Vet" and "Evil_Vet_Dot". The Bool picks the
-// Evil pair; the Int (an ExperienceLevelSystem value in the caller) is drawn as
-// level/5 Vet icons in a row above level%5 Vet_Dot icons, both rows centred on
-// the projected health-box position.
+// What it draws: Drawable::s_veterancyImage[4] at 0x012F12F4..0x012F1300 is
+// filled by the matched Drawable::initStaticImages (0x00415D50,
+// DrawableInitStaticImages.cpp) with "Good_Vet", "Good_Vet_Dot", "Evil_Vet"
+// and "Evil_Vet_Dot". The Bool picks the Evil pair; the Int (an
+// ExperienceLevelSystem value in the caller) is drawn as level/5 Vet icons
+// in a row above level%5 Vet_Dot icons, both rows centred on the projected
+// health-box position.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -118,15 +121,17 @@ public:
 extern Display *TheDisplay;
 extern View *TheTacticalView;
 
-// [0] = "Good_Vet" / "Evil_Vet", [1] = "Good_Vet_Dot" / "Evil_Vet_Dot"
-extern const Image *g_goodVetImages012F12F4[ 2 ];
-extern const Image *g_evilVetImages012F12FC[ 2 ];
-
 class Drawable
 {
 public:
 	void rva00420360( Bool evil, Int level );
-	void getHealthBoxPosition( Coord3D *position );
+	// 0x0041FCE0, reached through ILT 0x000239ED: thiscall, one Coord3D&
+	// out argument, ret 4. drawIconUI (0x00420860) makes the same call.
+	void rva0041FCE0( Coord3D &position );
+
+private:
+	// defined in DrawableInitStaticImages.cpp
+	static const Image *s_veterancyImage[ 4 ];
 };
 
 void Drawable::rva00420360( Bool evil, Int level )
@@ -145,30 +150,34 @@ void Drawable::rva00420360( Bool evil, Int level )
 	Real gapX = scaleX * 2.0f;
 
 	Coord3D pos;
-	getHealthBoxPosition( &pos );
+	rva0041FCE0( pos );
 	ICoord2D screen;
 	if ( TheTacticalView->worldToScreenTriReturn( &pos, &screen ) != 0 )
 		return;
 
 	// Retail keeps this pair as one aggregate beside screen and pos in the
-	// frame; two scalar locals move every spill slot.
+	// frame; two scalar locals move every spill slot. The rows then walk up
+	// from it through a reference: with a direct anchor.y the Vet row's
+	// pushed copy of y is scheduled three instructions late.
 	Coord2D anchor;
 	anchor.x = screen.x;
 	anchor.y = screen.y - 7.0f;
-	const Image **images = evil ? g_evilVetImages012F12FC : g_goodVetImages012F12F4;
+	Real &y = anchor.y;
+	// [0] = Vet, [1] = Vet_Dot
+	const Image **images = evil ? &s_veterancyImage[ 2 ] : &s_veterancyImage[ 0 ];
 
 	Int vetCount = level / 5;
 	Int dotCount = level % 5;
 
 	Real dotHeight = images[ 1 ]->getImageHeight() * scaleY;
-	anchor.y -= dotHeight;
+	y -= dotHeight;
 	if ( dotCount > 0 )
 	{
 		Real dotWidth = images[ 1 ]->getImageWidth() * scaleX;
 		Real x = anchor.x - ( ( dotCount - 1 ) * gapX + dotCount * dotWidth ) * 0.5f;
 		do
 		{
-			TheDisplay->drawImage( images[ 1 ], x, anchor.y, x + dotWidth, dotHeight + anchor.y );
+			TheDisplay->drawImage( images[ 1 ], x, y, x + dotWidth, dotHeight + y );
 			x += dotWidth + gapX;
 		} while ( --dotCount > 0 );
 	}
@@ -176,12 +185,12 @@ void Drawable::rva00420360( Bool evil, Int level )
 	if ( vetCount > 0 )
 	{
 		Real vetHeight = images[ 0 ]->getImageHeight() * scaleY;
-		anchor.y -= gapY + vetHeight;
+		y -= gapY + vetHeight;
 		Real vetWidth = images[ 0 ]->getImageWidth() * scaleX;
 		Real x = anchor.x - ( ( vetCount - 1 ) * gapX + vetCount * vetWidth ) * 0.5f;
 		do
 		{
-			TheDisplay->drawImage( images[ 0 ], x, anchor.y, x + vetWidth, anchor.y + vetHeight );
+			TheDisplay->drawImage( images[ 0 ], x, y, x + vetWidth, y + vetHeight );
 			x += vetWidth + gapX;
 		} while ( --vetCount > 0 );
 	}
