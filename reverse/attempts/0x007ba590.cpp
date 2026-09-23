@@ -1,0 +1,179 @@
+// ?d_007ba590@@YAXXZ
+// partial score=0.29 date=2026-09-23
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+
+
+typedef float Real;
+
+class Vector3
+{
+public:
+	Real X;
+	Real Y;
+	Real Z;
+};
+
+class W3DShadowManager
+{
+public:
+	Vector3 &getLightPosWorld(int index);
+};
+
+extern W3DShadowManager *TheW3DShadowManager;
+
+class AABoxClass
+{
+public:
+	Vector3 Center;
+	Vector3 Extent;
+};
+
+#define RVO_DUMMY(n) virtual void v##n(void);
+class RenderObjClass
+{
+public:
+	RVO_DUMMY(0) RVO_DUMMY(1) RVO_DUMMY(2) RVO_DUMMY(3)
+	RVO_DUMMY(4) RVO_DUMMY(5) RVO_DUMMY(6) RVO_DUMMY(7)
+	RVO_DUMMY(8) RVO_DUMMY(9) RVO_DUMMY(10) RVO_DUMMY(11)
+	RVO_DUMMY(12) RVO_DUMMY(13) RVO_DUMMY(14) RVO_DUMMY(15)
+	RVO_DUMMY(16) RVO_DUMMY(17) RVO_DUMMY(18) RVO_DUMMY(19)
+	RVO_DUMMY(20) RVO_DUMMY(21) RVO_DUMMY(22) RVO_DUMMY(23)
+	RVO_DUMMY(24) RVO_DUMMY(25) RVO_DUMMY(26) RVO_DUMMY(27)
+	RVO_DUMMY(28) RVO_DUMMY(29) RVO_DUMMY(30) RVO_DUMMY(31)
+	RVO_DUMMY(32) RVO_DUMMY(33) RVO_DUMMY(34) RVO_DUMMY(35)
+	RVO_DUMMY(36) RVO_DUMMY(37) RVO_DUMMY(38) RVO_DUMMY(39)
+	RVO_DUMMY(40) RVO_DUMMY(41) RVO_DUMMY(42) RVO_DUMMY(43)
+	RVO_DUMMY(44) RVO_DUMMY(45) RVO_DUMMY(46) RVO_DUMMY(47)
+	RVO_DUMMY(48) RVO_DUMMY(49) RVO_DUMMY(50) RVO_DUMMY(51)
+	RVO_DUMMY(52) RVO_DUMMY(53) RVO_DUMMY(54) RVO_DUMMY(55)
+	RVO_DUMMY(56) RVO_DUMMY(57) RVO_DUMMY(58) RVO_DUMMY(59)
+	RVO_DUMMY(60) RVO_DUMMY(61) RVO_DUMMY(62) RVO_DUMMY(63)
+	RVO_DUMMY(64)
+	virtual const AABoxClass &Get_Bounding_Box(void) const;
+	Vector3 Get_Position(void) const;
+};
+#undef RVO_DUMMY
+
+#define HT_DUMMY(n) virtual void h##n(void);
+class BaseHeightMapRenderObjClass
+{
+public:
+	HT_DUMMY(0) HT_DUMMY(1) HT_DUMMY(2) HT_DUMMY(3)
+	HT_DUMMY(4) HT_DUMMY(5) HT_DUMMY(6) HT_DUMMY(7)
+	HT_DUMMY(8) HT_DUMMY(9) HT_DUMMY(10) HT_DUMMY(11)
+	HT_DUMMY(12) HT_DUMMY(13) HT_DUMMY(14) HT_DUMMY(15)
+	HT_DUMMY(16) HT_DUMMY(17) HT_DUMMY(18) HT_DUMMY(19)
+	HT_DUMMY(20) HT_DUMMY(21) HT_DUMMY(22) HT_DUMMY(23)
+	HT_DUMMY(24) HT_DUMMY(25) HT_DUMMY(26) HT_DUMMY(27)
+	HT_DUMMY(28) HT_DUMMY(29) HT_DUMMY(30) HT_DUMMY(31)
+	HT_DUMMY(32) HT_DUMMY(33) HT_DUMMY(34) HT_DUMMY(35)
+	HT_DUMMY(36) HT_DUMMY(37) HT_DUMMY(38) HT_DUMMY(39)
+	HT_DUMMY(40) HT_DUMMY(41) HT_DUMMY(42) HT_DUMMY(43)
+	HT_DUMMY(44) HT_DUMMY(45) HT_DUMMY(46) HT_DUMMY(47)
+	HT_DUMMY(48) HT_DUMMY(49) HT_DUMMY(50) HT_DUMMY(51)
+	HT_DUMMY(52) HT_DUMMY(53) HT_DUMMY(54) HT_DUMMY(55)
+	HT_DUMMY(56) HT_DUMMY(57) HT_DUMMY(58) HT_DUMMY(59)
+	HT_DUMMY(60) HT_DUMMY(61) HT_DUMMY(62) HT_DUMMY(63)
+	HT_DUMMY(64) HT_DUMMY(65) HT_DUMMY(66) HT_DUMMY(67)
+	HT_DUMMY(68) HT_DUMMY(69) HT_DUMMY(70) HT_DUMMY(71)
+	HT_DUMMY(72) HT_DUMMY(73) HT_DUMMY(74) HT_DUMMY(75)
+	HT_DUMMY(76) HT_DUMMY(77) HT_DUMMY(78) HT_DUMMY(79)
+	HT_DUMMY(80) HT_DUMMY(81) HT_DUMMY(82) HT_DUMMY(83)
+	HT_DUMMY(84) HT_DUMMY(85) HT_DUMMY(86) HT_DUMMY(87)
+	HT_DUMMY(88) HT_DUMMY(89) HT_DUMMY(90) HT_DUMMY(91)
+	HT_DUMMY(92) HT_DUMMY(93) HT_DUMMY(94) HT_DUMMY(95)
+	HT_DUMMY(96) HT_DUMMY(97) HT_DUMMY(98) HT_DUMMY(99)
+	HT_DUMMY(100) HT_DUMMY(101) HT_DUMMY(102) HT_DUMMY(103)
+	HT_DUMMY(104) HT_DUMMY(105) HT_DUMMY(106) HT_DUMMY(107)
+	HT_DUMMY(108) HT_DUMMY(109) HT_DUMMY(110) HT_DUMMY(111)
+	HT_DUMMY(112) HT_DUMMY(113) HT_DUMMY(114) HT_DUMMY(115)
+	HT_DUMMY(116) HT_DUMMY(117) HT_DUMMY(118) HT_DUMMY(119)
+	HT_DUMMY(120) HT_DUMMY(121) HT_DUMMY(122) HT_DUMMY(123)
+	HT_DUMMY(124) HT_DUMMY(125) HT_DUMMY(126) HT_DUMMY(127)
+	HT_DUMMY(128) HT_DUMMY(129) HT_DUMMY(130) HT_DUMMY(131)
+	HT_DUMMY(132) HT_DUMMY(133) HT_DUMMY(134) HT_DUMMY(135)
+	HT_DUMMY(136) HT_DUMMY(137) HT_DUMMY(138) HT_DUMMY(139)
+	HT_DUMMY(140) HT_DUMMY(141) HT_DUMMY(142) HT_DUMMY(143)
+	HT_DUMMY(144) HT_DUMMY(145)
+	virtual Real getHeightMapHeight(Real x, Real y, void *normal) const;
+};
+#undef HT_DUMMY
+
+extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
+extern const Real BfmeZeroRange;
+extern const Real g_bfmeScaleBK;
+extern Real bfmeInvSqrt(Real value);
+
+class W3DVolumetricShadow
+{
+protected:
+	void updateOptimalExtrusionPadding(void);
+
+private:
+	char m_padding[0x70];
+	RenderObjClass *m_robj;
+	Real m_shadowLengthScale;
+	Real m_robjExtent;
+	Real m_extraExtrusionPadding;
+};
+
+void W3DVolumetricShadow::updateOptimalExtrusionPadding(void)
+{
+	if (m_robj)
+	{
+		Vector3 lightPosWorld = TheW3DShadowManager->getLightPosWorld(0);
+		if (m_shadowLengthScale > BfmeZeroRange)
+		{
+			Real lightXYDistance = lightPosWorld.X * lightPosWorld.X + lightPosWorld.Y * lightPosWorld.Y;
+			Real newZ = lightXYDistance * m_shadowLengthScale;
+			if (newZ > lightPosWorld.Z)
+				lightPosWorld.Z = newZ;
+		}
+
+		Vector3 objPos = m_robj->Get_Position();
+		Real baseGroundHeight = objPos.Z;
+		const AABoxClass &box = m_robj->Get_Bounding_Box();
+		Vector3 corners[4];
+		corners[0].X = box.Center.X + box.Extent.X;
+		corners[0].Y = box.Center.Y + box.Extent.Y;
+		corners[0].Z = box.Center.Z + box.Extent.Z;
+		corners[1] = corners[0];
+		corners[1].X -= 2.0f * box.Extent.X;
+		corners[2] = corners[1];
+		corners[2].Y -= 2.0f * box.Extent.Y;
+		corners[3] = corners[2];
+		corners[3].X += 2.0f * box.Extent.X;
+
+		for (int i = 0; i < 4; ++i)
+		{
+			Vector3 ray;
+			ray.X = corners[i].X - lightPosWorld.X;
+			ray.Y = corners[i].Y - lightPosWorld.Y;
+			ray.Z = corners[i].Z - lightPosWorld.Z;
+			Real length2 = ray.X * ray.X + ray.Y * ray.Y + ray.Z * ray.Z;
+			if (length2 != BfmeZeroRange)
+			{
+				Real inverseLength = bfmeInvSqrt(length2);
+				ray.X *= inverseLength;
+				ray.Y *= inverseLength;
+				ray.Z *= inverseLength;
+			}
+
+			Real nearX = corners[i].X + ray.X * 20.0f;
+			Real nearY = corners[i].Y + ray.Y * 20.0f;
+			Real nearZ = corners[i].Z + ray.Z * 20.0f;
+			Real nearHeight = TheTerrainRenderObject->getHeightMapHeight(nearX, nearY, 0);
+			if (nearHeight < nearZ)
+			{
+				Real farX = corners[i].X + ray.X * 200.0f;
+				Real farY = corners[i].Y + ray.Y * 200.0f;
+				Real farZ = corners[i].Z + ray.Z * 200.0f;
+				Real farHeight = TheTerrainRenderObject->getHeightMapHeight(farX, farY, 0);
+				if (farHeight < farZ && farHeight < baseGroundHeight)
+					baseGroundHeight = farHeight;
+			}
+		}
+
+		m_extraExtrusionPadding = objPos.Z - baseGroundHeight + g_bfmeScaleBK;
+	}
+}
