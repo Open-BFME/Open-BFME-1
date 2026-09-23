@@ -62,7 +62,7 @@ struct BfmeGlobal012F7FE0
 	float field_301c;
 	float getField301c() const { return field_301c; }
 };
-extern BfmeGlobal012F7FE0 *BfmeGlobal_012f7fe0;
+extern BfmeGlobal012F7FE0 *TheBfmeGlobal_012f7fe0;
 
 class DX8Wrapper
 {
@@ -122,7 +122,7 @@ void W3DShaderManagerStartRenderToTextureShim::start()
 			DX8Wrapper::Set_Material(p);
 			if (p)
 				p->Release_Ref();
-			int alpha = (int)(BfmeGlobal_012f7fe0->getField301c() * 255.0f);
+			int alpha = (int)(TheBfmeGlobal_012f7fe0->getField301c() * 255.0f);
 			slot.dims.x = 1;
 			slot.dims.y = 1;
 			bfmeDrawFilterUV(0xffffff | (alpha << 24), 0, dims);
@@ -130,13 +130,13 @@ void W3DShaderManagerStartRenderToTextureShim::start()
 		}
 		else
 		{
-			slot.opacity = BfmeGlobal_012f7fe0->getField301c();
+			slot.opacity = TheBfmeGlobal_012f7fe0->getField301c();
 			DX8Wrapper::Clear(true, false, false, Vector3(0, 0, 0), slot.opacity, 1, 0);
 		}
 	}
 	else if (m_currentFilter == 4)
 	{
-		slot.opacity = BfmeGlobal_012f7fe0->getField301c();
+		slot.opacity = TheBfmeGlobal_012f7fe0->field_301c;
 		DX8Wrapper::Clear(true, false, false, Vector3(0, 0, 0), slot.opacity, 1, 0);
 	}
 }
