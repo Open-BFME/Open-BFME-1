@@ -1448,5 +1448,25 @@
   "after_sha256": "95eff40820a1bc7244e88dcc3154cbb5b258fd8ad607a142a46c8842b893aa83",
   "evidence": "reverse/re_attempts.log",
   "reason": "MetaMapRec is the Zero Hour type; the BFME body landed at 0x005B6BA0 (MetaEventTranslator, reverse/re_attempts.log) reads a layout that differs from the ZH header, so the source models it as the address-derived Rva005B6BA0MapView rather than asserting the ZH type; no proof of the BFME type name exists, per AGENTS.md."
+ },
+ {
+  "old_path": "reverse/attempts/0x004a2f80.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarUpdateVirtual.cpp",
+  "old_name": "ControlBarSchemeManager",
+  "new_name": "Rva004AD970",
+  "before_sha256": "be35c09e105b4beab3f3d704a3bb48fa8d397acdb42ed69863e2007df88a4d1a",
+  "after_sha256": "680e8687a9afb33534baf77f8348400c629fc7ce236b399dccb7c360d17d8e8a",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "ControlBarSchemeManager was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived Rva004AD970 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x004a2f80.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ControlBar/ControlBarUpdateVirtual.cpp",
+  "old_name": "GameWindow",
+  "new_name": "Rva004A2F80LayoutView",
+  "before_sha256": "be35c09e105b4beab3f3d704a3bb48fa8d397acdb42ed69863e2007df88a4d1a",
+  "after_sha256": "680e8687a9afb33534baf77f8348400c629fc7ce236b399dccb7c360d17d8e8a",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "GameWindow was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived Rva004A2F80LayoutView because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
  }
 ]
