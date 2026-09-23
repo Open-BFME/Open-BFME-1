@@ -162,7 +162,86 @@ void ShellMenuScheme::addImage( ShellMenuSchemeImage* schemeImage )
 	m_imageList.push_back( schemeImage );
 }
 
-// ?draw@ShellMenuScheme@@QAEXXZ present-unmatched
+// Display as ShellMenuScheme::draw reaches it: slot +0xB0 opens and +0xDC
+// closes a precise-draw bracket around the Real-coordinate image (+0xD4) and
+// line (+0xB8) calls; the inline wrappers take Real coordinates, so the Int
+// fields are converted at the call site in right-to-left argument order.
+// Address-derived; never treat as an identity.
+class Rva00580BD0Display
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1C();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void slot2C();
+	virtual void slot30();
+	virtual void slot34();
+	virtual void slot38();
+	virtual void slot3C();
+	virtual void slot40();
+	virtual void slot44();
+	virtual void slot48();
+	virtual void slot4C();
+	virtual void slot50();
+	virtual void slot54();
+	virtual void slot58();
+	virtual void slot5C();
+	virtual void slot60();
+	virtual void slot64();
+	virtual void slot68();
+	virtual void slot6C();
+	virtual void slot70();
+	virtual void slot74();
+	virtual void slot78();
+	virtual void slot7C();
+	virtual void slot80();
+	virtual void slot84();
+	virtual void slot88();
+	virtual void slot8C();
+	virtual void slot90();
+	virtual void slot94();
+	virtual void slot98();
+	virtual void slot9C();
+	virtual void slotA0();
+	virtual void slotA4();
+	virtual void slotA8();
+	virtual void slotAC();
+	virtual void beginRva00580BD0( void ); // +0xB0
+	virtual void slotB4();
+	virtual void drawLineRva00580BD0( Real startX, Real startY, Real endX, Real endY,
+		Real lineWidth, UnsignedInt lineColor ); // +0xB8
+	virtual void slotBC(); virtual void slotC0(); virtual void slotC4();
+	virtual void slotC8(); virtual void slotCC(); virtual void slotD0();
+	virtual void drawImageRva00580BD0( const Image *image, Real startX, Real startY,
+		Real endX, Real endY, Color color, Int mode ); // +0xD4
+	virtual void slotD8();
+	virtual void endRva00580BD0( void ); // +0xDC
+
+	void drawImage( const Image *image, Real startX, Real startY, Real endX, Real endY,
+		Color color = 0xFFFFFFFF, Int mode = 2 )
+	{
+		beginRva00580BD0();
+		drawImageRva00580BD0( image, startX, startY, endX, endY, color, mode );
+		endRva00580BD0();
+	}
+
+	void drawLine( Real startX, Real startY, Real endX, Real endY, Real lineWidth,
+		UnsignedInt lineColor )
+	{
+		beginRva00580BD0();
+		drawLineRva00580BD0( startX, startY, endX, endY, lineWidth, lineColor );
+		endRva00580BD0();
+	}
+};
+
 void ShellMenuScheme::draw( void )
 {
 
@@ -172,7 +251,7 @@ void ShellMenuScheme::draw( void )
 		ShellMenuSchemeImage *image = *imageIt;
 		if(image && image->m_image)
 		{
-			TheDisplay->drawImage(image->m_image, image->m_position.x, image->m_position.y,
+			((Rva00580BD0Display *)TheDisplay)->drawImage(image->m_image, image->m_position.x, image->m_position.y,
 														image->m_position.x + image->m_size.x , image->m_position.y + image->m_size.y);
 		}
 		++imageIt;
@@ -185,7 +264,7 @@ void ShellMenuScheme::draw( void )
 		
 		if(line)
 		{
-			TheDisplay->drawLine(line->m_startPos.x, line->m_startPos.y, line->m_endPos.x,
+			((Rva00580BD0Display *)TheDisplay)->drawLine(line->m_startPos.x, line->m_startPos.y, line->m_endPos.x,
 														line->m_endPos.y,line->m_width, line->m_color);
 		}
 		++it;
