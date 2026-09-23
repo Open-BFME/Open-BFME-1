@@ -78,3 +78,34 @@ bool Rva0034E520::m(const BFMEFindAsciiStringView &key, bool remove)
     }
     return false;
 }
+
+// Retail 0x0034E490, 110 bytes, ILT 0x00024C76: the same lookup-and-remove over
+// a second string list at this+0x17260; every other byte, callee included, is
+// the body above. Its owner is not proven to be Rva0034E520's, so it keeps its
+// own address.
+class Rva0034E490
+{
+public:
+    bool m(const BFMEFindAsciiStringView &key, bool remove);
+    char pad_00[0x17260];
+    std::list<BFMEFindAsciiStringView> m_17260;
+};
+
+bool Rva0034E490::m(const BFMEFindAsciiStringView &key, bool remove)
+{
+    std::list<BFMEFindAsciiStringView>::const_iterator it =
+        std::find(m_17260.begin(), m_17260.end(), key);
+    if (it != m_17260.end()) {
+        if (remove) {
+            Rva0034E520Node *node = *(Rva0034E520Node **)&it;
+            Rva0034E520Node *next = node->next;
+            Rva0034E520Node *prev = node->prev;
+            prev->next = next;
+            next->prev = prev;
+            ((BFMERetailAsciiString *)&node->value)->~BFMERetailAsciiString();
+            _STL::__node_alloc<true, 0>::deallocate(node, 12);
+        }
+        return true;
+    }
+    return false;
+}

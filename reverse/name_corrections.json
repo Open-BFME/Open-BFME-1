@@ -1248,5 +1248,35 @@
   "after_sha256": "376d5ccdc47d518755ad649595df6db74d4d5dbcebee3ab7c8bc53d82145a5bc",
   "evidence": "docs/naming_evidence.md",
   "reason": "No rename happened: ExamineCellsStruct is kept verbatim in the new file as the 0x003E2F30 walk's user-data type and its callback owner (?cellCallback@ExamineCellsStruct@@ pinned to ILT 0x00010532). The token diff pairs it with Rva003D61C0 only because that already-matched snapLine callback class (0x003DCD80, PathfindSnapLineCellCallback.cpp) is declared at the same position in the multi-walk file."
+ },
+ {
+  "old_path": "reverse/attempts/0x0034e490.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/Rva0034E520.cpp",
+  "old_name": "BfmeHostAAF",
+  "new_name": "Rva0034E520",
+  "before_sha256": "270d9febac7af6927c04bf6b61d736aa2c3eaf18bda20c2427e636c43f4222b9",
+  "after_sha256": "d9e722d6580c6d0b0727d2ae5433d5ba67e398dfa20e1e959544da570646adc2",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeHostAAF is a Bfme<Word><Suffix> generator placeholder from the invented family docs/naming_evidence.md describes; no evidence named it. The body landed beside the byte-identical matched Rva0034E520::m (only the list offset differs), reusing that file's address-derived node type and giving the new owner its own address-derived class Rva0034E490."
+ },
+ {
+  "old_path": "reverse/attempts/0x0034e490.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/Rva0034E520.cpp",
+  "old_name": "BfmeIterAAF",
+  "new_name": "Rva0034E520Node",
+  "before_sha256": "270d9febac7af6927c04bf6b61d736aa2c3eaf18bda20c2427e636c43f4222b9",
+  "after_sha256": "d9e722d6580c6d0b0727d2ae5433d5ba67e398dfa20e1e959544da570646adc2",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeIterAAF is a Bfme<Word><Suffix> generator placeholder from the invented family docs/naming_evidence.md describes; no evidence named it. The body landed beside the byte-identical matched Rva0034E520::m (only the list offset differs), reusing that file's address-derived node type and giving the new owner its own address-derived class Rva0034E490."
+ },
+ {
+  "old_path": "reverse/attempts/0x0034e490.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/Rva0034E520.cpp",
+  "old_name": "BfmeNodeAAF",
+  "new_name": "Rva0034E520Node",
+  "before_sha256": "270d9febac7af6927c04bf6b61d736aa2c3eaf18bda20c2427e636c43f4222b9",
+  "after_sha256": "d9e722d6580c6d0b0727d2ae5433d5ba67e398dfa20e1e959544da570646adc2",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeNodeAAF is a Bfme<Word><Suffix> generator placeholder from the invented family docs/naming_evidence.md describes; no evidence named it. The body landed beside the byte-identical matched Rva0034E520::m (only the list offset differs), reusing that file's address-derived node type and giving the new owner its own address-derived class Rva0034E490."
  }
 ]
