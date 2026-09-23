@@ -1,6 +1,11 @@
-// ?d_002f48b0@@YAXXZ
-// partial score=0.99 date=2026-09-18
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/objectdlink /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+//
+// BfmeFireSpecialPowerHelper::fire, retail RVA 0x002F48B0 (289 bytes),
+// reached through ILT 0x000033B4 from ScriptActions::doFireSpecialPowerOnTeam,
+// ScriptActions::doSkirmishFireSpecialPowerAtMostCost and BfmeApplierBH.
+// Walks every player in the mask, their team prototypes, each prototype's
+// team instances and each team's members; the first member with a
+// SpecialPowerModule for the template fires it at the location.
 
 typedef bool Bool;
 typedef unsigned short UnsignedShort;
@@ -68,19 +73,19 @@ struct BfmePlayerTeamListNode
 };
 
 class BfmePlayerTeamPrototypeInstances;
-class BfmePlayerTeamInstanceLink;
+class BfmeTeamInstanceLink;
 
-class BfmePlayerTeamInstanceLink
+class BfmeTeamInstanceLink
 {
 public:
-	BfmePlayerTeamInstanceLink *_bfme_nextInInstanceList();
+	BfmeTeamInstanceLink *_bfme_nextInInstanceList();
 };
 
 class Player
 {
 public:
 	unsigned char m_pad[0x288];
-	BfmePlayerTeamListNode *m_teamList;
+	BfmePlayerTeamListNode *m_playerTeamPrototypes;
 };
 
 class BfmePlayerObjectDlinkObject;
@@ -97,7 +102,7 @@ public:
 	{
 		if (m_cur)
 			m_cur = (BfmePlayerTeamView *)
-				((BfmePlayerTeamInstanceLink *)m_cur)
+				((BfmeTeamInstanceLink *)m_cur)
 					->_bfme_nextInInstanceList();
 	}
 
@@ -163,7 +168,8 @@ public:
 	Player *getEachPlayerFromMask(UnsignedShort &);
 };
 
-extern void *TheScriptEngine;
+class ScriptEngine;
+extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 
 class BfmeFireSpecialPowerHelper
@@ -182,7 +188,7 @@ Bool BfmeFireSpecialPowerHelper::fire(const AsciiString &player,
 	{
 		Player *playerObject = ThePlayerList->getEachPlayerFromMask(playerMask);
 		if (playerObject == 0)
-			return false;
+			continue;
 
 		BfmePlayerTeamListField *teams =
 			(BfmePlayerTeamListField *)playerObject;
@@ -196,11 +202,13 @@ Bool BfmeFireSpecialPowerHelper::fire(const AsciiString &player,
 				BfmePlayerTeamView *team = iter.cur();
 				if (team == 0)
 					continue;
-				BfmeGetNextTeamMemberFunc getNext =
-					BfmeObjectDlinkBase::dlink_next_TeamMemberList;
-				Object *object = team->m_head;
-				while (object != 0)
+				BfmePlayerDlinkIterator<Object> objects(team->m_head,
+					BfmeObjectDlinkBase::dlink_next_TeamMemberList);
+				for (; !objects.done(); objects.advance())
 				{
+					Object *object = objects.cur();
+					if (object == 0)
+						continue;
 					SpecialPowerModuleInterface *module =
 						object->getSpecialPowerModule(power);
 					if (module != 0)
@@ -208,7 +216,6 @@ Bool BfmeFireSpecialPowerHelper::fire(const AsciiString &player,
 						module->doSpecialPowerAtLocation(location, 0x40000);
 						return true;
 					}
-					object = (object->*getNext)();
 				}
 			}
 		}
