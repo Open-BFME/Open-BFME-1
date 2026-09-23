@@ -114,11 +114,13 @@ _MINUTES = re.compile(r"(?:^|\s)t=(\d+)")
 
 def quick_look(status, evidence):
     """A `blocked` row with no banked body from a session that spent at most
-    QUICK_LOOK_MINUTES on it: somebody looked, nobody tried. 4,954 bodies got
+    QUICK_LOOK_MINUTES on it and no recorded blocker: somebody looked, nobody
+    tried. A blocker records a concrete failed lever, even in a short session.
+    4,954 bodies got
     one of these (median 2 minutes, "no named caller") mostly before opaque
     names were allowed. Where a real session came back later, 45% landed; 1,812
     (403 KB) were never revisited because the look counted as an attempt."""
-    if status != "blocked" or "stash=" in evidence:
+    if status != "blocked" or "stash=" in evidence or "blocker=" in evidence:
         return False
     minutes = _MINUTES.search(evidence)
     return bool(minutes) and int(minutes.group(1)) <= QUICK_LOOK_MINUTES

@@ -152,14 +152,16 @@ def test_a_quick_look_is_not_an_attempt(world):
         fh.write(f"{SYM}\t0x{RVA:08X}\t400\tblocked\tno named caller identifies the owner t=2min model=x\n")
     re_log._reset()
     assert eligibility.quick_look("blocked", "no named caller t=2min model=x")
+    assert not eligibility.quick_look("blocked", "register shape tried t=2min blocker=regalloc")
     assert not eligibility.quick_look("blocked", "three shapes tried t=45min model=x")
     assert not eligibility.quick_look("partial", "t=3min stash=reverse/attempts/x.cpp score=0.4")
     assert not eligibility.quick_look("blocked", "no duration given")      # unknown effort still counts
     assert eligibility.attempt_counts().get(RVA, 0) == 0                   # somebody looked, nobody tried
     with log.open("a", encoding="utf-8") as fh:
         fh.write(f"{SYM}\t0x{RVA:08X}\t400\tblocked\tthree shapes tried t=40min model=x\n")
+        fh.write(f"{SYM}\t0x{RVA:08X}\t400\tblocked\tregister shape tried t=2min blocker=regalloc\n")
     re_log._reset()
-    assert eligibility.attempt_counts()[RVA] == 1
+    assert eligibility.attempt_counts()[RVA] == 2
 
 
 def test_neighbour_density_counts_landed_cpp_around_a_body():
