@@ -1,5 +1,5 @@
 // ?rva00518610@BfmeAptScreenLanLobby@@QAEHIPAX0@Z
-// partial score=0.31 date=2026-09-16
+// partial score=0.32 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // BfmeAptScreenLanLobby primary APT callback, retail 0x00518610 (367 bytes).
@@ -14,28 +14,15 @@ public:
 	int defaultHandler( int message, void *control, void *data );
 };
 
-extern void j_00041ee3();
-
-class Rva00529EC0State
+class SkirmishScreenState
 {
 public:
-	int dispatch( unsigned int message, void *control, void *data )
-	{
-		typedef int (Rva00529EC0State::*Method)(
-			unsigned int, void *, void *);
-		union Bits
-		{
-			Method member;
-			void (*code)();
-		} bits;
-		bits.code = j_00041ee3;
-		return (this->*bits.member)( message, control, data );
-	}
-
+    int dispatch(unsigned int message, void *control, void *data);
 private:
-	char m_unmodelled[ 0x134 ];
+    char m_unmodelled[0x134];
 };
 
+// ILT 0x00038951 reaches 0x00526040; its receiver identity remains unverified.
 class Gen00038951
 {
 public:
@@ -61,7 +48,7 @@ public:
 
 private:
 	char m_beforeScreenState[ 0x25c ];
-	Rva00529EC0State m_screenState;
+	SkirmishScreenState m_screenState;
 	char m_beforeLanPreferences[ 0x24 ];
 	void *m_customGamesList;
 	void *m_customPlayerList;
@@ -72,15 +59,17 @@ private:
 
 // ?rva00518610@BfmeAptScreenLanLobby@@QAEHIPAX0@Z
 int BfmeAptScreenLanLobby::rva00518610(
-	unsigned int message, void *control, void *data )
+	unsigned int message, void * volatile control, void *data )
 {
 	if ( m_initComplete )
 		return 0;
 
+	void *savedControl = control;
 	int result = ((BfmeMsgHandler *)this)->defaultHandler(
-		message, control, data);
-	int stateResult = ((Rva00529EC0State *)((char *)this + 0x25c))
-		->dispatch(message, control, data);
+		message, savedControl, data);
+	SkirmishScreenState *state = (SkirmishScreenState *)((char *)this + 0x25c);
+	control = state;
+	int stateResult = state->dispatch(message, savedControl, data);
 	if ( result == 0 )
 		result = stateResult;
 
@@ -88,7 +77,7 @@ int BfmeAptScreenLanLobby::rva00518610(
 	{
 		if ( message == 0x4015 )
 		{
-			if ( control != m_customGamesList )
+			if ( savedControl != m_customGamesList )
 				return result;
 			void *game = 0;
 			getGameInfoRva00516850( (int)data, &game );
@@ -112,7 +101,7 @@ int BfmeAptScreenLanLobby::rva00518610(
 		message -= 0x4012;
 		if ( message != 0 )
 			return result;
-		if ( control != m_customGamesList )
+		if ( savedControl != m_customGamesList )
 			return result;
 		void *game = 0;
 		getGameInfoRva00516850( (int)data, &game );
@@ -124,7 +113,7 @@ int BfmeAptScreenLanLobby::rva00518610(
 	message -= 0x4030;
 	if ( message == 0 )
 	{
-		if ( control != m_chatEntry || data != 0 )
+		if ( savedControl != m_chatEntry || data != 0 )
 			return result;
 		sendChatRva00518350();
 		return 1;
