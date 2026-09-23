@@ -1834,10 +1834,8 @@ elapsed=StartStopwatch();
 ** Execute assignment algorithms
 */
 for(i=0;i<numarrays;i++)
-{       /* abase.ptrs.p+=i*ASSIGNROWS*ASSIGNCOLS; */
-        /* Fixed  by Eike Dierks */
+{       abase.ptrs.p+=i*ASSIGNROWS*ASSIGNCOLS;
 	Assignment(*abase.ptrs.ap);
-	abase.ptrs.p+=ASSIGNROWS*ASSIGNCOLS;
 }
 
 /*
@@ -1871,9 +1869,7 @@ abase1.ptrs.p=arraybase;
 LoadAssign(*(abase.ptrs.ap));
 if(numarrays>1)
 	for(i=1;i<numarrays;i++)
-	  {     /* abase1.ptrs.p+=i*ASSIGNROWS*ASSIGNCOLS; */
-	        /* Fixed  by Eike Dierks */
-	        abase1.ptrs.p+=ASSIGNROWS*ASSIGNCOLS;
+	  {     abase1.ptrs.p+=i*ASSIGNROWS*ASSIGNCOLS;
 		CopyToAssign(*(abase.ptrs.ap),*(abase1.ptrs.ap));
 	}
 
