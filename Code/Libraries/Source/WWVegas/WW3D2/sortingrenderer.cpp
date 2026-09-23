@@ -479,6 +479,27 @@ static void Apply_Render_State(RenderStateStruct& render_state)
 
 // ----------------------------------------------------------------------------
 
+// BFME-only, no Zero Hour twin.  Flush_Sorting_Pool (0x00939FC0) inlines this
+// test before each Apply_Render_State; retail also keeps an out-of-line copy at
+// 0x00939370 with MSVC's private static convention (b in EAX, a on the stack),
+// which only reproduces while that caller shares this TU.
+static bool RenderStatesDifferRva00939370(RenderStateStruct& a, RenderStateStruct& b)
+{
+	if (a.shader != b.shader) return true;
+	if (a.material != b.material) return true;
+	for (int i=0;i<*(const int *)(BfmeCurrentCaps+0x278);++i) {
+		if (a.Textures[i] != b.Textures[i]) return true;
+	}
+	if (a.material->Get_Lighting()) {
+		for (int i=0;i<4;++i) {
+			if (a.LightEnable[i] != b.LightEnable[i]) return true;
+		}
+	}
+	if (a.world != b.world) return true;
+	if (a.view != b.view) return true;
+	return false;
+}
+
 // ?Flush_Sorting_Pool@SortingRendererClass@@CAXXZ present-unmatched
 void SortingRendererClass::Flush_Sorting_Pool()
 {
@@ -640,18 +661,22 @@ void SortingRendererClass::Flush_Sorting_Pool()
 	unsigned node_id=tis[0].idx;
 	for (unsigned i=1;i<overlapping_polygon_count;++i) {
 		if (node_id!=tis[i].idx) {
-			SortingNodeStruct* state=overlapping_nodes[node_id];
-			Apply_Render_State(reinterpret_cast<RenderStateStruct &>(state->sorting_state));
+			if (RenderStatesDifferRva00939370(
+				reinterpret_cast<RenderStateStruct &>(overlapping_nodes[node_id]->sorting_state),
+				reinterpret_cast<RenderStateStruct &>(overlapping_nodes[tis[i].idx]->sorting_state))) {
+				SortingNodeStruct* state=overlapping_nodes[node_id];
+				Apply_Render_State(reinterpret_cast<RenderStateStruct &>(state->sorting_state));
 
 // ?Draw_Triangles@DX8Wrapper@@ present-unmatched
-			DX8Wrapper::Draw_Triangles(
-				start_index*3,
-				count_to_render,
-				state->min_vertex_index,
-				state->vertex_count);
+				DX8Wrapper::Draw_Triangles(
+					start_index*3,
+					count_to_render,
+					state->min_vertex_index,
+					state->vertex_count);
 
-			count_to_render=0;
-			start_index=i;
+				count_to_render=0;
+				start_index=i;
+			}
 			node_id=tis[i].idx;
 		}
 		count_to_render++;	//keep track of number of polygons of same kind
