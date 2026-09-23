@@ -1,5 +1,5 @@
 // ?evaluateTeamAttackedByType@ScriptConditions@@IAE_NPAVParameter@@0@Z
-// partial score=0.29 date=2026-09-21
+// partial score=0.55 date=2026-09-23
 // Open-BFME: retail RVA 0x00327790, 344 bytes.
 // ?evaluateTeamAttackedByType@ScriptConditions@@IAE_NPAVParameter@@0@Z
 //
@@ -18,9 +18,9 @@
 // null check, once for getName()), matching ZH's uncached calls, so it must
 // be a real inline method here (BFME's Thing::getTemplate resolves the
 // override chain) rather than the sibling TU's declared-only placeholder.
-// Parameter::getString() returns AsciiString by value (retail copy-
-// constructs a temp via StringBase<char>::StringBase before the
-// getTeamNamed call), and the team-name field sits at Parameter+0x10.
+// Parameter::getString() returns const AsciiString &, but BFME's matched
+// callers prove that ScriptEngine slot 17 takes AsciiString by value and a
+// second Bool; retail constructs that value from Parameter+0x10.
 
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink /ICode/Libraries/Source/WWVegas/WWLib
 
@@ -33,6 +33,7 @@ typedef int Int;
 class Parameter
 {
 public:
+	const AsciiString &getString(void) const { return m_string; }
 	unsigned char m_pad[0x10];
 	AsciiString m_string;   // +0x10
 };
@@ -172,7 +173,7 @@ public:
 	virtual void slot08(); virtual void slot09(); virtual void slot10(); virtual void slot11();
 	virtual void slot12(); virtual void slot13(); virtual void slot14(); virtual void slot15();
 	virtual void slot16();
-	virtual Team *getTeamNamed(const AsciiString &name);   // slot 17, vtable+0x44
+	virtual Team *getTeamNamed(AsciiString name, Bool exact); // slot 17, vtable+0x44
 };
 
 extern ScriptEngine *TheScriptEngine;
@@ -189,7 +190,7 @@ protected:
 Bool ScriptConditions::evaluateTeamAttackedByType(
 	Parameter *pTeamParm, Parameter *pTypeParm)
 {
-	Team *theTeam = TheScriptEngine->getTeamNamed(AsciiString(pTeamParm->m_string));
+	Team *theTeam = TheScriptEngine->getTeamNamed(pTeamParm->getString(), false);
 	if (!theTeam)
 		return false;
 
