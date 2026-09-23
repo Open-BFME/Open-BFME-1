@@ -57,8 +57,6 @@ jobs:
               assert not re.search(r'\b(?:volatile|__asm|__emit|naked)\b',text)
               source.parent.mkdir(parents=True,exist_ok=True);source.write_text(text,encoding='utf-8',newline='\n')
               created.append(destination)
-              # The normal add_match command runs the scoped source/byte/string gate,
-              # writes the tombstone, and retires the old stash only after success.
               command=[sys.executable,'tools/add_match.py',name,hex(rva),str(size),destination,'--replace-rva',hex(rva),'--notes','Existing bank identity and callee contracts retained; canonical ICoord2D empty construction visible; full-sized byte-exact C++; no new pins and no assembly']
               process=subprocess.run(command,cwd=root,capture_output=True,text=True,errors='replace',timeout=150)
               log=process.stdout+process.stderr
@@ -74,11 +72,15 @@ jobs:
               (out/f'0x{rva:08x}.json').write_text(json.dumps(result,indent=2),encoding='utf-8')
               (out/source.name).write_text(source.read_text(),encoding='utf-8',newline='\n')
               results.append(result);print('RESULT',json.dumps(result),flush=True)
-          # Include new files in the review patch without committing or pushing anything.
+          # The patch must include the tombstones as well as the replaced live rows.
+          expected=created+['reverse/functions.csv','reverse/deleted_rows.csv','reverse/attempts/0x0045c2f0.cpp','reverse/attempts/0x005a0450.cpp','reverse/attempts/0x0078d410.cpp']
           subprocess.run(['git','add','-N','--',*created],cwd=root,check=True)
-          patch=subprocess.check_output(['git','diff','--binary','HEAD','--',*created,'reverse/functions.csv','reverse/deleted_functions.csv','reverse/functions_deleted.csv','reverse/attempts/0x0045c2f0.cpp','reverse/attempts/0x005a0450.cpp','reverse/attempts/0x0078d410.cpp'],cwd=root)
-          (out/'coordinate-constructor-fixes.patch').write_bytes(patch)
-          (out/'summary.json').write_text(json.dumps({'cases':results,'total_bytes':sum(x['size'] for x in results),'all_scoped_gates_passed':True,'full_tree_gate_run':False,'merged':False,'research_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()},indent=2),encoding='utf-8')
+          changed=subprocess.check_output(['git','diff','--name-only','HEAD'],cwd=root,text=True).splitlines()
+          assert set(changed)==set(expected),{'actual':changed,'expected':expected}
+          patch=subprocess.check_output(['git','diff','--binary','HEAD','--',*expected],cwd=root)
+          path=out/'coordinate-constructor-fixes.patch';path.write_bytes(patch)
+          subprocess.run(['git','apply','--check','--reverse',str(path)],cwd=root,check=True)
+          (out/'summary.json').write_text(json.dumps({'cases':results,'total_bytes':sum(x['size'] for x in results),'all_scoped_gates_passed':True,'full_tree_gate_run':False,'merged':False,'patch_includes_all_changed_paths':True,'patch_sha256':hashlib.sha256(patch).hexdigest(),'research_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()},indent=2),encoding='utf-8')
           print('SUMMARY: three scoped add_match gates passed; 1149 bytes in proposed source conversions; no remote source or ledger writes.',flush=True)
           PY
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
