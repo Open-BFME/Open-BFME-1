@@ -1,30 +1,13 @@
-// ?d_00243d50@@YAXXZ
-// partial score=0.84 date=2026-09-18
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
+// Retail 0x00243D50 (carved 268B, ret 4): walk an STLport map<int,int> of object
+// IDs at +0x30; offer each object in its AI's range to the target's contain
+// (vtable +0x88), otherwise ask the AI (vtable +0x180) and issue aiEnter.
+// Owner identity unproven: the sole caller reaches it through an ILT thunk.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
 #include <map>
-
-struct Rva00243D50TreeNode
-{
-	int color;
-	Rva00243D50TreeNode *parent;
-	Rva00243D50TreeNode *left;
-	Rva00243D50TreeNode *right;
-	int objectID;
-	int value;
-};
-
-struct Rva00243D50HashNode;
-
-struct Rva00243D50HashNode
-{
-	Rva00243D50HashNode *next;
-	int objectID;
-	class Object *object;
-};
 
 struct Rva00243D50RangeData
 {
@@ -111,7 +94,7 @@ public:
 	Rva00243D50AI *ai;
 };
 
-class Rva00367E30Logic
+struct Rva00367E30Logic
 {
 public:
 	Object *findObjectByID(int objectID)
@@ -152,21 +135,28 @@ void Rva00243D50Owner::processNearbyEntries00243D50(Object *target)
 
 		if (object)
 		{
-			Rva00243D50AI *ai = object->ai;
 			float dx = object->x - target->x;
 			float dy = object->y - target->y;
-			if (ai)
 			{
-				float range = ai->rangeData->range;
-				float distance = dx * dx;
-				distance += dy * dy;
-				if (distance < range * range && target->contain)
+				Rva00243D50AI *ai = object->ai;
+				if (ai)
 				{
-					target->contain->acceptNearbyObject(object);
-					goto next_entry;
+					float range = ai->rangeData->range;
+					float distance = dx * dx;
+					distance += dy * dy;
+					if (distance < range * range)
+					{
+						Rva00243D50Contain *contain = target->contain;
+						if (contain)
+						{
+							contain->acceptNearbyObject(object);
+							goto next_entry;
+						}
+					}
 				}
 			}
 
+			Rva00243D50AI *ai = object->ai;
 			if (ai && ai->canEnterObject())
 				ai->command.aiEnter(target, CMD_FROM_AI);
 		}
