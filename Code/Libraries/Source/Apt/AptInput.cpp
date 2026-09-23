@@ -526,5 +526,82 @@ void BfmeSlotDispatcher1281::bfmeRouteEncoded1281(unsigned int encoded)
 		bfmeFallback1281(result, group, slot);
 }
 
+class Rva008D1FB0
+{
+public:
+	bool method(void *other);
+
+	char m_padding00[8];
+	int m_key08;
+	char m_padding0c[0x40];
+	Rva008D1FB0 *m_next4c;
+};
+
+bool Rva008D1FB0::method(void *otherPointer)
+{
+	Rva008D1FB0 *other = (Rva008D1FB0 *)otherPointer;
+	int count = 0;
+	for (Rva008D1FB0 *entry = m_next4c; entry != 0; entry = entry->m_next4c)
+		++count;
+	if (this == other || count == 0)
+		return false;
+
+	int index = 0;
+	if (count >= 0)
+	{
+		do
+		{
+			int ownCount = 0;
+			for (Rva008D1FB0 *entry = m_next4c; entry != 0; entry = entry->m_next4c)
+				++ownCount;
+			int ownKey;
+			if (index > ownCount)
+				ownKey = -1;
+			else
+			{
+				Rva008D1FB0 *entry = this;
+				if (ownCount != index)
+				{
+					int steps = ownCount - index;
+					do
+					{
+						--steps;
+						entry = entry->m_next4c;
+					} while (steps != 0);
+				}
+				ownKey = entry->m_key08;
+			}
+
+			int otherCount = 0;
+			for (Rva008D1FB0 *entry = other->m_next4c; entry != 0; entry = entry->m_next4c)
+				++otherCount;
+			int otherKey;
+			if (index > otherCount)
+				otherKey = -1;
+			else
+			{
+				Rva008D1FB0 *entry = other;
+				if (otherCount != index)
+				{
+					int steps = otherCount - index;
+					do
+					{
+						--steps;
+						entry = entry->m_next4c;
+					} while (steps != 0);
+				}
+				otherKey = entry->m_key08;
+			}
+
+			if (otherKey < ownKey)
+				return true;
+			if (otherKey > ownKey)
+				return false;
+			++index;
+		} while (index <= count);
+	}
+	return false;
+}
+
 
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
