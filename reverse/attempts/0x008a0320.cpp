@@ -1,5 +1,5 @@
 // ?UTF8_Initialize@EAStringC@@QAEAAV1@H@Z
-// partial score=0.18 date=2026-09-11
+// partial score=0.19 date=2026-09-23
 // ?UTF8_Initialize@EAStringC@@QAEAAV1@H@Z
 // cl: /O2 /DNDEBUG /MD
 
@@ -32,12 +32,13 @@ public:
 
 	void ChangeBuffer(unsigned int reserve, unsigned int offset,
 		unsigned int copy, CBPushZero pushZero, unsigned int internalSize);
-	EAStringC &UTF8_Initialize(int value);
 
 	char *GetInternalBuffer() const
 	{
 		return reinterpret_cast<char *>(m_pData) + sizeof(StringDataC);
 	}
+
+	EAStringC &UTF8_Initialize(int value);
 
 	StringDataC *m_pData;
 };
@@ -47,7 +48,8 @@ extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 EAStringC &EAStringC::UTF8_Initialize(int value)
 {
 	StringDataC *oldData = m_pData;
-	if (--oldData->m_refCount == 0)
+	--oldData->m_refCount;
+	if (oldData->m_refCount == 0)
 		g_bfmeStringPool1284->free(oldData);
 
 	m_pData = &g_bfmeDefaultString1284;
@@ -64,9 +66,9 @@ EAStringC &EAStringC::UTF8_Initialize(int value)
 	unsigned int size = m_pData->m_length;
 	if (size > (unsigned int)count)
 		size = count;
-	ChangeBuffer(count, 0, size, CB_PUSH_ZERO, size);
+	ChangeBuffer(count, 0, size, EAStringC::CB_PUSH_ZERO, size);
 
-	char *buffer = GetInternalBuffer();
+	char *buffer = reinterpret_cast<char *>(m_pData) + sizeof(StringDataC);
 	if (value < 0x80)
 	{
 		buffer[0] = (char)value;
@@ -98,8 +100,8 @@ EAStringC &EAStringC::UTF8_Initialize(int value)
 	buffer[4] = 0;
 	buffer[1] = (char)((value >> 12) | 0x80);
 	buffer[2] = (char)((value >> 6) | 0x80);
-	buffer[3] = (char)((value & 0x3f) | 0x80);
 	m_pData->m_length = 4;
+	buffer[3] = (char)((value & 0x3f) | 0x80);
 	m_pData->m_flags = 0;
 	return *this;
 }
