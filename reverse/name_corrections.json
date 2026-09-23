@@ -1508,5 +1508,105 @@
   "after_sha256": "f4512f2bdbe6d2c4e6de5533b05e3716c63daee1528ed114d2e5ae44c97d2432",
   "evidence": "reverse/re_attempts.log",
   "reason": "TextureBaseClass was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived Rva0074CDD0 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x006fc970.cpp",
+  "new_path": "reverse/attempts/0x006fc970.cpp",
+  "old_name": "EMPUpdateModuleData",
+  "new_name": "Rva006FC970",
+  "before_sha256": "3f17339a9066fea58fd259188192d8f05e34cd78f4d1c226d8244642e1d0b0f4",
+  "after_sha256": "cb0ee0b67de39f51cb8bb4a68e3d57fd929b43cf0807079c2218fa56e86d0cb2",
+  "evidence": "reverse/identity_evidence/0x006fc970-emp-refutation.md",
+  "reason": "The W3DDisplay allocation, installed 0x011207C0 vtable and matched W3D destructor refute the EMPUpdateModuleData/UpdateModuleData class guesses; the actual class is unnamed, so the address token is retained."
+ },
+ {
+  "old_path": "reverse/attempts/0x006fc970.cpp",
+  "new_path": "reverse/attempts/0x006fc970.cpp",
+  "old_name": "UpdateModuleData",
+  "new_name": "Rva0060A000Base",
+  "before_sha256": "3f17339a9066fea58fd259188192d8f05e34cd78f4d1c226d8244642e1d0b0f4",
+  "after_sha256": "cb0ee0b67de39f51cb8bb4a68e3d57fd929b43cf0807079c2218fa56e86d0cb2",
+  "evidence": "reverse/identity_evidence/0x006fc970-emp-refutation.md",
+  "reason": "The W3DDisplay allocation, installed 0x011207C0 vtable and matched W3D destructor refute the EMPUpdateModuleData/UpdateModuleData class guesses; the actual class is unnamed, so the address token is retained."
+ },
+ {
+  "old_path": "reverse/attempts/0x006fc970.cpp",
+  "new_path": "reverse/attempts/0x006fc970.cpp",
+  "old_name": "m_angle",
+  "new_name": "m_fieldEC",
+  "before_sha256": "3f17339a9066fea58fd259188192d8f05e34cd78f4d1c226d8244642e1d0b0f4",
+  "after_sha256": "cb0ee0b67de39f51cb8bb4a68e3d57fd929b43cf0807079c2218fa56e86d0cb2",
+  "evidence": "reverse/identity_evidence/0x006fc970-emp-refutation.md",
+  "reason": "This semantic member name was borrowed from the refuted EMPUpdateModuleData guess; the retail stores prove the offset and value but no member identity. The offset name preserves only witnessed information."
+ },
+ {
+  "old_path": "reverse/attempts/0x006fc970.cpp",
+  "new_path": "reverse/attempts/0x006fc970.cpp",
+  "old_name": "m_disabledDuration",
+  "new_name": "m_fieldE8",
+  "before_sha256": "3f17339a9066fea58fd259188192d8f05e34cd78f4d1c226d8244642e1d0b0f4",
+  "after_sha256": "cb0ee0b67de39f51cb8bb4a68e3d57fd929b43cf0807079c2218fa56e86d0cb2",
+  "evidence": "reverse/identity_evidence/0x006fc970-emp-refutation.md",
+  "reason": "This semantic member name was borrowed from the refuted EMPUpdateModuleData guess; the retail stores prove the offset and value but no member identity. The offset name preserves only witnessed information."
+ },
+ {
+  "old_path": "reverse/attempts/0x006fc970.cpp",
+  "new_path": "reverse/attempts/0x006fc970.cpp",
+  "old_name": "m_effectRadius",
+  "new_name": "m_fieldD0",
+  "before_sha256": "3f17339a9066fea58fd259188192d8f05e34cd78f4d1c226d8244642e1d0b0f4",
+  "after_sha256": "cb0ee0b67de39f51cb8bb4a68e3d57fd929b43cf0807079c2218fa56e86d0cb2",
+  "evidence": "reverse/identity_evidence/0x006fc970-emp-refutation.md",
+  "reason": "This semantic member name was borrowed from the refuted EMPUpdateModuleData guess; the retail stores prove the offset and value but no member identity. The offset name preserves only witnessed information."
+ },
+ {
+  "old_path": "reverse/attempts/0x006fc970.cpp",
+  "new_path": "reverse/attempts/0x006fc970.cpp",
+  "old_name": "m_startColor",
+  "new_name": "m_field9C",
+  "before_sha256": "3f17339a9066fea58fd259188192d8f05e34cd78f4d1c226d8244642e1d0b0f4",
+  "after_sha256": "cb0ee0b67de39f51cb8bb4a68e3d57fd929b43cf0807079c2218fa56e86d0cb2",
+  "evidence": "reverse/identity_evidence/0x006fc970-emp-refutation.md",
+  "reason": "This semantic member name was borrowed from the refuted EMPUpdateModuleData guess; the retail stores prove the offset and value but no member identity. The offset name preserves only witnessed information."
+ },
+ {
+  "old_path": "reverse/attempts/0x006fc970.cpp",
+  "new_path": "reverse/attempts/0x006fc970.cpp",
+  "old_name": "m_startScale",
+  "new_name": "m_field88",
+  "before_sha256": "3f17339a9066fea58fd259188192d8f05e34cd78f4d1c226d8244642e1d0b0f4",
+  "after_sha256": "cb0ee0b67de39f51cb8bb4a68e3d57fd929b43cf0807079c2218fa56e86d0cb2",
+  "evidence": "reverse/identity_evidence/0x006fc970-emp-refutation.md",
+  "reason": "This semantic member name was borrowed from the refuted EMPUpdateModuleData guess; the retail stores prove the offset and value but no member identity. The offset name preserves only witnessed information."
+ },
+ {
+  "old_path": "reverse/attempts/0x006fc970.cpp",
+  "new_path": "reverse/attempts/0x006fc970.cpp",
+  "old_name": "m_targetScaleMax",
+  "new_name": "m_field8C",
+  "before_sha256": "3f17339a9066fea58fd259188192d8f05e34cd78f4d1c226d8244642e1d0b0f4",
+  "after_sha256": "cb0ee0b67de39f51cb8bb4a68e3d57fd929b43cf0807079c2218fa56e86d0cb2",
+  "evidence": "reverse/identity_evidence/0x006fc970-emp-refutation.md",
+  "reason": "This semantic member name was borrowed from the refuted EMPUpdateModuleData guess; the retail stores prove the offset and value but no member identity. The offset name preserves only witnessed information."
+ },
+ {
+  "old_path": "reverse/attempts/0x006fc970.cpp",
+  "new_path": "reverse/attempts/0x006fc970.cpp",
+  "old_name": "m_targetScaleMin",
+  "new_name": "m_fieldE4",
+  "before_sha256": "3f17339a9066fea58fd259188192d8f05e34cd78f4d1c226d8244642e1d0b0f4",
+  "after_sha256": "cb0ee0b67de39f51cb8bb4a68e3d57fd929b43cf0807079c2218fa56e86d0cb2",
+  "evidence": "reverse/identity_evidence/0x006fc970-emp-refutation.md",
+  "reason": "This semantic member name was borrowed from the refuted EMPUpdateModuleData guess; the retail stores prove the offset and value but no member identity. The offset name preserves only witnessed information."
+ },
+ {
+  "old_path": "reverse/attempts/0x006fc970.cpp",
+  "new_path": "reverse/attempts/0x006fc970.cpp",
+  "old_name": "m_victimGrid",
+  "new_name": "m_field158",
+  "before_sha256": "3f17339a9066fea58fd259188192d8f05e34cd78f4d1c226d8244642e1d0b0f4",
+  "after_sha256": "cb0ee0b67de39f51cb8bb4a68e3d57fd929b43cf0807079c2218fa56e86d0cb2",
+  "evidence": "reverse/identity_evidence/0x006fc970-emp-refutation.md",
+  "reason": "This semantic member name was borrowed from the refuted EMPUpdateModuleData guess; the retail stores prove the offset and value but no member identity. The offset name preserves only witnessed information."
  }
 ]

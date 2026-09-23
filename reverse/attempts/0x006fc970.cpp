@@ -1,14 +1,19 @@
-// ??0EMPUpdateModuleData@@QAE@XZ
-// partial score=0.81 date=2026-09-02
+// ??0Rva006FC970@@QAE@XZ
+// partial score=0.93 date=2026-09-23
+// Opaque constructor candidate at 0x006FC970; vtable 0x011207C0.
+// The prior EMPUpdateModuleData label is refuted by its vtable and destructor.
+// Only witnessed field offsets are named here; semantic member identities are unknown.
 // cl: /DNDEBUG /MD /EHsc
 
 #include <string.h>
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
-class UpdateModuleData
+class Rva0060A000Base
 {
 public:
-	UpdateModuleData();
-	virtual void moduleDataAnchor();
+	Rva0060A000Base();
+	volatile unsigned m_vtable;
 
 private:
 	unsigned char m_unmodelled_04[ 0x70 - 4 ];
@@ -27,41 +32,44 @@ private:
 	int m_words[6];
 };
 
-class EMPUpdateModuleData : public UpdateModuleData, public SixZeroWords
+class Rva006FC970 : public Rva0060A000Base, public SixZeroWords
 {
 public:
-	EMPUpdateModuleData();
-	virtual void empModuleDataAnchor();
+	Rva006FC970();
+
 
 private:
-	float m_startScale;               // +0x88
-	float m_targetScaleMax;           // +0x8c
+	volatile float m_field88;               // +0x88
+	volatile float m_field8C;           // +0x8c
 	volatile int m_zero90;
 	volatile int m_zero94;
 	volatile int m_zero98;
-	float m_startColor[3];             // +0x9c
-	int m_zeroA8[10];
-	float m_effectRadius;              // +0xd0
+	volatile float m_field9C[3];             // +0x9c
+	volatile int m_zeroA8[10];
+	volatile float m_fieldD0;              // +0xd0
 	unsigned char m_gapD4[0x10];
-	float m_targetScaleMin;            // +0xe4
-	volatile int m_disabledDuration;            // +0xe8
-	float m_angle;                     // +0xec
+	volatile float m_fieldE4;            // +0xe4
+	volatile int m_fieldE8;            // +0xe8
+	volatile float m_fieldEC;                     // +0xec
 	unsigned char m_gapF0[0x48];
-	int m_zero138[5];
+	volatile int m_zero138[5];
 	unsigned char m_gap14C[0x0c];
-	int m_victimGrid[2500];            // +0x158
+	int m_field158[2500];            // +0x158
 };
 
-EMPUpdateModuleData::EMPUpdateModuleData()
+Rva006FC970::Rva006FC970()
 {
-	m_startScale = 1.0f;
-	m_targetScaleMax = 1.0f;
+	m_vtable = 0x011207C0u;
+	_ReadWriteBarrier();
+	m_field88 = 1.0f;
+	m_field8C = 1.0f;
 	m_zero90 = 0;
 	m_zero94 = 0;
 	m_zero98 = 0;
-	m_startColor[0] = 0.9f;
-	m_startColor[1] = 0.9f;
-	m_startColor[2] = 0.9f;
+	_ReadWriteBarrier();
+	m_field9C[0] = 0.9f;
+	m_field9C[1] = 0.9f;
+	m_field9C[2] = 0.9f;
 	m_zeroA8[0] = 0;
 	m_zeroA8[1] = 0;
 	m_zeroA8[2] = 0;
@@ -72,14 +80,14 @@ EMPUpdateModuleData::EMPUpdateModuleData()
 	m_zeroA8[7] = 0;
 	m_zeroA8[8] = 0;
 	m_zeroA8[9] = 0;
+	m_fieldE8 = 0;
 	m_zero138[0] = 0;
 	m_zero138[1] = 0;
 	m_zero138[2] = 0;
 	m_zero138[3] = 0;
 	m_zero138[4] = 0;
-	m_effectRadius = 10.0f;
-	m_targetScaleMin = 1.0f;
-	m_disabledDuration = 0;
-	m_angle = 0.5235988f;
-	memset( m_victimGrid, 0, sizeof( m_victimGrid ) );
+	m_fieldD0 = 10.0f;
+	m_fieldE4 = 1.0f;
+	m_fieldEC = 0.5235988f;
+	memset( m_field158, 0, sizeof( m_field158 ) );
 }
