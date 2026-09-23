@@ -1,5 +1,5 @@
 // ?Create_From_Definition@ParticleEmitterClass@@SAPAV1@ABVParticleEmitterDefClass@@@Z
-// partial score=0.3 date=2026-09-10
+// partial score=0.32 date=2026-09-23
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/Wwutil /ICode/Libraries/Source/WWVegas/WWDownload /ICode/Libraries/Source/Compression /Ireference/shims/sweep
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -235,7 +235,7 @@ extern BFMEWaterTrackTextureHandle BFMEGetWaterTrackTexture(
 	char *name, int mipCount, int format);
 
 static inline void BFMEAssignWaterTrackTexture(
-	TextureClass *&destination,
+	TextureClass * volatile &destination,
 	const BFMEWaterTrackTextureHandle &texture)
 {
 	if (texture.m_texture)
@@ -252,7 +252,7 @@ ParticleEmitterClass::Create_From_Definition (const ParticleEmitterDefClass &def
 {
 	// Attempt to load the texture for this emitter
 	const char *ptexture_filename = definition.Get_Texture_Filename ();
-	TextureClass *ptexture = NULL;
+	TextureClass * volatile ptexture = NULL;
 	if (ptexture_filename && ptexture_filename[0]) {
 		BFMEAssignWaterTrackTexture(ptexture, BFMEGetWaterTrackTexture((char *)ptexture_filename, 0, 0));
 	}
