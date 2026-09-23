@@ -1018,5 +1018,25 @@
   "after_sha256": "621a0b240129889096f4f5fea1370e5183643372e24ffab7662f739353cbd558",
   "evidence": "reverse/symbols.csv",
   "reason": "getHealthBoxPosition on Drawable is unproven: no pin, string or vtable slot names 0x0041FCE0, its only other caller (the matched drawIconUI) reaches it through the placeholder j_000239ed, and ZH has getHealthBoxPosition on Object with a different body; the callee is pinned address-derived as ?rva0041FCE0@Drawable@@QAEXAAUCoord3D@@@Z at ILT 0x000239ED."
+ },
+ {
+  "old_path": "reverse/attempts/0x00605690.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00605690OwnerConstructor.cpp",
+  "old_name": "GameSpyGroupRoom",
+  "new_name": "Rva00605690CharPart",
+  "before_sha256": "236f478e25a6a6209ea1902102019d4b2511ee988916317e8cde2923d2366967",
+  "after_sha256": "a0e559df0360ccfe22513d457dcd3d1d60d6f94cb8cc6ad2a8c2333f4a119b43",
+  "evidence": "reverse/functions.csv",
+  "reason": "The row in reverse/functions.csv at 0x00887B60 labels GameSpyGroupRoom's constructor as a C++ alias of StringBase<char>'s copy constructor. The only caller at 0x006059F0 is still a dump, so it does not identify this object as GameSpyGroupRoom."
+ },
+ {
+  "old_path": "reverse/attempts/0x00605690.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00605690OwnerConstructor.cpp",
+  "old_name": "GameSpyGroupRoom",
+  "new_name": "m_opaque00",
+  "before_sha256": "236f478e25a6a6209ea1902102019d4b2511ee988916317e8cde2923d2366967",
+  "after_sha256": "a0e559df0360ccfe22513d457dcd3d1d60d6f94cb8cc6ad2a8c2333f4a119b43",
+  "evidence": "reverse/functions.csv",
+  "reason": "The row in reverse/functions.csv at 0x00887B60 labels GameSpyGroupRoom's constructor as a C++ alias of StringBase<char>'s copy constructor. The only caller at 0x006059F0 is still a dump, so it does not identify this object as GameSpyGroupRoom."
  }
 ]
