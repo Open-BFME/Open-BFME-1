@@ -42,7 +42,10 @@ next proved start; the real end is the ret/tail-jmp followed by int3 padding, wh
 bytes you did not decode. IDENTITY: where the line names a vtable and class, the slot index maps to the virtual in
 declaration order of the class's Zero Hour header (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include);
 python tools/vtable_lookup.py 0xVT prints the landed siblings; python tools/fleet/context_pack.py 0xRVA prints callers,
-strings, layout witnesses; python tools/ghidra_decompile.py 0xRVA prints a control-flow DRAFT (names/types invented). A
+strings, layout witnesses; python tools/ghidra_decompile.py 0xRVA prints a control-flow DRAFT (names/types invented).
+If an MCP server named "ghidra" is available to you (tools decompile_function, disassemble, list_xrefs, search_strings,
+read_bytes, gen_callgraph on binary_name "lotrbfme.exe"; addresses are VAs 0x4XXXXXXX = RVA + 0x400000), use it for
+cross-references, string references and call graphs instead of grepping; its output is still a draft, never proof. A
 sibling's landed source is the best start. When identity is proved, use the real mangled name; otherwise opaque
 address-derived names (Rva0XXXXXXXX tokens), never plausible guesses. LAND when EXACT with python tools/add_match.py
 "MANGLED" 0xRVA SIZE Code/.../File.cpp --notes "<evidence>" (new row; AGENTS.md 'File placement'; a sibling's file is a
