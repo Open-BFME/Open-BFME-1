@@ -1,12 +1,10 @@
-// ?killTeam@Team@@QAEXXZ
-// partial score=0.64 date=2026-09-22
-// Scratch follow-up for retail RVA 0x000F6490, 636 bytes.
-// This keeps worker-c.cpp's proven STLport list and Object dlink layout, but
-// uses the native recursive Overridable/OVERRIDE pattern from
-// Code/GameEngine/Source/Common/RTS/TeamRva000F10F0Recruit.cpp.
-// The OVERRIDE object occupies the first four bytes of the existing +0x04
-// object pad carrier, so the canonical Object offsets and PMF remain intact.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/objectdlink /ICode/Libraries/Source/WWVegas/WWLib
+// Retail 0x000F6490, Team::killTeam(), 636 bytes.
+// Identity: the matched ScriptActions::doTeamKill (0x002F3B60) calls it
+// through the ILT 0x000341D0; Player::killPlayer is the other caller.
+// Zero Hour twin: Team::killTeam in GeneralsMD Team.cpp. BFME splits the
+// members into two lists and treats status 0x20000000 members through their
+// container.
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
@@ -189,9 +187,6 @@ public:
 	Object *m_memberHead;
 };
 
-extern void j_00001140(void);
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
-
 #define callMemberFunction(object, ptrToMember) ((object).*(ptrToMember))
 
 template <class OBJCLASS>
@@ -274,20 +269,11 @@ void Team::killTeam(void)
 		node != objectsWithStatus.end(); ++node)
 	{
 		Object *containedBy = (*node)->getContainedBy();
-		if (containedBy != 0)
-		{
-			const ThingTemplate *containedTemplate = containedBy->getTemplate();
-			UnsignedInt flags = *reinterpret_cast<const UnsignedInt *>(
-				reinterpret_cast<const unsigned char *>(containedTemplate) + 0xd4);
-			if ((flags & 0x1000U) != 0)
-				containedBy->slot18();
-			else
-				(*node)->slot18();
-		}
+		if (containedBy != 0 && (*reinterpret_cast<const UnsignedInt *>(
+			reinterpret_cast<const unsigned char *>(containedBy->getTemplate()) + 0xd4) & 0x1000U) != 0)
+			containedBy->slot18();
 		else
-		{
 			(*node)->slot18();
-		}
 	}
 
 	objectsToKill.clear();
