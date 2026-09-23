@@ -179,6 +179,10 @@ def carved_rows(path=None, rows=None):
     out = []
     with path.open(newline="", encoding="utf-8", errors="replace") as fh:
         for row in csv.DictReader(fh):
+            # Ghidra's Unwind@ entries are EH cleanup fragments that borrow
+            # their parent's frame, not independently callable C++ bodies.
+            if (row.get("ghidra") or "").startswith("Unwind@"):
+                continue
             raw_rva = row.get("target_rva") or row.get("rva") or ""
             rva = rva_of({"target_rva": raw_rva})
             try:

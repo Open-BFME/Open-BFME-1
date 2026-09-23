@@ -65,6 +65,8 @@ def test_carved_rows_shape_and_filter_stale_overlap(tmp_path):
                          "callers": "2", "end_evidence": "ret+int3", "ghidra": ""})
         writer.writerow({"rva": "0x2000", "size": "2", "start_evidence": "ghidra-start",
                          "callers": "0", "end_evidence": "ghidra-size", "ghidra": "FUN_2000"})
+        writer.writerow({"rva": "0x3000", "size": "8", "start_evidence": "ghidra-start",
+                         "callers": "0", "end_evidence": "jmp-tail", "ghidra": "Unwind@3000"})
     rows = eligibility.carved_rows(path, rows=[{"target_rva": "0x1000",
                                                 "target_size": "2"}])
     assert [r["target_rva"] for r in rows] == ["0x00002000"]
