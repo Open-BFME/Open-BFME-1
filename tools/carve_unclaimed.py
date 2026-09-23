@@ -220,6 +220,29 @@ def _end_for(data, start, gap_end, next_start, ghidra_size, instructions=None):
     return result
 
 
+def _conditional_escapes(data, start, end):
+    """Reject a tail fence if an earlier conditional enters the next range.
+
+    An EH cleanup funclet can already be claimed in the ledger even though a
+    branch in its parent reaches the epilogue after it.  The parent's last
+    instruction before that claim may be a backward ``jmp``; treating it as a
+    complete jmp-tail body would serve a truncated candidate.  A conditional
+    target outside the proposed body proves that it is not self-contained.
+    """
+    # A whole-image linear pass can decode the bytes before a function start
+    # under another alignment.  Decode from this candidate's proven start.
+    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    md.detail = True
+    for ins in md.disasm(data[start:end], start):
+        if ins.mnemonic == "jmp" or not ins.group(capstone.CS_GRP_JUMP):
+            continue
+        if ins.operands and ins.operands[0].type == capstone.x86.X86_OP_IMM:
+            target = int(ins.operands[0].imm)
+            if not start <= target < end:
+                return True
+    return False
+
+
 def split_candidates(data, gaps, ghidra_sizes=None, ghidra_names=None,
                      calls=None, validator=None, instructions=None):
     """Split uncovered gaps into validated candidate dictionaries.
@@ -265,6 +288,8 @@ def split_candidates(data, gaps, ghidra_sizes=None, ghidra_names=None,
         end, end_evidence = end_info
         size = end - start
         if size <= 0 or end > gap[1]:
+            continue
+        if _conditional_escapes(data, start, end):
             continue
         if validator.check_end(start, size) is not None:
             continue

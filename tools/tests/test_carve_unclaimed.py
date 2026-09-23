@@ -45,6 +45,23 @@ def test_splitter_rejects_overlapping_positive_extents():
     assert [(r["target_rva"], int(r["target_size"])) for r in rows] == [("0x00001002", 3)]
 
 
+def test_splitter_rejects_tail_before_reachable_cleanup():
+    # A claimed EH funclet begins at 0x1004.  The parent has a backward jmp
+    # immediately before that fence, but its conditional branch reaches the
+    # epilogue at 0x1008.  Four bytes are not a complete parent body.
+    data = bytearray(0x1020)
+    data[0x1000:0x100c] = bytes([
+        0x75, 0x06,       # jne 0x1008
+        0xeb, 0xfc,       # jmp 0x1000
+        0x90, 0x90, 0x90, 0x90,
+        0xc3, 0xcc, 0xcc, 0xcc,
+    ])
+    rows = carve.split_candidates(
+        data, [(0x1000, 0x1004)], calls={0x1000: [0x0f00]},
+        validator=validator(data))
+    assert rows == []
+
+
 def test_shrink_on_land_excludes_newly_claimed_gap():
     data = bytearray(0x1030)
     data[0x1000:0x1005] = b"\x90\xc3\xcc\xcc\xcc"
