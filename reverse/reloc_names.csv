@@ -1664,7 +1664,6 @@ _bfmeAppend,0x009D9180,150,Code/GameEngine/Source/Common/Gen009D9360.cpp,reloc-d
 ?Gen009F3DC0@@YAXPAUQ3SortElem8@@00HUQ3SortCompare@@@Z,0x009F3DC0,224,Code/GameEngine/Source/Common/Q3IntrosortFamilies.cpp,reloc-derived;call-sites=1;identity=generated
 ?Gen009F3EA0@@YAXPAUQ3SortElem8@@00HUQ3SortCompare@@@Z,0x009F3EA0,224,Code/GameEngine/Source/Common/Q3IntrosortFamilies.cpp,reloc-derived;call-sites=1;identity=generated
 ?bfmeAccept@BfmeSinkD@@QAEXPAVBfmeFlagTarget@@@Z,0x009F49F0,27,Code/GameEngine/Source/Common/S3InsertAndDescribe.cpp,reloc-derived;call-sites=1;identity=real
-__RTC_CheckEsp,0x009F7502,3,Code/GameEngine/Source/Common/Q1FrameCheckedWrappers.cpp,reloc-derived;call-sites=309;identity=real
 _D3DXFillTexture@12,0x009FFE86,532,vendor/d3dx9/d3dx9.lib,reloc-derived;call-sites=1;identity=real
 ?png_set_gray_1_2_4_to_8@D3DX@@YGXPAUpng_struct_def@1@@Z,0x00A64FDE,11,vendor/d3dx9/d3dx9.lib,reloc-derived;call-sites=1;identity=real
 ?png_set_tRNS_to_alpha@D3DX@@YGXPAUpng_struct_def@1@@Z,0x00A64FE9,11,vendor/d3dx9/d3dx9.lib,reloc-derived;call-sites=1;identity=real

@@ -371,7 +371,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x009F2140,631,ghidra-start,0,ret+int3,FUN_00df2140
 0x009F59D0,308,ghidra-start,0,ret+int3,FUN_00df59d0
 0x009F74F4,14,ghidra-start,0,jmp-tail,__security_check_cookie
-0x009F7502,3,ghidra-start,0,ret-tail,FUN_00df7502
 0x00BF2738,11,ghidra-start,0,jmp-tail,Unwind@00ff2738
 0x00BF4EB5,14,ghidra-start,0,jmp-tail,Unwind@00ff4eb5
 0x00BF4EC3,17,ghidra-start,0,jmp-tail,Unwind@00ff4ec3
