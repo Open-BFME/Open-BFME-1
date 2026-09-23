@@ -1,5 +1,5 @@
 // ?method@Rva002C1930Owner@@QAEXPAX00@Z
-// partial score=0.92 date=2026-09-22
+// partial score=0.922 date=2026-09-23
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail RVA 0x002C1930 (205 bytes), thiscall taking (void *arg1, void*, void*)
@@ -27,7 +27,11 @@ struct Coord3D
 	void normalize();
 };
 
-class Object;
+class Object
+{
+public:
+	float getDistanceSquared( const Object *other ) const;
+};
 
 // pinned callee: ?getCurrentVictim@AIUpdateInterface@@QBEPAVObject@@XZ
 class AIUpdateInterface
@@ -49,13 +53,6 @@ class BfmeThingAIA
 {
 public:
 	Bool bfmeAskAIA( Int kindOf );
-};
-
-// pinned callee: ?bfmeCalcBT@BfmeSrcBT@@QAEMPAX@Z
-class BfmeSrcBT
-{
-public:
-	float bfmeCalcBT( void *other );
 };
 
 // pinned callee: ?bfmeDeltaTo@BfmeDeltaOwner@@QAEXPAXPAD@Z
@@ -118,9 +115,10 @@ void Rva002C1930Owner::method( void *arg1, void * /*arg2*/, void * /*arg3*/ )
 		victim = (Object *)fallback->bfmeGetHM();
 		if ( !victim )
 			return;
-		if ( victim == (Object *)target )
-			return;
 	}
+
+	if ( victim == (Object *)target )
+		return;
 
 	if ( !( (BfmeThingAIA *)target )->bfmeAskAIA( 2 ) )
 		return;
@@ -129,7 +127,7 @@ void Rva002C1930Owner::method( void *arg1, void * /*arg2*/, void * /*arg3*/ )
 	if ( ( shiftedByte & 1 ) == 0 && victim )
 	{
 		float sumRange = obj->m_range0xbc + target->m_range0xbc;
-		float gapSq = ( (BfmeSrcBT *)victim )->bfmeCalcBT( target );
+		float gapSq = ( (Object *)victim )->getDistanceSquared( (const Object *)target );
 		if ( sumRange * sumRange >= gapSq )
 			return;
 	}
