@@ -1,5 +1,5 @@
-// ?createSpawn@SpawnBehavior@@QAE_NXZ
-// partial score=0.32 date=2026-09-20
+// ?d_0020c3b0@@YAXXZ
+// partial score=0.33 date=2026-09-23
 // BFME SpawnBehavior::createSpawn reconstruction at retail RVA 0x0020C3B0.
 // The local views preserve the BFME module and object offsets without shared-header edits.
 // stlport
@@ -318,9 +318,9 @@ public:
 	}
 
 	Object *reclaimOrphanSpawn();
-	Bool createSpawn();
 
 private:
+	Bool createSpawn();
 	void *m_unknown30;
 	const ThingTemplate *m_spawnTemplate;
 	Int m_oneShotCountdown;
@@ -367,18 +367,16 @@ Bool SpawnBehavior::createSpawn()
 	if (exitDoor == DOOR_NONE_AVAILABLE)
 		return false;
 
-	Object *newSpawn;
+	Object *newSpawn = 0;
 	Bool reclaimedOrphan = false;
 	if (md->m_canReclaimOrphans && md->m_isOneShotData == false)
 	{
 		newSpawn = reclaimOrphanSpawn();
 		if (newSpawn)
-		{
 			reclaimedOrphan = true;
-			goto spawnReady;
-		}
 	}
 
+	if (!newSpawn)
 	{
 		m_spawnTemplate = TheThingFactory->findTemplate(*m_templateNameIterator);
 		if (md->m_unknown19 && m_spawnTemplate)
@@ -414,7 +412,6 @@ Bool SpawnBehavior::createSpawn()
 			m_templateNameIterator = md->begin();
 	}
 
-spawnReady:
 	newSpawn->setProducer(parent);
 	for (RvaBehaviorModuleSlots **update = newSpawn->getBehaviorModules(); *update; ++update)
 	{
@@ -464,9 +461,9 @@ spawnReady:
 					{
 						if (curSpawn == newSpawn)
 							continue;
-						Real dy = curSpawn->getPosition()->y - parent->getPosition()->y;
 						Real dx = curSpawn->getPosition()->x - parent->getPosition()->x;
-						tapeMeasure = dy * dy + dx * dx;
+						Real dy = curSpawn->getPosition()->y - parent->getPosition()->y;
+						tapeMeasure = dx * dx + dy * dy;
 						if (tapeMeasure < closest)
 						{
 							closest = tapeMeasure;
