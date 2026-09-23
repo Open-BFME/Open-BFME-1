@@ -1278,5 +1278,95 @@
   "after_sha256": "d9e722d6580c6d0b0727d2ae5433d5ba67e398dfa20e1e959544da570646adc2",
   "evidence": "docs/naming_evidence.md",
   "reason": "BfmeNodeAAF is a Bfme<Word><Suffix> generator placeholder from the invented family docs/naming_evidence.md describes; no evidence named it. The body landed beside the byte-identical matched Rva0034E520::m (only the list offset differs), reusing that file's address-derived node type and giving the new owner its own address-derived class Rva0034E490."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUIDraw.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DInGameUIDraw.cpp",
+  "old_name": "drawMoveHints",
+  "new_name": "rva006FC5A0Slot",
+  "before_sha256": "15aa01ac6fe09c4b52bffb11ee000f04175dea3f0d2cf35458da2913025ca47d",
+  "after_sha256": "5ae5f0e9cad9f1d9fc9050a91145021f502609fd9bbaf98e4f87359af0240bde",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "drawMoveHints was the Zero Hour name assumed for the vtable slot; the BFME body at 0x006FC5A0 is unlanded and its identity is unproved (reverse/re_attempts.log rows for 0x006FC5A0), so the slot keeps an address token per AGENTS.md."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBuffer.cpp",
+  "old_name": "TRoadSegInfo",
+  "new_name": "Rva00709540Info",
+  "before_sha256": "01e57556eb94f1895bfadb28df9667c9a8d26f98b7905a67261a22de2a0b3b20",
+  "after_sha256": "4c880a69d357fdd25db8d357b745154ec6577695378b64d317d8338df90cd325",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "TRoadSegInfo was a Zero Hour type name assumed for a BFME struct whose layout differs (W3DRoadBuffer landings 0x00709540 / 0x00708320 witnessed the BFME layout); no source proves the BFME name, so an address token is used."
+ },
+ {
+  "old_path": "Code/Libraries/Source/WWVegas/WW3D2/matinfo.cpp",
+  "new_path": "Code/Libraries/Source/WWVegas/WW3D2/matinfo.cpp",
+  "old_name": "MeshMatDescClass",
+  "new_name": "Gen_0092C9D0",
+  "before_sha256": "86e6fe6211ca2aa4ecc527d2693cbdf338c23a612f1bf79fc2876f309dd887e8",
+  "after_sha256": "c5d7c640988f7d7052b12e5865c27c7bc8eea7f86b825d4cc2e94a10034d2788",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "MeshMatDescClass was assumed from Zero Hour for a helper class whose identity is unproved in BFME; the landed matinfo.cpp rows (0x009306E0) prove only the layout, so the generator/address token stays."
+ },
+ {
+  "old_path": "reverse/attempts/0x000d48e0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/RTS/PlayerBfmeLinkedObjLink.cpp",
+  "old_name": "m_upgradeMask",
+  "new_name": "m_20",
+  "before_sha256": "a634118f4ff8bfcb637f7ad12d3bf2fbcb0847f4718bb43fc313f6ae0d753155",
+  "after_sha256": "3499dcfac961ffc5f7195ad4fd5bd56eba4ab8869dbab6a191254a30354378db",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_upgradeMask was a guessed field name in the 2026-09 bank of 0x000d48e0; the landed PlayerBfmeLinkedObjLink.cpp body proves only offset +0x20 and its width, so AGENTS.md requires an opaque member name."
+ },
+ {
+  "old_path": "reverse/attempts/0x004dbe80.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupPlayerInfo_populate.cpp",
+  "old_name": "populateBattleHonors",
+  "new_name": "Rva004D9DF0",
+  "before_sha256": "2486ab600339ab32eade57e03ee24f96e6e63ae6a4a7a93418530269383c8875",
+  "after_sha256": "7cf4af6f5dbdd529a0c3cc4fe12e9e888a6cce80a006adf50c8396ecf79eb22f",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "populateBattleHonors was the bank's guessed name; the body landed as the opaque ledger symbol ?Rva004D9DF0@@YAXABVPSPlayerStats@@HHHHPAVGameWindow@@@Z because no caller, lexicon entry or literal proves the Zero Hour identity (reverse/re_attempts.log 0x004D9DF0)."
+ },
+ {
+  "old_path": "reverse/attempts/0x009306e0.cpp",
+  "new_path": "Code/Libraries/Source/WWVegas/WW3D2/matinfo.cpp",
+  "old_name": "MaterialCollectorClass",
+  "new_name": "Rva009306E0Collector",
+  "before_sha256": "ee954f765908a8f93069ff612d9cd3e38505f7a3a54e00802f0646d0aabdea26",
+  "after_sha256": "c5d7c640988f7d7052b12e5865c27c7bc8eea7f86b825d4cc2e94a10034d2788",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "MaterialCollectorClass is the Zero Hour class; the BFME class that owns 0x009306E0 has a different layout and no proof of the name, so the landed matinfo.cpp row uses an address token (reverse/re_attempts.log 0x009306E0)."
+ },
+ {
+  "old_path": "reverse/attempts/0x009306e0.cpp",
+  "new_path": "Code/Libraries/Source/WWVegas/WW3D2/matinfo.cpp",
+  "old_name": "MeshMatDescClass",
+  "new_name": "Gen_0092C9D0",
+  "before_sha256": "ee954f765908a8f93069ff612d9cd3e38505f7a3a54e00802f0646d0aabdea26",
+  "after_sha256": "c5d7c640988f7d7052b12e5865c27c7bc8eea7f86b825d4cc2e94a10034d2788",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "MeshMatDescClass was assumed from Zero Hour for a helper class whose identity is unproved in BFME; the landed matinfo.cpp rows (0x009306E0) prove only the layout, so the generator/address token stays."
+ },
+ {
+  "old_path": "reverse/attempts/0x00154f00.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIGroup.cpp",
+  "old_name": "findEnemyNear",
+  "new_name": "rva0014d120",
+  "before_sha256": "cc0c43a1afac3abe568536eaa9b86903ff90a5fbeb5b24772c3411195a152796",
+  "after_sha256": "ce0db25e3708771bf2c40aa89d10f23e59870a99a32fad22cdfc48b9e164d979",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "findEnemyNear was a Zero Hour method name assumed for the BFME callee; the callee is a ledger row under the opaque symbol rva0014d120 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (reverse/re_attempts.log); AGENTS.md requires the address token until it is proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x00154f00.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIGroup.cpp",
+  "old_name": "findGroundPath",
+  "new_name": "rva003F2160",
+  "before_sha256": "cc0c43a1afac3abe568536eaa9b86903ff90a5fbeb5b24772c3411195a152796",
+  "after_sha256": "ce0db25e3708771bf2c40aa89d10f23e59870a99a32fad22cdfc48b9e164d979",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "findGroundPath was a Zero Hour method name assumed for the BFME callee; the callee is a ledger row under the opaque symbol rva003F2160 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (reverse/re_attempts.log); AGENTS.md requires the address token until it is proved."
  }
 ]

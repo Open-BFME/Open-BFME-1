@@ -1,38 +1,27 @@
-// ?dup006b4d30@Rva006B4D30Owner@@QAEXPAX@Z
-// partial score=0.05 date=2026-09-17
-// cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD
-//
-// Retail 0x006B4D30, 2326 bytes.  The carved boundary is a thiscall body
-// ending in ret 4 at +0x913.  No source evidence proves the semantic owner,
-// so the class and method retain the address token.
-
+// ?xfer@MilesAudioManager@@UAEXPAVXfer@@@Z
+// partial score=0.457437661221 date=2026-09-23
+// cl: /O2 /Ob1 /I. /ICode/Libraries/Source/WWVegas/WWLib /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
+// stlport
+#define _STLP_NO_EXCEPTIONS 1
+// MilesAudioManager::xfer at RVA 006B4D30, secondary interface this = complete +8.
+// Witness: 006B0E30/36 installs 0111C0C0/0111C0AC; secondary slot 2
+// -> ILT 000306D4 -> 00696360 -> literal MilesAudioManager; slot 3
+// -> ILT 00003080 -> this body. End: ret 4 at 006B5643, int3 006B5646.
+// Reconstruction extends the original stash. Offsets are interface-relative.
+#include <vector>
+#include <list>
+#include <deque>
+#include "Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "reference/shims/stringbaseunicode/Common/UnicodeString.h"
+inline AsciiString::~AsciiString(){((StringBase<char>*)this)->releaseBuffer();}
+inline UnicodeString::~UnicodeString(){((StringBase<wchar_t>*)this)->releaseBuffer();}
+class Xfer;
+struct Rva006B4D30Version;
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
-extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long *value);
-extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long *value);
 
-template <typename T>
-class StringBase
-{
-public:
-	void set(const StringBase<T> &source);
-	void releaseBuffer();
-};
 
-class UnicodeString : public StringBase<unsigned short>
-{
-};
-
-class BFMERetailAsciiString : public StringBase<char>
-{
-};
-
-class Rva006B4D30Xfer
-{
-public:
-	void xfer(class Rva006B4D30XferArg *value);
-};
 
 class Rva006B4D30XferArg
 {
@@ -47,7 +36,7 @@ public:
 	virtual void slot07();
 	virtual void slot08();
 	virtual void slot09();
-	virtual void slot10(void *value);
+	virtual Rva006B4D30XferArg& slot10(Rva006B4D30Version& value);
 	virtual void slot11();
 	virtual void slot12();
 	virtual void slot13();
@@ -64,88 +53,16 @@ public:
 	virtual void slot24();
 	virtual void slot25();
 	virtual void slot26();
-	virtual void slot27(void *value);
+	virtual Rva006B4D30XferArg& slot27(float& value);
 	virtual void slot28();
-	virtual void slot29(void *value);
-	virtual void slot30(void *value);
+	virtual Rva006B4D30XferArg& slot29(unsigned int& value);
+	virtual Rva006B4D30XferArg& slot30(int& value);
 	virtual void slot31();
 	virtual void slot32();
 	virtual void slot33();
 	virtual void slot34();
-	virtual void slot35(void *value);
-	virtual void slot36(const char *name, void *value, int size);
-};
-
-// The retail body calls the 5-byte thunk symbols with several different
-// hidden signatures.  These unions preserve the thunk symbol while allowing
-// the call sites to carry the witnessed thiscall/cdecl argument shape.
-extern void j_00003544();
-extern void j_00008be3();
-extern void j_0000b61d();
-extern void j_0000e665();
-extern void j_0001b009();
-extern void j_00025987();
-extern void j_00026652();
-extern void j_0002e6ae();
-extern void j_0003d7cb();
-extern void j_00045f0c();
-
-class Rva006B4D30VectorOps
-{
-public:
-	void insert(void *where, void *first, void *last, int count, int flag);
-};
-
-class Rva006B4D30Helper
-{
-public:
-	void transfer(Rva006B4D30XferArg *xfer, void *first, void *last);
-	void reset();
-};
-
-class Rva006B4D30NodeHelper
-{
-public:
-	void destroy();
-};
-
-class Rva006B4D30RoomOwner
-{
-public:
-	void setRoomType(int value);
-};
-
-class Rva006B4D30Cleanup
-{
-public:
-	void destroy();
-};
-
-struct Rva006B4D30Pair
-{
-	void *first;
-	void *second;
-};
-
-struct Rva006B4D30Output
-{
-	unsigned char state;
-	unsigned char level;
-	unsigned char pad[6];
-};
-
-struct Rva006B4D30Ref
-{
-	void *vftable;
-	long references;
-};
-
-struct Rva006B4D30ListNode
-{
-	Rva006B4D30ListNode *next;
-	Rva006B4D30ListNode *previous;
-	void *value;
-	char pad0c[0x18];
+	virtual Rva006B4D30XferArg& slot35(unsigned char& value);
+	virtual Rva006B4D30XferArg& slot36(const char *name, void *value, int size);
 };
 
 class Rva006B4D30MutexGuard
@@ -170,248 +87,189 @@ private:
 	char m_owned;
 };
 
-class Rva006B4D30Owner
-{
-public:
-	void dup006b4d30(void *value);
 
-private:
-	char m_pad00[0x3c];
-	int m_3c;
-	int m_40;
-	char m_pad44[0x5fc - 0x44];
-	void *m_5fc;
-	char m_pad600[0x614 - 0x600];
-	char m_614[0x15];
-	unsigned char m_629;
-	char m_pad62a[4];
-	unsigned char m_62e;
-	unsigned char m_62f;
-	int m_630;
-	int m_634[3];
-	char m_pad640[0x954 - 0x640];
-	void *m_mutex;
-	char m_pad958[0x978 - 0x958];
-	void *m_978;
-	void *m_97c;
-	void *m_980;
-	void *m_984;
-	void *m_988;
-	char m_pad98c[0x9c8 - 0x98c];
-	Rva006B4D30ListNode *m_9c8;
-	char m_pad9cc[0xac8 - 0x9cc];
-	Rva006B4D30Ref *m_ac8[3];
-	Rva006B4D30Pair *m_ad4;
-	Rva006B4D30Pair *m_ad8;
-	Rva006B4D30Pair *m_ae0;
-	Rva006B4D30Pair *m_ae4;
-	char m_padAe8[0xb4c - 0xae8];
-	void *m_b4c;
-	char m_padB50[0xb68 - 0xb50];
-	unsigned char m_b68;
+struct Rva006B4D30Version { unsigned char first, second; };
+struct Rva006B4D30Info { char pad00[0x84]; int m_84; };
+struct Rva006B4D30Event {
+    char pad00[8]; Rva006B4D30Info *m_08;
+    char pad0c[0x28-0xc]; int m_28;
+    char pad2c[0x49-0x2c]; unsigned char m_49;
 };
-
-#pragma comment(linker, "/alternatename:?xfer@Rva006B4D30Xfer@@QAEXPAVRva006B4D30XferArg@@@Z=?j_0003d7cb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?insert@Rva006B4D30VectorOps@@QAEXPAX00HH@Z=?j_00025987@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setRoomType@Rva006B4D30RoomOwner@@QAEXH@Z=?j_00045f0c@@YAXXZ")
-
-extern void __cdecl rva006B4D30XferTree(
-	Rva006B4D30XferArg *xfer, void *tree);
-#pragma comment(linker, "/alternatename:?rva006B4D30XferTree@@YAXPAVRva006B4D30XferArg@@PAX@Z=?j_00003544@@YAXXZ")
-
-static void rva006B4D30Release(Rva006B4D30Ref *value)
+class Rva006B4D30Ref {
+public:
+    virtual ~Rva006B4D30Ref();
+    long m_04;
+    char pad08[0xc]; Rva006B4D30Event *m_14;
+    char pad18[0x34-0x18]; unsigned char m_34;
+};
+struct Rva006B4D30Ptr {
+    Rva006B4D30Ref *value;
+    Rva006B4D30Ptr():value(0) {}
+    Rva006B4D30Ptr(const Rva006B4D30Ptr &rhs):value(rhs.value) {
+        if(value) InterlockedIncrement(&value->m_04);
+    }
+    ~Rva006B4D30Ptr() {
+        Rva006B4D30Ref* saved=value;
+        if(saved && InterlockedDecrement(&saved->m_04)<=0) delete saved;
+    }
+};
+struct Rva006B4D30Pair { int first; float second; };
+struct Rva006B4D30Group { char pad00[0xc]; int m_0c; };
+struct Rva006B4D30GroupPair { Rva006B4D30Group *first; float second; };
+class Rva006ABC60 {
+public: void xfer(Xfer*); char m_bytes[0x1c4];
+};
+class Rva006AEF20 {
+public:
+    void invoke(Rva006B4D30XferArg*, Rva006B4D30Ptr*, Rva006B4D30Version*);
+    void rva006B2D80();
+    void rva00695AB0(int);
+};
+Xfer* xferTree(Xfer*,void*);
+Xfer* xferUnicodeStringVector(Xfer*,std::vector<UnicodeString>*);
+Xfer* xferAsciiStringVector(Xfer*,std::vector<AsciiString>*);
+typedef UnicodeString Rva006B4D30Wide;
+typedef AsciiString Rva006B4D30Narrow;
+typedef std::deque<Rva006B4D30Ptr> Rva006B4D30Deque;
+typedef std::list<Rva006B4D30Ptr> Rva006B4D30List;
+class MilesAudioManager {
+public:
+    virtual void xfer(Xfer*);
+    template<class T> T& field(int offset) {return *(T*)((char*)this+offset);}
+    char m_004[0x3c-4]; int m_03c; unsigned int m_040;
+    char m_044[0xb0-0x44]; Rva006ABC60 m_0b0[3];
+    int m_5fc; char m_600[0x14]; int m_614;
+    char m_618[0x11]; unsigned char m_629;
+    char m_62a; unsigned char m_62b; char m_62c[2];
+    unsigned char m_62e,m_62f; int m_630; int m_634[3];
+    char m_640[0x954-0x640]; void* m_mutex;
+    char m_958[0x20]; std::vector<Rva006B4D30Wide> m_978;
+    std::vector<Rva006B4D30Narrow> m_984;
+    struct Tree { char data[12]; }; Tree m_990[3];
+    char m_9b4[0x14]; Rva006B4D30List m_9c8;
+    Rva006B4D30Deque m_9cc[3][2]; int m_abc[3];
+    Rva006B4D30Ref* m_ac8[3];
+    std::vector<Rva006B4D30GroupPair> m_ad4;
+    std::vector<Rva006B4D30Pair> m_ae0;
+    char m_aec[0x60]; int m_b4c; char m_b50[0x18]; unsigned char m_b68;
+};
+void MilesAudioManager::xfer(Xfer* argument)
 {
-	if (value != 0 && InterlockedDecrement(&value->references) <= 0)
-	{
-		typedef void (Rva006B4D30Ref::*Destroy)(int);
-		union
-		{
-			void (__cdecl *plain)();
-			Destroy member;
-		} call;
-		call.plain = (void (__cdecl *)())value->vftable;
-		(value->*call.member)(1);
-	}
-}
-
-static void rva006B4D30AddRef(Rva006B4D30Ref *value)
-{
-	if (value != 0)
-		InterlockedIncrement(&value->references);
-}
-
-void Rva006B4D30Owner::dup006b4d30(void *value)
-{
-	Rva006B4D30XferArg *xfer = (Rva006B4D30XferArg *)value;
-	if (xfer->slot03())
-		return;
-
-	void *handle = m_mutex;
-	Rva006B4D30MutexGuard guard(handle);
-	Rva006B4D30Output output;
-	output.state = 1;
-	output.level = 4;
-
-	if (xfer->slot01())
-	{
-		m_62f = 1;
-		m_630 = 0;
-		xfer->slot10(&output);
-		void *oldValue = m_5fc;
-		xfer->slot36((const char *)0x0111bf48, &m_5fc, 4);
-		if (oldValue != m_5fc)
-		{
-			m_629 = 1;
-			xfer->slot36((const char *)0x0111bf58, &m_614[0], 4);
-			xfer->slot35((void *)((char *)this + 0x62b));
-		}
-
-		for (int i = 0; i < 3; ++i)
-		{
-			if (i == 2 && output.level >= 3 && m_b68)
-			{
-				xfer->slot36((const char *)0x0111bf70,
-					(char *)this + 0xabc + i * 4, 4);
-			}
-
-			Rva006B4D30Xfer *record =
-				(Rva006B4D30Xfer *)((char *)this + 0xb0 + i * 0x1c4);
-			record->xfer(xfer);
-			rva006B4D30XferTree(xfer,
-				(char *)this + 0x264 + i * 0xc);
-
-			if (output.level >= 4)
-				xfer->slot36((const char *)0x0111bd5c,
-					(char *)this + 0x634 + i * 4, 4);
-		}
-	}
-
-	if (!xfer->slot01())
-		goto finish;
-
-	{
-		Rva006B4D30Pair *begin = m_ae0;
-		Rva006B4D30Pair *end = m_ae4;
-		if (begin != end)
-		{
-			Rva006B4D30Pair *source = begin + 1;
-			while (source != end)
-			{
-				*begin = *source;
-				++begin;
-				++source;
-			}
-			m_ae4 = begin;
-		}
-
-		void *incoming = 0;
-		xfer->slot30(&incoming);
-		if (incoming != 0)
-		{
-			int stride = 8;
-			void *first = 0;
-			void *last = 0;
-			xfer->slot30(&first);
-			xfer->slot27(&last);
-			if (m_ae0 != m_ae4)
-			{
-				m_ae0->first = first;
-				m_ae0->second = last;
-				m_ae0 = (Rva006B4D30Pair *)((char *)m_ae0 + stride);
-			}
-			else
-			{
-				Rva006B4D30VectorOps vector;
-				vector.insert(m_ae4, first, last, 1, 1);
-			}
-			m_62e = 1;
-		}
-	}
-
-	{
-		int groupCount = (int)(m_ad8 - m_ad4);
-		xfer->slot30(&groupCount);
-		Rva006B4D30Pair *group = m_ad4;
-		while (group != m_ad8)
-		{
-			Rva006B4D30Pair *next = group + 1;
-			void *scratch = 0;
-			xfer->slot30(&scratch);
-			if (group->first != 0)
-			{
-				Rva006B4D30Helper helper;
-				helper.transfer(xfer, group->first, group->second);
-			}
-			group = next;
-		}
-	}
-
-	if (m_b68 && output.level >= 3)
-	{
-		for (int i = 0; i < 3; ++i)
-		{
-			Rva006B4D30Ref *reference = m_ac8[i];
-			if (reference != 0)
-			{
-				rva006B4D30Release(reference);
-				m_ac8[i] = 0;
-			}
-		}
-	}
-
-	{
-		StringBase<unsigned short> *wide =
-			(StringBase<unsigned short> *)m_978;
-		StringBase<unsigned short> *wideEnd =
-			(StringBase<unsigned short> *)m_97c;
-		while (wide != wideEnd)
-		{
-			((StringBase<unsigned short> *)m_97c)->set(*wide);
-			++wide;
-		}
-		m_97c = wide;
-
-		UnicodeString *unicode = (UnicodeString *)m_984;
-		UnicodeString *unicodeEnd = (UnicodeString *)m_988;
-		while (unicode != unicodeEnd)
-		{
-			unicode->set(*unicodeEnd);
-			++unicode;
-		}
-		m_988 = unicode;
-	}
-
-	{
-		Rva006B4D30ListNode local;
-		local.next = &local;
-		local.previous = &local;
-		Rva006B4D30ListNode *head = m_9c8;
-		if (head != 0)
-		{
-			Rva006B4D30ListNode *node = head->next;
-			while (node != head)
-			{
-				Rva006B4D30Ref *reference =
-					(Rva006B4D30Ref *)node->value;
-				if (reference != 0)
-					rva006B4D30AddRef(reference);
-				Rva006B4D30Helper helper;
-				helper.transfer(xfer, node + 1, node + 2);
-				node = node->next;
-			}
-		}
-	}
-
-finish:
-	{
-		Rva006B4D30Cleanup cleanup;
-		cleanup.destroy();
-	}
-	{
-		Rva006B4D30Helper helper;
-		helper.transfer(xfer, (char *)this + 0x978,
-			(char *)this + 0x97c);
-		helper.transfer(xfer, (char *)this + 0x984,
-			(char *)this + 0x988);
-	}
+    Rva006B4D30XferArg *xfer=(Rva006B4D30XferArg*)argument;
+    if(xfer->slot03()) return;
+    void *handle=m_mutex;
+    Rva006B4D30MutexGuard guard(handle);
+    if(xfer->slot01()) {
+        m_62f=1;
+        m_630=0;
+    }
+    Rva006B4D30Version version;
+    version.first=1;version.second=4;
+    xfer->slot10(version);
+    int previous=m_5fc;
+    xfer->slot36("AudioViewType",&m_5fc,4);
+    if(previous!=m_5fc) m_629=1;
+    xfer->slot36("AudioViewTypeBits",&m_614,4);
+    xfer->slot35(m_62b);
+    int i;
+    for(i=0;i<3;++i) {
+        if(i==2 && version.second>=3 && !m_b68) continue;
+        xfer->slot36("MusicSystem",&m_abc[i],4);
+        m_0b0[i].xfer(argument);
+        xferTree(argument,&m_990[i]);
+        if(version.second>=4) xfer->slot36("AudioAffect",&m_634[i],4);
+    }
+    if(xfer->slot01()) {
+        std::vector<Rva006B4D30Pair>& pairs=m_ae0;
+        pairs.erase(pairs.begin(),pairs.end());
+        int count;
+        xfer->slot30(count);
+        while(count) {
+            Rva006B4D30Pair pair;
+            xfer->slot30(pair.first);
+            xfer->slot27(pair.second);
+            pairs.push_back(pair);
+            --count;
+        }
+        m_62e=1;
+    } else {
+        std::vector<Rva006B4D30GroupPair>& groups=m_ad4;
+        int count=groups.size();
+        xfer->slot30(count);
+        for(std::vector<Rva006B4D30GroupPair>::iterator it=groups.begin();it!=groups.end();++it) {
+            int id=it->first->m_0c;
+            xfer->slot30(id);
+            float value=it->second;
+            xfer->slot27(value);
+        }
+    }
+    xfer->slot30(m_b4c);
+    if(xfer->slot01()) field<Rva006AEF20>(-8).rva00695AB0(m_b4c);
+    if(version.second>=2) xfer->slot29(m_040);
+    else m_040=~0u;
+    m_03c=0;
+    if(xfer->slot01()) {
+        int count;
+        xfer->slot30(count);
+        for(i=0;i<count;++i) {
+            Rva006B4D30Ptr value;
+            field<Rva006AEF20>(-8).invoke(xfer,&value,&version);
+            field<Rva006AEF20>(-8).rva006B2D80();
+        }
+        for(i=0;i<3;++i) {
+            if(i==2 && version.second>=3 && !m_b68) continue;
+            for(int j=0;j<2;++j) {
+                Rva006B4D30Deque& queue=m_9cc[i][j];
+                int oldSize=queue.size();
+                int count;
+                xfer->slot30(count);
+                for(int k=0;k<count;++k) {
+                    Rva006B4D30Ptr value;
+                    field<Rva006AEF20>(-8).invoke(xfer,&value,&version);
+                    if(value.value && queue.size()==oldSize) queue.push_back(value);
+                    oldSize=queue.size();
+                }
+            }
+        }
+        for(i=0;i<3;++i) {
+            if(i==2 && version.second>=3 && !m_b68) continue;
+            Rva006B4D30Ref* value=m_ac8[i];
+            if(value) {
+                if(InterlockedDecrement(&value->m_04)<=0) delete value;
+                m_ac8[i]=0;
+            }
+        }
+        std::vector<Rva006B4D30Wide>& wide=m_978;
+        wide.erase(wide.begin(),wide.end());
+        std::vector<Rva006B4D30Narrow>& narrow=m_984;
+        narrow.erase(narrow.begin(),narrow.end());
+    } else {
+        Rva006B4D30List selected;
+        Rva006B4D30List& source=m_9c8;
+        for(Rva006B4D30List::iterator it=source.begin();it!=source.end();++it) {
+            Rva006B4D30Ref* value=it->value;
+            if(value && value->m_14 &&
+               (value->m_14->m_08->m_84==0 || value->m_14->m_08->m_84==1) &&
+               (value->m_14->m_28!=2 || m_b68) &&
+               !value->m_34 && !value->m_14->m_49) selected.push_back(*it);
+        }
+        int count=selected.size();
+        xfer->slot30(count);
+        for(Rva006B4D30List::iterator it=selected.begin();it!=selected.end();++it)
+            field<Rva006AEF20>(-8).invoke(xfer,&*it,&version);
+        for(i=0;i<3;++i) {
+            if(i==2 && version.second>=3 && !m_b68) continue;
+            for(int j=0;j<2;++j) {
+                Rva006B4D30Deque& queue=m_9cc[i][j];
+                int count=queue.size();
+                xfer->slot30(count);
+                for(Rva006B4D30Deque::iterator it=queue.begin();it!=queue.end();++it) {
+                    Rva006B4D30Ptr value=*it;
+                    field<Rva006AEF20>(-8).invoke(xfer,&value,&version);
+                }
+            }
+        }
+    }
+    xferUnicodeStringVector(argument,&m_978);
+    xferAsciiStringVector(argument,&m_984);
 }

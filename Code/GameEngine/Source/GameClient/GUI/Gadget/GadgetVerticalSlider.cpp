@@ -80,6 +80,10 @@
 // GadgetVerticlaSliderInput ==================================================
 /** Handle input for vertical slider */
 //=============================================================================
+// BFME input body: RVA 0x004BF660, code through 0x004BF9B6 (854 B).
+// The following two switch tables and selectors end at 0x004BFABE (1118 B total).
+// 0x004BF699 is the first switch arm, not a separate function.
+// Retail sends slider-track message 0x400C; ZH names the older 0x400B value.
 WindowMsgHandledType GadgetVerticalSliderInput( GameWindow *window, UnsignedInt msg,
 																WindowMsgData mData1, WindowMsgData mData2 )
 {
@@ -205,7 +209,7 @@ WindowMsgHandledType GadgetVerticalSliderInput( GameWindow *window, UnsignedInt 
 
 							s->position += 2;
 							TheWindowManager->winSendSystemMsg( window->winGetOwner(), 
-																									GSM_SLIDER_TRACK,
+																									(GadgetGameMessage)0x400C,
 																									(WindowMsgData)window, 
 																									s->position );
 							// Translate to window coords
@@ -229,7 +233,7 @@ WindowMsgHandledType GadgetVerticalSliderInput( GameWindow *window, UnsignedInt 
 
 							s->position -= 2;
 							TheWindowManager->winSendSystemMsg( window->winGetOwner(), 
-																									GSM_SLIDER_TRACK,
+																									(GadgetGameMessage)0x400C,
 																									(WindowMsgData)window, 
 																									s->position );
 							// Translate to window coords

@@ -1,5 +1,5 @@
-// ?d_0034c0d0@@YAXXZ
-// partial score=0.92 date=2026-09-18
+// ?_writeOutINI@@YAXXZ
+// partial score=1.0 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -35,7 +35,7 @@ public:
 
 extern FileSystem *TheFileSystem;
 
-class AsciiString;
+#include "ascii_string.h"
 
 namespace FXParticleSystem
 {
@@ -49,14 +49,9 @@ public:
 
 }
 
-class AsciiString
-{
-public:
-	int compareNoCase(const AsciiString &other) const;
-};
-
 struct Q4Sort0034BFC0
 {
+ Q4Sort0034BFC0() {}
 	bool operator()(int left, int right) const;
 };
 
@@ -72,6 +67,20 @@ namespace rts
 typedef _STL::hash_map<AsciiString, FXParticleSystem::ParticleSystemTemplate *,
 	rts::hash<AsciiString>, _STL::equal_to<AsciiString> > TemplateMap;
 
+
+extern void j_000360f2();
+extern void j_0003496e();
+namespace _STL {
+template<> __forceinline void __insertion_sort<int*, Q4Sort0034BFC0>(int* first, int* last, Q4Sort0034BFC0 cmp) {
+ ((void (*)(int*,int*,Q4Sort0034BFC0))j_000360f2)(first,last,cmp);
+}
+template<> __forceinline void __unguarded_insertion_sort_aux<int*,int,Q4Sort0034BFC0>(int* first,int* last,int* value,Q4Sort0034BFC0 cmp) {
+ ((void (*)(int*,int*,int*,Q4Sort0034BFC0))j_0003496e)(first,last,value,cmp);
+}
+}
+
+struct Gen_t_00341960_m4pod { int a[1]; };
+
 class ParticleSystemManager
 {
 private:
@@ -79,6 +88,8 @@ private:
 	TemplateMap m_templateMap;
 
 public:
+	TemplateMap::iterator beginParticleSystemTemplate() { return m_templateMap.begin(); }
+	TemplateMap::iterator endParticleSystemTemplate() { return m_templateMap.end(); }
 	TemplateMap &templates()
 	{
 		return m_templateMap;
@@ -131,15 +142,15 @@ __declspec(noinline) void _writeOutINI()
 	if (!newINI)
 		return;
 
-	TemplateMap::iterator begin(TheParticleSystemManager->templates().begin());
-	TemplateMap::iterator end(TheParticleSystemManager->templates().end());
-	_STL::vector<int> templates;
+	_STL::vector<Gen_t_00341960_m4pod> templates;
+	TemplateMap::iterator begin(TheParticleSystemManager->beginParticleSystemTemplate());
+	TemplateMap::iterator end(TheParticleSystemManager->endParticleSystemTemplate());
 	for (; begin != end; ++begin)
-		templates.push_back(*(int *)&(*begin).second);
+		templates.push_back(*(Gen_t_00341960_m4pod *)&(*begin).second);
 
-	_STL::sort(templates.begin(), templates.end(), Q4Sort0034BFC0());
-	int *first = templates.begin();
-	int *last = templates.end();
+	_STL::sort((int*)templates.begin(), (int*)templates.end(), Q4Sort0034BFC0());
+	int *first = (int*)templates.begin();
+	int *last = (int*)templates.end();
 	if (first != last)
 	{
 		((FXParticleSystem::ParticleSystemTemplate *)*first)->writeINI(*newINI, 0);

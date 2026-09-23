@@ -1,6 +1,6 @@
 // ?reset@ScriptEngine@@UAEXXZ
-// partial score=0.6 date=2026-09-17
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// partial score=0.6200623700623701 date=2026-09-23
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 //
 // ScriptEngine::reset, retail 0x00348430, 1924 bytes.
@@ -10,11 +10,9 @@
 // ScriptEngine bodies; the names stay local where the binary does not prove a
 // semantic replacement.
 
-#define private public
 #include <algorithm>
 #include <list>
 #include <vector>
-#undef private
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -25,66 +23,9 @@ typedef float Real;
 extern "C" float __cdecl sinf(float);
 extern "C" float __cdecl cosf(float);
 
-// BFME's one-pointer narrow string view.  The base operations resolve to the
-// existing retail StringBase/UnicodeString bodies at 0x00887B60,
-// 0x00887C90 and 0x00887940.
-struct BfmeStringData
-{
-	Int m_refCount;
-	UnsignedShort m_length;
-	UnsignedShort m_capacity;
-	char m_text[1];
-};
-
-template <class T> class StringBase
-{
-	friend class AsciiString;
-	friend class UnicodeString;
-
-protected:
-	StringBase(void) : m_data(0) {}
-	__forceinline ~StringBase(void) { releaseBuffer(); }
-	BfmeStringData *m_data;
-
-private:
-	StringBase(const StringBase &);
-	void set(const StringBase &);
-	void releaseBuffer();
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString(void) {}
-	AsciiString(const AsciiString &that) : StringBase<char>(that) {}
-	__forceinline ~AsciiString(void) {}
-	AsciiString &operator=(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->set(
-			*(const StringBase<char> *)&that);
-		return *this;
-	}
-	__forceinline void clear(void)
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-};
-
-// ScriptEngine's named-object vector is the one BFME list whose first field
-// is the retail UnicodeString ABI.  Keep the public setter name here: it is
-// the direct callee in reset's copy loop, rather than the AsciiString helper.
-class UnicodeString : private StringBase<char>
-{
-public:
-	UnicodeString(void) {}
-	UnicodeString(const UnicodeString &that) : StringBase<char>(that) {}
-	__forceinline ~UnicodeString(void) {}
-	void set(const UnicodeString &that);
-	__forceinline void clear(void)
-	{
-		((StringBase<char> *)this)->releaseBuffer();
-	}
-};
+#include "ascii_string.h"
+inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
+#include "unicode_string.h"
 
 // The five map headers at +0x16040, +0x1604C, +0x16058, +0x16064 and
 // +0x16070 all have the STLport tree header shape.  Their erase helpers are
@@ -220,21 +161,16 @@ public:
 // Direct singleton addresses are used here because the evidence names the
 // storage addresses, while their TU-local pointee types differ across the
 // already-landed BFME shims.
-#define TheGameEngine (*(GameEngine **)0x012ED524)
-#define TheWritableGlobalData (*(GlobalData **)0x012ED5C8)
-#define TheInGameUI (*(BfmeInGameUI_setInputEnabled **)0x012F148C)
-#define TheMouse (*(BfmeMouse_setVisibility **)0x012F4C5C)
-#define TheScriptActions (*(BfmeResetSubsystem **)0x012F0620)
-#define TheScriptConditions (*(BfmeResetSubsystem **)0x012F06B0)
+extern GameEngine *TheGameEngine;
+extern GlobalData *TheWritableGlobalData;
+extern BfmeInGameUI_setInputEnabled *TheInGameUI;
+extern BfmeMouse_setVisibility *TheMouse;
+extern BfmeResetSubsystem *TheScriptActions;
+extern BfmeResetSubsystem *TheScriptConditions;
 
 struct NamedReveal
 {
-	__forceinline ~NamedReveal(void)
-	{
-		m_player.clear();
-		m_waypoint.clear();
-		m_name.clear();
-	}
+
 
 	AsciiString m_name;
 	AsciiString m_waypoint;
@@ -244,7 +180,7 @@ struct NamedReveal
 
 struct NamedObject
 {
-	UnicodeString m_name;
+	AsciiString m_name;
 	void *m_object;
 };
 
@@ -255,23 +191,16 @@ struct BfmeNamedRevealVectorLayout
 	NamedReveal *m_endOfStorage;
 };
 
-static __forceinline void clearNamedRevealVector(
-	std::vector<NamedReveal> &values)
-{
-	BfmeNamedRevealVectorLayout *raw =
-		(BfmeNamedRevealVectorLayout *)&values;
-	NamedReveal *first = raw->m_start;
-	NamedReveal *last = raw->m_finish;
-	NamedReveal *newEnd = _STL::__copy_ptrs(
-		last, last, first, _STL::__false_type());
+// A destruction guard preserves the remaining member lifetime if a later
+// member's destructor throws, as witnessed by retail unwind states 0 and 1.
+struct Rva00348430MemberCleanup {
+    AsciiString *record;
+ __forceinline Rva00348430MemberCleanup(AsciiString *p):record(p) {}
+    __forceinline ~Rva00348430MemberCleanup() {
+        record->~AsciiString();
+    }
+};
 
-	for (NamedReveal *it = newEnd; it != last; ++it) {
-		it->m_player.clear();
-		it->m_waypoint.clear();
-		it->m_name.clear();
-	}
-	raw->m_finish = newEnd;
-}
 
 struct BfmeNamedObjectVectorLayout
 {
@@ -291,7 +220,7 @@ static __forceinline void clearNamedObjectVector(
 		last, raw->m_finish, first, _STL::__false_type());
 
 	for (NamedObject *it = newEnd; it != last; ++it)
-		it->m_name.clear();
+		it->m_name.~AsciiString();
 	raw->m_finish = newEnd;
 }
 
@@ -322,8 +251,8 @@ static __forceinline void clearAsciiStringObjectIDList(
 	BfmeListHeaderLayout *node = header->m_next;
 	while (node != header) {
 		BfmeListHeaderLayout *next = node->m_next;
-		((AsciiStringObjectIDPair *)((char *)node + 8))->m_name.clear();
-		_STL::__node_alloc<true, 0>::_M_deallocate(node, 0x10);
+		((AsciiStringObjectIDPair *)((char *)node + 8))->m_name.~AsciiString();
+		_STL::__node_alloc<true, 0>::deallocate(node, 0x10);
 		node = next;
 	}
 	header->m_next = header;
@@ -385,7 +314,7 @@ static __forceinline void clearObjectTypeCount(ObjectTypeCount *tree)
 			ObjectTypeCountNode *left =
 				(ObjectTypeCountNode *)node->m_links[2];
 			node->m_name.~AsciiString();
-			_STL::__node_alloc<true, 0>::_M_deallocate(node, 0x18);
+			_STL::__node_alloc<true, 0>::deallocate(node, 0x18);
 			node = left;
 		}
 		tree->m_header->m_links[2] = tree->m_header;
@@ -394,6 +323,8 @@ static __forceinline void clearObjectTypeCount(ObjectTypeCount *tree)
 		tree->m_count = 0;
 	}
 }
+
+enum RvaScriptScience { RvaScriptScienceZero = 0 };
 
 class ScriptEngine
 {
@@ -447,7 +378,7 @@ private:
 	ListAsciiStringObjectID m_midwaySpecialPowers[32];
 	ListAsciiStringObjectID m_finishedSpecialPowers[32];
 	ListAsciiStringObjectID m_completedUpgrades[32];
-	std::vector<Int> m_acquiredSciences[32];
+	std::vector<RvaScriptScience> m_acquiredSciences[32];
 	ListAsciiStringCoord3D m_toppleDirections;
 	std::vector<NamedReveal> m_namedReveals;
 	BreezeInfo m_breezeInfo;
@@ -573,21 +504,36 @@ void ScriptEngine::reset(void)
 			m_allObjectTypeLists.erase(it);
 	}
 
-	clearNamedRevealVector(m_namedReveals);
+	{
+	BfmeNamedRevealVectorLayout *raw =
+		(BfmeNamedRevealVectorLayout *)&m_namedReveals;
+	NamedReveal *first = raw->m_start;
+	NamedReveal *last = raw->m_finish;
+	NamedReveal *newEnd = _STL::__copy_ptrs(
+		last, last, first, _STL::__false_type());
+
+	for (NamedReveal *it = newEnd; it != last; ++it) {
+		Rva00348430MemberCleanup name(&it->m_name);
+		Rva00348430MemberCleanup waypoint(&it->m_waypoint);
+		it->m_player.~AsciiString();
+	}
+	raw->m_finish = newEnd;
+}
+
 	clearNamedObjectVector(m_namedObjects);
 
 	m_completedVideo.clear();
 	m_uiInteractions.clear();
-	clearAsciiStringObjectIDList(m_testingSpeech);
-	clearAsciiStringObjectIDList(m_testingAudio);
+	m_testingSpeech.clear();
+	m_testingAudio.clear();
 	m_unidentifiedList.clear();
 
 	for (Int i = 0; i < 32; ++i) {
-		clearAsciiStringObjectIDList(m_triggeredSpecialPowers[i]);
-		clearAsciiStringObjectIDList(m_midwaySpecialPowers[i]);
-		clearAsciiStringObjectIDList(m_finishedSpecialPowers[i]);
-		clearAsciiStringObjectIDList(m_completedUpgrades[i]);
+		m_triggeredSpecialPowers[i].clear();
+		m_midwaySpecialPowers[i].clear();
+		m_finishedSpecialPowers[i].clear();
 		m_acquiredSciences[i].clear();
+		m_completedUpgrades[i].clear();
 	}
 
 	j_0001c5df();

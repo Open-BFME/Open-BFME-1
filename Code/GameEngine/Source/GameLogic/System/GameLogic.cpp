@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/multiplayer /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseascii /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/multiplayer /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -448,7 +448,7 @@ static Waypoint * findNamedWaypoint(AsciiString name)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
-void setFPMode( void )
+__declspec(noinline) void setFPMode( void )
 {
   // Set floating point round mode to CHOP, which only comes
   // into play when precision is exceeded.  This is necessary
@@ -6541,7 +6541,8 @@ extern __int64 Total_Load_3D_Assets;
 // ------------------------------------------------------------------------------------------------
 /** Update all objects in the world by invoking their update() methods. */
 // ------------------------------------------------------------------------------------------------
-// ?update@GameLogic@@UAEXXZ present-unmatched
+// Zero Hour reference entrypoint. BFME retail takes a phase argument;
+// the proved body at 0038DA10 is Rva0038DA10GameLogic::update below.
 void GameLogic::update( void )
 {
 	USE_PERF_TIMER(GameLogic_update)
@@ -8081,3 +8082,308 @@ void GameLogic::loadPostProcess( void )
 	remakeSleepyUpdate();
 
 }  // end loadPostProcess
+
+// BFME retail RVA 0038DA10. The matched GameEngine caller at 0006BAE0
+// passes the phase to primary vslot +20 (0006BB86); retail returns with ret4.
+// The parameterless Zero Hour prototype does not describe this ABI.
+// The TU-local view preserves the shared reference header and existing rows.
+// Full field/call witnesses: build/unclaimed_map/astra_H/LAYOUTS.md.
+#include <vector>
+#include "Common/AsciiString.h"
+#include "Common/LatchRestore.h"
+#include "Common/MessageStream.h"
+inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
+
+// Existing address-only ILT entries carry no guessed semantic identity.
+// The typed member-pointer adapters below supply the independently decoded
+// receiver/stack ABI; MSVC 7.1 single-inheritance member pointers are one code
+// address. The native UpdateModule pointer-vector instantiation reuses the
+// existing verified overflow pin at 00036B79 -> 00389600.
+void j_00001370();
+void j_0000d558();
+void j_000032ab();
+void j_00022a57();
+void j_0003f23d();
+void j_000194cf();
+void j_0004a7a5();
+void j_00043eeb();
+void j_000313a9();
+void j_00007e32();
+void j_00041ff1();
+void j_000159c9();
+void j_0002df01();
+void j_000467d1();
+void j_00034c3e();
+void j_00044774();
+void j_000065e1();
+void j_0002bb43();
+void j_0001c85f();
+void j_00028597();
+void j_0004776c();
+void j_0002b7e7();
+void j_0001be28();
+void j_0000b532();
+void j_00038361();
+void j_0003ff67();
+void j_0003004e();
+void j_00015028();
+struct Rva0038DA10System {
+    virtual void slot00(); virtual void slot04(); virtual void slot08();
+    virtual void slot0C(); virtual void slot10(); virtual void slot14();
+};
+struct Rva0038DA10Message {
+    unsigned rva00; Rva0038DA10Message* next;
+    void rva0008AB50(int value) { ((GameMessage*)this)->appendIntegerArgument(value); }
+    void rva0008ACE0(unsigned value) { ((GameMessage*)this)->appendTimestampArgument(value); }
+    void rva0008AB90(bool value) { ((GameMessage*)this)->appendBooleanArgument(value); }
+};
+struct Rva0038DA10CommandList : Rva0038DA10System {
+    virtual void slot18(); virtual void slot1C(); virtual void slot20();
+    virtual void slot24(); virtual void slot28(); virtual void slot2C();
+    virtual bool slot30(int); virtual Rva0038DA10Message* slot34(int);
+    unsigned rva04; Rva0038DA10Message* first;
+};
+struct Rva0038DA10View {
+    virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
+    virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1C();
+    virtual void slot20(); virtual void slot24(); virtual void slot28(); virtual void slot2C();
+    virtual void slot30(); virtual void slot34(); virtual void slot38(); virtual void slot3C();
+    virtual void slot40(); virtual void slot44(); virtual void slot48(); virtual void slot4C();
+    virtual void slot50(); virtual void slot54(); virtual void slot58(); virtual void slot5C();
+    virtual void slot60(); virtual void slot64(); virtual void slot68(); virtual void slot6C();
+    virtual void slot70(); virtual bool slot74();
+    virtual void slot78(); virtual void slot7C(); virtual void slot80(); virtual void slot84();
+    virtual void slot88(); virtual void slot8C(); virtual void slot90(); virtual void slot94();
+    virtual void slot98(); virtual void slot9C(); virtual void slotA0(); virtual void slotA4();
+    virtual void slotA8(); virtual void slotAC(); virtual void slotB0(); virtual void slotB4();
+    virtual void slotB8(); virtual void slotBC(); virtual void slotC0(); virtual void slotC4();
+    virtual void slotC8(); virtual void slotCC(); virtual void slotD0(); virtual bool slotD4();
+};
+struct Rva0038DA10Script : Rva0038DA10System {
+    void rva00339B10() { union { void (*entry)(); void (Rva0038DA10Script::*method)(); } fn; fn.entry=&j_00022a57; (this->*fn.method)(); } bool rva00336F20() { union { void (*entry)(); bool (Rva0038DA10Script::*method)(); } fn; fn.entry=&j_0003f23d; return (this->*fn.method)(); } void rva00337040() { union { void (*entry)(); void (Rva0038DA10Script::*method)(); } fn; fn.entry=&j_000194cf; (this->*fn.method)(); }
+};
+struct Rva0038DA10Network : Rva0038DA10View {};
+struct Rva0038DA10Client { char rva00[0xc4]; bool rvaC4; };
+struct Rva0038DA10Recorder : Rva0038DA10System { bool rva00097800() { union { void (*entry)(); bool (Rva0038DA10Recorder::*method)(); } fn; fn.entry=&j_0004a7a5; return (this->*fn.method)(); } int rva000977F0() { union { void (*entry)(); int (Rva0038DA10Recorder::*method)(); } fn; fn.entry=&j_00043eeb; return (this->*fn.method)(); } };
+struct Rva0038DA10AI : Rva0038DA10System { char rva04[8]; struct Rva003DC190* rva0C; };
+struct Rva003DC190 { void rva003DC190() { union { void (*entry)(); void (Rva003DC190::*method)(); } fn; fn.entry=&j_000313a9; (this->*fn.method)(); } };
+struct Rva0038C1E0 { bool rva00; void rva0038C1E0() { union { void (*entry)(); void (Rva0038C1E0::*method)(); } fn; fn.entry=&j_00007e32; (this->*fn.method)(); } };
+struct Rva0060D3D0 { bool rva0060D3D0() { union { void (*entry)(); bool (Rva0060D3D0::*method)(); } fn; fn.entry=&j_00041ff1; return (this->*fn.method)(); } };
+struct Rva00367810 { void rva00367810() { union { void (*entry)(); void (Rva00367810::*method)(); } fn; fn.entry=&j_000159c9; (this->*fn.method)(); } };
+struct Rva00065A40 { void rva00065A40() { union { void (*entry)(); void (Rva00065A40::*method)(); } fn; fn.entry=&j_0002df01; (this->*fn.method)(); } };
+struct Rva000A2E60 { void rva000A2E60() { union { void (*entry)(); void (Rva000A2E60::*method)(); } fn; fn.entry=&j_000467d1; (this->*fn.method)(); } };
+// Existing matched callee at 0041B200; private ABI established independently
+// by BFMERopeDrawableInterpolatedPosition.cpp and its getPosition caller.
+class BFMERopeDrawableGetPositionShim { friend class Rva0038DA10GameLogic; void bfmeRebuild(int); };
+struct Rva00278830 { bool rva00278830() { union { void (*entry)(); bool (Rva00278830::*method)(); } fn; fn.entry=&j_00044774; return (this->*fn.method)(); } void rva0026F080() { union { void (*entry)(); void (Rva00278830::*method)(); } fn; fn.entry=&j_000065e1; (this->*fn.method)(); } };
+struct Rva0038DA10Mask { unsigned bits; bool any() const { return bits!=0; } bool anyIntersectionWith(const Rva0038DA10Mask& other) const { return (bits&other.bits)!=0; } };
+struct Rva0038DA10Object {
+    virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
+    virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1C();
+    virtual void slot20(); virtual void slot24(); virtual BFMERopeDrawableGetPositionShim* slot28(); virtual void slot2C();
+    virtual void slot30(); virtual void slot34(); virtual void slot38(); virtual void slot3C();
+    char rva04[0x84]; Rva0038DA10Object* next; unsigned rva8C; unsigned rva90; unsigned rva94; unsigned rva98;
+    char rva9C[0xcc]; unsigned rva168; char rva16C[0x38]; unsigned rva1A4;
+    char rva1A8[0x5c]; Rva00278830* rva204;
+    Rva0038DA10Mask disabled() const { Rva0038DA10Mask m; m.bits=rva1A4;return m; }
+    void rva001C0BE0(unsigned a0) { union { void (*entry)(); void (Rva0038DA10Object::*method)(unsigned); } fn; fn.entry=&j_0002bb43; (this->*fn.method)(a0); } void rva001C5780() { union { void (*entry)(); void (Rva0038DA10Object::*method)(); } fn; fn.entry=&j_0001c85f; (this->*fn.method)(); } void rva001CE7B0() { union { void (*entry)(); void (Rva0038DA10Object::*method)(); } fn; fn.entry=&j_00028597; (this->*fn.method)(); } void rva001CE7F0() { union { void (*entry)(); void (Rva0038DA10Object::*method)(); } fn; fn.entry=&j_0004776c; (this->*fn.method)(); }
+};
+enum Rva0038DA10SleepTime { RVA0038DA10_SLEEP_NONE=1, RVA0038DA10_SLEEP_FOREVER=0x3fffffff };
+struct Rva0038DA10Interface { virtual Rva0038DA10SleepTime slot00(); virtual Rva0038DA10Mask slot04(); };
+struct Rva0038DA10Module {
+    unsigned rva00, rva04; Rva0038DA10Object* object; unsigned rva0C;
+    Rva0038DA10Interface interface; unsigned wake; int index, phase;
+    unsigned getWake() const { return wake; }
+    Rva0038DA10Object* getObject() const { return object; }
+    void setWake(unsigned when) { if (when>0x3fffffff) when=0x3fffffff; wake=when; }
+    void setIndex(int i,int p) { phase=p; index=i; }
+    void setIndex(int i) { phase=-1; index=i; }
+};
+struct Rva0038DA10Player { char rva00[0x24]; int rva24; int index() const { return rva24; } };
+struct Rva0038DA10PlayerList { char rva00[0xc]; Rva0038DA10Player* rva0C; Rva0038DA10Player* player() const { return rva0C; } };
+struct Rva0038DA10GameInfo { char rva00[8]; unsigned rva08; };
+struct Rva0038DA10GlobalData { char rva00[0xcb4]; int rvaCB4; };
+struct Rva0038DA10Terrain { unsigned rva00; Rva0038DA10System system; };
+class UpdateModule;
+struct Rva0038DA10Vector : std::vector<UpdateModule*> {
+    typedef std::vector<UpdateModule*> Base;
+    Rva0038DA10Module*& operator[](unsigned i) { return (Rva0038DA10Module*&)Base::operator[](i); }
+    Rva0038DA10Module*& back() { return (Rva0038DA10Module*&)Base::back(); }
+    void push_back(Rva0038DA10Module* const& u) { Base::push_back((UpdateModule* const&)u); }
+};
+class BfmeByteStream;
+class Rva0038DA10GameLogic {
+public:
+    virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
+    virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1C();
+    virtual void update(int phase);
+    unsigned getFrame() const { return frame; }
+    char rva04[0x38]; unsigned frame; bool rva40; char rva41[0x2a]; bool inUpdate;
+    char rva6C[0x34]; bool rvaA0; char rvaA1[7]; Rva0038DA10Object* objects;
+    char rvaAC[0x18]; Rva0038DA10Vector updates[4]; Rva0038DA10Vector sleeping;
+    Rva0038DA10Module* current; char rva104[8]; int mode; char rva110[0xd]; bool rva11D;
+    char rva11E[0x3e]; std::vector<void*> rva15C; int rva168; unsigned rva16C;
+    char rva170[0x30]; int depth;
+    void rva00383050() { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(); } fn; fn.entry=&j_0002b7e7; (this->*fn.method)(); } bool rva00382B00() { union { void (*entry)(); bool (Rva0038DA10GameLogic::*method)(); } fn; fn.entry=&j_0001be28; return (this->*fn.method)(); } unsigned getCRC(BfmeByteStream* a0) { union { void (*entry)(); unsigned (Rva0038DA10GameLogic::*method)(BfmeByteStream*); } fn; fn.entry=&j_0000b532; return (this->*fn.method)(a0); }
+    void rva0038B430(unsigned a0,int a1,unsigned a2,Rva0038DA10Message* a3,bool a4,BfmeByteStream* a5) { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(unsigned,int,unsigned,Rva0038DA10Message*,bool,BfmeByteStream*); } fn; fn.entry=&j_00038361; (this->*fn.method)(a0,a1,a2,a3,a4,a5); }
+    void rva00397540(Rva0038DA10Message* a0,void* a1) { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(Rva0038DA10Message*,void*); } fn; fn.entry=&j_0003ff67; (this->*fn.method)(a0,a1); } void rva0038A6F0() { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(); } fn; fn.entry=&j_0003004e; (this->*fn.method)(); } void rva0038AE90() { union { void (*entry)(); void (Rva0038DA10GameLogic::*method)(); } fn; fn.entry=&j_00015028; (this->*fn.method)(); }
+};
+extern Rva0038DA10GameLogic* g012F0898;
+extern Rva0038DA10Script* g012F076C;
+extern Rva0038DA10View* g012F1600;
+extern Rva0038DA10CommandList *g012ED5F0, *g012ED5EC;
+extern Rva0038DA10Client* g012F1464;
+extern Rva0038DA10Network* g012F7714;
+extern Rva0038C1E0 g012F08A0;
+extern Rva0060D3D0* g012F706C;
+extern Rva0038DA10AI* g012EF214;
+extern Rva0038DA10Terrain* g012EF4CC;
+extern Rva0038DA10System *g012F060C,*g012EF734,*g012ED5B8,*g012ED5C4,*g012ED5BC,*g012ED5C0,*g012ED83C,*g012F1044,*g012EF738,*g012EF504,*g012F079C,*g012F0888;
+extern Rva0038DA10Recorder* g012ED62C;
+extern Rva0038DA10GameInfo* g012F708C;
+extern unsigned g012A6F38;
+extern Rva0038DA10GlobalData* g012ED5C8;
+extern Rva0038DA10PlayerList* g012ED748;
+extern bool g012ED4E5,g012ED4E6;
+extern Rva00065A40* g012ED4FC;
+extern Rva000A2E60* g012ED63C;
+void setFPMode();
+class BfmeMade_009CB5F0;
+BfmeMade_009CB5F0* bfmeMake_009CB5F0(void*);
+inline BfmeByteStream* rva009CB5F0(const char* text) { return (BfmeByteStream*)bfmeMake_009CB5F0((void*)text); }
+void b_00102240();
+inline bool rva00102240() { return ((bool(*)())&b_00102240)(); }
+
+typedef char Rva0038DA10VectorSize[(sizeof(Rva0038DA10Vector)==12)?1:-1];
+typedef char Rva0038DA10ModuleSize[(sizeof(Rva0038DA10Module)==0x20)?1:-1];
+typedef void (Rva0038DA10GameLogic::*Rva0038DA10MemberPointer)();
+typedef char Rva0038DA10MemberPointerSize[(sizeof(Rva0038DA10MemberPointer)==sizeof(void(*)()))?1:-1];
+
+// ?update@GameLogic@@UAEXH@Z
+void Rva0038DA10GameLogic::update(int phase) {
+    if (depth==0) setFPMode();
+    ++depth;
+    if (phase==1) {
+        g012F076C->rva00339B10();
+        bool freeze=(g012F1600->slotD4() && !g012F1600->slot74()) || g012F076C->rva00336F20();
+        if (freeze) {
+            if (g012ED5F0->slot30(0x1d)) g012F076C->rva00337040();
+            else { g012F1464->rvaC4=false; --depth; return; }
+        }
+    }
+    rva15C.clear();
+    if (rva11D) {
+        if (phase==1) { rva00383050(); g012F1464->rvaC4=true; }
+        --depth; return;
+    }
+    if (g012F7714 && phase==1) g012F7714->slot8C();
+    rva168=phase;
+    bool first=(phase==1);
+    LatchRestore<bool> latch(inUpdate,true);
+    if (g012F08A0.rva00 && first) g012F08A0.rva0038C1E0();
+    if (first && frame==2 && g012F706C->rva0060D3D0() && g012F0898->rva00382B00()) {
+        for (Rva0038DA10Object* o=g012F0898->objects;o;o=o->next) {
+            Rva00278830* u=o->rva204;
+            if (u && u->rva00278830()) u->rva0026F080();
+        }
+    }
+    g012EF214->rva0C->rva003DC190();
+    setFPMode();
+    if (first) {
+        g012F076C->slot14(); g012F060C->slot14(); g012EF4CC->system.slot14();
+        if (g012EF734) g012EF734->slot14();
+    }
+    if (mode!=4 && mode!=8 && g012ED62C && first) {
+        bool generate=false;
+        if (g012ED62C->rva00097800()) {
+            unsigned interval=g012F708C->rva08;
+            generate=(frame%interval)==0;
+            if (mode==2) generate=false;
+        }
+        if (g012A6F38!=-1U) generate=(frame>=g012A6F38-g012ED5C8->rvaCB4-2 && frame<=g012A6F38);
+        if (generate) {
+            BfmeByteStream* text=0;
+            int player=g012ED748->player()->index();
+            unsigned crc;
+            if (!g012ED4E5 && !g012ED4E6) {
+                g012ED4E6=true; crc=getCRC(0); g012ED4E6=false;
+            } else {
+                AsciiString name;
+                name.format("%d",frame);
+                text=rva009CB5F0(name.str());
+                crc=getCRC(text);
+            }
+            Rva0038DA10Message* m=g012ED5EC->slot34(0x449);
+            m->rva0008AB50(crc); m->rva0008ACE0(frame); ((GameMessage*)m)->appendBooleanArgument(g012ED62C->rva000977F0()==1);
+            if (!g012ED4E5 && !g012ED4E6) ((GameMessage*)m)->appendBooleanArgument(false);
+            else rva0038B430(crc,player,frame,m,false,text);
+        }
+        if (g012ED4FC) g012ED4FC->rva00065A40();
+    }
+    if (g012ED63C && first) g012ED63C->rva000A2E60();
+    if (first) {
+        g012ED62C->slot14();
+        for (Rva0038DA10Message* m=g012ED5F0->first;m;m=m->next) rva00397540(m,0);
+        g012ED5F0->slot10();
+        for (Rva0038DA10Object* o=objects;o;o=o->next) if (o->slot28()) o->slot28()->bfmeRebuild(0);
+    }
+    if (phase==2) {
+        g012ED5B8->slot14(); g012ED5C4->slot14();
+        for (Rva0038DA10Object* o=objects;o;o=o->next) if (o->rva168!=frame) o->rva001C0BE0(frame);
+    } else {
+        if (phase>2) {
+            int start=0,end=0;
+            switch(phase) { case 3: case 4: start=0; end=1; break; case 5: start=1;end=3;break;case 6:start=3;end=4;break; }
+            for (int p=start;p<end;++p) {
+                int i=phase==4 ? updates[p].size()/2-1 : -1;
+                int next=i+1;
+                while (next<updates[p].size()) {
+                    ++i; ++next;
+                    if (phase==3 && i==updates[p].size()/2) break;
+                    Rva0038DA10Module* u=updates[p][i];
+                    if (!u || u->getWake()>g012F0898->getFrame()) continue;
+                    Rva0038DA10SleepTime sleep=RVA0038DA10_SLEEP_NONE;
+                    Rva0038DA10Mask dis=u->getObject()->disabled();
+                    if (!dis.any() || dis.anyIntersectionWith(u->interface.slot04())) {
+                        current=u;
+                        if (u->getObject()->rva90&1) sleep=RVA0038DA10_SLEEP_FOREVER;
+                        else { sleep=u->interface.slot00(); if(sleep<RVA0038DA10_SLEEP_NONE) sleep=RVA0038DA10_SLEEP_NONE; }
+                        current=0;
+                    }
+                    u->setWake(g012F0898->getFrame()+sleep);
+                }
+                if (phase>3) {
+                    for (unsigned j=updates[p].size();j>0;) {
+                        Rva0038DA10Module* u=updates[p][--j];
+                        if (u && u->wake>=0x3fffffff) {
+                            if (j<updates[p].size()-1) { updates[p][j]=updates[p].back();updates[p][j]->setIndex(j,p); }
+                            updates[p].pop_back();u->setIndex(sleeping.size());sleeping.push_back(u);
+                        }
+                    }
+                }
+            }
+        }
+        if (phase==5) g012EF214->slot14();
+    }
+    rva0038A6F0();
+    if (phase==5) {
+        g012ED5BC->slot14();g012ED5C0->slot14();g012ED83C->slot14();g012F1044->slot14();
+        rva0038AE90();g012EF738->slot14();g012EF504->slot14();g012F079C->slot14();g012F0888->slot14();
+        ((Rva00367810*)rva170)->rva00367810();
+    }
+    if (mode!=8 && mode!=4 && frame==1024 && !rva00102240()) {
+        Rva0038DA10Message* msg=g012ED5EC->slot34(0x447);
+        ((GameMessage*)msg)->appendBooleanArgument(false);
+    }
+    if (first) {
+        for(Rva0038DA10Object* o=objects;o;o=o->next) {
+            if(o->rva1A4) o->rva001C5780();
+            if(o->rva98&0x200) o->rva001CE7B0();
+            if(o->rva90&0x10) o->rva001CE7F0();
+            o->slot3C();
+        }
+        if(!rvaA0 && rva40) ++frame;
+        g012F1464->rvaC4=true;
+    }
+    --depth;
+}

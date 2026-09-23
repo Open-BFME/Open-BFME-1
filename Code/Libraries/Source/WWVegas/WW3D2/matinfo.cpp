@@ -287,55 +287,175 @@ MaterialCollectorClass::~MaterialCollectorClass(void)
 	Reset();
 }
 
-// ?Collect_Materials@MaterialCollectorClass@@QAEXPAVMeshModelClass@@@Z present-unmatched
-void MaterialCollectorClass::Collect_Materials(MeshModelClass * mesh)
+// BFME collector: owning texture handles. Layout witnesses and exact probe:
+// build/unclaimed_map/astra_T/LAYOUTS.md. The two visible getter bodies are
+// required for VC7.1 alias analysis; the array getter remains an opaque call.
+class BfmeHandleCX
 {
-	for (int pass = 0;pass < mesh->Get_Pass_Count(); pass++) {
+public:
+    TextureClass *p;
 
-		// Vertex materials (either single or per vertex)
-		if (mesh->Has_Material_Array(pass)) {
-			
-			for (int vert_index = 0;vert_index < mesh->Get_Vertex_Count(); vert_index++) {
-				VertexMaterialClass * mat = mesh->Peek_Material(vert_index,pass);
-				Add_Vertex_Material(mat);
-			}
+    BfmeHandleCX() : p(0) {}
+    BfmeHandleCX(const BfmeHandleCX &other) : p(other.p)
+    {
+        if (p) p->Add_Ref();
+    }
+    ~BfmeHandleCX()
+    {
+        if (p) p->Release_Ref();
+    }
+    BfmeHandleCX &operator=(const BfmeHandleCX &other)
+    {
+        if (other.p) other.p->Add_Ref();
+        if (p) p->Release_Ref();
+        p = other.p;
+        return *this;
+    }
+    bool operator==(const BfmeHandleCX &other) const { return p == other.p; }
+    bool operator!=(const BfmeHandleCX &other) const { return p != other.p; }
+};
 
-		} else {
-			VertexMaterialClass * mat = mesh->Get_Single_Material(pass);
-			Add_Vertex_Material(mat);
-			REF_PTR_RELEASE(mat);
-		}
-		
+class Gen_0092F070 { public: BfmeHandleCX bfmeGet(int index,int pass,int stage) const; };
 
-		// Shaders (single or per poly...)
-		if (mesh->Has_Shader_Array(pass)) {
-			for (int poly_index=0; poly_index < mesh->Get_Polygon_Count(); poly_index++) {
-				Add_Shader(mesh->Get_Shader(poly_index,pass));
-			}
-		} else {
-			ShaderClass sh = mesh->Get_Single_Shader(pass);
-			Add_Shader(sh);
-		}
-				
-		
-		// Textures per pass, per stage (either array or single...)
-		for (int stage = 0; stage < MeshMatDescClass::MAX_TEX_STAGES; stage++) {
+class Gen_0092C9D0
+{
+public:
+    enum { MAX_TEX_STAGES = 2 };
+    int PassCount;
+    int VertexCount;
+    int PolyCount;
+    void *UV[8];
+    int UVSource[4][2];
+    void *ColorArray[2];
+    int DCGSource[4];
+    int DIGSource[4];
+    BfmeHandleCX Texture[4][2];
+    ShaderClass Shader[4];
+    VertexMaterialClass *Material[4];
+    void *TextureArray[4][2];
+    void *MaterialArray[4];
+    void *ShaderArray[4];
 
-			if (mesh->Has_Texture_Array(pass,stage)) {
-				
-				for (int poly_index = 0;poly_index < mesh->Get_Polygon_Count(); poly_index++) {
-					TextureClass * tex = mesh->Peek_Texture(poly_index,pass,stage);
-					Add_Texture(tex);
-				}
+    VertexMaterialClass *Get_Single_Material(int pass) const
+    {
+        if (Material[pass]) Material[pass]->Add_Ref();
+        return Material[pass];
+    }
+    __declspec(noinline) BfmeHandleCX bfmeGet(int pass, int stage) const { return Texture[pass][stage]; }
+    VertexMaterialClass *Peek_Material(int index, int pass) const { return reinterpret_cast<const MeshMatDescClass*>(this)->Peek_Material(index,pass); }
+    ShaderClass Get_Shader(int index, int pass) const { return reinterpret_cast<const MeshMatDescClass*>(this)->Get_Shader(index,pass); }
+};
 
-			} else {
-			
-				TextureClass * tex = mesh->Peek_Single_Texture(pass,stage);
-				Add_Texture(tex);
+class BfmeThingBUZA
+{
+    unsigned char beforePolyCount[0x24];
+    int PolyCount;
+    int VertexCount;
+    unsigned char beforeCurMatDesc[0x9c - 0x2c];
+    Gen_0092C9D0 *CurMatDesc;
 
-			}
-		}
-	}
+public:
+    int Get_Pass_Count() const { return CurMatDesc->PassCount; }
+    int Get_Vertex_Count() const { return VertexCount; }
+    int Get_Polygon_Count() const { return PolyCount; }
+    bool Has_Material_Array(int pass) const { return CurMatDesc->MaterialArray[pass] != 0; }
+    bool Has_Shader_Array(int pass) const { return CurMatDesc->ShaderArray[pass] != 0; }
+    bool Has_Texture_Array(int pass, int stage) const { return CurMatDesc->TextureArray[pass][stage] != 0; }
+    VertexMaterialClass *Peek_Material(int index, int pass) const { return CurMatDesc->Peek_Material(index, pass); }
+    VertexMaterialClass *Get_Single_Material(int pass) const
+    {
+        return CurMatDesc->Get_Single_Material(pass);
+    }
+    ShaderClass Get_Shader(int index, int pass) const { return CurMatDesc->Get_Shader(index, pass); }
+    ShaderClass Get_Single_Shader(int pass) const { return CurMatDesc->Shader[pass]; }
+    __declspec(noinline) BfmeHandleCX bfmeGoBUZA(int pass, int stage) const { return CurMatDesc->bfmeGet(pass, stage); }
+};
+
+class Rva009306E0Collector
+{
+public:
+
+private:
+    DynamicVectorClass<ShaderClass> Shaders;
+    DynamicVectorClass<VertexMaterialClass *> VertexMaterials;
+    DynamicVectorClass<BfmeHandleCX> Textures;
+    ShaderClass LastShader;
+    VertexMaterialClass *LastMaterial;
+    BfmeHandleCX LastTexture;
+
+    int Find_Vertex_Material(VertexMaterialClass *material) const
+    {
+        for (int i = 0; i < VertexMaterials.Count(); ++i) {
+            if (VertexMaterials[i] == material) return i;
+        }
+        return -1;
+    }
+
+    int Find_Texture(TextureClass *texture) const
+    {
+        for (int i = 0; i < Textures.Count(); ++i) {
+            if (Textures[i].p == texture) return i;
+        }
+        return -1;
+    }
+
+public:
+    void Add_Vertex_Material(VertexMaterialClass *material)
+    {
+        if (material == 0) return;
+        if (material == LastMaterial) return;
+        if (Find_Vertex_Material(material) != -1) return;
+        VertexMaterials.Add(material);
+        material->Add_Ref();
+        LastMaterial = material;
+    }
+
+    void Add_Texture(const BfmeHandleCX &texture)
+    {
+        if (texture.p == 0) return;
+        if (texture.p == LastTexture.p) return;
+        if (Find_Texture(texture.p) != -1) return;
+        Textures.Add(texture);
+        LastTexture = texture;
+    }
+};
+
+void MaterialCollectorClass::Collect_Materials(MeshModelClass *legacyMesh)
+{
+    BfmeThingBUZA *mesh=reinterpret_cast<BfmeThingBUZA*>(legacyMesh);
+    Rva009306E0Collector *collector=reinterpret_cast<Rva009306E0Collector*>(this);
+    for (int pass = 0; pass < mesh->Get_Pass_Count(); pass++) {
+        if (mesh->Has_Material_Array(pass)) {
+            for (int vertex = 0; vertex < mesh->Get_Vertex_Count(); vertex++) {
+                collector->Add_Vertex_Material(mesh->Peek_Material(vertex, pass));
+            }
+        } else {
+            VertexMaterialClass *material = mesh->Get_Single_Material(pass);
+            collector->Add_Vertex_Material(material);
+            if (material) material->Release_Ref();
+        }
+
+        if (mesh->Has_Shader_Array(pass)) {
+            for (int polygon = 0; polygon < mesh->Get_Polygon_Count(); polygon++) {
+                Add_Shader(mesh->Get_Shader(polygon, pass));
+            }
+        } else {
+            ShaderClass shader = mesh->Get_Single_Shader(pass);
+            Add_Shader(shader);
+        }
+
+        for (int stage = 0; stage < Gen_0092C9D0::MAX_TEX_STAGES; stage++) {
+            if (mesh->Has_Texture_Array(pass, stage)) {
+                for (int poly_index = 0; poly_index < mesh->Get_Polygon_Count(); poly_index++) {
+                    BfmeHandleCX texture = reinterpret_cast<const Gen_0092F070*>(mesh)->bfmeGet(poly_index, pass, stage);
+                    collector->Add_Texture(texture);
+                }
+            } else {
+                BfmeHandleCX texture = mesh->bfmeGoBUZA(pass, stage);
+                collector->Add_Texture(texture);
+            }
+        }
+    }
 }
 
 // ?Reset@MaterialCollectorClass@@QAEXXZ present-unmatched
@@ -445,3 +565,8 @@ int MaterialCollectorClass::Find_Vertex_Material(VertexMaterialClass * mat)
 	}
 	return -1;
 }
+
+// Retain the two independently matched inline getter COMDATs: the BFME
+// collector below no longer calls the legacy pointer-based MeshModel getter.
+VertexMaterialClass *(MeshMatDescClass::*const Rva0092EFC0MaterialGetter)(int) const = &MeshMatDescClass::Get_Single_Material;
+VertexMaterialClass *(MeshModelClass::*const Rva0092F010MaterialGetter)(int) const = &MeshModelClass::Get_Single_Material;

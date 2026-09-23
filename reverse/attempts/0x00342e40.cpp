@@ -1,44 +1,37 @@
 // ?newMap@ScriptEngine@@UAEXXZ
-// partial score=0.3 date=2026-09-22
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Ireference/shims/stringinline
+// partial score=0.8394711992445704 date=2026-09-23
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 // stlport
 // ScriptEngine::newMap at retail 0x00342E40.  The vtable slot, ScriptEngine
 // field offsets, and BFME table ABI are independently witnessed in the repo.
 
-#define private public
 #include <list>
 #include <utility>
 #include <vector>
-#undef private
 
 typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
-typedef int NameKeyType;
+// The released NameKeyGenerator.h and matched KEYNAME at 0x00098B70
+// prove this is the 32-bit enum rather than an int typedef. The enum is
+// only forwarded here to avoid importing the unreconstructed subsystem graph.
+enum NameKeyType;
 
 enum ScienceType
 {
 	Rva00342E40ScienceType = 0
 };
 
-class AsciiString
-{
-public:
-	AsciiString() : m_data(0) {}
-	AsciiString(const AsciiString &other) : m_data(other.m_data) {}
-	~AsciiString();
-	void set(const AsciiString &other);
-	void releaseBuffer();
-
-private:
-	void *m_data;
-};
+#include "ascii_string.h"
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+#include "Common/LatchRestore.h"
 
 extern AsciiString KEYNAME(NameKeyType key);
 
 class Player
 {
 public:
+	NameKeyType getNameKey() const { return m_playerNameKey; }
 	char m_beforeNameKey[0x20];
 	NameKeyType m_playerNameKey;
 };
@@ -178,10 +171,15 @@ struct BfmeValueRecord
 	char m_beforeSecond[4];
 	void *m_second;
 	void *m_first;
+	char *m_offset10;
 };
 
 struct BfmeTableValue
 {
+    char *Rva00342E40word10(Int i) { return m_records[i].m_offset10; }
+    void *Rva00342E40address08(Int i) { return &m_records[i].m_second; }
+    Int Rva00342E40next(Int i) { return m_records[i].m_state; }
+
 	char m_beforeRecords[0x38];
 	BfmeValueRecord *m_records;
 	char m_beforeIndex[0x0c];
@@ -198,6 +196,7 @@ struct BfmeTableEntry
 class BfmeTableERJ
 {
 public:
+	Int getCount() const { return m_count; }
 	BfmeTableEntry *at(Int index)
 	{
 		if (index >= 0 && index < m_count)
@@ -344,38 +343,24 @@ void ScriptEngine::newMap(void)
 		--count;
 	} while (count != 0);
 
-	for (Int i = 0; i < g_bfmeTableERJ->m_count; ++i)
+	for (Int i = 0; i < g_bfmeTableERJ->getCount(); ++i)
 	{
 		Player *player = ThePlayerList->getNthPlayer(i);
 		m_currentPlayer = player;
-		AsciiString key = KEYNAME(player->m_playerNameKey);
+        LatchRestore<AsciiString> restore(m_unidentifiedString, KEYNAME(player->getNameKey()));
+        BfmeTableEntry *entry = g_bfmeTableERJ->at(i);
+        BfmeTableValue *value = entry->m_value;
+        if (value != 0)
+        {
+            for (Int index = value->m_index; index != -1; )
+            {
+                callRva0033E490((Rva0033E490Owner *)this,
+                    *(char **)(index * 20 + (unsigned)value->m_records + 16) + 4,
+                    value->Rva00342E40address08(index));
+                index = value->Rva00342E40next(index);
+            }
+        }
 
-		BfmeStringHold hold;
-		hold.m_vtable = (void *)0x010E7688;
-		hold.m_data = 0;
-		hold.m_target = &m_unidentifiedString;
-		((AsciiString *)&hold.m_data)->set(m_unidentifiedString);
-		m_unidentifiedString.set(key);
-
-		BfmeTableEntry *entry = g_bfmeTableERJ->at(i);
-		BfmeTableValue *value = entry->m_value;
-		if (value != 0)
-		{
-			Int index = value->m_index;
-			if (index != -1)
-			{
-				char *records = (char *)value->m_records;
-				char *record = records + index * 0x50;
-				callRva0033E490((Rva0033E490Owner *)this,
-					(char *)*(void **)(record + 0x10) + 4,
-					*(void **)(record + 8));
-				if (*(Int *)record == -1)
-				{
-					m_unidentifiedString.set(*(AsciiString *)&hold.m_data);
-					((AsciiString *)&hold.m_data)->releaseBuffer();
-				}
-			}
-		}
 	}
 
 	m_curFadeFrame = 0;

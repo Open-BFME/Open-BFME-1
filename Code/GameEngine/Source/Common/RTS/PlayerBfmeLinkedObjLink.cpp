@@ -1,8 +1,7 @@
 // ?link@BfmeLinkedObj@@QAEXPAV1@H@Z
-// partial score=0.86 date=2026-09-17
+// Complete native C++ reconstruction; identity and layout witnesses in build/unclaimed_map/astra_S/LAYOUTS.md.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /DBFME_STLP_NODE_ALLOC /Ireference/shims/stringinline /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
-// ?link@BfmeLinkedObj@@QAEXPAV1@H@Z present-unmatched
 //
 // The BFME body behind the existing BfmeLinkedObj::link pin.  The caller in
 // BfmeConv831 proves the class and method spelling.  The second caller and
@@ -25,18 +24,6 @@ class Player;
 class Team;
 class Object;
 
-// The two list operations are the existing retail callees printed by
-// tools/callees.py.  These aliases keep their direct ILT calls while the
-// local declarations retain the useful member ABIs.
-extern void j_00001140();
-extern void j_000022bb();
-extern void j_00014b91();
-extern void j_0001df16();
-extern void j_00027d6d();
-extern void j_000307e7();
-extern void j_00040327();
-extern void j_00041894();
-
 extern unsigned char g_bfmeTableDH[];
 
 extern "C" int __cdecl memcmp(const void *buf1, const void *buf2,
@@ -58,7 +45,7 @@ public:
 	unsigned char m_unmodelled_000[8];
 	AsciiString m_name;
 	unsigned char m_unmodelled_00c[0x14];
-	UnsignedInt m_upgradeMask;
+	UnsignedInt m_20;
 };
 
 class Upgrade
@@ -78,8 +65,6 @@ private:
 	Int m_playerIndex;
 };
 
-#pragma comment(linker, "/alternatename:?withdraw@Money@@QAEII_N@Z=?j_00041894@@YAXXZ")
-#pragma comment(linker, "/alternatename:?deposit@Money@@QAEXI_N@Z=?j_00027d6d@@YAXXZ")
 
 template <int NUM_BITS>
 class BitFlags
@@ -129,7 +114,7 @@ public:
 		return value;
 	}
 
-	const T *volatile m_overridable;
+	const T *m_overridable;
 };
 
 class BfmeObjectDlinkBase
@@ -177,6 +162,8 @@ public:
 	unsigned char m_vt[4];
 };
 
+// Native virtual inheritance reproduces the witnessed PMF: vbptr +0x68,
+// adjustment -0x64, vbtable index zero, and the dlink base at Object+4.
 class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
 {
 public:
@@ -203,16 +190,12 @@ public:
 	Object *m_containedBy;
 };
 
-#pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?bfmeTransferPowerInfluence@Object@@QAEXPAVPlayer@@0@Z=?j_00014b91@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setStatus@Object@@QAEXABV?$BitFlags@$0FG@@@_N@Z=?j_000307e7@@YAXXZ")
 
-template <class ObjectType>
+template <class ObjectType, class GetNextFunc = ObjectType *(ObjectType::*)() const>
 class BfmeDlinkIterator
 {
 public:
-	typedef ObjectType *(ObjectType::*GetNextFunc)() const;
+
 
 	BfmeDlinkIterator(ObjectType *cur, GetNextFunc getNext)
 		: m_cur(cur), m_getNext(getNext) { }
@@ -255,7 +238,6 @@ private:
 	Object *m_head;
 };
 
-#pragma comment(linker, "/alternatename:?_bfme_nextInInstanceList@Team@@QAEPAV1@XZ=?j_00022a70@@YAXXZ")
 
 class BfmeTeamPrototype
 {
@@ -276,6 +258,10 @@ public:
 class BfmePlayerMapState
 {
 public:
+    int field10() const { return m_value10; }
+    int field14() const { return m_value14; }
+    void add10(int x) { m_value10 += x; }
+    void add14(int x) { m_value14 += x; }
 	Int m_value00;
 	Int m_value04;
 	Int m_value08;
@@ -313,7 +299,6 @@ public:
 	BfmePlayerTeamList m_playerTeamPrototypes;
 };
 
-#pragma comment(linker, "/alternatename:?addUpgrade@Player@@QAEPAVUpgrade@@PBVUpgradeTemplate@@W4UpgradeStatusType@@@Z=?j_00040327@@YAXXZ")
 
 struct BfmeNodeND;
 
@@ -334,32 +319,20 @@ struct BfmeNodeND
 // The first nine upgrade tests are inlined in retail.  The last two use the
 // existing StringBase<char>::compare callee, so keep this tiny view local to
 // the inlined branch rather than routing every name through that callee.
-class BfmeTransferStringView
-{
-public:
-	int compare(const char *text, Int length) const
-	{
-		Int thisLength = m_text ?
-			*(const unsigned short *)(m_text + 4) : 0;
-		const char *data = m_text ? m_text + 8 :
-			(const char *)0x0107388B;
-		Int count = thisLength < length ? thisLength : length;
-		int result = memcmp(data, text, count);
-		if (result != 0)
-			return result;
-		return thisLength - length;
-	}
-
-	int compare(const char *text) const;
-
-	char *m_text;
-};
-
-#pragma comment(linker, "/alternatename:?compare@BfmeTransferStringView@@QBEHPBD@Z=?compare@?$StringBase@D@@QBEHPBD@Z")
+extern "C" unsigned int __cdecl strlen(const char *);
+#pragma intrinsic(strlen)
+template <> inline int StringBase<char>::compare(const char *text) const {
+    int length = text ? (int)strlen(text) : 0;
+    int thisLength = m_data ? m_data->length : 0;
+    const char *data = m_data ? m_data->data : (const char *)0x0107388B;
+    int count = thisLength < length ? thisLength : length;
+    int result = memcmp(data, text, count);
+    if (result != 0) return result;
+    return thisLength - length;
+}
 
 #define TheUpgradeCenter (*(BfmeThingND **)0x012EF188)
 
-#pragma comment(linker, "/alternatename:?bfmeFindND@BfmeThingND@@QAEPAUBfmeNodeND@@PBI@Z=?j_0001df16@@YAXXZ")
 
 class UpgradeMaskType
 {
@@ -406,11 +379,11 @@ void BfmeLinkedObj::link(BfmeLinkedObj *that, Int transferFlag)
 		it != sourceTeams->m_playerTeamPrototypes.end(); ++it)
 	{
 		BfmePlayerTeamList::value_type prototype = *it;
-		Team *team = prototype->m_teamInstanceList;
-		for (;;)
+		BfmeDlinkIterator<Team, Team *(Team::*)()> iter(prototype->m_teamInstanceList, &Team::_bfme_nextInInstanceList);
+		for (; !iter.done(); iter.advance())
 		{
-			if (!team)
-				break;
+			Team *team = iter.cur();
+			if (!team) continue;
 
 			BfmeDlinkIterator<Object> objects = team->iterate_TeamMemberList();
 			while (!objects.done())
@@ -427,19 +400,17 @@ void BfmeLinkedObj::link(BfmeLinkedObj *that, Int transferFlag)
 							const ThingTemplate *templateThird = object->getTemplate();
 							if (!(templateThird->m_kindOfCC & 0x00008000))
 							{
-				if (object->m_status94 & 0x20000000)
-					objectsWithInfluence.push_back(object);
-				else
-					objectsToComplete.push_back(object);
+								if (object->m_status94 & 0x20000000)
+									objectsWithInfluence.push_back(object);
+								else
+									objectsToComplete.push_back(object);
 							}
 						}
 					}
 				}
 				objects.advance();
 			}
-			team = team->_bfme_nextInInstanceList();
-			if (!team)
-				break;
+
 		}
 	}
 
@@ -447,31 +418,19 @@ void BfmeLinkedObj::link(BfmeLinkedObj *that, Int transferFlag)
 		objectsToComplete.begin(); it != objectsToComplete.end(); ++it)
 	{
 		Object *object = *it;
-		if (!object || (object->m_status94 & 0x20))
-			continue;
-
-		object->bfmeTransferPowerInfluence((Player *)that, (Player *)this);
-		const unsigned char doTransfer = (unsigned char)transferFlag;
-		if (doTransfer)
-		{
-			ObjectStatusMaskType status(ObjectStatusMaskType::kInit, 15);
-			object->setStatus(status, true);
-
-			Object *containedBy = object->m_containedBy;
-			if (containedBy)
-			{
-				const ThingTemplate *containedTemplate = containedBy->getTemplate();
-				if (containedTemplate->m_flagsD4 & 0x1000)
-					containedBy->setTeam(defaultTeam);
-				else
-					object->setTeam(defaultTeam);
-			}
-			else
-			{
-				object->setTeam(defaultTeam);
-			}
-		}
-	}
+		if (!object) continue;
+        if (!(object->m_status94 & 0x20))
+            object->bfmeTransferPowerInfluence((Player *)that, (Player *)this);
+        if ((unsigned char)transferFlag) {
+            ObjectStatusMaskType status(ObjectStatusMaskType::kInit, 79);
+            object->setStatus(status, true);
+        }
+        Object *containedBy = object->m_containedBy;
+        if (containedBy && (containedBy->getTemplate()->m_flagsD4 & 0x1000))
+            containedBy->setTeam(defaultTeam);
+        else
+            object->setTeam(defaultTeam);
+    }
 
 	for (_STL::list<Object *>::iterator it =
 		objectsWithInfluence.begin(); it != objectsWithInfluence.end(); ++it)
@@ -481,9 +440,7 @@ void BfmeLinkedObj::link(BfmeLinkedObj *that, Int transferFlag)
 			object->slot18();
 	}
 
-	UpgradeMaskType upgrades;
-	for (Int i = 0; i < 6; ++i)
-		upgrades.m_bits[i] = ((Player *)that)->m_upgradeMask[i];
+	UpgradeMaskType upgrades = *(UpgradeMaskType *)((Player *)that)->m_upgradeMask;
 
 	while (upgrades.checksum() > 0)
 	{
@@ -492,40 +449,41 @@ void BfmeLinkedObj::link(BfmeLinkedObj *that, Int transferFlag)
 		if (!node)
 			break;
 
-		BfmeTransferStringView *name =
-			(BfmeTransferStringView *)&node->m_name;
 		Bool matches =
-			name->compare("Upgrade_RohanDualEconomyChoice", 0x1e) == 0 ||
-			name->compare("Upgrade_IsengardDualEconomyChoice", 0x21) == 0 ||
-			name->compare("Upgrade_MordorDualEconomyChoice", 0x1f) == 0 ||
-			name->compare("Upgrade_EvilDualEconomyChoice", 0x1d) == 0 ||
-			name->compare("Upgrade_GondorFaction", 0x15) == 0 ||
-			name->compare("Upgrade_IsengardFaction", 0x17) == 0 ||
-			name->compare("Upgrade_MordorFaction", 0x15) == 0 ||
-			name->compare("Upgrade_RohanFaction", 0x14) == 0 ||
-			name->compare("Upgrade_GandalfWhite", 0x14) == 0 ||
-			name->compare("Upgrade_Anduril") == 0 &&
-				name->compare("Upgrade_ElvenGift") == 0;
+			node->m_name.compare("Upgrade_RohanDualEconomyChoice") == 0 ||
+			node->m_name.compare("Upgrade_IsengardDualEconomyChoice") == 0 ||
+			node->m_name.compare("Upgrade_MordorDualEconomyChoice") == 0 ||
+			node->m_name.compare("Upgrade_EvilDualEconomyChoice") == 0 ||
+			node->m_name.compare("Upgrade_GondorFaction") == 0 ||
+			node->m_name.compare("Upgrade_IsengardFaction") == 0 ||
+			node->m_name.compare("Upgrade_MordorFaction") == 0 ||
+			node->m_name.compare("Upgrade_RohanFaction") == 0 ||
+			node->m_name.compare("Upgrade_GandalfWhite") == 0 ||
+			node->m_name.compare("Upgrade_Anduril") == 0 ||
+			node->m_name.compare("Upgrade_ElvenGift") == 0;
 
-		if (matches)
+		if (!matches)
 		{
 			((Player *)this)->addUpgrade((const UpgradeTemplate *)node,
 				UPGRADE_STATUS_COMPLETE);
-			upgrades.clear(node->m_bit);
 		}
+        upgrades.clear(node->m_bit);
 	}
 
 	UnsignedInt allMoney = ((Player *)that)->getMoney()->countMoney();
 	((Player *)that)->getMoney()->withdraw(allMoney, true);
 	((Player *)this)->getMoney()->deposit(allMoney, true);
 
-	BfmePlayerMapState *sourceMap = &((Player *)that)->m_mapState;
-	BfmePlayerMapState *destinationMap = &((Player *)this)->m_mapState;
-	Int value10 = sourceMap->m_value10;
-	Int value14 = sourceMap->m_value14;
-	if (((Player *)that)->m_playerTemplate->m_hasFactionFlag)
-		++value14;
-	++value10;
-	destinationMap->m_value10 += value10;
-	destinationMap->m_value14 += value14;
+    if (&((Player *)that)->m_mapState) {
+        BfmePlayerMapState *destinationMap = &((Player *)this)->m_mapState;
+        if (destinationMap) {
+            const BfmePlayerTemplate *pt = ((Player *)that)->m_playerTemplate;
+            Int value10 = ((Player *)that)->m_mapState.m_value10;
+            Int value14 = ((Player *)that)->m_mapState.m_value14;
+            if (pt->m_hasFactionFlag) ++value14;
+            else ++value10;
+            destinationMap->add10(value10);
+            ((Player *)this)->m_mapState.add14(value14);
+        }
+    }
 }

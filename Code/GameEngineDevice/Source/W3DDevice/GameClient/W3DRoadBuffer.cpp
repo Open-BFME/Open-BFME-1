@@ -576,8 +576,27 @@ terrain.  The road is loaded into the quadrilateral defined by the
 the road vector gives the direction of the road, and the road normal is perpendicular
 to the road normal.  */
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DRoadBufferLoadFloat4PtSectionThunk.cpp
-// ?loadFloat4PtSection@W3DRoadBuffer@@ present-unmatched
+// Retail calls at 0x007088b8 and 0x00709bc0 use terrain vtable slot +0x24c
+// with two floats and consume an x87 Real return. ZH's direct helper is
+// not the BFME call contract. Preserve the witnessed slot without guessing
+// its semantic identity.
+struct __single_inheritance Rva00708320Receiver;
+struct Rva00708320VTable {
+    void *slots[0x24c/4];
+    Real (Rva00708320Receiver::*slot24c)(Real, Real);
+};
+struct Rva00708320Receiver {
+    Rva00708320VTable *vtable;
+    Real call24c(Real x, Real y) { return (this->*vtable->slot24c)(x, y); }
+};
+// By-value vectors and the corner setters below preserve retail's x87
+// expression order in both the lengths and the unrolled texture coordinates.
+static __forceinline Real Rva00708320Dot(Vector2 a, Vector2 b)
+{
+	return a.Y * b.Y + a.X * b.X;
+}
+// Identity: loadCurve at 0x0070ac68 calls this body through ILT 0x000346df;
+// preloadRoadSegment and the four join loaders share that named target.
 void W3DRoadBuffer::loadFloat4PtSection(RoadSegment *pRoad, Vector2 loc,
 														Vector2 roadNormal, Vector2 roadVector,
 														Vector2 *cornersP, 
@@ -595,10 +614,10 @@ void W3DRoadBuffer::loadFloat4PtSection(RoadSegment *pRoad, Vector2 loc,
 	info.loc = loc;
 	info.roadNormal = roadNormal;
 	info.roadVector = roadVector;
-	info.corners[bottomLeft] = cornersP[bottomLeft];
-	info.corners[bottomRight] = cornersP[bottomRight];
-	info.corners[topLeft] = cornersP[topLeft];
-	info.corners[topRight] = cornersP[topRight];
+	info.corners[bottomLeft].Set(cornersP[bottomLeft].X, cornersP[bottomLeft].Y);
+	info.corners[bottomRight].Set(cornersP[bottomRight].X, cornersP[bottomRight].Y);
+	info.corners[topLeft].Set(cornersP[topLeft].X, cornersP[topLeft].Y);
+	info.corners[topRight].Set(cornersP[topRight].X, cornersP[topRight].Y);
 	info.uOffset = uOffset;
 	info.vOffset = vOffset;
 	info.scale = uScale;
@@ -606,8 +625,8 @@ void W3DRoadBuffer::loadFloat4PtSection(RoadSegment *pRoad, Vector2 loc,
 
 
 
-	Real roadLen = roadVector.Length();
-	Real halfHeight = roadNormal.Length();
+	Real roadLen = (+roadVector).Length();
+	Real halfHeight = (+roadNormal).Length();
 	roadNormal.Normalize();
 	roadVector.Normalize();
 	Vector2 curVector;
@@ -657,14 +676,15 @@ void W3DRoadBuffer::loadFloat4PtSection(RoadSegment *pRoad, Vector2 loc,
 			nextColumn.lightGradient = false;
 			nextColumn.uIndex = i;
 
-			Real minHeight=m_map->getMaxHeightValue()*MAP_HEIGHT_SCALE;
+			// BFME uses 16-bit terrain samples scaled by 0.0390625.
+			Real minHeight=65535.0f*(MAP_HEIGHT_SCALE/16);
 			Real maxHeight = m_map->getMinHeightValue()*MAP_HEIGHT_SCALE;
 			for (j=0; j<vCount; j++) {
 				Real jFactor = ((Real)j / (vCount-1));
 				Real jBarFactor = 1.0f-jFactor;
 				nextColumn.vtx[j] = origin +  (uVector1 * jBarFactor * iFactor) + (uVector2 * jFactor * iFactor) +
 													(vVector1 * iBarFactor * jFactor) + (vVector2 * iFactor * jFactor) ;	
-				Real z = TheTerrainRenderObject->getMaxCellHeight(nextColumn.vtx[j].X, nextColumn.vtx[j].Y); 
+				Real z = ((Rva00708320Receiver *)TheTerrainRenderObject)->call24c(nextColumn.vtx[j].X, nextColumn.vtx[j].Y);
 				if (z<minHeight) minHeight = z;
 				if (z>maxHeight) maxHeight = z;
 				nextColumn.vertexIndex[j] = -1;
@@ -722,7 +742,7 @@ void W3DRoadBuffer::loadFloat4PtSection(RoadSegment *pRoad, Vector2 loc,
 				}
 				curVector.Set(curColumn.vtx[j].X - loc.X, curColumn.vtx[j].Y - loc.Y);
 				V = Vector2::Dot_Product(roadNormal, curVector);
-				U = Vector2::Dot_Product(roadVector, curVector);
+				U = Rva00708320Dot(roadVector, curVector);
 				Int diffuse = 0;
 			#ifdef _DEBUG
 				//diffuse &= 0xFFFF00FF; // strip out green.
@@ -800,7 +820,23 @@ terrain.  The road is loaded into the quadrilateral defined by the
 the road vector gives the direction of the road, and the road normal is perpendicular
 to the road normal.  */
 //=============================================================================
-// ?loadLit4PtSection@W3DRoadBuffer@@ present-unmatched
+// At 0x0070968e retail copies the proven RoadSegment::m_info (+0x68)
+// member by member. Keep the existing layout, with a TU-local access shim.
+struct Rva00709540RoadSegment : RoadSegment {
+    __forceinline void copyInfo(TRoadSegInfo &out) const {
+        out = m_info;
+    }
+};
+struct Rva00709540Info : TRoadSegInfo {
+    __forceinline Rva00709540Info() {
+        loc.Set(0.0f,0.0f); roadNormal.Set(0.0f,0.0f); roadVector.Set(0.0f,0.0f);
+        for (unsigned int n=0; n<NUM_CORNERS; ++n) corners[n].Set(0.0f,0.0f);
+        uOffset = vOffset = scale = 0.0f;
+    }
+};
+// Keep the previously landed out-of-line accessor emitted after its
+// caller adopts the retail inline copy.
+void (RoadSegment::*Rva00709540GetRoadSegInfoEmission)(TRoadSegInfo *) = &RoadSegment::GetRoadSegInfo;
 void W3DRoadBuffer::loadLit4PtSection(RoadSegment *pRoad, UnsignedShort *ib, VertexFormatXYZDUV1 *vb, RefRenderObjListIterator *pDynamicLightsIterator)
 {
 	
@@ -808,12 +844,11 @@ void W3DRoadBuffer::loadLit4PtSection(RoadSegment *pRoad, UnsignedShort *ib, Ver
 	const Real MAX_ERROR = MAP_HEIGHT_SCALE*1.1f;
 
 	
-	if (pRoad->m_uniqueID != m_curUniqueID) {
-		return;
-	}
+	if (pRoad->m_uniqueID != m_curUniqueID) return;
 	if (!pRoad->m_visible) {
 		return;
 	}
+	Int i, j, k;
 	Int numLights = 0;
 	const Int maxLights = 8;
 	LightClass *lights[maxLights];
@@ -828,19 +863,10 @@ void W3DRoadBuffer::loadLit4PtSection(RoadSegment *pRoad, UnsignedShort *ib, Ver
 			}
 	}
 
-	if (numLights == 0) return;
 
-	TRoadSegInfo info;
-	pRoad->GetRoadSegInfo(&info);
-	Real roadLen = info.roadVector.Length();
-	Real halfHeight = info.roadNormal.Length();
-	info.roadNormal.Normalize();
-	info.roadVector.Normalize();
-	Vector2 curVector;
-	Int uCount = (roadLen/MAP_XY_FACTOR)+1;
-	Int vCount = (2*halfHeight/MAP_XY_FACTOR)+1;
-
-
+	if (numLights < maxLights)
+		for (i=numLights; i<maxLights; ++i) lights[i] = NULL;
+	// Keep this declaration at retail's local-class ordinal (17).
 	const int maxRows = 100;
 	typedef struct {
 		Bool collapsed;
@@ -851,6 +877,20 @@ void W3DRoadBuffer::loadLit4PtSection(RoadSegment *pRoad, UnsignedShort *ib, Ver
 		Int vertexIndex[maxRows];
 		Real uIndex;
 	} TColumn;
+	if (numLights == 0) return;
+
+	Rva00709540Info info;
+	((const Rva00709540RoadSegment *)pRoad)->copyInfo(info);
+	Real roadLen = info.roadVector.Length();
+	Real halfHeight = info.roadNormal.Length();
+	info.roadNormal.Normalize();
+	info.roadVector.Normalize();
+	Vector2 curVector;
+	Int uCount = (roadLen/MAP_XY_FACTOR)+1;
+	Int vCount = (2*halfHeight/MAP_XY_FACTOR)+1;
+
+
+
 //	const Int DIFFUSE_LIMIT = 25; // if more than that, we tesselate :) jba.
 
 	if (vCount>maxRows) vCount = maxRows;
@@ -858,7 +898,6 @@ void W3DRoadBuffer::loadLit4PtSection(RoadSegment *pRoad, UnsignedShort *ib, Ver
 				
 	prevColumn.deleted = true;
 	curColumn.deleted = true;
-	Int i, j, k;
 	Vector2 v2 = info.corners[bottomLeft];
 	Vector3 origin(v2.X, v2.Y, 0);
 	v2 = info.corners[bottomRight] - info.corners[bottomLeft];
@@ -881,14 +920,15 @@ void W3DRoadBuffer::loadLit4PtSection(RoadSegment *pRoad, UnsignedShort *ib, Ver
 			nextColumn.lightGradient = false;
 			nextColumn.uIndex = i;
 
-			Real minHeight=m_map->getMaxHeightValue()*MAP_HEIGHT_SCALE;
+			// BFME height samples are 16-bit and use a 0.0390625 scale.
+			Real minHeight=65535.0f*(MAP_HEIGHT_SCALE/16);
 			Real maxHeight = m_map->getMinHeightValue()*MAP_HEIGHT_SCALE;
 			for (j=0; j<vCount; j++) {
 				Real jFactor = ((Real)j / (vCount-1));
 				Real jBarFactor = 1.0f-jFactor;
 				nextColumn.vtx[j] = origin +  (uVector1 * jBarFactor * iFactor) + (uVector2 * jFactor * iFactor) +
 													(vVector1 * iBarFactor * jFactor) + (vVector2 * iFactor * jFactor) ;	
-				Real z = TheTerrainRenderObject->getMaxCellHeight(nextColumn.vtx[j].X, nextColumn.vtx[j].Y); 
+				Real z = ((Rva00708320Receiver *)TheTerrainRenderObject)->call24c(nextColumn.vtx[j].X, nextColumn.vtx[j].Y);
 				if (z<minHeight) minHeight = z;
 				if (z>maxHeight) maxHeight = z;
 				nextColumn.vertexIndex[j] = -1;
@@ -985,27 +1025,22 @@ void W3DRoadBuffer::loadLit4PtSection(RoadSegment *pRoad, UnsignedShort *ib, Ver
 						Vector3 diffuse;
 						lights[k]->Get_Diffuse(&diffuse);
 						Vector3 ambient;
-						lights[k]->Get_Ambient(&ambient);
+						// Retail writes Ambient (+0xd8) to the diffuse temporary; ambient itself remains uninitialized.
+						lights[k]->Get_Ambient(&diffuse);
 						if (shade > 1.0) shade = 1.0;
-						if(shade < 0.0f) shade = 0.0f;
-						shadeR += shade*diffuse.X;
-						shadeG += shade*diffuse.Y;
-						shadeB += shade*diffuse.Z;		
-						shadeR += factor*ambient.X;
-						shadeG += factor*ambient.Y;
-						shadeB += factor*ambient.Z;		
+						else if(shade < 0.0f) shade = 0.0f;
+						shadeR = (shadeR + shade*diffuse.X) + factor*ambient.X;
+						shadeG = (shadeG + shade*diffuse.Y) + factor*ambient.Y;
+						shadeB = (shadeB + shade*diffuse.Z) + factor*ambient.Z;
 					}
 				}
  				if (shadeR > 1.0) shadeR = 1.0;
-				if(shadeR < 0.0f) shadeR = 0.0f;
+				else if(shadeR < 0.0f) shadeR = 0.0f;
 				if (shadeG > 1.0) shadeG = 1.0;
-				if(shadeG < 0.0f) shadeG = 0.0f;
+				else if(shadeG < 0.0f) shadeG = 0.0f;
 				if (shadeB > 1.0) shadeB = 1.0;
-				if(shadeB < 0.0f) shadeB = 0.0f;
-				shadeR*=255;
-				shadeG*=255;
-				shadeB*=255;
-				diffuse=REAL_TO_INT(shadeB) | (REAL_TO_INT(shadeG) << 8) | (REAL_TO_INT(shadeR) << 16) | ((int)255 << 24);
+				else if(shadeB < 0.0f) shadeB = 0.0f;
+
 
 			#ifdef _DEBUG
 				//diffuse &= 0xFFFF00FF; // strip out green.
@@ -1015,6 +1050,10 @@ void W3DRoadBuffer::loadLit4PtSection(RoadSegment *pRoad, UnsignedShort *ib, Ver
 				vb[m_curNumRoadVertices].x = curColumn.vtx[j].X;
 				vb[m_curNumRoadVertices].y = curColumn.vtx[j].Y;
 				vb[m_curNumRoadVertices].z = curColumn.vtx[j].Z+FLOAT_AMOUNT;
+				shadeR*=255;
+				shadeG*=255;
+				shadeB*=255;
+				diffuse=(Int)(shadeB) | ((Int)(shadeG) << 8) | ((Int)(shadeR) << 16) | ((int)255 << 24);
 				vb[m_curNumRoadVertices].diffuse = diffuse;
 				curColumn.vertexIndex[j] = m_curNumRoadVertices;
 				m_curNumRoadVertices++;

@@ -1,6 +1,8 @@
 // ?update@EmotionTrackerUpdate@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.18 date=2026-09-17
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.7558479532163742 date=2026-09-23
+// ?update@EmotionTrackerUpdate@@UAE?AW4UpdateSleepTime@@XZ
+// Rebuilt from the banked body; measured probe evidence is in astra_R/PROGRESS.md.
+// cl: /DNDEBUG /MD /EHsc /I. /ICode/Libraries/Source/WWVegas/WWLib
 //
 // EmotionTrackerUpdate::update, retail RVA 0x00290E50, 2052 bytes.
 //
@@ -10,7 +12,7 @@
 // receives the interface subobject: the owning Object and ModuleData are at
 // this-0x08 and this-0x0c, while the recovered tracker state starts at
 // this+0x14.  The BFME emotion-selection code has no Zero Hour twin; the
-// address-derived helper views below describe only the proven call ABIs and
+// address-derived helper views below describe only the witnessed call ABIs and
 // stack layouts.
 
 typedef unsigned int UnsignedInt;
@@ -39,6 +41,10 @@ struct Coord3D
 
 class Object;
 class Emotion;
+class PartitionFilter;
+enum DistanceCalculationType { Rva00290E50Distance0=0 };
+class PartitionManager { public: Object *getClosestObject(const Coord3D*,float,DistanceCalculationType,PartitionFilter*); };
+
 
 // The named direct callees are existing ledger identities.  The other calls
 // remain on their retail ILT spellings, as reported by tools/callees.py.
@@ -52,7 +58,6 @@ public:
 class GameLogic
 {
 public:
-	Object *findObjectByID(int id);
 	unsigned char m_pad00[0x3c];
 	UnsignedInt m_frame;
 };
@@ -74,7 +79,7 @@ class PlayerList
 class Gen_008f7470
 {
 public:
-	void m(void *position, int include, UnsignedShort playerMask);
+	void m(void);
 };
 
 class Registry
@@ -114,15 +119,24 @@ public:
 
 // These are the retail absolute globals annotated by the disassembler.  The
 // address forms keep this TU independent of unrelated BFME class-name shims.
-#define TheWritableGlobalData (*(unsigned char **)0x012ED5C8)
-#define TheTerrainLogic (*(TerrainLogic **)0x012EF4CC)
-#define TheTacticalView (*(TacticalView **)0x012F1600)
-#define ThePartitionManager (*(BfmeC1050 **)0x012ED5B8)
-#define ThePlayers (*(PlayerList **)0x012ED748)
-#define TheShroudManager (*(Gen_008f7470 **)0x012ED5BC)
-#define TheRegistry (*(Registry **)0x012EF1D8)
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define TheEmotionSystem (*(unsigned char **)0x012F0878)
+extern unsigned char *Rva012ED5C8;
+#define TheWritableGlobalData Rva012ED5C8
+extern TerrainLogic *Rva012EF4CC;
+#define TheTerrainLogic Rva012EF4CC
+extern TacticalView *Rva012F1600;
+#define TheTacticalView Rva012F1600
+extern BfmeC1050 *Rva012ED5B8;
+#define ThePartitionManager Rva012ED5B8
+extern PlayerList *Rva012ED748;
+#define ThePlayers Rva012ED748
+extern Gen_008f7470 *Rva012ED5BC;
+#define TheShroudManager Rva012ED5BC
+extern Registry *Rva012EF1D8;
+#define TheRegistry Rva012EF1D8
+extern GameLogic *Rva012F0898;
+#define TheBfmeGameLogic Rva012F0898
+extern unsigned char *Rva012F0878;
+#define TheEmotionSystem Rva012F0878
 #define BfmeZeroRange (*(const float *)0x01075350)
 
 extern void j_000016a4(void);
@@ -150,24 +164,8 @@ extern float GetGameLogicRandomValueReal(float low, float high,
 
 // The two direct bodies below are declared with their callee names.  Their
 // retail declarations return through EAX even though the old ILT spelling is
-// a QAEX void symbol; the aliases make the call ABI explicit without adding a
+// a QAEX void symbol; typed member-pointer views make the ABI explicit without adding a
 // new pin or a semantic name.
-class BfmeC1050Result
-{
-public:
-	Object *bfmeGo1050D(int a, int b, int c, int d);
-};
-
-#pragma comment(linker, "/alternatename:?bfmeGo1050D@BfmeC1050Result@@QAEPAVObject@@HHHH@Z=?bfmeGo1050D@BfmeC1050@@QAEXHHHH@Z")
-
-class Gen_008f7470Result
-{
-public:
-	UnsignedInt m(void *position, int include, UnsignedShort playerMask);
-};
-
-#pragma comment(linker, "/alternatename:?m@Gen_008f7470Result@@QAEIPAXHG@Z=?m@Gen_008f7470@@QAEXPAXHG@Z")
-
 struct Rva00290E50VoidCall
 {
 	typedef void (Rva00290E50VoidCall::*Function)(void);
@@ -290,14 +288,15 @@ static __forceinline Object *rva00290e50FindObject(GameLogic *logic, int id)
 
 struct Rva00290E50ShroudCall
 {
-	typedef UnsignedInt (Rva00290E50ShroudCall::*Function)(void *, int, UnsignedShort);
+	typedef UnsignedInt (Rva00290E50ShroudCall::*Function)(void *, int, UnsignedInt);
 };
 
 static __forceinline UnsignedInt rva00290e50Shroud(Gen_008f7470 *shroud,
-	void *position, UnsignedShort playerMask)
+	void *position, UnsignedInt playerMask)
 {
-	return reinterpret_cast<Gen_008f7470Result *>(shroud)->m(
-		position, 1, playerMask);
+	union { void (Gen_008f7470::*raw)(); Rva00290E50ShroudCall::Function member; } route;
+    route.raw=&Gen_008f7470::m;
+    return (reinterpret_cast<Rva00290E50ShroudCall*>(shroud)->*route.member)(position,1,playerMask);
 }
 
 struct Rva00290E50KindCall
@@ -322,6 +321,11 @@ static __forceinline int rva00290e50Layer(Object *object)
 	union { void (*raw)(void); Rva00290E50LayerCall::Function member; } route;
 	route.raw = j_0003a391;
 	return (reinterpret_cast<Rva00290E50LayerCall *>(object)->*route.member)();
+}
+
+static __forceinline Bool rva00290e50SameLayer(Object *first, Object *second) {
+    int layer=rva00290e50Layer(first);
+    return layer==rva00290e50Layer(second);
 }
 
 struct Rva00290E50EmotionTestCall
@@ -400,16 +404,17 @@ static __forceinline void rva00290e50SetObject(Emotion *emotion,
 	(reinterpret_cast<Rva00290E50SetObjectCall *>(emotion)->*route.member)(object);
 }
 
-struct Rva00290E50C1050Call
+struct BfmeC1050Result
 {
-	typedef Object *(Rva00290E50C1050Call::*Function)(int, int, int, int);
+	typedef Object *(BfmeC1050Result::*Function)(const Coord3D *, float, int, void *);
 };
 
 static __forceinline Object *rva00290e50FindAround(BfmeC1050 *manager,
-	int position, int range, int zero, int filter)
+	const Coord3D *position, float range, int zero, void *filter)
 {
-	return reinterpret_cast<BfmeC1050Result *>(manager)->bfmeGo1050D(
-		position, range, zero, filter);
+	union { void (BfmeC1050::*raw)(int,int,int,int); BfmeC1050Result::Function member; } route;
+    route.raw=&BfmeC1050::bfmeGo1050D;
+    return (reinterpret_cast<BfmeC1050Result*>(manager)->*route.member)(position,range,zero,filter);
 }
 
 // The stack filter constructor is the body at 0x0028F2A0, reached through
@@ -418,8 +423,12 @@ static __forceinline Object *rva00290e50FindAround(BfmeC1050 *manager,
 class Rva0028F2A0Filter
 {
 public:
-	Rva0028F2A0Filter(void *owner);
-	~Rva0028F2A0Filter(void);
+	Rva0028F2A0Filter(void *owner) {
+        union { void (*raw)(void); Function member; } route;
+        route.raw = j_00049f0d;
+        (reinterpret_cast<Call*>(this)->*route.member)(owner);
+    }
+	~Rva0028F2A0Filter(void) { m_vptr = 0x01083b5c; }
 
 	unsigned int m_vptr;
 	unsigned char m_storage[0x20];
@@ -432,21 +441,16 @@ private:
 	typedef Call::Function Function;
 };
 
-#pragma comment(linker, "/alternatename:??0Rva0028F2A0Filter@@QAE@PAX@Z=?j_00049f0d@@YAXXZ")
-#pragma comment(linker, "/alternatename:??1Rva0028F2A0Filter@@QAE@XZ=?m@Gen_0028ee20@@QAEXXZ")
 
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString(const char *text);
-	~BFMERetailAsciiString(void);
-	void releaseBuffer(void);
+#include "Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
+class ThingTemplate;
+class BfmeThingFactory { public: const ThingTemplate *findTemplate(const AsciiString&); };
 
-	unsigned char m_storage[0x0c];
+struct Rva00290E50ModuleData {
+    unsigned char pad00[8]; float field08; int field0c; unsigned field10;
+    unsigned field14,field18,field1c; float field20,field24,field28;
 };
-
-#pragma comment(linker, "/alternatename:??1BFMERetailAsciiString@@QAE@XZ=??1AsciiString@@QAE@XZ")
-
 class EmotionTrackerUpdate
 {
 public:
@@ -465,7 +469,7 @@ public:
 	Emotion **m_emotionsBegin;
 	Emotion **m_emotionsEnd;
 	unsigned char m_pad78[4];
-	Emotion *m_currentEmotion;
+	Emotion *current;
 	int m_distributionIndex;
 	unsigned char m_pad84[0x10];
 	int m_forcedRetry;
@@ -489,334 +493,149 @@ static __forceinline Object *rva00290e50FindByID(int id)
 // ?update@EmotionTrackerUpdate@@UAE?AW4UpdateSleepTime@@XZ
 UpdateSleepTime EmotionTrackerUpdate::update(void)
 {
-	register EmotionTrackerUpdate *self = this;
-	register Object *object;
-	const unsigned char *moduleData = *reinterpret_cast<const unsigned char * const *>(
-		reinterpret_cast<unsigned char *>(self) - 0x0c);
-
-	if (moduleData == 0)
-		return UPDATE_SLEEP_FOREVER;
-	object = *reinterpret_cast<Object **>(
-		reinterpret_cast<unsigned char *>(self) - 0x08);
-	if (object == 0)
-		return UPDATE_SLEEP_FOREVER;
-	if (*reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(object) + 0x214) == 0)
-		return UPDATE_SLEEP_FOREVER;
-	UnsignedInt zero = 0;
-
-	Emotion *current = m_currentEmotion;
-	if (current != 0)
-	{
-		rva00290e50StopEmotion(current);
-		m_currentEmotion = 0;
-		goto cleanup;
-	}
-
-	if (m_forcedRetry > (int)zero)
-		--m_forcedRetry;
-
-	if (*reinterpret_cast<unsigned char *>(TheWritableGlobalData + 0xec8) != 0)
-	{
-		Coord3D position;
-		const float *objectPosition = reinterpret_cast<const float *>(
-			reinterpret_cast<const unsigned char *>(object) + 0x38);
-		position.y = objectPosition[1];
-		position.z = objectPosition[2];
-		position.x = objectPosition[0];
-		position.z = TheTerrainLogic->slot18(position.x, position.y, 0);
-
-		if (*reinterpret_cast<const int *>(moduleData + 0x0c) != 0)
-		{
-			TheTacticalView->slot30(&position,
-				*reinterpret_cast<const float *>(moduleData + 0x08), 0xff0000ff, 0);
-			if (*reinterpret_cast<const float *>(moduleData + 0x20) > BfmeZeroRange)
-				TheTacticalView->slot30(&position,
-					*reinterpret_cast<const float *>(moduleData + 0x20), 0xff00ffff, 0);
-			if (*reinterpret_cast<const float *>(moduleData + 0x24) > BfmeZeroRange)
-				TheTacticalView->slot30(&position,
-					*reinterpret_cast<const float *>(moduleData + 0x24), 0xffff0000, 0);
-		}
-	}
-
-	Object *type3Object = 0;
-	Object *type4Object = 0;
-	Object *type59Object = 0;
-	float bestDistance = 0x7f7fffff;
-	float type4Distance;
-	Bool changedContainment = false;
-
-	{
-		int distribution = --m_distributionIndex;
-		Object *initial = 0;
-		if (distribution <= 0 &&
-			*reinterpret_cast<const int *>(moduleData + 0x0c) != 0 &&
-			m_forcedRetry <= 0)
-		{
-			Rva0028F2A0Filter filter(reinterpret_cast<unsigned char *>(self) - 0x10);
-			if (!rva00290e50TestStatus(object, 0x43))
-			{
-				initial = rva00290e50FindAround(ThePartitionManager,
-					(int)(unsigned long)(reinterpret_cast<unsigned char *>(object) + 0x38),
-					*reinterpret_cast<const int *>(moduleData + 0x08), 0,
-					(int)(unsigned long)&filter);
-			}
-
-			if (initial != 0)
-			{
-				Bool accepted = rva00290e50Accept(moduleData + 0x1c, initial);
-				if (!accepted)
-					accepted = rva00290e50Accept(moduleData + 0x14, initial);
-				if (!accepted)
-					accepted = rva00290e50Accept(moduleData + 0x18, initial);
-				if (!accepted)
-				{
-					m_active[9] = 0;
-					m_active[0] = 1;
-					m_active[3] = 0;
-				}
-				else
-				{
-					m_active[9] = 0;
-					m_active[0] = 0;
-					m_active[3] = 1;
-					bestDistance = rva00290e50Distance(object, initial);
-				}
-			}
-			else
-			{
-				m_active[0] = 0;
-				m_active[3] = 0;
-				if (filter.m_storage[0x1c] != 0)
-					m_active[9] = 1;
-				else
-					m_active[9] = 0;
-			}
-		}
-	}
-
-	{
-		if (*reinterpret_cast<const float *>(moduleData + 0x20) <= BfmeZeroRange ||
-			*reinterpret_cast<const float *>(moduleData + 0x24) <= BfmeZeroRange ||
-			m_forcedRetry > 0)
-			goto choose_emotion;
-
-		Player *player = rva00290e50ControllingPlayer(object);
-		if (player == 0)
-			goto choose_emotion;
-		int playerIndex = *reinterpret_cast<int *>(
-			reinterpret_cast<unsigned char *>(player) + 0x24);
-		UnsignedShort enemyMask = rva00290e50Mask(ThePlayers, playerIndex, 3);
-		UnsignedShort otherMask = rva00290e50Mask(ThePlayers, playerIndex, 4);
-		UnsignedInt objectMask = rva00290e50Shroud(TheShroudManager,
-			reinterpret_cast<unsigned char *>(object) + 0x38, otherMask);
-		UnsignedInt otherObjectMask = rva00290e50Shroud(TheShroudManager,
-			reinterpret_cast<unsigned char *>(object) + 0x38, enemyMask);
-		float shroudRange = rva00290e50ShroudRange(object);
-		if (shroudRange * shroudRange < bestDistance)
-			bestDistance = shroudRange * shroudRange;
-		float range20Squared = *reinterpret_cast<const float *>(moduleData + 0x20) *
-			*reinterpret_cast<const float *>(moduleData + 0x20);
-		type4Distance = *reinterpret_cast<const float *>(moduleData + 0x24) *
-			*reinterpret_cast<const float *>(moduleData + 0x24);
-
-		int *id = *reinterpret_cast<int **>(TheEmotionSystem + 0x14);
-		int *end = *reinterpret_cast<int **>(TheEmotionSystem + 0x18);
-		for (; id != end; ++id)
-		{
-			Object *candidate = rva00290e50FindByID(*id);
-			if (candidate == 0 ||
-				*reinterpret_cast<unsigned char *>(reinterpret_cast<unsigned char *>(candidate) + 0x368) == 0)
-				continue;
-
-			Relationship relationship = object->getRelationship(candidate);
-			if (relationship == RELATIONSHIP_ALLIES &&
-				!rva00290e50Accept(moduleData + 0x18, candidate))
-				goto candidate_kind59;
-
-			if (rva00290e50Kind(candidate, 0x8f))
-			{
-				float distance = rva00290e50Distance(object, candidate);
-				if (distance <= type4Distance)
-				{
-					Bool accepted = rva00290e50Accept(moduleData + 0x14, candidate);
-					if (!accepted)
-						accepted = rva00290e50Accept(moduleData + 0x18, candidate);
-					if (accepted)
-					{
-						if ((*reinterpret_cast<unsigned char *>(reinterpret_cast<unsigned char *>(candidate) + 0x90) & 0x40) == 0 &&
-							rva00290e50Layer(object) != rva00290e50Layer(candidate))
-						{
-							m_active[0] = 1;
-							m_active[3] = 0;
-						}
-						Emotion **emotion = m_emotionsBegin;
-						for (; emotion != m_emotionsEnd; ++emotion)
-						{
-							if (rva00290e50EmotionType(*emotion) == 4 &&
-								rva00290e50EmotionTest(*emotion, objectMask,
-									otherObjectMask, candidate))
-							{
-								type4Object = candidate;
-								type4Distance = distance;
-								goto next_candidate;
-							}
-						}
-					}
-				}
-			}
-
-			float distance = rva00290e50Distance(object, candidate);
-			if (distance <= bestDistance)
-			{
-				Bool accepted = rva00290e50Accept(moduleData + 0x14, candidate);
-				if (!accepted)
-					accepted = rva00290e50Accept(moduleData + 0x18, candidate);
-				if (!accepted)
-					accepted = rva00290e50Accept(moduleData + 0x1c, candidate);
-				if (accepted)
-				{
-					Emotion **emotion = m_emotionsBegin;
-					for (; emotion != m_emotionsEnd; ++emotion)
-					{
-						if (rva00290e50EmotionType(*emotion) == 3 &&
-							rva00290e50EmotionTest(*emotion, objectMask,
-								otherObjectMask, candidate))
-						{
-							bestDistance = distance;
-							type3Object = candidate;
-							if ((*reinterpret_cast<unsigned char *>(reinterpret_cast<unsigned char *>(candidate) + 0x90) & 0x40) == 0 &&
-								rva00290e50Layer(object) != rva00290e50Layer(candidate))
-							{
-								m_active[0] = 1;
-								m_active[3] = 0;
-							}
-							break;
-						}
-					}
-				}
-			}
-
-candidate_kind59:
-			if (rva00290e50Kind(candidate, 0x59))
-			{
-				void *nameObject;
-				{
-					BFMERetailAsciiString name((const char *)0x010BE578);
-					nameObject = rva00290e50RegistryLookup(TheRegistry, &name);
-				}
-				if (nameObject != 0 &&
-					rva00290e50Equivalent(nameObject, rva00290e50Template(candidate)))
-					goto next_candidate;
-				if (nameObject != 0 &&
-					*reinterpret_cast<int *>(reinterpret_cast<unsigned char *>(nameObject) + 8) == 2)
-				{
-					float distance = rva00290e50Distance(object, candidate);
-					if (distance < range20Squared)
-					{
-						type59Object = candidate;
-						changedContainment = true;
-					}
-				}
-			}
-
-next_candidate:
-			;
-		}
-
-choose_emotion:
-		if (type3Object != 0 || type4Object != 0 || type59Object != 0)
-			m_enabled = 0;
-		else if (m_enabled == 0)
-			m_enabled = 1;
-
-		if (m_enabled != 0 &&
-			TheBfmeGameLogic->m_frame > m_deadline &&
-			type59Object != 0)
-		{
-			m_deadline =
-				TheBfmeGameLogic->m_frame + 0x12c;
-			m_active[2] = 1;
-			m_enabled = 0;
-		}
-		else
-			m_active[2] = 0;
-
-		m_active[4] = type4Object != 0;
-		if (GetGameLogicRandomValueReal(0.0f, 1.0f,
-			(char *)0x010BE518, 0x226) <= *reinterpret_cast<const float *>(moduleData + 0x28) &&
-			rva00290e50Layer(object) == 1)
-		{
-			m_active[8] = 1;
-			UnsignedInt frame = TheBfmeGameLogic->m_frame + 1;
-			m_startFrame[8] = frame;
-			m_endFrame[8] = 0;
-			Emotion *selected = rva00290e50Select(
-				reinterpret_cast<unsigned char *>(self) - 0x10);
-			if (selected != 0)
-			{
-				UnsignedInt type = rva00290e50EmotionType(selected);
-				if (type == 3 && type3Object != 0)
-				{
-					UnsignedInt selectedID = m_endFrame[type];
-					UnsignedInt candidateID = *reinterpret_cast<UnsignedInt *>(
-						reinterpret_cast<unsigned char *>(type3Object) + 0x74);
-					if (selectedID != candidateID)
-					{
-						Object *selectedObject = rva00290e50FindByID(selectedID);
-						Object *candidateObject = rva00290e50FindByID(candidateID);
-						if (selectedObject != 0 && candidateObject != 0 &&
-							*reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(selectedObject) + 0x214) != 0 &&
-							*reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(candidateObject) + 0x214) != 0 &&
-							*reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(selectedObject) + 0x214) !=
-							*reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(candidateObject) + 0x214))
-							changedContainment = true;
-					}
-				}
-
-				current = m_currentEmotion;
-				if (current == selected && !changedContainment)
-				{
-					if (rva00290e50EmotionStillActive(current))
-						goto cleanup;
-					rva00290e50StopEmotion(current);
-					m_currentEmotion = 0;
-					goto cleanup;
-				}
-
-				if (current != 0)
-					rva00290e50StopEmotion(current);
-				m_currentEmotion = selected;
-				if (type == 2 && type3Object != 0)
-					m_endFrame[2] =
-						*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(type3Object) + 0x74);
-				else if (type == 4 && type4Object != 0)
-					m_endFrame[4] =
-						*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(type4Object) + 0x74);
-				else if (type != 0 && type != 3 && type3Object != 0)
-					m_endFrame[type] =
-						*reinterpret_cast<UnsignedInt *>(reinterpret_cast<unsigned char *>(type3Object) + 0x74);
-
-				int objectID;
-				if (m_forcedRetry > 0)
-					objectID = m_objectID;
-				else
-					objectID = m_endFrame[type];
-				rva00290e50SetObject(selected, rva00290e50FindByID(objectID));
-			}
-		}
-	}
-
-cleanup:
-	if (m_startFrame[0] != 0 &&
-		TheBfmeGameLogic->m_frame >= m_startFrame[0])
-	{
-		for (int i = 0; i < 10; ++i)
-		{
-			m_active[i] = 0;
-			m_startFrame[i] = 0;
-		}
-	}
-	return UPDATE_SLEEP_NONE;
+    const Rva00290E50ModuleData *moduleData = *(const Rva00290E50ModuleData **)((unsigned char*)this-0x0c);
+    if (!moduleData) return UPDATE_SLEEP_FOREVER;
+    Object *object = *(Object**)((unsigned char*)this-8);
+    if (!object) return UPDATE_SLEEP_FOREVER;
+    if (*(Object**)((unsigned char*)object+0x214)) {
+        if (current) { rva00290e50StopEmotion(current); current=0; }
+        return UPDATE_SLEEP_NONE;
+    } else {
+        if (m_forcedRetry>0) --m_forcedRetry;
+        if (*(TheWritableGlobalData+0xec8)) {
+            Coord3D position; position.x=*(float*)((unsigned char*)object+0x38); position.y=*(float*)((unsigned char*)object+0x3c); position.z=*(float*)((unsigned char*)object+0x40);
+            position.z=TheTerrainLogic->slot18(position.x,position.y,0);
+            if (moduleData->field0c)
+                TheTacticalView->slot30(&position,moduleData->field08,0xff0000ff,0);
+            if (moduleData->field20!=BfmeZeroRange)
+                TheTacticalView->slot30(&position,moduleData->field20,0xff00ffff,0);
+            if (moduleData->field24!=BfmeZeroRange)
+                TheTacticalView->slot30(&position,moduleData->field24,0xffff0000,0);
+        }
+        Object *type3Object=0;
+        float bestDistance=3.402823466e+38F;
+        if (--m_distributionIndex<=0 && moduleData->field0c && m_forcedRetry<=0) {
+            m_distributionIndex=moduleData->field0c;
+            Rva0028F2A0Filter filter((unsigned char*)this-0x10);
+            if (!rva00290e50TestStatus(object,0x43))
+                type3Object=((PartitionManager*)ThePartitionManager)->getClosestObject((const Coord3D*)((unsigned char*)object+0x38),moduleData->field08,Rva00290E50Distance0,(PartitionFilter*)&filter);
+            if (!type3Object) {
+                m_active[0]=0; m_active[3]=0;
+                if (filter.m_storage[0x1c]) m_active[9]=1; else m_active[9]=0;
+            } else {
+                if (!rva00290e50Accept(&moduleData->field1c,type3Object) &&
+                    !rva00290e50Accept(&moduleData->field14,type3Object) &&
+                    !rva00290e50Accept(&moduleData->field18,type3Object)) {
+                    m_active[9]=0; m_active[0]=1; m_active[3]=0;
+                } else {
+                    m_active[9]=0; m_active[0]=0; m_active[3]=1;
+                    bestDistance=rva00290e50Distance(object,type3Object);
+                }
+            }
+        }
+        Object *type59Object=0;
+        Object *type4Object=0;
+        if ((moduleData->field20>BfmeZeroRange || moduleData->field24>BfmeZeroRange) && m_forcedRetry<=0) {
+            Bool found59=false;
+            UnsignedInt objectMask=0,otherObjectMask=0;
+            Player *player=rva00290e50ControllingPlayer(object);
+            if (player) {
+                UnsignedShort enemyMask=rva00290e50Mask(ThePlayers,*(int*)((unsigned char*)player+0x24),3);
+                UnsignedShort otherMask=rva00290e50Mask(ThePlayers,*(int*)((unsigned char*)player+0x24),4);
+                objectMask=rva00290e50Shroud(TheShroudManager,(unsigned char*)*(Object**)((unsigned char*)this-8)+0x38,otherMask);
+                otherObjectMask=rva00290e50Shroud(TheShroudManager,(unsigned char*)*(Object**)((unsigned char*)this-8)+0x38,enemyMask);
+            }
+            float shroudRange=object->getShroudClearingRange();
+            float shroudSquared=shroudRange*shroudRange;
+            if (bestDistance>shroudSquared) bestDistance=shroudSquared;
+            float range20=moduleData->field20* moduleData->field20;
+            float range24=moduleData->field24* moduleData->field24;
+            int *id=*(int**)(TheEmotionSystem+0x14);
+            int **end=(int**)(TheEmotionSystem+0x18);
+            for (;id!=*end;++id) {
+                Object *candidate=rva00290e50FindByID(*id);
+                if (!candidate || !*((unsigned char*)candidate+0x368)) continue;
+                Relationship relationship=object->getRelationship(candidate);
+                if (rva00290e50Kind(candidate,0x8f) && (relationship!=RELATIONSHIP_ALLIES || rva00290e50Accept(&moduleData->field18,candidate))) {
+                    float distance=rva00290e50Distance(object,candidate);
+                    if (distance<range24 && (rva00290e50Accept(&moduleData->field14,candidate) || rva00290e50Accept(&moduleData->field18,candidate)) &&
+                        ((*((unsigned char*)candidate+0x90)&0x40) || rva00290e50SameLayer(*(Object**)((unsigned char*)this-8),candidate))) {
+                        Emotion **emotion=m_emotionsBegin;
+                        for (;emotion!=m_emotionsEnd;++emotion)
+                            if (rva00290e50EmotionType(*emotion)==4 && rva00290e50EmotionTest(*emotion,objectMask,otherObjectMask,candidate)) break;
+                        if (emotion!=m_emotionsEnd) { type4Object=candidate; range24=distance; continue; }
+                    }
+                    if (distance<bestDistance && (rva00290e50Accept(&moduleData->field14,candidate) || rva00290e50Accept(&moduleData->field18,candidate) || rva00290e50Accept(&moduleData->field1c,candidate))) {
+                        Emotion **emotion=m_emotionsBegin;
+                        for (;emotion!=m_emotionsEnd;++emotion)
+                            if (rva00290e50EmotionType(*emotion)==3 && rva00290e50EmotionTest(*emotion,objectMask,otherObjectMask,candidate)) break;
+                        if (emotion!=m_emotionsEnd) {
+                            bestDistance=distance; type3Object=candidate;
+                            if (!(*((unsigned char*)candidate+0x90)&0x40) && !rva00290e50SameLayer(*(Object**)((unsigned char*)this-8),candidate)) {
+                                m_active[0]=1; m_active[3]=0;
+                            } else { m_active[0]=0; m_active[3]=1; }
+                        }
+                    }
+                }
+                if (rva00290e50Kind(candidate,0x59)) {
+                    void *nameObject;
+                    { AsciiString name((const char*)0x010be578); nameObject=(void*)((BfmeThingFactory*)TheRegistry)->findTemplate(name); }
+                    if (nameObject && rva00290e50Equivalent(nameObject,rva00290e50Template(candidate))) continue;
+                    if (relationship==RELATIONSHIP_ALLIES) {
+                        float distance=rva00290e50Distance(object,candidate);
+                        if (distance<range20) { range20=distance; type59Object=candidate; found59=true; }
+                    }
+                }
+            }
+            if (!m_enabled && !found59) m_enabled=1;
+            GameLogic *logic=TheBfmeGameLogic;
+            if (logic->m_frame>m_deadline && type59Object && m_enabled) {
+                m_deadline=logic->m_frame+300; m_active[2]=1; m_enabled=0;
+            } else m_active[2]=0;
+            m_active[4]=type4Object!=0;
+        }
+        if (GetGameLogicRandomValueReal(0.0f,1.0f,(char*)0x010be518,0x226)<moduleData->field28 && rva00290e50Layer(object)==1) {
+            GameLogic *frameSource=TheBfmeGameLogic;
+            m_active[8]=1; m_startFrame[8]=frameSource->m_frame+1; m_endFrame[8]=0;
+        }
+        Emotion *selected=rva00290e50Select((unsigned char*)this-0x10);
+        Bool changedContainment=false;
+        if (selected && type3Object) {
+            UnsignedInt type=rva00290e50EmotionType(selected);
+            if (type==0 || type==3) {
+                UnsignedInt selectedID=m_endFrame[type];
+                UnsignedInt candidateID=*(UnsignedInt*)((unsigned char*)type3Object+0x74);
+                if (candidateID!=selectedID) {
+                    Object *a=rva00290e50FindByID(selectedID), *b=rva00290e50FindByID(candidateID);
+                    if (a && *(Object**)((unsigned char*)a+0x214)) a=*(Object**)((unsigned char*)a+0x214);
+                    if (b && *(Object**)((unsigned char*)b+0x214)) b=*(Object**)((unsigned char*)b+0x214);
+                    if (a!=b) changedContainment=true;
+                }
+            }
+        }
+        if (selected==current && !changedContainment) {
+            if (current && !rva00290e50EmotionStillActive(current)) {
+                rva00290e50StopEmotion(current); current=0;
+            }
+        } else {
+            if (current) rva00290e50StopEmotion(current);
+            current=selected;
+            if (selected) {
+                UnsignedInt type=rva00290e50EmotionType(selected);
+                if (type==0 || type==3) { if(type3Object) m_endFrame[type]=*(UnsignedInt*)((unsigned char*)type3Object+0x74); }
+                else if (type==2) { if(type59Object) m_endFrame[2]=*(UnsignedInt*)((unsigned char*)type59Object+0x74); }
+                else if (type==4) { if(type4Object) m_endFrame[4]=*(UnsignedInt*)((unsigned char*)type4Object+0x74); }
+                int objectID;
+                if (m_forcedRetry>0) objectID=m_objectID;
+                else objectID=m_endFrame[rva00290e50EmotionType(current)];
+                rva00290e50SetObject(current,rva00290e50FindByID(objectID));
+            }
+        }
+        for (int i=0;i<10;++i) if (m_startFrame[i] && TheBfmeGameLogic->m_frame>=m_startFrame[i]) {
+            m_active[i]=0; m_startFrame[i]=0;
+        }
+    }
+    return UPDATE_SLEEP_NONE;
 }
 
 #undef BfmeZeroRange

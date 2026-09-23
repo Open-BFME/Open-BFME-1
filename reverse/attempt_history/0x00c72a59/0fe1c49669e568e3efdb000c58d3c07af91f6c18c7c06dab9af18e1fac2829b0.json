@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0fe1c49669e568e3efdb000c58d3c07af91f6c18c7c06dab9af18e1fac2829b0",
+  "symbol": "?Rva00C72A59@@YAIPBD@Z",
+  "score_kind": "author-estimate",
+  "score": 0.2916666667,
+  "source": "// ?Rva00C72A59@@YAIPBD@Z\n// partial score=0.2916666667 date=2026-09-23\n// cl: /O1\r\n// Address identity only. Retail RVA 0x00C72A59, 24 bytes.\r\n// Counts bytes up to the first NUL. No semantic/original-symbol claim.\r\n// Boundary: preceding INT3 run; RET at 0x00C72A70; zero fill from 0x00C72A71.\r\nunsigned int Rva00C72A59(const char *text)\r\n{\r\n    const char *end = text;\r\n    char current = *end++;\r\n    while (current) {\r\n        current = *end++;\r\n    }\r\n    return (unsigned int)(end - text - 1);\r\n}\r\n"
+}

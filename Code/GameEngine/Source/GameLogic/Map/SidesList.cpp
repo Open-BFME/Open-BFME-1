@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/asciistring_copyctor_outofline /Ireference/shims/buildlistinfo /Ireference/shims/moduledata /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseascii /Ireference/shims/buildlistinfo /Ireference/shims/moduledata /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 /*
 **	Command & Conquer Generals Zero Hour(tm)
@@ -56,18 +56,12 @@
 #include "GameLogic/Scripts.h"
 #include "GameLogic/SidesList.h"
 
-// Retail's AsciiString is a StringBase<char> with no members of its own, so its
-// copy ctor at 0x0005EE50 only forwards to the base body at 0x00887B60, and
-// retail inlines that forwarder here. asciistring_copyctor_outofline leaves the
-// copy ctor undefined on purpose for the TUs that need the forwarder call;
-// defining it here puts the delegation in front of the use in this TU alone.
+// The canonical StringBase<char> shim supplies BFME AsciiString layout.
+// Retail inlines its reference release here; expose that base operation
+// within this TU. Every existing sibling remains byte-verified.
 #include "string_base.h"
 
-inline AsciiString::AsciiString(const AsciiString &stringSrc)
-{
-	((StringBase<char> *)this)->StringBase<char>::StringBase(
-		*(const StringBase<char> *)&stringSrc);
-}
+inline AsciiString::~AsciiString() { ((StringBase<char>*)this)->releaseBuffer(); }
 
 struct BfmeSidesListXferVersion
 {
@@ -547,93 +541,199 @@ static Bool ParseTeamsDataChunk(DataChunkInput &file, DataChunkInfo *info, void 
 	return true;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/Common/SidesList_prepareForMP_or_SkirmishMethodThunk.cpp
-// ?prepareForMP_or_Skirmish@SidesList@@QAEXXZ present-unmatched
-void SidesList::prepareForMP_or_Skirmish(void)
-{
-	m_skirmishTeamrec.clear();
-	Int i;
-	for (i = 0; i < getNumTeams(); i++)
-	{
-		Dict *tdict = getTeamInfo(i)->getDict();
-		m_skirmishTeamrec.addTeam(tdict);
-	}
-	m_teamrec.clear();
-
-	for (i = 0; i < MAX_PLAYER_COUNT; i++) {
-		m_skirmishSides[i].clear();
-	}
-	m_numSkirmishSides = 0;
-
-	for (i = 0; i < m_numSides; i++) 
-	{
-		m_skirmishSides[m_numSkirmishSides] = m_sides[i];
-		m_numSkirmishSides++;
-		if (m_sides[i].getDict()->getAsciiString(TheKey_playerFaction) == "FactionCivilian") {
-			// Don't remove FactionCivilian.
-			continue;
-		}
-		if (m_numSides == 1) break;	// can't remove the last side.
-		removeSide(i);
-		i--;
-	}
-	Bool gotScripts = false;
-	for (i=0; i<m_numSkirmishSides; i++) {
-		if (m_skirmishSides[i].getDict()->getAsciiString(TheKey_playerFaction) == "FactionCivilian") {
-			// Don't consider FactionCivilian.
-			continue;
-		}
-		if (m_skirmishSides[i].getScriptList()==NULL) continue;
-		if (m_skirmishSides[i].getScriptList()->getScript() != NULL || 
-			m_skirmishSides[i].getScriptList()->getScriptGroup()!=NULL) {
-			gotScripts = true;
-		}
-	}
-	if (!gotScripts) {
-		AsciiString path = "data\\Scripts\\SkirmishScripts.scb";
-		DEBUG_LOG(("Skirmish map using standard scripts\n"));
-		m_skirmishTeamrec.clear();
-		CachedFileInputStream theInputStream;
-		if (theInputStream.open(path)) { 
-				ChunkInputStream *pStrm = &theInputStream;
-				DataChunkInput file( pStrm );
-				file.registerParser( AsciiString("PlayerScriptsList"), AsciiString::TheEmptyString, ScriptList::ParseScriptsDataChunk );
-				file.registerParser( AsciiString("ScriptsPlayers"), AsciiString::TheEmptyString, ParsePlayersDataChunk );
-				file.registerParser( AsciiString("ScriptTeams"), AsciiString::TheEmptyString, ParseTeamsDataChunk );
-				if (!file.parse(this)) {
-					DEBUG_LOG(("ERROR - Unable to read in skirmish scripts.\n"));
-					return;
-				}
-				ScriptList *scripts[MAX_PLAYER_COUNT];
-				Int count = ScriptList::getReadScripts(scripts);
-				Int i;
-				for (i=0; i<count; i++) {
-					Int curSide = -1;
-					Int j;
-					for (j=0; j<m_numSkirmishSides; j++) {
- 						AsciiString name = getSkirmishSideInfo(j)->getDict()->getAsciiString(TheKey_playerName);
-						if (name == static_readPlayerNames[i]) {
-							curSide = j;
-							break;
-						}
-					}
-					if (curSide == -1) continue;
-
-					ScriptList *pSL = getSkirmishSideInfo(curSide)->getScriptList();
-					getSkirmishSideInfo(curSide)->setScriptList(scripts[i]);
-					scripts[i] = NULL;
-					if (pSL) 
-						pSL->deleteInstance();
-					scripts[i] = NULL;
-				}
-				for (i=0; i<MAX_PLAYER_COUNT; i++) {
-					static_readPlayerNames[i].clear();
-				}
-		}
-
-
-	}
+// BFME RVA 001A0390: identity is independently proved by the exact
+// GameLogic::startNewGame call position and the SidesList pin. Retail uses
+// a temporary SidesList and indexed team records; the ZH stream path does not
+// occur in this body. Witnesses: build/unclaimed_map/astra_H/LAYOUTS.md.
+#include <vector>
+extern "C" int __cdecl memcmp(const void*,const void*,unsigned int);
+#pragma intrinsic(memcmp)
+template<class T> inline bool StringBase<T>::isEmpty() const { return !m_data || !m_data->length; }
+template<class T> inline int StringBase<T>::compare(const T* s, int len) const {
+    int n = m_data ? m_data->length : 0;
+    const T* p = m_data ? m_data->data : "";
+    int c = memcmp(p, s, n < len ? n : len);
+    if(c!=0) return c;
+    return n-len;
 }
+template<class T> inline int StringBase<T>::compare(const T* s) const { return compare(s, strlen(s)); }
+template<class T> inline void StringBase<T>::concat(const T* s) { concat(s, strlen(s)); }
+
+// Address-only ILT adapters below use the existing ?j_XXXXXXXX identities.
+// The member-pointer representation is MSVC 7.1 single-inheritance: one code
+// address with ECX as receiver. Each signature follows the decoded call and
+// callee; no semantic name or pin is invented. The temporary's retail ctor
+// and dtor own construction/destruction of Dict and vector subobjects; the
+// trivial storage views avoid constructing them a second time.
+void j_0002c6c4();
+void j_00020d97();
+void j_0000fdf8();
+void j_000023d8();
+void j_00045dc7();
+void j_0002cd8b();
+void j_0001e5bf();
+void j_000384e7();
+void j_0000aa9c();
+struct Rva001A0390NodeBase { virtual ~Rva001A0390NodeBase(); };
+struct Rva00359E40 : Rva001A0390NodeBase { void rva00359E40() { union { void (*entry)(); void (Rva00359E40::*method)(); } fn; fn.entry=&j_000384e7; (this->*fn.method)(); } };
+template<class T> inline void rva001A0390Swap(T& a,T& b) { T t=a;a=b;b=t; }
+struct Rva001A0390VectorStorage {
+    unsigned words[3];
+    void clear() { ((std::vector<AsciiString>*)this)->clear(); }
+    void swap(Rva001A0390VectorStorage& b) { ((std::vector<AsciiString>*)this)->swap(*(std::vector<AsciiString>*)&b); }
+};
+struct Rva001A0390Side {
+    Rva001A0390NodeBase* rva00;
+    unsigned rva04;
+    Dict& dict04() { return *(Dict*)&rva04; }
+    Rva00359E40* rva08;
+    Rva001A0390VectorStorage rva0C;
+    void swap(Rva001A0390Side& b) {
+        rva001A0390Swap(rva00,b.rva00);
+        rva001A0390Swap(*(unsigned*)&rva04,*(unsigned*)&b.rva04);
+        rva001A0390Swap(rva08,b.rva08);
+        rva0C.swap(b.rva0C);
+    }
+    void init(const Dict* dict) {
+        delete rva00; rva00=0;
+        dict04().clear();
+        delete rva08; rva08=0;
+        rva0C.clear();
+        if(dict) dict04()=*dict;
+    }
+};
+struct Rva001A0390TeamNode { short rva00,rva02,rva04,rva06; void* rva08; Dict rva0C; };
+struct Rva001A0390Teams {
+    unsigned rva00,rva04,rva08;
+    Rva001A0390TeamNode* rva0C;
+    unsigned rva10,rva14;
+    short rva18,rva1A;
+    Rva001A0390Teams& rva0019DA80(const Rva001A0390Teams& rhs) { union { void (*entry)(); Rva001A0390Teams& (Rva001A0390Teams::*method)(const Rva001A0390Teams&); } fn; fn.entry=&j_0002c6c4; return (this->*fn.method)(rhs); }
+    void rva00197750(int i) { union { void (*entry)(); void (Rva001A0390Teams::*method)(int); } fn; fn.entry=&j_00020d97; (this->*fn.method)(i); }
+    void rva001977F0(int i) { union { void (*entry)(); void (Rva001A0390Teams::*method)(int); } fn; fn.entry=&j_0000fdf8; (this->*fn.method)(i); }
+    void rva00197860() { union { void (*entry)(); void (Rva001A0390Teams::*method)(); } fn; fn.entry=&j_000023d8; (this->*fn.method)(); }
+    void rva0019BA40(const Dict* dict) { union { void (*entry)(); void (Rva001A0390Teams::*method)(const Dict*); } fn; fn.entry=&j_00045dc7; (this->*fn.method)(dict); }
+    void erase(int i) {
+        rva00197750(i);
+        Rva001A0390TeamNode& node=rva0C[i];
+        node.rva0C.clear();
+        rva0C[node.rva00].rva02=node.rva02;
+        rva0C[node.rva02].rva00=node.rva00;
+        --rva18;
+        node.rva00=rva1A; rva1A=(short)i;
+    }
+    void swap(Rva001A0390Teams& b) {
+        rva001A0390Swap(rva00,b.rva00); rva001A0390Swap(rva04,b.rva04);
+        rva001A0390Swap(rva0C,b.rva0C); rva001A0390Swap(rva10,b.rva10);
+        rva001A0390Swap(rva14,b.rva14); rva001A0390Swap(rva18,b.rva18);
+        rva001A0390Swap(rva1A,b.rva1A);
+    }
+};
+struct Rva001A0390GameInfo {
+    virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0C();
+    virtual void slot10(); virtual void slot14(); virtual void slot18(); virtual void slot1C();
+    virtual void slot20(); virtual void slot24(); virtual void slot28(); virtual void slot2C();
+    virtual void slot30(); virtual bool slot34();
+};
+struct Rva001A0390Template { char rva00[0x10c]; AsciiString rva10C; };
+struct Rva000E0F30 { Rva001A0390Template* rva000E0F30(NameKeyType key) { union { void (*entry)(); Rva001A0390Template* (Rva000E0F30::*method)(NameKeyType); } fn; fn.entry=&j_0002cd8b; return (this->*fn.method)(key); } };
+extern Rva001A0390GameInfo* g012F708C;
+extern Rva000E0F30* g012ED750;
+extern StaticNameKey g012A7918,g012A7920,g012A7930,g012A7938,g012A7940,g012A7948,g012A7988;
+extern StaticNameKey g012A75B8,g012A75C0,g012A75C8;
+
+void j_00032ec5(); void j_000238ad();
+class Rva001A0390Layout {
+public:
+    Rva001A0390Layout() { union { void (*entry)(); void (Rva001A0390Layout::*method)(); } fn; fn.entry=&j_00032ec5; (this->*fn.method)(); }
+    ~Rva001A0390Layout() { union { void (*entry)(); void (Rva001A0390Layout::*method)(); } fn; fn.entry=&j_000238ad; (this->*fn.method)(); }
+    public:
+    char rva00[0x28];
+    int rva28;
+    Rva001A0390Side rva2C[32];
+    int rva32C;
+    Rva001A0390Side rva330[32];
+    Rva001A0390Teams rva630,rva64C;
+    char rva668[0x384];
+public:
+
+    void rva0019B640(int i) { union { void (*entry)(); void (Rva001A0390Layout::*method)(int); } fn; fn.entry=&j_0000aa9c; (this->*fn.method)(i); }
+    void rva001A0290() { union { void (*entry)(); void (Rva001A0390Layout::*method)(); } fn; fn.entry=&j_0001e5bf; (this->*fn.method)(); }
+
+    void addSide(const Dict* dict) { if(rva28<32) { int i=rva28; ++rva28; rva2C[i].init(dict); } }
+};
+
+
+typedef char Rva001A0390SideSize[(sizeof(Rva001A0390Side)==0x18)?1:-1];
+typedef char Rva001A0390TeamSize[(sizeof(Rva001A0390Teams)==0x1c)?1:-1];
+typedef char Rva001A0390LayoutSize[(sizeof(Rva001A0390Layout)==0x9ec)?1:-1];
+typedef void (Rva001A0390Layout::*Rva001A0390MemberPointer)();
+typedef char Rva001A0390MemberPointerSize[(sizeof(Rva001A0390MemberPointer)==sizeof(void(*)()))?1:-1];
+template<class T> inline const T* StringBase<T>::str() const { return m_data ? m_data->data : ""; }
+void SidesList::prepareForMP_or_Skirmish() {
+    Rva001A0390Layout temp;
+    Rva001A0390Layout* self=(Rva001A0390Layout*)this;
+    temp.rva630.rva0019DA80(self->rva630);
+    for(int i=0;i<self->rva28;) {
+        Dict* side=&self->rva2C[i].dict04();
+        AsciiString name=side->getAsciiString(g012A7918);
+        if(((const StringBase<char>*)&name)->isEmpty()) goto keepSide;
+        if(((const StringBase<char>*)&name)->compare("PlyrCivilian")==0) goto keepSide;
+        if(((const StringBase<char>*)&name)->compare("PlyrCreeps")==0) goto keepSide;
+        { temp.rva2C[temp.rva28].swap(self->rva2C[i]);
+            if(temp.rva2C[temp.rva28].rva08) temp.rva2C[temp.rva28].rva08->rva00359E40();
+            ++temp.rva28; self->rva0019B640(i); }
+        continue;
+    keepSide:
+        { side->setBool(g012A7920,false); ++i; }
+    }
+    Rva001A0390TeamNode* nodes=self->rva630.rva0C;
+    for(int idx=nodes[0].rva00;idx;) {
+        nodes=self->rva630.rva0C;
+        int next=nodes[idx].rva00;
+        AsciiString owner=nodes[idx].rva0C.getAsciiString(g012A75C0);
+        if(((const StringBase<char>*)&owner)->isEmpty() || ((const StringBase<char>*)&owner)->compare("PlyrCivilian")==0 || ((const StringBase<char>*)&owner)->compare("PlyrCreeps")==0)
+            temp.rva630.erase(idx);
+        else self->rva630.rva001977F0(idx);
+        idx=next;
+    }
+    if(!g012F708C || !g012F708C->slot34()) {
+        for(int j=0;j<temp.rva28;++j) {
+            Dict& side=temp.rva2C[j].dict04();
+            if(side.getType(g012A7988)!=Dict::DICT_ASCIISTRING) {
+                AsciiString faction=side.getAsciiString(g012A7938);
+                Rva001A0390Template* t=g012ED750->rva000E0F30(TheNameKeyGenerator->nameToKey(((const StringBase<char>*)&faction)->str()));
+                if(t && !((const StringBase<char>*)&t->rva10C)->isEmpty()) side.setAsciiString(g012A7988,t->rva10C);
+            }
+        }
+    }
+    Dict dict;
+    dict.setAsciiString(g012A7918,AsciiString("SkirmishHuman"));
+    dict.setBool(g012A7920,true);
+    dict.setUnicodeString(g012A7930,UnicodeString::TheEmptyString);
+    dict.setAsciiString(g012A7938,AsciiString("FactionCivilian"));
+    dict.setAsciiString(g012A7940,AsciiString::TheEmptyString);
+    dict.setAsciiString(g012A7948,AsciiString::TheEmptyString);
+    dict.setAsciiString(g012A7988,AsciiString("Multiplayer_Human"));
+    temp.addSide(&dict);
+    dict.clear();
+    AsciiString teamName("team"); ((StringBase<char>*)&teamName)->concat("SkirmishHuman",13);
+    dict.setAsciiString(g012A75B8,teamName);
+    dict.setAsciiString(g012A75C0,AsciiString("SkirmishHuman"));
+    dict.setBool(g012A75C8,true);
+    temp.rva630.rva0019BA40(&dict);
+    temp.rva001A0290();
+    for(int k=0;k<temp.rva28;++k)
+        if(temp.rva2C[k].rva08) temp.rva2C[k].rva08->rva00359E40();
+    temp.rva630.rva00197860();
+    self->rva32C=temp.rva28;
+    for(int n=0;n<32;++n) self->rva330[n].swap(temp.rva2C[n]);
+    self->rva64C.swap(temp.rva630);
+}
+
+
+
+
 
 
 // byte-exact reconstruction: Code/GameEngine/Source/Common/SidesList_isPlayerDefaultTeam_Thunk.cpp
