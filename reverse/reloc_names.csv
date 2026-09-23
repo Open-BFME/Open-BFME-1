@@ -725,7 +725,7 @@ _BfmePathfindMapUpdate@12,0x003FA5B0,3964,Code/GameEngine/Source/GameLogic/AI/Pa
 ?clear@?$hashtable@U?$pair@$$CBHUGen_t_00461d30_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_00461d30_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_00461d30_p12cd@@@_STL@@@2@@_STL@@QAEXXZ,0x004612E0,95,Code/gen_small/tgrid_128.cpp,reloc-derived;call-sites=1;identity=generated
 ?_bfme_setAptScreenRef@@YAXABVAsciiString@@VRva0050F840FunctorHolder@@@Z,0x004628E0,144,Code/GameEngine/Source/GameClient/AptScreenFactories.cpp,reloc-derived;call-sites=1;identity=real
 ?_bfme_closeAptScreen@@YAXABVAsciiString@@@Z,0x004629A0,97,Code/GameEngine/Source/GameClient/AptScreenFactories.cpp,reloc-derived;call-sites=2;identity=real
-?bfmeStep1_004647E0@@YAXXZ,0x00463340,976,Code/GameEngine/Source/Common/S3GuardedDelegates3.cpp,reloc-derived;call-sites=1;identity=real
+?bfmeStep1_004647E0@@YAXXZ,0x00463340,982,Code/GameEngine/Source/Common/S3GuardedDelegates3.cpp,reloc-derived;call-sites=1;identity=real;boundary=ret+0x3ce,cold-tail+0x3cf..+0x3d5,int3+0x3d6
 ??1Gen_dtor_004654c0@@UAE@XZ,0x00464E20,140,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
 ?_bfme_showAptScreen@_bfme_AptGameWindow@@QAEXABVAsciiString@@VRva0050F8B0FunctorHolder@@@Z,0x00464ED0,207,Code/GameEngine/Source/GameClient/AptScreenFactories.cpp,reloc-derived;call-sites=4;identity=real
 ?_bfme_showAptScreenWithArg@_bfme_AptGameWindow@@QAEXABVAsciiString@@PAXVRva0050F920FunctorHolder@@@Z,0x00464FE0,212,Code/GameEngine/Source/GameClient/AptScreenFactories.cpp,reloc-derived;call-sites=1;identity=real
