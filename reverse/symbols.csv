@@ -88839,3 +88839,9 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ??1Rva00140310Tree@@QAE@XZ,0x00029CAD,ThingTemplate +0x31C opaque 12B tree member destructor; retail caller +0x0C9 routes ILT to matched 0x00140310; payload type not inferred
 ??1Rva00140250Tree@@QAE@XZ,0x0000A470,ThingTemplate +0x304 opaque 12B tree member destructor; retail caller +0x122 routes ILT to matched 0x00140250; payload type not inferred
 ??1ModuleDataTreeStandIn@@QAE@XZ,0x0002C877,ModuleData tree header destructor; matched module-data dtors call ILT 0x0002C877 routing to 0x001468A0 RB-tree dtor; 0x20 header node
+??0Rva00003409Open2SlotOwner@@QAE@XZ,0x00075C10,opaque GameInfo plus Snapshot slot-owner ctor; matched Open2SlotOwner75C10 body and retail ILT 0x00003409
+??1Rva00003409Open2SlotOwner@@UAE@XZ,0x00075D70,opaque paired slot-owner dtor; matched two-base body shares array offset 0x5C and vtable at 0x58; retail ILT 0x00008797
+??0BfmeUnicodeStringBaseCopyView0009E130@@IAE@ABV0@@Z,0x00888400,one-word wide-base ABI view; retail call at SkirmishBattleHonors ctor 0x0009E130 plus 0x6C and 0x141 reaches matched StringBase<unsigned short> copy body
+??1BfmeUnicodeStringBaseCopyView0009E130@@IAE@XZ,0x008881D0,one-word wide-base ABI view; retail cleanup at SkirmishBattleHonors ctor plus 0x1DF reaches matched wide StringBase destructor
+?getSlotList@Rva0000BAD7Owner@@QAE?AVAsciiString@@XZ,0x0009DD30,opaque thiscall receiver with hidden AsciiString result; retail ctor passes this to ILT 0x0000BAD7; matched shared getSlotList body
+?setName@Rva0000F150GameSlot@@QAEXVBfmeUnicodeStringArgumentView0009E130@@@Z,0x00072420,address-qualified by-value UnicodeString ABI view; retail ctor calls ILT 0x0000F150 to matched GameSlot setName body

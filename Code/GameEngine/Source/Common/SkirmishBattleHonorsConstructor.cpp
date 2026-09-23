@@ -1,7 +1,4 @@
 // ??0SkirmishBattleHonors@@QAE@VUnicodeString@@@Z
-// partial score=0.94 date=2026-09-23
-// ??0SkirmishBattleHonors@@QAE@VUnicodeString@@@Z
-// scratch baseline copied from reverse/attempts/0x0009e130.cpp.
 // Retail 0x0009E130, 534 bytes; identity is proven by vtable 0x01080460,
 // matched dtor 0x0009C1E0, and the callers recorded in the live brief.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_NO_EXCEPTIONS /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /ICode/Libraries/Source/WWVegas/WWLib
@@ -22,22 +19,18 @@ typedef int Int;
 
 #define TRUE 1
 
-// Retail uses a distinct one-word by-value view for this literal. Its ctor is
-// an external, witnessed body; this call site has no caller-side destructor.
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString(const char *text);
-
-private:
-	char *m_text;
-};
+// The UserPreferences setBool call takes the native AsciiString by value.
+// Its canonical inline const-char constructor produces the retail call shape.
 
 class UserPreferences
 {
 public:
 	UserPreferences(void);
 	virtual ~UserPreferences(void);
+	virtual Bool load(const UnicodeString &filename);
+	virtual Bool load(AsciiString filename);
+	void setAsciiString(AsciiString key, AsciiString value);
+	void setBool(AsciiString key, Bool value);
 
 private:
 	unsigned char m_bfmeBody[0x10];
@@ -59,6 +52,7 @@ public:
 	GameInfo(void);
 	virtual ~GameInfo(void);
 	void setSlotPointer(Int index, GameSlot *slot);
+	GameSlot *getSlot(Int slot);
 
 private:
 	unsigned char m_storage[0x54];
@@ -83,39 +77,56 @@ private:
 	GameSlot m_slots[8];
 };
 
-class Rva0001EC18GameInfo
+// The native UnicodeString facade declares its copy constructor out of line.
+// Retail's by-value GameSlot::setName argument instead inlines a one-word
+// forwarding view; the base copy and destructor target the matched wide
+// StringBase bodies. This adapter changes only the caller's scheduling.
+class BfmeUnicodeStringBaseCopyView0009E130
+{
+protected:
+	BfmeUnicodeStringBaseCopyView0009E130(const BfmeUnicodeStringBaseCopyView0009E130 &other);
+	~BfmeUnicodeStringBaseCopyView0009E130();
+private:
+	void *m_data;
+};
+
+class BfmeUnicodeStringArgumentView0009E130 : private BfmeUnicodeStringBaseCopyView0009E130
 {
 public:
-	GameSlot *getSlot(Int slot);
+	BfmeUnicodeStringArgumentView0009E130(const UnicodeString &other)
+		: BfmeUnicodeStringBaseCopyView0009E130(
+			*(const BfmeUnicodeStringBaseCopyView0009E130 *)&other) {}
+	~BfmeUnicodeStringArgumentView0009E130() {}
 };
 
 class Rva0000F150GameSlot
 {
 public:
-	void setName(UnicodeString name);
+	void setName(BfmeUnicodeStringArgumentView0009E130 name);
 };
 
-class Rva00010807Values
+class Rva004D8EE0
 {
 public:
-	Rva00010807Values(void);
+	Rva004D8EE0(void);
 
 private:
 	Int m_values[10];
+};
+
+class Rva0000BAD7Owner
+{
+public:
+	AsciiString getSlotList(void);
 };
 
 class SkirmishBattleHonors : public UserPreferences
 {
 public:
 	SkirmishBattleHonors(UnicodeString userName);
-	Bool rva00021AD5Load(const UnicodeString &filename);
-	Bool rva00014308LoadAscii(AsciiString filename);
-	AsciiString rva0000BAD7GetSlotList(void);
-	void rva0000E377SetAsciiString(AsciiString key, AsciiString value);
-	void rva00017CC9SetBool(BFMERetailAsciiString key, Bool value);
 
 private:
-	Rva00010807Values m_values;
+	Rva004D8EE0 m_values;
 };
 
 extern AsciiString GameInfoToAsciiString(const GameInfo *game, Bool includeSlots);
@@ -124,49 +135,44 @@ extern Bool ParseAsciiStringToGameInfo(GameInfo *game, AsciiString options,
 
 #pragma comment(linker, "/alternatename:?compare@UnicodeString@@QBEHABV1@@Z=?j_000226ec@@YAXXZ")
 #pragma comment(linker, "/alternatename:??0UserPreferences@@QAE@XZ=?j_0004b19b@@YAXXZ")
-#pragma comment(linker, "/alternatename:??0Rva00010807Values@@QAE@XZ=?j_00010807@@YAXXZ")
 #pragma comment(linker, "/alternatename:??0Rva00003409Open2SlotOwner@@QAE@XZ=?j_00003409@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1Rva00003409Open2SlotOwner@@UAE@XZ=?j_00008797@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getSlot@Rva0001EC18GameInfo@@QAEPAVGameSlot@@H@Z=?j_0001ec18@@YAXXZ")
-#pragma comment(linker, "/alternatename:?setName@Rva0000F150GameSlot@@QAEXVUnicodeString@@@Z=?j_0000f150@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00021AD5Load@SkirmishBattleHonors@@QAE_NABVUnicodeString@@@Z=?j_00021ad5@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00014308LoadAscii@SkirmishBattleHonors@@QAE_NVAsciiString@@@Z=?j_00014308@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0000BAD7GetSlotList@SkirmishBattleHonors@@QAE?AVAsciiString@@XZ=?j_0000bad7@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0000E377SetAsciiString@SkirmishBattleHonors@@QAEXVAsciiString@@0@Z=?j_0000e377@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00017CC9SetBool@SkirmishBattleHonors@@QAEXVBFMERetailAsciiString@@_N@Z=?j_00017cc9@@YAXXZ")
+#pragma comment(linker, "/alternatename:?setName@Rva0000F150GameSlot@@QAEXVBfmeUnicodeStringArgumentView0009E130@@@Z=?j_0000f150@@YAXXZ")
+#pragma comment(linker, "/alternatename:??0BfmeUnicodeStringBaseCopyView0009E130@@IAE@ABV0@@Z=??0?$StringBase@G@@AAE@ABV0@@Z")
+#pragma comment(linker, "/alternatename:??1BfmeUnicodeStringBaseCopyView0009E130@@IAE@XZ=??1?$StringBase@G@@AAE@XZ")
+#pragma comment(linker, "/alternatename:?getSlotList@Rva0000BAD7Owner@@QAE?AVAsciiString@@XZ=?j_0000bad7@@YAXXZ")
 
 SkirmishBattleHonors::SkirmishBattleHonors(UnicodeString userName)
 {
 	if (userName.compare(BFMEUnicodeEmptyString) != 0)
 	{
-		UnicodeString filename(userName);
+		BfmeUnicodeStringArgumentView0009E130 filename(userName);
 		// The facade omits concat(text, length); retail calls StringBase's
 		// underlying native overload directly.
 		((StringBase<unsigned short> *)&filename)->concat(
 			(const unsigned short *)0x01080684,
 			(Int)wcslen((const wchar_t *)0x01080684));
-		if (!rva00021AD5Load(filename))
+		if (!UserPreferences::load(*(const UnicodeString *)&filename))
 		{
 			AsciiString asciiFilename;
 			asciiFilename.translate(userName);
 			((StringBase<char> *)&asciiFilename)->concat(
 				(const char *)0x0108066c, 0x11);
-			if (rva00014308LoadAscii(asciiFilename))
+			if (UserPreferences::load(asciiFilename))
 			{
 				Rva00003409Open2SlotOwner gameInfo;
-				Rva0001EC18GameInfo *game =
-					(Rva0001EC18GameInfo *)&gameInfo;
+				GameInfo *game = (GameInfo *)&gameInfo;
 				ParseAsciiStringToGameInfo(&gameInfo,
-					rva0000BAD7GetSlotList(), TRUE);
+					((Rva0000BAD7Owner *)this)->getSlotList(), TRUE);
 				Rva0000F150GameSlot *slot =
 					(Rva0000F150GameSlot *)game->getSlot(0);
-				slot->setName(userName);
-				rva0000E377SetAsciiString(
+				slot->setName(BfmeUnicodeStringArgumentView0009E130(userName));
+				UserPreferences::setAsciiString(
 					AsciiString((const char *)0x0108063c),
 					GameInfoToAsciiString(&gameInfo, TRUE));
 			}
-			rva00021AD5Load(filename);
+			UserPreferences::load(*(const UnicodeString *)&filename);
 		}
-		rva00017CC9SetBool(BFMERetailAsciiString((const char *)0x01080654), TRUE);
+		UserPreferences::setBool(AsciiString((const char *)0x01080654), TRUE);
 	}
 }
