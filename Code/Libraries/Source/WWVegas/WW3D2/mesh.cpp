@@ -858,12 +858,13 @@ WW3DErrorType MeshClass::Load_W3D(ChunkLoadClass & cload)
  * HISTORY:                                                                                    *
  *   6/17/98    GTH : Created.                                                                 *
  *=============================================================================================*/
-// ?MeshClass::Cast_Ray present-unmatched
+// Retail RVA 0x0092DA10; ret 4 at +0x2DB then int3: 734 bytes.
 bool MeshClass::Cast_Ray(RayCollisionTestClass & raytest)
 {
 	if ((Get_Collision_Type() & raytest.CollisionType) == 0) return false;
-	//Modified for 'Generals' so we could select trees but filter out headlight beams, etc. -MW
-	if (raytest.CheckTranslucent && Is_Alpha()!=0)
+	// BFME checks additive blending: vtable slot 109 -> ILT 0x15FEB ->
+	// Is_Additive at 0x6CF800 (Bits & 0x00400000).
+	if (raytest.CheckTranslucent && Is_Additive()!=0)
 		return false;
 	if (Is_Hidden() && !raytest.CheckHidden) return false;
 	if (Is_Animation_Hidden()) return false;
@@ -889,6 +890,11 @@ bool MeshClass::Cast_Ray(RayCollisionTestClass & raytest)
 	WWASSERT(Model);
 	
 	bool hit = Model->Cast_Ray(objray);
+	// BFME adds a squared bounding-box extent cutoff. Retail +0x1AD
+	// reads float bits 0x426B21AD from VA 0x0113C5B8.
+	AABoxClass bounds;
+	Model->Get_Bounding_Box(&bounds);
+	if (bounds.Extent.Length2() < 58.782886505126953125f) return false;
 	
 	// transform result back into original coordinate system
 	if (hit) {

@@ -2051,7 +2051,7 @@ void HLodClass::Include_NULL_Lod(bool include)
 	} else if (include && (Is_NULL_Lod_Included () == false)) {
 
 		// Tag the NULL render object onto the end
-		RenderObjClass *null_object = WW3DAssetManager::Get_Instance ()->Create_Render_Obj ("NULL");
+		RenderObjClass *null_object = ::Create_Render_Obj ("NULL");
 		WWASSERT (null_object != NULL);
 		if (null_object != NULL) {
 

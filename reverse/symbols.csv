@@ -88750,3 +88750,31 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?parsePlayerKVPairs@GameSpyPSMessageQueueInterface@@SA?AVPSPlayerStats@@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@Z,0x00659670,additive: retail call target of the red row ?WOLGameSetupMenuUpdate@@YAXPAVWindowLayout@@PAX@Z; ILT=0x000339EC; witnessed body=0x00659670; evidence=build/gap_004f6ad9/SESSION2_CALLEES.md
 ?pop_front@?$list@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@QAEXXZ,0x004F3AC0,additive: retail call target of the red row ?WOLGameSetupMenuUpdate@@YAXPAVWindowLayout@@PAX@Z; ILT=0x00014916; witnessed body=0x004F3AC0; evidence=build/gap_004f6ad9/SESSION2_CALLEES.md
 ?friend_getWaypointGoalPathSize@AIUpdateInterface@@QBEHXZ,0x0000BD84,Open-BFME5 ILT 0x0000BD84 jmp to body 0x00271AE0; sole retail call site 0x00746B9D in W3DWaypointBuffer::drawWaypoints (0x00746A30) passes ecx=Object+0x204 AI interface and bounds its goal-path index loop with the result; body = matched getAIStateType 0x0026F8F0 prefix (m_stateMachine +0x30; BFME getCurrentStateID +0x58 then +0x1C vs INVALID_STATE_ID 0xF423F) cmp AI_FOLLOW_PATH 6 else m_goalPath (+0x44/+0x48) size /12 as AIStateMachine::getGoalPathPosition 0x0016F770; ZH AIUpdate.cpp:5277 AIUpdate.h:643 Int ... const
+??0?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@ABV01@@Z,0x005A9D60,CommandXlat witnessed call 0x5b0e92; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+??0RayCollisionTestClass@@QAE@ABV0@ABVMatrix3D@@@Z,0x0092C8B0,additive: retail call target of the red row ?Cast_Ray@MeshClass@@UAE_NAAVRayCollisionTestClass@@@Z
+?Cast_Ray@MeshGeometryClass@@QAE_NAAVRayCollisionTestClass@@@Z,0x009278F0,additive: retail call target of the red row ?Cast_Ray@MeshClass@@UAE_NAAVRayCollisionTestClass@@@Z
+?Get_Inverse@Matrix3D@@QBEXAAV1@@Z,0x008D7B30,additive: retail call target of the red row ?Cast_Ray@MeshClass@@UAE_NAAVRayCollisionTestClass@@@Z
+?Obj_Look_At@Matrix3D@@QAEXABVVector3@@0M@Z,0x008D6D60,additive: retail call target of the red row ?Cast_Ray@MeshClass@@UAE_NAAVRayCollisionTestClass@@@Z
+?canAnyForceAttack@@YAHPBV?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@PBVObject@@PBVCoord3D@@@Z,0x005A89C0,CommandXlat witnessed call 0x5b0c98; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?canObjectForceAttack@@YAHPAVObject@@PBV1@PBVCoord3D@@@Z,0x005A88E0,CommandXlat witnessed call 0x5a89ee; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?evaluateContextCommand@CommandTranslator@@AAE?AW4CommandEvaluateType@@PAVDrawable@@PBVCoord3D@@W42@@Z,0x005ADE90,CommandXlat witnessed call 0x5b08ea; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?evaluateForceAttack@CommandTranslator@@AAEHPAVDrawable@@PBVCoord3D@@W4CommandEvaluateType@@@Z,0x005ADC10,CommandXlat witnessed call 0x5b077b; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?getPosition@Drawable@@QBEPBVCoord3D@@XZ,0x0041D090,CommandXlat witnessed call 0x5b013d; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?iNeedAHero@@YAPAVObject@@PAV1@@Z,0x005A9B50,CommandXlat witnessed call 0x5b00c5; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?iterateObjects@Player@@QBEHP6AHPAVObject@@PAX@Z1@Z,0x000CDCF0,CommandXlat witnessed call 0x5a9b7f; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva000652A0@GameLogic@@QBE_NXZ,0x000652A0,CommandXlat witnessed call 0x5b033e; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva000D4660@Player@@QBEPAVObject@@_NPAPAV2@@Z,0x000D4660,CommandXlat witnessed call 0x5b016a; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva00107140@Radar@@QAE_NPAVCoord3D@@@Z,0x00107140,CommandXlat witnessed call 0x5b019a; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva001BE310@Object@@QBEHHPBV1@PBVCoord3D@@H@Z,0x001BE310,CommandXlat witnessed call 0x5a8981; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva001C77B0@Object@@QBEHHPBV1@H@Z,0x001C77B0,CommandXlat witnessed call 0x5a88fd; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva001C9C10@Object@@QBE_NXZ,0x001C9C10,CommandXlat witnessed call 0x5a88e5; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva0043CEC0@InGameUI@@QAEXXZ,0x0043CEC0,CommandXlat witnessed call 0x5b0af1; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva0043EC00@InGameUI@@QBE_NXZ,0x0043EC00,CommandXlat witnessed call 0x5b06f0; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva00511CC0@@YAXH@Z,0x00511CC0,CommandXlat witnessed call 0x5b0286; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva0052B2A0@@YAXXZ,0x0052B2A0,CommandXlat witnessed call 0x5b0356; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva00569D80@@YAXXZ,0x00569D80,CommandXlat witnessed call 0x5b038e; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva005A49E0@Mouse@@QBE_NPBUICoord2D@@0@Z,0x005A49E0,CommandXlat witnessed call 0x5b0605; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?rva005A9B00@@YAHPAVObject@@PAX@Z,0x005A9B00,CommandXlat hero callback; VA00428ACE routes to005A9B00; cdecl Object*/holder and EAX result witnessed
+?rva005A9C90@CommandTranslator@@AAEXPBVGameMessage@@@Z,0x005A9C90,CommandXlat witnessed call 0x5b091b; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?test@Rva003968A0@@QAE_NXZ,0x003968A0,CommandXlat witnessed call 0x5b0e41; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
+?test@Rva004891C0@@QBE_NXZ,0x004891C0,CommandXlat witnessed call 0x5b034d; callee ABI inspected; build/gap_005ade0d/PIN_EVIDENCE.md
