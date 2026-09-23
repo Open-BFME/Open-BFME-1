@@ -1,5 +1,5 @@
 // ?rva0024ECA0@Rva0024ECA0Owner@@QAEXPAURva0024ECA0Object@@@Z
-// partial score=0.94 date=2026-09-10
+// partial score=0.96 date=2026-09-23
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: address-derived method spelling. Retail 0x0024ECA0, 126B, SlaughterHordeContain's
 // +0x20 secondary-interface slot 34 (+0x88, same slot HordeGarrisonContain
@@ -110,16 +110,14 @@ void Rva0024ECA0Owner::rva0024ECA0( Rva0024ECA0Object *obj )
 		return;
 	}
 
-	if ( !container->bfmeSlot6C( obj ) )
+	if( !container->bfmeSlot6C( obj ) &&
+			reinterpret_cast<BfmeThingAIA *>( obj )->bfmeAskAIA( 0x6c ) )
 	{
-		if ( reinterpret_cast<BfmeThingAIA *>( obj )->bfmeAskAIA( 0x6c ) )
-		{
-			container->bfmeSlot74( obj );
-			container->bfmeSlot44();
-			return;
-		}
+		container->bfmeSlot74( obj );
 	}
-
-	container->bfmeSlot78( obj );
+	else
+	{
+		container->bfmeSlot78( obj );
+	}
 	container->bfmeSlot44();
 }
