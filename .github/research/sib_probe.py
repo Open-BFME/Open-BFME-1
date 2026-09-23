@@ -1,90 +1,125 @@
-"""Independent floating-point lane seeded from candidates with all SIB bytes exact.
-Reuse the pinned preceding research harness, verifying its exact Git blob hash.
-All outputs remain scratch; no remote production or ledger changes.
+"""Resume the nine-byte renderer checkpoint. Diagnostic work only, not a landing.
+No compiler/output byte patching, no accepted source, ledger, or gate edits.
 """
 from pathlib import Path
 import hashlib,urllib.request
-url='https://raw.githubusercontent.com/Open-BFME/Open-BFME-1/010683a09c21c158a15f250bc1cc86fc1a9667cb/.github/research/sib_probe.py'
-raw=urllib.request.urlopen(url,timeout=30).read()
-assert hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()=='d021c7de108224c53583b8920ab7ba29e7d090ed'
-implementation=raw.decode('utf-8');prefix=implementation.split('seed_masks=',1)[0]
-exec(compile(prefix,'pinned_research_harness','exec'))
-(OUT/'shared_driver_source.json').write_text(json.dumps({'commit':'010683a09c21c158a15f250bc1cc86fc1a9667cb','source':implementation}),encoding='utf-8')
-deadline=time.monotonic()+420
-proof=json.loads((ROOT/'reverse/attempt_support/0x00960a30-verification.json').read_text())
-address_offsets={int(x,16) for g in proof['remaining_groups'] if 'SIB' in g['name'] for x in g['wrong_offsets']}
-assert len(address_offsets)==45
-batch([('address_seed_'+str(i),source_for(mask),mask) for i,mask in enumerate([[19,29,40],[19,29,40,41]])])
-assert best and best['cost']==20
-for generation in range(3):
-    if best.get('verified_exact') or time.monotonic()>deadline-60:break
-    eligible=sorted((r for r in records if r.get('mask') is not None and 'cost' in r and r.get('relocation_drifts')==0 and not address_offsets.intersection(r['offsets']) and 'error' not in r),key=lambda r:(r['cost'],r['volatile_tokens']))
-    beam=[];codes=set()
-    for r in eligible:
-        if r['code_sha256'] in codes:continue
-        codes.add(r['code_sha256']);beam.append(r)
-        if len(beam)==3:break
-    jobs=[]
-    for parent in beam:
-        for atom in range(len(atoms)):
-            mask=set(parent['mask'])^{atom};counter+=1
-            jobs.append(('address_beam_'+str(generation)+'_'+str(counter),source_for(mask),mask))
-    result=batch(jobs)
-    if not result:break
-# Preserve the two lane results even if the byte-distance best lost an address.
-address_best=min((r for r in records if 'cost' in r and not r.get('relocation_drifts') and not address_offsets.intersection(r.get('offsets',[])) and 'error' not in r),key=lambda r:(r['cost'],r['volatile_tokens']),default=None)
-if address_best:
-    seed=sources[address_best['tag']]
-    (OUT/'best_address_renderer.cpp').write_text(seed,encoding='utf-8',newline='\n')
-    (OUT/'best_address_renderer.json').write_text(json.dumps(address_best,indent=2),encoding='utf-8')
-    jobs=[]
-    # Same ordinary additions through different natural helper boundaries.
-    definitions=[
-      'static __forceinline void AddExpandedTop(Vector3& a,const Vector3& b) {a.X+=b.X;a.Y+=b.Y;a.Z+=b.Z;}\n',
-      'static __forceinline void AddExpandedTop(Vector3& a,const Vector3& b) {Vector3::Add(a,b,&a);}\n',
-      'static __forceinline void AddExpandedTop(Vector3& a,const Vector3& b) {Vector3::Add(b,a,&a);}\n',
-      'static __forceinline void AddExpandedTop(Vector3& a,const Vector3& b) {a.Set(a.X+b.X,a.Y+b.Y,a.Z+b.Z);}\n',
-      'static __forceinline void AddExpandedTop(Vector3& a,const Vector3& b) {a.X=b.X+a.X;a.Y=b.Y+a.Y;a.Z=b.Z+a.Z;}\n'
-    ]
-    for i,helper in enumerate(definitions):
-        text=seed.replace('void SegLineRendererClass::Render',helper+'void SegLineRendererClass::Render',1).replace('top += delta;','AddExpandedTop(top, delta);')
-        if text!=seed:jobs.append(('top_add_helper_'+str(i),text,None))
-    # Explicit local construction for the temporary displacement, keeping Vector3.
-    for declaration in ['struct ExpansionDelta : Vector3 { ExpansionDelta(const Vector3& a):Vector3(a) {} }; ExpansionDelta delta(top - bottom);','Vector3 delta; delta = top - bottom;']:
-        text=seed.replace('Vector3 delta = top - bottom;',declaration)
-        if text!=seed:jobs.append(('delta_storage_'+str(len(jobs)),text,None))
-    # Per-call-site helper boundaries: clone an existing helper for one use only.
-    name='DotSegLineLastTopSequential'
-    m=re.search(r'static WWINLINE float '+name+r'\([^\n]*\)\s*\{[^}]*\}',seed)
-    if m:
-        uses=list(re.finditer(r'\b'+name+r'\(',seed))[1:]
-        for i,use in enumerate(uses):
-            helper=m.group(0).replace(name,name+'Site')+'\n'
-            text=seed[:use.start()]+name+'Site'+seed[use.start()+len(name):]
+u='https://raw.githubusercontent.com/Open-BFME/Open-BFME-1/010683a09c21c158a15f250bc1cc86fc1a9667cb/.github/research/sib_probe.py'
+b=urllib.request.urlopen(u,timeout=30).read()
+assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()=='d021c7de108224c53583b8920ab7ba29e7d090ed'
+exec(compile(b.decode().split('seed_masks=',1)[0],'pinned_research_harness','exec'))
+deadline=time.monotonic()+500
+mask=[2,7,8,14,17,19,28,36,41]
+seed=source_for(mask)
+r=evaluate(('resume_baseline',seed,mask));accept(r,seed)
+assert r.get('resolved_diffs')==9 and r.get('size')==SIZE and not r.get('masked') and not r.get('unresolved'),r
+print('BASELINE_DETAIL',json.dumps(r),flush=True)
+import capstone
+md=capstone.Cs(capstone.CS_ARCH_X86,capstone.CS_MODE_32)
+for label,data in [('retail',retail),('candidate',bytes.fromhex(r['raw_hex']))]:
+    for ins in md.disasm(data,0):
+        if any(abs(ins.address-i)<22 for i in r['offsets']):print('RESIDUE',label,hex(ins.address),ins.bytes.hex(),ins.mnemonic,ins.op_str,flush=True)
+for i,m in enumerate(atoms):
+    print('ATOM',i,original[max(0,m.start()-75):m.end()+100].replace('\n',' '),flush=True)
+for name in ['cl.exe','c1.dll','c1xx.dll','c2.dll']:
+    p=build.vc71_root()/'Vc7/bin'/name
+    if p.exists():print('COMPILER',name,sha(p.read_bytes()),flush=True)
+# Natural inline boundaries for existing array indexing (same type, indices, and accesses).
+jobs=[]
+for reference in (False,True):
+    for swapped in (False,True):
+        for force in ('inline','__forceinline'):
+            ret='VertexFormatXYZDUV1 &' if reference else 'VertexFormatXYZDUV1 *'
+            params='unsigned int index, VertexFormatXYZDUV1 *base' if swapped else 'VertexFormatXYZDUV1 *base, unsigned int index'
+            helper='static '+force+' '+ret+' RendererVertexAt('+params+') {return '+('base[index]' if reference else 'base+index')+';}\n'
+            def replacement(m):
+                args=(m[1]+', vArray') if swapped else ('vArray, '+m[1])
+                return 'RendererVertexAt('+args+')'+('.' if reference else '->')
+            text=re.sub(r'vArray\[([^\]\n]+)\]\.',replacement,seed)
             text=text.replace('void SegLineRendererClass::Render',helper+'void SegLineRendererClass::Render',1)
-            jobs.append(('top_dot_site_'+str(i),text,None))
-    if time.monotonic()<deadline-45 and not best.get('verified_exact'):batch(jobs)
-
-if best_text:
-    r=evaluate(('final_recheck',best_text,best.get('mask')));accept(r,best_text)
-    # Unconditionally run strict resolver even when the lane is still above nine.
-    row={'name':SYM,'target_rva':hex(RVA),'target_size':str(SIZE),'source':(OUT/'final_recheck.cpp').relative_to(ROOT).as_posix(),'status':'matched','notes':''}
+            jobs.append(('vertex_helper_'+str(reference)+str(swapped)+force,text,None))
+# Group fields into an ordinary vertex reference per existing store group.
+pat=r'vArray\[vidx\]\.x = ([^;]+);\nvArray\[vidx\]\.y = ([^;]+);\nvArray\[vidx\]\.z = ([^;]+);'
+locations=list(re.finditer(pat,seed))
+for chosen in [set(range(len(locations)))]+[{i} for i in range(len(locations))]:
+    for form in ('ref','pointer','helper'):
+        t=seed
+        for i in sorted(chosen,reverse=True):
+            m=locations[i];fields=m.groups()
+            if form=='ref':new='{ VertexFormatXYZDUV1 &vertex=vArray[vidx]; vertex.x='+fields[0]+'; vertex.y='+fields[1]+'; vertex.z='+fields[2]+'; }'
+            elif form=='pointer':new='{ VertexFormatXYZDUV1 *vertex=vArray+vidx; vertex->x='+fields[0]+'; vertex->y='+fields[1]+'; vertex->z='+fields[2]+'; }'
+            else:new='StoreRendererPosition(vArray[vidx], '+fields[0].split('.')[0]+');'
+            t=t[:m.start()]+new+t[m.end():]
+        if form=='helper':t=t.replace('void SegLineRendererClass::Render','static __forceinline void StoreRendererPosition(VertexFormatXYZDUV1& v,const Vector3& p) {v.x=p.X; v.y=p.Y; v.z=p.Z;}\nvoid SegLineRendererClass::Render',1)
+        jobs.append(('vertex_group_'+form+'_'+str(min(chosen))+'_'+str(len(chosen)),t,None))
+# Move native operator bodies across existing helper boundaries; no added volatile.
+helpers=list(re.finditer(r'static (?:WWINLINE|__forceinline) [^{]+\{',seed))
+for i,m in enumerate(helpers):
+    level=1;j=m.end()
+    while level and j<len(seed):
+        level+=(seed[j]=='{')-(seed[j]=='}');j+=1
+    body=seed[m.start():j]
+    for kind in ('plain','inline','force','plain_inline','plain_force'):
+        new=body
+        if 'plain' in kind:new=re.sub(r'\bvolatile\s+','',new)
+        if 'inline' in kind:new=new.replace('__forceinline','inline').replace('WWINLINE','inline')
+        if 'force' in kind:new=new.replace('WWINLINE','__forceinline')
+        if new!=body:jobs.append(('helper_'+str(i)+'_'+kind,seed[:m.start()]+new+seed[j:],None))
+# Pure floating expressions in the existing expansion operation. All use native fields.
+add_helpers=[
+'float x=a.X+b.X; float y=a.Y+b.Y; float z=a.Z+b.Z; a.X=x;a.Y=y;a.Z=z;',
+'Vector3 sum(a.X+b.X,a.Y+b.Y,a.Z+b.Z); a=sum;',
+'a.X+=b.X;a.Y+=b.Y;a.Z+=b.Z;',
+'a.Set(a.X+b.X,a.Y+b.Y,a.Z+b.Z);',
+'a+=b;',
+'a=a+b;',
+'Vector3::Add(a,b,&a);'
+]
+for i,body in enumerate(add_helpers):
+    for swap in (False,True):
+        params='const Vector3& b,Vector3& a' if swap else 'Vector3& a,const Vector3& b'
+        helper='static __forceinline void RendererExpand('+params+') {'+body+'}\n'
+        text=seed.replace('void SegLineRendererClass::Render',helper+'void SegLineRendererClass::Render',1).replace('top += delta;','RendererExpand('+('delta,top' if swap else 'top,delta')+');')
+        jobs.append(('expansion_'+str(i)+'_'+str(swap),text,None))
+# Plain reads instead of identity pointer casts in different real math helpers.
+for i,m in enumerate(helpers):
+    level=1;j=m.end()
+    while level and j<len(seed):level+=(seed[j]=='{')-(seed[j]=='}');j+=1
+    body=seed[m.start():j]
+    new=re.sub(r'\*\((?:const )?(?:volatile )?float \*\)&([A-Za-z_]\w*(?:\.[A-Za-z_]\w*)?)',r'\1',body)
+    if new!=body:jobs.append(('native_reads_'+str(i),seed[:m.start()]+new+seed[j:],None))
+# Preserve all source changes and only retain unique compiled candidates.
+batch(jobs)
+# Explore interacting helper cleanups from the four closest distinct outputs.
+for generation in range(2):
+    if best.get('verified_exact') or time.monotonic()>deadline-75:break
+    eligible=sorted((x for x in records if 'cost' in x and not x.get('relocation_drifts') and 'error' not in x),key=lambda x:(x['cost'],x['volatile_tokens']))
+    beam=[];codes=set()
+    for rec in eligible:
+        if rec['code_sha256'] in codes:continue
+        codes.add(rec['code_sha256']);beam.append(rec)
+        if len(beam)==4:break
+    more=[]
+    for parent in beam:
+        text=sources[parent['tag']]
+        for i,m in enumerate(re.finditer(r'\bvolatile\s+',text)):
+            more.append(('cleanup_'+str(generation)+'_'+parent['tag']+'_'+str(i),text[:m.start()]+text[m.end():],None))
+    if not batch(more):break
+# Fresh serial compile and strict address-resolved verification.
+r=evaluate(('final_recheck',best_text,best.get('mask')))
+accept(r,best_text)
+row={'name':SYM,'target_rva':hex(RVA),'target_size':str(SIZE),'source':(OUT/'final_recheck.cpp').relative_to(ROOT).as_posix(),'status':'matched','notes':''}
+p=build.compile_function(row,symbols,OUT/'final_recheck.obj',retain_compiled=True)
+r.update(resolved_diffs=sum(a!=b for a,b in zip(retail,p['bytes'])),masked=p['masked'],unresolved=p['unresolved'],resolved_sha256=sha(p['bytes']),boundary_issue=build.claimed_boundary_issue(p['compiled'],SIZE,p['relocs']))
+r['verified_exact']=p['bytes']==retail and r['size']==SIZE and not r['masked'] and not r['unresolved'] and not r['boundary_issue']
+(OUT/'final_recheck.json').write_text(json.dumps(r,indent=2),encoding='utf-8')
+checks=[]
+for old in json.loads((ROOT/'reverse/attempt_support/0x00960a30-verification.json').read_text())['canonical_sibling_checks']:
+    row=dict(row,name=old['symbol'],target_rva=old['rva'],target_size=str(old['size']))
     try:
         p=build.compile_function(row,symbols,OUT/'final_recheck.obj',retain_compiled=True)
-        r.update(resolved_diffs=sum(a!=b for a,b in zip(retail,p['bytes'])),unresolved=p['unresolved'],masked=p['masked'],resolved_sha256=sha(p['bytes']),raw_hex=p['compiled'].hex(),retail_hex=retail.hex(),relocation_tuples=p['relocs'],boundary_issue=build.claimed_boundary_issue(p['compiled'],SIZE,p['relocs']))
-        r['verified_exact']=p['bytes']==retail and r['size']==SIZE and not p['unresolved'] and not p['masked'] and not r['relocation_drifts'] and not r['boundary_issue']
-        (OUT/'final_recheck.json').write_text(json.dumps(r,indent=2),encoding='utf-8')
-    except (Exception,SystemExit) as exc:print('STRICT_ERROR',str(exc),flush=True)
-    checks=[]
-    for old in proof['canonical_sibling_checks']:
-        row={'name':old['symbol'],'target_rva':old['rva'],'target_size':str(old['size']),'source':(OUT/'final_recheck.cpp').relative_to(ROOT).as_posix(),'status':'matched','notes':''}
-        try:
-            p=build.compile_function(row,symbols,OUT/'final_recheck.obj',retain_compiled=True)
-            target=build.read_target_bytes(int(old['rva'],16),old['size'])
-            checks.append({'symbol':old['symbol'],'rva':old['rva'],'size':old['size'],'exact':p['bytes']==target and not p['masked'] and not p['unresolved']})
-        except (Exception,SystemExit) as exc:checks.append({'symbol':old['symbol'],'error':str(exc),'exact':False})
-    (OUT/'renderer_siblings.json').write_text(json.dumps(checks,indent=2),encoding='utf-8')
-    print('FINAL',json.dumps({k:v for k,v in r.items() if k not in ('offsets','raw_hex','retail_hex','relocation_tuples','diff_instructions')}),flush=True)
-    print('SIBLINGS',json.dumps(checks),flush=True)
-(OUT/'results.json').write_text(json.dumps(records,indent=2),encoding='utf-8')
-print('SUMMARY',json.dumps({'trials':len(records),'best_cost':best['cost'] if best else None,'exact':[r['tag'] for r in records if r.get('verified_exact')]}),flush=True)
+        checks.append(dict(old,exact=p['bytes']==build.read_target_bytes(int(old['rva'],16),old['size']) and not p['masked'] and not p['unresolved']))
+    except (Exception,SystemExit) as exc:checks.append(dict(old,exact=False,error=str(exc)))
+(OUT/'renderer_siblings.json').write_text(json.dumps(checks,indent=2),encoding='utf-8')
+print('FINAL',json.dumps({k:v for k,v in r.items() if k not in ('raw_hex','retail_hex','relocation_tuples')}),flush=True)
+print('SIBLINGS',json.dumps(checks),flush=True)
+print('SUMMARY',json.dumps({'trials':len(records),'best_cost':best['cost'],'exact':r['verified_exact']}),flush=True)
