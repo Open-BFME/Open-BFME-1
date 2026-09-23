@@ -1,5 +1,3 @@
-// ?d_00174800@@YAXXZ
-// partial score=0.67 date=2026-09-20
 // cl: /DNDEBUG /MD
 //
 // Retail 0x00174800: an AIInternalMoveToState-derived state's onEnter().
@@ -15,16 +13,15 @@
 // Rva00174730State_update.cpp / Rva00174A20State_update.cpp establish the
 // AIInternalMoveToState machine/adjustDestinations layout reused here.
 
-typedef unsigned char Bool;
-
 enum StateReturnType
 {
 	STATE_CONTINUE = 0,
 	STATE_FAILURE = -2
 };
 
-// Local minimal Coord3D: method declared, not defined, so the call links
-// against the already-matched ?normalize@Coord3D@@QAEXXZ (coord3d.cpp).
+// Local minimal Coord3D: normalize() declared, not defined, so the call links
+// against the already-matched ?normalize@Coord3D@@QAEXXZ (coord3d.cpp);
+// set()/add() are the ZH BaseType.h inlines.
 struct Coord3D
 {
 	float x;
@@ -32,6 +29,20 @@ struct Coord3D
 	float z;
 
 	void normalize(void);
+
+	void add(const Coord3D *a)
+	{
+		x += a->x;
+		y += a->y;
+		z += a->z;
+	}
+
+	void set(const Coord3D *a)
+	{
+		x = a->x;
+		y = a->y;
+		z = a->z;
+	}
 };
 
 class Rva00174800Object;
@@ -48,7 +59,7 @@ struct Rva00174800StateMachine
 class AIUpdateInterface
 {
 public:
-	void requestPath(Coord3D *pos, Bool immediately);
+	void requestPath(Coord3D *pos, bool immediately);
 };
 
 // BFME AIUpdateInterface::chooseLocomotorSet is vtable +0x1fc (slot 127);
@@ -133,11 +144,13 @@ public:
 	AIUpdateInterface *m_ai;
 };
 
-extern "C" void j_0000e570(void);
+extern void j_0000e570();
 typedef Rva00174800Object *(__fastcall *Rva00174800GetGoal)(Rva00174800StateMachine *);
 
-extern "C" void j_0003a17a(void);
-typedef void (__cdecl *Rva00174800CritterDesyncLog)(void *, const char *);
+class CRCParameterCheck;
+
+extern void j_0003a17a();
+typedef void (__cdecl *Rva00174800CritterDesyncLog)(CRCParameterCheck *, const char *);
 
 // Reused from BfmeConv1780.cpp: TheAI->m_bfmeAgentGK->bfmeNoteGK(item) is
 // the already-matched call this body makes through the same pinned dump.
@@ -157,9 +170,8 @@ public:
 };
 
 extern AI *TheAI;						// retail 0x012EF214
-extern void *TheCRCParameterCheck;		// retail 0x012ED4FC
+extern CRCParameterCheck *TheCRCParameterCheck;	// retail 0x012ED4FC
 extern bool Glo012F0239;				// retail 0x012F0239
-extern float g_Rva01096C50;			// retail 0x01096C50 = 40.0f, unpinned scale constant
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState
@@ -173,16 +185,22 @@ protected:
 	unsigned char m_pad20[0x4c - 0x20];
 	unsigned char m_adjustDestinations;	// +0x4c
 	unsigned char m_pad4d[0x50 - 0x4d];
-	unsigned int m_field50;					// +0x50, address-derived
-	unsigned char m_checkForPath;			// +0x54
-	unsigned char m_pad55[0x58 - 0x55];
-	unsigned char m_field58;					// +0x58, address-derived
 };
 
+// The derived-state members follow the base, as ZH AIMoveAndTightenState's
+// m_okToRepathTimes / m_checkForPath do: its onEnter() stores 1 and true to
+// them right before TheAI->pathfinder()->removeGoal(obj), the same sequence
+// this body runs on +0x50 / +0x54.
 class Rva00174800State : public AIInternalMoveToState
 {
 public:
 	virtual StateReturnType onEnter();
+
+protected:
+	unsigned int m_field50;					// +0x50, address-derived
+	unsigned char m_checkForPath;			// +0x54
+	unsigned char m_pad55[0x58 - 0x55];
+	unsigned char m_field58;					// +0x58, address-derived
 };
 
 static void rva00174800_log(const char *message)
@@ -213,22 +231,24 @@ StateReturnType Rva00174800State::onEnter()
 
 		TheAI->m_bfmeAgentGK->bfmeNoteGK((BfmeItemGK *)owner);
 
-		float ox = owner->m_position.x;
-		float oy = owner->m_position.y;
-		float oz = owner->m_position.z;
+		Coord3D pos;
+		pos.set(&owner->m_position);
+		Coord3D offset;
+		{
+			// dir's scope closes before offset is consumed: retail's 0x18 frame
+			// spills offset.z into dir.z's slot.
+			Coord3D dir;
+			dir.x = pos.x - goal->m_position.x;
+			dir.y = pos.y - goal->m_position.y;
+			dir.z = pos.z - goal->m_position.z;
+			dir.normalize();
+			offset.x = dir.x * 40.0f;
+			offset.y = dir.y * 40.0f;
+			offset.z = dir.z * 40.0f;
+		}
+		pos.add(&offset);
 
-		Coord3D diff;
-		diff.x = ox - goal->m_position.x;
-		diff.y = oy - goal->m_position.y;
-		diff.z = oz - goal->m_position.z;
-		diff.normalize();
-
-		Coord3D dest;
-		dest.x = ox + diff.x * g_Rva01096C50;
-		dest.y = oy + diff.y * g_Rva01096C50;
-		dest.z = oz + diff.z * g_Rva01096C50;
-
-		ai->requestPath(&dest, 1);
+		ai->requestPath(&pos, true);
 	}
 	else
 	{
