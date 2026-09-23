@@ -1,8 +1,12 @@
 // ?rebuildPathFromStatePoints@Rva00270DF0AIUpdate@@IAEXXZ
-// partial score=0.3 date=2026-09-20
+// partial score=0.6 date=2026-09-23
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
+typedef float Real;
+
+#include <stddef.h>
+extern void j_000022bb( void );
 
 enum PathfindLayerEnum
 {
@@ -53,22 +57,65 @@ private:
 	char m_tailPad[0x24 - 0x10];
 };
 
-class Rva00270DF0LocomotorTemplate
+class BFMELocomotorOverride
 {
 public:
-	Rva00270DF0LocomotorTemplate *getFinalOverride() const;
+	BFMELocomotorOverride *friend_getFinalOverride();	///< retail ILT 0x000022bb
 
-	void *m_vtable;
-	Rva00270DF0LocomotorTemplate *m_next;
-	char m_pad[8];
-	Int m_surfaces;
+	Real getWanderWidthFactor() const
+	{
+		BFMELocomotorOverride *locoTemplate = m_nextOverride;
+		if (locoTemplate && locoTemplate->m_nextOverride)
+		{
+			typedef BFMELocomotorOverride *(BFMELocomotorOverride::*FinalOverrideCall)();
+			union { void *asVoid; FinalOverrideCall asMember; } overrideCast;
+			overrideCast.asVoid = (void *)j_000022bb;
+			locoTemplate = (locoTemplate->m_nextOverride->*overrideCast.asMember)();
+		}
+		return *(const Real *)((const char *)locoTemplate + 0xEC);
+	}
+
+	UnsignedInt getLegalSurfaces() const
+	{
+		BFMELocomotorOverride *finalOverride = m_nextOverride;
+		if (finalOverride && finalOverride->m_nextOverride)
+			finalOverride = finalOverride->m_nextOverride->friend_getFinalOverride();
+		return finalOverride->m_legalSurfaces;
+	}
+
+	BFMELocomotorOverride *bfmeFinalOverride()
+	{
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+
+	// Retail carries a null template through rather than guarding it, so the
+	// appearance read below happens off a null base and stays an invalid
+	// locomotor instead of silently meaning this one.
+	BFMELocomotorOverride *bfmeTemplate() const
+	{
+		if (m_nextOverride == NULL)
+			return NULL;
+		return m_nextOverride->bfmeFinalOverride();
+	}
+
+	Int getAppearance() const { return bfmeTemplate()->m_appearance; }
+
+	char m_unreconstructed_000[4];				///< the vtable pointer
+	BFMELocomotorOverride *m_nextOverride;			///< retail this+0x04
+	char m_unreconstructed_008[0x10 - 8];
+	UnsignedInt m_legalSurfaces;				///< retail this+0x10
+	char m_unreconstructed_014[0x70 - 0x14];
+	Int m_appearance;					///< retail this+0x70
 };
+
 
 class Rva00270DF0Locomotor
 {
 public:
 	char m_pad[4];
-	Rva00270DF0LocomotorTemplate *m_template;
+	BFMELocomotorOverride *m_template;
 };
 
 struct Rva0016F770Coord3D
@@ -283,7 +330,7 @@ public:
 class Rva00270DF0AIUpdate : public Rva00270DF0VirtualSlots
 {
 protected:
-	virtual void postPath();
+	virtual void slot117();
 	void rebuildPathFromStatePoints();
 
 	char m_pad000[4];
@@ -309,14 +356,17 @@ extern GameLogic *TheBfmeGameLogic;
 
 void Rva00270DF0AIUpdate::rebuildPathFromStatePoints()
 {
-	Rva00270DF0LocomotorTemplate *locomotor = m_curLocomotor->m_template;
-	Path *path = new Path;
-	m_path = path;
-	path->appendNode(m_object->getPosition(), LAYER_GROUND);
+	Object *object = m_object;
+	Rva00270DF0Locomotor *currentLocomotor = m_curLocomotor;
+	m_path = new Path;
+	m_path->appendNode(object->getPosition(), LAYER_GROUND);
 
-	if (locomotor->m_next)
-		locomotor = locomotor->getFinalOverride();
-	path->optimize(m_object, locomotor->m_surfaces, false);
+	BFMELocomotorOverride *locomotor = currentLocomotor->m_template;
+	if (locomotor == NULL)
+		locomotor = NULL;
+	else if (locomotor->m_nextOverride)
+		locomotor = locomotor->m_nextOverride->friend_getFinalOverride();
+	m_path->optimize(object, locomotor->m_legalSurfaces, false);
 
 	for (Int index = 0; index < (Int)(m_stateMachine->m_end - m_stateMachine->m_begin);
 		++index)
@@ -324,22 +374,22 @@ void Rva00270DF0AIUpdate::rebuildPathFromStatePoints()
 		Rva0016F770Coord3D *source = m_stateMachine->getPoint(index);
 		Coord3D point = *reinterpret_cast<Coord3D *>(source);
 		PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(
-			m_object, &point);
-		path->appendNode(&point, layer);
+			object, &point);
+		m_path->appendNode(&point, layer);
 	}
 
 	if (TheWritableGlobalData->m_debugAI == 1)
 		TheAI->m_pathfinder->setDebugPath(m_path);
 
 	Coord3D direction;
-	reinterpret_cast<const Thing *>(m_object)->getUnitDirectionVector2D(direction);
-	locomotor = m_curLocomotor->m_template;
-	if (locomotor && locomotor->m_next)
-		locomotor = locomotor->getFinalOverride();
-	path->bfmeOptimizeDir(m_object, &direction, locomotor->m_surfaces, false);
+	reinterpret_cast<const Thing *>(object)->getUnitDirectionVector2D(direction);
+	locomotor = currentLocomotor->m_template;
+	if (locomotor && locomotor->m_nextOverride)
+		locomotor = locomotor->m_nextOverride->friend_getFinalOverride();
+	m_path->bfmeOptimizeDir(object, &direction, locomotor->m_legalSurfaces, false);
 
 	m_pathTimestamp = TheBfmeGameLogic->m_frame;
-	postPath();
+	slot117();
 	m_blockedFrames = 0;
 	m_isBlockedAndStuck = false;
 }
