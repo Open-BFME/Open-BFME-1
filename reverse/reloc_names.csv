@@ -1180,7 +1180,7 @@ _Rva0051D1E0Forward,0x0051D1E0,149,Code/GameEngine/Source/Common/Rva0051D2A0Forw
 ??$__copy_ptrs@PBUGen_t_006bea40_p8pod@@PAU1@@_STL@@YAPAUGen_t_006bea40_p8pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x006BE5A0,46,Code/gen_small/tgrid_121.cpp,reloc-derived;call-sites=2;identity=generated
 ??1Gen_dtor_006c1ef0@@UAE@XZ,0x006C1780,212,Code/gen_small/dtors_008.cpp,reloc-derived;call-sites=1;identity=generated
 ??0Gen006C1D70@@QAE@XZ,0x006C1D70,304,Code/GameEngine/Source/Common/Q4NewNiladicFactories.cpp,reloc-derived;call-sites=1;identity=generated
-?updateScorches@BaseHeightMapScorchUpdater@@QAEXXZ,0x006C7E90,1528,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,reloc-derived;call-sites=1;identity=real
+?updateScorches@BaseHeightMapScorchUpdater@@QAEXXZ,0x006C7E90,1537,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,reloc-derived;call-sites=1;identity=real;boundary=final-ret-at-plus-0x600
 ?rva006ca4f0@@YAXXZ,0x006CA4F0,284,Code/GameEngine/Source/Common/Rva006D1C70Zero.cpp,reloc-derived;call-sites=1;identity=generated
 ?updateMacroTexture@BaseHeightMapResetTerrain@@QAEXVBaseHeightMapResetAsciiString@@_N@Z,0x006CB8D0,276,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,reloc-derived;call-sites=1;identity=real
 ?renderTrees@BaseHeightMapRenderObjClass@@QAEXPAVCameraClass@@@Z,0x006CD990,790,Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp,reloc-derived;call-sites=1;identity=real
