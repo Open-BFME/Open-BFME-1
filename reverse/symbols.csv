@@ -12122,7 +12122,7 @@ name,address,notes
 ?Needs_Vertex_Normals@MeshModelClass@@QAE_NXZ,0x0094E0B0,
 ?Notify_Added@RenderObjClass@@UAEXPAVSceneClass@@@Z,0x0091FBF0
 ?Notify_Removed@RenderObjClass@@UAEXPAVSceneClass@@@Z,0x0091FC00
-?OnChat@LANAPI@@UAEXVUnicodeString@@I0W4ChatType@LANAPIInterface@@@Z,0x00689bd0,vtable-slot ??_7LANAPI@@6B@ slot 35 anchors=27
+?OnChat@LANAPI@@UAEXVUnicodeString@@PAUBfmeNetAddress@@0W4ChatType@LANAPIInterface@@@Z,0x00689bd0,LANAPI vtable slot35; matched handleChat and RequestChat pass address-pair pointer; evidence=reverse/identity_evidence/0x00689bd0-lanapi-onchat.md
 ?OnEnd@DownloadManager@@UAEJXZ,0x000044E4,ILT thunk used by call site
 ?OnError@DownloadManager@@UAEJH@Z,0x00031EC1,ILT thunk used by call site
 ?OnError@DownloadManagerOnErrorShim@@QAEJH@Z,0x00626DA0,DownloadManager::OnError incremental-link thunk target through a TU-local forwarding shim
