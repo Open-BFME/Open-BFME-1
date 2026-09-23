@@ -1608,5 +1608,45 @@
   "after_sha256": "cb0ee0b67de39f51cb8bb4a68e3d57fd929b43cf0807079c2218fa56e86d0cb2",
   "evidence": "reverse/identity_evidence/0x006fc970-emp-refutation.md",
   "reason": "This semantic member name was borrowed from the refuted EMPUpdateModuleData guess; the retail stores prove the offset and value but no member identity. The offset name preserves only witnessed information."
+ },
+ {
+  "old_path": "reverse/attempts/0x0032b8d0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishSpecialPowerIsReady.cpp",
+  "old_name": "m_beforeInstances",
+  "new_name": "m_unmodelled_000",
+  "before_sha256": "96251428e3fb145eb6e74bc5fdb31cb28e02cf85df8862157f18dd3a64a5ceb3",
+  "after_sha256": "891c7ad466602828bfda1ec666e11dde8c5287436d4c8042fbc51c578cd8c87a",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_beforeInstances was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_unmodelled_000 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0032b8d0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishSpecialPowerIsReady.cpp",
+  "old_name": "m_beforeMembers",
+  "new_name": "m_unmodelled_000",
+  "before_sha256": "96251428e3fb145eb6e74bc5fdb31cb28e02cf85df8862157f18dd3a64a5ceb3",
+  "after_sha256": "891c7ad466602828bfda1ec666e11dde8c5287436d4c8042fbc51c578cd8c87a",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_beforeMembers was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_unmodelled_000 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0032b8d0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishSpecialPowerIsReady.cpp",
+  "old_name": "m_beforeTeams",
+  "new_name": "m_unmodelled_000",
+  "before_sha256": "96251428e3fb145eb6e74bc5fdb31cb28e02cf85df8862157f18dd3a64a5ceb3",
+  "after_sha256": "891c7ad466602828bfda1ec666e11dde8c5287436d4c8042fbc51c578cd8c87a",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_beforeTeams was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_unmodelled_000 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0032b8d0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsSkirmishSpecialPowerIsReady.cpp",
+  "old_name": "m_cachedValue",
+  "new_name": "m_int",
+  "before_sha256": "96251428e3fb145eb6e74bc5fdb31cb28e02cf85df8862157f18dd3a64a5ceb3",
+  "after_sha256": "891c7ad466602828bfda1ec666e11dde8c5287436d4c8042fbc51c578cd8c87a",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_cachedValue was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_int because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
  }
 ]
