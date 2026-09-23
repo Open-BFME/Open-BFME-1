@@ -8893,7 +8893,7 @@ name,address,notes
 ??1ModelConditionSpecialAbilityUpdateModuleData@@UAE@XZ,0x00028EB6,destructor ILT to 0x002984B0
 ??1ModelConditionUpgrade@@MAE@XZ,0x000387F3,vtable 0x00CCD48C slots name ModelConditionUpgrade; protected complete destructor called by wrapper 0x002D67D0
 ??1Module@@UAE@XZ,0x00047C53,base destructor ILT used by the optimized UpdateModule teardown
-??1ModuleDataListStandIn@@QAE@XZ,0x001468A0,Open-BFME5 list-style sentinel container dtor from AnimalAIUpdate-family ModuleData dtor call sites
+??1ModuleDataListStandIn@@QAE@XZ,0x001468A0,historical source alias from ModuleData dtors; retail body is an RB-tree destructor with 0x20 header nodes; migrate misleading list stand-ins separately
 ??1Money@@MAE@XZ,0x000424BA,exact constructor 0x000E1540 and dedicated vtable 0x00C83D18 establish the protected complete destructor called by wrapper 0x000CD530
 ??1MoneyCrateCollide@@MAE@XZ,0x000370A6,destructor ILT to 0x00217D60
 ??1MoneyCrateCollideModuleData@@UAE@XZ,0x0002BB2A,MoneyCrateCollideModuleData complete destructor ILT; factory/vtable and matched complete body establish this virtual destructor route through 0x00126FC0 to 0x00125E40
