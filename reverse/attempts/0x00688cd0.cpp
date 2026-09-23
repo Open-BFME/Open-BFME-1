@@ -1,5 +1,5 @@
 // ?OnHasMap@LANAPI@@UAEXPAUBfmeNetAddress@@_N@Z
-// partial score=0.4 date=2026-09-23
+// partial score=0.41 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 #include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
@@ -165,7 +165,7 @@ public:
 	virtual void bfmeSlot32(void) = 0;
 	virtual void bfmeSlot33(void) = 0;
 	virtual void OnHasMap(BfmeNetAddress *sender, Bool status);
-	virtual void OnChat(UnicodeString player, UnsignedInt ip,
+	virtual void OnChat(UnicodeString player, BfmeNetAddress *address,
 		UnicodeString message, Int chatType) = 0;
 	virtual void bfmeSlot36(void) = 0;
 	virtual void OnGameStartTimer(Int seconds) = 0;
@@ -186,7 +186,7 @@ public:
 	virtual void bfmeSlot52(void) = 0;
 	virtual void bfmeSlot53(void) = 0;
 	virtual void bfmeSlot54(void) = 0;
-	virtual UnsignedInt getLocalIP(void) = 0;
+	virtual BfmeNetAddress *_bfme_localAddress(void) = 0;
 
 	unsigned char m_beforeLobby[0x3D - 4];
 	Bool m_inLobby;
@@ -225,13 +225,14 @@ void LANAPI::OnHasMap(BfmeNetAddress *sender, Bool status)
 	if ((unsigned char)AmIHost() == 0)
 		return;
 
+	UnsignedInt senderIP = sender->m_ip;
 	BfmeLANGameInfoSlots *gameSlots =
 		(BfmeLANGameInfoSlots *)m_currentGame;
 	Int i;
 	for (i = 0; i < 8; ++i)
 	{
 		BfmeNetAddress *slot = &gameSlots->m_slot[i].m_address;
-		if (slot->m_ip == sender->m_ip && slot->m_port == sender->m_port)
+		if (slot->m_ip == senderIP && slot->m_port == sender->m_port)
 		{
 			((GameSlot *)((Rva0068D3E0Arr *)m_currentGame)->at(i))
 				->setMapAvailability(status);
@@ -274,7 +275,7 @@ void LANAPI::OnHasMap(BfmeNetAddress *sender, Bool status)
 				Rva00688CD0WideText(playerName),
 				Rva00688CD0WideText(mapDisplayName));
 		}
-		OnChat(UnicodeString(L"SYSTEM"), getLocalIP(), text, 2);
+		OnChat(UnicodeString(L"SYSTEM"), _bfme_localAddress(), text, 2);
 	}
 
 	if (g_bfme935GlobC != 0)
