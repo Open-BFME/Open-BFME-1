@@ -1,6 +1,6 @@
 // ?d_004dfef0@@YAXXZ
-// partial score=0.87 date=2026-09-23
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/campaignmanagerascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
+// partial score=0.99 date=2026-09-23
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __SHELL_H_
@@ -680,6 +680,12 @@ static void processLoadButtonPress(GameWindow *window)
 
 //-------------------------------------------------------------------------------------------------
 /** SaveLoad menu system callback */
+// The ZH Gadget.h message sequence is two values lower than BFME's here.
+// Retail routes 0x4014 to updateMenuActions and 0x4015 to processLoadButtonPress;
+// the matched BFME WOLBuddyOverlaySystem independently names 0x4015 as
+// GLM_DOUBLE_CLICKED.
+enum { BFME_GLM_SELECTED = 0x4014, BFME_GLM_DOUBLE_CLICKED = 0x4015 };
+
 //-------------------------------------------------------------------------------------------------
 WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg, 
 																				 WindowMsgData mData1, WindowMsgData mData2 )
@@ -716,7 +722,7 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 		}  // end input
 
     //----------------------------------------------------------------------------------------------
-		case GLM_DOUBLE_CLICKED:
+		case BFME_GLM_DOUBLE_CLICKED:
 			{
 				GameWindow *control = (GameWindow *)mData1;
 				GameWindow *listboxGames = TheWindowManager->winGetWindowFromId( window, listboxGamesKey );
@@ -735,7 +741,7 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 			}
 
 		// --------------------------------------------------------------------------------------------
-		case GLM_SELECTED:
+		case BFME_GLM_SELECTED:
 		{
 			GameWindow *control = (GameWindow *)mData1;
 
@@ -999,7 +1005,7 @@ TheAudioClientUpdate->slot30(0x3f, 4, 1);
 				updateMenuActions();
 
 				// close save menuu
-				closeSaveMenu( window, TRUE );
+				closeSaveMenu( window, FALSE );
 
 				// get save filename
 				AvailableGameInfo *selectedGameInfo = getSelectedSaveFileInfo( listboxGames );
@@ -1071,7 +1077,7 @@ TheAudioClientUpdate->slot30(0x3f, 4, 1);
 					//Moved by Sadullah Nader
 					//moved to fix the 
 					// close save/load layout menu
-					closeSaveMenu( window, FALSE );
+					closeSaveMenu( window, TRUE );
 					doLoadGame();
 				}
 
