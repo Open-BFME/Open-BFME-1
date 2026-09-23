@@ -9,6 +9,7 @@
 //
 //   getWaypointByName        0x001AA900  vtable slot 31  waypoint of that name
 //   getClosestWaypointOnPath 0x001A8C70  vtable slot 33  nearest waypoint on a path
+//   getWaypointByPath       0x001A8EB0  vtable slot 34  first waypoint on a path
 //   isPurposeOfPath          0x001AAAC0  vtable slot 35  does a waypoint carry a label
 //   getWaterHandleByName     0x001AAFD0  vtable slot 26  water trigger of that name
 //
@@ -129,12 +130,18 @@ public:
 	{
 		return m_next;
 	}
+	Waypoint *getLinkSource(void) const
+	{
+		return m_linkSource;
+	}
 
 private:
 	unsigned char m_unreconstructed_00[0x0c];
 	Coord3D m_location;			// +0x0c
 	unsigned char m_unreconstructed_18[4];
 	Waypoint *m_next;			// +0x1c
+	unsigned char m_unreconstructed_20[0x40 - 0x20];
+	Waypoint *m_linkSource;		// +0x40, set by addWaypointLink
 };
 
 class PolygonTrigger;
@@ -269,6 +276,37 @@ static Int compareWaypointName(const BfmeWaypointNameString &self,
 	return result;
 }
 
+static Int compareWaypointPathLabel(const AsciiString &self,
+	const AsciiString &other)
+{
+	const BfmeAsciiStringData *selfData = self.m_data;
+	Int selfLength;
+	if (selfData)
+		selfLength = *(volatile const unsigned short *)((const char *)selfData + 4);
+	else
+		selfLength = 0;
+	register unsigned int selfAddress;
+	if (self.m_data)
+		selfAddress = (unsigned int)(self.m_data + 1);
+	else
+		selfAddress = (unsigned int)"";
+	const BfmeAsciiStringData *otherData = other.m_data;
+	Int otherLength;
+	const char *otherChars;
+	if (otherData) {
+		otherLength = otherData->m_numChars;
+		otherChars = (const char *)(otherData + 1);
+	} else {
+		otherLength = 0;
+		otherChars = "";
+	}
+	Int length = otherLength < selfLength ? otherLength : selfLength;
+	Int result = _memicmp(otherChars, (const char *)selfAddress, length);
+	if (result != 0)
+		return result;
+	return otherLength - selfLength;
+}
+
 // getWaterHandleByName inlines the same comparison over two AsciiStrings, in
 // its own shape: the early return on an unequal prefix is retail's.
 static Int compareTriggerName(const AsciiString &self, const AsciiString &other)
@@ -343,6 +381,25 @@ Waypoint *TerrainLogic::getClosestWaypointOnPath(const Coord3D *pos,
 	}
 
 	return pClosestWay;
+}
+
+// TerrainLogic::getWaypointByPath, retail 0x001A8EB0.
+Waypoint *TerrainLogic::getWaypointByPath(AsciiString label)
+{
+	if (label.isEmpty())
+		return 0;
+
+	for (Waypoint *way = g_waypointListHead; way; way = way->getNext()) {
+		Bool match = compareWaypointPathLabel(way->getPathLabel1(), label) == 0 ||
+			label.compareNoCase(way->getPathLabel2()) == 0 ||
+			label.compareNoCase(way->getPathLabel3()) == 0;
+		if (match) {
+			while (way->getLinkSource())
+				way = way->getLinkSource();
+			return way;
+		}
+	}
+	return 0;
 }
 
 // TerrainLogic::isPurposeOfPath, retail 0x001AAAC0.
