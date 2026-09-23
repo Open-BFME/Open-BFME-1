@@ -24,8 +24,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(ROOT / "tools" / "fleet"))
-MODEL = os.environ.get("HUB_MODEL", "gpt-6-astra")
-EFFORT = os.environ.get("HUB_EFFORT", "xhigh")
+MODEL = os.environ.get("HUB_MODEL", "gpt-6-sol")
+EFFORT = os.environ.get("HUB_EFFORT", "medium")
 
 HUB_BRIEF = """ROLE. You are the analyst. One hub body, one bounded session (hard cap {cap} hours). The hub itself is NOT expected to
 land: its value is the analysis that lets its open callers and callees land afterwards. Read AGENTS.md first; it binds you.

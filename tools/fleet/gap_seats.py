@@ -26,8 +26,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(ROOT / "tools/fleet"))
-MODEL = os.environ.get("HUB_MODEL", "gpt-6-astra")
-EFFORT = os.environ.get("HUB_EFFORT", "xhigh")
+MODEL = os.environ.get("HUB_MODEL", "gpt-6-sol")
+EFFORT = os.environ.get("HUB_EFFORT", "medium")
 
 NOTE = """UNCLAIMED BODIES. None of these addresses has a ledger row: no seat was ever served them, there is no dump to
 replace and no prior bank unless re_attempts.log says so. Each line gives the start evidence (a REL32 call/jmp target,

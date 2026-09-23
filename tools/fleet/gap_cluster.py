@@ -25,8 +25,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 sys.path.insert(0, str(ROOT / "tools/fleet"))
-MODEL = os.environ.get("HUB_MODEL", "gpt-6-astra")
-EFFORT = os.environ.get("HUB_EFFORT", "xhigh")
+MODEL = os.environ.get("HUB_MODEL", "gpt-6-sol")
+EFFORT = os.environ.get("HUB_EFFORT", "medium")
 EXE = ROOT / "baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe"
 TEXT_START, TEXT_END = 0x1000, 0x1000 + 13049856
 
