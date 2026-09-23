@@ -1,5 +1,5 @@
 // ?refresh@Rva006F7CB0Owner@@QAE_NPAVCameraClass@@@Z
-// partial score=0.9 date=2026-09-21
+// partial score=0.99 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2
 // Open-BFME5: retail 0x006F7CB0 (191B).
 // Recomputes a world-space bounding sphere (this+0x0 Vector3 center) from a
@@ -14,20 +14,14 @@
 // (scene.cpp). Owner is address-derived: the sole caller
 // (refreshActive@Rva006F88B0Owner) does not itself prove a game-class name.
 //
-// PARTIAL: 191/191 bytes -- exact size. Splitting each row's three
-// products into separate named locals (x0/x1/x2 etc, evaluated Z,Y,X /
-// Z,X,Y / Z,X,Y to match retail's own fld order) got row 0's first two
-// terms and the whole control-flow skeleton (null-guard, the
-// Transform_Vector aliasing check, Update_Frustum/Overlap_Test call
-// shape, and the wasVisible/nowVisible compare-then-store-then-return
-// tail) byte-exact; the residue is which operand of each row's THIRD
-// (translation-adjacent) multiply MSVC 7.1 loads via fld vs leaves as the
-// fmul memory operand, and the same swap on all three rows -- this is the
-// documented "equivalent x87 expressions can compile differently...
-// commuted multiplication operands" trap (docs/matching.md); neither
-// operand order nor statement order changed it, and shape_family_levers
-// found no applicable mechanical lever. Score: 172/191 matching bytes
-// (0.90).
+// The function has its exact 191-byte size. The statement chain computes the
+// row terms in retail order, and the reversed bool comparison matches the
+// retail compare. The other 189 bytes match. The remaining mismatch is the
+// zero-offset X product. Our compiler emits fld [ecx]; fmul [eax], while
+// retail emits fld [eax]; fmul [ecx]. Both C++ multiplication operand orders
+// and a split product local emitted the same instructions. The owner remains
+// address-derived because its only caller does not identify the class.
+// The probe matched 189 of 191 non-relocation bytes (0.99).
 
 struct Vector3
 {
@@ -50,18 +44,21 @@ public:
 		{
 			v = &in;
 		}
-		float x0 = A.m_row[0][2] * v->Z;
-		float x1 = A.m_row[0][1] * v->Y;
-		float x2 = v->X * A.m_row[0][0];
-		out->X = x0 + x1 + x2 + A.m_row[0][3];
-		float y0 = A.m_row[1][2] * v->Z;
-		float y1 = A.m_row[1][0] * v->X;
-		float y2 = A.m_row[1][1] * v->Y;
-		out->Y = y0 + y1 + y2 + A.m_row[1][3];
-		float z0 = A.m_row[2][2] * v->Z;
-		float z1 = A.m_row[2][0] * v->X;
-		float z2 = A.m_row[2][1] * v->Y;
-		out->Z = z0 + z1 + z2 + A.m_row[2][3];
+		float x = A.m_row[0][2] * v->Z;
+		x = x + A.m_row[0][1] * v->Y;
+		x = A.m_row[0][0] * v->X + x;
+		x = x + A.m_row[0][3];
+		out->X = x;
+		float y = A.m_row[1][2] * v->Z;
+		y = y + A.m_row[1][0] * v->X;
+		y = y + A.m_row[1][1] * v->Y;
+		y = y + A.m_row[1][3];
+		out->Y = y;
+		float z = A.m_row[2][2] * v->Z;
+		z = z + A.m_row[2][0] * v->X;
+		z = z + A.m_row[2][1] * v->Y;
+		z = z + A.m_row[2][3];
+		out->Z = z;
 	}
 
 private:
@@ -141,5 +138,5 @@ bool Rva006F7CB0Owner::refresh(CameraClass *camera)
 	bool nowVisible = (overlap != 1);
 	m_visible = nowVisible;
 
-	return nowVisible != wasVisible;
+	return wasVisible != nowVisible;
 }
