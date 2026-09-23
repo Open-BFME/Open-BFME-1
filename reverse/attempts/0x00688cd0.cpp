@@ -1,218 +1,240 @@
+// ?OnHasMap@LANAPI@@UAEXPAUBfmeNetAddress@@_N@Z
+// partial score=0.4 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// partial score=0.35 date=2026-09-05
-//
-// LANAPI::OnHasMap, 0x00688CD0, 709 bytes -- DRAFT / PARTIAL, not landed.
-//
-// Identity: matches ZH LANAPI::OnHasMap(UnsignedInt playerIP, Bool status)
-// (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameNetwork/LANAPICallbacks.cpp,
-// right before OnGameStartTimer, our landed neighbour at 0x00689050). Callee
-// list confirms it: getMap@GameInfo x2 (0x42f28e), findMap@MapCache x1
-// (0x419880), WouldMapTransfer x1 (0x4393fb), UnicodeString::format x3
-// (0xc89190), StringBase<WCHAR> ctor x3 (0xc88de0). `ret 8` matches two
-// stack args (UnsignedInt, Bool).
-//
-// Reused from the already-landed LANAPIOnGameStartTimer.cpp: LANAPI's BFME
-// vtable has OnChat at slot 35 (+0x8c) and getLocalIP as a virtual at slot
-// 55 (+0xdc), not the m_localIP member the reference class uses. This body
-// needs two more slots off that table: AmIHost() at +0xb8 (slot 46, disasm
-// `call [eax+0xb8]` first instruction) and the vfn used at +0x40's target
-// (m_currentGame, a plain member here, not virtual).
-//
-// NOT YET MATCHED. Loop at +0x39 walks m_currentGame+0x88 in 0x68-byte
-// strides comparing BOTH a dword (IP) and a word at +4 against the caller's
-// [edi]/[edi+4] -- ZH's `getIP(i) == playerIP` is a single dword compare, so
-// BFME's LANGameInfo slot struct likely packs a port right after the IP and
-// this body checks both; not reproduced below. The tail (GlobalData flag at
-// 0x012F4998+0x26c, TheWritableGlobalData->m_pendingFile-shaped writes, two
-// MessageBoxInterface-looking calls through 0x12f147c) is sketched from the
-// ZH shape only and is very likely wrong; nothing past the loop should be
-// treated as identified. Banking this as a compiling skeleton with the
-// identity writeup above, not as a byte-match attempt.
+
+#include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../Code/Libraries/Source/WWVegas/WWLib/unicode_string.h"
+inline UnicodeString::UnicodeString(void)
+{
+	m_text = 0;
+}
+
+inline UnicodeString::UnicodeString(const wchar_t *text)
+{
+	((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(text);
+}
+
+inline UnicodeString::UnicodeString(const UnicodeString &other)
+{
+	((StringBase<wchar_t> *)this)->StringBase<wchar_t>::StringBase(
+		*(const StringBase<wchar_t> *)&other);
+}
+
+inline UnicodeString::~UnicodeString(void)
+{
+	((StringBase<wchar_t> *)this)->releaseBuffer();
+}
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
-typedef char Bool;
-typedef unsigned short WCHAR;
-typedef unsigned char UnsignedByte;
-enum { TRUE = 1, FALSE = 0 };
+typedef unsigned short UnsignedShort;
+typedef bool Bool;
 
-template <typename T> class StringBase
+struct BfmeNetAddress
 {
-friend class UnicodeString;
-private:
-	StringBase( void );
-	StringBase( const StringBase<T> &that );
-	StringBase( const T *text );
-	void releaseBuffer( void );
-public:
+	UnsignedInt m_ip;
+	UnsignedShort m_port;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString
+struct BfmeLANSlot
 {
-public:
-	AsciiString( void ) { m_data = 0; }
-	const char *str( void ) const { return (const char *)m_data; }
-private:
-	void *m_data;
+	BfmeNetAddress m_address;
+	unsigned char m_rest[0x68 - sizeof(BfmeNetAddress)];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/UnicodeString.h
-class UnicodeString
+struct BfmeLANGameInfoSlots
 {
-public:
-	UnicodeString( void ) { m_data = 0; }
-	UnicodeString( const WCHAR *text )
-	{
-		((StringBase<WCHAR> *)this)->StringBase<WCHAR>::StringBase( text );
-	}
-	UnicodeString( const UnicodeString &that )
-	{
-		((StringBase<WCHAR> *)this)->StringBase<WCHAR>::StringBase(
-			*(const StringBase<WCHAR> *)&that );
-	}
-	~UnicodeString( void );
-
-	void format( UnicodeString fmt, ... );
-	void format( const char *fmt, ... );
-
-private:
-	void *m_data;
-};
-
-class GameTextInterface
-{
-public:
-	virtual void vfn00( void );
-	virtual void vfn01( void );
-	virtual void vfn02( void );
-	virtual void vfn03( void );
-	virtual void vfn04( void );
-	virtual void vfn05( void );
-	virtual void vfn06( void );
-	virtual void vfn07( void );
-	virtual void vfn08( void );
-	virtual void vfn09( void );
-	virtual UnicodeString fetch( const char *label, Bool *exists = 0 );
-};
-
-extern GameTextInterface *TheGameText;
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
-class MapMetaData
-{
-public:
-	UnsignedByte m_unreconstructed_00[8];
-	AsciiString m_displayName;			// +0x08, guessed
-};
-
-class MapCache
-{
-public:
-	MapMetaData *findMap( AsciiString name );
-};
-
-extern MapCache *TheMapCache;
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
-class GameSlot
-{
-public:
-	void setMapAvailability( Bool avail );
+	unsigned char m_beforeSlots[0x88];
+	BfmeLANSlot m_slot[8];
 };
 
 class GameInfo
 {
 public:
-	UnsignedInt getIP( Int index );
-	GameSlot *getLANSlot( Int index );
-	AsciiString getMap( void );
-
-	UnsignedByte m_unreconstructed_00[0x88];
-	UnsignedByte m_slots[8][0x68];			// +0x88, stride guessed from disasm
+	AsciiString getMap(void) const;
 };
 
-Bool WouldMapTransfer( AsciiString mapName );
+class MapMetaData;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANAPI.h
+class MapCache
+{
+public:
+	const MapMetaData *findMap(AsciiString mapName);
+};
+
+class GameSlot
+{
+public:
+	void setMapAvailability(Bool available);
+	UnicodeString getName(void) const;
+};
+
+struct Rva0068D3E0Slot;
+
+class Rva0068D3E0Arr
+{
+public:
+	Rva0068D3E0Slot *at(Int index);
+};
+
+class StringBaseWideAP
+{
+protected:
+	StringBaseWideAP(void);
+	StringBaseWideAP(const StringBaseWideAP &other);
+	StringBaseWideAP(const unsigned short *text);
+	~StringBaseWideAP(void);
+
+	unsigned short *m_bfmeWideAP;
+};
+
+class UnicodeStringAP : public StringBaseWideAP
+{
+public:
+	UnicodeStringAP(void) {}
+	UnicodeStringAP(const UnicodeStringAP &other) : StringBaseWideAP(other) {}
+	~UnicodeStringAP(void) {}
+
+	const unsigned short *bfmeTextAP(void) const
+	{
+		return m_bfmeWideAP != 0 ? m_bfmeWideAP + 4
+			: (const unsigned short *)0x0107388C;
+	}
+};
+
+class BfmeEntryAP
+{
+public:
+	UnicodeStringAP bfmeDisplayNameAP(void);
+
+	unsigned char m_bfmePadAP[0x20];
+	Int m_bfmeCountAP;
+};
+
+class GameTextInterface
+{
+public:
+	virtual void bfmeSlot00(void) = 0;
+	virtual void bfmeSlot01(void) = 0;
+	virtual void bfmeSlot02(void) = 0;
+	virtual void bfmeSlot03(void) = 0;
+	virtual void bfmeSlot04(void) = 0;
+	virtual void bfmeSlot05(void) = 0;
+	virtual void bfmeSlot06(void) = 0;
+	virtual void bfmeSlot07(void) = 0;
+	virtual void bfmeSlot08(void) = 0;
+	virtual void bfmeSlot09(void) = 0;
+	virtual UnicodeString fetch(const char *label, Bool *exists) = 0;
+};
+
 class LANAPI
 {
 public:
-	virtual void vfn00( void );
-	virtual void vfn01( void );
-	virtual void vfn02( void );
-	virtual void vfn03( void );
-	virtual void vfn04( void );
-	virtual void vfn05( void );
-	virtual void vfn06( void );
-	virtual void vfn07( void );
-	virtual void vfn08( void );
-	virtual void vfn09( void );
-	virtual void vfn10( void );
-	virtual void vfn11( void );
-	virtual void vfn12( void );
-	virtual void vfn13( void );
-	virtual void vfn14( void );
-	virtual void vfn15( void );
-	virtual void vfn16( void );
-	virtual void vfn17( void );
-	virtual void vfn18( void );
-	virtual void vfn19( void );
-	virtual void vfn20( void );
-	virtual void vfn21( void );
-	virtual void vfn22( void );
-	virtual void vfn23( void );
-	virtual void vfn24( void );
-	virtual void vfn25( void );
-	virtual void vfn26( void );
-	virtual void vfn27( void );
-	virtual void vfn28( void );
-	virtual void vfn29( void );
-	virtual void vfn30( void );
-	virtual void vfn31( void );
-	virtual void vfn32( void );
-	virtual void vfn33( void );
-	virtual void vfn34( void );
-	virtual void OnChat( UnicodeString player, UnsignedInt ip, UnicodeString message, Int chatType );
-	virtual void vfn36( void );
-	virtual void OnGameStartTimer( Int seconds );
-	virtual void vfn38( void );
-	virtual void vfn39( void );
-	virtual void vfn40( void );
-	virtual void vfn41( void );
-	virtual void vfn42( void );
-	virtual void vfn43( void );
-	virtual void vfn44( void );
-	virtual void vfn45( void );
-	virtual Bool AmIHost( void );
-	virtual void OnHasMap( UnsignedInt playerIP, Bool status );
-	virtual void vfn47( void );
-	virtual void vfn48( void );
-	virtual void vfn49( void );
-	virtual void vfn50( void );
-	virtual void vfn51( void );
-	virtual void vfn52( void );
-	virtual void vfn53( void );
-	virtual UnsignedInt getLocalIP( void );
+	virtual void bfmeSlot00(void) = 0;
+	virtual void bfmeSlot01(void) = 0;
+	virtual void bfmeSlot02(void) = 0;
+	virtual void bfmeSlot03(void) = 0;
+	virtual void bfmeSlot04(void) = 0;
+	virtual void bfmeSlot05(void) = 0;
+	virtual void bfmeSlot06(void) = 0;
+	virtual void bfmeSlot07(void) = 0;
+	virtual void bfmeSlot08(void) = 0;
+	virtual void bfmeSlot09(void) = 0;
+	virtual void bfmeSlot10(void) = 0;
+	virtual void bfmeSlot11(void) = 0;
+	virtual void bfmeSlot12(void) = 0;
+	virtual void bfmeSlot13(void) = 0;
+	virtual void bfmeSlot14(void) = 0;
+	virtual void bfmeSlot15(void) = 0;
+	virtual void bfmeSlot16(void) = 0;
+	virtual void bfmeSlot17(void) = 0;
+	virtual void bfmeSlot18(void) = 0;
+	virtual void bfmeSlot19(void) = 0;
+	virtual void bfmeSlot20(void) = 0;
+	virtual void bfmeSlot21(void) = 0;
+	virtual void bfmeSlot22(void) = 0;
+	virtual void bfmeSlot23(void) = 0;
+	virtual void bfmeSlot24(void) = 0;
+	virtual void bfmeSlot25(void) = 0;
+	virtual void bfmeSlot26(void) = 0;
+	virtual void bfmeSlot27(void) = 0;
+	virtual void bfmeSlot28(void) = 0;
+	virtual void bfmeSlot29(void) = 0;
+	virtual void bfmeSlot30(void) = 0;
+	virtual void bfmeSlot31(void) = 0;
+	virtual void bfmeSlot32(void) = 0;
+	virtual void bfmeSlot33(void) = 0;
+	virtual void OnHasMap(BfmeNetAddress *sender, Bool status);
+	virtual void OnChat(UnicodeString player, UnsignedInt ip,
+		UnicodeString message, Int chatType) = 0;
+	virtual void bfmeSlot36(void) = 0;
+	virtual void OnGameStartTimer(Int seconds) = 0;
+	virtual void bfmeSlot38(void) = 0;
+	virtual void bfmeSlot39(void) = 0;
+	virtual void bfmeSlot40(void) = 0;
+	virtual void bfmeSlot41(void) = 0;
+	virtual void bfmeSlot42(void) = 0;
+	virtual void bfmeSlot43(void) = 0;
+	virtual void bfmeSlot44(void) = 0;
+	virtual void bfmeSlot45(void) = 0;
+	virtual Int AmIHost(void) = 0;
+	virtual void bfmeSlot47(void) = 0;
+	virtual void bfmeSlot48(void) = 0;
+	virtual void bfmeSlot49(void) = 0;
+	virtual void bfmeSlot50(void) = 0;
+	virtual void bfmeSlot51(void) = 0;
+	virtual void bfmeSlot52(void) = 0;
+	virtual void bfmeSlot53(void) = 0;
+	virtual void bfmeSlot54(void) = 0;
+	virtual UnsignedInt getLocalIP(void) = 0;
 
-	void lanUpdateSlotList( void );
-
-	UnsignedByte m_unreconstructed_04[0x40 - 4];
-	GameInfo *m_currentGame;			// +0x40, confirmed by disasm ([esi+0x40])
+	unsigned char m_beforeLobby[0x3D - 4];
+	Bool m_inLobby;
+	unsigned char m_beforeCurrentGame[2];
+	GameInfo *m_currentGame;
 };
 
-// ?OnHasMap@LANAPI@@UAEXIH@Z -- DRAFT, not verified against retail bytes.
-void LANAPI::OnHasMap( UnsignedInt playerIP, Bool status )
+struct BfmeObj935C
 {
-	if (!AmIHost())
+	unsigned char m_beforeRva00688CD0_26c[0x26C];
+	unsigned char m_rva00688CD0_26c;
+};
+
+extern MapCache *TheMapCache;
+extern GameTextInterface *TheGameText;
+extern BfmeObj935C *g_bfme935GlobC;
+extern Bool __cdecl WouldMapTransfer(GameInfo *game);
+extern void __cdecl rva004CAF70(void);
+
+inline const wchar_t *Rva00688CD0WideText(const UnicodeString &text)
+{
+	const void *data = *(void *const *)&text;
+	return data != 0 ? (const wchar_t *)((const unsigned char *)data + 8)
+		: (const wchar_t *)0x0107388C;
+}
+
+inline const char *Rva00688CD0AsciiText(const AsciiString &text)
+{
+	const void *data = *(void *const *)&text;
+	return data != 0 ? (const char *)((const unsigned char *)data + 8)
+		: (const char *)0x0107388B;
+}
+
+void LANAPI::OnHasMap(BfmeNetAddress *sender, Bool status)
+{
+	if ((unsigned char)AmIHost() == 0)
 		return;
 
+	BfmeLANGameInfoSlots *gameSlots =
+		(BfmeLANGameInfoSlots *)m_currentGame;
 	Int i;
 	for (i = 0; i < 8; ++i)
 	{
-		if (m_currentGame->getIP(i) == playerIP)
+		BfmeNetAddress *slot = &gameSlots->m_slot[i].m_address;
+		if (slot->m_ip == sender->m_ip && slot->m_port == sender->m_port)
 		{
-			m_currentGame->getLANSlot(i)->setMapAvailability(status);
+			((GameSlot *)((Rva0068D3E0Arr *)m_currentGame)->at(i))
+				->setMapAvailability(status);
 			break;
 		}
 	}
@@ -220,27 +242,43 @@ void LANAPI::OnHasMap( UnsignedInt playerIP, Bool status )
 		return;
 
 	UnicodeString mapDisplayName;
-	MapMetaData *mapData = TheMapCache->findMap(m_currentGame->getMap());
-	Bool willTransfer = TRUE;
+	const MapMetaData *mapData = TheMapCache->findMap(m_currentGame->getMap());
+	Bool willTransfer = WouldMapTransfer(m_currentGame);
 	if (mapData != 0)
 	{
-		mapDisplayName.format(mapData->m_displayName.str());
+		UnicodeStringAP mapAP =
+			((BfmeEntryAP *)mapData)->bfmeDisplayNameAP();
+		mapDisplayName.format(UnicodeString(L"%ls"), mapAP.bfmeTextAP());
 	}
 	else
 	{
-		mapDisplayName.format(m_currentGame->getMap().str());
-		willTransfer = WouldMapTransfer(m_currentGame->getMap());
+		mapDisplayName.format(UnicodeString(L"%hs"),
+			Rva00688CD0AsciiText(m_currentGame->getMap()));
 	}
 
 	if (!status)
 	{
 		UnicodeString text;
+		UnicodeString playerName =
+			((GameSlot *)((Rva0068D3E0Arr *)m_currentGame)->at(i))
+				->getName();
 		if (willTransfer)
-			text.format(TheGameText->fetch("GUI:PlayerNoMapWillTransfer"));
+		{
+			text.format(TheGameText->fetch("GUI:PlayerNoMapWillTransfer", 0),
+				Rva00688CD0WideText(playerName),
+				Rva00688CD0WideText(mapDisplayName));
+		}
 		else
-			text.format(TheGameText->fetch("GUI:PlayerNoMap"));
-		OnChat(UnicodeString((const WCHAR *)L"SYSTEM"), getLocalIP(), text, 2);
+		{
+			text.format(TheGameText->fetch("GUI:PlayerNoMap", 0),
+				Rva00688CD0WideText(playerName),
+				Rva00688CD0WideText(mapDisplayName));
+		}
+		OnChat(UnicodeString(L"SYSTEM"), getLocalIP(), text, 2);
 	}
 
-	lanUpdateSlotList();
+	if (g_bfme935GlobC != 0)
+		g_bfme935GlobC->m_rva00688CD0_26c = 1;
+	else
+		rva004CAF70();
 }
