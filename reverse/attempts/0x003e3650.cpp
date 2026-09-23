@@ -1,5 +1,5 @@
 // ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAURva003E3650Struct@@@Z
-// partial score=0.96 date=2026-09-10
+// partial score=0.966 date=2026-09-23
 // cl: /DNDEBUG /MD
 // ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAURva003E3650Struct@@@Z
 // Retail 0x003E3650: cell-space Bresenham walk with the BFME obstacle
@@ -226,9 +226,9 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start,
 		}
 		else
 		{
-			y += yinc1;
 			num += den;
 			x += xinc1;
+			y += yinc1;
 		}
 	}
 
