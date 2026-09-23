@@ -1,32 +1,25 @@
-// ?findAudioEventInfo@AudioManager@@UBE?AVAudioEventInfoRef@@PBVAsciiString@@@Z
-// partial score=0.14 date=2026-09-21
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /Ireference/shims/stringinline
 // stlport
 
-// Retail 0x006AEAE0, 401 bytes.
+// ?findAllAudioEventsOfType@AudioManager@@ -- retail 0x006AEAE0, 401 bytes.
 //
-// Same AudioManager mutex-at-+0x95c / hash-map-at-+0x70 layout already
-// proven at Code/GameEngine/Source/Common/Audio/AudioManagerAddAudioEventInfo.cpp
-// (retail 0x006AE910). That neighbour's addAudioEventInfo calls this virtual
-// (findAudioEventInfo) to check for an existing entry before inserting; this
-// body is the lookup itself: lock the mutex, hash_map::find(eventName), ref-
-// count the hit via InterlockedIncrement, and return an AudioEventInfoRef.
+// AudioManager vtable 0x0111C0C0 slot 80 (+0x140) holds ILT 0x0002E785, which
+// jumps here; slot 69 is addAudioEventInfo (0x006AE910) and slot 70 is the
+// findAudioEventInfo that body calls through [eax+0x118]. The body is the Zero
+// Hour AudioManager::findAllAudioEventsOfType: under the mutex at +0x95c it walks
+// m_allAudioEventInfo (+0x70) and appends every entry whose m_soundType (+0x84,
+// as AudioEventRTS::adjustForLocalization at 0x000B3730 reads it) equals the
+// requested type. BFME's vector holds refcounted handles, so the append bumps
+// m_refCount through the 4-byte-element _M_insert_overflow at 0x000BD3B0.
+//
+// begin() is reached through ILT 0x0001BA18, whose body 0x006A0320 is ICF-shared
+// with another hashtable instantiation, so the call is spelled by that thunk.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
+#include <vector>
 
-#include "ascii_string.h"
-
-namespace rts
-{
-template <class T>
-struct hash
-{
-	unsigned int operator()(T value) const;
-};
-}
-
-bool operator==(const AsciiString &left, const AsciiString &right);
+#include "StringInline.h"
 
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(
 	long volatile *value);
@@ -35,6 +28,27 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
 	void *handle, unsigned long milliseconds);
 extern "C" __declspec(dllimport) int __stdcall ReleaseMutex(void *handle);
+
+enum AudioType
+{
+	AT_Music = 0
+};
+
+namespace rts
+{
+template <class T>
+struct hash
+{
+	unsigned int operator()(T value) const
+	{
+		const char *text = value.str();
+		unsigned int result = 0;
+		for (; *text; ++text)
+			result = 5 * result + *text;
+		return result;
+	}
+};
+}
 
 struct AudioEventInfo
 {
@@ -49,12 +63,24 @@ public:
 
 	long m_refCount;
 	AsciiString m_audioName;
+	char m_pad00c[0x84 - 0x0c];
+	AudioType m_soundType;
 };
 
 class AudioEventInfoRef
 {
 public:
-	AudioEventInfoRef(void) : m_info(0) { }
+	AudioEventInfoRef(AudioEventInfo *info) : m_info(info)
+	{
+		if (m_info)
+			InterlockedIncrement(&m_info->m_refCount);
+	}
+
+	AudioEventInfoRef(const AudioEventInfoRef &other) : m_info(other.m_info)
+	{
+		if (m_info)
+			InterlockedIncrement(&m_info->m_refCount);
+	}
 
 	~AudioEventInfoRef(void)
 	{
@@ -63,6 +89,14 @@ public:
 	}
 
 	AudioEventInfo *m_info;
+};
+
+// The element type as the ledger names the vector's _M_insert_overflow
+// (0x000BD3B0): an AudioEventInfoRef by its copy (store + InterlockedIncrement)
+// and its destroy (InterlockedDecrement + deleting destructor).
+struct Rva000BD3B0Element : public AudioEventInfoRef
+{
+	Rva000BD3B0Element(AudioEventInfo *info) : AudioEventInfoRef(info) { }
 };
 
 class AudioManagerMutex
@@ -93,8 +127,24 @@ private:
 typedef _STL::hash_map<AsciiString, AudioEventInfo *, rts::hash<AsciiString>,
 	_STL::equal_to<AsciiString> > AudioEventInfoHash;
 
+extern void j_0001ba18(void);
+
 class AudioEventInfoMap : public AudioEventInfoHash
 {
+public:
+	iterator begin(void)
+	{
+		typedef void (AudioEventInfoMap::*Begin)(iterator *result);
+		union BeginBits
+		{
+			void (*freeFunction)(void);
+			Begin memberFunction;
+		} first;
+		first.freeFunction = j_0001ba18;
+		iterator result;
+		(this->*first.memberFunction)(&result);
+		return result;
+	}
 };
 
 class AudioManager
@@ -117,7 +167,14 @@ public:
 	virtual void slot56(); virtual void slot57(); virtual void slot58(); virtual void slot59();
 	virtual void slot60(); virtual void slot61(); virtual void slot62(); virtual void slot63();
 	virtual void slot64(); virtual void slot65(); virtual void slot66(); virtual void slot67();
+	virtual void slot68();
+	virtual void addAudioEventInfo(AudioEventInfo *newEvent);
 	virtual AudioEventInfoRef findAudioEventInfo(const AsciiString *eventName) const;
+	virtual void slot71(); virtual void slot72(); virtual void slot73(); virtual void slot74();
+	virtual void slot75(); virtual void slot76(); virtual void slot77(); virtual void slot78();
+	virtual void slot79();
+	virtual void findAllAudioEventsOfType(AudioType audioType,
+		_STL::vector<Rva000BD3B0Element> &allEvents);
 
 private:
 	char m_pad004[0x6c];
@@ -126,21 +183,15 @@ private:
 	void *m_mutex;
 };
 
-// ?findAudioEventInfo@AudioManager@@UBE?AVAudioEventInfoRef@@PBVAsciiString@@@Z
-AudioEventInfoRef AudioManager::findAudioEventInfo(const AsciiString *eventName) const
+void AudioManager::findAllAudioEventsOfType(AudioType audioType,
+	_STL::vector<Rva000BD3B0Element> &allEvents)
 {
-	AudioManagerMutex guard(((AudioManager *)this)->m_mutex);
-
-	AudioEventInfoRef result;
-
-	AudioEventInfoMap *map = (AudioEventInfoMap *)&m_allAudioEventInfo;
-	AudioEventInfoMap::iterator it = map->find(*eventName);
-	if (it != map->end())
+	AudioManagerMutex guard(m_mutex);
+	AudioEventInfoMap::iterator it;
+	for (it = m_allAudioEventInfo.begin(); it != m_allAudioEventInfo.end(); ++it)
 	{
-		AudioEventInfo *info = (*it).second;
-		result.m_info = info;
-		InterlockedIncrement(&info->m_refCount);
+		AudioEventInfo *audioEvent = (*it).second;
+		if (audioEvent->m_soundType == audioType)
+			allEvents.push_back(audioEvent);
 	}
-
-	return result;
 }
