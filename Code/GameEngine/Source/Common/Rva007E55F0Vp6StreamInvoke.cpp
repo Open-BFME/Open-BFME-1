@@ -22,14 +22,13 @@ extern char Rva006A16B0Empty[];
 class Rva007E3C20Vp6Stream;
 
 // Retail 0x007E35E0 returns al on every path (mov al,bl / mov al,1 before
-// each ret 0xc), but the ledger pin still spells it void; the caller here
-// tests al, so it is reached through a member-pointer cast.
+// each ret 0xc); the caller here tests al.
 class Rva007E3930StringState
 {
 	friend class Rva007E3C20Vp6Stream;
 
 private:
-	void _bfme_initialize_007E35E0(const char *text, int valueA, int valueB);
+	char _bfme_initialize_007E35E0(const char *text, int valueA, int valueB);
 };
 
 class BfmeDev996;
@@ -58,22 +57,23 @@ int bfmeInitCodecJX(CodecState **p, int a, int b);
 void d_009a4e50();
 void *bfmeMakeBlock(int tag, unsigned int size);
 void operator delete[](void *p);
-extern int (__cdecl *g_bfmeNowVNH)();
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime(void);
 
 // The block dispatchWhenReady hands back: +0x04 must equal 0x18 + 8, and
-// the fields read below end at +0x1e.
+// the fields read below end at +0x1e.  Offset-named: nothing here proves what
+// the fields mean.
 struct Rva007E55F0FormatDesc
 {
-	int m_dword00;
-	int m_dword04;
-	int m_dword08;
-	short m_width;
-	short m_height;
-	int m_dword10;
-	int m_stride;
-	int m_dword18;
-	short m_bpp;
-	short m_word1e;
+	int m_at00;
+	int m_at04;
+	int m_at08;
+	short m_at0c;
+	short m_at0e;
+	int m_at10;
+	int m_at14;
+	int m_at18;
+	short m_at1c;
+	short m_at1e;
 };
 
 class Gen_0081E480
@@ -111,24 +111,23 @@ public:
 	virtual int slot20(int value);
 
 private:
-	CodecState *m_decodeState;
-	CodecState *m_renderState;
+	// Offset names as in Rva007E3C20Vp6StreamDtor.cpp.
+	CodecState *m_at14;
+	CodecState *m_at18;
 	BfmeB996 m_b996;
 	unsigned char m_pad28[0x30 - 0x28];
-	int m_width;
-	int m_height;
-	bool m_flag38;
-	int m_stride;
-	int m_dword40;
-	int m_bpp;
-	int m_dword48;
-	int m_dword4c;
-	int m_dword50;
-	void *m_scratch;
-	int m_scratchSize;
+	int m_at30;
+	int m_at34;
+	bool m_at38;
+	int m_at3c;
+	int m_at40;
+	int m_at44;
+	int m_at48;
+	int m_at4c;
+	int m_at50;
+	void *m_at54;
+	int m_at58;
 };
-
-typedef char (Rva007E3930StringState::*Rva007E55F0OpenFn)(const char *, int, int);
 
 // address-derived identity: vtable slot 19 of the VP6 stream class
 char Rva007E3C20Vp6Stream::invoke(const AsciiString &name, int value, bool flag)
@@ -136,9 +135,7 @@ char Rva007E3C20Vp6Stream::invoke(const AsciiString &name, int value, bool flag)
 	const char *text = *reinterpret_cast<const char *const *>(&name);
 	text = text ? text + 8 : Rva006A16B0Empty;
 
-	Rva007E55F0OpenFn open = reinterpret_cast<Rva007E55F0OpenFn>(
-		&Rva007E3930StringState::_bfme_initialize_007E35E0);
-	if (!(((Rva007E3930StringState *)&m_b996)->*open)(text, 1, 0))
+	if (!((Rva007E3930StringState *)&m_b996)->_bfme_initialize_007E35E0(text, 1, 0))
 		return 0;
 
 	int id;
@@ -160,34 +157,34 @@ char Rva007E3C20Vp6Stream::invoke(const AsciiString &name, int value, bool flag)
 		m_b996.bfmeAdvance996();
 	}
 
-	if (desc && desc->m_dword04 - 8 == 0x18)
+	if (desc && desc->m_at04 - 8 == 0x18)
 	{
-		m_width = desc->m_width;
-		m_height = desc->m_height;
-		m_stride = desc->m_dword10;
-		m_dword40 = desc->m_dword18;
-		m_bpp = desc->m_bpp;
-		m_scratchSize = ((desc->m_stride + 3) & ~3) + 8;
+		m_at30 = desc->m_at0c;
+		m_at34 = desc->m_at0e;
+		m_at3c = desc->m_at10;
+		m_at40 = desc->m_at18;
+		m_at44 = desc->m_at1c;
+		m_at58 = ((desc->m_at14 + 3) & ~3) + 8;
 		delete[] desc;
 		desc = 0;
 
-		m_scratch = bfmeMakeBlock(0, m_scratchSize);
+		m_at54 = bfmeMakeBlock(0, m_at58);
 
-		bfmeInitCodecJX(&m_decodeState, m_width, m_height);
-		((void (__cdecl *)(CodecState *, int, int))d_009a4e50)(m_decodeState, 0, 0);
+		bfmeInitCodecJX(&m_at14, m_at30, m_at34);
+		((void (__cdecl *)(CodecState *, int, int))d_009a4e50)(m_at14, 0, 0);
 
-		m_flag38 = isAvp6 && flag;
-		if (m_flag38)
+		m_at38 = isAvp6 && flag;
+		if (m_at38)
 		{
-			bfmeInitCodecJX(&m_renderState, m_width, m_height);
-			((void (__cdecl *)(CodecState *, int, int))d_009a4e50)(m_renderState, 0, 0);
+			bfmeInitCodecJX(&m_at18, m_at30, m_at34);
+			((void (__cdecl *)(CodecState *, int, int))d_009a4e50)(m_at18, 0, 0);
 		}
 
 		slot02();
-		m_dword50 = -slot20(value);
-		m_dword50 += g_bfmeNowVNH();
-		m_dword48 = -1;
-		m_dword4c = -1;
+		m_at50 = -slot20(value);
+		m_at50 += timeGetTime();
+		m_at48 = -1;
+		m_at4c = -1;
 		return 1;
 	}
 

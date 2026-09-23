@@ -1058,5 +1058,135 @@
   "after_sha256": "0c7552fd99284e808745089cab1ff3d7d9114ab6d41bc049dc5a13c23e21e738",
   "evidence": "reverse/name_corrections.json",
   "reason": "BfmeShadowPartClient was borrowed from Shadow_setSize.cpp, where it is the client at node+0x08 of BfmeShadowPart's list; here the object sits at node+0x1C of the owner's +0x50 list and is reached only through vtable slot 3, and this TU's own earlier correction entry rejects the ShadowPart alias, so the class takes the offset-keyed address-token name Rva00769490Client1C."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_bpp",
+  "new_name": "m_at1c",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_bpp",
+  "new_name": "m_at44",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_decodeState",
+  "new_name": "m_at14",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_flag38",
+  "new_name": "m_at38",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_height",
+  "new_name": "m_at0e",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_height",
+  "new_name": "m_at34",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_renderState",
+  "new_name": "m_at18",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_scratch",
+  "new_name": "m_at54",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_scratchSize",
+  "new_name": "m_at58",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_stride",
+  "new_name": "m_at14",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_stride",
+  "new_name": "m_at3c",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_width",
+  "new_name": "m_at0c",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva007E55F0Vp6StreamInvoke.cpp",
+  "old_name": "m_width",
+  "new_name": "m_at30",
+  "before_sha256": "a80e36540144067951ccc43bbe19d61a7e67b3fb02faf1dcfec4ff0f29d4affd",
+  "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
  }
 ]

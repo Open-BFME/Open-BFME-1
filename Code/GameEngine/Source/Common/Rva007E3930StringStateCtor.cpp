@@ -27,7 +27,7 @@ public:
 	Rva007E3930StringState(const char *text, int valueA, int valueB);
 
 private:
-	void _bfme_initialize_007E35E0(const char *text, int valueA, int valueB);
+	char _bfme_initialize_007E35E0(const char *text, int valueA, int valueB);
 
 	int m_value4;
 	int m_mode;
