@@ -1,6 +1,5 @@
 // ??1ThingTemplate@@MAE@XZ
-// partial score=1.0 date=2026-09-23
-// Scratch reconstruction of the 849-byte BFME ThingTemplate destructor.
+// BFME ThingTemplate destructor, retail 0x00146BA0 (849 bytes).
 // Identity: ThingFactory::newOverride allocates this 0x4D4-byte type and the
 // constructor installs vtable 0x01094988. Unknown members keep RVA names.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
@@ -58,17 +57,6 @@ struct Rva00141A00Element
 
 struct Rva00146BA0Pod12 { unsigned char m_body[12]; };
 struct Rva00146BA0Pod236 { unsigned char m_body[0xEC]; };
-struct Rva00146BA0Value4A { unsigned int m_word; };
-struct Rva00146BA0Value4B { unsigned int m_word; };
-struct Rva00146BA0Value4C { unsigned int m_word; };
-struct Rva00146BA0Value4D { unsigned int m_word; };
-struct Rva00146BA0Value12
-{
-	unsigned char m_body[12];
-	~Rva00146BA0Value12();
-};
-struct Rva00146BA0Value116 { unsigned char m_body[0x74]; };
-
 typedef unsigned int Rva00146BA0UnknownSetKey;
 struct Rva00146BA0ArrayItem
 {
@@ -114,10 +102,21 @@ typedef char NuggetMustBe20Bytes[sizeof(Rva00142250Nugget) == 0x14 ? 1 : -1];
 typedef char ArrayItemMustBe20Bytes[sizeof(Rva00146BA0ArrayItem) == 0x14 ? 1 : -1];
 typedef char GeometryInfoMustBe92Bytes[sizeof(Rva000FFCA0GeometryInfo) == 0x5C ? 1 : -1];
 
-class Rva00146BA0ThingTemplateView : public Rva00146BA0OverridableView
+
+// Each retail call is a distinct tree destructor; its payload layout is opaque here.
+#define OPAQUE_TREE(NAME) struct NAME { unsigned char m_bytes[12]; ~NAME(); };
+OPAQUE_TREE(Rva00140250Tree)
+OPAQUE_TREE(Rva00140310Tree)
+OPAQUE_TREE(Rva00129B20Tree)
+OPAQUE_TREE(Rva00143C00Tree)
+OPAQUE_TREE(Rva001403D0Tree)
+OPAQUE_TREE(Rva001468A0Tree)
+#undef OPAQUE_TREE
+
+class ThingTemplate : public Rva00146BA0OverridableView
 {
 protected:
-	virtual ~Rva00146BA0ThingTemplateView();
+	virtual ~ThingTemplate();
 
 private:
 	UnicodeString m_wide_00C;
@@ -154,20 +153,20 @@ private:
 	std::vector<AsciiString> m_vector_2E8;
 	unsigned char m_opaque_2F4[4];
 	std::vector<Rva00146BA0Pod236> m_vector_2F8;
-	std::map<int, Rva00146BA0Value4A> m_map_304;
+	Rva00140250Tree m_map_304;
 	std::vector<Rva00146BA0Pod12> m_vector_310;
-	std::map<int, Rva00146BA0Value4B> m_map_31C;
-	std::map<unsigned int, Rva00146BA0Value116> m_map_328;
-	std::map<int, Rva00146BA0Value4C> m_map_334;
-	std::map<int, Rva00146BA0Value4D> m_map_340;
-	std::map<int, Rva00146BA0Value12> m_map_34C;
+	Rva00140310Tree m_map_31C;
+	Rva00129B20Tree m_map_328;
+	Rva00143C00Tree m_map_334;
+	Rva001403D0Tree m_map_340;
+	Rva001468A0Tree m_map_34C;
 	std::vector<void *> m_vector_358;
 	Rva00146BA0ArrayItem m_array_364[2];
 	unsigned char m_opaque_38C[0x4D4 - 0x38C];
 };
 
-typedef char ThingTemplateViewMustBe0x4D4[sizeof(Rva00146BA0ThingTemplateView) == 0x4D4 ? 1 : -1];
+typedef char ThingTemplateMustBe0x4D4[sizeof(ThingTemplate) == 0x4D4 ? 1 : -1];
 
-Rva00146BA0ThingTemplateView::~Rva00146BA0ThingTemplateView()
+ThingTemplate::~ThingTemplate()
 {
 }

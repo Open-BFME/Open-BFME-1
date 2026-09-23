@@ -88830,3 +88830,12 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ??_7PartitionFilterPlayer@Rva00327D30@@6B@,0x00C9688C,retail 00327D30 +193 installs player filter table; existing canonical vtable pin identifies slots
 ?link@PartitionFilter@Rva00327D30@@QAEPAV12@PAV12@@Z,0x009F2AE0,retail 00327D30 +1B2 through +1D8 call same filter-next linker five times
 ?getClosestObject@PartitionManager@Rva00327D30@@QAEPAVObject@@PBUCoord3D@@MHPAVPartitionFilter@2@@Z,0x009F26A0,retail 00327D30 +1F4 calls matched 33-byte four-argument closest-object wrapper
+??1?$vector@URva001439F0Element@@V?$allocator@URva001439F0Element@@@_STL@@@_STL@@QAE@XZ,0x0002742B,ThingTemplate destructor +0x1AC destroys vector at +0x2C4; ILT routes to matched 0x001439F0 vector dtor with 0x24 stride and element destructor
+??1?$vector@URva00141A00Element@@V?$allocator@URva00141A00Element@@@_STL@@@_STL@@QAE@XZ,0x00035125,ThingTemplate destructor +0x22A destroys vector at +0x0BC; ILT routes to matched 0x00141A00 vector dtor with 0x5C stride and virtual element destructor
+??1Rva000FFCA0GeometryInfo@@UAE@XZ,0x000309F4,ThingTemplate destructor +0x237 destroys GeometryInfo member at +0x060; ILT routes to 0x000FFCA0 already pinned GeometryInfo destructor
+??1Rva001468A0Tree@@QAE@XZ,0x0002C877,ThingTemplate +0x34C opaque 12B tree member destructor; retail caller +0x089 routes ILT to matched 0x001468A0; payload type not inferred
+??1Rva001403D0Tree@@QAE@XZ,0x0001CB70,ThingTemplate +0x340 opaque 12B tree member destructor; retail caller +0x099 routes ILT to matched 0x001403D0; payload type not inferred
+??1Rva00143C00Tree@@QAE@XZ,0x00015933,ThingTemplate +0x334 opaque 12B tree member destructor; retail caller +0x0A9 routes ILT to matched 0x00143C00; payload type not inferred
+??1Rva00129B20Tree@@QAE@XZ,0x00035B34,ThingTemplate +0x328 opaque 12B tree member destructor; retail caller +0x0B9 routes ILT to matched 0x00129B20; payload type not inferred
+??1Rva00140310Tree@@QAE@XZ,0x00029CAD,ThingTemplate +0x31C opaque 12B tree member destructor; retail caller +0x0C9 routes ILT to matched 0x00140310; payload type not inferred
+??1Rva00140250Tree@@QAE@XZ,0x0000A470,ThingTemplate +0x304 opaque 12B tree member destructor; retail caller +0x122 routes ILT to matched 0x00140250; payload type not inferred
