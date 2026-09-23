@@ -3,13 +3,16 @@
 // Retail 0x00174800: an AIInternalMoveToState-derived state's onEnter().
 // The state-machine owner and its AI update are fetched, a critter-desync
 // log line is emitted when TheCRCParameterCheck is live, and -- when the
-// AI's byte flag at +0x336 is set -- the state notes TheAI's agent list,
+// AI's byte flag at +0x336 is set -- the state removes the owner's goal
+// from TheAI's pathfinder (TheAI->pathfinder()->removeGoal(owner)),
 // computes a fixed-distance offset from the owner toward the (normalized)
 // direction away from the goal object, requests a path there, then chains
 // to the shared AIInternalMoveToState::onEnter(). When the flag is clear
 // the state just flips its own continue/wait bookkeeping and returns
-// STATE_CONTINUE without chaining to the base. Address-derived class and
-// field names where identity is unknown; landed twins
+// STATE_CONTINUE without chaining to the base. Callees are spelled with their
+// ledger identities (StateMachine::getGoalObject, chooseLocomotorSet slot 127,
+// Pathfinder::removeGoal, bfmeRetailCritterDesyncLog); address-derived class
+// and field names where identity is unknown; landed twins
 // Rva00174730State_update.cpp / Rva00174A20State_update.cpp establish the
 // AIInternalMoveToState machine/adjustDestinations layout reused here.
 
@@ -45,27 +48,30 @@ struct Coord3D
 	}
 };
 
-class Rva00174800Object;
+class Object;
 
-struct Rva00174800StateMachine
+// getGoalObject declared, not defined: links against the pinned
+// ?getGoalObject@StateMachine@@QAEPAVObject@@XZ (ILT 0x0000E570 -> 0x000A1490).
+class StateMachine
 {
+public:
+	Object *getGoalObject();
+
 	unsigned char m_pad00[0x10];
-	Rva00174800Object *m_owner;
+	Object *m_owner;
+};
+
+enum LocomotorSetType
+{
 };
 
 // Local minimal AIUpdateInterface: requestPath declared, not defined, so
 // the call links against the already-matched
 // ?requestPath@AIUpdateInterface@@QAEXPAUCoord3D@@_N@Z (AIUpdate.cpp).
+// chooseLocomotorSet is vtable +0x1fc (slot 127), per the matched
+// ?chooseLocomotorSet@AIUpdateInterface@@UAE_NW4LocomotorSetType@@@Z at
+// 0x00272ED0; the virtual call needs no linked symbol.
 class AIUpdateInterface
-{
-public:
-	void requestPath(Coord3D *pos, bool immediately);
-};
-
-// BFME AIUpdateInterface::chooseLocomotorSet is vtable +0x1fc (slot 127);
-// still a dump, so the call goes through the padded vtable shape rather
-// than a linked symbol (same trick as AIUpdate.cpp's own reconstruction).
-class AIUpdateInterface_Slot127
 {
 public:
 	virtual void _pad0(void) = 0;	virtual void _pad1(void) = 0;
@@ -132,10 +138,12 @@ public:
 	virtual void _pad122(void) = 0;	virtual void _pad123(void) = 0;
 	virtual void _pad124(void) = 0;	virtual void _pad125(void) = 0;
 	virtual void _pad126(void) = 0;
-	virtual int slot127(int wst) = 0;
+	virtual bool chooseLocomotorSet(LocomotorSetType wst) = 0;
+
+	void requestPath(Coord3D *pos, bool immediately);
 };
 
-class Rva00174800Object
+class Object
 {
 public:
 	unsigned char m_pad00[0x38];
@@ -144,29 +152,27 @@ public:
 	AIUpdateInterface *m_ai;
 };
 
-extern void j_0000e570();
-typedef Rva00174800Object *(__fastcall *Rva00174800GetGoal)(Rva00174800StateMachine *);
-
 class CRCParameterCheck;
 
-extern void j_0003a17a();
-typedef void (__cdecl *Rva00174800CritterDesyncLog)(CRCParameterCheck *, const char *);
+// Pinned _bfmeRetailCritterDesyncLog (ILT 0x0003A17A -> 0x00065C80).
+extern "C" void bfmeRetailCritterDesyncLog(CRCParameterCheck *sink, const char *message);
 
-// Reused from BfmeConv1780.cpp: TheAI->m_bfmeAgentGK->bfmeNoteGK(item) is
-// the already-matched call this body makes through the same pinned dump.
-class BfmeItemGK;
-
-class BfmeAgentGK
+// Pinned ?removeGoal@Pathfinder@@QAEXPAVObject@@@Z (ILT 0x00015D02 ->
+// 0x003E3D20); TheAI+0x0C is the pathfinder (TheAI pin note, AIFearState).
+class Pathfinder
 {
 public:
-	void bfmeNoteGK(BfmeItemGK *item);
+	void removeGoal(Object *obj);
 };
 
 class AI
 {
 public:
-	unsigned char m_pad0c[0x0c];
-	BfmeAgentGK *m_bfmeAgentGK;
+	Pathfinder *pathfinder() const { return m_pathfinder; }
+
+private:
+	unsigned char m_pad00[0x0c];
+	Pathfinder *m_pathfinder;			// +0x0c
 };
 
 extern AI *TheAI;						// retail 0x012EF214
@@ -181,7 +187,7 @@ public:
 
 protected:
 	unsigned char m_pad04[0x18];
-	Rva00174800StateMachine *m_machine;	// +0x1c
+	StateMachine *m_machine;	// +0x1c
 	unsigned char m_pad20[0x4c - 0x20];
 	unsigned char m_adjustDestinations;	// +0x4c
 	unsigned char m_pad4d[0x50 - 0x4d];
@@ -206,22 +212,22 @@ protected:
 static void rva00174800_log(const char *message)
 {
 	if (Glo012F0239 && TheCRCParameterCheck)
-		((Rva00174800CritterDesyncLog)j_0003a17a)(TheCRCParameterCheck, message);
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, message);
 }
 
 StateReturnType Rva00174800State::onEnter()
 {
 	rva00174800_log("CritterDesync: setAdjustDestination(FALSE) 16");
 
-	Rva00174800StateMachine *machine = m_machine;
+	StateMachine *machine = m_machine;
 	m_adjustDestinations = 0;
-	Rva00174800Object *owner = machine->m_owner;
-	Rva00174800Object *goal = ((Rva00174800GetGoal)j_0000e570)(machine);
+	Object *owner = machine->m_owner;
+	Object *goal = machine->getGoalObject();
 	AIUpdateInterface *ai = m_machine->m_owner->m_ai;
 	if (!goal || !ai)
 		return STATE_FAILURE;
 
-	((AIUpdateInterface_Slot127 *)ai)->slot127(9);
+	ai->chooseLocomotorSet((LocomotorSetType)9);
 
 	if (*((unsigned char *)ai + 0x336))
 	{
@@ -229,7 +235,7 @@ StateReturnType Rva00174800State::onEnter()
 		m_checkForPath = 1;
 		m_field58 = 0;
 
-		TheAI->m_bfmeAgentGK->bfmeNoteGK((BfmeItemGK *)owner);
+		TheAI->pathfinder()->removeGoal(owner);
 
 		Coord3D pos;
 		pos.set(&owner->m_position);
