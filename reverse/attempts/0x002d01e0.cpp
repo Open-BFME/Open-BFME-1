@@ -1,7 +1,12 @@
 // ?exitObjectViaDoor@DefaultProductionExitUpdate@@UAEXPAVObject@@W4ExitDoorType@@@Z
-// partial score=0.89 date=2026-09-07
+// partial score=0.96 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /MD /GX /Ireference/shims/stlp_nodealloc /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
 // stlport
+// Data identity correction: retail +0xA3 reads DIR32 VA 0x01075350, the
+// readonly zero pinned as BfmeZeroRange; keep the relocation named.
+// Callee identity correction: retail 0x0003A1A7 is an ILT to matched
+// Thing::setPosition at 0x00132CE0 (272B, thiscall, one pointer argument, ret 4).
+// Keep this declaration on Thing so Object inherits the call as in the donor.
 // Isolated TU for DefaultProductionExitUpdate::exitObjectViaDoor.
 // Retail 0x002D01E0 is 534B (gen-dump / full EH tail), not the 494B drift cut.
 // Wall: loc (Vector3) does not share the std::vector<Coord3D> slot, so
@@ -64,6 +69,7 @@ public:
 };
 
 extern TerrainLogic *TheTerrainLogic;
+extern const Real BfmeZeroRange; // VA 0x01075350, readonly zero used by retail.
 
 class AICommandInterface
 {
@@ -100,13 +106,13 @@ class Thing
 {
 public:
 	void setOrientation(Real angle);
+	void setPosition(const Coord3D *pos);
 };
 
 class Object : public Thing
 {
 public:
 	Int getLayer() const;
-	void setPosition(const Coord3D *pos);
 	void setLayer(PathfindLayerEnum layer);
 
 	Real getOrientation() const
@@ -218,7 +224,7 @@ void DefaultProductionExitUpdate::exitObjectViaDoor(Object *newObj, ExitDoorType
 		transform->Transform_Vector(*transform, loc, &loc);
 
 		loc.Z = TheTerrainLogic ? TheTerrainLogic->getLayerHeight(
-			loc.X, loc.Y, (PathfindLayerEnum)creationObject->getLayer(), 0, 1) : 0.0f;
+			loc.X, loc.Y, (PathfindLayerEnum)creationObject->getLayer(), 0, 1) : BfmeZeroRange;
 
 		createPoint.x = loc.X;
 		createPoint.y = loc.Y;
