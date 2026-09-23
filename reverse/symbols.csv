@@ -88865,3 +88865,4 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?updateBuddyInfo@@YAXXZ,0x0002549B,ShowDiplomacy retail call at 0x004C418B through ILT
 ?get_allocator@?$vector@UGen_t_003a75c0_p8cd@@V?$allocator@UGen_t_003a75c0_p8cd@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_t_003a75c0_p8cd@@@2@XZ,0x00013FC5,route=0x003A66A0; Retail vector copy 0x003AA980 passes this source vector and result slot to the ILT. The routed body returns the result slot.
 ?_M_insert_overflow@?$vector@PAURva002D8C10Record@@V?$allocator@PAURva002D8C10Record@@@_STL@@@_STL@@IAEXPAPAURva002D8C10Record@@ABQAU3@ABU__true_type@2@I_N@Z,0x00007711,route=0x002D8820; UpgradeTexture parser ILT call to native pointer-vector body
+??0W3DFileSystem@@QAE@XZ,0x00034F86,route=0x006F6330; W3DDisplay init allocation and W3DFileSystem vtable slots prove constructor

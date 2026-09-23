@@ -116,6 +116,68 @@ def test_gen_shim_replacement_keeps_transaction_and_tombstone(tmp_path, monkeypa
         assert "same 32-byte range" in tombstone[2]
 
 
+@pytest.mark.parametrize("gate", [0, 1])
+def test_real_identity_correction_requires_proof_and_is_transactional(
+        tmp_path, monkeypatch, gate):
+    old_name = "?apply@Rva00ABCD00@@QAEXXZ"
+    old = DUMP.replace("?d_00abcd00@@YAXXZ", old_name).replace(
+        "Code/gen_asm/d_00abcd00.asm", "Code/GameEngine/Old.cpp").replace(
+        "gen-dump;ghidra=FUN_00eacd00", "authored")
+    proof_rel = "reverse/identity_evidence/0x00abcd00.md"
+    functions, deleted, source = arrange(
+        tmp_path, monkeypatch, gate=gate, scaffold=old,
+        extra_args=("--correct-identity", old_name,
+                    "--identity-evidence", proof_rel))
+    proof = tmp_path / proof_rel
+    proof.parent.mkdir(parents=True)
+    proof.write_text("Matched caller and vtable prove the constructor.\n")
+    before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
+    if gate:
+        with pytest.raises(SystemExit):
+            add_match.main()
+        assert (functions.read_bytes(), deleted.read_bytes(), source.read_bytes()) == before
+    else:
+        add_match.main()
+        ledger = functions.read_text()
+        assert old_name not in ledger
+        assert "identity-correction=" + proof_rel in ledger
+        tombstone = list(csv.reader(io.StringIO(deleted.read_text())))[-1]
+        assert tombstone[0] == old_name
+        assert REAL in tombstone[2]
+
+
+def test_real_identity_correction_rejects_wrong_old_name(tmp_path, monkeypatch):
+    old = DUMP.replace("Code/gen_asm/d_00abcd00.asm", "Code/GameEngine/Old.cpp").replace(
+        "gen-dump;ghidra=FUN_00eacd00", "authored")
+    proof_rel = "reverse/identity_evidence/0x00abcd00.md"
+    functions, deleted, source = arrange(
+        tmp_path, monkeypatch, gate=0, scaffold=old,
+        extra_args=("--correct-identity", "?wrong@@YAXXZ",
+                    "--identity-evidence", proof_rel))
+    proof = tmp_path / proof_rel
+    proof.parent.mkdir(parents=True)
+    proof.write_text("Evidence.\n")
+    before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
+    with pytest.raises(SystemExit):
+        add_match.main()
+    assert (functions.read_bytes(), deleted.read_bytes(), source.read_bytes()) == before
+
+
+def test_real_identity_correction_rejects_missing_evidence(tmp_path, monkeypatch):
+    old_name = "?apply@Rva00ABCD00@@QAEXXZ"
+    old = DUMP.replace("?d_00abcd00@@YAXXZ", old_name).replace(
+        "Code/gen_asm/d_00abcd00.asm", "Code/GameEngine/Old.cpp").replace(
+        "gen-dump;ghidra=FUN_00eacd00", "authored")
+    functions, deleted, source = arrange(
+        tmp_path, monkeypatch, gate=0, scaffold=old,
+        extra_args=("--correct-identity", old_name,
+                    "--identity-evidence", "reverse/identity_evidence/missing.md"))
+    before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
+    with pytest.raises(SystemExit):
+        add_match.main()
+    assert (functions.read_bytes(), deleted.read_bytes(), source.read_bytes()) == before
+
+
 @pytest.mark.parametrize("notes,path", [
     ("gen-tgrid;template=vec_p16cd", "Code/Real.cpp"),
     ("gen-tgrid-other", "Code/gen_small/tgrid_109.cpp"),

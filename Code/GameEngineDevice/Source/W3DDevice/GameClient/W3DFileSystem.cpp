@@ -482,7 +482,6 @@ extern W3DFileSystem *TheW3DFileSystem = NULL;
 /** Constructor.  Creating an instance of this class overrices the default 
 W3D file factory.  */
 //-------------------------------------------------------------------------------------------------
-// ??0W3DFileSystem@@QAE@XZ present-unmatched
 W3DFileSystem::W3DFileSystem(void)
 {
 	_TheFileFactory = this; // override the w3d file factory.

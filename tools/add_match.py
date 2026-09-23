@@ -286,6 +286,12 @@ def main():
                         help="retire the SCAFFOLD row at this address and claim it "
                              "under the new name (the dump -> C++ conversion path); "
                              "the old row is restored if verification fails")
+    parser.add_argument("--correct-identity", metavar="OLD_NAME",
+                        help="with --replace-rva, retire this exact matched real-name claim "
+                             "when independent evidence proves the replacement identity")
+    parser.add_argument("--identity-evidence", metavar="PATH",
+                        help="reverse/identity_evidence/*.md proof required by "
+                             "--correct-identity")
     parser.add_argument("--boundary-evidence",
                         help="with --replace-rva, permit a corrected target_size while "
                              "recording why the scaffold extent was wrong; the start RVA "
@@ -297,6 +303,12 @@ def main():
                         help="TEST-ONLY: operate on a copy of the repo rooted here "
                              "instead of the live ledger (default: repo root)")
     args = parser.parse_args()
+    if bool(args.correct_identity) != bool(args.identity_evidence):
+        fail("--correct-identity and --identity-evidence must be passed together")
+    if args.correct_identity and (not args.replace_rva or args.replace_existing or
+                                  args.boundary_evidence):
+        fail("--correct-identity requires --replace-rva with the same proven extent "
+             "and cannot be combined with --replace-existing or --boundary-evidence")
     if args.boundary_evidence is not None:
         if not args.replace_rva:
             fail("--boundary-evidence requires --replace-rva")
@@ -308,6 +320,17 @@ def main():
     args.notes = run_tag(args.notes)
 
     root = args.root.resolve()
+    if args.identity_evidence:
+        evidence_rel = Path(args.identity_evidence)
+        if (evidence_rel.is_absolute() or ".." in evidence_rel.parts or
+                evidence_rel.parts[:2] != ("reverse", "identity_evidence") or
+                evidence_rel.suffix != ".md"):
+            fail("--identity-evidence must be a repo-relative "
+                 "reverse/identity_evidence/*.md path")
+        evidence = root / evidence_rel
+        if not evidence.is_file() or not evidence.read_text(encoding="utf-8").strip():
+            fail(f"--identity-evidence {evidence_rel} is missing or empty")
+        args.notes = f"identity-correction={evidence_rel.as_posix()};{args.notes}"
     functions_csv = root / "reverse" / "functions.csv"
     deleted_csv = root / "reverse" / "deleted_rows.csv"
     if not functions_csv.exists():
@@ -374,18 +397,27 @@ def main():
         if len(at_rva) != 1:
             fail(f"--replace-rva 0x{old_rva:08X} matches {len(at_rva)} rows; "
                  "it retires exactly one")
-        if not replaceable_scaffold(at_rva[0]):
+        if args.correct_identity:
+            old = at_rva[0]
+            if (old["name"] != args.correct_identity or old["name"] == name or
+                    old["status"] != "matched" or
+                    not old["source"].startswith("Code/") or
+                    old["source"].startswith(("Code/gen_small/", "Code/gen_asm/")) or
+                    replaceable_scaffold(old)):
+                fail(f"--correct-identity {args.correct_identity} does not name a "
+                     f"matched real-source claim at 0x{old_rva:08X}")
+        elif not replaceable_scaffold(at_rva[0]):
             fail(f"--replace-rva 0x{old_rva:08X} is {at_rva[0]['name']} "
                  f"({at_rva[0]['source']}), not a supported generated scaffold row",
-                 "only scaffolding may be taken over by name; retract a real claim "
-                 "in its own commit so the retraction is reviewable")
+                 "a real identity correction requires --correct-identity "
+                 "and --identity-evidence")
         if old_rva != rva:
-            fail(f"--replace-rva must preserve the scaffold's exact range "
+            fail(f"--replace-rva must preserve the prior claim's exact range "
                  f"0x{old_rva:08X}/{at_rva[0]['size']}B; new claim is "
                  f"0x{rva:08X}/{size}B",
                  "a different boundary needs an explicit evidence-backed retraction")
         if at_rva[0]["size"] != size and not args.boundary_evidence:
-            fail(f"--replace-rva must preserve the scaffold's exact range "
+            fail(f"--replace-rva must preserve the prior claim's exact range "
                  f"0x{old_rva:08X}/{at_rva[0]['size']}B; new claim is "
                  f"0x{rva:08X}/{size}B",
                  "pass --boundary-evidence only when retail disassembly proves the "

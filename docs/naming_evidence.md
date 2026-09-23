@@ -329,6 +329,14 @@ It checks aligned identifier substitutions and unambiguous layouts that
 A semantic rename supported by better evidence remains permitted. Do not replace
 an established name with an opaque name merely to land a matching body.
 
+To replace a matched real-name ledger row whose identity independent evidence
+refutes, use `tools/add_match.py` with `--replace-rva <rva>`,
+`--correct-identity <old-name>`, and `--identity-evidence` pointing to a
+`reverse/identity_evidence/*.md` proof. The transaction requires the exact old
+name and the same proven extent, verifies the new source, and tombstones the
+old claim. Retire an orphaned source after the replacement verifies. Ordinary
+`--replace-rva` remains limited to generated scaffolds.
+
 An intentional descriptive-to-opaque identity correction requires an entry in
 `reverse/name_corrections.json` (a JSON list). Each entry contains `old_path`,
 `new_path`, `old_name`, `new_name`, `before_sha256`, `after_sha256`, `evidence`,
