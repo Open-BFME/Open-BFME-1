@@ -1,15 +1,13 @@
-// ?rva005A9C90@@YGXPAVGameMessage@@@Z
-// partial score=0.9 date=2026-09-21
+// ?rva005A9C90@CommandTranslator@@AAEXPBVGameMessage@@@Z
+// partial score=0.91 date=2026-09-23
 // cl: /DNDEBUG /MD
-// Retail 0x005A9C90, 159 bytes, __stdcall (ret 4, one stack arg: a
-// GameMessage*). Reads the message's argument 0 as a pixel region, and when
-// it is a single point (zero width/height) and TheInGameUI is not busy,
-// picks an object under it via TheTacticalView, resolves it to either its
-// AI-thing's "goal" sub-object (when live) or a GameLogic re-lookup by id,
-// and finally asks TheControlBar::objectSelectPredicate on whichever object
-// it landed on (falling back to the picked action object itself when
-// testStatus(0x25) is false). No named caller ties an owner, so this keeps
-// the address token.
+// CommandTranslator::translateGameMessage calls this method for case 0x18.
+// The method checks whether message argument 0 contains one pixel.
+// It picks an object through TheTacticalView and checks its action status and goal.
+// It passes the selected object to TheControlBar::objectSelectPredicate.
+// The call at case 0x18 proves that CommandTranslator owns this method.
+// The method keeps the address in its name because no evidence proves a more
+// specific method name.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -30,12 +28,14 @@ public:
 	const GameMessageArgumentType *getArgument(Int argIndex) const;
 };
 
+class CommandTranslator { private: void rva005A9C90(const GameMessage *); };
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/InGameUI.h
 class InGameUI
 {
 public:
 	unsigned char m_pad[0x12b1];
-	Bool m_busy;						///< +0x12b1
+	Bool m_forceAttackMode;				///< +0x12b1
 };
 
 extern InGameUI *TheInGameUI;
@@ -127,7 +127,7 @@ public:
 	void *findObjectByID(Int id);
 };
 
-extern GameLogic *TheBfmeGameLogic;
+extern GameLogic *TheGameLogic;
 
 class ControlBar
 {
@@ -137,9 +137,9 @@ public:
 
 extern ControlBar *TheControlBar;
 
-void __stdcall rva005A9C90(GameMessage *msg)
+void CommandTranslator::rva005A9C90(const GameMessage *msg)
 {
-	if (TheInGameUI->m_busy)
+	if (TheInGameUI->m_forceAttackMode)
 		return;
 
 	const GameMessageArgumentType *arg = msg->getArgument(0);
@@ -161,7 +161,7 @@ void __stdcall rva005A9C90(GameMessage *msg)
 		void *aiThing = object->m_aiThing;
 		if (!aiThing)
 		{
-			aiThing = TheBfmeGameLogic->findObjectByID(object->m_lookupId);
+			aiThing = TheGameLogic->findObjectByID(object->m_lookupId);
 			if (!aiThing)
 				return;
 		}
