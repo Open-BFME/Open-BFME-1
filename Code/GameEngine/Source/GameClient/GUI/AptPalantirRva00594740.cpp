@@ -239,9 +239,7 @@ static DrawableList::const_iterator rva005946f0(const DrawableList *list, Drawab
 	return it;
 }
 
-// ?rva00594740@AptPalantir@@QAEXPAVObject@@@Z present-unmatched -- 724B, not
-// yet pinned; kept because removing it would change inlining/codegen for the
-// matched rva005946a0/rva005946f0 statics of this TU.
+// Keep the two iterator helpers in this TU to preserve their private register ABI.
 void AptPalantir::rva00594740(Object *object)
 {
 	Rva00593440Record record;
