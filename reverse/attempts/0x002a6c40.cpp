@@ -1,6 +1,6 @@
 // ?bfmeCheckXR@BfmeOwnerXR@@QAE_NPAX@Z
-// partial score=0.25 date=2026-09-07
-// Retail body 0x002A6C40, reached through the 0x00040390 ILT.
+// partial score=0.87 date=2026-09-23
+// ?bfmeCheckXR@BfmeOwnerXR@@QAE_NPAX@Z
 
 typedef unsigned char Bool;
 typedef unsigned int UnsignedInt;
@@ -13,8 +13,6 @@ public:
 };
 
 extern NameKeyGenerator *TheNameKeyGenerator;
-extern UnsignedInt g_bfmeCheckXRInit;
-extern NameKeyType g_bfmeCheckXRKey;
 
 class StealthUpdate
 {
@@ -23,19 +21,19 @@ public:
 	Bool m_field2d;
 };
 
-class BfmeXRChain
-{
-public:
-	unsigned char m_pad00[4];
-	BfmeXRChain *m_next;
-	BfmeXRChain *friend_getFinalOverride();
-};
-
 class BfmeXRResult
 {
 public:
 	unsigned char m_pad00[0x14];
 	int m_value14;
+};
+
+class BfmeXRChain
+{
+public:
+	unsigned char m_pad00[4];
+	BfmeXRChain *m_next;
+	BfmeXRResult *friend_getFinalOverride();
 };
 
 class BfmeContain
@@ -58,7 +56,7 @@ public:
 	virtual void slot52() = 0; virtual void slot53() = 0; virtual void slot54() = 0; virtual void slot55() = 0;
 	virtual void slot56() = 0; virtual void slot57() = 0; virtual void slot58() = 0; virtual void slot59() = 0;
 	virtual void slot60() = 0; virtual void slot61() = 0; virtual void slot62() = 0; virtual void slot63() = 0;
-	virtual UnsignedInt slot64(Bool argument);
+	virtual UnsignedInt getContainCount(Bool countRiders) const;
 };
 
 class BfmePlayerXR
@@ -88,72 +86,83 @@ public:
 class BfmeOwnerXR
 {
 public:
-	bool bfmeCheckXR(void *argument);
-};
+	BfmePlayerXR *getPlayer()
+	{
+		return *(BfmePlayerXR **)((char *)this - 0x1c);
+	}
 
-class BfmeCheckXRSentry
-{
-public:
-	BfmeCheckXRSentry() {}
-	~BfmeCheckXRSentry() {}
+	BfmeObjectXR *getObject()
+	{
+		return *(BfmeObjectXR **)((char *)this - 0x18);
+	}
+
+	bool bfmeCheckXR(void *argument);
 };
 
 bool BfmeOwnerXR::bfmeCheckXR(void *argument)
 {
-	BfmeCheckXRSentry sentry;
-	BfmePlayerXR *player = *(BfmePlayerXR **)((char *)this - 0x1c);
-	BfmeObjectXR *object = *(BfmeObjectXR **)((char *)this - 0x18);
-
-	UnsignedInt flags238 = *(volatile UnsignedInt *)((char *)player + 0x238);
+	BfmePlayerXR *const player = getPlayer();
+	UnsignedInt flags238 = player->m_flags238;
+	{
+	BfmeObjectXR *const object = getObject();
 	if ((flags238 & 1) != 0)
 	{
-		if ((*(volatile UnsignedInt *)((char *)object + 0x128) & 0x800) == 0)
+		UnsignedInt objectStatus128 = object->m_status128;
+		if ((objectStatus128 & 0x800) == 0)
 			return 0;
-		if ((*(volatile UnsignedInt *)((char *)object + 0x130) & 0x1000) == 0)
+	}
+	if ((flags238 & 1) != 0)
+	{
+		UnsignedInt objectStatus130 = object->m_status130;
+		if ((objectStatus130 & 0x1000) == 0)
 			return 0;
 	}
 
-	UnsignedInt flags23c = *(volatile UnsignedInt *)((char *)player + 0x23c);
+	UnsignedInt flags23c = player->m_flags23c;
 	if ((flags23c & 1) != 0)
 	{
-		if ((*(volatile UnsignedInt *)((char *)object + 0x128) & 0x800) != 0)
+		UnsignedInt objectStatus128 = object->m_status128;
+		if ((objectStatus128 & 0x800) != 0)
 			return 0;
-		if ((*(volatile UnsignedInt *)((char *)object + 0x130) & 0x1000) != 0)
+	}
+	if ((flags23c & 1) != 0)
+	{
+		UnsignedInt objectStatus130 = object->m_status130;
+		if ((objectStatus130 & 0x1000) != 0)
 			return 0;
+	}
 	}
 
 	if (player->m_flag24d)
 	{
-		if ((g_bfmeCheckXRInit & 1) == 0)
-		{
-			g_bfmeCheckXRInit |= 1;
-			g_bfmeCheckXRKey = TheNameKeyGenerator->nameToKey("StealthUpdate");
-		}
+		static NameKeyType key_StealthUpdate =
+			TheNameKeyGenerator->nameToKey("StealthUpdate");
 
-		StealthUpdate *module = object->findUpdateModule(g_bfmeCheckXRKey);
+		BfmeObjectXR *stealthObject = *(BfmeObjectXR **)((char *)this - 0x18);
+		StealthUpdate *module = stealthObject->findUpdateModule(key_StealthUpdate);
 		if (module != 0 && module->m_field2d)
 			return 0;
+	}
 
-		BfmeXRChain *chain = player->m_chain1d8;
-		if (chain->m_next != 0)
-		{
-			BfmeXRChain *resolved = chain->m_next->m_next;
-			if (resolved != 0)
+	BfmeXRChain *chain = player->m_chain1d8;
+	if (chain->m_next != 0 && chain->m_next->m_next != 0)
+	{
+		BfmeXRResult *final =
+			chain->m_next->m_next->friend_getFinalOverride();
+		int finalValue = final->m_value14;
+		if (finalValue >= 0x27 && finalValue <= 0x28)
 			{
-				BfmeXRResult *final = (BfmeXRResult *)resolved->friend_getFinalOverride();
-				if (final->m_value14 >= 0x27 && final->m_value14 <= 0x28)
-				{
-					BfmeContain *contain = object->m_contain;
-					if (contain == 0)
-						return 0;
-					UnsignedInt begin = contain->slot64(0);
-					UnsignedInt end = contain->slot23();
-					if (begin < end)
-						return 0;
-				}
+				BfmeObjectXR *containmentObject =
+					*(BfmeObjectXR **)((char *)this - 0x18);
+				BfmeContain *contain = containmentObject->m_contain;
+				if (contain == 0)
+					return 0;
+		UnsignedInt begin = contain->getContainCount(0);
+				UnsignedInt end = contain->slot23();
+				if (begin >= end)
+					return 0;
 			}
 		}
-	}
 
 	return 1;
 }
