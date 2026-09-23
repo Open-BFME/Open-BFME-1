@@ -3615,164 +3615,184 @@ Bool Object::hasAnySpecialPower() const
 /**
  * Returns true if object currently has some kind of attack capability
  */
-// ?isAbleToAttack@Object@@QBE_NXZ present-unmatched
-Bool Object::isAbleToAttack() const
+extern void j_000261a2();
+extern void j_00027836();
+extern void j_0003251f();
+extern void j_00035c4c();
+extern void j_0003c8e9();
+extern void j_00044201();
+
+struct Rva001C9C10Call {};
+
+template <int N> class Rva001C9C10Slots : public Rva001C9C10Slots<N - 1>
 {
+public:
+	virtual void gap(char (*)[N]) = 0;
+};
 
-	//******************************************************
-	//********* AUTOMATICALLY FALSE CONDITIONS *************
-	//******************************************************
+template <> class Rva001C9C10Slots<0> {};
 
-	// For things that may or may not be able to normally attack, but are under a status condition
-	if( getStatusBits().test( OBJECT_STATUS_NO_ATTACK ) )
-		return false;
+class Rva001C9C10Contain : public Rva001C9C10Slots<39>
+{
+public:
+	virtual const _STL::bitset<116> *slot39(void **, Object *) = 0;
+	virtual Bool slot40() = 0;
+	virtual void slot41gap() = 0;
+	virtual void slot42gap() = 0;
+	virtual Bool slot43(Object *, Object *) = 0;
+	virtual void slot44gap() = 0;
+	virtual void slot45gap() = 0;
+	virtual void slot46gap() = 0;
+	virtual void slot47gap() = 0;
+	virtual void slot48gap() = 0;
+	virtual void slot49gap() = 0;
+	virtual void slot50gap() = 0;
+	virtual void slot51gap() = 0;
+	virtual void slot52gap() = 0;
+	virtual void slot53gap() = 0;
+	virtual void slot54gap() = 0;
+	virtual void slot55gap() = 0;
+	virtual void slot56gap() = 0;
+	virtual void slot57gap() = 0;
+	virtual void slot58gap() = 0;
+	virtual void slot59gap() = 0;
+	virtual void slot60gap() = 0;
+	virtual void slot61gap() = 0;
+	virtual void slot62gap() = 0;
+	virtual void slot63gap() = 0;
+	virtual UnsignedInt slot64(Bool) = 0;
+};
 
-	// if we're contained within a transport we cannot attack unless it specifically allows us
-	const Object *containedBy = getContainedBy();
-	DEBUG_ASSERTCRASH( (containedBy == NULL) || (containedBy->getContain() != NULL), ("A %s thinks they are contained by something with no contain module!", getTemplate()->getName().str() ) );
-	if( containedBy && containedBy->getContain() && !containedBy->getContain()->isPassengerAllowedToFire( getID() ) )
-		return false;
-	
+template <int N> class Rva001C9C10SpawnSlots : public Rva001C9C10SpawnSlots<N - 1>
+{
+public:
+	virtual void gap(char (*)[N]) = 0;
+};
 
-	// We can't fire if under construction
-	if( testStatus(OBJECT_STATUS_UNDER_CONSTRUCTION) )
-		return false;
+template <> class Rva001C9C10SpawnSlots<0> {};
 
-	// or being sold
-	if( testStatus(OBJECT_STATUS_SOLD) )
-		return false;
+class Rva001C9C10Spawn : public Rva001C9C10SpawnSlots<7>
+{
+public:
+	virtual Bool slot7() = 0;
+};
 
-  if ( isDisabledByType( DISABLED_SUBDUED ) )
-    return FALSE; // A Microwave Tank is cooking me
-
-	//We can't fire if we, as a portable structure, are aptly disabled 
-	if ( isKindOf( KINDOF_PORTABLE_STRUCTURE ) || isKindOf( KINDOF_SPAWNS_ARE_THE_WEAPONS ))
-	{
-		if( isDisabledByType( DISABLED_HACKED ) || isDisabledByType( DISABLED_EMP ) )
-			return false;
-
-    if ( isKindOf( KINDOF_INFANTRY ) ) // I must be a stinger soldier or similar
-    {
-      for (BehaviorModule** update = getBehaviorModules(); *update; ++update)//expensive search, limited only to stinger soldiers
-      {
-	      SlavedUpdateInterface* sdu = (*update)->getSlavedUpdateInterface();
-	      if ( sdu )
-	      {
-          ObjectID slaverID = sdu->getSlaverID();
-          if ( slaverID != INVALID_ID )
-          {
-            Object *slaver = TheGameLogic->findObjectByID( slaverID );
-            if ( slaver && slaver->isDisabledByType( DISABLED_SUBDUED ))
-              return FALSE;// if my stinger site is subdued, so am I
-          }
-
-          break;//only expect one slavedupdate, so stop searching
-	      }
-      }
-    }
-
-
-	}
-
-  
-
-	//We can't fire if all our weapons are disabled! 
-	//Currently, only turreted weapons can be disabled.
-	//ONLY DO THIS CHECK IF OUR UNIT DOESN'T HAVE THE
-	//KINDOF_CAN_ATTACK flag... nuke cannons have disabled
-	//turrets when not deployed, and need to be able to attack to deploy!
-	//Strategy centers can't attack when bombardment isn't active!
-	Bool anyEnabled = FALSE;
-	Bool anyWeapon = FALSE;
-	const AIUpdateInterface *ai = getAI();
-	if( ai && !isKindOf( KINDOF_CAN_ATTACK ) )
-	{
-		for( Int i = 0; i < WEAPONSLOT_COUNT;	i++ )
-		{
-			//Find the weapon in this slot.
-			Weapon* weapon = getWeaponInWeaponSlot( (WeaponSlotType)i );
-			if( !weapon )
-				continue;
-
-			anyWeapon = TRUE;
-			
-			//We found a weapon, is it a turret?
-			Real dummy;
-			WhichTurretType tur = ai->getWhichTurretForWeaponSlot( (WeaponSlotType)i, &dummy );
-			if( tur == TURRET_INVALID )
-			{
-				//Currently impossible to disable a non-turreted weapon, so we
-				//have a non turreted weapon that is enabled. Quit.
-				anyEnabled = TRUE;
-				break;
-			}
-			
-			if( ai->isTurretEnabled( tur ) )
-			{
-				//The turret is enable, meaning we have an enabled weapon. Quit.
-				anyEnabled = TRUE;
-				break;;	
-			}
-		}
-		if( anyWeapon && !anyEnabled )
-		{
-			//We failed to find any active weapons.
-			return FALSE;
-		}
-	}
-
-
-	//***************************************
-	//********* TRUE CONDITIONS *************
-	//***************************************
-
-	// for certain buildings
-	if (isKindOf(KINDOF_CAN_ATTACK))
-		return true;
-
-	// for garrisonned buildings that can attack sometimes
-	if( getStatusBits().test( OBJECT_STATUS_CAN_ATTACK ) )
-		return true;
-	
-	// for weaponless transports.  This will make me think I can, but I will check if I literally can by looking
-	// at passenger weapons in CanAttack.
-	const ContainModuleInterface* contain = getContain();
-	if( contain && contain->isPassengerAllowedToFire( getID() ) && contain->getContainCount() > 0 )
-		return true;
-
-	// if we have AI and a weapon, assume we know how to use it
-	if (getAIUpdateInterface() != NULL && m_weaponSet.hasAnyWeapon())
-	{
-
-// actually, we don't want to do this; we want the troop crawler to be considered "able to attack"
-// even if empty, so sayeth Dustin. (srj)
-//		// special case: if the only damage we do is DEPLOY, we must have some guys contained.
-//		if (m_weaponSet.hasSingleDamageType(DAMAGE_DEPLOY))
-//		{
-//			return contain->getContainCount() > 0;
-//		}
-//		else
-		{
-			return true;
-		}
-	}
-
-	SpawnBehaviorInterface *spawnInterface = getSpawnBehaviorInterface();
-	if( spawnInterface )
-	{
-		if( spawnInterface->canAnySlavesAttack() )
-		{
-			return TRUE;
-		}
-	}
-
-	if (getTemplate()->isEnterGuard())
-		return TRUE;
-
-//Default is no
-	return false;
+static __forceinline Bool routeIsKindOf(const Object *object, Int kind)
+{
+	typedef Bool (Rva001C9C10Call::*Call)(Int) const;
+	union { void (*raw)(); Call member; } route;
+	route.raw = j_0003251f;
+	return (reinterpret_cast<Rva001C9C10Call *>(const_cast<Object *>(object))->*route.member)(kind);
 }
 
+static __forceinline Object *rva001C9C10Victim(const void *ai)
+{
+	typedef Object *(Rva001C9C10Call::*Call)() const;
+	union { void (*raw)(); Call member; } route;
+	route.raw = j_000261a2;
+	return (reinterpret_cast<Rva001C9C10Call *>(const_cast<void *>(ai))->*route.member)();
+}
+
+static __forceinline Weapon *routeGetWeaponInWeaponSlot(const void *set, WeaponSlotType slot)
+{
+	typedef Weapon *(Rva001C9C10Call::*Call)(WeaponSlotType) const;
+	union { void (*raw)(); Call member; } route;
+	route.raw = j_0003c8e9;
+	return (reinterpret_cast<Rva001C9C10Call *>(const_cast<void *>(set))->*route.member)(slot);
+}
+
+static __forceinline WhichTurretType rva001C9C10Turret(const void *ai, WeaponSlotType slot, Real *angle, Real *pitch)
+{
+	typedef WhichTurretType (Rva001C9C10Call::*Call)(WeaponSlotType, Real *, Real *) const;
+	union { void (*raw)(); Call member; } route;
+	route.raw = j_00035c4c;
+	return (reinterpret_cast<Rva001C9C10Call *>(const_cast<void *>(ai))->*route.member)(slot, angle, pitch);
+}
+
+static __forceinline Bool rva001C9C10TurretOpen(const void *ai, Int turret)
+{
+	typedef Bool (Rva001C9C10Call::*Call)(Int) const;
+	union { void (*raw)(); Call member; } route;
+	route.raw = j_00027836;
+	return (reinterpret_cast<Rva001C9C10Call *>(const_cast<void *>(ai))->*route.member)(turret);
+}
+
+static __forceinline Rva001C9C10Spawn *routeGetSpawnBehaviorInterface(const Object *object)
+{
+	typedef Rva001C9C10Spawn *(Rva001C9C10Call::*Call)() const;
+	union { void (*raw)(); Call member; } route;
+	route.raw = j_00044201;
+	return (reinterpret_cast<Rva001C9C10Call *>(const_cast<Object *>(object))->*route.member)();
+}
+
+// ?isAbleToAttack@Object@@QBE_NXZ
+Bool Object::isAbleToAttack() const
+{
+	const char *bytes = reinterpret_cast<const char *>(this);
+	struct Rva001C9C10Frame { Real dummy; void *out; UnsignedInt padding[2]; } frame;
+	UnsignedInt status;
+	if (*reinterpret_cast<const unsigned char *>(bytes + 0x90) & 0x20)
+		return FALSE;
+	Object *containedBy = *reinterpret_cast<Object * const *>(bytes + 0x214);
+	if (containedBy && routeIsKindOf(containedBy, 0x6c))
+		containedBy = *reinterpret_cast<Object * const *>(reinterpret_cast<const char *>(containedBy) + 0x214);
+	Rva001C9C10Contain *contain = containedBy ? reinterpret_cast<Rva001C9C10Contain *>(*reinterpret_cast<void * const *>(reinterpret_cast<const char *>(containedBy) + 0x1fc)) : 0;
+	if (contain && !(*reinterpret_cast<const unsigned char *>(bytes + 0x94) & 0x10))
+	{
+		#pragma inline_depth(0)
+		if (!contain->slot39(&frame.out, const_cast<Object *>(this))->_Unchecked_test(1))
+			return FALSE;
+		#pragma inline_depth()
+		void *ai = *reinterpret_cast<void * const *>(bytes + 0x204);
+		if (ai)
+		{
+			Object *victim = rva001C9C10Victim(ai);
+			if (victim && contain->slot43(const_cast<Object *>(this), victim))
+				return FALSE;
+		}
+	}
+
+	status = *reinterpret_cast<const UnsignedInt *>(bytes + 0x90);
+	if ((status & 4) || (status & 0x80000))
+		return FALSE;
+	if ((routeIsKindOf(this, 0x38) || routeIsKindOf(this, 0x53)) &&
+		(*reinterpret_cast<const unsigned char *>(bytes + 0x1a4) & 4))
+		return FALSE;
+
+	Bool anyWeapon = FALSE;
+	void *ai = *reinterpret_cast<void * const *>(bytes + 0x204);
+	if (ai && !routeIsKindOf(this, 3))
+	{
+		for (Int slot = 0; slot < 4; ++slot)
+		{
+			Weapon *weapon = routeGetWeaponInWeaponSlot(bytes + 0x264, (WeaponSlotType)slot);
+			if (!weapon)
+				continue;
+			anyWeapon = TRUE;
+			WhichTurretType turret = rva001C9C10Turret(ai, (WeaponSlotType)slot, &frame.dummy, 0);
+			if (turret == (WhichTurretType)-1 || rva001C9C10TurretOpen(ai, turret))
+				goto afterWeaponCheck;
+		}
+		if (anyWeapon)
+			return FALSE;
+	}
+
+afterWeaponCheck:
+	if (routeIsKindOf(this, 3))
+		return TRUE;
+	if (*reinterpret_cast<const unsigned char *>(bytes + 0x90) & 2)
+		return TRUE;
+	contain = reinterpret_cast<Rva001C9C10Contain *>(*reinterpret_cast<void * const *>(bytes + 0x1fc));
+	if (contain && contain->slot40() && contain->slot64(FALSE) > 0)
+		return TRUE;
+	if (*reinterpret_cast<void * const *>(bytes + 0x204) &&
+		*reinterpret_cast<UnsignedInt const *>(bytes + 0x284))
+		return TRUE;
+	Rva001C9C10Spawn *spawn = routeGetSpawnBehaviorInterface(this);
+	if (spawn && spawn->slot7())
+		return TRUE;
+	return FALSE;
+}
 //-------------------------------------------------------------------------------------------------
 /**
 	* Mask/Un-Mask an object
