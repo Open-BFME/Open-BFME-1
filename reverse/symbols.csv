@@ -85066,7 +85066,6 @@ name,address,notes
 ?queryRva001CAEE0@Object@@QBE_NPBVPlayer@@@Z,0x00003B1B,Full50B1CAEE0 reads nullable viewer+2C; this matched caller supplies Player from DF4A0; typed ABI without legacy Object cast
 ?queue@TransportQueueSendShim@@QAE_NIGPBEH@Z,0x00683830,Transport queueSend incremental-link thunk target through a TU-local forwarding shim
 ?queueFileForDownload@BfmeStartDownloadManager@@QAEXVBfmeStartAsciiString@@00000_N@Z,0x00627810,MainMenuUtils ABI view calls the proven DownloadManager queue body
-?queuePacket@LANAPI@@QAEXPAVLANAPIRequestPacket@@H@Z,0x0002B599,RequestLobbyLeave packet call; ILT thunk for LANAPI::sendMessage body 0x00684CF0
 ?queueSend@BfmeTransportQueueShim@@QAE_NPBUBfmeTransportAddress@@PBEH@Z,0x00049F80,LANAPI::sendMessage BFME transport queue ILT through TU-local address shim
 ?queueSend@NATProbeTransport@@QAEXABUNATProbeAddress@@PBEH@Z,0x00049F80,NAT sendAProbe transport queue ILT thunk
 ?queueSend@Transport@@QAE_NIGPBEH@Z,0x00049F80,ILT thunk; real body 0x683830 (from NAT::sendAProbe)
@@ -85753,7 +85752,6 @@ name,address,notes
 ?sendLocalCommandDirect@ConnectionManager@@QAEXPAVNetCommandMsg@@E@Z,0x000411D7,ILT thunk; real body 0xA63300
 ?sendMangledPortNumberToTarget@NAT@@IAEXGPAVGameSlot@@@Z,0x0002ACCA,ILT thunk; real body 0x6718A0
 ?sendMessage@LANAPI@@IAEXPAULANMessage@@I@Z,0x0002B599,thunk to 0x684CF0; pinned by RequestLobbyLeave @0x6850F0 which is byte-exact apart from this call
-?sendMessage@LANAPI@@QAEXPAULANMessage@@I@Z,0x0002B599,LANAPI::sendMessage(msg, ip) for RequestLobbyLeave
 ?sendNetCommandMsg@Connection@@QAEXPAVNetCommandMsg@@E@Z,0x00026D3C,ILT thunk for body 0x006624A0
 ?sendPlayerDestruct@DisconnectManager@@IAEXHPAVConnectionManager@@@Z,0x0004B0B0,DisconnectManager status update destruction dispatch through ILT to the existing 0x0066B550 body
 ?sendSignal@BfmeObjE65@@QAEXHH@Z,0x00014506,pin

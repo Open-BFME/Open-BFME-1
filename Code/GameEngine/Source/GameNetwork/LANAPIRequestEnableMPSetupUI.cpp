@@ -7,6 +7,7 @@
 // carries one Bool argument into that message before queueing it.
 
 typedef int Int;
+typedef unsigned int UnsignedInt;
 typedef unsigned short UnsignedShort;
 typedef unsigned short WideChar;
 typedef unsigned char UnsignedByte;
@@ -51,9 +52,8 @@ public:
 	}
 };
 
-// queuePacket uses this BFME-specific packet tag in its decorated name.
 #pragma pack(push, 1)
-class LANAPIRequestPacket
+struct LANMessage
 {
 	public:
 	Int m_type;
@@ -65,9 +65,7 @@ class LANAPIRequestPacket
 #pragma pack(pop)
 
 typedef char BfmePacketSizeCheck[
-	sizeof(LANAPIRequestPacket) == 0x1DC ? 1 : -1];
-
-typedef LANAPIRequestPacket LANMessage;
+	sizeof(LANMessage) == 0x1DC ? 1 : -1];
 
 class LANGameInfo
 {
@@ -141,9 +139,8 @@ public:
 	virtual void _bfme_slot54(void) = 0;
 	virtual void _bfme_slot55(void) = 0;
 
-	void queuePacket(LANAPIRequestPacket *packet, int ip);
-
 protected:
+	void sendMessage(LANMessage *packet, UnsignedInt ip);
 	UnsignedByte m_bfmeBeforeCurrent[0x40 - 4];
 	LANGameInfo *m_currentGame;
 	UnsignedByte m_bfmeBeforeMember[0x4C - 0x44];
@@ -153,7 +150,7 @@ protected:
 // ?RequestEnableMPSetupUI@LANAPI@@UAEX_N@Z
 void LANAPI::RequestEnableMPSetupUI(Bool enable)
 {
-	LANAPIRequestPacket packet;
+	LANMessage packet;
 	packet.m_type = 0x0C;
 	fillInLANMessage(&packet);
 	wcsncpy(packet.m_gameName,
@@ -162,6 +159,6 @@ void LANAPI::RequestEnableMPSetupUI(Bool enable)
 		16);
 	packet.m_gameName[16] = 0;
 	packet.m_enableMPSetupUI = enable;
-	queuePacket(&packet, 0);
+	sendMessage(&packet, 0);
 	m_memberObject->flushQueue();
 }

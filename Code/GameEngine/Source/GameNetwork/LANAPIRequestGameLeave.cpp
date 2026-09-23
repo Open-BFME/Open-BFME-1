@@ -45,8 +45,6 @@ struct LANMessage
 	unsigned char m_bfmeRest[0x1DC - 4];
 };
 
-class LANAPIRequestPacket;
-
 class LANAPIMemberObject
 {
 public:
@@ -112,9 +110,9 @@ public:
 	virtual void _bfme_slot53(void) = 0;
 	virtual void _bfme_slot54(void) = 0;
 	virtual BfmeNetAddress *_bfme_localAddress(void) = 0;
-	void queuePacket(LANAPIRequestPacket *packet, int ip);
 
 protected:
+	void sendMessage(LANMessage *msg, UnsignedInt ip);
 	void removeGame(LANGameInfo *game);
 
 	unsigned char m_bfmeHeadA[0x10 - 4];
@@ -150,7 +148,7 @@ void LANAPI::RequestGameLeave(void)
 	wcsncpy((unsigned short *)((char *)&msg + 0x22), game ? game->getName().str() : L"", 0x10);
 	*((unsigned short *)((char *)&msg + 0x42)) = 0;
 
-	queuePacket((LANAPIRequestPacket *)&msg, 0);
+	sendMessage(&msg, 0);
 	m_memberObject->flushQueue();
 
 	game = m_currentGame;
