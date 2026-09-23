@@ -1,7 +1,8 @@
 // ?rva0023a380@Rva0023A380HordeContain@@QAEII@Z
-// partial score=0.88 date=2026-09-21
+// partial score=0.9946 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
+// ?rva0023a380@Rva0023A380HordeContain@@QAEII@Z
 // Retail 0x0023A380, 369 bytes.
 //
 // Address-derived HordeContain-related body: the contained-member list at
@@ -9,12 +10,14 @@
 // Rva0023A270HordeContain::rva0023a270 (same file/class family).  Each
 // visited Object's +0x200 field is a virtual interface whose vtable slot
 // 0x48 (index 18) returns an id; that id is resolved back to an Object via
-// GameLogic::findObjectByID (retail 0x0009A510).  The first list's lookup
-// call is out-of-line (REL32 to the already-landed body); the member-index
-// tree's two chained lookups are the same conceptual call inlined -- the
-// compiler's own choice per call site, not a distinct function -- so the
-// id==0 guard from GameLogic::findObjectByID is reproduced on the inlined
-// copy too.
+// GameLogic::findObjectByID (retail 0x0009A510, ILT thunk 0x0001F253).
+//
+// findObjectByID is ONE inline body (the ZH header's commented-out hash
+// lookup) used at all three sites.  MSVC 7.1's inliner itself declines the
+// first site and emits a call to the out-of-line copy, and expands the two
+// member-index sites; the second site's id==0 guard is what folds the
+// iface2 slot48()==0 exit, so the member-index loop has no explicit
+// pre-check -- only the post-lookup candidate2 != 0 test retail keeps.
 //
 // The exact identity of the +0x200 interface, its slot-0x48 method, and the
 // +0x214/+0x74 chase on the resolved Object are unproven; names below keep
@@ -22,17 +25,6 @@
 
 typedef unsigned int UnsignedInt;
 class Object;
-
-// Out-of-line call target: matches
-// Code/GameEngine/Source/GameLogic/System/GameLogicFindObjectByID.cpp
-// (retail 0x0009A510), declared-not-defined here so the compiler cannot
-// inline it at this call site.
-class GameLogic
-{
-public:
-	Object *findObjectByID(int id);
-};
-extern GameLogic *TheBfmeGameLogic;
 
 // object+0x200 virtual interface; only vtable slot 0x48 (index 18) is
 // proven by this body's evidence.
@@ -57,16 +49,16 @@ typedef _STL::list<Object *> BfmeMemberList;
 typedef _STL::hash_map<UnsignedInt, Object *, _STL::hash<UnsignedInt>,
 	_STL::equal_to<UnsignedInt> > BfmeObjectPtrHash;
 
-// Same TheBfmeGameLogic global, typed so its findObjectByID inlines at the
-// member-index tree's two call sites (id==0 guard mirrors the real method).
-class BfmeGameLogicInline
+// retail 0x012F0898 TheBfmeGameLogic.  Only the bucket vector's placement
+// matters (this+0xB4/+0xB8), as in GameLogicFindObjectByID.cpp.
+class GameLogic
 {
 public:
-	__forceinline Object *findObjectByID(UnsignedInt key)
+	Object *findObjectByID(int id)
 	{
-		if (key == 0)
+		if (id == 0)
 			return 0;
-		BfmeObjectPtrHash::iterator it = m_objectHash.find(key);
+		BfmeObjectPtrHash::iterator it = m_objectHash.find(id);
 		if (it == m_objectHash.end())
 			return 0;
 		return (*it).second;
@@ -75,7 +67,7 @@ public:
 	char m_head[0xb0];
 	BfmeObjectPtrHash m_objectHash;
 };
-extern BfmeGameLogicInline *TheBfmeGameLogicInline;
+extern GameLogic *TheBfmeGameLogic;
 
 struct BfmeMemberIndexNode
 {
@@ -130,7 +122,7 @@ UnsignedInt Rva0023A380HordeContain::rva0023a380(UnsignedInt targetId)
 		if (candidate == 0)
 			continue;
 
-		Object *found = TheBfmeGameLogic->findObjectByID((int)candidate);
+		Object *found = TheBfmeGameLogic->findObjectByID(candidate);
 		if (found != 0)
 		{
 			void *field214 = *(void **)((char *)found + 0x214);
@@ -147,25 +139,20 @@ UnsignedInt Rva0023A380HordeContain::rva0023a380(UnsignedInt targetId)
 	while (entry != m_memberIndex)
 	{
 		UnsignedInt key = entry->m_key;
-		Object *obj2 = TheBfmeGameLogicInline->findObjectByID(key);
+		Object *obj2 = TheBfmeGameLogic->findObjectByID(key);
 		Rva0023A380BodyShim *iface2 = *(Rva0023A380BodyShim **)((char *)obj2 + 0x200);
 		if (iface2 != 0)
 		{
-			UnsignedInt id2 = iface2->slot48();
-			if (id2 != 0)
+			UnsignedInt candidate2 = iface2->slot48();
+			Object *obj3 = TheBfmeGameLogic->findObjectByID(candidate2);
+			if (obj3 != 0)
 			{
-				Object *obj3 = TheBfmeGameLogicInline->findObjectByID(id2);
-				UnsignedInt candidate2 = id2;
-				if (obj3 != 0)
-				{
-					void *field214b = *(void **)((char *)obj3 + 0x214);
-					if (field214b != 0)
-					{
-						UnsignedInt field74b = *(UnsignedInt *)((char *)field214b + 0x74);
-						if (field74b == targetId)
-							candidate2 = field74b;
-					}
-				}
+				void *field214b = *(void **)((char *)obj3 + 0x214);
+				if (field214b != 0 && *(UnsignedInt *)((char *)field214b + 0x74) == targetId)
+					candidate2 = *(UnsignedInt *)((char *)field214b + 0x74);
+			}
+			if (candidate2 != 0)
+			{
 				if (candidate2 == targetId)
 					result = candidate2;
 				else if (result == 0)
