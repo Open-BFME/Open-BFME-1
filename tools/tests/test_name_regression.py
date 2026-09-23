@@ -327,6 +327,53 @@ def test_rva_ledger_link_between_semantic_paths(repo):
     assert len(N.check(repo, 'HEAD', ':')[0]) == 4
 
 
+def test_ledger_only_symbol_downgrade_at_same_address(repo):
+    path = 'Code/Named.cpp'
+    put(repo, path, 'class GameLODManager { public: int calculateScore(); };\n')
+    put(repo, 'reverse/functions.csv',
+        f'?calculateScore@GameLODManager@@QAEHXZ,,0x00123456,16,{path},matched,evidence\n')
+    commit(repo)
+    put(repo, 'reverse/functions.csv',
+        f'?Rva00123456@Rva00123456Owner@@QAEHXZ,,0x00123456,16,{path},matched,evidence\n')
+    findings, accepted = N.check(repo, 'HEAD', ':')
+    assert accepted == 0
+    assert {(f.old_name, f.new_name) for f in findings} == {
+        ('calculateScore', 'Rva00123456'),
+        ('GameLODManager', 'Rva00123456Owner'),
+    }
+    assert all(f.old_path == f.new_path == 'reverse/functions.csv' for f in findings)
+
+
+def test_ledger_symbol_at_different_address_is_not_paired(repo):
+    path = 'Code/Named.cpp'
+    put(repo, 'reverse/functions.csv',
+        f'?calculateScore@GameLODManager@@QAEHXZ,,0x00123456,16,{path},matched,evidence\n')
+    commit(repo)
+    put(repo, 'reverse/functions.csv',
+        f'?Rva00654321@Rva00654321Owner@@QAEHXZ,,0x00654321,16,{path},matched,evidence\n')
+    assert N.check(repo, 'HEAD', ':') == ([], 0)
+
+
+def test_ledger_symbol_correction_requires_exact_row_snapshot(repo):
+    path = 'Code/Named.cpp'
+    put(repo, 'reverse/functions.csv',
+        f'?calculateScore@Known@@QAEHXZ,,0x00123456,16,{path},matched,evidence\n')
+    commit(repo)
+    put(repo, 'reverse/functions.csv',
+        f'?Rva00123456@Known@@QAEHXZ,,0x00123456,16,{path},matched,evidence\n')
+    finding = N.check(repo, 'HEAD', ':')[0][0]
+    correction(repo, finding)
+    assert N.check(repo, 'HEAD', ':') == ([], 1)
+    put(repo, 'reverse/functions.csv',
+        f'?Rva00123456@Known@@QAEHXZ,,0x00123456,16,{path},matched,changed evidence\n')
+    assert len(N.check(repo, 'HEAD', ':')[0]) == 1
+
+
+def test_constructor_owner_name_is_read_from_msvc_symbol():
+    assert N._symbol_names('??0GameLODManager@@QAE@XZ') == ('', 'GameLODManager')
+    assert N._symbol_names('??0Rva00123456Owner@@QAE@XZ') == ('', 'Rva00123456Owner')
+
+
 def test_source_path_with_spaces(repo):
     path = 'Code/Space In Name.cpp'
     put(repo, path, BEFORE)

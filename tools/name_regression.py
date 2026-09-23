@@ -3,8 +3,9 @@
 
 Usage: name_regression.py OLD NEW (NEW may be ':' for the index).
 Unlike name_oracle, this compares history, not the witness's class-name key.
-It checks explicit identifier substitutions and unambiguous, computable layouts;
-it does not infer semantic identity from a successful byte match.
+It checks explicit identifier substitutions, unambiguous computable layouts,
+and single-row symbol changes at the same ledger address. It does not infer
+semantic identity from a successful byte match.
 """
 import argparse
 import csv
@@ -334,6 +335,50 @@ def pairs(root, old, new):
     return [(a, b, left[a], right[b]) for a, b in sorted(linked)]
 
 
+def _symbol_names(symbol):
+    """Extract plain method and immediate-owner names from an MSVC symbol."""
+    if symbol.startswith(('??0', '??1')):
+        owner = symbol[3:].split('@', 1)[0]
+        return ('', owner if IDENT.fullmatch(owner) else '')
+    if not symbol.startswith('?') or symbol.startswith('??') or '@@' not in symbol:
+        return ()
+    head = symbol[1:].split('@@', 1)[0].split('@')
+    return tuple(part if IDENT.fullmatch(part) else '' for part in head[:2])
+
+
+def ledger_symbol_regressions(root, old, new):
+    """Catch a ledger-only rename of the same physical body."""
+    delta = git(root, 'diff', '--unified=0', '--no-renames',
+                *diff_args(old, new), '--', 'reverse/functions.csv')
+    removed, added = {}, {}
+    for line in delta.splitlines():
+        if not line.startswith(('+', '-')) or line.startswith(('+++', '---')):
+            continue
+        row = next(csv.reader([line[1:]]), [])
+        if len(row) < 6:
+            continue
+        try:
+            key = (int(row[2], 16), int(row[3]))
+        except ValueError:
+            continue
+        (added if line[0] == '+' else removed).setdefault(key, []).append(
+            (row[0], line[1:]))
+
+    found = []
+    for key in removed.keys() & added.keys():
+        if len(removed[key]) != 1 or len(added[key]) != 1:
+            continue  # A many-to-many ledger edit has no safe name pairing.
+        old_symbol, before = removed[key][0]
+        new_symbol, after = added[key][0]
+        for old_name, new_name in zip(_symbol_names(old_symbol),
+                                      _symbol_names(new_symbol)):
+            if downgrade(old_name, new_name):
+                found.append(Finding('reverse/functions.csv',
+                                     'reverse/functions.csv', old_name, new_name,
+                                     digest(before), digest(after)))
+    return sorted(found, key=lambda f: (f.before_sha256, f.old_name, f.new_name))
+
+
 @dataclass(frozen=True)
 class Finding:
     old_path: str
@@ -355,28 +400,32 @@ def check(root, old, new):
         raise ValueError(f'{CORRECTIONS} must contain a list')
     findings = []
     accepted = 0
-    for a, b, before, after in pairs(root, old, new):
-        for x, y in regressions(before, after):
-            finding = Finding(a, b, x, y, digest(before), digest(after))
-            allowed = False
-            for entry in corrections:
-                if not isinstance(entry, dict):
-                    raise ValueError(f'{CORRECTIONS}: correction must be an object')
-                if all(entry.get(k) == v for k, v in vars(finding).items()):
-                    evidence = entry.get('evidence', '')
-                    reason = entry.get('reason', '')
-                    # An exact, reviewable correction, not a count baseline or
-                    # reusable allowlist. Its evidence must exist in this snapshot.
-                    if (not isinstance(evidence, str) or not isinstance(reason, str)
-                            or not evidence.startswith(('docs/', 'reverse/'))
-                            or '..' in Path(evidence).parts or not reason.strip()
-                            or not (read(root, new, evidence) or '').strip()):
-                        raise ValueError(f'{CORRECTIONS}: correction needs tracked evidence and a reason')
-                    allowed = True
-                    accepted += 1
-                    break
-            if not allowed:
-                findings.append(finding)
+    candidates = [
+        Finding(a, b, x, y, digest(before), digest(after))
+        for a, b, before, after in pairs(root, old, new)
+        for x, y in regressions(before, after)
+    ]
+    candidates.extend(ledger_symbol_regressions(root, old, new))
+    for finding in candidates:
+        allowed = False
+        for entry in corrections:
+            if not isinstance(entry, dict):
+                raise ValueError(f'{CORRECTIONS}: correction must be an object')
+            if all(entry.get(k) == v for k, v in vars(finding).items()):
+                evidence = entry.get('evidence', '')
+                reason = entry.get('reason', '')
+                # An exact, reviewable correction, not a count baseline or
+                # reusable allowlist. Its evidence must exist in this snapshot.
+                if (not isinstance(evidence, str) or not isinstance(reason, str)
+                        or not evidence.startswith(('docs/', 'reverse/'))
+                        or '..' in Path(evidence).parts or not reason.strip()
+                        or not (read(root, new, evidence) or '').strip()):
+                    raise ValueError(f'{CORRECTIONS}: correction needs tracked evidence and a reason')
+                allowed = True
+                accepted += 1
+                break
+        if not allowed:
+            findings.append(finding)
     return findings, accepted
 
 
