@@ -277,11 +277,47 @@ void GeometryInfo::getCenterPosition(const Coord3D& pos, Coord3D& center) const
 }
 
 //=============================================================================
-// ?GeometryInfo::expandFootprint present-unmatched
+struct Rva0087F2B0Shape
+{
+	char m_prefix[0x08];
+	Real m_radiusX;
+	Real m_radiusY;
+	char m_suffix[0x10];
+	Bool m_enabled;
+	char m_tail[0x03];
+};
+
+class Rva0087F2B0ShapeVector
+{
+public:
+	Rva0087F2B0Shape *begin()
+	{
+		return *(Rva0087F2B0Shape **)((char *)this + 0x2c);
+	}
+
+	Rva0087F2B0Shape *end()
+	{
+		return *(Rva0087F2B0Shape **)((char *)this + 0x30);
+	}
+};
+
 void GeometryInfo::expandFootprint(Real radius)
 {
-	m_majorRadius += radius;
-	m_minorRadius += radius;
+	Rva0087F2B0ShapeVector *shapeVector = (Rva0087F2B0ShapeVector *)this;
+	Rva0087F2B0Shape *shape = shapeVector->begin();
+	if (shape != shapeVector->end())
+	{
+		do
+		{
+			if (shape->m_enabled)
+			{
+				shape->m_radiusX += radius;
+				shape->m_radiusY += radius;
+			}
+			++shape;
+		}
+		while (shape != shapeVector->end());
+	}
 	calcBoundingStuff();
 }
 
