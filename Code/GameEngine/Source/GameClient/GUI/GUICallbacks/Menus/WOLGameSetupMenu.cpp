@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseunicode /Ireference/shims/campaignmanagerascii /Ireference/shims/nat /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/psplayerstats /Ireference/shims/nat /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -36,6 +36,296 @@
 
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
+// BFME layouts used by the update callback below. The ZH/nat headers do not
+// provide these complete object lifetimes and virtual slots. Instruction
+// witnesses are recorded in build/gap_004f6ad9/LAYOUTS.md; unused bytes retain
+// opaque names. Keep these corrections scoped to this translation unit.
+#ifndef __GAMEINFO_H__
+#define __GAMEINFO_H__
+
+#include "Common/Snapshot.h"
+#include "Common/Money.h"
+#include "GameNetwork/NetworkDefs.h"
+#include "GameNetwork/FirewallHelper.h"
+
+enum SlotState
+{
+	SLOT_OPEN,
+	SLOT_CLOSED,
+	SLOT_EASY_AI,
+	SLOT_MED_AI,
+	SLOT_BRUTAL_AI,
+	SLOT_PLAYER
+};
+
+enum
+{
+	PLAYERTEMPLATE_RANDOM = -1,
+	PLAYERTEMPLATE_OBSERVER = -2,
+	PLAYERTEMPLATE_MIN = PLAYERTEMPLATE_OBSERVER
+};
+
+/**
+  * Connection info for a slot - the NAT/Firewall behavior and the
+	* port number the slot's player communicates on.  BFME passes this
+	* around as a unit (GameSlot::setState takes a pointer to one).
+	*/
+struct GameSlotConnectInfo {
+    FirewallHelperClass::FirewallBehaviorType m_nat;
+    unsigned short m_port;
+};
+struct BfmeWolAddress { unsigned int ip; unsigned short port; };
+
+
+/**
+  * GameSlot class - maintains information about the contents of a
+	* game slot.  This persists throughout the game.
+	*/
+class GameSlot
+{
+public:
+	GameSlot();
+	~GameSlot();
+	virtual void reset();
+
+	void setAccept( void ) { m_isAccepted = true; }		///< Accept the current options
+	void unAccept( void );														///< Unaccept (options changed, etc)
+	Bool isAccepted( void ) const { return m_isAccepted; }	///< Non-human slots are always accepted
+
+	void setMapAvailability( Bool hasMap );						///< Set whether the slot has the map
+	Bool hasMap( void ) const { return m_hasMap; }		///< Non-human slots always have the map
+
+	void setState( SlotState state,
+		UnicodeString name = UnicodeString::TheEmptyString,
+		const GameSlotConnectInfo *connectInfo = NULL);	///< Set the slot's state (human, AI, open, etc)
+	SlotState getState( void ) const { return m_state; }		///< Get the slot state
+
+	void setColor( Int color ) { m_color = color; }
+	Int getColor( void ) const { return m_color; }
+
+	void setStartPos( Int startPos ) { m_startPos = startPos; }
+	Int getStartPos( void ) const { return m_startPos; }
+
+	void setPlayerTemplate( Int playerTemplate )
+	{ m_playerTemplate = playerTemplate;
+		if (playerTemplate <= PLAYERTEMPLATE_MIN)
+			m_startPos = -1;
+	 }
+	Int getPlayerTemplate( void ) const { return m_playerTemplate; }
+
+	void setTeamNumber( Int teamNumber ) { m_teamNumber = teamNumber; }
+	Int getTeamNumber( void ) const { return m_teamNumber; }
+
+	inline void setName( UnicodeString name ) { m_name = name; }
+	inline UnicodeString getName( void ) const { return m_name; }
+
+	BfmeWolAddress getAddress() const { return m_address; }
+	void setAddress(BfmeWolAddress value) { m_address = value; }
+	inline void setIP( UnsignedInt IP ) { m_address.ip = IP; }
+	inline UnsignedInt getIP( void ) const { return m_address.ip; }
+
+	inline void setPort( UnsignedShort port ) { m_address.port = port; }
+	inline UnsignedShort getPort( void ) const { return m_address.port; }
+
+	inline void setNATBehavior( FirewallHelperClass::FirewallBehaviorType NATBehavior) { m_nat = NATBehavior; }
+	inline FirewallHelperClass::FirewallBehaviorType getNATBehavior() const { return m_nat; }
+	
+	void saveOffOriginalInfo( void );
+	inline Int getOriginalPlayerTemplate( void ) const	{ return m_origPlayerTemplate; }
+	inline Int getOriginalColor( void ) const						{ return m_origColor; }
+	inline Int getOriginalStartPos( void ) const				{ return m_origStartPos; }
+	Int getApparentPlayerTemplate( void ) const;
+	Int getApparentColor( void ) const;
+	Int getApparentStartPos( void ) const;
+	UnicodeString getApparentPlayerTemplateDisplayName( void ) const;
+
+	// Various tests
+	Bool isHuman( void ) const;															///< Is this slot occupied by a human player?
+	Bool isOccupied( void ) const;													///< Is this slot occupied (by a human or an AI)?
+	Bool isAI( void ) const;																///< Is this slot occupied by an AI?
+	Bool isPlayer( AsciiString userName ) const;						///< Does this slot contain the given user?
+	Bool isPlayer( UnicodeString userName ) const;					///< Does this slot contain the given user?
+	Bool isPlayer( UnsignedInt ip ) const;									///< Is this slot at this IP?
+	Bool isOpen( void ) const;
+
+	void setLastFrameInGame( UnsignedInt frame ) { m_lastFrameInGame = frame; }
+	void markAsDisconnected( void ) { m_disconnected = TRUE; }
+	UnsignedInt lastFrameInGame( void ) const { return m_lastFrameInGame; }
+	Bool disconnected( void ) const { return isHuman() && m_disconnected; }
+
+	void mute( Bool isMuted ) { m_isMuted = isMuted; }
+	Bool isMuted( void ) const { return m_isMuted; }
+protected:
+	SlotState m_state;
+	Bool m_isAccepted;
+	Bool m_hasMap;
+	Bool m_isMuted;
+	Int m_color;																			///< color, or -1 for random
+	Int m_startPos;																		///< start position, or -1 for random
+	Int m_playerTemplate;															///< PlayerTemplate
+	Int m_teamNumber;																	///< alliance, -1 for none
+	Int m_origColor;																			///< color, or -1 for random
+	Int m_origStartPos;																		///< start position, or -1 for random
+	Int m_origPlayerTemplate;															///< PlayerTemplate
+	UnicodeString m_name;															///< Only valid for human players
+	AsciiString m_opaque2c;												///< unpinned; see the note at the top
+	BfmeWolAddress m_address;																	///< Only valid for human players in LAN/WOL
+	FirewallHelperClass::FirewallBehaviorType m_nat;								///< NAT behavior and port for this slot's player.
+	UnsignedInt m_lastFrameInGame;	// only valid for human players
+	Bool m_disconnected;						// only valid for human players
+};
+
+/**
+  * GameInfo class - maintains information about the game setup and
+	* the contents of its slot list hroughout the game.
+	*/
+class GameInfo
+{
+public:
+	GameInfo();
+	virtual void slot_000();
+	virtual void slot_004();
+	
+	void init( void );
+	virtual void reset( void );
+
+	void clearSlotList( void );
+
+	Int getNumPlayers( void ) const;									///< How many players (human and AI) are in the game?
+	Int getNumNonObserverPlayers( void ) const;				///< How many non-observer players (human and AI) are in the game?
+	Int getMaxPlayers( void ) const;									///< How many players (human and AI) can be in the game?
+
+	void enterGame( void );														///< Mark us as having entered the game
+	void leaveGame( void );														///< Mark us as having left the game
+	virtual void startGame( Int gameID );											///< Mark our game as started, and record the game ID
+	void endGame( void );															///< Mark us as out of game
+	Int getGameID( void ) const { return m_gameID; }								///< Get the game ID of the current game or the last one if we're not in game
+
+	void setInGame( void ) { m_inGame = true; }										///< set the m_inGame flag
+	Bool isInGame( void ) const { return m_inGame; }											///< Are we (in game or in game setup)?  As opposed to chatting, matching, etc
+	Bool isGameInProgress( void ) const { return m_inProgress; }							///< Is the game in progress?
+	inline void setGameInProgress( Bool inProgress ); ///< Set whether the game is in progress or not.
+	void setSlot( Int slotNum, GameSlot slotInfo );		///< Set the slot state (human, open, AI, etc)
+	GameSlot* getSlot( Int slotNum );									///< Get the slot
+	const GameSlot* getConstSlot( Int slotNum ) const;	///< Get the slot
+	virtual Bool amIHost( void ) const;															///< Convenience function - is the local player the game host?
+	virtual Int getLocalSlotNum( void ) const;				///< Get the local slot number, or -1 if we're not present
+	Int getSlotNum( AsciiString userName ) const;			///< Get the slot number corresponding to a specific user, or -1 if he's not present
+
+	// Game options
+	void setMap( AsciiString mapName );								///< Set the map to play on
+	void setMapCRC( UnsignedInt mapCRC );							///< Set the map CRC
+	void setMapSize( UnsignedInt mapSize );						///< Set the map size
+	void setMapContentsMask( Int mask );							///< Set the map contents mask (1=map,2=preview,4=map.ini)
+	inline AsciiString getMap( void ) const;								///< Get the game map
+	UnsignedInt getMapCRC( void ) const { return m_mapCRC; }							///< Get the map CRC
+	UnsignedInt getMapSize( void ) const { return m_mapSize; }						///< Get the map size
+	Int getMapContentsMask( void ) const { return m_mapMask; }						///< Get the map contents mask
+	void setSeed( Int seed );													///< Set the random seed for the game
+	Int getSeed( void ) const { return m_seed; }												///< Get the game seed
+	Int getUseStats( void ) const { return m_useStats; }		///< Does this game count towards gamespy stats?
+	inline void setUseStats( Int useStats );
+
+UnsignedShort getSuperweaponRestriction( void ) const { return m_superweaponRestriction; } ///< Get any optional limits on superweapons
+  void setSuperweaponRestriction( UnsignedShort restriction ); ///< Set the optional limits on superweapons
+const Money& getStartingCash( void ) const { return m_startingCash; } 
+  void setStartingCash( const Money & startingCash );
+
+	void setSlotPointer( Int index, GameSlot *slot );	///< Set the slot info pointer
+
+	void setLocalIP( UnsignedInt ip ) { m_localIP =ip; }	///< Set the local IP
+	UnsignedInt getLocalIP( void ) const { return m_localIP; }	///< Get the local IP
+
+	Bool isColorTaken(Int colorIdx, Int slotToIgnore = -1 ) const;
+	Bool isStartPositionTaken(Int positionIdx, Int slotToIgnore = -1 ) const;
+
+	virtual void resetAccepted(void);															///< Reset the accepted flag on all players
+	virtual void resetStartSpots(void);						///< reset the start spots for the new map.
+	virtual void adjustSlotsForMap(void);					///< adjusts the slots to open and closed depending on the players in the game and the number of players the map can hold.
+
+	virtual void closeOpenSlots(void);						///< close all slots that are currently unoccupied.
+
+	// CRC checking hack
+	void setCRCInterval( Int val ) { m_crcInterval = (val<100)?val:100; }
+	inline Int getCRCInterval( void ) const { return m_crcInterval; }
+	
+	Bool haveWeSurrendered(void) { return m_surrendered; }
+	void markAsSurrendered(void) { m_surrendered = TRUE; }
+
+	Bool isSkirmish(void); // TRUE if 1 human & 1+ AI are present && !isSandbox()
+	Bool isMultiPlayer(void); // TRUE if 2+ human are present
+	Bool isSandbox(void); // TRUE if everybody is on the same team
+	
+	Bool isPlayerPreorder(Int index);
+	void markPlayerAsPreorder(Int index);
+
+Bool oldFactionsOnly(void) const { return m_oldFactionsOnly; }
+void setOldFactionsOnly( Bool oldFactionsOnly ) { m_oldFactionsOnly = oldFactionsOnly; }
+
+protected:
+	Int m_preorderMask;
+	Int m_crcInterval;
+	Bool m_inGame;
+	Bool m_inProgress;
+	Bool m_surrendered;
+	Int m_gameID;
+	GameSlot *m_slot[MAX_SLOTS];
+
+	UnsignedInt m_localIP;
+
+	// Game options
+	UnsignedInt m_opaque38;
+	AsciiString m_mapName;
+	UnsignedInt m_mapCRC;
+	UnsignedInt m_mapSize;
+	Int m_mapMask;
+	Int m_seed;
+	Int m_useStats;
+  Money         m_startingCash;
+  UnsignedShort m_superweaponRestriction;
+  Bool m_oldFactionsOnly; // Only USA, China, GLA -- not USA Air Force General, GLA Toxic General, et al
+};
+
+extern GameInfo *TheGameInfo;
+
+// Inline functions
+AsciiString	GameInfo::getMap( void ) const									{ return m_mapName; }
+void				GameInfo::setGameInProgress( Bool inProgress )	{ m_inProgress = inProgress; }
+void				GameInfo::setUseStats( Int useStats )           { m_useStats = useStats; }
+AsciiString GameInfoToAsciiString( const GameInfo *game );
+Bool ParseAsciiStringToGameInfo( GameInfo *game, AsciiString options, Bool value );
+
+
+/**
+  * The SkirmishGameInfo class holds information about the skirmish game and
+	* the contents of its slot list.
+	*/
+
+class SkirmishGameInfo : public GameInfo, public Snapshot
+{
+private:
+	GameSlot m_skirmishSlot[MAX_SLOTS];
+
+protected:
+	// snapshot methods
+	virtual void crc( Xfer *xfer );
+	virtual void xfer( Xfer *xfer );
+	virtual void loadPostProcess( void );
+
+public:
+	SkirmishGameInfo()
+	{
+		for (Int i = 0; i< MAX_SLOTS; ++i)
+			setSlotPointer(i, &m_skirmishSlot[i]);
+	}
+};
+
+extern SkirmishGameInfo *TheSkirmishGameInfo;
+extern SkirmishGameInfo *TheChallengeGameInfo;
+
+#endif // __GAMEINFO_H__
+
+
 #include "Common/GameEngine.h"
 #include "Common/GameState.h"
 #include "GameClient/GameText.h"
@@ -59,6 +349,719 @@
 #include "GameClient/MapUtil.h"
 #include "GameClient/EstablishConnectionsMenu.h"
 #include "GameClient/GameWindowTransitions.h"
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: PeerDefs.h //////////////////////////////////////////////////////
+// Generals GameSpy Peer (chat) definitions
+// Author: Matthew D. Campbell, June 2002
+
+#pragma once
+
+#ifndef __PEERDEFS_H__
+#define __PEERDEFS_H__
+
+#include "GameSpy/Peer/Peer.h"
+#include "GameSpy/GP/GP.h"
+
+#include "GameClient/Color.h"
+#include "Common/STLTypedefs.h"
+#include "GameNetwork/GameSpy/StagingRoomGameInfo.h"
+
+class GameWindow;
+class PSPlayerStats;
+
+typedef std::set<AsciiString> IgnoreList;
+typedef std::map<Int, AsciiString> SavedIgnoreMap;
+
+enum RCItemType
+{
+	ITEM_BUDDY,
+	ITEM_REQUEST,
+	ITEM_NONBUDDY,
+	ITEM_NONE,
+};
+
+class GameSpyRCMenuData
+{
+public:
+	AsciiString m_nick;
+	GPProfile m_id;
+	RCItemType m_itemType;
+};
+
+class BuddyInfo
+{
+public:
+	GPProfile m_id;
+	AsciiString m_name;
+	AsciiString m_email;
+	AsciiString m_countryCode;
+	GPEnum m_status;
+	UnicodeString m_statusString;
+	UnicodeString m_locationString;
+};
+typedef std::map<GPProfile, BuddyInfo> BuddyInfoMap;
+
+class BuddyMessage
+{
+public:
+	UnsignedInt m_timestamp;
+	GPProfile m_senderID;
+	AsciiString m_senderNick;
+	GPProfile m_recipientID;
+	AsciiString m_recipientNick;
+	UnicodeString m_message;
+};
+typedef std::list<BuddyMessage> BuddyMessageList;
+
+class GameSpyGroupRoom
+{
+public:
+	GameSpyGroupRoom() { m_name = AsciiString::TheEmptyString; m_translatedName = UnicodeString::TheEmptyString; m_groupID = m_numWaiting = m_maxWaiting = m_numGames = m_numPlaying = 0; }
+	AsciiString m_name;
+	UnicodeString m_translatedName;
+	Int m_groupID;
+	Int m_numWaiting;
+	Int m_maxWaiting;
+	Int m_numGames;
+	Int m_numPlaying;
+};
+typedef std::map<Int, GameSpyGroupRoom> GroupRoomMap;
+
+class Transport;
+class NAT;
+
+typedef std::map<Int, GameSpyStagingRoom *> StagingRoomMap;
+
+class PlayerInfo {
+public:
+    PlayerInfo();
+    PlayerInfo(const PlayerInfo &);
+    ~PlayerInfo();
+    AsciiString m_name, m_baseName, m_locale;
+    int m_wins, m_losses, m_profileID, m_flags, m_rankPoints;
+    int m_opaque20, m_opaque24, m_opaque28, m_side, m_preorder;
+    Bool isIgnored();
+};
+typedef char BfmePlayerInfoSize[sizeof(PlayerInfo) == 0x34 ? 1 : -1];
+
+struct AsciiComparator
+{
+	bool operator()(AsciiString s1, AsciiString s2) const;
+};
+
+
+typedef std::map<AsciiString, PlayerInfo, AsciiComparator> PlayerInfoMap;
+
+enum GameSpyColors {
+	GSCOLOR_DEFAULT = 0,
+	GSCOLOR_CURRENTROOM,
+	GSCOLOR_ROOM,
+	GSCOLOR_GAME,
+	GSCOLOR_GAME_FULL,
+	GSCOLOR_GAME_CRCMISMATCH,
+	GSCOLOR_PLAYER_NORMAL,
+	GSCOLOR_PLAYER_OWNER,
+	GSCOLOR_PLAYER_BUDDY,
+	GSCOLOR_PLAYER_SELF,
+	GSCOLOR_PLAYER_IGNORED,
+	GSCOLOR_CHAT_NORMAL,
+	GSCOLOR_CHAT_EMOTE,
+	GSCOLOR_CHAT_OWNER,
+	GSCOLOR_CHAT_OWNER_EMOTE,
+	GSCOLOR_CHAT_PRIVATE,
+	GSCOLOR_CHAT_PRIVATE_EMOTE,
+	GSCOLOR_CHAT_PRIVATE_OWNER,
+	GSCOLOR_CHAT_PRIVATE_OWNER_EMOTE,
+	GSCOLOR_CHAT_BUDDY,
+	GSCOLOR_CHAT_SELF,
+	GSCOLOR_ACCEPT_TRUE,
+	GSCOLOR_ACCEPT_FALSE,
+	GSCOLOR_MAP_SELECTED,
+	GSCOLOR_MAP_UNSELECTED,
+	GSCOLOR_MOTD,
+	GSCOLOR_MOTD_HEADING,
+	GSCOLOR_MAX
+};
+
+extern Color GameSpyColor[GSCOLOR_MAX];
+
+enum GameSpyBuddyStatus {
+	BUDDY_OFFLINE,
+	BUDDY_ONLINE,
+	BUDDY_LOBBY,
+	BUDDY_STAGING,
+	BUDDY_LOADING,
+	BUDDY_PLAYING,
+	BUDDY_MATCHING,
+	BUDDY_MAX
+};
+
+// ---------------------------------------------------
+// this class holds info used in the main thread
+class GameSpyInfoInterface
+{
+public:
+	virtual ~GameSpyInfoInterface() {};
+	virtual void reset( void ) {};
+	virtual void clearGroupRoomList( void ) = 0;
+	virtual GroupRoomMap* getGroupRoomList( void ) = 0;
+	virtual void addGroupRoom( GameSpyGroupRoom room ) = 0;
+	virtual Bool gotGroupRoomList( void ) = 0;
+	virtual void joinGroupRoom( Int groupID ) = 0;
+	virtual void leaveGroupRoom( void ) = 0;
+	virtual void joinBestGroupRoom( void ) = 0;
+	virtual void setCurrentGroupRoom( Int groupID ) = 0;
+	virtual Int  getCurrentGroupRoom( void ) = 0;
+	virtual void updatePlayerInfo( PlayerInfo pi, AsciiString oldNick = AsciiString::TheEmptyString ) = 0;
+	virtual void playerLeftGroupRoom( AsciiString nick ) = 0;
+	virtual PlayerInfoMap* getPlayerInfoMap( void ) = 0;
+
+	virtual BuddyInfoMap* getBuddyMap( void ) = 0;
+	virtual BuddyInfoMap* getBuddyRequestMap( void ) = 0;
+	virtual BuddyMessageList* getBuddyMessages( void ) = 0;
+	virtual Bool isBuddy( Int id ) = 0;
+
+	virtual void setLocalName( AsciiString name ) = 0;
+	virtual AsciiString getLocalName( void ) = 0;
+	virtual void setLocalProfileID( Int profileID ) = 0;
+	virtual Int getLocalProfileID( void ) = 0;
+	virtual AsciiString getLocalEmail( void ) = 0;
+	virtual void setLocalEmail( AsciiString email ) = 0;
+	virtual AsciiString getLocalPassword( void ) = 0;
+	virtual void setLocalPassword( AsciiString passwd ) = 0;
+	virtual void setLocalBaseName( AsciiString name ) = 0;
+	virtual AsciiString getLocalBaseName( void ) = 0;
+
+	virtual void setCachedLocalPlayerStats( PSPlayerStats stats ) = 0;
+	virtual PSPlayerStats getCachedLocalPlayerStats( void ) = 0;
+
+	virtual void clearStagingRoomList( void ) = 0;
+	virtual StagingRoomMap* getStagingRoomList( void ) = 0;
+	virtual GameSpyStagingRoom* findStagingRoomByID( Int id ) = 0;
+	virtual void addStagingRoom( GameSpyStagingRoom room ) = 0;
+	virtual void updateStagingRoom( GameSpyStagingRoom room ) = 0;
+	virtual void removeStagingRoom( GameSpyStagingRoom room ) = 0;
+	virtual Bool hasStagingRoomListChanged( void ) = 0;
+	virtual void leaveStagingRoom( void ) = 0;
+	virtual void markAsStagingRoomHost( void ) = 0;
+	virtual void markAsStagingRoomJoiner( Int game ) = 0;
+	virtual void sawFullGameList( void ) = 0;
+
+	virtual Bool amIHost( void ) = 0;
+	virtual GameSpyStagingRoom* getCurrentStagingRoom( void ) = 0;
+	virtual void setGameOptions( void ) = 0;
+	virtual Int getCurrentStagingRoomID( void ) = 0;
+
+	virtual void setDisallowAsianText( Bool val ) = 0;
+	virtual void setDisallowNonAsianText( Bool val ) = 0;
+	virtual Bool getDisallowAsianText( void ) = 0;
+	virtual Bool getDisallowNonAsianText(void ) = 0;
+
+	// chat
+	virtual void registerTextWindow( GameWindow *win ) = 0;
+	virtual void unregisterTextWindow( GameWindow *win ) = 0;
+	virtual Int addText( UnicodeString message, Color c, GameWindow *win ) = 0;
+	virtual void addChat( PlayerInfo p, UnicodeString msg, Bool isPublic, Bool isAction, GameWindow *win ) = 0;
+	virtual void addChat( AsciiString nick, Int profileID, UnicodeString msg, Bool isPublic, Bool isAction, GameWindow *win ) = 0;
+	virtual Bool sendChat( UnicodeString message, Bool isAction, GameWindow *playerListbox ) = 0;
+
+	virtual void setMOTD( const AsciiString& motd ) = 0;
+	virtual const AsciiString& getMOTD( void ) = 0;
+
+	virtual void setConfig( const AsciiString& config ) = 0;
+	virtual const AsciiString& getConfig( void ) = 0;
+
+	virtual void setPingString( const AsciiString& ping ) = 0;
+	virtual const AsciiString& getPingString( void ) = 0;
+	virtual Int getPingValue( const AsciiString& otherPing ) = 0;
+
+	static GameSpyInfoInterface* createNewGameSpyInfoInterface( void );
+	
+	virtual void addToSavedIgnoreList( Int profileID, AsciiString nick ) = 0;
+	virtual void removeFromSavedIgnoreList( Int profileID ) = 0;
+	virtual Bool isSavedIgnored( Int profileID ) = 0;		
+	virtual SavedIgnoreMap returnSavedIgnoreList( void ) = 0;
+	virtual void loadSavedIgnoreList( void ) = 0;
+	
+	virtual IgnoreList returnIgnoreList( void ) = 0;
+	virtual void addToIgnoreList( AsciiString nick ) = 0;
+	virtual void removeFromIgnoreList( AsciiString nick ) = 0;
+	virtual Bool isIgnored( AsciiString nick ) = 0;
+
+	virtual void setLocalIPs(UnsignedInt internalIP, UnsignedInt externalIP) = 0;
+	virtual UnsignedInt getInternalIP(void) = 0;
+	virtual UnsignedInt getExternalIP(void) = 0;
+
+	virtual Bool isDisconnectedAfterGameStart(Int *reason) const = 0;
+	virtual void markAsDisconnectedAfterGameStart(Int reason) = 0;
+
+	virtual Bool didPlayerPreorder( Int profileID ) const = 0;
+	virtual void markPlayerAsPreorder( Int profileID ) = 0;
+
+	virtual void setMaxMessagesPerUpdate( Int num ) = 0;
+	virtual Int getMaxMessagesPerUpdate( void ) = 0;
+
+	virtual Int getAdditionalDisconnects( void ) = 0;
+	virtual void clearAdditionalDisconnects( void ) = 0;
+	virtual void readAdditionalDisconnects( void ) = 0;
+	virtual void updateAdditionalGameSpyDisconnections(Int count) = 0;
+};
+
+extern GameSpyInfoInterface *TheGameSpyInfo;
+
+void WOLDisplayGameOptions( void );
+void WOLDisplaySlotList( void );
+Bool GetLocalChatConnectionAddress(AsciiString serverName, UnsignedShort serverPort, UnsignedInt& localIP);
+void SetLobbyAttemptHostJoin(Bool start);
+void SendStatsToOtherPlayers(const GameInfo *game);
+
+class PSPlayerStats;
+void GetAdditionalDisconnectsFromUserFile(PSPlayerStats *stats);
+extern Int GetAdditionalDisconnectsFromUserFile(Int playerID);
+
+//-------------------------------------------------------------------------
+// These functions set up the globals and threads neccessary for our GameSpy impl.
+
+void SetUpGameSpy( const char *motdBuffer, const char *configBuffer );
+void TearDownGameSpy( void );
+
+#endif // __PEERDEFS_H__
+
+/*
+**	Command & Conquer Generals Zero Hour(tm)
+**	Copyright 2025 Electronic Arts Inc.
+**
+**	This program is free software: you can redistribute it and/or modify
+**	it under the terms of the GNU General Public License as published by
+**	the Free Software Foundation, either version 3 of the License, or
+**	(at your option) any later version.
+**
+**	This program is distributed in the hope that it will be useful,
+**	but WITHOUT ANY WARRANTY; without even the implied warranty of
+**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+**	GNU General Public License for more details.
+**
+**	You should have received a copy of the GNU General Public License
+**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+//																																						//
+//  (c) 2001-2003 Electronic Arts Inc.																				//
+//																																						//
+////////////////////////////////////////////////////////////////////////////////
+
+// FILE: PeerThread.h //////////////////////////////////////////////////////
+// Generals GameSpy Peer-to-peer chat thread class interface
+// Author: Matthew D. Campbell, June 2002
+
+#pragma once
+
+#ifndef __PEERTHREAD_H__
+#define __PEERTHREAD_H__
+
+#include "GameSpy/Peer/Peer.h"
+#include "GameNetwork/NetworkDefs.h"
+
+enum SerialAuthResult
+{
+	SERIAL_NONEXISTENT,
+	SERIAL_AUTHFAILED,
+	SERIAL_BANNED,
+	SERIAL_OK
+};
+
+// this class encapsulates a request for the peer thread
+class PeerRequest
+{
+public:
+	enum
+	{
+		PEERREQUEST_LOGIN,				// attempt to login
+		PEERREQUEST_LOGOUT,				// log out if connected
+		PEERREQUEST_MESSAGEPLAYER,
+		PEERREQUEST_MESSAGEROOM,
+		PEERREQUEST_JOINGROUPROOM,
+		PEERREQUEST_LEAVEGROUPROOM,
+		PEERREQUEST_STARTGAMELIST,
+		PEERREQUEST_STOPGAMELIST,
+		PEERREQUEST_CREATESTAGINGROOM,
+		PEERREQUEST_SETGAMEOPTIONS,
+		PEERREQUEST_JOINSTAGINGROOM,
+		PEERREQUEST_LEAVESTAGINGROOM,
+		// Both NAT call sites that the reference writes as PEERREQUEST_UTMPLAYER
+		// -- notifyTargetOfProbe and notifyUsersOfConnectionFailed -- store 13,
+		// not 12. Two independent sites agreeing is much better evidence for the
+		// enum having gained a value ahead of UTMPLAYER than for both of them
+		// having switched to UTMROOM. Where the extra value really sits is not
+		// recoverable from those two stores; putting it here is the minimal
+		// assumption, since it shifts UTMPLAYER and everything after it and
+		// leaves the values before it alone.
+		PEERREQUEST_BFMEUNKNOWN,
+		PEERREQUEST_UTMPLAYER,
+		PEERREQUEST_UTMROOM,
+		PEERREQUEST_STARTGAME,
+		PEERREQUEST_STARTQUICKMATCH,
+		PEERREQUEST_WIDENQUICKMATCHSEARCH,
+		PEERREQUEST_STOPQUICKMATCH,
+		PEERREQUEST_PUSHSTATS,
+		PEERREQUEST_GETEXTENDEDSTAGINGROOMINFO,
+		PEERREQUEST_MAX
+	} peerRequestType;
+
+	std::string nick;	// only used by login, but must be outside the union b/c of copy constructor
+	std::wstring text;  // can't be in a union
+	std::string password;
+	std::string email;
+	std::string id;
+	
+	// gameopts
+	std::string options; // full string for UTMs
+	std::string ladderIP;
+	std::string hostPingStr;
+	std::string gameOptsMapName;
+	std::string gameOptsPlayerNames[MAX_SLOTS];
+
+	std::vector<bool> qmMaps;
+
+	union
+	{
+		struct
+		{
+			Int profileID;
+		} login;
+
+		struct
+		{
+			Int id;
+		} groupRoom;
+		
+		struct
+		{
+			Bool restrictGameList;
+		} gameList;
+
+		struct
+		{
+			Bool isAction;
+		} message;
+
+		struct
+		{
+			Int id;
+		} stagingRoom;
+
+		struct
+		{
+			UnsignedInt exeCRC;
+			UnsignedInt iniCRC;
+			UnsignedInt gameVersion;
+			Bool allowObservers;
+      Bool useStats;
+			UnsignedShort ladPort;
+			UnsignedInt ladPassCRC;
+			Bool restrictGameList;
+		} stagingRoomCreation;
+
+		struct
+		{
+			Int wins[MAX_SLOTS];
+			Int losses[MAX_SLOTS];
+			Int profileID[MAX_SLOTS];
+			Int faction[MAX_SLOTS];
+			Int color[MAX_SLOTS];
+			Int numPlayers;
+			Int maxPlayers;
+			Int numObservers;
+			// BFME's PeerRequest is four bytes larger than the reference's, and
+			// the extra dword is somewhere at or after the union: retail puts
+			// `id` at +0x34 and the UTM union at +0xE4, both exactly where the
+			// reference's layout puts them. gameOptions is the union's largest
+			// member at 172 bytes, so one more Int here is what moves sizeof
+			// from 0x190 to the 0x194 retail's callers reserve. Nothing landed
+			// against this header reads gameOptions, so which field BFME
+			// actually added is still open -- only the size is pinned.
+			Int bfmeExtraGameOption;
+		} gameOptions;
+
+		struct
+		{
+			Bool isStagingRoom;
+		} UTM;
+
+		struct
+		{
+			Int minPointPercentage, maxPointPercentage, points;
+			Int widenTime;
+			Int ladderID;
+			UnsignedInt ladderPassCRC;
+			Int maxPing;
+			Int maxDiscons, discons;
+			char pings[17]; // 8 servers (0-ff), 1 NULL
+			Int numPlayers;
+			Int botID;
+			Int roomID;
+			Int side;
+			Int color;
+			Int NAT;
+			UnsignedInt exeCRC;
+			UnsignedInt iniCRC;
+		} QM;
+
+		struct
+		{
+			Int locale;
+			Int wins;
+			Int losses;
+			Int rankPoints;
+			Int side;
+			Bool preorder;
+		} statsToPush;
+
+	};
+};
+
+//-------------------------------------------------------------------------
+
+enum DisconnectReason
+{
+	DISCONNECT_NICKTAKEN = 1,
+	DISCONNECT_BADNICK,
+	DISCONNECT_LOSTCON,
+	DISCONNECT_COULDNOTCONNECT,
+	DISCONNECT_GP_LOGIN_TIMEOUT,
+	DISCONNECT_GP_LOGIN_BAD_NICK,
+	DISCONNECT_GP_LOGIN_BAD_EMAIL,
+	DISCONNECT_GP_LOGIN_BAD_PASSWORD,
+	DISCONNECT_GP_LOGIN_BAD_PROFILE,
+	DISCONNECT_GP_LOGIN_PROFILE_DELETED,
+	DISCONNECT_GP_LOGIN_CONNECTION_FAILED,
+	DISCONNECT_GP_LOGIN_SERVER_AUTH_FAILED,
+	DISCONNECT_SERIAL_INVALID,
+	DISCONNECT_SERIAL_NOT_PRESENT,
+	DISCONNECT_SERIAL_BANNED,
+	DISCONNECT_GP_NEWUSER_BAD_NICK,
+	DISCONNECT_GP_NEWUSER_BAD_PASSWORD,
+	DISCONNECT_GP_NEWPROFILE_BAD_NICK,
+	DISCONNECT_GP_NEWPROFILE_BAD_OLD_NICK,
+	DISCONNECT_MAX,
+};
+
+enum QMStatus
+{
+	QM_IDLE,
+	QM_JOININGQMCHANNEL,
+	QM_LOOKINGFORBOT,
+	QM_SENTINFO,
+	QM_WORKING,
+	QM_POOLSIZE,
+	QM_WIDENINGSEARCH,
+	QM_MATCHED,
+	QM_INCHANNEL,
+	QM_NEGOTIATINGFIREWALLS,
+	QM_STARTINGGAME,
+	QM_COULDNOTFINDBOT,
+	QM_COULDNOTFINDCHANNEL,
+	QM_COULDNOTNEGOTIATEFIREWALLS,
+	QM_STOPPED,
+};
+
+// this class encapsulates an action the peer thread wants from the UI
+class PeerResponse
+{
+public:
+	enum
+	{
+		PEERRESPONSE_LOGIN,
+		PEERRESPONSE_DISCONNECT,
+		PEERRESPONSE_MESSAGE,
+		PEERRESPONSE_GROUPROOM,
+		PEERRESPONSE_STAGINGROOM,
+		PEERRESPONSE_STAGINGROOMLISTCOMPLETE,
+		PEERRESPONSE_STAGINGROOMPLAYERINFO,
+		PEERRESPONSE_JOINGROUPROOM,
+		PEERRESPONSE_CREATESTAGINGROOM,
+		PEERRESPONSE_JOINSTAGINGROOM,
+		PEERRESPONSE_PLAYERJOIN,
+		PEERRESPONSE_PLAYERLEFT,
+		PEERRESPONSE_PLAYERCHANGEDNICK,
+		PEERRESPONSE_PLAYERINFO,
+		PEERRESPONSE_PLAYERCHANGEDFLAGS,
+		PEERRESPONSE_ROOMUTM,
+		PEERRESPONSE_PLAYERUTM,
+		PEERRESPONSE_QUICKMATCHSTATUS,
+		PEERRESPONSE_GAMESTART,
+		PEERRESPONSE_FAILEDTOHOST,
+		PEERRESPONSE_MAX
+	} peerResponseType;
+
+	std::string groupRoomName; // can't be in union
+
+	std::string nick;   // can't be in a union
+	std::string oldNick;   // can't be in a union
+	std::wstring text;  // can't be in a union
+	std::string locale; // can't be in a union
+
+	std::string stagingServerGameOptions; // full string from UTMs
+
+	// game opts sent with PEERRESPONSE_STAGINGROOM
+	std::wstring stagingServerName;
+	std::string stagingServerPingString;
+	std::string stagingServerLadderIP;
+	std::string stagingRoomMapName;
+
+	// game opts sent with PEERRESPONSE_STAGINGROOMPLAYERINFO
+	std::string stagingRoomPlayerNames[MAX_SLOTS];
+
+	std::string command;
+	std::string commandOptions;
+
+	union
+	{
+		struct
+		{
+			DisconnectReason reason;
+		} discon;
+
+		struct
+		{
+			Int id;
+			Int numWaiting;
+			Int maxWaiting;
+			Int numGames;
+			Int numPlaying;
+		} groupRoom;
+
+		struct
+		{
+			Int id;
+			Bool ok;
+		} joinGroupRoom;
+		
+		struct
+		{
+			Int result;
+		} createStagingRoom;
+		
+		struct
+		{
+			Int id;
+			Bool ok;
+			Bool isHostPresent;
+			Int result; // for failures
+		} joinStagingRoom;
+		
+		struct
+		{
+			Bool isPrivate;
+			Bool isAction;
+			Int profileID;
+		} message;
+
+		struct
+		{
+			Int profileID;
+			Int wins;
+			Int losses;
+			RoomType roomType;
+			Int flags;
+			UnsignedInt IP;
+			Int rankPoints;
+			Int side;
+			Int preorder;
+			UnsignedInt internalIP; // for us, on connection
+			UnsignedInt externalIP; // for us, on connection
+		} player;
+
+		struct
+		{
+			Int id;
+			Int action;
+			Bool isStaging;
+			Bool requiresPassword;
+			Bool allowObservers;
+      Bool useStats;
+			UnsignedInt version;
+			UnsignedInt exeCRC;
+			UnsignedInt iniCRC;
+			UnsignedShort ladderPort;
+			Int wins[MAX_SLOTS];
+			Int losses[MAX_SLOTS];
+			Int profileID[MAX_SLOTS];
+			Int faction[MAX_SLOTS];
+			Int color[MAX_SLOTS];
+			Int numPlayers;
+			Int numObservers;
+			Int maxPlayers;
+			Int percentComplete;
+		} stagingRoom;
+
+		struct
+		{
+			QMStatus status;
+			Int poolSize;
+			Int mapIdx; // when matched
+			Int seed; // when matched
+			UnsignedInt IP[MAX_SLOTS]; // when matched
+			Int side[MAX_SLOTS]; // when matched
+			Int color[MAX_SLOTS]; // when matched
+			Int nat[MAX_SLOTS];
+		} qmStatus;
+	unsigned char bfmeOpaquePayload[572];
+	};
+};
+
+//-------------------------------------------------------------------------
+
+// this is the actual message queue used to pass messages between threads
+class GameSpyPeerMessageQueueInterface
+{
+public:
+	virtual ~GameSpyPeerMessageQueueInterface() {}
+	virtual void startThread( void ) = 0;
+	virtual void endThread( void ) = 0;
+	virtual Bool isThreadRunning( void ) = 0;
+	virtual Bool isConnected( void ) = 0;
+	virtual Bool isConnecting( void ) = 0;
+
+	virtual void addRequest( const PeerRequest& req ) = 0;
+	virtual Bool getRequest( PeerRequest& req ) = 0;
+
+	virtual void addResponse( const PeerResponse& resp ) = 0;
+	virtual Bool getResponse( PeerResponse& resp ) = 0;
+
+	virtual SerialAuthResult getSerialAuthResult( void ) = 0;
+
+	static GameSpyPeerMessageQueueInterface* createNewMessageQueue( void );
+};
+
+extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
+
+#endif // __PEERTHREAD_H__
+
 #include "GameNetwork/GameSpy/LobbyUtils.h"
 
 #include "GameNetwork/GameSpy/BuddyDefs.h"
@@ -70,6 +1073,12 @@
 #include "GameNetwork/NAT.h"
 #include "GameNetwork/GUIUtil.h"
 #include "GameNetwork/GameSpy/GSConfig.h"
+
+// Complete local objects and by-value argument extents witnessed in retail.
+typedef char BfmeWolPeerResponseSize[sizeof(PeerResponse) == 0x330 ? 1 : -1];
+typedef char BfmeWolPeerRequestSize[sizeof(PeerRequest) == 0x194 ? 1 : -1];
+typedef char BfmeWolGameSlotSize[sizeof(GameSlot) == 0x44 ? 1 : -1];
+typedef char BfmeWolPlayerStatsSize[sizeof(PSPlayerStats) == 0x1c4 ? 1 : -1];
 
 //-------------------------------------------------------------------------------------------------
 // Two BFME vtable drifts this file needs. Both are read straight off the retail
@@ -1731,22 +2740,193 @@ void WOLGameSetupMenuShutdown( WindowLayout *layout, void *userData )
 	TheTransitionHandler->reverse("GameSpyGameOptionsMenuFade");
 }  // void WOLGameSetupMenuShutdown( WindowLayout *layout, void *userData )
 
-static void fillPlayerInfo(const PeerResponse *resp, PlayerInfo *info)
+class BFMEPlayerInfoString : private StringBase<char>
 {
-	info->m_name			= resp->nick.c_str();
-	info->m_profileID	= resp->player.profileID;
-	info->m_flags			= resp->player.flags;
-	info->m_wins			= resp->player.wins;
-	info->m_losses		= resp->player.losses;
-	info->m_locale		= resp->locale.c_str();
-	info->m_rankPoints= resp->player.rankPoints;
-	info->m_side			= resp->player.side;
-	info->m_preorder	= resp->player.preorder;
+public:
+	BFMEPlayerInfoString &operator=( const char *text )
+	{
+		StringBase<char>::set( text, text ? strlen( text ) : 0 );
+		return *this;
+	}
+};
+
+class BFMEPlayerInfoLayout
+{
+public:
+	BFMEPlayerInfoString m_name;
+	BFMEPlayerInfoString m_baseName;
+	BFMEPlayerInfoString m_locale;
+	Int m_wins;
+	Int m_losses;
+	Int m_profileID;
+	Int m_flags;
+	Int m_rankPoints;
+	Int m_bfmeBookkeeping[ 3 ];
+	Int m_side;
+	Int m_preorder;
+};
+
+typedef char BFMEPlayerInfoStringSize[
+	sizeof( BFMEPlayerInfoString ) == 4 ? 1 : -1 ];
+typedef char BFMEPlayerInfoLayoutSize[
+	sizeof( BFMEPlayerInfoLayout ) == 0x34 ? 1 : -1 ];
+
+static void fillPlayerInfo( const PeerResponse *resp, PlayerInfo *info )
+{
+	BFMEPlayerInfoLayout *bfmeInfo =
+		reinterpret_cast<BFMEPlayerInfoLayout *>( info );
+	char baseName[ 256 ] = { 0 };
+	strncpy( baseName, resp->nick.c_str(), 255 );
+	char *suffix = strrchr( baseName, '-' );
+	if( suffix )
+		*suffix = 0;
+
+	const char *nick = resp->nick.c_str();
+	bfmeInfo->m_name = nick;
+	bfmeInfo->m_baseName = baseName;
+	bfmeInfo->m_profileID = resp->player.profileID;
+	bfmeInfo->m_flags = resp->player.flags;
+	bfmeInfo->m_wins = resp->player.wins;
+	bfmeInfo->m_losses = resp->player.losses;
+	const char *locale = resp->locale.c_str();
+	bfmeInfo->m_locale = locale;
+	bfmeInfo->m_rankPoints = resp->player.rankPoints;
+	bfmeInfo->m_side = resp->player.side;
+	bfmeInfo->m_preorder = resp->player.preorder;
 }
 
+
 //-------------------------------------------------------------------------------------------------
-/** Lan Game Options menu update method */
+/** WOL game setup update. FunctionLexicon: 00EA9B98 -> 000349A0 -> 004F6B60. */
 //-------------------------------------------------------------------------------------------------
+class BfmeWolUpdateInfo {
+public:
+    virtual ~BfmeWolUpdateInfo() = 0;
+    virtual void reset() = 0;
+    virtual void slot_008() = 0;
+    virtual void slot_00C() = 0;
+    virtual void slot_010() = 0;
+    virtual void slot_014() = 0;
+    virtual void slot_018() = 0;
+    virtual void slot_01C() = 0;
+    virtual void slot_020() = 0;
+    virtual void slot_024() = 0;
+    virtual void slot_028() = 0;
+    virtual void slot_02C() = 0;
+    virtual void slot_030() = 0;
+    virtual void slot_034() = 0;
+    virtual void slot_038() = 0;
+    virtual void slot_03C() = 0;
+    virtual void updatePlayerInfo(PlayerInfo pi, AsciiString oldNick = AsciiString::TheEmptyString) = 0;
+    virtual void playerLeftGroupRoom(AsciiString nick) = 0;
+    virtual PlayerInfoMap *getPlayerInfoMap() = 0;
+    virtual void slot_04C() = 0;
+    virtual void slot_050() = 0;
+    virtual void slot_054() = 0;
+    virtual void slot_058() = 0;
+    virtual void slot_05C() = 0;
+    virtual void slot_060() = 0;
+    virtual void slot_064() = 0;
+    virtual void slot_068() = 0;
+    virtual void slot_06C() = 0;
+    virtual void slot_070() = 0;
+    virtual void slot_074() = 0;
+    virtual void slot_078() = 0;
+    virtual void slot_07C() = 0;
+    virtual void slot_080() = 0;
+    virtual void slot_084() = 0;
+    virtual void slot_088() = 0;
+    virtual void slot_08C() = 0;
+    virtual void slot_090() = 0;
+    virtual void slot_094() = 0;
+    virtual void slot_098() = 0;
+    virtual void slot_09C() = 0;
+    virtual void slot_0A0() = 0;
+    virtual void slot_0A4() = 0;
+    virtual void slot_0A8() = 0;
+    virtual void slot_0AC() = 0;
+    virtual void leaveStagingRoom() = 0;
+    virtual void slot_0B4() = 0;
+    virtual void slot_0B8() = 0;
+    virtual void slot_0BC() = 0;
+    virtual Bool amIHost() = 0;
+    virtual GameSpyStagingRoom *getCurrentStagingRoom() = 0;
+    virtual void slot_0C8() = 0;
+    virtual void setGameOptions() = 0;
+    virtual void slot_0D0() = 0;
+    virtual void slot_0D4() = 0;
+    virtual void slot_0D8() = 0;
+    virtual void slot_0DC() = 0;
+    virtual void slot_0E0() = 0;
+    virtual void slot_0E4() = 0;
+    virtual void slot_0E8() = 0;
+    virtual Int addText(UnicodeString message, Color c, GameWindow *win) = 0;
+    virtual void addChat(AsciiString nick, Int profileID, UnicodeString msg, Bool isPublic, Bool isAction, GameWindow *win) = 0;
+    virtual void slot_0F4() = 0;
+    virtual void slot_0F8() = 0;
+    virtual void slot_0FC() = 0;
+    virtual void slot_100() = 0;
+    virtual void slot_104() = 0;
+    virtual void slot_108() = 0;
+    virtual void slot_10C() = 0;
+    virtual void slot_110() = 0;
+    virtual void slot_114() = 0;
+    virtual void slot_118() = 0;
+    virtual void slot_11C() = 0;
+    virtual void slot_120() = 0;
+    virtual void slot_124() = 0;
+    virtual void slot_128() = 0;
+    virtual void slot_12C() = 0;
+    virtual void slot_130() = 0;
+    virtual void slot_134() = 0;
+    virtual void slot_138() = 0;
+    virtual void slot_13C() = 0;
+    virtual void slot_140() = 0;
+    virtual void slot_144() = 0;
+    virtual void slot_148() = 0;
+    virtual void slot_14C() = 0;
+    virtual void slot_150() = 0;
+    virtual void slot_154() = 0;
+    virtual Bool isDisconnectedAfterGameStart(Int *reason) const = 0;
+    virtual void markAsDisconnectedAfterGameStart(Int reason) = 0;
+    virtual void slot_160() = 0;
+    virtual void slot_164() = 0;
+    virtual void slot_168() = 0;
+    virtual Int getMaxMessagesPerUpdate() = 0;
+};
+
+class BfmeWolInGameUI { public:
+    virtual void slot_000();
+    virtual void slot_004();
+    virtual void slot_008();
+    virtual void slot_00C();
+    virtual void slot_010();
+    virtual void slot_014();
+    virtual void slot_018();
+    virtual void slot_01C();
+    virtual void slot_020();
+    virtual void slot_024();
+    virtual void slot_028();
+    virtual void slot_02C();
+    virtual void message(AsciiString label, ...);
+};
+struct BfmeWolMapMetaData {
+    UnicodeString m_displayName;
+    UnicodeString m_description;
+    unsigned char m_extent[24];
+    int m_numPlayers;
+    bool m_isMultiplayer, m_isScenarioMP, m_isOfficial;
+};
+struct BfmeWolWideText {
+    static __forceinline const wchar_t *str(const UnicodeString &value) {
+        const char *p = *(const char *const *)&value;
+        return p ? (const wchar_t *)(p + 8) : L"";
+    }
+};
+void WOLDisplaySlotList();
+Bool WouldMapTransfer(GameInfo *game);
+void SendStatsToOtherPlayers(const GameInfo *game);
+
 void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 {
 	// We'll only be successful if we've requested to 
@@ -1769,12 +2949,12 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 
 		if (TheGameSpyGame && TheGameSpyGame->isGameInProgress())
 		{
-			if (TheGameSpyInfo->isDisconnectedAfterGameStart(NULL))
+			if (((BfmeWolUpdateInfo *)TheGameSpyInfo)->isDisconnectedAfterGameStart(NULL))
 			{
 				return; // already been disconnected, so don't worry.
 			}
 
-			Int allowedMessages = TheGameSpyInfo->getMaxMessagesPerUpdate();
+			Int allowedMessages = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getMaxMessagesPerUpdate();
 			Bool sawImportantMessage = FALSE;
 			PeerResponse resp;
 			while (allowedMessages-- && !sawImportantMessage && TheGameSpyPeerMessageQueue->getResponse( resp ))
@@ -1798,9 +2978,9 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 						else
 						{
 							// still ingame
-							TheInGameUI->message(disconMunkee);
+							((BfmeWolInGameUI *)TheInGameUI)->message(disconMunkee);
 						}
-						TheGameSpyInfo->markAsDisconnectedAfterGameStart(resp.discon.reason);
+						((BfmeWolUpdateInfo *)TheGameSpyInfo)->markAsDisconnectedAfterGameStart(resp.discon.reason);
 					}
 				}
 			}
@@ -1808,7 +2988,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 			return; // if we're in game, all we care about is if we've been disconnected from the chat server
 		}
 
-		Bool isHosting = TheGameSpyInfo->amIHost(); // only while in game setup screen
+		Bool isHosting = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->amIHost(); // only while in game setup screen
 		isHosting = isHosting || (TheGameSpyGame && TheGameSpyGame->isInGame() && TheGameSpyGame->amIHost()); // while in game
 		if (!isHosting && !lastSlotlistTime && timeGetTime() > enterTime + 10000)
 		{
@@ -1820,8 +3000,8 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 				DEBUG_LOG(("Haven't seen ourselves in slotlist\n"));
 				if (TheGameSpyGame)
 					TheGameSpyGame->reset();
-				TheGameSpyInfo->leaveStagingRoom();
-				//TheGameSpyInfo->joinBestGroupRoom();
+				((BfmeWolUpdateInfo *)TheGameSpyInfo)->leaveStagingRoom();
+				//((BfmeWolUpdateInfo *)TheGameSpyInfo)->joinBestGroupRoom();
 				GSMessageBoxOk(TheGameText->fetch("GUI:HostLeftTitle"), TheGameText->fetch("GUI:HostLeft"));
 				nextScreen = "Menus/WOLCustomLobby.wnd";
 				TheShell->pop();
@@ -1837,7 +3017,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 				//TheShell->pop();
 				TheGameSpyGame->launchGame();
 				if (TheGameSpyInfo) // this can be blown away by a disconnect on the map transfer screen
-					TheGameSpyInfo->leaveStagingRoom();
+					((BfmeWolUpdateInfo *)TheGameSpyInfo)->leaveStagingRoom();
 				return;
 			}
 			else if (NATState == NATSTATE_FAILED)
@@ -1849,9 +3029,9 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 				delete TheNAT;
 				TheNAT = NULL;
 
-				TheGameSpyInfo->getCurrentStagingRoom()->reset();
-				TheGameSpyInfo->leaveStagingRoom();
-				//TheGameSpyInfo->joinBestGroupRoom();
+				((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom()->reset();
+				((BfmeWolUpdateInfo *)TheGameSpyInfo)->leaveStagingRoom();
+				//((BfmeWolUpdateInfo *)TheGameSpyInfo)->joinBestGroupRoom();
 				GSMessageBoxOk(TheGameText->fetch("GUI:Error"), TheGameText->fetch("GUI:NATNegotiationFailed"));
 				nextScreen = "Menus/WOLCustomLobby.wnd";
 				TheShell->pop();
@@ -1861,7 +3041,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 
 		PeerResponse resp;
 
-		Int allowedMessages = TheGameSpyInfo->getMaxMessagesPerUpdate();
+		Int allowedMessages = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getMaxMessagesPerUpdate();
 		Bool sawImportantMessage = FALSE;
 		while (allowedMessages-- && !sawImportantMessage)
 		{
@@ -1885,13 +3065,13 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 			case PeerResponse::PEERRESPONSE_FAILEDTOHOST:
 				{
 					// oops - we've not heard from the qr server.  bail.
-					TheGameSpyInfo->addText(TheGameText->fetch("GUI:GSFailedToHost"), GameSpyColor[GSCOLOR_DEFAULT], NULL);
+					((BfmeWolUpdateInfo *)TheGameSpyInfo)->addText(TheGameText->fetch("GUI:GSFailedToHost"), GameSpyColor[GSCOLOR_DEFAULT], NULL);
 				}
 				break;
 			case PeerResponse::PEERRESPONSE_GAMESTART:
 				{
 					sawImportantMessage = TRUE;
-					GameSpyStagingRoom *myGame = TheGameSpyInfo->getCurrentStagingRoom();
+					GameSpyStagingRoom *myGame = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 					if (!myGame || !myGame->isInGame())
 						break;
 
@@ -1916,7 +3096,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 				{
 					PlayerInfo p;
 					fillPlayerInfo(&resp, &p);
-					TheGameSpyInfo->updatePlayerInfo(p);
+					((BfmeWolUpdateInfo *)TheGameSpyInfo)->updatePlayerInfo(p);
 					WOLDisplaySlotList();
 				}
 				break;
@@ -1924,10 +3104,10 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 				{
 					PlayerInfo p;
 					fillPlayerInfo(&resp, &p);
-					TheGameSpyInfo->updatePlayerInfo(p);
+					((BfmeWolUpdateInfo *)TheGameSpyInfo)->updatePlayerInfo(p);
 					WOLDisplaySlotList();
 					// send out new slotlist if I'm host
-					TheGameSpyInfo->setGameOptions();
+					((BfmeWolUpdateInfo *)TheGameSpyInfo)->setGameOptions();
 				}
 				break;
 			case PeerResponse::PEERRESPONSE_PLAYERJOIN:
@@ -1939,7 +3119,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 					sawImportantMessage = TRUE;
 					PlayerInfo p;
 					fillPlayerInfo(&resp, &p);
-					TheGameSpyInfo->updatePlayerInfo(p);
+					((BfmeWolUpdateInfo *)TheGameSpyInfo)->updatePlayerInfo(p);
 
 					if (p.m_profileID)
 					{
@@ -1953,8 +3133,8 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 					}
 
 					// check if we have room for the dude
-					GameInfo *game = TheGameSpyInfo->getCurrentStagingRoom();
-					if (TheGameSpyInfo->amIHost() && game)
+					GameInfo *game = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
+					if (((BfmeWolUpdateInfo *)TheGameSpyInfo)->amIHost() && game)
 					{
 						if (TheNAT)
 						{
@@ -1984,7 +3164,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 
 							// now get the number of starting spots on the map.
 							Int numStartingSpots = MAX_SLOTS;
-							const MapMetaData *md = TheMapCache->findMap(game->getMap());
+							const BfmeWolMapMetaData *md = (const BfmeWolMapMetaData *)TheMapCache->findMap(game->getMap());
 							if (md != NULL)
 							{
 								numStartingSpots = md->m_numPlayers;
@@ -2006,9 +3186,17 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 								// add him
 								GameSlot newSlot;
 								UnicodeString uName;
-								uName.translate(p.m_name);
-								newSlot.setState(SLOT_PLAYER, uName);
-								newSlot.setIP(ntohl(resp.player.IP));
+								uName.translate(p.m_baseName);
+								{
+                                    GameSlotConnectInfo connect;
+                                    connect.m_nat = (FirewallHelperClass::FirewallBehaviorType)0;
+                                    connect.m_port = 0;
+                                    newSlot.setState(SLOT_PLAYER, uName, &connect);
+                                }
+								BfmeWolAddress address;
+                                address.ip = htonl(resp.player.IP);
+                                address.port = 8088;
+                                newSlot.setAddress(address);
 								game->setSlot( openSlotIndex, newSlot );
 								game->resetAccepted(); // BGC - need to unaccept everyone if someone joins the game.
 							}
@@ -2025,7 +3213,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 							}
 
 							// send out new slotlist if I'm host
-							TheGameSpyInfo->setGameOptions();
+							((BfmeWolUpdateInfo *)TheGameSpyInfo)->setGameOptions();
 						}
 					}
 					WOLDisplaySlotList();
@@ -2037,7 +3225,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 					sawImportantMessage = TRUE;
 					PlayerInfo p;
 					fillPlayerInfo(&resp, &p);
-					TheGameSpyInfo->playerLeftGroupRoom(resp.nick.c_str());
+					((BfmeWolUpdateInfo *)TheGameSpyInfo)->playerLeftGroupRoom(resp.nick.c_str());
 
 					if (TheGameSpyGame && TheGameSpyGame->isGameInProgress())
 					{
@@ -2047,31 +3235,34 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 					if (TheNAT == NULL) // don't update slot list if we're trying to start a game
 					{
 
-						GameInfo *game = TheGameSpyInfo->getCurrentStagingRoom();
-						if (game && TheGameSpyInfo->amIHost())
+						GameInfo *game = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
+						if (game && ((BfmeWolUpdateInfo *)TheGameSpyInfo)->amIHost())
 						{
-							Int idx = game->getSlotNum(resp.nick.c_str());
+							Int idx = game->getSlotNum(p.m_baseName.str());
 							if (idx >= 0)
 							{
-								game->getSlot(idx)->setState(SLOT_OPEN);
+								GameSlotConnectInfo connect;
+                                connect.m_nat = (FirewallHelperClass::FirewallBehaviorType)0;
+                                connect.m_port = 0;
+                                game->getSlot(idx)->setState(SLOT_OPEN, UnicodeString::TheEmptyString, &connect);
 								game->resetAccepted(); // BGC - need to unaccept everyone if someone leaves the game.
 							}
 						}
 
 						// send out new slotlist if I'm host
-						TheGameSpyInfo->setGameOptions();
+						((BfmeWolUpdateInfo *)TheGameSpyInfo)->setGameOptions();
 						WOLDisplaySlotList();
 						
-						if (game && !TheGameSpyInfo->amIHost())
+						if (game && !((BfmeWolUpdateInfo *)TheGameSpyInfo)->amIHost())
 						{
-							Int idx = game->getSlotNum(resp.nick.c_str());
+							Int idx = game->getSlotNum(p.m_baseName.str());
 							if (idx == 0)
 							{
 								// host left
 								buttonPushed = true;
-								TheGameSpyInfo->getCurrentStagingRoom()->reset();
-								TheGameSpyInfo->leaveStagingRoom();
-								//TheGameSpyInfo->joinBestGroupRoom();
+								((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom()->reset();
+								((BfmeWolUpdateInfo *)TheGameSpyInfo)->leaveStagingRoom();
+								//((BfmeWolUpdateInfo *)TheGameSpyInfo)->joinBestGroupRoom();
 								GSMessageBoxOk(TheGameText->fetch("GUI:HostLeftTitle"), TheGameText->fetch("GUI:HostLeft"));
 								nextScreen = "Menus/WOLCustomLobby.wnd";
 								TheShell->pop();
@@ -2084,7 +3275,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 
 			case PeerResponse::PEERRESPONSE_MESSAGE:
 				{
-					TheGameSpyInfo->addChat(resp.nick.c_str(), resp.message.profileID,
+					((BfmeWolUpdateInfo *)TheGameSpyInfo)->addChat(resp.nick.c_str(), resp.message.profileID,
 						UnicodeString(resp.text.c_str()), !resp.message.isPrivate, resp.message.isAction, listboxGameSetupChat);
 				}
 				break;
@@ -2099,9 +3290,11 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 					body = TheGameText->fetch( disconMunkee );
 					GameSpyCloseAllOverlays();
 					GSMessageBoxOk( title, body );
-					TheGameSpyInfo->reset();
+					((BfmeWolUpdateInfo *)TheGameSpyInfo)->reset();
 					TheShell->pop();
+					TearDownGameSpy();
 				}
+				break;
 
 			case PeerResponse::PEERRESPONSE_ROOMUTM:
 				{
@@ -2116,8 +3309,14 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 					if (!strcmp(resp.command.c_str(), "SL"))
 					{
 						// slotlist
-						GameSpyStagingRoom *game = TheGameSpyInfo->getCurrentStagingRoom();
-						Bool isValidSlotList = game && game->getSlot(0) && game->getSlot(0)->isPlayer( resp.nick.c_str() ) && !TheGameSpyInfo->amIHost();
+						GameSpyStagingRoom *game = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
+                        PlayerInfoMap::iterator playerIt = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getPlayerInfoMap()->find(resp.nick.c_str());
+                        AsciiString playerName;
+                        if (playerIt != ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getPlayerInfoMap()->end())
+                            playerName = playerIt->second.m_baseName;
+                        else
+                            playerName = resp.nick.c_str();
+						Bool isValidSlotList = game && game->getSlot(0) && game->getSlot(0)->isPlayer( playerName ) && !((BfmeWolUpdateInfo *)TheGameSpyInfo)->amIHost();
 						if (!isValidSlotList)
 						{
 							SLOTLIST_DEBUG_LOG(("Not a valid slotlist\n"));
@@ -2133,7 +3332,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 								}
 								else
 								{
-									if (TheGameSpyInfo->amIHost())
+									if (((BfmeWolUpdateInfo *)TheGameSpyInfo)->amIHost())
 									{
 										SLOTLIST_DEBUG_LOG(("I'm the host!\n"));
 									}
@@ -2172,26 +3371,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 									ports[i] = 0;
 								}
 							}
-							Bool optionsOK = ParseAsciiStringToGameInfo(game, options.str());
-							if (TheNAT)
-							{
-								for (i=0; i<MAX_SLOTS; ++i)
-								{
-									if (game && game->getSlot(i))
-									{
-#ifdef DEBUG_LOGGING
-										UnsignedShort newPort = game->getConstSlot(i)->getPort();
-										UnsignedInt newIP = game->getConstSlot(i)->getIP();
-										DEBUG_ASSERTLOG(newIP == ips[i], ("IP was different for player %d (%X --> %X)\n",
-											i, ips[i], newIP));
-										DEBUG_ASSERTLOG(newPort == ports[i], ("Port was different for player %d (%d --> %d)\n",
-											i, ports[i], newPort));
-#endif
-										game->getSlot(i)->setPort(ports[i]);
-										game->getSlot(i)->setIP(ips[i]);
-									}
-								}
-							}
+							Bool optionsOK = ParseAsciiStringToGameInfo(game, options.str(), TRUE);
 							Int newLocalSlotNum = (game->isInGame()) ? game->getLocalSlotNum() : -1;
 							Bool isInGame = newLocalSlotNum >= 0;
 							if (!optionsOK)
@@ -2211,7 +3391,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 										if (slot && slot->isHuman())
 										{
 											UnicodeString munkee;
-											munkee.format(L"\t%d: %ls", i, slot->getName().str());
+											munkee.format(UnicodeString(L"\t%d: %ls"), i, BfmeWolWideText::str(slot->getName()));
 											SLOTLIST_DEBUG_LOG(("%ls\n", munkee.str()));
 										}
 									}
@@ -2227,7 +3407,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 								if ( (oldMapCRC ^ newMapCRC) || (!wasInGame && isInGame) )
 								{
 									// it changed.  send it
-									UnicodeString hostName = TheGameSpyInfo->getCurrentStagingRoom()->getSlot(0)->getName();
+									UnicodeString hostName = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom()->getSlot(0)->getName();
 									AsciiString asciiName;
 									asciiName.translate(hostName);
 									PeerRequest req;
@@ -2241,23 +3421,23 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 									{
 										UnicodeString text;
 										UnicodeString mapDisplayName;
-										const MapMetaData *mapData = TheMapCache->findMap( game->getMap() );
+										const BfmeWolMapMetaData *mapData = (const BfmeWolMapMetaData *)TheMapCache->findMap( game->getMap() );
 										Bool willTransfer = TRUE;
 										if (mapData)
 										{
-											mapDisplayName.format(L"%ls", mapData->m_displayName.str());
+											mapDisplayName.format(UnicodeString(L"%ls"), BfmeWolWideText::str(mapData->m_displayName));
 											willTransfer = !mapData->m_isOfficial;
 										}
 										else
 										{
-											mapDisplayName.format(L"%hs", TheGameState->getMapLeafName(game->getMap()).str());
-											willTransfer = WouldMapTransfer(game->getMap());
+											mapDisplayName.format(UnicodeString(L"%hs"), TheGameState->getMapLeafName(game->getMap()).str());
+											willTransfer = WouldMapTransfer(game);
 										}
 										if (willTransfer)
-											text.format(TheGameText->fetch("GUI:LocalPlayerNoMapWillTransfer"), mapDisplayName.str());
+											text.format(TheGameText->fetch("GUI:LocalPlayerNoMapWillTransfer"), BfmeWolWideText::str(mapDisplayName));
 										else
-											text.format(TheGameText->fetch("GUI:LocalPlayerNoMap"), mapDisplayName.str());
-										TheGameSpyInfo->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
+											text.format(TheGameText->fetch("GUI:LocalPlayerNoMap"), BfmeWolWideText::str(mapDisplayName));
+										((BfmeWolUpdateInfo *)TheGameSpyInfo)->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
 									}
 								}
 								if (!initialAcceptEnable)
@@ -2273,9 +3453,9 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 									// can't see ourselves
 									buttonPushed = true;
 									DEBUG_LOG(("Can't see ourselves in slotlist %s\n", options.str()));
-									TheGameSpyInfo->getCurrentStagingRoom()->reset();
-									TheGameSpyInfo->leaveStagingRoom();
-									//TheGameSpyInfo->joinBestGroupRoom();
+									((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom()->reset();
+									((BfmeWolUpdateInfo *)TheGameSpyInfo)->leaveStagingRoom();
+									//((BfmeWolUpdateInfo *)TheGameSpyInfo)->joinBestGroupRoom();
 									GSMessageBoxOk(TheGameText->fetch("GUI:GSErrorTitle"), TheGameText->fetch("GUI:GSKicked"));
 									nextScreen = "Menus/WOLCustomLobby.wnd";
 									TheShell->pop();
@@ -2286,14 +3466,14 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 					else if (!strcmp(resp.command.c_str(), "HWS"))
 					{
 						// host wants to start
-						GameInfo *game = TheGameSpyInfo->getCurrentStagingRoom();
+						GameInfo *game = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 						if (game && game->isInGame() && game->getSlot(0) && game->getSlot(0)->isPlayer( resp.nick.c_str() ))
 						{
 							Int slotNum = game->getLocalSlotNum();
 							GameSlot *slot = game->getSlot(slotNum);
 							if (slot && (slot->isAccepted() == false))
 							{
-								TheGameSpyInfo->addText(TheGameText->fetch("GUI:HostWantsToStart"), GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
+								((BfmeWolUpdateInfo *)TheGameSpyInfo)->addText(TheGameText->fetch("GUI:HostWantsToStart"), GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
 							}
 						}
 					}
@@ -2305,13 +3485,13 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 					}
 					else if (!stricmp(resp.command.c_str(), "Pings"))
 					{
-						if (!TheGameSpyInfo->amIHost())
+						if (!((BfmeWolUpdateInfo *)TheGameSpyInfo)->amIHost())
 						{
 							AsciiString pings = resp.commandOptions.c_str();
 							AsciiString token;
 							for (Int i=0; i<MAX_SLOTS; ++i)
 							{
-								GameSpyGameSlot *slot = TheGameSpyInfo->getCurrentStagingRoom()->getGameSpySlot(i);
+								GameSpyGameSlot *slot = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom()->getGameSpySlot(i);
 								if (pings.nextToken(&token, ","))
 								{
 									token.trim();
@@ -2337,34 +3517,41 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 							TheGameSpyPSMessageQueue->trackPlayerStats(stats);
 						break;
 					}
-					GameSpyStagingRoom *game = TheGameSpyInfo->getCurrentStagingRoom();
+					GameSpyStagingRoom *game = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 					if (game)
 					{
-						Int slotNum = game->getSlotNum(resp.nick.c_str());
+
+                        PlayerInfoMap::iterator playerIt = ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getPlayerInfoMap()->find(resp.nick.c_str());
+                        AsciiString playerName;
+                        if (playerIt != ((BfmeWolUpdateInfo *)TheGameSpyInfo)->getPlayerInfoMap()->end())
+                            playerName = playerIt->second.m_baseName;
+                        else
+                            playerName = resp.nick.c_str();
+						Int slotNum = game->getSlotNum(playerName);
 						if ((slotNum >= 0) && (slotNum < MAX_SLOTS) && (!stricmp(resp.command.c_str(), "NAT"))) {
 							// this is a command for NAT negotiations, pass if off to TheNAT
 							if (TheNAT != NULL) {
 								TheNAT->processGlobalMessage(slotNum, resp.commandOptions.c_str());
 							}
 						}
-						if (slotNum == 0 && !TheGameSpyInfo->amIHost())
+						if (slotNum == 0 && !((BfmeWolUpdateInfo *)TheGameSpyInfo)->amIHost())
 						{
 							if (!strcmp(resp.command.c_str(), "KICK"))
 							{
 								// oops - we've been kicked.  bail.
 								buttonPushed = true;
-								TheGameSpyInfo->getCurrentStagingRoom()->reset();
-								TheGameSpyInfo->leaveStagingRoom();
-								//TheGameSpyInfo->joinBestGroupRoom();
+								((BfmeWolUpdateInfo *)TheGameSpyInfo)->getCurrentStagingRoom()->reset();
+								((BfmeWolUpdateInfo *)TheGameSpyInfo)->leaveStagingRoom();
+								//((BfmeWolUpdateInfo *)TheGameSpyInfo)->joinBestGroupRoom();
 								UnicodeString message = TheGameText->fetch("GUI:GSKicked");
 								AsciiString commandMessage = resp.commandOptions.c_str();
 								commandMessage.trim();
 								DEBUG_LOG(("We were kicked: reason was '%s'\n", resp.commandOptions.c_str()));
-								if (commandMessage == "GameStarted")
+								if (commandMessage.compare("GameStarted") == 0)
 								{
 									message = TheGameText->fetch("GUI:GSKickedGameStarted");
 								}
-								else if (commandMessage == "GameFull")
+								else if (commandMessage.compare("GameFull") == 0)
 								{
 									message = TheGameText->fetch("GUI:GSKickedGameFull");
 								}
@@ -2373,12 +3560,12 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 								TheShell->pop();
 							}
 						}
-						else if (slotNum > 0 && TheGameSpyInfo->amIHost())
+						else if (slotNum > 0 && ((BfmeWolUpdateInfo *)TheGameSpyInfo)->amIHost())
 						{
 							if (!strcmp(resp.command.c_str(), "accept"))
 							{
 								game->getSlot(slotNum)->setAccept();
-								TheGameSpyInfo->setGameOptions();
+								((BfmeWolUpdateInfo *)TheGameSpyInfo)->setGameOptions();
 								WOLDisplaySlotList();
 							}
 							else if (!strcmp(resp.command.c_str(), "MAP"))
@@ -2389,24 +3576,24 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 								{
 									// tell the host the user doesn't have the map
 									UnicodeString mapDisplayName;
-									const MapMetaData *mapData = TheMapCache->findMap( game->getMap() );
+									const BfmeWolMapMetaData *mapData = (const BfmeWolMapMetaData *)TheMapCache->findMap( game->getMap() );
 									Bool willTransfer = TRUE;
 									if (mapData)
 									{
-										mapDisplayName.format(L"%ls", mapData->m_displayName.str());
+										mapDisplayName.format(UnicodeString(L"%ls"), BfmeWolWideText::str(mapData->m_displayName));
 										willTransfer = !mapData->m_isOfficial;
 									}
 									else
 									{
-										mapDisplayName.format(L"%hs", game->getMap().str());
-										willTransfer = WouldMapTransfer(game->getMap());
+										mapDisplayName.format(UnicodeString(L"%hs"), game->getMap().str());
+										willTransfer = WouldMapTransfer(game);
 									}
 									UnicodeString text;
 									if (willTransfer)
-										text.format(TheGameText->fetch("GUI:PlayerNoMapWillTransfer"), game->getSlot(slotNum)->getName().str(), mapDisplayName.str());
+										text.format(TheGameText->fetch("GUI:PlayerNoMapWillTransfer"), BfmeWolWideText::str(game->getSlot(slotNum)->getName()), BfmeWolWideText::str(mapDisplayName));
 									else
-										text.format(TheGameText->fetch("GUI:PlayerNoMap"), game->getSlot(slotNum)->getName().str(), mapDisplayName.str());
-									TheGameSpyInfo->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
+										text.format(TheGameText->fetch("GUI:PlayerNoMap"), BfmeWolWideText::str(game->getSlot(slotNum)->getName()), BfmeWolWideText::str(mapDisplayName));
+									((BfmeWolUpdateInfo *)TheGameSpyInfo)->addText(text, GameSpyColor[GSCOLOR_DEFAULT], listboxGameSetupChat);
 								}
 								WOLDisplaySlotList();
 							}
@@ -2427,7 +3614,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 								if (!slot)
 									break;
 
-								if (key == "Color")
+								if (key.compare("Color") == 0)
 								{
 									if (val >= -1 && val < TheMultiplayerSettings->getNumColors() && val != slot->getColor() && slot->getPlayerTemplate() != PLAYERTEMPLATE_OBSERVER)
 									{
@@ -2453,19 +3640,10 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 										DEBUG_LOG(("Rejecting invalid color %d\n", val));
 									}
 								}
-								else if (key == "PlayerTemplate")
+								else if (key.compare("PlayerTemplate") == 0)
 								{
 									if (val >= PLAYERTEMPLATE_MIN && val < ThePlayerTemplateStore->getPlayerTemplateCount() && val != slot->getPlayerTemplate())
 									{
-                    // Validate for LimitArmies checkbox
-                    if ( game->oldFactionsOnly() )
-                    {
-                      const PlayerTemplate *fac = ThePlayerTemplateStore->getNthPlayerTemplate(val);
-                      if ( fac != NULL && !fac->isOldFaction())
-                      {
-                        val = PLAYERTEMPLATE_RANDOM;
-                      }
-                    }
 
 										slot->setPlayerTemplate(val);
 										if (val == PLAYERTEMPLATE_OBSERVER)
@@ -2482,7 +3660,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 										DEBUG_LOG(("Rejecting invalid PlayerTemplate %d\n", val));
 									}
 								}
-								else if (key == "StartPos")
+								else if (key.compare("StartPos") == 0)
 								{
 									if (val >= -1 && val < MAX_SLOTS && val != slot->getStartPos() && slot->getPlayerTemplate() != PLAYERTEMPLATE_OBSERVER)
 									{
@@ -2509,7 +3687,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 										DEBUG_LOG(("Rejecting invalid startPos %d\n", val));
 									}
 								}
-								else if (key == "Team")
+								else if (key.compare("Team") == 0)
 								{
 									if (val >= -1 && val < MAX_SLOTS/2 && val != slot->getTeamNumber() && slot->getPlayerTemplate() != PLAYERTEMPLATE_OBSERVER)
 									{
@@ -2522,12 +3700,14 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 										DEBUG_LOG(("Rejecting invalid team %d\n", val));
 									}
 								}
-								else if (key == "IP")
+								else if (key.compare("IP") == 0)
 								{
 									if (uVal != slot->getIP())
 									{
-										DEBUG_LOG(("setting IP of player %ls from 0x%08x to be 0x%08x", slot->getName().str(), slot->getIP(), uVal));
-										slot->setIP(uVal);
+										DEBUG_LOG(("setting IP of player %ls from 0x%08x to be 0x%08x", BfmeWolWideText::str(slot->getName()), slot->getIP(), uVal));
+										BfmeWolAddress address = slot->getAddress();
+                                        address.ip = uVal;
+                                        slot->setAddress(address);
 										change = true;
 										shouldUnaccept = true;
 									}
@@ -2536,7 +3716,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 										DEBUG_LOG(("Rejecting invalid IP %d\n", uVal));
 									}
 								}
-								else if (key == "NAT")
+								else if (key.compare("NAT") == 0)
 								{
 									if ((val >= FirewallHelperClass::FIREWALL_MIN) &&
 											(val <= FirewallHelperClass::FIREWALL_MAX))
@@ -2550,10 +3730,10 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 										DEBUG_LOG(("Rejecting invalid NAT behavior %d from player %d\n", val, slotNum));
 									}
 								}
-								else if (key == "Ping")
+								else if (key.compare("Ping") == 0)
 								{
 									slot->setPingString(options.str()+1);
-									TheGameSpyInfo->setGameOptions();
+									((BfmeWolUpdateInfo *)TheGameSpyInfo)->setGameOptions();
 									DEBUG_LOG(("Setting ping string to %s for player %d\n", options.str()+1, slotNum));
 								}
 
@@ -2562,7 +3742,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 									if (shouldUnaccept)
 										game->resetAccepted();
 
-									TheGameSpyInfo->setGameOptions();
+									((BfmeWolUpdateInfo *)TheGameSpyInfo)->setGameOptions();
 
 									WOLDisplaySlotList();
 									DEBUG_LOG(("Slot value is color=%d, PlayerTemplate=%d, startPos=%d, team=%d, IP=0x%8.8X\n",
@@ -2581,6 +3761,7 @@ void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
 
 	}
 }// void WOLGameSetupMenuUpdate( WindowLayout * layout, void *userData)
+
 
 //-------------------------------------------------------------------------------------------------
 /** Lan Game Options menu input callback */
