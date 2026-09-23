@@ -1,6 +1,9 @@
-// ?MessageBoxOkCancel@@YAPAVGameWindow@@VUnicodeString@@0P6AXXZ1@Z
-// partial score=0.79 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+//
+// Retail 0x004C6880, 313 bytes, ILT 0x000159FB: MessageBoxOkCancel, named by its
+// byte-true caller GSMessageBoxOkCancel (0x00627D80). The same builder as
+// MessageBoxYesNo.cpp with button mode 1 and the second pair-holder
+// instantiation (Rva004C5D20 / Rva004C64E0 / Bfme5RefPairValE).
 
 #include "unicode_string.h"
 
@@ -90,6 +93,12 @@ class Rva004C64E0
 {
 public:
 	Rva004C64E0(Bfme5RefPairValE value);
+	Rva004C64E0(const Rva004C64E0 &other) throw() : m_bfmeNode(other.m_bfmeNode)
+	{
+		if(m_bfmeNode)
+			++((Open2Counted *)m_bfmeNode)->m_refs;
+	}
+	~Rva004C64E0();
 	void *m_bfmeNode;
 };
 
@@ -99,9 +108,6 @@ extern void Rva008C5480();
 #pragma warning(disable : 4716)
 
 // ?MessageBoxOkCancel@@YAPAVGameWindow@@VUnicodeString@@0P6AXXZ1@Z
-GameWindow *MessageBoxOkCancel(UnicodeString titleString, UnicodeString bodyString,
-	GameWinMsgBoxFunc okCallback, GameWinMsgBoxFunc cancelCallback);
-
 GameWindow *MessageBoxOkCancel(UnicodeString title, UnicodeString body,
 	GameWinMsgBoxFunc okCallback, GameWinMsgBoxFunc cancelCallback)
 {
@@ -110,5 +116,5 @@ GameWindow *MessageBoxOkCancel(UnicodeString title, UnicodeString body,
 	if(cancelCallback == 0)
 		cancelCallback = Rva008C5480;
 	((void (__cdecl *)(int, const UnicodeString &, const UnicodeString &, Rva004C64E0))j_0002e0b9)(
-		1, title, body, Rva004C64E0(Rva004C5D20(FunctorSlot(okCallback), FunctorSlot(cancelCallback))));
+		1, title, body, Rva004C5D20(FunctorSlot(okCallback), FunctorSlot(cancelCallback)));
 }
