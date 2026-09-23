@@ -1,5 +1,5 @@
 // ?d_003d28d0@@YAXXZ
-// partial score=0.255 date=2026-09-23
+// partial score=0.6 date=2026-09-23
 // cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Include/Precompiled
 // stlport
 
@@ -93,12 +93,14 @@ Rva003D2B80Child::Rva003D2B80Child(Rva003D2B80Source *source,
 	float second = (float)ceil((double)((source->m_0a4 - corner[1]) * scale));
 	int secondCount = fast_float2long_round(second);
 
-	m_entries.reserve(firstCount * secondCount);
+	m_entries.reserve(m_count * secondCount);
 
 	float halfStep = step * g_bfmeK1253;
-	for (int y = 0; y < secondCount; ++y)
+	volatile int y[2];
+	y[1] = 0;
+	for (; y[1] < secondCount; ++y[1])
 	{
-		float yPosition = (float)y * step + corner[1] + halfStep;
+		float yPosition = (float)y[1] * step + corner[1] + halfStep;
 		for (int x = 0; x < m_count; ++x)
 		{
 			float xPosition = (float)x * step + halfStep + corner[0];
