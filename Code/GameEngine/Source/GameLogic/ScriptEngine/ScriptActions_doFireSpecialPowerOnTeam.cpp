@@ -84,16 +84,6 @@ public:
 		BfmeAsciiStringArg name);
 };
 
-// This helper is the retail routine at ILT 0x000033B4.  It walks the named
-// player's objects, selects one able to use the power, and fires it at the
-// supplied team position.  The body is shared by the action cluster.
-class BfmeFireSpecialPowerHelper
-{
-public:
-	Bool fire(const AsciiString &, const SpecialPowerTemplate *,
-		const Coord3D *);
-};
-
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
 class ScriptActions
 {
@@ -121,12 +111,12 @@ static __forceinline Bool bfmeFireSpecialPowerAtPosition(ScriptActions *actions,
 	const AsciiString &player, const SpecialPowerTemplate *power,
 	const Coord3D *position)
 {
-	typedef Bool (BfmeFireSpecialPowerHelper::*Function)(
+	// ILT 0x000033B4 -> ScriptActions::rva002F48B0 (0x002F48B0).
+	typedef Bool (ScriptActions::*Function)(
 		const AsciiString &, const SpecialPowerTemplate *, const Coord3D *);
 	union { void (*raw)(void); Function member; } fn;
 	fn.raw = j_000033b4;
-	return (reinterpret_cast<BfmeFireSpecialPowerHelper *>(actions)->*fn.member)(
-		player, power, position);
+	return (actions->*fn.member)(player, power, position);
 }
 
 // ?doFireSpecialPowerOnTeam@ScriptActions@@IAEXABVAsciiString@@00@Z

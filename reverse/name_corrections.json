@@ -998,5 +998,15 @@
   "after_sha256": "51d8614ba1ef37da945b5f6d6403da29fd483dfe727268ad30968338a7d3cc76",
   "evidence": "reverse/symbols.csv",
   "reason": "Alignment artifact of this bank-to-source move: Object::bfmeGetNonnegativePreferredLocomotorHeight is still declared unchanged; the real change is the bank's opaque Rva001C7530::scan becoming Object::rva001c7530, the spelling reverse/symbols.csv already pins at 0x001C7530 (?rva001c7530@Object@@QAE_NXZ), with the owner proven because the walked pointer is passed to that Object method and m_template/m_ai are read."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_FireSpecialPowerHelper.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_FireSpecialPowerHelper.cpp",
+  "old_name": "fire",
+  "new_name": "rva002F48B0",
+  "before_sha256": "cf2c8091bd6854a90bc7ce5cf21d6a1d6374ddb655c849d084dcb0d2f17e990a",
+  "after_sha256": "6e7ec0c9a9a4f19866f722f5e797616fb40d964c797f2b2ebc00abf038248080",
+  "evidence": "reverse/deleted_rows.csv",
+  "reason": "fire was an invented method on an invented BfmeFireSpecialPowerHelper class; the three callers 0x002F8340 0x002F81F0 0x002F83D0 pass their own ScriptActions this through ILT 0x000033B4 and nothing names the method, so it keeps the address token rva002F48B0 on ScriptActions (the retraction is recorded in reverse/deleted_rows.csv)."
  }
 ]

@@ -1,8 +1,10 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
-// BfmeFireSpecialPowerHelper::fire, retail RVA 0x002F48B0 (289 bytes),
-// reached through ILT 0x000033B4 from ScriptActions::doFireSpecialPowerOnTeam,
-// ScriptActions::doSkirmishFireSpecialPowerAtMostCost and BfmeApplierBH.
+// ScriptActions::rva002F48B0, retail RVA 0x002F48B0 (289 bytes), reached
+// through ILT 0x000033B4 from ScriptActions::doFireSpecialPowerOnTeam
+// (0x002F8340), ScriptActions::doSkirmishFireSpecialPowerAtMostCost
+// (0x002F81F0) and 0x002F83D0; each caller loads ecx with its own
+// ScriptActions this.  The method name is unproven, so it keeps the address.
 // Walks every player in the mask, their team prototypes, each prototype's
 // team instances and each team's members; the first member with a
 // SpecialPowerModule for the template fires it at the location.
@@ -172,13 +174,14 @@ class ScriptEngine;
 extern ScriptEngine *TheScriptEngine;
 extern PlayerList *ThePlayerList;
 
-class BfmeFireSpecialPowerHelper
+class ScriptActions
 {
-public:
-	Bool fire(const AsciiString &, const SpecialPowerTemplate *, const Coord3D *);
+protected:
+	Bool rva002F48B0(const AsciiString &, const SpecialPowerTemplate *,
+		const Coord3D *);
 };
 
-Bool BfmeFireSpecialPowerHelper::fire(const AsciiString &player,
+Bool ScriptActions::rva002F48B0(const AsciiString &player,
 	const SpecialPowerTemplate *power, const Coord3D *location)
 {
 	UnsignedShort playerMask =

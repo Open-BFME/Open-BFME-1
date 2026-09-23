@@ -125,13 +125,6 @@ public:
 		AsciiString name);
 };
 
-class BfmeFireSpecialPowerHelper
-{
-public:
-	Bool fire(const AsciiString &, const SpecialPowerTemplate *,
-		const Coord3D *);
-};
-
 class ScriptActions
 {
 protected:
@@ -148,12 +141,12 @@ static __forceinline Bool bfmeFireSpecialPowerAtPosition(
 	ScriptActions *actions, const AsciiString &player,
 	const SpecialPowerTemplate *power, const Coord3D *position)
 {
-	typedef Bool (BfmeFireSpecialPowerHelper::*Function)(
+	// ILT 0x000033B4 -> ScriptActions::rva002F48B0 (0x002F48B0).
+	typedef Bool (ScriptActions::*Function)(
 		const AsciiString &, const SpecialPowerTemplate *, const Coord3D *);
 	union { void (*raw)(void); Function member; } fn;
 	fn.raw = j_000033b4;
-	return (reinterpret_cast<BfmeFireSpecialPowerHelper *>(actions)->*
-		fn.member)(player, power, position);
+	return (actions->*fn.member)(player, power, position);
 }
 
 // ?doSkirmishFireSpecialPowerAtMostCost@ScriptActions@@IAEXABVAsciiString@@0@Z
