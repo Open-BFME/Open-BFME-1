@@ -1,7 +1,10 @@
 // ?dispatch@Rva00222640Owner@@QAEXPAX@Z
-// partial score=0.86 date=2026-09-18
-// ?dispatch@Rva00222640Owner@@QAEXPAX@Z
+// partial score=0.87 date=2026-09-23
+// ?dispatch@Rva00222640Owner@@QAEXPAX@Z present-unmatched
 // cl: /DNDEBUG /MD /EHs-c-
+// stlport
+#define _STLP_NO_EXCEPTIONS 1
+#include <list>
 
 
 typedef bool Bool;
@@ -37,14 +40,6 @@ struct Rva00222640Context
 	float m_value;
 	unsigned char m_pad140[0x12];
 	unsigned char m_enabled;
-};
-
-struct Rva00222640Node
-{
-	Rva00222640Node *m_next;
-	unsigned char m_pad04[4];
-	void *m_value;
-	void *value(void) const { return m_value; }
 };
 
 class Rva00222640Probe
@@ -101,7 +96,7 @@ public:
 
 private:
 	unsigned char m_pad00[0x10];
-	Rva00222640Node *m_nodes;
+	_STL::list<Rva00222640Probe *> m_nodes;
 	unsigned char m_pad14[0x7c];
 	unsigned char m_flag;
 };
@@ -129,13 +124,12 @@ void Rva00222640Owner::dispatch(void *arg)
 		return ((Rva00222640BaseA *)((char *)owner - 8))->finish(0);
 	}
 
-	Rva00222640Node *node = m_nodes;
-	Rva00222640Node *current = node->m_next;
-	while (current != m_nodes)
+	_STL::list<Rva00222640Probe *>::iterator current = m_nodes.begin();
+	while (current != m_nodes.end())
 	{
 		register Rva00222640Probe *probe;
-		probe = (Rva00222640Probe *)current->value();
-		current = current->m_next;
+		probe = *current;
+		++current;
 		if (probe != 0)
 		{
 			if (probe->check() != 0)
@@ -146,11 +140,11 @@ void Rva00222640Owner::dispatch(void *arg)
 				union { void (*raw)(void); RunFunction member; } run;
 				run.raw = j_00008337;
 				(reinterpret_cast<BfmeXCQE *>(result)->*run.member)();
-				typedef void (GameLogic::*DestroyFunction)(Object *);
-				union { void (*raw)(void); DestroyFunction member; } destroy;
-				destroy.raw = j_0001d0de;
-				(TheBfmeGameLogic->*destroy.member)((Object *)probe);
 			}
+			typedef void (GameLogic::*DestroyFunction)(Object *);
+			union { void (*raw)(void); DestroyFunction member; } destroy;
+			destroy.raw = j_0001d0de;
+			(TheBfmeGameLogic->*destroy.member)((Object *)probe);
 		}
 	}
 }
