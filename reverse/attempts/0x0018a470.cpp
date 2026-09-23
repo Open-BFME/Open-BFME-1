@@ -1,106 +1,129 @@
-// ?d_0018a470@@YAXXZ
-// partial score=0.97 date=2026-09-20
-class BfmeThingEBE;
+// ?onEnter@AITNGuardInnerState@@UAE?AW4StateReturnType@@XZ
+// partial score=0.974619 date=2026-09-23
+typedef unsigned char Bool;
+typedef unsigned int UnsignedInt;
 
-class BfmeSubEBE
+enum StateReturnType
 {
-public:
-	virtual void bfmeSlot00EBE();
-	virtual void bfmeSlot01EBE();
-	virtual void bfmeSlot02EBE();
-	virtual void bfmeSlot03EBE();
-	virtual void bfmeSlot04EBE();
-	virtual void bfmeSlot05EBE();
-	virtual void bfmeSlot06EBE();
-	virtual void bfmeSlot07EBE();
-	virtual void bfmeSlot08EBE();
-	virtual void bfmeSlot09EBE();
-	virtual void bfmeSlot10EBE();
-	virtual void bfmeSlot11EBE();
-	virtual void bfmeSlot12EBE();
-	virtual void bfmeSlot13EBE();
-	virtual void bfmeAttachEBE(BfmeThingEBE *thing);
+	STATE_SUCCESS = -1,
+	STATE_CONTINUE = 0
 };
 
-class BfmeStateEBE
+class Object
 {
-public:
-	virtual void bfmeVSlot00EBE();
-	virtual void bfmeVSlot01EBE();
-	virtual void bfmeVSlot02EBE();
-	virtual void bfmeVSlot03EBE();
-	virtual int bfmeRunEBE();
-
-	BfmeStateEBE(void *owner, int a, int b, int c, void *data);
-
-	unsigned char m_bfmeHeadEBE[0x18];
-	BfmeSubEBE *m_bfmeSubEBE;
-	unsigned char m_bfmeTailEBE[0x34];
 };
 
-class BfmeOwnerEBE
+class AttackExitConditionsInterface;
+
+class StateMachine
 {
 public:
-	unsigned char m_bfmeHeadEBE[0x50];
-	int m_bfmeKeyEBE;
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void setGoalObject( const Object *object );
 };
 
-struct Rva00367E30Logic
+class AITNGuardMachineView
 {
-	BfmeThingEBE *bfmeFindEBE(int key);
+public:
+	unsigned char m_fields[0x50];
+	int m_nemesisToAttack;
+};
 
-	unsigned char m_bfmeHeadEBE[0x3c];
-	int m_bfmeFrameEBE;
+class GameLogic
+{
+public:
+	Object *findObjectByID( int id );
+	unsigned char m_fields[0x3c];
+	UnsignedInt m_frame;
+};
+
+class AIData
+{
+public:
+	unsigned char m_fields[0x3c];
+	UnsignedInt m_guardChaseUnitFrames;
 };
 
 class AI
 {
 public:
-	unsigned char m_bfmeHeadEBE[0x14];
-	AI *m_bfmeSubEBE;
-	unsigned char m_bfmePadEBE[0x24];
-	int m_bfmeDelayEBE;
+	unsigned char m_fields[0x14];
+	AIData *m_aiData;
 };
 
-extern Rva00367E30Logic *TheBfmeGameLogic;
+extern GameLogic *TheBfmeGameLogic;
 extern AI *TheAI;
 
-class BfmeHostEBE
+class AIAttackState
 {
 public:
-	int bfmeStartEBE();
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual StateReturnType onEnter();
+	virtual void onExit( int status );
+	virtual StateReturnType update();
 
-	unsigned char m_bfmeHeadEBE[0x1c];
-	BfmeOwnerEBE *m_bfmeOwnerEBE;
-	unsigned char m_bfmePadAEBE[4];
-	int m_bfmeDataEBE;
-	int m_bfmeTimeEBE;
-	unsigned char m_bfmePadBEBE[4];
-	BfmeStateEBE *m_bfmeStateEBE;
+	AIAttackState( StateMachine *machine, Bool follow, Bool attackingObject, Bool forceAttacking, AttackExitConditionsInterface *conditions );
+	StateMachine *getMachine() const { return *(StateMachine **)((const unsigned char *)this + 0x1c); }
+
+	unsigned char m_fields[0x18];
+	StateMachine *m_machine;
+	unsigned char m_tail[0x34];
 };
 
-int BfmeHostEBE::bfmeStartEBE()
+struct Rva0018A470ExitConditions
 {
-	Rva00367E30Logic *logic = TheBfmeGameLogic;
-	int key = m_bfmeOwnerEBE->m_bfmeKeyEBE;
+	unsigned char m_unknown00[4];
+	UnsignedInt m_attackGiveUpFrame;
+	unsigned char m_unknown08[4];
+};
 
-	BfmeThingEBE *thing = logic->bfmeFindEBE(key);
+class AITNGuardInnerState
+{
+public:
+	virtual StateReturnType onEnter();
 
-	if (thing == 0)
-		return -1;
+	unsigned char m_stateFields[0x18];
+	AITNGuardMachineView *m_machine;
+	unsigned char m_at20[4];
+	Rva0018A470ExitConditions m_exitConditions;
+	AIAttackState *m_attackState;
+};
 
-	AI *ai = TheAI->m_bfmeSubEBE;
-	int frame = logic->m_bfmeFrameEBE;
-	int delay = ai->m_bfmeDelayEBE;
+extern GameLogic *TheBfmeGameLogic;
+extern AI *TheAI;
 
-	m_bfmeTimeEBE = delay + frame;
+StateReturnType AITNGuardInnerState::onEnter()
+{
+	GameLogic *logic = TheBfmeGameLogic;
+	int key = m_machine->m_nemesisToAttack;
+	Object *nemesis = logic->findObjectByID( key );
 
-	m_bfmeStateEBE = new BfmeStateEBE(m_bfmeOwnerEBE, 0, 1, 0, &m_bfmeDataEBE);
+	if (nemesis == 0)
+		return STATE_SUCCESS;
 
-	m_bfmeStateEBE->m_bfmeSubEBE->bfmeAttachEBE(thing);
+	AIData *aiData = TheAI->m_aiData;
+	int frame = logic->m_frame;
+	int delay = aiData->m_guardChaseUnitFrames;
+	m_exitConditions.m_attackGiveUpFrame = delay + frame;
 
-	return m_bfmeStateEBE->bfmeRunEBE() != 0 ? -1 : 0;
+	m_attackState = new AIAttackState( (StateMachine *)m_machine, false, true, false, (AttackExitConditionsInterface *)&m_exitConditions );
+	m_attackState->getMachine()->setGoalObject( nemesis );
+
+	return m_attackState->onEnter() != STATE_CONTINUE ? STATE_SUCCESS : STATE_CONTINUE;
 }
-
-// The delay local reduces the register residue to five non-relocation bytes.
-// Generated callers still do not prove a production owner or method name.

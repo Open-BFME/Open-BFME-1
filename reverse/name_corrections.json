@@ -1228,5 +1228,15 @@
   "after_sha256": "c0aa50047d8f9a4a52c3187d9c47c8c239403f09ff6eb3e30df2dd2bf42999d4",
   "evidence": "docs/naming_evidence.md",
   "reason": "review of 0x001C6D00: name_oracle reports Object+0x39C not witnessed and no field_names.csv entry exists, so the byte takes an offset name; Zero Hour names the contain module type ContainModuleInterface; the forward4125F0 pin note only says bool action"
+ },
+ {
+  "old_path": "reverse/attempts/0x0018a470.cpp",
+  "new_path": "reverse/attempts/0x0018a470.cpp",
+  "old_name": "m_bfmePadAEBE",
+  "new_name": "m_at20",
+  "before_sha256": "85df1f2f3f626ecf2f13bd90295ed45dda8e3fe571fa49893e3c9f03337a0d39",
+  "after_sha256": "82be076421ed67ce6c2ff556479fd886d3e7999a6fe5a9b0dc1acdf9d2638054",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "The vtable and matched state source identify the enclosing class as AITNGuardInnerState. The old m_bfmePadAEBE label came from the fabricated bank and has no layout evidence behind it. The body models the four bytes at +0x20 without assigning them a meaning, so it uses m_at20."
  }
 ]
