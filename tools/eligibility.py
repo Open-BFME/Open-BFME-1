@@ -271,6 +271,8 @@ def finish_bodies(min_score=0.9, rows=None, latest=None, max_attempts=0,
     hard_bodies). `cooldown_days` > 0 hides a stash re-banked that recently,
     which is the only cross-host signal in git: the date on the stash header.
     """
+    from conversion_gate import is_lift_line
+
     out = []
     counts = counts if counts is not None else (attempt_counts() if max_attempts else {})
     today = today or datetime.date.today()
@@ -278,6 +280,12 @@ def finish_bodies(min_score=0.9, rows=None, latest=None, max_attempts=0,
         rva = rva_of(row)
         found = stash(rva)
         if not found or found[1] < min_score:
+            continue
+        # A saved naked/__emit transcription can probe exact by construction,
+        # but the conversion gate cannot accept it as C++. Keep it in the
+        # attempt bank without advertising it as one lever from landing.
+        if any(is_lift_line(line) for line in
+               found[0].read_text(encoding="utf-8", errors="replace").splitlines()):
             continue
         if max_attempts and counts.get(rva, 0) >= max_attempts:
             continue

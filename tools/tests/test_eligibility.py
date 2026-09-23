@@ -83,6 +83,16 @@ def test_stash_outlives_a_later_deferral(world):
     assert len(got) == 1 and got[0][2] == 0.95
 
 
+def test_naked_bank_is_not_near_landed(world):
+    tmp_path, log = world
+    bank(tmp_path, "0.99")
+    verdict(log, "partial")
+    stash = tmp_path / "attempts" / f"0x{RVA:08x}.cpp"
+    stash.write_text(stash.read_text() + "__declspec(naked) void f() {}\n")
+    assert eligibility.finish_bodies(0.9, [row()],
+                                     eligibility.latest_verdicts()) == []
+
+
 def test_size_window_and_anonymous_filter():
     rows = [row(), row(name="?init@PartitionManager@@UAEXXZ", target_rva="0x00001000",
                       target_size="50")]
