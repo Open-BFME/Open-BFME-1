@@ -174,7 +174,7 @@ name,target_rva,target_size,source,notes
 ?lookForInnerTarget@AIGuardMachine@@QAE_NXZ,0x0015D530,2514,Code/GameEngine/Source/GameLogic/AI/AIGuard.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeAccept@Gen_00168910@@AAEXPAVBfmeSeedTarget@@@Z,0x00161550,1031,Code/GameEngine/Source/Common/S3SeedPairsGuarded.cpp,reloc-derived;call-sites=1;identity=generated
 ?isLocationSafe@AIPlayer@@QAE_NPBUCoord3D@@PBVThingTemplate@@@Z,0x00163030,388,Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp,reloc-derived;call-sites=2;identity=real
-?getPlayerStructureBounds@AIPlayer@@SAXPAURegion2D@@H@Z,0x00163C70,537,Code/GameEngine/Source/GameLogic/AI/AIPlayer_guardSupplyCenter_Thunk.cpp,reloc-derived;call-sites=1;identity=real
+?getPlayerStructureBounds@AIPlayer@@SAXPAURegion2D@@H@Z,0x00163C70,537,Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp,reloc-derived;call-sites=6;identity=real;owner=ZH-twin-and-BFME-callers
 ?isSupplySourceAttacked@AIPlayer@@QAE_NXZ,0x00163F10,421,Code/GameEngine/Source/GameLogic/AI/AIPlayer_guardSupplyCenter_Thunk.cpp,reloc-derived;call-sites=1;identity=real
 ?findSupplyCenter@AIPlayer@@IAEPAVObject@@H@Z,0x00164C10,883,Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp,reloc-derived;call-sites=2;identity=real
 ?outOfWeaponRangeObject@@YA_NPAVState@@PAX@Z,0x00171E70,275,Code/GameEngine/Source/GameLogic/AI/AIStates.cpp,reloc-derived;call-sites=1;identity=real
