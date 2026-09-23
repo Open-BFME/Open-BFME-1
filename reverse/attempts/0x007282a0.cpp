@@ -1,8 +1,7 @@
-// ?subdivide@Rva007282A0@@QAEXHHHM@Z
-// partial score=0.1 date=2026-09-16
+// ?setFlipRecursive@W3DTerrainBackground@@IAEXHHHH@Z
+// partial score=0.1 date=2026-09-23
 // Scratch reconstruction for retail 0x007282A0..0x007285D5 (821 bytes).
-// The semantic owner is intentionally address-derived until the root lane
-// proves the identity and installs the final pin.
+// Caller, pin, and matched source establish the W3D member identity.
 //
 // cl: /DNDEBUG /MD /EHsc
 
@@ -75,11 +74,11 @@ public:
     }
 };
 
-class Rva007282A0
+class W3DTerrainBackground
 {
-public:
-    void subdivide(int xOffset, int yOffset, int width,
-        float errorTolerance);
+protected:
+    void setFlipRecursive(int xOffset, int yOffset, int width,
+        int errorToleranceBits);
 
 private:
     int xOrigin(void) const
@@ -98,13 +97,13 @@ private:
     }
 };
 
-// ?subdivide@Rva007282A0@@QAEXHHHM@Z
-void Rva007282A0::subdivide(int xOffset, int yOffset, int width,
-    float errorTolerance)
+// ?setFlipRecursive@W3DTerrainBackground@@IAEXHHHH@Z
+void W3DTerrainBackground::setFlipRecursive(int xOffset, int yOffset, int width,
+    int errorToleranceBits)
 {
-    Rva007282A0Map *terrainMap = map();
-    int limitX = terrainMap->width() - 1;
-    int limitY = terrainMap->height() - 1;
+
+    int limitX = map()->width() - 1;
+    int limitY = map()->height() - 1;
     bool match = true;
     int minX = xOrigin() + xOffset;
     int minY = yOrigin() + yOffset;
@@ -115,10 +114,10 @@ void Rva007282A0::subdivide(int xOffset, int yOffset, int width,
     if (maxY >= limitY)
         maxY = limitY;
 
-    int cornerA = terrainMap->heightAt(minX, minY);
-    int cornerB = terrainMap->heightAt(maxX, minY);
-    int cornerC = terrainMap->heightAt(maxX, maxY);
-    int cornerD = terrainMap->heightAt(minX, maxY);
+    int cornerA = map()->heightAt(minX, minY);
+    int cornerB = map()->heightAt(maxX, minY);
+    int cornerC = map()->heightAt(maxX, maxY);
+    int cornerD = map()->heightAt(minX, maxY);
 
     int i;
     int j;
@@ -133,7 +132,7 @@ void Rva007282A0::subdivide(int xOffset, int yOffset, int width,
             if (l >= limitY)
                 l = limitY;
 
-            if (terrainMap->cliffAt(k, l))
+            if (map()->cliffAt(k, l))
             {
                 match = false;
                 break;
@@ -157,11 +156,11 @@ void Rva007282A0::subdivide(int xOffset, int yOffset, int width,
                     0.0390625f;
             }
 
-            int currentHeight = terrainMap->heightAt(k, l);
+            int currentHeight = map()->heightAt(k, l);
             float delta = predicted - currentHeight * 0.0390625f;
             if (delta < 0.0f)
                 delta = -delta;
-            if (delta > errorTolerance)
+            if (delta > *(const float *)&errorToleranceBits)
             {
                 match = false;
                 break;
@@ -186,9 +185,9 @@ void Rva007282A0::subdivide(int xOffset, int yOffset, int width,
     }
 
     int halfWidth = width / 2;
-    subdivide(xOffset, yOffset, halfWidth, errorTolerance);
-    subdivide(xOffset, yOffset + halfWidth, halfWidth, errorTolerance);
-    subdivide(xOffset + halfWidth, yOffset, halfWidth, errorTolerance);
-    subdivide(xOffset + halfWidth, yOffset + halfWidth, halfWidth,
-        errorTolerance);
+    setFlipRecursive(xOffset, yOffset, halfWidth, errorToleranceBits);
+    setFlipRecursive(xOffset, yOffset + halfWidth, halfWidth, errorToleranceBits);
+    setFlipRecursive(xOffset + halfWidth, yOffset, halfWidth, errorToleranceBits);
+    setFlipRecursive(xOffset + halfWidth, yOffset + halfWidth, halfWidth,
+        errorToleranceBits);
 }
