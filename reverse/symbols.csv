@@ -88864,3 +88864,4 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?getMessageColor@InGameUI@@QAEH_N@Z,0x00015622,ShowDiplomacy retail call at 0x004C4048 through ILT
 ?registerWindowLayout@InGameUI@@QAEXPAVWindowLayout@@@Z,0x000178AA,ShowDiplomacy retail call at 0x004C4140 through ILT
 ?updateBuddyInfo@@YAXXZ,0x0002549B,ShowDiplomacy retail call at 0x004C418B through ILT
+?get_allocator@?$vector@UGen_t_003a75c0_p8cd@@V?$allocator@UGen_t_003a75c0_p8cd@@@_STL@@@_STL@@QBE?AV?$allocator@UGen_t_003a75c0_p8cd@@@2@XZ,0x00013FC5,route=0x003A66A0; Retail vector copy 0x003AA980 passes this source vector and result slot to the ILT. The routed body returns the result slot.
