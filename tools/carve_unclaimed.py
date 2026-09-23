@@ -356,7 +356,12 @@ def main(argv=None):
     for label, (count, total) in bands.items():
         print(f"{label:>10} {count:>12,} {total:>12,}")
     if not args.summary:
-        print(f"wrote {args.output.relative_to(ROOT).as_posix()}")
+        output_path = args.output.resolve()
+        try:
+            display_path = output_path.relative_to(ROOT)
+        except ValueError:
+            display_path = output_path
+        print(f"wrote {display_path.as_posix()}")
 
 
 if __name__ == "__main__":
