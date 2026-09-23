@@ -1,6 +1,4 @@
-// ?d_000ff4d0@@YAXXZ
-// partial score=0.9 date=2026-09-23
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
@@ -47,14 +45,14 @@ public:
 class GeometryInfo
 {
 public:
-	Real getBoundingCircleRadius() const
+	Real getBoundingSphereRadius() const
 	{
-		return m_boundingCircleRadius;
+		return m_boundingSphereRadius;
 	}
 
 private:
 	unsigned char m_pad[0x14];
-	Real m_boundingCircleRadius;
+	Real m_boundingSphereRadius;
 };
 
 enum KindOfMask
@@ -138,7 +136,7 @@ struct SimpleObjectIterator
     Int m_refCount;
 };
 
-class BfmeWideResult
+struct BfmeWideResult
 {
 public:
     SimpleObjectIterator *m_mpo;
@@ -228,13 +226,6 @@ public:
     BfmeWideResult bfmeForwardWideC(Int a, Real b, Int c, Int d, Int e);
 };
 
-__forceinline Int Rva000FF4D0FloatBits(Real value)
-{
-	union { Real real; Int bits; } bits;
-	bits.real = value;
-	return bits.bits;
-}
-
 class GameLogic
 {
 public:
@@ -263,7 +254,7 @@ void BuildAssistant::clearRemovableForConstruction(const ThingTemplate *whatToBu
 		((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
 			(Int)pos,
 			whatToBuild->getTemplateGeometryInfo()->
-				getBoundingCircleRadius() * 1.1f,
+				getBoundingSphereRadius() * 1.1f,
 			FROM_BOUNDINGSPHERE_3D,
 			PartitionFilterWouldCollide(*pos,
 				whatToBuild->getTemplateGeometryInfo(), angle, true),
