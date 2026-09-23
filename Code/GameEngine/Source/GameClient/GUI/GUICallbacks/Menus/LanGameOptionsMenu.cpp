@@ -124,7 +124,7 @@ extern Bool LANbuttonPushed;
 extern void MapSelectorTooltip(GameWindow *window, WinInstanceData *instData,	UnsignedInt mouse);
 extern void gameAcceptTooltip(GameWindow *window, WinInstanceData *instData, UnsignedInt mouse);
 
-static Bool winInitialized = FALSE;
+Bool winInitialized = FALSE;
 
 __declspec(noinline) void EnableSlotListUpdates(Bool val)
 {
