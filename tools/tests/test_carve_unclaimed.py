@@ -89,6 +89,21 @@ def test_carved_ranking_uses_expected_bytes(monkeypatch):
     assert got[0]["warmth"] == 6
 
 
+def test_carved_attempts_follow_boundary_after_name_recovery(monkeypatch):
+    row = {"name": "?d_00001000@@YAXXZ", "target_rva": "0x1000",
+           "target_size": "120", "source": "reverse/carved.csv",
+           "status": "carved", "callers": "1"}
+    monkeypatch.setattr(eligibility, "open_dumps", lambda **kwargs: [row])
+    monkeypatch.setattr(eligibility, "boundary_suspect", lambda *args: False)
+    monkeypatch.setattr(eligibility, "latest_verdicts",
+                        lambda: {0x1000: "blocked"})
+    monkeypatch.setattr(eligibility, "attempt_counts",
+                        lambda: {0x1000: 6})
+    candidate = next_work.carved_candidates()[0]
+    assert candidate["deferred_attempts"] == 6
+    assert next_work.drop_logged([candidate])[0][0]["deferred_attempts"] == 6
+
+
 def test_progress_does_not_import_carver():
     text = (ROOT / "tools" / "progress.py").read_text(encoding="utf-8")
     assert "carve_unclaimed" not in text

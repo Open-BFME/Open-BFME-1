@@ -646,6 +646,7 @@ def carved_candidates():
     """
     import eligibility
     latest = eligibility.latest_verdicts()
+    attempts = eligibility.attempt_counts()
     records = re_log.latest_records()
     out = []
     for row in eligibility.open_dumps(latest=latest, anonymous=True,
@@ -662,7 +663,7 @@ def carved_candidates():
         warmth = 2 * min(callers, 3)
         if row.get("ghidra"):
             warmth += 1
-        out.append({
+        candidate = {
             "function": row["name"],
             "symbol": row["name"],
             "target_rva": row["target_rva"],
@@ -676,7 +677,13 @@ def carved_candidates():
             "ghidra": row.get("ghidra", ""),
             "notes": row.get("notes", ""),
             "command": f"python3 tools/brief.py --rvas {row['target_rva']}",
-        })
+        }
+        # Carved rows retain a ?d_ placeholder after an analyst records the
+        # same boundary under its proved name. Count work by address so that
+        # renaming cannot make a heavily investigated body look fresh.
+        if eligibility.deferred(rva, latest) and attempts.get(rva):
+            candidate["deferred_attempts"] = attempts[rva]
+        out.append(candidate)
     out.sort(key=lambda c: eligibility.expected_bytes(c["warmth"], c["size"]),
              reverse=True)
     return out
@@ -721,7 +728,9 @@ def drop_logged(candidates):
             dropped += 1
             continue
         if re_log.is_deferred(candidate["function"], rva, boundary_moved=moved):
-            candidate["deferred_attempts"] = re_log.attempts(candidate["function"])
+            candidate["deferred_attempts"] = max(
+                candidate.get("deferred_attempts", 0),
+                re_log.attempts(candidate["function"]))
         kept.append(candidate)
     return kept, dropped
 
