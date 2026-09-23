@@ -1188,5 +1188,15 @@
   "after_sha256": "2504aa3391c773a37d013de8dc22da5b5c2f00abd818745ff6fd0269ed4d052e",
   "evidence": "docs/naming_evidence.md",
   "reason": "review of 0x007E55F0 refuted the member names as uncited guesses (m_stride named two different fields; the EA MVhd header puts frame count at +0x10 and a time-base at +0x1C); name_oracle has no witness for Rva007E3C20Vp6Stream, so the members take the offset names the landed destructor TU Rva007E3C20Vp6StreamDtor.cpp already uses"
+ },
+ {
+  "old_path": "reverse/attempts/0x0044a2e0.cpp",
+  "new_path": "reverse/attempts/0x0044a2e0.cpp",
+  "old_name": "addWorldAnimation",
+  "new_name": "rva00443910",
+  "before_sha256": "4be23f1bd824857a9d831b68a9f65c8019c019ac9743a3d8616a86a07c38c788",
+  "after_sha256": "4d70d23e9950dec8623db8ee854c4f7869251e2380744dad924054d35416b5f4",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "the 0.2-score stash named this InGameUI method addWorldAnimation as a ZH guess, but ZH InGameUI::addWorldAnimation takes a const Coord3D*, while the actual callee (ILT 0x0003D230 -> body 0x00443910, called from 0x0044A2E0 at both 0x0044A405+0x125 and 0x0044A571+0x291 with ecx loaded from TheInGameUI at VA 0x012F148C) converts an int pair (fild [ebx]/fild [ebx+4]) into a screen-space Anim2D list; reverse/functions.csv 0x00443910 carries only the address-derived name '?d_00443910', and reverse/re_attempts.log line 12972 records a blocked verdict for that same address stating identity detectors provide no trustworthy real owner, so addWorldAnimation was never a ledger-sourced identity and the body keeps the address token rva00443910 per AGENTS.md 3a."
  }
 ]
