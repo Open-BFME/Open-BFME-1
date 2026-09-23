@@ -1,8 +1,9 @@
 // cl: /DNDEBUG /MD
 //
-// Five of retail's cell-space Pathfinder::iterateCellsAlongLine instances, one
+// Six of retail's cell-space Pathfinder::iterateCellsAlongLine instances, one
 // 478-byte body each, byte-identical apart from the callback they call:
 //
+//   0x003DE480  ILT 0x00005713  Rva003DE480Struct       -> Rva003D61C0::cellCallback
 //   0x003E33F0  ILT 0x00013DC2  GroundPathPassableInfo  -> GroundPathPassableStruct::cellCallback
 //   0x003E7F80  ILT 0x00029DF7  BfmeCheckMovementInfo   -> Rva003E5820Info::examine
 //   0x003E81E0  ILT 0x00023DDF  Rva003DB640Info         -> LinePassableStruct::linePassableCallback
@@ -48,6 +49,12 @@ private:
 	char m_unreconstructed[0x44];
 };
 
+class Rva003D61C0
+{
+public:
+	Int cellCallback( PathfindCell *from, PathfindCell *to, Int x, Int y );
+};
+
 class GroundPathPassableStruct
 {
 public:
@@ -85,6 +92,7 @@ public:
 };
 
 struct GroundPathPassableInfo;
+struct Rva003DE480Struct;
 class BfmeCheckMovementInfo;
 class Rva003DB640Info;
 struct Rva003F1CA0Struct;
@@ -92,6 +100,8 @@ struct Rva003F1CA0Struct;
 class Pathfinder
 {
 public:
+	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
+		PathfindLayerEnum layer, Rva003DE480Struct *userData );
 	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
 		PathfindLayerEnum layer, BfmeCheckMovementInfo *userData );
 	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
@@ -207,6 +217,13 @@ private:
 		return 0;
 	}
 };
+
+Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
+	PathfindLayerEnum layer, Rva003DE480Struct *userData )
+{
+	return walkCellsAlongLine<Rva003D61C0, &Rva003D61C0::cellCallback>(
+		start, end, layer, (Rva003D61C0 *)userData );
+}
 
 Int Pathfinder::iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
 	PathfindLayerEnum layer, GroundPathPassableInfo *userData )
