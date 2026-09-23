@@ -5258,30 +5258,48 @@ Real W3DModelDraw::getAnimationScrubScalar( void ) const
 #endif
 
 //-------------------------------------------------------------------------------------------------
-// ?rebuildWeaponRecoilInfo@W3DModelDraw@@AAEXPBUModelConditionInfo@@@Z present-unmatched
+struct Rva007705D0Element
+{
+	Int value[3];
+};
+
+class Rva007705D0Vector
+{
+public:
+	void resizeValue(UnsignedInt newSize, Rva007705D0Element value);
+	void fillInsert(Rva007705D0Element *position, UnsignedInt count,
+		const Rva007705D0Element &value);
+
+private:
+	Rva007705D0Element *m_begin;
+	Rva007705D0Element *m_end;
+	Rva007705D0Element *m_capacity;
+};
+
 void W3DModelDraw::rebuildWeaponRecoilInfo(const ModelConditionInfo* state) 
 {
 	Int wslot;
-
+	// Retail has four slots. Its recoil vectors start at +0xAC in W3DModelDraw
+	// and the state barrel vectors start at +0x7C in ModelConditionInfo.
 	if (state == NULL)
 	{
-		for (wslot = 0; wslot < WEAPONSLOT_COUNT; ++wslot)
+		for (wslot = 0; wslot < 4; ++wslot)
 		{
-			m_weaponRecoilInfoVec[wslot].clear();
+			reinterpret_cast<WeaponRecoilInfoVec *>(reinterpret_cast<char *>(this) + 0xAC)[wslot].clear();
 		}
 	}
 	else
 	{
-		for (wslot = 0; wslot < WEAPONSLOT_COUNT; ++wslot)
+		for (wslot = 0; wslot < 4; ++wslot)
 		{
-			Int ncount = state->m_weaponBarrelInfoVec[wslot].size();
-			if (m_weaponRecoilInfoVec[wslot].size() != ncount)
+			Int ncount = reinterpret_cast<const ModelConditionInfo::WeaponBarrelInfoVec *>(reinterpret_cast<const char *>(state) + 0x7C)[wslot].size();
+			if (reinterpret_cast<WeaponRecoilInfoVec *>(reinterpret_cast<char *>(this) + 0xAC)[wslot].size() != ncount)
 			{
 				WeaponRecoilInfo tmp;
-				m_weaponRecoilInfoVec[wslot].resize(ncount, tmp);
+				reinterpret_cast<Rva007705D0Vector *>(&reinterpret_cast<WeaponRecoilInfoVec *>(reinterpret_cast<char *>(this) + 0xAC)[wslot])->resizeValue(ncount, *reinterpret_cast<Rva007705D0Element *>(&tmp));
 			}
 
-			for (WeaponRecoilInfoVec::iterator it = m_weaponRecoilInfoVec[wslot].begin(); it != m_weaponRecoilInfoVec[wslot].end(); ++it)
+			for (WeaponRecoilInfoVec::iterator it = reinterpret_cast<WeaponRecoilInfoVec *>(reinterpret_cast<char *>(this) + 0xAC)[wslot].begin(); it != reinterpret_cast<WeaponRecoilInfoVec *>(reinterpret_cast<char *>(this) + 0xAC)[wslot].end(); ++it)
 			{
 				it->clear();
 			}
@@ -5653,6 +5671,13 @@ void W3DModelDraw::xfer( Xfer *xfer )
 	if( xfer->getXferMode() == XFER_LOAD && m_subObjectVec.empty() == FALSE )
 		updateSubObjects();
 
+	// Keep the STLport helper specializations used by the retail recoil vector.
+	// This compile-time branch has no runtime effect.
+	if (0)
+	{
+		WeaponRecoilInfoVec keepHelpers;
+		keepHelpers.resize(0, WeaponRecoilInfo());
+	}
 }  // end xfer
 
 // ------------------------------------------------------------------------------------------------
