@@ -643,7 +643,7 @@ name,target_rva,target_size,source,notes
 ?iterateCellsAlongLine@Pathfinder@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAURva003F1CA0Struct@@@Z,0x003F1CA0,475,Code/GameEngine/Source/GameLogic/AI/pathfind_iterateCellsAlongLine_world.cpp,reloc-derived;call-sites=1;identity=generated
 ?iterateCellsAlongLine@Pathfinder@@IAEHABUICoord2D@@0W4PathfindLayerEnum@@PAX@Z,0x003F1F00,475,Code/GameEngine/Source/GameLogic/AI/pathfind_iterateCellsAlongLine_world.cpp,reloc-derived;call-sites=2;identity=real
 ?_M_insert_overflow@?$vector@UGen_t_003f90f0_p8pod@@V?$allocator@UGen_t_003f90f0_p8pod@@@_STL@@@_STL@@IAEXPAUGen_t_003f90f0_p8pod@@ABU3@ABU__false_type@2@I_N@Z,0x003F8EF0,302,Code/gen_small/tgrid_134.cpp,reloc-derived;call-sites=1;identity=generated
-_BfmePathfindMapUpdate@12,0x003FA5B0,3951,Code/GameEngine/Source/GameLogic/AI/PathfindMapObjectWrappers.cpp,reloc-derived;call-sites=1;identity=real
+_BfmePathfindMapUpdate@12,0x003FA5B0,3964,Code/GameEngine/Source/GameLogic/AI/PathfindMapObjectWrappers.cpp,reloc-derived;call-sites=1;identity=real;boundary=ret12-at-0x003FB52C-followed-by-int3
 ?bfmeNotifyPlain@PathfindLayer@@AAEXXZ,0x003FC380,430,Code/GameEngine/Source/GameLogic/AI/PathfindLayer_initAndSetDestroyed.cpp,reloc-derived;call-sites=1;identity=real
 ?_M_insert_overflow@?$vector@UGen_t_004019b0_m4pod@@V?$allocator@UGen_t_004019b0_m4pod@@@_STL@@@_STL@@IAEXPAUGen_t_004019b0_m4pod@@ABU3@ABU__false_type@2@I_N@Z,0x004014A0,282,Code/gen_small/fam_019.cpp,reloc-derived;call-sites=1;identity=generated
 ?flattenZones@@YAXPAG0H@Z,0x004027B0,171,Code/GameEngine/Source/GameLogic/AI/PathfindZoneFlatten.cpp,reloc-derived;call-sites=1;identity=real
