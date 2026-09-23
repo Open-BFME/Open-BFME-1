@@ -18,7 +18,8 @@ extern float g_bfmeUint32Scale; // retail 0x01075358 (2^32 conversion fixup)
 
 enum ObjectID
 {
-	INVALID_OBJECT_ID = -1
+	INVALID_ID = 0,
+	FORCE_OBJECTID_TO_LONG_SIZE = 0x7ffffff
 };
 
 unsigned Rva00990030Lookup(lua_State *state, Int index);
