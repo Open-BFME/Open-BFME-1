@@ -1,5 +1,6 @@
 // ?check@Rva006F7150@@QAEHH@Z
-// partial score=0.995 date=2026-09-22
+// Retail 0x006F7150: exact 398-byte shroud-boundary check. The volatile
+// matrix X read preserves the observed x87 operand order at +0x51.
 // RVA 0x006F7150: opaque shroud-boundary predicate with decoded ABI.
 // cl: /O2 /Ob2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
 #include "matrix3d.h"
@@ -43,7 +44,7 @@ static __forceinline void transformBounds(const Matrix3D &matrix, const Vector3 
     } else {
         value = &input;
     }
-    output->X = (matrix[0][2] * value->Z + matrix[0][1] * value->Y) + matrix[0][0] * value->X + matrix[0][3];
+    output->X = (matrix[0][2] * value->Z + matrix[0][1] * value->Y) + (*(volatile const float *)&matrix[0][0]) * value->X + matrix[0][3];
     output->Y = matrix[1][0] * value->X + matrix[1][1] * value->Y + matrix[1][2] * value->Z + matrix[1][3];
     output->Z = matrix[2][0] * value->X + matrix[2][1] * value->Y + matrix[2][2] * value->Z + matrix[2][3];
 }
