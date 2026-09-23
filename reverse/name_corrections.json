@@ -1648,5 +1648,175 @@
   "after_sha256": "891c7ad466602828bfda1ec666e11dde8c5287436d4c8042fbc51c578cd8c87a",
   "evidence": "reverse/re_attempts.log",
   "reason": "m_cachedValue was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_int because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_cameraLock",
+  "new_name": "m_bfme5c",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_cameraLock was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme5c because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_cameraLockDrawable",
+  "new_name": "m_bfme60",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_cameraLockDrawable was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme60 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_defaultAngle",
+  "new_name": "m_bfme4c",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_defaultAngle was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme4c because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_defaultPitch",
+  "new_name": "m_bfme4c",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_defaultPitch was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme4c because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_guardBandBiasX",
+  "new_name": "m_bfme74",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_guardBandBiasX was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme74 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_heightAboveGround",
+  "new_name": "m_bfme50",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_heightAboveGround was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme50 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_lockDistance",
+  "new_name": "m_bfme68",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_lockDistance was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme68 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_lockType",
+  "new_name": "m_bfme64",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_lockType was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme64 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_maxHeight",
+  "new_name": "m_bfme38",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_maxHeight was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme38 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_maxZoom",
+  "new_name": "m_bfme30",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_maxZoom was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme30 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_minZoom",
+  "new_name": "m_bfme34",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_minZoom was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme34 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_mouseLocked",
+  "new_name": "m_bfme70",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_mouseLocked was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme70 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_okToAdjustHeight",
+  "new_name": "m_bfme75",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_okToAdjustHeight was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme75 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_originX",
+  "new_name": "m_bfme20",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_originX was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme20 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_snapImmediate",
+  "new_name": "m_bfme76",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_snapImmediate was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme76 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_width",
+  "new_name": "m_bfme18",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_width was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme18 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
+ },
+ {
+  "old_path": "reverse/attempts/0x0045c4a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/ViewXferBfme.cpp",
+  "old_name": "m_zoom",
+  "new_name": "m_bfme40",
+  "before_sha256": "036a6225f8eb30956fef8c7ae651a6ef96ab9713eae3434e8b1d1d02bd111cc9",
+  "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "m_zoom was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme40 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
  }
 ]
