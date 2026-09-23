@@ -1,5 +1,3 @@
-// ??1Gen0002857EOwner@@QAE@XZ
-// partial score=0.95 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // ??1Gen0002857EOwner@@QAE@XZ
