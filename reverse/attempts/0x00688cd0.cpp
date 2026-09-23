@@ -1,5 +1,5 @@
 // ?OnHasMap@LANAPI@@UAEXPAUBfmeNetAddress@@_N@Z
-// partial score=0.41 date=2026-09-23
+// partial score=0.98 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 #include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
@@ -247,9 +247,8 @@ void LANAPI::OnHasMap(BfmeNetAddress *sender, Bool status)
 	Bool willTransfer = WouldMapTransfer(m_currentGame);
 	if (mapData != 0)
 	{
-		UnicodeStringAP mapAP =
-			((BfmeEntryAP *)mapData)->bfmeDisplayNameAP();
-		mapDisplayName.format(UnicodeString(L"%ls"), mapAP.bfmeTextAP());
+		mapDisplayName.format(UnicodeString(L"%ls"),
+			((BfmeEntryAP *)mapData)->bfmeDisplayNameAP().bfmeTextAP());
 	}
 	else
 	{
@@ -260,19 +259,20 @@ void LANAPI::OnHasMap(BfmeNetAddress *sender, Bool status)
 	if (!status)
 	{
 		UnicodeString text;
-		UnicodeString playerName =
-			((GameSlot *)((Rva0068D3E0Arr *)m_currentGame)->at(i))
-				->getName();
 		if (willTransfer)
 		{
 			text.format(TheGameText->fetch("GUI:PlayerNoMapWillTransfer", 0),
-				Rva00688CD0WideText(playerName),
+				Rva00688CD0WideText(
+					((GameSlot *)((Rva0068D3E0Arr *)m_currentGame)->at(i))
+						->getName()),
 				Rva00688CD0WideText(mapDisplayName));
 		}
 		else
 		{
 			text.format(TheGameText->fetch("GUI:PlayerNoMap", 0),
-				Rva00688CD0WideText(playerName),
+				Rva00688CD0WideText(
+					((GameSlot *)((Rva0068D3E0Arr *)m_currentGame)->at(i))
+						->getName()),
 				Rva00688CD0WideText(mapDisplayName));
 		}
 		OnChat(UnicodeString(L"SYSTEM"), _bfme_localAddress(), text, 2);
