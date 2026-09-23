@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "22df3c01c59a77c269c0009cc5fc94f392ca2f5727d005b356485ef9a2111a48",
+  "symbol": "?Rva004A0B20Query@@YGHHH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.7901,
+  "source": "// ?Rva004A0B20Query@@YGHHH@Z\n// partial score=0.7901 date=2026-09-23\n// ?Rva004A0B20Query@@YGHHH@Z\n// Retail 0x004A0B20, 81 bytes. The caller reaches this wrapper via an ILT;\n// no named owner is proven. It calls the matched purchase-science query,\n// reuses both input parameter slots as byte out-parameters, and reserves an\n// eight-byte local area. Only the call-argument register schedule differs.\nvoid __stdcall bfmeQueryWD(int first, int second, bool *fourth,\n                            bool *secondOut, bool *firstOut, bool *third);\n\nint __stdcall Rva004A0B20Query(int first, int second)\n{\n    bool local[8];\n    bfmeQueryWD(first, second, &local[4],\n                reinterpret_cast<bool *>(&second),\n                reinterpret_cast<bool *>(&first), &local[3]);\n    if (*reinterpret_cast<bool *>(&second) &&\n        *reinterpret_cast<bool *>(&first) && !local[3])\n        return 1;\n    return 0;\n}\n"
+}

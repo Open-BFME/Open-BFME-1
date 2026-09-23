@@ -1,35 +1,21 @@
-// ?bfmeCheckWD@@YGHHH@Z (identity unknown)
-// partial score=0.75 date=2026-09-07
-// 73/81 bytes. The call shape is worked out: a __stdcall taking SIX arguments,
-// pushed so that left-to-right they are
-//   (a1 by value, a2 by value, &localAtE-4, &a2's slot, &a1's slot, &localAtE-5)
-// -- i.e. the two incoming parameter slots are handed to the callee as
-// bool out-parameters and read back afterwards as BYTES:
-//   [E+8] tested first, then [E+4], then the byte local at E-5.
-// The byte local at E-4 is written by the callee and never read.
-// What is not modelled: retail reserves EIGHT bytes (`sub esp,8`) and uses only
-// E-5 and E-4 of them, leaving E-8..E-6 dead, while four `bool` locals make
-// MSVC reserve four (`push ecx`) and spread them differently. Something in the
-// original gives those two bytes a wider or aligned home.
-void __stdcall bfmeQueryWD(int first, int second, bool *fourth, bool *secondOut, bool *firstOut, bool *third);
+// ?Rva004A0B20Query@@YGHHH@Z
+// partial score=0.7901 date=2026-09-23
+// ?Rva004A0B20Query@@YGHHH@Z
+// Retail 0x004A0B20, 81 bytes. The caller reaches this wrapper via an ILT;
+// no named owner is proven. It calls the matched purchase-science query,
+// reuses both input parameter slots as byte out-parameters, and reserves an
+// eight-byte local area. Only the call-argument register schedule differs.
+void __stdcall bfmeQueryWD(int first, int second, bool *fourth,
+                            bool *secondOut, bool *firstOut, bool *third);
 
-int __stdcall bfmeCheckWD(int first, int second)
+int __stdcall Rva004A0B20Query(int first, int second)
 {
-	bool third;
-	bool fourth;
-	bool firstOut;
-	bool secondOut;
-
-	bfmeQueryWD(first, second, &fourth, &secondOut, &firstOut, &third);
-
-	if (!secondOut)
-		return 0;
-
-	if (!firstOut)
-		return 0;
-
-	if (third)
-		return 0;
-
-	return 1;
+    bool local[8];
+    bfmeQueryWD(first, second, &local[4],
+                reinterpret_cast<bool *>(&second),
+                reinterpret_cast<bool *>(&first), &local[3]);
+    if (*reinterpret_cast<bool *>(&second) &&
+        *reinterpret_cast<bool *>(&first) && !local[3])
+        return 1;
+    return 0;
 }
