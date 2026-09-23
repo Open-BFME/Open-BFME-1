@@ -1,5 +1,5 @@
 // ?Rva00454B00LoadMap@@YA_NVAsciiString@@PAX@Z
-// partial score=0.28 date=2026-09-16
+// partial score=0.47 date=2026-09-23
 // Clean C++ reconstruction of the 802-byte retail body at 0x00454B00.
 // The address-derived function name is intentional: the caller proves a
 // filename plus a second context pointer, while the semantic owner is not
@@ -8,6 +8,7 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseascii/Common /ICode/Libraries/Source/WWVegas/WWLib
 
 #include <string.h>
+#include <new>
 
 #include "AsciiString.h"
 
@@ -99,6 +100,9 @@ class BfmeThingAVC
 {
 public:
 	BfmeThingAVC *bfmeInitAVC(void);
+
+private:
+	char m_layout[0x10];
 };
 
 class Rva00454B00WaypointMap
@@ -114,7 +118,7 @@ private:
 };
 
 // The body allocates the 0x10-byte map object and leaves it live globally.
-#define Rva00454B00Waypoints (*(Rva00454B00WaypointMap **)0x012F1588)
+#define Rva00454B00Waypoints (*(BfmeThingAVC **)0x012F1588)
 #define Rva00454B00Width (*(Int *)0x012F1574)
 #define Rva00454B00Height (*(Int *)0x012F1578)
 #define Rva00454B00BorderSize (*(Int *)0x012F157C)
@@ -154,7 +158,17 @@ Bool Rva00454B00LoadMap(AsciiString filename, void *metadata)
 	ChunkInputStream *pStrm = &fileStrm;
 	DataChunkInput file(pStrm);
 
-	Rva00454B00Waypoints = new Rva00454B00WaypointMap;
+	// Retail allocates 0x10 bytes, null-checks the returned pointer, and calls
+	// the 0x00453D10 initializer on that storage.  Its callee body writes four
+	// owner dwords and a 0x20-byte sentinel node, then returns the owner in EAX.
+	BfmeThingAVC *waypoints =
+		(BfmeThingAVC *)::operator new(sizeof(BfmeThingAVC));
+	if (waypoints != 0)
+	{
+		new (waypoints) BfmeThingAVC;
+		waypoints = waypoints->bfmeInitAVC();
+	}
+	Rva00454B00Waypoints = waypoints;
 
 	file.registerParser(AsciiString("HeightMapData"),
 		AsciiString::TheEmptyString, Rva00454B00ParseSizeOnly);
