@@ -38,7 +38,7 @@ FIELD_OPAQUE = re.compile(
     r"(?:_?(?:0x)?[0-9a-fA-F]+)?"
     r"|(?:bfme)?(?:dword|word|byte|bool|int|float|short|ptr|hash|string|str|val|value)"
     r"(?:_?(?:0x)?[0-9][0-9a-fA-F]*)?"
-    r"|(?:at|f|bfme)(?:0x)?[0-9][0-9a-fA-F]*"
+    r"|(?:at|f|bfme|p)(?:0x)?[0-9][0-9a-fA-F]*"
     r"|(?:0x)?[0-9][0-9a-fA-F]*)$"
 )
 

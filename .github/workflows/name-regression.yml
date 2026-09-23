@@ -1,0 +1,52 @@
+name: Naming regression check
+
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'Code/**'
+      - 'reference/shims/**'
+      - 'reverse/attempts/**'
+      - 'reverse/functions.csv'
+      - 'reverse/name_corrections.json'
+      - 'tools/name_regression.py'
+      - 'tools/name_history.py'
+      - '.github/workflows/name-regression.yml'
+  pull_request:
+    paths:
+      - 'Code/**'
+      - 'reference/shims/**'
+      - 'reverse/attempts/**'
+      - 'reverse/functions.csv'
+      - 'reverse/name_corrections.json'
+      - 'tools/name_regression.py'
+      - 'tools/name_history.py'
+      - '.github/workflows/name-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Check pushed commits
+        if: github.event_name == 'push'
+        env:
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          python3 tools/name_history.py "$BEFORE" "$AFTER"
+          python3 tools/name_regression.py "$BEFORE" "$AFTER"
+      - name: Check pull request commits
+        if: github.event_name == 'pull_request'
+        env:
+          BEFORE: ${{ github.event.pull_request.base.sha }}
+          AFTER: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python3 tools/name_history.py "$BEFORE" "$AFTER"
+          python3 tools/name_regression.py "$BEFORE" "$AFTER"

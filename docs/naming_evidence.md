@@ -323,6 +323,13 @@ under `reverse/attempts/`. Renaming the owning class cannot hide a regression
 behind an unknown `(class, offset)` witness key. Comments retaining the old
 name do not count as preserving its declaration.
 
+`tools/name_history.py OLD NEW` checks each commit in the outgoing range, so
+a later edit cannot hide an earlier downgrade in the same push. The push hook
+and the `Naming regression check` GitHub workflow run it; CI also runs the
+endpoint check above for source moves split across a push. CI reports failures
+from clones without local hooks. A direct push reaches `master` before CI
+finishes unless branch protection requires this check.
+
 This is a historical regression check, not proof that an inherited name is right.
 It checks aligned identifier substitutions and unambiguous layouts that
 `name_oracle` can compute; it is not a complete C++ semantic rename detector.

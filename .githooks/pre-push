@@ -39,11 +39,12 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
     # CONSTRUCTION. 89 lift commits reached origin through exactly this gap.
     # Runs before the build because it costs a second and the build costs minutes.
     python3 tools/conversion_gate.py "$base" "$local_sha" || fail "conversion direction (see above)"
-    for checker in tools/name_regression.py tools/name_oracle.py; do
+    for checker in tools/name_regression.py tools/name_history.py tools/name_oracle.py; do
         git cat-file -e "$local_sha:$checker" && git diff --quiet "$local_sha" -- "$checker" \
             || fail "name checker differs from pushed snapshot: $checker; commit or revert its edits"
     done
     python3 tools/name_regression.py "$base" "$local_sha" || fail "descriptive names regressed in outgoing range (see above)"
+    python3 tools/name_history.py "$base" "$local_sha" || fail "descriptive names regressed in an outgoing commit (see above)"
     python3 tools/retired_guard.py --range "$base..$local_sha" || fail "retired path re-added in outgoing range (see above)"
 
     # Identity, for the same reason conversion_gate runs here: byte-verification

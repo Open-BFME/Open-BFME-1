@@ -8,6 +8,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import name_regression as N
+import name_history as H
 
 FIXTURES = Path(__file__).parent / 'fixtures/name_regression'
 BEFORE = (FIXTURES / 'before.cpp').read_text()
@@ -59,6 +60,30 @@ def incident(root, keep_bank=False, path=CODE):
 
 def test_exact_original_commit_fixture():
     assert set(N.regressions(BEFORE, AFTER)) == EXPECTED
+
+
+def test_offset_pointer_name_is_already_opaque():
+    assert N.opaque('m_p10')
+    assert N.regressions('class C { void *m_p10; };',
+                         'class C { void *m_reserved; };') == []
+
+
+def test_pushed_history_catches_a_regression_restored_later(repo):
+    put(repo, BANK, BEFORE)
+    old = commit(repo)
+    git(repo, 'rm', '-q', BANK)
+    put(repo, CODE, AFTER)
+    put(repo, 'reverse/functions.csv',
+        f'?check@Rva00695E20LodGate@@QBE_NXZ,,0x00695E20,54,{CODE},matched,evidence\n')
+    bad = commit(repo)
+    put(repo, CODE, BEFORE)
+    new = commit(repo)
+
+    assert N.check(repo, old, new)[0] == []
+    commits, findings, accepted = H.check(repo, old, new)
+    assert commits == [bad, new]
+    assert {(f.old_name, f.new_name) for sha, f in findings if sha == bad} == EXPECTED
+    assert accepted == 0
 
 
 @pytest.mark.parametrize('old,new', [
@@ -311,7 +336,7 @@ HOOKS = Path(__file__).resolve().parents[2] / '.githooks'
 def hook_fixture(repo):
     # Unrelated gates are inert; run the real hook to verify that it refuses
     # unreviewed checker code even if that local checker would return success.
-    for tool in ('name_regression', 'name_oracle', 'check_case_collisions',
+    for tool in ('name_regression', 'name_history', 'name_oracle', 'check_case_collisions',
                  'conversion_gate', 'check_csv', 'retired_guard'):
         put(repo, f'tools/{tool}.py', 'raise SystemExit(0)\n')
     put(repo, 'Code/Names.cpp', BEFORE)
@@ -337,6 +362,17 @@ def test_real_hooks_refuse_unstaged_checker_changes(repo, hook, checker):
     assert result.returncode != 0
     assert 'name checker differs from' in result.stderr
     assert f'tools/{checker}.py' in result.stderr
+
+
+def test_pre_push_refuses_unstaged_history_checker(repo):
+    old = hook_fixture(repo)
+    put(repo, 'Code/Names.cpp', AFTER)
+    commit(repo)
+    put(repo, 'tools/name_history.py', 'raise SystemExit(0)  # unreviewed\n',
+        stage=False)
+    result = run_hook(repo, 'pre-push', old)
+    assert result.returncode != 0
+    assert 'name checker differs from pushed snapshot: tools/name_history.py' in result.stderr
 
 
 @pytest.mark.parametrize('hook', ['pre-commit', 'pre-push'])
