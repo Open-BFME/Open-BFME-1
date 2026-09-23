@@ -427,54 +427,40 @@ void SortingRendererClass::Insert_To_Sorting_Pool(SortingNodeStruct* state)
 // ----------------------------------------------------------------------------
 //static unsigned prevLight = 0xffffffff;
 
-static void Apply_Render_State(RenderStateStruct& render_state)
+void BoxSetTexture(unsigned int stage, TextureBaseClass *&texture);
+
+class Rva009391B0 : public DX8Wrapper
 {
+public:
+ static void apply(RenderStateStruct &render_state);
+};
 
-
-
+void Rva009391B0::apply(RenderStateStruct &render_state)
+{
 	DX8Wrapper::Set_Shader(render_state.shader);
 
 	DX8Wrapper::Set_Material(render_state.material);
 
-	for (int i=0;i<DX8Wrapper::Get_Current_Caps()->Get_Max_Textures_Per_Pass();++i) 
-	{
-		DX8Wrapper::Set_Texture(i,render_state.Textures[i]);
-	}
+	for (int i = 0; i < *(int *)(BfmeCurrentCaps + 0x278); ++i)
+		BoxSetTexture(i, render_state.Textures[i]);
 
-	DX8Wrapper::_Set_DX8_Transform(D3DTS_WORLD,render_state.world);
-	DX8Wrapper::_Set_DX8_Transform(D3DTS_VIEW,render_state.view);
-
-
-
-  if (!render_state.material->Get_Lighting())
-    return;
-  //prevLight = render_state.lightsHash;
-
-	if (render_state.LightEnable[0]) 
-  {
-    
-    DX8Wrapper::Set_DX8_Light(0,&render_state.Lights[0]);
-		if (render_state.LightEnable[1]) 
-    {
-			DX8Wrapper::Set_DX8_Light(1,&render_state.Lights[1]);
-			if (render_state.LightEnable[2]) 
-      {
-				DX8Wrapper::Set_DX8_Light(2,&render_state.Lights[2]);
-				if (render_state.LightEnable[3]) 
-					DX8Wrapper::Set_DX8_Light(3,&render_state.Lights[3]);
-				else 
-					DX8Wrapper::Set_DX8_Light(3,NULL);
+	if (render_state.material->Get_Lighting()) {
+		for (int i = 0; i < 4; ++i) {
+			if (!render_state.LightEnable[i]) {
+				DX8Wrapper::Set_DX8_Light(i, NULL);
+				break;
 			}
-			else 
-				DX8Wrapper::Set_DX8_Light(2,NULL);
+			D3DLIGHT8 *light = &render_state.Lights[i];
+			DX8Wrapper::Set_DX8_Light(i, light);
 		}
-		else 
-			DX8Wrapper::Set_DX8_Light(1,NULL);
 	}
-	else 
-		DX8Wrapper::Set_DX8_Light(0,NULL);
 
-
+	++matrix_changes;
+	D3DDevice->SetTransform(D3DTS_WORLD, reinterpret_cast<const D3DMATRIX *>(&render_state.world));
+	++number_of_DX8_calls;
+	++matrix_changes;
+	D3DDevice->SetTransform(D3DTS_VIEW, reinterpret_cast<const D3DMATRIX *>(&render_state.view));
+	++number_of_DX8_calls;
 }
 
 // ----------------------------------------------------------------------------
@@ -665,7 +651,7 @@ void SortingRendererClass::Flush_Sorting_Pool()
 				reinterpret_cast<RenderStateStruct &>(overlapping_nodes[node_id]->sorting_state),
 				reinterpret_cast<RenderStateStruct &>(overlapping_nodes[tis[i].idx]->sorting_state))) {
 				SortingNodeStruct* state=overlapping_nodes[node_id];
-				Apply_Render_State(reinterpret_cast<RenderStateStruct &>(state->sorting_state));
+				Rva009391B0::apply(reinterpret_cast<RenderStateStruct &>(state->sorting_state));
 
 // ?Draw_Triangles@DX8Wrapper@@ present-unmatched
 				DX8Wrapper::Draw_Triangles(
@@ -685,7 +671,7 @@ void SortingRendererClass::Flush_Sorting_Pool()
 	// Render any remaining polygons...
 	if (count_to_render) {
 		SortingNodeStruct* state=overlapping_nodes[node_id];
-		Apply_Render_State(reinterpret_cast<RenderStateStruct &>(state->sorting_state));
+		Rva009391B0::apply(reinterpret_cast<RenderStateStruct &>(state->sorting_state));
 
 // ?Draw_Triangles@DX8Wrapper@@ present-unmatched
 		DX8Wrapper::Draw_Triangles(
