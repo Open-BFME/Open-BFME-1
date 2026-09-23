@@ -1,25 +1,10 @@
 // ?rva001C86B0@Object@@QAEPAUCoord3D@@PAU2@0@Z
-// partial score=0.63 date=2026-09-21
-// cl: /DNDEBUG /MD /EHs-c-
+// partial score=0.65 date=2026-09-23
+// cl: /DNDEBUG /MD /EHs-c- /Ireference/shims/sweep /ICode/GameEngine/Include /ICode/GameEngine/Source/Common/System /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
+// stlport
+#include "../../Code/GameEngine/Include/GameLogic/TerrainLogic.h"
+#include "GameClient/Drawable.h"
 // ?rva001C86B0@Object@@QAEPAVCoord3D@@PAU1@0@Z
-
-typedef bool Bool;
-typedef float Real;
-typedef unsigned char UnsignedByte;
-typedef int PathfindLayerEnum;
-
-struct Coord3D
-{
-	Real x;
-	Real y;
-	Real z;
-};
-
-class BfmeCalc919G
-{
-public:
-	int bfmeCalc919G();
-};
 
 class HordeContainInterface
 {
@@ -57,24 +42,6 @@ public:
 #undef CM_SLOT
 };
 
-class TerrainLogic
-{
-public:
-	virtual void slot0();
-	virtual void slot1();
-	virtual void slot2();
-	virtual void slot3();
-	virtual void slot4();
-	virtual void slot5();
-	virtual void slot6();
-	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer,
-		Coord3D *normal, Bool clip) const;
-	PathfindLayerEnum getLayerForDestination(class Object *object,
-		const Coord3D *position);
-};
-
-extern TerrainLogic *TheTerrainLogic;
-
 class Object
 {
 public:
@@ -88,13 +55,13 @@ public:
 	virtual void slot7();
 	virtual void slot8();
 	virtual void slot9();
-	virtual BfmeCalc919G *getDrawable();
+	virtual Drawable *getDrawable();
 
-	UnsignedByte m_pad004[0x8c];
-	UnsignedByte m_status;
-	UnsignedByte m_pad091[0x16b];
+	unsigned char m_pad004[0x8c];
+	unsigned char m_status;
+	unsigned char m_pad091[0x16b];
 	ContainModuleInterface *m_contain;
-	UnsignedByte m_pad200[0x114];
+	unsigned char m_pad200[0x114];
 	PathfindLayerEnum m_layer;
 
 	Coord3D *rva001C86B0(Coord3D *position, Coord3D *normal);
@@ -113,16 +80,19 @@ Coord3D *Object::rva001C86B0(Coord3D *position, Coord3D *normal)
 		}
 	}
 
-	BfmeCalc919G *drawable = getDrawable();
+	Drawable *drawable = getDrawable();
 	if (drawable != 0)
 	{
-		int matrix = drawable->bfmeCalc919G();
+		const Matrix3D *matrix = drawable->getTransformMatrix();
+		Real sampleY[2];
+		Real sampleX;
+		Real sampleZ;
 		Coord3D sample;
-		Real sampleX = *(Real *)(matrix + 0x0c);
-		Real sampleY = *(Real *)(matrix + 0x1c);
-		Real sampleZ = *(Real *)(matrix + 0x2c);
+		sampleX = matrix->Get_X_Translation();
+		sampleY[0] = matrix->Get_Y_Translation();
+		sampleZ = matrix->Get_Z_Translation();
 		sample.x = sampleX;
-		sample.y = sampleY;
+		sample.y = sampleY[0];
 		sample.z = sampleZ;
 
 		if ((m_status & 0x40) != 0)
@@ -130,12 +100,12 @@ Coord3D *Object::rva001C86B0(Coord3D *position, Coord3D *normal)
 			PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(
 				this, &sample);
 			sample.z = TheTerrainLogic->getLayerHeight(
-				sampleX, sampleY, layer, normal, true);
+				sampleX, sampleY[0], layer, normal, true);
 		}
 		else if (normal != 0)
 		{
 			TheTerrainLogic->getLayerHeight(
-				sampleX, sampleY, m_layer, normal, true);
+				sampleX, sampleY[0], m_layer, normal, true);
 		}
 
 		*position = sample;
