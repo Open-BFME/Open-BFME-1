@@ -621,8 +621,11 @@ name,address,notes
 ??$_M_allocate_and_copy@PBUGen_t_006bea40_p8pod@@@?$vector@UGen_t_006bea40_p8pod@@V?$allocator@UGen_t_006bea40_p8pod@@@_STL@@@_STL@@IAEPAUGen_t_006bea40_p8pod@@IPBU2@0@Z,0x006BE9C0,gen-tgrid payload member
 ??$_M_allocate_and_copy@PBUGeometryShape@@@?$vector@UGeometryShape@@V?$allocator@UGeometryShape@@@_STL@@@_STL@@IAEPAUGeometryShape@@IPBU2@0@Z,0x00048464,GeometryShape vector assign callee
 ??$_M_allocate_and_copy@PBUHideShowSubObjInfo@ModelConditionInfo@@@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEPAUHideShowSubObjInfo@ModelConditionInfo@@IPBU23@0@Z,0x00030D69,ILT thunk used by call site
+??0?$vector@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@QAE@IABQAVScienceInfo@@ABV?$allocator@PAVScienceInfo@@@1@@Z,0x00066EB0,folded body: the ScienceInfo* specialisation compiled /O2 /D_STLP_USE_STATIC_LIB probes EXACT at this address; called by vector<ScienceInfo *>::_M_fill_assign 0x0082EF90 through ILT 0x0002039C
 ??0Rva0013E5D0Nugget@@QAE@ABVAsciiString@@0PBVModuleData@@H_N@Z,0x0002E4FB,retail call target decoded from addModuleInfo object relocation
+??1?$_Vector_base@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@QAE@XZ,0x00066C30,folded body: the ScienceInfo* specialisation compiled /O2 /D_STLP_USE_STATIC_LIB probes EXACT at this address; called by vector<ScienceInfo *>::_M_fill_assign 0x0082EF90 through ILT 0x00031647
 ??1Rva0013E5D0Nugget@@QAE@XZ,0x0003B589,retail call target decoded from addModuleInfo object relocation
+?get_allocator@?$vector@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@QBE?AV?$allocator@PAVScienceInfo@@@2@XZ,0x000665A0,folded body: the ScienceInfo* specialisation compiled /O2 /D_STLP_USE_STATIC_LIB probes EXACT at this address; called by vector<ScienceInfo *>::_M_fill_assign 0x0082EF90 through ILT 0x00009C28
 ?push_back@?$vector@URva0013E5D0Nugget@@V?$allocator@URva0013E5D0Nugget@@@_STL@@@_STL@@QAEXABURva0013E5D0Nugget@@@Z,0x000311FB,retail call target decoded from addModuleInfo object relocation
 ?rva00030d69Target@@YAXXZ,0x003B4C80,TU-local clean-C++ alias for the matched HideShowSubObjInfo allocate-and-copy body used by the 0x00030D69 tail thunk
 ??$_M_allocate_and_copy@PBUICoord2D@@@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@IAEPAUICoord2D@@IPBU2@0@Z,0x009F5370,decoded from vector assign call site
@@ -84926,6 +84929,7 @@ name,address,notes
 ?preTeamDestroy@Rva000F4250PlayerCall@@QAEXPBVTeam@@@Z,0x00014DCB,Team destructor retail call via proven ILT
 ?prefMapIncrement@@YAPAUPrefMapNodeShim@@PAU1@@Z,0x0082B870,alias for the STL tree stepper already pinned here as _Rb_global<bool>::_M_increment
 ?preflight@HordeTransportContain@@QBE_NPAVObject@@_N@Z,0x000237B8,HordeTransportContain validity preflight helper reaches retail 0x00226A80
+?swap@?$vector@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@QAEXAAV12@@Z,0x00066F00,folded body: the ScienceInfo* specialisation compiled /O2 /D_STLP_USE_STATIC_LIB probes EXACT at this address; called by vector<ScienceInfo *>::_M_fill_assign 0x0082EF90 through ILT 0x000063E3
 ?test@Rva0021F4E0Sub@@QAE_NPAX0@Z,0x000237B8,opaque ABI alias for the proven readiness predicate call at 0x0021F4E0
 ?preflight@Rva00249310Owner@@QAE_NPAVRva00249310Object@@_N@Z,0x0002C836,secondary interface preflight call uses the existing incremental thunk
 ?preloadAssets@ParticleSystemManager@@UAEXW4TimeOfDay@@@Z,0x005cb720,vtable-slot ??_7W3DParticleSystemManager@@6BSubsystemInterface@@@ slot 14 anchors=7
