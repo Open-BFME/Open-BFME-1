@@ -60,6 +60,8 @@ protected:
     bool evaluateTeamCreated(class Parameter *);
     // 00322530: ScriptConditionsPlayerMask.cpp
     bool evaluatePlayerHasCredits(class Parameter *,class Parameter *,class Parameter *);
+    // 00327D30: ScriptConditions.cpp; dispatcher case 52 is ENEMY_SIGHTED.
+    bool evaluateEnemySighted(class Parameter *,class Parameter *,class Parameter *);
     // 003222B0: ScriptConditions.cpp
     bool evaluateBridgeRepaired(class Parameter *);
     // 00322260: ScriptConditions.cpp
@@ -323,8 +325,6 @@ public:
 extern void d_00327790(void);
 // ILT 00012855 -> body 00327A00; existing Code/gen_small/thunks_008.cpp.
 extern void j_00012855(void);
-// ILT 00044A94 -> body 00327D30; existing Code/gen_asm/d_00322a60.asm.
-extern void d_00327d30(void);
 // ILT 0001CA0D -> body 00328020; existing Code/gen_small/thunks_013.cpp.
 extern void j_0001ca0d(void);
 // ILT 00005ACE -> body 0032CFC0; existing Code/gen_small/thunks_002.cpp.
@@ -454,13 +454,6 @@ private:
         union { char (__stdcall *raw)(int,int); Function member; } fn;
         fn.raw = bfmeGo1092A;
         return (this->*fn.member)(a0, a1);
-    }
-    __forceinline bool rva00327D30(Parameter* a0, Parameter* a1, Parameter* a2)
-    {
-        typedef bool (Rva0032D720::*Function)(Parameter*, Parameter*, Parameter*);
-        union { void (*raw)(void); Function member; } fn;
-        fn.raw = d_00327d30;
-        return (this->*fn.member)(a0, a1, a2);
     }
     __forceinline bool rva00328020(Parameter* a0, Parameter* a1, Parameter* a2)
     {
@@ -943,7 +936,7 @@ bool Rva0032D720::evaluate(Condition* c)
         return rva00322630(c->getParameter(0), c->getParameter(1));
     case 52:
         if (c->getNumParameters() < 3) return false;
-        return rva00327D30(c->getParameter(0), c->getParameter(1), c->getParameter(2));
+        return evaluateEnemySighted(c->getParameter(0), c->getParameter(1), c->getParameter(2));
     case 133:
         return rva00328020(c->getParameter(0), c->getParameter(1), c->getParameter(2));
     case 77:

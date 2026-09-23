@@ -88822,3 +88822,11 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?slot34@Rva00278F20@@QAEXPAVObject@@HW4CommandSourceType@@@Z,0x00278F20,address-derived AI-update slot 34 callee; ILT 0x0003DCF3; thiscall ret 0xc tail-called by the byte-matched TransportAIUpdate::privateForceAttackObject 0x002C7330
 ?slot36@Rva0027DB50@@QAEXPBUCoord3D@@HW4CommandSourceType@@@Z,0x0027DB50,address-derived AI-update slot 36 callee; ILT 0x0003F698; thiscall ret 0xc tail-called by the byte-matched TransportAIUpdate::privateAttackPosition 0x002C7410
 ??$_Construct@UBridgeOCLInfo@@U1@@_STL@@YAXPAUBridgeOCLInfo@@ABU1@@Z,0x001F3310,BridgeDieOCL parser at 001F5620 calls ILT 00028696; body matches the BridgeFXInfo _Construct at 001F32A0 apart from relocations (destination check and eight-byte copy then narrow string construct at +8)
+??_7PartitionFilter@Rva00327D30@@6B@,0x00C83B5C,retail 00327D30 +099 installs BFME filter base table; existing canonical table pin independently identifies slots
+??_7PartitionFilterAcceptByKindOf@Rva00327D30@@6B@,0x00C83B70,retail 00327D30 +10F installs kind filter table; six-word KINDOFMASK_NONE construction aligns
+??_7Rva0025ED50ObjectFilter@Rva00327D30@@6B@,0x00C85DD0,retail 00327D30 +13F installs object filter table; matches existing address-derived vtable pin
+??_7Rva0025ED50RootFilter@Rva00327D30@@6B@,0x00C83B80,retail 00327D30 +167 installs root filter table; matches existing address-derived vtable pin
+??_7PartitionFilterRelationship@Rva00327D30@@6B@,0x00C85DC0,retail 00327D30 +177 installs relationship filter table; existing canonical vtable pin identifies slots
+??_7PartitionFilterPlayer@Rva00327D30@@6B@,0x00C9688C,retail 00327D30 +193 installs player filter table; existing canonical vtable pin identifies slots
+?link@PartitionFilter@Rva00327D30@@QAEPAV12@PAV12@@Z,0x009F2AE0,retail 00327D30 +1B2 through +1D8 call same filter-next linker five times
+?getClosestObject@PartitionManager@Rva00327D30@@QAEPAVObject@@PBUCoord3D@@MHPAVPartitionFilter@2@@Z,0x009F26A0,retail 00327D30 +1F4 calls matched 33-byte four-argument closest-object wrapper

@@ -31,6 +31,11 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#include <bitset>
+extern "C" void __cdecl _WriteBarrier(void);
+extern "C" void __cdecl _ReadWriteBarrier(void);
+#pragma intrinsic(_WriteBarrier)
+#pragma intrinsic(_ReadWriteBarrier)
 
 // BFME de-pooled this glue: retail's per-class `operator delete(void*, MagicEnum)`
 // is one 12-byte body (0x007EFFF0) that calls the CRT free IMPORT THUNK -- a
@@ -1308,61 +1313,180 @@ Bool ScriptConditions::evaluateIsBuildingEmpty( Parameter *pItemParm )
 	return false;
 }
 
+namespace Rva00327D30 {
+// BFME filters: virtual destructor, allow, getPlayerMask, then next at +4.
+class PartitionFilter
+{
+public:
+	PartitionFilter() : m_next(0) {}
+	virtual ~PartitionFilter() {}
+	virtual Bool allow(Object *) = 0;
+	virtual Int getPlayerMask();
+
+	PartitionFilter *link(PartitionFilter *next);
+
+	PartitionFilter *m_next;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
+template <int NUMBITS>
+class BitFlags
+{
+	_STL::bitset<NUMBITS> m_bits;
+
+public:
+	enum BogusInitType { kInit = 0 };
+
+	BitFlags(BogusInitType, Int idx1, Int idx2)
+	{
+		m_bits._Unchecked_set((size_t)idx1);
+		m_bits._Unchecked_set((size_t)idx2);
+	}
+};
+
+// BFME's KindOfMaskType is 192 bits: KINDOFMASK_NONE is pinned as
+// ?KINDOFMASK_NONE@@3V?$BitFlags@$0MA@@@B at VA 0x012ED8B8, six zero dwords.
+typedef BitFlags<192> KindOfMaskType;
+
+// vtable 0x01083B70. Its out-of-line ctor 0x000C3DD0 (ILT 0x000382FD, pinned
+// ??0PartitionFilterAcceptByKindOf@@QAE@ABV?$BitFlags@$0MA@@@0@Z) copies the
+// two masks to +0x08 and +0x20; LevelGrantSpecialPower::actionAt00260180
+// calls it under this name. Inlined here.
+class PartitionFilterAcceptByKindOf : public PartitionFilter
+{
+public:
+	PartitionFilterAcceptByKindOf(const KindOfMaskType &mustBeSet,
+		const KindOfMaskType &mustBeClear)
+		: m_mustBeSet(mustBeSet), m_mustBeClear(mustBeClear) {}
+	virtual ~PartitionFilterAcceptByKindOf() {}
+	virtual Bool allow(Object *);
+
+	KindOfMaskType m_mustBeSet;
+	KindOfMaskType m_mustBeClear;
+};
+
+class Rva0025ED50ObjectFilter : public PartitionFilter
+{
+public:
+	explicit Rva0025ED50ObjectFilter(Object *object)
+		: m_object(object) {}
+	virtual ~Rva0025ED50ObjectFilter() {}
+	virtual Bool allow(Object *);
+
+	Object *m_object;
+};
+
+class Rva0025ED50RootFilter : public PartitionFilter
+{
+public:
+	Rva0025ED50RootFilter() {}
+	virtual ~Rva0025ED50RootFilter() {}
+	virtual Bool allow(Object *);
+};
+
+class PartitionFilterRelationship : public PartitionFilter
+{
+public:
+	enum RelationshipAllowTypes
+	{
+		ALLOW_ENEMIES = 1,
+		ALLOW_NEUTRAL = 2,
+		ALLOW_ALLIES = 4
+	};
+
+	PartitionFilterRelationship(Object *object, Int flags, Bool match)
+		: m_obj(object), m_flags(flags), m_match(match) {}
+	virtual ~PartitionFilterRelationship() {}
+	virtual Bool allow(Object *);
+	virtual Int getPlayerMask();
+
+	Object *m_obj;
+	Int m_flags;
+	Bool m_match;
+};
+
+class PartitionFilterPlayer : public PartitionFilter
+{
+public:
+	PartitionFilterPlayer(const Player *player, Bool match)
+		: m_player(player), m_match(match) {}
+	virtual ~PartitionFilterPlayer() {}
+	virtual Bool allow(Object *);
+
+	const Player *m_player;
+	Bool m_match;
+};
+
+class PartitionManager
+{
+public:
+	Object *getClosestObject(const Coord3D *position, Real maxDistance,
+		Int distanceCalculation, PartitionFilter *filters);
+};
+
+}
+
+class Rva001DCBB0Filter : public Rva00327D30::PartitionFilter
+{
+public:
+	Rva001DCBB0Filter(Object *object, unsigned char match);
+	virtual ~Rva001DCBB0Filter() {}
+	virtual Bool allow(Object *);
+
+	Player *m_player;
+	unsigned char m_match;
+};
+
 //-------------------------------------------------------------------------------------------------
 /** evaluateEnemySighted */
 //-------------------------------------------------------------------------------------------------
-// ?evaluateEnemySighted@ScriptConditions@@IAE_NPAVParameter@@00@Z present-unmatched
-Bool ScriptConditions::evaluateEnemySighted(Parameter *pItemParm, Parameter *pAllianceParm, Parameter* pPlayerParm)
+Bool ScriptConditions::evaluateEnemySighted(Parameter *pItemParm, Parameter *pAllianceParm, Parameter *pPlayerParm)
 {
+	typedef Rva00327D30::PartitionFilterPlayer SightedPlayerFilter;
+	typedef Rva00327D30::PartitionFilterRelationship SightedRelationshipFilter;
+	typedef Rva00327D30::Rva0025ED50RootFilter SightedRootFilter;
+	typedef Rva00327D30::Rva0025ED50ObjectFilter SightedObjectFilter;
+	typedef Rva00327D30::PartitionFilterAcceptByKindOf SightedKindFilter;
 
-	Object *theObj = TheScriptEngine->getUnitNamed( pItemParm->getString() );
+	Object *theObj = reinterpret_cast<BfmeScriptConditionEngine *>(TheScriptEngine)->getUnitNamed(*reinterpret_cast<const AsciiString *>(pItemParm));
 	if (!theObj) {
+		_WriteBarrier();
 		return false;
 	}
 
-	Player *pPlayer = playerFromParam(pPlayerParm);
-	if (!pPlayer) {
-		return false;
-	}
-
-	// filter out appropriately based on alliances
 	Int relationDescriber;
-	switch (pAllianceParm->getInt()) {
-		case Parameter::REL_NEUTRAL:
-			relationDescriber = PartitionFilterRelationship::ALLOW_NEUTRAL;
-			break;
-		case Parameter::REL_FRIEND:
-			relationDescriber = PartitionFilterRelationship::ALLOW_ALLIES;
-			break;
-		case Parameter::REL_ENEMY:
-			relationDescriber = PartitionFilterRelationship::ALLOW_ENEMIES;
-			break;
+	switch (*reinterpret_cast<const Int *>(reinterpret_cast<const char *>(pAllianceParm) + 0x08)) {
+	case 0:
+		relationDescriber = SightedRelationshipFilter::ALLOW_ENEMIES;
+		break;
+	case 1:
+		relationDescriber = SightedRelationshipFilter::ALLOW_NEUTRAL;
+		break;
+	case 2:
+		relationDescriber = SightedRelationshipFilter::ALLOW_ALLIES;
+		break;
+	default:
+		relationDescriber = -1;
+		break;
 	}
-	PartitionFilterRelationship	filterTeam(theObj, relationDescriber);
 
-	// and only stuff that is not dead
-	PartitionFilterAlive filterAlive;
-
-	// and only nonstealthed items.
-	PartitionFilterRejectByObjectStatus filterStealth( MAKE_OBJECT_STATUS_MASK( OBJECT_STATUS_STEALTHED ), 
-																										 MAKE_OBJECT_STATUS_MASK2( OBJECT_STATUS_DETECTED, OBJECT_STATUS_DISGUISED ) );
-	
-	// and only on-map (or not)
-	PartitionFilterSameMapStatus filterMapStatus(theObj);
-
-	PartitionFilter *filters[] = { &filterTeam, &filterAlive, &filterStealth, &filterMapStatus, NULL };
-
-	Real visionRange = theObj->getVisionRange();
-
-	SimpleObjectIterator *iter = ThePartitionManager->iterateObjectsInRange(
-								theObj, visionRange, FROM_CENTER_2D, filters); 
-	MemoryPoolObjectHolder hold(iter);
-	for (Object *them = iter->first(); them; them = iter->next())
-	{
-		if (them->getControllingPlayer() == pPlayer) {
+	UnsignedShort mask = g_bfmeP1087->bfmeNext1087(pPlayerParm);
+	while (mask) {
+		Player *player = ThePlayerList->getEachPlayerFromMask(mask);
+		Bool found = (reinterpret_cast<Rva00327D30::PartitionManager *>(ThePartitionManager)->getClosestObject(reinterpret_cast<const Coord3D *>(reinterpret_cast<const char *>(theObj) + 0x38),
+			theObj->getVisionRange(), 0,
+			SightedPlayerFilter(player, true).link(
+			SightedRelationshipFilter(theObj, relationDescriber, false).link(
+			SightedRootFilter().link(
+			Rva001DCBB0Filter(theObj, 0).link(
+			SightedObjectFilter(theObj).link(
+			&SightedKindFilter(*reinterpret_cast<const Rva00327D30::KindOfMaskType *>(&KINDOFMASK_NONE),
+				Rva00327D30::KindOfMaskType(Rva00327D30::KindOfMaskType::kInit, 88, 133))))))))) != 0;
+		if (found != false)
 			return true;
-		}
 	}
+
+	_ReadWriteBarrier();
 	return false;
 }
 
