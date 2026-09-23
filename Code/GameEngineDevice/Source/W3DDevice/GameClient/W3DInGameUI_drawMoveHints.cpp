@@ -1,13 +1,12 @@
-// ?drawMoveHints@W3DInGameUI@@QAEXPAVView@@@Z
-// partial score=0.9 date=2026-09-22
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // W3DInGameUI::drawMoveHints, retail 0x006FC5A0 (650 B).
-// Identity: the matched W3DInGameUI::draw (0x006FBFF0) calls vtable slot
-// +0x1bc for each view in the ZH twin's drawMoveHints position, and the body
-// is the ZH W3DInGameUI::drawMoveHints loop over 25 hints with the BFME
-// additions (early-frame guard, per-hint skip byte, hide-on-create).
-// These are declaration-only facades; no new vtable is emitted by this TU.
+// Identity: slot +0x1bc of the W3DInGameUI vftable VA 0x01120590 (installed by
+// the matched constructor 0x006FBE10) holds ILT RVA 0x0002432F -> 0x006FC5A0, and
+// the matched W3DInGameUI::draw (0x006FBFF0) calls that slot once per view in
+// the ZH twin's drawMoveHints position. The body is the ZH loop over 25 hints
+// with the BFME additions (early-frame guard, per-hint skip byte,
+// hide-on-create). These are declaration-only facades; no vtable is emitted.
 
 #include "ascii_string.h"
 
@@ -173,11 +172,10 @@ struct MoveHintStruct
 
 class W3DInGameUI
 {
-public:
-	void drawMoveHints(View *view);
+protected:
+	virtual void drawMoveHints(View *view);                    // vftable +0x1bc
 
 private:
-	void *m_vtable_00;
 	unsigned char m_unmodelled_04[0x38 - 0x04];
 	MoveHintStruct m_moveHint[MAX_MOVE_HINTS];                 // +0x38
 	unsigned char m_unmodelled_22c[0x13ac - 0x22c];
@@ -232,7 +230,7 @@ void W3DInGameUI::drawMoveHints(View * /*view*/)
 			PathfindLayerEnum layer = TheTerrainLogic->alignOnTerrain(0, pos, true, transform);
 
 			Real waterZ;
-			if (layer == LAYER_GROUND && TheTerrainLogic->isUnderwater(pos.x, pos.y, &waterZ))
+			if (layer == LAYER_GROUND && TheTerrainLogic->isUnderwater(m_moveHint[i].pos.x, m_moveHint[i].pos.y, &waterZ))
 			{
 				Coord3D tmp;
 				tmp.x = pos.x;
