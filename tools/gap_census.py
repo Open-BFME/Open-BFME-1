@@ -90,6 +90,10 @@ for g0, g1 in gaps:
         else:
             i += 1
 
+# a page-aligned address reached only by a data pointer is data (a table or a
+# section-relative pointer), not a function: 501 such 'starts' were mid-instruction
+# and split real giants (0x00541480, 0x006E2AC0) on 2026-09-23
+cand = {a: ev for a, ev in cand.items() if not (a % 0x1000 == 0 and ev <= {"data_ptr", "rdata_ptr"})}
 # extents: to next candidate or gap end, trimmed of trailing 0xCC
 cs = sorted(cand)
 funcs = []
