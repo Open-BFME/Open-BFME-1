@@ -1,5 +1,5 @@
 // ?j_0000df76@Glo012F1024Item@@QAEXXZ
-// partial score=0.82 date=2026-09-09
+// partial score=0.821 date=2026-09-23
 // cl: /DNDEBUG /MD /EHsc
 
 // Open-BFME5: Glo012F1024Entry::bfmeStep, retail 0x003A7320, 62 bytes. The body
@@ -516,12 +516,13 @@ void Glo012F1024Item::j_00010bcc(void)
 // ?j_0000df76@Glo012F1024Item@@QAEXXZ
 void Glo012F1024Item::j_0000df76(void)
 {
-	for (Int index = 0, offset = 0;
-			index < (Int)(m_bfmeEntries.bfmeSize() >> 5);
-			++index, offset += 32)
+	Glo012F1024LoopState loop = { 0, 0 };
+	for (;
+			loop.m_bfmeIndex < (Int)(m_bfmeEntries.bfmeSize() >> 5);
+			++loop.m_bfmeIndex, loop.m_bfmeOffset += 32)
 	{
 		BfmeElem32 *element =
-			(BfmeElem32 *)((char *)m_bfmeEntries.m_bfmeBegin + offset);
+			(BfmeElem32 *)((char *)m_bfmeEntries.m_bfmeBegin + loop.m_bfmeOffset);
 		Glo012F1024Scratch scratch;
 
 		BfmeInlineString *first = element->rva0002ba62(&scratch.m_bfmeAt18);
