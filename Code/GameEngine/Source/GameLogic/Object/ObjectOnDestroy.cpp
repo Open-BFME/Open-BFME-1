@@ -41,10 +41,10 @@ extern TeamFactory *TheTeamFactory; // VA 0x012ED810
 class Drawable
 {
 public:
-	void forward4125F0(int slot, Bool immediately); // retail ILT 0x00039BAD
+	void forward4125F0(int slot, Bool flag); // retail ILT 0x00039BAD
 };
 
-class ContainModule
+class ContainModuleInterface
 {
 public:
 	virtual void slot00() = 0;
@@ -116,7 +116,7 @@ public:
 	virtual Drawable *getDrawable() const = 0; // slot 10, 0x001BE440
 
 	BehaviorModule **getBehaviorModules() { return m_behaviors; }
-	ContainModule *getContain() const { return m_contain; }
+	ContainModuleInterface *getContain() const { return m_contain; }
 
 private:
 	unsigned char m_pad004[0x8c];
@@ -124,14 +124,14 @@ private:
 	unsigned char m_pad09c[0x154];
 	BehaviorModule **m_behaviors;
 	unsigned char m_pad1f4[0x08];
-	ContainModule *m_contain;
+	ContainModuleInterface *m_contain;
 	unsigned char m_pad200[0x14];
 	Object *m_containedBy;
 	unsigned char m_pad218[0x24];
 	Team *m_team;
 	AsciiString m_originalTeamName;
 	unsigned char m_pad244[0x158];
-	Bool m_powerInfluenceActive;
+	Bool m_byte39C;
 };
 
 void Object::onDestroy()
@@ -142,7 +142,7 @@ void Object::onDestroy()
 	if (m_containedBy && m_containedBy->getContain())
 		m_containedBy->getContain()->removeFromContain(this, false);
 
-	if (m_powerInfluenceActive)
+	if (m_byte39C)
 	{
 		Player *player = m_team ? m_team->getControllingPlayer() : 0;
 		if ((m_status[1] & 0x20000000) != 0)
@@ -154,7 +154,7 @@ void Object::onDestroy()
 		if (player)
 		{
 			player->bfmeObjectLeavingInfluence(this);
-			m_powerInfluenceActive = false;
+			m_byte39C = false;
 		}
 	}
 

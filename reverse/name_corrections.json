@@ -1218,5 +1218,15 @@
   "after_sha256": "5b8f406fb27c621353484239ceb8db69bcf2dedb44c8b47e7922b5dfe09bbdba",
   "evidence": "docs/naming_evidence.md",
   "reason": "review of 0x007B4940: the ShadowType enumerators contradicted Zero Hour Shadow.h values; +0x34/+0x60 flags/owner names had no layout witness so they take offset names; +0x58/+0x5C are the bases Rva007AED00UpdateOffsets.cpp names m_firstBase/m_secondBase"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/Object/ObjectOnDestroy.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/ObjectOnDestroy.cpp",
+  "old_name": "m_powerInfluenceActive",
+  "new_name": "m_byte39C",
+  "before_sha256": "858106c1811344c613b729013d26798b42a4a866e0fe800d456b804f7680e8aa",
+  "after_sha256": "c0aa50047d8f9a4a52c3187d9c47c8c239403f09ff6eb3e30df2dd2bf42999d4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x001C6D00: name_oracle reports Object+0x39C not witnessed and no field_names.csv entry exists, so the byte takes an offset name; Zero Hour names the contain module type ContainModuleInterface; the forward4125F0 pin note only says bool action"
  }
 ]
