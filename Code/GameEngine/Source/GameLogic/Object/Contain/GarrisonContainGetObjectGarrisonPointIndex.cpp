@@ -1,12 +1,11 @@
 // ?getObjectGarrisonPointIndex@GarrisonContain@@UAEHW4ObjectID@@@Z
-// partial score=0.7 date=2026-09-22
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
-// Retail 0x0021F280: GarrisonContain slot 26 ObjectID lookup.
+// Vtable 0x010AB818 slot 26 reaches RVA 0x0021F280 through thunk 0x0003C781.
+// Constructor 0x0021D820 installs that vtable.
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
-#include <new>
 
 typedef int Int;
 
@@ -18,29 +17,6 @@ enum ObjectID
 
 class Object;
 typedef _STL::list<Object *> ContainedItemsList;
-
-typedef _STL::_List_node<Object *> ContainedItemsListNode;
-typedef _STL::__node_alloc<true, 0> ContainedItemsNodeAllocator;
-
-__forceinline void destroyContainedItemsList(ContainedItemsList *list)
-{
-	ContainedItemsListNode *sentinel =
-		reinterpret_cast<ContainedItemsListNode *>(list);
-	ContainedItemsListNode *node =
-		reinterpret_cast<ContainedItemsListNode *>(sentinel->_M_next);
-	while (node != sentinel)
-	{
-		ContainedItemsListNode *next =
-			reinterpret_cast<ContainedItemsListNode *>(node->_M_next);
-		ContainedItemsNodeAllocator::deallocate(node,
-			sizeof(ContainedItemsListNode));
-		node = next;
-	}
-	sentinel->_M_next = sentinel;
-	sentinel->_M_prev = sentinel;
-	ContainedItemsNodeAllocator::deallocate(sentinel,
-		sizeof(ContainedItemsListNode));
-}
 
 class HordeContainInterface
 {
@@ -139,8 +115,9 @@ Int GarrisonContain::getObjectGarrisonPointIndex(ObjectID objectID)
 	if (object == 0)
 		return -1;
 
+	Int i = 0;
 	GarrisonPointData *point = m_garrisonPointData;
-	for (Int i = 0; i < 40; ++i, ++point)
+	for (; i < 40; ++i, ++point)
 	{
 		ObjectContainModuleInterface *contain = object->m_contain;
 		if (contain != 0)
@@ -149,28 +126,22 @@ Int GarrisonContain::getObjectGarrisonPointIndex(ObjectID objectID)
 				contain->getHordeContainInterface();
 			if (hordeContain != 0)
 			{
-				char listStorage[16];
-				::new (listStorage) ContainedItemsList(
-					hordeContain->getContainList());
+				ContainedItemsList list(hordeContain->getContainList());
 
-				for (ContainedItemsList::const_iterator it =
-					reinterpret_cast<ContainedItemsList *>(listStorage)->begin();
-					it != reinterpret_cast<ContainedItemsList *>(listStorage)->end();
+				for (ContainedItemsList::const_iterator it = list.begin();
+					it != list.end();
 					++it)
 				{
-					ObjectID containedID = (*it)->getID();
+					Object *containedObject = *it;
+					ObjectID containedID = containedObject->getID();
 					for (Int j = 0; j < 40; ++j)
 					{
 						if (m_garrisonPointData[j].objectID == containedID)
 						{
-							destroyContainedItemsList(
-								reinterpret_cast<ContainedItemsList *>(listStorage));
 							return j;
 						}
 					}
 				}
-				destroyContainedItemsList(
-					reinterpret_cast<ContainedItemsList *>(listStorage));
 			}
 		}
 		else if (point->objectID == objectID)
