@@ -212,6 +212,24 @@ def test_staged_bank_move(repo):
     assert accepted == 0
 
 
+def test_generated_multi_body_source_is_not_paired_with_native_conversion(repo):
+    generated = 'Code/gen_small/fun_002.cpp'
+    native = 'Code/VectorCopy.cpp'
+    put(repo, generated, 'struct V_ { virtual void v(int); };\n')
+    put(repo, 'reverse/functions.csv',
+        '?m@Gen_003A6290@@QAEPAXHH@Z,,0x003A6290,11,'
+        'Code/gen_small/fun_002.cpp,matched,gen-shim\n')
+    commit(repo)
+    put(repo, native, 'struct Gen_t_003ab520_p24cd { int a[6]; };\n')
+    put(repo, 'reverse/functions.csv',
+        '?real@Rva003A6290@@QAEXXZ,,0x003A6290,11,'
+        'Code/VectorCopy.cpp,matched,authored\n')
+
+    findings, accepted = N.check(repo, 'HEAD', ':')
+    assert findings == []
+    assert accepted == 0
+
+
 def test_bank_need_not_be_deleted_and_filename_need_not_have_rva(repo):
     incident(repo, keep_bank=True, path='Code/LodGate.cpp')
     findings, _ = N.check(repo, 'HEAD', ':')

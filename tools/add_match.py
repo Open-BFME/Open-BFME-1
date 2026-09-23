@@ -60,7 +60,7 @@ def replaceable_scaffold(row):
     return ((kind == "gen-tgrid" and
              re.fullmatch(r"Code/gen_small/tgrid_\d+\.cpp", row["source"]) is not None)
             or (kind == "gen-shim" and
-                re.fullmatch(r"Code/gen_small/fam_\d+\.cpp", row["source"]) is not None))
+                re.fullmatch(r"Code/gen_small/(?:fam|fun)_\d+\.cpp", row["source"]) is not None))
 
 
 def fail(*lines):

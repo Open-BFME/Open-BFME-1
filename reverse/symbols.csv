@@ -88896,3 +88896,7 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?rva0075C9F0@Rva0077B3F0@@QAEXPAVRva0077B3F0Render@@@Z,0x00016671,Rva0077B3F0 call-site ABI; +0x49B REL32 reaches ILT 0x00016671 to matched body 0x0075C9F0
 ?rva004585F0@Rva0077B3F0Radius@@QAEXXZ,0x0003FC15,Rva0077B3F0 call-site ABI; +0x4A6 REL32 reaches ILT 0x0003FC15 to matched body 0x004585F0
 ?rva0075F810@Rva0077B3F0@@QAEXXZ,0x000495A3,Rva0077B3F0 call-site ABI; +0x4AD REL32 reaches ILT 0x000495A3 to matched body 0x0075F810
+??0?$_STLP_alloc_proxy@PAVRva003BA660Record@@V1@V?$allocator@VRva003BA660Record@@@_STL@@@_STL@@QAE@ABV?$allocator@VRva003BA660Record@@@1@PAVRva003BA660Record@@@Z,0x00049CC9,route=0x003A6290;retail 0x003A7CE0 calls this exact matched allocation proxy
+?get_allocator@?$vector@VRva003BA660Record@@V?$allocator@VRva003BA660Record@@@_STL@@@_STL@@QBE?AV?$allocator@VRva003BA660Record@@@2@XZ,0x0000DB75,route=0x003A6720;retail vector copy 0x003ABB80 calls this exact allocator helper
+??0?$_Vector_base@VRva003BA660Record@@V?$allocator@VRva003BA660Record@@@_STL@@@_STL@@QAE@IABV?$allocator@VRva003BA660Record@@@1@@Z,0x0004628B,route=0x003A7CE0;retail vector copy 0x003ABB80 calls this exact base constructor
+?b_002b5800@@YAXXZ,0x002B5800,gen-thunk body;retail 0x0004A0D9 jumps to this exact dump address

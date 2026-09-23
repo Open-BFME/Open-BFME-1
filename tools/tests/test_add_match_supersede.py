@@ -99,8 +99,11 @@ def test_tgrid_replacement_keeps_transaction_and_tombstone(tmp_path, monkeypatch
 
 
 @pytest.mark.parametrize("gate", [0, 1])
-def test_gen_shim_replacement_keeps_transaction_and_tombstone(tmp_path, monkeypatch, gate):
-    scaffold = DUMP.replace("Code/gen_asm/d_00abcd00.asm", "Code/gen_small/fam_001.cpp").replace(
+@pytest.mark.parametrize("source_path", ["Code/gen_small/fam_001.cpp",
+                                        "Code/gen_small/fun_002.cpp"])
+def test_gen_shim_replacement_keeps_transaction_and_tombstone(
+        tmp_path, monkeypatch, gate, source_path):
+    scaffold = DUMP.replace("Code/gen_asm/d_00abcd00.asm", source_path).replace(
         "gen-dump;ghidra=FUN_00eacd00", "gen-shim;family=f265_b7a8aa")
     functions, deleted, source = arrange(tmp_path, monkeypatch, gate=gate, scaffold=scaffold)
     before = functions.read_bytes(), deleted.read_bytes(), source.read_bytes()
@@ -186,6 +189,7 @@ def test_real_identity_correction_rejects_missing_evidence(tmp_path, monkeypatch
     ("gen-shim;family=f265_b7a8aa", "Code/Real.cpp"),
     ("gen-shim-other", "Code/gen_small/fam_001.cpp"),
     ("gen-alias;family=f265_b7a8aa", "Code/gen_small/fam_001.cpp"),
+    ("gen-alias;object-symbol=?m@Gen_00383090@@QAEHXZ", "Code/gen_small/fun_002.cpp"),
 ])
 def test_tgrid_support_does_not_admit_real_or_unwind_claims(
         tmp_path, monkeypatch, notes, path):

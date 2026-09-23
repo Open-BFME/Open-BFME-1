@@ -276,7 +276,12 @@ def diff_args(old, new):
 
 
 def source(path):
-    return path.startswith(('Code/', 'reference/shims/', 'reverse/attempts/')) and path.endswith(SOURCE)
+    # Generated files hold many unrelated placeholder bodies.  A ledger row
+    # moving from one of them to authored C++ links the entire old file to the
+    # new one, so comparing its declarations invents name regressions.
+    return (not path.startswith('Code/gen_small/') and
+            path.startswith(('Code/', 'reference/shims/', 'reverse/attempts/')) and
+            path.endswith(SOURCE))
 
 
 def pairs(root, old, new):
