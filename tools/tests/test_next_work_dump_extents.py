@@ -115,3 +115,17 @@ def test_exception_funclet_inventory_label_rejects_structural_alias(label):
     assert items == []
     assert meta["refuted"] == 1
     assert meta["reasons"] == {"C4 exception-funclet": 1}
+
+
+def test_logged_no_boundary_rejects_every_alias_at_the_address():
+    body = b"\x55\x8b\xec\xc3"
+    validator = next_work.boundary_validator.BoundaryValidator(
+        lambda rva, size: body[:size], {0x1400: len(body)})
+    validator.refuted_starts = {0x1400}
+    aliases = [candidate(), dict(candidate(), function="?g@C@@QAEXH@Z")]
+
+    items, meta = next_work.collapse_and_validate(aliases, validator)
+
+    assert items == []
+    assert meta["refuted"] == 2
+    assert meta["reasons"] == {"C0 logged-no-boundary": 1}

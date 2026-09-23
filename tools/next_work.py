@@ -770,6 +770,15 @@ def structural_validator(rvas=()):
     validator = boundary_validator.BoundaryValidator(build.read_target_bytes, sizes)
     validator.dump_extents = dumps
     validator.inventory_names = _ghidra_names()
+    # A no-boundary verdict is a fact about the address, not just the source
+    # name that happened to expose it.  Structural drift collapses many names
+    # onto one alignment vote, so symbol-level drop_logged() alone can retire
+    # one alias while continuing to serve all of its siblings at the same
+    # proven instruction-interior address.
+    validator.refuted_starts = {
+        rva for rva, fields in re_log.latest_records().items()
+        if fields[3] == "no-boundary"
+    }
     return validator
 
 
@@ -806,6 +815,11 @@ def collapse_and_validate(candidates, validator=None):
 
     kept, refuted, reasons = [], 0, {}
     for rva, group in groups.items():
+        if rva in getattr(validator, "refuted_starts", set()):
+            reason = "C0 logged-no-boundary"
+            reasons[reason] = reasons.get(reason, 0) + 1
+            refuted += len(group)
+            continue
         inventory_name = getattr(validator, "inventory_names", {}).get(rva, "")
         if inventory_name.startswith(("Unwind@", "Catch@")):
             reason = "C4 exception-funclet"
