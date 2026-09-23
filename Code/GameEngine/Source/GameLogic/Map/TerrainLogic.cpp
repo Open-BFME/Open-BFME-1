@@ -2669,15 +2669,65 @@ void TerrainLogic::setWaterHeight( const WaterHandle *water, Real height, Real d
 // ------------------------------------------------------------------------------------------------
 /** Change the height of a water table over time */
 // ------------------------------------------------------------------------------------------------
-// ?changeWaterHeightOverTime@TerrainLogic@@UAEXPBVWaterHandle@@MMM@Z present-unmatched
+// The retail TerrainLogic water array begins at +0x4c and its count at +0x54c.
+// The imported layout is sixteen bytes short before this array.
+struct BfmeTerrainWaterUpdateView
+{
+	unsigned char beforeWaterUpdates[0x4c];
+	struct Entry
+	{
+		const WaterHandle *waterTable;
+		Real changePerFrame;
+		Real targetHeight;
+		Real damageAmount;
+		Real currentHeight;
+	} entries[64];
+	Int count;
+};
+
+// The retail water-height query is vtable slot 27 (+0x6c).
+class BfmeTerrainWaterHeightDispatch
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void slot13() = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void slot16() = 0;
+	virtual void slot17() = 0;
+	virtual void slot18() = 0;
+	virtual void slot19() = 0;
+	virtual void slot20() = 0;
+	virtual void slot21() = 0;
+	virtual void slot22() = 0;
+	virtual void slot23() = 0;
+	virtual void slot24() = 0;
+	virtual void slot25() = 0;
+	virtual void slot26() = 0;
+	virtual Real getWaterHeight(const WaterHandle *water) = 0;
+};
+
 void TerrainLogic::changeWaterHeightOverTime( const WaterHandle *water,
 																							Real finalHeight,
 																							Real transitionTimeInSeconds,
 																							Real damageAmount )
 {
+	BfmeTerrainWaterUpdateView *waterUpdate = reinterpret_cast<BfmeTerrainWaterUpdateView *>(this);
 
 	// if we don't have room, oops!
-	if( m_numWaterToUpdate >= MAX_DYNAMIC_WATER )
+	if( waterUpdate->count >= MAX_DYNAMIC_WATER )
 	{
 
 		DEBUG_CRASH(( "Only '%d' simultaneous water table changes are supported\n", MAX_DYNAMIC_WATER ));
@@ -2690,17 +2740,17 @@ void TerrainLogic::changeWaterHeightOverTime( const WaterHandle *water,
 		return;
 
 	// if this water table already has an entry in the array to update, remove it
-	for( Int i = 0; i < m_numWaterToUpdate; i++ )
+	for( Int i = 0; i < waterUpdate->count; i++ )
 	{
 
-		if( m_waterToUpdate[ i ].waterTable == water )
+		if( waterUpdate->entries[ i ].waterTable == water )
 		{
 
 			// put the entry at the end of the list here
-			m_waterToUpdate[ i ] = m_waterToUpdate[ m_numWaterToUpdate - 1 ];
+			waterUpdate->entries[ i ] = waterUpdate->entries[ waterUpdate->count - 1 ];
 
 			// we now have one less entry
-			--m_numWaterToUpdate;
+			--waterUpdate->count;
 
 			//
 			// process this index over again just to be complete, but we should never find "another"
@@ -2713,18 +2763,18 @@ void TerrainLogic::changeWaterHeightOverTime( const WaterHandle *water,
 	}  // end for i
 
 	// get the current height of the water
-	Real currentHeight = getWaterHeight( water );
+	Real currentHeight = reinterpret_cast<BfmeTerrainWaterHeightDispatch *>(this)->getWaterHeight( water );
 
 	// add the entry into the array of water to update
-	m_waterToUpdate[ m_numWaterToUpdate ].waterTable = water;
-	m_waterToUpdate[ m_numWaterToUpdate ].changePerFrame = (finalHeight - currentHeight) / 
+	waterUpdate->entries[ waterUpdate->count ].waterTable = water;
+	waterUpdate->entries[ waterUpdate->count ].changePerFrame = (finalHeight - currentHeight) /
 																												 (LOGICFRAMES_PER_SECOND * transitionTimeInSeconds);
-	m_waterToUpdate[ m_numWaterToUpdate ].targetHeight = finalHeight;
-	m_waterToUpdate[ m_numWaterToUpdate ].damageAmount = damageAmount;
-	m_waterToUpdate[ m_numWaterToUpdate ].currentHeight = currentHeight;
+	waterUpdate->entries[ waterUpdate->count ].targetHeight = finalHeight;
+	waterUpdate->entries[ waterUpdate->count ].damageAmount = damageAmount;
+	waterUpdate->entries[ waterUpdate->count ].currentHeight = currentHeight;
 
 	// we now have one more entry to update
-	++m_numWaterToUpdate;
+	++waterUpdate->count;
 
 }  // end chanageWaterHeightOverTime
 
