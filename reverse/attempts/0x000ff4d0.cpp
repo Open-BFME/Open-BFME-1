@@ -1,6 +1,9 @@
-// ?clearRemovableForConstruction@BuildAssistant@@IAEXPBVThingTemplate@@PBUCoord3D@@M@Z
-// partial score=0.8 date=2026-09-09
+// ?d_000ff4d0@@YAXXZ
+// partial score=0.9 date=2026-09-23
 // cl: /DNDEBUG /MD /EHsc
+// stlport
+#define _STLP_NO_EXCEPTIONS 1
+#include <vector>
 // readable body of ?clearRemovableForConstruction@BuildAssistant@@: Code/GameEngine/Source/Common/System/BuildAssistant.cpp
 
 // BuildAssistant::clearRemovableForConstruction, retail 0x000FF4D0 (438 bytes).
@@ -21,20 +24,6 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 
 #define NULL 0
-
-class SimpleObjectIterator;
-
-// STLport's node allocator owns every small buffer; the iterator's own vector
-// releases through it, and hands anything over 128 bytes to ::operator delete.
-namespace _STL
-{
-	template <bool __threads, int __inst>
-	class __node_alloc
-	{
-		static void _M_deallocate(void *__p, unsigned int __n);
-		friend class ::SimpleObjectIterator;
-	};
-}
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
 struct Coord3D
@@ -135,70 +124,43 @@ public:
 	}
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/SimpleObjectIterator.h
-// BFME walks a vector of eight-byte entries instead of Zero Hour's clump list.
-class SimpleObjectIterator
+// The result wrapper points to this vector payload and its ownership count.
+struct SimpleObjectIteratorClump
 {
-public:
-	Object *first(void)
-	{
-		return next();
-	}
-
-	Object *next(void)
-	{
-		if (m_current == m_end)
-			return NULL;
-
-		char *cur = m_current;
-		Object *obj = *reinterpret_cast<Object **>(cur);
-		cur += 8;
-		m_current = cur;
-		return obj;
-	}
-
-	void deleteInstance(void)
-	{
-		--m_refCount;
-		if (m_refCount == 0)
-		{
-			char *begin = m_begin;
-			if (begin != NULL)
-			{
-				Int bytes = ((m_capacity - begin) >> 3) << 3;
-				if (bytes > 0x80)
-					::operator delete(begin);
-				else
-					_STL::__node_alloc<true, 0>::_M_deallocate(begin, bytes);
-			}
-			::operator delete(this);
-		}
-	}
-
-private:
-	char *m_begin;
-	char *m_end;
-	char *m_capacity;
-	char *m_current;
-	Int m_refCount;
+    Int m_valueBits;
+    Int m_distanceBits;
 };
 
-// Retail opens an unwind state for the iterator the instant the query returns,
-// before the filter it was given is destroyed, and releases it through the
-// same inlined deleteInstance at the end of the body.
-class MemoryPoolObjectHolder
+struct SimpleObjectIterator
+{
+    _STL::vector<SimpleObjectIteratorClump> m_entries;
+    SimpleObjectIteratorClump *m_cursor;
+    Int m_refCount;
+};
+
+class BfmeWideResult
 {
 public:
-	MemoryPoolObjectHolder(SimpleObjectIterator *iter) : m_mpo(iter) { }
+    SimpleObjectIterator *m_mpo;
+    BfmeWideResult();
+    BfmeWideResult(const BfmeWideResult &that);
 
-	__forceinline ~MemoryPoolObjectHolder()
-	{
-		if (m_mpo != NULL)
-			m_mpo->deleteInstance();
-	}
+    Object *next(void) const
+    {
+        if (m_mpo->m_cursor == m_mpo->m_entries.end())
+            return NULL;
+        SimpleObjectIteratorClump *cursor = m_mpo->m_cursor;
+        Object *object = reinterpret_cast<Object *>(cursor->m_valueBits);
+        ++cursor;
+        m_mpo->m_cursor = cursor;
+        return object;
+    }
 
-private:
-	SimpleObjectIterator *m_mpo;
+    ~BfmeWideResult()
+    {
+        if (--m_mpo->m_refCount == 0)
+            delete m_mpo;
+    }
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
@@ -232,6 +194,11 @@ public:
 		return false;
 	}
 
+	operator Int()
+	{
+		return (Int)this;
+	}
+
 private:
 	Coord3D m_position;
 	const GeometryInfo *m_geometry;
@@ -249,11 +216,24 @@ enum DistanceCalculationType
 
 class PartitionManager
 {
-public:
-	void getClosestObjects(SimpleObjectIterator *&result, const Coord3D *pos,
-		Real maxDist, DistanceCalculationType dc, PartitionFilter *filter,
-		Object *ignore);
 };
+
+class BfmeWideForwardC
+{
+private:
+    unsigned char m_pad[0x0c];
+    void *m_source;
+
+public:
+    BfmeWideResult bfmeForwardWideC(Int a, Real b, Int c, Int d, Int e);
+};
+
+__forceinline Int Rva000FF4D0FloatBits(Real value)
+{
+	union { Real real; Int bits; } bits;
+	bits.real = value;
+	return bits.bits;
+}
 
 class GameLogic
 {
@@ -279,16 +259,17 @@ protected:
 void BuildAssistant::clearRemovableForConstruction(const ThingTemplate *whatToBuild,
 	const Coord3D *pos, Real angle)
 {
-	SimpleObjectIterator *found;
-	{
-		PartitionFilterWouldCollide filter(*pos,
-			whatToBuild->getTemplateGeometryInfo(), angle, true);
-		ThePartitionManager->getClosestObjects(found, pos,
-			whatToBuild->getTemplateGeometryInfo()->getBoundingCircleRadius() * 1.1f,
-			FROM_BOUNDINGSPHERE_3D, &filter, NULL);
-	}
+	const BfmeWideResult &found =
+		((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
+			(Int)pos,
+			whatToBuild->getTemplateGeometryInfo()->
+				getBoundingCircleRadius() * 1.1f,
+			FROM_BOUNDINGSPHERE_3D,
+			PartitionFilterWouldCollide(*pos,
+				whatToBuild->getTemplateGeometryInfo(), angle, true),
+			0);
 	Object *them;
-	while ((them = found->next()) != NULL)
+	while ((them = found.next()) != NULL)
 	{
 		// UI feedback objects (always selectable) never get destroyed by
 		// construction, and neither does anything isRemovableForConstruction
@@ -307,5 +288,4 @@ void BuildAssistant::clearRemovableForConstruction(const ThingTemplate *whatToBu
 		TheGameLogic->destroyObject(them);
 	}
 
-	found->deleteInstance();
 }
