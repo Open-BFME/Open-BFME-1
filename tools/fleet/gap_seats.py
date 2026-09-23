@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Serve the unclaimed-.text census to analyst seats (gpt-6-astra + Ghidra).
 
-build/gap_census.py proves 4,166 function starts inside the gaps that hold no
+tools/gap_census.py proves 4,166 function starts inside the gaps that hold no
 ledger row (834 KB of the 994 KB unclaimed on 2026-09-23); 374 of them are
 600-2,500 B (446 KB) and about 150 KB sit in vtables whose class the ledger
 already names. No picker served any of these: eligibility only sees ledger rows
@@ -11,7 +11,7 @@ the gap-analyst instructions: prove the boundary yourself, identify through the
 vtable slot order of the ZH twin header or a caller, land with add_match (a NEW
 row), bank the rest.
 
-  python build/gap_census.py                       # refresh the census first
+  python tools/gap_census.py                       # refresh the census first
   python tools/fleet/gap_seats.py N [min_b] [max_b] [--cap-hours H] [--dry]
   python tools/fleet/gap_seats.py N --map [--lanes astra-finish,twin] [--dry]
 
@@ -139,7 +139,7 @@ def main():
     import eligibility
     census = ROOT / "build/gap_census.csv"
     if not census.exists():
-        sys.exit("run python build/gap_census.py first")
+        sys.exit("run python tools/gap_census.py first")
     slots = {}
     vj = ROOT / "build/gap_vtable_slots.json"
     if vj.exists():
