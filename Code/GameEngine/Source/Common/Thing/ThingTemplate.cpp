@@ -1040,6 +1040,30 @@ AIUpdateModuleData *ThingTemplate::friend_getAIModuleInfo(void)
 	return NULL;
 }
 
+// The retail body at 0x0013FC80 scans the same BFME behavior module vector as
+// friend_getAIModuleInfo. Its caller has not established a semantic method name.
+class Rva0013FC80ThingTemplateView
+{
+public:
+	Int rva0013FC80GetModuleValue(void);
+};
+
+Int Rva0013FC80ThingTemplateView::rva0013FC80GetModuleValue(void)
+{
+	Int numModInfos = (*reinterpret_cast<ModuleInfo *>(reinterpret_cast<char *>(this) + 0x294)).getCount();
+	for (int j = 0; j < numModInfos; ++j)
+	{
+		if ((*reinterpret_cast<ModuleInfo *>(reinterpret_cast<char *>(this) + 0x294)).getNthData(j) &&
+			static_cast<unsigned char>((*reinterpret_cast<ModuleInfo *>(reinterpret_cast<char *>(this) + 0x294)).getNthData(j)->getMinimumRequiredGameLOD()))
+		{
+			ModuleData *data = (*reinterpret_cast<ModuleInfo *>(reinterpret_cast<char *>(this) + 0x294)).friend_getNthData(j);
+			return *reinterpret_cast<Int *>(reinterpret_cast<char *>(data) + 8);
+		}
+	}
+
+	return 1;
+}
+
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
 // ?validateAudio@ThingTemplate@@IAEXXZ
