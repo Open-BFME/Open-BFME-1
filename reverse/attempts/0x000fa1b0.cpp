@@ -1,9 +1,9 @@
-// ??0Rva000F9FF0@@QAE@PAVObject@@@Z
-// partial score=0.63 date=2026-09-22
+// ??0Rva000FB210Element@@QAE@PAVObject@@@Z
+// partial score=0.73 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x000FA1B0/350: constructor for the address-derived 96-byte
-// Rva000F9FF0 record.  The matching copy constructor at 0x000F9FF0 proves
+// Rva000FB210Element record.  The matching copy constructor at 0x000F9FF0 proves
 // the member order, canonical AsciiString lifetime, the six-word block at
 // +0x14, and the Gen_000F9C60 subobject at +0x44.  The parent at 0x000FB2E0
 // passes its first argument unchanged; this body reads that argument as an
@@ -49,6 +49,7 @@ class Gen_000F9C60
 {
 public:
 	Gen_000F9C60(const Gen_000F9C60 &other);
+	~Gen_000F9C60(void);
 
 	int m_bfmeA;
 	int m_bfmeB;
@@ -58,6 +59,8 @@ public:
 	BfmeWideWK m_bfmeText;
 	BfmeStrWK m_bfmeName;
 };
+
+#pragma comment(linker, "/alternatename:??0Gen_000F9C60@@QAE@ABV0@@Z=?j_0003ed92@@YAXXZ")
 
 struct Rva000F9FF0Block14
 {
@@ -69,7 +72,7 @@ struct Rva000F9FF0Block14
 	int m_f28;
 };
 
-class Rva000F9FF0;
+class Rva000FB210Element;
 class Object;
 class ThingTemplate;
 
@@ -152,10 +155,11 @@ public:
 	const ThingTemplate *getFinalTemplate() const
 	{
 		const ThingTemplate *thingTemplate = m_template;
-		if (thingTemplate && thingTemplate->m_override)
-			thingTemplate = reinterpret_cast<const ThingTemplate *>(
-				thingTemplate->m_override->getFinalOverride());
-		return thingTemplate;
+		return !thingTemplate ? 0 :
+			(thingTemplate->m_override
+				? reinterpret_cast<const ThingTemplate *>(
+					thingTemplate->m_override->getFinalOverride())
+				: thingTemplate);
 	}
 
 	unsigned char m_vtable[4];
@@ -171,10 +175,10 @@ public:
 
 #pragma comment(linker, "/alternatename:?findModule@Object@@QBEPAVModule@@W4NameKeyType@@@Z=?j_0002ae23@@YAXXZ")
 
-class Rva000F9FF0
+class Rva000FB210Element
 {
 public:
-	Rva000F9FF0(Object *object);
+	Rva000FB210Element(Object *object);
 
 	AsciiString m_name;
 	int m_f04;
@@ -192,7 +196,7 @@ public:
 };
 
 // ??0Rva000F9FF0@@QAE@PAVObject@@@Z
-Rva000F9FF0::Rva000F9FF0(Object *object)
+Rva000FB210Element::Rva000FB210Element(Object *object)
 	: m_name(),
 	  m_f04(0),
 	  m_f08(object->m_experienceTracker->m_f0c),
