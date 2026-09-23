@@ -1,8 +1,10 @@
-// ?d_001b1c90@@YAXXZ
-// partial score=0.572 date=2026-09-22
-// cl: /O2 /Ob2 /G6 /FAsc /Fabuild/BfmeCellGridXfer_candidate1.cod
-// Candidate for retail 0x001B1C90. The version wrapper and cell layout follow
-// the matched VictorySystem caller and the landed BfmeCellGrid family.
+// cl: /O2 /Ob2 /G6
+// BfmeCellGrid::xfer, retail 0x001B1C90 (carved boundary, 530 bytes, ret+int3).
+// ILT 0x000499A9 carries the ?xfer@BfmeCellGrid@@QAE_NPAVXfer@@@Z pin and the
+// matched VictorySystem::xfer (0x001E05F0) calls it there and ORs the Bool result.
+// Slot names follow that caller's Xfer shim; the grid and 0x88-byte cell layout
+// follow the landed BfmeCellGrid family. Loading a grid whose dimensions differ
+// reads the saved cells into cell 0 and reports the mismatch to the caller.
 
 typedef bool Bool;
 typedef int Int;
@@ -84,15 +86,14 @@ private:
 
 Bool BfmeCellGrid::xfer(Xfer *xfer)
 {
-	{
-		XferVersion version;
-		version.m_fields.m_version = 1;
-		version.m_fields.m_currentVersion = 1;
-		xfer->xferVersion(&version);
-	}
+	XferVersion version;
+	version.m_fields.m_version = 1;
+	version.m_fields.m_currentVersion = 1;
+	xfer->xferVersion(&version);
 
 	UnsignedInt cellCount = m_cellCount;
 	UnsignedInt cellIndex;
+	Bool mismatch = false;
 	if (xfer->IsLoading())
 	{
 		Int width = m_width;
@@ -106,26 +107,11 @@ Bool BfmeCellGrid::xfer(Xfer *xfer)
 		xfer->xferReal(&cellSize);
 		xfer->xferReal(&offset);
 
-		if (width != m_width || height != m_height ||
-			cellCount != m_cellCount || cellSize != m_cellSize ||
-			offset != m_offset)
+		if (m_width != width || m_height != height ||
+			m_cellCount != cellCount || m_cellSize != cellSize ||
+			m_offset != offset)
 		{
-			if (cellCount > 0)
-			{
-				Bool result = true;
-				for (cellIndex = 0; cellIndex < cellCount; ++cellIndex)
-				{
-					for (Int playerIndex = 0; playerIndex < 16; ++playerIndex)
-					{
-						xfer->xferReal(&m_cells[0].m_first[0]);
-						xfer->xferReal(&m_cells[0].m_second[0]);
-					}
-					xfer->xferUnsignedInt(&m_cells[0].m_firstMask);
-					xfer->xferUnsignedInt(&m_cells[0].m_secondMask);
-				}
-				return result;
-			}
-			return true;
+			mismatch = true;
 		}
 	}
 	else
@@ -137,18 +123,34 @@ Bool BfmeCellGrid::xfer(Xfer *xfer)
 		xfer->xferReal(&m_offset);
 	}
 
-	for (cellIndex = 0; cellIndex < m_cellCount; ++cellIndex)
+	if (mismatch)
 	{
-		for (Int playerIndex = 0; playerIndex < 16; ++playerIndex)
+		for (cellIndex = 0; cellIndex < cellCount; ++cellIndex)
 		{
-			xfer->xferReal(&m_cells[cellIndex].m_first[playerIndex]);
-			xfer->xferReal(&m_cells[cellIndex].m_second[playerIndex]);
+			for (Int playerIndex = 0; playerIndex < 16; ++playerIndex)
+			{
+				xfer->xferReal(&m_cells[0].m_first[0]);
+				xfer->xferReal(&m_cells[0].m_second[0]);
+			}
+			xfer->xferUnsignedInt(&m_cells[0].m_firstMask);
+			xfer->xferUnsignedInt(&m_cells[0].m_secondMask);
 		}
-		xfer->xferUnsignedInt(&m_cells[cellIndex].m_firstMask);
-		xfer->xferUnsignedInt(&m_cells[cellIndex].m_secondMask);
 	}
+	else
+	{
+		for (cellIndex = 0; cellIndex < m_cellCount; ++cellIndex)
+		{
+			for (Int playerIndex = 0; playerIndex < 16; ++playerIndex)
+			{
+				xfer->xferReal(&m_cells[cellIndex].m_first[playerIndex]);
+				xfer->xferReal(&m_cells[cellIndex].m_second[playerIndex]);
+			}
+			xfer->xferUnsignedInt(&m_cells[cellIndex].m_firstMask);
+			xfer->xferUnsignedInt(&m_cells[cellIndex].m_secondMask);
+		}
 
-	if (xfer->IsLoading())
-		bfmeEvaluateCells();
-	return false;
+		if (xfer->IsLoading())
+			bfmeEvaluateCells();
+	}
+	return mismatch;
 }
