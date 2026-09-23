@@ -12127,7 +12127,7 @@ name,address,notes
 ?OnError@DownloadManager@@UAEJH@Z,0x00031EC1,ILT thunk used by call site
 ?OnError@DownloadManagerOnErrorShim@@QAEJH@Z,0x00626DA0,DownloadManager::OnError incremental-link thunk target through a TU-local forwarding shim
 ?OnGameStart@LANAPI@@UAEXXZ,0x0068A3E0,E tier 1 via the corrected TheNetwork vcall seed: LANAPI vtable 0x0111AF50 slot 36 (+0x90) via ILT 0x0003E8A6 immediately before ?OnGameStartTimer@LANAPI@@UAEXH@Z (+0x94 -> 0x00689050) as declared in ZH LANAPI.h:194-195; body is ZH LANAPICallbacks.cpp:190 line for line - LANPreferences 0x00086480 with the PlayerTemplate / Color / Map keys and UserPreferences::write 0x000A9F60; TheNetwork factory 0x00682320 at 0x0068A57E; setLocalAddress +0x30 at 0x0068A5AD; initTransport +0x38 at 0x0068A5B8; parseUserList +0x2C at 0x0068A61B; clearGameData 0x00396B00; DoAnyMapTransfers 0x0066E070; updateCache 0x00457E70; failure path LANAPI::removeGame 0x00685180 + ~LANGameInfo 0x00686CD0 + delete TheNetwork (0x0068A727) + GUI:CouldNotTransferMap / GUI:ErrorStartingGame; MSG_NEW_GAME(GAME_LAN) + InitGameLogicRandom 0x00096C90
-?OnHasMap@LANAPI@@UAEXI_N@Z,0x00688cd0,vtable-slot ??_7LANAPI@@6B@ slot 34 anchors=27
+?OnHasMap@LANAPI@@UAEXPAUBfmeNetAddress@@_N@Z,0x00688cd0,LANAPI vtable slot34; matched handleHasMap passes address pair pointer and retail target dereferences IP+port at +0/+4; evidence=reverse/identity_evidence/0x00688cd0-lanapi-onhasmap.md
 ?OnPlayerLeave@LANAPI@@UAEXVUnicodeString@@@Z,0x0068a900,vtable-slot ??_7LANAPI@@6B@ slot 32 anchors=27
 ?OnProgressUpdate@DownloadManagerProgressView@@QAEJHHHH@Z,0x00626980,DownloadMenu TU-local view of the matched five-byte base progress callback body
 ?OnStatusUpdate@DownloadManager@@UAEJH@Z,0x00008283
