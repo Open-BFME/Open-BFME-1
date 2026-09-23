@@ -1,5 +1,5 @@
 // ?copyPlane009AEEE0@@YAXPAURva009AF200Context@@HHH@Z
-// partial score=0.32 date=2026-09-10
+// partial score=0.32 date=2026-09-23
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 
 extern "C" void * __cdecl memset(void *, int, unsigned int);
@@ -9,26 +9,26 @@ struct Rva009ACBA0Context;
 int *Rva009ACBA0SetupBounding(Rva009ACBA0Context *ctx, int flimit);
 
 extern int *g_rva01356A9C;
-extern void (__cdecl *g_rva01356AA0)();
-extern void (__cdecl *g_rva01356A98)();
-extern void (__cdecl *g_rva01356A88)();
+extern const unsigned int *g_rva01356AA0;
+extern const unsigned int *g_rva01356A98;
+extern const unsigned int *g_rva01356A88;
 
 struct Rva009AF200Context;
-void copyPlane009AF0D0(Rva009AF200Context *, unsigned, int, unsigned, unsigned, unsigned char *, unsigned char *, void (*)());
+void copyPlane009AF0D0(Rva009AF200Context *, unsigned, int, unsigned, unsigned, unsigned char *, unsigned char *, const unsigned int *);
 
 typedef void (__cdecl *Rva009AEEE0Operation)(
 	Rva009AF200Context *, unsigned char *, unsigned char *, unsigned,
-	unsigned, unsigned, void (__cdecl *)());
+	unsigned, int, const unsigned int *);
 
 extern Rva009AEEE0Operation g_rva01356E94;
 extern Rva009AEEE0Operation g_rva01356E88;
 
 void __cdecl Rva009AD750(
 	Rva009AF200Context *, unsigned char *, unsigned char *, unsigned,
-	unsigned, unsigned, void (__cdecl *)());
+	unsigned, int, const unsigned int *);
 void __cdecl Rva009ACC80(
 	Rva009AF200Context *, unsigned char *, unsigned char *, unsigned,
-	unsigned, unsigned, void (__cdecl *)());
+	unsigned, int, const unsigned int *);
 
 struct Rva009AF200Context
 {
@@ -56,8 +56,8 @@ void copyPlane009AEEE0(Rva009AF200Context *ctx, int x, int y, int plane)
 {
 	Rva009AF200Context *self = ctx;
 	int mode = self->m_mode;
-	unsigned sourceOffset = 0;
-	void (__cdecl *callback)() = 0;
+	int sourceOffset = 0;
+	const unsigned int *callback = 0;
 	Rva009AEEE0Operation operation;
 	Rva009AEEE0Operation finalOperation;
 	unsigned char *base;
