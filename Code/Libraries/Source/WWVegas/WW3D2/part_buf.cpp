@@ -55,6 +55,10 @@
 #include "vector3.h"
 
 // ParticleBufferClass copy constructor, retail 0x00989A20, 4714 bytes.
+// Cleanup RVA 0x00C5FE42 is state 23 -> 22 in this constructor: retail
+// FuncInfo 0x00E4F39C / unwind map 0x00E4F27C, action slot 23.
+// The compiled map likewise selects $L28004 at slot 23 (not the identical
+// state-27 cleanup). It destroys the RefCountClass at saved [ebp-0x18].
 // Identity: byte-matched Clone at 0x0098ACA0 calls this constructor.
 // The renderer texture getters return owning one-pointer handles, not raw
 // pointers: retail passes hidden return slots, sets EH states, and releases

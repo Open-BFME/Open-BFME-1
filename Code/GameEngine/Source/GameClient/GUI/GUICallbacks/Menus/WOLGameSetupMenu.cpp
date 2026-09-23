@@ -154,6 +154,16 @@ public:
 	virtual void slot0E4() = 0;
 	virtual void unregisterTextWindow( GameWindow *window ) = 0;
 	virtual Int addText( UnicodeString message, Color c, GameWindow *win ) = 0;
+	virtual void slot0F0() = 0;
+	virtual void slot0F4() = 0;
+	virtual void slot0F8() = 0;
+	virtual void slot0FC() = 0;
+	virtual void slot100() = 0;
+	virtual void slot104() = 0;
+	virtual void slot108() = 0;
+	virtual void slot10C() = 0;
+	virtual void slot110() = 0;
+	virtual const AsciiString &getPingString() = 0;
 };
 
 class BfmeWOLGameSpyStagingRoom
@@ -1182,10 +1192,10 @@ void WOLDisplayGameOptions( void )
 //-------------------------------------------------------------------------------------------------
 void WOLDisplaySlotList( void )
 {
-	if (!parentWOLGameSetup || !TheGameSpyInfo->getCurrentStagingRoom())
+	if (!parentWOLGameSetup || !((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom())
 		return;
 
-	GameSpyStagingRoom *game = TheGameSpyInfo->getCurrentStagingRoom();
+	GameSpyStagingRoom *game = ((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getCurrentStagingRoom();
 	if (!game->isInGame())
 		return;
 
@@ -1201,10 +1211,10 @@ void WOLDisplaySlotList( void )
 		GameSpyGameSlot *slot = game->getGameSpySlot(i);
 		if (slot && slot->isHuman())
 		{
-			if (i == game->getLocalSlotNum())
+			if (i == ((BfmeVirtualStagingRoom *)game)->getLocalSlotNum())
 			{
 				// set up my own ping...
-				slot->setPingString(TheGameSpyInfo->getPingString());
+				slot->setPingString(((BfmeVirtualGameSpyInfo *)TheGameSpyInfo)->getPingString());
 			}
 
 			if (genericPingWindow[i])
