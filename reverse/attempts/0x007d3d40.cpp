@@ -1,5 +1,5 @@
 // ?d_007d3d40@@YAXXZ
-// partial score=0.25 date=2026-09-07
+// partial score=0.26 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x007D3D40, 1817 B.  The constructor at 0x007D3740 installs
 // vtable 0x01128A50; this is slot 5.  The readable W3DShaderManager donor
@@ -11,7 +11,7 @@ class StringClass {
 	static char *m_EmptyString; static char m_NullChar;
 	void Get_String(int,bool); void Free_String();
 public:
-	StringClass(int n=0,bool temp=false):m_Buffer(m_EmptyString) { Get_String(n,temp); m_Buffer[0]=m_NullChar; }
+	__forceinline StringClass(int n=0,bool temp=false):m_Buffer(m_EmptyString) { Get_String(n,temp); m_Buffer[0]=m_NullChar; }
 	~StringClass(){Free_String();}
 };
 class VertexMaterialClass {
@@ -49,7 +49,7 @@ public:
 	static unsigned render_state_changes;
 	static unsigned texture_stage_state_changes;
 	static void Apply_Render_State_Changes();
-	static void Get_DX8_Render_State_Value_Name(StringClass&,unsigned long,unsigned int);
+	static void Get_DX8_Render_State_Value_Name(StringClass&,unsigned long,unsigned int) throw();
 	static void Get_DX8_Texture_Stage_State_Value_Name(StringClass&,unsigned long,unsigned int);
 	static __forceinline void Set_DX8_Render_State(unsigned long state,unsigned value) {
 		if(RenderStates[state]==value)return;
@@ -76,6 +76,44 @@ public:
 		++number_of_DX8_calls; ++texture_stage_state_changes;
 	}
 };
+
+enum { BFME_SET_TSS_SLOT = 67, BFME_SET_RS_SLOT = 57, BFME_SET_SAMP_SLOT = 69 };
+typedef int (__stdcall *BFMESetTSSFn)(Device *, unsigned, unsigned, unsigned);
+typedef int (__stdcall *BFMESetRSFn)(Device *, unsigned, unsigned);
+
+#define BFME_SET_TSS(stage_, state_, value_) \
+	if (DX8Wrapper::TextureStageStates[(stage_)][(state_)] != value_) { \
+		if (ScreenSnapshot) { \
+			StringClass value_name(0, true); \
+			DX8Wrapper::Get_DX8_Texture_Stage_State_Value_Name(value_name, (state_), (value_)); \
+		} \
+		DX8Wrapper::TextureStageStates[(stage_)][(state_)] = value_; \
+		Device *tss_device_ = ScreenDevice; \
+		(*(BFMESetTSSFn **)tss_device_)[BFME_SET_TSS_SLOT](tss_device_, (stage_), (state_), (value_)); \
+		++number_of_DX8_calls; \
+		++DX8Wrapper::texture_stage_state_changes; \
+	}
+
+#define BFME_SET_SAMP(stage_, state_, value_) { \
+		Device *samp_device_ = ScreenDevice; \
+		(*(BFMESetTSSFn **)samp_device_)[BFME_SET_SAMP_SLOT](samp_device_, (stage_), (state_), (value_)); \
+		++number_of_DX8_calls; \
+		++DX8Wrapper::texture_stage_state_changes; \
+	}
+
+#define BFME_SET_RS(state_, value_) \
+	if (DX8Wrapper::RenderStates[(state_)] != value_) { \
+		if (ScreenSnapshot) { \
+			StringClass value_name(0, true); \
+			DX8Wrapper::Get_DX8_Render_State_Value_Name(value_name, (state_), (value_)); \
+		} \
+		DX8Wrapper::RenderStates[(state_)] = value_; \
+		Device *rs_device_ = ScreenDevice; \
+		(*(BFMESetRSFn **)rs_device_)[BFME_SET_RS_SLOT](rs_device_, (state_), (value_)); \
+		++number_of_DX8_calls; \
+		++DX8Wrapper::render_state_changes; \
+	}
+
 enum FilterModes {FM_NULL_MODE=0,FM_VIEW_CROSSFADE_CIRCLE=4};
 enum {D3DTSS_COLOROP=1,D3DTSS_COLORARG1=2,D3DTSS_COLORARG2=3,
 	D3DTSS_ALPHAOP=4,D3DTSS_ALPHAARG1=5,D3DTSS_ALPHAARG2=6,
@@ -96,26 +134,26 @@ int ScreenCrossFadeFilter::set(FilterModes mode)
 		ScreenMaterial=vmat;
 		TheBoxTextureDirtyMask|=0x4000;
 		if(vmat)vmat->Release_Ref();
-		if(ScreenShaderDirty||ScreenOpaqueShader!=ScreenCurrentShader){ScreenCurrentShader=ScreenOpaqueShader;TheBoxTextureDirtyMask|=0x8000;StringClass s;}
+		if(ScreenShaderDirty || ScreenOpaqueShader!=ScreenCurrentShader){ScreenCurrentShader=ScreenOpaqueShader;TheBoxTextureDirtyMask|=0x8000;StringClass s;}
 		{TextureHandle tex;BoxSetTexture(0,(TextureBaseClass*&)tex.p);}
 		{TextureHandle tex;BoxSetTexture(1,(TextureBaseClass*&)tex.p);}
 		DX8Wrapper::Apply_Render_State_Changes();
-		DX8Wrapper::Set_DX8_Texture_Stage_State(0,D3DTSS_ADDRESSU,D3DTADDRESS_CLAMP);
-		DX8Wrapper::Set_DX8_Texture_Stage_State(0,D3DTSS_ADDRESSV,D3DTADDRESS_CLAMP);
+		BFME_SET_SAMP(0,1,D3DTADDRESS_CLAMP);
+		BFME_SET_SAMP(0,2,D3DTADDRESS_CLAMP);
 		if(mode==FM_VIEW_CROSSFADE_CIRCLE) {
-			DX8Wrapper::Set_DX8_Texture_Stage_State(1,D3DTSS_COLORARG1,D3DTA_TEXTURE);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(1,D3DTSS_COLORARG2,D3DTA_CURRENT);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(1,D3DTSS_COLOROP,D3DTOP_MODULATE);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(1,D3DTSS_ALPHAARG1,D3DTA_TEXTURE);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(1,D3DTSS_ALPHAARG2,D3DTA_CURRENT);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(1,D3DTSS_ALPHAOP,D3DTOP_MODULATE);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(1,D3DTSS_TEXCOORDINDEX,1);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(1,D3DTSS_ADDRESSU,D3DTADDRESS_CLAMP);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(1,D3DTSS_ADDRESSV,D3DTADDRESS_CLAMP);
-			DX8Wrapper::Set_DX8_Texture_Stage_State(1,D3DTSS_MIPFILTER,D3DTEXF_NONE);
+			BFME_SET_TSS(1,D3DTSS_COLORARG1,D3DTA_TEXTURE);
+			BFME_SET_TSS(1,D3DTSS_COLORARG2,D3DTA_CURRENT);
+			BFME_SET_TSS(1,D3DTSS_COLOROP,D3DTOP_MODULATE);
+			BFME_SET_TSS(1,D3DTSS_ALPHAARG1,D3DTA_TEXTURE);
+			BFME_SET_TSS(1,D3DTSS_ALPHAARG2,D3DTA_CURRENT);
+			BFME_SET_TSS(1,D3DTSS_ALPHAOP,D3DTOP_MODULATE);
+			BFME_SET_TSS(1,D3DTSS_TEXCOORDINDEX,1);
+			BFME_SET_SAMP(1,1,D3DTADDRESS_CLAMP);
+			BFME_SET_SAMP(1,2,D3DTADDRESS_CLAMP);
+			BFME_SET_SAMP(1,7,0);
 		}
-		DX8Wrapper::Set_DX8_Render_State(D3DRS_ZFUNC,D3DCMP_ALWAYS);
-		DX8Wrapper::Set_DX8_Render_State(D3DRS_ZWRITEENABLE,0);
+		BFME_SET_RS(D3DRS_ZFUNC,D3DCMP_ALWAYS);
+		BFME_SET_RS(D3DRS_ZWRITEENABLE,0);
 		return true;
 	}
 	return false;
