@@ -88845,3 +88845,4 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ??1BfmeUnicodeStringBaseCopyView0009E130@@IAE@XZ,0x008881D0,one-word wide-base ABI view; retail cleanup at SkirmishBattleHonors ctor plus 0x1DF reaches matched wide StringBase destructor
 ?getSlotList@Rva0000BAD7Owner@@QAE?AVAsciiString@@XZ,0x0009DD30,opaque thiscall receiver with hidden AsciiString result; retail ctor passes this to ILT 0x0000BAD7; matched shared getSlotList body
 ?setName@Rva0000F150GameSlot@@QAEXVBfmeUnicodeStringArgumentView0009E130@@@Z,0x00072420,address-qualified by-value UnicodeString ABI view; retail ctor calls ILT 0x0000F150 to matched GameSlot setName body
+?bfme_getBaseDisplayName@MapMetaData@@QAE?AVUnicodeString@@XZ,0x00042807,retail ILT00042807 jumps to matched MapMetaData base display-name body 0x00450FC0

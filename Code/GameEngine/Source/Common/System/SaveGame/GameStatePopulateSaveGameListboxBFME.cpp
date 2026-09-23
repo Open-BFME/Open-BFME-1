@@ -1,11 +1,7 @@
-// ?populateSaveGameListbox@GameState@@QAEXPAVGameWindow@@W4SaveLoadLayoutType@@@Z
-// partial score=0.99456 date=2026-09-12
+// ?populateSaveGameListbox@GameState@@QAEXPAVGameWindow@@0_NH@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // BFME dual save-game list builder, RVA001121A0, retail1286B.
-// Partial reconstruction: exact size and seven non-relocation bytes differ.
-// The counted wide loop decrements its count before advancing both pointers;
-// retail advances both pointers first. Count-last source currently perturbs
-// inlining/register allocation to1299B. No instruction patching is used.
+// Exact C++ reconstruction of the four-argument retail body.
 // Caller0056FD30+3D reaches ILT000267F1 with four arguments and TheGameState;
 // retail ret16 independently rejects the ledger's old two-argument ABI.
 // Column0 is the map label, column1 the save description; do not swap them.
@@ -84,7 +80,7 @@ public:
 	}
 
 
-static __forceinline int compareChars(const unsigned short *p,const unsigned short *other,int count) {while(count > 0) { if(*p == *other) {--count;++p;++other;} else return *p-*other; } return 0;}
+static __forceinline int compareChars(const unsigned short *p,const unsigned short *other,int count) { int result = 0; while (count > 0) { if (*p != *other) { result = (int)*p - (int)*other; break; } ++p; ++other; --count; } return result; }
     __forceinline int compare(const unsigned short *other) const
     {
         int otherLen = bfmeLenVGI(other);
@@ -223,39 +219,23 @@ typedef void (*IterateSaveFileCallback)(AsciiString filename, void *userData);
 
 class GameState
 {
-    friend class BfmeGameStateSaveList;
+public:
+    void populateSaveGameListbox(GameWindow *normal, GameWindow *autosave, Bool newSave, int filter);
 private:
     void clearAvailableGames();
     void iterateSaveFiles(IterateSaveFileCallback callback, void *userData);
+    char m_pad[0x50];
+    AvailableGameInfo *m_availableGames;
 };
 
 extern void addGameToAvailableList(AsciiString filename, void *userData);
 
-class BfmeGameStateSaveList
-{
-public:
-	void populateSaveGameListbox(GameWindow *normal, GameWindow *autosave, Bool newSave, int filter);
 
-private:
-	char m_pad[0x50];
-	AvailableGameInfo *m_availableGames;
-};
-
-
-extern void j_00042807();
-class MapMetaData {
-public:
-    UnicodeString displayName() const {
-        typedef UnicodeString (MapMetaData::*Getter)() const;
-        union { void (*entry)(); Getter method; } call;
-        call.entry=j_00042807;
-        return (this->*call.method)();
-    }
-};
+class MapMetaData { public: UnicodeString bfme_getBaseDisplayName(); };
 class MapCache { public: const MapMetaData *findMap(AsciiString); };
 extern MapCache *TheMapCache;
 
-void BfmeGameStateSaveList::populateSaveGameListbox(GameWindow *normal, GameWindow *autosave, Bool newSave, int filter)
+void GameState::populateSaveGameListbox(GameWindow *normal, GameWindow *autosave, Bool newSave, int filter)
 {
     if (!normal) return;
     GadgetListBoxReset(normal);
@@ -294,7 +274,7 @@ void BfmeGameStateSaveList::populateSaveGameListbox(GameWindow *normal, GameWind
         UnicodeString mapLabel((const unsigned short *)L"");
         if (TheMapCache) {
             const MapMetaData *map=TheMapCache->findMap(save->mapLabel);
-            if (map) mapLabel=map->displayName();
+            if (map) mapLabel=const_cast<MapMetaData *>(map)->bfme_getBaseDisplayName();
         }
         if (mapLabel.isEmpty()) {
             Bool exists=false;
