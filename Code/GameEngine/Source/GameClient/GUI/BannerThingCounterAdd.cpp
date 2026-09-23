@@ -7,6 +7,7 @@
 #include <vector>
 
 class ThingTemplate;
+class Player;
 
 class BFMEThingFactory
 {
@@ -17,7 +18,7 @@ public:
 class Rva0039F0A0
 {
 public:
-	bool accepts(const ThingTemplate *thing, void *player, bool includeDisabled);
+	bool accepts(const void *thing, Player *player, Player *observer);
 
 private:
 	int m_state;

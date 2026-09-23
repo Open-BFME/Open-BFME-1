@@ -14836,7 +14836,7 @@ name,address,notes
 ?accept@T1Sink_005C8E90@@QAEPAXPAX0@Z,0x005C8E90,callee of the 18-byte receiver-swapping forwarders at 0x005C98C0 and 0x005CACE0 (T1ReceiverSwappingThunks.cpp); address-derived name; identity not recovered
 ?accepts@BfmeRvaA760ProbeInterface@@QAE_NPAVBfmeRvaA760Object@@H@Z,0x0001DA34,assigned body helper for Rva0024A760
 ?accepts@Rva001DB720Predicate@@QAE_NPAVThingTemplate@@@Z,0x00007B4E,incremental-link thunk called by the 0x001DB720 template-name scan
-?accepts@Rva0039F0A0@@QAE_NPBVThingTemplate@@PAX_N@Z,0x0001B437,Address-derived callee for BannerThingCounter::add at retail 0x0049A8F0. The callee uses existing ILT 0x0001B437 and body 0x0039F0A0.
+?accepts@Rva0039F0A0@@QAE_NPBXPAVPlayer@@1@Z,0x0001B437,Rva0039F0A0 takes a generic pointer and two Player pointers. BannerThingCounter::add calls it at 0x0049A8F0, and caller 0x003A04A0 passes both Player pointers.
 ?accepts@Rva006F88B0Item@@QAE_NH@Z,0x000474B5,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006F88B0 calls; autopin
 ?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z,0x0001DA34,Open-BFME5 filter predicate call pin
 ?accepts@U4Filter@@QBE_NPBUU4Elem@@@Z,0x00606BF0,U4 lane: element predicate called by both scan loops at 0x00606DC0 and 0x00607000; address-derived name
@@ -78624,7 +78624,6 @@ name,address,notes
 ?bfmeTest1220@BfmeNode1220@@QAEHPAHH@Z,0x0089C290,call destination decoded from the retail availability scan at 0x008D2070
 ?bfmeTest914A@@YAHXZ,0x000162A7,pin
 ?bfmeTest932E@BfmeThing932E@@QAEHXZ,0x00037E34,pin
-?bfmeTest@Rva2225E0Filter@@AAE_NPAVBfmeOverridable@@_N@Z,0x0001B437,Open-BFME5 ILT the filter test whose result Rva2225E0Filter::accepts at 0x003A04A0 returns
 ?bfmeTestERN@BfmeModERN@@QAEDPAVBfmeObjERN@@@Z,0x0000659B,pin
 ?bfmeTestETF@BfmeTesterETF@@QAEDPAUBfmeRangeETF@@0@Z,0x0003C2E5,pin
 ?bfmeTestLB@BfmeOwnerLB@@QAE_NPAUBfmeThingLB@@@Z,0x0004250A,pin
