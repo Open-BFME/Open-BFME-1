@@ -88860,3 +88860,7 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?test@Rva0074CDD0@@QAE_NHH@Z,0x0074CDD0,address-derived triangle-flip predicate; independent 271B callee reads map receiver and two coordinate args then returns AL and ret8; unlike cached-bit ZH getFlipState; caller +1A7 via ILT 32E66
 ?update@Rva006D5390@@QAEHPAVWorldHeightMap@@@Z,0x006D5390,address-derived zero-return method; callee xor eax eax and ret4; aligned call passes WorldHeightMap pointer and receiver at terrain handle; caller +9F via ILT B26C
 ?bfmeForwardWideC@BfmeWideForwardC@@QAE?AUBfmeWideResult@@HMHHH@Z,0x009F2960,canonical 57B wrapper at 009F2960 with BFME raw-float call spelling; target and ABI independently decoded
+?isIntroMoviePlaying@GameLogic@@QAE_NXZ,0x000349FA,ShowDiplomacy retail call at 0x004C3E1A through ILT
+?getMessageColor@InGameUI@@QAEH_N@Z,0x00015622,ShowDiplomacy retail call at 0x004C4048 through ILT
+?registerWindowLayout@InGameUI@@QAEXPAVWindowLayout@@@Z,0x000178AA,ShowDiplomacy retail call at 0x004C4140 through ILT
+?updateBuddyInfo@@YAXXZ,0x0002549B,ShowDiplomacy retail call at 0x004C418B through ILT

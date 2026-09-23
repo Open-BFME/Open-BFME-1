@@ -1,4 +1,5 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// ?ShowDiplomacy@@YAX_N@Z
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -33,6 +34,10 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
 // INCLUDES ///////////////////////////////////////////////////////////////////////////////////////
+#define ASCIISTRING_H
+#define UNICODESTRING_H
+#include "StringInline.h"
+bool operator==(const AsciiString &, const AsciiString &);
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/GlobalData.h"
@@ -162,15 +167,16 @@ static void updateFunc( WindowLayout *layout, void *param )
 	if (theAnimateWindowManager && *reinterpret_cast<const Bool*>(reinterpret_cast<const char*>(TheGlobalData) + 0xBC4))
 	{
 		Bool wasFinished = theAnimateWindowManager->isFinished();
-		// Call vtable slot 5 with the correct __thiscall convention without
-		// naming the (nonstandard-extension) __thiscall keyword: route the
-		// raw slot through a pointer-to-member-function cast instead.
-		struct AnimUpdateThunk { void Call(); };
-		typedef void (AnimUpdateThunk::*AnimUpdateFn)();
-		void **vtbl = *reinterpret_cast<void ***>(theAnimateWindowManager);
-		union { void *asVoid; AnimUpdateFn asMember; } fnCast;
-		fnCast.asVoid = vtbl[5];
-		(reinterpret_cast<AnimUpdateThunk *>(theAnimateWindowManager)->*fnCast.asMember)();
+		// Retail's update entry is vtable slot 5 in this translation unit.
+		struct AnimUpdateThunk {
+			virtual void slot0();
+			virtual void slot1();
+			virtual void slot2();
+			virtual void slot3();
+			virtual void slot4();
+			virtual void update();
+		};
+		reinterpret_cast<AnimUpdateThunk *>(theAnimateWindowManager)->update();
 		if (theAnimateWindowManager->isFinished() && !wasFinished && theAnimateWindowManager->isReversed())
 			theWindow->winHide( TRUE );
 	}
@@ -216,17 +222,128 @@ void UpdateDiplomacyBriefingText(AsciiString newText, Bool clear)
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+typedef _STL::list<UnicodeString> BFMEBriefingList;
+extern BFMEBriefingList Rva00EF3884BriefingList;
+
+// Retail calls InGameUI::isQuitMenuVisible through vtable byte offset 0x154.
+struct Rva004C3DE0InGameUIView {
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual void slot17();
+	virtual void slot18();
+	virtual void slot19();
+	virtual void slot20();
+	virtual void slot21();
+	virtual void slot22();
+	virtual void slot23();
+	virtual void slot24();
+	virtual void slot25();
+	virtual void slot26();
+	virtual void slot27();
+	virtual void slot28();
+	virtual void slot29();
+	virtual void slot30();
+	virtual void slot31();
+	virtual void slot32();
+	virtual void slot33();
+	virtual void slot34();
+	virtual void slot35();
+	virtual void slot36();
+	virtual void slot37();
+	virtual void slot38();
+	virtual void slot39();
+	virtual void slot40();
+	virtual void slot41();
+	virtual void slot42();
+	virtual void slot43();
+	virtual void slot44();
+	virtual void slot45();
+	virtual void slot46();
+	virtual void slot47();
+	virtual void slot48();
+	virtual void slot49();
+	virtual void slot50();
+	virtual void slot51();
+	virtual void slot52();
+	virtual void slot53();
+	virtual void slot54();
+	virtual void slot55();
+	virtual void slot56();
+	virtual void slot57();
+	virtual void slot58();
+	virtual void slot59();
+	virtual void slot60();
+	virtual void slot61();
+	virtual void slot62();
+	virtual void slot63();
+	virtual void slot64();
+	virtual void slot65();
+	virtual void slot66();
+	virtual void slot67();
+	virtual void slot68();
+	virtual void slot69();
+	virtual void slot70();
+	virtual void slot71();
+	virtual void slot72();
+	virtual void slot73();
+	virtual void slot74();
+	virtual void slot75();
+	virtual void slot76();
+	virtual void slot77();
+	virtual void slot78();
+	virtual void slot79();
+	virtual void slot80();
+	virtual void slot81();
+	virtual void slot82();
+	virtual void slot83();
+	virtual void slot84();
+	virtual Bool isQuitMenuVisible() const;
+};
+
+class BfmeWindowLayoutHideView {
+public:
+ virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
+ virtual void hide(Bool);
+};
+class BfmeAnimateResetView {
+public:
+ virtual void slot00(); virtual void slot04(); virtual void slot08(); virtual void slot0c();
+ virtual void reset();
+};
+class BfmeGameSpyProfileView {
+public:
+ virtual void slot00(); virtual void slot01(); virtual void slot02(); virtual void slot03(); virtual void slot04(); virtual void slot05(); virtual void slot06(); virtual void slot07(); virtual void slot08(); virtual void slot09(); virtual void slot10(); virtual void slot11(); virtual void slot12(); virtual void slot13(); virtual void slot14(); virtual void slot15(); virtual void slot16(); virtual void slot17(); virtual void slot18(); virtual void slot19(); virtual void slot20(); virtual void slot21(); virtual void slot22(); virtual void slot23(); virtual void slot24(); virtual void slot25(); virtual void slot26(); virtual void slot27();
+ virtual Int getLocalProfileID();
+};
+
+// ?ShowDiplomacy@@YAX_N@Z
 void ShowDiplomacy( Bool immediate )
 {
-	if (!TheInGameUI->getInputEnabled() || TheGameLogic->isIntroMoviePlaying() || 
-			TheGameLogic->isLoadingMap())
+	const unsigned char *uiState = (const unsigned char *)TheInGameUI;
+	if (!uiState[0x0D] || !uiState[0x0E] || TheGameLogic->isIntroMoviePlaying() ||
+		*((const unsigned char *)TheGameLogic + 0x69))
 		return;
 	
 
-	if (TheInGameUI->isQuitMenuVisible())
+	if (reinterpret_cast<Rva004C3DE0InGameUIView *>(TheInGameUI)->isQuitMenuVisible())
 		return;
 
-	if (TheDisconnectMenu && TheDisconnectMenu->isScreenVisible())
+	if (TheDisconnectMenu)
 		return;
 
 	if (theWindow)
@@ -256,16 +373,17 @@ void ShowDiplomacy( Bool immediate )
 			GameWindow *listboxSolo = TheWindowManager->winGetWindowFromId(theWindow, NAMEKEY("Diplomacy.wnd:ListboxSolo"));
 			if (listboxSolo)
 			{
-				for (BriefingList::iterator it = theBriefingList.begin(); it != theBriefingList.end(); ++it)
+				for (BFMEBriefingList::iterator it = Rva00EF3884BriefingList.begin();
+					it != Rva00EF3884BriefingList.end(); ++it)
 				{
-					UnicodeString translated = TheGameText->fetch(*it);
+					UnicodeString &entry = *it;
 					Int numEntries = GadgetListBoxGetNumEntries(listboxSolo);
-					GadgetListBoxAddEntryText(listboxSolo, translated, TheInGameUI->getMessageColor(numEntries%2), -1);
+					GadgetListBoxAddEntryText(listboxSolo, entry, TheInGameUI->getMessageColor(numEntries%2), -1, -1, TRUE);
 				}
 			}
 		}
 	}
-	theLayout->hide(FALSE);
+	reinterpret_cast<BfmeWindowLayoutHideView *>(theLayout)->hide(FALSE);
 
 	radioButtonInGame->winHide(TRUE);
 	radioButtonBuddies->winHide(TRUE);
@@ -283,15 +401,15 @@ void ShowDiplomacy( Bool immediate )
 		winSolo->winHide(FALSE);
 	}
 
-	theAnimateWindowManager->reset();
-	if (!immediate && TheGlobalData->m_animateWindows)
+	reinterpret_cast<BfmeAnimateResetView *>(theAnimateWindowManager)->reset();
+	if (!immediate && *reinterpret_cast<const Bool *>(reinterpret_cast<const char *>(TheGlobalData) + 0xBC4))
 		theAnimateWindowManager->registerGameWindow( theWindow, WIN_ANIMATION_SLIDE_TOP, TRUE, 200 );
 
 	TheInGameUI->registerWindowLayout(theLayout);
 	grabWindowPointers();
 	PopulateInGameDiplomacyPopup();
 
-	if(TheGameSpyInfo && TheGameSpyInfo->getLocalProfileID() != 0)
+	if(TheGameSpyInfo && reinterpret_cast<BfmeGameSpyProfileView *>(TheGameSpyInfo)->getLocalProfileID() != 0)
 	{
 		radioButtonInGame->winHide(FALSE);
 		radioButtonBuddies->winHide(FALSE);
@@ -480,3 +598,6 @@ WindowMsgHandledType DiplomacySystem( GameWindow *window, UnsignedInt msg,
 }  // end DiplomacySystem
 
 // PopulateInGameDiplomacyPopup is implemented in its BFME-layout-specific TU.
+
+// Keep the out-of-line copy used by the separately matched retail body.
+Bool (DisconnectMenu::*BfmeDisconnectScreenVisibleEmitter)() = &DisconnectMenu::isScreenVisible;

@@ -45,6 +45,11 @@ public:
 	AsciiString( const AsciiString &other ) : StringBase<char>( other ) {}
 	~AsciiString() {}
 	const char *str( void ) const { return m_data ? m_data->m_text : ""; }
+	static AsciiString TheEmptyString;
+	void format( const char *format, ... );
+	bool isEmpty( void ) const;
+	bool isNotEmpty( void ) const;
+	int compareNoCase( const AsciiString &other ) const;
 };
 
 class UnicodeString : private StringBase<unsigned short>
@@ -55,6 +60,9 @@ public:
 	UnicodeString( const UnicodeString &other ) : StringBase<unsigned short>( other ) {}
 	~UnicodeString() {}
 	const unsigned short *str( void ) const;
+	static UnicodeString TheEmptyString;
+	int getLength( void ) const;
+	int compareNoCase( const UnicodeString &other ) const;
 };
 
 #endif
