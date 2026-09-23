@@ -1,5 +1,5 @@
 // ?getAircraftPath@Pathfinder@@QAEPAVPath@@PBVObject@@PBUCoord3D@@@Z
-// partial score=0.25 date=2026-09-17
+// partial score=0.25 date=2026-09-23
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail 0x003E17A0: the BFME aircraft path search.  The Zero Hour source
@@ -420,25 +420,39 @@ Path *Pathfinder::getAircraftPath(const Object *object, const Coord3D *to)
 {
 	m_ignoreObstacleID = 0;
 
-	Int radius;
+	union
+	{
+		Int radius;
+		const Coord3D *from;
+	} radiusFrom;
 	Bool center;
-	getRadiusAndCenter(this, object, &radius, &center);
+	getRadiusAndCenter(this, object, &radiusFrom.radius, &center);
 
-	const Coord3D *from = object->getPosition();
-	Coord3D start = *from;
-	Coord3D destination = *to;
+	radiusFrom.from = object->getPosition();
+	union
+	{
+		Coord3D start;
+		ICoord2D candidatePos;
+	} startCandidate;
+	startCandidate.start = *radiusFrom.from;
+	union
+	{
+		Coord3D destination;
+		Bool neighborFlags[8];
+	} destinationFlags;
+	destinationFlags.destination = *to;
 	if (!center)
 	{
-		start.x += *(const float *)0x01075344;
-		start.y += *(const float *)0x01075344;
-		destination.x += *(const float *)0x01075344;
-		destination.y += *(const float *)0x01075344;
+		startCandidate.start.x += *(const float *)0x01075344;
+		startCandidate.start.y += *(const float *)0x01075344;
+		destinationFlags.destination.x += *(const float *)0x01075344;
+		destinationFlags.destination.y += *(const float *)0x01075344;
 	}
 
 	ICoord2D startCell;
 	ICoord2D goalCellNdx;
-	worldToCell(this, &start, &startCell);
-	worldToCell(this, &destination, &goalCellNdx);
+	worldToCell(this, &startCandidate.start, &startCell);
+	worldToCell(this, &destinationFlags.destination, &goalCellNdx);
 	if (startCell.x == goalCellNdx.x && startCell.y == goalCellNdx.y)
 		return 0;
 
@@ -470,7 +484,7 @@ Path *Pathfinder::getAircraftPath(const Object *object, const Coord3D *to)
 		return 0;
 
 	ICoord2D checkedGoal;
-	if (worldToCell(this, &destination, &checkedGoal))
+	if (worldToCell(this, &destinationFlags.destination, &checkedGoal))
 		return 0;
 	PathfindCell *goal = getCell(this, destinationLayer,
 		checkedGoal.x, checkedGoal.y);
@@ -478,7 +492,7 @@ Path *Pathfinder::getAircraftPath(const Object *object, const Coord3D *to)
 		return 0;
 
 	PathfindCell *parent = getClippedCell(this,
-		objectLayer(object), from);
+		objectLayer(object), radiusFrom.from);
 	if (parent == 0)
 		return 0;
 
@@ -518,8 +532,6 @@ Path *Pathfinder::getAircraftPath(const Object *object, const Coord3D *to)
 	}
 
 	static const Int adjacent[5] = { 0, 1, 2, 3, 0 };
-	Bool neighborFlags[8];
-
 	for (;;)
 	{
 		if (current == goal)
@@ -537,16 +549,16 @@ Path *Pathfinder::getAircraftPath(const Object *object, const Coord3D *to)
 		Int direction;
 		for (direction = 0; direction < 8; ++direction)
 		{
-			neighborFlags[direction] = false;
+			destinationFlags.neighborFlags[direction] = false;
 			PathfindCellInfo *currentInfo = current->m_info;
-			ICoord2D candidatePos;
-			candidatePos.x = currentInfo->m_pos.x +
+			startCandidate.candidatePos.x = currentInfo->m_pos.x +
 				g_bfmeDirectionX[direction];
-			candidatePos.y = currentInfo->m_pos.y +
+			startCandidate.candidatePos.y = currentInfo->m_pos.y +
 				g_bfmeDirectionY[direction];
 			PathfindCell *candidate = getCell(this,
 				(Int)((current->m_bits >> 6) & 0x3f),
-				candidatePos.x, candidatePos.y);
+				startCandidate.candidatePos.x,
+				startCandidate.candidatePos.y);
 			if (candidate == 0)
 				continue;
 
@@ -570,8 +582,8 @@ Path *Pathfinder::getAircraftPath(const Object *object, const Coord3D *to)
 				continue;
 
 			if (direction >= 4 &&
-				!neighborFlags[adjacent[direction - 4]] &&
-				!neighborFlags[adjacent[direction - 3]])
+				!destinationFlags.neighborFlags[adjacent[direction - 4]] &&
+				!destinationFlags.neighborFlags[adjacent[direction - 3]])
 				continue;
 
 			if (!stepCell(this, &movement, candidate))
@@ -581,7 +593,7 @@ Path *Pathfinder::getAircraftPath(const Object *object, const Coord3D *to)
 					if (g_bfmePathfindFreeList == 0)
 						allocateInfos();
 					candidate->m_info = acquireInfo(&g_bfmePathfindFreeList,
-						candidate, &candidatePos);
+						candidate, &startCandidate.candidatePos);
 				}
 				else
 				{
@@ -591,13 +603,13 @@ Path *Pathfinder::getAircraftPath(const Object *object, const Coord3D *to)
 				continue;
 			}
 
-			neighborFlags[direction] = true;
+			destinationFlags.neighborFlags[direction] = true;
 			if (candidateInfo == 0)
 			{
 				if (g_bfmePathfindFreeList == 0)
 					allocateInfos();
 				candidateInfo = acquireInfo(&g_bfmePathfindFreeList,
-					candidate, &candidatePos);
+					candidate, &startCandidate.candidatePos);
 				candidate->m_info = candidateInfo;
 			}
 			++examined;
@@ -634,7 +646,7 @@ Path *Pathfinder::getAircraftPath(const Object *object, const Coord3D *to)
 	Path *path = new Path;
 	if (path == 0)
 		return 0;
-	prependCells(this, path, from, goal, center);
+	prependCells(this, path, radiusFrom.from, goal, center);
 	path->m_complete = 1;
 	releaseInfo(goal);
 	resetLists(this);
