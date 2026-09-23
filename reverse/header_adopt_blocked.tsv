@@ -695,3 +695,4 @@ reverse/attempts/0x002d3970.cpp	AsciiString	build.sh exited 1
 Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsNamedBaseUnpackableForPlayer.cpp	AsciiString	build.sh exited 1
 reverse/attempts/0x00162190.cpp	AsciiString	build.sh exited 1
 Code/GameEngine/Source/Common/Rva0019A470ChunkParser.cpp	AsciiString	build.sh exited 1
+Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody_onVeterancyLevelChanged.cpp	AsciiString	Code\GameEngine\Source\GameLogic\Object\Body\ActiveBody_onVeterancyLevelChanged.cpp(58) : error C2039: 'TheEmptyString' : is not a member of 'AsciiString'
