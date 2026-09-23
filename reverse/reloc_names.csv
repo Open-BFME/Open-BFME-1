@@ -168,7 +168,7 @@ name,target_rva,target_size,source,notes
 ??$__uninitialized_copy@PBUGen_t_00152530_p12pod@@PAU1@@_STL@@YAPAUGen_t_00152530_p12pod@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00150420,45,Code/gen_small/tgrid_105.cpp,reloc-derived;call-sites=1;identity=generated
 ??0AIGroup@@QAE@XZ,0x00151BF0,197,Code/GameEngine/Source/GameLogic/AI/AI_createGroup.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_00152690@@UAE@XZ,0x00151D10,246,Code/gen_small/dtors_001.cpp,reloc-derived;call-sites=1;identity=generated
-?groupAttackObjectPrivate@AIGroup@@AAEX_NPAVObject@@HW4CommandSourceType@@@Z,0x00155DA0,568,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,reloc-derived;call-sites=4;identity=real
+?groupAttackObjectPrivate@AIGroup@@AAEX_NPAVObject@@HW4CommandSourceType@@@Z,0x00155DA0,576,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions.cpp,reloc-derived;call-sites=4;identity=real;boundary=ret16-at-0x00155FDD-followed-by-int3
 ?groupEnter@AIGroup@@QAEXPAVObject@@W4CommandSourceType@@@Z,0x00156440,229,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGarrisonSpecificBuilding.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeAccept@Gen_002BBD40@@AAEXPAVBfmeSeedTarget@@@Z,0x0015C0C0,325,Code/GameEngine/Source/Common/S3SeedPairsForms.cpp,reloc-derived;call-sites=1;identity=generated
 ?lookForInnerTarget@AIGuardMachine@@QAE_NXZ,0x0015D530,2514,Code/GameEngine/Source/GameLogic/AI/AIGuard.cpp,reloc-derived;call-sites=1;identity=real
