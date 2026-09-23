@@ -1,5 +1,5 @@
-// ?d_00514da0@@YAXXZ
-// partial score=0.96 date=2026-09-18
+// ?_bfme_onBttnRemoveFriend@BfmeAptScreenInGameChat@@QAEXPBD@Z
+// partial score=0.978 date=2026-09-23
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -14,11 +14,15 @@
 // callbacks. Only the three GameText labels and the second callback differ,
 // and the two retail typos in the remove labels are real.
 
-#include <vector>
-
 typedef bool Bool;
 typedef int Int;
 typedef unsigned short WideChar;
+
+
+#include <vector>
+
+extern "C" void _ReadWriteBarrier( void );
+#pragma intrinsic( _ReadWriteBarrier )
 
 class GameWindow;
 
@@ -224,9 +228,10 @@ void BfmeAptScreenInGameChat::_bfme_onBttnRemoveFriend( const char *name )
 	std::vector<Int> selected;
 	Int count = g_Rva005127A0InGameChat->rva00513BF0(
 		g_Rva005127A0InGameChat->m_friendsList, &selected, 7, true );
+	Int *ids = selected.begin();
+	_ReadWriteBarrier();
 	if( count > 0 )
 	{
-		Int *ids = selected.begin();
 		UnicodeString title = TheGameText->fetch( "APT:RemoveFirendTitle", 0 );
 		UnicodeString message;
 
@@ -234,8 +239,9 @@ void BfmeAptScreenInGameChat::_bfme_onBttnRemoveFriend( const char *name )
 		{
 			UnicodeString fmt =
 				TheGameText->fetch( "APT:RemovieFriendMessage", 0 );
+			Int id = ids[ 0 ];
 			UnicodeString buddy;
-			g_Rva005127A0InGameChat->rva00512890( ids[ 0 ], buddy );
+			g_Rva005127A0InGameChat->rva00512890( id, buddy );
 			message.format( fmt, buddy.str() );
 		}
 		else
@@ -262,9 +268,10 @@ void BfmeAptScreenInGameChat::_bfme_onBttnAddFriend( const char *name )
 	std::vector<Int> selected;
 	Int count = g_Rva005127A0InGameChat->rva00513BF0(
 		g_Rva005127A0InGameChat->m_friendsList, &selected, 7, true );
+	Int *ids = selected.begin();
+	_ReadWriteBarrier();
 	if( count > 0 )
 	{
-		Int *ids = selected.begin();
 		UnicodeString title = TheGameText->fetch( "APT:AcceptRequestTitle", 0 );
 		UnicodeString message;
 
@@ -272,8 +279,9 @@ void BfmeAptScreenInGameChat::_bfme_onBttnAddFriend( const char *name )
 		{
 			UnicodeString fmt =
 				TheGameText->fetch( "APT:AcceptRequestMessage", 0 );
+			Int id = ids[ 0 ];
 			UnicodeString buddy;
-			g_Rva005127A0InGameChat->rva00512890( ids[ 0 ], buddy );
+			g_Rva005127A0InGameChat->rva00512890( id, buddy );
 			message.format( fmt, buddy.str() );
 		}
 		else
