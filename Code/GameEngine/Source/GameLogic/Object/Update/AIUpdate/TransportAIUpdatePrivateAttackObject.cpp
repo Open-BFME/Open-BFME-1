@@ -174,6 +174,13 @@ protected:
 	virtual void privateAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType cmdSource);
 };
 
+// Opaque callee identity at the witnessed AI-update slot 30 body.
+class Rva00278D50
+{
+public:
+	void slot30(Object *victim, Int maxShotsToFire, CommandSourceType cmdSource);
+};
+
 class TransportAIUpdate : public AIUpdateInterface
 {
 protected:
@@ -213,5 +220,5 @@ void TransportAIUpdate::privateAttackObject( Object *victim, Int maxShotsToFire,
 		}
 	}
 
-	AIUpdateInterface::privateAttackObject( victim, maxShotsToFire, cmdSource );
+	((Rva00278D50 *)this)->slot30( victim, maxShotsToFire, cmdSource );
 }
