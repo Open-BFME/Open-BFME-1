@@ -1,38 +1,23 @@
-// ?Rva0035D460@@YAXPAURva0035D460Item@@PBU1@@Z
-// partial score=0.21 date=2026-09-21
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Oy- /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// ?Rva0035D460@@YAXPAURva00359530Record@@PBU1@@Z
+// partial score=0.97 date=2026-09-22
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
-
-// Open-BFME: anonymous carved body at 0x0035D460 (433 bytes), boundary
-// "jmp-tail" (ends in an unconditional jmp to a shared continuation at
-// retail 0x0035D570, not a ret -- the carve is a self-contained slice of a
-// larger routine). Only caller is the unlanded 0x0035E1F0 (d_0035aa50.asm).
+// Open-BFME: Rva0035D460(dest, src) -- retail 0x0035D460, cdecl, 577 bytes in
+// full (the carved 433 plus the catch block at 0x0035D611 and the stack
+// teardown tail at 0x0035D626). Only caller is 0x0035E1F0, which passes a
+// fresh temp record and the source record; identity stays address-derived.
 //
-// Retail copies a small record: dword@0, a UnicodeString via
-// UnicodeString::set (0x00887C90) at +4, a byte at +0xc, a word at +0xe,
-// then default-constructs a deque<Script*> at +0x10 (element type pinned as
-// Rva0035AF80Element, 4 bytes -- matches a pointer) via the already-matched
-// _M_initialize_map (RvaDequeInitializeMap.cpp) and copies each source
-// Script* by allocating (operator new, mem_ops.cpp) and copy-constructing
-// (Script::Script(const Script&), ScriptCopyCtor.cpp) a duplicate, pushing
-// the duplicate's pointer onto the destination deque (STLport push_back,
-// _M_reallocate_map / __new_alloc::allocate / _M_deallocate already pinned).
-//
-// docs/shape_levers.md note: retail inlines the deque push_back/grow logic
-// directly into this body (no call to a separate push_back symbol); our
-// STLport build calls out to deque<T>::push_back normally, which is the
-// most likely source of any frame/instruction-count drift here.
-
-class UnicodeString
-{
-public:
-	void set(const UnicodeString &src);
-
-	const void *m_data;
-};
-
+// Copies one Rva00359530Record: the catch block hands dest to
+// clearRva00359530Nodes (0x003595F0), which fixes the record type and its
+// BfmeNodeY chain at +0x10. Each node is a link plus a Script (new 0x44, then
+// Script's copy ctor 0x0035B550 at node+4 on the source node's Script).
+// The source chain is pushed onto a local stack and popped back so the copy
+// keeps the source order; the unwind map (state 0 = stack, try over the pop
+// loop only, state 2 = the new-expression) fixes where the try sits.
 #define _STLP_NO_EXCEPTIONS 1
-#include <deque>
+#include <stack>
+
+#include "ascii_string.h"
 
 class Xfer;
 
@@ -60,8 +45,6 @@ public:
 	ScriptAction *duplicate() const;
 };
 
-class AsciiString;
-
 class Script : public Snapshot
 {
 public:
@@ -73,7 +56,9 @@ public:
 	virtual void xfer(Xfer *xfer);
 
 private:
-	unsigned char m_bfmeStrings[0x0c];
+	AsciiString m_scriptName;
+	AsciiString m_comment;
+	AsciiString m_conditionComment;
 	int m_delayEvaluationSeconds;
 	bool m_isActive;
 	bool m_isOneShot;
@@ -87,36 +72,62 @@ private:
 	ScriptAction *m_actionFalse;
 	Script *m_nextScript;
 	bool m_hasWarnings;
-	unsigned char m_bfmeTail[0x0c];
+	AsciiString m_conditionTeamName;
 	float m_conditionTime;
 	float m_curTime;
 	int m_conditionExecutedCount;
 };
 
-struct Rva0035D460Item
+class BfmeNodeY
 {
-	unsigned int m_field0;
-	unsigned int m_field1;
-	UnicodeString m_name;
-	unsigned char m_flag;
-	unsigned short m_word;
-	_STL::deque<Script *> m_scripts;
+public:
+	BfmeNodeY(const BfmeNodeY &that) : m_next(0), m_script(that.m_script) {}
+	~BfmeNodeY();
+
+	BfmeNodeY *m_next;
+	Script m_script;
 };
 
-// address-derived identity: only reachable via one unlanded caller
-void Rva0035D460(Rva0035D460Item *dest, const Rva0035D460Item *src)
+struct Rva00359530Record
 {
-	dest->m_field0 = src->m_field0;
-	dest->m_field1 = src->m_field1;
-	dest->m_name.set(src->m_name);
-	dest->m_flag = src->m_flag;
-	dest->m_word = src->m_word;
+	int m_previous;
+	int m_next;
+	AsciiString m_name;
+	unsigned char m_released;
+	unsigned char m_pad;
+	unsigned short m_references;
+	BfmeNodeY *m_nodes;
+};
 
-	new (&dest->m_scripts) _STL::deque<Script *>();
+void clearRva00359530Nodes(Rva00359530Record *record);
 
-	for (_STL::deque<Script *>::const_iterator it = src->m_scripts.begin();
-		it != src->m_scripts.end(); ++it)
+// ?Rva0035D460@@YAXPAURva00359530Record@@PBU1@@Z
+void Rva0035D460(Rva00359530Record *dest, const Rva00359530Record *src)
+{
+	dest->m_previous = src->m_previous;
+	dest->m_next = src->m_next;
+	dest->m_name = src->m_name;
+	dest->m_released = src->m_released;
+	dest->m_references = src->m_references;
+	dest->m_nodes = 0;
+
+	_STL::stack<BfmeNodeY *> nodes;
+	for (BfmeNodeY *node = src->m_nodes; node; node = node->m_next)
+		nodes.push(node);
+
+	try
 	{
-		dest->m_scripts.push_back(new Script(**it));
+		while (!nodes.empty())
+		{
+			BfmeNodeY *copy = new BfmeNodeY(*nodes.top());
+			nodes.pop();
+			copy->m_next = dest->m_nodes;
+			dest->m_nodes = copy;
+		}
+	}
+	catch (...)
+	{
+		clearRva00359530Nodes(dest);
+		throw;
 	}
 }
