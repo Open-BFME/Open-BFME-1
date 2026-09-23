@@ -1,0 +1,81 @@
+name: Isolated compiler runtime preparation
+on:
+  push:
+    branches: [research/sib-20260923-d302e8d]
+    paths: ['.github/workflows/sib-runtime.yml']
+permissions:
+  contents: read
+jobs:
+  prepare:
+    runs-on: windows-2022
+    timeout-minutes: 12
+    steps:
+      - run: git config --global core.longpaths true
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout: |
+            tools
+            build/toolchains
+            baselines/bfme1/workshop-vanilla-1.03
+            reverse
+            Code/Libraries
+            Code/GameEngine
+            Code/GameEngineDevice
+            reference/shims
+            reference/CnC_Generals_Zero_Hour/GeneralsMD/Code
+            vendor/stlport
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Prepare explicit compiler and header dependencies
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json,subprocess,urllib.request,zipfile
+          root=Path.cwd(); out=root/'build/local_runtime_transfer';out.mkdir(parents=True,exist_ok=True)
+          hashes={'wibo-x86_64':'13f86a2d618f0dbe67179d349625345eabf9b46450295cb4c904e49f6aff85af','wibo-i686':'2575d3b0a2f408b2c2b0850db56f1af5d005a138394a6774eba77b6708ecc304'}
+          for name,digest in hashes.items():
+              data=urllib.request.urlopen('https://github.com/decompals/wibo/releases/download/1.2.0/'+name,timeout=40).read()
+              assert hashlib.sha256(data).hexdigest()==digest,name
+              (out/name).write_bytes(data)
+          subprocess.run(['python','-m','pip','download','capstone==5.0.3','--only-binary=:all:','--platform','manylinux2014_x86_64','--python-version','311','--implementation','cp','--abi','cp311','--dest',str(out)],check=True,timeout=90)
+          chosen=set()
+          def add(path):
+              p=root/path
+              if p.is_file():chosen.add(p)
+          for name in ['reverse/functions.csv','reverse/symbols.csv','reverse/attempts/0x00960a30.cpp','reverse/attempts/0x0045c2f0.cpp','reverse/attempts/0x0078d410.cpp','reverse/attempts/0x007901f0.cpp','reverse/attempts/0x005a0450.cpp','reverse/attempt_support/0x00960a30.inc','reverse/attempt_support/0x00960a30-verification.json','baselines/bfme1/workshop-vanilla-1.03/manifest.json','baselines/bfme1/workshop-vanilla-1.03/files/lotrbfme.exe','Code/GameEngine/Source/GameClient/View.cpp','Code/Libraries/Source/WWVegas/WW3D2/seglinerenderer.cpp','AGENTS.md','LICENSE']:
+              add(name)
+          for p in (root/'tools').rglob('*.py'):chosen.add(p)
+          for stem in ['Code/Libraries','Code/GameEngine','Code/GameEngineDevice','reference/shims','reference/CnC_Generals_Zero_Hour/GeneralsMD/Code','vendor/stlport']:
+              for p in (root/stem).rglob('*'):
+                  if p.is_file() and (p.suffix.lower() in {'.h','.hpp','.inc','.inl','.ipp','.cxx'} or (stem=='vendor/stlport' and not p.suffix)):
+                      chosen.add(p)
+          compiler=root/'build/toolchains/vs2003/Program Files/Microsoft Visual Studio .NET 2003'
+          for p in (compiler/'Vc7/bin').rglob('*'):
+              if p.is_file() and p.suffix.lower() in {'.exe','.dll'}:chosen.add(p)
+          for p in (compiler/'Vc7/include').rglob('*'):
+              if p.is_file():chosen.add(p)
+          for p in (compiler/'Common7/IDE').glob('*.dll'):chosen.add(p)
+          for p in (root/'build/toolchains/vs2003').glob('*.dll'):chosen.add(p)
+          chosen={p for p in chosen if p.suffix.lower() not in {'.ttf','.otf','.woff','.woff2','.pfb','.pfa'}}
+          manifest={'commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'purpose':'isolated compiler execution; not a source-conversion delivery','files':{}}
+          with zipfile.ZipFile(out/'runtime.zip','w',zipfile.ZIP_DEFLATED,compresslevel=6) as z:
+              for p in sorted(chosen):
+                  rel=p.relative_to(root).as_posix();data=p.read_bytes();z.writestr(rel,data)
+                  manifest['files'][rel]={'size':len(data),'sha256':hashlib.sha256(data).hexdigest()}
+              for p in sorted(out.iterdir()):
+                  if p.name.startswith('wibo-') or p.suffix=='.whl':
+                      data=p.read_bytes();z.writestr('host/'+p.name,data)
+                      manifest['files']['host/'+p.name]={'size':len(data),'sha256':hashlib.sha256(data).hexdigest()}
+              z.writestr('runtime_manifest.json',json.dumps(manifest,indent=2))
+          print('Explicit runtime package:',len(chosen),'files', (out/'runtime.zip').stat().st_size,'bytes')
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: isolated-compiler-runtime
+          path: build/local_runtime_transfer/runtime.zip
+          retention-days: 1
+          compression-level: 0
