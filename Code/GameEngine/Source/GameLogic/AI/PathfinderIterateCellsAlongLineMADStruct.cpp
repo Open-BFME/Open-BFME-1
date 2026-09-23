@@ -1,11 +1,9 @@
-// ?iterateCellsAlongLine@Pathfinder@@AAEHPBUICoord2D@@0W4PathfindLayerEnum@@PAUMADStruct@@@Z
-// partial score=0.94 date=2026-09-15
 // cl: /DNDEBUG /MD
 //
-// Retail 0x003ED9F0: the cell-space line walk used by
+// Retail 0x003ED9F0, 478 bytes: the cell-space line walk used by
 // Pathfinder::moveAlliesAwayFromDestination. The two byte-true callers name
 // this private overload, and its callback is MADStruct::cellCallback at
-// 0x003EC070.
+// 0x003EC070. Same Bresenham shape as PathfinderGroundCellsAlongLineRva003E2620.cpp.
 
 extern "C" int __cdecl abs( int n );
 #pragma intrinsic(abs)
@@ -80,17 +78,11 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D *start,
 	const ICoord2D *end, PathfindLayerEnum layer,
 	MADStruct *userData )
 {
-	const ICoord2D *start_ptr = start;
-	const ICoord2D *end_ptr = end;
-	Int end_x = end_ptr->x;
-	Int x = start_ptr->x;
-	Int delta_x = abs( end_x - x );
-	Int y = start_ptr->y;
-	Int end_y = end_ptr->y;
-	Int delta_y = abs( end_y - y );
+	Int delta_x = abs( end->x - start->x );
+	Int delta_y = abs( end->y - start->y );
 
-	Int numpixels, num, numadd, den;
-	Int xinc1, xinc2, yinc1, yinc2;
+	Int xinc2, yinc1, xinc1, numpixels, numadd, den;
+	Int yinc2, num;
 	if (delta_x >= delta_y)
 	{
 		numpixels = delta_x + 1;
@@ -114,17 +106,19 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D *start,
 		xinc1 = 1;
 	}
 
-	if (start->x > end_x)
+	if (start->x > end->x)
 	{
 		xinc2 = -xinc2;
 		xinc1 = -1;
 	}
-	if (start->y > end_y)
+	if (start->y > end->y)
 	{
 		yinc2 = -yinc2;
 		yinc1 = -1;
 	}
 
+	Int x = start->x;
+	Int y = start->y;
 	PathfindCell *from = 0;
 	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
 	{
@@ -135,6 +129,7 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D *start,
 		Int ret = userData->cellCallback( from, to, x, y );
 		if (ret != 0)
 			return ret;
+		from = to;
 
 		if (num < 0)
 		{
@@ -146,9 +141,8 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D *start,
 		{
 			num += den;
 			x += xinc1;
-			 y += yinc1;
+			y += yinc1;
 		}
-		from = to;
 	}
 	return 0;
 }
