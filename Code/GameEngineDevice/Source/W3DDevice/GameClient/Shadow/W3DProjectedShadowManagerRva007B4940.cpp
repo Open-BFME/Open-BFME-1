@@ -17,7 +17,6 @@ typedef int Int;
 typedef float Real;
 typedef char Char;
 typedef bool Bool;
-enum ShadowType { SHADOW_DYNAMIC_PROJECTION = 0x400, SHADOW_DIRECTIONAL_PROJECTION = 0x800 };
 
 #include "vector3.h"
 #include "aabox.h"
@@ -105,7 +104,7 @@ class W3DShadowTexture : public RefCountClass
 struct BFMEShadowTypeInfo
 {
 	Char name[128];
-	ShadowType type;
+	Int type;				// +0x80; not read by this body
 	Bool allowUpdates;
 	Bool allowWorldAlign;
 	Char pad[2];
@@ -133,8 +132,9 @@ public:
 struct Rva007B4940Sub
 {
 	Char m_pad[0x58];
-	Real m_offsetX;					//retail +0x58
-	Real m_offsetY;					//retail +0x5c
+	// Named as in Rva007AED00UpdateOffsets.cpp: the bases updateOffsets divides by.
+	Real m_firstBase;				//retail +0x58
+	Real m_secondBase;				//retail +0x5c
 	Char m_pad2[8];
 	W3DShadowTexture *m_texture;	//retail +0x68
 };
@@ -145,11 +145,11 @@ public:
 	Rva007B3B80() throw();
 
 	Char m_pad00[0x34];
-	Int m_flags;				//retail +0x34
+	Int m_at34;					//retail +0x34
 	Char m_pad38[0x58 - 0x38];
 	Rva007B4940Sub *m_first;	//retail +0x58
 	Rva007B4940Sub *m_second;	//retail +0x5c
-	void *m_owner;				//retail +0x60
+	void *m_at60;				//retail +0x60
 	Rva007B3B80 *m_next;		//retail +0x64
 };
 
@@ -166,14 +166,14 @@ class W3DProjectedShadowManager
 public:
 	virtual ~W3DProjectedShadowManager();
 	virtual Rva007B3B80 *createShadowPairRva007B4940(
-		Int flags,
+		Int value34,
 		RenderObjClass *robj,
 		BFMEShadowTypeInfo *left,
 		BFMEShadowTypeInfo *right);
 };
 
 Rva007B3B80 *W3DProjectedShadowManager::createShadowPairRva007B4940(
-	Int flags,
+	Int value34,
 	RenderObjClass *robj,
 	BFMEShadowTypeInfo *left,
 	BFMEShadowTypeInfo *right)
@@ -235,9 +235,9 @@ Rva007B3B80 *W3DProjectedShadowManager::createShadowPairRva007B4940(
 		}
 	}
 
-	pairObj->m_flags = flags;
-	void *&owner = pairObj->m_owner;
-	owner = robj;
+	pairObj->m_at34 = value34;
+	void *&at60 = pairObj->m_at60;
+	at60 = robj;
 
 	if (pairObj->m_first)
 		pairObj->m_first->m_texture = texture1;
@@ -245,11 +245,11 @@ Rva007B3B80 *W3DProjectedShadowManager::createShadowPairRva007B4940(
 		pairObj->m_second->m_texture = texture2;
 
 	Rva007B4940Sub *first = pairObj->m_first;
-	first->m_offsetX = lx;
-	first->m_offsetY = ly;
+	first->m_firstBase = lx;
+	first->m_secondBase = ly;
 	Rva007B4940Sub *second = pairObj->m_second;
-	second->m_offsetX = rx;
-	second->m_offsetY = ry;
+	second->m_firstBase = rx;
+	second->m_secondBase = ry;
 
 	((Rva007AED00Table *)pairObj)->updateOffsets(0, left->offsetX, left->offsetY);
 	((Rva007AED00Table *)pairObj)->updateOffsets(1, right->offsetX, right->offsetY);

@@ -1198,5 +1198,25 @@
   "after_sha256": "4d70d23e9950dec8623db8ee854c4f7869251e2380744dad924054d35416b5f4",
   "evidence": "reverse/re_attempts.log",
   "reason": "the 0.2-score stash named this InGameUI method addWorldAnimation as a ZH guess, but ZH InGameUI::addWorldAnimation takes a const Coord3D*, while the actual callee (ILT 0x0003D230 -> body 0x00443910, called from 0x0044A2E0 at both 0x0044A405+0x125 and 0x0044A571+0x291 with ecx loaded from TheInGameUI at VA 0x012F148C) converts an int pair (fild [ebx]/fild [ebx+4]) into a screen-space Anim2D list; reverse/functions.csv 0x00443910 carries only the address-derived name '?d_00443910', and reverse/re_attempts.log line 12972 records a blocked verdict for that same address stating identity detectors provide no trustworthy real owner, so addWorldAnimation was never a ledger-sourced identity and the body keeps the address token rva00443910 per AGENTS.md 3a."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp",
+  "old_name": "m_flags",
+  "new_name": "m_at34",
+  "before_sha256": "aed9e1028e61aad98e5a009519da48086002fecc1bbb948f9d34cadb6a99fb79",
+  "after_sha256": "5b8f406fb27c621353484239ceb8db69bcf2dedb44c8b47e7922b5dfe09bbdba",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007B4940: the ShadowType enumerators contradicted Zero Hour Shadow.h values; +0x34/+0x60 flags/owner names had no layout witness so they take offset names; +0x58/+0x5C are the bases Rva007AED00UpdateOffsets.cpp names m_firstBase/m_secondBase"
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Shadow/W3DProjectedShadowManagerRva007B4940.cpp",
+  "old_name": "m_owner",
+  "new_name": "m_at60",
+  "before_sha256": "aed9e1028e61aad98e5a009519da48086002fecc1bbb948f9d34cadb6a99fb79",
+  "after_sha256": "5b8f406fb27c621353484239ceb8db69bcf2dedb44c8b47e7922b5dfe09bbdba",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "review of 0x007B4940: the ShadowType enumerators contradicted Zero Hour Shadow.h values; +0x34/+0x60 flags/owner names had no layout witness so they take offset names; +0x58/+0x5C are the bases Rva007AED00UpdateOffsets.cpp names m_firstBase/m_secondBase"
  }
 ]
