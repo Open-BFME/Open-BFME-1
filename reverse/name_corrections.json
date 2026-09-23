@@ -1048,5 +1048,15 @@
   "after_sha256": "58b14236f1a7c819f9889b24f8ca0eb34ff4ccc363ab266d4199069595d5d85c",
   "evidence": "reverse/symbols.csv",
   "reason": "the pin bfmeForward at Gen_002DDCC0Target 0x00022D86 (ILT thunk to body 0x00428250) is the (void*,void*) forwarder the matched AssetList walkers use; arg1 here is an AssetList pointer so the ShadowPart (float,float) alias does not fit"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/Rva00769490AssetListCollect.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/Rva00769490AssetListCollect.cpp",
+  "old_name": "BfmeShadowPartClient",
+  "new_name": "Rva00769490Client1C",
+  "before_sha256": "58b14236f1a7c819f9889b24f8ca0eb34ff4ccc363ab266d4199069595d5d85c",
+  "after_sha256": "0c7552fd99284e808745089cab1ff3d7d9114ab6d41bc049dc5a13c23e21e738",
+  "evidence": "reverse/name_corrections.json",
+  "reason": "BfmeShadowPartClient was borrowed from Shadow_setSize.cpp, where it is the client at node+0x08 of BfmeShadowPart's list; here the object sits at node+0x1C of the owner's +0x50 list and is reached only through vtable slot 3, and this TU's own earlier correction entry rejects the ShadowPart alias, so the class takes the offset-keyed address-token name Rva00769490Client1C."
  }
 ]

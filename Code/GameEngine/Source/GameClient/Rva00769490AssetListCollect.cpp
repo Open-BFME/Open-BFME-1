@@ -28,6 +28,10 @@
 #include <vector>
 #include <string.h>
 
+// TU-local string shim instead of WWLib/ascii_string.h: that header forwards
+// isEmpty, getLength, str and concat(const char *) to out-of-line StringBase
+// members and declares ~AsciiString out of line, where retail inlines them;
+// with the header this body compiles to 397 bytes, not 429.
 template <typename T>
 class StringBase
 {
@@ -110,7 +114,7 @@ public:
 	void bfmeForward(void *one, void *two);
 };
 
-class BfmeShadowPartClient
+class Rva00769490Client1C
 {
 public:
 	virtual void _bfme_slot0();
@@ -119,20 +123,20 @@ public:
 	virtual void bfmeForward(void *one, void *two);
 };
 
-struct Rva00769490ShadowNode
+struct Rva00769490Node50
 {
-	Rva00769490ShadowNode *m_next;
+	Rva00769490Node50 *m_next;
 	unsigned char m_pad[0x18];
-	BfmeShadowPartClient *m_client;
+	Rva00769490Client1C *m_client1C;
 };
 
 struct Rva00769490SlotRecord
 {
 	unsigned char m_pad[0x10];
-	Gen_002DDCC0Target *m_part;
+	Gen_002DDCC0Target *m_target10;
 };
 
-struct Rva00769490Room
+struct Rva00769490Record38
 {
 	unsigned char m_pad[8];
 	AsciiString m_name;
@@ -146,11 +150,11 @@ public:
 
 private:
 	unsigned char m_pad0[0x2c];
-	_STL::vector<Rva00769490Room> m_rooms;
+	_STL::vector<Rva00769490Record38> m_records2C;
 	unsigned char m_pad1[0x44 - 0x38];
 	Gen_002DDCC0Target *m_broadcastTarget;
 	unsigned char m_pad2[0x50 - 0x48];
-	Rva00769490ShadowNode *m_sentinel;
+	Rva00769490Node50 *m_sentinel;
 	Rva00769490SlotRecord *m_slotsABegin;
 	Rva00769490SlotRecord *m_slotsAEnd;
 	unsigned char m_pad3[0x60 - 0x5c];
@@ -162,8 +166,8 @@ private:
 void Rva00769490Owner::invoke(AssetList *assets, void *context,
 	const AsciiString &prefix, int /*arg4*/)
 {
-	for (_STL::vector<Rva00769490Room>::const_iterator room = m_rooms.begin();
-		room != m_rooms.end(); ++room)
+	for (_STL::vector<Rva00769490Record38>::const_iterator record = m_records2C.begin();
+		record != m_records2C.end(); ++record)
 	{
 		AsciiString key("a*");
 		if (!prefix.isEmpty())
@@ -171,28 +175,28 @@ void Rva00769490Owner::invoke(AssetList *assets, void *context,
 			key.concat(prefix);
 			key.concat(".");
 		}
-		*assets << (key + room->m_name);
+		*assets << (key + record->m_name);
 	}
 
 	if (m_broadcastTarget)
 		m_broadcastTarget->bfmeForward(assets, context);
 
-	for (Rva00769490ShadowNode *node = m_sentinel->m_next; node != m_sentinel;
+	for (Rva00769490Node50 *node = m_sentinel->m_next; node != m_sentinel;
 		node = node->m_next)
 	{
-		if (node->m_client)
-			node->m_client->bfmeForward(assets, context);
+		if (node->m_client1C)
+			node->m_client1C->bfmeForward(assets, context);
 	}
 
 	for (Rva00769490SlotRecord *slot = m_slotsABegin; slot != m_slotsAEnd; ++slot)
 	{
-		if (slot->m_part)
-			slot->m_part->bfmeForward(assets, context);
+		if (slot->m_target10)
+			slot->m_target10->bfmeForward(assets, context);
 	}
 
 	for (Rva00769490SlotRecord *slot = m_slotsBBegin; slot != m_slotsBEnd; ++slot)
 	{
-		if (slot->m_part)
-			slot->m_part->bfmeForward(assets, context);
+		if (slot->m_target10)
+			slot->m_target10->bfmeForward(assets, context);
 	}
 }
