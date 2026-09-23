@@ -108,8 +108,11 @@ def unstage_inflight():
     five harvests on 2026-09-17. It is picked up once the lease ends."""
     import fleet_run
     live = {a.lower() for a in fleet_run.active_rvas(ROOT)}
+    # a retired stash (its body landed, git rm above) stays retired even when the
+    # seat that landed it still holds the lease: unstaging that deletion put the
+    # stash back in the index and check_csv refused the commit (2026-09-23, x3)
     inflight = [p for p in out("git", "diff", "--cached", "--name-only", "--", "reverse/attempts").splitlines()
-                if Path(p).stem.lower() in live]
+                if Path(p).stem.lower() in live and (ROOT / p).exists()]
     if inflight:
         run("git", "reset", "-q", "--", *inflight)
         print(f"harvest: left {len(inflight)} in-flight stash(es) unstaged")
