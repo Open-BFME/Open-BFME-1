@@ -1024,15 +1024,16 @@ ThingTemplate::ThingTemplate() :
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?friend_getAIModuleInfo@ThingTemplate@@QAEPAVAIUpdateModuleData@@XZ present-unmatched
 AIUpdateModuleData *ThingTemplate::friend_getAIModuleInfo(void)
 {
-	Int numModInfos = m_behaviorModuleInfo.getCount();
+	// BFME places m_behaviorModuleInfo at +0x294; the reference header uses +0x108.
+	// Matched caller 0x001BD0D0 and the retail vector scan establish this owner.
+	Int numModInfos = (*reinterpret_cast<ModuleInfo *>(reinterpret_cast<char *>(this) + 0x294)).getCount();
 	for (int j = 0; j < numModInfos; ++j) 
 	{
-		if (m_behaviorModuleInfo.getNthData(j) && m_behaviorModuleInfo.getNthData(j)->isAiModuleData()) 
+		if ((*reinterpret_cast<ModuleInfo *>(reinterpret_cast<char *>(this) + 0x294)).getNthData(j) && (*reinterpret_cast<ModuleInfo *>(reinterpret_cast<char *>(this) + 0x294)).getNthData(j)->isAiModuleData()) 
 		{
-			return (AIUpdateModuleData *)m_behaviorModuleInfo.friend_getNthData(j);
+			return (AIUpdateModuleData *)(*reinterpret_cast<ModuleInfo *>(reinterpret_cast<char *>(this) + 0x294)).friend_getNthData(j);
 		}
 	}
 
