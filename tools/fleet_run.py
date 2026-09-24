@@ -2,14 +2,12 @@
 """Run one worker with an immutable brief, transcript and actual exit status.
 
 The caller supplies a bounded command (seat.sh uses timeout). Runs share an
-atomic RVA claim table across lanes. A claim is a LEASE: it carries the
-worker's pid and an expiry (FLEET_LEASE_SECONDS, default the 150-minute
-session cap plus 30 minutes). A lease is reclaimed only when it has expired,
-its run record is terminal, and its pid is gone -- never out from under a live
-or unverified worker. An operator can still release a named run with
---release RUN --reason TEXT after establishing the worker stopped. Existing
-legacy workers do not participate; deploy at a fleet restart, not by
-overwriting a running script.
+atomic RVA claim table across lanes. A claim carries its worker PID, expiry,
+and delegated Linux cgroup-v2 path. Reclaim requires an expired lease and a
+verified ``populated=0`` event; a dead PID or terminal record alone is not
+enough. Hosts without delegated cgroup-v2 support fail before launch. An
+operator can release a named cgroup-less legacy claim after establishing the
+worker stopped. Deploy at a controlled fleet restart, not over running workers.
 """
 import argparse
 from contextlib import closing
@@ -21,13 +19,14 @@ import os
 from pathlib import Path
 import re
 import shutil
-import signal
 import sqlite3
 import subprocess
 import sys
 import threading
 import time
 import uuid
+
+import fleet_cgroup
 
 from portable_lock import lock
 
@@ -81,12 +80,15 @@ def _schema(db):
         db.execute("ALTER TABLE claims ADD COLUMN pid INTEGER")
     if "expires" not in have:
         db.execute("ALTER TABLE claims ADD COLUMN expires REAL")
+    if "cgroup_path" not in have:
+        db.execute("ALTER TABLE claims ADD COLUMN cgroup_path TEXT")
 
 
-def _require_schema(db, *, initialized):
+def _require_schema(db, *, initialized, require_cgroup=True):
     """An initialized database must not repair a missing claims schema on read."""
     required = {
-        "claims": {"rva", "run", "started", "pid", "expires"} if initialized
+        "claims": ({"rva", "run", "started", "pid", "expires"}
+                   | ({"cgroup_path"} if require_cgroup else set())) if initialized
                   else {"rva", "run", "started"},
         "releases": {"run", "at", "reason"},
     }
@@ -95,6 +97,10 @@ def _require_schema(db, *, initialized):
     for table, columns in required.items():
         actual = {row[1] for row in db.execute(f"PRAGMA table_info({table})")}
         if not columns <= actual:
+            if table == "claims" and require_cgroup and "cgroup_path" not in actual:
+                raise CoordinationUnavailable(
+                    "claims database needs the guarded cgroup schema migration; "
+                    "stop the fleet, review --coordination-status, then run --init-coordination")
             raise CoordinationUnavailable(f"claims database schema lacks {table} columns")
 
 
@@ -252,6 +258,27 @@ def _coordination_digest(root):
     return digest.hexdigest()
 
 
+def cgroup_state(path, run=None):
+    """Return the verified cgroup state; absent, malformed or unreadable is unknown."""
+    if not path:
+        return None
+    try:
+        unit = fleet_cgroup.CgroupV2Unit.from_path(path)
+        if run is not None and unit.path.name != f"bfme-fleet-{run}":
+            return None
+        return unit.populated()
+    except (fleet_cgroup.CgroupStateUnavailable,
+            fleet_cgroup.ContainmentUnavailable, OSError, TypeError, ValueError):
+        return None
+
+
+def _cgroup_summary(states):
+    counts = {"empty": 0, "populated": 0, "unknown": 0}
+    for state in states:
+        counts["empty" if state is False else "populated" if state is True else "unknown"] += 1
+    return counts
+
+
 def coordination_status(root):
     """Read-only report for a controlled fleet coordination cutover."""
     root = Path(root)
@@ -259,10 +286,23 @@ def coordination_status(root):
     records = sorted((root / "build/fleet_runs").glob("*/record.json"))
     report = dict(state="fresh", claim_count=None, release_count=None,
                   record_count=len(records))
+    unit_states = []
+    for record_path in records:
+        try:
+            data = json.loads(record_path.read_text(encoding="utf-8"))
+            path_value = data.get("cgroup_path") if isinstance(data, dict) else None
+            if path_value:
+                state = cgroup_state(path_value, data.get("id") or record_path.parent.name)
+                if state is None and data.get("cgroup_empty_verified") is True:
+                    state = False
+                unit_states.append(state)
+        except (OSError, ValueError):
+            unit_states.append(None)
 
     def finished():
         # SQLite's first read of a WAL database may create a shared-memory
         # sidecar. Snapshot after the read so the dry run does not stale itself.
+        report.setdefault("cgroup_units", _cgroup_summary(unit_states))
         report["snapshot_sha256"] = _coordination_digest(root)
         return report
 
@@ -280,13 +320,24 @@ def coordination_status(root):
         return finished()
     try:
         with closing(_open_existing(path, readonly=True)) as db:
-            _require_schema(db, initialized=identity is not None)
+            _require_schema(db, initialized=identity is not None, require_cgroup=False)
             report["claim_count"] = db.execute("SELECT count(*) FROM claims").fetchone()[0]
             report["release_count"] = db.execute("SELECT count(*) FROM releases").fetchone()[0]
+            columns = {row[1] for row in db.execute("PRAGMA table_info(claims)")}
+            report["cgroup_schema"] = "present" if "cgroup_path" in columns else "missing"
+            if "cgroup_path" in columns:
+                for run, path_value in db.execute(
+                        "SELECT DISTINCT run, cgroup_path FROM claims WHERE cgroup_path IS NOT NULL"):
+                    unit_states.append(cgroup_state(path_value, run))
+            report["cgroup_units"] = _cgroup_summary(unit_states)
             if identity is not None and _database_id(db) != identity:
                 report.update(state="inconsistent", problem="database UUID differs from marker")
             else:
-                report["state"] = "ready" if identity is not None else "requires_review"
+                if identity is None:
+                    report["state"] = "requires_review"
+                else:
+                    report["state"] = ("ready" if "cgroup_path" in columns
+                                        else "requires_cgroup_migration")
     except (sqlite3.Error, CoordinationUnavailable) as error:
         report.update(state="inconsistent", problem=str(error))
     return finished()
@@ -308,6 +359,12 @@ def _recorded_live_pids(root):
             raise CoordinationUnavailable(f"cannot establish run-record liveness at {path}: nonterminal run has no PID")
         if pid and pid_alive(pid):
             yield pid
+        cgroup_path = data.get("cgroup_path")
+        if cgroup_path:
+            state = cgroup_state(cgroup_path, data.get("id") or directory.name)
+            if state is True or (state is None and data.get("cgroup_empty_verified") is not True):
+                raise CoordinationUnavailable(
+                    f"cannot establish empty cgroup for run {directory.name}: {state or 'unknown'}")
 
 
 def initialize_coordination(root, *, stopped_fleet=False, expected_sha=None):
@@ -327,6 +384,7 @@ def initialize_coordination(root, *, stopped_fleet=False, expected_sha=None):
                 "prior claims database is missing or inconsistent; restore it before migration")
         if report["state"] == "ready":
             return report
+        marked_cgroup_migration = report["state"] == "requires_cgroup_migration"
         live = list(_recorded_live_pids(root))
         if live:
             raise CoordinationUnavailable(f"recorded worker PID(s) still alive: {live}")
@@ -334,14 +392,25 @@ def initialize_coordination(root, *, stopped_fleet=False, expected_sha=None):
         if path.exists():
             db = _open_existing(path)
             try:
-                _require_schema(db, initialized=False)
                 db.execute("BEGIN IMMEDIATE")
+                if marked_cgroup_migration:
+                    # A marked database may add only the reviewed nullable
+                    # cgroup column. Never repair another lost required field.
+                    _require_schema(db, initialized=True, require_cgroup=False)
+                else:
+                    _require_schema(db, initialized=False)
                 columns = {row[1] for row in db.execute("PRAGMA table_info(claims)")}
                 if "pid" in columns:
                     live = [pid for (pid,) in db.execute("SELECT pid FROM claims")
                             if pid and pid_alive(pid)]
                     if live:
                         raise CoordinationUnavailable(f"claimed worker PID(s) still alive: {live}")
+                if "cgroup_path" in columns:
+                    for owner, cgroup_path in db.execute(
+                            "SELECT DISTINCT run, cgroup_path FROM claims WHERE cgroup_path IS NOT NULL"):
+                        if cgroup_state(cgroup_path, owner) is not False:
+                            raise CoordinationUnavailable(
+                                f"cannot establish empty cgroup for claimed run {owner}")
                 _schema(db)
             except BaseException:
                 db.close()
@@ -392,33 +461,48 @@ def pid_alive(pid):
         return True
 
 
-def run_finished(root, run):
-    """True when the run record has reached a terminal state.
-
-    Expired claims require this as well as a dead recorded PID; claims without
-    an expiry use the record because they predate PID/lease tracking.
-    """
-    record = root / "build" / "fleet_runs" / str(run) / "record.json"
-    try:
-        status = json.loads(record.read_text(encoding="utf-8")).get("status")
-    except (OSError, ValueError):
-        return False  # no trustworthy record: unknown liveness, keep the claim
-    return status in ("finished", "failed", "aborted")
-
-
-def lease_dead(expires, pid, now=None, root=None, run=None):
+def lease_dead(expires, pid, now=None, root=None, run=None, cgroup_path=None):
     now = time.time() if now is None else now
-    if not expires:
-        # An interrupted record may still have a live child. Even an ended
-        # legacy record cannot override a PID that is still alive.
-        return (root is not None and run_finished(root, run)
-                and not pid_alive(pid))
-    # A supervisor killed before it can finalize leaves a nonterminal record.
-    # A dead direct PID alone does not prove the run stopped: descendants may
-    # still be active. Reclaim only after a terminal record and a dead PID.
-    # Claims without a trustworthy record or PID remain busy for review.
-    return (now > expires and root is not None and run_finished(root, run)
-            and not pid_alive(pid))
+    # A dead direct PID or terminal legacy record cannot prove detached
+    # descendants stopped. Only a contained run with an expired lease and a
+    # positively empty cgroup can be reclaimed automatically.
+    if not expires or now <= expires or not cgroup_path:
+        return False
+    # Empty containment excludes descendants; the separately recorded direct
+    # PID must also be absent so an escaped/migrated worker cannot be replaced.
+    if cgroup_state(cgroup_path, run) is not False:
+        return False
+    pids = []
+    if pid is not None:
+        pids.append(pid)
+    record_has_pid = False
+    preexec_no_pid = False
+    if root is not None and run is not None:
+        record_path = Path(root) / "build/fleet_runs" / str(run) / "record.json"
+        try:
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return False
+        if not isinstance(record, dict):
+            return False
+        if (record.get("id") != str(run)
+                or record.get("cgroup_path") != str(cgroup_path)):
+            return False
+        record_has_pid = "pid" in record
+        if record_has_pid:
+            pids.append(record["pid"])
+        preexec_no_pid = (
+            not record_has_pid
+            and record.get("touch_tracking") is True
+            and record.get("launch_phase") in ("starting", "preexec")
+            and record.get("status") in ("starting", "running"))
+    elif pid is None:
+        return False
+    if any(pid_alive(value) for value in pids):
+        return False
+    # With no direct PID yet, only the durable prelaunch record state is
+    # eligible: the gated bootstrap cannot exec before attach and PID commit.
+    return bool(pids) or preexec_no_pid
 
 
 def strip_timeout(command):
@@ -444,55 +528,27 @@ def parse_duration(text):
     return float(text)
 
 
-def kill_tree(child):
-    """Kill the worker and everything it spawned (codex forks tool shells)."""
-    if sys.platform.startswith("win"):
-        try:
-            subprocess.Popen(["taskkill", "/T", "/F", "/PID", str(child.pid)],
-                             stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).wait(30)
-        except OSError:
-            pass
-    else:
-        try:
-            os.killpg(child.pid, signal.SIGKILL)
-        except OSError:
-            pass
-    try:
-        child.kill()
-    except (ProcessLookupError, OSError):
-        pass
-
-
-def surviving_group(child):
-    """A direct child may exit while a tool process in its session still runs."""
-    if sys.platform.startswith("win"):
-        return False  # native Windows has no POSIX process-group query
-    try:
-        os.killpg(child.pid, 0)
-        return True
-    except ProcessLookupError:
-        return False
-    except OSError:
-        return True
-
-
-def claim(root, run, targets, pid=None, lease=None):
+def claim(root, run, targets, pid=None, lease=None, cgroup_path=None, expires_at=None):
     lease = LEASE_SECONDS if lease is None else lease
     now = time.time()
+    expires = now + lease if expires_at is None else expires_at
     with closing(connect(root)) as db, db:
         db.execute("BEGIN IMMEDIATE")
         for rva, _ in targets:
-            owner = db.execute("SELECT run, pid, expires FROM claims WHERE rva=?", (rva,)).fetchone()
+            owner = db.execute(
+                "SELECT run, pid, expires, cgroup_path FROM claims WHERE rva=?", (rva,)).fetchone()
             if owner:
-                if not lease_dead(owner[2], owner[1], now, root, owner[0]):
+                if not lease_dead(owner[2], owner[1], now, root, owner[0], owner[3]):
                     raise ClaimConflict(f"{rva} is already owned by run {owner[0]}")
                 db.execute("DELETE FROM claims WHERE rva=?", (rva,))
                 db.execute("INSERT INTO releases VALUES (?,?,?)",
                            (owner[0], now,
-                            f"lease expired, run is terminal, and pid {owner[1]} is gone; "
+                            f"lease expired and run cgroup was verified empty; "
                             f"{rva} taken by {run}"))
-            db.execute("INSERT INTO claims (rva, run, started, pid, expires) VALUES (?,?,?,?,?)",
-                       (rva, run, now, pid, now + lease))
+            db.execute(
+                "INSERT INTO claims (rva, run, started, pid, expires, cgroup_path) "
+                "VALUES (?,?,?,?,?,?)",
+                (rva, run, now, pid, expires, cgroup_path))
 
 
 def set_pid(root, run, pid, expected=None):
@@ -522,8 +578,9 @@ def active_rvas(root):
     """Leases that are live or whose worker termination is not yet proven."""
     now = time.time()
     with closing(connect(root)) as db, db:
-        rows = db.execute("SELECT rva, run, pid, expires FROM claims").fetchall()
-    return {rva for rva, run, pid, expires in rows if not lease_dead(expires, pid, now, root, run)}
+        rows = db.execute("SELECT rva, run, pid, expires, cgroup_path FROM claims").fetchall()
+    return {rva for rva, run, pid, expires, cgroup_path in rows
+            if not lease_dead(expires, pid, now, root, run, cgroup_path)}
 
 
 def run_tag(text):
@@ -566,7 +623,7 @@ def touched_rvas(directory):
 def aborted(record):
     """A run that died at once and worked on nothing (quota, network, a bad
     command line). 2,680 of these on 2026-09-18 cooled 1,796 bodies for 48 h."""
-    return (record.get("status") == "aborted"
+    return ((record.get("status") == "aborted" and not record.get("touched"))
             or (record.get("exit_code") not in (0, None)
                 and (record.get("seconds") or ABORT_SECONDS) < ABORT_SECONDS
                 and not record.get("touched")))
@@ -594,8 +651,49 @@ def retry_allowed(root, rva, before):
                    for row in csv.DictReader(ledger) if row.get("target_rva"))
 
 
-def release(root, run, reason):
+def release(root, run, reason, *, stopped_fleet=False, expected_state_sha=None):
     with closing(connect(root)) as db, db:
+        db.execute("BEGIN IMMEDIATE")
+        rows = db.execute(
+            "SELECT DISTINCT run, pid, cgroup_path FROM claims WHERE run=?", (run,)).fetchall()
+        record_path = Path(root) / "build/fleet_runs" / str(run) / "record.json"
+        try:
+            data = json.loads(record_path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            data = {}
+        if not isinstance(data, dict):
+            data = {}
+        record_cgroup = data.get("cgroup_path")
+        record_pid = data.get("pid")
+        if record_pid is not None and pid_alive(record_pid):
+            raise ClaimConflict(f"cannot release run {run}: recorded worker PID is alive or unknown")
+        if record_cgroup and cgroup_state(record_cgroup, run) is not False:
+            raise ClaimConflict(f"cannot release run {run}: its recorded cgroup is populated or unknown")
+        legacy_claim = False
+        for owner, pid, path in rows:
+            if path != record_cgroup:
+                raise ClaimConflict(
+                    f"cannot release run {run}: claim and record cgroup paths differ")
+            if pid is not None and pid_alive(pid):
+                raise ClaimConflict(f"cannot release run {run}: claimed worker PID is alive or unknown")
+            if path:
+                if data.get("id") != str(run):
+                    raise ClaimConflict(f"cannot release run {run}: its recorded cgroup owner ID differs")
+                if cgroup_state(path, owner) is not False:
+                    raise ClaimConflict(f"cannot release run {run}: its cgroup is populated or unknown")
+            else:
+                legacy_claim = True
+        if legacy_claim:
+            if not stopped_fleet or not expected_state_sha:
+                raise ClaimConflict(
+                    f"cgroup-less run {run} requires --stopped-fleet and a fresh --state-sha "
+                    "from --coordination-status before named release")
+            report = coordination_status(root)
+            if report["snapshot_sha256"] != expected_state_sha:
+                raise ClaimConflict("fleet state changed since coordination status; inspect and retry")
+            units = report.get("cgroup_units", {})
+            if units.get("populated", 0) or units.get("unknown", 0):
+                raise ClaimConflict("cannot release cgroup-less ownership while any cgroup is active or unknown")
         db.execute("DELETE FROM claims WHERE run=?", (run,))
         db.execute("INSERT INTO releases VALUES (?,?,?)", (run, time.time(), reason))
 
@@ -618,23 +716,47 @@ def execute(root, brief, legacy_log, engine, seat, command):
     with closing(connect(root)):
         pass
     run = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ-") + uuid.uuid4().hex[:12]
+    # Fail before recording or claiming work unless a delegated cgroup-v2
+    # unit can be created. There is no process-group fallback.
+    unit = fleet_cgroup.CgroupV2Unit.create(run)
     directory = root / "build/fleet_runs" / run
-    directory.mkdir(parents=True)
-    (directory / "brief.txt").write_bytes(body)
-    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True)
-    record = dict(id=run, engine=engine, seat=seat, source_head=head.stdout.strip(),
-                  brief_sha256=hashlib.sha256(body).hexdigest(), targets=targets,
-                  start=time.time(), status="starting", legacy_log=str(legacy_log),
-                  usage=None, usage_note="No token or cost attribution from plain-text output")
-    save(directory / "record.json", record)
+    try:
+        directory.mkdir(parents=True)
+        (directory / "brief.txt").write_bytes(body)
+        head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=root, capture_output=True, text=True)
+        record_path = directory / "record.json"
+        record = dict(id=run, engine=engine, seat=seat, source_head=head.stdout.strip(),
+                      brief_sha256=hashlib.sha256(body).hexdigest(), targets=targets,
+                      start=time.time(), status="starting", legacy_log=str(legacy_log),
+                      cgroup_path=str(unit.path), cgroup_empty_verified=False,
+                      touch_tracking=True, launch_phase="starting",
+                      usage=None, usage_note="No token or cost attribution from plain-text output")
+        save(record_path, record)
+    except BaseException:
+        if unit.populated() is False:
+            unit.remove()
+        raise
+
+    record_lock = threading.RLock()
+
+    def save_record():
+        with record_lock:
+            save(record_path, record)
+
     claimed = False
     child = None
+    bootstrap = None
+    timer = None
+    timeout_errors = []
     try:
-        claim(root, run, targets)
+        lease_expires = time.time() + LEASE_SECONDS
+        record["lease_expires"] = lease_expires
+        save_record()
+        claim(root, run, targets, cgroup_path=str(unit.path), expires_at=lease_expires)
         claimed = True
         validate_targets(root, targets)
         record["status"] = "running"
-        save(directory / "record.json", record)
+        save_record()
         # The compatibility path becomes a pointer; preserve any old transcript.
         pointer = Path(legacy_log)
         pointer.parent.mkdir(parents=True, exist_ok=True)
@@ -644,9 +766,14 @@ def execute(root, brief, legacy_log, engine, seat, command):
         print(f"fleet run {run}: {directory}", flush=True)
         with (directory / "output.log").open("w", encoding="utf-8") as log:
             command, cap, kill_after = strip_timeout(command)
-            # Popen without a shell does not consult PATHEXT: on Windows the
-            # npm `codex` shim is codex.cmd, and a bare `codex` is WinError 2.
-            command = [shutil.which(command[0]) or command[0]] + list(command[1:])
+            if not command:
+                raise ValueError("worker command must not be empty")
+            # Resolve in the supervisor so a missing executable remains a
+            # pre-exec launch failure instead of a worker exit from bootstrap.
+            resolved = shutil.which(command[0])
+            if not resolved:
+                raise FileNotFoundError(f"worker executable not found: {command[0]}")
+            command = [resolved] + list(command[1:])
             # seat.sh passes the whole brief as one argument; on Windows the
             # npm codex shim goes through cmd.exe, whose line limit is ~8 KB
             # ("The command line is too long"). Hand the brief over stdin
@@ -664,32 +791,50 @@ def execute(root, brief, legacy_log, engine, seat, command):
             elif "-" in command[1:]:
                 # seat.sh now passes `-` itself; the brief still goes over stdin
                 feed = body.decode("utf-8-sig", errors="replace").encode("utf-8")
-            child = subprocess.Popen(command, cwd=root, env=dict(os.environ, BFME_RUN_ID=run, BFME_RUN_DIR=str(directory)),
-                                     stdin=subprocess.PIPE if feed else subprocess.DEVNULL,
-                                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                                     start_new_session=not sys.platform.startswith("win"))
+            record["launch_phase"] = "preexec"
+            save_record()
+            bootstrap = fleet_cgroup.BlockedBootstrap(
+                command, cwd=root, env=dict(os.environ, BFME_RUN_ID=run, BFME_RUN_DIR=str(directory)),
+                stdin=subprocess.PIPE if feed else subprocess.DEVNULL,
+                stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+            child = bootstrap.child
             record["pid"] = child.pid
+            record["launch_phase"] = "bootstrap"
             record["cap_seconds"] = cap
-            save(directory / "record.json", record)
-            try:
-                set_pid(root, run, child.pid, expected=len(targets))
-            except ClaimConflict:
-                kill_tree(child)
-                child.wait(timeout=30)
-                raise
+            save_record()
+            unit.attach(child.pid)
+            set_pid(root, run, child.pid, expected=len(targets))
+            record["launch_phase"] = "contained"
+            save_record()
+            if cap is not None:
+                def expire():
+                    if unit.populated() is False:
+                        return
+                    try:
+                        unit.kill()
+                    except BaseException as error:
+                        timeout_errors.append(str(error))
+                    try:
+                        with record_lock:
+                            record["timed_out"] = True
+                            if timeout_errors:
+                                record["cgroup_timeout_error"] = timeout_errors[-1]
+                            save(record_path, record)
+                    except BaseException as error:
+                        timeout_errors.append(f"cannot save timeout record: {error}")
+                timer = threading.Timer(cap, expire)
+                # Keep the owning supervisor alive until its cap action runs
+                # if an exception leaves the unit populated.
+                timer.daemon = False
+                timer.start()
+            bootstrap.release()
+            record["launch_phase"] = "released"
+            save_record()
             if feed:
                 try:
                     child.stdin.write(feed)
                 finally:
                     child.stdin.close()
-            timer = None
-            if cap:
-                def expire():
-                    record["timed_out"] = True
-                    kill_tree(child)
-                timer = threading.Timer(cap, expire)
-                timer.daemon = True
-                timer.start()
             # Bound memory even if a tool emits a multi-megabyte single line.
             with child.stdout:
                 while chunk := child.stdout.readline(65536):
@@ -698,35 +843,64 @@ def execute(root, brief, legacy_log, engine, seat, command):
                         log.write(line.rstrip("\r\n")[:400] + "\n")
                         log.flush()
             code = child.wait()
+            # A direct CLI exit does not release ownership: wait for every
+            # contained descendant before freezing touches or stopping timer.
+            while True:
+                if timeout_errors:
+                    raise fleet_cgroup.CgroupStateUnavailable(timeout_errors[-1])
+                state = unit.populated()
+                if state is False:
+                    break
+                if state is None:
+                    raise fleet_cgroup.CgroupStateUnavailable(
+                        f"cannot read cgroup.events for {unit.path}")
+                time.sleep(0.05)
             if timer:
                 timer.cancel()
                 timer.join()
+                timer = None
         record.update(status="finished", exit_code=code)
         return code
     except BaseException as error:
-        record.update(status="interrupted" if child and child.poll() is None else "failed",
-                      error=str(error))
+        with record_lock:
+            record.update(status="interrupted" if child and child.poll() is None else "failed",
+                          error=str(error))
+        save_record()
         raise
     finally:
-        record.update(end=time.time())
-        record["seconds"] = record["end"] - record["start"]
-        record["touched"] = touched_rvas(directory)
-        if claimed and child is not None and child.poll() is not None and surviving_group(child):
-            # The direct CLI exited but a subprocess remains. Its PID is not
-            # the stored PID, so retain ownership as unknown until an operator
-            # verifies the whole group is gone and releases the named run.
-            record["surviving_group"] = True
+        if bootstrap is not None and not bootstrap._released:
             try:
-                set_pid(root, run, None, expected=len(targets))
-            except ClaimConflict:
-                record["claim_lost_with_surviving_group"] = True
-        if record.get("status") == "finished" and aborted(record):
-            record["status"] = "aborted"
-        save(directory / "record.json", record)
-        # A detached surviving child still owns its bodies. Do not time it out
-        # of the registry and hand them to another worker.
-        if claimed and not record.get("surviving_group") and (child is None or child.poll() is not None):
-            release(root, run, "worker exited" if child is not None else "launch failed")
+                bootstrap.abort()
+            except BaseException as error:
+                record["bootstrap_abort_error"] = str(error)
+        state = unit.populated()
+        empty = state is False
+        if timer and empty:
+            timer.cancel()
+            timer.join()
+            timer = None
+        with record_lock:
+            record["end"] = time.time()
+            record["seconds"] = record["end"] - record["start"]
+            record["touched"] = touched_rvas(directory)
+            record["cgroup_empty_verified"] = empty
+            if empty:
+                record["launch_phase"] = "complete"
+            if state is True:
+                record["cgroup_state"] = "populated"
+            elif state is None:
+                record["cgroup_state"] = "unknown"
+            if timeout_errors:
+                record["cgroup_timeout_error"] = timeout_errors[-1]
+            if record.get("status") == "finished" and aborted(record):
+                record["status"] = "aborted"
+            save(record_path, record)
+        # Release only after a positive empty observation. The record carries
+        # that evidence before the DB row is removed; then remove only our unit.
+        if claimed and empty:
+            release(root, run, "contained worker unit empty")
+        if empty:
+            unit.remove()
 
 
 def main():
@@ -763,7 +937,8 @@ def main():
     if a.release:
         if not a.reason:
             ap.error("--release requires --reason after verifying the worker has stopped")
-        release(ROOT, a.release, a.reason)
+        release(ROOT, a.release, a.reason, stopped_fleet=a.stopped_fleet,
+                expected_state_sha=a.state_sha)
         return
     command = a.command[1:] if a.command[:1] == ["--"] else a.command
     if not a.brief or not a.log or not command:

@@ -114,18 +114,28 @@ def test_recent_runs_and_attempt_counts(tmp_path, world):
     assert eligibility.attempt_counts()[RVA] == 2
 
 
-def test_only_touched_targets_cool_down_and_aborted_runs_cool_nothing(tmp_path):
+def test_only_verified_contained_touches_cool_down_and_aborted_runs_cool_nothing(tmp_path):
     def run(name, **record):
         directory = tmp_path / "build" / "fleet_runs" / name
         directory.mkdir(parents=True)
         record.setdefault("start", time.time() - 60)
         (directory / "record.json").write_text(json.dumps(record), encoding="utf-8")
     two = [["0x00000010", 10], ["0x00000020", 10]]
-    run("worked", status="finished", exit_code=0, seconds=4000, targets=two, touched=["0x00000010"])
-    run("quota", status="finished", exit_code=1, seconds=3, targets=[["0x00000030", 10]], touched=[])
-    run("legacy-quota", status="finished", exit_code=1, seconds=3, targets=[["0x00000040", 10]])
+    run("worked", status="finished", exit_code=0, seconds=4000, targets=two,
+        touched=["0x00000010"], cgroup_path="/cg/bfme-fleet-worked",
+        cgroup_empty_verified=True)
+    run("quota", status="finished", exit_code=1, seconds=3, targets=[["0x00000030", 10]],
+        touched=[], cgroup_path="/cg/bfme-fleet-quota", cgroup_empty_verified=True)
+    run("legacy-worked", status="finished", exit_code=0, seconds=4000,
+        targets=[["0x00000040", 10]])
+    run("legacy-aborted", status="aborted", exit_code=1, seconds=2,
+        targets=[["0x00000060", 10]], touched=[])
     run("live", status="running", targets=[["0x00000050", 10]], touched=[])
-    assert eligibility.recent_run_rvas(1, tmp_path) == {"0x00000010", "0x00000050"}
+    # A contained completed run cools only its touched targets. Old runs with
+    # no containment path retain all brief targets during the window, even if
+    # an old quick-failure record would otherwise be considered aborted.
+    assert eligibility.recent_run_rvas(1, tmp_path) == {
+        "0x00000010", "0x00000040", "0x00000050", "0x00000060"}
 
 
 def test_servable_applies_every_lane_rule(tmp_path, world, monkeypatch):

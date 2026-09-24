@@ -129,7 +129,7 @@ class LeaseTests(unittest.TestCase):
         temporary = stack.enter_context(tempfile.TemporaryDirectory())
         return Path(temporary)
 
-    def test_live_lease_blocks_and_dead_lease_is_reclaimed(self):
+    def test_cgroupless_terminal_claim_stays_busy_and_empty_contained_claim_reclaims(self):
         with contextlib.ExitStack() as stack:
             root = self._root(stack)
             targets = [("0x00123456", 2)]
@@ -141,25 +141,64 @@ class LeaseTests(unittest.TestCase):
             fleet_run.claim(root, "run-c", [("0x00000010", 1)], pid=None, lease=-5)
             self.assertIn("0x00000010", fleet_run.active_rvas(root))
 
-            # A dead PID with a missing run record is still ambiguous.
+            # A terminal record and dead direct PID cannot prove that an
+            # uncontained descendant stopped.
+            record = root / "build" / "fleet_runs" / "run-d"
+            record.mkdir(parents=True)
+            (record / "record.json").write_text(
+                json.dumps({"status": "finished"}), encoding="utf-8")
             fleet_run.claim(root, "run-d", [("0x00000020", 1)], pid=999999, lease=-5)
             with patch.object(fleet_run, "pid_alive", return_value=False):
                 self.assertIn("0x00000020", fleet_run.active_rvas(root))
                 with self.assertRaises(RuntimeError):
                     fleet_run.claim(root, "run-e", [("0x00000020", 1)], pid=None, lease=10)
 
-                # A terminal record plus a dead PID permits takeover.
-                record = root / "build" / "fleet_runs" / "run-d"
-                record.mkdir(parents=True)
-                (record / "record.json").write_text(
-                    json.dumps({"status": "finished"}), encoding="utf-8")
-                self.assertNotIn("0x00000020", fleet_run.active_rvas(root))
-                fleet_run.claim(root, "run-f", [("0x00000020", 1)], pid=None, lease=10)
+            # A positive empty cgroup is the evidence that permits takeover,
+            # and the direct PID must also be absent.
+            cgroup_path = "/delegated/bfme-fleet-run-f"
+            record = root / "build" / "fleet_runs" / "run-f"
+            record.mkdir(parents=True)
+            (record / "record.json").write_text(
+                json.dumps({"id": "run-f", "status": "running", "pid": 999999,
+                            "cgroup_path": cgroup_path}), encoding="utf-8")
+            fleet_run.claim(root, "run-f", [("0x00000030", 1)], pid=999999,
+                            lease=-5, cgroup_path=cgroup_path)
+            with patch.object(fleet_run, "cgroup_state", return_value=False):
+                self.assertNotIn("0x00000030", fleet_run.active_rvas(root))
+                fleet_run.claim(root, "run-g", [("0x00000030", 1)], pid=None, lease=10)
             with contextlib.closing(fleet_run.connect(root)) as db:
-                owner = db.execute("SELECT run FROM claims WHERE rva='0x00000020'").fetchone()[0]
+                owner = db.execute("SELECT run FROM claims WHERE rva='0x00000030'").fetchone()[0]
                 reasons = [r[0] for r in db.execute("SELECT reason FROM releases")]
-            self.assertEqual(owner, "run-f")
+            self.assertEqual(owner, "run-g")
             self.assertTrue(any("lease expired" in r for r in reasons))
+
+            # A live recorded PID blocks reclaim even if the unit appears empty.
+            record = root / "build" / "fleet_runs" / "run-live-contained"
+            record.mkdir(parents=True)
+            cgroup_path = "/delegated/bfme-fleet-run-live-contained"
+            (record / "record.json").write_text(
+                json.dumps({"id": "run-live-contained", "status": "running",
+                            "pid": os.getpid(), "cgroup_path": cgroup_path}), encoding="utf-8")
+            fleet_run.claim(root, "run-live-contained", [("0x00000031", 1)],
+                            pid=os.getpid(), lease=-5,
+                            cgroup_path=cgroup_path)
+            with patch.object(fleet_run, "cgroup_state", return_value=False):
+                self.assertIn("0x00000031", fleet_run.active_rvas(root))
+
+            # PID=None is releasable only for a verifiable prelaunch record
+            # with no PID written before the bootstrap gate opened.
+            record = root / "build" / "fleet_runs" / "run-prelaunch"
+            record.mkdir(parents=True)
+            cgroup_path = "/delegated/bfme-fleet-run-prelaunch"
+            (record / "record.json").write_text(
+                json.dumps({"id": "run-prelaunch", "status": "starting",
+                            "cgroup_path": cgroup_path, "touch_tracking": True,
+                            "launch_phase": "preexec"}), encoding="utf-8")
+            fleet_run.claim(root, "run-prelaunch", [("0x00000032", 1)],
+                            pid=None, lease=-5,
+                            cgroup_path=cgroup_path)
+            with patch.object(fleet_run, "cgroup_state", return_value=False):
+                self.assertNotIn("0x00000032", fleet_run.active_rvas(root))
 
     def test_expired_terminal_record_does_not_override_unknown_pid(self):
         with contextlib.ExitStack() as stack:
@@ -209,14 +248,83 @@ class LeaseTests(unittest.TestCase):
                 fleet_run.claim(root, "replacement", [("0x00000022", 1)],
                                 pid=None, lease=10)
 
-    def test_own_pid_is_alive_and_release_clears(self):
+    def test_live_pid_blocks_release_even_when_cgroup_looks_empty(self):
         self.assertTrue(fleet_run.pid_alive(os.getpid()))
         with contextlib.ExitStack() as stack:
             root = self._root(stack)
-            fleet_run.claim(root, "run-f", [("0x00000030", 1)], pid=os.getpid(), lease=-5)
-            self.assertIn("0x00000030", fleet_run.active_rvas(root))
-            fleet_run.release(root, "run-f", "test")
-            self.assertEqual(fleet_run.active_rvas(root), set())
+            fleet_run.connect(root).close()
+            run = "run-f"
+            cgroup_path = f"/delegated/bfme-fleet-{run}"
+            record = root / "build" / "fleet_runs" / run
+            record.mkdir(parents=True)
+            (record / "record.json").write_text(
+                json.dumps({"status": "running", "pid": os.getpid(),
+                            "cgroup_path": cgroup_path}), encoding="utf-8")
+            fleet_run.claim(root, run, [("0x00000030", 1)], pid=os.getpid(),
+                            lease=-5, cgroup_path=cgroup_path)
+            with patch.object(fleet_run, "cgroup_state", return_value=False):
+                self.assertIn("0x00000030", fleet_run.active_rvas(root))
+                with self.assertRaisesRegex(fleet_run.ClaimConflict, "PID is alive"):
+                    fleet_run.release(root, run, "test")
+                self.assertEqual(fleet_run.active_rvas(root), {"0x00000030"})
+
+    def test_claim_record_cgroup_mismatch_stays_busy_and_cannot_release(self):
+        with contextlib.ExitStack() as stack:
+            root = self._root(stack)
+            fleet_run.connect(root).close()
+            run = "run-mismatch"
+            record_cgroup = f"/delegated/bfme-fleet-{run}"
+            claim_cgroup = "/delegated/bfme-fleet-other-owner"
+            record = root / "build" / "fleet_runs" / run
+            record.mkdir(parents=True)
+            (record / "record.json").write_text(
+                json.dumps({"id": run, "status": "finished", "pid": 999999,
+                            "cgroup_path": record_cgroup}), encoding="utf-8")
+            fleet_run.claim(root, run, [("0x00000033", 1)], pid=999999,
+                            lease=-5, cgroup_path=claim_cgroup)
+            with patch.object(fleet_run, "cgroup_state", return_value=False), \
+                    patch.object(fleet_run, "pid_alive", return_value=False):
+                self.assertIn("0x00000033", fleet_run.active_rvas(root))
+                with self.assertRaisesRegex(fleet_run.ClaimConflict, "paths differ"):
+                    fleet_run.release(root, run, "test")
+                self.assertEqual(fleet_run.active_rvas(root), {"0x00000033"})
+
+    def test_release_rejects_missing_record_containment_for_claim(self):
+        with contextlib.ExitStack() as stack:
+            root = self._root(stack)
+            fleet_run.connect(root).close()
+            run = "run-no-record-unit"
+            record = root / "build" / "fleet_runs" / run
+            record.mkdir(parents=True)
+            (record / "record.json").write_text(
+                json.dumps({"id": run, "status": "finished", "pid": 999999}),
+                encoding="utf-8")
+            fleet_run.claim(root, run, [("0x00000034", 1)], pid=999999,
+                            lease=-5, cgroup_path=f"/delegated/bfme-fleet-{run}")
+            with patch.object(fleet_run, "cgroup_state", return_value=False), \
+                    patch.object(fleet_run, "pid_alive", return_value=False):
+                with self.assertRaisesRegex(fleet_run.ClaimConflict, "paths differ"):
+                    fleet_run.release(root, run, "test")
+                self.assertEqual(fleet_run.active_rvas(root), {"0x00000034"})
+
+    def test_release_rejects_legacy_claim_with_contained_record(self):
+        with contextlib.ExitStack() as stack:
+            root = self._root(stack)
+            fleet_run.connect(root).close()
+            run = "run-record-only-unit"
+            record = root / "build" / "fleet_runs" / run
+            record.mkdir(parents=True)
+            (record / "record.json").write_text(
+                json.dumps({"id": run, "status": "finished", "pid": 999999,
+                            "cgroup_path": f"/delegated/bfme-fleet-{run}"}),
+                encoding="utf-8")
+            fleet_run.claim(root, run, [("0x00000035", 1)], pid=999999,
+                            lease=-5, cgroup_path=None)
+            with patch.object(fleet_run, "cgroup_state", return_value=False), \
+                    patch.object(fleet_run, "pid_alive", return_value=False):
+                with self.assertRaisesRegex(fleet_run.ClaimConflict, "paths differ"):
+                    fleet_run.release(root, run, "test")
+                self.assertEqual(fleet_run.active_rvas(root), {"0x00000035"})
 
 
 class LegacyAndTimeoutTests(unittest.TestCase):
@@ -238,7 +346,15 @@ class LegacyAndTimeoutTests(unittest.TestCase):
             self.assertEqual(fleet_run.active_rvas(root), {"0x00000040"})
             with self.assertRaises(fleet_run.ClaimConflict):
                 fleet_run.claim(root, "new-run", [("0x00000040", 1)])
-            fleet_run.release(root, "old-run", "worker independently verified stopped")
+            with self.assertRaisesRegex(fleet_run.ClaimConflict, "stopped-fleet"):
+                fleet_run.release(root, "old-run", "worker independently verified stopped")
+            with self.assertRaisesRegex(fleet_run.ClaimConflict, "state changed"):
+                fleet_run.release(root, "old-run", "worker independently verified stopped",
+                                  stopped_fleet=True, expected_state_sha="wrong")
+            report = fleet_run.coordination_status(root)
+            fleet_run.release(root, "old-run", "worker independently verified stopped",
+                              stopped_fleet=True,
+                              expected_state_sha=report["snapshot_sha256"])
             self.assertEqual(fleet_run.active_rvas(root), set())
 
     def test_timeout_prefix_is_stripped_and_parsed(self):

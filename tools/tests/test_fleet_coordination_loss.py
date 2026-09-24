@@ -92,6 +92,16 @@ def test_run_record_without_database_requires_restore(tmp_path):
     assert not (tmp_path / "build/fleet_runs.sqlite").exists()
 
 
+def test_malformed_record_cgroup_path_reports_unknown_not_crash(tmp_path):
+    path = record(tmp_path, "odd-run", status="running")
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["cgroup_path"] = {"unexpected": "object"}
+    path.write_text(json.dumps(data), encoding="utf-8")
+
+    report = fleet_run.coordination_status(tmp_path)
+    assert report["cgroup_units"] == {"empty": 0, "populated": 0, "unknown": 1}
+
+
 def test_guarded_initialization_refuses_live_recorded_pid(tmp_path):
     fleet_run.claim(tmp_path, "live-run", [(RVA, 8)], pid=os.getpid(), lease=3600)
     record(tmp_path, "live-run", pid=os.getpid())
@@ -241,6 +251,51 @@ def test_changed_cutover_snapshot_requires_new_review(tmp_path):
         fleet_run.initialize_coordination(
             tmp_path, stopped_fleet=True, expected_sha=report["snapshot_sha256"])
     assert not fleet_run.coordination_marker(tmp_path).exists()
+
+
+def test_marked_legacy_schema_requires_guarded_cgroup_migration(tmp_path):
+    fleet_run.claim(tmp_path, "legacy-owner", [(RVA, 8)], pid=None, lease=3600)
+    database = tmp_path / "build/fleet_runs.sqlite"
+    with sqlite3.connect(database) as db:
+        db.execute("ALTER TABLE claims DROP COLUMN cgroup_path")
+
+    report = fleet_run.coordination_status(tmp_path)
+    assert report["state"] == "requires_cgroup_migration"
+    assert report["cgroup_schema"] == "missing"
+    with sqlite3.connect(database) as db:
+        assert "cgroup_path" not in {row[1] for row in db.execute("PRAGMA table_info(claims)")}
+    with pytest.raises(fleet_run.CoordinationUnavailable, match="guarded cgroup schema migration"):
+        fleet_run.active_rvas(tmp_path)
+    with pytest.raises(ValueError):
+        fleet_run.initialize_coordination(tmp_path, expected_sha=report["snapshot_sha256"])
+
+    result = fleet_run.initialize_coordination(
+        tmp_path, stopped_fleet=True, expected_sha=report["snapshot_sha256"])
+    assert result["state"] == "ready"
+    assert result["cgroup_schema"] == "present"
+    with sqlite3.connect(database) as db:
+        assert db.execute("SELECT cgroup_path FROM claims WHERE run='legacy-owner'").fetchone() == (None,)
+    assert fleet_run.active_rvas(tmp_path) == {RVA}
+    with pytest.raises(fleet_run.ClaimConflict):
+        fleet_run.claim(tmp_path, "replacement", [(RVA, 8)])
+
+
+def test_marked_cgroup_migration_does_not_repair_other_missing_columns(tmp_path):
+    fleet_run.claim(tmp_path, "legacy-owner", [(RVA, 8)], pid=None, lease=3600)
+    database = tmp_path / "build/fleet_runs.sqlite"
+    with sqlite3.connect(database) as db:
+        db.execute("ALTER TABLE claims DROP COLUMN cgroup_path")
+        db.execute("ALTER TABLE claims DROP COLUMN expires")
+
+    report = fleet_run.coordination_status(tmp_path)
+    assert report["state"] == "inconsistent"
+    with pytest.raises(fleet_run.CoordinationUnavailable):
+        fleet_run.initialize_coordination(
+            tmp_path, stopped_fleet=True, expected_sha=report["snapshot_sha256"])
+    with sqlite3.connect(database) as db:
+        columns = {row[1] for row in db.execute("PRAGMA table_info(claims)")}
+    assert "cgroup_path" not in columns
+    assert "expires" not in columns
 
 
 def test_first_picker_diagnostic_with_file_stem_allows_fresh_runner(tmp_path):

@@ -90,17 +90,37 @@ fleet tooling. No claim of increased fleet throughput follows from the tests.
 The claim table is local to one checkout; independent clones have no shared
 launch-exclusion guarantee. Picker validation can race a subsequent ledger
 write, so the runner checks again before launch; no transaction spans Git
-publication and SQLite. A worker that deliberately detaches from its POSIX
-group, or native Windows descendants after a normal parent exit, cannot be
-proved dead by the local Linux tests. Unknown liveness remains busy until an
-operator verifies it and releases the named run. Windows process behavior and
-live fleet throughput were not measured here.
+publication and SQLite. The original review's unknown-liveness conclusion was
+too strong: its process-group check did not find a `setsid()` descendant. The
+two real-process reproducers above showed that the pre-containment runner could
+release while that child remained alive. The separate coordination database
+guard published as `80125dc93e` prevents silent database recreation; it does
+not prove descendant termination.
+
+The cgroup patch now assigns each Linux worker to a delegated cgroup-v2 unit
+before opening its exec gate. Real local process tests verified detached-child
+tracking, supervisor-crash ownership, and whole-unit timeout kill. Reads do not
+kill workers; reclaim and release require an empty cgroup and an absent direct
+PID, while cgroup-less historical claims require a stopped-fleet assertion
+bound to a fresh status SHA. These tests ran in isolated temporary repositories
+and cgroups. No live database, controller, or production fleet was touched,
+and no live throughput claim was measured.
+
+Rollout requires a controlled fleet restart and a delegated writable Linux
+cgroup-v2 child with `cgroup.procs`, `cgroup.events`, and `cgroup.kill`. If the
+host lacks that delegation or a state read is unknown, new launches fail
+closed. Windows launches also fail closed until a separately reviewed native
+Job Object implementation and integration test exist. The cgroup design
+protects against accidental detachment, not hostile same-UID workers that
+deliberately migrate themselves to another writable cgroup.
 
 Deploy only at a controlled fleet restart. Do not overwrite scripts under
 running shells. First stop old controllers and direct launchers, inspect
 `python3 tools/fleet/reconcile_legacy.py` in dry-run mode, verify every old
 worker has stopped, and follow the guarded `--apply --stopped-fleet --log-sha`
-procedure in [throughput-tools.md](throughput-tools.md). The local dry run
-reported four old log tokens and 23 SQLite claims; no cutover was applied.
+procedure in [throughput-tools.md](throughput-tools.md). The initial audit
+snapshot recorded four old log tokens and 23 SQLite claims; a later isolated
+read found no local claims database, so those counts are historical and do not
+describe current coordination state. No cutover was applied.
 After restart, observe claim conflicts, picker lock wait/hold, cache hit rate,
 brief waste and landed bytes per worker-hour before claiming a throughput gain.

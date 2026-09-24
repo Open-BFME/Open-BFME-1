@@ -61,10 +61,14 @@ region 0.40 s, while anonymous preparation took 7.03 s and final lock region
 lock holds, not a measured fleet throughput gain. Deploy at a controlled seat
 restart; do not replace tools beneath running controllers.
 
-`tools/fleet_run.py` claims are leases: pid + expiry (`FLEET_LEASE_SECONDS`,
-default session cap + 30 min). A lease is reclaimed only when expired, its run
-record is terminal, and the pid is gone; an unknown pid is never reclaimed.
-Takeovers are recorded in the `releases` table with the reason.
+`tools/fleet_run.py` claims carry a direct PID, lease expiry, and (for new
+runs) a Linux cgroup-v2 path. The record status and a dead PID alone never
+prove a detached descendant stopped. Automatic reclaim requires an expired
+lease, positively empty `cgroup.events`, and no live recorded direct PID; a
+no-PID pre-exec claim additionally needs its intact starting record and
+`launch_phase=preexec`. Legacy rows with no cgroup path remain busy until a
+stopped-fleet, snapshot-bound named release. Takeovers retain their proof in
+the `releases` table.
 
 Lanes added to `seat.sh` / `launch_fleet.sh` (args: file big finish mid anon
 review; defaults since 2026-09-16 are 10 0 2 8 15 2, no net new seats):
@@ -198,14 +202,26 @@ The wrapper exports `BFME_RUN_ID`; `add_match.py` and `re_log.py` attach it to
 new records. Picker output is advisory. All lanes consult one active-RVA table,
 and the wrapper atomically claims only the targets that survived brief filtering
 immediately before launch. A failed brief or launch cannot strand a picker
-reservation. The wrapper checks those targets against the live ledger and
-releases the entire run's claims when its worker exits. Only bodies recorded in
-`touched.txt` receive post-run cooldown. A supervisor crash, unknown PID or
-surviving POSIX process group keeps its claims for operator review. After
-establishing that the entire worker group stopped:
+reservation. The wrapper checks those targets against the live ledger. Each
+run is assigned to its own Linux cgroup-v2 unit before the worker's exec gate
+opens. Claims are released only after `cgroup.events` reports `populated 0`;
+timeout uses `cgroup.kill` for the whole unit. Only bodies recorded in
+`touched.txt` receive post-run cooldown, after contained descendants stop.
+Reads, pickers and lease recovery never kill a worker. An expired claim is
+reclaimable only when its cgroup is verified empty and its recorded direct PID
+is absent. A pre-exec claim with no PID is recoverable only from a valid
+starting record with touch tracking enabled. For contained claims, the DB path,
+record path and record run ID must agree; missing or inconsistent metadata
+stays busy. Old claims with a NULL cgroup path remain busy automatically.
+
+To release a cgroup-less legacy claim, first stop every seat and direct
+launcher, verify that no worker remains, then bind the explicit operator
+assertion to a fresh read-only coordination snapshot:
 
 ```sh
-python tools/fleet_run.py --release RUN_ID --reason 'worker confirmed stopped'
+python3 tools/fleet_run.py --coordination-status
+python3 tools/fleet_run.py --release RUN_ID --reason 'workers verified stopped' \
+  --stopped-fleet --state-sha SHA
 ```
 
 Old `seats.log` records have no reliable owner or date. Keep them as
@@ -229,6 +245,17 @@ exact `snapshot_sha256` printed by the status command:
 ```sh
 python3 tools/fleet_run.py --init-coordination --stopped-fleet --state-sha SHA
 ```
+
+The cgroup rollout also requires a delegated writable child under Linux cgroup
+v2, including `cgroup.procs`, `cgroup.events`, and `cgroup.kill`. If delegation
+or an event read is unavailable, launch and automatic release fail closed; no
+process-group fallback is used. A marked database from before cgroup claims
+reports `requires_cgroup_migration`; perform the same stopped-fleet, snapshot-
+bound initialization before the runner adds the nullable `cgroup_path` column.
+The migration validates all existing marked schema fields and leaves old
+NULL-path claims busy for named, guarded operator release. On Windows this
+runner intentionally rejects launches until a native Job Object containment
+path has separate implementation and integration tests.
 
 Migration preserves old claims and release rows. It refuses a live recorded or
 claimed PID. A run directory with no database, or a marker with a

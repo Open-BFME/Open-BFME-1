@@ -115,3 +115,56 @@ The primary checkout's supplied log contains two old `seat pick ->` lines and
 one finished historical run record. The supplied process inventory found no
 active fleet runner or local claims database; these artifacts do not establish
 current backlog or another worktree's state.
+
+## Implementation update — isolated patch, not deployed
+
+The first expired-lease mitigation above was too permissive for a dead direct
+PID: it still could not prove that detached descendants had stopped. The
+containment patch replaces that rule. A new Linux run creates a per-run
+cgroup-v2 unit, stores its path in the record and claim before launch, starts a
+bootstrap with a sanitized loader/Python environment, attaches and verifies
+that blocked process, and only then opens the exec gate with the original
+worker environment. Normal return, touch snapshot, and release wait for
+`cgroup.events: populated 0`. Only the owning live supervisor uses
+`cgroup.kill` at the configured cap. Eligibility and recovery only observe
+state; they never kill a worker.
+
+An expired contained claim also requires the direct PID to be absent. A
+PID-less claim is recoverable only when its intact record proves the
+touch-tracking pre-exec phase, in which the bootstrap has not opened its gate.
+Missing, unreadable, malformed, populated, or mismatched cgroup state remains
+busy. The claim's persisted path must match the record path and run ID for
+contained reclaim or release, preserving touched history and preventing a
+different unit from proving this owner's exit. Legacy NULL-path claims are
+never automatically reclaimed. Releasing one requires a stopped-fleet
+assertion bound to a fresh coordination-status SHA; a known live or unknown
+direct PID still blocks release. The additive `cgroup_path` column on a marked
+older DB likewise requires stopped-fleet, snapshot-bound initialization. Status
+is read-only, migration validates every existing marked schema field, and
+legacy rows remain NULL and busy.
+
+For manual legacy release, a known live PID is an unconditional blocker. An
+unknown PID needs the explicit stopped-fleet assertion and matching snapshot
+SHA; the ordinary named-release command cannot clear it.
+
+The helper and real-process tests passed on this host's delegated writable
+cgroup-v2 leaf, including detached `setsid()` children, supervisor death,
+timeout kill, the pre-attach crash gate, late touches, and unavailable-state
+guards. These isolated tests touched no live coordination DB or controller and
+make no throughput claim. Launch requires delegated `cgroup.procs`,
+`cgroup.events`, and `cgroup.kill`; it fails closed without them. Windows
+launches also fail closed until a native Job Object implementation has
+independent integration tests. Same-UID code that deliberately migrates to
+another writable cgroup remains outside the accidental-detachment guarantee.
+
+The independent post-implementation audit found and resolved five fail-closed
+gaps before publication: bootstrap startup now uses `-I -S` and an empty
+environment, restoring the worker environment only after attachment; ordinary
+reads no longer migrate a marked database schema; legacy release rejects a
+live direct PID; the only PID-less automatic recovery is a recorded,
+touch-tracked pre-exec claim; and reclaim/release require the DB cgroup path,
+record path, and run ID to agree. Malformed cgroup path types also report
+unknown state instead of escaping the status report. Initial broad-suite
+failures were test-fixture issues (the temporary harvest repo omitted the new
+helper, and synthetic history tests had not initialized their marker); the
+fixtures were corrected, with no production behavior relaxed.

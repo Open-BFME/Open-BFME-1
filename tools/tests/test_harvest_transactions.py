@@ -29,6 +29,7 @@ def repository(tmp_path):
     # verdicts) and runs retired_guard; without them every test here died on
     # ModuleNotFoundError before reaching what it meant to test
     shutil.copy2(TOOLS / "fleet_run.py", root / "tools/fleet_run.py")
+    shutil.copy2(TOOLS / "fleet_cgroup.py", root / "tools/fleet_cgroup.py")
     (root / "tools/re_log.py").write_text(
         "import sys\nfrom pathlib import Path\n"
         "if sys.argv[1:2] == ['record']:\n"

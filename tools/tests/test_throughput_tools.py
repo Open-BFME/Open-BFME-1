@@ -178,7 +178,9 @@ def test_claims_are_all_or_nothing_and_owner_release_is_scoped(tmp_path):
     assert fleet_run.active_rvas(tmp_path) == {"0x1000"}
     fleet_run.release(tmp_path, "second", "failed acquisition")
     assert fleet_run.active_rvas(tmp_path) == {"0x1000"}
-    fleet_run.release(tmp_path, "first", "worker exited")
+    report = fleet_run.coordination_status(tmp_path)
+    fleet_run.release(tmp_path, "first", "worker exited", stopped_fleet=True,
+                      expected_state_sha=report["snapshot_sha256"])
     assert not fleet_run.active_rvas(tmp_path)
 
 

@@ -500,15 +500,47 @@ def recent_run_rvas(hours=48, root=None):
     runs = root / "build" / "fleet_runs"
     if not runs.exists():
         return out
+    now = time.time()
     for record in runs.glob("*/record.json"):
         try:
             data = json.loads(record.read_text(encoding="utf-8"))
         except (OSError, ValueError):
             continue
-        if data.get("start", 0) < cutoff or fleet_run.aborted(data):
+        if data.get("start", 0) < cutoff:
             continue
         targets = {r.lower() for r, _ in data.get("targets", [])}
-        if "touched" in data and data.get("status") != "running":
-            targets &= {r.lower() for r in data["touched"]}
+        cgroup_path = data.get("cgroup_path")
+        if not cgroup_path:
+            # No containment proof exists for historical runs. Keep every
+            # brief target cooling during the window, even if an old quick-
+            # failure record was frozen before a detached descendant stopped.
+            out |= targets
+            continue
+        # A descendant can append a touch after the direct CLI or supervisor
+        # exits. Merge the durable log before applying the quick-failure rule.
+        touched = {str(rva).lower() for rva in data.get("touched", [])}
+        touched.update(fleet_run.touched_rvas(record.parent))
+        observed = dict(data, touched=sorted(touched))
+        if fleet_run.aborted(observed):
+            continue
+        state = fleet_run.cgroup_state(cgroup_path, data.get("id") or record.parent.name)
+        empty = (state is False
+                 or (state is None and data.get("cgroup_empty_verified") is True))
+        lease_expires = data.get("lease_expires")
+        lease_expired = (isinstance(lease_expires, (int, float))
+                         and now > lease_expires)
+        if data.get("status") == "running" and not (empty and lease_expired):
+            # Active, unreadable and not-yet-expired units protect the entire
+            # brief. Claims are the authoritative busy check; this also keeps
+            # shortlist cooldown conservative if the record is read alone.
+            out |= targets
+            continue
+        if empty:
+            targets &= touched
+        else:
+            # A terminal status alone does not prove that a contained child
+            # stopped; only the empty unit does.
+            out |= targets
+            continue
         out |= targets
     return out
