@@ -41,7 +41,7 @@ class ActionManager
 {
 public:
 	Bool canDoSpecialPowerAtObject(const Object *source, const Object *target,
-		CommandSourceType cmdSource, const SpecialPowerTemplate *power,
+		CommandSourceType commandSource, const SpecialPowerTemplate *power,
 		UnsignedInt options, Bool forced);
 };
 
@@ -85,7 +85,7 @@ class Rva00152110AIGroup
 public:
 	void groupDoSpecialPowerAtObject(UnsignedInt specialPowerID,
 		Object *target, UnsignedInt commandOptions,
-		CommandSourceType cmdSource);
+		CommandSourceType commandSource);
 
 private:
 	unsigned char m_unmodelled_000[4];
@@ -94,7 +94,7 @@ private:
 
 void Rva00152110AIGroup::groupDoSpecialPowerAtObject(
 	UnsignedInt specialPowerID, Object *target, UnsignedInt commandOptions,
-	CommandSourceType cmdSource)
+		CommandSourceType commandSource)
 {
 	_STL::list<BfmeDistanceEntry> sorted;
 	_STL::list<Object *>::iterator i;
@@ -138,7 +138,7 @@ void Rva00152110AIGroup::groupDoSpecialPowerAtObject(
 		Object *object = j->m_object;
 		BfmeAIUpdateInterface *ai = object->getAI();
 		if (ai)
-			ai->m_lastCommandSource = cmdSource;
+			ai->m_lastCommandSource = commandSource;
 		const SpecialPowerTemplate *power =
 			TheSpecialPowerStore->findSpecialPowerTemplateByID(specialPowerID);
 		if (!power)
