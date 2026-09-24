@@ -1,5 +1,5 @@
-// Five short stack-pair seeders: 0x000C8830, 0x0015BB80, 0x0015E860,
-// 0x0018CC20 and 0x001B3B00.
+// Four short stack-pair seeders: 0x000C8830, 0x0015BB80, 0x0015E860 and
+// 0x0018CC20.
 //
 // The narrowest member of the family: fill the two-byte pair from one mov al,1,
 // hand its address to virtual slot ten, then make exactly ONE further virtual
@@ -95,16 +95,6 @@ private:
 	BfmeSubObject m_bfmeItem;				// +0x24
 };
 
-class Gen_001B3B00
-{
-public:
-	void bfmeSeed(BfmeSeedTarget *target);
-
-private:
-	char m_bfmeHead[0x04];
-	BfmeSubObject m_bfmeItem;				// +0x04
-};
-
 // ?bfmeSeed@Gen_000C8830@@QAEXPAVBfmeSeedTarget@@@Z
 void Gen_000C8830::bfmeSeed(BfmeSeedTarget *target)
 {
@@ -151,16 +141,4 @@ void Gen_0018CC20::bfmeSeed(BfmeSeedTarget *target)
 
 	target->bfmeSeed(&pair);
 	target->bfmeTakeAt6C(&m_bfmeItem);
-}
-
-// ?bfmeSeed@Gen_001B3B00@@QAEXPAVBfmeSeedTarget@@@Z
-void Gen_001B3B00::bfmeSeed(BfmeSeedTarget *target)
-{
-	BfmeSeedPair pair;
-
-	pair.m_bfmeFirst = 1;
-	pair.m_bfmeSecond = 1;
-
-	target->bfmeSeed(&pair);
-	target->bfmeTakeAt78(&m_bfmeItem);
 }
