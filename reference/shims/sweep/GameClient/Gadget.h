@@ -409,6 +409,9 @@ typedef struct _ComboBoxData
 	Bool lettersAndNumbersOnly;   // Used to notify the Text Entry Box if it is to only allow letters and numbers
 	ListboxData *listboxData;			// Needed for the listbox component of the combo box
 	EntryData		*entryData;				// Needed for the text entry component of the combo box
+	// BFME field at +0x18: retail GadgetComboBoxSystem keeps dontHide at +0x1C and createGadget
+	// zeroes entryCount at +0x20 (reverse/identity_evidence/0047a520.md).
+	Int				unmodelled18;
 	//
 	// The following fields are for internal use and should not be initialized 
 	// by the user

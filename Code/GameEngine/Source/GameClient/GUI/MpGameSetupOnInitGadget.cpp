@@ -16,7 +16,7 @@ typedef void (*GameWinTooltipFunc)(
 	GameWindow *, WinInstanceData *, unsigned int );
 
 void GadgetComboBoxReset( GameWindow *window );
-GameWindow *GadgetComboBoxGetListBox( GameWindow *window );
+GameWindow *GadgetComboBoxGetEditBox( GameWindow *window );
 void GadgetListBoxSetColumnWidths( GameWindow *window, int count, int *widths );
 const char *bfmePathLeafAfterMarker( const char *path );
 
@@ -93,7 +93,7 @@ void MpGameSetup::_bfme_onInitGadget(
 	{
 		GadgetComboBoxReset( window );
 		m_player[ index ] = window;
-		GadgetComboBoxGetListBox( window )->winSetTooltipFunc(
+		GadgetComboBoxGetEditBox( window )->winSetTooltipFunc(
 			(GameWinTooltipFunc)0x0042D727 );
 		return;
 	}
