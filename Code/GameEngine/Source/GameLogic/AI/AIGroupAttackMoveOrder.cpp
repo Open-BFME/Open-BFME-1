@@ -140,9 +140,9 @@ extern AI *TheAI;
 class AICommandInterface
 {
 public:
-	void aiAttackMoveToPosition(const Coord3D *pos, int maxShotsToFire,
-		CommandSourceType cmdSource);
-	void aiMoveToPosition(const Coord3D *pos, CommandSourceType cmdSource);
+	void aiAttackMoveToPosition(const Coord3D *position, int maxShotsToFire,
+		CommandSourceType commandSource);
+	void aiMoveToPosition(const Coord3D *position, CommandSourceType commandSource);
 };
 
 class BfmeGroupAI
