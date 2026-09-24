@@ -30,7 +30,7 @@ with tarfile.open(tgz,'r:gz') as tf:
 os.environ['VC71_ROOT']=str(sp1)
 # build.vc71_root reads env at call time; compile unchanged source.
 r1=evaluate(('sp1_candidate9',seed,None))
-print('SP1',json.dumps({k:r1.get(k) for k in ('size','diff_count','cost','offsets','code_sha256','raw_exact')}),flush=True)
+print('SP1',json.dumps({k:r1.get(k) for k in ('returncode','size','diff_count','cost','offsets','code_sha256','raw_exact','error')}),flush=True)
 # Strict relocation-resolved verification when shape is promising.
 if r1.get('returncode')==0:
     row={'name':SYM,'target_rva':hex(RVA),'target_size':str(SIZE),'source':(OUT/'sp1_candidate9.cpp').relative_to(ROOT).as_posix(),'status':'matched','notes':''}
