@@ -1,5 +1,5 @@
 // ?W3DGadgetVerticalSliderImageDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z
-// partial score=0.95 date=2026-09-24
+// partial score=0.96 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -149,7 +149,7 @@ void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
 	const Image *topImage, *bottomImage, *centerImage, *smallCenterImage;
 	Int originX, originY;
 	ICoord2D size, start, end;
-	Int xOffset, yOffset;
+	ICoord2D imageOffset;
 	Int i;
 
 	// get screen position and size
@@ -157,8 +157,8 @@ void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
 	window->winGetSize( &size.x, &size.y );
 
 	// get image offset
-	xOffset = instData->m_imageOffset.x;
-	yOffset = instData->m_imageOffset.y;
+	imageOffset.x = instData->m_imageOffset.x;
+	imageOffset.y = instData->m_imageOffset.y;
 
 	// BFME places GameWindow::m_instData at +0x30.
 	// The ZH inline getters assume +0x2c, so this body adjusts their receiver.
@@ -206,16 +206,16 @@ void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
 	if(topSize.y + bottomSize.y >= size.y)
 	{
 		// draw top end
-		start.x = originX + xOffset;
-		start.y = originY + yOffset;
-		end.x = originX + xOffset + topSize.x;
+		start.x = originX + imageOffset.x;
+		start.y = originY + imageOffset.y;
+		end.x = originX + imageOffset.x + topSize.x;
 		end.y = originY + size.y /2;
 		TheWindowManager->winDrawImage(topImage, start.x, start.y, end.x, end.y);
 
 		// draw bottom end
 		start.y = originY + size.y /2;
-		end.x = originX + xOffset + bottomSize.x;
-		end.y = originY + yOffset + size.y;
+		end.x = originX + imageOffset.x + bottomSize.x;
+		end.y = originY + imageOffset.y + size.y;
 		TheWindowManager->winDrawImage(bottomImage, start.x, start.y, end.x, end.y);
 	}
 	else
@@ -223,10 +223,10 @@ void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
 
 		// get two key points used in the end drawing
 		ICoord2D topEnd, bottomStart;
-		topEnd.x = originX + topSize.x + xOffset;
-		topEnd.y = originY + topSize.y + yOffset;
-		bottomStart.x = originX + xOffset;
-		bottomStart.y = originY + size.y - bottomSize.y + yOffset;
+		topEnd.x = originX + topSize.x + imageOffset.x;
+		topEnd.y = originY + topSize.y + imageOffset.y;
+		bottomStart.x = originX + imageOffset.x;
+		bottomStart.y = originY + size.y - bottomSize.y + imageOffset.y;
 
 		// draw the center repeating bar
 		Int centerHeight, pieces;
@@ -238,7 +238,7 @@ void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
 		pieces = centerHeight / centerImage->getImageHeight();
 
 		// draw the pieces
-		start.x = originX + xOffset;
+		start.x = originX + imageOffset.x;
 		start.y = topEnd.y;
 		end.x = start.x + centerImage->getImageWidth();
 		end.y = start.y + centerImage->getImageHeight();
@@ -273,8 +273,8 @@ void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
 		}  // end for i
 
 		// draw top end
-		start.x = originX + xOffset;
-		start.y = originY + yOffset;
+		start.x = originX + imageOffset.x;
+		start.y = originY + imageOffset.y;
 		end = topEnd;
 		TheWindowManager->winDrawImage(topImage, start.x, start.y, end.x, end.y);
 
@@ -287,3 +287,5 @@ void W3DGadgetVerticalSliderImageDraw( GameWindow *window,
 	
 
 }  // end W3DGadgetVerticalSliderImageDraw
+
+
