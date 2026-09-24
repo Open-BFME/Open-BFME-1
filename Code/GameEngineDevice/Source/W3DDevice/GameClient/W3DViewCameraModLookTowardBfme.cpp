@@ -33,7 +33,7 @@ struct Coord3D
 struct Rva0073FF30Elem
 {
 	Coord3D position;
-	AsciiString name;
+	AsciiString unknown0c;
 	Int unknown10;
 };
 
@@ -58,9 +58,9 @@ class Rva0073FF30CameraPath : public Rva0073FF30Base
 public:
 	Rva0073FF30Elem waypoints[259];
 	Real cameraAngles[256];
-	Real waySegmentLengths[256];
-	Real totalDistance;
-	Real currentSegmentDistance;
+	Real unknownSegments[256];
+	Real unknownTotal;
+	Real unknownCurrent;
 	char padding1c70[0x2070 - 0x1c70];
 	Int numWaypoints;
 };
@@ -91,9 +91,9 @@ private:
 	void moveAlongWaypointPath(Int frames);
 
 	char padding0004[0x138 - 4];
-	Int cameraArrivedAtWaypointOnPath;
+	Int m_field138;
 	char padding013c[0x1dc - 0x13c];
-	Bool doingMoveCameraOnWaypointPath;
+	Bool doingRotateCamera;
 	char padding1dd[0x280 - 0x1dd];
 	Rva0073FF30CameraPath cameraPath;
 	char padding22f4[0x2354 - 0x22f4];
@@ -104,7 +104,7 @@ private:
 
 void W3DView::cameraModLookToward(Coord3D *pLoc)
 {
-	if (doingMoveCameraOnWaypointPath) {
+	if (doingRotateCamera) {
 		return;
 	}
 	if (cameraMovementMode == 1) {
@@ -149,7 +149,7 @@ void W3DView::cameraModLookToward(Coord3D *pLoc)
 		if (cameraPath.unknown04 == 1) {
 			moveAlongWaypointPath(1);
 			cameraMovementMode = 1;
-			cameraArrivedAtWaypointOnPath = false;
+			m_field138 = false;
 			slot27(false);
 		}
 	}

@@ -2308,5 +2308,15 @@
   "after_sha256": "1b79c8126014293dd9e88bc3b4c4410344b5e09f700fe461ec655df29caaf872",
   "evidence": "reverse/deleted_rows.csv",
   "reason": "review of 0x00511CC0: no matched caller uses SetInGameChatType (CommandXlat calls the pinned rva00511CC0) and the body mixes ShowInGameChat, ToggleInGameChat and SetInGameChatType traits, so it keeps its address token"
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewCameraModLookTowardBfme.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DViewCameraModLookTowardBfme.cpp",
+  "old_name": "cameraArrivedAtWaypointOnPath",
+  "new_name": "m_field138",
+  "before_sha256": "2b865e3a7d643e6c62ad2296884357ec806cf6b3d2693f3ed9c3411c0af11e47",
+  "after_sha256": "cd89bb6f8e205c7140a210fb8ce5adab88e47affb4ed32aa8406bf408a372772",
+  "evidence": "reverse/name_oracle_baseline.csv",
+  "reason": "review of 0x0073FF30: +0x1DC is the rotate-camera flag (ZH cameraModLookToward tests m_doingRotateCamera first; matched rotateCamera sets +0x1DC; sibling FinalLookToward names it doingRotateCamera); +0x138 has no witness and W3DViewResetBfme.cpp keeps it m_field138; the waypoint-path fields this body never reads take opaque names"
  }
 ]
