@@ -1,7 +1,9 @@
 // cl: /ICode/Libraries/Source/WWVegas/WWLib
 // ?Rva002E3750SetModule@@YADDPBD@Z
-// The Lua ShowModule and HideModule callbacks (0x002E3820 pushes 1, 0x002E3840
-// pushes 0, each with lua_tostring(L, 1)) share this module-name helper.
+// The Lua CurDrawableHideModule (0x002E3820, pushes hide = 1) and
+// CurDrawableShowModule (0x002E3840, pushes hide = 0) callbacks, each with
+// lua_tostring(L, 1), share this module-name helper; the owner call receives
+// the inverted flag.
 //
 // The owner is read through the chain in one expression, not through a named
 // intermediate for the +0x78 pointer: with that local, MSVC 7.1 loads the owner
@@ -35,13 +37,13 @@ struct BfmeOwnerBR
 
 extern BfmeOwnerBR *g_bfmeOwnerBR;
 
-char Rva002E3750SetModule(char on, const char *text)
+char Rva002E3750SetModule(char hide, const char *text)
 {
 	if (g_bfmeOwnerBR->m_bfmeTarget != 0) {
 		BfmeOwnerAE *owner = g_bfmeOwnerBR->m_bfmeTarget->m_bfmeOwner;
 		AsciiString name(text);
 		if (owner != 0)
-			return owner->bfmeSetAE((BfmeStrAE *)&name, on == 0);
+			return owner->bfmeSetAE((BfmeStrAE *)&name, hide == 0);
 	}
 	return 0;
 }
