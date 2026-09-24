@@ -1,12 +1,13 @@
 // ?rva0029B120@PhysicsBehavior@@QAEX_N@Z
-// partial score=0.87 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
 // Retail 0x0029B120/137: compact PhysicsBehavior source shape.
 // The constructor and destructor independently prove the +0x20 Coord3D
 // vector and 0x60-byte owner layout.  This method name stays address-derived.
-// Probe: 137/137 with 18 non-relocation differences at +0x61..+0x75:
-// retail materializes 0x80000 in EAX and tests it against the flags in ECX;
-// this source ORs in EAX and compares.  Do not land until that tail matches.
+// The bitset accessor layers preserve retail's EAX mask for Object model
+// condition bit 115, SPLATTED in the shipped table at VA 0x012A6918.
+#define _STLP_NO_EXCEPTIONS 1
+#include <bitset>
 struct Coord3D { float x, y, z; };
 class ModuleData {
 public:
@@ -15,12 +16,19 @@ public:
 };
 enum DamageType { DAMAGE_TYPE_8 = 8 };
 enum DeathType { DEATH_TYPE_0 = 0 };
+class Rva0029B120Conditions {
+public:
+    bool test(int bit) const { return m_bits.test(bit); }
+    void set(int bit) { m_bits.set(bit); }
+private:
+    _STL::bitset<320> m_bits;
+};
 class Object {
 public:
     void notifyModelConditionChanged();
     void kill(DamageType damage, DeathType death);
-    char m_pad[0x11C];
-    unsigned m_modelConditions;
+    char m_pad[0x110];
+    Rva0029B120Conditions m_modelConditionFlags;
 };
 enum UpdateSleepTime { UPDATE_SLEEP_FOREVER = 0x3fffffff };
 class UpdateModule {
@@ -46,6 +54,13 @@ private:
     bool m_at5F;
 };
 extern void j_00014d7b();
+static __forceinline void setCondition(Object *obj)
+{
+    if (!obj->m_modelConditionFlags.test(115)) {
+        obj->m_modelConditionFlags.set(115);
+        obj->notifyModelConditionChanged();
+    }
+}
 void PhysicsBehavior::rva0029B120(bool skipWake)
 {
     Coord3D *begin = m_begin;
@@ -56,12 +71,7 @@ void PhysicsBehavior::rva0029B120(bool skipWake)
     m_at50 = 0.0f;
     m_at54 = 0.0f;
     if (shouldKill || m_moduleData->m_at59) {
-        unsigned flags = obj->m_modelConditions;
-        unsigned mask = 0x80000;
-        if ((flags | mask) != flags) {
-            obj->m_modelConditions = flags | mask;
-            obj->notifyModelConditionChanged();
-        }
+        setCondition(obj);
         obj->kill(DAMAGE_TYPE_8, DEATH_TYPE_0);
     } else if (!skipWake) {
         setWakeFrame(obj, UPDATE_SLEEP_FOREVER);
