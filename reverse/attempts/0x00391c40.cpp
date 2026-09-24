@@ -1,5 +1,5 @@
 // ?xfer@GameLogic@@MAEXPAVXfer@@@Z
-// partial score=0.975893241498063 date=2026-09-23
+// partial score=0.9948342660352992 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseunicode /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath /ICode/GameEngine/Source/Common/System
 // stlport
 // GameLogic secondary Snapshot transfer, RVA00391C40,2323B.
@@ -86,6 +86,18 @@ template<class T> struct Rva00391C40Map {
     }
 };
 struct Rva00391C40Entry { AsciiString at000; unsigned short at004; };
+typedef Xfer *(__fastcall *Rva00391C40UnsignedShortSlot)(Xfer *, void *, unsigned short *);
+struct Rva00391C40XferVtable
+{
+    void *slots[31];
+    Rva00391C40UnsignedShortSlot transferUnsignedShort;
+};
+__forceinline void Rva00391C40TransferUnsignedShort(Xfer *xfer, unsigned short *value)
+{
+    Rva00391C40XferVtable *vtable = *(Rva00391C40XferVtable **)xfer;
+    vtable->transferUnsignedShort(xfer, vtable, value);
+}
+
 class Rva00391C40Thing;
 struct Rva00391C40Redirect {
     Rva00391C40Thing* get() {
@@ -229,7 +241,7 @@ void GameLogic::xfer(Xfer *xfer) {
         Rva00391C40Team *team=g_Rva00391C40PlayerList->at014->at230;
         unsigned short number;
         for(unsigned i=0;i<count;++i) {
-            *xfer==number;
+            Rva00391C40TransferUnsignedShort(xfer, &number);
             Rva00391C40Entry *entry=owner->findId(number);
             if(!entry)throw XferException(5,0);
             transferId(xfer,&id);
