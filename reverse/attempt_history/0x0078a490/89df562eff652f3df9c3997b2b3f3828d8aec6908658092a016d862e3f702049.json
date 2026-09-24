@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "89df562eff652f3df9c3997b2b3f3828d8aec6908658092a016d862e3f702049",
+  "symbol": "?bfmeComputeQW@@YAHPAX@Z",
+  "score_kind": "author-estimate",
+  "score": 0.44,
+  "source": "// ?bfmeComputeQW@@YAHPAX@Z\n// partial score=0.44 date=2026-09-24\n// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n#include <string.h>\nextern \"C\" __declspec(dllimport) int __cdecl _memicmp(const void *left, const void *right, unsigned int count);\nextern char Rva006A16B0Empty[];\nstruct Rva0078A490StringData\n{\n    int refs;\n    unsigned short length;\n    unsigned short capacity;\n    char text[1];\n};\nstatic __forceinline const char **Rva0078A490NameTableIfPresent()\n{\n    if (*(const char * volatile *)0x012BB88C != 0)\n        return (const char **)0x012BB88C;\n    return 0;\n}\nstatic __forceinline int Rva0078A490Compare(void *item, const char *name)\n{\n    int nameLength = name ? strlen(name) : 0;\n    Rva0078A490StringData *data = *(Rva0078A490StringData **)item;\n    int length = data ? data->length : 0;\n    const char *text = data ? data->text : Rva006A16B0Empty;\n    int result = _memicmp(text, name, length < nameLength ? length : nameLength);\n    if (result != 0)\n        return result;\n    return length - nameLength;\n}\nint __cdecl bfmeComputeQW(void *item)\n{\n    int index = 0;\n    if (*(const char * volatile *)0x012BB88C != 0) {\n        const char **base = (const char **)0x012BB88C;\n        const char **cursor = base;\n        const char *name = *base;\n        do {\n            if (Rva0078A490Compare(item, name) == 0)\n                return index;\n            ++index;\n            ++cursor;\n            name = *cursor;\n        } while (name != 0);\n    }\n    return 0;\n}\n"
+}
