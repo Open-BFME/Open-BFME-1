@@ -235,7 +235,7 @@ private:
 	std::list<Object *> m_memberList;
 };
 
-void AIGroup::groupIdle(Int cmdSource)
+void AIGroup::groupIdle(Int commandSource)
 {
 	std::list<Object *>::iterator i;
 	for (i = m_memberList.begin(); i != m_memberList.end(); ++i)
@@ -247,12 +247,12 @@ void AIGroup::groupIdle(Int cmdSource)
 		AIUpdateInterface *ai = obj->getAIUpdateInterface();
 		if (ai)
 		{
-			aiIdleViaIlt(&ai->m_commands, (CommandSourceType)cmdSource);
+			aiIdleViaIlt(&ai->m_commands, (CommandSourceType)commandSource);
 
-			if (cmdSource == CMD_FROM_PLAYER)
+			if (commandSource == CMD_FROM_PLAYER)
 				ai->m_playerIdle = 1;
 
-			if (cmdSource == CMD_FROM_PLAYER &&
+			if (commandSource == CMD_FROM_PLAYER &&
 				BitTest(obj->getStatusBits(), OBJECT_STATUS_CAN_STEALTH) &&
 				ai->canAutoAcquire())
 			{
@@ -286,13 +286,13 @@ void AIGroup::groupIdle(Int cmdSource)
 			ContainModuleInterface *contain = obj->getContain();
 			if (contain)
 				contain->iterateContained(bfmeGoBUA,
-					(void *)&cmdSource, true);
+					(void *)&commandSource, true);
 		}
 
 		SpawnBehaviorInterface *spawnInterface =
 			getSpawnBehaviorInterfaceViaIlt(obj);
 		if (spawnInterface)
 			spawnInterface->orderSlavesToGoIdle(
-				(CommandSourceType)cmdSource);
+				(CommandSourceType)commandSource);
 	}
 }

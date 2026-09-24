@@ -84,7 +84,7 @@ struct DamageInfo
 class AICommandParms
 {
 public:
-    AICommandParms(AICommandType cmd, CommandSourceType cmdSource);
+    AICommandParms(AICommandType cmd, CommandSourceType commandSource);
 
     AICommandType m_cmd;
     CommandSourceType m_cmdSource;

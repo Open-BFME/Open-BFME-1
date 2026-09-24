@@ -84,7 +84,7 @@ struct AICommandParms
 	const CommandButton *m_commandButton;
 	Path *m_path;
 
-	AICommandParms(AICommandType cmd, CommandSourceType cmdSource);
+	AICommandParms(AICommandType cmd, CommandSourceType commandSource);
 };
 
 class AICommandInterface
