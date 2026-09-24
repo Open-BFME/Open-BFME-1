@@ -8,10 +8,12 @@
 //
 // WHAT THE BYTES SHOW.  `this` arrives in ecx, a constant is added to it, and
 // control leaves through a jmp, so the callee inherits this frame unchanged and
-// its `ret` returns to OUR caller.  The bare jmp means the callee pops what
-// this function pops: the callee ends in a plain `ret`, so both it and this
-// function are __thiscall with no stack arguments.  The added constant is the
-// offset of the receiver inside the object.
+// its `ret` returns to OUR caller.  The bare jmp preserves any stack arguments
+// from this function's caller; the callee's `ret` decides their cleanup.  A
+// signature therefore needs independent evidence for each target.  In
+// particular, 0x00594000 forwards one pointer-sized argument and its callee
+// 0x00593A30 ends in `ret 4`.  The added constant is the offset of the
+// receiver inside the object.
 //
 // TWO AXES, AND NEITHER IS INFERRED: the offset is an immediate operand and the
 // target is the displacement, so both are read straight off the instruction
@@ -89,6 +91,18 @@ template class _STL::vector<Gen000DD310Entry>;
 		( (CALLEE *)( (char *)this + ( OFFSET ) ) )->handle();            \
 	}
 
+// One stack word is inherited by the tail target at 0x00593A30 (ret 4).
+#define BFME_OFFSET_TAIL_THUNK_ARG1( NAME, CALLEE, OFFSET )               \
+	class NAME                                                            \
+	{                                                                     \
+	public:                                                               \
+		void invoke( void *item );                                         \
+	};                                                                    \
+	void NAME::invoke( void *item )                                       \
+	{                                                                     \
+		( (CALLEE *)( (char *)this + ( OFFSET ) ) )->handle( item );      \
+	}
+
 BFME_OFFSET_TAIL_CALLEE( 00064110 )
 BFME_OFFSET_TAIL_CALLEE( 00064800 )
 BFME_OFFSET_TAIL_CALLEE( 00065090 )
@@ -159,7 +173,11 @@ BFME_OFFSET_TAIL_CALLEE( 0058BC20 )
 BFME_OFFSET_TAIL_CALLEE( 0058BCD0 )
 BFME_OFFSET_TAIL_CALLEE( 0058BD70 )
 BFME_OFFSET_TAIL_CALLEE( 0058D820 )
-BFME_OFFSET_TAIL_CALLEE( 00593A30 )
+class Gen00593A30
+{
+public:
+	void handle( void *item );
+};
 BFME_OFFSET_TAIL_CALLEE( 00594D60 )
 BFME_OFFSET_TAIL_CALLEE( 005C21D0 )
 BFME_OFFSET_TAIL_CALLEE( 005EF6C0 )
@@ -319,7 +337,7 @@ BFME_OFFSET_TAIL_THUNK( Rva0058D150, Gen0058BCD0, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0058D190, Gen0058BC20, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0058D1D0, Gen0058BD70, 8 )
 BFME_OFFSET_TAIL_THUNK( Rva0058FD60, Gen0058D820, 8 )
-BFME_OFFSET_TAIL_THUNK( Rva00594000, Gen00593A30, 340 )
+BFME_OFFSET_TAIL_THUNK_ARG1( Rva00594000, Gen00593A30, 340 )
 BFME_OFFSET_TAIL_THUNK( Rva005954D0, Gen00594D60, 696 )
 BFME_OFFSET_TAIL_THUNK( Rva005B27D0, Gen00887940, 4 )
 BFME_OFFSET_TAIL_THUNK( Rva005BE1A0, Gen00887C90, 188 )

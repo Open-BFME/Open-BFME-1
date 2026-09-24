@@ -83251,7 +83251,7 @@ name,address,notes
 ?handle@Gen0058BD70@@QAEXXZ,0x0058BD70,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
 ?handle@Gen0058C030@@QAEXXZ,0x0058C030,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
 ?handle@Gen0058D820@@QAEXXZ,0x0058D820,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
-?handle@Gen00593A30@@QAEXXZ,0x00593A30,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
+?handle@Gen00593A30@@QAEXPAX@Z,0x00593A30,one pointer argument from matched 0x003C6200 and 0x003C83E0 callers plus physical callee ret 4;address-derived target
 ?handle@Gen00594D60@@QAEXXZ,0x00594D60,address-derived callee of the add-ecx offset tail-jump family; target read from the REL32 at its call sites
 ?handle@Gen005A7E10@@QAEXXZ,0x005A7E10,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
 ?handle@Gen005B2950@@QAEXXZ,0x005B2950,address-derived callee of the mov-ecx-from-stack tail-jump family; target read from the REL32 at its call site
