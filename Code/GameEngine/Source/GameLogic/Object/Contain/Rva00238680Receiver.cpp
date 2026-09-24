@@ -1,0 +1,60 @@
+// ?rva00238680@Rva00238680Receiver@@QAE_NPAVRva00238680Object@@@Z
+// The served body has no named caller or installed vtable, so its owner stays
+// address-derived. Calls use the matched Object and GameLogic ABI declarations.
+// cl: /DNDEBUG /MD /EHs-c-
+
+class Object
+{
+public:
+    Object *bfmeResolveMeleeTarget(int);
+    float getDistanceSquared(const Object *) const;
+};
+
+class Rva00238680Object
+{
+};
+
+class GameLogic
+{
+public:
+    Object *findObjectByID(int);
+    char pad000[0x3C];
+    unsigned m_frame; // +0x3C in AIAttackMeleeHordeWaitState_update.cpp
+};
+
+extern GameLogic *TheGameLogic;
+#define Rva00238680Limit (*(float *)0x010AEBB8)
+
+class Rva00238680Receiver
+{
+public:
+    char pad000[0x100];
+    int objectIdAt100;
+    unsigned limitAt104;
+    bool rva00238680(Rva00238680Object *target);
+};
+
+bool Rva00238680Receiver::rva00238680(Rva00238680Object *target)
+{
+    if (target == 0)
+    {
+        return false;
+    }
+    else
+    {
+        if (objectIdAt100 == 0)
+            return false;
+        GameLogic *logic = TheGameLogic;
+        if (logic->m_frame >= limitAt104)
+            return false;
+        Object *found = logic->findObjectByID(objectIdAt100);
+        if (!found)
+            return false;
+        char close = ((Object *)target)->getDistanceSquared(*(Object **)((char *)this - 0xDC)) < Rva00238680Limit;
+        Object *foundParent = found->bfmeResolveMeleeTarget(0);
+        Object *targetParent = ((Object *)target)->bfmeResolveMeleeTarget(0);
+        if (targetParent == foundParent)
+            return true;
+        return close;
+    }
+}
