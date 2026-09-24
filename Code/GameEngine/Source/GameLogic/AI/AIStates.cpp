@@ -5688,28 +5688,9 @@ void AIMoveAndDeleteState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
-// ?onEnter@AIMoveAndDeleteState@@UAE?AW4StateReturnType@@XZ present-unmatched
-// This "60" body is AIMoveToPositionAndDieState::onEnter (0x0017EF50), now
-// matched from AIMoveToPositionAndDieState_onEnter.cpp.
-StateReturnType AIMoveAndDeleteState::onEnter()
-{
-	BfmeMoveStateFields *self = (BfmeMoveStateFields *)this;
-
-	if (g_012F0239 && g_012ED4FC)
-	{
-		((BfmeCritterDesyncLog)j_0003a17a)(g_012ED4FC,
-			"CritterDesync: setAdjustDestination(FALSE) 60");
-	}
-	self->m_adjustDestinations = 0;
-	self->m_machine->m_locked = 1;
-	// if we have a goal object, move to it, otherwise move to goal position
-	if (((StateMachine *)self->m_machine)->getGoalObject())
-		self->m_goalPosition = ((const BfmeMoveStateObject *)((StateMachine *)self->m_machine)->getGoalObject())->m_position;
-	else
-		self->m_goalPosition = self->m_machine->m_goalPosition;
-	self->m_appendGoalPosition = 1; // We may be moving off the map.
-	return AIInternalMoveToState::onEnter();
-}
+// ?onEnter@AIMoveAndDeleteState@@UAE?AW4StateReturnType@@XZ
+// Body in AIMoveAndDeleteState_onEnter.cpp (0x0017A430). The "60" twin is
+// AIMoveToPositionAndDieState::onEnter, in AIMoveToPositionAndDieState_onEnter.cpp.
 
 //----------------------------------------------------------------------------------------------------------
 StateReturnType AIMoveAndDeleteState::update()
