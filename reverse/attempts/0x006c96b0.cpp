@@ -1,5 +1,5 @@
 // ?rva006C96B0@BaseHeightMapRenderObjClass@@IAEXXZ
-// partial score=0.306238 date=2026-09-23
+// partial score=0.306868 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2
 // stlport
 #include "Lib/BaseType.h"
@@ -305,8 +305,8 @@ void BaseHeightMapRenderObjClass::rva006C96B0(void)
                 vertices->y = worldY;
                 vertices->z = z + g_bfmeK1253;
                 vertices->diffuse = 0xffffffff;
-                vertices->u1 = u1;
                 vertices->v1 = v1;
+                vertices->u1 = u1;
                 ++vertices;
                 ++m_curNumScorchVertices;
             }
