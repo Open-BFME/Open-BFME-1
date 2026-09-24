@@ -68,12 +68,14 @@ enum ShaderShiftConstants
 	SHIFT_TEXTURING				= 16,	// bit shift for texturing setting (1 bit)
 	SHIFT_NPATCHENABLE			= 17,	// bit shift for npatch enabling
 	SHIFT_ALPHATEST				= 18,	// bit shift for alpha test setting
-	SHIFT_CULLMODE					= 19,	// bit shift for cullmode setting
-	// BFME puts one more bit between the cull mode and the post-detail fields:
-	// W3dUtilityClass::Convert_Shader (0x00978760) writes them with shl 0x15 and
-	// shl 0x19 against masks ~0x01E00000 and ~0x0E000000, one bit later than the
-	// Zero Hour layout. Whether the extra bit belongs to the cull mode or is a
-	// field of its own is not decided by that function.
+	// BFME puts one more bit between the alpha test and the post-detail fields:
+	// W3dUtilityClass::Convert_Shader (0x00978760) writes the post-detail fields
+	// with shl 0x15 and shl 0x19 against masks ~0x01E00000 and ~0x0E000000, one
+	// bit later than Zero Hour. The cull mode moved with them: ShaderClass::Apply
+	// (0x00911020, +0xAE8) sets D3DRS_CULLMODE from `test eax,0x100000`, and the
+	// default bits every BFME site stores are 0x0010441B (bit 20 set, bit 19
+	// clear). Bit 19 is a field of its own that no known code sets.
+	SHIFT_CULLMODE					= 20,	// bit shift for cullmode setting
 	SHIFT_POSTDETAILCOLORFUNC	= 21,	// bit shift for post-detail color function setting
 	SHIFT_POSTDETAILALPHAFUNC	= 25	// bit shift for post-detail alpha function setting
 };
@@ -251,7 +253,7 @@ public:
 		// BFME drift: alpha test occupies two bits in retail (Determine_Tail_Diffuse
 		// at 0x98B750 tests [bits & 0xC0000] == 0x40000).
 		MASK_ALPHATEST				= (3<<18),			// mask for alpha test enable
-		MASK_CULLMODE				= (1<<19),			// mask for cullmode setting
+		MASK_CULLMODE				= (1<<20),			// mask for cullmode setting
 		MASK_POSTDETAILCOLORFUNC= (15<<21),			// mask for post detail color function setting
 		MASK_POSTDETAILALPHAFUNC= (7<<25)			// mask for post detail alpha function setting
 	};
