@@ -196,8 +196,7 @@ public:
 	}
 
 	void *m_vptr;
-	void *m_proto;
-	void *m_id;
+	unsigned char m_pad04[8];
 	Object *m_head;
 };
 
