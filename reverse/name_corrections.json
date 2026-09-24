@@ -2329,5 +2329,135 @@
   "after_sha256": "fc6960796db49219792c1926fdad77b20d9b9a88e811929627c7eadd19abd898",
   "evidence": "reverse/identity_evidence/001b5a30.md",
   "reason": "Retail fields at +0x44/+0x48 are Lift/LiftDamaged. The class and ABI are known but exact method identity is unresolved, so retain the RVA."
- }
+ },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "Drawable",
+    "new_name": "Rva00527200Owner",
+    "before_sha256": "d2d97a7fafd0c4890e2538f0a64c833a9fa77074c19cdfb937f0d418a939ee2d",
+    "after_sha256": "136005dea04eca9cdf3edc410f3d9f95cc2bef74bd92a48b413fbda4a95f5323",
+    "evidence": "reverse/identity_evidence/0x00526660-false-drawable-route.md",
+    "reason": "Independent retail receiver and callee evidence in the proof refutes the old Drawable ledger identity at the same RVA; the new address-derived name preserves the matched extent without asserting a semantic owner."
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "clearModelConditionState",
+    "new_name": "rva00527200",
+    "before_sha256": "d2d97a7fafd0c4890e2538f0a64c833a9fa77074c19cdfb937f0d418a939ee2d",
+    "after_sha256": "136005dea04eca9cdf3edc410f3d9f95cc2bef74bd92a48b413fbda4a95f5323",
+    "evidence": "reverse/identity_evidence/0x00526660-false-drawable-route.md",
+    "reason": "Independent retail receiver and callee evidence in the proof refutes the old Drawable ledger identity at the same RVA; the new address-derived name preserves the matched extent without asserting a semantic owner."
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "Drawable",
+    "new_name": "Rva0001C8D2Thunk",
+    "before_sha256": "df87a196dd335cc8ecc40c1cc2804095cbdfaf438964d917b0b55c6ca98dfc94",
+    "after_sha256": "502b2ff6a4c925d7a3d265eb8fa5ceee519b5d00054661f782f33a4717f11f7b",
+    "evidence": "reverse/identity_evidence/0x00526660-false-drawable-route.md",
+    "reason": "Independent retail receiver and callee evidence in the proof refutes the old Drawable ledger identity at the same RVA; the new address-derived name preserves the matched extent without asserting a semantic owner."
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "militarySubtitle",
+    "new_name": "rva00441D30",
+    "before_sha256": "2ed3e795f3aa9073291141325c0a4ffa19b7210a969b359c9e41d8c55b1b05e4",
+    "after_sha256": "77543e85b9d0f7ec8915e23649edab7e527dd4175fba0719cf2e8ad25e2cca62",
+    "evidence": "reverse/identity_evidence/0x00441d30-ingameui-slot-rehome.md",
+    "reason": "The 0x00441D30 slot-19 body consumes a UnicodeString by value. The AsciiString-label militarySubtitle method is the 0x0043E510 slot-20 wrapper, supported by the installed BFME vtables, matched slot-21 removeMilitarySubtitle and the Zero Hour declaration order. Slot 19 keeps an address-derived name because its lexical method spelling is unproven."
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "bfmeGo1052J",
+    "new_name": "rva003C8300",
+    "before_sha256": "8c6d3d53209be24ac446d06f1e7053e20c4245602d07bf21d29eb5568fa7731f",
+    "after_sha256": "fc8a6f51132371e1bb81d493034c4b342e4c71e3e46d44f0d789aa1176d71281",
+    "evidence": "reverse/identity_evidence/0x003c8300-manager-region-return.md",
+    "reason": "The 46-byte row's pointer return and manager receiver are proved by the matched 0x003C8160 callee and the 0x003CB290 to 0x003C83E0 caller chain. The corrected ledger name retains 0x003C8300 because the lexical method name remains unknown."
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "SlaughterHordeContain",
+    "new_name": "Rva0024EB00",
+    "before_sha256": "4e5ca0af5fcf69e233951f2e039b013d43e0ffee2be3fb63fe68d729387c35bc",
+    "after_sha256": "ed7565dc7ac3ebd4d471adc425d5b8840174cba146b55613523d14b94520250c",
+    "evidence": "reverse/identity_evidence/0x0024eb00-on-die-slot.md",
+    "reason": "Retail constructor +0x28 vtable slot 0 routes through ILT 0x00041B82 to 0x0024EB00, aligned with Open/Garrison onDie slots and the one-method DieModuleInterface. The former destructor symbol conflicts with the body and ABI, while the exact declaring class is not proved; retain an address-derived owner. The old COFF symbol remains only as an explicit byte-emitter alias."
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "SetInGameChatType",
+    "new_name": "rva00511CC0",
+    "before_sha256": "632bd59d266823845c8d038671c358b087cb776490493dd8963661c97f92e1ab",
+    "after_sha256": "1b79c8126014293dd9e88bc3b4c4410344b5e09f700fe461ec655df29caaf872",
+    "evidence": "reverse/deleted_rows.csv",
+    "reason": "review of 0x00511CC0: no matched caller uses SetInGameChatType (CommandXlat calls the pinned rva00511CC0) and the body mixes ShowInGameChat, ToggleInGameChat and SetInGameChatType traits, so it keeps its address token"
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "ParticleEmitterDefClass",
+    "new_name": "Rva002B6860",
+    "before_sha256": "49678cc11c39ee5ef0eb19a1e83f8a19ed910a63888b62e936d2a2f0d8069f67",
+    "after_sha256": "0268df0467b590cdeff8a285d4fb91e735ae0b9f8897cc8553fb70be37d27c02",
+    "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+    "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x002B6860 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "ParticleEmitterDefClass",
+    "new_name": "Rva0035F090",
+    "before_sha256": "55c6e797fb40782828d06468b2766431a47c8015da57eea125193bed9e43f64f",
+    "after_sha256": "3fdef3212aebf14a9307befd8fa5d74857484bfb2ed72c9258394ec9c0e452ad",
+    "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+    "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x0035F090 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "ParticleEmitterDefClass",
+    "new_name": "Rva0021A220",
+    "before_sha256": "7df91b7ae3a1767e0d3379a4ec5657ec524f525e9ea9434b5abefc92e9c00d90",
+    "after_sha256": "786a5de55c407ea8b1e9f5490fcaa2f07ce3af1ac1aa4cc549e9a9f3f401b91e",
+    "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+    "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x0021A220 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "ParticleEmitterDefClass",
+    "new_name": "Rva001065F0",
+    "before_sha256": "808cdc14d9ed0f0abc27163c1512538a8323c3cf352cf6dc77da9b1a93e6c0dd",
+    "after_sha256": "f1fb3c8ef632f25a5a8e14e981fd8ae205d0fa9fc8d60a463dbcd0d33230cc51",
+    "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+    "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x001065F0 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "ParticleEmitterDefClass",
+    "new_name": "Rva0026F930",
+    "before_sha256": "af9fa5279d901506cdc31f8a50086444448d41b041cd624b270613b9f56da5eb",
+    "after_sha256": "2ed86eaeafedec31ff53c33f3c7d7a6af32f66a62d7ab7638f62eebc88229778",
+    "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+    "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x0026F930 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
+  },
+  {
+    "old_path": "reverse/functions.csv",
+    "new_path": "reverse/functions.csv",
+    "old_name": "ParticleEmitterDefClass",
+    "new_name": "Rva00253D20",
+    "before_sha256": "c06348e987a581e9252a13557ecc3a90f936d7cec48d98e80f1682e6cbb91662",
+    "after_sha256": "99b41d36c156a72a9ee2b4ee36c5aae5becea8fabf2c8ed6116fd9743251ecc3",
+    "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+    "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x00253D20 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
+  }
 ]
