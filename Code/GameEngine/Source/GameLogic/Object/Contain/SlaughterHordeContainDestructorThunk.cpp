@@ -1,5 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc
-// Open-BFME5: lift MASM dump to standalone C++ thunk.
+// Historical byte emitter for 0x0024EB00. Its COFF destructor name below is
+// semantically wrong: the retail +0x28 DieModuleInterface slot calls this as
+// onDie(const DamageInfo*). The ledger keeps that COFF name only as an explicit
+// object-symbol alias; see reverse/identity_evidence/0x0024eb00-on-die-slot.md.
 
 class __declspec(novtable) SlaughterHordeContain
 {

@@ -2158,5 +2158,15 @@
   "after_sha256": "7f8e23210b1901a476d8638cbe10c97773bd45f938537b2320744679e560d72f",
   "evidence": "reverse/identity_evidence/0x00941c60-method-identities.md",
   "reason": "Retail passes one FontCharsClass pointer to the matched 0x0093F980 helper. Record_Sentence_Chunk has no parameters and is the separate matched body at 0x0093F310, so its name identifies a different target. The address-derived name states the proven callee."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "SlaughterHordeContain",
+  "new_name": "Rva0024EB00",
+  "before_sha256": "4e5ca0af5fcf69e233951f2e039b013d43e0ffee2be3fb63fe68d729387c35bc",
+  "after_sha256": "ed7565dc7ac3ebd4d471adc425d5b8840174cba146b55613523d14b94520250c",
+  "evidence": "reverse/identity_evidence/0x0024eb00-on-die-slot.md",
+  "reason": "Retail constructor +0x28 vtable slot 0 routes through ILT 0x00041B82 to 0x0024EB00, aligned with Open/Garrison onDie slots and the one-method DieModuleInterface. The former destructor symbol conflicts with the body and ABI, while the exact declaring class is not proved; retain an address-derived owner. The old COFF symbol remains only as an explicit byte-emitter alias."
  }
 ]
