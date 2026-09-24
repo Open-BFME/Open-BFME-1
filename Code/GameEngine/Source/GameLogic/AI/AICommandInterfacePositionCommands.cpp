@@ -81,7 +81,7 @@ struct DamageInfo
 struct AICommandParms
 {
 	AICommandType						m_cmd;			// +0x00
-	CommandSourceType				m_cmdSource;		// +0x04
+	CommandSourceType				m_commandSource;		// +0x04
 	Coord3D									m_pos;			// +0x08
 	Object									*m_obj;			// +0x14
 	Object									*m_otherObj;		// +0x18
@@ -94,7 +94,7 @@ struct AICommandParms
 	const CommandButton			*m_commandButton;	// +0x94
 	Path										*m_path;		// +0x98
 
-	AICommandParms(AICommandType cmd, CommandSourceType cmdSource);	// ILT 0x00030EA4
+	AICommandParms(AICommandType cmd, CommandSourceType commandSource);	// ILT 0x00030EA4
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
@@ -103,84 +103,84 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;	// slot 0, vtable+0x00
 
-	void aiBfmeCommand54(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiTightenToPosition(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiMoveToAndEvacuate(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiMoveToAndEvacuateAndExit(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiBfmeCommand35(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiBfmeCommand19(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiBfmeCommand38(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiBfmeCommand41(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiBfmeCommand40(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiBfmeCommand39(const Coord3D *pos, CommandSourceType cmdSource);
+	void aiBfmeCommand54(const Coord3D *position, CommandSourceType commandSource);
+	void aiTightenToPosition(const Coord3D *position, CommandSourceType commandSource);
+	void aiMoveToAndEvacuate(const Coord3D *position, CommandSourceType commandSource);
+	void aiMoveToAndEvacuateAndExit(const Coord3D *position, CommandSourceType commandSource);
+	void aiBfmeCommand35(const Coord3D *position, CommandSourceType commandSource);
+	void aiBfmeCommand19(const Coord3D *position, CommandSourceType commandSource);
+	void aiBfmeCommand38(const Coord3D *position, CommandSourceType commandSource);
+	void aiBfmeCommand41(const Coord3D *position, CommandSourceType commandSource);
+	void aiBfmeCommand40(const Coord3D *position, CommandSourceType commandSource);
+	void aiBfmeCommand39(const Coord3D *position, CommandSourceType commandSource);
 };
 
-void AICommandInterface::aiBfmeCommand54(const Coord3D *pos, CommandSourceType cmdSource)
+void AICommandInterface::aiBfmeCommand54(const Coord3D *position, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_BFME_54, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_BFME_54, commandSource);
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiTightenToPosition( const Coord3D *pos, CommandSourceType cmdSource )
+void AICommandInterface::aiTightenToPosition( const Coord3D *position, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_TIGHTEN_TO_POSITION, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_TIGHTEN_TO_POSITION, commandSource);
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiMoveToAndEvacuate( const Coord3D *pos, CommandSourceType cmdSource )
+void AICommandInterface::aiMoveToAndEvacuate( const Coord3D *position, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_MOVE_TO_POSITION_AND_EVACUATE, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_MOVE_TO_POSITION_AND_EVACUATE, commandSource);
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiMoveToAndEvacuateAndExit( const Coord3D *pos, CommandSourceType cmdSource )
+void AICommandInterface::aiMoveToAndEvacuateAndExit( const Coord3D *position, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_MOVE_TO_POSITION_AND_EVACUATE_AND_EXIT, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_MOVE_TO_POSITION_AND_EVACUATE_AND_EXIT, commandSource);
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand35(const Coord3D *pos, CommandSourceType cmdSource)
+void AICommandInterface::aiBfmeCommand35(const Coord3D *position, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_BFME_35, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_BFME_35, commandSource);
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand19(const Coord3D *pos, CommandSourceType cmdSource)
+void AICommandInterface::aiBfmeCommand19(const Coord3D *position, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_BFME_19, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_BFME_19, commandSource);
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand38(const Coord3D *pos, CommandSourceType cmdSource)
+void AICommandInterface::aiBfmeCommand38(const Coord3D *position, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_BFME_38, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_BFME_38, commandSource);
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand41(const Coord3D *pos, CommandSourceType cmdSource)
+void AICommandInterface::aiBfmeCommand41(const Coord3D *position, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_BFME_41, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_BFME_41, commandSource);
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand40(const Coord3D *pos, CommandSourceType cmdSource)
+void AICommandInterface::aiBfmeCommand40(const Coord3D *position, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_BFME_40, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_BFME_40, commandSource);
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand39(const Coord3D *pos, CommandSourceType cmdSource)
+void AICommandInterface::aiBfmeCommand39(const Coord3D *position, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_BFME_39, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_BFME_39, commandSource);
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
