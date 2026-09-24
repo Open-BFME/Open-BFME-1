@@ -29,14 +29,14 @@ function,source,size,candidate_rva,aligned_pct,class,first_diff,hint,votes
 ?resetShadowVolume@W3DVolumetricShadow@@IAEXHH@Z,W3DVolumetricShadow.cpp,123,0x007B9110,100,exact-ambiguous,-1,identical bytes; string-anchor disambiguated,7
 ??0HAnimComboClass@@QAE@H@Z,hanim.cpp,213,0x00974820,100,exact-ambiguous,-1,identical bytes; string-anchor disambiguated,9
 ?Delete_Registry_Tree@RegistryClass@@SAXPAD@Z,registry.cpp,475,0x009DCAB0,100,exact-ambiguous,-1,identical bytes; string-anchor disambiguated,22
-?Flip_To_Primary@DX8Wrapper@@SAXXZ,dx8wrapper.cpp,167,0x00909250,99,immediate-only,116,1 literal(s): call DWORD PTR [edx+0x3c] vs DWORD PTR [edx+0x44],6
+?Flip_To_Primary@DX8Wrapper@@SAXXZ,dxwrapper.cpp,167,0x00909250,99,immediate-only,116,1 literal(s): call DWORD PTR [edx+0x3c] vs DWORD PTR [edx+0x44],6
 ?Get_Obj_Space_Bounding_Box@StreakLineClass@@UBEXAAVAABoxClass@@@Z,streak.cpp,2279,0x00919010,99,immediate-only,7,"7 literal(s): mov ecx,DWORD PTR [eax+0xac] vs ecx,DWORD PTR [eax+0xe0]",12
 ?Read@DebugIOCon@@UAEHPADH@Z,debug_io_con.cpp,561,0x00890F80,99,structural,60,"shape ratio 99%, sizes 561->561",16
 ?notifyLauncher@CopyProtect@@SA_NXZ,CopyProtection.cpp,242,0x001020D0,97,structural,79,"shape ratio 86%, sizes 242->198",10
 ?Post_Load_Process@MeshMatDescClass@@QAEX_NPAVMeshModelClass@@@Z,meshmatdesc.cpp,4057,0x0092A6C3,93,structural,0,"shape ratio 96%, sizes 4057->4057",16
 ?testMinimumRequirements@W3DShaderManager@@SA_NPAW4ChipsetType@@PAW4CpuType@@PAH2PAM33@Z,W3DShaderManager.cpp,175,0x00717887,90,structural,0,"shape ratio 96%, sizes 175->175",7
 ?prepForPlayerCounting@ObjectTypes@@QAEHAAV?$vector@PBVThingTemplate@@V?$allocator@PBVThingTemplate@@@_STL@@@_STL@@AAV?$vector@HV?$allocator@H@_STL@@@3@@Z,ObjectTypes.cpp,193,0x001DC59E,88,structural,0,"shape ratio 93%, sizes 193->193",8
-?Get_DX8_Texture_Stage_State_Name@DX8Wrapper@@SAPBDK@Z,dx8wrapper.cpp,304,0x00902913,88,structural,0,"shape ratio 58%, sizes 304->304",55
+?Get_DX8_Texture_Stage_State_Name@DX8Wrapper@@SAPBDK@Z,dxwrapper.cpp,304,0x00902913,88,structural,0,"shape ratio 58%, sizes 304->304",55
 ?Add_Camera_Shake@W3DView@@UAEXABUCoord3D@@MMM@Z,W3DView.cpp,62,0x0073D470,87,structural,46,"shape ratio 86%, sizes 62->63",5
 ?RenderMeshVolumeBounds@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@@Z,W3DVolumetricShadow.cpp,1343,0x007BC8B0,86,structural,580,"shape ratio 83%, sizes 1343->1345",8
 ?constructVolumeVB@W3DVolumetricShadow@@IAEXPAVVector3@@MHH@Z,W3DVolumetricShadow.cpp,1539,0x007B8980,80,structural,411,"shape ratio 94%, sizes 1539->1536",9
@@ -46,7 +46,7 @@ function,source,size,candidate_rva,aligned_pct,class,first_diff,hint,votes
 ??RParabolicEase@@QBEMM@Z,ParabolicEase.cpp,193,0x00094AE8,76,structural,0,"shape ratio 71%, sizes 193->193",7
 ??0FontDesc@@QAE@XZ,GlobalLanguage.cpp,82,0x00439282,73,structural,0,"shape ratio 82%, sizes 82->82",7
 ?Set_NPatches_Level@WW3D@@SAXI@Z,ww3d.cpp,87,0x008FD080,73,structural,35,"shape ratio 64%, sizes 87->87",7
-?Do_Onetime_Device_Dependent_Inits@DX8Wrapper@@SAXXZ,dx8wrapper.cpp,77,0x0090AE00,72,structural,0,"shape ratio 18%, sizes 77->77",5
+?Do_Onetime_Device_Dependent_Inits@DX8Wrapper@@SAXXZ,dxwrapper.cpp,77,0x0090AE00,72,structural,0,"shape ratio 18%, sizes 77->77",5
 ?WOLWelcomeMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,WOLWelcomeMenu.cpp,117,0x0050B9B1,71,structural,0,"shape ratio 60%, sizes 117->117",6
 ?OnGameStartTimer@LANAPI@@UAEXH@Z,LANAPICallbacks.cpp,212,0x00689050,71,structural,127,"shape ratio 78%, sizes 212->222",16
 ??4?$vector@_NV?$allocator@_N@_STL@@@_STL@@QAEAAV01@ABV01@@Z,PeerThread.cpp,265,0x00646352,68,structural,0,"shape ratio 91%, sizes 265->265",11
@@ -428,7 +428,7 @@ _$E16,GameWindowManagerScript.cpp,48,0x009DA875,50,structural,0,"shape ratio 37%
 ?getClassMemoryPool@W3DTankTruckDraw@@CAPAVMemoryPool@@XZ,W3DTankTruckDraw.cpp,104,0x0079CD90,49,structural,0,"shape ratio 17%, sizes 104->104",5
 ?getClassMemoryPool@W3DPrototypeClass@@CAPAVMemoryPool@@XZ,W3DAssetManager.cpp,104,0x0079CD90,49,structural,0,"shape ratio 17%, sizes 104->104",5
 ?Create@CollectionPrototypeClass@@UAEPAVRenderObjClass@@XZ,collect.cpp,99,0x0048E3FC,49,structural,0,"shape ratio 46%, sizes 99->99",6
-?Apply_Render_State_Changes@DX8Wrapper@@SAXXZ,dx8wrapper.cpp,1189,0x0090488B,49,structural,0,"shape ratio 2%, sizes 1189->1189",5
+?Apply_Render_State_Changes@DX8Wrapper@@SAXXZ,dxwrapper.cpp,1189,0x0090488B,49,structural,0,"shape ratio 2%, sizes 1189->1189",5
 ?Create@NullPrototypeClass@@UAEPAVRenderObjClass@@XZ,nullrobj.cpp,99,0x0048E3FC,49,structural,0,"shape ratio 43%, sizes 99->99",6
 ?CrashBegin@Debug@@SAAAV1@PBDH@Z,debug_debug.cpp,263,0x0088F003,49,structural,0,"shape ratio 26%, sizes 263->263",5
 ?createW3DMemPool@@YAPAXPBDH@Z,GameMemory.cpp,37,0x0079CDAE,48,structural,0,"shape ratio 24%, sizes 37->37",5
@@ -444,7 +444,7 @@ _$E16,GameWindowManagerScript.cpp,48,0x009DA875,50,structural,0,"shape ratio 37%
 ??0SupplyTruckStateMachine@@QAE@PAVObject@@@Z,SupplyTruckAIUpdate.cpp,1007,0x002BFB8A,48,structural,0,"shape ratio 1%, sizes 1007->1007",25
 ?doTeamRemoveOverrideRelationToPlayer@ScriptActions@@IAEXABVAsciiString@@0@Z,ScriptActions.cpp,86,0x006827D4,48,structural,0,"shape ratio 39%, sizes 86->86",10
 ?getClassMemoryPool@Condition@@CAPAVMemoryPool@@XZ,Scripts.cpp,104,0x00AB6B13,48,structural,0,"shape ratio 27%, sizes 104->104",5
-?Init@DX8Wrapper@@SA_NPAX_N@Z,dx8wrapper.cpp,496,0x00949CF0,48,structural,0,"shape ratio 2%, sizes 496->496",5
+?Init@DX8Wrapper@@SA_NPAX_N@Z,dxwrapper.cpp,496,0x00949CF0,48,structural,0,"shape ratio 2%, sizes 496->496",5
 ?Free@PredictiveLODOptimizerClass@@SAXXZ,predlod.cpp,98,0x00C3C3C9,48,structural,0,"shape ratio 15%, sizes 98->98",10
 ?MainMenuShutdown@@YAXPAVWindowLayout@@PAX@Z,MainMenu.cpp,87,0x0050B9A3,47,structural,0,"shape ratio 16%, sizes 87->87",5
 ?getModuleNameKey@DefaultProductionExitUpdate@@UBE?AW4NameKeyType@@XZ,DefaultProductionExitUpdate.cpp,104,0x00A4753F,47,structural,0,"shape ratio 25%, sizes 104->104",5
@@ -534,8 +534,8 @@ _$E16,GameWindowManagerScript.cpp,48,0x009DA875,50,structural,0,"shape ratio 37%
 ?sendObjectCreated@GameLogic@@QAEXPAVObject@@@Z,GameLogic.cpp,50,0x005B8958,42,structural,0,"shape ratio 5%, sizes 50->50",5
 ?startOnline@@YAXXZ,MainMenuUtils.cpp,717,0x0062EAA3,42,structural,0,"shape ratio 5%, sizes 717->717",20
 ?init@ScreenBWFilterDOT3@@UAEHXZ,W3DShaderManager.cpp,56,0x007E1F54,42,structural,0,"shape ratio 10%, sizes 56->56",5
-?Compute_Caps@DX8Wrapper@@KAXW4WW3DFormat@@@Z,dx8wrapper.cpp,152,0x00906E6F,42,structural,0,"shape ratio 49%, sizes 152->152",15
-?Do_Onetime_Device_Dependent_Shutdowns@DX8Wrapper@@SAXXZ,dx8wrapper.cpp,290,0x00907B59,42,structural,0,"shape ratio 35%, sizes 290->290",10
+?Compute_Caps@DX8Wrapper@@KAXW4WW3DFormat@@@Z,dxwrapper.cpp,152,0x00906E6F,42,structural,0,"shape ratio 49%, sizes 152->152",15
+?Do_Onetime_Device_Dependent_Shutdowns@DX8Wrapper@@SAXXZ,dxwrapper.cpp,290,0x00907B59,42,structural,0,"shape ratio 35%, sizes 290->290",10
 ?Render@WW3D@@SA?AW4WW3DErrorType@@AAVRenderObjClass@@AAVRenderInfoClass@@@Z,ww3d.cpp,136,0x00949CB0,42,structural,0,"shape ratio 19%, sizes 136->136",5
 ?Flush@ShdDX8RendererClass@@UAEXXZ,shdrenderer.cpp,56,0x00949E77,42,structural,0,"shape ratio 20%, sizes 56->56",5
 ??1State@@MAE@XZ,StateMachine.cpp,99,0x00C714F5,41,structural,0,"shape ratio 20%, sizes 99->99",5
@@ -555,7 +555,7 @@ _$E16,GameWindowManagerScript.cpp,48,0x009DA875,50,structural,0,"shape ratio 37%
 ?updateTreadObjects@W3DTankDraw@@IAEXXZ,W3DTankDraw.cpp,687,0x0077E320,41,structural,15,"shape ratio 90%, sizes 687->635",8
 ??0ScorchTextureClass@@QAE@W4MipCountType@@@Z,TerrainTex.cpp,41,0x006D4FC5,41,structural,0,"shape ratio 15%, sizes 41->41",5
 ??0W3DTerrainVisual@@QAE@XZ,W3DTerrainVisual.cpp,139,0x009469A6,41,structural,0,"shape ratio 27%, sizes 139->139",10
-?_Update_Texture@DX8Wrapper@@SAXPAVTextureClass@@0@Z,dx8wrapper.cpp,48,0x0094D83B,41,structural,0,"shape ratio 16%, sizes 48->48",5
+?_Update_Texture@DX8Wrapper@@SAXPAVTextureClass@@0@Z,dxwrapper.cpp,48,0x0094D83B,41,structural,0,"shape ratio 16%, sizes 48->48",5
 ??1ShareBufferClassUnsignedShort@@QAE@XZ,ShareBufferUnsignedShort.cpp,29,0x00C7142C,41,structural,0,"shape ratio 17%, sizes 29->29",5
 ?Close_Tag@TagBlockFile@@QAEXPAVTagBlockHandle@@@Z,tagblock.cpp,72,0x00C5FF6E,41,structural,0,"shape ratio 24%, sizes 72->72",10
 ??1RendererListContainerClass@@UAE@XZ,shdrenderer.cpp,121,0x00972ACD,41,structural,0,"shape ratio 27%, sizes 121->121",5
@@ -627,7 +627,7 @@ _$E16,GameWindowManagerScript.cpp,48,0x009DA875,50,structural,0,"shape ratio 37%
 ?buildFieldParse@W3DTruckDrawModuleData@@SAXAAVMultiIniFieldParse@@@Z,W3DTruckDraw.cpp,30,0x0077F75F,40,structural,0,"shape ratio 43%, sizes 30->30",5
 ?createVideoBuffer@W3DDisplay@@UAEPAVVideoBuffer@@XZ,W3DDisplay.cpp,220,0x0093B264,40,structural,0,"shape ratio 43%, sizes 220->220",6
 ?endRenderToTexture@W3DShaderManager@@SAPAUIDirect3DTexture8@@XZ,W3DShaderManager.cpp,122,0x007E204F,40,structural,0,"shape ratio 42%, sizes 122->122",30
-?Set_Vertex_Buffer@DX8Wrapper@@SAXABVDynamicVBAccessClass@@@Z,dx8wrapper.cpp,201,0x0090450F,40,structural,0,"shape ratio 35%, sizes 201->201",15
+?Set_Vertex_Buffer@DX8Wrapper@@SAXABVDynamicVBAccessClass@@@Z,dxwrapper.cpp,201,0x0090450F,40,structural,0,"shape ratio 35%, sizes 201->201",15
 ?ParticleBufferClass_force_Render_Line_SimpleDynVec@@YAXXZ,part_buf.cpp,456,0x00C6E245,40,structural,0,"shape ratio 2%, sizes 456->456",10
 ??1SimpleSceneClass@@UAE@XZ,scene.cpp,125,0x00943ECF,40,structural,0,"shape ratio 19%, sizes 125->125",10
 ?Render@WW3D@@SA?AW4WW3DErrorType@@PAVSceneClass@@PAVCameraClass@@_N2ABVVector3@@@Z,ww3d.cpp,873,0x008FE3C0,40,structural,26,"shape ratio 38%, sizes 873->879",50
@@ -652,7 +652,7 @@ _$E16,GameWindowManagerScript.cpp,48,0x009DA875,50,structural,0,"shape ratio 37%
 ?readRunAheadMetricsMessage@NetPacket@@KAPAVNetCommandMsg@@PAEAAH@Z,NetPacket.cpp,134,0x0067919F,39,structural,0,"shape ratio 61%, sizes 134->134",6
 ??1W3DTruckDraw@@MAE@XZ,W3DTruckDraw.cpp,125,0x00781518,39,structural,0,"shape ratio 29%, sizes 125->125",10
 ??1DX8MeshRendererClass@@QAE@XZ,dx8renderer.cpp,122,0x00949D00,39,structural,22,"shape ratio 62%, sizes 122->164",10
-?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z,dx8wrapper.cpp,412,0x00906FAD,39,structural,0,"shape ratio 39%, sizes 412->412",25
+?Get_DX8_Texture_Stage_State_Value_Name@DX8Wrapper@@SAXAAVStringClass@@KI@Z,dxwrapper.cpp,412,0x00906FAD,39,structural,0,"shape ratio 39%, sizes 412->412",25
 ??1HLodDefClass@@QAE@XZ,hlod.cpp,74,0x0097D7FF,39,structural,0,"shape ratio 38%, sizes 74->74",5
 ?Apply_Render_State@@YAXAAURenderStateStruct@@@Z,sortingrenderer.cpp,1337,0x009F2480,39,structural,0,"shape ratio 2%, sizes 1337->1337",5
 ??0AddInfoStruct@MixFileFactoryClass@@QAE@XZ,mixfile.cpp,114,0x0091CC52,39,structural,0,"shape ratio 27%, sizes 114->114",10
@@ -843,8 +843,8 @@ _$E16,GameWindowManagerScript.cpp,48,0x009DA875,50,structural,0,"shape ratio 37%
 ?Log_Textures@@YAX_NAAI1@Z,assetmgr.cpp,1089,0x00948A85,36,structural,0,"shape ratio 4%, sizes 1089->1089",10
 ??0ProxyClass@@QAE@XZ,collect.cpp,33,0x00C6E234,36,structural,0,"shape ratio 9%, sizes 33->33",5
 ?Load_W3D@DistLODLoaderClass@@UAEPAVPrototypeClass@@AAVChunkLoadClass@@@Z,distlod.cpp,115,0x00C5FD2E,36,structural,0,"shape ratio 15%, sizes 115->11",10
-??1DX8Caps@@QAE@XZ,dx8wrapper.cpp,99,0x00907A7D,36,structural,0,"shape ratio 26%, sizes 99->99",15
-?Apply_Default_State@DX8Wrapper@@SAXXZ,dx8wrapper.cpp,825,0x00711690,36,structural,0,"shape ratio 2%, sizes 825->825",40
+??1DX8Caps@@QAE@XZ,dxwrapper.cpp,99,0x00907A7D,36,structural,0,"shape ratio 26%, sizes 99->99",15
+?Apply_Default_State@DX8Wrapper@@SAXXZ,dxwrapper.cpp,825,0x00711690,36,structural,0,"shape ratio 2%, sizes 825->825",40
 ??1HLodClass@@UAE@XZ,hlod.cpp,149,0x00949D0F,36,structural,0,"shape ratio 32%, sizes 149->149",6
 ?Scan_Mesh@@YAXAAVChunkLoadClass@@AAV?$list@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@V?$allocator@V?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@@2@@_STL@@PBD@Z,w3d_dep.cpp,72,0x0098C278,36,structural,0,"shape ratio 40%, sizes 72->72",10
 ?Convert_Color@W3dUtilityClass@@SAXABVVector3@@PAUW3dRGBStruct@@@Z,w3d_util.cpp,66,0x00928917,36,structural,0,"shape ratio 17%, sizes 66->66",10
@@ -985,7 +985,7 @@ _$E16,GameWindowManagerScript.cpp,48,0x009DA875,50,structural,0,"shape ratio 37%
 ??1CollectionPrototypeClass@@MAE@XZ,collect.cpp,90,0x00C714F7,35,structural,0,"shape ratio 17%, sizes 90->90",5
 ??1DistLODPrototypeClass@@MAE@XZ,distlod.cpp,90,0x00C714F7,35,structural,0,"shape ratio 17%, sizes 90->90",5
 ??0SortingIndexBufferClass@@QAE@G@Z,dx8indexbuffer.cpp,142,0x00AFD8F0,35,structural,0,"shape ratio 33%, sizes 142->142",5
-?End_Scene@DX8Wrapper@@SAX_N@Z,dx8wrapper.cpp,518,0x00909012,35,structural,0,"shape ratio 54%, sizes 518->518",10
+?End_Scene@DX8Wrapper@@SAX_N@Z,dxwrapper.cpp,518,0x00909012,35,structural,0,"shape ratio 54%, sizes 518->518",10
 ??0HLodClass@@QAE@ABVHLodDefClass@@@Z,hlod.cpp,734,0x0097D0D0,35,structural,26,"shape ratio 50%, sizes 734->732",20
 ?read_channel@HMorphAnimClass@@IAEXAAVChunkLoadClass@@H@Z,hmorphanim.cpp,216,0x0097B97F,35,structural,0,"shape ratio 14%, sizes 216->216",10
 ??1HModelPrototypeClass@@MAE@XZ,proto.cpp,90,0x00C714F7,35,structural,0,"shape ratio 17%, sizes 90->90",5
@@ -1315,7 +1315,7 @@ _$E16,GameWindowManagerScript.cpp,48,0x009DA875,50,structural,0,"shape ratio 37%
 ?Create@BoxPrototypeClass@@UAEPAVRenderObjClass@@XZ,boxrobj.cpp,218,0x00972200,32,structural,0,"shape ratio 31%, sizes 218->218",5
 ?Add_Vertex@DecalPolyClass@@QAEXABVVector3@@0@Z,decalmsh.cpp,34,0x009564D5,32,structural,1,"shape ratio 33%, sizes 34->34",5
 ?Vendor_Specific_Hacks@DX8Caps@@AAEXABU_D3DADAPTER_IDENTIFIER8@@@Z,dx8caps.cpp,1236,0x0091BDC2,32,structural,0,"shape ratio 1%, sizes 1236->1236",40
-?Release_Device@DX8Wrapper@@KAXXZ,dx8wrapper.cpp,236,0x00907AEF,32,structural,0,"shape ratio 54%, sizes 236->236",10
+?Release_Device@DX8Wrapper@@KAXXZ,dxwrapper.cpp,236,0x00907AEF,32,structural,0,"shape ratio 54%, sizes 236->236",10
 ?Reset_Missing@HAnimManagerClass@@QAEXXZ,hanimmgr.cpp,114,0x007BB66E,32,structural,0,"shape ratio 36%, sizes 114->114",5
 ?Load@LightPersistFactoryClass@@UBEPAVPersistClass@@AAVChunkLoadClass@@@Z,light.cpp,168,0x0090EB2C,32,structural,0,"shape ratio 31%, sizes 168->168",15
 ?Peek_Thumbnail_Instance_From_Any_Manager@ThumbnailManagerClass@@SAPAVThumbnailClass@@ABVStringClass@@@Z,texturethumbnail.cpp,194,0x00C21BB9,32,structural,0,"shape ratio 16%, sizes 194->194",10
@@ -1530,7 +1530,7 @@ _$E16,GameWindowManagerScript.cpp,48,0x009DA875,50,structural,0,"shape ratio 37%
 ?Load_W3D@CollectionLoaderClass@@UAEPAVPrototypeClass@@AAVChunkLoadClass@@@Z,collect.cpp,180,0x00C5BB0A,30,structural,0,"shape ratio 21%, sizes 180->180",10
 ?Render_Delayed_Procedural_Material_Passes@DX8RigidFVFCategoryContainer@@UAEXXZ,dx8renderer.cpp,156,0x0094690F,30,structural,0,"shape ratio 75%, sizes 156->156",15
 ?Remove@DX8TextureManagerClass@@SAXPAVTextureBaseClass@@@Z,dx8texman.cpp,65,0x00948521,30,structural,0,"shape ratio 24%, sizes 65->65",5
-??1RenderDeviceDescClass@@QAE@XZ,dx8wrapper.cpp,230,0x009077AA,30,structural,0,"shape ratio 36%, sizes 230->230",45
+??1RenderDeviceDescClass@@QAE@XZ,dxwrapper.cpp,230,0x009077AA,30,structural,0,"shape ratio 36%, sizes 230->230",45
 ??0Entry@?$HashTemplateClass@VStringClass@@PAVHTreeClass@@@@QAE@XZ,htreemgr.cpp,40,0x00C6E26E,30,structural,0,"shape ratio 7%, sizes 40->40",5
 ??1?$HashTemplateClass@VStringClass@@PAVHTreeClass@@@@QAE@XZ,htreemgr.cpp,56,0x00C5C495,30,structural,0,"shape ratio 26%, sizes 56->56",10
 ??1HTreeManagerClass@@QAE@XZ,htreemgr.cpp,126,0x00C5F8B6,30,structural,0,"shape ratio 20%, sizes 126->126",10
@@ -1871,9 +1871,9 @@ _$E16,GameWindowManagerScript.cpp,48,0x009DA875,50,structural,0,"shape ratio 37%
 ?Log_Texture_Statistics@WW3DAssetManager@@SAXXZ,assetmgr.cpp,170,0x00C6E247,28,structural,0,"shape ratio 22%, sizes 170->170",5
 ?Initialize@LogicalDecalPoolClass@MultiFixedPoolDecalSystemClass@@QAEXK@Z,decalsys.cpp,179,0x00A571C5,28,structural,0,"shape ratio 23%, sizes 179->179",10
 ?Allocate_DX8_Dynamic_Buffer@DynamicVBAccessClass@@AAEXXZ,dx8vertexbuffer.cpp,343,0x00949F4C,28,structural,0,"shape ratio 22%, sizes 343->343",5
-?Release_Render_State@DX8Wrapper@@SAXXZ,dx8wrapper.cpp,192,0x00903D2B,28,structural,0,"shape ratio 57%, sizes 192->192",10
-?Draw_Sorting_IB_VB@DX8Wrapper@@CAXIGGGG@Z,dx8wrapper.cpp,554,0x00951DE6,28,structural,0,"shape ratio 28%, sizes 554->554",10
-?Create_Render_Target@DX8Wrapper@@SAPAVTextureClass@@HHW4WW3DFormat@@@Z,dx8wrapper.cpp,357,0x0090514B,28,structural,0,"shape ratio 56%, sizes 357->357",15
+?Release_Render_State@DX8Wrapper@@SAXXZ,dxwrapper.cpp,192,0x00903D2B,28,structural,0,"shape ratio 57%, sizes 192->192",10
+?Draw_Sorting_IB_VB@DX8Wrapper@@CAXIGGGG@Z,dxwrapper.cpp,554,0x00951DE6,28,structural,0,"shape ratio 28%, sizes 554->554",10
+?Create_Render_Target@DX8Wrapper@@SAPAVTextureClass@@HHW4WW3DFormat@@@Z,dxwrapper.cpp,357,0x0090514B,28,structural,0,"shape ratio 56%, sizes 357->357",15
 ?Free@HTreeClass@@AAEXXZ,htree.cpp,67,0x0096FE24,28,structural,0,"shape ratio 17%, sizes 67->67",10
 ??1MaterialInfoClass@@UAE@XZ,matinfo.cpp,157,0x00C5FD35,28,structural,0,"shape ratio 27%, sizes 157->157",10
 ?read_aabtree@MeshGeometryClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z,meshgeometry.cpp,143,0x00924B8F,28,structural,0,"shape ratio 48%, sizes 143->143",5
@@ -2900,9 +2900,9 @@ _REF_encode@16,refencode.cpp,110,0x0081F41F,27,structural,0,"shape ratio 22%, si
 ??_GDX8RigidFVFCategoryContainer@@UAEPAXI@Z,dx8renderer.cpp,30,0x00C714C2,26,structural,0,"shape ratio 32%, sizes 30->30",5
 ??_GDX8SkinFVFCategoryContainer@@UAEPAXI@Z,dx8renderer.cpp,30,0x00C714C2,26,structural,0,"shape ratio 32%, sizes 30->30",5
 ?Render@DX8RigidFVFCategoryContainer@@UAEXXZ,dx8renderer.cpp,124,0x00949E9F,26,structural,0,"shape ratio 49%, sizes 124->124",10
-??_GDX8Caps@@QAEPAXI@Z,dx8wrapper.cpp,30,0x00C714C2,26,structural,0,"shape ratio 32%, sizes 30->30",5
-??_G?$DynamicVectorClass@VResolutionDescClass@@@@UAEPAXI@Z,dx8wrapper.cpp,30,0x00C714C2,26,structural,0,"shape ratio 32%, sizes 30->30",5
-??_G?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAEPAXI@Z,dx8wrapper.cpp,30,0x00C714C2,26,structural,0,"shape ratio 32%, sizes 30->30",5
+??_GDX8Caps@@QAEPAXI@Z,dxwrapper.cpp,30,0x00C714C2,26,structural,0,"shape ratio 32%, sizes 30->30",5
+??_G?$DynamicVectorClass@VResolutionDescClass@@@@UAEPAXI@Z,dxwrapper.cpp,30,0x00C714C2,26,structural,0,"shape ratio 32%, sizes 30->30",5
+??_G?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAEPAXI@Z,dxwrapper.cpp,30,0x00C714C2,26,structural,0,"shape ratio 32%, sizes 30->30",5
 ??0DynamicMeshModel@@QAE@II@Z,dynamesh.cpp,227,0x0094EAFF,26,structural,0,"shape ratio 46%, sizes 227->227",10
 ??0DynamicMeshModel@@QAE@ABV0@@Z,dynamesh.cpp,288,0x0094EAE6,26,structural,0,"shape ratio 35%, sizes 288->288",10
 ??_GMeshMatDescClass@@QAEPAXI@Z,dynamesh.cpp,30,0x00C714C2,26,structural,0,"shape ratio 32%, sizes 30->30",5
@@ -3454,7 +3454,7 @@ _REF_encode@16,refencode.cpp,110,0x0081F41F,27,structural,0,"shape ratio 22%, si
 ?Peek_Shader@Vertex_Split_Table@@QAE?AVShaderClass@@II@Z,dx8renderer.cpp,151,0x009470D1,25,structural,0,"shape ratio 65%, sizes 151->151",5
 ?Add_Mesh@DX8SkinFVFCategoryContainer@@UAEXPAVMeshModelClass@@@Z,dx8renderer.cpp,110,0x00C714DD,25,structural,0,"shape ratio 19%, sizes 110->110",5
 ?Get_String@DX8RendererDebugger@@SAXAAVStringClass@@@Z,dx8rendererdebugger.cpp,427,0x009352C7,25,structural,0,"shape ratio 21%, sizes 427->427",10
-?_Get_DX8_Back_Buffer@DX8Wrapper@@SAPAVSurfaceClass@@I@Z,dx8wrapper.cpp,142,0x00C714EA,25,structural,0,"shape ratio 11%, sizes 142->142",5
+?_Get_DX8_Back_Buffer@DX8Wrapper@@SAPAVSurfaceClass@@I@Z,dxwrapper.cpp,142,0x00C714EA,25,structural,0,"shape ratio 11%, sizes 142->142",5
 ?Reset@DynamicMeshModel@@QAEXXZ,dynamesh.cpp,180,0x0094DFB1,25,structural,0,"shape ratio 41%, sizes 180->180",5
 ??1DynamicMeshModel@@UAE@XZ,dynamesh.cpp,148,0x00C714ED,25,structural,0,"shape ratio 17%, sizes 148->148",5
 ?Free_All_Anims_With_Exclusion_List@HAnimManagerClass@@QAEXABVW3DExclusionListClass@@@Z,hanimmgr.cpp,152,0x007BB66F,25,structural,0,"shape ratio 39%, sizes 152->152",5
@@ -3624,10 +3624,10 @@ _REF_encode@16,refencode.cpp,110,0x0081F41F,27,structural,0,"shape ratio 22%, si
 ??0DistLODClass@@QAE@ABVDistLODDefClass@@@Z,distlod.cpp,255,0x00AFF959,24,structural,0,"shape ratio 27%, sizes 255->255",5
 ?Check_Depth_Stencil_Support@DX8Caps@@AAEXW4WW3DFormat@@ABU_D3DCAPS8@@@Z,dx8caps.cpp,295,0x00937A9B,24,structural,0,"shape ratio 21%, sizes 295->295",10
 ??1DX8RigidFVFCategoryContainer@@UAE@XZ,dx8renderer.cpp,103,0x00947DE0,24,structural,0,"shape ratio 10%, sizes 103->103",5
-?Resize@?$VectorClass@VResolutionDescClass@@@@UAE_NHPBVResolutionDescClass@@@Z,dx8wrapper.cpp,310,0x0097B460,24,structural,24,"shape ratio 66%, sizes 310->286",15
-?_Create_DX8_Volume_Texture@DX8Wrapper@@SAPAUIDirect3DVolumeTexture8@@IIIW4WW3DFormat@@W4MipCountType@@W4_D3DPOOL@@@Z,dx8wrapper.cpp,325,0x007DDA0A,24,structural,0,"shape ratio 24%, sizes 325->325",10
-??1?$VectorClass@VRenderDeviceDescClass@@@@UAE@XZ,dx8wrapper.cpp,70,0x00974BAB,24,structural,0,"shape ratio 30%, sizes 70->70",10
-??1?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAE@XZ,dx8wrapper.cpp,70,0x00974BAB,24,structural,0,"shape ratio 30%, sizes 70->70",10
+?Resize@?$VectorClass@VResolutionDescClass@@@@UAE_NHPBVResolutionDescClass@@@Z,dxwrapper.cpp,310,0x0097B460,24,structural,24,"shape ratio 66%, sizes 310->286",15
+?_Create_DX8_Volume_Texture@DX8Wrapper@@SAPAUIDirect3DVolumeTexture8@@IIIW4WW3DFormat@@W4MipCountType@@W4_D3DPOOL@@@Z,dxwrapper.cpp,325,0x007DDA0A,24,structural,0,"shape ratio 24%, sizes 325->325",10
+??1?$VectorClass@VRenderDeviceDescClass@@@@UAE@XZ,dxwrapper.cpp,70,0x00974BAB,24,structural,0,"shape ratio 30%, sizes 70->70",10
+??1?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAE@XZ,dxwrapper.cpp,70,0x00974BAB,24,structural,0,"shape ratio 30%, sizes 70->70",10
 ??0DynamicMeshModel@@QAE@IIPAVMaterialInfoClass@@@Z,dynamesh.cpp,186,0x0094EB28,24,structural,0,"shape ratio 46%, sizes 186->186",10
 ?Load_W3D@HTreeClass@@QAEHAAVChunkLoadClass@@@Z,htree.cpp,405,0x00A7B11F,24,structural,0,"shape ratio 25%, sizes 405->405",10
 ?read_chunks@MeshGeometryClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z,meshgeometry.cpp,363,0x00978A73,24,structural,0,"shape ratio 11%, sizes 363->363",10
@@ -3788,8 +3788,8 @@ _REF_encode@16,refencode.cpp,110,0x0081F41F,27,structural,0,"shape ratio 22%, si
 ?Load@CollectionDefClass@@QAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z,collect.cpp,595,0x0097B894,23,structural,0,"shape ratio 5%, sizes 595->595",15
 ??0CollectionClass@@QAE@ABV0@@Z,collect.cpp,235,0x00C6DE71,23,structural,0,"shape ratio 17%, sizes 235->235",5
 ?Check_Render_To_Texture_Support@DX8Caps@@AAEXW4WW3DFormat@@ABU_D3DCAPS8@@@Z,dx8caps.cpp,317,0x00937A85,23,structural,0,"shape ratio 22%, sizes 317->317",10
-?Create_Render_Target@DX8Wrapper@@SAXHHW4WW3DFormat@@W4WW3DZFormat@@PAPAVTextureClass@@PAPAVZTextureClass@@@Z,dx8wrapper.cpp,400,0x00905157,23,structural,0,"shape ratio 49%, sizes 400->400",15
-?_Create_DX8_Cube_Texture@DX8Wrapper@@SAPAUIDirect3DCubeTexture8@@IIW4WW3DFormat@@W4MipCountType@@W4_D3DPOOL@@_N@Z,dx8wrapper.cpp,599,0x0094941A,23,structural,0,"shape ratio 18%, sizes 599->599",10
+?Create_Render_Target@DX8Wrapper@@SAXHHW4WW3DFormat@@W4WW3DZFormat@@PAPAVTextureClass@@PAPAVZTextureClass@@@Z,dxwrapper.cpp,400,0x00905157,23,structural,0,"shape ratio 49%, sizes 400->400",15
+?_Create_DX8_Cube_Texture@DX8Wrapper@@SAPAUIDirect3DCubeTexture8@@IIW4WW3DFormat@@W4MipCountType@@W4_D3DPOOL@@_N@Z,dxwrapper.cpp,599,0x0094941A,23,structural,0,"shape ratio 18%, sizes 599->599",10
 ??0HLodClass@@QAE@PBDPAPAVRenderObjClass@@H@Z,hlod.cpp,710,0x0097CE0F,23,structural,0,"shape ratio 9%, sizes 710->710",50
 ?write_channel@HMorphAnimClass@@IAEXAAVChunkSaveClass@@H@Z,hmorphanim.cpp,115,0x009E1908,23,structural,0,"shape ratio 20%, sizes 115->115",5
 ?read_user_text@MeshGeometryClass@@IAE?AW4WW3DErrorType@@AAVChunkLoadClass@@@Z,meshgeometry.cpp,192,0x009252BF,23,structural,0,"shape ratio 58%, sizes 192->192",20
@@ -3834,7 +3834,7 @@ _REF_encode@16,refencode.cpp,110,0x0081F41F,27,structural,0,"shape ratio 22%, si
 ??0?$_List_base@USubsystemLegendEntry@@V?$allocator@USubsystemLegendEntry@@@_STL@@@_STL@@QAE@ABV?$allocator@USubsystemLegendEntry@@@1@@Z,SubsystemLegend.cpp,40,0x009F5703,22,structural,0,"shape ratio 18%, sizes 40->40",5
 ?removeLastChar@UnicodeString@@QAEXXZ,UnicodeString.cpp,194,0x00AFDA22,22,structural,0,"shape ratio 18%, sizes 194->194",5
 ?close@XferSave@@UAEXXZ,XferSave.cpp,92,0x003D396E,22,structural,0,"shape ratio 37%, sizes 92->92",10
-??1XferSave@@UAE@XZ,XferSave.cpp,143,0x00AFFA1C,22,structural,0,"shape ratio 10%, sizes 143->143",5
+??1XferSave@@UAE@XZ,xfer_save.cpp,143,0x00AFFA1C,22,structural,0,"shape ratio 10%, sizes 143->143",5
 ?_M_clear@?$vector@U?$pair@PAVSubsystemInterface@@PAX@_STL@@V?$allocator@U?$pair@PAVSubsystemInterface@@PAX@_STL@@@2@@_STL@@IAEXXZ,subsystem_interface.cpp,45,0x009F568F,22,structural,0,"shape ratio 70%, sizes 45->45",10
 ??1TerrainTypeCollection@@UAE@XZ,TerrainTypes.cpp,131,0x00AFFA28,22,structural,0,"shape ratio 11%, sizes 131->131",5
 ??0StickyBombUpdateModuleData@@QAE@XZ,ModuleFactory.cpp,36,0x009EB97B,22,structural,0,"shape ratio 17%, sizes 36->36",5
@@ -3992,8 +3992,8 @@ _BTREE_size@4,btreedecode.cpp,57,0x00822E67,22,structural,0,"shape ratio 24%, si
 ??0MultiFixedPoolDecalSystemClass@@QAE@KPBK@Z,decalsys.cpp,189,0x0097CE93,22,structural,0,"shape ratio 30%, sizes 189->189",10
 ?Check_Texture_Format_Support@DX8Caps@@AAEXW4WW3DFormat@@ABU_D3DCAPS8@@@Z,dx8caps.cpp,324,0x00937A7D,22,structural,0,"shape ratio 22%, sizes 324->324",10
 ??1DX8TextureCategoryClass@@UAE@XZ,dx8renderer.cpp,188,0x009F2497,22,structural,0,"shape ratio 27%, sizes 188->188",5
-?Invalidate_Cached_Render_States@DX8Wrapper@@SAXXZ,dx8wrapper.cpp,479,0x00903C4F,22,structural,0,"shape ratio 61%, sizes 479->479",15
-?Enumerate_Devices@DX8Wrapper@@KAXXZ,dx8wrapper.cpp,1468,0x00908897,22,structural,0,"shape ratio 6%, sizes 1468->1468",15
+?Invalidate_Cached_Render_States@DX8Wrapper@@SAXXZ,dxwrapper.cpp,479,0x00903C4F,22,structural,0,"shape ratio 61%, sizes 479->479",15
+?Enumerate_Devices@DX8Wrapper@@KAXXZ,dxwrapper.cpp,1468,0x00908897,22,structural,0,"shape ratio 6%, sizes 1468->1468",15
 ?Save@HLodDefClass@@QAE?AW4WW3DErrorType@@AAVChunkSaveClass@@@Z,hlod.cpp,71,0x0097B84C,22,structural,0,"shape ratio 50%, sizes 71->71",10
 ?Save_W3D@HMorphAnimClass@@QAEHAAVChunkSaveClass@@@Z,hmorphanim.cpp,235,0x0098CD08,22,structural,0,"shape ratio 25%, sizes 235->235",10
 ??1MeshClass@@UAE@XZ,mesh.cpp,155,0x009728DC,22,structural,0,"shape ratio 7%, sizes 155->155",5
@@ -4248,7 +4248,7 @@ _BTREE_size@4,btreedecode.cpp,57,0x00822E67,22,structural,0,"shape ratio 24%, si
 ??$__copy_aux@U?$_Rb_tree_iterator@VAsciiString@@U?$_Const_traits@VAsciiString@@@_STL@@@_STL@@PAVAsciiString@@@_STL@@YAPAVAsciiString@@U?$_Rb_tree_iterator@VAsciiString@@U?$_Const_traits@VAsciiString@@@_STL@@@0@0PAV1@ABU__false_type@0@@Z,Win32BIGFileSystem_loadBigFiles.cpp,32,0x009CDC51,21,structural,0,"shape ratio 45%, sizes 32->32",5
 ??$copy@PAVAsciiString@@PAV1@@_STL@@YAPAVAsciiString@@PAV1@00@Z,Win32BIGFileSystem_loadBigFiles.cpp,32,0x006FB388,21,structural,0,"shape ratio 64%, sizes 32->32",5
 ??$copy@U?$_Rb_tree_iterator@VAsciiString@@U?$_Const_traits@VAsciiString@@@_STL@@@_STL@@PAVAsciiString@@@_STL@@YAPAVAsciiString@@U?$_Rb_tree_iterator@VAsciiString@@U?$_Const_traits@VAsciiString@@@_STL@@@0@0PAV1@@Z,Win32BIGFileSystem_loadBigFiles.cpp,32,0x009CDC51,21,structural,0,"shape ratio 45%, sizes 32->32",5
-?_Create_DX8_Texture@DX8Wrapper@@SAPAUIDirect3DTexture8@@IIW4WW3DFormat@@W4MipCountType@@W4_D3DPOOL@@_N@Z,dx8wrapper.cpp,614,0x0094940B,21,structural,0,"shape ratio 19%, sizes 614->614",10
+?_Create_DX8_Texture@DX8Wrapper@@SAPAUIDirect3DTexture8@@IIW4WW3DFormat@@W4MipCountType@@W4_D3DPOOL@@_N@Z,dxwrapper.cpp,614,0x0094940B,21,structural,0,"shape ratio 19%, sizes 614->614",10
 ?Load_W3D@HModelDefClass@@QAEHAAVChunkLoadClass@@@Z,hmdldef.cpp,470,0x0096F8C1,21,structural,0,"shape ratio 26%, sizes 470->470",15
 ?Load_W3D@HMorphAnimClass@@QAEHAAVChunkLoadClass@@@Z,hmorphanim.cpp,507,0x0096F79B,21,structural,0,"shape ratio 24%, sizes 507->507",15
 ??_EPivotClass@@QAEPAXI@Z,htree.cpp,80,0x008F935C,21,structural,0,"shape ratio 62%, sizes 80->80",15
@@ -4943,7 +4943,7 @@ _BTREE_size@4,btreedecode.cpp,57,0x00822E67,22,structural,0,"shape ratio 24%, si
 ??0CollectionClass@@QAE@ABVCollectionDefClass@@@Z,collect.cpp,398,0x00C6DE76,18,structural,0,"shape ratio 20%, sizes 398->398",5
 ??0DecalGeneratorClass@@IAE@KPAVDecalSystemClass@@@Z,decalsys.cpp,224,0x007130B5,18,structural,0,"shape ratio 36%, sizes 224->224",10
 ?Render_Procedural_Material_Passes@DX8FVFCategoryContainer@@IAEXXZ,dx8renderer.cpp,154,0x00947D84,18,structural,0,"shape ratio 71%, sizes 154->154",5
-??_G?$VectorClass@VResolutionDescClass@@@@UAEPAXI@Z,dx8wrapper.cpp,72,0x00C5F319,18,structural,0,"shape ratio 19%, sizes 72->72",10
+??_G?$VectorClass@VResolutionDescClass@@@@UAEPAXI@Z,dxwrapper.cpp,72,0x00C5F319,18,structural,0,"shape ratio 19%, sizes 72->72",10
 ??_G?$VectorClass@PAVHAnimComboDataClass@@@@UAEPAXI@Z,hanim.cpp,72,0x00C5F319,18,structural,0,"shape ratio 19%, sizes 72->72",10
 ?Create_Asset_List@HAnimManagerClass@@QAEXAAV?$DynamicVectorClass@VStringClass@@@@@Z,hanimmgr.cpp,341,0x0071099D,18,structural,0,"shape ratio 12%, sizes 341->341",10
 ??_G?$VectorClass@VModelNodeClass@HLodClass@@@@UAEPAXI@Z,hlod.cpp,72,0x00C5F319,18,structural,0,"shape ratio 19%, sizes 72->72",10
@@ -5209,9 +5209,9 @@ _BTREE_size@4,btreedecode.cpp,57,0x00822E67,22,structural,0,"shape ratio 24%, si
 ?Set_Mesh_Transform@DecalGeneratorClass@@QAEXABVMatrix3D@@@Z,decalsys.cpp,135,0x00949022,17,structural,0,"shape ratio 33%, sizes 135->135",5
 ?Create@DistLODPrototypeClass@@UAEPAVRenderObjClass@@XZ,distlod.cpp,299,0x00A1EB52,17,structural,0,"shape ratio 10%, sizes 299->299",10
 ?Create_Vertex_Buffer@DX8VertexBufferClass@@IAEXW4UsageType@1@@Z,dx8vertexbuffer.cpp,214,0x0087B18F,17,structural,0,"shape ratio 25%, sizes 214->214",5
-?_Create_DX8_Surface@DX8Wrapper@@SAPAUIDirect3DSurface8@@PBD@Z,dx8wrapper.cpp,515,0x007CBD37,17,structural,0,"shape ratio 18%, sizes 515->515",10
-??1?$VectorClass@VResolutionDescClass@@@@UAE@XZ,dx8wrapper.cpp,45,0x00C71519,17,structural,0,"shape ratio 11%, sizes 45->45",5
-??1?$DynamicVectorClass@VResolutionDescClass@@@@UAE@XZ,dx8wrapper.cpp,45,0x00C71519,17,structural,0,"shape ratio 11%, sizes 45->45",5
+?_Create_DX8_Surface@DX8Wrapper@@SAPAUIDirect3DSurface8@@PBD@Z,dxwrapper.cpp,515,0x007CBD37,17,structural,0,"shape ratio 18%, sizes 515->515",10
+??1?$VectorClass@VResolutionDescClass@@@@UAE@XZ,dxwrapper.cpp,45,0x00C71519,17,structural,0,"shape ratio 11%, sizes 45->45",5
+??1?$DynamicVectorClass@VResolutionDescClass@@@@UAE@XZ,dxwrapper.cpp,45,0x00C71519,17,structural,0,"shape ratio 11%, sizes 45->45",5
 ??1?$VectorClass@PAVHAnimComboDataClass@@@@UAE@XZ,hanim.cpp,45,0x00C71519,17,structural,0,"shape ratio 11%, sizes 45->45",5
 ??1?$DynamicVectorClass@M@@UAE@XZ,hanim.cpp,45,0x00C71519,17,structural,0,"shape ratio 11%, sizes 45->45",5
 ??1?$DynamicVectorClass@PAVHAnimComboDataClass@@@@UAE@XZ,hanim.cpp,45,0x00C71519,17,structural,0,"shape ratio 11%, sizes 45->45",5
@@ -6762,7 +6762,7 @@ _BTREE_size@4,btreedecode.cpp,57,0x00822E67,22,structural,0,"shape ratio 24%, si
 ?Set_Position@DistLODClass@@UAEXABVVector3@@@Z,distlod.cpp,68,0x0098212D,11,structural,0,"shape ratio 22%, sizes 68->68",5
 ?Copy@IndexBufferClass@@QAEXPAIII@Z,dx8indexbuffer.cpp,254,0x0087B1F5,11,structural,0,"shape ratio 27%, sizes 254->254",5
 ?Copy@IndexBufferClass@@QAEXPAGII@Z,dx8indexbuffer.cpp,254,0x0087B1F5,11,structural,0,"shape ratio 27%, sizes 254->254",5
-?Set_Light_Environment@DX8Wrapper@@SAXPAVLightEnvironmentClass@@@Z,dx8wrapper.cpp,653,0x0094378D,11,structural,0,"shape ratio 2%, sizes 653->653",5
+?Set_Light_Environment@DX8Wrapper@@SAXPAVLightEnvironmentClass@@@Z,dxwrapper.cpp,653,0x0094378D,11,structural,0,"shape ratio 2%, sizes 653->653",5
 ?Set_Texture@DynamicMeshClass@@QAEHPAVTextureClass@@_NH@Z,dynamesh.cpp,403,0x0096F97E,11,structural,0,"shape ratio 23%, sizes 403->403",5
 ?Insert_Morph_Key@HMorphAnimClass@@QAEXHKK@Z,hmorphanim.cpp,104,0x009C0A70,11,structural,0,"shape ratio 17%, sizes 104->104",5
 ?Set_Texture@MeshMatDescClass@@QAEXHPAVTextureClass@@HH@Z,meshmatdesc.cpp,76,0x009F24CE,11,structural,0,"shape ratio 34%, sizes 76->76",5
@@ -6994,7 +6994,7 @@ _BTREE_size@4,btreedecode.cpp,57,0x00822E67,22,structural,0,"shape ratio 24%, si
 ?Peek_Material@Vertex_Split_Table@@QAEPAVVertexMaterialClass@@II@Z,dx8renderer.cpp,98,0x0096FA8F,10,structural,0,"shape ratio 20%, sizes 98->98",5
 ?Flush@DX8MeshRendererClass@@QAEXXZ,dx8renderer.cpp,228,0x00949D9C,10,structural,0,"shape ratio 59%, sizes 228->228",10
 ??0AppendLockClass@VertexBufferClass@@QAE@PAV1@II@Z,dx8vertexbuffer.cpp,110,0x0087B1F7,10,structural,0,"shape ratio 30%, sizes 110->110",5
-?Clear@?$VectorClass@VResolutionDescClass@@@@UAEXXZ,dx8wrapper.cpp,39,0x00C7151F,10,structural,0,"shape ratio 25%, sizes 39->39",5
+?Clear@?$VectorClass@VResolutionDescClass@@@@UAEXXZ,dxwrapper.cpp,39,0x00C7151F,10,structural,0,"shape ratio 25%, sizes 39->39",5
 ?Set_Vertex_Material@DynamicMeshClass@@QAEHHH@Z,dynamesh.cpp,101,0x0096FA68,10,structural,0,"shape ratio 29%, sizes 101->101",5
 ?Clear@?$VectorClass@PAVHAnimComboDataClass@@@@UAEXXZ,hanim.cpp,39,0x00C7151F,10,structural,0,"shape ratio 25%, sizes 39->39",5
 ?Clear@?$VectorClass@VModelNodeClass@HLodClass@@@@UAEXXZ,hlod.cpp,39,0x00C7151F,10,structural,0,"shape ratio 25%, sizes 39->39",5
@@ -7340,7 +7340,7 @@ _BTREE_size@4,btreedecode.cpp,57,0x00822E67,22,structural,0,"shape ratio 24%, si
 ?Set_Transform@DistLODClass@@UAEXABVMatrix3D@@@Z,distlod.cpp,68,0x00979D3D,8,structural,0,"shape ratio 29%, sizes 68->68",5
 ?Add_Mesh@DX8RigidFVFCategoryContainer@@UAEXPAVMeshModelClass@@@Z,dx8renderer.cpp,1035,0x00C7105F,8,structural,0,"shape ratio 2%, sizes 1035->1035",5
 ??0WriteLockClass@DynamicVBAccessClass@@QAE@PAV1@@Z,dx8vertexbuffer.cpp,172,0x0087B1B8,8,structural,0,"shape ratio 24%, sizes 172->172",5
-??1RenderStateStruct@@QAE@XZ,dx8wrapper.cpp,130,0x009F2490,8,structural,0,"shape ratio 21%, sizes 130->130",5
+??1RenderStateStruct@@QAE@XZ,dxwrapper.cpp,130,0x009F2490,8,structural,0,"shape ratio 21%, sizes 130->130",5
 ?Save_Header@HLodDefClass@@IAE?AW4WW3DErrorType@@AAVChunkSaveClass@@@Z,hlod.cpp,189,0x0098CB64,8,structural,0,"shape ratio 26%, sizes 189->189",10
 ?Add_Lod_Model@HLodClass@@UAEXHPAVRenderObjClass@@H@Z,hlod.cpp,146,0x0097C787,8,structural,0,"shape ratio 80%, sizes 146->146",5
 ?Free@HModelDefClass@@AAEXXZ,hmdldef.cpp,61,0x00C714C7,8,structural,0,"shape ratio 22%, sizes 61->61",5
@@ -11976,27 +11976,27 @@ _bfme_PointGroupClassRender_917B70,PointGroupClassRenderThunk.cpp,662,,0,absent,
 ??_GSortingVertexBufferClass@@MAEPAXI@Z,dx8vertexbuffer.cpp,36,,0,absent,-1,no plausible placement,1
 ??_GDX8VertexBufferClass@@MAEPAXI@Z,dx8vertexbuffer.cpp,36,,0,absent,-1,no plausible placement,1
 ??0DynamicVBAccessClass@@QAE@IIG@Z,dx8vertexbuffer.cpp,61,,0,absent,-1,no plausible placement,0
-?Set_Vertex_Shader_Constant@DX8Wrapper@@SAXHPBXH@Z,dx8wrapper.cpp,94,,0,absent,-1,no plausible placement,4
-?Set_Pixel_Shader_Constant@DX8Wrapper@@SAXHPBXH@Z,dx8wrapper.cpp,94,,0,absent,-1,no plausible placement,4
-?Non_Fatal_Log_DX8_ErrorCode@@YAXIPBDH@Z,dx8wrapper.cpp,59,,0,absent,-1,no plausible placement,0
-?Get_Render_Target_Resolution@DX8Wrapper@@KAXAAH00AA_N@Z,dx8wrapper.cpp,120,,0,absent,-1,no plausible placement,0
-?Clear@DX8Wrapper@@SAX_N0ABVVector3@@MMI@Z,dx8wrapper.cpp,339,,0,absent,-1,no plausible placement,1
-?_Create_DX8_Texture@DX8Wrapper@@SAPAUIDirect3DTexture8@@PBDW4MipCountType@@@Z,dx8wrapper.cpp,101,,0,absent,-1,no plausible placement,0
-?_Create_DX8_Surface@DX8Wrapper@@SAPAUIDirect3DSurface8@@IIW4WW3DFormat@@@Z,dx8wrapper.cpp,71,,0,absent,-1,no plausible placement,0
-?_Get_DX8_Front_Buffer@DX8Wrapper@@SAPAUIDirect3DSurface8@@XZ,dx8wrapper.cpp,104,,0,absent,-1,no plausible placement,0
-?Set_Render_Target@DX8Wrapper@@SAXPAUIDirect3DSurface8@@_N@Z,dx8wrapper.cpp,354,,0,absent,-1,no plausible placement,2
-?Set_Render_Target@DX8Wrapper@@SAXPAUIDirect3DSurface8@@0@Z,dx8wrapper.cpp,361,,0,absent,-1,no plausible placement,2
-?Create_Additional_Swap_Chain@DX8Wrapper@@SAPAUIDirect3DSwapChain8@@PAX@Z,dx8wrapper.cpp,130,,0,absent,-1,no plausible placement,0
-??0RenderStateStruct@@QAE@XZ,dx8wrapper.cpp,56,,0,absent,-1,no plausible placement,0
-?Draw@DX8Wrapper@@CAXIGGGG@Z,dx8wrapper.cpp,356,,0,absent,-1,no plausible placement,0
-?Draw_Triangles@DX8Wrapper@@SAXIGGGG@Z,dx8wrapper.cpp,56,,0,absent,-1,no plausible placement,0
-?_Create_DX8_Texture@DX8Wrapper@@SAPAUIDirect3DTexture8@@PAUIDirect3DSurface8@@W4MipCountType@@@Z,dx8wrapper.cpp,264,,0,absent,-1,no plausible placement,0
-?_Create_DX8_ZTexture@DX8Wrapper@@SAPAUIDirect3DTexture8@@IIW4WW3DZFormat@@W4MipCountType@@W4_D3DPOOL@@@Z,dx8wrapper.cpp,283,,0,absent,-1,no plausible placement,0
-?Set_Render_Target_With_Z@DX8Wrapper@@SAXPAVTextureClass@@PAVZTextureClass@@@Z,dx8wrapper.cpp,90,,0,absent,-1,no plausible placement,0
-?Set_Render_Target@DX8Wrapper@@SAXPAUIDirect3DSwapChain8@@@Z,dx8wrapper.cpp,64,,0,absent,-1,no plausible placement,1
-?Resize@?$DynamicVectorClass@VResolutionDescClass@@@@UAE_NHPBVResolutionDescClass@@@Z,dx8wrapper.cpp,47,,0,absent,-1,no plausible placement,3
-?Create_Device@DX8Wrapper@@KA_NXZ,dx8wrapper.cpp,298,,0,absent,-1,no plausible placement,0
-?ID@?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAEHPBVRenderDeviceDescClass@@@Z,dx8wrapper.cpp,36,,0,absent,-1,no plausible placement,3
+?Set_Vertex_Shader_Constant@DX8Wrapper@@SAXHPBXH@Z,dxwrapper.cpp,94,,0,absent,-1,no plausible placement,4
+?Set_Pixel_Shader_Constant@DX8Wrapper@@SAXHPBXH@Z,dxwrapper.cpp,94,,0,absent,-1,no plausible placement,4
+?Non_Fatal_Log_DX8_ErrorCode@@YAXIPBDH@Z,dxwrapper.cpp,59,,0,absent,-1,no plausible placement,0
+?Get_Render_Target_Resolution@DX8Wrapper@@KAXAAH00AA_N@Z,dxwrapper.cpp,120,,0,absent,-1,no plausible placement,0
+?Clear@DX8Wrapper@@SAX_N0ABVVector3@@MMI@Z,dxwrapper.cpp,339,,0,absent,-1,no plausible placement,1
+?_Create_DX8_Texture@DX8Wrapper@@SAPAUIDirect3DTexture8@@PBDW4MipCountType@@@Z,dxwrapper.cpp,101,,0,absent,-1,no plausible placement,0
+?_Create_DX8_Surface@DX8Wrapper@@SAPAUIDirect3DSurface8@@IIW4WW3DFormat@@@Z,dxwrapper.cpp,71,,0,absent,-1,no plausible placement,0
+?_Get_DX8_Front_Buffer@DX8Wrapper@@SAPAUIDirect3DSurface8@@XZ,dxwrapper.cpp,104,,0,absent,-1,no plausible placement,0
+?Set_Render_Target@DX8Wrapper@@SAXPAUIDirect3DSurface8@@_N@Z,dxwrapper.cpp,354,,0,absent,-1,no plausible placement,2
+?Set_Render_Target@DX8Wrapper@@SAXPAUIDirect3DSurface8@@0@Z,dxwrapper.cpp,361,,0,absent,-1,no plausible placement,2
+?Create_Additional_Swap_Chain@DX8Wrapper@@SAPAUIDirect3DSwapChain8@@PAX@Z,dxwrapper.cpp,130,,0,absent,-1,no plausible placement,0
+??0RenderStateStruct@@QAE@XZ,dxwrapper.cpp,56,,0,absent,-1,no plausible placement,0
+?Draw@DX8Wrapper@@CAXIGGGG@Z,dxwrapper.cpp,356,,0,absent,-1,no plausible placement,0
+?Draw_Triangles@DX8Wrapper@@SAXIGGGG@Z,dxwrapper.cpp,56,,0,absent,-1,no plausible placement,0
+?_Create_DX8_Texture@DX8Wrapper@@SAPAUIDirect3DTexture8@@PAUIDirect3DSurface8@@W4MipCountType@@@Z,dxwrapper.cpp,264,,0,absent,-1,no plausible placement,0
+?_Create_DX8_ZTexture@DX8Wrapper@@SAPAUIDirect3DTexture8@@IIW4WW3DZFormat@@W4MipCountType@@W4_D3DPOOL@@@Z,dxwrapper.cpp,283,,0,absent,-1,no plausible placement,0
+?Set_Render_Target_With_Z@DX8Wrapper@@SAXPAVTextureClass@@PAVZTextureClass@@@Z,dxwrapper.cpp,90,,0,absent,-1,no plausible placement,0
+?Set_Render_Target@DX8Wrapper@@SAXPAUIDirect3DSwapChain8@@@Z,dxwrapper.cpp,64,,0,absent,-1,no plausible placement,1
+?Resize@?$DynamicVectorClass@VResolutionDescClass@@@@UAE_NHPBVResolutionDescClass@@@Z,dxwrapper.cpp,47,,0,absent,-1,no plausible placement,3
+?Create_Device@DX8Wrapper@@KA_NXZ,dxwrapper.cpp,298,,0,absent,-1,no plausible placement,0
+?ID@?$DynamicVectorClass@VRenderDeviceDescClass@@@@UAEHPBVRenderDeviceDescClass@@@Z,dxwrapper.cpp,36,,0,absent,-1,no plausible placement,3
 ?getClassMemoryPool@MaterialInfoClass@@CAPAXXZ,dynamesh.cpp,103,,0,absent,-1,no plausible placement,1
 ?Clamp_Color@DX8Wrapper@@SAXAAVVector4@@@Z,dynamesh.cpp,315,,0,absent,-1,no plausible placement,4
 ?Convert_Color_Clamp@DX8Wrapper@@SAIABVVector4@@@Z,dynamesh.cpp,515,,0,absent,-1,no plausible placement,1
@@ -14487,10 +14487,10 @@ _bfme_CollisionMathCollide_8DAD70,CollisionMathCollideLineSegObbThunk.cpp,665,,0
 ?Enable_Mesh@DX8RendererDebugger@@SAXI@Z,dx8rendererdebugger.cpp,36,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
 ?Release_Textures@DX8TextureManagerClass@@SAXXZ,dx8texman.cpp,42,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
 ?Recreate_Textures@DX8TextureManagerClass@@SAXXZ,dx8texman.cpp,47,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
-?Validate_Device@DX8Wrapper@@SA_NXZ,dx8wrapper.cpp,34,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
-?Begin_Scene@DX8Wrapper@@SAXXZ,dx8wrapper.cpp,30,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
-?Draw_Triangles@DX8Wrapper@@SAXGGGG@Z,dx8wrapper.cpp,31,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
-?Draw_Strip@DX8Wrapper@@SAXGGGG@Z,dx8wrapper.cpp,31,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
+?Validate_Device@DX8Wrapper@@SA_NXZ,dxwrapper.cpp,34,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
+?Begin_Scene@DX8Wrapper@@SAXXZ,dxwrapper.cpp,30,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
+?Draw_Triangles@DX8Wrapper@@SAXGGGG@Z,dxwrapper.cpp,31,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
+?Draw_Strip@DX8Wrapper@@SAXGGGG@Z,dxwrapper.cpp,31,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
 ?Set_Dirty@DynamicMeshClass@@QAEXXZ,dynamesh.cpp,31,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
 ?Set_Visible@RenderObjClass@@UAEXH@Z,dynamesh.cpp,33,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
 ?Reset_Flags@DynamicMeshClass@@QAEXXZ,dynamesh.cpp,31,,0,no-anchors,-1,too small/reloc-dense to anchor; needs manual look,0
