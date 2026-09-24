@@ -57,7 +57,7 @@ So every retail body has exactly one identity. When two real names claim one
 address, at most one is right, and a matched caller, a vtable slot between named
 neighbours or a pin decides which. Retire each other name by deleting its row and
 adding its tombstone, with the evidence as the reason, to `reverse/deleted_rows.csv`.
-When nothing decides, keep the address-derived name. `add_match --icf-owner` is
+When nothing decides, add no second name. `add_match --icf-owner` is
 refused. `identity_guard` fails a commit that raises `one_identity.surplus` in
 `reverse/identity_baseline.txt`, and a commit that retires a surplus name lowers
 that number in the same commit. `python3 tools/one_identity.py --list` prints every
@@ -65,6 +65,16 @@ address still carrying more than one real name, and `--callers` shows, for each,
 symbol the matched C++ callers' objects name at retail's call sites into the body. When
 exactly one row name is called there, the callers decide it; generated and assembly
 callers are not counted, because they name whatever the ledger said when they were made.
+
+Work a body only when such evidence decides it, and retire nothing on a guess. The
+backlog is not urgent: every newly matched caller can settle a body that is open
+today, so rerunning `--callers` later decides more of it. C callers are not counted
+either, so where a C definition and a C++ wrapper share a body, keep the C name that
+C code calls. A vtable decides only through an owner named independently of the body
+in question, never through that body's own `??_G` name. Stage each tombstone with
+its deletion: `functions.csv` is union-merged, so a row deleted next to another
+branch's deletion comes back on rebase, and only its tombstone lets `check_csv`
+catch that.
 
 ## Do not guess — ask
 
