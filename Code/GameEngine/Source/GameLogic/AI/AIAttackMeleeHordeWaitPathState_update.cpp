@@ -127,7 +127,7 @@ private:
 	unsigned char m_pad004[0x18];
 	StateMachine *m_machine;
 	unsigned char m_pad020[4];
-	UnsignedInt m_waitUntil;
+	UnsignedInt m_nextRetryFrame;
 	int m_retryCount;
 };
 
@@ -145,7 +145,7 @@ StateReturnType AIAttackMeleeHordeWaitPathState::update()
 			return STATE_SUCCESS;
 
 		UnsignedInt frame = TheGameLogic->m_frame;
-		if (m_waitUntil > frame)
+		if (m_nextRetryFrame > frame)
 			return STATE_CONTINUE;
 
 		Bool canAttack = false;
@@ -174,7 +174,7 @@ StateReturnType AIAttackMeleeHordeWaitPathState::update()
 		return STATE_FAILURE;
 
 		retry:
-		m_waitUntil = TheGameLogic->m_frame + 7;
+		m_nextRetryFrame = TheGameLogic->m_frame + 7;
 		return ++m_retryCount <= 5 ? STATE_CONTINUE : STATE_SUCCESS;
 	}
 	}
