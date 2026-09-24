@@ -247,6 +247,13 @@ identity in real C++ at its proper `Code/` path instead. Never infer a funclet's
 After landing a batch, sweep your own rows: one body per address. A duplicate
 range among them is an over-claim, not an ICF alias.
 
+**Retail was linked without identical-COMDAT folding, so every body has exactly
+one identity** however many names compile to its bytes. A second real name on an
+address is an over-claim to retire, never an alias to keep: `add_match
+--icf-owner` is refused, and `identity_guard` fails a commit that raises
+`one_identity.surplus`. `python3 tools/one_identity.py` prints the evidence and
+`--list` the addresses; `docs/naming_evidence.md` says how to decide one.
+
 ## Vendored third-party claims
 
 `vendored=<lib>-<ver>` rows carry the upstream's real identities, never `gen-`

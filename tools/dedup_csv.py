@@ -5,12 +5,10 @@ Many agents append rows concurrently and push straight to main; the union merge
 driver combines both sides, which can leave the ledger unsorted or holding two
 rows for one (address, name). This collapses each (address, name) pair to a
 single row and re-sorts, deterministically, so any agent can run it and get the
-identical result. Distinct names at one address are ICF alias groups and are
-kept.
+identical result. Distinct names at one address are kept: which one is right
+is an identity decision (tools/one_identity.py), never a merge cleanup.
 
-functions.csv: one row per (target_rva, name) — ICF alias groups legitimately
-hold several names at one address (folded identical COMDATs), so the name is part
-of the key. A matched row beats an unmatched one; among equals the smaller
+functions.csv: one row per (target_rva, name); the name is part of the key. A matched row beats an unmatched one; among equals the smaller
 target_size wins (a trimmed-padding row). If rows still tie but name DIFFERENT
 sources, only byte-verification can say which source really defines the symbol,
 so this refuses to guess and exits 1 naming both. (It used to break that tie on

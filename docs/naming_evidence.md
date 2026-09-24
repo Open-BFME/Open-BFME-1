@@ -38,6 +38,31 @@ changes. **The address must stay UNIQUE; it never has to be the whole name.**
 distinction IS, which is the whole difference between a disambiguator and a
 riddle. Count the call sites before deciding which ICF copy owns a name.
 
+## One body, one name
+
+Retail was linked without identical-COMDAT folding. `python3 tools/one_identity.py`
+prints the evidence from retail's own bytes, and none of it depends on a ledger name:
+
+- An incremental-link table of 60,965 five-byte `jmp` entries starts at `0x00001005`.
+  The MSVC linker turns incremental linking off under `/OPT:ICF` (warning LNK4075),
+  so an image carrying that table was not linked with folding.
+- Hundreds of short byte patterns without a call or jump, `mov eax,ecx; ret 4`
+  among them, sit on thousands of separate retail bodies. A folding linker keeps one
+  copy of each. The tool prints the current counts.
+- Some bodies have two table entries. They are deleting destructors, which the
+  compiler emits as one body under two symbols (`??_G` and `??_E`); the tool prints
+  how many of them have that shape.
+
+So every retail body has exactly one identity. When two real names claim one
+address, at most one is right, and a matched caller, a vtable slot between named
+neighbours or a pin decides which. Retire each other name by deleting its row and
+adding its tombstone, with the evidence as the reason, to `reverse/deleted_rows.csv`.
+When nothing decides, keep the address-derived name. `add_match --icf-owner` is
+refused. `identity_guard` fails a commit that raises `one_identity.surplus` in
+`reverse/identity_baseline.txt`, and a commit that retires a surplus name lowers
+that number in the same commit. `python3 tools/one_identity.py --list` prints every
+address still carrying more than one real name.
+
 ## Do not guess — ask
 
 The repository already holds the real name for a large share of the member surface.

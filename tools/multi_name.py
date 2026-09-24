@@ -1,8 +1,9 @@
 """Classify every address that two or more row names claim.
 
-A shared address is usually honest: retail's linker folds identical COMDATs, so
-one body legitimately answers to several names. But it is also how a whole class
-of defect hides, because the offsets AGREE -- the GameWindow setters read as
+Retail was linked without identical-COMDAT folding, so a body has one identity
+and every further name on its address is an over-claim; tools/one_identity.py
+prints that evidence and counts them. This tool asks what the bytes can show, and
+a wrong name hides best where the offsets AGREE -- the GameWindow setters read as
 perfectly matched while every Color and BorderColor row sat one field along.
 Nothing that reads offsets can see that; only asking whether the claimants COULD
 be one body can.
@@ -21,8 +22,8 @@ tried on the live ledger before this settled:
 
 What works is structure rather than names. Mask every relocation site to zero in
 both bodies, then compare the remaining bytes AND the (offset, type) list. Two
-ICF-folded bodies ARE the same bytes, so their relocation sites must coincide
-however differently our objects happen to name the targets.
+claims on one retail body must compile to the same bytes, so their relocation
+sites must coincide however differently our objects happen to name the targets.
 
 STRUCTURE IS NOT ENOUGH ON ITS OWN, and the GameWindow setters are why. Our
 header is short by a field there, so `winSetEnabledColor` compiles to exactly
@@ -34,26 +35,25 @@ list rather than a verdict on the ledger -- it is the only test here that
 reasons from names.
 
 FAMILY IS NOT PROOF, AND AABTreeClass IS WHY. Cast_AABox_Recursive,
-Cast_OBBox_Recursive and Intersect_OBBox_Recursive share one body at 0x0096B100
-and legitimately do: they differ only in the type of the test object, every
-method they call on it folded too, and the calls are REL32s the comparison
-masks. So the flag depends on WHERE the difference would have to appear. The
-GameWindow families differ in which FIELD they write, and a field offset is a
-literal in the instruction stream -- it cannot fold, so identical compared bytes
-prove a defect. The AABTree families differ in a TYPE, and everything the type
-contributed is inside the masked relocations, so identical compared bytes prove
-nothing. Each FAMILY line reports which case it is by asking whether the
-claimants name the same relocation targets. It does not change the verdict:
-clearing a candidate automatically is how a real defect gets filed as noise.
+Cast_OBBox_Recursive and Intersect_OBBox_Recursive claim one body at 0x0096B100
+and compile to one shape: they differ only in the type of the test object, and
+every call that type changes is a REL32 the comparison masks. At most one of the
+names is right, but this test cannot say which. So the flag depends on WHERE the
+difference would have to appear. The GameWindow families differ in which FIELD
+they write, and a field offset is a literal in the instruction stream -- it
+cannot be masked, so identical compared bytes prove a defect. The AABTree
+families differ in a TYPE, and everything the type contributed is inside the
+masked relocations, so identical compared bytes prove nothing. Each FAMILY line
+reports which case it is by asking whether the claimants name the same
+relocation targets. It does not change the verdict: clearing a candidate
+automatically is how a real defect gets filed as noise.
 
 Different target NAMES do not settle it either way, and the next step is the
-same for both outcomes: resolve each name to an ADDRESS. AABTreeClass folds
-because all three of its differing calls land on one address -- the callees
-folded first, so the callers became identical. A family whose differing
-relocations resolve to DIFFERENT addresses cannot be one body at all, whatever
-the compared bytes say, because the linked bodies would not match.
+same for both outcomes: resolve each name to an ADDRESS. A family whose
+differing relocations resolve to DIFFERENT addresses cannot be one body at all,
+whatever the compared bytes say, because the linked bodies would not match.
 
-On the live ledger: 958 real folds, 65 all-placeholder, 9 family conflicts,
+On the live ledger: 958 identical shapes, 65 all-placeholder, 9 family conflicts,
 2 addresses whose claimants cannot be one body, and 4 large groups with one odd
 member. Both GameWindow draw-data families rest on ALL 37 of their bytes -- full
 byte evidence and still wrong, which is the whole reason the name test exists.
@@ -64,9 +64,9 @@ relocation site compares equal to ANY target of its length -- it is not a match,
 it is an absence of evidence -- and the build's funclet healer paid for that
 lesson with a data table of four label pointers that tied with a real funclet.
 No group here rests on zero bytes, so the verdicts stand as computed; 44 of the
-958 folds rest on three bytes or fewer, which is a 5-byte `E9` jump agreeing
-with another 5-byte `E9` jump on the opcode alone. That is a different claim
-from 600 bytes agreeing, and until this column it printed the same.
+958 identical shapes rest on three bytes or fewer, which is a 5-byte `E9` jump
+agreeing with another 5-byte `E9` jump on the opcode alone. That is a different
+claim from 600 bytes agreeing, and until this column it printed the same.
 
 An unreadable object is REPORTED, never skipped. A sweep that silently drops the
 rows it could not load reports "consistent" for a symbol whose contradiction it
@@ -84,7 +84,7 @@ PLACEHOLDER = re.compile(
     r"^(\?d_[0-9a-f]+@|\?j_[0-9a-f]+@|\?dup_[0-9a-f]+@|\?a_[0-9a-f]+@"
     r"|tg_|dup_|Gen_|gen_|\?gen_|uw_)")
 
-FOLD = "identical masked bytes and reloc sites - a real fold"
+FOLD = "identical shape; at most one name is right"
 DIFFER = "DIFFERENT BODIES - cannot share an address"
 ODD_MEMBER = ("one member of a LARGE group compiles differently here - "
               "evidence about that member, not about the group")
@@ -94,10 +94,10 @@ PLACEHOLDERS = "all-placeholder"
 UNREADABLE = "unreadable object - NOT a clean result"
 
 # Above this many names, "the bodies differ" stops being a claim about the group.
-# Forty names on one nine-byte constructor is an ICF group the linker really
-# built; one member of it compiling differently HERE points at our compile of
-# that member long before it points at thirty-nine wrong rows. Reported apart so
-# a large group is not read as a large defect.
+# In a forty-name group on one nine-byte constructor, one member compiling
+# differently HERE points at our compile of that member, not at a second body.
+# Reported apart so the group is not read as a structural defect; its surplus
+# names are over-claims that tools/one_identity.py counts.
 LARGE_GROUP = 3
 
 
@@ -265,7 +265,7 @@ def classify(rows, read=None):
             # Two setters of different fields producing identical bytes here is
             # the signature of a class that is short by a field: the GameWindow
             # setters read as perfectly matched while every Color row sat on the
-            # Image body. Only reported for small groups; a forty-name ICF group
+            # Image body. Only reported for small groups; a forty-name group
             # of trivial accessors will always contain some one-token pair.
             if reviewed_icf_group(rs):
                 yield Group(rva, size, names, FOLD, family, left, split)

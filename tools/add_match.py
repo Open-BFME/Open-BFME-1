@@ -277,8 +277,8 @@ def main():
     parser.add_argument("target_size", help="function size in bytes, decimal")
     parser.add_argument("source", help="repo-relative source path (src/...)")
     parser.add_argument("--notes", default="", help="notes column text (no commas)")
-    parser.add_argument("--icf-owner", help="existing matched symbol at the same RVA and size; "
-                        "allows a verified identical-code-folding alias")
+    parser.add_argument("--icf-owner", help="refused: retail has no identical-code folding, "
+                        "so a body takes one name (python3 tools/one_identity.py)")
     parser.add_argument("--replace-existing", action="store_true",
                         help="replace the symbol's one existing row instead of rejecting it; "
                              "the old row is restored if verification fails")
@@ -303,6 +303,11 @@ def main():
                         help="TEST-ONLY: operate on a copy of the repo rooted here "
                              "instead of the live ledger (default: repo root)")
     args = parser.parse_args()
+    if args.icf_owner:
+        fail(f"--icf-owner {args.icf_owner}: retail was linked without identical-code "
+             f"folding, so every body has exactly one identity",
+             "python3 tools/one_identity.py prints the evidence; when the existing name is "
+             "wrong, replace it with --replace-rva, --correct-identity and --identity-evidence")
     if bool(args.correct_identity) != bool(args.identity_evidence):
         fail("--correct-identity and --identity-evidence must be passed together")
     if args.correct_identity and (not args.replace_rva or args.replace_existing or
@@ -446,29 +451,13 @@ def main():
              "a ledger identity cannot be retired durably without a tombstone")
 
     new_end = rva + size
-    icf_owner = None
-    if args.icf_owner:
-        owners = [row for row in rows if row["name"] == args.icf_owner]
-        if len(owners) != 1:
-            fail(f"--icf-owner {args.icf_owner} must name exactly one existing row")
-        icf_owner = owners[0]
-        if (icf_owner["status"] != "matched" or icf_owner["rva"] != rva or
-                icf_owner["size"] != size):
-            fail(f"--icf-owner {args.icf_owner} is not a matched {size}-byte claim "
-                 f"at 0x{rva:08X}")
     for row in rows:
         if row is replaced:
             continue
-        same_icf_group = (icf_owner is not None and row["status"] == "matched" and
-                          row["rva"] == rva and row["size"] == size)
         if row["rva"] == rva:
-            if same_icf_group:
-                continue
             fail(f"target_rva 0x{rva:08X} is already claimed by {row['name']} "
                  f"({row['source']}, {row['status']}, line {row['line']})")
         if row["status"] == "matched" and row["rva"] < new_end and rva < row["rva"] + row["size"]:
-            if same_icf_group:
-                continue
             fail(f"range [0x{rva:08X}, 0x{new_end:08X}) overlaps matched row "
                  f"{row['name']} [0x{row['rva']:08X}, 0x{row['rva'] + row['size']:08X}) "
                  f"({row['source']}, line {row['line']})")

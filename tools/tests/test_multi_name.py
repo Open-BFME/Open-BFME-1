@@ -97,10 +97,9 @@ def test_same_class_label_does_not_fire_across_classes():
 
 
 def test_a_large_group_is_reported_apart_from_a_real_candidate():
-    """Forty names on one nine-byte constructor is an ICF group the linker
-    really built. One member compiling differently HERE points at our compile of
-    that member long before it points at thirty-nine wrong rows, so it must not
-    land in the same bucket as a two-name collision."""
+    """In a forty-name group on one nine-byte constructor, one member compiling
+    differently HERE points at our compile of that member, not at a second body,
+    so it must not land in the same bucket as a two-name collision."""
     def group(n):
         return [_row("?m%d@C@@QAEXXZ" % i) for i in range(n)]
     table = {"?m0@C@@QAEXXZ": (b"\x90" * 8, [])}

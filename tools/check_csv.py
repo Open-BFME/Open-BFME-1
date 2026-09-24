@@ -260,15 +260,15 @@ def check_functions(raw, problems, sources_ok, deleted=None):
                                 "Byte-verify decides which is real.")
             elif gen_row != prev_gen:
                 # A gen-* placeholder sharing an exact range with a real identity
-                # is not an ICF alias — the placeholder is the same function under
+                # is not an alias group — the placeholder is the same function under
                 # a synthetic name and must yield (union merges land both sides
                 # silently; this is the only gate that can see it).
                 problems.append(f"functions.csv: {name} and {prev_name} claim the same range "
                                 f"at {target_rva} but exactly one is a gen-* placeholder. "
                                 "Retract the placeholder row and tombstone it in "
                                 "reverse/deleted_rows.csv.")
-            # same (rva, size), same kind: ICF alias group — identical COMDATs
-            # folded to one address in retail; each byte-verifies independently.
+            # same (rva, size), same kind: an alias group. Retail has no ICF, so at
+            # most one name is right; identity_guard ratchets the count down.
         by_rva.setdefault(rva, (name, size, gen_row))
 
         if name in by_name and by_name[name] != rva and name not in ALLOWED_DUP_NAMES:
@@ -283,7 +283,7 @@ def check_functions(raw, problems, sources_ok, deleted=None):
     for (a_start, a_end, a_name), (b_start, b_end, b_name) in zip(matched_ranges, matched_ranges[1:]):
         if b_start < a_end:
             if a_start == b_start and a_end == b_end:
-                continue  # ICF alias group: identical range claimed by multiple names
+                continue  # alias group: one range, several names; identity_guard counts these
             problems.append(f"functions.csv: matched ranges overlap: {a_name} "
                             f"[0x{a_start:08X}-0x{a_end:08X}) and {b_name} @ 0x{b_start:08X}. "
                             "The full gate will refuse to patch. Byte-verify decides which is real.")

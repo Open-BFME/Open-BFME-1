@@ -2,11 +2,11 @@
 """Fail when a byte-verified row starts naming the wrong function.
 
 The byte gate cannot see this class: a pin naming the wrong function still
-byte-matches, so a green build proves nothing about identity. Four detectors
+byte-matches, so a green build proves nothing about identity. Five detectors
 find it, and before this guard existed they ran only when somebody remembered
 them -- which made them reports rather than checks.
 
-Three are fast enough for the commit hook (~6s together) and run here.
+Four are fast enough for the commit hook and run here.
 null_reloc.py takes ~70s and runs in the full gate instead; see tools/build.py.
 
 Counts only ever go DOWN. Raising a baseline to go green is the same prohibited
@@ -76,6 +76,14 @@ CHECKS = [
      "ctor_vtable.py",
      re.compile(r"^\s+(\d+)\s+the vtable it installs names a DIFFERENT class", re.M),
      re.compile(r"^matched constructor rows with a plain class name: \d+", re.M),
+     IMAGE,
+     None),
+    # Retail has no identical-COMDAT folding, so a second real name on a body is
+    # an over-claim however well the bytes match. Counts names, not addresses.
+    ("one_identity.surplus",
+     "one_identity.py",
+     re.compile(r"^surplus names beyond one per body: (\d+)$", re.M),
+     None,
      IMAGE,
      None),
     # A coverage floor, not a defect count: a body the sweep cannot read is one

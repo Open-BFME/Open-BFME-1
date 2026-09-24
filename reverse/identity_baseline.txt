@@ -17,6 +17,11 @@
 #                       group of 12 at 0x0024FC20 is gone -- those names are not
 #                       in BFME's module-name string pool at all, so the rows
 #                       were deleted (reverse/deleted_rows.csv) rather than fixed.
+# one_identity.surplus  non-placeholder names beyond the first at one address.
+#                       Retail was linked without identical-COMDAT folding
+#                       (evidence: python3 tools/one_identity.py), so each is an
+#                       over-claim; --list prints the addresses. Names, not
+#                       addresses, so a third name on a two-name body counts.
 # ctor_vtable.unreadable a coverage floor like null_reloc.max_unreadable, not a
 #                       defect count. Zero, and it stays zero.
 #
@@ -31,6 +36,7 @@ multi_name.different = 0
 size_outlier.indicted = 1
 ctor_vtable.contradicted = 29
 ctor_vtable.unreadable = 0
+one_identity.surplus = 3005
 # fcf825b4f7 retired the false FXNugget zero-store claim; the body still has aliases.
 null_reloc.rows = 64
 null_reloc.bodies = 19

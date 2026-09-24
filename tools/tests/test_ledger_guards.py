@@ -68,7 +68,7 @@ def test_dedup_still_collapses_true_duplicates(tmp_path):
 
 
 def test_icf_alias_group_survives_dedup(tmp_path):
-    """Distinct names at one address are folded COMDATs, not a conflict."""
+    """Distinct names at one address are an identity question, not a duplicate row."""
     ledger = tmp_path / "functions.csv"
     src = "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp"
     _write(ledger,
