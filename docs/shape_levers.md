@@ -1065,3 +1065,21 @@ Use this only when the retail disassembly proves the signed conversion and
 operand direction; it is a local code-generation override, not a body lift.
 The surrounding `tickIntervalTimers` attempt remains unmatched (673/718 bytes,
 488 differing non-relocation bytes, score `0.19498607242339833`, with relocation-layout drift).
+## Vtable register-temp call shape (RegallocLever-2)
+
+When VC7.1 selects the wrong volatile register for a virtual call's vtable
+temporary, a typed vtable view plus a typed `__fastcall` slot pointer can
+select the required register without assembly. A one-register pointer keeps
+the receiver in ECX while the vtable temporary stays in EAX. When retail keeps
+that temporary in EDX, a second register-only `__fastcall` parameter can carry
+the same table pointer; this is a codegen adapter, not evidence that the
+thiscall slot has an explicit EDX argument. Prove the slot offset and dynamic
+call contract independently, and do not infer a class or callee signature from
+the adapter type.
+
+At `0x0023A380` (369 B), the typed first-slot call selected EAX; retaining
+the normal virtual call at the later slot preserved EDX. At `0x00172600`
+(1524 B), the typed no-stack slot `+0x44` call retained the table temporary in
+EDX and the later slot `+0x1D4` call used EAX. Both bodies matched exactly
+modulo verified relocation operands; their dynamic slot contracts were
+independently documented before choosing the adapter.

@@ -1,12 +1,11 @@
-// ?d_00172600@@YAXXZ
-// partial score=0.9974 date=2026-09-22
-// cl: /Ob1 /ICode/Libraries/Source/WWVegas/WWMath /FAsc /Fabuild/hub_00172600/current.cod
-// Complete hub reconstruction, retail RVA 0x00172600 (1524 bytes).
-// Symbol: ?onEnter@AIInternalMoveToStateOnEnterShim@@QAE?AW4StateReturnType@@XZ
-// See ANALYSIS.md for independently witnessed identities, layouts and ABIs.
-// No assembly and no new callee pin. Existing j_ routes are ABI adapters.
+// cl: /Ob1 /ICode/Libraries/Source/WWVegas/WWMath
+// AIInternalMoveToState::onEnter, retail RVA 0x00172600.
+// Probe symbol: ?onEnter@AIInternalMoveToStateOnEnterShim@@QAE?AW4StateReturnType@@XZ
+// This shim symbol is not an alternate owner for the 0x00021E27 ILT.
+// Identity, ABI, and control-flow evidence: docs/analysis/0x00172600.md.
+// Existing j_ routes are ABI adapters; no new callees are claimed.
 // Retail frame is aligned8, alloc32, saved EBX/frame-EBP/ESI/EDI; no EH.
-// Probe output is authoritative about how closely this source emits that shape.
+// The slot-17 EDX value is the vtable temporary from retail's register-only dispatch.
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
 // stlport
@@ -17,6 +16,16 @@ typedef bool Bool;
 typedef unsigned int UnsignedInt;
 typedef int Int;
 typedef float Real;
+typedef Bool (__fastcall *Rva00172600Slot17Fn)(void *, void *);
+struct Rva00172600StateVtable {
+	void *slots[17];
+	Rva00172600Slot17Fn slot17;
+};
+typedef void (__fastcall *Rva00172600Slot117Fn)(void *);
+struct Rva00172600AIVtable {
+	void *slots[117];
+	Rva00172600Slot117Fn slot117;
+};
 
 enum StateReturnType
 {
@@ -212,58 +221,44 @@ extern void j_00048ca7(void);
 
 typedef void (__cdecl *Rva00172600DebugLogCall)(void *, const char *, ...);
 
-// These are address-derived member-pointer adapters.  Their only purpose is
-// to give MSVC 7.1 the retail thiscall ABI; every adapter is redirected to the
-// exact printed j_ callee below, and the adapter spellings make no identity
-// claim about those bodies.
-class Rva00172600Calls
-{
-public:
-	Rva00172600Override *rva000022bb();
-	void rva0000979b();
-	void rva0000ebab(Int);
-	Bool rva00010109();
-	void rva0001246d();
-	void rva00012486();
-	Int rva0001a36b();
-	Bool rva0001c26f(Coord3D *, Int);
-	Int rva0001c675(Object *, Coord3D *);
-	void rva0001c7e2(Int);
-	void rva0002191d();
-	Bool rva00027ffc(Object *, void *, Coord3D *, const Coord3D *);
-	void rva000294e2(Object *, Coord3D *, Int, const char *, Int);
-	void rva0002b3f0();
-	Bool rva0003251f(Int);
-	Real rva000333ac();
-	void rva00034c16(Object *, Coord3D *);
-	Int rva0003a391();
-	Bool rva00046ad3(Object *);
-	void rva00048ca7(Real);
+// Address-derived member-pointer types retain the evidenced thiscall ABI.
+// Local casts name the exact j_ routes in retail's call sites; the types carry
+// only the contract from docs/analysis/0x00172600.md and assert no semantic
+// identity beyond those routes.
+class Rva00172600Calls {};
+template<class MemberCall>
+union Rva00172600CallCast {
+	void *asVoid;
+	MemberCall asMember;
 };
+typedef Rva00172600Override *(Rva00172600Calls::*Rva00172600FinalOverrideCall)();
+union Rva00172600FinalOverrideCast {
+	void *asVoid;
+	Rva00172600FinalOverrideCall asMember;
+};
+typedef void (Rva00172600Calls::*Rva00172600VoidNoArgsCall)();
+typedef Real (Rva00172600Calls::*Rva00172600RealNoArgsCall)();
+typedef Bool (Rva00172600Calls::*Rva00172600BoolNoArgsCall)();
+typedef Int (Rva00172600Calls::*Rva00172600IntNoArgsCall)();
+typedef void (Rva00172600Calls::*Rva00172600VoidIntCall)(Int);
+typedef Bool (Rva00172600Calls::*Rva00172600BoolAdjustCall)(
+	Object *, void *, Coord3D *, const Coord3D *);
+typedef void (Rva00172600Calls::*Rva00172600VoidObjectCoordCall)(
+	Object *, Coord3D *);
+typedef void (Rva00172600Calls::*Rva00172600VoidUpdateGoalCall)(
+	Object *, Coord3D *, Int, const char *, Int);
+typedef Int (Rva00172600Calls::*Rva00172600IntObjectCoordCall)(
+	Object *, Coord3D *);
+typedef Bool (Rva00172600Calls::*Rva00172600BoolObjectCall)(Object *);
+typedef Bool (Rva00172600Calls::*Rva00172600BoolCoordIntCall)(
+	Coord3D *, Int);
+typedef Bool (Rva00172600Calls::*Rva00172600BoolIntCall)(Int);
+typedef void (Rva00172600Calls::*Rva00172600VoidRealCall)(Real);
 
-#pragma comment(linker, "/alternatename:?rva000022bb@Rva00172600Calls@@QAEPAVRva00172600Override@@XZ=?j_000022bb@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0000979b@Rva00172600Calls@@QAEXXZ=?j_0000979b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0000ebab@Rva00172600Calls@@QAEXH@Z=?j_0000ebab@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00010109@Rva00172600Calls@@QAE_NXZ=?j_00010109@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0001246d@Rva00172600Calls@@QAEXXZ=?j_0001246d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00012486@Rva00172600Calls@@QAEXXZ=?j_00012486@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0001a36b@Rva00172600Calls@@QAEHXZ=?j_0001a36b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0001c26f@Rva00172600Calls@@QAE_NPAVCoord3D@@H@Z=?j_0001c26f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0001c675@Rva00172600Calls@@QAEHPAVObject@@PAVCoord3D@@@Z=?j_0001c675@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0001c7e2@Rva00172600Calls@@QAEXH@Z=?j_0001c7e2@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0002191d@Rva00172600Calls@@QAEXXZ=?j_0002191d@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00027ffc@Rva00172600Calls@@QAE_NPAVObject@@PAXPAVCoord3D@@PBV3@@Z=?j_00027ffc@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva000294e2@Rva00172600Calls@@QAEXPAVObject@@PAVCoord3D@@HPBDH@Z=?j_000294e2@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0002b3f0@Rva00172600Calls@@QAEXXZ=?j_0002b3f0@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0003251f@Rva00172600Calls@@QAE_NH@Z=?j_0003251f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva000333ac@Rva00172600Calls@@QAEMXZ=?j_000333ac@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00034c16@Rva00172600Calls@@QAEXPAVObject@@PAVCoord3D@@@Z=?j_00034c16@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva0003a391@Rva00172600Calls@@QAEHXZ=?j_0003a391@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00046ad3@Rva00172600Calls@@QAE_NPAVObject@@@Z=?j_00046ad3@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva00048ca7@Rva00172600Calls@@QAEXM@Z=?j_00048ca7@@YAXXZ")
 
 StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 {
+	Rva00172600StateWithComputePath *stateObject = this;
 	if (TheAudioClientUpdate != 0 && m_ambientPlayingHandle >= 5)
 	{
 		TheAudioClientUpdate->slot19(m_ambientPlayingHandle);
@@ -272,6 +267,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 
 	Object *owner = getMachineOwner();
 	Rva00172600AIUpdate *ai = owner->getAI();
+	Rva00172600AIUpdate *aiObject = ai;
 	m_waitingForPath = ai->m_waitingForPath;
 
 	if (g_012F0239 && g_012ED4FC)
@@ -280,8 +276,11 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		UnsignedInt objectId = owner->m_id;
 		if (templateForLog != 0 && templateForLog->m_override != 0)
 		{
+			Rva00172600FinalOverrideCast finalOverrideCast;
+			finalOverrideCast.asVoid = (void *)j_000022bb;
 			templateForLog = (Rva00172600Template *)
-			((Rva00172600Calls *)templateForLog->m_override)->rva000022bb();
+				(((Rva00172600Calls *)templateForLog->m_override)
+					->*finalOverrideCast.asMember)();
 		}
 		const char *objectName = templateForLog->m_name ?
             (const char *)templateForLog->m_name + 8 : (const char *)0x0107388b;
@@ -300,13 +299,22 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		return STATE_FAILURE;
 	}
 
+	Rva00172600CallCast<Rva00172600RealNoArgsCall> queryFloatCall;
+	queryFloatCall.asVoid = (void *)j_000333ac;
 	Real queryFloat =
-		((Rva00172600Calls *)ai)->rva000333ac();
+		(((Rva00172600Calls *)ai)->*queryFloatCall.asMember)();
 	void *currentLocomotor = ai->m_curLocomotor;
 	if (currentLocomotor != 0)
-		((Rva00172600Calls *)currentLocomotor)->rva0000979b();
+	{
+		Rva00172600CallCast<Rva00172600VoidNoArgsCall> refreshLocomotorCall;
+		refreshLocomotorCall.asVoid = (void *)j_0000979b;
+		(((Rva00172600Calls *)currentLocomotor)
+			->*refreshLocomotorCall.asMember)();
+	}
 	m_tryOneMoreRepath = 1;
-	((Rva00172600Calls *)ai)->rva0001246d();
+	Rva00172600CallCast<Rva00172600VoidNoArgsCall> startMovingCall;
+	startMovingCall.asVoid = (void *)j_0001246d;
+	(((Rva00172600Calls *)ai)->*startMovingCall.asMember)();
 
 	if (g_012F0239 && g_012ED4FC)
 	{
@@ -315,7 +323,10 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			m_goalPosition.y, m_goalPosition.z);
 	}
 
-	Bool adjustsDestination = ((Rva00172600Calls *)this)->rva00010109();
+	Rva00172600CallCast<Rva00172600BoolNoArgsCall> adjustsDestinationCall;
+	adjustsDestinationCall.asVoid = (void *)j_00010109;
+	Bool adjustsDestination =
+		(((Rva00172600Calls *)this)->*adjustsDestinationCall.asMember)();
 	if (adjustsDestination)
 	{
 		if (g_012F0239 && g_012ED4FC)
@@ -325,11 +336,19 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 		}
 
 		Rva00172600Pathfinder *pathfinder = TheAI->m_pathfinder;
+		Rva00172600CallCast<Rva00172600IntNoArgsCall> getObstacleIDCall;
+		getObstacleIDCall.asVoid = (void *)j_0001a36b;
 		Int ignoredObstacleID =
-			((Rva00172600Calls *)ai)->rva0001a36b();
-		((Rva00172600Calls *)pathfinder)->rva0001c7e2(ignoredObstacleID);
-		Bool adjusted = ((Rva00172600Calls *)pathfinder)->rva00027ffc(
-			owner, (void *)ai->m_locomotorSet, &m_goalPosition, 0);
+			(((Rva00172600Calls *)ai)->*getObstacleIDCall.asMember)();
+		Rva00172600CallCast<Rva00172600VoidIntCall> setPathStateCall;
+		setPathStateCall.asVoid = (void *)j_0001c7e2;
+		(((Rva00172600Calls *)pathfinder)->*setPathStateCall.asMember)(
+			ignoredObstacleID);
+		Rva00172600CallCast<Rva00172600BoolAdjustCall> adjustDestinationCall;
+		adjustDestinationCall.asVoid = (void *)j_00027ffc;
+		Bool adjusted =
+			(((Rva00172600Calls *)pathfinder)->*adjustDestinationCall.asMember)(
+				owner, (void *)ai->m_locomotorSet, &m_goalPosition, 0);
 		if (!adjusted)
 		{
 			if (g_012F0239 && g_012ED4FC)
@@ -338,8 +357,10 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 					(const char *)0x01098cb0, m_goalPosition.x,
 					m_goalPosition.y, m_goalPosition.z);
 			}
-			((Rva00172600Calls *)pathfinder)->rva00034c16(owner,
-				&m_goalPosition);
+			Rva00172600CallCast<Rva00172600VoidObjectCoordCall> snapGoalCall;
+			snapGoalCall.asVoid = (void *)j_00034c16;
+			(((Rva00172600Calls *)pathfinder)->*snapGoalCall.asMember)(
+				owner, &m_goalPosition);
 			if (g_012F0239 && g_012ED4FC)
 			{
 				((Rva00172600DebugLogCall)j_0003a17a)(g_012ED4FC,
@@ -354,9 +375,14 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 				m_goalPosition.y, m_goalPosition.z);
 		}
 
-		((Rva00172600Calls *)pathfinder)->rva000294e2(owner,
-			&m_goalPosition,
-			((Rva00172600Calls *)TheTerrainLogic)->rva0001c675(owner, &m_goalPosition),
+		Rva00172600CallCast<Rva00172600IntObjectCoordCall> getLayerCall;
+		getLayerCall.asVoid = (void *)j_0001c675;
+		Rva00172600CallCast<Rva00172600VoidUpdateGoalCall> updateGoalCall;
+		updateGoalCall.asVoid = (void *)j_000294e2;
+		(((Rva00172600Calls *)pathfinder)->*updateGoalCall.asMember)(
+			owner, &m_goalPosition,
+			(((Rva00172600Calls *)TheTerrainLogic)
+				->*getLayerCall.asMember)(owner, &m_goalPosition),
 			(const char *)0x0109769c, 0x909);
 		if (g_012F0239 && g_012ED4FC)
 		{
@@ -364,7 +390,7 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 				(const char *)0x01098b38, m_goalPosition.x,
 				m_goalPosition.y, m_goalPosition.z);
 		}
-		((Rva00172600Calls *)pathfinder)->rva0001c7e2(0);
+		(((Rva00172600Calls *)pathfinder)->*setPathStateCall.asMember)(0);
 	}
 	else if (g_012F0239 && g_012ED4FC)
 	{
@@ -388,8 +414,13 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 				m_goalPosition.y, m_goalPosition.z);
 		}
 
+		Rva00172600CallCast<Rva00172600BoolObjectCall> locomotorQueryCall;
+		locomotorQueryCall.asVoid = (void *)j_00046ad3;
+		Rva00172600CallCast<Rva00172600BoolIntCall> kindQueryCall;
+		kindQueryCall.asVoid = (void *)j_0003251f;
 		if (currentLocomotor != 0 &&
-			((Rva00172600Calls *)currentLocomotor)->rva00046ad3(owner) &&
+			(((Rva00172600Calls *)currentLocomotor)
+				->*locomotorQueryCall.asMember)(owner) &&
 			(m_waitingForPath ||
 			 queryFloat > *(Real *)((unsigned char *)currentLocomotor + 0x38)))
 		{
@@ -400,14 +431,21 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 					m_goalPosition.y, m_goalPosition.z);
 			}
 			Rva00172600Pathfinder *pathfinder = TheAI->m_pathfinder;
-			Int layer = ((Rva00172600Calls *)owner)->rva0003a391();
-			Bool onCellTypeTwo = ((Rva00172600Calls *)pathfinder)->rva0001c26f(
-				position, layer);
+			Rva00172600CallCast<Rva00172600IntNoArgsCall> getLayerCall;
+			getLayerCall.asVoid = (void *)j_0003a391;
+			Int layer =
+				(((Rva00172600Calls *)owner)->*getLayerCall.asMember)();
+			Rva00172600CallCast<Rva00172600BoolCoordIntCall> cellTypeCall;
+			cellTypeCall.asVoid = (void *)j_0001c26f;
+			Bool onCellTypeTwo =
+				(((Rva00172600Calls *)pathfinder)->*cellTypeCall.asMember)(
+					position, layer);
 			UnsignedInt condition = onCellTypeTwo ? 0x66 : 0x3c;
 			owner->setCondition(condition);
 		}
-		else if (((Rva00172600Calls *)owner)->rva0003251f(0xe) &&
-			((Rva00172600Calls *)owner)->rva0003251f(0x10))
+		else if (
+			(((Rva00172600Calls *)owner)->*kindQueryCall.asMember)(0xe) &&
+			(((Rva00172600Calls *)owner)->*kindQueryCall.asMember)(0x10))
 		{
 			if (g_012F0239 && g_012ED4FC)
 			{
@@ -443,7 +481,10 @@ StateReturnType AIInternalMoveToStateOnEnterShim::onEnter()
 			m_goalPosition.y, m_goalPosition.z);
 	}
 
-if (!slot17())
+	Rva00172600StateVtable *stateVtable =
+		*(Rva00172600StateVtable **)stateObject;
+	// Match the retail EDX vtable temporary on this register-only virtual call.
+	if (!stateVtable->slot17(stateObject, stateVtable))
 	{
 		if (g_012F0239 && g_012ED4FC)
 		{
@@ -451,7 +492,9 @@ if (!slot17())
 				(const char *)0x010987e0, m_goalPosition.x,
 				m_goalPosition.y, m_goalPosition.z);
 		}
-		((Rva00172600Calls *)ai)->rva00012486();
+		Rva00172600CallCast<Rva00172600VoidNoArgsCall> failurePathCall;
+		failurePathCall.asVoid = (void *)j_00012486;
+		(((Rva00172600Calls *)ai)->*failurePathCall.asMember)();
 		return STATE_FAILURE;
 	}
 
@@ -461,11 +504,18 @@ if (!slot17())
 			(const char *)0x01098768, m_goalPosition.x,
 			m_goalPosition.y, m_goalPosition.z);
 	}
-	ai->slot117();
-	((Rva00172600Calls *)ai)->rva0000ebab(0);
-	((Rva00172600Calls *)ai)->rva00048ca7(999999.0f);
+	Rva00172600AIVtable *aiVtable = *(Rva00172600AIVtable **)aiObject;
+	aiVtable->slot117(aiObject);
+	Rva00172600CallCast<Rva00172600VoidIntCall> setPathResultCall;
+	setPathResultCall.asVoid = (void *)j_0000ebab;
+	(((Rva00172600Calls *)ai)->*setPathResultCall.asMember)(0);
+	Rva00172600CallCast<Rva00172600VoidRealCall> setSpeedCall;
+	setSpeedCall.asVoid = (void *)j_00048ca7;
+	(((Rva00172600Calls *)ai)->*setSpeedCall.asMember)(999999.0f);
+	Rva00172600CallCast<Rva00172600VoidNoArgsCall> startMoveSoundCall;
+	startMoveSoundCall.asVoid = (void *)j_0002b3f0;
 	if (startSound)
-		((Rva00172600Calls *)this)->rva0002b3f0();
+		(((Rva00172600Calls *)this)->*startMoveSoundCall.asMember)();
 	return STATE_CONTINUE;
 }
 
