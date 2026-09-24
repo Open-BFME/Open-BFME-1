@@ -56,7 +56,9 @@ ledger to reject carved overlaps before choosing from a bounded shortlist.
 `fleet_run` still performs the authoritative atomic claim and prelaunch row
 check. The context pack's cold call-index cache gained a separate lock and
 atomic image-bound publication before preparation was moved. Other lane
-pickers, retry policy, blocker grouping, and emitter discovery were deferred.
+pickers, retry policy, blocker grouping, and emitter discovery were deferred
+at that checkpoint. A later, separately reviewed reviewer-picker slice is
+recorded in [fleet-lock-scope-2026-09-24.md](analysis/fleet-lock-scope-2026-09-24.md).
 
 ## Implemented and verified
 
@@ -84,6 +86,16 @@ with a 1.25 s final lock region; lock wait was zero. Total local anonymous
 wall time did not improve. These timings support reduced lock occupancy only.
 All four correctness commits added **zero game-code bytes**, as expected for
 fleet tooling. No claim of increased fleet throughput follows from the tests.
+
+The later reviewer-picker slice moved whole-pool ranking out of the advisory
+lock and rechecked a bounded exact-RVA shortlist. Its ten new tests passed;
+the integrated fleet suite passed 163 tests and 19 subtests. Three paired local
+entry-point replays reduced review lock hold from 1.364–1.388 s to
+0.451–0.471 s and the contended wait from 1.336–1.358 s to 0.425–0.451 s.
+The same replay increased single-pick wall time from 1.444–1.475 s to
+1.884–1.946 s because it rereads the ledger. Two-picker elapsed time improved
+from 2.794–2.809 s to 2.386–2.411 s. These are local dispatch timings, not
+accepted bytes or measured fleet throughput.
 
 ## Remaining limits and rollout
 
