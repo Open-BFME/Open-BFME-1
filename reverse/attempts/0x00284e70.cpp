@@ -10,8 +10,9 @@
 typedef unsigned char Bool;
 
 extern "C" int __cdecl strcmp(const char *, const char *);
-extern "C" __declspec(dllimport) int __cdecl _strcmpi(const char *, const char *);
+extern "C" __declspec(dllimport) int __cdecl bfmeCmpDWK(const char *, const char *);
 extern "C" unsigned int __cdecl strlen(const char *);
+extern "C" unsigned char bfmeStrDWK[];
 #pragma intrinsic(strcmp)
 #pragma intrinsic(strlen)
 
@@ -50,7 +51,7 @@ public:
 struct BannerCarrierSubObject
 {
 	RetailLayoutString m_name;
-	Bool m_show;
+	Bool m_isDWK;
 };
 
 void rva00284E70ParseExpLevelDraw(
@@ -70,8 +71,9 @@ void rva00284E70ParseExpLevelDraw(
 			throw INIException(3, "UnitType expected");
 
 		BannerCarrierSubObject *entry = new BannerCarrierSubObject;
-		const char *showToken = ini->getNextToken(ini->m_tokenDelimiters);
-		entry->m_show = _strcmpi(showToken, "Show") == 0;
+		const char *dwkToken = ini->getNextToken(ini->m_tokenDelimiters);
+		entry->m_isDWK = bfmeCmpDWK(
+			dwkToken, (const char *)bfmeStrDWK) == 0;
 		const char *name = ini->getNextToken(ini->m_tokenDelimiters);
 		entry->m_name.set(name, name ? (int)strlen(name) : 0);
 		record->m_strings.push_back((BannerCarrierString *)entry);
