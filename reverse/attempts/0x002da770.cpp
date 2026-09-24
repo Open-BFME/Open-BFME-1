@@ -1,7 +1,7 @@
 // ?handleMatch@BfmeBaseA97@@QAEXPAX0@Z
-// partial score=0.75 date=2026-09-10
-// Research bank for retail 0x002DA770 (403 bytes).  The production claim was
-// intentionally removed after the scoped probe remained non-exact.
+// partial score=0.76 date=2026-09-24
+// Research bank for retail 0x002DA770 (403 bytes). The apply call sits after the
+// cone block: retail reaches it when angle >= pi, the lookup is null, or dot >= cos.
 
 struct BfmeHandleA97
 {
@@ -83,11 +83,10 @@ private:
 void BfmeBaseA97::handleMatch(void *owner, void *direction)
 {
 	BfmeDirectionA97 *sample = (BfmeDirectionA97 *)direction;
-	BfmeBaseA97 *self = this;
 	BfmeHandleA97 *handle = (BfmeHandleA97 *)owner;
 	BfmeFoundObjectA97 *object = (BfmeFoundObjectA97 *)
 		TheBfmeGameLogic->findObjectByID(handle->m_objectID);
-	if (self->m_angle < BfmePi && object != 0)
+	if (m_angle < BfmePi && object != 0)
 	{
 		BfmeVector3A97 delta;
 		delta.m_x = sample->m_x - object->m_positionX;
@@ -98,8 +97,8 @@ void BfmeBaseA97::handleMatch(void *owner, void *direction)
 		axis.m_y = object->m_axisB;
 		axis.m_z = object->m_axisC;
 
-		float objectLengthSquared = axis.m_z * axis.m_z
-			+ axis.m_x * axis.m_x + axis.m_y * axis.m_y;
+		float objectLengthSquared = axis.m_x * axis.m_x
+			+ axis.m_y * axis.m_y + axis.m_z * axis.m_z;
 		if (objectLengthSquared != BfmeZeroRange)
 		{
 			float inverseLength = WWMath::Inv_Sqrt(objectLengthSquared);
@@ -108,20 +107,21 @@ void BfmeBaseA97::handleMatch(void *owner, void *direction)
 			axis.m_z *= inverseLength;
 		}
 
+		BfmeVector3A97 normalized = delta;
 		float deltaLengthSquared = delta.m_x * delta.m_x
 			+ delta.m_y * delta.m_y + delta.m_z * delta.m_z;
 		if (deltaLengthSquared != BfmeZeroRange)
 		{
 			float inverseLength = WWMath::Inv_Sqrt(deltaLengthSquared);
-			BfmeVector3A97 normalized = delta;
-			normalized.m_x *= inverseLength;
-			normalized.m_y *= inverseLength;
-			normalized.m_z *= inverseLength;
-			float directionScore = normalized.m_z * axis.m_z
-				+ normalized.m_y * axis.m_y + normalized.m_x * axis.m_x;
-			if (cosf(self->m_angle) < directionScore)
-				((Rva00367E30Sink *)sample)->apply(
-					(int *)((unsigned char *)self + 0x58), -1);
+			normalized.m_x = delta.m_x * inverseLength;
+			normalized.m_y = delta.m_y * inverseLength;
+			normalized.m_z = delta.m_z * inverseLength;
 		}
+		float directionScore = normalized.m_x * axis.m_x
+			+ normalized.m_y * axis.m_y + normalized.m_z * axis.m_z;
+		if (directionScore < cosf(m_angle))
+			return;
 	}
+	((Rva00367E30Sink *)sample)->apply(
+		(int *)((unsigned char *)this + 0x58), -1);
 }
