@@ -6891,15 +6891,55 @@ void Drawable::notifyDrawableDependencyCleared()
 //-------------------------------------------------------------------------------------------------
 /** Set as selectable or not. */
 //-------------------------------------------------------------------------------------------------
+// BFME's InGameUI::deselectDrawable is slot 57 (+0xE4) of InGameUI's table
+// 0x00CF5B38 (body 0x00446490), and ObjectDrawInterface::setSelectable is slot
+// 23 (+0x5C): W3DModelDraw::setSelectable (0x0075C2B0) fills it in the draw
+// modules' ObjectDrawInterface tables, e.g. 0x011223A0, whose slot 0 is
+// clientOnly_getRenderObjInfo.
+#define BFME_SELECTABLE_SLOT(n) virtual void bfmeSelectableSlot##n() = 0;
+class BfmeSelectableInGameUI
+{
+public:
+	BFME_SELECTABLE_SLOT(0) BFME_SELECTABLE_SLOT(1) BFME_SELECTABLE_SLOT(2) BFME_SELECTABLE_SLOT(3)
+	BFME_SELECTABLE_SLOT(4) BFME_SELECTABLE_SLOT(5) BFME_SELECTABLE_SLOT(6) BFME_SELECTABLE_SLOT(7)
+	BFME_SELECTABLE_SLOT(8) BFME_SELECTABLE_SLOT(9) BFME_SELECTABLE_SLOT(10) BFME_SELECTABLE_SLOT(11)
+	BFME_SELECTABLE_SLOT(12) BFME_SELECTABLE_SLOT(13) BFME_SELECTABLE_SLOT(14) BFME_SELECTABLE_SLOT(15)
+	BFME_SELECTABLE_SLOT(16) BFME_SELECTABLE_SLOT(17) BFME_SELECTABLE_SLOT(18) BFME_SELECTABLE_SLOT(19)
+	BFME_SELECTABLE_SLOT(20) BFME_SELECTABLE_SLOT(21) BFME_SELECTABLE_SLOT(22) BFME_SELECTABLE_SLOT(23)
+	BFME_SELECTABLE_SLOT(24) BFME_SELECTABLE_SLOT(25) BFME_SELECTABLE_SLOT(26) BFME_SELECTABLE_SLOT(27)
+	BFME_SELECTABLE_SLOT(28) BFME_SELECTABLE_SLOT(29) BFME_SELECTABLE_SLOT(30) BFME_SELECTABLE_SLOT(31)
+	BFME_SELECTABLE_SLOT(32) BFME_SELECTABLE_SLOT(33) BFME_SELECTABLE_SLOT(34) BFME_SELECTABLE_SLOT(35)
+	BFME_SELECTABLE_SLOT(36) BFME_SELECTABLE_SLOT(37) BFME_SELECTABLE_SLOT(38) BFME_SELECTABLE_SLOT(39)
+	BFME_SELECTABLE_SLOT(40) BFME_SELECTABLE_SLOT(41) BFME_SELECTABLE_SLOT(42) BFME_SELECTABLE_SLOT(43)
+	BFME_SELECTABLE_SLOT(44) BFME_SELECTABLE_SLOT(45) BFME_SELECTABLE_SLOT(46) BFME_SELECTABLE_SLOT(47)
+	BFME_SELECTABLE_SLOT(48) BFME_SELECTABLE_SLOT(49) BFME_SELECTABLE_SLOT(50) BFME_SELECTABLE_SLOT(51)
+	BFME_SELECTABLE_SLOT(52) BFME_SELECTABLE_SLOT(53) BFME_SELECTABLE_SLOT(54) BFME_SELECTABLE_SLOT(55)
+	BFME_SELECTABLE_SLOT(56)
+	virtual void deselectDrawable( Drawable *draw ) = 0;		///< vtable +0xE4
+};
+
+class BfmeSelectableDrawInterface
+{
+public:
+	BFME_SELECTABLE_SLOT(0) BFME_SELECTABLE_SLOT(1) BFME_SELECTABLE_SLOT(2) BFME_SELECTABLE_SLOT(3)
+	BFME_SELECTABLE_SLOT(4) BFME_SELECTABLE_SLOT(5) BFME_SELECTABLE_SLOT(6) BFME_SELECTABLE_SLOT(7)
+	BFME_SELECTABLE_SLOT(8) BFME_SELECTABLE_SLOT(9) BFME_SELECTABLE_SLOT(10) BFME_SELECTABLE_SLOT(11)
+	BFME_SELECTABLE_SLOT(12) BFME_SELECTABLE_SLOT(13) BFME_SELECTABLE_SLOT(14) BFME_SELECTABLE_SLOT(15)
+	BFME_SELECTABLE_SLOT(16) BFME_SELECTABLE_SLOT(17) BFME_SELECTABLE_SLOT(18) BFME_SELECTABLE_SLOT(19)
+	BFME_SELECTABLE_SLOT(20) BFME_SELECTABLE_SLOT(21) BFME_SELECTABLE_SLOT(22)
+	virtual void setSelectable( Bool selectable ) = 0;		///< vtable +0x5C
+};
+#undef BFME_SELECTABLE_SLOT
+
 void Drawable::setSelectable( Bool selectable )
 {
 	// unselct drawable if it is no longer selectable.
 	if( !selectable )
-		TheInGameUI->deselectDrawable( this );
+		((BfmeSelectableInGameUI *)TheInGameUI)->deselectDrawable( this );
 
-	for (DrawModule** dm = getDrawModules(); *dm; ++dm)
+	for (DrawModule** dm = ((BfmeDrawableDrawModules *)this)->m_drawModules; *dm; ++dm)
 	{
-		ObjectDrawInterface* di = (*dm)->getObjectDrawInterface();
+		BfmeSelectableDrawInterface* di = (BfmeSelectableDrawInterface *)((BfmeObjectDrawModule *)(*dm))->getObjectDrawInterface();
 		if (di)
 			di->setSelectable(selectable);
 	}
