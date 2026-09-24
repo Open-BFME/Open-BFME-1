@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "35894c9c9a8db3bbffff583425c1c916ecbadd5af15f51f388caf7429a04066f",
+  "symbol": "?d_00895950@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.35,
+  "source": "// ?d_00895950@@YAXXZ\n// partial score=0.35 date=2026-09-24\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n\nextern void (__cdecl *TheBfmeFree)(void *storage, unsigned int bytes);\n\nclass BfmeDropObjectA\n{\npublic:\n\t~BfmeDropObjectA();\n\tvoid operator delete(void *storage, unsigned int bytes)\n\t{\n\t\tTheBfmeFree(storage, bytes);\n\t}\n\tint m_refCount;\n\tvoid *m_string;\n\tint m_kind;\n};\n\nclass BfmeStrVKI\n{\npublic:\n\tvoid *m_data;\n};\n\nclass RefHandle008958D0\n{\npublic:\n\tBfmeDropObjectA *m_object;\n};\n\nclass Rva00895950RefGuard\n{\npublic:\n\tRva00895950RefGuard() : m_object(0) {}\n\t~Rva00895950RefGuard()\n\t{\n\t\tif (m_object && --m_object->m_refCount == 0)\n\t\t\tdelete m_object;\n\t}\n\tBfmeDropObjectA *m_object;\n};\n\nclass Rva00893030Node\n{\npublic:\n\tBfmeDropObjectA *m_object;\n\tRva00893030Node *m_next;\n};\n\nclass Rva00893030Manager\n{\npublic:\n\tRefHandle008958D0 find008958D0(BfmeStrVKI *key);\n\tRefHandle008958D0 rva00895950(BfmeStrVKI *key);\nprivate:\n\tRva00893030Node *m_head;\n};\n\nRefHandle008958D0 Rva00893030Manager::rva00895950(BfmeStrVKI *key)\n{\n\tRva00895950RefGuard guard;\n\tRefHandle008958D0 found = find008958D0(key);\n\tguard.m_object = found.m_object;\n\tRefHandle008958D0 output;\n\toutput.m_object = 0;\n\tif (guard.m_object &&\n\t\t(guard.m_object->m_kind == 4 || guard.m_object->m_kind == 5))\n\t{\n\t\toutput.m_object = guard.m_object;\n\t\t++guard.m_object->m_refCount;\n\t}\n\treturn output;\n}\n"
+}
