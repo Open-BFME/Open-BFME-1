@@ -80071,7 +80071,6 @@ name,address,notes
 ?eraseSubtree@Rva00605820Tree@@QAEXPAURva00605820Node@@@Z,0x000082D3,route=0x00605820; retail605836 recurses on node+C with same ECX; canonical STLport _M_erase confirms right recursion
 ?eraseViaThunk@Rva00124FC0RbTree@@QAEXPAURva00124FC0RbTreeNode@@@Z,0x000296E0,ILT thunk back to the 0x00124FC0 red-black-tree erase body
 ?errorCallback@BuddyThreadClass@@QAEXPAVGPConnection@@PAUGPErrorArg@@@Z,0x0000BEE2
-?estimateWeaponDamage@Weapon@@IAEMPBVObject@@0PBUCoord3D@@@Z,0x0001366F,pinharvest x1 (thunk)
 ?evaCheckCopy@@YAPAUEvaCheck@@PAU1@00ABUEvaCheckCopyTag@@PAH@Z,0x0000320B,Open-BFME5 24-byte __copy ILT used by EvaCheckVecBase::resize shrink
 ?evaluate@BezierSegmentEvaluateShim@@QBEXMPAUCoord3D@@@Z,0x000B69A0,BezierSegment evaluateBezSegmentAtT incremental-link thunk target through a TU-local forwarding shim
 ?evaluate@Gen000D7180@@QAEPAXPAX@Z,0x000D7180,address-derived callee of the 28-byte self-pair-returning family; target read from the REL32 at its call sites
