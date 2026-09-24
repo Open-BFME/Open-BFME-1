@@ -1,5 +1,9 @@
 // ?prepare@Rva21C710Owner@@QAEXPAVRva21C710Object@@@Z
-// partial score=0.88 date=2026-09-10
+// partial score=0.9 date=2026-09-24
+// stlport
+#define _STLP_NO_EXCEPTIONS 1
+#include <bitset>
+
 struct Rva21C710Vector
 {
 	float x;
@@ -34,18 +38,21 @@ struct Coord3D
 class Rva21C710StatusMask
 {
 public:
-	unsigned int words[3];
+	enum _dummy_kInit { kInit };
+
+	Rva21C710StatusMask(_dummy_kInit, int bit)
+	{
+		set(bit);
+	}
 
 	void set(int bit)
 	{
-		words[bit >> 5] |= 1U << (bit & 31);
+		words.set(bit);
 	}
+
+	_STL::bitset<86> words;
 };
 
-const Rva21C710Vector *Rva21C710Object::getPosition() const
-{
-	return (const Rva21C710Vector *)((const unsigned char *)this + 0x38);
-}
 
 struct Rva21C710Node
 {
@@ -83,10 +90,21 @@ class Rva21C710Owner
 public:
 	void prepare(Rva21C710Object *object);
 
+	Rva21C710Object *getObject() const
+	{
+		return object;
+	}
+
+	const struct Rva21C710OwnerContext *getContext() const
+	{
+		return context;
+	}
+
 private:
 	void *vtable;
 	struct Rva21C710OwnerContext *context;
-	char gap08[0x18];
+	Rva21C710Object *object;
+	char gap0C[0x14];
 	class Rva21C710OwnerInterface interface;
 };
 
@@ -199,7 +217,7 @@ public:
 	virtual void slot09() = 0;
 	virtual Gen_00411DD0 *getDrawable() = 0;
 
-	char gap2C[0x38 - 0x2C];
+	char gap04[0x38 - 0x04];
 	Rva21C710Vector position;
 	char gap44[0x110 - 0x44];
 	unsigned int modelConditionWord0;
@@ -209,6 +227,11 @@ public:
 	class Rva21C710Physics *physics;
 };
 
+inline const Rva21C710Vector *Rva21C710Object::getPosition() const
+{
+	return &((const Rva21C710PrepareObjectView *)this)->position;
+}
+
 class Rva21C710Physics
 {
 public:
@@ -216,6 +239,8 @@ public:
 	unsigned char motiveState;
 };
 
+extern float g_rva00EAEB4C;
+extern float g_rva00EAEB48;
 extern void j_00008337();
 extern void j_0000d81e();
 extern void j_000107ad();
@@ -247,17 +272,10 @@ void Rva21C710Owner::prepare(Rva21C710Object *object)
 {
 	Coord3D positions[32];
 	AsciiString prefix(*(const AsciiString *)
-		((const unsigned char *)context->nameHolder->data + 0x20));
+		((const unsigned char *)getContext()->nameHolder->data + 0x20));
 
-	Rva21C710GetBones getBones;
-	union
-	{
-		void (*raw)();
-		Rva21C710GetBones member;
-	} getBonesCall;
-	getBonesCall.raw = j_000107ad;
-	getBones = getBonesCall.member;
-	int count = (object->*getBones)(prefix.str(), 32, positions, 0, true, 0);
+	int count = getObject()->getMultiLogicalBonePosition(prefix.str(), 32,
+		positions, 0, true, 0);
 
 	Rva21C710PrepareObjectView *view =
 		(Rva21C710PrepareObjectView *)object;
@@ -284,10 +302,14 @@ void Rva21C710Owner::prepare(Rva21C710Object *object)
 		setPosition = setPositionCall.member;
 		(object->*setPosition)(point);
 
+		const Rva21C710Vector *origin = getObject()->getPosition();
 		Rva21C710Vector direction;
-		direction.x = object->getPosition()->x - point->x;
-		direction.y = object->getPosition()->y - point->y;
+		direction.x = point->x;
+		direction.z = origin->z;
+		direction.y = point->y;
+		direction.x -= origin->x;
 		direction.z = 0.0f;
+		direction.y -= origin->y;
 
 		Rva21C710Normalize normalize;
 		union
@@ -299,11 +321,12 @@ void Rva21C710Owner::prepare(Rva21C710Object *object)
 		normalize = normalizeCall.member;
 		(((Coord3D *)&direction)->*normalize)();
 
+		float forceX = direction.x * g_rva00EAEB4C;
+		float forceY = direction.y * g_rva00EAEB4C;
 		Rva21C710Vector force;
-		force.x = direction.x * *(volatile float *)0x012AEB4C;
-		force.y = direction.y * *(volatile float *)0x012AEB4C;
-		*(unsigned int *)&force.z =
-			*(volatile unsigned int *)0x012AEB48;
+		force.x = forceX;
+		force.y = forceY;
+		force.z = g_rva00EAEB48;
 
 		Rva21C710ApplyForce applyForce;
 		union
@@ -326,7 +349,6 @@ void Rva21C710Owner::prepare(Rva21C710Object *object)
 		(physics->*setMotiveState)(true);
 		physics->motiveState = 1;
 
-		Gen_00411DD0 *drawable = view->getDrawable();
 		Rva21C710BfmeSet bfmeSet;
 		union
 		{
@@ -335,7 +357,7 @@ void Rva21C710Owner::prepare(Rva21C710Object *object)
 		} bfmeSetCall;
 		bfmeSetCall.raw = j_00008337;
 		bfmeSet = bfmeSetCall.member;
-		(drawable->*bfmeSet)(false);
+		(view->getDrawable()->*bfmeSet)(false);
 	}
 
 	if ((view->modelConditionWord2 & 0x80) == 0)
@@ -353,12 +375,6 @@ void Rva21C710Owner::prepare(Rva21C710Object *object)
 		(object->*notifyConditions)();
 	}
 
-	Rva21C710StatusMask status;
-	status.words[0] = 0;
-	status.words[1] = 0;
-	status.words[2] = 0;
-	status.set(6);
-
 	Rva21C710SetStatus setStatus;
 	union
 	{
@@ -367,7 +383,8 @@ void Rva21C710Owner::prepare(Rva21C710Object *object)
 	} setStatusCall;
 	setStatusCall.raw = j_000307e7;
 	setStatus = setStatusCall.member;
-	(object->*setStatus)(status, false);
+	(object->*setStatus)(
+		Rva21C710StatusMask(Rva21C710StatusMask::kInit, 6), false);
 
 	interface.prepared(object);
 }
