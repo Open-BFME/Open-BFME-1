@@ -1,5 +1,5 @@
 // ??0Rva00808920LanGame@@QAE@H@Z
-// partial score=0.9 date=2026-09-20
+// partial score=0.97 date=2026-09-24
 // cl: /O2 /Og /GX- /GS
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,6 +15,16 @@ struct Rva007EFFC0Allocator
 	virtual void *allocate( unsigned int size, int flags );
 	virtual void release( void *block, int flags );
 };
+
+typedef void *(__fastcall *Rva007EFFC0AllocateSlot)(
+	Rva007EFFC0Allocator *, void *, unsigned int, int);
+
+__forceinline void *Rva007EFFC0Allocate(
+	Rva007EFFC0Allocator *allocator, unsigned int size, int flags)
+{
+	void **vtable = *(void ***)allocator;
+	return ((Rva007EFFC0AllocateSlot)vtable[2])(allocator, vtable, size, flags);
+}
 
 struct Rva007E9B70Obj
 {
@@ -53,7 +63,10 @@ Rva00808920LanGame::Rva00808920LanGame( int maxPlayers )
 {
 	m_state = 1;
 	m_maxPlayers = maxPlayers;
-	m_players = (void **)Rva007EFFC0Get()->allocate( m_maxPlayers * 4, 0 );
+	Rva007EFFC0Allocator *allocator = Rva007EFFC0Get();
+	unsigned int allocationBytes;
+	allocationBytes = m_maxPlayers * 4;
+	m_players = (void **)Rva007EFFC0Allocate( allocator, allocationBytes, 0 );
 	for ( int index = 0; index < m_maxPlayers; ++index )
 		m_players[ index ] = 0;
 

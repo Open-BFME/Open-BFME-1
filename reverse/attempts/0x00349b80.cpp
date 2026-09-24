@@ -1,5 +1,5 @@
 // ?xfer@ScriptEngine@@MAEXPAVXfer@@@Z
-// partial score=0.35624895711663607 date=2026-09-23
+// partial score=0.52 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib /ICode/GameEngine/Source/Common
 // stlport
 // Natural reconstruction of 00349B80..0034B2E8 (5993 bytes, ret 4 then INT3).
@@ -255,7 +255,7 @@ void ScriptEngine::xfer(Xfer *xfer)
             map.clear(); unsigned count=0; *xfer == count;
             while(count) {
                 AsciiString key; bool value=false; *xfer == key; *xfer == value;
-                map.insert(std::make_pair(key,value)); --count;
+                map[key]=value; --count;
             }
         }
     }
