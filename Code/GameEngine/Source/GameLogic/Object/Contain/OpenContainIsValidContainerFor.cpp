@@ -150,7 +150,7 @@ public:
 	unsigned char m_beforeFilter[0x114];
 	Rva2225E0Filter m_filter;
 	unsigned char m_beforeFlags[0x34];
-	unsigned char m_alliedOwned;
+	unsigned char m_allowOwnPlayerInsideOverride;	// INI AllowOwnPlayerInsideOverride (field_names.csv)
 	unsigned char m_allowAlliesInside;
 	unsigned char m_allowEnemiesInside;
 	unsigned char m_allowNeutralInside;
@@ -180,7 +180,9 @@ public:
 	virtual void slot16(void) = 0;
 	virtual void slot17(void) = 0;
 	virtual void slot18(void) = 0;
-	virtual Bool accepts(const Object *object) const = 0;
+	// Slot 19 (+0x4C): OpenContain's own body 0x00219710 is xor al,al / ret 4;
+	// nothing names it.
+	virtual Bool primarySlot19(const Object *object) const = 0;
 
 	OpenContainModuleData *getModuleData(void) const
 	{
@@ -301,14 +303,14 @@ relationship:
 		if (((const BfmeObjectCall *)object)->getControllingPlayer() ==
 			((const BfmeObjectCall *)owner)->getControllingPlayer())
 		{
-			if (data->m_alliedOwned != 0)
+			if (data->m_allowOwnPlayerInsideOverride != 0)
 				goto success;
 		}
 		if (data->m_allowAlliesInside != 0)
 			goto success;
 		if (!object->testStatus(0x25))
 			goto failed;
-		allowed = accepts(object);
+		allowed = primarySlot19(object);
 		goto checkAllowed;
 	default:
 		goto failed;
