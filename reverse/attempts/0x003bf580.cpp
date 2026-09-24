@@ -1,5 +1,5 @@
-// ?d_003bf580@@YAXXZ
-// partial score=0.95 date=2026-09-24
+// ?rva003BF580@CampaignManager@@QAE?AVAsciiString@@H@Z
+// partial score=0.99 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x003BF580/139: source-shape bank, not a verified conversion.
 // 0x0052B8A0 matched caller proves the CampaignManager receiver, hidden
@@ -9,6 +9,9 @@
 // tools/callees.py can surface a GameSpyGroupRoom C++ alias at this same body.
 // Retail second return instead calls AsciiString copy ILT 0x000416AF; this
 // bank does NOT, so it must not be landed without that relocation correction.
+// Reading secondEnd before index subtraction and secondBegin after it removes
+// all six earlier register/scheduling differences: 139/139 instruction bytes
+// now match, but the second copy still calls the wrong physical body.
 #include "ascii_string.h"
 
 extern "C" void _ReadWriteBarrier(void);
@@ -50,9 +53,12 @@ AsciiString CampaignManager::rva003BF580(int index)
             unsigned firstSize = unsigned(region->m_first.m_end - firstBegin);
             if ((unsigned)index < firstSize)
                 return *(firstBegin + index);
+            AsciiString *secondEnd = region->m_second.m_end;
             index -= firstSize;
-            if ((unsigned)index < region->m_second.size())
-                return region->m_second[index];
+            AsciiString *secondBegin = region->m_second.m_begin;
+            unsigned secondSize = unsigned(secondEnd - secondBegin);
+            if ((unsigned)index < secondSize)
+                return secondBegin[index];
         }
     }
     return Rva01336E50EmptyString;
