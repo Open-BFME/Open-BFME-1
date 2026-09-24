@@ -1,5 +1,5 @@
 // ?dup_009b2530@@YAXPAURva009B2530Context@@PAX1@Z
-// partial score=0.14 date=2026-09-17
+// partial score=0.27 date=2026-09-24
 // ?dup_009b2530@@YAXPAURva009B2530Context@@PAX1@Z
 // Anonymous BFME VP6 scalar plane filter.  The address token is retained:
 // the codec callers and dispatch tables prove the codec family, but no named
@@ -16,9 +16,7 @@ struct Rva009B2530Context
 	int *m_levelTable;
 	int *m_metric;
 	unsigned char m_pad2c[0x4c];
-	int m_plane0;
-	int m_plane1;
-	int m_plane2;
+	int m_plane[3];
 	unsigned char m_pad84[0x0c];
 	unsigned int m_cols;
 	unsigned int m_rows;
@@ -64,10 +62,10 @@ void __cdecl dup_009b2530(
 	else
 		filterTable = (int *)0x01356940;
 
-	unsigned char * volatile source0 = (unsigned char *)sourceArgument + state->m_plane0;
+	unsigned char * volatile source0 = (unsigned char *)sourceArgument + state->m_plane[0];
 	unsigned int rows = state->m_rows;
 	unsigned int cols = state->m_cols;
-	unsigned char *destination0 = (unsigned char *)destinationArgument + state->m_plane0;
+	unsigned char *destination0 = (unsigned char *)destinationArgument + state->m_plane[0];
 	int stride = (int)state->m_stride;
 	unsigned int index = 0;
 	unsigned int row = 0;
@@ -140,110 +138,51 @@ void __cdecl dup_009b2530(
 		while (row < rows);
 	}
 
-	unsigned char *source1 = (unsigned char *)sourceArgument + state->m_plane1;
-	unsigned char *destination1 = (unsigned char *)destinationArgument + state->m_plane1;
 	unsigned int rows1 = rows >> 1;
 	unsigned int cols1 = cols >> 1;
 	int stride1 = stride >> 1;
-	unsigned int outer1 = rows1;
 
-	while (outer1 > 0)
+	for (int chromaPlane = 1; chromaPlane < 3; ++chromaPlane)
 	{
-		if (cols1 > 0)
+		unsigned char *sourcePlane = (unsigned char *)sourceArgument + state->m_plane[chromaPlane];
+		unsigned char *destinationPlane = (unsigned char *)destinationArgument + state->m_plane[chromaPlane];
+		unsigned int outer = rows1;
+
+		while (outer > 0)
 		{
-			unsigned int count = cols1;
-			int delta = (int)(destination1 - source1);
-			do
+			if (cols1 > 0)
 			{
-				int metric = state->m_metric[index];
-				
-				if (state->m_mode < 5)
-					alpha = state->m_levelTable[index];
+				unsigned int count = cols1;
+				int delta = (int)(destinationPlane - sourcePlane);
+				do
+				{
+					int metric = state->m_metric[index];
+					if (state->m_mode < 5)
+						alpha = state->m_levelTable[index];
 
-				if (state->m_filterMode > 5 && metric > copyThreshold)
-				{
-					g_rva009b2530Filter(state, source1, source1 + delta,
-						stride1, alpha, filterTable);
-					g_rva009b2530Filter(state, source1, source1 + delta,
-						stride1, alpha, filterTable);
-					g_rva009b2530Filter(state, source1, source1 + delta,
-						stride1, alpha, filterTable);
-				}
-				else if (metric > mediumThreshold)
-				{
-					g_rva009b2530Filter(state, source1, source1 + delta,
-						stride1, alpha, filterTable);
-				}
-				else if (metric > smallThreshold)
-				{
-					g_rva009b2530Bilinear(state, source1, source1 + delta,
-						stride1, alpha, filterTable);
-				}
-				else
-				{
-					g_rva009b2530Copy(source1, source1 + delta, stride1);
-				}
+					if (state->m_filterMode > 5 && metric > copyThreshold)
+					{
+						g_rva009b2530Filter(state, sourcePlane, sourcePlane + delta, stride1, alpha, filterTable);
+						g_rva009b2530Filter(state, sourcePlane, sourcePlane + delta, stride1, alpha, filterTable);
+						g_rva009b2530Filter(state, sourcePlane, sourcePlane + delta, stride1, alpha, filterTable);
+					}
+					else if (metric > mediumThreshold)
+						g_rva009b2530Filter(state, sourcePlane, sourcePlane + delta, stride1, alpha, filterTable);
+					else if (metric > smallThreshold)
+						g_rva009b2530Bilinear(state, sourcePlane, sourcePlane + delta, stride1, alpha, filterTable);
+					else
+						g_rva009b2530Copy(sourcePlane, sourcePlane + delta, stride1);
 
-				++index;
-				--count;
-				source1 += 8;
+					++index;
+					--count;
+					sourcePlane += 8;
+				}
+				while (count != 0);
 			}
-			while (count != 0);
+			sourcePlane += stride1 * 8;
+			destinationPlane += stride1 * 8;
+			--outer;
 		}
-		source1 += stride1 * 8;
-		destination1 += stride1 * 8;
-		--outer1;
 	}
 
-	unsigned char *source2 = (unsigned char *)sourceArgument + state->m_plane2;
-	unsigned char *destination2 = (unsigned char *)destinationArgument + state->m_plane2;
-	unsigned int outer2 = rows1;
-
-	while (outer2 > 0)
-	{
-		if (cols1 > 0)
-		{
-			unsigned int count = cols1;
-			int delta = (int)(destination2 - source2);
-			do
-			{
-				int metric = state->m_metric[index];
-
-				if (state->m_mode < 5)
-					alpha = state->m_levelTable[index];
-
-				if (state->m_filterMode > 5 && metric > copyThreshold)
-				{
-					g_rva009b2530Filter(state, source2, source2 + delta,
-						stride1, alpha, filterTable);
-					g_rva009b2530Filter(state, source2, source2 + delta,
-						stride1, alpha, filterTable);
-					g_rva009b2530Filter(state, source2, source2 + delta,
-						stride1, alpha, filterTable);
-				}
-				else if (metric > mediumThreshold)
-				{
-					g_rva009b2530Filter(state, source2, source2 + delta,
-						stride1, alpha, filterTable);
-				}
-				else if (metric > smallThreshold)
-				{
-					g_rva009b2530Bilinear(state, source2, source2 + delta,
-						stride1, alpha, filterTable);
-				}
-				else
-				{
-					g_rva009b2530Copy(source2, source2 + delta, stride1);
-				}
-
-				++index;
-				--count;
-				source2 += 8;
-			}
-			while (count != 0);
-		}
-		source2 += stride1 * 8;
-		destination2 += stride1 * 8;
-		--outer2;
-	}
 }
