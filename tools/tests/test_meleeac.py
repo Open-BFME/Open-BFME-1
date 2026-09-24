@@ -21,7 +21,7 @@ from cave import PE  # noqa: E402
 
 # call site -> first instruction after the five stolen bytes.
 # The call's resume is the disarm hook. The disarm hook's resume is the je.
-TARGETS = {
+HOOK_RESUMES = {
     modbuild.MELEEAC_ONENTER_CALL: modbuild.MELEEAC_ONENTER_RESTORE,
     modbuild.MELEEAC_ONENTER_RESTORE: modbuild.MELEEAC_ONENTER_RESTORE + 5,
     modbuild.MELEEAC_UPDATE_CALL: modbuild.MELEEAC_UPDATE_RESTORE,
@@ -64,7 +64,7 @@ def test_meleeac_payload_has_no_unresolved_runtime_symbols():
         assert modbuild.undefined_externals(obj) == []
 
 
-def test_retail_sites_are_the_predicate_call_and_its_test():
+def test_retail_hook_sites_preserve_predicate_test_and_branch():
     pe = PE(EXE)
     for call, restore in (
             (modbuild.MELEEAC_ONENTER_CALL, modbuild.MELEEAC_ONENTER_RESTORE),
@@ -84,7 +84,7 @@ def test_meleeac_detours_both_calls_and_returns_to_the_je(built):
     md = _md()
     shim_targets = []
 
-    for target, resume in TARGETS.items():
+    for target, resume in HOOK_RESUMES.items():
         detour = pe.read(target, 5)
         assert detour[0] == 0xE9, f"0x{target:08X} was not replaced by a rel32 detour"
         shim = target + 5 + struct.unpack("<i", detour[1:])[0]
@@ -98,5 +98,5 @@ def test_meleeac_detours_both_calls_and_returns_to_the_je(built):
                     and ins.address > call.address)
         assert int(back.op_str, 16) - pe.image_base == resume
 
-    assert len(set(shim_targets)) == len(TARGETS)
+    assert len(set(shim_targets)) == len(HOOK_RESUMES)
     assert pe.data != bytearray(EXE.read_bytes())
