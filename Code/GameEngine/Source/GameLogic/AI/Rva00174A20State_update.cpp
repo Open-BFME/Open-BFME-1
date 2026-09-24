@@ -44,12 +44,14 @@ private:
 	UnsignedByte m_unmodelled[0x70];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
-class ThingTemplate
+// BFME Object::getDrawable vtable slot +0x28 and retail sound-lookup thunk
+class Drawable
 {
 public:
 	const AudioEventRTS *getPerUnitSound(const AsciiString &name) const;
 };
+
+#pragma comment(linker, "/alternatename:?getPerUnitSound@Drawable@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z=?j_0000fd44@@YAXXZ")
 
 class Player
 {
@@ -109,7 +111,7 @@ public:
 	virtual void slot07() = 0;
 	virtual void slot08() = 0;
 	virtual void slot09() = 0;
-	virtual const ThingTemplate *getTemplate() const = 0;
+	virtual Drawable *getDrawable() const = 0;
 
 	void notifyModelConditionChanged();
 	Bool bfmeGetRecentDamageSource(UnsignedInt *source, UnsignedInt kind) const;
@@ -241,13 +243,13 @@ StateReturnType Rva00174A20State::update()
 	UnsignedInt damageSource;
 	if (source->bfmeGetRecentDamageSource(&damageSource, 4) == true)
 	{
-		const ThingTemplate *tmpl = source->getTemplate();
-		if (tmpl)
+		const Drawable *drawable = source->getDrawable();
+		if (drawable)
 		{
 			const AudioEventRTS *event;
 			{
 				AsciiString soundName("VoiceDesperateAttack");
-				event = tmpl->getPerUnitSound(soundName);
+				event = drawable->getPerUnitSound(soundName);
 			}
 			if (event)
 			{

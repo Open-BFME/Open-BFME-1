@@ -61,11 +61,13 @@ public:
 	Bool isCurrentlyPlaying() const;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
-class ThingTemplate {
+// BFME Object::getDrawable vtable slot +0x28 and retail sound-lookup thunk
+class Drawable {
 public:
 	const AudioEventRTS *getPerUnitSound(const AsciiString &name) const;
 };
+
+#pragma comment(linker, "/alternatename:?getPerUnitSound@Drawable@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z=?j_0000fd44@@YAXXZ")
 
 #define TEN_VIRTUALS(prefix) \
 	virtual void prefix##0(); virtual void prefix##1(); \
@@ -118,7 +120,7 @@ public:
 	virtual void slot07() = 0;
 	virtual void slot08() = 0;
 	virtual void slot09() = 0;
-	virtual const ThingTemplate *getTemplate() const = 0;
+	virtual Drawable *getDrawable() const = 0;
 
 	char Pad0[0x3C - 4];
 	UnsignedInt KindOf;					// +0x3C
@@ -356,12 +358,12 @@ void TurretAI::startRotOrPitchSound()
 {
 	if (!m_turretRotOrPitchSound.isCurrentlyPlaying())
 	{
-		const ThingTemplate *thingTemplate = Owner->getTemplate();
-		if (thingTemplate)
+		const Drawable *drawable = Owner->getDrawable();
+		if (drawable)
 		{
 			{
 				AsciiString soundName("TurretMoveLoop");
-				m_turretRotOrPitchSound = *thingTemplate->getPerUnitSound(soundName);
+				m_turretRotOrPitchSound = *drawable->getPerUnitSound(soundName);
 			}
 			m_turretRotOrPitchSound.setObjectID(Owner->getID());
 			m_turretRotOrPitchSound.setPlayingHandle(TheAudio->addAudioEvent(&m_turretRotOrPitchSound));

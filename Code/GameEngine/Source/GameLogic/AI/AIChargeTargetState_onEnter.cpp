@@ -38,8 +38,8 @@ private:
 	unsigned char m_unmodelled[0x70];
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
-class ThingTemplate
+// BFME Object::getDrawable vtable slot +0x28 and retail sound-lookup thunk
+class Drawable
 {
 public:
 	const AudioEventRTS *getPerUnitSound(const AsciiString &name) const;
@@ -49,7 +49,7 @@ public:
 #pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
 #pragma comment(linker, "/alternatename:?setObjectID@AudioEventRTS@@QAEXI@Z=?j_00019a6a@@YAXXZ")
 #pragma comment(linker, "/alternatename:?setPlayerIndex@AudioEventRTS@@QAEXH@Z=?j_0003ac88@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getPerUnitSound@ThingTemplate@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z=?j_0000fd44@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getPerUnitSound@Drawable@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z=?j_0000fd44@@YAXXZ")
 
 class Player
 {
@@ -76,7 +76,7 @@ public:
 	virtual void slot07() = 0;
 	virtual void slot08() = 0;
 	virtual void slot09() = 0;
-	virtual const ThingTemplate *getTemplate() const = 0;
+	virtual Drawable *getDrawable() const = 0;
 
 	void setWeaponLock(int weaponSlot, int lockType); // ILT 0x0003EEBE
 	Player *getControllingPlayer() const;             // ILT 0x00020824
@@ -175,12 +175,12 @@ StateReturnType AIChargeTargetState::onEnter()
 		m_goalPosition = *victim->getPosition();
 		source->setWeaponLock(0, 1);
 
-		if (source->getTemplate())
+		if (source->getDrawable())
 		{
 			const AudioEventRTS *event;
 			{
 				AsciiString soundName("VoiceStartCharging");
-				event = source->getTemplate()->getPerUnitSound(soundName);
+				event = source->getDrawable()->getPerUnitSound(soundName);
 			}
 			if (event)
 			{

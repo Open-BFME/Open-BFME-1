@@ -663,7 +663,6 @@ _BfmePathfindMapUpdate@12,0x003FA5B0,3964,Code/GameEngine/Source/GameLogic/AI/Pa
 ?getPristineBonePositions@BFMEDrawableBoneQuery@@QBEHPBDHPAUCoord3D@@PAVMatrix3D@@HH@Z,0x00413850,175,Code/GameEngine/Source/GameLogic/Object/Object.cpp,reloc-derived;call-sites=1;identity=real
 ?calcPhysicsXformTreads@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x004143F0,1013,Code/GameEngine/Source/GameClient/Drawable_calcPhysicsXform_Thunk.cpp,reloc-derived;call-sites=1;identity=real
 ?setEmoticon@Drawable@@QAEXABVAsciiString@@H@Z,0x004149E0,218,Code/GameEngine/Source/GameLogic/AI/AIGroup_groupSetEmoticon.cpp,reloc-derived;call-sites=1;identity=real
-?getPerUnitSound@ThingTemplate@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z,0x00416FE0,97,Code/GameEngine/Source/GameLogic/AI/TurretAIStartRotOrPitchSoundThunk.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeEmit@Gen_00417cb0@@AAEXPAX0@Z,0x00417710,681,Code/GameEngine/Source/Common/Bfme/Gen_00417cb0_tail.cpp,reloc-derived;call-sites=1;identity=generated
 ?setIndicatorColor@Drawable@@QAEXI@Z,0x004186E0,143,Code/GameEngine/Source/GameClient/Drawable_changedTeam.cpp,reloc-derived;call-sites=1;identity=real
 ??1Gen_dtor_0041b990@@UAE@XZ,0x00419A10,747,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated

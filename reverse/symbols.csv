@@ -82520,8 +82520,7 @@ name,address,notes
 ?getPath_UserData@Rva006C9270GlobalData@@QBE?AVAsciiString@@XZ,0x000106EA,LadderList::loadLocalLadders uses the BFME GlobalData ILT at the retail path accessor call site
 ?getPath_UserData@ScreenshotGlobalData@@QBE?AVScreenshotAsciiString@@XZ,0x00036D9A,W3DDisplay screenshot path accessor thunk
 ?getPayload@Rva00677530CmdMsg@@QBEIXZ,0x00674250,ICF-folded trivial getter; address-derived name for the DisconnectFrameMessage twin
-?getPerUnitSound@Drawable@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z,0x00416FE0,DozerActionDoActionState update obtains receiver from Object vslot+28 returning Drawable; lookup walks Drawable draw modules at +158 before ThingTemplate fallback; calls encode its retail ILT
-?getPerUnitSound@ThingTemplate@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z,0x0000FD44,TurretAI startRotOrPitchSound retail call target
+?getPerUnitSound@Drawable@@QBEPBVAudioEventRTS@@ABVAsciiString@@@Z,0x00416FE0,Object vtable 0x0109EE58 slot +0x28 reaches matched getDrawable at 0x001BE440; AIChargeTargetState TurretAI and Rva00174A20State pass its result to ILT 0x0000FD44 routing here; provider pointer read at Drawable+0x158
 ?getPercentComplete@NetCommandWrapperListNode@@QAEHXZ,0x0003D497
 ?getPercentage@NetProgressCommandMsg@@QAEEXZ,0x000157A3
 ?getPingsRecieved@Network@@UAEHXZ,0x00681AF0,vtable 0x0111A968 slot 34 (+0x88) via ILT 0x00022165; same shape as slot 33 reading dm+0x264 (Gen_0066b140) = ZH m_pingsRecieved; caller 0x004E6D4B
