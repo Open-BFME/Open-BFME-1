@@ -1,123 +1,184 @@
-"""Targeted renderer experiments: vector expansion and per-call helper context.
-Source-only mutations. No accepted-source, compiler binary, or gate modifications.
+"""Targeted final-nine renderer search.
+Only source-shape experiments on the isolated research branch.
 """
 from pathlib import Path
-import hashlib,urllib.request
+import hashlib, urllib.request, itertools, re, json, time
 u='https://raw.githubusercontent.com/Open-BFME/Open-BFME-1/010683a09c21c158a15f250bc1cc86fc1a9667cb/.github/research/sib_probe.py'
 b=urllib.request.urlopen(u,timeout=30).read()
 assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()=='d021c7de108224c53583b8920ab7ba29e7d090ed'
 exec(compile(b.decode().split('seed_masks=',1)[0],'pinned_research_harness','exec'))
 deadline=time.monotonic()+520
-seed9=source_for([19,41]);seed16=source_for([19,29,35,40,41,53,58])
-for tag,text,n in [('baseline9',seed9,9),('baseline16',seed16,16)]:
-    r=evaluate((tag,text,None));accept(r,text);assert r.get('cost')==n and not r.get('relocation_drifts'),r
-    print('BASELINE',tag,n,flush=True)
+seed=source_for([19,41])
+base=evaluate(('baseline9',seed,None)); accept(base,seed)
+assert base.get('cost')==9 and not base.get('relocation_drifts'),base
+print('BASELINE9',json.dumps({k:base.get(k) for k in ('cost','offsets','code_sha256')}),flush=True)
 
-def add_helper(text,helper):return text.replace('void SegLineRendererClass::Render',helper+'\nvoid SegLineRendererClass::Render',1)
-def helper_span(text,name):
-    m=re.search(r'static\s+(?:WWINLINE|__forceinline)\s+[^\n]+?\b'+name+r'\([^\n]*\)\s*\{',text)
-    assert m,name
-    j=m.end();level=1
-    while level:level+=(text[j]=='{')-(text[j]=='}');j+=1
-    return m.start(),j
+def add_helper(text,helper):
+    return text.replace('void SegLineRendererClass::Render',helper+'\nvoid SegLineRendererClass::Render',1)
 
 jobs=[]
-# Return-value/copy lifetimes for the one remaining block in the 16-byte candidate.
-forms=[
-('return_by_value','static __forceinline Vector3 ExpandedTop(Vector3 a,const Vector3& d) {a+=d;return a;}','top = ExpandedTop(top,delta);'),
-('return_by_value_swapped','static __forceinline Vector3 ExpandedTop(const Vector3& d,Vector3 a) {a+=d;return a;}','top = ExpandedTop(delta,top);'),
-('copy_delta','static __forceinline Vector3 ExpandedTop(const Vector3& a,Vector3 d) {d+=a;return d;}','top = ExpandedTop(top,delta);'),
-('copy_both','static __forceinline Vector3 ExpandedTop(Vector3 a,Vector3 d) {a+=d;return a;}','top = ExpandedTop(top,delta);'),
-('local_copy','static __forceinline Vector3 ExpandedTop(const Vector3& a,const Vector3& d) {Vector3 result=a;result+=d;return result;}','top = ExpandedTop(top,delta);'),
-('local_reverse','static __forceinline Vector3 ExpandedTop(const Vector3& a,const Vector3& d) {Vector3 result=d;result+=a;return result;}','top = ExpandedTop(top,delta);'),
-('binary_reverse','','top = delta + top;'),
-('reuse_delta','','{ Vector3 savedDelta=delta; delta+=top; top=delta; delta=savedDelta; }'),
-('copy_then_add','','{ Vector3 originalTop=top; top=delta; top+=originalTop; }'),
-('output_copy','static __forceinline void ExpandedTop(Vector3* result,Vector3 a,const Vector3& d) {a+=d;*result=a;}','ExpandedTop(&top,top,delta);'),
-('output_const','static __forceinline void ExpandedTop(Vector3* result,const Vector3& a,const Vector3& d) {*result=a+d;}','ExpandedTop(&top,top,delta);')
-]
-for label,helper,call in forms:
-    text=add_helper(seed16,helper).replace('top += delta;',call)
-    jobs.append(('top_lifetime_'+label,text,None))
-# Identical scalar additions with natural value/reference inputs, confined to expansion.
-for lt,rt in itertools.product(['float','const float&','const float*'],repeat=2):
-    for reverse in (False,True):
-        for axes in [('X',),('X','Y','Z')]:
-            le='*a' if '*' in lt else 'a';re_='*b' if '*' in rt else 'b'
-            helper='static __forceinline float ExpansionAdd('+lt+' a,'+rt+' b) {return '+(re_+'+'+le if reverse else le+'+'+re_)+';}\n'
-            body=''
-            for axis in 'XYZ':
-                if axis in axes:
-                    aa=('&' if '*' in lt else '')+'top.'+axis
-                    bb=('&' if '*' in rt else '')+'delta.'+axis
-                    body+='top.'+axis+'=ExpansionAdd('+aa+','+bb+');'
-                else:body+='top.'+axis+'+=delta.'+axis+';'
-            for outer in (False,True):
-                h=helper
-                if outer:
-                    h+='static __forceinline void ExpandTop(Vector3& top,const Vector3& delta) {'+body+'}\n';bodycall='ExpandTop(top,delta);'
-                else:bodycall=body
-                name='add_'+str(len(jobs))
-                jobs.append((name,add_helper(seed16,h).replace('top += delta;',bodycall),None))
-# Preserve the delta needed by bottom, but build native vector temporaries differently.
-for declaration in [
-'Vector3 delta(top.X-bottom.X,top.Y-bottom.Y,top.Z-bottom.Z);',
-'Vector3 delta; delta.X=top.X-bottom.X;delta.Y=top.Y-bottom.Y;delta.Z=top.Z-bottom.Z;',
-'Vector3 delta(top); delta-=bottom;',
-'const Vector3 initialDelta=top-bottom; Vector3 delta(initialDelta);',
-'Vector3 delta = top; delta -= bottom;'
+# 1) The two-byte merge-classification X-product residue.
+needle='vdp = Vector3::Dot_Product(prev_seg->EdgePlane[edge], next_seg->EdgePlane[edge]);'
+for order in [
+    '(a.Z*b.Z+a.Y*b.Y)+a.X*b.X',
+    '(a.Z*b.Z+a.Y*b.Y)+b.X*a.X',
+    '(a.Y*b.Y+a.Z*b.Z)+a.X*b.X',
+    'a.Z*b.Z+(a.Y*b.Y+a.X*b.X)',
 ]:
-    jobs.append(('delta_'+str(len(jobs)),seed16.replace('Vector3 delta = top - bottom;',declaration),None))
-for parameter in ['float factor','const float& factor']:
-    for body in ['value*=factor;return value;','value.X*=factor;value.Y*=factor;value.Z*=factor;return value;','value = value*factor;return value;']:
-        helper='static __forceinline Vector3& ScaleSegLineExpansion(Vector3& value,'+parameter+') {'+body+'}'
-        a,z=helper_span(seed16,'ScaleSegLineExpansion')
-        jobs.append(('scale_'+str(len(jobs)),seed16[:a]+helper+seed16[z:],None))
+  for vol in ['none','ax','bx','bothx','ay','by']:
+    expr=order
+    repl={'ax':'*(const volatile float*)&a.X','bx':'*(const volatile float*)&b.X',
+          'ay':'*(const volatile float*)&a.Y','by':'*(const volatile float*)&b.Y'}
+    if vol in ('ax','bothx'): expr=expr.replace('a.X',repl['ax'])
+    if vol in ('bx','bothx'): expr=expr.replace('b.X',repl['bx'])
+    if vol=='ay': expr=expr.replace('a.Y',repl['ay'])
+    if vol=='by': expr=expr.replace('b.Y',repl['by'])
+    helper='static __forceinline float FinalMergeDot(const Vector3& a,const Vector3& b) { return '+expr+'; }'
+    t=add_helper(seed,helper).replace(needle,'vdp = FinalMergeDot(prev_seg->EdgePlane[edge], next_seg->EdgePlane[edge]);')
+    jobs.append(('merge_dot_'+str(len(jobs)),t,None))
+
+# 2) The final top-only dot: alter only X operand materialization while retaining Y-Z-X grouping.
+old="""top = top_dir * ((*(const volatile float *)&points[pidx].Y * top_dir.Y
+    + points[pidx].Z * top_dir.Z) + points[pidx].X * top_dir.X);"""
+for xexpr in [
+    'points[pidx].X * top_dir.X',
+    'top_dir.X * points[pidx].X',
+    '*(const volatile float *)&points[pidx].X * top_dir.X',
+    'points[pidx].X * *(const volatile float *)&top_dir.X',
+    '*(const volatile float *)&top_dir.X * points[pidx].X',
+    'top_dir.X * *(const volatile float *)&points[pidx].X',
+]:
+  for helper in (False,True):
+    expr='((*(const volatile float *)&points[pidx].Y * top_dir.Y + points[pidx].Z * top_dir.Z) + '+xexpr+')'
+    if helper:
+      h='static __forceinline float FinalTopDotX(const Vector3& p,const Vector3& d) { return ((*(const volatile float *)&p.Y*d.Y+p.Z*d.Z)+'+xexpr.replace('points[pidx]','p').replace('top_dir','d')+'); }'
+      t=add_helper(seed,h).replace(old,'top = top_dir * FinalTopDotX(points[pidx], top_dir);')
+    else:
+      t=seed.replace(old,'top = top_dir * '+expr+';')
+    jobs.append(('final_top_'+str(len(jobs)),t,None))
+
+# 3) Address-encoding residues in output writes. Change one block at a time.
+blocks=[
+"""vArray[vidx].x = top.X;
+vArray[vidx].y = top.Y;
+vArray[vidx].z = top.Z;
+vArray[vidx].diffuse = DX8Wrapper::Convert_Color(intersection[top_int_idx][TOP_EDGE].RGBA);
+vArray[vidx].u1 = u_values[0] + uv_offset.X;
+vArray[vidx].v1 = intersection[top_int_idx][TOP_EDGE].TexV + uv_offset.Y;""",
+"""vArray[vidx].x = bottom.X;
+vArray[vidx].y = bottom.Y;
+vArray[vidx].z = bottom.Z;
+vArray[vidx].diffuse = DX8Wrapper::Convert_Color(intersection[bottom_int_idx][BOTTOM_EDGE].RGBA);
+vArray[vidx].u1 = u_values[1] + uv_offset.X;
+vArray[vidx].v1 = intersection[bottom_int_idx][BOTTOM_EDGE].TexV + uv_offset.Y;""",
+]
+# same text occurs in multiple control-flow sites; mutate each occurrence separately.
+occurrences=[]
+for bi,blk in enumerate(blocks):
+    start=0
+    while True:
+        pos=seed.find(blk,start)
+        if pos<0: break
+        occurrences.append((bi,pos,blk))
+        start=pos+1
+
+def replace_nth(text, old, new, nth):
+    start=0
+    for i in range(nth+1):
+        pos=text.find(old,start)
+        if pos<0:return text
+        if i==nth:return text[:pos]+new+text[pos+len(old):]
+        start=pos+1
+    return text
+
+for bi,blk in enumerate(blocks):
+  count=seed.count(blk)
+  for nth in range(count):
+    for mode in range(8):
+      val='top' if bi==0 else 'bottom'
+      idx='0' if bi==0 else '1'
+      if mode==0:
+        head='VertexFormatXYZDUV1 *out = vArray + vidx;'
+      elif mode==1:
+        head='VertexFormatXYZDUV1 *out = &vArray[vidx];'
+      elif mode==2:
+        head='VertexFormatXYZDUV1 &out = vArray[vidx];'
+      elif mode==3:
+        head='VertexFormatXYZDUV1 *out = (VertexFormatXYZDUV1 *)((char*)vArray + vidx * sizeof(VertexFormatXYZDUV1));'
+      elif mode==4:
+        head='VertexFormatXYZDUV1 *out = (VertexFormatXYZDUV1 *)((unsigned)vArray + vidx * sizeof(VertexFormatXYZDUV1));'
+      elif mode==5:
+        head='unsigned outOffset = vidx * sizeof(VertexFormatXYZDUV1); VertexFormatXYZDUV1 *out=(VertexFormatXYZDUV1 *)((unsigned)vArray+outOffset);'
+      elif mode==6:
+        head='unsigned outBase=(unsigned)vArray; VertexFormatXYZDUV1 *out=(VertexFormatXYZDUV1 *)(outBase+vidx*sizeof(VertexFormatXYZDUV1));'
+      else:
+        head='VertexFormatXYZDUV1 *out=vArray; out += vidx;'
+      arrow='.' if mode==2 else '->'
+      repl=head+'\n'+'\n'.join([
+        'out'+arrow+'x = '+val+'.X;',
+        'out'+arrow+'y = '+val+'.Y;',
+        'out'+arrow+'z = '+val+'.Z;',
+        'out'+arrow+'diffuse = DX8Wrapper::Convert_Color(intersection['+('top_int_idx' if bi==0 else 'bottom_int_idx')+']['+('TOP_EDGE' if bi==0 else 'BOTTOM_EDGE')+'].RGBA);',
+        'out'+arrow+'u1 = u_values['+idx+'] + uv_offset.X;',
+        'out'+arrow+'v1 = intersection['+('top_int_idx' if bi==0 else 'bottom_int_idx')+']['+('TOP_EDGE' if bi==0 else 'BOTTOM_EDGE')+'].TexV + uv_offset.Y;'
+      ])
+      t=replace_nth(seed,blk,repl,nth)
+      jobs.append(('out_b'+str(bi)+'_n'+str(nth)+'_m'+str(mode),t,None))
+
+# 4) Narrow pointer/address alternatives only for xyz stores, leaving color/UV shape intact.
+for val in ('top','bottom'):
+  for mode in range(5):
+    old3='vArray[vidx].x = '+val+'.X;\nvArray[vidx].y = '+val+'.Y;\nvArray[vidx].z = '+val+'.Z;'
+    for nth in range(seed.count(old3)):
+      if mode==0:
+        repl='VertexFormatXYZDUV1 *xyz=&vArray[vidx]; xyz->x='+val+'.X; xyz->y='+val+'.Y; xyz->z='+val+'.Z;'
+      elif mode==1:
+        repl='VertexFormatXYZDUV1 *xyz=vArray+vidx; xyz->x='+val+'.X; xyz->y='+val+'.Y; xyz->z='+val+'.Z;'
+      elif mode==2:
+        repl='float *xyz=(float*)&vArray[vidx]; xyz[0]='+val+'.X; xyz[1]='+val+'.Y; xyz[2]='+val+'.Z;'
+      elif mode==3:
+        repl='float *xyz=(float*)((unsigned)vArray+vidx*sizeof(VertexFormatXYZDUV1)); xyz[0]='+val+'.X; xyz[1]='+val+'.Y; xyz[2]='+val+'.Z;'
+      else:
+        repl='unsigned xyzaddr=(unsigned)vArray+vidx*sizeof(VertexFormatXYZDUV1); *(float*)(xyzaddr+0)='+val+'.X; *(float*)(xyzaddr+4)='+val+'.Y; *(float*)(xyzaddr+8)='+val+'.Z;'
+      t=replace_nth(seed,old3,repl,nth)
+      jobs.append(('xyz_'+val+'_'+str(nth)+'_'+str(mode),t,None))
+
 batch(jobs)
-# Distinct inline copies for actual call sites: never add a new volatile read.
-# The helpers are shared by different endpoint/interior contexts in the saved bank.
-jobs=[]
-for lane,seed in [('nine',seed9),('sixteen',seed16)]:
-    for name in ['SegLineStartSignXZ','DotSegLineTopPlaneYXZ','DotSegLineLastTopSequential','SegLineTopSignSequential']:
-        a,z=helper_span(seed,name);definition=seed[a:z]
-        uses=[m for m in re.finditer(r'\b'+name+r'\(',seed) if m.start()>z]
-        vpos=list(re.finditer(r'\bvolatile\s+',definition))
-        for use_index,use in enumerate(uses):
-            for removal in range(1<<len(vpos)):
-                clone=definition
-                for i in reversed(range(len(vpos))):
-                    if removal&(1<<i):clone=clone[:vpos[i].start()]+clone[vpos[i].end():]
-                newname=name+'AtSite'+str(use_index)
-                clone=clone.replace(name,newname,1)
-                for inline_kind in ('keep','force'):
-                    d=clone.replace('WWINLINE','__forceinline') if inline_kind=='force' else clone
-                    t=seed[:use.start()]+newname+seed[use.start()+len(name):]
-                    t=add_helper(t,d)
-                    jobs.append(('site_'+lane+'_'+name+'_'+str(use_index)+'_'+str(removal)+'_'+inline_kind,t,None))
-# Parallel-test dot input lifetimes, leaving the other native dot sites untouched.
-dot='Vector3::Dot_Product(prev_seg->EdgePlane[edge], next_seg->EdgePlane[edge])'
-for left,right in itertools.product(['const Vector3&','const Vector3'],repeat=2):
-    for reverse in (False,True):
-        body=left+' a=prev_seg->EdgePlane[edge];'+right+' b=next_seg->EdgePlane[edge]; vdp=Vector3::Dot_Product('+('b,a' if reverse else 'a,b')+');'
-        jobs.append(('dot_lifetime_'+str(len(jobs)),seed9.replace('vdp = '+dot+';','{'+body+'}'),None))
-batch(jobs)
-# Recheck the best candidate with all relocation operands resolved, plus sibling checks.
+
+# Greedy combine only mutations that improve the nine-byte baseline and keep zero reloc drift.
+improved=sorted((r for r in records if r.get('cost',99)<9 and not r.get('relocation_drifts')),key=lambda r:(r['cost'],r.get('volatile_tokens',999)))
+print('IMPROVED',json.dumps([{k:r.get(k) for k in ('tag','cost','offsets','code_sha256')} for r in improved[:25]]),flush=True)
+if improved:
+    best_r=improved[0]; best_src=sources[best_r['tag']]
+    # Re-run individual families on top of the best source.
+    second=[]
+    for tag,text,_ in jobs:
+        # derive replacement by line-level delta against seed when practical
+        # and skip large multi-region rewrites that cannot be safely composed.
+        if tag.startswith(('merge_dot_','final_top_')):
+            if tag.startswith('merge_dot_'):
+                candidate=text
+                # transplant helper+call by extracting the changed merge statement and helper.
+                hm=re.search(r'static __forceinline float FinalMergeDot.*?\}',candidate,re.S)
+                if hm and 'FinalMergeDot' not in best_src:
+                    x=add_helper(best_src,hm.group(0)).replace(needle,re.search(r'vdp = FinalMergeDot[^;]+;',candidate).group(0))
+                    second.append(('combine_'+tag,x,None))
+            else:
+                hm=re.search(r'static __forceinline float FinalTopDotX.*?\}',text,re.S)
+                if hm:
+                    x=add_helper(best_src,hm.group(0)).replace(old,re.search(r'top = top_dir \* FinalTopDotX[^;]+;',text).group(0))
+                else:
+                    newstmt=re.search(r'top = top_dir \* \(\(.*?\);',text,re.S)
+                    x=best_src.replace(old,newstmt.group(0)) if newstmt else best_src
+                second.append(('combine_'+tag,x,None))
+    batch(second)
+
 selected=best_text
-r=evaluate(('final_recheck',selected,None));accept(r,selected)
+r=evaluate(('final_recheck',selected,None)); accept(r,selected)
 row={'name':SYM,'target_rva':hex(RVA),'target_size':str(SIZE),'source':(OUT/'final_recheck.cpp').relative_to(ROOT).as_posix(),'status':'matched','notes':''}
 p=build.compile_function(row,symbols,OUT/'final_recheck.obj',retain_compiled=True)
 r.update(resolved_diffs=sum(a!=b for a,b in zip(retail,p['bytes'])),unresolved=p['unresolved'],masked=p['masked'],resolved_sha256=sha(p['bytes']),boundary_issue=build.claimed_boundary_issue(p['compiled'],SIZE,p['relocs']))
 r['verified_exact']=p['bytes']==retail and r['size']==SIZE and not r['unresolved'] and not r['masked'] and not r['boundary_issue']
 (OUT/'final_recheck.json').write_text(json.dumps(r,indent=2),encoding='utf-8')
-checks=[]
-for old in json.loads((ROOT/'reverse/attempt_support/0x00960a30-verification.json').read_text())['canonical_sibling_checks']:
-    sr=dict(row,name=old['symbol'],target_rva=old['rva'],target_size=str(old['size']))
-    try:
-        q=build.compile_function(sr,symbols,OUT/'final_recheck.obj',retain_compiled=True)
-        checks.append(dict(old,exact=q['bytes']==build.read_target_bytes(int(old['rva'],16),old['size']) and not q['masked'] and not q['unresolved']))
-    except (Exception,SystemExit) as exc:checks.append(dict(old,exact=False,error=str(exc)))
-(OUT/'renderer_siblings.json').write_text(json.dumps(checks,indent=2),encoding='utf-8')
 print('FINAL',json.dumps({k:v for k,v in r.items() if k not in ('raw_hex','retail_hex','relocation_tuples')}),flush=True)
-print('SIBLINGS',json.dumps(checks),flush=True)
-print('CLOSEST',json.dumps([{k:x.get(k) for k in ('tag','cost','volatile_tokens','offsets','code_sha256')} for x in sorted((x for x in records if 'cost' in x and not x.get('relocation_drifts')),key=lambda x:x['cost'])[:30]]),flush=True)
 print('SUMMARY',json.dumps({'trials':len(records),'best_cost':best['cost'],'exact':r['verified_exact']}),flush=True)
