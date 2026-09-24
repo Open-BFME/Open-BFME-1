@@ -1,20 +1,6 @@
-// ?d_006b1b40@@YAXXZ
-// partial score=0.88 date=2026-09-21
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// Retail 0x006B1B40: BFME Miles sample filter setup reached by the
-// PlayingAudio sample-start helper at 0x006B3E30.  The address-qualified
-// method name preserves the BFME fork's one-reference argument shape.
-// Size now matches retail exactly (332B): the delay-block "value = 0.0"
-// reset and the reverb-off "wet" argument must be literal 0.0f, not a
-// load of the Rva006B1B40Zero global -- retail bakes both as an immediate
-// (mov [esp+N],0 / push 0) since MSVC treats a true float literal as a
-// compile-time bit pattern instead of a memory dereference.
-// Remaining 41 non-reloc bytes are pure MSVC 7.1 register-allocation
-// residue (ecx/edx/eax permutations and one fld operand-order swap in the
-// fade divide and the delay/reverb argument setup); confirmed resistant to
-// declaration-order, named-temp, and comparison-operand-order rewrites --
-// each left the compiled shape hash unchanged, so treat as compiler-
-// internal scheduling, not a semantic or layout error.
+// Retail 0x006B1B40: BFME twin of ZH MilesAudioManager::initFilters, reached from 0x006B3E30.
+// Owners stay address-derived; the argument is one PlayingAudio reference, not ZH's sample/event pair.
 
 typedef float Real;
 typedef unsigned char Bool;
@@ -33,16 +19,13 @@ extern "C" __declspec(dllimport) void __stdcall _AIL_set_filter_sample_preferenc
 	HSAMPLE sample, const char *name, Real *value);
 extern "C" __declspec(dllimport) void __stdcall _AIL_set_sample_reverb_levels(
 	HSAMPLE sample, Real dry, Real wet);
-extern void j_00027124();
 
-#define Rva006B1B40One (*(const Real *)0x01075334)
-#define Rva006B1B40Zero (*(const Real *)0x01075350)
-
+// Miles takes (dry, wet); retail passes +0x80 as dry and +0x7c as wet.
 struct Rva006B1B40AudioInfo
 {
 	char m_pad00[0x7c];
-	Real m_reverbDry;
 	Real m_reverbWet;
+	Real m_reverbDry;
 };
 
 class Rva006B1B40AudioEvent
@@ -54,6 +37,13 @@ public:
 	Real m_pitchScale;
 	char m_pad50[4];
 	Real m_delay;
+};
+
+// Pitch getter at 0x000B21C0 reads the event's +0x4c.
+class Rva000B21C0Owner
+{
+public:
+	Real body(void) const;
 };
 
 class Rva006B1B40RefCountClass
@@ -117,54 +107,46 @@ private:
 	HPROVIDER m_delayFilter;
 };
 
+// ?rva006B1B40InitFilters@Rva006B1B40MilesAudioManager@@QAEXPAVRva006B1B40PlayingAudioRef@@@Z
 void Rva006B1B40MilesAudioManager::rva006B1B40InitFilters(
 	Rva006B1B40PlayingAudioRef *playingRef)
 {
 	Rva006B1B40PlayingAudio *playing = playingRef->m_ptr;
+	Rva006B1B40AudioEvent *event = playing->m_event;
 	HSAMPLE sample = playing->m_sample;
 
-	Real volume = compute(
-		(Rva006AE150Argument *)playing->m_event, 1);
+	Real volume = compute((Rva006AE150Argument *)event, 1);
 	Real fade = 1.0f - ((Real)playingRef->m_ptr->m_fadeFrame /
 		(Real)m_audioSettings->m_fadeAudioFrames);
-	if (fade < Rva006B1B40Zero)
-		fade = Rva006B1B40Zero;
-	else if (fade > Rva006B1B40One)
-		fade = Rva006B1B40One;
+	if (fade < 0.0f)
+		fade = 0.0f;
+	else if (fade > 1.0f)
+		fade = 1.0f;
 
 	_AIL_set_sample_volume_pan(sample, volume * fade, 0.5f);
 
-	typedef Real (Rva006B1B40AudioEvent::*GetPitchScale)(void) const;
-	union
-	{
-		void (*freeGetPitchScale)();
-		GetPitchScale memberGetPitchScale;
-	} getPitchScale;
-	getPitchScale.freeGetPitchScale = ::j_00027124;
-	volatile Real pitchScale =
-		(playing->m_event->*getPitchScale.memberGetPitchScale)();
-	if (pitchScale == Rva006B1B40Zero)
+	Real pitchScale =
+		((const Rva000B21C0Owner *)playing->m_event)->body();
+	if (pitchScale == 0.0f)
 	{
 	}
 	else
 	{
-		int rate = _AIL_sample_playback_rate(sample);
-		rate = (int)(rate * pitchScale);
-		_AIL_set_sample_playback_rate(sample, rate);
+		_AIL_set_sample_playback_rate(sample, (int)(_AIL_sample_playback_rate(sample) * pitchScale));
 	}
 
-	if (playing->m_event->m_delay > Rva006B1B40Zero)
+	if (playing->m_event->m_delay > 0.0f)
 	{
-		HPROVIDER delayFilter = this->m_delayFilter;
-		Real value = playing->m_event->m_delay;
-		_AIL_set_sample_processor(sample, 1, delayFilter);
+		Real value;
+		value = playing->m_event->m_delay;
+		_AIL_set_sample_processor(sample, 1, m_delayFilter);
 		_AIL_set_filter_sample_preference(sample, "Mono Delay Time", &value);
 		value = 0.0f;
 		_AIL_set_filter_sample_preference(sample, "Mono Delay", &value);
 		_AIL_set_filter_sample_preference(sample, "Mono Delay Mix", &value);
 	}
 
-	if (this->m_reverbEnabled)
+	if (m_reverbEnabled)
 		_AIL_set_sample_reverb_levels(sample, playing->m_event->m_info->m_reverbDry,
 			playing->m_event->m_info->m_reverbWet);
 	else
