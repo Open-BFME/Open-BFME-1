@@ -1,5 +1,5 @@
 // ?Rva001A7A90AddShrub@@YGXPBVThingTemplate@@PBUCoord3D@@MM@Z
-// partial score=0.56 date=2026-09-24
+// partial score=0.99 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x001A7A90 (311 bytes), __stdcall with four arguments.  It looks for
 // a tree draw module among a template's draw modules and hands the shrub to
@@ -10,6 +10,11 @@
 // stays.  Retail tests draw module 0 on every pass of the loop.
 
 #include "ascii_string.h"
+
+extern "C" void _ReadWriteBarrier(void);
+extern "C" void _WriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+#pragma intrinsic(_WriteBarrier)
 
 typedef bool Bool;
 typedef int Int;
@@ -187,17 +192,23 @@ void __stdcall Rva001A7A90AddShrub(const ThingTemplate *tmpl, const Coord3D *pos
 		if (treeData)
 		{
 			DrawableID id = TheGameClient->allocDrawableID();
+			Int shadowType = tmpl->m_shadowType;
 			TheTerrainVisual->addTree(id, *pos, scale, angle, 0, treeData,
-				tmpl->m_shadowType, &tmpl->m_shadowTextureName, &tmpl->m_string20);
+				shadowType, &tmpl->m_shadowTextureName, &tmpl->m_string20);
+			_ReadWriteBarrier();
 			return;
 		}
 	}
 
-	if (_bfme_debugReportingEnabled())
+	if (!_bfme_debugReportingEnabled())
 	{
-		_bfme_debugRecordCallsite(1);
-		TheBfmeAwakenDebug->v60();
-		TheBfmeAwakenDebug->v6c(0, 0)->v38("Shrub ")->v38(tmpl->getString20())
-			->v38(" requires a W3DTreeDrawModule.\n")->v4c(2);
+		_ReadWriteBarrier();
+		return;
 	}
+
+	_bfme_debugRecordCallsite(1);
+	TheBfmeAwakenDebug->v60();
+	TheBfmeAwakenDebug->v6c(0, 0)->v38("Shrub ")->v38(tmpl->getString20())
+		->v38(" requires a W3DTreeDrawModule.\n")->v4c(2);
+	_WriteBarrier();
 }
