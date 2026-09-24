@@ -1,5 +1,5 @@
 // ?pickDrawable@W3DView@@UAEPAVDrawable@@PBUICoord2D@@_NW4PickType@@@Z
-// partial score=0.78 date=2026-09-09
+// partial score=0.8 date=2026-09-23
 // cl: /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 // BFME reconstruction scratch for retail 0x00745370, full boundary 793 bytes.
@@ -119,6 +119,7 @@ static __forceinline Drawable *bfmeSpecialPick(PickType pickType)
 Drawable *W3DView::pickDrawable(const ICoord2D *screen,
 	Bool forceAttack, PickType pickType)
 {
+	W3DView * volatile view = this;
 	const ICoord2D *screenPos = screen;
 	RenderObjClass *renderObj = 0;
 	Drawable *draw = 0;
@@ -137,7 +138,7 @@ Drawable *W3DView::pickDrawable(const ICoord2D *screen,
 	}
 
 	Vector3 rayStart, rayEnd;
-	getPickRay(screenPos, &rayStart, &rayEnd);
+	view->getPickRay(screenPos, &rayStart, &rayEnd);
 	LineSegClass lineseg;
 	lineseg.Set(rayStart, rayEnd);
 	CastResultStruct result;
