@@ -88969,3 +88969,6 @@ _peerGetLocalIP,0x00857460,GameSpy Peer; ICF-folded 8-byte accessor called by do
 ?rva0089EDF0@@YAXPAVBfmeStrVKI@@PBDZZ,0x0089EDF0,address-derived cdecl variadic string format helper called by bfmeApplyEVF 0x008C4FA0+199; full 256B decode: string object +4 format +8 va_list from +C passed to 0x009F6EC0; single plain ret +FF
 ?bfmeMeshHitTest1290@BfmePicker1284@@QAE_NPAUBfmeMesh1290@@PBUBfmeTransform2_1290@@HH@Z,0x008BAD90,address-derived thiscall mesh hit test; the 0x008BAEA0 call at +0xDA loads ECX with its receiver and pushes four dwords and the 0x008BAD90 body never reads ECX and returns AL through ret 0x10
 ?body@Rva0021D180@@QAEXXZ,0x0021D180,address-derived helper identity; ECX receiver proven by exact caller
+?Rva00892FD0@Gen_uw_00893e70@@QAE_NHH@Z,0x00892FD0,The body at 0x00896710 calls through the object at 0x013377F0 with two integer arguments. Retail reads a count at +0 and eight-byte entries at +8.
+?Rva008965B0@Rva00893030Manager@@QAEXXZ,0x008965B0,The body at 0x00896710 calls with the object at 0x013377D4 in ECX. The matched body at 0x00892F00 confirms the manager's list head at +0.
+?Rva00895F30@Rva00896710Vector@@QAEXPAX@Z,0x00895F30,The body at 0x00896710 calls with its tracker vector at +4 and passes one local pointer. Retail swaps the 20-byte vector fields and returns with ret 4.
