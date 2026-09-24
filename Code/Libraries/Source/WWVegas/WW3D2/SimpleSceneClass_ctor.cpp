@@ -1,5 +1,5 @@
 // ??0SimpleSceneClass@@QAE@XZ
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Include
 #include "../WWLib/bittype.h"
 #define WWDEBUG_H
 #define MEMPOOL_H
@@ -7,29 +7,17 @@ template <class T, int N> class AutoPoolClass {};
 #define WWDEBUG_SAY(x)
 #define WWDEBUG_WARNING(x)
 #include "../WWLib/multilist.h"
-
-class RenderObjClass { public: void Release_Ref(); };
+#include "../WWLib/refcount.h"
+#include "../WWMath/vector3.h"
+#include "rendobj.h"
 typedef RefMultiListClass<RenderObjClass> RefRenderObjListClass;
 typedef MultiListClass<RenderObjClass> NonRefRenderObjListClass;
-
-class RefCountClass
-{
-public:
-    RefCountClass() : NumRefs(1) {}
-    virtual ~RefCountClass();
-    int NumRefs;
-};
 
 class RenderInfoClass;
 class SceneIterator;
 class CameraClass;
 class ChunkSaveClass;
 class ChunkLoadClass;
-struct Vector3
-{
-    Vector3(float a, float b, float c) : x(a), y(b), z(c) {}
-    float x, y, z;
-};
 
 class SceneClass : public RefCountClass
 {
