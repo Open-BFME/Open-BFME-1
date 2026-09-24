@@ -1,21 +1,15 @@
 // ?rva006164e0@BfmeLivingWorldManager@@QAEXXZ
-// partial score=0.45 date=2026-09-22
+// partial score=0.46 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/shims/stringinline /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // Retail RVA 0x006164E0, 1010 bytes.  Manager fields and both spawned object layouts are address-derived.
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
+#include "Lib/BaseType.h"
 #include "StringInline.h"
 
 extern "C" __declspec(dllimport) int __cdecl sprintf(char *, const char *, ...);
-
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
 
 class WWMath
 {
@@ -107,7 +101,7 @@ public:
 	virtual void slot10();
 	virtual void slot14();
 	virtual void slot18();
-	virtual void slot1c(const Coord3D *position);
+	virtual void slot1c(Coord3D position);
 	Rva0060BBD0(AsciiStringBG_Rva0060BBD0 name);
 
 	char m_pad04[4];
@@ -205,23 +199,23 @@ static float retailFloat(unsigned int address)
 void BfmeLivingWorldManager::rva006164e0()
 {
 	int batchSize = 1;
+	int remaining;
 	if (m_fieldE4 > 0)
 	{
-		int remaining = m_fieldE4;
+		remaining = m_fieldE4;
 		do
 		{
 			int index = 0;
 			while (index < batchSize)
 			{
-				char buffer[64];
+				char buffer[60];
 				sprintf(buffer, "doomRays%02d", index);
 				Rva0060BEB0Object *object = new Rva0060BEB0Object(AsciiString(buffer));
 				if (object->createRenderObject(m_nameC0) != 0)
 				{
 					Rva00739B30(object->m_renderObject, false);
-					bfmeReportGN(object->m_renderObject, 0, 0, 0);
-					object->m_field28 = 1;
-					object->m_renderObject->renderSlot100(true);
+					bfmeReportGN(object->m_renderObject, (object->m_field28 = 1, 0), 0, 0);
+						object->m_renderObject->renderSlot100(true);
 					object->m_field94 = m_coordD4;
 					object->m_field8c = m_fieldE0;
 					g_bfmeStateDF->slot28(object->m_renderObject);
@@ -234,23 +228,21 @@ void BfmeLivingWorldManager::rva006164e0()
 		while (--remaining != 0);
 	}
 
-	int index = 0;
-	while (index < m_field104)
+	remaining = 0;
+	while (remaining < m_field104)
 	{
 		char buffer[64];
-		sprintf(buffer, "doomCloud%02d", index);
+		sprintf(buffer, "doomCloud%02d", remaining);
 		Rva0060BBD0 *object = new Rva0060BBD0(AsciiStringBG_Rva0060BBD0(buffer));
 		if (object->createRenderObject(m_nameFC) != 0)
 		{
 			Rva00739B30(object->m_renderObject, false);
-			float x = WWMath::Random_Float() * (m_field10c - m_field108) + m_field108;
-			float y = WWMath::Random_Float() * (m_field118 - m_field114) + m_field114;
+			Coord3D position;
+			position.x = WWMath::Random_Float() * (m_field10c - m_field108) + m_field108;
+			position.y = WWMath::Random_Float() * (m_field118 - m_field114) + m_field114;
+			position.z = m_field28;
 			int offset = (int)(WWMath::Random_Float() * (float)m_field120 * retailFloat(0x01095f98));
-			float position[3];
-			position[0] = x;
-			position[1] = y;
-			position[2] = m_field28;
-			object->slot1c(reinterpret_cast<const Coord3D *>(position));
+			object->slot1c(position);
 			object->m_field7c = 1;
 			object->m_renderObject->renderSlot100(false);
 			int left = offset + (int)((WWMath::Random_Float() * retailFloat(0x01116b88) + retailFloat(0x01080bbc)) * batchSize);
@@ -262,6 +254,6 @@ void BfmeLivingWorldManager::rva006164e0()
 			m_primary.push_back(object);
 			rva00616240(reinterpret_cast<BfmeItemAM *>(object), 3, 0);
 		}
-		++index;
+		++remaining;
 	}
 }

@@ -1,5 +1,5 @@
 // ?d_002ec0a0@@YAXXZ
-// partial score=0.192057761732852 date=2026-09-23
+// partial score=0.212274368231 date=2026-09-24
 // cl: /O2 /EHsc /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/GameEngine/Source/Common/System /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x002EC0A0. Owner layout and helper contracts are read from retail.
 // stlport
@@ -114,8 +114,7 @@ static inline StringHeaderView *stringHeader(const AsciiString &value)
 
 static inline const char *stringData(const AsciiString &value)
 {
-	StringHeaderView *header = stringHeader(value);
-	return header ? header->m_text : Rva006A16B0Empty;
+	return value.str();
 }
 
 static inline int stringLength(const char *value)
@@ -134,22 +133,12 @@ static inline int stringLength(const char *value)
 
 static inline bool stringPresent(const AsciiString &value)
 {
-	StringHeaderView *header = stringHeader(value);
-	return header != 0 && header->m_length != 0;
+	return value.isNotEmpty();
 }
 
 static inline bool sameString(const AsciiString &left, const AsciiString &right)
 {
-	StringHeaderView *leftHeader = stringHeader(left);
-	StringHeaderView *rightHeader = stringHeader(right);
-	int leftLength = leftHeader ? leftHeader->m_length : 0;
-	int rightLength = rightHeader ? rightHeader->m_length : 0;
-	const char *leftText = leftHeader ? leftHeader->m_text : Rva006A16B0Empty;
-	const char *rightText = rightHeader ? rightHeader->m_text : Rva006A16B0Empty;
-	int commonLength = leftLength < rightLength ? leftLength : rightLength;
-	if (memcmp(leftText, rightText, commonLength) != 0)
-		return false;
-	return leftLength == rightLength;
+	return left.compare(right) == 0;
 }
 
 static inline void setString(AsciiString &destination, const char *value)
