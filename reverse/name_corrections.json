@@ -2218,5 +2218,15 @@
   "after_sha256": "823472a6a69f0f5299988c7292dc9b1d5e51adfbcc2d58bf8cdbe1785fe53c64",
   "evidence": "reverse/deleted_rows.csv",
   "reason": "review of 0x000EDDE0: no caller (callers_of finds none for the body or its ILT 0x0002DA60), no vtable slot, string or Zero Hour twin proves getMinSpeedRelativeTo; the method keeps its address token"
+ },
+ {
+  "old_path": "reverse/attempts/0x009eeac0.cpp",
+  "new_path": "reverse/attempts/0x009eeac0.cpp",
+  "old_name": "Gen_p12cd",
+  "new_name": "Gen_t_009f14c0_p12cd",
+  "before_sha256": "66876f5fa5e9bd9907807be230966a1137999b1c9d18a3a401c6950cab98d028",
+  "after_sha256": "0fbf6049d848128aac6e8b2a32550ac9da58f8dbb8ad8deb91311582e4d319c5",
+  "evidence": "reverse/symbols.csv",
+  "reason": "Gen_p12cd was a stash-local spelling of the payload of the registry +0x44 hash_map; the ledger already names that payload Gen_t_009f14c0_p12cd in the 0x009EE0F0 begin pin and the matched 0x009F14C0 hash_map constructor the registry ctor 0x009F2140 uses for +0x44, so the bank adopts the established type name"
  }
 ]

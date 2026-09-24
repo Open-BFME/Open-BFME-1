@@ -1,11 +1,33 @@
 // ?bfmeInvoke@Gen_009EBA60Target@@QAEXPAX0@Z
-// partial score=0.95 date=2026-09-12
-// cl: /DNDEBUG /MD /EHsc /O2 /Ob2
-// stlport
+// partial score=0.99 date=2026-09-24
 // ?bfmeInvoke@Gen_009EBA60Target@@QAEXPAX0@Z
+// cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB
+// stlport
+//
+// The member the matched guarded dispatcher bfmeDispatch_009EBA60
+// (S3GuardedDispatchers.cpp) calls on the registry g_theAssetRegistry
+// (0x0134FAAC) points at; reverse/symbols.csv already pins this name at
+// 0x009EEAC0. The layout is the one the landed constructor
+// ??0Gen_dtor_009eb9e0@@QAE@XZ size-checks and Find_Asset.cpp uses: the
+// critical section at +0x2C, the hash_map<int, Gen_t_009f14c0_p12cd> at
+// +0x44 (the constructor's type, whose begin() is pinned at 0x009EE0F0; the
+// out-of-line find retail calls is its 60-byte body at 0x009EE6D0) and the
+// name-key generator at +0x1F0.
+//
+// The second argument is a pointer set: retail tests its node count at +4,
+// walks it from the header's leftmost node with the STLport tree increment
+// and reads each value at node+0x10. Under the registry lock the named
+// entry's record gets, if it has none yet, a null-terminated new[] copy of
+// that set at +0xC.
+//
+// The find result is converted to a const_iterator, which is what keeps the
+// returned temporary and the iterator in separate frame slots the way retail
+// does (the table half of the copy lands at esp+0x1C).
 
 #define _STLP_NO_EXCEPTIONS 1
+#define _STLP_USE_STATIC_LIB 1
 #include <hash_map>
+#include <set>
 
 struct CRITICAL_SECTION
 {
@@ -20,69 +42,50 @@ extern "C" __declspec(dllimport) void __stdcall LeaveCriticalSection(
 class CriticalSectionLock
 {
 public:
-	explicit CriticalSectionLock(int lock) : m_lock(lock)
+	explicit CriticalSectionLock(CRITICAL_SECTION *lock) : m_lock(lock)
 	{
-		EnterCriticalSection((CRITICAL_SECTION *)m_lock);
+		EnterCriticalSection(m_lock);
 	}
 	~CriticalSectionLock()
 	{
-		LeaveCriticalSection((CRITICAL_SECTION *)m_lock);
+		LeaveCriticalSection(m_lock);
 	}
 
-	int m_lock;
+	CRITICAL_SECTION *m_lock;
+};
+
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0,
+	FORCE_NAMEKEYTYPE_LONG = 0x7fffffff
 };
 
 class NameKeyGenerator
 {
 public:
-	int nameToLowercaseKey(const char *name);
+	NameKeyType nameToLowercaseKey(const char *name);
 };
 
-struct Gen_p12cd
+struct Rva001408C0Target;
+typedef Rva001408C0Target *Rva001408C0Key;
+typedef _STL::set<Rva001408C0Key> Rva001408C0Set;
+
+struct Gen_t_009f14c0_p12cd
 {
 	void *m_asset;
-	int m_reserved4;
-	int m_reserved8;
+	int a[2];
+	Gen_t_009f14c0_p12cd();
+	Gen_t_009f14c0_p12cd(const Gen_t_009f14c0_p12cd &);
+	~Gen_t_009f14c0_p12cd();
+	Gen_t_009f14c0_p12cd &operator=(const Gen_t_009f14c0_p12cd &);
 };
 
-typedef _STL::pair<const int, Gen_p12cd> GenAssetPair;
-typedef _STL::hash_map<int, Gen_p12cd> GenAssetHash;
-
-namespace _STL
-{
-
-struct _Rb_tree_node_base;
-
-template <class T>
-struct _Rb_global
-{
-	static _Rb_tree_node_base *_M_increment(_Rb_tree_node_base *node);
-};
-
-}
-
-struct GenAssetTreeNode
-{
-	char m_tree_links[0x10];
-	void *m_value;
-};
-
-struct GenAssetTree
-{
-	char m_tree_header[8];
-	GenAssetTreeNode *m_root;
-};
-
-struct GenAssetSource
-{
-	GenAssetTree *m_tree;
-	int m_count;
-};
+typedef _STL::hash_map<int, Gen_t_009f14c0_p12cd> GenAssetHash;
 
 struct GenAssetRecord
 {
 	char m_prefix[0xc];
-	void **m_items;
+	Rva001408C0Key *m_items;
 };
 
 class Gen_009EBA60Target
@@ -103,33 +106,26 @@ void Gen_009EBA60Target::bfmeInvoke(void *name, void *source)
 	if (name == 0)
 		return;
 
-	GenAssetSource *assetSource = (GenAssetSource *)source;
-	if (assetSource->m_count == 0)
+	const Rva001408C0Set &keys = *(const Rva001408C0Set *)source;
+	if (keys.size() == 0)
 		return;
 
-	CriticalSectionLock lock((int)&m_lock);
-	int keySlot[2];
-	keySlot[0] = m_hash_context->nameToLowercaseKey((const char *)name);
-	if (keySlot[0] == 0)
+	CriticalSectionLock lock(&m_lock);
+	int key = m_hash_context->nameToLowercaseKey((const char *)name);
+	if (key == 0)
 		return;
-	GenAssetHash::iterator *it = &m_assets.find(keySlot[0]);
-	GenAssetHash::iterator found = *it;
-	if (found._M_cur == 0)
+
+	GenAssetHash::const_iterator found = m_assets.find(key);
+	if (found == m_assets.end())
 		return;
-	GenAssetRecord *record =
-		(GenAssetRecord *)found._M_cur->_M_val.second.m_asset;
+
+	GenAssetRecord *record = (GenAssetRecord *)(*found).second.m_asset;
 	if (record->m_items != 0)
 		return;
 
-	GenAssetTreeNode *entry;
-	record->m_items = new void *[assetSource->m_count + 1];
-	entry = assetSource->m_tree->m_root;
+	record->m_items = new Rva001408C0Key[keys.size() + 1];
 	int count = 0;
-	while (entry != (GenAssetTreeNode *)assetSource->m_tree)
-	{
-		record->m_items[count++] = (void *)entry->m_value;
-		entry = (GenAssetTreeNode *)_STL::_Rb_global<bool>::_M_increment(
-			(_STL::_Rb_tree_node_base *)entry);
-	}
+	for (Rva001408C0Set::const_iterator it = keys.begin(); it != keys.end(); ++it)
+		record->m_items[count++] = *it;
 	record->m_items[count] = 0;
 }
