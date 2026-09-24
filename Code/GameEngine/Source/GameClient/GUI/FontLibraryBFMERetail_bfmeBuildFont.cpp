@@ -1,12 +1,14 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/asciistring_downloadmanager /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 
-// FontLibraryBFMERetail::bfmeBuildFont, retail 0x00476C50, 361 bytes.
+// FontLibraryBFMERetail::rva00476C50, retail 0x00476C50, 361 bytes.
 //
 // Identity: the matched FontLibraryBFMERetail::getFont at 0x004772D0
 // (FontLibraryBFMERetail_getFont.cpp) tail-returns this body through ILT
 // 0x0000EBA6, which reverse/symbols.csv pins under this name.  The body
 // installs the GameFont vtable 0x010F7628 and walks the font list at this+8.
+// That proves the owner and signature, not the method name, so the name keeps
+// its address token.
 //
 // The size is snapped to the weight grid (floor(weight * size + k) / weight),
 // the name, size and style go through the substitution table at 0x00476B00,
@@ -38,9 +40,9 @@ public:
 	Real pointSize;
 	unsigned char m_padding10[4];
 	void *fontData;
-	unsigned char style;
+	unsigned char bold;
 	unsigned char m_padding19[3];
-	Int weight;
+	Int m_extra_setting;
 
 protected:
 	virtual ~GameFont();
@@ -82,15 +84,15 @@ private:
 	virtual void releaseFontData(GameFont *font) = 0;
 
 	BfmeFontRecord *bfmeFindRecord(AsciiString *name, Real size);
-	GameFont *bfmeBuildFont(AsciiString *name, Real size, unsigned char style,
+	GameFont *rva00476C50(AsciiString *name, Real size, unsigned char style,
 			Int weight);
 
 	GameFont *m_fontList;
 	Int m_count;
 };
 
-// ?bfmeBuildFont@FontLibraryBFMERetail@@AAEPAVGameFont@@PAVAsciiString@@MEH@Z
-GameFont *FontLibraryBFMERetail::bfmeBuildFont(AsciiString *name, Real size,
+// ?rva00476C50@FontLibraryBFMERetail@@AAEPAVGameFont@@PAVAsciiString@@MEH@Z
+GameFont *FontLibraryBFMERetail::rva00476C50(AsciiString *name, Real size,
 		unsigned char style, Int weight)
 {
 	size = (Real)BfmeFloorER((Real)weight * size + g_bfmeK1253)
@@ -102,8 +104,8 @@ GameFont *FontLibraryBFMERetail::bfmeBuildFont(AsciiString *name, Real size,
 	GameFont *font;
 	for (font = m_fontList; font != NULL; font = font->next)
 	{
-		if (font->pointSize == size && font->style == style &&
-				font->weight == weight && font->nameString.compare(fontName) == 0)
+		if (font->pointSize == size && font->bold == style &&
+				font->m_extra_setting == weight && font->nameString.compare(fontName) == 0)
 			return font;
 	}
 
@@ -115,9 +117,9 @@ GameFont *FontLibraryBFMERetail::bfmeBuildFont(AsciiString *name, Real size,
 
 	font->nameString = fontName;
 	font->pointSize = size;
-	font->style = styleValue;
+	font->bold = styleValue;
 	font->fontData = NULL;
-	font->weight = weight;
+	font->m_extra_setting = weight;
 
 	if (!loadFontData(font))
 	{

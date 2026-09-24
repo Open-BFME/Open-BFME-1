@@ -2538,5 +2538,35 @@
   "after_sha256": "33682d3d0d5623f1ca0f949f63e9c11d7d49b1de064673c38b65e7c9eecc0405",
   "evidence": "docs/naming_evidence.md",
   "reason": "BfmeDecalInfo +0x9c/+0xa0 have no witnessed name: m_defaultScale and m_reserved were guessed from the 20.0f/false initialisers. The landed Code/GameEngine/Source/GameClient/RadiusDecalTemplate_createSelection.cpp models the same struct with the address-derived m_unmodelled9c/m_unmodelleda0 and docs/naming_evidence.md requires an address-derived name where the evidence names nothing."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/GUI/FontLibraryBFMERetail_bfmeBuildFont.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/FontLibraryBFMERetail_bfmeBuildFont.cpp",
+  "old_name": "bfmeBuildFont",
+  "new_name": "rva00476C50",
+  "before_sha256": "ebded27eeec40cc9532e1863a1de391cdb9817a9ca38a7256c3ddd71af3f0537",
+  "after_sha256": "9cad55a1b37e67419542f2747b0048042db544258d18bb987e8e1851b5dac1df",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bfmeBuildFont is an invented bfme-prefixed placeholder with no retail witness: the matched caller FontLibraryBFMERetail::getFont at 0x004772D0 and the ILT 0x0000EBA6 pin prove the owner and signature of 0x00476C50 but not a method name. docs/naming_evidence.md requires the address token for an unproven method so the body and its one caller and pin use rva00476C50."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/GUI/FontLibraryBFMERetail_getFont.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/FontLibraryBFMERetail_getFont.cpp",
+  "old_name": "bfmeBuildFont",
+  "new_name": "rva00476C50",
+  "before_sha256": "a3ee8a2a159c4d23a7f3124c7d62202d712b477eb67006702ecd2b5e51ffa8a6",
+  "after_sha256": "eac65dd37e6f93eda136b9b6dc2112d81cd0b7fc644632ca8922eaa90a2458e0",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bfmeBuildFont is an invented bfme-prefixed placeholder with no retail witness: the matched caller FontLibraryBFMERetail::getFont at 0x004772D0 and the ILT 0x0000EBA6 pin prove the owner and signature of 0x00476C50 but not a method name. docs/naming_evidence.md requires the address token for an unproven method so the body and its one caller and pin use rva00476C50."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "bfmeBuildFont",
+  "new_name": "rva00476C50",
+  "before_sha256": "feecebd4aec0c50b6dac58455231170fc3d4ca6d878d9cd9d48bd7f698c834d3",
+  "after_sha256": "8951c370d2f5abf86b67ae00dce19301cbbadea16d3d2e86e026c923ee016ba0",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bfmeBuildFont is an invented bfme-prefixed placeholder with no retail witness: the matched caller FontLibraryBFMERetail::getFont at 0x004772D0 and the ILT 0x0000EBA6 pin prove the owner and signature of 0x00476C50 but not a method name. docs/naming_evidence.md requires the address token for an unproven method so the body and its one caller and pin use rva00476C50."
  }
 ]

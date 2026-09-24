@@ -75490,7 +75490,7 @@ name,address,notes
 ?bfmeBroadcast1285@BfmeBroadcast1285@@QAEXPAUBfmeNode1285@@H@Z,0x008BAAB0,address-derived broadcast method called by the 0x008BB570 retail body
 ?bfmeBucketNumForKey@@YAIPBXI@Z,0x00012909,Open-BFME5 ILT the hashtable iterator skips at 0x00460DA0 and 0x00461480 ask for the bucket through
 ?bfmeBuildEVB@Rva00893030Manager@@QAE?AUBfmeResultEVB@@PAVBfmeStrVKI@@@Z,0x00895A00,pin manager build for BfmeConv1993
-?bfmeBuildFont@FontLibraryBFMERetail@@AAEPAVGameFont@@PAVAsciiString@@MEH@Z,0x0000EBA6,Open-BFME5 ILT thunk to body 0x00476C50; FontLibraryBFMERetail::getFont at 0x004772D0 tail-returns its result; address-derived name
+?rva00476C50@FontLibraryBFMERetail@@AAEPAVGameFont@@PAVAsciiString@@MEH@Z,0x0000EBA6,Open-BFME5 ILT thunk to body 0x00476C50; FontLibraryBFMERetail::getFont at 0x004772D0 tail-returns its result; address-derived name
 ?bfmeBuildKeyString@LargeGroupAudioKeyMap@@QAE?AVAsciiString@@XZ,0x003D37E0,return-by-value helper scans the global key-record tree and builds selected key names
 ?bfmeBuildString1284@BfmeStringWriter1284@@QAEXPAVBfmeString1284@@H@Z,0x008B8E70,address-derived string builder; receiver and output-string shape decoded from the 0x008B9460 retail call site
 ?bfmeBumpURB@BfmeThingURB@@QAEXXZ,0x009EB940,pin

@@ -46,7 +46,7 @@ public:
 
 private:
 	BfmeFontRecord *bfmeFindRecord(AsciiString *name, Real size);
-	GameFont *bfmeBuildFont(AsciiString *name, Real size, unsigned char style,
+	GameFont *rva00476C50(AsciiString *name, Real size, unsigned char style,
 			Int weight);
 
 	unsigned char m_padding[0x10];
@@ -64,7 +64,7 @@ GameFont *FontLibraryBFMERetail::getFont(AsciiString *name, Real size,
 	if (record)
 		weighted = record->m_bfmeWeighted;
 
-	return bfmeBuildFont(name, size, style, weighted ? 4 : 1);
+	return rva00476C50(name, size, style, weighted ? 4 : 1);
 }
 
 BfmeFontRecord *FontLibraryBFMERetail::bfmeFindRecord(AsciiString *name,
