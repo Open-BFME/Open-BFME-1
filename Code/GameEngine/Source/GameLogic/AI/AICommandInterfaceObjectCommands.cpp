@@ -85,7 +85,7 @@ struct AICommandParms
 	const CommandButton			*m_commandButton;	// +0x94
 	Path										*m_path;		// +0x98
 
-	AICommandParms(AICommandType cmd, CommandSourceType cmdSource);	// ILT 0x00030EA4
+	AICommandParms(AICommandType cmd, CommandSourceType commandSource);	// ILT 0x00030EA4
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
@@ -94,52 +94,52 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;	// slot 0, vtable+0x00
 
-	void aiRepair(Object *object, CommandSourceType cmdSource);
-	void aiResumeConstruction(Object *object, CommandSourceType cmdSource);
-	void aiGetHealed(Object *healDepot, CommandSourceType cmdSource);
-	void aiGetRepaired(Object *repairDepot, CommandSourceType cmdSource);
-	void aiDock(Object *object, CommandSourceType cmdSource);
-	void aiExit(Object *objectToExit, CommandSourceType cmdSource);
+	void aiRepair(Object *object, CommandSourceType commandSource);
+	void aiResumeConstruction(Object *object, CommandSourceType commandSource);
+	void aiGetHealed(Object *healDepot, CommandSourceType commandSource);
+	void aiGetRepaired(Object *repairDepot, CommandSourceType commandSource);
+	void aiDock(Object *object, CommandSourceType commandSource);
+	void aiExit(Object *objectToExit, CommandSourceType commandSource);
 };
 
-void AICommandInterface::aiRepair( Object *object, CommandSourceType cmdSource )
+void AICommandInterface::aiRepair( Object *object, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_REPAIR, cmdSource);
+	AICommandParms parms(AICMD_REPAIR, commandSource);
 	parms.m_obj = object;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiResumeConstruction( Object *object, CommandSourceType cmdSource )
+void AICommandInterface::aiResumeConstruction( Object *object, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_RESUME_CONSTRUCTION, cmdSource);
+	AICommandParms parms(AICMD_RESUME_CONSTRUCTION, commandSource);
 	parms.m_obj = object;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiGetHealed( Object *healDepot, CommandSourceType cmdSource )
+void AICommandInterface::aiGetHealed( Object *healDepot, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_GET_HEALED, cmdSource);
+	AICommandParms parms(AICMD_GET_HEALED, commandSource);
 	parms.m_obj = healDepot;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiGetRepaired( Object *repairDepot, CommandSourceType cmdSource )
+void AICommandInterface::aiGetRepaired( Object *repairDepot, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_GET_REPAIRED, cmdSource);
+	AICommandParms parms(AICMD_GET_REPAIRED, commandSource);
 	parms.m_obj = repairDepot;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiDock( Object *object, CommandSourceType cmdSource )
+void AICommandInterface::aiDock( Object *object, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_DOCK, cmdSource);
+	AICommandParms parms(AICMD_DOCK, commandSource);
 	parms.m_obj = object;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiExit( Object *objectToExit, CommandSourceType cmdSource )
+void AICommandInterface::aiExit( Object *objectToExit, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_EXIT, cmdSource);
+	AICommandParms parms(AICMD_EXIT, commandSource);
 	parms.m_obj = objectToExit;
 	aiDoCommand(&parms);
 }
