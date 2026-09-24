@@ -1312,3 +1312,23 @@ from `AIGuardAttackAggressorState_onEnter_Bfme.cpp`. It also keeps the guard
 MACHINE in a callee-saved register across that call
 (`AITNGuardAttackAggressorState_onEnter.cpp` 0x0018AA70). The inner, outer
 and GiantBird variants (0x0018A470, 0x0018A6C0, 0x002BD6F0) landed with it.
+
+## A float pair written through an out pointer: return it by value
+
+A member function that takes a hidden result address, returns that address in
+EAX and ends in `ret 4` or `ret 8` is returning a small struct by value; MSVC
+7.1 returns every class type from a member function this way, even an 8-byte
+POD. Modelling it as a `Real *out` or `Coord2D *out` parameter compiles to the
+same size but leaves the final stores in the wrong order, because the
+compiler has no named object to copy from. Return a named local instead, and
+give the result type an inline field-wise copy constructor
+(`T(const T &o) : x(o.x), y(o.y) {}`, plus an empty default constructor).
+MSVC then copies member by member into the return slot, moving one field from
+the FPU and the other from the local's frame slot, and keeps the local's
+otherwise unused frame slot too. Without the copy constructor the struct is
+copied as two dwords through an integer register. Build the value in the
+steps retail does: a `unit` pair of cos/sin first, then the scaled result.
+On 2026-09-24 this closed `Rva0015AAC0Owner::computeSize` (0x0015AAC0, 114 B,
+banked at 0.97 behind `#pragma optimize` and an int-typed float copy) and
+`Rva00233F30::rotatedOffset` (0x00233F30, 154 B, banked at 0.95 with a
+volatile). When the result type is unproven, give it an address-derived name.

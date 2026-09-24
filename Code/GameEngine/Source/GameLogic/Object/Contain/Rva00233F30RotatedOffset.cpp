@@ -1,20 +1,30 @@
-// ?method@Rva00233F30@@QAEPAUCoord2D@@PAU2@PBU2@@Z
-// partial score=0.95 date=2026-09-25
-// ?method@Rva00233F30@@QAEPAUCoord2D@@PAU2@PBU2@@Z
-// Best exact-size candidate is 154/154B with 8 x87-order differences at
-// +0x88..+0x90. Three callers verify ECX plus two stack pointers and EAX output;
-// the C++ aggregate-return versus explicit-output return contract remains open.
 // cl: /ICode/GameEngine/Include /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// Retail 0x00233F30 (154 bytes, ret 8).  Three callers (one is 0x002350C0)
+// pass ECX, a hidden result address and a direction, and use the returned
+// EAX.  The body takes the direction's length (scaled by the settings float
+// at +0x2DC when TheTerrainLogic's slot 47 accepts the object's position),
+// rotates by the direction's angle plus the object's angle at +0x44, and
+// returns cos/sin times that length by value.  The result is a named local
+// with an inline field-wise copy constructor: retail keeps x in memory and y
+// on the FPU and copies both into the return slot.  Owner and result type
+// are unproven, so both names keep the address.
 #include "Lib/BaseType.h"
 class TerrainLogic;
 extern TerrainLogic* TheTerrainLogic;
 #include "Lib/trig.h"
 
+struct Rva00233F30Offset
+{
+    Rva00233F30Offset() {}
+    Rva00233F30Offset(const Rva00233F30Offset &that) : x(that.x), y(that.y) {}
+    Real x;
+    Real y;
+};
 struct Rva00233F30 {
     char reserved[4];
     void* settings;
     void* object;
-    Coord2D* method(Coord2D* output, const Coord2D* direction);
+    Rva00233F30Offset rotatedOffset(const Coord2D* direction);
 };
 
 class Rva00233F30TerrainSlots {
@@ -69,7 +79,7 @@ public:
     virtual bool slot47(const Coord3D*) = 0;
 };
 
-Coord2D* Rva00233F30::method(Coord2D* output, const Coord2D* direction)
+Rva00233F30Offset Rva00233F30::rotatedOffset(const Coord2D* direction)
 {
     float distance = direction->length();
     const Coord3D* position = reinterpret_cast<const Coord3D*>(reinterpret_cast<const char*>(object) + 0x38);
@@ -79,9 +89,8 @@ Coord2D* Rva00233F30::method(Coord2D* output, const Coord2D* direction)
     Coord2D unit;
     unit.x = Cos(angle);
     unit.y = Sin(angle);
-    volatile float x = unit.x * distance;
-    float y = unit.y * distance;
-    output->x = x;
-    output->y = y;
-    return output;
+    Rva00233F30Offset result;
+    result.x = unit.x * distance;
+    result.y = unit.y * distance;
+    return result;
 }
