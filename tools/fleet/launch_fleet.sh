@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Launch the luna fleet: $1 file-lane seats, $2 big seats, $3 finish seats, $4 mid seats (300-1000 B, landed-neighbour files),
 # $5 anonymous-lane seats (pick_anon.py), $6 reviewer seats (pick_review.py), $7 class-lane seats (pick_class.py),
-# $8 blocker-lane seats (pick_blocker.py: one session per shared blocker family).
+# $8 blocker-lane seats (pick_blocker.py: one exploratory session per broad blocker family).
 # 2026-09-15 consensus defaults: finish first, anonymous lane as the main conversion lane, no new seats overall.
 # 2026-09-16: finish pool under the attempt cap is ~30 bodies, so 2 finish seats; the freed seats go to mid
 # (300-2500 B, largest first) and anon (ranked by expected bytes): same 37 seats, more bytes per session.

@@ -90,11 +90,11 @@ while true; do
     echo "$(date '+%H:%M') seat $ENGINE$SEAT finished $RVAS" >> build/fleet_logs/seats.log
   elif [ "${ENGINE%block}" != "$ENGINE" ]; then
     # blocker lane: the largest cluster of open bodies whose latest verdict names the same
-    # blocker family (tools/blockers.py). One session looks for the shared lever, then
-    # lists the bodies it reopens in reverse/unlocked.txt for the ordinary lanes.
+    # blocker family (tools/blockers.py). One session first checks whether a
+    # common lever exists, then lists only bodies it proves reopened.
     python tools/fleet/pick_blocker.py 12 > build/.pick_blocker_$SEAT.txt 2>/dev/null
     RVAS=$(head -1 build/.pick_blocker_$SEAT.txt | sed 's/^RVAS: //' | tr -d '\r')
-    [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no shared blocker of 5+ bodies; retry in 600s"; sleep 600; continue; }
+    [ -z "${RVAS// /}" ] && { echo "seat $SEAT: no blocker family of 5+ bodies; retry in 600s"; sleep 600; continue; }
     STEM=$(echo "$RVAS" | awk '{print $1}')
     BRIEF="build/brief_seat_${ENGINE}${SEAT}_${STEM}.txt"
     # shellcheck disable=SC2086

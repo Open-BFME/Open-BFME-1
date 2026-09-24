@@ -19,7 +19,7 @@ change does not replace a shell that is already executing an older copy.
 | `pick_big.py` | select one large body (1000..2500 B), fewest prior attempts first then largest; the `*big` seat stays on it for up to 3 sessions while its stash keeps changing |
 | `pick_mid.py` | select 3 bodies of 300..2500 B, largest first, from the file with the densest landed C++ neighbourhood; skips boundary suspects |
 | `pick_class.py` | serve the warmest vtable that still has a servable dump slot (`eligibility.servable`: leases, touched cooldown, attempt cap, dead ends, suspect boundaries, `unlocked.txt`) and print its slot table; there is no permanent claim file |
-| `pick_blocker.py` | cluster open bodies whose latest verdict names the same `blocker=` family (`tools/blockers.py`) and hand the largest cluster to one session; `--report` lists every family |
+| `pick_blocker.py` | cluster open bodies by broad `blocker=` family (`tools/blockers.py`) for a possible shared-lever investigation; a family tag is not prerequisite proof; `--report` lists every family |
 | `vtable_rank.py` | build the vtable ranking `pick_class.py` reads; game classes have no RTTI |
 | `pick_finish.py` | select near-landed stashes (`N MIN_SCORE MAX_ATTEMPTS COOLDOWN_DAYS`, default `2 0.9 5 2`); ranks on the compiler's measurement of the stash (`tools/finish_measure.py`, cached in `build/finish_measured.json`), the author score only orders what is not measured yet; luna seats get bodies under 5 verdicts and not re-banked in 2 days, `lunaxhigh` seats get the hard set too (`0 0`) |
 | `pick_anon.py` | select anonymous dump bodies ranked by expected bytes (size x (1 + evidence warmth): callers via thunk, strings, vtable, layout); skips boundary suspects |
