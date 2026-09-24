@@ -1042,3 +1042,25 @@ type `011DFFDC` to RTTI `012A716C`, whose name is `.?AW4ErrorCode@@`.
 Using `Common/Errors.h` and `throw ERROR_BAD_ARG` preserves the actual
 exception type and resolves the metadata relocation. Do not keep an opaque
 "diagnostic" call or infer the type from the immediate value alone.
+
+## X87 integer countdown order (HubAnalyst-2)
+
+At `0x008A15F0`, retail subtracts an integer elapsed value from a float field
+with `fild [elapsed]; fsubr [remaining]; fstp [remaining]`. The ordinary C++
+spelling `remaining = remaining - (float)elapsed` emitted `fld [remaining];
+fisub [elapsed]; fstp [remaining]` under MSVC 7.1. A narrowly scoped inline
+assembly block emitted the witnessed three-instruction order:
+
+```cpp
+__asm {
+    mov eax, timer
+    fild elapsed
+    fsubr dword ptr [eax + 0x0c]
+    fstp dword ptr [eax + 0x0c]
+}
+```
+
+Use this only when the retail disassembly proves the signed conversion and
+operand direction; it is a local code-generation override, not a body lift.
+The surrounding `tickIntervalTimers` attempt remains unmatched (673/718 bytes,
+488 differing non-relocation bytes, score `0.19498607242339833`, with relocation-layout drift).
