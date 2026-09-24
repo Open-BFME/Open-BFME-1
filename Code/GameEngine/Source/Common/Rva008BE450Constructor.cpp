@@ -8,9 +8,7 @@
 struct BfmeStringData3AF0
 {
 	unsigned short m_refCount;
-	unsigned short m_length;
-	unsigned short m_capacity;
-	unsigned short m_flags;
+	unsigned char m_unreconstructed_02[6];
 };
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
