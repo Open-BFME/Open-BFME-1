@@ -1,6 +1,38 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
-// Combined TU: thiscall refreshPair (0x00699180) + setVolumes (0x006999C0).
-// Helper body is the real member; no stand-in.
+// Product clamping and output-pair refresh share this receiver and translation unit.
+// Keeping both helper bodies visible preserves retail's ECX call sequence at 0x006994C0.
+class Rva00699430Owner {
+public:
+	void productClamp(int index);
+	char m_bytes[0x60];
+};
+void Rva00699430Owner::productClamp(int index)
+{
+	char *slot = m_bytes + index * 12;
+	float *begin = *(float **)(slot + 0x4c);
+	float *end = *(float **)(slot + 0x50);
+	float *out = (float *)(m_bytes + 0x34 + index * 4);
+	*out = 1.0f;
+	if (begin != end)
+	{
+		do
+		{
+			*out = *out * *begin;
+			begin = (float *)((char *)begin + 8);
+		} while (begin != end);
+	}
+	float v = *out;
+	if (v < 0.0f)
+	{
+		static float s_zero = 0.0f;
+		v = s_zero;
+		*out = v;
+		return;
+	}
+	if (v > 1.0f)
+		v = 1.0f;
+	*out = v;
+}
 
 class Rva00699180Owner
 {
@@ -136,4 +168,19 @@ void Rva00699180Owner::setVolumes(float volume, unsigned char flags)
 		for (int i = 0; i < 2; ++i)
 			refreshPair(3, i);
 	}
+}
+
+// Retail 0x006994C0 updates one product channel, then its two output pairs.
+// The receiver layout is shared by the matched productClamp and refreshPair bodies.
+class Rva006994C0Owner {
+public:
+    void recomputeProductChannel(int index);
+};
+
+void Rva006994C0Owner::recomputeProductChannel(int index)
+{
+    ((Rva00699430Owner *)this)->productClamp(index);
+    for (int i = 0; i < 2; ++i) {
+        ((Rva00699180Owner *)this)->refreshPair(index, i);
+    }
 }
