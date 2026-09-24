@@ -1159,11 +1159,12 @@ bytes); it improved nothing that was already the right size.
 The EDX form of the vtable register-temp lever above also landed
 `Drawable::drawHealthBar` (`0x0041CA50`, 511 B): the getHealth slot `+0x10`
 takes the table as the second `__fastcall` register argument. It reduced
-`0x007F71B0`, `0x0024ECA0` and `0x00271630` to 2-3 bytes, but the residuals
-there need the EAX vtable temporary at a call that also pushes stack
-arguments; no source shape tried (one-register `__fastcall`, pointer-to-member
-through a typed table, locals, return and argument types, `/G5` `/G6` `/GB`)
-produced it. Those verdicts carry `blocker=regalloc/vtable-temp-eax-with-stack-args`.
+`0x007F71B0`, `0x0024ECA0` and `0x00271630` to 2-3 bytes. That earlier sweep
+tried one-register slot pointers, member pointers, locals, return/argument
+types and `/G5` `/G6` `/GB`; it did not try a `__fastcall` EDX dummy while
+also passing the target's real stack arguments. The expanded matrix and
+site-specific results below replace the earlier negative verdict; the three
+residuals above still do not match.
 
 ## An exact probe is not a landed body
 
@@ -1186,3 +1187,75 @@ unlanded, among them `PeerThreadClass::Thread_Function` (5316 B) and
   `+4`); it landed only after the call was modelled as that getter.
 - A `__declspec(naked)` bank is a lift and is refused at commit; it still
   needs real C++.
+
+## EAX vtable temporaries with stack arguments (RegallocLever-3)
+
+A typed `__fastcall` table entry can put the receiver in ECX, a register-only
+dummy in EDX, and the target's real argument(s) on the stack. For a
+`__thiscall` target, EDX is caller-saved and is not an implicit input; only the
+stack arguments participate in the callee's stack cleanup. This is an
+ABI-specific typed call adapter, not a change to the target's `__thiscall`
+contract. Use it only when the target slot and stack cleanup are independently
+known, and when producing the EDX dummy does not add or reorder instructions.
+
+At `0x005A6790`, the retail EDX value is the same newly stored member that is
+pushed for `Mouse::setCursor`. A table view for slot `+0x38` with a
+`__fastcall(Mouse *, int dummy, int cursor)` entry passes that value in EDX and
+again on the stack, producing retail's `mov edx,[esi+0x1ec]; mov eax,[ecx];
+push edx; call [eax+0x38]`. The body now probes exact and is a live matched
+row in `Code/GameEngine/Source/GameClient/Input/Rva005A6790.cpp`; the global
+uses the real `Mouse *TheMouse` ABI while retaining an opaque address-derived
+owner name.
+
+### Compiler matrix
+
+The MSVC 7.1 matrix used compiler version 13.10.3077 (SHA-256
+`2ecf86a3edfd3deae498e08298e210e984537ce9e11759930561e43f40bd2515`). It
+produced 1,472 rows: 1,471 successful compiles/listings and one expected
+`C4234` rejection for an explicit `__thiscall` function-pointer spelling.
+The complete per-case table, compiler commands and extracted instructions are
+in `build/eax_vtable_lab/compiler_matrix/complete_table.csv`.
+
+| Sweep | Full tried-list | Result |
+| --- | --- | --- |
+| 1,440-case call-shape factorial | Return `void`/`int`/`bool`/pointer/`float`/12-byte struct; argument `int`/pointer/`float`/struct-by-value/`const` reference; direct/single/multiple/virtual-base hierarchy; global/member/local receiver; direct virtual/member-pointer dispatch; virtual/pure virtual declaration | 180 EAX-table calls with stack arguments, all in virtual-base variants. Direct, single-base and multiple-base direct virtual calls stayed EDX across the tested types. Every member-pointer case compiled, but its caller used member-pointer dispatch rather than `[eax+slot]`. |
+| Declaration/definition | Declaration only; definition before; definition after | No vptr-register change. |
+| Call-state shape | Value live/dead across the call; branch/straight-line control flow | No vptr-register change. |
+| Stack arity | One argument and two arguments for every argument type | No vptr-register change in the direct-hierarchy baseline. |
+| Optimization flags | `/O2`, `/Ox`, `/Og`, `/Oi`, `/Ot` crossed with `/G5`, `/G6`, `/GB` | `/O2`, `/Ox`, `/Og` stayed EDX; `/Oi` and `/Ot` yielded EAX in the one-factor repro sweep across all three CPU targets. |
+| Pragma/helper | `#pragma optimize` off/on; inlineable/noinline gate helper | Pragma-off and noinline-helper repros yielded EAX; pragma-on and inlineable-helper repros stayed EDX. |
+| Calling convention | Explicit free-function and member-pointer `__thiscall` spellings | Rejected with `C4234` (“reserved for future use”); ordinary virtual member calls compiled. |
+
+The virtual-base result emits a vbptr load, a vbase-offset load and an
+`lea` adjustment before loading the base vptr. That is not the retail
+`mov reg,[object]` call shape in these cases. Changing each receiver class to
+virtual inheritance was therefore only a scratch experiment: all seven probes
+grew or changed beyond the target bytes. The full-body `/Oi`, `/Ot` and
+`#pragma optimize("", off)` trials likewise did not match. The 1,440-case
+factorial and the flag/pragma/helper sweeps show that EAX can be generated,
+but do not make those global source/layout changes valid for a real object.
+
+### Seven retail sites
+
+The seven listings share the x86 dispatch skeleton—receiver in ECX, a vptr
+loaded from `[receiver]` into EAX or EDX, and zero or more explicit stack
+arguments—but not one liveness or provenance pattern. An ignored EAX return
+does not establish a `void` target.
+
+| RVA / site | Live state and receiver provenance | Return evidence | Real-body trials and verdict |
+| --- | --- | --- | --- |
+| `0x005A6790`, slot `+0x38` | The global `TheMouse` pointer is loaded immediately before dispatch; the freshly stored `m_value` is reloaded to EDX and pushed. The preceding gate call returns a bool-like AL used by the branch; `this` and the saved old value remain live. | Virtual result is overwritten by the saved old value. The target contract is independently known as `Mouse::setCursor(MouseCursor)`. | Duplicate-valued fastcall dummy gives exact 60/60 and is landed. Virtual-base and pragma-off trials were not exact. |
+| `0x0029BDE0`, slot `+0x20` | Incoming `this` remains in EDI; node payload is loaded from `[esi+0x10]` after `query()` returns true in AL. The payload is staged through ECX, vptr through EAX, then ECX is restored to the receiver. | Ignored; type is not evidenced. | Duplicate-payload fastcall adapter got EAX but used EDX for the payload/push; a distinct dummy recovered ECX/push but added `mov edx,esi` and grew to 100 B. `/Oi`, `/Ot`, virtual-base and pragma-off trials did not match. |
+| `0x0026FDE0`, gate slot `+0x20` | Gate receiver is loaded from `this+0x30` then `[subobject+0x1c]`; there are no explicit arguments. The previous-current guard is live. | AL is tested and controls a branch, so bool-like return is evidenced. | One-register table adapter remained EDX; virtual-base and pragma-off changed the body. `/Oi` and `/Ot` did not fix the two register bytes. |
+| `0x004BCCE0`, slot `+0x4c` at `+0xbf` | `ProductionUpdateInterface *` came from the preceding direct helper return and is retained in ESI. The prior check helper's AL is tested just before the call; item EDI is pushed and ECX is reset to ESI. The same slot also appears later with EDX. | Slot `+0x4c` returns a pointer-like value used in EDI, tested and revisited by the loop. | Typed fastcall duplicate-argument and inline-table trials changed the body/size; `/Oi` and `/Ot` retained the EDX/EAX mismatch. Virtual-base and pragma-off trials did not match. |
+| `0x007F71B0`, failure slot `+0x2c` | On scan exhaustion, the receiver is loaded from `[edi+0x1c]`; `-0x65` and EBX=0 are pushed. No preceding call supplies the receiver. | Ignored; type is not evidenced. | Fastcall dummy-zero adapter put the table in EAX but inserted `xor edx,edx` and grew to 288 B. `/Oi`, `/Ot`, virtual-base and pragma-off trials did not match. |
+| `0x00271630`, clear slot `+0x14` | State-machine receiver is loaded from `[esi+0x30]`; no explicit argument. The earlier `canEnterObject` result gates this path. | Ignored; type is not evidenced. | One-register table adapter stayed EDX. A dummy-table variant changed the neighboring slot `+0x20`; no exact result. `/Oi`, `/Ot`, virtual-base and pragma-off trials did not match. |
+| `0x0024ECA0`, slot `+0x78` | Receiver ESI is the incoming secondary-interface `this-0x20`; object argument EDI is the incoming parameter. An earlier call in the same body uses a receiver returned by a direct helper; its provenance is not shared by slot `+0x78`. | Slot `+0x78` result is overwritten by the next vptr load; type is not evidenced. | Retail already uses EAX at slot `+0x78`; the residual is the adjacent `mov ecx,esi` / `push edi` order. Both local-alias orders and the fastcall table trial failed; `/Oi`, `/Ot`, virtual-base and pragma-off trials did not match. |
+
+The exact `0x005A6790` result depends on the available duplicate value: there
+the stack argument and EDX value are identical. At the other sites a dummy
+requires an extra load, changes which register carries the stack value, alters
+a neighboring call, or introduces virtual-base adjustment code. No other body
+in this seven-site set became exact; the remaining blocker verdicts stay open.
+
+
