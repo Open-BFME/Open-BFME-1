@@ -15,7 +15,7 @@ per (owner class, member). Read the result with tools/bfme_layout.py.
 Known blind spots: `this` inside a non-primary base subobject (offsets come out
 subobject-relative), registers that alias `this` after the prologue, and members
 of the same ZH offset in a derived class that the dump could not compile."""
-import sys,json,re,difflib,collections,csv,struct
+import argparse,sys,json,re,difflib,collections,csv,struct
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent)); import build as B
 
@@ -249,8 +249,19 @@ def run_witness():
     for o in changed[:40]: print(f"  {(o['owner'] or o['fn_class'] or '?'):28s} {o['member']:34s} zh={o['zh']:#6x} bfme={o['bfme']:#6x} votes={o['votes']}/{o['total']}")
 
 
+def main(argv=None):
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument(
+        '--compile', nargs='*', metavar='PREFIX',
+        help='compile reference TUs, optionally limited to paths containing PREFIX')
+    args = parser.parse_args(argv)
+    if args.compile is None:
+        run_witness()
+    else:
+        compile_reference(args.compile or None)
+
+
 if __name__ == '__main__':
-    if '--compile' in sys.argv:
-        prefixes=[a for a in sys.argv[1:] if a != '--compile']
-        compile_reference(prefixes or None); sys.exit(0)
-    run_witness()
+    main()
