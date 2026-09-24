@@ -703,3 +703,4 @@ Code/GameEngine/Source/GameClient/GUI/AptScreenFactories.cpp	UnicodeString	build
 Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobbyConstructor.cpp	UnicodeString	build.sh exited 1
 Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobbyDestructor.cpp	AsciiString	build.sh exited 1
 Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsConstructor.cpp	UnicodeString	build.sh exited 1
+Code/GameEngine/Source/GameLogic/System/Rva00397350GlobalRallyPointFeedback.cpp	UnicodeString	build.sh exited 1
