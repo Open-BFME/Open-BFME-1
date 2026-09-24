@@ -16,7 +16,9 @@
 #define __PLACEMENT_VEC_NEW_INLINE
 
 #include <vector>
+#define KINDOFMASK_NONE ZH_KINDOFMASK_NONE
 #include "PreRTS.h"
+#undef KINDOFMASK_NONE
 #include "GameLogic/ObjectIter.h"
 
 typedef int Int;
@@ -87,14 +89,10 @@ struct Rva0025BD30Target;
 typedef Rva0025BD30Target *Rva0025BD30Key;
 typedef std::set<Rva0025BD30Key> PointerIdentityTree0025BD30;
 
-#include <bitset>
-struct Rva000C3DD0Mask
-{
-    std::bitset<192> m_bits;
-    explicit Rva000C3DD0Mask(unsigned bit) { m_bits.set(bit); }
-};
-
-extern const Rva000C3DD0Mask g_bfmeKindofMaskNone;
+#include "Common/BitFlags.h"
+// PreRTS's KindOfMaskType is 128 bits; retail pins this global as BitFlags<192>.
+typedef BitFlags<192> Rva000C3DD0Mask;
+extern const Rva000C3DD0Mask KINDOFMASK_NONE;
 
 // PhysicalC3DD0 copies two24-byte masks after its8-byte base (56B total).
 // Six storage words and selectedbit151 are witnessed; the original logical
@@ -240,7 +238,7 @@ void TaintSpecialPower::after(const struct Coord3D *loc)
 
 
 			BfmeWideResult iterator = ThePartitionManager->bfmeForwardWideC(
-				loc, radius * *(const float *)0x010B4BCC, 0, &PartitionFilterAcceptByKindOf(Rva000C3DD0Mask(151), g_bfmeKindofMaskNone), 1);
+				loc, radius * *(const float *)0x010B4BCC, 0, &PartitionFilterAcceptByKindOf(Rva000C3DD0Mask(Rva000C3DD0Mask::kInit, 151), KINDOFMASK_NONE), 1);
 
 			// Retail constructs the native _Rb_tree only after the first
 			// wide-result is live: its 0x14-byte header allocation is visible
@@ -266,7 +264,7 @@ void TaintSpecialPower::after(const struct Coord3D *loc)
 
 
 			iterator = ThePartitionManager->bfmeForwardWideC(
-				loc, radius * g_bfmeK1266B, 0, &PartitionFilterAcceptByKindOf(Rva000C3DD0Mask(151), g_bfmeKindofMaskNone), 1);
+				loc, radius * g_bfmeK1266B, 0, &PartitionFilterAcceptByKindOf(Rva000C3DD0Mask(Rva000C3DD0Mask::kInit, 151), KINDOFMASK_NONE), 1);
 
 		Object *candidate;
 		while (iterator.next(candidate))
