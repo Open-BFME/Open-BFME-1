@@ -140,38 +140,6 @@ public:
 	BfmeRefCV *m_bfmeRef;					// +0x04
 };
 
-// ?bfmeAssign@@YAXPAVBfmeHandleCV@@PBV1@@Z
-void __cdecl bfmeAssign(BfmeHandleCV *destination, const BfmeHandleCV *source)
-{
-	if (!destination)
-		return;
-
-	destination->m_bfmeTag = source->m_bfmeTag;
-
-	BfmeRefCV *ref = source->m_bfmeRef;
-
-	destination->m_bfmeRef = ref;
-
-	if (ref)
-		++ref->m_bfmeCount;
-}
-
-// ?bfmeAssignAgain@@YAXPAVBfmeHandleCV@@PBV1@@Z
-void __cdecl bfmeAssignAgain(BfmeHandleCV *destination, const BfmeHandleCV *source)
-{
-	if (!destination)
-		return;
-
-	destination->m_bfmeTag = source->m_bfmeTag;
-
-	BfmeRefCV *ref = source->m_bfmeRef;
-
-	destination->m_bfmeRef = ref;
-
-	if (ref)
-		++ref->m_bfmeCount;
-}
-
 class BfmeOwnerCV
 {
 public:

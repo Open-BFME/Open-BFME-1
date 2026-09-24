@@ -47,27 +47,6 @@ bool Gen_00892550::bfmeIsEmpty(void) const
 	return m_bfmeNode == &m_bfmeSentinel;
 }
 
-class Gen_0089CC10
-{
-public:
-	int bfmeSize(void) const;
-
-private:
-	int m_bfmeValue;					// +0x00
-	int m_bfmeCount;					// +0x04
-};
-
-// ?bfmeSize@Gen_0089CC10@@QBEHXZ
-int Gen_0089CC10::bfmeSize(void) const
-{
-	int size = 2;
-
-	if (m_bfmeCount != 0)
-		size = m_bfmeValue + 2;
-
-	return size;
-}
-
 class Gen_00977870
 {
 public:
