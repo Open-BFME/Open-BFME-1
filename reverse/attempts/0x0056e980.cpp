@@ -1,5 +1,5 @@
-// ??0BfmeAptScreenSaveLoad@@QAE@PAX@Z
-// partial score=0.76 date=2026-09-15
+// ?d_0056e980@@YAXXZ
+// partial score=0.77 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
 #include <list>
@@ -813,12 +813,16 @@ public:
 extern Rva00367E30Logic *TheBfmeGameLogic;
 extern const char *BfmeSaveLoadCallbackNames[];
 
-struct BfmeSaveLoadSlotNode
+// EH state 1 calls the list-base destructor at 0x56E160 on this +0x284 member.
+// Its 0x44 node has two pointer links; the element payload is 0x3C bytes.
+struct Z1Elem0056D960
 {
-	BfmeSaveLoadSlotNode *m_next;
-	BfmeSaveLoadSlotNode *m_prev;
-	char m_unmodelled[ 0x44 - 8 ];
+	~Z1Elem0056D960();
+	char m_unmodelled[ 0x3C ];
 };
+
+typedef _STL::list<Z1Elem0056D960,
+	_STL::allocator<Z1Elem0056D960> > BfmeSaveLoadSlotList;
 
 // SaveLoad.apt, retail 0x00104DC0, object 0x288 bytes.
 class __declspec( novtable ) __multiple_inheritance BfmeAptScreenSaveLoad
@@ -852,7 +856,7 @@ private:
 	bool m_field278;
 	int m_field27C;
 	bool m_field280;
-	BfmeSaveLoadSlotNode *m_pSlotListHead;
+	BfmeSaveLoadSlotList m_field284;
 };
 
 BfmeAptScreenSaveLoad::BfmeAptScreenSaveLoad( void *context )
@@ -873,13 +877,6 @@ BfmeAptScreenSaveLoad::BfmeAptScreenSaveLoad( void *context )
 		m_field280 = false;
 		_ReadWriteBarrier();
 
-		BfmeSaveLoadSlotNode *node = 0;
-		m_pSlotListHead = 0;
-		node = (BfmeSaveLoadSlotNode *)
-			bfmeAllocNode( sizeof( BfmeSaveLoadSlotNode ) );
-		node->m_next = node;
-		node->m_prev = node;
-		m_pSlotListHead = node;
 
 		if( g_bfmeReadyAG == 0 )
 	{

@@ -1106,3 +1106,26 @@ The size check proves aggregate packing, not every type identity or emitted
 function bytes; `??0GlobalData@@QAE@XZ` remains a partial, not a matched body.
 Do not infer constructor stores, string literals, callback identities, or EH
 ordering from a coherent layout alone.
+## Push-state-before-registration EH prologues (EHLever-2)
+
+VC7.1 emits another SEH registration order: `push -1; mov eax,fs:[0]; push
+handler; push eax; mov fs:[0],esp`. The complete sequence is 21 bytes, with
+the handler VA at offset `+9`. This is distinct from the existing form that
+loads `fs:[0]` before `push -1`.
+
+`tools/eh_info.py` recognizes this order only when all 21 bytes match, then
+follows the same `mov eax,FuncInfo; jmp handler` stub and unwind-map layout as
+the other supported form. Requiring the trailing `push eax; mov fs:[0],esp`
+avoids scanning arbitrary code for a plausible handler immediate.
+
+At RVA `0x001BA1C0`, the handler is `0x00C08BD6`, FuncInfo is `0x00DF7410`,
+and the map has three states. State 0 cleans up at `0x00C08BC0`
+(`lea ecx,[ebp-0x94]`, ILT to `0x000C3E50`); states 1 and 2 share
+`0x00C08BCB` (`lea ecx,[ebp-0xd4]`, ILT to `0x000C5FC0`). The latter helper
+decrements the referenced payload's `+0x10` count and frees it on zero, which
+supports the result-handle lifetime model without asserting a class identity.
+
+The current `reverse/functions.csv` contains 160 rows with this exact
+21-byte signature; all 160 handler/FuncInfo maps parse through the tool.
+These are ledger rows, not a claim of 160 unique functions. Handler addresses
+and cleanup adjustments are evidence only, not names.

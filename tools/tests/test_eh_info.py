@@ -30,6 +30,29 @@ def test_registration_load_before_state_push():
         0x200, 0x300, [(0, -1, 0x500), (1, 0, None), (2, 1, 0x600)])
 
 
+def test_state_push_before_registration_load():
+    data = image()
+    data[0x100:0x115] = (
+        b"\x6a\xff\x64\xa1\x00\x00\x00\x00\x68"
+        + struct.pack("<I", 0x400200)
+        + b"\x50\x64\x89\x25\x00\x00\x00\x00"
+    )
+    assert eh_info.unwind_info(lambda r, n: data[r:r+n], 0x100) == (
+        0x200, 0x300, [(0, -1, 0x500), (1, 0, None), (2, 1, 0x600)])
+
+
+def test_alternate_prologue_requires_full_registration_store():
+    data = image()
+    data[0x100:0x115] = (
+        b"\x6a\xff\x64\xa1\x00\x00\x00\x00\x68"
+        + struct.pack("<I", 0x400200)
+        + b"\x50\x64\x89\x25\x00\x00\x00\x00"
+    )
+    data[0x10d] = 0x51
+    with pytest.raises(ValueError, match="unsupported EH prologue"):
+        eh_info.unwind_info(lambda r, n: data[r:r+n], 0x100)
+
+
 @pytest.mark.parametrize("prefix", [b"\x64\xa1\x04\x00\x00\x00", b"\x90" * 6])
 def test_unrecognized_prefix_is_not_scanned(prefix):
     data = image()
