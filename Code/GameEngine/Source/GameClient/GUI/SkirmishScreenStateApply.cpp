@@ -72,8 +72,8 @@ public:
 	bool shouldRefresh();
 	void refreshPlayerSlot(int index);
 	void refreshPlayerTypeControl(int index);
-	void refreshPlayerTeamControl(int index);
-	void refreshPlayerFactionControl(int index, bool preserveSelection);
+	void refreshPlayerFactionControl(int index);
+	void refreshPlayerTeamControl(int index, bool isObserver);
 	void bfmeFlush11();
 	bool apply(void *gameInfo, int force);
 
@@ -132,8 +132,8 @@ bool SkirmishScreenState::apply(void *gameInfo, int force)
 	{
 		refreshPlayerTypeControl(index);
 		refreshPlayerSlot(index);
-		refreshPlayerTeamControl(index);
-		refreshPlayerFactionControl(index, false);
+		refreshPlayerFactionControl(index);
+		refreshPlayerTeamControl(index, false);
 		m_first[index]->winEnable(restore);
 		m_elements[index]->winEnable(false);
 		m_third[index]->winEnable(false);
