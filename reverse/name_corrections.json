@@ -2048,5 +2048,15 @@
   "after_sha256": "2214a7b3d8cf1a39994bae7f8e5585c7dda3eb21d19a3e4218630639519e8b75",
   "evidence": "reverse/re_attempts.log",
   "reason": "The matched AIPlayer callers pass the Team receiver through Team::Rva000F10F0, but none names this method (reverse/re_attempts.log). The old source guessed recruit from behavior. The new method keeps RVA 000F2A00 in its name until evidence proves its identity."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "militarySubtitle",
+  "new_name": "rva00441D30",
+  "before_sha256": "2ed3e795f3aa9073291141325c0a4ffa19b7210a969b359c9e41d8c55b1b05e4",
+  "after_sha256": "77543e85b9d0f7ec8915e23649edab7e527dd4175fba0719cf2e8ad25e2cca62",
+  "evidence": "reverse/identity_evidence/0x00441d30-ingameui-slot-rehome.md",
+  "reason": "The 0x00441D30 slot-19 body consumes a UnicodeString by value. The AsciiString-label militarySubtitle method is the 0x0043E510 slot-20 wrapper, supported by the installed BFME vtables, matched slot-21 removeMilitarySubtitle and the Zero Hour declaration order. Slot 19 keeps an address-derived name because its lexical method spelling is unproven."
  }
 ]

@@ -18,11 +18,8 @@ cleanup at 0x008881D0. The clean C++ source reproduces all 132 bytes outside
 eight relocation operands. The scoped `add_match.py` gate verified the physical
 string callees and `TheGameText` global during relocation resolution.
 
-The existing ledger names slot 19's physical body 0x00441D30 as
-`InGameUI::militarySubtitle(const AsciiString&, int)`. Retail slot 19 ends with
-`ret 8` and inspects a wide code unit at +0x40 of that body; the slot-20 caller
-supplies a UnicodeString by value. The Zero Hour InGameUI header and two
-currently unmatched ScriptActions bodies spell an AsciiString-label
-`militarySubtitle`, which supports the label interface but does not prove that
-spelling belongs to BFME physical slot 19. This conversion does not rename or
-repin slot 19; its source uses an address-qualified positional declaration.
+The subsequent identity correction at
+`0x00441d30-ingameui-slot-rehome.md` gives the AsciiString-label
+`militarySubtitle` name to this slot-20 body. Slot 19 takes the forwarded
+UnicodeString by value and keeps an address-qualified ledger name. Both source
+symbols remain unchanged, with explicit `object-symbol` aliases in the ledger.

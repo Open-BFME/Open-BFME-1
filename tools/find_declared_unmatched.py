@@ -8,6 +8,8 @@ import subprocess
 import sys
 from pathlib import Path
 
+from build import ledger_object_symbol
+
 ROOT = Path(__file__).resolve().parents[1]
 SRC_DIR = ROOT / "src"
 FUNCTIONS_CSV = ROOT / "reverse" / "functions.csv"
@@ -73,13 +75,17 @@ def read_function_names(path: Path, staged: bool):
     matched = set()
     matched_by_source = {}
     matched_sources = {}
+    matched_aliases_by_source = {}
     for row in csv.DictReader(text.splitlines()):
         declared.add(row["name"])
         if row["status"] == "matched":
             matched.add(row["name"])
             matched_by_source[row["source"]] = matched_by_source.get(row["source"], 0) + 1
             matched_sources.setdefault(row["name"], set()).add(row["source"])
-    return declared, matched, matched_by_source, matched_sources
+            emitter = ledger_object_symbol(row)
+            if emitter != row["name"]:
+                matched_aliases_by_source.setdefault(row["source"], set()).add(emitter)
+    return declared, matched, matched_by_source, matched_sources, matched_aliases_by_source
 
 
 def mangle_method(class_name: str, method_name: str) -> str:
@@ -233,7 +239,8 @@ def main():
     parser.add_argument("--staged", action="store_true", help="read paths from the git index")
     args = parser.parse_args()
 
-    declared, matched, matched_by_source, matched_sources = read_function_names(FUNCTIONS_CSV, args.staged)
+    (declared, matched, matched_by_source, matched_sources,
+     matched_aliases_by_source) = read_function_names(FUNCTIONS_CSV, args.staged)
     whitelist = load_claims_whitelist()
 
     unmatched = []
@@ -262,6 +269,11 @@ def main():
             )
         own_names = {n for n, srcs in matched_sources.items()
                      if rel_path.as_posix() in srcs}
+        # A retail name may differ from the C++ symbol whose object bytes the
+        # row verifies. The alias is a claim only for this exact source, not a
+        # global substitute for the retail identity.
+        own_aliases = matched_aliases_by_source.get(rel_path.as_posix(), set())
+        claim_names = matched | own_aliases
         local_typedefs = set(TYPEDEF_RE.findall(text))
         label_counts = {}
         for label, _m in marker_labels:
@@ -270,7 +282,8 @@ def main():
             # matched from ANOTHER file is correct bookkeeping (asm-whale scaffolds
             # claim symbols the verbatim ZH copy also defines); matched from THIS
             # file means the marker is stale
-            if rel_path.as_posix() not in matched_sources.get(label, ()):
+            if (rel_path.as_posix() not in matched_sources.get(label, ())
+                    and label not in own_aliases):
                 # An abbreviated label -- `??0OutputStream@@` standing in for
                 # `??0OutputStream@DebugIOFlat@@AAE@PBDI@Z` -- never equals a
                 # ledger name, so the exact test above cannot fire. Every stale
@@ -282,11 +295,11 @@ def main():
                 # in GameInfo.cpp -- and claiming one says nothing about the
                 # others, so a count mismatch is not evidence about any of them.
                 key = label[:-2] if label.endswith("@@") else label
-                cand = [n for n in own_names if n.startswith(key + "@")]
+                cand = [n for n in own_names | own_aliases if n.startswith(key + "@")]
                 if len(cand) != 1 or label_counts[label] != 1:
                     continue
                 label = cand[0]
-            if rel_path.as_posix() in matched_sources.get(label, ()):
+            if rel_path.as_posix() in matched_sources.get(label, ()) or label in own_aliases:
                 violations.append(
                     f"{rel_path}: {label} is matched in functions.csv from this file but "
                     f"still marked {marker} (stale annotation — remove the marker)"
@@ -310,7 +323,7 @@ def main():
                     # or address are not yet pinned; kept because trimming it would
                     # change inlining of matched functions in this TU.
                     continue
-                if symbol_name in declared:
+                if symbol_name in declared or symbol_name in own_aliases:
                     continue
                 unmatched.append((rel_path, class_name, method_name))
                 continue
@@ -345,10 +358,10 @@ def main():
             open_needle = needle[:-1]
             # Constructors/destructors match a prefix; ordinary methods match a substring.
             if needle.startswith("??0") or needle.startswith("??1"):
-                if any(name.startswith(open_needle) for name in matched):
+                if any(name.startswith(open_needle) for name in claim_names):
                     continue
             else:
-                if any(open_needle in name for name in matched):
+                if any(open_needle in name for name in claim_names):
                     continue
             unmatched.append((rel_path, class_name, method_name))
 

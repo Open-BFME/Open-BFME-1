@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?militarySubtitle@InGameUI@@UAEXABVAsciiString@@H@Z: Code/GameEngine/Source/GameClient/InGameUI.cpp
-// Open-BFME5: lift the retail InGameUI::militarySubtitle MASM body into a C++ thunk.
+// Physical InGameUI slot-19 body at 0x00441D30; see reverse/identity_evidence/0x00441d30-ingameui-slot-rehome.md.
+// The AsciiString-label militarySubtitle identity belongs to slot 20 at 0x0043E510.
 
 extern "C" __declspec(naked) void bfme_InGameUIMilitarySubtitle_441D30()
 {

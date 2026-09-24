@@ -2,9 +2,10 @@
 
 // Retail 0x0043E510 is slot 20 in the InGameUI and W3DInGameUI vtables.
 // The slot converts an AsciiString label through TheGameText and forwards the
-// resulting UnicodeString and duration to slot 19. Keep both method names
-// address-qualified: the older slot-19 ledger spelling has an unresolved
-// AsciiString/UnicodeString signature conflict (see identity evidence).
+// resulting UnicodeString and duration to slot 19. The ledger's proved
+// militarySubtitle(AsciiString const&, int) identity belongs to this slot.
+// Keep the emitted method name address-qualified because InGameUI.cpp also
+// defines the present-unmatched method; object-symbol selects this emitter.
 
 #include "StringInline.h"
 
