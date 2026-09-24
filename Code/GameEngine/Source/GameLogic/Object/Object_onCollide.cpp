@@ -4,7 +4,7 @@
 #include "PreRTS.h"
 #include "GameLogic/Object.h"
 
-void Object::onCollide( Object *other, const Coord3D *loc, const Coord3D *normal )
+void Object::onCollide( Object *otherObject, const Coord3D *collisionLocation, const Coord3D *collisionNormal )
 {
 	struct BFMEObjectOnCollideFields
 	{
@@ -30,8 +30,8 @@ void Object::onCollide( Object *other, const Coord3D *loc, const Coord3D *normal
 	BFMEObjectOnCollideFields *self =
 		reinterpret_cast<BFMEObjectOnCollideFields *>( this );
 	BFMEObjectOnCollideFields *otherFields =
-		reinterpret_cast<BFMEObjectOnCollideFields *>( other );
-	if (other == NULL)
+		reinterpret_cast<BFMEObjectOnCollideFields *>( otherObject );
+	if (otherObject == NULL)
 		return;
 	if (self->m_field3a0 == otherFields->m_id)
 		return;
@@ -49,6 +49,6 @@ void Object::onCollide( Object *other, const Coord3D *loc, const Coord3D *normal
 		if( (self->m_status90 & 0x10) != 0 )
 			break;
 
-		collide->onCollide( other, loc, normal );
+		collide->onCollide( otherObject, collisionLocation, collisionNormal );
 	}
 }
