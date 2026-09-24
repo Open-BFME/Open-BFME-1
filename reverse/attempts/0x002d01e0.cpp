@@ -1,5 +1,5 @@
 // ?exitObjectViaDoor@DefaultProductionExitUpdate@@UAEXPAVObject@@W4ExitDoorType@@@Z
-// partial score=0.96 date=2026-09-23
+// partial score=0.9607 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /MD /GX /Ireference/shims/stlp_nodealloc /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug
 // stlport
 // Data identity correction: retail +0xA3 reads DIR32 VA 0x01075350, the
@@ -215,6 +215,7 @@ void DefaultProductionExitUpdate::exitObjectViaDoor(Object *newObj, ExitDoorType
 	{
 		const DefaultProductionExitUpdateModuleData *md = getDefaultProductionExitUpdateModuleData();
 
+		{
 		Real exitAngle = creationObject->getOrientation();
 		const Matrix3D *transform = creationObject->getTransformMatrix();
 		Vector3 loc;
@@ -232,6 +233,7 @@ void DefaultProductionExitUpdate::exitObjectViaDoor(Object *newObj, ExitDoorType
 		newObj->setPosition(&createPoint);
 		newObj->setOrientation(exitAngle);
 		newObj->setLayer((PathfindLayerEnum)creationObject->getLayer());
+		}
 
 		TheAI->pathfinder()->addObjectToPathfindMap(newObj);
 		Coord3D tmp;
