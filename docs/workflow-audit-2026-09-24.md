@@ -75,6 +75,7 @@ recorded in [fleet-lock-scope-2026-09-24.md](analysis/fleet-lock-scope-2026-09-2
 | `38c9464088` | Make the tertiary naked-candidate queue use the latest exact-RVA verdict across renamed symbols, falling back to symbol-only history only when no RVA verdict exists. | Combined current-master retry/naked-candidate regression recheck during this refresh: 47 tests passed. This changes classification, not candidate weights or live fleet throughput. |
 | `debc058ea85b` | Apply the shared boundary-suspect predicate to short blocked verdicts in the tertiary naked queue, while preserving explicit inspection and later reopening. | Included in the 47-test current-master retry/naked-candidate recheck above; no live throughput effect was measured. |
 | `f98e2eb6a4` | Clarify that a blocker family is an exploratory broad tag, not proof of a shared prerequisite; selection and eligibility logic stayed unchanged. | The real dry-run selected the same 12 RVAs before and after; 19 blocker/eligibility tests passed. No family-rotation or shared-lever success rate is established. |
+| `432eb7bc480b` | Make publication hooks select exact changed rows and their emitters when a candidate body is replaced or a ledger-only claim lands. | A staged 0x007692D0 replacement selected the new row despite a stale generated object; negative tests rejected unknown selectors. Final tests: 97 passed, 3 skipped, 3 subtests; `check_csv`, syntax and normal hooks passed. |
 
 The post-implementation reviews caught and fixed: missing-record and
 interrupted leases being treated as dead; a PID-recording transaction race;
@@ -86,6 +87,17 @@ production functions or entry points, including two concurrent runner
 processes, six concurrent cold cache readers, brief filtering/failure,
 owner-safe late cleanup, carved overlap, changed rows, contention, transient
 failure recovery and real compiler dependencies.
+
+The publication review found that a removed candidate could leave the old
+generated translation unit on disk, causing the hook's source scan to miss the
+new ledger row while a stale object was still present. The correction validates
+the exact row and its emitter, including ledger-only changes, and rejects
+unknown or mixed selectors instead of silently skipping them. A separate
+adversarial pass caught that mixed-selector case and bounded the hook's
+argument batches before publication. The final diff was checked for bypasses;
+no acceptance baseline, byte comparison, relocation check or identity guard
+was relaxed. All publication tests used temporary repositories and local
+remotes, never the production remote.
 
 An isolated warm replay after the lock change measured finish preparation at
 1.00 s with a 0.40 s final lock region, and anonymous preparation at 7.03 s
