@@ -610,6 +610,7 @@ void GameSpyPSMessageQueue::addRequest( const PSRequest& req )
 	m_requests.push(req);
 }
 
+// ?getRequest@GameSpyPSMessageQueue@@UAE_NAAVPSRequest@@@Z present-unmatched
 Bool GameSpyPSMessageQueue::getRequest( PSRequest& req )
 {
 	MutexClass::LockClass m(m_requestMutex, 0);

@@ -94,6 +94,7 @@ private:
 };
 
 // ??0GettingBuiltBehaviorModuleData@@QAE@XZ
+// ??0GettingBuiltBehaviorModuleData@@QAE@XZ present-unmatched
 GettingBuiltBehaviorModuleData::GettingBuiltBehaviorModuleData()
 {
 	m_width1 = 60.0f;
