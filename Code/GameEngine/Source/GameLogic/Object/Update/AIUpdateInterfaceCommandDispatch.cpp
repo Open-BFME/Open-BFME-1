@@ -3,7 +3,7 @@
 // Open-BFME: the two AIUpdateInterface bodies that reach the object's own
 // AICommandInterface through the secondary base at AIUpdateInterface+0x20.
 //
-//   ?aiDoCommand@       0x00277780, 1953 bytes
+//   ?aiDoCommand@       0x00277780, 2248 bytes
 //   ?bfmeAttackTarget@  0x0027D420,  159 bytes
 //
 // aiDoCommand is the dispatcher itself, reached through AICommandInterface's
