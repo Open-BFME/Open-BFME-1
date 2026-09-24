@@ -36,7 +36,7 @@ struct BfmeNode912C
 struct Gen009F5040Counter
 {
 	int m_value;
-	int m_pad;
+	Gen009F5040Node *m_head;
 };
 
 struct Gen009F5040Bucket
@@ -59,6 +59,7 @@ public:
 	void calculate(Gen009F5040Node *node, int *result28, int *result2c,
 		int *result24);
 	__declspec(noinline) void remove(Gen009F5040Node *node);
+	void linkNode_009F4D80(Gen009F5040Node *node);
 
 	Gen009F5040Bucket m_buckets[2];
 	Gen009F5040Counter *m_rangeBegin;
@@ -124,4 +125,35 @@ void Gen009F5040::handle()
 
 		node = m_node;
 	}
+}
+
+// The retail call from handle() enters this body at 0x009F4D80.  Its two
+// intrusive links are distinct: remove() handles the +0x18/+0x1C pair while
+// this insertion uses the +0x10/+0x14 pair.
+void Gen009F5040::linkNode_009F4D80(Gen009F5040Node *node)
+{
+	calculate(node, &node->m_result28, &node->m_result2c, &node->m_result24);
+	int index = node->m_item->getIndex();
+	if (index < -1 || index >= 16)
+		index = -1;
+	Gen009F5040Counter *counter = m_buckets[index + 3].m_counter;
+	unsigned int mask = m_mask >> 1;
+	unsigned int count = (unsigned int)(m_rangeEnd - m_rangeBegin) >> 2;
+	while (count != 0) {
+		if (node->m_result24 & mask)
+			break;
+		++counter->m_value;
+		int step = ((node->m_result2c & mask) != 0 ? 2 : 0);
+		step += ((node->m_result28 & mask) != 0);
+		counter += step * count + 1;
+		count >>= 2;
+		mask >>= 1;
+	}
+	Gen009F5040Node **slot = &counter->m_head;
+	node->m_secondaryPreviousLink = slot;
+	node->m_secondaryNext = *slot;
+	if (node->m_secondaryNext != 0)
+		node->m_secondaryNext->m_secondaryPreviousLink = &node->m_secondaryNext;
+	*slot = node;
+	node->m_index = index + 1;
 }
