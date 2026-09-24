@@ -1,0 +1,59 @@
+.386
+.model flat
+
+; Boundary repair of the pre-existing 0x009446F0/1075B ASM span.
+; This still-unconverted whole function is 0x00944690/552B.
+; Its five adjacent bodies are now separate C++ claims.
+; Evidence: reverse/identity_evidence/009446f0.md
+_TEXT SEGMENT
+public ?method@Rva00944690Scene@@UAEXPAVCameraClass@@@Z
+?method@Rva00944690Scene@@UAEXPAVCameraClass@@@Z PROC
+    db 06Ah,0FFh,068h,098h,0DAh,005h,001h,064h,0A1h,000h,000h,000h
+    db 000h,050h,064h,089h,025h,000h,000h,000h,000h,083h,0ECh,020h
+    db 053h,08Bh,0D9h,08Bh,083h,0C4h,000h,000h,000h,055h,08Dh,08Bh
+    db 0C0h,000h,000h,000h,03Bh,0C1h,056h,057h,089h,05Ch,024h,010h
+    db 089h,044h,024h,02Ch,089h,04Ch,024h,024h,00Fh,084h,088h,000h
+    db 000h,000h,0EBh,004h,08Bh,044h,024h,02Ch,08Bh,070h,00Ch,085h
+    db 0F6h,074h,005h,083h,0C6h,0F8h,0EBh,002h,033h,0F6h,08Dh,044h
+    db 024h,018h,050h,08Dh,04Ch,024h,020h,051h,08Dh,054h,024h,028h
+    db 052h,056h,08Dh,04Bh,034h,0E8h,0B6h,0EBh,0FFh,0FFh,08Bh,08Eh
+    db 094h,000h,000h,000h,085h,0C9h,08Bh,07Ch,024h,018h,08Bh,05Ch
+    db 024h,01Ch,08Bh,06Ch,024h,020h,07Ch,01Dh,08Bh,0C5h,0C1h,0E0h
+    db 00Ah,00Bh,0C3h,0C1h,0E0h,00Ah,00Bh,0C7h,03Bh,0C1h,074h,01Dh
+    db 08Bh,04Ch,024h,010h,056h,083h,0C1h,034h,0E8h,003h,0EDh,0FFh
+    db 0FFh,08Bh,04Ch,024h,010h,057h,053h,055h,056h,083h,0C1h,034h
+    db 0E8h,063h,0ECh,0FFh,0FFh,08Bh,044h,024h,02Ch,08Bh,040h,004h
+    db 03Bh,044h,024h,024h,08Bh,05Ch,024h,010h,089h,044h,024h,02Ch
+    db 00Fh,085h,07Ah,0FFh,0FFh,0FFh,08Dh,0B3h,0BCh,000h,000h,000h
+    db 08Dh,07Eh,004h,090h,08Bh,046h,008h,03Bh,0C7h,074h,015h,08Bh
+    db 040h,00Ch,085h,0C0h,074h,00Eh,083h,0C0h,0F8h,074h,009h,08Bh
+    db 0CEh,0E8h,0F6h,079h,009h,000h,0EBh,0E4h,08Bh,083h,004h,001h
+    db 000h,000h,08Dh,0BBh,0ECh,000h,000h,000h,040h,08Bh,0CFh,089h
+    db 083h,004h,001h,000h,000h,089h,07Ch,024h,010h,0E8h,0CBh,049h
+    db 06Ch,0FFh,033h,0C0h,089h,044h,024h,014h,08Bh,06Ch,024h,040h
+    db 050h,055h,08Dh,04Ch,024h,01Ch,051h,08Dh,04Bh,034h,089h,044h
+    db 024h,044h,0E8h,079h,0FCh,0FFh,0FFh,08Bh,074h,024h,014h,085h
+    db 0F6h,089h,074h,024h,040h,074h,079h,08Bh,054h,024h,040h,08Bh
+    db 072h,004h,08Bh,006h,08Bh,0CEh,0FFh,090h,09Ch,001h,000h,000h
+    db 085h,0C0h,075h,02Ch,08Bh,016h,08Bh,0CEh,0FFh,092h,000h,001h
+    db 000h,000h,08Bh,0CDh,08Bh,0F8h,0E8h,005h,0D6h,0FEh,0FFh,08Dh
+    db 085h,004h,001h,000h,000h,057h,050h,0E8h,068h,068h,0F9h,0FFh
+    db 08Bh,07Ch,024h,018h,083h,0C4h,008h,083h,0F8h,001h,074h,026h
+    db 06Ah,001h,08Dh,046h,008h,050h,08Bh,0CFh,0E8h,04Fh,077h,009h
+    db 000h,03Ch,001h,075h,003h,0FFh,046h,004h,08Bh,083h,004h,001h
+    db 000h,000h,08Bh,016h,050h,053h,08Bh,0CEh,0FFh,092h,088h,001h
+    db 000h,000h,08Bh,04Ch,024h,040h,08Bh,001h,085h,0C0h,089h,044h
+    db 024h,040h,075h,08Bh,08Bh,074h,024h,014h,08Bh,0ABh,0DCh,000h
+    db 000h,000h,081h,0C3h,0D8h,000h,000h,000h,03Bh,0EBh,074h,037h
+    db 08Dh,064h,024h,000h,08Bh,045h,00Ch,085h,0C0h,074h,00Ch,08Dh
+    db 070h,0F8h,085h,0F6h,074h,007h,08Dh,046h,008h,0EBh,004h,033h
+    db 0F6h,033h,0C0h,06Ah,001h,050h,08Bh,0CFh,0E8h,0EFh,076h,009h
+    db 000h,03Ch,001h,075h,003h,0FFh,046h,004h,08Bh,06Dh,004h,03Bh
+    db 0EBh,075h,0D1h,08Bh,074h,024h,014h,085h,0F6h,0C7h,044h,024h
+    db 038h,0FFh,0FFh,0FFh,0FFh,074h,014h,090h,08Bh,0C6h,08Bh,036h
+    db 06Ah,008h,050h,0E8h,054h,09Dh,0EEh,0FFh,083h,0C4h,008h,085h
+    db 0F6h,075h,0EDh,08Bh,04Ch,024h,030h,05Fh,05Eh,05Dh,05Bh,064h
+    db 089h,00Dh,000h,000h,000h,000h,083h,0C4h,02Ch,0C2h,004h,000h
+?method@Rva00944690Scene@@UAEXPAVCameraClass@@@Z ENDP
+_TEXT ENDS
+END
