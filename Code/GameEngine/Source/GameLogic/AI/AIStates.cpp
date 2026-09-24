@@ -5688,6 +5688,9 @@ void AIMoveAndDeleteState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //----------------------------------------------------------------------------------------------------------
+// ?onEnter@AIMoveAndDeleteState@@UAE?AW4StateReturnType@@XZ present-unmatched
+// This "60" body is AIMoveToPositionAndDieState::onEnter (0x0017EF50), now
+// matched from AIMoveToPositionAndDieState_onEnter.cpp.
 StateReturnType AIMoveAndDeleteState::onEnter()
 {
 	BfmeMoveStateFields *self = (BfmeMoveStateFields *)this;
