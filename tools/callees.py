@@ -44,13 +44,36 @@ IMAGE_MAX = 0x1400000
 
 
 def ledger_names():
-    out = {}
+    # Several retail addresses have multiple ledger identities sharing one
+    # compiled COMDAT. The ledger is sorted by name, so last-row-wins can
+    # present an unrelated alias as the callee's identity.
+    at_rva = collections.defaultdict(set)
     with open(build.ROOT / "reverse/functions.csv", newline="") as fh:
         for row in csv.DictReader(fh):
             try:
-                out[int(row["target_rva"], 16)] = row["name"]
+                rva = int(row["target_rva"], 16)
+                name = row["name"]
             except (KeyError, TypeError, ValueError):
                 continue
+            if name:
+                object_symbol = build.ledger_object_symbol(
+                    {"name": name, "notes": row.get("notes") or ""})
+                at_rva[rva].add((name, object_symbol))
+
+    out = {}
+    for rva, entries in at_rva.items():
+        names = {name for name, _ in entries}
+        objects = {object_symbol for _, object_symbol in entries}
+        if len(entries) == 1:
+            name, object_symbol = next(iter(entries))
+            out[rva] = (name if name == object_symbol else
+                        f"{name} [object symbol: {object_symbol}]")
+        elif len(objects) == 1:
+            out[rva] = (f"{next(iter(objects))} [object symbol; "
+                        f"{len(names)} ledger names share RVA]")
+        else:
+            out[rva] = (f"*** AMBIGUOUS LEDGER: {len(names)} ledger names, "
+                        f"{len(objects)} object symbols share RVA ***")
     return out
 
 

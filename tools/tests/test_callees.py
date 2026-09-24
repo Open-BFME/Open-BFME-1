@@ -1,4 +1,5 @@
 """Instruction boundaries and placeholder identities must not invent contracts."""
+import csv
 import struct
 import sys
 from pathlib import Path
@@ -8,6 +9,45 @@ import pytest
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import callees
 import pin_consistency
+
+
+def test_ledger_aliases_show_compiled_body_without_claiming_alias_identity(monkeypatch, tmp_path):
+    reverse = tmp_path / "reverse"
+    reverse.mkdir()
+    with (reverse / "functions.csv").open("w", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=["name", "target_rva", "notes"])
+        writer.writeheader()
+        writer.writerows([
+            {"name": "StringBaseCopy", "target_rva": "0x00887B60", "notes": ""},
+            {"name": "BuddyInfoCopy", "target_rva": "0x00887B60",
+             "notes": "object-symbol=StringBaseCopy;C++ alias"},
+            {"name": "GameSpyGroupRoomCopy", "target_rva": "0x00887B60",
+             "notes": "object-symbol=StringBaseCopy;C++ alias"},
+        ])
+    monkeypatch.setattr(callees.build, "ROOT", tmp_path)
+
+    shown = callees.ledger_names()[0x00887B60]
+    assert "StringBaseCopy" in shown
+    assert "object symbol" in shown
+    assert "3 ledger names" in shown
+    assert "GameSpyGroupRoomCopy" not in shown
+
+
+def test_distinct_object_symbols_at_same_rva_are_reported_ambiguous(monkeypatch, tmp_path):
+    reverse = tmp_path / "reverse"
+    reverse.mkdir()
+    with (reverse / "functions.csv").open("w", newline="") as fh:
+        writer = csv.DictWriter(fh, fieldnames=["name", "target_rva", "notes"])
+        writer.writeheader()
+        writer.writerows([
+            {"name": "FirstBody", "target_rva": "0x0033A580", "notes": ""},
+            {"name": "SecondBody", "target_rva": "0x0033A580", "notes": ""},
+        ])
+    monkeypatch.setattr(callees.build, "ROOT", tmp_path)
+
+    shown = callees.ledger_names()[0x0033A580]
+    assert "AMBIGUOUS" in shown
+    assert "FirstBody" not in shown and "SecondBody" not in shown
 
 
 def install_body(monkeypatch, body):
