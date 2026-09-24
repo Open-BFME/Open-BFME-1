@@ -203,7 +203,8 @@ void PopulateReplayFileListbox(GameWindow *listbox)
 	FilenameList replayFilenames;
 	FilenameListIter it;
 
-	TheFileSystem->getFileListInDirectory(TheRecorder->getReplayDir(), asciisearch, replayFilenames, TRUE);
+	FileSystem *fileSystem = TheFileSystem;
+	fileSystem->getFileListInDirectory(TheRecorder->getReplayDir(), asciisearch, replayFilenames, TRUE);
 
 	TheMapCache->updateCache();
 
