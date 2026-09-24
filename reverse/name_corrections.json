@@ -2318,5 +2318,25 @@
   "after_sha256": "cd89bb6f8e205c7140a210fb8ce5adab88e47affb4ed32aa8406bf408a372772",
   "evidence": "reverse/name_oracle_baseline.csv",
   "reason": "review of 0x0073FF30: +0x1DC is the rotate-camera flag (ZH cameraModLookToward tests m_doingRotateCamera first; matched rotateCamera sets +0x1DC; sibling FinalLookToward names it doingRotateCamera); +0x138 has no witness and W3DViewResetBfme.cpp keeps it m_field138; the waypoint-path fields this body never reads take opaque names"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp",
+  "old_name": "m_desyncLogFrameCount",
+  "new_name": "m_field1A0",
+  "before_sha256": "79e22f85d4b564a197dca2e6620c7657453c0b75c1207258ad19230ab6f5ee1c",
+  "after_sha256": "dffcf4de1515312e16751aa0cf7f8974a665f192bddf886d74c4ec3fc27b215d",
+  "evidence": "reverse/name_oracle_baseline.csv",
+  "reason": "review of 0x00177A90: name_oracle reports GameLogic+0x1A0 and +0x3C not witnessed (no BFME witness, the desync-log name had no source), so they take offset names; Object+0x38 is witnessed as Thing m_cachedPos"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_computePath.cpp",
+  "old_name": "m_frame",
+  "new_name": "m_field3C",
+  "before_sha256": "79e22f85d4b564a197dca2e6620c7657453c0b75c1207258ad19230ab6f5ee1c",
+  "after_sha256": "dffcf4de1515312e16751aa0cf7f8974a665f192bddf886d74c4ec3fc27b215d",
+  "evidence": "reverse/name_oracle_baseline.csv",
+  "reason": "review of 0x00177A90: name_oracle reports GameLogic+0x1A0 and +0x3C not witnessed (no BFME witness, the desync-log name had no source), so they take offset names; Object+0x38 is witnessed as Thing m_cachedPos"
  }
 ]

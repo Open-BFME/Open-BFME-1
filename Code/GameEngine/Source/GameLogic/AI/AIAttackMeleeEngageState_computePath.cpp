@@ -13,13 +13,11 @@
 #include "basetype.h"
 
 extern void j_0003a17a();
-extern void j_0001f253();
 extern void j_00031a7f();
 extern void j_0003a4e5();
 extern void j_000296b8();
 extern void j_0001c675();
 extern void j_000294e2();
-extern void j_00015d93();
 
 class Rva00177A90Receiver {};
 template<class T> __forceinline T Rva00177A90Member(void (*raw)())
@@ -42,7 +40,7 @@ struct Rva00177A90AIUpdate
 struct Rva00177A90Object
 {
     char pad00[0x38];
-    Coord3D m_position;
+    Coord3D m_cachedPos;
     char pad44[0xbc-0x44];
     float valueBC; // 177A90+154/+15c; twice this field plus literal 60.0
     char padC0[0x204-0xc0];
@@ -57,9 +55,9 @@ class GameLogic
 {
 public:
     char pad00[0x3c];
-    unsigned m_frame;
+    unsigned m_field3C;
     char pad40[0x1a0-0x40];
-    int m_desyncLogFrameCount;
+    int m_field1A0;
 };
 class AI { public: char pad00[0xc]; void *m_pathfinder; };
 class CRCParameterCheck;
@@ -169,23 +167,23 @@ Bool AIAttackMeleeEngageState::computePath()
     }
     if (!ai->m_path && !ai->flag31e)
         forceRepath = true;
-    if (!forceRepath && TheBfmeGameLogic->m_frame - frame58 < 5)
+    if (!forceRepath && TheBfmeGameLogic->m_field3C - frame58 < 5)
         return true;
-    frame58 = TheBfmeGameLogic->m_frame;
+    frame58 = TheBfmeGameLogic->m_field3C;
     if (CALL(Rva000A1490,m_machine,j_0000e570)())
     {
         Rva00177A90Object *source = m_machine->m_owner;
-        if (!forceRepath && isSamePosition(&source->m_position,&position5c,
-            &CALL(Rva000A1490,m_machine,j_0000e570)()->m_position))
+        if (!forceRepath && isSamePosition(&source->m_cachedPos,&position5c,
+            &CALL(Rva000A1490,m_machine,j_0000e570)()->m_cachedPos))
             return true;
         void *weapon = CALL(Rva001BE230,source,j_00031a7f)(0);
         if (!weapon)
             return false;
         Rva00177A90Object *victim = CALL(Rva000A1490,m_machine,j_0000e570)();
         Coord3D position;
-        position.x = victim->m_position.x;
-        position.y = victim->m_position.y;
-        position.z = victim->m_position.z;
+        position.x = victim->m_cachedPos.x;
+        position.y = victim->m_cachedPos.y;
+        position.z = victim->m_cachedPos.z;
         CALL(Rva001C0010,victim,j_00027bc9)(&position);
         position5c = position;
         if (((Rva00175820)j_0002056d)(source,victim))
@@ -202,12 +200,12 @@ Bool AIAttackMeleeEngageState::computePath()
                 flag4d = false;
             return true;
         }
-        if (TheBfmeGameLogic->m_desyncLogFrameCount > 0 && !forceRepath && TheCRCParameterCheck)
+        if (TheBfmeGameLogic->m_field1A0 > 0 && !forceRepath && TheCRCParameterCheck)
             ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
                 "masiwar called by AIAttackMeleeEngageState::computePath [1]");
         if (!forceRepath && CALL(Rva001E6930,weapon,j_0003a4e5)(source,&m_goalPosition,victim,&position5c,0.0f))
             return true;
-        if (TheBfmeGameLogic->m_desyncLogFrameCount > 0 && TheCRCParameterCheck)
+        if (TheBfmeGameLogic->m_field1A0 > 0 && TheCRCParameterCheck)
             ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
                 "AIAttackFireDuringApproachState::computePath[2] will call FindMeleeEngagmentLocation with %f,%f (m_goalPosition:%f,%f = m_prevVictimPosition:%f, %f;)",
                 (double)m_goalPosition.x,(double)m_goalPosition.y,
@@ -226,7 +224,7 @@ Bool AIAttackMeleeEngageState::computePath()
                 return true;
             }
             flag74 = true;
-            frame70 = TheBfmeGameLogic->m_frame + 50;
+            frame70 = TheBfmeGameLogic->m_field3C + 50;
             return true;
         }
         void *pathfinder = TheAI->m_pathfinder;
