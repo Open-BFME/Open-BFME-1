@@ -1,6 +1,8 @@
 // cl: /DNDEBUG /MD /EHsc /O2
 // BFME TAiData assignment.  The local member order follows the witnessed
 // constructor layout; the byte gaps are compiler padding and are not copied.
+// AI::newOverride identifies +0xF4 as m_namedLists and +0xF8 as m_next;
+// see reverse/identity_evidence/0x0014ac60-taidata-destructor.md.
 
 class Snapshot
 {
@@ -96,8 +98,8 @@ public:
 	unsigned char m_bfmeE9EB[3];
 	void *m_sideInfo;
 	void *m_sideBuildLists;
+	void *m_namedLists;
 	TAiData *m_next;
-	void *m_bfmeF8;
 };
 
 // ??4TAiData@@QAEAAV0@ABV0@@Z
@@ -170,7 +172,7 @@ TAiData &TAiData::operator=(const TAiData &other)
 	m_bfmeE8 = other.m_bfmeE8;
 	m_sideInfo = other.m_sideInfo;
 	m_sideBuildLists = other.m_sideBuildLists;
+	m_namedLists = other.m_namedLists;
 	m_next = other.m_next;
-	m_bfmeF8 = other.m_bfmeF8;
 	return *this;
 }

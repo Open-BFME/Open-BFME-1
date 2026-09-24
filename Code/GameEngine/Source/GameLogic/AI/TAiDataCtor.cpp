@@ -4,6 +4,8 @@
 // BFME's TAiData predates the larger Zero Hour layout exposed by the reference
 // header.  Keeping its layout local prevents that later header from changing
 // the member offsets and the three one-dword retail strings used here.
+// The matched AI::newOverride copy identifies +0xF4 as m_namedLists and
+// +0xF8 as m_next (reverse/identity_evidence/0x0014ac60-taidata-destructor.md).
 
 typedef float Real;
 typedef unsigned int UnsignedInt;
@@ -129,8 +131,8 @@ private:
 	unsigned char m_bfmeE9[3];
 	void *m_sideInfo;
 	void *m_sideBuildLists;
+	void *m_namedLists;
 	TAiData *m_next;
-	void *m_bfmeF8;
 };
 
 TAiData::TAiData() :
@@ -200,8 +202,8 @@ TAiData::TAiData() :
 	m_bfmeE8( 0 ),
 	m_sideInfo( 0 ),
 	m_sideBuildLists( 0 ),
-	m_next( 0 ),
-	m_bfmeF8( 0 )
+	m_namedLists( 0 ),
+	m_next( 0 )
 {
 	m_bfmeE4 = 0.55f;
 }
