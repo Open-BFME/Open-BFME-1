@@ -1,5 +1,5 @@
-// ?rva001e9380@WeaponTemplate@@QAEXPBVObject@@PBUCoord3D@@HHPAV2@H1ABUWeaponBonus@@_NPAVWeapon@@PAH@Z
-// partial score=0.8011849901250823 date=2026-09-23
+// ?d_001e9380@@YAXXZ
+// partial score=0.91 date=2026-09-24
 // ?rva001e9380@WeaponTemplate@@QAEXPBVObject@@PBUCoord3D@@HHPAV2@H1ABUWeaponBonus@@_NPAVWeapon@@PAH@Z
 // BFME 1.03 RVA 0x001E9380, 1519 decoded bytes, through ret 0x2c at 0x001E996C.
 // Reached by Weapon::privateFireWeapon (001E9FD0) via ILT000425C3.
@@ -7,7 +7,7 @@
 // the historical Zero Hour fireWeaponTemplate mangling does NOT describe it.
 // Keep the method address-qualified until its original signature is proved.
 // The 0x4c frame, all dispatch branches and direct call sites are reconstructed.
-// Still partial: 1520 bytes, 300 masked byte differences, score 0.8011849901.
+// Best measured variant: 1,520 bytes, 139 differing non-relocation bytes, score 0.91.
 // getAimPosition/scatter have hidden coordinate returns; scatter additionally
 // takes its last coordinate by value. Both callees and caller stack cleanup
 // were decoded independently. Drawable FX consumes seven arguments (ret1c),
@@ -15,11 +15,10 @@
 // are intentionally unpinned while this caller remains unmatched.
 // Coord3D copy/empty-dtor lifetime agrees with the landed TerrainLogic
 // getLayerForDestinationObject and BaseUpgrade upgradeImplementation donors.
-// Recoil is snapshotted before aim in this best measured variant; the decoded
-// aim helper only reads the template. The alternative preserving retail's
-// later load is saved in build/astra_unclaimed_20260923/weapon_cd_speed_accessor.cpp
-// (1520B / 391 differences). Other remaining gaps are scratch-register order
-// across FX, the position copy, and EBX/EBP in the final nugget loop.
+// Retail calls Object vtable slot +0x28 at +0x196 with EAX and at +0x28B with EDX.
+// Separate typed local vtable views reduce relocation drift from nine sites to three.
+// The remaining control-flow residue starts at +0x1A3. Retail branches on victimObj
+// before loading recoil; this source loads recoil before the branch.
 
 // stlport
 // cl: /DNDEBUG /MD /O2 /EHsc
@@ -344,6 +343,16 @@ public:
     Coord3D m_position;
 };
 class Player;
+struct Rva001E9380ThingVtable
+{
+    void *slots00[10];
+    union
+    {
+        Drawable *(__fastcall *getDrawableEax)(Thing *);
+        Drawable *(__fastcall *getDrawableEdx)(Thing *, Rva001E9380ThingVtable *);
+    };
+};
+
 class Object : public Thing
 {
 public:
@@ -531,7 +540,8 @@ void WeaponTemplate::rva001e9380(const Object *sourceObj,
         if (distanceSquared < minimumRange * minimumRange)
             return;
     }
-    if (sourceObj->getDrawable())
+    Rva001E9380ThingVtable *initialDrawableVtable = *(Rva001E9380ThingVtable **)sourceObj;
+    if (initialDrawableVtable->getDrawableEax((Thing *)sourceObj))
     {
         Real recoilAngle = getWeaponRecoilAmount();
         Coord3D aimPosition;
@@ -550,7 +560,8 @@ void WeaponTemplate::rva001e9380(const Object *sourceObj,
             handled = true;
         else
         {
-            handled = sourceObj->getDrawable()->handleWeaponFireFX((WeaponSlotType)wslot, specificBarrelToUse, fx, getWeaponSpeed(), recoilAngle, direction, &aimPosition);
+            Rva001E9380ThingVtable *effectDrawableVtable = *(Rva001E9380ThingVtable **)sourceObj;
+            handled = effectDrawableVtable->getDrawableEdx((Thing *)sourceObj, effectDrawableVtable)->handleWeaponFireFX((WeaponSlotType)wslot, specificBarrelToUse, fx, getWeaponSpeed(), recoilAngle, direction, &aimPosition);
         }
         if (!handled && fx)
             FXList::doFXObj(fx,sourceObj,victimObj);
