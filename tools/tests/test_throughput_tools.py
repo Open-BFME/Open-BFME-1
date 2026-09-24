@@ -153,6 +153,24 @@ def test_concurrent_cache_requests_compile_once(compiler):
     assert sorted(reused for _, reused in results) == [False, True]
 
 
+def test_read_only_receipt_uses_the_same_dependency_and_option_checks(compiler):
+    source, state = compiler
+    assert experiments.validated_object_receipt(source) is None
+    experiments.compile_cached(source)
+    receipt = experiments.validated_object_receipt(source)
+    assert receipt
+    (source.parent / "unrelated.h").write_text("first")
+    experiments.compile_cached(source)  # refresh search inventory after file addition
+    receipt = experiments.validated_object_receipt(source)
+    (source.parent / "unrelated.h").write_text("second")
+    assert experiments.validated_object_receipt(source) == receipt
+    state["deps"] = False
+    assert experiments.validated_object_receipt(source) is None
+    state["deps"] = True
+    state["flags"] = ["-Od"]
+    assert experiments.validated_object_receipt(source) is None
+
+
 def test_claims_are_all_or_nothing_and_owner_release_is_scoped(tmp_path):
     fleet_run.claim(tmp_path, "first", [("0x1000", 8)])
     with pytest.raises(RuntimeError):

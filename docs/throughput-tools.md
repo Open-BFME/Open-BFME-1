@@ -30,6 +30,16 @@ are still cheap. `seat.sh` now runs the tracked `tools/fleet/pick_*.py`
 directly; the untracked `build/pick_*.py` copies were never refreshed on other
 hosts.
 
+Finish measurements are diagnostic queue scores, never acceptance receipts.
+`finish_measure.py` keeps a result only while the stash symbol and body, ledger
+row and retail extent, probe logic, and the experiment store's verified compiler
+object receipt remain current. A missing prerequisite, compiler failure or
+timeout gets a short retry window. Qualified positive results rank ahead of
+unmeasured bodies; valid zero-quality and failed probes rank behind them. Four
+target briefs reserve one place for an unmeasured candidate when available.
+The 0.9 author-score admission floor is unchanged because a lower floor has
+not demonstrated an additional viable finish body.
+
 `tools/fleet_run.py` claims are leases: pid + expiry (`FLEET_LEASE_SECONDS`,
 default session cap + 30 min). A lease is reclaimed only when expired AND the
 pid is gone; an unknown pid is never reclaimed. Takeovers are recorded in the

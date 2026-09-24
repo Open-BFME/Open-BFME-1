@@ -32,7 +32,7 @@ lock(lf, exclusive=True)
 claimed = eligibility.busy_rvas(ROOT) | eligibility.recent_run_rvas(48, ROOT)
 # best-first on what the COMPILER says about the stash (tools/finish_measure.py):
 # the header score is an author estimate and runs optimistic. Up to 8 unmeasured
-# stashes are measured per pick (~2 s each, cached by stash body), best author
+# stashes are measured per pick (cached while all probe inputs stay current), best author
 # score first, so the cache fills in a few picks; FINISH_MEASURE=0 skips that.
 import os
 import finish_measure

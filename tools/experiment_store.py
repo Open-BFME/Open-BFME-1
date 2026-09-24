@@ -54,32 +54,72 @@ def search_inventory(source, command, env):
     return digest(json.dumps(directories).encode())
 
 
-def compile_cached(source):
+def _compile_inputs(source):
     source = Path(source).resolve()
     root = build.ROOT / "build" / "experiments"
-    root.mkdir(parents=True, exist_ok=True)
     placeholder = root / "object.obj"
     command, env = build.compiler_command(source, placeholder)
     key = digest(json.dumps([str(source), digest(source.read_bytes()),
                              compiler_identity(source), command,
                              {k: env.get(k, "") for k in ("INCLUDE", "CL", "_CL_", "PATH")}]).encode())
-    directory = root / key
+    return source, root / key, command, env
+
+
+def _verified_object(source, directory, command, env):
+    """The one receipt/dependency rule for compilation reuse and read-only probes."""
+    receipt = directory / "cache.json"
+    inventory = search_inventory(source, command, env)
+    try:
+        meta = json.loads(receipt.read_text()) if receipt.exists() else {}
+    except (ValueError, OSError):
+        meta = {}
+    obj = directory / meta.get("path", "missing.obj")
+    if (inventory is not None and not env.get("CL") and not env.get("_CL_")
+            and obj.exists() and meta.get("inventory") == inventory
+            and meta.get("object") == digest(obj.read_bytes())
+            and build.compile_is_current(source, obj)):
+        return obj, meta
+    return None
+
+
+def validated_object_receipt(source):
+    """Fingerprint a *currently reusable* object without invoking a compile.
+
+    The finish measurement cache calls this to qualify a stored probe. An
+    absent or changed dependency receipt is not evidence of current codegen.
+    """
+    try:
+        source, directory, command, env = _compile_inputs(source)
+        lock_path = directory / "compile.lock"
+        if not lock_path.exists():
+            return None
+        with lock_path.open("r+b") as handle:
+            lock(handle, exclusive=False)
+            try:
+                found = _verified_object(source, directory, command, env)
+                if found is None:
+                    return None
+                _, meta = found
+                return digest(json.dumps([directory.name, meta], sort_keys=True).encode())
+            finally:
+                unlock(handle)
+    except (Exception, SystemExit):
+        # Missing toolchain, dependency, or receipt invalidates a measurement;
+        # it never makes an old result into an acceptance receipt.
+        return None
+
+
+def compile_cached(source):
+    source, directory, command, env = _compile_inputs(source)
+    directory.parent.mkdir(parents=True, exist_ok=True)
     directory.mkdir(exist_ok=True)
     receipt = directory / "cache.json"
     with (directory / "compile.lock").open("a+b") as handle:
         lock(handle, exclusive=True)
         try:
-            inventory = search_inventory(source, command, env)
-            try:
-                meta = json.loads(receipt.read_text()) if receipt.exists() else {}
-            except (ValueError, OSError):
-                meta = {}
-            obj = directory / meta.get("path", "missing.obj")
-            if (inventory is not None and not env.get("CL") and not env.get("_CL_")
-                    and obj.exists() and meta.get("inventory") == inventory
-                    and meta.get("object") == digest(obj.read_bytes())
-                    and build.compile_is_current(source, obj)):
-                return obj, True
+            found = _verified_object(source, directory, command, env)
+            if found is not None:
+                return found[0], True
             # Never replace an object another probe may still be reading.
             obj = directory / ("object-" + uuid.uuid4().hex + ".obj")
             try:
@@ -88,7 +128,7 @@ def compile_cached(source):
                 # Keep negative evidence, but never reuse a failed compile:
                 # /showIncludes may not have disclosed all dependencies yet.
                 (directory / ("failure-" + str(time.time_ns()) + ".json")).write_text(
-                    json.dumps({"error": str(error), "source": str(source), "key": key}))
+                    json.dumps({"error": str(error), "source": str(source), "key": directory.name}))
                 receipt.unlink(missing_ok=True)
                 raise
             # Capture AFTER compiling: some toolchains create header directories.

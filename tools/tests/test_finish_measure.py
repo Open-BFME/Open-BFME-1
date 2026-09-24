@@ -1,9 +1,27 @@
 """The finish lane ranks on the compiler's measurement, not the author's score."""
 from pathlib import Path
 import sys
+import time
+
+import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import finish_measure  # noqa: E402
+import experiment_store  # noqa: E402
+
+
+@pytest.fixture
+def proof(monkeypatch):
+    # These ranking tests isolate ordering from retail-image and compiler I/O.
+    # Input/receipt invalidation is exercised separately with real fixtures.
+    monkeypatch.setattr(finish_measure, "hypothesis",
+                        lambda rva, path: finish_measure.body_hash(path))
+    monkeypatch.setattr(experiment_store, "validated_object_receipt", lambda path: "object")
+    def entry(path, **fields):
+        return dict(fields, version=finish_measure.VERSION,
+                    fingerprint=finish_measure.body_hash(path), receipt="object",
+                    path=str(path), at=time.time())
+    return entry
 
 NEAR = """compile  reused verified dependency cache
 symbol   ?f@@YAXXZ
@@ -31,20 +49,20 @@ def stash(tmp_path, name, body):
     return path
 
 
-def test_measured_quality_outranks_an_optimistic_author_score(tmp_path):
+def test_measured_quality_outranks_an_optimistic_author_score(tmp_path, proof):
     honest, boastful, unmeasured = (stash(tmp_path, n, n) for n in ("a.cpp", "b.cpp", "c.cpp"))
     cache = {
-        "0x00000010": dict(finish_measure.parse(NEAR), hash=finish_measure.body_hash(honest)),
-        "0x00000020": dict(finish_measure.parse(BROKEN), hash=finish_measure.body_hash(boastful)),
+        "0x00000010": proof(honest, **finish_measure.parse(NEAR)),
+        "0x00000020": proof(boastful, **finish_measure.parse(BROKEN)),
     }
     bodies = [(0x20, boastful, 0.999, 700), (0x30, unmeasured, 0.95, 300), (0x10, honest, 0.90, 143)]
     bodies.sort(key=lambda b: finish_measure.rank_key(cache, *b))
     assert [b[0] for b in bodies] == [0x10, 0x30, 0x20]      # a failed probe cannot outrank fresh work
 
 
-def test_a_changed_stash_body_is_measured_again_but_a_new_score_is_not(tmp_path):
+def test_a_changed_stash_body_is_measured_again_but_a_new_score_is_not(tmp_path, proof):
     path = stash(tmp_path, "a.cpp", "int x;")
-    cache = {"0x00000010": dict(quality=0.5, hash=finish_measure.body_hash(path))}
+    cache = {"0x00000010": proof(path, compiles=True, quality=0.5)}
     assert finish_measure.current(cache, 0x10, path)
     path.write_text("// ?f@@YAXXZ\n// partial score=0.999 date=2026-09-21\nint x;\n", encoding="utf-8")
     assert finish_measure.current(cache, 0x10, path)          # same hypothesis, louder claim
@@ -53,6 +71,9 @@ def test_a_changed_stash_body_is_measured_again_but_a_new_score_is_not(tmp_path)
 
 
 def test_ensure_respects_its_budget(tmp_path, monkeypatch):
+    monkeypatch.setattr(finish_measure, "hypothesis",
+                        lambda rva, path: finish_measure.body_hash(path))
+    monkeypatch.setattr(experiment_store, "validated_object_receipt", lambda path: "object")
     monkeypatch.setattr(finish_measure, "CACHE", tmp_path / "cache.json")
     monkeypatch.setattr(finish_measure, "measure", lambda rva, path: finish_measure.parse(EXACT))
     bodies = [(0x10 * i, stash(tmp_path, f"{i}.cpp", str(i))) for i in range(1, 6)]
