@@ -1,5 +1,4 @@
-// ?Rva004BCCE0@@YAXPAVGameWindow@@@Z
-// partial score=0.9950248756218906 date=2026-09-24
+// cl: /DNDEBUG /MD /EHsc
 // Retail 0x004BCCE0, 402 bytes.
 // Sits between the landed GadgetPushButtonSystem (0x004BCBB0,
 // GadgetPushButtonBodies.cpp) and GadgetRadioButton.cpp's doRadioUnselect
@@ -11,7 +10,7 @@
 // (BfmeConv1335.cpp), Rva0029BBC0::isEither (S2TwoValueStateTests.cpp),
 // Object::getProductionUpdateInterface (ObjectFields.cpp),
 // ControlBar::findContainedObject (ControlBar_findContainedObject.cpp) and
-// GameWindow::winGetUserData (GadgetUserDataHelpers.cpp).
+// GameWindow::winGetUserData (GameWindow.cpp).
 //
 // Retail walks a window's push-button user data (+0x28 dirty flag routes
 // through Rva004BC8A0; +0x14 is a command-button/BfmeOwnerLU pointer whose
@@ -125,13 +124,6 @@ public:
 	virtual Rva0029BBC0 *slot19( Rva0029BBC0 *cur ) = 0;
 #undef BFME_PUI_SLOT
 };
-typedef Rva0029BBC0 *(__fastcall *Rva004BCCE0Slot18Fn)(void *, void *);
-struct Rva004BCCE0Vtable
-{
-	void *slots[18];
-	Rva004BCCE0Slot18Fn slot18;
-};
-
 class Object
 {
 public:
@@ -227,7 +219,10 @@ void Rva004BCCE0( GameWindow *window )
 			{
 				if( (char)item->isEither() )
 				{
-					if( thing->bfmeCheckFH( *(void **)( (char *)item + 8 ) ) )
+					// Named local, not an inline argument: it shifts VC7.1's scratch
+					// register rotation so the get-next vtable load lands in EAX.
+					void *field8 = *(void **)( (char *)item + 8 );
+					if( thing->bfmeCheckFH( field8 ) )
 					{
 						GadgetButtonDrawInverseClock( window, ( (BfmeThingUKD *)item )->bfmeGoUKD(), 0x80FFFFFF );
 						return;
@@ -241,8 +236,7 @@ void Rva004BCCE0( GameWindow *window )
 		{
 			void *compareKey = *(void **)( (char *)command + 0x20 );
 
-			Rva004BCCE0Vtable *vtable = *(Rva004BCCE0Vtable **)pui;
-			Rva0029BBC0 *item = vtable->slot18(pui, vtable);
+			Rva0029BBC0 *item = pui->slot18();
 			while( item != 0 )
 			{
 				if( *(int *)( (char *)item + 4 ) == 2 )
