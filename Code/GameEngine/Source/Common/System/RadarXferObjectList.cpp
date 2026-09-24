@@ -16,8 +16,10 @@
 // new rather than the twin's memory pool.
 //
 // The helper is static, so MSVC 7.1 gives it a private convention (head in
-// eax, xfer in edi); the TU-local caller below keeps it alive with that
-// convention, as Radar::xfer does in retail.
+// eax, xfer in edi); Radar::xfer (0x00108BF0) below is its only caller, as in
+// retail.  BFME's Radar::xfer returns early for a light CRC xfer, writes
+// version 2, and after the Zero Hour fields drops each event's reference-
+// counted attachment on load and transfers the BFME-only fields that follow.
 
 typedef unsigned char UnsignedByte;
 typedef unsigned short UnsignedShort;
@@ -73,25 +75,29 @@ public:
 	virtual void xferVersion(XferVersion *version);
 	virtual void slot11();
 	virtual void xferSnapshot(Snapshot *snapshot);
-	virtual void slot13();
+	virtual void xferRGBAColorInt(void *color);
 	virtual void slot14();
 	virtual void slot15();
 	virtual void slot16();
-	virtual void slot17();
+	virtual void slot17(void *value);
 	virtual void slot18();
-	virtual void slot19();
+	virtual void xferICoord2D(void *value);
 	virtual void slot20();
 	virtual void slot21();
 	virtual void slot22();
 	virtual void slot23();
-	virtual void slot24();
+	virtual void xferCoord3D(void *value);
 	virtual void slot25();
 	virtual void slot26();
-	virtual void slot27();
+	virtual void slot27(void *value);
 	virtual void slot28();
-	virtual void slot29();
-	virtual void slot30();
+	virtual void xferUnsignedInt(UnsignedInt *value);
+	virtual void xferInt(Int *value);
 	virtual void xferUnsignedShort(UnsignedShort *value);
+	virtual void slot32();
+	virtual void slot33();
+	virtual void slot34();
+	virtual void xferBool(Bool *value);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
@@ -217,10 +223,144 @@ static void xferRadarObjectList( Xfer *xfer, RadarObject **head )
 
 }  // end xferRadarObjectList
 
-// absent-from-retail: TU-local caller keeping the static alive with the
-// private eax/edi convention Radar::xfer (0x00108BF0) gives it.
-void Rva00108A90XferRadarObjectListCaller( Xfer *xfer, RadarObject **localList, RadarObject **list )
+class MidVirtualSlot90Receiver;
+
+void Rva0010BF80(MidVirtualSlot90Receiver *xfer, void *value);
+
+// An event's reference-counted attachment; the load path drops it.
+class Rva00108BF0EventAttachment
 {
-	xferRadarObjectList( xfer, localList );
-	xferRadarObjectList( xfer, list );
+public:
+	virtual ~Rva00108BF0EventAttachment();
+
+	void releaseRef()
+	{
+		if (--m_refCount <= 0)
+			delete this;
+	}
+
+	Int m_refCount;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
+struct RadarEvent
+{
+	Int type;
+	Bool active;
+	UnsignedInt createFrame;
+	UnsignedInt dieFrame;
+	UnsignedInt fadeFrame;
+	Int color1[4];
+	Int color2[4];
+	float worldLoc[3];
+	Int radarLoc[2];
+	Bool soundPlayed;
+	Rva00108BF0EventAttachment *m_attachment;
+};
+
+enum
+{
+	MAX_RADAR_EVENTS = 64
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Radar.h
+class Radar : public Snapshot
+{
+protected:
+	virtual void xfer(Xfer *xfer);
+
+	unsigned char m_pad04[0x0c - 0x04];
+	Bool m_radarHidden;
+	Bool m_radarForceOn;
+	RadarObject *m_objectList;
+	RadarObject *m_localObjectList;
+	float m_field18;
+	float m_field1C;
+	float m_field20;
+	float m_field24;
+	RadarEvent m_event[MAX_RADAR_EVENTS];
+	Int m_nextFreeRadarEvent;
+	Int m_lastRadarEvent;
+	Int m_field1430;
+	UnsignedInt m_field1434;
+	unsigned char m_pad1438[0x1454 - 0x1438];
+	unsigned char m_field1454[0x10];
+	Bool m_field1464;
+	UnsignedInt m_field1468;
+};
+
+struct RadarXferVersion : public XferVersion
+{
+	RadarXferVersion(UnsignedByte version, UnsignedByte currentVersion)
+	{
+		m_version = version;
+		m_currentVersion = currentVersion;
+	}
+};
+
+// ?xfer@Radar@@MAEXPAVXfer@@@Z
+void Radar::xfer( Xfer *xfer )
+{
+	if( xfer->IsLightCRC() )
+		return;
+
+	// version
+	RadarXferVersion version(1, 2);
+	xfer->xferVersion( &version );
+
+	xfer->xferBool( &m_radarHidden );
+	xfer->xferBool( &m_radarForceOn );
+
+	xferRadarObjectList( xfer, &m_localObjectList );
+	xferRadarObjectList( xfer, &m_objectList );
+
+	// save the radar event count and data
+	UnsignedShort eventCountVerify = MAX_RADAR_EVENTS;
+	UnsignedShort eventCount = eventCountVerify;
+	xfer->xferUnsignedShort( &eventCount );
+	if( eventCount != eventCountVerify )
+	{
+		XferException error;
+		bfmeFormatText( &error, 5, NULL );
+		_CxxThrowException( &error, &g_rva005c5100ThrowInfo );
+	}
+
+	for( UnsignedShort i = 0; i < eventCount; ++i )
+	{
+		Rva0010BF80( (MidVirtualSlot90Receiver *)xfer, &m_event[ i ].type );
+		xfer->xferBool( &m_event[ i ].active );
+		xfer->xferUnsignedInt( &m_event[ i ].createFrame );
+		xfer->xferUnsignedInt( &m_event[ i ].dieFrame );
+		xfer->xferUnsignedInt( &m_event[ i ].fadeFrame );
+		xfer->xferRGBAColorInt( m_event[ i ].color1 );
+		xfer->xferRGBAColorInt( m_event[ i ].color2 );
+		xfer->xferCoord3D( m_event[ i ].worldLoc );
+		xfer->xferICoord2D( m_event[ i ].radarLoc );
+		xfer->xferBool( &m_event[ i ].soundPlayed );
+
+		if( !xfer->IsStoring() && m_event[ i ].m_attachment )
+		{
+			m_event[ i ].m_attachment->releaseRef();
+			m_event[ i ].m_attachment = NULL;
+		}
+	}
+
+	xfer->xferInt( &m_nextFreeRadarEvent );
+	xfer->xferInt( &m_lastRadarEvent );
+
+	xfer->slot27( &m_field18 );
+	xfer->slot27( &m_field1C );
+	xfer->slot27( &m_field20 );
+	xfer->slot27( &m_field24 );
+
+	xfer->slot17( m_field1454 );
+	xfer->xferBool( &m_field1464 );
+	xfer->slot17( m_field1454 );
+	xfer->xferUnsignedInt( &m_field1468 );
+
+	if( version.m_currentVersion >= 2 )
+	{
+		xfer->xferInt( &m_field1430 );
+		xfer->xferUnsignedInt( &m_field1434 );
+	}
 }
