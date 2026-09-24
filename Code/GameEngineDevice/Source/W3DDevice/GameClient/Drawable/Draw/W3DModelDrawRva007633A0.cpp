@@ -1,12 +1,10 @@
-// ?rva007633A0@W3DModelDraw@@UAEXPAURva007633A0Input@@@Z
-// partial score=0.9736 date=2026-09-24
-// 0x007633A0: address-qualified W3DModelDraw-family vtable slot 16.
-// Seven constructor-installed tables route through ILT 0x0004A9FD; the method name is unproven.
-// Near match: 303/303 bytes, one aligned relocation, 8 non-relocation differences.
-// A volatile integer view reproduces retail's offsetY load, manager load/test,
-// then offsetY store schedule. The residue is a single register-allocation
-// choice (EDI instead of EDX) that propagates through the following virtual call.
 // cl: /DNDEBUG /MD /EHsc
+// W3DModelDraw vtable slot 16 at 0x007633A0 (method name unproven; address-qualified).
+// Seven constructor-installed W3DModelDraw-family tables, including the primary
+// 0x01123D38, route slot 16 through ILT 0x0004A9FD to this body.
+// Shape follows the sibling setTerrainDecal (0x00763230) and the Zero Hour twin:
+// OVERRIDE-style template access and a real TheProjectedShadowManager global
+// (VA 0x01306DEC), which lets the offsetY store schedule after the manager test.
 
 typedef bool Bool;
 typedef float Real;
@@ -14,7 +12,12 @@ typedef float Real;
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const;
+	const Overridable *getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
 	void *m_vptr;
 	Overridable *m_nextOverride;
 };
@@ -26,27 +29,26 @@ public:
 	Real m_shadowSizeX;
 	Real m_shadowSizeY;
 	Real m_shadowOffsetX;
-	union
-	{
-		Real m_shadowOffsetY;
-		volatile unsigned int m_shadowOffsetYBits;
-	};
+	Real m_shadowOffsetY;
 };
 
 class BfmeOverrideView
 {
 public:
-	Overridable *getNonOverloadedPointer() const { return m_value; }
-	Overridable *volatile m_value;
+	operator const Overridable *() const
+	{
+		if (!m_overridable)
+			return 0;
+		return m_overridable->getFinalOverride();
+	}
+
+	const Overridable *m_overridable;
 };
 
 class BfmeDrawableView
 {
 public:
-	Overridable *getTemplate() const
-	{
-		return m_template.getNonOverloadedPointer();
-	}
+	const Overridable *getTemplate() const { return m_template; }
 
 	void *m_vptr;
 	BfmeOverrideView m_template;
@@ -99,7 +101,7 @@ public:
 	void enableShadowRender(Bool value) { m_isEnabled = value; }
 };
 
-class BfmeProjectedShadowManager
+class ProjectedShadowManager
 {
 public:
 	virtual void slot0();
@@ -109,10 +111,7 @@ public:
 };
 
 // The source global TheProjectedShadowManager lives at VA 0x01306DEC.
-static BfmeProjectedShadowManager *bfmeProjectedShadowManagerAt01306DEC()
-{
-	return *(BfmeProjectedShadowManager **)0x01306DEC;
-}
+extern ProjectedShadowManager *TheProjectedShadowManager;
 
 class W3DModelDraw
 {
@@ -141,15 +140,7 @@ void W3DModelDraw::rva007633A0(Rva007633A0Input *input)
 	if (!spec || !spec->m_04)
 		return;
 
-	Overridable *raw = m_drawable->getTemplate();
-	ThingTemplate *thing;
-	if (raw == 0) {
-		thing = 0;
-	} else {
-		if (raw->m_nextOverride != 0)
-			raw = (Overridable *)raw->m_nextOverride->getFinalOverride();
-		thing = (ThingTemplate *)raw;
-	}
+	const ThingTemplate *thing = (const ThingTemplate *)m_drawable->getTemplate();
 
 	BfmeDecalInfo info;
 	info.m_allowUpdates = false;
@@ -162,12 +153,9 @@ void W3DModelDraw::rva007633A0(Rva007633A0Input *input)
 	info.m_sizeX = thing->m_shadowSizeX;
 	info.m_sizeY = thing->m_shadowSizeY;
 	info.m_offsetX = thing->m_shadowOffsetX;
-	unsigned int offsetY = thing->m_shadowOffsetYBits;
-	BfmeProjectedShadowManager *manager =
-		bfmeProjectedShadowManagerAt01306DEC();
-	*(unsigned int *)&info.m_offsetY = offsetY;
-	if (manager)
-		m_terrainDecal = manager->addDecal(m_renderObject, &info, 1, 0);
+	info.m_offsetY = thing->m_shadowOffsetY;
+	if (TheProjectedShadowManager)
+		m_terrainDecal = TheProjectedShadowManager->addDecal(m_renderObject, &info, 1, 0);
 	if (m_terrainDecal) {
 		m_terrainDecal->m_isInvisibleEnabled = m_fullyObscuredByShroud;
 		m_terrainDecal->enableShadowRender(m_flag02e && !m_flag02f);
