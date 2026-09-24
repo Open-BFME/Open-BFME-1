@@ -2268,5 +2268,15 @@
   "after_sha256": "6cb422c5397197c7707cbecc418d0812f3add9215fa2cce6273a3ce64e0f9808",
   "evidence": "reverse/functions.csv",
   "reason": "functions.csv row ??0Rva007F4DA0@@QAE@XZ at 0x007F4DA0 (Code/GameEngine/Source/Common/Rva007F4DA0Ctor.cpp) is the landed derived class; only m_chain3C's TYPE changes, from the base to that landed derived class, which installs the same vtable 0x0112B4B4 over the same 0x007E86B0 base with the same three stores, and SnapshotDupReplica stays as that class's base."
+ },
+ {
+  "old_path": "reverse/attempts/0x005f3ee0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Gen005F3EE0ParticleBuffers.cpp",
+  "old_name": "m_useHalfHeightMap",
+  "new_name": "m_field0DCD",
+  "before_sha256": "6104bd2295e69df8b238ec143abc66061e1db0b6a66cedbcd564599031dfbc5e",
+  "after_sha256": "fbf4388109909b20d7e9157fd3ee1fc80d1603662098e1086f2775a1e4ef32a4",
+  "evidence": "reverse/field_names.csv",
+  "reason": "reverse/field_names.csv (UseHalfHeightMap row) and tools/name_oracle.py --class GlobalData --offset 0x4f (confidence 1.00) put m_useHalfHeightMap at GlobalData+0x4f, not +0xDCD; tools/name_oracle.py --class GlobalData --offset 0xdcd reports +0xDCD unwitnessed, so the offset-derived m_field0DCD replaces a contradicted guess"
  }
 ]
