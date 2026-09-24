@@ -27,17 +27,6 @@ public:
 	BfmeNodeLC *bfmeFindLC();
 };
 
-void *bfmeGo925A(BfmeKeyLC *k)
-{
-	BfmeNodeLC *o = k->bfmeFindLC();
-	if (o) {
-		void *p = o->m_bfmeQ;
-		if (p)
-			return p;
-	}
-	return 0;
-}
-
 void bfmeGo925B(BfmeKeyLC *k)
 {
 	if (!k)
