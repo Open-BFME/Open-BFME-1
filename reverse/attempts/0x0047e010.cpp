@@ -137,7 +137,7 @@ public:
 	virtual void v26();
 	virtual void v27();
 	virtual void v28();
-	virtual GameWindow *create(GameWindow *);
+	virtual GameWindow *winCreate(GameWindow *);
 	virtual void v30();
 	virtual void v31();
 	virtual void v32();
@@ -200,7 +200,7 @@ GameWindow *GameWindowManager::gogoGadgetStaticText(GameWindow *parent,
 	parent->instanceData->style &= ~0x1000;
 	if ((parent->instanceData->style & 0x80) != 0)
 	{
-		textWin = create(parent);
+		textWin = winCreate(parent);
 		if (textWin != 0)
 		{
 			textWin->winSetOwner(parent->owner);
