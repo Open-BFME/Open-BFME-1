@@ -1,5 +1,5 @@
-// ?rva0023d430@Rva0023D430Owner@@QAEXPAUCoord3D@@0@Z
-// partial score=0.33 date=2026-09-21
+// ?d_0023d430@@YAXXZ
+// partial score=0.41 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc
 // stlport
 // Retail 0x0023D430, 598 bytes. The owner and operation remain address-derived.
@@ -161,11 +161,13 @@ void Rva0023D430Owner::rva0023d430(Coord3D *result, Coord3D *normal)
 	Int count = 0;
 	const BfmeMemberList &members =
 		((Rva0023D430MemberView *)((char *)this - 0xc4))->getMemberList();
-	Coord3D average = {0.0f, 0.0f, 0.0f};
+	BfmeMemberList::const_iterator it = members.begin();
+	Coord3D average;
+	average.z = 0.0f;
+	average.y = 0.0f;
+	average.x = 0.0f;
 	Bool hasSpecial = false;
-
-	for (BfmeMemberList::const_iterator it = members.begin();
-		it != members.end(); ++it)
+	while (it != members.end())
 	{
 		Object *object = *it;
 		if (object != 0)
@@ -173,6 +175,7 @@ void Rva0023D430Owner::rva0023d430(Coord3D *result, Coord3D *normal)
 			rva0023d430Accumulate(average, count, object);
 			if (!hasSpecial && (object->m_status & 0x40) != 0)
 				hasSpecial = true;
+			++it;
 		}
 	}
 
