@@ -1,5 +1,5 @@
 // ?update@Rva003D2B80Child@@QAEXPAV1@00@Z
-// partial score=0.88 date=2026-09-14
+// partial score=0.89 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
 // The refresh callback at 0x003D2B80 calls this method through the thunk at
 // 0x0004AFCF.  The retail body updates each 60-byte entry from eight samples
@@ -91,9 +91,10 @@ void Rva003D2B80Child::update(Rva003D2B80Child *first,
 			point.m_y = entry->m_y - half;
 			slots.m_slot[5] = third->lookup(point);
 			point.m_x = entry->m_x - half;
-			slots.m_slot[6] = third->lookup(point);
-			point.m_y = entry->m_y + half;
+			// the (-x,-y) sample fills slot 7 and the (-x,+y) sample slot 6
 			slots.m_slot[7] = third->lookup(point);
+			point.m_y = entry->m_y + half;
+			slots.m_slot[6] = third->lookup(point);
 			((Rva003CBA90 *)entry)->setSlots(&slots);
 			++entry;
 		} while (entry != m_end);
