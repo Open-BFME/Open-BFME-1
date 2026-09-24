@@ -8050,53 +8050,8 @@ VideoBuffer* InGameUI::cameoVideoBuffer( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?displayCantBuildMessage@InGameUI@@UAEXW4LegalBuildCode@@@Z present-unmatched
-void InGameUI::displayCantBuildMessage( LegalBuildCode lbc )
-{
-
-	switch( lbc )
-	{
-
-		//---------------------------------------------------------------------------------------------
-		case LBC_RESTRICTED_TERRAIN:
-			TheInGameUI->message( "GUI:CantBuildRestrictedTerrain" );
-			break;
-
-		//---------------------------------------------------------------------------------------------
-		case LBC_NOT_FLAT_ENOUGH:
-			TheInGameUI->message( "GUI:CantBuildNotFlatEnough" );
-			break;
-
-		//---------------------------------------------------------------------------------------------
-		case LBC_OBJECTS_IN_THE_WAY:
-			TheInGameUI->message( "GUI:CantBuildObjectsInTheWay" );
-			break;
-
-		//---------------------------------------------------------------------------------------------
-		case LBC_TOO_CLOSE_TO_SUPPLIES:
-			TheInGameUI->message( "GUI:CantBuildTooCloseToSupplies" );
-			break;
-
-		//---------------------------------------------------------------------------------------------
-		case LBC_NO_CLEAR_PATH:
-		  TheInGameUI->message( "GUI:CantBuildNoClearPath" );
-			break;
-
-		//---------------------------------------------------------------------------------------------
-		case LBC_SHROUD:
-			TheInGameUI->message( "GUI:CantBuildShroud" );
-			break;
-
-		//---------------------------------------------------------------------------------------------
-		case LBC_GENERIC_FAILURE:
-		default:
-
-			TheInGameUI->message( "GUI:CantBuildThere" );
-			break;
-
-	}  // end switch
-
-}  // end displayCantBuildMessage
+// ?displayCantBuildMessage@InGameUI@@UAEXW4LegalBuildCode@@@Z
+// Body in InGameUIDisplayCantBuildMessage.cpp (slot 24).
 
 // ------------------------------------------------------------------------------------------------
 // InGameUI::militarySubtitle
