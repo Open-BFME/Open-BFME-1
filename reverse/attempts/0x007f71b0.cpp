@@ -1,5 +1,5 @@
 // ?bfmeGoVJT@BfmeThingVJT@@QAEXHH@Z
-// partial score=0.95 date=2026-09-04
+// partial score=0.993 date=2026-09-24
 // EA FESL gamebrowser host-slot registration at retail 0x007F71B0.
 // cl: /O2 /Ob0
 
@@ -121,6 +121,13 @@ public:
 
 extern void __stdcall BfmeGameBrowserVJTCallback();
 
+struct BfmeHostMatchVJTVtable
+{
+	void *slots[9];
+	int *(__fastcall *matchFirst)(void *self, BfmeHostMatchVJTVtable *table, int *value);
+	int *(__fastcall *matchSecond)(void *self, BfmeHostMatchVJTVtable *table, int *value);
+};
+
 class BfmeThingVJT
 {
 public:
@@ -176,7 +183,8 @@ found:
 	flag.value = 0;
 	if (m_bfme2d8)
 	{
-		int *first = m_bfme2d8->matchFirst(key);
+		BfmeHostMatchVJTVtable *table = *(BfmeHostMatchVJTVtable **)m_bfme2d8;
+		int *first = table->matchFirst(m_bfme2d8, table, key);
 		if (*first == a1)
 		{
 			int *second = m_bfme2d8->matchSecond(key);

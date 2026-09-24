@@ -1,5 +1,5 @@
 // ?notifyNested@Rva0024C420Owner@@QAEXPAX@Z
-// partial score=0.98 date=2026-09-12
+// partial score=0.99 date=2026-09-24
 // ?notifyNested@Rva0024C420Owner@@QAEXPAX@Z
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
@@ -25,6 +25,12 @@ public:
 	S(20) S(21) S(22) S(23) S(24) S(25)
 #undef S
 	virtual Rva0024C420Result *getResult(void);
+};
+
+struct Rva0024C420ContainVtable
+{
+	void *slots[26];
+	Rva0024C420Result *(__fastcall *getResult)(Rva0024C420Contain *self);
 };
 
 class Object
@@ -65,7 +71,8 @@ void Rva0024C420Owner::notifyNested(void *arg)
 		if (contain == 0)
 			continue;
 		Rva0024C420Result *result;
-		result = contain->getResult();
+		Rva0024C420ContainVtable *table = *(Rva0024C420ContainVtable **)contain;
+		result = table->getResult(contain);
 		if (result != 0)
 			result->notify(*(void **)((char *)this - 0x18), arg);
 	}
