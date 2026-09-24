@@ -24,12 +24,7 @@ public:
 	virtual void *slot168() = 0;
 };
 
-class Object
-{
-public:
-	char m_padding000[0x204];
-	AIUpdateInterface *m_ai;
-};
+#include "../Object/object.h"
 
 class AttackFireWhileMovingMachine
 {

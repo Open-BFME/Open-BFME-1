@@ -19,14 +19,7 @@ public:
 	UnsignedInt m_nextMoodCheckTime;
 };
 
-class Object
-{
-private:
-	unsigned char m_pad[0x204];
-
-public:
-	AIUpdateInterface *m_ai;
-};
+#include "../Object/object.h"
 
 class GameLogic
 {

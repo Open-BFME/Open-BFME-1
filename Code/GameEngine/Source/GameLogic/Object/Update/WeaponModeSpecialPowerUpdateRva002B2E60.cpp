@@ -33,17 +33,11 @@ class FiringTracker
 	void coolDown(Bool forceReset);
 };
 
-class Object
-{
-private:
-	unsigned char m_pad[0x1ec];
-
-public:
-	FiringTracker * volatile m_firingTracker;
-	void setWeaponLock(Int weaponSlot, Int lockType);
-	void actionA(Int condition);
+#define OBJECT_TU_MEMBERS \
+	void setWeaponLock(Int weaponSlot, Int lockType); \
+	void actionA(Int condition); \
 	Bool applyAttributeModifier(const AsciiString &name, Int duration);
-};
+#include "../object.h"
 
 class Gen001C9A10
 {

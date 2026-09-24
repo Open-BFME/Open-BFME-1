@@ -50,13 +50,7 @@ public:
 	void call(float);
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	unsigned char m_pad00[0x204];
-	Rva00179A90AI *m_ai;
-};
+#include "../Object/object.h"
 
 class Rva00179A90Machine
 {

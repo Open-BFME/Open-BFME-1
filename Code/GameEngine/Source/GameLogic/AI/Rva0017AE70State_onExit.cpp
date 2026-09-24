@@ -38,13 +38,7 @@ public:
 	unsigned int m_flags;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	unsigned char m_pad00[0x204];
-	AIUpdateInterface *m_ai;
-};
+#include "../Object/object.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIStateMachine.h
 class AIInternalMoveToState

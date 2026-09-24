@@ -49,15 +49,10 @@ public:
 	AICommandInterface m_command;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	void leaveGroup();
+#define OBJECT_TU_MEMBERS \
+	void leaveGroup(); \
 	Bool bfmeIsGiantBird() const;
-	unsigned char m_pad[0x204];
-	AIUpdateInterface *m_ai;
-};
+#include "../Object/object.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
 class ScriptEngine

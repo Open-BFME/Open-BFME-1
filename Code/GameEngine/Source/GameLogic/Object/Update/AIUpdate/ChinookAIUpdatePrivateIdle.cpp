@@ -29,13 +29,7 @@ public:
 	void bfmeSetRQ(int object, int commandSource);
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	unsigned char m_unreconstructed_000[0x204];
-	void *m_ai;
-};
+#include "../../object.h"
 
 #define CHINOOK_SLOT(n) virtual void unused##n();
 

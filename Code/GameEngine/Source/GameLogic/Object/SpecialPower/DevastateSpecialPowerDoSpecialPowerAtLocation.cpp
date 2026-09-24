@@ -36,14 +36,9 @@ class Coord3D;
 class Matrix3D;
 class BfmeX1035;
 
-class Object
-{
-public:
+#define OBJECT_TU_MEMBERS \
 	class Player *getControllingPlayer() const;
-
-	char m_pad00[0x1a4];
-	int m_disabledMask;
-};
+#include "../object.h"
 
 class Money
 {

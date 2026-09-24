@@ -7,13 +7,10 @@
 typedef int Int;
 
 class Player;
-class Object {
-public:
-    Player *getControllingPlayer() const;
-    void bfmeApplySpecialModelCondition(Int condition, const void *descriptor, Int frames);
-    unsigned char gap[0x88];
-    Object *m_next;
-};
+#define OBJECT_TU_MEMBERS \
+	Player *getControllingPlayer() const; \
+	void bfmeApplySpecialModelCondition(Int condition, const void *descriptor, Int frames);
+#include "../object.h"
 class GameLogic {
 public:
     Object *getFirstObject();

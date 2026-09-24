@@ -38,12 +38,7 @@ struct AIUpdateInterface
 	Real m_locomotorScale;
 };
 
-class Object
-{
-public:
-	char m_head[0x204];
-	AIUpdateInterface *m_ai;
-};
+#include "object.h"
 
 class GlobalData
 {

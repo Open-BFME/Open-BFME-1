@@ -35,16 +35,9 @@ class Weapon;
 class Object;
 class AIUpdateInterface;
 
-class Object
-{
-public:
+#define OBJECT_TU_MEMBERS \
 	Weapon *getCurrentWeapon(WeaponSlotType *slot);
-
-	char m_pad74[0x74];
-	int m_id;
-	char m_pad204[0x204 - 0x78];
-	AIUpdateInterface *m_ai;
-};
+#include "../Object/object.h"
 
 class AIUpdateInterface
 {

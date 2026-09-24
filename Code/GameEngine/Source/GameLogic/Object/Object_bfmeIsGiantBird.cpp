@@ -89,16 +89,9 @@ public:
 
 #undef BFME_AI_SLOT
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
+#define OBJECT_TU_MEMBERS \
 	int bfmeIsGiantBird() const;
-
-private:
-	unsigned char m_pad[0x204];
-	AIUpdateInterface *m_ai;
-};
+#include "object.h"
 
 int Object::bfmeIsGiantBird() const
 {

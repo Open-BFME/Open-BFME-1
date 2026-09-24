@@ -65,14 +65,7 @@ public:
 	Int m_scalarIndex;
 };
 
-class Object
-{
-private:
-	unsigned char m_pad000[ 0x210 ];
-
-public:
-	ExperienceTracker *m_experienceTracker;
-};
+#include "../object.h"
 
 // landed: Code/GameEngine/Source/Common/ExperienceLevelSystemGainLevels.cpp
 class ExperienceLevelSystem

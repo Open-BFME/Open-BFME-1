@@ -6,13 +6,7 @@
 class Drawable;
 typedef _STL::list<Drawable *> DrawableList;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	char m_padding[0x74];
-	unsigned int m_id;
-};
+#include "../../GameLogic/Object/object.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Drawable.h
 class Drawable

@@ -69,14 +69,7 @@ public:
 
 #undef BFME_VOID_SLOT
 
-class Object
-{
-public:
-	char m_pad1[0x1fc];
-	ContainModuleInterface *m_contain;			// +0x1fc
-	char m_pad2[0x344 - 0x200];
-	unsigned char m_privateStatus;					// +0x344, bit0 tested
-};
+#include "../Object/object.h"
 
 class Rva0016D270Owner
 {

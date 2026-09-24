@@ -34,12 +34,7 @@ public:
 	AICommandInterface m_commands;
 };
 
-class Object
-{
-public:
-	char m_pad00[0x204];
-	AIUpdateInterface *m_ai;
-};
+#include "../Object/object.h"
 
 struct Rva0020CA90ListNode
 {

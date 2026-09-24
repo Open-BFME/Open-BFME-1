@@ -61,12 +61,7 @@ public:
 
 #undef BFME_VOID_SLOT
 
-class Object
-{
-public:
-	char m_pad[0x1fc];
-	ContainModuleInterface *m_contain;
-};
+#include "../Object/object.h"
 
 class Rva0016D330State
 {

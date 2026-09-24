@@ -40,15 +40,9 @@ public:
 	Object *m_owner;
 };
 
-class Object
-{
-public:
-	Bool chooseBestWeaponForTarget(const Object *target, WeaponChoiceCriteria criteria,
-		CommandSourceType cmdSource);
-
-	unsigned char m_padding000[0x204];
-	AIUpdateInterface *m_ai;
-};
+#define OBJECT_TU_MEMBERS \
+	Bool chooseBestWeaponForTarget(const Object *target, WeaponChoiceCriteria criteria, CommandSourceType cmdSource);
+#include "../Object/object.h"
 
 template<int N>
 class BfmeVirtualSlots : public BfmeVirtualSlots<N - 1>

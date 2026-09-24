@@ -11,12 +11,8 @@
 typedef bool Bool;
 typedef unsigned int ObjectID;
 
-class Object
-{
-	unsigned char m_pad[0x74];
-public:
-	ObjectID m_id;
-};
+#define BFME_HAVE_OBJECTID
+#include "../Object/object.h"
 
 class Player
 {

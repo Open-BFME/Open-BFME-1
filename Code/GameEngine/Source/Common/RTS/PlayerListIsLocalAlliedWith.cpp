@@ -22,13 +22,7 @@ public:
 	bool active() const;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	unsigned char m_pad[0x23C];
-	Team *m_team;
-};
+#include "../../GameLogic/Object/object.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerList.h
 class PlayerList

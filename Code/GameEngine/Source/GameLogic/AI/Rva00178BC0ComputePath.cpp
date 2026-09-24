@@ -30,15 +30,7 @@ public:
 	Bool m_waitingForPath;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-private:
-	unsigned char m_pad00[0x204];
-
-public:
-	AIUpdateInterface *m_ai;
-};
+#include "../Object/object.h"
 
 struct Rva00178BC0StateMachine
 {

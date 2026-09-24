@@ -23,13 +23,10 @@ private:
 	_STL::bitset<320> m_bits;
 };
 
-class Object
-{
-public:
+#define BFME_HAVE_MODELCONDITIONFLAGS
+#define OBJECT_TU_MEMBERS \
 	void notifyModelConditionChanged();
-	unsigned char m_bfmeHeadAZ[0x110];
-	ModelConditionFlags m_modelConditionFlags;
-};
+#include "../object.h"
 
 // This TU models the secondary interface pointer accepted at +0x20.
 class GarrisonContain

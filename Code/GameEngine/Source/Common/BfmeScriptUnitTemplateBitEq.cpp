@@ -24,12 +24,7 @@ public:
 	unsigned int m_flagsD8;      // +0xD8
 };
 
-class Object
-{
-public:
-	char m_pad0[4];
-	ThingTemplate *m_template; // +4
-};
+#include "../GameLogic/Object/object.h"
 
 class ScriptEngine
 {

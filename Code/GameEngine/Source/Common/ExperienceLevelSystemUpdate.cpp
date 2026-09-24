@@ -15,12 +15,7 @@ class ExperienceLevelData;
 
 #pragma comment(linker, "/alternatename:?call@Gen0002B7F6@@QAEXPAVExperienceLevelData@@PAVObject@@_N@Z=?j_0002b7f6@@YAXXZ")
 
-class Object
-{
-public:
-	char m_pad[ 0x344 ];
-	unsigned char m_privateStatus;
-};
+#include "../GameLogic/Object/object.h"
 
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>,
 	_STL::equal_to<ObjectID> > ObjectPtrHash;

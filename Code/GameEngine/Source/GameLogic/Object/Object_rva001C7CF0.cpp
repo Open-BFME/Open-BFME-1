@@ -113,22 +113,10 @@ struct AIUpdateInterface
 	}
 };
 
-class Object
-{
-public:
-	void rva001C7CF0(Real angleDegrees, Real magnitude,
-		Real verticalScale, const AsciiString &rockName);
-
-	unsigned char m_pad000[0x004];
-	ThingTemplate *m_template;               // 0x004
-	unsigned char m_pad008[0x080 - 0x008];
-	Drawable *m_drawable;                    // 0x080
-	unsigned char m_pad084[0x110 - 0x084];
-	ModelConditionFlags m_modelConditionFlags; // 0x110 .. 0x138
-	unsigned char m_pad138[0x204 - 0x138];
-	AIUpdateInterface *m_ai;                 // 0x204
-	PhysicsBehavior *m_physics;              // 0x208
-};
+#define BFME_HAVE_MODELCONDITIONFLAGS
+#define OBJECT_TU_MEMBERS \
+	void rva001C7CF0(Real angleDegrees, Real magnitude, Real verticalScale, const AsciiString &rockName);
+#include "object.h"
 
 static __forceinline void setModelCondition(Object *object, Int bit)
 {

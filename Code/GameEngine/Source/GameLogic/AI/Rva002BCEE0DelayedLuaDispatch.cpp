@@ -6,12 +6,7 @@
 // 8 through the already matched BfmeOwnerBR wrapper.  No caller or emitter
 // proves a semantic owner for this body, so the owner name remains opaque.
 
-class Object
-{
-public:
-	char m_pad[0x74];
-	unsigned int m_id;
-};
+#include "../Object/object.h"
 
 class BfmeDelayedLuaEvent
 {

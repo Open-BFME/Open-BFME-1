@@ -72,18 +72,10 @@ public:
 	virtual HordeContainInterface *getHordeContainInterface() = 0;
 };
 
-class Object
-{
-public:
+#define BFME_HAVE_OBJECTID
+#define OBJECT_TU_MEMBERS \
 	Bool affectedByUpgrade(const UpgradeTemplate *upgrade) const;
-
-	char m_pad00[0x78];
-	ObjectID m_producerID;
-	char m_pad7c[0x180];
-	ContainModuleInterface *m_contain;
-	char m_pad200[0x14];
-	Object *m_containedBy;
-};
+#include "../object.h"
 
 class GameLogic
 {

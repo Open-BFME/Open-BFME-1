@@ -94,15 +94,10 @@ public:
 	virtual void iterateContained(ContainIterateFunc func, void *userData, bool reverse);
 };
 
-class Object
-{
-public:
-	bool bfmeCheckC80F0();
+#define OBJECT_TU_MEMBERS \
+	bool bfmeCheckC80F0(); \
 	bool isNonFactionStructure() const;
-
-	char m_pad[0x1FC];
-	ContainModuleInterface *m_contain;
-};
+#include "../GameLogic/Object/object.h"
 
 enum CommandSourceType
 {

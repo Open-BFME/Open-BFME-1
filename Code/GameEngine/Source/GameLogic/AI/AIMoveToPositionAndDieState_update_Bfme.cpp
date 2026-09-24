@@ -84,16 +84,9 @@ enum DeathType
 	DEATH_NORMAL = 0
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
+#define OBJECT_TU_MEMBERS \
 	void kill(DamageType damageType, DeathType deathType);
-
-private:
-	unsigned char m_unreconstructed_000[0x200];
-	BFMEBodyDamageSource *m_body;
-};
+#include "../Object/object.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic

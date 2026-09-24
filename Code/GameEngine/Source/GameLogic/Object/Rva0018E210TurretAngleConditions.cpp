@@ -31,17 +31,10 @@ typedef BitFlags<320> ModelConditionFlags;
 typedef char Rva0018E210ModelConditionFlagsSizeCheck[
     (sizeof(ModelConditionFlags) == 40) ? 1 : -1];
 
-class Object
-{
-public:
-    void notifyModelConditionChanged();
-
-private:
-    unsigned char m_unmodelled000[0x110];
-
-public:
-    ModelConditionFlags m_modelConditionFlags;
-};
+#define BFME_HAVE_MODELCONDITIONFLAGS
+#define OBJECT_TU_MEMBERS \
+	void notifyModelConditionChanged();
+#include "object.h"
 
 #define RVA0018E210_ZERO 0.0f
 #define RVA0018E210_TWO_PI 6.2831854820251465f

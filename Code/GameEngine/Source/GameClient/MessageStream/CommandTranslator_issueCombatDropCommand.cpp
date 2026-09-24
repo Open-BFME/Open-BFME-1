@@ -13,12 +13,7 @@ struct Coord3D
 	float z;
 };
 
-class Object
-{
-public:
-	char m_padding[0x74];
-	UnsignedInt m_id;
-};
+#include "../../GameLogic/Object/object.h"
 
 class Drawable
 {

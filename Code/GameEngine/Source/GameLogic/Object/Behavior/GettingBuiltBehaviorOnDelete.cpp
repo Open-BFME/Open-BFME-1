@@ -15,12 +15,7 @@
 
 typedef unsigned int UnsignedInt;
 
-class Object
-{
-public:
-	char m_pad00[0x78];
-	UnsignedInt m_producerID;
-};
+#include "../object.h"
 
 class BfmeY982
 {

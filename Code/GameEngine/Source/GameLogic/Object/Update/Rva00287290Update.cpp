@@ -23,16 +23,10 @@ union Rva001C9380Argument
 
 };
 
-class Object
-{
-public:
-	void rva001c9380(Rva001C9380VictimArgument victim,
-		Rva001C9380Argument allow);
+#define OBJECT_TU_MEMBERS \
+	void rva001c9380(Rva001C9380VictimArgument victim, Rva001C9380Argument allow); \
 	void rva001CCB20ApplyContainedCondition(Int value);
-
-	unsigned char m_pad000[0x1fc];
-	void *m_contain;
-};
+#include "../object.h"
 
 class BfmeObjAS : public Object
 {

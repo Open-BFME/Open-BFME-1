@@ -99,14 +99,7 @@ public:
 
 #undef SLOT
 
-class Object
-{
-private:
-	unsigned char m_prefix[0x1fc];
-
-public:
-	ContainModuleInterface *m_contain;
-};
+#include "../Object/object.h"
 
 class GameLogic
 {

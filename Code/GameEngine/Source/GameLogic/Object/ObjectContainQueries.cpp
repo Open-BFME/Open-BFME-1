@@ -150,25 +150,17 @@ public:
 
 #undef BFME_SLOT
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	Bool applyAttributeModifier(const AsciiString &name, Int duration);
-	Bool getAttributeModifierBonus(Int which, Real *out) const;
-	Bool getAttributeModifierMultiplier(Int which, Real *out) const;
-	Int bfmeGetHordeMemberCount() const;
-	Real bfmeGetCrewSpeedMultiplier() const;
-
-protected:
-	Module *findModule(NameKeyType key) const;
-
-private:
+#define OBJECT_TU_MEMBERS \
+	Bool applyAttributeModifier(const AsciiString &name, Int duration); \
+	Bool getAttributeModifierBonus(Int which, Real *out) const; \
+	Bool getAttributeModifierMultiplier(Int which, Real *out) const; \
+	Int bfmeGetHordeMemberCount() const; \
+	Real bfmeGetCrewSpeedMultiplier() const; \
+	protected: \
+	Module *findModule(NameKeyType key) const; \
+	private: \
 	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate() const;
-
-	unsigned char m_unmodelled000[0x1fc];
-	ContainModuleInterface *m_contain;		// +0x1FC
-};
+#include "object.h"
 
 // ?findAttributeModifierPoolUpdate@Object@@ABEPAVAttributeModifierPoolUpdate@@XZ
 //

@@ -2,15 +2,9 @@
 
 typedef bool Bool;
 
-class Object
-{
-public:
+#define OBJECT_TU_MEMBERS \
 	void Rva001BE7A0( Bool enable );
-
-private:
-	unsigned char m_unreconstructed[0x344];
-	unsigned char m_privateStatus;
-};
+#include "object.h"
 
 void Object::Rva001BE7A0( Bool enable )
 {

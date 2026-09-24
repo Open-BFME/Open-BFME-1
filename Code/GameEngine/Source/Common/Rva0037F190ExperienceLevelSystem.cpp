@@ -59,12 +59,7 @@ struct ExperienceLevelList
 	ExperienceLevelNode *m_node;
 };
 
-class Object
-{
-public:
-	unsigned char m_pad[0x210];
-	void *m_experienceTracker;
-};
+#include "../GameLogic/Object/object.h"
 
 struct Rva0037F190Result
 {

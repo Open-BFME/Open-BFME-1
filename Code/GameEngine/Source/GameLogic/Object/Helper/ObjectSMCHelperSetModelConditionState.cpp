@@ -60,13 +60,10 @@ private:
 	_STL::bitset<320> m_bits;
 };
 
-class Object
-{
-public:
+#define BFME_HAVE_MODELCONDITIONFLAGS
+#define OBJECT_TU_MEMBERS \
 	void notifyModelConditionChanged();
-	unsigned char m_padding[0x110];
-	ModelConditionFlags m_modelConditionFlags;
-};
+#include "../object.h"
 
 struct Rva002571A0Elem
 {

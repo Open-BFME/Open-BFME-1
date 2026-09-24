@@ -14,13 +14,8 @@
 typedef int ObjectID;
 typedef bool Bool;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	unsigned char m_unmodelled_00[ 0x74 ];
-	ObjectID m_id;							// +0x74
-};
+#define BFME_HAVE_OBJECTID
+#include "../Object/object.h"
 
 class Squad
 {
@@ -33,7 +28,6 @@ private:
 	ObjectID *m_end;						// +0x08
 };
 
-// ?isOnSquad@Squad@@QBE_NPBVObject@@@Z present-unmatched
 // RE-HOMED. The row for 0x0018B520 is now ?dup_0018b520@@YAXXZ. The replica
 // below places the membership pair at +0x04, and that is an assertion rather
 // than evidence -- two SYMBOLIC matched rows in Squad.cpp put retail's

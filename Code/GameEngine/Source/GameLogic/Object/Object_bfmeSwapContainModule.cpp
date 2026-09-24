@@ -33,18 +33,9 @@ class BehaviorModule : public ObjectModuleBase, public BehaviorModuleInterface
 {
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
+#define OBJECT_TU_MEMBERS \
 	void bfmeSwapContainModule(Object *other);
-
-private:
-	unsigned char m_pad000[0x1f0];
-	BehaviorModule **m_behaviors;
-	unsigned char m_pad1f4[8];
-	ContainModuleInterface *m_contain;
-};
+#include "object.h"
 
 void Object::bfmeSwapContainModule(Object *other)
 {

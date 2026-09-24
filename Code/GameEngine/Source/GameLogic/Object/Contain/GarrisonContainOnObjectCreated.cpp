@@ -46,13 +46,9 @@ public:
 	virtual void addToContain(Object *object) = 0;
 };
 
-class Object
-{
-public:
+#define OBJECT_TU_MEMBERS \
 	Player *getControllingPlayer() const;
-	unsigned char m_unreconstructed00[0x1fc];
-	ContainModuleInterface *m_contain;
-};
+#include "../object.h"
 
 #pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
 

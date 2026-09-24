@@ -10,12 +10,7 @@
 #include <list>
 #include <map>
 
-class Object
-{
-public:
-	unsigned char m_pad[0x74];
-	int m_id;
-};
+#include "../object.h"
 
 class __declspec(novtable) Rva00236A80OpenContain
 {

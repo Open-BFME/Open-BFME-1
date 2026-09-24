@@ -30,12 +30,7 @@ public:
 	virtual BodyDamageType getDamageState() const = 0;
 };
 
-class Object
-{
-public:
-	unsigned char m_unmodelled000[0x200];
-	BodyModuleInterface *m_body;
-};
+#include "object.h"
 
 class Overridable
 {

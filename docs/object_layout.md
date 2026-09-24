@@ -104,20 +104,48 @@ The census contradicts these witness rows, each with byte-verified copies:
 
 The first four are ZH offsets carried over unshifted.
 
-## Rules for the header
+## The header
+
+`Code/GameEngine/Source/GameLogic/Object/object.h` (with
+`Code/GameEngine/Source/Common/Thing/thing.h`) is written from this page:
 
 1. `class Thing` (+0x00..+0x5F) and `class Object : public Thing`, so the
    witnessed `Thing` names are inherited rather than restated.
-2. The +0x60..+0x73 vfptrs/vbptr and the virtual base are compiler state in
-   retail. A header that does not model the four other bases must keep their
-   bytes as opaque storage named by offset. It must not invent base classes.
-3. After the class, an offset check per field (`typedef char
-   check[offsetof(...) == N ? 1 : -1]`), so a TU that supplies a wrongly sized
-   `Coord3D`, `Matrix3D` or `AsciiString` fails to compile rather than
-   silently shifting everything after it.
-4. Methods only with a byte-verified signature. Several pinned names have
-   competing spellings (`clearAndSetModelConditionFlags` has five), and those
-   are identity work, not header work.
+2. A member is declared when at least two byte-verified copies agree on it, or
+   one copy plus `name_oracle` at >= 0.9. The rest is opaque storage named by
+   offset (`m_unmodelledXXX`). The +0x60..+0x73 vfptrs/vbptr and the
+   +0x3BC/+0x3C0 vtordisp and virtual-base vfptr are compiler state in retail,
+   kept as opaque members; the header never constructs or up-casts an Object.
+3. A virtual slot is named only where an existing pin for that very body uses
+   `Object`'s virtual mangling (`onDestroy`, `getDrawable`,
+   `updatePendingDamage`, `setTeam`, `rva001cff30`); the rest carry slot and
+   body address. That rule also keeps a TU's own declarations from colliding.
+4. After each class, `BFME_LAYOUT_CHECK` asserts every named member's offset,
+   and `sizeof(Thing) == 0x60`, `sizeof(Object) == 0x3C4`.
+5. Nothing has to be included first. A member typed elsewhere takes the real
+   type when the TU has it and is otherwise the same bytes under the same
+   name: `m_transform` (Matrix3D once `matrix3d.h` is in), `m_cachedPos` /
+   `m_cachedDirVector` (`BFME_HAVE_COORD3D`), `m_id` / `m_producerID` /
+   `m_builderID` (`BFME_HAVE_OBJECTID`, else `Int`, MSVC's representation of
+   the enum), `m_name` / `m_originalTeamName` (`BFME_HAVE_ASCIISTRING`),
+   `m_modelConditionFlags` (`BFME_HAVE_MODELCONDITIONFLAGS`). Using one as the
+   real type without it is a compile error, never a byte change.
+6. Non-virtual methods stay with the TU until their signatures are settled
+   (`clearAndSetModelConditionFlags` has five pinned spellings). Define
+   `OBJECT_TU_MEMBERS` to the declarations a TU calls, with access labels;
+   the hook opens `public:`. Member functions only.
+
+Using it in a new body:
+
+    #define BFME_HAVE_OBJECTID                // only if the TU has the enum
+    #define OBJECT_TU_MEMBERS \
+        Bool isKindOf(KindOfType kind) const;
+    #include "../object.h"                    // relative to the TU
+
+52 TUs moved onto it with one byte-verified swap each. The TUs that were not
+moved fail for TU reasons, not layout: they carry their own `Thing`, type a
+pointer field as a local shim class (`BfmeAIUpdate *` for `m_ai`), declare
+`setTeam` non-virtually, or build the class body from macros.
 
 ## Reproduce
 

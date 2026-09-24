@@ -12,12 +12,7 @@ public:
     bool gainExpForLevel(int, bool, bool);
 };
 
-class Object
-{
-public:
-    unsigned char m_beforeExperienceTracker[0x210];
-    ExperienceTracker *m_experienceTracker;
-};
+#include "../object.h"
 
 void __cdecl rousingContainedLevelAt00264AF0(Object *object, void *)
 {

@@ -51,13 +51,7 @@ struct Gen_t_002237f0_p4pod { int a[1]; };
 bool operator==(const Gen_t_002237f0_p4pod&, const Gen_t_002237f0_p4pod&);
 bool operator<(const Gen_t_002237f0_p4pod&, const Gen_t_002237f0_p4pod&);
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object
-{
-public:
-	unsigned char m_unreconstructed_00[0x214];
-	void *m_containedBy;								///< retail this+0x214
-};
+#include "../object.h"
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
