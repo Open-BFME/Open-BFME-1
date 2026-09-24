@@ -8,6 +8,13 @@ template <int NUMBITS> class BitFlags
 public:
 	unsigned int m_bits[6];
 	bool testSetAndClear( const BitFlags &mustBeSet, const BitFlags &mustBeClear ) const;
+	bool any( void ) const
+	{
+		for( unsigned int i = 0; i < 6; ++i )
+			if( m_bits[i] != 0 )
+				return true;
+		return false;
+	}
 };
 
 typedef BitFlags<116> KindOfMaskType;
@@ -231,6 +238,10 @@ public:
 	virtual void objectModuleAnchor();
 	ObjectModule( Thing *thing, const ModuleData *moduleData );
 
+protected:
+	const ModuleData *getModuleData( void ) const { return *(const ModuleData *const *)( m_data + 0 ); }
+	Object *getObject( void ) const { return *(Object *const *)( m_data + 4 ); }
+
 private:
 	unsigned char m_data[8];
 };
@@ -260,6 +271,8 @@ public:
 	{
 	}
 
+	const DieModuleData *getDieModuleData( void ) const { return (const DieModuleData *)getModuleData(); }
+	bool isDieApplicable( const DamageInfo *damageInfo ) const { return getDieModuleData()->m_dieMuxData.isDieApplicable( getObject(), damageInfo ); }
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/CreateCrateDie.h
@@ -268,6 +281,7 @@ class CreateCrateDie : public DieModule
 public:
 	CreateCrateDie( Thing *thing, const ModuleData *moduleData );
 	virtual void onDie( const DamageInfo *damageInfo );
+	const CreateCrateDieModuleData *getCreateCrateDieModuleData( void ) const { return (const CreateCrateDieModuleData *)getModuleData(); }
 
 private:
 	__declspec(noinline) bool testKillerType( CrateTemplate const *currentCrateData, Object *killer );
@@ -315,6 +329,57 @@ bool CreateCrateDie::testKillerScience( CrateTemplate const *currentCrateData, O
 		return false;
 
 	return true;
+}
+
+// ?onDie@CreateCrateDie@@UAEXPBVDamageInfo@@@Z
+// Retail 0x00254400. Entered through the DieModuleInterface subobject at +0x10.
+void CreateCrateDie::onDie( const DamageInfo *damageInfo )
+{
+	if( !isDieApplicable( damageInfo ) )
+		return;
+
+	CrateTemplate const *currentCrateData = 0;
+	Object *killer = TheGameLogic->findObjectByID( damageInfo->in.m_sourceID );
+	Object *me = getObject();
+
+	if( killer && killer->getRelationship( me ) == ALLIES )
+		return;
+
+	for( AsciiStringListNode *iter = getCreateCrateDieModuleData()->m_crateNameList.m_node->m_next;
+			iter != getCreateCrateDieModuleData()->m_crateNameList.m_node;
+			iter = iter->m_next )
+	{
+		currentCrateData = TheCrateSystem->findCrateTemplate( iter->m_value );
+		if( currentCrateData )
+		{
+			float testAgainst = currentCrateData->m_creationChance;
+			if( !( GetGameLogicRandomValueReal( 0.0f, 1.0f, (char *)"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Die\\CreateCrateDie.cpp", 112 ) < testAgainst ) )
+				continue;
+
+			if( currentCrateData->m_killedByTypeKindof.any() && !testKillerType( currentCrateData, killer ) )
+				continue;
+
+			if( ( currentCrateData->m_killerScience != SCIENCE_INVALID ) && !testKillerScience( currentCrateData, killer ) )
+				continue;
+
+			Object *crate = createCrate( currentCrateData );
+			if( crate )
+			{
+				if( currentCrateData->m_isOwnedByMaker )
+					crate->setTeam( me->getControllingPlayer()->getDefaultTeam() );
+
+				if( killer )
+				{
+					if( killer->getControllingPlayer() && killer->getControllingPlayer()->getPlayerType() == 1 )
+					{
+						AIUpdateInterface *ai = killer->getAIUpdateInterface();
+						if( ai )
+							ai->notifyCrate( crate->getID() );
+					}
+				}
+			}
+		}
+	}
 }
 
 // The following are the narrow views used by CreateCrateDie::createCrate.  They
