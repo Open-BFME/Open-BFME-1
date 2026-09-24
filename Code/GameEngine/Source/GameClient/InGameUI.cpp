@@ -2778,6 +2778,7 @@ void InGameUI::endAreaSelectHint( const GameMessage *msg )
 //-------------------------------------------------------------------------------------------------
 /** A move command has occurred, start graphical "hint". */
 //-------------------------------------------------------------------------------------------------
+// ?createMoveHint@InGameUI@@UAEXPBVGameMessage@@@Z present-unmatched
 void InGameUI::createMoveHint( const GameMessage *msg )
 {
 }
@@ -2793,7 +2794,6 @@ void InGameUI::createAttackHint( const GameMessage *msg )
 //-------------------------------------------------------------------------------------------------
 /** A force attack command has occurred, start graphical "hint". */
 //-------------------------------------------------------------------------------------------------
-// ?createForceAttackHint@InGameUI@@UAEXPBVGameMessage@@@Z present-unmatched
 void InGameUI::createForceAttackHint( const GameMessage *msg )
 {
 
