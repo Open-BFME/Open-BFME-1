@@ -713,6 +713,14 @@ void W3DDisplay::reset( void )
 
 const UnsignedInt START_CUMU_FRAME = LOGICFRAMES_PER_SECOND / 2;	// skip first half-sec
 
+// BFME's W3DDisplay keeps m_averageFPS at +0x17C, not Zero Hour's +0x8C: the matched
+// getAverageFPS (0x006E9140, W3DDisplayState.cpp) returns it from there.
+struct BfmeW3DDisplayAverageFPS
+{
+	char m_unmodelled000[0x17C];
+	Real m_averageFPS;
+};
+
 /** Update a moving average of the last 30 fps measurements.  Also try to filter out temporary spikes.
 	This code is designed to be used by the GameLOD sytems to determine the correct dynamic LOD setting.
 */
@@ -765,7 +773,7 @@ void W3DDisplay::updateAverageFPS(void)
 			average += fpsHistory[j];
 		}
 
-		m_averageFPS = average / (Real)numSamples;
+		((BfmeW3DDisplayAverageFPS *)this)->m_averageFPS = average / (Real)numSamples;
 	}
 
 	lastUpdateTime64 = time64;
