@@ -7,7 +7,7 @@
 // ID through the shared ObjectID xfer helper, on load find the object or throw
 // the BFME xfer exception (tag 5, as the matched list helper does) and point
 // the object back at this node, then the color.  BFME first returns early when
-// the xfer's slot-4 predicate is true, and the object's back-pointer is the
+// the xfer is a light CRC pass, and the object's back-pointer is the
 // store at Object+0x20C (the Zero Hour friend_setRadarData inline).
 
 typedef unsigned char UnsignedByte;
@@ -43,7 +43,7 @@ public:
 	virtual Bool isLoading() const;
 	virtual Bool isSaving() const;
 	virtual void slot03();
-	virtual Bool slot04();
+	virtual Bool IsLightCRC() const;
 	virtual void slot05();
 	virtual void slot06();
 	virtual void slot07();
@@ -69,7 +69,7 @@ public:
 	virtual void slot27();
 	virtual void slot28();
 	virtual void slot29();
-	virtual void slot30(Color *color);
+	virtual void xferInt(Int *value);
 };
 
 void xferObjectID0010C3C0(Xfer *xfer, UnsignedInt *objectID);
@@ -120,7 +120,7 @@ protected:
 // ?xfer@RadarObject@@MAEXPAVXfer@@@Z
 void RadarObject::xfer(Xfer *xfer)
 {
-	if (xfer->slot04())
+	if (xfer->IsLightCRC())
 		return;
 
 	XferVersion version;
@@ -143,5 +143,5 @@ void RadarObject::xfer(Xfer *xfer)
 		m_object->friend_setRadarData(this);
 	}
 
-	xfer->slot30(&m_color);
+	xfer->xferInt(&m_color);
 }
