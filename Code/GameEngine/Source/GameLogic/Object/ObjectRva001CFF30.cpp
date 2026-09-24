@@ -154,7 +154,7 @@ private:
 	Bool m_reentryGuardAt0x36a;				// +0x36A
 };
 
-Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *target);
+Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target);
 
 void Object::rva001cff30(Object *other)
 {

@@ -162,7 +162,7 @@ extern AI *TheAI;
 extern TerrainLogic *TheTerrainLogic;
 extern "C" void __cdecl bfmeRetailCritterDesyncLog(
 	CRCParameterCheck *check, const char *format, ...);
-Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *victim);
+Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target);
 
 // Retail callees with no typed ledger name, reached through their ILT rows
 // (same form as the landed Rva00170680ApproachPath computePath sibling).

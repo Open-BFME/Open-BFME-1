@@ -123,7 +123,7 @@ static State *loadCurrentState(const StateMachine *machine)
 	return machine->m_state;
 }
 
-extern Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *target);
+extern Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target);
 
 class BfmeUnit988
 {

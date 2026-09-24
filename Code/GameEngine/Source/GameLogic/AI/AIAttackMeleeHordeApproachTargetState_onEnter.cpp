@@ -100,12 +100,12 @@ static Bool machineIsGoalObjectDestroyed(StateMachineView *self)
 	return (reinterpret_cast<Thunk *>(self)->*fn.member)();
 }
 
-static Bool bfmeMeleeHordeTargetInvalid(Object *owner, Object *goal)
+static Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target)
 {
 	typedef Bool (__cdecl *Call)(Object *, Object *);
 	union { void (*raw)(void); Call member; } fn;
 	fn.raw = (void (*)(void))j_0002056d;
-	return fn.member(owner, goal);
+	return fn.member(attacker, target);
 }
 
 static Bool bfmeCallENJ(Object *owner, Object *goal)
@@ -215,5 +215,4 @@ StateReturnType AIAttackMeleeHordeApproachTargetState::onEnter()
 	m_adjustDestinations = m_isInitialApproach;
 	return baseResult;
 }
-
 

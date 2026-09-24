@@ -6,16 +6,16 @@
 class BfmeSub1CC_EC3
 {
 public:
-	float effectiveMaxSpeed(void *val);
-	int queryBelowQuarter(void *val);
+	float effectiveMaxSpeed(void *object);
+	int queryBelowQuarter(void *object);
 
 private:
 	unsigned char m_pad[0x3C];
-	float m_value;
+	float m_speedThreshold;
 };
 
-int BfmeSub1CC_EC3::queryBelowQuarter(void *val)
+int BfmeSub1CC_EC3::queryBelowQuarter(void *object)
 {
-	float limit = m_value;
-	return effectiveMaxSpeed(val) * 0.25f < limit;
+	float limit = m_speedThreshold;
+	return effectiveMaxSpeed(object) * 0.25f < limit;
 }

@@ -141,7 +141,7 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *target);
+Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target);
 
 class AIAttackMeleeHordeWaitState
 {

@@ -37,7 +37,7 @@ struct Rva00175820Vector2
 	}
 };
 
-union Rva00175820BoolInt
+union Rva00175820BoolResult
 {
 	int integer;
 	Bool boolean;
@@ -61,7 +61,7 @@ public:
 class BfmeSub1CC_EC3
 {
 public:
-	int queryBelowQuarter(void *value);
+	int queryBelowQuarter(void *target);
 };
 
 class Rva001BDFF0
@@ -84,13 +84,17 @@ public:
 	const Coord3D *getPosition() const { return &m_position; }
 };
 
-Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *target)
+Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target)
 {
 	if (target == 0)
 		goto no;
+	// Retail checks this before member resolution, so the incoming object's bit
+	// controls whether any facing or locomotor data is read.
 	if (target->m_privateStatus & 1)
 		goto no;
 
+	// Resolve only after the status check: geometry below may describe a member,
+	// while the early-out above always observes the machine's original target.
 	if (target->m_kindFlags & 0x20)
 	{
 		if (((RvaC4390Second *)target)->resolve(0) != 0)
@@ -99,7 +103,7 @@ Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *target)
 
 	Coord3D delta;
 	delta.set(target->getPosition());
-	delta.sub(source->getPosition());
+	delta.sub(attacker->getPosition());
 	const Coord3D *direction =
 		((Thing *)target)->getUnitDirectionVector2D();
 	Rva00175820Vector2 direction2(direction->x, direction->y);
@@ -110,7 +114,7 @@ Bool bfmeMeleeHordeTargetInvalid(Object *source, Object *target)
 			(BfmeSub1CC_EC3 *)((Rva001BDFF0 *)target)->get();
 		if (locomotor != 0)
 		{
-			Rva00175820BoolInt result;
+			Rva00175820BoolResult result;
 			result.integer = locomotor->queryBelowQuarter(target);
 			return result.boolean;
 		}
