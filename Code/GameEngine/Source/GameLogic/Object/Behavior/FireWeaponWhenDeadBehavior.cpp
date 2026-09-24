@@ -89,6 +89,7 @@ FireWeaponWhenDeadBehavior::~FireWeaponWhenDeadBehavior( void )
 //-------------------------------------------------------------------------------------------------
 /** The die callback. */
 //-------------------------------------------------------------------------------------------------
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Behavior/FireWeaponWhenDeadBehaviorOnDie.cpp
 // ?onDie@FireWeaponWhenDeadBehavior@@ present-unmatched
 void FireWeaponWhenDeadBehavior::onDie( const DamageInfo *damageInfo )
 {
