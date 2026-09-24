@@ -119,9 +119,19 @@ static void parseOCL( INI* ini, void *instance, void * /*store*/, const void* /*
 }
 
 //-------------------------------------------------------------------------------------------------
+// BFME's StructureToppleUpdateModuleData is Zero Hour's shifted by 0x14: the INI table
+// binds MinToppleDelay, StructuralIntegrity, ToppleStartFX and MinToppleBurstDelay at
+// +0x34/+0x3C/+0x4C/+0x64 (field_names.csv) against Zero Hour's +0x20/+0x28/+0x38/+0x50,
+// so angleFX sits at +0xA8 rather than +0x94.
+struct BfmeStructureToppleAngleFXView
+{
+	char m_unmodelled000[0xA8];
+	AngleFXInfoVector angleFX;
+};
+
 static void parseAngleFX(INI* ini, void *instance, void * /* store */, const void * /*userData*/)
 {
-	StructureToppleUpdateModuleData* self = (StructureToppleUpdateModuleData*)instance;
+	BfmeStructureToppleAngleFXView* self = (BfmeStructureToppleAngleFXView*)instance;
 	AngleFXInfo info;
 	INI::parseReal(ini, instance, &(info.angle), NULL);
 	info.angle = info.angle * PI / 180.0f; // convert from degrees to radians.
