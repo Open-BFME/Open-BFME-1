@@ -8,7 +8,8 @@ class Rva001417F0ModuleInfo
 	public:
 	struct Nugget
 	{
-		unsigned char m_data[16];
+		unsigned char m_data[12];
+		int interfaceMask;
 		Bool copiedFromDefault;
 		Bool inheritable;
 		unsigned char m_padding[2];
@@ -50,7 +51,7 @@ Bool ModuleInfo::clearCopiedFromDefaultEntries(int interfaceMask)
 	Nugget *it = m_begin;
 	while (it != m_end)
 	{
-		if ((*(int *)((char *)it + 0x0c) & interfaceMask) != 0
+		if ((it->interfaceMask & interfaceMask) != 0
 			&& it->copiedFromDefault && !it->inheritable)
 		{
 			Nugget *next = it + 1;
