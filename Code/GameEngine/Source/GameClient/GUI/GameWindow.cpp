@@ -960,11 +960,10 @@ void GameWindow::winSetIMECompositeTextColors( Color color, Color borderColor )
 // GameWindow::winGetEnabledTextColor =========================================
 /** Get the enabled text color */
 //=============================================================================
-// ?winGetEnabledTextColor@GameWindow@@QAEHXZ present-unmatched
 Color GameWindow::winGetEnabledTextColor( void )
 {
 
-	return m_instData.m_enabledText.color;
+	return BFME_WIN_AT(this, 0x18c, Color);
 
 }  // end winGetEnabledTextColor
 
@@ -981,66 +980,60 @@ Color GameWindow::winGetEnabledTextBorderColor( void )
 // GameWindow::winGetDisabledTextColor ========================================
 /** Get the disabled text color */
 //=============================================================================
-// ?winGetDisabledTextColor@GameWindow@@QAEHXZ present-unmatched
 Color GameWindow::winGetDisabledTextColor( void )
 {
 
-	return m_instData.m_disabledText.color;
+	return BFME_WIN_AT(this, 0x194, Color);
 
 }  // end winGetDisabledTextColor
 
 // GameWindow::winGetDisabledTextBorderColor ==================================
 /** Get the disabled text color */
 //=============================================================================
-// ?winGetDisabledTextBorderColor@GameWindow@@QAEHXZ present-unmatched
 Color GameWindow::winGetDisabledTextBorderColor( void )
 {
 
-	return m_instData.m_disabledText.borderColor;
+	return BFME_WIN_AT(this, 0x198, Color);
 
 }  // end winGetEnabledTextBorderColor
 
 // GameWindow::winGetIMECompositeTextColor ==========================================
 /** Get the IME composite text color */
 //=============================================================================
-// ?winGetIMECompositeTextColor@GameWindow@@QAEHXZ present-unmatched
 Color GameWindow::winGetIMECompositeTextColor( void )
 {
 
-	return m_instData.m_imeCompositeText.color;
+	return BFME_WIN_AT(this, 0x1a4, Color);
 
 }  // end winGetIMECompositeTextColor
 
 // GameWindow::winGetIMECompositeBorderColor ==========================================
 /** Get the IME composite border color */
 //=============================================================================
-// ?winGetIMECompositeBorderColor@GameWindow@@QAEHXZ present-unmatched
 Color GameWindow::winGetIMECompositeBorderColor( void )
 {
 
-	return m_instData.m_imeCompositeText.borderColor;
+	return BFME_WIN_AT(this, 0x1a8, Color);
 
 }  // end winGetIMECompositeBorderColor
 
 // GameWindow::winGetHiliteTextColor ==========================================
 /** Get the hilite text color */
 //=============================================================================
-// ?winGetHiliteTextColor@GameWindow@@QAEHXZ present-unmatched
 Color GameWindow::winGetHiliteTextColor( void )
 {
 
-	return m_instData.m_hiliteText.color;
+	return BFME_WIN_AT(this, 0x19c, Color);
 
 }  // end winGetHiliteTextColor
 
 // GameWindow::winGetHiliteTextBorderColor ====================================
 /** Get the hilite text color */
 //=============================================================================
-// ?winGetHiliteTextBorderColor@GameWindow@@QAEHXZ present-unmatched
 Color GameWindow::winGetHiliteTextBorderColor( void )
 {
 
-	return m_instData.m_hiliteText.borderColor;
+	return BFME_WIN_AT(this, 0x1a0, Color);
 
 }  // end winGetHiliteTextBorderColor
 
