@@ -1,5 +1,5 @@
 // ?j_000250d6@Glo012F1024Item@@QAEXXZ
-// partial score=0.32 date=2026-09-12
+// partial score=0.33 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /Oy /Ireference/shims/stringinline
 // ?j_000250d6@Glo012F1024Item@@QAEXXZ
 // Guarded 0x28-byte record walk at +0x14. Named by bfmeEnter calling
@@ -74,12 +74,12 @@ public:
 
 extern Glo012F1028Type *Glo012F1028;
 
-static bool bfmeNonempty(const AsciiString &s)
+static unsigned int bfmeTextLength(const AsciiString &s)
 {
 	const char *data = *(const char **)&s;
 	if (data == 0)
-		return false;
-	return *(const unsigned short *)(data + 4) != 0;
+		return 0;
+	return *(const unsigned short *)(data + 4);
 }
 
 class Glo012F1024Item
@@ -104,7 +104,7 @@ void Glo012F1024Item::j_000250d6(void)
 		bool hasFirst;
 		{
 			AsciiString first = record->getAt18();
-			hasFirst = bfmeNonempty(first);
+			hasFirst = bfmeTextLength(first) != 0;
 		}
 		if (hasFirst)
 		{
@@ -127,7 +127,7 @@ void Glo012F1024Item::j_000250d6(void)
 			bool hasFallback;
 			{
 				AsciiString fallback = record->getAt04();
-				hasFallback = bfmeNonempty(fallback);
+				hasFallback = bfmeTextLength(fallback) != 0;
 			}
 			if (hasFallback)
 			{
