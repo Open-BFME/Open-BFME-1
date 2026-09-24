@@ -1,5 +1,5 @@
-// ?d_00187860@@YAXXZ
-// partial score=0.62 date=2026-09-09
+// ?bfmeAccept@BfmeSubAccept_00002DEC@@QAEXPAVBfmeSeedTarget@@@Z
+// partial score=0.621 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
 
 // Open-BFME5: the VERSIONED form of the same hand-over family.
@@ -21,6 +21,12 @@ struct BfmeVersionBlock
 {
 	unsigned char m_bfmeKind;
 	unsigned char m_bfmeVersion;
+};
+
+union Rva00187860VersionSlot
+{
+	BfmeVersionBlock value;
+	unsigned char storage[ 4 ];
 };
 
 class BfmeSeedTarget
@@ -954,15 +960,15 @@ void Gen_005BAC70::bfmeSeed(BfmeSeedTarget *target)
 // parent seed classes retain their one-byte embedded-subobject layout.
 void BfmeSubAccept_00002DEC::bfmeAccept(BfmeSeedTarget *target)
 {
-	BfmeVersionBlock version;
+	Rva00187860VersionSlot version;
 	Rva00187860View *self = (Rva00187860View *)this;
 	int count;
 	Rva00187860Stl::vector<Rva00187860Coord3D,
 		Rva00187860Stl::allocator<Rva00187860Coord3D> > *points;
 	Rva00187860Coord3D point;
-	version.m_bfmeKind = 1;
-	version.m_bfmeVersion = 1;
-	target->bfmeSeed(&version);
+	version.value.m_bfmeKind = 1;
+	version.value.m_bfmeVersion = 1;
+	target->bfmeSeed(&version.value);
 
 	bfmeHandOver_00043301(target, (void *)self);
 	bfmeHandOver_00004B79(target, (char *)self + 4);
