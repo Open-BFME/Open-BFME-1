@@ -218,41 +218,8 @@ void ThingFactory::init( void )
 //-------------------------------------------------------------------------------------------------
 /** Reset */
 //-------------------------------------------------------------------------------------------------
-// ?reset@ThingFactory@@ present-unmatched
-void ThingFactory::reset( void )
-{
-	ThingTemplate *t;
-	// go through all templates and delete any overrides
-	for( t = m_firstTemplate; t; /* empty */ )
-	{
-		Bool possibleAdjustment = FALSE;
-		// t itself can be deleted if it is something created for this map only. Therefore, 
-		// we need to store what the next item is so that we don't orphan a bunch of templates.
-		ThingTemplate *nextT = t->friend_getNextTemplate();
-		if (t == m_firstTemplate) {
-			possibleAdjustment = TRUE;
-		}
-
-		// if stillValid is NULL after we delete the overrides, then this template was created for 
-		// this map only. If it also happens to be m_firstTemplate, then we need to update m_firstTemplate
-		// as well. Finally, if it was only created for this map, we need to remove the name from the 
-		// hash map, to prevent any crashes.
-
-		AsciiString templateName = t->getName();
-		
-		Overridable *stillValid = t->deleteOverrides();
-		if (stillValid == NULL && possibleAdjustment) {
-			m_firstTemplate = nextT;
-		}
-		
-		if (stillValid == NULL) {
-			// Also needs to be removed from the Hash map.
-			m_templateHashMap.erase(templateName);
-		}
-
-		t = nextT;
-	}
-}  // end reset
+// ?reset@ThingFactory@@UAEXXZ
+// Body in ThingFactory_reset.cpp (slot 4; deleteOverrides inlined one level as retail does).
 
 //-------------------------------------------------------------------------------------------------
 /** Update */
