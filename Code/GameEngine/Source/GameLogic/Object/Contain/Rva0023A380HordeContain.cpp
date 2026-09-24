@@ -1,30 +1,28 @@
-// ?rva0023a380@Rva0023A380HordeContain@@QAEII@Z
-// partial score=0.9946 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
 // stlport
-// ?rva0023a380@Rva0023A380HordeContain@@QAEII@Z
 // Retail 0x0023A380, 369 bytes.
 //
 // Address-derived HordeContain-related body: the contained-member list at
-// this-0xAC and the member index tree at this+0x30 match the already-landed
-// Rva0023A270HordeContain::rva0023a270 (same file/class family).  Each
-// visited Object's +0x200 field is a virtual interface whose vtable slot
-// 0x48 (index 18) returns an id; that id is resolved back to an Object via
-// GameLogic::findObjectByID (retail 0x0009A510, ILT thunk 0x0001F253).
+// this-0xAC and member-index tree at this+0x30 match the already-landed
+// Rva0023A270HordeContain body. Each visited Object's +0x200 field is an
+// address-derived interface whose vtable slot 0x48 returns an id; that id is
+// resolved through TheBfmeGameLogic's object hash. The exact identity of the
+// interface and the +0x214/+0x74 chase on the resolved Object are unproven.
 //
-// findObjectByID is ONE inline body (the ZH header's commented-out hash
-// lookup) used at all three sites.  MSVC 7.1's inliner itself declines the
-// first site and emits a call to the out-of-line copy, and expands the two
-// member-index sites; the second site's id==0 guard is what folds the
-// iface2 slot48()==0 exit, so the member-index loop has no explicit
-// pre-check -- only the post-lookup candidate2 != 0 test retail keeps.
-//
-// The exact identity of the +0x200 interface, its slot-0x48 method, and the
-// +0x214/+0x74 chase on the resolved Object are unproven; names below keep
-// the address token rather than guess a class.
+// At the first slot-0x48 call, an explicit typed vtable view emits the retail
+// EAX vtable temporary. A one-argument __fastcall function pointer puts the
+// receiver in ECX, matching thiscall for this no-explicit-argument slot. The
+// member-call form at the second site already emits retail's EDX temporary.
 
 typedef unsigned int UnsignedInt;
 class Object;
+
+typedef UnsignedInt (__fastcall *Rva0023A380Slot48)(void *);
+struct Rva0023A380Vtable
+{
+	void *slots[18];
+	Rva0023A380Slot48 slot48;
+};
 
 // object+0x200 virtual interface; only vtable slot 0x48 (index 18) is
 // proven by this body's evidence.
@@ -49,7 +47,7 @@ typedef _STL::list<Object *> BfmeMemberList;
 typedef _STL::hash_map<UnsignedInt, Object *, _STL::hash<UnsignedInt>,
 	_STL::equal_to<UnsignedInt> > BfmeObjectPtrHash;
 
-// retail 0x012F0898 TheBfmeGameLogic.  Only the bucket vector's placement
+// Retail 0x012F0898 TheBfmeGameLogic. Only the bucket vector's placement
 // matters (this+0xB4/+0xB8), as in GameLogicFindObjectByID.cpp.
 class GameLogic
 {
@@ -118,7 +116,8 @@ UnsignedInt Rva0023A380HordeContain::rva0023a380(UnsignedInt targetId)
 		if (iface == 0)
 			continue;
 
-		UnsignedInt candidate = iface->slot48();
+		Rva0023A380Vtable *vtable = *(Rva0023A380Vtable **)iface;
+		UnsignedInt candidate = vtable->slot48(iface);
 		if (candidate == 0)
 			continue;
 
