@@ -1,10 +1,15 @@
-// ?computePath@AIAttackMeleeEngageState@@MAE_NXZ
-// partial score=0.9789915966386554 date=2026-09-21
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
+// ?computePath@AIAttackMeleeEngageState@@MAE_NXZ
 // RVA 00177A90, 952 bytes. Vtable 0x01099848 slot 17 routes through ILT
 // 0x0002E5CD to this body; AIStateMachine.h declares virtual Bool computePath.
-// Layout/ABI evidence: docs/analysis/0x003e8e10.md sections 1b-1d and this
-// caller's complete retail instructions. Reuses Rva0016D5F0PathTest call views.
+// The diagnostic string "masiwar called by AIAttackMeleeEngageState::computePath"
+// names the owner. Layout/ABI evidence: docs/analysis/0x003e8e10.md sections
+// 1b-1d and this caller's complete retail instructions.
+// The goal offset is an inlined helper: the direction vector arrives as the
+// helper's parameter and is copied into the helper's own local, so VC7.1 knows
+// the copy cannot alias its source and loads all three components before the
+// Scale call (retail +0x15A..+0x17A). Written in the caller, the copy is
+// ordered load/store per component.
 #include "basetype.h"
 
 extern void j_0003a17a();
@@ -136,9 +141,16 @@ public:
     bool flag75;
 protected:
     virtual Bool computePath();
+    __forceinline void setGoalAlongDirection00177A90(const Coord3D *dir, Rva00177A90Object *victim, const Coord3D &pos);
 };
 
-
+__forceinline void AIAttackMeleeEngageState::setGoalAlongDirection00177A90(const Coord3D *dir, Rva00177A90Object *victim, const Coord3D &pos)
+{
+    Coord3D direction = *dir;
+    CALL(Rva0014FFD0,&direction,j_0000e1c4)(2.0f*victim->valueBC + 60.0f);
+    m_goalPosition = pos;
+    CALL(Rva000EC6F0,&m_goalPosition,j_0002f66c)(direction);
+}
 
 Bool AIAttackMeleeEngageState::computePath()
 {
@@ -178,10 +190,7 @@ Bool AIAttackMeleeEngageState::computePath()
         position5c = position;
         if (((Rva00175820)j_0002056d)(source,victim))
         {
-            Coord3D direction = *CALL(Rva00132140,victim,j_00040246)();
-            CALL(Rva0014FFD0,&direction,j_0000e1c4)(2.0f*victim->valueBC + 60.0f);
-            m_goalPosition = position;
-            CALL(Rva000EC6F0,&m_goalPosition,j_0002f66c)(direction);
+            setGoalAlongDirection00177A90(CALL(Rva00132140,victim,j_00040246)(), victim, position);
             CALL(Rva003EAC80,TheAI->m_pathfinder,j_00011252)(source,(char*)ai+0x1a8,&m_goalPosition);
             if (Glo012F0239 && TheCRCParameterCheck)
                 ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
@@ -223,7 +232,7 @@ Bool AIAttackMeleeEngageState::computePath()
         void *pathfinder = TheAI->m_pathfinder;
         CALL(Rva003E9720,pathfinder,j_000294e2)(source,&m_goalPosition,
             CALL(Rva001A7C20,TheTerrainLogic,j_0001c675)(source,&m_goalPosition),
-            (const char*)0x0109769c,0x1c38);
+            "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp",0x1c38);
         CALL(Rva0027BD90,ai,j_0003bcff)(&m_goalPosition,true);
         flag4d = ai->flag31e;
         return true;
