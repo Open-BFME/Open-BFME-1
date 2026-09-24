@@ -87,7 +87,7 @@ struct AICommandParms
 	const CommandButton			*m_commandButton;	// +0x94
 	Path										*m_path;		// +0x98
 
-	AICommandParms(AICommandType cmd, CommandSourceType cmdSource);	// ILT 0x00030EA4
+	AICommandParms(AICommandType cmd, CommandSourceType commandSource);	// ILT 0x00030EA4
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
@@ -96,52 +96,52 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;	// slot 0, vtable+0x00
 
-	void aiGuardPosition(const Coord3D *pos, GuardMode guardMode, CommandSourceType cmdSource);
-	void aiGuardObject(Object *objToGuard, GuardMode guardMode, CommandSourceType cmdSource);
-	void aiBfmeCommand20(const Team *team, Int value, CommandSourceType cmdSource);
-	void aiGuardArea(const PolygonTrigger *areaToGuard, GuardMode guardMode, CommandSourceType cmdSource);
-	void aiBfmeCommand44(const PolygonTrigger *poly, Int value,
-			CommandSourceType cmdSource, const Coord3D *pos);
+	void aiGuardPosition(const Coord3D *position, GuardMode guardMode, CommandSourceType commandSource);
+	void aiGuardObject(Object *objToGuard, GuardMode guardMode, CommandSourceType commandSource);
+	void aiBfmeCommand20(const Team *team, Int value, CommandSourceType commandSource);
+	void aiGuardArea(const PolygonTrigger *areaToGuard, GuardMode guardMode, CommandSourceType commandSource);
+	void aiBfmeCommand44(const PolygonTrigger *polygon, Int value,
+			CommandSourceType commandSource, const Coord3D *position);
 };
 
-void AICommandInterface::aiGuardPosition( const Coord3D *pos, GuardMode guardMode, CommandSourceType cmdSource )
+void AICommandInterface::aiGuardPosition( const Coord3D *position, GuardMode guardMode, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_GUARD_POSITION, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_GUARD_POSITION, commandSource);
+	parms.m_pos = *position;
 	parms.m_intValue = guardMode;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiGuardObject( Object *objToGuard, GuardMode guardMode, CommandSourceType cmdSource )
+void AICommandInterface::aiGuardObject( Object *objToGuard, GuardMode guardMode, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_GUARD_OBJECT, cmdSource);
+	AICommandParms parms(AICMD_GUARD_OBJECT, commandSource);
 	parms.m_obj = objToGuard;
 	parms.m_intValue = guardMode;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand20(const Team *team, Int value, CommandSourceType cmdSource)
+void AICommandInterface::aiBfmeCommand20(const Team *team, Int value, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_BFME_20, cmdSource);
+	AICommandParms parms(AICMD_BFME_20, commandSource);
 	parms.m_team = team;
 	parms.m_intValue = value;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiGuardArea( const PolygonTrigger *areaToGuard, GuardMode guardMode, CommandSourceType cmdSource )
+void AICommandInterface::aiGuardArea( const PolygonTrigger *areaToGuard, GuardMode guardMode, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_GUARD_AREA, cmdSource);
+	AICommandParms parms(AICMD_GUARD_AREA, commandSource);
 	parms.m_polygon = areaToGuard;
 	parms.m_intValue = guardMode;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand44(const PolygonTrigger *poly, Int value,
-		CommandSourceType cmdSource, const Coord3D *pos)
+void AICommandInterface::aiBfmeCommand44(const PolygonTrigger *polygon, Int value,
+		CommandSourceType commandSource, const Coord3D *position)
 {
-	AICommandParms parms(AICMD_BFME_44, cmdSource);
-	parms.m_polygon = poly;
+	AICommandParms parms(AICMD_BFME_44, commandSource);
+	parms.m_polygon = polygon;
 	parms.m_intValue = value;
-	parms.m_pos = *pos;
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
