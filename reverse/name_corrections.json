@@ -2008,5 +2008,15 @@
   "after_sha256": "502b2ff6a4c925d7a3d265eb8fa5ceee519b5d00054661f782f33a4717f11f7b",
   "evidence": "reverse/identity_evidence/0x00526660-false-drawable-route.md",
   "reason": "Independent retail receiver and callee evidence in the proof refutes the old Drawable ledger identity at the same RVA; the new address-derived name preserves the matched extent without asserting a semantic owner."
+ },
+ {
+  "old_path": "reverse/attempts/0x000c15a0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/INI/Rva000C15A0ParseAsciiSet.cpp",
+  "old_name": "parseAsciiStringVector",
+  "new_name": "Rva000C15A0ParseAsciiSet",
+  "before_sha256": "84e680c24964d64e8f2580e5c766aca8b1c0497eeef07a27109421c8f1ddb011",
+  "after_sha256": "8b06e6537214363b64ebd0fa02d0e0d3272883905ec6e93c802249619ecf1281",
+  "evidence": "reverse/identity_evidence/0x000c15a0-set-parser.md",
+  "reason": "Token-alignment artifact, not a rename: the old rough bank called INI::parseAsciiStringVector, and the exact landed callback still calls that same 0x008542B0 parser. The new Rva000C15A0ParseAsciiSet is the distinct 227-byte callback that copies its parsed vector into a set at instance+8; no named caller proves its semantic owner."
  }
 ]
