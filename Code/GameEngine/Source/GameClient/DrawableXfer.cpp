@@ -1,5 +1,3 @@
-// ?xfer@Drawable@@MAEXPAVXfer@@@Z
-// partial score=1.0 date=2026-09-23
 // stlport
 // Intended home: Code/GameEngine/Source/GameClient/Drawable.cpp.
 // Banked: instruction-shape exact; unresolved typed callees prevent a landing.
@@ -63,7 +61,7 @@ public:
 extern Rva0041D290Audio *Rva012ed668;
 class TintEnvelope { public: char bytes[0x50]; TintEnvelope() throw(); };
 class DrawableLocoInfo { public: char bytes[0x58]; DrawableLocoInfo() throw(); };
-class Anim2DTemplate { public: AsciiString rva00415bc0(); };
+class Anim2DTemplate { public: AsciiString getName() const; };
 class Anim2DCollection;
 class Anim2D { public: char bytes[0x34]; Anim2D(Anim2DTemplate*,Anim2DCollection*);Anim2DTemplate *getTemplate()const{return *(Anim2DTemplate**)(bytes+0xc);} };
 class DrawableIconInfo { public: void *v; Anim2D *icon[14]; unsigned keep[14]; void clear(); };
@@ -225,8 +223,12 @@ void setID(DrawableID);
 void replaceModelConditionState(const ModelConditionFlags&,unsigned,unsigned);
 protected:void xferDrawableModules(Xfer*); virtual void xfer(Xfer*); };
 
+// Inline forwarders onto the real Drawable members; they emit no body.
+// ?rva00411600@Rva0041D290FullDrawable@@QAEXI@Z absent-from-retail
 inline void Rva0041D290FullDrawable::rva00411600(unsigned id){((Drawable*)this)->setID((DrawableID)id);}
+// ?rva00417e20@Rva0041D290FullDrawable@@QAEXPAVXfer@@@Z absent-from-retail
 inline void Rva0041D290FullDrawable::rva00417e20(Xfer *x){((Drawable*)this)->xferDrawableModules(x);}
+// ?rva0041ccd0@Rva0041D290FullDrawable@@QAEXPAX_N1@Z absent-from-retail
 inline void Rva0041D290FullDrawable::rva0041ccd0(void *p,bool a,bool b){((Drawable*)this)->replaceModelConditionState(*(ModelConditionFlags*)p,a,b);}
 void Drawable::xfer(Xfer *x)
 {
@@ -270,7 +272,7 @@ void Drawable::xfer(Xfer *x)
   for(unsigned char i=0;i<14;++i){if(!m_280||!full->rva00410f10()->icon[i])continue;
    const char *name=Rva012b4f5c[i];field<StringBase<char> >(&indexName,0).set(name,name?strlen(name):0);*x==indexName;
    keep=full->rva00410f10()->keep[i];*x==keep;
-   templateName=full->rva00410f10()->icon[i]->getTemplate()->rva00415bc0();*x==templateName;
+   templateName=full->rva00410f10()->icon[i]->getTemplate()->getName();*x==templateName;
    x->operator==(*reinterpret_cast<Snapshot*>(full->rva00410f10()->icon[i]));
   }
  }else{
