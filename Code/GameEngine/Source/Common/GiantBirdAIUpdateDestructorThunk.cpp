@@ -90,7 +90,7 @@ public:
 private:
 	unsigned char m_pad28[0x324];
 	GiantBirdMemberA m_memberA;
-	unsigned char m_pad34d[0x9f];
+	unsigned char m_pad34d[0x70];
 	GiantBirdMemberB m_memberB;
 	unsigned char m_pad3ed[0x13];
 	GiantBirdNested m_nested;
