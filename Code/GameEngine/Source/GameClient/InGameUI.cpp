@@ -2800,12 +2800,39 @@ void InGameUI::createForceAttackHint( const GameMessage *msg )
 //-------------------------------------------------------------------------------------------------
 /** An garrison command has occurred, start graphical "hint". */
 //-------------------------------------------------------------------------------------------------
+// This source-backed opaque receiver contract is shared with BfmeConv553.cpp;
+// its no-argument member call resolves through the existing ILT 0xE3AE.
+class BfmeThingBXF
+{
+public:
+	void bfmeOnceBXF();
+};
+
+// BFME's GameClient vtable places findDrawableByID at +0x2C; the vendored
+// declaration used by this TU places it at +0x20.
+class BfmeGameClientGarrisonView
+{
+public:
+	virtual void _m0() = 0;
+	virtual void _m1() = 0;
+	virtual void _m2() = 0;
+	virtual void _m3() = 0;
+	virtual void _m4() = 0;
+	virtual void _m5() = 0;
+	virtual void _m6() = 0;
+	virtual void _m7() = 0;
+	virtual void _m8() = 0;
+	virtual void _m9() = 0;
+	virtual void _m10() = 0;
+	virtual Drawable *findDrawableByID(DrawableID id) = 0;
+};
+
 void InGameUI::createGarrisonHint( const GameMessage *msg )
 {
-	Drawable *draw = TheGameClient->findDrawableByID( msg->getArgument(0)->drawableID );
+	Drawable *draw = ((BfmeGameClientGarrisonView *)TheGameClient)->findDrawableByID( msg->getArgument(0)->drawableID );
 	if( draw )
 	{
-		draw->onSelected();
+		((BfmeThingBXF *)draw)->bfmeOnceBXF();
 	}
 }
 
