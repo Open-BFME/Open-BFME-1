@@ -1908,5 +1908,25 @@
   "after_sha256": "0b88dc4beaa7f2406905ea59a7a694b00cb111d9d3029935aee9a787a7383e61",
   "evidence": "reverse/symbols.csv",
   "reason": "reverse/symbols.csv pins ?Rva008C5D70Alloc@@3P6APAXI@ZA at 0x01337828; the old spelling g_rva8CF030Allocate matches no pinned symbol, so the source uses the pinned name."
+ },
+ {
+  "old_path": "reverse/attempts/0x008ce5c0.cpp",
+  "new_path": "Code/Libraries/Source/EA/Apt/Rva8CE5C0AppendRecord.cpp",
+  "old_name": "Rva8CE5C0String",
+  "new_name": "Rva008BA800HeaderedDelete",
+  "before_sha256": "d9c96d1a8ee20025d78e030f7cb5e3b575439c4ba5a8a2e63c3fe4fb3a0669ad",
+  "after_sha256": "26c102724ecfcdd5b4faefaf8bbd480468348b83b920f1f113cb661a7d192942",
+  "evidence": "reverse/functions.csv",
+  "reason": "Token-alignment artifact, not a rename: the bank's Rva8CE5C0String was replaced by BfmeStrVKI because the callee is the matched ledger row ?bfmeSetVKI@BfmeStrVKI@@QAEXPBD@Z at 0x0089E680 in reverse/functions.csv; Rva008BA800HeaderedDelete is a separate new declaration for the class delete at 0x008BA800."
+ },
+ {
+  "old_path": "reverse/attempts/0x008ce5c0.cpp",
+  "new_path": "Code/Libraries/Source/EA/Apt/Rva8CE5C0AppendRecord.cpp",
+  "old_name": "g_rva8CE5C0Allocate",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "d9c96d1a8ee20025d78e030f7cb5e3b575439c4ba5a8a2e63c3fe4fb3a0669ad",
+  "after_sha256": "26c102724ecfcdd5b4faefaf8bbd480468348b83b920f1f113cb661a7d192942",
+  "evidence": "reverse/symbols.csv",
+  "reason": "reverse/symbols.csv pins ?Rva008C5D70Alloc@@3P6APAXI@ZA; the bank's g_rva8CE5C0Allocate spelling matches no pinned symbol, so the source uses the pinned name."
  }
 ]
