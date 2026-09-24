@@ -28,7 +28,7 @@ class Gen_00943CF0
 
 class Rva00944430
 {
-	void rva00944430(void **head, CameraClass *camera, int flags);
+	void rva00944430(void **head, CameraClass *camera, const float *padding);
 	friend class Rva00944690Scene;
 };
 
