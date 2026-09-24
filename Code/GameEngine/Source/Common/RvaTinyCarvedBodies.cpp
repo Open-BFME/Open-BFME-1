@@ -303,22 +303,6 @@ int Rva000644D0Field::get(void) const
 	return m_value;
 }
 
-class Rva00065290Field
-{
-public:
-	int get(void) const;
-
-private:
-	char m_pad[0x3c];
-	int m_value;
-};
-
-// ?get@Rva00065290Field@@QBEHXZ
-int Rva00065290Field::get(void) const
-{
-	return m_value;
-}
-
 class Rva00065360Opaque
 {
 public:
