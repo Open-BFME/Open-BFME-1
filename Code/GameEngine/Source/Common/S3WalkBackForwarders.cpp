@@ -120,14 +120,6 @@ void Gen_00289AA0::bfmeForward(void)
 	holder->m_bfmeSub.bfmeForward();
 }
 
-// ?bfmeForward@Gen_002D34F0@@QAEXXZ
-void Gen_002D34F0::bfmeForward(void)
-{
-	Gen_002D34F0Holder *holder = *(Gen_002D34F0Holder **)((char *)this - 0x1C);
-
-	holder->m_bfmeSub.bfmeForward();
-}
-
 // ?bfmeForward@Gen_002D6D00@@QAEXXZ
 void Gen_002D6D00::bfmeForward(void)
 {

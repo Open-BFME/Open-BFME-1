@@ -24,12 +24,6 @@ private:
 	BfmeNodeBY m_bfmeSentinel;				// +0x0C
 };
 
-// ?bfmeIsEmpty@Gen_00892500@@QBE_NXZ
-bool Gen_00892500::bfmeIsEmpty(void) const
-{
-	return m_bfmeNode == &m_bfmeSentinel;
-}
-
 class Gen_00892550
 {
 public:
@@ -40,12 +34,6 @@ private:
 	BfmeNodeBY *m_bfmeNode;					// +0x08
 	BfmeNodeBY m_bfmeSentinel;				// +0x0C
 };
-
-// ?bfmeIsEmpty@Gen_00892550@@QBE_NXZ
-bool Gen_00892550::bfmeIsEmpty(void) const
-{
-	return m_bfmeNode == &m_bfmeSentinel;
-}
 
 class Gen_00977870
 {
@@ -59,12 +47,6 @@ private:
 	int m_bfmeFirst;					// +0x18
 	int m_bfmeLast;						// +0x1C
 };
-
-// ?bfmeBytes@Gen_00977870@@QBEHXZ
-int Gen_00977870::bfmeBytes(void) const
-{
-	return (m_bfmeLast - m_bfmeFirst + 1) * m_bfmeStride * 4 + 0x20;
-}
 
 class BfmeTargetBY
 {

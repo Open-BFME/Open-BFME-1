@@ -245,12 +245,6 @@ private:
 	unsigned char m_value;
 };
 
-// ?body@Rva0044F5F0Body@@QBEEXZ
-unsigned char Rva0044F5F0Body::body() const
-{
-	return m_value;
-}
-
 class Rva0044F6B0Body
 {
 public:

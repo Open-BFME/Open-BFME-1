@@ -575,12 +575,6 @@ public:
 	int body() const;
 };
 
-// ?body@Rva0037D330Body@@QBEHXZ
-int Rva0037D330Body::body() const
-{
-	return m_value;
-}
-
 class Rva0037D380Body
 {
 public:

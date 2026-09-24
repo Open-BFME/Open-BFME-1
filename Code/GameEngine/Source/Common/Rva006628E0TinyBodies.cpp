@@ -219,12 +219,6 @@ private:
 	unsigned int m_value;
 };
 
-// ?get@Rva00681D60Dword@@QBEIXZ
-unsigned int Rva00681D60Dword::get() const
-{
-	return m_value;
-}
-
 class Rva00684BD0Dword
 {
 public:

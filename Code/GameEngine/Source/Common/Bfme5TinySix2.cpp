@@ -16,12 +16,6 @@ public:
 
 extern BfmeHolderBQ *g_bfmeHolderBQ;				// retail 0x012F1464
 
-// ?bfmeSetOther@@YGXE@Z
-void __stdcall bfmeSetOther(unsigned char value)
-{
-	g_bfmeHolderBQ->m_bfmeFlag = value;
-}
-
 inline void bfmeSwapInt(int &left, int &right)
 {
 	int value = left;
@@ -59,18 +53,6 @@ private:
 	int m_bfmeSecondScale;					// +0x24
 	int m_bfmeSecondOffset;					// +0x28
 };
-
-// ?bfmeFirstIsPositive@Gen_0037A810@@QBEHH@Z
-int Gen_0037A810::bfmeFirstIsPositive(int value) const
-{
-	return m_bfmeFirstScale * value + m_bfmeFirstOffset >= 0;
-}
-
-// ?bfmeSecondIsPositive@Gen_0037A810@@QBEHH@Z
-int Gen_0037A810::bfmeSecondIsPositive(int value) const
-{
-	return m_bfmeSecondScale * value + m_bfmeSecondOffset >= 0;
-}
 
 class BfmePairBQ
 {

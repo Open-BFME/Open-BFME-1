@@ -47,9 +47,3 @@ private:
 	Int m_value00;
 };
 
-// ??0Rva00065C50Owner@@QAE@PAX@Z
-Rva00065C50Owner::Rva00065C50Owner(void *source)
-{
-	m_value00 = 0;
-	attach(source);
-}

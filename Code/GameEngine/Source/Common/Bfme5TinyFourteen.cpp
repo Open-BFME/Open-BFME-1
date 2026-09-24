@@ -102,10 +102,3 @@ private:
 	int m_bfmeDeadline;					// +0x5C
 };
 
-// ?bfmeArm@Gen_001B4980@@QAEXHH@Z
-void Gen_001B4980::bfmeArm(int value, int delay)
-{
-	m_bfmeValue = value;
-
-	m_bfmeDeadline = g_bfmeClockCE->m_bfmeStamp + delay;
-}

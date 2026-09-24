@@ -31,7 +31,6 @@
 		m_value = value;                                                      \
 	}
 
-BFME_DISP_BYTE_SETTER( Rva000C96F0ByteSlot, 0x29C )
 BFME_DISP_BYTE_SETTER( Rva000F91E0ByteSlot, 0x90 )
 BFME_DISP_BYTE_SETTER( Rva0010CEE0ByteSlot, 0x11D )
 BFME_DISP_BYTE_SETTER( Rva00160470ByteSlot, 0x294 )

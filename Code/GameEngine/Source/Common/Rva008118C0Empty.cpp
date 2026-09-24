@@ -5,7 +5,3 @@ void Rva008118C0()
 {
 }
 
-int Rva008118D0()
-{
-	return -1;
-}

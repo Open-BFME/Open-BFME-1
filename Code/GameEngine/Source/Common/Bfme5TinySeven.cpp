@@ -28,11 +28,3 @@ private:
 	int m_bfmeSecond;					// +0x34
 };
 
-// ?bfmeInit@Gen_0095C7F0@@QAEXXZ
-void Gen_0095C7F0::bfmeInit(void)
-{
-	m_bfmeSeed = g_bfmeSeedBX;
-
-	m_bfmeFirst = 0;
-	m_bfmeSecond = 0;
-}

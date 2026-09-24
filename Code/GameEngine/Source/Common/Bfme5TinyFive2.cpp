@@ -16,20 +16,6 @@ private:
 	int m_bfmeSecond;					// +0x834
 };
 
-// ?bfmeSetMode@Gen_0043AD70@@QAEXE@Z
-void Gen_0043AD70::bfmeSetMode(unsigned char value)
-{
-	if (m_bfmeMode != value)
-		m_bfmeMode = value;
-}
-
-// ?bfmeGetPair@Gen_0043AD70@@QBEXPAH@Z
-void Gen_0043AD70::bfmeGetPair(int *out) const
-{
-	out[0] = m_bfmeFirst;
-	out[1] = m_bfmeSecond;
-}
-
 class BfmeThingBR
 {
 public:
@@ -97,13 +83,3 @@ public:
 
 extern BfmeOwnerBR *g_bfmeOwnerBR;				// retail 0x012F060C
 
-// ?bfmeMark@@YAHXZ
-int __cdecl bfmeMark(void)
-{
-	BfmeTargetBR *target = g_bfmeOwnerBR->m_bfmeTarget;
-
-	if (target)
-		target->m_bfmeFlag = 1;
-
-	return 0;
-}

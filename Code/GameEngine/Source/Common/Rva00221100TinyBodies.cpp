@@ -99,11 +99,6 @@ public:
 	void method( int first, int second );
 };
 
-// ?method@Rva0022A060Opaque@@QAEXHH@Z
-void Rva0022A060Opaque::method( int, int )
-{
-}
-
 class Rva0022A0C0Opaque
 {
 public:

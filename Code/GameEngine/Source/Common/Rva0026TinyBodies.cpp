@@ -10,12 +10,6 @@ private:
 	unsigned char m_value;
 };
 
-// ?getByte@Rva0026BFA0@@QBEEXZ
-unsigned char Rva0026BFA0::getByte(void) const
-{
-	return m_value;
-}
-
 class Rva0026C5C0
 {
 public:

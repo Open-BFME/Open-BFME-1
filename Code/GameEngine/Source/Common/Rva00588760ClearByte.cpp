@@ -22,9 +22,3 @@ private:
 	unsigned char m_flag;
 };
 
-Rva002ED510Object *Rva002ED510Object::clearByte()
-{
-	m_flag = 0;
-	return this;
-}
-

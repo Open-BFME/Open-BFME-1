@@ -94,10 +94,3 @@ public:
  unsigned char m_bfmeHeadEQV[0x194];
  BfmeMapEQV m_bfmeMapEQV;
 };
-BfmeItemEQV *BfmeHostEQV::bfmeGetEQV_006155E0(const AsciiString &key) {
- BfmeMapEQV *map = &m_bfmeMapEQV;
- if (map->find(key) != map->end()) return (*map)[key];
- BfmeItemEQV *item = new BfmeItemEQV(key);
- (*map)[key] = item;
- return item;
-}

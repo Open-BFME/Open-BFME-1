@@ -45,14 +45,6 @@ private:
 	BfmeThingCG *m_bfmeThing;				// +0x00
 };
 
-// ?bfmeSetPair@Gen_003F69C0@@QAEXPAHH@Z
-void Gen_003F69C0::bfmeSetPair(int *first, int second)
-{
-	m_bfmeThing->m_bfmeFirst = *first;
-
-	m_bfmeThing->m_bfmeSecond = second;
-}
-
 class Gen_003D4E00
 {
 public:
@@ -64,9 +56,3 @@ private:
 	int m_bfmeSecond;					// +0x23630
 };
 
-// ?bfmeGetPair@Gen_003D4E00@@QBEXPAH@Z
-void Gen_003D4E00::bfmeGetPair(int *out) const
-{
-	out[0] = m_bfmeFirst;
-	out[1] = m_bfmeSecond;
-}

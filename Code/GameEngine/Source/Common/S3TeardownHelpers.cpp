@@ -1,16 +1,8 @@
-// Nine more bodies in three shapes.
+// Six more bodies in two shapes.
 //
 // 0x004410A0, 0x0077F000 and 0x007892D0 are three no-argument member calls in
 // a row on the same this: esi holds it across the first two calls and the
 // third is in tail position, so it becomes a jump after esi is popped.
-//
-// 0x00891B80, 0x00892890 and 0x008AD330 release a shared block. The refcount
-// is decremented with a sixteen-bit dec and then RE-READ by a separate cmp
-// rather than branched on the flags dec already set, which is what two
-// statements give -- decrement, then test the member -- not `if (--n == 0)`.
-// The release itself goes through slot +0x04 of a global table of __cdecl
-// function pointers, cleaned with pop ecx because there is exactly one
-// argument.
 //
 // 0x008A0D60, 0x008C5B30 and 0x008C5C00 free a buffer only when it exists,
 // passing the element count at +0x04 scaled by four; the scale is a shl, so
@@ -146,39 +138,6 @@ void Gen_007892D0::bfmeRun(void)
 	bfmeStep1();
 	bfmeStep2();
 	bfmeStep3();
-}
-
-// ?bfmeRelease@Gen_00891B80@@QAEXXZ
-void Gen_00891B80::bfmeRelease(void)
-{
-	BfmeRefBlock *block = m_bfmeBlock;
-
-	--block->m_bfmeRefCount;
-
-	if (block->m_bfmeRefCount == 0)
-		TheBfmeReleaseTable->m_bfmeRelease(block);
-}
-
-// ?bfmeRelease@Gen_00892890@@QAEXXZ
-void Gen_00892890::bfmeRelease(void)
-{
-	BfmeRefBlock *block = m_bfmeBlock;
-
-	--block->m_bfmeRefCount;
-
-	if (block->m_bfmeRefCount == 0)
-		TheBfmeReleaseTable->m_bfmeRelease(block);
-}
-
-// ?bfmeRelease@Gen_008AD330@@QAEXXZ
-void Gen_008AD330::bfmeRelease(void)
-{
-	BfmeRefBlock *block = m_bfmeBlock;
-
-	--block->m_bfmeRefCount;
-
-	if (block->m_bfmeRefCount == 0)
-		TheBfmeReleaseTable->m_bfmeRelease(block);
 }
 
 // ?bfmeFreeBuffer@Gen_008A0D60@@QAEXXZ

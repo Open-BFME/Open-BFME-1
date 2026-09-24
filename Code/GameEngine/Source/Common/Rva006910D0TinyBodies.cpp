@@ -336,8 +336,3 @@ public:
 	AudioEventInfoHash::iterator method();
 };
 
-// ?method@Rva006925D0@@QAE?AU?$_Ht_iterator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@VAsciiString@@U?$hash@VAsciiString@@@rts@@U?$_Select1st@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@U?$equal_to@VAsciiString@@@6@V?$allocator@U?$pair@$$CBVAsciiString@@PAUAudioEventInfo@@@_STL@@@2@@_STL@@XZ
-AudioEventInfoHash::iterator Rva006925D0::method()
-{
-	return begin();
-}

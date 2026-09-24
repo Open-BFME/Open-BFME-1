@@ -289,12 +289,6 @@ public:
     void *get() const;
 };
 
-// ?get@Rva00097130AddressPlus1C@@QBEPAXXZ
-void *Rva00097130AddressPlus1C::get() const
-{
-    return (unsigned char *)this + 0x1C;
-}
-
 class Rva00097140Dword
 {
     unsigned char m_padding[4];

@@ -139,50 +139,8 @@ bool Gen_002da6b0::bfmeMatch(void *first, void *second)
 	return bfmeMatchRaw(first, second);
 }
 
-// ?bfmeMatch@Gen_002da6d0@@QAE_NPAX0@Z
-bool Gen_002da6d0::bfmeMatch(void *first, void *second)
-{
-	return bfmeMatchRaw(first, second);
-}
-
-// ?bfmeMatch@Gen_002dad40@@QAE_NPAX0@Z
-bool Gen_002dad40::bfmeMatch(void *first, void *second)
-{
-	return bfmeMatchRaw(first, second);
-}
-
-// ?bfmeMatch@Gen_002db220@@QAE_NPAX0@Z
-bool Gen_002db220::bfmeMatch(void *first, void *second)
-{
-	return bfmeMatchRaw(first, second);
-}
-
 // ?bfmeMatch@Gen_002dcc60@@QAE_NPAX0@Z
 bool Gen_002dcc60::bfmeMatch(void *first, void *second)
-{
-	return bfmeMatchRaw(first, second);
-}
-
-// ?bfmeMatch@Gen_002dd290@@QAE_NPAX0@Z
-bool Gen_002dd290::bfmeMatch(void *first, void *second)
-{
-	return bfmeMatchRaw(first, second);
-}
-
-// ?bfmeMatch@Gen_002ddc80@@QAE_NPAX0@Z
-bool Gen_002ddc80::bfmeMatch(void *first, void *second)
-{
-	return bfmeMatchRaw(first, second);
-}
-
-// ?bfmeMatch@Gen_002ddca0@@QAE_NPAX0@Z
-bool Gen_002ddca0::bfmeMatch(void *first, void *second)
-{
-	return bfmeMatchRaw(first, second);
-}
-
-// ?bfmeMatch@Gen_002de220@@QAE_NPAX0@Z
-bool Gen_002de220::bfmeMatch(void *first, void *second)
 {
 	return bfmeMatchRaw(first, second);
 }
@@ -199,14 +157,3 @@ bool Gen_002dec00::bfmeMatch(void *first, void *second)
 	return bfmeMatchRaw(first, second);
 }
 
-// ?bfmeMatch@Gen_002df4c0@@QAE_NPAX0@Z
-bool Gen_002df4c0::bfmeMatch(void *first, void *second)
-{
-	return bfmeMatchRaw(first, second);
-}
-
-// ?bfmeMatch@Gen_002df4e0@@QAE_NPAX0@Z
-bool Gen_002df4e0::bfmeMatch(void *first, void *second)
-{
-	return bfmeMatchRaw(first, second);
-}

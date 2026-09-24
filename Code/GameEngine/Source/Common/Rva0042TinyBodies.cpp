@@ -258,11 +258,6 @@ public:
     void method( int );
 };
 
-// ?method@Rva0043AC90Owner@@QAEXH@Z
-void Rva0043AC90Owner::method( int )
-{
-}
-
 // ?d_0042ec50@@YAXXZ
 void d_0042ec50()
 {

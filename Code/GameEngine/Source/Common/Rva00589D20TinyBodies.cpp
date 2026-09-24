@@ -70,12 +70,6 @@ public:
     unsigned char body() const;
 };
 
-// ?body@Rva0058B030Body@@QBEEXZ
-unsigned char Rva0058B030Body::body() const
-{
-    return 0;
-}
-
 class Rva0058B2E0Body
 {
 public:

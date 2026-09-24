@@ -180,11 +180,6 @@ unsigned char Rva00651F80False()
 	return 0;
 }
 
-unsigned char Rva00651F90False()
-{
-	return 0;
-}
-
 unsigned char Rva00652070False()
 {
 	return 0;

@@ -100,9 +100,3 @@ private:
 	int m_bfmeSecond;					// +0x70
 };
 
-// ?bfmeGetPair@Gen_003C6F60@@QBEXPAH@Z
-void Gen_003C6F60::bfmeGetPair(int *out) const
-{
-	out[0] = m_bfmeFirst;
-	out[1] = m_bfmeSecond;
-}

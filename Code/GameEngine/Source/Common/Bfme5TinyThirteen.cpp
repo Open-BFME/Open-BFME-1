@@ -55,13 +55,6 @@ private:
 	int m_bfmeSecond;					// +0x324
 };
 
-// ?bfmeGetPair@Gen_0014FD90@@QBEXPAH@Z
-void Gen_0014FD90::bfmeGetPair(int *out) const
-{
-	out[0] = m_bfmeFirst;
-	out[1] = m_bfmeSecond;
-}
-
 class BfmeSourceCD
 {
 public:

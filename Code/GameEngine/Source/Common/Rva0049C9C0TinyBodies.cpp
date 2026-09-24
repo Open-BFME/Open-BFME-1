@@ -10,12 +10,6 @@ private:
 	char m_pad[0x144];
 };
 
-// ?get@Rva0049C9C0Dword@@QBEIXZ
-unsigned int Rva0049C9C0Dword::get() const
-{
-	return *(const unsigned int *)((const char *)this + 0x144);
-}
-
 class Rva0049C9D0Dword
 {
 public:

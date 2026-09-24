@@ -133,5 +133,4 @@ int Rva001BDD10Dword::get() const
 {
 	return m_value;
 }
-BFME_RVA_DWORD_GETTER( Rva001BDD60Dword, 0x1C )
 BFME_RVA_DWORD_GETTER( Rva001BDD70Dword, 0x24 )

@@ -472,12 +472,6 @@ public:
 };
 extern Gen_009EBB60Target *TheBfmeTarget_009EBB60;			// 0x134faac
 
-// ?bfmeForward@Gen_000C9770@@QAEXPAX@Z
-void Gen_000C9770::bfmeForward(void *a0)
-{
-	if (m_bfmeImpl)
-		m_bfmeImpl->bfmeForward(a0);
-}
 // ?bfmeForward@Gen_001BF950@@QAEHPAX0@Z
 int Gen_001BF950::bfmeForward(void *a0, void *a1)
 {
@@ -541,14 +535,6 @@ void Gen_0043BC10::bfmeForward(void *a0, void *a1)
 {
 	if (m_bfmeImpl)
 		m_bfmeImpl->bfmeForward(a0, a1);
-}
-// ?bfmeForward_005169E0@@YG_NPAX@Z
-bool __stdcall bfmeForward_005169E0(void *a0)
-{
-	if (TheBfmeTarget_005169E0)
-		return TheBfmeTarget_005169E0->bfmeForward(a0);
-
-	return false;
 }
 // ?bfmeForward@Gen_0060D600@@QAEXPAX@Z
 void Gen_0060D600::bfmeForward(void *a0)

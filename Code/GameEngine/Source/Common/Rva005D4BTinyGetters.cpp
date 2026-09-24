@@ -12,7 +12,6 @@ __declspec(noinline) unsigned int Rva##RVA##Owner::getValue() const \
     return value; \
 }
 
-RVA_TINY_GETTER(005D4B40)
 RVA_TINY_GETTER(005D4B50)
 RVA_TINY_GETTER(005D4B60)
 RVA_TINY_GETTER(005D4B70)

@@ -57,8 +57,3 @@ float BfmeBoundaryObject3D::bfmeBoundaryDistanceSquared3D(
 	return distance * distance;
 }
 
-// ?rva0018CF10@BfmeBoundaryObject3D@@QBEMPBUBfmeBoundaryPoint3D@@@Z
-float BfmeBoundaryObject3D::rva0018CF10(const BfmeBoundaryPoint3D *other) const
-{
-	return bfmeBoundaryDistanceSquared3D(&m_point, other);
-}
