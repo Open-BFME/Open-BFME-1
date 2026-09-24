@@ -385,29 +385,8 @@ void AITNGuardInnerState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //--------------------------------------------------------------------------------------
-// ?onEnter@AITNGuardInnerState@@ present-unmatched
-StateReturnType AITNGuardInnerState::onEnter( void )
-{
-	Object* nemesis = TheGameLogic->findObjectByID(getGuardMachine()->getNemesisID()) ;
-	if (nemesis == NULL) 
-	{
-		DEBUG_LOG(("Unexpected NULL nemesis in AITNGuardInnerState.\n"));
-		return STATE_SUCCESS;
-	}
-	m_exitConditions.m_attackGiveUpFrame = TheGameLogic->getFrame() + TheAI->getAiData()->m_guardChaseUnitFrames;
-
-	m_attackState = newInstance(AIAttackState)(getMachine(), false, true, false, &m_exitConditions);
-
-	m_attackState->getMachine()->setGoalObject(nemesis);
-
-	StateReturnType returnVal = m_attackState->onEnter();
-	if (returnVal == STATE_CONTINUE) {
-		return STATE_CONTINUE;
-	}
-
-	// if we had no one to attack, we were successful, so go to the next state.
-	return STATE_SUCCESS;
-}
+// ?onEnter@AITNGuardInnerState@@UAE?AW4StateReturnType@@XZ
+// Body in AITNGuardInnerState_onEnter.cpp (slot 4).
 
 static Object *TunnelNetworkScan(Object *owner) 
 {
