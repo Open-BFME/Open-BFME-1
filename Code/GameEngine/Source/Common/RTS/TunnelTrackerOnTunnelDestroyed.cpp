@@ -1,8 +1,8 @@
-// ?onTunnelDestroyed@TunnelTracker@@QAEXPBVObject@@@Z
-// partial score=0.99 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// readable body: Code/GameEngine/Source/Common/RTS/TunnelTracker.cpp
+// TunnelTracker::onTunnelDestroyed at retail RVA 0x000F8C20 (191 bytes).
+// Identity: four matched callers reach it through ILT 0x000304E0
+// (CaveContain::tryToSetCaveIndex, TunnelContain::onSelling and two more).
 //
 // BFME keeps Object::m_id at +0x74 and Object::m_containedBy at +0x214.
 // These translation-unit-local views retain those retail layouts without
@@ -40,10 +40,6 @@ public:
 };
 
 extern GameLogic *TheGameLogic;
-
-#pragma comment(linker, "/alternatename:?TheGameLogic@@3PAVGameLogic@@A=?TheBfmeGameLogic@@3PAVGameLogic@@A")
-
-#pragma comment(linker, "/alternatename:?onContainedBy@Object@@QAEXPAV1@@Z=?j_000020a9@@YAXXZ")
 
 typedef std::list<Object *> ContainedItemsList;
 typedef std::list<ObjectID> ObjectIDList;
@@ -83,8 +79,10 @@ void TunnelTracker::onTunnelDestroyed(const Object *deadTunnel)
 	}
 	else
 	{
-		ObjectID firstID = m_tunnelIDs.front();
-		Object *validTunnel = TheGameLogic->findObjectByID(firstID);
+		// Retail reads the first ID straight off the sentinel's next node; the
+		// front() iterator temporary allocates EAX for it instead of EDX.
+		Object *validTunnel = TheGameLogic->findObjectByID(
+			((ObjectIDList::_Node *)m_tunnelIDs._M_node._M_data->_M_next)->_M_data);
 		for (ContainedItemsList::iterator it = m_containList.begin();
 			it != m_containList.end(); )
 		{
