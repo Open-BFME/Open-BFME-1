@@ -23,7 +23,7 @@ class Object;
 class AICommandInterface
 {
 public:
-	void aiEnter(Object *obj, CommandSourceType cmdSource);
+	void aiEnter(Object *object, CommandSourceType commandSource);
 };
 
 class BfmeGroupAI
@@ -44,14 +44,14 @@ public:
 class AIGroup
 {
 public:
-	void groupEnter(Object *obj, CommandSourceType cmdSource);
+	void groupEnter(Object *object, CommandSourceType commandSource);
 
 private:
 	char m_bfmeHead[0x04];
 	_STL::list<BfmeGroupMember *> m_memberList;		// +0x04
 };
 
-void AIGroup::groupEnter(Object *obj, CommandSourceType cmdSource)
+void AIGroup::groupEnter(Object *object, CommandSourceType commandSource)
 {
 	_STL::list<BfmeGroupMember *> snapshot;
 	// Re-read end() each trip so `this` stays live in ebx and retail's
@@ -67,6 +67,6 @@ void AIGroup::groupEnter(Object *obj, CommandSourceType cmdSource)
 	{
 		BfmeGroupAI *ai = (*it)->m_bfmeAI;
 		if (ai)
-			ai->m_bfmeCommands.aiEnter(obj, cmdSource);
+			ai->m_bfmeCommands.aiEnter(object, commandSource);
 	}
 }
