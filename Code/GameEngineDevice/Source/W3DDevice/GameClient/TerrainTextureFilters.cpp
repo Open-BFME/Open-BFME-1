@@ -1,10 +1,6 @@
-// ?d_006d4690@@YAXXZ
-// partial score=0.74 date=2026-09-16
-// cl: /DNDEBUG /MD /EHsc
-// BFME's per-stage terrain texture filter helper.  The semantic owner is
-// named by the W3DShaderManager declaration and the retail ILT pin; the
-// +0x47 global byte remains opaque because the layout witness names only
-// +0x45 and +0x46.
+// ?setTerrainTextureFilters@@YAXI@Z
+// Per-stage terrain min/mag/mip filter selection from the anisotropic filter
+// caps and GlobalData's bilinear/trilinear terrain flags; +0x47 stays unwitnessed.
 
 struct Rva006D4FF0Device
 {
@@ -105,30 +101,27 @@ extern unsigned char *BfmeCurrentCaps;
 // ?setTerrainTextureFilters@@YAXI@Z
 void __cdecl setTerrainTextureFilters( unsigned stage )
 {
-	unsigned caps_flags = reinterpret_cast<unsigned int *>( BfmeCurrentCaps )[ 0x12 ];
 	unsigned char filter_mode = TheWritableGlobalData->m_unknown47;
-	if( (caps_flags & 0x400) == 0 )
+	if( (reinterpret_cast<unsigned int *>( BfmeCurrentCaps )[ 0x12 ] & 0x400) == 0 )
+		filter_mode = 0;
+	if( (reinterpret_cast<unsigned int *>( BfmeCurrentCaps )[ 0x12 ] & 0x04000000) == 0 )
 		filter_mode = 0;
 
-	if( (caps_flags & 0x04000000) && filter_mode )
+	if( filter_mode )
 	{
 		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 6, 3 );
 		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 5, 3 );
 		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 10, 2 );
 	}
+	else if( TheWritableGlobalData->m_bilinearTerrainTex || TheWritableGlobalData->m_trilinearTerrainTex )
+	{
+		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 6, 2 );
+		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 5, 2 );
+	}
 	else
 	{
-		filter_mode = 0;
-		if( TheWritableGlobalData->m_bilinearTerrainTex || TheWritableGlobalData->m_trilinearTerrainTex )
-		{
-			SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 6, 2 );
-			SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 5, 2 );
-		}
-		else
-		{
-			SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 6, 1 );
-			SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 5, 1 );
-		}
+		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 6, 1 );
+		SET_TERRAIN_TEXTURE_FILTER_STATE( stage, 5, 1 );
 	}
 
 	if( TheWritableGlobalData->m_trilinearTerrainTex || filter_mode )
