@@ -80350,7 +80350,7 @@ name,address,notes
 ?findWeaponTemplate@WeaponStore@@QBEPBVWeaponTemplate@@VRva002E6650Name@@@Z,0x0000D3FA,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E6650 calls; autopin
 ?findWeaponTemplatePrivate@BfmeWeaponStore@@IBEPAVWeaponTemplate@@W4NameKeyType@@@Z,0x0000D486,ILT to WeaponStore::findWeaponTemplatePrivate body 0x001E42F0; WeaponSet::updateWeaponSet
 ?findWeaponTemplatePrivate@BfmeWeaponStore@@QBEPAVWeaponTemplate@@W4NameKeyType@@@Z,0x0000D486,public spelling of the ILT already pinned as IBE; WeaponSet::updateWeaponSet
-?findWeaponTemplateSet@BfmeThingTemplate@@QBEPBVWeaponTemplateSet@@ABVWeaponSetFlags@@XZ,0x00021044,ILT to ThingTemplate::findWeaponTemplateSet body 0x001467E0; WeaponSet::updateWeaponSet
+?findWeaponTemplateSet@BfmeThingTemplate@@QBEPBVWeaponTemplateSet@@ABVWeaponSetFlags@@@Z,0x00021044,ILT to ThingTemplate::findWeaponTemplateSet body 0x001467E0 (thiscall one ref arg ret 4); WeaponSet::updateWeaponSet +0x32
 ?finish@BfmeRva9140Member@@QAEXXZ,0x00025806,assigned body helper for Rva00249140
 ?finish@BfmeRvaAA70Owner@@QAEXPAVObject@@@Z,0x00034955,assigned body helper for Rva0024AA70
 ?finish@BfmeRvaB7E0Owner@@QAEXPAVBfmeRvaB7E0Object@@_N@Z,0x000035E9,assigned-body helper for Rva00247E80
