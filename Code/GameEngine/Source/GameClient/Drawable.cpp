@@ -7683,30 +7683,11 @@ TintEnvelope::TintEnvelope(void)
 const Real FADE_RATE_EPSILON = (0.001f);
 
 //-------------------------------------------------------------------------------------------------
-void TintEnvelope::play(const RGBColor *peak, UnsignedInt atackFrames, UnsignedInt decayFrames, UnsignedInt sustainAtPeak )    
-{
-	setPeakColor( peak );
-
-	setAttackFrames( atackFrames );
-	setDecayFrames( decayFrames );
-
-	m_envState = ENVELOPE_STATE_ATTACK;
-	m_sustainCounter = sustainAtPeak;
-	m_affect = TRUE;
-
-	Vector3 delta;
-	Vector3::Subtract(m_currentColor, m_peakColor, &delta);
-
-	if ( delta.Length() <= FADE_RATE_EPSILON ) // we are practically already at this color
-		m_envState = ENVELOPE_STATE_SUSTAIN;
-
-}
-
-//-------------------------------------------------------------------------------------------------
 // BFME's TintEnvelope carries ONE vtable pointer where the reference class
 // derives from both MemoryPoolObject and Snapshot and carries two, so every
-// colour vector sits four bytes earlier: m_attackRate at +0x04, m_decayRate at
-// +0x10, m_peakColor at +0x1c and m_currentColor at +0x28.
+// member sits four bytes earlier: m_attackRate at +0x04, m_decayRate at +0x10,
+// m_peakColor at +0x1c, m_currentColor at +0x28, m_sustainCounter at +0x34,
+// m_envState at +0x38 and m_affect at +0x39 (TintEnvelope::play 0x004156D0).
 struct BfmeTintEnvelopeRates
 {
 	void *m_vtable;
@@ -7714,7 +7695,32 @@ struct BfmeTintEnvelopeRates
 	Vector3 m_decayRate;						///< retail this+0x10
 	Vector3 m_peakColor;						///< retail this+0x1c
 	Vector3 m_currentColor;						///< retail this+0x28
+	UnsignedInt m_sustainCounter;				///< retail this+0x34
+	Byte m_envState;							///< retail this+0x38
+	Bool m_affect;								///< retail this+0x39
 };
+
+//-------------------------------------------------------------------------------------------------
+void TintEnvelope::play(const RGBColor *peak, UnsignedInt atackFrames, UnsignedInt decayFrames, UnsignedInt sustainAtPeak )    
+{
+	BfmeTintEnvelopeRates *self = (BfmeTintEnvelopeRates *)this;
+
+	self->m_peakColor = Vector3( peak->red, peak->green, peak->blue );
+
+	setAttackFrames( atackFrames );
+	setDecayFrames( decayFrames );
+
+	self->m_envState = ENVELOPE_STATE_ATTACK;
+	self->m_sustainCounter = sustainAtPeak;
+	self->m_affect = TRUE;
+
+	Vector3 delta;
+	Vector3::Subtract(self->m_currentColor, self->m_peakColor, &delta);
+
+	if ( delta.Length() <= FADE_RATE_EPSILON ) // we are practically already at this color
+		self->m_envState = ENVELOPE_STATE_SUSTAIN;
+
+}
 
 // ?setAttackFrames@TintEnvelope@@AAEXI@Z
 void TintEnvelope::setAttackFrames(UnsignedInt frames) 
