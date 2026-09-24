@@ -229,6 +229,12 @@ def attempts(symbol):
     return _ATTEMPTS.get(symbol, 0)
 
 
+def symbol_only_status(symbol):
+    """Standing verdict without an RVA; never inherit a different boundary."""
+    _load()
+    return _BY_BOUNDARY.get(symbol, {}).get(None)
+
+
 def standing_status(symbol, rva=None, *, boundary_moved=False):
     """The verdict that currently stands for `symbol` at `rva`, or None.
 

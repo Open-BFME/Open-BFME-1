@@ -6,6 +6,7 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import re_log
+import eligibility
 import list_naked_candidates as queue
 import next_work
 
@@ -147,3 +148,69 @@ def test_both_queues_keep_later_genuine_verdicts(log, status):
     assert re_log.latest_records()[RVA][3] == status
     if status in re_log.DEFERRED_STATUSES:
         assert structural[0]["deferred_attempts"] == 1
+
+
+@pytest.mark.parametrize("placeholder_rows", [0, 1])
+def test_naked_queue_counts_deferred_work_by_rva_after_name_change(log, placeholder_rows):
+    placeholder = "?d_00497140@@YAXXZ"
+    lines = [row("blocked", symbol=placeholder)] if placeholder_rows else []
+    lines += [row("partial", symbol=SYM), row("blocked", symbol=SYM)]
+    log.write_text("".join(lines))
+    candidate = {"symbol": placeholder, "rva": hex(RVA)}
+    assert eligibility.attempt_counts().get(RVA) == 2 + placeholder_rows
+    assert queue.drop_logged([candidate]) == ([candidate], 0)
+    assert candidate["deferred_attempts"] == 2 + placeholder_rows
+    if placeholder_rows == 0:
+        candidate.update(score=0, size=233, path="Code/gen_asm/test.asm", line=1)
+        selected, meta = queue.select_candidate([candidate])
+        assert selected is candidate
+        assert meta["exhausted"] is True
+
+
+def test_naked_queue_keeps_three_field_symbol_only_deferral(log):
+    log.write_text(f"{SYM}\tblocked\tunknown boundary\n")
+    candidate = {"symbol": SYM, "rva": hex(RVA)}
+    assert queue.drop_logged([candidate]) == ([candidate], 0)
+    assert candidate["deferred_attempts"] == 1
+
+
+def test_naked_queue_retires_placeholder_after_other_name_refutes_rva(log):
+    placeholder = "?d_00497140@@YAXXZ"
+    log.write_text(row("blocked", symbol=placeholder)
+                   + row("no-match", symbol=SYM))
+    assert eligibility.latest_verdicts()[RVA] == "no-match"
+    assert queue.drop_logged([{"symbol": placeholder, "rva": hex(RVA)}]) == ([], 1)
+
+
+def test_naked_queue_uses_symbol_only_finding_without_rva_verdict(log):
+    log.write_text(f"{SYM}\tno-match\tmeasured symbol finding\n")
+    assert queue.drop_logged([{"symbol": SYM, "rva": hex(RVA)}]) == ([], 1)
+
+
+def test_naked_queue_later_exact_partial_releases_symbol_only_dead_end(log):
+    log.write_text(f"{SYM}\tno-match\told symbol finding\n" + row("partial"))
+    candidate = {"symbol": SYM, "rva": hex(RVA)}
+    assert queue.drop_logged([candidate]) == ([candidate], 0)
+    assert candidate["deferred_attempts"] == 1
+
+
+def test_naked_queue_voided_refutation_does_not_retire_after_rename(log):
+    placeholder = "?d_00497140@@YAXXZ"
+    log.write_text(row("no-match", symbol=SYM)
+                   + row("void", symbol=SYM)
+                   + row("blocked", symbol=placeholder))
+    candidate = {"symbol": placeholder, "rva": hex(RVA)}
+    assert queue.drop_logged([candidate]) == ([candidate], 0)
+    assert candidate["deferred_attempts"] >= 1
+
+
+def test_naked_queue_quick_look_remains_untried(log):
+    log.write_text(row("blocked", "t=2min no named caller"))
+    candidate = {"symbol": SYM, "rva": hex(RVA), "score": 0, "size": 233,
+                 "path": "Code/gen_asm/test.asm", "line": 1}
+    assert eligibility.attempt_counts().get(RVA, 0) == 0
+    assert queue.drop_logged([candidate]) == ([candidate], 0)
+    assert "deferred_attempts" not in candidate
+    selected, meta = queue.select_candidate([candidate])
+    assert selected is candidate
+    assert meta["exhausted"] is False

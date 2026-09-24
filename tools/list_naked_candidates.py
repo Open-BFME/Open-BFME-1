@@ -16,6 +16,7 @@ import struct
 import sys
 
 import build
+import eligibility
 import re_log
 import yield_model
 
@@ -286,18 +287,42 @@ def drop_logged(candidates):
     An agent's deferral is not a refutation: the dump still has to become C++,
     so those are kept and tagged `deferred_attempts` for select_candidate to
     order behind untried work. See tools/re_log.py."""
+    latest = eligibility.latest_verdicts()
+    counts = eligibility.attempt_counts()
     kept, dropped = [], 0
     for item in candidates:
         rva = item.get("rva")
         try:
             rva = int(rva, 16) if rva else None
-        except ValueError:
+        except (TypeError, ValueError):
             rva = None
-        if item["symbol"] and re_log.is_dead_end(item["symbol"], rva):
-            dropped += 1
-            continue
-        if item["symbol"] and re_log.is_deferred(item["symbol"], rva):
-            item["deferred_attempts"] = re_log.attempts(item["symbol"])
+        symbol = item["symbol"]
+        if rva is not None:
+            # A renamed body is still the same retail address. An exact-RVA
+            # verdict under another name outranks older placeholder evidence.
+            if eligibility.retired(rva, latest):
+                dropped += 1
+                continue
+            if eligibility.deferred(rva, latest):
+                # A short blocked quick look is a deferral verdict but not an
+                # attempt; eligibility excludes it from the count on purpose.
+                if counts.get(rva, 0):
+                    item["deferred_attempts"] = counts[rva]
+            elif rva not in latest and symbol:
+                # Historical three-field findings have no address. They only
+                # apply to this symbol when no exact-RVA verdict supersedes it.
+                status = re_log.symbol_only_status(symbol)
+                if status in re_log.DEAD_END_STATUSES:
+                    dropped += 1
+                    continue
+                if status in re_log.DEFERRED_STATUSES:
+                    item["deferred_attempts"] = re_log.attempts(symbol)
+        elif symbol:
+            if re_log.is_dead_end(symbol):
+                dropped += 1
+                continue
+            if re_log.is_deferred(symbol):
+                item["deferred_attempts"] = re_log.attempts(symbol)
         kept.append(item)
     return kept, dropped
 
