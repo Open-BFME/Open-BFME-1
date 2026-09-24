@@ -1,6 +1,5 @@
 rva,size,start_evidence,callers,end_evidence,ghidra
 0x00001F96,5,ghidra-start,0,jmp-tail,~ConcreteModuleTemplate<FXParticleSystem::ModuleTag<5;char_const*_const_FXParticleSystem::BOX_EMISSION_VOLUME_MODULE_KEY;char_const*_const_FXParticleSystem::BOX_EMISSION_VOLUME_MODULE_NAME;FXParticleSystem::BoxEmissionVolumeModule;FXParticleSystem::BoxEmissionVolumeModuleTemplate;FXParticleSystem::DefaultParticleModule<5>;FXParticleSystem::DefaultParticleModuleTemplate<5>_>_>
-0x0005B748,29,rel32-call/jmp,1,ret+int3,
 0x000616E0,13,rel32-call/jmp,1,ret+int3,
 0x0007AC77,131,rel32-call/jmp,1,ret+int3,
 0x00096570,809,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00496570
@@ -30,7 +29,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x00159AD0,1101,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00559ad0
 0x00163F10,428,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00563f10
 0x001649B0,486,rel32-call/jmp,1,ret+int3,
-0x00164C10,886,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00564c10
 0x00166A80,898,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00566a80
 0x00174210,334,rel32-call/jmp,1,ret+int3,
 0x00179740,670,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00579740
@@ -40,8 +38,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x0019D2E0,239,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0059d2e0
 0x001A12D0,312,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_005a12d0
 0x001A9110,516,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_005a9110
-0x001AD370,1515,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_005ad370
-0x001AE1E0,557,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_005ae1e0
 0x001BB530,1337,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_005bb530
 0x001C6870,933,rel32-call/jmp,1,ret+int3,
 0x001C7200,289,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_005c7200
@@ -54,7 +50,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x001FD780,381,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_005fd780
 0x00203800,764,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00603800
 0x0020C3B0,740,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0060c3b0
-0x0021F280,481,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0061f280
 0x00222640,187,rel32-call/jmp,1,ret+int3,
 0x002298B0,1397,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_006298b0
 0x0022A860,739,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0062a860
@@ -80,7 +75,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x0026B9D0,1109,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0066b9d0
 0x0028D0C0,422,ghidra-start,0,ret+int3,FUN_0068d0c0
 0x00290E50,2052,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00690e50
-0x002D8C10,300,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_006d8c10
 0x002E22F0,657,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_006e22f0
 0x002E5090,232,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_006e5090
 0x002E6850,335,rel32-call/jmp,1,ret+int3,
@@ -90,26 +84,19 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x002FF0C0,704,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_006ff0c0
 0x002FF430,655,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_006ff430
 0x002FFDB0,843,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_006ffdb0
-0x00325700,374,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00725700
 0x003269C0,455,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_007269c0
 0x00327A00,653,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00727a00
-0x0032B8D0,478,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0072b8d0
 0x0032CFC0,659,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0072cfc0
 0x00342E40,1059,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00742e40
 0x00348430,1924,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00748430
 0x00349B80,5993,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00749b80
-0x0034C0D0,652,rel32-call/jmp,1,ret+int3,
 0x0035A060,350,ghidra-start,0,ret+int3,FUN_0075a060
 0x0035A2A0,350,ghidra-start,0,ret+int3,FUN_0075a2a0
 0x0035BCE0,201,rel32-call/jmp,1,ret+int3,
-0x0035BE10,321,rel32-call/jmp,1,ret+int3,
-0x00364E70,340,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00764e70
 0x003664A0,222,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_007664a0
-0x00369240,427,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00769240
 0x00371650,950,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00771650
 0x00372FA0,181,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00772fa0
 0x00373530,1221,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00773530
-0x003760C0,312,rel32-call/jmp,1,ret+int3,
 0x00377060,1009,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00777060
 0x0037F280,459,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0077f280
 0x00391C40,2323,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00791c40
@@ -117,8 +104,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x0039F0A0,781,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0079f0a0
 0x003A1A30,566,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_007a1a30
 0x003A2700,2291,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_007a2700
-0x003AA980,172,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_007aa980
-0x003ABB80,200,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_007abb80
 0x003ADCC0,192,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_007adcc0
 0x003ADDB0,224,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_007addb0
 0x003ADED0,192,rel32-call/jmp,1,ret+int3,
@@ -160,10 +145,8 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x0044A2E0,757,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0084a2e0
 0x004578EB,1059,ghidra-start,0,ret+int3,FUN_008578eb
 0x0045AC40,669,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0085ac40
-0x0045C4A0,777,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_0085c4a0
 0x00499050,301,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00899050
 0x004A5E30,1381,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_008a5e30
-0x004CC980,2229,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_008cc980
 0x004CDA50,978,rel32-call/jmp,1,ret+int3,
 0x004CDF20,1718,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_008cdf20
 0x004E2D50,315,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_008e2d50
@@ -187,7 +170,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x00575B70,3413,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00975b70
 0x005778E0,1639,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_009778e0
 0x00578160,2868,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00978160
-0x00580BD0,316,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00980bd0
 0x00583680,679,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00983680
 0x005880C0,1167,rel32-call/jmp,1,ret+int3,
 0x00591640,322,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00991640
@@ -216,10 +198,10 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x006C96B0,1587,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00ac96b0
 0x006D2A00,1984,rel32-call/jmp,1,ret+int3,
 0x006D3480,3395,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00ad3480
+0x006D7EA0,1284,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00ad7ea0
 0x006DC0D0,1758,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00adc0d0
 0x006DC970,5761,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00adc970
 0x006E2AC0,13048,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00ae2ac0
-0x006ED5B0,1824,rel32-call/jmp,1,ret+int3,
 0x006F3FC0,1184,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00af3fc0
 0x00702920,1057,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00b02920
 0x00713780,2491,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00b13780
@@ -234,7 +216,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x007371D0,1966,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00b371d0
 0x00737B70,5457,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00b37b70
 0x0073CB10,1540,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00b3cb10
-0x0074CFA0,496,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00b4cfa0
 0x0074F1F0,2683,rel32-call/jmp,1,ret+int3,
 0x00755000,20,rel32-call/jmp,1,ret+int3,
 0x00755A70,416,rel32-call/jmp;ghidra-start,1,jmp+int3,FUN_00b55a70
@@ -260,7 +241,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x007B4CD0,294,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00bb4cd0
 0x007B4FE0,4341,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00bb4fe0
 0x007B6520,1640,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00bb6520
-0x007BFB90,1934,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00bbfb90
 0x007C05E0,1729,rel32-call/jmp;ghidra-start,1,ret+int3,FUN_00bc05e0
 0x007D24A0,1749,rel32-call/jmp,1,ret+int3,
 0x00808920,365,ghidra-start,0,ret+int3,FUN_00c08920
@@ -283,7 +263,11 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x008D0080,2566,ghidra-start,0,ret+int3,FUN_00cd0080
 0x008D2130,393,ghidra-start,0,ret+int3,FUN_00cd2130
 0x008D22C0,1357,ghidra-start,0,ret+int3,FUN_00cd22c0
-0x008F78B0,212,ghidra-start,0,ret+int3,FUN_00cf78b0
+0x008F7EC0,57,ghidra-start,0,ret+int3,FUN_00cf7ec0
+0x008F7F00,415,ghidra-start,0,ret+int3,FUN_00cf7f00
+0x008F80A0,112,ghidra-start,0,ret-tail,FUN_00cf80a0
+0x008F8110,399,ghidra-start,0,ret+int3,FUN_00cf8110
+0x008F82A0,155,ghidra-start,0,ret+int3,FUN_00cf82a0
 0x008FBD00,1252,ghidra-start,0,jmp+int3,FUN_00cfbd00
 0x009016A0,1107,ghidra-start,0,ret+int3,FUN_00d016a0
 0x0090FEE0,3619,ghidra-start,0,ret+int3,FUN_00d0fee0
@@ -291,10 +275,8 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x00925380,559,ghidra-start,0,ret+int3,FUN_00d25380
 0x00925D10,1634,ghidra-start,0,ret+int3,FUN_00d25d10
 0x00928820,1727,ghidra-start,0,ret+int3,FUN_00d28820
-0x009391B0,448,ghidra-start,0,ret-tail,FUN_00d391b0
 0x00939FC0,2122,ghidra-start,0,ret+int3,FUN_00d39fc0
 0x00940D40,1355,ghidra-start,0,ret+int3,FUN_00d40d40
-0x00941700,554,ghidra-start,0,ret+int3,FUN_00d41700
 0x00941C60,1999,ghidra-start,0,ret+int3,FUN_00d41c60
 0x00948BD0,4397,ghidra-start,0,ret+int3,FUN_00d48bd0
 0x0094A320,1370,ghidra-start,0,ret+int3,FUN_00d4a320
@@ -316,7 +298,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x009EF280,1102,ghidra-start,0,ret+int3,FUN_00def280
 0x009EFF50,3186,ghidra-start,0,ret+int3,FUN_00deff50
 0x009F1AE0,1470,ghidra-start,0,ret+int3,FUN_00df1ae0
-0x009F2140,631,ghidra-start,0,ret+int3,FUN_00df2140
 0x009F59D0,308,ghidra-start,0,ret+int3,FUN_00df59d0
 0x009F74F4,14,ghidra-start,0,jmp-tail,__security_check_cookie
 0x00BF2738,11,ghidra-start,0,jmp-tail,Unwind@00ff2738
