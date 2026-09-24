@@ -1,14 +1,15 @@
-// ?bfmeSendCH@BfmeHostCH@@QAEXPAVBfmeSrcCH@@PAX@Z (identity unknown)
-// partial score=0.97 date=2026-09-07
-// 66/66 at exact size. Every instruction matches; only two are transposed.
-// Retail schedules   mov eax,[ecx] (vftable) / mov byte [esp+8],0 / call
-// MSVC schedules     mov byte [esp+8],0 / mov eax,[ecx] / call
-// Moving the call into a named local first (`void *made = t->bfmeMakeCH();`)
-// fixes the vftable position but then pushes the byte store PAST the call, so
-// the two orderings are the only ones reachable: the byte store sits either
-// before the vftable load or after the call, never between.
-// The 0x10-byte request block, its field order (D, C, B, then A from the call
-// result) and the two-argument dispatch all match exactly.
+// cl: /DNDEBUG /MD /EHsc
+// Open-BFME: leftover of d_00153d10.asm at 0x0015A130, 66 bytes, ret 8.
+// Only caller is GameLogic::logicMessageDispatcher (0x00397540 via ILT
+// 0x0000DD0A), which passes the looked-up object and 0. The body reads the
+// object's pointer at +0x1FC, and when it is set fills a 16-byte stack request
+// {slot-81 virtual result, 0, object, object} for the shared apply helper at
+// ILT 0x00048C43 (body 0x00159AD0), second argument 0.
+//
+// The request is filled inside the null test, not after an early return: the
+// early-return spelling stores the flag byte ahead of the vftable load, the
+// guarded block puts the flag byte between the vftable load and the call as
+// retail does.
 class BfmeThingCH
 {
 public:
@@ -112,26 +113,37 @@ struct BfmeReqCH
 	BfmeSrcCH *m_bfmeDCH;
 };
 
+struct Rva0015A190Packet;
+
+// The apply helper is pinned under the owner spelling its 0x0015A190 sibling
+// landed with; the receiver is the same object, cast through as
+// ScriptActions_doTeamMoveToNearestObjectOfKindof.cpp does.
+class Rva0015A190Owner
+{
+public:
+	void applyPacket(Rva0015A190Packet *packet, int b);
+};
+
 class BfmeHostCH
 {
 public:
 	void bfmeSendCH(BfmeSrcCH *src, void *unused);
-	void bfmeDispatchCH(BfmeReqCH *req, int mode);
 };
 
+// ?bfmeSendCH@BfmeHostCH@@QAEXPAVBfmeSrcCH@@PAX@Z
 void BfmeHostCH::bfmeSendCH(BfmeSrcCH *src, void *unused)
 {
 	BfmeThingCH *t = src->m_bfmeTargetCH;
 
-	if (t == 0)
-		return;
+	if (t != 0)
+	{
+		BfmeReqCH req;
 
-	BfmeReqCH req;
+		req.m_bfmeDCH = src;
+		req.m_bfmeCCH = src;
+		req.m_bfmeBCH = 0;
+		req.m_bfmeACH = t->bfmeMakeCH();
 
-	req.m_bfmeDCH = src;
-	req.m_bfmeCCH = src;
-	req.m_bfmeBCH = 0;
-	req.m_bfmeACH = t->bfmeMakeCH();
-
-	bfmeDispatchCH(&req, 0);
+		((Rva0015A190Owner *)this)->applyPacket((Rva0015A190Packet *)&req, 0);
+	}
 }
