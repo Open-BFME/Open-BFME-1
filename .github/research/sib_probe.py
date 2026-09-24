@@ -1,72 +1,83 @@
-"""Constructor/lifetime perturbations for the final-nine renderer candidate."""
+"""Alias/provenance experiments for the final-nine SegLineRenderer candidate."""
 from pathlib import Path
-import hashlib,urllib.request,itertools,json,time,re
+import hashlib,urllib.request,json,re
 u='https://raw.githubusercontent.com/Open-BFME/Open-BFME-1/010683a09c21c158a15f250bc1cc86fc1a9667cb/.github/research/sib_probe.py'
 b=urllib.request.urlopen(u,timeout=30).read()
 assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()=='d021c7de108224c53583b8920ab7ba29e7d090ed'
 exec(compile(b.decode().split('seed_masks=',1)[0],'pinned_research_harness','exec'))
-seed=source_for([19,41])
-r=evaluate(('baseline9',seed,None));accept(r,seed);assert r.get('cost')==9
-print('BASE',json.dumps({k:r.get(k) for k in ('cost','offsets','code_sha256')}),flush=True)
-
+seed=source_for([19,41]);r=evaluate(('baseline9',seed,None));accept(r,seed);assert r.get('cost')==9
 jobs=[]
-# Explicit default constructors on the large stack record arrays.
-repls=[
- ('LineSegment','struct LineSegment {','struct LineSegment { LineSegment() {}'),
- ('LineSegmentIntersection','struct LineSegmentIntersection  {','struct LineSegmentIntersection { LineSegmentIntersection() {}'),
+decl='VertexFormatXYZDUV1 *vArray = getVertexBuffer(vnum);'
+variants=[
+ 'VertexFormatXYZDUV1 * __restrict vArray = getVertexBuffer(vnum);',
+ 'VertexFormatXYZDUV1 *__restrict vArray = getVertexBuffer(vnum);',
+ 'VertexFormatXYZDUV1 * const vArray = getVertexBuffer(vnum);',
+ 'register VertexFormatXYZDUV1 *vArray = getVertexBuffer(vnum);',
+ 'VertexFormatXYZDUV1 *vArray = getVertexBuffer(vnum); _ReadWriteBarrier();',
+ 'VertexFormatXYZDUV1 *vArray = getVertexBuffer(vnum); _ReadBarrier();',
 ]
-for mask in range(1,4):
- t=seed; names=[]
- for i,(name,a,b) in enumerate(repls):
-  if mask&(1<<i):
-   t=t.replace(a,b,1);names.append(name)
- jobs.append(('ctor_'+'_'.join(names),t,None))
+for i,x in enumerate(variants):jobs.append(('vptr_'+str(i),seed.replace(decl,x,1),None))
 
-# Forceinline/noinline constructor forms to probe front-end lifetime boundaries.
-for name,a,b in repls:
- for spec in ['__forceinline ','__declspec(noinline) ','']:
-  ctor=(('struct '+name+' {') if name=='LineSegment' else 'struct LineSegmentIntersection {')+' '+spec+name+'() {}'
-  old=a
-  t=seed.replace(old,ctor,1)
-  jobs.append(('ctorform_'+name+'_'+(spec.strip().replace(' ','_') or 'inline'),t,None))
+# Index lifetime/type hints
+for typ in ['register unsigned int','unsigned long','register unsigned long','int','register int']:
+ t=seed.replace('unsigned int vidx = 0;',typ+' vidx = 0;',1)
+ jobs.append(('vidx_'+typ.replace(' ','_'),t,None))
+for typ in ['register unsigned int','unsigned long','register unsigned long','int','register int']:
+ t=seed.replace('unsigned int top_int_idx = 1;',typ+' top_int_idx = 1;',1).replace('unsigned int bottom_int_idx = 1;',typ+' bottom_int_idx = 1;',1)
+ jobs.append(('iidx_'+typ.replace(' ','_'),t,None))
 
-# Add explicit copy constructors/assignments to records (not necessarily exercised)
-# to see whether type traits change optimizer treatment.
-for name,a,b in repls:
- base=('struct LineSegment {' if name=='LineSegment' else 'struct LineSegmentIntersection  {')
- for kind in ['copy','assign','both']:
-  extra=name+'() {} '
-  if kind in ('copy','both'): extra+=name+'(const '+name+'& o) { *this=o; } '
-  if kind in ('assign','both'): extra+=name+'& operator=(const '+name+'& o) { memcpy(this,&o,sizeof(*this)); return *this; } '
-  t=seed.replace(base,('struct '+name+' { '+extra),1)
-  jobs.append(('traits_'+name+'_'+kind,t,None))
+# Keep vArray in a tiny wrapper object; operator[] remains ordinary C++.
+helper_variants=[
+ '''struct FinalVertexArray { VertexFormatXYZDUV1 *p; __forceinline VertexFormatXYZDUV1& operator[](unsigned i) const { return p[i]; } };''',
+ '''struct FinalVertexArray { VertexFormatXYZDUV1 *p; __forceinline VertexFormatXYZDUV1& at(unsigned i) const { return *(p+i); } };''',
+ '''struct FinalVertexArray { VertexFormatXYZDUV1 *p; __forceinline VertexFormatXYZDUV1* at(unsigned i) const { return p+i; } };''',
+]
+for i,h in enumerate(helper_variants):
+ t=seed.replace('void SegLineRendererClass::Render',h+'\nvoid SegLineRendererClass::Render',1)
+ if i==0:
+  t=t.replace(decl,'FinalVertexArray va = { getVertexBuffer(vnum) }; VertexFormatXYZDUV1 *vArray=va.p;',1)
+  # mutate only output phase vArray subscripts, but not getVertexBuffer implementation later
+  pos=t.index('FinalVertexArray va')
+  end=t.index('SortingRendererClass::Insert_Triangles',pos)
+  mid=t[pos:end].replace('vArray[vidx]','va[vidx]')
+  t=t[:pos]+mid+t[end:]
+ elif i==1:
+  t=t.replace(decl,'FinalVertexArray va = { getVertexBuffer(vnum) }; VertexFormatXYZDUV1 *vArray=va.p;',1)
+  pos=t.index('FinalVertexArray va');end=t.index('SortingRendererClass::Insert_Triangles',pos)
+  mid=t[pos:end].replace('vArray[vidx]','va.at(vidx)')
+  t=t[:pos]+mid+t[end:]
+ else:
+  t=t.replace(decl,'FinalVertexArray va = { getVertexBuffer(vnum) }; VertexFormatXYZDUV1 *vArray=va.p;',1)
+  pos=t.index('FinalVertexArray va');end=t.index('SortingRendererClass::Insert_Triangles',pos)
+  mid=t[pos:end]
+  for field in ['x','y','z','diffuse','u1','v1']:
+   mid=mid.replace('vArray[vidx].'+field,'va.at(vidx)->'+field)
+  t=t[:pos]+mid+t[end:]
+ jobs.append(('wrapper_'+str(i),t,None))
 
-# TriIndex stack array: shadow with a wrapper only if its declaration is available by name.
-# No field changes; constructor is intentionally empty.
-for spec in ['','__forceinline ']:
- marker='TriIndex v_index_array[MAX_SEGLINE_POLY_BUFFER_SIZE];'
- replacement='struct LocalTriIndex : TriIndex { '+spec+'LocalTriIndex() {} }; LocalTriIndex v_index_array[MAX_SEGLINE_POLY_BUFFER_SIZE];'
- jobs.append(('tri_ctor_'+(spec.strip() or 'inline'),seed.replace(marker,replacement),None))
+# Alias-contract on member definition. Attribute syntax may be unsupported in VC7;
+# failed compiles are useful and isolated.
+for spelling in [
+ 'VertexFormatXYZDUV1 * __declspec(restrict) SegLineRendererClass::getVertexBuffer(unsigned int number)',
+ '__declspec(restrict) VertexFormatXYZDUV1 *SegLineRendererClass::getVertexBuffer(unsigned int number)',
+ 'VertexFormatXYZDUV1 *__restrict SegLineRendererClass::getVertexBuffer(unsigned int number)',
+]:
+ old='VertexFormatXYZDUV1 *SegLineRendererClass::getVertexBuffer(unsigned int number)'
+ if old in seed: jobs.append(('retalias_'+str(len(jobs)),seed.replace(old,spelling,1),None))
 
-# Lifetime scopes around the output phase can change allocator interference without
-# changing any expression. Test nested block boundaries.
-start='unsigned int vnum = num_intersections[TOP_EDGE] + num_intersections[BOTTOM_EDGE];'
-end='SortingRendererClass::Insert_Triangles('
-if start in seed and end in seed:
- pos=seed.index(start); ep=seed.index(end,pos)
- for mode in range(3):
-  if mode==0:
-   t=seed[:pos]+'{\n'+seed[pos:ep]+'}\n'+seed[ep:]
-  elif mode==1:
-   # block only vertex pointer and index array declarations plus use region
-   t=seed[:pos]+'{\n'+seed[pos:ep]+seed[ep:]
-   # close before function's following state restore by searching after insert statement later
-   close=t.find(';',t.index(end,pos))+1;t=t[:close]+'\n}\n'+t[close:]
-  else:
-   t=seed.replace('VertexFormatXYZDUV1 *vArray = getVertexBuffer(vnum);','VertexFormatXYZDUV1 *vArray; { vArray = getVertexBuffer(vnum); }',1)
-  jobs.append(('scope_'+str(mode),t,None))
+# Barrier placement immediately before only the output stores: perturb optimizer IR but
+# leave arithmetic source and storage layout unchanged.
+markers=['vArray[vidx].x = top.X;','vArray[vidx].x = bottom.X;']
+for marker in markers:
+ count=seed.count(marker)
+ for nth in range(count):
+  start=0
+  for _ in range(nth+1): pos=seed.find(marker,start);start=pos+1
+  for bar in ['_ReadWriteBarrier(); ','_WriteBarrier(); ']:
+   t=seed[:pos]+bar+seed[pos:]
+   jobs.append(('bar_'+('top' if 'top' in marker else 'bottom')+'_'+str(nth)+'_'+bar[1:5],t,None))
 
 batch(jobs)
-print('BESTS',json.dumps([{k:x.get(k) for k in ('tag','cost','offsets','code_sha256','error')} for x in sorted(records,key=lambda x:x.get('cost',999))[:20]]),flush=True)
+print('TOP',json.dumps([{k:x.get(k) for k in ('tag','cost','offsets','code_sha256','error')} for x in sorted(records,key=lambda x:x.get('cost',999))[:20]]),flush=True)
 r=evaluate(('final_recheck',best_text,None));accept(r,best_text)
 print('FINAL',json.dumps({k:r.get(k) for k in ('cost','offsets','code_sha256','verified_exact')}),flush=True)
