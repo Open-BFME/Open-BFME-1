@@ -1,5 +1,5 @@
 // ??0Rva006FC970@@QAE@XZ
-// partial score=0.93 date=2026-09-23
+// partial score=1.0 date=2026-09-24
 // Opaque constructor candidate at 0x006FC970; vtable 0x011207C0.
 // The prior EMPUpdateModuleData label is refuted by its vtable and destructor.
 // Only witnessed field offsets are named here; semantic member identities are unknown.
@@ -46,9 +46,9 @@ private:
 	volatile int m_zero98;
 	volatile float m_field9C[3];             // +0x9c
 	volatile int m_zeroA8[10];
-	volatile float m_fieldD0;              // +0xd0
+	float m_fieldD0;              // +0xd0
 	unsigned char m_gapD4[0x10];
-	volatile float m_fieldE4;            // +0xe4
+	float m_fieldE4;            // +0xe4
 	volatile int m_fieldE8;            // +0xe8
 	volatile float m_fieldEC;                     // +0xec
 	unsigned char m_gapF0[0x48];
