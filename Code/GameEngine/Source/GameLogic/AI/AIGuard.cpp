@@ -197,8 +197,8 @@ Bool ExitConditions::shouldExit(const StateMachine* machine) const
 
 //-- AIGuardMachine -------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
-// ??0AIGuardMachine@@QAE@PAVObject@@@Z
-// Body in Code/masm_dumps/_sa___0AIGuardMachine___15D1D0.asm (exact 691B retail @ 0x15D1D0).
+// BFME retail: ??0AIGuardMachine@@QAE@PAVObject@@VAsciiString@@@Z (owner plus by-value name).
+// AIGuardMachineCtorThunk.cpp emits the exact 691B body at 0x15D1D0 under its historical symbol alias.
 //--------------------------------------------------------------------------------------
 // Lifting that constructor out took every newInstance() call in this file with
 // it, and with them the pool operator new and operator delete these six state
@@ -860,7 +860,7 @@ returnSuccess:
 }
 
 //--------------------------------------------------------------------------------------
-// ?update@AIGuardReturnState@@ present-unmatched
+// AIGuardReturnState::update is matched at 0x0015E4C0/60B via its object-symbol alias.
 StateReturnType AIGuardReturnState::update( void )
 {
 	UnsignedInt now = TheGameLogic->getFrame();
