@@ -6,9 +6,7 @@
 
 #include "StringInline.h"
 #include <exception>
-#define private public
 #include <hash_map>
-#undef private
 
 class BFMERetailAsciiString
 {
@@ -81,8 +79,8 @@ void WindowManager::invokeCallback( const char *name, void *unused )
 	{
 		BFMERetailAsciiString key( name );
 		const Rva0046C000Map *map = &self->m_callbacks;
-		found = map->_M_ht._M_find(
-			reinterpret_cast<const AsciiString &>( key ) );
+		found = map->find(
+			reinterpret_cast<const AsciiString &>( key ) )._M_cur;
 	}
 
 	if( found != 0 )
@@ -92,4 +90,60 @@ void WindowManager::invokeCallback( const char *name, void *unused )
 			throw FunctorNotSet();
 		callback->invoke( unused );
 	}
+}
+
+struct Rva0046CA40Result
+{
+	Rva0046CA40Result(float value, int arg) : threshold(value), m_arg(arg) {}
+	float threshold;
+	int m_arg;
+};
+
+class Rva0046CA40Callback
+{
+public:
+	virtual ~Rva0046CA40Callback();
+	virtual Rva0046CA40Result invoke(const char *key);
+};
+
+struct Rva0046AF20Mapped
+{
+	Rva0046CA40Callback *m_ptr;
+};
+
+typedef std::hash_map<AsciiString, Rva0046AF20Mapped,
+	rts::hash<AsciiString>, rts::equal_to<AsciiString> > Rva0046AF20Map;
+typedef _STL::pair<const AsciiString, Rva0046AF20Mapped> Rva0046AF20Pair;
+typedef _STL::_Hashtable_node<Rva0046AF20Pair> Rva0046AF20Node;
+
+extern const char *__cdecl bfmeSkipLevelPrefix(const char *key);
+
+// The caller's manager global differs from TheWindowManager.  The body proves
+// the callback-map layout and result ABI, but not the original owner name.
+class Rva0046CA40Owner
+{
+public:
+	Rva0046CA40Result lookupThreshold_0046CA40(const char *name);
+
+private:
+	unsigned char m_prefix[0x94];
+	Rva0046AF20Map m_callbacks;
+};
+
+Rva0046CA40Result Rva0046CA40Owner::lookupThreshold_0046CA40(const char *name)
+{
+	const char *keyName = bfmeSkipLevelPrefix(name);
+	Rva0046AF20Node *found;
+	{
+		BFMERetailAsciiString key(keyName);
+		const Rva0046AF20Map *map = &m_callbacks;
+		found = map->find(reinterpret_cast<const AsciiString &>(key))._M_cur;
+	}
+	if (found != 0) {
+		Rva0046CA40Callback *callback = found->_M_val.second.m_ptr;
+		if (callback == 0)
+			throw FunctorNotSet();
+		return callback->invoke(keyName);
+	}
+	return Rva0046CA40Result(1.0f, 0);
 }
