@@ -528,6 +528,8 @@ void BridgeBehavior::onHealing( DamageInfo *damageInfo )
 // ------------------------------------------------------------------------------------------------
 /** Pick a random surface spot on the bridge surface */
 // ------------------------------------------------------------------------------------------------
+// Retail __LINE__/__FILE__ for the three GameLogicRandomValueReal calls: 512/521/535 in BFME's own path.
+#line 493 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Behavior\\BridgeBehavior.cpp"
 void BridgeBehavior::getRandomSurfacePosition( TerrainRoadType *bridgeTemplate, 
 																							 const BridgeInfo *bridgeInfo, 
 																							 Coord3D *pos )
@@ -573,6 +575,7 @@ void BridgeBehavior::getRandomSurfacePosition( TerrainRoadType *bridgeTemplate,
 	pos->z += GameLogicRandomValueReal( 0.0f, bridgeTemplate->getTransitionEffectsHeight() );
 
 }  // end getRandomSurfacePosition
+#line 576
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
