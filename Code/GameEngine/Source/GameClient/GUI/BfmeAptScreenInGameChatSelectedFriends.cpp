@@ -1,13 +1,9 @@
-// ?rva00513BF0@BfmeAptScreenInGameChat@@QAEHPAVGameWindow@@PAXH_N@Z
-// partial score=0.70 date=2026-09-17
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 //
-// BfmeAptScreenInGameChat::rva00513BF0, retail 0x00513BF0, 511 bytes.
-// The constructor and friend-button callers establish the screen layout and
-// the void-pointer vector ABI.  This body gathers the selected friend rows,
-// optionally filters them by the local player's defeated/observer state, and
-// appends the corresponding profile ids.
+// BfmeAptScreenInGameChat::rva00513BF0, retail 0x00513BF0, 511 bytes: collects the profile ids of the
+// selected friends-list rows, filtered by internet player status and by the buddy-lookup result mask.
+// The friend-button callers at 0x00514DA0 and 0x005151F0 reach it through the pinned ILT 0x00017373.
 
 #include <vector>
 
@@ -109,7 +105,7 @@ class __multiple_inheritance BfmeAptScreenInGameChat
 	: public _bfme_AptGameWindow
 {
 public:
-	Int rva00513BF0( GameWindow *list, void *selected, Int column, Bool refresh );
+	Int rva00513BF0( GameWindow *list, void *selected, Int buddyMask, Bool skipStatusFilter );
 	Int _bfme_getInternetPlayerStatus( const UnicodeString &name );
 	Int rva00512890( Int profileID, UnicodeString &result );
 
@@ -123,53 +119,49 @@ private:
 	unsigned char m_tail[ 0x34 ];
 };
 
-// The value is the second list-box text column.  It sits immediately before
-// the BfmeAptGameWindow vftable in the retail image and has no recovered
-// source declaration.
-#define Rva01106F04 ( *(const Int *)0x01106F04 )
+// List-box text column read from .rdata at VA 0x01106F04 (value 2).
+extern const Int Rva01106F04;
 
-Int BfmeAptScreenInGameChat::rva00513BF0( GameWindow *list, void *selected,
-	Int column, Bool refresh )
+// ?rva00513BF0@BfmeAptScreenInGameChat@@QAEHPAVGameWindow@@PAXH_N@Z
+Int BfmeAptScreenInGameChat::rva00513BF0( GameWindow *list, void *selected, Int buddyMask, Bool skipStatusFilter )
 {
 	std::vector<Int> *profileIDs = (std::vector<Int> *)selected;
 	Int entries = GadgetListBoxGetNumEntries( list );
 	profileIDs->erase( profileIDs->begin(), profileIDs->end() );
 
-	Int localStatus = 0;
 	Int index = 0;
-	if ( !refresh )
+	Int localStatus = 0;
+	if ( !skipStatusFilter )
 	{
 		Player *localPlayer = Rva002EE330ThePlayers->m_local;
 		if ( localPlayer != 0 )
 			localStatus = _bfme_getInternetPlayerStatus( localPlayer->getPlayerDisplayName() );
 	}
-	if ( entries > 0 )
+	if ( entries != 0 )
 	{
-		const Int *selectedRows = 0;
+		Int *selectedRows = 0;
 		GadgetListBoxGetSelected( list, (Int *)&selectedRows );
 
-		for ( ; index < entries; ++index )
+		for ( index = 0; index < entries; ++index )
 		{
-			Int row = selectedRows[ index ];
-			if ( row < 0 )
+			if ( selectedRows[ index ] < 0 )
 				break;
 
 			Bool keep = true;
 			if ( localStatus != 0 )
 			{
-				UnicodeString rowName = GadgetListBoxGetText(
-					m_friendsList, row, Rva01106F04 );
+				UnicodeString rowName = GadgetListBoxGetText( m_friendsList, selectedRows[ index ], Rva01106F04 );
 				Int rowStatus = _bfme_getInternetPlayerStatus( rowName );
-				keep = ( rowStatus == 2 ) == ( localStatus == 2 );
+				if ( ( rowStatus == 2 ) ^ ( localStatus == 2 ) )
+					keep = false;
 			}
 
 			if ( keep )
 			{
-				Int profileID = (Int)GadgetListBoxGetItemData(
-					m_friendsList, row, 0 );
+				Int profileID = (Int)GadgetListBoxGetItemData( m_friendsList, selectedRows[ index ], 0 );
 				UnicodeString buddyName;
-				if ( column == 0 || rva00512890( profileID, buddyName ) )
-				profileIDs->push_back( profileID );
+				if ( buddyMask == 0 || ( buddyMask & rva00512890( profileID, buddyName ) ) )
+					profileIDs->push_back( profileID );
 			}
 		}
 	}
