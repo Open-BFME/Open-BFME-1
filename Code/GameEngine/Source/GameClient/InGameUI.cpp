@@ -3955,7 +3955,6 @@ void InGameUI::deselectAllDrawables( Bool postMsg )
 //-------------------------------------------------------------------------------------------------
 /** Return the list of all the currently selected Drawable pointers. */
 //-------------------------------------------------------------------------------------------------
-// ?getAllSelectedDrawables@InGameUI@@UBEPBV?$list@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@XZ present-unmatched
 const DrawableList *InGameUI::getAllSelectedDrawables( void ) const
 {
 	return &m_selectedDrawables;
