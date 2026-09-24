@@ -1,5 +1,3 @@
-// ?drawHealthBar@Drawable@@AAEXXZ
-// partial score=0.996 date=2026-09-22
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // ?drawHealthBar@Drawable@@AAEXXZ  retail 0x0041CA50 511 bytes
 //
@@ -38,12 +36,24 @@ struct BfmeBody
 // zero stores BETWEEN that load and the call; a C++ virtual call keeps the
 // load welded to the call, so the stores land on the wrong side of it.
 // Slot 0x14 is not used by this body and is left address-derived.
+// Retail holds the table for the getHealth call in EDX; passing it as the
+// second __fastcall register argument reproduces that (docs/shape_levers.md,
+// "Vtable register-temp call shape"). The slot itself takes no argument.
 struct BfmeBodyVtable
 {
 	void *slots00_0c[4];
-	Real (__fastcall *getHealth)(BfmeBody *body);
+	Real (__fastcall *getHealth)(BfmeBody *body, BfmeBodyVtable *table);
 	void *slot14;
 	Real (__fastcall *getMaxHealth)(BfmeBody *body);
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
+// Only the kind-of query is used here; the object passes its own address as
+// the Thing receiver, as in DrawableBFME.cpp.
+class Thing
+{
+public:
+	Bool isKindOf(KindOfType kind) const;
 };
 
 // This is the vtable slot at +0x28 used by the raw 0x0041CA50 body.  The
@@ -63,17 +73,16 @@ public:
 	virtual void slot24();
 	virtual Drawable *getDrawable() const;
 
-	Bool isKindOf(KindOfType kind) const;
+	Bool isKindOf(KindOfType kind) const
+	{
+		return ((const Thing *)this)->isKindOf(kind);
+	}
 
 	unsigned char m_pad04[0x1fc];
 	BfmeBody *m_body;
 	unsigned char m_pad204[0x10];
 	Object *m_containedBy;
 };
-
-// The call target is Thing::isKindOf's retail ILT.  This view uses Object's
-// this-pointer because the raw call sites pass the Object address unchanged.
-#pragma comment(linker, "/alternatename:?isKindOf@Object@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
 
 class InGameUI
 {
@@ -216,14 +225,15 @@ private:
 
 	void drawHealthBar();
 
-	// Retail places a pointer to the first local region word before the
-	// ratio on the stack.  The matched target is declared as int,int in the
-	// shared TU, so this local pointer/float spelling is kept behind an
-	// alternate-name ABI shim rather than changing that shared declaration.
-	void bfmeRegionDispatch(void *regionWord, Real ratio);
+	// Retail pushes a pointer to the first local region word and then the
+	// float ratio. The matched target (DrawableBFME.cpp, 0x0041AA00) is
+	// declared int,int there and only forwards both words, so the call goes
+	// through that declaration with the pointer/float argument spelling.
+public:
+	void bfmeRegionDispatch(int first, int second);
 };
 
-#pragma comment(linker, "/alternatename:?bfmeRegionDispatch@Drawable@@QAEXPAXM@Z=?j_00030afd@@YAXXZ")
+typedef void (Drawable::*BfmeRegionDispatchPF)(void *regionWord, Real ratio);
 
 void Drawable::drawHealthBar()
 {
@@ -298,10 +308,11 @@ void Drawable::drawHealthBar()
 	BfmeBodyVtable &bodyVtable = **(BfmeBodyVtable **)body;
 	region.first = 0;
 	region.second = 0;
-	Real health = bodyVtable.getHealth(body);
+	Real health = bodyVtable.getHealth(body, &bodyVtable);
 	if (health == BfmeZeroRange)
 		return;
 
 	int *regionPtr = &region.first;
-	bfmeRegionDispatch(regionPtr, health / maxHealth);
+	(this->*(BfmeRegionDispatchPF)&Drawable::bfmeRegionDispatch)(regionPtr,
+		health / maxHealth);
 }
