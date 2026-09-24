@@ -1,5 +1,4 @@
-// ?d_0029a7d0@@YAXXZ
-// partial score=1.0 date=2026-09-24
+// ?rva0029A7D0@PhysicsBehavior@@QAEXXZ
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 // Retail 0x0029A7D0 is a complete 133-byte PhysicsBehavior thiscall. The
