@@ -31,7 +31,7 @@ public:
 class BfmeSubBIA
 {
 public:
-	void bfmeOnAdd(void);
+	void method0041BAC0(void);
 	void bfmeOnRemove(void);
 	unsigned bfmeFlags00C8(void) const;
 	float bfmeRange0398(void) const;
@@ -61,7 +61,7 @@ void BfmePathfinder003FA5B0::updateAt003FA5B0(
 	if (sub != 0)
 	{
 		if (add)
-			sub->bfmeOnAdd();
+			sub->method0041BAC0();
 		else
 			sub->bfmeOnRemove();
 	}
