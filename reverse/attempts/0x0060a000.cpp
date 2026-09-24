@@ -1,21 +1,22 @@
 // ??0Rva006092D0State@@QAE@XZ
-// partial score=0.806 date=2026-09-24
+// partial score=0.95 date=2026-09-24
 // ??0Rva006092D0State@@QAE@XZ
 // Partial reconstruction only. Retail 0x0060A000 is 237 bytes; this compiles
-// to 237 bytes with 46 non-relocation differences and one misaligned relocation.
+// to 237 bytes with 10 non-relocation differences and aligned relocations.
 // The matched 0x00609E30 destructor and 0x006092D0 mode method, plus vtable
 // 0x01115AD0, support the address-derived owner. The class's virtual interface
 // below is deliberately incomplete and must be checked before a strict claim.
-// Remaining shape: retail saves ESI/EDI before clearing EBX and installing the
-// vtable; this compiler build moves those saves/clear around the initializers.
-// At +0xA1 retail passes the copy iterator in ECX and tag address in EDX,
-// while this build exchanges those registers. The curve stores from +0x47
-// through +0x85 otherwise line up after a volatile finish reload and barrier.
+// Remaining shape: at +0x19..+0x22 retail saves ESI/EDI before clearing EBX,
+// while this compiler build clears EBX before those saves. All later
+// instructions align modulo relocations after an explicit copy destination
+// local and a no-code barrier in the curve's first scalar initializer.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
+
+__forceinline int rvaZeroBarrier() { _ReadWriteBarrier(); return 0; }
 
 struct GarrisonContain
 {
@@ -39,7 +40,7 @@ namespace _STL
 class Rva0006A3C0
 {
 public:
-    Rva0006A3C0() : m_field0(0), m_field4(0), m_start(0), m_finish(0), m_end(0)
+    Rva0006A3C0() : m_field0(rvaZeroBarrier()), m_field4(0), m_start(0), m_finish(0), m_end(0)
     { _ReadWriteBarrier(); m_current = *(GarrisonContain::StationPointData * volatile *)&m_finish; m_extra4 = 0; m_extra3 = 0; m_extra2 = 0; m_extra1 = 0; }
     ~Rva0006A3C0();
     int m_field0;
@@ -121,8 +122,9 @@ Rva006092D0State::Rva006092D0State() :
     if (g_bfmeGameCW) g_bfmeGameCW->rva006157c0();
     _STL::random_access_iterator_tag tag;
     int *none = 0;
+    GarrisonContain::StationPointData *dest = m_curve.m_start;
     m_curve.m_finish = _STL::__copy(m_curve.m_finish, m_curve.m_finish,
-        m_curve.m_start, tag, none);
+        dest, tag, none);
     Rva0006AB10Curve *curve = (Rva0006AB10Curve *)&m_curve;
     curve->set(0.0f, 0.0f, 0, 0);
     curve->set(1.0f, 1.0f, 0, 0);
