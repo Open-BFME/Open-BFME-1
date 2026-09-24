@@ -2518,5 +2518,25 @@
   "after_sha256": "2ac4fbac2a0925dbed3bbd0bfe4f2a02a75abf26a40100abdec8ffd467e30178",
   "evidence": "reverse/functions.csv",
   "reason": "reverse/functions.csv row 0x005CB130 (Code/GameEngine/Source/Common/Y3ChainCopyCtors.cpp) is the landed copy ctor of this same class: a clone at +0 and a Sub005C92F0 subobject at +4 reached through the empty intermediate base Mid005CB130. This body is that class's copy-assignment operator, same layout, same lea eax,[edi+4]/push eax outlier, so the address-derived name is preserved rather than the invented BfmeRefXI."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawRva007633A0.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawRva007633A0.cpp",
+  "old_name": "m_defaultScale",
+  "new_name": "m_unmodelled9c",
+  "before_sha256": "f52465f1e9931707bb9fdef70b1d7910bf88984d1a9bf8742b15a654540307a2",
+  "after_sha256": "d138f264ad3e41ff98172ebcd75c44ba75bd5b46f138e04027151602f6161359",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeDecalInfo +0x9c/+0xa0 have no witnessed name: m_defaultScale and m_reserved were guessed from the 20.0f/false initialisers. The landed Code/GameEngine/Source/GameClient/RadiusDecalTemplate_createSelection.cpp models the same struct with the address-derived m_unmodelled9c/m_unmodelleda0 and docs/naming_evidence.md requires an address-derived name where the evidence names nothing."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/W3DModelDrawSetTerrainDecal.cpp",
+  "old_name": "m_defaultScale",
+  "new_name": "m_unmodelled9c",
+  "before_sha256": "8838029042e33656232e32e905a109d96cd038327c4eb47db3c1d82910fb7802",
+  "after_sha256": "33682d3d0d5623f1ca0f949f63e9c11d7d49b1de064673c38b65e7c9eecc0405",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeDecalInfo +0x9c/+0xa0 have no witnessed name: m_defaultScale and m_reserved were guessed from the 20.0f/false initialisers. The landed Code/GameEngine/Source/GameClient/RadiusDecalTemplate_createSelection.cpp models the same struct with the address-derived m_unmodelled9c/m_unmodelleda0 and docs/naming_evidence.md requires an address-derived name where the evidence names nothing."
  }
 ]

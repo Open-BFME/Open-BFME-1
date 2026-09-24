@@ -62,11 +62,11 @@ struct BfmeDecalInfo
 	Real m_offsetX;
 	Real m_offsetY;
 	int m_unmodelled098;
-	Real m_defaultScale;
-	Bool m_reserved;
+	Real m_unmodelled9c;
+	Bool m_unmodelleda0;
 	unsigned char m_pad09d[3];
 
-	BfmeDecalInfo() : m_defaultScale(20.0f), m_reserved(false) {}
+	BfmeDecalInfo() : m_unmodelled9c(20.0f), m_unmodelleda0(false) {}
 };
 
 class Shadow
