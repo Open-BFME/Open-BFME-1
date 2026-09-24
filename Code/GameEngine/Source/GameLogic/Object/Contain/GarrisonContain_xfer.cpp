@@ -1,15 +1,15 @@
-// ?xfer@GarrisonContain@@MAEXPAVXfer@@@Z
-// partial score=0.99007 date=2026-09-23
-// Partial clean C++ reconstruction for retail RVA 0x0021DAA0.
-// The owner is GarrisonContain::xfer: constructor 0x0021D820 installs
-// vtable 0x010AB818 and slot 3 reaches this RVA.  The surrounding source
-// file carries the TU-local BFME Xfer ABI and field view used to compile it.
-
-// The banked body was missing its detached-TU declarations.  These views are
-// the witnessed BFME ABI: 0x489DC is the reviewed base transfer helper,
-// 0x0000C9B4 is the two ObjectID hand-overs, and 0x00008CA1 is the separate
-// particle-system handle helper.
 // cl: /DNDEBUG /MD /EHsc /O2
+// GarrisonContain::xfer, retail RVA 0x0021DAA0, 403 bytes (ret 4 at +0x190).
+// Identity: constructor 0x0021D820 (??0GarrisonContain) installs vtable
+// 0x010AB818 and slot 3 reaches this body through ILT 0x0000EAA7.
+// ZH twin: GarrisonContain.cpp GarrisonContain::xfer. BFME runs the base
+// transfer first (ILT 0x000489DC -> 0x002298B0), returns early on a
+// light-CRC pass, scopes the version record, and throws the RTTI-proven
+// eight-byte XferException (ThrowInfo VA 0x011DFE5C, variadic constructor
+// 0x009D6220). The version block and the unbraced throw give retail's
+// frame: $T exception and version on esp+0, teamID on esp+8.
+// 0x0000C9B4 is the ObjectID hand-over helper and 0x00008CA1 the separate
+// particle-system handle helper.
 
 typedef unsigned char UnsignedByte;
 typedef unsigned short UnsignedShort;
@@ -32,20 +32,15 @@ struct BfmeGarrisonXferVersion
 	UnsignedByte m_padding[2];
 };
 
-struct XferException
+class XferException
 {
+public:
+	XferException(Int tag, const char *format, ...);
+	XferException(const XferException &that);
+	~XferException();
+
 	char *text;
 	Int tag;
-};
-
-union BfmeGarrisonXferWorking
-{
-	XferException error;
-	struct
-	{
-		Int loopCount;
-		UnsignedInt teamID;
-	} values;
 };
 
 class Team
@@ -113,7 +108,7 @@ typedef BfmeSeedTarget BfmeGarrisonXferTarget;
 
 class BfmeBase002298B0
 {
-public:
+	friend class GarrisonContain;
 	void xferBase2298B0(Xfer *target);
 };
 
@@ -151,69 +146,50 @@ protected:
 
 extern void bfmeHandOver_0000C9B4(BfmeSeedTarget *target, void *item);
 extern void BfmeParticleSystemXferHandle(Xfer &target, void *item);
-extern "C" XferException *__cdecl bfmeFormatText(
-	XferException *result, Int tag, const char *format, ...);
-extern void __declspec(noreturn) __stdcall _CxxThrowException(
-	void *object, void *throwInfo);
-extern int g_guardTargetTypeThrowInfo;
-
 void GarrisonContain::xfer(Xfer *xfer)
 {
 	BfmeGarrisonXferTarget *target =
 		reinterpret_cast<BfmeGarrisonXferTarget *>(xfer);
 	BfmeGarrisonXferView *self =
 		reinterpret_cast<BfmeGarrisonXferView *>(this);
+	Int i;
 
 	reinterpret_cast<BfmeBase002298B0 *>(this)->xferBase2298B0(xfer);
 	if (target->isLightCRC())
 		return;
 
-	BfmeGarrisonXferVersion version;
-	version.m_version = 1;
-	version.m_currentVersion = 1;
-	target->xferVersion(&version);
-
 	{
-		BfmeGarrisonXferWorking working;
-		working.values.teamID = self->m_originalTeam ? self->m_originalTeam->getID() : 0;
-		target->xferUnsignedInt(&working.values.teamID);
-		if (target->isLoading())
-		{
-			if (working.values.teamID)
-			{
-				self->m_originalTeam = TheTeamFactory->findTeamByID(working.values.teamID);
-				if (self->m_originalTeam == 0)
-				{
-					bfmeFormatText(&working.error, 5, 0);
-					_CxxThrowException(&working.error, &g_guardTargetTypeThrowInfo);
-				}
-			}
-			else
-				self->m_originalTeam = 0;
-		}
+		BfmeGarrisonXferVersion version;
+		version.m_version = 1;
+		version.m_currentVersion = 1;
+		target->xferVersion(&version);
 	}
 
-	Int i;
+	UnsignedInt teamID = self->m_originalTeam ? self->m_originalTeam->getID() : 0;
+	target->xferUnsignedInt(&teamID);
+	if (target->isLoading())
+	{
+		if (teamID)
+		{
+			self->m_originalTeam = TheTeamFactory->findTeamByID(teamID);
+			if (self->m_originalTeam == 0)
+				throw XferException(5, 0);
+		}
+		else
+			self->m_originalTeam = 0;
+	}
+
 	target->xferBool(&self->m_hideGarrisonedStateFromNonallies);
 	UnsignedShort pointDataCount = MAX_GARRISON_POINTS;
 	target->xferUnsignedShort(&pointDataCount);
-	i = 0;
-	if (pointDataCount <= i)
-		goto garrison_point_done;
+	for (i = 0; i < pointDataCount; ++i)
 	{
-		UnsignedInt *point = &self->m_garrisonPointData[0].targetID;
-		do
-		{
-			bfmeHandOver_0000C9B4(target, point - 1);
-			bfmeHandOver_0000C9B4(target, point);
-			target->xferUnsignedInt(point + 1);
-			target->xferUnsignedInt(point + 2);
-			BfmeParticleSystemXferHandle(*xfer, point + 3);
-			++i;
-			point += 5;
-		} while (i < pointDataCount);
+		bfmeHandOver_0000C9B4(target, &self->m_garrisonPointData[i].object);
+		bfmeHandOver_0000C9B4(target, &self->m_garrisonPointData[i].targetID);
+		target->xferUnsignedInt(&self->m_garrisonPointData[i].placeFrame);
+		target->xferUnsignedInt(&self->m_garrisonPointData[i].lastEffectFrame);
+		BfmeParticleSystemXferHandle(*xfer, &self->m_garrisonPointData[i].effect);
 	}
-garrison_point_done:
 
 	target->xferInt(&self->m_garrisonPointsInUse);
 	for (i = 0; i < 3; ++i)
