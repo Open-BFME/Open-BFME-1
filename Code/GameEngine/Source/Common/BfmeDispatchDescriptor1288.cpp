@@ -1,5 +1,5 @@
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// BfmeSubmitter1283::bfmeDispatchDescriptor1288, retail RVA 0x008BEF00 (439 bytes).
+// BfmeSubmitter1283::rva008BEF00, retail RVA 0x008BEF00 (439 bytes).
 // Flag 2 submits the looked-up entry with an optional name; flag 1 queries by key
 // and submits the node the query returns, passing the context through as the fifth argument.
 
@@ -110,13 +110,13 @@ class BfmeSubmitter1283
 public:
 	void bfmeSubmitColors1283(int a1, int a2, int a3, int a4, int a5, int a6, int a7,
 		const unsigned int *colors, int a9, int a10, int a11);
-	void bfmeDispatchDescriptor1288(BfmeDescriptor1288 *descriptor, BfmeContext1288 *context);
+	void rva008BEF00(BfmeDescriptor1288 *descriptor, BfmeContext1288 *context);
 
 private:
 	BfmeQuery1279 *m_query;
 };
 
-void BfmeSubmitter1283::bfmeDispatchDescriptor1288(BfmeDescriptor1288 *descriptor,
+void BfmeSubmitter1283::rva008BEF00(BfmeDescriptor1288 *descriptor,
 	BfmeContext1288 *context)
 {
 	unsigned int flags = descriptor->m_flags;

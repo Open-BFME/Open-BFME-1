@@ -2568,5 +2568,25 @@
   "after_sha256": "8951c370d2f5abf86b67ae00dce19301cbbadea16d3d2e86e026c923ee016ba0",
   "evidence": "docs/naming_evidence.md",
   "reason": "bfmeBuildFont is an invented bfme-prefixed placeholder with no retail witness: the matched caller FontLibraryBFMERetail::getFont at 0x004772D0 and the ILT 0x0000EBA6 pin prove the owner and signature of 0x00476C50 but not a method name. docs/naming_evidence.md requires the address token for an unproven method so the body and its one caller and pin use rva00476C50."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/BfmeDispatchDescriptor1288.cpp",
+  "new_path": "Code/GameEngine/Source/Common/BfmeDispatchDescriptor1288.cpp",
+  "old_name": "bfmeDispatchDescriptor1288",
+  "new_name": "rva008BEF00",
+  "before_sha256": "b9c34ca2900b644fe327e363e8e843d9482bb1288cb1239e69dfa7bdc293b7fe",
+  "after_sha256": "3fa74cd5159f6355581b9cbf7e4bebeb27cedd4222257064b5dcd8ed434292a7",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bfmeDispatchDescriptor1288 is an invented bfme-prefixed placeholder: 1288 is a batch serial and not the address and the only caller of 0x008BEF00 is the anonymous gen_asm dump d_008d3860 so no retail evidence names the method. docs/naming_evidence.md requires the address token for an unproven method so it becomes rva008BEF00 on the unchanged BfmeSubmitter1283 owner."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "bfmeDispatchDescriptor1288",
+  "new_name": "rva008BEF00",
+  "before_sha256": "52041957705e1aa3c6a1785a2e2ff7bdcf2e137a1edadddb53f37e1bc13dc0b2",
+  "after_sha256": "e205edae1713339a5309feb903a7820fd2787ad9e88d3c9c60522b198f697183",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bfmeDispatchDescriptor1288 is an invented bfme-prefixed placeholder: 1288 is a batch serial and not the address and the only caller of 0x008BEF00 is the anonymous gen_asm dump d_008d3860 so no retail evidence names the method. docs/naming_evidence.md requires the address token for an unproven method so it becomes rva008BEF00 on the unchanged BfmeSubmitter1283 owner."
  }
 ]
