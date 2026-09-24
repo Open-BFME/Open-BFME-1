@@ -1,12 +1,13 @@
 // ?after@TaintSpecialPower@@QAEXPBUCoord3D@@@Z
 // partial score=0.75 date=2026-09-22
 // ?after@TaintSpecialPower@@QAEXPBUCoord3D@@@Z
-// Corrected native reconstruction of0026B9D0/1109B, still partial.
-// Current result1116B with514 non-relocation differences; frameB8 is correct.
+// Corrected native reconstruction of 0x0026B9D0/1109B, still partial.
+// The current build emits 1,116 bytes with 521 non-relocation differences.
+// The frame size, 0xB8, matches retail.
 // Independent review verified branches, receivers, arguments and lifetimes.
 // Critical repairs: six-word masks/56B filters; temporary virtual-base cleanup;
-// same-owner exclusion; float query ABI and unscaled terrain radius; OCLowner
-// argument; separate Taint receiver and unconditional0026B950 helper call.
+// same-owner exclusion; float query ABI and unscaled terrain radius; OCL owner
+// argument; separate Taint receiver and unconditional 0x0026B950 helper call.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /DBFME_STLP_NODE_ALLOC /Ireference/shims/sweep /Ireference/shims/stlp_nodealloc /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -121,7 +122,7 @@ private:
 class BfmeWideForwardC
 {
 public:
-	BfmeWideResult bfmeForwardWideC(const Coord3D *, float, Int, PartitionFilter *, Int);
+	BfmeWideResult bfmeForwardWideC(Int, float, Int, Int, Int);
 };
 
 extern BfmeWideForwardC *ThePartitionManager;
@@ -238,7 +239,7 @@ void TaintSpecialPower::after(const struct Coord3D *loc)
 
 
 			BfmeWideResult iterator = ThePartitionManager->bfmeForwardWideC(
-				loc, radius * *(const float *)0x010B4BCC, 0, &PartitionFilterAcceptByKindOf(Rva000C3DD0Mask(Rva000C3DD0Mask::kInit, 151), KINDOFMASK_NONE), 1);
+				(Int)loc, radius * *(const float *)0x010B4BCC, 0, (Int)&PartitionFilterAcceptByKindOf(Rva000C3DD0Mask(Rva000C3DD0Mask::kInit, 151), KINDOFMASK_NONE), 1);
 
 			// Retail constructs the native _Rb_tree only after the first
 			// wide-result is live: its 0x14-byte header allocation is visible
@@ -264,7 +265,7 @@ void TaintSpecialPower::after(const struct Coord3D *loc)
 
 
 			iterator = ThePartitionManager->bfmeForwardWideC(
-				loc, radius * g_bfmeK1266B, 0, &PartitionFilterAcceptByKindOf(Rva000C3DD0Mask(Rva000C3DD0Mask::kInit, 151), KINDOFMASK_NONE), 1);
+				(Int)loc, radius * g_bfmeK1266B, 0, (Int)&PartitionFilterAcceptByKindOf(Rva000C3DD0Mask(Rva000C3DD0Mask::kInit, 151), KINDOFMASK_NONE), 1);
 
 		Object *candidate;
 		while (iterator.next(candidate))
