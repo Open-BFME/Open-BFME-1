@@ -10,6 +10,10 @@
 // forwarder at 0x003BCA50, which passes the same 0x20 bytes of arguments on to
 // LivingWorldRegionManager::rva003C8C60 when its +0x28 manager exists.
 //
+// The byte at +0x20 keeps an offset name: retail parsePathFindRule (0x003B7570)
+// sets it to 1 only for "EnabledOrPlayerOwned" and to 0 for "AllRegions", so
+// the AllRegions name it used to carry was backwards.
+//
 // Retail evaluates the region-name call first and spills the three flags to
 // frame temporaries before any push, with the far time held in ECX: every
 // argument but the reinforcement list is an inline accessor call, which the
@@ -34,7 +38,7 @@ public:
 	unsigned int getCloseDistanceTime() const { return m_closeDistanceTime; }
 	unsigned int getMediumDistanceTime() const { return m_mediumDistanceTime; }
 	unsigned int getFarDistanceTime() const { return m_farDistanceTime; }
-	bool getPathFindRuleAllRegions() const { return m_pathFindRuleAllRegions; }
+	bool getPathFindRule20() const { return m_pathFindRule20; }
 	bool getPathFindRulePlayerOwned() const { return m_pathFindRulePlayerOwned; }
 	bool getAutoSummon() const { return m_autoSummon; }
 
@@ -43,7 +47,7 @@ public:
 	unsigned int m_closeDistanceTime;
 	unsigned int m_mediumDistanceTime;
 	unsigned int m_farDistanceTime;
-	bool m_pathFindRuleAllRegions;
+	bool m_pathFindRule20;
 	bool m_pathFindRulePlayerOwned;
 	bool m_autoSummon;
 };
@@ -89,7 +93,7 @@ public:
 		unsigned int closeDistanceTime,
 		unsigned int mediumDistanceTime,
 		unsigned int farDistanceTime,
-		unsigned char pathFindRuleAllRegions,
+		unsigned char pathFindRule20,
 		unsigned char pathFindRulePlayerOwned,
 		unsigned char autoSummon);
 };
@@ -109,7 +113,7 @@ void Glo012F1024Item::j_00010712(void)
 			record->getCloseDistanceTime(),
 			record->getMediumDistanceTime(),
 			record->getFarDistanceTime(),
-			record->getPathFindRuleAllRegions(),
+			record->getPathFindRule20(),
 			record->getPathFindRulePlayerOwned(),
 			record->getAutoSummon());
 	}
