@@ -1,5 +1,5 @@
 // ?writeCacheINI@MapCache@@AAEX_N@Z
-// partial score=0.74 date=2026-09-17
+// partial score=0.82 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ivendor/stlport /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?writeCacheINI@MapCache@@AAEX_N@Z: Code/GameEngine/Source/GameClient/MapUtil.cpp
 //
@@ -210,7 +210,7 @@ void MapCache::writeCacheINI(bool userDir)
 		if (mapName->startsWithNoCase(dir, dirLen))
 		{
 		md = it->second;
-		fprintf(fp, "\nMapCache %s\n", AsciiStringToQuotedPrintable(*mapName).str());
+		fprintf(fp, "\nMapCache %s\n", AsciiStringToQuotedPrintable(mapName->str()).str());
 		fprintf(fp, "  fileSize = %u\n", md.m_filesize);
 		fprintf(fp, "  fileCRC = %u\n", md.m_CRC);
 		fprintf(fp, "  timestampLo = %d\n", md.m_timestamp.m_lowTimeStamp);
