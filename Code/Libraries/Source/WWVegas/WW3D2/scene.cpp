@@ -722,12 +722,50 @@ struct Gen_uw_0002e866
 	~Gen_uw_0002e866();
 };
 
+// The six copied floats and the scale field are witnessed by retail
+// 0x00943FF0; the two intervening fields are used by Set_Level.
+struct Rva00943FF0Bounds
+{
+	float m_00;
+	float m_04;
+	float m_08;
+	float m_0C;
+	float m_10;
+	float m_14;
+};
+
+// Retail calls the allocator's physical out-of-line free operation directly.
+// STLport's public deallocate wrapper imports it indirectly in this TU.
+namespace _STL {
+template <bool threads, int inst> class __node_alloc {
+public:
+	static void _M_deallocate(void *node, unsigned int size);
+};
+}
+
+struct Rva00943FF0List
+{
+	Gen_00943CF0_Node *head;
+
+	~Rva00943FF0List()
+	{
+		register Gen_00943CF0_Node *current = head;
+		while (current) {
+			Gen_00943CF0_Node *old = current;
+			current = current->next;
+			_STL::__node_alloc<true, 0>::_M_deallocate(old, 8);
+		}
+	}
+};
+
+extern float g_bfmeDefaultBU;
+
 class BfmeSceneVector
 {
 	void clear(Gen_uw_0002e866 *objects);
 	void process(Gen_00943CF0_Node **objects);
 
-	unsigned char unused[0x18];
+	Rva00943FF0Bounds bounds;
 	BfmeSceneVectorElement *vector;
 	int vector_max;
 	float scale;
@@ -735,7 +773,22 @@ class BfmeSceneVector
 
 public:
 	void Set_Level(unsigned int level);
+	void rva00943FF0(const Rva00943FF0Bounds &newBounds);
 };
+
+void BfmeSceneVector::rva00943FF0(const Rva00943FF0Bounds &newBounds)
+{
+	Rva00943FF0List objects = {0};
+	// Both list views have one head pointer. clear fills it; this local owns
+	// its lifetime and releases the nodes after process uses them.
+	clear(reinterpret_cast<Gen_uw_0002e866 *>(&objects));
+	bounds = newBounds;
+	float dx = bounds.m_0C - bounds.m_00;
+	float dy = bounds.m_10 - bounds.m_04;
+	float greater = dx > dy ? dx : dy;
+	scale = g_bfmeDefaultBU / greater;
+	process(&objects.head);
+}
 
 void BfmeSceneVector::Set_Level(unsigned int level)
 {
