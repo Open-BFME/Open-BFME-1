@@ -1,5 +1,3 @@
-// ?selectMatchingAcrossRegion@InGameUI@@UAEHPAUIRegion2D@@@Z
-// partial score=1.0 date=2026-09-23
 // InGameUI slot90 in tableVA10F5B38 routes through ILT3DC76 to RVA4481C0.
 // Matched caller rva00448700 and retail 25-callee structure corroborate identity.
 // Exact 1066 instruction bytes; strict dependencies documented in astra_T/REPORT.md.
