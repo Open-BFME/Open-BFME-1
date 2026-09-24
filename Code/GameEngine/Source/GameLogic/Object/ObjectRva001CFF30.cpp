@@ -156,29 +156,29 @@ private:
 
 Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target);
 
-void Object::rva001cff30(Object *other)
+void Object::rva001cff30(Object *otherObject)
 {
-	if (other == 0)
+	if (otherObject == 0)
 		return;
 	AIUpdateInterface *ai = m_ai;
 	if (ai == 0)
 		return;
 	if (m_reentryGuardAt0x36a)
 		return;
-	if (bfmeMeleeHordeTargetInvalid(this, other))
+	if (bfmeMeleeHordeTargetInvalid(this, otherObject))
 		return;
 
 	Object *victim = bfmeGetCurrentVictimIfAttacking();
 	if (!ai->m_bfmeTargeting && victim != 0)
 	{
-		Bool sameTarget = (other == victim);
-		if (other->testStatus(OBJECT_STATUS_HORDE_MEMBER))
+		Bool sameTarget = (otherObject == victim);
+		if (otherObject->testStatus(OBJECT_STATUS_HORDE_MEMBER))
 		{
 			Object *victimHorde = victim->bfmeResolveMeleeTarget(0);
-			if (other->bfmeResolveMeleeTarget(0) == victimHorde)
+			if (otherObject->bfmeResolveMeleeTarget(0) == victimHorde)
 				sameTarget = true;
 		}
-		if ((!testStatus(OBJECT_STATUS_HORDE_MEMBER) || other->isKindOf(KINDOF_STRUCTURE)) && !sameTarget)
+		if ((!testStatus(OBJECT_STATUS_HORDE_MEMBER) || otherObject->isKindOf(KINDOF_STRUCTURE)) && !sameTarget)
 			return;
 	}
 
@@ -191,15 +191,15 @@ void Object::rva001cff30(Object *other)
 		return;
 	if (!weapon->m_template->get())
 		return;
-	if (crushPolicy(other, TEST_CRUSH_OR_SQUISH) && rva001c7530())
+	if (crushPolicy(otherObject, TEST_CRUSH_OR_SQUISH) && rva001c7530())
 		return;
 	Object *horde = bfmeResolveMeleeTarget(0);
 	if (testStatus(OBJECT_STATUS_HORDE_MEMBER) && horde != 0 &&
-		horde->crushPolicy(other, TEST_CRUSH_OR_SQUISH) && horde->rva001c7530())
+		horde->crushPolicy(otherObject, TEST_CRUSH_OR_SQUISH) && horde->rva001c7530())
 		return;
 	if (ai->getMoodMatrixValue() & 0x2000)
 		return;
-	if (!((BfmeThingAFA *)this)->bfmeAskAFA(other))
+	if (!((BfmeThingAFA *)this)->bfmeAskAFA(otherObject))
 		return;
 	if (!ai->isIdle() && !ai->isAttacking())
 		return;
@@ -207,15 +207,15 @@ void Object::rva001cff30(Object *other)
 		return;
 	if (testStatus(OBJECT_STATUS_IS_MELEE_ATTACKING))
 		return;
-	if (other->queryRva001CAEE0(getControllingPlayer()))
+	if (otherObject->queryRva001CAEE0(getControllingPlayer()))
 		return;
 	if (testStatus(OBJECT_STATUS_STEALTHED) && !testStatus(OBJECT_STATUS_DETECTED))
 		return;
 
-	ai->bfmeAttackTarget(other);
+	ai->bfmeAttackTarget(otherObject);
 	rva001c7200();
 	m_reentryGuardAt0x36a = true;
-	if (other->getRelationship(this) == ENEMIES && !other->isKindOf(KINDOF_MINE))
-		other->rva001cff30(this);
+	if (otherObject->getRelationship(this) == ENEMIES && !otherObject->isKindOf(KINDOF_MINE))
+		otherObject->rva001cff30(this);
 	m_reentryGuardAt0x36a = false;
 }
