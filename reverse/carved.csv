@@ -263,7 +263,6 @@ rva,size,start_evidence,callers,end_evidence,ghidra
 0x008D0080,2566,ghidra-start,0,ret+int3,FUN_00cd0080
 0x008D2130,393,ghidra-start,0,ret+int3,FUN_00cd2130
 0x008D22C0,1357,ghidra-start,0,ret+int3,FUN_00cd22c0
-0x008F7EC0,57,ghidra-start,0,ret+int3,FUN_00cf7ec0
 0x008F7F00,415,ghidra-start,0,ret+int3,FUN_00cf7f00
 0x008F80A0,112,ghidra-start,0,ret-tail,FUN_00cf80a0
 0x008F8110,399,ghidra-start,0,ret+int3,FUN_00cf8110
