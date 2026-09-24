@@ -1,7 +1,9 @@
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // ??0Rva008BE450SizedDeleting@@QAE@XZ
-// partial score=0.9753 date=2026-09-14
-// ??0Rva008BE450SizedDeleting@@QAE@XZ
-// cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+// Constructor of the class whose destructor is 0x008BE480 (same vtable
+// 0x01136E00). The inlined base constructor matches the standalone base
+// constructor at 0x008AB8B0 (vtable 0x01136854); its vtable store is dead and
+// the compiler drops it, which is why fields +0x04..+0x14 precede the store.
 
 struct BfmeStringData3AF0
 {
@@ -11,28 +13,44 @@ struct BfmeStringData3AF0
 	unsigned short m_flags;
 };
 
-extern char g_bfmeDerived1286Vtable;
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 extern unsigned char g_bfmeFlag1281;
 
-extern "C" void _ReadWriteBarrier();
-#pragma intrinsic(_ReadWriteBarrier)
+class BfmeString1286
+{
+public:
+	BfmeString1286() : m_data(&g_bfmeDefaultString1284)
+	{
+		++m_data->m_refCount;
+	}
 
-class Rva008BE450SizedDeleting
+private:
+	BfmeStringData3AF0 *m_data;
+};
+
+class BfmeBase1286
+{
+public:
+	BfmeBase1286() : m_bfme04(-1), m_bfme08(0), m_bfme0c(0), m_bfme10(0), m_bfme14(0) {}
+	virtual ~BfmeBase1286();
+
+protected:
+	int m_bfme04;
+	int m_bfme08;
+	void *m_bfme0c;
+	void *m_bfme10;
+	unsigned char m_bfme14;
+};
+
+class Rva008BE450SizedDeleting : public BfmeBase1286
 {
 public:
 	Rva008BE450SizedDeleting();
+	virtual ~Rva008BE450SizedDeleting();
 
 private:
-	void *m_vtable;
-	int m_bfme04;
-	int m_bfme08;
-	int m_bfme0c;
-	int m_bfme10;
-	unsigned char m_bfme14;
-	char m_padding15[3];
-	void *m_bfme18;
-	void *m_bfme1c;
+	BfmeString1286 m_bfme18;
+	BfmeString1286 m_bfme1c;
 	int m_bfme20;
 	int m_bfme24;
 	int m_bfme28;
@@ -54,35 +72,20 @@ private:
 	int m_bfme68;
 	int m_bfme6c;
 	int m_bfme70;
-	union {
-		unsigned int m_flags;
-		struct {
-			unsigned int m_lowBits : 3;
-			unsigned int m_globalBit : 1;
-			unsigned int m_remainingBits : 28;
-		};
-	};
+	unsigned int m_lowBits : 3;
+	unsigned int m_globalBit : 1;
+	unsigned int m_remainingBits : 28;
 };
 
 Rva008BE450SizedDeleting::Rva008BE450SizedDeleting()
-	: m_bfme04(-1), m_bfme08(0), m_bfme0c(0), m_bfme10(0), m_bfme14(0)
 {
-	BfmeStringData3AF0 &string = g_bfmeDefaultString1284;
-	m_vtable = &g_bfmeDerived1286Vtable;
-	_ReadWriteBarrier();
-	m_bfme18 = &string;
-	++string.m_refCount;
-	m_bfme1c = &string;
-	++string.m_refCount;
 	m_bfme24 = -1;
+	m_bfme28 = 1;
+	m_bfme2c = 1;
 	m_bfme30 = -1;
 	m_bfme38 = 3;
 	m_bfme3c = 3;
-	unsigned int flags = m_flags;
-	_ReadWriteBarrier();
-	m_bfme28 = 1;
-	m_bfme2c = 1;
-	m_flags = flags & ~7u;
+	m_lowBits = 0;
 	m_bfme20 = 0;
 	m_bfme34 = 0xff000000;
 	m_bfme40 = 0;
