@@ -68,7 +68,7 @@ private:
 	bool m_bfmeAttackState4C;
 	bool m_bfmeAttackState4D;
 	unsigned char m_pad4E[2];
-	unsigned int m_bfmeAttackState50;
+	unsigned int m_attackMachineType;
 };
 
 // ??0AIAttackState@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z
@@ -89,7 +89,7 @@ AIAttackState::AIAttackState(
 	m_bfmeAttackState48(0),
 	m_bfmeAttackState4C(false),
 	m_bfmeAttackState4D(false),
-	m_bfmeAttackState50(3)
+	m_attackMachineType(3)
 {
 	m_originalVictimPos.zero();
 }

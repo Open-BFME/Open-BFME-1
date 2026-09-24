@@ -27,7 +27,7 @@ private:
 	volatile int m_field58;
 	volatile int m_field5C;
 	volatile bool m_field60;
-	volatile bool m_field61;
+	volatile bool m_isInitialApproach;
 };
 
 AIAttackMeleeHordeApproachTargetState::AIAttackMeleeHordeApproachTargetState( StateMachine *machine )
@@ -39,5 +39,5 @@ AIAttackMeleeHordeApproachTargetState::AIAttackMeleeHordeApproachTargetState( St
 	m_field58 = 0;
 	m_field5C = 0;
 	m_field60 = false;
-	m_field61 = true;
+	m_isInitialApproach = true;
 }

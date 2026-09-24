@@ -81,6 +81,17 @@ private:
 	char m_body[0x44];
 };
 
+enum AttackMachineKind
+{
+	ATTACK_MACHINE_REUSE_OWNER_SLOT = 0,
+	ATTACK_MACHINE_FIRE_WHILE_MOVING = 1,
+	ATTACK_MACHINE_MELEE = 2,
+	ATTACK_MACHINE_STANDARD = 3,
+	ATTACK_MACHINE_HORDE_CONTESTER = 4,
+	ATTACK_MACHINE_HORDE = 5,
+	ATTACK_MACHINE_FIRE_WHILE_CHARGING = 6
+};
+
 class Rva00180810AIAttackMachine
 {
 public:
@@ -104,42 +115,42 @@ private:
 	char m_padding000[0x28];
 	void *m_attackMachine;
 	char m_padding02c[0x18];
-	unsigned char m_bfmeAttackState44;
+	unsigned char m_follow;
 	unsigned char m_isAttackingObject;
-	unsigned char m_bfmeAttackState46;
+	unsigned char m_isForceAttacking;
 	char m_padding047[0x09];
-	unsigned int m_bfmeAttackState50;
+	unsigned int m_attackMachineType;
 };
 
 // ?createAttackMachine@AIAttackState@@IAEXPAVObject@@@Z
 void AIAttackState::createAttackMachine(Object *owner)
 {
-	if (m_bfmeAttackState50 == 1)
+	if (m_attackMachineType == ATTACK_MACHINE_FIRE_WHILE_MOVING)
 	{
 		m_attackMachine = new AttackFireWhileMovingMachine(
 			owner, this, AsciiString("AIAttackMovingMachine"));
 	}
-	else if (m_bfmeAttackState50 == 2)
+	else if (m_attackMachineType == ATTACK_MACHINE_MELEE)
 	{
 		m_attackMachine = new AttackMeleeStateMachine(
 			owner, this, AsciiString("AIMeleeMachine"));
 	}
-	else if (m_bfmeAttackState50 == 5)
+	else if (m_attackMachineType == ATTACK_MACHINE_HORDE)
 	{
 		m_attackMachine = new Rva001812B0AIHordeMachine(
 			owner, this, AsciiString("AIHordeMachine"));
 	}
-	else if (m_bfmeAttackState50 == 4)
+	else if (m_attackMachineType == ATTACK_MACHINE_HORDE_CONTESTER)
 	{
 		m_attackMachine = new AttackHordeStateMachine(
 			owner, this, AsciiString("AIAttackContesterMachine"));
 	}
-	else if (m_bfmeAttackState50 == 6)
+	else if (m_attackMachineType == ATTACK_MACHINE_FIRE_WHILE_CHARGING)
 	{
 		m_attackMachine = new AttackFireWhileChargingMachine(
 			owner, this, AsciiString("AIAttackFireWhileCharging"), true);
 	}
-	else if (m_bfmeAttackState50 == 0)
+	else if (m_attackMachineType == ATTACK_MACHINE_REUSE_OWNER_SLOT)
 	{
 		m_attackMachine = owner->m_ai->slot168();
 	}
@@ -147,7 +158,6 @@ void AIAttackState::createAttackMachine(Object *owner)
 	{
 		m_attackMachine = new Rva00180810AIAttackMachine(
 			owner, this, AsciiString("AIAttackMachine"),
-			m_bfmeAttackState44, m_isAttackingObject,
-			m_bfmeAttackState46);
+			m_follow, m_isAttackingObject, m_isForceAttacking);
 	}
 }

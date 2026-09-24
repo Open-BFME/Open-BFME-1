@@ -97,7 +97,7 @@ protected:
 	Bool m_bfmeAttackState4C;
 	Bool m_bfmeAttackState4D;
 	char m_bfmeAttackState4E[2];
-	UnsignedInt m_bfmeAttackState50;
+	UnsignedInt m_attackMachineType;
 
 	void createAttackMachine(Object *owner);
 };
@@ -118,7 +118,7 @@ void AIAttackState::xfer(Xfer *xfer)
 	Bool hasMachine = m_attackMachine != 0;
 	xfer->xferBool(&hasMachine);
 	xfer->xferCoord3D(&m_originalVictimPos);
-	xfer->xferUser(&m_bfmeAttackState50, sizeof(m_bfmeAttackState50));
+	xfer->xferUser(&m_attackMachineType, sizeof(m_attackMachineType));
 
 	if (hasMachine && m_attackMachine == 0)
 	{
