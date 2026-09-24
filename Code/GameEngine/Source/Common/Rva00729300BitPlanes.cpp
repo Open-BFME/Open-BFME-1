@@ -127,3 +127,49 @@ void Rva00729D30Terrain::checkEdges( int xOffset, int yOffset, int width,
 	if( !m_map->test( m_xOrigin + centerX, minY ) )
 		*left = true;
 }
+
+struct ICoord2D
+{
+	int x;
+	int y;
+};
+
+class Rva00729570Terrain
+{
+public:
+	bool advanceRight( ICoord2D &right, int xOffset, int yOffset,
+		int width, int height );
+
+private:
+	Byte m_pad00[0x40];
+	int m_xOrigin;
+	int m_yOrigin;
+	int m_width;
+	Rva00729300BitPlane *m_map;
+};
+
+bool Rva00729570Terrain::advanceRight( ICoord2D &right, int xOffset,
+	int yOffset, int width, int height )
+{
+	Rva00729300BitPlane *map = m_map;
+	int mapWidth = map->m_width;
+	int mapHeight = map->m_height;
+	int yOrigin = m_yOrigin;
+	int limitX = mapWidth - m_xOrigin;
+	int limitY = mapHeight - yOrigin;
+	limitX--;
+	limitY--;
+	while( right.x < width + xOffset && right.x < limitX )
+	{
+		right.x++;
+		if( m_map->test( right.x + m_xOrigin, right.y + m_yOrigin ) )
+			return true;
+	}
+	while( right.y < yOffset + height - 1 && right.y < limitY - 1 )
+	{
+		right.y++;
+		if( m_map->test( right.x + m_xOrigin, right.y + m_yOrigin ) )
+			return true;
+	}
+	return false;
+}
