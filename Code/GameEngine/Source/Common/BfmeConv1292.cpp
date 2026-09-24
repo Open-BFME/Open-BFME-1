@@ -60,7 +60,35 @@ void bfmeReadSJA(void *slot, void *p, char *out)
 		}
 	}
 }
-void bfmeLoadSJA(void *slot, void *p, char *out);
+
+// The second table's mapped value is the 44-byte record the matched erase at
+// 0x004609B0 instantiates; its owner is the word at +4.
+struct Rva004609B0Mapped
+{
+	char m_body[44];
+};
+
+typedef _STL::hash_map<AsciiString, Rva004609B0Mapped, rts::hash<AsciiString>,
+	_STL::equal_to<AsciiString> > BfmeSJAValueHash;
+
+void bfmeLoadSJA(void *slot, void *p, char *out)
+{
+	BfmeSJAValueHash *table = (BfmeSJAValueHash *)slot;
+	BfmeSJAValueHash::iterator eraseIt;
+	BfmeSJAValueHash::iterator it = table->begin();
+	while (it != table->end())
+	{
+		if (*(void **)(it->second.m_body + 4) == p)
+		{
+			eraseIt = it++;
+			table->erase( eraseIt );
+		}
+		else
+		{
+			++it;
+		}
+	}
+}
 
 void bfmeGoSJA(void *p)
 {
