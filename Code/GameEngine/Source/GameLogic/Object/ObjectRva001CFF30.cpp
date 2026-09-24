@@ -130,7 +130,7 @@ public:
 	// slot 25, +0x64 (ILT 0x0000B366 -> 0x001BE070)
 	virtual Object *bfmeGetCurrentVictimIfAttacking() const;
 	// slot 26, +0x68
-	virtual void rva001cff30(Object *other);
+	virtual void rva001cff30(Object *otherObject);
 
 	Bool testStatus(Int status) const;
 	Relationship getRelationship(const Object *other) const;
