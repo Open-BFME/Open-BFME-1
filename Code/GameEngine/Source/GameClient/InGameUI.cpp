@@ -2778,10 +2778,8 @@ void InGameUI::endAreaSelectHint( const GameMessage *msg )
 //-------------------------------------------------------------------------------------------------
 /** A move command has occurred, start graphical "hint". */
 //-------------------------------------------------------------------------------------------------
-// ?createMoveHint@InGameUI@@UAEXPBVGameMessage@@@Z present-unmatched
-void InGameUI::createMoveHint( const GameMessage *msg )
-{
-}
+// ?createMoveHint@InGameUI@@UAEXPBVGameMessage@@@Z
+// Body in InGameUICreateMoveHint.cpp (slot 27; BFME terrain checks and hint reset).
 
 //-------------------------------------------------------------------------------------------------
 /** An attack command has occurred, start graphical "hint". */
