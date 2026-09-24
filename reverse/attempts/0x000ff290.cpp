@@ -1,151 +1,329 @@
-// ?Rva000FF290@@YAXPAX@Z
-// partial score=0.25 date=2026-09-21
-// cl: /DNDEBUG /MD /EHsc
+// ?addBibs@BuildAssistant@@UAEXPBUCoord3D@@PBVThingTemplate@@@Z
+// partial score=0.95 date=2026-09-24
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#define _STLP_NO_EXCEPTIONS 1
+#include <vector>
+#include <string.h>
+
+// BuildAssistant::addBibs, retail 0x000FF290 (452 bytes).
 //
-// Open-BFME: anonymous carved body at 0x000FF290 (452 bytes). vtable
-// 0x01083B5C (only generated slots) is installed into a local
-// PartitionFilterAcceptByKindOf, so this scans objects within a computed
-// radius of the incoming object (this+0x70 * g_bfmeK1266A + this+0x3a4)
-// through PartitionManager::iterateObjectsInRange (bfmeForwardWideC,
-// BfmeWideResultForward.cpp), and for each candidate whose module-data
-// getFinalOverride() flags clear four gates (+0xd0 bit 0x1000000, +0xc8
-// bit 0x40, +0xcc bit 0x40000, this+0x344 bit 0, then +0xc8 bit 4 set)
-// forwards it to g_bfmeTerrainVisual's vtable slot 0x5c(object,1,0). The
-// caller and exact owning method are unproven (one carved caller, five
-// resolved callees).
+// Identity: slot 13 of the BuildAssistant SubsystemInterface table at
+// 0x010860D8 (ctor 0x000FDA80), the addBibs position of the Zero Hour
+// declaration order, and the body is the Zero Hour one: a KINDOF_STRUCTURE
+// accept filter against KINDOFMASK_NONE, range = vision range plus three
+// major radii, isRemovableForConstruction inlined, and
+// TheTerrainVisual->addFactionBib(them, true) (W3DTerrainVisual slot 23) for
+// every immobile survivor.  As in clearRemovableForConstruction the vendored
+// headers carry a different Object layout, so the BFME offsets are spelled
+// here.  KindOf is a 192-bit mask at ThingTemplate+0xc8: STRUCTURE bit 7 and
+// IMMOBILE bit 2 of word 0, SHRUBBERY bit 6 of word 0, CLEARED_BY_BUILD bit 18
+// of word 1, INERT bit 24 of word 2.
 
+typedef bool Bool;
 typedef float Real;
+typedef int Int;
+typedef unsigned int UnsignedInt;
 
-struct BitFlagsKindOf
+#define NULL 0
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
+struct Coord3D
 {
-	unsigned int m_bits[3];
+	Real x;
+	Real y;
+	Real z;
 };
 
-extern const BitFlagsKindOf KINDOFMASK_NONE;
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
+template <Int NUMBITS>
+class BitFlags
+{
+public:
+	enum BogusInitType
+	{
+		kInit = 0
+	};
 
+	BitFlags(BogusInitType, Int idx)
+	{
+		memset(m_bits, 0, sizeof(m_bits));
+		m_bits[idx >> 5] |= 1u << (idx & 31);
+	}
+
+private:
+	UnsignedInt m_bits[(NUMBITS + 31) / 32];
+};
+
+typedef BitFlags<192> KindOfMaskType;
+
+enum KindOfType
+{
+	KINDOF_IMMOBILE = 2,
+	KINDOF_STRUCTURE = 7
+};
+
+enum KindOfWordMask
+{
+	KINDOF_IMMOBILE_MASK = 0x00000004,
+	KINDOF_SHRUBBERY_MASK = 0x00000040,
+	KINDOF_CLEARED_BY_BUILD_MASK = 0x00040000,
+	KINDOF_INERT_MASK = 0x01000000
+};
+
+extern const KindOfMaskType KINDOFMASK_NONE;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
+class Overridable
+{
+public:
+	const Overridable *getFinalOverride() const;
+
+	void *_vptr;
+	Overridable *m_nextOverride;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GeometryInfo.h
+class GeometryInfo
+{
+public:
+	Real getMajorRadius() const
+	{
+		return m_majorRadius;
+	}
+
+private:
+	unsigned char m_pad[0x10];
+	Real m_majorRadius;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
+class ThingTemplate : public Overridable
+{
+public:
+	UnsignedInt getKindOfWord(Int word) const
+	{
+		return m_kindof[word];
+	}
+
+	const GeometryInfo &getTemplateGeometryInfo() const
+	{
+		return m_geometryInfo;
+	}
+
+	Real friend_calcVisionRange() const
+	{
+		return m_visionRange;
+	}
+
+private:
+	unsigned char m_pad[0x58];
+	GeometryInfo m_geometryInfo;
+	unsigned char m_pad2[0x54];
+	UnsignedInt m_kindof[6];
+	unsigned char m_pad3[0x2c4];
+	Real m_visionRange;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
+class Thing
+{
+public:
+	const ThingTemplate *getTemplate() const
+	{
+		const ThingTemplate *tmpl = m_template;
+		if (tmpl != 0 && tmpl->m_nextOverride != 0)
+			tmpl = static_cast<const ThingTemplate *>(
+				tmpl->m_nextOverride->getFinalOverride());
+		return tmpl;
+	}
+
+private:
+	void *_vptr;
+	const ThingTemplate *m_template;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class Object : public Thing
+{
+public:
+	UnsignedInt getKindOfWord(Int word) const
+	{
+		return getTemplate()->getKindOfWord(word);
+	}
+
+	UnsignedInt getStatusBits() const
+	{
+		return *reinterpret_cast<const unsigned char *>(
+			reinterpret_cast<const char *>(this) + 0x344);
+	}
+};
+
+struct SimpleObjectIteratorClump
+{
+	Int m_valueBits;
+	Int m_distanceBits;
+};
+
+struct SimpleObjectIterator
+{
+	_STL::vector<SimpleObjectIteratorClump> m_entries;
+	SimpleObjectIteratorClump *m_cursor;
+	Int m_refCount;
+};
+
+struct BfmeWideResult
+{
+public:
+	SimpleObjectIterator *m_mpo;
+	BfmeWideResult();
+	BfmeWideResult(const BfmeWideResult &that);
+
+	Object *next(void) const
+	{
+		if (m_mpo->m_cursor == m_mpo->m_entries.end())
+			return NULL;
+		SimpleObjectIteratorClump *cursor = m_mpo->m_cursor;
+		Object *object = reinterpret_cast<Object *>(cursor->m_valueBits);
+		++cursor;
+		m_mpo->m_cursor = cursor;
+		return object;
+	}
+
+	~BfmeWideResult()
+	{
+		if (--m_mpo->m_refCount == 0)
+			delete m_mpo;
+	}
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/PartitionManager.h
 class PartitionFilter
 {
 public:
-	virtual ~PartitionFilter();
-	virtual bool shouldAccept(void *obj) const;
-	virtual int getFilterID() const;
+	PartitionFilter() : m_next(0) { }
+	virtual ~PartitionFilter() { }
+	virtual Bool allow(Object *obj) = 0;
+
+private:
+	PartitionFilter *m_next;
 };
 
 class PartitionFilterAcceptByKindOf : public PartitionFilter
 {
 public:
-	PartitionFilterAcceptByKindOf(const BitFlagsKindOf &accept,
-		const BitFlagsKindOf &reject);
+	PartitionFilterAcceptByKindOf(const KindOfMaskType &mustBeSet,
+		const KindOfMaskType &mustBeClear);
+	virtual ~PartitionFilterAcceptByKindOf() { }
+	virtual Bool allow(Object *obj);
+
+	operator Int()
+	{
+		return (Int)this;
+	}
+
+private:
+	KindOfMaskType m_mustBeSet;
+	KindOfMaskType m_mustBeClear;
 };
 
-struct BfmeWideResult
+enum DistanceCalculationType
 {
-	unsigned char m_pad[8];
+	FROM_CENTER_2D = 0,
+	FROM_CENTER_3D = 1
 };
 
 class PartitionManager
 {
+};
+
+class BfmeWideForwardC
+{
+private:
+	unsigned char m_pad[0x0c];
+	void *m_source;
+
 public:
-	BfmeWideResult forwardWideC(Real x, Real y, Real z, int a, int b);
+	BfmeWideResult bfmeForwardWideC(Int a, Real b, Int c, Int d, Int e);
 };
 
 extern PartitionManager *ThePartitionManager;
 
-extern "C" void *__cdecl bfmeGetFinalOverride(void *chain);
-
-class Rva004FF290Object
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/TerrainVisual.h
+class TerrainVisual
 {
 public:
-	void *m_moduleChain;
-	unsigned char m_pad344[0x344];
-	unsigned char m_flags344;
+	virtual void v00();
+	virtual void v01();
+	virtual void v02();
+	virtual void v03();
+	virtual void v04();
+	virtual void v05();
+	virtual void v06();
+	virtual void v07();
+	virtual void v08();
+	virtual void v09();
+	virtual void v10();
+	virtual void v11();
+	virtual void v12();
+	virtual void v13();
+	virtual void v14();
+	virtual void v15();
+	virtual void v16();
+	virtual void v17();
+	virtual void v18();
+	virtual void v19();
+	virtual void v20();
+	virtual void v21();
+	virtual void v22();
+	virtual void addFactionBib(Object *factionBuilding, Bool highlight,
+		Real extra = 0);
 };
 
-struct TerrainVisualLike
+extern TerrainVisual *TheTerrainVisual;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BuildAssistant.h
+class BuildAssistant
 {
-	void ***m_vptr;
-};
+public:
+	virtual void addBibs(const Coord3D *worldPos, const ThingTemplate *build);
 
-extern TerrainVisualLike *g_bfmeTerrainVisual;
-
-struct Rva004FF290Vector
-{
-	void *m_begin;
-	void *m_endCapacity;
-	void *m_end;
-	void *m_endReserved;
-};
-
-extern "C" void *__cdecl bfmeGetFinalOverrideChain(void *object);
-
-// address-derived identity: carved boundary evidence only, vtable
-// 0x01083B5C has only generated slots
-void Rva000FF290(void *thisObj)
-{
-	Rva004FF290Object *obj = (Rva004FF290Object *)thisObj;
-
-	float radius = *(float *)((char *)obj + 0x70) * (*(float *)0x01075338)
-		+ *(float *)((char *)obj + 0x3a4);
-
-	PartitionFilterAcceptByKindOf filter(*(const BitFlagsKindOf *)0x012ed8b8,
-		KINDOFMASK_NONE);
-
-	Rva004FF290Vector iter;
-	ThePartitionManager->forwardWideC((int)&iter, *(int *)&radius, 1,
-		(int)&filter, 0);
-
-	void **begin = (void **)iter.m_begin;
-	void **end = (void **)iter.m_end;
-
-	while (begin != end)
+protected:
+	__forceinline Bool isRemovableForConstruction(Object *obj)
 	{
-		void *item = *begin;
-		begin += 1;
+		if (obj->getKindOfWord(2) & KINDOF_INERT_MASK)
+			return false;
 
-		if (!item)
+		if ((obj->getKindOfWord(0) & KINDOF_SHRUBBERY_MASK)
+			|| (obj->getKindOfWord(1) & KINDOF_CLEARED_BY_BUILD_MASK)
+			|| (obj->getStatusBits() & 1))
+			return true;
+
+		return false;
+	}
+};
+
+// ?addBibs@BuildAssistant@@UAEXPBUCoord3D@@PBVThingTemplate@@@Z
+void BuildAssistant::addBibs(const Coord3D *worldPos, const ThingTemplate *build)
+{
+	Real range = build->friend_calcVisionRange();
+	range += 3 * build->getTemplateGeometryInfo().getMajorRadius();
+
+	const BfmeWideResult &found =
+		((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
+			(Int)worldPos, range, FROM_CENTER_3D,
+			PartitionFilterAcceptByKindOf(
+				KindOfMaskType(KindOfMaskType::kInit, KINDOF_STRUCTURE),
+				KINDOFMASK_NONE),
+			0);
+
+	Object *them;
+	while ((them = found.next()) != NULL)
+	{
+		if (isRemovableForConstruction(them))
 			continue;
 
-		void *chain1 = *(void **)((char *)item + 4);
-		if (chain1 && *(void **)((char *)chain1 + 4))
-		{
-			void *ov = bfmeGetFinalOverrideChain(chain1);
-			if (*(unsigned int *)((char *)ov + 0xd0) & 0x1000000)
-				continue;
-		}
-
-		void *chain2 = *(void **)((char *)item + 4);
-		if (chain2 && *(void **)((char *)chain2 + 4))
-		{
-			void *ov = bfmeGetFinalOverrideChain(chain2);
-			if (*(unsigned char *)((char *)ov + 0xc8) & 0x40)
-				continue;
-		}
-
-		void *chain3 = *(void **)((char *)item + 4);
-		if (chain3 && *(void **)((char *)chain3 + 4))
-		{
-			void *ov = bfmeGetFinalOverrideChain(chain3);
-			if (*(unsigned int *)((char *)ov + 0xcc) & 0x40000)
-				continue;
-		}
-
-		if (*(unsigned char *)((char *)item + 0x344) & 1)
-			continue;
-
-		void *chain4 = *(void **)((char *)item + 4);
-		if (chain4 && *(void **)((char *)chain4 + 4))
-		{
-			void *ov = bfmeGetFinalOverrideChain(chain4);
-			if (!(*(unsigned char *)((char *)ov + 0xc8) & 4))
-				continue;
-		}
-		else
-		{
-			continue;
-		}
-
-		typedef void (__stdcall *NotifyFn)(void *, void *, int, int);
-		(*(NotifyFn **)g_bfmeTerrainVisual->m_vptr)[0x5c / 4](
-			g_bfmeTerrainVisual, item, 1, 0);
+		if (them->getKindOfWord(0) & KINDOF_IMMOBILE_MASK)
+			TheTerrainVisual->addFactionBib(them, true);
 	}
 }
