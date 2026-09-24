@@ -10,7 +10,9 @@ need verification. Used by the git hooks instead of running the full gate.
   --pins          print instead the sources a reverse/symbols.csv PIN DELETION
                   can redden (see pin_deletion_sources)
 
-Output: one repo-relative source path per line (empty output = no affected sources).
+Default output: one repo-relative source path per line for legacy callers.
+With --selectors, output typed ``source:<path>`` checks and exact
+``row:<rva>:<size>:<name>`` byte-verification selectors.
 """
 import argparse
 import bisect
@@ -175,8 +177,14 @@ def object_is_current(source, obj):
                for dep, digest in meta.get("deps", {}).items())
 
 
-def affected_sources(deleted, kept_pins, rows, reason):
-    """Sources whose byte-truth lost callable candidates can break.
+def row_selector(row):
+    """Exact build selector for one ledger claim, independent of its source TU."""
+    return (f"row:0x{int(row['target_rva'], 16):08X}:"
+            f"{int(row['target_size'])}:{row['name']}")
+
+
+def affected_row_indices(deleted, kept_pins, rows, reason):
+    """Matched ledger rows whose byte-truth can change after candidate loss.
 
     Two filters, in this order, and neither is allowed to guess:
 
@@ -187,16 +195,18 @@ def affected_sources(deleted, kept_pins, rows, reason):
          50 call sites of operator delete[] at 0x00881EF0 resolve through the
          matched ??_V@YAXPAX@Z row and do not care that ??3@YAXPAX@Z lost it.
          An object that is absent or provably stale is not evidence, so its row
-         stays in the set rather than being dropped on a guess.
+         stays in the set rather than being dropped on a guess. Return the
+         exact row owners, so callers can verify those rows without requiring
+         every unrelated sibling in a large generated TU to be green.
     """
     if not deleted:
-        print(f"{reason}: none — no caller source to verify", file=sys.stderr)
+        print(f"{reason}: none — no caller row to verify", file=sys.stderr)
         return []
     lost = lost_candidates(deleted, kept_pins, rows, build.build_call_thunks())
     log = (f"{reason}: {len(deleted)} candidate(s) over "
            f"{len({n for n, _ in deleted})} name(s); {len(lost)} resolution(s) lost")
     if not lost:
-        print(log + " that nothing else supplies — no source to verify", file=sys.stderr)
+        print(log + " that nothing else supplies — no row to verify", file=sys.stderr)
         return []
 
     # Folded aliases can have different emitted symbols at the same range;
@@ -226,23 +236,23 @@ def affected_sources(deleted, kept_pins, rows, reason):
         # symbol map is never consulted for it, so candidate loss cannot move it.
         if (ROOT / row["source"]).suffix.lower() == LIB_SUFFIX:
             continue
-        by_object.setdefault(build.row_object(row), []).append((row, sited))
+        by_object.setdefault(build.row_object(row), []).append((index, row, sited))
 
-    sources, stale = set(), set()
+    affected, stale = set(), set()
     for obj, claims in by_object.items():
-        source = ROOT / claims[0][0]["source"]
+        source = ROOT / claims[0][1]["source"]
         if not object_is_current(source, obj):
-            stale.update(row["source"] for row, _ in claims)
-            sources.update(row["source"] for row, _ in claims)
+            stale.update(index for index, _, _ in claims)
+            affected.update(index for index, _, _ in claims)
             continue
         defined, rel32 = object_rel32(obj)
-        for row, sited in claims:
+        for index, row, sited in claims:
             placed = defined.get(build.ledger_object_symbol(row))
             if placed is None:
                 # The row's own symbol is not in the object this ledger row
                 # names. Whatever that is, it is not evidence of safety.
-                stale.add(row["source"])
-                sources.add(row["source"])
+                stale.add(index)
+                affected.add(index)
                 continue
             section, value = placed
             body = int(row["target_rva"], 16)
@@ -250,12 +260,18 @@ def affected_sources(deleted, kept_pins, rows, reason):
             # call/jmp opcode the retail scan found.
             if any(rel32.get((section, value + site - body + 1)) in lost[callee]
                    for site, callee in sited):
-                sources.add(row["source"])
+                affected.add(index)
 
     print(f"{log}; {sum(len(v) for v in hits.values())} retail call site(s) in "
-          f"{len(hits)} claimed row(s) -> {len(sources)} source(s) to verify "
+          f"{len(hits)} claimed row(s) -> {len(affected)} row(s) to verify "
           f"({len(stale)} kept because their object is missing or stale)", file=sys.stderr)
-    return sorted(sources)
+    return sorted(affected)
+
+
+def affected_sources(deleted, kept_pins, rows, reason):
+    """Source-granularity view retained for diagnostics and compatibility."""
+    return sorted({rows[index]["source"] for index in
+                   affected_row_indices(deleted, kept_pins, rows, reason)})
 
 
 def pin_deletion_sources(old_spec, new_spec):
@@ -278,6 +294,39 @@ def function_delta_sources(old_spec, new_spec):
     return sorted(sources)
 
 
+def function_delta_selectors(old_spec, new_spec):
+    """Typed source checks plus exact matched-row build selectors for hook use."""
+    old = dict_rows_at(f"{old_spec}:{LEDGER}")
+    new = dict_rows_at(f"{new_spec}:{LEDGER}")
+    old_rows = {tuple(row.items()) for row in old}
+    selected = [row for row in new
+                if row.get("status") == "matched" and tuple(row.items()) not in old_rows]
+    deleted = set(row_candidates(old).items()) - set(row_candidates(new).items())
+    if deleted:
+        selected.extend(new[index] for index in affected_row_indices(
+            deleted, pins_at(f"{new_spec}:{PINS}"), new, "function candidate losses"))
+    return typed_selectors(selected)
+
+
+def pin_deletion_selectors(old_spec, new_spec):
+    kept = pins_at(f"{new_spec}:{PINS}")
+    deleted = pins_at(f"{old_spec}:{PINS}") - kept
+    rows = dict_rows_at(f"{new_spec}:{LEDGER}")
+    selected = [rows[index] for index in affected_row_indices(
+        deleted, kept, rows, "pin deletions")]
+    return typed_selectors(selected)
+
+
+def typed_selectors(rows):
+    """Emit each selected row's source for cleanliness checks and exact row for build."""
+    selectors = set()
+    for row in rows:
+        if row.get("source"):
+            selectors.add(f"source:{row['source']}")
+        selectors.add(row_selector(row))
+    return sorted(selectors)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__,
                                      formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -287,20 +336,26 @@ def main():
     mode.add_argument("--range", nargs=2, metavar=("OLD", "NEW"),
                       help="delta between two committed refs/SHAs")
     parser.add_argument("--pins", action="store_true",
-                        help="print the sources a symbols.csv pin deletion can redden")
+                        help="analyze symbols.csv pin deletions")
+    parser.add_argument("--selectors", action="store_true",
+                        help="emit source:<path> and exact row:<rva>:<size>:<name> selectors")
     args = parser.parse_args()
 
     old_spec, new_spec = ("HEAD", "") if args.staged else args.range
 
-    if args.pins:
-        sources = pin_deletion_sources(old_spec, new_spec)
+    if args.selectors and args.pins:
+        selectors = pin_deletion_selectors(old_spec, new_spec)
+    elif args.selectors:
+        selectors = function_delta_selectors(old_spec, new_spec)
+    elif args.pins:
+        selectors = pin_deletion_sources(old_spec, new_spec)
     else:
-        sources = function_delta_sources(old_spec, new_spec)
+        selectors = function_delta_sources(old_spec, new_spec)
 
     # Hooks read paths line by line: force LF-only output or
     # Windows text-mode stdout appends CR to every path and -f "$s" fails.
     sys.stdout.reconfigure(newline="\n")
-    for s in sources:
+    for s in selectors:
         print(s)
 
 

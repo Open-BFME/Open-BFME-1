@@ -7,6 +7,7 @@ set -euo pipefail
 # names to verify just those (a few seconds, skips the baseline hash and
 # no-op patch):
 #   ./build.sh src/math/color.cpp
+#   ./build.sh 'row:0x00001000:5:?example@@YAXXZ'
 
 # Keep Wine quiet and avoid needing an X display.
 export WINEDEBUG="${WINEDEBUG:--all}"

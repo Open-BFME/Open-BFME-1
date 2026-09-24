@@ -59,10 +59,19 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
         || fail "pin_consistency_baseline.csv grew across the outgoing range (see above)"
 
     delta_out=$(mktemp)
-    python3 tools/delta_sources.py --range "$base" "$local_sha" > "$delta_out" \
+    python3 tools/delta_sources.py --range "$base" "$local_sha" --selectors > "$delta_out" \
         || { rm -f "$delta_out"; fail "delta_sources (see above)"; }
-    mapfile -t delta < "$delta_out"
+    mapfile -t delta_raw < "$delta_out"
     rm -f "$delta_out"
+    delta_sources=()
+    delta_rows=()
+    for s in "${delta_raw[@]}"; do
+        case "$s" in
+            source:*) delta_sources+=("${s#source:}") ;;
+            row:*) delta_rows+=("$s") ;;
+            *) fail "untyped delta selector: $s" ;;
+        esac
+    done
 
     # Sources the range EDITS while leaving their ledger rows alone are absent
     # from that delta, so nothing byte-verifies them — yet one such edit can
@@ -110,35 +119,71 @@ PY
     pin_delta=()
     if ! git diff --quiet "$base" "$local_sha" -- reverse/symbols.csv; then
         pin_delta_out=$(mktemp)
-        python3 tools/delta_sources.py --range "$base" "$local_sha" --pins > "$pin_delta_out" \
+        python3 tools/delta_sources.py --range "$base" "$local_sha" --pins --selectors > "$pin_delta_out" \
             || { rm -f "$pin_delta_out"; fail "delta_sources --pins (see above)"; }
-        mapfile -t pin_delta < "$pin_delta_out"
+        mapfile -t pin_delta_raw < "$pin_delta_out"
         rm -f "$pin_delta_out"
+        pin_delta_sources=()
+        pin_delta_rows=()
+        for s in "${pin_delta_raw[@]}"; do
+            case "$s" in
+                source:*) pin_delta_sources+=("${s#source:}") ;;
+                row:*) pin_delta_rows+=("$s") ;;
+                *) fail "untyped pin-delta selector: $s" ;;
+            esac
+        done
+    else
+        pin_delta_sources=()
+        pin_delta_rows=()
     fi
 
     verify=()
-    declare -A seen=()
-    for s in "${delta[@]}" "${edited[@]}" "${pin_delta[@]}"; do
+    declare -A seen_verify=() seen_sources=()
+    for s in "${edited[@]}" "${delta_sources[@]}" "${pin_delta_sources[@]}"; do
         [ -z "$s" ] && continue
-        [ -n "${seen[$s]:-}" ] && continue
-        seen["$s"]=1
+        [ -n "${seen_sources[$s]:-}" ] && continue
+        seen_sources["$s"]=1
         [ -f "$s" ] || fail "outgoing rows reference missing source $s"
         git diff --quiet HEAD -- "$s" || fail "$s differs from HEAD; commit or stash before pushing"
+    done
+    delta_source_selectors=()
+    for s in "${delta_sources[@]}" "${pin_delta_sources[@]}"; do
+        delta_source_selectors+=("source:$s")
+    done
+    for s in "${edited[@]}" "${delta_source_selectors[@]}" "${delta_rows[@]}" "${pin_delta_rows[@]}"; do
+        [ -z "$s" ] && continue
+        [ -n "${seen_verify[$s]:-}" ] && continue
+        seen_verify["$s"]=1
         verify+=("$s")
     done
-    # Verify in chunks: a first push of a branch whose remote ref does not exist
-    # yet falls back to merge-base, which on a fork rebased onto a much newer
-    # upstream can list thousands of sources. Windows caps the argument list, so
-    # one giant ./build.sh call dies with "Argument list too long" and the push
-    # fails for an environment reason rather than a byte mismatch.
+    # Bound actual command length, not just selector count: exact row selectors
+    # include the mangled name in addition to the paired source path, and long
+    # outgoing ranges can otherwise exceed Windows' command-line limit.
     if [ "${#verify[@]}" -ne 0 ]; then
-        chunk=200
-        i=0
-        while [ "$i" -lt "${#verify[@]}" ]; do
-            BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${verify[@]:$i:$chunk}" \
-                || fail "byte-verify of outgoing sources (see above)"
-            i=$((i + chunk))
+        measure_verify_argument() {
+            local LC_ALL=C
+            verify_argument_bytes=$((2 * ${#1} + 3))
+        }
+        verify_chunk=()
+        verify_bytes=0
+        for selector in "${verify[@]}"; do
+            measure_verify_argument "$selector"
+            [ "$verify_argument_bytes" -le 24000 ] \
+                || fail "verification selector exceeds byte-verify argument limit: $selector"
+            if [ "${#verify_chunk[@]}" -ne 0 ] \
+               && [ "$((verify_bytes + verify_argument_bytes))" -gt 24000 ]; then
+                BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${verify_chunk[@]}" \
+                    || fail "byte-verify of outgoing sources/rows (see above)"
+                verify_chunk=()
+                verify_bytes=0
+            fi
+            verify_chunk+=("$selector")
+            verify_bytes=$((verify_bytes + verify_argument_bytes))
         done
+        if [ "${#verify_chunk[@]}" -ne 0 ]; then
+            BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${verify_chunk[@]}" \
+                || fail "byte-verify of outgoing sources/rows (see above)"
+        fi
     fi
-    echo "PRE-PUSH OK (${#verify[@]} outgoing source(s) byte-verified)"
+    echo "PRE-PUSH OK (${#verify[@]} outgoing verification selector(s) checked)"
 done <<< "$refs"

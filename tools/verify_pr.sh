@@ -3,7 +3,8 @@
 #   tools/verify_pr.sh <pr-number> [--full]
 #
 # Checks out the PR, validates the ledgers statically, byte-verifies exactly
-# the sources whose claims the PR adds or edits, and (with --full) runs the
+# the rows whose claims the PR adds or whose resolver candidates disappear,
+# and (with --full) runs the
 # whole gate. Leaves you on the PR branch to merge or comment; returns to the
 # previous branch on failure.
 set -euo pipefail
@@ -41,14 +42,23 @@ fi
 # reported VERIFIED with nothing byte-verified. Run it to a file first, as
 # .githooks/pre-push does.
 delta_out=$(mktemp)
-if ! python3 tools/delta_sources.py --range "$base" HEAD > "$delta_out"; then
+if ! python3 tools/delta_sources.py --range "$base" HEAD --selectors > "$delta_out"; then
     rm -f "$delta_out"
     echo "PR #$pr FAILED: delta_sources could not list the changed claims" >&2
     restore
     exit 1
 fi
-mapfile -t delta < "$delta_out"
+mapfile -t delta_raw < "$delta_out"
 rm -f "$delta_out"
+delta_sources=()
+delta_rows=()
+for selector in "${delta_raw[@]}"; do
+    case "$selector" in
+        source:*) delta_sources+=("${selector#source:}") ;;
+        row:*) delta_rows+=("$selector") ;;
+        *) echo "PR #$pr FAILED: untyped selector $selector" >&2; restore; exit 1 ;;
+    esac
+done
 
 # The third gate with the same blind spot the hooks had: a reverse/symbols.csv
 # PIN DELETION changes no functions.csv row, so the delta above is empty for it
@@ -56,26 +66,77 @@ rm -f "$delta_out"
 # d27ae4b7b reached master with 1,599 deletions and a two-file byte-verify.
 if ! git diff --quiet "$base" HEAD -- reverse/symbols.csv; then
     pin_delta_out=$(mktemp)
-    if ! python3 tools/delta_sources.py --range "$base" HEAD --pins > "$pin_delta_out"; then
+    if ! python3 tools/delta_sources.py --range "$base" HEAD --pins --selectors > "$pin_delta_out"; then
         rm -f "$pin_delta_out"
         echo "PR #$pr FAILED: delta_sources --pins could not list the affected sources" >&2
         restore
         exit 1
     fi
-    mapfile -t pin_delta < "$pin_delta_out"
+    mapfile -t pin_delta_raw < "$pin_delta_out"
     rm -f "$pin_delta_out"
-    mapfile -t delta < <(printf '%s\n' "${delta[@]}" "${pin_delta[@]}" | sed '/^$/d' | sort -u)
+    for selector in "${pin_delta_raw[@]}"; do
+        case "$selector" in
+            source:*) delta_sources+=("${selector#source:}") ;;
+            row:*) delta_rows+=("$selector") ;;
+            *) echo "PR #$pr FAILED: untyped pin selector $selector" >&2; restore; exit 1 ;;
+        esac
+    done
 fi
 
-if [ "${#delta[@]}" -ne 0 ] && [ -n "${delta[0]}" ]; then
-    echo "byte-verifying ${#delta[@]} source(s) changed by PR #$pr..."
-    if ! BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${delta[@]}"; then
+delta=()
+declare -A seen_sources=() seen_rows=()
+for source in "${delta_sources[@]}"; do
+    [ -n "${seen_sources[$source]:-}" ] && continue
+    seen_sources["$source"]=1
+    [ -f "$source" ] || { echo "PR #$pr FAILED: missing source $source" >&2; restore; exit 1; }
+    git diff --quiet HEAD -- "$source" || { echo "PR #$pr FAILED: $source differs from checked-out PR" >&2; restore; exit 1; }
+    delta+=("source:$source")
+done
+for row in "${delta_rows[@]}"; do
+    [ -n "${seen_rows[$row]:-}" ] && continue
+    seen_rows["$row"]=1
+    delta+=("$row")
+done
+
+if [ "${#delta[@]}" -ne 0 ]; then
+    echo "checking ${#delta_rows[@]} exact row(s) and ${#delta_sources[@]} source claim(s) changed by PR #$pr..."
+    # Keep below Windows' 32,767 UTF-16 command-line limit with ample room
+    # for the executable, inherited command prefix and quoting. Row selectors
+    # contain full mangled names, so selector count alone is not a safe bound.
+    measure_verify_argument() {
+        local LC_ALL=C
+        verify_argument_bytes=$((2 * ${#1} + 3))
+    }
+    verify_chunk=()
+    verify_bytes=0
+    for selector in "${delta[@]}"; do
+        measure_verify_argument "$selector"
+        if [ "$verify_argument_bytes" -gt 24000 ]; then
+            echo "PR #$pr FAILED: verification selector exceeds argument limit: $selector" >&2
+            restore
+            exit 1
+        fi
+        if [ "${#verify_chunk[@]}" -ne 0 ] \
+           && [ "$((verify_bytes + verify_argument_bytes))" -gt 24000 ]; then
+            if ! BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${verify_chunk[@]}"; then
+                echo "PR #$pr FAILED byte-verification" >&2
+                restore
+                exit 1
+            fi
+            verify_chunk=()
+            verify_bytes=0
+        fi
+        verify_chunk+=("$selector")
+        verify_bytes=$((verify_bytes + verify_argument_bytes))
+    done
+    if [ "${#verify_chunk[@]}" -ne 0 ] \
+       && ! BUILD_POOL="${BUILD_POOL:-4}" ./build.sh "${verify_chunk[@]}"; then
         echo "PR #$pr FAILED byte-verification" >&2
         restore
         exit 1
     fi
 else
-    echo "PR #$pr adds no ledger claims; static checks only"
+    echo "PR #$pr has no affected matched rows; static checks only"
 fi
 
 if [ "$full" = "--full" ]; then

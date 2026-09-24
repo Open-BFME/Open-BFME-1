@@ -2111,17 +2111,67 @@ def complete_source_selector(selector):
         return None
 
 
+def parse_row_selector(selector):
+    """Return (RVA, size, name) for a strict exact-row selector, else None."""
+    if not selector.startswith("row:"):
+        return None
+    match = re.fullmatch(r"row:(0x[0-9A-Fa-f]{8}):([1-9][0-9]*):(.+)", selector)
+    if match is None:
+        raise SystemExit(f"malformed exact row selector: {selector!r}")
+    return int(match.group(1), 16), int(match.group(2)), match.group(3)
+
+
 def selector_matches_row(selector, row):
+    exact = parse_row_selector(selector)
+    if exact is not None:
+        return (row.get("status") == "matched"
+                and exact == (int(row["target_rva"], 16),
+                              int(row["target_size"]), row["name"]))
     source = complete_source_selector(selector)
     if source is not None:
         return source == row["source"]
     return selector in row["source"] or selector in row["name"]
 
 
-def verify_functions(only=None):
-    rows = load_function_rows()
+def select_function_rows(selectors, rows):
+    """Resolve exact row selectors in one ledger pass; keep legacy fuzzy selectors."""
+    exact_rows = {}
+    broad = []
+    for selector in selectors:
+        exact = parse_row_selector(selector)
+        if exact is not None:
+            exact_rows.setdefault(exact, selector)
+        elif not selector.startswith("source:"):
+            broad.append(selector)
+
+    if exact_rows:
+        counts = {identity: 0 for identity in exact_rows}
+        for row in rows:
+            if row.get("status") != "matched":
+                continue
+            identity = (int(row["target_rva"], 16), int(row["target_size"]), row["name"])
+            if identity in counts:
+                counts[identity] += 1
+        for identity, count in counts.items():
+            if count != 1:
+                selector = exact_rows[identity]
+                raise SystemExit(
+                    f"exact row selector {selector!r} matched {count} matched ledger rows; "
+                    "expected exactly one")
+
+    exact_set = set(exact_rows)
+    return [row for row in rows if
+            (row.get("status") == "matched"
+             and (int(row["target_rva"], 16), int(row["target_size"]), row["name"]) in exact_set)
+            or any(selector_matches_row(selector, row) for selector in broad)]
+
+
+def verify_functions(only=None, selected_rows=None):
+    rows = load_function_rows() if selected_rows is None else selected_rows
+    if only and selected_rows is None:
+        function_selectors = [sel for sel in only if not sel.startswith("source:")]
+        rows = select_function_rows(function_selectors, rows)
     if only:
-        rows = [row for row in rows if any(selector_matches_row(sel, row) for sel in only)]
         if not rows:
             raise SystemExit("no functions match: " + ", ".join(only))
     total = len(rows)
@@ -2490,16 +2540,24 @@ def verify_source_claims(only=None):
         matched_sources.setdefault(row["name"], set()).add(row["source"])
 
     problems = []
-    direct = [ROOT / sel for sel in (only or ())]
-    if only and all(p.suffix.lower() == ".cpp" and p.is_file() for p in direct):
+    scoped = only is not None
+    source_only = [sel.removeprefix("source:") for sel in (only or ())
+                   if not sel.startswith("row:")]
+    direct = [ROOT / sel for sel in source_only]
+    if scoped and not source_only:
+        # Exact row selectors verify their own ledger tuple. They do not request
+        # a whole-TU source-claim scan, which could drag unrelated siblings back
+        # into the verification set.
+        sources = []
+    elif scoped and all(p.suffix.lower() == ".cpp" and p.is_file() for p in direct):
         # the delta path names whole source files; walking all of Code/ and
         # relative_to() on 12k paths cost 3.7 s per add_match under the lock
         sources = sorted(set(direct))
     else:
         sources = sorted((ROOT / "Code").rglob("*.cpp"))
-        if only:
+        if scoped:
             sources = [p for p in sources
-                       if any(sel in p.relative_to(ROOT).as_posix() for sel in only)]
+                       if any(sel in p.relative_to(ROOT).as_posix() for sel in source_only)]
     for path in sources:
         rel = path.relative_to(ROOT).as_posix()
         text = path.read_text(encoding="utf-8", errors="replace")
@@ -2550,14 +2608,18 @@ def main(only=None):
         # selector names a source that owns no rows, which is exactly the case the
         # zero-row check exists to catch, so it has to run before that exit.
         verify_source_claims(only)
-        verify_functions(only)
+        function_selectors = [sel for sel in only if not sel.startswith("source:")]
+        if not function_selectors:
+            return
+        function_rows = select_function_rows(function_selectors, load_function_rows())
+        if not function_rows:
+            raise SystemExit("no functions match: " + ", ".join(function_selectors))
+        verify_functions(function_selectors, selected_rows=function_rows)
         # String-ref verify scoped to the same rows: function bytes alone cannot
         # tell identical-twin stubs apart (their string pointer is a masked
         # DIR32) — three wrong-twin claims survived per-file verification and
         # reached master before the full gate caught them.
-        rows = [row for row in load_function_rows()
-                if any(selector_matches_row(sel, row) for sel in only)]
-        verify_string_refs(rows)
+        verify_string_refs(function_rows)
         return
     print("Full verification")
     # Identity, not bytes: verify_functions proves each row's bytes, and a

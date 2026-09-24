@@ -20,6 +20,7 @@ def test_verify_pr_checks_the_status_of_delta_sources():
     # Both invocations, the claim delta and the pin delta, must be guarded.
     guarded = re.findall(r"if ! python3 tools/delta_sources\.py [^\n]*> \"\$\w+\"; then", text)
     assert len(guarded) == 2, guarded
+    assert all("--selectors" in command for command in guarded)
 
 
 def test_the_pattern_is_recognised():

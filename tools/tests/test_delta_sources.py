@@ -175,9 +175,41 @@ def test_every_overlapping_owner_is_considered(selection, second_start, second_s
     assert delta.function_delta_sources("old", "new") == ["Code/A.cpp"]
 
 
+def test_stale_tu_evidence_keeps_only_exact_affected_row(selection):
+    callee = row("lost", 0x1000)
+    caller = row("caller", 0x2000, "Code/Shared.cpp")
+    sibling = row("unrelated", 0x2100, "Code/Shared.cpp")
+    selection([callee, caller, sibling], [caller, sibling], [(0x2000, 0x1000)],
+              {}, current=False)
+    assert delta.affected_row_indices({("lost", 0x1000)}, set(),
+                                      [caller, sibling], "test") == [0]
+
+
+def test_current_tu_relocation_can_exclude_exact_caller_row(selection):
+    callee = row("lost", 0x1000)
+    caller = row("caller", 0x2000, "Code/Shared.cpp")
+    sibling = row("unrelated", 0x2100, "Code/Shared.cpp")
+    selection([callee, caller, sibling], [caller, sibling], [(0x2000, 0x1000)],
+              {"Code/Shared.cpp": [(0x2000, "other")]}, current=True)
+    assert delta.affected_row_indices({("lost", 0x1000)}, set(),
+                                      [caller, sibling], "test") == []
+
+
+def test_delta_selector_pairs_source_check_with_exact_affected_row(selection, monkeypatch):
+    callee = row("lost", 0x1000)
+    caller = row("caller", 0x2000, "Code/Shared.cpp")
+    sibling = row("unrelated", 0x2100, "Code/Shared.cpp")
+    old, new = [callee, caller, sibling], [caller, sibling]
+    selection(old, new, [(0x2000, 0x1000)], {}, current=False)
+    monkeypatch.setattr(delta, "dict_rows_at",
+                        lambda spec: old if spec.startswith("old:") else new)
+    assert delta.function_delta_selectors("old", "new") == [
+        "row:0x00002000:16:caller", "source:Code/Shared.cpp"]
+
+
 @pytest.mark.parametrize("hook", ["pre-commit", "pre-push"])
 @pytest.mark.parametrize("mode", ["ordinary", "pins"])
-@pytest.mark.parametrize("outcome", ["failure", "empty", "source"])
+@pytest.mark.parametrize("outcome", ["failure", "empty", "source", "many"])
 def test_hooks_check_selector_status_before_using_output(tmp_path, hook, mode, outcome):
     """Run the actual hooks; a failing selector emits valid partial output first."""
     source = "Code/Caller With Space.cpp"
@@ -203,7 +235,14 @@ if sys.argv[1] == "tools/delta_sources.py":
     mode = "pins" if "--pins" in sys.argv else "ordinary"
     if mode == os.environ["SELECTOR_MODE"]:
         outcome = os.environ["SELECTOR_OUTCOME"]
-        if outcome != "empty": print("Code/Caller With Space.cpp")
+        if outcome != "empty":
+            if outcome == "many":
+                for index in range(240):
+                    print("row:0x%08X:16:?caller_%03d_%s@@YAXXZ" %
+                          (0x1000 + index, index, "x" * 150))
+            else:
+                print("source:Code/Caller With Space.cpp")
+                print("row:0x00001000:16:?caller@@YAXXZ")
         if outcome == "failure":
             print("selector fixture failed", file=sys.stderr)
             sys.exit(23)
@@ -214,22 +253,44 @@ if sys.argv[1] == "tools/delta_sources.py":
         path.write_text(f"#!{sys.executable}\n" + body)
         path.chmod(0o755)
     build_script = tmp_path / "build.sh"
-    build_script.write_text('#!/bin/bash\nprintf "%s\\n" "$@" > build-arguments\n')
+    build_script.write_text('''#!/bin/bash
+n=0
+if [ -f build-count ]; then read -r n < build-count; fi
+n=$((n + 1))
+printf '%s\\n' "$n" > build-count
+printf '%s\\n' "$@" > "build-args-$n"
+''')
     build_script.chmod(0o755)
     env = dict(os.environ, PATH=f"{bindir}:{os.environ['PATH']}",
                FIXTURE_ROOT=str(tmp_path), SELECTOR_MODE=mode, SELECTOR_OUTCOME=outcome)
+    if hook == "pre-push" and outcome == "many" and mode == "ordinary":
+        pass
+    elif outcome == "many":
+        pytest.skip("many-selector argv exercise targets the pre-push chunker")
     result = subprocess.run(["bash", str(TOOLS.parent / ".githooks" / hook)],
                             input="refs/heads/test local refs/heads/test base\n",
                             text=True, capture_output=True, env=env)
-    record = tmp_path / "build-arguments"
+    records = sorted(tmp_path.glob("build-args-*"), key=lambda p: int(p.name.rsplit("-", 1)[1]))
+    chunks = [record.read_text().splitlines() for record in records]
     if outcome == "failure":
         assert result.returncode != 0
         assert "selector fixture failed" in result.stderr
         assert "FAILED: delta_sources" in result.stderr
-        assert not record.exists()
+        assert not records
     else:
         assert result.returncode == 0, result.stderr
         if outcome == "source":
-            assert record.read_text().splitlines() == [source]
+            assert set(chunks[0]) == {
+                "source:Code/Caller With Space.cpp",
+                "row:0x00001000:16:?caller@@YAXXZ"}
+        elif outcome == "many":
+            assert len(chunks) > 1
+            flattened = [selector for chunk in chunks for selector in chunk]
+            assert len(flattened) == 240
+            assert all(sum(2 * len(selector.encode("utf-8")) + 3
+                           for selector in chunk) <= 24000 for chunk in chunks)
+            for chunk in chunks:
+                command = subprocess.list2cmdline(["p" * 1000, "s" * 1000] + chunk)
+                assert len(command.encode("utf-16-le")) // 2 < 32767
         else:
-            assert not record.exists()
+            assert not records
