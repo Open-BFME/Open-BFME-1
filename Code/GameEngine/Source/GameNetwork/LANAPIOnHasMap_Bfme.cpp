@@ -1,9 +1,8 @@
 // ?OnHasMap@LANAPI@@UAEXPAUBfmeNetAddress@@_N@Z
-// partial score=0.98 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
-#include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
-#include "../../Code/Libraries/Source/WWVegas/WWLib/unicode_string.h"
+#include "../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
+#include "../../../Libraries/Source/WWVegas/WWLib/unicode_string.h"
 inline UnicodeString::UnicodeString(void)
 {
 	m_text = 0;
@@ -239,47 +238,49 @@ void LANAPI::OnHasMap(BfmeNetAddress *sender, Bool status)
 			break;
 		}
 	}
-	if (i == 8)
-		return;
-
-	UnicodeString mapDisplayName;
-	const MapMetaData *mapData = TheMapCache->findMap(m_currentGame->getMap());
-	Bool willTransfer = WouldMapTransfer(m_currentGame);
-	if (mapData != 0)
+	// Keep the post-slot work in this scope. It gives mapDisplayName and the
+	// returned name temporaries the same stack homes as the retail body.
+	if (i != 8)
 	{
-		mapDisplayName.format(UnicodeString(L"%ls"),
-			((BfmeEntryAP *)mapData)->bfmeDisplayNameAP().bfmeTextAP());
-	}
-	else
-	{
-		mapDisplayName.format(UnicodeString(L"%hs"),
-			Rva00688CD0AsciiText(m_currentGame->getMap()));
-	}
-
-	if (!status)
-	{
-		UnicodeString text;
-		if (willTransfer)
+		UnicodeString mapDisplayName;
+		const MapMetaData *mapData = TheMapCache->findMap(m_currentGame->getMap());
+		Bool willTransfer = WouldMapTransfer(m_currentGame);
+		if (mapData != 0)
 		{
-			text.format(TheGameText->fetch("GUI:PlayerNoMapWillTransfer", 0),
-				Rva00688CD0WideText(
-					((GameSlot *)((Rva0068D3E0Arr *)m_currentGame)->at(i))
-						->getName()),
-				Rva00688CD0WideText(mapDisplayName));
+			mapDisplayName.format(UnicodeString(L"%ls"),
+				((BfmeEntryAP *)mapData)->bfmeDisplayNameAP().bfmeTextAP());
 		}
 		else
 		{
-			text.format(TheGameText->fetch("GUI:PlayerNoMap", 0),
-				Rva00688CD0WideText(
-					((GameSlot *)((Rva0068D3E0Arr *)m_currentGame)->at(i))
-						->getName()),
-				Rva00688CD0WideText(mapDisplayName));
+			mapDisplayName.format(UnicodeString(L"%hs"),
+				Rva00688CD0AsciiText(m_currentGame->getMap()));
 		}
-		OnChat(UnicodeString(L"SYSTEM"), _bfme_localAddress(), text, 2);
-	}
 
-	if (g_bfme935GlobC != 0)
-		g_bfme935GlobC->m_rva00688CD0_26c = 1;
-	else
-		rva004CAF70();
+		if (!status)
+		{
+			UnicodeString text;
+			if (willTransfer)
+			{
+				text.format(TheGameText->fetch("GUI:PlayerNoMapWillTransfer", 0),
+					Rva00688CD0WideText(
+						((GameSlot *)((Rva0068D3E0Arr *)m_currentGame)->at(i))
+							->getName()),
+					Rva00688CD0WideText(mapDisplayName));
+			}
+			else
+			{
+				text.format(TheGameText->fetch("GUI:PlayerNoMap", 0),
+					Rva00688CD0WideText(
+						((GameSlot *)((Rva0068D3E0Arr *)m_currentGame)->at(i))
+							->getName()),
+					Rva00688CD0WideText(mapDisplayName));
+			}
+			OnChat(UnicodeString(L"SYSTEM"), _bfme_localAddress(), text, 2);
+		}
+
+		if (g_bfme935GlobC != 0)
+			g_bfme935GlobC->m_rva00688CD0_26c = 1;
+		else
+			rva004CAF70();
+	}
 }
