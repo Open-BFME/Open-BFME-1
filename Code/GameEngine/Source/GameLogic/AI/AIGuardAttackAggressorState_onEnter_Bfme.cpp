@@ -1,21 +1,37 @@
-// ?onEnter@AIGuardAttackAggressorState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.98 date=2026-09-11
-// cl: /DNDEBUG /MD /EHsc
-// BFME reconstruction of AIGuardAttackAggressorState::onEnter at retail 0x0015CB70.
-
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+// AIGuardAttackAggressorState::onEnter at retail RVA 0x0015CB70 (284 bytes).
+// The dedicated AIGuardAttackAggressorState vtable 0x010963A0 slot 4 routes
+// through ILT 0x0001CE81 to this body.  Port of the Zero Hour body in
+// GameLogic/AI/AIGuard.cpp; BFME dropped the guard-radius exit condition and
+// added the one-shot re-entry flag at +0x44.
+//
+// Retail keeps TheGameLogic in EDI across the findObjectByID call and reads
+// the frame through it: BFME's findObjectByID was a header inline MSVC 7.1 left
+// out of line, so its body was visible and proved it writes no memory.  The
+// visible noinline body below reproduces that; the call still binds to the
+// pinned 0x0009A510 body through ILT 0x0001F253.
 
 typedef bool Bool;
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef int ObjectID;
 
+class Object;
+
+#define _STLP_USE_NEWALLOC 1
+#define _STLP_NO_EXCEPTIONS 1
+#include <hash_map>
+
+typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
+
+enum { INVALID_ID = 0 };
+
 enum StateReturnType
 {
 	STATE_CONTINUE = 0,
 	STATE_SUCCESS = -1
 };
-
-class Object;
 
 class BodyModule
 {
@@ -76,21 +92,33 @@ public:
 	Object *m_owner;
 };
 
-class GameLogicFrameBase
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
+// hash_map placement as Code/GameEngine/Source/GameLogic/System/GameLogicFindObjectByID.cpp
+class GameLogic
 {
 public:
-	unsigned char m_pad00[0x3c];
-	UnsignedInt m_frame;
+	__declspec(noinline) Object *findObjectByID(ObjectID id)
+	{
+		if (id == 0)
+			return 0;
+
+		ObjectPtrHash::iterator it = m_objHash.find(id);
+		if (it == m_objHash.end())
+			return 0;
+
+		return (*it).second;
+	}
+
 	UnsignedInt getFrame()
 	{
 		return m_frame;
 	}
-};
 
-class GameLogic : public GameLogicFrameBase
-{
-public:
-	Object *findObjectByID(ObjectID id);
+private:
+	unsigned char m_pad00[0x3c];
+	UnsignedInt m_frame;
+	unsigned char m_slice_pad[0x70];
+	ObjectPtrHash m_objHash;
 };
 
 class AIData
@@ -98,10 +126,6 @@ class AIData
 public:
 	unsigned char m_pad00[0x3c];
 	UnsignedInt m_guardChaseUnitFrames;
-	UnsignedInt getGuardChaseUnitFrames() const
-	{
-		return m_guardChaseUnitFrames;
-	}
 };
 
 class AI
@@ -115,14 +139,17 @@ public:
 	}
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define TheAI (*(AI **)0x012EF214)
+extern GameLogic *TheGameLogic;
+extern AI *TheAI;
 
 class BfmeGuardMachine : public StateMachine
 {
 public:
 	unsigned char m_pad14[0x58];
-	volatile ObjectID m_nemesisID;
+	ObjectID m_nemesisID;
+
+	void setNemesisID(ObjectID id) { m_nemesisID = id; }
+	ObjectID getNemesisID() const { return m_nemesisID; }
 };
 
 class State
@@ -139,9 +166,14 @@ public:
 	unsigned char m_pad04[0x18];
 	StateMachine *m_machine;
 	unsigned char m_pad20[4];
+
 	StateMachine *getMachine() const
 	{
 		return m_machine;
+	}
+	Object *getMachineOwner() const
+	{
+		return m_machine->m_owner;
 	}
 };
 
@@ -181,52 +213,51 @@ public:
 	unsigned char m_tail[0x34];
 };
 
-// ?onEnter@AIGuardAttackAggressorState@@UAE?AW4StateReturnType@@XZ
-class Rva0015CB70AIGuardAttackAggressorState : public State
+class AIGuardAttackAggressorState : public State
 {
 public:
 	virtual StateReturnType onEnter();
+
+	BfmeGuardMachine *getGuardMachine() const
+	{
+		return (BfmeGuardMachine *)getMachine();
+	}
 
 	ExitConditions m_exitConditions;
 	AIAttackState *m_attackState;
 	Bool m_unusedFlag;
 };
 
-// ?onEnter@AIGuardAttackAggressorState@@UAE?AW4StateReturnType@@XZ
-StateReturnType Rva0015CB70AIGuardAttackAggressorState::onEnter()
+StateReturnType AIGuardAttackAggressorState::onEnter()
 {
 	if (m_unusedFlag)
 	{
 		m_unusedFlag = false;
-		State *self = this;
-		return self->onEnter();
+		return onEnter();
 	}
 
-	Object *owner = ((BfmeGuardMachine *)m_machine)->m_owner;
-	if (owner->getBodyModule() != 0 &&
-		owner->getBodyModule()->getLastDamageInfo()->m_sourceID != 0)
+	Object *obj = getMachineOwner();
+	ObjectID nemID = INVALID_ID;
+
+	if (obj->getBodyModule() && obj->getBodyModule()->getLastDamageInfo()->m_sourceID)
 	{
-		ObjectID nemID = owner->getBodyModule()->getLastDamageInfo()->m_sourceID;
-		((BfmeGuardMachine *)m_machine)->m_nemesisID = nemID;
+		nemID = obj->getBodyModule()->getLastDamageInfo()->m_sourceID;
+		getGuardMachine()->setNemesisID(nemID);
 	}
 
-	BfmeGuardMachine *machineForID = (BfmeGuardMachine *)m_machine;
-	ObjectID nemID = machineForID->m_nemesisID;
-	GameLogic *const logic = TheBfmeGameLogic;
-	Object *nemesis = logic->findObjectByID(nemID);
+	Object *nemesis = TheGameLogic->findObjectByID(getGuardMachine()->getNemesisID());
 	if (nemesis == 0)
 		return STATE_SUCCESS;
 
-	m_exitConditions.m_attackGiveUpFrame =
-		TheAI->getAiData()->m_guardChaseUnitFrames + logic->getFrame();
+	m_exitConditions.m_attackGiveUpFrame = TheGameLogic->getFrame() + TheAI->getAiData()->m_guardChaseUnitFrames;
 	m_exitConditions.m_conditionsToConsider = 6;
 
-	m_attackState = new AIAttackState(
-		getMachine(), true, true, false, &m_exitConditions);
+	m_attackState = new AIAttackState(getMachine(), true, true, false, &m_exitConditions);
 	m_attackState->m_machine->setGoalObject(nemesis);
 
 	StateReturnType returnVal = m_attackState->onEnter();
 	if (returnVal == STATE_CONTINUE)
 		return STATE_CONTINUE;
+
 	return STATE_SUCCESS;
 }
