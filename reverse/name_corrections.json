@@ -2038,5 +2038,15 @@
   "after_sha256": "d39258c180522b8a98033c608b47f3a15fa54a43fc8d18ccfcb0884f513a6641",
   "evidence": "reverse/functions.csv",
   "reason": "BfmeStructureToppleUpdateView described the update receiver layout in the banked full-TU draft. Rva00132200Target is a separate call view whose method resolves to the matched Thing::rva00132200 body at 0x00132200. reverse/functions.csv proves that body identity and its 257-byte range."
-  }
+ },
+ {
+  "old_path": "reverse/attempts/0x000f2a00.cpp",
+  "new_path": "reverse/attempts/0x000f2a00.cpp",
+  "old_name": "recruit",
+  "new_name": "rva000F2A00",
+  "before_sha256": "5b26e8b6b947f658142149551307727a1e0b83b73583f5b65f18017ae24e95dd",
+  "after_sha256": "2214a7b3d8cf1a39994bae7f8e5585c7dda3eb21d19a3e4218630639519e8b75",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "The matched AIPlayer callers pass the Team receiver through Team::Rva000F10F0, but none names this method (reverse/re_attempts.log). The old source guessed recruit from behavior. The new method keeps RVA 000F2A00 in its name until evidence proves its identity."
+ }
 ]

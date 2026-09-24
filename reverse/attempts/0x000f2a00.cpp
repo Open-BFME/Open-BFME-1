@@ -1,7 +1,10 @@
-// ?recruit@Rva000F2A00Team@@QAEPAXPAVThingTemplate@@PBUCoord3D@@M@Z
-// partial score=0.25 date=2026-09-19
-// Retail 0x000F2A00 candidate, retained for the boundary and ABI experiment.
-// The BFME extension scans behavior-module template names before recruiting.
+// ?d_000f2a00@@YAXXZ
+// partial score=0.3 date=2026-09-24
+// ?rva000F2A00@Rva000F2A00Team@@QAEPAXPAVThingTemplate@@PBUCoord3D@@M@Z
+// This source keeps the address in its owner and method names because callers
+// prove the Team receiver but do not prove the method name.
+// Retail reads the module count from ThingTemplate+0x294 and divides its byte
+// span by 0x14. Inline size() and begin() accessors reproduce those reads.
 
 typedef int Int;
 typedef bool Bool;
@@ -39,6 +42,9 @@ struct ModuleInfoView
 	ModuleNugget *m_begin;
 	ModuleNugget *m_end;
 	ModuleNugget *m_capacity;
+
+	ModuleNugget *begin() const { return m_begin; }
+	Int size() const { return (Int)(m_end - m_begin); }
 };
 
 class ModuleDataView
@@ -95,7 +101,7 @@ public:
 class Rva000F2A00Team
 {
 public:
-	ObjectView *recruit(ThingTemplate *templateToFind,
+	void *rva000F2A00(ThingTemplate *templateToFind,
 		const Coord3D *home, Real maxDist);
 };
 
@@ -118,12 +124,12 @@ extern GameLogicView *TheBfmeGameLogic;
 extern "C" void j_0000103c();
 extern "C" void j_000358be();
 
-static ThingTemplate *findTemplate(const AsciiString &name)
+static __forceinline ThingTemplate *findTemplate(const AsciiString &name)
 {
 	return TheThingFactory->findTemplate(name);
 }
 
-static ObjectView *firstObject(GameLogicView *logic)
+static __forceinline ObjectView *firstObject(GameLogicView *logic)
 {
 	typedef ObjectView *(GameLogicView::*Call)();
 	union
@@ -135,7 +141,7 @@ static ObjectView *firstObject(GameLogicView *logic)
 	return (logic->*call.member)();
 }
 
-static Bool candidatePasses(TeamView *team, ObjectView **best, Real *bestDist,
+static __forceinline Bool candidatePasses(TeamView *team, ObjectView **best, Real *bestDist,
 	ObjectView *candidate, ThingTemplate *templateToFind, const Coord3D *home)
 {
 	typedef Bool (TeamView::*Call)(ObjectView **, Real *, ObjectView *,
@@ -149,38 +155,43 @@ static Bool candidatePasses(TeamView *team, ObjectView **best, Real *bestDist,
 	return (team->*call.member)(best, bestDist, candidate, templateToFind, home);
 }
 
-static Bool hasTemplateVariation(const ThingTemplate *templateToFind)
+static __forceinline Bool hasTemplateVariation(const ThingTemplate *templateToFind)
 {
 	const char *base = (const char *)templateToFind;
 	const ModuleInfoView *info = (const ModuleInfoView *)(base + 0x294);
-	ModuleNugget *it = info->m_begin;
-	ModuleNugget *end = info->m_end;
-	for (Int index = 0; it != end; ++index, ++it)
+	if (info->size() > 0)
 	{
-		const ModuleDataView *data =
-			(const ModuleDataView *)it->m_data;
-		if (data != 0)
+		Int index = 0;
+		Int offset = 0;
+		do
 		{
-			const RecruitmentOwnerView *owner =
-				(const RecruitmentOwnerView *)data->getRecruitmentOwner();
-			if (owner != 0)
+			ModuleNugget *it = (ModuleNugget *)((char *)info->begin() + offset);
+			const ModuleDataView *data = (const ModuleDataView *)it->m_data;
+			if (data != 0)
 			{
-				ModuleNugget *names = owner->begin();
-				ModuleNugget *namesEnd = owner->end();
-				if (names != 0 && namesEnd - names > 1)
+				const RecruitmentOwnerView *owner =
+					(const RecruitmentOwnerView *)data->getRecruitmentOwner();
+				if (owner != 0)
 				{
-					if (findTemplate(*(const AsciiString *)names) != 0 &&
-						findTemplate(*(const AsciiString *)(names + 1)) != 0)
-						return true;
+					ModuleNugget *names = owner->begin();
+					ModuleNugget *namesEnd = owner->end();
+					if (names != 0 && namesEnd - names > 1)
+					{
+						if (findTemplate(*(const AsciiString *)names) != 0 &&
+							findTemplate(*(const AsciiString *)(names + 1)) != 0)
+							return true;
+					}
 				}
 			}
-		}
+			++index;
+			offset += sizeof(ModuleNugget);
+		} while (index < info->size());
 	}
 	return false;
 }
 
-// ?recruit@Rva000F2A00Team@@QAEPAXPAVThingTemplate@@PBUCoord3D@@M@Z
-ObjectView *Rva000F2A00Team::recruit(ThingTemplate *templateToFind,
+// ?rva000F2A00@Rva000F2A00Team@@QAEPAXPAVThingTemplate@@PBUCoord3D@@M@Z
+void *Rva000F2A00Team::rva000F2A00(ThingTemplate *templateToFind,
 	const Coord3D *home, Real maxDist)
 {
 	Real bestDist = maxDist * maxDist;
