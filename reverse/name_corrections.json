@@ -1,5 +1,15 @@
 [
  {
+  "old_path": "reverse/attempts/0x0024eac0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Contain/Rva0024EAC0OnRemoving.cpp",
+  "old_name": "BfmeOwnAZ",
+  "new_name": "Rva0024EAC0",
+  "before_sha256": "3eb51652aa2f18b408499100ccf49cc7d86e748412e8ebbb349747eed33d5438",
+  "after_sha256": "81ba12529afd8b5638c9a8bdc3b84b423f98c23b828615a7f41be26fbb6e71a3",
+  "evidence": "reverse/identity_evidence/0x0024eac0-on-removing-slot.md",
+  "reason": "The bank marks BfmeOwnAZ identity unknown, and its AZ suffix is an invented temporary owner. Retail vtable slot 18 plus the matched GarrisonContain base call prove onRemoving(Object*) but not whether Base or derived declares it, so the new owner must keep 0x0024EAC0."
+ },
+ {
   "old_path": "reverse/attempts/0x006155e0.cpp",
   "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldManagerRva006155E0.cpp",
   "old_name": "bfmeGetEQV",
