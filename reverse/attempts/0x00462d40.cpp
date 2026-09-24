@@ -73,8 +73,10 @@ public:
 
 // Retail 0x00462D40 (126B): given a non-empty string, run it through
 // bfmeDoBSD, then for_each over the g_bfmeTwoSJA hashtable's [begin, end)
-// range through the checker at 0x00462710. On a null/empty string, flag
-// g_bfmeDoneSJA and dispatch TheWindowManager's slot44 with a null window
+// range through the checker at 0x00462710. Retail also calls the matched
+// StringBase<char>::releaseBuffer at +0x5A; this partial source omits that
+// cleanup and must not be treated as a complete reconstruction. On a null or
+// empty string, flag g_bfmeDoneSJA and dispatch TheWindowManager's slot44 with a null window
 // instead. No caller, class or method identity survived the identity sweep
 // (blocked once: t=5min model=gpt-5.6, "no direct caller, no vtable pointer
 // reference, no source emitter"); every name here is address-derived.
