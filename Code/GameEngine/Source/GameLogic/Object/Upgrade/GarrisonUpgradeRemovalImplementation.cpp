@@ -1,17 +1,29 @@
-// ?upgradeRemovalImplementation@GarrisonUpgrade@@MAEXXZ
-// partial score=0.98 date=2026-09-11
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// stlport
+//
+// GarrisonUpgrade::upgradeRemovalImplementation, retail 0x002D54A0 (142 B).
+// The GarrisonUpgrade constructor (0x002D5280) installs the UpgradeMux vtable
+// 0x010CCA40 at +0x10; its slot 7 (+0x1c) reaches this body through ILT
+// 0x00031E5D, the slot CommandSetUpgrade and CostModifierUpgrade land as
+// upgradeRemovalImplementation. Slot 8 (+0x20) is setUpgradeExecuted.
+//
+// Bit 252 of Object's 40-byte model-condition mask at +0x110 (word +0x12c,
+// bit 28) is UPGRADE_GARRISON in the shipped ModelCondition name table at
+// VA 0x012A6918. It is cleared through native bitset accessor layers and a
+// free inline conditional-update helper (docs/shape_levers.md, model-condition
+// bit masks): a raw word expression gives the same instructions but swaps the
+// ESI/EDI roles of the contain module and the object.
+#include <bitset>
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
-class BfmeY982
+class ProjectileUpdateInterface
 {
 public:
 	virtual void slot00();
 	virtual void slot01();
 	virtual void slot02(int value);
-	BfmeY982 *bfmeConv982B();
 };
 
 class Object;
@@ -105,22 +117,46 @@ public:
 	virtual ContainModuleInterface *getContain();
 };
 
+class Rva002D54A0ConditionBits
+{
+public:
+	Bool test(int bit) const { return m_bits.test(bit); }
+	void reset(int bit) { m_bits.reset(bit); }
+private:
+	_STL::bitset<320> m_bits;
+};
+
+enum ModelConditionFlagType
+{
+	MODELCONDITION_UPGRADE_GARRISON = 252
+};
+
 class Object
 {
 public:
 	void notifyModelConditionChanged();
+	ProjectileUpdateInterface *getProjectileUpdateInterface() const;
 	BehaviorModule **getBehaviorModules() const
 	{
 		return m_behaviors;
 	}
 
-	char m_padding000[0x12c];
-	UnsignedInt m_conditionFlags;
-	char m_padding130[0xc0];
+	char m_padding000[0x110];
+	Rva002D54A0ConditionBits m_modelConditionFlags;
+	char m_padding138[0xb8];
 	BehaviorModule **m_behaviors;
 	char m_padding1f4[0x10];
 	void *m_ai;
 };
+
+static __forceinline void clearCondition(Object *object, ModelConditionFlagType bit)
+{
+	if (object->m_modelConditionFlags.test(bit))
+	{
+		object->m_modelConditionFlags.reset(bit);
+		object->notifyModelConditionChanged();
+	}
+}
 
 class UpgradeMux
 {
@@ -156,9 +192,6 @@ protected:
 	virtual void upgradeRemovalImplementation();
 };
 
-#pragma comment(linker, "/alternatename:?bfmeConv982B@BfmeY982@@QAEPAV1@XZ=?j_0000de9f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?notifyModelConditionChanged@Object@@QAEXXZ=?j_0002191d@@YAXXZ")
-
 // ?upgradeRemovalImplementation@GarrisonUpgrade@@MAEXXZ
 void GarrisonUpgrade::upgradeRemovalImplementation()
 {
@@ -171,18 +204,14 @@ void GarrisonUpgrade::upgradeRemovalImplementation()
 		ContainModuleInterface *contain = behavior->getContain();
 		if (contain != 0 && contain->isGarrisonable())
 		{
-			if ((object->m_conditionFlags & 0x10000000) != 0)
-			{
-				object->m_conditionFlags &= 0xefffffff;
-				object->notifyModelConditionChanged();
-			}
+			clearCondition(object, MODELCONDITION_UPGRADE_GARRISON);
 			contain->slot59();
 		}
 	}
 
 	if (object->m_ai != 0)
 	{
-		BfmeY982 *related = ((BfmeY982 *)object)->bfmeConv982B();
+		ProjectileUpdateInterface *related = object->getProjectileUpdateInterface();
 		if (related != 0)
 			related->slot02(0);
 	}
