@@ -28,6 +28,7 @@ import hashlib
 import json
 import re
 import secrets
+import shlex
 import subprocess
 import sys
 from pathlib import Path
@@ -602,8 +603,8 @@ def finish_candidates(min_score=0.9, max_attempts=FINISH_MAX_ATTEMPTS,
         head = stash_path.read_text(encoding="utf-8", errors="replace").splitlines()[:1]
         label = (head[0].lstrip("/").strip() if head else "") or row["name"]
         # Bank headers can annotate a decorated symbol with prose such as
-        # "(identity unknown)". Keep that warning visible, but never pass it
-        # to the object-symbol lookup performed by probe.py.
+        # "(identity unknown)". Keep the annotation visible; the manual
+        # measurement command resolves the actual compiled object symbol.
         symbol = label.split()[0] if label.startswith("?") else label
         target_rva = f"0x{rva:08X}"
         stash_rel = (stash_path.relative_to(ROOT).as_posix()
@@ -617,7 +618,8 @@ def finish_candidates(min_score=0.9, max_attempts=FINISH_MAX_ATTEMPTS,
             "stash": stash_rel,
             "score": score,
             "latest_verdict": latest.get(rva, "partial"),
-            "command": f"python3 tools/probe.py {stash_rel} '{symbol}' {target_rva}",
+            "command": f"{shlex.quote(Path(sys.executable).as_posix())} tools/finish_measure.py --one "
+                       f"{target_rva} {shlex.quote(stash_rel)}",
         })
     out.sort(key=lambda c: (-c["score"], -c["target_size"]))
     return out

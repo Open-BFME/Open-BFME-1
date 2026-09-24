@@ -11,6 +11,7 @@ same. Failed probes receive a short retry window.
 
   python tools/finish_measure.py [--min-score 0.9] [--limit N]   # fill the cache
   python tools/finish_measure.py --report                          # author score vs measured
+  python tools/finish_measure.py --one RVA STASH                   # resolve a manual probe
 
 quality: 1.0 for EXACT, else 1 - (differing bytes + 2 x size error) / retail
 size, floored at 0; 0 when the stash no longer compiles. `first` is the offset
@@ -23,6 +24,7 @@ import json
 import os
 from pathlib import Path
 import re
+import shlex
 import subprocess
 import sys
 import time
@@ -334,10 +336,58 @@ def select(candidates, cache, count):
     return chosen
 
 
-def main():
+def measure_one(rva, path):
+    """Print a current diagnostic probe command for one banked body.
+
+    A compiled candidate symbol is not proof of identity or byte acceptance.
+    Do not print a command if the source, target, tool logic, or compiler object
+    changed while measuring.
+    """
+    import experiment_store
+    path = Path(path).resolve()
+    try:
+        before = hypothesis(rva, path)
+        result = measure(rva, path)
+        after = hypothesis(rva, path)
+    except (OSError, ValueError) as error:
+        print(f"finish_measure: {error}", file=sys.stderr)
+        return 1
+    if before != after:
+        print("finish_measure: inputs changed during measurement; run again", file=sys.stderr)
+        return 1
+    if not result.get("compiles"):
+        print(f"finish_measure: probe failed: {result.get('note', 'no measurable body')}", file=sys.stderr)
+        return 1
+    if experiment_store.validated_object_receipt(path) is None:
+        print("finish_measure: compiled object or dependencies are no longer current; run again",
+              file=sys.stderr)
+        return 1
+    symbol = result.get("symbol") or symbol_of(path)
+    display_path = path.relative_to(ROOT).as_posix() if path.is_relative_to(ROOT) else str(path)
+    command = " ".join(shlex.quote(part) for part in (
+        Path(sys.executable).as_posix(), "tools/probe.py", display_path, symbol, f"0x{rva:08X}"))
+    print(f"candidate object symbol  {symbol}")
+    print(f"size ours={result['ours']} retail={result['retail']} "
+          f"diffs={result['diffs']} first=+{result['first']} quality={result['quality']:.4f}")
+    print(f"probe: {command}")
+    print("Diagnostic only: prove identity and pass the strict byte-match gate before landing.")
+    return 0
+
+
+def main(argv=None):
     sys.path.insert(0, str(ROOT / "tools"))
     import eligibility
-    args = sys.argv[1:]
+    args = list(sys.argv[1:] if argv is None else argv)
+    if "--one" in args:
+        if len(args) != 3 or args[0] != "--one":
+            print("usage: finish_measure.py --one RVA STASH", file=sys.stderr)
+            return 2
+        try:
+            rva = int(args[1], 0)
+        except ValueError:
+            print(f"finish_measure: invalid RVA {args[1]!r}", file=sys.stderr)
+            return 2
+        return measure_one(rva, args[2])
     floor = float(args[args.index("--min-score") + 1]) if "--min-score" in args else 0.9
     limit = int(args[args.index("--limit") + 1]) if "--limit" in args else 10 ** 6
     bodies = [(eligibility.rva_of(row), path, score) for row, path, score in eligibility.finish_bodies(floor)]
@@ -358,4 +408,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

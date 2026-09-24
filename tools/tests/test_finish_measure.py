@@ -1,5 +1,6 @@
 """The finish lane ranks on the compiler's measurement, not the author's score."""
 from pathlib import Path
+import shlex
 import sys
 import time
 
@@ -102,3 +103,50 @@ def test_a_ledger_name_in_the_header_is_not_a_compile_failure():
     assert not any(n.startswith("__ehhandler") for n in names)
     assert names[-1].startswith("??")                                        # constructors and destructors last
     assert finish_measure.fallback_symbols(NEAR, 0x10) == []
+
+
+def test_one_prints_the_measured_symbol_not_the_stale_stash_header(tmp_path, monkeypatch, capsys):
+    path = stash(tmp_path, "bank.cpp", "int x;")
+    actual = "?real@Class@@QAEXXZ"
+    monkeypatch.setattr(finish_measure, "hypothesis", lambda rva, source: finish_measure.body_hash(source))
+    monkeypatch.setattr(finish_measure, "measure",
+                        lambda rva, source: dict(finish_measure.parse(NEAR), symbol=actual))
+    monkeypatch.setattr(experiment_store, "validated_object_receipt", lambda source: "current")
+    assert finish_measure.main(["--one", "0x10", str(path)]) == 0
+    output = capsys.readouterr().out
+    assert f"candidate object symbol  {actual}" in output
+    assert "Diagnostic only" in output
+    command = next(line.removeprefix("probe: ") for line in output.splitlines()
+                   if line.startswith("probe: "))
+    assert shlex.split(command) == [sys.executable, "tools/probe.py", str(path), actual, "0x00000010"]
+
+
+def test_one_rejects_a_stash_changed_during_measurement(tmp_path, monkeypatch, capsys):
+    path = stash(tmp_path, "bank.cpp", "int x;")
+    monkeypatch.setattr(finish_measure, "hypothesis", lambda rva, source: finish_measure.body_hash(source))
+    def change_source(rva, source):
+        source.write_text(source.read_text() + "int y;\n", encoding="utf-8")
+        return dict(finish_measure.parse(NEAR), symbol="?real@Class@@QAEXXZ")
+    monkeypatch.setattr(finish_measure, "measure", change_source)
+    assert finish_measure.main(["--one", "0x10", str(path)]) == 1
+    output = capsys.readouterr()
+    assert "inputs changed" in output.err
+    assert "probe:" not in output.out
+
+
+def test_one_rejects_stale_compiler_dependencies_and_failed_probes(tmp_path, monkeypatch, capsys):
+    path = stash(tmp_path, "bank.cpp", "int x;")
+    monkeypatch.setattr(finish_measure, "hypothesis", lambda rva, source: finish_measure.body_hash(source))
+    monkeypatch.setattr(finish_measure, "measure",
+                        lambda rva, source: dict(finish_measure.parse(NEAR), symbol="?real@Class@@QAEXXZ"))
+    monkeypatch.setattr(experiment_store, "validated_object_receipt", lambda source: None)
+    assert finish_measure.main(["--one", "0x10", str(path)]) == 1
+    output = capsys.readouterr()
+    assert "no longer current" in output.err
+    assert "probe:" not in output.out
+    monkeypatch.setattr(finish_measure, "measure",
+                        lambda rva, source: dict(compiles=False, quality=0.0, note="compiler unavailable"))
+    assert finish_measure.main(["--one", "0x10", str(path)]) == 1
+    output = capsys.readouterr()
+    assert "compiler unavailable" in output.err
+    assert "probe:" not in output.out

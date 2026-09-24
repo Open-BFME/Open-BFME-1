@@ -40,6 +40,13 @@ target briefs reserve one place for an unmeasured candidate when available.
 The 0.9 author-score admission floor is unchanged because a lower floor has
 not demonstrated an additional viable finish body.
 
+For manual finish work, `next_work.py` prints a `finish_measure.py --one` start
+command. It compiles the banked body, resolves a stale stash-header symbol to a
+symbol actually defined in the object, and prints a follow-up `probe.py`
+command using the same Python environment. The reported quality is diagnostic:
+the chosen symbol can still be the wrong identity, and only the normal strict
+byte, relocation, identity and publication gates can land the body.
+
 The finish and anonymous pickers prepare candidates outside
 `build/.fleet_claims.lock`, then recheck a bounded shortlist under that lock.
 `fleet_run` still atomically claims only the live targets in the final brief;

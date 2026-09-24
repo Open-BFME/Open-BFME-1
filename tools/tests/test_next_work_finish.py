@@ -53,7 +53,9 @@ def test_served_from_stash_with_score(world):
     assert [c["target_rva"] for c in got] == [f"0x{RVA:08X}"]
     assert got[0]["score"] == 0.95 and got[0]["function"] == SYM
     assert got[0]["latest_verdict"] == "partial"
-    assert "probe.py" in got[0]["command"]
+    assert shlex.split(got[0]["command"]) == [
+        sys.executable, "tools/finish_measure.py", "--one", f"0x{RVA:08X}",
+        str(tmp_path / "attempts" / f"0x{RVA:08x}.cpp")]
 
 
 def test_later_deferral_does_not_hide_the_stash(world):
@@ -65,16 +67,18 @@ def test_later_deferral_does_not_hide_the_stash(world):
     assert len(got) == 1 and got[0]["latest_verdict"] == "blocked"
 
 
-def test_probe_command_excludes_symbol_header_annotation(world):
+def test_finish_start_command_does_not_probe_an_unverified_header_symbol(world):
     tmp_path, _, _ = world
-    label = SYM + " (identity unknown)"
+    label = "?dup_00354c10@@YAXXZ (identity unknown)"
     (tmp_path / "attempts" / f"0x{RVA:08x}.cpp").write_text(
         f"// {label}\n// partial score=0.97 date=2026-09-01\nint x;\n",
         encoding="utf-8")
     candidate = next_work.finish_candidates(0.9)[0]
     assert candidate["function"] == label
-    assert candidate["symbol"] == SYM
-    assert shlex.split(candidate["command"])[3] == SYM
+    assert candidate["symbol"] == "?dup_00354c10@@YAXXZ"
+    assert shlex.split(candidate["command"]) == [
+        sys.executable, "tools/finish_measure.py", "--one", f"0x{RVA:08X}",
+        str(tmp_path / "attempts" / f"0x{RVA:08x}.cpp")]
 
 
 def test_later_dead_end_retires_the_address(world):
