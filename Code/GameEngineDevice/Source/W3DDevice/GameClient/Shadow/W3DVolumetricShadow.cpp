@@ -46,7 +46,9 @@
 #include "GameClient/View.h"
 #include "WW3D2/Camera.h"
 #include "WW3D2/Light.h"
+#define MESH_RENDER_SNAPSHOT_ENABLED
 #include "../../../../../Libraries/Source/WWVegas/WW3D2/dx8wrapper.h"
+#undef MESH_RENDER_SNAPSHOT_ENABLED
 #include "WW3D2/DX8Wrapper.h"
 #include "WW3D2/HLod.h"
 #include "WW3D2/mesh.h"
@@ -4675,7 +4677,121 @@ void W3DVolumetricShadowManager::renderStencilShadows( void )
 
 }  // end renderStencilShadows
 
-// ?renderShadows@W3DVolumetricShadowManager@@QAEX_N@Z present-unmatched
+extern void BoxSetTexture(unsigned, TextureBaseClass*&);
+class Rva007C2CD0Receiver { public: void invoke(); };
+extern Rva007C2CD0Receiver* Rva01307178;
+class Gen0003D172 { public: void handle(int); };
+
+struct Rva007BFB90TextureRef {
+    TextureClass* texture;
+    Rva007BFB90TextureRef():texture(0){}
+    __forceinline ~Rva007BFB90TextureRef(){if(texture) texture->Release_Ref();}
+};
+// BFME retail device-interface slots, witnessed by the calls in this body.
+class Rva007BFB90Device { public:
+    virtual void rva_slot_000() = 0;
+    virtual void rva_slot_004() = 0;
+    virtual void rva_slot_008() = 0;
+    virtual void rva_slot_00c() = 0;
+    virtual void rva_slot_010() = 0;
+    virtual void rva_slot_014() = 0;
+    virtual void rva_slot_018() = 0;
+    virtual void rva_slot_01c() = 0;
+    virtual void rva_slot_020() = 0;
+    virtual void rva_slot_024() = 0;
+    virtual void rva_slot_028() = 0;
+    virtual void rva_slot_02c() = 0;
+    virtual void rva_slot_030() = 0;
+    virtual void rva_slot_034() = 0;
+    virtual void rva_slot_038() = 0;
+    virtual void rva_slot_03c() = 0;
+    virtual void rva_slot_040() = 0;
+    virtual void rva_slot_044() = 0;
+    virtual void rva_slot_048() = 0;
+    virtual void rva_slot_04c() = 0;
+    virtual void rva_slot_050() = 0;
+    virtual void rva_slot_054() = 0;
+    virtual void rva_slot_058() = 0;
+    virtual void rva_slot_05c() = 0;
+    virtual void rva_slot_060() = 0;
+    virtual void rva_slot_064() = 0;
+    virtual void rva_slot_068() = 0;
+    virtual void rva_slot_06c() = 0;
+    virtual void rva_slot_070() = 0;
+    virtual void rva_slot_074() = 0;
+    virtual void rva_slot_078() = 0;
+    virtual void rva_slot_07c() = 0;
+    virtual void rva_slot_080() = 0;
+    virtual void rva_slot_084() = 0;
+    virtual void rva_slot_088() = 0;
+    virtual void rva_slot_08c() = 0;
+    virtual void rva_slot_090() = 0;
+    virtual void rva_slot_094() = 0;
+    virtual void rva_slot_098() = 0;
+    virtual void rva_slot_09c() = 0;
+    virtual void rva_slot_0a0() = 0;
+    virtual void rva_slot_0a4() = 0;
+    virtual void rva_slot_0a8() = 0;
+    virtual void rva_slot_0ac() = 0;
+    virtual void rva_slot_0b0() = 0;
+    virtual void rva_slot_0b4() = 0;
+    virtual void rva_slot_0b8() = 0;
+    virtual void rva_slot_0bc() = 0;
+    virtual void rva_slot_0c0() = 0;
+    virtual void rva_slot_0c4() = 0;
+    virtual void rva_slot_0c8() = 0;
+    virtual void rva_slot_0cc() = 0;
+    virtual void rva_slot_0d0() = 0;
+    virtual void rva_slot_0d4() = 0;
+    virtual void rva_slot_0d8() = 0;
+    virtual void rva_slot_0dc() = 0;
+    virtual void rva_slot_0e0() = 0;
+    virtual long __stdcall SetRenderState(D3DRENDERSTATETYPE,unsigned) = 0;
+    virtual long __stdcall GetRenderState(D3DRENDERSTATETYPE,unsigned long*) = 0;
+    virtual void rva_slot_0ec() = 0;
+    virtual void rva_slot_0f0() = 0;
+    virtual void rva_slot_0f4() = 0;
+    virtual void rva_slot_0f8() = 0;
+    virtual void rva_slot_0fc() = 0;
+    virtual void rva_slot_100() = 0;
+    virtual long __stdcall SetTexture(unsigned,IDirect3DBaseTexture8*) = 0;
+    virtual void rva_slot_108() = 0;
+    virtual long __stdcall SetTextureStageState(unsigned,D3DTEXTURESTAGESTATETYPE,unsigned) = 0;
+    virtual void rva_slot_110() = 0;
+    virtual void rva_slot_114() = 0;
+    virtual void rva_slot_118() = 0;
+    virtual void rva_slot_11c() = 0;
+    virtual void rva_slot_120() = 0;
+    virtual void rva_slot_124() = 0;
+    virtual void rva_slot_128() = 0;
+    virtual void rva_slot_12c() = 0;
+    virtual void rva_slot_130() = 0;
+    virtual void rva_slot_134() = 0;
+    virtual void rva_slot_138() = 0;
+    virtual void rva_slot_13c() = 0;
+    virtual void rva_slot_140() = 0;
+    virtual void rva_slot_144() = 0;
+    virtual void rva_slot_148() = 0;
+    virtual void rva_slot_14c() = 0;
+    virtual void rva_slot_150() = 0;
+    virtual void rva_slot_154() = 0;
+    virtual void rva_slot_158() = 0;
+    virtual void rva_slot_15c() = 0;
+    virtual void rva_slot_160() = 0;
+    virtual long __stdcall SetVertexShader(unsigned) = 0;
+    virtual void rva_slot_168() = 0;
+    virtual void rva_slot_16c() = 0;
+    virtual long __stdcall SetPixelShader(unsigned) = 0;
+};
+static __forceinline W3DBufferManager::W3DVertexBuffer* Rva007BFB90NextVB(W3DBufferManager::W3DVertexBuffer* previous)
+{
+    return previous ? *(W3DBufferManager::W3DVertexBuffer**)((char*)previous+0x10)
+                    : *(W3DBufferManager::W3DVertexBuffer**)((char*)TheW3DBufferManager+0x9000);
+}
+
+extern int Rva007AD820Lookup(int); // landed 12-byte table lookup, retail ILT 0x0001AFF0
+
+
 void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
 {
 	W3DVolumetricShadow *shadow;
@@ -4697,10 +4813,12 @@ void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
  	beY = bbox.Extent.Y;
  	beZ = bbox.Extent.Z;
 
-	if (m_shadowList && TheGlobalData->m_useShadowVolumes)
+	if (Rva01307178) reinterpret_cast<W3DVolumetricShadowManager*>(Rva01307178)->renderShadows();
+
+	if (m_shadowList && *(const Bool*)((const char*)TheGlobalData+0x64))
 	{
 
-		LPDIRECT3DDEVICE8 m_pDev=DX8Wrapper::_Get_D3D_Device8();
+		Rva007BFB90Device* m_pDev=(Rva007BFB90Device*)DX8Wrapper::_Get_D3D_Device8();
 
 		if (!m_pDev)
 			return;	//need device to render anything.
@@ -4717,9 +4835,9 @@ void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
 
 		DX8Wrapper::Set_Shader(ShaderClass::_PresetOpaqueShader);
 // ?Set_Texture@DX8Wrapper@@SAXIPAVTextureBaseClass@@@Z present-unmatched
-		DX8Wrapper::Set_Texture(0,NULL);	//turn off textures
+		{ Rva007BFB90TextureRef tex; BoxSetTexture(0, (TextureBaseClass*&)tex.texture); }	//turn off textures
 // ?Set_Texture@DX8Wrapper@@SAXIPAVTextureBaseClass@@@Z present-unmatched
-		DX8Wrapper::Set_Texture(1,NULL);	//turn off textures
+		{ Rva007BFB90TextureRef tex; BoxSetTexture(1, (TextureBaseClass*&)tex.texture); }	//turn off textures
 // ?Apply_Render_State_Changes@DX8Wrapper@@ present-unmatched
 		DX8Wrapper::Apply_Render_State_Changes();	//force update of view and projection matrices
 
@@ -4757,7 +4875,7 @@ void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
 	#else
 		//disable writes to color buffer
 		if (DX8Wrapper::Get_Current_Caps()->Get_DX8_Caps().PrimitiveMiscCaps & D3DPMISCCAPS_COLORWRITEENABLE)
-		{	DX8Wrapper::_Get_D3D_Device8()->GetRenderState(D3DRS_COLORWRITEENABLE, &oldColorWriteEnable);
+		{	((Rva007BFB90Device*)DX8Wrapper::_Get_D3D_Device8())->GetRenderState(D3DRS_COLORWRITEENABLE, &oldColorWriteEnable);
 			DX8Wrapper::Set_DX8_Render_State(D3DRS_COLORWRITEENABLE,0);
 		}
 		else
@@ -4774,7 +4892,7 @@ void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
 		//If the value of just the potential occluder bit is >= than the combined bits, then we know none of the player color
 		//bits were set and it's okay to render shadow.
 		if (TheW3DShadowManager->getStencilShadowMask() == 0x80808080)
-			m_pDev->SetRenderState( D3DRS_STENCILFUNC,     D3DCMP_NOTEQUAL );	//in this mode, MSB indicates occluded player pixels.
+			m_pDev->SetRenderState( D3DRS_STENCILFUNC,     D3DCMP_GREATER );	//in this mode, MSB indicates occluded player pixels.
 		else
 			m_pDev->SetRenderState( D3DRS_STENCILFUNC,     D3DCMP_GREATEREQUAL );	//in this mode, multiple bits indicate occluded player pixels.
 		m_pDev->SetRenderState( D3DRS_STENCILREF,      0x80808080 );			//isolate MSB, it's used to indicate pixels containing potential occluders.
@@ -4784,6 +4902,7 @@ void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
 		m_pDev->SetRenderState( D3DRS_STENCILFAIL,  D3DSTENCILOP_KEEP );
 		m_pDev->SetRenderState( D3DRS_STENCILPASS,  D3DSTENCILOP_INCR );
 		
+		m_pDev->SetPixelShader(0);
 		m_pDev->SetVertexShader(SHADOW_DYNAMIC_VOLUME_FVF);
 
 		m_pDev->SetRenderState(D3DRS_CULLMODE,D3DCULL_CW);
@@ -4797,13 +4916,13 @@ void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
 		W3DVolumetricShadowRenderTask *shadowDynamicTasksStart,*shadowDynamicTask;
 		
 		// step through each of our shadows and render
-		for( shadow = m_shadowList; shadow; shadow = shadow->m_next )
+		for( shadow = m_shadowList; shadow; shadow = *(W3DVolumetricShadow**)((char*)shadow+0x68) )
 		{
 			if (shadow->m_isEnabled && !shadow->m_isInvisibleEnabled)
 			{
 				//Record last added task
 				shadowDynamicTasksStart=m_dynamicShadowVolumesToRender;
-				shadow->Update();
+				reinterpret_cast<Gen0003D172*>(shadow)->handle(false);
 				shadowDynamicTask=m_dynamicShadowVolumesToRender;
 				while (shadowDynamicTask != shadowDynamicTasksStart)
 				{	//update() added a dynamic shadow
@@ -4818,12 +4937,12 @@ void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
 		}  // end for
 
 		// Set vertex format to that used by static shadow volumes
-		m_pDev->SetVertexShader(W3DBufferManager::getDX8Format(W3DBufferManager::VBM_FVF_XYZ));
+		m_pDev->SetVertexShader(Rva007AD820Lookup(0));
 
 		//Empty queue of static shadow volumes to render.
 		W3DBufferManager::W3DVertexBuffer *nextVb;
 		W3DVolumetricShadowRenderTask *nextTask;
-		for (nextVb=TheW3DBufferManager->getNextVertexBuffer(NULL,W3DBufferManager::VBM_FVF_XYZ);nextVb != NULL; nextVb=TheW3DBufferManager->getNextVertexBuffer(nextVb,W3DBufferManager::VBM_FVF_XYZ))
+		for (nextVb=Rva007BFB90NextVB(NULL);nextVb != NULL; nextVb=Rva007BFB90NextVB(nextVb))
 		{
 			nextTask=(W3DVolumetricShadowRenderTask *)nextVb->m_renderTaskList;
 			while (nextTask)
@@ -4844,7 +4963,7 @@ void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
 
 		m_pDev->SetRenderState(D3DRS_CULLMODE,D3DCULL_CCW);
 
-		for (nextVb=TheW3DBufferManager->getNextVertexBuffer(NULL,W3DBufferManager::VBM_FVF_XYZ);nextVb != NULL; nextVb=TheW3DBufferManager->getNextVertexBuffer(nextVb,W3DBufferManager::VBM_FVF_XYZ))
+		for (nextVb=Rva007BFB90NextVB(NULL);nextVb != NULL; nextVb=Rva007BFB90NextVB(nextVb))
 		{
 			nextTask=(W3DVolumetricShadowRenderTask *)nextVb->m_renderTaskList;
 			while (nextTask)
@@ -4865,7 +4984,7 @@ void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
 		}
 
 		//Reset all render tasks for next frame.
-		for (nextVb=TheW3DBufferManager->getNextVertexBuffer(NULL,W3DBufferManager::VBM_FVF_XYZ);nextVb != NULL; nextVb=TheW3DBufferManager->getNextVertexBuffer(nextVb,W3DBufferManager::VBM_FVF_XYZ))
+		for (nextVb=Rva007BFB90NextVB(NULL);nextVb != NULL; nextVb=Rva007BFB90NextVB(nextVb))
 		{
 			nextVb->m_renderTaskList=NULL;
 		}
@@ -4902,7 +5021,7 @@ void W3DVolumetricShadowManager::renderShadows( Bool forceStencilFill )
 		DX8Wrapper::Set_Material(vmat);
 		REF_PTR_RELEASE(vmat);
 		DX8Wrapper::Set_Shader(ShaderClass::_PresetOpaqueShader);
-		DX8Wrapper::Set_Texture(0,NULL);
+		{ Rva007BFB90TextureRef tex; BoxSetTexture(0, (TextureBaseClass*&)tex.texture); }
 // ?Apply_Render_State_Changes@DX8Wrapper@@ present-unmatched
 		DX8Wrapper::Apply_Render_State_Changes();	//force update of view and projection matrices
 

@@ -39,6 +39,7 @@ public:
 	void invalidateCachedLightPositions(void);
 	void loadTerrainShadows(void);
 	void renderShadows(Bool);
+	void renderShadows(void);
 	void ReleaseResources(void);
 	Bool ReAcquireResources(void);
 protected:

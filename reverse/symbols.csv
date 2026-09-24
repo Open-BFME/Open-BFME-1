@@ -85301,7 +85301,7 @@ name,address,notes
 ?renderMirror@WaterRenderObjClass@@IAEXPAVCameraClass@@@Z,0x00040809,REL32 pin for WaterRenderObjClass::updateRenderTargetTextures
 ?renderMovie@AptPalantir@@QAEXHHHH@Z,0x00018B0B,AptPalantir RenderMovie rectangle dispatcher
 ?renderRadar@AptPalantir@@QAEXHHHHPAH@Z,0x0000FC5E,AptPalantir RenderRadar rectangle dispatcher
-?renderShadows@W3DVolumetricShadowManager@@QAEX_N@Z,0x00046A51,DoShadows REL32 call via ILT thunk
+?renderShadows@W3DVolumetricShadowManager@@QAEX_N@Z,0x00046A51,DoShadows REL32 call via ILT thunk; route=0x007BFB90
 ?renderSubBox@W3DSnowManager@@QAEXAAVRenderInfoClass@@HHHH@Z,0x00724570,Full948 RET20 thiscall; ILT440DF from render725710; upstream snow point leaf with starting heights fast sine buffer batching; BFME removes recursion and adds integer spacing/color; owner resource layout corroborated by matched ReAcquireResources723FB0
 ?renderTrees@BaseHeightMapRenderObjClass@@QAEXPAVCameraClass@@@Z,0x0003FE36
 ?render_box@BoxRenderObjClass@@IAEXAAVRenderInfoClass@@ABVVector3@@1@Z,0x00956F40,rel32 pin for exact-ambiguous landing
@@ -88905,3 +88905,4 @@ _ghiSetProxy,0x0087AD40,route=0x0087C900; retail patch-check calls this ILT to m
 ?GadgetComboBoxAddEntry@@YAHPAVGameWindow@@VUnicodeString@@H@Z,0x0002F338,route=0x004B4F40; skirmish profile callback calls canonical combo add through retail ILT
 ?copyStringAt14@Rva0009F820Host@@QAE?AVRva0009F820String@@XZ,0x00008BC0,route=0x0009F820; skirmish profile copies the list at host +0x14 through retail ILT
 ?compareNoCaseRaw@?$StringBase@G@@ABEHPBG0H@Z,0x000480F4,route=0x0009ECA0; skirmish profile compares wide profile names through retail ILT
+?RenderVolume@W3DVolumetricShadow@@IAEXHH@Z,0x007BD9C0,method definition and retail callers prove thiscall int int; retail body ends ret 8 and ILT 0x0003FFFD routes here
