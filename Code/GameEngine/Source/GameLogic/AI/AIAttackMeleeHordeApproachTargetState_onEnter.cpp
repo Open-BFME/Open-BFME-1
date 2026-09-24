@@ -48,7 +48,7 @@ class AIUpdateInterface
 {
 public:
 	unsigned char m_pad000[0x33a];
-	unsigned char m_field33a;
+	unsigned char m_playerIdle;
 };
 
 class Object
@@ -182,7 +182,7 @@ StateReturnType AIAttackMeleeHordeApproachTargetState::onEnter()
 			return STATE_SUCCESS;
 	}
 
-	if ((owner->m_field98 & 8) != 0 || owner->m_ai->m_field33a != 0)
+	if ((owner->m_field98 & 8) != 0 || owner->m_ai->m_playerIdle != 0)
 	{
 		if (!bfmeCallENJ(owner, goalObject))
 		{

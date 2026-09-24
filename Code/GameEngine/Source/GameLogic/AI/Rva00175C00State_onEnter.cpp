@@ -22,7 +22,7 @@ extern GameLogic *TheBfmeGameLogic;
 struct Rva00175C00AIUpdate
 {
     char m_unknown[0x33a];
-    unsigned char m_pathFlag;
+    unsigned char m_playerIdle;
 };
 
 struct Rva00175C00Object
@@ -68,7 +68,7 @@ StateReturnType Rva00175C00State::onEnter()
 
     m_goalFrame = TheBfmeGameLogic->m_frame;
     if ((m_machine->m_owner->m_statusFlag & 8) ||
-        m_machine->m_owner->m_ai->m_pathFlag)
+        m_machine->m_owner->m_ai->m_playerIdle)
         m_goalFrame += 7;
 
     return STATE_CONTINUE;

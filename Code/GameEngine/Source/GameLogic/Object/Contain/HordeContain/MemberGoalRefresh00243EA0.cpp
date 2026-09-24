@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWMath
 // stlport
-// Retail 0x00243EA0: adjusted receiver; original method identity unknown.
+// Retail 0x00243EA0: HordeContain interface 0x010AED58 slot 68, beginMelee.
+// Adjusted receiver (this-0xdc). The dword the caller pushes is the target.
 // Hub contracts: docs/analysis/0x003e9720.md. ret4; incoming dword unused.
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
@@ -65,7 +66,7 @@ struct Slot00243EA0 {
 };
 class MemberGoalRefresh00243EA0 {
 public:
-    void refresh(int unusedArgument);
+    void beginMelee(int target);
     char pad000[4]; bool field004,field005;
     char pad006[0x3c-6]; _STL::map<int,int> indices;
     char padAfterMap[0xf4-0x3c-sizeof(_STL::map<int,int>)];
@@ -74,7 +75,7 @@ public:
     bool field118;
 };
 
-void MemberGoalRefresh00243EA0::refresh(int unusedArgument)
+void MemberGoalRefresh00243EA0::beginMelee(int target)
 {
     Member00243EA0 *owner=*(Member00243EA0 **)((char *)this-0xdc);
     field118=true;

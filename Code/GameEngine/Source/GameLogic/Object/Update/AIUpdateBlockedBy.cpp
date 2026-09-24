@@ -20,7 +20,7 @@ extern void j_0002760b();
 class Object; class AIUpdateInterface;
 class BfmeSub1CC_EC3 {
 public: // Called through existing ILT 0x000230AB; receiver is Object AI+0x1CC.
-float query(void *); bool isMovingBackwards()const{return (flags>>7)&1;}
+float effectiveMaxSpeed(void *); bool isMovingBackwards()const{return (flags>>7)&1;}
 char prefix[0x40];unsigned flags;
 };
 class Thing{
@@ -208,8 +208,8 @@ bool AIUpdateInterface::blockedBy(Object*other)
  if(obj->isKindOf(BFME124)&&other->isKindOf(INFANTRY))return false;
  if(obj->isKindOf(BFME115)&&other->isKindOf(BFME115))return false;
  if(obj->bfmeLocomotor()&&other->bfmeLocomotor()){
-  float ourSpeed=obj->bfmeLocomotor()->query(obj);
-  float otherSpeed=other->bfmeLocomotor()->query(other);
+  float ourSpeed=obj->bfmeLocomotor()->effectiveMaxSpeed(obj);
+  float otherSpeed=other->bfmeLocomotor()->effectiveMaxSpeed(other);
   if(ourSpeed-otherSpeed>ourSpeed*0.1f)return false;
  }
  if(path&&path->bfmeHasSpecialNode())return false;

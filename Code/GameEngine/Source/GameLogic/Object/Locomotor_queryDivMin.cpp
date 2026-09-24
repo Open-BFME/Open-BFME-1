@@ -20,7 +20,7 @@ public:
 class BfmeSub1CC_EC3
 {
 public:
-	float query(void *val);
+	float effectiveMaxSpeed(void *val);
 	float queryDivMin40(void *val);
 	float queryDivMin4C(void *val);
 
@@ -34,7 +34,7 @@ private:
 
 float BfmeSub1CC_EC3::queryDivMin40(void *val)
 {
-	float q = query(val);
+	float q = effectiveMaxSpeed(val);
 	const Overridable *t = m_template;
 	if (t != 0 && t->m_nextOverride != 0)
 		t = t->m_nextOverride->getFinalOverride();
@@ -47,7 +47,7 @@ float BfmeSub1CC_EC3::queryDivMin40(void *val)
 
 float BfmeSub1CC_EC3::queryDivMin4C(void *val)
 {
-	float q = query(val);
+	float q = effectiveMaxSpeed(val);
 	const Overridable *t = m_template;
 	if (t != 0 && t->m_nextOverride != 0)
 		t = t->m_nextOverride->getFinalOverride();

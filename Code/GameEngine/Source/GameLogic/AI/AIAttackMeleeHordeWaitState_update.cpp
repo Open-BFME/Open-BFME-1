@@ -3,11 +3,13 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
+// Same numbering as StateMachine.h. -2 is failure, and the horde machine
+// sends that edge from the wait state to path-wait.
 enum StateReturnType
 {
 	STATE_CONTINUE = 0,
-	STATE_FAILURE = -1,
-	STATE_SUCCESS = -2
+	STATE_SUCCESS = -1,
+	STATE_FAILURE = -2
 };
 
 enum KindOfType
@@ -52,6 +54,8 @@ public:
 	HORDE_SLOT(56); HORDE_SLOT(57); HORDE_SLOT(58); HORDE_SLOT(59);
 	HORDE_SLOT(60); HORDE_SLOT(61); HORDE_SLOT(62); HORDE_SLOT(63);
 	HORDE_SLOT(64); HORDE_SLOT(65); HORDE_SLOT(66); HORDE_SLOT(67);
+	// Slot bodies: beginMelee 0x00243EA0, updateMeleeTarget 0x002440E0,
+	// isMeleeTargetReady 0x002439F0, prepareMeleeTarget 0x00232350.
 	virtual void beginMelee(Object *member) = 0;
 	virtual void endMelee() = 0;
 	HORDE_SLOT(70);
@@ -156,18 +160,18 @@ StateReturnType AIAttackMeleeHordeWaitState::onEnter()
 {
 	Object *source = m_machine->m_owner;
 	if (m_machine->isGoalObjectDestroyed())
-		return STATE_FAILURE;
+		return STATE_SUCCESS;
 
 	Object *target = m_machine->getGoalObject();
 	if (target == 0)
-		return STATE_FAILURE;
+		return STATE_SUCCESS;
 
 	ContainModuleInterface *contain = source->getContain();
 	if (contain != 0)
 	{
 		HordeContainInterface *horde = contain->getHordeContainInterface();
 		if (horde == 0)
-			return STATE_FAILURE;
+			return STATE_SUCCESS;
 
 		unsigned int formation = target->getMeleeFormation();
 		if (target->isMeleeHordeTarget())
@@ -181,7 +185,7 @@ StateReturnType AIAttackMeleeHordeWaitState::onEnter()
 		}
 
 		if (bfmeMeleeHordeTargetInvalid(source, target))
-			return STATE_SUCCESS;
+			return STATE_FAILURE;
 
 		if (!horde->isMeleeTargetReady(target))
 		{
@@ -194,7 +198,7 @@ StateReturnType AIAttackMeleeHordeWaitState::onEnter()
 				(float)(maximumDistance * maximumDistance))
 				horde->prepareMeleeTarget(target);
 			else
-				return STATE_SUCCESS;
+				return STATE_FAILURE;
 		}
 
 		horde->setMeleeFormation(formation);
@@ -209,30 +213,30 @@ StateReturnType AIAttackMeleeHordeWaitState::update()
 {
 	Object *source = m_machine->m_owner;
 	if (m_machine->isGoalObjectDestroyed())
-		return STATE_FAILURE;
+		return STATE_SUCCESS;
 
 	Object *target = m_machine->getGoalObject();
 	if (target == 0)
-		return STATE_FAILURE;
+		return STATE_SUCCESS;
 
 	if (((BFMEObjectStealthQuery *)target)->isStealthedAndUndetected(
 			(const Object *)source->getControllingPlayer()))
-		return STATE_SUCCESS;
+		return STATE_FAILURE;
 
 	ContainModuleInterface *contain = source->getContain();
 	if (contain != 0)
 	{
 		HordeContainInterface *horde = contain->getHordeContainInterface();
 		if (horde == 0)
-			return STATE_FAILURE;
+			return STATE_SUCCESS;
 
 		if (bfmeMeleeHordeTargetInvalid(source, target))
-			return STATE_SUCCESS;
+			return STATE_FAILURE;
 
 		if (horde->isMeleeTargetReady(target))
 			m_waitUntil = TheGameLogic->m_frame + 15;
 		else if (TheGameLogic->m_frame >= m_waitUntil)
-			return STATE_SUCCESS;
+			return STATE_FAILURE;
 
 		horde->updateMeleeTarget(target);
 	}

@@ -85049,8 +85049,8 @@ name,address,notes
 ?qr2_keybuffer_add@@YAXPAXH@Z,0x00855330,Open-BFME5 zh_sweep packet 00642cf0 callee pin
 ?query1A6320@TerrainLogic@@QAEPAUBfme1A6320Record@@PAVBfmeE5B30Object@@PAUCoord3D@@M@Z,0x0001DFED,Reviewed 1A6320 query plus full 1A4A00 enumeration and 1A3280 callback; returns selected 48-byte record whose first member is Coord3D
 ?query@BfmeHelperD77@@QAEDPAX@Z,0x0003E80B,pin
-?query@BfmeSub1CC_EC3@@QAEMPAX@Z,0x000230AB,exact retail rel32 target of the three callers; the body at 0x001B7E90 carries no other name
-?query@BfmeSub1CC_EC3@@QAEMPAX@Z,0x001B7E90,queryClamp and queryDivMin40 share the BfmeSub1CC_EC3 +0x3C value and call the same query body
+?effectiveMaxSpeed@BfmeSub1CC_EC3@@QAEMPAX@Z,0x000230AB,exact retail rel32 target of the three callers; the body at 0x001B7E90 carries no other name
+?effectiveMaxSpeed@BfmeSub1CC_EC3@@QAEMPAX@Z,0x001B7E90,queryClamp and queryDivMin40 share the BfmeSub1CC_EC3 +0x3C value and call the same query body
 ?query@ExperienceLevelSystemQueryShim@@QAEPAXPAX@Z,0x0002603F,ILT call view for the ExperienceLevelSystem lookup at 0x0037F190
 ?query@Object@@QAE_NPAV1@H@Z,0x00047ED8,ILT to 0x001CF9F0 Object query used by Rva001DCC20Filter
 ?query@Q2FlagOwner@@QAE_NH@Z,0x00416FC0,byte-returning __thiscall predicate taking one index; every row of the 34-byte queried-index assignment family (Q2QueriedIndexAssignments.cpp) calls this one body; address-derived name; identity not recovered

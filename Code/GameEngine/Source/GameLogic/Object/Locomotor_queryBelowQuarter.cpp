@@ -6,7 +6,7 @@
 class BfmeSub1CC_EC3
 {
 public:
-	float query(void *val);
+	float effectiveMaxSpeed(void *val);
 	int queryBelowQuarter(void *val);
 
 private:
@@ -17,5 +17,5 @@ private:
 int BfmeSub1CC_EC3::queryBelowQuarter(void *val)
 {
 	float limit = m_value;
-	return query(val) * 0.25f < limit;
+	return effectiveMaxSpeed(val) * 0.25f < limit;
 }

@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD
 //
-// Retail 0x001B9590: cached wrapper around BfmeSub1CC_EC3::query.  When the
+// Retail 0x001B9590: cached wrapper around BfmeSub1CC_EC3::effectiveMaxSpeed.  When the
 // dword at this+0x5C is still the current TheGameLogic frame the cached float
 // at +0x58 is returned; otherwise the call tails into query.
 
@@ -17,7 +17,7 @@ extern GameLogic *TheGameLogic;
 class BfmeSub1CC_EC3
 {
 public:
-	float query(void *val);
+	float effectiveMaxSpeed(void *val);
 	float queryCached(void *val);
 
 private:
@@ -29,6 +29,6 @@ private:
 float BfmeSub1CC_EC3::queryCached(void *val)
 {
 	if (m_frame < TheGameLogic->m_frame)
-		return query(val);
+		return effectiveMaxSpeed(val);
 	return m_cached;
 }

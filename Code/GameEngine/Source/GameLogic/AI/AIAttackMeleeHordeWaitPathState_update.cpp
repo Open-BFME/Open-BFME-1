@@ -7,11 +7,13 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
+// Same numbering as StateMachine.h. A path that exists, or a structure
+// this horde can attack, returns failure so the machine goes back to approach.
 enum StateReturnType
 {
 	STATE_CONTINUE = 0,
-	STATE_FAILURE = -1,
-	STATE_SUCCESS = -2
+	STATE_SUCCESS = -1,
+	STATE_FAILURE = -2
 };
 
 enum KindOfType
@@ -135,12 +137,12 @@ StateReturnType AIAttackMeleeHordeWaitPathState::update()
 	switch (m_machine->isGoalObjectDestroyed())
 	{
 	default:
-		return STATE_FAILURE;
+		return STATE_SUCCESS;
 	case 0:
 	{
 		Object *target = m_machine->getGoalObject();
 		if (target == 0)
-			return STATE_FAILURE;
+			return STATE_SUCCESS;
 
 		UnsignedInt frame = TheGameLogic->m_frame;
 		if (m_waitUntil > frame)
@@ -157,23 +159,23 @@ StateReturnType AIAttackMeleeHordeWaitPathState::update()
 				TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
 			Module *module = target->findModule(siegeDeploySpecialPowerKey);
 			if (module != 0 && ((Bool (__fastcall *)(Module *))j_00048112)(module))
-				goto success;
+				goto blocked;
 		}
 
 		if (canAttack)
-			goto success;
+			goto blocked;
 		if (TheAI->pathfinder()->slowDoesPathExist(
 				source, source->getPosition(), target->getPosition(), OBJECT_ID_NONE))
-			goto success;
+			goto blocked;
 		goto retry;
 
-		success:
+		blocked:
 		__asm { }
-		return STATE_SUCCESS;
+		return STATE_FAILURE;
 
 		retry:
 		m_waitUntil = TheGameLogic->m_frame + 7;
-		return ++m_retryCount <= 5 ? STATE_CONTINUE : STATE_FAILURE;
+		return ++m_retryCount <= 5 ? STATE_CONTINUE : STATE_SUCCESS;
 	}
 	}
 }

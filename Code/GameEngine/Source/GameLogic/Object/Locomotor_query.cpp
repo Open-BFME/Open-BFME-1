@@ -1,4 +1,4 @@
-// ?query@BfmeSub1CC_EC3@@QAEMPAX@Z
+// ?effectiveMaxSpeed@BfmeSub1CC_EC3@@QAEMPAX@Z
 // Retail RVA 0x001B7E90, 297 bytes.
 // cl: /O2 /GR- /DNDEBUG /DWIN32 /MD /EHsc-
 
@@ -73,7 +73,7 @@ public:
 class BfmeSub1CC_EC3
 {
 public:
-	Real query(void *value);
+	Real effectiveMaxSpeed(void *value);
 
 private:
 	unsigned char m_pad000[4];
@@ -95,7 +95,7 @@ extern volatile Real g_rva001B59ScaleConstantNormalAlias;
 extern volatile Real g_rva001B59ScaleConstantDamaged;
 extern volatile Real g_rva001B59ScaleConstantDamagedAlias;
 
-Real BfmeSub1CC_EC3::query(void *value)
+Real BfmeSub1CC_EC3::effectiveMaxSpeed(void *value)
 {
 	Object *object = static_cast<Object *>(value);
 	BodyDamageType condition = object->m_body->getDamageState();

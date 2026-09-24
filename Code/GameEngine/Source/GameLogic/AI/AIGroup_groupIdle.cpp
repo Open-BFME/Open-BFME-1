@@ -92,7 +92,7 @@ public:
 	char m_unreconstructed_008[0x20 - 0x08];
 	AICommandInterface m_commands;
 	char m_unreconstructed_021[0x33A - 0x21];
-	unsigned char m_field33a;
+	unsigned char m_playerIdle;
 
 	Bool canAutoAcquire() const
 	{
@@ -250,7 +250,7 @@ void AIGroup::groupIdle(Int cmdSource)
 			aiIdleViaIlt(&ai->m_commands, (CommandSourceType)cmdSource);
 
 			if (cmdSource == CMD_FROM_PLAYER)
-				ai->m_field33a = 1;
+				ai->m_playerIdle = 1;
 
 			if (cmdSource == CMD_FROM_PLAYER &&
 				BitTest(obj->getStatusBits(), OBJECT_STATUS_CAN_STEALTH) &&

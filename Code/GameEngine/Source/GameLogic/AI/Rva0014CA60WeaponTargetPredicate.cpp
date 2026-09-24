@@ -149,7 +149,7 @@ class AIUpdateInterface
 {
 public:
 	char m_pad000[0x33a];
-	Bool m_isDoingGroundMovement;
+	Bool m_playerIdle;
 };
 
 class AIData
@@ -243,7 +243,7 @@ Bool __cdecl rva0014ca60(BfmeOutOfWeaponRangeObject *source,
 	unsigned int status = *(const unsigned int *)((const char *)source + 0x98);
 	volatile Bool onGround;
 	onGround = false;
-	if ((status & 8) != 0 || ai->m_isDoingGroundMovement)
+	if ((status & 8) != 0 || ai->m_playerIdle)
 		onGround = true;
 
 	if (source->isKindOf(KINDOF_0014CA60_HORDE))

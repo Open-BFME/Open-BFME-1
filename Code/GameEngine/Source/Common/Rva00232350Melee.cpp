@@ -22,7 +22,7 @@ extern GameLogic *TheGameLogic;
 class Gen_00232350
 {
 public:
-	void bfmeNote(Object *obj);
+	void prepareMeleeTarget(Object *obj);
 
 private:
 	char m_pad[0x100];
@@ -30,8 +30,8 @@ private:
 	int m_104;
 };
 
-// ?bfmeNote@Gen_00232350@@QAEXPAVObject@@@Z
-void Gen_00232350::bfmeNote(Object *obj)
+// ?prepareMeleeTarget@Gen_00232350@@QAEXPAVObject@@@Z
+void Gen_00232350::prepareMeleeTarget(Object *obj)
 {
 	if (obj == 0)
 		return;

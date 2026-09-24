@@ -14,7 +14,7 @@
 class BfmeSub1CC_EC3
 {
 public:
-	float query(void *val);
+	float effectiveMaxSpeed(void *val);
 	float queryDivMin40(void *val);
 	void queryClamp(float limit, void *val);
 
@@ -37,7 +37,7 @@ void BfmeSub1CC_EC3::queryClamp(float limit, void *val)
 		m_value = limit;
 
 	// Keep the query result in the x87 stack while the cached value is tested.
-	float q = query(val);
+	float q = effectiveMaxSpeed(val);
 	// MSVC 7.1 needs this spill to retain the retail floating-point ordering.
 	volatile float result = m_value;
 	if (result < g_bfmeZeroCY)
