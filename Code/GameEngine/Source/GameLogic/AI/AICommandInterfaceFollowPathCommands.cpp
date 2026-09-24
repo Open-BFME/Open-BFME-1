@@ -76,7 +76,7 @@ struct DamageInfo
 struct AICommandParms
 {
 	AICommandType						m_cmd;			// +0x00
-	CommandSourceType				m_cmdSource;		// +0x04
+	CommandSourceType				m_commandSource;		// +0x04
 	Coord3D									m_pos;			// +0x08
 	Object									*m_obj;			// +0x14
 	Object									*m_otherObj;		// +0x18
@@ -89,7 +89,7 @@ struct AICommandParms
 	const CommandButton			*m_commandButton;	// +0x94
 	Path										*m_path;		// +0x98
 
-	AICommandParms(AICommandType cmd, CommandSourceType cmdSource);	// ILT 0x00030EA4
+	AICommandParms(AICommandType cmd, CommandSourceType commandSource);	// ILT 0x00030EA4
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
@@ -98,73 +98,73 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;	// slot 0, vtable+0x00
 
-	void aiFollowWaypointPath(const Waypoint *way, CommandSourceType cmdSource);
-	void aiFollowWaypointPathExact(const Waypoint *way, CommandSourceType cmdSource);
-	void aiFollowWaypointPathAsTeam(const Waypoint *way, CommandSourceType cmdSource);
-	void aiBfmeCommand33(const Waypoint *way, CommandSourceType cmdSource);
-	void aiBfmeCommand9FollowPath(const _STL::vector<Coord3D> *path, Object *ignoreObject, CommandSourceType cmdSource);
-	void aiBfmeCommand36FollowPath(const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType cmdSource);
-	void aiBfmeCommand37FollowPath(const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType cmdSource);
-	void aiFollowExitProductionPath(const _STL::vector<Coord3D> *path, Object *ignoreObject, CommandSourceType cmdSource);
+	void aiFollowWaypointPath(const Waypoint *waypoint, CommandSourceType commandSource);
+	void aiFollowWaypointPathExact(const Waypoint *waypoint, CommandSourceType commandSource);
+	void aiFollowWaypointPathAsTeam(const Waypoint *waypoint, CommandSourceType commandSource);
+	void aiBfmeCommand33(const Waypoint *waypoint, CommandSourceType commandSource);
+	void aiBfmeCommand9FollowPath(const _STL::vector<Coord3D> *path, Object *ignoreObject, CommandSourceType commandSource);
+	void aiBfmeCommand36FollowPath(const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType commandSource);
+	void aiBfmeCommand37FollowPath(const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType commandSource);
+	void aiFollowExitProductionPath(const _STL::vector<Coord3D> *path, Object *ignoreObject, CommandSourceType commandSource);
 };
 
-void AICommandInterface::aiFollowWaypointPath( const Waypoint *way, CommandSourceType cmdSource )
+void AICommandInterface::aiFollowWaypointPath( const Waypoint *waypoint, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_FOLLOW_WAYPOINT_PATH, cmdSource);
-	parms.m_waypoint = way;
+	AICommandParms parms(AICMD_FOLLOW_WAYPOINT_PATH, commandSource);
+	parms.m_waypoint = waypoint;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiFollowWaypointPathExact( const Waypoint *way, CommandSourceType cmdSource )
+void AICommandInterface::aiFollowWaypointPathExact( const Waypoint *waypoint, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_FOLLOW_WAYPOINT_PATH_EXACT, cmdSource);
-	parms.m_waypoint = way;
+	AICommandParms parms(AICMD_FOLLOW_WAYPOINT_PATH_EXACT, commandSource);
+	parms.m_waypoint = waypoint;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiFollowWaypointPathAsTeam( const Waypoint *way, CommandSourceType cmdSource )
+void AICommandInterface::aiFollowWaypointPathAsTeam( const Waypoint *waypoint, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_FOLLOW_WAYPOINT_PATH_AS_TEAM, cmdSource);
-	parms.m_waypoint = way;
+	AICommandParms parms(AICMD_FOLLOW_WAYPOINT_PATH_AS_TEAM, commandSource);
+	parms.m_waypoint = waypoint;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand33( const Waypoint *way, CommandSourceType cmdSource )
+void AICommandInterface::aiBfmeCommand33( const Waypoint *waypoint, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_BFME_33, cmdSource);
-	parms.m_waypoint = way;
+	AICommandParms parms(AICMD_BFME_33, commandSource);
+	parms.m_waypoint = waypoint;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand9FollowPath( const _STL::vector<Coord3D> *path, Object *ignoreObject, CommandSourceType cmdSource )
+void AICommandInterface::aiBfmeCommand9FollowPath( const _STL::vector<Coord3D> *path, Object *ignoreObject, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_BFME_9, cmdSource);
+	AICommandParms parms(AICMD_BFME_9, commandSource);
 	parms.m_coords = *path;
 	parms.m_obj = ignoreObject;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand36FollowPath( const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType cmdSource )
+void AICommandInterface::aiBfmeCommand36FollowPath( const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_BFME_36, cmdSource);
+	AICommandParms parms(AICMD_BFME_36, commandSource);
 	parms.m_coords = *path;
 	parms.m_obj = obj;
 	*(Object **)&parms.m_pos.x = otherObj;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand37FollowPath( const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType cmdSource )
+void AICommandInterface::aiBfmeCommand37FollowPath( const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_BFME_37, cmdSource);
+	AICommandParms parms(AICMD_BFME_37, commandSource);
 	parms.m_coords = *path;
 	parms.m_obj = obj;
 	*(Object **)&parms.m_pos.x = otherObj;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiFollowExitProductionPath( const _STL::vector<Coord3D> *path, Object *ignoreObject, CommandSourceType cmdSource )
+void AICommandInterface::aiFollowExitProductionPath( const _STL::vector<Coord3D> *path, Object *ignoreObject, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_FOLLOW_EXITPRODUCTION_PATH, cmdSource);
+	AICommandParms parms(AICMD_FOLLOW_EXITPRODUCTION_PATH, commandSource);
 	parms.m_coords = *path;
 	parms.m_obj = ignoreObject;
 	aiDoCommand(&parms);
