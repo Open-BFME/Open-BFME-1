@@ -10547,7 +10547,7 @@ name,address,notes
 ??_7OathbreakerBody@@6BBehaviorModuleInterface@@@,0x010A8C78,secondary vtable at this+0x0C
 ??_7OathbreakerBody@@6BBodyModuleInterface@@@,0x010A8BA8,secondary vtable at this+0x10
 ??_7OathbreakersFadeAwayBehavior@@6B@,0x010A5124,matched constructor 0x00201BB0 installs this dedicated vtable; slot zero ILT 0x00006622 reaches scalar wrapper 0x00201CC0
-??_7Object@@6B@,0x00C9EE74,vtable whose slots name Object
+??_7Object@@6B@,0x00C9EE58,primary vftable: ??0Object at 0x001D29A0 stores 0x0109EE58 at [this] after the Thing base ctor (0x001328C0 installs 0x01090DE0); 0x00C9EE74 is slot 7 of it (??_GObject)
 ??_7ObjectDefectionHelper@@6B@,0x0109E4A0,secondary vtable at this+0x10
 ??_7ObjectDefectionHelper@@6BBehaviorModuleInterface@@@,0x0109E4B0,secondary vtable at this+0x0C
 ??_7ObjectDefectionHelper@@6BObjectModule@@@,0x0109E574,primary vtable installed by the named constructor and destructor
