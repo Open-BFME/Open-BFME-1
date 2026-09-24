@@ -4,10 +4,11 @@
 // readable body of ??1AIPlayer@@MAE@XZ: Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
 //
 // Open-BFME: emptying AIPlayer's two team queues, and the destructor that is the
-// only caller of both.
+// one caller of both. AIPlayer::clearTeamsInQueue is the other.
 //
 //   ?removeAll_TeamBuildQueue@  0x001607C0,  82 bytes
 //   ?removeAll_TeamReadyQueue@  0x00160990,  82 bytes
+//   ?clearTeamsInQueue@         0x00160E70,  27 bytes
 //   ??1AIPlayer@                0x001613C0,  87 bytes
 //
 // The destructor is four lines and does nothing else: drain the build queue,
@@ -85,6 +86,7 @@ protected:
 	typedef void (*RemoveAllProc)( TeamInQueue *o );
 
 	virtual ~AIPlayer();
+	void clearTeamsInQueue();
 
 	void removeAll_TeamBuildQueue( RemoveAllProc p );
 	void removeAll_TeamReadyQueue( RemoveAllProc p );
@@ -120,6 +122,13 @@ void AIPlayer::removeAll_TeamReadyQueue( RemoveAllProc p )
 		if( p )
 			(*p)( tmp );
 	}
+}
+
+// ?clearTeamsInQueue@AIPlayer@@IAEXXZ
+void AIPlayer::clearTeamsInQueue()
+{
+	removeAll_TeamBuildQueue(deleteQueue);
+	removeAll_TeamReadyQueue(deleteQueue);
 }
 
 // ??1AIPlayer@@MAE@XZ

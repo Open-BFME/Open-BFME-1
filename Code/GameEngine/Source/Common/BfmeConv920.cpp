@@ -131,25 +131,3 @@ void BfmeThing920D::bfmeGo920D(void *a)
 		return;
 	r->bfmeVirt920D();
 }
-
-class LocomotorTemplate;
-
-class LocomotorTemplateDeleteAccess
-{
-public:
-	static void destroy(LocomotorTemplate *p);
-};
-
-class BfmeThing920F
-{
-public:
-	void bfmeGo920F();
-	void bfmeOne920F(void (*cb)(LocomotorTemplate *));
-	void bfmeTwo920F(void (*cb)(LocomotorTemplate *));
-};
-
-void BfmeThing920F::bfmeGo920F()
-{
-	bfmeOne920F(LocomotorTemplateDeleteAccess::destroy);
-	bfmeTwo920F(LocomotorTemplateDeleteAccess::destroy);
-}
