@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "fa161751402b1e45c34eeba62932edcc614de4f56612bd69b711d967a8132a35",
+  "symbol": "?method@Rva0091B750@@QAEXIABU_D3DCAPS8@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.9167,
+  "source": "// ?method@Rva0091B750@@QAEXIABU_D3DCAPS8@@@Z\n// partial score=0.9167 date=2026-09-24\n// cl: /DNDEBUG /MD /EHsc /Ireference/shims/sweep\n// Retail RVA 0x0091B750; address-derived identity pending independent naming evidence.\n\n#include <d3d8.h>\n\nclass Rva0091B750\n{\n\tunsigned char _unrecovered_000[0x20b];\n\tunsigned char _formatSupport[100];\n\tunsigned char _unrecovered_271[0x2a0 - 0x271];\n\tIDirect3D8 *direct3D;\n\npublic:\n\tvoid method(unsigned displayFormat, const D3DCAPS8 &caps);\n};\n\nvoid Rva0091B750::method(unsigned displayFormat, const D3DCAPS8 &caps)\n{\n\tif (displayFormat == 0) {\n\t\tfor (unsigned i = 0; i < 100; ++i) {\n\t\t\t_formatSupport[i] = 0;\n\t\t}\n\t\treturn;\n\t}\n\n\tfor (unsigned format = 70; format < 81; ++format) {\n\t\tswitch (format) {\n\t\tcase 70:\n\t\tcase 72:\n\t\tcase 74:\n\t\tcase 76:\n\t\tcase 78:\n\t\tcase 79:\n\t\tcase 81:\n\t\tcase 82:\n\t\tcase 83:\n\t\t\t_formatSupport[format] = SUCCEEDED(direct3D->CheckDeviceFormat(\n\t\t\t\tcaps.AdapterOrdinal,\n\t\t\t\tcaps.DeviceType,\n\t\t\t\t(D3DFORMAT)displayFormat,\n\t\t\t\t2,\n\t\t\t\t1,\n\t\t\t\t(D3DFORMAT)format));\n\t\t\tbreak;\n\t\tdefault:\n\t\t\tbreak;\n\t\t}\n\t}\n}\n"
+}
