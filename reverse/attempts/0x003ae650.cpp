@@ -1,5 +1,5 @@
 // ?j_00010712@Glo012F1024Item@@QAEXXZ
-// partial score=0.98 date=2026-09-24
+// partial score=0.99 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
 
 #include "StringInline.h"
@@ -351,16 +351,20 @@ void Glo012F1024Item::j_00010712(void)
 			records + index;
 		AsciiString *name;
 		Glo012F1024Scratch scratch(record, name);
-		scratch.m_bfmeByte22.byte = record->m_bfmeByte22;
-		scratch.m_bfmeByte21.byte = record->m_bfmeByte21;
-		scratch.m_bfmeByte20.byte = record->m_bfmeByte20;
+		unsigned char byte21 = record->m_bfmeByte21;
+		unsigned char byte22 = record->m_bfmeByte22;
+		scratch.m_bfmeByte22.byte = byte22;
+		unsigned char byte20 = record->m_bfmeByte20;
+		scratch.m_bfmeByte21.byte = byte21;
+		int at1C = record->m_bfmeAt1C;
+		scratch.m_bfmeByte20.byte = byte20;
 
 		((Rva003BCA50 *)Glo012F1028)->forward(
 			(int)name,
 			(int)&record->m_bfmePayload[0],
 			record->m_bfmeAt14,
 			record->m_bfmeAt18,
-			record->m_bfmeAt1C,
+			at1C,
 			scratch.m_bfmeByte20.word,
 			 scratch.m_bfmeByte21.word,
 			 scratch.m_bfmeByte22.word);
