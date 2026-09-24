@@ -1,10 +1,19 @@
-// ?bfmeAdvanceCB@BfmeHostCB@@QAEXXZ (identity unknown)
-// partial score=0.97 date=2026-09-07
-// 66/66 at exact size. The gate readiness vtable remains in the wrong scratch
-// register (retail eax, compiler edx); the second call is a typed slot-13
-// fastcall adapter that pins its vtable to edx.
-// The `||` short-circuit is required: spelling it as an explicit if/else with
-// the leave call duplicated in both arms costs 6 bytes (72).
+// cl: /DNDEBUG /MD /EHsc
+//
+// BfmeThingEW::bfmeConv1940194, retail 0x0026FDE0 (66 B).
+//
+// The name is the one the matched caller Object::bfmeConv001C6E00
+// (Rva001C6E00.cpp, 0x001C6E00) calls right after BfmeThingEW::bfmeSwapEW on
+// the same receiver; the method name itself stays address-derived. The
+// receiver's slot 134 (+0x218) is AIUpdateInterface::makeStateMachine
+// (0x00271D30) in the vtable 0x010BA8A8 installed by the AIUpdateInterface
+// constructor 0x0027F4B0, and +0x30 is the witnessed m_stateMachine. The
+// machine's +0x1C is the witnessed StateMachine::m_currentState, and its
+// slot 8 (+0x20) sits after the isIdle slot 7 the matched
+// AIFollowPathAsTeamState::isAttack (0x0016C2B0) calls. The null-means-true
+// test is the Zero Hour StateMachine inline shape
+// (m_currentState ? m_currentState->isX() : true); written as that bool inline
+// accessor it puts both vtable temporaries in retail's registers.
 class BfmeCurCB;
 
 class BfmeItemCB
@@ -18,7 +27,7 @@ public:
 	virtual void bfmeSlot005I();
 	virtual void bfmeSlot006I();
 	virtual void bfmeSlot007I();
-	virtual char bfmeReadyCB();
+	virtual bool bfmeReadyCB() const;
 };
 
 class BfmeCurCB
@@ -39,16 +48,15 @@ public:
 	virtual void bfmeSlot012C();
 	virtual void bfmeLeaveCB();
 
+	bool bfmeGateReadyCB() const
+	{
+		return m_bfmeGateCB ? m_bfmeGateCB->bfmeReadyCB() : true;
+	}
+
 	unsigned char m_bfmeHeadCB[0x18];
 	BfmeItemCB *m_bfmeGateCB;
 };
-struct BfmeCurCBVtable
-{
-	void *slots[13];
-	void (__fastcall *slot13)(BfmeCurCB *, BfmeCurCBVtable *);
-};
-
-class BfmeHostCB
+class BfmeThingEW
 {
 public:
 	virtual void bfmeSlot000H();
@@ -187,7 +195,7 @@ public:
 	virtual void bfmeSlot133H();
 	virtual BfmeCurCB *bfmeNextCB();
 
-	void bfmeAdvanceCB();
+	void bfmeConv1940194();
 
 	unsigned char m_bfmeHeadCB[0x2c];
 	BfmeCurCB *m_bfmeCurCB;
@@ -195,19 +203,13 @@ public:
 	BfmeCurCB *m_bfmePrevCB;
 };
 
-void BfmeHostCB::bfmeAdvanceCB()
+void BfmeThingEW::bfmeConv1940194()
 {
 	if (m_bfmePrevCB != 0)
 		return;
 
-	BfmeItemCB *gate = m_bfmeCurCB->m_bfmeGateCB;
-
-	if (!gate || gate->bfmeReadyCB())
-	{
-		BfmeCurCBVtable *vtable =
-			*(BfmeCurCBVtable **)m_bfmeCurCB;
-		vtable->slot13( m_bfmeCurCB, vtable );
-	}
+	if (m_bfmeCurCB->bfmeGateReadyCB())
+		m_bfmeCurCB->bfmeLeaveCB();
 
 	m_bfmePrevCB = m_bfmeCurCB;
 	m_bfmeCurCB = bfmeNextCB();
