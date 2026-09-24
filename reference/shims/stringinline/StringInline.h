@@ -59,6 +59,7 @@ public:
 	UnicodeString( const unsigned short *text ) : StringBase<unsigned short>( text ) {}
 	UnicodeString( const UnicodeString &other ) : StringBase<unsigned short>( other ) {}
 	~UnicodeString() {}
+	void __cdecl format( UnicodeString format, ... );
 	const unsigned short *str( void ) const;
 	static UnicodeString TheEmptyString;
 	int getLength( void ) const;
