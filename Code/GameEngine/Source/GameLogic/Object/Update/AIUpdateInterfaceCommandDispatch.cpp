@@ -545,7 +545,7 @@ protected:
 	AICommandParmsStorage m_field27c;
 	unsigned char m_field31c;
 	char m_to335[0x335 - 0x31d];
-	unsigned char m_field335;
+	unsigned char m_bfmeTargeting;
 	char m_to33a[0x33a - 0x336];
 	unsigned char m_playerIdle;
 	char m_to33c[0x33c - 0x33b];
@@ -626,7 +626,7 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 		}
 	}
 
-	m_field335 = 0;
+	m_bfmeTargeting = 0;
 	m_field33c = 0;
 	if (parms->m_cmd != 5 && parms->m_cmdSource == CMD_FROM_PLAYER && m_playerIdle)
 		m_playerIdle = 0;

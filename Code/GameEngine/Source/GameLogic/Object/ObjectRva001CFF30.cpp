@@ -82,7 +82,7 @@ public:
 	void bfmeAttackTarget(Object *target);
 
 	unsigned char m_pad004[0x335 - 0x4];
-	Bool m_field335;						// +0x335
+	Bool m_bfmeTargeting;					// +0x335
 };
 
 // Object vtable slots 0..24; which of them Thing declares is not modelled.
@@ -169,7 +169,7 @@ void Object::rva001cff30(Object *other)
 		return;
 
 	Object *victim = bfmeGetCurrentVictimIfAttacking();
-	if (!ai->m_field335 && victim != 0)
+	if (!ai->m_bfmeTargeting && victim != 0)
 	{
 		Bool sameTarget = (other == victim);
 		if (other->testStatus(OBJECT_STATUS_HORDE_MEMBER))
