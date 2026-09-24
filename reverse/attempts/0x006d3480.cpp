@@ -1,5 +1,5 @@
 // ?Render@HeightMapRenderObjClass@@UAEXAAVRenderInfoClass@@@Z
-// partial score=0.445360824742268 date=2026-09-23
+// partial score=0.448 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // Identity: ctor RVA006D1C80 installs primary vtable VA0111DC88; slot12
@@ -137,7 +137,7 @@ void HeightMapRenderObjClass::Render(RenderInfoClass &rinfo){
  }
  DX8Wrapper::Set_Light_Environment(rinfo.light_environment);
  ((Rva006C9270*)this)->apply();bind(0,0);bind(1,0);invalidate();
- world(tm);
+ DX8Wrapper::Set_Transform(D3DTS_WORLD,tm);
  material(field_304c);shader(*(unsigned*)&field_3048);
  if(Rva00EED5C8->field218==4)cloud=false;
  int st=12;
