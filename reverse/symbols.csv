@@ -82373,7 +82373,6 @@ name,address,notes
 ?getGoalObject@StateMachine@@QBEPBVObject@@XZ,0x000479BA,retail ExitConditions shouldExit const goal-object call target
 ?getGridResolution@WaterRenderObjClass@@QAEXPAM00@Z,0x0001125C,pinharvest x1 (thunk)
 ?getGridTransform@WaterRenderObjClass@@QAEXPAVMatrix3D@@@Z,0x00019376,ILT thunk; real body 0xB9FB50
-?getGroup@Object@@QAEPAVAIGroup@@XZ,0x008F9550,derived-ICF
 ?getHandle@Rva0069A6F0Owner@@QAEHPAPAURva0069A6F0Playing@@@Z,0x00699E50,Miles playing-audio handle lookup; setReverb callee
 ?getHeightAboveTerrain@Thing@@QBEMXZ,0x00001C30,hit-decoded x8 (thunk)
 ?getHeightAboveTerrainOrWater@Thing@@QBEMXZ,0x00001C30,pinharvest x1 (thunk)
@@ -85877,7 +85876,7 @@ name,address,notes
 ?setDebugPath@Pathfinder@@QAEXPAVPath@@@Z,0x0002EA3C,route=0x003D9880; decoded setPathFromWaypoint debug publication call to matched PathfinderSetDebugPath body
 ?setDefaultControlBarConfig@ControlBar@@IAEXXZ,0x00043E73
 ?setDefaultState@StateMachine@@IAEXI@Z,0x000A12B0,GiantBirdGuardMachine ctor final call passes state ID 0xB79B with ECX=this; body validates the map at +0x04 and stores the selected default ID at +0x18
-?setDesiredSpeed@AIUpdateInterface@@QAEXM@Z,0x00048CA7,retail ICF call site stores the formation speed in the AI update state
+?setDesiredSpeed@AIUpdateInterface@@QAEXM@Z,0x00048CA7,ILT of 0x0026EDC0; AIInternalMoveToState::onEnter passes FAST_AS_POSSIBLE
 ?setDestroyed@BFMEPathfindLayer@@QAE_N_N@Z,0x003FCEC0,alias of the ledgered spelling at the same body; AIPathfind.cpp reaches it through a view class because the reference AIPathfind.h inlines it
 ?setDestroyed@PathfindLayer@@QAE_N_N@Z,0x00005510,Open-BFME5 ILT; ?changeBridgeState@Pathfinder@@QAEXW4PathfindLayerEnum@@_N@Z at 0x003D58C0 hands it the inverted repaired flag
 ?setDisabledUntil@Object@@QAEXW4DisabledType@@I@Z,0x0003364A
