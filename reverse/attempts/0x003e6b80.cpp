@@ -1,5 +1,5 @@
 // ?buildGroundPath@Pathfinder@@IAEPAVPath@@PBUCoord3D@@PAVPathfindCell@@_NH@Z
-// partial score=0.88 date=2026-09-10
+// partial score=0.9 date=2026-09-24
 // Open-BFME reconstruction of the BFME Pathfinder ground-path builder.
 // The surrounding layout follows the GPLv3 GeneralsMD reference tree; the
 // retail-specific path smoothing is reconstructed from the BFME body at RVA
@@ -35,6 +35,11 @@ struct Coord3D
 	Real x;
 	Real y;
 	Real z;
+
+	void add(const Coord3D *a) { x += a->x; y += a->y; z += a->z; }
+	void sub(const Coord3D *a) { x -= a->x; y -= a->y; z -= a->z; }
+	void scale(Real s) { x *= s; y *= s; z *= s; }
+	void set(const Coord3D *a) { x = a->x; y = a->y; z = a->z; }
 };
 
 class PathNode
@@ -110,50 +115,51 @@ Path *Pathfinder::buildGroundPath(const Coord3D *fromPos,
 		if (havePrevious)
 		{
 			const Coord3D *nextPosition = node->getNextOptimized()->getPosition();
-			Coord3D adjustedPosition = *currentPosition;
-
-			Real dy = currentPosition->y;
-			Real dx = currentPosition->x - previousPosition.x;
-			dy -= previousPosition.y;
-			Real nextDy = nextPosition->y;
-			Real nextDx = nextPosition->x - currentPosition->x;
-			nextDy -= currentPosition->y;
-			Real totalDx = dx + nextDx;
-			Real totalDy = dy + nextDy;
-			Real scale = g_bfmeDefaultBU /
-				sqrt(totalDx * totalDx + totalDy * totalDy);
-			Real offsetX = scale * totalDx;
-			Real offsetY = scale * totalDy;
+			Coord3D prevDir;
+			Coord3D nextDir;
+			prevDir.set(currentPosition);
+			prevDir.sub(&previousPosition);
+			nextDir.set(nextPosition);
+			nextDir.sub(currentPosition);
+			Real dirX = prevDir.x + nextDir.x;
+			Real dirY = nextDir.y + prevDir.y;
+			Real scale = g_bfmeDefaultBU / sqrt(dirX * dirX + dirY * dirY);
+			Coord3D offset;
+			offset.x = scale * dirX;
+			offset.y = scale * dirY;
 			Real width = TheAI->pathfinder()->m_fieldA0;
 			width += width;
-			offsetX *= width;
-			offsetY *= width;
+			offset.x *= width;
+			offset.y *= width;
 
-			if (dx * nextDy - nextDx * dy < BfmeZeroRange)
+			Coord3D adjustedPosition;
+			adjustedPosition.set(currentPosition);
+			if (prevDir.x * nextDir.y - nextDir.x * prevDir.y < BfmeZeroRange)
 			{
-				adjustedPosition.x = currentPosition->x + offsetY;
-				adjustedPosition.y = currentPosition->y - offsetX;
+				adjustedPosition.x -= offset.y;
+				adjustedPosition.y += offset.x;
 			}
 			else
 			{
-				adjustedPosition.x = currentPosition->x - offsetY;
-				adjustedPosition.y = currentPosition->y + offsetX;
+				adjustedPosition.x += offset.y;
+				adjustedPosition.y -= offset.x;
 			}
 
 			snapLine(currentPosition, &adjustedPosition);
 
-			Coord3D delta = adjustedPosition;
-			delta.x -= currentPosition->x;
-			delta.y -= currentPosition->y;
-			delta.z -= currentPosition->z;
-			currentPosition->x += delta.x * g_bfmeK1253;
-			currentPosition->y += delta.y * g_bfmeK1253;
-			currentPosition->z += delta.z * g_bfmeK1253;
+			offset = adjustedPosition;
+			offset.sub(currentPosition);
+			offset.x *= g_bfmeK1253;
+			offset.y *= g_bfmeK1253;
+			offset.z *= g_bfmeK1253;
+			adjustedPosition = *currentPosition;
+			adjustedPosition.add(&offset);
+			*currentPosition = adjustedPosition;
 		}
 
+		havePrevious = true;
 		previousPosition = originalPosition;
 		node = node->getNextOptimized();
-		havePrevious = true;
 	}
 
 	return path;
