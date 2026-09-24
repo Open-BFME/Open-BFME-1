@@ -1,5 +1,3 @@
-// ?Thread_Function@PeerThreadClass@@UAEXXZ
-// partial score=0.927765237020316 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc /Ireference/shims/stringbaseascii /Ireference/shims/nat /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // GPL-3.0-or-later, adapted from EA Zero Hour PeerThread.cpp.
@@ -418,17 +416,25 @@ public:
 
 extern GameSpyPeerMessageQueueInterface *TheGameSpyPeerMessageQueue;
 
+// Four private PeerThreadClass helpers already carry opaque ledger names at
+// their bodies (0x00646240, 0x00646290, 0x00649DB0, 0x00649E90). The members
+// below forward to those names on the same receiver; they assert no new
+// identity. Retail reaches each through its ILT.
+class BfmeThingAVA { public: void bfmeGoAVA(); };
+class Rva00646290Owner { public: void *lookup00646290(int id); };
+class BfmeSessionAJ { public: void bfmeStartAJ(void *peer); };
+class BfmeOwnerFP { public: void bfmeStopFP(void *peer); };
 
 class PeerThreadClass : public ThreadClass {
 public:
  virtual void Thread_Function();
 private:
  void doQuickMatch(PEER);
- void Rva00646240();
- _SBServer* Rva00646290(Int);
- void Rva00649E90(PEER);
+ void Rva00646240() { reinterpret_cast<BfmeThingAVA *>(this)->bfmeGoAVA(); }
+ _SBServer* Rva00646290(Int id) { return (_SBServer *)reinterpret_cast<Rva00646290Owner *>(this)->lookup00646290(id); }
+ void Rva00649E90(PEER peer) { reinterpret_cast<BfmeOwnerFP *>(this)->bfmeStopFP(peer); }
  void Rva00643BC0(PEER);
- void Rva00649DB0(PEER);
+ void Rva00649DB0(PEER peer) { reinterpret_cast<BfmeSessionAJ *>(this)->bfmeStartAJ(peer); }
  void Rva00643C10(PEER);
  static char s_valueBuffers[8][20];
  static const char* s_keys[6];
@@ -505,7 +511,12 @@ extern unsigned s_heartbeatInterval;
 static SOCKET qr2Sock=INVALID_SOCKET;
 extern unsigned localIP;
 std::string WideCharStringToMultiByte(const wchar_t*);
+// Retail passes the peer in ECX to doCDKeyAuthentication (0x00648E30, the
+// file-static helper's register convention), so the call is modelled as a
+// no-argument thiscall on the peer pointer.
 class Rva00648E30Peer { public: SerialAuthResult call(); };
+// The ledger already names 0x0085A850 (chatSetLocalIP's one-int store).
+struct Rva0085A850 { static void store(int value); };
 void checkQR2Queries(PEER,SOCKET);
 extern "C" {
  void GSIStartAvailableCheckA(const char*);
@@ -862,7 +873,7 @@ void PeerThreadClass::Thread_Function()
 		}
 		IPlist = IPlist->next;
 	}
-	chatSetLocalIP(preferredIP);
+	Rva0085A850::store((int)preferredIP);
 
 	UnsignedInt preferredQRPort = 0;
 	AsciiString selectedQRPort = pref["GameSpyQRPort"];

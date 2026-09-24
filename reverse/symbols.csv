@@ -88932,3 +88932,16 @@ _ghiSetProxy,0x0087AD40,route=0x0087C900; retail patch-check calls this ILT to m
 ?b_000b6030@@YAXXZ,0x000B6030,gen-thunk body; target of retail E9 thunk 0x0002940B
 ?b_001a0390@@YAXXZ,0x001A0390,gen-thunk body; target of retail E9 thunk 0x00028155
 ?b_004cdf20@@YAXXZ,0x004CDF20,gen-thunk body; target of retail E9 thunk 0x000241CC
+?call@Rva00648E30Peer@@QAE?AW4SerialAuthResult@@XZ,0x00648E30,register-convention call of doCDKeyAuthentication from Thread_Function 0x0064FB90 (peer in ECX)
+_peerIsConnected,0x00857200,GameSpy Peer; ICF-folded 8-byte accessor called by Thread_Function 0x0064FB90
+_peerJoinStagingRoomA,0x00858B70,GameSpy Peer; six-argument cdecl call from Thread_Function 0x0064FB90
+_peerUpdateGame,0x00857690,GameSpy Peer; three-argument cdecl call from Thread_Function 0x0064FB90
+_peerStateChanged,0x00857EA0,GameSpy Peer; 5-byte tail jump to _piSendStateChanged called by Thread_Function 0x0064FB90
+_peerSetRoomKeysA,0x00858070,GameSpy Peer peerSetRoomKeys; six-argument cdecl call from Thread_Function 0x0064FB90 (ledger row there is the opaque dispatchIndexedValue)
+?bfmeGoAVA@BfmeThingAVA@@QAEXXZ,0x00035E31,REL32 pin from Thread_Function 0x0064FB90 (ILT call site)
+?lookup00646290@Rva00646290Owner@@QAEPAXH@Z,0x0002D718,REL32 pin from Thread_Function 0x0064FB90 (ILT call site)
+?bfmeStartAJ@BfmeSessionAJ@@QAEXPAX@Z,0x00034892,REL32 pin from Thread_Function 0x0064FB90 (ILT call site)
+?bfmeStopFP@BfmeOwnerFP@@QAEXPAX@Z,0x0003EB17,REL32 pin from Thread_Function 0x0064FB90 (ILT call site)
+?Rva00643BC0@PeerThreadClass@@AAEXPAX@Z,0x00045372,REL32 pin from Thread_Function 0x0064FB90 (ILT call site)
+?Rva00643C10@PeerThreadClass@@AAEXPAX@Z,0x00009359,REL32 pin from Thread_Function 0x0064FB90 (ILT call site)
+?doQuickMatch@PeerThreadClass@@AAEXPAX@Z,0x0003BFA7,REL32 pin from Thread_Function 0x0064FB90 (ILT call site)
