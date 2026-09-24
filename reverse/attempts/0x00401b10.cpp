@@ -46,8 +46,9 @@ void Rva00401B10Owner::update( unsigned int key, std::vector<int> *output )
 	while( self->m_current != 0 )
 	{
 		node = self->m_current;
-		if( node->m_key != key )
-			self->m_payload = node->m_payload;
+		if( node->m_key == key )
+			break;
+		self->m_payload = node->m_payload;
 		Rva00401B10Node *next = node->m_next;
 		self->m_current = next;
 	}
