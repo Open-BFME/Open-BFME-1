@@ -43,7 +43,8 @@ public:
 private:
 	volatile int m_vft;
 	volatile int m_zero;
-	volatile int m_08;
+	// Matched copy row and BFME parser diagnostic identify +0x08 as the name.
+	volatile int m_name;
 	volatile int m_filename;
 	volatile int m_volume;
 	volatile int m_volumeShift;
@@ -87,7 +88,7 @@ AudioEventInfo::AudioEventInfo()
 {
 	m_zero = 0;
 	m_vft = 0x010818CC;
-	m_08 = 0;
+	m_name = 0;
 	m_filename = 0;
 	m_volume = 0x42c80000;
 	m_volumeShift = 0;
