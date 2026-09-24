@@ -699,3 +699,7 @@ Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody_onVeterancyLevelChanged.
 Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionParseAction.cpp	AsciiString	c:\Users\Jonathan\Desktop\reverse bfme\Code\Libraries\Source\WWVegas\WWLib\string_base.h(81) : error C2953: 'StringBase' : template class has already been defined
 Code/GameEngine/Source/Common/Rva007E35E0StringStateInitialize.cpp	StringBase	build.sh exited 1
 Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody_createParticleSystems.cpp	AsciiString	Functions: FAIL 1/1
+Code/GameEngine/Source/GameClient/GUI/AptScreenFactories.cpp	UnicodeString	build.sh exited 1
+Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobbyConstructor.cpp	UnicodeString	build.sh exited 1
+Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenLanLobbyDestructor.cpp	AsciiString	build.sh exited 1
+Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsConstructor.cpp	UnicodeString	build.sh exited 1

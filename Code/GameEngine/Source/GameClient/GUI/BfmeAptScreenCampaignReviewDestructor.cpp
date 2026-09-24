@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // BfmeAptScreenCampaignReview destructor, retail 0x0050DBD0 (159 bytes).
@@ -30,7 +31,7 @@ public:
 	virtual ~_bfme_AptGameWindow();
 
 private:
-	char m_unmodelled[0x214];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 
 class BfmeAptFunctorMarker

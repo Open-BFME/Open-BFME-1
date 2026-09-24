@@ -1129,3 +1129,16 @@ The current `reverse/functions.csv` contains 160 rows with this exact
 21-byte signature; all 160 handler/FuncInfo maps parse through the tool.
 These are ledger rows, not a claim of 160 unique functions. Handler addresses
 and cleanup adjustments are evidence only, not names.
+
+## APT screen base storage view (layout cluster)
+
+`BfmeAptScreenBaseLayout<>` names the storage after the APT screen primary
+vptr. `BfmeAptScreenBaseConstructor.cpp` establishes its `0x214`-byte extent
+and field order; together with the vptr, the base subobject is `0x218` bytes.
+The template parameter preserves the existing typed `WinInstanceData` member
+in the base constructor, while layout-only TUs use an opaque `0x1A8`-byte
+member. This keeps the shared offsets usable without importing a destructor or
+claiming unproven names for opaque storage. `AptMainMenu`, ScoreScreen,
+SkirmishScreen and related GUI TUs now use the same view; the scoped build
+matched all 60 functions across the 15 migrated/defining TUs. The header is
+`Code/GameEngine/Include/GameClient/BfmeAptScreenBaseLayout.h`.

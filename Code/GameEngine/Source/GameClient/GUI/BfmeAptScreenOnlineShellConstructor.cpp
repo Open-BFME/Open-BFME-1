@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // OnlineShell constructor, RVA 0x0055D150, full 1060 bytes through ret4 at
 // 0x0055D571. Factory createAptScreenOnlineShell (0x00104C40) names the
@@ -131,7 +132,7 @@ public:
 	virtual void aptSlot12();
 	virtual void aptSlot13();
 private:
-	char m_unmodelled[0x214];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 class S4Owner
 {

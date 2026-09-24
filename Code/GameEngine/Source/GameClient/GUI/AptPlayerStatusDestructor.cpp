@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
@@ -27,7 +28,7 @@ public:
 	virtual ~_bfme_AptGameWindow();
 
 private:
-	unsigned char m_unmodelled[0x214];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 
 class InGameUI

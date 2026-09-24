@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
 //
@@ -129,7 +130,7 @@ public:
 		Rva0051EE20FunctorHolder callback );
 
 private:
-	char m_unmodelled[ 0x214 ];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 
 // the +0x218 registry subobject: a tracked 0x40-byte secondary base; novtable

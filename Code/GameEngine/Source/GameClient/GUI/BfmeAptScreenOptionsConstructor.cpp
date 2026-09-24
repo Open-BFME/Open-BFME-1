@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x00563370, full 1073 bytes. Named factory 104CC0 and destructor
 // 55E320 prove this is Options.apt. True primary/registry base ownership keeps
@@ -128,7 +129,7 @@ public:
 	virtual void aptSlot12();
 	virtual void aptSlot13();
 private:
-	char m_unmodelled[0x214];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 class S4Owner
 {

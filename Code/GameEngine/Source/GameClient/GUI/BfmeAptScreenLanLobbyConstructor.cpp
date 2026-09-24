@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // Retail 0x00519F90, 1193 bytes. LanLobby.apt factory and the matched
 // destructor at 5199A0 establish the three interfaces at +0/+218/+258,
@@ -127,7 +128,7 @@ public:
 	virtual void aptSlot12();
 	virtual void aptSlot13();
 private:
-	char m_unmodelled[0x214];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 class S4Owner
 {

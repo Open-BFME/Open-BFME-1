@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringinline
 // Retail 0x005199A0: BfmeAptScreenLanLobby destructor.
 
@@ -129,7 +130,7 @@ public:
 	virtual ~_bfme_AptGameWindow();
 
 private:
-	char m_unmodelled[0x214];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 
 class BfmeAptFunctorMarker

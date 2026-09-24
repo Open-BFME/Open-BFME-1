@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // BfmeAptScreenOptions destructor, retail 0x0055E320 (255 bytes).
@@ -25,7 +26,7 @@ public:
 	virtual ~_bfme_AptGameWindow();
 
 private:
-	char m_unmodelled[ 0x214 ];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 
 class BfmeAptFunctorMarker

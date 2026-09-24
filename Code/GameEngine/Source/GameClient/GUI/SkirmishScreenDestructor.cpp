@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // Retail 0x00579480: BfmeAptScreenSkirmish destructor.
 
 template <typename T> class StringBase
@@ -39,7 +40,7 @@ public:
 	virtual ~_bfme_AptGameWindow();
 
 private:
-	char m_unmodelled[ 0x214 ];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 
 class BfmeAptFunctorMarker

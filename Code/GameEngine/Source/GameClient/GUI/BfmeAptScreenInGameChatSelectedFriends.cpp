@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // cl: /DNDEBUG /MD /EHsc
 // stlport
 //
@@ -81,7 +82,7 @@ public:
 	virtual void aptSlot12();
 	virtual void aptSlot13();
 private:
-	unsigned char m_unmodelled[0x214];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 
 class S4Owner

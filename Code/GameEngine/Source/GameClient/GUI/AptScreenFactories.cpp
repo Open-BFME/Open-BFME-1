@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // stlport
 #include <list>
@@ -1462,7 +1463,7 @@ public:
 	virtual void slot0();
 
 private:
-	char m_unmodelled[ 0x214 ];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 
 // QuickMatchMenu, retail 0x001051C0, object 0x2B0 bytes.

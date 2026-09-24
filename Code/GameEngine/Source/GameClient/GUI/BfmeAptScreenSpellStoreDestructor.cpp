@@ -1,3 +1,4 @@
+#include "../../../Include/GameClient/BfmeAptScreenBaseLayout.h"
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // BfmeAptScreenSpellStore destructor, retail 0x00599330 (264 bytes).
@@ -33,7 +34,7 @@ public:
 	virtual ~_bfme_AptGameWindow();
 
 private:
-	char m_unmodelled[ 0x214 ];
+	BfmeAptScreenBaseLayout<> m_primaryStorage;
 };
 
 class BfmeAptFunctorMarker
