@@ -60,11 +60,13 @@ struct AudioEventInfo : public AudioEventInfoOpaqueBase
 		int m_volume;
 		int m_volumeShift;
 		int m_minVolume;
-		int m_word1c;
-		int m_word20;
+		// Matched BFME parsePitchShift at 0x000AFFF0 writes +0x1C and +0x20.
+		int m_pitchShiftMin;
+		int m_pitchShiftMax;
 		int m_word24;
-		int m_word28;
-		int m_word2c;
+		// Matched BFME parseDelay at 0x000AFF40 writes +0x28 and +0x2C.
+		int m_delayMin;
+		int m_delayMax;
 		int m_limit;
 		int m_priority;
 		int m_type;
@@ -92,11 +94,11 @@ AudioEventInfo::AudioEventInfo(const AudioEventInfo &other)
 	  m_volume(other.m_volume),
 	  m_volumeShift(other.m_volumeShift),
 	  m_minVolume(other.m_minVolume),
-	  m_word1c(other.m_word1c),
-	  m_word20(other.m_word20),
+	  m_pitchShiftMin(other.m_pitchShiftMin),
+	  m_pitchShiftMax(other.m_pitchShiftMax),
 	  m_word24(other.m_word24),
-	  m_word28(other.m_word28),
-	  m_word2c(other.m_word2c),
+	  m_delayMin(other.m_delayMin),
+	  m_delayMax(other.m_delayMax),
 	  m_limit(other.m_limit),
 	  m_priority(other.m_priority),
 	  m_type(other.m_type),
@@ -125,11 +127,11 @@ AudioEventInfo &AudioEventInfo::operator=(const AudioEventInfo &other)
 	m_volume = other.m_volume;
 	m_volumeShift = other.m_volumeShift;
 	m_minVolume = other.m_minVolume;
-	m_word1c = other.m_word1c;
-	m_word20 = other.m_word20;
+	m_pitchShiftMin = other.m_pitchShiftMin;
+	m_pitchShiftMax = other.m_pitchShiftMax;
 	m_word24 = other.m_word24;
-	m_word28 = other.m_word28;
-	m_word2c = other.m_word2c;
+	m_delayMin = other.m_delayMin;
+	m_delayMax = other.m_delayMax;
 	m_limit = other.m_limit;
 	m_priority = other.m_priority;
 	m_type = other.m_type;

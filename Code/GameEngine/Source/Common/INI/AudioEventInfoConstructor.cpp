@@ -48,11 +48,13 @@ private:
 	volatile int m_volume;
 	volatile int m_volumeShift;
 	volatile int m_minVolume;
-	volatile int m_1c;
-	volatile int m_20;
+	// Matched BFME parsePitchShift at 0x000AFFF0 writes +0x1C and +0x20.
+	volatile int m_pitchShiftMin;
+	volatile int m_pitchShiftMax;
 	One m_24;
-	volatile int m_28;
-	volatile int m_2c;
+	// Matched BFME parseDelay at 0x000AFF40 writes +0x28 and +0x2C.
+	volatile int m_delayMin;
+	volatile int m_delayMax;
 	volatile int m_limit;
 	Two m_priority;
 	volatile int m_type;
@@ -90,10 +92,10 @@ AudioEventInfo::AudioEventInfo()
 	m_volume = 0x42c80000;
 	m_volumeShift = 0;
 	m_minVolume = 0;
-	m_1c = 0;
-	m_20 = 0;
-	m_28 = 0;
-	m_2c = 0;
+	m_pitchShiftMin = 0;
+	m_pitchShiftMax = 0;
+	m_delayMin = 0;
+	m_delayMax = 0;
 	m_limit = 0x19;
 	m_priority.set();
 	m_type = 0;
