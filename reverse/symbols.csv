@@ -88950,7 +88950,6 @@ _peerSetRoomKeysA,0x00858070,GameSpy Peer peerSetRoomKeys; six-argument cdecl ca
 ?replaceBase@Rva008312E0String@@QAEAAV1@PAD000ABURva008312E0Tag@@@Z,0x00830CC0,forward replace called by 0x008312E0 (thiscall 5 args ret 0x14 returns this)
 ??0Rva006092D0State@@QAE@XZ,0x0000B89D,REL32 pin from ??0Rva006FC970 0x006FC970 (ILT); body 0x0060A000 installs vtable 0x01115AD0 like the matched ??1Rva006092D0State at 0x00609E30
 _peerGetLocalIP,0x00857460,GameSpy Peer; ICF-folded 8-byte accessor called by doQuickMatch 0x0064EFD0
-?handle@Rva0021D180Primary@@QAEXXZ,0x000480CC,REL32 pin from onContaining 0x0021D5D0 (ILT to the unnamed 0x0021D180 dump)
 ??1?$_Rb_tree@PAURva00442AB0Target@@PAU1@U?$_Identity@PAURva00442AB0Target@@@_STL@@U?$less@PAURva00442AB0Target@@@3@V?$allocator@PAURva00442AB0Target@@@3@@_STL@@QAE@XZ,0x0004A60B,REL32 pin from InGameUI::selectMatchingAcrossRegion 0x004481C0 (ILT to the pointer-set destructor body 0x004428E0)
 ?getTailEAN@BfmeLexEAN@@QAEPADXZ,0x000262BA,REL32 pin from rva002EC770ParseToken 0x002EC770 (ILT to the 0x0035EF40 accessor)
 ?rva002EC770ParseTokenEvents@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x0000668B,REL32 pin from rva002EC770ParseToken 0x002EC770 (ILT to the unnamed 0x002EA5D0 dump)
@@ -88969,3 +88968,4 @@ _peerGetLocalIP,0x00857460,GameSpy Peer; ICF-folded 8-byte accessor called by do
 ?rva0089EB30@@YA?AVBfmeStrVKI@@PBDABV1@@Z,0x0089EB30,address-derived cdecl prefix-plus-string helper called by bfmeApplyEVF 0x008C4FA0+117; full 285B decode: args hidden return +4 prefix +8 string ref +C; EAX=hidden return on rets +52 +86 +11C; plain ret
 ?rva0089EDF0@@YAXPAVBfmeStrVKI@@PBDZZ,0x0089EDF0,address-derived cdecl variadic string format helper called by bfmeApplyEVF 0x008C4FA0+199; full 256B decode: string object +4 format +8 va_list from +C passed to 0x009F6EC0; single plain ret +FF
 ?bfmeMeshHitTest1290@BfmePicker1284@@QAE_NPAUBfmeMesh1290@@PBUBfmeTransform2_1290@@HH@Z,0x008BAD90,address-derived thiscall mesh hit test; the 0x008BAEA0 call at +0xDA loads ECX with its receiver and pushes four dwords and the 0x008BAD90 body never reads ECX and returns AL through ret 0x10
+?body@Rva0021D180@@QAEXXZ,0x0021D180,address-derived helper identity; ECX receiver proven by exact caller

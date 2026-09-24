@@ -1,3 +1,4 @@
+// ?onContaining@Rva0021D5D0Secondary@@QAEXPAVObject@@_N@Z
 // cl: /O2 /DNDEBUG /MD /EHsc
 typedef bool Bool;
 
@@ -28,10 +29,10 @@ public:
 	void handle(int objectBits);
 };
 
-class Rva0021D180Primary
+class Rva0021D180
 {
 public:
-	void handle();
+	void body();
 };
 
 class Rva00202DF0Face;
@@ -91,7 +92,7 @@ void Rva0021D5D0Secondary::onContaining(Object *object, Bool selected)
 		((Gen0021CE60 *)primary())->handle((int)object);
 	} else {
 		if (containHead()->m_next == containHead()) {
-			((Rva0021D180Primary *)primary())->handle();
+			((Rva0021D180 *)primary())->body();
 			return;
 		}
 
