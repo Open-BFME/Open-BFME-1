@@ -1,5 +1,5 @@
 // ?rva002EC770ParseToken@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z
-// partial score=0.73 date=2026-09-21
+// partial score=0.99 date=2026-09-24
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // LuaScriptEngine::rva002EC770ParseToken, retail RVA 0x002EC770.
 // Sibling of LuaScriptEngineParseTokenFile.cpp's rva002EC840ParseTokenFile,
@@ -63,7 +63,7 @@ private:
 #pragma comment(linker, "/alternatename:?rva002EC770ParseTokenEvents@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z=?j_0000668b@@YAXXZ")
 #pragma comment(linker, "/alternatename:?rva002EC770ParseTokenEventList@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z=?j_0003ed33@@YAXXZ")
 
-// ?d_002ec770@@YAXXZ
+// ?rva002EC770ParseToken@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z
 void LuaScriptEngine::rva002EC770ParseToken(BfmeLexEAN *parser)
 {
 	char *tail = parser->getTailEAN();
@@ -72,29 +72,24 @@ void LuaScriptEngine::rva002EC770ParseToken(BfmeLexEAN *parser)
 		return;
 
 	Int status = ((XmlNameSlotList *)parser)->finish();
-	if (status == 0)
-		return;
-	if (--status != 0)
-		return;
-
-	const char *tag = parser->getTailEAN();
-
-	int cmpEvents = strcmp(tag, "Events");
-	if (cmpEvents == 0)
+	while (status != 0)
 	{
-		rva002EC770ParseTokenEvents(parser);
-		goto checkFinish;
+		if (--status != 0)
+			return;
+
+		const char *tag = parser->getTailEAN();
+		int cmpEvents = strcmp(tag, "Events");
+		if (cmpEvents == 0)
+		{
+			rva002EC770ParseTokenEvents(parser);
+		}
+		else
+		{
+			int cmpEventList = strcmp(tag, "EventList");
+			if (cmpEventList != 0)
+				return;
+			rva002EC770ParseTokenEventList(parser);
+		}
+		status = ((XmlNameSlotList *)parser)->finish();
 	}
-
-	if (strcmp(tag, "EventList") != 0)
-		return;
-
-	rva002EC770ParseTokenEventList(parser);
-
-checkFinish:
-	Int status2 = ((XmlNameSlotList *)parser)->finish();
-	if (status2 == 0)
-		return;
-	if (--status2 != 0)
-		return;
 }
