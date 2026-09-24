@@ -43,7 +43,7 @@ extern GameLogic *TheBfmeGameLogic;
 struct BfmeGameLogicIndicator
 {
 	unsigned char m_unreconstructed_000[0x114];
-	bool m_indicatorOverride;
+	bool m_unreconstructed_114;
 };
 
 class Drawable
@@ -63,7 +63,7 @@ void Drawable::setIndicatorColor(UnsignedInt color)
 {
 	m_indicatorColor = color;
 	Thing *object = getObject();
-	bool indicatorOn = reinterpret_cast<const BfmeGameLogicIndicator *>(TheBfmeGameLogic)->m_indicatorOverride
+	bool indicatorOn = reinterpret_cast<const BfmeGameLogicIndicator *>(TheBfmeGameLogic)->m_unreconstructed_114
 		|| (object && object->isAnyKindOf(KindOfMaskType(KindOfMaskType::kInit, 119, 179)));
 	bfmeSetIndicatorOn(indicatorOn);
 }
