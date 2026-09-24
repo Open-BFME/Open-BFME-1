@@ -2278,5 +2278,15 @@
   "after_sha256": "fbf4388109909b20d7e9157fd3ee1fc80d1603662098e1086f2775a1e4ef32a4",
   "evidence": "reverse/field_names.csv",
   "reason": "reverse/field_names.csv (UseHalfHeightMap row) and tools/name_oracle.py --class GlobalData --offset 0x4f (confidence 1.00) put m_useHalfHeightMap at GlobalData+0x4f, not +0xDCD; tools/name_oracle.py --class GlobalData --offset 0xdcd reports +0xDCD unwitnessed, so the offset-derived m_field0DCD replaces a contradicted guess"
+ },
+ {
+  "old_path": "reverse/attempts/0x00226a80.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Contain/OpenContainIsValidContainerFor.cpp",
+  "old_name": "Rva2225E0Filter",
+  "new_name": "Rva0039F0A0",
+  "before_sha256": "35d87ffe09aa96547e3d0e881407f02173995cea25aeed7eb7f554390118c557",
+  "after_sha256": "e3bec528f50db02142a529a265e557b949648aadd808fbd7f70da75d94c68b47",
+  "evidence": "reverse/symbols.csv",
+  "reason": "bfmeTest had no pin under any spelling; reverse/symbols.csv pins the PassengerFilter template test at ILT 0x0001B437 to Rva0039F0A0::accepts, so OpenContain::isValidContainerFor's qualified call through the m_filter subobject adopts that pinned class/method instead of the unpinned Rva2225E0Filter::bfmeTest spelling"
  }
 ]
