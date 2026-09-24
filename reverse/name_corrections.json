@@ -2198,5 +2198,25 @@
   "after_sha256": "3bee9445a182be8fc59c715ece13d70209fbc22f549f9aa7ce02a3b5d6075c6b",
   "evidence": "reverse/functions.csv",
   "reason": "reverse/functions.csv names the body at 0x00002E46 ?j_00002e46@@YAXXZ; the old spelling j_0002e46 matches no ledger row or pin, so the source uses the ledger name."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/RTS/Rva000EDDE0TeamMinSpeed.cpp",
+  "new_path": "Code/GameEngine/Source/Common/RTS/Rva000EDDE0TeamMinSpeed.cpp",
+  "old_name": "getMinSpeedRelativeTo",
+  "new_name": "rva000EDDE0",
+  "before_sha256": "4631528063092b93202e136ec4d0715d90543c245d8a5e5d9e1d194c9b86f628",
+  "after_sha256": "823472a6a69f0f5299988c7292dc9b1d5e51adfbcc2d58bf8cdbe1785fe53c64",
+  "evidence": "reverse/deleted_rows.csv",
+  "reason": "review of 0x000EDDE0: no caller (callers_of finds none for the body or its ILT 0x0002DA60), no vtable slot, string or Zero Hour twin proves getMinSpeedRelativeTo; the method keeps its address token"
+ },
+ {
+  "old_path": "reverse/attempts/0x000edde0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/RTS/Rva000EDDE0TeamMinSpeed.cpp",
+  "old_name": "getMinSpeedRelativeTo",
+  "new_name": "rva000EDDE0",
+  "before_sha256": "37954fe6094c0d48303911f74845178ea38888e5cc46caf835da82ee6ab759c9",
+  "after_sha256": "823472a6a69f0f5299988c7292dc9b1d5e51adfbcc2d58bf8cdbe1785fe53c64",
+  "evidence": "reverse/deleted_rows.csv",
+  "reason": "review of 0x000EDDE0: no caller (callers_of finds none for the body or its ILT 0x0002DA60), no vtable slot, string or Zero Hour twin proves getMinSpeedRelativeTo; the method keeps its address token"
  }
 ]

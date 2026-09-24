@@ -1,5 +1,5 @@
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// ?getMinSpeedRelativeTo@Rva000EDDE0Team@@QBEMPAVObject@@@Z
+// ?rva000EDDE0@Rva000EDDE0Team@@QBEMPAVObject@@@Z
 //
 // Address-derived: no proven owner or real name. `this` has the same
 // TeamMemberList-head-at-+0x0c layout the landed Rva000EDB30TeamIsIdle.cpp
@@ -99,14 +99,14 @@ private:
 class Rva000EDDE0Team
 {
 public:
-	Real getMinSpeedRelativeTo( Object *other ) const;
+	Real rva000EDDE0( Object *other ) const;
 
 private:
 	unsigned char m_beforeMemberList[ 0x0c ];
 	Object *m_memberList;
 };
 
-Real Rva000EDDE0Team::getMinSpeedRelativeTo( Object *other ) const
+Real Rva000EDDE0Team::rva000EDDE0( Object *other ) const
 {
 	Real otherSpeed = 999999.0f;
 	AIUpdateInterface *otherAi = other->getAIUpdateInterface();
