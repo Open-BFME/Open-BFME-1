@@ -508,34 +508,8 @@ void AITNGuardOuterState::loadPostProcess( void )
 }  // end loadPostProcess
 
 //--------------------------------------------------------------------------------------
-// ?onEnter@AITNGuardOuterState@@ present-unmatched
-StateReturnType AITNGuardOuterState::onEnter( void )
-{
-	if (getGuardMachine()->getGuardMode() == GUARDMODE_GUARD_WITHOUT_PURSUIT)
-	{
-		// "patrol" mode does not follow targets outside the guard area.
-		return STATE_SUCCESS;
-	}
-
-	Object* nemesis = TheGameLogic->findObjectByID(getGuardMachine()->getNemesisID()) ;
-	if (nemesis == NULL) 
-	{
-		DEBUG_LOG(("Unexpected NULL nemesis in AITNGuardOuterState.\n"));
-		return STATE_SUCCESS;
-	}
-
-	m_exitConditions.m_attackGiveUpFrame = TheGameLogic->getFrame() + TheAI->getAiData()->m_guardChaseUnitFrames;
-	m_attackState = newInstance(AIAttackState)(getMachine(), false, true, false, &m_exitConditions);
-	m_attackState->getMachine()->setGoalObject(nemesis);
-
-	StateReturnType returnVal = m_attackState->onEnter();
-	if (returnVal == STATE_CONTINUE) {
-		return STATE_CONTINUE;
-	}
-
-	// if we had no one to attack, we were successful, so go to the next state.
-	return STATE_SUCCESS;
-}
+// ?onEnter@AITNGuardOuterState@@UAE?AW4StateReturnType@@XZ
+// Body in AITNGuardOuterState_onEnter.cpp (slot 4).
 
 //--------------------------------------------------------------------------------------
 // ?update@AITNGuardOuterState@@ present-unmatched
