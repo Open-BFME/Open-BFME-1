@@ -1,10 +1,9 @@
-// ?d_002e6850@@YAXXZ
-// partial score=0.994 date=2026-09-20
+// ?ObjectPlaySound@@YAHPAUlua_State@@@Z
+// partial score=0.994 date=2026-09-24
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
-// Open-BFME7: the carved 0x002E6850 body is a Lua audio-event binding.  Its
-// caller and callee inventory prove the Lua argument checks, GameLogic
-// object lookup, AudioEventRTS construction, and result push, but no public
-// semantic name. Address-derived where identity is unknown.
+// The registration table pairs ILT 0x0003C3AD with ObjectPlaySound.
+// The body matches except that +0xA2/+0xA6 use ECX where retail uses EAX
+// for the temporary AsciiString address.
 
 struct lua_State;
 extern "C" int lua_gettop(lua_State *state);
@@ -86,8 +85,7 @@ public:
 #define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
 #define TheAudioClientUpdate (*(AudioClientUpdate **)0x012ED668)
 
-// ?Rva002E6850@@YAHPAUlua_State@@@Z
-int Rva002E6850(lua_State *state)
+int ObjectPlaySound(lua_State *state)
 {
 	if (lua_gettop(state) < 2 || TheAudioClientUpdate == 0)
 		return 0;
