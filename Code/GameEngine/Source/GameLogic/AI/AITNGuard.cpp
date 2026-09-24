@@ -869,44 +869,8 @@ AITNGuardAttackAggressorState::AITNGuardAttackAggressorState( StateMachine *mach
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?onEnter@AITNGuardAttackAggressorState@@ present-unmatched
-StateReturnType AITNGuardAttackAggressorState::onEnter( void )
-{
-	Object *obj = getMachineOwner();
-	ObjectID nemID = INVALID_ID;
-
-	if (obj->getBodyModule() && obj->getBodyModule()->getLastDamageInfo()->in.m_sourceID) {
-		nemID = obj->getBodyModule()->getLastDamageInfo()->in.m_sourceID;
-		getGuardMachine()->setNemesisID(nemID);	 
-
-	}
-
-	Object *nemesis = TheGameLogic->findObjectByID(getGuardMachine()->getNemesisID());
-	if (nemesis == NULL) 
-	{
-		DEBUG_LOG(("Unexpected NULL nemesis in AITNGuardAttackAggressorState.\n"));
-		return STATE_SUCCESS;
-	}
-
-	Player *ownerPlayer = getMachineOwner()->getControllingPlayer();
-	TunnelTracker *tunnels = NULL;
-	if (ownerPlayer) {
-		tunnels = ownerPlayer->getTunnelSystem();
-	}
-	if (tunnels) tunnels->updateNemesis(nemesis);
-
-	m_exitConditions.m_attackGiveUpFrame = TheGameLogic->getFrame() + TheAI->getAiData()->m_guardChaseUnitFrames;
-	m_attackState = newInstance(AIAttackState)(getMachine(), true, true, false, &m_exitConditions);
-	m_attackState->getMachine()->setGoalObject(nemesis);
-
-	StateReturnType returnVal = m_attackState->onEnter();
-	if (returnVal == STATE_CONTINUE) {
-		return STATE_CONTINUE;
-	}
-
-	// if we had no one to attack, we were successful, so go to the next state.
-	return STATE_SUCCESS;
-}
+// ?onEnter@AITNGuardAttackAggressorState@@UAE?AW4StateReturnType@@XZ
+// Body in AITNGuardAttackAggressorState_onEnter.cpp (slot 4).
 
 //-------------------------------------------------------------------------------------------------
 // ?update@AITNGuardAttackAggressorState@@ present-unmatched
