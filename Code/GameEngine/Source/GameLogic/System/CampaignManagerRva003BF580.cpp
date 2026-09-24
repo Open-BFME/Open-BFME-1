@@ -1,5 +1,3 @@
-// ?rva003BF580@CampaignManager@@QAE?AVAsciiString@@H@Z
-// partial score=0.99 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x003BF580/139: source-shape bank, not a verified conversion.
 // 0x0052B8A0 matched caller proves the CampaignManager receiver, hidden
