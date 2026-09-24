@@ -29,7 +29,7 @@ with tarfile.open(tgz,'r:gz') as tf:
 # Bundle root itself contains Vc7.
 os.environ['VC71_ROOT']=str(sp1)
 # build.vc71_root reads env at call time; compile unchanged source.
-r1=evaluate(('sp1_candidate9',seed,None),details=True)
+r1=evaluate(('sp1_candidate9',seed,None))
 print('SP1',json.dumps({k:r1.get(k) for k in ('size','diff_count','cost','offsets','code_sha256','raw_exact')}),flush=True)
 # Strict relocation-resolved verification when shape is promising.
 if r1.get('returncode')==0:
