@@ -1,6 +1,6 @@
-// ?rva00234E60@Rva00234E60HordeContain@@QAEXXZ
-// partial score=0.55 date=2026-09-20
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep
+// ?d_00234e60@@YAXXZ
+// partial score=0.6 date=2026-09-23
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep
 // stlport
 // Open-BFME: address-derived HordeContain formation refresh body, retail 0x00234E60.
 
@@ -10,16 +10,10 @@
 #define _STLP_USE_NAMESPACES 1
 #include <list>
 #include <math.h>
+#include "coord.h"
 
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
-
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
 
 class Object;
 class LocomotorSet;
@@ -167,8 +161,7 @@ void Rva00234E60HordeContain::rva00234E60()
 		return;
 	self->m_flagE8 = enabled;
 
-	volatile Coord3D destination = owner->m_position;
-	const Coord3D *ownerPosition = &owner->m_position;
+	Coord3D destination = owner->m_position;
 	for (_STL::list<Object *>::iterator it = self->m_members.begin();
 		it != self->m_members.end(); ++it)
 	{
@@ -179,17 +172,16 @@ void Rva00234E60HordeContain::rva00234E60()
 	}
 
 	TheAI->pathfinder()->adjustDestination(owner, *ai->getLocomotorSet(),
-		(Coord3D *)&destination, 0);
+		&destination, 0);
 
 	Coord3D delta;
-	delta.x = ownerPosition->x - destination.x;
-	delta.y = ownerPosition->y - destination.y;
-	delta.z = ownerPosition->z - destination.z;
-	float distance = (float)sqrt(delta.x * delta.x + delta.y * delta.y
-		+ delta.z * delta.z);
+	delta.x = owner->m_position.x - destination.x;
+	delta.y = owner->m_position.y - destination.y;
+	delta.z = owner->m_position.z - destination.z;
+	float distance = delta.length();
 	if (distance > *(const float *)0x01075C74 &&
 		distance < *(const float *)0x0109A028)
-		owner->setPosition((Coord3D *)&destination);
+		owner->setPosition(&destination);
 
 	#line 2249 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Contain\\HordeContain\\HordeContain.cpp"
 	TheAI->pathfinder()->updateGoal(owner, &owner->m_position,
