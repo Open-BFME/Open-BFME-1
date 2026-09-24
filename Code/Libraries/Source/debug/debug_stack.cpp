@@ -342,8 +342,8 @@ bool DebugStackwalk::IsOldDbghelp(void)
   return g_oldDbghelp;
 }
 
-// ?StackWalk@DebugStackwalk@@SAHAAVSignature@1@PAU_CONTEXT@@@Z present-unmatched
-int DebugStackwalk::StackWalk(Signature &sig, struct _CONTEXT *ctx)
+// ?StackWalk@DebugStackwalk@@SAHAAVSignature@1@PAU_CONTEXT@@_N@Z present-unmatched
+int DebugStackwalk::StackWalk(Signature &sig, struct _CONTEXT *ctx, bool)
 {
   InitDbghelp();
 

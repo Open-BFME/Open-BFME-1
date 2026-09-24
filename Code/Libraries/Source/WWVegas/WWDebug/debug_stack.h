@@ -159,7 +159,7 @@ public:
     \param ctx processor context, if NULL then use current address
     \return number of addresses found
   */
-  static int StackWalk(Signature &sig, struct _CONTEXT *ctx=0);
+  static int StackWalk(Signature &sig, struct _CONTEXT *ctx=0, bool useFallback=true);
 };
 
 /**
