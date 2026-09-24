@@ -1898,5 +1898,15 @@
   "after_sha256": "1b2d5d453ec344b2e737f1178739345d90c50489168e711acb50af2c7b168aa6",
   "evidence": "reverse/symbols.csv",
   "reason": "reverse/symbols.csv pins the global at 0x012F19E8 as ?Rva00579160TheManager@@3PAURva00579160Manager@@A; the bank's g_rva00579160TheManager spelling matches no pinned symbol, so the body references the pinned name."
+ },
+ {
+  "old_path": "reverse/attempts/0x008cf030.cpp",
+  "new_path": "reverse/attempts/0x008cf030.cpp",
+  "old_name": "g_rva8CF030Allocate",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "0e5d218566a3133ae8b1e6a6f9f7b75e7ed26968ff5d82c10b4f70b3b3b0667a",
+  "after_sha256": "0b88dc4beaa7f2406905ea59a7a694b00cb111d9d3029935aee9a787a7383e61",
+  "evidence": "reverse/symbols.csv",
+  "reason": "reverse/symbols.csv pins ?Rva008C5D70Alloc@@3P6APAXI@ZA at 0x01337828; the old spelling g_rva8CF030Allocate matches no pinned symbol, so the source uses the pinned name."
  }
 ]
