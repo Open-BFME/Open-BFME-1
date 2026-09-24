@@ -2338,5 +2338,65 @@
   "after_sha256": "dffcf4de1515312e16751aa0cf7f8974a665f192bddf886d74c4ec3fc27b215d",
   "evidence": "reverse/name_oracle_baseline.csv",
   "reason": "review of 0x00177A90: name_oracle reports GameLogic+0x1A0 and +0x3C not witnessed (no BFME witness, the desync-log name had no source), so they take offset names; Object+0x38 is witnessed as Thing m_cachedPos"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "ParticleEmitterDefClass",
+  "new_name": "Rva002B6860",
+  "before_sha256": "49678cc11c39ee5ef0eb19a1e83f8a19ed910a63888b62e936d2a2f0d8069f67",
+  "after_sha256": "0268df0467b590cdeff8a285d4fb91e735ae0b9f8897cc8553fb70be37d27c02",
+  "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+  "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x002B6860 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "ParticleEmitterDefClass",
+  "new_name": "Rva0035F090",
+  "before_sha256": "55c6e797fb40782828d06468b2766431a47c8015da57eea125193bed9e43f64f",
+  "after_sha256": "3fdef3212aebf14a9307befd8fa5d74857484bfb2ed72c9258394ec9c0e452ad",
+  "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+  "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x0035F090 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "ParticleEmitterDefClass",
+  "new_name": "Rva0021A220",
+  "before_sha256": "7df91b7ae3a1767e0d3379a4ec5657ec524f525e9ea9434b5abefc92e9c00d90",
+  "after_sha256": "786a5de55c407ea8b1e9f5490fcaa2f07ce3af1ac1aa4cc549e9a9f3f401b91e",
+  "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+  "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x0021A220 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "ParticleEmitterDefClass",
+  "new_name": "Rva001065F0",
+  "before_sha256": "808cdc14d9ed0f0abc27163c1512538a8323c3cf352cf6dc77da9b1a93e6c0dd",
+  "after_sha256": "f1fb3c8ef632f25a5a8e14e981fd8ae205d0fa9fc8d60a463dbcd0d33230cc51",
+  "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+  "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x001065F0 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "ParticleEmitterDefClass",
+  "new_name": "Rva0026F930",
+  "before_sha256": "af9fa5279d901506cdc31f8a50086444448d41b041cd624b270613b9f56da5eb",
+  "after_sha256": "2ed86eaeafedec31ff53c33f3c7d7a6af32f66a62d7ab7638f62eebc88229778",
+  "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+  "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x0026F930 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "ParticleEmitterDefClass",
+  "new_name": "Rva00253D20",
+  "before_sha256": "c06348e987a581e9252a13557ecc3a90f936d7cec48d98e80f1682e6cbb91662",
+  "after_sha256": "99b41d36c156a72a9ee2b4ee36c5aae5becea8fabf2c8ed6116fd9743251ecc3",
+  "evidence": "reverse/identity_evidence/particle-emitter-def-vtable.md",
+  "reason": "The ParticleEmitterDefClass setter this row named is the vtable 0x00D3F908 slot body; 0x00253D20 is not referenced from that vtable, so it keeps an address-derived name until its own identity is recovered."
  }
 ]
