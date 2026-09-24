@@ -1,5 +1,5 @@
 // ?privateMoveToObject@AIUpdateInterface@@MAEXPAVObject@@W4CommandSourceType@@@Z
-// partial score=0.92 date=2026-09-04
+// partial score=0.971 date=2026-09-24
 class Object;
 
 enum CommandSourceType
@@ -57,6 +57,17 @@ public:
 	virtual void slot34() = 0;
 	virtual void setGoalObject(const Object *object) = 0;
 };
+
+struct BFMEGoalObjectMachineVtable
+{
+	void *slots00[5];
+	void (__fastcall *clear)(BFMEGoalObjectMachine *self);
+	void *slots18[2];
+	void (__fastcall *setState)(BFMEGoalObjectMachine *self, BFMEGoalObjectMachineVtable *table, unsigned int state);
+	void *slots24[5];
+	void (__fastcall *setGoalObject)(BFMEGoalObjectMachine *self, BFMEGoalObjectMachineVtable *table, const Object *object);
+};
+#define MVT(m) (*(BFMEGoalObjectMachineVtable **)(m))
 
 struct BFMEAIUpdateFields
 {
@@ -118,7 +129,7 @@ void AIUpdateInterface::privateMoveToObject(Object *obj, CommandSourceType cmdSo
 	if (!accepted)
 		return;
 	getMachine()->clear();
-	getMachine()->setGoalObject(obj);
+	{ BFMEGoalObjectMachine *m = getMachine(); MVT(m)->setGoalObject(m, MVT(m), obj); }
 	m_bfmeLastCommandSource = cmdSource;
 	getMachine()->setState(0x3c);
 }

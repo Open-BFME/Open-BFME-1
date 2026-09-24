@@ -1,5 +1,5 @@
 // ?rva0024ECA0@Rva0024ECA0Owner@@QAEXPAURva0024ECA0Object@@@Z
-// partial score=0.96 date=2026-09-23
+// partial score=0.976 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: address-derived method spelling. Retail 0x0024ECA0, 126B, SlaughterHordeContain's
 // +0x20 secondary-interface slot 34 (+0x88, same slot HordeGarrisonContain
@@ -85,6 +85,18 @@ public:
 
 #undef BFME_SLOT
 
+struct Rva0024ECA0ContainerVtable
+{
+	void *slots17[17];
+	void (__fastcall *bfmeSlot44)(Rva0024ECA0Container *self, Rva0024ECA0ContainerVtable *table);
+	void *slots18[9];
+	int (__fastcall *bfmeSlot6C)(Rva0024ECA0Container *self, Rva0024ECA0ContainerVtable *table, Rva0024ECA0Object *obj);
+	void *slot28;
+	void (__fastcall *bfmeSlot74)(Rva0024ECA0Container *self, Rva0024ECA0ContainerVtable *table, Rva0024ECA0Object *obj);
+	void (__fastcall *bfmeSlot78)(Rva0024ECA0Container *self, Rva0024ECA0ContainerVtable *table, Rva0024ECA0Object *obj);
+};
+#define VT(c) (*(Rva0024ECA0ContainerVtable **)(c))
+
 class Rva0024ECA0Owner
 {
 public:
@@ -110,10 +122,10 @@ void Rva0024ECA0Owner::rva0024ECA0( Rva0024ECA0Object *obj )
 		return;
 	}
 
-	if( !container->bfmeSlot6C( obj ) &&
+	if( !VT(container)->bfmeSlot6C( container, VT(container), obj ) &&
 			reinterpret_cast<BfmeThingAIA *>( obj )->bfmeAskAIA( 0x6c ) )
 	{
-		container->bfmeSlot74( obj );
+		VT(container)->bfmeSlot74( container, VT(container), obj );
 	}
 	else
 	{
