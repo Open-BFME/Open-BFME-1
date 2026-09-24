@@ -214,3 +214,29 @@ def test_naked_queue_quick_look_remains_untried(log):
     selected, meta = queue.select_candidate([candidate])
     assert selected is candidate
     assert meta["exhausted"] is False
+
+
+def test_naked_queue_skips_latest_short_boundary_suspect_across_names(log):
+    placeholder = "?d_00497140@@YAXXZ"
+    log.write_text(row("blocked", "t=3min starts inside another live body",
+                       symbol=SYM))
+    candidate = {"symbol": placeholder, "rva": hex(RVA)}
+    assert eligibility.attempt_counts().get(RVA, 0) == 0
+    assert eligibility.boundary_suspect(RVA)
+    assert queue.drop_logged([candidate]) == ([], 1)
+
+
+def test_naked_queue_reopens_after_later_nonboundary_verdict(log):
+    placeholder = "?d_00497140@@YAXXZ"
+    log.write_text(row("blocked", "t=3min starts inside another live body",
+                       symbol=SYM) + row("partial", "new entry witness and banked body",
+                                         symbol=placeholder))
+    candidate = {"symbol": placeholder, "rva": hex(RVA)}
+    assert not eligibility.boundary_suspect(RVA)
+    assert queue.drop_logged([candidate]) == ([candidate], 0)
+
+
+def test_naked_queue_does_not_hide_other_rva_after_boundary_finding(log):
+    log.write_text(row("blocked", "t=3min starts inside another live body"))
+    candidate = {"symbol": SYM, "rva": hex(RVA + 16)}
+    assert queue.drop_logged([candidate]) == ([candidate], 0)

@@ -288,6 +288,7 @@ def drop_logged(candidates):
     so those are kept and tagged `deferred_attempts` for select_candidate to
     order behind untried work. See tools/re_log.py."""
     latest = eligibility.latest_verdicts()
+    records = re_log.latest_records()
     counts = eligibility.attempt_counts()
     kept, dropped = [], 0
     for item in candidates:
@@ -301,6 +302,9 @@ def drop_logged(candidates):
             # A renamed body is still the same retail address. An exact-RVA
             # verdict under another name outranks older placeholder evidence.
             if eligibility.retired(rva, latest):
+                dropped += 1
+                continue
+            if eligibility.boundary_suspect(rva, records):
                 dropped += 1
                 continue
             if eligibility.deferred(rva, latest):
