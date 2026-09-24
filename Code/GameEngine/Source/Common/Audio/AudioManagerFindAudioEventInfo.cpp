@@ -1,7 +1,7 @@
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
-// ?findAudioEventInfo@AudioManager@@UAE?AVAudioEventInfoRef@@ABVAsciiString@@@Z
+// ?findAudioEventInfo@AudioManager@@UBE?AVAudioEventInfoRef@@ABVAsciiString@@@Z
 // Retail 0x006AEA10: lock the BFME audio-event table and return a retained
 // AudioEventInfoRef for one event name (empty when the name is unknown).
 // Identity: the body's ILT 0x000153D9 sits in the AudioManager vtable
@@ -9,8 +9,9 @@
 // right after newAudioEventInfo (+0x110, 0x006AE710) and addAudioEventInfo
 // (+0x114, 0x006AE910) -- the Zero Hour GameAudio.h declaration order -- and
 // the matched addAudioEventInfo calls +0x118 where Zero Hour calls
-// findAudioEventInfo.  The returned handle has a destructor, which is why
-// retail zeroes the return-value construction flag before the mutex guard.
+// findAudioEventInfo (const, as in Zero Hour GameAudio.h).  The returned
+// handle has a destructor, which is why retail zeroes the return-value
+// construction flag before the mutex guard.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
@@ -109,7 +110,7 @@ struct Rva006AEA10Node
 class AudioManager
 {
 public:
-	virtual AudioEventInfoRef findAudioEventInfo(const AsciiString &eventName);
+	virtual AudioEventInfoRef findAudioEventInfo(const AsciiString &eventName) const;
 
 private:
 	char m_pad04[0x6c];
@@ -118,10 +119,11 @@ private:
 	void *m_mutex;
 };
 
-AudioEventInfoRef AudioManager::findAudioEventInfo(const AsciiString &eventName)
+AudioEventInfoRef AudioManager::findAudioEventInfo(const AsciiString &eventName) const
 {
 	Rva006AEA10MutexGuard guard(m_mutex);
-	Rva006A7AD0Map::const_iterator it = m_events.find(eventName);
+	Rva006A7AD0Map::const_iterator it;
+	it = m_events.find(eventName);
 	Rva006AEA10Node *node = *(Rva006AEA10Node **)&it;
 	if (node == 0)
 		return AudioEventInfoRef();
