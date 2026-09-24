@@ -2098,5 +2098,45 @@
   "after_sha256": "72464a8fe88bceaa0a8d8968fbab4ba757de4eca8e75606ceac6176110814460",
   "evidence": "reverse/identity_evidence/0x003c8030-opaque-bank.md",
   "reason": "The refcount-release behavior is proved, but no caller or class evidence proves the old lexical function name. The new name keeps the address token for this partial bank."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/BfmeConv1052.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionManager_Rva003C8300.cpp",
+  "old_name": "BfmeD1052",
+  "new_name": "Rva003C8300Pair",
+  "before_sha256": "aa6e62bb52671c3af0597f280c0ede225c0907793162b6cb98886eb7f241491a",
+  "after_sha256": "255bce5441a12fb202720b74967680f0be2e0be28b0ddc90865e2fab65960dd6",
+  "evidence": "reverse/identity_evidence/0x003c8300-manager-region-return.md",
+  "reason": "Name alignment across the source move is false: BfmeD1052 remains in the old file for its unrelated 0x00221870 row. Rva003C8300Pair is the new wrapper's two-word input, not a rename of BfmeD1052."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/BfmeConv1052.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionManager_Rva003C8300.cpp",
+  "old_name": "bfmeGo1052J",
+  "new_name": "j_00046150",
+  "before_sha256": "aa6e62bb52671c3af0597f280c0ede225c0907793162b6cb98886eb7f241491a",
+  "after_sha256": "255bce5441a12fb202720b74967680f0be2e0be28b0ddc90865e2fab65960dd6",
+  "evidence": "reverse/identity_evidence/0x003c8300-manager-region-return.md",
+  "reason": "Name alignment across the moved source is false: j_00046150 is an existing address-only ILT called by the wrapper, not a replacement method. The actual wrapper identity correction is recorded separately."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/BfmeConv1052.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldRegionManager_Rva003C8300.cpp",
+  "old_name": "bfmeGo1052J",
+  "new_name": "rva003C8300",
+  "before_sha256": "aa6e62bb52671c3af0597f280c0ede225c0907793162b6cb98886eb7f241491a",
+  "after_sha256": "255bce5441a12fb202720b74967680f0be2e0be28b0ddc90865e2fab65960dd6",
+  "evidence": "reverse/identity_evidence/0x003c8300-manager-region-return.md",
+  "reason": "The old synthetic method is physically a LivingWorldRegionManager thiscall wrapper returning the matched manager lookup's region pointer. The matched caller forwards this and consumes EAX; lexical method spelling is unknown, so the address token is preserved."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "bfmeGo1052J",
+  "new_name": "rva003C8300",
+  "before_sha256": "8c6d3d53209be24ac446d06f1e7053e20c4245602d07bf21d29eb5568fa7731f",
+  "after_sha256": "fc8a6f51132371e1bb81d493034c4b342e4c71e3e46d44f0d789aa1176d71281",
+  "evidence": "reverse/identity_evidence/0x003c8300-manager-region-return.md",
+  "reason": "The 46-byte row's pointer return and manager receiver are proved by the matched 0x003C8160 callee and the 0x003CB290 to 0x003C83E0 caller chain. The corrected ledger name retains 0x003C8300 because the lexical method name remains unknown."
  }
 ]

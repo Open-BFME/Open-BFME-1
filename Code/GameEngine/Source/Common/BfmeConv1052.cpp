@@ -138,37 +138,6 @@ void BfmeH1052::bfmeGo1052H(BfmeI1052 *p)
 	bfmeDo1052(0, p, p->bfmeFind1052(g_bfmeName1052, 0));
 }
 
-class BfmeK1052
-{
-public:
-	virtual void bfmeVK01052();
-	virtual void bfmeVK11052();
-	virtual void bfmeVK21052();
-	virtual void bfmeVK31052();
-	virtual void bfmeVK41052();
-	virtual void bfmeVK51052();
-	virtual void bfmeVK61052();
-	virtual void bfmeVK71052();
-	virtual void bfmeQuery1052(int a, int *t);
-};
-
-extern BfmeK1052 *g_bfmeK1052;
-
-class BfmeJ1052
-{
-public:
-	void bfmeGo1052J(int a);
-	void bfmeUse1052(int *t);
-};
-
-void BfmeJ1052::bfmeGo1052J(int a)
-{
-	int t[3];
-
-	g_bfmeK1052->bfmeQuery1052(a, t);
-	bfmeUse1052(t);
-}
-
 extern "C" void bfmeHook1052(void);
 
 struct BfmeM1052
