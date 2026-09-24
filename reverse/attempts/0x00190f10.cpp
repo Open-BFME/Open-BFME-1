@@ -1,5 +1,5 @@
 // ?rva00190f10@Rva00190F10Owner@@QAE_NPAXPAVRva00190F10Arg@@@Z
-// partial score=0.9522613065326633 date=2026-09-23
+// partial score=0.957 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 // Retail 0x00190F10, 398 bytes.
@@ -157,8 +157,9 @@ bool Rva00190F10Owner::rva00190f10(void *argA, Rva00190F10Arg *argB)
 
 	while (*m_scanCursor)
 	{
-		if ((*m_scanCursor)->getID() > m_id)
-			m_id = (*m_scanCursor)->getID();
+		BfmeOwnVVB *cur = *m_scanCursor;
+		if (cur->getID() > m_id)
+			m_id = cur->getID();
 		m_scanCursor = *m_scanCursor ? &(*m_scanCursor)->m_nodes : 0;
 	}
 
