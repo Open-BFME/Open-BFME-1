@@ -1,13 +1,16 @@
-// ?rva0023BE60@Rva0023BE60Receiver@@QAE_NPAVObject@@@Z
-// partial score=0.968 date=2026-09-24
 // cl: /DNDEBUG /MD /EHs-c-
+// Retail 0x0023BE60 (189 bytes, thiscall, ret 4). Reached through ILT 0x00004A11
+// from the HordeContain.cpp member bodies 0x00245420 and 0x0024E310 (and 0x002417E0),
+// which pass their own receiver in ECX plus one Object*. Owner class and method
+// name are not proven, so both keep the address token. AI+0x0C is ZH m_pathfinder;
+// the pathfinder query at 0x003E4680 (ILT 0x00027AB6, ret 12) is address-derived.
 
 struct Coord3D { float x, y, z; };
 typedef unsigned int ObjectID;
 
 class Overridable {
 public:
-	Overridable *getFinalOverride() const;
+	const Overridable *getFinalOverride() const;
 	char pad000[4];
 	Overridable *next;
 	char pad008[0xC8 - 8];
@@ -56,7 +59,7 @@ public:
 
 bool Rva0023BE60Receiver::rva0023BE60(Object *target)
 {
-	Overridable *targetData = target->runtime;
+	const Overridable *targetData = target->runtime;
 	if (targetData && targetData->next)
 		targetData = targetData->next->getFinalOverride();
 	if (targetData->flagsC8 & 0x800)
@@ -66,28 +69,26 @@ bool Rva0023BE60Receiver::rva0023BE60(Object *target)
 	Rva003E4680Pathfinder *pathfinder = TheAI->pathfinder;
 	Object *owner = objectAt8;
 	int count = pathfinder->rva003E4680(target, &target->position, nearby);
-	ObjectID ownerId;
-	GameLogic *logic;
 	int i = 0;
-	if (count <= 0) goto done;
-	ownerId = owner->id;
-	logic = TheBfmeGameLogic;
-	for (; i < count; ++i) {
-		ObjectID id = nearby[i];
-		if (id == ownerId)
-			continue;
-		Object *candidate = logic->findObjectByID(id);
-		if (!candidate)
+	if (count > 0) {
+		ObjectID ownerId = owner->id;
+		GameLogic *logic = TheBfmeGameLogic;
+		do {
+			ObjectID id = nearby[i];
+			if (id == ownerId)
+				continue;
+			Object *candidate = logic->findObjectByID(id);
+			if (!candidate)
+				return false;
+			if (candidate->owner == owner)
+				continue;
+			const Overridable *candidateData = candidate->runtime;
+			if (candidateData && candidateData->next)
+				candidateData = candidateData->next->getFinalOverride();
+			if (candidateData->flagsD4 & 0x1000)
+				continue;
 			return false;
-		if (candidate->owner == owner)
-			continue;
-		Overridable *candidateData = candidate->runtime;
-		if (candidateData && candidateData->next)
-			candidateData = candidateData->next->getFinalOverride();
-		if (candidateData->flagsD4 & 0x1000)
-			continue;
-		return false;
+		} while (++i < count);
 	}
-	done:
 	return true;
 }
