@@ -1,11 +1,12 @@
-// ?_writeOutINI@@YAXXZ
-// partial score=1.0 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <algorithm>
+// Keep the disputed retail iterator helper under its address-derived name.
+#define _M_skip_to_next Rva003442B0_skipToNext
 #include <hash_map>
+#undef _M_skip_to_next
 #include <stdio.h>
 #include <vector>
 
@@ -66,6 +67,11 @@ namespace rts
 
 typedef _STL::hash_map<AsciiString, FXParticleSystem::ParticleSystemTemplate *,
 	rts::hash<AsciiString>, _STL::equal_to<AsciiString> > TemplateMap;
+class CommandButton;
+// Retail passes the iterator in ECX and stores the returned node from EAX.
+// Both STLport iterators hold the current node and hashtable pointers.
+typedef _STL::hash_map<AsciiString, const CommandButton *,
+	rts::hash<AsciiString>, _STL::equal_to<AsciiString> > CommandButtonMap;
 
 
 extern void j_000360f2();
@@ -98,6 +104,7 @@ public:
 
 extern ParticleSystemManager *TheParticleSystemManager;
 
+// The FXParticleSystem.ini and .BAK literals identify the writer.
 __declspec(noinline) void _writeOutINI()
 {
 	const int maxFileLength = 128;
@@ -145,7 +152,7 @@ __declspec(noinline) void _writeOutINI()
 	_STL::vector<Gen_t_00341960_m4pod> templates;
 	TemplateMap::iterator begin(TheParticleSystemManager->beginParticleSystemTemplate());
 	TemplateMap::iterator end(TheParticleSystemManager->endParticleSystemTemplate());
-	for (; begin != end; ++begin)
+	for (; begin != end; ++(*(CommandButtonMap::iterator *)&begin))
 		templates.push_back(*(Gen_t_00341960_m4pod *)&(*begin).second);
 
 	_STL::sort((int*)templates.begin(), (int*)templates.end(), Q4Sort0034BFC0());
