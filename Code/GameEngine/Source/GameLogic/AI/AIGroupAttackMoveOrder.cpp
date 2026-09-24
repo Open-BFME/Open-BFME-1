@@ -173,13 +173,13 @@ class AIGroup
 public:
 	char isReady();
 	void prepSpecial();
-	bool checkSpecial(const Coord3D *pos, int a);
-	void prepFollow(CommandSourceType cmdSource, int flag);
-	void sendSpecial(const Coord3D *pos, int a, int b, int d, int zero);
+	bool checkSpecial(const Coord3D *position, int commandSource);
+	void prepFollow(CommandSourceType commandSource, int flag);
+	void sendSpecial(const Coord3D *position, int commandSource, int b, int d, int zero);
 
-	bool tryGroupSpecial(const Coord3D *pos, int a, int b, int c, int d);
-	void groupAttackMoveToPosition(const Coord3D *pos, int maxShotsToFire,
-		CommandSourceType cmdSource);
+	bool tryGroupSpecial(const Coord3D *position, int commandSource, int b, int c, int d);
+	void groupAttackMoveToPosition(const Coord3D *position, int maxShotsToFire,
+		CommandSourceType commandSource);
 
 private:
 	unsigned char m_unmodelled_000[4];
@@ -188,7 +188,7 @@ private:
 
 // ?tryGroupSpecial@AIGroup@@QAE_NPBUCoord3D@@HHHH@Z
 // Also reached from applyOrFallback (0x0015A190) through the same ILT 0x00046876.
-bool AIGroup::tryGroupSpecial(const Coord3D *pos, int a, int b, int c, int d)
+bool AIGroup::tryGroupSpecial(const Coord3D *position, int commandSource, int b, int c, int d)
 {
 	if (isReady())
 	{
@@ -216,11 +216,11 @@ bool AIGroup::tryGroupSpecial(const Coord3D *pos, int a, int b, int c, int d)
 			return false;
 
 		prepSpecial();
-		if (!checkSpecial(pos, a))
+		if (!checkSpecial(position, commandSource))
 			return false;
 
-		prepFollow((CommandSourceType)a, b);
-		sendSpecial(pos, a, b, d, 0);
+		prepFollow((CommandSourceType)commandSource, b);
+		sendSpecial(position, commandSource, b, d, 0);
 		return true;
 	}
 
@@ -228,13 +228,13 @@ bool AIGroup::tryGroupSpecial(const Coord3D *pos, int a, int b, int c, int d)
 }
 
 // ?groupAttackMoveToPosition@AIGroup@@QAEXPBUCoord3D@@HW4CommandSourceType@@@Z
-void AIGroup::groupAttackMoveToPosition(const Coord3D *pos, int maxShotsToFire,
-	CommandSourceType cmdSource)
+void AIGroup::groupAttackMoveToPosition(const Coord3D *position, int maxShotsToFire,
+	CommandSourceType commandSource)
 {
 	unsigned int count = m_memberList.size();
 	float countF = (float)count;
-	const Coord3D *dest = pos;
-	CommandSourceType src = cmdSource;
+	const Coord3D *dest = position;
+	CommandSourceType src = commandSource;
 	if (countF > 1.0f)
 	{
 		TAiData *data = TheAI->getAiData();
