@@ -96,7 +96,7 @@ static NameKeyType buttonMapStartPositionID[MAX_SLOTS] = { NAMEKEY_INVALID,NAMEK
 
 static GameWindow *winMapWindow = NULL;
 
-static void NullifyControls(void)
+static void dup_00503e30(void)
 {
 	parent = NULL;
 	winMapPreview = NULL;
@@ -222,7 +222,7 @@ void WOLMapSelectMenuInit( WindowLayout *layout, void *userData )
 //-------------------------------------------------------------------------------------------------
 void WOLMapSelectMenuShutdown( WindowLayout *layout, void *userData )
 {
-	NullifyControls();
+	dup_00503e30();
 
 	// hide menu
 	((BfmeVirtualHideLayout *)layout)->hide( TRUE );
@@ -322,7 +322,7 @@ WindowMsgHandledType WOLMapSelectMenuSystem( GameWindow *window, UnsignedInt msg
 		//---------------------------------------------------------------------------------------------
 		case GWM_DESTROY:
 		{
-			NullifyControls();
+			dup_00503e30();
 			break;
 
 		}  // end case
