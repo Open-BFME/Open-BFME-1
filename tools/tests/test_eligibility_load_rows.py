@@ -37,3 +37,13 @@ def test_a_short_row_is_named_by_line(tmp_path):
 def test_a_missing_ledger_is_an_error(tmp_path):
     with pytest.raises(eligibility.LedgerUnreadable, match="functions.csv"):
         eligibility.load_rows(tmp_path / "functions.csv", wait=0)
+
+
+def test_bounded_ledger_load_still_rejects_an_unselected_torn_row(tmp_path):
+    ledger = tmp_path / "functions.csv"
+    ledger.write_text(HEADER + ROW + "?g@@YAXXZ,0x00002000,0x00002000", newline="")
+    with pytest.raises(eligibility.LedgerUnreadable, match="line 3"):
+        eligibility.load_rows(ledger, wait=0, rvas={0x1000})
+    ledger.write_text(HEADER + ROW + ROW.replace("0x00001000", "0x00002000"), newline="")
+    got = eligibility.load_rows(ledger, wait=0, rvas={0x1000})
+    assert [row["target_rva"] for row in got] == ["0x00001000"]

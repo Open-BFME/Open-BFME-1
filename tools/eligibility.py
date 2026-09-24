@@ -44,9 +44,14 @@ class LedgerUnreadable(RuntimeError):
     """functions.csv could not be read whole; an empty ledger is not an answer."""
 
 
-def load_rows(path=None, tries=4, wait=1):
-    """functions.csv rows, retrying a torn read while another lane writes."""
+def load_rows(path=None, tries=4, wait=1, rvas=None):
+    """functions.csv rows, retrying a torn read while another lane writes.
+
+    With ``rvas``, retain only those addresses while still checking every row
+    for a torn read. Pickers use this for bounded final validation.
+    """
     path = path or ROOT / "reverse/functions.csv"
+    wanted = None if rvas is None else {int(r, 16) if isinstance(r, str) else r for r in rvas}
     reason = "no read was tried"
     for _ in range(tries):
         try:
@@ -57,7 +62,8 @@ def load_rows(path=None, tries=4, wait=1):
                     if short is None and (row.get("source") is None
                                           or row.get("target_rva") is None):
                         short = reader.line_num
-                    rows.append(row)
+                    if wanted is None or rva_of(row) in wanted:
+                        rows.append(row)
             if short is None:
                 return rows
             reason = f"line {short} has fewer columns than the header"

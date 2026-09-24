@@ -10,16 +10,66 @@ neighbours look like. All of that is mechanical, so this prints it once.
 Library use: pack(rva) -> list of lines. First run builds build/call_index.json
 (every REL32 call site in .text keyed by target) in ~20 s; later runs reuse it.
 Read-only against the ledgers."""
-import sys, csv, json, struct, re, bisect, collections
+import sys, csv, json, struct, re, bisect, collections, hashlib, os, tempfile
 from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / 'tools'))
 import build
 import capstone
+from portable_lock import lock
 
 _exe = None; _secs = None; _rows = None; _starts = None; _pins = None; _calls = None; _strings = None; _vt = None
 _thunks_of = None
 BASE = 0x400000
+
+
+def call_index(raw, lo, path):
+    """Load or build the retail call index with one atomic, image-bound writer.
+
+    Anonymous pickers prepare outside the shared claim lock, so cold readers
+    must never see a partially written index from another picker.
+    """
+    path = Path(path)
+    digest = hashlib.sha256(raw).hexdigest()
+    with (path.parent / (path.name + '.lock')).open('a+b') as handle:
+        lock(handle, exclusive=True)
+        try:
+            data = json.loads(path.read_text(encoding='utf-8'))
+            if (data.get('version') == 1 and data.get('text_sha256') == digest
+                    and data.get('text_rva') == lo and isinstance(data.get('calls'), dict)):
+                calls = {int(k): v for k, v in data['calls'].items()}
+                hi = lo + len(raw)
+                if all(lo <= target < hi and isinstance(sites, list)
+                       and all(isinstance(site, int) and lo <= site < hi
+                               for site in sites)
+                       for target, sites in calls.items()):
+                    return calls
+        except (OSError, ValueError, TypeError, AttributeError):
+            pass
+
+        calls = collections.defaultdict(list)
+        unpack = struct.Struct('<i').unpack_from
+        hi = lo + len(raw)
+        i = raw.find(b'\xe8')
+        while i != -1 and i + 5 <= len(raw):
+            target = lo + i + 5 + unpack(raw, i + 1)[0]
+            if lo <= target < hi:
+                calls[target].append(lo + i)
+            i = raw.find(b'\xe8', i + 1)
+        data = {'version': 1, 'text_sha256': digest, 'text_rva': lo,
+                'calls': calls}
+        temporary = None
+        try:
+            with tempfile.NamedTemporaryFile('w', encoding='utf-8',
+                                             dir=path.parent, prefix=path.name + '.',
+                                             suffix='.tmp', delete=False) as out:
+                temporary = Path(out.name)
+                json.dump(data, out)
+            os.replace(temporary, path)
+        finally:
+            if temporary is not None:
+                temporary.unlink(missing_ok=True)
+        return dict(calls)
 
 
 def _load():
@@ -49,20 +99,9 @@ def _load():
                 _pins[int(p[1], 16)].append((p[0], p[2] if len(p) > 2 else ''))
             except ValueError:
                 pass
-    ci = ROOT / 'build/call_index.json'
-    if ci.exists():
-        _calls = {int(k): v for k, v in json.load(open(ci)).items()}
-    else:
-        t = _secs[0]; raw = _exe[t['raw_pointer']:t['raw_pointer'] + t['size']]; lo = t['rva']; hi = lo + t['size']
-        _calls = collections.defaultdict(list)
-        u = struct.Struct('<i').unpack_from
-        i = raw.find(b'\xe8')
-        while i != -1 and i + 5 <= len(raw):
-            tgt = lo + i + 5 + u(raw, i + 1)[0]
-            if lo <= tgt < hi:
-                _calls[tgt].append(lo + i)
-            i = raw.find(b'\xe8', i + 1)
-        json.dump(_calls, open(ci, 'w'))
+    t = _secs[0]
+    raw = _exe[t['raw_pointer']:t['raw_pointer'] + t['size']]
+    _calls = call_index(raw, t['rva'], ROOT / 'build/call_index.json')
     # thunk -> body it lands on, so callers of the thunk count for the body
     _thunks_of = collections.defaultdict(list)
     for s0, r0 in _rows.items():

@@ -40,6 +40,20 @@ target briefs reserve one place for an unmeasured candidate when available.
 The 0.9 author-score admission floor is unchanged because a lower floor has
 not demonstrated an additional viable finish body.
 
+The finish and anonymous pickers prepare candidates outside
+`build/.fleet_claims.lock`, then recheck a bounded shortlist under that lock.
+`fleet_run` still atomically claims only the live targets in the final brief;
+parallel pickers may prepare the same candidate, but cannot launch duplicate
+ownership in one checkout. Anonymous final validation reads the whole current
+ledger so a newly claimed range excludes an overlapping carved candidate.
+The context pack publishes its retail call index atomically under a separate
+cache lock; the first run after this change rebuilds the old cache format.
+In one isolated local replay, finish preparation took 1.00 s and final lock
+region 0.40 s, while anonymous preparation took 7.03 s and final lock region
+1.25 s, with no lock wait. These timings demonstrate shorter local picker
+lock holds, not a measured fleet throughput gain. Deploy at a controlled seat
+restart; do not replace tools beneath running controllers.
+
 `tools/fleet_run.py` claims are leases: pid + expiry (`FLEET_LEASE_SECONDS`,
 default session cap + 30 min). A lease is reclaimed only when expired AND the
 pid is gone; an unknown pid is never reclaimed. Takeovers are recorded in the
