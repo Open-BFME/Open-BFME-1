@@ -1948,5 +1948,15 @@
   "after_sha256": "4c5f4d4e562aecfd2db4fe3c04443614c393997a181ad1c0e26746fe7062e222",
   "evidence": "reverse/symbols.csv",
   "reason": "The bank's CtorTargetR0015F420 stood in for the constructed attack state; the call resolves only through the reverse/symbols.csv pin ??0Rva002BD020AIAttackState@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z (0x0000BF3C), so the source uses that class."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva004942C0Owner.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva004942C0Owner.cpp",
+  "old_name": "Handler",
+  "new_name": "Rva0081D520Owner",
+  "before_sha256": "b5d365953ca8e4df8a89d5954988ab0f674aa3a64a92f87a10faae9adf452e03",
+  "after_sha256": "f684af8c5f6d54de8424f8cfe2074f96afad261541c01bc973fa880213dc61f6",
+  "evidence": "reverse/identity_evidence/0x0081d520-broadcaster-abi.md",
+  "reason": "The old local source declared a one-Int Handler::handle thiscall and admitted there was no named owner. Retail 0x0081D520 uses ret20 and forwards five incoming words to listener vslot +4; all three caller stacks agree. The matched 0x004942C0 source now uses a five-word address-derived broadcaster without asserting an unproved Handler identity."
  }
 ]

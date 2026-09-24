@@ -19,7 +19,7 @@ public:
 	virtual void unused05();
 	virtual void unused06();
 	virtual void unused07();
-	virtual Int query8(Real p1, Real p2, Real p3, Real p4);
+	virtual Int query8(void);
 	virtual void unused09();
 	virtual void unused10();
 	virtual void unused11();
@@ -32,19 +32,23 @@ public:
 	BObj *m_sub;
 };
 
-// Retail's still-dump direct callee at 0x0081D520: thiscall, one Int
-// stack arg, no named owner.
-class Handler
+// Retail 0x0081D520 has an unresolved owner and a five-dword thiscall ABI.
+class Rva0081D520Listener;
+class Rva0081D520Owner
 {
 public:
-	void handle(Int value);
+	void broadcast(Int value, Real x0, Real y0, Real x1, Real y1);
+private:
+	unsigned char unmodelled[0x14];
+	Rva0081D520Listener **begin;
+	Rva0081D520Listener **end;
 };
 
 class BObj
 {
 public:
 	unsigned char m_unmodelled_000[0x18];
-	Handler *m_handler;
+	Rva0081D520Owner *m_handler;
 };
 
 // Local Display view: only the one slot this body reaches (0xE0 = index
@@ -152,10 +156,10 @@ void Rva004942C0Owner::run(void)
 			(Real)m_rectC, (Real)m_rectD, m_handle);
 	}
 
-	Handler *handler = m_a->m_sub->m_handler;
+	Rva0081D520Owner *handler = m_a->m_sub->m_handler;
 	if (!handler)
 		return;
 
-	Int value = m_a->query8((Real)m_rectA, (Real)m_rectB, (Real)m_rectC, (Real)m_rectD);
-	handler->handle(value);
+	handler->broadcast(m_a->query8(), (Real)m_rectA, (Real)m_rectB,
+		(Real)m_rectC, (Real)m_rectD);
 }
