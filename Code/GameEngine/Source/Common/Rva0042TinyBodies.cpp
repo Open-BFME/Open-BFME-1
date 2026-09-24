@@ -263,18 +263,6 @@ void Rva0043AC90Owner::method( int )
 {
 }
 
-class Rva0043B250Owner
-{
-public:
-    char *get();
-};
-
-// ?get@Rva0043B250Owner@@QAEPADXZ
-char *Rva0043B250Owner::get()
-{
-    return (char *)this + 0x18;
-}
-
 // ?d_0042ec50@@YAXXZ
 void d_0042ec50()
 {
