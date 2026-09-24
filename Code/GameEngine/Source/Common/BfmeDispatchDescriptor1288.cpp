@@ -1,7 +1,7 @@
-// ?bfmeDispatchDescriptor1288@BfmeSubmitter1283@@QAEXPAUBfmeDescriptor1288@@PAUBfmeContext1288@@@Z
-// partial score=0.97 date=2026-09-16
-// ?bfmeDispatchDescriptor1288@BfmeSubmitter1283@@QAEXPAUBfmeDescriptor1288@@PAUBfmeContext1288@@@Z
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// BfmeSubmitter1283::bfmeDispatchDescriptor1288, retail RVA 0x008BEF00 (439 bytes).
+// Flag 2 submits the looked-up entry with an optional name; flag 1 queries by key
+// and submits the node the query returns, passing the context through as the fifth argument.
 
 struct BfmeStringData3AF0
 {
@@ -141,7 +141,7 @@ void BfmeSubmitter1283::bfmeDispatchDescriptor1288(BfmeDescriptor1288 *descripto
 		void *previousResult;
 		void *nodeResult;
 		m_query->bfmeQuery1279((void *)descriptor->m_value04, 0, &previousResult, &nodeResult);
-		bfmeSubmitColors1283((int)previousResult, 0, 0, 0, (int)nodeResult, 0, -1,
+		bfmeSubmitColors1283((int)nodeResult, 0, 0, 0, (int)context, 0, -1,
 			(flags & 8) != 0 ? descriptor->m_colors24 : 0,
 			(flags & 4) != 0 ? (int)descriptor->m_values0c : 0,
 			(int)(flags & 0x80 ? descriptor->m_value38 : 0), descriptor->m_value2c);
