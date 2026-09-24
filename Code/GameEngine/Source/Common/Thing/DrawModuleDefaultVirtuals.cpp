@@ -35,11 +35,13 @@ public:
 	virtual void *rva00750110();
 	virtual void *rva00750100();
 	virtual void *rva00750120();
+	__declspec(noinline) void *rva00750130();
 	virtual void *rva00750150();
 	virtual void *rva00750140();
 	virtual void *rva00750160();
 	virtual void rva00750180(UnsignedInt);
 	virtual Bool rva007501A0() const;
+	__declspec(noinline) void rva007501D0(UnsignedInt, UnsignedInt);
 	virtual void rva007501E0();
 	virtual void rva007501F0(UnsignedInt);
 	virtual void rva00750200(UnsignedInt);
@@ -161,6 +163,13 @@ void *DrawModule::rva00750120()
 	return 0;
 }
 
+// DrawModule vtable slot 42 names this body at retail 0x00750130.
+// ?rva00750130@DrawModule@@QAEPAXXZ
+void *DrawModule::rva00750130()
+{
+	return 0;
+}
+
 // ?rva00750140@DrawModule@@UAEPAXXZ
 void *DrawModule::rva00750140()
 {
@@ -188,6 +197,12 @@ void DrawModule::rva00750180(UnsignedInt)
 Bool DrawModule::rva007501A0() const
 {
 	return false;
+}
+
+// DrawModule vtable slot 53 identifies this body at retail 0x007501D0.
+// ?rva007501D0@DrawModule@@QAEXII@Z
+void DrawModule::rva007501D0(UnsignedInt, UnsignedInt)
+{
 }
 
 // DrawModule vtable slot 54 identifies this body at retail 0x007501E0.
