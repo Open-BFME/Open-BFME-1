@@ -1,12 +1,12 @@
-// ?Rva000697B0ScanTangentAngle@@YAMPBD@Z
-// partial score=0.95 date=2026-09-06
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME7: the function-curve tangent scanner at 0x000697B0 (136 B): the
 // token is read through INI::scanReal as an angle in degrees which must lie
 // in (-89.9 89.9) (INIException(3 ...) either side with the two messages at
 // VA 0x010759B0 and 0x01075958) and the tangent of the angle in radians is
 // returned (the degree-to-radian constant at VA 0x01075954 then the inline
-// fptan).  Address-derived name.
+// fptan).  Address-derived name.  The constants are written as literals:
+// against extern const Real declarations MSVC loads the degree-to-radian
+// constant first, while retail loads the angle and multiplies by it.
 
 #include <math.h>
 #pragma intrinsic( tan )
@@ -31,17 +31,15 @@ public:
 	static Real scanReal( const char *token );
 };
 
-extern const Real Rva000697B0MaxAngle;
-extern const Real Rva000697B0MinAngle;
-extern const Real Rva000697B0DegreesToRadians;
+#define PI 3.14159265359f
 
 // ?Rva000697B0ScanTangentAngle@@YAMPBD@Z
 Real Rva000697B0ScanTangentAngle( const char *token )
 {
 	Real angle = INI::scanReal( token );
-	if( angle > Rva000697B0MaxAngle )
+	if( angle > 89.9f )
 		throw INIException( 3, "Function curve tangent angle value must be less than 89.9 degrees" );
-	if( angle < Rva000697B0MinAngle )
+	if( angle < -89.9f )
 		throw INIException( 3, "Function curve tangent angle value must be greater than -89.9 degrees" );
-	return (Real)tan( Rva000697B0DegreesToRadians * angle );
+	return (Real)tan( angle * (PI / 180.0f) );
 }

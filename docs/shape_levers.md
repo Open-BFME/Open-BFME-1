@@ -1262,3 +1262,16 @@ a neighboring call, or introduces virtual-base adjustment code. No other body
 in this seven-site set became exact; the remaining blocker verdicts stay open.
 
 
+
+## An x87 product loads its operands in the wrong order: make the constant a literal
+
+When retail multiplies a local by a float constant as `fld [local]; fmul
+[const]` and ours emits `fld [const]; fmul [local]`, check how the constant is
+spelled. Against an `extern const Real` declaration, MSVC 7.1 puts the constant
+first whichever side of the `*` it is written on, so swapping the operands, a
+compound `*=`, a named temporary and `double` casts all compile to the same
+bytes. Written as a literal (`angle * (PI / 180.0f)`, or `0.017453292f`), the
+local loads first, as in retail. The literal becomes a `__real@` constant and
+still resolves to the retail constant's address. `Rva000697B0ScanTangentAngle`
+at 0x000697B0 (136 B) went from four differing bytes to exact on 2026-09-24,
+after sessions had logged it as unresolved register scheduling.
