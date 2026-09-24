@@ -2298,38 +2298,7 @@
     "after_sha256": "fc6960796db49219792c1926fdad77b20d9b9a88e811929627c7eadd19abd898",
     "evidence": "reverse/identity_evidence/001b5a30.md",
     "reason": "The retail field table maps the method selected offsets to Lift and LiftDamaged, and the claimed caller is not supported. Preserve the proven Locomotor owner and thiscall ABI while leaving method identity address-derived."
-  }
-,
- {
-  "old_path": "Code/GameEngine/Source/GameLogic/Object/Locomotor_getMaxAccelerationObject.cpp",
-  "new_path": "Code/GameEngine/Source/GameLogic/Object/LocomotorRva001B5A30.cpp",
-  "old_name": "getMaxAcceleration",
-  "new_name": "rva001B5A30",
-  "before_sha256": "19203dd8a6c37f1012e16fbeaa75c824158526a276b5b322acead31a11b55661",
-  "after_sha256": "853efcafa7be62a99fb0593a43966d8d0fc0499530dbdf26fe91ee4f3c9eb379",
-  "evidence": "reverse/identity_evidence/001b5a30.md",
-  "reason": "Retail fields at +0x44/+0x48 are Lift/LiftDamaged. The class and ABI are known but exact method identity is unresolved, so retain the RVA."
- },
- {
-  "old_path": "Code/GameEngine/Source/GameLogic/Object/Locomotor_getMaxAccelerationObject.cpp",
-  "new_path": "Code/GameEngine/Source/GameLogic/Object/LocomotorRva001B5A30.cpp",
-  "old_name": "m_maxAcceleration",
-  "new_name": "m_value24",
-  "before_sha256": "19203dd8a6c37f1012e16fbeaa75c824158526a276b5b322acead31a11b55661",
-  "after_sha256": "853efcafa7be62a99fb0593a43966d8d0fc0499530dbdf26fe91ee4f3c9eb379",
-  "evidence": "reverse/identity_evidence/001b5a30.md",
-  "reason": "The old clamp name asserted an unproven acceleration identity. Only Locomotor offset +0x24 is established."
- },
- {
-  "old_path": "reverse/functions.csv",
-  "new_path": "reverse/functions.csv",
-  "old_name": "getMaxAcceleration",
-  "new_name": "rva001B5A30",
-  "before_sha256": "66ddae5174005c02d165e9609d10f3f529dd8530eb9d98f556321f5a6fda25a3",
-  "after_sha256": "fc6960796db49219792c1926fdad77b20d9b9a88e811929627c7eadd19abd898",
-  "evidence": "reverse/identity_evidence/001b5a30.md",
-  "reason": "Retail fields at +0x44/+0x48 are Lift/LiftDamaged. The class and ABI are known but exact method identity is unresolved, so retain the RVA."
- },
+  },
   {
     "old_path": "reverse/functions.csv",
     "new_path": "reverse/functions.csv",
