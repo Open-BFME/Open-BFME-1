@@ -14,7 +14,7 @@ per (owner class, member). Read the result with tools/bfme_layout.py.
 Known blind spots: `this` inside a non-primary base subobject (offsets come out
 subobject-relative), registers that alias `this` after the prologue, and members
 of the same ZH offset in a derived class that the dump could not compile."""
-import sys,json,re,difflib,collections,csv
+import sys,json,re,difflib,collections,csv,struct
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent)); import build as B
 
@@ -119,6 +119,45 @@ def shape(i, X86_OP_MEM, X86_OP_IMM):
     return (i.mnemonic,tuple(ops))
 
 
+# A body this small that nothing in retail reaches was named by its ZH shape, so an unshifted access in it
+# only echoes ZH's layout and cannot witness a member on its own.
+SHAPE_ONLY_MAX = 16
+
+
+def retail_references(data, secs, thunks):
+    """RVA -> references that reach it: rel32 call/jmp sites outside `thunks`, references to a thunk (or thunk
+    chain) jumping to it, export table entries, and absolute dwords (vtables, push/mov immediates) naming it
+    or such a thunk."""
+    base = B.u32(data, B.u32(data, 0x3C) + 0x34)
+    text = next(s for s in secs if s['name'] == '.text')
+    t0, t1 = text['rva'], text['rva'] + text['size']
+    blob = data[text['raw_pointer']:text['raw_pointer'] + text['size']]
+    direct = collections.Counter(); into = collections.defaultdict(list)
+    for m in re.finditer(rb'[\xe8\xe9]', blob):
+        i = m.start()
+        if i + 5 > len(blob): break
+        site = t0 + i; dst = site + 5 + struct.unpack_from('<i', blob, i + 1)[0]
+        if not (t0 <= dst < t1): continue
+        if blob[i] == 0xE9 and site in thunks: into[dst].append(site)
+        else: direct[dst] += 1
+    ptr = collections.Counter()
+    exp_rva = B.u32(data, B.u32(data, 0x3C) + 0x78)
+    if exp_rva:
+        e = B.rva_to_file_offset(secs, exp_rva)
+        eat = B.rva_to_file_offset(secs, B.u32(data, e + 0x1C))
+        for k in range(B.u32(data, e + 0x14)):
+            ptr[B.u32(data, eat + 4 * k)] += 1
+    for s in secs:
+        raw = data[s['raw_pointer']:s['raw_pointer'] + s['size']]
+        for align in range(4):
+            for (v,) in struct.iter_unpack('<I', raw[align:len(raw) - (len(raw) - align) % 4]):
+                if t0 <= v - base < t1: ptr[v - base] += 1
+    def count(rva, seen):
+        seen.add(rva)
+        return direct[rva] + ptr[rva] + sum(count(t, seen) for t in into.get(rva, ()) if t not in seen)
+    return collections.Counter({rva: count(rva, set()) for rva in set(direct) | set(into) | set(ptr)})
+
+
 def run_witness():
     from capstone import Cs, CS_ARCH_X86, CS_MODE_32
     from capstone.x86 import X86_OP_MEM, X86_OP_IMM
@@ -144,6 +183,7 @@ def run_witness():
         for m in re.finditer(r'^\s*(?:class|struct)\s+(\w+)\s*:\s*([^{;]+)\{',txt,re.M):
             bl=[re.sub(r'\b(public|protected|private|virtual)\b','',x).strip() for x in m.group(2).split(',')]
             bases.setdefault(m.group(1),[re.sub(r'<.*','',b).strip() for b in bl if b.strip()])
+    reach=retail_references(data,secs,{a for a,s in size.items() if s==5})
     objs=list((B.ROOT/'build/layout/ref').glob('*.obj'))+list((B.ROOT/'build/match').glob('reference_*.obj'))
     seen=set(); wit=[]; stats=collections.Counter()
     for p in objs:
@@ -154,6 +194,7 @@ def run_witness():
             if s['section']<=0 or not n.startswith('?') or n in seen or n not in addr: continue
             rva=addr[n]; sz=size.get(rva)
             if not sz: continue
+            dead=sz<=SHAPE_ONLY_MAX and not reach[rva]
             try: comp,relocs=B.read_object_symbol_bytes(p,n)
             except Exception: continue
             ours=len(comp.rstrip(b'\xcc'))
@@ -178,19 +219,24 @@ def run_witness():
                         if oa.type==X86_OP_MEM and orr.type==X86_OP_MEM and oa.mem.base and oa.mem.index==0:
                             base=a.reg_name(oa.mem.base)
                             if isthis and base in thisregs and oa.mem.disp>=0:
-                                wit.append((cls,oa.mem.disp,orr.mem.disp,n,rva,q))
+                                echo=dead and oa.mem.disp==orr.mem.disp; stats['shape_only_echo']+=echo
+                                wit.append((cls,oa.mem.disp,orr.mem.disp,n,rva,q,echo))
     print(dict(stats),'witness records',len(wit))
     # aggregate: same-offset witnesses also count (confirm ZH offset unchanged)
+    # a shape-only echo counts toward the total but never wins, so it can only lower a member's confidence
     votes=collections.defaultdict(collections.Counter); fns=collections.defaultdict(set); fcls=collections.defaultdict(set)
-    for cls,z,b,n,rva,q in wit:
+    live=collections.defaultdict(collections.Counter)
+    for cls,z,b,n,rva,q,echo in wit:
         key=member_at(cls,z,zh=zh,bases=bases)
         if key: owner,mem=key
         else: owner,mem=cls,f'+0x{z:x}?'
         k=(owner,mem,z)
-        votes[k][b]+=q; fns[k].add(n); fcls[k].add(cls)
+        votes[k][b]+=q
+        if not echo: live[k][b]+=q; fns[k].add(n); fcls[k].add(cls)
     out=[]
     for (owner,mem,z),c in votes.items():
-        bf,nv=c.most_common(1)[0]
+        if not live[(owner,mem,z)]: continue
+        bf=live[(owner,mem,z)].most_common(1)[0][0]; nv=c[bf]
         tot=sum(c.values())
         out.append(dict(owner=owner,fn_class=sorted(fcls[(owner,mem,z)])[0],member=mem,zh=z,bfme=bf,votes=round(nv,1),total=round(tot,1),
                         confidence=round(nv/tot,2),alts={f'{k:#x}':round(v,1) for k,v in c.items() if k!=bf},fns=sorted(fns[(owner,mem,z)])[:3]))

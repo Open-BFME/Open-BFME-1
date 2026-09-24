@@ -51,6 +51,11 @@ Three of today's hand-derived conversions were used as the check: Object
   declare no members) appear as `+0x..?` under the function's own class.
 - A moved member read by several derived classes can collect dissenting votes
   from misaligned bodies; trust `confidence >= 0.75` with `votes >= 2`.
+- A body of 16 bytes or less that nothing in retail reaches (no call, no thunk
+  that is called, no pointer, no export) was usually named by its ZH byte
+  shape, so an unshifted access in it only echoes the ZH layout. Such an
+  access counts toward a member's total but never wins; a member witnessed
+  only that way is left out, and `fns` lists only the voters that can win.
 
 ## Also fixed alongside
 
