@@ -72,7 +72,7 @@ struct AICommandParms
 	const CommandButton *m_commandButton;	// +0x94
 	Path *m_path;							// +0x98
 
-	AICommandParms(AICommandType cmd, CommandSourceType cmdSource);	// ILT 0x00030EA4
+	AICommandParms(AICommandType cmd, CommandSourceType commandSource);	// ILT 0x00030EA4
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
@@ -81,35 +81,35 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;	// slot 0, vtable+0x00
 
-	void aiGuardTunnelNetwork(Int guardMode, CommandSourceType cmdSource);
-	void aiWander(const Waypoint *way, CommandSourceType cmdSource);
-	void aiWanderInPlace(CommandSourceType cmdSource);
-	void aiPanic(const Waypoint *way, CommandSourceType cmdSource);
+	void aiGuardTunnelNetwork(Int guardMode, CommandSourceType commandSource);
+	void aiWander(const Waypoint *waypoint, CommandSourceType commandSource);
+	void aiWanderInPlace(CommandSourceType commandSource);
+	void aiPanic(const Waypoint *waypoint, CommandSourceType commandSource);
 };
 
-void AICommandInterface::aiGuardTunnelNetwork(Int guardMode, CommandSourceType cmdSource)
+void AICommandInterface::aiGuardTunnelNetwork(Int guardMode, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_GUARD_TUNNEL_NETWORK, cmdSource);
+	AICommandParms parms(AICMD_GUARD_TUNNEL_NETWORK, commandSource);
 	parms.m_intValue = guardMode;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiWander(const Waypoint *way, CommandSourceType cmdSource)
+void AICommandInterface::aiWander(const Waypoint *waypoint, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_WANDER, cmdSource);
-	parms.m_waypoint = way;
+	AICommandParms parms(AICMD_WANDER, commandSource);
+	parms.m_waypoint = waypoint;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiWanderInPlace(CommandSourceType cmdSource)
+void AICommandInterface::aiWanderInPlace(CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_WANDER_IN_PLACE, cmdSource);
+	AICommandParms parms(AICMD_WANDER_IN_PLACE, commandSource);
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiPanic(const Waypoint *way, CommandSourceType cmdSource)
+void AICommandInterface::aiPanic(const Waypoint *waypoint, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_PANIC, cmdSource);
-	parms.m_waypoint = way;
+	AICommandParms parms(AICMD_PANIC, commandSource);
+	parms.m_waypoint = waypoint;
 	aiDoCommand(&parms);
 }
