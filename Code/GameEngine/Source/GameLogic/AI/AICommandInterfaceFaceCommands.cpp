@@ -71,7 +71,7 @@ struct AICommandParms
 	const CommandButton *m_commandButton;	// +0x94
 	Path *m_path;							// +0x98
 
-	AICommandParms(AICommandType cmd, CommandSourceType cmdSource);	// ILT 0x00030EA4
+	AICommandParms(AICommandType cmd, CommandSourceType commandSource);	// ILT 0x00030EA4
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
@@ -80,28 +80,28 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;	// slot 0, vtable+0x00
 
-	void aiFacePosition(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiMoveToObject(Object *target, CommandSourceType cmdSource);
-	void aiFaceObject(Object *target, CommandSourceType cmdSource);
+	void aiFacePosition(const Coord3D *position, CommandSourceType commandSource);
+	void aiMoveToObject(Object *target, CommandSourceType commandSource);
+	void aiFaceObject(Object *target, CommandSourceType commandSource);
 };
 
-void AICommandInterface::aiFacePosition(const Coord3D *pos, CommandSourceType cmdSource)
+void AICommandInterface::aiFacePosition(const Coord3D *position, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_FACE_POSITION, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_FACE_POSITION, commandSource);
+	parms.m_pos = *position;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiMoveToObject(Object *target, CommandSourceType cmdSource)
+void AICommandInterface::aiMoveToObject(Object *target, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_MOVE_TO_OBJECT, cmdSource);
+	AICommandParms parms(AICMD_MOVE_TO_OBJECT, commandSource);
 	parms.m_obj = target;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiFaceObject(Object *target, CommandSourceType cmdSource)
+void AICommandInterface::aiFaceObject(Object *target, CommandSourceType commandSource)
 {
-	AICommandParms parms(AICMD_FACE_OBJECT, cmdSource);
+	AICommandParms parms(AICMD_FACE_OBJECT, commandSource);
 	parms.m_obj = target;
 	aiDoCommand(&parms);
 }
