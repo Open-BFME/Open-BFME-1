@@ -207,6 +207,7 @@ ImageCollection::ImageCollection( void )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// ??1ImageCollection@@UAE@XZ present-unmatched
 ImageCollection::~ImageCollection( void )
 {
   for (std::map<unsigned,Image *>::iterator i=m_imageMap.begin();i!=m_imageMap.end();++i)

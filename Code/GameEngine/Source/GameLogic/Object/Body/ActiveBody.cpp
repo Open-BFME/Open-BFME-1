@@ -1361,6 +1361,7 @@ Real ActiveBody::getHealth() const
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
+// ?getDamageState@ActiveBody@@UBE?AW4BodyDamageType@@XZ present-unmatched
 BodyDamageType ActiveBody::getDamageState() const
 {
 	return m_curDamageState;

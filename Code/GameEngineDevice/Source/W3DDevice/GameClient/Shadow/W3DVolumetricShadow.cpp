@@ -5324,6 +5324,7 @@ void W3DVolumetricShadowManager::removeAllShadows(void)
 	}  // end for
 }
 
+// ??0W3DShadowGeometryManager@@QAE@XZ present-unmatched
 W3DShadowGeometryManager::W3DShadowGeometryManager(void) 
 {
 	// Create the hash tables

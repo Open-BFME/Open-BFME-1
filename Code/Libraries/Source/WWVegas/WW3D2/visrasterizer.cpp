@@ -70,6 +70,7 @@ void VisPolyClass::Add_Vertex(const Vector3 & point)
 	Verts.Add(point);
 }
 
+// ?Clip@VisPolyClass@@QBEXABVPlaneClass@@AAV1@@Z present-unmatched
 void VisPolyClass::Clip(const PlaneClass & plane,VisPolyClass & dest) const
 {
 	dest.Reset();

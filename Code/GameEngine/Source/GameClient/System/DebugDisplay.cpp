@@ -222,6 +222,7 @@ void	DebugDisplay::setRightMargin( Int rightPos )
 // DebugDisplay::setLeftMargin
 //============================================================================
 
+// ?setLeftMargin@DebugDisplay@@UAEXH@Z present-unmatched
 void	DebugDisplay::setLeftMargin( Int leftPos )
 {
 	m_leftMargin = leftPos;

@@ -208,6 +208,7 @@ SceneClass * LayerClass::Get_Scene(void) const
  * HISTORY:                                                                                    *
  *   3/8/99    NH : Created.                                                                   *
  *=============================================================================================*/
+// ?Peek_Scene@LayerClass@@QBEPAVSceneClass@@XZ present-unmatched
 SceneClass * LayerClass::Peek_Scene(void) const
 {
 	return Scene;

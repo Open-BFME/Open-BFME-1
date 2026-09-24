@@ -95,6 +95,7 @@ const char * ShdMeshClass::Get_Name() const
 	return Name;
 }
 
+// ?Set_Name@ShdMeshClass@@UAEXPBD@Z present-unmatched
 void ShdMeshClass::Set_Name(const char * name)
 {
 	Name = name;
