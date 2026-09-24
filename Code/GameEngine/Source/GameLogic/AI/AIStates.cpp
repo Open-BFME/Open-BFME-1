@@ -5450,7 +5450,6 @@ void AIMoveAndEvacuateState::onExit( StateExitType status )
 //----------------------------------------------------------------------------------------------------------
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/AIAttackMoveToStateCtorThunk.cpp
 // ??0AIAttackMoveToState@@QAE@PAVStateMachine@@@Z present-unmatched
 AIAttackMoveToState::AIAttackMoveToState( StateMachine *machine ) : AIMoveToState(machine)
 {
