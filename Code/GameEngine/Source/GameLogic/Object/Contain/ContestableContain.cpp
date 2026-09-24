@@ -16,8 +16,35 @@
 typedef bool Bool;
 typedef unsigned int UnsignedInt;
 
+enum AbleToAttackType
+{
+	CONTEST_ATTACK_TYPE = 8
+};
+
+enum CommandSourceType
+{
+	CONTEST_COMMAND_SOURCE = 2
+};
+
+enum CanAttackResult
+{
+	CONTEST_ATTACK_RESULT_POSSIBLE = 3
+};
+
 class Object
 {
+public:
+	Bool isAbleToAttack() const;
+	CanAttackResult getAbleToAttackSpecificObject(AbleToAttackType attackType,
+		const Object *target, CommandSourceType commandSource) const;
+};
+
+// updateObject reads one byte at +0x1A8 through the module-data pointer at
+// this+4, while the ContestableContainModuleData factory allocates 0x1A8 bytes.
+struct ContestLimitModuleData0021BAF0
+{
+	unsigned char m_unreconstructed_000[0x1a8];
+	unsigned char m_contestLimit;
 };
 
 // The BFME GameLogic frame is the field used by the surrounding
@@ -45,8 +72,11 @@ class OpenContainPrimaryBase
 public:
 	virtual ~OpenContainPrimaryBase();
 
+protected:
+	const ContestLimitModuleData0021BAF0 *m_moduleData; // ObjectModule ctor 0x00113C60 stores it at +4
+
 private:
-	unsigned char m_pad[8];
+	unsigned char m_pad[4];
 };
 
 template <int Number>
@@ -96,11 +126,13 @@ private:
 };
 
 // These are the payload types already recovered from the ContestableContain
-// destructor's real STLport instantiations.  The refresh only needs the list
-// heads, but retaining the member types keeps the proven offsets truthful.
+// destructor's real STLport instantiations.  updateObject reads the entry's
+// target pointer at node+0x14 and its byte counter at node+0x18.
 struct ContestableMapEntry
 {
-	int a[2];
+	Object *m_object;
+	unsigned char m_count;
+	unsigned char m_pad[3];
 };
 
 struct ContestableRecord
@@ -118,15 +150,67 @@ private:
 	unsigned char m_unreconstructed_99c[0x20];
 	_STL::list<Object *> m_contestList; // +0x9BC
 	_STL::list<Object *> m_contestListShadow; // +0x9C0
-	_STL::map<int, ContestableMapEntry> m_objectData; // +0x9C4
+	_STL::map<Object *, ContestableMapEntry> m_objectData; // +0x9C4
 	_STL::list<ContestableRecord> m_records; // +0x9D0
 	UnsignedInt m_lastContestUpdateFrame; // +0x9D4
 };
 
-// 0x00026396 is the existing incremental-link thunk for the real
-// ContestableContain::updateObject(Object *, Bool) implementation at
-// 0x0021BAF0. The typed helper pin in reverse/symbols.csv preserves this
-// independently verified ILT route until the callee is converted.
+// updateContestStatus reaches updateObject (0x0021BAF0) through the
+// incremental-link thunk 0x00026396.
+
+// ?updateObject@ContestableContain@@QAEXPAVObject@@_N@Z
+void ContestableContain::updateObject(Object *object, Bool contesting)
+{
+	typedef _STL::map<Object *, ContestableMapEntry> ObjectDataMap;
+	const ContestLimitModuleData0021BAF0 *owner = m_moduleData;
+	ObjectDataMap::iterator current = m_objectData.find(object);
+	if (current == m_objectData.end())
+		return;
+
+	Bool able = object->isAbleToAttack();
+	Object *old = current->second.m_object;
+	if (old != 0)
+	{
+		if (able && object->getAbleToAttackSpecificObject(
+			CONTEST_ATTACK_TYPE, old,
+			CONTEST_COMMAND_SOURCE) ==
+			CONTEST_ATTACK_RESULT_POSSIBLE)
+			return;
+
+		ObjectDataMap::iterator oldEntry = m_objectData.find(old);
+		if (oldEntry != m_objectData.end())
+			--oldEntry->second.m_count;
+		current->second.m_object = 0;
+	}
+
+	if (!able)
+		return;
+
+	_STL::list<Object *> *candidates = contesting ? &m_containList : &m_contestList;
+	unsigned char bestCount = owner->m_contestLimit;
+	Object *best = 0;
+	ObjectDataMap::iterator bestEntry = 0;
+	for (_STL::list<Object *>::iterator it = candidates->begin();
+		it != candidates->end(); ++it)
+	{
+		ObjectDataMap::iterator entry = m_objectData.find(*it);
+		if (entry != m_objectData.end() && entry->second.m_count < bestCount &&
+			entry->second.m_count < owner->m_contestLimit &&
+			object->getAbleToAttackSpecificObject(
+				CONTEST_ATTACK_TYPE, *it,
+				CONTEST_COMMAND_SOURCE) ==
+				CONTEST_ATTACK_RESULT_POSSIBLE)
+		{
+			best = *it;
+			bestCount = entry->second.m_count;
+			bestEntry = entry;
+		}
+	}
+
+	current->second.m_object = best;
+	if (best != 0)
+		++bestEntry->second.m_count;
+}
 
 // ?updateContestStatus@ContestableContain@@QAEXXZ
 void ContestableContain::updateContestStatus()
