@@ -1,10 +1,11 @@
-// ?cameraModLookToward@W3DView@@UAEXPAUCoord3D@@@Z
-// partial score=0.984 date=2026-09-17
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug
 // BFME W3DView::cameraModLookToward, retail 0x0073FF30 / 497 bytes.
 // Identity is fixed by the W3DView vtable slot used by ScriptActions and by
 // the canonical waypoint-heading algorithm immediately before the final-look
 // variant in W3DView.cpp.
+// Retail's 0x40 frame shares one scalar slot between WWMath::Sqrt's inlined
+// argument and the heading: VC7.1 overlaps them only because the heading is
+// declared in its own block, a sibling of the inlined Sqrt scope.
 
 #include "vector2.h"
 
@@ -130,19 +131,20 @@ void W3DView::cameraModLookToward(Coord3D *pLoc)
 			result.z = 0;
 
 			Vector2 direction(pLoc->x - result.x, pLoc->y - result.y);
-			Real angle, directionLength;
-			angle = direction.Length2();
-			directionLength = WWMath::Sqrt(angle);
+			const Real directionLength = direction.Length();
 			if (directionLength < 0.1f) {
 				continue;
 			}
-			angle = WWMath::Acos(direction.X / directionLength);
-			if (direction.Y < 0.0f) {
-				angle = -angle;
+			{
+				// Own block: lets the heading reuse the Sqrt argument's slot.
+				Real angle = WWMath::Acos(direction.X / directionLength);
+				if (direction.Y < 0.0f) {
+					angle = -angle;
+				}
+				angle -= 1.5707963705062866f;
+				normAngle(angle);
+				cameraPath.cameraAngles[i] = angle;
 			}
-			angle -= 1.5707963705062866f;
-			normAngle(angle);
-			cameraPath.cameraAngles[i] = angle;
 		}
 		if (cameraPath.unknown04 == 1) {
 			moveAlongWaypointPath(1);
