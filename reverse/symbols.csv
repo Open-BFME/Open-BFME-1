@@ -88906,3 +88906,4 @@ _ghiSetProxy,0x0087AD40,route=0x0087C900; retail patch-check calls this ILT to m
 ?copyStringAt14@Rva0009F820Host@@QAE?AVRva0009F820String@@XZ,0x00008BC0,route=0x0009F820; skirmish profile copies the list at host +0x14 through retail ILT
 ?compareNoCaseRaw@?$StringBase@G@@ABEHPBG0H@Z,0x000480F4,route=0x0009ECA0; skirmish profile compares wide profile names through retail ILT
 ?RenderVolume@W3DVolumetricShadow@@IAEXHH@Z,0x007BD9C0,method definition and retail callers prove thiscall int int; retail body ends ret 8 and ILT 0x0003FFFD routes here
+?saveGame@GameState@@QAE?AW4SaveCode@@VAsciiString@@VUnicodeString@@W4SaveFileType@@W4SnapshotType@@_N@Z,0x00020CD4,route=0x00110170; retail SaveLoadMenuSystem calls the independently matched five-argument GameState::saveGame through this ILT

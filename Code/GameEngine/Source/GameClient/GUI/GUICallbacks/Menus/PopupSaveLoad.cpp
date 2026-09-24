@@ -1,5 +1,9 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/campaignmanagerascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
+// ?SaveLoadMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z
+// Retail FunctionLexicon entry 0x00EA9528 names this callback and routes
+// through the 0x0003664C thunk to its body at 0x004DFEF0.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/ini /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
+// Use the tracked BFME StringBase shims; make UnicodeString cleanup visible in this TU.
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __SHELL_H_
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
@@ -54,7 +58,11 @@
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "Common/GameEngine.h"
+// BFME's matched GameState::saveGame takes a fifth Bool argument. Adapt only
+// this TU's vendored declaration; other GameState methods retain their ABI.
+#define saveGame(a, b, c, d) saveGame(a, b, c, d, Bool showMessage = TRUE)
 #include "Common/GameState.h"
+#undef saveGame
 #include "Common/MessageStream.h"
 #include "GameClient/CampaignManager.h"
 #include "GameClient/GadgetListBox.h"
@@ -84,6 +92,14 @@ public:
 };
 
 extern Shell *TheShell;
+
+// BFME's StringBase-backed UnicodeString destructor body is the wrapper used by
+// the matched WWLib implementation. Keeping it visible preserves temporary cleanup
+// ordering without depending on a scratch include directory.
+__forceinline UnicodeString::~UnicodeString()
+{
+	((StringBase<wchar_t> *)this)->releaseBuffer();
+}
 
 // PRIVATE DATA ///////////////////////////////////////////////////////////////////////////////////
 static NameKeyType buttonBackKey					= NAMEKEY_INVALID;
@@ -182,6 +198,42 @@ class BfmePopupSaveGameState
 public:
 	SaveCode loadGame( AvailableGameInfo gameInfo );
 };
+
+class BfmeStateDO
+{
+public:
+	int m_bfmeHead[11];
+	bool m_bfmeFirst;
+	bool m_bfmeSecond;
+};
+extern BfmeStateDO *g_bfmeStateDO;
+
+__declspec(noinline) int __cdecl bfmeReady(int mode)
+{
+	if (g_bfmeStateDO->m_bfmeFirst && g_bfmeStateDO->m_bfmeSecond)
+		return 1;
+	return mode != 1;
+}
+
+// Vtable 0x0111C0C0 slot +0x30 is proven; its method identity is unresolved.
+class Rva0111C0C0AudioSlotView
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot04() = 0;
+	virtual void slot08() = 0;
+	virtual void slot0C() = 0;
+	virtual void slot10() = 0;
+	virtual void slot14() = 0;
+	virtual void slot18() = 0;
+	virtual void slot1C() = 0;
+	virtual void slot20() = 0;
+	virtual void slot24() = 0;
+	virtual void slot28() = 0;
+	virtual void slot2C() = 0;
+	virtual void slot30(unsigned int, int, int) = 0;
+};
+#define TheAudioClientUpdate (*(Rva0111C0C0AudioSlotView **)0x012ED668)
 
 // PUBLIC FUNCTIONS ///////////////////////////////////////////////////////////////////////////////
 extern Bool DontShowMainMenu; //KRIS
@@ -646,7 +698,14 @@ static void processLoadButtonPress(GameWindow *window)
 
 //-------------------------------------------------------------------------------------------------
 /** SaveLoad menu system callback */
+// The ZH Gadget.h message sequence is two values lower than BFME's here.
+// Retail routes 0x4014 to updateMenuActions and 0x4015 to processLoadButtonPress;
+// the matched BFME WOLBuddyOverlaySystem independently names 0x4015 as
+// GLM_DOUBLE_CLICKED.
+enum { BFME_GLM_SELECTED = 0x4014, BFME_GLM_DOUBLE_CLICKED = 0x4015 };
+
 //-------------------------------------------------------------------------------------------------
+// Retail ABI: GameWinSystemFunc shape.
 WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg, 
 																				 WindowMsgData mData1, WindowMsgData mData2 )
 {
@@ -682,7 +741,7 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 		}  // end input
 
     //----------------------------------------------------------------------------------------------
-		case GLM_DOUBLE_CLICKED:
+		case BFME_GLM_DOUBLE_CLICKED:
 			{
 				GameWindow *control = (GameWindow *)mData1;
 				GameWindow *listboxGames = TheWindowManager->winGetWindowFromId( window, listboxGamesKey );
@@ -701,7 +760,7 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 			}
 
 		// --------------------------------------------------------------------------------------------
-		case GLM_SELECTED:
+		case BFME_GLM_SELECTED:
 		{
 			GameWindow *control = (GameWindow *)mData1;
 
@@ -906,17 +965,17 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 					// mode it means that the save is a mission save between maps because you can only
 					// save the game between maps and can of course not load one
 					//
-					SaveFileType fileType;
-					if( currentLayoutType == SLLT_SAVE_AND_LOAD )
-						fileType = SAVE_FILE_TYPE_NORMAL;
-					else
-						fileType = SAVE_FILE_TYPE_MISSION;
+					SaveFileType fileType = (SaveFileType)bfmeReady(currentLayoutType);
 
 					// save the game
 					AsciiString filename;
 					if( selectedGameInfo )
 						filename = selectedGameInfo->filename;
-					TheGameState->saveGame( filename, selectedGameInfo->saveGameInfo.description, fileType );
+					TheGameState->saveGame(
+							filename, selectedGameInfo->saveGameInfo.description,
+							fileType, SNAPSHOT_SAVELOAD, TRUE);
+TheAudioClientUpdate->slot30(0x3f, 3, 0);
+TheAudioClientUpdate->slot30(0x3f, 4, 1);
 
 /*
 					// set the description text entry field to default value
@@ -959,7 +1018,7 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 				updateMenuActions();
 
 				// close save menuu
-				closeSaveMenu( window, TRUE );
+				closeSaveMenu( window, FALSE );
 
 				// get save filename
 				AvailableGameInfo *selectedGameInfo = getSelectedSaveFileInfo( listboxGames );
@@ -970,17 +1029,16 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 				// mode it means that the save is a mission save between maps because you can only
 				// save the game between maps and can of course not load one
 				//
-				SaveFileType fileType;
-				if( currentLayoutType == SLLT_SAVE_AND_LOAD )
-					fileType = SAVE_FILE_TYPE_NORMAL;
-				else
-					fileType = SAVE_FILE_TYPE_MISSION;
+				SaveFileType fileType = (SaveFileType)bfmeReady(currentLayoutType);
 
 				// save the game
 				AsciiString filename;
 				if( selectedGameInfo )
 					filename = selectedGameInfo->filename;
-				TheGameState->saveGame( filename, desc, fileType );
+				TheGameState->saveGame(
+					filename, desc, fileType, SNAPSHOT_SAVELOAD, TRUE);
+TheAudioClientUpdate->slot30(0x3f, 3, 0);
+TheAudioClientUpdate->slot30(0x3f, 4, 1);
 
 			}  // end else if
 			else if( controlID == buttonSaveDescCancel )
@@ -1025,7 +1083,7 @@ WindowMsgHandledType SaveLoadMenuSystem( GameWindow *window, UnsignedInt msg,
 					//Moved by Sadullah Nader
 					//moved to fix the 
 					// close save/load layout menu
-					closeSaveMenu( window, FALSE );
+					closeSaveMenu( window, TRUE );
 					doLoadGame();
 				}
 

@@ -68,6 +68,8 @@ int Gen_0049AFE0::bfmeCurrent(void) const
 	return 0;
 }
 
+// Retain the established layout witness here while bfmeReady's definition
+// moves beside its caller. This type names the same retail state in both TUs.
 class BfmeStateDO
 {
 public:
@@ -77,15 +79,6 @@ public:
 };
 
 extern BfmeStateDO *g_bfmeStateDO;				// retail 0x012F1028
-
-// ?bfmeReady@@YAHH@Z
-int __cdecl bfmeReady(int mode)
-{
-	if (g_bfmeStateDO->m_bfmeFirst && g_bfmeStateDO->m_bfmeSecond)
-		return 1;
-
-	return mode != 1;
-}
 
 class BfmeThingDO
 {

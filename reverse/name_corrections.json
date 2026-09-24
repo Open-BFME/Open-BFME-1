@@ -1818,8 +1818,7 @@
   "after_sha256": "83902e7c4d5e6e1e6ba5159ac7cde843013cac921b6180f9ed4568e68fa2621c",
   "evidence": "reverse/re_attempts.log",
   "reason": "m_zoom was a Zero Hour name the earlier bank assumed; the landed source models the BFME layout or callee as the address-derived m_bfme40 because no caller, vtable slot or literal proves the Zero Hour identity in BFME (see the body's rows in reverse/re_attempts.log); AGENTS.md requires the address token until proved."
-}
-,
+ },
  {
   "old_path": "reverse/attempts/0x001c7200.cpp",
   "new_path": "reverse/attempts/0x001c7200.cpp",
@@ -1859,8 +1858,7 @@
   "after_sha256": "915abb538b92d7384804c1baec36495d1a453e122d3cdbd63e6f9d3d1c780b6e",
   "evidence": "reverse/re_attempts.log",
   "reason": "The old m_data array covered the full 0x1F4-byte object from offset 0. Retail stores m_active at +0x8 and constructs m_map0c at +0x0C, so m_pad09 names only the three alignment bytes between them."
- }
-,
+ },
  {
   "old_path": "reverse/attempts/0x0057cac0.cpp",
   "new_path": "Code/GameEngine/Source/GameClient/GUI/SkirmishScreenRefreshProfile.cpp",
@@ -1870,5 +1868,25 @@
   "after_sha256": "8cbfc8e501cad1eb39003af6dd6e7bb7589fdc1f7110778f399a6364aeaa24de",
   "evidence": "reverse/identity_evidence/0057cac0.md",
   "reason": "The descriptive ProfileList class is retained as the base; only the symbol-facing derived result wrapper takes the existing matched accessor return type Rva0009F820String. The accessor calls a list copy ctor and list<UnicodeString> insert, so the semantic list identity is unchanged; see the evidence file."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Bfme5FortySix.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupSaveLoad.cpp",
+  "old_name": "BfmeThingDO",
+  "new_name": "Rva0111C0C0AudioSlotView",
+  "before_sha256": "e6f463011131951333b1bab7c2465c8c6ae5feeba413dd4da1ff5dfcce301094",
+  "after_sha256": "ad33b0541d6760b135a5988f62b01044cbcbce119785d9d4fec3604aeb43855e",
+  "evidence": "reverse/identity_evidence/004dfef0.md",
+  "reason": "False file-pair alignment after moving bfmeReady. BfmeThingDO remains in Bfme5FortySix.cpp; the audio slot view is a new unrelated type in PopupSaveLoad.cpp, not a rename."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Bfme5FortySix.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/PopupSaveLoad.cpp",
+  "old_name": "m_bfmeHead",
+  "new_name": "m_pad",
+  "before_sha256": "e6f463011131951333b1bab7c2465c8c6ae5feeba413dd4da1ff5dfcce301094",
+  "after_sha256": "ad33b0541d6760b135a5988f62b01044cbcbce119785d9d4fec3604aeb43855e",
+  "evidence": "reverse/identity_evidence/004dfef0.md",
+  "reason": "False file-pair alignment after moving bfmeReady. BfmeThingDO::m_bfmeHead remains in Bfme5FortySix.cpp; the new m_pad belongs to an unrelated popup type, not the same field."
  }
 ]
