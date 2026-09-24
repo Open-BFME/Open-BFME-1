@@ -1,5 +1,5 @@
 // ?Rva009BEBB0Vp6DeblockBand@@YAXPAURva009BEBB0Vp6PostProc@@PAE1IIIPAI@Z
-// partial score=0.85 date=2026-09-10
+// partial score=0.905 date=2026-09-24
 // ?Rva009BEBB0Vp6DeblockBand@@YAXPAURva009BEBB0Vp6PostProc@@PAE1IIIPAI@Z
 // cl: /O2
 //
@@ -32,7 +32,7 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 	unsigned int start,
 	unsigned int *qTable)
 {
-	volatile unsigned char *srcHome;
+	unsigned char *srcHome;
 	unsigned char *dstPtr;
 	unsigned int qIndex;
 	unsigned char *srcPtr;
@@ -43,8 +43,8 @@ void __cdecl Rva009BEBB0Vp6DeblockBand(
 	__declspec(align(16)) unsigned short work[80];
 	unsigned int frag;
 
-#define CTX (*(Rva009BEBB0Vp6PostProc * volatile *)&ctx)
-#define PV(x) (*(volatile unsigned int *)&x)
+#define CTX (*(Rva009BEBB0Vp6PostProc * *)&ctx)
+#define PV(x) (*(unsigned int *)&x)
 
 	srcHome = src;
 	srcPtr = src;
