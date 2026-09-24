@@ -221,3 +221,39 @@ def test_todo_refuses_a_name_already_declared_at_another_offset(monkeypatch):
 
     assert not conflicts and not todo
     assert tally["witness name already declared in this class"] == 1
+
+
+def _ask(monkeypatch, capsys, argv, witness, zh):
+    monkeypatch.setattr(N, "load_witness", lambda: witness)
+    monkeypatch.setattr(N, "zh_members", lambda cls: zh.get(cls, {}))
+    monkeypatch.setattr(sys, "argv", ["name_oracle.py"] + argv)
+    code = N.main()
+    out = capsys.readouterr()
+    return code, out.out, out.err
+
+
+def test_unwitnessed_class_prints_the_zh_layout_as_a_labelled_hint(monkeypatch, capsys):
+    code, out, err = _ask(monkeypatch, capsys, ["--class", "Money"], {("Other", 0): ("m_x", 1.0, "w")},
+                          {"Money": {4: ["m_money"], 8: ["m_playerIndex"]}})
+    assert code == 2 and out == ""
+    assert "no witnessed layout for class 'Money'" in err
+    assert "not a BFME witness" in err and "+0x0004  m_money" in err and "+0x0008  m_playerIndex" in err
+
+
+def test_unwitnessed_offset_names_only_that_zh_member(monkeypatch, capsys):
+    code, out, err = _ask(monkeypatch, capsys, ["--class", "Money", "--offset", "0x8"],
+                          {("Money", 4): ("m_money", 1.0, "w")}, {"Money": {4: ["m_money"], 8: ["m_playerIndex"]}})
+    assert code == 2 and out == ""
+    assert "Money+0x8 is not witnessed" in err
+    assert "+0x0008  m_playerIndex" in err and "m_money" not in err.split("not witnessed")[1]
+
+
+def test_witnessed_offset_answers_without_a_hint(monkeypatch, capsys):
+    code, out, err = _ask(monkeypatch, capsys, ["--class", "Money", "--offset", "4"],
+                          {("Money", 4): ("m_money", 1.0, "layout_witness")}, {"Money": {4: ["m_other"]}})
+    assert code == 0 and "Money+0x4  m_money" in out and err == ""
+
+
+def test_zh_members_reads_the_committed_dump():
+    zh = N.zh_members("Money")
+    assert zh[4] == ["m_money"] and "sizeof" not in sum(zh.values(), [])

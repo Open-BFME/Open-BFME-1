@@ -39,6 +39,7 @@ ROOT = Path(__file__).resolve().parents[1]
 LAYOUTS = ROOT / "reverse/bfme_layouts.json"
 FIELDS = ROOT / "reverse/field_names.csv"
 BASELINE = ROOT / "reverse/name_oracle_baseline.csv"
+ZH_OFFSETS = ROOT / "reverse/zh_offsets.json"
 AREAS = ("Code/GameEngine", "Code/GameEngineDevice", "Code/Libraries")
 
 # The confidence floor below which layout_witness's own aggregation says the
@@ -147,6 +148,27 @@ def size_of(decl_type, pointer, array):
                 return None
             count = int(span.group(1), 0) - int(span.group(2), 0)
     return unit * count, align
+
+
+def zh_members(cls):
+    """ZH offset -> member names the ZH dump records for `cls` itself; inherited members are not listed."""
+    out = collections.defaultdict(list)
+    for classes in json.load(open(ZH_OFFSETS)).values():
+        for member, off in classes.get(cls, {}).items():
+            if member != "sizeof" and isinstance(off, int) and member not in out[off]:
+                out[off].append(member)
+    return out
+
+
+def zh_hint(cls, offset=None):
+    """Stderr lines naming what ZH declares, labelled as a hint because BFME may have moved it."""
+    zh = zh_members(cls)
+    rows = [(o, n) for o, n in sorted(zh.items()) if offset is None or o == offset]
+    if not rows:
+        return [f"  ZH records no own member of {cls} at that offset either."] if zh and offset is not None else []
+    lines = [f"  ZH layout of {cls} (a hint, not a BFME witness; BFME may have moved these):"]
+    lines += [f"    +{o:#06x}  {', '.join(n)}" for o, n in rows]
+    return lines
 
 
 def load_witness():
@@ -519,6 +541,9 @@ def main():
             print(f"name_oracle: no witnessed layout for class {args.cls!r} "
                   f"(of {len({o for o, _ in wit})} classes). Evidence may exist but be unaligned: "
                   f"run tools/layout_witness.py --compile, then tools/layout_witness.py", file=sys.stderr)
+            want = int(args.offset, 0) if args.offset is not None else None
+            for line in zh_hint(args.cls, want):
+                print(line, file=sys.stderr)
             return 2
         if args.offset is not None:
             want = int(args.offset, 0)
@@ -528,6 +553,8 @@ def main():
                     return 0
             print(f"name_oracle: {args.cls}+{want:#x} is not witnessed; "
                   f"nearest below is {max((o for o, *_ in rows if o <= want), default=None)}", file=sys.stderr)
+            for line in zh_hint(args.cls, want):
+                print(line, file=sys.stderr)
             return 2
         print(f"{args.cls}: {len(rows)} witnessed member(s)")
         for off, n, c, s in rows:

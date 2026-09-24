@@ -199,7 +199,8 @@ record `blocked`.
   and two wrong numbers have already been published from the disassembly. The
   compiled constant identifies the field; the archive says what it does.
 - **Naming a member, type or file? Ask before you invent.** `tools/name_oracle.py
-  --class <C> --offset <N>` answers from `bfme_layouts.json` and `field_names.csv`;
+  --class <C> --offset <N>` answers from `bfme_layouts.json` and `field_names.csv`
+  (an offset neither witnesses gets ZH's member as a labelled hint, exit 2);
   `--todo` lists placeholders the evidence can already name, `--check` reports sources
   that CONFLICT with the witness (shrink-only `reverse/name_oracle_baseline.csv`).
   An address-derived name is self-labelling and harmless; a plausible WRONG one is
