@@ -2478,5 +2478,25 @@
   "after_sha256": "f385634e7a8603eab84bc9987cf56dd17fd1822b9d1243b9c4527afa5d2655d7",
   "evidence": "reverse/functions.csv",
   "reason": "retail's call at +0x13 goes through ILT 0x000329FC to 0x003568C0 whose matched ledger name is ?findNameIndex@Rva00359330StringRecordTable@@AAEHPAVAsciiString@@@Z so the class name is forced by the callee's decorated symbol (the bank's findNameIndex@BfmeMap00359d40 has no pin and would not resolve)"
+ },
+ {
+  "old_path": "Code/Libraries/Source/WWVegas/WW3D2/BfmeAnimationHolderUniformTranslation.cpp",
+  "new_path": "Code/Libraries/Source/WWVegas/WW3D2/BfmeAnimationHolderUniformTranslation.cpp",
+  "old_name": "applyUniformPayload",
+  "new_name": "rva0061D5A0",
+  "before_sha256": "f9a35c5467af0db7e6bd4f4e28b19986ae8ac388d92ebfed170a13cb0fdb6db3",
+  "after_sha256": "902a523b53fcbcc22e4962e7282ac93792ab6c917bf9fd7de95ebe8d4214300f",
+  "evidence": "reverse/deleted_rows.csv",
+  "reason": "applyUniformPayload was an invented method name: 0x0061D5A0 has no caller or vtable slot or string or ZH twin and re_attempts.log already calls BfmeAnimationHolder identity-suspect; the method is renamed to its address token rva0061D5A0 and the retraction tombstone is in reverse/deleted_rows.csv"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "applyUniformPayload",
+  "new_name": "rva0061D5A0",
+  "before_sha256": "fa9269983c99517372caac24e8e5935ee0259c941f8986589abc6072a76b0dab",
+  "after_sha256": "e584c8682139472c107a69eb9e1f26165911dfd90d00bb792be944e9aa63ca44",
+  "evidence": "reverse/deleted_rows.csv",
+  "reason": "applyUniformPayload was an invented method name: 0x0061D5A0 has no caller or vtable slot or string or ZH twin and re_attempts.log already calls BfmeAnimationHolder identity-suspect; the method is renamed to its address token rva0061D5A0 and the retraction tombstone is in reverse/deleted_rows.csv"
  }
 ]

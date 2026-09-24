@@ -5,7 +5,7 @@
 class BfmeAnimationHolder
 {
 public:
-	void applyUniformPayload(float value);
+	void rva0061D5A0(float value);
 
 private:
 	unsigned char m_beforeReceivers[8];
@@ -13,8 +13,8 @@ private:
 	RenderObjClass *m_secondary;
 };
 
-// ?applyUniformPayload@BfmeAnimationHolder@@QAEXM@Z
-void BfmeAnimationHolder::applyUniformPayload(float value)
+// ?rva0061D5A0@BfmeAnimationHolder@@QAEXM@Z
+void BfmeAnimationHolder::rva0061D5A0(float value)
 {
 	RenderObjClass *primary = m_primary;
 	if (primary == 0)
