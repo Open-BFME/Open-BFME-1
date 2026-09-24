@@ -1,4 +1,8 @@
 // Open-BFME5 conversions.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#define _STLP_NO_EXCEPTIONS 1
+#include <list>
 
 extern char g_bfme928Handler[];
 
@@ -114,13 +118,34 @@ public:
 	void bfmeTail928F();
 };
 
+struct Rva007B4CD0Entry
+{
+	char m_pad00[0x34];
+	int m_type;
+	char m_pad38[0x9c];
+	Rva007B4CD0Entry *m_next;
+};
+
+class Shadow
+{
+public:
+	virtual void slot00(int);
+	virtual void slot04(int);
+	virtual void release();
+	void rva00459960(int, int, int, int, int, int, int, int);
+};
+
 class BfmeThing928F
 {
 public:
 	void bfmeGo928F();
 	void bfmeOne928F();
 	void bfmeTwo928F();
-	char m_bfmePad[0x24c];
+
+	void *m_pad00;
+	Rva007B4CD0Entry *m_list04;
+	Rva007B4CD0Entry *m_list08;
+	char m_bfmePad[0x240];
 	BfmeSub928F *m_bfmeSub;
 };
 
@@ -129,6 +154,30 @@ void BfmeThing928F::bfmeGo928F()
 	bfmeOne928F();
 	bfmeTwo928F();
 	m_bfmeSub->bfmeTail928F();
+}
+
+void BfmeThing928F::bfmeOne928F()
+{
+	_STL::list<Shadow *> pending;
+
+	for (int list = 0; list <= 1; ++list)
+	{
+		Rva007B4CD0Entry *entry = list ? m_list04 : m_list08;
+		while (entry)
+		{
+			if (entry->m_type == 0x400 || entry->m_type == 0x800)
+				pending.push_back((Shadow *)entry);
+			entry = entry->m_next;
+		}
+	}
+
+	for (_STL::list<Shadow *>::iterator it = pending.begin();
+		it != pending.end(); ++it)
+	{
+		(*it)->rva00459960(0, 0, 0, 0, 0, 0, 0, 0);
+		(*it)->release();
+	}
+	pending.clear();
 }
 
 __declspec(dllimport) void __stdcall bfmeImport928G(void *h);
