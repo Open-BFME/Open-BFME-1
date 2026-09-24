@@ -1,10 +1,13 @@
 // ?getPlayerSuperweaponValue@AIPlayer@@KAHPAUCoord3D@@HM@Z
-// partial score=0.98 date=2026-09-09
-// The retail body at 0x00164130 traverses player teams and values nearby objects.
-// The three-argument AIPlayer method in reference/CnC_Generals_Zero_Hour/Generals/Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp uses the same traversal and cost calculation.
-// The current GeneralsMD AIPlayer header declares a four-argument overload in an access section that emits KAH.
-// The bank declares the three-argument overload in that section too.
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
+// cl: /DNDEBUG /DWIN32 /MD /EHsc
+// The retail body at 0x00164130 is the three-argument Generals
+// AIPlayer::getPlayerSuperweaponValue (reference/CnC_Generals_Zero_Hour/Generals/
+// Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp): the radius clamp to
+// 4*PATHFIND_CELL_SIZE_F, the team walk, the aircraft skip, the cost scaling
+// and the two /10 cuts. The Generals header declares it protected static (KAH).
+// Every template read is the native OVERRIDE<ThingTemplate> conversion with
+// Overridable::getFinalOverride inlined one level; the recursion reaches the
+// out-of-line getFinalOverride through ILT 0x000022BB.
 
 #include <math.h>
 
@@ -21,55 +24,54 @@ struct Coord3D
 	Coord3D() {}
 };
 
-struct Coord2D
-{
-	Real x;
-	Real y;
-};
-
 class Player;
 
-class BfmeOverridable
+class Overridable
 {
 public:
-	BfmeOverridable *friend_getFinalOverride();
+	const Overridable *getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->getFinalOverride();
+		return this;
+	}
 
 	void *m_vtable;
-	BfmeOverridable *m_nextOverride;
+	Overridable *m_nextOverride;
 };
 
-typedef BfmeOverridable Overridable;
-
-class ThingTemplate : public BfmeOverridable
+class ThingTemplate : public Overridable
 {
 public:
 	Int calcCostToBuild(const Player *player, Int playerIndex = -1) const;
 
 	unsigned char m_pad[0xc0];
-	unsigned int m_kindOf;
+	unsigned int m_kindof;
 };
 
-__forceinline Int calcCostForTemplate(const ThingTemplate *thingTemplate, const Player *player)
-{
-	return thingTemplate->calcCostToBuild(player);
-}
-
-class TemplateOverride
+template <class T>
+class OVERRIDE
 {
 public:
-	const ThingTemplate *operator->() const
+	const T *operator->() const
 	{
-		const ThingTemplate *tmpl = *(const ThingTemplate **)((const char *)this);
-		if (tmpl != 0)
-		{
-			if (tmpl->m_nextOverride != 0)
-				tmpl = (const ThingTemplate *)tmpl->m_nextOverride->friend_getFinalOverride();
-		}
-		return tmpl;
+		if (!m_overridable)
+			return 0;
+		return (T *)m_overridable->getFinalOverride();
+	}
+	const T *operator*() const
+	{
+		if (!m_overridable)
+			return 0;
+		return (T *)m_overridable->getFinalOverride();
+	}
+	operator const T *() const
+	{
+		return operator*();
 	}
 
 private:
-	const Overridable *m_overridable;
+	const T *m_overridable;
 };
 
 class Object;
@@ -89,23 +91,13 @@ class BfmeObjectVtbl
 {
 public:
 	virtual void bfmeObjectSlot0(void);
-
-	__forceinline const ThingTemplate *getTemplate() const
-	{
-		const ThingTemplate *tmpl = *(const ThingTemplate **)((const char *)this + 4);
-		if (tmpl == 0)
-			return 0;
-		if (tmpl->m_nextOverride != 0)
-			tmpl = (const ThingTemplate *)tmpl->m_nextOverride->friend_getFinalOverride();
-		return tmpl;
-	}
 };
 
 class BfmeObjectDlinkBase
 {
 public:
 	Object *dlink_next_TeamMemberList(void) const;
-	TemplateOverride m_template;
+	OVERRIDE<ThingTemplate> m_template;
 };
 
 class BfmeObjectDlinkPad
@@ -118,9 +110,9 @@ class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
 	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
 {
 public:
-	Bool isKindOf(unsigned int kind) const
+	const ThingTemplate *getTemplate() const
 	{
-		return (getTemplate()->m_kindOf & (1UL << kind)) != 0;
+		return m_template;
 	}
 
 	Bool isSignificantlyAboveTerrain() const;
@@ -198,8 +190,6 @@ class Team
 public:
 	Team *_bfme_nextInInstanceList();
 
-	BfmeTeamInstanceIterator iterate_TeamInstanceList();
-
 	DLINK_ITERATOR<Object> iterate_TeamMemberList() const
 	{
 		return DLINK_ITERATOR<Object>(m_head, Object::dlink_next_TeamMemberList);
@@ -211,7 +201,7 @@ public:
 	Object *m_head;
 };
 
-void BfmeTeamInstanceIterator::advance()
+inline void BfmeTeamInstanceIterator::advance()
 {
 	if (m_cur)
 		m_cur = m_cur->_bfme_nextInInstanceList();
@@ -271,7 +261,6 @@ public:
 };
 
 extern PlayerList *ThePlayerList;
-extern Real g_bfmeDefaultBU;
 
 class AIPlayer
 {
@@ -307,7 +296,7 @@ Int AIPlayer::getPlayerSuperweaponValue(Coord3D *center, Int playerNdx, Real rad
 				Object *pObj = members.cur();
 				if (!pObj)
 					continue;
-				if ((pObj->getTemplate()->m_kindOf & 0x1000) != 0)
+				if ((pObj->getTemplate()->m_kindof & 0x1000) != 0)
 				{
 					if (pObj->isSignificantlyAboveTerrain())
 						continue;
@@ -317,26 +306,10 @@ Int AIPlayer::getPlayerSuperweaponValue(Coord3D *center, Int playerNdx, Real rad
 				Real dy = center->y - pos.y;
 				if (dx * dx + dy * dy < radSqr)
 				{
-					const ThingTemplate *templateForCost =
-						*(const ThingTemplate **)((const char *)pObj + 4);
 					Real dist = sqrt(dx * dx + dy * dy);
 					Real factor = 1.0f - (dist / (2 * radius));
-					const ThingTemplate *finalTemplateForCost;
-					if (templateForCost != 0)
-						goto haveTemplateForCost;
-					finalTemplateForCost = 0;
-					goto templateForCostDone;
-
-				haveTemplateForCost:
-					if (templateForCost->m_nextOverride != 0)
-						finalTemplateForCost = (const ThingTemplate *)
-							templateForCost->m_nextOverride->friend_getFinalOverride();
-					else
-						finalTemplateForCost = templateForCost;
-
-				templateForCostDone:
-					Real cost = calcCostForTemplate(finalTemplateForCost, pPlayer);
-					if ((pObj->getTemplate()->m_kindOf & 0x20000) != 0)
+					Real cost = pObj->getTemplate()->calcCostToBuild(pPlayer);
+					if ((pObj->getTemplate()->m_kindof & 0x20000) != 0)
 						cost = cost / 10;
 					if (cost > 3000)
 						cost = cost / 10;
