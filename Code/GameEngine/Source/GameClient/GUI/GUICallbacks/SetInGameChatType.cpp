@@ -1,12 +1,15 @@
-// ?SetInGameChatType@@YAXW4InGameChatType@@@Z
-// partial score=0.98 date=2026-09-18
 // cl: /DNDEBUG /MD /EHsc
+// ?SetInGameChatType@@YAXW4InGameChatType@@@Z
 // BFME SetInGameChatType, retail 0x00511CC0 (450 bytes).
 //
 // This is the BFME APT implementation, not the Zero Hour window/gadget
 // implementation.  The caller at 0x0055D7F0 passes mode 3 through ILT 28A51;
 // the body stores it at InGameChat+0x25c, creates InGameChat.apt, localizes
 // the selected Chat:* label, and writes APT:InGameChatReceivers.
+//
+// TheBfmeGameLogic is a real extern object, not an absolute-address cast:
+// only a named symbol lets MSVC 7.1 hoist its first load above the
+// mov fs:[0],esp of the EH prologue, as retail does at +0x0e.
 
 typedef bool Bool;
 
@@ -185,7 +188,7 @@ public:
 #define TheInGameUI (*(InGameUI **)0x012F148C)
 #define TheDisconnectMenu (*(void **)0x012F4964)
 
-class Rva00367E30Logic
+struct Rva00367E30Logic
 {
 private:
 	char m_pad10C[0x10c];
@@ -196,7 +199,7 @@ public:
 	void *m_field118;
 };
 
-#define TheBfmeGameLogic (*(Rva00367E30Logic **)0x012F0898)
+extern Rva00367E30Logic *TheBfmeGameLogic;
 
 class GameInfo
 {
