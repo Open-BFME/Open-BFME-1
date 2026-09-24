@@ -1,5 +1,5 @@
-// ?rva00392d00@Rva00392D00GameLogic@@QAEXHHH@Z
-// partial score=0.23 date=2026-09-18
+// ?d_00392d00@@YAXXZ
+// partial score=0.24 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 //
 // Retail 0x00392D00, 2353 bytes.  The matched caller is
@@ -497,13 +497,13 @@ static void teamAppend(BfmeTeamCollection *teams, const Dict *dict)
 	(teams->*call.member)(dict);
 }
 
-static void *sideFind(BfmeSideCollection *sides, GameSpyGroupRoom room,
+static void *sideFind(BfmeSideCollection *sides, AsciiString room,
 	Int *index)
 {
 	union
 	{
 		void (*raw)();
-		void *(BfmeSideCollection::*member)(GameSpyGroupRoom, Int *);
+		void *(BfmeSideCollection::*member)(AsciiString, Int *);
 	} call;
 	call.raw = j_000074b9;
 	return (sides->*call.member)(room, index);
@@ -581,8 +581,8 @@ void Rva00392D00GameLogic::rva00392d00(Int progressBase, Int arg1, Int arg2)
 		}
 
 		BFMERetailAsciiString creepsName("PlyrCreeps");
-		GameSpyGroupRoom creepsRoom(
-			*(const GameSpyGroupRoom *)&creepsName);
+		AsciiString creepsRoom(
+			*(const AsciiString *)&creepsName);
 		Int sideIndex = 0;
 		hasCreepsSide = sideFind(
 			(BfmeSideCollection *)*(void **)0x012EF428,
@@ -745,8 +745,8 @@ void Rva00392D00GameLogic::rva00392d00(Int progressBase, Int arg1, Int arg2)
 			}
 
 			BFMERetailAsciiString sideName(" ");
-			GameSpyGroupRoom sideRoom(
-				*(const GameSpyGroupRoom *)&sideName);
+			AsciiString sideRoom(
+				*(const AsciiString *)&sideName);
 			sideFind((BfmeSideCollection *)*(void **)0x012EF428,
 				sideRoom, &sideIndex);
 			sideAdd((BfmeSideCollection *)*(void **)0x012EF428,
@@ -773,8 +773,8 @@ void Rva00392D00GameLogic::rva00392d00(Int progressBase, Int arg1, Int arg2)
 	if (hasCreepsSide)
 	{
 		BFMERetailAsciiString observer(" ");
-		GameSpyGroupRoom observerRoom(
-			*(const GameSpyGroupRoom *)&observer);
+		AsciiString observerRoom(
+			*(const AsciiString *)&observer);
 		Int observerIndex = 0;
 		void *side = sideFind(
 			(BfmeSideCollection *)*(void **)0x012EF428,
