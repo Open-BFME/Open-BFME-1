@@ -147,58 +147,48 @@ Two follow-ups this lane surfaced and did not take:
   `releaseBuffer` and friends. Adding those to `ascii_string.h` -- on evidence,
   not on demand -- would reopen most of that pool in one full gate.
 
-## Blocked: AsciiString+0x0 and UnicodeString+0x0 are named against the evidence
+## Member-name evidence snapshot (2026-09-24)
 
-`layout_witness` puts **`m_data`** at `AsciiString+0x0` and `UnicodeString+0x0`,
-both at confidence 1.00. `ascii_string.h`, `unicode_string.h` and
-`module_factory.h` all say `m_text`, and the 490 TUs this lane moved onto those
-headers inherited it. That is the worst shape this defect takes -- a wrong name
-spreading through an `#include` rather than sitting in one file -- and it is why
-`tools/name_oracle.py` now reads headers at all.
+The earlier bulk-rename proposal was based on a witness that has since been
+re-generated from `--compile` objects alone (commit `ca805da376`). The current
+oracle does **not** support applying that recipe as written:
 
-**The change is prepared and verified, and it cannot be committed.** The hook gives
-any staged `.h` the full gate with no baseline tolerance, and the full gate is red
-on master for reasons that have nothing to do with this:
+* `python3 tools/name_oracle.py --class AsciiString --offset 0` exits 2:
+  there is no BFME witness for `AsciiString`; its `m_data` result is only a ZH
+  layout hint, which does not prove the retail member name.
+* `python3 tools/name_oracle.py --class UnicodeString --offset 0` reports
+  `m_data` at confidence 1.00. `unicode_string.h` still spells the member
+  `m_text`, and `python3 tools/name_oracle.py --check
+  Code/Libraries/Source/WWVegas/WWLib/unicode_string.h` reports one conflict.
+  This is a real disagreement to review, not a basis for renaming every
+  `m_text` occurrence across both string classes.
 
-    FULL GATE: FAIL — 5 red: functions, dir32 consistency, source claims,
-                             null relocs, no-op patch (unrunnable)
-    Functions: FAIL 147/161889
-    Source claims: FAIL (14 problem(s))   # ZERO matched rows, e.g. gen_small/X4*.cpp
+The witness is an inference from aligned retail accesses, not direct source
+symbols; `docs/bfme_layouts.md` documents its limits, including ambiguous tiny
+bodies. Resolve the Unicode disagreement with the relevant uses and witness
+provenance before changing names. Do not infer an `AsciiString` name from the
+ZH hint.
 
-No `Code/` header has landed from anyone in three days, which is this same wall.
+This is a recorded evidence snapshot, not a current gate forecast. A staged
+header or shim runs the full gate. The hook compares its red rows against the
+shrink-only `reverse/full_gate_baseline.txt` via `tools/gate_baseline.py`; it
+rejects new red rows and gate failures before byte comparison, while known red
+rows do not by themselves prohibit a header change. Commit `9c397c6e37` landed
+`Object` headers and moved 52 TUs on 2026-09-24, so the former claim that no
+header could land is obsolete. The hook and baseline are authoritative for a
+new change.
 
-### The recipe
+The earlier bulk rename experiment was measured before the witness
+regeneration. It byte-verified 424 includers, with one pre-existing failing TU,
+and found two traps that remain useful when reviewing a member rename:
 
-    python3 - <<'PY'
-    import re, pathlib
-    for f in ("Code/Libraries/Source/WWVegas/WWLib/ascii_string.h",
-              "Code/Libraries/Source/WWVegas/WWLib/unicode_string.h",
-              "Code/GameEngine/Source/Common/System/module_factory.h",
-              # these three name the member from inside their own methods
-              "Code/Libraries/Source/WWVegas/WWLib/ascii_string.cpp",
-              "Code/Libraries/Source/WWVegas/WWLib/unicode_string.cpp",
-              "Code/GameEngine/Source/GameClient/GUI/WinInstanceDataDisplayStrings.cpp"):
-        p = pathlib.Path(f); t = p.read_text(encoding="utf-8", newline="")
-        p.write_text(re.sub(r"\bm_text\b", "m_data", t), encoding="utf-8", newline="")
-    PY
+* Member uses can be unqualified: `unicode_string.cpp` refers to `m_text`
+  inside `UnicodeString` methods, so searching only `\.m_text` and `->m_text`
+  misses them. Identify the declaring class before changing a same-spelled
+  member in another type.
+* A cached object can make a scoped header build look green without compiling
+  the changed source. Check the `Compile: N of M` line and ensure the edited
+  source was rebuilt.
 
-### What was measured
-
-* All **424** TUs that include one of the three headers were byte-verified in
-  chunks of 30. **One** failed: `AsciiStringListCtorNothrow.cpp`, and it fails
-  identically with the change stashed -- pre-existing, not this rename.
-* So the change contributes **zero** of the 147 tree-wide failures.
-
-### Two traps it cost to find
-
-**A member is also named without a `this->`.** Grepping `\.m_text` and `->m_text`
-found only other classes' fields and suggested the rename was self-contained. It
-is not: `unicode_string.cpp` says bare `m_text` inside its own methods, and the
-first full gate died on `error C2065: 'm_text' : undeclared identifier`. The test
-that works is "declares its own member called `m_text`" -- and it must accept any
-type, since `UnicodeString m_text;` in an unrelated class is not the header's.
-
-**A scoped build can pass without compiling anything.** The first check after the
-rename reported `Functions: OK 25/25` on `ascii_string.cpp` -- from a **cached**
-object, `deps-cache: 1 current`, built before the edit. Read the `Compile: N of M`
-line before believing a green scoped build of a header change.
+Those historical results do not establish that a proposed rename is correct
+under the current witness, nor that the full gate will pass today.
