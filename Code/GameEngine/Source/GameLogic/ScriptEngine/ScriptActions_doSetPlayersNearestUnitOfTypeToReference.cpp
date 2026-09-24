@@ -1,5 +1,5 @@
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
-// ?doSetPlayersNearestUnitOfTypeToReference@ScriptActions@@IAEXABVAsciiString@@PAVScriptActionParameter@@0@Z
+// ?doTeamSetPlayersNearestUnitOfTypeToReference@ScriptActions@@IAEXABVAsciiString@@PAVParameter@@0@Z
 // TEAM_SET_PLAYERS_NEAREST_UNIT_OF_TYPE_TO_REFERENCE at retail RVA 0x002F86D0.
 // The action binds the nearest object of a type to a named unit reference.
 
@@ -14,7 +14,7 @@ class ObjectTypes;
 class Player;
 class ThingTemplate;
 
-class ScriptActionParameter
+class Parameter
 {
 	friend class ScriptActions;
 
@@ -44,12 +44,12 @@ class PartitionFilterThing : public PartitionFilter
 {
 public:
 	PartitionFilterThing(const ThingTemplate *thingTemplate, Bool match)
-		: m_thingTemplate(thingTemplate), m_match(match) {}
+		: m_tThing(thingTemplate), m_match(match) {}
 
 	virtual Bool allow(Object *object);
 
 private:
-	const ThingTemplate *m_thingTemplate;
+	const ThingTemplate *m_tThing;
 	Bool m_match;
 };
 
@@ -87,7 +87,7 @@ public:
 };
 
 // BFME adds getTeamNamed at slot 17, getObjectTypes at slot 20 and
-// bindUnitReference at slot 29.
+// an unidentified method at slot 29 (body 0x00349730, still an unnamed dump).
 class ScriptEngine
 {
 public:
@@ -120,7 +120,7 @@ public:
 	virtual void slot26(void);
 	virtual void slot27(void);
 	virtual void slot28(void);
-	virtual void bindUnitReference(Object *object, const AsciiString &name);
+	virtual void vslot29(Object *object, const AsciiString &name);
 
 	void assignUnitReference(const AsciiString &name, Object *object);
 };
@@ -132,9 +132,9 @@ protected:
 	Object *findClosestObject(const Coord3D *position,
 		ObjectTypes *objectTypes, Player *player);
 
-	void doSetPlayersNearestUnitOfTypeToReference(
+	void doTeamSetPlayersNearestUnitOfTypeToReference(
 		const AsciiString &objectType,
-		ScriptActionParameter *teamParameter,
+		Parameter *teamParameter,
 		const AsciiString &referenceName);
 };
 
@@ -142,9 +142,9 @@ extern ScriptEngine *TheScriptEngine;
 extern BfmeThingFactory *TheThingFactory;
 extern PartitionManager *ThePartitionManager;
 
-// ?doSetPlayersNearestUnitOfTypeToReference@ScriptActions@@IAEXABVAsciiString@@PAVScriptActionParameter@@0@Z
-void ScriptActions::doSetPlayersNearestUnitOfTypeToReference(
-	const AsciiString &objectType, ScriptActionParameter *teamParameter,
+// ?doTeamSetPlayersNearestUnitOfTypeToReference@ScriptActions@@IAEXABVAsciiString@@PAVParameter@@0@Z
+void ScriptActions::doTeamSetPlayersNearestUnitOfTypeToReference(
+	const AsciiString &objectType, Parameter *teamParameter,
 	const AsciiString &referenceName)
 {
 	Team *team = TheScriptEngine->getTeamNamed(teamParameter->m_string, false);
@@ -178,5 +178,5 @@ void ScriptActions::doSetPlayersNearestUnitOfTypeToReference(
 		return;
 
 	TheScriptEngine->assignUnitReference(referenceName, object);
-	TheScriptEngine->bindUnitReference(object, referenceName);
+	TheScriptEngine->vslot29(object, referenceName);
 }
