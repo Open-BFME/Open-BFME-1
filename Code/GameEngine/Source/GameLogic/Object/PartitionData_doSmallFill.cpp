@@ -85,6 +85,7 @@ public:
 	BfmePartitionGridSmallFill *m_grid;
 	BfmeCoiSmallFill *m_first;
 	BfmeCoiSmallFill *m_next;
+	bool rva008F80A0(int firstX, int lastX, int y);
 };
 
 extern bool bfmeFillSmall(int cellCenterX, int cellCenterY, int cellRadius,
@@ -133,5 +134,46 @@ bool PartitionData::doSmallFill(Real centerX, Real centerY, Real radius)
 			return false;
 		}
 		return true;
+	}
+}
+
+bool bfmeFillSmall(int cellCenterX, int cellCenterY, int cellRadius,
+	BfmeSmallFillRange range)
+{
+	int x = 0;
+	int y = cellRadius;
+	int error = 2 - 2 * cellRadius;
+	int leftX = cellCenterX;
+	int rightX = cellCenterX;
+
+	for (;;)
+	{
+		if (error + y > 0)
+		{
+			if (y == 0 && cellRadius == 1)
+			{
+				++x;
+				++rightX;
+				--leftX;
+			}
+
+			if (!range.rva008F80A0(leftX, rightX, cellCenterY + y))
+				return false;
+			if (y == 0)
+				return true;
+			if (!range.rva008F80A0(leftX, rightX, cellCenterY - y))
+				return false;
+
+			--y;
+			error += 1 - 2 * y;
+		}
+
+		if (x > error)
+		{
+			++x;
+			++rightX;
+			--leftX;
+			error += 2 * x + 1;
+		}
 	}
 }
