@@ -20,13 +20,13 @@ struct Coord3D
 	float z;
 };
 
-void *__stdcall bfmeGo941G(void *result, void *object);
 extern volatile const float BfmeZeroRange;
 
 class Object
 {
 public:
 	Coord3D computeBoundaryVector2D(const Object *other) const;
+	Coord3D bfmeGo941G(const Object *other) const;
 
 private:
 	char m_fields[0xbc];
@@ -35,8 +35,7 @@ private:
 
 Coord3D Object::computeBoundaryVector2D(const Object *other) const
 {
-	Coord3D delta;
-	bfmeGo941G(&delta, (void *)other);
+	Coord3D delta = bfmeGo941G(other);
 
 	float distance = (float)sqrt(delta.x * delta.x + delta.y * delta.y + delta.z * delta.z);
 	float combinedRadius = other->m_boundingCircleRadius + m_boundingCircleRadius;
