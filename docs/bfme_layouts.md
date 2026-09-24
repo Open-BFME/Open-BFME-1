@@ -52,8 +52,9 @@ Three of today's hand-derived conversions were used as the check: Object
 - A moved member read by several derived classes can collect dissenting votes
   from misaligned bodies; trust `confidence >= 0.75` with `votes >= 2`.
 - A body of 16 bytes or less matches every ZH getter of the same shape, so the
-  ledger can name it from its bytes alone (ICF folds such getters across
-  classes, and calls into the body do not say which class it serves). An
+  ledger can name it from its bytes alone (getters of different classes are
+  byte-identical, and calls into the body do not say which class it serves;
+  retail has no identical-COMDAT folding, so only one of those names is right). An
   unshifted access in it therefore only echoes the ZH layout, unless retail's
   export table names the body with the voter's own symbol. An echo counts
   toward a member's total but never wins; a member witnessed only that way is
