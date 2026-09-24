@@ -1,5 +1,3 @@
-// ?onContaining@Rva0021D5D0Secondary@@QAEXPAVObject@@_N@Z
-// partial score=0.99 date=2026-09-24
 // cl: /O2 /DNDEBUG /MD /EHsc
 typedef bool Bool;
 
