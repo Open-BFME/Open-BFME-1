@@ -2498,5 +2498,15 @@
   "after_sha256": "e584c8682139472c107a69eb9e1f26165911dfd90d00bb792be944e9aa63ca44",
   "evidence": "reverse/deleted_rows.csv",
   "reason": "applyUniformPayload was an invented method name: 0x0061D5A0 has no caller or vtable slot or string or ZH twin and re_attempts.log already calls BfmeAnimationHolder identity-suspect; the method is renamed to its address token rva0061D5A0 and the retraction tombstone is in reverse/deleted_rows.csv"
+ },
+ {
+  "old_path": "reverse/attempts/0x002184d0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Collide/CrateCollide/SalvageCrateCollide_executeCrateBehavior.cpp",
+  "old_name": "getSalvageCrateCollideModuleData",
+  "new_name": "rva002181C0",
+  "before_sha256": "12f25f734c871dd6bcdb58ddf475110aea6804227525f606bd448473e59f273e",
+  "after_sha256": "6c81905a9980870316451cea02a7c40e7f566bdfb4832811d799ed504634c7bd",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "false-positive token pairing and not a rename: the banked attempt inlined the module-data getter by hand (modData = getSalvageCrateCollideModuleData()) while the landed body calls the separate roll helper whose out-of-line retail copy is 0x002181C0 (outcome = rva002181C0()) and which the compiler inlines as retail does; these are two different calls so no descriptive name was replaced by a placeholder"
  }
 ]
