@@ -59,39 +59,34 @@ def test_compile_reference_does_not_swallow_exceptions():
 
 
 def _image():
-    """Tiny PE-like image: .text at RVA 0x1000 (raw 0x100), .rdata at RVA 0x2000 (raw 0x200), base 0x400000."""
+    """Tiny PE-like image: .text at RVA 0x1000 (raw 0x100), .rdata at RVA 0x2000 (raw 0x200), base 0x400000.
+    Exports: ?a@@ -> thunk 0x1010 -> thunk 0x1018 -> body 0x1090, ?b@@ -> body 0x10E0."""
     import struct
-    data = bytearray(b'\xcc' * 0x240)
+    data = bytearray(b'\xcc' * 0x300)
     struct.pack_into('<I', data, 0x3C, 0x40)
     struct.pack_into('<I', data, 0x40 + 0x34, 0x400000)
-    def rel(op, site, dst):
+    def jmp(site, dst):
         o = 0x100 + site - 0x1000
-        data[o] = op; struct.pack_into('<i', data, o + 1, dst - site - 5)
-    rel(0xE8, 0x1000, 0x1080)                    # direct call to A
-    rel(0xE8, 0x1005, 0x1010)                    # call into the thunk of B
-    rel(0xE9, 0x1010, 0x1090)                    # thunk -> B
-    rel(0xE9, 0x1020, 0x10A0)                    # thunk -> C, itself never referenced
-    rel(0xE8, 0x1030, 0x1040)                    # call into a thunk chain ending at E
-    rel(0xE9, 0x1040, 0x1048)
-    rel(0xE9, 0x1048, 0x10D0)
-    data[0x200:0x240] = bytes(0x40)
-    struct.pack_into('<I', data, 0x200, 0x4010B0)  # vtable slot naming D
-    struct.pack_into('<I', data, 0x40 + 0x78, 0x2010)  # export directory
-    struct.pack_into('<I', data, 0x210 + 0x14, 1)
-    struct.pack_into('<I', data, 0x210 + 0x1C, 0x2030)
-    struct.pack_into('<I', data, 0x230, 0x10E0)    # export address table entry naming F
+        data[o] = 0xE9; struct.pack_into('<i', data, o + 1, dst - site - 5)
+    jmp(0x1010, 0x1018)
+    jmp(0x1018, 0x1090)
+    data[0x200:0x300] = bytes(0x100)
+    struct.pack_into('<I', data, 0x40 + 0x78, 0x2010)            # export directory
+    struct.pack_into('<IIII', data, 0x210 + 0x18, 2, 0x2040, 0x2048, 0x2050)
+    struct.pack_into('<II', data, 0x240, 0x1010, 0x10E0)         # address table
+    struct.pack_into('<II', data, 0x248, 0x2060, 0x2068)         # name pointers
+    struct.pack_into('<HH', data, 0x250, 0, 1)                   # name ordinals
+    data[0x260:0x265] = b'?a@@\0'
+    data[0x268:0x26D] = b'?b@@\0'
     secs = [dict(name='.text', rva=0x1000, size=0x100, raw_pointer=0x100),
-            dict(name='.rdata', rva=0x2000, size=0x40, raw_pointer=0x200)]
+            dict(name='.rdata', rva=0x2000, size=0x100, raw_pointer=0x200)]
     return bytes(data), secs
 
 
-def test_retail_references_follows_thunks_and_pointers():
+def test_exported_names_follow_thunk_chains_to_the_body():
     data, secs = _image()
-    reach = lw.retail_references(data, secs, {0x1010, 0x1020, 0x1040, 0x1048})
-    assert reach[0x1080] == 1          # direct call
-    assert reach[0x1090] == 1          # reached only through its called thunk
-    assert reach[0x10A0] == 0          # its thunk is dead, so the body is too
-    assert reach[0x10B0] == 1          # vtable pointer
-    assert reach[0x10C0] == 0
-    assert reach[0x10D0] == 1          # through two chained thunks
-    assert reach[0x10E0] == 1          # exported
+    names = lw.exported_names(data, secs, {0x1010, 0x1018})
+    assert names[0x1090] == {'?a@@'}   # through two chained thunks
+    assert names[0x1010] == {'?a@@'}   # the exported thunk itself
+    assert names[0x10E0] == {'?b@@'}   # exported directly
+    assert 0x10A0 not in names

@@ -119,43 +119,31 @@ def shape(i, X86_OP_MEM, X86_OP_IMM):
     return (i.mnemonic,tuple(ops))
 
 
-# A body this small that nothing in retail reaches was named by its ZH shape, so an unshifted access in it
-# only echoes ZH's layout and cannot witness a member on its own.
+# A body this small matches the ZH getter of the same shape, so the ledger can name it from its bytes alone
+# and an unshifted access in it echoes ZH; only retail's export table names such a body independently.
 SHAPE_ONLY_MAX = 16
 
 
-def retail_references(data, secs, thunks):
-    """RVA -> references that reach it: rel32 call/jmp sites outside `thunks`, references to a thunk (or thunk
-    chain) jumping to it, export table entries, and absolute dwords (vtables, push/mov immediates) naming it
-    or such a thunk."""
-    base = B.u32(data, B.u32(data, 0x3C) + 0x34)
-    text = next(s for s in secs if s['name'] == '.text')
-    t0, t1 = text['rva'], text['rva'] + text['size']
-    blob = data[text['raw_pointer']:text['raw_pointer'] + text['size']]
-    direct = collections.Counter(); into = collections.defaultdict(list)
-    for m in re.finditer(rb'[\xe8\xe9]', blob):
-        i = m.start()
-        if i + 5 > len(blob): break
-        site = t0 + i; dst = site + 5 + struct.unpack_from('<i', blob, i + 1)[0]
-        if not (t0 <= dst < t1): continue
-        if blob[i] == 0xE9 and site in thunks: into[dst].append(site)
-        else: direct[dst] += 1
-    ptr = collections.Counter()
-    exp_rva = B.u32(data, B.u32(data, 0x3C) + 0x78)
-    if exp_rva:
-        e = B.rva_to_file_offset(secs, exp_rva)
-        eat = B.rva_to_file_offset(secs, B.u32(data, e + 0x1C))
-        for k in range(B.u32(data, e + 0x14)):
-            ptr[B.u32(data, eat + 4 * k)] += 1
-    for s in secs:
-        raw = data[s['raw_pointer']:s['raw_pointer'] + s['size']]
-        for align in range(4):
-            for (v,) in struct.iter_unpack('<I', raw[align:len(raw) - (len(raw) - align) % 4]):
-                if t0 <= v - base < t1: ptr[v - base] += 1
-    def count(rva, seen):
-        seen.add(rva)
-        return direct[rva] + ptr[rva] + sum(count(t, seen) for t in into.get(rva, ()) if t not in seen)
-    return collections.Counter({rva: count(rva, set()) for rva in set(direct) | set(into) | set(ptr)})
+def exported_names(data, secs, thunks):
+    """RVA -> mangled names retail's export table gives it, directly or through a chain of `thunks` (jmp rel32)."""
+    out = collections.defaultdict(set)
+    exp = B.u32(data, B.u32(data, 0x3C) + 0x78)
+    if not exp:
+        return out
+    e = B.rva_to_file_offset(secs, exp)
+    eat, names, ords = (B.rva_to_file_offset(secs, B.u32(data, e + k)) for k in (0x1C, 0x20, 0x24))
+    for k in range(B.u32(data, e + 0x18)):
+        p = B.rva_to_file_offset(secs, B.u32(data, names + 4 * k))
+        name = data[p:data.index(b'\0', p)].decode('ascii', 'replace')
+        rva = B.u32(data, eat + 4 * struct.unpack_from('<H', data, ords + 2 * k)[0])
+        seen = set()
+        while rva in thunks and rva not in seen:
+            out[rva].add(name); seen.add(rva)
+            o = B.rva_to_file_offset(secs, rva)
+            if data[o] != 0xE9: break
+            rva = rva + 5 + struct.unpack_from('<i', data, o + 1)[0]
+        out[rva].add(name)
+    return out
 
 
 def run_witness():
@@ -183,7 +171,7 @@ def run_witness():
         for m in re.finditer(r'^\s*(?:class|struct)\s+(\w+)\s*:\s*([^{;]+)\{',txt,re.M):
             bl=[re.sub(r'\b(public|protected|private|virtual)\b','',x).strip() for x in m.group(2).split(',')]
             bases.setdefault(m.group(1),[re.sub(r'<.*','',b).strip() for b in bl if b.strip()])
-    reach=retail_references(data,secs,{a for a,s in size.items() if s==5})
+    exported=exported_names(data,secs,{a for a,s in size.items() if s==5})
     objs=list((B.ROOT/'build/layout/ref').glob('*.obj'))+list((B.ROOT/'build/match').glob('reference_*.obj'))
     seen=set(); wit=[]; stats=collections.Counter()
     for p in objs:
@@ -194,7 +182,7 @@ def run_witness():
             if s['section']<=0 or not n.startswith('?') or n in seen or n not in addr: continue
             rva=addr[n]; sz=size.get(rva)
             if not sz: continue
-            dead=sz<=SHAPE_ONLY_MAX and not reach[rva]
+            dead=sz<=SHAPE_ONLY_MAX and n not in exported.get(rva,())
             try: comp,relocs=B.read_object_symbol_bytes(p,n)
             except Exception: continue
             ours=len(comp.rstrip(b'\xcc'))
