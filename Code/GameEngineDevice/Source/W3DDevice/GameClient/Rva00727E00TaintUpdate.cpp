@@ -1,9 +1,6 @@
-// ?update@Rva00727E00@@QAEXPAVCameraClass@@@Z
-// partial score=0.7 date=2026-09-16
-// Scratch-only native reconstruction for retail 0x00727E00 (684 bytes).
-// The owner and method are address-derived; the stack argument is unused.
-//
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Include /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib
+// Retail 0x00727E00 (684 bytes, RET4): per-frame taint surface update that follows the
+// statement order of Zero Hour W3DShroud::render. Owner and method stay address-derived.
 
 #include <string.h>
 #include "basetype.h"
@@ -68,6 +65,9 @@ public:
 class ShroudFilter
 {
 public:
+	int getMagFilter(void) const { return m_filter4; }
+	void setMagFilter(int filter) { m_filter4 = filter; }
+	void setMinFilter(int filter) { m_filter0 = filter; }
 	int m_filter0;
 	int m_filter4;
 };
@@ -93,6 +93,11 @@ extern HeightMapRenderObjClass *TheTerrainRenderObject;
 class Rva00727E00Map
 {
 public:
+	int getBorderSize(void) const { return m_field10; }
+	int getDrawOrgX(void) const { return m_field120E0; }
+	int getDrawOrgY(void) const { return m_field120E4; }
+	int getDrawWidth(void) const { return m_field120E8; }
+	int getDrawHeight(void) const { return m_field120EC; }
 	unsigned char m_pad00[0x10];
 	int m_field10;
 	unsigned char m_pad14[0x120E0 - 0x14];
@@ -204,25 +209,48 @@ void Rva00727E00::update(CameraClass *unused)
 	Rva00727E00Map *map =
 		reinterpret_cast<Rva00727E00TerrainView *>(TheTerrainRenderObject)->m_map;
 	int visStartX = fast_float2long_round((float)floor((double)(
-		((float)(map->m_field120E0 - map->m_field10) / m_cellWidth) * 10.0f)));
+		((float)(map->getDrawOrgX() - map->getBorderSize()) / m_cellWidth) * 10.0f)));
+	if (visStartX < 0)
+		visStartX = 0;
 	int visStartY = fast_float2long_round((float)floor((double)(
-		((float)(map->m_field120E4 - map->m_field10) / m_cellHeight) * 10.0f)));
-	int width = fast_float2long_round((float)floor((double)(
-		((float)(map->m_field120E8 - 1) / m_cellWidth) * 10.0f)));
-	int height = fast_float2long_round((float)floor((double)(
-		((float)(map->m_field120EC - 1) / m_cellHeight) * 10.0f)));
+		((float)(map->getDrawOrgY() - map->getBorderSize()) / m_cellHeight) * 10.0f)));
+	if (visStartY < 0)
+		visStartY = 0;
+
+	visStartX = 0;
+	visStartY = 0;
+
+	int width = visStartX + fast_float2long_round((float)floor((double)(
+		((float)(map->getDrawWidth() - 1) / m_cellWidth) * 10.0f))) + 1;
+	int height = visStartY + fast_float2long_round((float)floor((double)(
+		((float)(map->getDrawHeight() - 1) / m_cellHeight) * 10.0f))) + 1;
 
 	width = m_width;
 	height = m_height;
-	visStartX = 0;
-	visStartY = 0;
+
+	if (width > m_width)
+	{
+		visStartX -= width - m_width;
+		if (visStartX < 0)
+			visStartX = 0;
+		width = m_width;
+	}
+
+	if (height > m_height)
+	{
+		visStartY -= height - m_height;
+		if (visStartY < 0)
+			visStartY = 0;
+		height = m_height;
+	}
+
 	m_drawOriginX = (float)visStartX * m_cellWidth;
 	m_drawOriginY = (float)visStartY * m_cellHeight;
 
-	if (texture->getFilter()->m_filter4 != m_filter)
+	if (texture->getFilter()->getMagFilter() != m_filter)
 	{
-		texture->getFilter()->m_filter4 = m_filter;
-		texture->getFilter()->m_filter0 = m_filter;
+		texture->getFilter()->setMagFilter(m_filter);
+		texture->getFilter()->setMinFilter(m_filter);
 	}
 
 	Rva00727E00Record record;
@@ -232,22 +260,23 @@ void Rva00727E00::update(CameraClass *unused)
 
 	if (m_clear != 0)
 	{
-		unsigned char borderLevel = m_borderLevel;
 		m_clear = 0;
 		reinterpret_cast<TaintBuffer *>(this)->fillTaintSurface(
-			borderLevel, reinterpret_cast<SurfaceClass *>(&surface));
+			m_borderLevel, reinterpret_cast<SurfaceClass *>(&surface));
 	}
 
-	unsigned char *source = reinterpret_cast<unsigned char *>(m_data);
-	int pitch;
-	unsigned char *destination = reinterpret_cast<unsigned char *>(
-		reinterpret_cast<SurfaceClass *>(&surface)->Lock(
-			&pitch, 1, 1, width + 1, height + 1));
-	for (int y = 0; y < height; ++y)
 	{
-		memcpy(destination, source, width * 4);
-		source += m_width * 4;
-		destination += pitch;
+		unsigned char *source = reinterpret_cast<unsigned char *>(m_data);
+		int pitch;
+		unsigned char *destination = reinterpret_cast<unsigned char *>(
+			reinterpret_cast<SurfaceClass *>(&surface)->Lock(
+				&pitch, 1, 1, width + 1, height + 1));
+		for (int y = 0; y < height; ++y)
+		{
+			memcpy(destination, source, width * 4);
+			source += m_width * 4;
+			destination += pitch;
+		}
+		reinterpret_cast<SurfaceClass *>(&surface)->Unlock();
 	}
-	reinterpret_cast<SurfaceClass *>(&surface)->Unlock();
 }
