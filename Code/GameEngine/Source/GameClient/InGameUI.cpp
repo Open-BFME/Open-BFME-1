@@ -659,15 +659,38 @@ void InGameUI::loadPostProcess( void )
 
 // ------------------------------------------------------------------------------------------------
 // ------------------------------------------------------------------------------------------------
+// BFME's Mouse::setCursor is vtable slot 14 (+0x38): the pure slot of Mouse's
+// table 0x0110D580, overridden there by Win32Mouse::setCursor (0x006BC190).
+// m_mouseMode and m_mouseModeCursor are InGameUI+0x824/+0x828 (name_oracle 1.00).
+#define BFME_MOUSE_SLOT(n) virtual void bfmeMouseSlot##n() = 0;
+struct BfmeMouseSetCursorView
+{
+	BFME_MOUSE_SLOT(0) BFME_MOUSE_SLOT(1) BFME_MOUSE_SLOT(2) BFME_MOUSE_SLOT(3)
+	BFME_MOUSE_SLOT(4) BFME_MOUSE_SLOT(5) BFME_MOUSE_SLOT(6) BFME_MOUSE_SLOT(7)
+	BFME_MOUSE_SLOT(8) BFME_MOUSE_SLOT(9) BFME_MOUSE_SLOT(10) BFME_MOUSE_SLOT(11)
+	BFME_MOUSE_SLOT(12) BFME_MOUSE_SLOT(13)
+	virtual void setCursor( Mouse::MouseCursor cursor ) = 0;	///< vtable +0x38
+};
+#undef BFME_MOUSE_SLOT
+
+struct BfmeMouseModeView
+{
+	UnsignedByte pad[0x824];
+	Int mouseMode;									///< retail this+0x824
+	Int mouseModeCursor;							///< retail this+0x828
+};
+
 void InGameUI::setMouseCursor(Mouse::MouseCursor c)
 {
+	BfmeMouseModeView *self = (BfmeMouseModeView *)this;
+
 	if (!TheMouse)
 		return;
 
-	TheMouse->setCursor(c);
+	((BfmeMouseSetCursorView *)TheMouse)->setCursor(c);
 
-	if (m_mouseMode == MOUSEMODE_GUI_COMMAND && c != Mouse::ARROW && c != Mouse::SCROLL)
-		m_mouseModeCursor = c;
+	if (self->mouseMode == MOUSEMODE_GUI_COMMAND && c != Mouse::ARROW && c != Mouse::SCROLL)
+		self->mouseModeCursor = c;
 
 }
 
