@@ -46,15 +46,15 @@ enum {
 // The byte this call armed, so disarm clears only a bit it set. One logic
 // thread: arm returns before the predicate runs, and disarm is the next
 // instruction after that call.
-static unsigned char *s_status;
-static int s_armed;
+static unsigned char *s_predicateSkipByte;
+static int s_predicateSkipArmed;
 
-static void *field_ptr(void *base, int offset)
+static void *read_pointer_field(void *base, int offset)
 {
     return *(void **)((unsigned char *)base + offset);
 }
 
-static int goal_is_structure(void *object)
+static int unit_has_structure_goal(void *object)
 {
     void *ai;
     void *machine;
@@ -62,10 +62,10 @@ static int goal_is_structure(void *object)
 
     if (object == 0)
         return 0;
-    ai = field_ptr(object, OBJECT_AI);
+    ai = read_pointer_field(object, OBJECT_AI);
     if (ai == 0)
         return 0;
-    machine = field_ptr(ai, AI_STATE_MACHINE);
+    machine = read_pointer_field(ai, AI_STATE_MACHINE);
     if (machine == 0)
         return 0;
     goal = c_get_goal_object(machine, 0);
@@ -74,39 +74,39 @@ static int goal_is_structure(void *object)
     return c_is_kind_of(goal, 0, KINDOF_STRUCTURE) != 0;
 }
 
-static int attacking_structure(void *target)
+static int object_or_outer_has_structure_goal(void *target)
 {
     void *outer;
 
-    if (goal_is_structure(target))
+    if (unit_has_structure_goal(target))
         return 1;
     if (target == 0)
         return 0;
-    outer = field_ptr(target, OBJECT_OUTER);
+    outer = read_pointer_field(target, OBJECT_OUTER);
     if (outer == 0 || outer == target)
         return 0;
-    return goal_is_structure(outer);
+    return unit_has_structure_goal(outer);
 }
 
-extern "C" __declspec(dllexport) void __cdecl meleeac_arm(void *target)
+extern "C" __declspec(dllexport) void __cdecl armMeleeHordeTargetPredicateSkip(void *target)
 {
     unsigned char *status;
 
-    s_armed = 0;
-    if (target == 0 || !attacking_structure(target))
+    s_predicateSkipArmed = 0;
+    if (target == 0 || !object_or_outer_has_structure_goal(target))
         return;
     status = (unsigned char *)target + OBJECT_PREDICATE_SKIP;
     if ((*status & PREDICATE_SKIP_BIT) != 0)
         return;
     *status = (unsigned char)(*status | PREDICATE_SKIP_BIT);
-    s_status = status;
-    s_armed = 1;
+    s_predicateSkipByte = status;
+    s_predicateSkipArmed = 1;
 }
 
-extern "C" __declspec(dllexport) void __cdecl meleeac_disarm(void)
+extern "C" __declspec(dllexport) void __cdecl disarmMeleeHordeTargetPredicateSkip(void)
 {
-    if (!s_armed)
+    if (!s_predicateSkipArmed)
         return;
-    *s_status = (unsigned char)(*s_status & (unsigned char)~PREDICATE_SKIP_BIT);
-    s_armed = 0;
+    *s_predicateSkipByte = (unsigned char)(*s_predicateSkipByte & (unsigned char)~PREDICATE_SKIP_BIT);
+    s_predicateSkipArmed = 0;
 }
