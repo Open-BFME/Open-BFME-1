@@ -400,32 +400,32 @@ public:
 	virtual Bool isIdle() const = 0;
 	virtual Bool bfmeCurrentWeaponTemplateFlag4() const;
 
-	void setGoalPositionClipped(const Coord3D *pos, CommandSourceType cmdSource);
+	void setGoalPositionClipped(const Coord3D *position, CommandSourceType commandSource);
 
 protected:
-	virtual void privateExitInstantly(Object *objectToExit, CommandSourceType cmdSource);
-	virtual void privateEnter(Object *obj, CommandSourceType cmdSource);
-	virtual void bfmePrivateCommand01(void *first, CommandSourceType cmdSource);
-	virtual void bfmePrivateCommand38(void *first, CommandSourceType cmdSource);
-	virtual void privateMoveToPosition(const Coord3D *pos, CommandSourceType cmdSource);
-	virtual void bfmePrivateCommand3F(void *first, CommandSourceType cmdSource);
-	virtual void bfmePrivateCommand25(void *first, CommandSourceType cmdSource);
-	virtual void bfmePrivateCommand1C(const Coord3D *pos, CommandSourceType cmdSource);
-	virtual void bfmePrivateCommand1D(const Coord3D *pos, CommandSourceType cmdSource);
-	virtual void bfmePrivateCommand1E(const Coord3D *pos, CommandSourceType cmdSource);
-	virtual void bfmePrivateCommand37(const Coord3D *pos, CommandSourceType cmdSource);
-	virtual void bfmePrivateCommand1B(void *first, CommandSourceType cmdSource);
-	void bfmePrivateCommand31(Object *obj, CommandSourceType cmdSource);
-	virtual void bfmePrivateCommand39(Object *victim, CommandSourceType cmdSource);
-	virtual void privateAttackMoveToPosition(const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource);
-	virtual void privateHunt(CommandSourceType cmdSource);
-	virtual void privateFaceObject(Object *obj, CommandSourceType cmdSource);
-	virtual void privateGetRepaired(Object *repairDepot, CommandSourceType cmdSource);
-	virtual void privateGuardObject(Object *objectToGuard, GuardMode guardMode, CommandSourceType cmdSource);
-	virtual void privateGuardPosition(const Coord3D *pos, GuardMode guardMode, CommandSourceType cmdSource);
+	virtual void privateExitInstantly(Object *objectToExit, CommandSourceType commandSource);
+	virtual void privateEnter(Object *object, CommandSourceType commandSource);
+	virtual void bfmePrivateCommand01(void *first, CommandSourceType commandSource);
+	virtual void bfmePrivateCommand38(void *first, CommandSourceType commandSource);
+	virtual void privateMoveToPosition(const Coord3D *position, CommandSourceType commandSource);
+	virtual void bfmePrivateCommand3F(void *first, CommandSourceType commandSource);
+	virtual void bfmePrivateCommand25(void *first, CommandSourceType commandSource);
+	virtual void bfmePrivateCommand1C(const Coord3D *position, CommandSourceType commandSource);
+	virtual void bfmePrivateCommand1D(const Coord3D *position, CommandSourceType commandSource);
+	virtual void bfmePrivateCommand1E(const Coord3D *position, CommandSourceType commandSource);
+	virtual void bfmePrivateCommand37(const Coord3D *position, CommandSourceType commandSource);
+	virtual void bfmePrivateCommand1B(void *first, CommandSourceType commandSource);
+	void bfmePrivateCommand31(Object *object, CommandSourceType commandSource);
+	virtual void bfmePrivateCommand39(Object *victim, CommandSourceType commandSource);
+	virtual void privateAttackMoveToPosition(const Coord3D *position, Int maxShotsToFire, CommandSourceType commandSource);
+	virtual void privateHunt(CommandSourceType commandSource);
+	virtual void privateFaceObject(Object *target, CommandSourceType commandSource);
+	virtual void privateGetRepaired(Object *repairDepot, CommandSourceType commandSource);
+	virtual void privateGuardObject(Object *objectToGuard, GuardMode guardMode, CommandSourceType commandSource);
+	virtual void privateGuardPosition(const Coord3D *position, GuardMode guardMode, CommandSourceType commandSource);
 	virtual void privateGuardAreaFromPosition(const PolygonTrigger *area, GuardMode guardMode,
-		CommandSourceType cmdSource, const Coord3D *position);
-	virtual void privateGuardRetaliate(Object *victim, const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource);
+		CommandSourceType commandSource, const Coord3D *position);
+	virtual void privateGuardRetaliate(Object *victim, const Coord3D *position, Int maxShotsToFire, CommandSourceType commandSource);
 
 	void playMoveVoiceResponse(const Coord3D *position);
 	void playAttackVoiceResponse(Object *victim);
@@ -484,7 +484,7 @@ protected:
 
 // Retail 0x00271690. The object enter command first gives horde containers a
 // direct enter callback, then uses the ordinary AI enter state.
-void AIUpdateInterface::privateEnter(Object *obj, CommandSourceType cmdSource)
+void AIUpdateInterface::privateEnter(Object *object, CommandSourceType commandSource)
 {
 	Object *me = m_object;
 	ContainModuleInterface *contain = me->m_contain;
@@ -494,7 +494,7 @@ void AIUpdateInterface::privateEnter(Object *obj, CommandSourceType cmdSource)
 			contain->getHordeContainInterface());
 		if (horde)
 		{
-			horde->enterObject(obj, cmdSource);
+			horde->enterObject(object, commandSource);
 			return;
 		}
 	}
@@ -502,11 +502,11 @@ void AIUpdateInterface::privateEnter(Object *obj, CommandSourceType cmdSource)
 	if (!me->isMobile())
 		return;
 
-	if (TheActionManager->canEnterObject(me, obj, cmdSource, DONT_CHECK_CAPACITY, 0))
+	if (TheActionManager->canEnterObject(me, object, commandSource, DONT_CHECK_CAPACITY, 0))
 	{
 		m_stateMachine->clear();
-		m_stateMachine->setGoalObject(obj);
-		m_lastCommandSource = cmdSource;
+		m_stateMachine->setGoalObject(object);
+		m_lastCommandSource = commandSource;
 		m_stateMachine->setState((StateID)0x0f);
 	}
 }
@@ -514,7 +514,7 @@ void AIUpdateInterface::privateEnter(Object *obj, CommandSourceType cmdSource)
 // Retail 0x00271800. The preceding 0x00271760 body is privateDock. This one
 // asks the object's contain interface at +0x1FC for a BFME horde exit view and
 // uses it if there is one, before falling back to the exit-instantly state.
-void AIUpdateInterface::privateExitInstantly(Object *objectToExit, CommandSourceType cmdSource)
+void AIUpdateInterface::privateExitInstantly(Object *objectToExit, CommandSourceType commandSource)
 {
 	Object *us = m_object;
 	if (!objectToExit)
@@ -529,21 +529,21 @@ void AIUpdateInterface::privateExitInstantly(Object *objectToExit, CommandSource
 		HordeContainInterface *horde = contain->getHordeContainInterface();
 		if (horde)
 		{
-			horde->exitObject(objectToExit, cmdSource);
+			horde->exitObject(objectToExit, commandSource);
 			return;
 		}
 	}
 
 	m_stateMachine->clear();
 	m_stateMachine->setGoalObject(objectToExit);
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_EXIT_INSTANTLY);
 }
 
 // Retail 0x00273400. The object form of the move order privateMoveToPosition
 // gives the position form: m_isAiDead gates it, the argument becomes the goal
 // object, and the voice response reads that object's position at +0x38.
-void AIUpdateInterface::bfmePrivateCommand01(void *first, CommandSourceType cmdSource)
+void AIUpdateInterface::bfmePrivateCommand01(void *first, CommandSourceType commandSource)
 {
 	if (m_isAiDead)
 		return;
@@ -558,16 +558,16 @@ void AIUpdateInterface::bfmePrivateCommand01(void *first, CommandSourceType cmdS
 	m_blockedFrames = 0;
 	m_isBlocked = 0;
 	m_isBlockedAndStuck = 0;
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_MOVE_TO);
 
-	if (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
 		playMoveVoiceResponse((const Coord3D *)((const char *)first + 0x38));
 }
 
 // Retail 0x002734B0. bfmePrivateCommand01 without the m_isAiDead gate,
 // entering state 0x38.
-void AIUpdateInterface::bfmePrivateCommand38(void *first, CommandSourceType cmdSource)
+void AIUpdateInterface::bfmePrivateCommand38(void *first, CommandSourceType commandSource)
 {
 	if (!m_object->isMobile())
 		return;
@@ -580,17 +580,17 @@ void AIUpdateInterface::bfmePrivateCommand38(void *first, CommandSourceType cmdS
 	m_blockedFrames = 0;
 	m_isBlocked = 0;
 	m_isBlockedAndStuck = 0;
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_38);
 
-	if (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
 		playMoveVoiceResponse((const Coord3D *)((const char *)first + 0x38));
 }
 
 // Retail 0x00278280. BFME rejects mine-clearing details, preserves the active
 // goal for an internal move, and uses a 100-frame temporary move state when the
 // unit is busy.
-void AIUpdateInterface::privateMoveToPosition(const Coord3D *pos, CommandSourceType cmdSource)
+void AIUpdateInterface::privateMoveToPosition(const Coord3D *position, CommandSourceType commandSource)
 {
 	if (!m_object->isMobile())
 		return;
@@ -600,10 +600,10 @@ void AIUpdateInterface::privateMoveToPosition(const Coord3D *pos, CommandSourceT
 	if (m_curLocomotor)
 		m_curLocomotor->set((const char *)m_object);
 
-	if (!isIdle() && cmdSource == CMD_FROM_INTERNAL)
+	if (!isIdle() && commandSource == CMD_FROM_INTERNAL)
 	{
 		reinterpret_cast<Rva0016AD50 *>(m_stateMachine)->bfmeSnapshot();
-		reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)pos, (void *)cmdSource);
+		reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)position, (void *)commandSource);
 		m_blockedFrames = 0;
 		m_isBlocked = 0;
 		m_isBlockedAndStuck = 0;
@@ -612,20 +612,20 @@ void AIUpdateInterface::privateMoveToPosition(const Coord3D *pos, CommandSourceT
 	}
 
 	m_stateMachine->clear();
-	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)pos, (void *)cmdSource);
+	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)position, (void *)commandSource);
 	m_blockedFrames = 0;
 	m_isBlocked = 0;
 	m_isBlockedAndStuck = 0;
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_MOVE_TO);
 
-	if (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI)
-		playMoveVoiceResponse(pos);
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+		playMoveVoiceResponse(position);
 }
 
 // Retail 0x00278390. Gated on weapon-set bit 8 like privateMoveToPosition, but
 // with no voice response.
-void AIUpdateInterface::bfmePrivateCommand3F(void *first, CommandSourceType cmdSource)
+void AIUpdateInterface::bfmePrivateCommand3F(void *first, CommandSourceType commandSource)
 {
 	if (!m_object->isMobile())
 		return;
@@ -636,32 +636,32 @@ void AIUpdateInterface::bfmePrivateCommand3F(void *first, CommandSourceType cmdS
 		m_curLocomotor->set((const char *)m_object);
 
 	m_stateMachine->clear();
-	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare(first, (void *)cmdSource);
+	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare(first, (void *)commandSource);
 	m_blockedFrames = 0;
 	m_isBlocked = 0;
 	m_isBlockedAndStuck = 0;
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_3F);
 }
 
 // Retail 0x00278430. No locomotor notification and no voice response.
-void AIUpdateInterface::bfmePrivateCommand25(void *first, CommandSourceType cmdSource)
+void AIUpdateInterface::bfmePrivateCommand25(void *first, CommandSourceType commandSource)
 {
 	if (!m_object->isMobile())
 		return;
 
 	m_stateMachine->clear();
-	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare(first, (void *)cmdSource);
+	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare(first, (void *)commandSource);
 	m_blockedFrames = 0;
 	m_isBlocked = 0;
 	m_isBlockedAndStuck = 0;
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_25);
 }
 
 // Retail 0x002784A0, 0x00278540, 0x002785E0 and 0x00278680: one body four times
 // over states 0x1C, 0x1D, 0x1E and 0x37, differing in the constant alone.
-void AIUpdateInterface::bfmePrivateCommand1C(const Coord3D *pos, CommandSourceType cmdSource)
+void AIUpdateInterface::bfmePrivateCommand1C(const Coord3D *position, CommandSourceType commandSource)
 {
 	if (!m_object->isMobile())
 		return;
@@ -670,18 +670,18 @@ void AIUpdateInterface::bfmePrivateCommand1C(const Coord3D *pos, CommandSourceTy
 		m_curLocomotor->set((const char *)m_object);
 
 	m_stateMachine->clear();
-	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)pos, (void *)cmdSource);
+	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)position, (void *)commandSource);
 	m_blockedFrames = 0;
 	m_isBlocked = 0;
 	m_isBlockedAndStuck = 0;
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_1C);
 
-	if (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI)
-		playMoveVoiceResponse(pos);
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+		playMoveVoiceResponse(position);
 }
 
-void AIUpdateInterface::bfmePrivateCommand1D(const Coord3D *pos, CommandSourceType cmdSource)
+void AIUpdateInterface::bfmePrivateCommand1D(const Coord3D *position, CommandSourceType commandSource)
 {
 	if (!m_object->isMobile())
 		return;
@@ -690,18 +690,18 @@ void AIUpdateInterface::bfmePrivateCommand1D(const Coord3D *pos, CommandSourceTy
 		m_curLocomotor->set((const char *)m_object);
 
 	m_stateMachine->clear();
-	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)pos, (void *)cmdSource);
+	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)position, (void *)commandSource);
 	m_blockedFrames = 0;
 	m_isBlocked = 0;
 	m_isBlockedAndStuck = 0;
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_1D);
 
-	if (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI)
-		playMoveVoiceResponse(pos);
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+		playMoveVoiceResponse(position);
 }
 
-void AIUpdateInterface::bfmePrivateCommand1E(const Coord3D *pos, CommandSourceType cmdSource)
+void AIUpdateInterface::bfmePrivateCommand1E(const Coord3D *position, CommandSourceType commandSource)
 {
 	if (!m_object->isMobile())
 		return;
@@ -710,18 +710,18 @@ void AIUpdateInterface::bfmePrivateCommand1E(const Coord3D *pos, CommandSourceTy
 		m_curLocomotor->set((const char *)m_object);
 
 	m_stateMachine->clear();
-	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)pos, (void *)cmdSource);
+	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)position, (void *)commandSource);
 	m_blockedFrames = 0;
 	m_isBlocked = 0;
 	m_isBlockedAndStuck = 0;
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_1E);
 
-	if (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI)
-		playMoveVoiceResponse(pos);
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+		playMoveVoiceResponse(position);
 }
 
-void AIUpdateInterface::bfmePrivateCommand37(const Coord3D *pos, CommandSourceType cmdSource)
+void AIUpdateInterface::bfmePrivateCommand37(const Coord3D *position, CommandSourceType commandSource)
 {
 	if (!m_object->isMobile())
 		return;
@@ -730,34 +730,34 @@ void AIUpdateInterface::bfmePrivateCommand37(const Coord3D *pos, CommandSourceTy
 		m_curLocomotor->set((const char *)m_object);
 
 	m_stateMachine->clear();
-	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)pos, (void *)cmdSource);
+	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)position, (void *)commandSource);
 	m_blockedFrames = 0;
 	m_isBlocked = 0;
 	m_isBlockedAndStuck = 0;
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_37);
 
-	if (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI)
-		playMoveVoiceResponse(pos);
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+		playMoveVoiceResponse(position);
 }
 
 // Retail 0x002787D0, the shortest of the family: it clears the goal object
 // rather than setting one, and skips the locomotor, the blocked counters and
 // the voice response.
-void AIUpdateInterface::bfmePrivateCommand1B(void *first, CommandSourceType cmdSource)
+void AIUpdateInterface::bfmePrivateCommand1B(void *first, CommandSourceType commandSource)
 {
 	if (!m_object->isMobile())
 		return;
 
 	m_stateMachine->clear();
 	m_stateMachine->setGoalObject(0);
-	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare(first, (void *)cmdSource);
-	m_lastCommandSource = cmdSource;
+	reinterpret_cast<Rva002BC470StateAction *>(this)->prepare(first, (void *)commandSource);
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_1B);
 }
 
 // Retail 0x002788B0. A contained unit cannot accept this object-order state.
-void AIUpdateInterface::bfmePrivateCommand31(Object *obj, CommandSourceType cmdSource)
+void AIUpdateInterface::bfmePrivateCommand31(Object *object, CommandSourceType commandSource)
 {
 	if (m_isAiDead)
 		return;
@@ -767,27 +767,27 @@ void AIUpdateInterface::bfmePrivateCommand31(Object *obj, CommandSourceType cmdS
 		return;
 
 	Object *oldGoal = m_stateMachine->getGoalObject();
-	Object *target = obj;
+	Object *target = object;
 	m_stateMachine->clear();
 	m_stateMachine->setGoalObject(target);
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	setCurrentVictim(oldGoal);
 	m_stateMachine->setState((StateID)0x31);
 
-	if (!cmdSource || cmdSource == CMD_FROM_AI)
+	if (!commandSource || commandSource == CMD_FROM_AI)
 		playMoveVoiceResponse((const Coord3D *)((const char *)target + 0x38));
 }
 
 // Retail 0x00273730. BFME command 0x39 orders a giant bird to force-attack
 // one object with one shot, then answers player and AI orders with attack voice.
-void AIUpdateInterface::bfmePrivateCommand39(Object *victim, CommandSourceType cmdSource)
+void AIUpdateInterface::bfmePrivateCommand39(Object *victim, CommandSourceType commandSource)
 {
 	if (!victim)
 		return;
 
 	m_stateMachine->clear();
 	m_stateMachine->setGoalObject(victim);
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState((StateID)0x2e);
 
 	Weapon *weapon = m_object->getCurrentWeapon(0);
@@ -797,14 +797,14 @@ void AIUpdateInterface::bfmePrivateCommand39(Object *victim, CommandSourceType c
 		weapon->m_shotsFired = 0;
 	}
 
-	if (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
 		playAttackVoiceResponse(victim);
 }
 
 // Retail 0x00279050. m_isAiDead, isMobile, weapon-set bit 8,
 // setGoalPositionClipped, setState(0x21), max-shot count, move voice for
 // command sources 0 and 1.
-void AIUpdateInterface::privateAttackMoveToPosition(const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource)
+void AIUpdateInterface::privateAttackMoveToPosition(const Coord3D *position, Int maxShotsToFire, CommandSourceType commandSource)
 {
 	if (m_isAiDead)
 		return;
@@ -814,8 +814,8 @@ void AIUpdateInterface::privateAttackMoveToPosition(const Coord3D *pos, Int maxS
 		return;
 
 	m_stateMachine->clear();
-	setGoalPositionClipped(pos, cmdSource);
-	m_lastCommandSource = cmdSource;
+	setGoalPositionClipped(position, commandSource);
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_ATTACK_MOVE_TO);
 
 	Weapon *weapon = m_object->getCurrentWeapon(0);
@@ -825,13 +825,13 @@ void AIUpdateInterface::privateAttackMoveToPosition(const Coord3D *pos, Int maxS
 		weapon->m_shotsFired = 0;
 	}
 
-	if (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI)
-		playMoveVoiceResponse(pos);
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+		playMoveVoiceResponse(position);
 }
 
 // Retail 0x00279100. isMobile, inlined isKindOf(KINDOF_PROJECTILE), the +0x94
 // flag, then clear and a tail-call setState(0x11).
-void AIUpdateInterface::privateHunt(CommandSourceType cmdSource)
+void AIUpdateInterface::privateHunt(CommandSourceType commandSource)
 {
 	if (!m_object->isMobile())
 		return;
@@ -847,12 +847,12 @@ void AIUpdateInterface::privateHunt(CommandSourceType cmdSource)
 		return;
 
 	m_stateMachine->clear();
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_HUNT);
 }
 
 // Retail 0x00279180.
-void AIUpdateInterface::privateFaceObject(Object *obj, CommandSourceType cmdSource)
+void AIUpdateInterface::privateFaceObject(Object *target, CommandSourceType commandSource)
 {
 	if (!m_object->isMobile())
 		return;
@@ -864,14 +864,14 @@ void AIUpdateInterface::privateFaceObject(Object *obj, CommandSourceType cmdSour
 	if (tmpl->m_kindof[0] & 0x2000000)
 		return;
 
-	m_faceObject = obj;
+	m_faceObject = target;
 	m_stateMachine->clear();
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_FACE_OBJECT);
 
-	if (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
 	{
-		Coord3D pos = obj->getPosition();
+		Coord3D pos = target->getPosition();
 		playAttackVoiceResponse(&pos);
 	}
 }
@@ -879,7 +879,7 @@ void AIUpdateInterface::privateFaceObject(Object *obj, CommandSourceType cmdSour
 // Retail 0x00279360. Guards the object's +0x94 flag and isMobile /
 // isKindOf(KINDOF_PROJECTILE), stores the depot at +0x4C, clears the state
 // machine, then setState(0x18).
-void AIUpdateInterface::privateGetRepaired(Object *repairDepot, CommandSourceType cmdSource)
+void AIUpdateInterface::privateGetRepaired(Object *repairDepot, CommandSourceType commandSource)
 {
 	if (m_object->m_flags & 0x20)
 		return;
@@ -890,14 +890,14 @@ void AIUpdateInterface::privateGetRepaired(Object *repairDepot, CommandSourceTyp
 
 	m_repairDepot = repairDepot;
 	m_stateMachine->clear();
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_GET_REPAIRED);
 }
 
 // Retail 0x002793C0. Same +0x94 / isMobile / isKindOf(PROJECTILE) guards as
 // privateGetRepaired, then the two-slot guard-target type, the object ID at
 // +0x74, setState(0x10).
-void AIUpdateInterface::privateGuardObject(Object *objectToGuard, GuardMode guardMode, CommandSourceType cmdSource)
+void AIUpdateInterface::privateGuardObject(Object *objectToGuard, GuardMode guardMode, CommandSourceType commandSource)
 {
 	if (m_object->m_flags & 0x20)
 		return;
@@ -914,14 +914,14 @@ void AIUpdateInterface::privateGuardObject(Object *objectToGuard, GuardMode guar
 	m_guardMode = guardMode;
 	m_objectToGuard = objectToGuard->m_id;
 	m_stateMachine->clear();
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_GUARD);
 }
 
 // Retail 0x00279450, the sibling of privateGuardObject: same guards, guard
 // target type 2, object-to-guard cleared, the position's z word copied to
 // +0x68, setState(0x10).
-void AIUpdateInterface::privateGuardPosition(const Coord3D *pos, GuardMode guardMode, CommandSourceType cmdSource)
+void AIUpdateInterface::privateGuardPosition(const Coord3D *position, GuardMode guardMode, CommandSourceType commandSource)
 {
 	if (m_object->m_flags & 0x20)
 		return;
@@ -937,9 +937,9 @@ void AIUpdateInterface::privateGuardPosition(const Coord3D *pos, GuardMode guard
 
 	m_guardMode = guardMode;
 	m_objectToGuard = 0;
-	m_guardExtra = *(UnsignedInt *)&pos->z;
+	m_guardExtra = *(UnsignedInt *)&position->z;
 	m_stateMachine->clear();
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_GUARD);
 }
 
@@ -947,7 +947,7 @@ void AIUpdateInterface::privateGuardPosition(const Coord3D *pos, GuardMode guard
 // pointer but takes an optional waypoint position for the location the guard
 // state uses. A null position falls back to the area's own centre.
 void AIUpdateInterface::privateGuardAreaFromPosition(const PolygonTrigger *area,
-	GuardMode guardMode, CommandSourceType cmdSource, const Coord3D *position)
+	GuardMode guardMode, CommandSourceType commandSource, const Coord3D *position)
 {
 	if (m_object->m_flags & 0x20)
 		return;
@@ -971,22 +971,22 @@ void AIUpdateInterface::privateGuardAreaFromPosition(const PolygonTrigger *area,
 	m_locationToGuard = localPosition;
 	m_objectToGuard = 0;
 	m_stateMachine->clear();
-	m_lastCommandSource = cmdSource;
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_GUARD);
 }
 
 // Retail 0x002795D0. Null-victim guard, clear, setGoalObject,
 // setGoalPositionClipped, setState(0x3e), then the current weapon's max-shot
 // count at +0x34.
-void AIUpdateInterface::privateGuardRetaliate(Object *victim, const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource)
+void AIUpdateInterface::privateGuardRetaliate(Object *victim, const Coord3D *position, Int maxShotsToFire, CommandSourceType commandSource)
 {
 	if (!victim)
 		return;
 
 	m_stateMachine->clear();
 	m_stateMachine->setGoalObject(victim);
-	setGoalPositionClipped(pos, cmdSource);
-	m_lastCommandSource = cmdSource;
+	setGoalPositionClipped(position, commandSource);
+	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_GUARD_RETALIATE);
 
 	Weapon *weapon = m_object->getCurrentWeapon(0);
