@@ -199,13 +199,13 @@ struct AICommandParms
 	const CommandButton			*m_commandButton;	// +0x94
 	Path										*m_path;		// +0x98
 
-	AICommandParms(AICommandType cmd, CommandSourceType cmdSource);	// ILT 0x00030EA4
+	AICommandParms(AICommandType cmd, CommandSourceType commandSource);	// ILT 0x00030EA4
 };
 
 // ??0AICommandParms@@QAE@W4AICommandType@@W4CommandSourceType@@@Z
-AICommandParms::AICommandParms(AICommandType cmd, CommandSourceType cmdSource)
+AICommandParms::AICommandParms(AICommandType cmd, CommandSourceType commandSource)
 	: m_cmd(cmd),
-	  m_cmdSource(cmdSource),
+	  m_cmdSource(commandSource),
 	  m_obj(0),
 	  m_otherObj(0),
 	  m_team(0),
@@ -225,58 +225,58 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;	// slot 0, vtable+0x00
 
-	void aiAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType cmdSource);
-	void aiForceAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType cmdSource);
-	void aiAttackTeam(const Team *team, Int maxShotsToFire, CommandSourceType cmdSource);
-	void aiAttackPosition(const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource);
-	void aiAttackArea(const PolygonTrigger *areaToGuard, CommandSourceType cmdSource);
-	void aiGoProne(const DamageInfo *damageInfo, CommandSourceType cmdSource);
-	void aiAttackFollowWaypointPath(const Waypoint *way, Int maxShotsToFire, CommandSourceType cmdSource);
-	void aiAttackFollowWaypointPathAsTeam(const Waypoint *way, Int maxShotsToFire, CommandSourceType cmdSource);
+	void aiAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType commandSource);
+	void aiForceAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType commandSource);
+	void aiAttackTeam(const Team *team, Int maxShotsToFire, CommandSourceType commandSource);
+	void aiAttackPosition(const Coord3D *position, Int maxShotsToFire, CommandSourceType commandSource);
+	void aiAttackArea(const PolygonTrigger *attackArea, CommandSourceType commandSource);
+	void aiGoProne(const DamageInfo *damageInfo, CommandSourceType commandSource);
+	void aiAttackFollowWaypointPath(const Waypoint *waypoint, Int maxShotsToFire, CommandSourceType commandSource);
+	void aiAttackFollowWaypointPathAsTeam(const Waypoint *waypoint, Int maxShotsToFire, CommandSourceType commandSource);
 };
 
-void AICommandInterface::aiAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType cmdSource )
+void AICommandInterface::aiAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_ATTACK_OBJECT, cmdSource);
+	AICommandParms parms(AICMD_ATTACK_OBJECT, commandSource);
 	parms.m_obj = victim;
 	parms.m_intValue = maxShotsToFire;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiForceAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType cmdSource )
+void AICommandInterface::aiForceAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_FORCE_ATTACK_OBJECT, cmdSource);
+	AICommandParms parms(AICMD_FORCE_ATTACK_OBJECT, commandSource);
 	parms.m_obj = victim;
 	parms.m_intValue = maxShotsToFire;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiAttackTeam( const Team *team, Int maxShotsToFire, CommandSourceType cmdSource )
+void AICommandInterface::aiAttackTeam( const Team *team, Int maxShotsToFire, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_ATTACK_TEAM, cmdSource);
+	AICommandParms parms(AICMD_ATTACK_TEAM, commandSource);
 	parms.m_team = team;
 	parms.m_intValue = maxShotsToFire;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiAttackPosition( const Coord3D *pos, Int maxShotsToFire, CommandSourceType cmdSource )
+void AICommandInterface::aiAttackPosition( const Coord3D *position, Int maxShotsToFire, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_ATTACK_POSITION, cmdSource);
-	parms.m_pos = *pos;
+	AICommandParms parms(AICMD_ATTACK_POSITION, commandSource);
+	parms.m_pos = *position;
 	parms.m_intValue = maxShotsToFire;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiAttackArea( const PolygonTrigger *areaToGuard, CommandSourceType cmdSource )
+void AICommandInterface::aiAttackArea( const PolygonTrigger *attackArea, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_ATTACK_AREA, cmdSource);
-	parms.m_polygon = areaToGuard;
+	AICommandParms parms(AICMD_ATTACK_AREA, commandSource);
+	parms.m_polygon = attackArea;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiGoProne( const DamageInfo *damageInfo, CommandSourceType cmdSource )
+void AICommandInterface::aiGoProne( const DamageInfo *damageInfo, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_GO_PRONE, cmdSource);
+	AICommandParms parms(AICMD_GO_PRONE, commandSource);
 	parms.m_damage.in = damageInfo->in;
 	parms.m_damage.out.m_actualDamageDealt = damageInfo->out.m_actualDamageDealt;
 	parms.m_damage.out.m_actualDamageClipped = damageInfo->out.m_actualDamageClipped;
@@ -284,18 +284,18 @@ void AICommandInterface::aiGoProne( const DamageInfo *damageInfo, CommandSourceT
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiAttackFollowWaypointPath( const Waypoint *way, Int maxShotsToFire, CommandSourceType cmdSource )
+void AICommandInterface::aiAttackFollowWaypointPath( const Waypoint *waypoint, Int maxShotsToFire, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_ATTACKFOLLOW_WAYPOINT_PATH, cmdSource);
-	parms.m_waypoint = way;
+	AICommandParms parms(AICMD_ATTACKFOLLOW_WAYPOINT_PATH, commandSource);
+	parms.m_waypoint = waypoint;
 	parms.m_intValue = maxShotsToFire;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiAttackFollowWaypointPathAsTeam( const Waypoint *way, Int maxShotsToFire, CommandSourceType cmdSource )
+void AICommandInterface::aiAttackFollowWaypointPathAsTeam( const Waypoint *waypoint, Int maxShotsToFire, CommandSourceType commandSource )
 {
-	AICommandParms parms(AICMD_ATTACKFOLLOW_WAYPOINT_PATH_AS_TEAM, cmdSource);
-	parms.m_waypoint = way;
+	AICommandParms parms(AICMD_ATTACKFOLLOW_WAYPOINT_PATH_AS_TEAM, commandSource);
+	parms.m_waypoint = waypoint;
 	parms.m_intValue = maxShotsToFire;
 	aiDoCommand(&parms);
 }
