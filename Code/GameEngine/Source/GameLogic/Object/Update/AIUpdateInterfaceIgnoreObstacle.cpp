@@ -1,22 +1,23 @@
 // ?ignoreObstacle@AIUpdateInterface@@QAEXPBVObject@@@Z
-// partial score=0.76 date=2026-09-12
-// cl: /DNDEBUG /MD /EHsc /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/STLport-4.5.3/stlport
-// stlport
-#include <hash_map>
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// BFME AIUpdateInterface::ignoreObstacle, RVA 0x002739F0, 523 bytes: ZH store wrapped in CritterDesync logging.
+// Thing::m_template is OVERRIDE<ThingTemplate>; its inlined operator* reads through &obj->m_template.
+#include "ascii_string.h"
+
+template <> inline const char *StringBase<char>::str() const { return m_data ? m_data->data : ""; }
+
 typedef int ObjectID;
 static const ObjectID INVALID_ID = 0;
-
-class AsciiString
-{
-public:
-	const char *str() const { return m_data ? m_data + 8 : ""; }
-	char *m_data;
-};
 
 class Overridable
 {
 public:
-	const Overridable *getFinalOverride() const;
+	const Overridable *getFinalOverride() const
+	{
+		if (m_next)
+			return m_next->getFinalOverride();
+		return this;
+	}
 	char m_prefix[4];
 	const Overridable *m_next;
 };
@@ -28,20 +29,28 @@ public:
 	AsciiString m_name;
 };
 
+template <class T> class OVERRIDE
+{
+public:
+	const T *operator*() const
+	{
+		if (!m_overridable)
+			return 0;
+		return (T *)m_overridable->getFinalOverride();
+	}
+	operator const T *() const { return operator*(); }
+private:
+	const T *m_overridable;
+};
+
 class Object
 {
 public:
-	const ThingTemplate *getTemplate() const
-	{
-		const ThingTemplate *value = m_template;
-		if (value && value->m_next)
-			value = reinterpret_cast<const ThingTemplate *>(value->m_next->getFinalOverride());
-		return value;
-	}
+	const ThingTemplate *getTemplate() const { return m_template; }
 	const ObjectID getID() const { return m_id; }
 
 	char m_prefix[4];
-	ThingTemplate *m_template;
+	OVERRIDE<ThingTemplate> m_template;
 	char m_pad08[0x74 - 8];
 	ObjectID m_id;
 };
@@ -51,24 +60,12 @@ extern unsigned char g_012F0239;
 extern void *g_012ED4FC;
 extern void j_0003a17a(void);
 
-class ObjectLookup
+class GameLogic
 {
 public:
-	__declspec(noinline) Object *findObjectByID(ObjectID id)
-	{
-		if (id == INVALID_ID)
-			return 0;
-		ObjectHash::iterator it = m_objects.find(id);
-		if (it == m_objects.end())
-			return 0;
-		return (*it).second;
-	}
-private:
-	typedef _STL::hash_map<int, Object *, _STL::hash<int>, _STL::equal_to<int> > ObjectHash;
-	char m_pad[0xB0];
-	ObjectHash m_objects;
+	Object *findObjectByID(ObjectID id);
 };
-extern ObjectLookup *TheGameLogic;
+extern GameLogic *TheGameLogic;
 
 class AIUpdateInterface
 {
