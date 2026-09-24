@@ -1,5 +1,5 @@
-// ?d_001e9380@@YAXXZ
-// partial score=0.91 date=2026-09-24
+// ?rva001e9380@WeaponTemplate@@QAEXPBVObject@@PBUCoord3D@@HHPAV2@H1ABUWeaponBonus@@_NPAVWeapon@@PAH@Z
+// partial score=0.944 date=2026-09-24
 // ?rva001e9380@WeaponTemplate@@QAEXPBVObject@@PBUCoord3D@@HHPAV2@H1ABUWeaponBonus@@_NPAVWeapon@@PAH@Z
 // BFME 1.03 RVA 0x001E9380, 1519 decoded bytes, through ret 0x2c at 0x001E996C.
 // Reached by Weapon::privateFireWeapon (001E9FD0) via ILT000425C3.
@@ -543,7 +543,6 @@ void WeaponTemplate::rva001e9380(const Object *sourceObj,
     Rva001E9380ThingVtable *initialDrawableVtable = *(Rva001E9380ThingVtable **)sourceObj;
     if (initialDrawableVtable->getDrawableEax((Thing *)sourceObj))
     {
-        Real recoilAngle = getWeaponRecoilAmount();
         Coord3D aimPosition;
         if (victimObj)
         {
@@ -551,6 +550,7 @@ void WeaponTemplate::rva001e9380(const Object *sourceObj,
         }
         else
             aimPosition.set(targetPosition);
+        Real recoilAngle = getWeaponRecoilAmount();
         Real direction = recoilAngle != 0.0f ? (Real)atan2(targetPosition->y-sourceObj->m_position.y, targetPosition->x-sourceObj->m_position.x) : 0.0f;
         const FXList *fx = m_fireFXs[0];
         if (BFME_GAME_LOGIC_FRAME < firingWeapon->m_suspendFXFrame)

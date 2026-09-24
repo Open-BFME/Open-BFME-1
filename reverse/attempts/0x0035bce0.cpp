@@ -1,18 +1,8 @@
 // ?rva0035bce0@BfmeThingFFF@@QAEXPAPAURva0035BCE0Entry@@PAU2@@Z
-// partial score=0.43 date=2026-09-20
-// Address-derived reconstruction of retail 0x0035BCE0 (carved, 201 B).
-// The three stack/register fields on the second argument (next-link at +0,
-// table index at +4, target version at +8) match the ListNode shape proven
-// by the matched sibling 0x0035B3D0 (BfmeThingFFF::bfmeStepFFF,
-// BfmeThingFFFStep.cpp), which this body calls directly with the same
-// two-pointer ABI.  The version-chain node reuses the exact destructor
-// proven at 0x00354A00 (Rva00354A00Node, Rva00354A00NodeDestructor.cpp) --
-// same four-field, next-link-prefixed shape -- so this body walks and frees
-// nodes of that class.  The receiver's +0xC subobject is the StringRecordTable
-// proven at 0x00359330 (Rva00359330StringRecordRelease.cpp); +0x18 is a
-// pointer to a 20-byte-stride table of version-chain heads (index and short
-// version proven by the field reads at table-entry +0xE/+0x10).  No caller
-// resolves a name for this method or its receiver beyond the ABI above.
+// partial score=0.76 date=2026-09-24
+// The neighboring methods at 0x0035B3D0 and 0x0035BDE0 identify this receiver as BfmeThingFFF.
+// Retail reads the version table at this+0x18 and calls this body through thunk 0x000196D7.
+// No caller names this method, so the address-derived name keeps its identity open.
 
 struct Rva0035BCE0Entry;
 
@@ -66,17 +56,23 @@ private:
 
 void BfmeThingFFF::rva0035bce0(Rva0035BCE0Entry **listSlot, Rva0035BCE0Entry *entry)
 {
-	Rva0035BCE0TableRow *tableEntry = &m_table[entry->m_tableIndex];
-	int version = tableEntry->m_version;
-	Rva00354A00Node *node = tableEntry->m_head;
+	int tableIndex = entry->m_tableIndex;
 	int targetVersion = entry->m_targetVersion;
+	Rva0035BCE0TableRow *tableEntry = &m_table[tableIndex];
+	int version = tableEntry->m_version;
+	Rva00354A00Node *node;
 	if (version > targetVersion)
 	{
 		int diff = version - targetVersion;
+		node = tableEntry->m_head;
 		do
 		{
 			node = node->m_next;
 		} while (--diff);
+	}
+	else
+	{
+		node = tableEntry->m_head;
 	}
 
 	Rva0035BCE0Entry *child = node->m_child;
