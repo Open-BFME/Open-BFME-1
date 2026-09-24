@@ -1,0 +1,39 @@
+name: Isolated VC71 SP1 renderer research
+on:
+  push:
+    branches: [research/sib-20260923-d302e8d]
+    paths:
+      - '.github/research/sib_sp1.py'
+      - '.github/workflows/sib-sp1.yml'
+permissions:
+  contents: read
+jobs:
+  sp1:
+    runs-on: windows-2022
+    timeout-minutes: 15
+    steps:
+      - run: git config --global core.longpaths true
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 1
+          sparse-checkout: |
+            .github/research
+            tools
+            build/toolchains
+            baselines/bfme1/workshop-vanilla-1.03
+            reverse/attempts
+            reverse/attempt_support
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install capstone==5.0.3
+      - run: python -u .github/research/sib_sp1.py
+      - if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sib-sp1-receipts
+          path: |
+            build/sib_research_20260923/*.json
+            build/sib_research_20260923/sp1_candidate9.cpp
+          retention-days: 3
