@@ -1,6 +1,4 @@
 // ?Worker_Thread_009EFA30@AssetRegistry@@QAEXXZ
-// partial score=0.99 date=2026-09-24
-// ?Worker_Thread_009EFA30@AssetRegistry@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
