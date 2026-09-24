@@ -1,11 +1,14 @@
 #!/usr/bin/env python3
 """Retail was linked without identical-COMDAT folding, so each body has one identity.
 Prints the evidence for that and counts the real names beyond one per body.
-Usage: python3 tools/one_identity.py [--list]   (read by tools/identity_guard.py)"""
+Usage: python3 tools/one_identity.py [--list | --check-ref REF]   (read by identity_guard.py)"""
 import argparse
 import collections
 import csv
+import io
+import re
 import struct
+import subprocess
 import sys
 from pathlib import Path
 
@@ -18,11 +21,44 @@ SCALAR_DELETING = bytes.fromhex("568bf1")  # push esi; mov esi,ecx
 VECTOR_DELETING = bytes.fromhex("f644240401")  # test byte ptr [esp+4],1
 
 
-def matched_rows(path=None):
-    path = path or B.ROOT / "reverse" / "functions.csv"
-    with open(path, encoding="utf-8", errors="replace", newline="") as handle:
-        return [r for r in csv.DictReader(handle)
-                if r["status"] == "matched" and r["target_rva"].startswith("0x")]
+def matched_rows(path=None, text=None):
+    if text is None:
+        path = path or B.ROOT / "reverse" / "functions.csv"
+        text = Path(path).read_text(encoding="utf-8", errors="replace")
+    return [r for r in csv.DictReader(io.StringIO(text, newline=""))
+            if r["status"] == "matched" and r["target_rva"].startswith("0x")]
+
+
+def surplus(rows):
+    return sum(len(n) - 1 for n in real_names_by_address(rows).values() if len(n) > 1)
+
+
+def check_ref(ref):
+    """Exit status for the pre-push hook: the ledger AT `ref` against the baseline AT `ref`,
+    so a commit made before the baseline tightened cannot be rebased past it."""
+    def show(path):
+        return subprocess.run(["git", "show", f"{ref}:{path}"], capture_output=True,
+                              check=True, cwd=B.ROOT).stdout.decode("utf-8", "replace")
+    limit = re.search(r"^one_identity\.surplus\s*=\s*(\d+)",
+                      show("reverse/identity_baseline.txt"), re.M)
+    if limit is None:
+        # Only a commit from before this tool existed may lack the key.
+        present = subprocess.run(["git", "cat-file", "-e", f"{ref}:tools/one_identity.py"],
+                                 capture_output=True, cwd=B.ROOT).returncode == 0
+        if present:
+            print(f"one_identity: {ref[:10]} has no one_identity.surplus baseline",
+                  file=sys.stderr)
+            return 1
+        return 0
+    found = surplus(matched_rows(text=show("reverse/functions.csv")))
+    if found > int(limit.group(1)):
+        print(f"one_identity: {ref[:10]} has {found} surplus real names, baseline "
+              f"{limit.group(1)}. A commit made before the baseline was lowered adds a second "
+              f"name to a body; retire it (python3 tools/one_identity.py --list; "
+              f"docs/naming_evidence.md).", file=sys.stderr)
+        return 1
+    print(f"one_identity: OK at {ref[:10]} ({found} surplus, baseline {limit.group(1)})")
+    return 0
 
 
 def real_names_by_address(rows):
@@ -67,7 +103,11 @@ def folding_evidence(rows, text, text_rva, table_end):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--list", action="store_true", help="print every address with 2+ real names")
+    ap.add_argument("--check-ref", metavar="REF",
+                    help="fail if REF's ledger exceeds REF's baseline")
     args = ap.parse_args(argv)
+    if args.check_ref:
+        return check_ref(args.check_ref)
     rows = matched_rows()
     image = B.EXE.read_bytes()
     text = next(s for s in B.pe_sections(image) if s["name"] == ".text")
@@ -89,7 +129,7 @@ def main(argv=None):
     if args.list:
         for rva in sorted(multi):
             print(f"0x{rva:08X}\t{len(multi[rva])}\t" + "\t".join(sorted(multi[rva])))
-    print(f"surplus names beyond one per body: {sum(len(n) - 1 for n in multi.values())}")
+    print(f"surplus names beyond one per body: {surplus(rows)}")
     print(f"addresses with 2+ real names: {len(multi)}")
     return 0
 

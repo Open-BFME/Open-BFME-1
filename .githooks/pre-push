@@ -21,6 +21,8 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
     [ "$local_sha" = "$ZERO" ] && continue   # deleting a remote ref
 
     python3 tools/check_csv.py --ref "$local_sha" || fail "ledger integrity at $local_sha (see above)"
+    # identity_guard runs at commit time; a commit rebased past a lowered baseline needs this.
+    python3 tools/one_identity.py --check-ref "$local_sha" || fail "second real name on one body at $local_sha (see above)"
 
     if [ "$remote_sha" != "$ZERO" ] && git cat-file -e "$remote_sha" 2>/dev/null; then
         base="$remote_sha"

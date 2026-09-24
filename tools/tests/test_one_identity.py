@@ -18,6 +18,12 @@ def test_placeholders_do_not_count_as_real_names():
     assert names[0x200] == {"?getB@D@@QAEHXZ", "?getC@E@@QAEHXZ"}
 
 
+def test_surplus_counts_every_real_name_beyond_the_first_per_body():
+    rows = [row("?a@C@@QAEHXZ", 0x100), row("?b@C@@QAEHXZ", 0x100), row("?c@C@@QAEHXZ", 0x100),
+            row("?d@C@@QAEHXZ", 0x200), row("?dup_00000200@@YAXXZ", 0x200)]
+    assert oi.surplus(rows) == 2
+
+
 def test_link_table_stops_at_the_first_non_jump_and_groups_entries_by_body():
     base = 0x1000
     text = bytearray(b"\xcc" * 5)
