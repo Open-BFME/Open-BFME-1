@@ -367,6 +367,13 @@ typedef struct _ListboxData
 
 	Bool				audioFeedback;		// Audio click feedback?
 
+	// BFME inserts a 4-byte field at +0x10, so every field from columnWidth on sits
+	// 4 bytes later than in Zero Hour: retail GadgetListBoxGetColumnWidth
+	// (0x004B79D0) reads columnWidth at +0x14, parseListboxData (0x00484760)
+	// clears it at +0x14 after writing the seven flags above at their ZH
+	// offsets, and Rva004B8230UpdateColumnWidths reads slider at +0x24.
+	Int					unmodelled10;
+
 	//
 	// The following fields are for internal use and should not be initialized 
 	// by the user
