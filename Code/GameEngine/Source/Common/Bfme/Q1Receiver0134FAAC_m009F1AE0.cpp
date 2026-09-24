@@ -1,11 +1,12 @@
 // ?m009F1AE0@Q1Receiver0134FAAC@@QAEXXZ
-// partial score=0.99 date=2026-09-24
-// ?m009F1AE0@Q1Receiver0134FAAC@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
-// Retail RVA 0x009F1AE0, 1470 bytes. Identity is address-derived: no caller,
-// vtable slot or string names this body, so the method keeps its address.
+// Retail RVA 0x009F1AE0, 1470 bytes. Identity is address-derived: its one
+// caller, the unclaimed guarded forwarder at 0x009EBC40 (mov ecx,[0x0134FAAC];
+// test ecx,ecx; je; jmp 0x009F1AE0), proves the receiver and the no-argument
+// thiscall ABI but is itself unnamed, and no vtable slot or string names this
+// body, so the method keeps its address.
 //
 // The receiver is the object g_theAssetRegistry (0x0134FAAC) points at, the
 // same object as the matched Q1Receiver0134FAAC methods beside this file and
@@ -37,22 +38,23 @@
 struct Rva001408C0Target;
 typedef _STL::set<Rva001408C0Target *> Rva001408C0Set;
 
-// The receiver's 0x14-byte set wrapper: tree, count, flag (the name the
-// pinned 0x009EFD40 member already uses for it).
+// The receiver's 0x14-byte set wrapper (the name the pinned 0x009EFD40 member
+// and the matched 0x009F0E50 member already use for it, with their member
+// spelling).
 struct Q1ReceiverLocalSet
 {
-	Rva001408C0Set m_tree;
-	unsigned int m_count;
-	bool m_active;
+	Rva001408C0Set m_set;
+	int m_zero;
+	bool m_one;
 
 	void reset()
 	{
-		m_tree.clear();
-		m_active = true;
+		m_set.clear();
+		m_one = true;
 	}
 };
 
-class Q1QueueEntry009F1510
+class Rva009EF0D0Element
 {
 public:
 	virtual void slot00();
@@ -79,7 +81,7 @@ public:
 	int m_key08;
 };
 
-typedef _STL::deque<Q1QueueEntry009F1510 *> Q1Queue009F1510;
+typedef _STL::deque<Rva009EF0D0Element *> Q1Queue009F1510;
 
 class Gen009F1510
 {
@@ -122,7 +124,7 @@ void Q1Receiver0134FAAC::m009F1AE0()
 		{
 			for (unsigned int i = 0; i < m_deques78[q].size(); ++i)
 			{
-				Q1QueueEntry009F1510 *entry = m_deques78[q][i];
+				Rva009EF0D0Element *entry = m_deques78[q][i];
 				entry->m_bit25 = 0;
 				if (q == 3)
 				{

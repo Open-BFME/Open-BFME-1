@@ -2238,5 +2238,15 @@
   "after_sha256": "3664178c066dad2f572160ff6d6b9d1db42f725c0db787be58e9b8736999c5f2",
   "evidence": "reverse/symbols.csv",
   "reason": "Both are address-derived placeholders for the registry's +0x78 deque element; nothing names the class. Master already pins the element's deque push_back aux 0x009EF0D0 and push_front aux 0x009EF140 as deque<Rva009EF0D0Element*> (reverse/symbols.csv), so the bank adopts that spelling to share one pin per deque helper address instead of adding a second name at each"
+ },
+ {
+  "old_path": "reverse/attempts/0x009f1ae0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Bfme/Q1Receiver0134FAAC_m009F1AE0.cpp",
+  "old_name": "Q1QueueEntry009F1510",
+  "new_name": "Rva009EF0D0Element",
+  "before_sha256": "b0391e71498bfd867333b50182df3d72f477ff950f5cf71db95d77c2df322575",
+  "after_sha256": "eb73f5588bd127208a63698b9d7a03d65ca10da0fad07a0bb3a00c0a67ccdf75",
+  "evidence": "reverse/symbols.csv",
+  "reason": "Both are address-derived placeholders for the registry's +0x78 deque element; nothing names the class. Master pins the element's deque helpers 0x009EF0D0, 0x009EF140 and 0x009EE360 as deque<Rva009EF0D0Element*> (reverse/symbols.csv), so the bank adopts that spelling to share one pin per deque helper address"
  }
 ]
