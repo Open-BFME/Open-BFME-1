@@ -1,12 +1,16 @@
-// ?update@HijackerUpdate@@UAE?AW4UpdateSleepTime@@XZ
-// partial score=0.88 date=2026-09-11
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
+// ?update@HijackerUpdate@@UAE?AW4UpdateSleepTime@@XZ
+// HijackerUpdate ctor 0x00295B20 installs vtable 0x010BF714 at +0x10; slot 0 reaches this body via ILT 0x0003C673.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef unsigned char UnsignedByte;
-typedef int ObjectID;
+
+#define _STLP_USE_STATIC_LIB 1
+#define _STLP_NO_EXCEPTIONS 1
+#include "Common/BitFlags.h"
+#include "Common/GameType.h"
 
 enum UpdateSleepTime
 {
@@ -14,26 +18,10 @@ enum UpdateSleepTime
 	UPDATE_SLEEP_NONE = 1
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_AI = 2
-};
-
 enum ObjectStatusTypes
 {
 	OBJECT_STATUS_3 = 3,
 	OBJECT_STATUS_4 = 4
-};
-
-struct Coord3D
-{
-	float m_x;
-	float m_y;
-	float m_z;
-};
-
-class AsciiString
-{
 };
 
 class ThingTemplate
@@ -58,13 +46,6 @@ public:
 };
 
 class Rva00295D70ContainModuleInterface;
-
-class Rva00295D70ObjectContainView
-{
-public:
-	unsigned char m_pad00[0x1fc];
-	Rva00295D70ContainModuleInterface *m_contain;
-};
 
 class Rva00295D70Snapshot
 {
@@ -98,10 +79,16 @@ public:
 	{
 		return m_contain;
 	}
-	void addContainedObject(Object *object);
+
+	ObjectID getID(void) const
+	{
+		return m_id;
+	}
 
 	public:
-	unsigned char m_padToContain[0x1f4];
+	unsigned char m_padToID[0x6c];
+	ObjectID m_id;
+	unsigned char m_padToContain[0x184];
 	Rva00295D70ContainModuleInterface *m_contain;
 	unsigned char m_padToTeam[0x3c];
 	Team *m_team;
@@ -119,7 +106,7 @@ public:
 	Object *findObjectByID(ObjectID id);
 };
 
-struct ObjectStatusMaskType;
+typedef BitFlags<86> ObjectStatusMaskType;
 
 class Rva00295D70HijackerUpdateModuleData
 {
@@ -128,46 +115,16 @@ public:
 	AsciiString m_parachuteName;
 };
 
-class Rva00295D70HijackerUpdateFull
-{
-public:
-	unsigned char m_pad00[0x24];
-	Coord3D m_ejectPos;
-};
-
 class ThingFactory
 {
 public:
-	ThingTemplate *findTemplate(const AsciiString &name);
+	const ThingTemplate *findTemplate(const AsciiString &name);
 	Object *newObject(const ThingTemplate *thingTemplate, Team *team,
-		const volatile ObjectStatusMaskType &statusBits, UnsignedInt extra);
+		const ObjectStatusMaskType &statusBits, UnsignedInt extra);
 };
 
 #define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
 #define TheThingFactory (*(ThingFactory **)0x012EF1D8)
-extern void j_0004494a(void);
-
-struct ObjectStatusMaskType
-{
-	UnsignedInt m_bits[3];
-};
-
-typedef Object *(ThingFactory::*ThingFactoryNewObjectCall)(
-	const ThingTemplate *, Team *, const volatile ObjectStatusMaskType &, void *);
-
-static __forceinline Object *rva00295D70NewObject(
-	ThingFactory *factory, const ThingTemplate *thingTemplate, Team *team,
-	const volatile ObjectStatusMaskType &statusBits = ObjectStatusMaskType(),
-	void *extra = 0)
-{
-	union
-	{
-		void (*raw)(void);
-		ThingFactoryNewObjectCall member;
-	} call;
-	call.raw = j_0004494a;
-	return (factory->*call.member)(thingTemplate, team, statusBits, extra);
-}
 
 class Rva00295D70AIHead
 {
@@ -246,29 +203,6 @@ public:
 	virtual bool attemptBestFirePointPosition(Object *, void *, const Coord3D *) = 0;
 };
 
-union Rva00295D70ContainValue
-{
-	Object *object;
-	Rva00295D70ContainModuleInterface *contain;
-};
-
-
-__forceinline void Object::addContainedObject(Object *object)
-{
-	m_contain->addToContain(object);
-}
-
-static __forceinline void rva00295D70SetPosition(
-	Object *object, const Coord3D *position)
-{
-	object->setPosition(position);
-}
-
-static __forceinline void rva00295D70AddContain(
-	Rva00295D70ContainModuleInterface *contain, Object *object)
-{
-	contain->addToContain(object);
-}
 
 class Rva00295D70HijackerUpdateModuleData;
 
@@ -334,13 +268,16 @@ protected:
 	}
 };
 
-class Rva00295D70HijackerUpdate : public Rva00295D70UpdateModule
+class HijackerUpdate : public Rva00295D70UpdateModule
 {
 public:
 	virtual UpdateSleepTime update(void);
 	void setTargetObject(const Object *object)
 	{
-		m_targetID = object == 0 ? 0 : 1;
+		if (object)
+			m_targetID = object->getID();
+		else
+			m_targetID = INVALID_ID;
 	}
 	void setIsInVehicle(UnsignedByte inVehicle)
 	{
@@ -360,74 +297,69 @@ private:
 };
 
 // ?update@HijackerUpdate@@UAE?AW4UpdateSleepTime@@XZ
-UpdateSleepTime Rva00295D70HijackerUpdate::update(void)
+UpdateSleepTime HijackerUpdate::update(void)
 {
-	if (m_update == 0)
+	if (!m_update)
 		return UPDATE_SLEEP_NONE;
 
-	if (m_isInVehicle != 0)
+	if (m_isInVehicle)
 	{
-		ObjectID targetID = m_targetID;
-		Object *object = getObject();
+		Object *obj = getObject();
 
-		if (targetID != 0)
+		// Keep the hidden hijacker on the hijacked vehicle while it lives.
+		Object *target = m_targetID != INVALID_ID ? TheBfmeGameLogic->findObjectByID(m_targetID) : 0;
+		if (target)
 		{
-			Object *target = TheBfmeGameLogic->findObjectByID(targetID);
-			if (target != 0)
-			{
-				Coord3D *position = reinterpret_cast<Coord3D *>(
-					reinterpret_cast<UnsignedByte *>(target) + 0x38);
-				object->setPosition(position);
-				m_wasTargetAirborne = static_cast<UnsignedByte>(
-					reinterpret_cast<BfmeOwnerRW *>(target)->bfmeCheckRW());
-				m_ejectPos = *position;
-				return UPDATE_SLEEP_NONE;
-			}
+			Coord3D *position = reinterpret_cast<Coord3D *>(
+				reinterpret_cast<UnsignedByte *>(target) + 0x38);
+			obj->setPosition(position);
+			m_wasTargetAirborne = static_cast<UnsignedByte>(
+				reinterpret_cast<BfmeOwnerRW *>(target)->bfmeCheckRW());
+			m_ejectPos = *position;
 		}
-
-		object->rva001CA2E0();
-
-		if (object->getDrawable() != 0)
-			reinterpret_cast<Gen_00411DD0 *>(object->getDrawable())->bfmeSet(false);
-
-		object->clearStatus(OBJECT_STATUS_4);
-		object->maskObject(false);
-		object->clearStatus(OBJECT_STATUS_3);
-
-		Rva00295D70AI *ai = *reinterpret_cast<Rva00295D70AI **>(
-			reinterpret_cast<UnsignedByte *>(object) + 0x204);
-		if (ai != 0)
-			ai->aiIdle(CMD_FROM_AI);
-
-		if (m_wasTargetAirborne != 0)
+		else
 		{
-			const Rva00295D70HijackerUpdateModuleData *moduleData =
-				getModuleData();
-			ThingTemplate *thingTemplate = TheThingFactory->findTemplate(
-				moduleData->m_parachuteName);
-			if (thingTemplate != 0)
-			{
-				Object *objectContainer = TheThingFactory->newObject(
-					thingTemplate,
-					object->getTeam(),
-					ObjectStatusMaskType(), 0);
-				objectContainer->setPosition(&m_ejectPos);
+			// The vehicle is gone: restore and unhide the hijacker.
+			obj->rva001CA2E0();
 
-				if (objectContainer->getContain()->isValidContainerFor(object, true))
+			if (obj->getDrawable())
+				obj->getDrawable()->bfmeSet(false);
+
+			obj->clearStatus(OBJECT_STATUS_4);
+			obj->maskObject(false);
+			obj->clearStatus(OBJECT_STATUS_3);
+
+			Rva00295D70AI *ai = *reinterpret_cast<Rva00295D70AI **>(
+				reinterpret_cast<UnsignedByte *>(obj) + 0x204);
+			if (ai)
+				ai->aiIdle(CMD_FROM_AI);
+
+			if (m_wasTargetAirborne)
+			{
+				const ThingTemplate *putInContainerTmpl = TheThingFactory->findTemplate(
+					getModuleData()->m_parachuteName);
+				if (putInContainerTmpl)
 				{
-					objectContainer->getContain()->addToContain(object);
-				}
-				else
-				{
+					Object *container = TheThingFactory->newObject(
+						putInContainerTmpl, obj->getTeam(), ObjectStatusMaskType(), 0);
+					container->setPosition(&m_ejectPos);
+					if (container->getContain()->isValidContainerFor(obj, true))
+					{
+						container->getContain()->addToContain(obj);
+					}
 				}
 			}
-		}
 
-		setTargetObject(0);
-		setIsInVehicle(0);
-		setUpdate(0);
+			setTargetObject(0);
+			setIsInVehicle(0);
+			setUpdate(0);
+			m_wasTargetAirborne = false;
+		}
+	}
+	else
+	{
+		m_wasTargetAirborne = false;
 	}
 
-	m_wasTargetAirborne = 0;
 	return UPDATE_SLEEP_NONE;
 }
