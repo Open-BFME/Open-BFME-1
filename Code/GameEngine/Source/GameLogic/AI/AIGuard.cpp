@@ -467,27 +467,8 @@ StateReturnType AIGuardInnerState::onEnter( void )
 }
 
 //--------------------------------------------------------------------------------------
-// ?update@AIGuardInnerState@@ present-unmatched
-StateReturnType AIGuardInnerState::update( void )
-{
-	if (m_attackState)
-	{
-		// if the position has moved (IE we're guarding an object), move with it.
-		Object* targetToGuard = getGuardMachine()->findTargetToGuardByID();
-		if (targetToGuard) 
-		{
-			m_exitConditions.m_center = *targetToGuard->getPosition();
-		}
-		
-		return m_attackState->update();
-	}
-	else if (m_enterState)
-	{
-		return m_enterState->update();
-	}
-
-	return STATE_SUCCESS;
-}
+// ?update@AIGuardInnerState@@UAE?AW4StateReturnType@@XZ
+// Body in AIGuardInnerStateUpdate.cpp (slot 6; BFME team guard, restart flag and rescans).
 
 //--------------------------------------------------------------------------------------
 // ?onExit@AIGuardInnerState@@ present-unmatched
