@@ -1,6 +1,4 @@
 // ?bfmeInvoke@Gen_009EBA60Target@@QAEXPAX0@Z
-// partial score=0.99 date=2026-09-24
-// ?bfmeInvoke@Gen_009EBA60Target@@QAEXPAX0@Z
 // cl: /DNDEBUG /MD /EHsc /O2 /Ob2 /D_STLP_USE_STATIC_LIB
 // stlport
 //
