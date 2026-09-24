@@ -1,5 +1,3 @@
-// ?doQuickMatch@PeerThreadClass@@AAEXPAX@Z
-// partial score=1.0 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 // PeerThread.cpp reconstruction bank. GPL-3.0-or-later, derived from EA Zero Hour.
@@ -443,11 +441,14 @@ public:
   bool Failed() { return failed; }
  };
 };
+// ThreadClass::Switch_Thread's body at 0x009DB570 carries the ledger name
+// bfmeGoDWI (BfmeConv792.cpp); the static member forwards to it.
+void bfmeGoDWI();
 class ThreadClass {
 public:
  virtual ~ThreadClass();
  virtual void Execute();
- static void Switch_Thread();
+ static void Switch_Thread() { bfmeGoDWI(); }
 protected:
  virtual void Thread_Function()=0;
  char Rva0064CEF0Base[0x4c];
