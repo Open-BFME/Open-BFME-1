@@ -1,6 +1,4 @@
 // ?Queue_Keys_009EFBF0@AssetRegistry@@QAEX_NABV?$set@PAURva001408C0Target@@U?$less@PAURva001408C0Target@@@_STL@@V?$allocator@PAURva001408C0Target@@@3@@_STL@@@Z
-// partial score=0.99 date=2026-09-24
-// ?Queue_Keys_009EFBF0@AssetRegistry@@QAEX_NABV?$set@PAURva001408C0Target@@U?$less@PAURva001408C0Target@@@_STL@@V?$allocator@PAURva001408C0Target@@@3@@_STL@@@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
