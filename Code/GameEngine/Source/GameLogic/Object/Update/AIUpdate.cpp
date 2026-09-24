@@ -3,7 +3,6 @@
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define __PLACEMENT_VEC_NEW_INLINE  // always.h/GameMemory.h define array placement-new themselves
 // stlport
-// readable body of ?getShroudStatusForPlayer@PartitionManager@@: Code/GameEngine/Source/GameLogic/Object/PartitionManager.cpp
 /*
 **	Command & Conquer Generals Zero Hour(tm)
 **	Copyright 2025 Electronic Arts Inc.
@@ -5935,7 +5934,6 @@ void AIUpdateInterface::setAttitude( AttitudeType tude )
 /**
  * Get the current behavior modifier state	
  */
-// ?getAttitude@AIUpdateInterface@@ present-unmatched
 AttitudeType AIUpdateInterface::getAttitude( void ) const
 {
 	return m_attitude;
@@ -5967,7 +5965,6 @@ void AIUpdateInterface::ignoreObstacleID( ObjectID id )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?getIgnoredObstacleID@AIUpdateInterface@@ present-unmatched
 ObjectID AIUpdateInterface::getIgnoredObstacleID( void ) const
 { 
 	return m_ignoreObstacleID; 
