@@ -1,9 +1,6 @@
-// ?xfer@Rva003D1020@@QAEXPAVXfer@@@Z
-// partial score=0.78 date=2026-09-17
 // cl: /DNDEBUG /MD /O2 /EHsc
-// The owner of this body is not named by the retail evidence.  Its vector is
-// at +0x04/+0x08, its transfer guard is at +0x2c, and the related record body
-// is the already pinned 0x003D0A40 two-argument transfer helper.
+// "AudioMap" record-vector transfer, retail 0x003D1020 (500 bytes). The owner stays
+// address-derived; each record is transferred by 0x003D0A40 with the version as context.
 
 typedef bool Bool;
 typedef unsigned short UnsignedShort;
@@ -39,7 +36,21 @@ public:
 	}
 	~BFMERetailAsciiString(void) { releaseBuffer(); }
 
-	const StringBase<char>::Header *header(void) const { return m_data; }
+	int getLength(void) const { return m_data ? m_data->m_length : 0; }
+	const char *str(void) const { return m_data ? m_data->m_text : ""; }
+
+	int compareNoCase(const BFMERetailAsciiString &other) const
+	{
+		int lenOther = other.getLength();
+		const char *pOther = other.str();
+		int lenThis = getLength();
+		const char *pThis = str();
+		int shorter = lenThis < lenOther ? lenThis : lenOther;
+		int diff = _memicmp(pThis, pOther, shorter);
+		if (diff != 0)
+			return diff;
+		return lenThis - lenOther;
+	}
 
 private:
 	void releaseBuffer(void);
@@ -101,18 +112,18 @@ public:
 
 extern void j_000175d0(void);
 
+// 0x003D0A40 is __thiscall (Xfer *, void *context) with ret 8, reached through its thunk.
 static void transferRecord(Rva003D0A40Record *record, Xfer *xfer,
-	BFMERetailAsciiString *name)
+	XferVersion *version)
 {
-	typedef void (Rva003D0A40Record::*RecordTransfer)(Xfer *,
-		BFMERetailAsciiString *);
+	typedef void (Rva003D0A40Record::*RecordTransfer)(Xfer *, XferVersion *);
 	union
 	{
 		void (*raw)(void);
 		RecordTransfer member;
 	} call;
 	call.raw = j_000175d0;
-	(record->*call.member)(xfer, name);
+	(record->*call.member)(xfer, version);
 }
 
 class Rva003D1020
@@ -129,9 +140,7 @@ private:
 	Bool m_transferGuard;
 };
 
-static const char *const kAudioMap = (const char *)0x010EE3F8;
-static const char *const kEmptyAscii = (const char *)0x0107388B;
-
+// ?xfer@Rva003D1020@@QAEXPAVXfer@@@Z
 void Rva003D1020::xfer(Xfer *xfer)
 {
 	Rva003D1020 *owner = this;
@@ -157,47 +166,27 @@ void Rva003D1020::xfer(Xfer *xfer)
 			Rva003D0A40Record **record = owner->m_begin;
 			for (; record != owner->m_end; ++record)
 			{
-				const StringBase<char>::Header **recordDataAddress =
-					(const StringBase<char>::Header **)((const char *)(*record) + 0x14);
-				const StringBase<char>::Header *nameData = name.header();
-				int nameLength = nameData ? nameData->m_length : 0;
-				const char *nameText = nameData ? nameData->m_text : kEmptyAscii;
-
-				const StringBase<char>::Header *recordData = *recordDataAddress;
-				int recordLength;
-				if (recordData != 0)
-					recordLength = recordData->m_length;
-				else
-					recordLength = 0;
-				const char *recordText;
-				const StringBase<char>::Header *recordTextData = recordData;
-				if (recordTextData != 0)
-					recordText = recordTextData->m_text;
-				else
-					recordText = kEmptyAscii;
-				int compareLength = recordLength < nameLength ?
-					recordLength : nameLength;
-				if (_memicmp(recordText, nameText, compareLength) == 0 &&
-					recordLength == nameLength)
+				if ((*record)->m_name.compareNoCase(name) == 0)
 					break;
 			}
 
 			if (record == owner->m_end)
-				xfer->skipBlock(kAudioMap);
-			else
 			{
-				xfer->beginBlock(kAudioMap);
-				transferRecord(*record, xfer, &name);
-				xfer->endBlock();
+				xfer->skipBlock("AudioMap");
+				continue;
 			}
+			xfer->beginBlock("AudioMap");
+			transferRecord(*record, xfer, &version);
+			xfer->endBlock();
 		}
 		else
 		{
 			Rva003D0A40Record *record = owner->m_begin[index];
-			BFMERetailAsciiString savedName(record->m_name);
+			const BFMERetailAsciiString *source = &record->m_name;
+			BFMERetailAsciiString savedName(*source);
 			xfer->xferAsciiString(&savedName);
-			xfer->beginBlock(kAudioMap);
-			transferRecord(record, xfer, &savedName);
+			xfer->beginBlock("AudioMap");
+			transferRecord(record, xfer, &version);
 			xfer->endBlock();
 		}
 	}
