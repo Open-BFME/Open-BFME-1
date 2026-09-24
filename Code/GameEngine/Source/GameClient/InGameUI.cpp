@@ -1318,7 +1318,7 @@ struct BfmeInGameUIVirtualView {
 	BFME_IN_GAME_UI_SLOT(60)
 	BFME_IN_GAME_UI_SLOT(61)
 	BFME_IN_GAME_UI_SLOT(62)
-	BFME_IN_GAME_UI_SLOT(63)
+	virtual const DrawableList *getAllSelectedDrawables( void ) const = 0;	///< vtable +0xFC: lea eax,[ecx+0x18] (0x0043B250)
 	BFME_IN_GAME_UI_SLOT(64)
 	BFME_IN_GAME_UI_SLOT(65)
 	BFME_IN_GAME_UI_SLOT(66)
@@ -1880,6 +1880,8 @@ struct BfmeSoloNexusDrawable
 {
 	UnsignedByte pad[0xfc];
 	Object *object;						///< retail Drawable+0xFC
+
+	Object *getObject( void ) const { return object; }
 };
 
 struct BfmeSoloNexusUI
@@ -8630,7 +8632,7 @@ Bool InGameUI::canSelectedObjectsOverrideSpecialPowerDestination( const Coord3D 
 	Int qualify = 0;
 
 	// get selected list of drawables
-	const DrawableList *selected = TheInGameUI->getAllSelectedDrawables();
+	const DrawableList *selected = ((const BfmeInGameUIVirtualView *)TheInGameUI)->getAllSelectedDrawables();
 
 	// loop through all the selected drawables
 	Drawable *other;
@@ -8641,7 +8643,7 @@ Bool InGameUI::canSelectedObjectsOverrideSpecialPowerDestination( const Coord3D 
 		other = *it;
 		count++;
 
-		if( TheActionManager->canOverrideSpecialPowerDestination( other->getObject(), loc, spType, CMD_FROM_PLAYER ) )
+		if( TheActionManager->canOverrideSpecialPowerDestination( ((BfmeSoloNexusDrawable *)other)->getObject(), loc, spType, CMD_FROM_PLAYER ) )
 		{
 			if( rule == SELECTION_ANY )
 			{
