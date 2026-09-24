@@ -74,32 +74,32 @@ static int unit_has_structure_goal(void *object)
     return c_is_kind_of(goal, 0, KINDOF_STRUCTURE) != 0;
 }
 
-static int object_or_outer_has_structure_goal(void *target)
+static int object_or_outer_has_structure_goal(void *object)
 {
     void *outer;
 
-    if (unit_has_structure_goal(target))
+    if (unit_has_structure_goal(object))
         return 1;
-    if (target == 0)
+    if (object == 0)
         return 0;
-    outer = read_pointer_field(target, OBJECT_OUTER);
-    if (outer == 0 || outer == target)
+    outer = read_pointer_field(object, OBJECT_OUTER);
+    if (outer == 0 || outer == object)
         return 0;
     return unit_has_structure_goal(outer);
 }
 
-extern "C" __declspec(dllexport) void __cdecl armMeleeHordeTargetPredicateSkip(void *target)
+extern "C" __declspec(dllexport) void __cdecl armMeleeHordeTargetPredicateSkip(void *object)
 {
-    unsigned char *status;
+    unsigned char *predicateSkipByte;
 
     s_predicateSkipArmed = 0;
-    if (target == 0 || !object_or_outer_has_structure_goal(target))
+    if (object == 0 || !object_or_outer_has_structure_goal(object))
         return;
-    status = (unsigned char *)target + OBJECT_PREDICATE_SKIP;
-    if ((*status & PREDICATE_SKIP_BIT) != 0)
+    predicateSkipByte = (unsigned char *)object + OBJECT_PREDICATE_SKIP;
+    if ((*predicateSkipByte & PREDICATE_SKIP_BIT) != 0)
         return;
-    *status = (unsigned char)(*status | PREDICATE_SKIP_BIT);
-    s_predicateSkipByte = status;
+    *predicateSkipByte = (unsigned char)(*predicateSkipByte | PREDICATE_SKIP_BIT);
+    s_predicateSkipByte = predicateSkipByte;
     s_predicateSkipArmed = 1;
 }
 
