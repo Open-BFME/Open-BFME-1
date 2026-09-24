@@ -1,7 +1,3 @@
-// ?endPreparation@SpecialAbilityUpdate@@QAEXXZ
-// partial score=0.98 date=2026-09-04
-// ?endPreparation@SpecialAbilityUpdate@@QAEXXZ
-// partial score=0.98 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
@@ -9,8 +5,10 @@
 // The BFME build uses the ten-word model-condition view for the two masks in
 // this method.  The special-power switch is kept after the flag update, as in
 // the retail body; its three cases all share the special-object cleanup call.
+// The switch reads the type through the Zero Hour getFO() chain: the const
+// friend_getFinalOverride inlines the non-const one once, and only the
+// recursive step stays a call (0x00048C61 -> 0x00097880).
 
-#define _STLP_NO_EXCEPTIONS 1
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
 typedef unsigned int AudioHandle;
@@ -24,9 +22,6 @@ enum SpecialPowerType
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <bitset>
-
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
 
 template<int NUMBITS>
 class BitFlags
@@ -110,7 +105,20 @@ class Overridable
 public:
 	virtual ~Overridable();
 
-	Overridable *friend_getFinalOverride();
+	Overridable *friend_getFinalOverride()
+	{
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+
+	const Overridable *friend_getFinalOverride() const
+	{
+		if (m_nextOverride)
+			return m_nextOverride->friend_getFinalOverride();
+		return this;
+	}
+
 	Overridable *m_nextOverride;
 };
 
@@ -120,19 +128,18 @@ class SpecialPowerTemplate : public Overridable
 public:
 	SpecialPowerType getSpecialPowerType() const
 	{
-		return (SpecialPowerType)m_specialPowerType;
+		return getFO()->m_specialPowerType;
 	}
 
-	public:
+private:
+	const SpecialPowerTemplate *getFO() const
+	{
+		return (const SpecialPowerTemplate *)friend_getFinalOverride();
+	}
+
 	unsigned char m_unmodelled_08[0x0c];
 	SpecialPowerType m_specialPowerType;
 };
-
-static __forceinline int readSpecialPowerType(
-	const SpecialPowerTemplate *specialPowerTemplate)
-{
-	return (int)specialPowerTemplate->m_specialPowerType;
-}
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
 class SpecialAbilityUpdateModuleData
@@ -168,16 +175,8 @@ void SpecialAbilityUpdate::endPreparation()
 	ModelConditionFlags set;
 	getObject()->clearAndSetModelConditionFlags(clear, set);
 
-	const SpecialPowerTemplate *specialPowerTemplate =
-		m_moduleData->m_specialPowerTemplate;
-	Overridable *overrideTemplate = specialPowerTemplate->m_nextOverride;
-	if (overrideTemplate)
-	{
-		if (overrideTemplate->m_nextOverride)
-			overrideTemplate =
-				overrideTemplate->m_nextOverride->friend_getFinalOverride();
-		specialPowerTemplate = (const SpecialPowerTemplate *)overrideTemplate;
-	}
+	const SpecialAbilityUpdateModuleData *data = m_moduleData;
+	const SpecialPowerTemplate *specialPowerTemplate = data->m_specialPowerTemplate;
 	switch (specialPowerTemplate->getSpecialPowerType())
 	{
 	case SPECIAL_MISSILE_DEFENDER_LASER_GUIDED_MISSILES:
