@@ -10049,10 +10049,31 @@ WorldAnimationData::WorldAnimationData( void )
 
 }  // end WorldAnimationData
 
+// Retail allocates 0x34 bytes for Anim2D at 0x00443720, then calls the real
+// Anim2D constructor. The vendored layout is 0x2c, so this view reserves the
+// eight-byte BFME tail while constructing the Anim2D member at offset zero.
+struct BfmeRetailAnim2DStorageView
+{
+	Anim2D animation;
+	unsigned char retailTail[8];
+
+	BfmeRetailAnim2DStorageView(Anim2DTemplate *animTemplate,
+		Anim2DCollection *collection)
+		: animation(animTemplate, collection) { }
+};
+
+typedef char BfmeRetailAnim2DStorageViewMustBe34Bytes[
+	(sizeof(BfmeRetailAnim2DStorageView) == 0x34) ? 1 : -1];
+
+// The retail list call reaches the four-byte push_front specialization at
+// 0x00442660, whose address-derived element view is one dword wide.
+struct Rva00442660Element { int m_body; };
+typedef _STL::list<Rva00442660Element, _STL::allocator<Rva00442660Element> >
+	BfmeWorldAnimationListStorageView;
+
 // ------------------------------------------------------------------------------------------------
 /** Add a 2D animation at a spot in the world */
 // ------------------------------------------------------------------------------------------------
-// ?addWorldAnimation@InGameUI@@QAEXPAVAnim2DTemplate@@PBUCoord3D@@W4WorldAnimationOptions@@MM@Z present-unmatched
 void InGameUI::addWorldAnimation( Anim2DTemplate *animTemplate,
 																	const Coord3D *pos,
 																	WorldAnimationOptions options,
@@ -10071,7 +10092,8 @@ void InGameUI::addWorldAnimation( Anim2DTemplate *animTemplate,
 		return;		
 
 	// allocate a new animation instance
-	Anim2D *anim = newInstance(Anim2D)( animTemplate, TheAnim2DCollection );
+	Anim2D *anim = &( (::new BfmeRetailAnim2DStorageView(
+		animTemplate, TheAnim2DCollection ))->animation );
 
 	// assign all data
 	wad->m_anim = anim;
@@ -10081,7 +10103,10 @@ void InGameUI::addWorldAnimation( Anim2DTemplate *animTemplate,
 	wad->m_zRisePerSecond = zRisePerSecond;
 
 	// add to list
-	m_worldAnimationList.push_front( wad );
+	// The BFME list storage is at this+0x12c0; the ZH header offset differs.
+	reinterpret_cast<BfmeWorldAnimationListStorageView *>(
+		reinterpret_cast<char *>( this ) + 0x12c0 )->push_front(
+			reinterpret_cast<Rva00442660Element &>( wad ) );
 
 }  // end addWorldAnimation
 
