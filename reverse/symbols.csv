@@ -3989,7 +3989,7 @@ name,address,notes
 ??0W3DTracerDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00048B9E,"exact retail rel32 target of the byte-verified caller; replaces a harvested pin at 0x00004D36, which is ??0SiegeDockingBehavior@@QAE@PAVThing@@PBVModuleData@@@Z's own body"
 ??0W3DTreeDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00034C25,link thunk to the W3DTreeDraw constructor; named from the draw-module registration that pairs "W3DTreeDraw" with factory 0x006BF690
 ??0W3DTruckDraw@@QAE@PAVThing@@PBVModuleData@@@Z,0x00036AED,link thunk to the W3DTruckDraw constructor; named from the draw-module registration that pairs "W3DTruckDraw" with factory 0x006BF470
-??0W3DTruckDrawModuleData@@QAE@XZ,0x0003616F,"the ILT the matched factory ?friend_newModuleData@W3DTruckDraw@@ encodes; it reaches the 181-byte body at 0x0077F830. The harvested 0x0000CC3E reaches a 50-byte body already owned by ??0DetachableRiderBodyModuleData@@QAE@XZ and ??0FlightDeckBehaviorModuleData@@QAE@XZ, which cannot also be this ctor"
+??0W3DTruckDrawModuleData@@QAE@XZ,0x0003616F,"the ILT the matched factory ?friend_newModuleData@W3DTruckDraw@@ encodes; it reaches the 181-byte body at 0x0077F830. The harvested 0x0000CC3E reaches a 50-byte body owned by ??0FlightDeckBehaviorModuleData@@QAE@XZ, which cannot also be this ctor"
 ??0W3DVolumetricShadow@@QAE@XZ,0x00034171,addShadow constructor call via retail ILT
 ??0WOLLoginNickList@@QAE@ABV0@@Z,0x0003FA67,WOLLogin pair list-layout copy thunk;target=0x00443D60
 ??0WUU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,WallUpgradeUpdate constructor calls the shared ObjectModule constructor ILT
