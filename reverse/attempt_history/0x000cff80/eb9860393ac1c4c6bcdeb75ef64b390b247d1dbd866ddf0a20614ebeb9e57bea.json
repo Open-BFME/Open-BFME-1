@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "eb9860393ac1c4c6bcdeb75ef64b390b247d1dbd866ddf0a20614ebeb9e57bea",
+  "symbol": "?eraseInputKey@Rva000CFF80Owner@@QAEXPAURva000CFF80Input@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.94,
+  "source": "// ?eraseInputKey@Rva000CFF80Owner@@QAEXPAURva000CFF80Input@@@Z\n// partial score=0.94 date=2026-09-24\n// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD\nstruct BfmeNodeXC;\nclass BfmeListXC\n{\npublic:\n    void bfmeEraseXC(unsigned short *key);\n    BfmeNodeXC *m_bfmeEnd;\n};\nstruct Rva000CFF80Input\n{\n    unsigned char unused[0x478];\n    unsigned short key;\n};\nclass Rva000CFF80Owner\n{\n    unsigned char unused[0x64c];\n    BfmeListXC list;\npublic:\n    void eraseInputKey(Rva000CFF80Input *input);\n};\nvoid Rva000CFF80Owner::eraseInputKey(Rva000CFF80Input *input)\n{\n    input = reinterpret_cast<Rva000CFF80Input *>(static_cast<unsigned int>(input->key));\n    list.bfmeEraseXC(reinterpret_cast<unsigned short *>(&input));\n}\n"
+}
