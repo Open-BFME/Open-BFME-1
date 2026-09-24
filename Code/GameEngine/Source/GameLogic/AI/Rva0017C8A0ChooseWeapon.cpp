@@ -41,7 +41,7 @@ public:
 };
 
 #define OBJECT_TU_MEMBERS \
-	Bool chooseBestWeaponForTarget(const Object *target, WeaponChoiceCriteria criteria, CommandSourceType cmdSource);
+	Bool chooseBestWeaponForTarget(const Object *target, WeaponChoiceCriteria criteria, CommandSourceType commandSource);
 #include "../Object/object.h"
 
 template<int N>

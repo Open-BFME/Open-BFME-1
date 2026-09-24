@@ -45,7 +45,7 @@ struct Coord3D
 class AICommandInterface
 {
 public:
-	void aiEvacuate(Bool exposeStealthUnits, CommandSourceType cmdSource);
+	void aiEvacuate(Bool exposeStealthUnits, CommandSourceType commandSource);
 };
 
 class AIUpdateInterfacePrefix

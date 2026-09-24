@@ -26,7 +26,7 @@ enum CommandSourceType
 class AICommandInterface
 {
 public:
-	void aiIdle(CommandSourceType cmdSource); // named ILT 0x00024D70
+	void aiIdle(CommandSourceType commandSource); // named ILT 0x00024D70
 };
 
 class AIPrimaryRva00256B70
