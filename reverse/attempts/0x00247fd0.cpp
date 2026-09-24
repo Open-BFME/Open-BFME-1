@@ -1,5 +1,5 @@
 // ?rva00247fd0@Rva00247FD0HordeContain@@QAEXPAV?$vector@PAVRva00247FD0Object@@V?$allocator@PAVRva00247FD0Object@@@_STL@@@_STL@@@Z
-// partial score=0.1 date=2026-09-22
+// partial score=0.11 date=2026-09-24
 // cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 // Retail 0x00247FD0. The owner remains address-qualified because no caller names slot 115.
@@ -306,7 +306,7 @@ void Rva00247FD0HordeContain::rva00247fd0(
 {
 	Rva00247FD0Object *me = owner();
 	Rva00247FD0FormationData formation = *getFormationData();
-	_STL::vector<Gen_t_002468d0_p4cd> pending;
+	_STL::vector< _STL::list<Int> > pending;
 	pending.clear();
 	volatile unsigned char lookupState[12];
 	lookupState[0] = 0;

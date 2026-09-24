@@ -1,5 +1,5 @@
 // ?sendSpecial@AIGroup@@QAEXPBUCoord3D@@HHHH@Z
-// partial score=0.3718079673135853 date=2026-09-23
+// partial score=0.3793 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 // stlport
 // AIGroup::sendSpecial, 00157BE0: caller tryGroupSpecial -> ILT 0001A6B3.
@@ -328,7 +328,7 @@ void AIGroup::sendSpecial(const Coord3D *pos,Int source,Int mode,Int snap,Int fl
    Coord2D offset;offset.x=originalOffset.x;offset.y=originalOffset.y;
    Rva00150100(&center,&intermediate,&offset);
    Coord3D dest;
-   dest.x=intermediate.x+offset.x;dest.y=intermediate.y+offset.y;dest.z=intermediate.z;
+   dest.set(intermediate.x+offset.x,intermediate.y+offset.y,intermediate.z);
    center=intermediate;
    if((unsigned char)snap==1)TheAI->pathfinder()->snapLine(&intermediate,&dest);
    path.push_back(dest);
@@ -357,7 +357,7 @@ void AIGroup::sendSpecial(const Coord3D *pos,Int source,Int mode,Int snap,Int fl
    offset.x*=0.0f;offset.y*=0.0f;
   }
   Coord3D dest;
-  dest.x=destination.x+offset.x;dest.y=destination.y+offset.y;dest.z=destination.z;
+  dest.set(destination.x+offset.x,destination.y+offset.y,destination.z);
   if((unsigned char)snap==1)TheAI->pathfinder()->snapLine(&destination,&dest);
   if(!TheAI->pathfinder()->adjustDestination(obj,*ai->getLocomotorSet(),&dest,0)) {
    Region3D extent;TheTerrainLogic->getExtent(&extent);
