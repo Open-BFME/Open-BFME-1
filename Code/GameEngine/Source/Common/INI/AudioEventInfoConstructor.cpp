@@ -35,6 +35,14 @@ struct One
 	}
 };
 
+// Word view of STLport vector storage, matching vendor/stlport/stl/_vector.h.
+struct Rva000B0D10VectorStorage
+{
+	volatile int m_begin;
+	volatile int m_end;
+	volatile int m_capacity;
+};
+
 struct AudioEventInfo
 {
 public:
@@ -60,17 +68,11 @@ private:
 	Two m_priority;
 	volatile int m_type;
 	volatile int m_control;
-	volatile int m_sounds;
-	volatile int m_44;
-	volatile int m_48;
+	Rva000B0D10VectorStorage m_sounds;
 	volatile int m_4c;
-	volatile int m_attackSounds;
-	volatile int m_54;
-	volatile int m_58;
+	Rva000B0D10VectorStorage m_attackSounds;
 	volatile int m_5c;
-	volatile int m_decaySounds;
-	volatile int m_64;
-	volatile int m_68;
+	Rva000B0D10VectorStorage m_decaySounds;
 	volatile int m_6c;
 	volatile int m_lowPassFreq;
 	volatile int m_minDistance;
@@ -79,9 +81,7 @@ private:
 	One m_80;
 	Two m_84;
 	volatile int m_88;
-	volatile int m_8c;
-	volatile int m_90;
-	volatile int m_94;
+	Rva000B0D10VectorStorage m_vector8c;
 };
 
 AudioEventInfo::AudioEventInfo()
@@ -102,17 +102,17 @@ AudioEventInfo::AudioEventInfo()
 	m_type = 0;
 	m_control = 0;
 	m_24.set();
-	m_sounds = 0;
-	m_44 = 0;
-	m_48 = 0;
+	m_sounds.m_begin = 0;
+	m_sounds.m_end = 0;
+	m_sounds.m_capacity = 0;
 	m_4c = 0;
-	m_attackSounds = 0;
-	m_54 = 0;
-	m_58 = 0;
+	m_attackSounds.m_begin = 0;
+	m_attackSounds.m_end = 0;
+	m_attackSounds.m_capacity = 0;
 	m_5c = 0;
-	m_decaySounds = 0;
-	m_64 = 0;
-	m_68 = 0;
+	m_decaySounds.m_begin = 0;
+	m_decaySounds.m_end = 0;
+	m_decaySounds.m_capacity = 0;
 	m_6c = 0;
 	m_lowPassFreq = 0;
 	m_minDistance = 0x42c80000;
@@ -121,7 +121,7 @@ AudioEventInfo::AudioEventInfo()
 	m_80.set();
 	m_84.set();
 	m_88 = -1;
-	m_8c = 0;
-	m_90 = 0;
-	m_94 = 0;
+	m_vector8c.m_begin = 0;
+	m_vector8c.m_end = 0;
+	m_vector8c.m_capacity = 0;
 }
