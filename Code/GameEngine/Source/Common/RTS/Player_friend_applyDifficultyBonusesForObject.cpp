@@ -1,7 +1,3 @@
-// ?friend_applyDifficultyBonusesForObject@Player@@QAEXPAVObject@@_N@Z
-// partial score=0.97 date=2026-09-04
-// ?friend_applyDifficultyBonusesForObject@Player@@QAEXPAVObject@@_N@Z
-// partial score=0.97 date=2026-09-04
 // cl: /DNDEBUG /MD /EHsc
 // BFME's difficulty bonus is an AI-upgrade grant, not ZH's health/weapon-bonus
 // pair. Object::setReceivingDifficultyBonus (matched) calls this through the
@@ -35,11 +31,15 @@ private:
 	const char *m_data;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/PlayerTemplate.h
+// BFME's PlayerTemplate FieldParse table (0x00C847E0) puts PlayableSide at +0xBD.
 class PlayerTemplate
 {
 public:
+	Bool isPlayableSide() const { return m_playableSide; }
+
 	unsigned char m_unreconstructed[0xBD];
-	Bool m_receivesDifficultyBonus;				///< retail this+0xBD
+	Bool m_playableSide;					///< retail this+0xBD
 };
 
 class AIPlayer
@@ -65,7 +65,7 @@ public:
 	Bool _bfme_isInMultiplayerOrSkirmishGame();
 
 	unsigned char m_unreconstructed[0x9C];
-	GameDifficulty m_gameDifficulty;				///< retail this+0x9C
+	GameDifficulty m_gameDifficulty;				///< retail this+0x9C, stored by matched GameLogic::prepareNewGame
 };
 
 class UpgradeCenter
@@ -84,6 +84,11 @@ class Player
 public:
 	void friend_applyDifficultyBonusesForObject(Object *obj, Bool apply);
 
+	// Zero Hour Player.h's inline accessor. Reading the template through it,
+	// rather than the member directly, is what gives retail's allocation:
+	// this in EDI and the Object in ESI.
+	const PlayerTemplate *getPlayerTemplate() const { return m_playerTemplate; }
+
 	void *m_vtable;
 	const PlayerTemplate *m_playerTemplate;			///< retail this+0x04
 	unsigned char m_unreconstructed_08[0x220 - 0x08];
@@ -101,9 +106,9 @@ void Player::friend_applyDifficultyBonusesForObject(Object *obj, Bool apply)
 		return;
 	if (!obj->getControllingPlayer())
 		return;
-	if (!obj->getControllingPlayer()->m_playerTemplate)
+	if (!obj->getControllingPlayer()->getPlayerTemplate())
 		return;
-	if (!obj->getControllingPlayer()->m_playerTemplate->m_receivesDifficultyBonus)
+	if (!obj->getControllingPlayer()->getPlayerTemplate()->isPlayableSide())
 		return;
 
 	AsciiString name;
