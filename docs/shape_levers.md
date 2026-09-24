@@ -322,6 +322,12 @@ words, not new arrays. Derive names from the shipped enum table rather than
 Zero Hour's different numbering. This lever does not validate a routine's
 identity or excuse a changed lifetime or comparison.
 
+A smaller TU-local form also reaches it: a flags struct whose inline `test`
+returns the masked WORD (`m_bits[i >> 5] & (1u << (i & 31))`), not a bool.
+`!= 0` makes VC7.1 emit `shr`/`test al,1` instead. `AIMoveAndDeleteState_onEnter.cpp`
+(0x0017A430, 196 B) sets bits 60 and 241 through that `test` and a matching
+`set`, each followed by `notifyModelConditionChanged`.
+
 Also check that the attempts log entry is not stale: `grep ,0xRVA, reverse/functions.csv`
 -- if the row already points at a `.cpp`, someone landed it.
 
@@ -1275,3 +1281,34 @@ local loads first, as in retail. The literal becomes a `__real@` constant and
 still resolves to the retail constant's address. `Rva000697B0ScanTangentAngle`
 at 0x000697B0 (136 B) went from four differing bytes to exact on 2026-09-24,
 after sessions had logged it as unresolved register scheduling.
+
+## Owner from the vtable slot, then the Zero Hour source as written (2026-09-24)
+
+Many `d_` bodies that sessions blocked as "no identity" sit in a vftable whose
+slot 0 is a named `??_G` deleting destructor. The slot then names the method:
+BFME's SubsystemInterface is init 1, loadIniFilesFromLegend 2, postProcessLoad 3,
+reset 4, update 5, and State is onEnter 4, onExit 5, update 6, each confirmed by
+named rows in the same slots. Scan the image for tables that hold a body
+(directly or through its ILT thunk) before calling it anonymous; a body held by
+exactly one table has exactly one owner.
+
+Once the owner is known, write Zero Hour's source for that method literally,
+with Zero Hour's own inline accessors, before inventing locals. Shapes that
+closed bodies other sessions had banked:
+
+| Symptom | Lever | Witness |
+|---|---|---|
+| A recursive override walk keeps its "not an override" arm inline where retail puts it after the epilogue | Write `Overridable::deleteOverrides` as the inline member it is in Zero Hour; MSVC inlines one level and calls the out-of-line copy for the recursion | `ThingFactory_reset.cpp` 0x00137D50 |
+| A goal-object load lands in ECX before the saved return value instead of EAX after it | Use State's inline `getMachineGoalObject()` rather than `getMachine()->getGoalObject()` | `AIGuardInnerStateUpdate.cpp` 0x0015E180 |
+| An owner test threads straight to the join where retail keeps `jmp` / `xor reg,reg` | Spell the object load through the inline `Drawable::getObject()` | `InGameUICreateMoveHint.cpp` 0x00444450 |
+| A Coord3D local stays in registers where retail copies it to the frame and reloads x and y | Fill it with the inline `Coord3D::set(const Coord3D *)`, which takes its address | `InGameUICreateMoveHint.cpp` 0x00444450 |
+| `list::push_front` calls `_M_create_node` out of line where retail inlines `__new_alloc::allocate(0xc)` | Compile the TU with `_STLP_NO_EXCEPTIONS`; the `_STLP_TRY` wrapper is what keeps it out of line (the compiler's own EH for a static-local init is unaffected) | `InGameUISelectDrawable.cpp` 0x004462D0 |
+| A deleting-destructor call through the vtable emits a null check retail lacks | Delete through an inline `deleteInstance() { delete this; }` | `WeaponStore_reset.cpp` 0x001E27D0 |
+| A switch-free loop keeps an entry `cmp ecx,N; jae` and a signed back-edge | The body is an inlined index-checked helper: `if ((unsigned)i < N)` inside the loop | `InGameUIDeselectDrawable.cpp` 0x00446490 |
+
+The give-up-frame family (`frame + guardChaseUnitFrames` around a
+`findObjectByID`) closes with the visible no-write `findObjectByID` lever
+from `AIGuardAttackAggressorState_onEnter_Bfme.cpp`. It also keeps the guard
+MACHINE in a callee-saved register across that call
+(`AITNGuardAttackAggressorState_onEnter.cpp` 0x0018AA70). The inner, outer
+and GiantBird variants (0x0018A470, 0x0018A6C0, 0x002BD6F0) landed with it.
