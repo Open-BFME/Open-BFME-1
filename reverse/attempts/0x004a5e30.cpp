@@ -1,5 +1,5 @@
 // ?populateCommand@ControlBar@@IAEXPAVObject@@_N@Z
-// partial score=0.443157132512672 date=2026-09-23
+// partial score=0.443881245474294 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /I. /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // stlport
 // ControlBar::populateCommand, RVA 004A5E30, 1381 bytes through ret8 at 004A6392.
@@ -200,7 +200,8 @@ void ControlBar::populateCommand(Object *object,Bool refresh)
     }
     Rva004A5E30Contain *contain=((Rva004A5E30ObjectView*)object)->field1fc;
     if(contain && contain->slot2d()) doTransportInventoryUI(object,commandSet);
-    int specialIndex=0;
+    int specialIndex[2];
+    specialIndex[1] = 0;
     for(i=0;i<20;++i) {
         const CommandButton *button=commandSet->getCommandButton(i);
         Rva004A5E30ButtonView *b=(Rva004A5E30ButtonView*)button;
@@ -218,17 +219,17 @@ void ControlBar::populateCommand(Object *object,Bool refresh)
                 field100[i]->bfmeClose(true);
                 continue;
             }
-            void *image=rvaCall1<void*>((char*)player+0x684,j_0004a66f,specialIndex);
-            void *item=rvaCall1<void*>((char*)player+0x684,j_00002135,specialIndex);
+            void *image=rvaCall1<void*>((char*)player+0x684,j_0004a66f,specialIndex[1]);
+            void *item=rvaCall1<void*>((char*)player+0x684,j_00002135,specialIndex[1]);
             if(image && item) {
                 ((BFMERetailCommandButton*)button)->setButtonImage((const Image*)image);
                 AsciiString text;
                 if(rvaCall1<Bool>(item,j_00046c18,&text)) b->field68=text;
                 if(field100[i]) setControlCommand(field100[i],button);
                 b->field68.clear();
-                b->fielda0=specialIndex;
+                b->fielda0=specialIndex[1];
             } else b->fielda0=-1;
-            ++specialIndex;
+            ++specialIndex[1];
         }
         if(b->field10==0xf) continue;
         if(field100[i]) {
