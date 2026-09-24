@@ -2592,14 +2592,33 @@ void LocomotorSet::clear()
 }
 
 //-------------------------------------------------------------------------------------------------
+// BFME moved two members this body reads through Locomotor's inline getters:
+// Locomotor::m_template (an OVERRIDE) is at +0x04 (layout_witness), and
+// LocomotorTemplate::m_downhillOnly at +0xCF, where the INI table binds
+// DownhillOnly (field_names.csv). m_surfaces stays at +0x10.
+struct BfmeLocomotorSurfacesView
+{
+	unsigned char m_unmodelled00[0x10];
+	LocomotorSurfaceTypeMask m_surfaces;
+	unsigned char m_unmodelled14[0xCF - 0x14];
+	Bool m_downhillOnly;
+};
+
+struct BfmeLocomotorTemplateAt04View
+{
+	void *m_vtable;
+	OVERRIDE<LocomotorTemplate> m_template;
+};
+
 void LocomotorSet::addLocomotor(const LocomotorTemplate* lt)
 {
 	Locomotor* loco = TheLocomotorStore->newLocomotor(lt);
 	if (loco)
 	{
 		m_locomotors.push_back(loco);
-		m_validLocomotorSurfaces |= loco->getLegalSurfaces();
-		if (loco->getIsDownhillOnly())
+		BfmeLocomotorTemplateAt04View *view = (BfmeLocomotorTemplateAt04View *)loco;
+		m_validLocomotorSurfaces |= ((const BfmeLocomotorSurfacesView *)(const LocomotorTemplate *)view->m_template)->m_surfaces;
+		if (((const BfmeLocomotorSurfacesView *)(const LocomotorTemplate *)view->m_template)->m_downhillOnly)
 		{
 			m_downhillOnly = TRUE;
 		}
