@@ -1,8 +1,8 @@
-// ?d_00177a90@@YAXXZ
+// ?computePath@AIAttackMeleeEngageState@@MAE_NXZ
 // partial score=0.9789915966386554 date=2026-09-21
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
-// Retail RVA 0x00177A90, 952 bytes. Opaque owner: the diagnostic names the
-// melee-engage state, but no original class/virtual signature is claimed.
+// RVA 00177A90, 952 bytes. Vtable 0x01099848 slot 17 routes through ILT
+// 0x0002E5CD to this body; AIStateMachine.h declares virtual Bool computePath.
 // Layout/ABI evidence: docs/analysis/0x003e8e10.md sections 1b-1d and this
 // caller's complete retail instructions. Reuses Rva0016D5F0PathTest call views.
 #include "basetype.h"
@@ -113,16 +113,19 @@ typedef void (Rva00177A90Receiver::*Rva003F6090)(Rva00177A90Object*,void*,Coord3
 typedef bool (__cdecl *Rva00175820)(Rva00177A90Object*,Rva00177A90Object*);
 typedef bool (__cdecl *Rva001752A0)(Coord3D*,Rva00177A90Object*,Rva00177A90Object*);
 
-class Rva00177A90MeleePath
+template<int N> class Rva00177A90Slots : public Rva00177A90Slots<N-1> {
+public: virtual void unused(char (*)[N]) = 0;
+};
+template<> class Rva00177A90Slots<0> {};
+class AIAttackMeleeEngageState : public Rva00177A90Slots<17>
 {
 public:
-    bool computePath();
-    char pad00[0x1c];
+    char pad004[0x1c-4];
     Rva00177A90Machine *m_machine;
     char pad20[4];
     Coord3D m_goalPosition;
     char pad30[0x4c-0x30];
-    bool m_adjustDestinations; // oracle AIInternalMoveToState+4c
+    bool m_adjustDestinations;
     bool flag4d;
     char pad4e[0x58-0x4e];
     unsigned frame58;
@@ -131,9 +134,13 @@ public:
     unsigned frame70;
     bool flag74;
     bool flag75;
+protected:
+    virtual Bool computePath();
 };
 
-bool Rva00177A90MeleePath::computePath()
+
+
+Bool AIAttackMeleeEngageState::computePath()
 {
     if (Glo012F0239 && TheCRCParameterCheck)
         ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
