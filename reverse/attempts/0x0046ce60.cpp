@@ -1,5 +1,5 @@
 // ?apply@BfmeLevelActionRegistry@@QAEXPBDPAX@Z
-// partial score=0.96 date=2026-09-04
+// partial score=0.9696969696969697 date=2026-09-24
 // ?apply@BfmeLevelActionRegistry@@QAEXPBDPAX@Z
 // partial score=0.96 date=2026-09-04
 // cl: /DNDEBUG /DWIN32 /MD /EHsc
@@ -26,6 +26,12 @@ class BfmeLevelAction
 public:
 	virtual void unused();
 	virtual void apply(void *value, void *context, int enabled);
+};
+typedef void (__fastcall *Rva0046CE60ApplyFn)(void *, void *, void *, void *, int);
+struct Rva0046CE60ActionVtable
+{
+	void *slot0;
+	Rva0046CE60ApplyFn slot1;
 };
 
 struct BfmeLevelActionNode
@@ -74,6 +80,7 @@ void BfmeLevelActionRegistry::apply(const char *name, void *context)
 		void *value = node->m_value;
 		if (action == 0)
 			throw BfmeErr1042();
-		action->apply(value, context, 1);
+		Rva0046CE60ActionVtable *actionVtable = *(Rva0046CE60ActionVtable **)action;
+		actionVtable->slot1(action, actionVtable, value, context, 1);
 	}
 }
