@@ -1,92 +1,174 @@
 // ?Rva00941C60_Method@Render2DSentenceClass@@AAE?AVVector2@@PBGPAH1_N@Z
-// partial score=0.0 date=2026-09-22
+// partial score=0.076 date=2026-09-24
+// ?Rva00941C60_Method@Render2DSentenceClass@@AAE?AVVector2@@PBGPAH1_N@Z
+// The matched caller at 0x00942430 passes this object, text, two hotkey pointers, and the flag.
+// That caller proves the ABI, but it does not prove a semantic method name.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
-#define Build_Sentence_Not_Centered Rva00941C60_Method
-// stlport
-#define Matrix4x4 Matrix4  // BFME renamed it
-/*
-**	Command & Conquer Generals Zero Hour(tm)
-**	Copyright 2025 Electronic Arts Inc.
-**
-**	This program is free software: you can redistribute it and/or modify
-**	it under the terms of the GNU General Public License as published by
-**	the Free Software Foundation, either version 3 of the License, or
-**	(at your option) any later version.
-**
-**	This program is distributed in the hope that it will be useful,
-**	but WITHOUT ANY WARRANTY; without even the implied warranty of
-**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-**	GNU General Public License for more details.
-**
-**	You should have received a copy of the GNU General Public License
-**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
 
- /***********************************************************************************************
- ***              C O N F I D E N T I A L  ---  W E S T W O O D  S T U D I O S               ***
- ***********************************************************************************************
- *                                                                                             *
- *                 Project Name : WW3D                                                         *
- *                                                                                             *
- *                     $Archive:: /Commando/Code/ww3d2/render2dsentence.cpp                   $*
- *                                                                                             *
- *                       $Author:: Patrick                  $*
- *                                                                                             *
- *								$Modtime:: 8/29/01 11:16a                                             $*
- *                                                                                             *
- *                    $Revision:: 13                                                          $*
- *                                                                                             *
- *---------------------------------------------------------------------------------------------*
- * Functions:                                                                                  *
- * - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
+typedef unsigned short WCHAR;
+typedef unsigned short uint16;
+#define NULL 0
 
-#include "render2dsentence.h"
-#include "surfaceclass.h"
-#include "texture.h"
-#include "wwprofile.h"
-#include "wwmemlog.h"
-#include "dx8wrapper.h"
+void __cdecl operator delete[](void *) throw();
+void __cdecl Gen0082E5F0(void *, unsigned int);
+extern "C" __declspec(dllimport) unsigned int __cdecl bfmeLenVGI(const unsigned short *);
 
-#define TEXTURE_OFFSET 2
-Vector2	Render2DSentenceClass::Build_Sentence_Not_Centered (const WCHAR *text, int *hkX, int *hkY, bool justCalcExtents)
+class Vector2 { public: float X, Y; void Set(float x, float y) { X=x; Y=y; } };
+struct Vector2i { int I, J; void Set(int i, int j) { I=i; J=j; } };
+struct FontCharsClassCharDataStruct { unsigned short Value; short Width; short ExtraSpacing; };
+
+class FontCharsClass
 {
-	Vector2 cursor = Cursor;
-	int textureStartX = TextureStartX;
-	float maxX = 0;
+public:
+    virtual ~FontCharsClass();
+    unsigned int references;
+    int Get_Char_Height() const { return char_height; }
+    const FontCharsClassCharDataStruct *Get_Char_Data(unsigned short);
+    int Get_Char_Spacing(unsigned short ch) {
+        const FontCharsClassCharDataStruct *data = Get_Char_Data(ch);
+        return data ? data->Width + data->ExtraSpacing : 0;
+    }
+    int Get_Extra_Overlap() const { return pixel_overlap; }
+    void Blit_Char(unsigned short, unsigned int *, int, int, int);
+    FontCharsClass *AlternateUnicodeFont;
+private:
+    char fields0c[0x20];
+    int char_height;
+    char fields30[0x08];
+    int pixel_overlap;
+    char fields3c[4];
+};
 
-	int hotKeyPosX = 0;
+class Rva0093C4A0Target
+{
+public:
+    bool Check(const unsigned short *, unsigned short *, int);
+private:
+    char fields00[0x48];
+    void *font;
+};
+
+class Rva00941700Owner
+{
+public:
+    void Rva00941700_Method(FontCharsClass *, const unsigned short *, unsigned short *, bool);
+};
+
+namespace _STL
+{
+template <class T> class allocator {};
+template <class T, class A> class vector
+{
+public:
+    vector() : _M_start(0), _M_finish(0), _M_end_of_storage(0) {}
+    ~vector()
+    {
+        if (_M_start != 0) {
+            unsigned int bytes = (unsigned int)((char *)_M_end_of_storage - (char *)_M_start);
+            if (bytes > 0x80)
+                ::operator delete[](_M_start);
+            else
+                Gen0082E5F0(_M_start, bytes);
+        }
+    }
+    T *begin() { return _M_start; }
+    unsigned int size() const { return (unsigned int)(_M_finish - _M_start); }
+    void resize(unsigned int, T);
+private:
+    T *_M_start;
+    T *_M_finish;
+    T *_M_end_of_storage;
+};
+}
+
+struct SentenceData
+{
+    void *surface;
+    float screen_left, screen_top, screen_right, screen_bottom;
+    float uv_left, uv_top, uv_right, uv_bottom;
+};
+
+template <class T> class DynamicVector
+{
+public:
+    virtual void dummy();
+    T *Vector;
+    int VectorMax;
+    bool IsValid;
+    bool IsAllocated;
+    char pad[2];
+    int ActiveCount;
+    int GrowthStep;
+};
+struct Rect { float left, top, right, bottom; };
+class SurfaceClass { public: unsigned int *Lock(int *, bool = false); };
+
+class Render2DSentenceClass
+{
+public:
+    virtual void reset();
+private:
+    Vector2 Rva00941C60_Method(const unsigned short *, int *, int *, bool);
+public:
+    void Record_Sentence_Chunk();
+    void Rva0093F980_Method(FontCharsClass *);
+    DynamicVector<SentenceData> sentence_data;
+    DynamicVector<char> pending_surfaces;
+    DynamicVector<char> renderers;
+    FontCharsClass *Font;
+    Vector2 BaseLocation, Location, Cursor;
+    Vector2i TextureOffset;
+    int TextureStartX, CurrTextureSize, TextureSizeHint;
+    SurfaceClass *CurSurface;
+    bool MonoSpaced;
+    float WrapWidth;
+    bool Centered;
+    Rect ClipRect, DrawExtents;
+    bool IsClippedEnabled, ParseHotKey, useHardWordWrap;
+    char pad[1];
+    unsigned int *LockedPtr;
+    int LockedStride;
+};
+
+inline float max(float left, float right) { return left > right ? left : right; }
+#define TEXTURE_OFFSET 2
+Vector2 Render2DSentenceClass::Rva00941C60_Method (const WCHAR *text, int *hkX, int *hkY, bool justCalcExtents)
+{
+		int hotKeyPosX = 0;
 	int hotKeyPosY = 0;
 	bool calcHotKeyX = false;
 	bool dontBlit = false;
-	Vector2i textureOffset = TextureOffset;
+	float maxX = 0;
 
-
-	//
-	//	Start fresh
-	//
-	if (!justCalcExtents)
-	{
-		Reset_Sentence_Data ();
+	int length = (int)bfmeLenVGI(text);
+	_STL::vector<unsigned short, _STL::allocator<unsigned short> > glyphVector;
+	glyphVector.resize(length + 1, 0);
+	unsigned short *glyphs = glyphVector.begin();
+	FontCharsClass *drawFont = Font;
+	if (!reinterpret_cast<Rva0093C4A0Target *>(drawFont)->Check(text, glyphs, length)) {
+		if (drawFont->AlternateUnicodeFont != NULL) {
+			reinterpret_cast<Rva0093C4A0Target *>(drawFont->AlternateUnicodeFont)->Check(text, glyphs, length);
+			drawFont = drawFont->AlternateUnicodeFont;
+		}
 	}
-	Cursor.Set (0, 0);
+	glyphs[length] = 0xffff;
+	reinterpret_cast<Rva00941700Owner *>(this)->Rva00941700_Method(drawFont, text, glyphs, justCalcExtents);
 
-	//
-	//	Ensure we have a surface to start with
-	//
-	if (CurSurface == NULL) {
-		Allocate_New_Surface (text, justCalcExtents);
-	}
+
+
 
 	TextureOffset.Set (TEXTURE_OFFSET, 0);
 	TextureStartX = TEXTURE_OFFSET;	
 
-	float char_height = Font->Get_Char_Height ();
+	float char_height = drawFont->Get_Char_Height ();
 
 	//
 	//	Loop over all the characters in the string
 	//
+	const WCHAR *glyphText = glyphs;
 	while (text != NULL) {
 		WCHAR ch = *text++;
+		WCHAR glyph = *glyphText++;
 		dontBlit = false;
 		//
 		//	Determine how much horizontal space this character requires
@@ -100,9 +182,10 @@ Vector2	Render2DSentenceClass::Build_Sentence_Not_Centered (const WCHAR *text, i
 				hotKeyPosX = Cursor.X + TextureOffset.I -TextureStartX;//TextureOffset.I;
 
 			ch = *text++;
+			glyph = *glyphText++;
 			dontBlit = true;
 		}
-		float char_spacing = Font->Get_Char_Spacing (ch);
+		float char_spacing = drawFont->Get_Char_Spacing(glyph);
 
 		bool exceeded_texture_width	= ((TextureOffset.I + char_spacing) >= CurrTextureSize);
 		bool encountered_break_char	= (ch == L' ' || ch == L'\n' || ch == 0);
@@ -113,7 +196,7 @@ Vector2	Render2DSentenceClass::Build_Sentence_Not_Centered (const WCHAR *text, i
 		if (exceeded_texture_width || encountered_break_char|| wordBiggerThenLine) {
 			if (!justCalcExtents)
 			{
-				Record_Sentence_Chunk ();
+				Rva0093F980_Method(drawFont);
 			}
 
 			//
@@ -139,11 +222,14 @@ Vector2	Render2DSentenceClass::Build_Sentence_Not_Centered (const WCHAR *text, i
 					//	Find the length of the next word
 					//
 					const WCHAR *word	= text;
+					const WCHAR *wordGlyph = glyphText;
 					float word_width	= char_spacing;
 					while ((*word != 0) && (*word > L' ')) {
-						if(ParseHotKey && (*word == L'&') && (*word+1 != 0) && (*word+1 > L' ') && (*word+1 != L'\n'))
-							*word++;
-						word_width += Font->Get_Char_Spacing (*word++);
+						if(ParseHotKey && (*word == L'&') && (*word+1 != 0) && (*word+1 > L' ') && (*word+1 != L'\n')) {
+							word++;
+							wordGlyph++;
+						}
+						word_width += drawFont->Get_Char_Spacing (*wordGlyph++);
 					}
 
 					//
@@ -179,7 +265,7 @@ Vector2	Render2DSentenceClass::Build_Sentence_Not_Centered (const WCHAR *text, i
 				//	Did the text extent completely off the texture?
 				//
 				if ((TextureOffset.J + char_height) >= CurrTextureSize) {
-					Allocate_New_Surface (text, justCalcExtents);
+					reinterpret_cast<Rva00941700Owner *>(this)->Rva00941700_Method(drawFont, text, glyphs, justCalcExtents);
 				}
 			}
 		}
@@ -192,34 +278,28 @@ Vector2	Render2DSentenceClass::Build_Sentence_Not_Centered (const WCHAR *text, i
 			if (!justCalcExtents)
 			{
 				if (LockedPtr == NULL) {
-					LockedPtr = (uint16 *)CurSurface->Lock (&LockedStride);
-					WWASSERT (LockedPtr != NULL);
+					LockedPtr = (unsigned int *)CurSurface->Lock (&LockedStride);
+
 				}
 			}
 
-			//
-			//	Check to ensure the text will fit on this texture
-			//
-			WWASSERT (((TextureOffset.I + char_spacing) < CurrTextureSize) && ((TextureOffset.J + char_height) < CurrTextureSize));
+
 
 			//
 			//	Blit the character to the surface
 			//
 			if (!justCalcExtents && !dontBlit )
 			{
-				Font->Blit_Char (ch, LockedPtr, LockedStride, TextureOffset.I, TextureOffset.J);			
+				drawFont->Blit_Char (ch, LockedPtr, LockedStride, TextureOffset.I, TextureOffset.J);
 			}
 			TextureOffset.I += char_spacing;
 		} 
 	}
 
 	Vector2 extent;
-	extent.X = maxX + Font->Get_Extra_Overlap();
+	extent.X = maxX + drawFont->Get_Extra_Overlap();
 	extent.Y = Cursor.Y + char_height;
 
-	Cursor = cursor;
-	TextureOffset = textureOffset;
-	TextureStartX = textureStartX;
 	
 	if(hkX)						
 		*hkX = hotKeyPosX;

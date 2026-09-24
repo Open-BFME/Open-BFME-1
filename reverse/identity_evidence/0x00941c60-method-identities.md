@@ -1,0 +1,5 @@
+# Identity corrections at RVA 0x00941C60
+
+`reverse/functions.csv`, the ledger of matched names and body extents, names the 1,934-byte body at RVA 0x00942430 `Render2DSentenceClass::Build_Sentence_Not_Centered`. Its retail code sets ECX to the sentence object, calls RVA 0x00941C60 at offset +0x152, then reads the hidden `Vector2` return value. The callee has a distinct 1,999-byte body. This call proves the callee's member calling convention and class role, but it does not give the callee the caller's method name. The bank therefore uses the address-derived name `Rva00941C60_Method`.
+
+The old bank called `Record_Sentence_Chunk()` with no arguments. Retail instead calls RVA 0x0093F980 with one `FontCharsClass*` argument. `reverse/functions.csv` names that matched one-argument helper `Rva0093F980_Method`. The ledger separately names the zero-argument `Record_Sentence_Chunk` body at RVA 0x0093F310. The old name therefore pointed to a different body and signature. The bank now calls `Rva0093F980_Method(drawFont)`.

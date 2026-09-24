@@ -2138,5 +2138,25 @@
   "after_sha256": "fc8a6f51132371e1bb81d493034c4b342e4c71e3e46d44f0d789aa1176d71281",
   "evidence": "reverse/identity_evidence/0x003c8300-manager-region-return.md",
   "reason": "The 46-byte row's pointer return and manager receiver are proved by the matched 0x003C8160 callee and the 0x003CB290 to 0x003C83E0 caller chain. The corrected ledger name retains 0x003C8300 because the lexical method name remains unknown."
+ },
+ {
+  "old_path": "reverse/attempts/0x00941c60.cpp",
+  "new_path": "reverse/attempts/0x00941c60.cpp",
+  "old_name": "Build_Sentence_Not_Centered",
+  "new_name": "Rva00941C60_Method",
+  "before_sha256": "6634f6bb180d9c181b52ba245092c7a88ed393ec32a53b4c1e1d34a6774850d0",
+  "after_sha256": "7f8e23210b1901a476d8638cbe10c97773bd45f938537b2320744679e560d72f",
+  "evidence": "reverse/identity_evidence/0x00941c60-method-identities.md",
+  "reason": "The matched Build_Sentence_Not_Centered body at 0x00942430 calls this distinct body at 0x00941C60 with the same member ABI. The caller already owns that symbol, so assigning it to the callee would give two different bodies the same identity. The address-derived name leaves the callee method open."
+ },
+ {
+  "old_path": "reverse/attempts/0x00941c60.cpp",
+  "new_path": "reverse/attempts/0x00941c60.cpp",
+  "old_name": "Record_Sentence_Chunk",
+  "new_name": "Rva0093F980_Method",
+  "before_sha256": "6634f6bb180d9c181b52ba245092c7a88ed393ec32a53b4c1e1d34a6774850d0",
+  "after_sha256": "7f8e23210b1901a476d8638cbe10c97773bd45f938537b2320744679e560d72f",
+  "evidence": "reverse/identity_evidence/0x00941c60-method-identities.md",
+  "reason": "Retail passes one FontCharsClass pointer to the matched 0x0093F980 helper. Record_Sentence_Chunk has no parameters and is the separate matched body at 0x0093F310, so its name identifies a different target. The address-derived name states the proven callee."
  }
 ]
