@@ -520,7 +520,8 @@ void MeshClass::Scale(float scalex, float scaley, float scalez)
 void	MeshClass::Get_Deformed_Vertices(Vector3 *dst_vert, Vector3 *dst_norm)
 {
 	WWASSERT(Model->Get_Flag(MeshGeometryClass::SKIN));
-	Model->get_deformed_vertices(dst_vert,dst_norm,Container->Get_HTree());
+	Model->get_deformed_vertices(dst_vert, dst_norm,
+		Container != NULL ? Container->Get_HTree() : NULL);
 }
 
 
