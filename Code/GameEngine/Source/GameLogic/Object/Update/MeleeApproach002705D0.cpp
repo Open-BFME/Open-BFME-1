@@ -67,7 +67,7 @@ extern void *g002705D0Va012ED4FC;
 class MeleeApproach002705D0 {
 public:
     unsigned char pad000[8];
-    Melee002705D0Object *at008;
+    Melee002705D0Object *m_object;
     unsigned char pad00c[0x144-0xc];
     unsigned int at144;
     Coord3D m_requestedDestination; // +148, name_oracle and retail log agree.
@@ -99,7 +99,7 @@ public:
 };
 
 bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
-    Melee002705D0Object *obj=at008;
+    Melee002705D0Object *obj=m_object;
     Coord3D oldPosition=*obj->position();
     Coord3D pos;
     {
@@ -124,11 +124,11 @@ bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
             pos=*destination;
         }
     }
-    Melee002705D0Object *adjustObject=at008;
+    Melee002705D0Object *adjustObject=m_object;
     typedef bool (Melee002705D0Route::*AdjustCall)(Melee002705D0Object *, void *, Coord3D *);
     union { void (*address)(); AdjustCall member; } adjustCall={j_0002f3c9};
     if ((((Melee002705D0Route *)g002705D0Va012EF214->pathfinder())->*adjustCall.member)(adjustObject,at1a8,&pos)) {
-        Melee002705D0Object *owner=at008;
+        Melee002705D0Object *owner=m_object;
         Melee002705D0Pathfinder *finder=g002705D0Va012EF214->pathfinder();
         typedef void (Melee002705D0Route::*UpdateCall)(Melee002705D0Object *,const Coord3D *,int,const char *,int);
         union { void (*address)(); UpdateCall member; } updateCall={j_000294e2};
@@ -150,13 +150,13 @@ bool MeleeApproach002705D0::request(const Coord3D *destination,bool flag) {
             at321=true;
             at322=false;
             if (at160>g002705D0Va012F0898->at03c-2) {
-                if (wake()>10 && !at330) setWake(at008,10);
+                if (wake()>10 && !at330) setWake(m_object,10);
                 m_queueForPathFrame=g002705D0Va012F0898->at03c+10;
                 destroy();
                 return true;
             }
             at31e=true;
-            g002705D0Va012EF214->pathfinder()->queue(at008->at074);
+            g002705D0Va012EF214->pathfinder()->queue(m_object->at074);
             return true;
         }
     }
