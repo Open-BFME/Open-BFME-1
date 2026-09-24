@@ -66,6 +66,17 @@ TARGET_DISCARD = 0x006620A4
 TARGET_REPLAYFRAME = 0x0006B910
 # TerrainTracksRenderObjClassSystem::flush
 TARGET_TRACKSFLUSH = 0x0072FEB0
+# 051-meleeac. The two calls to bfmeMeleeHordeTargetInvalid inside
+# AIAttackMeleeHordeWaitState::onEnter / ::update, and the `add esp, 8` /
+# `test al` that follows each of them. The call is where the predicate-skip
+# bit is armed; the add/test is where it is put back, before the je. Five
+# bytes at the second site is exactly those two instructions, so the short
+# je stays in the retail body. See mods/features/051-meleeac/README.md.
+MELEEAC_ONENTER_CALL = 0x00175979
+MELEEAC_ONENTER_RESTORE = 0x0017597E
+MELEEAC_UPDATE_CALL = 0x00175AF0
+MELEEAC_UPDATE_RESTORE = 0x00175AF5
+MELEEAC_AFTER_CALL = bytes((0x83, 0xC4, 0x08, 0x84, 0xC0))
 # 043-replaycam. InGameUI::update, at its entry -- the very function that reads
 # the four camera flags this feature writes, so they are set and consumed inside
 # one call and nothing can clear them in between. The stolen five bytes are the
@@ -420,6 +431,30 @@ def build_tracksfix(pe, feature_dir, probe=False):
     ), probe=probe)
 
 
+def build_meleeac(pe, feature_dir, probe=False):
+    """Arm the predicate's own skip bit around its two wait-state calls.
+
+    A wrong image must fail here, before a jmp is written over something that
+    is not that call. The byte after each E8 is `add esp, 8; test al, al`."""
+    for call, restore in (
+            (MELEEAC_ONENTER_CALL, MELEEAC_ONENTER_RESTORE),
+            (MELEEAC_UPDATE_CALL, MELEEAC_UPDATE_RESTORE)):
+        if restore != call + 5:
+            raise SystemExit(
+                f"meleeac restore 0x{restore:08X} is not the instruction after "
+                f"the call at 0x{call:08X}")
+        if pe.read(call, 1) != b"\xE8" or pe.read(restore, 5) != MELEEAC_AFTER_CALL:
+            raise SystemExit(
+                f"0x{call:08X} is not the retail call to "
+                f"bfmeMeleeHordeTargetInvalid followed by add esp, 8 / test al")
+    return build_feature(pe, feature_dir / "src/meleeac.cpp", "meleeac_arm", (
+        (MELEEAC_ONENTER_CALL, "meleeac_arm", ("esi",)),
+        (MELEEAC_ONENTER_RESTORE, "meleeac_disarm", ()),
+        (MELEEAC_UPDATE_CALL, "meleeac_arm", ("edi",)),
+        (MELEEAC_UPDATE_RESTORE, "meleeac_disarm", ()),
+    ), probe=probe)
+
+
 def build_uiprobe(pe, feature_dir, probe=False):
     # Shares 039-replayctl's hook address; build it with --only.
     return build_feature(pe, feature_dir / "src/uiprobe.cpp", "uiprobe_frame", (
@@ -594,6 +629,10 @@ FEATURES = {"020-gameresult": build_gameresult,
             # nothing outside retail's own idle band there. Replay-only.
             # See mods/features/043-replaycam/README.md.
             "043-replaycam": build_replaycam,
+            # A battalion whose attack goal is a structure stays valid to a
+            # contact weapon standing behind it. The gate, the bit it borrows,
+            # and the two call sites are in mods/features/051-meleeac/README.md.
+            "051-meleeac": build_meleeac,
             }
 # Features that ship a DATA file as well as code, as (archive path under the
 # game root, module in the feature directory exposing build(src, dst)).

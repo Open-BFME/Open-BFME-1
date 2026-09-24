@@ -10,14 +10,14 @@
   },
   "output": {
     "path": "mods/dist/lotrbfme.exe",
-    "sha256": "9af8b6219ec8037363918f712ac66f34d1f60f3de7897d0f23571fd6ac0e1faa",
+    "sha256": "510a1e097e05210f0a9928907bff7005ca09a33acbe53e7f3a9252dab845f1a4",
     "size": 16498688
   },
   "cave": {
     "section": ".bfmemod",
     "rva": "0x01016000",
     "size": "0x10000",
-    "used": 4011
+    "used": 4439
   },
   "features": [
     {
@@ -27,6 +27,22 @@
     {
       "name": "031-earlysend",
       "target_rva": "0x0006BA44"
+    },
+    {
+      "name": "051-meleeac",
+      "target_rva": "0x00175979"
+    },
+    {
+      "name": "051-meleeac",
+      "target_rva": "0x0017597E"
+    },
+    {
+      "name": "051-meleeac",
+      "target_rva": "0x00175AF0"
+    },
+    {
+      "name": "051-meleeac",
+      "target_rva": "0x00175AF5"
     },
     {
       "name": "020-gameresult",
