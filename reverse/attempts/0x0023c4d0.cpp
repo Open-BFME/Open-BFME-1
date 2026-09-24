@@ -1,5 +1,5 @@
 // ?slot98@HordeContainInterface@@QAE_NXZ
-// partial score=0.94 date=2026-09-04
+// partial score=0.9447 date=2026-09-24
 // ?slot98@HordeContainInterface@@QAE_NXZ
 // Started from reverse/attempts/0x0023c4d0.cpp (score 0.94); corrected after
 // the vtable and layout review below.
@@ -22,42 +22,14 @@ typedef unsigned int UnsignedInt;
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
 #include <hash_map>
-
-namespace _STL
-{
-struct _Rb_tree_node_base
-{
-	int m_bfmeColor;
-	_Rb_tree_node_base *m_bfmeParent;
-	_Rb_tree_node_base *m_bfmeLeft;
-	_Rb_tree_node_base *m_bfmeRight;
-};
-
-template <class Dummy>
-struct _Rb_global
-{
-	static _Rb_tree_node_base *_M_increment( _Rb_tree_node_base *node );
-};
-}
-
-struct BfmeIdNode
-{
-	_STL::_Rb_tree_node_base m_bfmeBase;
-	UnsignedInt m_bfmeId;
-};
+#include <set>
 
 class Object;
-
-struct BfmeObjectHashNode
-{
-	BfmeObjectHashNode *m_bfmeNext;
-	UnsignedInt m_bfmeId;
-	Object *m_bfmeObject;
-};
-
 typedef int ObjectID;
+
 typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>,
 	_STL::equal_to<ObjectID> > ObjectPtrHash;
+typedef _STL::set<UnsignedInt> BfmeIdSet;
 
 class GameLogic
 {
@@ -126,7 +98,7 @@ public:
 
 private:
 	char m_bfmeHead[ 0x30 ];
-	_STL::_Rb_tree_node_base *m_bfmeIdSet;
+	BfmeIdSet m_bfmeIdSet;
 };
 
 Bool HordeContainInterface::slot98( void )
@@ -134,20 +106,18 @@ Bool HordeContainInterface::slot98( void )
 	Bool blocked = false;
 	Bool anyResolved = false;
 
-	for ( _STL::_Rb_tree_node_base *node = m_bfmeIdSet->m_bfmeLeft; node != m_bfmeIdSet;
-		node = _STL::_Rb_global<bool>::_M_increment( node ) )
+	for ( BfmeIdSet::const_iterator it = m_bfmeIdSet.begin();
+		it != m_bfmeIdSet.end(); ++it )
 	{
-		Object *member;
-		ObjectID id = ( (BfmeIdNode *)node )->m_bfmeId;
-
+		ObjectID id = *it;
 		if ( id == 0 )
 			continue;
 
-		member = TheGameLogic->findObjectByID( id );
+		Object *member = TheGameLogic->findObjectByID( id );
 		if ( member != 0 )
 		{
-			BfmeMemberQueue *queue = member->m_bfmeAI->m_bfmeSlotState->m_bfmeQueue;
 			BfmeMemberSlotState *state = bfmeGetSlotState( member );
+			BfmeMemberQueue *queue = state->m_bfmeQueue;
 
 			anyResolved = true;
 

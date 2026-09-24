@@ -1,6 +1,9 @@
 // ?refresh@Rva000F72D0FrameCachedValue@@AAEXM@Z
-// partial score=0.95 date=2026-09-14
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.8189 date=2026-09-24
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+#include <vector>
+
 
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
@@ -42,22 +45,10 @@ struct WideResultEntry
 class WideResultHandle
 {
 public:
-	WideResultEntry *m_begin;
-	WideResultEntry *m_end;
-	WideResultEntry *m_endOfStorage;
+	_STL::vector<WideResultEntry> m_values;
 	WideResultEntry *m_cursor;
 	unsigned int m_refCount;
 };
-
-namespace _STL
-{
-template <bool __threads, int __inst>
-class __node_alloc
-{
-public:
-	static void _M_deallocate(void *p, unsigned int n);
-};
-}
 
 struct BfmeWideResult
 {
@@ -65,19 +56,7 @@ struct BfmeWideResult
 	__forceinline ~BfmeWideResult()
 	{
 		if (--m_value->m_refCount == 0)
-		{
-			void *begin = m_value->m_begin;
-			if (begin != 0)
-			{
-				unsigned int size = (unsigned int)((char *)m_value->m_endOfStorage - (char *)begin);
-				size = (size >> 3) << 3;
-				if (size > 0x80)
-					::operator delete(begin);
-				else
-					_STL::__node_alloc<true, 0>::_M_deallocate(begin, size);
-			}
-			::operator delete(m_value);
-		}
+			delete m_value;
 	}
 };
 
@@ -162,7 +141,7 @@ void Rva000F72D0FrameCachedValue::refresh(float range)
 	_ReadWriteBarrier();
 	WideResultHandle *handle = result.m_value;
 	WideResultEntry *cursor = handle->m_cursor;
-	WideResultEntry *end = handle->m_end;
+	WideResultEntry *end = handle->m_values.end();
 	if (cursor != end)
 	{
 		Overridable *node = cursor->node;

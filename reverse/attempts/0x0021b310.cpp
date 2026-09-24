@@ -1,6 +1,10 @@
 // ?accepts@Rva21B310RelationshipCapacity@@QAEHPAVObject@@@Z
-// partial score=0.99 date=2026-09-05
-// cl: /DNDEBUG /MD /EHsc
+// partial score=0.9733 date=2026-09-14
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// stlport
+#define _STLP_NO_EXCEPTIONS 1
+#include <list>
+
 // 73 of 75 bytes match. The two that differ are at +0x2c and +0x2f: after the
 // list-walk loop, retail reloads the data pointer into EAX and compares
 // against [eax+0x17c], while this source gets ECX and [ecx+0x17c]. Both EAX
@@ -27,10 +31,6 @@ struct Rva21B310Data
 	unsigned int capacity;
 };
 
-struct Rva21B310Node
-{
-	Rva21B310Node *next;
-};
 
 class Rva21B310RelationshipCapacity
 {
@@ -43,22 +43,13 @@ private:
 	Rva21B310Data * volatile data;
 	Object *owner;
 	char gap0C[0x9B0];
-	Rva21B310Node *objects;
+	_STL::list<Object *> objects;
 };
 
 int Rva21B310RelationshipCapacity::accepts(Object *object)
 {
 	if (object->getRelationship(owner) == 0) {
-		Rva21B310Node *end = objects;
-		Rva21B310Node *node = end->next;
-		unsigned int count = 0;
-
-		while (node != end) {
-			node = node->next;
-			++count;
-		}
-
-		return count < data->capacity;
+		return objects.size() < data->capacity;
 	}
 
 	return acceptRelated(object);

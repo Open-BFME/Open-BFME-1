@@ -1,9 +1,10 @@
 // ?evaluateNamedSelected@ScriptConditions@@IAE_NPAVCondition@@PAVParameter@@@Z
-// partial score=0.97 date=2026-09-15
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// partial score=0.9716 date=2026-09-24
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 
 #include "ascii_string.h"
+#include <list>
 
 typedef bool Bool;
 typedef int Int;
@@ -61,17 +62,7 @@ public:
 	}
 };
 
-struct DrawableListNode
-{
-	DrawableListNode *m_next;
-	DrawableListNode *m_prev;
-	Drawable *m_drawable;
-};
-
-struct DrawableList
-{
-	DrawableListNode *m_sentinel;
-};
+typedef _STL::list<Drawable *> DrawableList;
 
 __forceinline Bool bfmeStringEqual(const AsciiString &left, const AsciiString &right)
 {
@@ -149,17 +140,16 @@ Bool ScriptConditions::evaluateNamedSelected(Condition *pCondition, Parameter *p
 
 	Bool isSelected = false;
 	const DrawableList *selected = TheInGameUI->getAllSelectedDrawables();
-	const DrawableListNode *sentinel = selected->m_sentinel;
-	const DrawableListNode *node = sentinel->m_next;
-	while (node != sentinel)
+	DrawableList::const_iterator end = selected->end();
+	DrawableList::const_iterator it = selected->begin();
+	for (; it != end; ++it)
 	{
-		Drawable *draw = node->m_drawable;
+		Drawable *draw = *it;
 		if (bfmeStringEqual(draw->getObject()->getName(), pUnitParm->getString()))
 		{
 			isSelected = true;
 			break;
 		}
-		node = node->m_next;
 	}
 
 	pCondition->setCustomData(-1);
