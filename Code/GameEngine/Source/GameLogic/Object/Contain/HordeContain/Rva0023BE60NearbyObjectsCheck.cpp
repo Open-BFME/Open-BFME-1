@@ -22,13 +22,13 @@ public:
 class Object {
 public:
 	char pad000[4];
-	Overridable *runtime;
+	Overridable *m_template;
 	char pad008[0x38 - 8];
 	Coord3D position;
 	char pad044[0x74 - 0x44];
 	ObjectID id;
 	char pad078[0x214 - 0x78];
-	Object *owner;
+	Object *m_containedBy;
 };
 
 class Rva003E4680Pathfinder {
@@ -59,7 +59,7 @@ public:
 
 bool Rva0023BE60Receiver::rva0023BE60(Object *target)
 {
-	const Overridable *targetData = target->runtime;
+	const Overridable *targetData = target->m_template;
 	if (targetData && targetData->next)
 		targetData = targetData->next->getFinalOverride();
 	if (targetData->flagsC8 & 0x800)
@@ -80,9 +80,9 @@ bool Rva0023BE60Receiver::rva0023BE60(Object *target)
 			Object *candidate = logic->findObjectByID(id);
 			if (!candidate)
 				return false;
-			if (candidate->owner == owner)
+			if (candidate->m_containedBy == owner)
 				continue;
-			const Overridable *candidateData = candidate->runtime;
+			const Overridable *candidateData = candidate->m_template;
 			if (candidateData && candidateData->next)
 				candidateData = candidateData->next->getFinalOverride();
 			if (candidateData->flagsD4 & 0x1000)
