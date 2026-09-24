@@ -3,6 +3,7 @@
 import contextlib
 import io
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
@@ -122,7 +123,7 @@ class TouchedTests(unittest.TestCase):
 
 
 class LeaseTests(unittest.TestCase):
-    """A claim is a lease: reclaimed only when expired AND the pid is gone."""
+    """Expired claims need a terminal record as well as a dead PID."""
 
     def _root(self, stack):
         temporary = stack.enter_context(tempfile.TemporaryDirectory())
@@ -139,19 +140,73 @@ class LeaseTests(unittest.TestCase):
             # expired but pid unknown: still live (never reclaim what we cannot check)
             fleet_run.claim(root, "run-c", [("0x00000010", 1)], pid=None, lease=-5)
             self.assertIn("0x00000010", fleet_run.active_rvas(root))
-            # expired and pid dead: reclaimable, and the takeover is recorded
+
+            # A dead PID with a missing run record is still ambiguous.
+            fleet_run.claim(root, "run-d", [("0x00000020", 1)], pid=999999, lease=-5)
             with patch.object(fleet_run, "pid_alive", return_value=False):
-                fleet_run.claim(root, "run-d", [("0x00000020", 1)], pid=999999, lease=-5)
+                self.assertIn("0x00000020", fleet_run.active_rvas(root))
+                with self.assertRaises(RuntimeError):
+                    fleet_run.claim(root, "run-e", [("0x00000020", 1)], pid=None, lease=10)
+
+                # A terminal record plus a dead PID permits takeover.
+                record = root / "build" / "fleet_runs" / "run-d"
+                record.mkdir(parents=True)
+                (record / "record.json").write_text(
+                    json.dumps({"status": "finished"}), encoding="utf-8")
                 self.assertNotIn("0x00000020", fleet_run.active_rvas(root))
-                fleet_run.claim(root, "run-e", [("0x00000020", 1)], pid=None, lease=10)
+                fleet_run.claim(root, "run-f", [("0x00000020", 1)], pid=None, lease=10)
             with contextlib.closing(fleet_run.connect(root)) as db:
                 owner = db.execute("SELECT run FROM claims WHERE rva='0x00000020'").fetchone()[0]
                 reasons = [r[0] for r in db.execute("SELECT reason FROM releases")]
-            self.assertEqual(owner, "run-e")
+            self.assertEqual(owner, "run-f")
             self.assertTrue(any("lease expired" in r for r in reasons))
 
+    def test_expired_terminal_record_does_not_override_unknown_pid(self):
+        with contextlib.ExitStack() as stack:
+            root = self._root(stack)
+            record = root / "build" / "fleet_runs" / "failed-unknown"
+            record.mkdir(parents=True)
+            (record / "record.json").write_text(
+                json.dumps({"status": "failed"}), encoding="utf-8")
+            fleet_run.claim(root, "failed-unknown", [("0x00000021", 1)],
+                            pid=None, lease=-5)
+            self.assertIn("0x00000021", fleet_run.active_rvas(root))
+            with self.assertRaises(RuntimeError):
+                fleet_run.claim(root, "replacement", [("0x00000021", 1)],
+                                pid=None, lease=10)
+
+    def test_expired_nonterminal_records_stay_busy_after_pid_exit(self):
+        with contextlib.ExitStack() as stack:
+            root = self._root(stack)
+            with patch.object(fleet_run, "pid_alive", return_value=False):
+                for index, status in enumerate(("starting", "interrupted")):
+                    run = "old-" + status
+                    record = root / "build" / "fleet_runs" / run
+                    record.mkdir(parents=True)
+                    (record / "record.json").write_text(
+                        json.dumps({"status": status}), encoding="utf-8")
+                    target = [(f"0x{0x30 + index:08x}", 1)]
+                    fleet_run.claim(root, run, target, pid=999999, lease=-5)
+                    self.assertIn(target[0][0], fleet_run.active_rvas(root))
+                    with self.assertRaises(RuntimeError):
+                        fleet_run.claim(root, "replacement-" + status, target,
+                                        pid=None, lease=10)
+
+    def test_expired_terminal_record_does_not_override_live_pid(self):
+        with contextlib.ExitStack() as stack:
+            root = self._root(stack)
+            record = root / "build" / "fleet_runs" / "run-live"
+            record.mkdir(parents=True)
+            (record / "record.json").write_text(
+                json.dumps({"status": "finished"}), encoding="utf-8")
+            fleet_run.claim(root, "run-live", [("0x00000022", 1)],
+                            pid=os.getpid(), lease=-5)
+            self.assertIn("0x00000022", fleet_run.active_rvas(root))
+            with self.assertRaises(RuntimeError):
+                fleet_run.claim(root, "replacement", [("0x00000022", 1)],
+                                pid=None, lease=10)
+
     def test_own_pid_is_alive_and_release_clears(self):
-        import os
         self.assertTrue(fleet_run.pid_alive(os.getpid()))
         with contextlib.ExitStack() as stack:
             root = self._root(stack)

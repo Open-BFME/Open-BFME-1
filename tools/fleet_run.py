@@ -4,11 +4,12 @@
 The caller supplies a bounded command (seat.sh uses timeout). Runs share an
 atomic RVA claim table across lanes. A claim is a LEASE: it carries the
 worker's pid and an expiry (FLEET_LEASE_SECONDS, default the 150-minute
-session cap plus 30 minutes). A lease is reclaimed only when it has expired
-AND its pid is gone -- never out from under a live worker. An operator can
-still release a named run with --release RUN --reason TEXT after establishing
-the worker stopped. Existing legacy workers do not participate; deploy at a
-fleet restart, not by overwriting a running script.
+session cap plus 30 minutes). A lease is reclaimed only when it has expired,
+its run record is terminal, and its pid is gone -- never out from under a live
+or unverified worker. An operator can still release a named run with
+--release RUN --reason TEXT after establishing the worker stopped. Existing
+legacy workers do not participate; deploy at a fleet restart, not by
+overwriting a running script.
 """
 import argparse
 from contextlib import closing
@@ -94,8 +95,11 @@ def pid_alive(pid):
 
 
 def run_finished(root, run):
-    """True when the immutable run record says the worker is no longer running.
-    Legacy claims (no pid, no expiry) can only be judged this way."""
+    """True when the run record has reached a terminal state.
+
+    Expired claims require this as well as a dead recorded PID; claims without
+    an expiry use the record because they predate PID/lease tracking.
+    """
     record = root / "build" / "fleet_runs" / str(run) / "record.json"
     try:
         status = json.loads(record.read_text(encoding="utf-8")).get("status")
@@ -111,7 +115,12 @@ def lease_dead(expires, pid, now=None, root=None, run=None):
         # legacy record cannot override a PID that is still alive.
         return (root is not None and run_finished(root, run)
                 and (not pid or not pid_alive(pid)))
-    return now > expires and not pid_alive(pid)
+    # A supervisor killed before it can finalize leaves a nonterminal record.
+    # A dead direct PID alone does not prove the run stopped: descendants may
+    # still be active. Reclaim only after a terminal record and a dead PID.
+    # Claims without a trustworthy record or PID remain busy for review.
+    return (now > expires and root is not None and run_finished(root, run)
+            and not pid_alive(pid))
 
 
 def strip_timeout(command):
@@ -181,7 +190,9 @@ def claim(root, run, targets, pid=None, lease=None):
                     raise ClaimConflict(f"{rva} is already owned by run {owner[0]}")
                 db.execute("DELETE FROM claims WHERE rva=?", (rva,))
                 db.execute("INSERT INTO releases VALUES (?,?,?)",
-                           (owner[0], now, f"lease expired and pid {owner[1]} is gone; {rva} taken by {run}"))
+                           (owner[0], now,
+                            f"lease expired, run is terminal, and pid {owner[1]} is gone; "
+                            f"{rva} taken by {run}"))
             db.execute("INSERT INTO claims (rva, run, started, pid, expires) VALUES (?,?,?,?,?)",
                        (rva, run, now, pid, now + lease))
 
@@ -210,7 +221,7 @@ def validate_targets(root, targets):
 
 
 def active_rvas(root):
-    """Leases that are live: unexpired, or expired with the worker still running."""
+    """Leases that are live or whose worker termination is not yet proven."""
     now = time.time()
     with closing(connect(root)) as db, db:
         rows = db.execute("SELECT rva, run, pid, expires FROM claims").fetchall()

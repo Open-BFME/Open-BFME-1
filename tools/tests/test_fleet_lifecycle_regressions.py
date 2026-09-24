@@ -5,6 +5,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import time
 
 import pytest
 
@@ -144,6 +145,94 @@ def test_ambiguous_legacy_and_expired_unknown_pid_stay_busy(tmp_path):
         db.execute("INSERT INTO claims (rva,run,started) VALUES ('0x00001000','unknown',0)")
     fleet_run.claim(tmp_path, "expired-unknown", [("0x00002000", 8)], pid=None, lease=-1)
     assert fleet_run.active_rvas(tmp_path) == {"0x00001000", "0x00002000"}
+
+
+def test_supervisor_crash_keeps_expired_nonterminal_run_busy(tmp_path):
+    if os.name != "posix":
+        pytest.skip("this process-tree fixture uses fork and setsid")
+    ledger(tmp_path, (0x1000, 8))
+    brief_path = brief(tmp_path, (0x1000, 8))
+    direct_pid_path = tmp_path / "direct.pid"
+    descendant_pid_path = tmp_path / "descendant.pid"
+    worker_code = (
+        "import os,sys,time\n"
+        "direct,descendant=sys.argv[1:]\n"
+        "open(direct,'w').write(str(os.getpid()))\n"
+        "pid=os.fork()\n"
+        "if pid == 0:\n"
+        " os.setsid()\n"
+        " for fd in (0,1,2):\n"
+        "  try: os.close(fd)\n"
+        "  except OSError: pass\n"
+        " with open(descendant,'w') as f:\n"
+        "  f.write(str(os.getpid())); f.flush(); os.fsync(f.fileno())\n"
+        " time.sleep(30)\n"
+        " os._exit(0)\n"
+        "time.sleep(2)\n"
+    )
+    runner_path = tmp_path / "runner.py"
+    runner_path.write_text(
+        "import sys\nfrom pathlib import Path\n"
+        f"sys.path.insert(0, {str(Path(fleet_run.__file__).parent)!r})\n"
+        "import fleet_run\n"
+        f"root=Path({str(tmp_path)!r})\n"
+        f"fleet_run.execute(root, {str(brief_path)!r}, root/'worker.log', 'test', 'crash', "
+        f"[sys.executable, '-c', {worker_code!r}, {str(direct_pid_path)!r}, "
+        f"{str(descendant_pid_path)!r}])\n",
+        encoding="utf-8",
+    )
+    supervisor = subprocess.Popen([sys.executable, str(runner_path)], cwd=tmp_path,
+                                  stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+    direct_pid = descendant_pid = None
+    try:
+        deadline = time.monotonic() + 10
+        while time.monotonic() < deadline and not (direct_pid_path.exists()
+                                                   and descendant_pid_path.exists()):
+            time.sleep(.02)
+        assert direct_pid_path.exists() and descendant_pid_path.exists()
+        direct_pid = int(direct_pid_path.read_text(encoding="ascii"))
+        descendant_pid = int(descendant_pid_path.read_text(encoding="ascii"))
+
+        # Wait until set_pid commits before killing the supervisor.
+        deadline = time.monotonic() + 5
+        while time.monotonic() < deadline:
+            with fleet_run.connect(tmp_path) as db:
+                owner = db.execute("SELECT run,pid FROM claims WHERE rva='0x00001000'").fetchone()
+            if owner and owner[1] == direct_pid:
+                run = owner[0]
+                break
+            time.sleep(.02)
+        else:
+            raise AssertionError("runner did not persist the worker PID")
+
+        supervisor.kill()
+        supervisor.wait(timeout=5)
+        deadline = time.monotonic() + 8
+        while fleet_run.pid_alive(direct_pid) and time.monotonic() < deadline:
+            time.sleep(.02)
+        assert not fleet_run.pid_alive(direct_pid)
+        assert fleet_run.pid_alive(descendant_pid)
+
+        with fleet_run.connect(tmp_path) as db:
+            db.execute("UPDATE claims SET expires=? WHERE run=?", (time.time() - 1, run))
+            db.commit()
+        assert eligibility.busy_rvas(tmp_path) == {"0x00001000"}
+        with pytest.raises(fleet_run.ClaimConflict):
+            fleet_run.claim(tmp_path, "replacement", [("0x00001000", 8)])
+    finally:
+        if supervisor.poll() is None:
+            supervisor.kill()
+            supervisor.wait(timeout=5)
+        if direct_pid and fleet_run.pid_alive(direct_pid):
+            try:
+                os.kill(direct_pid, 9)
+            except ProcessLookupError:
+                pass
+        if descendant_pid:
+            try:
+                os.kill(descendant_pid, 9)
+            except ProcessLookupError:
+                pass
 
 
 def test_pid_recording_refuses_lost_or_partial_ownership(tmp_path):
