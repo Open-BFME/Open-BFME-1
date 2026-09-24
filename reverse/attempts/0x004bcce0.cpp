@@ -1,5 +1,5 @@
 // ?Rva004BCCE0@@YAXPAVGameWindow@@@Z
-// partial score=0.99 date=2026-09-21
+// partial score=0.9950248756218906 date=2026-09-24
 // Retail 0x004BCCE0, 402 bytes.
 // Sits between the landed GadgetPushButtonSystem (0x004BCBB0,
 // GadgetPushButtonBodies.cpp) and GadgetRadioButton.cpp's doRadioUnselect
@@ -125,6 +125,12 @@ public:
 	virtual Rva0029BBC0 *slot19( Rva0029BBC0 *cur ) = 0;
 #undef BFME_PUI_SLOT
 };
+typedef Rva0029BBC0 *(__fastcall *Rva004BCCE0Slot18Fn)(void *, void *);
+struct Rva004BCCE0Vtable
+{
+	void *slots[18];
+	Rva004BCCE0Slot18Fn slot18;
+};
 
 class Object
 {
@@ -235,7 +241,8 @@ void Rva004BCCE0( GameWindow *window )
 		{
 			void *compareKey = *(void **)( (char *)command + 0x20 );
 
-			Rva0029BBC0 *item = pui->slot18();
+			Rva004BCCE0Vtable *vtable = *(Rva004BCCE0Vtable **)pui;
+			Rva0029BBC0 *item = vtable->slot18(pui, vtable);
 			while( item != 0 )
 			{
 				if( *(int *)( (char *)item + 4 ) == 2 )
