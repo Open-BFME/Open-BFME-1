@@ -88902,3 +88902,6 @@ __TI1?AW4ErrorCode@@,0x00DE0004,retail ThrowInfo VA011E0004; catchable array011D
 ?b_002b5800@@YAXXZ,0x002B5800,gen-thunk body;retail 0x0004A0D9 jumps to this exact dump address
 ?FormatURLFromRegistry@@YAXAAV?$basic_string@DV?$char_traits@D@_STL@@V?$allocator@D@2@@_STL@@000@Z,0x00886B00,retail patch-check calls this direct four-string URL builder; WWDownload urlBuilder header and caller ABI agree
 _ghiSetProxy,0x0087AD40,route=0x0087C900; retail patch-check calls this ILT to matched ghttpCommon.c proxy setter
+?GadgetComboBoxAddEntry@@YAHPAVGameWindow@@VUnicodeString@@H@Z,0x0002F338,route=0x004B4F40; skirmish profile callback calls canonical combo add through retail ILT
+?copyStringAt14@Rva0009F820Host@@QAE?AVRva0009F820String@@XZ,0x00008BC0,route=0x0009F820; skirmish profile copies the list at host +0x14 through retail ILT
+?compareNoCaseRaw@?$StringBase@G@@ABEHPBG0H@Z,0x000480F4,route=0x0009ECA0; skirmish profile compares wide profile names through retail ILT

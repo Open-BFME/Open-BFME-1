@@ -1860,4 +1860,15 @@
   "evidence": "reverse/re_attempts.log",
   "reason": "The old m_data array covered the full 0x1F4-byte object from offset 0. Retail stores m_active at +0x8 and constructs m_map0c at +0x0C, so m_pad09 names only the three alignment bytes between them."
  }
+,
+ {
+  "old_path": "reverse/attempts/0x0057cac0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/SkirmishScreenRefreshProfile.cpp",
+  "old_name": "ProfileList",
+  "new_name": "Rva0009F820String",
+  "before_sha256": "47b96a15603717aef981fe81f23df2edaedfba8f145263860a42499c02867bc7",
+  "after_sha256": "8cbfc8e501cad1eb39003af6dd6e7bb7589fdc1f7110778f399a6364aeaa24de",
+  "evidence": "reverse/identity_evidence/0057cac0.md",
+  "reason": "The descriptive ProfileList class is retained as the base; only the symbol-facing derived result wrapper takes the existing matched accessor return type Rva0009F820String. The accessor calls a list copy ctor and list<UnicodeString> insert, so the semantic list identity is unchanged; see the evidence file."
+ }
 ]
