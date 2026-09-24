@@ -23,10 +23,10 @@ public:
     virtual void slot14(); virtual void slot15(); virtual void slot16(); virtual void slot17();
     virtual void slot18(); virtual void slot19(); virtual void slot1A(); virtual void slot1B();
     virtual void slot1C(); virtual void slot1D(); virtual void slot1E();
-    virtual int dispatch(const char *name, int flags);
+    virtual void *slot1F(const char *name, int flags);
 };
 
-int __stdcall Rva003C7F40ComposeAndDispatch(
+void *__stdcall Rva003C7F40ComposeAndDispatch(
     Rva003C7F40Receiver *receiver,
     const AsciiString &left,
     const AsciiString &right)
@@ -37,5 +37,5 @@ int __stdcall Rva003C7F40ComposeAndDispatch(
     AsciiString joined = left + "." + right;
     // StringBase<char>'s one-pointer layout has eight header bytes before text.
     const char *header = *(const char *const *)&joined;
-    return receiver->dispatch(header ? header + 8 : "", 0);
+    return receiver->slot1F(header ? header + 8 : "", 0);
 }
