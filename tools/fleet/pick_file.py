@@ -5,9 +5,10 @@ A file is busy while a live run owns one of its bodies, or while an old
 unreconciled seat log assigns its stem. Finished sessions leave most bodies unconverted (a session
 lands ~5 of 25), so the old append-only claim list starved the fleet once every
 big file had been touched once. Order: landed-neighbour density first (see below), then remaining dump bytes,
-at least argv[1] remaining dump bodies (default 6).
+at least argv[1] briefable dump bodies (default 6) no larger than argv[2]
+(default 2500 bytes).
 """
-import csv, collections, sys, time
+import collections, sys, time
 from pathlib import Path
 sys.path.insert(0, 'tools')
 from portable_lock import lock
@@ -23,28 +24,34 @@ busy_stems = {token for token in eligibility.legacy_busy_tokens(ROOT, seats_log)
 active = active_rvas(ROOT)
 
 minb = int(sys.argv[1]) if len(sys.argv) > 1 else 6
-b = collections.Counter(); n = collections.Counter()
-for _ in range(4):
-    try:
-        rows = list(csv.DictReader(open(ROOT / 'reverse/functions.csv', newline='', encoding='utf-8', errors='replace')))
-        if all(r.get('source') is not None for r in rows):
-            break
-    except Exception:
-        rows = []
-    time.sleep(1)
-lo = {}; hi = {}; landed = []
-for r in rows:
-    s = r.get('source') or ''
-    rva = r.get('target_rva') or ''
-    if not rva.startswith('0x'):
+maxb = int(sys.argv[2]) if len(sys.argv) > 2 else 2500
+rows = eligibility.load_rows(ROOT / 'reverse/functions.csv')
+latest = eligibility.latest_verdicts(ROOT / 'reverse/re_attempts.log')
+# Count the bodies the following brief can actually include.  A dead-end or
+# oversized row must not make a file look full, and aliases count only once.
+live_by_file = collections.defaultdict(dict)
+asm_rows = [row for row in rows if (row.get('source') or '').endswith('.asm')]
+for row in eligibility.open_dumps(rows=asm_rows, latest=latest, max_size=maxb):
+    source = row['source']
+    rva = eligibility.rva_of(row)
+    if rva is not None:
+        live_by_file[source][rva] = int(row.get('target_size') or 0)
+b = {source: sum(sizes.values()) for source, sizes in live_by_file.items()}
+n = {source: len(sizes) for source, sizes in live_by_file.items()}
+lo = {source: min(sizes) for source, sizes in live_by_file.items()}
+hi = {source: max(sizes) for source, sizes in live_by_file.items()}
+landed = []
+for row in rows:
+    source = row.get('source') or ''
+    rva = eligibility.rva_of(row)
+    if rva is None:
         continue
-    if s.endswith('.asm'):
-        if rva.lower() in active:
-            busy_stems.add(Path(s).stem)
-        b[s] += int(r.get('target_size') or 0); n[s] += 1
-        a = int(rva, 16); lo[s] = min(lo.get(s, a), a); hi[s] = max(hi.get(s, a), a)
-    elif r.get('status') == 'matched' and not s.startswith('Code/gen_'):
-        landed.append(int(rva, 16))
+    if source.endswith('.asm'):
+        # Keep the file exclusive even if its owned row was since retired.
+        if f'0x{rva:08x}' in active:
+            busy_stems.add(Path(source).stem)
+    elif row.get('status') == 'matched' and not source.startswith('Code/gen_'):
+        landed.append(rva)
 # Order by landed-neighbour density: real C++ rows inside the file's address
 # range per remaining dump body. Measured land rate is 19.5% for a body whose
 # file has no landed siblings and 46.5% with ten or more (AGENTS.md), so the
