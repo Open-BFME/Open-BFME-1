@@ -119,9 +119,9 @@ public:
 	virtual void unusedSlot09();
 	virtual Drawable *getDrawable(void) const;		// vtable +0x28
 
-	void doCommandButton(const CommandButton *commandButton, Int cmdSource, Int bfmeArg);	// ILT 0x000063CF
-	void doCommandButtonAtPosition(const CommandButton *commandButton, const Coord3D *pos, CommandSourceType cmdSource, Bool bfmeFlag);	// ILT 0x00026EF4
-	void doCommandButtonAtObject(const CommandButton *commandButton, Object *obj, CommandSourceType cmdSource, Bool bfmeFlag);	// ILT 0x00033AA0
+	void doCommandButton(const CommandButton *commandButton, Int commandSource, Int bfmeArg);	// ILT 0x000063CF
+	void doCommandButtonAtPosition(const CommandButton *commandButton, const Coord3D *position, CommandSourceType commandSource, Bool bfmeFlag);	// ILT 0x00026EF4
+	void doCommandButtonAtObject(const CommandButton *commandButton, Object *targetObject, CommandSourceType commandSource, Bool bfmeFlag);	// ILT 0x00033AA0
 	SpecialPowerUpdateInterface *findSpecialPowerWithOverridableDestinationActive(SpecialPowerType spType) const;	// ILT 0x00039766
 	Player *getControllingPlayer(void) const;					// ILT 0x00020824
 	Bool hasUpgrade(const UpgradeTemplate *upgrade) const;				// ILT 0x0000BA37
@@ -174,14 +174,14 @@ extern UpgradeCenter *TheUpgradeCenter;
 class AIGroup
 {
 public:
-	void groupSell(CommandSourceType cmdSource);
-	void groupDoCommandButton(const CommandButton *commandButton, CommandSourceType cmdSource);
-	void groupDoCommandButtonAtPosition(const CommandButton *commandButton, const Coord3D *pos, CommandSourceType cmdSource);
-	void groupDoCommandButtonAtObject(const CommandButton *commandButton, Object *obj, CommandSourceType cmdSource);
-	void setAttitude(AttitudeType tude);
+	void groupSell(CommandSourceType commandSource);
+	void groupDoCommandButton(const CommandButton *commandButton, CommandSourceType commandSource);
+	void groupDoCommandButtonAtPosition(const CommandButton *commandButton, const Coord3D *position, CommandSourceType commandSource);
+	void groupDoCommandButtonAtObject(const CommandButton *commandButton, Object *targetObject, CommandSourceType commandSource);
+	void setAttitude(AttitudeType attitude);
 	void queueUpgrade(const UpgradeTemplate *upgrade, Bool bfmeFlag);
 	void groupSetEmoticon(const AsciiString &name, Int duration);
-	void groupOverrideSpecialPowerDestination(SpecialPowerType spType, const Coord3D *loc, CommandSourceType cmdSource);
+	void groupOverrideSpecialPowerDestination(SpecialPowerType specialPowerType, const Coord3D *destination, CommandSourceType commandSource);
 
 private:
 	unsigned char m_unmodelled_000[4];			// this+0x00, untouched
@@ -190,7 +190,7 @@ private:
 
 // The only member that mutates the list it is walking, which is why it copies
 // the iterator and advances before it acts.
-void AIGroup::groupSell( CommandSourceType cmdSource )
+void AIGroup::groupSell( CommandSourceType commandSource )
 {
 	_STL::list<Object *>::iterator i, thisIterator;
 	Object *obj;
@@ -215,7 +215,7 @@ void AIGroup::groupSell( CommandSourceType cmdSource )
 // The reference's body with one BFME change: the per-object command carries a
 // third argument, and this loop passes it zero -- the same shape the two
 // AtPosition/AtObject loops below have, one argument narrower.
-void AIGroup::groupDoCommandButton( const CommandButton *commandButton, CommandSourceType cmdSource )
+void AIGroup::groupDoCommandButton( const CommandButton *commandButton, CommandSourceType commandSource )
 {
 	_STL::list<Object *>::iterator i;
 	Object *source;
@@ -226,15 +226,15 @@ void AIGroup::groupDoCommandButton( const CommandButton *commandButton, CommandS
 		// get object
 		source = *i;
 
-		source->doCommandButton( commandButton, cmdSource, 0 );
+		source->doCommandButton( commandButton, commandSource, 0 );
 	}  // end for, i
 }
 
 // The reference's body with one BFME change: the per-object command carries a
-// fourth argument, and this loop passes it false. cmdSource and pos are loop
+// fourth argument, and this loop passes it false. commandSource and position are loop
 // invariant and live in ebx/ebp; the button is reloaded each turn because the
 // call clobbers eax.
-void AIGroup::groupDoCommandButtonAtPosition( const CommandButton *commandButton, const Coord3D *pos, CommandSourceType cmdSource )
+void AIGroup::groupDoCommandButtonAtPosition( const CommandButton *commandButton, const Coord3D *position, CommandSourceType commandSource )
 {
 	_STL::list<Object *>::iterator i;
 	Object *source;
@@ -245,11 +245,11 @@ void AIGroup::groupDoCommandButtonAtPosition( const CommandButton *commandButton
 		// get object
 		source = *i;
 
-		source->doCommandButtonAtPosition( commandButton, pos, cmdSource, false );
+		source->doCommandButtonAtPosition( commandButton, position, commandSource, false );
 	}  // end for, i
 }
 
-void AIGroup::groupDoCommandButtonAtObject( const CommandButton *commandButton, Object *obj, CommandSourceType cmdSource )
+void AIGroup::groupDoCommandButtonAtObject( const CommandButton *commandButton, Object *targetObject, CommandSourceType commandSource )
 {
 	_STL::list<Object *>::iterator i;
 	Object *source;
@@ -260,11 +260,11 @@ void AIGroup::groupDoCommandButtonAtObject( const CommandButton *commandButton, 
 		// get object
 		source = *i;
 
-		source->doCommandButtonAtObject( commandButton, obj, cmdSource, false );
+		source->doCommandButtonAtObject( commandButton, targetObject, commandSource, false );
 	}  // end for, i
 }
 
-void AIGroup::setAttitude( AttitudeType tude )
+void AIGroup::setAttitude( AttitudeType attitude )
 {
 	_STL::list<Object *>::iterator i;
 	for( i = m_memberList.begin(); i != m_memberList.end(); ++i )
@@ -272,7 +272,7 @@ void AIGroup::setAttitude( AttitudeType tude )
 		AIUpdateInterface *ai = (*i)->getAIUpdateInterface();
 		if (ai)
 		{
-			ai->setAttitude( tude );
+			ai->setAttitude( attitude );
 		}
 	}
 }
@@ -328,7 +328,7 @@ void AIGroup::groupSetEmoticon( const AsciiString &name, Int duration )
 	}
 }
 
-void AIGroup::groupOverrideSpecialPowerDestination( SpecialPowerType spType, const Coord3D *loc, CommandSourceType cmdSource )
+void AIGroup::groupOverrideSpecialPowerDestination( SpecialPowerType specialPowerType, const Coord3D *destination, CommandSourceType commandSource )
 {
 	_STL::list<Object *>::iterator i;
 	for( i = m_memberList.begin(); i != m_memberList.end(); ++i )
@@ -336,10 +336,10 @@ void AIGroup::groupOverrideSpecialPowerDestination( SpecialPowerType spType, con
 		Object *object = (*i);
 		if( object )
 		{
-			SpecialPowerUpdateInterface *spuInterface = object->findSpecialPowerWithOverridableDestinationActive( spType );
+			SpecialPowerUpdateInterface *spuInterface = object->findSpecialPowerWithOverridableDestinationActive( specialPowerType );
 			if( spuInterface )
 			{
-				spuInterface->setSpecialPowerOverridableDestination( loc );
+				spuInterface->setSpecialPowerOverridableDestination( destination );
 			}
 		}
 	}
