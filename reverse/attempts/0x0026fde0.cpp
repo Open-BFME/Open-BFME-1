@@ -1,9 +1,8 @@
 // ?bfmeAdvanceCB@BfmeHostCB@@QAEXXZ (identity unknown)
 // partial score=0.97 date=2026-09-07
-// 66/66 at exact size. Every instruction, operand and branch matches. The only
-// difference is which scratch register holds the vftable in the two virtual
-// calls: retail uses eax for the first and edx for the second, MSVC the other
-// way round -- four bytes, all modrm.
+// 66/66 at exact size. The gate readiness vtable remains in the wrong scratch
+// register (retail eax, compiler edx); the second call is a typed slot-13
+// fastcall adapter that pins its vtable to edx.
 // The `||` short-circuit is required: spelling it as an explicit if/else with
 // the leave call duplicated in both arms costs 6 bytes (72).
 class BfmeCurCB;
@@ -42,6 +41,11 @@ public:
 
 	unsigned char m_bfmeHeadCB[0x18];
 	BfmeItemCB *m_bfmeGateCB;
+};
+struct BfmeCurCBVtable
+{
+	void *slots[13];
+	void (__fastcall *slot13)(BfmeCurCB *, BfmeCurCBVtable *);
 };
 
 class BfmeHostCB
@@ -198,8 +202,12 @@ void BfmeHostCB::bfmeAdvanceCB()
 
 	BfmeItemCB *gate = m_bfmeCurCB->m_bfmeGateCB;
 
-	if (gate == 0 || gate->bfmeReadyCB() != 0)
-		m_bfmeCurCB->bfmeLeaveCB();
+	if (!gate || gate->bfmeReadyCB())
+	{
+		BfmeCurCBVtable *vtable =
+			*(BfmeCurCBVtable **)m_bfmeCurCB;
+		vtable->slot13( m_bfmeCurCB, vtable );
+	}
 
 	m_bfmePrevCB = m_bfmeCurCB;
 	m_bfmeCurCB = bfmeNextCB();
