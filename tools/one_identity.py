@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Retail was linked without identical-COMDAT folding, so each body has one identity.
 Prints the evidence for that and counts the real names beyond one per body.
-Usage: python3 tools/one_identity.py [--list | --check-ref REF]   (read by identity_guard.py)"""
+Usage: python3 tools/one_identity.py [--list] [--callers] | --check-ref REF   (identity_guard)"""
 import argparse
+import bisect
 import collections
 import csv
 import io
@@ -100,9 +101,67 @@ def folding_evidence(rows, text, text_rva, table_end):
     return len(shared), sum(len(v) for v in shared.values()), template, widest
 
 
+NOT_EVIDENCE = ("Code/gen_small/", "Code/gen_asm/", "Code/masm_dumps/")
+
+
+def caller_names(rows, bodies):
+    """body -> (Counter of symbols its C++ callers' objects name at retail call sites, unread).
+    Generated and assembly callers are skipped: they name whatever the ledger said then."""
+    import delta_sources as ds
+    target = {}
+    for body, entries in B.build_call_thunks().items():
+        if body in bodies:
+            target.update({entry: body for entry in entries})
+    target.update({body: body for body in bodies})
+    owners = sorted((int(r["target_rva"], 16), int(r["target_size"]), i) for i, r in enumerate(rows))
+    starts, ends = [o[0] for o in owners], []
+    for start, size, _ in owners:
+        ends.append(max(ends[-1] if ends else 0, start + size))
+    by_object = collections.defaultdict(list)
+    for site, callee in ds.call_sites(target):
+        k = bisect.bisect_right(starts, site) - 1
+        while k >= 0 and ends[k] > site:
+            start, size, i = owners[k]
+            source = rows[i]["source"]
+            if (site < start + size and source.startswith("Code/") and source.endswith(".cpp")
+                    and not source.startswith(NOT_EVIDENCE)):
+                by_object[B.row_object(rows[i])].append((rows[i], site, target[callee]))
+            k -= 1
+    named = collections.defaultdict(collections.Counter)
+    unread = collections.Counter()
+    for obj, claims in by_object.items():
+        if not ds.object_is_current(B.ROOT / claims[0][0]["source"], obj):
+            unread.update(body for _, _, body in claims)
+            continue
+        defined, rel32 = ds.object_rel32(obj)
+        for row, site, body in claims:
+            placed = defined.get(B.ledger_object_symbol(row))
+            if placed is None:
+                unread[body] += 1
+                continue
+            symbol = rel32.get((placed[0], placed[1] + site - int(row["target_rva"], 16) + 1))
+            if symbol is not None:
+                named[body][symbol] += 1
+    return named, unread
+
+
+def print_callers(rows, multi):
+    named, unread = caller_names(rows, set(multi))
+    for rva in sorted(multi):
+        own = {n: c for n, c in named[rva].items() if n in multi[rva]}
+        other = {n: c for n, c in named[rva].items() if n not in multi[rva]}
+        verdict = f"decided: {next(iter(own))}" if len(own) == 1 else (
+            "conflict" if own else "no C++ caller names a row")
+        print(f"0x{rva:08X}\t{verdict}\tunread={unread[rva]}\t"
+              + ";".join(f"{n}={c}" for n, c in sorted(own.items())) + "\t"
+              + ";".join(f"{n}={c}" for n, c in sorted(other.items())))
+
+
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--list", action="store_true", help="print every address with 2+ real names")
+    ap.add_argument("--callers", action="store_true",
+                    help="per address, the symbols matched C++ callers name there (reads objects)")
     ap.add_argument("--check-ref", metavar="REF",
                     help="fail if REF's ledger exceeds REF's baseline")
     args = ap.parse_args(argv)
@@ -129,6 +188,8 @@ def main(argv=None):
     if args.list:
         for rva in sorted(multi):
             print(f"0x{rva:08X}\t{len(multi[rva])}\t" + "\t".join(sorted(multi[rva])))
+    if args.callers:
+        print_callers(rows, multi)
     print(f"surplus names beyond one per body: {surplus(rows)}")
     print(f"addresses with 2+ real names: {len(multi)}")
     return 0

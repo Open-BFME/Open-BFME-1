@@ -49,3 +49,19 @@ def test_folding_evidence_counts_identical_separate_bodies_and_skips_rel32():
     patterns, bodies, template, (widest, rvas) = oi.folding_evidence(rows, text, base, base)
     assert (patterns, bodies, template) == (1, 2, 2)
     assert widest == getter and sorted(rvas) == [base, base + 4]
+
+
+def test_callers_decide_only_when_exactly_one_row_name_is_called(monkeypatch, capsys):
+    import collections
+    named = collections.defaultdict(collections.Counter)
+    named[0x100].update({"?a@C@@QAEHXZ": 3, "?pinOnly@D@@QAEHXZ": 1})
+    named[0x200].update({"?c@C@@QAEHXZ": 1, "?d@C@@QAEHXZ": 2})
+    monkeypatch.setattr(oi, "caller_names", lambda rows, bodies: (named, collections.Counter()))
+    oi.print_callers([], {0x100: {"?a@C@@QAEHXZ", "?b@C@@QAEHXZ"},
+                          0x200: {"?c@C@@QAEHXZ", "?d@C@@QAEHXZ"},
+                          0x300: {"?e@C@@QAEHXZ", "?f@C@@QAEHXZ"}})
+    lines = capsys.readouterr().out.splitlines()
+    assert lines[0].split("\t")[1] == "decided: ?a@C@@QAEHXZ"
+    assert lines[0].split("\t")[4] == "?pinOnly@D@@QAEHXZ=1"
+    assert lines[1].split("\t")[1] == "conflict"
+    assert lines[2].split("\t")[1] == "no C++ caller names a row"

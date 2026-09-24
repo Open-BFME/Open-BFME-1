@@ -61,7 +61,10 @@ When nothing decides, keep the address-derived name. `add_match --icf-owner` is
 refused. `identity_guard` fails a commit that raises `one_identity.surplus` in
 `reverse/identity_baseline.txt`, and a commit that retires a surplus name lowers
 that number in the same commit. `python3 tools/one_identity.py --list` prints every
-address still carrying more than one real name.
+address still carrying more than one real name, and `--callers` shows, for each, which
+symbol the matched C++ callers' objects name at retail's call sites into the body. When
+exactly one row name is called there, the callers decide it; generated and assembly
+callers are not counted, because they name whatever the ledger said when they were made.
 
 ## Do not guess — ask
 
