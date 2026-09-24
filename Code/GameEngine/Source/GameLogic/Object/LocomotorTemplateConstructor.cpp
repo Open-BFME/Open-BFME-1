@@ -48,8 +48,8 @@ private:
 	float m_d14;
 	unsigned char m_c18;
 	unsigned int m_maxSpeed;
-	float m_d20;
-	unsigned int m_d24;
+	float m_maxSpeedDamaged;
+	unsigned int m_minSpeed;
 	unsigned int m_turnPeriod;
 	unsigned int m_damagedTurnPeriod;
 	unsigned int m_d30;
@@ -59,11 +59,11 @@ private:
 	unsigned int m_acceleration;
 	unsigned int m_lift;
 	float m_liftDamaged;
-	unsigned int m_d4c;
+	unsigned int m_braking;
 	float m_d50;
-	unsigned int m_d54;
+	unsigned int m_preferredHeight;
 	unsigned int m_d58;
-	float m_d5c;
+	float m_preferredHeightDamping;
 	unsigned int m_d60;
 	float m_d64;
 	unsigned int m_d68;
@@ -134,10 +134,10 @@ typedef char LocomotorTemplateSizeMustBe140[
 
 LocomotorTemplate::LocomotorTemplate()
 {
-	m_d20 = 1.0f;
+	m_maxSpeedDamaged = 1.0f;
 	m_turnPeriod = 5;
 	m_acceleration = 5;
-	m_d4c = 5;
+	m_braking = 5;
 	m_d8c = 0.1f;
 	m_d90 = 0.1f;
 	m_damagedTurnPeriod = 0;
@@ -151,14 +151,14 @@ LocomotorTemplate::LocomotorTemplate()
 	m_d38 = 0.2617994f;
 	m_d3c = 3.1415927f;
 	m_lift = 0;
-	m_d24 = 0;
+	m_minSpeed = 0;
 	m_d50 = 99999.0f;
 	m_d6c = 0;
 	m_d70 = 1;
 	m_d74 = 7;
-	m_d54 = 0;
+	m_preferredHeight = 0;
 	m_d58 = 0;
-	m_d5c = 1.0f;
+	m_preferredHeightDamping = 1.0f;
 	m_d60 = 0;
 	m_d78 = 0.5f;
 	m_d7c = 0;
