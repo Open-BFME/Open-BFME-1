@@ -1,12 +1,14 @@
 // ?updatePos@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@@Z
-// partial score=0.25 date=2026-09-10
+// partial score=0.27 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
 //
 // Complete typed source candidate copied from the existing Pathfinder owner in
 // Code/GameEngine/Source/GameLogic/AI/AIPathfind.cpp.  Identity is not guessed:
-// the full retail boundary is 0x003E9D80..0x003EA256 (1206 bytes), the sole
-// named caller is Object::setLayer at 0x001BEBB0, and reloc_names.csv records
-// the same Pathfinder::updatePos symbol.  The candidate is banked because the
+// full retail boundary is 0x003E9D80..0x003EA23D (1213 bytes), and four named
+// callers (Object::setLayer, two OpenContain exits, and AIUpdateInterface's
+// load post-process) establish the same Pathfinder::updatePos identity.  The
+// corrected extent has 11 named callees and no unnamed targets.  The candidate
+// is banked because the
 // owning ZH-derived TU emits a different ABI/layout shape for BFME: retail
 // begins with the inline Object flag test at +0x344 and the direct BFME field
 // layout, while the probe emits a call-based isKindOf path and a different
@@ -27,6 +29,7 @@ void Pathfinder::updatePos( Object *obj, const Coord3D *newPos )
 	AIUpdateInterface *ai = obj->getAIUpdateInterface();
 	if (!ai)
 		return;
+	volatile ObjectID objectID = obj->getID();
 
 	ICoord2D curCell = *ai->getCurPathfindCell();
 	if (!ai->isDoingGroundMovement())
@@ -82,12 +85,12 @@ void Pathfinder::updatePos( Object *obj, const Coord3D *newPos )
 				cellNdx.x = i;
 				cellNdx.y = j;
 				PathfindCell *cell = getCell(layer, i, j);
-				if (cell && cell->getPosUnit() == obj->getID())
+				if (cell && cell->getPosUnit() == objectID)
 					cell->setPosUnit(INVALID_ID, cellNdx);
 				if (layer != LAYER_GROUND)
 				{
 					cell = getCell(LAYER_GROUND, i, j);
-					if (cell && cell->getPosUnit() == obj->getID())
+					if (cell && cell->getPosUnit() == objectID)
 						cell->setPosUnit(INVALID_ID, cellNdx);
 				}
 			}
@@ -104,13 +107,13 @@ void Pathfinder::updatePos( Object *obj, const Coord3D *newPos )
 			{
 				cell = getCell(layer, i, j);
 				if (cell)
-					cell->setPosUnit(obj->getID(), cellNdx);
+					cell->setPosUnit(objectID, cellNdx);
 			}
 			if (doGround)
 			{
 				cell = getCell(LAYER_GROUND, i, j);
 				if (cell)
-					cell->setPosUnit(obj->getID(), cellNdx);
+					cell->setPosUnit(objectID, cellNdx);
 			}
 		}
 	}
