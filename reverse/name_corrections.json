@@ -2508,5 +2508,15 @@
   "after_sha256": "6c81905a9980870316451cea02a7c40e7f566bdfb4832811d799ed504634c7bd",
   "evidence": "reverse/re_attempts.log",
   "reason": "false-positive token pairing and not a rename: the banked attempt inlined the module-data getter by hand (modData = getSalvageCrateCollideModuleData()) while the landed body calls the separate roll helper whose out-of-line retail copy is 0x002181C0 (outcome = rva002181C0()) and which the compiler inlines as retail does; these are two different calls so no descriptive name was replaced by a placeholder"
+ },
+ {
+  "old_path": "reverse/attempts/0x005cb1d0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva005CB130Assignment.cpp",
+  "old_name": "BfmeRefXI",
+  "new_name": "Rva005CB130",
+  "before_sha256": "7ad0188509a067b01e20d0f185a76634e91382a4622a630beda8082bc1dbcc53",
+  "after_sha256": "2ac4fbac2a0925dbed3bbd0bfe4f2a02a75abf26a40100abdec8ffd467e30178",
+  "evidence": "reverse/functions.csv",
+  "reason": "reverse/functions.csv row 0x005CB130 (Code/GameEngine/Source/Common/Y3ChainCopyCtors.cpp) is the landed copy ctor of this same class: a clone at +0 and a Sub005C92F0 subobject at +4 reached through the empty intermediate base Mid005CB130. This body is that class's copy-assignment operator, same layout, same lea eax,[edi+4]/push eax outlier, so the address-derived name is preserved rather than the invented BfmeRefXI."
  }
 ]
