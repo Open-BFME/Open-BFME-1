@@ -1,14 +1,14 @@
 // ?bfmeSampleAirspace@AerialPathfinder@@QAEHPAVObject@@PBUCoord3D@@PAU3@@Z
-// partial score=0.87 date=2026-09-20
-// cl: /O2 /Ob0 /DNDEBUG /MD /EHsc-
+// partial score=0.97 date=2026-09-24
+// cl: /O2 /DNDEBUG /MD /EHsc-
 //
-// BFME AerialPathfind family.  The member below is the 0x00149130 helper
-// called by the complete 0x00149470 AerialPathfind body.  Its receiver and
-// three stack arguments are established by that caller; the name remains
-// address-derived until the original BFME declaration is recovered.
+// Retail 0x00149130, called five times by 0x00149470 with this, Object*,
+// const Coord3D*, Coord3D* (ret 0x0C). Samples terrain/no-fly ceiling at the
+// centre and four corners offset by Object+0xC0 and returns clearance > 0.
 
 typedef int Int;
 typedef float Real;
+typedef bool Bool;
 
 struct Coord3D
 {
@@ -56,17 +56,22 @@ class AerialPathfinder
 {
 public:
 	Real getNoFlyZoneHeight(Real x, Real y);
-	void bfmeAerialHeight(Object *object, const Coord3D *from,
-		const Real *sample, Coord3D *result);
+	// retail 0x00148C70: thiscall, ret 0x10, returns AL, raises *sample
+	Bool bfmeAerialHeight(Object *object, const Coord3D *from,
+		Real *sample, Coord3D *result);
 	Int bfmeSampleAirspace(Object *object, const Coord3D *position,
 		Coord3D *result);
 };
 
 extern Rva003FD060TerrainLogic *TheTerrainLogic;
 
-#define Rva001094A50 (*(const Real *)0x01094A50)
-#define Rva001094A5C (*(const Real *)0x01094A5C)
-#define BfmeZeroRange (*(const Real *)0x01075350)
+// Height of the higher of terrain and no-fly ceiling above pt.z.
+inline Real Rva00149130HeightAbove(AerialPathfinder *self, const Coord3D &pt)
+{
+	Real terrain = TheTerrainLogic->getGroundHeight(pt.x, pt.y, 0);
+	Real noFly = self->getNoFlyZoneHeight(pt.x, pt.y);
+	return (noFly > terrain ? noFly : terrain) - pt.z;
+}
 
 // ?bfmeSampleAirspace@AerialPathfinder@@QAEHPAVObject@@PBUCoord3D@@PAU3@@Z
 Int AerialPathfinder::bfmeSampleAirspace(Object *object,
@@ -75,78 +80,55 @@ Int AerialPathfinder::bfmeSampleAirspace(Object *object,
 	AIUpdateInterface *ai = object->m_ai;
 	if (ai == 0)
 		return 2;
-	register AerialPathfinder *self = this;
 
 	result->x = 0.0f;
 	result->y = 0.0f;
 	result->z = 0.0f;
 
+	Real best;
 	Real sampleRadius = ai->m_curLocomotor->m_sampleRadius;
+	Real halfRadius = sampleRadius * 0.5f;
 	Real objectRadius = object->m_heightC0;
-	Real floorZ = position->z - sampleRadius * Rva001094A50;
-	Real best = 0.0f;
-	struct SampleXY { Real x; Real y; } sampleXY;
-	Real terrain;
-	Real noFly;
+	Coord3D pt;
 	Real height;
-
-	sampleXY.x = position->x;
-	sampleXY.y = position->y;
-	terrain = TheTerrainLogic->getGroundHeight(sampleXY.x, sampleXY.y, 0);
-	noFly = self->getNoFlyZoneHeight(sampleXY.x, sampleXY.y);
-	if (noFly <= terrain)
-		noFly = terrain;
-	height = noFly - floorZ;
-	if (best > height)
-		best = height;
-
-	floorZ = position->z - sampleRadius * Rva001094A5C;
-	sampleXY.x = position->x - objectRadius;
-	sampleXY.y = position->y - sampleRadius;
-	terrain = TheTerrainLogic->getGroundHeight(
-		sampleXY.x, sampleXY.y, 0);
-	noFly = self->getNoFlyZoneHeight(
-		sampleXY.x, sampleXY.y);
-	if (noFly <= terrain)
-		noFly = terrain;
-	height = noFly - floorZ;
-	if (best > height)
-		best = height;
-
-	sampleXY.x = position->x + objectRadius;
-	sampleXY.y = position->y - sampleRadius;
-	terrain = TheTerrainLogic->getGroundHeight(sampleXY.x, sampleXY.y, 0);
-	noFly = self->getNoFlyZoneHeight(
-		sampleXY.x, sampleXY.y);
-	if (noFly <= terrain)
-		noFly = terrain;
-	height = noFly - floorZ;
-	if (best > height)
-		best = height;
-
-	sampleXY.x = position->x + objectRadius;
-	sampleXY.y = position->y + sampleRadius;
-	terrain = TheTerrainLogic->getGroundHeight(sampleXY.x, sampleXY.y, 0);
-	noFly = self->getNoFlyZoneHeight(
-		sampleXY.x, sampleXY.y);
-	if (noFly <= terrain)
-		noFly = terrain;
-	height = noFly - floorZ;
-	if (best > height)
-		best = height;
-
-	sampleXY.x = position->x - objectRadius;
-	sampleXY.y = position->y + sampleRadius;
-	terrain = TheTerrainLogic->getGroundHeight(sampleXY.x, sampleXY.y, 0);
-	noFly = self->getNoFlyZoneHeight(
-		sampleXY.x, sampleXY.y);
-	if (noFly <= terrain)
-		noFly = terrain;
-	height = noFly - floorZ;
-	if (best > height)
-		best = height;
-
+	{
+		pt.x = position->x;
+		pt.y = position->y;
+		pt.z = position->z - halfRadius;
+		best = 0.0f;
+		height = Rva00149130HeightAbove(this, pt);
+		if (0.0f < height)
+			best = height;
+	}
+	{
+		pt.x = position->x - objectRadius;
+		pt.y = position->y - objectRadius;
+		pt.z = position->z - sampleRadius * 0.3885f;
+		height = Rva00149130HeightAbove(this, pt);
+		if (best < height)
+			best = height;
+	}
+	{
+		pt.y = position->y + objectRadius;
+		height = Rva00149130HeightAbove(this, pt);
+		if (best < height)
+			best = height;
+	}
+	{
+		pt.x = position->x + objectRadius;
+		height = Rva00149130HeightAbove(this, pt);
+		if (best < height)
+			best = height;
+	}
+	{
+		Real sampleY = position->y - objectRadius;
+		Real terrain = TheTerrainLogic->getGroundHeight(pt.x, sampleY, 0);
+		Real noFly = getNoFlyZoneHeight(pt.x, sampleY);
+		height = (noFly > terrain ? noFly : terrain) - pt.z;
+		if (best < height)
+			best = height;
+	}
 	result->z += best;
-	self->bfmeAerialHeight(object, position, &best, result);
-	return best > BfmeZeroRange;
+	bfmeAerialHeight(object, position, &best, result);
+	return best > 0.0f;
 }
