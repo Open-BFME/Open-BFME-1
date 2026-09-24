@@ -1,5 +1,5 @@
 // ?d_006a20d0@@YAXXZ
-// partial score=0.18 date=2026-09-17
+// partial score=0.19 date=2026-09-23
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 //
@@ -19,6 +19,9 @@ extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(
 	long volatile *value);
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 	long volatile *value);
+// This barrier makes MSVC issue an IAT call for each increment site.
+extern "C" void __cdecl _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 class Rva006A20D0Counted
 {
@@ -28,6 +31,7 @@ public:
 	void Add_Ref(void)
 	{
 		InterlockedIncrement(&m_refCount);
+		_ReadWriteBarrier();
 	}
 
 	void Release_Ref(void)
@@ -81,6 +85,7 @@ public:
 		{
 			if (other.m_pointer != 0)
 				InterlockedIncrement(&other.m_pointer->m_refCount);
+		_ReadWriteBarrier();
 			if (m_pointer != 0)
 				if (InterlockedDecrement(&m_pointer->m_refCount) <= 0)
 					delete m_pointer;
@@ -93,6 +98,7 @@ public:
 	{
 		if (pointer != 0)
 			InterlockedIncrement(&pointer->m_refCount);
+		_ReadWriteBarrier();
 		if (m_pointer != 0)
 			if (InterlockedDecrement(&m_pointer->m_refCount) <= 0)
 				delete m_pointer;
@@ -124,6 +130,7 @@ public:
 	{
 		if (pointer != 0)
 			InterlockedIncrement(&pointer->m_refCount);
+		_ReadWriteBarrier();
 		if (m_pointer != 0)
 			if (InterlockedDecrement(&m_pointer->m_refCount) <= 0)
 				delete m_pointer;
@@ -135,6 +142,7 @@ public:
 	{
 		if (other.m_pointer != 0)
 			InterlockedIncrement(&other.m_pointer->m_refCount);
+		_ReadWriteBarrier();
 		if (m_pointer != 0)
 			if (InterlockedDecrement(&m_pointer->m_refCount) <= 0)
 				delete m_pointer;
@@ -186,6 +194,15 @@ struct SelfPair006A1650
 {
 	void *m_value;
 	void *m_owner;
+};
+
+// Retail's unwind map puts `playing` at -0x4c in a 0x40-byte frame.
+// The maker writes only the pair's first two pointers. The adjacent bytes
+// preserve the eight-byte pair and reproduce the retail frame size.
+struct Rva006A1650PairStorage
+{
+	SelfPair006A1650 m_pair;
+	unsigned char m_pad[8];
 };
 
 class Rva006A1650Maker
@@ -325,7 +342,8 @@ bool Rva006A20D0Owner::resolve(AudioHandle handle,
 		}
 	}
 
-	SelfPair006A1650 pair;
+	Rva006A1650PairStorage pairStorage;
+	SelfPair006A1650 &pair = pairStorage.m_pair;
 	Rva006A1650Maker *maker =
 		(Rva006A1650Maker *)((char *)this + 0xb10);
 	maker->make(&pair, (void *)handle);
