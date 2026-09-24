@@ -1,7 +1,6 @@
-// ?positionAdditionalImages@@YAXPAVMapMetaData@@PAVGameWindow@@_N@Z
-// partial score=0.9757207891 date=2026-09-21
 // cl: /G5 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Oy /D_STLP_USE_STATIC_LIB /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
+// positionAdditionalImages: ZH twin SkirmishGameOptionsMenu.cpp; retail 0x00452AD0..0x00452D62 (659 bytes)
 
 #define _STLP_NO_EXCEPTIONS 1
 
@@ -78,64 +77,53 @@ void positionAdditionalImages(MapMetaData *mmd, GameWindow *mapWindow, Bool forc
 	TheSupplyAndTechImageLocations.m_supplyPosList.clear();
 	TheSupplyAndTechImageLocations.m_techPosList.clear();
 
-	if (!mmd || !mapWindow || mapWindow->winIsHidden())
+	if( !mmd || !mapWindow || mapWindow->winIsHidden())
 		return;
 	static MapMetaData *prevMMD = NULL;
-	if (force)
+	if(force)
 		prevMMD = NULL;
-	if (mmd == prevMMD)
+	if(mmd == prevMMD)
 		return;
-
-	ICoord2D winMapSize;
-	ICoord2D winMapPos;
+	ICoord2D winMapSize, winMapPos;
 	mapWindow->winGetSize(&winMapSize.x, &winMapSize.y);
 	mapWindow->winGetScreenPosition(&winMapPos.x, &winMapPos.y);
 
 	ICoord2D ul;
-	ICoord2D lr;
-	findDrawPositions(0, 0, winMapSize.x, winMapSize.y, mmd->m_extent, &ul, &lr);
-	Int &smallWidth = winMapSize.x;
-	smallWidth = lr.x - ul.x;
-	Int &smallHeight = winMapSize.y;
-	smallHeight = lr.y - ul.y;
+	Int smallWidth, smallHeight;
+	{
+		ICoord2D lr;
+		findDrawPositions(0,0, winMapSize.x, winMapSize.y,mmd->m_extent, &ul, &lr);
+		smallWidth = lr.x - ul.x;
+		smallHeight= lr.y - ul.y;
+	}
 
 	Coord3DList::iterator it = mmd->m_supplyPositions.begin();
-	if (it != mmd->m_supplyPositions.end()) {
-        const Real drawWidth = smallWidth;
-        const Real originX = ul.x;
-        const Real drawHeight = smallHeight;
-        const Real originY = ul.y;
-        do {
+	Int ulX = ul.x;
+	Int ulY = ul.y;
+	while( it != mmd->m_supplyPositions.end())
+	{
 		ICoord2D markerPos;
-		Real position = (it->x - mmd->m_extent.lo.x)
-			/ (mmd->m_extent.hi.x - mmd->m_extent.lo.x);
-		markerPos.x = position * drawWidth - SUPPLY_TECH_SIZE / 2 + originX;
-		position = (it->y - mmd->m_extent.lo.y)
-			/ (mmd->m_extent.hi.y - mmd->m_extent.lo.y);
-		markerPos.y = (1 - position) * drawHeight
-			- SUPPLY_TECH_SIZE / 2 + originY;
+		Real position;
+		position = (it->x - mmd->m_extent.lo.x) / (mmd->m_extent.hi.x - mmd->m_extent.lo.x);
+		markerPos.x = (position * smallWidth) - SUPPLY_TECH_SIZE /2 + ulX;
+		position = (it->y - mmd->m_extent.lo.y) / (mmd->m_extent.hi.y - mmd->m_extent.lo.y);
+		markerPos.y = ((1- position) * smallHeight) - SUPPLY_TECH_SIZE /2 + ulY;
 		TheSupplyAndTechImageLocations.m_supplyPosList.push_front(markerPos);
 		it++;
-        } while (it != mmd->m_supplyPositions.end());
 	}
 
 	it = mmd->m_techPositions.begin();
-	if (it != mmd->m_techPositions.end()) {
-        const Real drawWidth = smallWidth;
-        const Real originX = ul.x;
-        const Real drawHeight = smallHeight;
-        const Real originY = ul.y;
-        do {
+	ulX = ul.x;
+	ulY = ul.y;
+	while( it != mmd->m_techPositions.end())
+	{
 		ICoord2D markerPos;
-		Real position = (it->x - mmd->m_extent.lo.x)
-			/ (mmd->m_extent.hi.x - mmd->m_extent.lo.x);
-		markerPos.x = position * drawWidth - SUPPLY_TECH_SIZE / 2 + originX;
-		position = (it->y - mmd->m_extent.lo.y)
-			/ (mmd->m_extent.hi.y - mmd->m_extent.lo.y);
-		markerPos.y = (1 - position) * drawHeight
-			- SUPPLY_TECH_SIZE / 2 + originY;
+		Real position;
+		position = (it->x - mmd->m_extent.lo.x) / (mmd->m_extent.hi.x - mmd->m_extent.lo.x);
+		markerPos.x = (position * smallWidth) - SUPPLY_TECH_SIZE /2 + ulX;
+		position = (it->y - mmd->m_extent.lo.y) / (mmd->m_extent.hi.y - mmd->m_extent.lo.y);
+		markerPos.y = ((1- position) * smallHeight) - SUPPLY_TECH_SIZE /2 + ulY;
 		TheSupplyAndTechImageLocations.m_techPosList.push_front(markerPos);
 		it++;
-        } while (it != mmd->m_techPositions.end());
 	}
 }
