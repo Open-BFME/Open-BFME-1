@@ -1,17 +1,14 @@
-// ?d_003c3850@@YAXXZ
-// partial score=0.88 date=2026-09-18
+// ?rva003C3850@LivingWorldLogic@@QAE_NPAVLivingWorldRegion@@@Z
 // cl: /DNDEBUG /MD /EHsc
-//
-// Retail 0x003C3850 (495 bytes).  The constructor/destructor at 0x003C2FC0/
-// 0x003C31D0 install LivingWorldLogic's vtable and establish the +0x28 region
-// manager, +0x30 string and +0x84 two-byte objective vector used here.  The
-// direct caller at 0x003C3AE0 passes the same record through ILT 0x00044DF5.
-// The original method name is not recoverable, so the exported method keeps
-// the body address in its name.
+// Retail 0x003C3850: selects a LivingWorldLogic region (+0x28 manager, +0x30 name, +0x84 objective vector).
+// Callers 0x003C3AE0 and 0x005B4380 reach it through ILT 0x00044DF5; the second tests the bool result.
+// The method name is not recoverable, so it keeps the body address.
 
 template <typename T>
 class StringBase
 {
+	friend class AsciiString;
+
 protected:
 	struct Header
 	{
@@ -22,11 +19,13 @@ protected:
 	};
 
 	StringBase() : m_data(0) {}
-	StringBase(const StringBase<T> &other);
 	~StringBase() { releaseBuffer(); }
 
-	public:
+public:
 	void set(const StringBase<T> &other);
+
+private:
+	StringBase(const StringBase<T> &other);
 	void releaseBuffer();
 
 protected:
@@ -287,6 +286,7 @@ class LivingWorldLogic
 {
 public:
 	bool rva003C3850(LivingWorldRegion *record);
+	Gen003C73A0Owner *getRegionManager() const { return m_regionManager; }
 
 private:
 	Gen003C73A0Owner *m_regionManager;
@@ -306,7 +306,7 @@ extern void j_000156b3();
 extern void j_0003a4a4();
 extern void j_000475a5();
 extern void j_00032a56();
-extern void j_0002e46();
+extern void j_00002e46();
 extern void j_000012e4();
 
 extern ClientSubsystem *TheAudioClientUpdate;
@@ -316,115 +316,103 @@ extern Keyboard *TheKeyboard;
 extern GlobalData *TheWritableGlobalData;
 extern CampaignManager *TheLivingWorldLogic;
 extern Gen_00609320 *g_bfmeStateDF;
-#define Rva01336E50Empty (*(AsciiString *)0x01336E50)
+extern const AsciiString Rva01336E50EmptyString;
+#define Rva01336E50Empty Rva01336E50EmptyString
 
 typedef void (LivingWorldLogic::*ClearObjectiveVectors)();
-typedef void (Rva003C3850Vector::*ResizeObjectiveVector)(
-	unsigned int, unsigned short);
-typedef void (GameLogic::*ApplyCQ)(
-	AsciiString, Rva003C3850Pair *);
+typedef void (Rva003C3850Vector::*ResizeObjectiveVector)(unsigned int, unsigned short);
+typedef void (GameLogic::*ApplyCQ)(AsciiString, Rva003C3850Pair *);
 typedef bool (Keyboard::*IsShift)();
 typedef void (LivingWorldLogic::*RecordAction)(LivingWorldRegion *);
-typedef bool (LivingWorldRegionManager::*ContainsRecord)(
-	LivingWorldRegion *);
-typedef Rva003C3850LookupOwner *(LivingWorldLogic::*FindRecord)(
-  AsciiString *);
-typedef void (LivingWorldRegion::*SetRecordName)(AsciiString *);
+typedef bool (LivingWorldRegionManager::*ContainsRecord)(LivingWorldRegion *);
+typedef Rva003C3850LookupOwner *(LivingWorldLogic::*FindRecord)(AsciiString *);
+typedef void (LivingWorldRegion::*SetRecordName)(const AsciiString *);
 typedef void (Gen_00609320::*UpdateState)(void *);
 
 bool LivingWorldLogic::rva003C3850(LivingWorldRegion * const record)
 {
-	register LivingWorldRegion *value = record;
-	register LivingWorldLogic *owner = this;
+	LivingWorldLogic *owner = this;
+	LivingWorldRegion *value = record;
 
 	if (value != 0)
 	{
+		TheAudioClientUpdate->slot94();
 
-	TheAudioClientUpdate->slot94();
+		owner->m_currentRegionName.set(value->m_name);
+		TheInGameUI->slot23();
 
-	owner->m_currentRegionName.set(value->m_name);
-	TheInGameUI->slot23();
+		((Rva003C1A50 *)owner)->clearTwoVec();
 
-	((Rva003C1A50 *)owner)->clearTwoVec();
+		unsigned int count = value->missionObjectiveCount();
+		Rva003C3850VisibleValue initialValue;
 
-	unsigned int count = value->missionObjectiveCount();
-	Rva003C3850VisibleValue initialValue;
+		m_missionObjectiveStates.resize(count, *(unsigned short *)&initialValue);
 
-	m_missionObjectiveStates.resize(count,
-		*(unsigned short *)&initialValue);
+		unsigned short *stateEnd = m_missionObjectiveStates.m_finish;
+		unsigned short *state = m_missionObjectiveStates.m_begin;
+		Rva003C3850VisibleValue visible;
+		while (state != stateEnd)
+		{
+			*state = *(unsigned short *)&visible;
+			++state;
+		}
 
-	unsigned short *stateEnd = m_missionObjectiveStates.m_finish;
-	unsigned short *state = m_missionObjectiveStates.m_begin;
-	Rva003C3850VisibleValue visible;
-	while (state != stateEnd)
-	{
-		*state = *(unsigned short *)&visible;
-		++state;
-	}
+		Rva003C3850Pair range;
+		AsciiString text;
+		((BfmeHostESA *)owner)->bfmeGetESA((BfmeStrESA *)&text, &range);
 
-	Rva003C3850Pair range;
-	BfmeStrESA text;
-	((BfmeHostESA *)owner)->bfmeGetESA(&text, &range);
+		((Rva003855C0 *)TheBfmeGameLogic)->reset();
 
-	((Rva003855C0 *)TheBfmeGameLogic)->reset();
+		if (text.hasText())
+		{
+			union
+			{
+				void (*raw)();
+				ApplyCQ member;
+			} apply;
+			apply.raw = ::j_0001d8c7;
+			(TheBfmeGameLogic->*apply.member)(text, &range);
+		}
 
-	if (text.hasText())
-	{
 		union
 		{
 			void (*raw)();
-			ApplyCQ member;
-		} apply;
-		apply.raw = ::j_0001d8c7;
-		(TheBfmeGameLogic->*apply.member)(
-			text, &range);
-	}
+			RecordAction member;
+		} action;
+		action.raw = ::j_00035ff3;
+		(owner->*action.member)(value);
 
-	union
-	{
-		void (*raw)();
-		RecordAction member;
-	} action;
-	action.raw = ::j_00035ff3;
-	(owner->*action.member)(value);
+		if (TheKeyboard->isShift() && TheWritableGlobalData->m_flag90 != 0)
+		{
+			((Rva003BFB20 *)owner)->run((int)value);
+			return true;
+		}
 
-	if (TheKeyboard->isShift() &&
-		TheWritableGlobalData->m_flag90 != 0)
-	{
-		((Rva003BFB20 *)owner)->run((int)value);
+		if (!owner->m_regionManager->containsOrEmpty((Gen003C73A0Item *)value))
+		{
+			owner->m_currentRegionName.set(Rva01336E50Empty);
+			return false;
+		}
+
+		Rva003C0110Owner::Rva003C0110ElementResult *found =
+			((Rva003C0110Owner *)owner)->findByName((StringBase<char> *)&text);
+
+		union
+		{
+			void (*raw)();
+			SetRecordName member;
+		} setName;
+		setName.raw = ::j_00002e46;
+		if (found != 0)
+			(value->*setName.member)((AsciiString *)((char *)found + 0x40));
+		else
+			(value->*setName.member)(&Rva01336E50Empty);
+
+		owner->getRegionManager()->m_selectedRegion = value;
+		owner->getRegionManager()->m_enabled = false;
+
+		((Rva006092D0State *)g_bfmeStateDF)->rva00609360((char *)TheLivingWorldLogic + 0x20);
 		return true;
-	}
-
-	if (!owner->m_regionManager->containsOrEmpty(
-		(Gen003C73A0Item *)value))
-	{
-		owner->m_currentRegionName.set(Rva01336E50Empty);
-		return false;
-	}
-
-	Rva003C0110Owner::Rva003C0110ElementResult *found =
-		((Rva003C0110Owner *)owner)->findByName(
-			(StringBase<char> *)&text);
-
-	union
-	{
-		void (*raw)();
-		SetRecordName member;
-	} setName;
-	setName.raw = ::j_0002e46;
-	if (found != 0)
-		(value->*setName.member)(
-			(AsciiString *)((char *)found + 0x40));
-	else
-		(value->*setName.member)(
-			&Rva01336E50Empty);
-
-	owner->m_regionManager->m_selectedRegion = value;
-	owner->m_regionManager->m_enabled = false;
-
-	((Rva006092D0State *)g_bfmeStateDF)->rva00609360(
-		(char *)TheLivingWorldLogic + 0x20);
-	return true;
 	}
 	return false;
 }

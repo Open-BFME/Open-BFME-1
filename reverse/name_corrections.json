@@ -2188,5 +2188,15 @@
   "after_sha256": "1fdf1e367320ab2bd70aca6832cc7b22f57d3eab4c7c902fb439081c602f75d4",
   "evidence": "reverse/symbols.csv",
   "reason": "reverse/symbols.csv pins ?Rva008C5D70Alloc@@3P6APAXI@ZA at 0x01337828; the old spelling WideAllocPtr matches no pinned symbol, so the source uses the pinned name."
+ },
+ {
+  "old_path": "reverse/attempts/0x003c3850.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldLogicRva003C3850.cpp",
+  "old_name": "j_0002e46",
+  "new_name": "j_00002e46",
+  "before_sha256": "50e12821eaa0ac5f658c22d41a52448674e1422954487d17fb611116d132e71e",
+  "after_sha256": "3bee9445a182be8fc59c715ece13d70209fbc22f549f9aa7ce02a3b5d6075c6b",
+  "evidence": "reverse/functions.csv",
+  "reason": "reverse/functions.csv names the body at 0x00002E46 ?j_00002e46@@YAXXZ; the old spelling j_0002e46 matches no ledger row or pin, so the source uses the ledger name."
  }
 ]
