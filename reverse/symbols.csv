@@ -88952,3 +88952,6 @@ _peerSetRoomKeysA,0x00858070,GameSpy Peer peerSetRoomKeys; six-argument cdecl ca
 _peerGetLocalIP,0x00857460,GameSpy Peer; ICF-folded 8-byte accessor called by doQuickMatch 0x0064EFD0
 ?handle@Rva0021D180Primary@@QAEXXZ,0x000480CC,REL32 pin from onContaining 0x0021D5D0 (ILT to the unnamed 0x0021D180 dump)
 ??1?$_Rb_tree@PAURva00442AB0Target@@PAU1@U?$_Identity@PAURva00442AB0Target@@@_STL@@U?$less@PAURva00442AB0Target@@@3@V?$allocator@PAURva00442AB0Target@@@3@@_STL@@QAE@XZ,0x0004A60B,REL32 pin from InGameUI::selectMatchingAcrossRegion 0x004481C0 (ILT to the pointer-set destructor body 0x004428E0)
+?getTailEAN@BfmeLexEAN@@QAEPADXZ,0x000262BA,REL32 pin from rva002EC770ParseToken 0x002EC770 (ILT to the 0x0035EF40 accessor)
+?rva002EC770ParseTokenEvents@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x0000668B,REL32 pin from rva002EC770ParseToken 0x002EC770 (ILT to the unnamed 0x002EA5D0 dump)
+?rva002EC770ParseTokenEventList@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z,0x0003ED33,REL32 pin from rva002EC770ParseToken 0x002EC770 (ILT to the unnamed 0x002EC0A0 body)

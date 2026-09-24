@@ -1,5 +1,3 @@
-// ?rva002EC770ParseToken@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z
-// partial score=0.99 date=2026-09-24
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // LuaScriptEngine::rva002EC770ParseToken, retail RVA 0x002EC770.
 // Sibling of LuaScriptEngineParseTokenFile.cpp's rva002EC840ParseTokenFile,
@@ -58,10 +56,7 @@ private:
 	unsigned char m_keepOpen;
 };
 
-#pragma comment(linker, "/alternatename:?getTailEAN@BfmeLexEAN@@QAEPADXZ=?j_000262ba@@YAXXZ")
 #pragma comment(linker, "/alternatename:?finish@XmlNameSlotList@@QAEHXZ=?j_00049ae4@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva002EC770ParseTokenEvents@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z=?j_0000668b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?rva002EC770ParseTokenEventList@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z=?j_0003ed33@@YAXXZ")
 
 // ?rva002EC770ParseToken@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z
 void LuaScriptEngine::rva002EC770ParseToken(BfmeLexEAN *parser)
