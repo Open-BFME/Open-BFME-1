@@ -1,12 +1,23 @@
-// ?update@AIGiantBirdFollowThruState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.97 date=2026-09-10
-// cl: /DNDEBUG /MD
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB
+// stlport
 //
-// AIGiantBirdFollowThruState::update, retail RVA 0x002BECD0.
+// AIGiantBirdFollowThruState::update, retail RVA 0x002BECD0, 347 bytes.
 // The constructor at 0x002BEC00 installs vtable 0x010C7968.  Its slot 6
 // contains thunk 0x00042F41, which jumps to this 347-byte body; the matched
 // onExit at 0x002BEE90 occupies slot 5.  The body is the follow-through
 // state update and uses the shared Giant Bird goal-routing layout.
+//
+// GameLogic::findObjectByID is an inline member in the Zero Hour header
+// (GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h), and BFME kept
+// the hash_map body that header still carries commented out (see the matched
+// Code/GameEngine/Source/GameLogic/System/GameLogicFindObjectByID.cpp).  The
+// compiler does not inline it here but sees that it writes no memory, so
+// retail keeps TheGameLogic in EDI across the first lookup and reuses it for
+// the second, loading the victim ID before the global.  That only reproduces
+// when the inline body is visible in this TU.
+#define _STLP_USE_NEWALLOC 1
+#define _STLP_NO_EXCEPTIONS 1
+#include <hash_map>
 
 typedef unsigned int UnsignedInt;
 
@@ -83,11 +94,32 @@ public:
 	void setPosition(const Coord3D *position);
 };
 
+typedef int ObjectID;
+
+typedef _STL::hash_map<ObjectID, Object *, _STL::hash<ObjectID>, _STL::equal_to<ObjectID> > ObjectPtrHash;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
-	Object *findObjectByID(int id);
+	Object *findObjectByID(ObjectID id);
+
+private:
+	char m_slice_pad[0xB0];		// retail this+0x00 .. +0xAF, untouched
+	ObjectPtrHash m_objHash;	// bucket vector _M_start lands at this+0xB4
 };
+
+inline Object *GameLogic::findObjectByID(ObjectID id)
+{
+	if (id == 0)
+		return 0;
+
+	ObjectPtrHash::iterator it = m_objHash.find(id);
+	if (it == m_objHash.end())
+		return 0;
+
+	return (*it).second;
+}
 
 class StateMachine
 {
@@ -123,8 +155,8 @@ public:
 	int m_counter28;
 };
 
-#define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
-#define BfmeZeroRange (*(const float *)0x01075350)
+extern GameLogic *TheGameLogic;
+extern const float BfmeZeroRange;
 
 StateReturnType AIGiantBirdFollowThruState::update()
 {
@@ -164,14 +196,11 @@ StateReturnType AIGiantBirdFollowThruState::update()
 		return STATE_CONTINUE;
 
 	((Thing *)object)->setPosition(&goal);
-	Object *target;
-	const int &targetID = ai->m_targetID3f8;
-	GameLogic *gameLogic = TheBfmeGameLogic;
-	target = gameLogic->findObjectByID(targetID);
+	Object *target = TheGameLogic->findObjectByID(ai->m_targetID3f8);
 	if (target != 0 && (target->m_flags344 & 1) == 0)
 		return STATE_FAILURE;
 
-	Object *otherTarget = gameLogic->findObjectByID(ai->m_targetID48c);
+	Object *otherTarget = TheGameLogic->findObjectByID(ai->m_targetID48c);
 	StateMachine *machine = m_machine1c;
 	machine->setGoalObject(0);
 	if (otherTarget == 0 || (otherTarget->m_flags344 & 1) != 0)
