@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 // Sibling of Rva0025D7E0FreezingRainDispatch::run with an extra this-adjusted
-// tail call after finish.
+// call through ILT 0x00036561 to body 0x00259160 after finish.
 
 class Rva0025D7E0Owner
 {
@@ -22,7 +22,12 @@ class Rva00259670Primary
 {
 public:
 	void finish( Rva0025D7E0Subject *subject );
-	void tail();
+};
+
+class Rva00259160Owner
+{
+public:
+	void applyToFilteredObjects();
 };
 
 class Rva00259670Dispatch : public Rva0025D7E0FreezingRainDispatch
@@ -42,5 +47,5 @@ void Rva00259670Dispatch::run(
 	apply( subject, context );
 	Rva00259670Primary *primary = (Rva00259670Primary *)( (char *)this - 0x10 );
 	primary->finish( subject );
-	primary->tail();
+	((Rva00259160Owner *)primary)->applyToFilteredObjects();
 }

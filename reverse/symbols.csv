@@ -86210,7 +86210,7 @@ name,address,notes
 ?tagAt@XmlNameSlotList@@QAEPBDH@Z,0x0035EF60,pin for Rva002E2970 applyNameFlags
 ?tail@Gen_00417cb0@@QAEXPAX@Z,0x00417A70,Open-BFME5 address-derived name; tail-jmp target of 0x00417CB0 via ILT 0x000294B5; identity not asserted
 ?tail@Rva0024CD10@@QAEXXZ,0x000133EF,assigned-body helper for Rva0024CD10
-?tail@Rva00259670Primary@@QAEXXZ,0x00036561,address-derived tail call read from retail RVA 0x00259670
+?applyToFilteredObjects@Rva00259160Owner@@QAEXXZ,0x00036561,route=0x00259160; matched caller 0x00259670 adjusts this by -0x10; physical 0x00259160 body and no-stack-arg ABI verified
 ?take0046DBB0@S4Holder0046DBB0@@QAEXABVAsciiString@@@Z,0x0046DBB0,S4 holder method of the string-vector drain family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?take0046DD00@S4Holder0046DBB0@@QAEXABVAsciiString@@@Z,0x0046DD00,S4 holder method of the string-vector drain family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
 ?take0046DE10@S4Holder0046DBB0@@QAEXABVAsciiString@@@Z,0x0046DE10,S4 holder method of the string-vector drain family (address-derived name; target read from the REL32 at its call site and followed through its ILT thunk)
