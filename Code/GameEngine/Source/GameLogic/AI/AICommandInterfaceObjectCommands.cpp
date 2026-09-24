@@ -94,25 +94,25 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;	// slot 0, vtable+0x00
 
-	void aiRepair(Object *obj, CommandSourceType cmdSource);
-	void aiResumeConstruction(Object *obj, CommandSourceType cmdSource);
+	void aiRepair(Object *object, CommandSourceType cmdSource);
+	void aiResumeConstruction(Object *object, CommandSourceType cmdSource);
 	void aiGetHealed(Object *healDepot, CommandSourceType cmdSource);
 	void aiGetRepaired(Object *repairDepot, CommandSourceType cmdSource);
-	void aiDock(Object *obj, CommandSourceType cmdSource);
+	void aiDock(Object *object, CommandSourceType cmdSource);
 	void aiExit(Object *objectToExit, CommandSourceType cmdSource);
 };
 
-void AICommandInterface::aiRepair( Object *obj, CommandSourceType cmdSource )
+void AICommandInterface::aiRepair( Object *object, CommandSourceType cmdSource )
 {
 	AICommandParms parms(AICMD_REPAIR, cmdSource);
-	parms.m_obj = obj;
+	parms.m_obj = object;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiResumeConstruction( Object *obj, CommandSourceType cmdSource )
+void AICommandInterface::aiResumeConstruction( Object *object, CommandSourceType cmdSource )
 {
 	AICommandParms parms(AICMD_RESUME_CONSTRUCTION, cmdSource);
-	parms.m_obj = obj;
+	parms.m_obj = object;
 	aiDoCommand(&parms);
 }
 
@@ -130,10 +130,10 @@ void AICommandInterface::aiGetRepaired( Object *repairDepot, CommandSourceType c
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiDock( Object *obj, CommandSourceType cmdSource )
+void AICommandInterface::aiDock( Object *object, CommandSourceType cmdSource )
 {
 	AICommandParms parms(AICMD_DOCK, cmdSource);
-	parms.m_obj = obj;
+	parms.m_obj = object;
 	aiDoCommand(&parms);
 }
 
