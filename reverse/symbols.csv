@@ -88966,3 +88966,5 @@ _peerGetLocalIP,0x00857460,GameSpy Peer; ICF-folded 8-byte accessor called by do
 ?rva0041abe0@Rva0041D290FullDrawable@@QAEXXZ,0x000151DB,REL32 pin from Drawable::xfer 0x0041D290 (ILT to the unnamed 0x0041ABE0 dump)
 ?_M_insert_overflow@?$vector@PAXV?$allocator@PAX@_STL@@@_STL@@IAEXPAPAXABQAXABU__true_type@2@I_N@Z,0x00004AED,REL32 pin from Drawable::xfer 0x0041D290 (ILT to the f265_b7a8aa family copy at 0x00418C50)
 ?rva00479B80@Rva00479B80Window@@QAE?AVUnicodeString@@XZ,0x00007E82,REL32 pin from drawBorder 0x0078E570 (ILT to the 30-byte sret getter at 0x00479B80, receiver+0x30)
+?rva0089EB30@@YA?AVBfmeStrVKI@@PBDABV1@@Z,0x0089EB30,address-derived cdecl prefix-plus-string helper called by bfmeApplyEVF 0x008C4FA0+117; full 285B decode: args hidden return +4 prefix +8 string ref +C; EAX=hidden return on rets +52 +86 +11C; plain ret
+?rva0089EDF0@@YAXPAVBfmeStrVKI@@PBDZZ,0x0089EDF0,address-derived cdecl variadic string format helper called by bfmeApplyEVF 0x008C4FA0+199; full 256B decode: string object +4 format +8 va_list from +C passed to 0x009F6EC0; single plain ret +FF
