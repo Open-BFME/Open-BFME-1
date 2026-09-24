@@ -11,8 +11,8 @@ a lead, not a blob. Prior attempts count against a body only when the pack
 still has nothing new to say about it.
 
   python tools/fleet/pick_anon.py [N] [min_bytes] [max_bytes] [--dry]
-Prints RVAs one per line; the pick is recorded in seats.log ('seat pick ->')
-so a concurrent picker sees it busy. The durable claim is fleet_run's lease.
+Prints RVAs one per line; the pick is diagnostic only. The durable claim is
+fleet_run's atomic lease on the filtered brief targets.
 """
 import re
 import sys
@@ -97,7 +97,7 @@ cands.sort(key=lambda t: eligibility.expected_bytes(t[0], t[1], t[3]), reverse=T
 picked = [c[2] for c in cands[:n_want]]
 if picked and not dry:
     with open(seats_log, "a", encoding="utf-8") as fh:
-        fh.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(picked)}\n")
+        fh.write(f"{time.strftime('%H:%M')} seat pick selected {' '.join(picked)}\n")
 print("\n".join(picked))
 if dry:
     for w, sz, rva, d in cands[:n_want]:

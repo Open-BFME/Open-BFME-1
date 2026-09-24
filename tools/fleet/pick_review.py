@@ -47,5 +47,5 @@ cands.sort(reverse=True)
 picked = [rva for _, _, rva in cands[:n_want]]
 if picked and not dry:
     with open(seats_log, "a", encoding="utf-8") as fh:
-        fh.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(picked)}\n")
+        fh.write(f"{time.strftime('%H:%M')} seat pick selected {' '.join(picked)}\n")
 print("\n".join(picked))

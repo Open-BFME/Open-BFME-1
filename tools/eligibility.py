@@ -18,14 +18,15 @@ Rules (Claude/Astra consensus, 2026-09-15; see docs/baseline-2026-09-15.md):
   * a DEFERRAL never retires: blocked/attempted/abandoned/partial say a
     session failed, not that the address is wrong.
   * a banked STASH outlives a later deferral: the body is the evidence.
-  * BUSY means a live fleet lease (tools/fleet_run claims, pid-checked) or a
-    seat currently on it per seats.log; append-only claim files are not
-    consulted -- they starved the fleet once every body had been touched.
+  * BUSY means a live fleet lease (tools/fleet_run claims, pid-checked) or,
+    until a stopped-fleet cutover, an old seat log assignment. New selections
+    are advisory and never create a log assignment.
 
 Library use only; nothing here writes.
 """
 import csv
 import bisect
+import hashlib
 import json
 import datetime
 import re
@@ -223,12 +224,12 @@ def is_carved_row(row):
 
 
 def open_dumps(rows=None, latest=None, min_size=0, max_size=None, anonymous=None,
-               include_carved=False):
+               include_carved=False, carved_path=None):
     """Dump rows that are not retired, in a size window. anonymous=True keeps
     only ?d_/?dup_/?j_ names; False keeps only named rows; None keeps both."""
     rows = load_rows() if rows is None else rows
     if include_carved:
-        rows = list(rows) + carved_rows(rows=rows)
+        rows = list(rows) + carved_rows(path=carved_path, rows=rows)
     latest = latest_verdicts() if latest is None else latest
     out = []
     for row in rows:
@@ -431,22 +432,49 @@ def servable(root=None, hours=48):
 
 
 def busy_rvas(root=None, seats_log=None):
-    """Addresses a live worker owns: fleet_run leases (pid-checked) plus seats
-    currently '->' on an RVA in seats.log. Lower-case '0x%08x' strings."""
+    """Live run leases plus unreconciled legacy log assignments."""
     root = root or ROOT
     import fleet_run
     busy = set(fleet_run.active_rvas(root))
     seats_log = seats_log or root / "build" / "fleet_logs" / "seats.log"
-    if seats_log.exists():
-        state = {}
-        for line in seats_log.read_text(encoding="utf-8", errors="replace").splitlines():
-            m = re.match(r"\S+ (?:vt)?seat (\S+) (->|done) (.+)", line)
-            if m:
-                for token in m.group(3).split():
-                    if token.lower().startswith("0x"):
-                        state[token.lower()] = m.group(2) == "->"
-        busy |= {rva for rva, on in state.items() if on}
+    for token in legacy_busy_tokens(root, seats_log):
+        if token.startswith("0x"):
+            try:
+                busy.add(f"0x{int(token, 16):08x}")
+            except ValueError:
+                continue
     return busy
+
+
+def legacy_busy_tokens(root=None, seats_log=None):
+    """Ownerless old-log exclusions, with a conservative stopped-fleet cutover.
+
+    The cutover records the exact closed prefix. If that prefix changes, read
+    the whole log again. New old-style assignments after cutover are honored,
+    so accidentally restarting an old controller cannot silently bypass them.
+    """
+    root = root or ROOT
+    seats_log = seats_log or root / "build/fleet_logs/seats.log"
+    try:
+        raw = seats_log.read_bytes()
+    except FileNotFoundError:
+        raw = b""
+    marker = root / "build/fleet_legacy_cutover.json"
+    try:
+        cut = json.loads(marker.read_text(encoding="utf-8"))
+        count = cut["closed_log_bytes"]
+        if (isinstance(count, int) and 0 <= count <= len(raw)
+                and hashlib.sha256(raw[:count]).hexdigest() == cut["closed_log_sha256"]):
+            raw = raw[count:]
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    state = {}
+    for line in raw.decode("utf-8", errors="replace").splitlines():
+        match = re.match(r"\S+ (?:vt)?seat (\S+) (->|done) (.+)", line)
+        if match:
+            for token in match.group(3).split():
+                state[token.lower()] = match.group(2) == "->"
+    return {token for token, on in state.items() if on}
 
 
 def recent_run_rvas(hours=48, root=None):

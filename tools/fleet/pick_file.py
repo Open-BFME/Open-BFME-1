@@ -1,31 +1,26 @@
 #!/usr/bin/env python3
-"""Atomically pick the next dump file for a fleet seat. Prints its path.
+"""Select the next dump file for a fleet seat. Prints its path.
 
-A file is busy only while a seat is CURRENTLY on it (seats.log: last event for
-the stem is '->'). Finished sessions leave most bodies unconverted (a session
+A file is busy while a live run owns one of its bodies, or while an old
+unreconciled seat log assigns its stem. Finished sessions leave most bodies unconverted (a session
 lands ~5 of 25), so the old append-only claim list starved the fleet once every
 big file had been touched once. Order: landed-neighbour density first (see below), then remaining dump bytes,
 at least argv[1] remaining dump bodies (default 6).
 """
-import csv, collections, re, sys, time
+import csv, collections, sys, time
 from pathlib import Path
 sys.path.insert(0, 'tools')
 from portable_lock import lock
 from fleet_run import active_rvas
+import eligibility
 ROOT = Path('.').resolve()
 seats_log = ROOT / 'build' / 'fleet_logs' / 'seats.log'
 lf = (ROOT / 'build' / '.fleet_claims.lock').open('a')
 lock(lf, exclusive=True)
 
-busy = {}
-if seats_log.exists():
-    for l in seats_log.read_text(encoding='utf-8', errors='replace').splitlines():
-        m = re.match(r'\S+ seat (\S+) (->|done) (\S+)', l)
-        if m:
-            busy[m.group(3)] = (m.group(2) == '->', m.group(1))
-busy_stems = {stem for stem, (on, _) in busy.items() if on}
+busy_stems = {token for token in eligibility.legacy_busy_tokens(ROOT, seats_log)
+              if not token.startswith('0x')}
 active = active_rvas(ROOT)
-# sessions older than 3h with no 'done' are dead seats, not busy (log has only HH:MM; be lenient)
 
 minb = int(sys.argv[1]) if len(sys.argv) > 1 else 6
 b = collections.Counter(); n = collections.Counter()
@@ -65,9 +60,8 @@ for s in ordered:
     stem = Path(s).stem
     if stem in busy_stems or n[s] < minb:
         continue
-    # claim: write the assignment marker the seat script would write, so two
-    # seats picking within the same second cannot both take it
+    # Selection is advisory; fleet_run atomically claims actual brief RVAs.
     with open(seats_log, 'a') as f:
-        f.write(f"{time.strftime('%H:%M')} seat pick -> {stem}\n")
+        f.write(f"{time.strftime('%H:%M')} seat pick selected {stem}\n")
     print(s)
     break

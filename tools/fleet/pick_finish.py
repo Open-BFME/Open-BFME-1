@@ -7,8 +7,8 @@ stash is usually one lever from landing.
 Reads the stash on disk, not only the log's LATEST verdict: a `blocked` row
 recorded after the bank hid 234 of 381 servable bodies on 2026-09-15. Only a
 dead-end verdict (no-match, refuted, ...) retires the address, as in re_log.
-Prints N RVAs (largest first), one per line. Claims live in seats.log via the
-'seat pick ->' marker, same as pick_file.py.
+Prints N selected RVAs, one per line. Selection is advisory; fleet_run claims
+only actual brief targets before launch.
 """
 import sys, time
 from pathlib import Path
@@ -47,5 +47,5 @@ cands.sort(key=lambda c: finish_measure.rank_key(measured, int(c[2], 16), c[3], 
 picked = [c[2] for c in cands[:n_want]]
 if picked:
     with open(seats_log, 'a') as f:
-        f.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(picked)}\n")
+        f.write(f"{time.strftime('%H:%M')} seat pick selected {' '.join(picked)}\n")
 print('\n'.join(picked))

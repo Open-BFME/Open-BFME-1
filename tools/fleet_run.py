@@ -20,6 +20,7 @@ import os
 from pathlib import Path
 import re
 import shutil
+import signal
 import sqlite3
 import subprocess
 import sys
@@ -40,6 +41,14 @@ def keep_transcript_line(line):
 
 
 LEASE_SECONDS = int(os.environ.get("FLEET_LEASE_SECONDS", "0") or 0) or (9000 + 1800)
+
+
+class ClaimConflict(RuntimeError):
+    """An advisory selection lost ownership before any worker launched."""
+
+
+class StaleBrief(RuntimeError):
+    """A brief target is no longer an open body at the stated size."""
 
 
 def connect(root):
@@ -65,7 +74,9 @@ def pid_alive(pid):
         kernel32 = ctypes.windll.kernel32
         handle = kernel32.OpenProcess(0x1000, False, int(pid))  # PROCESS_QUERY_LIMITED_INFORMATION
         if not handle:
-            return False
+            # Access denied and other query errors do not prove the process is
+            # gone. ERROR_INVALID_PARAMETER is the absent-PID result.
+            return kernel32.GetLastError() != 87
         try:
             code = ctypes.c_ulong()
             if not kernel32.GetExitCodeProcess(handle, ctypes.byref(code)):
@@ -89,15 +100,17 @@ def run_finished(root, run):
     try:
         status = json.loads(record.read_text(encoding="utf-8")).get("status")
     except (OSError, ValueError):
-        return True   # no record at all: nothing is running under that name
-    return status in ("finished", "failed", "interrupted")
+        return False  # no trustworthy record: unknown liveness, keep the claim
+    return status in ("finished", "failed", "aborted")
 
 
 def lease_dead(expires, pid, now=None, root=None, run=None):
     now = time.time() if now is None else now
     if not expires:
-        # legacy row from before leases: dead once its run record says so
-        return root is not None and run_finished(root, run)
+        # An interrupted record may still have a live child. Even an ended
+        # legacy record cannot override a PID that is still alive.
+        return (root is not None and run_finished(root, run)
+                and (not pid or not pid_alive(pid)))
     return now > expires and not pid_alive(pid)
 
 
@@ -132,10 +145,28 @@ def kill_tree(child):
                              stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL).wait(30)
         except OSError:
             pass
+    else:
+        try:
+            os.killpg(child.pid, signal.SIGKILL)
+        except OSError:
+            pass
     try:
         child.kill()
     except (ProcessLookupError, OSError):
         pass
+
+
+def surviving_group(child):
+    """A direct child may exit while a tool process in its session still runs."""
+    if sys.platform.startswith("win"):
+        return False  # native Windows has no POSIX process-group query
+    try:
+        os.killpg(child.pid, 0)
+        return True
+    except ProcessLookupError:
+        return False
+    except OSError:
+        return True
 
 
 def claim(root, run, targets, pid=None, lease=None):
@@ -147,7 +178,7 @@ def claim(root, run, targets, pid=None, lease=None):
             owner = db.execute("SELECT run, pid, expires FROM claims WHERE rva=?", (rva,)).fetchone()
             if owner:
                 if not lease_dead(owner[2], owner[1], now, root, owner[0]):
-                    raise RuntimeError(f"{rva} is already owned by run {owner[0]}")
+                    raise ClaimConflict(f"{rva} is already owned by run {owner[0]}")
                 db.execute("DELETE FROM claims WHERE rva=?", (rva,))
                 db.execute("INSERT INTO releases VALUES (?,?,?)",
                            (owner[0], now, f"lease expired and pid {owner[1]} is gone; {rva} taken by {run}"))
@@ -155,9 +186,27 @@ def claim(root, run, targets, pid=None, lease=None):
                        (rva, run, now, pid, now + lease))
 
 
-def set_pid(root, run, pid):
+def set_pid(root, run, pid, expected=None):
     with closing(connect(root)) as db, db:
+        db.execute("BEGIN IMMEDIATE")
+        count = db.execute("SELECT count(*) FROM claims WHERE run=?", (run,)).fetchone()[0]
+        if not count or (expected is not None and count != expected):
+            raise ClaimConflict(f"run {run} lost its claim before PID recording")
         db.execute("UPDATE claims SET pid=? WHERE run=?", (pid, run))
+
+
+def validate_targets(root, targets):
+    """Use eligibility's one open-body rule just before spawning a worker."""
+    import eligibility
+    rows = eligibility.load_rows(root / "reverse/functions.csv")
+    latest = eligibility.latest_verdicts(root / "reverse/re_attempts.log")
+    live = {row["target_rva"].lower(): int(row.get("target_size") or 0)
+            for row in eligibility.open_dumps(
+                rows, latest, include_carved=True,
+                carved_path=root / "reverse/carved.csv")}
+    for rva, size in targets:
+        if live.get(rva) != size:
+            raise StaleBrief(f"{rva}/{size}B is no longer an open body at that size")
 
 
 def active_rvas(root):
@@ -269,6 +318,7 @@ def execute(root, brief, legacy_log, engine, seat, command):
     try:
         claim(root, run, targets)
         claimed = True
+        validate_targets(root, targets)
         record["status"] = "running"
         save(directory / "record.json", record)
         # The compatibility path becomes a pointer; preserve any old transcript.
@@ -302,16 +352,22 @@ def execute(root, brief, legacy_log, engine, seat, command):
                 feed = body.decode("utf-8-sig", errors="replace").encode("utf-8")
             child = subprocess.Popen(command, cwd=root, env=dict(os.environ, BFME_RUN_ID=run, BFME_RUN_DIR=str(directory)),
                                      stdin=subprocess.PIPE if feed else subprocess.DEVNULL,
-                                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                                     start_new_session=not sys.platform.startswith("win"))
+            record["pid"] = child.pid
+            record["cap_seconds"] = cap
+            save(directory / "record.json", record)
+            try:
+                set_pid(root, run, child.pid, expected=len(targets))
+            except ClaimConflict:
+                kill_tree(child)
+                child.wait(timeout=30)
+                raise
             if feed:
                 try:
                     child.stdin.write(feed)
                 finally:
                     child.stdin.close()
-            record["pid"] = child.pid
-            record["cap_seconds"] = cap
-            save(directory / "record.json", record)
-            set_pid(root, run, child.pid)
             timer = None
             if cap:
                 def expire():
@@ -330,6 +386,7 @@ def execute(root, brief, legacy_log, engine, seat, command):
             code = child.wait()
             if timer:
                 timer.cancel()
+                timer.join()
         record.update(status="finished", exit_code=code)
         return code
     except BaseException as error:
@@ -340,13 +397,22 @@ def execute(root, brief, legacy_log, engine, seat, command):
         record.update(end=time.time())
         record["seconds"] = record["end"] - record["start"]
         record["touched"] = touched_rvas(directory)
+        if claimed and child is not None and child.poll() is not None and surviving_group(child):
+            # The direct CLI exited but a subprocess remains. Its PID is not
+            # the stored PID, so retain ownership as unknown until an operator
+            # verifies the whole group is gone and releases the named run.
+            record["surviving_group"] = True
+            try:
+                set_pid(root, run, None, expected=len(targets))
+            except ClaimConflict:
+                record["claim_lost_with_surviving_group"] = True
         if record.get("status") == "finished" and aborted(record):
             record["status"] = "aborted"
         save(directory / "record.json", record)
         # A detached surviving child still owns its bodies. Do not time it out
         # of the registry and hand them to another worker.
-        if claimed and (child is None or child.poll() is not None):
-            release(root, run, "worker exited")
+        if claimed and not record.get("surviving_group") and (child is None or child.poll() is not None):
+            release(root, run, "worker exited" if child is not None else "launch failed")
 
 
 def main():
@@ -377,7 +443,11 @@ def main():
     command = a.command[1:] if a.command[:1] == ["--"] else a.command
     if not a.brief or not a.log or not command:
         ap.error("--brief, --log and a bounded command after -- are required")
-    sys.exit(execute(ROOT, a.brief, a.log, a.engine, a.seat, command))
+    try:
+        sys.exit(execute(ROOT, a.brief, a.log, a.engine, a.seat, command))
+    except (ClaimConflict, StaleBrief) as error:
+        print(f"fleet run: {error}; repick", file=sys.stderr)
+        sys.exit(75)
 
 
 if __name__ == "__main__":

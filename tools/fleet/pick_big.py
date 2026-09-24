@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Atomically claim the next N unassigned LARGE dump bodies for a big-body seat.
+"""Select the next N available LARGE dump bodies for a big-body seat.
 Prints RVAs, one per line.
 
 Window defaults to 1000..2500 bytes: the first hour of 3-6KB picks re-worked
@@ -32,5 +32,5 @@ cands.sort()
 picked = [rva for _, _, rva in cands[:n_want]]
 if picked:
     with open(ROOT / 'build' / 'fleet_logs' / 'seats.log', 'a') as f:
-        f.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(picked)}\n")
+        f.write(f"{time.strftime('%H:%M')} seat pick selected {' '.join(picked)}\n")
 print('\n'.join(picked))

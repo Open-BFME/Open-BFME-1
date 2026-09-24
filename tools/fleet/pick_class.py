@@ -7,7 +7,7 @@ slot index maps each dump body to a virtual in declaration order of the ZH twin
 header, which is identity evidence no single-body brief has.
 
   python tools/fleet/pick_class.py            # best servable vtable, print RVAS line + NOTE
-  python tools/fleet/pick_class.py --dry      # do not mark the pick in seats.log
+  python tools/fleet/pick_class.py --dry      # do not log the advisory selection
   python tools/fleet/pick_class.py --vt 0x0113eb94 --dry
 Output: first line "RVAS: 0x.. 0x..", then "NOTE: <one paragraph>".
 
@@ -77,9 +77,8 @@ note = (f"WARM CLASS {name}: retail vtable at VA 0x{vt:08X} ({len(slots)} slots,
         f"ZH twin header: {zh or 'not found'} ({len(virt)} virtuals parsed in declaration order; MSVC lays out single-inheritance vtables in declaration order after the base class's slots, so align the ZH list against the LANDED slots first to find the base-slot offset, then read the dump slots' names off it). "
         f"Open the landed sibling sources for this vtable and reuse their class definition, cl: flags and pins verbatim. Slot table:\n" + "\n".join(lines))
 if not dry:
-    # the same in-flight mark the other pickers leave: busy_rvas reads it until
-    # the seat logs "done", which covers the gap before fleet_run takes the lease
+    # Diagnostic only; fleet_run claims the actual filtered brief before launch.
     with open(ROOT / 'build' / 'fleet_logs' / 'seats.log', 'a') as h:
-        h.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(f'0x{a:08x}' for a in live)}\n")
+        h.write(f"{time.strftime('%H:%M')} seat pick selected {' '.join(f'0x{a:08x}' for a in live)}\n")
 print('RVAS: ' + ' '.join(f'0x{a:08X}' for a in live))
 print('NOTE: ' + note)

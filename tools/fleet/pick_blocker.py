@@ -69,7 +69,7 @@ def main():
     picked = members[:want]
     if "--dry" not in sys.argv:
         with (ROOT / "build" / "fleet_logs" / "seats.log").open("a") as log:
-            log.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(f'0x{m[1]:08x}' for m in picked)}\n")
+            log.write(f"{time.strftime('%H:%M')} seat pick selected {' '.join(f'0x{m[1]:08x}' for m in picked)}\n")
     print("RVAS: " + " ".join(f"0x{m[1]:08X}" for m in picked))
     examples = " | ".join(f"0x{m[1]:08X}: {m[2][:160]}" for m in picked[:3])
     print(f"NOTE: SHARED BLOCKER `{name}`: {len(members)} open bodies ({sum(m[0] for m in members)} B) stop on the same "

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Claim N mid-size dump bodies (default 300..2500 B, largest first) from ONE dump file whose
+"""Select N mid-size dump bodies (default 300..2500 B, largest first) from ONE dump file whose
 address neighbourhood already holds landed real C++.
 
 Why: the file lane briefs smallest-first, so 2,167 bodies / 1.13 MB in the
@@ -10,9 +10,8 @@ class layout, pins and callees are worked out). A file is scored by landed
 real-C++ rows inside its address range per remaining dump body.
 
   python tools/fleet/pick_mid.py [N] [min_bytes] [max_bytes] [--dry]
-Prints RVAs one per line. A pick is marked in build/fleet_logs/seats.log under
-the fleet claims lock until the seat logs "done"; leases and the 48 h touched
-cooldown (tools/eligibility.py) replace the old append-only claim file."""
+Prints RVAs one per line. A pick is advisory; fleet_run atomically claims the
+actual brief targets before launch. Only touched targets receive cooldown."""
 import csv, re, sys, time
 from pathlib import Path
 sys.path.insert(0, 'tools')
@@ -85,7 +84,7 @@ if not best:
 picked = best[2][:n_want]
 if not dry:
     with open(ROOT / 'build' / 'fleet_logs' / 'seats.log', 'a') as h:
-        h.write(f"{time.strftime('%H:%M')} seat pick -> {' '.join(picked)}\n")
+        h.write(f"{time.strftime('%H:%M')} seat pick selected {' '.join(picked)}\n")
 print('\n'.join(picked))
 if dry:
     print(f'# file {best[1]} expected landed bytes {best[0]:.0f}; neighbours landed: '

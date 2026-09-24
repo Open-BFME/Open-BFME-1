@@ -12,7 +12,7 @@ what has been tried, who is on it". `next_work.py`, every `tools/fleet/pick_*.py
 and `tools/brief.py` import it. Rules: a dump row (gen-dump note or `.asm`
 source) is open; a dead-end verdict retires it; a deferral never does; a
 banked stash outlives a later `blocked`; busy means a live `fleet_run` lease
-or a seat currently `->` on it in `seats.log`. The append-only
+or, until stopped-fleet reconciliation, an old seat `->` line in `seats.log`. The append-only
 `build/fleet_*_claimed.txt` files are no longer read: a body a run touched
 waits 48 h (`recent_run_rvas`, from the immutable run records) instead of
 being claimed for ever. Measured before the change: `pick_finish.py` saw 147 of
@@ -164,18 +164,42 @@ they are not complete raw agent event streams. Tokens and cost remain unknown
 when the command emits plain text; transcript size is not a usage measure.
 
 The wrapper exports `BFME_RUN_ID`; `add_match.py` and `re_log.py` attach it to
-new records. All lanes consult one active-RVA table, and the wrapper atomically
-claims the whole brief immediately before launch. Claims release when the
-worker exits. A supervisor crash does not silently expire a surviving worker's
-claims. After establishing that the worker stopped:
+new records. Picker output is advisory. All lanes consult one active-RVA table,
+and the wrapper atomically claims only the targets that survived brief filtering
+immediately before launch. A failed brief or launch cannot strand a picker
+reservation. The wrapper checks those targets against the live ledger and
+releases the entire run's claims when its worker exits. Only bodies recorded in
+`touched.txt` receive post-run cooldown. A supervisor crash, unknown PID or
+surviving POSIX process group keeps its claims for operator review. After
+establishing that the entire worker group stopped:
 
 ```sh
 python tools/fleet_run.py --release RUN_ID --reason 'worker confirmed stopped'
 ```
 
-Existing permanent picker lists remain conservative exclusions during
-migration. This is not a full replacement of the scheduler or automatic
-reclamation of legacy claims. Big-lane retries now require a changed preferred
+Old `seats.log` records have no reliable owner or date. Keep them as
+conservative exclusions until a controlled restart. Do not overwrite scripts
+beneath running controllers. Stop all old seats and direct launchers, verify
+that no worker is still alive, then inspect the old log without changing it:
+
+```sh
+python3 tools/fleet/reconcile_legacy.py
+```
+
+The dry run prints outstanding tokens, the exact log SHA, and the number of
+run claims. Investigate and release named claims only after verifying their
+workers have stopped. With the old controllers stopped and zero claims, run
+`python3 tools/fleet/reconcile_legacy.py --apply --stopped-fleet --log-sha SHA`
+using the SHA just printed. The tool refuses a changed log or any remaining
+claim, appends scoped closing events, and writes an atomic local cutover
+marker. Repeat the dry run to confirm zero outstanding tokens before starting
+new controllers through the usual copy-and-launch workflow. If an old
+controller later writes an ownership event, the reader honors it again. Do
+not apply this migration to a live fleet. The SQLite registry is per checkout;
+separate writer clones have independent claims and still rely on the normal
+Git publication guards.
+
+This is not a full scheduler replacement. Big-lane retries require a changed preferred
 source body, a live partial of at least 0.5, and a remaining dump. Merely
 changing the score/date no longer buys another session.
 

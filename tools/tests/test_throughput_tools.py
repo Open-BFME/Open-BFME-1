@@ -20,6 +20,15 @@ import shape_search
 import source_donors
 
 
+def open_ledger(root, *targets):
+    reverse = root / "reverse"
+    reverse.mkdir(exist_ok=True)
+    rows = ["name,export_rva,target_rva,target_size,source,status,notes"]
+    rows += [f"?d_{rva:08X}@@YAXXZ,,0x{rva:08X},{size},Code/gen_asm/test.asm,matched,"
+             for rva, size in targets]
+    (reverse / "functions.csv").write_text("\n".join(rows) + "\n", encoding="utf-8")
+
+
 @pytest.mark.parametrize("left,right,expected", [
     ("b8 01 00 00 00 c3", "b8 02 00 00 00 c3", "operand-change"),
     ("89 c1 c3", "01 c1 c3", "instruction-change"),
@@ -156,6 +165,7 @@ def test_claims_are_all_or_nothing_and_owner_release_is_scoped(tmp_path):
 
 
 def test_real_worker_exit_status_run_env_and_old_logs_survive(tmp_path):
+    open_ledger(tmp_path, (0x1000, 8))
     brief_path = tmp_path / "brief.txt"
     brief_path.write_text("TARGETS:\n- 0x00001000 8B foo\n")
     log = tmp_path / "worker.log"
@@ -175,6 +185,7 @@ def test_real_worker_exit_status_run_env_and_old_logs_survive(tmp_path):
 
 
 def test_missing_executable_releases_claim_and_records_failure(tmp_path):
+    open_ledger(tmp_path, (0x1000, 8))
     brief_path = tmp_path / "brief.txt"
     brief_path.write_text("- 0x00001000 8B foo\n")
     with pytest.raises(FileNotFoundError):

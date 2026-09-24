@@ -14,6 +14,15 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import fleet_run
 
 
+def open_ledger(root, *targets):
+    reverse = root / "reverse"
+    reverse.mkdir(exist_ok=True)
+    rows = ["name,export_rva,target_rva,target_size,source,status,notes"]
+    rows += [f"?d_{rva:08X}@@YAXXZ,,0x{rva:08X},{size},Code/gen_asm/test.asm,matched,"
+             for rva, size in targets]
+    (reverse / "functions.csv").write_text("\n".join(rows) + "\n", encoding="utf-8")
+
+
 class TranscriptFilterTests(unittest.TestCase):
     def test_retail_instructions_survive(self):
         for line in (
@@ -52,6 +61,7 @@ class TranscriptFilterTests(unittest.TestCase):
     def test_worker_log_and_exit_status(self):
         with tempfile.TemporaryDirectory() as temporary, contextlib.ExitStack() as cleanup:
             root = Path(temporary)
+            open_ledger(root, (0x00123456, 2))
             brief = root / "brief.txt"
             brief.write_text("TARGETS\n- 0x00123456 2B\n", encoding="utf-8")
             pointer = root / "latest.log"
@@ -157,11 +167,13 @@ class LegacyAndTimeoutTests(unittest.TestCase):
             root = Path(stack.enter_context(tempfile.TemporaryDirectory()))
             with contextlib.closing(fleet_run.connect(root)) as db, db:
                 db.execute("INSERT INTO claims (rva, run, started) VALUES ('0x00000040','old-run',0)")
-            # no record at all: nothing runs under that name -> reclaimable
-            self.assertEqual(fleet_run.active_rvas(root), set())
+            # No record cannot prove death; an ambiguous old claim stays busy.
+            self.assertEqual(fleet_run.active_rvas(root), {"0x00000040"})
             rec = root / "build" / "fleet_runs" / "old-run"
             rec.mkdir(parents=True)
             (rec / "record.json").write_text(json.dumps({"status": "running"}), encoding="utf-8")
+            self.assertEqual(fleet_run.active_rvas(root), {"0x00000040"})
+            (rec / "record.json").write_text(json.dumps({"status": "interrupted"}), encoding="utf-8")
             self.assertEqual(fleet_run.active_rvas(root), {"0x00000040"})
             (rec / "record.json").write_text(json.dumps({"status": "finished"}), encoding="utf-8")
             self.assertEqual(fleet_run.active_rvas(root), set())
@@ -176,6 +188,7 @@ class LegacyAndTimeoutTests(unittest.TestCase):
     def test_cap_kills_a_runaway_worker(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
+            open_ledger(root, (0x00123457, 2))
             brief = root / "brief.txt"
             brief.write_text("TARGETS" + chr(10) + "- 0x00123457 2B" + chr(10), encoding="utf-8")
             command = ["timeout", "-k", "1", "2", sys.executable, "-c",
@@ -195,6 +208,7 @@ class BriefOverStdinTests(unittest.TestCase):
     def test_brief_argument_is_replaced_by_stdin(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
+            open_ledger(root, (0x00123458, 2))
             brief = root / "brief.txt"
             text = "TARGETS" + chr(10) + "- 0x00123458 2B" + chr(10) + "x" * 20000 + chr(10)
             brief.write_text(text, encoding="utf-8")
