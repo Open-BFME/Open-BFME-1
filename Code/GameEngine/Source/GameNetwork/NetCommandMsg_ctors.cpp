@@ -289,6 +289,7 @@ class NetChatCommandMsg : public NetCommandMsg
 {
 public:
 	NetChatCommandMsg();
+	Int getPlayerMask();
 	void setPlayerMask(Int playerMask);
 	void *m_text;
 	Int m_playerMask;
@@ -630,6 +631,7 @@ UnsignedInt BFMENetRequestFrameDataCommandMsg::getLastFrame() { return m_lastFra
 void BFMENetRequestFrameDataCommandMsg::setFirstFrame(UnsignedInt frame) { m_firstFrame = frame; }
 void BFMENetRequestFrameDataCommandMsg::setLastFrame(UnsignedInt frame) { m_lastFrame = frame; }
 
+Int NetChatCommandMsg::getPlayerMask() { return m_playerMask; }
 void NetChatCommandMsg::setPlayerMask(Int playerMask) { m_playerMask = playerMask; }
 
 
