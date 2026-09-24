@@ -55,16 +55,17 @@ struct Rva000643F0Triple
 class Rva000643F0Value
 {
 public:
-	void copyTo(Rva000643F0Triple *destination) const;
+	Rva000643F0Triple *copyTo(Rva000643F0Triple *destination) const;
 
 	int m_value00;										///< retail this+0x00
 	int m_value04;										///< retail this+0x04
 	int m_value08;										///< retail this+0x08
 };
 
-void Rva000643F0Value::copyTo(Rva000643F0Triple *destination) const
+Rva000643F0Triple *Rva000643F0Value::copyTo(Rva000643F0Triple *destination) const
 {
 	destination->m_value00 = m_value00;
 	destination->m_value04 = m_value04;
 	destination->m_value08 = m_value08;
+	return destination;
 }
