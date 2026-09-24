@@ -2068,5 +2068,35 @@
   "after_sha256": "77543e85b9d0f7ec8915e23649edab7e527dd4175fba0719cf2e8ad25e2cca62",
   "evidence": "reverse/identity_evidence/0x00441d30-ingameui-slot-rehome.md",
   "reason": "The 0x00441D30 slot-19 body consumes a UnicodeString by value. The AsciiString-label militarySubtitle method is the 0x0043E510 slot-20 wrapper, supported by the installed BFME vtables, matched slot-21 removeMilitarySubtitle and the Zero Hour declaration order. Slot 19 keeps an address-derived name because its lexical method spelling is unproven."
+ },
+ {
+  "old_path": "reverse/attempts/0x003c8030.cpp",
+  "new_path": "reverse/attempts/0x003c8030.cpp",
+  "old_name": "BfmeThingYU",
+  "new_name": "Rva003C8030Result",
+  "before_sha256": "88f3e5088306d4a9672674cc0912625c82cf78ee4e8fdd61003273d20c0e3d5a",
+  "after_sha256": "72464a8fe88bceaa0a8d8968fbab4ba757de4eca8e75606ceac6176110814460",
+  "evidence": "reverse/identity_evidence/0x003c8030-opaque-bank.md",
+  "reason": "The old bank explicitly marked identity unknown. Retail proves the result pointer's vslot and refcount offsets but no class name; the new address-qualified class avoids asserting BfmeThingYU as an identity."
+ },
+ {
+  "old_path": "reverse/attempts/0x003c8030.cpp",
+  "new_path": "reverse/attempts/0x003c8030.cpp",
+  "old_name": "bfmeFindYU",
+  "new_name": "Rva003C7F40ComposeAndDispatch",
+  "before_sha256": "88f3e5088306d4a9672674cc0912625c82cf78ee4e8fdd61003273d20c0e3d5a",
+  "after_sha256": "72464a8fe88bceaa0a8d8968fbab4ba757de4eca8e75606ceac6176110814460",
+  "evidence": "reverse/identity_evidence/0x003c8030-opaque-bank.md",
+  "reason": "The physical callee is now matched at 0x003C7F40 and joins a dotted string before virtual dispatch. The bank's old finder name was a guess; the matched address-qualified name and pointer ABI replace it."
+ },
+ {
+  "old_path": "reverse/attempts/0x003c8030.cpp",
+  "new_path": "reverse/attempts/0x003c8030.cpp",
+  "old_name": "bfmeReleaseYU",
+  "new_name": "Rva003C8030ReleaseResult",
+  "before_sha256": "88f3e5088306d4a9672674cc0912625c82cf78ee4e8fdd61003273d20c0e3d5a",
+  "after_sha256": "72464a8fe88bceaa0a8d8968fbab4ba757de4eca8e75606ceac6176110814460",
+  "evidence": "reverse/identity_evidence/0x003c8030-opaque-bank.md",
+  "reason": "The refcount-release behavior is proved, but no caller or class evidence proves the old lexical function name. The new name keeps the address token for this partial bank."
  }
 ]

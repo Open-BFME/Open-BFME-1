@@ -1,141 +1,143 @@
-// ?bfmeReleaseYU@@YGXPAX00D@Z (identity unknown)
-// partial score=0.95 date=2026-09-07
-// 64/64, identical instruction count. Structure fully solved: __stdcall with
-// four args, a stdcall 3-arg finder, `thing->vf100(flag == 0)` where the
-// xor/sete pair is the int 0/1 conversion, then `if (--thing->m_ref == 0)
-// thing->vf0();` -- the `dec dword ptr [esi+4]` is a direct pre-decrement of the
-// member, no local needed.
-// Residue is [[argument-shuttle-register]] preload depth:
-//   retail  a3->eax, a2->edx, push esi, push eax, THEN `mov eax,[esp+0xc]` for
-//           a1 (reusing eax after its push), push edx, push eax
-//   MSVC    a3->eax, a2->ecx, a1->edx all preloaded, then three pushes
-// plus the knock-on cl/dl and edx/eax naming. Per that note, hoisting arguments
-// into locals is already ruled out for this shape -- do not re-sweep.
-class BfmeThingYU
+// ?Rva003C8030ReleaseResult@@YGXPAX00D@Z
+// partial score=0.96 date=2026-09-24
+// ?Rva003C8030ReleaseResult@@YGXPAX00D@Z (address-derived identity)
+// 0x003C8030/64B partial, 16 non-relocation byte differences.
+// Retail calls the now-matched 0x003C7F40 through ILT 0x00029B31, tests its
+// pointer result, calls result vslot +0x190 with (flag == 0), decrements the
+// reference count at +4, and calls vslot zero when it reaches zero.
+// The remaining differences are the argument-preload/register shuttle:
+// retail saves ESI before reloading argument one after pushing argument three;
+// VC7.1 preloads all three arguments before saving ESI. This rotates CL/DL,
+// EAX/ECX and the virtual-call vtable register. The earlier bank's attempts
+// to hoist or reload arguments did not solve it; do not repeat that family.
+class Rva003C8030Result
 {
 public:
-	virtual void bfmeDestroyYU();
-	virtual void bfmeT01YU();
-	virtual void bfmeT02YU();
-	virtual void bfmeT03YU();
-	virtual void bfmeT04YU();
-	virtual void bfmeT05YU();
-	virtual void bfmeT06YU();
-	virtual void bfmeT07YU();
-	virtual void bfmeT08YU();
-	virtual void bfmeT09YU();
-	virtual void bfmeT10YU();
-	virtual void bfmeT11YU();
-	virtual void bfmeT12YU();
-	virtual void bfmeT13YU();
-	virtual void bfmeT14YU();
-	virtual void bfmeT15YU();
-	virtual void bfmeT16YU();
-	virtual void bfmeT17YU();
-	virtual void bfmeT18YU();
-	virtual void bfmeT19YU();
-	virtual void bfmeT20YU();
-	virtual void bfmeT21YU();
-	virtual void bfmeT22YU();
-	virtual void bfmeT23YU();
-	virtual void bfmeT24YU();
-	virtual void bfmeT25YU();
-	virtual void bfmeT26YU();
-	virtual void bfmeT27YU();
-	virtual void bfmeT28YU();
-	virtual void bfmeT29YU();
-	virtual void bfmeT30YU();
-	virtual void bfmeT31YU();
-	virtual void bfmeT32YU();
-	virtual void bfmeT33YU();
-	virtual void bfmeT34YU();
-	virtual void bfmeT35YU();
-	virtual void bfmeT36YU();
-	virtual void bfmeT37YU();
-	virtual void bfmeT38YU();
-	virtual void bfmeT39YU();
-	virtual void bfmeT40YU();
-	virtual void bfmeT41YU();
-	virtual void bfmeT42YU();
-	virtual void bfmeT43YU();
-	virtual void bfmeT44YU();
-	virtual void bfmeT45YU();
-	virtual void bfmeT46YU();
-	virtual void bfmeT47YU();
-	virtual void bfmeT48YU();
-	virtual void bfmeT49YU();
-	virtual void bfmeT50YU();
-	virtual void bfmeT51YU();
-	virtual void bfmeT52YU();
-	virtual void bfmeT53YU();
-	virtual void bfmeT54YU();
-	virtual void bfmeT55YU();
-	virtual void bfmeT56YU();
-	virtual void bfmeT57YU();
-	virtual void bfmeT58YU();
-	virtual void bfmeT59YU();
-	virtual void bfmeT60YU();
-	virtual void bfmeT61YU();
-	virtual void bfmeT62YU();
-	virtual void bfmeT63YU();
-	virtual void bfmeT64YU();
-	virtual void bfmeT65YU();
-	virtual void bfmeT66YU();
-	virtual void bfmeT67YU();
-	virtual void bfmeT68YU();
-	virtual void bfmeT69YU();
-	virtual void bfmeT70YU();
-	virtual void bfmeT71YU();
-	virtual void bfmeT72YU();
-	virtual void bfmeT73YU();
-	virtual void bfmeT74YU();
-	virtual void bfmeT75YU();
-	virtual void bfmeT76YU();
-	virtual void bfmeT77YU();
-	virtual void bfmeT78YU();
-	virtual void bfmeT79YU();
-	virtual void bfmeT80YU();
-	virtual void bfmeT81YU();
-	virtual void bfmeT82YU();
-	virtual void bfmeT83YU();
-	virtual void bfmeT84YU();
-	virtual void bfmeT85YU();
-	virtual void bfmeT86YU();
-	virtual void bfmeT87YU();
-	virtual void bfmeT88YU();
-	virtual void bfmeT89YU();
-	virtual void bfmeT90YU();
-	virtual void bfmeT91YU();
-	virtual void bfmeT92YU();
-	virtual void bfmeT93YU();
-	virtual void bfmeT94YU();
-	virtual void bfmeT95YU();
-	virtual void bfmeT96YU();
-	virtual void bfmeT97YU();
-	virtual void bfmeT98YU();
-	virtual void bfmeT99YU();
-	virtual void bfmeSetYU(int on);
+	virtual void slot00();
+	virtual void slot01();
+	virtual void slot02();
+	virtual void slot03();
+	virtual void slot04();
+	virtual void slot05();
+	virtual void slot06();
+	virtual void slot07();
+	virtual void slot08();
+	virtual void slot09();
+	virtual void slot0A();
+	virtual void slot0B();
+	virtual void slot0C();
+	virtual void slot0D();
+	virtual void slot0E();
+	virtual void slot0F();
+	virtual void slot10();
+	virtual void slot11();
+	virtual void slot12();
+	virtual void slot13();
+	virtual void slot14();
+	virtual void slot15();
+	virtual void slot16();
+	virtual void slot17();
+	virtual void slot18();
+	virtual void slot19();
+	virtual void slot1A();
+	virtual void slot1B();
+	virtual void slot1C();
+	virtual void slot1D();
+	virtual void slot1E();
+	virtual void slot1F();
+	virtual void slot20();
+	virtual void slot21();
+	virtual void slot22();
+	virtual void slot23();
+	virtual void slot24();
+	virtual void slot25();
+	virtual void slot26();
+	virtual void slot27();
+	virtual void slot28();
+	virtual void slot29();
+	virtual void slot2A();
+	virtual void slot2B();
+	virtual void slot2C();
+	virtual void slot2D();
+	virtual void slot2E();
+	virtual void slot2F();
+	virtual void slot30();
+	virtual void slot31();
+	virtual void slot32();
+	virtual void slot33();
+	virtual void slot34();
+	virtual void slot35();
+	virtual void slot36();
+	virtual void slot37();
+	virtual void slot38();
+	virtual void slot39();
+	virtual void slot3A();
+	virtual void slot3B();
+	virtual void slot3C();
+	virtual void slot3D();
+	virtual void slot3E();
+	virtual void slot3F();
+	virtual void slot40();
+	virtual void slot41();
+	virtual void slot42();
+	virtual void slot43();
+	virtual void slot44();
+	virtual void slot45();
+	virtual void slot46();
+	virtual void slot47();
+	virtual void slot48();
+	virtual void slot49();
+	virtual void slot4A();
+	virtual void slot4B();
+	virtual void slot4C();
+	virtual void slot4D();
+	virtual void slot4E();
+	virtual void slot4F();
+	virtual void slot50();
+	virtual void slot51();
+	virtual void slot52();
+	virtual void slot53();
+	virtual void slot54();
+	virtual void slot55();
+	virtual void slot56();
+	virtual void slot57();
+	virtual void slot58();
+	virtual void slot59();
+	virtual void slot5A();
+	virtual void slot5B();
+	virtual void slot5C();
+	virtual void slot5D();
+	virtual void slot5E();
+	virtual void slot5F();
+	virtual void slot60();
+	virtual void slot61();
+	virtual void slot62();
+	virtual void slot63();
+	virtual void slot64Int(int on);
 
-	unsigned char m_bfmeHeadYU[4];
-	int m_bfmeRefYU;
+	int m_refCount;
 };
 
-BfmeThingYU * __stdcall bfmeFindYU(void *a, void *b, void *c);
+class Rva003C7F40Receiver;
+class AsciiString;
+void * __stdcall Rva003C7F40ComposeAndDispatch(Rva003C7F40Receiver *receiver, const AsciiString &left, const AsciiString &right);
 
 __forceinline void *reloadArg003C8030(void *volatile *value)
 {
 	return *value;
 }
 
-void __stdcall bfmeReleaseYU(void *a, void *b, void *c, char flag)
+void __stdcall Rva003C8030ReleaseResult(void *a, void *b, void *c, char flag)
 {
-	BfmeThingYU *thing = bfmeFindYU(reloadArg003C8030(&a), b, c);
+	Rva003C8030Result *thing = (Rva003C8030Result *)Rva003C7F40ComposeAndDispatch(
+        (Rva003C7F40Receiver *)reloadArg003C8030(&a),
+        *(const AsciiString *)b, *(const AsciiString *)c);
 
 	if (thing == 0)
 		return;
 
-	thing->bfmeSetYU(flag == 0);
+	thing->slot64Int(flag == 0);
 
-	if (--thing->m_bfmeRefYU == 0)
-		thing->bfmeDestroyYU();
+	if (--thing->m_refCount == 0)
+		thing->slot00();
 }
