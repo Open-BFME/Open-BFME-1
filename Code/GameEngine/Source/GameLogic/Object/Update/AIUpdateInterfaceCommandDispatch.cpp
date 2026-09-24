@@ -233,61 +233,63 @@ public:
 class AIUpdateInterface : public UpdateModule, public AICommandInterface
 {
 protected:
-	virtual void dispatch_2c(const Coord3D *pos, CommandSourceType source) = 0;
-	virtual void dispatch_30(Object *object, CommandSourceType source) = 0;
-	virtual void dispatch_34(const Coord3D *pos, CommandSourceType source) = 0;
+	// Named entries match the target at the same offset in retail vtable
+	// 0x010BA8A8. Keep offset labels where the target identity is unresolved.
+	virtual void privateMoveToPosition(const Coord3D *pos, CommandSourceType source) = 0;
+	virtual void bfmePrivateCommand01(Object *object, CommandSourceType source) = 0;
+	virtual void bfmePrivateCommand3F(const Coord3D *pos, CommandSourceType source) = 0;
 	virtual void dispatch_38(Object *object, CommandSourceType source) = 0;
-	virtual void dispatch_3c(const Coord3D *pos, CommandSourceType source) = 0;
-	virtual void dispatch_40(const Coord3D *pos, CommandSourceType source) = 0;
-	virtual void dispatch_44(const Coord3D *pos, CommandSourceType source) = 0;
-	virtual void dispatch_48(const Coord3D *pos, CommandSourceType source) = 0;
-	virtual void dispatch_4c(Object *object, CommandSourceType source) = 0;
-	virtual void dispatch_50(CommandSourceType source) = 0;
-	virtual void dispatch_54(const Coord3D *pos, CommandSourceType source) = 0;
-	virtual void dispatch_58(const Waypoint *waypoint, CommandSourceType source) = 0;
-	virtual void dispatch_5c(const Waypoint *waypoint, CommandSourceType source) = 0;
-	virtual void dispatch_60(const Waypoint *waypoint, CommandSourceType source) = 0;
-	virtual void dispatch_64(const Waypoint *waypoint, CommandSourceType source) = 0;
-	virtual void dispatch_68(const void *coords, Object *object, CommandSourceType source, Bool exitProduction) = 0;
-	virtual void dispatch_6c(const void *coords, Object *object, float value, CommandSourceType source) = 0;
-	virtual void dispatch_70(const void *coords, Object *object, float value, CommandSourceType source) = 0;
-	virtual void dispatch_74(const Coord3D *pos, CommandSourceType source) = 0;
+	virtual void bfmePrivateCommand1C(const Coord3D *pos, CommandSourceType source) = 0;
+	virtual void bfmePrivateCommand1D(const Coord3D *pos, CommandSourceType source) = 0;
+	virtual void bfmePrivateCommand1E(const Coord3D *pos, CommandSourceType source) = 0;
+	virtual void bfmePrivateCommand37(const Coord3D *pos, CommandSourceType source) = 0;
+	virtual void bfmePrivateCommand38(Object *object, CommandSourceType source) = 0;
+	virtual void privateIdle(CommandSourceType source) = 0;
+	virtual void bfmePrivateCommand1B(const Coord3D *pos, CommandSourceType source) = 0;
+	virtual void privateFollowWaypointPath(const Waypoint *waypoint, CommandSourceType source) = 0;
+	virtual void privateFollowWaypointPathAsTeam(const Waypoint *waypoint, CommandSourceType source) = 0;
+	virtual void privateFollowWaypointPathExact(const Waypoint *waypoint, CommandSourceType source) = 0;
+	virtual void privateFollowWaypointPathAsTeamExact(const Waypoint *waypoint, CommandSourceType source) = 0;
+	virtual void privateFollowPath(const void *coords, Object *object, CommandSourceType source, Bool exitProduction) = 0;
+	virtual void bfmeFollowPath36(const void *coords, Object *object, float value, CommandSourceType source) = 0;
+	virtual void bfmeFollowPath3D(const void *coords, Object *object, float value, CommandSourceType source) = 0;
+	virtual void privateFollowPathAppend(const Coord3D *pos, CommandSourceType source) = 0;
 	virtual void dispatch_78(Object *object, Int value, CommandSourceType source) = 0;
 	virtual void dispatch_7c(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_80(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_84(const Coord3D *pos, CommandSourceType source) = 0;
 	virtual void dispatch_88(Object *object, Int value, CommandSourceType source) = 0;
-	virtual void dispatch_8c(const Team *team, Int value, CommandSourceType source) = 0;
+	virtual void privateAttackObject(const Team *team, Int value, CommandSourceType source) = 0;
 	virtual void dispatch_90(const Coord3D *pos, Int value, CommandSourceType source) = 0;
-	virtual void dispatch_94(const Coord3D *pos, Int value, CommandSourceType source) = 0;
-	virtual void dispatch_98(const Waypoint *waypoint, Int value, Bool asTeam, CommandSourceType source) = 0;
-	virtual void dispatch_9c(CommandSourceType source) = 0;
+	virtual void privateAttackMoveToPosition(const Coord3D *pos, Int value, CommandSourceType source) = 0;
+	virtual void privateAttackFollowWaypointPath(const Waypoint *waypoint, Int value, Bool asTeam, CommandSourceType source) = 0;
+	virtual void privateHunt(CommandSourceType source) = 0;
 	virtual void dispatch_a0(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_a4(Object *object, CommandSourceType source) = 0;
-	virtual void dispatch_a8(Object *object, CommandSourceType source) = 0;
+	virtual void privateGetHealed(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_ac(Object *object, CommandSourceType source) = 0;
-	virtual void dispatch_b0(Object *object, CommandSourceType source) = 0;
+	virtual void privateEnter(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_b4(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_b8(Object *object, CommandSourceType source) = 0;
-	virtual void dispatch_bc(Object *object, CommandSourceType source) = 0;
+	virtual void privateDock(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_c0(const Coord3D *pos, CommandSourceType source) = 0;
-	virtual void dispatch_c4(Object *object, CommandSourceType source) = 0;
+	virtual void privateExitInstantly(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_c8(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_cc(Int value, CommandSourceType source) = 0;
-	virtual void dispatch_d0(const void *damage, CommandSourceType source) = 0;
+	virtual void privateGoProne(const void *damage, CommandSourceType source) = 0;
 	virtual void dispatch_d4(Int value, CommandSourceType source) = 0;
 	virtual void dispatch_d8(const Coord3D *pos, Int value, CommandSourceType source) = 0;
-	virtual void dispatch_dc(Object *object, Int value, CommandSourceType source) = 0;
+	virtual void privateGuardObject(Object *object, Int value, CommandSourceType source) = 0;
 	virtual void dispatch_e0(const Team *team, Int value, CommandSourceType source) = 0;
-	virtual void dispatch_e4(Object *object, const Coord3D *pos, Int value, CommandSourceType source) = 0;
-	virtual void dispatch_e8(const PolygonTrigger *polygon, Int value, CommandSourceType source, const Coord3D *pos) = 0;
+	virtual void privateGuardRetaliate(Object *object, const Coord3D *pos, Int value, CommandSourceType source) = 0;
+	virtual void privateGuardAreaFromPosition(const PolygonTrigger *polygon, Int value, CommandSourceType source, const Coord3D *pos) = 0;
 	virtual void dispatch_ec(const PolygonTrigger *polygon, CommandSourceType source) = 0;
 	virtual void dispatch_f0(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_f4(const Coord3D *pos, CommandSourceType source) = 0;
 	virtual void dispatch_f8() = 0;
-	virtual void dispatch_fc(const CommandButton *button, CommandSourceType source) = 0;
-	virtual void dispatch_100(const CommandButton *button, const Coord3D *pos, CommandSourceType source) = 0;
-	virtual void dispatch_104(const CommandButton *button, Object *object, CommandSourceType source) = 0;
+	virtual void privateCommandButton(const CommandButton *button, CommandSourceType source) = 0;
+	virtual void privateCommandButtonPosition(const CommandButton *button, const Coord3D *pos, CommandSourceType source) = 0;
+	virtual void privateCommandButtonObject(const CommandButton *button, Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_108(const Waypoint *waypoint, CommandSourceType source) = 0;
 	virtual void dispatch_10c(CommandSourceType source) = 0;
 	virtual void dispatch_110(const Waypoint *waypoint, CommandSourceType source) = 0;
@@ -633,64 +635,64 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 	{
 		case 0x00:
 		case 0x36:
-			dispatch_2c(&parms->m_pos, parms->m_cmdSource);
+			privateMoveToPosition(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x47:
-			dispatch_34(&parms->m_pos, parms->m_cmdSource);
+			bfmePrivateCommand3F(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x01:
-			dispatch_30(parms->m_obj, parms->m_cmdSource);
+			bfmePrivateCommand01(parms->m_obj, parms->m_cmdSource);
 			break;
 		case 0x48:
 			dispatch_38(parms->m_obj, parms->m_cmdSource);
 			break;
 		case 0x02:
-			dispatch_54(&parms->m_pos, parms->m_cmdSource);
+			bfmePrivateCommand1B(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x03:
-			dispatch_3c(&parms->m_pos, parms->m_cmdSource);
+			bfmePrivateCommand1C(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x04:
-			dispatch_40(&parms->m_pos, parms->m_cmdSource);
+			bfmePrivateCommand1D(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x38:
-			dispatch_44(&parms->m_pos, parms->m_cmdSource);
+			bfmePrivateCommand1E(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x41:
-			dispatch_48(&parms->m_pos, parms->m_cmdSource);
+			bfmePrivateCommand37(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x42:
-			dispatch_4c(parms->m_obj, parms->m_cmdSource);
+			bfmePrivateCommand38(parms->m_obj, parms->m_cmdSource);
 			break;
 		case 0x05:
-			dispatch_50(parms->m_cmdSource);
+			privateIdle(parms->m_cmdSource);
 			break;
 		case 0x06:
-			dispatch_58(parms->m_waypoint, parms->m_cmdSource);
+			privateFollowWaypointPath(parms->m_waypoint, parms->m_cmdSource);
 			break;
 		case 0x07:
-			dispatch_5c(parms->m_waypoint, parms->m_cmdSource);
+			privateFollowWaypointPathAsTeam(parms->m_waypoint, parms->m_cmdSource);
 			break;
 		case 0x32:
-			dispatch_60(parms->m_waypoint, parms->m_cmdSource);
+			privateFollowWaypointPathExact(parms->m_waypoint, parms->m_cmdSource);
 			break;
 		case 0x33:
-			dispatch_64(parms->m_waypoint, parms->m_cmdSource);
+			privateFollowWaypointPathAsTeamExact(parms->m_waypoint, parms->m_cmdSource);
 			break;
 		case 0x09:
-			dispatch_68(parms->m_coords, parms->m_obj, parms->m_cmdSource, false);
+			privateFollowPath(parms->m_coords, parms->m_obj, parms->m_cmdSource, false);
 			break;
 		case 0x24:
-			dispatch_6c(parms->m_coords, parms->m_obj, parms->m_pos.x, parms->m_cmdSource);
+			bfmeFollowPath36(parms->m_coords, parms->m_obj, parms->m_pos.x, parms->m_cmdSource);
 			break;
 		case 0x25:
-			dispatch_70(parms->m_coords, parms->m_obj, parms->m_pos.x, parms->m_cmdSource);
+			bfmeFollowPath3D(parms->m_coords, parms->m_obj, parms->m_pos.x, parms->m_cmdSource);
 			break;
 		case 0x35:
-			dispatch_74(&parms->m_pos, parms->m_cmdSource);
+			privateFollowPathAppend(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x0a:
-			dispatch_68(parms->m_coords, parms->m_obj, parms->m_cmdSource, true);
+			privateFollowPath(parms->m_coords, parms->m_obj, parms->m_cmdSource, true);
 			break;
 		case 0x0b:
 			dispatch_78(parms->m_obj, parms->m_intValue, parms->m_cmdSource);
@@ -708,22 +710,22 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 			dispatch_84(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x0d:
-			dispatch_8c(parms->m_team, parms->m_intValue, parms->m_cmdSource);
+			privateAttackObject(parms->m_team, parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x0e:
 			dispatch_90(&parms->m_pos, parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x0f:
-			dispatch_94(&parms->m_pos, parms->m_intValue, parms->m_cmdSource);
+			privateAttackMoveToPosition(&parms->m_pos, parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x10:
-			dispatch_98(parms->m_waypoint, parms->m_intValue, false, parms->m_cmdSource);
+			privateAttackFollowWaypointPath(parms->m_waypoint, parms->m_intValue, false, parms->m_cmdSource);
 			break;
 		case 0x11:
-			dispatch_98(parms->m_waypoint, parms->m_intValue, true, parms->m_cmdSource);
+			privateAttackFollowWaypointPath(parms->m_waypoint, parms->m_intValue, true, parms->m_cmdSource);
 			break;
 		case 0x12:
-			dispatch_9c(parms->m_cmdSource);
+			privateHunt(parms->m_cmdSource);
 			break;
 		case 0x23:
 			dispatch_ec(parms->m_polygon, parms->m_cmdSource);
@@ -735,7 +737,7 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 			dispatch_a4(parms->m_obj, parms->m_cmdSource);
 			break;
 		case 0x15:
-			dispatch_a8(parms->m_obj, parms->m_cmdSource);
+			privateGetHealed(parms->m_obj, parms->m_cmdSource);
 			break;
 		case 0x16:
 			dispatch_ac(parms->m_obj, parms->m_cmdSource);
@@ -744,19 +746,19 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 			dispatch_b8(parms->m_obj, parms->m_cmdSource);
 			break;
 		case 0x17:
-			dispatch_b0(parms->m_obj, parms->m_cmdSource);
+			privateEnter(parms->m_obj, parms->m_cmdSource);
 			break;
 		case 0x3d:
 			dispatch_b4(parms->m_obj, parms->m_cmdSource);
 			break;
 		case 0x18:
-			dispatch_bc(parms->m_obj, parms->m_cmdSource);
+			privateDock(parms->m_obj, parms->m_cmdSource);
 			break;
 		case 0x19:
 			dispatch_c0(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x1a:
-			dispatch_c4(parms->m_obj, parms->m_cmdSource);
+			privateExitInstantly(parms->m_obj, parms->m_cmdSource);
 			break;
 		case 0x3e:
 			dispatch_c8(parms->m_obj, parms->m_cmdSource);
@@ -765,13 +767,13 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 			dispatch_cc(parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x1d:
-			dispatch_d0(&parms->m_damage, parms->m_cmdSource);
+			privateGoProne(&parms->m_damage, parms->m_cmdSource);
 			break;
 		case 0x1e:
 			dispatch_d8(&parms->m_pos, parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x1f:
-			dispatch_dc(parms->m_obj, parms->m_intValue, parms->m_cmdSource);
+			privateGuardObject(parms->m_obj, parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x20:
 			dispatch_e0(parms->m_team, parms->m_intValue, parms->m_cmdSource);
@@ -780,13 +782,13 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 			dispatch_d4(parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x21:
-			dispatch_e8(parms->m_polygon, parms->m_intValue, parms->m_cmdSource, 0);
+			privateGuardAreaFromPosition(parms->m_polygon, parms->m_intValue, parms->m_cmdSource, 0);
 			break;
 		case 0x44:
-			dispatch_e8(parms->m_polygon, parms->m_intValue, parms->m_cmdSource, &parms->m_pos);
+			privateGuardAreaFromPosition(parms->m_polygon, parms->m_intValue, parms->m_cmdSource, &parms->m_pos);
 			break;
 		case 0x46:
-			dispatch_e4(parms->m_obj, &parms->m_pos, parms->m_intValue, parms->m_cmdSource);
+			privateGuardRetaliate(parms->m_obj, &parms->m_pos, parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x26:
 			dispatch_f0(parms->m_obj, parms->m_cmdSource);
@@ -795,13 +797,13 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 			dispatch_f4(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x2a:
-			dispatch_fc(parms->m_commandButton, parms->m_cmdSource);
+			privateCommandButton(parms->m_commandButton, parms->m_cmdSource);
 			break;
 		case 0x29:
-			dispatch_104(parms->m_commandButton, parms->m_obj, parms->m_cmdSource);
+			privateCommandButtonObject(parms->m_commandButton, parms->m_obj, parms->m_cmdSource);
 			break;
 		case 0x28:
-			dispatch_100(parms->m_commandButton, &parms->m_pos, parms->m_cmdSource);
+			privateCommandButtonPosition(parms->m_commandButton, &parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x2b:
 			dispatch_108(parms->m_waypoint, parms->m_cmdSource);
