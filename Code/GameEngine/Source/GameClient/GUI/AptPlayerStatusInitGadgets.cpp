@@ -35,16 +35,25 @@ class GameInfo
 {
 public:
 	const GameSlot *getConstSlot( int index ) const;
+	GameSlot *getSlot( int index );
 };
 
 extern GameInfo *TheGameInfo;
 
 void GadgetCheckBoxSetChecked( GameWindow *window, bool checked );
+bool GadgetCheckBoxIsChecked( GameWindow *window );
+
+class BfmeMsgHandler
+{
+public:
+	int defaultHandler( int msg, void *control, void *data );
+};
 
 class AptPlayerStatus
 {
 public:
 	void InitGadgets( const char *name, void *userData, GameWindow *window );
+	int _bfme_checkMsg( int msg, void *control, void *data );
 
 private:
 	unsigned char m_head[ 0x268 ];
@@ -82,4 +91,29 @@ void AptPlayerStatus::InitGadgets( const char *name, void *userData, GameWindow 
 
 	window->winHide( false );
 	GadgetCheckBoxSetChecked( window, gameSlot->m_isMuted );
+}
+
+// ?_bfme_checkMsg@AptPlayerStatus@@QAEHHPAX0@Z
+// Vtable slot 2 of AptPlayerStatus. The selected mute window updates the
+// corresponding GameSlot; other messages return the base handler's result.
+int AptPlayerStatus::_bfme_checkMsg( int msg, void *control, void *data )
+{
+	int handled = ((BfmeMsgHandler *)this)->defaultHandler( msg, control, data );
+	if( msg == 0x4008 )
+	{
+		int index = 0;
+		GameWindow **window = m_muteWindows;
+		for( ; index < 8; ++index, ++window )
+		{
+			if( control == *window )
+			{
+				GameSlot *slot = TheGameInfo->getSlot( (signed char)m_slotNumbers[index] );
+				bool checked = GadgetCheckBoxIsChecked( (GameWindow *)control );
+				if( slot == 0 )
+					break;
+				slot->m_isMuted = checked;
+			}
+		}
+	}
+	return msg == 0x4008 ? 1 : handled;
 }
