@@ -1,16 +1,20 @@
-// ?getOffset@Rva00233F30Scatter@@QAE?AUCoord2D@@PBU2@@Z
-// partial score=0.87 date=2026-09-24
+// ?method@Rva00233F30@@QAEPAUCoord2D@@PAU2@PBU2@@Z
+// partial score=0.95 date=2026-09-25
+// ?method@Rva00233F30@@QAEPAUCoord2D@@PAU2@PBU2@@Z
+// Best exact-size candidate is 154/154B with 8 x87-order differences at
+// +0x88..+0x90. Three callers verify ECX plus two stack pointers and EAX output;
+// the C++ aggregate-return versus explicit-output return contract remains open.
 // cl: /ICode/GameEngine/Include /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 #include "Lib/BaseType.h"
 class TerrainLogic;
 extern TerrainLogic* TheTerrainLogic;
 #include "Lib/trig.h"
 
-struct Rva00233F30Scatter {
+struct Rva00233F30 {
     char reserved[4];
     void* settings;
     void* object;
-    Coord2D getOffset(const Coord2D* direction);
+    Coord2D* method(Coord2D* output, const Coord2D* direction);
 };
 
 class Rva00233F30TerrainSlots {
@@ -65,7 +69,7 @@ public:
     virtual bool slot47(const Coord3D*) = 0;
 };
 
-Coord2D Rva00233F30Scatter::getOffset(const Coord2D* direction)
+Coord2D* Rva00233F30::method(Coord2D* output, const Coord2D* direction)
 {
     float distance = direction->length();
     const Coord3D* position = reinterpret_cast<const Coord3D*>(reinterpret_cast<const char*>(object) + 0x38);
@@ -75,8 +79,9 @@ Coord2D Rva00233F30Scatter::getOffset(const Coord2D* direction)
     Coord2D unit;
     unit.x = Cos(angle);
     unit.y = Sin(angle);
-    Coord2D offset;
-    offset.x = unit.x * distance;
-    offset.y = unit.y * distance;
-    return offset;
+    volatile float x = unit.x * distance;
+    float y = unit.y * distance;
+    output->x = x;
+    output->y = y;
+    return output;
 }
