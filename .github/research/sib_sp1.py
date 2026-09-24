@@ -10,6 +10,7 @@ assert hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()=='d02
 prefix=raw.decode().split('seed_masks=',1)[0]
 exec(compile(prefix,'pinned_research_harness','exec'))
 seed=source_for([19,41])
+default_root=build.vc71_root()
 # Baseline with repository compiler.
 r0=evaluate(('rtm_baseline9',seed,None))
 print('RTM',json.dumps({k:r0.get(k) for k in ('size','diff_count','cost','offsets','code_sha256')}),flush=True)
@@ -26,8 +27,7 @@ with tarfile.open(tgz,'r:gz') as tf:
         if not m.name.startswith(root): continue
         m.name=m.name[len(root):]
         if m.name: tf.extract(m,sp1)
-# Bundle root itself contains Vc7.
-os.environ['VC71_ROOT']=str(sp1)
+# Supply host runtime/support DLLs without replacing SP1 compiler backends.\nimport shutil\nfor srcdir in [default_root/'Vc7'/'bin', default_root/'Common7'/'IDE', default_root.parents[1]]:\n    if not srcdir.exists(): continue\n    for dll in srcdir.glob('*.dll'):\n        if dll.name.lower() in ('c1.dll','c1xx.dll','c2.dll'): continue\n        for dstdir in [sp1/'Vc7'/'bin', sp1/'Common7'/'IDE']:\n            dstdir.mkdir(parents=True,exist_ok=True)\n            dst=dstdir/dll.name\n            if not dst.exists(): shutil.copy2(dll,dst)\n# Bundle root itself contains Vc7.\nos.environ['VC71_ROOT']=str(sp1)
 # build.vc71_root reads env at call time; compile unchanged source.
 r1=evaluate(('sp1_candidate9',seed,None))
 print('SP1',json.dumps({k:r1.get(k) for k in ('returncode','size','diff_count','cost','offsets','code_sha256','raw_exact','error')}),flush=True)
