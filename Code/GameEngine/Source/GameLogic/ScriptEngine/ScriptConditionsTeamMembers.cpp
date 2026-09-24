@@ -7,6 +7,11 @@
 //   0x00328470  evaluateRva00328470                 whether a player sees it
 //   0x0032BB90  evaluateTeamHasObjectStatus         an object-status bit
 //
+// 0x00325080 evaluateTeamIsContained joins the same iterator family. Its
+// upstream body is present in both pristine Zero Hour and the BFME source;
+// BFME calls the StringBase<char> copy constructor at 0x00887B60, which also
+// has unrelated ledger alias names.
+//
 // All four open with getTeamNamed at ScriptEngine's slot 17 and then run the
 // same DLINK_ITERATOR over Team's member-list head, so they share every model
 // here and differ only in what they ask of each member. They sat in four files
@@ -111,6 +116,15 @@ public:
 
 class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
 
+class AIUpdateInterface
+{
+public:
+	Int getCurrentStateID() const;
+};
+
+// AI_EXIT is enum item 37 in the pristine Zero Hour AIStateMachine.h.
+enum { BFME_AI_EXIT = 37 };
+
 enum SpecialPowerType
 {
 	SPECIAL_INVALID = 0
@@ -133,6 +147,14 @@ public:
 	Bool hasSpecialPower(SpecialPowerType type) const;
 	Bool queryRva001CAEE0(const Player *viewer) const;	// address-derived: retail 0x001CAEE0
 	ObjectShroudStatus getShroudedStatus(Int playerIndex) const;
+	AIUpdateInterface *getAIUpdateInterface() const
+	{
+		return *(AIUpdateInterface *const *)((const char *)this + 0x204);
+	}
+	Object *getContainedBy() const
+	{
+		return *(Object *const *)((const char *)this + 0x214);
+	}
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
@@ -342,7 +364,46 @@ protected:
 	virtual Bool evaluateSkirmishCommandButtonIsReady(Parameter *, Parameter *, Parameter *, Bool);
 	Bool evaluateRva00328470(Parameter *, Parameter *);
 	Bool evaluateTeamHasObjectStatus(Parameter *pTeamParm, Parameter *pObjectStatus, Bool entireTeam);
+	virtual Bool evaluateTeamIsContained(Parameter *pTeamParm, Bool allContained);
 };
+
+// The upstream condition and this BFME body both look up the team, walk its
+// members, and compare each member's contained-by link to the all/any flag.
+Bool ScriptConditions::evaluateTeamIsContained(Parameter *pTeamParm, Bool allContained)
+{
+	Team *pTeam = TheScriptEngine->getTeamNamed(pTeamParm->getString(), false);
+	if (!pTeam)
+		return false;
+
+	Bool anyConsidered = false;
+	for (DLINK_ITERATOR<Object> iter = pTeam->iterate_TeamMemberList();
+		!iter.done(); iter.advance()) {
+		Object *obj = iter.cur();
+		if (!obj)
+			continue;
+
+		Bool isContained = obj->getContainedBy() != 0;
+		if (!isContained) {
+			AIUpdateInterface *ai = obj->getAIUpdateInterface();
+			// Preserve the upstream expression. MSVC retains this pointer
+			// load but folds away the state query because isContained is false.
+			if (ai)
+				isContained = isContained && ai->getCurrentStateID() == BFME_AI_EXIT;
+		}
+
+		if (isContained) {
+			if (!allContained)
+				return true;
+		} else {
+			if (allContained)
+				return false;
+		}
+		anyConsidered = true;
+	}
+	if (anyConsidered)
+		return allContained;
+	return false;
+}
 
 // ?evaluateTeamAttackedByPlayer@ScriptConditions@@IAE_NPAVParameter@@0@Z
 Bool ScriptConditions::evaluateTeamAttackedByPlayer(
