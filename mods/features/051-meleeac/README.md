@@ -49,14 +49,12 @@ Nothing on this path calls `isInMultiplayerGame`. The same bytes run in
 skirmish. It shows up against a human because a human attack click sits in
 that one loop. Skirmish AI reissues instead of camping the back of a horde.
 
-## The names in the matched source
+## State return names
 
-`AIAttackMeleeHordeWaitState_update.cpp` defines `STATE_SUCCESS` as `-2` and
-`STATE_FAILURE` as `-1`. The engine header, and every other machine, does the
-opposite: success is `-1`, failure is `-2`. `return STATE_SUCCESS` in that file
-compiles to `mov eax, -2`, which is the retail immediate, so the byte match is
-real. The machine treats `-2` as failure. The names read backwards. This
-feature does not edit that file.
+`AIAttackMeleeHordeWaitState_update.cpp` uses the engine values: success is
+`-1`, failure is `-2`, and continue is `0`. The predicate and timeout exits
+return `STATE_FAILURE`, which sends the horde machine to path-wait. The earlier
+inverted labels were corrected without changing the matched retail bytes.
 
 ## The fix, and why it is shaped like this
 
