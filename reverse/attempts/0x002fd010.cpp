@@ -1,5 +1,5 @@
 // ?doSetPlayerOwnershipOfTypeCounter@ScriptActions@@IAEXPAVScriptAction@@PAVParameter@@11_N@Z
-// partial score=0.32 date=2026-09-19
+// partial score=0.33 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
 // SET_PLAYER_OWNERSHIP_OF_TYPE_COUNTER and its include-dead sibling.
 
@@ -228,6 +228,6 @@ void ScriptActions::doSetPlayerOwnershipOfTypeCounter(ScriptAction *action,
 
 		ScriptCounter *destination = TheScriptEngine->bfmeCounter(
 			counter->getString());
-		destination->m_value = value;
 		action->m_customFrame = TheScriptEngine->getFrameObjectCountChanged();
+		destination->m_value = value;
 }
