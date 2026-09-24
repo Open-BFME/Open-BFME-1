@@ -1,7 +1,7 @@
-// ?d_0046df00@@YAXXZ
-// partial score=0.54 date=2026-09-18
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
 // stlport
+// WindowManager::loadAptWindow, vtable 0x010F72A8 slot 15: claims an APT window
+// record, maps the movie file to it and loads the movie's .big archive.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <hash_map>
@@ -138,7 +138,7 @@ public:
 	WINDOW_MANAGER_SLOT(12); WINDOW_MANAGER_SLOT(13); WINDOW_MANAGER_SLOT(14);
 	#undef WINDOW_MANAGER_SLOT
 	virtual int loadAptWindow(AsciiString directory, AsciiString file,
-		int unknown1, int unknown2, int unknown3);
+		bool unknown1, int unknown2, int unknown3);
 
 private:
 	unsigned char m_beforeFileMap[0x54];
@@ -151,9 +151,9 @@ private:
 	unsigned char m_aptWindowsDirty;
 };
 
-// ?loadAptWindow@WindowManager@@UAEHVAsciiString@@0HHH@Z
+// ?loadAptWindow@WindowManager@@UAEHVAsciiString@@0_NHH@Z
 int WindowManager::loadAptWindow(AsciiString directory, AsciiString file,
-	int unknown1, int unknown2, int unknown3)
+	bool unknown1, int unknown2, int unknown3)
 {
 	Rva00469D20Map *map = &m_fileToWindow;
 	Rva00469D20Map::iterator found = map->find(file);
@@ -175,8 +175,8 @@ int WindowManager::loadAptWindow(AsciiString directory, AsciiString file,
 	}
 	else
 	{
-		if (index >= 12)
-			return -1;
+		if ((unsigned int)index >= 12)
+			return 0;
 		if (m_aptWindows[index].m_index != -1)
 			return -1;
 	}
@@ -190,9 +190,9 @@ free_slot:
 selected_slot:
 
 
-	if (!directory.endsWith((const char *)0x01075318, 1) &&
-		!directory.endsWith((const char *)0x0107531C))
-		directory.concat((const char *)0x01075318);
+	if (!directory.endsWith("\\", 1) &&
+		!directory.endsWith("/"))
+		directory.concat("\\");
 
 	m_aptWindows[index].set(index,
 		*(const Rva0036CA00Str *)&directory,
@@ -200,14 +200,14 @@ selected_slot:
 		unknown2);
 	(*map)[file] = (Rva00469D20Mapped)index;
 
-	if (unknown1 != 0)
+	if (unknown1)
 	{
 		m_aptWindowsDirty = 1;
 		m_aptWindows[index].m_flags |= 1;
 	}
 
 	AsciiString aptFile = file;
-	aptFile.concat((const char *)0x010F72F4, 4);
+	aptFile.concat(".big", 4);
 	TheArchiveFileSystem->loadBigFilesFromDirectory(directory, aptFile, true);
 	return index;
 }
