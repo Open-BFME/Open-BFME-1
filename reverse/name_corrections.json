@@ -2248,5 +2248,25 @@
   "after_sha256": "eb73f5588bd127208a63698b9d7a03d65ca10da0fad07a0bb3a00c0a67ccdf75",
   "evidence": "reverse/symbols.csv",
   "reason": "Both are address-derived placeholders for the registry's +0x78 deque element; nothing names the class. Master pins the element's deque helpers 0x009EF0D0, 0x009EF140 and 0x009EE360 as deque<Rva009EF0D0Element*> (reverse/symbols.csv), so the bank adopts that spelling to share one pin per deque helper address"
+ },
+ {
+  "old_path": "reverse/attempts/0x009f1510.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Bfme/Gen009F1510_Handle.cpp",
+  "old_name": "Q1QueueEntry009F1510",
+  "new_name": "Rva009EF0D0Element",
+  "before_sha256": "27a28b1faca831dbe49564f46d153989e97ef1c49a00c9017f2cc38a0f7c4305",
+  "after_sha256": "2b09e57ba7fef49eee1873cf78e9609e1bcaedf6ae1b1cd8016754ab307f5d55",
+  "evidence": "reverse/symbols.csv",
+  "reason": "Q1QueueEntry009F1510 was a stash-local spelling of the element of the registry +0x78 entry deques; symbols.csv pins the push_back/push_front aux 0x009EF0D0/0x009EF140 of those deques under deque<Rva009EF0D0Element*> for the landed worker 0x009EFA30 and key queue pass 0x009EFBF0 (AssetRegistryWorkerThread.cpp and AssetRegistryQueueKeys009EFBF0.cpp), so the body adopts the established type name"
+ },
+ {
+  "old_path": "reverse/attempts/0x007f6d60.cpp",
+  "new_path": "Code/GameEngine/Source/GameNetwork/Rva007F6D60ChildConstructor.cpp",
+  "old_name": "SnapshotDupReplica",
+  "new_name": "Rva007F4DA0",
+  "before_sha256": "838ef8a6979aea5f0b0d52e7d44de0c81244438f39ae8e63f3e2ce1d60584261",
+  "after_sha256": "6cb422c5397197c7707cbecc418d0812f3add9215fa2cce6273a3ce64e0f9808",
+  "evidence": "reverse/functions.csv",
+  "reason": "functions.csv row ??0Rva007F4DA0@@QAE@XZ at 0x007F4DA0 (Code/GameEngine/Source/Common/Rva007F4DA0Ctor.cpp) is the landed derived class; only m_chain3C's TYPE changes, from the base to that landed derived class, which installs the same vtable 0x0112B4B4 over the same 0x007E86B0 base with the same three stores, and SnapshotDupReplica stays as that class's base."
  }
 ]
