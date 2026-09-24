@@ -108,12 +108,12 @@ static Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target)
 	return fn.member(attacker, target);
 }
 
-static Bool bfmeCallENJ(Object *owner, Object *goal)
+static Bool passesWeaponTargetPredicate(Object *attacker, Object *target)
 {
 	typedef Bool (__cdecl *Call)(void *, void *);
 	union { void (*raw)(void); Call member; } fn;
 	fn.raw = (void (*)(void))j_00004c37;
-	return fn.member(owner, goal);
+	return fn.member(attacker, target);
 }
 
 class AIInternalMoveToState : public Rva001834E0Slots<4>
@@ -184,7 +184,7 @@ StateReturnType AIAttackMeleeHordeApproachTargetState::onEnter()
 
 	if ((owner->m_field98 & 8) != 0 || owner->m_ai->m_playerIdle != 0)
 	{
-		if (!bfmeCallENJ(owner, goalObject))
+		if (!passesWeaponTargetPredicate(owner, goalObject))
 		{
 			m_machine->call38(0);
 			return STATE_FAILURE;
@@ -215,4 +215,3 @@ StateReturnType AIAttackMeleeHordeApproachTargetState::onEnter()
 	m_adjustDestinations = m_isInitialApproach;
 	return baseResult;
 }
-
