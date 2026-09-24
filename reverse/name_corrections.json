@@ -2178,5 +2178,15 @@
   "after_sha256": "fd8b286b4fed8eb670c4329562889f5a2047c8aa57f7a33c4faf0b95398022f7",
   "evidence": "reverse/identity_evidence/0x0078e570-text-getter.md",
   "reason": "Retail calls ILT 0x00007E82 -> 0x00479B80, an sret getter reading receiver+0x30; GameWindow::winGetText at 0x005CB9F0 reads +4 through a different callee, so the banked winGetText spelling named the wrong function. The callee keeps an address-derived name."
+ },
+ {
+  "old_path": "reverse/attempts/0x008b4da0.cpp",
+  "new_path": "reverse/attempts/0x008b4da0.cpp",
+  "old_name": "WideAllocPtr",
+  "new_name": "Rva008C5D70Alloc",
+  "before_sha256": "15399dea6d83ad61a6bc7ae14f3120934121d3ae9c356196082abdd77a983759",
+  "after_sha256": "1fdf1e367320ab2bd70aca6832cc7b22f57d3eab4c7c902fb439081c602f75d4",
+  "evidence": "reverse/symbols.csv",
+  "reason": "reverse/symbols.csv pins ?Rva008C5D70Alloc@@3P6APAXI@ZA at 0x01337828; the old spelling WideAllocPtr matches no pinned symbol, so the source uses the pinned name."
  }
 ]
