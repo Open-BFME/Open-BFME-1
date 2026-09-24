@@ -1,5 +1,5 @@
 // ?Rva00465770MovieProperties@@YAXPAXPBDPAVGameWindow@@@Z
-// partial score=0.938 date=2026-09-24
+// partial score=0.9507 date=2026-09-24
 // Probe only: retail 0x00465770, 487 bytes. The owner is unknown.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
@@ -100,9 +100,13 @@ void Rva00465770MovieProperties(void *, const char *query, GameWindow *window)
         if (containsTrue(param))
             msg.flags |= 0x80;
         if (bfmeGetParamVMZ(query, "_CallOnLastFrame", asParam(&param)))
-            reinterpret_cast<BFMERetailAsciiString *>((char *)window + 0x268)->set(param);
+        {
+            BFMERetailAsciiString &callOnLastFrame =
+                *reinterpret_cast<BFMERetailAsciiString *>((char *)window + 0x268);
+            callOnLastFrame.set(param);
+        }
         msg.callback = j_00030477;
-        msg.window = window;
+        *(GameWindow * volatile *)&msg.window = window;
         GameWindowManager *manager = TheWindowManager;
         manager->winSendSystemMsg(window, 0x1D, 1000, &msg);
     }
