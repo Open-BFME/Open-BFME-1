@@ -1,18 +1,20 @@
-// ?d_00230bf0@@YAXXZ
-// partial score=0.9794117647058823 date=2026-09-22
 // cl: /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWMath /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 // RVA 00230BF0, 1020 bytes, ret16, no EH. Analyst pack 002417E0 supplies
 // hub/owner/Object contracts. Remaining layouts follow the complete retail body.
-// Partial: 1020 bytes, 21 non-reloc differences. At +360 the sine-zero
-// product uses a qword rather than retail dword; +3D3..+3E7 stores differ.
-// Every direct callee, branch and other instruction matches the retail boundary.
+// The transform is native Matrix3D: identity, Set_X/Y/Z_Translation, Rotate_Z.
+// Retail's c-first x87 schedule (fcos; fstp; fsin; fld c; fld st(1); fmul zero)
+// comes from the three single-axis translation setters; Set_Translation(Vector3)
+// gives the sine-first schedule instead. The cached-position copy is a 12-byte
+// block copy (memcpy), which lets the flag store and +208 load schedule between
+// its first and second words exactly as retail does.
 // Record00230BF0 is the ignored 16-byte hidden result of 002350C0; it
 // shares the delta slot. Preserve the nested scopes and original argument homes.
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
 #include <bitset>
 #include <math.h>
+#include <string.h>
 #include "coord3d.h"
 #define _OPERATOR_NEW_DEFINED_
 #include "WWMath/matrix3d.h"
@@ -26,7 +28,7 @@ inline Coord3D& Coord3D::operator=(const Coord3D &p) {
  Coord3DBase *base=this; *base=p; return *this;
 }
 inline Coord3D& Coord3D::Sub(const Coord3DBase &p) {x-=p.x; y-=p.y; z-=p.z; return *this;}
-inline float Coord3D::length() const {const volatile Coord3D *p=this;float v=p->x*p->x;v=v+p->z*p->z;v=v+p->y*p->y;return (float)sqrt(v);}
+inline float Coord3D::length() const {float v=x*x;v=v+z*z;v=v+y*y;return (float)sqrt(v);}
 inline void Coord3D::scale(float a) {x*=a;y*=a;z*=a;}
 inline void Coord3D::add(const Coord3DBase *p) {x+=p->x;y+=p->y;z+=p->z;}
 
@@ -255,12 +257,13 @@ void MemberMotion00230BF0::apply(MemberObject00230BF0 *obj,const Coord3D *destin
  }
  }
  Matrix3D transform(true);
- transform.Set_Translation(Vector3(position.x,position.y,position.z));
- {volatile float cStore=(float)cos(orientation); double sn=(float)sin(orientation); float c=cStore; float sz=sn*0.0f;
- transform[0][0]=c+sz; float cz=cStore*0.0f; transform[0][1]=cz-sn; float r10=sn;r10=r10+cz;transform[1][0]=r10; transform[1][1]=c-sz; transform[2][0]=cz+sz; transform[2][1]=cz-sz;}
+ transform.Set_X_Translation(position.x);
+ transform.Set_Y_Translation(position.y);
+ transform.Set_Z_Translation(position.z);
+ transform.Rotate_Z(orientation);
  CALL(VoidPtr,obj,j_000361ce)(&transform);
  CALL(VoidPtr,obj,j_0003a1a7)(&position);
- obj->value178=position;
+ memcpy(&obj->value178,&position,sizeof(Coord3D));
  obj->flag186=true;
  if(obj->ptr208)CALL(VoidBool,obj->ptr208,j_0000d81e)(false);
 }
