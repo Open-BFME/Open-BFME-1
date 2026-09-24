@@ -1,9 +1,14 @@
 // cl: /DNDEBUG /MD /EHsc
-// ?SetInGameChatType@@YAXW4InGameChatType@@@Z
-// BFME SetInGameChatType, retail 0x00511CC0 (450 bytes).
+// ?rva00511CC0@@YAXH@Z
+// Retail 0x00511CC0 (450 bytes), address-derived: the matched CommandXlat
+// callers reach it as rva00511CC0(int) (symbols.csv pin), and nothing proves
+// which Zero Hour InGameChat.cpp function it descends from. Its guards follow
+// ShowInGameChat (replay, quit menu, disconnect menu), the multiplayer guard
+// follows ToggleInGameChat, and the Chat:* label tail follows
+// SetInGameChatType; it sits just before ResetInGameChat (0x00511F00).
 //
-// This is the BFME APT implementation, not the Zero Hour window/gadget
-// implementation.  The caller at 0x0055D7F0 passes mode 3 through ILT 28A51;
+// The body drives the BFME APT chat, not the Zero Hour window/gadget one.
+// The caller at 0x0055D7F0 passes mode 3 through ILT 28A51;
 // the body stores it at InGameChat+0x25c, creates InGameChat.apt, localizes
 // the selected Chat:* label, and writes APT:InGameChatReceivers.
 //
@@ -290,7 +295,7 @@ enum InGameChatType
 	INGAME_CHAT_BUDDIES = 3
 };
 
-void SetInGameChatType(InGameChatType chatType)
+void rva00511CC0(int chatType)
 {
 	if (TheBfmeGameLogic->m_field10C == 3)
 		return;

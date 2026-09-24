@@ -2288,5 +2288,25 @@
   "after_sha256": "e3bec528f50db02142a529a265e557b949648aadd808fbd7f70da75d94c68b47",
   "evidence": "reverse/symbols.csv",
   "reason": "bfmeTest had no pin under any spelling; reverse/symbols.csv pins the PassengerFilter template test at ILT 0x0001B437 to Rva0039F0A0::accepts, so OpenContain::isValidContainerFor's qualified call through the m_filter subobject adopts that pinned class/method instead of the unpinned Rva2225E0Filter::bfmeTest spelling"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/SetInGameChatType.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Rva00511CC0InGameChat.cpp",
+  "old_name": "SetInGameChatType",
+  "new_name": "rva00511CC0",
+  "before_sha256": "dacf0270a1e226a30b03fbedb385275b4f3dd0f479b283f4a0f57270bd472ebc",
+  "after_sha256": "fa473f9eff246d1887641d9924f0461934ee8b0da89e8a4ed8dc2646e1941fd9",
+  "evidence": "reverse/deleted_rows.csv",
+  "reason": "review of 0x00511CC0: no matched caller uses SetInGameChatType (CommandXlat calls the pinned rva00511CC0) and the body mixes ShowInGameChat, ToggleInGameChat and SetInGameChatType traits, so it keeps its address token"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "SetInGameChatType",
+  "new_name": "rva00511CC0",
+  "before_sha256": "632bd59d266823845c8d038671c358b087cb776490493dd8963661c97f92e1ab",
+  "after_sha256": "1b79c8126014293dd9e88bc3b4c4410344b5e09f700fe461ec655df29caaf872",
+  "evidence": "reverse/deleted_rows.csv",
+  "reason": "review of 0x00511CC0: no matched caller uses SetInGameChatType (CommandXlat calls the pinned rva00511CC0) and the body mixes ShowInGameChat, ToggleInGameChat and SetInGameChatType traits, so it keeps its address token"
  }
 ]
