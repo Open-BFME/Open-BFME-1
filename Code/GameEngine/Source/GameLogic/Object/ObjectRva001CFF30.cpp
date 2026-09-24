@@ -120,7 +120,7 @@ public:
 class BfmeThingAFA
 {
 public:
-	bool bfmeAskAFA(void *what);
+	bool bfmeAskAFA(void *targetObject);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
