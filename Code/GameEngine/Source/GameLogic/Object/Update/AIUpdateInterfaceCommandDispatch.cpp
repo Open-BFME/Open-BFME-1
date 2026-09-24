@@ -534,7 +534,7 @@ protected:
 	StateMachine *m_stateMachine;			// +0x30
 	void *m_field34;						// +0x34
 	char m_to140[0x140 - 0x38];
-	void *m_field140;
+	void *m_path;
 	char m_to1a4[0x1a4 - 0x144];
 	unsigned int m_field1a4;
 	char m_to1d8[0x1d8 - 0x1a8];
@@ -568,8 +568,8 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 		return;
 
 	Bool rejected = false;
-	if (m_field140 != 0 && m_field1d8 != 0 &&
-			reinterpret_cast<BFMEStatusCall>(j_00006dcf)(m_field140))
+	if (m_path != 0 && m_field1d8 != 0 &&
+			reinterpret_cast<BFMEStatusCall>(j_00006dcf)(m_path))
 		rejected = true;
 
 	Object *object = m_object;
