@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "8056980a8bff0f1dee593d91e199f6941df6f540b02e331439b651a47020b154",
+  "symbol": "?rva0048D460AnsiToWide@@YGXPBDPAVUnicodeString@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.89,
+  "source": "// ?rva0048D460AnsiToWide@@YGXPBDPAVUnicodeString@@@Z\n// partial score=0.89 date=2026-09-24\n// cl: /O2 /DNDEBUG /MD /EHsc\n#include <string.h>\n\nclass UnicodeString;\nvoid __stdcall rva0048D460AnsiToWide(const char *source, UnicodeString *target);\n\ntemplate<class CharT>\nclass StringBase\n{\n\tfriend void __stdcall rva0048D460AnsiToWide(const char *, UnicodeString *);\nprivate:\n\tvoid releaseBuffer();\n};\n\nclass UnicodeString : public StringBase<unsigned short>\n{\npublic:\n\tUnicodeString &operator=(const unsigned short *text);\n};\n\nextern \"C\" __declspec(dllimport) int __stdcall MultiByteToWideChar(\n\tunsigned int codePage, unsigned int flags, const char *source,\n\tint sourceLength, unsigned short *target, int targetLength);\n\nvoid __stdcall rva0048D460AnsiToWide(const char *source, UnicodeString *target)\n{\n\tint length = MultiByteToWideChar(0, 0, source, strlen(source), 0, 0);\n\ttarget->releaseBuffer();\n\tif (length <= 0)\n\t\treturn;\n\n\tunsigned short *buffer = new unsigned short[length + 1];\n\tif (buffer == 0)\n\t\treturn;\n\n\tint written = MultiByteToWideChar(0, 0, source, strlen(source), buffer, length);\n\tif (written <= 0) {\n\t\ttarget->releaseBuffer();\n\t\tdelete[] buffer;\n\t\treturn;\n\t}\n\n\tbuffer[written] = 0;\n\t*target = buffer;\n\tdelete[] buffer;\n}\n"
+}
