@@ -1,5 +1,5 @@
 // ?pickDrawable@W3DView@@UAEPAVDrawable@@PBUICoord2D@@_NW4PickType@@@Z
-// partial score=0.8 date=2026-09-23
+// partial score=0.82 date=2026-09-24
 // cl: /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 // BFME reconstruction scratch for retail 0x00745370, full boundary 793 bytes.
@@ -120,14 +120,13 @@ Drawable *W3DView::pickDrawable(const ICoord2D *screen,
 	Bool forceAttack, PickType pickType)
 {
 	W3DView * volatile view = this;
-	const ICoord2D *screenPos = screen;
 	RenderObjClass *renderObj = 0;
-	Drawable *draw = 0;
+	GameWindow *window = 0;
+	const ICoord2D *screenPos = screen;
 
 	if (screenPos == 0)
 		return 0;
 
-	GameWindow *window = 0;
 	if (TheWindowManager)
 		window = TheWindowManager->getWindowUnderCursor(screenPos->x, screenPos->y);
 	while (window)
@@ -151,8 +150,9 @@ Drawable *W3DView::pickDrawable(const ICoord2D *screen,
 	// filtered by the proven Drawable visibility-gate call.
 	if (pickType & 0x100)
 	{
-		if ((draw = bfmeSpecialPick(pickType)) != 0)
-			return draw;
+		Drawable *special = bfmeSpecialPick(pickType);
+		if (special != 0)
+			return special;
 	}
 
 	if (W3DDisplay::m_3DScene->castRay(raytest, false, (Int)pickType))
@@ -185,6 +185,7 @@ Drawable *W3DView::pickDrawable(const ICoord2D *screen,
 			TheGameClientNotify007->notifyPick(id);
 	}
 
+	Drawable *draw = 0;
 	if (renderObj)
 	{
 		DrawableInfo *info = (DrawableInfo *)renderObj->Get_User_Data();
