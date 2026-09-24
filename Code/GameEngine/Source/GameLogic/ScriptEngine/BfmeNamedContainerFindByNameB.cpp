@@ -2,18 +2,24 @@
 // The ILT at 0x0000A592 and the lookup caller at 0x0033C450 identify this
 // method as BfmeNamedContainer0033c340::findByNameB. The table at +0x2C is the
 // second string-record table (findNameIndex at 0x00356A60 through ILT
-// 0x000072F7); its 20-byte record holds the name at +8 and the stored item
-// pointer at +0x10. Retail 0x00359CE0 is the same name-to-id lookup out of
-// line; here it is inlined, then the item is re-read through this.
+// 0x000072F7); its 20-byte record holds the name at +8 and the m_nodes pointer
+// at +0x10, and the method returns m_nodes + 4. Record and table layouts are
+// the ones Rva0035A220LookupReleased.cpp and the Rva00359330 / Rva003568C0
+// StringRecord siblings declare. Retail 0x00359CE0 is the same name-to-id
+// lookup out of line; here it is inlined, then the record is re-read through
+// this.
 
 #include "ascii_string.h"
 
-struct BfmeBucketERY
+struct Rva00359530Record
 {
-	char m_head[8];
+	int m_previous;
+	int m_next;
 	AsciiString m_name;
-	char m_padding[4];
-	void *m_item;
+	bool m_released;
+	unsigned char m_pad;
+	unsigned short m_references;
+	void *m_nodes;
 };
 
 class BfmeNamedContainer0033c340;
@@ -24,10 +30,14 @@ private:
 	friend class BfmeNamedContainer0033c340;
 	int findNameIndex(AsciiString *name);
 
-	int *m_first;
-	int *m_last;
-	char m_padding[4];
-	BfmeBucketERY *m_entries;
+	int *m_nameIndexesBegin;
+	int *m_nameIndexesEnd;
+	int *m_nameIndexesCapacity;
+	Rva00359530Record *m_records;
+	int m_10;
+	int m_14;
+	int m_freeHead;
+	int m_activeTail;
 };
 
 class BfmeNamedItem0033c340;
@@ -43,10 +53,11 @@ private:
 	{
 		Rva00359530StringRecordTable *table = &m_table;
 		int index = table->findNameIndex((AsciiString *)&name);
-		if ((unsigned int)index < (unsigned int)(table->m_last - table->m_first))
+		if ((unsigned int)index < (unsigned int)(table->m_nameIndexesEnd -
+			table->m_nameIndexesBegin))
 		{
-			int id = table->m_first[index];
-			if (((const StringBase<char> *)&table->m_entries[id].m_name)
+			int id = table->m_nameIndexesBegin[index];
+			if (((const StringBase<char> *)&table->m_records[id].m_name)
 					->compare(*(const StringBase<char> *)&name) == 0)
 				return id;
 		}
@@ -63,5 +74,5 @@ BfmeNamedItem0033c340 *BfmeNamedContainer0033c340::findByNameB(
 {
 	int id = rva00359CE0LookupId(name);
 	return id != -1 ? (BfmeNamedItem0033c340 *)
-		((char *)m_table.m_entries[id].m_item + 4) : 0;
+		((char *)m_table.m_records[id].m_nodes + 4) : 0;
 }

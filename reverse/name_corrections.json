@@ -2448,5 +2448,15 @@
   "after_sha256": "b0ce7fbb15b64ff3bc0a138a7aacbf67eb6a9555f4ba2fd069adf58c0db5ed85",
   "evidence": "reverse/symbols.csv",
   "reason": "pin ?getRegionName@Rva003BABE0Record@@QAE?AVAsciiString@@XZ at ILT 0x0001073F: the retail call at 0x003AE650+0x5D encodes that pinned ILT and functions.csv row 0x003AD470 (ParseRegionReinforcementBlock.cpp) defines the same 0x24-byte record so the bank TU-local record shim is that class"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/BfmeNamedContainerFindByNameB.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/BfmeNamedContainerFindByNameB.cpp",
+  "old_name": "BfmeBucketERY",
+  "new_name": "Rva00359530Record",
+  "before_sha256": "eee644b4abadab9d2a1377839a22ac6c923840daca7e7a2d30f4027226526777",
+  "after_sha256": "c57c9887109a4702739614881d381f877c382f479c21b35c553da99e3774804e",
+  "evidence": "reverse/functions.csv",
+  "reason": "the same second string-record table (owner +0x2C and findNameIndex 0x00356A60) is matched at 0x0035A220 in Rva0035A220LookupReleased.cpp which names its 20-byte record Rva00359530Record; the bank-era BfmeBucketERY shim carried no evidence of its own so the TU adopts the sibling record name"
  }
 ]
