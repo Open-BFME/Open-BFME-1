@@ -1,6 +1,5 @@
-// ??$__find@U?$_List_iterator@VUnicodeString@@U?$_Nonconst_traits@VUnicodeString@@@_STL@@@_STL@@VUnicodeString@@@_STL@@YA?AU?$_List_iterator@VUnicodeString@@U?$_Nonconst_traits@VUnicodeString@@@_STL@@@0@U10@0ABVUnicodeString@@ABUinput_iterator_tag@0@@Z
-// partial score=0.98 date=2026-09-15
 // cl: /O2 /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// ??$__find@U?$_List_iterator@VUnicodeString@@U?$_Nonconst_traits@VUnicodeString@@@_STL@@@_STL@@VUnicodeString@@@_STL@@YA?AU?$_List_iterator@VUnicodeString@@U?$_Nonconst_traits@VUnicodeString@@@_STL@@@0@U10@0ABVUnicodeString@@ABUinput_iterator_tag@0@@Z
 // stlport
 #include <list>
 #include <algorithm>
@@ -14,8 +13,9 @@ inline int compareWideRuns(const unsigned short *s1, int len1,
 	int minLen = len1;
 	if (minLen >= len2)
 		minLen = len2;
-	const unsigned short *q = s2;
+	// p before q: MSVC 7.1 then loads *q into EDX first at the mismatch, as retail does
 	const unsigned short *p = s1;
+	const unsigned short *q = s2;
 	if (minLen > 0) {
 		do {
 			if (*p != *q) {
