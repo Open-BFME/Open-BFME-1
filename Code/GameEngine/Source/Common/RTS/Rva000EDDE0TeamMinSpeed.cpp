@@ -1,5 +1,3 @@
-// ?getMinSpeedRelativeTo@Rva000EDDE0Team@@QBEMPAVObject@@@Z
-// partial score=0.9 date=2026-09-21
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 // ?getMinSpeedRelativeTo@Rva000EDDE0Team@@QBEMPAVObject@@@Z
 //
@@ -119,7 +117,10 @@ Real Rva000EDDE0Team::getMinSpeedRelativeTo( Object *other ) const
 
 	for ( BfmeDlinkIterator iter( m_memberList, BfmeObjectDlinkBase::dlink_next_TeamMemberList ); !iter.done(); iter.advance() )
 	{
-		AIUpdateInterface *ai = iter.cur()->getAIUpdateInterface();
+		Object *obj = iter.cur();
+		if ( obj == 0 )
+			continue;
+		AIUpdateInterface *ai = obj->getAIUpdateInterface();
 		if ( ai )
 		{
 			if ( ai->getCurLocomotorSpeed() < bestSpeed )
