@@ -137,6 +137,7 @@ name,address,notes
 ??$BfmeElementConstruct@URva001EFAA0Element@@@_STL@@YAXPAXABURva001EFAA0Element@@@Z,0x0003FDA5,Open-BFME5 the element copy the RvaVectorAllocateAndCopy body at 0x001EFAA0 calls
 ??$BfmeElementConstruct@URva00244A80Element@@@_STL@@YAXPAURva00244A80Element@@ABU1@@Z,0x000128DC,Open-BFME5 a callee of a vector push_back
 ??$BfmeElementConstruct@URva00253630Element@@@_STL@@YAXPAURva00253630Element@@ABU1@@Z,0x0001EEE3,Open-BFME5 a callee of a vector push_back
+??$BfmeElementConstruct@VGen00252A50@@@_STL@@YAXPAVGen00252A50@@ABV1@@Z,0x0001EEE3,The construct thunk at 0x0001EEE3 calls the Gen00252A50 copy constructor at 0x00252A50.
 ??$BfmeElementConstruct@URva002E0A10Element@@@_STL@@YAXPAXABURva002E0A10Element@@@Z,0x0003B8F4,Open-BFME5 the element copy the RvaVectorAllocateAndCopy body at 0x002E0A10 calls
 ??$BfmeElementConstruct@URva002E1610Element@@@_STL@@YAXPAXABURva002E1610Element@@@Z,0x0001AE06,Open-BFME5 the element copy the RvaVectorAllocateAndCopy body at 0x002E1610 calls
 ??$BfmeElementConstruct@URva00355320Element@@@_STL@@YAXPAXABURva00355320Element@@@Z,0x00036C2D,Open-BFME5 the element copy helper the vector allocate-and-copy at 0x00355320 calls
@@ -14327,6 +14328,7 @@ name,address,notes
 ?_M_insert_overflow@?$vector@URva001E9020Element@@V?$allocator@URva001E9020Element@@@_STL@@@_STL@@IAEXPAURva001E9020Element@@ABU3@ABU__false_type@2@I_N@Z,0x001E9020,existing exact STLport vector overflow body at the proven constructor target
 ?_M_insert_overflow@?$vector@URva00244A80Element@@V?$allocator@URva00244A80Element@@@_STL@@@_STL@@IAEXPAURva00244A80Element@@ABU3@ABU__false_type@2@I_N@Z,0x0000C5D6,Open-BFME5 a callee of a vector push_back
 ?_M_insert_overflow@?$vector@URva00253630Element@@V?$allocator@URva00253630Element@@@_STL@@@_STL@@IAEXPAURva00253630Element@@ABU3@ABU__false_type@2@I_N@Z,0x000492AB,Open-BFME5 a callee of a vector push_back
+?_M_insert_overflow@?$vector@VGen00252A50@@V?$allocator@VGen00252A50@@@_STL@@@_STL@@IAEXPAVGen00252A50@@ABV3@ABU__false_type@2@I_N@Z,0x000492AB,RubbleNeighbor parser calls this helper for Gen00252A50 records. Its retail body calls the construct thunk at 0x0001EEE3.
 ?_M_insert_overflow@?$vector@URva0025CB00Element@_STL@@V?$allocator@URva0025CB00Element@_STL@@@2@@_STL@@IAEXPAURva0025CB00Element@2@ABU32@ABU__false_type@2@I_N@Z,0x0025CB00,existing exact STLport vector overflow body at the proven constructor target
 ?_M_insert_overflow@?$vector@URva002622D0Entry@@V?$allocator@URva002622D0Entry@@@_STL@@@_STL@@IAEXPAURva002622D0Entry@@ABU3@ABU__false_type@2@I_N@Z,0x00262120,exact270B scoped16-byte entry-vector overflow body; terminal ret20 at +0x10B establishes270B extent
 ?_M_insert_overflow@?$vector@URva002DC6D0Entry@@V?$allocator@URva002DC6D0Entry@@@_STL@@@_STL@@IAEXPAURva002DC6D0Entry@@ABU3@ABU__false_type@2@I_N@Z,0x000031CF,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002DC6D0 calls; autopin
