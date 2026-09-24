@@ -1,5 +1,5 @@
 // ?groupScatter@AIGroup@@QAEXW4CommandSourceType@@@Z
-// partial score=0.82 date=2026-09-09
+// partial score=0.92 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME: the AIGroup orders that walk the member list and forward one
 // command to each member's own AICommandInterface.
@@ -644,10 +644,13 @@ void AIGroup::groupScatter(::CommandSourceType cmdSource)
 
 	for (Object *theUnit = iter->first(); theUnit; theUnit = iter->next())
 	{
-		center.x -= g_01076C24;
-		BfmeGroupAI *ai = theUnit->getAI();
 		Coord3D dest;
-		Coord3D unitPos = *theUnit->getPosition();
+		Coord3D unitPos;
+		unitPos.x = theUnit->getPosX();
+		unitPos.y = theUnit->getPosY();
+		center.x -= g_01076C24;
+		unitPos.z = theUnit->getPosZ();
+		BfmeGroupAI *ai = theUnit->getAI();
 		Coord2D delta;
 		dest = unitPos;
 		delta.x = unitPos.x - center.x;
