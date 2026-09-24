@@ -1,14 +1,10 @@
-// ?groupDoSpecialPowerAtObject@AIGroup@@QAEXIPAVObject@@IW4CommandSourceType@@@Z
-// partial score=0.66 date=2026-09-22
+// ?groupDoSpecialPowerAtObject@Rva00152110AIGroup@@QAEXIPAVObject@@IW4CommandSourceType@@@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// Open-BFME: BFME's ordered special-power-at-object group dispatch,
-// retail RVA 0x00152110.
-//
-// The BFME body copies the target position and orders members by the
-// dominant horizontal axis before checking the selected power.  The local
-// mirror keeps the witnessed AIGroup list at this+0x04 and the Object AI
-// pointer at this+0x204.
+// Open-BFME: special-power-at-object group dispatch, retail RVA 0x00152110,
+// reached from GameLogic::logicMessageDispatcher through ILT 0x0002F126.
+// Members are ordered by a dominant-axis distance to the target before the
+// power is issued; the AIGroup list sits at this+0x04 and Object AI at +0x204.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
@@ -51,6 +47,7 @@ public:
 
 extern SpecialPowerStore *TheSpecialPowerStore;
 extern ActionManager *TheActionManager;
+extern const Real BfmeZeroRange;
 
 class BfmeAIUpdateInterface
 {
@@ -95,7 +92,6 @@ private:
 	_STL::list<Object *> m_memberList;
 };
 
-// ?groupDoSpecialPowerAtObject@AIGroup@@QAEXIPAVObject@@IW4CommandSourceType@@@Z
 void Rva00152110AIGroup::groupDoSpecialPowerAtObject(
 	UnsignedInt specialPowerID, Object *target, UnsignedInt commandOptions,
 	CommandSourceType cmdSource)
@@ -105,7 +101,7 @@ void Rva00152110AIGroup::groupDoSpecialPowerAtObject(
 
 	for (i = m_memberList.begin(); i != m_memberList.end(); ++i)
 	{
-		Real distance = *(const Real *)0x01075350;
+		Real distance = BfmeZeroRange;
 		Object *object = *i;
 		if (target)
 		{
@@ -113,29 +109,27 @@ void Rva00152110AIGroup::groupDoSpecialPowerAtObject(
 			targetPosition.x -= object->getPosition()->x;
 			targetPosition.y -= object->getPosition()->y;
 			if ((Real)fabs(targetPosition.x) > (Real)fabs(targetPosition.y))
-				distance = (Real)fabs(targetPosition.x) + (Real)fabs(targetPosition.y) * *(const Real *)0x01083B6C;
+				distance = (Real)fabs(targetPosition.x) + (Real)fabs(targetPosition.y) * 0.25f;
 			else
-				distance = (Real)fabs(targetPosition.y) + (Real)fabs(targetPosition.x) * *(const Real *)0x01083B6C;
+				distance = (Real)fabs(targetPosition.y) + (Real)fabs(targetPosition.x) * 0.25f;
 		}
 
 		BfmeDistanceEntry entry;
 		entry.m_object = object;
 		entry.m_distance = distance;
-		_STL::list<BfmeDistanceEntry>::iterator at = sorted.begin();
-		for (;;)
+		Bool inserted = false;
+		_STL::list<BfmeDistanceEntry>::iterator at;
+		for (at = sorted.begin(); at != sorted.end(); ++at)
 		{
-			if (at == sorted.end())
-			{
-				sorted.push_back(entry);
-				break;
-			}
-			if (at->m_distance > entry.m_distance)
+			if (entry.m_distance < at->m_distance)
 			{
 				sorted.insert(at, entry);
+				inserted = true;
 				break;
 			}
-			++at;
 		}
+		if (!inserted)
+			sorted.push_back(entry);
 	}
 
 	for (_STL::list<BfmeDistanceEntry>::iterator j = sorted.begin();
@@ -143,10 +137,8 @@ void Rva00152110AIGroup::groupDoSpecialPowerAtObject(
 	{
 		Object *object = j->m_object;
 		BfmeAIUpdateInterface *ai = object->getAI();
-		if (!ai)
-			continue;
-
-		ai->m_lastCommandSource = cmdSource;
+		if (ai)
+			ai->m_lastCommandSource = cmdSource;
 		const SpecialPowerTemplate *power =
 			TheSpecialPowerStore->findSpecialPowerTemplateByID(specialPowerID);
 		if (!power)
