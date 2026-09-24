@@ -1,10 +1,7 @@
-// ?drawConstructPercent@Drawable@@AAEXXZ
-// partial score=0.76 date=2026-09-09
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/campaignmanagerascii /Ireference/shims/stringbaseunicode /ICode/Libraries/Source/WWVegas/WWLib
 
-// BFME's no-region construction-percent pass.  The current Drawable.cpp
-// method is the later region-taking ZH body; this TU recovers the distinct
-// BFME member reached by drawIconUI's named ILT at 0x00034130.
+// BFME's no-region construction-percent pass, reached from Drawable::drawIconUI
+// case 0 through the named ILT at 0x00034130.
 
 #include <stddef.h>
 
@@ -93,6 +90,8 @@ public:
 	UnsignedByte m_drawableCaptionBold;
 
 	AsciiString getDrawableCaptionFontName();
+	Int getDrawableCaptionPointSize() { return m_drawableCaptionPointSize; }
+	UnsignedByte isDrawableCaptionBold() { return m_drawableCaptionBold; }
 };
 
 class GameTextInterface
@@ -160,7 +159,7 @@ public:
 	DRAWABLE_CONSTRUCT_VIEW_SLOT(84) DRAWABLE_CONSTRUCT_VIEW_SLOT(85)
 	DRAWABLE_CONSTRUCT_VIEW_SLOT(86)
 #undef DRAWABLE_CONSTRUCT_VIEW_SLOT
-	virtual Bool worldToScreen( Coord3D *world, ICoord2D *screen );
+	virtual Int worldToScreen( Coord3D *world, ICoord2D *screen );
 };
 
 class CountermeasuresBehaviorInterface
@@ -204,8 +203,9 @@ private:
 	UnsignedByte m_pad224[ 0x120 ];
 
 public:
-	UnsignedByte m_drawableConstructionFlags;
+	UnsignedByte m_privateStatus;
 
+	Bool isEffectivelyDead() const { return (m_privateStatus & 1) != 0; }
 	const ThingTemplate *getTemplate() const;
 	const CountermeasuresBehaviorInterface *getCountermeasuresBehaviorInterface() const;
 };
@@ -294,45 +294,6 @@ extern void j_000351d9();
 extern void j_0003ee55();
 extern void j_000239ed();
 
-static __forceinline Int constructAdjustFontSize( GlobalLanguageData *language, Int pointSize )
-{
-	AdjustFontSizeValue call = { j_00004e67 };
-	return (language->*call.memberFunction)( pointSize );
-}
-
-static __forceinline GameFont *constructGetFont( FontLibrary *library,
-	AsciiString *name, Real pointSize, UnsignedByte bold )
-{
-	GetFontValue call = { j_0000abc3 };
-	return (library->*call.memberFunction)( name, pointSize, bold );
-}
-
-static __forceinline const ThingTemplate *constructGetTemplate( Object *object )
-{
-	GetTemplateValue call = { j_000084b8 };
-	return (object->*call.memberFunction)();
-}
-
-static __forceinline AsciiStringSuffix *constructTemplateName( const ThingTemplate *thingTemplate )
-{
-	return reinterpret_cast<AsciiStringSuffix *>(
-		const_cast<UnsignedByte *>( reinterpret_cast<const UnsignedByte *>( thingTemplate ) ) + 0x20 );
-}
-
-static __forceinline Bool constructEndsWithNoCase( AsciiStringSuffix *string,
-	const char *suffix )
-{
-	EndsWithNoCaseValue call = { j_0001c3dc };
-	return (string->*call.memberFunction)( suffix );
-}
-
-static __forceinline const CountermeasuresBehaviorInterface *constructCountermeasures(
-	Object *object )
-{
-	CountermeasuresValue call = { j_000351d9 };
-	return (object->*call.memberFunction)();
-}
-
 static __forceinline const Coord3D *constructPosition( Drawable *drawable )
 {
 	PositionValue call = { j_0003ee55 };
@@ -348,55 +309,52 @@ static __forceinline void constructCenter( Drawable *drawable, Coord3D *center )
 #define DRAWABLE_CONSTRUCT_GLOBAL(type, address) \
 	(*reinterpret_cast<type **>( address ))
 
+typedef AsciiString (InGameUI::*CaptionFontNameCall)();
+union CaptionFontNameValue
+{
+	void (*freeFunction)();
+	CaptionFontNameCall memberFunction;
+};
+extern void j_0003b75f();
+
 void Drawable::drawConstructPercent()
 {
-	register UnsignedInt zero = 0;
-	register Object *obj = m_object;
-	if ( obj == reinterpret_cast<Object *>( zero ) ||
-		(obj->m_status & 4) == 0 || (obj->m_status & 0x80000) != 0 ||
-		(obj->m_drawableConstructionFlags & 1) != 0 )
+	Object *obj = m_object;
+	if ( obj == NULL || (obj->m_status & 4) == 0 || (obj->m_status & 0x80000) != 0 ||
+		obj->isEffectivelyDead() )
 	{
-		if ( m_constructDisplayString != reinterpret_cast<DisplayString *>( zero ) )
+		if ( m_constructDisplayString )
 		{
 			DRAWABLE_CONSTRUCT_GLOBAL( DisplayStringManager, 0x012f12cc )
 				->freeDisplayString( m_constructDisplayString );
-			m_constructDisplayString = reinterpret_cast<DisplayString *>( zero );
+			m_constructDisplayString = NULL;
 		}
 		return;
 	}
 
-	if ( m_constructDisplayString == reinterpret_cast<DisplayString *>( zero ) )
+	if ( m_constructDisplayString == NULL )
 	{
 		m_constructDisplayString =
-			DRAWABLE_CONSTRUCT_GLOBAL( DisplayStringManager, 0x012f12cc )
-				->newDisplayString();
-
-		AsciiString fontName = DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, 0x012f148c )
-			->getDrawableCaptionFontName();
-		register AsciiString *fontNamePointer = &fontName;
+			DRAWABLE_CONSTRUCT_GLOBAL( DisplayStringManager, 0x012f12cc )->newDisplayString();
+		CaptionFontNameValue fontNameCall = { j_0003b75f };
+		GetFontValue getFontCall = { j_0000abc3 };
+		AdjustFontSizeValue adjustCall = { j_00004e67 };
 		m_constructDisplayString->setFont(
-			constructGetFont( DRAWABLE_CONSTRUCT_GLOBAL( FontLibrary, 0x012f1b38 ),
-					fontNamePointer,
-					(Real)constructAdjustFontSize(
-						DRAWABLE_CONSTRUCT_GLOBAL( GlobalLanguageData, 0x012f1484 ),
-							DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, 0x012f148c )
-								->m_drawableCaptionPointSize),
-					DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, 0x012f148c )
-						->m_drawableCaptionBold) );
+			(DRAWABLE_CONSTRUCT_GLOBAL( FontLibrary, 0x012f1b38 )->*getFontCall.memberFunction)(
+				&(DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, 0x012f148c )->*fontNameCall.memberFunction)(),
+				(Real)(DRAWABLE_CONSTRUCT_GLOBAL( GlobalLanguageData, 0x012f1484 )->*adjustCall.memberFunction)(
+					DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, 0x012f148c )->getDrawableCaptionPointSize() ),
+				DRAWABLE_CONSTRUCT_GLOBAL( InGameUI, 0x012f148c )->isDrawableCaptionBold() ) );
 	}
 
 	if ( m_lastConstructDisplayed != obj->m_constructionPercent )
 	{
-		GetTemplateValue getTemplateCall;
-		getTemplateCall.freeFunction = j_000084b8;
-		EndsWithNoCaseValue endsWithNoCaseCall;
-		endsWithNoCaseCall.freeFunction = j_0001c3dc;
-		CountermeasuresValue countermeasuresCall;
-		countermeasuresCall.freeFunction = j_000351d9;
+		GetTemplateValue getTemplateCall = { j_000084b8 };
+		CountermeasuresValue countermeasuresCall = { j_000351d9 };
 		UnicodeString buffer;
-		if ( (constructTemplateName( (obj->*getTemplateCall.memberFunction)() )
-			->*endsWithNoCaseCall.memberFunction)( "moot" ) &&
-			(obj->*countermeasuresCall.memberFunction)() != 0 &&
+		if ( reinterpret_cast<const StringBase<char> *>(
+				&(obj->*getTemplateCall.memberFunction)()->m_name )->endsWithNoCase( "moot" ) &&
+			(obj->*countermeasuresCall.memberFunction)() != NULL &&
 			(obj->*countermeasuresCall.memberFunction)()->isActive() )
 		{
 			buffer.format(
@@ -418,11 +376,10 @@ void Drawable::drawConstructPercent()
 	ICoord2D screen;
 	Coord3D center;
 	constructCenter( this, &center );
-	const Coord3D *position = constructPosition( this );
-	center.z = center.z - (center.z - position->z) *
-		*reinterpret_cast<const Real *>( 0x010f15cc );
-	if ( DRAWABLE_CONSTRUCT_GLOBAL( TacticalView, 0x012f1600 )
-		->worldToScreen( &center, &screen ) )
+	Real z = constructPosition( this )->z;
+	TacticalView *view = DRAWABLE_CONSTRUCT_GLOBAL( TacticalView, 0x012f1600 );
+	center.z = center.z - (center.z - z) * *reinterpret_cast<const Real *>( 0x010f15cc );
+	if ( view->worldToScreen( &center, &screen ) != 0 )
 		return;
 
 	screen.x -= m_constructDisplayString->getWidth( -1 ) / 2;
