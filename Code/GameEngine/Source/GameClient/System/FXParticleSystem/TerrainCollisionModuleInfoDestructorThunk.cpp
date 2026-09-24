@@ -4,8 +4,8 @@
 // Retail destroys this member with a direct call to
 // StringBase<char>::releaseBuffer (0x00887940) -- the member is a retail
 // AsciiString, not the WWLib Buffer whose own destructor is the 40-byte
-// body at 0x009E1E30, so name it the way the other lifted ModuleData
-// destructors already do.
+// body at 0x009E1E30. The matched constructor and copy constructor call this
+// member m_eventName at the same +0x04 offset.
 class BFMERetailAsciiString
 {
 public:
@@ -29,7 +29,7 @@ class __declspec(novtable) TerrainCollisionModuleInfo : public TerrainCollisionM
 public:
 	virtual ~TerrainCollisionModuleInfo();
 private:
-	BFMERetailAsciiString m_buffer;
+	BFMERetailAsciiString m_eventName;
 };
 
 // ??1TerrainCollisionModuleInfo@FXParticleSystem@@UAE@XZ

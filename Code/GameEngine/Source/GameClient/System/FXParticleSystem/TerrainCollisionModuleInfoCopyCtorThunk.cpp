@@ -30,9 +30,12 @@ public:
 
 struct TerrainCollisionValueBlock
 {
-	unsigned int m_a;
-	unsigned int m_b;
-	unsigned int m_c;
+	// The matched constructor at 0x005FD230 passes this+8 to
+	// GameClientRandomVariable::setRange. The shared type stores distribution,
+	// minimum, and maximum at +0/+4/+8; keep these as raw words for this copy.
+	unsigned int m_distributionBits;
+	unsigned int m_minimumBits;
+	unsigned int m_maximumBits;
 };
 
 class TerrainCollisionModuleInfo : public TerrainCollisionModuleInfoBase
