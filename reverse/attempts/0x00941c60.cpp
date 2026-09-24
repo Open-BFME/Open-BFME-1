@@ -1,5 +1,5 @@
 // ?Rva00941C60_Method@Render2DSentenceClass@@AAE?AVVector2@@PBGPAH1_N@Z
-// partial score=0.076 date=2026-09-24
+// partial score=0.078 date=2026-09-24
 // ?Rva00941C60_Method@Render2DSentenceClass@@AAE?AVVector2@@PBGPAH1_N@Z
 // The matched caller at 0x00942430 passes this object, text, two hotkey pointers, and the flag.
 // That caller proves the ABI, but it does not prove a semantic method name.
@@ -10,7 +10,7 @@ typedef unsigned short uint16;
 #define NULL 0
 
 void __cdecl operator delete[](void *) throw();
-void __cdecl Gen0082E5F0(void *, unsigned int);
+void __cdecl Gen0082E5F0(void *, unsigned int) throw();
 extern "C" __declspec(dllimport) unsigned int __cdecl bfmeLenVGI(const unsigned short *);
 
 class Vector2 { public: float X, Y; void Set(float x, float y) { X=x; Y=y; } };
