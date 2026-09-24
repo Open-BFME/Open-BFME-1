@@ -1,6 +1,6 @@
 // ?startTraining@AIPlayer@@MAE_NPAVWorkOrder@@_NVAsciiString@@@Z
-// partial score=0.96 date=2026-09-13
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// partial score=0.978 date=2026-09-24
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // AIPlayer::startTraining, retail 0x00166EF0.
 //
 // The caller at AIPlayer::doTeamBuilding passes a WorkOrder and its team name.
@@ -11,43 +11,7 @@
 typedef bool Bool;
 typedef int Int;
 
-template <typename T> struct StringInlineData
-{
-	Int m_refCount;
-	Int m_length;
-	T m_text[1];
-};
-
-template <typename T> class StringBase
-{
-public:
-	StringBase() : m_data(0) {}
-	StringBase(const T *text);
-	StringBase(const StringBase<T> &other);
-	~StringBase();
-	void concat(const StringBase<T> &other);
-	void concat(const T *text);
-
-private:
-	StringInlineData<T> *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	__forceinline AsciiString(const char *text) : StringBase<char>(text) {}
-	__forceinline AsciiString(const AsciiString &other) : StringBase<char>(other) {}
-	__forceinline ~AsciiString() {}
-
-	__forceinline void concat(const AsciiString &other)
-	{
-		((StringBase<char> *)this)->concat((const StringBase<char> &)other);
-	}
-	__forceinline void concat(const char *text)
-	{
-		((StringBase<char> *)this)->concat(text);
-	}
-};
+#include "ascii_string.h"
 
 class ThingTemplate
 {
@@ -119,22 +83,19 @@ public:
 #define TheGlobalData (*(GlobalData **)0x012ED5C8)
 #define TheScriptEngine (*(ScriptEngine **)0x012F076C)
 
-#pragma comment(linker, "/alternatename:?findFactory@AIPlayer@@IAEPAVObject@@PBVThingTemplate@@_NPAH@Z=?j_0002b62f@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getProductionUpdateInterface@Object@@QAEPAVProductionUpdateInterface@@XZ=?j_00003b52@@YAXXZ")
-#pragma comment(linker, "/alternatename:?AppendDebugMessage@ScriptEngine@@QAEXABVAsciiString@@_N@Z=?j_00028ce0@@YAXXZ")
 
 // ?startTraining@AIPlayer@@MAE_NPAVWorkOrder@@_NVAsciiString@@@Z
 Bool AIPlayer::startTraining(WorkOrder *order, Bool busyOK, AsciiString teamName)
 {
-	Int factoryID;
 	Object *factory;
-	ProductionUpdateInterface *pu;
-	Bool busy = busyOK;
-	factory = findFactory(order->m_thing, busy, &factoryID);
-	if (factory != 0)
 	{
-		pu = factory->getProductionUpdateInterface();
-		if (pu != 0 && pu->queueCreateUnit(order->m_thing,
+		Int factoryID;
+		factory = findFactory(order->m_thing, busyOK, &factoryID);
+	}
+	if (factory)
+	{
+		ProductionUpdateInterface *pu = factory->getProductionUpdateInterface();
+		if (pu && pu->queueCreateUnit(order->m_thing,
 			*(const void **)&teamName,
 			pu->requestUniqueUnitID(-1, 0)))
 		{
@@ -144,8 +105,7 @@ Bool AIPlayer::startTraining(WorkOrder *order, Bool busyOK, AsciiString teamName
 				AsciiString teamStr = "Queuing ";
 				teamStr.concat(order->m_thing->getName());
 				teamStr.concat(" for ");
-				const AsciiString *name = &teamName;
-				teamStr.concat(*name);
+				teamStr.concat(teamName);
 				TheScriptEngine->AppendDebugMessage(teamStr, false);
 			}
 			return true;
