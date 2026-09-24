@@ -1,5 +1,5 @@
 // ?rva8CD520ConfigureState@@YAXPAVRva8CD520State@@PAURva8CD520Context@@@Z
-// partial score=0.88 date=2026-09-02
+// partial score=0.89 date=2026-09-24
 // ?rva8CD520ConfigureState@@YAXPAVRva8CD520State@@PAURva8CD520Context@@@Z
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
@@ -40,7 +40,7 @@ public:
 class Rva8CD520State
 {
 public:
-	Rva8CD520Value *resolve(void *, void *, Rva8CD520String *, int, int, int);
+	Rva8CD520Value *resolve(void *output, void *scope, Rva8CD520String *name, int, int, int);
 	void popValues(int count);
 	int m_count;
 	int m_unused;
@@ -65,7 +65,7 @@ struct Rva8CD520Packet
 };
 
 extern Rva8CD520Packet *g_rva8CD520Packet;
-extern void rva8C6320Resolve(void *, void *, void *, int *, Rva8CD520String *);
+extern void rva8C6320Resolve(void *, void *, void *, void **, Rva8CD520String *);
 
 static int rva8CD520Type(Rva8CD520Value *value) { return value->m_flags & 0x3f; }
 void rva8CD520ConfigureState(Rva8CD520State *state, Rva8CD520Context *context)
@@ -75,15 +75,17 @@ void rva8CD520ConfigureState(Rva8CD520State *state, Rva8CD520Context *context)
 	if ((type == 1 || type == 0x2a) &&
 		!((unsigned char)(~(value->m_flags >> 15)) & 1))
 	{
+		void *output = 0;
 		Rva8CD520String name;
-		if (rva8CD520Type(value) != 1)
+		type = value->m_flags & 0x3f;
+		if (type != 1)
 			value = value->m_inner;
-		int output = 0;
 		rva8C6320Resolve(context->m_owner, context->m_scope,
 			(char *)value + 8, &output, &name);
-		value = state->resolve(context->m_owner, context->m_scope, &name, 1, 1, 0);
+		value = state->resolve(output, context->m_scope, &name, 1, 1, 0);
 	}
 
+	int popCount = 3;
 	value->addRef();
 	g_rva8CD520Packet->m_value = value;
 	g_rva8CD520Packet->m_x = 0.0f;
@@ -101,7 +103,6 @@ void rva8CD520ConfigureState(Rva8CD520State *state, Rva8CD520Context *context)
 		g_rva8CD520Packet->m_y = (float)g_rva8CD520Packet->m_height - value->m_y;
 	}
 
-	int popCount = 3;
 	Rva8CD520Value *quad = state->m_stack[state->m_count - 3];
 	if (rva8CD520Type(quad) == 7 &&
 		!((unsigned char)(~(quad->m_flags >> 15)) & 1))
