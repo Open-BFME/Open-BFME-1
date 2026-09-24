@@ -1,5 +1,5 @@
 // ?j_00010712@Glo012F1024Item@@QAEXXZ
-// partial score=0.97 date=2026-09-21
+// partial score=0.98 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
 
 #include "StringInline.h"
@@ -208,7 +208,10 @@ public:
 	BfmeByteWord m_bfmeByte20;
 	NameStorage m_bfmeNameStorage;
 
-	Glo012F1024Scratch(void) {}
+	Glo012F1024Scratch(Glo012F1024Record *record, AsciiString *&name)
+	{
+		name = record->GetName(&m_bfmeName());
+	}
 	~Glo012F1024Scratch(void)
 	{
 		m_bfmeName().~AsciiString();
@@ -343,11 +346,11 @@ void Glo012F1024Item::j_00010712(void)
 		 index < m_bfmeRecords.bfmeSize();
 		 ++index)
 	{
-		Glo012F1024Scratch scratch;
 		Glo012F1024Record *records = m_bfmeRecords.bfmeBegin();
 		Glo012F1024Record *record =
 			records + index;
-		AsciiString *name = record->GetName(&scratch.m_bfmeName());
+		AsciiString *name;
+		Glo012F1024Scratch scratch(record, name);
 		scratch.m_bfmeByte22.byte = record->m_bfmeByte22;
 		scratch.m_bfmeByte21.byte = record->m_bfmeByte21;
 		scratch.m_bfmeByte20.byte = record->m_bfmeByte20;
