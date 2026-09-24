@@ -1,28 +1,17 @@
-// ?d_002523e0@@YAXXZ
-// partial score=0.73 date=2026-09-18
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
-//
-// Retail 0x002523E0 (403 bytes).  The body is a TransitionDamageFX method
-// reached from the landed damage-state dispatcher through the 0x0000AD49
-// thunk.  Its anonymous record name is kept address-derived because the
-// historical method spelling is not present in the surviving symbols.
+// ?rva002523E0@TransitionDamageFX@@QAEX_N@Z
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Include
+// Retail 0x002523E0: walks the 0x2c-byte records at +0xD4 and recurses through the owner-side thunk 0x0000AD49.
 
+#include "basetype.h"
 #include "ascii_string.h"
 
-typedef int Int;
-typedef bool Bool;
-typedef unsigned int UnsignedInt;
-
-struct Coord3D
-{
-	float x;
-	float y;
-	float z;
-};
-
 class Matrix3D;
-class ObjectCreationList;
-class TransitionDamageFX;
+class Module;
+
+enum NameKeyType
+{
+	NAMEKEY_INVALID = 0
+};
 
 class S4Sink004135C0
 {
@@ -33,21 +22,7 @@ public:
 class NameKeyGenerator
 {
 public:
-	Int nameToKey(const char *name);
-};
-
-typedef Int NameKeyType;
-
-class Module
-{
-};
-
-class Thing
-{
-public:
-	void convertBonePosToWorldPos(const Coord3D *bonePos,
-		const Matrix3D *boneTransform, Coord3D *worldPos,
-		Matrix3D *worldTransform) const;
+	NameKeyType nameToKey(const char *name);
 };
 
 class StatusModule
@@ -64,7 +39,7 @@ public:
 	virtual Int getStatus();
 };
 
-class Object : public Thing
+class Thing
 {
 public:
 	virtual void slot00();
@@ -79,8 +54,20 @@ public:
 	virtual void slot24();
 	virtual S4Sink004135C0 *getDrawable();
 
-	Module *findModule(NameKeyType key);
+	void convertBonePosToWorldPos(const Coord3D *bonePos,
+		const Matrix3D *boneTransform, Coord3D *worldPos,
+		Matrix3D *worldTransform) const;
+};
 
+class Object : public Thing
+{
+public:
+	Module *findDamageModule(NameKeyType key) const { return findModule(key); }
+
+protected:
+	Module *findModule(NameKeyType key) const;
+
+public:
 	unsigned char m_unmodelled[0x1FC];
 	StatusModule *m_statusModule;
 };
@@ -98,8 +85,7 @@ public:
 		UnsignedInt lifetimeFrames) const;
 };
 
-// The record is 0x2c bytes.  The range at +4/+8 is a contiguous array of
-// AsciiString objects; +0x10 is the OCL and +0x20 is its local position.
+// 0x2c-byte record: +4/+8 bound an AsciiString array, +0x10 is the OCL, +0x20 the local position.
 struct Rva002523E0Record
 {
 	Int m_objectID;
@@ -127,6 +113,7 @@ private:
 
 #define TheBfmeGameLogic (*(GameLogic **)0x012F0898)
 #define TheNameKeyGenerator (*(NameKeyGenerator **)0x012ED600)
+
 void TransitionDamageFX::rva002523E0(Bool applyTransition)
 {
 	if (m_enabled == 0)
@@ -136,39 +123,47 @@ void TransitionDamageFX::rva002523E0(Bool applyTransition)
 	if (sink == 0)
 		return;
 
-	for (Rva002523E0Record *record = m_recordBegin;
-		record != m_recordEnd; ++record)
+	for (Rva002523E0Record *it = m_recordBegin; it != m_recordEnd; )
 	{
-		Object *object = TheBfmeGameLogic->findObjectByID(record->m_objectID);
-		if (object == 0)
-			continue;
+		Rva002523E0Record *record = it++;
 
-		Int status = object->m_statusModule->getStatus();
+		Int status = 3;
+		Object *object = TheBfmeGameLogic->findObjectByID(record->m_objectID);
+		if (object != 0)
+			status = object->m_statusModule->getStatus();
+
 		for (AsciiString *name = record->m_nameBegin;
 			 name != record->m_nameEnd; ++name)
 		{
 			sink->invoke(*name, status != 3, 0, 0, 0);
 		}
 
-		if (!applyTransition)
-			continue;
+		if (applyTransition)
+		{
+			static NameKeyType transitionDamageKey =
+				TheNameKeyGenerator->nameToKey("TransitionDamageFX");
 
-		static NameKeyType transitionDamageKey =
-			TheNameKeyGenerator->nameToKey("TransitionDamageFX");
+			if (object != 0)
+			{
+				TransitionDamageFX *transition =
+					(TransitionDamageFX *)object->findDamageModule(
+						transitionDamageKey);
+				if (transition != 0)
+					transition->rva002523E0(false);
+			}
 
-		TransitionDamageFX *transition =
-			(TransitionDamageFX *)object->findModule(
-				transitionDamageKey);
-		if (transition != 0)
-			transition->rva002523E0(false);
-
-		if (status != 3 || record->m_objectCreationList == 0)
-			continue;
-
-		Coord3D worldPosition;
-		m_object->convertBonePosToWorldPos(
-			&record->m_localPosition, 0, &worldPosition, 0);
-		record->m_objectCreationList->createInternal(
-			m_object, m_object, 0);
+			if (status == 3 && record->m_objectCreationList != 0)
+			{
+				Coord3D worldPosition;
+				worldPosition.x = record->m_localPosition.x;
+				worldPosition.y = record->m_localPosition.y;
+				worldPosition.z = record->m_localPosition.z;
+				m_object->convertBonePosToWorldPos(
+					&worldPosition, 0, &worldPosition, 0);
+				ObjectCreationList *ocl = record->m_objectCreationList;
+				if (ocl != 0)
+					ocl->createInternal(m_object, m_object, 0);
+			}
+		}
 	}
 }
