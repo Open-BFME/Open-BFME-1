@@ -1,8 +1,8 @@
-// ?d_00178140@@YAXXZ
+// ?onEnter@AIAttackMeleeEngageState@@UAE?AW4StateReturnType@@XZ
 // partial score=0.9001560062402496 date=2026-09-21
 // cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled /ICode/Libraries/Source/WWVegas/WWMath
-// RVA 00178140, 641 bytes. Opaque state entry; no original identity claimed.
-// Complete retail body: build/hub_003e9720/retail/0x00178140.asm.
+// RVA 00178140, 641 bytes; identity is supported by the constructor-installed
+// vtable 0x01099848 slot 4 -> ILT 0x0002F5E5 -> this body.
 // Hub contract and Object offsets: docs/analysis/0x003e9720.md.
 #include "coord3d.h"
 // Visible definitions from coord3d.cpp retain native nontrivial copying.
@@ -85,13 +85,31 @@ __forceinline void log00178140(const char *text) {
     if (g00178140Va012F0239 && g00178140Va012ED4FC)
         ((void (__cdecl *)(void *, const char *))j_0003a17a)(g00178140Va012ED4FC, text);
 }
+enum StateReturnType {
+    STATE_CONTINUE = 0,
+    STATE_SUCCESS = -1,
+    STATE_FAILURE = -2
+};
 template<int N> class AttackGoalEntry00178140Slots : public AttackGoalEntry00178140Slots<N-1> {
 public: virtual void unused(char (*)[N]) = 0;
 };
 template<> class AttackGoalEntry00178140Slots<0> {};
-class AttackGoalEntry00178140 : public AttackGoalEntry00178140Slots<17> {
+class AIAttackMeleeEngageState : public AttackGoalEntry00178140Slots<4> {
 public:
-    virtual bool slot044() = 0;
+    virtual StateReturnType onEnter();
+    virtual void onExit(int status) = 0;
+    virtual StateReturnType update() = 0;
+    virtual bool slot007() = 0;
+    virtual bool slot008() = 0;
+    virtual bool slot009() = 0;
+    virtual bool slot010() = 0;
+    virtual bool slot011() = 0;
+    virtual bool slot012() = 0;
+    virtual bool slot013() = 0;
+    virtual bool slot014() = 0;
+    virtual bool slot015() = 0;
+    virtual bool slot016() = 0;
+    virtual bool computePath() = 0;
     unsigned char pad004[0x1c-4];
     AttackGoalEntry00178140Machine *at01c;
     unsigned char pad020[0x4c-0x20];
@@ -106,8 +124,7 @@ public:
     bool at074;
     unsigned char pad075[3];
     NotifyWeaponFiredInterface *at078;
-    int enter00172600();
-    int run();
+    StateReturnType enter00172600();
 };
 
 // Typed single-inheritance routes preserve independently decoded ILT targets.
@@ -196,15 +213,17 @@ __forceinline bool AttackGoalEntry00178140Pathfinder::goal003E6080(AttackGoalEnt
 }
 
 extern void j_00021e27();
-__forceinline int AttackGoalEntry00178140::enter00172600() {
-    typedef int (AttackGoalEntry00178140AI::*Call)();
+__forceinline StateReturnType AIAttackMeleeEngageState::enter00172600() {
+    typedef StateReturnType (AttackGoalEntry00178140AI::*Call)();
     union { void (*address)(); Call member; } route = { j_00021e27 };
     return (((AttackGoalEntry00178140AI *)this)->*route.member)();
 }
 
-int AttackGoalEntry00178140::run() {
+StateReturnType AIAttackMeleeEngageState::onEnter() {
+
+
     AttackGoalEntry00178140Object *source = at01c->at010;
-    if (at01c->destroyed000A1D80()) return -1;
+    if (at01c->destroyed000A1D80()) return STATE_SUCCESS;
     if (!at050)
         at050 = new AIAttackFireWeaponState((StateMachine *)at01c, at078);
     at054 = -1;
@@ -217,9 +236,9 @@ int AttackGoalEntry00178140::run() {
     AttackGoalEntry00178140AI *ai = source->at204;
     AttackGoalEntry00178140Object *target = at01c->goal000A1490();
     if (!target || (target->at208 && target->at208->flag0029A7A0()) ||
-        (target->at344 & 1) || (target->at094 & 0x20000)) return -2;
+        (target->at344 & 1) || (target->at094 & 0x20000)) return STATE_FAILURE;
     AttackGoalEntry00178140Weapon *weapon = source->weapon001BE230(0);
-    if (!weapon) return -2;
+    if (!weapon) return STATE_FAILURE;
     if (weapon->range001E8930(source, target, 0)) {
         Coord3D pos = source->at038;
         AttackGoalEntry00178140Pathfinder *pathfinder = g00178140Va012EF214->at00c;
@@ -227,19 +246,19 @@ int AttackGoalEntry00178140::run() {
             "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x1c9a);
         if (g00178140Va012EF214->pathfinder()->goal003E6080(source, &pos)) ai->set0016A6D0(&pos);
         source->status000D3EB0(28, true);
-        return -1;
+        return STATE_SUCCESS;
     }
     at05c = target->at038;
     if (source->test000C4D40(37) && source->at214) {
         source->status000D3EB0(28, false);
-        return -2;
+        return STATE_FAILURE;
     }
     ai->destroy0026F080();
     if (g00178140Va012F0239 && g00178140Va012ED4FC)
         ((void (__cdecl *)(void *, const char *))j_0003a17a)(g00178140Va012ED4FC, "CritterDesync: ComputePath27");
-    if (!slot044()) return -2;
-    if (at074) return 0;
-    int result = enter00172600();
+    if (!computePath()) return STATE_FAILURE;
+    if (at074) return STATE_CONTINUE;
+    StateReturnType result = enter00172600();
     if (g00178140Va012F0239 && g00178140Va012ED4FC)
         ((void (__cdecl *)(void *, const char *))j_0003a17a)(g00178140Va012ED4FC, "CritterDesync: setAdjustDestination(TRUE) 36");
     at04c = true;
