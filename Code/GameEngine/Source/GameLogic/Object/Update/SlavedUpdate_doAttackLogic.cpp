@@ -1,9 +1,9 @@
-// ?doAttackLogic@SlavedUpdate@@QAEXPBVObject@@@Z
-// partial score=0.72 date=2026-09-17
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+// SlavedUpdate::doAttackLogic from the Zero Hour twin; SlavedUpdate.cpp literal line 0x14a.
+// aiMoveToPosition is visible but not inlined, so VC7.1 knows the target is not retained.
 
-// Open-BFME: SlavedUpdate::doAttackLogic, based on the Zero Hour twin and
-// the BFME retail inlined boundary-distance calculation.
+#include <vector>
 
 typedef unsigned int UnsignedInt;
 typedef int Int;
@@ -64,10 +64,54 @@ enum CommandSourceType
     CMD_FROM_AI = 2
 };
 
+class Object;
+class Team;
+class Waypoint;
+class PolygonTrigger;
+class CommandButton;
+class Path;
+
+enum AICommandType
+{
+    AICMD_MOVE_TO_POSITION = 0x00
+};
+
+struct DamageInfo
+{
+    char m_bfme_body[0x5C];
+};
+
+class AICommandParms
+{
+public:
+    AICommandParms(AICommandType cmd, CommandSourceType cmdSource);
+
+    AICommandType m_cmd;
+    CommandSourceType m_cmdSource;
+    Coord3D m_pos;
+    Object *m_obj;
+    Object *m_otherObj;
+    const Team *m_team;
+    std::vector<Coord3D> m_coords;
+    const Waypoint *m_waypoint;
+    const PolygonTrigger *m_polygon;
+    int m_intValue;
+    DamageInfo m_damage;
+    const CommandButton *m_commandButton;
+    Path *m_path;
+};
+
 class AICommandInterface
 {
 public:
-    void aiMoveToPosition(const Coord3D *position, CommandSourceType commandSource);
+    virtual void aiDoCommand(const AICommandParms *parms);
+
+    __declspec(noinline) void aiMoveToPosition(const Coord3D *pos, CommandSourceType cmdSource)
+    {
+        AICommandParms parms(AICMD_MOVE_TO_POSITION, cmdSource);
+        parms.m_pos = *pos;
+        aiDoCommand(&parms);
+    }
 };
 
 class AIUpdateInterface
