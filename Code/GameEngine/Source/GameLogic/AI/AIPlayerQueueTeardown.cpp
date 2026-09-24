@@ -8,11 +8,12 @@
 //
 //   ?removeAll_TeamBuildQueue@  0x001607C0,  82 bytes
 //   ?removeAll_TeamReadyQueue@  0x00160990,  82 bytes
+//   ?deleteQueue@               0x00160E50,  15 bytes
 //   ?clearTeamsInQueue@         0x00160E70,  27 bytes
 //   ??1AIPlayer@                0x001613C0,  87 bytes
 //
 // The destructor is four lines and does nothing else: drain the build queue,
-// drain the ready queue, both with a callback that does nothing. Its own file
+// drain the ready queue, both with a callback that deletes each node. Its own file
 // could only declare the two functions it calls; here it sits under them.
 //
 // The two removeAll bodies are the same DLINK macro expanded twice, with the
@@ -41,6 +42,7 @@ protected:
 class TeamInQueue
 {
 public:
+	virtual ~TeamInQueue();
 	void dlink_removeFrom_TeamBuildQueue( TeamInQueue **pListHead )
 	{
 		if( m_dlink_next_build )
@@ -70,14 +72,14 @@ public:
 	}
 
 private:
-	unsigned int m_unmodelled_00;
 	TeamInQueue *m_dlink_prev_build;			// +0x04
 	TeamInQueue *m_dlink_next_build;			// +0x08
 	TeamInQueue *m_dlink_prev_ready;			// +0x0C
 	TeamInQueue *m_dlink_next_ready;			// +0x10
 };
 
-static void deleteQueue(TeamInQueue *) {}
+// ?deleteQueue@@YAXPAVTeamInQueue@@@Z
+static void deleteQueue(TeamInQueue *o) { if (o) delete o; }
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer : public PlayerController
