@@ -1674,7 +1674,8 @@ void WeaponStore::resetWeaponTemplates( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// ?reset@WeaponStore@@UAEXXZ present-unmatched
+// ?reset@WeaponStore@@UAEXXZ is matched from WeaponStore_reset.cpp. This Zero Hour
+// copy stays: it emits the out-of-line isOverride and friend_clearNextTemplate rows.
 void WeaponStore::reset()
 {
 	// clean up any overriddes.
