@@ -1,25 +1,25 @@
-// ?bfmeBuildFont@FontLibraryBFMERetail@@AAEPAVGameFont@@PAVAsciiString@@MEH@Z
-// partial score=0.975 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/asciistring_downloadmanager /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 
-// Open-BFME5: FontLibraryBFMERetail::getFont, retail 0x004772D0, 60 bytes. The
-// body carried only a machine byte-dump row; the symbols.csv pin names it as
-// the BFME retail FontLibrary ABI alias.
+// FontLibraryBFMERetail::bfmeBuildFont, retail 0x00476C50, 361 bytes.
 //
-// The name and size go first to the record lookup. A record, if there is one,
-// supplies the byte at +8; without one the byte stands at 1. That byte only
-// decides between two weights, four and one, which the compiler produces
-// without a branch: negate to set carry, subtract with borrow into itself, mask
-// to three and add one.
+// Identity: the matched FontLibraryBFMERetail::getFont at 0x004772D0
+// (FontLibraryBFMERetail_getFont.cpp) tail-returns this body through ILT
+// 0x0000EBA6, which reverse/symbols.csv pins under this name.  The body
+// installs the GameFont vtable 0x010F7628 and walks the font list at this+8.
 //
-// Both helpers are pinned with this body, at the ILTs the two calls use.
+// The size is snapped to the weight grid (floor(weight * size + k) / weight),
+// the name, size and style go through the substitution table at 0x00476B00,
+// and the font list is searched for an exact match.  Failing that a new
+// GameFont is built, loaded through vtable slot +0x24 and linked at the head.
+//
+// Shape: the search compares the adjusted style parameter itself; the new
+// font takes a copy made after the search.  That copy is what lets VC7.1 load
+// the style once into BL ahead of the empty-list test and keep the weight in
+// EBP for both the loop and the new font.
 
 #include "PreRTS.h"
 #include "Common/AsciiString.h"
-
-extern "C" void _ReadWriteBarrier(void);
-#pragma intrinsic(_ReadWriteBarrier)
 
 typedef int Int;
 typedef float Real;
@@ -46,22 +46,7 @@ protected:
 	virtual ~GameFont();
 };
 
-struct BfmeFontRecord
-{
-	unsigned char m_bfmeHead[0x08];
-	unsigned char m_bfmeWeighted;				// +0x08
-};
-
-typedef _STL::map<Int, UnsignedInt> BfmeFontSizeMap;
-
-struct BfmeFontSizeTable
-{
-	unsigned char m_padding[0x08];
-	BfmeFontRecord *m_defaultRecord;
-	BfmeFontSizeMap m_records;
-};
-
-typedef _STL::map<AsciiString, BfmeFontSizeTable *> BfmeFontTable;
+struct BfmeFontRecord;
 
 class BfmeFontLibraryBaseView
 {
@@ -79,11 +64,18 @@ public:
 	AsciiString m_name;
 };
 
+// The substitution lookup at 0x00476B00 (FontLibraryBFMEAdjustFont.cpp).  Its
+// owner is still address-named; this body calls it on its own this pointer.
+class Rva00476B00FontLibrary
+{
+public:
+	void adjustFont(AsciiString *name, Real *size, unsigned char *style);
+};
+
 class FontLibraryBFMERetail : public BfmeFontLibraryBaseView
 {
 public:
 	GameFont *getFont(AsciiString *name, Real size, unsigned char style);
-	GameFont *firstFont() { return m_fontList; }
 
 private:
 	virtual Bool loadFontData(GameFont *font) = 0;
@@ -95,40 +87,7 @@ private:
 
 	GameFont *m_fontList;
 	Int m_count;
-	BfmeFontTable m_tables;
 };
-
-extern void j_00001ed3();
-
-// ?getFont@FontLibraryBFMERetail@@QAEPAVGameFont@@PAVAsciiString@@ME@Z
-GameFont *FontLibraryBFMERetail::getFont(AsciiString *name, Real size,
-		unsigned char style)
-{
-	unsigned char weighted = 1;
-
-	BfmeFontRecord *record = bfmeFindRecord(name, size);
-
-	if (record)
-		weighted = record->m_bfmeWeighted;
-
-	return bfmeBuildFont(name, size, style, weighted ? 4 : 1);
-}
-
-BfmeFontRecord *FontLibraryBFMERetail::bfmeFindRecord(AsciiString *name,
-		Real size)
-{
-	BfmeFontTable::iterator table;
-	table = m_tables.find(*name);
-	if (table == m_tables.end())
-		return NULL;
-
-	int sizeKey = (int)size;
-	BfmeFontSizeTable *sizes = table->second;
-	BfmeFontSizeMap::iterator record = sizes->m_records.find(sizeKey);
-	if (record == sizes->m_records.end())
-		return sizes->m_defaultRecord;
-	return (BfmeFontRecord *)record->second;
-}
 
 // ?bfmeBuildFont@FontLibraryBFMERetail@@AAEPAVGameFont@@PAVAsciiString@@MEH@Z
 GameFont *FontLibraryBFMERetail::bfmeBuildFont(AsciiString *name, Real size,
@@ -138,27 +97,18 @@ GameFont *FontLibraryBFMERetail::bfmeBuildFont(AsciiString *name, Real size,
 		/ (Real)weight;
 	AsciiString fontName(*name);
 
-	typedef void (FontLibraryBFMERetail::*AdjustFont)(AsciiString *, Real *,
-		unsigned char *);
-	union
+	((Rva00476B00FontLibrary *)this)->adjustFont(&fontName, &size, &style);
+
+	GameFont *font;
+	for (font = m_fontList; font != NULL; font = font->next)
 	{
-		void (*function)(void);
-		AdjustFont member;
-	} thunk;
-	thunk.function = j_00001ed3;
-	(this->*thunk.member)(&fontName, &size, &style);
-	unsigned char styleValue;
-	GameFont *font = m_fontList;
-	styleValue = style;
-	_ReadWriteBarrier();
-	for (; font != NULL; font = font->next)
-	{
-		if (font->pointSize == size && font->style == styleValue &&
+		if (font->pointSize == size && font->style == style &&
 				font->weight == weight && font->nameString.compare(fontName) == 0)
 			return font;
 	}
 
-	makeFont:
+	unsigned char styleValue = style;
+
 	font = new GameFont;
 	if (font == NULL)
 		return NULL;
