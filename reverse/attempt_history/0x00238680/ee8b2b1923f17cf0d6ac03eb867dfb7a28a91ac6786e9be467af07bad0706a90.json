@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "ee8b2b1923f17cf0d6ac03eb867dfb7a28a91ac6786e9be467af07bad0706a90",
+  "symbol": "?rva00238680@Rva00238680Receiver@@QAE_NPAVRva00238680Object@@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.863,
+  "source": "// ?rva00238680@Rva00238680Receiver@@QAE_NPAVRva00238680Object@@@Z\n// partial score=0.863 date=2026-09-24\n// cl: /DNDEBUG /MD /EHs-c-\n\nclass Rva00238680Object\n{\npublic:\n    float rva000ED3B0GapSq(const Rva00238680Object *) const;\n    Rva00238680Object *rva001CB020Resolve(int);\n};\n\nclass Rva00238680GameLogic\n{\npublic:\n    Rva00238680Object *findObjectByID(int);\n    char pad000[0x3C];\n    unsigned countAt3C;\n};\n\n#define Rva00238680GameLogicGlobal (*(Rva00238680GameLogic **)0x012F0898)\n#define Rva00238680Limit (*(float *)0x010AEBB8)\n\nclass Rva00238680Receiver\n{\npublic:\n    char pad000[0x100];\n    int objectIdAt100;\n    unsigned limitAt104;\n    bool rva00238680(Rva00238680Object *target);\n};\n\nbool Rva00238680Receiver::rva00238680(Rva00238680Object *target)\n{\n    if (!target)\n        return false;\n    if (!objectIdAt100)\n        return false;\n    Rva00238680GameLogic *logic = Rva00238680GameLogicGlobal;\n    if (logic->countAt3C >= limitAt104)\n        return false;\n    Rva00238680Object *found = logic->findObjectByID(objectIdAt100);\n    if (!found)\n        return false;\n    char close = target->rva000ED3B0GapSq(*(Rva00238680Object **)((char *)this - 0xDC)) < Rva00238680Limit;\n    Rva00238680Object *foundParent = found->rva001CB020Resolve(0);\n    Rva00238680Object *targetParent = target->rva001CB020Resolve(0);\n    if (foundParent == targetParent)\n        return true;\n    return close;\n}\n"
+}
