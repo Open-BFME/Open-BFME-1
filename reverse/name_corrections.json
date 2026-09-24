@@ -1958,5 +1958,55 @@
   "after_sha256": "f684af8c5f6d54de8424f8cfe2074f96afad261541c01bc973fa880213dc61f6",
   "evidence": "reverse/identity_evidence/0x0081d520-broadcaster-abi.md",
   "reason": "The old local source declared a one-Int Handler::handle thiscall and admitted there was no named owner. Retail 0x0081D520 uses ret20 and forwards five incoming words to listener vslot +4; all three caller stacks agree. The matched 0x004942C0 source now uses a five-word address-derived broadcaster without asserting an unproved Handler identity."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/DrawableClearAndSetModelConditionStateThunk.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/Rva0001C8D2Thunk.cpp",
+  "old_name": "Drawable",
+  "new_name": "Rva0001C8D2Thunk",
+  "before_sha256": "d57f3abaa14f8033a6cf2acd92fb7fd6657b8fe16eb0ef97d2b44c0ba5064d9d",
+  "after_sha256": "b1ba120aa480a1c4d4882625da6066de2e9000d8ffd1af5e02f48c1337816dea",
+  "evidence": "reverse/identity_evidence/0x00526660-false-drawable-route.md",
+  "reason": "The old five-byte Drawable source used an invented shim pin to 0x00526660. The proof shows the target uses the multiplayer setup receiver and cannot be this Drawable method; the new thunk and body shim names keep their addresses."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/DrawableClearAndSetModelConditionStateThunk.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/Rva0001C8D2Thunk.cpp",
+  "old_name": "DrawableClearAndSetModelConditionStateShim",
+  "new_name": "Rva00526660Body",
+  "before_sha256": "d57f3abaa14f8033a6cf2acd92fb7fd6657b8fe16eb0ef97d2b44c0ba5064d9d",
+  "after_sha256": "b1ba120aa480a1c4d4882625da6066de2e9000d8ffd1af5e02f48c1337816dea",
+  "evidence": "reverse/identity_evidence/0x00526660-false-drawable-route.md",
+  "reason": "The old five-byte Drawable source used an invented shim pin to 0x00526660. The proof shows the target uses the multiplayer setup receiver and cannot be this Drawable method; the new thunk and body shim names keep their addresses."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "Drawable",
+  "new_name": "Rva00527200Owner",
+  "before_sha256": "d2d97a7fafd0c4890e2538f0a64c833a9fa77074c19cdfb937f0d418a939ee2d",
+  "after_sha256": "136005dea04eca9cdf3edc410f3d9f95cc2bef74bd92a48b413fbda4a95f5323",
+  "evidence": "reverse/identity_evidence/0x00526660-false-drawable-route.md",
+  "reason": "Independent retail receiver and callee evidence in the proof refutes the old Drawable ledger identity at the same RVA; the new address-derived name preserves the matched extent without asserting a semantic owner."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "clearModelConditionState",
+  "new_name": "rva00527200",
+  "before_sha256": "d2d97a7fafd0c4890e2538f0a64c833a9fa77074c19cdfb937f0d418a939ee2d",
+  "after_sha256": "136005dea04eca9cdf3edc410f3d9f95cc2bef74bd92a48b413fbda4a95f5323",
+  "evidence": "reverse/identity_evidence/0x00526660-false-drawable-route.md",
+  "reason": "Independent retail receiver and callee evidence in the proof refutes the old Drawable ledger identity at the same RVA; the new address-derived name preserves the matched extent without asserting a semantic owner."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "Drawable",
+  "new_name": "Rva0001C8D2Thunk",
+  "before_sha256": "df87a196dd335cc8ecc40c1cc2804095cbdfaf438964d917b0b55c6ca98dfc94",
+  "after_sha256": "502b2ff6a4c925d7a3d265eb8fa5ceee519b5d00054661f782f33a4717f11f7b",
+  "evidence": "reverse/identity_evidence/0x00526660-false-drawable-route.md",
+  "reason": "Independent retail receiver and callee evidence in the proof refutes the old Drawable ledger identity at the same RVA; the new address-derived name preserves the matched extent without asserting a semantic owner."
  }
 ]

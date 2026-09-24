@@ -335,8 +335,16 @@ def pairs(root, old, new):
         names = moved[i:i + count]; i += count
         if count == 2 and names[0] in left and names[1] in right:
             linked.add(tuple(names))
-    linked.update((a, b) for a in left for b in right
-                  if a != b and ids.get(a, set()) & ids.get(b, set()))
+    for a in left:
+        targets = [b for b in right if a != b and ids.get(a, set()) & ids.get(b, set())]
+        if not targets:
+            continue
+        # Rehoming one row out of a retained Code/ TU does not move its other
+        # declarations. Comparing that unchanged whole source to the new file
+        # invents unrelated renames; the same-RVA ledger check still runs.
+        if a.startswith('Code/') and read(root, new, a) == left[a]:
+            continue
+        linked.update((a, b) for b in targets)
     return [(a, b, left[a], right[b]) for a, b in sorted(linked)]
 
 

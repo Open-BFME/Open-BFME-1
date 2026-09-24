@@ -865,7 +865,6 @@ _Rva0051D1E0Forward,0x0051D1E0,149,Code/GameEngine/Source/Common/Rva0051D2A0Forw
 ?Gen005256D0@@YAHHH@Z,0x005256D0,219,Code/GameEngine/Source/Common/BigObfHookWrappers.cpp,reloc-derived;call-sites=1;identity=generated
 ?Gen00525800@@YAHHH@Z,0x00525800,220,Code/GameEngine/Source/Common/BigObfHookWrappers.cpp,reloc-derived;call-sites=1;identity=generated
 ?handle@Gen00038951@@QAEXH@Z,0x00526040,139,Code/GameEngine/Source/Common/Gen00038951Refresh.cpp,reloc-derived;call-sites=2;identity=generated
-?clearAndSetModelConditionState@Drawable@@QAEXW4ModelConditionFlagType@@0@Z,0x00526660,518,Code/GameEngine/Source/GameLogic/Object/Object.cpp,reloc-derived;call-sites=1;identity=real
 ?bfmeGen0002EA91@Gen_00529B10@@QAEXH_N@Z,0x005268F0,544,Code/GameEngine/Source/Common/Gen00529B10Loop.cpp,reloc-derived;call-sites=1;identity=generated
 ?bfmeGen00029C35@Gen_00529B10@@QAEXH@Z,0x00527220,911,Code/GameEngine/Source/Common/Gen00529B10Loop.cpp,reloc-derived;call-sites=1;identity=generated
 ?bfmeGen00018C1E@Gen_005291F0@@QAEXH@Z,0x00528B60,683,Code/GameEngine/Source/Common/Gen005291F0Refresh.cpp,reloc-derived;call-sites=1;identity=generated

@@ -79294,7 +79294,6 @@ name,address,notes
 ?clearAndSetModelConditionFlags@Object@@QAEXABVBfmeConditionFlags@@0@Z,0x000095ED,Open-BFME5 random-condition model flags call at 0x0028D8F0
 ?clearAndSetModelConditionFlags@Object@@QAEXABVModelConditionFlags@@0@Z,0x001C7720,BFME retail Object model-condition forwarding body called by FiringTracker::coolDown at 0x001B33E0
 ?clearAndSetModelConditionFlags@Object@@QAEXABVModelConditionFlags@@PBV2@@Z,0x001C7370,Open-BFME5 the member clearModelConditionState forwards its one-bit mask to with a null set-mask; unnamed in the image
-?clearAndSetModelConditionState@Drawable@@QAEXW4ModelConditionFlagType@@0@Z,0x0001C8D2
 ?clearAt@Rva0028EF00Clear@@QAEXH@Z,0x0004B443,Open-BFME5 ILT thunk to exact body 0x0028EF00; BfmeSubAED chain-tail forwarder at 0x001C1FF0 calls it with the original integer argument
 ?clearCellForDiameter@Pathfinder@@QAEHHHHHHH@Z,0x00048D29,ILT to the body at 0x003DC810; called by the member-ified groundPathPassable callback at 0x003DEDA0 with a literal 0 crusher and a trailing literal 1
 ?clearCommandsExceptFrom@Connection@@QAEXH@Z,0x00661C30,ZH twin exact: walks m_netCommandList(+0x18)->first; keeps refs whose msg->playerID(+0xC)==arg; removeMessage 0x00672EC0 then ~NetCommandRef 0x00676280 + operator delete; sole caller beginPlayerLeave 0x0066735F (local-leave branch) via ILT 0x00022A61
@@ -85502,7 +85501,7 @@ name,address,notes
 ?run@ConditionDuplicateShim@@QBEPAVCondition@@XZ,0x00357D30,Condition duplicate incremental-link thunk target through a TU-local forwarding shim
 ?run@DictEnsureUniqueShim@@QAEPAUDictPair@1@H_NPAU21@@Z,0x000683D0,Dict ensureUnique incremental-link thunk target through a TU-local forwarding shim
 ?run@DieMuxDataGetFieldParseShim@@SAPBUFieldParse@@XZ,0x00255140,DieMuxData getFieldParse incremental-link thunk target through a TU-local forwarding shim
-?run@DrawableClearAndSetModelConditionStateShim@@QAEXW4ModelConditionFlagType@@0@Z,0x00526660,Drawable clearAndSetModelConditionState incremental-link thunk target through a TU-local forwarding shim
+?run@Rva00526660Body@@QAEXHH@Z,0x00526660,opaque forwarding target from retail ILT 0x0001C8D2; body identity unresolved
 ?run@FXListAtBonePosDoFxAtBonesShim@@QBEXPBVObject@@H@Z,0x0042D8E0,FXListAtBonePosFXNugget doFxAtBones incremental-link thunk target through a TU-local forwarding shim
 ?run@FXListDoFXPosShim@@QBEXPBUCoord3D@@PBVMatrix3D@@MRBU2@M@Z,0x001D6770,FXList doFXPos incremental-link thunk target through a TU-local forwarding shim; volatile 4th param is the enregistration-exclusion device that reproduces retail register placement
 ?run@GadgetListBoxSetColorsShim@@SAXPAVGameWindow@@HHHHHHHHHHHH@Z,0x004B6D40,GadgetListBoxSetColors incremental-link thunk target through a TU-local forwarding shim

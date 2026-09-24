@@ -5916,7 +5916,8 @@ void Drawable::drawHealthBar(const IRegion2D* healthBarRegion)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/DrawableClearAndSetModelConditionStateThunk.cpp
+// The former 0x0001C8D2 thunk claim was refuted; see
+// reverse/identity_evidence/0x00526660-false-drawable-route.md.
 // ?clearAndSetModelConditionState@Drawable@@QAEXW4ModelConditionFlagType@@0@Z present-unmatched
 void Drawable::clearAndSetModelConditionState( ModelConditionFlagType clr, ModelConditionFlagType set )
 {

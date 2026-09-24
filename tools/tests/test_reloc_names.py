@@ -234,6 +234,34 @@ def test_the_queue_drops_published_rows_the_ledger_has_claimed():
     print(f"PASS the queue drops 0x{rva:X} once claimed, by name or by range")
 
 
+def test_refuted_drawable_route_is_not_served_as_recovered_identity():
+    """The matched wrapper at 0x527200 once gave a false Drawable name to
+    the multiplayer setup body reached through ILT 0x1C8D2. The corrected
+    thunk may lend an address-derived name, but no real identity is proven at
+    this body, so the published snapshot and work queue must not claim one.
+    """
+    target = 0x00526660
+    derived = [row for row in published_rows()
+               if int(row["target_rva"], 16) == target]
+    assert all(row["notes"].endswith("identity=generated") for row in derived), derived
+    served, _ = next_work.reloc_named_candidates(set(), [])
+    assert not [row for row in served if int(row["target_rva"], 16) == target]
+    print("PASS refuted Drawable route is absent from recovered-name work")
+
+
+def test_corrected_opaque_drawable_route_does_not_recover_an_identity():
+    """A future green full gate may rederive this call, but its new symbol
+    keeps the ILT address and must remain a generated, unservable candidate.
+    """
+    thunk = 0x0001C8D2
+    body = 0x00526660
+    caller = call_row(0x00527200, thunk,
+                      symbol="?forward@Rva0001C8D2Thunk@@QAEXHH@Z")
+    rows = build.select_reloc_names(build.harvest_reloc_names([caller]))
+    assert len(rows) == 1 and int(rows[0]["target_rva"], 16) == body, rows
+    assert rows[0]["notes"].endswith("identity=generated"), rows
+
+
 def a_dup_claimed_function():
     """A body whose ONLY ledger claim is a ?dup_<rva> row, and which Ghidra
     still calls FUN_. The ledger covers its bytes and names nothing."""

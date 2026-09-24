@@ -230,6 +230,53 @@ def test_generated_multi_body_source_is_not_paired_with_native_conversion(repo):
     assert accepted == 0
 
 
+def test_rehomed_row_does_not_rename_unchanged_multirow_source(repo):
+    original = 'Code/Owner.cpp'
+    extracted = 'Code/Rva00527200Wrapper.cpp'
+    put(repo, original,
+        'class Drawable { public: void clearModelConditionState(int); };\n'
+        'void Drawable::clearModelConditionState(int) {}\n')
+    put(repo, 'reverse/functions.csv',
+        '?clearModelConditionState@Drawable@@QAEXH@Z,,0x00527200,15,'
+        f'{original},matched,evidence\n')
+    commit(repo)
+
+    put(repo, extracted,
+        'class Rva00527200Owner { public: void rva00527200(int); };\n'
+        'void Rva00527200Owner::rva00527200(int) {}\n')
+    put(repo, 'reverse/functions.csv',
+        '?rva00527200@Rva00527200Owner@@QAEXH@Z,,0x00527200,15,'
+        f'{extracted},matched,evidence\n')
+
+    # The old source still contains its original names. Only the ledger row
+    # changed identity; comparing whole sources invents unrelated renames.
+    assert (original, extracted) not in {
+        (old_path, new_path) for old_path, new_path, _, _ in N.pairs(repo, 'HEAD', ':')
+    }
+    findings, _ = N.check(repo, 'HEAD', ':')
+    assert {(f.old_path, f.old_name, f.new_name) for f in findings} == {
+        ('reverse/functions.csv', 'Drawable', 'Rva00527200Owner'),
+        ('reverse/functions.csv', 'clearModelConditionState', 'rva00527200'),
+    }
+
+
+def test_changed_source_extraction_still_detects_owner_and_member_downgrades(repo):
+    old_path, new_path = 'Code/Named.cpp', 'Code/Rva00695E20LodGate.cpp'
+    put(repo, old_path, BEFORE)
+    put(repo, 'reverse/functions.csv',
+        f'?check@@YAXXZ,,0x00695E20,54,{old_path},matched,evidence\n')
+    commit(repo)
+
+    # The source was edited while one of its rows moved. Cross-file comparison
+    # is still needed here to catch names absent from the unchanged symbol.
+    put(repo, old_path, 'void retainedSibling() {}\n')
+    put(repo, new_path, AFTER)
+    put(repo, 'reverse/functions.csv',
+        f'?check@@YAXXZ,,0x00695E20,54,{new_path},matched,evidence\n')
+    findings, _ = N.check(repo, 'HEAD', ':')
+    assert EXPECTED <= {(f.old_name, f.new_name) for f in findings}
+
+
 def test_bank_need_not_be_deleted_and_filename_need_not_have_rva(repo):
     incident(repo, keep_bank=True, path='Code/LodGate.cpp')
     findings, _ = N.check(repo, 'HEAD', ':')
