@@ -88945,3 +88945,6 @@ _peerSetRoomKeysA,0x00858070,GameSpy Peer peerSetRoomKeys; six-argument cdecl ca
 ?Rva00643BC0@PeerThreadClass@@AAEXPAX@Z,0x00045372,REL32 pin from Thread_Function 0x0064FB90 (ILT call site)
 ?Rva00643C10@PeerThreadClass@@AAEXPAX@Z,0x00009359,REL32 pin from Thread_Function 0x0064FB90 (ILT call site)
 ?doQuickMatch@PeerThreadClass@@AAEXPAX@Z,0x0003BFA7,REL32 pin from Thread_Function 0x0064FB90 (ILT call site)
+?erase@Rva008312E0String@@QAEPADPAD0@Z,0x00007C1B,erase range thunk called by 0x008312E0 (thiscall 2 args ret 8)
+?insertRange@Rva008312E0String@@QAEXPAD00ABURva008312E0Tag@@@Z,0x008300B0,forward insert range called by 0x008312E0 (thiscall 4 args ret 0x10)
+?replaceBase@Rva008312E0String@@QAEAAV1@PAD000ABURva008312E0Tag@@@Z,0x00830CC0,forward replace called by 0x008312E0 (thiscall 5 args ret 0x14 returns this)
