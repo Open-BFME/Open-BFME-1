@@ -1,16 +1,6 @@
-// ?createParticleSystems@ActiveBody@@IAEXABVAsciiString@@PBVParticleSystemTemplate@@H@Z
-// partial score=0.57 date=2026-09-21
-// ZH twin reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp:976-1077
-// Real Coord3D (Code/Libraries/Source/WWVegas/WWMath/coord3d.h) has a non-trivial
-// ctor/dtor, so the local bonePositions[16] array needs the compiler-generated
-// eh-vector-constructor-iterator (??_L) -- that call was missing from the
-// earlier hand-rolled Coord3D stand-in, which is why that attempt came up 64B
-// short. Including the real header restores it. memset() zero-fill for
-// usedBoneIndices beats the {false} aggregate initializer (244 vs 275
-// non-reloc diffs) but neither reproduces retail's clean 4x dword zero-store;
-// frame is still 0xEC vs retail 0xE8 -- /FAsc showed both ours and retail
-// spill `this` to the stack (not the culprit); the extra slot is still open.
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath
+// ActiveBody::createParticleSystems, retail 0x0020ED10 (virtual slot +0x40, ILT 0x0004237A).
+// ZH twin: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp
+// cl: /DNDEBUG /MD /EHsc
 
 #include <string.h>
 
@@ -23,19 +13,26 @@ enum ParticleSystemID
 	INVALID_PARTICLE_SYSTEM_ID = 0
 };
 
-#include "coord3d.h"
+// Struct tag as the retail callees mangle it; the out-of-line empty ctor/dtor
+// (coord3d.cpp) make the local array use the EH vector iterators.
+struct Coord3D
+{
+	float x, y, z;
+
+	Coord3D();
+	~Coord3D();
+};
 
 class Matrix3D;
 
 class AsciiString
 {
-	public:
+public:
 	void *m_data;
 
 	const char *str() const
 	{
-		return m_data ? reinterpret_cast<const char *>(m_data) + 8 :
-			reinterpret_cast<const char *>(0x0107388b);
+		return m_data ? reinterpret_cast<const char *>(m_data) + 8 : "";
 	}
 };
 
@@ -59,9 +56,14 @@ public:
 
 	ParticleSystemID getSystemID() const
 	{
-		return *reinterpret_cast<const ParticleSystemID *>(
-			reinterpret_cast<const char *>(this) + 0xac);
+		return m_systemID;
 	}
+
+	unsigned char m_pad[0x98];
+	BfmeParticleSystemHandle *m_firstHandle;
+	BfmeParticleSystemHandle *m_lastHandle;
+	unsigned char m_pad0A0[0xAC - 0xA0];
+	ParticleSystemID m_systemID;
 };
 
 extern ParticleSystem *Make00001B18();
@@ -71,8 +73,19 @@ class BfmeParticleSystemHandle
 public:
 	~BfmeParticleSystemHandle() throw()
 	{
-		m_previous = 0;
-		m_next = 0;
+		if (m_system)
+		{
+			if (m_previous)
+				m_previous->m_next = m_next;
+			else
+				m_system->m_firstHandle = m_next;
+			if (m_next)
+				m_next->m_previous = m_previous;
+			else
+				m_system->m_lastHandle = m_previous;
+			m_previous = 0;
+			m_next = 0;
+		}
 	}
 
 	operator Bool() const
@@ -106,9 +119,6 @@ class BodyParticleSystem
 protected:
 	virtual ~BodyParticleSystem();
 
-private:
-	virtual void *getObjectMemoryPool();
-
 public:
 	enum BodyParticleSystemMagicEnum
 	{
@@ -129,11 +139,11 @@ public:
 class ActiveBody
 {
 protected:
-	void createParticleSystems(const AsciiString &boneBaseName,
+	virtual void createParticleSystems(const AsciiString &boneBaseName,
 		const ParticleSystemTemplate *systemTemplate, Int maxSystems);
 
 private:
-	unsigned char m_bodyFields[0xa8];
+	unsigned char m_bodyFields[0xa4];
 	BodyParticleSystem *m_particleSystems;
 
 public:
@@ -151,6 +161,8 @@ extern Int GetGameClientRandomValue(int lo, int hi, char *file, int line);
 #define newInstance(ARGCLASS) \
 	new(ARGCLASS::ARGCLASS##_GLUE_NOT_IMPLEMENTED, __FILE__) ARGCLASS
 
+// Places up to maxSystems systems on distinct random bones, probing forward from
+// a random start index until a free bone is found.
 void ActiveBody::createParticleSystems(const AsciiString &boneBaseName,
 	const ParticleSystemTemplate *systemTemplate, Int maxSystems)
 {
@@ -173,43 +185,35 @@ void ActiveBody::createParticleSystems(const AsciiString &boneBaseName,
 	Bool usedBoneIndices[MAX_BONES];
 	memset(usedBoneIndices, 0, sizeof(usedBoneIndices));
 
-	const Coord3D *pos;
 	for (Int i = 0; i < maxSystems; ++i)
 	{
-		// Keep the retail source location used by GameClientRandomValue.
-#line 1391 "Code/GameEngine/Source/GameLogic/Object/Body/ActiveBody.cpp"
-		Int boneIndex = GameClientRandomValue(0, maxSystems - i - 1);
-#line 110
+#line 1391 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Body\\ActiveBody.cpp"
+		Int boneIndex = GameClientRandomValue(0, numBones - 1);
 
-		Int count = 0;
 		for (Int j = 0; j < numBones; j++)
 		{
-			if (usedBoneIndices[j] == true)
-				continue;
-
-			if (count == boneIndex)
+			if (usedBoneIndices[boneIndex] != true)
 			{
-				pos = &bonePositions[j];
-				usedBoneIndices[j] = true;
+				const Coord3D *pos = &bonePositions[boneIndex];
+				usedBoneIndices[boneIndex] = true;
+				if (pos)
+				{
+					BfmeParticleSystemHandle particleSystem =
+						TheParticleSystemManager->createParticleSystem(systemTemplate, true);
+					if (particleSystem)
+					{
+						particleSystem->setPosition(pos);
+						particleSystem->attachToObject(us);
+
+						BodyParticleSystem *newEntry = newInstance(BodyParticleSystem);
+						newEntry->m_particleSystemID = particleSystem->getSystemID();
+						newEntry->m_next = m_particleSystems;
+						m_particleSystems = newEntry;
+					}
+				}
 				break;
 			}
-			else
-			{
-				++count;
-			}
-		}
-
-		BfmeParticleSystemHandle particleSystem =
-			TheParticleSystemManager->createParticleSystem(systemTemplate);
-		if (particleSystem)
-		{
-			particleSystem->setPosition(pos);
-			particleSystem->attachToObject(us);
-
-			BodyParticleSystem *newEntry = newInstance(BodyParticleSystem);
-			newEntry->m_particleSystemID = particleSystem->getSystemID();
-			newEntry->m_next = m_particleSystems;
-			m_particleSystems = newEntry;
+			boneIndex = (boneIndex + 1) % numBones;
 		}
 	}
 }
