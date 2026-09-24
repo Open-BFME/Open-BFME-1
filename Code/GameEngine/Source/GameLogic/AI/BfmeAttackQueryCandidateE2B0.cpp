@@ -29,10 +29,10 @@ struct PathfindMovementProfile
 struct BfmeCellResult
 {
 	Int m_field00;
-	Int m_field04;
-	Int m_field08;
-	Int m_field0c;
-	Int m_field10;
+	Int m_ownerId;
+	Int m_candidateZone;
+	Int m_candidateX;
+	Int m_candidateY;
 };
 
 struct BfmeCellInfo
@@ -45,7 +45,7 @@ class PathfindCell
 {
 public:
 	BfmeCellInfo *m_info;
-	Int m_field04;
+	Int m_ownerId;
 	unsigned short m_zone;
 	unsigned short m_pad0a;
 	unsigned char m_pad0c[4];
@@ -111,7 +111,7 @@ private:
 
 // Retail body 0x003D6DC0; the checkCandidate caller reaches it through ILT
 // 0x00042E01.  The body returns true when the line finds a cell whose owner
-// differs from result->m_field04 and records that cell in result.
+// differs from result->m_ownerId and records that cell in result.
 Int BfmeAttackQuery::fillCellAlongLine(const ICoord2D *from,
 	const ICoord2D *to, Int layer, BfmeCellResult *result)
 {
@@ -168,11 +168,11 @@ Int BfmeAttackQuery::fillCellAlongLine(const ICoord2D *from,
 
 		BfmeCellInfo *info = cell->m_info;
 		Int owner = info != 0 ? info->m_field20 : 0;
-		if (owner != result->m_field04)
+		if (owner != result->m_ownerId)
 		{
-			result->m_field08 = cell->m_zone;
-			result->m_field0c = x;
-			result->m_field10 = y;
+			result->m_candidateZone = cell->m_zone;
+			result->m_candidateX = x;
+			result->m_candidateY = y;
 			return true;
 		}
 
@@ -202,10 +202,10 @@ Bool BfmeAttackQuery::checkCandidate(const ICoord2D *base, Int dx, Int dy,
 	candidate.y += dy;
 	fillCellAlongLine(base, &candidate, layer, result);
 
-	if (result->m_field08 != 0)
+	if (result->m_candidateZone != 0)
 	{
 		Int effectiveZone = m_zoneManager.getEffectiveZone(
-			*profile, (zoneStorageType)result->m_field08);
+			*profile, (zoneStorageType)result->m_candidateZone);
 		if (fromZone == effectiveZone ||
 			validMovement(unused, fromZone, effectiveZone, extra))
 			return true;
