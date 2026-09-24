@@ -2438,5 +2438,15 @@
   "after_sha256": "1cf586c39dcec18c6cc00e8810b1df193858532f4e1b6af41f98a72bfa04bd4e",
   "evidence": "reverse/identity_evidence/00853ec0.md",
   "reason": "0x00853EC0 is a 72B constructor-shaped body (zeroes this+4/+8/+0xC, calls 0x00853510 with 0x64, returns this), not GarrisonContain::xfer; the real xfer is the 403B body at 0x0021DAA0 reached from ctor 0x0021D820 vtable 0x010AB818 slot 3 ILT 0x0000EAA7"
+ },
+ {
+  "old_path": "reverse/attempts/0x003ae650.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Glo012F1024Item_forwardRegionReinforcements.cpp",
+  "old_name": "Glo012F1024Record",
+  "new_name": "Rva003BABE0Record",
+  "before_sha256": "359aced6f478201e9a10d9ad3569504ae84c068015d5d4bd38585f5055cc4af6",
+  "after_sha256": "b0ce7fbb15b64ff3bc0a138a7aacbf67eb6a9555f4ba2fd069adf58c0db5ed85",
+  "evidence": "reverse/symbols.csv",
+  "reason": "pin ?getRegionName@Rva003BABE0Record@@QAE?AVAsciiString@@XZ at ILT 0x0001073F: the retail call at 0x003AE650+0x5D encodes that pinned ILT and functions.csv row 0x003AD470 (ParseRegionReinforcementBlock.cpp) defines the same 0x24-byte record so the bank TU-local record shim is that class"
  }
 ]
