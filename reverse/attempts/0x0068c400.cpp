@@ -1,5 +1,5 @@
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/lanapi /Ireference/shims/campaignmanagerascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
-// partial score=0.17 date=2026-09-17
+// ?handleRequestJoin@LANAPI@@IAEXPAULANMessage@@I@Z
+// partial score=0.18 date=2026-09-24
 // stlport
 
 // ?handleRequestJoin@LANAPI@@IAEXPAULANMessage@@I@Z
@@ -8,6 +8,17 @@
 // packed join payload, extra CRC and BFME LAN layouts are carried by the
 // included BFME shim/source; the retail EH/string schedule is still open.
 #include "../../Code/GameEngine/Source/GameNetwork/lanapi.cpp"
+
+static __forceinline Int Rva0068C400FindOpenSlot(LANGameInfo *game, Bool canJoin)
+{
+	Int player = 0;
+	for (; canJoin && player < MAX_SLOTS; ++player)
+	{
+		if (game->getLANSlot(player)->isOpen())
+			return player;
+	}
+	return player;
+}
 
 void LANAPI::handleRequestJoin( LANMessage *msg, UnsignedInt senderIP )
 {
@@ -109,29 +120,26 @@ void LANAPI::handleRequestJoin( LANMessage *msg, UnsignedInt senderIP )
 
 			if (numPlayers < numStartingSpots)
 			{
-				for (player = 0; canJoin && player < MAX_SLOTS; ++player)
+				player = Rva0068C400FindOpenSlot(m_currentGame, canJoin);
+				if (canJoin && player < MAX_SLOTS)
 				{
-					if (m_currentGame->getLANSlot(player)->isOpen())
-					{
-						reply.LANMessageType = LANMessage::MSG_JOIN_ACCEPT;
-						wcsncpy(reply.GameJoined.gameName,
-							m_currentGame->getName().str(), g_lanGameNameLength);
-						reply.GameJoined.gameName[g_lanGameNameLength] = 0;
-						reply.GameJoined.slotPosition = player;
-						reply.GameJoined.gameIP = m_localIP;
-						reply.GameJoined.playerIP = senderIP;
+					reply.LANMessageType = LANMessage::MSG_JOIN_ACCEPT;
+					wcsncpy(reply.GameJoined.gameName,
+						m_currentGame->getName().str(), g_lanGameNameLength);
+					reply.GameJoined.gameName[g_lanGameNameLength] = 0;
+					reply.GameJoined.slotPosition = player;
+					reply.GameJoined.gameIP = m_localIP;
+					reply.GameJoined.playerIP = senderIP;
 
-						LANGameSlot newSlot;
-						newSlot.setState(SLOT_PLAYER, UnicodeString(msg->name));
-						newSlot.setIP(senderIP);
-						newSlot.setPort(NETWORK_BASE_PORT_NUMBER);
-						newSlot.setLastHeard(timeGetTime());
-						newSlot.setSerial(BFME_JOIN(msg)->serial);
-						m_currentGame->setSlot(player, newSlot);
-						OnPlayerJoin(player, UnicodeString(msg->name));
-						responseIP = 0;
-						break;
-					}
+					LANGameSlot newSlot;
+					newSlot.setState(SLOT_PLAYER, UnicodeString(msg->name));
+					newSlot.setIP(senderIP);
+					newSlot.setPort(NETWORK_BASE_PORT_NUMBER);
+					newSlot.setLastHeard(timeGetTime());
+					newSlot.setSerial(BFME_JOIN(msg)->serial);
+					m_currentGame->setSlot(player, newSlot);
+					OnPlayerJoin(player, UnicodeString(msg->name));
+					responseIP = 0;
 				}
 			}
 
