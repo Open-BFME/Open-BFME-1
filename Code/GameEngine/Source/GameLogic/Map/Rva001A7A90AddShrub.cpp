@@ -1,5 +1,3 @@
-// ?Rva001A7A90AddShrub@@YGXPBVThingTemplate@@PBUCoord3D@@MM@Z
-// partial score=0.99 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x001A7A90 (311 bytes), __stdcall with four arguments.  It looks for
 // a tree draw module among a template's draw modules and hands the shrub to
@@ -174,6 +172,11 @@ public:
 };
 
 extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+
+// Typed view of the debug manager's table for the slot +0x60 call: the
+// second register parameter carries the table so it stays in EDX, as retail
+// loads it (docs/shape_levers.md, vtable register-temp call shape).
+typedef void (__fastcall *BfmeAwakenDebugSlot60)(BfmeAwakenDebug *self, void *const *table);
 extern bool _bfme_debugReportingEnabled(void);
 extern void _bfme_debugRecordCallsite(int kind);
 
@@ -207,7 +210,10 @@ void __stdcall Rva001A7A90AddShrub(const ThingTemplate *tmpl, const Coord3D *pos
 	}
 
 	_bfme_debugRecordCallsite(1);
-	TheBfmeAwakenDebug->v60();
+	{
+		void *const *table = *(void *const *const *)TheBfmeAwakenDebug;
+		((BfmeAwakenDebugSlot60)table[0x60 / 4])(TheBfmeAwakenDebug, table);
+	}
 	TheBfmeAwakenDebug->v6c(0, 0)->v38("Shrub ")->v38(tmpl->getString20())
 		->v38(" requires a W3DTreeDrawModule.\n")->v4c(2);
 	_WriteBarrier();
