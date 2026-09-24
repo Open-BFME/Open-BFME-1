@@ -47,6 +47,14 @@ The MSVC 7.1 toolchain and baseline executables are committed directly (plain gi
 ./build.sh               # verify every tracked function against retail   (build.cmd or .\build.ps1 on Windows, same arguments)
 ```
 
+On Linux, use WineHQ's Wine 11 (`winehq-stable`), not a distro package, with a
+32-bit prefix (`WINEARCH=win32 wineboot -i`). Ubuntu 24.04's Wine 9.0 compiles
+almost everything, but `cl.exe` spins forever on a few TUs (among them
+`WW3D2/Rva0093C4A0.cpp`, `System/RegistryUserDataLeafNameUnicode.cpp` and
+`GameNetwork/NetPacket_ConstructBigCommandPacketList.cpp`), so a full gate
+never finishes. Under Wine 11 the same full gate runs in about 30 minutes on
+four cores.
+
 To check a single function while iterating, pass its file or name — a few seconds instead of the full run:
 
 ```bash
