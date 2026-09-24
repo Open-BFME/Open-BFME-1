@@ -13,10 +13,11 @@
 // at 0x001B4250.  Fields whose BFME semantic names are not independently known
 // retain offset-based names; float and byte types are used only where the
 // constructor values and surrounding source establish those ABI widths.
-// Locomotor.cpp:425-426 maps the BFME INI keys Surfaces and Speed to +0x10
-// and +0x1c. Matched Locomotor::getMaxTurnRate at 0x001B5860 reads +0x28/+0x2c
-// as normal/damaged turn periods; matched getMaxAcceleration at 0x001B5A30
-// reads +0x44/+0x48 as acceleration and damaged acceleration.
+// The retail LocomotorTemplate FieldParse table at 0x00C9D860 maps
+// Acceleration/Lift/LiftDamaged to +0x40/+0x44/+0x48. The matched getter at
+// 0x001B5A30 appears to conflict; its identity remains unresolved (see
+// docs/naming_evidence.md). Matched getMaxTurnRate at 0x001B5860 reads
+// +0x28/+0x2c as normal/damaged turn periods.
 
 class Overridable
 {
@@ -55,9 +56,9 @@ private:
 	float m_d34;
 	float m_d38;
 	float m_d3c;
-	unsigned int m_d40;
 	unsigned int m_acceleration;
-	float m_accelerationDamaged;
+	unsigned int m_lift;
+	float m_liftDamaged;
 	unsigned int m_d4c;
 	float m_d50;
 	unsigned int m_d54;
@@ -135,12 +136,12 @@ LocomotorTemplate::LocomotorTemplate()
 {
 	m_d20 = 1.0f;
 	m_turnPeriod = 5;
-	m_d40 = 5;
+	m_acceleration = 5;
 	m_d4c = 5;
 	m_d8c = 0.1f;
 	m_d90 = 0.1f;
 	m_damagedTurnPeriod = 0;
-	m_accelerationDamaged = -1.0f;
+	m_liftDamaged = -1.0f;
 	m_surfaces = 0;
 	m_maxSpeed = 0;
 	m_d14 = 1.0f;
@@ -149,7 +150,7 @@ LocomotorTemplate::LocomotorTemplate()
 	m_d34 = 20.0f;
 	m_d38 = 0.2617994f;
 	m_d3c = 3.1415927f;
-	m_acceleration = 0;
+	m_lift = 0;
 	m_d24 = 0;
 	m_d50 = 99999.0f;
 	m_d6c = 0;

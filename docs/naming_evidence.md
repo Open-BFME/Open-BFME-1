@@ -376,3 +376,16 @@ correction: the check can enforce its presence, not prove the identity for you.
 The hooks also require the checker and its layout walker to match the staged
 index (commit) or outgoing commit (push), so an unstaged tool experiment cannot
 silently change the verdict on the reviewed source.
+
+### LocomotorTemplate retail field-table evidence
+
+The BFME retail `FieldParse` table at RVA `0x00C9D860` names
+`Acceleration`, `Lift`, and `LiftDamaged` at offsets `+0x40`, `+0x44`, and
+`+0x48`. Those direct table entries support the member names in the
+`LocomotorTemplate` constructor and copy-assignment layout views. A separate
+matched body at `0x001B5A30`, currently named `getMaxAcceleration`, appears to
+read `+0x44/+0x48` as an acceleration pair. Its identity is unresolved: the
+known apparent caller at `0x001B80D0` has not been independently established as
+an acceleration query, and an existing attempt describes a hover/bob update
+flow. Do not use that getter name to override the retail field table or change
+the getter/pins until an independent caller and ABI establish its identity.

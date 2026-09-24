@@ -1,9 +1,10 @@
 // cl: /O2 /Ob1 /DNDEBUG /MD /ICode/Libraries/Source/WWVegas/WWLib
 // BFME retail LocomotorTemplate::operator= (RVA 0x001B4250).
-// Locomotor.cpp:425-426 maps the BFME INI keys Surfaces and Speed to +0x10
-// and +0x1c. Matched Locomotor::getMaxTurnRate at 0x001B5860 reads +0x28/+0x2c
-// as normal/damaged turn periods; matched getMaxAcceleration at 0x001B5A30
-// reads +0x44/+0x48 as acceleration and damaged acceleration.
+// The retail LocomotorTemplate FieldParse table at 0x00C9D860 maps
+// Acceleration/Lift/LiftDamaged to +0x40/+0x44/+0x48. The matched getter at
+// 0x001B5A30 appears to conflict; its identity remains unresolved (see
+// docs/naming_evidence.md). Matched getMaxTurnRate at 0x001B5860 reads
+// +0x28/+0x2c as normal/damaged turn periods.
 
 class ScienceInfoBase
 {
@@ -35,9 +36,9 @@ private:
 	unsigned int m_d34;
 	unsigned int m_d38;
 	unsigned int m_d3c;
-	unsigned int m_d40;
 	unsigned int m_acceleration;
-	unsigned int m_accelerationDamaged;
+	unsigned int m_lift;
+	unsigned int m_liftDamaged;
 	unsigned int m_d4c;
 	unsigned int m_d50;
 	unsigned int m_d54;
@@ -123,9 +124,9 @@ LocomotorTemplate &LocomotorTemplate::operator=(const LocomotorTemplate &other)
 	m_d34 = other.m_d34;
 	m_d38 = other.m_d38;
 	m_d3c = other.m_d3c;
-	m_d40 = other.m_d40;
 	m_acceleration = other.m_acceleration;
-	m_accelerationDamaged = other.m_accelerationDamaged;
+	m_lift = other.m_lift;
+	m_liftDamaged = other.m_liftDamaged;
 	m_d4c = other.m_d4c;
 	m_d50 = other.m_d50;
 	m_d54 = other.m_d54;
