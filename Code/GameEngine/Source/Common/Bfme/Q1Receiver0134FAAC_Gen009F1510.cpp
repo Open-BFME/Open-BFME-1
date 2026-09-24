@@ -1,17 +1,16 @@
 // ?handle@Gen009F1510@@QAEXXZ
-// partial score=0.99 date=2026-09-24
-// ?handle@Gen009F1510@@QAEXXZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
 // Retail RVA 0x009F1510, 1199 bytes of code (its seven-entry switch table
 // follows at 0x009F19C0). Identity is address-derived. The name is the pin the
 // matched pointer-tail thunk 0x009EBA30 (IndirectMemberTailThunks.cpp) already
-// calls through W3DRenderObjectSnapshot's +8 pointer; the matched 0x009F1AE0
-// sweep and the unmatched AssetRegistry destructor 0x009F23C0 also call it
-// with the receiver in ECX. Gen009F1510 is that pinned view of the
-// Q1Receiver0134FAAC object g_theAssetRegistry (0x0134FAAC) points at, so it
-// derives from the receiver layout and calls the receiver's own members.
+// calls through W3DRenderObjectSnapshot's +8 pointer; the 0x009F1AE0 sweep
+// and the matched registry destructor ??1Gen_dtor_009eb9e0@@QAE@XZ
+// (0x009F23C0) also call it with the receiver in ECX. Gen009F1510 is that
+// pinned view of the Q1Receiver0134FAAC object g_theAssetRegistry
+// (0x0134FAAC) points at, so it derives from the receiver layout and calls the
+// receiver's own members (0x009EFBF0 through its own functions.csv row).
 //
 // The body is the worker pass over the receiver's seven entry deques at
 // +0x78 (see Q1Receiver0134FAAC_m009F1AE0.cpp for the element proof). For
@@ -43,23 +42,24 @@
 struct Rva001408C0Target;
 typedef _STL::set<Rva001408C0Target *> Rva001408C0Set;
 
-// The receiver's 0x14-byte set wrapper: tree, count, flag (the name the
-// pinned 0x009EFD40 member already uses for it). Retail builds the local one
-// here as header node, count 0, flag 1.
+// The receiver's 0x14-byte set wrapper (the name the pinned 0x009EFD40 member
+// and the matched 0x009F0E50 member already use for it, with their member
+// spelling). Retail builds the local one here as header node, 0 at +0xC and
+// 1 at +0x10.
 struct Q1ReceiverLocalSet
 {
-	Rva001408C0Set m_tree;
-	unsigned int m_count;
-	bool m_active;
+	Rva001408C0Set m_set;
+	int m_zero;
+	bool m_one;
 
 	Q1ReceiverLocalSet()
 	{
-		m_count = 0;
-		m_active = true;
+		m_zero = 0;
+		m_one = true;
 	}
 };
 
-class Q1QueueEntry009F1510
+class Rva009EF0D0Element
 {
 public:
 	virtual void slot00();
@@ -86,13 +86,21 @@ public:
 	int m_key08;
 };
 
-typedef _STL::deque<Q1QueueEntry009F1510 *> Q1Queue009F1510;
+typedef _STL::deque<Rva009EF0D0Element *> Q1Queue009F1510;
+
+// 0x009EFBF0 is landed as AssetRegistry::Queue_Keys_009EFBF0
+// (AssetRegistryQueueKeys009EFBF0.cpp) on the same g_theAssetRegistry
+// object; this TU reaches it through that declaration.
+class AssetRegistry
+{
+public:
+	void Queue_Keys_009EFBF0(bool known, const Rva001408C0Set &keys);
+};
 
 class Q1Receiver0134FAAC
 {
 public:
 	void refresh();
-	void m009EFBF0(bool known, Q1ReceiverLocalSet *set);
 
 protected:
 	unsigned int m_thread;
@@ -142,7 +150,7 @@ void Gen009F1510::handle()
 				LeaveCriticalSection(&m_lock60);
 				break;
 			}
-			Q1QueueEntry009F1510 *entry = m_deques78[q].front();
+			Rva009EF0D0Element *entry = m_deques78[q].front();
 			m_deques78[q].pop_front();
 			entry->m_queue = 8;
 			LeaveCriticalSection(&m_lock60);
@@ -157,10 +165,11 @@ void Gen009F1510::handle()
 				m_field20 += entry->slot38();
 				Q1ReceiverLocalSet set;
 				entry->slot10(&set);
-				if (set.m_tree.size() != 0)
+				if (set.m_set.size() != 0)
 				{
-					m009EFBF0(m_set1a4.m_tree.find((Rva001408C0Target *)entry->m_key08) !=
-						m_set1a4.m_tree.end(), &set);
+					((AssetRegistry *)this)->Queue_Keys_009EFBF0(
+						m_set1a4.m_set.find((Rva001408C0Target *)entry->m_key08) !=
+						m_set1a4.m_set.end(), set.m_set);
 				}
 				break;
 			}

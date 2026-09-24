@@ -2228,5 +2228,15 @@
   "after_sha256": "0fbf6049d848128aac6e8b2a32550ac9da58f8dbb8ad8deb91311582e4d319c5",
   "evidence": "reverse/symbols.csv",
   "reason": "Gen_p12cd was a stash-local spelling of the payload of the registry +0x44 hash_map; the ledger already names that payload Gen_t_009f14c0_p12cd in the 0x009EE0F0 begin pin and the matched 0x009F14C0 hash_map constructor the registry ctor 0x009F2140 uses for +0x44, so the bank adopts the established type name"
+ },
+ {
+  "old_path": "reverse/attempts/0x009f1510.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Bfme/Q1Receiver0134FAAC_Gen009F1510.cpp",
+  "old_name": "Q1QueueEntry009F1510",
+  "new_name": "Rva009EF0D0Element",
+  "before_sha256": "27a28b1faca831dbe49564f46d153989e97ef1c49a00c9017f2cc38a0f7c4305",
+  "after_sha256": "3664178c066dad2f572160ff6d6b9d1db42f725c0db787be58e9b8736999c5f2",
+  "evidence": "reverse/symbols.csv",
+  "reason": "Both are address-derived placeholders for the registry's +0x78 deque element; nothing names the class. Master already pins the element's deque push_back aux 0x009EF0D0 and push_front aux 0x009EF140 as deque<Rva009EF0D0Element*> (reverse/symbols.csv), so the bank adopts that spelling to share one pin per deque helper address instead of adding a second name at each"
  }
 ]
