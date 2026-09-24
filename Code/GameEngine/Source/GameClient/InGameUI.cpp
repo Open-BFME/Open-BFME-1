@@ -3894,7 +3894,9 @@ void InGameUI::selectDrawable( Drawable *draw )
 //-------------------------------------------------------------------------------------------------
 /** Clear "selected" status of Drawable. */
 //-------------------------------------------------------------------------------------------------
-// ?deselectDrawable@InGameUI@@UAEXPAVDrawable@@@Z present-unmatched
+// ?deselectDrawable@InGameUI@@UAEXPAVDrawable@@@Z is matched from InGameUIDeselectDrawable.cpp
+// (BFME offsets, entry reset at +0x44). This Zero Hour copy stays: it instantiates
+// the out-of-line _STL::find rows this TU carries.
 void InGameUI::deselectDrawable( Drawable *draw )
 {
 

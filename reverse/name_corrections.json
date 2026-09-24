@@ -2458,5 +2458,15 @@
   "after_sha256": "c57c9887109a4702739614881d381f877c382f479c21b35c553da99e3774804e",
   "evidence": "reverse/functions.csv",
   "reason": "the same second string-record table (owner +0x2C and findNameIndex 0x00356A60) is matched at 0x0035A220 in Rva0035A220LookupReleased.cpp which names its 20-byte record Rva00359530Record; the bank-era BfmeBucketERY shim carried no evidence of its own so the TU adopts the sibling record name"
+ },
+ {
+  "old_path": "reverse/attempts/0x00446490.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/InGameUIDeselectDrawable.cpp",
+  "old_name": "BfmeDeselectFlagView",
+  "new_name": "Rva00417240",
+  "before_sha256": "f5c0e96243afc0247f62a8a5019acf77133ad4a61b3c1e0d1f5ed6a75d6e4c1a",
+  "after_sha256": "cf14b237fc7c0c1b6321bf9460abd53a4c4a239f6534d776fda767b94432daad",
+  "evidence": "reverse/identity_evidence/00446490.md",
+  "reason": "BfmeDeselectFlagView was the bank's local view, reached through an /alternatename onto the ILT thunk 0x00013368; it names no class. The landed body calls the target 0x00417240 under its existing ledger name Rva00417240::run, so the call resolves without an alias."
  }
 ]
