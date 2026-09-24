@@ -13,9 +13,9 @@
 "0x8": 2.4
 },
 "fns": [
-"??0?$BitFlags@$0BB@@@QAE@XZ",
 "??0?$BitFlags@$0HE@@@QAE@XZ",
-"??0?$BitFlags@$0HF@@@QAE@XZ"
+"??0?$BitFlags@$0HF@@@QAE@XZ",
+"??0?$BitFlags@$0IA@@@QAE@XZ"
 ]
 },
 {
@@ -6644,48 +6644,6 @@
 ]
 },
 {
-"owner": "?$DLINK_ITERATOR@VObject",
-"fn_class": "?$DLINK_ITERATOR@VObject",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?cur@?$DLINK_ITERATOR@VObject@@@@QBEPAVObject@@XZ"
-]
-},
-{
-"owner": "?$DLINK_ITERATOR@VTeam",
-"fn_class": "?$DLINK_ITERATOR@VTeam",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?cur@?$DLINK_ITERATOR@VTeam@@@@QBEPAVTeam@@XZ"
-]
-},
-{
-"owner": "?$DLINK_ITERATOR@VTeamInQueue",
-"fn_class": "?$DLINK_ITERATOR@VTeamInQueue",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?cur@?$DLINK_ITERATOR@VTeamInQueue@@@@QBEPAVTeamInQueue@@XZ"
-]
-},
-{
 "owner": "?$DLListClass@USmudge",
 "fn_class": "?$DLListClass@USmudge",
 "member": "+0x4?",
@@ -8502,20 +8460,6 @@
 ]
 },
 {
-"owner": "?$HashTemplateClass@VStringClass",
-"fn_class": "?$HashTemplateClass@VStringClass",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Hash@?$HashTemplateClass@VStringClass@@PAVTextureClass@@@@QAEPAHXZ"
-]
-},
-{
 "owner": "?$HashTemplateClass@VVector3",
 "fn_class": "?$HashTemplateClass@VVector3",
 "member": "+0x0?",
@@ -8966,34 +8910,6 @@
 ]
 },
 {
-"owner": "?$OVERRIDE@VWaterTransparencySetting",
-"fn_class": "?$OVERRIDE@VWaterTransparencySetting",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getNonOverloadedPointer@?$OVERRIDE@VWaterTransparencySetting@@@@QBEPBVWaterTransparencySetting@@XZ"
-]
-},
-{
-"owner": "?$OVERRIDE@VWeatherSetting",
-"fn_class": "?$OVERRIDE@VWeatherSetting",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getNonOverloadedPointer@?$OVERRIDE@VWeatherSetting@@@@QBEPBVWeatherSetting@@XZ"
-]
-},
-{
 "owner": "?$ObjectPoolClass@VGridLinkClass",
 "fn_class": "?$ObjectPoolClass@VGridLinkClass",
 "member": "+0x0?",
@@ -9215,20 +9131,6 @@
 "alts": {},
 "fns": [
 "?Peek_Obj@?$RefMultiListIterator@VRenderObjClass@@@@QAEPAVRenderObjClass@@XZ"
-]
-},
-{
-"owner": "?$SLNode@VFont3DDataClass",
-"fn_class": "?$SLNode@VFont3DDataClass",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Next@?$SLNode@VFont3DDataClass@@@@QAEPAV1@XZ"
 ]
 },
 {
@@ -10643,7 +10545,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?ID@?$VectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAEHABUAddInfoStruct@MixFileFactoryClass@@@Z",
 "?ID@?$VectorClass@UAddInfoStruct@MixFileFactoryClass@@@@UAEHPBUAddInfoStruct@MixFileFactoryClass@@@Z"
 ]
 },
@@ -10687,9 +10588,8 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?ID@?$VectorClass@UFileInfoStruct@MixFileCreator@@@@UAEHABUFileInfoStruct@MixFileCreator@@@Z",
 "?ID@?$VectorClass@UFileInfoStruct@MixFileCreator@@@@UAEHPBUFileInfoStruct@MixFileCreator@@@Z",
-"?ID@?$VectorClass@UFileInfoStruct@MixFileFactoryClass@@@@UAEHABUFileInfoStruct@MixFileFactoryClass@@@Z"
+"?ID@?$VectorClass@UFileInfoStruct@MixFileFactoryClass@@@@UAEHPBUFileInfoStruct@MixFileFactoryClass@@@Z"
 ]
 },
 {
@@ -10732,7 +10632,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?ID@?$VectorClass@UFileOffsetStruct@@@@UAEHABUFileOffsetStruct@@@Z",
 "?ID@?$VectorClass@UFileOffsetStruct@@@@UAEHPBUFileOffsetStruct@@@Z"
 ]
 },
@@ -10878,7 +10777,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?ID@?$VectorClass@VRenderDeviceDescClass@@@@UAEHABVRenderDeviceDescClass@@@Z",
 "?Resize@?$VectorClass@VRenderDeviceDescClass@@@@UAE_NHPBVRenderDeviceDescClass@@@Z"
 ]
 },
@@ -12040,8 +11938,8 @@
 "alts": {},
 "fns": [
 "?_M_upper_bound@?$_Rb_tree@PAVGameWindow@@PAV1@U?$_Identity@PAVGameWindow@@@_STL@@U?$less@PAVGameWindow@@@3@V?$allocator@PAVGameWindow@@@3@@_STL@@ABEPAU?$_Rb_tree_node@PAVGameWindow@@@2@ABQAVGameWindow@@@Z",
-"?empty@?$_Rb_tree@PAVGameWindow@@PAV1@U?$_Identity@PAVGameWindow@@@_STL@@U?$less@PAVGameWindow@@@3@V?$allocator@PAVGameWindow@@@3@@_STL@@QBE_NXZ",
-"?equal_range@?$_Rb_tree@PAVGameWindow@@PAV1@U?$_Identity@PAVGameWindow@@@_STL@@U?$less@PAVGameWindow@@@3@V?$allocator@PAVGameWindow@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@PAVGameWindow@@U?$_Nonconst_traits@PAVGameWindow@@@_STL@@@_STL@@U12@@2@ABQAVGameWindow@@@Z"
+"?equal_range@?$_Rb_tree@PAVGameWindow@@PAV1@U?$_Identity@PAVGameWindow@@@_STL@@U?$less@PAVGameWindow@@@3@V?$allocator@PAVGameWindow@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@PAVGameWindow@@U?$_Nonconst_traits@PAVGameWindow@@@_STL@@@_STL@@U12@@2@ABQAVGameWindow@@@Z",
+"?insert_unique@?$_Rb_tree@PAVGameWindow@@PAV1@U?$_Identity@PAVGameWindow@@@_STL@@U?$less@PAVGameWindow@@@3@V?$allocator@PAVGameWindow@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@PAVGameWindow@@U?$_Nonconst_traits@PAVGameWindow@@@_STL@@@_STL@@_N@2@ABQAVGameWindow@@@Z"
 ]
 },
 {
@@ -12306,7 +12204,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?empty@?$_Rb_tree@W4LocomotorSetType@@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QBE_NXZ",
 "?insert_unique@?$_Rb_tree@W4LocomotorSetType@@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@2@@Z",
 "?insert_unique@?$_Rb_tree@W4LocomotorSetType@@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Select1st@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@2@@Z"
 ]
@@ -12371,20 +12268,6 @@
 "?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@UPristineBoneInfo@@@2@@Z",
 "?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@VObjectCreationList@@@2@@Z",
 "?insert_unique@?$_Rb_tree@W4NameKeyType@@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Select1st@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@U?$less@W4NameKeyType@@@3@V?$allocator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@U?$_Nonconst_traits@U?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@_STL@@@2@@2@U32@ABU?$pair@$$CBW4NameKeyType@@W4VeterancyLevel@@@2@@Z"
-]
-},
-{
-"owner": "?$_Rb_tree@W4ObjectID",
-"fn_class": "?$_Rb_tree@W4ObjectID",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?empty@?$_Rb_tree@W4ObjectID@@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@U?$_Select1st@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@U?$less@W4ObjectID@@@3@V?$allocator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@3@@_STL@@QBE_NXZ"
 ]
 },
 {
@@ -12488,20 +12371,6 @@
 {
 "owner": "?$deque@PAVPartitionCell",
 "fn_class": "?$deque@PAVPartitionCell",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?front@?$deque@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@QAEAAPAVPartitionCell@@XZ"
-]
-},
-{
-"owner": "?$deque@PAVPartitionCell",
-"fn_class": "?$deque@PAVPartitionCell",
 "member": "+0x10?",
 "zh": 16,
 "bfme": 16,
@@ -12538,7 +12407,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?front@?$deque@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@QAEAAPAVSightingInfo@@XZ",
 "?size@?$deque@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
@@ -12638,7 +12506,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?front@?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAEAAVBuddyRequest@@XZ",
 "?pop_front@?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
@@ -12779,7 +12646,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?front@?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAEAAVBuddyResponse@@XZ",
 "?pop_front@?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
@@ -12922,7 +12788,7 @@
 "fns": [
 "?_M_pop_front_aux@?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@IAEXXZ",
 "?_M_reallocate_map@?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@IAEXI_N@Z",
-"?front@?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAEAAVGameResultsRequest@@XZ"
+"?pop_front@?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
 {
@@ -13076,7 +12942,7 @@
 "fns": [
 "?_M_pop_front_aux@?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@IAEXXZ",
 "?_M_reallocate_map@?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@IAEXI_N@Z",
-"?front@?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAEAAVGameResultsResponse@@XZ"
+"?pop_front@?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
 {
@@ -13230,7 +13096,7 @@
 "fns": [
 "?_M_pop_front_aux@?$deque@VPSRequest@@V?$allocator@VPSRequest@@@_STL@@@_STL@@IAEXXZ",
 "?_M_reallocate_map@?$deque@VPSRequest@@V?$allocator@VPSRequest@@@_STL@@@_STL@@IAEXI_N@Z",
-"?front@?$deque@VPSRequest@@V?$allocator@VPSRequest@@@_STL@@@_STL@@QAEAAVPSRequest@@XZ"
+"?pop_front@?$deque@VPSRequest@@V?$allocator@VPSRequest@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
 {
@@ -13368,7 +13234,6 @@
 "alts": {},
 "fns": [
 "?_M_pop_front_aux@?$deque@VPSResponse@@V?$allocator@VPSResponse@@@_STL@@@_STL@@IAEXXZ",
-"?front@?$deque@VPSResponse@@V?$allocator@VPSResponse@@@_STL@@@_STL@@QAEAAVPSResponse@@XZ",
 "?pop_front@?$deque@VPSResponse@@V?$allocator@VPSResponse@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
@@ -13429,7 +13294,6 @@
 "alts": {},
 "fns": [
 "?_M_pop_front_aux@?$deque@VPeerRequest@@V?$allocator@VPeerRequest@@@_STL@@@_STL@@IAEXXZ",
-"?front@?$deque@VPeerRequest@@V?$allocator@VPeerRequest@@@_STL@@@_STL@@QAEAAVPeerRequest@@XZ",
 "?pop_front@?$deque@VPeerRequest@@V?$allocator@VPeerRequest@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
@@ -13491,7 +13355,7 @@
 "fns": [
 "?_M_pop_front_aux@?$deque@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@IAEXXZ",
 "?_M_reallocate_map@?$deque@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@IAEXI_N@Z",
-"?front@?$deque@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@QAEAAVPeerResponse@@XZ"
+"?pop_front@?$deque@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
 {
@@ -13625,8 +13489,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_reallocate_map@?$deque@VPingRequest@@V?$allocator@VPingRequest@@@_STL@@@_STL@@IAEXI_N@Z",
-"?front@?$deque@VPingRequest@@V?$allocator@VPingRequest@@@_STL@@@_STL@@QAEAAVPingRequest@@XZ"
+"?_M_reallocate_map@?$deque@VPingRequest@@V?$allocator@VPingRequest@@@_STL@@@_STL@@IAEXI_N@Z"
 ]
 },
 {
@@ -13772,7 +13635,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?front@?$deque@VPingResponse@@V?$allocator@VPingResponse@@@_STL@@@_STL@@QAEAAVPingResponse@@XZ",
 "?pop_front@?$deque@VPingResponse@@V?$allocator@VPingResponse@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
@@ -13977,48 +13839,6 @@
 ]
 },
 {
-"owner": "?$map@W4LocomotorSetType",
-"fn_class": "?$map@W4LocomotorSetType",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?empty@?$map@W4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@U?$less@W4LocomotorSetType@@@3@V?$allocator@U?$pair@$$CBW4LocomotorSetType@@V?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@@_STL@@@3@@_STL@@QBE_NXZ"
-]
-},
-{
-"owner": "?$map@W4ObjectID",
-"fn_class": "?$map@W4ObjectID",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?empty@?$map@W4ObjectID@@W4ObjectEnterExitType@@U?$less@W4ObjectID@@@_STL@@V?$allocator@U?$pair@$$CBW4ObjectID@@W4ObjectEnterExitType@@@_STL@@@4@@_STL@@QBE_NXZ"
-]
-},
-{
-"owner": "?$queue@PAVPartitionCell",
-"fn_class": "?$queue@PAVPartitionCell",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?front@?$queue@PAVPartitionCell@@V?$deque@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@@_STL@@QAEAAPAVPartitionCell@@XZ"
-]
-},
-{
 "owner": "?$queue@PAVPartitionCell",
 "fn_class": "?$queue@PAVPartitionCell",
 "member": "+0x10?",
@@ -14057,7 +13877,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?front@?$queue@PAVSightingInfo@@V?$deque@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@@_STL@@QAEAAPAVSightingInfo@@XZ",
 "?size@?$queue@PAVSightingInfo@@V?$deque@PAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
@@ -14147,34 +13966,6 @@
 ]
 },
 {
-"owner": "?$queue@VBuddyRequest",
-"fn_class": "?$queue@VBuddyRequest",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?front@?$queue@VBuddyRequest@@V?$deque@VBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@@_STL@@QAEAAVBuddyRequest@@XZ"
-]
-},
-{
-"owner": "?$queue@VBuddyResponse",
-"fn_class": "?$queue@VBuddyResponse",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?front@?$queue@VBuddyResponse@@V?$deque@VBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@@_STL@@QAEAAVBuddyResponse@@XZ"
-]
-},
-{
 "owner": "?$queue@VGameResultsRequest",
 "fn_class": "?$queue@VGameResultsRequest",
 "member": "+0x0?",
@@ -14185,7 +13976,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?front@?$queue@VGameResultsRequest@@V?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@@_STL@@QAEAAVGameResultsRequest@@XZ",
 "?pop@?$queue@VGameResultsRequest@@V?$deque@VGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
@@ -14262,20 +14052,6 @@
 {
 "owner": "?$queue@VGameResultsResponse",
 "fn_class": "?$queue@VGameResultsResponse",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?front@?$queue@VGameResultsResponse@@V?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@@_STL@@QAEAAVGameResultsResponse@@XZ"
-]
-},
-{
-"owner": "?$queue@VGameResultsResponse",
-"fn_class": "?$queue@VGameResultsResponse",
 "member": "+0x10?",
 "zh": 16,
 "bfme": 16,
@@ -14299,62 +14075,6 @@
 "alts": {},
 "fns": [
 "?push@?$queue@VGameResultsResponse@@V?$deque@VGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@@_STL@@QAEXABVGameResultsResponse@@@Z"
-]
-},
-{
-"owner": "?$queue@VPSRequest",
-"fn_class": "?$queue@VPSRequest",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?front@?$queue@VPSRequest@@V?$deque@VPSRequest@@V?$allocator@VPSRequest@@@_STL@@@_STL@@@_STL@@QAEAAVPSRequest@@XZ"
-]
-},
-{
-"owner": "?$queue@VPSResponse",
-"fn_class": "?$queue@VPSResponse",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?front@?$queue@VPSResponse@@V?$deque@VPSResponse@@V?$allocator@VPSResponse@@@_STL@@@_STL@@@_STL@@QAEAAVPSResponse@@XZ"
-]
-},
-{
-"owner": "?$queue@VPeerRequest",
-"fn_class": "?$queue@VPeerRequest",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?front@?$queue@VPeerRequest@@V?$deque@VPeerRequest@@V?$allocator@VPeerRequest@@@_STL@@@_STL@@@_STL@@QAEAAVPeerRequest@@XZ"
-]
-},
-{
-"owner": "?$queue@VPeerResponse",
-"fn_class": "?$queue@VPeerResponse",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?front@?$queue@VPeerResponse@@V?$deque@VPeerResponse@@V?$allocator@VPeerResponse@@@_STL@@@_STL@@@_STL@@QAEAAVPeerResponse@@XZ"
 ]
 },
 {
@@ -14388,20 +14108,6 @@
 {
 "owner": "?$queue@VPingRequest",
 "fn_class": "?$queue@VPingRequest",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?front@?$queue@VPingRequest@@V?$deque@VPingRequest@@V?$allocator@VPingRequest@@@_STL@@@_STL@@@_STL@@QAEAAVPingRequest@@XZ"
-]
-},
-{
-"owner": "?$queue@VPingRequest",
-"fn_class": "?$queue@VPingRequest",
 "member": "+0x10?",
 "zh": 16,
 "bfme": 16,
@@ -14430,20 +14136,6 @@
 {
 "owner": "?$queue@VPingResponse",
 "fn_class": "?$queue@VPingResponse",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?front@?$queue@VPingResponse@@V?$deque@VPingResponse@@V?$allocator@VPingResponse@@@_STL@@@_STL@@@_STL@@QAEAAVPingResponse@@XZ"
-]
-},
-{
-"owner": "?$queue@VPingResponse",
-"fn_class": "?$queue@VPingResponse",
 "member": "+0x10?",
 "zh": 16,
 "bfme": 16,
@@ -14467,48 +14159,6 @@
 "alts": {},
 "fns": [
 "?push@?$queue@VPingResponse@@V?$deque@VPingResponse@@V?$allocator@VPingResponse@@@_STL@@@_STL@@@_STL@@QAEXABVPingResponse@@@Z"
-]
-},
-{
-"owner": "?$reverse_iterator@PAPAVSubsystemInterface",
-"fn_class": "?$reverse_iterator@PAPAVSubsystemInterface",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?base@?$reverse_iterator@PAPAVSubsystemInterface@@@_STL@@QBEPAPAVSubsystemInterface@@XZ"
-]
-},
-{
-"owner": "?$reverse_iterator@PAVAsciiString",
-"fn_class": "?$reverse_iterator@PAVAsciiString",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?base@?$reverse_iterator@PAVAsciiString@@@_STL@@QBEPAVAsciiString@@XZ"
-]
-},
-{
-"owner": "?$set@PAVGameWindow",
-"fn_class": "?$set@PAVGameWindow",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?empty@?$set@PAVGameWindow@@U?$less@PAVGameWindow@@@_STL@@V?$allocator@PAVGameWindow@@@3@@_STL@@QBE_NXZ"
 ]
 },
 {
@@ -14662,9 +14312,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVCrateTemplate@@V?$allocator@PAVCrateTemplate@@@_STL@@@_STL@@IAEXPAPAVCrateTemplate@@00@Z",
-"?begin@?$vector@PAVCrateTemplate@@V?$allocator@PAVCrateTemplate@@@_STL@@@_STL@@QAEPAPAVCrateTemplate@@XZ",
-"?begin@?$vector@PAVCrateTemplate@@V?$allocator@PAVCrateTemplate@@@_STL@@@_STL@@QBEPBQAVCrateTemplate@@XZ"
+"?_M_set@?$vector@PAVCrateTemplate@@V?$allocator@PAVCrateTemplate@@@_STL@@@_STL@@IAEXPAPAVCrateTemplate@@00@Z"
 ]
 },
 {
@@ -14707,8 +14355,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@IAEXPAPAVDrawable@@00@Z",
-"?begin@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAEPAPAVDrawable@@XZ"
+"?_M_set@?$vector@PAVDrawable@@V?$allocator@PAVDrawable@@@_STL@@@_STL@@IAEXPAPAVDrawable@@00@Z"
 ]
 },
 {
@@ -14752,8 +14399,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVEvaCheckInfo@@V?$allocator@PAVEvaCheckInfo@@@_STL@@@_STL@@IAEXPAPAVEvaCheckInfo@@00@Z",
-"?begin@?$vector@PAVEvaCheckInfo@@V?$allocator@PAVEvaCheckInfo@@@_STL@@@_STL@@QAEPAPAVEvaCheckInfo@@XZ"
+"?_M_set@?$vector@PAVEvaCheckInfo@@V?$allocator@PAVEvaCheckInfo@@@_STL@@@_STL@@IAEXPAPAVEvaCheckInfo@@00@Z"
 ]
 },
 {
@@ -14795,8 +14441,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVLocomotor@@V?$allocator@PAVLocomotor@@@_STL@@@_STL@@IAEXPAPAVLocomotor@@00@Z",
-"?begin@?$vector@PAVLocomotor@@V?$allocator@PAVLocomotor@@@_STL@@@_STL@@QAEPAPAVLocomotor@@XZ"
+"?_M_set@?$vector@PAVLocomotor@@V?$allocator@PAVLocomotor@@@_STL@@@_STL@@IAEXPAPAVLocomotor@@00@Z"
 ]
 },
 {
@@ -14838,9 +14483,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEXPAPAVObject@@00@Z",
-"?begin@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAEPAPAVObject@@XZ",
-"?begin@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QBEPBQAVObject@@XZ"
+"?_M_set@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEXPAPAVObject@@00@Z"
 ]
 },
 {
@@ -14886,9 +14529,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@IAEXPAPAVObjectCreationNugget@@00@Z",
-"?begin@?$vector@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@QAEPAPAVObjectCreationNugget@@XZ",
-"?begin@?$vector@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@QBEPBQAVObjectCreationNugget@@XZ"
+"?_M_set@?$vector@PAVObjectCreationNugget@@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@IAEXPAPAVObjectCreationNugget@@00@Z"
 ]
 },
 {
@@ -14932,9 +14573,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVRankInfo@@V?$allocator@PAVRankInfo@@@_STL@@@_STL@@IAEXPAPAVRankInfo@@00@Z",
-"?begin@?$vector@PAVRankInfo@@V?$allocator@PAVRankInfo@@@_STL@@@_STL@@QAEPAPAVRankInfo@@XZ",
-"?begin@?$vector@PAVRankInfo@@V?$allocator@PAVRankInfo@@@_STL@@@_STL@@QBEPBQAVRankInfo@@XZ"
+"?_M_set@?$vector@PAVRankInfo@@V?$allocator@PAVRankInfo@@@_STL@@@_STL@@IAEXPAPAVRankInfo@@00@Z"
 ]
 },
 {
@@ -14978,7 +14617,7 @@
 "fns": [
 "?_M_insert_overflow@?$vector@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@IAEXPAPAVScienceInfo@@ABQAV3@ABU__true_type@2@I_N@Z",
 "?_M_set@?$vector@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@IAEXPAPAVScienceInfo@@00@Z",
-"?begin@?$vector@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@QAEPAPAVScienceInfo@@XZ"
+"?clear@?$vector@PAVScienceInfo@@V?$allocator@PAVScienceInfo@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
 {
@@ -15026,8 +14665,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVSpecialPowerTemplate@@V?$allocator@PAVSpecialPowerTemplate@@@_STL@@@_STL@@IAEXPAPAVSpecialPowerTemplate@@00@Z",
-"?begin@?$vector@PAVSpecialPowerTemplate@@V?$allocator@PAVSpecialPowerTemplate@@@_STL@@@_STL@@QAEPAPAVSpecialPowerTemplate@@XZ"
+"?_M_set@?$vector@PAVSpecialPowerTemplate@@V?$allocator@PAVSpecialPowerTemplate@@@_STL@@@_STL@@IAEXPAPAVSpecialPowerTemplate@@00@Z"
 ]
 },
 {
@@ -15069,8 +14707,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVSubsystemInterface@@V?$allocator@PAVSubsystemInterface@@@_STL@@@_STL@@IAEXPAPAVSubsystemInterface@@00@Z",
-"?begin@?$vector@PAVSubsystemInterface@@V?$allocator@PAVSubsystemInterface@@@_STL@@@_STL@@QAEPAPAVSubsystemInterface@@XZ"
+"?_M_set@?$vector@PAVSubsystemInterface@@V?$allocator@PAVSubsystemInterface@@@_STL@@@_STL@@IAEXPAPAVSubsystemInterface@@00@Z"
 ]
 },
 {
@@ -15112,8 +14749,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVTunnelTracker@@V?$allocator@PAVTunnelTracker@@@_STL@@@_STL@@IAEXPAPAVTunnelTracker@@00@Z",
-"?begin@?$vector@PAVTunnelTracker@@V?$allocator@PAVTunnelTracker@@@_STL@@@_STL@@QAEPAPAVTunnelTracker@@XZ"
+"?_M_set@?$vector@PAVTunnelTracker@@V?$allocator@PAVTunnelTracker@@@_STL@@@_STL@@IAEXPAPAVTunnelTracker@@00@Z"
 ]
 },
 {
@@ -15157,9 +14793,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@IAEXPAPAVUpdateModule@@00@Z",
-"?begin@?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@QAEPAPAVUpdateModule@@XZ",
-"?begin@?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@QBEPBQAVUpdateModule@@XZ"
+"?_M_set@?$vector@PAVUpdateModule@@V?$allocator@PAVUpdateModule@@@_STL@@@_STL@@IAEXPAPAVUpdateModule@@00@Z"
 ]
 },
 {
@@ -15203,9 +14837,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PAVWeaponTemplate@@V?$allocator@PAVWeaponTemplate@@@_STL@@@_STL@@IAEXPAPAVWeaponTemplate@@00@Z",
-"?begin@?$vector@PAVWeaponTemplate@@V?$allocator@PAVWeaponTemplate@@@_STL@@@_STL@@QAEPAPAVWeaponTemplate@@XZ",
-"?begin@?$vector@PAVWeaponTemplate@@V?$allocator@PAVWeaponTemplate@@@_STL@@@_STL@@QBEPBQAVWeaponTemplate@@XZ"
+"?_M_set@?$vector@PAVWeaponTemplate@@V?$allocator@PAVWeaponTemplate@@@_STL@@@_STL@@IAEXPAPAVWeaponTemplate@@00@Z"
 ]
 },
 {
@@ -15249,8 +14881,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PBVFXList@@V?$allocator@PBVFXList@@@_STL@@@_STL@@IAEXPAPBVFXList@@00@Z",
-"?begin@?$vector@PBVFXList@@V?$allocator@PBVFXList@@@_STL@@@_STL@@QBEPBQBVFXList@@XZ"
+"?_M_set@?$vector@PBVFXList@@V?$allocator@PBVFXList@@@_STL@@@_STL@@IAEXPAPBVFXList@@00@Z"
 ]
 },
 {
@@ -15295,8 +14926,7 @@
 "alts": {},
 "fns": [
 "?_M_insert_overflow@?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@IAEXPAPBVLocomotorTemplate@@ABQBV3@ABU__true_type@2@I_N@Z",
-"?_M_set@?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@IAEXPAPBVLocomotorTemplate@@00@Z",
-"?begin@?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@QAEPAPBVLocomotorTemplate@@XZ"
+"?_M_set@?$vector@PBVLocomotorTemplate@@V?$allocator@PBVLocomotorTemplate@@@_STL@@@_STL@@IAEXPAPBVLocomotorTemplate@@00@Z"
 ]
 },
 {
@@ -15342,8 +14972,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PBVModuleData@@V?$allocator@PBVModuleData@@@_STL@@@_STL@@IAEXPAPBVModuleData@@00@Z",
-"?begin@?$vector@PBVModuleData@@V?$allocator@PBVModuleData@@@_STL@@@_STL@@QAEPAPBVModuleData@@XZ"
+"?_M_set@?$vector@PBVModuleData@@V?$allocator@PBVModuleData@@@_STL@@@_STL@@IAEXPAPBVModuleData@@00@Z"
 ]
 },
 {
@@ -15388,8 +15017,7 @@
 "alts": {},
 "fns": [
 "?_M_insert_overflow@?$vector@PBVObjectCreationList@@V?$allocator@PBVObjectCreationList@@@_STL@@@_STL@@IAEXPAPBVObjectCreationList@@ABQBV3@ABU__true_type@2@I_N@Z",
-"?_M_set@?$vector@PBVObjectCreationList@@V?$allocator@PBVObjectCreationList@@@_STL@@@_STL@@IAEXPAPBVObjectCreationList@@00@Z",
-"?begin@?$vector@PBVObjectCreationList@@V?$allocator@PBVObjectCreationList@@@_STL@@@_STL@@QBEPBQBVObjectCreationList@@XZ"
+"?_M_set@?$vector@PBVObjectCreationList@@V?$allocator@PBVObjectCreationList@@@_STL@@@_STL@@IAEXPAPBVObjectCreationList@@00@Z"
 ]
 },
 {
@@ -15435,8 +15063,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PBVThingTemplate@@V?$allocator@PBVThingTemplate@@@_STL@@@_STL@@IAEXPAPBVThingTemplate@@00@Z",
-"?begin@?$vector@PBVThingTemplate@@V?$allocator@PBVThingTemplate@@@_STL@@@_STL@@QAEPAPBVThingTemplate@@XZ"
+"?_M_set@?$vector@PBVThingTemplate@@V?$allocator@PBVThingTemplate@@@_STL@@@_STL@@IAEXPAPBVThingTemplate@@00@Z"
 ]
 },
 {
@@ -15478,8 +15105,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@PBVWeaponTemplate@@V?$allocator@PBVWeaponTemplate@@@_STL@@@_STL@@IAEXPAPBVWeaponTemplate@@00@Z",
-"?begin@?$vector@PBVWeaponTemplate@@V?$allocator@PBVWeaponTemplate@@@_STL@@@_STL@@QBEPBQBVWeaponTemplate@@XZ"
+"?_M_set@?$vector@PBVWeaponTemplate@@V?$allocator@PBVWeaponTemplate@@@_STL@@@_STL@@IAEXPAPBVWeaponTemplate@@00@Z"
 ]
 },
 {
@@ -15522,8 +15148,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@UAngleFXInfo@@V?$allocator@UAngleFXInfo@@@_STL@@@_STL@@IAEXPAUAngleFXInfo@@00@Z",
-"?begin@?$vector@UAngleFXInfo@@V?$allocator@UAngleFXInfo@@@_STL@@@_STL@@QAEPAUAngleFXInfo@@XZ",
-"?begin@?$vector@UAngleFXInfo@@V?$allocator@UAngleFXInfo@@@_STL@@@_STL@@QBEPBUAngleFXInfo@@XZ"
+"?clear@?$vector@UAngleFXInfo@@V?$allocator@UAngleFXInfo@@@_STL@@@_STL@@QAEXXZ",
+"?erase@?$vector@UAngleFXInfo@@V?$allocator@UAngleFXInfo@@@_STL@@@_STL@@QAEPAUAngleFXInfo@@PAU3@0@Z"
 ]
 },
 {
@@ -15611,8 +15237,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UCoord2D@@V?$allocator@UCoord2D@@@_STL@@@_STL@@IAEXPAUCoord2D@@00@Z",
-"?begin@?$vector@UCoord2D@@V?$allocator@UCoord2D@@@_STL@@@_STL@@QBEPBUCoord2D@@XZ"
+"?_M_set@?$vector@UCoord2D@@V?$allocator@UCoord2D@@@_STL@@@_STL@@IAEXPAUCoord2D@@00@Z"
 ]
 },
 {
@@ -15655,8 +15280,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@IAEXPAUCoord3D@@00@Z",
-"?begin@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEPAUCoord3D@@XZ",
-"?begin@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QBEPBUCoord3D@@XZ"
+"?capacity@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QBEIXZ",
+"?clear@?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
 {
@@ -15702,8 +15327,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UDetonatorInfo@MinefieldBehavior@@V?$allocator@UDetonatorInfo@MinefieldBehavior@@@_STL@@@_STL@@IAEXPAUDetonatorInfo@MinefieldBehavior@@00@Z",
-"?begin@?$vector@UDetonatorInfo@MinefieldBehavior@@V?$allocator@UDetonatorInfo@MinefieldBehavior@@@_STL@@@_STL@@QAEPAUDetonatorInfo@MinefieldBehavior@@XZ"
+"?_M_set@?$vector@UDetonatorInfo@MinefieldBehavior@@V?$allocator@UDetonatorInfo@MinefieldBehavior@@@_STL@@@_STL@@IAEXPAUDetonatorInfo@MinefieldBehavior@@00@Z"
 ]
 },
 {
@@ -15748,9 +15372,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UEvaCheck@@V?$allocator@UEvaCheck@@@_STL@@@_STL@@IAEXPAUEvaCheck@@00@Z",
-"?begin@?$vector@UEvaCheck@@V?$allocator@UEvaCheck@@@_STL@@@_STL@@QAEPAUEvaCheck@@XZ",
-"?begin@?$vector@UEvaCheck@@V?$allocator@UEvaCheck@@@_STL@@@_STL@@QBEPBUEvaCheck@@XZ"
+"?_M_set@?$vector@UEvaCheck@@V?$allocator@UEvaCheck@@@_STL@@@_STL@@IAEXPAUEvaCheck@@00@Z"
 ]
 },
 {
@@ -15794,8 +15416,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@IAEXPAUEvaSideSounds@@00@Z",
-"?begin@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@QBEPBUEvaSideSounds@@XZ"
+"?_M_set@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@IAEXPAUEvaSideSounds@@00@Z"
 ]
 },
 {
@@ -15826,21 +15447,6 @@
 "fns": [
 "?_M_set@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@IAEXPAUEvaSideSounds@@00@Z",
 "?push_back@?$vector@UEvaSideSounds@@V?$allocator@UEvaSideSounds@@@_STL@@@_STL@@QAEXABUEvaSideSounds@@@Z"
-]
-},
-{
-"owner": "?$vector@UFXBoneInfo",
-"fn_class": "?$vector@UFXBoneInfo",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 3.0,
-"total": 3.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?begin@?$vector@UFXBoneInfo@@V?$allocator@UFXBoneInfo@@@_STL@@@_STL@@QAEPAUFXBoneInfo@@XZ",
-"?begin@?$vector@UFXBoneInfo@@V?$allocator@UFXBoneInfo@@@_STL@@@_STL@@QBEPBUFXBoneInfo@@XZ"
 ]
 },
 {
@@ -15869,8 +15475,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXPAUFlightDeckInfo@FlightDeckBehavior@@00@Z",
-"?begin@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@QAEPAUFlightDeckInfo@FlightDeckBehavior@@XZ",
-"?begin@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@QBEPBUFlightDeckInfo@FlightDeckBehavior@@XZ"
+"?capacity@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@QBEIXZ",
+"?size@?$vector@UFlightDeckInfo@FlightDeckBehavior@@V?$allocator@UFlightDeckInfo@FlightDeckBehavior@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
 {
@@ -15916,9 +15522,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXPAUHideShowSubObjInfo@ModelConditionInfo@@00@Z",
-"?begin@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@QAEPAUHideShowSubObjInfo@ModelConditionInfo@@XZ",
-"?begin@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@QBEPBUHideShowSubObjInfo@ModelConditionInfo@@XZ"
+"?_M_set@?$vector@UHideShowSubObjInfo@ModelConditionInfo@@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXPAUHideShowSubObjInfo@ModelConditionInfo@@00@Z"
 ]
 },
 {
@@ -15964,8 +15568,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@IAEXPAUHorzLine@@00@Z",
-"?begin@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@QAEPAUHorzLine@@XZ",
-"?capacity@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@QBEIXZ"
+"?capacity@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@QBEIXZ",
+"?size@?$vector@UHorzLine@@V?$allocator@UHorzLine@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
 {
@@ -16012,8 +15616,7 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@IAEXPAUICoord2D@@00@Z",
-"?begin@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEPAUICoord2D@@XZ",
-"?begin@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QBEPBUICoord2D@@XZ"
+"?erase@?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEPAUICoord2D@@PAU3@0@Z"
 ]
 },
 {
@@ -16059,9 +15662,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UModelConditionInfo@@V?$allocator@UModelConditionInfo@@@_STL@@@_STL@@IAEXPAUModelConditionInfo@@00@Z",
-"?begin@?$vector@UModelConditionInfo@@V?$allocator@UModelConditionInfo@@@_STL@@@_STL@@QAEPAUModelConditionInfo@@XZ",
-"?begin@?$vector@UModelConditionInfo@@V?$allocator@UModelConditionInfo@@@_STL@@@_STL@@QBEPBUModelConditionInfo@@XZ"
+"?_M_set@?$vector@UModelConditionInfo@@V?$allocator@UModelConditionInfo@@@_STL@@@_STL@@IAEXPAUModelConditionInfo@@00@Z"
 ]
 },
 {
@@ -16104,8 +15705,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@IAEXPAUNugget@ModuleInfo@@00@Z",
-"?begin@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@QAEPAUNugget@ModuleInfo@@XZ",
-"?begin@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@QBEPBUNugget@ModuleInfo@@XZ"
+"?capacity@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@QBEIXZ",
+"?size@?$vector@UNugget@ModuleInfo@@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
 {
@@ -16150,8 +15751,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@UParkingPlaceInfo@ParkingPlaceBehavior@@V?$allocator@UParkingPlaceInfo@ParkingPlaceBehavior@@@_STL@@@_STL@@IAEXPAUParkingPlaceInfo@ParkingPlaceBehavior@@00@Z",
-"?begin@?$vector@UParkingPlaceInfo@ParkingPlaceBehavior@@V?$allocator@UParkingPlaceInfo@ParkingPlaceBehavior@@@_STL@@@_STL@@QAEPAUParkingPlaceInfo@ParkingPlaceBehavior@@XZ",
-"?begin@?$vector@UParkingPlaceInfo@ParkingPlaceBehavior@@V?$allocator@UParkingPlaceInfo@ParkingPlaceBehavior@@@_STL@@@_STL@@QBEPBUParkingPlaceInfo@ParkingPlaceBehavior@@XZ"
+"?capacity@?$vector@UParkingPlaceInfo@ParkingPlaceBehavior@@V?$allocator@UParkingPlaceInfo@ParkingPlaceBehavior@@@_STL@@@_STL@@QBEIXZ",
+"?size@?$vector@UParkingPlaceInfo@ParkingPlaceBehavior@@V?$allocator@UParkingPlaceInfo@ParkingPlaceBehavior@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
 {
@@ -16195,9 +15796,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UParticleSysBoneInfo@@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@IAEXPAUParticleSysBoneInfo@@00@Z",
-"?begin@?$vector@UParticleSysBoneInfo@@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@QAEPAUParticleSysBoneInfo@@XZ",
-"?begin@?$vector@UParticleSysBoneInfo@@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@QBEPBUParticleSysBoneInfo@@XZ"
+"?_M_set@?$vector@UParticleSysBoneInfo@@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@IAEXPAUParticleSysBoneInfo@@00@Z"
 ]
 },
 {
@@ -16243,8 +15842,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@UParticleSysTrackerType@W3DModelDraw@@V?$allocator@UParticleSysTrackerType@W3DModelDraw@@@_STL@@@_STL@@IAEXPAUParticleSysTrackerType@W3DModelDraw@@00@Z",
-"?begin@?$vector@UParticleSysTrackerType@W3DModelDraw@@V?$allocator@UParticleSysTrackerType@W3DModelDraw@@@_STL@@@_STL@@QAEPAUParticleSysTrackerType@W3DModelDraw@@XZ",
-"?clear@?$vector@UParticleSysTrackerType@W3DModelDraw@@V?$allocator@UParticleSysTrackerType@W3DModelDraw@@@_STL@@@_STL@@QAEXXZ"
+"?clear@?$vector@UParticleSysTrackerType@W3DModelDraw@@V?$allocator@UParticleSysTrackerType@W3DModelDraw@@@_STL@@@_STL@@QAEXXZ",
+"?erase@?$vector@UParticleSysTrackerType@W3DModelDraw@@V?$allocator@UParticleSysTrackerType@W3DModelDraw@@@_STL@@@_STL@@QAEPAUParticleSysTrackerType@W3DModelDraw@@PAU34@0@Z"
 ]
 },
 {
@@ -16288,8 +15887,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UPayload@DeliverPayloadNugget@@V?$allocator@UPayload@DeliverPayloadNugget@@@_STL@@@_STL@@IAEXPAUPayload@DeliverPayloadNugget@@00@Z",
-"?begin@?$vector@UPayload@DeliverPayloadNugget@@V?$allocator@UPayload@DeliverPayloadNugget@@@_STL@@@_STL@@QAEPAUPayload@DeliverPayloadNugget@@XZ"
+"?_M_set@?$vector@UPayload@DeliverPayloadNugget@@V?$allocator@UPayload@DeliverPayloadNugget@@@_STL@@@_STL@@IAEXPAUPayload@DeliverPayloadNugget@@00@Z"
 ]
 },
 {
@@ -16333,8 +15931,7 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@IAEXPAUPrereqUnitRec@ProductionPrerequisite@@00@Z",
-"?begin@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QAEPAUPrereqUnitRec@ProductionPrerequisite@@XZ",
-"?begin@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QBEPBUPrereqUnitRec@ProductionPrerequisite@@XZ"
+"?capacity@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
 {
@@ -16380,9 +15977,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UQuantityModifier@@V?$allocator@UQuantityModifier@@@_STL@@@_STL@@IAEXPAUQuantityModifier@@00@Z",
-"?begin@?$vector@UQuantityModifier@@V?$allocator@UQuantityModifier@@@_STL@@@_STL@@QAEPAUQuantityModifier@@XZ",
-"?begin@?$vector@UQuantityModifier@@V?$allocator@UQuantityModifier@@@_STL@@@_STL@@QBEPBUQuantityModifier@@XZ"
+"?_M_set@?$vector@UQuantityModifier@@V?$allocator@UQuantityModifier@@@_STL@@@_STL@@IAEXPAUQuantityModifier@@00@Z"
 ]
 },
 {
@@ -16427,7 +16022,7 @@
 "fns": [
 "?_M_set@?$vector@URunwayInfo@FlightDeckBehavior@@V?$allocator@URunwayInfo@FlightDeckBehavior@@@_STL@@@_STL@@IAEXPAURunwayInfo@FlightDeckBehavior@@00@Z",
 "?_M_set@?$vector@URunwayInfo@ParkingPlaceBehavior@@V?$allocator@URunwayInfo@ParkingPlaceBehavior@@@_STL@@@_STL@@IAEXPAURunwayInfo@ParkingPlaceBehavior@@00@Z",
-"?begin@?$vector@URunwayInfo@FlightDeckBehavior@@V?$allocator@URunwayInfo@FlightDeckBehavior@@@_STL@@@_STL@@QAEPAURunwayInfo@FlightDeckBehavior@@XZ"
+"?capacity@?$vector@URunwayInfo@ParkingPlaceBehavior@@V?$allocator@URunwayInfo@ParkingPlaceBehavior@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
 {
@@ -16474,7 +16069,6 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@USegInfo@W3DRopeDraw@@V?$allocator@USegInfo@W3DRopeDraw@@@_STL@@@_STL@@IAEXPAUSegInfo@W3DRopeDraw@@00@Z",
-"?begin@?$vector@USegInfo@W3DRopeDraw@@V?$allocator@USegInfo@W3DRopeDraw@@@_STL@@@_STL@@QAEPAUSegInfo@W3DRopeDraw@@XZ",
 "?clear@?$vector@USegInfo@W3DRopeDraw@@V?$allocator@USegInfo@W3DRopeDraw@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
@@ -16520,8 +16114,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UStationPointData@GarrisonContain@@V?$allocator@UStationPointData@GarrisonContain@@@_STL@@@_STL@@IAEXPAUStationPointData@GarrisonContain@@00@Z",
-"?begin@?$vector@UStationPointData@GarrisonContain@@V?$allocator@UStationPointData@GarrisonContain@@@_STL@@@_STL@@QAEPAUStationPointData@GarrisonContain@@XZ"
+"?_M_set@?$vector@UStationPointData@GarrisonContain@@V?$allocator@UStationPointData@GarrisonContain@@@_STL@@@_STL@@IAEXPAUStationPointData@GarrisonContain@@00@Z"
 ]
 },
 {
@@ -16564,8 +16157,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UTransitionInfo@State@@V?$allocator@UTransitionInfo@State@@@_STL@@@_STL@@IAEXPAUTransitionInfo@State@@00@Z",
-"?begin@?$vector@UTransitionInfo@State@@V?$allocator@UTransitionInfo@State@@@_STL@@@_STL@@QAEPAUTransitionInfo@State@@XZ"
+"?_M_set@?$vector@UTransitionInfo@State@@V?$allocator@UTransitionInfo@State@@@_STL@@@_STL@@IAEXPAUTransitionInfo@State@@00@Z"
 ]
 },
 {
@@ -16611,7 +16203,7 @@
 "fns": [
 "?_M_set@?$vector@UUpgrades@CashHackSpecialPowerModuleData@@V?$allocator@UUpgrades@CashHackSpecialPowerModuleData@@@_STL@@@_STL@@IAEXPAUUpgrades@CashHackSpecialPowerModuleData@@00@Z",
 "?_M_set@?$vector@UUpgrades@OCLSpecialPowerModuleData@@V?$allocator@UUpgrades@OCLSpecialPowerModuleData@@@_STL@@@_STL@@IAEXPAUUpgrades@OCLSpecialPowerModuleData@@00@Z",
-"?begin@?$vector@UUpgrades@CashHackSpecialPowerModuleData@@V?$allocator@UUpgrades@CashHackSpecialPowerModuleData@@@_STL@@@_STL@@QAEPAUUpgrades@CashHackSpecialPowerModuleData@@XZ"
+"?clear@?$vector@UUpgrades@CashHackSpecialPowerModuleData@@V?$allocator@UUpgrades@CashHackSpecialPowerModuleData@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
 {
@@ -16672,8 +16264,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@UWeaponBarrelInfo@ModelConditionInfo@@V?$allocator@UWeaponBarrelInfo@ModelConditionInfo@@@_STL@@@_STL@@IAEXPAUWeaponBarrelInfo@ModelConditionInfo@@00@Z",
-"?begin@?$vector@UWeaponBarrelInfo@ModelConditionInfo@@V?$allocator@UWeaponBarrelInfo@ModelConditionInfo@@@_STL@@@_STL@@QAEPAUWeaponBarrelInfo@ModelConditionInfo@@XZ",
-"?begin@?$vector@UWeaponBarrelInfo@ModelConditionInfo@@V?$allocator@UWeaponBarrelInfo@ModelConditionInfo@@@_STL@@@_STL@@QBEPBUWeaponBarrelInfo@ModelConditionInfo@@XZ"
+"?capacity@?$vector@UWeaponBarrelInfo@ModelConditionInfo@@V?$allocator@UWeaponBarrelInfo@ModelConditionInfo@@@_STL@@@_STL@@QBEIXZ",
+"?clear@?$vector@UWeaponBarrelInfo@ModelConditionInfo@@V?$allocator@UWeaponBarrelInfo@ModelConditionInfo@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
 {
@@ -16719,8 +16311,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@UWeaponRecoilInfo@W3DModelDraw@@V?$allocator@UWeaponRecoilInfo@W3DModelDraw@@@_STL@@@_STL@@IAEXPAUWeaponRecoilInfo@W3DModelDraw@@00@Z",
-"?begin@?$vector@UWeaponRecoilInfo@W3DModelDraw@@V?$allocator@UWeaponRecoilInfo@W3DModelDraw@@@_STL@@@_STL@@QAEPAUWeaponRecoilInfo@W3DModelDraw@@XZ"
+"?_M_set@?$vector@UWeaponRecoilInfo@W3DModelDraw@@V?$allocator@UWeaponRecoilInfo@W3DModelDraw@@@_STL@@@_STL@@IAEXPAUWeaponRecoilInfo@W3DModelDraw@@00@Z"
 ]
 },
 {
@@ -16765,7 +16356,6 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@UtConnInfoStruct@@V?$allocator@UtConnInfoStruct@@@_STL@@@_STL@@IAEXPAUtConnInfoStruct@@00@Z",
-"?begin@?$vector@UtConnInfoStruct@@V?$allocator@UtConnInfoStruct@@@_STL@@@_STL@@QAEPAUtConnInfoStruct@@XZ",
 "?size@?$vector@UtConnInfoStruct@@V?$allocator@UtConnInfoStruct@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
@@ -16812,8 +16402,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@VArmorTemplateSet@@V?$allocator@VArmorTemplateSet@@@_STL@@@_STL@@IAEXPAVArmorTemplateSet@@00@Z",
-"?begin@?$vector@VArmorTemplateSet@@V?$allocator@VArmorTemplateSet@@@_STL@@@_STL@@QAEPAVArmorTemplateSet@@XZ",
-"?begin@?$vector@VArmorTemplateSet@@V?$allocator@VArmorTemplateSet@@@_STL@@@_STL@@QBEPBVArmorTemplateSet@@XZ"
+"?capacity@?$vector@VArmorTemplateSet@@V?$allocator@VArmorTemplateSet@@@_STL@@@_STL@@QBEIXZ",
+"?clear@?$vector@VArmorTemplateSet@@V?$allocator@VArmorTemplateSet@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
 {
@@ -16858,8 +16448,7 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@IAEXPAVAsciiString@@00@Z",
-"?begin@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAEPAVAsciiString@@XZ",
-"?begin@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QBEPBVAsciiString@@XZ"
+"?clear@?$vector@VAsciiString@@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAEXXZ"
 ]
 },
 {
@@ -16950,7 +16539,7 @@
 "fns": [
 "?_M_clear@?$vector@VPlayerTemplate@@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@IAEXXZ",
 "?_M_set@?$vector@VPlayerTemplate@@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@IAEXPAVPlayerTemplate@@00@Z",
-"?begin@?$vector@VPlayerTemplate@@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@QAEPAVPlayerTemplate@@XZ"
+"?size@?$vector@VPlayerTemplate@@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
 {
@@ -16998,7 +16587,7 @@
 "fns": [
 "?_M_clear@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@IAEXXZ",
 "?_M_set@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@IAEXPAVProductionPrerequisite@@00@Z",
-"?begin@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@QAEPAVProductionPrerequisite@@XZ"
+"?capacity@?$vector@VProductionPrerequisite@@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
 {
@@ -17044,8 +16633,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@VUnicodeString@@V?$allocator@VUnicodeString@@@_STL@@@_STL@@IAEXPAVUnicodeString@@00@Z",
-"?begin@?$vector@VUnicodeString@@V?$allocator@VUnicodeString@@@_STL@@@_STL@@QAEPAVUnicodeString@@XZ"
+"?_M_set@?$vector@VUnicodeString@@V?$allocator@VUnicodeString@@@_STL@@@_STL@@IAEXPAVUnicodeString@@00@Z"
 ]
 },
 {
@@ -17089,9 +16677,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?_M_set@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEXPAVW3DAnimationInfo@@00@Z",
-"?begin@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@QAEPAVW3DAnimationInfo@@XZ",
-"?begin@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@QBEPBVW3DAnimationInfo@@XZ"
+"?_M_set@?$vector@VW3DAnimationInfo@@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@IAEXPAVW3DAnimationInfo@@00@Z"
 ]
 },
 {
@@ -17137,8 +16723,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@IAEXPAVWeaponTemplateSet@@00@Z",
-"?begin@?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@QAEPAVWeaponTemplateSet@@XZ",
-"?begin@?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@QBEPBVWeaponTemplateSet@@XZ"
+"?clear@?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@QAEXXZ",
+"?size@?$vector@VWeaponTemplateSet@@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@QBEIXZ"
 ]
 },
 {
@@ -17184,8 +16770,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@IAEXPAW4ObjectID@@00@Z",
-"?begin@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QAEPAW4ObjectID@@XZ",
-"?begin@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QBEPBW4ObjectID@@XZ"
+"?clear@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QAEXXZ",
+"?erase@?$vector@W4ObjectID@@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QAEPAW4ObjectID@@PAW43@0@Z"
 ]
 },
 {
@@ -17232,8 +16818,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@W4ParticleSystemID@@V?$allocator@W4ParticleSystemID@@@_STL@@@_STL@@IAEXPAW4ParticleSystemID@@00@Z",
-"?begin@?$vector@W4ParticleSystemID@@V?$allocator@W4ParticleSystemID@@@_STL@@@_STL@@QAEPAW4ParticleSystemID@@XZ",
-"?clear@?$vector@W4ParticleSystemID@@V?$allocator@W4ParticleSystemID@@@_STL@@@_STL@@QAEXXZ"
+"?clear@?$vector@W4ParticleSystemID@@V?$allocator@W4ParticleSystemID@@@_STL@@@_STL@@QAEXXZ",
+"?erase@?$vector@W4ParticleSystemID@@V?$allocator@W4ParticleSystemID@@@_STL@@@_STL@@QAEPAW4ParticleSystemID@@PAW43@0@Z"
 ]
 },
 {
@@ -17278,8 +16864,8 @@
 "alts": {},
 "fns": [
 "?_M_set@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@IAEXPAW4ScienceType@@00@Z",
-"?begin@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEPAW4ScienceType@@XZ",
-"?begin@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QBEPBW4ScienceType@@XZ"
+"?clear@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEXXZ",
+"?erase@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEPAW4ScienceType@@PAW43@0@Z"
 ]
 },
 {
@@ -17453,20 +17039,6 @@
 "fns": [
 "?destroyGroup@AI@@QAEXPAVAIGroup@@@Z",
 "?findGroup@AI@@QAEPAVAIGroup@@I@Z"
-]
-},
-{
-"owner": "AI",
-"fn_class": "AI",
-"member": "m_nextFormationID",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getNextFormationID@AI@@QAE?AW4FormationID@@XZ"
 ]
 },
 {
@@ -17672,20 +17244,6 @@
 ]
 },
 {
-"owner": "AICommandParmsStorage",
-"fn_class": "AICommandParmsStorage",
-"member": "m_cmd",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getCommandType@AICommandParmsStorage@@QBE?AW4AICommandType@@XZ"
-]
-},
-{
 "owner": "AIDockMoveToRallyState",
 "fn_class": "AIDockMoveToRallyState",
 "member": "+0x0?",
@@ -17754,20 +17312,6 @@
 "alts": {},
 "fns": [
 "?onEnter@AIDockState@@UAE?AW4StateReturnType@@XZ"
-]
-},
-{
-"owner": "AIDockWaitForClearanceState",
-"fn_class": "AIDockWaitForClearanceState",
-"member": "m_enterFrame",
-"zh": 36,
-"bfme": 36,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?onEnter@AIDockWaitForClearanceState@@UAE?AW4StateReturnType@@XZ"
 ]
 },
 {
@@ -18161,20 +17705,6 @@
 ]
 },
 {
-"owner": "AIGuardMachine",
-"fn_class": "AIGuardMachine",
-"member": "m_guardMode",
-"zh": 80,
-"bfme": 80,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setGuardMode@AIGuardMachine@@QAEXW4GuardMode@@@Z"
-]
-},
-{
 "owner": "AIGuardRetaliateReturnState",
 "fn_class": "AIGuardRetaliateReturnState",
 "member": "+0x0?",
@@ -18527,16 +18057,15 @@
 "fn_class": "AIPlayer",
 "member": "+0x30?",
 "zh": 48,
-"bfme": 48,
+"bfme": 44,
 "votes": 1.0,
 "total": 2.0,
 "confidence": 0.5,
 "alts": {
-"0x2c": 1.0
+"0x30": 1.0
 },
 "fns": [
-"?getAIDifficulty@AIPlayer@@QBE?AW4GameDifficulty@@XZ",
-"?setAIDifficulty@AIPlayer@@QAEXW4GameDifficulty@@@Z"
+"?getAIDifficulty@AIPlayer@@QBE?AW4GameDifficulty@@XZ"
 ]
 },
 {
@@ -18653,20 +18182,6 @@
 "fns": [
 "?acquireEnemy@AISkirmishPlayer@@IAEXXZ",
 "?getMyEnemyPlayerIndex@AISkirmishPlayer@@IAEHXZ"
-]
-},
-{
-"owner": "AIStateMachine",
-"fn_class": "AIStateMachine",
-"member": "m_goalWaypoint",
-"zh": 68,
-"bfme": 68,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setGoalWaypoint@AIStateMachine@@QAEXPBVWaypoint@@@Z"
 ]
 },
 {
@@ -18936,20 +18451,6 @@
 "alts": {},
 "fns": [
 "?privateGuardObject@AIUpdateInterface@@MAEXPAVObject@@W4GuardMode@@W4CommandSourceType@@@Z"
-]
-},
-{
-"owner": "AIUpdateInterface",
-"fn_class": "AIUpdateInterface",
-"member": "m_completedWaypoint",
-"zh": 300,
-"bfme": 300,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setCompletedWaypoint@AIUpdateInterface@@QAEXPBVWaypoint@@@Z"
 ]
 },
 {
@@ -19379,34 +18880,6 @@
 ]
 },
 {
-"owner": "AcademyStats",
-"fn_class": "AcademyStats",
-"member": "m_firstUpdate",
-"zh": 12,
-"bfme": 12,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setFirstUpdate@AcademyStats@@QAEX_N@Z"
-]
-},
-{
-"owner": "ActiveBody",
-"fn_class": "ActiveBody",
-"member": "m_currentHealth",
-"zh": 28,
-"bfme": 28,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDamageState@ActiveBody@@UBE?AW4BodyDamageType@@XZ"
-]
-},
-{
 "owner": "AlphaEdgeTextureClass",
 "fn_class": "AlphaEdgeTextureClass",
 "member": "+0x0?",
@@ -19460,20 +18933,6 @@
 "alts": {},
 "fns": [
 "?update@AlphaEdgeTextureClass@@QAEHPAVWorldHeightMap@@@Z"
-]
-},
-{
-"owner": "Anim2D",
-"fn_class": "Anim2D",
-"member": "m_alpha",
-"zh": 28,
-"bfme": 28,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setAlpha@Anim2D@@QAEXM@Z"
 ]
 },
 {
@@ -19623,20 +19082,6 @@
 ]
 },
 {
-"owner": "AnimateWindow",
-"fn_class": "AnimateWindow",
-"member": "m_isFinished",
-"zh": 65,
-"bfme": 65,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setFinished@AnimateWindow@@QAEX_N@Z"
-]
-},
-{
 "owner": "AnimatedParticleSysBoneClientUpdate",
 "fn_class": "AnimatedParticleSysBoneClientUpdate",
 "member": "+0x0?",
@@ -19721,20 +19166,6 @@
 ]
 },
 {
-"owner": "AsciiString",
-"fn_class": "AsciiString",
-"member": "m_data",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?str@AsciiString@@QBEPBDXZ"
-]
-},
-{
 "owner": "AssaultTransportAIUpdate",
 "fn_class": "AssaultTransportAIUpdate",
 "member": "+0x0?",
@@ -19774,63 +19205,6 @@
 "alts": {},
 "fns": [
 "?getPlayerIndex@AudioEventRTS@@QBEHXZ"
-]
-},
-{
-"owner": "AudioEventRTS",
-"fn_class": "AudioEventRTS",
-"member": "m_playingHandle",
-"zh": 12,
-"bfme": 12,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setPlayingHandle@AudioEventRTS@@QAEXI@Z"
-]
-},
-{
-"owner": "AudioEventRTS",
-"fn_class": "AudioEventRTS",
-"member": "m_killThisHandle",
-"zh": 16,
-"bfme": 16,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getHandleToKill@AudioEventRTS@@QBEIXZ",
-"?setHandleToKill@AudioEventRTS@@QAEXI@Z"
-]
-},
-{
-"owner": "AudioEventRTS",
-"fn_class": "AudioEventRTS",
-"member": "m_priority",
-"zh": 32,
-"bfme": 32,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setAudioPriority@AudioEventRTS@@QAEXW4AudioPriority@@@Z"
-]
-},
-{
-"owner": "AudioEventRTS",
-"fn_class": "AudioEventRTS",
-"member": "m_volume",
-"zh": 36,
-"bfme": 36,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setVolume@AudioEventRTS@@QAEXM@Z"
 ]
 },
 {
@@ -19882,49 +19256,6 @@
 {
 "owner": "AudioEventRTS",
 "fn_class": "AudioEventRTS",
-"member": "m_shouldFade",
-"zh": 64,
-"bfme": 64,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getShouldFade@AudioEventRTS@@QBE_NXZ"
-]
-},
-{
-"owner": "AudioEventRTS",
-"fn_class": "AudioEventRTS",
-"member": "m_isLogicalAudio",
-"zh": 65,
-"bfme": 65,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getIsLogicalAudio@AudioEventRTS@@QBE_NXZ",
-"?setIsLogicalAudio@AudioEventRTS@@QAEX_N@Z"
-]
-},
-{
-"owner": "AudioEventRTS",
-"fn_class": "AudioEventRTS",
-"member": "m_uninterruptable",
-"zh": 66,
-"bfme": 66,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setUninterruptable@AudioEventRTS@@QAEX_N@Z"
-]
-},
-{
-"owner": "AudioEventRTS",
-"fn_class": "AudioEventRTS",
 "member": "m_volumeShift",
 "zh": 72,
 "bfme": 80,
@@ -19961,22 +19292,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getPlayerIndex@AudioEventRTS@@QBEHXZ",
-"?setPlayerIndex@AudioEventRTS@@QAEXH@Z"
-]
-},
-{
-"owner": "AudioEventRTS",
-"fn_class": "AudioEventRTS",
-"member": "m_portionToPlayNext",
-"zh": 96,
-"bfme": 96,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setNextPlayPortion@AudioEventRTS@@QAEXW4PortionToPlay@@@Z"
+"?getPlayerIndex@AudioEventRTS@@QBEHXZ"
 ]
 },
 {
@@ -20821,20 +20137,6 @@
 {
 "owner": "BitChannelClass",
 "fn_class": "BitChannelClass",
-"member": "PivotIdx",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Pivot@BitChannelClass@@QBEHXZ"
-]
-},
-{
-"owner": "BitChannelClass",
-"fn_class": "BitChannelClass",
 "member": "DefaultVal",
 "zh": 8,
 "bfme": 8,
@@ -20889,22 +20191,6 @@
 ]
 },
 {
-"owner": "BodyModule",
-"fn_class": "BodyModule",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 4.0,
-"total": 4.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?applyDamageScalar@BodyModule@@UAEXM@Z",
-"?getBody@BodyModule@@UAEPAVBodyModuleInterface@@XZ",
-"?getDamageScalar@BodyModule@@UBEMXZ"
-]
-},
-{
 "owner": "BoneFXUpdate",
 "fn_class": "BoneFXUpdate",
 "member": "m_curBodyState",
@@ -20945,48 +20231,6 @@
 "alts": {},
 "fns": [
 "?getBridgeInfo@Bridge@@QAEXPAVBridgeInfo@@@Z"
-]
-},
-{
-"owner": "Bridge",
-"fn_class": "Bridge",
-"member": "m_bridgeInfo+0x54",
-"zh": 96,
-"bfme": 96,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setBridgeObjectID@Bridge@@QAEXW4ObjectID@@@Z"
-]
-},
-{
-"owner": "Bridge",
-"fn_class": "Bridge",
-"member": "m_layer",
-"zh": 136,
-"bfme": 136,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setLayer@Bridge@@QAEXW4PathfindLayerEnum@@@Z"
-]
-},
-{
-"owner": "BridgeBehavior",
-"fn_class": "BridgeBehavior",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getUpdate@BridgeBehavior@@UAEPAVUpdateModuleInterface@@XZ"
 ]
 },
 {
@@ -21035,20 +20279,6 @@
 },
 "fns": [
 "?update@BridgeScaffoldBehavior@@UAE?AW4UpdateSleepTime@@XZ"
-]
-},
-{
-"owner": "BridgeTowerBehavior",
-"fn_class": "BridgeTowerBehavior",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getBridgeTowerBehaviorInterface@BridgeTowerBehavior@@UAEPAVBridgeTowerBehaviorInterface@@XZ"
 ]
 },
 {
@@ -21197,7 +20427,6 @@
 },
 "fns": [
 "?duplicate@BuildListInfo@@QAEPAV1@XZ",
-"?setNextBuildList@BuildListInfo@@QAEXPAV1@@Z",
 "?xfer@BuildListInfo@@MAEXPAVXfer@@@Z"
 ]
 },
@@ -21456,8 +20685,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?init@ButtonFlashTransition@@UAEXPAVGameWindow@@@Z",
-"?skip@ButtonFlashTransition@@UAEXXZ"
+"?init@ButtonFlashTransition@@UAEXPAVGameWindow@@@Z"
 ]
 },
 {
@@ -21503,21 +20731,6 @@
 ]
 },
 {
-"owner": "CDDrive",
-"fn_class": "CDDrive",
-"member": "m_disk",
-"zh": 32,
-"bfme": 32,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDisk@CDDrive@@UAE?AW4Disk@CD@@XZ",
-"?refreshInfo@CDDrive@@UAEXXZ"
-]
-},
-{
 "owner": "CDManager",
 "fn_class": "CDManager",
 "member": "+0x0?",
@@ -21560,7 +20773,7 @@
 "fns": [
 "?absoluteSeek@CachedFileInputStream@@UAE_NI@Z",
 "?close@CachedFileInputStream@@QAEXXZ",
-"?eof@CachedFileInputStream@@UAE_NXZ"
+"?open@CachedFileInputStream@@QAE_NVAsciiString@@@Z"
 ]
 },
 {
@@ -21592,7 +20805,7 @@
 "fns": [
 "?absoluteSeek@CachedFileInputStream@@UAE_NI@Z",
 "?close@CachedFileInputStream@@QAEXXZ",
-"?eof@CachedFileInputStream@@UAE_NXZ"
+"?open@CachedFileInputStream@@QAE_NVAsciiString@@@Z"
 ]
 },
 {
@@ -21628,20 +20841,6 @@
 ]
 },
 {
-"owner": "CameraClass",
-"fn_class": "CameraClass",
-"member": "Frustum",
-"zh": 260,
-"bfme": 260,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Frustum@CameraClass@@QBEABVFrustumClass@@XZ"
-]
-},
-{
 "owner": "CampaignManager",
 "fn_class": "CampaignManager",
 "member": "m_currentCampaign",
@@ -21652,7 +20851,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getCurrentCampaign@CampaignManager@@QAEPAVCampaign@@XZ",
 "?getCurrentMissionNumber@CampaignManager@@QAEHXZ",
 "?gotoNextMission@CampaignManager@@QAEPAVMission@@XZ"
 ]
@@ -21857,20 +21055,6 @@
 ]
 },
 {
-"owner": "CellAndObjectIntersection",
-"fn_class": "CellAndObjectIntersection",
-"member": "m_cell",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getCell@CellAndObjectIntersection@@QAEPAVPartitionCell@@XZ"
-]
-},
-{
 "owner": "ClassicEnvironmentMapperClass",
 "fn_class": "ClassicEnvironmentMapperClass",
 "member": "+0x0?",
@@ -21909,22 +21093,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Clip@ClipPolyClass@@QBEXABVPlaneClass@@AAV1@@Z",
-"?Reset@ClipPolyClass@@QAEXXZ"
-]
-},
-{
-"owner": "CollideModule",
-"fn_class": "CollideModule",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getCollide@CollideModule@@UAEPAVCollideModuleInterface@@XZ"
+"?Clip@ClipPolyClass@@QBEXABVPlaneClass@@AAV1@@Z"
 ]
 },
 {
@@ -21953,20 +21122,6 @@
 "alts": {},
 "fns": [
 "?isReady@CommandButton@@QBE_NPBVObject@@@Z"
-]
-},
-{
-"owner": "CommandButton",
-"fn_class": "CommandButton",
-"member": "m_flashCount",
-"zh": 204,
-"bfme": 204,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setFlashCount@CommandButton@@QBEXH@Z"
 ]
 },
 {
@@ -22332,7 +21487,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?preloadAssets@ControlBar@@QAEXW4TimeOfDay@@@Z",
 "?setControlBarSchemeByName@ControlBar@@QAEXABVAsciiString@@@Z",
 "?setSquishedControlBarConfig@ControlBar@@IAEXXZ"
 ]
@@ -22512,20 +21666,6 @@
 "?animateSpecialPowerShortcut@ControlBar@@QAEX_N@Z",
 "?hideSpecialPowerShortcut@ControlBar@@QAEXXZ",
 "?showSpecialPowerShortcut@ControlBar@@QAEXXZ"
-]
-},
-{
-"owner": "ControlBar",
-"fn_class": "ControlBar",
-"member": "m_observerLookAtPlayer",
-"zh": 696,
-"bfme": 696,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getObserverLookAtPlayer@ControlBar@@QAEPAVPlayer@@XZ"
 ]
 },
 {
@@ -22790,8 +21930,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?init@ControlBarArrowTransition@@UAEXPAVGameWindow@@@Z",
-"?skip@ControlBarArrowTransition@@UAEXXZ"
+"?init@ControlBarArrowTransition@@UAEXPAVGameWindow@@@Z"
 ]
 },
 {
@@ -24399,22 +23538,6 @@
 ]
 },
 {
-"owner": "CreateModule",
-"fn_class": "CreateModule",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 3.0,
-"total": 3.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getCreate@CreateModule@@UAEPAVCreateModuleInterface@@XZ",
-"?onBuildComplete@CreateModule@@UAEXXZ",
-"?shouldDoOnBuildComplete@CreateModule@@UBE_NXZ"
-]
-},
-{
 "owner": "CreditsManager",
 "fn_class": "CreditsManager",
 "member": "m_creditLineList",
@@ -24756,20 +23879,6 @@
 "alts": {},
 "fns": [
 "??0?$ShareBufferClass@D@@QAE@HPBDH@Z"
-]
-},
-{
-"owner": "DX8Caps",
-"fn_class": "DX8Caps",
-"member": "SupportPointSprites",
-"zh": 288,
-"bfme": 288,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Support_PointSprites@DX8Caps@@QBE_NXZ"
 ]
 },
 {
@@ -25155,20 +24264,6 @@
 ]
 },
 {
-"owner": "DamageModule",
-"fn_class": "DamageModule",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDamage@DamageModule@@UAEPAVDamageModuleInterface@@XZ"
-]
-},
-{
 "owner": "DataChunkInput",
 "fn_class": "DataChunkInput",
 "member": "m_file",
@@ -25179,9 +24274,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?atEndOfFile@DataChunkInput@@QAE_NXZ",
 "?closeDataChunk@DataChunkInput@@QAEXXZ",
-"?decrementDataLeft@DataChunkInput@@IAEXH@Z"
+"?decrementDataLeft@DataChunkInput@@IAEXH@Z",
+"?openDataChunk@DataChunkInput@@QAE?AVAsciiString@@PAG@Z"
 ]
 },
 {
@@ -25374,7 +24469,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getCursorXPos@DebugDisplay@@UAEHXZ",
 "?setCursorPos@DebugDisplay@@UAEXHH@Z"
 ]
 },
@@ -25389,22 +24483,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getCursorYPos@DebugDisplay@@UAEHXZ",
 "?setCursorPos@DebugDisplay@@UAEXHH@Z"
-]
-},
-{
-"owner": "DebugDisplay",
-"fn_class": "DebugDisplay",
-"member": "m_leftMargin",
-"zh": 28,
-"bfme": 28,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setLeftMargin@DebugDisplay@@UAEXH@Z"
 ]
 },
 {
@@ -25418,7 +24497,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getRallyPoint@DefaultProductionExitUpdate@@UBEPBUCoord3D@@XZ",
 "?setRallyPoint@DefaultProductionExitUpdate@@UAEXPBUCoord3D@@@Z"
 ]
 },
@@ -25438,34 +24516,6 @@
 ]
 },
 {
-"owner": "DeliverPayloadNugget",
-"fn_class": "DeliverPayloadNugget",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0Payload@DeliverPayloadNugget@@QAE@XZ"
-]
-},
-{
-"owner": "DestroyModule",
-"fn_class": "DestroyModule",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDestroy@DestroyModule@@UAEPAVDestroyModuleInterface@@XZ"
-]
-},
-{
 "owner": "Dict",
 "fn_class": "Dict",
 "member": "m_data",
@@ -25476,9 +24526,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?clear@Dict@@QAEXXZ",
 "?findPairByKey@Dict@@ABEPAUDictPair@1@W4NameKeyType@@@Z",
-"?getBool@Dict@@QBE_NW4NameKeyType@@PA_N@Z"
+"?getBool@Dict@@QBE_NW4NameKeyType@@PA_N@Z",
+"?getInt@Dict@@QBEHW4NameKeyType@@PA_N@Z"
 ]
 },
 {
@@ -25507,20 +24557,6 @@
 "alts": {},
 "fns": [
 "?remove@Dict@@QAE_NW4NameKeyType@@@Z"
-]
-},
-{
-"owner": "DieModule",
-"fn_class": "DieModule",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDie@DieModule@@UAEPAVDieModuleInterface@@XZ"
 ]
 },
 {
@@ -25887,20 +24923,6 @@
 {
 "owner": "Display",
 "fn_class": "Display",
-"member": "m_windowed",
-"zh": 20,
-"bfme": 20,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getWindowed@Display@@UAE_NXZ"
-]
-},
-{
-"owner": "Display",
-"fn_class": "Display",
 "member": "m_viewList",
 "zh": 24,
 "bfme": 24,
@@ -25910,8 +24932,7 @@
 "alts": {},
 "fns": [
 "?deleteViews@Display@@MAEXXZ",
-"?drawViews@Display@@UAEXXZ",
-"?getFirstView@Display@@UAEPAVView@@XZ"
+"?drawViews@Display@@UAEXXZ"
 ]
 },
 {
@@ -26448,20 +25469,6 @@
 {
 "owner": "DownloadManager",
 "fn_class": "DownloadManager",
-"member": "m_sawEnd",
-"zh": 13,
-"bfme": 13,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?OnEnd@DownloadManager@@UAEJXZ"
-]
-},
-{
-"owner": "DownloadManager",
-"fn_class": "DownloadManager",
 "member": "m_errorString",
 "zh": 16,
 "bfme": 16,
@@ -26790,20 +25797,6 @@
 {
 "owner": "Drawable",
 "fn_class": "Drawable",
-"member": "m_effectiveStealthOpacity",
-"zh": 120,
-"bfme": 120,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?friend_getEffectiveStealthOpacity@Drawable@@QAEMXZ"
-]
-},
-{
-"owner": "Drawable",
-"fn_class": "Drawable",
 "member": "m_object",
 "zh": 136,
 "bfme": 252,
@@ -26906,34 +25899,6 @@
 {
 "owner": "Drawable",
 "fn_class": "Drawable",
-"member": "m_flashCount",
-"zh": 204,
-"bfme": 204,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setFlashCount@Drawable@@QAEXH@Z"
-]
-},
-{
-"owner": "Drawable",
-"fn_class": "Drawable",
-"member": "m_flashColor",
-"zh": 208,
-"bfme": 208,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setFlashColor@Drawable@@QAEXH@Z"
-]
-},
-{
-"owner": "Drawable",
-"fn_class": "Drawable",
 "member": "m_instanceScale",
 "zh": 260,
 "bfme": 504,
@@ -26944,8 +25909,7 @@
 "0x104": 1.0
 },
 "fns": [
-"?getScale@Drawable@@QBE?BMXZ",
-"?setInstanceScale@Drawable@@QAEXM@Z"
+"?getScale@Drawable@@QBE?BMXZ"
 ]
 },
 {
@@ -26978,20 +25942,6 @@
 "??0TreadObjectInfo@W3DTankDraw@@QAE@XZ",
 "??0TreadObjectInfo@W3DTankTruckDraw@@QAE@XZ",
 "?clientOnly_getRenderObjBoneTransform@W3DModelDraw@@UBE_NABVAsciiString@@PAVMatrix3D@@@Z"
-]
-},
-{
-"owner": "DynamicIBAccessClass",
-"fn_class": "DynamicIBAccessClass",
-"member": "Type",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Type@DynamicIBAccessClass@@QBEIXZ"
 ]
 },
 {
@@ -27157,20 +26107,6 @@
 ]
 },
 {
-"owner": "DynamicVBAccessClass",
-"fn_class": "DynamicVBAccessClass",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?FVF_Info@DynamicVBAccessClass@@QBEABVFVFInfoClass@@XZ"
-]
-},
-{
 "owner": "E",
 "fn_class": "E",
 "member": "+0x4?",
@@ -27276,20 +26212,6 @@
 {
 "owner": "EdgeMapperClass",
 "fn_class": "EdgeMapperClass",
-"member": "LastUsedSyncTime",
-"zh": 12,
-"bfme": 12,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Reset@EdgeMapperClass@@UAEXXZ"
-]
-},
-{
-"owner": "EdgeMapperClass",
-"fn_class": "EdgeMapperClass",
 "member": "UseReflect",
 "zh": 24,
 "bfme": 24,
@@ -27299,20 +26221,6 @@
 "alts": {},
 "fns": [
 "?Apply@EdgeMapperClass@@UAEXH@Z"
-]
-},
-{
-"owner": "EjectPilotDie",
-"fn_class": "EjectPilotDie",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getEjectPilotDieInterface@EjectPilotDie@@UAEPAVDieModuleInterface@@XZ"
 ]
 },
 {
@@ -27457,34 +26365,6 @@
 ]
 },
 {
-"owner": "FVFInfoClass",
-"fn_class": "FVFInfoClass",
-"member": "FVF",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_FVF@FVFInfoClass@@QBEIXZ"
-]
-},
-{
-"owner": "FXListDie",
-"fn_class": "FXListDie",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDie@FXListDie@@UAEPAVDieModuleInterface@@XZ"
-]
-},
-{
 "owner": "FadeTransition",
 "fn_class": "FadeTransition",
 "member": "+0x0?",
@@ -27496,7 +26376,6 @@
 "alts": {},
 "fns": [
 "?init@FadeTransition@@UAEXPAVGameWindow@@@Z",
-"?skip@FadeTransition@@UAEXXZ",
 "?update@FadeTransition@@UAEXH@Z"
 ]
 },
@@ -27555,7 +26434,7 @@
 "fns": [
 "?close@File@@UAEXXZ",
 "?eof@File@@QAE_NXZ",
-"?position@File@@UAEHXZ"
+"?size@File@@UAEHXZ"
 ]
 },
 {
@@ -27617,20 +26496,6 @@
 "fns": [
 "?close@File@@UAEXXZ",
 "?convertToRAMFile@LocalFile@@UAEPAVFile@@XZ"
-]
-},
-{
-"owner": "FileClass",
-"fn_class": "FileClass",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Tell@FileClass@@UAEHXZ"
 ]
 },
 {
@@ -27702,20 +26567,6 @@
 "alts": {},
 "fns": [
 "?update@FireWeaponWhenDamagedBehavior@@UAE?AW4UpdateSleepTime@@XZ"
-]
-},
-{
-"owner": "FireWeaponWhenDeadBehavior",
-"fn_class": "FireWeaponWhenDeadBehavior",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getUpgrade@FireWeaponWhenDeadBehavior@@UAEPAVUpgradeModuleInterface@@XZ"
 ]
 },
 {
@@ -28153,8 +27004,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?calcSleepTime@FlammableUpdate@@IAE?AW4UpdateSleepTime@@XZ",
-"?wouldIgnite@FlammableUpdate@@QAE_NXZ"
+"?calcSleepTime@FlammableUpdate@@IAE?AW4UpdateSleepTime@@XZ"
 ]
 },
 {
@@ -28225,8 +27075,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?init@FlashTransition@@UAEXPAVGameWindow@@@Z",
-"?skip@FlashTransition@@UAEXXZ"
+"?init@FlashTransition@@UAEXPAVGameWindow@@@Z"
 ]
 },
 {
@@ -28475,9 +27324,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getIsQuitting@FrameDataManager@@QAE_NXZ",
-"?init@FrameDataManager@@QAEXXZ",
-"?setQuitFrame@FrameDataManager@@QAEXI@Z"
+"?init@FrameDataManager@@QAEXXZ"
 ]
 },
 {
@@ -28491,9 +27338,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getQuitFrame@FrameDataManager@@QAEIXZ",
-"?init@FrameDataManager@@QAEXXZ",
-"?setQuitFrame@FrameDataManager@@QAEXI@Z"
+"?init@FrameDataManager@@QAEXXZ"
 ]
 },
 {
@@ -28550,7 +27395,6 @@
 "alts": {},
 "fns": [
 "?keyToFunc@FunctionLexicon@@IAEPAXW4NameKeyType@@PAUTableEntry@1@@Z",
-"?reset@FunctionLexicon@@UAEXXZ",
 "?validate@FunctionLexicon@@QAE_NXZ"
 ]
 },
@@ -28677,35 +27521,6 @@
 {
 "owner": "GameClient",
 "fn_class": "GameClient",
-"member": "m_frame",
-"zh": 12,
-"bfme": 12,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getFrame@GameClient@@UAEIXZ",
-"?setFrame@GameClient@@UAEXI@Z"
-]
-},
-{
-"owner": "GameClient",
-"fn_class": "GameClient",
-"member": "m_drawableList",
-"zh": 16,
-"bfme": 16,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?firstDrawable@GameClient@@UAEPAVDrawable@@XZ"
-]
-},
-{
-"owner": "GameClient",
-"fn_class": "GameClient",
 "member": "m_nextDrawableID",
 "zh": 32,
 "bfme": 40,
@@ -28767,36 +27582,6 @@
 ]
 },
 {
-"owner": "GameEngine",
-"fn_class": "GameEngine",
-"member": "m_maxFPS",
-"zh": 8,
-"bfme": 8,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getFramesPerSecondLimit@GameEngine@@UAEHXZ",
-"?setFramesPerSecondLimit@GameEngine@@UAEXH@Z"
-]
-},
-{
-"owner": "GameEngine",
-"fn_class": "GameEngine",
-"member": "m_quitting",
-"zh": 12,
-"bfme": 12,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getQuitting@GameEngine@@UAE_NXZ",
-"?setQuitting@GameEngine@@UAEX_N@Z"
-]
-},
-{
 "owner": "GameFileClass",
 "fn_class": "GameFileClass",
 "member": "+0x0?",
@@ -28831,20 +27616,6 @@
 {
 "owner": "GameFileClass",
 "fn_class": "GameFileClass",
-"member": "m_fileExists",
-"zh": 8,
-"bfme": 8,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Is_Available@GameFileClass@@UAE_NH@Z"
-]
-},
-{
-"owner": "GameFileClass",
-"fn_class": "GameFileClass",
 "member": "m_filePath",
 "zh": 9,
 "bfme": 9,
@@ -28854,20 +27625,6 @@
 "alts": {},
 "fns": [
 "?Open@GameFileClass@@UAEHH@Z"
-]
-},
-{
-"owner": "GameFileClass",
-"fn_class": "GameFileClass",
-"member": "m_filename",
-"zh": 269,
-"bfme": 269,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?File_Name@GameFileClass@@UBEPBDXZ"
 ]
 },
 {
@@ -28898,34 +27655,6 @@
 "?amIHost@GameSpyStagingRoom@@UBE_NXZ",
 "?getLocalSlotNum@GameSpyStagingRoom@@UBEHXZ",
 "?getSlotNum@LANGameInfo@@QAEHVUnicodeString@@@Z"
-]
-},
-{
-"owner": "GameInfo",
-"fn_class": "GameInfo",
-"member": "m_inProgress",
-"zh": 13,
-"bfme": 13,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setGameInProgress@GameInfo@@QAEX_N@Z"
-]
-},
-{
-"owner": "GameInfo",
-"fn_class": "GameInfo",
-"member": "m_localIP",
-"zh": 52,
-"bfme": 52,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setLocalIP@GameInfo@@QAEXI@Z"
 ]
 },
 {
@@ -29042,7 +27771,6 @@
 "0x94": 2.0
 },
 "fns": [
-"?isInLanGame@GameLogic@@QAE_NXZ",
 "?isInMultiplayerGame@GameLogic@@QAE_NXZ",
 "?isInSinglePlayerGame@GameLogic@@QAE_NXZ"
 ]
@@ -29064,20 +27792,6 @@
 {
 "owner": "GameLogic",
 "fn_class": "GameLogic",
-"member": "m_gamePaused",
-"zh": 164,
-"bfme": 164,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?isGamePaused@GameLogic@@QAE_NXZ"
-]
-},
-{
-"owner": "GameLogic",
-"fn_class": "GameLogic",
 "member": "m_forceGameStartByTimeOut",
 "zh": 208,
 "bfme": 328,
@@ -29087,20 +27801,6 @@
 "alts": {},
 "fns": [
 "?timeOutGameStart@GameLogic@@QAEXXZ"
-]
-},
-{
-"owner": "GameLogic",
-"fn_class": "GameLogic",
-"member": "m_frameObjectsChangedTriggerAreas",
-"zh": 212,
-"bfme": 212,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getFrameObjectsChangedTriggerAreas@GameLogic@@QAEIXZ"
 ]
 },
 {
@@ -29513,20 +28213,6 @@
 {
 "owner": "GameSlot",
 "fn_class": "GameSlot",
-"member": "m_connectInfo+0x4",
-"zh": 52,
-"bfme": 52,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setPort@GameSlot@@QAEXG@Z"
-]
-},
-{
-"owner": "GameSlot",
-"fn_class": "GameSlot",
 "member": "m_disconnected",
 "zh": 60,
 "bfme": 64,
@@ -29537,20 +28223,6 @@
 "fns": [
 "?disconnected@GameSlot@@QBE_NXZ",
 "?markAsDisconnected@GameSlot@@QAEXXZ"
-]
-},
-{
-"owner": "GameSlot",
-"fn_class": "GameSpyGameSlot",
-"member": "m_disconnected+0x20",
-"zh": 92,
-"bfme": 92,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setSlotRankPoints@GameSpyGameSlot@@QAEXH@Z"
 ]
 },
 {
@@ -29686,34 +28358,6 @@
 ]
 },
 {
-"owner": "GameSpyBuddyMessageQueue",
-"fn_class": "GameSpyBuddyMessageQueue",
-"member": "+0x64?",
-"zh": 100,
-"bfme": 100,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?isThreadRunning@GameSpyBuddyMessageQueue@@UAE_NXZ"
-]
-},
-{
-"owner": "GameSpyConfig",
-"fn_class": "GameSpyConfig",
-"member": "+0x1c?",
-"zh": 28,
-"bfme": 28,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getMaxManglerRetries@GameSpyConfig@@UAEHXZ"
-]
-},
-{
 "owner": "GameSpyConfig",
 "fn_class": "GameSpyConfig",
 "member": "+0x30?",
@@ -29772,20 +28416,6 @@
 ]
 },
 {
-"owner": "GameSpyGameSlot",
-"fn_class": "GameSpyGameSlot",
-"member": "m_favoriteSide",
-"zh": 96,
-"bfme": 96,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setFavoriteSide@GameSpyGameSlot@@QAEXH@Z"
-]
-},
-{
 "owner": "GameSpyInfo",
 "fn_class": "GameSpyInfo",
 "member": "+0x0?",
@@ -29829,7 +28459,6 @@
 "alts": {},
 "fns": [
 "?isDisconnectedAfterGameStart@GameSpyInfo@@UBE_NPAH@Z",
-"?markAsDisconnectedAfterGameStart@GameSpyInfo@@UAEXH@Z",
 "?reset@GameSpyInfo@@UAEXXZ"
 ]
 },
@@ -29845,36 +28474,7 @@
 "alts": {},
 "fns": [
 "?isDisconnectedAfterGameStart@GameSpyInfo@@UBE_NPAH@Z",
-"?markAsDisconnectedAfterGameStart@GameSpyInfo@@UAEXH@Z",
 "?reset@GameSpyInfo@@UAEXXZ"
-]
-},
-{
-"owner": "GameSpyInfo",
-"fn_class": "GameSpyInfo",
-"member": "m_rawMotd",
-"zh": 12,
-"bfme": 12,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getMOTD@GameSpyInfo@@UAEABVAsciiString@@XZ"
-]
-},
-{
-"owner": "GameSpyInfo",
-"fn_class": "GameSpyInfo",
-"member": "m_rawConfig",
-"zh": 16,
-"bfme": 16,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getConfig@GameSpyInfo@@UAEABVAsciiString@@XZ"
 ]
 },
 {
@@ -29888,7 +28488,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getPingString@GameSpyInfo@@UAEABVAsciiString@@XZ",
 "?getPingValue@GameSpyInfo@@UAEHABVAsciiString@@@Z"
 ]
 },
@@ -29966,7 +28565,7 @@
 "fns": [
 "?addStagingRoom@GameSpyInfo@@UAEXVGameSpyStagingRoom@@@Z",
 "?clearStagingRoomList@GameSpyInfo@@UAEXXZ",
-"?hasStagingRoomListChanged@GameSpyInfo@@UAE_NXZ"
+"?removeStagingRoom@GameSpyInfo@@UAEXVGameSpyStagingRoom@@@Z"
 ]
 },
 {
@@ -30023,7 +28622,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getPlayerInfoMap@GameSpyInfo@@UAEPAV?$map@VAsciiString@@VPlayerInfo@@UAsciiComparator@@V?$allocator@U?$pair@$$CBVAsciiString@@VPlayerInfo@@@_STL@@@_STL@@@_STL@@XZ",
 "?joinBestGroupRoom@GameSpyInfo@@UAEXXZ",
 "?setCurrentGroupRoom@GameSpyInfo@@UAEXH@Z"
 ]
@@ -30554,20 +29152,6 @@
 ]
 },
 {
-"owner": "GameSpyPSMessageQueue",
-"fn_class": "GameSpyPSMessageQueue",
-"member": "+0x64?",
-"zh": 100,
-"bfme": 100,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?isThreadRunning@GameSpyPSMessageQueue@@UAE_NXZ"
-]
-},
-{
 "owner": "GameSpyPeerMessageQueue",
 "fn_class": "GameSpyPeerMessageQueue",
 "member": "+0x0?",
@@ -30697,35 +29281,6 @@
 ]
 },
 {
-"owner": "GameSpyPeerMessageQueue",
-"fn_class": "GameSpyPeerMessageQueue",
-"member": "+0x64?",
-"zh": 100,
-"bfme": 100,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?isThreadRunning@GameSpyPeerMessageQueue@@UAE_NXZ"
-]
-},
-{
-"owner": "GameSpyPeerMessageQueue",
-"fn_class": "GameSpyPeerMessageQueue",
-"member": "+0x68?",
-"zh": 104,
-"bfme": 104,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getSerialAuthResult@GameSpyPeerMessageQueue@@UAE?AW4SerialAuthResult@@XZ",
-"?setSerialAuthResult@GameSpyPeerMessageQueue@@QAEXW4SerialAuthResult@@@Z"
-]
-},
-{
 "owner": "GameSpyStagingRoom",
 "fn_class": "GameSpyStagingRoom",
 "member": "+0x0?",
@@ -30737,8 +29292,7 @@
 "alts": {},
 "fns": [
 "?cleanUpSlotPointers@GameSpyStagingRoom@@QAEXXZ",
-"?getLocalSlotNum@GameSpyStagingRoom@@UBEHXZ",
-"?resetAccepted@GameSpyStagingRoom@@UAEXXZ"
+"?getLocalSlotNum@GameSpyStagingRoom@@UBEHXZ"
 ]
 },
 {
@@ -31243,20 +29797,6 @@
 {
 "owner": "GameWindow",
 "fn_class": "GameWindow",
-"member": "m_instData+0x198",
-"zh": 452,
-"bfme": 452,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setTooltipDelay@GameWindow@@QAEXH@Z"
-]
-},
-{
-"owner": "GameWindow",
-"fn_class": "GameWindow",
 "member": "m_instData+0x19c",
 "zh": 456,
 "bfme": 460,
@@ -31421,8 +29961,7 @@
 },
 "fns": [
 "?winBringToTop@GameWindow@@QAEHXZ",
-"?winGetLayout@GameWindow@@QAEPAVWindowLayout@@XZ",
-"?winSetLayout@GameWindow@@QAEXPAVWindowLayout@@@Z"
+"?winGetLayout@GameWindow@@QAEPAVWindowLayout@@XZ"
 ]
 },
 {
@@ -31553,7 +30092,7 @@
 "fns": [
 "?getWindowUnderCursor@GameWindowManager@@UAEPAVGameWindow@@HH_N@Z",
 "?winDestroy@GameWindowManager@@UAEHPAVGameWindow@@@Z",
-"?winGetFocus@GameWindowManager@@UAEPAVGameWindow@@XZ"
+"?winProcessKey@GameWindowManager@@UAE?AW4WinInputReturnCode@@EE@Z"
 ]
 },
 {
@@ -31584,8 +30123,7 @@
 "alts": {},
 "fns": [
 "?getWindowUnderCursor@GameWindowManager@@UAEPAVGameWindow@@HH_N@Z",
-"?winDestroy@GameWindowManager@@UAEHPAVGameWindow@@@Z",
-"?winGetGrabWindow@GameWindowManager@@UAEPAVGameWindow@@XZ"
+"?winDestroy@GameWindowManager@@UAEHPAVGameWindow@@@Z"
 ]
 },
 {
@@ -31616,20 +30154,6 @@
 "?clearTabList@GameWindowManager@@UAEXXZ",
 "?registerTabList@GameWindowManager@@UAEXV?$list@PAVGameWindow@@V?$allocator@PAVGameWindow@@@_STL@@@_STL@@@Z",
 "?winNextTab@GameWindowManager@@UAEXPAVGameWindow@@@Z"
-]
-},
-{
-"owner": "GapFillerClass",
-"fn_class": "GapFillerClass",
-"member": "PolygonArray",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Polygon_Array@GapFillerClass@@QBEPBVVector3i16@@XZ"
 ]
 },
 {
@@ -31817,62 +30341,6 @@
 "alts": {},
 "fns": [
 "?Find_Entry@INISection@@QBEPAUINIEntry@@PBD@Z"
-]
-},
-{
-"owner": "GenericObjectCreationNugget",
-"fn_class": "GenericObjectCreationNugget",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0AnimSet@GenericObjectCreationNugget@@QAE@XZ"
-]
-},
-{
-"owner": "GenericObjectCreationNugget",
-"fn_class": "GenericObjectCreationNugget",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0AnimSet@GenericObjectCreationNugget@@QAE@XZ"
-]
-},
-{
-"owner": "GenericObjectCreationNugget",
-"fn_class": "GenericObjectCreationNugget",
-"member": "+0x8?",
-"zh": 8,
-"bfme": 8,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0AnimSet@GenericObjectCreationNugget@@QAE@XZ"
-]
-},
-{
-"owner": "GenericSLNode",
-"fn_class": "GenericSLNode",
-"member": "NodeNext",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Internal_Get_Next@GenericSLNode@@IAEPAXXZ"
 ]
 },
 {
@@ -32106,34 +30574,6 @@
 "alts": {},
 "fns": [
 "?setBoundingSphere@Geometry@@QAEXABVSphereClass@@@Z"
-]
-},
-{
-"owner": "GeometryInfo",
-"fn_class": "GeometryInfo",
-"member": "m_type",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getGeomType@GeometryInfo@@QBE?AW4GeometryType@@XZ"
-]
-},
-{
-"owner": "GeometryInfo",
-"fn_class": "GeometryInfo",
-"member": "m_boundingCircleRadius",
-"zh": 24,
-"bfme": 24,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getBoundingCircleRadius@GeometryInfo@@QBEMXZ"
 ]
 },
 {
@@ -32421,7 +30861,6 @@
 "alts": {},
 "fns": [
 "?Add_Object_Internal@GridCullSystemClass@@IAEXPAVCullableClass@@@Z",
-"?Get_Object_Count@GridCullSystemClass@@UBEHXZ",
 "?Remove_Object_Internal@GridCullSystemClass@@IAEXPAVCullableClass@@@Z"
 ]
 },
@@ -32464,7 +30903,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Is_Done@GridListIterator@@QAE_NXZ",
 "?Next@GridListIterator@@QAEXXZ"
 ]
 },
@@ -32770,20 +31208,6 @@
 "alts": {},
 "fns": [
 "??$find@H@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@1@ABH@Z"
-]
-},
-{
-"owner": "HAnimClass",
-"fn_class": "HAnimClass",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Key@HAnimClass@@UAEPBDXZ"
 ]
 },
 {
@@ -33720,48 +32144,6 @@
 ]
 },
 {
-"owner": "IPAVMapObject",
-"fn_class": "IPAVMapObject",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@IPAVMapObject@@V?$allocator@PAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVMapObject@@@1@I@Z"
-]
-},
-{
-"owner": "IPAVPartitionCell",
-"fn_class": "IPAVPartitionCell",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@IPAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVPartitionCell@@@1@I@Z"
-]
-},
-{
-"owner": "IPAVSightingInfo",
-"fn_class": "IPAVSightingInfo",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@IPAVSightingInfo@@V?$allocator@PAVSightingInfo@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVSightingInfo@@@1@I@Z"
-]
-},
-{
 "owner": "IPEnumeration",
 "fn_class": "IPEnumeration",
 "member": "m_IPlist",
@@ -33858,62 +32240,6 @@
 "alts": {},
 "fns": [
 "?height@IRegion2D@@QBEHXZ"
-]
-},
-{
-"owner": "IVBuddyRequest",
-"fn_class": "IVBuddyRequest",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@IVBuddyRequest@@V?$allocator@VBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyRequest@@@1@I@Z"
-]
-},
-{
-"owner": "IVBuddyResponse",
-"fn_class": "IVBuddyResponse",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@IVBuddyResponse@@V?$allocator@VBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VBuddyResponse@@@1@I@Z"
-]
-},
-{
-"owner": "IVGameResultsRequest",
-"fn_class": "IVGameResultsRequest",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@IVGameResultsRequest@@V?$allocator@VGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsRequest@@@1@I@Z"
-]
-},
-{
-"owner": "IVGameResultsResponse",
-"fn_class": "IVGameResultsResponse",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@IVGameResultsResponse@@V?$allocator@VGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VGameResultsResponse@@@1@I@Z"
 ]
 },
 {
@@ -34068,9 +32394,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0MilitarySubtitleData@InGameUI@@QAE@XZ",
-"??0UIMessage@InGameUI@@QAE@XZ",
-"?addMessageText@InGameUI@@IAEXABVUnicodeString@@PBURGBColor@@@Z"
+"?addMessageText@InGameUI@@IAEXABVUnicodeString@@PBURGBColor@@@Z",
+"?addSuperweapon@InGameUI@@UAEXHABVAsciiString@@W4ObjectID@@PBVSpecialPowerTemplate@@@Z",
+"?beginAreaSelectHint@InGameUI@@UAEXPBVGameMessage@@@Z"
 ]
 },
 {
@@ -34121,20 +32447,6 @@
 {
 "owner": "InGameUI",
 "fn_class": "InGameUI",
-"member": "m_isDragSelecting",
-"zh": 32,
-"bfme": 32,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?endAreaSelectHint@InGameUI@@UAEXPBVGameMessage@@@Z"
-]
-},
-{
-"owner": "InGameUI",
-"fn_class": "InGameUI",
 "member": "m_dragSelectRegion",
 "zh": 36,
 "bfme": 36,
@@ -34144,21 +32456,6 @@
 "alts": {},
 "fns": [
 "?selectNextIdleWorker@InGameUI@@UAEXXZ"
-]
-},
-{
-"owner": "InGameUI",
-"fn_class": "InGameUI",
-"member": "m_displayedMaxWarning",
-"zh": 52,
-"bfme": 52,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDisplayedMaxWarning@InGameUI@@UAE_NXZ",
-"?setDisplayedMaxWarning@InGameUI@@UAEX_N@Z"
 ]
 },
 {
@@ -34509,8 +32806,7 @@
 "alts": {},
 "fns": [
 "?closeKeyboard@DirectInputKeyboard@@IAEXXZ",
-"?isAlt@Keyboard@@QAE_NXZ",
-"?isCtrl@Keyboard@@QAE_NXZ"
+"?isShift@Keyboard@@QAE_NXZ"
 ]
 },
 {
@@ -34603,34 +32899,6 @@
 "fns": [
 "?OnPlayerLeave@LANAPI@@UAEXVUnicodeString@@@Z",
 "?RequestGameLeave@LANAPI@@UAEXXZ"
-]
-},
-{
-"owner": "LANAPI",
-"fn_class": "LANAPI",
-"member": "m_gameStartTime",
-"zh": 28,
-"bfme": 28,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?ResetGameStartTimer@LANAPI@@UAEXXZ"
-]
-},
-{
-"owner": "LANAPI",
-"fn_class": "LANAPI",
-"member": "m_gameStartSeconds",
-"zh": 32,
-"bfme": 32,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?ResetGameStartTimer@LANAPI@@UAEXXZ"
 ]
 },
 {
@@ -34831,20 +33099,6 @@
 ]
 },
 {
-"owner": "LANGameSlot",
-"fn_class": "LANGameSlot",
-"member": "m_lastHeard",
-"zh": 92,
-"bfme": 92,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setLastHeard@LANGameSlot@@QAEXI@Z"
-]
-},
-{
 "owner": "LList",
 "fn_class": "LList",
 "member": "m_head",
@@ -34990,8 +33244,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?findLadderByIndex@LadderList@@QAEPBVLadderInfo@@H@Z",
-"?getSpecialLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ"
+"?findLadderByIndex@LadderList@@QAEPBVLadderInfo@@H@Z"
 ]
 },
 {
@@ -35005,22 +33258,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?findLadderByIndex@LadderList@@QAEPBVLadderInfo@@H@Z",
-"?getStandardLadders@LadderList@@QAEPBV?$list@PAVLadderInfo@@V?$allocator@PAVLadderInfo@@@_STL@@@_STL@@XZ"
-]
-},
-{
-"owner": "LanguageFilter",
-"fn_class": "LanguageFilter",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?reset@LanguageFilter@@UAEXXZ"
+"?findLadderByIndex@LadderList@@QAEPBVLadderInfo@@H@Z"
 ]
 },
 {
@@ -35250,20 +33488,6 @@
 "alts": {},
 "fns": [
 "?Get_Diffuse@LightClass@@QBEXPAVVector3@@@Z"
-]
-},
-{
-"owner": "LightEnvironmentClass",
-"fn_class": "LightEnvironmentClass",
-"member": "LightCount",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Light_Count@LightEnvironmentClass@@QBEHXZ"
 ]
 },
 {
@@ -35625,34 +33849,6 @@
 {
 "owner": "Locomotor",
 "fn_class": "Locomotor",
-"member": "m_maxLift",
-"zh": 28,
-"bfme": 28,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setMaxLift@Locomotor@@QAEXM@Z"
-]
-},
-{
-"owner": "Locomotor",
-"fn_class": "Locomotor",
-"member": "m_closeEnoughDist",
-"zh": 48,
-"bfme": 48,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setCloseEnoughDist@Locomotor@@QAEXM@Z"
-]
-},
-{
-"owner": "Locomotor",
-"fn_class": "Locomotor",
 "member": "m_preferredHeight",
 "zh": 56,
 "bfme": 60,
@@ -35852,8 +34048,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?init@MainMenuSmallScaleDownTransition@@UAEXPAVGameWindow@@@Z",
-"?skip@MainMenuSmallScaleDownTransition@@UAEXXZ"
+"?init@MainMenuSmallScaleDownTransition@@UAEXPAVGameWindow@@@Z"
 ]
 },
 {
@@ -36002,21 +34197,6 @@
 {
 "owner": "MapObject",
 "fn_class": "MapObject",
-"member": "m_nextMapObject",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getNext@MapObject@@QBEPAV1@XZ",
-"?setNextMap@MapObject@@QAEXPAV1@@Z"
-]
-},
-{
-"owner": "MapObject",
-"fn_class": "MapObject",
 "member": "m_properties",
 "zh": 36,
 "bfme": 36,
@@ -36133,20 +34313,6 @@
 ]
 },
 {
-"owner": "MatPassTaskClass",
-"fn_class": "MatPassTaskClass",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Peek_Material_Pass@MatPassTaskClass@@QAEPAVMaterialPassClass@@XZ"
-]
-},
-{
 "owner": "MaterialInfoClass",
 "fn_class": "MaterialInfoClass",
 "member": "+0x0?",
@@ -36222,20 +34388,6 @@
 ]
 },
 {
-"owner": "MaterialPassClass",
-"fn_class": "MaterialPassClass",
-"member": "CullVolume",
-"zh": 52,
-"bfme": 52,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Set_Cull_Volume@MaterialPassClass@@QAEXPAVOBBoxClass@@@Z"
-]
-},
-{
 "owner": "Matrix3D",
 "fn_class": "Matrix3D",
 "member": "Row",
@@ -36295,8 +34447,8 @@
 "alts": {},
 "fns": [
 "?Adjust_Translation@Matrix3D@@QAEXABVVector3@@@Z",
-"?Adjust_X_Translation@Matrix3D@@QAEXM@Z",
-"?Get_Translation@Matrix3D@@QBE?AVVector3@@XZ"
+"?Get_Translation@Matrix3D@@QBE?AVVector3@@XZ",
+"?Get_Translation@Matrix3D@@QBEXPAVVector3@@@Z"
 ]
 },
 {
@@ -36560,48 +34712,6 @@
 "fns": [
 "?Make_Identity@Matrix3x3@@QAEXXZ",
 "?Transpose@Matrix3x3@@QBE?AV1@XZ"
-]
-},
-{
-"owner": "MemoryPool",
-"fn_class": "MemoryPool",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getOwningFactory@MemoryPool@@QAEPAVMemoryPoolFactory@@XZ"
-]
-},
-{
-"owner": "MemoryPoolBlob",
-"fn_class": "MemoryPoolBlob",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getOwningPool@MemoryPoolBlob@@QAEPAVMemoryPool@@XZ"
-]
-},
-{
-"owner": "MemoryPoolSingleBlock",
-"fn_class": "MemoryPoolSingleBlock",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getOwningBlob@MemoryPoolSingleBlock@@QAEPAVMemoryPoolBlob@@XZ"
 ]
 },
 {
@@ -37292,7 +35402,7 @@
 "fns": [
 "?Configure_Material@MeshMatDescClass@@IAEXPAVVertexMaterialClass@@H_N@Z",
 "?Do_Mappers_Need_Normals@MeshMatDescClass@@QAE_NXZ",
-"?Get_Pass_Count@MeshMatDescClass@@QBEHXZ"
+"?Init_Alternate@MeshMatDescClass@@QAEXAAV1@0@Z"
 ]
 },
 {
@@ -37843,9 +35953,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0HideShowSubObjInfo@ModelConditionInfo@@QAE@XZ",
 "??0WeaponBarrelInfo@ModelConditionInfo@@QAE@ABU01@@Z",
-"??0WeaponBarrelInfo@ModelConditionInfo@@QAE@XZ"
+"??0WeaponBarrelInfo@ModelConditionInfo@@QAE@XZ",
+"??4WeaponBarrelInfo@ModelConditionInfo@@QAEAAU01@ABU01@@Z"
 ]
 },
 {
@@ -38110,20 +36220,6 @@
 },
 {
 "owner": "Module",
-"fn_class": "HordeUpdate",
-"member": "m_moduleData+0x2",
-"zh": 10,
-"bfme": 10,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?hasFlag@HordeUpdate@@UBE_NXZ"
-]
-},
-{
-"owner": "Module",
 "fn_class": "ActiveBody",
 "member": "m_moduleData+0x8",
 "zh": 16,
@@ -38158,7 +36254,7 @@
 "fns": [
 "??0FlightDeckInfo@FlightDeckBehavior@@QAE@XZ",
 "?createVisionObject@BattlePlanUpdate@@IAEXXZ",
-"?getRallyPoint@QueueProductionExitUpdate@@UBEPBUCoord3D@@XZ"
+"?huntSpecialPower@CommandButtonHuntUpdate@@IAE?AW4UpdateSleepTime@@PAVAIUpdateInterface@@@Z"
 ]
 },
 {
@@ -38270,7 +36366,7 @@
 },
 {
 "owner": "Module",
-"fn_class": "BattlePlanUpdate",
+"fn_class": "SlavedUpdate",
 "member": "m_moduleData+0x28",
 "zh": 48,
 "bfme": 48,
@@ -38284,7 +36380,7 @@
 "fns": [
 "?clientOnly_getRenderObjBoundBox@W3DModelDraw@@UBE_NPAVOBBoxClass@@@Z",
 "?doGuardLogic@SlavedUpdate@@QAEXPAUCoord3D@@@Z",
-"?getActiveBattlePlan@BattlePlanUpdate@@QBE?AW4BattlePlanStatus@@XZ"
+"?setRopeSpeed@W3DRopeDraw@@UAEXMMM@Z"
 ]
 },
 {
@@ -38444,34 +36540,6 @@
 "fns": [
 "?setDockCrippled@SupplyWarehouseDockUpdate@@UAEX_N@Z",
 "?update@DockUpdate@@UAE?AW4UpdateSleepTime@@XZ"
-]
-},
-{
-"owner": "Module",
-"fn_class": "DockUpdate",
-"member": "m_moduleData+0x5d",
-"zh": 101,
-"bfme": 101,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setDockCrippled@DockUpdate@@UAEX_N@Z"
-]
-},
-{
-"owner": "Module",
-"fn_class": "DockUpdate",
-"member": "m_moduleData+0x5e",
-"zh": 102,
-"bfme": 102,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setDockOpen@DockUpdate@@UAEX_N@Z"
 ]
 },
 {
@@ -38637,9 +36705,7 @@
 "-0x340": 0.7
 },
 "fns": [
-"?gainOneBox@WorkerAIUpdate@@UAE_NH@Z",
-"?getBuildSubTask@WorkerAIUpdate@@UAE?AW4DozerBuildSubTask@@XZ",
-"?setBuildSubTask@WorkerAIUpdate@@UAEXW4DozerBuildSubTask@@@Z"
+"?gainOneBox@WorkerAIUpdate@@UAE_NH@Z"
 ]
 },
 {
@@ -38668,21 +36734,6 @@
 "alts": {},
 "fns": [
 "?update@DockUpdate@@UAE?AW4UpdateSleepTime@@XZ"
-]
-},
-{
-"owner": "Module",
-"fn_class": "DozerAIUpdate",
-"member": "m_moduleData+0x114",
-"zh": 284,
-"bfme": 284,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getBuildSubTask@DozerAIUpdate@@UAE?AW4DozerBuildSubTask@@XZ",
-"?setBuildSubTask@DozerAIUpdate@@UAEXW4DozerBuildSubTask@@@Z"
 ]
 },
 {
@@ -38872,20 +36923,6 @@
 },
 {
 "owner": "Module",
-"fn_class": "DeliverPayloadAIUpdate",
-"member": "m_moduleData+0x244",
-"zh": 588,
-"bfme": 588,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDropDelay@DeliverPayloadAIUpdate@@QBEIXZ"
-]
-},
-{
-"owner": "Module",
 "fn_class": "AssaultTransportAIUpdate",
 "member": "m_moduleData+0x28f",
 "zh": 663,
@@ -39010,9 +37047,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0ModuleTemplate@ModuleFactory@@QAE@XZ",
 "?findModuleInterfaceMask@ModuleFactory@@QAEHABVAsciiString@@W4ModuleType@@@Z",
-"?findModuleTemplate@ModuleFactory@@IAEPBVModuleTemplate@1@ABVAsciiString@@W4ModuleType@@@Z"
+"?findModuleTemplate@ModuleFactory@@IAEPBVModuleTemplate@1@ABVAsciiString@@W4ModuleType@@@Z",
+"?newModule@ModuleFactory@@QAEPAVModule@@PAVThing@@ABVAsciiString@@PBVModuleData@@W4ModuleType@@@Z"
 ]
 },
 {
@@ -39087,34 +37124,6 @@
 "alts": {},
 "fns": [
 "?deposit@Money@@QAEXI_N@Z"
-]
-},
-{
-"owner": "Money",
-"fn_class": "Money",
-"member": "m_money",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?init@Money@@QAEXXZ"
-]
-},
-{
-"owner": "MotionChannelClass",
-"fn_class": "MotionChannelClass",
-"member": "PivotIdx",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Pivot@MotionChannelClass@@QBEHXZ"
 ]
 },
 {
@@ -40223,113 +38232,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??1WeightInfoStruct@NamedPivotMapClass@@QAE@XZ",
 "??_EWeightInfoStruct@NamedPivotMapClass@@QAEPAXI@Z"
-]
-},
-{
-"owner": "NetAckBothCommandMsg",
-"fn_class": "NetAckBothCommandMsg",
-"member": "m_commandID",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getCommandID@NetAckBothCommandMsg@@QAEGXZ",
-"?setCommandID@NetAckBothCommandMsg@@QAEXG@Z"
-]
-},
-{
-"owner": "NetAckBothCommandMsg",
-"fn_class": "NetAckBothCommandMsg",
-"member": "m_originalPlayerID",
-"zh": 30,
-"bfme": 30,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getOriginalPlayerID@NetAckBothCommandMsg@@QAEEXZ",
-"?setOriginalPlayerID@NetAckBothCommandMsg@@QAEXE@Z"
-]
-},
-{
-"owner": "NetAckStage1CommandMsg",
-"fn_class": "NetAckStage1CommandMsg",
-"member": "m_commandID",
-"zh": 28,
-"bfme": 28,
-"votes": 3.0,
-"total": 3.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getCommandID@NetAckStage1CommandMsg@@QAEGXZ",
-"?getSortNumber@NetAckStage1CommandMsg@@UAEHXZ",
-"?setCommandID@NetAckStage1CommandMsg@@QAEXG@Z"
-]
-},
-{
-"owner": "NetAckStage1CommandMsg",
-"fn_class": "NetAckStage1CommandMsg",
-"member": "m_originalPlayerID",
-"zh": 30,
-"bfme": 30,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getOriginalPlayerID@NetAckStage1CommandMsg@@QAEEXZ",
-"?setOriginalPlayerID@NetAckStage1CommandMsg@@QAEXE@Z"
-]
-},
-{
-"owner": "NetAckStage2CommandMsg",
-"fn_class": "NetAckStage2CommandMsg",
-"member": "m_commandID",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getCommandID@NetAckStage2CommandMsg@@QAEGXZ",
-"?setCommandID@NetAckStage2CommandMsg@@QAEXG@Z"
-]
-},
-{
-"owner": "NetAckStage2CommandMsg",
-"fn_class": "NetAckStage2CommandMsg",
-"member": "m_originalPlayerID",
-"zh": 30,
-"bfme": 30,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getOriginalPlayerID@NetAckStage2CommandMsg@@QAEEXZ",
-"?setOriginalPlayerID@NetAckStage2CommandMsg@@QAEXE@Z"
-]
-},
-{
-"owner": "NetChatCommandMsg",
-"fn_class": "NetChatCommandMsg",
-"member": "m_playerMask",
-"zh": 32,
-"bfme": 32,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setPlayerMask@NetChatCommandMsg@@QAEXH@Z"
 ]
 },
 {
@@ -40470,20 +38373,6 @@
 },
 {
 "owner": "NetCommandMsg",
-"fn_class": "NetCommandMsg",
-"member": "m_referenceCount",
-"zh": 24,
-"bfme": 24,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?attach@NetCommandMsg@@QAEXXZ"
-]
-},
-{
-"owner": "NetCommandMsg",
 "fn_class": "NetGameCommandMsg",
 "member": "m_referenceCount+0x10",
 "zh": 40,
@@ -40523,8 +38412,8 @@
 "alts": {},
 "fns": [
 "?getPercentComplete@NetCommandWrapperList@@QAEHG@Z",
-"?init@NetCommandWrapperList@@QAEXXZ",
-"?processWrapper@NetCommandWrapperList@@QAEXPAVNetCommandRef@@@Z"
+"?processWrapper@NetCommandWrapperList@@QAEXPAVNetCommandRef@@@Z",
+"?removeFromList@NetCommandWrapperList@@IAEXPAVNetCommandWrapperListNode@@@Z"
 ]
 },
 {
@@ -40599,141 +38488,6 @@
 ]
 },
 {
-"owner": "NetDestroyPlayerCommandMsg",
-"fn_class": "NetDestroyPlayerCommandMsg",
-"member": "m_playerIndex",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getPlayerIndex@NetDestroyPlayerCommandMsg@@QAEIXZ",
-"?setPlayerIndex@NetDestroyPlayerCommandMsg@@QAEXI@Z"
-]
-},
-{
-"owner": "NetDisconnectFrameCommandMsg",
-"fn_class": "NetDisconnectFrameCommandMsg",
-"member": "m_disconnectFrame",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDisconnectFrame@NetDisconnectFrameCommandMsg@@QAEIXZ",
-"?setDisconnectFrame@NetDisconnectFrameCommandMsg@@QAEXI@Z"
-]
-},
-{
-"owner": "NetDisconnectPlayerCommandMsg",
-"fn_class": "NetDisconnectPlayerCommandMsg",
-"member": "m_disconnectSlot",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDisconnectSlot@NetDisconnectPlayerCommandMsg@@QAEEXZ",
-"?setDisconnectSlot@NetDisconnectPlayerCommandMsg@@QAEXE@Z"
-]
-},
-{
-"owner": "NetDisconnectPlayerCommandMsg",
-"fn_class": "NetDisconnectPlayerCommandMsg",
-"member": "m_disconnectFrame",
-"zh": 32,
-"bfme": 32,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDisconnectFrame@NetDisconnectPlayerCommandMsg@@QAEIXZ",
-"?setDisconnectFrame@NetDisconnectPlayerCommandMsg@@QAEXI@Z"
-]
-},
-{
-"owner": "NetDisconnectScreenOffCommandMsg",
-"fn_class": "NetDisconnectScreenOffCommandMsg",
-"member": "m_newFrame",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getNewFrame@NetDisconnectScreenOffCommandMsg@@QAEIXZ",
-"?setNewFrame@NetDisconnectScreenOffCommandMsg@@QAEXI@Z"
-]
-},
-{
-"owner": "NetDisconnectVoteCommandMsg",
-"fn_class": "NetDisconnectVoteCommandMsg",
-"member": "m_slot",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getSlot@NetDisconnectVoteCommandMsg@@QAEEXZ",
-"?setSlot@NetDisconnectVoteCommandMsg@@QAEXE@Z"
-]
-},
-{
-"owner": "NetDisconnectVoteCommandMsg",
-"fn_class": "NetDisconnectVoteCommandMsg",
-"member": "m_voteFrame",
-"zh": 32,
-"bfme": 32,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getVoteFrame@NetDisconnectVoteCommandMsg@@QAEIXZ",
-"?setVoteFrame@NetDisconnectVoteCommandMsg@@QAEXI@Z"
-]
-},
-{
-"owner": "NetFileAnnounceCommandMsg",
-"fn_class": "NetFileAnnounceCommandMsg",
-"member": "m_fileID",
-"zh": 32,
-"bfme": 32,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getFileID@NetFileAnnounceCommandMsg@@QAEGXZ",
-"?setFileID@NetFileAnnounceCommandMsg@@QAEXG@Z"
-]
-},
-{
-"owner": "NetFileAnnounceCommandMsg",
-"fn_class": "NetFileAnnounceCommandMsg",
-"member": "m_playerMask",
-"zh": 34,
-"bfme": 34,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getPlayerMask@NetFileAnnounceCommandMsg@@QAEEXZ",
-"?setPlayerMask@NetFileAnnounceCommandMsg@@QAEXE@Z"
-]
-},
-{
 "owner": "NetFileCommandMsg",
 "fn_class": "NetFileCommandMsg",
 "member": "+0x0?",
@@ -40758,7 +38512,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getFileData@NetFileCommandMsg@@QAEPAEXZ",
 "?setFileData@NetFileCommandMsg@@QAEXPAEI@Z"
 ]
 },
@@ -40773,38 +38526,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getFileLength@NetFileCommandMsg@@QAEIXZ",
 "?setFileData@NetFileCommandMsg@@QAEXPAEI@Z"
-]
-},
-{
-"owner": "NetFileProgressCommandMsg",
-"fn_class": "NetFileProgressCommandMsg",
-"member": "m_fileID",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getFileID@NetFileProgressCommandMsg@@QAEGXZ",
-"?setFileID@NetFileProgressCommandMsg@@QAEXG@Z"
-]
-},
-{
-"owner": "NetFileProgressCommandMsg",
-"fn_class": "NetFileProgressCommandMsg",
-"member": "m_progress",
-"zh": 32,
-"bfme": 32,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getProgress@NetFileProgressCommandMsg@@QAEHXZ",
-"?setProgress@NetFileProgressCommandMsg@@QAEXH@Z"
 ]
 },
 {
@@ -40836,36 +38558,6 @@
 ]
 },
 {
-"owner": "NetPlayerLeaveCommandMsg",
-"fn_class": "NetPlayerLeaveCommandMsg",
-"member": "m_leavingPlayerID",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getLeavingPlayerID@NetPlayerLeaveCommandMsg@@QAEEXZ",
-"?setLeavingPlayerID@NetPlayerLeaveCommandMsg@@QAEXE@Z"
-]
-},
-{
-"owner": "NetProgressCommandMsg",
-"fn_class": "NetProgressCommandMsg",
-"member": "m_percent",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getPercentage@NetProgressCommandMsg@@QAEEXZ",
-"?setPercentage@NetProgressCommandMsg@@QAEXE@Z"
-]
-},
-{
 "owner": "NetWrapperCommandMsg",
 "fn_class": "NetWrapperCommandMsg",
 "member": "m_data",
@@ -40876,7 +38568,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getData@NetWrapperCommandMsg@@QAEPAEXZ",
 "?setData@NetWrapperCommandMsg@@QAEXPAEI@Z"
 ]
 },
@@ -40891,83 +38582,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getDataLength@NetWrapperCommandMsg@@QAEIXZ",
 "?setData@NetWrapperCommandMsg@@QAEXPAEI@Z"
-]
-},
-{
-"owner": "NetWrapperCommandMsg",
-"fn_class": "NetWrapperCommandMsg",
-"member": "m_dataOffset",
-"zh": 36,
-"bfme": 36,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDataOffset@NetWrapperCommandMsg@@QAEIXZ",
-"?setDataOffset@NetWrapperCommandMsg@@QAEXI@Z"
-]
-},
-{
-"owner": "NetWrapperCommandMsg",
-"fn_class": "NetWrapperCommandMsg",
-"member": "m_totalDataLength",
-"zh": 40,
-"bfme": 40,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getTotalDataLength@NetWrapperCommandMsg@@QAEIXZ",
-"?setTotalDataLength@NetWrapperCommandMsg@@QAEXI@Z"
-]
-},
-{
-"owner": "NetWrapperCommandMsg",
-"fn_class": "NetWrapperCommandMsg",
-"member": "m_chunkNumber",
-"zh": 44,
-"bfme": 44,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getChunkNumber@NetWrapperCommandMsg@@QAEIXZ",
-"?setChunkNumber@NetWrapperCommandMsg@@QAEXI@Z"
-]
-},
-{
-"owner": "NetWrapperCommandMsg",
-"fn_class": "NetWrapperCommandMsg",
-"member": "m_numChunks",
-"zh": 48,
-"bfme": 48,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getNumChunks@NetWrapperCommandMsg@@QAEIXZ",
-"?setNumChunks@NetWrapperCommandMsg@@QAEXI@Z"
-]
-},
-{
-"owner": "NetWrapperCommandMsg",
-"fn_class": "NetWrapperCommandMsg",
-"member": "m_wrappedCommandID",
-"zh": 52,
-"bfme": 52,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getWrappedCommandID@NetWrapperCommandMsg@@QAEGXZ",
-"?setWrappedCommandID@NetWrapperCommandMsg@@QAEXG@Z"
 ]
 },
 {
@@ -40981,8 +38596,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?isPlayerConnected@Network@@UAE_NH@Z",
-"?reset@Network@@UAEXXZ"
+"?isPlayerConnected@Network@@UAE_NH@Z"
 ]
 },
 {
@@ -40996,9 +38610,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?areAllQueuesEmpty@Network@@UAE_NXZ",
 "?getLocalPlayerID@Network@@UAEIXZ",
-"?getNumPlayers@Network@@UAEHXZ"
+"?isPacketRouter@Network@@UAE_NXZ",
+"?isPlayerConnected@Network@@UAE_NH@Z"
 ]
 },
 {
@@ -41208,9 +38822,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0DLINK_TeamMemberList@Object@@QAE@XZ",
 "?calculateHeightAboveTerrain@Object@@MBEMXZ",
-"?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z"
+"?findModule@Object@@IBEPAVModule@@W4NameKeyType@@@Z",
+"?findSpecialAbilityUpdate@Object@@QBEPAVSpecialAbilityUpdate@@W4SpecialPowerType@@@Z"
 ]
 },
 {
@@ -41269,20 +38883,6 @@
 "?getSingleLogicalBonePosition@Object@@QBE_NPBDPAUCoord3D@@PAVMatrix3D@@@Z",
 "?removeCustomIndicatorColor@Object@@QAEXXZ",
 "?setCustomIndicatorColor@Object@@QAEXH@Z"
-]
-},
-{
-"owner": "Object",
-"fn_class": "Object",
-"member": "m_name",
-"zh": 132,
-"bfme": 132,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getName@Object@@QBEABVAsciiString@@XZ"
 ]
 },
 {
@@ -41423,34 +39023,6 @@
 {
 "owner": "Object",
 "fn_class": "Object",
-"member": "m_body",
-"zh": 404,
-"bfme": 404,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getBodyModule@Object@@QBEPAVBodyModuleInterface@@XZ"
-]
-},
-{
-"owner": "Object",
-"fn_class": "Object",
-"member": "m_stealth",
-"zh": 408,
-"bfme": 408,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getStealth@Object@@QBEPAVStealthUpdate@@XZ"
-]
-},
-{
-"owner": "Object",
-"fn_class": "Object",
 "member": "m_ai",
 "zh": 412,
 "bfme": 516,
@@ -41469,20 +39041,6 @@
 {
 "owner": "Object",
 "fn_class": "Object",
-"member": "m_physics",
-"zh": 416,
-"bfme": 416,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getPhysics@Object@@QAEPAVPhysicsBehavior@@XZ"
-]
-},
-{
-"owner": "Object",
-"fn_class": "Object",
 "member": "m_partitionData",
 "zh": 420,
 "bfme": 944,
@@ -41493,7 +39051,6 @@
 "0x1a4": 1.0
 },
 "fns": [
-"?friend_setPartitionData@Object@@QAEXPAVPartitionData@@@Z",
 "?getShroudedStatus@Object@@QBE?AW4ObjectShroudStatus@@H@Z",
 "?setScriptStatus@Object@@QAEXW4ObjectScriptStatusBit@@_N@Z"
 ]
@@ -41503,16 +39060,14 @@
 "fn_class": "Object",
 "member": "m_radarData",
 "zh": 424,
-"bfme": 424,
-"votes": 2.0,
+"bfme": 524,
+"votes": 1.0,
 "total": 3.0,
-"confidence": 0.67,
+"confidence": 0.33,
 "alts": {
-"0x20c": 1.0
+"0x1a8": 2.0
 },
 "fns": [
-"?friend_getRadarData@Object@@QAEPAVRadarObject@@XZ",
-"?friend_setRadarData@Object@@QAEXPAVRadarObject@@@Z",
 "?setOrRestoreTeam@Object@@IAEXPAVTeam@@_N@Z"
 ]
 },
@@ -41650,7 +39205,6 @@
 "0x27c": 1.0
 },
 "fns": [
-"?getDestinationLayer@Object@@QBE?AW4PathfindLayerEnum@@XZ",
 "?setDestinationLayer@Object@@QAEXW4PathfindLayerEnum@@@Z"
 ]
 },
@@ -42245,244 +39799,6 @@
 ]
 },
 {
-"owner": "PAPAPAVMapObject",
-"fn_class": "PAPAPAVMapObject",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAPAVMapObject@@PAPAV1@V?$allocator@PAPAVMapObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAPAVMapObject@@@1@PAPAPAVMapObject@@@Z"
-]
-},
-{
-"owner": "PAPAPAVPartitionCell",
-"fn_class": "PAPAPAVPartitionCell",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAPAVPartitionCell@@PAPAV1@V?$allocator@PAPAVPartitionCell@@@_STL@@@_STL@@QAE@ABV?$allocator@PAPAVPartitionCell@@@1@PAPAPAVPartitionCell@@@Z"
-]
-},
-{
-"owner": "PAPAPAVSightingInfo",
-"fn_class": "PAPAPAVSightingInfo",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAPAVSightingInfo@@PAPAV1@V?$allocator@PAPAVSightingInfo@@@_STL@@@_STL@@QAE@ABV?$allocator@PAPAVSightingInfo@@@1@PAPAPAVSightingInfo@@@Z"
-]
-},
-{
-"owner": "PAPAVBuddyRequest",
-"fn_class": "PAPAVBuddyRequest",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAVBuddyRequest@@PAV1@V?$allocator@PAVBuddyRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVBuddyRequest@@@1@PAPAVBuddyRequest@@@Z"
-]
-},
-{
-"owner": "PAPAVBuddyResponse",
-"fn_class": "PAPAVBuddyResponse",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAVBuddyResponse@@PAV1@V?$allocator@PAVBuddyResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVBuddyResponse@@@1@PAPAVBuddyResponse@@@Z"
-]
-},
-{
-"owner": "PAPAVDrawable",
-"fn_class": "PAPAVDrawable",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAVDrawable@@PAV1@V?$allocator@PAVDrawable@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVDrawable@@@1@PAPAVDrawable@@@Z"
-]
-},
-{
-"owner": "PAPAVGameResultsRequest",
-"fn_class": "PAPAVGameResultsRequest",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAVGameResultsRequest@@PAV1@V?$allocator@PAVGameResultsRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVGameResultsRequest@@@1@PAPAVGameResultsRequest@@@Z"
-]
-},
-{
-"owner": "PAPAVGameResultsResponse",
-"fn_class": "PAPAVGameResultsResponse",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAVGameResultsResponse@@PAV1@V?$allocator@PAVGameResultsResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVGameResultsResponse@@@1@PAPAVGameResultsResponse@@@Z"
-]
-},
-{
-"owner": "PAPAVLocomotor",
-"fn_class": "PAPAVLocomotor",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAVLocomotor@@PAV1@V?$allocator@PAVLocomotor@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVLocomotor@@@1@PAPAVLocomotor@@@Z"
-]
-},
-{
-"owner": "PAPAVObject",
-"fn_class": "PAPAVObject",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAVObject@@PAV1@V?$allocator@PAVObject@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVObject@@@1@PAPAVObject@@@Z"
-]
-},
-{
-"owner": "PAPAVObjectCreationNugget",
-"fn_class": "PAPAVObjectCreationNugget",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAVObjectCreationNugget@@PAV1@V?$allocator@PAVObjectCreationNugget@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVObjectCreationNugget@@@1@PAPAVObjectCreationNugget@@@Z"
-]
-},
-{
-"owner": "PAPAVWeaponTemplate",
-"fn_class": "PAPAVWeaponTemplate",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPAVWeaponTemplate@@PAV1@V?$allocator@PAVWeaponTemplate@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVWeaponTemplate@@@1@PAPAVWeaponTemplate@@@Z"
-]
-},
-{
-"owner": "PAPBVFXList",
-"fn_class": "PAPBVFXList",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPBVFXList@@PBV1@V?$allocator@PBVFXList@@@_STL@@@_STL@@QAE@ABV?$allocator@PBVFXList@@@1@PAPBVFXList@@@Z"
-]
-},
-{
-"owner": "PAPBVModuleData",
-"fn_class": "PAPBVModuleData",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPBVModuleData@@PBV1@V?$allocator@PBVModuleData@@@_STL@@@_STL@@QAE@ABV?$allocator@PBVModuleData@@@1@PAPBVModuleData@@@Z"
-]
-},
-{
-"owner": "PAPBVObjectCreationList",
-"fn_class": "PAPBVObjectCreationList",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAPBVObjectCreationList@@PBV1@V?$allocator@PBVObjectCreationList@@@_STL@@@_STL@@QAE@ABV?$allocator@PBVObjectCreationList@@@1@PAPBVObjectCreationList@@@Z"
-]
-},
-{
-"owner": "PAUAngleFXInfo",
-"fn_class": "PAUAngleFXInfo",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUAngleFXInfo@@U1@V?$allocator@UAngleFXInfo@@@_STL@@@_STL@@QAE@ABV?$allocator@UAngleFXInfo@@@1@PAUAngleFXInfo@@@Z"
-]
-},
-{
-"owner": "PAUAnimSet",
-"fn_class": "PAUAnimSet",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUAnimSet@GenericObjectCreationNugget@@U12@V?$allocator@UAnimSet@GenericObjectCreationNugget@@@_STL@@@_STL@@QAE@ABV?$allocator@UAnimSet@GenericObjectCreationNugget@@@1@PAUAnimSet@GenericObjectCreationNugget@@@Z"
-]
-},
-{
 "owner": "PAUAudioRequest",
 "fn_class": "PAUAudioRequest",
 "member": "+0x0?",
@@ -42494,76 +39810,6 @@
 "alts": {},
 "fns": [
 "??0?$_List_base@PAUAudioRequest@@V?$allocator@PAUAudioRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@PAUAudioRequest@@@1@@Z"
-]
-},
-{
-"owner": "PAUCoord2D",
-"fn_class": "PAUCoord2D",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUCoord2D@@U1@V?$allocator@UCoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UCoord2D@@@1@PAUCoord2D@@@Z"
-]
-},
-{
-"owner": "PAUCoord3D",
-"fn_class": "PAUCoord3D",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUCoord3D@@U1@V?$allocator@UCoord3D@@@_STL@@@_STL@@QAE@ABV?$allocator@UCoord3D@@@1@PAUCoord3D@@@Z"
-]
-},
-{
-"owner": "PAUFXBoneInfo",
-"fn_class": "PAUFXBoneInfo",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUFXBoneInfo@@U1@V?$allocator@UFXBoneInfo@@@_STL@@@_STL@@QAE@ABV?$allocator@UFXBoneInfo@@@1@PAUFXBoneInfo@@@Z"
-]
-},
-{
-"owner": "PAUHideShowSubObjInfo",
-"fn_class": "PAUHideShowSubObjInfo",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUHideShowSubObjInfo@ModelConditionInfo@@U12@V?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@_STL@@@_STL@@QAE@ABV?$allocator@UHideShowSubObjInfo@ModelConditionInfo@@@1@PAUHideShowSubObjInfo@ModelConditionInfo@@@Z"
-]
-},
-{
-"owner": "PAUICoord2D",
-"fn_class": "PAUICoord2D",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUICoord2D@@U1@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@PAUICoord2D@@@Z"
 ]
 },
 {
@@ -42718,146 +39964,6 @@
 ]
 },
 {
-"owner": "PAUModelConditionInfo",
-"fn_class": "PAUModelConditionInfo",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUModelConditionInfo@@U1@V?$allocator@UModelConditionInfo@@@_STL@@@_STL@@QAE@ABV?$allocator@UModelConditionInfo@@@1@PAUModelConditionInfo@@@Z"
-]
-},
-{
-"owner": "PAUNugget",
-"fn_class": "PAUNugget",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUNugget@ModuleInfo@@U12@V?$allocator@UNugget@ModuleInfo@@@_STL@@@_STL@@QAE@ABV?$allocator@UNugget@ModuleInfo@@@1@PAUNugget@ModuleInfo@@@Z"
-]
-},
-{
-"owner": "PAUParticleSysBoneInfo",
-"fn_class": "PAUParticleSysBoneInfo",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUParticleSysBoneInfo@@U1@V?$allocator@UParticleSysBoneInfo@@@_STL@@@_STL@@QAE@ABV?$allocator@UParticleSysBoneInfo@@@1@PAUParticleSysBoneInfo@@@Z"
-]
-},
-{
-"owner": "PAUParticleSysTrackerType",
-"fn_class": "PAUParticleSysTrackerType",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUParticleSysTrackerType@W3DModelDraw@@U12@V?$allocator@UParticleSysTrackerType@W3DModelDraw@@@_STL@@@_STL@@QAE@ABV?$allocator@UParticleSysTrackerType@W3DModelDraw@@@1@PAUParticleSysTrackerType@W3DModelDraw@@@Z"
-]
-},
-{
-"owner": "PAUPayload",
-"fn_class": "PAUPayload",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUPayload@DeliverPayloadNugget@@U12@V?$allocator@UPayload@DeliverPayloadNugget@@@_STL@@@_STL@@QAE@ABV?$allocator@UPayload@DeliverPayloadNugget@@@1@PAUPayload@DeliverPayloadNugget@@@Z"
-]
-},
-{
-"owner": "PAUPrereqUnitRec",
-"fn_class": "PAUPrereqUnitRec",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUPrereqUnitRec@ProductionPrerequisite@@U12@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QAE@ABV?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@1@PAUPrereqUnitRec@ProductionPrerequisite@@@Z"
-]
-},
-{
-"owner": "PAUWeaponBarrelInfo",
-"fn_class": "PAUWeaponBarrelInfo",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUWeaponBarrelInfo@ModelConditionInfo@@U12@V?$allocator@UWeaponBarrelInfo@ModelConditionInfo@@@_STL@@@_STL@@QAE@ABV?$allocator@UWeaponBarrelInfo@ModelConditionInfo@@@1@PAUWeaponBarrelInfo@ModelConditionInfo@@@Z"
-]
-},
-{
-"owner": "PAUWeaponRecoilInfo",
-"fn_class": "PAUWeaponRecoilInfo",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAUWeaponRecoilInfo@W3DModelDraw@@U12@V?$allocator@UWeaponRecoilInfo@W3DModelDraw@@@_STL@@@_STL@@QAE@ABV?$allocator@UWeaponRecoilInfo@W3DModelDraw@@@1@PAUWeaponRecoilInfo@W3DModelDraw@@@Z"
-]
-},
-{
-"owner": "PAVArmorTemplateSet",
-"fn_class": "PAVArmorTemplateSet",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAVArmorTemplateSet@@V1@V?$allocator@VArmorTemplateSet@@@_STL@@@_STL@@QAE@ABV?$allocator@VArmorTemplateSet@@@1@PAVArmorTemplateSet@@@Z"
-]
-},
-{
-"owner": "PAVAsciiString",
-"fn_class": "PAVAsciiString",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 3.0,
-"total": 3.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAVAsciiString@@V1@V?$allocator@VAsciiString@@@_STL@@@_STL@@QAE@ABV?$allocator@VAsciiString@@@1@PAVAsciiString@@@Z"
-]
-},
-{
 "owner": "PAVCreditsLine",
 "fn_class": "PAVCreditsLine",
 "member": "+0x0?",
@@ -42941,7 +40047,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??D?$_Deque_iterator@PAVMapObject@@U?$_Nonconst_traits@PAVMapObject@@@_STL@@@_STL@@QBEAAPAVMapObject@@XZ",
 "??F?$_Deque_iterator@PAVMapObject@@U?$_Nonconst_traits@PAVMapObject@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -43258,34 +40363,6 @@
 "fns": [
 "??0?$_Deque_base@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVPartitionCell@@@1@I@Z",
 "??0?$deque@PAVPartitionCell@@V?$allocator@PAVPartitionCell@@@_STL@@@_STL@@QAE@ABV?$allocator@PAVPartitionCell@@@1@@Z"
-]
-},
-{
-"owner": "PAVPlayerTemplate",
-"fn_class": "PAVPlayerTemplate",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAVPlayerTemplate@@V1@V?$allocator@VPlayerTemplate@@@_STL@@@_STL@@QAE@ABV?$allocator@VPlayerTemplate@@@1@PAVPlayerTemplate@@@Z"
-]
-},
-{
-"owner": "PAVProductionPrerequisite",
-"fn_class": "PAVProductionPrerequisite",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAVProductionPrerequisite@@V1@V?$allocator@VProductionPrerequisite@@@_STL@@@_STL@@QAE@ABV?$allocator@VProductionPrerequisite@@@1@PAVProductionPrerequisite@@@Z"
 ]
 },
 {
@@ -43713,20 +40790,6 @@
 ]
 },
 {
-"owner": "PAVUnicodeString",
-"fn_class": "PAVUnicodeString",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAVUnicodeString@@V1@V?$allocator@VUnicodeString@@@_STL@@@_STL@@QAE@ABV?$allocator@VUnicodeString@@@1@PAVUnicodeString@@@Z"
-]
-},
-{
 "owner": "PAVVertexMaterialClass",
 "fn_class": "PAVVertexMaterialClass",
 "member": "+0x4?",
@@ -43826,62 +40889,6 @@
 ]
 },
 {
-"owner": "PAVW3DAnimationInfo",
-"fn_class": "PAVW3DAnimationInfo",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAVW3DAnimationInfo@@V1@V?$allocator@VW3DAnimationInfo@@@_STL@@@_STL@@QAE@ABV?$allocator@VW3DAnimationInfo@@@1@PAVW3DAnimationInfo@@@Z"
-]
-},
-{
-"owner": "PAVWeaponTemplateSet",
-"fn_class": "PAVWeaponTemplateSet",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAVWeaponTemplateSet@@V1@V?$allocator@VWeaponTemplateSet@@@_STL@@@_STL@@QAE@ABV?$allocator@VWeaponTemplateSet@@@1@PAVWeaponTemplateSet@@@Z"
-]
-},
-{
-"owner": "PAW4ObjectID",
-"fn_class": "PAW4ObjectID",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAW4ObjectID@@W41@V?$allocator@W4ObjectID@@@_STL@@@_STL@@QAE@ABV?$allocator@W4ObjectID@@@1@PAW4ObjectID@@@Z"
-]
-},
-{
-"owner": "PAW4ScienceType",
-"fn_class": "PAW4ScienceType",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$_STLP_alloc_proxy@PAW4ScienceType@@W41@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAE@ABV?$allocator@W4ScienceType@@@1@PAW4ScienceType@@@Z"
-]
-},
-{
 "owner": "PBVGameWindow",
 "fn_class": "PBVGameWindow",
 "member": "+0x0?",
@@ -43936,7 +40943,7 @@
 "fns": [
 "??$_M_find@PBVThingTemplate@@@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@ABEPAU?$_Rb_tree_node@U?$pair@QBVThingTemplate@@H@_STL@@@1@ABQBVThingTemplate@@@Z",
 "??$find@PBVThingTemplate@@@?$_Rb_tree@PBVThingTemplate@@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Select1st@U?$pair@QBVThingTemplate@@H@_STL@@@3@U?$less@PBVThingTemplate@@@3@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAE?AU?$_Rb_tree_iterator@U?$pair@QBVThingTemplate@@H@_STL@@U?$_Nonconst_traits@U?$pair@QBVThingTemplate@@H@_STL@@@2@@1@ABQBVThingTemplate@@@Z",
-"??0?$_Rb_tree_iterator@PBVThingTemplate@@U?$_Const_traits@PBVThingTemplate@@@_STL@@@_STL@@QAE@XZ"
+"??A?$map@PBVThingTemplate@@HU?$less@PBVThingTemplate@@@_STL@@V?$allocator@U?$pair@QBVThingTemplate@@H@_STL@@@3@@_STL@@QAEAAHABQBVThingTemplate@@@Z"
 ]
 },
 {
@@ -44582,9 +41589,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?costSoFar@PathfindCell@@QAEIPAV1@@Z",
-"?setParentCell@PathfindCell@@QAEXPAV1@@Z",
-"?setParentCellHierarchical@PathfindCell@@QAEXPAV1@@Z"
+"?costSoFar@PathfindCell@@QAEIPAV1@@Z"
 ]
 },
 {
@@ -44641,20 +41646,6 @@
 "alts": {},
 "fns": [
 "?getEndCellIndex@PathfindLayer@@QAEXPAUICoord2D@@@Z"
-]
-},
-{
-"owner": "PathfindLayer",
-"fn_class": "PathfindLayer",
-"member": "m_zone",
-"zh": 44,
-"bfme": 44,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setZone@PathfindLayer@@QAEXH@Z"
 ]
 },
 {
@@ -44891,20 +41882,6 @@
 {
 "owner": "PeerThreadClass",
 "fn_class": "PeerThreadClass",
-"member": "+0x94?",
-"zh": 148,
-"bfme": 148,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setSawCompleteGameList@PeerThreadClass@@QAEX_N@Z"
-]
-},
-{
-"owner": "PeerThreadClass",
-"fn_class": "PeerThreadClass",
 "member": "+0x98?",
 "zh": 152,
 "bfme": 148,
@@ -44944,20 +41921,6 @@
 "alts": {},
 "fns": [
 "?addServerToMap@PeerThreadClass@@QAEHPAU_SBServer@@@Z"
-]
-},
-{
-"owner": "PhysicsBehavior",
-"fn_class": "PhysicsBehavior",
-"member": "m_extraBounciness",
-"zh": 120,
-"bfme": 120,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setExtraBounciness@PhysicsBehavior@@QAEXM@Z"
 ]
 },
 {
@@ -45191,20 +42154,6 @@
 "alts": {},
 "fns": [
 "?areThreadsRunning@Pinger@@UAE_NXZ"
-]
-},
-{
-"owner": "Pipe",
-"fn_class": "Pipe",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?End@Pipe@@UAEHXZ"
 ]
 },
 {
@@ -45498,20 +42447,6 @@
 {
 "owner": "Player",
 "fn_class": "Player",
-"member": "m_energy",
-"zh": 128,
-"bfme": 128,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getEnergy@Player@@QAEPAVEnergy@@XZ"
-]
-},
-{
-"owner": "Player",
-"fn_class": "Player",
 "member": "m_ai",
 "zh": 336,
 "bfme": 544,
@@ -45644,7 +42579,6 @@
 "0x188": 1.0
 },
 "fns": [
-"?getRankLevel@Player@@QBEHXZ",
 "?resetSciences@Player@@QAEXXZ",
 "?setRankLevel@Player@@QAE_NH@Z"
 ]
@@ -45971,8 +42905,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getName@PlayerTemplate@@QBE?AVAsciiString@@XZ",
-"?getNameKey@PlayerTemplate@@QBE?AW4NameKeyType@@XZ"
+"?getName@PlayerTemplate@@QBE?AVAsciiString@@XZ"
 ]
 },
 {
@@ -46115,23 +43048,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Get_Frame_Row_Column_Count_Log2@PointGroupClass@@QAEEXZ",
 "?Set_Frame_Row_Column_Count_Log2@PointGroupClass@@QAEXE@Z"
-]
-},
-{
-"owner": "PointGroupClass",
-"fn_class": "PointGroupClass",
-"member": "Shader",
-"zh": 40,
-"bfme": 40,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Shader@PointGroupClass@@QAE?AVShaderClass@@XZ",
-"?Set_Shader@PointGroupClass@@QAEXVShaderClass@@@Z"
 ]
 },
 {
@@ -46145,8 +43062,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Get_Polygon_Count@PointGroupClass@@QAEHXZ",
-"?Set_Point_Mode@PointGroupClass@@QAEXW4PointModeEnum@1@@Z"
+"?Get_Polygon_Count@PointGroupClass@@QAEHXZ"
 ]
 },
 {
@@ -46161,20 +43077,6 @@
 "alts": {},
 "fns": [
 "?Set_Flag@PointGroupClass@@QAEXW4FlagsType@1@_N@Z"
-]
-},
-{
-"owner": "PointGroupClass",
-"fn_class": "PointGroupClass",
-"member": "DefaultPointSize",
-"zh": 52,
-"bfme": 52,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Set_Point_Size@PointGroupClass@@QAEXM@Z"
 ]
 },
 {
@@ -46220,48 +43122,6 @@
 "fns": [
 "?Get_Point_Color@PointGroupClass@@QAE?AVVector3@@XZ",
 "?Set_Point_Color@PointGroupClass@@QAEXVVector3@@@Z"
-]
-},
-{
-"owner": "PointGroupClass",
-"fn_class": "PointGroupClass",
-"member": "DefaultPointAlpha",
-"zh": 68,
-"bfme": 68,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Set_Point_Alpha@PointGroupClass@@QAEXM@Z"
-]
-},
-{
-"owner": "PointGroupClass",
-"fn_class": "PointGroupClass",
-"member": "DefaultPointOrientation",
-"zh": 72,
-"bfme": 72,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Set_Point_Orientation@PointGroupClass@@QAEXE@Z"
-]
-},
-{
-"owner": "PointGroupClass",
-"fn_class": "PointGroupClass",
-"member": "DefaultPointFrame",
-"zh": 73,
-"bfme": 73,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Set_Point_Frame@PointGroupClass@@QAEXE@Z"
 ]
 },
 {
@@ -46349,20 +43209,6 @@
 ]
 },
 {
-"owner": "PolyRenderTaskClass",
-"fn_class": "PolyRenderTaskClass",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Peek_Polygon_Renderer@PolyRenderTaskClass@@QAEPAVDX8PolygonRendererClass@@XZ"
-]
-},
-{
 "owner": "PolygonTrigger",
 "fn_class": "PolygonTrigger",
 "member": "m_points",
@@ -46389,7 +43235,6 @@
 "0x1c": 1.0
 },
 "fns": [
-"?getNumPoints@PolygonTrigger@@QBEHXZ",
 "?updateBounds@PolygonTrigger@@IBEXXZ"
 ]
 },
@@ -47349,20 +44194,6 @@
 {
 "owner": "RandomTextureMapperClass",
 "fn_class": "RandomTextureMapperClass",
-"member": "Remainder",
-"zh": 24,
-"bfme": 24,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Reset@RandomTextureMapperClass@@UAEXXZ"
-]
-},
-{
-"owner": "RandomTextureMapperClass",
-"fn_class": "RandomTextureMapperClass",
 "member": "CurrentAngle",
 "zh": 28,
 "bfme": 28,
@@ -47389,20 +44220,6 @@
 ]
 },
 {
-"owner": "RandomTextureMapperClass",
-"fn_class": "RandomTextureMapperClass",
-"member": "LastUsedSyncTime",
-"zh": 48,
-"bfme": 48,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Reset@RandomTextureMapperClass@@UAEXXZ"
-]
-},
-{
 "owner": "RankInfoStore",
 "fn_class": "RankInfoStore",
 "member": "m_rankInfos",
@@ -47414,7 +44231,6 @@
 "alts": {},
 "fns": [
 "?getRankInfo@RankInfoStore@@QBEPBVRankInfo@@H@Z",
-"?getRankLevelCount@RankInfoStore@@QBEHXZ",
 "?init@RankInfoStore@@UAEXXZ"
 ]
 },
@@ -47506,7 +44322,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getMode@RecorderClass@@QAE?AW4RecorderModeType@@XZ",
 "?isMultiplayer@RecorderClass@@QAE_NXZ",
 "?update@RecorderClass@@UAEXXZ"
 ]
@@ -47550,8 +44365,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Set@RectClass@@QAEXMMMM@Z",
-"?Width@RectClass@@QBEMXZ"
+"?Set@RectClass@@QAEXMMMM@Z"
 ]
 },
 {
@@ -47565,7 +44379,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Height@RectClass@@QBEMXZ",
 "?Set@RectClass@@QAEXMMMM@Z"
 ]
 },
@@ -47580,8 +44393,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Set@RectClass@@QAEXMMMM@Z",
-"?Width@RectClass@@QBEMXZ"
+"?Set@RectClass@@QAEXMMMM@Z"
 ]
 },
 {
@@ -47595,22 +44407,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Height@RectClass@@QBEMXZ",
 "?Set@RectClass@@QAEXMMMM@Z"
-]
-},
-{
-"owner": "RefCountClass",
-"fn_class": "RefCountClass",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Delete_This@RefCountClass@@UAEXXZ"
 ]
 },
 {
@@ -47625,8 +44422,8 @@
 "alts": {},
 "fns": [
 "??0Material_Override@RenderObjClass@@QAE@XZ",
-"?Get_Current_LOD@RenderObjClass@@UAEPAV1@XZ",
-"?Get_Obj_Space_Bounding_Box@StreakLineClass@@UBEXAAVAABoxClass@@@Z"
+"?Get_Obj_Space_Bounding_Box@StreakLineClass@@UBEXAAVAABoxClass@@@Z",
+"?Get_Transform@HRawAnimClass@@UBEXAAVMatrix3D@@HM@Z"
 ]
 },
 {
@@ -47717,7 +44514,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Get_Fog_Color@SceneClass@@UAEABVVector3@@XZ",
 "?Set_Fog_Color@SceneClass@@UAEXABVVector3@@@Z"
 ]
 },
@@ -47814,20 +44610,6 @@
 },
 {
 "owner": "RefCountClass",
-"fn_class": "RenderObjClass",
-"member": "NumRefs+0x88",
-"zh": 140,
-"bfme": 140,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?_bfme_ro_get_8c@RenderObjClass@@UBEMXZ"
-]
-},
-{
-"owner": "RefCountClass",
 "fn_class": "CameraClass",
 "member": "NumRefs+0x90",
 "zh": 148,
@@ -47838,20 +44620,6 @@
 "alts": {},
 "fns": [
 "?Set_Projection_Type@CameraClass@@QAEXW4ProjectionType@1@@Z"
-]
-},
-{
-"owner": "RefCountClass",
-"fn_class": "RenderObjClass",
-"member": "NumRefs+0x94",
-"zh": 152,
-"bfme": 152,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?_bfme_ro_get_98@RenderObjClass@@UBEMXZ"
 ]
 },
 {
@@ -48747,34 +45515,6 @@
 {
 "owner": "RenderDeviceDescClass",
 "fn_class": "RenderDeviceDescClass",
-"member": "DeviceName",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Device_Name@RenderDeviceDescClass@@QBEPBDXZ"
-]
-},
-{
-"owner": "RenderDeviceDescClass",
-"fn_class": "RenderDeviceDescClass",
-"member": "HardwareVendor",
-"zh": 28,
-"bfme": 28,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Hardware_Vendor@RenderDeviceDescClass@@QBEPBDXZ"
-]
-},
-{
-"owner": "RenderDeviceDescClass",
-"fn_class": "RenderDeviceDescClass",
 "member": "ResArray",
 "zh": 1320,
 "bfme": 1440,
@@ -48828,8 +45568,8 @@
 "alts": {},
 "fns": [
 "??0Material_Override@RenderObjClass@@QAE@XZ",
-"?Get_Bone_Transform@RenderObjClass@@UAEABVMatrix3D@@H@Z",
-"?Get_Bone_Transform@RenderObjClass@@UAEABVMatrix3D@@PBD@Z"
+"?Get_Bounding_Box@RenderObjClass@@UBEABVAABoxClass@@XZ",
+"?Get_Bounding_Sphere@RenderObjClass@@UBEABVSphereClass@@XZ"
 ]
 },
 {
@@ -48843,9 +45583,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Get_Collision_Type@RenderObjClass@@UBEHXZ",
 "?Get_Obj_Space_Bounding_Box@StreakLineClass@@UBEXAAVAABoxClass@@@Z",
-"?Is_Additive@RenderObjClass@@UBEHXZ"
+"?Is_Not_Hidden_At_All@RenderObjClass@@UAEHXZ",
+"?Set_Additive@RenderObjClass@@UAEXH@Z"
 ]
 },
 {
@@ -48862,22 +45602,8 @@
 },
 "fns": [
 "?Are_Sub_Object_Transforms_Dirty@RenderObjClass@@QAE_NXZ",
-"?Get_Bone_Transform@RenderObjClass@@UAEABVMatrix3D@@H@Z",
-"?Get_Bone_Transform@RenderObjClass@@UAEABVMatrix3D@@PBD@Z"
-]
-},
-{
-"owner": "RenderObjClass",
-"fn_class": "RenderObjClass",
-"member": "ObjectScale",
-"zh": 72,
-"bfme": 72,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Set_ObjectScale@RenderObjClass@@UAEXM@Z"
+"?Set_Locs@StreakLineClass@@IAEXIPAVVector3@@@Z",
+"?Set_Sub_Object_Transforms_Dirty@RenderObjClass@@QAEX_N@Z"
 ]
 },
 {
@@ -48924,33 +45650,17 @@
 },
 {
 "owner": "RenderObjClass",
-"fn_class": "RenderObjClass",
-"member": "NativeScreenSize",
-"zh": 120,
-"bfme": 120,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Native_Screen_Size@RenderObjClass@@UBEMXZ",
-"?Set_Native_Screen_Size@RenderObjClass@@UAEXM@Z"
-]
-},
-{
-"owner": "RenderObjClass",
 "fn_class": "BaseHeightMapRenderObjClass",
 "member": "Scene",
 "zh": 128,
-"bfme": 128,
-"votes": 1.9,
+"bfme": 124,
+"votes": 1.0,
 "total": 2.9,
-"confidence": 0.65,
+"confidence": 0.35,
 "alts": {
-"0x7c": 1.0
+"0x80": 1.9
 },
 "fns": [
-"?Is_In_Scene@RenderObjClass@@UAE_NXZ",
 "?Is_Transform_Identity@RenderObjClass@@QBE_NXZ",
 "?adjustTerrainLOD@BaseHeightMapRenderObjClass@@UAEXH@Z"
 ]
@@ -48960,16 +45670,15 @@
 "fn_class": "RenderObjClass",
 "member": "User_Data",
 "zh": 136,
-"bfme": 136,
+"bfme": 132,
 "votes": 1.0,
 "total": 2.0,
 "confidence": 0.5,
 "alts": {
-"0x84": 1.0
+"0x88": 1.0
 },
 "fns": [
-"?Get_Container@RenderObjClass@@QBEPAV1@XZ",
-"?Set_User_Data@RenderObjClass@@UAEXPAX_N@Z"
+"?Get_Container@RenderObjClass@@QBEPAV1@XZ"
 ]
 },
 {
@@ -49015,20 +45724,6 @@
 "alts": {},
 "fns": [
 "?removeSupplyCenter@ResourceGatheringManager@@QAEXPAVObject@@@Z"
-]
-},
-{
-"owner": "ReverseSoundTransition",
-"fn_class": "ReverseSoundTransition",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?skip@ReverseSoundTransition@@UAEXXZ"
 ]
 },
 {
@@ -49317,49 +46012,6 @@
 ]
 },
 {
-"owner": "RoadType",
-"fn_class": "RoadType",
-"member": "m_stackingOrder",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getStacking@RoadType@@QAEHXZ",
-"?setStacking@RoadType@@QAEXH@Z"
-]
-},
-{
-"owner": "RotateTextureMapperClass",
-"fn_class": "RotateTextureMapperClass",
-"member": "CurrentAngle",
-"zh": 20,
-"bfme": 20,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Reset@RotateTextureMapperClass@@UAEXXZ"
-]
-},
-{
-"owner": "RotateTextureMapperClass",
-"fn_class": "RotateTextureMapperClass",
-"member": "LastUsedSyncTime",
-"zh": 36,
-"bfme": 36,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Reset@RotateTextureMapperClass@@UAEXXZ"
-]
-},
-{
 "owner": "SaveDate",
 "fn_class": "SaveDate",
 "member": "year",
@@ -49496,8 +46148,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?init@ScaleUpTransition@@UAEXPAVGameWindow@@@Z",
-"?skip@ScaleUpTransition@@UAEXXZ"
+"?init@ScaleUpTransition@@UAEXPAVGameWindow@@@Z"
 ]
 },
 {
@@ -49828,8 +46479,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?init@ScoreScaleUpTransition@@UAEXPAVGameWindow@@@Z",
-"?skip@ScoreScaleUpTransition@@UAEXXZ"
+"?init@ScoreScaleUpTransition@@UAEXPAVGameWindow@@@Z"
 ]
 },
 {
@@ -49957,7 +46607,7 @@
 "fns": [
 "?doAffectObjectPanelFlagsUnit@ScriptActions@@IAEXABVAsciiString@@0_N@Z",
 "?doAudioSetVolume@ScriptActions@@IAEXW4AudioAffect@@M@Z",
-"?doC3CameraDisableSlaveMode@ScriptActions@@IAEXXZ"
+"?doCameraMotionBlurJump@ScriptActions@@IAEXABVAsciiString@@_N@Z"
 ]
 },
 {
@@ -50063,20 +46713,6 @@
 {
 "owner": "SegLineRendererClass",
 "fn_class": "SegLineRendererClass",
-"member": "Width",
-"zh": 8,
-"bfme": 8,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Width@SegLineRendererClass@@QBEMXZ"
-]
-},
-{
-"owner": "SegLineRendererClass",
-"fn_class": "SegLineRendererClass",
 "member": "Color",
 "zh": 12,
 "bfme": 12,
@@ -50114,21 +46750,6 @@
 "alts": {},
 "fns": [
 "?Set_Color@SegLineRendererClass@@QAEXABVVector3@@@Z"
-]
-},
-{
-"owner": "SegLineRendererClass",
-"fn_class": "SegLineRendererClass",
-"member": "SubdivisionLevel",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Current_Subdivision_Level@SegLineRendererClass@@QBEIXZ",
-"?Set_Current_Subdivision_Level@SegLineRendererClass@@QAEXI@Z"
 ]
 },
 {
@@ -50223,20 +46844,6 @@
 {
 "owner": "SelectionTranslator",
 "fn_class": "SelectionTranslator",
-"member": "m_leftMouseButtonIsDown",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setLeftMouseButton@SelectionTranslator@@QAEX_N@Z"
-]
-},
-{
-"owner": "SelectionTranslator",
-"fn_class": "SelectionTranslator",
 "member": "m_displayedMaxWarning",
 "zh": 32,
 "bfme": 32,
@@ -50273,9 +46880,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?Get_Src_Blend_Func@ShaderClass@@QBE?AW4SrcBlendFuncType@1@XZ",
 "?Set_Alpha_Test@ShaderClass@@QAEXW4AlphaTestType@1@@Z",
-"?Set_Color_Mask@ShaderClass@@QAEXW4ColorMaskType@1@@Z"
+"?Set_Color_Mask@ShaderClass@@QAEXW4ColorMaskType@1@@Z",
+"?Set_Depth_Mask@ShaderClass@@QAEXW4DepthMaskType@1@@Z"
 ]
 },
 {
@@ -50339,20 +46946,6 @@
 },
 {
 "owner": "Shadow",
-"fn_class": "Shadow",
-"member": "m_localAngle",
-"zh": 52,
-"bfme": 52,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setAngle@Shadow@@QAEXM@Z"
-]
-},
-{
-"owner": "Shadow",
 "fn_class": "W3DVolumetricShadow",
 "member": "m_localAngle+0x8",
 "zh": 60,
@@ -50396,8 +46989,7 @@
 "0x48": 1.0
 },
 "fns": [
-"?Update@W3DVolumetricShadow@@IAEXXZ",
-"?setRenderObjExtent@W3DVolumetricShadow@@IAEXM@Z"
+"?Update@W3DVolumetricShadow@@IAEXXZ"
 ]
 },
 {
@@ -50405,16 +46997,15 @@
 "fn_class": "W3DVolumetricShadow",
 "member": "m_localAngle+0x18",
 "zh": 76,
-"bfme": 76,
-"votes": 1.0,
+"bfme": 124,
+"votes": 0.8,
 "total": 1.8,
-"confidence": 0.55,
+"confidence": 0.45,
 "alts": {
-"0x7c": 0.8
+"0x4c": 1.0
 },
 "fns": [
-"?Update@W3DVolumetricShadow@@IAEXXZ",
-"?setOptimalExtrusionPadding@W3DVolumetricShadow@@IAEXM@Z"
+"?Update@W3DVolumetricShadow@@IAEXXZ"
 ]
 },
 {
@@ -50576,7 +47167,6 @@
 "alts": {},
 "fns": [
 "?addToBuildList@SidesInfo@@QAEXPAVBuildListInfo@@H@Z",
-"?getBuildList@SidesInfo@@QAEPAVBuildListInfo@@XZ",
 "?removeFromBuildList@SidesInfo@@QAEHPAVBuildListInfo@@@Z"
 ]
 },
@@ -50652,34 +47242,6 @@
 "alts": {},
 "fns": [
 "?sort@SimpleObjectIterator@@QAEXW4IterOrderType@@@Z"
-]
-},
-{
-"owner": "SineLinearOffsetTextureMapperClass",
-"fn_class": "SineLinearOffsetTextureMapperClass",
-"member": "CurrentAngle",
-"zh": 44,
-"bfme": 44,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Reset@SineLinearOffsetTextureMapperClass@@UAEXXZ"
-]
-},
-{
-"owner": "SineLinearOffsetTextureMapperClass",
-"fn_class": "SineLinearOffsetTextureMapperClass",
-"member": "LastUsedSyncTime",
-"zh": 48,
-"bfme": 48,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Reset@SineLinearOffsetTextureMapperClass@@UAEXXZ"
 ]
 },
 {
@@ -51015,21 +47577,6 @@
 ]
 },
 {
-"owner": "SnowManager",
-"fn_class": "SnowManager",
-"member": "m_isVisible",
-"zh": 60,
-"bfme": 60,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?reset@SnowManager@@UAEXXZ",
-"?setVisible@SnowManager@@QAEX_N@Z"
-]
-},
-{
 "owner": "SoundFXNugget",
 "fn_class": "SoundFXNugget",
 "member": "+0x0?",
@@ -51041,20 +47588,6 @@
 "alts": {},
 "fns": [
 "?doFXObj@SoundFXNugget@@UBEXPBVObject@@0@Z"
-]
-},
-{
-"owner": "SpawnBehavior",
-"fn_class": "SpawnBehavior",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getUpdate@SpawnBehavior@@UAEPAVUpdateModuleInterface@@XZ"
 ]
 },
 {
@@ -51131,7 +47664,7 @@
 "fns": [
 "?getReadyFrame@SpecialPowerModule@@UBEIXZ",
 "?getRequiredScience@SpecialPowerModule@@UBE?AW4ScienceType@@XZ",
-"?getSpecialPower@SpecialPowerModule@@UAEPAVSpecialPowerModuleInterface@@XZ"
+"?isReady@SpecialPowerModule@@UBE_NXZ"
 ]
 },
 {
@@ -52473,9 +49006,9 @@
 "0x8": 2.9
 },
 "fns": [
-"??0ModuleTemplate@ModuleFactory@@QAE@XZ",
 "??0TranslatorData@MessageStream@@QAE@XZ",
-"??4UIMessage@InGameUI@@QAEAAU01@ABU01@@Z"
+"??4UIMessage@InGameUI@@QAEAAU01@ABU01@@Z",
+"?addObjectCreationNugget@ObjectCreationListStore@@QAEXPAVObjectCreationNugget@@@Z"
 ]
 },
 {
@@ -52489,9 +49022,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0ModuleTemplate@ModuleFactory@@QAE@XZ",
 "??4UIMessage@InGameUI@@QAEAAU01@ABU01@@Z",
-"?addImage@ImageCollection@@QAEXPAVImage@@@Z"
+"?addImage@ImageCollection@@QAEXPAVImage@@@Z",
+"?beginAreaSelectHint@InGameUI@@UAEXPBVGameMessage@@@Z"
 ]
 },
 {
@@ -52773,20 +49306,6 @@
 },
 {
 "owner": "SubsystemInterface",
-"fn_class": "ParticleSystemManager",
-"member": "m_name+0x80",
-"zh": 132,
-"bfme": 132,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getParticleCount@ParticleSystemManager@@QBEIXZ"
-]
-},
-{
-"owner": "SubsystemInterface",
 "fn_class": "LANAPI",
 "member": "m_name+0x88",
 "zh": 140,
@@ -52797,21 +49316,6 @@
 "alts": {},
 "fns": [
 "?handleChat@LANAPI@@IAEXPAULANMessage@@I@Z"
-]
-},
-{
-"owner": "SubsystemInterface",
-"fn_class": "ParticleSystemManager",
-"member": "m_name+0x8c",
-"zh": 144,
-"bfme": 144,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getOnScreenParticleCount@W3DParticleSystemManager@@UAEHXZ",
-"?setOnScreenParticleCount@ParticleSystemManager@@UAEXH@Z"
 ]
 },
 {
@@ -57627,7 +54131,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getRallyPoint@SupplyCenterProductionExitUpdate@@UBEPBUCoord3D@@XZ",
 "?setRallyPoint@SupplyCenterProductionExitUpdate@@UAEXPBUCoord3D@@@Z"
 ]
 },
@@ -57980,23 +54483,8 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0DLINK_TeamInstanceList@Team@@QAE@XZ",
 "?deleteTeam@Team@@QAEX_N@Z",
 "?evacuateTeam@Team@@QAEXXZ"
-]
-},
-{
-"owner": "Team",
-"fn_class": "Team",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0DLINK_TeamInstanceList@Team@@QAE@XZ"
 ]
 },
 {
@@ -58038,15 +54526,14 @@
 "fn_class": "Team",
 "member": "m_id+0xc",
 "zh": 24,
-"bfme": 24,
-"votes": 1.0,
+"bfme": 20,
+"votes": 0.8,
 "total": 1.8,
-"confidence": 0.56,
+"confidence": 0.44,
 "alts": {
-"0x14": 0.8
+"0x18": 1.0
 },
 "fns": [
-"?dlink_next_TeamInstanceList@Team@@QBEPAV1@XZ",
 "?getRelationship@Team@@QBE?AW4Relationship@@PBV1@@Z"
 ]
 },
@@ -58255,20 +54742,6 @@
 {
 "owner": "TeamFactory",
 "fn_class": "TeamFactory",
-"member": "m_uniqueTeamPrototypeID",
-"zh": 24,
-"bfme": 24,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?reset@TeamFactory@@UAEXXZ"
-]
-},
-{
-"owner": "TeamFactory",
-"fn_class": "TeamFactory",
 "member": "m_uniqueTeamID",
 "zh": 28,
 "bfme": 28,
@@ -58277,38 +54750,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?createTeamOnPrototype@TeamFactory@@QAEPAVTeam@@PAVTeamPrototype@@@Z",
-"?reset@TeamFactory@@UAEXXZ"
-]
-},
-{
-"owner": "TeamInQueue",
-"fn_class": "TeamInQueue",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0DLINK_TeamBuildQueue@TeamInQueue@@QAE@XZ",
-"??0DLINK_TeamReadyQueue@TeamInQueue@@QAE@XZ"
-]
-},
-{
-"owner": "TeamInQueue",
-"fn_class": "TeamInQueue",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0DLINK_TeamBuildQueue@TeamInQueue@@QAE@XZ",
-"??0DLINK_TeamReadyQueue@TeamInQueue@@QAE@XZ"
+"?createTeamOnPrototype@TeamFactory@@QAEPAVTeam@@PAVTeamPrototype@@@Z"
 ]
 },
 {
@@ -58503,20 +54945,6 @@
 {
 "owner": "TeamPrototype",
 "fn_class": "TeamPrototype",
-"member": "m_teamTemplate",
-"zh": 104,
-"bfme": 104,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getTemplateInfo@TeamPrototype@@QBEPBVTeamTemplateInfo@@XZ"
-]
-},
-{
-"owner": "TeamPrototype",
-"fn_class": "TeamPrototype",
 "member": "m_teamTemplate+0x98",
 "zh": 256,
 "bfme": 456,
@@ -58570,20 +54998,6 @@
 "?countBuildings@TeamPrototype@@QAEHXZ",
 "?countObjectsByThingTemplate@TeamPrototype@@QBEXHPBQBVThingTemplate@@_NPAH1@Z",
 "?removeAll_TeamInstanceList@TeamPrototype@@QAEXP6AXPAVTeam@@@Z@Z"
-]
-},
-{
-"owner": "TeamsInfoRec",
-"fn_class": "TeamsInfoRec",
-"member": "m_numTeams",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getNumTeams@TeamsInfoRec@@QBEHXZ"
 ]
 },
 {
@@ -58830,20 +55244,6 @@
 "alts": {},
 "fns": [
 "?getRadarColor@TerrainRoadType@@QAE?AURGBColor@@XZ"
-]
-},
-{
-"owner": "TerrainRoadType",
-"fn_class": "TerrainRoadType",
-"member": "m_bridgeScale",
-"zh": 28,
-"bfme": 28,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?friend_setBridgeScale@TerrainRoadType@@QAEXM@Z"
 ]
 },
 {
@@ -59342,20 +55742,6 @@
 ]
 },
 {
-"owner": "TextureFilterClass",
-"fn_class": "TextureFilterClass",
-"member": "TextureMinFilter",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Get_Min_Filter@TextureFilterClass@@QBE?AW4FilterType@1@XZ"
-]
-},
-{
 "owner": "TextureMapperClass",
 "fn_class": "BumpEnvTextureMapperClass",
 "member": "Stage",
@@ -59383,20 +55769,6 @@
 "alts": {},
 "fns": [
 "?Clone@ScaleTextureMapperClass@@UBEPAVTextureMapperClass@@XZ"
-]
-},
-{
-"owner": "TextureMapperClass",
-"fn_class": "EdgeMapperClass",
-"member": "Stage+0xc",
-"zh": 20,
-"bfme": 20,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Reset@EdgeMapperClass@@UAEXXZ"
 ]
 },
 {
@@ -59491,9 +55863,9 @@
 "0x18": 0.7
 },
 "fns": [
-"??0DLINK_TeamMemberList@Object@@QAE@XZ",
 "?calcPhysicsXformWheels@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z",
-"?getSingleLogicalBonePosition@Object@@QBE_NPBDPAUCoord3D@@PAVMatrix3D@@@Z"
+"?getSingleLogicalBonePosition@Object@@QBE_NPBDPAUCoord3D@@PAVMatrix3D@@@Z",
+"?getTemplate@Thing@@QBEPBVThingTemplate@@XZ"
 ]
 },
 {
@@ -60082,20 +56454,6 @@
 {
 "owner": "ThingTemplate",
 "fn_class": "ThingTemplate",
-"member": "m_reskinnedFrom",
-"zh": 448,
-"bfme": 448,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setReskinnedFrom@ThingTemplate@@QAEXPBV1@@Z"
-]
-},
-{
-"owner": "ThingTemplate",
-"fn_class": "ThingTemplate",
 "member": "m_buttonImage",
 "zh": 456,
 "bfme": 912,
@@ -60439,20 +56797,6 @@
 ]
 },
 {
-"owner": "ToppleUpdate",
-"fn_class": "ToppleUpdate",
-"member": "m_toppleState",
-"zh": 56,
-"bfme": 56,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?isAbleToBeToppled@ToppleUpdate@@QBE_NXZ"
-]
-},
-{
 "owner": "Transition",
 "fn_class": "CountUpTransition",
 "member": "m_frameLength",
@@ -60470,7 +56814,7 @@
 },
 {
 "owner": "Transition",
-"fn_class": "ButtonFlashTransition",
+"fn_class": "ControlBarArrowTransition",
 "member": "m_isFinished",
 "zh": 8,
 "bfme": 8,
@@ -61239,7 +57583,6 @@
 "alts": {},
 "fns": [
 "?friend_turnTowardsAngle@TurretAI@@QAE_NMMM@Z",
-"?recenterTurret@TurretAI@@QAEXXZ",
 "?setTurretTargetPosition@TurretAI@@QAEXPBUCoord3D@@@Z"
 ]
 },
@@ -61672,9 +58015,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?ClearStatus@UDP@@QAEXXZ",
 "?GetStatus@UDP@@QAE?AW4sockStat@1@XZ",
-"?Read@UDP@@QAEHPAEIPAUsockaddr_in@@@Z"
+"?Read@UDP@@QAEHPAEIPAUsockaddr_in@@@Z",
+"?Write@UDP@@QAEHPBEIIG@Z"
 ]
 },
 {
@@ -61908,7 +58251,6 @@
 "0x8": 0.8
 },
 "fns": [
-"??0?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@@Z",
 "??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z"
 ]
 },
@@ -61923,7 +58265,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@@Z",
 "??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z"
 ]
 },
@@ -61938,7 +58279,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAE@ABV?$allocator@UICoord2D@@@1@@Z",
 "??4?$vector@UICoord2D@@V?$allocator@UICoord2D@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z"
 ]
 },
@@ -62085,20 +58425,6 @@
 {
 "owner": "USmudge",
 "fn_class": "USmudge",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$DLNodeClass@USmudge@@@@QAE@XZ"
-]
-},
-{
-"owner": "USmudge",
-"fn_class": "USmudge",
 "member": "+0x4?",
 "zh": 4,
 "bfme": 4,
@@ -62107,8 +58433,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$DLListClass@USmudge@@@@QAE@XZ",
-"??0?$DLNodeClass@USmudge@@@@QAE@XZ"
+"??0?$DLListClass@USmudge@@@@QAE@XZ"
 ]
 },
 {
@@ -62122,22 +58447,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$DLListClass@USmudge@@@@QAE@XZ",
-"??0?$DLNodeClass@USmudge@@@@QAE@XZ"
-]
-},
-{
-"owner": "USmudgeSet",
-"fn_class": "USmudgeSet",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$DLNodeClass@USmudgeSet@@@@QAE@XZ"
+"??0?$DLListClass@USmudge@@@@QAE@XZ"
 ]
 },
 {
@@ -62151,8 +58461,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$DLListClass@USmudgeSet@@@@QAE@XZ",
-"??0?$DLNodeClass@USmudgeSet@@@@QAE@XZ"
+"??0?$DLListClass@USmudgeSet@@@@QAE@XZ"
 ]
 },
 {
@@ -62166,8 +58475,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0?$DLListClass@USmudgeSet@@@@QAE@XZ",
-"??0?$DLNodeClass@USmudgeSet@@@@QAE@XZ"
+"??0?$DLListClass@USmudgeSet@@@@QAE@XZ"
 ]
 },
 {
@@ -62326,7 +58634,7 @@
 "fns": [
 "??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@ABU01@@Z",
 "??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@PAII@Z",
-"??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@XZ"
+"??D?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QBE?AU_Bit_reference@1@XZ"
 ]
 },
 {
@@ -62356,7 +58664,7 @@
 "fns": [
 "??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@ABU01@@Z",
 "??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@PAII@Z",
-"??0?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QAE@XZ"
+"??D?$_Bit_iter@U_Bit_reference@_STL@@PAU12@@_STL@@QBE?AU_Bit_reference@1@XZ"
 ]
 },
 {
@@ -62370,22 +58678,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?isEmpty@UnicodeString@@QBE_NXZ",
-"?str@UnicodeString@@QBEPBGXZ"
-]
-},
-{
-"owner": "UpdateModule",
-"fn_class": "UpdateModule",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getUpdate@UpdateModule@@UAEPAVUpdateModuleInterface@@XZ"
+"?isEmpty@UnicodeString@@QBE_NXZ"
 ]
 },
 {
@@ -62421,9 +58714,9 @@
 "0x1c": 4.8
 },
 "fns": [
-"?friend_getIndexInLogic@UpdateModule@@QBEHXZ",
-"?friend_setIndexInLogic@UpdateModule@@QAEXH@Z",
-"?getExitPosition@DockUpdate@@UAEXPAVObject@@PAUCoord3D@@@Z"
+"?getExitPosition@DockUpdate@@UAEXPAVObject@@PAUCoord3D@@@Z",
+"?getWhichTurretForWeaponSlot@AIUpdateInterface@@QBE?AW4WhichTurretType@@W4WeaponSlotType@@PAM1@Z",
+"?reserveDoorForExit@QueueProductionExitUpdate@@UAE?AW4ExitDoorType@@PBVThingTemplate@@PAVObject@@@Z"
 ]
 },
 {
@@ -62456,34 +58749,6 @@
 "?findNonConstUpgradeByKey@UpgradeCenter@@IAEPAVUpgradeTemplate@@W4NameKeyType@@@Z",
 "?findUpgrade@UpgradeCenter@@QBEPBVUpgradeTemplate@@ABVAsciiString@@@Z",
 "?findUpgradeByKey@UpgradeCenter@@QBEPBVUpgradeTemplate@@W4NameKeyType@@@Z"
-]
-},
-{
-"owner": "UpgradeModule",
-"fn_class": "UpgradeModule",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getUpgrade@UpgradeModule@@UAEPAVUpgradeModuleInterface@@XZ"
-]
-},
-{
-"owner": "UpgradeMux",
-"fn_class": "UpgradeMux",
-"member": "m_upgradeExecuted",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setUpgradeExecuted@UpgradeMux@@IAEX_N@Z"
 ]
 },
 {
@@ -62731,7 +58996,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??D?$_Deque_iterator@VBuddyRequest@@U?$_Nonconst_traits@VBuddyRequest@@@_STL@@@_STL@@QBEAAVBuddyRequest@@XZ",
 "??E?$_Deque_iterator@VBuddyRequest@@U?$_Nonconst_traits@VBuddyRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -62788,7 +59052,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??D?$_Deque_iterator@VBuddyResponse@@U?$_Nonconst_traits@VBuddyResponse@@@_STL@@@_STL@@QBEAAVBuddyResponse@@XZ",
 "??E?$_Deque_iterator@VBuddyResponse@@U?$_Nonconst_traits@VBuddyResponse@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -63082,7 +59345,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??D?$_Deque_iterator@VGameResultsRequest@@U?$_Nonconst_traits@VGameResultsRequest@@@_STL@@@_STL@@QBEAAVGameResultsRequest@@XZ",
 "??E?$_Deque_iterator@VGameResultsRequest@@U?$_Nonconst_traits@VGameResultsRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -63185,7 +59447,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??D?$_Deque_iterator@VGameResultsResponse@@U?$_Nonconst_traits@VGameResultsResponse@@@_STL@@@_STL@@QBEAAVGameResultsResponse@@XZ",
 "??E?$_Deque_iterator@VGameResultsResponse@@U?$_Nonconst_traits@VGameResultsResponse@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -63452,34 +59713,6 @@
 ]
 },
 {
-"owner": "VPSRequest",
-"fn_class": "VPSRequest",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??D?$_Deque_iterator@VPSRequest@@U?$_Nonconst_traits@VPSRequest@@@_STL@@@_STL@@QBEAAVPSRequest@@XZ"
-]
-},
-{
-"owner": "VPSResponse",
-"fn_class": "VPSResponse",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??D?$_Deque_iterator@VPSResponse@@U?$_Nonconst_traits@VPSResponse@@@_STL@@@_STL@@QBEAAVPSResponse@@XZ"
-]
-},
-{
 "owner": "VPeerRequest",
 "fn_class": "VPeerRequest",
 "member": "+0x0?",
@@ -63490,7 +59723,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??D?$_Deque_iterator@VPeerRequest@@U?$_Nonconst_traits@VPeerRequest@@@_STL@@@_STL@@QBEAAVPeerRequest@@XZ",
 "??E?$_Deque_iterator@VPeerRequest@@U?$_Nonconst_traits@VPeerRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
@@ -63537,20 +59769,6 @@
 ]
 },
 {
-"owner": "VPeerResponse",
-"fn_class": "VPeerResponse",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??D?$_Deque_iterator@VPeerResponse@@U?$_Nonconst_traits@VPeerResponse@@@_STL@@@_STL@@QBEAAVPeerResponse@@XZ"
-]
-},
-{
 "owner": "VPingRequest",
 "fn_class": "VPingRequest",
 "member": "+0x0?",
@@ -63563,7 +59781,7 @@
 "fns": [
 "??0?$deque@VPingRequest@@V?$allocator@VPingRequest@@@_STL@@@_STL@@QAE@ABV?$allocator@VPingRequest@@@1@@Z",
 "??0?$queue@VPingRequest@@V?$deque@VPingRequest@@V?$allocator@VPingRequest@@@_STL@@@_STL@@@_STL@@QAE@XZ",
-"??D?$_Deque_iterator@VPingRequest@@U?$_Nonconst_traits@VPingRequest@@@_STL@@@_STL@@QBEAAVPingRequest@@XZ"
+"??E?$_Deque_iterator@VPingRequest@@U?$_Nonconst_traits@VPingRequest@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
 {
@@ -63717,7 +59935,7 @@
 "fns": [
 "??0?$deque@VPingResponse@@V?$allocator@VPingResponse@@@_STL@@@_STL@@QAE@ABV?$allocator@VPingResponse@@@1@@Z",
 "??0?$queue@VPingResponse@@V?$deque@VPingResponse@@V?$allocator@VPingResponse@@@_STL@@@_STL@@@_STL@@QAE@XZ",
-"??D?$_Deque_iterator@VPingResponse@@U?$_Nonconst_traits@VPingResponse@@@_STL@@@_STL@@QBEAAVPingResponse@@XZ"
+"??E?$_Deque_iterator@VPingResponse@@U?$_Nonconst_traits@VPingResponse@@@_STL@@@_STL@@QAEAAU01@XZ"
 ]
 },
 {
@@ -64544,48 +60762,6 @@
 ]
 },
 {
-"owner": "VSortingNodeStruct",
-"fn_class": "VSortingNodeStruct",
-"member": "+0x0?",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$DLNodeClass@VSortingNodeStruct@@@@QAE@XZ"
-]
-},
-{
-"owner": "VSortingNodeStruct",
-"fn_class": "VSortingNodeStruct",
-"member": "+0x4?",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$DLNodeClass@VSortingNodeStruct@@@@QAE@XZ"
-]
-},
-{
-"owner": "VSortingNodeStruct",
-"fn_class": "VSortingNodeStruct",
-"member": "+0x8?",
-"zh": 8,
-"bfme": 8,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"??0?$DLNodeClass@VSortingNodeStruct@@@@QAE@XZ"
-]
-},
-{
 "owner": "VStringClass",
 "fn_class": "VStringClass",
 "member": "+0x4?",
@@ -65310,34 +61486,6 @@
 ]
 },
 {
-"owner": "Version",
-"fn_class": "Version",
-"member": "m_major",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getVersionNumber@Version@@QAEIXZ"
-]
-},
-{
-"owner": "Version",
-"fn_class": "Version",
-"member": "m_minor",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getVersionNumber@Version@@QAEIXZ"
-]
-},
-{
 "owner": "VertexMaterialClass",
 "fn_class": "VertexMaterialClass",
 "member": "+0x0?",
@@ -65590,7 +61738,6 @@
 "alts": {},
 "fns": [
 "?Get_Color_Array@Vertex_Split_Table@@QBEPBII@Z",
-"?Get_Mesh_Model_Class@Vertex_Split_Table@@QAEPAVMeshModelClass@@XZ",
 "?Get_UV_Array@Vertex_Split_Table@@QBEPBVVector2@@I@Z"
 ]
 },
@@ -65621,8 +61768,7 @@
 "alts": {},
 "fns": [
 "?cachePlayerPtrs@VictoryConditions@@UAEXXZ",
-"?hasAchievedVictory@VictoryConditions@@UAE_NPAVPlayer@@@Z",
-"?init@VictoryConditions@@UAEXXZ"
+"?hasAchievedVictory@VictoryConditions@@UAE_NPAVPlayer@@@Z"
 ]
 },
 {
@@ -65710,20 +61856,6 @@
 ]
 },
 {
-"owner": "VideoBuffer",
-"fn_class": "W3DVideoBuffer",
-"member": "m_format+0x4",
-"zh": 36,
-"bfme": 36,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?valid@W3DVideoBuffer@@UAE_NXZ"
-]
-},
-{
 "owner": "View",
 "fn_class": "View",
 "member": "+0x0?",
@@ -65765,7 +61897,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getID@View@@UAEIXZ",
 "?getPosition@View@@UAEXPAUCoord3D@@@Z",
 "?setPosition@View@@IAEXPBUCoord3D@@@Z"
 ]
@@ -65833,7 +61964,7 @@
 },
 {
 "owner": "View",
-"fn_class": "View",
+"fn_class": "W3DView",
 "member": "m_height",
 "zh": 28,
 "bfme": 28,
@@ -65842,9 +61973,8 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getHeight@View@@UAEHXZ",
-"?setHeight@View@@UAEXH@Z",
-"?setHeight@W3DView@@UAEXH@Z"
+"?setHeight@W3DView@@UAEXH@Z",
+"?setOrigin@W3DView@@UAEXHH@Z"
 ]
 },
 {
@@ -65932,45 +62062,15 @@
 "fn_class": "View",
 "member": "m_zoomLimited",
 "zh": 72,
-"bfme": 72,
-"votes": 2.0,
+"bfme": 68,
+"votes": 1.0,
 "total": 3.0,
-"confidence": 0.67,
+"confidence": 0.33,
 "alts": {
-"0x44": 1.0
+"0x48": 2.0
 },
 "fns": [
-"?isZoomLimited@View@@UAE_NXZ",
-"?setZoomLimited@View@@UAEX_N@Z"
-]
-},
-{
-"owner": "View",
-"fn_class": "View",
-"member": "m_currentHeightAboveGround",
-"zh": 84,
-"bfme": 84,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getCurrentHeightAboveGround@View@@UAEMXZ",
-"?setCurrentHeightAboveGround@View@@UAEXM@Z"
-]
-},
-{
-"owner": "View",
-"fn_class": "W3DView",
-"member": "m_FOV",
-"zh": 108,
-"bfme": 108,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setFieldOfView@W3DView@@UAEXM@Z"
+"?isZoomLimited@View@@UAE_NXZ"
 ]
 },
 {
@@ -66505,34 +62605,6 @@
 ]
 },
 {
-"owner": "W3DAnimationInfo",
-"fn_class": "W3DAnimationInfo",
-"member": "m_distanceCovered",
-"zh": 4,
-"bfme": 4,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getDistanceCovered@W3DAnimationInfo@@QBEMXZ"
-]
-},
-{
-"owner": "W3DAnimationInfo",
-"fn_class": "W3DAnimationInfo",
-"member": "m_naturalDurationInMsec",
-"zh": 8,
-"bfme": 8,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getNaturalDurationInMsec@W3DAnimationInfo@@QBEMXZ"
-]
-},
-{
 "owner": "W3DBibBuffer",
 "fn_class": "W3DBibBuffer",
 "member": "m_vertexBib",
@@ -66861,7 +62933,6 @@
 "alts": {},
 "fns": [
 "?getBridgeInfo@W3DBridge@@QAEXPAVBridgeInfo@@@Z",
-"?getEnd@W3DBridge@@QBEPBVVector3@@XZ",
 "?getModelVerticesFixed@W3DBridge@@IAEHPAUVertexFormatXYZNDUV1@@HABVMatrix3D@@PAVMeshClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z"
 ]
 },
@@ -67904,9 +63975,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0WeaponRecoilInfo@W3DModelDraw@@QAE@XZ",
 "?clientOnly_getRenderObjBoneTransform@W3DModelDraw@@UBE_NABVAsciiString@@PAVMatrix3D@@@Z",
-"?clientOnly_getRenderObjBoundBox@W3DModelDraw@@UBE_NPAVOBBoxClass@@@Z"
+"?clientOnly_getRenderObjBoundBox@W3DModelDraw@@UBE_NPAVOBBoxClass@@@Z",
+"?clientOnly_getRenderObjInfo@W3DModelDraw@@UBE_NPAUCoord3D@@PAMPAVMatrix3D@@@Z"
 ]
 },
 {
@@ -67920,9 +63991,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"??0WeaponRecoilInfo@W3DModelDraw@@QAE@XZ",
 "?clientOnly_getRenderObjBoneTransform@W3DModelDraw@@UBE_NABVAsciiString@@PAVMatrix3D@@@Z",
-"?getCurrentWorldspaceClientBonePositions@W3DModelDraw@@UBE_NPBDAAVMatrix3D@@@Z"
+"?getCurrentWorldspaceClientBonePositions@W3DModelDraw@@UBE_NPBDAAVMatrix3D@@@Z",
+"?nukeCurrentRender@W3DModelDraw@@AAEXPAVMatrix3D@@@Z"
 ]
 },
 {
@@ -68472,20 +64543,6 @@
 "alts": {},
 "fns": [
 "?addProp@W3DPropBuffer@@QAEXHUCoord3D@@MMABVAsciiString@@@Z"
-]
-},
-{
-"owner": "W3DPropBuffer",
-"fn_class": "W3DPropBuffer",
-"member": "m_doCull",
-"zh": 192010,
-"bfme": 192010,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?doFullUpdate@W3DPropBuffer@@QAEXXZ"
 ]
 },
 {
@@ -69652,8 +65709,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?ReAcquireResources@W3DSmudgeManager@@UAEXXZ",
-"?init@W3DSmudgeManager@@UAEXXZ"
+"?ReAcquireResources@W3DSmudgeManager@@UAEXXZ"
 ]
 },
 {
@@ -70235,8 +66291,7 @@
 },
 "fns": [
 "?intersectTerrain@W3DTerrainVisual@@UAE_NPAUCoord3D@@00@Z",
-"?removeAllBibs@W3DTerrainVisual@@UAEXXZ",
-"?removeBibHighlighting@W3DTerrainVisual@@UAEXXZ"
+"?removeFactionBibDrawable@W3DTerrainVisual@@UAEXPAVDrawable@@@Z"
 ]
 },
 {
@@ -70250,9 +66305,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?addWaterVelocity@W3DTerrainVisual@@UAEXMMMM@Z",
-"?changeWaterHeight@W3DTerrainVisual@@UAEXMMM@Z",
-"?enableWaterGrid@W3DTerrainVisual@@UAEX_N@Z"
+"?enableWaterGrid@W3DTerrainVisual@@UAEX_N@Z",
+"?getWaterGridResolution@W3DTerrainVisual@@UAEXPBVWaterHandle@@PAM11@Z",
+"?getWaterTransform@W3DTerrainVisual@@UAEXPBVWaterHandle@@PAVMatrix3D@@@Z"
 ]
 },
 {
@@ -70266,7 +66321,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?getTerrainColorAt@W3DTerrainVisual@@UAEXMMPAURGBColor@@@Z",
 "?getTerrainTile@W3DTerrainVisual@@UAEPAVTerrainType@@MM@Z"
 ]
 },
@@ -70447,20 +66501,6 @@
 "alts": {},
 "fns": [
 "?init@W3DView@@UAEXXZ"
-]
-},
-{
-"owner": "W3DView",
-"fn_class": "W3DView",
-"member": "m_nextWireFrameEnabled",
-"zh": 149,
-"bfme": 149,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?set3DWireFrameMode@W3DView@@UAEX_N@Z"
 ]
 },
 {
@@ -70926,9 +66966,9 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?get@WSYS_String@@QBEPADXZ",
 "?makeLowerCase@WSYS_String@@QAEXXZ",
-"?makeUpperCase@WSYS_String@@QAEXXZ"
+"?makeUpperCase@WSYS_String@@QAEXXZ",
+"?set@WSYS_String@@QAEXPBD@Z"
 ]
 },
 {
@@ -71979,21 +68019,6 @@
 {
 "owner": "Weapon",
 "fn_class": "Weapon",
-"member": "m_whenPreAttackFinished",
-"zh": 28,
-"bfme": 28,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getPreAttackFinishedFrame@Weapon@@QBEIXZ",
-"?setPreAttackFinishedFrame@Weapon@@QAEXI@Z"
-]
-},
-{
-"owner": "Weapon",
-"fn_class": "Weapon",
 "member": "m_pitchLimited",
 "zh": 72,
 "bfme": 76,
@@ -72389,20 +68414,6 @@
 {
 "owner": "WeaponTemplate",
 "fn_class": "WeaponTemplate",
-"member": "m_nextTemplate",
-"zh": 4,
-"bfme": 4,
-"votes": 3.0,
-"total": 3.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?friend_clearNextTemplate@WeaponTemplate@@QAEPAV1@XZ"
-]
-},
-{
-"owner": "WeaponTemplate",
-"fn_class": "WeaponTemplate",
 "member": "m_attackRange",
 "zh": 56,
 "bfme": 20,
@@ -72429,34 +68440,6 @@
 ]
 },
 {
-"owner": "WeaponTemplate",
-"fn_class": "WeaponTemplate",
-"member": "m_maxTargetPitch",
-"zh": 120,
-"bfme": 120,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getMaxTargetPitch@WeaponTemplate@@QBEMXZ"
-]
-},
-{
-"owner": "WeaponTemplate",
-"fn_class": "WeaponTemplate",
-"member": "m_clipSize",
-"zh": 356,
-"bfme": 356,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getClipSize@WeaponTemplate@@QBEHXZ"
-]
-},
-{
 "owner": "WeaponTemplateSet",
 "fn_class": "WeaponTemplateSet",
 "member": "m_thingTemplate",
@@ -72467,7 +68450,6 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?friend_getThingTemplate@WeaponTemplateSet@@QBEPBVThingTemplate@@XZ",
 "?parseWeaponTemplateSet@WeaponTemplateSet@@QAEXPAVINI@@PBVThingTemplate@@@Z"
 ]
 },
@@ -74030,8 +70012,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?init@WinInstanceData@@QAEXXZ",
-"?setVideoBuffer@WinInstanceData@@QAEXPAVVideoBuffer@@@Z"
+"?init@WinInstanceData@@QAEXXZ"
 ]
 },
 {
@@ -74135,22 +70116,7 @@
 "confidence": 1.0,
 "alts": {},
 "fns": [
-"?runUpdate@WindowLayout@@QAEXPAX@Z",
-"?setUpdate@WindowLayout@@QAEXP6AXPAV1@PAX@Z@Z"
-]
-},
-{
-"owner": "WindowVideo",
-"fn_class": "WindowVideo",
-"member": "m_playType",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getPlayType@WindowVideo@@QAE?AW4WindowVideoPlayType@@XZ"
+"?runUpdate@WindowLayout@@QAEXPAX@Z"
 ]
 },
 {
@@ -74386,62 +70352,6 @@
 ]
 },
 {
-"owner": "ZigZagLinearOffsetTextureMapperClass",
-"fn_class": "ZigZagLinearOffsetTextureMapperClass",
-"member": "Remainder",
-"zh": 36,
-"bfme": 36,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Reset@ZigZagLinearOffsetTextureMapperClass@@UAEXXZ"
-]
-},
-{
-"owner": "ZigZagLinearOffsetTextureMapperClass",
-"fn_class": "ZigZagLinearOffsetTextureMapperClass",
-"member": "LastUsedSyncTime",
-"zh": 40,
-"bfme": 40,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?Reset@ZigZagLinearOffsetTextureMapperClass@@UAEXXZ"
-]
-},
-{
-"owner": "ZoneBlock",
-"fn_class": "ZoneBlock",
-"member": "m_interactsWithBridge",
-"zh": 32,
-"bfme": 32,
-"votes": 2.0,
-"total": 2.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?getInteractsWithBridge@ZoneBlock@@QBE_NXZ"
-]
-},
-{
-"owner": "ZoneBlock",
-"fn_class": "ZoneBlock",
-"member": "m_markedPassable",
-"zh": 33,
-"bfme": 33,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?setPassable@ZoneBlock@@QAEX_N@Z"
-]
-},
-{
 "owner": "_Bit_iterator_base",
 "fn_class": "_Bit_iterator_base",
 "member": "+0x0?",
@@ -74500,7 +70410,6 @@
 "alts": {},
 "fns": [
 "??0?$LatchRestore@_N@@QAE@AA_NAB_N@Z",
-"??1?$LatchRestore@_N@@UAE@XZ",
 "??_G?$LatchRestore@_N@@UAEPAXI@Z"
 ]
 },
@@ -74516,7 +70425,6 @@
 "alts": {},
 "fns": [
 "??0?$LatchRestore@_N@@QAE@AA_NAB_N@Z",
-"??1?$LatchRestore@_N@@UAE@XZ",
 "??_G?$LatchRestore@_N@@UAEPAXI@Z"
 ]
 },
@@ -74578,8 +70486,8 @@
 "alts": {},
 "fns": [
 "??0_Bit_iterator_base@_STL@@QAE@PAII@Z",
-"??0_Bit_iterator_base@_STL@@QAE@XZ",
-"??0_Bit_reference@_STL@@QAE@PAII@Z"
+"??0_Bit_reference@_STL@@QAE@PAII@Z",
+"??4_Bit_reference@_STL@@QAEAAU01@ABU01@@Z"
 ]
 },
 {
@@ -74594,22 +70502,8 @@
 "alts": {},
 "fns": [
 "??0_Bit_iterator_base@_STL@@QAE@PAII@Z",
-"??0_Bit_iterator_base@_STL@@QAE@XZ",
-"??0_Bit_reference@_STL@@QAE@PAII@Z"
-]
-},
-{
-"owner": "file_auto_ptr",
-"fn_class": "file_auto_ptr",
-"member": "_Ptr",
-"zh": 0,
-"bfme": 0,
-"votes": 1.0,
-"total": 1.0,
-"confidence": 1.0,
-"alts": {},
-"fns": [
-"?get@file_auto_ptr@@QBEPAVFileClass@@XZ"
+"??0_Bit_reference@_STL@@QAE@PAII@Z",
+"??4_Bit_reference@_STL@@QAEAAU01@ABU01@@Z"
 ]
 }
 ]
