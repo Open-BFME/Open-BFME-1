@@ -1,5 +1,4 @@
-// Three more: a bit test over a word array, a constant select and a walk over
-// a list.
+// A bit test over a word array and a constant select.
 
 class Gen_000D2440
 {
@@ -45,42 +44,4 @@ private:
 int Gen_001EFCE0::bfmeCost(void) const
 {
 	return bfmeSize() > 0 ? 1 : 0x3FFFFFFF;
-}
-
-class BfmeNodeDL
-{
-public:
-	int m_bfmeHead[2];					// +0x00
-	int m_bfmeExtra;					// +0x08
-	BfmeNodeDL *m_bfmeNext;					// +0x0C
-	int m_bfmeCount;					// +0x10
-	int m_bfmeLimit;					// +0x14
-	bool m_bfmeArmed;					// +0x18
-};
-
-class Gen_00160FF0
-{
-public:
-	bool bfmeIdle(void) const;
-
-private:
-	int m_bfmeHead[5];					// +0x00
-	BfmeNodeDL *m_bfmeHead2;				// +0x14
-};
-
-// ?bfmeIdle@Gen_00160FF0@@QBE_NXZ
-bool Gen_00160FF0::bfmeIdle(void) const
-{
-	for (BfmeNodeDL *node = m_bfmeHead2; node != 0; node = node->m_bfmeNext)
-	{
-		int count = node->m_bfmeCount;
-
-		if (node->m_bfmeExtra != 0)
-			++count;
-
-		if (node->m_bfmeLimit > count && node->m_bfmeArmed)
-			return false;
-	}
-
-	return true;
 }
