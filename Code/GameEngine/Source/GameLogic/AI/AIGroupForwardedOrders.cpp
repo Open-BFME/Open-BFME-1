@@ -152,7 +152,7 @@ public:
 	virtual void slot60();
 	virtual void slot64();
 	virtual void slot68();
-	virtual void orderAllPassengersToExit(CommandSourceType cmdSource);	// vtable +0x6C
+	virtual void orderAllPassengersToExit(CommandSourceType commandSource);	// vtable +0x6C
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
@@ -198,17 +198,17 @@ private:
 class AICommandInterface
 {
 public:
-	void aiFollowWaypointPathAsTeam(const Waypoint *way, CommandSourceType cmdSource);
-	void aiHunt(CommandSourceType cmdSource);
-	void aiIdle(CommandSourceType cmdSource);			// ILT 0x00024D70
-	void aiTightenToPosition(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiFollowPathAppend(const Coord3D *pos, CommandSourceType cmdSource);
-	void aiMoveToAndEvacuate(const Coord3D *pos, CommandSourceType cmdSource);	// ILT 0x00027903 -> 0x001528E0
-	void aiEvacuate(bool exposeStealthUnits, CommandSourceType cmdSource);		// ILT 0x000344C3 -> 0x000D8AC0
-	void aiGuardPosition(const Coord3D *pos, ::GuardMode mode,
-			::CommandSourceType cmdSource);			// ILT 0x0000A033
-	void aiBfmeCommand44(const PolygonTrigger *poly, int value,
-			CommandSourceType cmdSource, const Coord3D *pos);
+	void aiFollowWaypointPathAsTeam(const Waypoint *waypoint, CommandSourceType commandSource);
+	void aiHunt(CommandSourceType commandSource);
+	void aiIdle(CommandSourceType commandSource);			// ILT 0x00024D70
+	void aiTightenToPosition(const Coord3D *position, CommandSourceType commandSource);
+	void aiFollowPathAppend(const Coord3D *position, CommandSourceType commandSource);
+	void aiMoveToAndEvacuate(const Coord3D *position, CommandSourceType commandSource);	// ILT 0x00027903 -> 0x001528E0
+	void aiEvacuate(bool exposeStealthUnits, CommandSourceType commandSource);		// ILT 0x000344C3 -> 0x000D8AC0
+	void aiGuardPosition(const Coord3D *position, ::GuardMode mode,
+			::CommandSourceType commandSource);			// ILT 0x0000A033
+	void aiBfmeCommand44(const PolygonTrigger *polygon, int value,
+			CommandSourceType commandSource, const Coord3D *position);
 };
 
 class BfmeGroupAI
@@ -283,19 +283,19 @@ public:
 	enum GuardMode { BFME_AIGROUP_GUARD_MODE };
 	enum CommandSourceType { BFME_AIGROUP_COMMAND_SOURCE };
 
-	void groupTightenToPosition(const Coord3D *pos, bool addWaypoint,
-			::CommandSourceType cmdSource);
-	void groupFollowWaypointPathAsTeam(const Waypoint *way, ::CommandSourceType cmdSource);
-	void groupHunt(::CommandSourceType cmdSource);
-	void groupEvacuate(::CommandSourceType cmdSource);
-	void groupGuardPosition(const Coord3D *pos, GuardMode mode,
-			CommandSourceType cmdSource);
-	void groupBfmeCommand44(const PolygonTrigger *poly, int value,
-			::CommandSourceType cmdSource, const Coord3D *pos);
+	void groupTightenToPosition(const Coord3D *position, bool addWaypoint,
+			::CommandSourceType commandSource);
+	void groupFollowWaypointPathAsTeam(const Waypoint *waypoint, ::CommandSourceType commandSource);
+	void groupHunt(::CommandSourceType commandSource);
+	void groupEvacuate(::CommandSourceType commandSource);
+	void groupGuardPosition(const Coord3D *position, GuardMode mode,
+			CommandSourceType commandSource);
+	void groupBfmeCommand44(const PolygonTrigger *polygon, int value,
+			::CommandSourceType commandSource, const Coord3D *position);
 	void groupStealthIdle();
 
 	char isReady();								// ILT 0x000104B0
-	void prepFollow(::CommandSourceType cmdSource, int unused);	// ILT 0x0002E636
+	void prepFollow(::CommandSourceType commandSource, int unused);	// ILT 0x0002E636
 
 private:
 	char m_bfmeHead[0x04];
@@ -306,8 +306,8 @@ private:
 // The one that does not forward from the walk. Identity is the matched
 // aiTightenToPosition callee (ILT 0x000438C9 -> 0x001527C0); the addWaypoint arm
 // is aiFollowPathAppend (ILT 0x0000BAC8 -> 0x00153480).
-void AIGroup::groupTightenToPosition(const Coord3D *pos, bool addWaypoint,
-		::CommandSourceType cmdSource)
+void AIGroup::groupTightenToPosition(const Coord3D *position, bool addWaypoint,
+		::CommandSourceType commandSource)
 {
 	SimpleObjectIterator *iter = new SimpleObjectIterator;
 
@@ -327,8 +327,8 @@ void AIGroup::groupTightenToPosition(const Coord3D *pos, bool addWaypoint,
 		if (obj->getAI() == 0)
 			continue;
 
-		float dx = unitPos.x - pos->x;
-		float dy = unitPos.y - pos->y;
+		float dx = unitPos.x - position->x;
+		float dy = unitPos.y - position->y;
 		iter->insert(obj, dx * dx + dy * dy);
 	}
 
@@ -338,21 +338,21 @@ void AIGroup::groupTightenToPosition(const Coord3D *pos, bool addWaypoint,
 	{
 		BfmeGroupAI *ai = theUnit->getAI();
 		if (!addWaypoint)
-			ai->m_bfmeCommands.aiTightenToPosition(pos, cmdSource);
+			ai->m_bfmeCommands.aiTightenToPosition(position, commandSource);
 		else
-			ai->m_bfmeCommands.aiFollowPathAppend(pos, cmdSource);
+			ai->m_bfmeCommands.aiFollowPathAppend(position, commandSource);
 	}
 }
 
 // ?groupFollowWaypointPathAsTeam@AIGroup@@QAEXPBVWaypoint@@W4CommandSourceType@@@Z
 // The only one of the four with anything before the walk: a Bool gate at
 // ILT 0x000104B0 and a group prep at ILT 0x0002E636 -> 0x0015AB50.
-void AIGroup::groupFollowWaypointPathAsTeam(const Waypoint *way, ::CommandSourceType cmdSource)
+void AIGroup::groupFollowWaypointPathAsTeam(const Waypoint *waypoint, ::CommandSourceType commandSource)
 {
 	if (!isReady())
 		return;
 
-	prepFollow(cmdSource, 0);
+	prepFollow(commandSource, 0);
 
 	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
 			it != m_memberList;
@@ -361,14 +361,14 @@ void AIGroup::groupFollowWaypointPathAsTeam(const Waypoint *way, ::CommandSource
 		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
 
 		if (ai)
-			ai->m_bfmeCommands.aiFollowWaypointPathAsTeam(way, cmdSource);
+			ai->m_bfmeCommands.aiFollowWaypointPathAsTeam(waypoint, commandSource);
 	}
 }
 
 // ?groupHunt@AIGroup@@QAEXW4CommandSourceType@@@Z
 // The bare walk, and at 53 bytes the price of the walk itself. Identity is the
 // matched aiHunt callee, ILT 0x0001C882 -> 0x000D88D0.
-void AIGroup::groupHunt(::CommandSourceType cmdSource)
+void AIGroup::groupHunt(::CommandSourceType commandSource)
 {
 	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
 			it != m_memberList;
@@ -377,7 +377,7 @@ void AIGroup::groupHunt(::CommandSourceType cmdSource)
 		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
 
 		if (ai)
-			ai->m_bfmeCommands.aiHunt(cmdSource);
+			ai->m_bfmeCommands.aiHunt(commandSource);
 	}
 }
 
@@ -385,7 +385,7 @@ void AIGroup::groupHunt(::CommandSourceType cmdSource)
 // The three-way split Zero Hour also has: an airborne aircraft is dropped to the
 // terrain layer height first, anything else with an AI is told to evacuate, and
 // a structure without an AI orders its passengers out through the contain module.
-void AIGroup::groupEvacuate(::CommandSourceType cmdSource)
+void AIGroup::groupEvacuate(::CommandSourceType commandSource)
 {
 	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
 			it != m_memberList;
@@ -402,27 +402,27 @@ void AIGroup::groupEvacuate(::CommandSourceType cmdSource)
 				PathfindLayerEnum layerAtDest =
 						TheTerrainLogic->getHighestLayerForDestination(&pos, false);
 				pos.z = TheTerrainLogic->getLayerHeight(pos.x, pos.y, layerAtDest, 0, true);
-				ai->m_bfmeCommands.aiMoveToAndEvacuate(&pos, cmdSource);
+				ai->m_bfmeCommands.aiMoveToAndEvacuate(&pos, commandSource);
 			}
 			else
 			{
-				ai->m_bfmeCommands.aiEvacuate(false, cmdSource);
+				ai->m_bfmeCommands.aiEvacuate(false, commandSource);
 			}
 		}
 		else if (obj->isKindOf(KINDOF_STRUCTURE))
 		{
 			ContainModuleInterface *contain = obj->getContain();
 			if (contain)
-				contain->orderAllPassengersToExit(cmdSource);
+				contain->orderAllPassengersToExit(commandSource);
 		}
 	}
 }
 
 // ?groupGuardPosition@AIGroup@@QAEXPBUCoord3D@@W4GuardMode@1@W4CommandSourceType@1@@Z
-void AIGroup::groupGuardPosition(const Coord3D *pos, GuardMode mode,
-		CommandSourceType cmdSource)
+void AIGroup::groupGuardPosition(const Coord3D *position, GuardMode mode,
+		CommandSourceType commandSource)
 {
-	if (!pos)
+	if (!position)
 		return;
 
 	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
@@ -432,8 +432,8 @@ void AIGroup::groupGuardPosition(const Coord3D *pos, GuardMode mode,
 		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
 
 		if (ai)
-			ai->m_bfmeCommands.aiGuardPosition(pos, (::GuardMode)mode,
-					(::CommandSourceType)cmdSource);
+			ai->m_bfmeCommands.aiGuardPosition(position, (::GuardMode)mode,
+					(::CommandSourceType)commandSource);
 	}
 }
 
@@ -441,10 +441,10 @@ void AIGroup::groupGuardPosition(const Coord3D *pos, GuardMode mode,
 // The callee is the matched 0x44 command builder at 0x001549A0, which
 // AICommandInterfaceGuardCommands.cpp reads as a guard-area order carrying an
 // extra position.
-void AIGroup::groupBfmeCommand44(const PolygonTrigger *poly, int value,
-		::CommandSourceType cmdSource, const Coord3D *pos)
+void AIGroup::groupBfmeCommand44(const PolygonTrigger *polygon, int value,
+		::CommandSourceType commandSource, const Coord3D *position)
 {
-	if (!poly)
+	if (!polygon)
 		return;
 
 	for (BfmeListNodeBase *it = m_memberList->m_bfmeNext;
@@ -454,7 +454,7 @@ void AIGroup::groupBfmeCommand44(const PolygonTrigger *poly, int value,
 		BfmeGroupAI *ai = ((BfmeMemberNode *)it)->m_bfmeValue->m_ai;
 
 		if (ai)
-			ai->m_bfmeCommands.aiBfmeCommand44(poly, value, cmdSource, pos);
+			ai->m_bfmeCommands.aiBfmeCommand44(polygon, value, commandSource, position);
 	}
 }
 
