@@ -72,7 +72,7 @@ struct DamageInfo
 class AICommandParms
 {
 public:
-	AICommandParms( AICommandType cmd, CommandSourceType cmdSource );	// ILT 0x00030EA4
+	AICommandParms( AICommandType cmd, CommandSourceType commandSource );	// ILT 0x00030EA4
 
 	AICommandType m_cmd;					// +0x00
 	CommandSourceType m_cmdSource;			// +0x04
@@ -95,44 +95,44 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand( const AICommandParms *parms ) = 0;
 
-	void aiMoveToPosition( const Coord3D *pos, CommandSourceType cmdSource );
-	void aiIdle( CommandSourceType cmdSource );
-	void aiHunt( CommandSourceType cmdSource );
-	void aiEnter( Object *obj, CommandSourceType cmdSource );
-	void aiEvacuate( bool exposeStealthUnits, CommandSourceType cmdSource );
-	void aiAttackMoveToPosition( const Coord3D *pos, int maxShotsToFire,
-		CommandSourceType cmdSource );
+	void aiMoveToPosition( const Coord3D *position, CommandSourceType commandSource );
+	void aiIdle( CommandSourceType commandSource );
+	void aiHunt( CommandSourceType commandSource );
+	void aiEnter( Object *object, CommandSourceType commandSource );
+	void aiEvacuate( bool exposeStealthUnits, CommandSourceType commandSource );
+	void aiAttackMoveToPosition( const Coord3D *position, int maxShotsToFire,
+		CommandSourceType commandSource );
 };
 
-void AICommandInterface::aiMoveToPosition( const Coord3D *pos, CommandSourceType cmdSource )
+void AICommandInterface::aiMoveToPosition( const Coord3D *position, CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_MOVE_TO_POSITION, cmdSource );
-	parms.m_pos = *pos;
+	AICommandParms parms( AICMD_MOVE_TO_POSITION, commandSource );
+	parms.m_pos = *position;
 	aiDoCommand( &parms );
 }
 
-void AICommandInterface::aiIdle( CommandSourceType cmdSource )
+void AICommandInterface::aiIdle( CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_IDLE, cmdSource );
+	AICommandParms parms( AICMD_IDLE, commandSource );
 	aiDoCommand( &parms );
 }
 
-void AICommandInterface::aiHunt( CommandSourceType cmdSource )
+void AICommandInterface::aiHunt( CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_HUNT, cmdSource );
+	AICommandParms parms( AICMD_HUNT, commandSource );
 	aiDoCommand( &parms );
 }
 
-void AICommandInterface::aiEnter( Object *obj, CommandSourceType cmdSource )
+void AICommandInterface::aiEnter( Object *object, CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_ENTER, cmdSource );
-	parms.m_obj = obj;
+	AICommandParms parms( AICMD_ENTER, commandSource );
+	parms.m_obj = object;
 	aiDoCommand( &parms );
 }
 
-void AICommandInterface::aiEvacuate( bool exposeStealthUnits, CommandSourceType cmdSource )
+void AICommandInterface::aiEvacuate( bool exposeStealthUnits, CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_EVACUATE, cmdSource );
+	AICommandParms parms( AICMD_EVACUATE, commandSource );
 	if ( exposeStealthUnits )
 		parms.m_intValue = 1;
 	else
@@ -140,11 +140,11 @@ void AICommandInterface::aiEvacuate( bool exposeStealthUnits, CommandSourceType 
 	aiDoCommand( &parms );
 }
 
-void AICommandInterface::aiAttackMoveToPosition( const Coord3D *pos,
-	int maxShotsToFire, CommandSourceType cmdSource )
+void AICommandInterface::aiAttackMoveToPosition( const Coord3D *position,
+	int maxShotsToFire, CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_ATTACKMOVE_TO_POSITION, cmdSource );
-	parms.m_pos = *pos;
+	AICommandParms parms( AICMD_ATTACKMOVE_TO_POSITION, commandSource );
+	parms.m_pos = *position;
 	parms.m_intValue = maxShotsToFire;
 	aiDoCommand( &parms );
 }
