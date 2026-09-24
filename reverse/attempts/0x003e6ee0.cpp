@@ -1,5 +1,5 @@
-// ?examineNeighboringCells@Pathfinder@@IAEHPAVPathfindCell@@0ABVLocomotorSet@@_N2HABUICoord2D@@PBVObject@@H@Z
-// partial score=0.21 date=2026-09-24
+// ?d_003e6ee0@@YAXXZ
+// partial score=0.26 date=2026-09-24
 // stlport
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/terrainlogic /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // Extracted best available source body for the partial at 0x003E6EE0.
@@ -45,6 +45,29 @@ struct TCheckMovementInfo
 	Bool allyGoal;
 };
 
+struct BfmeAIUpdateInterfaceView
+{
+	unsigned char m_pad[0x328];
+	Bool m_canPathThroughUnits;
+	Bool canPathThroughUnits(void) const { return m_canPathThroughUnits; }
+};
+
+struct BfmeObjectAIView
+{
+	unsigned char m_pad[0x204];
+	AIUpdateInterface *m_ai;
+};
+
+struct BfmePathfindCellView
+{
+	unsigned char m_pad[0x0C];
+	unsigned int m_packed;
+	PathfindLayerEnum getLayer(void) const
+	{
+		return (PathfindLayerEnum)((m_packed >> 6) & 0x3F);
+	}
+};
+
 struct ExamineCellsStruct
 {
 	Int cellCallback( PathfindCell *from, PathfindCell *to, Int x, Int y );
@@ -74,11 +97,12 @@ Int Pathfinder::examineNeighboringCells(PathfindCell *parentCell, PathfindCell *
 																				 Bool isHuman, Bool centerInCell, Int radius, const ICoord2D &startCellNdx,
 																				 const Object *obj, Int attackDistance)
 {
+		BfmeAIUpdateInterfaceView *ai =
+			(BfmeAIUpdateInterfaceView *)((BfmeObjectAIView *)obj)->m_ai;
 		Bool canPathThroughUnits = false;
-		if (obj && obj->getAIUpdateInterface()) {
-			canPathThroughUnits = obj->getAIUpdateInterface()->canPathThroughUnits();
-		}
-		Bool isCrusher = obj ? obj->getCrusherLevel() > 0 : false;
+		if (ai)
+			canPathThroughUnits = ai->canPathThroughUnits();
+		Bool isCrusher = obj->getCrusherLevel() > 0;
 		if (attackDistance==NO_ATTACK && !m_isTunneling && !locomotorSet.isDownhillOnly() && goalCell) {
 			ExamineCellsStruct info;
 			struct PathCellsVector
@@ -98,7 +122,8 @@ Int Pathfinder::examineNeighboringCells(PathfindCell *parentCell, PathfindCell *
 			end.x = goalCell->getXIndex();
 			end.y = goalCell->getYIndex();
 			((Rva003E2F30Iterator *)this)->iterateCellsAlongLine(
-				start, end, parentCell->getLayer(), &info);
+				start, end,
+				((BfmePathfindCellView *)parentCell)->getLayer(), &info);
 		}
 
 		Int cellCount = 0;
@@ -127,14 +152,17 @@ Int Pathfinder::examineNeighboringCells(PathfindCell *parentCell, PathfindCell *
 			newCellCoord.y = parentCell->getYIndex() + delta[i].y;
 
 			// get the neighboring cell
-			newCell = getCell(parentCell->getLayer(), newCellCoord.x, newCellCoord.y );
+			newCell = getCell(
+				((BfmePathfindCellView *)parentCell)->getLayer(),
+				newCellCoord.x, newCellCoord.y );
 
 			// check if cell is on the map
 			if (newCell == NULL)
 				continue;
 
 			Bool notZonePassable = false;
-			if ((newCell->getLayer()==LAYER_GROUND) && !m_zoneManager.isPassable(newCellCoord.x, newCellCoord.y)) {
+			if ((((BfmePathfindCellView *)newCell)->getLayer()==LAYER_GROUND) &&
+				!m_zoneManager.isPassable(newCellCoord.x, newCellCoord.y)) {
 				notZonePassable = true;
 			}
 			if (isHuman) {
@@ -208,7 +236,7 @@ Int Pathfinder::examineNeighboringCells(PathfindCell *parentCell, PathfindCell *
 
 			TCheckMovementInfo info;
 			info.cell = newCellCoord;
-			info.layer = parentCell->getLayer();
+			info.layer = ((BfmePathfindCellView *)parentCell)->getLayer();
 			info.centerInCell = centerInCell;
 			info.radius = radius;
 			info.considerTransient = false;
@@ -336,5 +364,3 @@ Int Pathfinder::examineNeighboringCells(PathfindCell *parentCell, PathfindCell *
 		}
 	return cellCount;
 }
-
-
