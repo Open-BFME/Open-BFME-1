@@ -1,5 +1,5 @@
 // ?inGameTailA0@W3DInGameUI@@UAEXXZ
-// partial score=0.59 date=2026-09-23
+// partial score=0.6 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled
 #include "PreRTS.h"
 
@@ -166,8 +166,9 @@ void W3DInGameUI::inGameTailA0()
 
 	Int cursorY = startY;
 	Int blockY;
+	Int measuredW, measuredH;
+	measuredW = 0;
 	Int byteOffset = 8;
-	Int measuredW = 0, measuredH;
 	for (; (UnsignedInt)index <= (UnsignedInt)m_subtitle->m_lineCount; ++index, byteOffset += 4)
 	{
 		blockY = cursorY;

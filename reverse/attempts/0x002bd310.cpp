@@ -1,7 +1,8 @@
-// ?onEnter@Rva002BD310State@@UAE?AW4StateReturnType@@XZ
-// partial score=0.99 date=2026-09-22
+// ?onEnter@GiantBirdGuardOuterState@@UAE?AW4StateReturnType@@XZ
+// partial score=0.9923809523809524 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /D_STLP_NO_EXCEPTIONS /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
-// ?onEnter@Rva002BD310State@@UAE?AW4StateReturnType@@XZ
+// Constructor 0x002C04D0 installs vtable 0x010C7C28. Slot 4 reaches this body through ILT 0x00040142. The complete destructor row identifies GiantBirdGuardOuterState.
+// ?onEnter@GiantBirdGuardOuterState@@UAE?AW4StateReturnType@@XZ
 
 #include "Lib/BaseType.h"
 
@@ -158,7 +159,7 @@ public:
 	unsigned char m_tail20[0x34];
 };
 
-class Rva002BD310State
+class GiantBirdGuardOuterState
 {
 public:
 	virtual void slot00();
@@ -184,9 +185,9 @@ inline Object *findBfmeObject(GameLogic *logic, Int id)
 	return logic->findObjectByID(id);
 }
 
-StateReturnType Rva002BD310State::onEnter()
+StateReturnType GiantBirdGuardOuterState::onEnter()
 {
-	Rva002BD310State *state = this;
+	GiantBirdGuardOuterState *state = this;
 	Coord3D position;
 	Rva002BD310Machine *machine =
 		(Rva002BD310Machine *)state->m_machine;
