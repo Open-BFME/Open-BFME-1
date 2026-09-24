@@ -871,6 +871,14 @@ void WorldHeightMap::setCliffState(Int xIndex, Int yIndex, Bool state)
 	m_cellCliffState[yIndex*m_flipStateWidth + (xIndex >> 3)] = flagByte;
 }
 
+// BFME's GlobalData keeps m_weather at +0x21C, not Zero Hour's +0x208: the retail
+// INI table binds the Weather key there (reverse/field_names.csv).
+struct BfmeGlobalDataWeather
+{
+	char m_unmodelled000[0x21C];
+	Int m_weather;
+};
+
 Bool WorldHeightMap::ParseWorldDictDataChunk(DataChunkInput &file, DataChunkInfo *info, void *userData)
 {
 	Dict d = file.readDict();
@@ -878,7 +886,7 @@ Bool WorldHeightMap::ParseWorldDictDataChunk(DataChunkInput &file, DataChunkInfo
 	Bool exists;
 	Int theWeather = MapObject::getWorldDict()->getInt(TheKey_weather, &exists);
 	if (exists) {
-		TheWritableGlobalData->m_weather = (Weather) theWeather;
+		((BfmeGlobalDataWeather *)TheWritableGlobalData)->m_weather = (Weather) theWeather;
 	}
 	return true;
 }
