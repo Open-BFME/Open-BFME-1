@@ -3705,12 +3705,9 @@ void WeaponBonus::appendBonuses(WeaponBonus& bonus) const
 }
 
 //-------------------------------------------------------------------------------------------------
-void WeaponBonusSet::parseWeaponBonusSet(INI* ini)
-{
-	WeaponBonusConditionType wb = (WeaponBonusConditionType)INI::scanIndexList(ini->getNextToken(), TheWeaponBonusNames);
-	WeaponBonus::Field wf = (WeaponBonus::Field)INI::scanIndexList(ini->getNextToken(), TheWeaponBonusFieldNames);
-	m_bonus[wb].setField(wf, INI::scanPercentToReal(ini->getNextToken()));
-}
+// ?parseWeaponBonusSet@WeaponBonusSet@@QAEXPAVINI@@@Z
+// Body in WeaponBonusSet_parseWeaponBonusSet.cpp: retail calls INI::scanPercentToReal
+// out of line, which this TU's INI shim inlines.
 
 //-------------------------------------------------------------------------------------------------
 // ?appendBonuses@WeaponBonusSet@@QBEXIAAVWeaponBonus@@@Z present-unmatched
