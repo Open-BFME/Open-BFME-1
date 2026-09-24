@@ -16,8 +16,8 @@ typedef unsigned int AudioHandle;
 enum SpecialPowerType
 {
 	SPECIAL_MISSILE_DEFENDER_LASER_GUIDED_MISSILES = 0x15,
-	SPECIAL_TIMED_CHARGES = 0x1a,
-	SPECIAL_BOOBY_TRAP = 0x1d
+	SPECIAL_BLACKLOTUS_CAPTURE_BUILDING = 0x1a,
+	SPECIAL_INFANTRY_CAPTURE_BUILDING = 0x1d
 };
 
 #define _STLP_NO_EXCEPTIONS 1
@@ -128,7 +128,7 @@ class SpecialPowerTemplate : public Overridable
 public:
 	SpecialPowerType getSpecialPowerType() const
 	{
-		return getFO()->m_specialPowerType;
+		return getFO()->m_type;
 	}
 
 private:
@@ -138,7 +138,7 @@ private:
 	}
 
 	unsigned char m_unmodelled_08[0x0c];
-	SpecialPowerType m_specialPowerType;
+	SpecialPowerType m_type;
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialAbilityUpdate.h
@@ -180,8 +180,8 @@ void SpecialAbilityUpdate::endPreparation()
 	switch (specialPowerTemplate->getSpecialPowerType())
 	{
 	case SPECIAL_MISSILE_DEFENDER_LASER_GUIDED_MISSILES:
-	case SPECIAL_TIMED_CHARGES:
-	case SPECIAL_BOOBY_TRAP:
+	case SPECIAL_BLACKLOTUS_CAPTURE_BUILDING:
+	case SPECIAL_INFANTRY_CAPTURE_BUILDING:
 		((SpecialAbilityCleanupCall)j_000434c3)(this);
 		break;
 	}
