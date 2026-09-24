@@ -1,5 +1,5 @@
 // ?Rva009B4390CodecCall@@YAHPAXHPBDZZ
-// partial score=0.15 date=2026-09-23
+// partial score=0.2 date=2026-09-24
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 #include <windows.h>
 #include <stdarg.h>
@@ -13,12 +13,15 @@ extern "C" __declspec(dllimport) BOOL WINAPI BitBlt(
 typedef DWORD COLORREF;
 extern "C" __declspec(dllimport) COLORREF WINAPI GetPixel(HDC, int, int);
 
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+
 // ?Rva009B4390CodecCall@@YAHPAXHPBDZZ
 int __cdecl Rva009B4390CodecCall(void *context, int offset, const char *format, ...)
 {
 	RECT rect;
 	HFONT font;
-	int result;
+	volatile int result;
 	unsigned char *output;
 	HBITMAP bitmap;
 	HGDIOBJ selected;
@@ -28,12 +31,13 @@ int __cdecl Rva009B4390CodecCall(void *context, int offset, const char *format, 
 	stride = *(int *)((char *)context + 0x1b8);
 	output = *(unsigned char **)((char *)context + 0x25c);
 	char buffer[256];
-	buffer[0] = 0;
+	((volatile char *)buffer)[0] = 0;
 	memset(buffer + 1, 0, 255);
 	va_list args;
-	result = 0;
 	output += offset;
 	va_start(args, format);
+	_ReadWriteBarrier();
+	result = 0;
 	_vsnprintf(buffer, sizeof(buffer), format, args);
 	va_end(args);
 
