@@ -1,5 +1,3 @@
-// ?d_0073b290@@YAXXZ
-// partial score=0.85 date=2026-09-10
 // ?getRegion@Rva0073B290View@@QAEXAAURegion3D@@@Z
 // Projects the four far frustum corners onto the map's low and high z planes and
 // bounds the result; falls back to the frustum bound when the camera is below it.
@@ -22,6 +20,11 @@ struct Region3D
 
 struct Vector3
 {
+	Vector3() {}
+	Vector3(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; }
+	Vector3(Real x, Real y, Real z) { X = x; Y = y; Z = z; }
+	Vector3 &operator=(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
+
 	Real X;
 	Real Y;
 	Real Z;
@@ -30,6 +33,8 @@ struct Vector3
 
 struct Matrix3D
 {
+	Vector3 Get_Translation() const { return Vector3(Row[0][3], Row[1][3], Row[2][3]); }
+
 	Real Row[3][4];
 };
 
@@ -91,6 +96,8 @@ public:
 	virtual void cameraSlot4C() = 0;
 	virtual void cameraSlot50() = 0;
 
+	Vector3 Get_Position() { cameraSlot50(); return Transform.Get_Translation(); }
+
 	unsigned char m_camHead[0x14];
 	Matrix3D Transform;
 	unsigned char m_camMid[0xBC];
@@ -110,77 +117,83 @@ struct Rva0073B290View
 	CameraClass *m_3DCamera;
 };
 
+// Retail keeps these three in one address-exposed frame block, which stops the
+// x-slope from being hoisted out of the plane loop.
+struct GetRegionFrameBlock
+{
+	Region3D bounds;
+	Coord3D pt;
+	Region3D mapExtent;
+};
+
 void Rva0073B290View::getRegion(Region3D &region)
 {
-	Region3D mapExtent;
-	TheTerrainLogic->getExtent( &mapExtent );
+	GetRegionFrameBlock L;
+	TheTerrainLogic->getExtent( &L.mapExtent );
 
 	CameraClass *camera = m_3DCamera;
 	camera->Update_Frustum();
-	CameraClass *view = m_3DCamera;
-	view->cameraSlot50();
-	Vector3 camPos;
-	camPos.X = view->Transform.Row[0][3];
-	camPos.Y = view->Transform.Row[1][3];
-	camPos.Z = view->Transform.Row[2][3];
+	Vector3 camPos = m_3DCamera->Get_Position();
 
 	if( camPos.Z > camera->Frustum.BoundMax.Z )
 	{
-		Region3D bounds;
-		bounds.lo.x = 0.0f;
-		bounds.lo.y = 0.0f;
-		bounds.lo.z = -1.0f;
-		bounds.hi.x = 0.0f;
-		bounds.hi.y = 0.0f;
+		L.bounds.lo.x = 0.0f;
+		L.bounds.lo.y = 0.0f;
+		L.bounds.lo.z = -1.0f;
+		L.bounds.hi.x = 0.0f;
+		L.bounds.hi.y = 0.0f;
 
 		for( Int i = 0; i < 4; i++ )
 		{
 			const Vector3 &corner = camera->Frustum.Corners[ 4 + i ];
+			Real dy = corner.Y - camPos.Y;
+			Real dzc = corner.Z - camPos.Z;
 
 			for( Int j = 0; j < 2; j++ )
 			{
-				Real planeZ = (j == 0) ? mapExtent.lo.z : mapExtent.hi.z;
+				Real planeZ = (j == 0) ? L.mapExtent.lo.z : L.mapExtent.hi.z;
 				if( planeZ > camPos.Z )
 					planeZ = camPos.Z - g_bfmeDefaultBU;
 				Real dz = planeZ - camPos.Z;
 
-				Real py = (corner.Y - camPos.Y) / (corner.Z - camPos.Z) * dz + camPos.Y;
 				Real px = (corner.X - camPos.X) / (corner.Z - camPos.Z) * dz + camPos.X;
+				L.pt.y = dy / dzc * dz + camPos.Y;
+				Real py = L.pt.y;
 
-				if( bounds.lo.z < BfmeZeroRange )
+				if( L.bounds.lo.z < BfmeZeroRange )
 				{
-					bounds.lo.x = bounds.hi.x = px;
-					bounds.lo.y = bounds.hi.y = py;
-					bounds.lo.z = 0.0f;
+					L.bounds.lo.x = L.bounds.hi.x = px;
+					L.bounds.lo.y = L.bounds.hi.y = py;
+					L.bounds.lo.z = 0.0f;
 				}
 				else
 				{
-					if( px < bounds.lo.x )
-						bounds.lo.x = px;
-					if( py < bounds.lo.y )
-						bounds.lo.y = py;
-					if( px > bounds.hi.x )
-						bounds.hi.x = px;
-					if( py > bounds.hi.y )
-						bounds.hi.y = py;
+					if( px < L.bounds.lo.x )
+						L.bounds.lo.x = px;
+					if( px > L.bounds.hi.x )
+						L.bounds.hi.x = px;
+					if( py < L.bounds.lo.y )
+						L.bounds.lo.y = py;
+					if( py > L.bounds.hi.y )
+						L.bounds.hi.y = py;
 				}
 			}
 		}
 
-		region.lo.x = bounds.lo.x - DRAWABLE_OVERSCAN;
-		region.lo.y = bounds.lo.y - DRAWABLE_OVERSCAN;
-		region.lo.z = mapExtent.lo.z - MAP_Z_SAFE;
-		region.hi.x = bounds.hi.x + DRAWABLE_OVERSCAN;
-		region.hi.y = bounds.hi.y + DRAWABLE_OVERSCAN;
-		region.hi.z = mapExtent.hi.z + MAP_Z_SAFE;
+		region.lo.x = L.bounds.lo.x - DRAWABLE_OVERSCAN;
+		region.lo.y = L.bounds.lo.y - DRAWABLE_OVERSCAN;
+		region.lo.z = L.mapExtent.lo.z - MAP_Z_SAFE;
+		region.hi.x = L.bounds.hi.x + DRAWABLE_OVERSCAN;
+		region.hi.y = L.bounds.hi.y + DRAWABLE_OVERSCAN;
+		region.hi.z = L.mapExtent.hi.z + MAP_Z_SAFE;
 	}
 	else
 	{
 		region.lo.x = camera->Frustum.BoundMin.X - DRAWABLE_OVERSCAN;
 		region.lo.y = camera->Frustum.BoundMin.Y - DRAWABLE_OVERSCAN;
-		region.lo.z = mapExtent.lo.z - MAP_Z_SAFE;
+		region.lo.z = L.mapExtent.lo.z - MAP_Z_SAFE;
 		region.hi.x = camera->Frustum.BoundMax.X + DRAWABLE_OVERSCAN;
 		region.hi.y = camera->Frustum.BoundMax.Y + DRAWABLE_OVERSCAN;
-		region.hi.z = mapExtent.hi.z + MAP_Z_SAFE;
+		region.hi.z = L.mapExtent.hi.z + MAP_Z_SAFE;
 	}
 }
