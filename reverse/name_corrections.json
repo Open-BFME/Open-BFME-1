@@ -2168,5 +2168,15 @@
   "after_sha256": "ed7565dc7ac3ebd4d471adc425d5b8840174cba146b55613523d14b94520250c",
   "evidence": "reverse/identity_evidence/0x0024eb00-on-die-slot.md",
   "reason": "Retail constructor +0x28 vtable slot 0 routes through ILT 0x00041B82 to 0x0024EB00, aligned with Open/Garrison onDie slots and the one-method DieModuleInterface. The former destructor symbol conflicts with the body and ABI, while the exact declaring class is not proved; retain an address-derived owner. The old COFF symbol remains only as an explicit byte-emitter alias."
+ },
+ {
+  "old_path": "reverse/attempts/0x0078e570.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva0078E570DrawBorder.cpp",
+  "old_name": "winGetText",
+  "new_name": "rva00479B80",
+  "before_sha256": "4a2653c41534043feaeedc51d3b49769bccdefda59fcc6af045d6e9f0b2d0c83",
+  "after_sha256": "fd8b286b4fed8eb670c4329562889f5a2047c8aa57f7a33c4faf0b95398022f7",
+  "evidence": "reverse/identity_evidence/0x0078e570-text-getter.md",
+  "reason": "Retail calls ILT 0x00007E82 -> 0x00479B80, an sret getter reading receiver+0x30; GameWindow::winGetText at 0x005CB9F0 reads +4 through a different callee, so the banked winGetText spelling named the wrong function. The callee keeps an address-derived name."
  }
 ]
