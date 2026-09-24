@@ -43,8 +43,7 @@ cands = [(score, int(r.get('target_size') or 0), r['target_rva'], path)
 cands.sort(key=lambda c: (-c[0], -c[1]))
 measured = finish_measure.ensure([(int(c[2], 16), c[3]) for c in cands],
                                  budget=int(os.environ.get('FINISH_MEASURE', '8')))
-cands.sort(key=lambda c: finish_measure.rank_key(measured, int(c[2], 16), c[3], c[0], c[1]))
-picked = [c[2] for c in cands[:n_want]]
+picked = [c[2] for c in finish_measure.select(cands, measured, n_want)]
 if picked:
     with open(seats_log, 'a') as f:
         f.write(f"{time.strftime('%H:%M')} seat pick selected {' '.join(picked)}\n")

@@ -39,7 +39,7 @@ def test_measured_quality_outranks_an_optimistic_author_score(tmp_path):
     }
     bodies = [(0x20, boastful, 0.999, 700), (0x30, unmeasured, 0.95, 300), (0x10, honest, 0.90, 143)]
     bodies.sort(key=lambda b: finish_measure.rank_key(cache, *b))
-    assert [b[0] for b in bodies] == [0x10, 0x20, 0x30]      # measured first, best quality first
+    assert [b[0] for b in bodies] == [0x10, 0x30, 0x20]      # a failed probe cannot outrank fresh work
 
 
 def test_a_changed_stash_body_is_measured_again_but_a_new_score_is_not(tmp_path):

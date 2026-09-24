@@ -31,8 +31,10 @@ DIFFS = re.compile(r"^diffs\s+(\d+) non-reloc byte\(s\); first at \+(\d+)", re.M
 
 
 def body_hash(path):
-    # the two header lines carry the author score and date, not the hypothesis
-    return hashlib.sha256(b"\n".join(Path(path).read_bytes().splitlines()[2:])).hexdigest()
+    # Line 1 selects the symbol probe.py measures. Only line 2's author score
+    # and date are metadata; changing the symbol is a new hypothesis.
+    lines = Path(path).read_bytes().splitlines()
+    return hashlib.sha256(b"\n".join(lines[:1] + lines[2:])).hexdigest()
 
 
 def symbol_of(path):
@@ -176,13 +178,38 @@ def ensure(bodies, budget=8, cache=None):
 
 
 def rank_key(cache, rva, path, score, size):
-    """Sort key, best first. Measured bodies outrank unmeasured ones; among the
-    measured the compiler's quality decides, then the deeper first divergence,
-    then bytes. The author score only orders what nobody has measured yet."""
+    """Sort key: positive measured, unmeasured, valid zero, failed probe.
+
+    A measurement's mere existence cannot make a broken or unrelated body
+    outrank a viable, unmeasured hypothesis.
+    """
     entry = current(cache, rva, path)
     if entry is None:
         return (1, -score, -size)
-    return (0, -entry["quality"], -entry.get("first", 0) / max(entry.get("retail", 1), 1), -size)
+    quality = entry.get("quality", 0.0)
+    if entry.get("compiles") and quality > 0:
+        return (0, -quality, -entry.get("first", 0) / max(entry.get("retail", 1), 1), -size)
+    if entry.get("compiles"):
+        return (2, -score, -size)
+    return (3, -score, -size)
+
+
+def select(candidates, cache, count):
+    """Choose ranked (author score, size, RVA text, stash) tuples.
+
+    A four-target finish brief reserves one place for a previously unmeasured
+    candidate when measured positives would otherwise fill every place.
+    """
+    ordered = sorted(candidates, key=lambda c: rank_key(
+        cache, int(c[2], 16), c[3], c[0], c[1]))
+    chosen = ordered[:count]
+    if count >= 4 and chosen and all(current(cache, int(c[2], 16), c[3]) is not None
+                                     for c in chosen):
+        fresh = next((c for c in ordered[count:]
+                      if current(cache, int(c[2], 16), c[3]) is None), None)
+        if fresh is not None:
+            chosen[-1] = fresh
+    return chosen
 
 
 def main():
