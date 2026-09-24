@@ -2410,50 +2410,29 @@ Real W3DModelDraw::getCurAnimDistanceCovered() const
 */
 static void doHideShowBoneSubObjs(Bool state, Int numSubObjects, Int boneIdx, RenderObjClass *fullObject, const HTreeClass *htree)
 {
-#if 1	//(gth) fixed and tested this version
 	for (Int i=0; i < numSubObjects; i++) 
 	{
-		bool is_child = false;
-		Int parentBoneIndex = fullObject->Get_Sub_Object_Bone_Index(0, i);
-		
-		while (parentBoneIndex != 0) 
+		RenderObjClass *childObject = fullObject->Get_Sub_Object(i);
+		if (childObject)
 		{
-			parentBoneIndex = htree->Get_Parent_Index(parentBoneIndex);
-
-			if (parentBoneIndex == boneIdx) 
+			Int parentBoneIndex = fullObject->Get_Sub_Object_Bone_Index(childObject);
+			childObject->Release_Ref();
+			while (parentBoneIndex > 0 && parentBoneIndex < fullObject->Get_Num_Bones())
 			{
-				is_child = true;
-				break;
+				parentBoneIndex = htree->Get_Parent_Index(parentBoneIndex);
+				if (parentBoneIndex == boneIdx)
+				{
+					childObject = fullObject->Get_Sub_Object(i);
+					if (childObject)
+					{
+						childObject->Set_Hidden(state);
+						childObject->Release_Ref();
+					}
+					break;
+				}
 			}
 		}
-
-		if (is_child) 
-		{
-			RenderObjClass* childObject = fullObject->Get_Sub_Object(i);
-			childObject->Set_Hidden(state);
-			childObject->Release_Ref();
-		}
 	}
-#endif
-#if 0	//old slow version
-	
-  for (Int i=0; i < numSubObjects; i++)
-  {	
-  	Int childBoneIndex = fullObject->Get_Sub_Object_Bone_Index(0, i);
-  	Int parentIndex = htree->Get_Parent_Index(childBoneIndex);
-  	if (childBoneIndex == parentIndex)
-  		continue;
-
-  	if (parentIndex == boneIdx)	// this object has our subobject as parent so copy hide state
-  	{	
-  		RenderObjClass* childObject = fullObject->Get_Sub_Object(i);
-  		// recurse down the hierarchy to hide all sub-children
-  		doHideShowBoneSubObjs(state, numSubObjects, childBoneIndex, fullObject, htree);
-		childObject->Set_Hidden(state);
-  		childObject->Release_Ref();
-  	}
-  } 
-#endif
 }
 
 //-------------------------------------------------------------------------------------------------
