@@ -58,6 +58,23 @@ def test_compile_reference_does_not_swallow_exceptions():
     assert "format_failure_groups" in text
 
 
+def test_reference_name_keeps_zh_paths_and_prefixes_generals():
+    zh = lw.ZH / 'Libraries/Source/WWVegas/WW3D2/mesh.cpp'
+    gen = build.GENERALS_REFERENCE_ROOT / 'GameEngine/Source/Common/INI/INI.CPP'
+    assert lw.reference_name(zh) == 'Libraries/Source/WWVegas/WW3D2/mesh.cpp'
+    assert lw.reference_name(gen) == 'Generals/GameEngine/Source/Common/INI/INI.CPP'
+
+
+def test_ledger_reference_sources_are_the_rows_built_from_reference(monkeypatch, tmp_path):
+    (tmp_path / 'reverse').mkdir()
+    (tmp_path / 'reverse/functions.csv').write_text(
+        'name,export_rva,target_rva,target_size,source,status,notes\n'
+        '?a@@YAXXZ,,0x1,1,reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/x.cpp,matched,\n'
+        '?b@@YAXXZ,,0x2,1,Code/GameEngine/Source/y.cpp,matched,\n', encoding='utf-8')
+    monkeypatch.setattr(build, 'ROOT', tmp_path)
+    assert lw.ledger_reference_sources() == {tmp_path / 'reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/x.cpp'}
+
+
 def _image():
     """Tiny PE-like image: .text at RVA 0x1000 (raw 0x100), .rdata at RVA 0x2000 (raw 0x200), base 0x400000.
     Exports: ?a@@ -> thunk 0x1010 -> thunk 0x1018 -> body 0x1090, ?b@@ -> body 0x10E0."""

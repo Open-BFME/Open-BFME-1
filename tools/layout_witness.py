@@ -1,6 +1,7 @@
 """Witness BFME's class layouts from the code itself.
 
-    python tools/layout_witness.py --compile   # compile every reference GameEngine(Device) TU to build/layout/ref/ (~10 min, resumable)
+    python tools/layout_witness.py --compile   # compile every reference GameEngine(Device) TU, and every reference TU the
+                                               # ledger builds rows from, to build/layout/ref/ (~10 min, resumable)
     python tools/layout_witness.py             # align + aggregate -> reverse/bfme_layouts.json
 
 For every function the ledger or a pin names, whose ZH source compiled, the ZH body
@@ -39,20 +40,33 @@ def format_failure_groups(fails, examples=5):
     return lines, ranked
 
 
+def ledger_reference_sources():
+    """Vendored reference TUs the ledger builds rows from; its Libraries and Generals TUs lie outside the sweep."""
+    rows = csv.DictReader(open(B.ROOT / 'reverse/functions.csv', encoding='utf-8', errors='replace'))
+    return {B.ROOT / r['source'] for r in rows if (r.get('source') or '').startswith('reference/')}
+
+
+def reference_name(p):
+    """Path of a reference TU under the ZH tree, or under the Generals tree behind a `Generals/` prefix."""
+    try:
+        return p.relative_to(ZH).as_posix()
+    except ValueError:
+        return 'Generals/' + p.relative_to(B.GENERALS_REFERENCE_ROOT).as_posix()
+
+
 def compile_reference(prefixes=None):
-    """Compile every ZH GameEngine(Device) TU. Failures are grouped, not swallowed."""
+    """Compile every ZH GameEngine(Device) TU and the ledger's reference TUs. Failures are grouped, not swallowed."""
     import concurrent.futures as cf
-    srcs = [p for r in ('GameEngine/Source', 'GameEngineDevice/Source')
-            for p in (ZH / r).rglob('*.cpp')]
-    srcs.sort()
+    srcs = sorted({p for r in ('GameEngine/Source', 'GameEngineDevice/Source')
+                   for p in (ZH / r).rglob('*.cpp')} | ledger_reference_sources())
     if prefixes:
-        srcs = [p for p in srcs if any(pref in p.relative_to(ZH).as_posix() for pref in prefixes)]
+        srcs = [p for p in srcs if any(pref in reference_name(p) for pref in prefixes)]
     outdir = B.ROOT / 'build/layout/ref'
     outdir.mkdir(parents=True, exist_ok=True)
 
     def one(p):
-        rel = p.relative_to(ZH).as_posix()
-        out = outdir / (rel.replace('/', '_')[:-4] + '.obj')
+        rel = reference_name(p)
+        out = outdir / (rel.replace('/', '_').rsplit('.', 1)[0] + '.obj')
         if out.exists():
             return 'cached', rel, ''
         try:
@@ -172,7 +186,7 @@ def run_witness():
             bl=[re.sub(r'\b(public|protected|private|virtual)\b','',x).strip() for x in m.group(2).split(',')]
             bases.setdefault(m.group(1),[re.sub(r'<.*','',b).strip() for b in bl if b.strip()])
     exported=exported_names(data,secs,{a for a,s in size.items() if s==5})
-    objs=list((B.ROOT/'build/layout/ref').glob('*.obj'))+list((B.ROOT/'build/match').glob('reference_*.obj'))
+    objs=sorted((B.ROOT/'build/layout/ref').glob('*.obj'))
     seen=set(); wit=[]; stats=collections.Counter()
     for p in objs:
         try: st=p.stat(); d,ss,syms=B._object_layout(str(p),st.st_mtime_ns,st.st_size)

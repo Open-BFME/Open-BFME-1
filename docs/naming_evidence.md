@@ -82,19 +82,13 @@ potential coverage**. The split by surface matters:
          v
     bfme_layouts.json  X::m_foo is at BFME +0x08          430 of 1,488 classes
 
-The gap is NOT "nobody ran the pass". Running `layout_witness.py --compile` fresh in a
-clean tree makes coverage **worse** — 2,780 named members fall to 1,726, and 430 classes
-to 324 — because the tool consumes `build/layout/ref/*.obj` **plus**
-`build/match/reference_*.obj`, and a fresh compile succeeded on only 415 of 704
-reference TUs. The committed artifact was produced from a larger successful set.
-
-**So the lever on witness coverage is making more reference TUs compile, not re-running
-the aggregation.** `compile_reference()` swallows every exception
-(`except BaseException: return False`), so the failures are currently unattributed —
-that is the first thing to fix for anyone who wants this number to move.
-
-Until then: `reverse/bfme_layouts.json` is a committed artifact that a naive re-run
-silently degrades. Do not regenerate it without comparing the before/after counts.
+The gap is NOT "nobody ran the pass". `layout_witness.py --compile` builds every
+reference GameEngine(Device) TU plus every reference TU the ledger builds rows from,
+attributes each failure, and `layout_witness.py` reads only those objects, so a clean
+tree regenerates the committed artifact exactly. Coverage is held by the 70% alignment
+threshold and by the tiny-getter rule in `docs/bfme_layouts.md`, not by the compile
+rate. The output still moves with the ledger, so compare the before/after counts when
+regenerating it.
 
 ## The offset model, and why it refuses so much
 

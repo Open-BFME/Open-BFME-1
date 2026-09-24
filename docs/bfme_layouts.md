@@ -10,7 +10,7 @@ shared answer, derived mechanically and regenerable.
 | artifact | what it is | how it is made |
 |---|---|---|
 | `reverse/zh_offsets.json` | ZH member offsets: 1,488 classes, 9,539 members, plus `sizeof` | `python tools/zh_offsets.py --all` compiles `&((C*)0)->m` tables per header with the project's cl (MSVC 7.1 has no layout report flag) |
-| `reverse/bfme_layouts.json` | witnessed retail offsets: 5,047 members over 930 classes, 1,530 moved, 595 of them high-confidence | `python tools/layout_witness.py --compile` (every reference TU -> `build/layout/ref/`, ~10 min) then `python tools/layout_witness.py` |
+| `reverse/bfme_layouts.json` | witnessed retail offsets per (class, member), read with `tools/bfme_layout.py` | `python tools/layout_witness.py --compile` (every reference GameEngine(Device) TU and every reference TU the ledger uses -> `build/layout/ref/`, ~10 min) then `python tools/layout_witness.py` |
 | `tools/bfme_layout.py` | reader: `bfme_layout.py Object`, `--grep Contain`, `--changed` | |
 | brief context pack | "BFME layout of <class>" lines under the callee list, when the body's class is known from its vtable or pin | `tools/fleet/context_pack.py` |
 
