@@ -1,5 +1,5 @@
 // ?d_006adee0@@YAXXZ
-// partial score=0.28 date=2026-09-24
+// partial score=0.37 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
 
 // This source reconstructs the carved 305-byte body at 0x006ADEE0.
@@ -61,7 +61,7 @@ public:
 struct BfmeStr4BE
 {
 	char m_buf[1];
-	BfmeStr4BE() : m_buf() {}
+	BfmeStr4BE() : m_buf() { lock(); }
 	~BfmeStr4BE() { freeStr(); }
 	void freeStr()
 	{
@@ -103,9 +103,8 @@ void Rva006ADEE0Owner::bfmeClearList006ADEE0()
 {
 	ThingRef held;
 	BfmeStr4BE mutex;
-	mutex.lock();
 
-	if (m_listHead->m_next != m_listHead)
+	if (*reinterpret_cast<ListNodeBase *volatile *>(m_listHead) != m_listHead)
 	{
 		do
 		{
@@ -132,7 +131,7 @@ void Rva006ADEE0Owner::bfmeClearList006ADEE0()
 			bfmeReleaseIfLast(held.m_ptr);
 			held.m_ptr = 0;
 			mutex.lock();
-		} while (m_listHead->m_next != m_listHead);
+		} while (*reinterpret_cast<ListNodeBase *volatile *>(m_listHead) != m_listHead);
 	}
 
 	mutex.unlock();
