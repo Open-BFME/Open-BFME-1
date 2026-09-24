@@ -2018,5 +2018,25 @@
   "after_sha256": "8b06e6537214363b64ebd0fa02d0e0d3272883905ec6e93c802249619ecf1281",
   "evidence": "reverse/identity_evidence/0x000c15a0-set-parser.md",
   "reason": "Token-alignment artifact, not a rename: the old rough bank called INI::parseAsciiStringVector, and the exact landed callback still calls that same 0x008542B0 parser. The new Rva000C15A0ParseAsciiSet is the distinct 227-byte callback that copies its parsed vector into a set at instance+8; no named caller proves its semantic owner."
- }
+ },
+ {
+  "old_path": "reverse/attempts/0x002b0250.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate_update.cpp",
+  "old_name": "setTransformMatrix",
+  "new_name": "rva00132200",
+  "before_sha256": "71e6f494dc628eeceb4735b14de20476c9e4beda445bfa55c5a748a6e30fa8a6",
+  "after_sha256": "d39258c180522b8a98033c608b47f3a15fa54a43fc8d18ccfcb0884f513a6641",
+  "evidence": "reverse/functions.csv",
+  "reason": "reverse/functions.csv assigns Thing::rva00132200 to 0x00132200 and Thing::setTransformMatrix to 0x00132350. The retail call at 0x002B058A reaches 0x00132200 through ILT 0x000361CE, which shows that setTransformMatrix names a different callee. The address-derived spelling states the proven target and leaves its semantic name open."
+ },
+ {
+  "old_path": "reverse/attempts/0x002b0250.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Update/StructureToppleUpdate_update.cpp",
+  "old_name": "BfmeStructureToppleUpdateView",
+  "new_name": "Rva00132200Target",
+  "before_sha256": "71e6f494dc628eeceb4735b14de20476c9e4beda445bfa55c5a748a6e30fa8a6",
+  "after_sha256": "d39258c180522b8a98033c608b47f3a15fa54a43fc8d18ccfcb0884f513a6641",
+  "evidence": "reverse/functions.csv",
+  "reason": "BfmeStructureToppleUpdateView described the update receiver layout in the banked full-TU draft. Rva00132200Target is a separate call view whose method resolves to the matched Thing::rva00132200 body at 0x00132200. reverse/functions.csv proves that body identity and its 257-byte range."
+  }
 ]
