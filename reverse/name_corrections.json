@@ -1928,5 +1928,25 @@
   "after_sha256": "26c102724ecfcdd5b4faefaf8bbd480468348b83b920f1f113cb661a7d192942",
   "evidence": "reverse/symbols.csv",
   "reason": "reverse/symbols.csv pins ?Rva008C5D70Alloc@@3P6APAXI@ZA; the bank's g_rva8CE5C0Allocate spelling matches no pinned symbol, so the source uses the pinned name."
+ },
+ {
+  "old_path": "reverse/attempts/0x0015f420.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0015F420GuardRetaliateAttackEnter.cpp",
+  "old_name": "CtorTargetR0015F420",
+  "new_name": "Rva0015EBE0State",
+  "before_sha256": "7f65073ddb2e09b8601364bd6f3a6d5665d0cd06b5450a70885c3c8b8033ffb0",
+  "after_sha256": "4c5f4d4e562aecfd2db4fe3c04443614c393997a181ad1c0e26746fe7062e222",
+  "evidence": "reverse/functions.csv",
+  "reason": "Token-alignment artifact, not a rename: CtorTargetR0015F420 became the pinned Rva002BD020AIAttackState; Rva0015EBE0State is a separate class for the matched ledger row ?queryGuardContain@Rva0015EBE0State@@QAEHXZ at 0x0015EBE0."
+ },
+ {
+  "old_path": "reverse/attempts/0x0015f420.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0015F420GuardRetaliateAttackEnter.cpp",
+  "old_name": "CtorTargetR0015F420",
+  "new_name": "Rva002BD020AIAttackState",
+  "before_sha256": "7f65073ddb2e09b8601364bd6f3a6d5665d0cd06b5450a70885c3c8b8033ffb0",
+  "after_sha256": "4c5f4d4e562aecfd2db4fe3c04443614c393997a181ad1c0e26746fe7062e222",
+  "evidence": "reverse/symbols.csv",
+  "reason": "The bank's CtorTargetR0015F420 stood in for the constructed attack state; the call resolves only through the reverse/symbols.csv pin ??0Rva002BD020AIAttackState@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z (0x0000BF3C), so the source uses that class."
  }
 ]
