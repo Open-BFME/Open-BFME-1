@@ -4,58 +4,12 @@
 // The ThingTemplate.cpp caller and the ModuleInfo method name identify this
 // body. The 20-byte Nugget layout and STLport vector erase reproduce its calls.
 
-#include <string.h>
 #include <vector>
-
-#pragma intrinsic(memcmp)
 
 typedef bool Bool;
 typedef int Int;
 
-struct BfmeStringData
-{
-	unsigned short m_refCount;
-	unsigned short m_numCharsAllocated;
-	unsigned short m_len;
-	unsigned short m_pad;
-};
-
-#include "string_base.h"
-
-class AsciiString
-{
-public:
-	Int compare(const AsciiString &that) const
-	{
-		Int thatLen = that.m_data ? that.m_data->m_len : 0;
-		const char *thatData = that.m_data
-			? reinterpret_cast<const char *>(that.m_data) + 8 :
-			reinterpret_cast<const char *>(0x0107388B);
-		Int thisLen = m_data ? m_data->m_len : 0;
-		const char *thisData = m_data
-			? reinterpret_cast<const char *>(m_data) + 8 :
-			reinterpret_cast<const char *>(0x0107388B);
-		Int count = thisLen < thatLen ? thisLen : thatLen;
-		Int result = memcmp(thisData, thatData, count);
-		if (result != 0)
-			return result;
-		return thisLen - thatLen;
-	}
-
-	AsciiString &operator=(const AsciiString &source)
-	{
-		((StringBase<char> *)this)->set(
-			*(const StringBase<char> *)&source);
-		return *this;
-	}
-
-	BfmeStringData *m_data;
-};
-
-inline Bool operator==(const AsciiString &left, const AsciiString &right)
-{
-	return left.compare(right) == 0;
-}
+#include "ascii_string.h"
 
 class Rva001417F0ModuleInfo
 {
@@ -97,7 +51,7 @@ Bool ModuleInfo::clearModuleDataWithTag(const AsciiString &tagToClear,
 	for (std::vector<Nugget>::iterator it = m_info.begin();
 		it != m_info.end(); )
 	{
-		if (it->m_moduleTag == tagToClear)
+		if (it->m_moduleTag.compare(tagToClear) == 0)
 		{
 			clearedModuleNameOut = it->first;
 			it = m_info.erase(it);
