@@ -1,5 +1,5 @@
 // ?StackWalk@DebugStackwalk@@SAHAAVSignature@1@PAU_CONTEXT@@_N@Z
-// partial score=0.27 date=2026-09-24
+// partial score=0.36 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -45,12 +45,14 @@ struct BfmeStackFrame : public STACKFRAME
 
 struct BfmeWalkStorage
 {
-	DWORD padding;
+	BYTE padding[3];
+	bool skipFirst;
 	DWORD regEbp;
 	BfmeStackFrame frame;
 	DWORD regEip;
 	DWORD regEsp;
 	CONTEXT context;
+	DWORD tailPadding[2];
 };
 
 // Definitions to allow run-time linking to the dbghelp.dll functions.
@@ -409,13 +411,13 @@ int DebugStackwalk::StackWalk(Signature &sig, struct _CONTEXT *ctx, bool useFall
 		storage.context = *ctx;
 
 	// Walk the stack by the requested number of return address iterations.
-  bool skipFirst=!ctx;
+	storage.skipFirst = !ctx;
   while (sig.m_numAddr<Signature::MAX_ADDR&&
 		     gDbg._StackWalk(IMAGE_FILE_MACHINE_I386,GetCurrentProcess(),GetCurrentThread(),
 						 &storage.frame,ctx ? &storage.context : NULL,NULL,gDbg._SymFunctionTableAccess,gDbg._SymGetModuleBase,NULL))
   {
-    if (skipFirst)
-      skipFirst=false;
+		if (storage.skipFirst)
+			storage.skipFirst = false;
     else
       sig.m_addr[sig.m_numAddr++]=storage.frame.AddrPC.Offset;
   }
