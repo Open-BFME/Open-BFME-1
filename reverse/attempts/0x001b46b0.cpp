@@ -1,10 +1,11 @@
 // ?Rva001B46B0@@YAMPBURva001B46B0Vec3@@0@Z
-// partial score=0.75 date=2026-09-21
+// partial score=0.96 date=2026-09-24
 // Retail 0x001B46B0, 120 bytes, __cdecl free function taking two pointers to
 // three consecutive floats (x,y,z) and returning a float in ST(0). No proven
 // owning class or method identity (callers are still dumps), so the points
 // stay raw float pointers rather than a guessed struct, and the function
-// keeps its address token.
+// keeps its address token. A compiler barrier before the return preserves
+// retail's common branch tail; the last x87 add/pop choice remains unmatched.
 //
 // delta = *b - *a per component; dist = length(delta); when dist is not
 // exactly BfmeZeroRange (0x01075350, 0.0f) the delta is normalized by the
@@ -13,6 +14,7 @@
 // (BfmeZeroRange == 0.0f) but IEEE fp rules keep the multiply live in
 // codegen, matching retail's fmul/fadd/fxch tail exactly.
 
+extern "C" void _ReadWriteBarrier(void);
 extern "C" double __cdecl sqrt(double x);
 
 extern const float BfmeZeroRange;   // 0x01075350 == 0.0f
@@ -43,5 +45,6 @@ float Rva001B46B0(const Rva001B46B0Vec3 *a, const Rva001B46B0Vec3 *b)
 		delta.z *= dist;
 	}
 
+	_ReadWriteBarrier();
 	return (delta.x + delta.y) * BfmeZeroRange + delta.z;
 }
