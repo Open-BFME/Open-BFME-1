@@ -95,38 +95,38 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;	// slot 0, vtable+0x00
 
-	void bfmeCommand01(Object *objectToEnter, CommandSourceType cmdSource);
-	void bfmeCommand3C(Object *objectToEnter, CommandSourceType cmdSource);
-	void bfmeCommand52(Object *objectToEnter, CommandSourceType cmdSource);
-	void aiBfmeCommand2F(Object *target, CommandSourceType cmdSource);
+	void bfmeCommand01(Object *object, CommandSourceType cmdSource);
+	void bfmeCommand3C(Object *object, CommandSourceType cmdSource);
+	void bfmeCommand52(Object *object, CommandSourceType cmdSource);
+	void aiBfmeCommand2F(Object *object, CommandSourceType cmdSource);
 	void aiBfmeCommand3A(CommandSourceType cmdSource);
 };
 
-void AICommandInterface::bfmeCommand01(Object *objectToEnter, CommandSourceType cmdSource)
+void AICommandInterface::bfmeCommand01(Object *object, CommandSourceType cmdSource)
 {
 	AICommandParms parms(AICMD_BFME_01, cmdSource);
-	parms.m_obj = objectToEnter;
+	parms.m_obj = object;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::bfmeCommand3C(Object *objectToEnter, CommandSourceType cmdSource)
+void AICommandInterface::bfmeCommand3C(Object *object, CommandSourceType cmdSource)
 {
 	AICommandParms parms(AICMD_BFME_3C, cmdSource);
-	parms.m_obj = objectToEnter;
+	parms.m_obj = object;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::bfmeCommand52(Object *objectToEnter, CommandSourceType cmdSource)
+void AICommandInterface::bfmeCommand52(Object *object, CommandSourceType cmdSource)
 {
 	AICommandParms parms(AICMD_BFME_34, cmdSource);
-	parms.m_obj = objectToEnter;
+	parms.m_obj = object;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand2F(Object *target, CommandSourceType cmdSource)
+void AICommandInterface::aiBfmeCommand2F(Object *object, CommandSourceType cmdSource)
 {
 	AICommandParms parms(AICMD_BFME_2F, cmdSource);
-	parms.m_obj = target;
+	parms.m_obj = object;
 	aiDoCommand(&parms);
 }
 
