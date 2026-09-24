@@ -1,14 +1,49 @@
-// ?updatePathPositions@BfmeAODHordeContainOwner@@QAEXXZ
-// partial score=0.52 date=2026-09-11
+// ?updatePathPositions@Rva0022F960BfmeAODHordeContainOwner@@QAEXXZ
+// partial score=0.99 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
 
 #include <math.h>
+
+extern float normalizeAngle(float angle);
 
 struct Rva0022F960Coord3D
 {
 	float x;
 	float y;
 	float z;
+
+	float length() const
+	{
+		return (float)sqrt(x * x + y * y + z * z);
+	}
+	void normalize()
+	{
+		float len = length();
+		if (len != 0)
+		{
+			x /= len;
+			y /= len;
+			z /= len;
+		}
+	}
+	void sub(const Rva0022F960Coord3D *a)
+	{
+		x -= a->x;
+		y -= a->y;
+		z -= a->z;
+	}
+	void scale(float s)
+	{
+		x *= s;
+		y *= s;
+		z *= s;
+	}
+	void add(const Rva0022F960Coord3D *a)
+	{
+		x += a->x;
+		y += a->y;
+		z += a->z;
+	}
 };
 
 struct Rva0022F960PathPosition
@@ -25,12 +60,6 @@ struct Rva0022F960FlowPoint
 	float unused;
 };
 
-extern const float BfmeZeroRange;
-extern float g_bfmeDefaultBU;
-extern const float g_bfmeAngleUpper;
-extern const float g_bfmeAngleLower;
-extern float normalizeAngle(float angle);
-
 class Rva0022F960BfmeAODHordeContainOwner
 {
 public:
@@ -44,81 +73,59 @@ private:
 	int m_flowPointCount;
 };
 
-// ?updatePathPositions@BfmeAODHordeContainOwner@@QAEXXZ
+// ?updatePathPositions@Rva0022F960BfmeAODHordeContainOwner@@QAEXXZ
 void Rva0022F960BfmeAODHordeContainOwner::updatePathPositions()
 {
-	Rva0022F960BfmeAODHordeContainOwner *owner = this;
-	float firstFlowDistance = owner->m_flowPoints[0].distance;
-	int pathIndex = 0;
-	if (owner->m_flowPointCount <= pathIndex)
-		return;
-
+	float firstFlowDistance = m_flowPoints[0].distance;
 	float pathDistance = 0.0f;
-	float currentFrame = -1.0f;
-	int flowIndex = 0;
-	float *flow = reinterpret_cast<float *>(
-		reinterpret_cast<unsigned char *>(owner) + 0x618);
+	int pathIndex = 0;
 	Rva0022F960Coord3D delta;
-	Rva0022F960Coord3D scaledDelta;
+	delta.x = -1.0f;
+	delta.y = 0.0f;
 
-	while (flowIndex < owner->m_flowPointCount)
+	for (int flowIndex = 0; flowIndex < m_flowPointCount; ++flowIndex)
 	{
-		float remaining = firstFlowDistance - flow[-1] - pathDistance;
-		Rva0022F960PathPosition *next = reinterpret_cast<Rva0022F960PathPosition *>(
-			reinterpret_cast<unsigned char *>(owner) + (pathIndex + 0x26) * 0x10);
+		float remaining = firstFlowDistance - m_flowPoints[flowIndex].distance - pathDistance;
 		float length;
-		if (pathIndex < owner->m_pathPositionCount - 1)
+		for (;;)
 		{
-			delta.x = next->position.x - (next - 1)->position.x;
-			delta.y = next->position.y - (next - 1)->position.y;
-			delta.z = next->position.z;
-			length = (float)sqrt(delta.x * delta.x + delta.y * delta.y);
-		}
-		else
-			length = 99999.9f;
-
-		if (length <= remaining)
-		{
+			if (pathIndex < m_pathPositionCount - 1)
+			{
+				delta = m_pathPositions[pathIndex + 1].position;
+				delta.sub(&m_pathPositions[pathIndex].position);
+				length = (float)sqrt(delta.x * delta.x + delta.y * delta.y);
+			}
+			else
+				length = 99999.9f;
+			if (length > remaining)
+				break;
 			++pathIndex;
 			remaining -= length;
 			pathDistance += length;
-			continue;
 		}
 
-		float horizontalLength = (float)sqrt(delta.x * delta.x + delta.y * delta.y);
-		scaledDelta.x = delta.x;
-		scaledDelta.y = delta.y;
-		scaledDelta.z = BfmeZeroRange;
-		if (horizontalLength > BfmeZeroRange)
-		{
-			float scale = g_bfmeDefaultBU / horizontalLength;
-			scaledDelta.x = delta.x * scale;
-			scaledDelta.y = delta.y * scale;
-			scaledDelta.z = scale * BfmeZeroRange;
-		}
+		Rva0022F960Coord3D dir;
+		dir.x = delta.x;
+		dir.y = delta.y;
+		dir.z = 0.0f;
+		dir.normalize();
+		dir.scale(remaining);
+		dir.add(&m_pathPositions[pathIndex].position);
+		m_flowPoints[flowIndex].position = dir;
 
-		Rva0022F960PathPosition *current = reinterpret_cast<Rva0022F960PathPosition *>(
-			reinterpret_cast<unsigned char *>(owner) + (pathIndex + 0x25) * 0x10);
-		flow[1] = current->position.x + scaledDelta.x * remaining;
-		flow[2] = current->position.y + scaledDelta.y * remaining;
-		flow[3] = current->position.z + scaledDelta.z * remaining;
-
-		currentFrame = current->frame;
-		float frameDelta = currentFrame;
-		if (pathIndex < owner->m_pathPositionCount - 1)
-			frameDelta = next->frame;
-		frameDelta -= currentFrame;
-		frameDelta = normalizeAngle(frameDelta);
-		float desiredAngle = normalizeAngle(remaining / horizontalLength * frameDelta + currentFrame);
-		float angleDelta = normalizeAngle(desiredAngle - flow[0]);
-		float adjustedAngle = flow[0];
-		if (angleDelta > g_bfmeAngleUpper)
-			adjustedAngle = currentFrame + g_bfmeAngleUpper;
-		else if (angleDelta < g_bfmeAngleLower)
-			adjustedAngle = currentFrame - g_bfmeAngleUpper;
-		flow[0] = normalizeAngle(adjustedAngle);
-
-		++flowIndex;
-		flow += 6;
+		float curAngle = m_pathPositions[pathIndex].frame;
+		float nextAngle = curAngle;
+		if (pathIndex < m_pathPositionCount - 1)
+			nextAngle = m_pathPositions[pathIndex + 1].frame;
+		float desired = normalizeAngle(remaining / length * normalizeAngle(nextAngle - curAngle) + curAngle);
+		float flowAngle = m_flowPoints[flowIndex].angle;
+		float turn = normalizeAngle(desired - flowAngle);
+		if (turn > 0.17453294f)
+			m_flowPoints[flowIndex].angle = flowAngle + 0.17453294f;
+		else if (turn < -0.17453294f)
+			m_flowPoints[flowIndex].angle = flowAngle - 0.17453294f;
+		else
+			m_flowPoints[flowIndex].angle = desired;
+		m_flowPoints[flowIndex].angle = normalizeAngle(m_flowPoints[flowIndex].angle);
 	}
 }
