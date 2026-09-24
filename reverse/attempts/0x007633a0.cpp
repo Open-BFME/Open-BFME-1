@@ -1,10 +1,11 @@
-// ?d_007633a0@@YAXXZ
-// partial score=0.9571 date=2026-09-24
+// ?rva007633A0@W3DModelDraw@@UAEXPAURva007633A0Input@@@Z
+// partial score=0.9736 date=2026-09-24
 // 0x007633A0: address-qualified W3DModelDraw-family vtable slot 16.
 // Seven constructor-installed tables route through ILT 0x0004A9FD; the method name is unproven.
-// Near match: 303/303 bytes, one aligned relocation, 13 non-relocation differences.
-// The only mismatch is VC7.1 scheduling the manager load/test before the final
-// template offsetY load; retail loads offsetY, tests manager, then stores offsetY.
+// Near match: 303/303 bytes, one aligned relocation, 8 non-relocation differences.
+// A volatile integer view reproduces retail's offsetY load, manager load/test,
+// then offsetY store schedule. The residue is a single register-allocation
+// choice (EDI instead of EDX) that propagates through the following virtual call.
 // cl: /DNDEBUG /MD /EHsc
 
 typedef bool Bool;
@@ -25,7 +26,11 @@ public:
 	Real m_shadowSizeX;
 	Real m_shadowSizeY;
 	Real m_shadowOffsetX;
-	Real m_shadowOffsetY;
+	union
+	{
+		Real m_shadowOffsetY;
+		volatile unsigned int m_shadowOffsetYBits;
+	};
 };
 
 class BfmeOverrideView
@@ -157,9 +162,10 @@ void W3DModelDraw::rva007633A0(Rva007633A0Input *input)
 	info.m_sizeX = thing->m_shadowSizeX;
 	info.m_sizeY = thing->m_shadowSizeY;
 	info.m_offsetX = thing->m_shadowOffsetX;
+	unsigned int offsetY = thing->m_shadowOffsetYBits;
 	BfmeProjectedShadowManager *manager =
 		bfmeProjectedShadowManagerAt01306DEC();
-	info.m_offsetY = thing->m_shadowOffsetY;
+	*(unsigned int *)&info.m_offsetY = offsetY;
 	if (manager)
 		m_terrainDecal = manager->addDecal(m_renderObject, &info, 1, 0);
 	if (m_terrainDecal) {
