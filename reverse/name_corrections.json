@@ -1888,5 +1888,15 @@
   "after_sha256": "ad33b0541d6760b135a5988f62b01044cbcbce119785d9d4fec3604aeb43855e",
   "evidence": "reverse/identity_evidence/004dfef0.md",
   "reason": "False file-pair alignment after moving bfmeReady. BfmeThingDO::m_bfmeHead remains in Bfme5FortySix.cpp; the new m_pad belongs to an unrelated popup type, not the same field."
+ },
+ {
+  "old_path": "reverse/attempts/0x0046f490.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva0046F490DrawBoundsOverlay.cpp",
+  "old_name": "g_rva00579160TheManager",
+  "new_name": "Rva00579160TheManager",
+  "before_sha256": "3f87c8820746973ff491a0314955347a0e436ae83a96e3c26448496734e4ae31",
+  "after_sha256": "1b2d5d453ec344b2e737f1178739345d90c50489168e711acb50af2c7b168aa6",
+  "evidence": "reverse/symbols.csv",
+  "reason": "reverse/symbols.csv pins the global at 0x012F19E8 as ?Rva00579160TheManager@@3PAURva00579160Manager@@A; the bank's g_rva00579160TheManager spelling matches no pinned symbol, so the body references the pinned name."
  }
 ]

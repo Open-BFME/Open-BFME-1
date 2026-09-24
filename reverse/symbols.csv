@@ -88907,3 +88907,5 @@ _ghiSetProxy,0x0087AD40,route=0x0087C900; retail patch-check calls this ILT to m
 ?compareNoCaseRaw@?$StringBase@G@@ABEHPBG0H@Z,0x000480F4,route=0x0009ECA0; skirmish profile compares wide profile names through retail ILT
 ?RenderVolume@W3DVolumetricShadow@@IAEXHH@Z,0x007BD9C0,method definition and retail callers prove thiscall int int; retail body ends ret 8 and ILT 0x0003FFFD routes here
 ?saveGame@GameState@@QAE?AW4SaveCode@@VAsciiString@@VUnicodeString@@W4SaveFileType@@W4SnapshotType@@_N@Z,0x00020CD4,route=0x00110170; retail SaveLoadMenuSystem calls the independently matched five-argument GameState::saveGame through this ILT
+?computeThreshold@Rva00579160Manager@@QAE?AURva0046CA40Result@@PAX@Z,0x0002E249,0x0046F490 calls this ILT (jmp 0x0046CA40); ecx=Rva00579160TheManager; callee ends ret 8 and fills the hidden 8-byte result slot
+?bfmeRunD@Display@@QAEXPBVImage@@MMMMMH@Z,0x00034338,0x0046F490 calls this ILT (jmp 0x0046EC50); ecx=TheDisplay and x87-stored float arguments; callee ends ret 0x1c
