@@ -1,11 +1,10 @@
-// ?setMasks@Rva0039FF30Filter@@QAEXURva0021FC80Mask@@0@Z
-// partial score=0.78 date=2026-09-10
 // cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
 // stlport
-// TransportContainModuleData, retail 0x0021FC80, 216 bytes.
-// BFME stores an interned object-filter handle at +0x114, rather than
-// the Generals source's inline allow/deny masks. The setter takes two
-// six-word masks by value and releases/replaces that handle.
+// Open-BFME5: object-filter handle setter, retail 0x0039FF30, 549 bytes, called
+// through ILT 0x0004699D by the TransportContainModuleData ctor at 0x0021FC80.
+// Releases the pool handle, builds a kind-2 attribute entry from two by-value
+// six-word masks and interns it; an empty first mask falls back to the kind-1
+// setter at ILT 0x0000D3E1 (retail 0x0039FBA0, ret 0x30) with the none mask.
 #include <bitset>
 #include "StringInline.h"
 
@@ -122,36 +121,23 @@ void Rva0039FF30Filter::setMasks(Rva0021FC80Mask first,
     }
 
     Gen00043699 entry;
-    entry.m_firstPlain.set(first);
-    entry.m_secondPlain.set(second);
     entry.m_enabled = false;
     entry.m_kind = 2;
+    entry.m_firstPlain.set(first);
+    entry.m_secondPlain.set(second);
 
-    const UnsignedInt *firstWords =
-        reinterpret_cast<const UnsignedInt *>(&first);
-    if (firstWords[0] == 0 && firstWords[1] == 0 && firstWords[2] == 0 &&
-        firstWords[3] == 0 && firstWords[4] == 0 && firstWords[5] == 0)
+    if (first.bits.any())
     {
-        reinterpret_cast<RespawnPolicyMember *>(this)->setPolicies(
-            *reinterpret_cast<const RespawnPolicy *>(&Rva012ED8B8NoneMask),
-            *reinterpret_cast<const RespawnPolicy *>(&Rva012ED8B8NoneMask));
-    }
-    else
-    {
+        entry.m_enabled = true;
         handle = bfmeInternAttributeEntry(&entry);
+        return;
     }
+    reinterpret_cast<RespawnPolicyMember *>(this)->setPolicies(
+        *reinterpret_cast<const RespawnPolicy *>(&Rva012ED8B8NoneMask),
+        *reinterpret_cast<const RespawnPolicy *>(&Rva012ED8B8NoneMask));
 }
 
-// ??0TransportContainModuleData@@QAE@XZ
-TransportContainModuleData::TransportContainModuleData()
-{
-    m_filter.setMasks(Rva0021FC80Mask(8), Rva012ED8B8NoneMask);
-    m_flag170 = false;
-    m_flag168 = false;
-    m_flag171 = false;
-    m_initialPayloadCount = 0;
-    m_scalar16c = 1.0f;
-}
 typedef char VerifyMaskSize[sizeof(Rva0021FC80Mask) == 24 ? 1 : -1];
 typedef char VerifyBaseSize[sizeof(OpenContainModuleData) == 0x168 ? 1 : -1];
 typedef char VerifyObjectSize[sizeof(TransportContainModuleData) == 0x17c ? 1 : -1];
+typedef char VerifyEntrySize[sizeof(Gen00043699) == 0x88 ? 1 : -1];
