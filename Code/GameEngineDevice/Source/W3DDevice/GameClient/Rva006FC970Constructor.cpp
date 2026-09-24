@@ -1,5 +1,3 @@
-// ??0Rva006FC970@@QAE@XZ
-// partial score=1.0 date=2026-09-24
 // Opaque constructor candidate at 0x006FC970; vtable 0x011207C0.
 // The prior EMPUpdateModuleData label is refuted by its vtable and destructor.
 // Only witnessed field offsets are named here; semantic member identities are unknown.
@@ -9,10 +7,10 @@
 extern "C" void _ReadWriteBarrier(void);
 #pragma intrinsic(_ReadWriteBarrier)
 
-class Rva0060A000Base
+class Rva006092D0State
 {
 public:
-	Rva0060A000Base();
+	Rva006092D0State();
 	volatile unsigned m_vtable;
 
 private:
@@ -32,7 +30,7 @@ private:
 	int m_words[6];
 };
 
-class Rva006FC970 : public Rva0060A000Base, public SixZeroWords
+class Rva006FC970 : public Rva006092D0State, public SixZeroWords
 {
 public:
 	Rva006FC970();

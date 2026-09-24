@@ -88948,3 +88948,4 @@ _peerSetRoomKeysA,0x00858070,GameSpy Peer peerSetRoomKeys; six-argument cdecl ca
 ?erase@Rva008312E0String@@QAEPADPAD0@Z,0x00007C1B,erase range thunk called by 0x008312E0 (thiscall 2 args ret 8)
 ?insertRange@Rva008312E0String@@QAEXPAD00ABURva008312E0Tag@@@Z,0x008300B0,forward insert range called by 0x008312E0 (thiscall 4 args ret 0x10)
 ?replaceBase@Rva008312E0String@@QAEAAV1@PAD000ABURva008312E0Tag@@@Z,0x00830CC0,forward replace called by 0x008312E0 (thiscall 5 args ret 0x14 returns this)
+??0Rva006092D0State@@QAE@XZ,0x0000B89D,REL32 pin from ??0Rva006FC970 0x006FC970 (ILT); body 0x0060A000 installs vtable 0x01115AD0 like the matched ??1Rva006092D0State at 0x00609E30
