@@ -18,7 +18,7 @@ class Object;
 class AICommandInterface
 {
 public:
-	void aiBfmeCommand45(Object *target, CommandSourceType cmdSource);
+	void aiBfmeCommand45(Object *target, CommandSourceType commandSource);
 };
 
 class BfmeGroupAI
@@ -40,14 +40,14 @@ public:
 class AIGroup
 {
 public:
-	void groupBfmeCommand45(Object *target, CommandSourceType cmdSource);
+	void groupBfmeCommand45(Object *target, CommandSourceType commandSource);
 
 private:
 	char m_bfmeHead[0x04];
 	_STL::list<Object *> m_memberList;
 };
 
-void AIGroup::groupBfmeCommand45(Object *target, CommandSourceType cmdSource)
+void AIGroup::groupBfmeCommand45(Object *target, CommandSourceType commandSource)
 {
 	if (m_memberList.empty())
 		return;
@@ -66,5 +66,5 @@ void AIGroup::groupBfmeCommand45(Object *target, CommandSourceType cmdSource)
 
 	BfmeGroupAI *ai = obj->m_bfmeAI;
 	if (ai)
-		ai->m_bfmeCommands.aiBfmeCommand45(tgt, cmdSource);
+		ai->m_bfmeCommands.aiBfmeCommand45(tgt, commandSource);
 }
