@@ -1,12 +1,14 @@
 // cl: /O2 /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD
-// Open-BFME: ?Rva006AD9B0GetAllowAudioReinitialize@@YA_NXZ, retail 0x006AD9B0, 234 bytes.
+// Open-BFME: ?rva006AD9B0@MilesAudioManager@@QAE_NXZ, retail 0x006AD9B0, 234 bytes.
 //
-// Free-standing helper: builds a fresh OptionPreferences (which loads
-// Options.ini in its own constructor), looks up the AllowAudioReinitialize
-// key, and returns false only when the stored value case-insensitively
-// equals "false" or "no"; a missing key, or any other value, returns true.
-// No `this` pointer is read anywhere in the retail body. The owner is not
-// proven, so the name keeps its address token.
+// __thiscall member that ignores `this`: both retail callers load ecx right
+// before calling ILT 0x0002F1D5, and the matched MilesAudioManager::rva006B86D0
+// models the call as a MilesAudioManager member. The body builds a fresh
+// OptionPreferences (which loads Options.ini in its own constructor), looks up
+// the AllowAudioReinitialize key, and returns false only when the stored value
+// case-insensitively equals "false" or "no"; a missing key, or any other value,
+// returns true. ecx is never read. The method name is not proven, so it keeps
+// its address token.
 //
 // callers: ?rva006B86D0@MilesAudioManager@@UAEXI@Z (via ILT) and the
 // ?d_006b9c90@@YAXXZ dump.
@@ -98,7 +100,13 @@ private:
 	PreferenceNode *m_node;
 };
 
-bool Rva006AD9B0GetAllowAudioReinitialize(void)
+class MilesAudioManager
+{
+public:
+	bool rva006AD9B0(void);
+};
+
+bool MilesAudioManager::rva006AD9B0(void)
 {
 	OptionPreferences prefs;
 	PreferenceIterator it = prefs.m_prefs.find("AllowAudioReinitialize");
