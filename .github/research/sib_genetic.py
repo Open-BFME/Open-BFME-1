@@ -7,7 +7,7 @@ u='https://raw.githubusercontent.com/Open-BFME/Open-BFME-1/010683a09c21c158a15f2
 b=urllib.request.urlopen(u,timeout=30).read()
 assert hashlib.sha1(b'blob '+str(len(b)).encode()+b'\0'+b).hexdigest()=='d021c7de108224c53583b8920ab7ba29e7d090ed'
 exec(compile(b.decode().split('seed_masks=',1)[0],'pinned_research_harness','exec'))
-rng=random.Random(960A30)
+rng=random.Random(0x960A30)
 deadline=time.monotonic()+650
 current={19,41}
 # First reproduce the nine-byte state.
