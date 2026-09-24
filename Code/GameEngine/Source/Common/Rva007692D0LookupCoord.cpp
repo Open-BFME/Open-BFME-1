@@ -1,5 +1,4 @@
 // ?rva007692D0LookupCoord@Rva00769260Owner@@QAE_NPAXPAURva007692D0Coord@@@Z
-// partial score=0.99 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 // Retail 0x007692D0 shares the flag and tree layout of the byte-matched
 // Rva00769260Owner::lookup at 0x00769260. The slot at node+0x14 holds
