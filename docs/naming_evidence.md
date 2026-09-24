@@ -385,10 +385,12 @@ silently change the verdict on the reviewed source.
 The BFME retail `FieldParse` table at RVA `0x00C9D860` names
 `Acceleration`, `Lift`, and `LiftDamaged` at offsets `+0x40`, `+0x44`, and
 `+0x48`. Those direct table entries support the member names in the
-`LocomotorTemplate` constructor and copy-assignment layout views. A separate
-matched body at `0x001B5A30`, currently named `getMaxAcceleration`, appears to
-read `+0x44/+0x48` as an acceleration pair. Its identity is unresolved: the
-known apparent caller at `0x001B80D0` has not been independently established as
-an acceleration query, and an existing attempt describes a hover/bob update
-flow. Do not use that getter name to override the retail field table or change
-the getter/pins until an independent caller and ABI establish its identity.
+`LocomotorTemplate` constructor and copy-assignment layout views. The separate
+148-byte method at `0x001B5A30` selects the fields at `+0x44/+0x48`, scales by
+`Object`'s AI locomotor scale, and clamps at `Locomotor+0x24`. Its `thiscall`
+ABI and class are established, but `callers_of.py` finds no named direct caller;
+the former ledger note naming `0x001B80D0` conflicts with that body's recorded
+hover/bob analysis. Its method purpose and clamp-field name remain unresolved,
+so the source and row use address-derived `Locomotor::rva001B5A30` and
+`m_value24`; no pin or semantic `getMaxLift` identity is claimed. The evidence
+and exact ABI are recorded in `reverse/identity_evidence/001b5a30.md`.
