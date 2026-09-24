@@ -24,7 +24,8 @@
 //     is 2 and whose +0xc field equals the command button's own +0x20 field,
 //     then draw the same way.
 //   no ProductionUpdateInterface at all: fall back to the selected object's
-//     +0x1fc interface, gate on its slot 0xD4 against TheControlBar's
+//     contain module (Object+0x1fc, m_contain per the name_oracle layout
+//     witness), gate on its slot 0xD4 against TheControlBar's
 //     findContainedObject(window), then draw using slot 0x30's return as the
 //     percent over the contained object's own +0x74 field.
 
@@ -130,34 +131,35 @@ public:
 	ProductionUpdateInterface *getProductionUpdateInterface();
 };
 
-// The fallback facet at Object+0x1fc when there is no ProductionUpdateInterface:
-// slot12 (offset 0x30, one int arg) computes the percent, slot53 (offset
-// 0xD4, one Object* arg) is the availability gate. Neither name is proven.
-class SpecialInterface
+// Object+0x1fc is m_contain (name_oracle layout witness, confidence 1.00), so
+// the fallback is the object's ContainModuleInterface: slot12 (offset 0x30,
+// one int arg) computes the percent, slot53 (offset 0xD4, one Object* arg) is
+// the availability gate. Neither slot name is proven.
+class ContainModuleInterface
 {
 public:
-#define BFME_SPECIAL_SLOT( n ) virtual void slot##n( void ) = 0;
-	BFME_SPECIAL_SLOT( 00 ) BFME_SPECIAL_SLOT( 01 ) BFME_SPECIAL_SLOT( 02 )
-	BFME_SPECIAL_SLOT( 03 ) BFME_SPECIAL_SLOT( 04 ) BFME_SPECIAL_SLOT( 05 )
-	BFME_SPECIAL_SLOT( 06 ) BFME_SPECIAL_SLOT( 07 ) BFME_SPECIAL_SLOT( 08 )
-	BFME_SPECIAL_SLOT( 09 ) BFME_SPECIAL_SLOT( 10 ) BFME_SPECIAL_SLOT( 11 )
+#define BFME_CONTAIN_SLOT( n ) virtual void slot##n( void ) = 0;
+	BFME_CONTAIN_SLOT( 00 ) BFME_CONTAIN_SLOT( 01 ) BFME_CONTAIN_SLOT( 02 )
+	BFME_CONTAIN_SLOT( 03 ) BFME_CONTAIN_SLOT( 04 ) BFME_CONTAIN_SLOT( 05 )
+	BFME_CONTAIN_SLOT( 06 ) BFME_CONTAIN_SLOT( 07 ) BFME_CONTAIN_SLOT( 08 )
+	BFME_CONTAIN_SLOT( 09 ) BFME_CONTAIN_SLOT( 10 ) BFME_CONTAIN_SLOT( 11 )
 	virtual int slot12( int value ) = 0;
-	BFME_SPECIAL_SLOT( 13 ) BFME_SPECIAL_SLOT( 14 ) BFME_SPECIAL_SLOT( 15 )
-	BFME_SPECIAL_SLOT( 16 ) BFME_SPECIAL_SLOT( 17 ) BFME_SPECIAL_SLOT( 18 )
-	BFME_SPECIAL_SLOT( 19 ) BFME_SPECIAL_SLOT( 20 ) BFME_SPECIAL_SLOT( 21 )
-	BFME_SPECIAL_SLOT( 22 ) BFME_SPECIAL_SLOT( 23 ) BFME_SPECIAL_SLOT( 24 )
-	BFME_SPECIAL_SLOT( 25 ) BFME_SPECIAL_SLOT( 26 ) BFME_SPECIAL_SLOT( 27 )
-	BFME_SPECIAL_SLOT( 28 ) BFME_SPECIAL_SLOT( 29 ) BFME_SPECIAL_SLOT( 30 )
-	BFME_SPECIAL_SLOT( 31 ) BFME_SPECIAL_SLOT( 32 ) BFME_SPECIAL_SLOT( 33 )
-	BFME_SPECIAL_SLOT( 34 ) BFME_SPECIAL_SLOT( 35 ) BFME_SPECIAL_SLOT( 36 )
-	BFME_SPECIAL_SLOT( 37 ) BFME_SPECIAL_SLOT( 38 ) BFME_SPECIAL_SLOT( 39 )
-	BFME_SPECIAL_SLOT( 40 ) BFME_SPECIAL_SLOT( 41 ) BFME_SPECIAL_SLOT( 42 )
-	BFME_SPECIAL_SLOT( 43 ) BFME_SPECIAL_SLOT( 44 ) BFME_SPECIAL_SLOT( 45 )
-	BFME_SPECIAL_SLOT( 46 ) BFME_SPECIAL_SLOT( 47 ) BFME_SPECIAL_SLOT( 48 )
-	BFME_SPECIAL_SLOT( 49 ) BFME_SPECIAL_SLOT( 50 ) BFME_SPECIAL_SLOT( 51 )
-	BFME_SPECIAL_SLOT( 52 )
+	BFME_CONTAIN_SLOT( 13 ) BFME_CONTAIN_SLOT( 14 ) BFME_CONTAIN_SLOT( 15 )
+	BFME_CONTAIN_SLOT( 16 ) BFME_CONTAIN_SLOT( 17 ) BFME_CONTAIN_SLOT( 18 )
+	BFME_CONTAIN_SLOT( 19 ) BFME_CONTAIN_SLOT( 20 ) BFME_CONTAIN_SLOT( 21 )
+	BFME_CONTAIN_SLOT( 22 ) BFME_CONTAIN_SLOT( 23 ) BFME_CONTAIN_SLOT( 24 )
+	BFME_CONTAIN_SLOT( 25 ) BFME_CONTAIN_SLOT( 26 ) BFME_CONTAIN_SLOT( 27 )
+	BFME_CONTAIN_SLOT( 28 ) BFME_CONTAIN_SLOT( 29 ) BFME_CONTAIN_SLOT( 30 )
+	BFME_CONTAIN_SLOT( 31 ) BFME_CONTAIN_SLOT( 32 ) BFME_CONTAIN_SLOT( 33 )
+	BFME_CONTAIN_SLOT( 34 ) BFME_CONTAIN_SLOT( 35 ) BFME_CONTAIN_SLOT( 36 )
+	BFME_CONTAIN_SLOT( 37 ) BFME_CONTAIN_SLOT( 38 ) BFME_CONTAIN_SLOT( 39 )
+	BFME_CONTAIN_SLOT( 40 ) BFME_CONTAIN_SLOT( 41 ) BFME_CONTAIN_SLOT( 42 )
+	BFME_CONTAIN_SLOT( 43 ) BFME_CONTAIN_SLOT( 44 ) BFME_CONTAIN_SLOT( 45 )
+	BFME_CONTAIN_SLOT( 46 ) BFME_CONTAIN_SLOT( 47 ) BFME_CONTAIN_SLOT( 48 )
+	BFME_CONTAIN_SLOT( 49 ) BFME_CONTAIN_SLOT( 50 ) BFME_CONTAIN_SLOT( 51 )
+	BFME_CONTAIN_SLOT( 52 )
 	virtual bool slot53( Object *obj ) = 0;
-#undef BFME_SPECIAL_SLOT
+#undef BFME_CONTAIN_SLOT
 };
 
 class BfmeOwnerLU
@@ -255,17 +257,17 @@ void Rva004BCCE0( GameWindow *window )
 		return;
 	}
 
-	SpecialInterface *special = *(SpecialInterface **)( (char *)object + 0x1fc );
-	if( special == 0 )
+	ContainModuleInterface *contain = *(ContainModuleInterface **)( (char *)object + 0x1fc );
+	if( contain == 0 )
 		return;
 
 	Object *contained = TheControlBar->findContainedObject( window );
 	if( contained == 0 )
 		return;
 
-	if( !special->slot53( contained ) )
+	if( !contain->slot53( contained ) )
 		return;
 
 	int scaled = *(int *)( (char *)contained + 0x74 );
-	GadgetButtonDrawInverseClock( window, special->slot12( scaled ), 0x94FFCD6C );
+	GadgetButtonDrawInverseClock( window, contain->slot12( scaled ), 0x94FFCD6C );
 }
