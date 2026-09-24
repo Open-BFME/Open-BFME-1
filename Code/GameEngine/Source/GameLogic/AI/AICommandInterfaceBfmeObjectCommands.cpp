@@ -80,7 +80,7 @@ struct DamageInfo
 class AICommandParms
 {
 public:
-	AICommandParms( AICommandType cmd, CommandSourceType cmdSource );	// ILT 0x00030EA4
+	AICommandParms( AICommandType cmd, CommandSourceType commandSource );	// ILT 0x00030EA4
 
 	AICommandType m_cmd;					// +0x00
 	CommandSourceType m_cmdSource;			// +0x04
@@ -103,60 +103,60 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand( const AICommandParms *parms ) = 0;
 
-	void aiBfmeCommand42( Object *obj, CommandSourceType cmdSource );
-	void aiBfmeCommand45( Object *obj, CommandSourceType cmdSource );
-	void aiBfmeCommand39( Object *obj, CommandSourceType cmdSource );
-	void aiBfmeObjectCommand3D( Object *obj, CommandSourceType cmdSource );
-	void aiBfmeObjectCommand3E( Object *obj, CommandSourceType cmdSource );
-	void aiBfmeCommand2E( Object *obj, CommandSourceType cmdSource );
-	void aiBfmeCommand63( Object *obj, CommandSourceType cmdSource );
+	void aiBfmeCommand42( Object *object, CommandSourceType commandSource );
+	void aiBfmeCommand45( Object *object, CommandSourceType commandSource );
+	void aiBfmeCommand39( Object *object, CommandSourceType commandSource );
+	void aiBfmeObjectCommand3D( Object *object, CommandSourceType commandSource );
+	void aiBfmeObjectCommand3E( Object *object, CommandSourceType commandSource );
+	void aiBfmeCommand2E( Object *object, CommandSourceType commandSource );
+	void aiBfmeCommand63( Object *object, CommandSourceType commandSource );
 };
 
-void AICommandInterface::aiBfmeCommand42( Object *obj, CommandSourceType cmdSource )
+void AICommandInterface::aiBfmeCommand42( Object *object, CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_BFME_42, cmdSource );
-	parms.m_obj = obj;
+	AICommandParms parms( AICMD_BFME_42, commandSource );
+	parms.m_obj = object;
 	aiDoCommand( &parms );
 }
 
-void AICommandInterface::aiBfmeCommand45( Object *obj, CommandSourceType cmdSource )
+void AICommandInterface::aiBfmeCommand45( Object *object, CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_BFME_45, cmdSource );
-	parms.m_obj = obj;
+	AICommandParms parms( AICMD_BFME_45, commandSource );
+	parms.m_obj = object;
 	aiDoCommand( &parms );
 }
 
-void AICommandInterface::aiBfmeCommand39( Object *obj, CommandSourceType cmdSource )
+void AICommandInterface::aiBfmeCommand39( Object *object, CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_BFME_39, cmdSource );
-	parms.m_obj = obj;
+	AICommandParms parms( AICMD_BFME_39, commandSource );
+	parms.m_obj = object;
 	aiDoCommand( &parms );
 }
 
-void AICommandInterface::aiBfmeObjectCommand3D( Object *obj, CommandSourceType cmdSource )
+void AICommandInterface::aiBfmeObjectCommand3D( Object *object, CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_BFME_3D, cmdSource );
-	parms.m_obj = obj;
+	AICommandParms parms( AICMD_BFME_3D, commandSource );
+	parms.m_obj = object;
 	aiDoCommand( &parms );
 }
 
-void AICommandInterface::aiBfmeObjectCommand3E( Object *obj, CommandSourceType cmdSource )
+void AICommandInterface::aiBfmeObjectCommand3E( Object *object, CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_BFME_3E, cmdSource );
-	parms.m_obj = obj;
+	AICommandParms parms( AICMD_BFME_3E, commandSource );
+	parms.m_obj = object;
 	aiDoCommand( &parms );
 }
 
-void AICommandInterface::aiBfmeCommand2E( Object *obj, CommandSourceType cmdSource )
+void AICommandInterface::aiBfmeCommand2E( Object *object, CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_BFME_2E, cmdSource );
-	parms.m_obj = obj;
+	AICommandParms parms( AICMD_BFME_2E, commandSource );
+	parms.m_obj = object;
 	aiDoCommand( &parms );
 }
 
-void AICommandInterface::aiBfmeCommand63( Object *obj, CommandSourceType cmdSource )
+void AICommandInterface::aiBfmeCommand63( Object *object, CommandSourceType commandSource )
 {
-	AICommandParms parms( AICMD_BFME_3F, cmdSource );
-	parms.m_obj = obj;
+	AICommandParms parms( AICMD_BFME_3F, commandSource );
+	parms.m_obj = object;
 	aiDoCommand( &parms );
 }
