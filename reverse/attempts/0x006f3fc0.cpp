@@ -1,5 +1,5 @@
 // ?draw@W3DDisplay@@UAEXXZ
-// partial score=0.8454391891891891 date=2026-09-23
+// partial score=0.94 date=2026-09-24
 // cl: /DNDEBUG /MD /EHs-c- /Ireference/shims/sweep
 #include <windows.h>
 void * __cdecl operator new[](unsigned);
@@ -261,7 +261,7 @@ void W3DDisplay::draw()
                 int count=Rva012ED5C8->fieldecc;
                 captureScreen(image+((count/2+i)%count)*width*3,count*width*3);
             }
-            --Rva012F804C;
+            --(*reinterpret_cast<volatile int *>(&Rva012F804C));
             saveScreenShot(image,Rva012ED5C8->fieldecc*width,height);
             delete []image;
             Rva012ED5C8->fielded0=false;
