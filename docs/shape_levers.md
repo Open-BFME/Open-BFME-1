@@ -1142,3 +1142,47 @@ claiming unproven names for opaque storage. `AptMainMenu`, ScoreScreen,
 SkirmishScreen and related GUI TUs now use the same view; the scoped build
 matched all 60 functions across the 15 migrated/defining TUs. The header is
 `Code/GameEngine/Include/GameClient/BfmeAptScreenBaseLayout.h`.
+
+## Strip earlier workarounds before hunting a new lever
+
+Banked near misses often carry `volatile` fields, `_ReadWriteBarrier()` calls,
+`register` locals and hand-duplicated statements that an earlier session added
+to push one register. Probe the plain version first. At `0x00505410`
+(`BfmeQuickMatchProgressBody::update`, 127 B) eleven sessions had kept a
+volatile progress-bar member, a barrier and two calls; writing the single
+`GadgetProgressBarSetProgress` call after the step `if`/`else` matched exactly,
+because MSVC 7.1 tail-duplicates the call into both arms the way retail does.
+A mechanical sweep that only removed `volatile` from 310 banks restored the
+retail extent of `0x009BEBB0` (3721 B, from a size mismatch to 354 differing
+bytes); it improved nothing that was already the right size.
+
+The EDX form of the vtable register-temp lever above also landed
+`Drawable::drawHealthBar` (`0x0041CA50`, 511 B): the getHealth slot `+0x10`
+takes the table as the second `__fastcall` register argument. It reduced
+`0x007F71B0`, `0x0024ECA0` and `0x00271630` to 2-3 bytes, but the residuals
+there need the EAX vtable temporary at a call that also pushes stack
+arguments; no source shape tried (one-register `__fastcall`, pointer-to-member
+through a typed table, locals, return and argument types, `/G5` `/G6` `/GB`)
+produced it. Those verdicts carry `blocker=regalloc/vtable-temp-eax-with-stack-args`.
+
+## An exact probe is not a landed body
+
+`probe.py` masks relocations, so a bank can be EXACT and still fail
+`add_match` on callee resolution. On 2026-09-24 nine banks were exact and
+unlanded, among them `PeerThreadClass::Thread_Function` (5316 B) and
+`Drawable::xfer` (4763 B). Run `add_match` as soon as a probe is exact, then:
+
+- Read each unresolved call target from the retail call site
+  (`tools/unresolved_pins.py --gate-log`, or `callees.py`). If the ledger already
+  names the target, call it by that name (an inline forwarder keeps the
+  bytes), rather than pinning a second name onto the same body.
+- Pin through the ILT the retail call actually encodes. `route=` is admissible
+  only when the pinned name is the ledger's name for the target; otherwise use a
+  plain `REL32 pin from ...` row.
+- A template helper with several identical copies (`vector<void*>` insert
+  overflow) needs one more candidate pin for the copy this caller reaches.
+- Masking also hides a wrong callee. `0x0078E570` called `winGetText`, but its
+  retail ILT reaches a different 30-byte sret getter (receiver `+0x30`, not
+  `+4`); it landed only after the call was modelled as that getter.
+- A `__declspec(naked)` bank is a lift and is refused at commit; it still
+  needs real C++.
