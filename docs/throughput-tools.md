@@ -62,9 +62,9 @@ lock holds, not a measured fleet throughput gain. Deploy at a controlled seat
 restart; do not replace tools beneath running controllers.
 
 `tools/fleet_run.py` claims are leases: pid + expiry (`FLEET_LEASE_SECONDS`,
-default session cap + 30 min). A lease is reclaimed only when expired AND the
-pid is gone; an unknown pid is never reclaimed. Takeovers are recorded in the
-`releases` table with the reason.
+default session cap + 30 min). A lease is reclaimed only when expired, its run
+record is terminal, and the pid is gone; an unknown pid is never reclaimed.
+Takeovers are recorded in the `releases` table with the reason.
 
 Lanes added to `seat.sh` / `launch_fleet.sh` (args: file big finish mid anon
 review; defaults since 2026-09-16 are 10 0 2 8 15 2, no net new seats):
@@ -214,8 +214,28 @@ beneath running controllers. Stop all old seats and direct launchers, verify
 that no worker is still alive, then inspect the old log without changing it:
 
 ```sh
+python3 tools/fleet_run.py --coordination-status
 python3 tools/fleet/reconcile_legacy.py
 ```
+
+The claims database now has a durable UUID marker at
+`build/fleet_coordination.json`. If the database is missing, replaced, corrupt,
+or has lost its claims schema, every new claim fails closed. A fresh checkout
+initializes on first use. For an existing checkout with an unmarked old
+database or only historical `seats.log` assignments, stop every controller
+and worker, inspect the status and live processes, then initialize from the
+exact `snapshot_sha256` printed by the status command:
+
+```sh
+python3 tools/fleet_run.py --init-coordination --stopped-fleet --state-sha SHA
+```
+
+Migration preserves old claims and release rows. It refuses a live recorded or
+claimed PID. A run directory with no database, or a marker with a
+missing or mismatched database, requires restoration of the original database;
+initialization cannot erase that uncertainty. Keep old controllers stopped
+through the subsequent legacy reconciliation. This is a per-checkout cutover,
+not a fleet-wide reset or a reason to overwrite scripts under running seats.
 
 The dry run prints outstanding tokens, the exact log SHA, and the number of
 run claims. Investigate and release named claims only after verifying their

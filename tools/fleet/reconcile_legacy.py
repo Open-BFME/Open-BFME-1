@@ -5,18 +5,17 @@ Dry-run by default. --apply requires --stopped-fleet and the exact SHA printed
 by a dry run. This tool never changes a run claim or a worker record.
 """
 import argparse
-from contextlib import closing
 import hashlib
 import json
 import os
 from pathlib import Path
-import sqlite3
 import sys
 import time
 import uuid
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import eligibility  # noqa: E402
+import fleet_run  # noqa: E402
 from portable_lock import lock  # noqa: E402
 
 
@@ -25,17 +24,11 @@ def snapshot(root):
     log_path = build / "fleet_logs/seats.log"
     marker = build / "fleet_legacy_cutover.json"
     raw = log_path.read_bytes() if log_path.exists() else b""
-    db_path = build / "fleet_runs.sqlite"
-    claim_count = 0
-    if db_path.exists():
-        try:
-            with closing(sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)) as db:
-                claim_count = db.execute("SELECT count(*) FROM claims").fetchone()[0]
-        except sqlite3.Error as error:
-            raise RuntimeError(f"cannot establish run-claim state: {error}") from error
+    coordination = fleet_run.coordination_status(root)
     return dict(log_sha256=hashlib.sha256(raw).hexdigest(),
                 outstanding=sorted(eligibility.legacy_busy_tokens(root, log_path)),
-                claim_count=claim_count, cutover_marker=marker.exists())
+                claim_count=coordination["claim_count"], coordination=coordination,
+                cutover_marker=marker.exists())
 
 
 def reconcile(root, apply=False, stopped_fleet=False, expected_sha=None):
@@ -56,6 +49,10 @@ def reconcile(root, apply=False, stopped_fleet=False, expected_sha=None):
             raise ValueError("apply requires --stopped-fleet and --log-sha from a dry run")
         if before_sha != expected_sha:
             raise ValueError("seats.log changed since dry run; inspect and retry")
+        if report["coordination"]["state"] != "ready":
+            raise fleet_run.CoordinationUnavailable(
+                "claims coordination is missing or uninitialized; inspect the dry-run report "
+                "and complete guarded fleet_run --init-coordination first")
         if claim_count:
             raise RuntimeError("run claims remain; establish worker liveness before cutover")
         if marker.exists():

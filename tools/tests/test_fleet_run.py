@@ -164,6 +164,7 @@ class LeaseTests(unittest.TestCase):
     def test_expired_terminal_record_does_not_override_unknown_pid(self):
         with contextlib.ExitStack() as stack:
             root = self._root(stack)
+            stack.enter_context(contextlib.closing(fleet_run.connect(root)))
             record = root / "build" / "fleet_runs" / "failed-unknown"
             record.mkdir(parents=True)
             (record / "record.json").write_text(
@@ -178,6 +179,7 @@ class LeaseTests(unittest.TestCase):
     def test_expired_nonterminal_records_stay_busy_after_pid_exit(self):
         with contextlib.ExitStack() as stack:
             root = self._root(stack)
+            stack.enter_context(contextlib.closing(fleet_run.connect(root)))
             with patch.object(fleet_run, "pid_alive", return_value=False):
                 for index, status in enumerate(("starting", "interrupted")):
                     run = "old-" + status
@@ -195,6 +197,7 @@ class LeaseTests(unittest.TestCase):
     def test_expired_terminal_record_does_not_override_live_pid(self):
         with contextlib.ExitStack() as stack:
             root = self._root(stack)
+            stack.enter_context(contextlib.closing(fleet_run.connect(root)))
             record = root / "build" / "fleet_runs" / "run-live"
             record.mkdir(parents=True)
             (record / "record.json").write_text(
@@ -217,7 +220,7 @@ class LeaseTests(unittest.TestCase):
 
 
 class LegacyAndTimeoutTests(unittest.TestCase):
-    def test_legacy_claim_dies_with_its_run_record(self):
+    def test_legacy_claim_without_pid_needs_explicit_release(self):
         with contextlib.ExitStack() as stack:
             root = Path(stack.enter_context(tempfile.TemporaryDirectory()))
             with contextlib.closing(fleet_run.connect(root)) as db, db:
@@ -231,6 +234,11 @@ class LegacyAndTimeoutTests(unittest.TestCase):
             (rec / "record.json").write_text(json.dumps({"status": "interrupted"}), encoding="utf-8")
             self.assertEqual(fleet_run.active_rvas(root), {"0x00000040"})
             (rec / "record.json").write_text(json.dumps({"status": "finished"}), encoding="utf-8")
+            # A terminal record alone cannot prove a detached child stopped.
+            self.assertEqual(fleet_run.active_rvas(root), {"0x00000040"})
+            with self.assertRaises(fleet_run.ClaimConflict):
+                fleet_run.claim(root, "new-run", [("0x00000040", 1)])
+            fleet_run.release(root, "old-run", "worker independently verified stopped")
             self.assertEqual(fleet_run.active_rvas(root), set())
 
     def test_timeout_prefix_is_stripped_and_parsed(self):

@@ -115,6 +115,9 @@ def test_concurrent_runner_processes_launch_only_one_owner(tmp_path):
 
 
 def test_legacy_cutover_is_dry_run_guarded_and_detects_old_restart(tmp_path):
+    # Production initializes durable coordination before old log events are
+    # reconciled. A historical log with no DB now requires explicit cutover.
+    fleet_run.connect(tmp_path).close()
     path = log(tmp_path, "01:00 seat pick -> 0x00001000 0x00002000\n"
                      "01:01 seat luna1 -> 0x00001000\n"
                      "01:02 seat luna1 done 0x00001000\n")

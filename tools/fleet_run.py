@@ -29,6 +29,8 @@ import threading
 import time
 import uuid
 
+from portable_lock import lock
+
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = re.compile(r"^- (0x[0-9a-fA-F]+) (\d+)B", re.M)
 DIFF = re.compile(r"^(diff --git |index [0-9a-f]+\.\.|\+\+\+ |--- |@@ |[-+])")
@@ -52,23 +54,319 @@ class StaleBrief(RuntimeError):
     """A brief target is no longer an open body at the stated size."""
 
 
-def connect(root):
-    (root / "build").mkdir(exist_ok=True)
-    db = sqlite3.connect(root / "build/fleet_runs.sqlite", timeout=60)
+class CoordinationUnavailable(RuntimeError):
+    """Prior fleet state cannot be proved intact; refuse a new owner."""
+
+
+def coordination_marker(root):
+    return Path(root) / "build/fleet_coordination.json"
+
+
+def _database(root):
+    return Path(root) / "build/fleet_runs.sqlite"
+
+
+def _open_existing(path, *, readonly=False):
+    mode = "ro" if readonly else "rw"
+    return sqlite3.connect(path.resolve().as_uri() + f"?mode={mode}",
+                           uri=True, timeout=60)
+
+
+def _schema(db):
     db.execute("CREATE TABLE IF NOT EXISTS claims (rva TEXT PRIMARY KEY, run TEXT, started REAL)")
     db.execute("CREATE TABLE IF NOT EXISTS releases (run TEXT, at REAL, reason TEXT)")
+    db.execute("CREATE TABLE IF NOT EXISTS fleet_coordination (id TEXT PRIMARY KEY)")
     have = {row[1] for row in db.execute("PRAGMA table_info(claims)")}
     if "pid" not in have:
         db.execute("ALTER TABLE claims ADD COLUMN pid INTEGER")
     if "expires" not in have:
         db.execute("ALTER TABLE claims ADD COLUMN expires REAL")
-    return db
+
+
+def _require_schema(db, *, initialized):
+    """An initialized database must not repair a missing claims schema on read."""
+    required = {
+        "claims": {"rva", "run", "started", "pid", "expires"} if initialized
+                  else {"rva", "run", "started"},
+        "releases": {"run", "at", "reason"},
+    }
+    if initialized:
+        required["fleet_coordination"] = {"id"}
+    for table, columns in required.items():
+        actual = {row[1] for row in db.execute(f"PRAGMA table_info({table})")}
+        if not columns <= actual:
+            raise CoordinationUnavailable(f"claims database schema lacks {table} columns")
+
+
+def _database_id(db):
+    try:
+        values = [row[0] for row in db.execute("SELECT id FROM fleet_coordination")]
+    except sqlite3.Error as error:
+        raise CoordinationUnavailable(f"claims database lacks coordination identity: {error}") from error
+    if len(values) > 1:
+        raise CoordinationUnavailable("claims database has multiple coordination identities")
+    if not values:
+        return None
+    try:
+        if str(uuid.UUID(values[0])) != values[0]:
+            raise ValueError("noncanonical UUID")
+    except (ValueError, TypeError, AttributeError) as error:
+        raise CoordinationUnavailable(f"invalid claims database identity: {error}") from error
+    return values[0]
+
+
+def _marker_id(path):
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+        value = data["id"]
+        if data.get("version") != 1 or str(uuid.UUID(value)) != value:
+            raise ValueError("invalid marker version or UUID")
+        return value
+    except (OSError, ValueError, KeyError, TypeError, AttributeError) as error:
+        raise CoordinationUnavailable(f"invalid fleet coordination marker {path}: {error}") from error
+
+
+def _write_marker(path, identity):
+    temporary = path.with_name(path.name + "." + uuid.uuid4().hex + ".tmp")
+    try:
+        with temporary.open("w", encoding="utf-8") as handle:
+            json.dump({"version": 1, "id": identity}, handle, sort_keys=True)
+            handle.write("\n")
+            handle.flush()
+            os.fsync(handle.fileno())
+        os.replace(temporary, path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def _history(root):
+    runs = Path(root) / "build/fleet_runs"
+    log = Path(root) / "build/fleet_logs/seats.log"
+    if runs.exists() and any(runs.iterdir()):
+        return True
+    if not log.exists():
+        return False
+    # New picker diagnostics never reserve anything. A picker may write one
+    # before the first runner initializes SQLite; only old/unknown log events
+    # require a stopped-fleet review at that point.
+    for line in log.read_text(encoding="utf-8", errors="replace").splitlines():
+        if line.strip() and not re.fullmatch(
+                r"\S+ seat pick selected(?: \S+)+", line):
+            return True
+    return False
+
+
+def _run_history(root):
+    runs = Path(root) / "build/fleet_runs"
+    return runs.exists() and any(runs.iterdir())
+
+
+def _ready_connection(path, marker):
+    identity = _marker_id(marker)
+    if not path.exists():
+        raise CoordinationUnavailable(f"claims database missing after initialization: {path}")
+    try:
+        db = _open_existing(path)
+        _require_schema(db, initialized=True)
+        if _database_id(db) != identity:
+            raise CoordinationUnavailable("claims database identity differs from coordination marker")
+        return db
+    except BaseException:
+        if "db" in locals():
+            db.close()
+        raise
+
+
+def connect(root):
+    """Open one intact local claims database, creating only a fresh one.
+
+    A missing/replaced database after any run was recorded is not an empty
+    queue. The marker's UUID binds the file to this checkout's prior claims.
+    """
+    root = Path(root)
+    build = root / "build"
+    build.mkdir(exist_ok=True)
+    path, marker = _database(root), coordination_marker(root)
+    if marker.exists():
+        return _ready_connection(path, marker)
+    with (build / ".fleet_coordination.lock").open("a+b") as handle:
+        lock(handle, exclusive=True)
+        if marker.exists():
+            return _ready_connection(path, marker)
+        if _history(root):
+            raise CoordinationUnavailable(
+                "historical fleet records exist without a coordination marker; "
+                "stop the fleet and run --coordination-status, then guarded --init-coordination")
+        if path.exists():
+            try:
+                db = _open_existing(path)
+                _require_schema(db, initialized=False)
+                db.execute("BEGIN IMMEDIATE")
+                if (db.execute("SELECT count(*) FROM claims").fetchone()[0]
+                        or db.execute("SELECT count(*) FROM releases").fetchone()[0]):
+                    raise CoordinationUnavailable(
+                        "unmarked claims database contains claim or release history")
+                _schema(db)
+            except BaseException:
+                if "db" in locals():
+                    db.close()
+                raise
+        else:
+            db = sqlite3.connect(path, timeout=60)
+            _schema(db)
+        try:
+            identity = _database_id(db)
+            if identity is None:
+                identity = str(uuid.uuid4())
+                db.execute("INSERT INTO fleet_coordination (id) VALUES (?)", (identity,))
+            db.commit()
+            _write_marker(marker, identity)
+            return db
+        except BaseException:
+            db.close()
+            raise
+
+
+def _coordination_digest(root):
+    """Bind a dry-run cutover approval to the local records it inspected."""
+    root = Path(root)
+    build = root / "build"
+    paths = [_database(root), Path(str(_database(root)) + "-wal"),
+             Path(str(_database(root)) + "-shm"), coordination_marker(root),
+             Path(str(_database(root)) + "-journal"),
+             build / "fleet_logs/seats.log"]
+    runs = build / "fleet_runs"
+    if runs.exists():
+        for directory in sorted(runs.iterdir()):
+            paths.extend((directory / "record.json", directory / "touched.txt"))
+    digest = hashlib.sha256()
+    for path in paths:
+        digest.update(str(path.relative_to(root)).encode("utf-8", errors="replace") + b"\0")
+        try:
+            with path.open("rb") as handle:
+                while chunk := handle.read(1024 * 1024):
+                    digest.update(chunk)
+        except FileNotFoundError:
+            digest.update(b"<missing>")
+        digest.update(b"\0")
+    return digest.hexdigest()
+
+
+def coordination_status(root):
+    """Read-only report for a controlled fleet coordination cutover."""
+    root = Path(root)
+    path, marker = _database(root), coordination_marker(root)
+    records = sorted((root / "build/fleet_runs").glob("*/record.json"))
+    report = dict(state="fresh", claim_count=None, release_count=None,
+                  record_count=len(records))
+
+    def finished():
+        # SQLite's first read of a WAL database may create a shared-memory
+        # sidecar. Snapshot after the read so the dry run does not stale itself.
+        report["snapshot_sha256"] = _coordination_digest(root)
+        return report
+
+    identity = None
+    if marker.exists():
+        try:
+            identity = _marker_id(marker)
+        except CoordinationUnavailable as error:
+            report.update(state="inconsistent", problem=str(error))
+            return finished()
+    if not path.exists():
+        report["state"] = "missing" if marker.exists() else (
+            "missing" if _run_history(root) else
+            "requires_review" if _history(root) else "fresh")
+        return finished()
+    try:
+        with closing(_open_existing(path, readonly=True)) as db:
+            _require_schema(db, initialized=identity is not None)
+            report["claim_count"] = db.execute("SELECT count(*) FROM claims").fetchone()[0]
+            report["release_count"] = db.execute("SELECT count(*) FROM releases").fetchone()[0]
+            if identity is not None and _database_id(db) != identity:
+                report.update(state="inconsistent", problem="database UUID differs from marker")
+            else:
+                report["state"] = "ready" if identity is not None else "requires_review"
+    except (sqlite3.Error, CoordinationUnavailable) as error:
+        report.update(state="inconsistent", problem=str(error))
+    return finished()
+
+
+def _recorded_live_pids(root):
+    for directory in (Path(root) / "build/fleet_runs").glob("*"):
+        path = directory / "record.json"
+        try:
+            data = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError) as error:
+            raise CoordinationUnavailable(f"cannot establish run-record liveness at {path}: {error}") from error
+        if not isinstance(data, dict):
+            raise CoordinationUnavailable(f"cannot establish run-record liveness at {path}: not an object")
+        pid = data.get("pid")
+        if pid is not None and (not isinstance(pid, int) or isinstance(pid, bool) or pid <= 0):
+            raise CoordinationUnavailable(f"cannot establish run-record liveness at {path}: invalid PID")
+        if pid is None and data.get("status") not in ("finished", "failed", "aborted"):
+            raise CoordinationUnavailable(f"cannot establish run-record liveness at {path}: nonterminal run has no PID")
+        if pid and pid_alive(pid):
+            yield pid
+
+
+def initialize_coordination(root, *, stopped_fleet=False, expected_sha=None):
+    """Guarded migration; never clears a claim or changes a run record."""
+    if not stopped_fleet or not expected_sha:
+        raise ValueError("initialization requires --stopped-fleet and --state-sha from a dry run")
+    root = Path(root)
+    build = root / "build"
+    build.mkdir(exist_ok=True)
+    with (build / ".fleet_coordination.lock").open("a+b") as handle:
+        lock(handle, exclusive=True)
+        report = coordination_status(root)
+        if report["snapshot_sha256"] != expected_sha:
+            raise ValueError("fleet coordination state changed since dry run; inspect and retry")
+        if report["state"] in ("missing", "inconsistent"):
+            raise CoordinationUnavailable(
+                "prior claims database is missing or inconsistent; restore it before migration")
+        if report["state"] == "ready":
+            return report
+        live = list(_recorded_live_pids(root))
+        if live:
+            raise CoordinationUnavailable(f"recorded worker PID(s) still alive: {live}")
+        path = _database(root)
+        if path.exists():
+            db = _open_existing(path)
+            try:
+                _require_schema(db, initialized=False)
+                db.execute("BEGIN IMMEDIATE")
+                columns = {row[1] for row in db.execute("PRAGMA table_info(claims)")}
+                if "pid" in columns:
+                    live = [pid for (pid,) in db.execute("SELECT pid FROM claims")
+                            if pid and pid_alive(pid)]
+                    if live:
+                        raise CoordinationUnavailable(f"claimed worker PID(s) still alive: {live}")
+                _schema(db)
+            except BaseException:
+                db.close()
+                raise
+        else:
+            db = sqlite3.connect(path, timeout=60)
+            _schema(db)
+        try:
+            identity = _database_id(db)
+            if identity is None:
+                identity = str(uuid.uuid4())
+                db.execute("INSERT INTO fleet_coordination (id) VALUES (?)", (identity,))
+            db.commit()
+            _write_marker(coordination_marker(root), identity)
+        finally:
+            db.close()
+        return coordination_status(root)
 
 
 def pid_alive(pid):
     """True while the process exists. Unknown pid (None) counts as alive: a
     lease we cannot check is not a lease we may take."""
-    if not pid:
+    # A negative POSIX PID addresses a process group; zero addresses our own
+    # group. Neither is an unambiguous worker PID, so never use kill(0) on it.
+    if not isinstance(pid, int) or isinstance(pid, bool) or pid <= 0:
         return True
     if sys.platform.startswith("win"):
         import ctypes
@@ -114,7 +412,7 @@ def lease_dead(expires, pid, now=None, root=None, run=None):
         # An interrupted record may still have a live child. Even an ended
         # legacy record cannot override a PID that is still alive.
         return (root is not None and run_finished(root, run)
-                and (not pid or not pid_alive(pid)))
+                and not pid_alive(pid))
     # A supervisor killed before it can finalize leaves a nonterminal record.
     # A dead direct PID alone does not prove the run stopped: descendants may
     # still be active. Reclaim only after a terminal record and a dead PID.
@@ -314,6 +612,11 @@ def execute(root, brief, legacy_log, engine, seat, command):
     targets = [(r.lower(), int(n)) for r, n in TARGET.findall(body.decode("utf-8-sig", errors="replace"))]
     if not targets or len({r for r, _ in targets}) != len(targets):
         raise ValueError("brief must contain unique live TARGETS lines")
+    # First use must establish durable coordination before writing a starting
+    # run record. Otherwise our own preclaim record would look like a prior
+    # fleet run when the database does not yet exist.
+    with closing(connect(root)):
+        pass
     run = datetime.datetime.now(datetime.timezone.utc).strftime("%Y%m%dT%H%M%SZ-") + uuid.uuid4().hex[:12]
     directory = root / "build/fleet_runs" / run
     directory.mkdir(parents=True)
@@ -428,6 +731,10 @@ def execute(root, brief, legacy_log, engine, seat, command):
 
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("--coordination-status", action="store_true")
+    ap.add_argument("--init-coordination", action="store_true")
+    ap.add_argument("--stopped-fleet", action="store_true")
+    ap.add_argument("--state-sha")
     ap.add_argument("--brief", type=Path)
     ap.add_argument("--log", type=Path)
     ap.add_argument("--engine", default="manual")
@@ -439,6 +746,13 @@ def main():
     ap.add_argument("--before")
     ap.add_argument("command", nargs=argparse.REMAINDER)
     a = ap.parse_args()
+    if a.coordination_status:
+        print(json.dumps(coordination_status(ROOT), indent=2))
+        return
+    if a.init_coordination:
+        print(json.dumps(initialize_coordination(
+            ROOT, stopped_fleet=a.stopped_fleet, expected_sha=a.state_sha), indent=2))
+        return
     if a.fingerprint is not None:
         print(stash_fingerprint(a.fingerprint))
         return
