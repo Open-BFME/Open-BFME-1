@@ -76,7 +76,7 @@ struct DamageInfo
 struct AICommandParms
 {
 	AICommandType						m_cmd;			// +0x00
-	CommandSourceType				m_commandSource;		// +0x04
+	CommandSourceType				m_cmdSource;		// +0x04
 	Coord3D									m_pos;			// +0x08
 	Object									*m_obj;			// +0x14
 	Object									*m_otherObj;		// +0x18
