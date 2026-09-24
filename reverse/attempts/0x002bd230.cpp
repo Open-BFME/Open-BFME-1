@@ -1,148 +1,196 @@
 // ?update@GiantBirdGuardInnerState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.9 date=2026-09-06
-// cl: /DNDEBUG /MD
-//
-// GiantBirdGuardInnerState::update at retail RVA 0x002BD230.
+// partial score=0.97 date=2026-09-24
+// cl: /DNDEBUG /MD /EHsc
+
+// GiantBirdGuardInnerState::update (0x002BD230): slot 6 of
+// GiantBirdGuardInnerState's table 0x010C7B28 (installed by the constructor at
+// 0x002C03F0). The first half is AIGuardInnerState::update
+// (AIGuardInnerStateUpdate.cpp, whose views this reuses): restart flag, follow
+// the guarded object or team, run the attack state. It then gives up with
+// STATE_SUCCESS once the attack goal is gone or dead and the attack state
+// answers true at vtable +0x48, instead of rescanning.
 
 typedef int Int;
+typedef unsigned int UnsignedInt;
+typedef float Real;
+typedef bool Bool;
 
-enum StateReturnType
-{
-	STATE_CONTINUE = 0,
-	STATE_COMPLETE = -1,
-};
+enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1, STATE_FAILURE = -2 };
+enum StateExitType { EXIT_NORMAL = 0 };
+enum KindOfType { BFME_KINDOF_7 = 7 };
+enum WeaponSlotType { BFME_WEAPONSLOT_INVALID = -1 };
+enum WeaponStatus { BFME_WEAPON_STATUS_4 = 4 };
 
 struct Coord3D
 {
-	float x;
-	float y;
-	float z;
+	Real x, y, z;
 };
 
-class Object
+class GiantBirdGuardInnerState;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
+class Weapon
+{
+	friend class GiantBirdGuardInnerState;
+
+private:
+	WeaponStatus bfmeComputeStatus( Bool *reloading ) const;
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
+class Thing
 {
 public:
-	unsigned char m_unreconstructed000[0x344];
-	unsigned char m_status;
+	Bool isKindOf( KindOfType t ) const;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
+class Object : public Thing
+{
+public:
+	Weapon *getCurrentWeapon( WeaponSlotType *wslot = 0 );
+
+	const Coord3D *getPosition() const { return (const Coord3D *)((const char *)this + 0x38); }
+	Bool bfmePrivateStatusBit0() const { return (*((const unsigned char *)this + 0x344) & 1) != 0; }
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
+class Team
+{
+public:
+	Coord3D *getEstimateTeamPosition_000EDCD0( Coord3D *pos ) const;
+};
+
+class TeamFactory
+{
+public:
+	Team *findTeamByID( UnsignedInt id );
+};
+
+extern TeamFactory *TheTeamFactory;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/GameLogic.h
 class GameLogic
 {
 public:
-	Object *findObjectByID(Int id);
+	Object *findObjectByID( Int id );
+	UnsignedInt getFrame() { return m_frame; }
+
+private:
+	char m_unmodelled000[0x3c];
+	UnsignedInt m_frame;									///< this+0x3C
 };
 
+extern GameLogic *TheGameLogic;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
 class StateMachine
 {
 public:
 	Object *getGoalObject();
-};
-
-class Rva002BD630TeamFactory
-{
-public:
-	void *find(Int id);
-};
-
-class Team
-{
-public:
-	Coord3D *getEstimateTeamPosition_000EDCD0(Coord3D *position) const;
-
-	unsigned char m_unreconstructed000[0x38];
-	Coord3D m_position;
-};
-
-class GiantBirdGuardInnerMachine
-{
-public:
-	virtual void unused000() = 0;
-	virtual void unused004() = 0;
-	virtual void unused008() = 0;
-	virtual void unused00c() = 0;
-	virtual Int unused010() = 0;
-	virtual StateReturnType unused014() = 0;
-	virtual Int update() = 0;
-	virtual void unused01c() = 0;
-	virtual void unused020() = 0;
-	virtual void unused024() = 0;
-	virtual void unused028() = 0;
-	virtual void unused02c() = 0;
-	virtual void unused030() = 0;
-	virtual void unused034() = 0;
-	virtual void unused038() = 0;
-	virtual void unused03c() = 0;
-	virtual void unused040() = 0;
-	virtual void unused044() = 0;
-	virtual bool isComplete() = 0;
-
-	unsigned char m_unreconstructed004[0x18];
-	StateMachine *m_stateMachine;
-	unsigned char m_unreconstructed020[0x24];
-	Int m_teamID;
-	Int m_otherID;
-
-};
-
-extern GameLogic *TheBfmeGameLogic;
-extern Rva002BD630TeamFactory *TheBfmeTeamFactory;
-
-class GiantBirdGuardInnerState
-{
-public:
-	virtual void unused000() = 0;
-	virtual void unused004() = 0;
-	virtual void unused008() = 0;
-	virtual void unused00c() = 0;
-	virtual StateReturnType onEnter() = 0;
-	virtual void onExit() = 0;
-	virtual StateReturnType update();
+	Object *getOwner() { return m_owner; }
 
 private:
-	unsigned char m_unreconstructed004[0x18];
-	GiantBirdGuardInnerMachine *m_machine;
-	unsigned char m_unreconstructed020[0x0c];
-	Coord3D m_position;
-	unsigned char m_unreconstructed038[8];
-	GiantBirdGuardInnerMachine *m_subMachine;
-	unsigned char m_active;
+	char m_unmodelled000[0x10];
+	Object *m_owner;										///< this+0x10
 };
 
-static StateMachine *getStateMachine(GiantBirdGuardInnerMachine *machine)
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIGuard.h
+class AIGuardMachine : public StateMachine
 {
-	return machine->m_stateMachine;
-}
+public:
+	Bool lookForInnerTarget( void );
 
-StateReturnType GiantBirdGuardInnerState::update()
+	Object *findTargetToGuardByID( void ) { return TheGameLogic->findObjectByID( m_targetToGuard ); }
+	Team *findTeamToGuardByID( void ) { return TheTeamFactory->findTeamByID( m_teamToGuard ); }
+
+private:
+	char m_unreconstructed000[0x44 - 0x14];
+	Int m_targetToGuard;									///< this+0x44
+	UnsignedInt m_teamToGuard;								///< this+0x48
+};
+
+#define BFME_GUARD_STATE_SLOT(n) virtual void bfmeGuardStateSlot##n() = 0;
+
+class State
 {
-	if (m_active)
+public:
+	BFME_GUARD_STATE_SLOT(0) BFME_GUARD_STATE_SLOT(1) BFME_GUARD_STATE_SLOT(2) BFME_GUARD_STATE_SLOT(3)
+	virtual StateReturnType onEnter() = 0;					///< vtable +0x10
+	virtual void onExit( StateExitType status ) = 0;		///< vtable +0x14
+	virtual StateReturnType update() = 0;					///< vtable +0x18
+	BFME_GUARD_STATE_SLOT(7) BFME_GUARD_STATE_SLOT(8) BFME_GUARD_STATE_SLOT(9) BFME_GUARD_STATE_SLOT(10)
+	BFME_GUARD_STATE_SLOT(11) BFME_GUARD_STATE_SLOT(12) BFME_GUARD_STATE_SLOT(13) BFME_GUARD_STATE_SLOT(14)
+	BFME_GUARD_STATE_SLOT(15) BFME_GUARD_STATE_SLOT(16) BFME_GUARD_STATE_SLOT(17)
+	virtual Bool bfmeStateSlot18() = 0;						///< vtable +0x48
+
+	StateMachine *getMachine() { return m_machine; }
+	Object *getMachineGoalObject() { return m_machine->getGoalObject(); }
+
+private:
+	char m_unreconstructed004[0x1c - 0x04];
+	StateMachine *m_machine;								///< this+0x1C
+};
+
+#undef BFME_GUARD_STATE_SLOT
+
+struct ExitConditions
+{
+	Coord3D m_center;										///< this+0x00
+};
+
+class GiantBirdGuardInnerState : public State
+{
+public:
+	virtual StateReturnType onEnter();
+	virtual void onExit( StateExitType status );
+	virtual StateReturnType update();
+
+	AIGuardMachine *getGuardMachine() { return (AIGuardMachine *)getMachine(); }
+
+private:
+	char m_unmodelled020[0x2c - 0x20];
+	ExitConditions m_exitConditions;						///< this+0x2C
+	char m_unmodelled038[0x40 - 0x38];
+	State *m_attackState;									///< this+0x40
+	Bool m_bfmeRestart44;									///< this+0x44
+	char m_unmodelled045[0x3];
+	UnsignedInt m_bfmeNextWeaponCheckFrame48;				///< this+0x48
+};
+
+// ?update@GiantBirdGuardInnerState@@UAE?AW4StateReturnType@@XZ
+StateReturnType GiantBirdGuardInnerState::update( void )
+{
+	if (m_bfmeRestart44)
 	{
-		m_active = 0;
+		m_bfmeRestart44 = false;
 		return onEnter();
 	}
 
-	if (m_subMachine == 0)
-		return STATE_COMPLETE;
+	if (!m_attackState)
+		return STATE_SUCCESS;
 
-	GiantBirdGuardInnerMachine *machine = m_machine;
-	Object *object = TheBfmeGameLogic->findObjectByID(machine->m_teamID);
-	Team *teamResult = (Team *)TheBfmeTeamFactory->find(machine->m_otherID);
-	if (object)
+	// if the position has moved (IE we're guarding an object), move with it.
+	AIGuardMachine *machine = getGuardMachine();
+	Object* targetToGuard = machine->findTargetToGuardByID();
+	Team* teamToGuard = machine->findTeamToGuardByID();
+	if (targetToGuard) 
 	{
-		Coord3D *objectPosition = (Coord3D *)((char *)object + 0x38);
-		m_position = *objectPosition;
+		m_exitConditions.m_center = *targetToGuard->getPosition();
 	}
-	else if (teamResult)
+	else if (teamToGuard)
 	{
-		teamResult->getEstimateTeamPosition_000EDCD0(&m_position);
+		teamToGuard->getEstimateTeamPosition_000EDCD0( &m_exitConditions.m_center );
 	}
 
-	Int result = m_subMachine->update();
-	Object *goalObject = m_subMachine->m_stateMachine->getGoalObject();
-	if (goalObject == 0 || (goalObject->m_status & 1) != 0)
+	StateReturnType ret = m_attackState->update();
+
+	Object *goal = m_attackState->getMachineGoalObject();
+	if (goal == 0 || goal->bfmePrivateStatusBit0())
 	{
-		if (m_subMachine != 0 && m_subMachine->isComplete())
-			return STATE_COMPLETE;
+		if (m_attackState && m_attackState->bfmeStateSlot18())
+			return STATE_SUCCESS;
 	}
-	return (StateReturnType)result;
+
+	return ret;
 }
