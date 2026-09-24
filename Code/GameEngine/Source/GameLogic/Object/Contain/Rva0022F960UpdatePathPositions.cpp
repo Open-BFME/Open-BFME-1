@@ -2,6 +2,10 @@
 // partial score=0.99 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
 
+// The caller in AODHordeContainUpdateFormation.cpp names this operation;
+// its ILT at 0x0003DF41 is ledgered as updatePathPositions and targets 0x0022F960.
+// The address token keeps this body distinct from the matched thunk row.
+
 #include <math.h>
 
 extern float normalizeAngle(float angle);
@@ -16,13 +20,13 @@ struct Rva0022F960Coord3D
 	{
 		return (float)sqrt(x * x + y * y + z * z);
 	}
-	void normalize()
+	void normalize(const volatile float *sourceY)
 	{
 		float len = length();
 		if (len != 0)
 		{
 			x /= len;
-			y /= len;
+			y = *sourceY / len;
 			z /= len;
 		}
 	}
@@ -66,9 +70,11 @@ public:
 	void updatePathPositions();
 
 private:
+	// The matched AOD owner layout places its path buffer at +0x250 and count at +0x610.
 	unsigned char m_prefix[0x250];
 	Rva0022F960PathPosition m_pathPositions[0x3c];
 	int m_pathPositionCount;
+	// The retail body uses 20 flow points beginning at +0x614.
 	Rva0022F960FlowPoint m_flowPoints[0x14];
 	int m_flowPointCount;
 };
@@ -108,7 +114,7 @@ void Rva0022F960BfmeAODHordeContainOwner::updatePathPositions()
 		dir.x = delta.x;
 		dir.y = delta.y;
 		dir.z = 0.0f;
-		dir.normalize();
+		dir.normalize(&delta.y);
 		dir.scale(remaining);
 		dir.add(&m_pathPositions[pathIndex].position);
 		m_flowPoints[flowIndex].position = dir;
