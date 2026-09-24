@@ -111,8 +111,8 @@ public:
 class Pathfinder
 {
 public:
-	Bool isAttackViewBlockedByObstacle(const Object *source, const Coord3D *sourcePos,
-		const Object *victim, const Coord3D *victimPos);
+	Bool isAttackViewBlockedByObstacle(const Object *attacker, const Coord3D *attackerPos,
+		const Object *target, const Coord3D *targetPos);
 };
 
 class AI
@@ -133,15 +133,15 @@ extern AI *TheAI;
 class Weapon
 {
 public:
-	Bool isGoalPosWithinAttackRange(const Object *source, const Coord3D *goalPos,
-		const Object *victim, const Coord3D *victimPos, Int forceAttacking) const;
+	Bool isGoalPosWithinAttackRange(const Object *attacker, const Coord3D *goalPos,
+		const Object *target, const Coord3D *targetPos, Int forceAttacking) const;
 };
 
 class BfmeOutOfWeaponRangeWeapon
 {
 public:
-	Bool isWithinAttackRange(const BfmeOutOfWeaponRangeObject *source,
-		const BfmeOutOfWeaponRangeObject *victim, Int forceAttacking) const;
+	Bool isWithinAttackRange(const BfmeOutOfWeaponRangeObject *attacker,
+		const BfmeOutOfWeaponRangeObject *target, Int forceAttacking) const;
 };
 
 class BfmeObjectCall

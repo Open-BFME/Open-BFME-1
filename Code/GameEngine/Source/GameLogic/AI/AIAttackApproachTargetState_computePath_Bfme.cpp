@@ -218,16 +218,16 @@ static __declspec(noinline) Bool isSamePosition(const Coord3D *ourPos,
 
 // Static helper from AIStates.cpp at 0x00174CC0 (ZH canPursue with the BFME
 // object-state gate and speed accessor).  VC7.1 gives it a private convention
-// (source in ESI, victim in EDI, weapon on the stack), so computePath only
+// (attacker in ESI, target in EDI, weapon on the stack), so computePath only
 // matches with the real definition in the same TU; this body is itself exact.
-static __declspec(noinline) Bool canPursue(Object *source, Weapon *weapon, Object *victim)
+static __declspec(noinline) Bool canPursue(Object *attacker, Weapon *weapon, Object *target)
 {
 	/* This state is only used if the target is moving away from us, and has physics. */
-	if (!victim->getPhysics())
+	if (!target->getPhysics())
 		return false;
-	if ((source->m_byte94 & 0x20) && source->m_dword214)
+	if ((attacker->m_byte94 & 0x20) && attacker->m_dword214)
 		return false;
-	AIUpdateInterface *ai = source->getAI();
+	AIUpdateInterface *ai = attacker->getAI();
 	if (!ai)
 		return false;
 
@@ -238,27 +238,27 @@ static __declspec(noinline) Bool canPursue(Object *source, Weapon *weapon, Objec
 
 	if (TheAI->m_aiData->m_aiCrushesInfantry)
 	{
-		if (source->getControllingPlayer() &&
-			(source->getControllingPlayer()->getPlayerType() == PLAYER_COMPUTER) &&
-			source->crushPolicy(victim, TEST_CRUSH_OR_SQUISH))
+		if (attacker->getControllingPlayer() &&
+			(attacker->getControllingPlayer()->getPlayerType() == PLAYER_COMPUTER) &&
+			attacker->crushPolicy(target, TEST_CRUSH_OR_SQUISH))
 		{
 			return true;	// Always pursue if we can squish.
 		}
 	}
 
-	if (CALL(IsTooClose, weapon, j_0000e7dc)(source, victim))
+	if (CALL(IsTooClose, weapon, j_0000e7dc)(attacker, target))
 		return false;		// Don't chase it if we are already too close.
 
-	Real ourMaxSpeed = source->getAI()->getCurLocomotorSpeed();
+	Real ourMaxSpeed = attacker->getAI()->getCurLocomotorSpeed();
 
-	Real victimSpeed = victim->bfmeGetNonnegativePreferredLocomotorHeight();
+	Real victimSpeed = target->bfmeGetNonnegativePreferredLocomotorHeight();
 	if (victimSpeed >= ourMaxSpeed)
 		return false; // we can't catch them.
 	if (victimSpeed < ourMaxSpeed * 0.1f)
 		return false; // They aren't moving very fast, so don't chase.
-	Real dx = victim->getPosition()->x - source->getPosition()->x;
-	Real dy = victim->getPosition()->y - source->getPosition()->y;
-	const Coord3D *dir = victim->getUnitDirectionVector2D();
+	Real dx = target->getPosition()->x - attacker->getPosition()->x;
+	Real dy = target->getPosition()->y - attacker->getPosition()->y;
+	const Coord3D *dir = target->getUnitDirectionVector2D();
 	Coord3D victimVector;
 	victimVector.x = dir->x;
 	victimVector.y = dir->y;
