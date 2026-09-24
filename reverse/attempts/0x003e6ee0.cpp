@@ -1,5 +1,5 @@
 // ?examineNeighboringCells@Pathfinder@@IAEHPAVPathfindCell@@0ABVLocomotorSet@@_N2HABUICoord2D@@PBVObject@@H@Z
-// partial score=0.2 date=2026-09-19
+// partial score=0.21 date=2026-09-24
 // stlport
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/terrainlogic /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // Extracted best available source body for the partial at 0x003E6EE0.
@@ -47,14 +47,26 @@ struct TCheckMovementInfo
 
 struct ExamineCellsStruct
 {
-	Pathfinder *thePathfinder;
-	const LocomotorSet *theLoco;
-	Bool centerInCell;
-	Bool isHuman;
-	Int radius;
-	const Object *obj;
-	PathfindCell *goalCell;
+	Int cellCallback( PathfindCell *from, PathfindCell *to, Int x, Int y );
+	unsigned char m_payload[0x30];
 };
+
+class Rva003DB820Helper
+{
+public:
+	void initialize( void *pathfinder, void *locomotorSet, Int centerInCell,
+		Int radius, void *obj, Int isHuman, void *goalCell, Int attackDistance );
+};
+
+class Rva003E2F30Iterator
+{
+public:
+	Int iterateCellsAlongLine( const ICoord2D &start, const ICoord2D &end,
+		PathfindLayerEnum layer, ExamineCellsStruct *userData );
+};
+
+#pragma comment(linker, "/alternatename:?initialize@Rva003DB820Helper@@QAEXPAX0HH0H0H@Z=?j_00049ee0@@YAXXZ")
+#pragma comment(linker, "/alternatename:?iterateCellsAlongLine@Rva003E2F30Iterator@@QAEHABUICoord2D@@0W4PathfindLayerEnum@@PAUExamineCellsStruct@@@Z=?j_00031c50@@YAXXZ")
 
 const Int COST_ORTHOGONAL = 10;
 const Int COST_DIAGONAL = 14;
@@ -69,19 +81,24 @@ Int Pathfinder::examineNeighboringCells(PathfindCell *parentCell, PathfindCell *
 		Bool isCrusher = obj ? obj->getCrusherLevel() > 0 : false;
 		if (attackDistance==NO_ATTACK && !m_isTunneling && !locomotorSet.isDownhillOnly() && goalCell) {
 			ExamineCellsStruct info;
-			info.thePathfinder = this;
-			info.theLoco = &locomotorSet;
-			info.centerInCell = centerInCell;
-			info.radius = radius;
-			info.obj = obj;
-			info.isHuman = isHuman;
-			info.goalCell = goalCell;
+			struct PathCellsVector
+			{
+				void *begin;
+				void *end;
+				void *capacity;
+			};
+			PathCellsVector *pathCells = (PathCellsVector *)((char *)this + 0x2470c);
+			Int callbackAttackDistance = pathCells->begin == pathCells->end ? attackDistance : 0;
+			((Rva003DB820Helper *)&info)->initialize(this, (void *)&locomotorSet,
+				centerInCell, radius, (void *)obj, isHuman, goalCell,
+				callbackAttackDistance);
 			ICoord2D start, end;
 			start.x = parentCell->getXIndex();
 			start.y = parentCell->getYIndex();
 			end.x = goalCell->getXIndex();
 			end.y = goalCell->getYIndex();
-			iterateCellsAlongLine(start, end, parentCell->getLayer(), examineCellsCallback, &info);
+			((Rva003E2F30Iterator *)this)->iterateCellsAlongLine(
+				start, end, parentCell->getLayer(), &info);
 		}
 
 		Int cellCount = 0;
@@ -319,6 +336,5 @@ Int Pathfinder::examineNeighboringCells(PathfindCell *parentCell, PathfindCell *
 		}
 	return cellCount;
 }
-
 
 
