@@ -1,5 +1,5 @@
 // ?d_006a9ce0@@YAXXZ
-// partial score=0.2 date=2026-09-24
+// partial score=0.3 date=2026-09-24
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -19,6 +19,7 @@ struct BfmeAsciiStringData
 
 typedef unsigned int AudioHandle;
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(long volatile *value);
+extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long volatile *value);
 
 class Rva006A9CE0AudioEventInfo
 {
@@ -78,6 +79,10 @@ class RefCountedPlayingAudio
 {
 public:
 	virtual ~RefCountedPlayingAudio();
+	void Add_Ref(void)
+	{
+		InterlockedIncrement(&m_refCount);
+	}
 
 	void Release_Ref(void)
 	{
@@ -96,13 +101,28 @@ public:
 	AudioEventRTS *m_audioEventRTS;
 };
 
-class PlayingAudioRef
+class ThingRef
 {
 public:
-	~PlayingAudioRef(void)
+	ThingRef(void) : m_ptr(0) {}
+
+	~ThingRef(void)
 	{
 		if (m_ptr)
 			m_ptr->Release_Ref();
+	}
+
+	ThingRef &operator=(const ThingRef &other)
+	{
+		if (this != &other)
+		{
+			if (other.m_ptr)
+				other.m_ptr->Add_Ref();
+			if (m_ptr)
+				m_ptr->Release_Ref();
+			m_ptr = other.m_ptr;
+		}
+		return *this;
 	}
 
 	operator PlayingAudio *(void) const { return m_ptr; }
@@ -119,13 +139,15 @@ class BfmeHostESG
 {
 public:
 	~BfmeHostESG();
-};
-
-struct Rva006A0810Key : public BfmeHostESG
-{
+	unsigned char m_head[4];
 	AudioEventRTS *m_event;
 	unsigned int m_hash;
+	unsigned char m_member[4];
 };
+
+typedef BfmeHostESG Rva006A0810Key;
+
+class Rva006A0810Table;
 
 struct Rva006A0810Node
 {
@@ -137,26 +159,70 @@ struct Rva006A0810Buckets
 {
 	Rva006A0810Node **m_start;
 	Rva006A0810Node **m_finish;
+	Rva006A0810Node **m_storageEnd;
 
 	unsigned int size(void) const { return (unsigned int)(m_finish - m_start); }
 	Rva006A0810Node *&operator[](unsigned int slot) { return m_start[slot]; }
 };
 
+struct Rva006A0810Iterator
+{
+	Rva006A0810Node *m_value;
+	Rva006A0810Table *m_owner;
+
+	Rva006A0810Iterator(Rva006A0810Node *value, Rva006A0810Table *owner)
+		: m_value(value), m_owner(owner) {}
+	Rva006A0810Key *operator*(void) const { return m_value->m_key; }
+	Rva006A0810Iterator &operator++(void);
+	bool operator!=(const Rva006A0810Iterator &other) const
+		{ return m_value != other.m_value; }
+};
+
 class Rva006A0810Table
 {
 public:
+	typedef Rva006A0810Iterator iterator;
+	iterator begin(void);
+	iterator end(void) { return iterator(0, this); }
 	void erase(Rva006A0810Node **it);
 
-private:
 	unsigned char m_pad0[4];
-
-public:
 	Rva006A0810Buckets m_buckets;
-
-private:
-	unsigned char m_gap[4];
 	int m_count;
 };
+
+inline Rva006A0810Table::iterator Rva006A0810Table::begin(void)
+{
+	unsigned int slot = 0;
+	unsigned int bucketCount = m_buckets.size();
+	Rva006A0810Node *node = 0;
+	while (node == 0 && slot < bucketCount)
+		node = m_buckets[slot++];
+	return iterator(node, this);
+}
+
+inline Rva006A0810Iterator &Rva006A0810Iterator::operator++(void)
+{
+	Rva006A0810Node *next = m_value->m_next;
+	if (next != 0)
+	{
+		m_value = next;
+	}
+	else
+	{
+		Rva006A0810Key *key = m_value->m_key;
+		unsigned int hash = (unsigned int)key;
+		if (key != 0)
+			hash = key->m_hash;
+		unsigned int bucket = hash % m_owner->m_buckets.size();
+		unsigned int bucketCount = m_owner->m_buckets.size();
+		Rva006A0810Node *node = 0;
+		while (node == 0 && ++bucket < bucketCount)
+			node = m_owner->m_buckets[bucket];
+		m_value = node;
+	}
+	return *this;
+}
 
 class Rva006A9CE0MutexGuard
 {
@@ -192,8 +258,8 @@ struct AudioRequest
 };
 
 typedef _STL::list<AudioRequest *> AudioRequestList;
-typedef _STL::list<PlayingAudioRef> PlayingAudioList;
-typedef _STL::deque<PlayingAudioRef> PlayingAudioDeque;
+typedef _STL::list<ThingRef> PlayingAudioList;
+typedef _STL::deque<ThingRef> PlayingAudioDeque;
 typedef _STL::vector<Rva0069C9D0Element> Rva006A9CE0EventVector;
 
 class MilesAudioManager
@@ -227,14 +293,14 @@ void MilesAudioManager::rva006A9CE0(const AsciiString &eventName, int audioType)
 	Rva006A9CE0MutexGuard guard(m_mutex);
 
 	PlayingAudioList::iterator it;
-	PlayingAudio *playing = 0;
+	ThingRef playing;
 	for (it = m_playingSounds.begin(); it != m_playingSounds.end(); )
 	{
 		playing = *it;
 		if (playing && playing->m_audioEventRTS->getEventName().compare(eventName) == 0 &&
 			playing->m_audioEventRTS->m_audioType == audioType)
 		{
-			rva006A59F0(*it);
+			rva006A59F0(playing);
 			it = m_playingSounds.erase(it);
 		}
 		else
@@ -249,7 +315,7 @@ void MilesAudioManager::rva006A9CE0(const AsciiString &eventName, int audioType)
 		if (playing && playing->m_audioEventRTS->getEventName().compare(eventName) == 0 &&
 			playing->m_audioEventRTS->m_audioType == audioType)
 		{
-			rva006A59F0(*it);
+			rva006A59F0(playing);
 			it = m_playing3DSounds.erase(it);
 		}
 		else
@@ -264,7 +330,7 @@ void MilesAudioManager::rva006A9CE0(const AsciiString &eventName, int audioType)
 		if (playing && playing->m_audioEventRTS->getEventName().compare(eventName) == 0 &&
 			playing->m_audioEventRTS->m_audioType == audioType)
 		{
-			rva006A59F0(*it);
+			rva006A59F0(playing);
 			it = m_playingStreams.erase(it);
 		}
 		else
@@ -303,20 +369,20 @@ void MilesAudioManager::rva006A9CE0(const AsciiString &eventName, int audioType)
 		}
 	}
 
-	for (Rva006A0810Node **bucket = m_requestTable050.m_buckets.m_start;
-		bucket != m_requestTable050.m_buckets.m_finish; ++bucket)
+	for (Rva006A0810Table::iterator it = m_requestTable050.begin();
+		it != m_requestTable050.end(); )
 	{
-		Rva006A0810Node *node = *bucket;
-		while (node != 0)
+		Rva006A0810Key *key = *it;
+		if (key->m_event && key->m_event->getEventName().compare(eventName) == 0)
 		{
-			Rva006A0810Node *next = node->m_next;
-			Rva006A0810Key *key = node->m_key;
-			if (key->m_event && key->m_event->getEventName().compare(eventName) == 0)
-			{
-				m_requestTable050.erase(&node);
-				delete key;
-			}
-			node = next;
+			Rva006A0810Iterator eraseIt = it;
+			++it;
+			m_requestTable050.erase(&eraseIt.m_value);
+			delete key;
+		}
+		else
+		{
+			++it;
 		}
 	}
 
@@ -324,7 +390,7 @@ void MilesAudioManager::rva006A9CE0(const AsciiString &eventName, int audioType)
 	while (ait != m_audioRequests.end())
 	{
 		AudioRequest *request = *ait;
-		if (request && request->m_request == 0 && request->m_pendingEvent &&
+		if (request->m_request == 0 && request->m_pendingEvent &&
 			request->m_pendingEvent->getEventName().compare(eventName) == 0)
 		{
 			ait = m_audioRequests.erase(ait);
