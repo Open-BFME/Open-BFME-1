@@ -3863,33 +3863,8 @@ Real InGameUI::getPlacementAngle( void )
 //-------------------------------------------------------------------------------------------------
 /** Mark given Drawable as "selected". */
 //-------------------------------------------------------------------------------------------------
-// ?selectDrawable@InGameUI@@UAEXPAVDrawable@@@Z present-unmatched
-void InGameUI::selectDrawable( Drawable *draw )
-{
-
-	if( draw->isSelected() == FALSE )
-	{
-
-		m_frameSelectionChanged = TheGameLogic->getFrame();
-		// set the selection in the drawable
-		draw->friend_setSelected();
-
-		// add to our selected list
-		m_selectedDrawables.push_front( draw );
-
-		// we now have one more selected drawable
-		incrementSelectCount(); 
-
-
-		// evaluate whether our selection consists of exactly one angry mob
-		evaluateSoloNexus( draw );
-
-		// the control needs to update its context sensitive display now
-		TheControlBar->onDrawableSelected( draw );
-
-	}  // end if
-
-}  // end selectDrawable
+// ?selectDrawable@InGameUI@@UAEXPAVDrawable@@@Z
+// Body in InGameUISelectDrawable.cpp (BFME gate-behaviour check and offsets).
 
 //-------------------------------------------------------------------------------------------------
 /** Clear "selected" status of Drawable. */
