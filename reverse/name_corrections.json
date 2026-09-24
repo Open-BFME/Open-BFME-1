@@ -2288,5 +2288,15 @@
   "after_sha256": "e3bec528f50db02142a529a265e557b949648aadd808fbd7f70da75d94c68b47",
   "evidence": "reverse/symbols.csv",
   "reason": "bfmeTest had no pin under any spelling; reverse/symbols.csv pins the PassengerFilter template test at ILT 0x0001B437 to Rva0039F0A0::accepts, so OpenContain::isValidContainerFor's qualified call through the m_filter subobject adopts that pinned class/method instead of the unpinned Rva2225E0Filter::bfmeTest spelling"
+ },
+ {
+  "old_path": "reverse/attempts/0x009aeee0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009AEEE0CopyPlane.cpp",
+  "old_name": "__cdecl",
+  "new_name": "Rva009AEEE0Filter",
+  "before_sha256": "ad22e12b996274e11a284439eb57c330cca7fb9cd17411f792ac695498834d66",
+  "after_sha256": "0789bbb01c8512c1087af5496d83fdcb8e8eaab5e096b32c0ac0df815d46f596",
+  "evidence": "reverse/deleted_rows.csv",
+  "reason": "__cdecl is a calling-convention keyword the token diff paired with the new filter-pointer typedef, not a descriptive identifier; the bank named no function or type here, so no descriptive identity is lost and the new body keeps its address token"
  }
 ]
