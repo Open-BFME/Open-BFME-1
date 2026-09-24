@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7308f14dcf78e9c1f962767bc54f66fbb66d99dec296370f300e5c7e0f081ae0",
+  "symbol": "?clearStatusBit22@Rva0017DD40@@QAEHXZ",
+  "score_kind": "author-estimate",
+  "score": 0.97,
+  "source": "// ?clearStatusBit22@Rva0017DD40@@QAEHXZ\n// partial score=0.97 date=2026-09-24\n// ?clearStatusBit22@Rva0017DD40@@QAEHXZ\n\nextern \"C\" void *__cdecl memset(void *destination, int value, unsigned int count);\n\ntemplate <int NUMBITS>\nclass BitFlags\n{\npublic:\n\tunsigned int m_words[(NUMBITS + 31) / 32];\n};\n\nclass Object\n{\npublic:\n\tvoid setStatus(const BitFlags<86> &flags, bool set);\n};\n\nclass Rva0017DD40Bound\n{\npublic:\n\tunsigned char m_padding00[0x3c];\n\tunsigned int m_field3C;\n};\n\nextern Rva0017DD40Bound *g_bfmeGameLogic1294;\n\nclass Rva0017DD40Holder\n{\npublic:\n\tunsigned char m_padding00[0x10];\n\tObject *m_field10;\n};\n\nclass Rva0017DD40\n{\npublic:\n\tint clearStatusBit22();\n\nprivate:\n\tunsigned char m_padding00[0x1c];\n\tRva0017DD40Holder *m_field1C;\n\tunsigned char m_padding20[4];\n\tunsigned int m_field24;\n};\n\nint Rva0017DD40::clearStatusBit22()\n{\n\tif (m_field24 < g_bfmeGameLogic1294->m_field3C)\n\t\treturn -1;\n\n\tObject *object = m_field1C->m_field10;\n\n\tBitFlags<86> flags;\n\tmemset(flags.m_words, 0, 12);\n\tflags.m_words[0] |= 0x400000;\n\n\tobject->setStatus(flags, false);\n\treturn 0;\n}\n"
+}
