@@ -1083,3 +1083,26 @@ the normal virtual call at the later slot preserved EDX. At `0x00172600`
 EDX and the later slot `+0x1D4` call used EAX. Both bodies matched exactly
 modulo verified relocation operands; their dynamic slot contracts were
 independently documented before choosing the adapter.
+## Keep the BFME GlobalData view opt-in (GlobalDataCtor)
+
+BFME `GlobalData` is not the Zero Hour view selected by `Common/GlobalData.h`.
+Keep the BFME layout in the distinct `Code/GameEngine/Include/Common/GlobalDataBFME.h`;
+do not replace or shadow the existing header. An explicit view lets future BFME
+callers share one layout without silently changing Zero Hour consumers.
+For a recovered translation unit, add `/ICode/GameEngine/Include` to its
+compile flags and include `Common/GlobalDataBFME.h` explicitly.
+
+The field offsets have independent witnesses: stores in the constructor at
+`0x00084510` through its `ret` at `0x0008571c`, cleanup order in the matched
+destructor at `0x00084030`, and the parser table at `0x00c77018`.
+`name_oracle.py --class GlobalData` reports 323 witnessed members. The view
+starts after the 8-byte `SubsystemInterface` base, ends with `m_next` at
+`+0x128c`, and checks `sizeof(GlobalData) == 0x1290`. Arrays and helper views
+keep those witnessed ranges explicit; slots without a reliable semantic name
+remain RVA-labeled.
+
+Use this header only when a BFME caller and its field offsets are established.
+The size check proves aggregate packing, not every type identity or emitted
+function bytes; `??0GlobalData@@QAE@XZ` remains a partial, not a matched body.
+Do not infer constructor stores, string literals, callback identities, or EH
+ordering from a coherent layout alone.
