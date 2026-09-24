@@ -1,9 +1,11 @@
-// ?d_003d0a40@@YAXXZ
-// partial score=0.77 date=2026-09-24
-// ?xfer@Rva003D0A40Map@@QAEXPAVXfer@@PAX@Z
-// LargeGroupAudioMap layout and Xfer body at retail RVA 0x003D0A40.
-// The owner and context method names remain address-derived pending a named ABI witness.
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// stlport
+
+// Sound key pair transfer of a LargeGroupAudio map, retail 0x003D0A40 (401
+// bytes). The receiver matches LargeGroupAudioMap's SoundKeyPair vector at
+// +0x18; the owner and the pass-through context stay address-derived.
+
+#include <vector>
 
 typedef bool Bool;
 
@@ -52,13 +54,14 @@ public:
 };
 
 extern void j_00039117();
-extern void j_00014ac4();
 
 class LargeGroupAudioKeyMap
 {
 public:
 	LargeGroupAudioKeyMap();
 	~LargeGroupAudioKeyMap();
+
+	void xfer(Xfer *xfer);
 
 	void load(Xfer *xfer)
 	{
@@ -69,18 +72,6 @@ public:
 			Load member;
 		} target;
 		target.raw = j_00039117;
-		(this->*target.member)(xfer);
-	}
-
-	void save(Xfer *xfer)
-	{
-		typedef void (LargeGroupAudioKeyMap::*Save)(Xfer *);
-		union
-		{
-			void (*raw)(void);
-			Save member;
-		} target;
-		target.raw = j_00014ac4;
 		(this->*target.member)(xfer);
 	}
 
@@ -109,12 +100,9 @@ public:
 
 class SoundKeyPair;
 
-class SoundKeyVector
+class SoundKeyVector : public _STL::vector<SoundKeyPair *,
+	_STL::allocator<SoundKeyPair *> >
 {
-public:
-	SoundKeyPair **m_begin;
-	SoundKeyPair **m_end;
-	SoundKeyPair **m_capacity;
 };
 
 class SoundKeyPair
@@ -143,12 +131,10 @@ private:
 	SoundKeyVector m_sound;
 };
 
-static const char *const kAudioMap = (const char *)0x010EE17C;
-
+// ?xfer@Rva003D0A40Map@@QAEXPAVXfer@@PAX@Z
 void Rva003D0A40Map::xfer(Xfer *xfer, void *context)
 {
-	Rva003D0A40Map *owner = this;
-	int count = (int)(owner->m_sound.m_end - owner->m_sound.m_begin);
+	int count = m_sound.size();
 	xfer->xferInt(&count);
 
 	if (xfer->isLoading())
@@ -160,39 +146,36 @@ void Rva003D0A40Map::xfer(Xfer *xfer, void *context)
 			int elementCount;
 			xfer->xferInt(&elementCount);
 
-			SoundKeyPair **pair = owner->m_sound.m_begin;
-			for (; pair != owner->m_sound.m_end; ++pair)
+			SoundKeyVector::iterator pair = m_sound.begin();
+			for (; pair != m_sound.end(); ++pair)
 			{
-				if (((const Rva003D3250 *)*pair)->equals(
-					(const Rva003D3250 *)&key))
+				if (((const Rva003D3250 *)*pair)->equals((const Rva003D3250 *)&key))
 					break;
 			}
 
-			if (pair != owner->m_sound.m_end &&
-				elementCount == ((const Rva003CD2D0 *)*pair)->total())
+			if (pair != m_sound.end() && elementCount == ((const Rva003CD2D0 *)*pair)->total())
 			{
-				xfer->beginBlock(kAudioMap);
-				((Rva003D0720 *)*pair)->run(
-					(Y1ForEachArg *)xfer, (Y1ForEachArg *)context);
+				xfer->beginBlock("SoundKeyPair");
+				((Rva003D0720 *)*pair)->run((Y1ForEachArg *)xfer, (Y1ForEachArg *)context);
 				xfer->endBlock();
 			}
 			else
-				xfer->skipBlock(kAudioMap);
+				xfer->skipBlock("SoundKeyPair");
 		}
 	}
 	else
 	{
-		SoundKeyPair **pair = owner->m_sound.m_begin;
-		while (pair != owner->m_sound.m_end)
+		SoundKeyVector::iterator it = m_sound.begin();
+		while (it != m_sound.end())
 		{
-			(*pair)->m_keyMap.save(xfer);
-			int elementCount = ((const Rva003CD2D0 *)*pair)->total();
+			SoundKeyPair *pair = *it;
+			pair->m_keyMap.xfer(xfer);
+			int elementCount = ((const Rva003CD2D0 *)pair)->total();
 			xfer->xferInt(&elementCount);
-			xfer->beginBlock(kAudioMap);
-			((Rva003D0720 *)*pair)->run(
-				(Y1ForEachArg *)xfer, (Y1ForEachArg *)context);
+			xfer->beginBlock("SoundKeyPair");
+			((Rva003D0720 *)pair)->run((Y1ForEachArg *)xfer, (Y1ForEachArg *)context);
 			xfer->endBlock();
-			++pair;
+			++it;
 		}
 	}
 }
