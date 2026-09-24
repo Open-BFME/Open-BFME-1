@@ -1,0 +1,3320 @@
+diff --git a/reverse/attempts/0x002ff0c0.cpp b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDeploySiege.cpp
+similarity index 54%
+rename from reverse/attempts/0x002ff0c0.cpp
+rename to Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDeploySiege.cpp
+index b8c0c8f8..4d0aa792 100644
+--- a/reverse/attempts/0x002ff0c0.cpp
++++ b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDeploySiege.cpp
+@@ -1,17 +1,33 @@
+-// ?doDeploySiegeOnWaypoint@ScriptActions@@IAEXPAVParameter@@00@Z
+-// partial score=0.78 date=2026-09-23
+ // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+ // stlport
+ //
+-// ScriptActions::doDeploySiegeOnWaypoint, retail 0x002FF0C0, 704 bytes (ret 0Ch
+-// at +0x2BD, int3 padding from +0x2C0). executeAction's jump-table entry 466
+-// passes its three Parameters here through ILT 0x00012085, and
+-// m_actionTemplates[466] is DEPLOY_SIEGE_ON_WAYPOINT.
++// ScriptActions' three BFME deploy-siege actions.
++//
++//   0x002FEE90  448 B  doDeployNamedSiegeOnWaypoint  (ret 0Ch at +0x1BD)
++//   0x002FF0C0  704 B  doDeploySiegeOnWaypoint       (ret 0Ch at +0x2BD)
++//   0x002FF430  655 B  doDeploySiegeNearTeam         (ret 0Ch at +0x28C)
+ //
+-// For every object near the waypoint that owns a SiegeDockingBehavior, walk the
+-// team (one shared member iterator, as the retail loop never restarts it) and
+-// fire each ready siege member's special power 46 at that object while the dock
+-// accepts the member's ID.
++// Identity: ScriptActions::executeAction's jump table sends actions 465, 466
++// and 467 here through ILTs 0x00046F15, 0x00012085 and 0x0003F576, each with
++// its three Parameters. The action-template initializer names those slots
++// DEPLOY_NAMED_SIEGE_ON_WAYPOINT, DEPLOY_SIEGE_ON_WAYPOINT and
++// DEPLOY_SIEGE_NEAR_TEAM.
++//
++// Each body queries the objects near a point that can be walked on top of
++// (walls) and owns a SiegeDockingBehavior (string literal at VA 0x01090CA4),
++// then fires a ready siege tower's SIEGEDEPLOY special power at the first dock
++// that accepts the tower's ObjectID. The team forms walk ONE team-member
++// iterator across all of those objects: it is never restarted, so each tower
++// is spent on the first dock that accepts it. The point is a named waypoint or
++// another team's estimated position.
++
++// Two source shapes decide the iterator's advance() null guard, which retail
++// keeps (test esi,esi before the PMF call) and VC7.1 otherwise removes:
++//   * no `if (!member) continue;` in the member loop, and
++//   * isKindOf reaches the template through Thing's OVERRIDE<ThingTemplate>
++//     member, so the dereferenced pointer is &member->m_template rather than
++//     member itself. Reading a plain `const ThingTemplate *` member instead
++//     lets the compiler prove the member non-null and fold the guard (692 B).
+ 
+ #define _STLP_NO_EXCEPTIONS 1
+ #define BFME_STLP_NODE_ALLOC 1
+@@ -27,6 +43,7 @@ typedef float Real;
+ 
+ class Object;
+ 
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Lib/BaseType.h
+ struct Coord3D
+ {
+ 	Real x;
+@@ -38,19 +55,20 @@ struct Coord3D
+ 
+ enum NameKeyType { NAMEKEY_INVALID = 0 };
+ enum ObjectID { INVALID_ID = 0 };
+-enum SpecialPowerType { SPECIAL_INVALID = 0 };
+-enum KindOfType { KINDOF_INVALID = -1 };
+-enum CommandSourceType { CMD_FROM_SCRIPT = 2 };
+-enum ObjectStatusTypes { OBJECT_STATUS_NONE = 0 };
+-
+-// Retail tests KindOf word 2 bit 28 on the template and asks for power 46;
+-// neither enum value is named here.
+-const KindOfType Rva002FF0C0SiegeKindOf = (KindOfType)(64 + 28);
+-const SpecialPowerType Rva002FF0C0SiegePower = (SpecialPowerType)46;
+-// A member whose status bit 63 (word 1 bit 31 of m_status) is set is skipped.
+-const ObjectStatusTypes Rva002FF0C0SkipStatus = (ObjectStatusTypes)63;
+-// The partition filter's must-be-set KindOf bit (word 1 bit 27).
+-const Int Rva002FF0C0FilterKindOf = 32 + 27;
++// Enumerator values are the indices in retail's INI bit-name tables:
++// SpecialPowerType names at VA 0x012A8D40, KindOf names at VA 0x012AA068,
++// ObjectStatus names at VA 0x012A6670 (reverse/name_tables.tsv).
++enum SpecialPowerType { SPECIAL_INVALID = 0, SPECIAL_SIEGEDEPLOY = 46 };
++enum KindOfType
++{
++	KINDOF_INVALID = -1,
++	KINDOF_WALK_ON_TOP_OF_WALL = 59,	// the partition query's must-be-set bit
++	KINDOF_SIEGE_TOWER = 92			// the member walk's template test
++};
++enum ObjectStatusTypes { OBJECT_STATUS_DEPLOYING = 63 };
++
++// commandOptions both bodies pass to doSpecialPowerAtObject.
++const UnsignedInt Rva002FF0C0CommandOptions = 2;
+ 
+ // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Scripts.h
+ class Parameter
+@@ -73,11 +91,20 @@ public:
+ };
+ extern NameKeyGenerator *TheNameKeyGenerator;
+ 
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
++// The one-level inline walk calls the out-of-line body at 0x00087A80 through
++// ILT 0x000022BB for the rest of the chain.
+ class Overridable
+ {
+ public:
+ 	virtual ~Overridable();
+-	const Overridable *getFinalOverride() const;
++	const Overridable *getFinalOverride() const
++	{
++		if (m_nextOverride)
++			return m_nextOverride->getFinalOverride();
++		return this;
++	}
++
+ 	Overridable *m_nextOverride;
+ };
+ 
+@@ -92,28 +119,38 @@ public:
+ 
+ private:
+ 	unsigned char m_beforeKindOf[0xc8 - 8];
+-	UnsignedInt m_kindOf[6];
++	UnsignedInt m_kindOf[6];				// ThingTemplate+0xC8
+ };
+ 
+-class Thing
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
++template <class T>
++class OVERRIDE
+ {
+ public:
+-	Bool isKindOf(KindOfType kind) const
++	const T *operator*() const
+ 	{
+-		const ThingTemplate *thingTemplate = m_template;
+-		if (thingTemplate == 0)
+-		{
+-			thingTemplate = 0;
+-		}
+-		else if (thingTemplate->m_nextOverride != 0)
+-			thingTemplate = reinterpret_cast<const ThingTemplate *>(
+-				thingTemplate->m_nextOverride->getFinalOverride());
+-		return thingTemplate->isKindOf(kind);
++		if (!m_overridable)
++			return 0;
++		return (T *)m_overridable->getFinalOverride();
+ 	}
++	operator const T *() const { return operator*(); }
++
++private:
++	const T *m_overridable;
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
++// Viewed through a cast below: the objectdlink skeleton puts Object's DLINK
++// base at +4, where Thing keeps m_template.
++class Thing
++{
++public:
++	const ThingTemplate *getTemplate() const { return m_template; }
++	Bool isKindOf(KindOfType kind) const { return getTemplate()->isKindOf(kind); }
+ 
+ protected:
+ 	virtual ~Thing();
+-	const ThingTemplate *m_template;
++	OVERRIDE<ThingTemplate> m_template;			// Thing+0x04
+ };
+ 
+ // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/BitFlags.h
+@@ -135,6 +172,9 @@ public:
+ 
+ typedef BitFlags<86> ObjectStatusMaskType;
+ 
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/SpecialPowerModule.h
++// BFME inserts one slot before the ZH doSpecialPower; ObjectDoSpecialPower.cpp
++// witnesses doSpecialPower at slot 11, so doSpecialPowerAtObject is slot 12.
+ class SpecialPowerModuleInterface
+ {
+ public:
+@@ -177,8 +217,6 @@ class Rva002FF0C0SiegeDocking : public Module, public Rva002FF0C0DockInterface
+ 
+ // The BFME Object skeleton from reference/shims/objectdlink: vptr at +0, the
+ // DLINK base at +4, the vbptr-carrying base at +0x68.
+-class Object;
+-
+ class BfmeObjectVirtualTail { public: unsigned char m_vt[4]; };
+ 
+ class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
+@@ -215,6 +253,7 @@ public:
+ 
+ #define callMemberFunction(object,ptrToMember) ((object).*(ptrToMember))
+ 
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
+ template<class OBJCLASS>
+ class DLINK_ITERATOR
+ {
+@@ -243,15 +282,18 @@ public:
+ class Team
+ {
+ public:
+-	void *m_vptr;
+-	void *m_unmodelled0;
+-	void *m_unmodelled1;
+-	Object *m_head;
++	// BFME out-parameter form, matched at 0x000F2420 (TeamMemberQueries.cpp).
++	Coord3D *getEstimateTeamPosition(Coord3D *out) const;
+ 
+ 	DLINK_ITERATOR<Object> iterate_TeamMemberList() const
+ 	{
+ 		return DLINK_ITERATOR<Object>(m_head, Object::dlink_next_TeamMemberList);
+ 	}
++
++	void *m_vptr;
++	void *m_unmodelled0;
++	void *m_unmodelled1;
++	Object *m_head;						// Team+0x0C
+ };
+ 
+ // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
+@@ -262,7 +304,7 @@ public:
+ 
+ private:
+ 	unsigned char m_pad[0xc];
+-	Coord3D m_location;
++	Coord3D m_location;					// Waypoint+0x0C
+ };
+ 
+ // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
+@@ -275,6 +317,9 @@ public:
+ 	virtual void _12()=0; virtual void _13()=0; virtual void _14()=0; virtual void _15()=0;
+ 	virtual void _16()=0;
+ 	virtual Team *getTeamNamed(AsciiString name, Bool playerOwned) = 0;
++	virtual void _18()=0; virtual void _19()=0; virtual void _20()=0; virtual void _21()=0;
++	virtual void _22()=0; virtual void _23()=0; virtual void _24()=0; virtual void _25()=0;
++	virtual Object *getUnitNamed(const AsciiString &name) = 0;	// slot 26, vtable+0x68
+ };
+ 
+ // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/TerrainLogic.h
+@@ -326,6 +371,7 @@ public:
+ 	KindOfMaskType m_mustBeClear;
+ };
+ 
++// vtable 0x01083B80.
+ class Rva0025ED50RootFilter : public PartitionFilter
+ {
+ public:
+@@ -347,6 +393,7 @@ struct Rva002FF0C0ResultData
+ 	Int references;
+ };
+ 
++// The reference-counted object list ThePartitionManager's query returns.
+ struct BfmeWideResult
+ {
+ 	Rva002FF0C0ResultData *value;
+@@ -379,9 +426,62 @@ extern BfmeWideForwardC *ThePartitionManager;
+ class ScriptActions
+ {
+ protected:
++	void doDeployNamedSiegeOnWaypoint(Parameter *pUnitParm, Parameter *pWaypointParm, Parameter *pRadiusParm);
+ 	void doDeploySiegeOnWaypoint(Parameter *pTeamParm, Parameter *pWaypointParm, Parameter *pRadiusParm);
++	void doDeploySiegeNearTeam(Parameter *pTeamParm, Parameter *pTargetTeamParm, Parameter *pRadiusParm);
+ };
+ 
++// ?doDeployNamedSiegeOnWaypoint@ScriptActions@@IAEXPAVParameter@@00@Z
++void ScriptActions::doDeployNamedSiegeOnWaypoint(Parameter *pUnitParm, Parameter *pWaypointParm, Parameter *pRadiusParm)
++{
++	// executeAction passes the unit Parameter itself where getUnitNamed takes
++	// the name, the same spelling ScriptConditionsTriggerAreas.cpp uses.
++	Object *unit = TheScriptEngine->getUnitNamed(*(const AsciiString *)pUnitParm);
++	if (!unit)
++		return;
++	if (!((Thing *)unit)->isKindOf(KINDOF_SIEGE_TOWER))
++		return;
++
++	SpecialPowerModuleInterface *power =
++		unit->findSpecialPowerModuleInterface(SPECIAL_SIEGEDEPLOY);
++	if (!power)
++		return;
++	if (!power->isReady())
++		return;
++
++	Waypoint *way = TheTerrainLogic->getWaypointByName(pWaypointParm->getString());
++	if (!way)
++		return;
++
++	Coord3D pos;
++	pos.set(way->getLocation());
++	Real radius = pRadiusParm->getReal();
++
++	BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
++		(int)&pos, *(int *)&radius, 0,
++		(int)&PartitionFilterAcceptByKindOf(
++			KindOfMaskType(KindOfMaskType::kInit, KINDOF_WALK_ON_TOP_OF_WALL),
++			KINDOFMASK_NONE),
++		1);
++
++	Object *other;
++	while (result.next(other))
++	{
++		static NameKeyType siegeDockKey = TheNameKeyGenerator->nameToKey("SiegeDockingBehavior");
++		Rva002FF0C0SiegeDocking *dock = (Rva002FF0C0SiegeDocking *)
++			other->findModule(siegeDockKey);
++		if (!dock)
++			continue;
++		// With the action inside the accepted branch VC7.1 keeps the result's
++		// destructor out of line here (ILT 0x0002C471), as retail does.
++		if (dock->slot03(unit->getID()))
++		{
++			power->doSpecialPowerAtObject(other, Rva002FF0C0CommandOptions);
++			break;
++		}
++	}
++}
++
+ // ?doDeploySiegeOnWaypoint@ScriptActions@@IAEXPAVParameter@@00@Z
+ void ScriptActions::doDeploySiegeOnWaypoint(Parameter *pTeamParm, Parameter *pWaypointParm, Parameter *pRadiusParm)
+ {
+@@ -404,7 +504,7 @@ void ScriptActions::doDeploySiegeOnWaypoint(Parameter *pTeamParm, Parameter *pWa
+ 	BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
+ 		(int)&pos, *(int *)&radius, 0,
+ 		(int)PartitionFilterAcceptByKindOf(
+-			KindOfMaskType(KindOfMaskType::kInit, Rva002FF0C0FilterKindOf),
++			KindOfMaskType(KindOfMaskType::kInit, KINDOF_WALK_ON_TOP_OF_WALL),
+ 			KINDOFMASK_NONE)
+ 			.link(&Rva0025ED50RootFilter()),
+ 		1);
+@@ -421,23 +521,78 @@ void ScriptActions::doDeploySiegeOnWaypoint(Parameter *pTeamParm, Parameter *pWa
+ 		for (; !iter.done(); iter.advance())
+ 		{
+ 			Object *member = iter.cur();
+-			if (!member)
++			if (!((Thing *)member)->isKindOf(KINDOF_SIEGE_TOWER))
+ 				continue;
+-			if (!((Thing *)member)->isKindOf(Rva002FF0C0SiegeKindOf))
++
++			SpecialPowerModuleInterface *power =
++				member->findSpecialPowerModuleInterface(SPECIAL_SIEGEDEPLOY);
++			if (!power)
++				continue;
++			if (!power->isReady())
++				continue;
++			if (member->testStatus(OBJECT_STATUS_DEPLOYING))
++				continue;
++			if (!dock->slot03(member->getID()))
++				break;
++
++			power->doSpecialPowerAtObject(other, Rva002FF0C0CommandOptions);
++		}
++	}
++}
++
++// ?doDeploySiegeNearTeam@ScriptActions@@IAEXPAVParameter@@00@Z
++void ScriptActions::doDeploySiegeNearTeam(Parameter *pTeamParm, Parameter *pTargetTeamParm, Parameter *pRadiusParm)
++{
++	Team *team = TheScriptEngine->getTeamNamed(pTeamParm->getString(), false);
++	if (!team)
++		return;
++
++	DLINK_ITERATOR<Object> iter = team->iterate_TeamMemberList();
++	if (iter.done())
++		return;
++
++	Team *targetTeam = TheScriptEngine->getTeamNamed(pTargetTeamParm->getString(), false);
++	if (!targetTeam)
++		return;
++
++	Coord3D pos;
++	targetTeam->getEstimateTeamPosition(&pos);
++	Real radius = pRadiusParm->getReal();
++
++	BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
++		(int)&pos, *(int *)&radius, 0,
++		(int)&PartitionFilterAcceptByKindOf(
++			KindOfMaskType(KindOfMaskType::kInit, KINDOF_WALK_ON_TOP_OF_WALL),
++			KINDOFMASK_NONE),
++		1);
++
++	Object *other;
++	while (result.next(other))
++	{
++		static NameKeyType siegeDockKey = TheNameKeyGenerator->nameToKey("SiegeDockingBehavior");
++		Rva002FF0C0SiegeDocking *dock = (Rva002FF0C0SiegeDocking *)
++			other->findModule(siegeDockKey);
++		if (!dock)
++			continue;
++
++		for (; !iter.done(); iter.advance())
++		{
++			Object *member = iter.cur();
++			if (!((Thing *)member)->isKindOf(KINDOF_SIEGE_TOWER))
+ 				continue;
+ 
+ 			SpecialPowerModuleInterface *power =
+-				member->findSpecialPowerModuleInterface(Rva002FF0C0SiegePower);
++				member->findSpecialPowerModuleInterface(SPECIAL_SIEGEDEPLOY);
+ 			if (!power)
+ 				continue;
+ 			if (!power->isReady())
+ 				continue;
+-			if (member->testStatus(Rva002FF0C0SkipStatus))
++			if (member->testStatus(OBJECT_STATUS_DEPLOYING))
+ 				continue;
+ 			if (!dock->slot03(member->getID()))
+ 				break;
+ 
+-			power->doSpecialPowerAtObject(other, CMD_FROM_SCRIPT);
++			power->doSpecialPowerAtObject(other, Rva002FF0C0CommandOptions);
+ 		}
+ 	}
+ }
+diff --git a/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedSetModelCondition.cpp b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedSetModelCondition.cpp
+index 8518b304..e7634ec4 100644
+--- a/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedSetModelCondition.cpp
++++ b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedSetModelCondition.cpp
+@@ -26,6 +26,9 @@ enum ModelConditionFlagType
+ class ModelConditionFlags
+ {
+ public:
++	UnsignedInt &word(ModelConditionFlagType t) { return m_bits[(UnsignedInt)t >> 5]; }
++	static UnsignedInt mask(ModelConditionFlagType t) { return 1u << ((UnsignedInt)t & 31); }
++
+ 	UnsignedInt m_bits[10];
+ };
+ 
+@@ -102,10 +105,11 @@ public:
+ 
+ extern ScriptEngine *TheScriptEngine;
+ 
+-// Retail outlines this common update at 0x002FDEF0.  The compiler's
+-// translation-unit-local register convention passes Object in ESI, the
+-// condition in EAX, and Bool at [esp+4]; this ordinary static C++ helper is
+-// the same shape donor used by the neighboring exact team body.
++// Retail outlines this common update at 0x002FDEF0, and this TU claims it.
++// The compiler's translation-unit-local register convention passes Object in
++// ESI, the condition in EAX, and Bool at [esp+4]. Each branch recomputes the
++// word and mask, as retail does: computing them once before the branch folds
++// the two copies together (120 B instead of 131 B).
+ static void applyModelCondition_002FDEF0(
+ 	Object *obj, Int conditionNumber, Bool set)
+ {
+@@ -119,22 +123,21 @@ static void applyModelCondition_002FDEF0(
+ 		default: condition = MODELCONDITION_USER_1; break;
+ 	}
+ 
+-	UnsignedInt mask = 1u << ((UnsignedInt)condition & 31);
+-	UnsignedInt &word = obj->m_modelConditionFlags.m_bits[
+-		(UnsignedInt)condition >> 5];
+ 	if (set)
+ 	{
+-		if (!(word & mask))
++		ModelConditionFlags &flags = obj->m_modelConditionFlags;
++		if (!(flags.word(condition) & ModelConditionFlags::mask(condition)))
+ 		{
+-			word |= mask;
++			flags.word(condition) |= ModelConditionFlags::mask(condition);
+ 			obj->notifyModelConditionChanged();
+ 		}
+ 	}
+ 	else
+ 	{
+-		if (word & mask)
++		ModelConditionFlags &flags = obj->m_modelConditionFlags;
++		if (flags.word(condition) & ModelConditionFlags::mask(condition))
+ 		{
+-			word &= ~mask;
++			flags.word(condition) &= ~ModelConditionFlags::mask(condition);
+ 			obj->notifyModelConditionChanged();
+ 		}
+ 	}
+diff --git a/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedUseCommandButtonOnNearestObjectType.cpp b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedUseCommandButtonOnNearestObjectType.cpp
+new file mode 100644
+index 00000000..dce80740
+--- /dev/null
++++ b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedUseCommandButtonOnNearestObjectType.cpp
+@@ -0,0 +1,334 @@
++// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
++// stlport
++//
++// ScriptActions::doNamedUseCommandButtonOnNearestObjectType, retail 0x002FDCD0
++// (173 bytes, ret 0Ch), and the helper it shares with
++// doTeamUseCommandButtonOnNearestObjectType, retail 0x002FDAC0 (416 bytes).
++//
++// Identity: ScriptActions::executeAction's jump table sends action 429 here
++// through ILT 0x000413D0, passing parameter 0 and the strings of parameters 1
++// and 2; the action-template initializer names slot 429
++// NAMED_USE_COMMANDBUTTON_ON_NEAREST_OBJECTTYPE. The team form of the same
++// action (0x002FE110) is the other caller of 0x002FDAC0.
++//
++// Retail compiled the helper with a translation-unit-local register
++// convention: the unit in ESI, the command button in EDI and the template on
++// the stack. A static helper beside its caller reproduces it.
++
++#include "ascii_string.h"
++
++typedef bool Bool;
++typedef int Int;
++typedef unsigned int UnsignedInt;
++typedef float Real;
++
++enum CommandSourceType { CMD_FROM_PLAYER = 0, CMD_FROM_SCRIPT };
++
++// upstream: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
++enum CommandOption { NEED_TARGET_POS = 0x00000020 };
++
++// The value is the TREE entry's index in retail's KindOf INI bit-name table
++// at VA 0x012AA068 (reverse/name_tables.tsv).
++enum KindOfType { KINDOF_INVALID = -1, KINDOF_TREE = 93 };
++
++class Object;
++class ObjectTypes;
++class Player;
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Lib/BaseType.h
++struct Coord3D
++{
++	Real x;
++	Real y;
++	Real z;
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
++// The one-level inline walk calls the out-of-line body at 0x00087A80 through
++// ILT 0x000022BB for the rest of the chain.
++class Overridable
++{
++public:
++	virtual ~Overridable();
++	const Overridable *getFinalOverride() const
++	{
++		if (m_nextOverride)
++			return m_nextOverride->getFinalOverride();
++		return this;
++	}
++
++	Overridable *m_nextOverride;
++};
++
++class ThingTemplate : public Overridable
++{
++public:
++	Bool isKindOf(KindOfType kind) const
++	{
++		return (m_kindOf[(UnsignedInt)kind >> 5]
++			& (1u << ((UnsignedInt)kind & 31))) != 0;
++	}
++
++private:
++	unsigned char m_beforeKindOf[0xc8 - 8];
++	UnsignedInt m_kindOf[6];				// ThingTemplate+0xC8
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
++template <class T>
++class OVERRIDE
++{
++public:
++	const T *operator*() const
++	{
++		if (!m_overridable)
++			return 0;
++		return (T *)m_overridable->getFinalOverride();
++	}
++	operator const T *() const { return operator*(); }
++
++private:
++	const T *m_overridable;
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
++class Thing
++{
++public:
++	const ThingTemplate *getTemplate() const { return m_template; }
++	const Coord3D *getPosition() const { return &m_position; }
++
++protected:
++	virtual ~Thing();
++	OVERRIDE<ThingTemplate> m_template;			// Thing+0x04
++	unsigned char m_beforePosition[0x38 - 8];
++	Coord3D m_position;					// Thing+0x38
++};
++
++class CommandButton;
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
++class Object : public Thing
++{
++public:
++	Bool bfmeCanUseCommandButton(const CommandButton *commandButton) const;
++	void doCommandButtonAtObject(const CommandButton *commandButton, Object *obj,
++		CommandSourceType cmdSource, Bool playVoiceResponse);
++	void doCommandButtonAtPosition(const CommandButton *commandButton,
++		const Coord3D *pos, CommandSourceType cmdSource, Bool playVoiceResponse);
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
++class CommandButton
++{
++public:
++	Bool isReady(const Object *sourceObj) const;
++	Bool isNeedTargetPos() const { return (m_options & NEED_TARGET_POS) != 0; }
++
++private:
++	unsigned char m_beforeOptions[0x18];
++	UnsignedInt m_options;					// CommandButton+0x18
++};
++
++class ControlBar
++{
++public:
++	const CommandButton *findCommandButton(const AsciiString &name);
++};
++
++extern ControlBar *TheControlBar;
++
++class ThingFactory
++{
++public:
++	const ThingTemplate *findTemplate(const AsciiString &name);
++};
++
++extern ThingFactory *TheThingFactory;
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
++class ScriptEngine
++{
++public:
++	virtual void _0()=0; virtual void _1()=0; virtual void _2()=0; virtual void _3()=0;
++	virtual void _4()=0; virtual void _5()=0; virtual void _6()=0; virtual void _7()=0;
++	virtual void _8()=0; virtual void _9()=0; virtual void _10()=0; virtual void _11()=0;
++	virtual void _12()=0; virtual void _13()=0; virtual void _14()=0; virtual void _15()=0;
++	virtual void _16()=0; virtual void _17()=0; virtual void _18()=0; virtual void _19()=0;
++	virtual ObjectTypes *getObjectTypes(const AsciiString &objectTypeList) = 0;	// slot 20
++	virtual void _21()=0; virtual void _22()=0; virtual void _23()=0; virtual void _24()=0;
++	virtual void _25()=0;
++	virtual Object *getUnitNamed(const AsciiString &unitName) = 0;			// slot 26
++};
++
++extern ScriptEngine *TheScriptEngine;
++
++// The terrain query wrapper at 0x001A62D0 (ILT 0x000226AB): it fills a
++// 24-byte result and returns the pointer the result holds at +0x14, which
++// this caller uses as a position. Its name keeps the address.
++class TerrainLogic
++{
++public:
++	const Coord3D *rva001A62D0(const Coord3D *pos, Real radius, Bool flagA, Bool flagB);
++};
++
++extern TerrainLogic *TheTerrainLogic;
++
++// BFME filters: virtual destructor, allow, getPlayerMask, then next at +4.
++class PartitionFilter
++{
++public:
++	PartitionFilter() : m_next(0) {}
++	virtual ~PartitionFilter() {}
++	virtual Bool allow(Object *obj) = 0;
++
++	PartitionFilter *link(PartitionFilter *next);
++
++	PartitionFilter *m_next;
++};
++
++// vtable 0x01085DD0.
++class PartitionFilterSameMapStatus : public PartitionFilter
++{
++public:
++	PartitionFilterSameMapStatus(const Object *obj) : m_obj(obj) {}
++
++protected:
++	virtual Bool allow(Object *obj);
++
++private:
++	const Object *m_obj;
++};
++
++// vtable 0x010CFFD0.
++class PartitionFilterThing : public PartitionFilter
++{
++public:
++	PartitionFilterThing(const ThingTemplate *thingTemplate, Bool match)
++		: m_thingTemplate(thingTemplate), m_match(match) {}
++
++protected:
++	virtual Bool allow(Object *obj);
++
++private:
++	const ThingTemplate *m_thingTemplate;
++	Bool m_match;
++};
++
++// vtable 0x010A1A5C.
++class PartitionFilterValidCommandButtonTarget : public PartitionFilter
++{
++public:
++	PartitionFilterValidCommandButtonTarget(Object *source,
++		const CommandButton *commandButton, Bool match, CommandSourceType commandSource)
++		: m_source(source), m_commandButton(commandButton), m_match(match),
++		  m_commandSource(commandSource) {}
++
++protected:
++	virtual Bool allow(Object *obj);
++
++private:
++	Object *m_source;
++	const CommandButton *m_commandButton;
++	Bool m_match;
++	CommandSourceType m_commandSource;
++};
++
++class PartitionManager
++{
++public:
++	Object *getClosestObject(const Coord3D *pos, Real maxDist,
++		Int dc, PartitionFilter *filters);
++};
++
++extern PartitionManager *ThePartitionManager;
++
++// Retail 0x002FDAC0. The helper aims the button at the closest object of the
++// template (at its position when the button needs one); a button that needs
++// an object but finds none falls back to the terrain query when the template
++// is a tree.
++static void useCommandButtonOnNearestTemplate_002FDAC0(Object *unit,
++	const CommandButton *commandButton, const ThingTemplate *thingTemplate)
++{
++	Object *obj;
++	if (commandButton->isNeedTargetPos())
++	{
++		{
++			PartitionFilterSameMapStatus filterMapStatus(unit);
++			PartitionFilterThing filterThing(thingTemplate, true);
++			obj = ThePartitionManager->getClosestObject(unit->getPosition(),
++				1000000.0f, 0, filterThing.link(&filterMapStatus));
++		}
++		if (obj)
++			unit->doCommandButtonAtPosition(commandButton, obj->getPosition(),
++				CMD_FROM_SCRIPT, false);
++		return;
++	}
++
++	{
++		PartitionFilterSameMapStatus filterMapStatus(unit);
++		PartitionFilterValidCommandButtonTarget filterTarget(unit, commandButton,
++			true, CMD_FROM_SCRIPT);
++		PartitionFilterThing filterThing(thingTemplate, true);
++		obj = ThePartitionManager->getClosestObject(unit->getPosition(), 1000000.0f, 0,
++			filterThing.link(filterTarget.link(&filterMapStatus)));
++	}
++	if (!obj)
++	{
++		if (thingTemplate->isKindOf(KINDOF_TREE))
++		{
++			const Coord3D *loc = TheTerrainLogic->rva001A62D0(unit->getPosition(),
++				10000000.0f, true, true);
++			if (loc)
++				unit->doCommandButtonAtPosition(commandButton, loc,
++					CMD_FROM_SCRIPT, false);
++		}
++		return;
++	}
++
++	unit->doCommandButtonAtObject(commandButton, obj, CMD_FROM_SCRIPT, false);
++}
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptActions.h
++class ScriptActions
++{
++protected:
++	Object *findClosestObject(const Coord3D *pos, ObjectTypes *objectTypes, Player *player);
++	void doNamedUseCommandButtonOnNearestObjectType(const AsciiString &unitName,
++		const AsciiString &commandAbility, const AsciiString &objectType);
++};
++
++// ?doNamedUseCommandButtonOnNearestObjectType@ScriptActions@@IAEXABVAsciiString@@00@Z
++void ScriptActions::doNamedUseCommandButtonOnNearestObjectType(const AsciiString &unitName,
++	const AsciiString &commandAbility, const AsciiString &objectType)
++{
++	Object *unit = TheScriptEngine->getUnitNamed(unitName);
++	if (!unit)
++		return;
++
++	const ThingTemplate *thingTemplate;
++	ObjectTypes *objectTypes = TheScriptEngine->getObjectTypes(objectType);
++	if (objectTypes)
++	{
++		Object *obj = findClosestObject(unit->getPosition(), objectTypes, 0);
++		if (!obj)
++			return;
++		thingTemplate = obj->getTemplate();
++	}
++	else
++	{
++		thingTemplate = TheThingFactory->findTemplate(objectType);
++	}
++	if (!thingTemplate)
++		return;
++
++	const CommandButton *commandButton = TheControlBar->findCommandButton(commandAbility);
++	if (!commandButton)
++		return;
++	if (!commandButton->isReady(unit))
++		return;
++	if (!unit->bfmeCanUseCommandButton(commandButton))
++		return;
++
++	useCommandButtonOnNearestTemplate_002FDAC0(unit, commandButton, thingTemplate);
++}
+diff --git a/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsRva00303910.cpp b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsRva00303910.cpp
+new file mode 100644
+index 00000000..975fdcae
+--- /dev/null
++++ b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsRva00303910.cpp
+@@ -0,0 +1,268 @@
++// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
++// stlport
++//
++// ScriptActions action 480, retail 0x00303910, 340 bytes (ret 8 at +0x151).
++//
++// Identity: ScriptActions::executeAction's jump table sends action 480 here
++// through ILT 0x000459B7 with the strings of parameters 0 and 1. The
++// action-template initializer assigns slot 480 no internal name (slot 479,
++// TEAM_REPAIR_NEREST, is 0x00303670), so the method keeps the address.
++//
++// The body finds the structure of the second team whose body reports the
++// lowest value below 1.0 and sends every dozer of the first team to repair it.
++
++#include "ascii_string.h"
++
++typedef bool Bool;
++typedef int Int;
++typedef unsigned int UnsignedInt;
++typedef float Real;
++
++enum CommandSourceType { CMD_FROM_PLAYER = 0, CMD_FROM_SCRIPT };
++
++// Enumerator values are the indices in retail's KindOf INI bit-name table at
++// VA 0x012AA068 (reverse/name_tables.tsv).
++enum KindOfType
++{
++	KINDOF_INVALID = -1,
++	KINDOF_STRUCTURE = 7,
++	KINDOF_DOZER = 14
++};
++
++class Object;
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
++// The one-level inline walk calls the out-of-line body at 0x00087A80 through
++// ILT 0x000022BB for the rest of the chain.
++class Overridable
++{
++public:
++	virtual ~Overridable();
++	const Overridable *getFinalOverride() const
++	{
++		if (m_nextOverride)
++			return m_nextOverride->getFinalOverride();
++		return this;
++	}
++
++	Overridable *m_nextOverride;
++};
++
++class ThingTemplate : public Overridable
++{
++public:
++	Bool isKindOf(KindOfType kind) const
++	{
++		return (m_kindOf[(UnsignedInt)kind >> 5]
++			& (1u << ((UnsignedInt)kind & 31))) != 0;
++	}
++
++private:
++	unsigned char m_beforeKindOf[0xc8 - 8];
++	UnsignedInt m_kindOf[6];				// ThingTemplate+0xC8
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
++template <class T>
++class OVERRIDE
++{
++public:
++	const T *operator*() const
++	{
++		if (!m_overridable)
++			return 0;
++		return (T *)m_overridable->getFinalOverride();
++	}
++	operator const T *() const { return operator*(); }
++
++private:
++	const T *m_overridable;
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
++// Viewed through a cast below: the objectdlink skeleton puts Object's DLINK
++// base at +4, where Thing keeps m_template.
++class Thing
++{
++public:
++	const ThingTemplate *getTemplate() const { return m_template; }
++	Bool isKindOf(KindOfType kind) const { return getTemplate()->isKindOf(kind); }
++
++protected:
++	virtual ~Thing();
++	OVERRIDE<ThingTemplate> m_template;			// Thing+0x04
++};
++
++// Slot 5 returns the value this body compares, starting from 1.0; its name
++// is not proven.
++class BodyModuleInterface
++{
++public:
++	virtual void slot00() = 0;
++	virtual void slot01() = 0;
++	virtual void slot02() = 0;
++	virtual void slot03() = 0;
++	virtual void slot04() = 0;
++	virtual Real slot05() const = 0;
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
++class AICommandInterface
++{
++public:
++	void aiRepair(Object *obj, CommandSourceType cmdSource);
++};
++
++// The 0x20-byte module base AIUpdateInterface derives from first.
++class UpdateModule
++{
++public:
++	virtual void moduleSlot();
++	unsigned char m_moduleBody[0x1c];
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
++// AICommandInterface is the base at +0x20.
++class AIUpdateInterface : public UpdateModule, public AICommandInterface
++{
++};
++
++// The BFME Object skeleton from reference/shims/objectdlink: vptr at +0, the
++// DLINK base at +4, the vbptr-carrying base at +0x68.
++class BfmeObjectVirtualTail { public: unsigned char m_vt[4]; };
++
++class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
++{
++public:
++	unsigned char m_carrier[4];
++};
++
++class BfmeObjectVtbl { public: virtual void bfmeObjectSlot0(void); };
++
++class BfmeObjectDlinkBase
++{
++public:
++	Object *dlink_next_TeamMemberList(void) const;
++};
++
++class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
++
++class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
++	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
++{
++public:
++	BodyModuleInterface *getBodyModule() const { return m_body; }
++	AIUpdateInterface *getAIUpdateInterface() { return m_ai; }
++
++	unsigned char m_before200[0x200 - 0x70];
++	BodyModuleInterface *m_body;				// Object+0x200
++	AIUpdateInterface *m_ai;				// Object+0x204; aiRepair at +0x20 below
++};
++
++#define callMemberFunction(object,ptrToMember) ((object).*(ptrToMember))
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
++template<class OBJCLASS>
++class DLINK_ITERATOR
++{
++public:
++	typedef OBJCLASS *(OBJCLASS::*GetNextFunc)() const;
++
++private:
++	OBJCLASS *m_cur;
++	GetNextFunc m_getNextFunc;
++
++public:
++	DLINK_ITERATOR(OBJCLASS *cur, GetNextFunc getNextFunc)
++		: m_cur(cur), m_getNextFunc(getNextFunc) { }
++
++	void advance()
++	{
++		if (m_cur)
++			m_cur = callMemberFunction(*m_cur, m_getNextFunc)();
++	}
++
++	Bool done() const { return m_cur == 0; }
++	OBJCLASS *cur() const { return m_cur; }
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
++class Team
++{
++public:
++	DLINK_ITERATOR<Object> iterate_TeamMemberList() const
++	{
++		return DLINK_ITERATOR<Object>(m_head, Object::dlink_next_TeamMemberList);
++	}
++
++	void *m_vptr;
++	void *m_unmodelled0;
++	void *m_unmodelled1;
++	Object *m_head;						// Team+0x0C
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
++class ScriptEngine
++{
++public:
++	virtual void _0()=0; virtual void _1()=0; virtual void _2()=0; virtual void _3()=0;
++	virtual void _4()=0; virtual void _5()=0; virtual void _6()=0; virtual void _7()=0;
++	virtual void _8()=0; virtual void _9()=0; virtual void _10()=0; virtual void _11()=0;
++	virtual void _12()=0; virtual void _13()=0; virtual void _14()=0; virtual void _15()=0;
++	virtual void _16()=0;
++	virtual Team *getTeamNamed(AsciiString name, Bool playerOwned) = 0;	// slot 17
++};
++
++extern ScriptEngine *TheScriptEngine;
++
++class ScriptActions
++{
++protected:
++	void rva00303910(const AsciiString &repairTeamName, const AsciiString &targetTeamName);
++};
++
++// ?rva00303910@ScriptActions@@IAEXABVAsciiString@@0@Z
++void ScriptActions::rva00303910(const AsciiString &repairTeamName,
++	const AsciiString &targetTeamName)
++{
++	Team *repairTeam = TheScriptEngine->getTeamNamed(repairTeamName, false);
++	Team *targetTeam = TheScriptEngine->getTeamNamed(targetTeamName, false);
++	if (!repairTeam)
++		return;
++
++	Object *mostDamaged = 0;
++	Real lowest = 1.0f;
++	for (DLINK_ITERATOR<Object> iter = targetTeam->iterate_TeamMemberList();
++		!iter.done(); iter.advance())
++	{
++		Object *obj = iter.cur();
++		if (!obj)
++			continue;
++		if (((Thing *)obj)->isKindOf(KINDOF_STRUCTURE))
++		{
++			BodyModuleInterface *body = obj->getBodyModule();
++			if (body && body->slot05() < lowest)
++			{
++				mostDamaged = obj;
++				lowest = body->slot05();
++			}
++		}
++	}
++
++	if (!mostDamaged)
++		return;
++
++	for (DLINK_ITERATOR<Object> iter2 = repairTeam->iterate_TeamMemberList();
++		!iter2.done(); iter2.advance())
++	{
++		Object *obj = iter2.cur();
++		if (!obj)
++			continue;
++		if (((Thing *)obj)->isKindOf(KINDOF_DOZER))
++		{
++			AIUpdateInterface *ai = obj->getAIUpdateInterface();
++			if (ai)
++				ai->aiRepair(mostDamaged, CMD_FROM_SCRIPT);
++		}
++	}
++}
+diff --git a/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamGarrisonNearestBuilding.cpp b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamGarrisonNearestBuilding.cpp
+new file mode 100644
+index 00000000..202dd750
+--- /dev/null
++++ b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamGarrisonNearestBuilding.cpp
+@@ -0,0 +1,388 @@
++// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
++// stlport
++//
++// ScriptActions::doTeamGarrisonNearestBuilding, retail 0x00302240, 536 bytes
++// (ret 4 at +0x215).
++//
++// Identity: ScriptActions::executeAction's jump table sends action 108 here
++// through ILT 0x00008A8F; the action-template initializer names slot 108
++// TEAM_GARRISON_NEAREST_BUILDING. The body is the Zero Hour action of that
++// name (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/
++// GameLogic/ScriptEngine/ScriptActions.cpp) without the money-hacker branch:
++// BFME queries garrisonable buildings through a linked filter chain and a
++// reference-counted result instead of a filter array and ObjectIterator.
++
++#define _STLP_NO_EXCEPTIONS 1
++#include <vector>
++
++#include "ascii_string.h"
++
++typedef bool Bool;
++typedef int Int;
++typedef unsigned int UnsignedInt;
++typedef float Real;
++
++enum CommandSourceType { CMD_FROM_PLAYER = 0, CMD_FROM_SCRIPT };
++
++// Enumerator values are the indices in retail's KindOf INI bit-name table at
++// VA 0x012AA068 (reverse/name_tables.tsv).
++enum KindOfType
++{
++	KINDOF_INVALID = -1,
++	KINDOF_INFANTRY = 8,
++	KINDOF_NO_GARRISON = 27
++};
++
++class Object;
++class Player;
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Lib/BaseType.h
++struct Coord3D
++{
++	Real x;
++	Real y;
++	Real z;
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Overridable.h
++// The one-level inline walk calls the out-of-line body at 0x00087A80 through
++// ILT 0x000022BB for the rest of the chain.
++class Overridable
++{
++public:
++	virtual ~Overridable();
++	const Overridable *getFinalOverride() const
++	{
++		if (m_nextOverride)
++			return m_nextOverride->getFinalOverride();
++		return this;
++	}
++
++	Overridable *m_nextOverride;
++};
++
++class ThingTemplate : public Overridable
++{
++public:
++	Bool isKindOf(KindOfType kind) const
++	{
++		return (m_kindOf[(UnsignedInt)kind >> 5]
++			& (1u << ((UnsignedInt)kind & 31))) != 0;
++	}
++
++private:
++	unsigned char m_beforeKindOf[0xc8 - 8];
++	UnsignedInt m_kindOf[6];				// ThingTemplate+0xC8
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Override.h
++template <class T>
++class OVERRIDE
++{
++public:
++	const T *operator*() const
++	{
++		if (!m_overridable)
++			return 0;
++		return (T *)m_overridable->getFinalOverride();
++	}
++	operator const T *() const { return operator*(); }
++
++private:
++	const T *m_overridable;
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
++// Viewed through a cast below: the objectdlink skeleton puts Object's DLINK
++// base at +4, where Thing keeps m_template.
++class Thing
++{
++public:
++	const ThingTemplate *getTemplate() const { return m_template; }
++	Bool isKindOf(KindOfType kind) const { return getTemplate()->isKindOf(kind); }
++	const Coord3D *getPosition() const { return &m_position; }
++
++protected:
++	virtual ~Thing();
++	OVERRIDE<ThingTemplate> m_template;			// Thing+0x04
++	unsigned char m_beforePosition[0x38 - 8];
++	Coord3D m_position;					// Thing+0x38
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ContainModule.h
++// BFME slot numbers: getContainMax is slot 23 and the count query, which
++// takes one Bool, is slot 64.
++class ContainModuleInterface
++{
++public:
++#define BFME_CONTAIN_SLOT(N) virtual void containSlot##N() = 0;
++	BFME_CONTAIN_SLOT(00) BFME_CONTAIN_SLOT(01) BFME_CONTAIN_SLOT(02) BFME_CONTAIN_SLOT(03)
++	BFME_CONTAIN_SLOT(04) BFME_CONTAIN_SLOT(05) BFME_CONTAIN_SLOT(06) BFME_CONTAIN_SLOT(07)
++	BFME_CONTAIN_SLOT(08) BFME_CONTAIN_SLOT(09) BFME_CONTAIN_SLOT(10) BFME_CONTAIN_SLOT(11)
++	BFME_CONTAIN_SLOT(12) BFME_CONTAIN_SLOT(13) BFME_CONTAIN_SLOT(14) BFME_CONTAIN_SLOT(15)
++	BFME_CONTAIN_SLOT(16) BFME_CONTAIN_SLOT(17) BFME_CONTAIN_SLOT(18) BFME_CONTAIN_SLOT(19)
++	BFME_CONTAIN_SLOT(20) BFME_CONTAIN_SLOT(21) BFME_CONTAIN_SLOT(22)
++	virtual Int getContainMax() const = 0;					// slot 23
++	BFME_CONTAIN_SLOT(24) BFME_CONTAIN_SLOT(25) BFME_CONTAIN_SLOT(26) BFME_CONTAIN_SLOT(27)
++	BFME_CONTAIN_SLOT(28) BFME_CONTAIN_SLOT(29) BFME_CONTAIN_SLOT(30) BFME_CONTAIN_SLOT(31)
++	BFME_CONTAIN_SLOT(32) BFME_CONTAIN_SLOT(33) BFME_CONTAIN_SLOT(34) BFME_CONTAIN_SLOT(35)
++	BFME_CONTAIN_SLOT(36) BFME_CONTAIN_SLOT(37) BFME_CONTAIN_SLOT(38) BFME_CONTAIN_SLOT(39)
++	BFME_CONTAIN_SLOT(40) BFME_CONTAIN_SLOT(41) BFME_CONTAIN_SLOT(42) BFME_CONTAIN_SLOT(43)
++	BFME_CONTAIN_SLOT(44) BFME_CONTAIN_SLOT(45) BFME_CONTAIN_SLOT(46) BFME_CONTAIN_SLOT(47)
++	BFME_CONTAIN_SLOT(48) BFME_CONTAIN_SLOT(49) BFME_CONTAIN_SLOT(50) BFME_CONTAIN_SLOT(51)
++	BFME_CONTAIN_SLOT(52) BFME_CONTAIN_SLOT(53) BFME_CONTAIN_SLOT(54) BFME_CONTAIN_SLOT(55)
++	BFME_CONTAIN_SLOT(56) BFME_CONTAIN_SLOT(57) BFME_CONTAIN_SLOT(58) BFME_CONTAIN_SLOT(59)
++	BFME_CONTAIN_SLOT(60) BFME_CONTAIN_SLOT(61) BFME_CONTAIN_SLOT(62) BFME_CONTAIN_SLOT(63)
++	virtual UnsignedInt getContainCount(Bool unknown) const = 0;		// slot 64
++#undef BFME_CONTAIN_SLOT
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
++class AICommandInterface
++{
++public:
++	void aiEnter(Object *obj, CommandSourceType cmdSource);
++};
++
++// The 0x20-byte module base AIUpdateInterface derives from first.
++class UpdateModule
++{
++public:
++	virtual void moduleSlot();
++	unsigned char m_moduleBody[0x1c];
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h
++// AICommandInterface is the base at +0x20.
++class AIUpdateInterface : public UpdateModule, public AICommandInterface
++{
++};
++
++// The BFME Object skeleton from reference/shims/objectdlink: vptr at +0, the
++// DLINK base at +4, the vbptr-carrying base at +0x68.
++class BfmeObjectVirtualTail { public: unsigned char m_vt[4]; };
++
++class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
++{
++public:
++	unsigned char m_carrier[4];
++};
++
++class BfmeObjectVtbl { public: virtual void bfmeObjectSlot0(void); };
++
++class BfmeObjectDlinkBase
++{
++public:
++	Object *dlink_next_TeamMemberList(void) const;
++};
++
++class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
++
++class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
++	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
++{
++public:
++	ContainModuleInterface *getContain() const { return m_contain; }
++	AIUpdateInterface *getAIUpdateInterface() { return m_ai; }
++
++	unsigned char m_before1fc[0x1fc - 0x70];
++	ContainModuleInterface *m_contain;			// Object+0x1FC
++	unsigned char m_before204[4];
++	AIUpdateInterface *m_ai;				// Object+0x204; aiEnter at +0x20 below
++};
++
++#define callMemberFunction(object,ptrToMember) ((object).*(ptrToMember))
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
++template<class OBJCLASS>
++class DLINK_ITERATOR
++{
++public:
++	typedef OBJCLASS *(OBJCLASS::*GetNextFunc)() const;
++
++private:
++	OBJCLASS *m_cur;
++	GetNextFunc m_getNextFunc;
++
++public:
++	DLINK_ITERATOR(OBJCLASS *cur, GetNextFunc getNextFunc)
++		: m_cur(cur), m_getNextFunc(getNextFunc) { }
++
++	void advance()
++	{
++		if (m_cur)
++			m_cur = callMemberFunction(*m_cur, m_getNextFunc)();
++	}
++
++	Bool done() const { return m_cur == 0; }
++	OBJCLASS *cur() const { return m_cur; }
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
++class Team
++{
++public:
++	Player *getControllingPlayer() const;
++
++	DLINK_ITERATOR<Object> iterate_TeamMemberList() const
++	{
++		return DLINK_ITERATOR<Object>(m_head, Object::dlink_next_TeamMemberList);
++	}
++
++	void *m_vptr;
++	void *m_unmodelled0;
++	void *m_unmodelled1;
++	Object *m_head;						// Team+0x0C
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
++class ScriptEngine
++{
++public:
++	virtual void _0()=0; virtual void _1()=0; virtual void _2()=0; virtual void _3()=0;
++	virtual void _4()=0; virtual void _5()=0; virtual void _6()=0; virtual void _7()=0;
++	virtual void _8()=0; virtual void _9()=0; virtual void _10()=0; virtual void _11()=0;
++	virtual void _12()=0; virtual void _13()=0; virtual void _14()=0; virtual void _15()=0;
++	virtual void _16()=0;
++	virtual Team *getTeamNamed(AsciiString name, Bool playerOwned) = 0;	// slot 17
++};
++
++extern ScriptEngine *TheScriptEngine;
++
++// BFME filters: virtual destructor, allow, getPlayerMask, then next at +4.
++class PartitionFilter
++{
++public:
++	PartitionFilter() : m_next(0) {}
++	virtual ~PartitionFilter() {}
++	virtual Bool allow(Object *obj) = 0;
++
++	PartitionFilter *link(PartitionFilter *next);
++
++	PartitionFilter *m_next;
++};
++
++// vtable 0x01085DD0.
++class PartitionFilterSameMapStatus : public PartitionFilter
++{
++public:
++	PartitionFilterSameMapStatus(const Object *obj) : m_obj(obj) {}
++
++protected:
++	virtual Bool allow(Object *obj);
++
++private:
++	const Object *m_obj;
++};
++
++// vtable 0x010CFFF0.
++class PartitionFilterGarrisonableByPlayer : public PartitionFilter
++{
++public:
++	PartitionFilterGarrisonableByPlayer(Player *player, Bool match,
++		CommandSourceType commandSource)
++		: m_player(player), m_match(match), m_commandSource(commandSource) {}
++
++protected:
++	virtual Bool allow(Object *obj);
++
++private:
++	Player *m_player;
++	Bool m_match;
++	CommandSourceType m_commandSource;
++};
++
++struct Rva00302240Entry
++{
++	Object *object;
++	UnsignedInt word04;
++};
++
++struct Rva00302240ResultData
++{
++	std::vector<Rva00302240Entry> entries;
++	Rva00302240Entry *current;
++	Int references;
++};
++
++// The reference-counted object list ThePartitionManager's query returns.
++struct BfmeWideResult
++{
++	Rva00302240ResultData *value;
++
++	BfmeWideResult();
++	BfmeWideResult(const BfmeWideResult &);
++	Object *next(Object *&object)
++	{
++		if (value->current == value->entries.end())
++			return 0;
++		object = (value->current++)->object;
++		return object;
++	}
++	~BfmeWideResult()
++	{
++		if (--value->references == 0)
++			delete value;
++	}
++};
++
++// ThePartitionManager's iterate forwarder, 0x009F2960 (its pinned raw-float
++// spelling: position, radius, distance mode, filter chain, sort flag).
++class BfmeWideForwardC
++{
++public:
++	BfmeWideResult bfmeForwardWideC(int, Real, int, int, int);
++};
++
++extern BfmeWideForwardC *ThePartitionManager;
++
++class ScriptActions
++{
++protected:
++	void doTeamGarrisonNearestBuilding(const AsciiString &teamName);
++};
++
++// ?doTeamGarrisonNearestBuilding@ScriptActions@@IAEXABVAsciiString@@@Z
++void ScriptActions::doTeamGarrisonNearestBuilding(const AsciiString &teamName)
++{
++	Team *theTeam = TheScriptEngine->getTeamNamed(teamName, false);
++	if (!theTeam) {
++		return;
++	}
++
++	DLINK_ITERATOR<Object> diter = theTeam->iterate_TeamMemberList();
++	Object *leader = diter.cur();
++	if (!leader) {
++		return;
++	}
++
++	BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
++		(int)((Thing *)leader)->getPosition(), 1000000.0f, 3,
++		(int)PartitionFilterGarrisonableByPlayer(theTeam->getControllingPlayer(),
++			true, CMD_FROM_SCRIPT).link(&PartitionFilterSameMapStatus(leader)),
++		1);
++
++	Object *theBuilding;
++	while (result.next(theBuilding)) {
++		ContainModuleInterface *cmi = theBuilding->getContain();
++		if (!cmi) {
++			continue;
++		}
++
++		Int slotsAvailable = cmi->getContainMax() - cmi->getContainCount(false);
++		for (int i = 0; i < slotsAvailable; ) {
++			Object *obj = diter.cur();
++			if (diter.done() || !obj) {
++				return;
++			}
++
++			AIUpdateInterface *ai = obj->getAIUpdateInterface();
++			if (ai && ((Thing *)obj)->isKindOf(KINDOF_INFANTRY)
++				&& !((Thing *)obj)->isKindOf(KINDOF_NO_GARRISON)) {
++				ai->aiEnter(theBuilding, CMD_FROM_SCRIPT);
++				++i;
++			}
++			diter.advance();
++		}
++	}
++}
+diff --git a/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamPartialUseCommandButton.cpp b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamPartialUseCommandButton.cpp
+new file mode 100644
+index 00000000..9eedf385
+--- /dev/null
++++ b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamPartialUseCommandButton.cpp
+@@ -0,0 +1,191 @@
++// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
++// stlport
++//
++// ScriptActions::doTeamPartialUseCommandButton, retail 0x002FFB60, 464 bytes
++// (ret 0Ch at +0x1AE).
++//
++// Identity: ScriptActions::executeAction's jump table sends action 273 here
++// through ILT 0x000325E7, passing getReal() of parameter 0 and the strings of
++// parameters 1 and 2; the action-template initializer names slot 273
++// TEAM_PARTIAL_USE_COMMANDBUTTON. The body is the Zero Hour action of that
++// name (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/
++// GameLogic/ScriptEngine/ScriptActions.cpp), with BFME's two differences:
++// the member count is rounded up with ceil, and Object::doCommandButton takes
++// a third argument.
++
++#include <math.h>
++#include <vector>
++
++#include "ascii_string.h"
++
++typedef bool Bool;
++typedef int Int;
++typedef float Real;
++
++enum CommandSourceType { CMD_FROM_PLAYER = 0, CMD_FROM_SCRIPT };
++
++struct Coord3D;
++class CommandButton;
++class Object;
++
++// upstream: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
++__forceinline long fast_float2long_round(float f)
++{
++	long i;
++	__asm {
++		fld [f]
++		fistp [i]
++	}
++	return i;
++}
++
++// BFME rounds up through the CRT ceil (the MSVCR71 import) before the
++// fistp conversion.
++#define REAL_TO_INT_CEIL(x) (fast_float2long_round((Real)ceil((double)(x))))
++
++// The BFME Object skeleton from reference/shims/objectdlink: vptr at +0, the
++// DLINK base at +4, the vbptr-carrying base at +0x68.
++class BfmeObjectVirtualTail { public: unsigned char m_vt[4]; };
++
++class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
++{
++public:
++	unsigned char m_carrier[4];
++};
++
++class BfmeObjectVtbl { public: virtual void bfmeObjectSlot0(void); };
++
++class BfmeObjectDlinkBase
++{
++public:
++	Object *dlink_next_TeamMemberList(void) const;
++};
++
++class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
++
++class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
++	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
++{
++public:
++	// BFME's three-argument form, pinned at ILT 0x000063CF.
++	void doCommandButton(const CommandButton *commandButton, Int cmdSource, Int unknown);
++
++	unsigned char m_tail[0x40];
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/ControlBar.h
++class CommandButton
++{
++public:
++	Bool isValidToUseOn(const Object *targetObj, const Object *sourceObj,
++		const Coord3D *targetLocation, CommandSourceType commandSource) const;
++};
++
++class ControlBar
++{
++public:
++	const CommandButton *findCommandButton(const AsciiString &name);
++};
++
++extern ControlBar *TheControlBar;
++
++#define callMemberFunction(object,ptrToMember) ((object).*(ptrToMember))
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameCommon.h
++template<class OBJCLASS>
++class DLINK_ITERATOR
++{
++public:
++	typedef OBJCLASS *(OBJCLASS::*GetNextFunc)() const;
++
++private:
++	OBJCLASS *m_cur;
++	GetNextFunc m_getNextFunc;
++
++public:
++	DLINK_ITERATOR(OBJCLASS *cur, GetNextFunc getNextFunc)
++		: m_cur(cur), m_getNextFunc(getNextFunc) { }
++
++	void advance()
++	{
++		if (m_cur)
++			m_cur = callMemberFunction(*m_cur, m_getNextFunc)();
++	}
++
++	Bool done() const { return m_cur == 0; }
++	OBJCLASS *cur() const { return m_cur; }
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Team.h
++class Team
++{
++public:
++	DLINK_ITERATOR<Object> iterate_TeamMemberList() const
++	{
++		return DLINK_ITERATOR<Object>(m_head, Object::dlink_next_TeamMemberList);
++	}
++
++	void *m_vptr;
++	void *m_unmodelled0;
++	void *m_unmodelled1;
++	Object *m_head;						// Team+0x0C
++};
++
++// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h
++class ScriptEngine
++{
++public:
++	virtual void _0()=0; virtual void _1()=0; virtual void _2()=0; virtual void _3()=0;
++	virtual void _4()=0; virtual void _5()=0; virtual void _6()=0; virtual void _7()=0;
++	virtual void _8()=0; virtual void _9()=0; virtual void _10()=0; virtual void _11()=0;
++	virtual void _12()=0; virtual void _13()=0; virtual void _14()=0; virtual void _15()=0;
++	virtual void _16()=0;
++	virtual Team *getTeamNamed(AsciiString name, Bool playerOwned) = 0;	// slot 17
++};
++
++extern ScriptEngine *TheScriptEngine;
++
++class ScriptActions
++{
++protected:
++	void doTeamPartialUseCommandButton(Real percentage, const AsciiString &teamName,
++		const AsciiString &commandAbility);
++};
++
++// ?doTeamPartialUseCommandButton@ScriptActions@@IAEXMABVAsciiString@@0@Z
++void ScriptActions::doTeamPartialUseCommandButton(Real percentage,
++	const AsciiString &teamName, const AsciiString &commandAbility)
++{
++	Team *team = TheScriptEngine->getTeamNamed(teamName, false);
++	if (!team) {
++		return;
++	}
++
++	const CommandButton *commandButton = TheControlBar->findCommandButton(commandAbility);
++	if (!commandButton) {
++		return;
++	}
++
++	std::vector<Object *> objList;
++	DLINK_ITERATOR<Object> iter = team->iterate_TeamMemberList();
++
++	for (iter = team->iterate_TeamMemberList(); !iter.done(); iter.advance()) {
++		Object *obj = iter.cur();
++		if (commandButton->isValidToUseOn(obj, 0, 0, CMD_FROM_SCRIPT)) {
++			objList.push_back(obj);
++		}
++	}
++
++	Int numObjs = REAL_TO_INT_CEIL(percentage / 100.0f * objList.size());
++	Int count = 0;
++	for (std::vector<Object *>::const_iterator it = objList.begin(); it != objList.end(); ++it)
++	{
++		Object *obj = (*it);
++
++		if (count >= numObjs)
++			return;
++
++		obj->doCommandButton(commandButton, CMD_FROM_SCRIPT, 0);
++		++count;
++	}
++}
+diff --git a/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamSetModelCondition.cpp b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamSetModelCondition.cpp
+index ff3aee05..1562f3a0 100644
+--- a/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamSetModelCondition.cpp
++++ b/Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamSetModelCondition.cpp
+@@ -30,6 +30,9 @@ enum ModelConditionFlagType
+ class ModelConditionFlags
+ {
+ public:
++	UnsignedInt &word(ModelConditionFlagType t) { return m_bits[(UnsignedInt)t >> 5]; }
++	static UnsignedInt mask(ModelConditionFlagType t) { return 1u << ((UnsignedInt)t & 31); }
++
+ 	UnsignedInt m_bits[10];
+ };
+ 
+@@ -141,7 +144,8 @@ extern ScriptEngine *TheScriptEngine;
+ // Retail outlined this common update at 0x002FDEF0 and assigned it a private
+ // register convention.  The suffix is a reconstruction alias; not historical
+ // identity.  Keeping the clean helper TU-local reproduces that convention in
+-// doTeamSetModelCondition.  Only the named action body is claimed here.
++// doTeamSetModelCondition.  Only the named action body is claimed here; the
++// same helper body is claimed from ScriptActionsNamedSetModelCondition.cpp.
+ static void applyModelCondition_002FDEF0(
+ 	Object *obj, Int conditionNumber, Bool set)
+ {
+@@ -155,22 +159,21 @@ static void applyModelCondition_002FDEF0(
+ 		default: condition = MODELCONDITION_USER_1; break;
+ 	}
+ 
+-	UnsignedInt mask = 1u << ((UnsignedInt)condition & 31);
+-	UnsignedInt &word = obj->m_modelConditionFlags.m_bits[
+-		(UnsignedInt)condition >> 5];
+ 	if (set)
+ 	{
+-		if (!(word & mask))
++		ModelConditionFlags &flags = obj->m_modelConditionFlags;
++		if (!(flags.word(condition) & ModelConditionFlags::mask(condition)))
+ 		{
+-			word |= mask;
++			flags.word(condition) |= ModelConditionFlags::mask(condition);
+ 			obj->notifyModelConditionChanged();
+ 		}
+ 	}
+ 	else
+ 	{
+-		if (word & mask)
++		ModelConditionFlags &flags = obj->m_modelConditionFlags;
++		if (flags.word(condition) & ModelConditionFlags::mask(condition))
+ 		{
+-			word &= ~mask;
++			flags.word(condition) &= ~ModelConditionFlags::mask(condition);
+ 			obj->notifyModelConditionChanged();
+ 		}
+ 	}
+diff --git a/reverse/attempts/0x002fdcd0.cpp b/reverse/attempts/0x002fdcd0.cpp
+deleted file mode 100644
+index 5198e5fe..00000000
+--- a/reverse/attempts/0x002fdcd0.cpp
++++ /dev/null
+@@ -1,216 +0,0 @@
+-// ?d_002fdcd0@@YAXXZ
+-// partial score=0.55 date=2026-09-07
+-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
+-// NAMED_USE_COMMANDBUTTON_ON_NEAREST_OBJECTTYPE, executeAction template 429.
+-// Retail RVA 0x002FDCD0, 173 bytes.  The action registration and the sole
+-// retail executeAction caller identify this as the named-unit/object-type
+-// nearest-command action.  The object/template offsets below are the fields
+-// read by this body; they are kept as TU-local views because the owning BFME
+-// layouts are not complete in the public headers.
+-// The private d_002FDAC0 ABI remains unresolved: retail enters with EDI=button,
+-// inherited ESI=unit, and one stack ThingTemplate argument, while its body
+-// reads [EDI+0x18], saves ESI, forms ESI+0x38, and consumes that stack word.
+-// The wrapper below therefore records semantic recovery only, not a truthful
+-// one-argument cdecl declaration; score 0.55 reflects that unresolved ABI.
+-
+-#include "StringInline.h"
+-
+-typedef bool Bool;
+-
+-class Object;
+-class ObjectTypes;
+-class Player;
+-
+-class BfmeOverridableView
+-{
+-public:
+-	void *m_vtable;
+-	BfmeOverridableView *m_nextOverride;
+-	const BfmeOverridableView *getFinalOverride() const;
+-};
+-
+-class ThingTemplate : public BfmeOverridableView
+-{
+-};
+-
+-struct Coord3D
+-{
+-	float x;
+-	float y;
+-	float z;
+-};
+-
+-class ScriptEngine
+-{
+-public:
+-	virtual void slot00() = 0;
+-	virtual void slot01() = 0;
+-	virtual void slot02() = 0;
+-	virtual void slot03() = 0;
+-	virtual void slot04() = 0;
+-	virtual void slot05() = 0;
+-	virtual void slot06() = 0;
+-	virtual void slot07() = 0;
+-	virtual void slot08() = 0;
+-	virtual void slot09() = 0;
+-	virtual void slot10() = 0;
+-	virtual void slot11() = 0;
+-	virtual void slot12() = 0;
+-	virtual void slot13() = 0;
+-	virtual void slot14() = 0;
+-	virtual void slot15() = 0;
+-	virtual void slot16() = 0;
+-	virtual void slot17() = 0;
+-	virtual void slot18() = 0;
+-	virtual void slot19() = 0;
+-	virtual ObjectTypes *getObjectTypes(const AsciiString &name) = 0;
+-	virtual void slot21() = 0;
+-	virtual void slot22() = 0;
+-	virtual void slot23() = 0;
+-	virtual void slot24() = 0;
+-	virtual void slot25() = 0;
+-	virtual Object *getUnitNamed(const AsciiString &name) = 0;
+-};
+-
+-class BfmeThingFactory
+-{
+-public:
+-	const ThingTemplate *findTemplate(const AsciiString &name);
+-};
+-
+-class CommandButton
+-{
+-public:
+-	Bool isReady(const Object *sourceObject) const;
+-};
+-
+-class ControlBar
+-{
+-public:
+-	const CommandButton *findCommandButton(const AsciiString &name);
+-};
+-
+-class Object
+-{
+-public:
+-	void *m_vtable;
+-	ThingTemplate *m_template;
+-	unsigned char m_beforePosition[0x30];
+-	Coord3D m_position;
+-
+-	const Coord3D *getPosition() const
+-	{
+-		return &m_position;
+-	}
+-
+-	Bool bfmeCanUseCommandButton(const CommandButton *button) const;
+-	const ThingTemplate *getTemplate() const { return m_template; }
+-};
+-
+-// The override chain is read from the object template at +4.  The final
+-// override ILT is an existing matched route, but this action reaches it with
+-// the link object as its receiver, so keep the call ABI local to this TU.
+-extern ScriptEngine *TheScriptEngine;
+-extern ControlBar *TheControlBar;
+-#define TheThingFactory (*(BfmeThingFactory **)0x012EF1D8)
+-
+-extern void d_002fdac0();
+-extern void j_000022bb();
+-extern void j_000414d9();
+-
+-class ScriptActions;
+-
+-static __forceinline Object *bfmeFindClosestObject(const Coord3D *position,
+-	ObjectTypes *objectTypes, Player *player, ScriptActions *actions)
+-{
+-	class FindClosestObjectCall
+-	{
+-	public:
+-		Object *findClosestObject(const Coord3D *, ObjectTypes *, Player *);
+-	};
+-	typedef Object *(FindClosestObjectCall::*Function)(
+-		const Coord3D *, ObjectTypes *, Player *);
+-	union { void (*raw)(void); Function member; } fn;
+-	fn.raw = j_000414d9;
+-	return (reinterpret_cast<FindClosestObjectCall *>(actions)->*fn.member)(
+-		position, objectTypes, player);
+-}
+-
+-static __forceinline const ThingTemplate *bfmeGetFinalOverride(
+-	const BfmeOverridableView *nextOverride)
+-{
+-	typedef const BfmeOverridableView *(BfmeOverridableView::*Function)() const;
+-	union { void (*raw)(void); Function member; } fn;
+-	fn.raw = j_000022bb;
+-	return (const ThingTemplate *)
+-		(reinterpret_cast<const BfmeOverridableView *>(nextOverride)->*
+-		fn.member)();
+-}
+-
+-static __forceinline void bfmeApplyNearestObjectTypeAction(
+-	const ThingTemplate *thingTemplate)
+-{
+-	typedef void (*Function)(const ThingTemplate *);
+-	union { void (*raw)(void); Function typed; } fn;
+-	fn.raw = d_002fdac0;
+-	fn.typed(thingTemplate);
+-}
+-
+-class ScriptActions
+-{
+-protected:
+-	void doNamedUseCommandButtonOnNearestObjectType(
+-		const AsciiString &unitName, const AsciiString &commandAbility,
+-		const AsciiString &objectTypeName);
+-};
+-
+-// ?doNamedUseCommandButtonOnNearestObjectType@ScriptActions@@IAEXABVAsciiString@@00@Z
+-void ScriptActions::doNamedUseCommandButtonOnNearestObjectType(
+-	const AsciiString &unitName, const AsciiString &commandAbility,
+-	const AsciiString &objectTypeName)
+-{
+-	const ThingTemplate *thingTemplate;
+-	const AsciiString *objectType = &objectTypeName;
+-	Object *unit = TheScriptEngine->getUnitNamed(unitName);
+-	if (!unit)
+-		return;
+-
+-	if (ObjectTypes *objectTypes =
+-		TheScriptEngine->getObjectTypes(*objectType))
+-	{
+-		Object *nearest = bfmeFindClosestObject(unit->getPosition(), objectTypes,
+-			0, this);
+-		if (!nearest)
+-			return;
+-
+-		thingTemplate = nearest->getTemplate();
+-		if (thingTemplate)
+-		{
+-			if (thingTemplate->m_nextOverride)
+-				thingTemplate = bfmeGetFinalOverride(
+-					thingTemplate->m_nextOverride);
+-		}
+-		else
+-		{
+-			thingTemplate = 0;
+-		}
+-	}
+-	else
+-	{
+-		thingTemplate = TheThingFactory->findTemplate(*objectType);
+-	}
+-
+-	if (!thingTemplate)
+-		return;
+-
+-	register const CommandButton *button =
+-		TheControlBar->findCommandButton(commandAbility);
+-	if (!button)
+-		return;
+-	if (!button->isReady(unit))
+-		return;
+-	if (!unit->bfmeCanUseCommandButton(button))
+-		return;
+-
+-	bfmeApplyNearestObjectTypeAction(thingTemplate);
+-}
+diff --git a/reverse/attempts/0x002fdef0.cpp b/reverse/attempts/0x002fdef0.cpp
+deleted file mode 100644
+index 5331f199..00000000
+--- a/reverse/attempts/0x002fdef0.cpp
++++ /dev/null
+@@ -1,165 +0,0 @@
+-// ?applyModelCondition_002FDEF0@@YAXPAVObject@@H_N@Z
+-// partial score=0.45 date=2026-09-12
+-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink /Ireference/shims/stringinline
+-
+-// Retail outlines the shared UNIT/TEAM_SET_MODELCONDITION update once at
+-// 0x002FDEF0 (pinned as applyModelCondition_002FDEF0 in reverse/symbols.csv).
+-// ScriptActionsNamedSetModelCondition.cpp and ScriptActionsTeamSetModelCondition.cpp
+-// each already carry a private TU-local copy of this same body reachable from
+-// their own single call site. Landing the shared body's own address needs a
+-// TU-local caller shaped the same way, so the scaffold below is not a retail
+-// function; only the helper below is claimed.
+-
+-typedef int Int;
+-typedef bool Bool;
+-typedef unsigned int UnsignedInt;
+-
+-class AsciiString
+-{
+-	char *m_data;
+-};
+-
+-enum ModelConditionFlagType
+-{
+-	MODELCONDITION_USER_1 = 0xae,
+-	MODELCONDITION_USER_2,
+-	MODELCONDITION_USER_3,
+-	MODELCONDITION_USER_4
+-};
+-
+-class ModelConditionFlags
+-{
+-public:
+-	UnsignedInt m_bits[10];
+-};
+-
+-class Object;
+-
+-class BfmeObjectVirtualTail { public: unsigned char m_vt[4]; };
+-
+-class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
+-{
+-public:
+-	unsigned char m_carrier[4];
+-};
+-
+-class BfmeObjectVtbl { public: virtual void bfmeObjectSlot0(void); };
+-
+-class BfmeObjectDlinkBase
+-{
+-public:
+-	Object *dlink_next_TeamMemberList(void) const;
+-};
+-
+-class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
+-
+-// Upstream layout: GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h.
+-// These bases place the BFME model-condition mask at Object+0x110.
+-class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
+-	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
+-{
+-public:
+-	unsigned char m_tail[0xa0];
+-	ModelConditionFlags m_modelConditionFlags;
+-
+-	void notifyModelConditionChanged(void);
+-};
+-
+-#define BFME_SCRIPT_ENGINE_SLOT(index) virtual void _se_##index(void) = 0;
+-
+-// Upstream layout: GeneralsMD/Code/GameEngine/Include/GameLogic/ScriptEngine.h.
+-// BFME's getUnitNamed is slot 26, vtable offset +0x68, and takes one
+-// AsciiString reference.
+-class ScriptEngine
+-{
+-public:
+-	BFME_SCRIPT_ENGINE_SLOT(0)
+-	BFME_SCRIPT_ENGINE_SLOT(1)
+-	BFME_SCRIPT_ENGINE_SLOT(2)
+-	BFME_SCRIPT_ENGINE_SLOT(3)
+-	BFME_SCRIPT_ENGINE_SLOT(4)
+-	BFME_SCRIPT_ENGINE_SLOT(5)
+-	BFME_SCRIPT_ENGINE_SLOT(6)
+-	BFME_SCRIPT_ENGINE_SLOT(7)
+-	BFME_SCRIPT_ENGINE_SLOT(8)
+-	BFME_SCRIPT_ENGINE_SLOT(9)
+-	BFME_SCRIPT_ENGINE_SLOT(10)
+-	BFME_SCRIPT_ENGINE_SLOT(11)
+-	BFME_SCRIPT_ENGINE_SLOT(12)
+-	BFME_SCRIPT_ENGINE_SLOT(13)
+-	BFME_SCRIPT_ENGINE_SLOT(14)
+-	BFME_SCRIPT_ENGINE_SLOT(15)
+-	BFME_SCRIPT_ENGINE_SLOT(16)
+-	BFME_SCRIPT_ENGINE_SLOT(17)
+-	BFME_SCRIPT_ENGINE_SLOT(18)
+-	BFME_SCRIPT_ENGINE_SLOT(19)
+-	BFME_SCRIPT_ENGINE_SLOT(20)
+-	BFME_SCRIPT_ENGINE_SLOT(21)
+-	BFME_SCRIPT_ENGINE_SLOT(22)
+-	BFME_SCRIPT_ENGINE_SLOT(23)
+-	BFME_SCRIPT_ENGINE_SLOT(24)
+-	BFME_SCRIPT_ENGINE_SLOT(25)
+-	virtual Object *getUnitNamed(const AsciiString &) = 0;
+-};
+-
+-#undef BFME_SCRIPT_ENGINE_SLOT
+-
+-extern ScriptEngine *TheScriptEngine;
+-
+-// ?applyModelCondition_002FDEF0@@YAXPAVObject@@H_N@Z
+-// Shared outlined helper for the UNIT/TEAM_SET_MODELCONDITION script actions.
+-// See docs/shape_levers.md, "Static function with a private register
+-// convention": a single-call static helper compiles its parameters wherever
+-// the one caller already holds them (obj in ESI, conditionNumber in EAX).
+-static void applyModelCondition_002FDEF0(
+-	Object *obj, Int conditionNumber, Bool set)
+-{
+-	ModelConditionFlagType condition;
+-	switch (conditionNumber)
+-	{
+-		case 1: condition = MODELCONDITION_USER_1; break;
+-		case 2: condition = MODELCONDITION_USER_2; break;
+-		case 3: condition = MODELCONDITION_USER_3; break;
+-		case 4: condition = MODELCONDITION_USER_4; break;
+-		default: condition = MODELCONDITION_USER_1; break;
+-	}
+-
+-	UnsignedInt mask = 1u << ((UnsignedInt)condition & 31);
+-	UnsignedInt &word = obj->m_modelConditionFlags.m_bits[
+-		(UnsignedInt)condition >> 5];
+-	if (set)
+-	{
+-		if (!(word & mask))
+-		{
+-			word |= mask;
+-			obj->notifyModelConditionChanged();
+-		}
+-	}
+-	else
+-	{
+-		if (word & mask)
+-		{
+-			word &= ~mask;
+-			obj->notifyModelConditionChanged();
+-		}
+-	}
+-}
+-
+-// Reconstruction scaffold, absent from retail: gives the helper above a
+-// single TU-local call site shaped like the two real callers, so it compiles
+-// with the same private register convention they already reproduce.
+-class ModelConditionHelperScaffold
+-{
+-public:
+-	void bfmeScaffoldCall(const AsciiString &, Int, Bool);
+-};
+-
+-void ModelConditionHelperScaffold::bfmeScaffoldCall(
+-	const AsciiString &unitName, Int conditionNumber, Bool set)
+-{
+-	Object *unit = TheScriptEngine->getUnitNamed(unitName);
+-	if (!unit)
+-		return;
+-
+-	applyModelCondition_002FDEF0(unit, conditionNumber, set);
+-}
+diff --git a/reverse/attempts/0x002ff430.cpp b/reverse/attempts/0x002ff430.cpp
+deleted file mode 100644
+index 84f4b708..00000000
+--- a/reverse/attempts/0x002ff430.cpp
++++ /dev/null
+@@ -1,431 +0,0 @@
+-// ?d_002ff430@@YAXXZ
+-// partial score=0.78 date=2026-09-23
+-// ?doDeploySiegeNearTeam@ScriptActions@@IAEXPAVParameter@@00@Z
+-// Scratch-only native reconstruction for retail RVA 0x002FF430, 655 bytes.
+-// Identity is proven by the DEPLOY_SIEGE_NEAR_TEAM action table arm and its
+-// ILT caller.  This file is intentionally outside Code/ and is not a ledger
+-// claim.
+-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline /ICode/Libraries/Source/WWVegas/WWLib
+-// stlport
+-
+-#define _STLP_USE_STATIC_LIB 1
+-
+-#include <bitset>
+-#include <vector>
+-#include "ascii_string.h"
+-
+-typedef bool Bool;
+-typedef int Int;
+-typedef unsigned int UnsignedInt;
+-typedef float Real;
+-
+-struct Coord3D
+-{
+-	Real x;
+-	Real y;
+-	Real z;
+-};
+-
+-class Parameter
+-{
+-public:
+-	unsigned char m_beforeReal[0x0c];
+-	Real m_real;
+-	AsciiString m_string;
+-};
+-
+-enum NameKeyType
+-{
+-	NAMEKEY_INVALID = 0
+-};
+-
+-class NameKeyGenerator
+-{
+-public:
+-	NameKeyType nameToKey(const char *name);
+-};
+-
+-enum SpecialPowerType
+-{
+-	SPECIAL_POWER_DEPLOY_SIEGE = 0x2e
+-};
+-
+-class SpecialPowerTemplate;
+-class Object;
+-
+-class SpecialPowerModuleInterface
+-{
+-public:
+-	virtual Bool isModuleForPower(const SpecialPowerTemplate *) const = 0;
+-	virtual Bool isReady() const = 0;
+-	virtual void slot02() const = 0;
+-	virtual void slot03() const = 0;
+-	virtual void slot04() const = 0;
+-	virtual void slot05() const = 0;
+-	virtual void slot06() const = 0;
+-	virtual void slot07() const = 0;
+-	virtual void slot08() const = 0;
+-	virtual void slot09() const = 0;
+-	virtual void slot10() const = 0;
+-	virtual void slot11() = 0;
+-	virtual void doSpecialPowerAtObject(Object *object,
+-		UnsignedInt commandOptions) = 0;
+-};
+-
+-class BfmeObjectVirtualTail
+-{
+-public:
+-	unsigned char m_vt[4];
+-};
+-
+-class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
+-{
+-public:
+-	unsigned char m_carrier[4];
+-};
+-
+-class BfmeObjectVtbl
+-{
+-public:
+-	virtual void bfmeObjectSlot0();
+-};
+-
+-class BfmeObjectDlinkBase
+-{
+-public:
+-	Object *dlink_next_TeamMemberList() const;
+-};
+-
+-class BfmeObjectDlinkPad
+-{
+-public:
+-	unsigned char m_pad[0x64];
+-};
+-
+-class Module;
+-
+-class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
+-	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
+-{
+-public:
+-	Module *findModule(NameKeyType key) const;
+-	SpecialPowerModuleInterface *findSpecialPowerModuleInterface(
+-		SpecialPowerType type) const;
+-
+-	unsigned char m_tail[0x40];
+-};
+-
+-typedef Object *(Object::*GetNextObjectFunc)() const;
+-
+-template<class ObjectType>
+-class DLINK_ITERATOR
+-{
+-public:
+-	typedef ObjectType *(ObjectType::*GetNextFunc)() const;
+-
+-	DLINK_ITERATOR(ObjectType *current, GetNextFunc getNext)
+-		: m_cur(current), m_getNextFunc(getNext) {}
+-
+-	void advance()
+-	{
+-		if (m_cur)
+-			m_cur = (m_cur->*m_getNextFunc)();
+-	}
+-
+-	Bool done() const
+-	{
+-		return m_cur == 0;
+-	}
+-
+-	ObjectType *cur() const
+-	{
+-		return m_cur;
+-	}
+-
+-private:
+-    ObjectType *m_cur;
+-	GetNextFunc m_getNextFunc;
+-};
+-
+-class Team
+-{
+-public:
+-	Coord3D *getEstimateTeamPosition(Coord3D *out) const;
+-	DLINK_ITERATOR<Object> iterate_TeamMemberList() const
+-	{
+-		return DLINK_ITERATOR<Object>(m_head,
+-			Object::dlink_next_TeamMemberList);
+-	}
+-
+-	void *m_vptr;
+-	void *m_proto;
+-	void *m_id;
+-	Object *m_head;
+-};
+-
+-class Overridable
+-{
+-public:
+-	const Overridable *getFinalOverride() const;
+-
+-	void *m_vptr;
+-	Overridable *m_nextOverride;
+-};
+-
+-class BfmeObjectTemplateView
+-{
+-public:
+-	void *m_vptr;
+-	Overridable *m_template;
+-};
+-
+-class BfmeThingTemplateKindView
+-{
+-public:
+-	unsigned char m_beforeKind[0xd0];
+-	UnsignedInt m_kindOfD0;
+-};
+-
+-class SiegeDeployModuleInterface
+-{
+-public:
+-	virtual void slot00() {}
+-	virtual void slot01() {}
+-	virtual void slot02() {}
+-	virtual Bool canDeploy(Object *) { return false; }
+-};
+-
+-class SiegeDeployModuleView
+-{
+-public:
+-	unsigned char m_beforeInterface[0x20];
+-	SiegeDeployModuleInterface m_interface;
+-};
+-
+-class ObjectDeployFields
+-{
+-public:
+-	unsigned char m_before74[0x74];
+-	Object *m_deployReference;
+-	unsigned char m_before94[0x94 - 0x78];
+-	Int m_status94;
+-};
+-
+-template <unsigned int NUMBITS>
+-class BitFlags
+-{
+-public:
+-	enum BogusInitType { kInit = 0 };
+-
+-	BitFlags() {}
+-	BitFlags(BogusInitType, Int bit)
+-	{
+-		m_bits._Unchecked_set((size_t)bit);
+-	}
+-
+-private:
+-	_STL::bitset<NUMBITS> m_bits;
+-};
+-
+-typedef BitFlags<192> KindOfMaskType;
+-extern const KindOfMaskType KINDOFMASK_NONE;
+-
+-class PartitionFilter
+-{
+-public:
+-	PartitionFilter() : m_next(0) {}
+-	virtual ~PartitionFilter() {}
+-	virtual Bool allow(Object *) = 0;
+-
+-	PartitionFilter *m_next;
+-};
+-
+-class PartitionFilterAcceptByKindOf : public PartitionFilter
+-{
+-public:
+-	PartitionFilterAcceptByKindOf(const KindOfMaskType &mustBeSet,
+-		const KindOfMaskType &mustBeClear);
+-	virtual ~PartitionFilterAcceptByKindOf() {}
+-	virtual Bool allow(Object *) { return false; }
+-	PartitionFilter *asFilter() { return this; }
+-
+-	KindOfMaskType m_mustBeSet;
+-	KindOfMaskType m_mustBeClear;
+-};
+-
+-struct BfmeWideEntry
+-{
+-	Object *object;
+-	UnsignedInt word04;
+-};
+-
+-struct BfmeWideResultData
+-{
+-	std::vector<BfmeWideEntry> entries;
+-	BfmeWideEntry *current;
+-	Int references;
+-};
+-
+-struct BfmeWideResult
+-{
+-	BfmeWideResultData *value;
+-
+-	BfmeWideResult();
+-	BfmeWideResult(const BfmeWideResult &other)
+-		: value(other.value)
+-	{
+-		++value->references;
+-	}
+-
+-	~BfmeWideResult()
+-	{
+-		if (--value->references == 0)
+-			delete value;
+-	}
+-
+-	Object *next(Object *&object)
+-	{
+-		if (value->current == value->entries.end())
+-			return 0;
+-		object = (value->current++)->object;
+-		return object;
+-	}
+-};
+-
+-class BfmeWideForwardC
+-{
+-public:
+-	BfmeWideResult bfmeForwardWideC(Int a, Int b, Int c, Int d, Int e);
+-};
+-
+-class PartitionManager : public BfmeWideForwardC
+-{
+-};
+-
+-class ScriptEngine
+-{
+-public:
+-	virtual void slot00() = 0;
+-	virtual void slot01() = 0;
+-	virtual void slot02() = 0;
+-	virtual void slot03() = 0;
+-	virtual void slot04() = 0;
+-	virtual void slot05() = 0;
+-	virtual void slot06() = 0;
+-	virtual void slot07() = 0;
+-	virtual void slot08() = 0;
+-	virtual void slot09() = 0;
+-	virtual void slot10() = 0;
+-	virtual void slot11() = 0;
+-	virtual void slot12() = 0;
+-	virtual void slot13() = 0;
+-	virtual void slot14() = 0;
+-	virtual void slot15() = 0;
+-	virtual void slot16() = 0;
+-	virtual Team *getTeamNamed(AsciiString name, Bool exact) = 0;
+-};
+-
+-class BfmeSpecialPowerModuleVtbl_30
+-{
+-public:
+-	virtual void slot00() = 0;
+-	virtual void slot01() = 0;
+-	virtual void slot02() = 0;
+-	virtual void slot03() = 0;
+-	virtual UnsignedInt getReadyFrame() const = 0;
+-	virtual void slot05() = 0;
+-	virtual void slot06() = 0;
+-	virtual void slot07() = 0;
+-	virtual void slot08() = 0;
+-	virtual void slot09(UnsignedInt) = 0;
+-	virtual void slot10(Bool) = 0;
+-	virtual void slot11() = 0;
+-	virtual void doSpecialPowerAtObject(Object *object,
+-		UnsignedInt commandOptions) = 0;
+-};
+-
+-extern ScriptEngine *TheScriptEngine;
+-extern NameKeyGenerator *TheNameKeyGenerator;
+-extern PartitionManager *ThePartitionManager;
+-
+-class ScriptActions
+-{
+-protected:
+-	void doDeploySiegeNearTeam(Parameter *sourceTeam, Parameter *targetTeam,
+-		Parameter *radius);
+-};
+-
+-void ScriptActions::doDeploySiegeNearTeam(Parameter *sourceTeam,
+-	Parameter *targetTeam, Parameter *radius)
+-{
+-	Team *source = TheScriptEngine->getTeamNamed(sourceTeam->m_string, false);
+-	if (!source)
+-		return;
+-
+-	DLINK_ITERATOR<Object> members = source->iterate_TeamMemberList();
+-	if (members.done())
+-		return;
+-
+-	Team *target = TheScriptEngine->getTeamNamed(targetTeam->m_string, false);
+-	if (!target)
+-		return;
+-
+-	Coord3D targetPosition;
+-	target->getEstimateTeamPosition(&targetPosition);
+-	Real searchRadius = radius->m_real;
+-	Int searchRadiusBits = *(const Int *)&searchRadius;
+-
+-	BitFlags<192> kindMask(BitFlags<192>::kInit, 27);
+-	BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
+-		(Int)&targetPosition, searchRadiusBits, 0,
+-		(Int)PartitionFilterAcceptByKindOf(kindMask, KINDOFMASK_NONE).asFilter(),
+-		1);
+-
+-	Object *candidate;
+-	while (result.next(candidate))
+-	{
+-		if (!candidate)
+-			continue;
+-
+-		static NameKeyType siegeDeployKey =
+-			TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
+-		Module *candidateModule = candidate->findModule(siegeDeployKey);
+-		if (!candidateModule)
+-			continue;
+-
+-		for (; !members.done(); )
+-		{
+-			Object *member = members.cur();
+-
+-			Overridable *objectTemplate =
+-				((BfmeObjectTemplateView *)member)->m_template;
+-			if (objectTemplate && objectTemplate->m_nextOverride)
+-				objectTemplate = (Overridable *)objectTemplate->m_nextOverride
+-					->getFinalOverride();
+-			if ((((BfmeThingTemplateKindView *)objectTemplate)->m_kindOfD0 &
+-				0x10000000) == 0)
+-				goto advance_member;
+-
+-			SpecialPowerModuleInterface *specialPower =
+-				member->findSpecialPowerModuleInterface(
+-					(SpecialPowerType)SPECIAL_POWER_DEPLOY_SIEGE);
+-			if (!specialPower)
+-				goto advance_member;
+-			if (!specialPower->isReady())
+-				goto advance_member;
+-			if ((((ObjectDeployFields *)member)->m_status94 &
+-				0x80000000u) != 0)
+-				goto advance_member;
+-			if (!((SiegeDeployModuleView *)candidateModule)->m_interface
+-				.canDeploy(((ObjectDeployFields *)member)->m_deployReference))
+-				break;
+-
+-			((BfmeSpecialPowerModuleVtbl_30 *)specialPower)
+-				->doSpecialPowerAtObject(candidate, 2);
+-
+-	advance_member:
+-			if (members.cur() != 0)
+-				members.advance();
+-		}
+-	}
+-}
+diff --git a/reverse/attempts/0x00302240.cpp b/reverse/attempts/0x00302240.cpp
+deleted file mode 100644
+index 0082b2de..00000000
+--- a/reverse/attempts/0x00302240.cpp
++++ /dev/null
+@@ -1,475 +0,0 @@
+-// ?doTeamGarrisonNearestBuilding@ScriptActions@@IAEXABVAsciiString@@@Z
+-// partial score=0.58 date=2026-09-10
+-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
+-//
+-// ScriptActions::doTeamGarrisonNearestBuilding, retail RVA 0x00302240.
+-// The executeAction TEAM_GARRISON_NEAREST_BUILDING arm names this operation.
+-// This TU keeps the BFME-only wide iterator and Object/DLINK layouts local;
+-// the vendored Zero Hour declarations use a different iterator ABI here.
+-
+-#include "StringInline.h"
+-
+-typedef bool Bool;
+-typedef float Real;
+-typedef int Int;
+-typedef unsigned int UnsignedInt;
+-
+-class Object;
+-class Player;
+-
+-namespace _STL
+-{
+-	template <bool __threads, int __inst>
+-	class __node_alloc
+-	{
+-	public:
+-		static void _M_deallocate(void *p, unsigned int bytes);
+-	};
+-}
+-
+-class BfmeStringArgBase
+-{
+-	friend class BfmeAsciiStringArg;
+-
+-private:
+-	BfmeStringArgBase(const BfmeStringArgBase &other);
+-	~BfmeStringArgBase();
+-};
+-
+-class BfmeAsciiStringArg
+-{
+-public:
+-	BfmeAsciiStringArg(const AsciiString &that)
+-	{
+-		((BfmeStringArgBase *)this)->BfmeStringArgBase::BfmeStringArgBase(
+-			*(const BfmeStringArgBase *)&that);
+-	}
+-	~BfmeAsciiStringArg();
+-
+-private:
+-	char *m_text;
+-};
+-
+-class BfmeObjectVirtualTail
+-{
+-public:
+-	unsigned char m_vt[4];
+-};
+-
+-class BfmeObjectVtbl
+-{
+-public:
+-	virtual void bfmeObjectSlot0(void) = 0;
+-};
+-
+-template <class T>
+-class BfmeOverride
+-{
+-public:
+-	const T *operator->() const
+-	{
+-		const T *value = m_overridable;
+-		if (value && *(const void *const *)((const char *)value + 4))
+-			value = (const T *)((const Overridable *)
+-				*(const void *const *)((const char *)value + 4))->getFinalOverride();
+-		return value;
+-	}
+-
+-	const T *volatile m_overridable;
+-};
+-
+-class Overridable
+-{
+-public:
+-	const Overridable *getFinalOverride(void) const;
+-};
+-
+-struct Coord3D
+-{
+-	Real x;
+-	Real y;
+-	Real z;
+-};
+-
+-enum KindOfType
+-{
+-	KINDOF_INFANTRY = 8,
+-	KINDOF_NO_GARRISON = 27
+-};
+-
+-class ThingTemplate
+-{
+-public:
+-	Bool isKindOf(KindOfType kind) const
+-	{
+-		const volatile UnsignedInt *kindOf =
+-			(const volatile UnsignedInt *)((const char *)this + 0xc8);
+-		return (kindOf[(UnsignedInt)kind >> 5] &
+-			(1u << ((UnsignedInt)kind & 31))) != 0;
+-	}
+-};
+-
+-class BfmeObjectDlinkBase
+-{
+-public:
+-	Object *dlink_next_TeamMemberList(void) const;
+-	BfmeOverride<ThingTemplate> m_template;
+-};
+-
+-class BfmeObjectDlinkPad
+-{
+-public:
+-	unsigned char m_pad[0x60];
+-};
+-
+-// Object+0x68 is the inherited vbptr used by the retail DLINK PMF.
+-class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
+-{
+-public:
+-	unsigned char m_carrier[4];
+-};
+-
+-class AICommandInterface
+-{
+-public:
+-	void aiEnter(Object *building, int source);
+-};
+-
+-class BfmeAIUpdateView
+-{
+-public:
+-	unsigned char m_beforeCommands[0x20];
+-	AICommandInterface m_commands;
+-};
+-
+-class ContainModuleInterface
+-{
+-public:
+-#define BFME_CONTAIN_SLOT(N) virtual void bfmeContainSlot##N(void) = 0
+-	BFME_CONTAIN_SLOT(00); BFME_CONTAIN_SLOT(01);
+-	BFME_CONTAIN_SLOT(02); BFME_CONTAIN_SLOT(03);
+-	BFME_CONTAIN_SLOT(04); BFME_CONTAIN_SLOT(05);
+-	BFME_CONTAIN_SLOT(06); BFME_CONTAIN_SLOT(07);
+-	BFME_CONTAIN_SLOT(08); BFME_CONTAIN_SLOT(09);
+-	BFME_CONTAIN_SLOT(10); BFME_CONTAIN_SLOT(11);
+-	BFME_CONTAIN_SLOT(12); BFME_CONTAIN_SLOT(13);
+-	BFME_CONTAIN_SLOT(14); BFME_CONTAIN_SLOT(15);
+-	BFME_CONTAIN_SLOT(16); BFME_CONTAIN_SLOT(17);
+-	BFME_CONTAIN_SLOT(18); BFME_CONTAIN_SLOT(19);
+-	BFME_CONTAIN_SLOT(20); BFME_CONTAIN_SLOT(21);
+-	BFME_CONTAIN_SLOT(22);
+-	virtual UnsignedInt getContainMax(void) const = 0;
+-#undef BFME_CONTAIN_SLOT
+-	virtual void bfmeContainSlot24(void) = 0;
+-	virtual void bfmeContainSlot25(void) = 0;
+-	virtual void bfmeContainSlot26(void) = 0;
+-	virtual void bfmeContainSlot27(void) = 0;
+-	virtual void bfmeContainSlot28(void) = 0;
+-	virtual void bfmeContainSlot29(void) = 0;
+-	virtual void bfmeContainSlot30(void) = 0;
+-	virtual void bfmeContainSlot31(void) = 0;
+-	virtual void bfmeContainSlot32(void) = 0;
+-	virtual void bfmeContainSlot33(void) = 0;
+-	virtual void bfmeContainSlot34(void) = 0;
+-	virtual void bfmeContainSlot35(void) = 0;
+-	virtual void bfmeContainSlot36(void) = 0;
+-	virtual void bfmeContainSlot37(void) = 0;
+-	virtual void bfmeContainSlot38(void) = 0;
+-	virtual void bfmeContainSlot39(void) = 0;
+-	virtual void bfmeContainSlot40(void) = 0;
+-	virtual void bfmeContainSlot41(void) = 0;
+-	virtual void bfmeContainSlot42(void) = 0;
+-	virtual void bfmeContainSlot43(void) = 0;
+-	virtual void bfmeContainSlot44(void) = 0;
+-	virtual void bfmeContainSlot45(void) = 0;
+-	virtual void bfmeContainSlot46(void) = 0;
+-	virtual void bfmeContainSlot47(void) = 0;
+-	virtual void bfmeContainSlot48(void) = 0;
+-	virtual void bfmeContainSlot49(void) = 0;
+-	virtual void bfmeContainSlot50(void) = 0;
+-	virtual void bfmeContainSlot51(void) = 0;
+-	virtual void bfmeContainSlot52(void) = 0;
+-	virtual void bfmeContainSlot53(void) = 0;
+-	virtual void bfmeContainSlot54(void) = 0;
+-	virtual void bfmeContainSlot55(void) = 0;
+-	virtual void bfmeContainSlot56(void) = 0;
+-	virtual void bfmeContainSlot57(void) = 0;
+-	virtual void bfmeContainSlot58(void) = 0;
+-	virtual void bfmeContainSlot59(void) = 0;
+-	virtual void bfmeContainSlot60(void) = 0;
+-	virtual void bfmeContainSlot61(void) = 0;
+-	virtual void bfmeContainSlot62(void) = 0;
+-	virtual void bfmeContainSlot63(void) = 0;
+-	virtual UnsignedInt getContainCount(Bool countRiders) const = 0;
+-};
+-
+-class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
+-	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
+-{
+-public:
+-
+-	const Coord3D *getPosition(void) const
+-	{
+-		return (const Coord3D *)((const char *)this + 0x38);
+-	}
+-
+-	BfmeAIUpdateView *getAIUpdateInterface(void) const
+-	{
+-		return *(BfmeAIUpdateView *const *)((const char *)this + 0x204);
+-	}
+-
+-	ContainModuleInterface *getContain(void) const
+-	{
+-		return *(ContainModuleInterface *const *)((const char *)this + 0x1fc);
+-	}
+-
+-	const ThingTemplate *getTemplate(void) const
+-	{
+-		return m_template.operator->();
+-	}
+-
+-	Bool isKindOf(KindOfType kind) const
+-	{
+-		const ThingTemplate *thingTemplate = getTemplate();
+-		return thingTemplate != 0 && thingTemplate->isKindOf(kind);
+-	}
+-};
+-
+-typedef Object *(Object::*BfmeGetNextTeamMemberFunc)(void) const;
+-
+-template<class ObjectType>
+-class DLINK_ITERATOR
+-{
+-public:
+-	DLINK_ITERATOR(ObjectType *cur, BfmeGetNextTeamMemberFunc getNext)
+-		: m_cur(cur), m_getNext(getNext) {}
+-
+-	void advance(void)
+-	{
+-		if (m_cur)
+-			m_cur = (m_cur->*m_getNext)();
+-	}
+-
+-	Bool done(void) const { return m_cur == 0; }
+-	ObjectType *cur(void) const { return m_cur; }
+-
+-private:
+-	ObjectType *m_cur;
+-	BfmeGetNextTeamMemberFunc m_getNext;
+-};
+-
+-class Team
+-{
+-public:
+-	Player *getControllingPlayer(void) const;
+-
+-	DLINK_ITERATOR<Object> iterate_TeamMemberList(void) const
+-	{
+-		return DLINK_ITERATOR<Object>(m_head,
+-			(BfmeGetNextTeamMemberFunc)
+-				BfmeObjectDlinkBase::dlink_next_TeamMemberList);
+-	}
+-
+-private:
+-	unsigned char m_beforeMembers[0x0c];
+-	Object *m_head;
+-};
+-
+-class PartitionFilter
+-{
+-public:
+-	PartitionFilter *link(PartitionFilter *next);
+-
+-	UnsignedInt m_vptr;
+-	PartitionFilter *m_next;
+-};
+-
+-class PartitionFilterSameMapStatus : public PartitionFilter
+-{
+-public:
+-	PartitionFilterSameMapStatus(const Object *object)
+-	{
+-		m_next = 0;
+-		m_vptr = 0x01085dd0;
+-		m_object = object;
+-	}
+-
+-	~PartitionFilterSameMapStatus(void)
+-	{
+-		m_vptr = 0x01083b5c;
+-	}
+-
+-	const Object *m_object;
+-};
+-
+-class PartitionFilterGarrisonableByPlayer : public PartitionFilter
+-{
+-public:
+-	PartitionFilterGarrisonableByPlayer(const Player *player, Bool match,
+-		int source)
+-	{
+-		m_next = 0;
+-		m_vptr = 0x010cfff0;
+-		m_player = player;
+-		m_match = match;
+-		m_source = source;
+-	}
+-
+-	~PartitionFilterGarrisonableByPlayer(void)
+-	{
+-		m_vptr = 0x01083b5c;
+-	}
+-
+-	const Player *m_player;
+-	Bool m_match;
+-	int m_source;
+-};
+-
+-struct BfmeRangeNode
+-{
+-	Object *m_object;
+-	UnsignedInt m_padding;
+-};
+-
+-class SimpleObjectIterator
+-{
+-public:
+-	Object *first(void)
+-	{
+-		return next();
+-	}
+-
+-	Object *next(void)
+-	{
+-		char *end = m_end;
+-		char *cur = m_current;
+-		if (cur == end)
+-			return 0;
+-		Object *object = *(Object **)cur;
+-		cur += 8;
+-		m_current = cur;
+-		return object;
+-	}
+-
+-	void deleteInstance(void)
+-	{
+-		--m_refCount;
+-		if (m_refCount == 0)
+-		{
+-			char *begin = m_begin;
+-			if (begin != 0)
+-			{
+-				Int bytes = ((m_capacity - begin) >> 3) << 3;
+-				if (bytes > 0x80)
+-					::operator delete(begin);
+-				else
+-					_STL::__node_alloc<true, 0>::_M_deallocate(begin, bytes);
+-			}
+-			::operator delete(this);
+-		}
+-	}
+-
+-private:
+-	char *m_begin;
+-	char *m_end;
+-	char *m_capacity;
+-	char *m_current;
+-	Int m_refCount;
+-};
+-
+-struct BfmeWideResult
+-{
+-	SimpleObjectIterator *m_value;
+-
+-	~BfmeWideResult(void)
+-	{
+-		m_value->deleteInstance();
+-	}
+-};
+-
+-class BfmeWideResultSource
+-{
+-};
+-
+-class BfmeWideForwardC
+-{
+-	char m_pad[0x0c];
+-	BfmeWideResultSource *m_source;
+-
+-public:
+-	BfmeWideResult bfmeForwardWideC(int a, int b, int c, int d, int e);
+-};
+-
+-class PartitionManager : public BfmeWideForwardC
+-{
+-};
+-
+-class ScriptEngine
+-{
+-public:
+-	virtual void slot00(void) = 0; virtual void slot01(void) = 0;
+-	virtual void slot02(void) = 0; virtual void slot03(void) = 0;
+-	virtual void slot04(void) = 0; virtual void slot05(void) = 0;
+-	virtual void slot06(void) = 0; virtual void slot07(void) = 0;
+-	virtual void slot08(void) = 0; virtual void slot09(void) = 0;
+-	virtual void slot10(void) = 0; virtual void slot11(void) = 0;
+-	virtual void slot12(void) = 0; virtual void slot13(void) = 0;
+-	virtual void slot14(void) = 0; virtual void slot15(void) = 0;
+-	virtual void slot16(void) = 0;
+-	virtual Team *getTeamNamed(BfmeAsciiStringArg name, Bool exact) = 0;
+-};
+-
+-extern ScriptEngine *TheScriptEngine;
+-extern PartitionManager *ThePartitionManager;
+-
+-class ScriptActions
+-{
+-protected:
+-	void doTeamGarrisonNearestBuilding(const AsciiString &teamName);
+-};
+-
+-// ?doTeamGarrisonNearestBuilding@ScriptActions@@IAEXABVAsciiString@@@Z
+-void ScriptActions::doTeamGarrisonNearestBuilding(const AsciiString &teamName)
+-{
+-	Team *theTeam = TheScriptEngine->getTeamNamed(teamName, false);
+-	if (!theTeam)
+-		return;
+-
+-	DLINK_ITERATOR<Object> diter = theTeam->iterate_TeamMemberList();
+-	Object *leader = diter.cur();
+-	if (!leader)
+-		return;
+-
+-	PartitionFilterSameMapStatus f1(leader);
+-	PartitionFilterGarrisonableByPlayer f2(
+-		theTeam->getControllingPlayer(), true, 1);
+-	BfmeWideResult result = ThePartitionManager->bfmeForwardWideC(
+-		(int)leader->getPosition(), 0x49742400, 3,
+-		(int)f2.link(&f1), 1);
+-
+-	Object *theBuilding;
+-	while ((theBuilding = result.m_value->next()) != 0)
+-	{
+-		ContainModuleInterface *contain = theBuilding->getContain();
+-		if (!contain)
+-			continue;
+-
+-		Int slotsAvailable = (Int)contain->getContainCount(false);
+-		slotsAvailable = (Int)contain->getContainMax() - slotsAvailable;
+-		for (Int i = 0; i < slotsAvailable; )
+-		{
+-			Object *object = diter.cur();
+-			if (diter.done() || !object)
+-				return;
+-
+-			BfmeAIUpdateView *ai = object->getAIUpdateInterface();
+-			if (ai && object->isKindOf(KINDOF_INFANTRY) &&
+-				!object->isKindOf(KINDOF_NO_GARRISON))
+-			{
+-				ai->m_commands.aiEnter(theBuilding, 1);
+-				++i;
+-			}
+-			diter.advance();
+-		}
+-	}
+-}
+diff --git a/reverse/attempts/0x00303910.cpp b/reverse/attempts/0x00303910.cpp
+deleted file mode 100644
+index 56f031b4..00000000
+--- a/reverse/attempts/0x00303910.cpp
++++ /dev/null
+@@ -1,215 +0,0 @@
+-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline /Ireference/shims/objectdlink
+-// partial score=0.94 date=2026-09-08
+-// TEAM_REPAIR_NEREST scans a team for the most damaged eligible object, then
+-// sends every eligible member of the named repair team to that object.
+-
+-#include "StringInline.h"
+-#include "ObjectDlinkPmf.h"
+-
+-typedef bool Bool;
+-typedef float Real;
+-
+-class Team;
+-class Object;
+-
+-class Overridable
+-{
+-public:
+-	virtual ~Overridable();
+-	const Overridable *getFinalOverride() const;
+-
+-	Overridable *m_nextOverride;
+-};
+-
+-class ThingTemplate : public Overridable
+-{
+-public:
+-	unsigned char m_unmodelled_008[0xc0];
+-	unsigned int m_kindof[1];
+-};
+-
+-enum CommandSourceType
+-{
+-	CMD_FROM_SCRIPT = 1
+-};
+-
+-class AICommandInterface
+-{
+-public:
+-	void aiRepair(Object *object, CommandSourceType source);
+-};
+-
+-class AIUpdateInterface
+-{
+-public:
+-	unsigned char m_unmodelled_00[0x20];
+-	AICommandInterface m_command;
+-};
+-
+-class BfmeBodyModuleInterface
+-{
+-public:
+-	virtual void slot00() = 0;
+-	virtual void slot01() = 0;
+-	virtual void slot02() = 0;
+-	virtual void slot03() = 0;
+-	virtual void slot04() = 0;
+-	virtual Real getHealth() const = 0;
+-};
+-
+-static const ThingTemplate *bfmeGetTemplate(const Object *object)
+-{
+-	return *(const ThingTemplate **)((const unsigned char *)object + 4);
+-}
+-
+-static BfmeBodyModuleInterface *bfmeGetBody(const Object *object)
+-{
+-	return *(BfmeBodyModuleInterface **)((const unsigned char *)object + 0x200);
+-}
+-
+-static AIUpdateInterface *bfmeGetAI(const Object *object)
+-{
+-	return *(AIUpdateInterface **)((const unsigned char *)object + 0x204);
+-}
+-
+-template <class ObjectType>
+-class BfmeDlinkIterator
+-{
+-public:
+-	typedef ObjectType *(ObjectType::*GetNextFunc)() const;
+-
+-	BfmeDlinkIterator(ObjectType *cur, GetNextFunc getNext)
+-		: m_cur(cur), m_getNext(getNext) { }
+-
+-	Bool done() const
+-	{
+-		return m_cur == 0;
+-	}
+-
+-	ObjectType *cur() const
+-	{
+-		return m_cur;
+-	}
+-
+-	void advance()
+-	{
+-		m_cur = (m_cur->*m_getNext)();
+-	}
+-
+-private:
+-	ObjectType *m_cur;
+-	GetNextFunc m_getNext;
+-};
+-
+-class Team
+-{
+-public:
+-	void *m_vptr;
+-	void *m_unmodelled0;
+-	void *m_unmodelled1;
+-	struct DlinkHead
+-	{
+-		Object *m_head;
+-	} m_dlinkhead_TeamMemberList;
+-
+-	BfmeDlinkIterator<Object> iterate_TeamMemberList() const
+-	{
+-		return BfmeDlinkIterator<Object>(m_dlinkhead_TeamMemberList.m_head,
+-			Object::dlink_next_TeamMemberList);
+-	}
+-
+-};
+-
+-class ScriptEngine
+-{
+-public:
+-	virtual void slot00() = 0;
+-	virtual void slot01() = 0;
+-	virtual void slot02() = 0;
+-	virtual void slot03() = 0;
+-	virtual void slot04() = 0;
+-	virtual void slot05() = 0;
+-	virtual void slot06() = 0;
+-	virtual void slot07() = 0;
+-	virtual void slot08() = 0;
+-	virtual void slot09() = 0;
+-	virtual void slot10() = 0;
+-	virtual void slot11() = 0;
+-	virtual void slot12() = 0;
+-	virtual void slot13() = 0;
+-	virtual void slot14() = 0;
+-	virtual void slot15() = 0;
+-	virtual void slot16() = 0;
+-	virtual Team *getTeamNamed(AsciiString name, Bool exact) = 0;
+-};
+-
+-extern ScriptEngine *TheScriptEngine;
+-
+-static const ThingTemplate *bfmeFinalTemplate(const Overridable *value)
+-{
+-	return (const ThingTemplate *)value->getFinalOverride();
+-}
+-
+-static void bfmeAiRepair(AICommandInterface *command, Object *object,
+-	CommandSourceType source)
+-{
+-	command->aiRepair(object, source);
+-}
+-
+-class ScriptActions
+-{
+-protected:
+-	void doTeamRepairNearest(const AsciiString &repairTeamName,
+-		const AsciiString &targetTeamName);
+-};
+-
+-void ScriptActions::doTeamRepairNearest(const AsciiString &repairTeamName,
+-	const AsciiString &targetTeamName)
+-{
+-	Team *repairTeam = TheScriptEngine->getTeamNamed(repairTeamName, false);
+-	Team *targetTeam = TheScriptEngine->getTeamNamed(targetTeamName, false);
+-	if (!repairTeam)
+-		return;
+-
+-	Object *mostDamaged = 0;
+-	Real lowestHealth = 1.0f;
+-	BfmeDlinkIterator<Object> target = targetTeam->iterate_TeamMemberList();
+-	for (; !target.done(); target.advance())
+-	{
+-		Object *object = target.cur();
+-		const ThingTemplate *thingTemplate = bfmeGetTemplate(object);
+-		if (thingTemplate && thingTemplate->m_nextOverride)
+-			thingTemplate = bfmeFinalTemplate(thingTemplate->m_nextOverride);
+-		if (*(const unsigned char *)&thingTemplate->m_kindof[0] & 0x80)
+-		{
+-			BfmeBodyModuleInterface *body = bfmeGetBody(object);
+-			if (body)
+-			{
+-				if (body->getHealth() < lowestHealth)
+-				{
+-					mostDamaged = object;
+-					lowestHealth = body->getHealth();
+-				}
+-			}
+-		}
+-	}
+-
+-	if (mostDamaged)
+-	{
+-		BfmeDlinkIterator<Object> repair = repairTeam->iterate_TeamMemberList();
+-		for (; !repair.done(); repair.advance())
+-		{
+-			Object *object = repair.cur();
+-			const ThingTemplate *thingTemplate = bfmeGetTemplate(object);
+-			if (thingTemplate && thingTemplate->m_nextOverride)
+-				thingTemplate = bfmeFinalTemplate(thingTemplate->m_nextOverride);
+-			if (thingTemplate->m_kindof[0] & 0x4000)
+-			{
+-				AIUpdateInterface *ai = bfmeGetAI(object);
+-				if (ai)
+-					bfmeAiRepair(&ai->m_command, mostDamaged,
+-						CMD_FROM_SCRIPT);
+-			}
+-		}
+-	}
+-}
+diff --git a/reverse/deleted_rows.csv b/reverse/deleted_rows.csv
+index 7e20367f..75322616 100644
+--- a/reverse/deleted_rows.csv
++++ b/reverse/deleted_rows.csv
+@@ -28031,3 +28031,10 @@ Gen_f265_b7a8aa_002d8990,0x002D8990,"gen-shim scaffold placeholder superseded by
+ ?d_009f0bd0@@YAXXZ,0x009F0BD0,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?m009F0BD0@Q1Receiver0134FAAC@@QAEXH@Z, a gate-required claim from Code/GameEngine/Source/Common/Bfme/Q1Receiver0134FAAC_m009F0BD0.cpp over the same 238-byte range. The Code/gen_asm/d_009d9a30.asm scaffold reproduces those bytes but carries no identity."
+ ?d_009f0e50@@YAXXZ,0x009F0E50,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?m009F0E50@Q1Receiver0134FAAC@@QAEXH@Z, a gate-required claim from Code/GameEngine/Source/Common/Bfme/Q1Receiver0134FAAC_m009F0E50.cpp over the same 327-byte range. The Code/gen_asm/d_009d9a30.asm scaffold reproduces those bytes but carries no identity."
+ ?d_009f23c0@@YAXXZ,0x009F23C0,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ??1Gen_dtor_009eb9e0@@QAE@XZ, a gate-required claim from Code/GameEngine/Source/Common/Bfme/Gen_dtor_009eb9e0_Destructor.cpp over the same 563-byte range. The Code/gen_asm/d_009d9a30.asm scaffold reproduces those bytes but carries no identity."
++?d_002fee90@@YAXXZ,0x002FEE90,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?doDeployNamedSiegeOnWaypoint@ScriptActions@@IAEXPAVParameter@@00@Z, a gate-required claim from Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDeploySiege.cpp over the same 448-byte range. The Code/gen_asm/d_002fd9d0.asm scaffold reproduces those bytes but carries no identity."
++?d_002fdef0@@YAXXZ,0x002FDEF0,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?applyModelCondition_002FDEF0@@YAXPAVObject@@H_N@Z, a gate-required claim from Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedSetModelCondition.cpp over the same 131-byte range. The Code/gen_asm/d_002fd9d0.asm scaffold reproduces those bytes but carries no identity."
++?d_002ffb60@@YAXXZ,0x002FFB60,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?doTeamPartialUseCommandButton@ScriptActions@@IAEXMABVAsciiString@@0@Z, a gate-required claim from Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamPartialUseCommandButton.cpp over the same 464-byte range. The Code/gen_asm/d_002fd9d0.asm scaffold reproduces those bytes but carries no identity."
++?d_002fdac0@@YAXXZ,0x002FDAC0,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?useCommandButtonOnNearestTemplate_002FDAC0@@YAXPAVObject@@PBVCommandButton@@PBVThingTemplate@@@Z, a gate-required claim from Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedUseCommandButtonOnNearestObjectType.cpp over the same 416-byte range. The Code/gen_asm/d_002fd9d0.asm scaffold reproduces those bytes but carries no identity."
++?d_002fdcd0@@YAXXZ,0x002FDCD0,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?doNamedUseCommandButtonOnNearestObjectType@ScriptActions@@IAEXABVAsciiString@@00@Z, a gate-required claim from Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedUseCommandButtonOnNearestObjectType.cpp over the same 173-byte range. The Code/gen_asm/d_002fd9d0.asm scaffold reproduces those bytes but carries no identity."
++?d_00302240@@YAXXZ,0x00302240,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?doTeamGarrisonNearestBuilding@ScriptActions@@IAEXABVAsciiString@@@Z, a gate-required claim from Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamGarrisonNearestBuilding.cpp over the same 536-byte range. The Code/gen_asm/d_002fd9d0.asm scaffold reproduces those bytes but carries no identity."
++?d_00303910@@YAXXZ,0x00303910,"gen-dump scaffold placeholder superseded by the real identity of these bytes: ?rva00303910@ScriptActions@@IAEXABVAsciiString@@0@Z, a gate-required claim from Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsRva00303910.cpp over the same 340-byte range. The Code/gen_asm/d_002fd9d0.asm scaffold reproduces those bytes but carries no identity."
+diff --git a/reverse/functions.csv b/reverse/functions.csv
+index df406c87..57d37d6c 100644
+--- a/reverse/functions.csv
++++ b/reverse/functions.csv
+@@ -32207,19 +32207,12 @@ $L314,,0x00C1FC1D,24,Code/GameEngine/Source/Common/Rva00C1FC1DVecDtor.cpp,matche
+ ?d_002fca30@@YAXXZ,,0x002FCA30,478,Code/gen_asm/d_002f6330.asm,matched,gen-dump;ghidra=FUN_006fca30
+ ?d_002fd280@@YAXXZ,,0x002FD280,242,Code/gen_asm/d_002f6330.asm,matched,gen-dump;ghidra=FUN_006fd280
+ ?d_002fd790@@YAXXZ,,0x002FD790,457,Code/gen_asm/d_002f6330.asm,matched,gen-dump;ghidra=FUN_006fd790
+-?d_002fdac0@@YAXXZ,,0x002FDAC0,416,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_006fdac0
+-?d_002fdcd0@@YAXXZ,,0x002FDCD0,173,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_006fdcd0
+-?d_002fdef0@@YAXXZ,,0x002FDEF0,131,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_006fdef0
+ ?d_002fe590@@YAXXZ,,0x002FE590,461,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_006fe590
+-?d_002fee90@@YAXXZ,,0x002FEE90,448,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_006fee90
+-?d_002ffb60@@YAXXZ,,0x002FFB60,464,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_006ffb60
+ ?d_003006b0@@YAXXZ,,0x003006B0,2445,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_007006b0
+ ?d_003014c0@@YAXXZ,,0x003014C0,979,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_007014c0
+ ?d_00301c10@@YAXXZ,,0x00301C10,160,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_00701c10
+-?d_00302240@@YAXXZ,,0x00302240,536,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_00702240
+ ?d_00302c70@@YAXXZ,,0x00302C70,202,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_00702c70
+ ?d_00303670@@YAXXZ,,0x00303670,534,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_00703670
+-?d_00303910@@YAXXZ,,0x00303910,340,Code/gen_asm/d_002fd9d0.asm,matched,gen-dump;ghidra=FUN_00703910
+ ?d_00322070@@YAXXZ,,0x00322070,9,Code/gen_asm/d_002ed640.asm,matched,gen-dump;bounds=high
+ ?d_00322730@@YAXXZ,,0x00322730,37,Code/gen_asm/d_002ed640.asm,matched,gen-dump;bounds=high
+ ?d_00323550@@YAXXZ,,0x00323550,205,Code/gen_asm/d_00322a60.asm,matched,gen-dump;ghidra=FUN_00723550
+@@ -169282,3 +169275,12 @@ _rva0045DD90UpdateCoordinatePairs,,0x0045DD90,161,Code/GameEngine/Source/GameCli
+ ?Rva009EBAA0@@YAXH@Z,,0x009EBAA0,21,Code/GameEngine/Source/Common/Q1GlobalGuardedForwarders.cpp,matched,address-derived; guarded forwarder on global 0x0134FAAC to matched m009F1A60; same 21B shape as the other Q1 forwarders in this TU
+ ?Rva009EBAE0@@YAXH@Z,,0x009EBAE0,21,Code/GameEngine/Source/Common/Q1GlobalGuardedForwarders.cpp,matched,address-derived; guarded forwarder on global 0x0134FAAC to matched m009F0CC0; same 21B shape as the other Q1 forwarders in this TU
+ ?Rva009EBB00@@YAXH@Z,,0x009EBB00,21,Code/GameEngine/Source/Common/Q1GlobalGuardedForwarders.cpp,matched,address-derived; guarded forwarder on global 0x0134FAAC to matched m009F0E50; same 21B shape as the other Q1 forwarders in this TU
++?doDeploySiegeOnWaypoint@ScriptActions@@IAEXPAVParameter@@00@Z,,0x002FF0C0,704,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDeploySiege.cpp,matched,executeAction action 466 via ILT 0x00012085; template DEPLOY_SIEGE_ON_WAYPOINT; carved boundary ret 0Ch at +0x2BD; clean C++ with OVERRIDE<ThingTemplate> keeping the advance null guard
++?doDeploySiegeNearTeam@ScriptActions@@IAEXPAVParameter@@00@Z,,0x002FF430,655,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDeploySiege.cpp,matched,executeAction action 467 via ILT 0x0003F576; template DEPLOY_SIEGE_NEAR_TEAM; carved boundary ret 0Ch at +0x28C; shares the deploy-siege member walk with 0x002FF0C0
++?doDeployNamedSiegeOnWaypoint@ScriptActions@@IAEXPAVParameter@@00@Z,,0x002FEE90,448,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsDeploySiege.cpp,matched,executeAction action 465 via ILT 0x00046F15; template DEPLOY_NAMED_SIEGE_ON_WAYPOINT; single-unit deploy-siege sibling of 0x002FF0C0
++?applyModelCondition_002FDEF0@@YAXPAVObject@@H_N@Z,,0x002FDEF0,131,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedSetModelCondition.cpp,matched,TU-local UNIT/TEAM_SET_MODELCONDITION helper called by 0x002FDFB0 and 0x002FDFF0 with ESI=Object EAX=condition stack=Bool; jump table maps 1-4 to USER_1-4; reconstruction alias keeps the address
++?doTeamPartialUseCommandButton@ScriptActions@@IAEXMABVAsciiString@@0@Z,,0x002FFB60,464,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamPartialUseCommandButton.cpp,matched,executeAction action 273 via ILT 0x000325E7; template TEAM_PARTIAL_USE_COMMANDBUTTON; ZH twin with BFME ceil rounding
++?useCommandButtonOnNearestTemplate_002FDAC0@@YAXPAVObject@@PBVCommandButton@@PBVThingTemplate@@@Z,,0x002FDAC0,416,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedUseCommandButtonOnNearestObjectType.cpp,matched,TU-local helper shared by 0x002FDCD0 and 0x002FE110 with ESI=unit EDI=CommandButton stack=ThingTemplate; closest template object via Thing/ValidCommandButtonTarget/SameMapStatus filters; reconstruction alias keeps the address
++?doNamedUseCommandButtonOnNearestObjectType@ScriptActions@@IAEXABVAsciiString@@00@Z,,0x002FDCD0,173,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsNamedUseCommandButtonOnNearestObjectType.cpp,matched,executeAction action 429 via ILT 0x000413D0; template NAMED_USE_COMMANDBUTTON_ON_NEAREST_OBJECTTYPE; calls helper 0x002FDAC0
++?doTeamGarrisonNearestBuilding@ScriptActions@@IAEXABVAsciiString@@@Z,,0x00302240,536,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsTeamGarrisonNearestBuilding.cpp,matched,executeAction action 108 via ILT 0x00008A8F; template TEAM_GARRISON_NEAREST_BUILDING; ZH twin with BFME linked filter temporaries and refcounted query result
++?rva00303910@ScriptActions@@IAEXABVAsciiString@@0@Z,,0x00303910,340,Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActionsRva00303910.cpp,matched,executeAction action 480 via ILT 0x000459B7 with two strings; template slot 480 has no internal name so the method keeps the address; dozers of team 1 repair the lowest-body structure of team 2
+diff --git a/reverse/symbols.csv b/reverse/symbols.csv
+index a4658541..5d9b9440 100644
+--- a/reverse/symbols.csv
++++ b/reverse/symbols.csv
+@@ -88973,3 +88973,6 @@ _peerGetLocalIP,0x00857460,GameSpy Peer; ICF-folded 8-byte accessor called by do
+ ?Rva008965B0@Rva00893030Manager@@QAEXXZ,0x008965B0,The body at 0x00896710 calls with the object at 0x013377D4 in ECX. The matched body at 0x00892F00 confirms the manager's list head at +0.
+ ?Rva00895F30@Rva00896710Vector@@QAEXPAX@Z,0x00895F30,The body at 0x00896710 calls with its tracker vector at +4 and passes one local pointer. Retail swaps the 20-byte vector fields and returns with ret 4.
+ ?getSegmentPoints@BezierSegment@@QBEXHPAV?$vector@UCoord3D@@V?$allocator@UCoord3D@@@_STL@@@_STL@@@Z,0x00014466,ILT 0x00014466 jumps to 0x000B7D30; thiscall ECX segment with Int count and vector<Coord3D> pointer then ret 8; body null-checks the vector then clears and resizes it and fills 12-byte elements through BezFwdIterator; ZH BezierSegment::getSegmentPoints twin; called by calcFlightPath 0x001EF5E0
++??1BfmeWideResult@@QAE@XZ,0x000C5FC0,destructor of the refcounted partition-query result bfmeForwardWideC 0x009F2960 returns; doDeployNamedSiegeOnWaypoint 0x002FEE90+0x1A7 calls it through ILT 0x0002C471 on the returned object with EH state -1; body decrements the count at +0x10 and deletes the data through the 8-byte-entry vector dtor 0x000C4CF0 exactly as the inline copy in 0x002FF0C0
++?_M_insert_overflow@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEXPAPAVObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x0018B700,objList.push_back overflow in doTeamPartialUseCommandButton 0x002FFB60+0xDE calls this copy through ILT 0x0001F6CC; body equals the 0x00754110 copy the ILT 0x000486BC pin names except its four rel32 displacements
++?rva001A62D0@TerrainLogic@@QAEPBUCoord3D@@PBU2@M_N1@Z,0x001A62D0,address-named terrain query wrapper; 0x002FDAC0+0x15D calls it through ILT 0x000226AB on TheTerrainLogic with (unit position 10000000.0f 1 1) and passes the returned pointer to doCommandButtonAtPosition as the target position; body fills a 24-byte result and returns its +0x14 pointer (ret 10h)

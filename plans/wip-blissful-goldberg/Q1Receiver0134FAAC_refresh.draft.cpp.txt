@@ -1,0 +1,238 @@
+// ?refresh@Q1Receiver0134FAAC@@QAEXXZ
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+// stlport
+
+#include <deque>
+#include <hash_map>
+#define _BFME_RETAIL_TREE_INSERT_LAYOUT
+#include <map>
+#include <set>
+#include <windows.h>
+
+struct Rva001408C0Target;
+typedef _STL::set<Rva001408C0Target *> Rva001408C0Set;
+
+struct Q1ReceiverLocalSet
+{
+	Rva001408C0Set m_set;
+	int m_zero;
+	bool m_one;
+
+	Q1ReceiverLocalSet()
+	{
+		m_zero = 0;
+		m_one = true;
+	}
+
+	Q1ReceiverLocalSet(const Q1ReceiverLocalSet &other) : m_set(other.m_set)
+	{
+		m_zero = 0;
+		m_one = true;
+	}
+
+	Q1ReceiverLocalSet &operator=(const Q1ReceiverLocalSet &other)
+	{
+		if (this != &other)
+		{
+			m_set = other.m_set;
+			m_one = true;
+			m_zero = other.m_zero;
+		}
+		return *this;
+	}
+
+	void add(const Q1ReceiverLocalSet &other)
+	{
+		m_set.insert(other.m_set.begin(), other.m_set.end());
+		m_one = true;
+	}
+};
+
+class Rva009EC770Set
+{
+public:
+	Rva009EC770Set &rva009EC770(const Rva009EC770Set &other);
+};
+
+class Rva009EC5B0Set
+{
+public:
+	Rva009EC5B0Set &subtract(const Rva009EC5B0Set &other);
+};
+
+class Rva009EF0D0Element
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void slot10(Q1ReceiverLocalSet *set);
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1C();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void slot2C();
+	virtual void slot30();
+	virtual void slot34();
+	virtual int slot38();
+
+	volatile unsigned int m_bits00 : 16;
+	volatile unsigned int m_queue : 8;
+	unsigned int m_bit24 : 1;
+	unsigned int m_bit25 : 1;
+	unsigned int m_bit26 : 1;
+	int m_key08;
+	int m_field0c;
+	unsigned int m_field10;
+};
+
+struct Rva009EDBE0Value
+{
+	Rva009EF0D0Element *m_element;
+};
+
+typedef _STL::multimap<unsigned int, Rva009EDBE0Value> Rva009EDBE0Map;
+typedef _STL::deque<Rva009EF0D0Element *> Q1Queue009EFF50;
+typedef _STL::hash_map<int, Rva009EF0D0Element *> Q1Hash009EFF50;
+
+class Q1ReceiverLock009EFF50
+{
+public:
+	explicit Q1ReceiverLock009EFF50(CRITICAL_SECTION *lock) : m_lock(lock)
+	{
+		EnterCriticalSection(m_lock);
+	}
+	~Q1ReceiverLock009EFF50()
+	{
+		LeaveCriticalSection(m_lock);
+	}
+
+	CRITICAL_SECTION *m_lock;
+};
+
+class Q1Receiver0134FAAC
+{
+public:
+	void refresh();
+	void m009EFD40(Q1ReceiverLocalSet *set);
+
+private:
+	unsigned int m_thread;
+	unsigned char m_unmodelled_004[0x1C];
+	int m_field20;
+	int m_field24;
+	unsigned int m_field28;
+	CRITICAL_SECTION m_lock2c;
+	Q1Hash009EFF50 m_map44;
+	unsigned char m_unmodelled_058[8];
+	CRITICAL_SECTION m_lock60;
+	Q1Queue009EFF50 m_deques78[7];
+	Q1ReceiverLocalSet m_set190;
+	Q1ReceiverLocalSet m_set1a4;
+	Q1ReceiverLocalSet m_set1b8;
+	Q1ReceiverLocalSet m_set1cc;
+	unsigned int m_field1e0;
+	unsigned int m_field1e4;
+	unsigned char m_unmodelled_1e8[0x0C];
+};
+
+typedef char Q1Receiver009EFF50SizeCheck[sizeof(Q1Receiver0134FAAC) == 0x1f4 ? 1 : -1];
+
+void Q1Receiver0134FAAC::refresh()
+{
+	Q1ReceiverLock009EFF50 lock(&m_lock60);
+	m009EFD40(&m_set190);
+	m009EFD40(&m_set1a4);
+
+	Rva009EDBE0Map sorted;
+	Q1ReceiverLocalSet wanted(m_set190);
+	wanted.add(m_set1b8);
+
+	for (int q = 0; q < 7; ++q)
+	{
+		for (unsigned int i = 0; i < m_deques78[q].size(); ++i)
+		{
+			Rva009EF0D0Element *entry = m_deques78[q][i];
+			if ((wanted.m_set.find((Rva001408C0Target *)entry->m_key08) != wanted.m_set.end()) == (q < 4))
+				continue;
+			entry->m_bit25 = (q > 3);
+			if (q == 3 && !entry->m_bit26)
+			{
+				Rva009EDBE0Value value;
+				value.m_element = entry;
+				sorted.insert(Rva009EDBE0Map::value_type(entry->m_field10, value));
+				m_deques78[3][i] = m_deques78[3][m_deques78[3].size() - 1];
+				m_deques78[3].pop_back();
+				--i;
+			}
+			else if (q == 4)
+			{
+				entry->m_queue = 3;
+				m_field20 += entry->slot38();
+				m_deques78[entry->m_queue].push_back(m_deques78[4][i]);
+				m_deques78[4][i] = m_deques78[4][m_deques78[4].size() - 1];
+				m_deques78[4].pop_back();
+				--i;
+			}
+			else if (q == 0)
+			{
+				entry->m_queue = 7;
+				m_deques78[0][i] = m_deques78[0][m_deques78[0].size() - 1];
+				m_deques78[0].pop_back();
+				--i;
+			}
+		}
+	}
+
+	while (m_field20 >= m_field24 && sorted.size() != 0)
+	{
+		Rva009EF0D0Element *entry = sorted.begin()->second.m_element;
+		sorted.erase(sorted.begin());
+		entry->m_queue = 4;
+		m_field20 -= entry->slot38();
+		m_deques78[entry->m_queue].push_back(entry);
+		if (m_field20 < 0)
+			m_field20 = 0;
+	}
+	for (Rva009EDBE0Map::iterator it = sorted.begin(); it != sorted.end(); ++it)
+		m_deques78[3].push_back(it->second.m_element);
+
+	for (int pass = 0; pass < 2; ++pass)
+	{
+		Q1ReceiverLocalSet changed;
+		if (pass == 0)
+		{
+			changed = m_set1a4;
+			reinterpret_cast<Rva009EC770Set &>(changed).rva009EC770(
+				reinterpret_cast<const Rva009EC770Set &>(m_set190));
+			changed.add(m_set1b8);
+		}
+		else
+		{
+			changed = m_set190;
+			reinterpret_cast<Rva009EC5B0Set &>(changed).subtract(
+				reinterpret_cast<const Rva009EC5B0Set &>(m_set1a4));
+		}
+		for (Rva001408C0Set::iterator it = changed.m_set.begin(); it != changed.m_set.end(); ++it)
+		{
+			Q1Hash009EFF50::const_iterator found = m_map44.find((int)*it);
+			if (found != m_map44.end())
+			{
+				Rva009EF0D0Element *entry = (*found).second;
+				if (entry->m_queue == 7)
+				{
+					entry->m_queue = 0;
+					entry->m_bit25 = 1;
+					m_deques78[entry->m_queue].push_back(entry);
+				}
+			}
+		}
+		if (pass == 0)
+			m_field1e0 = m_deques78[0].size() + m_deques78[1].size() + m_deques78[2].size();
+		else
+			m_field1e4 = m_deques78[0].size() + m_deques78[1].size() + m_deques78[2].size() - m_field1e0;
+	}
+}
