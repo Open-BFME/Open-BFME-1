@@ -478,12 +478,6 @@ void Gen_000C9770::bfmeForward(void *a0)
 	if (m_bfmeImpl)
 		m_bfmeImpl->bfmeForward(a0);
 }
-// ?bfmeForward@Gen_000C9B40@@QAEXPAX@Z
-void Gen_000C9B40::bfmeForward(void *a0)
-{
-	if (m_bfmeImpl)
-		m_bfmeImpl->bfmeForward(a0);
-}
 // ?bfmeForward@Gen_001BF950@@QAEHPAX0@Z
 int Gen_001BF950::bfmeForward(void *a0, void *a1)
 {

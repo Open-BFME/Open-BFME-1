@@ -82,7 +82,7 @@ private:
 	std::vector<BFMERetailAsciiString> m_vec1;
 };
 
-// ??1GateOpenAndCloseBehaviorModuleData@@UAE@XZ
+// ??1GateOpenAndCloseBehaviorModuleData@@UAE@XZ present-unmatched
 GateOpenAndCloseBehaviorModuleData::~GateOpenAndCloseBehaviorModuleData()
 {
 }

@@ -92,8 +92,8 @@ static void checkForCountermeasures( Object *testObj, void *userData )
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ??0CountermeasuresBehavior@@ is implemented by the exact retail thunk in
-// CountermeasuresBehaviorCtorThunk.cpp.
+// ??0CountermeasuresBehavior@@ is not placed: the body its thunk claimed is another
+// class's constructor (reverse/identity_evidence/caller-decided-1.md).
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------

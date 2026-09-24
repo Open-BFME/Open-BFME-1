@@ -266,14 +266,6 @@ void Gen001C4240::bfmeSet( AsciiString value )
 	text.set( value );
 }
 
-// ?bfmeSet@Gen0022A620@@QAEXVAsciiString@@@Z		78B
-void Gen0022A620::bfmeSet( AsciiString value )
-{
-	StringBase<char> &text = m_bfmeText;
-
-	text.set( value );
-}
-
 // ?bfmeSet@Gen002BA170@@QAEXVAsciiString@@@Z		78B
 void Gen002BA170::bfmeSet( AsciiString value )
 {

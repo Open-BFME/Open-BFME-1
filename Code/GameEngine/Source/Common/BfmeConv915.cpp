@@ -17,20 +17,6 @@ public:
 	BfmeNode915A *m_bfmeList;
 };
 
-void BfmeThing915A::bfmeGo915A(void *k)
-{
-	BfmeNode915A *l = m_bfmeList;
-	for (BfmeNode915A *n = l->m_bfmeNext; n != l; n = n->m_bfmeNext) {
-		if (k == n->m_bfmeKey) {
-			BfmeNode915A *nx = n->m_bfmeNext;
-			BfmeNode915A *pv = n->m_bfmePrev;
-			pv->m_bfmeNext = nx;
-			nx->m_bfmePrev = pv;
-			bfmeFree915A(n, 0xc);
-			return;
-		}
-	}
-}
 
 class BfmeElem915C
 {

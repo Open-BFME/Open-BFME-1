@@ -8834,7 +8834,7 @@ name,address,notes
 ??1LwsAudioEventRTS@@QAE@XZ,0x00026F35,LivingWorldSound helper AudioEventRTS destructor ILT
 ??1MainMenuMediumScaleUpTransition@@MAE@XZ,0x00029D4D,vtable 0x00D0C994 slots name MainMenuMediumScaleUpTransition; protected complete destructor called by wrapper 0x0059E260
 ??1MainMenuScaleUpTransition@@MAE@XZ,0x000293ED,vtable 0x00D0C9F8 slots name MainMenuScaleUpTransition; protected complete destructor called by wrapper 0x0059E830
-??1ManTheWallsSpecialPower@@UAE@XZ,0x0002147C,route=0x00268F30; primary vtable scalar wrapper calls this ILT which forwards through 0x00260B50 and ILT 0x0002041E to matched destructor 0x00268F30
+??1ManTheWallsSpecialPower@@UAE@XZ,0x0002147C,primary vtable scalar wrapper calls this ILT; its body 0x00260B50 tail-jumps through ILT 0x0002041E to the SpecialPowerModule destructor
 ??1ManTheWallsSpecialPowerModuleData@@UAE@XZ,0x00016220,public complete destructor ILT called by scalar wrapper 0x00261280; exact constructor 0x00261260 installs dedicated vtable 0x010B5EA0
 ??1MapTransferLoadScreen@@MAE@XZ,0x00034081,vtable 0x00CF9B60 slots name MapTransferLoadScreen; protected complete destructor called by wrapper 0x004912C0
 ??1Mapping@@MAE@XZ,0x0002BB61,destructor ILT to 0x00102E40

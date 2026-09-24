@@ -448,13 +448,4 @@ struct BfmeThingFAH
 	int m_bfmeV;
 };
 
-int BfmeThingFAH::bfmeGoFAH(BfmeObjFAH *o)
-{
-	if (o->bfmeKindFAH(m_bfmeP) == 2)
-		return 0;
-	int v = m_bfmeV;
-	if (v == -1)
-		v = m_bfmeW;
-	return v;
-}
 

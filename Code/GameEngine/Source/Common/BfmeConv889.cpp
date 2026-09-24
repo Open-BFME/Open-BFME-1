@@ -17,12 +17,6 @@ struct BfmeThingEZA
 	BfmeNodeEZA *m_bfmeList;
 };
 
-void BfmeThingEZA::bfmeGoEZA()
-{
-	for (BfmeNodeEZA *n = m_bfmeList->m_bfmeNext; n != m_bfmeList; n = n->m_bfmeNext)
-		n->m_bfmeItem->bfmeRunEZA();
-}
-
 extern "C" const float bfmeKEZC;
 
 struct BfmeResEZC
@@ -43,14 +37,6 @@ struct BfmeThingEZC
 	unsigned char m_bfmeHead[0x1d8];
 	BfmeSubEZC m_bfmeSub;
 };
-
-float BfmeThingEZC::bfmeGoEZC(void *a)
-{
-	BfmeResEZC *r = m_bfmeSub.bfmeFindEZC(a);
-	if (r)
-		return r->m_bfmeF;
-	return bfmeKEZC;
-}
 
 struct BfmeSubEZF
 {

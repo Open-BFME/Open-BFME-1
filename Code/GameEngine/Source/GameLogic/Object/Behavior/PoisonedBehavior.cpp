@@ -71,7 +71,7 @@ PoisonedBehaviorModuleData::PoisonedBehaviorModuleData()
   p.add(dataFieldParse);
 }
 
-// The exact retail constructor is emitted by PoisonedBehaviorCtorThunk.cpp.
+// The constructor is not placed (reverse/identity_evidence/caller-decided-1.md).
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
