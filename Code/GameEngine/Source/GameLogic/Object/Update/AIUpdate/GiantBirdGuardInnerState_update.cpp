@@ -17,39 +17,16 @@ typedef bool Bool;
 
 enum StateReturnType { STATE_CONTINUE = 0, STATE_SUCCESS = -1, STATE_FAILURE = -2 };
 enum StateExitType { EXIT_NORMAL = 0 };
-enum KindOfType { BFME_KINDOF_7 = 7 };
-enum WeaponSlotType { BFME_WEAPONSLOT_INVALID = -1 };
-enum WeaponStatus { BFME_WEAPON_STATUS_4 = 4 };
 
 struct Coord3D
 {
 	Real x, y, z;
 };
 
-class GiantBirdGuardInnerState;
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Weapon.h
-class Weapon
-{
-	friend class GiantBirdGuardInnerState;
-
-private:
-	WeaponStatus bfmeComputeStatus( Bool *reloading ) const;
-};
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
-class Thing
-{
-public:
-	Bool isKindOf( KindOfType t ) const;
-};
-
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h
-class Object : public Thing
+class Object
 {
 public:
-	Weapon *getCurrentWeapon( WeaponSlotType *wslot = 0 );
-
 	const Coord3D *getPosition() const { return (const Coord3D *)((const char *)this + 0x38); }
 	Bool bfmePrivateStatusBit0() const { return (*((const unsigned char *)this + 0x344) & 1) != 0; }
 };
@@ -74,11 +51,6 @@ class GameLogic
 {
 public:
 	Object *findObjectByID( Int id );
-	UnsignedInt getFrame() { return m_frame; }
-
-private:
-	char m_unmodelled000[0x3c];
-	UnsignedInt m_frame;									///< this+0x3C
 };
 
 extern GameLogic *TheGameLogic;
@@ -88,7 +60,6 @@ class StateMachine
 {
 public:
 	Object *getGoalObject();
-	Object *getOwner() { return m_owner; }
 
 private:
 	char m_unmodelled000[0x10];
@@ -99,8 +70,6 @@ private:
 class AIGuardMachine : public StateMachine
 {
 public:
-	Bool lookForInnerTarget( void );
-
 	Object *findTargetToGuardByID( void ) { return TheGameLogic->findObjectByID( m_targetToGuard ); }
 	Team *findTeamToGuardByID( void ) { return TheTeamFactory->findTeamByID( m_teamToGuard ); }
 
@@ -134,9 +103,20 @@ private:
 
 #undef BFME_GUARD_STATE_SLOT
 
-struct ExitConditions
+// Layout as landed in GiantBirdGuardInnerState_onEnter.cpp (0x002BD020).
+class AttackExitConditionsInterface
 {
-	Coord3D m_center;										///< this+0x00
+public:
+	virtual Bool shouldExit( const StateMachine *machine ) const;
+};
+
+class GiantBirdGuardExitConditions : public AttackExitConditionsInterface
+{
+public:
+	Int m_conditionsToConsider;
+	Coord3D m_center;										///< this+0x08
+	Real m_radiusSqr;
+	UnsignedInt m_attackGiveUpFrame;
 };
 
 class GiantBirdGuardInnerState : public State
@@ -149,13 +129,11 @@ public:
 	AIGuardMachine *getGuardMachine() { return (AIGuardMachine *)getMachine(); }
 
 private:
-	char m_unmodelled020[0x2c - 0x20];
-	ExitConditions m_exitConditions;						///< this+0x2C
-	char m_unmodelled038[0x40 - 0x38];
+	char m_unmodelled020[0x24 - 0x20];
+	GiantBirdGuardExitConditions m_exitConditions;			///< this+0x24, m_center at +0x2C
 	State *m_attackState;									///< this+0x40
 	Bool m_bfmeRestart44;									///< this+0x44
-	char m_unmodelled045[0x3];
-	UnsignedInt m_bfmeNextWeaponCheckFrame48;				///< this+0x48
+	char m_unmodelled045[0x3];								///< object ends at +0x48 (operator new 0x48)
 };
 
 // ?update@GiantBirdGuardInnerState@@UAE?AW4StateReturnType@@XZ
