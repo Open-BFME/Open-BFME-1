@@ -946,12 +946,10 @@ void W3DGhostObject::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@W3DGhostObject@@MAEXXZ present-unmatched
 void W3DGhostObject::loadPostProcess( void )
 {
 
-	// extend base class
-	GhostObject::loadPostProcess();
+	// BFME's override does not extend GhostObject::loadPostProcess; retail is a lone ret.
 
 }  // end loadPostProcess
 
