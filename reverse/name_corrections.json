@@ -3118,5 +3118,35 @@
   "after_sha256": "22fef328cdf16053985885eaf248a0689b5daf12fab0a4a1e3be1809542c012d",
   "evidence": "docs/naming_evidence.md",
   "reason": "existing symbols.csv pin at ILT 0x0002DE02 spells the callee rva0007E0F0; the banked names (refreshCustomStaticLODLevel/ensureIdealStaticLODLevel) had no evidence for body 0x0007E0F0"
+ },
+ {
+  "old_path": "reverse/attempts/0x00206ff0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp",
+  "old_name": "m_base",
+  "new_name": "m_unmodelled04",
+  "before_sha256": "2c8ed33bcc9f7259b3f23bc139e5f10755c4dff6bc9e9855bbc4c75a046ec242",
+  "after_sha256": "7d4b1cae261417996131cefbad61e195a8f6c9cc210683a7dfbd4cd34af959c9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "opaque pad renamed to offset form"
+ },
+ {
+  "old_path": "reverse/attempts/0x00206ff0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp",
+  "old_name": "m_enabled",
+  "new_name": "m_bool30",
+  "before_sha256": "2c8ed33bcc9f7259b3f23bc139e5f10755c4dff6bc9e9855bbc4c75a046ec242",
+  "after_sha256": "7d4b1cae261417996131cefbad61e195a8f6c9cc210683a7dfbd4cd34af959c9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank guess for the +0x30 Bool with no witness (name_oracle has no SiegeDockingBehavior layout)"
+ },
+ {
+  "old_path": "reverse/attempts/0x00206ff0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Behavior/SiegeDockingBehaviorXfer.cpp",
+  "old_name": "m_kind",
+  "new_name": "m_int00",
+  "before_sha256": "2c8ed33bcc9f7259b3f23bc139e5f10755c4dff6bc9e9855bbc4c75a046ec242",
+  "after_sha256": "7d4b1cae261417996131cefbad61e195a8f6c9cc210683a7dfbd4cd34af959c9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank guess for the +0x00 Int with no witness"
  }
 ]
