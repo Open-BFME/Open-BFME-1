@@ -89082,3 +89082,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?W3DGadgetCheckBoxImageDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x007901F0,W3DCheckBox.cpp definition; FunctionLexicon registration and ILT caller identify checkbox image draw; tail calls drawCheckBoxText at 0x0078FDE0
 ?W3DGadgetProgressBarImageDrawA@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00793520,W3DProgressBar.cpp definition; ILT 0x0001CAA3 routes to this body; draw slot and GameWindow calls identify progress-bar image callback
 ?W3DGadgetCheckBoxDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x0078FF40,W3DCheckBox.cpp definition; caller bfmeSubmit at 0x00790310 via ILT; resolved drawCheckBoxText target at 0x0078FDE0 supports callback identity
+?doTeamGuard@ScriptActions@@IAEXABVAsciiString@@@Z,0x00301C10,ScriptActions.cpp definition and TEAM_GUARD dispatch arm identify callback; two ILT-mediated callers
