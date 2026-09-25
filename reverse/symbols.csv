@@ -89122,3 +89122,4 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ?getPreferredColor@LANPreferences@@QAEHXZ,0x00043D24,REL32 pin from LanGameOptionsMenuInit at 0x004CDB4F. Its LANPreferences color getter returns Int in EAX.
 ?getPreferredFaction@LANPreferences@@QAEHXZ,0x00027D3B,REL32 pin from LanGameOptionsMenuInit at 0x004CDB5B. Its LANPreferences faction getter returns Int in EAX.
 ?setMap@LANGameInfo@@QAEXVAsciiString@@@Z,0x00023CBD,REL32 pin from LanGameOptionsMenuInit at 0x004CDB89. The receiver is LANGameInfo and the by-value argument is AsciiString.
+?_M_insert_overflow@?$vector@PAURva003C9DD0Item@@V?$allocator@PAURva003C9DD0Item@@@_STL@@@_STL@@IAEXPAPAURva003C9DD0Item@@ABQAU3@ABU__true_type@2@I_N@Z,0x00010596,ILT to the STLport vector<T*> insert-overflow body 0x003C8F80 called at 0x003C9DD0+0xAF with (pos &x &__true_type 1 1) by the collect body
