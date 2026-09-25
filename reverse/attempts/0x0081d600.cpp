@@ -1,4 +1,4 @@
-// ?parseLineTable@SubtitleManager@@SAXPAVINI@@PAX1PBX@Z
+// ?Rva0081D600ParseLineTable@@YAXPAVINI@@PAX1PBX@Z
 // partial score=0.95 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /FAsc /Fabuild/subtitle_line_table.cod
 
@@ -28,7 +28,7 @@ public:
 class SubtitleManager
 {
 public:
-	static void parseLineTable(INI *ini, void *instance, void *store,
+	friend void Rva0081D600ParseLineTable(INI *ini, void *instance, void *store,
 		const void *userData);
 
 private:
@@ -36,10 +36,10 @@ private:
 	bool m_enabled;
 };
 
-class VideoPlayer
+class VideoPlayerInterface
 {
 public:
-	virtual ~VideoPlayer() {}
+	virtual ~VideoPlayerInterface() {}
 	virtual void slot01() = 0;
 	virtual void slot02() = 0;
 	virtual void slot03() = 0;
@@ -64,12 +64,12 @@ public:
 	virtual SubtitleManager *getSubTitleMgrForVideo(const AsciiString &title) = 0;
 };
 
-extern VideoPlayer *TheVideoPlayer;
+extern VideoPlayerInterface *TheVideoPlayer;
 extern const float BfmeZeroRange;
 extern const float g_bfmeDefaultBU;
-extern const float Rva0112CF08LineTableStep;
 
-void SubtitleManager::parseLineTable(INI *ini, void *, void *store, const void *)
+// The retail field table names LineTable at +0x24; the callback's C++ owner is unproven.
+void Rva0081D600ParseLineTable(INI *ini, void *, void *store, const void *)
 {
 	SubtitleManager *manager = TheVideoPlayer->getSubTitleMgrForVideo(ini->getFilename());
 	if (manager != 0 && store != 0)

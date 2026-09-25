@@ -3378,5 +3378,15 @@
   "after_sha256": "3f28ebbfd8ef51b285ec227f1f483b842d2a82c3590bc5c50de8a83ea3abde31",
   "evidence": "reverse/re_attempts.log",
   "reason": "The earlier bank typed the first parameter as AsciiString; the retail caller 0x000F99C0 passes a pointer to a callback record whose 0x18-byte payload follows, so the attempt now declares that record under the address-derived type Rva00365C20SourceRecord."
+ },
+ {
+  "old_path": "reverse/attempts/0x0081d600.cpp",
+  "new_path": "reverse/attempts/0x0081d600.cpp",
+  "old_name": "parseLineTable",
+  "new_name": "Rva0081D600ParseLineTable",
+  "before_sha256": "436fa38c6c6d39dc2325ca20adb6222da18256e8e6bf564c617d17a0ec5fd6d4",
+  "after_sha256": "2658b8a0c2136ac78cb820fc0cb95ba0ca035035338d04b69ec8bf19192ff7fc",
+  "evidence": "reverse/identity_evidence/0x0081d600-line-table-callback.md",
+  "reason": "The independent xrefs identify a LineTable callback, but the field table names data rather than its callback and Ghidra gives no C++ owner; keep the unproven owner address-qualified."
  }
 ]
