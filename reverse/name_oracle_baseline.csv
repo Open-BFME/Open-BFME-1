@@ -238,7 +238,6 @@ SubsystemInterface+0x4|m_bfmeState|m_name,Code/GameEngine/Source/Common/System/R
 SubsystemInterface+0x4|m_bfmeState|m_name,Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTerrainVisualBaseConstructor.cpp,33,0.92,layout_witness
 SubsystemInterface+0x4|m_data|m_name,Code/GameEngine/Source/GameLogic/Object/ObjectCreationListStoreDestructorThunk.cpp,16,0.92,layout_witness
 SubsystemInterface+0x4|m_siPad|m_name,Code/GameEngine/Source/GameClient/GameClient_loadPostProcess.cpp,40,0.92,layout_witness
-SubsystemInterface+0x4|m_state|m_name,Code/GameEngine/Source/Common/System/RecorderReadReplayHeader.cpp,173,0.92,layout_witness
 SupplyWarehouseCripplingBehaviorModuleData+0x10|m_third|m_selfHealAmount,Code/GameEngine/Source/GameLogic/Object/Behavior/SupplyWarehouseCripplingBehavior.cpp,11,1.00,field_names
 SupplyWarehouseCripplingBehaviorModuleData+0x8|m_first|m_selfHealSupression,Code/GameEngine/Source/GameLogic/Object/Behavior/SupplyWarehouseCripplingBehavior.cpp,9,1.00,field_names
 SupplyWarehouseCripplingBehaviorModuleData+0xc|m_second|m_selfHealDelay,Code/GameEngine/Source/GameLogic/Object/Behavior/SupplyWarehouseCripplingBehavior.cpp,10,1.00,field_names

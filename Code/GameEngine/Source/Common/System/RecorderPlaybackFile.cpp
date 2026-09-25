@@ -107,7 +107,7 @@ class SubsystemInterface
 {
 public:
 	virtual void slot00();
-	Int m_state;
+	AsciiString m_name;
 };
 
 class RecorderClass : public SubsystemInterface

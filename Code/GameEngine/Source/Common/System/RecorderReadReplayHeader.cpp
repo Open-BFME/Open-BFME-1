@@ -169,7 +169,7 @@ class SubsystemInterface
 {
 public:
 	virtual void subsystemSlot0(void);
-	Int m_state;
+	AsciiString m_name;
 };
 
 class Rva00099490RecorderClass : public SubsystemInterface
