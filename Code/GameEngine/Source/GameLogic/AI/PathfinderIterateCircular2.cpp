@@ -34,12 +34,12 @@ extern "C" void __cdecl bfmeRetailCritterDesyncLog(
 struct AdjustTargetInfo
 {
 	Pathfinder *m_pathfinder;
-	Object *m_obj;
-	Bool m_center;
+	Object *m_object;
+	Bool m_centerInCell;
 	Int m_radius;
-	Coord3D *m_dest;
+	Coord3D *m_destination;
 	Object *m_target;
-	const Coord3D *m_targetPos;
+	const Coord3D *m_targetPosition;
 	const Weapon *m_weapon;
 	__forceinline Bool check(Int x, Int y) const;
 };
@@ -58,8 +58,8 @@ protected:
 
 __forceinline Bool AdjustTargetInfo::check(Int x, Int y) const
 {
-	return m_pathfinder->checkForTarget(m_obj, x, y, m_weapon, m_target,
-		m_targetPos, m_radius, m_center, m_dest);
+	return m_pathfinder->checkForTarget(m_object, x, y, m_weapon, m_target,
+		m_targetPosition, m_radius, m_centerInCell, m_destination);
 }
 
 Bool Pathfinder::iterateCircular2(ICoord2D *cell, Int limit, void *userData)

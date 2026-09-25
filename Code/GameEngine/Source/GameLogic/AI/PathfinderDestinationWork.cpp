@@ -128,12 +128,12 @@ private:
 struct AdjustTargetInfo
 {
 	Pathfinder *m_pathfinder;
-	Object *m_obj;
-	bool m_center;
+	Object *m_object;
+	bool m_centerInCell;
 	Int m_radius;
-	Coord3D *m_dest;
+	Coord3D *m_destination;
 	Object *m_target;
-	const Coord3D *m_targetPos;
+	const Coord3D *m_targetPosition;
 	const Weapon *m_weapon;
 	__forceinline bool check(Int x, Int y) const;
 };
@@ -160,13 +160,13 @@ bool Pathfinder::adjustTargetDestination(const Object *object, const Object *tar
 
 	AdjustTargetInfo info;
 	info.m_pathfinder = this;
-	info.m_obj = (Object *)object;
-	info.m_dest = destination;
+	info.m_object = (Object *)object;
+	info.m_destination = destination;
 	info.m_target = (Object *)target;
-	info.m_targetPos = targetPosition;
+	info.m_targetPosition = targetPosition;
 	info.m_weapon = weapon;
-	bfmeQuery(info.m_obj, &info.m_radius,
-		reinterpret_cast<Bool *>(&info.m_center));
+	bfmeQuery(info.m_object, &info.m_radius,
+		reinterpret_cast<Bool *>(&info.m_centerInCell));
 	return iterateCircular2(&cell, 0x190, &info);
 }
 
