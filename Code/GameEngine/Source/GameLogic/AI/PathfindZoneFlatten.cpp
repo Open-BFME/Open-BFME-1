@@ -57,7 +57,7 @@ static void flattenZones(zoneStorageType *zoneArray,
 class PathfindZoneManager
 {
 public:
-	void bfmeFlattenZones(Int start, Int end);
+	void bfmeFlattenZones(Int startPercent, Int endPercent);
 
 private:
 	unsigned char m_beforeEquivalency[0x18];
@@ -69,10 +69,10 @@ private:
 #pragma pack(pop)
 
 // ?bfmeFlattenZones@PathfindZoneManager@@QAEXHH@Z
-void PathfindZoneManager::bfmeFlattenZones(Int start, Int end)
+void PathfindZoneManager::bfmeFlattenZones(Int startPercent, Int endPercent)
 {
-	Int endTable = end * 5 / 100 + 1;
-	Int firstTable = start * 5 / 100 + 1;
+	Int endTable = endPercent * 5 / 100 + 1;
+	Int firstTable = startPercent * 5 / 100 + 1;
 	for (Int table = firstTable; table < endTable; ++table)
 	{
 		for (Int profile = 0; profile < 12; ++profile)
