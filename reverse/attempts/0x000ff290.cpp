@@ -244,7 +244,7 @@ private:
 	void *m_source;
 
 public:
-	BfmeWideResult bfmeForwardWideC(Int a, Real b, Int c, Int d, Int e);
+	BfmeWideResult bfmeForwardWideC(Int a, Int b, Int c, Int d, Int e);
 };
 
 extern PartitionManager *ThePartitionManager;
@@ -311,7 +311,7 @@ void BuildAssistant::addBibs(const Coord3D *worldPos, const ThingTemplate *build
 
 	const BfmeWideResult &found =
 		((BfmeWideForwardC *)ThePartitionManager)->bfmeForwardWideC(
-			(Int)worldPos, range, FROM_CENTER_3D,
+			(Int)worldPos, *(Int *)&range, FROM_CENTER_3D,
 			PartitionFilterAcceptByKindOf(
 				KindOfMaskType(KindOfMaskType::kInit, KINDOF_STRUCTURE),
 				KINDOFMASK_NONE),
