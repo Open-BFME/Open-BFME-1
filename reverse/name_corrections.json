@@ -4868,5 +4868,15 @@
   "after_sha256": "c045276074933b0c43c7d20d0e5170c16f281f57f09398b69a294dd391e683dc",
   "evidence": "docs/naming_evidence.md",
   "reason": "the bank's method name had no caller string, vtable slot or ZH twin, and the landed caller GeometryInfoCalcBoundingStuff.cpp and the symbols.csv pin already use the address token"
+ },
+ {
+  "old_path": "reverse/attempts/0x008b8e10.cpp",
+  "new_path": "Code/Libraries/Source/Apt/BfmeN1242Rva008B8E10.cpp",
+  "old_name": "bfmeSet1242",
+  "new_name": "rva008B8E10",
+  "before_sha256": "cd111f2564b90c1002158d95540578328781f78a585a64d455cb8f1fd31a38ef",
+  "after_sha256": "859df61a8c9ed4a96cd5ddbf05e106fcf236d583d4f7716a68436aab0defaf5a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank method name with no matched caller naming it (the caller at 0x008CE1E0 uses ?d_008b8e10@@YAXXZ) and no vtable slot string or ZH twin"
  }
 ]

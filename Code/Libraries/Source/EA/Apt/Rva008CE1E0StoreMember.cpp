@@ -51,9 +51,11 @@ struct Rva00899560Pool;
 extern Rva00899560Pool *g_rva8CD130IdleHook;
 struct Rva008CE1E0State { int m_count, m_unknown04; Rva008CE1E0Value **m_values; };
 struct Rva008CE1E0Context { char m_gap00[8]; void *m_scope08; };
-extern void d_008b8e10();
-// The 53-byte callee loads args at entry+4/+8 and ends in ret8 (+32).
-// It receives this in ECX; its proprietary identity is not inferred.
+// 0x008B8E10 landed as BfmeN1242::rva008B8E10(int, BfmeE1242 *) (thiscall,
+// ret 8); this caller only needs its exact mangled symbol, reached through
+// the same member-pointer reinterpretation as before.
+class BfmeE1242;
+class BfmeN1242 { public: void rva008B8E10(int, BfmeE1242 *); };
 typedef void (Rva008CE1E0Value::*Rva008B8E10Store)(int, Rva008CE1E0Value *);
 typedef void (__cdecl *Rva008CE1E0Notify)(const char *, const char *);
 
@@ -64,8 +66,8 @@ void rva008CE1E0StoreMember(Rva008CE1E0State *state, Rva008CE1E0Context *context
     Rva008CE1E0Value *value = state->m_values[state->m_count - 1];
     if (owner->kind() == 22 && !owner->undefined() &&
         ((key->kind() == 7 && !key->undefined()) || (key->kind() == 6 && !key->undefined()))) {
-        union { void (*raw)(); Rva008B8E10Store member; } call;
-        call.raw = d_008b8e10;
+        union { void (BfmeN1242::*bound)(int, BfmeE1242 *); Rva008B8E10Store member; } call;
+        call.bound = &BfmeN1242::rva008B8E10;
         (owner->*call.member)(((AptValue *)key)->toInteger(), value);
     } else if (owner->slot24() || owner->kindRange()) {
         Rva8CD130String name;
