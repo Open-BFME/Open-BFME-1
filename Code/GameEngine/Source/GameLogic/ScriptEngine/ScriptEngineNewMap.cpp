@@ -1,10 +1,8 @@
-// ?newMap@ScriptEngine@@UAEXXZ
-// partial score=0.9915 date=2026-09-24
-// ?newMap@ScriptEngine@@UAEXXZ
+// Retail places ScriptEngine::newMap at RVA 0x00342E40 and gives it 1,059 bytes.
+// Vtable VA 0x010E7A30 routes slot 9 through ILT 0x00049BF2 to this body.
+// The released Zero Hour twin and header name slot 9 as newMap.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include
 // stlport
-// Vtable 0x010E7A30 slot 9 routes through ILT 0x00049BF2 to 0x00342E40.
-// The Zero Hour twin names this override ScriptEngine::newMap.
 
 #include <list>
 #include <utility>
@@ -177,12 +175,8 @@ struct BfmeValueRecord
 
 struct BfmeTableValue
 {
-	char *Rva00342E40word10(Int i) { return m_records[i].m_offset10; }
-	void *Rva00342E40address08(Int i) {
-		register BfmeValueRecord *records = m_records;
-		return &records[i].m_second;
-	}
-    Int Rva00342E40next(Int i) { return m_records[i].m_state; }
+	BfmeValueRecord *begin(void) { return m_records; }
+    Int Rva00342E40next(Int i) { return begin()[i].m_state; }
 
 	char m_beforeRecords[0x38];
 	BfmeValueRecord * volatile m_records;
@@ -359,8 +353,8 @@ void ScriptEngine::newMap(void)
             for (Int index = value->m_index; index != -1; )
             {
                 callRva0033E490((Rva0033E490Owner *)this,
-				    value->m_records[index].m_offset10 + 4,
-                    value->Rva00342E40address08(index));
+                    value->begin()[index].m_offset10 + 4,
+                    &value->begin()[index].m_second);
                 index = value->Rva00342E40next(index);
             }
         }
