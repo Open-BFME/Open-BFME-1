@@ -257,7 +257,7 @@ inline Object *getGuardOwner(Rva0015C570GuardMachine *machine)
 StateReturnType AIGuardInnerState::onEnter()
 {
 	AIGuardInnerState *state = this;
-	Coord3D position;
+	Coord3D guardPosition;
 	{
 	register Rva0015C570GuardMachine *machine = (Rva0015C570GuardMachine *)state->m_machine;
 	union
@@ -266,7 +266,7 @@ StateReturnType AIGuardInnerState::onEnter()
 			FindObjectByIDCall asMember;
 		} findObjectCast;
 		findObjectCast.asVoid = (void *)j_0001f253;
-		Object *target = (TheBfmeGameLogic->*findObjectCast.asMember)(
+		Object *targetObject = (TheBfmeGameLogic->*findObjectCast.asMember)(
 			machine->m_targetToGuard);
 		union
 		{
@@ -274,14 +274,14 @@ StateReturnType AIGuardInnerState::onEnter()
 			FindTeamByIDCall asMember;
 		} findTeamCast;
 		findTeamCast.asVoid = (void *)j_00044c2e;
-		Team *team = (TheTeamFactory->*findTeamCast.asMember)(
+		Team *targetTeam = (TheTeamFactory->*findTeamCast.asMember)(
 			machine->m_teamToGuard);
 
-		if (target)
+		if (targetObject)
 		{
-			position = target->m_position;
+			guardPosition = targetObject->m_position;
 		}
-		else if (team)
+		else if (targetTeam)
 		{
 			union
 			{
@@ -289,28 +289,28 @@ StateReturnType AIGuardInnerState::onEnter()
 				EstimateTeamPositionCall asMember;
 			} estimateTeamPositionCast;
 			estimateTeamPositionCast.asVoid = (void *)j_000241fe;
-			(team->*estimateTeamPositionCast.asMember)(&position);
+			(targetTeam->*estimateTeamPositionCast.asMember)(&guardPosition);
 		}
 		else
 		{
-			position = ((Rva0015C570GuardMachine *)state->m_machine)->m_positionToGuard;
+			guardPosition = ((Rva0015C570GuardMachine *)state->m_machine)->m_positionToGuard;
 		}
 
 	}
 
 	register Rva0015C570GuardMachine *machine = (Rva0015C570GuardMachine *)state->m_machine;
-	Object *nemesis = findBfmeObject(TheBfmeGameLogic,
+	Object *nemesisObject = findBfmeObject(TheBfmeGameLogic,
 		machine->m_nemesisToAttack);
-	if (!nemesis)
+	if (!nemesisObject)
 		return STATE_SUCCESS;
 
-	register Coord3D *center = &state->m_exitConditions.m_center;
-	*center = position;
-	Real range = AI::getAdjustedVisionRangeForObject(
+	register Coord3D *guardCenter = &state->m_exitConditions.m_center;
+	*guardCenter = guardPosition;
+	Real visionRange = AI::getAdjustedVisionRangeForObject(
 		getGuardOwner(machine), 7);
-	const Real cap = 300.0f;
-	range = (_STL::min)(range, cap);
-	state->m_exitConditions.m_radiusSqr = range * range;
+	const Real maximumVisionRange = 300.0f;
+	visionRange = (_STL::min)(visionRange, maximumVisionRange);
+	state->m_exitConditions.m_radiusSqr = visionRange * visionRange;
 	state->m_exitConditions.m_conditionsToConsider = 5;
 
 	Rva0015C570GuardMachine *machineForArea =
@@ -333,7 +333,7 @@ StateReturnType AIGuardInnerState::onEnter()
 			GetCenterPointCall asMember;
 		} getCenterPointCast;
 		getCenterPointCast.asVoid = (void *)j_00007ad6;
-		(area->*getCenterPointCast.asMember)(center);
+		(area->*getCenterPointCast.asMember)(guardCenter);
 	}
 
 	m_attackState = new(
@@ -341,7 +341,7 @@ StateReturnType AIGuardInnerState::onEnter()
 		Rva002BD020AIAttackState(
 			getMachine(), false, true, false,
 			&m_exitConditions);
-	m_attackState->m_machine->setGoalObject(nemesis);
+	m_attackState->m_machine->setGoalObject(nemesisObject);
 	m_frameAt48 = TheBfmeGameLogic->m_frame + 0xf;
 	StateReturnType result = m_attackState->onEnter();
 	return result == STATE_CONTINUE ? STATE_CONTINUE : STATE_SUCCESS;
