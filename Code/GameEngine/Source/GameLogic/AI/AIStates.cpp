@@ -169,8 +169,8 @@ public:
 
 //----------------------------------------------------------------------------------------------------------
 // ??0AICommandParms@@QAE@W4AICommandType@@W4CommandSourceType@@@Z present-unmatched
-AICommandParms::AICommandParms(AICommandType cmd, CommandSourceType commandSource) :
-	m_cmd(cmd),
+AICommandParms::AICommandParms(AICommandType commandType, CommandSourceType commandSource) :
+	m_cmd(commandType),
 	m_cmdSource(commandSource),
 	m_obj(NULL),
 	m_otherObj(NULL),

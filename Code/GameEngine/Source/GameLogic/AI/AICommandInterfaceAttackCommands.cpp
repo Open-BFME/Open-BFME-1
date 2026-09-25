@@ -199,12 +199,12 @@ struct AICommandParms
 	const CommandButton			*m_commandButton;	// +0x94
 	Path										*m_path;		// +0x98
 
-	AICommandParms(AICommandType cmd, CommandSourceType commandSource);	// ILT 0x00030EA4
+	AICommandParms(AICommandType commandType, CommandSourceType commandSource);	// ILT 0x00030EA4
 };
 
 // ??0AICommandParms@@QAE@W4AICommandType@@W4CommandSourceType@@@Z
-AICommandParms::AICommandParms(AICommandType cmd, CommandSourceType commandSource)
-	: m_cmd(cmd),
+AICommandParms::AICommandParms(AICommandType commandType, CommandSourceType commandSource)
+	: m_cmd(commandType),
 	  m_cmdSource(commandSource),
 	  m_obj(0),
 	  m_otherObj(0),

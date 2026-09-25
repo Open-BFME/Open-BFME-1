@@ -72,7 +72,7 @@ struct AICommandParms
 	const CommandButton *m_commandButton;	// +0x94
 	Path *m_path;							// +0x98
 
-	AICommandParms(AICommandType cmd, CommandSourceType commandSource);	// ILT 0x00030EA4
+	AICommandParms(AICommandType commandType, CommandSourceType commandSource);	// ILT 0x00030EA4
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AI.h
