@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "1360f0c8f118ab06df8c15284631e3c700df412e759fd7f13584e208b18f2855",
+  "symbol": "?d_008acdc0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.939252,
+  "source": "// ?d_008acdc0@@YAXXZ\n// partial score=0.939252 date=2026-09-25\n// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc\n\nstruct BfmeStringData3AF0\n{\n\tunsigned short m_refCount;\n\tunsigned short m_length;\n\tunsigned short m_capacity;\n\tunsigned short m_flags;\n};\n\nstruct BfmeStringPool3AF0\n{\n\tvoid *m_unused;\n\tvoid (__cdecl *free)(void *);\n};\n\nextern BfmeStringData3AF0 g_bfmeDefaultString1284;\nextern BfmeStringPool3AF0 *g_bfmeStringPool1284;\nclass BfmeStrVKI;\nextern void bfmeResetEVF(void *context, BfmeStrVKI *text);\n\nclass BfmeStrVKI\n{\npublic:\n BfmeStrVKI():m_data(&g_bfmeDefaultString1284) { ++m_data->m_refCount; }\n BfmeStrVKI(const BfmeStrVKI &other):m_data(other.m_data) { ++m_data->m_refCount; }\n BfmeStrVKI(const char *text) { bfmeSetVKI(text); }\n void bfmeSetVKI(const char *);\n ~BfmeStrVKI() {\n  BfmeStringData3AF0 *data=m_data;\n  if(--data->m_refCount==0)g_bfmeStringPool1284->free(data);\n }\n BfmeStringData3AF0 *m_data;\n};\nclass Rva8CD130String:public BfmeStrVKI {\npublic:\n Rva8CD130String() {}\n Rva8CD130String(const Rva8CD130String &other):BfmeStrVKI(other){}\n Rva8CD130String(const char *text):BfmeStrVKI(text){}\n};\nclass Rva00896AF0Tracker\n{\npublic:\n\tvoid rva00896AF0(Rva8CD130String *input, Rva8CD130String text);\n};\n\nextern Rva00896AF0Tracker *Rva013377F8;\nclass AptValue;\nextern AptValue *g_bfmeFallbackDB;\nAptValue *Rva008ACDC0(void *context)\n{\n Rva8CD130String input;\n bfmeResetEVF(context,&input);\n Rva013377F8->rva00896AF0(&Rva8CD130String(\"\"),input);\n return g_bfmeFallbackDB;\n}\n"
+}
