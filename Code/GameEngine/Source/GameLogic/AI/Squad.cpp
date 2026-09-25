@@ -71,7 +71,6 @@ void Squad::addObjectID(ObjectID objectID) {
 }
 
 // removeObject ///////////////////////////////////////////////////////////////////////////////////
-// ?removeObject@Squad@@QAEXPAVObject@@@Z present-unmatched
 // RE-HOMED. The row for 0x0018B620 is now ?dup_0018b620@@YAXXZ -- the existing
 // convention for a real body whose identity is unknown -- because that body
 // reads a container at this+0x04 and the two symbolic rows above prove retail's
@@ -309,7 +308,6 @@ void Squad::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@Squad@@MAEXXZ present-unmatched
 void Squad::loadPostProcess( void )
 {
 
