@@ -216,7 +216,7 @@ typedef char Rva0003DC4EPmfSize[(sizeof(Rva0003DC4ECall) == sizeof(void (*)())) 
 class Rva003F2D20Query
 {
 public:
-    bool test(int x, int y)
+    bool test(int cellX, int cellY)
     {
         int result;
         union Rva0003DC4EBinding
@@ -225,7 +225,7 @@ public:
             Rva0003DC4ECall member;
         } target;
         target.address = &j_0003dc4e;
-        if (!(f00->*target.member)(f04, f08, f0c, x, y, f14, f10,
+        if (!(f00->*target.member)(f04, f08, f0c, cellX, cellY, f14, f10,
                                   f0d, &f28, f18, &result))
             return false;
         if (result == 0)
@@ -233,8 +233,8 @@ public:
         if (result < f24 || f24 == 0)
         {
             f24 = result;
-            f1c = x;
-            f20 = y;
+            f1c = cellX;
+            f20 = cellY;
         }
         return false;
     }
