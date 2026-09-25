@@ -2,8 +2,9 @@
 // stlport
 // Open-BFME: GeometryInfo::calcBoundingStuff, retail 0x0087EE60, 301 bytes.
 //
-// Identity: the matched GeometryInfo::parseGeometryIsSmall (0x0087F160) and
-// parseGeometryHeight (0x0087F180) tail-call this body on the INI store.
+// Identity: the matched GeometryInfo::parseGeometryIsSmall (0x0087F160)
+// tail-calls this body (jmp at +0x1B) on the INI store, and the matched
+// parseGeometryHeight (0x0087F180) calls it and then calls 0x0087EBB0.
 // It rebuilds the bounding circle (+0x10) and sphere (+0x14) radii as the
 // maximum over the enabled 0x24-byte GeometryShape entries at +0x2C, then
 // derives the centre and two extents from the bounds helper at 0x0087E650.
@@ -91,7 +92,9 @@ private:
 	std::vector<GeometryShape> m_shapes;
 };
 
-// ?rva0087ED00@GeometryShape@@QBEMXZ (retail 0x0087ED00; only its body is needed here)
+// ?rva0087ED00@GeometryShape@@QBEMXZ: a semantically faithful but not
+// byte-exact model of retail 0x0087ED00 (101 bytes; this compiles to 89),
+// kept visible only so calcBoundingStuff's register allocation matches.
 __declspec(noinline) Real GeometryShape::rva0087ED00() const
 {
 	Real y = m_offset.y;
@@ -109,7 +112,10 @@ __declspec(noinline) Real GeometryShape::rva0087ED00() const
 	return result;
 }
 
-// ?rva0087ED70@GeometryShape@@QBEMXZ (retail 0x0087ED70; only its body is needed here)
+// ?rva0087ED70@GeometryShape@@QBEMXZ: a semantically faithful but not
+// byte-exact model of retail 0x0087ED70 (228 bytes; this compiles to 224),
+// kept visible only so calcBoundingStuff's register allocation matches.
+// The cylinder case adds the offset length, as retail does at +0x80..+0xB3.
 __declspec(noinline) Real GeometryShape::rva0087ED70() const
 {
 	Real result = 0.0f;
@@ -119,15 +125,14 @@ __declspec(noinline) Real GeometryShape::rva0087ED70() const
 			result = sqrt(sqr(m_offset.x) + sqr(m_offset.y) + sqr(m_offset.z)) + m_majorRadius;
 			break;
 		case GEOMETRY_CYLINDER:
-		{
-			Real xy = sqrt(sqr(m_offset.x) + sqr(m_offset.y));
-			result = sqrt(sqr(xy + m_majorRadius) + sqr(fabs(m_offset.z) + m_height * 0.5f));
+			result = sqrt(sqr(sqrt(sqr(m_offset.x) + sqr(m_offset.y)) + m_majorRadius) +
+				sqr(fabs(m_offset.z) + m_height * 0.5)) +
+				sqrt(sqr(m_offset.x) + sqr(m_offset.y) + sqr(m_offset.z));
 			break;
-		}
 		case GEOMETRY_BOX:
 			result = sqrt(sqr(fabs(m_offset.x) + m_majorRadius) +
 				sqr(fabs(m_offset.y) + m_minorRadius) +
-				sqr(fabs(m_offset.z) + m_height * 0.5f));
+				sqr(fabs(m_offset.z) + m_height * 0.5));
 			break;
 	}
 	return result;
