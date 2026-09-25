@@ -315,8 +315,8 @@ StateReturnType AIGuardInnerState::onEnter()
 
 	Rva0015C570GuardMachine *machineForArea =
 		(Rva0015C570GuardMachine *)state->m_machine;
-	PolygonTrigger *area = machineForArea->m_areaToGuard;
-	if (area)
+	PolygonTrigger *guardArea = machineForArea->m_areaToGuard;
+	if (guardArea)
 	{
 		union
 		{
@@ -324,16 +324,16 @@ StateReturnType AIGuardInnerState::onEnter()
 			GetAreaValueCall asMember;
 		} getAreaValueCast;
 		getAreaValueCast.asVoid = (void *)j_00045a02;
-		Real areaRange = (area->*getAreaValueCast.asMember)();
+		Real guardAreaRadius = (guardArea->*getAreaValueCast.asMember)();
 		state->m_exitConditions.m_radiusSqr =
-			(area->*getAreaValueCast.asMember)() * areaRange;
+			(guardArea->*getAreaValueCast.asMember)() * guardAreaRadius;
 		union
 		{
 			void *asVoid;
 			GetCenterPointCall asMember;
 		} getCenterPointCast;
 		getCenterPointCast.asVoid = (void *)j_00007ad6;
-		(area->*getCenterPointCast.asMember)(guardCenter);
+		(guardArea->*getCenterPointCast.asMember)(guardCenter);
 	}
 
 	m_attackState = new(
