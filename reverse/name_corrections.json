@@ -3758,5 +3758,75 @@
   "after_sha256": "a4d30485e025ca8e712178ba93865e976d44fc6fa676df0da4185e119529387f",
   "evidence": "docs/naming_evidence.md",
   "reason": "the body never reads +0"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "BfmeDisplaySlot10State",
+  "new_name": "Rva006ECF80Held",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank-invented type name with no layout witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "bfmeDisplaySlot10",
+  "new_name": "rva006ECF80",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name had no caller/string/ZH evidence and wrongly said slot 10 (vtable slot is 22)"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "m_begin",
+  "new_name": "m_field08",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "no field_names/name_oracle witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "m_end",
+  "new_name": "m_field0C",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "no field_names/name_oracle witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "m_entries",
+  "new_name": "m_field188",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle has no witnessed W3DDisplay layout at 0x188"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "m_mode",
+  "new_name": "m_field14",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "guessed semantic name with no witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "m_state",
+  "new_name": "m_field184",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle has no witnessed W3DDisplay layout at 0x184 (landed W3DDisplay TUs use m_unmodelled_184)"
  }
 ]

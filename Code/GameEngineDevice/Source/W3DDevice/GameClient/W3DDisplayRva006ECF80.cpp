@@ -1,10 +1,10 @@
-// ?d_006ecf80@@YAXXZ
-// partial score=0.95 date=2026-09-06
-// cl: /DNDEBUG /DWIN32 /MD /EHsc
-
-// Conversion of the BFME W3DDisplay vtable slot at 0x006ECF80.
-// The source name is address-qualified because the retail slot's semantic
-// name is not present in the recovered BFME headers.
+// cl: /DNDEBUG /MD /EHsc
+// W3DDisplay vtable 0x0111EDD0 slot 22 (+0x58) -> ILT 0x0003FEA9 -> 0x006ECF80.
+// The owner is proven by the matched W3DDisplay destructor 0x006EFC20, which
+// installs the same vtable; the slot has no Zero Hour counterpart and no caller
+// or string names it, so the method keeps its address token.  The +0x184/+0x188
+// pair is the one 0x006ECF10 releases; the held object's +0x08/+0x0C words are an
+// eight-byte-element range (retail divides their difference by 8).
 
 typedef bool Bool;
 
@@ -40,53 +40,50 @@ public:
 
 extern AudioManager *TheAudio;
 
-class BfmeDisplaySlot10State
+struct Rva006ECF80Element
+{
+	int dword_0;
+	int dword_4;
+};
+
+class Rva006ECF80Held
 {
 public:
 	unsigned char m_pad00[8];
-	struct Pair
-	{
-		int m_first;
-		int m_second;
-	};
-	Pair *m_begin;
-	Pair *m_end;
+	Rva006ECF80Element *m_field08;
+	Rva006ECF80Element *m_field0C;
 	unsigned char m_pad10[4];
-	int m_mode;
+	int m_field14;
 };
 
 class W3DDisplay
 {
 private:
 	unsigned char m_pad00[0x180];
-	void *m_state;
-	BfmeDisplaySlot10State *m_entries;
+	void *m_field184;
+	Rva006ECF80Held *m_field188;
 
 public:
-	virtual Bool bfmeDisplaySlot10();
+	virtual Bool rva006ECF80();
 };
 
-// ?bfmeDisplaySlot10@W3DDisplay@@UAE_NXZ
-Bool W3DDisplay::bfmeDisplaySlot10()
+
+// ?rva006ECF80@W3DDisplay@@UAE_NXZ
+Bool W3DDisplay::rva006ECF80()
 {
-	Bool result = 0;
-
-	if (m_state)
+	Bool result = false;
+	if (m_field184)
 	{
-		BfmeDisplaySlot10State *entries = m_entries;
-		if (entries)
+		Rva006ECF80Held *held = m_field188;
+		if (held)
 		{
-			if (entries->m_mode != 1)
-				return 1;
-
-			unsigned int count = (unsigned int)(entries->m_end - entries->m_begin);
-			if (count > 0)
-				return 1;
+			if (held->m_field14 != 1)
+				result = true;
+			else if ((unsigned int)(held->m_field0C - held->m_field08) > 0)
+				result = true;
 		}
 	}
-
-	if (TheAudio && TheAudio->slot93())
-		result = 1;
-
+	if (!result && TheAudio && TheAudio->slot93())
+		result = true;
 	return result;
 }
