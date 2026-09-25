@@ -76,6 +76,8 @@ public:
 		const Object *target, const void *unused) const;
 };
 
+typedef BfmeAttackQuery PathfinderAttackQueryView;
+
 class Pathfinder
 {
 public:
@@ -87,16 +89,11 @@ class AI
 {
 public:
 	unsigned char m_pad000[0x0c];
-	BfmeAttackQuery *m_attackQuery;
-
-	BfmeAttackQuery *attackQuery() const
-	{
-		return m_attackQuery;
-	}
+	Pathfinder *m_pathfinder;
 
 	Pathfinder *pathfinder() const
 	{
-		return reinterpret_cast<Pathfinder *>(m_attackQuery);
+		return m_pathfinder;
 	}
 };
 
@@ -128,54 +125,55 @@ private:
 	StateMachine *m_machine;
 	unsigned char m_pad020[4];
 	UnsignedInt m_nextRetryFrame;
-	int m_retryCount;
+	int m_pathCheckAttempts;
 };
 
 StateReturnType AIAttackMeleeHordeWaitPathState::update()
 {
-	Object *source = m_machine->m_owner;
+	Object *attacker = m_machine->m_owner;
 	switch (m_machine->isGoalObjectDestroyed())
 	{
 	default:
 		return STATE_SUCCESS;
 	case 0:
 	{
-		Object *target = m_machine->getGoalObject();
-		if (target == 0)
+		Object *machineGoal = m_machine->getGoalObject();
+		if (machineGoal == 0)
 			return STATE_SUCCESS;
 
-		UnsignedInt frame = TheGameLogic->m_frame;
-		if (m_nextRetryFrame > frame)
+		UnsignedInt currentFrame = TheGameLogic->m_frame;
+		if (m_nextRetryFrame > currentFrame)
 			return STATE_CONTINUE;
 
-		Bool canAttack = false;
-		if (target->isKindOf(KINDOF_STRUCTURE))
-			canAttack = TheAI->attackQuery()->bfmeCanAttackTarget(
-				source, source->getPosition(), target, 0);
+		Bool structureAttackQueryPassed = false;
+		if (machineGoal->isKindOf(KINDOF_STRUCTURE))
+			structureAttackQueryPassed =
+				((PathfinderAttackQueryView *)TheAI->pathfinder())->bfmeCanAttackTarget(
+					attacker, attacker->getPosition(), machineGoal, 0);
 
-		if (target->isKindOf(KINDOF_MELEE_HORDE_TARGET))
+		if (machineGoal->isKindOf(KINDOF_MELEE_HORDE_TARGET))
 		{
 			static NameKeyType siegeDeploySpecialPowerKey =
 				TheNameKeyGenerator->nameToKey("SiegeDeploySpecialPower");
-			Module *module = target->findModule(siegeDeploySpecialPowerKey);
+			Module *module = machineGoal->findModule(siegeDeploySpecialPowerKey);
 			if (module != 0 && ((Bool (__fastcall *)(Module *))j_00048112)(module))
-				goto blocked;
+				goto returnToApproach;
 		}
 
-		if (canAttack)
-			goto blocked;
+		if (structureAttackQueryPassed)
+			goto returnToApproach;
 		if (TheAI->pathfinder()->slowDoesPathExist(
-				source, source->getPosition(), target->getPosition(), OBJECT_ID_NONE))
-			goto blocked;
-		goto retry;
+			attacker, attacker->getPosition(), machineGoal->getPosition(), OBJECT_ID_NONE))
+			goto returnToApproach;
+		goto schedulePathRetry;
 
-		blocked:
+		returnToApproach:
 		__asm { }
 		return STATE_FAILURE;
 
-		retry:
+		schedulePathRetry:
 		m_nextRetryFrame = TheGameLogic->m_frame + 7;
-		return ++m_retryCount <= 5 ? STATE_CONTINUE : STATE_SUCCESS;
+		return ++m_pathCheckAttempts <= 5 ? STATE_CONTINUE : STATE_SUCCESS;
 	}
 	}
 }
