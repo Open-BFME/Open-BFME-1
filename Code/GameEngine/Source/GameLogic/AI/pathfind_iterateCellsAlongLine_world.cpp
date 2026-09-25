@@ -61,7 +61,7 @@ struct Rva003F1CA0Struct;
 class Pathfinder
 {
 public:
-	Bool worldToCell(const Coord3D *world, ICoord2D *cell);		///< ILT thunk at 0x000171E8
+	Bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);		///< ILT thunk at 0x000171E8
 
 	Int iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &endWorld,
 			PathfindLayerEnum layer, Rva003D7440Struct *userData);
@@ -262,4 +262,3 @@ Int Pathfinder::iterateCellsAlongLine(const Coord3D &startWorld, const Coord3D &
 	worldToCell( &endWorld, &end );
 	return iterateCellsAlongLine(start, end, layer, userData);
 }
-
