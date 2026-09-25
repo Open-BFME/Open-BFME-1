@@ -89062,3 +89062,5 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?append@Rva003B4250StoreThunk@@QAEXPBURva00366890Element@@ABVAsciiString@@1@Z,0x0003453B,retail 0x003B4250 encodes ILT 0x0003453B to Rva00383820 tail thunk and Rva00366970 store body
+??1Rva000C0B90MapMetaDataReader@@QAE@XZ,0x0003404F,opaque address-derived reader cleanup; retail ILT targets the unnamed body at 0x000C0B90
+??ARva000C1D10MapCache@@QAEAAVMapMetaData@@ABVAsciiString@@@Z,0x00031E99,opaque address-derived cache index; retail ILT targets the unnamed body at 0x000C1D10

@@ -3388,5 +3388,25 @@
   "after_sha256": "2658b8a0c2136ac78cb820fc0cb95ba0ca035035338d04b69ec8bf19192ff7fc",
   "evidence": "reverse/identity_evidence/0x0081d600-line-table-callback.md",
   "reason": "The independent xrefs identify a LineTable callback, but the field table names data rather than its callback and Ghidra gives no C++ owner; keep the unproven owner address-qualified."
+ },
+ {
+  "old_path": "reverse/attempts/0x000c1e50.cpp",
+  "new_path": "Code/GameEngine/Source/Common/INI/Rva000C1E50MapCacheDefinition.cpp",
+  "old_name": "MapMetaDataReader",
+  "new_name": "Rva000C0B90MapMetaDataReader",
+  "before_sha256": "5c1e4951ca62ee3c34e32a50e68a2776c4aa33446d80857e43da4d5fc76b25d4",
+  "after_sha256": "30be479bd452161964e3c84528d3ecf8f654e4848a3debb0ff6c74b767f724f1",
+  "evidence": "reverse/functions.csv",
+  "reason": "The bank draft called these helpers MapMetaDataReader and MapPlayers on Zero Hour twin grounds only. The body behind ILT 0x0001FFC3 (0x000C0C60) is already ledgered as ??4Rva000C0C60MapPlayers@@QAEAAV0@ABV0@@Z, and the body behind ILT 0x0003404F (0x000C0B90) is an unnamed placeholder, so the converted source uses the ledger's name and an address-derived one instead of adding second or unproven names."
+ },
+ {
+  "old_path": "reverse/attempts/0x000c1e50.cpp",
+  "new_path": "Code/GameEngine/Source/Common/INI/Rva000C1E50MapCacheDefinition.cpp",
+  "old_name": "MapPlayers",
+  "new_name": "Rva000C0C60MapPlayers",
+  "before_sha256": "5c1e4951ca62ee3c34e32a50e68a2776c4aa33446d80857e43da4d5fc76b25d4",
+  "after_sha256": "30be479bd452161964e3c84528d3ecf8f654e4848a3debb0ff6c74b767f724f1",
+  "evidence": "reverse/functions.csv",
+  "reason": "The bank draft called these helpers MapMetaDataReader and MapPlayers on Zero Hour twin grounds only. The body behind ILT 0x0001FFC3 (0x000C0C60) is already ledgered as ??4Rva000C0C60MapPlayers@@QAEAAV0@ABV0@@Z, and the body behind ILT 0x0003404F (0x000C0B90) is an unnamed placeholder, so the converted source uses the ledger's name and an address-derived one instead of adding second or unproven names."
  }
 ]
