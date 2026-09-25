@@ -188,18 +188,18 @@ StateReturnType AIRampageState::onEnter()
 	if (!owner)
 		return STATE_FAILURE;
 
-	AIUpdateInterface *ai = owner->getAIUpdateInterface();
-	ai->slot1FC(8);
+	AIUpdateInterface *aiUpdate = owner->getAIUpdateInterface();
+	aiUpdate->slot1FC(8);
 
-	Coord3D position;
-	position.x = owner->m_position.x;
-	position.y = owner->m_position.y;
-	position.z = owner->m_position.z;
+	Coord3D ownerPosition;
+	ownerPosition.x = owner->m_position.x;
+	ownerPosition.y = owner->m_position.y;
+	ownerPosition.z = owner->m_position.z;
 	TheAI->pathfinder()->removeGoal(owner);
-	TheAI->pathfinder()->snapPosition(owner, &position);
+	TheAI->pathfinder()->snapPosition(owner, &ownerPosition);
 
-	ai->m_flag334 = true;
-	ai->m_flag333 = true;
+	aiUpdate->m_flag334 = true;
+	aiUpdate->m_flag333 = true;
 	owner->clearCondition(8);
 	TheBfmeGameLogic->deselectObject(owner, 0xffff, true);
 
@@ -214,10 +214,10 @@ StateReturnType AIRampageState::onEnter()
 		owner->setStatus(status, true);
 	}
 
-	int duration = bfmeRampageDuration(ai);
-	m_field28 = TheBfmeGameLogic->getFrame() + duration;
+	int durationOrNextFrame = bfmeRampageDuration(aiUpdate);
+	m_field28 = TheBfmeGameLogic->getFrame() + durationOrNextFrame;
 
-	UnsignedInt period = ai->m_moduleData->m_field48;
+	UnsignedInt period = aiUpdate->m_moduleData->m_field48;
 	if (period == 0)
 	{
 		m_field2c = 0xffffffff;
@@ -226,10 +226,10 @@ StateReturnType AIRampageState::onEnter()
 
 	GameLogic *logic = TheBfmeGameLogic;
 	_ReadWriteBarrier();
-	if (duration)
-		duration = logic->getFrame() + period;
+	if (durationOrNextFrame)
+		durationOrNextFrame = logic->getFrame() + period;
 	else
-		duration = logic->getFrame();
-	m_field2c = duration;
+		durationOrNextFrame = logic->getFrame();
+	m_field2c = durationOrNextFrame;
 	return STATE_CONTINUE;
 }
