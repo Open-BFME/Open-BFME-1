@@ -26,7 +26,7 @@ extern "C" void __cdecl bfmeRetailCritterDesyncLog(CRCParameterCheck *, const ch
 class BfmeCellTesterRva003F5340
 {
 public:
-	bool test(Int x, Int y);
+	bool test(Int cellX, Int cellY);
 };
 
 
