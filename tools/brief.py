@@ -200,8 +200,10 @@ def lift_lines(r):
              f"function (the whole lift file when nothing else lives in it); precedent 33110b4b40. "
              f"The name came with the lift: confirm it from callers/vtable/ZH before landing. "
              f"NAME must be the ledger's name exactly as written ({r['name']})"
-             + ("; it is truncated, so also pass --notes \"object-symbol=<full mangled name>\" "
-                "or the build cannot find the symbol in your object"
+             + ("; it is truncated, so either keep it and pass --notes \"object-symbol=<full mangled "
+                "name>\", or land the full (or corrected) name with `--replace-rva 0xRVA "
+                "--correct-identity <ledger name> --identity-evidence reverse/identity_evidence/<rva>.md` "
+                "instead of --replace-existing"
                 if r["name"].endswith("@@") else "") + "."]
     for warning in lift_lane.identity_warnings(r["name"], int(r["target_rva"], 16), int(r["target_size"])):
         lines.append(f"    IDENTITY CHECK: {warning}.")
