@@ -16,7 +16,7 @@ struct ICoord2D
 class Pathfinder
 {
 public:
-	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
+	Bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
 	int bfmeWalkWorldCells(const ICoord2D &startCell, const ICoord2D &endCell,
 		int layer, const Coord3D **context);
 	Bool bfmeWorldLineHasNoHit(const Coord3D *startPosition, const Coord3D *endPosition);
