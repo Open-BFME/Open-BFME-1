@@ -158,52 +158,54 @@ private:
 
 StateReturnType AIAttackMeleeHordeWaitState::onEnter()
 {
-	Object *source = m_machine->m_owner;
+	Object *attacker = m_machine->m_owner;
 	if (m_machine->isGoalObjectDestroyed())
 		return STATE_SUCCESS;
 
-	Object *target = m_machine->getGoalObject();
-	if (target == 0)
+	Object *candidateVictim = m_machine->getGoalObject();
+	if (candidateVictim == 0)
 		return STATE_SUCCESS;
 
-	ContainModuleInterface *contain = source->getContain();
-	if (contain != 0)
+	ContainModuleInterface *containModule = attacker->getContain();
+	if (containModule != 0)
 	{
-		HordeContainInterface *horde = contain->getHordeContainInterface();
-		if (horde == 0)
+		HordeContainInterface *owningHorde = containModule->getHordeContainInterface();
+		if (owningHorde == 0)
 			return STATE_SUCCESS;
 
-		unsigned int formation = target->getMeleeFormation();
-		if (target->isMeleeHordeTarget())
+		// The machine goal is the initial candidate; successful horde resolution
+		// changes the object used by the readiness check and melee commands.
+		unsigned int formation = candidateVictim->getMeleeFormation();
+		if (candidateVictim->isMeleeHordeTarget())
 		{
-			Object *resolved = target->bfmeResolveMeleeTarget(0);
-			if (resolved != 0)
+			Object *resolvedMember = candidateVictim->bfmeResolveMeleeTarget(0);
+			if (resolvedMember != 0)
 			{
-				formation = resolved->getMeleeFormation();
-				target = resolved;
+				formation = resolvedMember->getMeleeFormation();
+				candidateVictim = resolvedMember;
 			}
 		}
 
-		if (bfmeMeleeHordeTargetInvalid(source, target))
+		if (bfmeMeleeHordeTargetInvalid(attacker, candidateVictim))
 			return STATE_FAILURE;
 
-		if (!horde->isMeleeTargetReady(target))
+		if (!owningHorde->isMeleeTargetReady(candidateVictim))
 		{
 			int maximumDistance = 40;
-			if (target->bfmeIsKindOf(KINDOF_MELEE_HORDE_TARGET) &&
-				source->getLayer() != 1)
+			if (candidateVictim->bfmeIsKindOf(KINDOF_MELEE_HORDE_TARGET) &&
+				attacker->getLayer() != 1)
 				maximumDistance = 60;
 
-			if (source->getDistanceSquared(target) <
+			if (attacker->getDistanceSquared(candidateVictim) <
 				(float)(maximumDistance * maximumDistance))
-				horde->prepareMeleeTarget(target);
+				owningHorde->prepareMeleeTarget(candidateVictim);
 			else
 				return STATE_FAILURE;
 		}
 
-		horde->setMeleeFormation(formation);
+		owningHorde->setMeleeFormation(formation);
 		m_waitUntil = TheGameLogic->m_frame + 15;
-		horde->beginMelee(target);
+		owningHorde->beginMelee(candidateVictim);
 	}
 
 	return STATE_CONTINUE;
@@ -211,38 +213,40 @@ StateReturnType AIAttackMeleeHordeWaitState::onEnter()
 
 StateReturnType AIAttackMeleeHordeWaitState::update()
 {
-	Object *source = m_machine->m_owner;
+	Object *attacker = m_machine->m_owner;
 	if (m_machine->isGoalObjectDestroyed())
 		return STATE_SUCCESS;
 
-	Object *target = m_machine->getGoalObject();
-	if (target == 0)
+	Object *machineGoal = m_machine->getGoalObject();
+	if (machineGoal == 0)
 		return STATE_SUCCESS;
 
-	if (((BFMEObjectStealthQuery *)target)->isStealthedAndUndetected(
-			(const Object *)source->getControllingPlayer()))
+	if (((BFMEObjectStealthQuery *)machineGoal)->isStealthedAndUndetected(
+			(const Object *)attacker->getControllingPlayer()))
 		return STATE_FAILURE;
 
-	ContainModuleInterface *contain = source->getContain();
-	if (contain != 0)
+	ContainModuleInterface *containModule = attacker->getContain();
+	if (containModule != 0)
 	{
-		HordeContainInterface *horde = contain->getHordeContainInterface();
-		if (horde == 0)
+		HordeContainInterface *owningHorde = containModule->getHordeContainInterface();
+		if (owningHorde == 0)
 			return STATE_SUCCESS;
 
-		if (bfmeMeleeHordeTargetInvalid(source, target))
+		// Here the predicate receives the machine goal and resolves horde members
+		// after its status-bit check, unlike onEnter's resolution above.
+		if (bfmeMeleeHordeTargetInvalid(attacker, machineGoal))
 			return STATE_FAILURE;
 
-		if (horde->isMeleeTargetReady(target))
+		if (owningHorde->isMeleeTargetReady(machineGoal))
 			m_waitUntil = TheGameLogic->m_frame + 15;
 		else if (TheGameLogic->m_frame >= m_waitUntil)
 			return STATE_FAILURE;
 
-		horde->updateMeleeTarget(target);
+		owningHorde->updateMeleeTarget(machineGoal);
 	}
 
-	float angle = source->getOrientation();
-	angle += source->bfmeRelativeAngleTo(target->getPosition());
-	source->setOrientation(angle);
+	float angle = attacker->getOrientation();
+	angle += attacker->bfmeRelativeAngleTo(machineGoal->getPosition());
+	attacker->setOrientation(angle);
 	return STATE_CONTINUE;
 }
