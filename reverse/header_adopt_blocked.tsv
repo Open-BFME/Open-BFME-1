@@ -706,3 +706,4 @@ Code/GameEngine/Source/GameClient/GUI/BfmeAptScreenOptionsConstructor.cpp	Unicod
 Code/GameEngine/Source/GameLogic/System/Rva00397350GlobalRallyPointFeedback.cpp	UnicodeString	build.sh exited 1
 Code/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorRva001FF1C0.cpp	StringBase	Code\GameEngine\Source\GameLogic\Object\Behavior\GettingBuiltBehaviorRva001FF1C0.cpp(75) : error C2039: 'm_length' : is not a member of 'StringBase<T>::Header'
 Code/GameEngine/Source/GameLogic/Object/Behavior/GettingBuiltBehaviorModuleDataCtorThunk.cpp	AsciiString	build.sh exited 1
+Code/GameEngine/Source/Common/System/Recorder_updateRecord.cpp	AsciiString	build.sh exited 1

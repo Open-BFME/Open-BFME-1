@@ -13001,6 +13001,7 @@ name,address,notes
 ?TheMappedImageCollection@@3PAVMappedImageCollectionPortraitShim@@A,0x012F6924,BFME portrait selector mapped-image global
 ?TheMaxHealthUpgradePool@?1??getClassMemoryPool@MaxHealthUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0588,pool-glue cascade static (back-solved)
 ?TheMemoryPoolFactory@@3PAVMemoryPoolFactory@@A,0x00EED600,pool-glue cascade static (back-solved)
+?TheCommandList@@3PAVCommandList@@A,0x012ED5F0,TheCommandList singleton; complete callers at 0x0008ADF0 and 0x006828D0 plus target 0x0009BFE0 read its first-message field at +0x08
 ?TheMessageStream@@3PAVMessageStream@@A,0x012ED5EC,Open-BFME5 doDisableInput appends a message through virtual slot 0x34 on this global
 ?TheModelConditionUpgradePool@?1??getClassMemoryPool@ModelConditionUpgrade@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EF0590,pool-glue cascade static (back-solved)
 ?TheMoneyCrateCollidePool@?1??getClassMemoryPool@MoneyCrateCollide@@CAPAVMemoryPool@@XZ@4PAV3@A,0x00EEFA10,pool-glue cascade static (back-solved)
@@ -87000,6 +87001,8 @@ name,address,notes
 ?updatePlayerCells008FC3B0@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl008FBA40@@H@Z,0x008FC3B0,RVA 0x008FB010 per-element player update call target
 ?updatePlayerCells008FC450@ShroudManagerImpl008FBA40Element@@QAEXPAVShroudManagerImpl008FBA40@@H@Z,0x008FC450,RVA 0x008FB060 per-element alternate player update call target
 ?updatePos@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@@Z,0x00013647,Open-BFME5 ILT; called by ?setLayer@Object@@QAEXW4PathfindLayerEnum@@@Z at 0x001BEBB0 on TheAI+0x0C with the object position after the layer store
+?lastFrame@?1??updateRecord@RecorderClass@@QAEXXZ@4HA,0x012A7D60,updateRecord function-local static frame sentinel; target writes -1 on clear and 0 on new-game
+?Rva0009B6C0RecorderStart@RecorderClass@@IAEXHHHH@Z,0x0009B6C0,address-derived RecorderClass helper; target updateRecord call proves thiscall with four 32-bit arguments
 ?updateRecord@RecorderClass@@QAEXXZ,0x0009BFE0,zh-sweep callee pin derived from retail REL32 displacement
 ?updateScorches@BaseHeightMapScorchUpdater@@QAEXXZ,0x00032966,BaseHeightMap scorch update ILT thunk
 ?updateShadowState@W3DVolumetricShadow@@QAEXXZ,0x0001315B,render helper ILT
