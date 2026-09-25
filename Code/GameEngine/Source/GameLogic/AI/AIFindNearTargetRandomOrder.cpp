@@ -33,11 +33,11 @@ public:
 class Rva0016DF90Owner
 {
 public:
-	Object *rva0016df90(Object *obj);
+	Object *rva0016df90(Object *object);
 };
 
 // retail RVA 0x0016DF90
-Object *Rva0016DF90Owner::rva0016df90(Object *obj)
+Object *Rva0016DF90Owner::rva0016df90(Object *object)
 {
 	int order = GetGameLogicRandomValue(1, 2,
 		"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x3ac4);
@@ -46,18 +46,18 @@ Object *Rva0016DF90Owner::rva0016df90(Object *obj)
 
 	if (order == 1)
 	{
-		result = TheAI->findEnemyNear(obj, obj->getVisionRange() * 2.0f, 2, 0, 0);
+		result = TheAI->findEnemyNear(object, object->getVisionRange() * 2.0f, 2, 0, 0);
 		if (result)
 			return result;
 
-		result = TheAI->findAllyNear(obj, obj->getVisionRange() * 2.0f, 2);
+		result = TheAI->findAllyNear(object, object->getVisionRange() * 2.0f, 2);
 		return result;
 	}
 
-	result = TheAI->findAllyNear(obj, obj->getVisionRange() * 2.0f, 2);
+	result = TheAI->findAllyNear(object, object->getVisionRange() * 2.0f, 2);
 	if (result)
 		return result;
 
-	result = TheAI->findEnemyNear(obj, obj->getVisionRange() * 2.0f, 2, 0, 0);
+	result = TheAI->findEnemyNear(object, object->getVisionRange() * 2.0f, 2, 0, 0);
 	return result;
 }
