@@ -1,5 +1,5 @@
 // ?h005143D0@Glo00EF4988@@QAEXXZ
-// partial score=0.66 date=2026-09-20
+// partial score=0.69 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc
 
 typedef int Int;
@@ -42,6 +42,16 @@ struct Rva005143D0Vector
 			else
 				_STL::__node_alloc<true, 0>::_M_deallocate( begin, bytes );
 		}
+	}
+
+	unsigned int size() const
+	{
+		return static_cast<unsigned int>(m_finish - m_begin);
+	}
+
+	int *begin() const
+	{
+		return m_begin;
 	}
 
 	int *m_begin;
@@ -101,9 +111,8 @@ void Glo00EF4988::h005143D0()
 		list, &values, 7, true );
 	if (count > 0)
 	{
-		int *begin = values.m_begin;
-		int *it = begin;
-		int *end = values.m_finish;
+		int *it = values.begin();
+		int *end = it + values.size();
 		if (it != end)
 		{
 			do
