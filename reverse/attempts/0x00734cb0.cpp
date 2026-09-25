@@ -1,5 +1,5 @@
 // ?loadTreesInVertexAndIndexBuffers@W3DTreeBuffer@@IAEXPAV?$RefMultiListIterator@VRenderObjClass@@@@@Z
-// partial score=0.9519026 date=2026-09-25
+// partial score=0.9540334855403348 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWSaveLoad /Ireference/shims/sweep
 // BFME tree vertex/index loading, RVA 0x00734CB0, full decoded size 3285.
 // Derived from EA GeneralsMD W3DTreeBuffer.cpp, with retail-only layouts and
@@ -171,9 +171,9 @@ void W3DTreeBuffer::loadTreesInVertexAndIndexBuffers(RefRenderObjListIterator *p
     Rva00734CB0Color lightDiffuse[3];
     for (Int i=0;i<3;++i) {
         Vector3 lightDirection(objectLighting[i].lightPos.x,objectLighting[i].lightPos.y,objectLighting[i].lightPos.z);
-        Real lightLength2 = lightDirection.Z * lightDirection.Z;
-        lightLength2 += lightDirection.X * lightDirection.X;
+        Real lightLength2 = lightDirection.X * lightDirection.X;
         lightLength2 += lightDirection.Y * lightDirection.Y;
+        lightLength2 += lightDirection.Z * lightDirection.Z;
         if (lightLength2 != 0.0f) {
             Real inverseLength = WWMath::Inv_Sqrt(lightLength2);
             lightDirection.X *= inverseLength;
