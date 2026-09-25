@@ -119,17 +119,17 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D *startCell,
 
 	Int x = startCell->x;
 	Int y = startCell->y;
-	PathfindCell *from = 0;
+	PathfindCell *previousCell = 0;
 	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
 	{
-		PathfindCell *to = getCell( layer, x, y );
-		if (to == 0)
+		PathfindCell *currentCell = getCell( layer, x, y );
+		if (currentCell == 0)
 			return 0;
 
-		Int ret = callbackInfo->cellCallback( from, to, x, y );
+		Int ret = callbackInfo->cellCallback( previousCell, currentCell, x, y );
 		if (ret != 0)
 			return ret;
-		from = to;
+		previousCell = currentCell;
 
 		if (num < 0)
 		{
