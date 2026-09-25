@@ -167,14 +167,14 @@ public:
 	bool isGroundPathPassable(const Coord3D &startWorld,
 		PathfindLayerEnum startLayer, const Coord3D &endWorld,
 		int pathDiameter);
-	Bool isLinePassable(Object *obj, Int zone, PathfindLayerEnum layer,
+	Bool isLinePassable(Object *object, Int validSurfaces, PathfindLayerEnum layer,
 		const Coord3D *start, const Coord3D *end, Bool considerTransient,
 		Bool isCrusher, Bool restrictSurfaces);
 	Bool lineBlocked(Object *object, Int validSurfaces, PathfindLayerEnum layer,
 		const Coord3D *start, const Coord3D *end);
-	Bool isLinePassable(Object *obj, Int zone, PathfindLayerEnum layer,
+	Bool isLinePassable(Object *object, Int validSurfaces, PathfindLayerEnum layer,
 		const Coord3D *start, const Coord3D *end, Bool considerTransient);
-	Bool lineClear(Object *obj, Int value, PathfindLayerEnum layer,
+	Bool lineClear(Object *object, Int value, PathfindLayerEnum layer,
 		const Coord3D *start, const Coord3D *end);
 
 private:
@@ -223,7 +223,7 @@ bool Pathfinder::isGroundPathPassable(const Coord3D &startWorld,
 
 // ?isLinePassable@Pathfinder@@QAEHPAVObject@@HW4PathfindLayerEnum@@PBUCoord3D@@2HHH@Z
 // The caller's crusher and restrict-surfaces flags, allowPinched forced off.
-Bool Pathfinder::isLinePassable(Object *obj, Int zone, PathfindLayerEnum layer,
+Bool Pathfinder::isLinePassable(Object *object, Int validSurfaces, PathfindLayerEnum layer,
 	const Coord3D *startWorld, const Coord3D *endWorld, Bool considerTransient,
 	Bool isCrusher, Bool restrictSurfaces)
 {
@@ -231,7 +231,7 @@ Bool Pathfinder::isLinePassable(Object *obj, Int zone, PathfindLayerEnum layer,
 	ICoord2D start;
 	unsigned char storage[0x58];
 	BfmeCheckMovementInfo *payload = new (storage) BfmeCheckMovementInfo(
-		this, obj, zone, considerTransient, isCrusher, restrictSurfaces, 0);
+		this, object, validSurfaces, considerTransient, isCrusher, restrictSurfaces, 0);
 	worldToCell(startWorld, &start);
 	worldToCell(endWorld, &end);
 	return iterateCellsAlongLine(start, end, layer, payload) == 0;
@@ -253,27 +253,27 @@ Bool Pathfinder::lineBlocked(Object *object, Int validSurfaces, PathfindLayerEnu
 
 // ?isLinePassable@Pathfinder@@QAEHPAVObject@@HW4PathfindLayerEnum@@PBUCoord3D@@2H@Z
 // crusher off, restrict-surfaces and allowPinched on.
-Bool Pathfinder::isLinePassable(Object *obj, Int zone, PathfindLayerEnum layer,
+Bool Pathfinder::isLinePassable(Object *object, Int validSurfaces, PathfindLayerEnum layer,
 	const Coord3D *startWorld, const Coord3D *endWorld, Bool considerTransient)
 {
 	ICoord2D end;
 	ICoord2D start;
 	unsigned char storage[0x58];
 	BfmeCheckMovementInfo *payload = new (storage) BfmeCheckMovementInfo(
-		this, obj, zone, considerTransient, 0, 1, 1);
+		this, object, validSurfaces, considerTransient, 0, 1, 1);
 	worldToCell(startWorld, &start);
 	worldToCell(endWorld, &end);
 	return iterateCellsAlongLine(start, end, layer, payload) == 0;
 }
 
 // ?lineClear@Pathfinder@@QAEHPAVObject@@HW4PathfindLayerEnum@@PBUCoord3D@@2@Z
-Bool Pathfinder::lineClear(Object *obj, Int value, PathfindLayerEnum layer,
+Bool Pathfinder::lineClear(Object *object, Int value, PathfindLayerEnum layer,
 	const Coord3D *startWorld, const Coord3D *endWorld)
 {
 	ICoord2D end;
 	ICoord2D start;
 	unsigned char storage[0x54];
-	Rva003E5A50Info *payload = new (storage) Rva003E5A50Info(this, obj, value);
+	Rva003E5A50Info *payload = new (storage) Rva003E5A50Info(this, object, value);
 	worldToCell(startWorld, &start);
 	worldToCell(endWorld, &end);
 	return iterateCellsAlongLine(start, end, layer, payload) == 0;
