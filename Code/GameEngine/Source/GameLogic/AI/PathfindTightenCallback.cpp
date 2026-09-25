@@ -15,10 +15,10 @@ class PathfindCell;
 class Pathfinder
 {
 public:
-	Bool checkForAdjust(Object *obj, const LocomotorSet &set, Bool human,
-		Int x, Int y, Int layer, Int radius, Bool center, Coord3D *dest,
-		const Coord3D *groupDest, Real originalZ,
-		PathfindCell **fromSlot, Int onlyIfLayer);
+	Bool checkForAdjust(Object *object, const LocomotorSet &locomotorSet, Bool isHuman,
+		Int cellX, Int cellY, Int layer, Int radius, Bool centerInCell, Coord3D *destination,
+		const Coord3D *groupDestination, Real originalZ,
+		PathfindCell **previousCellSlot, Int onlyIfLayer);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
@@ -35,39 +35,39 @@ private:
 class TightenPathCallbackInfo
 {
 public:
-	Int cellCallback(PathfindCell *from, PathfindCell *to, Int to_x, Int to_y);
+	Int cellCallback(PathfindCell *previousCell, PathfindCell *candidateCell, Int cellX, Int cellY);
 
 	Pathfinder *m_pathfinder;
-	Object *m_obj;
+	Object *m_object;
 	const LocomotorSet *m_locomotorSet;
 	Int m_radius;
-	Bool m_center;
+	Bool m_centerInCell;
 	char m_pad11[3];
 	Int m_layer;
 	Bool m_foundDest;
 	char m_pad19[3];
-	Coord3D m_scratch;
-	Coord3D m_dest;
+	Coord3D m_candidatePosition;
+	Coord3D m_destination;
 };
 
-Int TightenPathCallbackInfo::cellCallback(PathfindCell *from,
-	PathfindCell *to, Int to_x, Int to_y)
+Int TightenPathCallbackInfo::cellCallback(PathfindCell *previousCell,
+	PathfindCell *candidateCell, Int cellX, Int cellY)
 {
-	if (from == 0)
+	if (previousCell == 0)
 		return 0;
 
-	if (m_layer != to->getLayer())
+	if (m_layer != candidateCell->getLayer())
 		return 0;
 
-	if (!m_pathfinder->checkForAdjust(m_obj, *m_locomotorSet, 1,
-		to_x, to_y, to->getLayer(), m_radius, m_center, &m_scratch,
-		0, 0.0f, &from, 0))
+	if (!m_pathfinder->checkForAdjust(m_object, *m_locomotorSet, 1,
+		cellX, cellY, candidateCell->getLayer(), m_radius, m_centerInCell, &m_candidatePosition,
+		0, 0.0f, &previousCell, 0))
 		return 0;
 
-	if (from != 0)
+	if (previousCell != 0)
 		return 0;
 
 	m_foundDest = 1;
-	m_dest = m_scratch;
+	m_destination = m_candidatePosition;
 	return 0;
 }
