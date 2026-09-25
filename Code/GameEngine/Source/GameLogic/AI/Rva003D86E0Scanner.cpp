@@ -75,14 +75,13 @@ class Rva003D86E0Scanner
     PathfindLayerEnum m_layer;
     Int m_field14;
     Int m_cachedCellA, m_cachedCellB;
-    // Existing bank names retained; these are lower and upper extents on both axes.
-    Int m_originX, m_originY;
+    Int m_lowerCellOffset, m_upperCellOffset;
 };
 char Rva003D86E0Scanner::scan(Int cellX, Int cellY)
 {
-    for (Int x = cellX - m_originX; x < cellX + m_originY; ++x)
+    for (Int x = cellX - m_lowerCellOffset; x < cellX + m_upperCellOffset; ++x)
     {
-        for (Int y = cellY - m_originX; y < cellY + m_originY; ++y)
+        for (Int y = cellY - m_lowerCellOffset; y < cellY + m_upperCellOffset; ++y)
         {
             PathfindCell *cell = m_pathfinder->getCell(m_layer, x, y);
             if (!cell)
