@@ -29,9 +29,9 @@ public:
 // ?bfmeGetCellTwin@Pathfinder@@QAEPAVPathfindCell@@W4PathfindLayerEnum@@PBUCoord3D@@@Z
 PathfindCell *Pathfinder::bfmeGetCellTwin(PathfindLayerEnum layer, const Coord3D *worldPosition)
 {
-	ICoord2D cell;
-	Bool overflow = worldToCell(worldPosition, &cell);
+	ICoord2D cellIndex;
+	Bool overflow = worldToCell(worldPosition, &cellIndex);
 	if (overflow)
 		return 0;
-	return bfmeGetCellByIndicesTwin(layer, cell.x, cell.y);
+	return bfmeGetCellByIndicesTwin(layer, cellIndex.x, cellIndex.y);
 }
