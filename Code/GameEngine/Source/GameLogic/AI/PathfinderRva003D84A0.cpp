@@ -66,17 +66,17 @@ public:
 class Pathfinder
 {
 public:
-	__declspec(noinline) Bool worldToCell(const Coord3D *position, ICoord2D *cell);
+	__declspec(noinline) Bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
 	void rva003D84A0(Waypoint *waypoint);
 
 private:
 	// Ground-map subset of the layer-aware getCell, as in PathfinderGetLayer.cpp.
-	__forceinline PathfindCell *getGroundCell(Int x, Int y)
+	__forceinline PathfindCell *getGroundCell(Int cellX, Int cellY)
 	{
-		if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
-			y >= m_extent.lo.y && y <= m_extent.hi.y)
-			return (PathfindCell *)((unsigned char *)m_map[x] +
-				y * sizeof(PathfindCell));
+		if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+			cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
+			return (PathfindCell *)((unsigned char *)m_map[cellX] +
+				cellY * sizeof(PathfindCell));
 		return 0;
 	}
 
@@ -87,15 +87,15 @@ private:
 	PathfindZoneManager m_zoneManager;
 };
 
-Bool Pathfinder::worldToCell(const Coord3D *position, ICoord2D *cell)
+Bool Pathfinder::worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex)
 {
-	cell->x = REAL_TO_INT_FLOOR(position->x/10);
-	cell->y = REAL_TO_INT_FLOOR(position->y/10);
+	cellIndex->x = REAL_TO_INT_FLOOR(worldPosition->x/10);
+	cellIndex->y = REAL_TO_INT_FLOOR(worldPosition->y/10);
 	Bool overflow = false;
-	if (cell->x < m_extent.lo.x) {overflow = true; cell->x = m_extent.lo.x;}
-	if (cell->y < m_extent.lo.y) {overflow = true; cell->y = m_extent.lo.y;}
-	if (cell->x > m_extent.hi.x) {overflow = true; cell->x = m_extent.hi.x;}
-	if (cell->y > m_extent.hi.y) {overflow = true; cell->y = m_extent.hi.y;}
+	if (cellIndex->x < m_extent.lo.x) {overflow = true; cellIndex->x = m_extent.lo.x;}
+	if (cellIndex->y < m_extent.lo.y) {overflow = true; cellIndex->y = m_extent.lo.y;}
+	if (cellIndex->x > m_extent.hi.x) {overflow = true; cellIndex->x = m_extent.hi.x;}
+	if (cellIndex->y > m_extent.hi.y) {overflow = true; cellIndex->y = m_extent.hi.y;}
 	return overflow;
 }
 

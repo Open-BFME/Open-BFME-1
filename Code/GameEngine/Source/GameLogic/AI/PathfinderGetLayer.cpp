@@ -38,16 +38,16 @@ private:
 class Pathfinder
 {
 public:
-	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
+	Bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
 	Int getLayer(const Coord3D *worldPosition);
 
 private:
-	__forceinline PathfindCell *getGroundCell(Int x, Int y)
+	__forceinline PathfindCell *getGroundCell(Int cellX, Int cellY)
 	{
-		if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
-			y >= m_extent.lo.y && y <= m_extent.hi.y)
-			return (PathfindCell *)((unsigned char *)m_map[x] +
-				y * sizeof(PathfindCell));
+		if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+			cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
+			return (PathfindCell *)((unsigned char *)m_map[cellX] +
+				cellY * sizeof(PathfindCell));
 		return 0;
 	}
 
