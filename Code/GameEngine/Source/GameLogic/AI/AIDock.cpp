@@ -204,8 +204,8 @@ class BFMERetailDockVTable
 {
 public:
 	virtual void slot000() = 0;
-	virtual Bool reserveApproachPosition( Object *owner, Coord3D *goalPos, Int *approach ) = 0;	///< +0x04
-	virtual Bool reserveAdvancePosition( Object *owner, Coord3D *goalPos, Int *approach ) = 0;	///< +0x08
+	virtual Bool reserveApproachPosition( Object *owner, Coord3D *goalPosition, Int *approachIndex ) = 0;	///< +0x04
+	virtual Bool reserveAdvancePosition( Object *owner, Coord3D *goalPosition, Int *approachIndex ) = 0;	///< +0x08
 	virtual void slot00c() = 0;
 	virtual void slot010() = 0;
 	virtual void getEnterPosition( Object *owner, Coord3D *enterPosition ) = 0;	///< +0x14
