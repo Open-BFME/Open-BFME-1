@@ -34,7 +34,7 @@ public:
 	LocomotorOverridable *m_bfme04YY;
 };
 
-class BfmeCfgYY
+class Rva003DB760Config
 {
 public:
 	unsigned char m_bfmeHeadYY[0x10];
@@ -71,14 +71,14 @@ struct BfmeMovementPositionInfo
 	}
 };
 
-class BfmeCtxYY
+class Rva003DB760Context
 {
 public:
-	BfmeCtxYY(void *a, Object *o, BfmeCfgYY *c, char d, char e);
+	Rva003DB760Context(void *a, Object *o, Rva003DB760Config *c, char d, char e);
 
 	void *m_bfme00YY;
 	Object *m_bfme04YY;
-	BfmeCfgYY *m_bfme08YY;
+	Rva003DB760Config *m_bfme08YY;
 	BfmeMovementPositionInfo m_bfme0CYY;
 	char m_bfme18YY;
 	char m_bfme19YY;
@@ -87,7 +87,7 @@ public:
 	char m_bfme1CYY;
 };
 
-BfmeCtxYY::BfmeCtxYY(void *a, Object *o, BfmeCfgYY *c, char d, char e)
+Rva003DB760Context::Rva003DB760Context(void *a, Object *o, Rva003DB760Config *c, char d, char e)
 {
 	m_bfme00YY = a;
 	m_bfme04YY = o;

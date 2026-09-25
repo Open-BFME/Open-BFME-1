@@ -2698,5 +2698,35 @@
   "after_sha256": "8cf3f0fb469a6fd131a58000396d46315a885804945cab94cfb128725b26c1f6",
   "evidence": "docs/naming_evidence.md",
   "reason": "BfmeHostCH, BfmeSrcCH and bfmeSendCH were invented batch names with no evidence (earlier re_attempts verdicts kept the address identity) and BfmeHostCH collides with an unrelated class in BfmeOneHundredEighty.cpp; the 0x0015A130 body calls applyPacket on this, so it is re-homed on the pinned receiver Rva0015A190Owner as the address-derived rva0015A130 with the address-token parameter type Rva0015A130Source."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/AI/Rva003DB760MovementPositionContext.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva003DB760MovementPositionContext.cpp",
+  "old_name": "BfmeCfgYY",
+  "new_name": "Rva003DB760Config",
+  "before_sha256": "aed84175faa9229e0e805c2dab33a2c0176671f31942ab297daa7d8e4338533f",
+  "after_sha256": "93c8b4048be7c28e42ac12689acdf6ee3ffca6f10537b772141bd16ef659c32c",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeCtxYY and BfmeCfgYY were batch-serial placeholder guesses with no address token and no evidence for the owner of the 0x003DB760 constructor or its config parameter type, so both take address-derived names (Rva003DB760Context and Rva003DB760Config) until their identity is proven."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/AI/Rva003DB760MovementPositionContext.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva003DB760MovementPositionContext.cpp",
+  "old_name": "BfmeCtxYY",
+  "new_name": "Rva003DB760Context",
+  "before_sha256": "aed84175faa9229e0e805c2dab33a2c0176671f31942ab297daa7d8e4338533f",
+  "after_sha256": "93c8b4048be7c28e42ac12689acdf6ee3ffca6f10537b772141bd16ef659c32c",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeCtxYY and BfmeCfgYY were batch-serial placeholder guesses with no address token and no evidence for the owner of the 0x003DB760 constructor or its config parameter type, so both take address-derived names (Rva003DB760Context and Rva003DB760Config) until their identity is proven."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "BfmeCtxYY",
+  "new_name": "Rva003DB760Context",
+  "before_sha256": "3b8fc41bba3ab5cc2b505bb01d1a5dce6439173bea72e43d2c4a1fd89fba1fb7",
+  "after_sha256": "6e811d91344c3310c75f0c87772c9a7a03ead0b9adabbac0f780ba6d88032db1",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeCtxYY and BfmeCfgYY were batch-serial placeholder guesses with no address token and no evidence for the owner of the 0x003DB760 constructor or its config parameter type, so both take address-derived names (Rva003DB760Context and Rva003DB760Config) until their identity is proven."
  }
 ]
