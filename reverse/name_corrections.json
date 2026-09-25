@@ -3998,5 +3998,15 @@
   "after_sha256": "9076b8c75010f1e63ea0e41dbe8bde8f094a57c5d5088620cb9293abec203846",
   "evidence": "reverse/identity_evidence/0x00925d10.md",
   "reason": "Bfme1016ArrayView, bfmeVS01016 and m_bfmePad* were invented temporary names with no witness; replaced by address-derived Rva00925D10Buf/rva009371E0Inc and plain padding names."
+ },
+ {
+  "old_path": "reverse/attempts/0x00512670.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/HideInGameChatShimRun.cpp",
+  "old_name": "InGameChat",
+  "new_name": "Rva005127A0InGameChat",
+  "before_sha256": "882ff93fc026ceb87751191a0c881fc83666461b638c9a36b489f3031caf9709",
+  "after_sha256": "cca61c1cdab63a766377a352f08a4f1c3a85121e3bc99c894bace1c3a429ea84",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank's TU-local class had no layout witness, so it now uses the address-derived type the ledger already gives global 0x012F4988"
  }
 ]
