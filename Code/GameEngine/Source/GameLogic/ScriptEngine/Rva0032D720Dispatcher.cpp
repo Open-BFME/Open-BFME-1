@@ -54,6 +54,8 @@ protected:
     bool evaluateNamedAttackedByType(class Parameter *,class Parameter *);
     // 00324C30: ScriptConditionsTeamMembers.cpp
     bool evaluateTeamAttackedByPlayer(class Parameter *,class Parameter *);
+    // 003261D0: ScriptConditionsTeamIsLedByUnit.cpp
+    bool evaluateTeamIsLedByUnit(class Parameter *,class Parameter *);
     // 00322510: ScriptConditions.cpp
     bool evaluateNamedCreated(class Parameter *);
     // 00324D00: ScriptConditionsTeamState.cpp
@@ -375,8 +377,8 @@ extern void j_000230fb(void);
 extern void j_00035986(void);
 // ILT 0001BE37 -> body 00325970; existing Code/gen_small/thunks_013.cpp.
 extern void j_0001be37(void);
-// ILT 0004A660 -> body 003261D0; existing Code/gen_asm/d_00322a60.asm.
-extern void d_003261d0(void);
+// ILT 0004A660 -> body 003261D0; landed ScriptConditions::evaluateTeamIsLedByUnit
+// (ScriptConditionsTeamIsLedByUnit.cpp), declared with the class above.
 // ILT 0002772D -> body 00326490; existing Code/gen_asm/d_00322a60.asm.
 extern void d_00326490(void);
 // ILT 00047AB4 -> body 003248E0; existing Code/gen_small/thunks_034.cpp.
@@ -748,14 +750,6 @@ private:
         fn.raw = bfmeGo922D;
         return (this->*fn.member)(a0, a1, a2);
     }
-    __forceinline bool rva003261D0(Parameter* a0, Parameter* a1)
-    {
-        typedef bool (Rva0032D720::*Function)(Parameter*, Parameter*);
-        union { void (*raw)(void); Function member; } fn;
-        fn.raw = d_003261d0;
-        return (this->*fn.member)(a0, a1);
-    }
-
     __forceinline bool rva00326490(Parameter* a0, Parameter* a1)
     {
         typedef bool (Rva0032D720::*Function)(Parameter*, Parameter*);
@@ -1145,7 +1139,7 @@ bool Rva0032D720::evaluate(Condition* c)
     case 119:
         return rva00323D20(c->getParameter(0), c->getParameter(1), c->getParameter(2));
     case 123:
-        return rva003261D0(c->getParameter(0), c->getParameter(1));
+        return evaluateTeamIsLedByUnit(c->getParameter(0), c->getParameter(1));
     case 124:
         return evaluatePlayerCompareLightPoints(c->getParameter(0), c->getParameter(1), c->getParameter(2));
     case 125:

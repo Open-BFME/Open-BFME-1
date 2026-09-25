@@ -3218,5 +3218,15 @@
   "after_sha256": "23359c3e515c38661ae9359b38253249825b743a84e42d703dc7f43aac524d67",
   "evidence": "docs/naming_evidence.md",
   "reason": "stash-invented name with no witness; the landed ctor TU spells the same offset m_targetId so the offset name avoids the conflict; only the type is evidenced (passed as the NotifyWeaponFiredInterface* ctor argument)"
+ },
+ {
+  "old_path": "reverse/attempts/0x003261d0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptConditionsTeamIsLedByUnit.cpp",
+  "old_name": "m_leaderID",
+  "new_name": "m_unmodelled360",
+  "before_sha256": "f9b3b02121ac415ca0be12f4f9a4b200760dd5c6f6fc400cb76116a68edcc655",
+  "after_sha256": "973be5ddaf72c03ff58347c1027bf6d474c1abe11bccdec364cc9c0e739739b9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle reports Object+0x360 unwitnessed (ZH has no member there) so leader-ID was a bank guess"
  }
 ]
