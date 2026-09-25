@@ -13,6 +13,20 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import fleet_run
+import fleet_cgroup
+
+
+def require_cgroup_v2(test):
+    """These tests launch a real worker, and since afea6de317 fleet_run
+    contains every worker in a delegated cgroup-v2 unit. GitHub's runners and
+    Windows hosts cannot create one, so the tests skip there instead of
+    turning the tools workflow red (red on every push since 2026-09-24)."""
+    import uuid
+    try:
+        unit = fleet_cgroup.CgroupV2Unit.create("test-" + uuid.uuid4().hex)
+    except fleet_cgroup.ContainmentUnavailable as error:
+        test.skipTest(f"host does not delegate writable cgroup-v2 units: {error}")
+    unit.remove()
 
 
 def open_ledger(root, *targets):
@@ -60,6 +74,7 @@ class TranscriptFilterTests(unittest.TestCase):
                 self.assertTrue(fleet_run.keep_transcript_line(line))
 
     def test_worker_log_and_exit_status(self):
+        require_cgroup_v2(self)
         with tempfile.TemporaryDirectory() as temporary, contextlib.ExitStack() as cleanup:
             root = Path(temporary)
             open_ledger(root, (0x00123456, 2))
@@ -365,6 +380,7 @@ class LegacyAndTimeoutTests(unittest.TestCase):
         self.assertEqual(fleet_run.strip_timeout(["python", "-c", "1"]), (["python", "-c", "1"], None, None))
 
     def test_cap_kills_a_runaway_worker(self):
+        require_cgroup_v2(self)
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             open_ledger(root, (0x00123457, 2))
@@ -385,6 +401,7 @@ class LegacyAndTimeoutTests(unittest.TestCase):
 
 class BriefOverStdinTests(unittest.TestCase):
     def test_brief_argument_is_replaced_by_stdin(self):
+        require_cgroup_v2(self)
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
             open_ledger(root, (0x00123458, 2))
