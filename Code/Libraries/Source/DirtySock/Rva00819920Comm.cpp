@@ -1,5 +1,4 @@
 // _Rva00819920
-// partial score=0.88 date=2026-09-21
 // cl: /Od /GZ /GS /MD /DNDEBUG
 
 struct Rva00819920Comm;
@@ -39,19 +38,19 @@ struct Rva00819920Comm
 
 extern "C"
 {
-	__declspec( dllimport ) void __stdcall Rva01358D18Enter( void *lock );
-	__declspec( dllimport ) void __stdcall Rva01358E74Leave( void *lock );
-	__declspec( dllimport ) void __stdcall Rva01358F30Sleep( int interval );
-	__declspec( dllimport ) unsigned int __stdcall Rva01358E0CTick( void );
-	__declspec( dllimport ) unsigned int __stdcall Rva01358F64Wait(
+	__declspec( dllimport ) void __stdcall EnterCriticalSection( void *lock );
+	__declspec( dllimport ) void __stdcall LeaveCriticalSection( void *lock );
+	__declspec( dllimport ) void __stdcall Sleep( unsigned long interval );
+	__declspec( dllimport ) unsigned int __stdcall GetTickCount( void );
+	__declspec( dllimport ) unsigned int __stdcall WaitForSingleObject(
 		void *handle, unsigned int timeout );
-	__declspec( dllimport ) unsigned int __stdcall Rva01358F60WaitMultiple(
+	__declspec( dllimport ) unsigned int __stdcall WaitForMultipleObjects(
 		unsigned int count, void **handles, int waitAll, unsigned int timeout );
 
-	void Rva00819F50( struct Rva00819920Comm *comm,
+	int Rva00819F50( struct Rva00819920Comm *comm,
 		struct Rva00819920Message *message );
-	void Rva0081A3B0( struct Rva00819920Comm *comm, void *record );
-	void Rva0081A5C0( struct Rva00819920Comm *comm );
+	int Rva0081A3B0( struct Rva00819920Comm *comm, void *record );
+	int Rva0081A5C0( struct Rva00819920Comm *comm );
 	void Rva0081A6A0( struct Rva00819920Comm *comm,
 		struct Rva00819920Message *message, int threadId );
 	void Rva0081A740( struct Rva00819920Comm *comm );
@@ -63,7 +62,7 @@ extern "C"
 		struct Rva00819920Message *message, int threadId );
 }
 
-extern "C" void Rva00819920( struct Rva00819920Comm *parameter )
+extern "C" int Rva00819920( struct Rva00819920Comm *parameter )
 {
 	Rva00819920Message message;
 	unsigned int tick;
@@ -79,43 +78,40 @@ extern "C" void Rva00819920( struct Rva00819920Comm *parameter )
 			comm->m_state = 1;
 
 		if ( comm->m_state == 1 || comm->m_state == 0
-			|| comm->m_state == 7 )
+			|| comm->m_state == 7 || comm->m_state == 5 )
 		{
+			if ( comm->m_state == 7 && comm->m_streamLength > 0 )
+			{
+				EnterCriticalSection( comm->m_lock );
+				Rva0081A3B0( comm, 0 );
+				LeaveCriticalSection( comm->m_lock );
+				Sleep( 0x19 );
+				continue;
+			}
+
+			Sleep( 0x32 );
+			continue;
 		}
-		else if ( comm->m_state != 5 )
-			goto waitForEvents;
-
-		if ( comm->m_state != 7 || comm->m_streamLength <= 0 )
-			goto sleepForFifty;
-
-		Rva01358D18Enter( comm->m_lock );
-		Rva0081A3B0( comm, 0 );
-		Rva01358E74Leave( comm->m_lock );
-		Rva01358F30Sleep( 0x19 );
-		continue;
-
-sleepForFifty:
-		Rva01358F30Sleep( 0x32 );
-		continue;
-
-waitForEvents:
-		if ( Rva01358F64Wait( comm->m_event1, 0 ) == 0x102 )
+		else
 		{
-			eventCount = 0;
-			events[ eventCount++ ] = comm->m_event1;
+			if ( WaitForSingleObject( comm->m_event1, 0 ) == 0x102 )
+			{
+				eventCount = 0;
+				events[ eventCount++ ] = comm->m_event1;
 
-			if ( comm->m_streamLength > 0
-				&& Rva01358F64Wait( comm->m_event2, 0 ) == 0x102 )
-				events[ eventCount++ ] = comm->m_event2;
+				if ( comm->m_streamLength > 0
+					&& WaitForSingleObject( comm->m_event2, 0 ) == 0x102 )
+					events[ eventCount++ ] = comm->m_event2;
 
-			Rva01358F60WaitMultiple( eventCount, events, 0, 0x64 );
+				WaitForMultipleObjects( eventCount, events, 0, 0x64 );
+			}
 		}
 
 		message.m_length = -1;
 		Rva00819F50( comm, &message );
-		tick = Rva01358E0CTick();
+		tick = GetTickCount();
 
-		Rva01358D18Enter( comm->m_lock );
+		EnterCriticalSection( comm->m_lock );
 		Rva0081A3B0( comm, 0 );
 
 		if ( comm->m_state == 4 && tick - comm->m_lastTick > 0xafc8 )
@@ -126,15 +122,16 @@ waitForEvents:
 
 		if ( comm->m_state == 4
 			&& comm->m_sendAckOffset != comm->m_sendWriteOffset )
+		{
 			Rva0081A8C0( comm );
-
-		tick = Rva01358E0CTick();
+			tick = GetTickCount();
+		}
 
 		if ( comm->m_state == 2
 			&& tick - *(unsigned int *)( (char *)comm + 0x1918 ) > 0x3e8 )
 		{
 			Rva0081A740( comm );
-			tick = Rva01358E0CTick();
+			tick = GetTickCount();
 		}
 
 		if ( comm->m_state == 4
@@ -142,7 +139,7 @@ waitForEvents:
 			&& tick - *(unsigned int *)( (char *)comm + 0x1918 ) > 0x3e8 )
 		{
 			Rva0081A810( comm );
-			tick = Rva01358E0CTick();
+			tick = GetTickCount();
 		}
 
 		if ( message.m_length >= 0
@@ -166,7 +163,7 @@ waitForEvents:
 
 resetMessage:
 			message.m_length = -1;
-			comm->m_lastTick = Rva01358E0CTick();
+			comm->m_lastTick = GetTickCount();
 		}
 
 		if ( comm->m_state == 3 && message.m_length == 0
@@ -176,10 +173,10 @@ resetMessage:
 			comm->m_state = 4;
 			Rva0081A6A0( comm, &message, comm->m_threadId );
 			message.m_length = -1;
-			comm->m_lastTick = Rva01358E0CTick();
+			comm->m_lastTick = GetTickCount();
 		}
 
-		Rva01358E74Leave( comm->m_lock );
+		LeaveCriticalSection( comm->m_lock );
 
 		if ( comm->m_flags != 0 )
 		{
@@ -190,4 +187,5 @@ resetMessage:
 	}
 
 	comm->m_state = 1;
+	return 0;
 }
