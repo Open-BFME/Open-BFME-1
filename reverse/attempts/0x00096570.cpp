@@ -1,5 +1,5 @@
 // ?solve@PartitionSolver@@QAEXXZ
-// partial score=0.84 date=2026-09-10
+// partial score=0.86 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Include/Precompiled /ICode/GameEngine/Source/Common/System /ICode/GameEngine/Source/Common /ICode/Libraries/Source/WWVegas/WWMath
 // stlport
 #include <algorithm>
@@ -88,11 +88,11 @@ void PartitionSolver::solve(void)
 
 	// first, determine whether there is an actual solution, or we're going to have to fudge it.
 	for (i = 0; i < m_data.size(); ++i) {
-		minSizeForAllData += m_data[i].second;
+		minSizeForAllData += (m_data.begin() + i)->second;
 	}
 
 	for (i = 0; i < m_spacesForData.size(); ++i) {
-		slotsAllotted += m_spacesForData[i].second;
+		slotsAllotted += (m_spacesForData.begin() + i)->second;
 	}
 
 	// we want to attempt to place the largest things first. This allows us to throw
@@ -114,10 +114,10 @@ void PartitionSolver::solve(void)
 		{
 			for (j = 0; j < spacesStillAvailable.size(); ++j) 
 			{
-				if (m_data[i].second <= spacesStillAvailable[j].second) 
+				if ((m_data.begin() + i)->second <= (spacesStillAvailable.begin() + j)->second)
 				{
-					spacesStillAvailable[j].second -= m_data[i].second;
-					m_bestSolution.push_back(std::make_pair(m_data[i].first, spacesStillAvailable[j].first));
+					(spacesStillAvailable.begin() + j)->second -= (m_data.begin() + i)->second;
+					m_bestSolution.push_back(std::make_pair((m_data.begin() + i)->first, (spacesStillAvailable.begin() + j)->first));
 					break;
 				}
 			}
