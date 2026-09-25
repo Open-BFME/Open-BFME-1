@@ -25,19 +25,19 @@ struct Coord3D
 	}
 };
 
-struct Rva00175820Vector2
+struct MeleeHordeVector2
 {
 	Real X;
 	Real Y;
-	__forceinline Rva00175820Vector2(Real x, Real y) : X(x), Y(y) {}
-	__forceinline friend Real operator *(const Rva00175820Vector2 &left,
-		const Rva00175820Vector2 &right)
+	__forceinline MeleeHordeVector2(Real x, Real y) : X(x), Y(y) {}
+	__forceinline friend Real operator *(const MeleeHordeVector2 &left,
+		const MeleeHordeVector2 &right)
 	{
 		return left.X * right.X + left.Y * right.Y;
 	}
 };
 
-union Rva00175820BoolResult
+union IntegerBackedBoolResult
 {
 	int integer;
 	Bool boolean;
@@ -84,39 +84,40 @@ public:
 	const Coord3D *getPosition() const { return &m_position; }
 };
 
-Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target)
+Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *candidateVictim)
 {
-	if (target == 0)
+	if (candidateVictim == 0)
 		goto no;
 	// Retail checks this before member resolution, so the incoming object's bit
 	// controls whether any facing or locomotor data is read.
-	if (target->m_privateStatus & 1)
+	if (candidateVictim->m_privateStatus & 1)
 		goto no;
 
 	// Resolve only after the status check: geometry below may describe a member,
 	// while the early-out above always observes the machine's original target.
-	if (target->m_kindFlags & 0x20)
+	if (candidateVictim->m_kindFlags & 0x20)
 	{
-		if (((RvaC4390Second *)target)->resolve(0) != 0)
-			target = (Object *)((RvaC4390Second *)target)->resolve(0);
+		if (((RvaC4390Second *)candidateVictim)->resolve(0) != 0)
+			candidateVictim = (Object *)((RvaC4390Second *)candidateVictim)->resolve(0);
 	}
 
-	Coord3D delta;
-	delta.set(target->getPosition());
-	delta.sub(attacker->getPosition());
-	const Coord3D *direction =
-		((Thing *)target)->getUnitDirectionVector2D();
-	Rva00175820Vector2 direction2(direction->x, direction->y);
-	if (!(direction2 * *(const Rva00175820Vector2 *)&delta
+	Coord3D attackerToVictim;
+	attackerToVictim.set(candidateVictim->getPosition());
+	attackerToVictim.sub(attacker->getPosition());
+	const Coord3D *victimFacingDirection =
+		((Thing *)candidateVictim)->getUnitDirectionVector2D();
+	MeleeHordeVector2 victimFacingVector2D(
+		victimFacingDirection->x, victimFacingDirection->y);
+	if (!(victimFacingVector2D * *(const MeleeHordeVector2 *)&attackerToVictim
 		< BfmeZeroRange))
 	{
 		BfmeSub1CC_EC3 *locomotor =
-			(BfmeSub1CC_EC3 *)((Rva001BDFF0 *)target)->get();
+			(BfmeSub1CC_EC3 *)((Rva001BDFF0 *)candidateVictim)->get();
 		if (locomotor != 0)
 		{
-			Rva00175820BoolResult result;
-			result.integer = locomotor->queryBelowQuarter(target);
-			return result.boolean;
+			IntegerBackedBoolResult integerBackedBoolResult;
+			integerBackedBoolResult.integer = locomotor->queryBelowQuarter(candidateVictim);
+			return integerBackedBoolResult.boolean;
 		}
 	}
 
