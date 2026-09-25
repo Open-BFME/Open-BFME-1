@@ -3738,5 +3738,25 @@
   "after_sha256": "03a9de4b46ff5e09493254456004fa2940ff27d3cfcfe1883071cd0ec9f397f0",
   "evidence": "reverse/identity_evidence/0x009f59d0-name-correction.md",
   "reason": "The matched state update copies six integers at offset zero, but no evidence supplies their member name. The source keeps the offset visible."
+ },
+ {
+  "old_path": "reverse/attempts/0x0071a680.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudMaterialPassClass_Install_Materials.cpp",
+  "old_name": "m_refs",
+  "new_name": "m_word4",
+  "before_sha256": "1d253bee4263a11567972a162796ddaf607283b29c9141cfc1cd87f63299825d",
+  "after_sha256": "a4d30485e025ca8e712178ba93865e976d44fc6fa676df0da4185e119529387f",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "TextureBaseClass+4 is not witnessed (name_oracle) so an offset token replaces the guessed refcount name"
+ },
+ {
+  "old_path": "reverse/attempts/0x0071a680.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudMaterialPassClass_Install_Materials.cpp",
+  "old_name": "m_vptr",
+  "new_name": "m_pad0",
+  "before_sha256": "1d253bee4263a11567972a162796ddaf607283b29c9141cfc1cd87f63299825d",
+  "after_sha256": "a4d30485e025ca8e712178ba93865e976d44fc6fa676df0da4185e119529387f",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the body never reads +0"
  }
 ]
