@@ -36,9 +36,9 @@ class AIUpdateInterface
 public:
 	WhichTurretType getWhichTurretForCurWeapon() const;
 	Real getCurLocomotorSpeed();
-	void ignoreObstacle(Object *obj);
+	void ignoreObstacle(Object *obstacle);
 	void requestPath(Coord3D *destination, Bool isFinalGoal);
-	void requestAttackPath(ObjectID victimID, const Coord3D *victimPos);
+	void requestAttackPath(ObjectID targetObjectId, const Coord3D *targetPosition);
 
 	char m_pad000[0x140];
 	void *m_path;							// +0x140
@@ -72,7 +72,7 @@ public:
 	Bool isMobile() const;
 	Weapon *getCurrentWeapon(WeaponSlotType *wslot = 0);
 	Player *getControllingPlayer() const;
-	Bool crushPolicy(Object *other, CrushSquishTestType test) const;
+	Bool crushPolicy(Object *otherObject, CrushSquishTestType test) const;
 	Real bfmeGetNonnegativePreferredLocomotorHeight() const;
 	void *getPhysics() const { return m_physics; }
 	const Coord3D *getPosition() const { return &m_position; }
@@ -120,9 +120,9 @@ public:
 class Pathfinder
 {
 public:
-	Bool adjustDestination(Object *obj, const LocomotorSet &locomotorSet,
-		Coord3D *dest, const Coord3D *groupDest);
-	void updateGoal(Object *obj, const Coord3D *newGoalPos,
+	Bool adjustDestination(Object *object, const LocomotorSet &locomotorSet,
+		Coord3D *destination, const Coord3D *groupDestination);
+	void updateGoal(Object *object, const Coord3D *newGoalPosition,
 		PathfindLayerEnum layer, const char *file, int line);
 };
 
@@ -145,7 +145,7 @@ public:
 class TerrainLogic
 {
 public:
-	PathfindLayerEnum getLayerForDestination(Object *obj, const Coord3D *pos);
+	PathfindLayerEnum getLayerForDestination(Object *object, const Coord3D *position);
 };
 
 class GameLogic
