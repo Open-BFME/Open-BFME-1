@@ -317,47 +317,47 @@ Object *AIPlayer::findDozer(const Coord3D *searchPosition)
 {
 	Object *candidateObject;
 	Object *fallbackDozer = NULL;
-	Bool needDozer = true;
+	Bool shouldQueueDozer = true;
 	Object *closestIdleDozer = NULL;
 	Real closestIdleDistanceSquared = 0;
 
 	for (candidateObject = TheGameLogic->getFirstObject(); candidateObject;
 		candidateObject = candidateObject->getNextObject())
 	{
-		Player *owner = candidateObject->getControllingPlayer();
-		if (owner == m_player)
+		Player *candidateOwner = candidateObject->getControllingPlayer();
+		if (candidateOwner == m_player)
 		{
-			const ThingTemplate *thingTemplate = candidateObject->getTemplate();
-			if (thingTemplate && thingTemplate->getNextOverride())
-				thingTemplate = static_cast<const ThingTemplate *>(
-					thingTemplate->getNextOverride()->getFinalOverride());
-			if ((thingTemplate->m_kindOf & KINDOF_DOZER) != 0)
+			const ThingTemplate *candidateTemplate = candidateObject->getTemplate();
+			if (candidateTemplate && candidateTemplate->getNextOverride())
+				candidateTemplate = static_cast<const ThingTemplate *>(
+					candidateTemplate->getNextOverride()->getFinalOverride());
+			if ((candidateTemplate->m_kindOf & KINDOF_DOZER) != 0)
 			{
-				AIUpdateInterface *ai = candidateObject->getAIUpdateInterface();
-				if (ai == NULL)
+				AIUpdateInterface *candidateAI = candidateObject->getAIUpdateInterface();
+				if (candidateAI == NULL)
 					continue;
 
-				DozerAIInterface *dozerAI = ai->getDozerAIInterface();
-				if (dozerAI)
+				DozerAIInterface *dozerInterface = candidateAI->getDozerAIInterface();
+				if (dozerInterface)
 				{
-					SupplyTruckAIInterface *supplyTruckAI =
-						ai->getSupplyTruckAIInterface();
-					if (!dozerAI->isAnyTaskPending() && supplyTruckAI)
+					SupplyTruckAIInterface *supplyTruckInterface =
+						candidateAI->getSupplyTruckAIInterface();
+					if (!dozerInterface->isAnyTaskPending() && supplyTruckInterface)
 					{
-						if (supplyTruckAI->isCurrentlyFerryingSupplies()
-							|| supplyTruckAI->isForcedIntoWantingState())
+						if (supplyTruckInterface->isCurrentlyFerryingSupplies()
+							|| supplyTruckInterface->isForcedIntoWantingState())
 							continue;
 					}
 					if (candidateObject->getID() == m_repairDozer)
 						continue;
-					needDozer = false;
-					if (dozerAI->isTaskPending(DOZER_TASK_BUILD))
+					shouldQueueDozer = false;
+					if (dozerInterface->isTaskPending(DOZER_TASK_BUILD))
 						continue;
-					if (!dozerAI->isAnyTaskPending())
+					if (!dozerInterface->isAnyTaskPending())
 						fallbackDozer = candidateObject;
 					if (fallbackDozer == NULL)
 						fallbackDozer = candidateObject;
-					if (fallbackDozer && !dozerAI->isAnyTaskPending())
+					if (fallbackDozer && !dozerInterface->isAnyTaskPending())
 					{
 						Real dozerDistanceSquared;
 						Real deltaX = searchPosition->x - fallbackDozer->getPosition()->x;
@@ -378,7 +378,7 @@ Object *AIPlayer::findDozer(const Coord3D *searchPosition)
 			}
 		}
 	}
-	if (needDozer)
+	if (shouldQueueDozer)
 		queueDozer();
 	if (closestIdleDozer)
 		return closestIdleDozer;
