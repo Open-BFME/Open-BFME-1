@@ -190,7 +190,6 @@ void TurretStateMachine::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@TurretStateMachine@@MAEXXZ present-unmatched
 void TurretStateMachine::loadPostProcess( void )
 {
 }  // end loadPostProcess
