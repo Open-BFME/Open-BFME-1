@@ -4858,5 +4858,15 @@
   "after_sha256": "05f27da1f73cd92e3cd6a5da507cff01da9b2bb49e6bb378dccced754836c332",
   "evidence": "docs/naming_evidence.md",
   "reason": "pad members respelled to the offset-token convention"
+ },
+ {
+  "old_path": "reverse/attempts/0x0087ed70.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/GeometryShapeRva0087ED70.cpp",
+  "old_name": "getBoundingSphereRadius",
+  "new_name": "rva0087ED70",
+  "before_sha256": "4b51f6491b4012a4e19a6afbf3750af33441e2dd5632ebd791b446697accde03",
+  "after_sha256": "c045276074933b0c43c7d20d0e5170c16f281f57f09398b69a294dd391e683dc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank's method name had no caller string, vtable slot or ZH twin, and the landed caller GeometryInfoCalcBoundingStuff.cpp and the symbols.csv pin already use the address token"
  }
 ]
