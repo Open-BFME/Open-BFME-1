@@ -49,7 +49,7 @@ public:
 	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
 
 protected:
-	void getRadiusAndCenter(const Object *object, Int &radius, Bool &center);
+	void getRadiusAndCenter(const Object *object, Int &radius, Bool &centerInCell);
 	void adjustCoordToCell(Int cellX, Int cellY, Bool centerInCell,
 		Coord3D &position, PathfindLayerEnum layer);
 };
