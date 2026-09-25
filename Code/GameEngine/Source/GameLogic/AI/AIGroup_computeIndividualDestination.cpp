@@ -186,8 +186,8 @@ private:
 class AIGroup
 {
 public:
-	void computeIndividualDestination(Coord3D *dest, const Coord3D *groupDest,
-		Object *obj, const Coord3D *center, Bool isFormation);
+	void computeIndividualDestination(Coord3D *individualDestination, const Coord3D *groupDestination,
+		Object *object, const Coord3D *groupCenter, Bool isFormation);
 };
 
 // ?computeIndividualDestination@AIGroup@@QAEXPAUCoord3D@@PBU2@PAVObject@@1E@Z
