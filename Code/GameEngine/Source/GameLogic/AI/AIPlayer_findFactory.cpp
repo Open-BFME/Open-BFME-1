@@ -1,5 +1,5 @@
 // ?findFactory@AIPlayer@@IAEPAVObject@@PBVThingTemplate@@_NPAH@Z
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // readable body of ?findFactory@AIPlayer@@IAEPAVObject@@PBVThingTemplate@@_NPAH@Z: Code/GameEngine/Source/GameLogic/AI/AIPlayer.cpp
 //
 // BFME's findFactory is not the two-argument Zero Hour build-list query.  Its
@@ -7,6 +7,8 @@
 // object list, asking each owned factory whether it can make the requested
 // template.  The declarations below deliberately model only the fields and
 // virtual slots reached by this body.
+
+#include "ascii_string.h"
 
 typedef bool Bool;
 typedef int Int;
@@ -32,12 +34,15 @@ class ThingTemplate
 public:
 	void *m_vtable;
 	ThingTemplate *m_nextOverride;
-	unsigned char m_unmodelled008[0xcc - 8];
+	unsigned char m_unmodelled008[0x20 - 8];
+	AsciiString m_nameString;							// +0x20
+	unsigned char m_unmodelled024[0xcc - 0x24];
 	// Retail tests bit 30 of this word; the current naming witness conflicts.
 	unsigned int m_shadowOffsetY;
 	unsigned char m_unmodelled0d0[0x4cb - 0xd0];
 	unsigned char m_bfmeProductionFlag;
 
+	const AsciiString &getName() const { return m_nameString; }
 	ThingTemplate *getFinalOverride();
 	Bool isEquivalentTo(const ThingTemplate *other) const;
 };
@@ -47,7 +52,9 @@ class Object
 public:
 	void *m_vtable;
 	ThingTemplate *m_template;
-	unsigned char m_unmodelled008[0x88 - 8];
+	unsigned char m_unmodelled008[0x74 - 8];
+	Int m_id;											// +0x74
+	unsigned char m_unmodelled078[0x88 - 0x78];
 	Object *m_nextObject;
 	unsigned char m_unmodelled08c[0x90 - 0x8c];
 	unsigned int m_status;
@@ -59,6 +66,7 @@ public:
 	Player *getControllingPlayer() const;
 	ProductionUpdateInterface *getProductionUpdateInterface();
 	Object *getNextObject() const { return m_nextObject; }
+	Int getID() const { return m_id; }
 };
 
 class Player
@@ -130,12 +138,13 @@ class ProductionUpdateInterface
 public:
 	virtual void slot00();
 	virtual void slot01();
-	virtual void slot02();
+	virtual Int requestUniqueUnitID() = 0;					// +0x08
 	virtual void slot03();
 	virtual void slot04();
 	virtual void slot05();
 	virtual void slot06();
-	virtual void slot07();
+	virtual Bool queueCreateUnit(const ThingTemplate *unitType, Int buildIndex,
+		Int productionID, Int bfmeC, Int bfmeD) = 0;		// +0x1C
 	virtual void slot08();
 	virtual void slot09();
 	virtual void slot10();
@@ -149,15 +158,41 @@ public:
 	virtual ProductionEntry *firstProduction() const = 0;
 };
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
+class WorkOrder
+{
+public:
+	char m_unmodelled000[0x4];
+	const ThingTemplate *m_thing;						// +0x04
+	Int m_factoryID;									// +0x08
+};
+
+struct GlobalData
+{
+	char m_unmodelled000[0xa88];
+	Int m_debugAI;										// +0xA88
+};
+
+extern GlobalData *TheGlobalData;
+
+class ScriptEngine
+{
+public:
+	void AppendDebugMessage(const AsciiString &strToAdd, Bool mustAdd);
+};
+
+extern ScriptEngine *TheScriptEngine;
+
 class AIPlayer
 {
 protected:
+	virtual Bool startTraining(WorkOrder *order, Bool busyOK, AsciiString teamName);
 	Object *findFactory(const ThingTemplate *thing, Bool busyOK,
 		Int *buildIndex);
 
 private:
-	char m_prefix[0x0c];
-	Player *m_player;
+	char m_prefix[0x0c - 0x04];							// after the vtable pointer
+	Player *m_player;									// +0x0C
 };
 
 Object *AIPlayer::findFactory(const ThingTemplate *thing, Bool busyOK,
@@ -246,4 +281,35 @@ busyResult:
 
 foundFactory:
 	return factory;
+}
+
+// ?startTraining@AIPlayer@@MAE_NPAVWorkOrder@@_NVAsciiString@@@Z
+// Slot 24 (+0x60) of AIPlayer's table 0x010968B0 (0x00166EF0). Zero Hour's
+// body; BFME's findFactory reports the build index that queueCreateUnit then
+// takes, with (-1, 0) after the unit ID. Compiled beside findFactory, as in
+// retail's AIPlayer.cpp: with the callee's body visible MSVC reuses the
+// order slot for the index, as retail does. AISkirmishPlayer::startTraining
+// (AISkirmishPlayer_startTraining.cpp) is the same source without it.
+Bool AIPlayer::startTraining( WorkOrder *order, Bool busyOK, AsciiString teamName)
+{
+	Int buildIndex;										// written by findFactory
+	Object *factory = findFactory(order->m_thing, busyOK, &buildIndex);
+	if( factory )
+	{
+		ProductionUpdateInterface *pu = factory->getProductionUpdateInterface();
+		if (pu && pu->queueCreateUnit( order->m_thing, buildIndex, pu->requestUniqueUnitID(), -1, 0 )) {
+			order->m_factoryID = factory->getID(); 
+			if (TheGlobalData->m_debugAI) {
+				AsciiString teamStr = "Queuing ";
+				((StringBase<char> *)&teamStr)->concat(*(const StringBase<char> *)&order->m_thing->getName());
+				teamStr.concat(" for ");
+				teamStr.concat(teamName);
+				TheScriptEngine->AppendDebugMessage(teamStr, false);
+			}
+			return true;
+		}
+	}  // end if
+
+	return false;
+
 }
