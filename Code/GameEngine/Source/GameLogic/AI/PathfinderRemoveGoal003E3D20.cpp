@@ -91,8 +91,8 @@ public:
 		return info ? info->m_goalAircraftID : 0;
 	}
 
-	void setGoalUnit(ObjectID unitID, const ICoord2D &pos);
-	void setGoalAircraft(ObjectID unitID, const ICoord2D &pos);
+	void setGoalUnit(ObjectID unitID, const ICoord2D &cellPosition);
+	void setGoalAircraft(ObjectID unitID, const ICoord2D &cellPosition);
 
 	void *m_info;
 	unsigned char m_pad04[8];
