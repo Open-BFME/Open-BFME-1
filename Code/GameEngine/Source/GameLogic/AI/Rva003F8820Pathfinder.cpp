@@ -150,7 +150,7 @@ public:
 extern void j_0001a523();
 struct Rva003F82C0Classify
 {
-	void call(Int i, Int j, PathfindCell *cell, Bridge *theBridge, Bool keep,
+	void call(Int cellX, Int cellY, PathfindCell *cell, Bridge *theBridge, Bool keep,
 		PathfindCell *bridgeCell, Real height);
 };
 typedef void (Rva003F82C0Classify::*Rva003F82C0Call)(Int, Int, PathfindCell *,
@@ -167,12 +167,12 @@ public:
 	Int bfmeLayerForPosition(Object *object, Coord3D position);
 	Bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
 
-	__forceinline void classify(Int i, Int j, PathfindCell *cell, Bridge *theBridge,
+	__forceinline void classify(Int cellX, Int cellY, PathfindCell *cell, Bridge *theBridge,
 		Bool keep, PathfindCell *bridgeCell, Real height)
 	{
 		union { void (*asFunction)(); Rva003F82C0Call asMember; } fnCast;
 		fnCast.asFunction = j_0001a523;
-		(reinterpret_cast<Rva003F82C0Classify *>(this)->*fnCast.asMember)(i, j, cell,
+		(reinterpret_cast<Rva003F82C0Classify *>(this)->*fnCast.asMember)(cellX, cellY, cell,
 			theBridge, keep, bridgeCell, height);
 	}
 
