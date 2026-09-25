@@ -1,18 +1,15 @@
-// ?handleQueueReply@Rva007F5840Owner@@QAEXPAVRva007E8810Message@@PAVBfmeOwnerYA@@@Z
-// partial score=0.25 date=2026-09-21
-// cl: /GS
-// 0x007F5840: FESL game-browser queue-status reply handler.
+// cl: /O2 /GS
+// 0x007F5840: FESL queue-status reply handler.
 //
 // The on-stack Rva007F5120Queue temporary (ctor at 0x007F5120, matched in
 // V2FeslAriesRecords.cpp), the message error accessors pinned at
-// 0x007E88A0/0x007E88B0 (?hasError@Rva007E8810Message@@QAE_NXZ /
-// ?getError@Rva007E8810Message@@QAEHXZ), and the listener member at +0x1c
-// match the neighboring recovered gamebrowser reply handlers at 0x007F5720
-// and 0x007F5D10 (Rva007F5720GameBrowserLogin.cpp / Rva007F5D10GameBrowser.cpp)
-// exactly in shape. No caller, string, or vtable install proves the owning
-// class or method name here, so the remaining names are address-derived; the
-// result-holder type keeps the BfmeOwnerYA name already established by
-// BfmeConv1857.cpp (its ::bfmeParseYA is called directly below).
+// 0x007E88A0/0x007E88B0 and the listener member at +0x1c follow the
+// neighbouring game-browser reply handlers at 0x007F5720 and 0x007F5D10.
+// The 'queu' error code (0x71756575) copies the queue position/length into
+// the result; any other error forwards the reason text to
+// BfmeOwnerYA::bfmeParseYA (0x007F5560, BfmeConv1857.cpp). No caller, string
+// or vtable install proves the owner class or method name, so both stay
+// address-derived.
 
 class Rva007E8810Message
 {
@@ -58,7 +55,7 @@ public:
 	virtual void v08();
 	virtual void v09();
 	virtual void v10();
-	virtual void onQueueStatus( BfmeOwnerYA *result, int zero );
+	virtual void onQueueStatus( BfmeOwnerYA *result, int error );
 };
 
 class Rva007F5840Owner
@@ -76,26 +73,28 @@ private:
 void Rva007F5840Owner::handleQueueReply( Rva007E8810Message *msg, BfmeOwnerYA *result )
 {
 	Rva007F5120Queue q( msg );
-	int code = 0;
+	int error = 0;
 
 	if( msg->hasError() )
 	{
-		code = msg->getError();
-		if( code == 0x71756575 )
+		error = msg->getError();
+		if( error == 0x71756575 )
 		{
-			result->m_status = 0;
-			result->bfmeParseYA( q.m_reason );
-		}
-		else
-		{
+			error = 0;
 			result->m_qpos = q.m_qpos;
 			result->m_qlen = q.m_qlen;
 			result->m_status = 3;
+		}
+		else
+		{
+			result->m_status = 0;
+			result->bfmeParseYA( q.m_reason );
 		}
 	}
 	else if( result->m_flag014 )
 	{
 		m_flag036 = 0;
-		m_listener->onQueueStatus( result, code );
 	}
+
+	m_listener->onQueueStatus( result, error );
 }
