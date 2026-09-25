@@ -1,5 +1,5 @@
-// ?d_00842f80@@YAXXZ
-// partial score=0.46 date=2026-09-21
+// ?sync_with_stdio@ios_base@_STL@@SA_N_N@Z
+// partial score=0.46 date=2026-09-25
 // stlport
 /*
  * Copyright (c) 1999
