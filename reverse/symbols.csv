@@ -82694,6 +82694,7 @@ name,address,notes
 ?getManglerName@FirewallHelperClass@@SAXHPAD@Z,0x0003BD81,ILT thunk; real body 0x66EF00
 ?getManglerResponse@FirewallHelperClass@@QAEGGH@Z,0x00025A7C
 ?getMap@GameInfo@@QBE?AVAsciiString@@XZ,0x0002F28E
+?getMap@Rva00098E70GameInfoView@@QBE?AVAsciiString@@XZ,0x00098E70,opaque no-throw ABI alias proven to GameInfo::getMap at 0x00098E70
 ?getMap@GameSpyStagingRoom@@QBE?AVAsciiString@@XZ,0x0002F28E,ILT of GameInfo getMap used by CustomMatch applyLocalSlot 0x005392B0
 ?getMapDir@MapCache@@QBE?AVAsciiString@@XZ,0x000079F5,ILT thunk to MapCache::getMapDir; called from getUserMapDir and writeCacheINI
 ?getMapLeafAndDirName@@YA?AVAsciiString@@ABV1@@Z,0x0010E4F0,donor static helper direct-called by GameState portable/real map path bodies; exact 115B helper and caller ABI; campaign=luna36h-20260907;lane=xfer
@@ -82804,6 +82805,7 @@ name,address,notes
 ?getPlayerMask@NetFileAnnounceCommandMsg@@QAEEXZ,0x000478F2,processFileAnnounce calls the ILT for the matched 0x00674010 accessor
 ?getPlayerMaskFromAsciiString@BfmeScriptEngine_getPlayerMaskFromAsciiString@@QAEGABVAsciiString@@PA_N@Z,0x0004B290,ILT doSetMoney player-mask resolver (body 0x34CB60)
 ?getPlayerName@ConnectionManager@@QAE?AVUnicodeString@@H@Z,0x00012A62,DisconnectManager::disconnectPlayer direct-call ILT thunk
+?getPlayerName@Rva004C8800GameInfoView@@QAE?AVUnicodeString@@H@Z,0x004C8800,opaque return-ABI alias proven to bfmeGoDQG at 0x004C8800
 ?getPlayerStructureBounds@AIPlayer@@SAXPAURegion2D@@H@Z,0x000362AA,Open-BFME5 ILT at guardSupplyCenter 0x0016694A; static helper receives the local bounds and enemy player index
 ?getPlayersWithRelationship@BfmePlayerListHuntView@@QAEGHH_N@Z,0x00044C60,retail relationship helper called by Player::setUnitsShouldHunt at 0x000D8C60
 ?getPlayersWithRelationship@PlayerList@@QAEGHH_N@Z,0x00044C60,ILT of BFME 3-arg getPlayersWithRelationship body 0x000DF5A0
