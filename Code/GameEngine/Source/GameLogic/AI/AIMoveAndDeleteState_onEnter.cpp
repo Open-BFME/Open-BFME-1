@@ -90,7 +90,7 @@ public:
 
 	StateMachine *getMachine() { return m_machine; }
 	Object *getMachineOwner() { return m_machine->getOwner(); }
-	void setAdjustsDestination( Bool b ) { m_adjustDestinations = b; }
+	void setAdjustsDestination( Bool adjustsDestination ) { m_adjustDestinations = adjustsDestination; }
 
 protected:
 	UnsignedByte m_pad004[0x18];
