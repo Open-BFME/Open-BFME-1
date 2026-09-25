@@ -1,5 +1,5 @@
-// ?rebuildPathFromStatePoints@Rva00270DF0AIUpdate@@IAEXXZ
-// partial score=0.6 date=2026-09-23
+// cl: /DNDEBUG /MD /EHsc
+// Opaque AIUpdate path rebuild body recovered at retail RVA 0x00270DF0.
 typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef bool Bool;
@@ -60,7 +60,7 @@ private:
 class BFMELocomotorOverride
 {
 public:
-	BFMELocomotorOverride *friend_getFinalOverride();	///< retail ILT 0x000022bb
+	BFMELocomotorOverride *friend_getFinalOverride();
 
 	Real getWanderWidthFactor() const
 	{
@@ -90,9 +90,6 @@ public:
 		return this;
 	}
 
-	// Retail carries a null template through rather than guarding it, so the
-	// appearance read below happens off a null base and stays an invalid
-	// locomotor instead of silently meaning this one.
 	BFMELocomotorOverride *bfmeTemplate() const
 	{
 		if (m_nextOverride == NULL)
@@ -102,14 +99,13 @@ public:
 
 	Int getAppearance() const { return bfmeTemplate()->m_appearance; }
 
-	char m_unreconstructed_000[4];				///< the vtable pointer
-	BFMELocomotorOverride *m_nextOverride;			///< retail this+0x04
+	char m_unreconstructed_000[4];
+	BFMELocomotorOverride *m_nextOverride;
 	char m_unreconstructed_008[0x10 - 8];
-	UnsignedInt m_legalSurfaces;				///< retail this+0x10
+	UnsignedInt m_legalSurfaces;
 	char m_unreconstructed_014[0x70 - 0x14];
-	Int m_appearance;					///< retail this+0x70
+	Int m_appearance;
 };
-
 
 class Rva00270DF0Locomotor
 {
@@ -125,11 +121,17 @@ struct Rva0016F770Coord3D
 	float z;
 };
 
+struct Rva0016F770Points
+{
+	char *m_begin;
+	char *m_end;
+	Int size() const { return (Int)((m_end - m_begin) / (Int)12); }
+};
+
 struct Rva0016F770Path
 {
 	char m_pad[0x44];
-	Rva0016F770Coord3D *m_begin;
-	Rva0016F770Coord3D *m_end;
+	Rva0016F770Points m_points;
 
 	Rva0016F770Coord3D *getPoint(Int index);
 };
@@ -354,6 +356,7 @@ extern AI *TheAI;
 extern GlobalData *TheWritableGlobalData;
 extern GameLogic *TheBfmeGameLogic;
 
+// ?rebuildPathFromStatePoints@Rva00270DF0AIUpdate@@IAEXXZ
 void Rva00270DF0AIUpdate::rebuildPathFromStatePoints()
 {
 	Object *object = m_object;
@@ -368,7 +371,7 @@ void Rva00270DF0AIUpdate::rebuildPathFromStatePoints()
 		locomotor = locomotor->m_nextOverride->friend_getFinalOverride();
 	m_path->optimize(object, locomotor->m_legalSurfaces, false);
 
-	for (Int index = 0; index < (Int)(m_stateMachine->m_end - m_stateMachine->m_begin);
+	for (Int index = 0; index < m_stateMachine->m_points.size();
 		++index)
 	{
 		Rva0016F770Coord3D *source = m_stateMachine->getPoint(index);
