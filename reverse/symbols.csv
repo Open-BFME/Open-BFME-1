@@ -89057,3 +89057,4 @@ g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?rva00736940@W3DTreeBuffer@@QAEHABVAsciiString@@H0@Z,0x00736940,address-derived tree-type lookup; independent full342B callee RET12 and aligned1313B caller establish AsciiString ref plus int plus AsciiString ref; owner from matched BaseHeightMap tree-buffer caller
+?apply@Rva002147E0Owner@@QAEXMPAUDamageInfo@@@Z,0x002147E0,address-derived secondary-body-interface callee; independently decoded394B body consumes float stackarg and pointer plus ECX receiver with object at minus8; RET8 on all exits; aligned350B caller via ILT00030BBB
