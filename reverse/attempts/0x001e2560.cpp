@@ -1,8 +1,11 @@
 // ?bfmeClampDH@BfmeHostDH@@QBEXPAVBfmeVecDH@@PBVBfmeSrcDH@@@Z
-// partial score=0.95 date=2026-09-08
+// partial score=0.96 date=2026-09-24
 extern "C" double sqrt(double x);
 
 #pragma intrinsic(sqrt)
+
+extern "C" void _ReadWriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
 
 extern const float BfmeZeroRange;
 
@@ -43,10 +46,17 @@ void BfmeHostDH::bfmeClampDH(BfmeVecDH *out, const BfmeSrcDH *src) const
 
 	if (len <= range)
 	{
-		((volatile BfmeVecDH *)out)->bfmeSetDH(*(const volatile float *)&BfmeZeroRange, *(const volatile float *)&BfmeZeroRange, *(const volatile float *)&BfmeZeroRange);
+		_ReadWriteBarrier();
+		BfmeVecDH zero = {
+			*(const volatile float *)&BfmeZeroRange,
+			*(const volatile float *)&BfmeZeroRange,
+			*(const volatile float *)&BfmeZeroRange
+		};
+		((volatile BfmeVecDH *)out)->bfmeSetDH(zero.m_bfmeXDH, zero.m_bfmeYDH, zero.m_bfmeZDH);
 	}
 	else
 	{
+		_ReadWriteBarrier();
 		volatile float t = (len - range) / len;
 
 		((volatile BfmeVecDH *)out)->bfmeSetDH(t * v.m_bfmeXDH, v.m_bfmeYDH * t, v.m_bfmeZDH * t);
