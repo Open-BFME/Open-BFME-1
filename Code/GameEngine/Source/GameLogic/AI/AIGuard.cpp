@@ -723,7 +723,7 @@ public:
 class BfmeGuardMachine : public BfmeGuardStateMachine
 {
 public:
-	void getGuardScanPos(Coord3D *out);
+	void getGuardScanPos(Coord3D *scanPosition);
 };
 
 struct BfmeGuardReturnStateView
