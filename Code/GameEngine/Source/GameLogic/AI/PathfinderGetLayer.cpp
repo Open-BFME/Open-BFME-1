@@ -65,11 +65,11 @@ Int Pathfinder::getLayer(const Coord3D *worldPosition)
 	if (m_map == 0)
 		return 1;
 
-	ICoord2D cell;
-	if (worldToCell(worldPosition, &cell))
+	ICoord2D cellIndex;
+	if (worldToCell(worldPosition, &cellIndex))
 		return 1;
 
-	PathfindCell *pathCell = getGroundCell(cell.x, cell.y);
+	PathfindCell *pathCell = getGroundCell(cellIndex.x, cellIndex.y);
 	if (pathCell != 0)
 		return pathCell->getLayer();
 	return 1;
