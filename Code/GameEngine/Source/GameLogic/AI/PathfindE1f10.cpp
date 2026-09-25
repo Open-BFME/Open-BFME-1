@@ -51,7 +51,7 @@ public:
 	Bool sameCell( Object *object, Coord3D fromPosition, Coord3D toPosition );
 
 	void bfmeQuery( Object *object, Int *radius, Bool *centerInCell );
-	bool worldToCell( const Coord3D *position, ICoord2D *cell );
+	bool worldToCell( const Coord3D *worldPosition, ICoord2D *cellIndex );
 };
 
 Bool Pathfinder::sameCell( Object *object, Coord3D fromPosition, Coord3D toPosition )
