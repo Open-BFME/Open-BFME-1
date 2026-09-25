@@ -4008,5 +4008,25 @@
   "after_sha256": "cca61c1cdab63a766377a352f08a4f1c3a85121e3bc99c894bace1c3a429ea84",
   "evidence": "docs/naming_evidence.md",
   "reason": "the bank's TU-local class had no layout witness, so it now uses the address-derived type the ledger already gives global 0x012F4988"
+ },
+ {
+  "old_path": "reverse/attempts/0x00579810.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenuReallyDoStartRva00579810.cpp",
+  "old_name": "m_data",
+  "new_name": "m_unmodelled00",
+  "before_sha256": "9c5b07aacad25bc08721a814cc1a515b01589c761b00618b9ff37d83298872dd",
+  "after_sha256": "586869996e727436d125e9195cb7a6bb9ec8b8ca4ca9a27b8fc1e69cf9615cdd",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "opaque pad never read by the body"
+ },
+ {
+  "old_path": "reverse/attempts/0x00579810.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/SkirmishGameOptionsMenuReallyDoStartRva00579810.cpp",
+  "old_name": "m_data",
+  "new_name": "m_unmodelled04",
+  "before_sha256": "9c5b07aacad25bc08721a814cc1a515b01589c761b00618b9ff37d83298872dd",
+  "after_sha256": "586869996e727436d125e9195cb7a6bb9ec8b8ca4ca9a27b8fc1e69cf9615cdd",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "opaque pad never read by the body"
  }
 ]
