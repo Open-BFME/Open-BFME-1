@@ -3,6 +3,36 @@
 // ScoreScreenSystem candidate excerpt from the owning ScoreScreen.cpp TU.
 // The surrounding ScoreScreen globals and engine declarations remain in that TU.
 
+class BFMERetailAsciiString;
+
+template <typename T> class StringBase
+{
+	friend class BFMERetailAsciiString;
+
+private:
+	StringBase() : m_data( 0 ) {}
+	StringBase( const T *text );
+	StringBase( const StringBase<T> &other );
+	~StringBase();
+
+	void *m_data;
+};
+
+class BFMERetailAsciiString : private StringBase<char>
+{
+public:
+	BFMERetailAsciiString( const char *text ) : StringBase<char>( text ) {}
+	BFMERetailAsciiString( const BFMERetailAsciiString &other )
+		: StringBase<char>( other ) {}
+	~BFMERetailAsciiString() {}
+};
+
+class ScoreScreenTransitionHandlerView
+{
+public:
+	void remove( BFMERetailAsciiString groupName, Bool skipPending );
+};
+
 class ScoreScreenGameSpyInfoView
 {
 public:
@@ -52,7 +82,8 @@ WindowMsgHandledType ScoreScreenSystem( GameWindow *window, UnsignedInt msg,
 
 		case GBM_SELECTED:
 		{
-			TheTransitionHandler->remove("ScoreScreenShow", TRUE);
+			((ScoreScreenTransitionHandlerView *)TheTransitionHandler)->remove(
+				BFMERetailAsciiString("ScoreScreenShow"), TRUE);
 			ReplayWasPressed = FALSE;
 
 			Int controlID = control->winGetWindowId();
