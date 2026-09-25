@@ -75,6 +75,156 @@ public:
 	virtual Real getGroundHeight( Real x, Real y, Coord3D *normal = NULL ) = 0;
 };
 
+class Rva00589320Player;
+
+struct Rva002EE330PlayerList
+{
+	Rva00589320Player *getLocalPlayer();
+};
+extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+extern void j_00009ca0();
+extern void j_0001483a();
+extern void j_000179bd();
+extern void j_0001e52e();
+extern void j_0001ff91();
+extern void j_00020824();
+extern void j_00024ca8();
+extern void j_0002ae23();
+extern void j_0003251f();
+extern void j_0003add7();
+extern void j_0003e77a();
+extern void j_00044f30();
+
+static inline RadarPriorityType BfmeGetRadarPriority( const Object *object )
+{
+	struct CallObject { RadarPriorityType get() const; };
+	typedef RadarPriorityType (CallObject::*Call)() const;
+	union { void (*raw)(void); Call member; } call;
+	call.raw = j_0001e52e;
+	return (((const CallObject *)object)->*call.member)();
+}
+
+static inline Bool BfmeIsKindOf( const Object *object, KindOfType kind )
+{
+	struct CallThing { Bool test( KindOfType ) const; };
+	typedef Bool (CallThing::*Call)( KindOfType ) const;
+	union { void (*raw)(void); Call member; } call;
+	call.raw = j_0003251f;
+	return (((const CallThing *)object)->*call.member)( kind );
+}
+
+static inline Bool BfmeIsNeutralControlled( const Object *object )
+{
+	struct CallObject { Bool test() const; };
+	typedef Bool (CallObject::*Call)() const;
+	union { void (*raw)(void); Call member; } call;
+	call.raw = j_0001483a;
+	return (((const CallObject *)object)->*call.member)();
+}
+
+static inline Bool BfmeIsPlayerActive( const Player *player )
+{
+	struct CallPlayer { Bool test() const; };
+	typedef Bool (CallPlayer::*Call)() const;
+	union { void (*raw)(void); Call member; } call;
+	call.raw = j_000179bd;
+	return (((const CallPlayer *)player)->*call.member)();
+}
+
+static inline Bool BfmeIsLocallyControlled( const Object *object )
+{
+	struct CallObject { Bool test() const; };
+	typedef Bool (CallObject::*Call)() const;
+	union { void (*raw)(void); Call member; } call;
+	call.raw = j_0001ff91;
+	return (((const CallObject *)object)->*call.member)();
+}
+
+static inline Player *BfmeGetControllingPlayer( const Object *object )
+{
+	struct CallObject { Player *get() const; };
+	typedef Player *(CallObject::*Call)() const;
+	union { void (*raw)(void); Call member; } call;
+	call.raw = j_00020824;
+	return (((const CallObject *)object)->*call.member)();
+}
+
+static inline Color BfmeGetIndicatorColor( const Object *object )
+{
+	struct CallObject { Color get() const; };
+	typedef Color (CallObject::*Call)() const;
+	union { void (*raw)(void); Call member; } call;
+	call.raw = j_00009ca0;
+	return (((const CallObject *)object)->*call.member)();
+}
+
+static inline Module *BfmeFindModule( const Object *object, NameKeyType key )
+{
+	struct CallObject { Module *find( NameKeyType ) const; };
+	typedef Module *(CallObject::*Call)( NameKeyType ) const;
+	union { void (*raw)(void); Call member; } call;
+	call.raw = j_0002ae23;
+	return (((const CallObject *)object)->*call.member)( key );
+}
+
+static inline NameKeyType BfmeNameToKey( NameKeyGenerator *generator, const char *name )
+{
+	struct CallGenerator { NameKeyType key( const char * ); };
+	typedef NameKeyType (CallGenerator::*Call)( const char * );
+	union { void (*raw)(void); Call member; } call;
+	call.raw = j_0003add7;
+	return (((CallGenerator *)generator)->*call.member)( name );
+}
+
+static inline Relationship BfmeGetRelationship( const Player *player, const Team *team )
+{
+	struct CallPlayer { Relationship get( const Team * ) const; };
+	typedef Relationship (CallPlayer::*Call)( const Team * ) const;
+	union { void (*raw)(void); Call member; } call;
+	call.raw = j_0003e77a;
+	return (((const CallPlayer *)player)->*call.member)( team );
+}
+
+static inline Color BfmeMakeColor( void *colorData )
+{
+	typedef Color (*Call)( void * );
+	Call call = (Call)j_00024ca8;
+	return call( colorData );
+}
+
+struct BfmeRadarObjectAdd
+{
+	void *m_vtable;
+	Object *m_object;
+	BfmeRadarObjectAdd *m_next;
+	Color m_color;
+};
+
+struct BfmeRadarStealthView
+{
+	void *m_vtable;
+	unsigned char m_pad004[ 0x30 ];
+	Int m_disguisedPlayerIndex;
+	void *m_disguiseAsTemplate;
+
+	Bool isDisguised() const { return m_disguiseAsTemplate != NULL; }
+	Int getDisguisedPlayerIndex() const { return m_disguisedPlayerIndex; }
+};
+
+struct BfmeRadarContainView
+{
+	virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0; virtual void slot0c() = 0;
+	virtual void slot10() = 0; virtual void slot14() = 0; virtual void slot18() = 0; virtual void slot1c() = 0;
+	virtual void slot20() = 0; virtual void slot24() = 0; virtual void slot28() = 0; virtual void slot2c() = 0;
+	virtual void slot30() = 0; virtual void slot34() = 0; virtual void slot38() = 0;
+	virtual Player *getApparentControllingPlayer( const Player * ) const = 0;
+};
+
+struct Rva000F4250PlayerListCall
+{
+	Player *getNthPlayer( Int index );
+};
+
 // PRIVATE ////////////////////////////////////////////////////////////////////////////////////////
 #define RADAR_QUEUE_TERRAIN_REFRESH_DELAY (LOGICFRAMES_PER_SECOND * 3.0f)
 
@@ -466,48 +616,97 @@ void Radar::newMap( TerrainLogic *terrain )
 /** Add an object to the radar list.  The object will be sorted in the list to be grouped
 	* using it's radar priority */
 //-------------------------------------------------------------------------------------------------
-// ?addObject@Radar@@QAEXPAVObject@@@Z present-unmatched
 void Radar::addObject( Object *obj )
 {
+	Object *object = obj;
 
 	// get the radar priority for this object
-	RadarPriorityType newPriority = obj->getRadarPriority();
-	if( isPriorityVisible( newPriority ) == FALSE )
+	if( object == NULL )
+		return;
+	RadarPriorityType newPriority = BfmeGetRadarPriority( object );
+	if( newPriority >= RADAR_PRIORITY_INVALID && newPriority <= RADAR_PRIORITY_NOT_ON_RADAR )
+		return;
+	if( BfmeIsKindOf( object, (KindOfType)7 ) )
+	{
+		if( BfmeIsKindOf( object, (KindOfType)0x77 ) ||
+			BfmeIsKindOf( object, (KindOfType)0x75 ) )
+			goto allocate_radar_object;
+		else
+		{
+			if( BfmeIsNeutralControlled( object ) )
+				return;
+		Player *localPlayer = (Player *)Rva002EE330ThePlayers->getLocalPlayer();
+			if( localPlayer == NULL )
+				return;
+			struct BFMEObjectTeamField
+			{
+				unsigned char pad[0x23c];
+				Team *team;
+			};
+			const BFMEObjectTeamField *self = reinterpret_cast<const BFMEObjectTeamField *>(object);
+			if( BfmeGetRelationship( localPlayer, self->team ) != NEUTRAL )
+				goto allocate_radar_object;
+			return;
+		}
+	}
+	if( BfmeIsKindOf( object, (KindOfType)0x3b ) ||
+		BfmeIsKindOf( object, (KindOfType)0x3c ) )
 		return;
 
+allocate_radar_object:
+
 	// if this object is on the radar, remove it in favor of the new add
-	RadarObject **list;
-	RadarObject *newObj;
+	BfmeRadarObjectAdd **list;
+	BfmeRadarObjectAdd *newObj;
 
 	// sanity
-	DEBUG_ASSERTCRASH( obj->friend_getRadarData() == NULL,
-										 ("Radar: addObject - non NULL radar data for '%s'\n", 
-										 obj->getTemplate()->getName().str()) );
+	DEBUG_ASSERTCRASH( object->friend_getRadarData() == NULL,
+											 ("Radar: addObject - non NULL radar data for '%s'\n",
+										 object->getTemplate()->getName().str()) );
 
 	// allocate a new object
-	newObj = newInstance(RadarObject);
+	BfmeRadarObjectAdd *allocated;
+	void *rawObj = operator new( 0x10 );
+	if( rawObj != NULL )
+	{
+		allocated = (BfmeRadarObjectAdd *)rawObj;
+		allocated->m_vtable = (void *)0x01088838;
+		allocated->m_object = NULL;
+		allocated->m_next = NULL;
+		allocated->m_color = GameMakeColor( 255, 255, 255, 255 );
+		newObj = allocated;
+	}
+	else
+		newObj = NULL;
 
 	// set the object data
-	newObj->friend_setObject( obj );
+	newObj->m_object = object;
 
 	// set color for this object on the radar
-	const Player *player = obj->getControllingPlayer();
+	const Player *player = BfmeGetControllingPlayer( object );
 	Bool useIndicatorColor = true;
 
-	if( obj->isKindOf( KINDOF_DISGUISER ) )
+	if( BfmeIsKindOf( object, (KindOfType)0x57 ) )
 	{
 		//Because we have support for disguised units pretending to be units from another
 		//team, we need to intercept it here and make sure it's rendered appropriately
 		//based on which client is rendering it.
-    StealthUpdate *update = obj->getStealth();
+		static NameKeyType key_StealthUpdate = BfmeNameToKey( TheNameKeyGenerator, "StealthUpdate" );
+		BfmeRadarStealthView *update =
+			(BfmeRadarStealthView *)BfmeFindModule( object, key_StealthUpdate );
 		if( update )
 		{
 			if( update->isDisguised() )
 			{
-				Player *clientPlayer = ThePlayerList->getLocalPlayer();
-				Player *disguisedPlayer = ThePlayerList->getNthPlayer( update->getDisguisedPlayerIndex() );
-				if( player->getRelationship( clientPlayer->getDefaultTeam() ) != ALLIES && clientPlayer->isPlayerActive() )
+				Player *clientPlayer = (Player *)Rva002EE330ThePlayers->getLocalPlayer();
+				if( clientPlayer != NULL &&
+					BfmeGetRelationship( player,
+					*(Team **)((unsigned char *)clientPlayer + 0x230) ) != ALLIES &&
+					BfmeIsPlayerActive( clientPlayer ) )
 				{
+					Player *disguisedPlayer =
+						((Rva000F4250PlayerListCall *)Rva002EE330ThePlayers)->getNthPlayer(
+							update->getDisguisedPlayerIndex() );
 					//Neutrals and enemies will see this disguised unit as the team it's disguised as.
 					player = disguisedPlayer;
 					if( player )
@@ -518,35 +717,40 @@ void Radar::addObject( Object *obj )
 		}
 	}
 	
-	if( obj->getContain() )
+	ContainModuleInterface *contain =
+		*(ContainModuleInterface **)((unsigned char *)object + 0x1fc);
+	if( contain )
 	{
 		// To handle Stealth garrison, ask containers what color they are drawing with to the local player.
 		// Local is okay because radar display is not synced.
-		player = obj->getContain()->getApparentControllingPlayer( ThePlayerList->getLocalPlayer() );
+		player = ((BfmeRadarContainView *)contain)
+			->getApparentControllingPlayer(
+			(Player *)Rva002EE330ThePlayers->getLocalPlayer() );
 		if( player )
 			useIndicatorColor = false;
 	}
 
 	if( useIndicatorColor || (player == NULL) )
 	{
-		newObj->setColor( obj->getIndicatorColor() );
+		newObj->m_color = BfmeMakeColor( (void *)BfmeGetIndicatorColor( object ) );
 	}
 	else
-	{	
-		newObj->setColor( player->getPlayerColor() );
+	{
+		newObj->m_color = BfmeMakeColor(
+			(void *)*(Color *)((unsigned char *)player + 0x1c4) );
 	}
 
 	// set a chunk of radar data in the object
-	obj->friend_setRadarData( newObj );
+	*(void **)((unsigned char *)object + 0x20c) = (void *)newObj;
 
 	//
 	// we will put this on either the local object list for objects that belong to the
 	// local player, or on the regular object list for all other objects
 	//
-	if( obj->isLocallyControlled() )
-		list = &m_localObjectList;
+	if( BfmeIsLocallyControlled( object ) )
+		list = (BfmeRadarObjectAdd **)&m_localObjectList;
 	else
-		list = &m_objectList;
+		list = (BfmeRadarObjectAdd **)&m_objectList;
 
 	// link object to master list at the head of it's priority section
 	if( *list == NULL )
@@ -554,7 +758,7 @@ void Radar::addObject( Object *obj )
 	else
 	{
 		RadarPriorityType prevPriority, currPriority;
-		RadarObject *currObject, *prevObject, *nextObject;
+		BfmeRadarObjectAdd *currObject, *prevObject, *nextObject;
 
 		prevObject = NULL;
 		prevPriority = RADAR_PRIORITY_INVALID;
@@ -562,10 +766,10 @@ void Radar::addObject( Object *obj )
 		{
 
 			// get the next object
-			nextObject = currObject->friend_getNext();
+			nextObject = currObject->m_next;
 
 			// get the priority of this entry in the list (currPriority)
-			currPriority = currObject->friend_getObject()->getRadarPriority();
+			currPriority = BfmeGetRadarPriority( currObject->m_object );
 
 			//
 			// if there is no previous object, or the previous priority is less than the
@@ -581,17 +785,17 @@ void Radar::addObject( Object *obj )
 				{
 
 					// the new entry next points to what the previous one used to point to
-					newObj->friend_setNext( prevObject->friend_getNext() );
+					newObj->m_next = prevObject->m_next;
 
 					// the previous one next now points to the new entry
-					prevObject->friend_setNext( newObj );
+					prevObject->m_next = newObj;
 
 				}  // end if
 				else
 				{
 
 					// the new object next points to the current object
-					newObj->friend_setNext( currObject );
+					newObj->m_next = currObject;
 
 					// new list head is now newObj
 					*list = newObj;
@@ -605,7 +809,7 @@ void Radar::addObject( Object *obj )
 			{
 
 				// at the end of the list, put object here
-				currObject->friend_setNext( newObj );
+				currObject->m_next = newObj;
 
 			}  // end else if
 

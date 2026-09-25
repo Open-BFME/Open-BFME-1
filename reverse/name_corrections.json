@@ -2618,5 +2618,15 @@
   "after_sha256": "a2b77f5b4a874786e6355f53d21f67e152d7c3a3e0542e7f6f7fae1606e3522f",
   "evidence": "reverse/identity_evidence/00730d30-terrain-forwarders.md",
   "reason": "The 00730D30 caller forwards point radius context to006C8890; independent consumers720C20 and7023C0 interpret the second argument as float. The prior construction method declares a GeometryInfo reference and calls a different006C8930 body. Preserve unknown owner through its address token and keep distinct sibling call contracts."
+ },
+ {
+  "old_path": "reverse/attempts/0x001086c0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/Radar.cpp",
+  "old_name": "Player",
+  "new_name": "Rva00589320Player",
+  "before_sha256": "232eee2543498a381924be58f94b321116cbbdb6051a984a694bc87554f81249",
+  "after_sha256": "9dafbc602f71e9809252768e60f9fa2d8ac9fb56a110d0d7d82af9be374b8aad",
+  "evidence": "reverse/symbols.csv",
+  "reason": "reverse/symbols.csv pins the local-player accessor this body calls as ?getLocalPlayer@Rva002EE330PlayerList@@QAEPAVRva00589320Player@@XZ at ILT 0x0000762B, so the returned type must use the pinned spelling Rva00589320Player for the call to resolve; the bank's Player was a local view name for the same object."
  }
 ]
