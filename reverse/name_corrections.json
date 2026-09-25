@@ -3098,5 +3098,25 @@
   "after_sha256": "2bfde7932969d2cf46d1b58a3d12d983d400ca3f1dcb6d7f19c20d2f1702e1af",
   "evidence": "docs/naming_evidence.md",
   "reason": "byte/dword stores respelled from generic flag/tail placeholders; renamed fields are only ever written as a raw byte or dword with no evidence of flag or tail semantics (see verdict renames field for 0x0060A000)"
+ },
+ {
+  "old_path": "reverse/attempts/0x0007e9b0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp",
+  "old_name": "refreshCustomStaticLODLevel",
+  "new_name": "rva0007C1D0",
+  "before_sha256": "2a6fbeefc56db3f86f5e22e17103552aab361ae300eb05330ac3889bcfaff632",
+  "after_sha256": "22fef328cdf16053985885eaf248a0689b5daf12fab0a4a1e3be1809542c012d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "callee at ILT 0x00023DAD -> body 0x0007C1D0 is pinned under an address-derived name; ZH twin suggests refreshCustomStaticLODLevel but identity is not independently proven (body is ledgered as bfmeGo1144@BfmeA1144)"
+ },
+ {
+  "old_path": "reverse/attempts/0x0007e9b0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/GameLODManagerApplyStaticLODLevel.cpp",
+  "old_name": "refreshCustomStaticLODLevel",
+  "new_name": "rva0007E0F0",
+  "before_sha256": "2a6fbeefc56db3f86f5e22e17103552aab361ae300eb05330ac3889bcfaff632",
+  "after_sha256": "22fef328cdf16053985885eaf248a0689b5daf12fab0a4a1e3be1809542c012d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "existing symbols.csv pin at ILT 0x0002DE02 spells the callee rva0007E0F0; the banked names (refreshCustomStaticLODLevel/ensureIdealStaticLODLevel) had no evidence for body 0x0007E0F0"
  }
 ]

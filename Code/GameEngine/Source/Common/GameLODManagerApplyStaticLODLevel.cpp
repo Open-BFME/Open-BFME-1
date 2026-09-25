@@ -1,46 +1,55 @@
-// ?applyStaticLODLevel@GameLODManager@@IAEXW4StaticGameLODLevel@@@Z
-// partial score=0.99 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc
+// Open-BFME: GameLODManager::applyStaticLODLevel, retail 0x0007E9B0, 868 bytes.
+// readable reference: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/GameLOD.cpp
+//
+// Identity: setStaticLODLevel (0x0007EDF0, matched in GameLOD.cpp) calls it
+// through ILT 0x00036A11. BFME inlines getRecommendedTextureReduction and
+// clamps it against the level's own reduction with a const-reference max; the
+// out-of-line call is what leaves the recommendation in EAX.
 
 typedef int Int;
 typedef unsigned char Bool;
 
+// Names from retail StaticGameLODNames (0x00EA73E4): VeryLow Low Medium High
+// UltraHigh Custom.
 enum StaticGameLODLevel
 {
 	STATIC_GAME_LOD_UNKNOWN = -1,
-	STATIC_GAME_LOD_LOW = 0,
-	STATIC_GAME_LOD_MEDIUM = 1,
-	STATIC_GAME_LOD_HIGH = 2,
-	STATIC_GAME_LOD_VERY_HIGH = 3,
-	STATIC_GAME_LOD_ULTRA = 4,
+	STATIC_GAME_LOD_VERY_LOW = 0,
+	STATIC_GAME_LOD_LOW = 1,
+	STATIC_GAME_LOD_MEDIUM = 2,
+	STATIC_GAME_LOD_HIGH = 3,
+	STATIC_GAME_LOD_ULTRA_HIGH = 4,
 	STATIC_GAME_LOD_CUSTOM = 5
 };
 
-struct BfmeStaticLODInfo
+// 0x30-byte element of GameLODManager::m_staticGameLODInfo; named members are
+// the ones the BFME field-parse witness names (tools/name_oracle.py).
+struct StaticGameLODInfo
 {
 	Int m_maxParticleCount;
 	Bool m_useShadowVolumes;
 	Bool m_useShadowDecals;
-	Bool m_useCloudMap;
+	Bool byte_6;
+	Bool byte_7;
 	Bool m_useLightMap;
-	Bool m_useSoftWaterEdge;
-	Bool m_terrainDetail;
+	Bool m_showSoftWaterEdge;
 	unsigned char m_pad0a[2];
 	Int m_maxTankTrackEdges;
 	Int m_maxTankTrackOpaqueEdges;
 	Int m_maxTankTrackFadeDelay;
-	Bool m_flag18;
-	Bool m_flag19;
-	Bool m_flag1a;
-	Bool m_flag1b;
+	Bool m_useBuildupScaffolds;
+	Bool m_useTreeSway;
+	Bool byte_1a;
+	Bool byte_1b;
 	Int m_textureReduction;
-	unsigned char m_pad20;
-	Bool m_flag21;
-	Bool m_flag22;
-	Bool m_flag23;
-	Int m_field24;
-	Int m_field28;
-	Int m_field2c;
+	unsigned char byte_20;
+	Bool byte_21;
+	Bool byte_22;
+	Bool byte_23;
+	Int dword_24;
+	Int dword_28;
+	Int dword_2c;
 };
 
 struct Rva006C9270GlobalData
@@ -97,6 +106,7 @@ public:
 	unsigned char m_preferenceStorage[0x10];
 };
 
+// Slots 28-30 follow the Zero Hour twin's TheGameClient calls in order.
 class ClientRoot4120
 {
 public:
@@ -114,6 +124,7 @@ public:
 
 extern ClientRoot4120 *TheGameClient;
 
+// Slots 21-22 follow the Zero Hour twin's TheTerrainVisual calls.
 class TerrainVisualDispatch
 {
 public:
@@ -169,30 +180,50 @@ public:
 };
 #undef BFME_A1087_SLOT
 
-extern BfmeA1087 *volatile g_bfmeA1087;
+extern BfmeA1087 *g_bfmeA1087;
 extern void W3DRadarResetLock();
 extern char bfmeUnlock1179();
-class BfmeRadarResetGuard
+
+// Scoped W3DRadarResetLock / bfmeUnlock1179 pair: EH state 1 covers the two
+// slot calls and the unlock runs on unwind.
+class RadarResetLockScope
 {
 public:
-	BfmeRadarResetGuard() { W3DRadarResetLock(); }
-	~BfmeRadarResetGuard() { bfmeUnlock1179(); }
+	RadarResetLockScope() { W3DRadarResetLock(); }
+	~RadarResetLockScope() { bfmeUnlock1179(); }
 };
+
 extern Int Rva008FD440Get();
+
+template <class T> inline const T &maxOf(const T &a, const T &b)
+{
+	return a > b ? a : b;
+}
 
 class GameLODManager
 {
 public:
-	protected:
+	Int rva0007E0F0();
+	void rva0007C1D0();
+
+protected:
 	void applyStaticLODLevel(StaticGameLODLevel level);
-	void refreshCustomStaticLODLevel();
-	void ensureIdealStaticLODLevel();
+
+	Int getRecommendedTextureReduction()
+	{
+		if (m_idealDetailLevel == STATIC_GAME_LOD_UNKNOWN)
+			rva0007E0F0();
+		if (!m_memPassed)
+			return m_staticGameLODInfo[STATIC_GAME_LOD_VERY_LOW].m_textureReduction;
+		return m_staticGameLODInfo[m_pendingStaticLOD].m_textureReduction;
+	}
+
 	Bool isReallyLowMHz() const
 	{
 		return m_cpuFreq < m_reallyLowMHz;
 	}
 
-	BfmeStaticLODInfo m_staticGameLODInfo[6];
+	StaticGameLODInfo m_staticGameLODInfo[6];
 	unsigned char m_pad0120[0x16c0 - 0x0120];
 	Int m_currentStaticLOD;
 	Int m_pendingStaticLOD;
@@ -210,70 +241,55 @@ public:
 	Int m_reallyLowMHz;
 };
 
+// ?applyStaticLODLevel@GameLODManager@@IAEXW4StaticGameLODLevel@@@Z
 void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 {
-	BfmeStaticLODInfo previous;
-	previous.m_useShadowVolumes = 1;
-	previous.m_useShadowDecals = 1;
-	previous.m_terrainDetail = 1;
+	StaticGameLODInfo prevLodBackup;
+	prevLodBackup.m_useShadowVolumes = 1;
+	prevLodBackup.m_useShadowDecals = 1;
+	prevLodBackup.m_showSoftWaterEdge = 1;
 	if (m_currentStaticLOD != STATIC_GAME_LOD_UNKNOWN)
-		previous = m_staticGameLODInfo[m_currentStaticLOD];
+		prevLodBackup = m_staticGameLODInfo[m_currentStaticLOD];
 
 	if (level == STATIC_GAME_LOD_CUSTOM)
-		refreshCustomStaticLODLevel();
+		rva0007C1D0();
 
-	BfmeStaticLODInfo *info = &m_staticGameLODInfo[level];
-	Int *selectedTextureReduction;
-	Int textureReduction;
+	StaticGameLODInfo *lodInfo = &m_staticGameLODInfo[level];
+	Int requestedTextureReduction;
 	if (level == STATIC_GAME_LOD_CUSTOM)
-	{
-		textureReduction = info->m_textureReduction;
-	}
+		requestedTextureReduction = lodInfo->m_textureReduction;
 	else
-	{
-		if (m_idealDetailLevel == STATIC_GAME_LOD_UNKNOWN)
-			ensureIdealStaticLODLevel();
-		Int requestedTextureReduction;
-		if (!m_memPassed)
-			requestedTextureReduction = m_staticGameLODInfo[STATIC_GAME_LOD_LOW].m_textureReduction;
-		else
-			requestedTextureReduction = m_staticGameLODInfo[m_pendingStaticLOD].m_textureReduction;
-
-		selectedTextureReduction = &info->m_textureReduction;
-		if (requestedTextureReduction > *selectedTextureReduction)
-			selectedTextureReduction = &requestedTextureReduction;
-		textureReduction = *selectedTextureReduction;
-	}
+		requestedTextureReduction = maxOf(getRecommendedTextureReduction(), lodInfo->m_textureReduction);
 
 	if (TheWritableGlobalData)
 	{
-		if (level == STATIC_GAME_LOD_LOW || level == STATIC_GAME_LOD_MEDIUM)
+		if (level == STATIC_GAME_LOD_VERY_LOW || level == STATIC_GAME_LOD_LOW)
 			TheWritableGlobalData->m_field1d = 0;
-		if (level == STATIC_GAME_LOD_LOW || level == STATIC_GAME_LOD_MEDIUM)
+		if (level == STATIC_GAME_LOD_VERY_LOW || level == STATIC_GAME_LOD_LOW)
 			TheWritableGlobalData->m_fielda75 = 0;
 		{
 			OptionPreferences options;
 			TheWritableGlobalData->m_fielda75 = options.getUnitDecals();
-			if (level == STATIC_GAME_LOD_HIGH)
+			if (level == STATIC_GAME_LOD_MEDIUM)
 				TheWritableGlobalData->m_fielda77 = 1;
-			else if (level == STATIC_GAME_LOD_VERY_HIGH || level == STATIC_GAME_LOD_ULTRA)
+			else if (level == STATIC_GAME_LOD_HIGH || level == STATIC_GAME_LOD_ULTRA_HIGH)
 				TheWritableGlobalData->m_fielda77 = 0;
 		}
 
-		TheWritableGlobalData->m_fieldb8c = info->m_maxParticleCount;
-		TheWritableGlobalData->m_field64 = info->m_useShadowVolumes;
-		TheWritableGlobalData->m_field65 = info->m_useShadowDecals;
+		TheWritableGlobalData->m_fieldb8c = lodInfo->m_maxParticleCount;
+		TheWritableGlobalData->m_field64 = lodInfo->m_useShadowVolumes;
+		TheWritableGlobalData->m_field65 = lodInfo->m_useShadowDecals;
 
-		if (textureReduction != Rva008FD440Get())
+		if (requestedTextureReduction != Rva008FD440Get())
 		{
-			TheWritableGlobalData->m_field68 = textureReduction;
+			TheWritableGlobalData->m_field68 = requestedTextureReduction;
 			if (TheGameClient)
 				TheGameClient->adjustLOD(0);
 		}
 
 		if (m_currentStaticLOD == STATIC_GAME_LOD_UNKNOWN
-			|| info->m_useShadowVolumes != previous.m_useShadowVolumes
-			|| info->m_useShadowDecals != previous.m_useShadowDecals)
+			|| lodInfo->m_useShadowVolumes != prevLodBackup.m_useShadowVolumes
+			|| lodInfo->m_useShadowDecals != prevLodBackup.m_useShadowDecals)
 		{
 			if (TheGameClient)
 			{
@@ -282,12 +298,12 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 			}
 		}
 
-		TheWritableGlobalData->m_field47 = info->m_useCloudMap;
-		TheWritableGlobalData->m_field28 = !info->m_useLightMap;
-		m_field170c = info->m_field24;
-		TheWritableGlobalData->m_field38 = info->m_useSoftWaterEdge;
-		TheWritableGlobalData->m_field44 = info->m_useSoftWaterEdge;
-		if (info->m_useSoftWaterEdge)
+		TheWritableGlobalData->m_field47 = lodInfo->byte_6;
+		TheWritableGlobalData->m_field28 = !lodInfo->byte_7;
+		m_field170c = lodInfo->dword_24;
+		TheWritableGlobalData->m_field38 = lodInfo->m_useLightMap;
+		TheWritableGlobalData->m_field44 = lodInfo->m_useLightMap;
+		if (lodInfo->m_useLightMap)
 		{
 			TheWritableGlobalData->m_field45 = 1;
 			TheWritableGlobalData->m_field46 = 1;
@@ -297,30 +313,30 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 			TheWritableGlobalData->m_field45 = 1;
 			TheWritableGlobalData->m_field46 = 0;
 		}
-		TheWritableGlobalData->m_field8c = info->m_terrainDetail;
+		TheWritableGlobalData->m_field8c = lodInfo->m_showSoftWaterEdge;
 
 		if (m_currentStaticLOD == STATIC_GAME_LOD_UNKNOWN
-			|| info->m_terrainDetail != previous.m_terrainDetail)
+			|| lodInfo->m_showSoftWaterEdge != prevLodBackup.m_showSoftWaterEdge)
 		{
 			if (g_bfmeTerrainVisual)
 				g_bfmeTerrainVisual->setShoreLineDetail();
 		}
 
-		TheWritableGlobalData->m_field1f4 = info->m_maxTankTrackEdges;
-		TheWritableGlobalData->m_field1f8 = info->m_maxTankTrackOpaqueEdges;
-		TheWritableGlobalData->m_field1fc = info->m_maxTankTrackFadeDelay;
-		TheWritableGlobalData->m_field1a = info->m_flag19;
-		TheWritableGlobalData->m_field1b = info->m_flag1a;
-		TheWritableGlobalData->m_field1c = !info->m_flag18;
-		TheWritableGlobalData->m_field58 = info->m_flag21;
-		TheWritableGlobalData->m_field18 = info->m_flag22;
-		TheWritableGlobalData->m_field1f = info->m_flag23;
-		m_field16e4 = info->m_field28;
-		m_field16e8 = info->m_field2c;
+		TheWritableGlobalData->m_field1f4 = lodInfo->m_maxTankTrackEdges;
+		TheWritableGlobalData->m_field1f8 = lodInfo->m_maxTankTrackOpaqueEdges;
+		TheWritableGlobalData->m_field1fc = lodInfo->m_maxTankTrackFadeDelay;
+		TheWritableGlobalData->m_field1a = lodInfo->m_useTreeSway;
+		TheWritableGlobalData->m_field1b = lodInfo->byte_1a;
+		TheWritableGlobalData->m_field1c = !lodInfo->m_useBuildupScaffolds;
+		TheWritableGlobalData->m_field58 = lodInfo->byte_21;
+		TheWritableGlobalData->m_field18 = lodInfo->byte_22;
+		TheWritableGlobalData->m_field1f = lodInfo->byte_23;
+		m_field16e4 = lodInfo->dword_28;
+		m_field16e8 = lodInfo->dword_2c;
 
 		if (g_bfmeA1087)
 		{
-			BfmeRadarResetGuard guard;
+			RadarResetLockScope lock;
 			g_bfmeA1087->slot130();
 			g_bfmeA1087->slot131();
 		}
