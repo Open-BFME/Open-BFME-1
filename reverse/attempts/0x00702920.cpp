@@ -1,5 +1,5 @@
 // ?d_00702920@@YAXXZ
-// partial score=0.55 date=2026-09-22
+// partial score=0.57 date=2026-09-24
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -384,24 +384,26 @@ void W3DPropBuffer::notifyShroudChanged()
 
 DECLARE_PERF_TIMER(Prop_Render)
 
-class BfmeCloudEffectSystemView
+class BfmeGlobCC0
 {
 public:
-	virtual void slot00() = 0;
-	virtual void slot01() = 0;
-	virtual void slot02() = 0;
-	virtual void slot03() = 0;
-	virtual void slot04() = 0;
-	virtual void slot05() = 0;
-	virtual void slot06() = 0;
-	virtual void slot07() = 0;
-	virtual void slot08() = 0;
-	virtual void slot09() = 0;
-	virtual Bool slot10() = 0;
-	virtual void slot11() = 0;
-	virtual void slot12() = 0;
-	virtual void slot13(Real *value) = 0;
+	virtual Int slot00() = 0;
+	virtual Int slot01() = 0;
+	virtual Int slot02() = 0;
+	virtual Int slot03() = 0;
+	virtual Int slot04() = 0;
+	virtual Int slot05() = 0;
+	virtual Int slot06() = 0;
+	virtual Int slot07() = 0;
+	virtual Int slot08() = 0;
+	virtual Int slot09() = 0;
+	virtual Bool bfmePredCC0() = 0;
+	virtual Int slot11() = 0;
+	virtual Int slot12() = 0;
+	virtual Vector3 *bfmeGetCC0(Vector3 *) = 0;
 };
+
+extern BfmeGlobCC0 *g_bfmeGlobCC0;
 
 class BfmePropBufferView
 {
@@ -419,7 +421,6 @@ public:
 	GlobalData::TerrainLighting m_terrainObjectsLighting[TIME_OF_DAY_COUNT][MAX_GLOBAL_LIGHTS];
 };
 
-#define BFME_CLOUD_EFFECT_SYSTEM (*reinterpret_cast<BfmeCloudEffectSystemView **>(0x012F1104))
 #define BFME_ONE (*(const Real *)0x01075334)
 
 //=============================================================================
@@ -478,10 +479,10 @@ void W3DPropBuffer::drawProps(RenderInfoClass &rinfo)
 	const BfmeGlobalDataLightingView *lightingData = reinterpret_cast<const BfmeGlobalDataLightingView *>(TheGlobalData);
 	const GlobalData::TerrainLighting *objectLighting = lightingData->m_terrainObjectsLighting[lightingData->m_timeOfDay];
 	Real lightScale = 1.0f;
-	if (BFME_CLOUD_EFFECT_SYSTEM != 0 && BFME_CLOUD_EFFECT_SYSTEM->slot10()) {
-		Real cloudScale;
-		BFME_CLOUD_EFFECT_SYSTEM->slot13(&cloudScale);
-		lightScale = BFME_ONE - cloudScale;
+	if (g_bfmeGlobCC0 != 0 && g_bfmeGlobCC0->bfmePredCC0()) {
+		Vector3 cloudScale;
+		g_bfmeGlobCC0->bfmeGetCC0(&cloudScale);
+		lightScale = BFME_ONE - cloudScale.X;
 	}
 
 	LightEnvironmentClass lightEnv;
