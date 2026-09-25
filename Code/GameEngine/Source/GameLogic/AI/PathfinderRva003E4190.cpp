@@ -99,10 +99,10 @@ void Pathfinder::Rva003E4190(Object *object)
 {
 	Int oldLayer = object->getLayer();
 	PathfindCell *currentCell = bfmeObjectCell(object);
-	Coord3D position;
-	position.x = object->m_position.x;
-	position.y = object->m_position.y;
-	position.z = object->m_position.z;
+	Coord3D worldPosition;
+	worldPosition.x = object->m_position.x;
+	worldPosition.y = object->m_position.y;
+	worldPosition.z = object->m_position.z;
 
 	if (currentCell == 0)
 		return;
@@ -111,10 +111,10 @@ void Pathfinder::Rva003E4190(Object *object)
 	if (cellLayer == oldLayer)
 		return;
 
-	register Int yBits = *(volatile Int *)&position.y;
+	register Int yBits = *(volatile Int *)&worldPosition.y;
 	_ReadWriteBarrier();
-	if (fabs(TheTerrainLogic->bfmeHeightABE(position.x, bfmeFloatFromBits(yBits),
-		cellLayer, 0, 1) - position.z) < g_bfmeDirectionWeight1285)
+	if (fabs(TheTerrainLogic->bfmeHeightABE(worldPosition.x, bfmeFloatFromBits(yBits),
+		cellLayer, 0, 1) - worldPosition.z) < g_bfmeDirectionWeight1285)
 		object->setLayer((PathfindLayerEnum)currentCell->getLayer());
 
 	Int layerNumber = 2;
@@ -125,16 +125,16 @@ void Pathfinder::Rva003E4190(Object *object)
 		if (layer->isUsed())
 		{
 			ICoord2D cell;
-			if (!worldToCell(&position, &cell))
+			if (!worldToCell(&worldPosition, &cell))
 			{
 				PathfindCell *candidate = getCell((PathfindLayerEnum)layerNumber,
 					cell.x, cell.y);
 				if (candidate != 0 && candidate->getLayer() == layerNumber &&
 					candidate->getType() != 5)
 				{
-					if (fabs(TheTerrainLogic->bfmeHeightABE(position.x,
+					if (fabs(TheTerrainLogic->bfmeHeightABE(worldPosition.x,
 						bfmeFloatFromBits(yBits),
-						layerNumber, 0, 1) - position.z) < g_bfmeDirectionWeight1285)
+						layerNumber, 0, 1) - worldPosition.z) < g_bfmeDirectionWeight1285)
 					{
 						object->setLayer((PathfindLayerEnum)layerNumber);
 						return;
