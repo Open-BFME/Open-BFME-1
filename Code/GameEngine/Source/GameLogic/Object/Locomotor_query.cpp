@@ -73,7 +73,7 @@ public:
 class BfmeSub1CC_EC3
 {
 public:
-	Real effectiveMaxSpeed(void *value);
+	Real effectiveMaxSpeed(void *objectArgument);
 
 private:
 	unsigned char m_pad000[4];
@@ -95,9 +95,9 @@ extern volatile Real g_rva001B59ScaleConstantNormalAlias;
 extern volatile Real g_rva001B59ScaleConstantDamaged;
 extern volatile Real g_rva001B59ScaleConstantDamagedAlias;
 
-Real BfmeSub1CC_EC3::effectiveMaxSpeed(void *value)
+Real BfmeSub1CC_EC3::effectiveMaxSpeed(void *objectArgument)
 {
-	Object *object = static_cast<Object *>(value);
+	Object *object = static_cast<Object *>(objectArgument);
 	BodyDamageType condition = object->m_body->getDamageState();
 	Real scale = object->m_ai->m_locomotorScale;
 	BodyDamageType penalty = TheWritableGlobalData->m_movementPenaltyDamageState;
