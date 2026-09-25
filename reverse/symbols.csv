@@ -78326,7 +78326,6 @@ name,address,notes
 ?bfmeSend1020@BfmeLog1020@@QAEXH@Z,0x0002144A,pin
 ?bfmeSend1028@BfmeSink1028@@QAEXHPAH0@Z,0x00803110,pin
 ?bfmeSend1051@BfmeSub1051@@QAEXHHHHHH@Z,0x0087F590,pin
-?bfmeSend1177@BfmeQ1177@@QAEXHPAUBfmeBuf1177@@@Z,0x00851910,pin
 ?bfmeSend975B@BfmeB975@@QAEXHH@Z,0x0002D6F5,pin
 ?bfmeSend979B@BfmeSink979@@QAEXPAVBfmeKey979@@@Z,0x00038938,pin
 ?bfmeSend986C@BfmeC986@@QAEXHHHHH@Z,0x0001A6B3,pin
@@ -88386,7 +88385,7 @@ _g_bfmeNameZO,0x00CF5E30
 _g_bfmeO1145,0x00F40534,pin
 _g_bfmeO1146,0x00EF1600,pin
 _g_bfmeOwner1179,0x00F40584,pin
-_g_bfmeS1177,0x00CCED70,pin
+_q4Fields001E6240,0x00CCED70,address-derived LuaEventNugget FieldParse table used by q4Notify001E6240
 _g_bfmeSITable,0x00EF77A8,global 0x190-dword table cleared by BfmeThingSI ctor
 _g_bfmeSecondEB,0x01346DE0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x009336E0 calls; autopin
 _g_bfmeSingleZM,0x00C80FC0
