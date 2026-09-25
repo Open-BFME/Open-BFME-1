@@ -149,7 +149,7 @@ class Pathfinder
 public:
 	Bool rva003E5E40( Object *object );
 	Bool worldToCell( const Coord3D *position, ICoord2D *cell );
-	PathfindCell *getCell( PathfindLayerEnum layer, Int x, Int y );
+	PathfindCell *getCell( PathfindLayerEnum layer, Int cellX, Int cellY );
 
 protected:
 	void getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell );
@@ -216,18 +216,18 @@ __declspec(noinline) Bool Pathfinder::worldToCell( const Coord3D *position, ICoo
 	return overflow;
 }
 
-inline PathfindCell *Pathfinder::getCell( PathfindLayerEnum layer, Int x, Int y )
+inline PathfindCell *Pathfinder::getCell( PathfindLayerEnum layer, Int cellX, Int cellY )
 {
-	if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
-		y >= m_extent.lo.y && y <= m_extent.hi.y)
+	if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+		cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
 	{
 		if (layer > 1 && layer <= 15)
 		{
-			PathfindCell *cell = m_layers[layer].getCell( x, y );
+			PathfindCell *cell = m_layers[layer].getCell( cellX, cellY );
 			if (cell)
 				return cell;
 		}
-		return &m_map[x][y];
+		return &m_map[cellX][cellY];
 	}
 	return 0;
 }
