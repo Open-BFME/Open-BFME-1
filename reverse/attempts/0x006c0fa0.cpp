@@ -1,8 +1,7 @@
 // ?d_006c0fa0@@YAXXZ
-// partial score=0.2 date=2026-09-22
+// partial score=0.4 date=2026-09-25
+// ?method@Rva006C0FA0W3DRadar@@QAEXHHHHH@Z
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// BFME retail RVA 0x006C0FA0, 577 bytes.  The opaque method name preserves
-// the target address until the five-argument owner is independently proven.
 
 typedef float Real;
 typedef int Int;
@@ -170,35 +169,43 @@ public:
 #define RvaRadarCellOrigin (*(const Real *)0x0111d780)
 #define Glo012F4B98 (*(Rva00592E10Owner **)0x012f4b98)
 
-void Rva006C0FA0W3DRadar::method(Int pixelX, Int pixelY, Int width, Int height, Int extra)
+void Rva006C0FA0W3DRadar::method(Int pixelX, Int pixelY, Int width, Int height, Int unused)
 {
-	volatile Real residue[2];
 	Rva006C0FA0Locals locals;
 	Real terrainZ;
-	Real x;
-	Real y;
 
 	TheTacticalView->getOrigin(&locals.origin.x, &locals.origin.y);
 	terrainZ = m_terrainAverageZ;
 	TheTacticalView->screenToWorldAtZ(&locals.origin, &locals.world, terrainZ);
 
-	{
-		Coord2D viewBox[4];
-		residue[0] = 0.0f;
-		x = locals.world.x /
-			((m_mapExtent.hi.x - m_mapExtent.lo.x) * RvaRadarCellScale);
-		y = locals.world.y /
-			((m_mapExtent.hi.y - m_mapExtent.lo.y) * RvaRadarCellScale);
+	Real x;
+	Real y;
+	x = locals.world.x /
+		((m_mapExtent.hi.x - m_mapExtent.lo.x) * RvaRadarCellScale);
+	y = locals.world.y /
+		((m_mapExtent.hi.y - m_mapExtent.lo.y) * RvaRadarCellScale);
+	locals.world.x = pixelX + (width * x) * RvaRadarCellScale;
+	locals.world.y = pixelY + ((RvaRadarCellOrigin - y) * height) * RvaRadarCellScale;
 
-		viewBox[0].x = x;
-		viewBox[0].y = y;
-		viewBox[1].x = x + width * RvaRadarCellScale;
-		viewBox[1].y = y + height * RvaRadarCellScale;
-		viewBox[2].x = viewBox[1].x + pixelX * RvaRadarCellScale;
-		viewBox[2].y = viewBox[1].y + pixelY * RvaRadarCellScale;
-		viewBox[3].x = viewBox[2].x + extra * RvaRadarCellScale;
-		viewBox[3].y = viewBox[2].y;
-		if (Glo012F4B98)
-			Glo012F4B98->copy((const Rva00592E10Pair *)viewBox);
+	{
+	Coord2D points[4];
+
+	points[0].x = locals.world.x;
+	points[0].y = locals.world.y;
+	x += m_viewBox[1].x;
+	y += m_viewBox[1].y;
+	points[1].x = pixelX + (width * x) * RvaRadarCellScale;
+	points[1].y = pixelY + ((RvaRadarCellOrigin - y) * height) * RvaRadarCellScale;
+	x += m_viewBox[2].x;
+	y += m_viewBox[2].y;
+	points[2].x = pixelX + (width * x) * RvaRadarCellScale;
+	points[2].y = pixelY + ((RvaRadarCellOrigin - y) * height) * RvaRadarCellScale;
+	x += m_viewBox[3].x;
+	y += m_viewBox[3].y;
+	points[3].x = pixelX + (width * x) * RvaRadarCellScale;
+	points[3].y = pixelY + ((RvaRadarCellOrigin - y) * height) * RvaRadarCellScale;
+
+	if (Glo012F4B98)
+		Glo012F4B98->copy((const Rva00592E10Pair *)points);
 	}
 }
