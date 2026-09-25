@@ -87,10 +87,10 @@ Real Pathfinder::getLayerHeight(PathfindLayerEnum layer,
 	const Coord3D *worldPosition, Coord3D *surfaceNormal)
 {
 	{
-		ICoord2D cell;
+		ICoord2D cellIndex;
 		PathfindCell *pathCell = 0;
-		if (!worldToCell(worldPosition, &cell))
-			pathCell = getCell(layer, cell.x, cell.y);
+		if (!worldToCell(worldPosition, &cellIndex))
+			pathCell = getCell(layer, cellIndex.x, cellIndex.y);
 		if (pathCell != 0 && layer != LAYER_GROUND)
 		{
 			int actualLayer = pathCell->getLayer();
