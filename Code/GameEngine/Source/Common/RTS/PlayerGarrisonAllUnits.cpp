@@ -1,59 +1,16 @@
-// ?garrisonAllUnits@Player@@QAEXW4CommandSourceType@@@Z
-// partial score=0.9 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /DZH_EMIT_POOL_GLUE /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
+// The script callback at 0x002EF410 reaches Player::garrisonAllUnits(1).
+// Keep <vector> before PreRTS.h to preserve the retail frame and registers.
 #define Matrix4x4 Matrix4  // BFME renamed it
 #define PartitionFilterAcceptByKindOf BfmeCanonicalPartitionFilterAcceptByKindOf
+#define AICommandInterface BfmeCanonicalAICommandInterface
 #define _STLP_USE_STATIC_LIB 1
 #define _STLP_NO_EXCEPTIONS 1
 #define BFME_STLP_NODE_ALLOC 1
 #define __PLACEMENT_VEC_NEW_INLINE
 #include <vector>
-/*
-**	Command & Conquer Generals Zero Hour(tm)
-**	Copyright 2025 Electronic Arts Inc.
-**
-**	This program is free software: you can redistribute it and/or modify
-**	it under the terms of the GNU General Public License as published by
-**	the Free Software Foundation, either version 3 of the License, or
-**	(at your option) any later version.
-**
-**	This program is distributed in the hope that it will be useful,
-**	but WITHOUT ANY WARRANTY; without even the implied warranty of
-**	MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-**	GNU General Public License for more details.
-**
-**	You should have received a copy of the GNU General Public License
-**	along with this program.  If not, see <http://www.gnu.org/licenses/>.
-*/
-
-////////////////////////////////////////////////////////////////////////////////
-//																																						//
-//  (c) 2001-2003 Electronic Arts Inc.																				//
-//																																						//
-////////////////////////////////////////////////////////////////////////////////
-
-// FILE: Player.cpp /////////////////////////////////////////////////////////
-//-----------------------------------------------------------------------------
-//                                                                          
-//                       Westwood Studios Pacific.                          
-//                                                                          
-//                       Confidential Information                           
-//                Copyright (C) 2001 - All Rights Reserved                  
-//                                                                          
-//-----------------------------------------------------------------------------
-//
-// Project:   RTS3
-//
-// File name: Player.cpp
-//
-// Created:   Steven Johnson, October 2001
-//
-// Desc:      @todo
-//
-//-----------------------------------------------------------------------------
-
-#include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
+#include "PreRTS.h"
 
 #define DEFINE_SCIENCE_AVAILABILITY_NAMES
 
@@ -113,11 +70,10 @@
 #include "GameNetwork/GameInfo.h"
 
 #undef PartitionFilterAcceptByKindOf
+#undef AICommandInterface
 
-// +0x1a0. Both walkers below read it through this view.
-// BFME's team-prototype list sits at +0x288; the vendored header lands it at
-// +0x1a0. Both walkers below read it through this view.
-// +0x1a0. Both walkers below read it through this view.
+// BFME stores PlayerTeamList at +0x288.
+// The vendored Player header puts it at +0x1a0.
 struct BfmePlayerTeamFields
 {
 	UnsignedByte m_unreconstructed_00[0x288];
@@ -265,8 +221,13 @@ public:
 	virtual Bool allow(Object *object);
 	operator Int() const { return (Int)this; }
 
+	UnsignedInt m_unmodelled_04;
 	BfmeGarrisonKindOfMask m_mustBeSet;
 	BfmeGarrisonKindOfMask m_mustBeClear;
+	~PartitionFilterAcceptByKindOf()
+	{
+		*(UnsignedInt *)this = 0x01083B5C;
+	}
 };
 
 struct BfmeGarrisonResultEntry
@@ -401,52 +362,43 @@ public:
 class BfmeGarrisonObjectView
 {
 public:
-	Player *getControllingPlayer() const;
 	unsigned char m_unmodelled_000[0x1fc];
 	BfmeGarrisonContainView *m_contain;
 	unsigned char m_unmodelled_200[0x204 - 0x200];
 	AIUpdateInterface *m_ai;
 };
 
-class BfmeGarrisonActionManagerView
+class BFMEActionManager
 {
 public:
 	Bool canEnterObject(const Object *obj, const Object *objectToEnter,
 		CommandSourceType commandSource, CanEnterType mode, Bool *outResult);
 };
 
-class BfmeGarrisonAICommandView
+class AICommandInterface
 {
 public:
 	void aiEnter(Object *object, CommandSourceType commandSource);
 };
 
-#pragma comment(linker, "/alternatename:?getControllingPlayer@BfmeGarrisonObjectView@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
-#pragma comment(linker, "/alternatename:?canEnterObject@BfmeGarrisonActionManagerView@@QAE_NPBVObject@@0W4CommandSourceType@@W4CanEnterType@@PA_N@Z=?j_0002d588@@YAXXZ")
-#pragma comment(linker, "/alternatename:?aiEnter@BfmeGarrisonAICommandView@@QAEXPAVObject@@W4CommandSourceType@@@Z=?j_000442a1@@YAXXZ")
 
-// ?garrisonAllUnits@Player@@QAEXW4CommandSourceType@@@Z
 void Player::garrisonAllUnits(CommandSourceType source)
 {
 	BfmeGarrisonKindOfMask mustBeSet(BfmeGarrisonKindOfMask::kInit,
 		KINDOF_STRUCTURE);
-	PartitionFilterAcceptByKindOf filter(
-		mustBeSet, *(const BfmeGarrisonKindOfMask *)&KINDOFMASK_NONE);
 	BfmeResultA iterBuilding =
-		((BfmeResultForwardB *)ThePartitionManager)->bfmeForwardResultB((Int)filter);
-	*(unsigned int *)&filter = 0x01083B5C;
+		((BfmeResultForwardB *)ThePartitionManager)->bfmeForwardResultB(
+			(Int)PartitionFilterAcceptByKindOf(mustBeSet,
+				*(const BfmeGarrisonKindOfMask *)&KINDOFMASK_NONE));
 
-	struct BfmePlayerTeamListField
+	BfmePlayerTeamFields *teams = (BfmePlayerTeamFields *)this;
+	for (Player::PlayerTeamList::iterator it = teams->m_playerTeamPrototypes.begin();
+			it != teams->m_playerTeamPrototypes.end(); ++it)
 	{
-		unsigned char m_unmodelled_000[0x288];
-		BfmePlayerTeamListNode *m_head;
-	};
-	BfmePlayerTeamListField *teams = (BfmePlayerTeamListField *)this;
-	for (BfmePlayerTeamListNode *it = teams->m_head->m_next;
-			it != teams->m_head; it = it->m_next)
-	{
+		BfmePlayerTeamPrototypeInstances *prototype =
+			(BfmePlayerTeamPrototypeInstances *)*it;
 		for (BfmePlayerTeamInstanceIterator iter(
-				it->m_prototype->m_teamInstanceList);
+				prototype->m_teamInstanceList);
 			!iter.done(); iter.advance())
 		{
 			BfmePlayerTeamView *team = iter.cur();
@@ -477,21 +429,19 @@ void Player::garrisonAllUnits(CommandSourceType source)
 					{
 						PlayerMaskType player = contain->getPlayerWhoEntered();
 						if (!((player == 0) ||
-							(player == obj->getControllingPlayer()->getPlayerMask())))
+							(player == ((Object *)obj)->getControllingPlayer()->getPlayerMask())))
 							continue;
 					}
 
 					Bool outResult;
-					if (!((BfmeGarrisonActionManagerView *)TheActionManager)->canEnterObject(
+					if (!((BFMEActionManager *)TheActionManager)->canEnterObject(
 						(Object *)obj, theBuilding, source, CHECK_CAPACITY, &outResult)
 						|| outResult)
 						continue;
-					((BfmeGarrisonAICommandView *)((char *)ai + 0x20))->aiEnter(
+					((AICommandInterface *)((char *)ai + 0x20))->aiEnter(
 						theBuilding, source);
 				}
 			}
 		}
 	}
 }
-
-//=============================================================================
