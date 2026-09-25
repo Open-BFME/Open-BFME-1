@@ -1,10 +1,12 @@
-// ?Rva002A71E0@SpecialAbilityUpdate@@QAE_NXZ
-// partial score=0.25 date=2026-09-23
+// ?continuePreparation@SpecialAbilityUpdate@@IAE_NXZ
+// BFME continuePreparation twin, with current ledger-proven helper declarations.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 #include "ascii_string.h"
+
+#define MAX(a, b) ((a) > (b) ? (a) : (b))
 
 typedef bool Bool;
 typedef int Int;
@@ -14,6 +16,12 @@ typedef unsigned int ObjectID;
 enum Relationship { ALLIES = 2 };
 class SpecialPowerTemplate;
 class SpecialPowerModuleInterface;
+
+extern void j_0004b466();
+extern void j_0002cdc7();
+extern void j_000120ad();
+extern void j_0004067e();
+extern void j_00040a3e();
 
 struct Coord3D
 {
@@ -37,11 +45,12 @@ public:
 class AudioEventRTS
 {
 public:
-	virtual ~AudioEventRTS();
+	~AudioEventRTS();
 	AudioEventRTS(const AudioEventRTS &source);
 	void setObjectID(ObjectID id);
 
 private:
+	void *m_vtable;
 	AsciiString m_filenameToLoad;
 	CountedPtr m_eventInfo;
 	UnsignedInt m_playingHandle;
@@ -77,12 +86,16 @@ private:
 	AsciiString m_tail;
 };
 
+#pragma comment(linker, "/alternatename:??1AudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
+
 class RGBColor
 {
 public:
 	void rva0002cdc7(Int value);
 private:
-	UnsignedInt m_value;
+	Real m_red;
+	Real m_green;
+	Real m_blue;
 };
 
 class Drawable
@@ -121,14 +134,26 @@ public:
 class Overridable
 {
 public:
-	Overridable *friend_getFinalOverride();
-	void *m_vtable;
+	virtual ~Overridable();
+	Overridable *friend_getFinalOverride()
+	{
+		if (m_nextOverride)
+			return m_nextOverride->m_nextOverride
+				? m_nextOverride->m_nextOverride->friend_getFinalOverride()
+				: m_nextOverride;
+		return this;
+	}
 	Overridable *m_nextOverride;
 };
 
 class SpecialPowerTemplate : public Overridable
 {
 public:
+	Int getSpecialPowerType() const
+	{
+		SpecialPowerTemplate *self = const_cast<SpecialPowerTemplate *>(this);
+		return ((const SpecialPowerTemplate *)self->friend_getFinalOverride())->m_type;
+	}
 	Int rva00040a3e() const;
 	unsigned char m_prefix[0x0c];
 	Int m_type;
@@ -138,7 +163,7 @@ class SpecialAbilityUpdateModuleData
 {
 public:
 	unsigned char m_prefix[0x1d8];
-	SpecialPowerTemplate *m_specialPowerTemplate;
+	const SpecialPowerTemplate *m_specialPowerTemplate;
 	unsigned char m_prefix1dc[0x14];
 	Real m_abilityAbortRange;
 	unsigned char m_prefix1f4[0x18];
@@ -183,88 +208,55 @@ public:
 	AudioEventRTS m_defectorTimerTickSound;
 };
 
-class AudioManager
+class ClientSubsystem
 {
 public:
-	virtual void slot00();
-	virtual void slot01();
-	virtual void slot02();
-	virtual void slot03();
-	virtual void slot04();
-	virtual void slot05();
-	virtual void slot06();
-	virtual void slot07();
-	virtual void slot08();
-	virtual void slot09();
-	virtual void slot10();
-	virtual void slot11();
-	virtual void slot12();
-	virtual void slot13();
-	virtual void slot14();
-	virtual void slot15();
-	virtual void slot16();
-	virtual UnsignedInt addAudioEvent(const AudioEventRTS *event);
-	virtual void slot18();
-	virtual void slot19();
-	virtual void slot20();
-	virtual void slot21();
-	virtual void slot22();
-	virtual void slot23();
-	virtual void slot24();
-	virtual void slot25();
-	virtual void slot26();
-	virtual void slot27();
-	virtual void slot28();
-	virtual void slot29();
-	virtual void slot30();
-	virtual void slot31();
-	virtual void slot32();
-	virtual void slot33();
-	virtual void slot34();
-	virtual void slot35();
-	virtual void slot36();
-	virtual void slot37();
-	virtual void slot38();
-	virtual void slot39();
+	virtual void slot00(); virtual void slot04();
+	virtual void slot08(); virtual void slot0c();
+	virtual void slot10(); virtual void slot14();
+	virtual void slot18(); virtual void slot1c();
+	virtual void slot20(); virtual void slot24();
+	virtual void slot28(); virtual void slot2c();
+	virtual void slot30(); virtual void slot34();
+	virtual void slot38(); virtual void slot3c();
 	virtual void slot40();
-	virtual void slot41();
-	virtual void slot42();
-	virtual void slot43();
-	virtual void slot44();
-	virtual void slot45();
-	virtual void slot46();
-	virtual void slot47();
-	virtual void slot48();
-	virtual void slot49();
-	virtual void slot50();
-	virtual void slot51();
-	virtual void slot52();
-	virtual void slot53();
-	virtual void slot54();
-	virtual void slot55();
-	virtual void slot56();
-	virtual void slot57();
-	virtual void slot58();
-	virtual void slot59();
-	virtual void slot60();
-	virtual void slot61();
-	virtual void slot62();
-	virtual void slot63();
-	virtual void slot64();
-	virtual void slot65();
-	virtual void slot66();
-	virtual void slot67();
-	virtual void slot68();
-	virtual void slot69();
-	virtual void slot70();
-	virtual void slot71();
-	virtual void slot72();
-	virtual RvaAudioMisc *rvaSlot124();
+	virtual UnsignedInt addAudioEvent(AudioEventRTS *event);
+	#define CLIENT_SUBSYSTEM_PAD(n) virtual void pad##n();
+	CLIENT_SUBSYSTEM_PAD(18) CLIENT_SUBSYSTEM_PAD(19)
+	CLIENT_SUBSYSTEM_PAD(20) CLIENT_SUBSYSTEM_PAD(21)
+	CLIENT_SUBSYSTEM_PAD(22) CLIENT_SUBSYSTEM_PAD(23)
+	CLIENT_SUBSYSTEM_PAD(24) CLIENT_SUBSYSTEM_PAD(25)
+	CLIENT_SUBSYSTEM_PAD(26) CLIENT_SUBSYSTEM_PAD(27)
+	CLIENT_SUBSYSTEM_PAD(28) CLIENT_SUBSYSTEM_PAD(29)
+	CLIENT_SUBSYSTEM_PAD(30) CLIENT_SUBSYSTEM_PAD(31)
+	CLIENT_SUBSYSTEM_PAD(32) CLIENT_SUBSYSTEM_PAD(33)
+	CLIENT_SUBSYSTEM_PAD(34) CLIENT_SUBSYSTEM_PAD(35)
+	CLIENT_SUBSYSTEM_PAD(36) CLIENT_SUBSYSTEM_PAD(37)
+	CLIENT_SUBSYSTEM_PAD(38) CLIENT_SUBSYSTEM_PAD(39)
+	CLIENT_SUBSYSTEM_PAD(40) CLIENT_SUBSYSTEM_PAD(41)
+	CLIENT_SUBSYSTEM_PAD(42) CLIENT_SUBSYSTEM_PAD(43)
+	CLIENT_SUBSYSTEM_PAD(44) CLIENT_SUBSYSTEM_PAD(45)
+	CLIENT_SUBSYSTEM_PAD(46) CLIENT_SUBSYSTEM_PAD(47)
+	CLIENT_SUBSYSTEM_PAD(48) CLIENT_SUBSYSTEM_PAD(49)
+	CLIENT_SUBSYSTEM_PAD(50) CLIENT_SUBSYSTEM_PAD(51)
+	CLIENT_SUBSYSTEM_PAD(52) CLIENT_SUBSYSTEM_PAD(53)
+	CLIENT_SUBSYSTEM_PAD(54) CLIENT_SUBSYSTEM_PAD(55)
+	CLIENT_SUBSYSTEM_PAD(56) CLIENT_SUBSYSTEM_PAD(57)
+	CLIENT_SUBSYSTEM_PAD(58) CLIENT_SUBSYSTEM_PAD(59)
+	CLIENT_SUBSYSTEM_PAD(60) CLIENT_SUBSYSTEM_PAD(61)
+	CLIENT_SUBSYSTEM_PAD(62) CLIENT_SUBSYSTEM_PAD(63)
+	CLIENT_SUBSYSTEM_PAD(64) CLIENT_SUBSYSTEM_PAD(65)
+	CLIENT_SUBSYSTEM_PAD(66) CLIENT_SUBSYSTEM_PAD(67)
+	CLIENT_SUBSYSTEM_PAD(68) CLIENT_SUBSYSTEM_PAD(69)
+	CLIENT_SUBSYSTEM_PAD(70) CLIENT_SUBSYSTEM_PAD(71)
+	CLIENT_SUBSYSTEM_PAD(72)
+	#undef CLIENT_SUBSYSTEM_PAD
+	virtual RvaAudioMisc *getMiscAudio();
 };
 
 extern GameLogic *TheGameLogic;
 extern GlobalData *TheWritableGlobalData;
-extern AudioManager *TheAudio;
+extern ClientSubsystem *TheAudioClientUpdate;
 extern const Real Rva00C75334One;
 
 #pragma comment(linker, "/alternatename:?rva002a65c0@SpecialAbilityUpdate@@QAE_NXZ=?j_0004b466@@YAXXZ")
@@ -276,45 +268,52 @@ extern const Real Rva00C75334One;
 class SpecialAbilityUpdate
 {
 public:
-	Bool Rva002A71E0();
 	Bool rva002a65c0();
 	Bool initLaser(Object *specialObject, Object *target);
 	Object *getObject() const { return m_object; }
+	SpecialPowerModuleInterface *getMySPM() const
+	{
+		SpecialAbilityUpdateModuleData *moduleData = m_moduleData;
+		Object *object = m_object;
+		return object->getSpecialPowerModule(moduleData->m_specialPowerTemplate);
+	}
+
+protected:
+	Bool continuePreparation();
 
 private:
 	void *m_vtable;
 	SpecialAbilityUpdateModuleData *m_moduleData;
 	Object *m_object;
 	unsigned char m_prefix00c[0x9c];
-	UnsignedInt m_prepFrames;
+	UnsignedInt m_animFrames;
 	ObjectID m_targetID;
 	unsigned char m_prefix0b0[0x1c];
 	_STL::list<ObjectID> m_specialObjectIDList;
+	UnsignedInt m_specialObjectEntries;
 	unsigned char m_prefix0d4[4];
 	Real m_captureFlashPhase;
 };
 
-Bool SpecialAbilityUpdate::Rva002A71E0()
+typedef Bool (SpecialAbilityUpdate::*AbortRangeCall)();
+typedef void (RGBColor::*SetColorCall)(Int);
+typedef void (Drawable::*SaturateCall)(RGBColor &, Real);
+typedef void (Drawable::*FlashCall)(const RGBColor *);
+typedef Int (SpecialPowerTemplate::*OutTypeCall)() const;
+
+Bool SpecialAbilityUpdate::continuePreparation()
 {
 	SpecialAbilityUpdateModuleData *data = m_moduleData;
-	SpecialPowerTemplate *spTemplate = data->m_specialPowerTemplate;
+	const SpecialPowerTemplate *spTemplate = data->m_specialPowerTemplate;
 	if (data->m_abilityAbortRange < 10000000.0f)
 	{
-		if (!rva002a65c0())
+		union { void (*raw)(void); AbortRangeCall member; } abortRange;
+		abortRange.raw = j_0004b466;
+		if (!(this->*abortRange.member)())
 			return false;
 	}
 
-	SpecialPowerTemplate *resolvedTemplate = spTemplate;
-	if (resolvedTemplate->m_nextOverride)
-	{
-		if (resolvedTemplate->m_nextOverride->m_nextOverride)
-		{
-			resolvedTemplate = (SpecialPowerTemplate *)
-				resolvedTemplate->m_nextOverride->friend_getFinalOverride();
-		}
-	}
-
-	switch (resolvedTemplate->m_type)
+	switch (spTemplate->getSpecialPowerType())
 	{
 	case 0x15:
 	{
@@ -346,37 +345,40 @@ Bool SpecialAbilityUpdate::Rva002A71E0()
 			if (targetDraw)
 			{
 				Bool lastPhase = ((Int)m_captureFlashPhase) & 1;
-				UnsignedInt denominator = data->m_preparationFrames;
-				if (denominator < 1)
-					denominator = 1;
-				Real increment = 1.0f - ((Real)m_prepFrames / denominator);
+				Real denominator[2];
+				denominator[0] = MAX(1, data->m_preparationFrames);
+				Real increment = 1.0f - ((Real)m_animFrames / denominator[0]);
 				m_captureFlashPhase += increment / 3.0f;
 				Bool thisPhase = ((Int)m_captureFlashPhase) & 1;
 				if (lastPhase && !thisPhase)
 				{
 					RGBColor myHouseColor;
-					myHouseColor.rva0002cdc7((Int)getObject()->getIndicatorColor());
+					union { void (*raw)(void); SetColorCall member; } setColor;
+					setColor.raw = j_0002cdc7;
+					(myHouseColor.*setColor.member)(
+						(Int)getObject()->getIndicatorColor());
 					Real saturation = TheWritableGlobalData->m_selectionFlashSaturationFactor;
-					targetDraw->rva000120ad(myHouseColor, saturation);
-					targetDraw->rva0004067e(&myHouseColor);
+					union { void (*raw)(void); SaturateCall member; } saturate;
+					saturate.raw = j_000120ad;
+					(targetDraw->*saturate.member)(myHouseColor, saturation);
+					union { void (*raw)(void); FlashCall member; } flash;
+					flash.raw = j_0004067e;
+					(targetDraw->*flash.member)(&myHouseColor);
 					AudioEventRTS defectorTimerSound =
-						TheAudio->rvaSlot124()->m_defectorTimerTickSound;
+						TheAudioClientUpdate->getMiscAudio()->m_defectorTimerTickSound;
 					defectorTimerSound.setObjectID(m_targetID);
-					TheAudio->addAudioEvent(&defectorTimerSound);
+					TheAudioClientUpdate->addAudioEvent(&defectorTimerSound);
 				}
 			}
 		}
+		SpecialPowerModuleInterface *spmInterface = getMySPM();
+		union { void (*raw)(void); OutTypeCall member; } outType;
+		outType.raw = j_00040a3e;
+		if (spmInterface && (((SpecialPowerTemplate *)spTemplate)->*outType.member)()
+			== 0x1d)
+			spmInterface->rvaSlot40();
 		break;
 	}
 	}
-
-	SpecialPowerModuleInterface *spmInterface = getObject()->getSpecialPowerModule(
-		data->m_specialPowerTemplate);
-	if (spmInterface && spTemplate->rva00040a3e() == 0x1d)
-		spmInterface->rvaSlot40();
 	return true;
 }
-
-
-
-
