@@ -131,11 +131,11 @@ public:
         union { void (*raw)(); Fn fn; } u; u.raw=j_00027ffc;
         return (reinterpret_cast<Call *>(this)->*u.fn)(o,l,d,g);
     }
-	Bool bfmeGroundCellThreshold(const Coord3D *position, Bool b) {
+	Bool bfmeGroundCellThreshold(const Coord3D *position, Bool requireClearType) {
         struct Call { Bool invoke(const Coord3D *, Bool); };
         typedef Bool (Call::*Fn)(const Coord3D *, Bool);
         union { void (*raw)(); Fn fn; } u; u.raw=j_0003ce25;
-	        return (reinterpret_cast<Call *>(this)->*u.fn)(position,b);
+	        return (reinterpret_cast<Call *>(this)->*u.fn)(position,requireClearType);
     }
 	char bfmeAnyBridgeAt(const Coord3D *position) {
         struct Call { char invoke(const Coord3D *); };
