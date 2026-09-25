@@ -2848,5 +2848,35 @@
   "after_sha256": "73da0ed623c9a433a8f304f40391d71fe85888ff7f66f60bcb78279e088b49d4",
   "evidence": "docs/naming_evidence.md",
   "reason": "the bank guessed the owner Footprint and the method query with no caller, vtable or string evidence; owner Pathfinder is proven by the ecx receiver of Pathfinder::getRadiusAndCenter and Pathfinder::worldToCell, and the method stays address-derived -- rva003E5E40Cells is the forceinline cell-scan helper split out of the same address-derived Pathfinder::rva003E5E40"
+ },
+ {
+  "old_path": "reverse/attempts/0x001e2560.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Object_rva001E2560.cpp",
+  "old_name": "bfmeClampDH",
+  "new_name": "rva001E2560",
+  "before_sha256": "0e3bcd5b434604a789470c421a73b4581f78ee6c9de595cf5588de3a3f5e741b",
+  "after_sha256": "ef6c7b81b512b402cecea2665d1911f6fdd39bf734dd8d094728e25043adef8d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank invented the class and method name with no caller/vtable/string/ZH evidence and caller 0x001E43D0 proves the receiver is Object"
+ },
+ {
+  "old_path": "reverse/attempts/0x001e2560.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Object_rva001E2560.cpp",
+  "old_name": "bfmeDeltaDH",
+  "new_name": "rva00148960",
+  "before_sha256": "0e3bcd5b434604a789470c421a73b4581f78ee6c9de595cf5588de3a3f5e741b",
+  "after_sha256": "ef6c7b81b512b402cecea2665d1911f6fdd39bf734dd8d094728e25043adef8d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "invented bank name; the callee is reached with an Object receiver and its method name is unrecovered"
+ },
+ {
+  "old_path": "reverse/attempts/0x001e2560.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Object_rva001E2560.cpp",
+  "old_name": "m_bfmeRangeDH",
+  "new_name": "m_float0BC",
+  "before_sha256": "0e3bcd5b434604a789470c421a73b4581f78ee6c9de595cf5588de3a3f5e741b",
+  "after_sha256": "ef6c7b81b512b402cecea2665d1911f6fdd39bf734dd8d094728e25043adef8d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle reports Object+0xbc unwitnessed so an offset name is used"
  }
 ]
