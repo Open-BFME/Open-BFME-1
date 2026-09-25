@@ -1,7 +1,8 @@
-// ?doSetPlayerOwnershipOfTypeCounter@ScriptActions@@IAEXPAVScriptAction@@PAVParameter@@11_N@Z
-// partial score=0.33 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc /Ireference/shims/stringinline
-// SET_PLAYER_OWNERSHIP_OF_TYPE_COUNTER and its include-dead sibling.
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// stlport
+// Four matched ScriptActions::executeAction callers and the
+// SET_PLAYER_OWNERSHIP_OF_TYPE_COUNTER action template identify this method
+// at RVA 0x002FD010 as ScriptActions::doSetPlayerOwnershipOfTypeCounter.
 
 #include <vector>
 #include "StringInline.h"
@@ -15,27 +16,23 @@ class ThingTemplate;
 class Parameter
 {
 public:
-	Int getInt() const { return m_int; }
-	const AsciiString &getString() const { return m_string; }
-
-private:
-	char m_beforeInt[8];
-	Int m_int;
-	float m_real;
-	AsciiString m_string;
+	const AsciiString &getString() const
+	{
+		return *(const AsciiString *)((const char *)this + 0x10);
+	}
 };
 
 class ScriptAction
 {
 public:
-	char m_beforeFrame[0x44];
-	Int m_customFrame;
+	char m_storage[0x44];
+	Int field_0044;
 };
 
-class ScriptCounter
+struct ScriptCounter
 {
 public:
-	Int m_value;
+	Int field_0000;
 };
 
 class ObjectTypes
@@ -45,6 +42,10 @@ public:
 	virtual ~ObjectTypes();
 	Int prepForPlayerCounting(std::vector<const ThingTemplate *> &templates,
 		std::vector<Int> &counts);
+
+private:
+	AsciiString m_listName;
+	std::vector<AsciiString> m_objectTypes;
 };
 
 class ObjectTypesTemp
@@ -59,6 +60,11 @@ public:
 			delete m_types;
 	}
 };
+
+__declspec(noinline) ObjectTypesTemp::ObjectTypesTemp() : m_types(0)
+{
+	m_types = new ObjectTypes;
+}
 
 class Player
 {
@@ -76,6 +82,7 @@ public:
 
 class ScriptEngine
 {
+friend class ScriptActions;
 public:
 	virtual void slot00() = 0;
 	virtual void slot01() = 0;
@@ -173,6 +180,7 @@ public:
 		return *(const Int *)((const char *)this + 0x170d8);
 	}
 	UnsignedShort unidentified_0034DB40(Parameter *parameter);
+	protected:
 	ScriptCounter *bfmeCounter(AsciiString name);
 };
 
@@ -181,7 +189,8 @@ extern PlayerList *ThePlayerList;
 
 class ScriptConditions
 {
-public:
+	friend class ScriptActions;
+	protected:
 	static void objectTypesFromParam(Parameter *parameter,
 		ObjectTypes *objectTypes);
 };
@@ -196,19 +205,19 @@ protected:
 void ScriptActions::doSetPlayerOwnershipOfTypeCounter(ScriptAction *action,
 	Parameter *type, Parameter *player, Parameter *counter, Bool includeDead)
 {
-	if (TheScriptEngine->getFrameObjectCountChanged() == action->m_customFrame)
+	if (TheScriptEngine->getFrameObjectCountChanged() == action->field_0044)
 		return;
 
-	std::vector<const ThingTemplate *> templates;
+	UnsignedShort mask;
 	std::vector<Int> counts;
+	std::vector<const ThingTemplate *> templates;
 	ObjectTypesTemp types;
 	ScriptConditions::objectTypesFromParam(type, types.m_types);
 	Int numTemplates = types.m_types->prepForPlayerCounting(templates, counts);
 	if (!numTemplates)
 		return;
 
-	UnsignedShort mask =
-			TheScriptEngine->unidentified_0034DB40(player);
+	mask = TheScriptEngine->unidentified_0034DB40(player);
 	Int value = 0;
 		if (mask)
 		{
@@ -219,15 +228,17 @@ void ScriptActions::doSetPlayerOwnershipOfTypeCounter(ScriptAction *action,
 				{
 					thePlayer->countObjectsByThingTemplate(numTemplates,
 						&(*templates.begin()), includeDead, &(*counts.begin()), true);
+					Int subtotal = 0;
 					for (std::vector<Int>::iterator it = counts.begin();
 						it != counts.end(); ++it)
-						value += *it;
+						subtotal += *it;
+					value += subtotal;
 				}
 			} while (mask);
 		}
 
 		ScriptCounter *destination = TheScriptEngine->bfmeCounter(
 			counter->getString());
-		action->m_customFrame = TheScriptEngine->getFrameObjectCountChanged();
-		destination->m_value = value;
+		destination->field_0000 = value;
+		action->field_0044 = TheScriptEngine->getFrameObjectCountChanged();
 }
