@@ -1,5 +1,5 @@
 // ?xferDrawableModules@Drawable@@IAEXPAVXfer@@@Z
-// partial score=0.9 date=2026-09-10
+// partial score=0.9623 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc
 // readable body of ?xferDrawableModules@Drawable@@IAEXPAVXfer@@@Z: Code/GameEngine/Source/GameClient/Drawable.cpp
 // Open-BFME5: real C++ body for Drawable::xferDrawableModules.
@@ -11,7 +11,7 @@
 // literal "DrawableModule"; the load path uses skipBlock when its module tag is
 // absent.  These declarations are a TU-local ABI view, not a new Xfer identity.
 
-#include "../../../Libraries/Source/WWVegas/WWLib/string_base.h"
+#include "../../Code/Libraries/Source/WWVegas/WWLib/string_base.h"
 
 typedef unsigned char UnsignedByte;
 typedef unsigned short UnsignedShort;
@@ -19,6 +19,7 @@ typedef bool Bool;
 
 struct XferVersion
 {
+	XferVersion(UnsignedByte version) : m_version(version), m_currentVersion(version) {}
 	UnsignedByte m_version;
 	UnsignedByte m_currentVersion;
 };
@@ -61,6 +62,15 @@ public:
 	virtual void slot29();
 	virtual void slot30();
 	virtual void xferUnsignedShort(UnsignedShort *value);
+};
+
+// A caller-side adapter: the slot takes only the StringBase pointer on the
+// stack; EDX carries the proven vtable temporary from retail.
+typedef void (__fastcall *XferAsciiStringSlot)(Xfer *xfer, void *edxTable, class AsciiString *value);
+struct XferVtable
+{
+	void *slots[0x68 / sizeof(void *)];
+	XferAsciiStringSlot xferAsciiString;
 };
 
 // BFME's Module view has Snapshot as its sole polymorphic prefix here, placing
@@ -159,9 +169,7 @@ private:
 void Drawable::xferDrawableModules(Xfer *xfer)
 {
 	{
-		XferVersion version;
-		version.m_version = 1;
-		version.m_currentVersion = 1;
+		XferVersion version(1);
 		xfer->xferVersion(&version);
 	}
 	xfer->IsStoring();
@@ -183,9 +191,11 @@ void Drawable::xferDrawableModules(Xfer *xfer)
 		{
 			for (m = m_modules[curModuleType]; m && *m; ++m)
 			{
-				moduleIdentifier = TheNameKeyGenerator->keyToName(
+				NameKeyGenerator *generator = TheNameKeyGenerator;
+				moduleIdentifier = generator->keyToName(
 					(*m)->getModuleTagNameKey());
-				xfer->xferAsciiString(&moduleIdentifier);
+				XferVtable *vtable = *reinterpret_cast<XferVtable **>(xfer);
+				vtable->xferAsciiString(xfer, vtable, &moduleIdentifier);
 				xfer->beginBlock("DrawableModule");
 				xfer->xferSnapshot(*m);
 				xfer->endBlock();
