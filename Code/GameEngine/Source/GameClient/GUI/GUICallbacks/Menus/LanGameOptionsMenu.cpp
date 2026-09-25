@@ -362,6 +362,11 @@ static Int getFirstSelectablePlayer(const GameInfo *game)
 
 void updateMapStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], Bool onLoadScreen = FALSE );
 void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow);
+void positionStartSpots( GameInfo *myGame, GameWindow *buttonMapStartPositions[], GameWindow *mapWindow, Bool onLoadScreen );
+extern void *g_bfmeA1023;
+extern char g_bfmeBuf1023[];
+extern void rva004CAF70( void );
+void d_004cc660( void );
 void LanPositionStartSpots( void )
 {
 	
@@ -848,6 +853,15 @@ void lanUpdateSlotList( void )
 
 
 // InitLanGameGadgets reaches BFME's shifted LAN and GameWindow slots.
+class BfmeStartPositionAddress
+{
+public:
+	BfmeStartPositionAddress() : m_ip( 0 ), m_port( 0 ) {}
+
+	UnsignedInt m_ip;
+	UnsignedShort m_port;
+};
+
 class BfmeInitVirtualLanApi
 {
 public:
@@ -866,15 +880,15 @@ public:
     virtual void slot030() = 0;
     virtual void slot034() = 0;
     virtual void slot038() = 0;
-    virtual void slot03C() = 0;
+    virtual void RequestHasMap( void ) = 0;
     virtual void slot040() = 0;
     virtual void slot044() = 0;
     virtual void slot048() = 0;
     virtual void slot04C() = 0;
     virtual void slot050() = 0;
-    virtual void slot054() = 0;
+    virtual void _bfme_requestSerializedGameInfo(Bool unused, BfmeStartPositionAddress *destination) = 0;
     virtual void slot058() = 0;
-    virtual void slot05C() = 0;
+    virtual void RequestGameAnnounce( void ) = 0;
     virtual void slot060() = 0;
     virtual void slot064() = 0;
     virtual void slot068() = 0;
@@ -897,9 +911,21 @@ public:
     virtual void slot0AC() = 0;
     virtual void slot0B0() = 0;
     virtual void slot0B4() = 0;
-    virtual void slot0B8() = 0;
+    virtual Bool AmIHost( void ) = 0;
     virtual UnicodeString GetMyName( void ) = 0;
     virtual LANGameInfo *GetMyGame( void ) = 0;
+    virtual void slot0C4() = 0;
+    virtual void slot0C8() = 0;
+    virtual Bool slot0CC() = 0;
+};
+
+class BfmeInitLanGameInfoMapApi
+{
+public:
+    virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0;
+    virtual void slot0C() = 0; virtual void slot10() = 0; virtual void slot14() = 0;
+    virtual void slot18() = 0; virtual void slot1C() = 0;
+    virtual void adjustSlotsForMap() = 0;
 };
 
 class BfmeInitVirtualLanGameInfo
@@ -1079,9 +1105,26 @@ void DeinitLanGameGadgets( void )
 //-------------------------------------------------------------------------------------------------
 /** Initialize the Lan Game Options Menu */
 //-------------------------------------------------------------------------------------------------
+struct Rva0068D3E0Slot
+{
+	char m_unmodelled[ 0x10 ];
+	Int m_startPos;
+	Int m_playerTemplate;
+	Int m_team;
+	Int getTeam() const { return m_team; }
+	void setTeam( Int team ) { m_team = team; }
+	Int getStartPos() const { return m_startPos; }
+};
+
+class Rva0068D3E0Arr
+{
+public:
+	Rva0068D3E0Slot *at( Int index );
+};
+
 void LanGameOptionsMenuInit( WindowLayout *layout, void *userData )
 {
-	if (TheLAN->GetMyGame() && TheLAN->GetMyGame()->isGameInProgress())
+	if (((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame() && ((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->isGameInProgress())
 	{
 		// If we init while the game is in progress, we are really returning to the menu
 		// after the game.  So, we pop the menu and go back to the lobby.  Whee!
@@ -1106,53 +1149,58 @@ void LanGameOptionsMenuInit( WindowLayout *layout, void *userData )
 
 	//The dialog needs to react differently depending on whether it's the host or not.
 	TheMapCache->updateCache();
-	if (TheLAN->AmIHost())
+	if (((BfmeInitVirtualLanApi *)TheLAN)->AmIHost())
 	{
 		// read in some prefs
-		LANGameInfo *game = TheLAN->GetMyGame();
-		LANGameSlot *slot = game->getLANSlot(0);
+		LANGameInfo *game = ((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame();
+		LANGameSlot *slot = (LANGameSlot *)((Rva0068D3E0Arr *)game)->at(0);
 		LANPreferences pref;
 		slot->setColor( pref.getPreferredColor() );
 		slot->setPlayerTemplate( pref.getPreferredFaction() );
-		slot->setNATBehavior(FirewallHelperClass::FIREWALL_TYPE_SIMPLE);
+		*(UnsignedInt *)((char *)slot + 0x38) = FirewallHelperClass::FIREWALL_TYPE_SIMPLE;
 		game->setMap( pref.getPreferredMap() );
-    game->setStartingCash( pref.getStartingCash() );
-    game->setSuperweaponRestriction( pref.getSuperweaponRestricted() ? 1 : 0 );
 		AsciiString lowerMap = pref.getPreferredMap();
 		lowerMap.toLower();
-		std::map<AsciiString, MapMetaData>::iterator it = TheMapCache->find(lowerMap);
-		if (it != TheMapCache->end())
+		MapCache *mapCache = TheMapCache;
+		std::map<AsciiString, MapMetaData>::iterator it = mapCache->find(lowerMap);
+		if (it != mapCache->end())
 		{
-			TheLAN->GetMyGame()->getSlot(0)->setMapAvailability(true);
-			TheLAN->GetMyGame()->setMapCRC( it->second.m_CRC );
-			TheLAN->GetMyGame()->setMapSize( it->second.m_filesize );
+			((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->getSlot(0)->setMapAvailability(true);
+			((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->setMapCRC( it->second.m_CRC );
+			((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->setMapSize( it->second.m_filesize );
 
-			TheLAN->GetMyGame()->adjustSlotsForMap(); // BGC- adjust the slots for the selected map.
+			((BfmeInitLanGameInfoMapApi *)((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame())->adjustSlotsForMap(); // BGC- adjust the slots for the selected map.
 		}
 
 		//GadgetTextEntrySetText(comboBoxPlayer[0], TheLAN->GetMyName());
-		lanUpdateSlotList();
-		updateGameOptions();
+		rva004CAF70();
+		d_004cc660();
 		start = 1; // leave my combo boxes usable
+		if (((BfmeInitVirtualLanApi *)TheLAN)->slot0CC())
+			buttonSelectMap->winEnable(FALSE);
 	}
 	else
 	{
 
-		//DEBUG_LOG(("LanGameOptionsMenuInit(): map is %s\n", TheLAN->GetMyGame()->getMap().str()));
-		buttonStart->winSetText(TheGameText->fetch("GUI:Accept"));
+		//DEBUG_LOG(("LanGameOptionsMenuInit(): map is %s\n", ((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->getMap().str()));
+		buttonStart->GameWindow::winSetText(TheGameText->fetch("GUI:Accept"));
 		buttonSelectMap->winEnable( FALSE );
-    checkboxLimitSuperweapons->winEnable( FALSE ); // Can look but only host can touch
-    comboBoxStartingCash->winEnable( FALSE );      // Ditto
-		TheLAN->GetMyGame()->setMapCRC( TheLAN->GetMyGame()->getMapCRC() );		// force a recheck
-		TheLAN->GetMyGame()->setMapSize( TheLAN->GetMyGame()->getMapSize() ); // of if we have the map
-		TheLAN->RequestHasMap();
-		lanUpdateSlotList();
-		updateGameOptions();
+		{
+			UnsignedInt mapCRC = *(UnsignedInt *)((char *)((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame() + 0x40);
+			((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->setMapCRC(mapCRC);		// force a recheck
+		}
+		{
+			UnsignedInt mapSize = *(UnsignedInt *)((char *)((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame() + 0x44);
+			((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->setMapSize(mapSize); // of if we have the map
+		}
+		((BfmeInitVirtualLanApi *)TheLAN)->RequestHasMap();
+		rva004CAF70();
+		d_004cc660();
 	}
 	for (Int i = start; i < MAX_SLOTS; ++i)
 	{
 		//I'm a client, disable the controls I can't touch.
-		if (!TheLAN->AmIHost())
+		if (!((BfmeInitVirtualLanApi *)TheLAN)->AmIHost())
 			comboBoxPlayer[i]->winEnable(FALSE);
 
 		comboBoxColor[i]->winEnable(FALSE);
@@ -1175,13 +1223,16 @@ void LanGameOptionsMenuInit( WindowLayout *layout, void *userData )
 
 	s_isIniting = FALSE;
 
-	if (TheLAN->AmIHost())
+	if (((BfmeInitVirtualLanApi *)TheLAN)->AmIHost())
 	{
-		TheLAN->RequestGameOptions(GenerateGameOptionsString(),true);
-		TheLAN->RequestGameAnnounce();
+		BfmeStartPositionAddress address;
+		((BfmeInitVirtualLanApi *)TheLAN)->_bfme_requestSerializedGameInfo(TRUE, &address);
+		((BfmeInitVirtualLanApi *)TheLAN)->RequestGameAnnounce();
 	}
-	lanUpdateSlotList();
-	LanPositionStartSpots();
+	rva004CAF70();
+	if (g_bfmeA1023 != 0)
+		positionStartSpots(((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame(),
+			(GameWindow **)g_bfmeBuf1023, (GameWindow *)g_bfmeA1023, FALSE);
 	TheTransitionHandler->setGroup("LanGameOptionsFade");
 
 	// animate controls
@@ -1659,15 +1710,6 @@ void PostToLanGameOptions( PostToLanGameType post )
 	}
 }
 
-class BfmeStartPositionAddress
-{
-public:
-	BfmeStartPositionAddress() : m_ip( 0 ), m_port( 0 ) {}
-
-	UnsignedInt m_ip;
-	UnsignedShort m_port;
-};
-
 class BfmeStartPositionLANAPI
 {
 public:
@@ -1731,23 +1773,6 @@ public:
 	BfmeStartPositionVector m_startPositions;
 	const Int *begin() const { return m_startPositions.begin(); }
 	Int size() const { return m_startPositions.size(); }
-};
-
-struct Rva0068D3E0Slot
-{
-	char m_unmodelled[ 0x10 ];
-	Int m_startPos;
-	Int m_playerTemplate;
-	Int m_team;
-	Int getTeam() const { return m_team; }
-	void setTeam( Int team ) { m_team = team; }
-	Int getStartPos() const { return m_startPos; }
-};
-
-class Rva0068D3E0Arr
-{
-public:
-	Rva0068D3E0Slot *at( Int index );
 };
 
 class BfmeThing935B

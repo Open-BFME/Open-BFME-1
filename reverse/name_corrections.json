@@ -5108,5 +5108,25 @@
   "after_sha256": "43a8145c8de3af6838efaae910de43e548f801c41d8b1798d4009e7ca9c060c5",
   "evidence": "reverse/re_attempts.log",
   "reason": "the stash name was coined by the banking session (its own header says identity unknown); no caller vtable or string names the owner so the landed source keeps the address token"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp",
+  "old_name": "lanUpdateSlotList",
+  "new_name": "rva004CAF70",
+  "before_sha256": "d40ba9dde8efae4b6fe72bcb2ae7c749ea20a90fc2ac1ba2e0d419f58bc53210",
+  "after_sha256": "ca570a540db0d2ba92da58c38ad32e289f5343edee0d2f9212bb0209d692e073",
+  "evidence": "reverse/identity_evidence/lan-game-options-menu-callees.md",
+  "reason": "Retail calls ILT 0x00039202 from LanGameOptionsMenuInit and that thunk targets body 0x004CAF70. The matched body is named rva004CAF70 and a probe shows lanUpdateSlotList compiles to a different size."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/LanGameOptionsMenu.cpp",
+  "old_name": "updateGameOptions",
+  "new_name": "d_004cc660",
+  "before_sha256": "d40ba9dde8efae4b6fe72bcb2ae7c749ea20a90fc2ac1ba2e0d419f58bc53210",
+  "after_sha256": "ca570a540db0d2ba92da58c38ad32e289f5343edee0d2f9212bb0209d692e073",
+  "evidence": "reverse/identity_evidence/lan-game-options-menu-callees.md",
+  "reason": "Retail calls ILT 0x0001C9D6 from LanGameOptionsMenuInit and that thunk targets body 0x004CC660. The matched body is named d_004cc660 and a probe shows updateGameOptions compiles to a different size."
  }
 ]
