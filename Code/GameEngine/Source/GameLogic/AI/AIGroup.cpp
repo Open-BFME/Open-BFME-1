@@ -466,7 +466,7 @@ UnsignedInt AIGroup::getID( void )
 }
 
 void AIGroup::groupAttackPosition(const Coord3D *pos, Int maxShotsToFire,
-	CommandSourceType cmdSource)
+	CommandSourceType commandSource)
 {
 	Coord3D attackPos;
 	if (pos)
@@ -492,14 +492,14 @@ void AIGroup::groupAttackPosition(const Coord3D *pos, Int maxShotsToFire,
 						garrisonedMember->getAbleToAttackSpecificObject(
 							ATTACK_NEW_TARGET, 0,
 							(CommandSourceType)(unsigned int)&attackPos,
-							(WeaponSlotType)cmdSource);
+							(WeaponSlotType)commandSource);
 					if (result == ATTACKRESULT_POSSIBLE
 						|| result == ATTACKRESULT_POSSIBLE_AFTER_MOVING)
 					{
 						BfmeAIUpdateInterface *memberAI = garrisonedMember->m_ai;
 						if (memberAI)
 							memberAI->m_commands.aiAttackPosition(
-								&attackPos, maxShotsToFire, cmdSource);
+								&attackPos, maxShotsToFire, commandSource);
 					}
 				}
 			}
@@ -509,11 +509,11 @@ void AIGroup::groupAttackPosition(const Coord3D *pos, Int maxShotsToFire,
 			(*i)->getSpawnBehaviorInterface();
 		if (spawnInterface)
 			spawnInterface->orderSlavesToAttackPosition(
-				&attackPos, maxShotsToFire, cmdSource);
+				&attackPos, maxShotsToFire, commandSource);
 
 		BfmeAIUpdateInterface *ai = (*i)->m_ai;
 		if (ai)
 			ai->m_commands.aiAttackPosition(&attackPos, maxShotsToFire,
-				cmdSource);
+				commandSource);
 	}
 }
