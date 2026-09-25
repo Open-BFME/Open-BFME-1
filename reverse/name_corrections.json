@@ -4108,5 +4108,15 @@
   "after_sha256": "7b84cb907bf58ae03c2a85418fcb80611bbcf61e9ce1b21579175b46f5a6f37e",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank member name without name_oracle/field_names witness (no layout witness for VictorySystem)"
+ },
+ {
+  "old_path": "reverse/attempts/0x002218a0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva002218A0ForwardHalfPlane.cpp",
+  "old_name": "m_rva002218A0Field138",
+  "new_name": "m_float138",
+  "before_sha256": "a984a02f8b7483a2d383d9136e4e90c7a8058b87f6e4770e3a3d1e5b212bc236",
+  "after_sha256": "328070102e94244829487fa74adb4e0d43a98c02b09c8bb7d187d542c1e21519",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset placeholder to offset placeholder"
  }
 ]
