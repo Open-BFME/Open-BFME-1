@@ -1,5 +1,5 @@
-// ?rva0028D0C0@@YAHXZ
-// partial score=0.23 date=2026-09-20
+// The matched DestroyEnvironmentUpdate::update at 0x0028D2D0 calls this no-argument helper and stores its return as an ObjectID.
+// This file sits beside that caller and keeps the address-derived function name because no class owner is proven.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/bfmekindof /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // stlport
 #define _STLP_USE_STATIC_LIB 1
@@ -97,30 +97,40 @@ struct BfmeResultA
 		if (--value->references == 0)
 			delete value;
 	}
-	Object *next()
+	Object *next(Object *&object)
 	{
 		if (value->current == value->entries.end())
 			return 0;
-		return (value->current++)->object;
+		object = (value->current++)->object;
+		return object;
 	}
 };
 
-class PartitionManager
+class BfmeResultSourceA;
+
+class BfmeResultForwardB
 {
+	unsigned char m_padding[0x0C];
+	BfmeResultSourceA *m_source;
+
 public:
-	BfmeResultA iterateAllAt0028D0C0(PartitionFilter *filter);
+	BfmeResultA bfmeForwardResultB(int value);
 };
 
+class PartitionManager;
 extern PartitionManager *ThePartitionManager;
 
 int __cdecl rva0028D0C0()
 {
-	BfmeResultA iterator = ThePartitionManager->iterateAllAt0028D0C0(
-		&PartitionFilterAcceptByKindOf(
-			Rva0028D0C0KindOfMask(Rva0028D0C0KindOfMask::kInit, 100),
-			*reinterpret_cast<const Rva0028D0C0KindOfMask *>(&KINDOFMASK_NONE)));
+	BfmeResultA iterator =
+		((BfmeResultForwardB *)ThePartitionManager)->bfmeForwardResultB(
+			(int)&PartitionFilterAcceptByKindOf(
+				Rva0028D0C0KindOfMask(Rva0028D0C0KindOfMask::kInit, 100),
+				*reinterpret_cast<const Rva0028D0C0KindOfMask *>(
+					&KINDOFMASK_NONE)));
 
-	for (Object *object = iterator.next(); object; object = iterator.next())
+	Object *object;
+	while (iterator.next(object))
 	{
 		for (BehaviorModule **module = object->behaviors; *module; ++module)
 		{
