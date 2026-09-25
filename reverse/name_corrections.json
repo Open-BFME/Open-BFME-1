@@ -2808,5 +2808,25 @@
   "after_sha256": "618556d16a92ef58e48660eabb7613f6374b88d6e6731e992650208f7e9dbe50",
   "evidence": "reverse/functions.csv",
   "reason": "ledger row for 0x003F68F0 names the matched body Gen_003F68F0::bfmeAttach (Code/GameEngine/Source/Common/Gen_003F68F0.cpp); the bank name BfmeCellETD was a placeholder, not a proven identity"
+ },
+ {
+  "old_path": "reverse/attempts/0x003d84a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/PathfinderRva003D84A0.cpp",
+  "old_name": "BfmeCellETD",
+  "new_name": "m_dword4",
+  "before_sha256": "f835198858f438c4049b68f2630032cceba3af7af90813b9b615cfb23e541004",
+  "after_sha256": "f8890fb27744391ed4d3b2c4f099d4b6426d8428bf5a2b21aa077e8a2fb8e72d",
+  "evidence": "reverse/functions.csv",
+  "reason": "renames: BfmeCellETD -> PathfindCell (element of m_map) / Gen_003F68F0 (ledger spelling for the setter at 0x003F68F0); the bank class name had no evidence -- the real identity comes from the matched callee ?bfmeAttach@Gen_003F68F0@@QAEXPAVRva001A1DE0Owner@@@Z at 0x003F68F0."
+ },
+ {
+  "old_path": "reverse/attempts/0x003d84a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/PathfinderRva003D84A0.cpp",
+  "old_name": "bfmeToCellETD",
+  "new_name": "rva003D84A0",
+  "before_sha256": "f835198858f438c4049b68f2630032cceba3af7af90813b9b615cfb23e541004",
+  "after_sha256": "f8890fb27744391ed4d3b2c4f099d4b6426d8428bf5a2b21aa077e8a2fb8e72d",
+  "evidence": "reverse/functions.csv",
+  "reason": "renames: bfmeToCellETD -> worldToCell; matched body ?worldToCell@Pathfinder@@QAE_NPBUCoord3D@@PAUICoord2D@@@Z at 0x003D7EC0, called by this body via ILT 0x000171E8; the bank name had no evidence."
  }
 ]
