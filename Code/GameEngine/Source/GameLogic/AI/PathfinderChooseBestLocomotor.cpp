@@ -59,7 +59,7 @@ class Pathfinder
 public:
 	Locomotor *chooseBestLocomotorForPosition(PathfindLayerEnum layer,
 		LocomotorSet *locomotorSet, const Coord3D *position);
-	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
+	PathfindCell *getCell(PathfindLayerEnum layer, Int cellX, Int cellY);
 };
 
 // ?chooseBestLocomotorForPosition@Pathfinder@@QAEPAVLocomotor@@W4PathfindLayerEnum@@PAVLocomotorSet@@PBUCoord3D@@@Z
