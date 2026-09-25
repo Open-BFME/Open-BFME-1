@@ -153,7 +153,7 @@ public:
 class AIUpdateInterface
 {
 public:
-	void friend_setGoalObject(Object *object);
+	void friend_setGoalObject(Object *goalObject);
 
 	ObjectID getCrateID() const
 	{

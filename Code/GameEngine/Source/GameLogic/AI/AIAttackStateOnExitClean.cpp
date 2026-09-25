@@ -58,7 +58,7 @@ public:
 	void setCurrentVictim(const Object *victim);
 	void setTurretTargetObject(WhichTurretType turret, Object *targetObject,
 		Bool forceAttacking);
-	void friend_setGoalObject(Object *object);
+	void friend_setGoalObject(Object *goalObject);
 };
 
 class Rva001BF560

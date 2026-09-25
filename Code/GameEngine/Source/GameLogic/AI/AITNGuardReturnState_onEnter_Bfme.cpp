@@ -128,7 +128,7 @@ public:
 class AIUpdateInterface
 {
 public:
-	void friend_setGoalObject(Object *obj);
+	void friend_setGoalObject(Object *goalObject);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/StateMachine.h
