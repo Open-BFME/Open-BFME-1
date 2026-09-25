@@ -244,7 +244,6 @@ void ObjectTypes::xfer(Xfer *xfer)
 }
 
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@ObjectTypes@@ present-unmatched
 void ObjectTypes::loadPostProcess()
 {
 
