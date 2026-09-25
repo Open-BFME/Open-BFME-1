@@ -32,11 +32,8 @@ public:
 };
 
 extern "C" void *Rva00484F60GetDataTemplate( char *type, UnsignedInt *size );
-GameWindow *createGadget( char *type, GameWindow *parent, Int status, Int x, Int y,
-	Int width, Int height, WinInstanceData *instData, void *data );
-// Retail pushes four arguments to createGadget at 0x00486B10; the ledger symbol keeps the ZH list.
-typedef GameWindow *( __cdecl *Rva004879A0CreateGadget )( char *type, void *data,
-	Open2479440Record *record, GameWindow *source );
+GameWindow *createGadget( char *type, void *data, Open2479440Record *record,
+	GameWindow *source );
 
 class Rva004879A0
 {
@@ -108,5 +105,5 @@ GameWindow *Rva004879A0::rva004879A0( GameWindow *source, void *unused )
 		memcpy( data, userData, size );
 	}
 
-	return ( ( Rva004879A0CreateGadget )&createGadget )( type, data, &record, source );
+	return createGadget( type, data, &record, source );
 }

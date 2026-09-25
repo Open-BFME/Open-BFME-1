@@ -1536,13 +1536,12 @@ void setWindowText( GameWindow *window, AsciiString textLabel );
 // createGadget ===============================================================
 /** Create a gadget based on the 'type' parm */
 //=============================================================================
+// Retail is cdecl with four arguments; the record is the window record Rva00479440 publishes.
+class Open2479440Record;
 __declspec(naked) GameWindow *createGadget( char *type,
-																 GameWindow *parent, 
-																 Int status,
-																 Int x, Int y, 
-																 Int width, Int height, 
-																 WinInstanceData *instData, 
-																 void *data )
+																 void *data, 
+																 Open2479440Record *record,
+																 GameWindow *source )
 {
 	__asm {
 	__emit 0x64;
@@ -3903,8 +3902,9 @@ __declspec(naked) GameWindow *createGadget( char *type,
 // ?createWindow@@YAPAVGameWindow@@PADHHHHHHPAVWinInstanceData@@PAXP6A?AW4WindowMsgHandledType@@PAV1@III@Z4P6AX31I@ZP6AX31@Z@Z
 // Body in Code/masm_dumps/GameWindowManagerScript_createWindow.asm
 // (exact 320B retail @ 0x004874A0; queue 0x009D2256 was int3/wrong region).
-// C++ kept for static callees in this TU; matched row is the MASM dump.
+// Zero Hour reference only: retail passes type in EDX and a window record in EBX.
 //=============================================================================
+#if 0
 static GameWindow *createWindow( char *type, 
 																 Int id, 
 																 Int status, 
@@ -4022,6 +4022,7 @@ static GameWindow *createWindow( char *type,
   return window;
 
 }  // end createWindow
+#endif
 
 // lookup table for parsing functions
 static GameWindowParse gameWindowFieldList[] = 
