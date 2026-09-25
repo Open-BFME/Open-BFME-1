@@ -40587,7 +40587,7 @@ name,address,notes
 ?b_0032cb00@@YAXXZ,0x0032CB00,gen-thunk body
 ?b_0032ccc0@@YAXXZ,0x0032CCC0,gen-thunk body
 ?b_0032cdb0@@YAXXZ,0x0032CDB0,gen-thunk body
-?b_0032cfc0@@YAXXZ,0x0032CFC0,gen-thunk body
+?b_0032cfc0@@YAXXZ,0x0032CFC0,compatibility pin for generated thunk ?j_00005ace@@YAXXZ
 ?b_0032d300@@YAXXZ,0x0032D300,gen-thunk body
 ?b_0032d720@@YAXXZ,0x0032D720,gen-thunk body
 ?b_003307e0@@YAXXZ,0x003307E0,gen-thunk body
@@ -80388,6 +80388,7 @@ name,address,notes
 ?evaluateNamedInsideArea@ScriptConditions@@QAE_NPAVParameter@@0@Z,0x003247A0,matched ScriptConditions evaluateNamedInsideArea body used by the incremental-link tail at 0x0000696F
 ?evaluateTeamInsideAreaEntirely@ScriptConditions@@IAE_NPAVParameter@@00@Z,0x00013219
 ?evaluateTeamInsideAreaPartially@ScriptConditions@@IAE_NPAVParameter@@00@Z,0x0004A8E0
+?evaluateTypeSighted@ScriptConditions@@IAE_NPAVParameter@@00@Z,0x0032CFC0,ScriptConditions type-sighted dispatcher case 77
 ?execute@BfmeSub58_E80@@QAE_NPAXH@Z,0x0001DA34,pin
 ?execute@Rva0058C100CommandManager@@QAEXHPAX@Z,0x0003BCCD,address-derived command execution thunk used by the observer command callbacks
 ?exitObjectInAHurry@OpenContain@@UAEXPAVObject@@@Z,0x002289f0,vtable-slot ??_7GarrisonContain@@6BExitInterface@@@ slot 5 anchors=2
@@ -89073,6 +89074,21 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?rva006A1C60@Rva006B3F90Owner@@QAEXPAURva006B3F90Wrapper@@PAE@Z,0x000445D0,body 0x006A1C60 via ILT jmp; called from 0x006B1CE0+0x118 and 0x006B2FC0 with ecx=this and two pushed args (wrapper and Bool out); callee sub esp 0x1c/mov ebx ecx thiscall and every exit ret 8 with byte store through arg2; address-derived name
 ?rva006A20D0@MilesAudioManager@@QAE_NIPAX0@Z,0x00008549,body 0x006A20D0 via ILT jmp (ret 0xc thiscall bool in AL; reads this+0x9C8/0x9CC/0x9D0 playing lists); called from 0x006A2750+0x56 isCurrentlyPlaying with (handle 0 0) via ILT 0x00008549; method identity unproven so address-derived name
 ??$__copy@PAURva0006AA90Element@@PAU1@H@_STL@@YAPAURva0006AA90Element@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000B98F0,aligned STLport __copy(finish finish start) for vector<Rva0006AA90Element>::clear; 0x0060A000 calls it via ILT 0x0001E6A5 to the 76-byte cdecl 5-arg body at 0x000B98F0
+?examineNeighboringCells@Pathfinder@@IAEHPAVPathfindCell@@0ABVLocomotorSet@@_N2HABUICoord2D@@PBVObject@@H@Z,0x003E6EE0,Pathfinder identity from BFME definition and object-backed Zero Hour symbol
+?stopClientParticleSystems@W3DModelDraw@@IAEXXZ,0x0077AB30,destructor route through ILT 0x0001B798 and BFME 20-byte records at this+0x130 identify W3DModelDraw::stopClientParticleSystems
+?W3DGadgetHorizontalSliderImageDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00790EA0,W3DHorizontalSlider.cpp definition plus caller via ILT and W3D draw lexicon row 0x012BA4FC identify this image-draw callback
+?isLocationSafe@AIPlayer@@QAE_NPBUCoord3D@@PBVThingTemplate@@@Z,0x00163030,body identity from AIPlayer.cpp:1023; matched caller isSupplySourceSafe at 0x00166A10; ILT 0x0003E504 resolves here
+?calcPhysicsXformHoverOrWings@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x00410E10,body identity from Drawable.cpp:1708; matched calcPhysicsXform caller at 0x004213F0; ILT 0x00020865 resolves here
+?W3DGadgetCheckBoxImageDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x007901F0,W3DCheckBox.cpp definition; FunctionLexicon registration and ILT caller identify checkbox image draw; tail calls drawCheckBoxText at 0x0078FDE0
+?W3DGadgetProgressBarImageDrawA@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00793520,W3DProgressBar.cpp definition; ILT 0x0001CAA3 routes to this body; draw slot and GameWindow calls identify progress-bar image callback
+?W3DGadgetCheckBoxDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x0078FF40,W3DCheckBox.cpp definition; caller bfmeSubmit at 0x00790310 via ILT; resolved drawCheckBoxText target at 0x0078FDE0 supports callback identity
+?doTeamGuard@ScriptActions@@IAEXABVAsciiString@@@Z,0x00301C10,ScriptActions.cpp definition and TEAM_GUARD dispatch arm identify callback; two ILT-mediated callers
+?onEnter@GiantBirdGuardOuterState@@UAE?AW4StateReturnType@@XZ,0x002BD310,GiantBirdGuardOuterState vtable 0x010C7C28 installed at 0x002C04D0; slot 4 ILT 0x00040142 reaches body; exact destructor and name getter support class identity
+?Rva00149130@AerialPathfinder@@QAEHPAVObject@@PBUCoord3D@@PAU3@@Z,0x00149130,AerialPathfinder owner from matched caller; five calls at 0x00149470 pass Object and Coord3D arguments; opaque method label preserves unresolved name
+?parseFontFileName@GlobalLanguage@@SAXPAVINI@@PAX1PBX@Z,0x0043A3B0,GlobalLanguage.cpp LocalFontFile FieldParse callback and exact body definition identify parser
+?releaseWeaponLock@WeaponSet@@QAEXW4WeaponLockType@@@Z,0x001EBB40,WeaponSet.cpp exact method; matched BfmeThing916D caller at 0x001C9B80 calls ILT 0x0001192D with WeaponSet subobject at +0x264
+?handleGameStart@LANAPI@@IAEXPAULANMessage@@I@Z,0x0068BFA0,LANAPIhandlers.cpp exact definition; matched LANAPI::update MSG_GAME_START caller at 0x006870F0; ILT 0x0001529E targets this body
+?isValidAudioEvent@AudioManager@@UBE_NPAVAudioEventRTS@@@Z,0x0069CFB0,AudioManager vtable 0x0111C0C0 slot 23 ILT 0x00041952; INI::parseAudioEventRTS calls mutable overload
 ?rva0087ED00@GeometryShape@@QBEMXZ,0x0087ED00,body 0x0087ED00; direct call at calcBoundingStuff 0x0087EE60+0x2C with ecx=GeometryShape element (0x24 stride) of vector at GeometryInfo+0x2C; callee plain ret no args returns st0 and never writes edx; method name unproven so address token kept
 ?rva0087ED70@GeometryShape@@QBEMXZ,0x0087ED70,body 0x0087ED70; direct call at calcBoundingStuff 0x0087EE60+0x4E with ecx=same GeometryShape element; callee push/pop ecx plain ret no args returns st0 and never writes edx; method name unproven so address token kept
 ?rva0087E650@GeometryInfo@@QAEXPAURva0087E650Bounds@@@Z,0x0087E650,body 0x0087E650; direct call at calcBoundingStuff 0x0087EE60+0x81 with ecx=this and one pushed stack-buffer pointer; callee ends ret 4 and fills six floats; matches reverse/attempts/0x0087e650.cpp decoration; method name unproven so address token kept
