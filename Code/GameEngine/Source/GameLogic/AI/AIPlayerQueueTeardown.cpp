@@ -79,19 +79,19 @@ private:
 };
 
 // ?deleteQueue@@YAXPAVTeamInQueue@@@Z
-static void deleteQueue(TeamInQueue *o) { if (o) delete o; }
+static void deleteQueue(TeamInQueue *queueEntry) { if (queueEntry) delete queueEntry; }
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPlayer.h
 class AIPlayer : public PlayerController
 {
 protected:
-	typedef void (*RemoveAllProc)( TeamInQueue *o );
+	typedef void (*RemoveAllProc)( TeamInQueue *queueEntry );
 
 	virtual ~AIPlayer();
 	void clearTeamsInQueue();
 
-	void removeAll_TeamBuildQueue( RemoveAllProc p );
-	void removeAll_TeamReadyQueue( RemoveAllProc p );
+	void removeAll_TeamBuildQueue( RemoveAllProc removeCallback );
+	void removeAll_TeamReadyQueue( RemoveAllProc removeCallback );
 
 private:
 	TeamInQueue *m_buildQueueHead;				// +0x04
@@ -99,7 +99,7 @@ private:
 };
 
 // ?removeAll_TeamBuildQueue@AIPlayer@@IAEXP6AXPAVTeamInQueue@@@Z@Z
-void AIPlayer::removeAll_TeamBuildQueue( RemoveAllProc p )
+void AIPlayer::removeAll_TeamBuildQueue( RemoveAllProc removeCallback )
 {
 	while( m_buildQueueHead )
 	{
@@ -107,13 +107,13 @@ void AIPlayer::removeAll_TeamBuildQueue( RemoveAllProc p )
 
 		tmp->dlink_removeFrom_TeamBuildQueue( &m_buildQueueHead );
 
-		if( p )
-			(*p)( tmp );
+		if( removeCallback )
+			(*removeCallback)( tmp );
 	}
 }
 
 // ?removeAll_TeamReadyQueue@AIPlayer@@IAEXP6AXPAVTeamInQueue@@@Z@Z
-void AIPlayer::removeAll_TeamReadyQueue( RemoveAllProc p )
+void AIPlayer::removeAll_TeamReadyQueue( RemoveAllProc removeCallback )
 {
 	while( m_readyQueueHead )
 	{
@@ -121,8 +121,8 @@ void AIPlayer::removeAll_TeamReadyQueue( RemoveAllProc p )
 
 		tmp->dlink_removeFrom_TeamReadyQueue( &m_readyQueueHead );
 
-		if( p )
-			(*p)( tmp );
+		if( removeCallback )
+			(*removeCallback)( tmp );
 	}
 }
 
