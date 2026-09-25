@@ -77780,7 +77780,7 @@ name,address,notes
 ?bfmeNoteVJI@BfmeSubVJI@@QAEXPBD@Z,0x00808BF0,pin
 ?bfmeNoteWD@BfmeThingWD@@QAEXXZ,0x0002191D,pin
 ?bfmeNoteXG@BfmeHookXG@@QAEXXZ,0x00025BFD
-?bfmeNoteYF_00585C20@BfmeHostYF@@QAEXUBfmeHandleYF@@@Z,0x00585C20,RVA00585CF0+0B ILT36D7C; callee reads one-pointer value argument and ret4; owner unknown
+?bfmeNoteYF_00585C20@BfmeHostYF@@QAEXUBfmeHandleYF@@@Z,0x00585C20,RVA00585CF0+0B ILT36D7C; matched caller and identity_evidence/00585c20.md establish method identity and one-pointer value argument; ret4
 ?bfmeNotify1280@BfmeA1280@@QAEXH@Z,0x00019574,pin
 ?bfmeNotify1281@BfmeA1281@@QAEXH@Z,0x0003E85B,pin
 ?bfmeNotify1_574@@YAXPAX0@Z,0x00034B67,pin

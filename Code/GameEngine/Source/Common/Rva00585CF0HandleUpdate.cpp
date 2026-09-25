@@ -10,6 +10,12 @@
 // tag explains the two equal-address arguments; it is not an output pair.
 class Rva003C8340Item;
 
+struct Rva00585C20CachePair
+{
+	int x;
+	int y;
+};
+
 class BfmeObjYF
 {
 public:
@@ -25,6 +31,11 @@ public:
 	bool m_field38;
 	char m_pad39[3];
 	int m_bfme3CYF;
+	union
+	{
+		struct { int m_bfme40YF; int m_bfme44YF; };
+		Rva00585C20CachePair m_cachePairYF;
+	};
 };
 
 struct BfmeHandleYF
@@ -44,6 +55,48 @@ public:
 	void rva00585D60(BfmeHandleYF h);
 	void rva00585E90(BfmeHandleYF h);
 };
+
+class Gen_00609320
+{
+public:
+	virtual void slot0();
+	virtual void slot1();
+	virtual void slot2();
+	virtual void slot3();
+	virtual void slot4();
+	virtual void slot5();
+	virtual void slot6();
+	virtual void slot7();
+	virtual void slot8();
+	virtual bool slot9(const void *coord, int *outXY);
+};
+extern Gen_00609320 *g_bfmeStateDF;
+void bfmeGo1077B(int a, float b, float c);
+
+void BfmeHostYF::bfmeNoteYF_00585C20(BfmeHandleYF h)
+{
+	BfmeObjYF *o = h.m_bfmePtrYF;
+	int logId = o->m_bfme10YF;
+	int outXY[2];
+	bool ok = g_bfmeStateDF->slot9((const char *)o + 0x18, outXY);
+
+	if (ok)
+	{
+		if (outXY[0] == o->m_bfme40YF && outXY[1] == o->m_bfme44YF)
+			return;
+		bfmeGo1077B(logId, (float)outXY[0], (float)outXY[1]);
+		o->m_bfme40YF = outXY[0];
+		o->m_bfme44YF = outXY[1];
+	}
+	else
+	{
+		if (o->m_bfme40YF == -1000 && outXY[1] == -1000)
+			return;
+		bfmeGo1077B(logId, -1000.0f, -1000.0f);
+		Rva00585C20CachePair reset = { -1000, -1000 };
+		o->m_cachePairYF = reset;
+	}
+}
 
 void BfmeHostYF::bfmeUpdateYF_00585CF0(BfmeHandleYF h)
 {
