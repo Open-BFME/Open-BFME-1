@@ -19,6 +19,7 @@ private:
 #include "Common/GameAudio.h"
 #include "GameClient/GameWindow.h"
 #include "GameClient/GameWindowManager.h"
+#include "GameClient/Keyboard.h"
 #include "GameClient/Gadget.h"
 #include "GameClient/GadgetListBox.h"
 #include "string_base.h"
@@ -62,6 +63,7 @@ class BfmeThing925D { public: void bfmeGo925D(void*); };
 class BfmeThing926A { public: void bfmeGo926A(void*,void*); };
 class BfmeC1040 { public: int bfmeGo1040C(); };
 class BfmeThingCCH { public: int bfmeGoCCH(void*); };
+extern void bfmeGo1017Y(int, int, int);
 
 class Rva004B5C90WindowManager { public:
     virtual void slot_00();
@@ -197,6 +199,67 @@ __declspec(noinline) int Rva004B5AA0::m(const Image* image,int height,int width,
     unsigned char* data=(unsigned char*)((Rva004B6190Data*)m_00->winGetUserData())->m_08->winGetUserData();
     if(*(short*)(data+0x2c)>=*(short*)data) GadgetListBoxSetListLength(list,2*(int)*(short*)data);
     return GadgetListBoxAddEntryImage(list,image,-1,0,width,height,true,color);
+}
+
+WindowMsgHandledType GadgetImageComboBoxInput(GameWindow* window, UnsignedInt msg,
+    WindowMsgData mData1, WindowMsgData mData2)
+{
+    GameWindow* adapter=window;
+    WinInstanceData* instData=window->winGetInstanceData();
+    switch(msg) {
+    case GWM_CHAR:
+        if(mData1!=KEY_TAB) return MSG_IGNORED;
+        if(mData2 & KEY_STATE_DOWN) {
+            if(TheKeyboard->getModifierFlags() & KEY_STATE_LSHIFT) {
+                TheWindowManager->winPrevTab(window);
+                return MSG_HANDLED;
+            } else {
+                TheWindowManager->winNextTab(window);
+                return MSG_HANDLED;
+            }
+        }
+        break;
+    case GWM_LEFT_UP: {
+        if(TheAudio) {
+            AudioEventRTS click("GUIComboBoxClick",2);
+            ((Rva004B6190Audio*)TheAudio)->slot_44(&click);
+        }
+        GameWindow* list=((Rva004B6190Data*)window->winGetUserData())->m_08;
+        ((Rva004B5C90*)&adapter)->invoke(!list->winIsHidden());
+        bfmeGo1017Y(0,1,1);
+        return MSG_HANDLED;
+    }
+    case GWM_LEFT_DRAG:
+        if(instData->m_style & GWS_MOUSE_TRACK)
+            TheWindowManager->winSendSystemMsg(window->winGetOwner(),0x4000,(WindowMsgData)window,0);
+        break;
+    case GWM_SCRIPT_CREATE: {
+        GameWindow* child=TheWindowManager->winGetWindowFromId(window,(Int)mData1);
+        if(child) {
+            Rva004B6190Data* data=(Rva004B6190Data*)window->winGetUserData();
+            if(child->winGetStyle() & 1) {
+                data->m_04=child;
+            } else if(child->winGetStyle() & 0x20) {
+                data->m_08=child;
+                ((unsigned char*)((Rva004B6190Data*)window->winGetUserData())->m_08->winGetUserData())[0x12]=1;
+                ((unsigned char*)((Rva004B6190Data*)window->winGetUserData())->m_08->winGetUserData())[0x13]=1;
+                ((unsigned char*)((Rva004B6190Data*)window->winGetUserData())->m_08->winGetUserData())[0x0e]=1;
+            }
+        }
+        break;
+    }
+    case GWM_LEFT_DOWN:
+        if(((Rva004B5C90WindowManager*)TheWindowManager)->slot_c0()==window)
+            return MSG_IGNORED;
+        break;
+    case GWM_RIGHT_UP:
+    case GWM_WHEEL_UP:
+    case GWM_WHEEL_DOWN:
+        break;
+    default:
+        return MSG_IGNORED;
+    }
+    return MSG_HANDLED;
 }
 
 WindowMsgHandledType GadgetImageComboBoxSystem(GameWindow* window,unsigned msg,unsigned mData1,unsigned mData2)
