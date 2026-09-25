@@ -72,12 +72,12 @@ struct IRegion2D
 class Pathfinder
 {
 public:
-	PathfindCell *getGroundCell(Int x, Int y) const
+	PathfindCell *getGroundCell(Int cellX, Int cellY) const
 	{
-		if (x < m_mapBounds.loX || x > m_mapBounds.hiX ||
-			y < m_mapBounds.loY || y > m_mapBounds.hiY)
+		if (cellX < m_mapBounds.loX || cellX > m_mapBounds.hiX ||
+			cellY < m_mapBounds.loY || cellY > m_mapBounds.hiY)
 			return 0;
-		return &m_map[x][y];
+		return &m_map[cellX][cellY];
 	}
 
 private:
