@@ -1352,7 +1352,7 @@ MultiPlayerLoadScreen::~MultiPlayerLoadScreen( void )
 //	TheAudio->stopAudio( AudioAffect_Music );
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/MultiPlayerLoadScreenInitThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/LoadScreenInit.cpp
 // ?init@MultiPlayerLoadScreen@@ present-unmatched
 void MultiPlayerLoadScreen::init( GameInfo *game )
 {
