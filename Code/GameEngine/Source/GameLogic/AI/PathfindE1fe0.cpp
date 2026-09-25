@@ -17,7 +17,7 @@
 // Frame notes (retail gets by with exactly 0x2C bytes of locals):
 //   * the radius output and the destination cell both live on top of the local
 //     copy of `from`, so both are expressed as aliases of it;
-//   * `pos` and the payload are the only other locals.
+//   * `workingPosition` and the payload are the only other locals.
 //
 // No /EHsc: retail registers no handler for the body.
 
@@ -61,7 +61,7 @@ struct TightenLineWork
 {
 	Coord3D adjFrom;									///< frame esp+0x00
 	ICoord2D fromCell;									///< frame esp+0x0C
-	Coord3D pos;										///< frame esp+0x14
+	Coord3D workingPosition;					///< frame esp+0x14
 	Rva003D7680Struct info;								///< frame esp+0x20
 };
 
@@ -96,11 +96,11 @@ void Pathfinder::tightenLine(Object *object, const Coord3D *startPosition, Coord
 		endPosition->y += PATHFIND_CELL_SIZE_F/2;
 	}
 
-	w.pos.x = w.adjFrom.x;
-	w.pos.y = w.adjFrom.y;
-	w.pos.z = w.adjFrom.z;
+	w.workingPosition.x = w.adjFrom.x;
+	w.workingPosition.y = w.adjFrom.y;
+	w.workingPosition.z = w.adjFrom.z;
 
-	w.info.m_workingPosition = &w.pos;
+	w.info.m_workingPosition = &w.workingPosition;
 	w.info.m_pathfinder = this;
 	w.info.m_layer = object->getLayer();
 
@@ -110,7 +110,7 @@ void Pathfinder::tightenLine(Object *object, const Coord3D *startPosition, Coord
 	worldToCell(endPosition, &toCell);
 
 	if (iterateCellsAlongLine(w.fromCell, toCell, LAYER_GROUND, &w.info)) {
-		*endPosition = w.pos;
+		*endPosition = w.workingPosition;
 	}
 
 	if (!centerInCell) {
