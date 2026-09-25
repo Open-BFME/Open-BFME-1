@@ -1,5 +1,3 @@
-// ?rva00585c20@Rva00585C20Owner@@QAEXPAURva00585C20Param@@@Z
-// partial score=0.9259 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
 
 // retail RVA 0x00585C20. this->m_10 is a log id; this->m_18 a coordinate the
@@ -10,6 +8,9 @@
 // cache is reset to the -1000 sentinel (and logged) unless it is already
 // there. No caller, owner class, or vtable slot identifies this body, so the
 // owner/coordinate layout is address-derived.
+//
+// Shape: the cache is a two-int pair assigned whole in each branch; the
+// failure sentinel is written x first, then y.
 
 class Gen_00609320
 {
@@ -30,14 +31,19 @@ extern Gen_00609320 *g_bfmeStateDF;
 
 void bfmeGo1077B(int a, float b, float c);
 
+struct Rva00585C20Point
+{
+	int x;
+	int y;
+};
+
 struct Rva00585C20Param
 {
 	unsigned char m_head[0x10];
 	int m_logId;				// +0x10
 	unsigned char m_gap14[4];
 	unsigned char m_coord[0x28];		// +0x18
-	int m_cachedX;				// +0x40
-	int m_cachedY;				// +0x44
+	Rva00585C20Point m_cached;		// +0x40
 };
 
 class Rva00585C20Owner
@@ -50,24 +56,24 @@ public:
 void Rva00585C20Owner::rva00585c20(Rva00585C20Param *p)
 {
 	int logId = p->m_logId;
-	int outXY[2];
-	bool ok = g_bfmeStateDF->bfmeProjectToScreen(p->m_coord, outXY);
+	Rva00585C20Point screen;
+	bool ok = g_bfmeStateDF->bfmeProjectToScreen(p->m_coord, &screen.x);
 
 	if (ok)
 	{
-		if (outXY[0] == p->m_cachedX && outXY[1] == p->m_cachedY)
+		if (screen.x == p->m_cached.x && screen.y == p->m_cached.y)
 			return;
 
-		bfmeGo1077B(logId, (float)outXY[0], (float)outXY[1]);
+		bfmeGo1077B(logId, (float)screen.x, (float)screen.y);
+		p->m_cached = screen;
 	}
 	else
 	{
-		if (p->m_cachedX == -1000 && outXY[1] == -1000)
+		if (p->m_cached.x == -1000 && screen.y == -1000)
 			return;
 		bfmeGo1077B(logId, -1000.0f, -1000.0f);
-		outXY[0] = -1000;
-		outXY[1] = -1000;
+		screen.x = -1000;
+		screen.y = -1000;
+		p->m_cached = screen;
 	}
-	p->m_cachedY = outXY[1];
-	p->m_cachedX = outXY[0];
 }
