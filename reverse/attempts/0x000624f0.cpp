@@ -1,6 +1,6 @@
 // ?parseMod@@YAHQAPADH@Z
-// partial score=0.88 date=2026-09-11
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// partial score=0.9 date=2026-09-25
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /FAsc
 
 #include <string.h>
 
@@ -19,11 +19,15 @@ struct Rva000624F0StatHolder
 	Rva000624F0Stat m_stat;
 };
 
-extern "C" int __cdecl stat(const char *, Rva000624F0Stat *);
+extern "C" int (__cdecl *__imp__stat)(const char *, Rva000624F0Stat *);
 
 template <class T> class StringBase
 {
 public:
+	StringBase();
+	StringBase(const T *text);
+	StringBase(const StringBase<T> &text);
+	~StringBase();
 	T *m_data;
 	void concat(const T *text, int length);
 	void set(const StringBase<T> &text);
@@ -34,9 +38,9 @@ public:
 class BFMERetailAsciiString : public StringBase<char>
 {
 public:
-	BFMERetailAsciiString(const char *text);
-	BFMERetailAsciiString(const BFMERetailAsciiString &text);
-	~BFMERetailAsciiString(void);
+	BFMERetailAsciiString(const char *text) : StringBase<char>(text) {}
+	BFMERetailAsciiString(const BFMERetailAsciiString &text) : StringBase<char>(text) {}
+	~BFMERetailAsciiString(void) {}
 
 	const char *str(void) const
 	{
@@ -112,7 +116,7 @@ int __cdecl parseMod(char *args[], int num)
 		if (!TheLocalFileSystem->doesFileExist(modPath.str()))
 			return 2;
 
-		if (stat(modPath.str(), &statHolder.m_stat) != 0)
+		if ((*__imp__stat)(modPath.str(), &statHolder.m_stat) != 0)
 			return 2;
 
 		if (statHolder.m_stat.st_mode & 0x4000)
