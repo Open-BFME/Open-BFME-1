@@ -1,5 +1,4 @@
 // ?method@Rva002C1930Owner@@QAEXPAX00@Z
-// partial score=0.922 date=2026-09-23
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail RVA 0x002C1930 (205 bytes), thiscall taking (void *arg1, void*, void*)
@@ -127,8 +126,7 @@ void Rva002C1930Owner::method( void *arg1, void * /*arg2*/, void * /*arg3*/ )
 	if ( ( shiftedByte & 1 ) == 0 && victim )
 	{
 		float sumRange = obj->m_range0xbc + target->m_range0xbc;
-		float gapSq = ( (Object *)victim )->getDistanceSquared( (const Object *)target );
-		if ( sumRange * sumRange >= gapSq )
+		if ( ( (Object *)victim )->getDistanceSquared( (const Object *)target ) <= sumRange * sumRange )
 			return;
 	}
 
