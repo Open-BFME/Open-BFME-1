@@ -5518,5 +5518,15 @@
   "after_sha256": "7b3329efa218f7e0e5bd374b0a1d0c087ebf78924474853c4da23782790b16c3",
   "evidence": "reverse/identity_evidence/00720d10.md",
   "reason": "False whole-TU pairing caused by moving only the unchanged-name getPartitionBucket row. Vector3 and doLighting remain unchanged in the retained original source; Rva00720D10Data and rva00720D10 retain the existing bank identities of a separate append body."
+ },
+ {
+  "old_path": "reverse/attempts/0x001de2a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/System/BfmeCellRva001DE2A0.cpp",
+  "old_name": "compute",
+  "new_name": "rva001DE2A0",
+  "before_sha256": "30e035837cc04e5eebfad1110965c6b1cb90702b6528eca09c34c2319fc4f803",
+  "after_sha256": "c8cdbf39bedee61de249bb8e7927fd653b36d4b1aef141fbbf1a8ae1a3428cdc",
+  "evidence": "reverse/symbols.csv",
+  "reason": "compute was an invented method name in the 0.34 bank, whose own header says the owning method identity is not established. reverse/symbols.csv pins ?rva001DE2A0@BfmeCell@@QAEXPBUCoord3D@@MHPAX@Z at ILT 0x00004D27, the exact name the matched BfmeCellGrid::rva001B1AD0 sweep calls, so the landed body takes that address-keeping name."
  }
 ]
