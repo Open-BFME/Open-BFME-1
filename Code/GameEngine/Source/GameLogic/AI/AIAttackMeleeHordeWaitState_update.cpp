@@ -32,6 +32,10 @@ public:
 	Bool isStealthedAndUndetected(const Object *viewer) const;
 };
 
+// The ILT keeps this TU-specific ABI spelling; the receiver's canonical class
+// name is unresolved, while its visibility-query contract is established.
+typedef BFMEObjectStealthQuery ObjectStealthVisibilityQueryView;
+
 #define HORDE_SLOT(N) virtual int slot##N() = 0
 
 class HordeContainInterface
@@ -223,7 +227,7 @@ StateReturnType AIAttackMeleeHordeWaitState::update()
 	if (machineGoal == 0)
 		return STATE_SUCCESS;
 
-	if (((BFMEObjectStealthQuery *)machineGoal)->isStealthedAndUndetected(
+	if (((ObjectStealthVisibilityQueryView *)machineGoal)->isStealthedAndUndetected(
 			(const Object *)attacker->getControllingPlayer()))
 		return STATE_FAILURE;
 
