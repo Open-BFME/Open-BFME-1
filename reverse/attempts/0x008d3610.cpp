@@ -1,9 +1,7 @@
 // ?update@Rva008D3610Owner@@QAEXHPAX@Z
-// partial score=0.285 date=2026-09-10
-// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
-// Address-derived Apt update body at retail 0x008D3610.
-// The caller is the named Rva008A25C0 Apt dispatcher; the original owner
-// spelling is not recovered, so this TU keeps the witnessed offsets local.
+// partial score=0.291 date=2026-09-25
+// ?update@Rva008D3610Owner@@QAEXHPAX@Z
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /FAsc /Fabuild/shape_008d3610.cod
 
 extern void rva008CC540ZeroThirdForwarder(void *, void *, void *);
 extern void (*TheBfmeFree)(void *, unsigned int);
@@ -23,7 +21,14 @@ public:
 struct Rva008D3610Nested
 {
 	int m_count;
-	int m_buffer;
+	char *m_buffer;
+};
+
+struct Rva008D3610NestedEntry
+{
+	int m_00;
+	int m_04;
+	char *m_value;
 };
 
 struct Rva008D3610Node;
@@ -31,43 +36,42 @@ struct Rva008D3610Node;
 struct Rva008D3610Group
 {
 	int m_count;
-	int m_items;
+	Rva008D3610Node **m_items;
 };
 
 struct Rva008D3610Node
 {
 	int m_type;
 	int m_value04;
-	int m_value08;
+	char *m_value08;
 	char m_padding0c[0x28];
-	int m_value34;
+	char *m_value34;
 	char m_padding38[4];
-	int m_nested;
+	Rva008D3610Nested *m_nested;
 };
 
 class Rva008D3610Owner
 {
 public:
-	static __forceinline int count(Rva008D3610Owner *owner)
-	{
-		return owner->m_groupCount;
-	}
-
 	void update(int delta, void *context);
 
-	private:
+private:
 	int m_groupCount;
-	int m_groups;
-	int m_child;
+	Rva008D3610Group *m_groups;
+	void *m_child;
 };
+
+#define RVA008D3610_SUBTRACT(lvalue) if (lvalue != 0) (unsigned &)(lvalue) -= (unsigned)amount
 
 // ?update@Rva008D3610Owner@@QAEXHPAX@Z
 void Rva008D3610Owner::update(int delta, void *context)
 {
-	for (int groupIndex = 0; groupIndex < m_groupCount; ++groupIndex)
+	register int amount = delta;
+	for (register int groupIndex = 0; groupIndex < m_groupCount; ++groupIndex)
 	{
-		int itemCount = ((Rva008D3610Group *)m_groups)[groupIndex].m_count;
-		for (int itemIndex = 0; itemIndex < itemCount; ++itemIndex)
+		for (int itemIndex = 0;
+			itemIndex < ((Rva008D3610Group *)m_groups)[groupIndex].m_count;
+			++itemIndex)
 		{
 			switch (((Rva008D3610Node **)
 				((Rva008D3610Group *)m_groups)[groupIndex].m_items)
@@ -78,13 +82,13 @@ void Rva008D3610Owner::update(int delta, void *context)
 					(void *)((Rva008D3610Node **)
 						((Rva008D3610Group *)m_groups)[groupIndex].m_items)
 						[itemIndex]->m_value04,
-					(void *)delta, (void *)context);
+					(void *)amount, (void *)context);
 				if (((Rva008D3610Node **)
 					((Rva008D3610Group *)m_groups)[groupIndex].m_items)
 					[itemIndex]->m_value04 != 0)
 					((Rva008D3610Node **)
 						((Rva008D3610Group *)m_groups)[groupIndex].m_items)
-						[itemIndex]->m_value04 -= delta;
+						[itemIndex]->m_value04 -= amount;
 				break;
 
 			case 1:
@@ -93,7 +97,29 @@ void Rva008D3610Owner::update(int delta, void *context)
 					[itemIndex]->m_value04 != 0)
 					((Rva008D3610Node **)
 						((Rva008D3610Group *)m_groups)[groupIndex].m_items)
-						[itemIndex]->m_value04 -= delta;
+						[itemIndex]->m_value04 -= amount;
+				break;
+
+			case 7:
+				rva008CC540ZeroThirdForwarder(
+					(void *)((Rva008D3610Node **)
+						((Rva008D3610Group *)m_groups)[groupIndex].m_items)
+						[itemIndex]->m_value08,
+					(void *)amount, (void *)context);
+				if (((Rva008D3610Node **)
+					((Rva008D3610Group *)m_groups)[groupIndex].m_items)
+					[itemIndex]->m_value08 != 0)
+					((Rva008D3610Node **)
+						((Rva008D3610Group *)m_groups)[groupIndex].m_items)
+						[itemIndex]->m_value08 -= amount;
+				if (((Rva008D3610Node **)
+					((Rva008D3610Group *)m_groups)[groupIndex].m_items)
+					[itemIndex]->m_value04 < 0)
+					((Rva008D3610Node **)
+					((Rva008D3610Group *)m_groups)[groupIndex].m_items)
+					[itemIndex]->m_value04 = -((Rva008D3610Node **)
+						((Rva008D3610Group *)m_groups)[groupIndex].m_items)
+						[itemIndex]->m_value04;
 				break;
 
 			case 2:
@@ -104,20 +130,21 @@ void Rva008D3610Owner::update(int delta, void *context)
 						[itemIndex]->m_nested;
 				if (nested != 0)
 				{
+					Rva008D3610NestedEntry *entry =
+						(Rva008D3610NestedEntry *)nested->m_buffer;
 					int nestedIndex = 0;
 					while (nestedIndex < nested->m_count)
 					{
-						int offset = nestedIndex * 12;
-						int *value = (int *)(nested->m_buffer + offset + 8);
 						rva008CC540ZeroThirdForwarder(
-							(void *)*value, (void *)delta, (void *)context);
-						if (*value != 0)
-							*value -= delta;
+							(void *)entry->m_value, (void *)amount, (void *)context);
+						if (entry->m_value != 0)
+							entry->m_value -= amount;
 						++nestedIndex;
+						++entry;
 					}
 
 					if (nested->m_buffer != 0)
-						nested->m_buffer -= delta;
+						nested->m_buffer -= amount;
 				}
 
 				if (((Rva008D3610Node **)
@@ -125,44 +152,19 @@ void Rva008D3610Owner::update(int delta, void *context)
 					[itemIndex]->m_value34 != 0)
 					((Rva008D3610Node **)
 						((Rva008D3610Group *)m_groups)[groupIndex].m_items)
-						[itemIndex]->m_value34 -= delta;
+						[itemIndex]->m_value34 -= amount;
 
-				if (((Rva008D3610Node **)
+				RVA008D3610_SUBTRACT(((Rva008D3610Node **)
 					((Rva008D3610Group *)m_groups)[groupIndex].m_items)
-					[itemIndex]->m_nested != 0)
-					((Rva008D3610Node **)
-						((Rva008D3610Group *)m_groups)[groupIndex].m_items)
-						[itemIndex]->m_nested -= delta;
+					[itemIndex]->m_nested);
 				break;
 			}
 
-			case 7:
-				rva008CC540ZeroThirdForwarder(
-					(void *)((Rva008D3610Node **)
-						((Rva008D3610Group *)m_groups)[groupIndex].m_items)
-						[itemIndex]->m_value08,
-					(void *)delta, (void *)context);
-				if (((Rva008D3610Node **)
-					((Rva008D3610Group *)m_groups)[groupIndex].m_items)
-					[itemIndex]->m_value08 != 0)
-					((Rva008D3610Node **)
-						((Rva008D3610Group *)m_groups)[groupIndex].m_items)
-						[itemIndex]->m_value08 -= delta;
-				if (((Rva008D3610Node **)
-					((Rva008D3610Group *)m_groups)[groupIndex].m_items)
-					[itemIndex]->m_value04 < 0)
-					((Rva008D3610Node **)
-						((Rva008D3610Group *)m_groups)[groupIndex].m_items)
-						[itemIndex]->m_value04 = -((Rva008D3610Node **)
-							((Rva008D3610Group *)m_groups)[groupIndex].m_items)
-							[itemIndex]->m_value04;
-				break;
 			}
 		}
 	}
 
-	if (m_groups != 0)
-		m_groups -= delta;
+	RVA008D3610_SUBTRACT(m_groups);
 
 	if (m_child != 0)
 	{
