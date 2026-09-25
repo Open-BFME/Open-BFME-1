@@ -140,7 +140,7 @@ public:
 	virtual void _pad126(void) = 0;
 	virtual bool chooseLocomotorSet(LocomotorSetType wst) = 0;
 
-	void requestPath(Coord3D *pos, bool immediately);
+	void requestPath(Coord3D *position, bool immediately);
 };
 
 class Object
@@ -162,7 +162,7 @@ extern "C" void bfmeRetailCritterDesyncLog(CRCParameterCheck *sink, const char *
 class Pathfinder
 {
 public:
-	void removeGoal(Object *obj);
+	void removeGoal(Object *object);
 };
 
 class AI
