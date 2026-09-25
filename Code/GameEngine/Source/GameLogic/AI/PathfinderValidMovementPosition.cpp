@@ -112,17 +112,17 @@ struct BfmeMovementPositionInfo
 class Pathfinder
 {
 public:
-	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
+	PathfindCell *getCell(PathfindLayerEnum layer, Int cellX, Int cellY);
 	Bool bfmeStepD4F90(void *state, PathfindCell *cell);
-	Bool validMovementPosition(const Coord3D *pos, PathfindLayerEnum layer,
+	Bool validMovementPosition(const Coord3D *worldPosition, PathfindLayerEnum layer,
 		UnsignedInt validSurfaces, Object *object);
 };
 
-Bool Pathfinder::validMovementPosition(const Coord3D *pos,
+Bool Pathfinder::validMovementPosition(const Coord3D *worldPosition,
 	PathfindLayerEnum layer, UnsignedInt validSurfaces, Object *object)
 {
-	Int x = (Int)(pos->x * 0.1f);
-	Int y = (Int)(pos->y * 0.1f);
+	Int x = (Int)(worldPosition->x * 0.1f);
+	Int y = (Int)(worldPosition->y * 0.1f);
 
 	PathfindCell *cell = getCell(layer, x, y);
 	if (cell == 0)
