@@ -48,29 +48,29 @@ struct ICoord2D
 class Pathfinder
 {
 public:
-	Bool sameCell( Object *obj, Coord3D from, Coord3D to );
+	Bool sameCell( Object *object, Coord3D fromPosition, Coord3D toPosition );
 
 	void bfmeQuery( Object *object, Int *radius, Bool *centerInCell );
 	bool worldToCell( const Coord3D *position, ICoord2D *cell );
 };
 
-Bool Pathfinder::sameCell( Object *obj, Coord3D from, Coord3D to )
+Bool Pathfinder::sameCell( Object *object, Coord3D fromPosition, Coord3D toPosition )
 {
 	ICoord2D fromCell;
 	Bool centerInCell;
-	bfmeQuery( obj, &fromCell.x, &centerInCell );
+	bfmeQuery( object, &fromCell.x, &centerInCell );
 
 	if (!centerInCell) {
-		from.x += PATHFIND_CELL_SIZE_F/2;
-		from.y += PATHFIND_CELL_SIZE_F/2;
-		to.x += PATHFIND_CELL_SIZE_F/2;
-		to.y += PATHFIND_CELL_SIZE_F/2;
+		fromPosition.x += PATHFIND_CELL_SIZE_F/2;
+		fromPosition.y += PATHFIND_CELL_SIZE_F/2;
+		toPosition.x += PATHFIND_CELL_SIZE_F/2;
+		toPosition.y += PATHFIND_CELL_SIZE_F/2;
 	}
 
-	worldToCell( &from, &fromCell );
+	worldToCell( &fromPosition, &fromCell );
 
-	ICoord2D &toCell = *(ICoord2D *)&from;
-	worldToCell( &to, &toCell );
+	ICoord2D &toCell = *(ICoord2D *)&fromPosition;
+	worldToCell( &toPosition, &toCell );
 
 	return fromCell.x == toCell.x && fromCell.y == toCell.y;
 }
