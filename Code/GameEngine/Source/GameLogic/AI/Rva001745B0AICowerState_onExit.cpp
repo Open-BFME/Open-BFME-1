@@ -42,14 +42,14 @@ typedef BitFlags<86> ObjectStatusMaskType;
 class Rva001745B0FlagWord
 {
 public:
-    Bool test(int index) const
+    Bool test(int bitIndex) const
     {
-        return m_bits.test(index);
+        return m_bits.test(bitIndex);
     }
 
-    void reset(int index)
+    void reset(int bitIndex)
     {
-        m_bits.reset(index);
+        m_bits.reset(bitIndex);
     }
 
 private:
