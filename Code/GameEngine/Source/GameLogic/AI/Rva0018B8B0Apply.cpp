@@ -24,7 +24,7 @@ public:
 class Rva0018B8B0Holder
 {
 public:
-	void apply(Rva0018B8B0Arg *arg, bool flag);
+	void apply(Rva0018B8B0Arg *arg, bool shouldClearExistingIds);
 
 private:
 	int m_vptr;
@@ -32,11 +32,11 @@ private:
 };
 
 // ?apply@Rva0018B8B0Holder@@QAEXPAVRva0018B8B0Arg@@_N@Z
-void Rva0018B8B0Holder::apply(Rva0018B8B0Arg *arg, bool flag)
+void Rva0018B8B0Holder::apply(Rva0018B8B0Arg *arg, bool shouldClearExistingIds)
 {
 	if (arg)
 	{
-		if (flag)
+		if (shouldClearExistingIds)
 			m_ids.clear();
 
 		((BfmePartCDF *)&m_ids)->bfmeCopyOneCDF(arg->getPart());
