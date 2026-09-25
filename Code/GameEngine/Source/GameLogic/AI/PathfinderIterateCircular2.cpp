@@ -41,38 +41,38 @@ struct AdjustTargetInfo
 	Object *m_target;
 	const Coord3D *m_targetPosition;
 	const Weapon *m_weapon;
-	__forceinline Bool check(Int x, Int y) const;
+	__forceinline Bool check(Int cellX, Int cellY) const;
 };
 
 class Pathfinder
 {
 public:
-	Bool iterateCircular2(ICoord2D *cell, Int limit, void *userData);
+	Bool iterateCircular2(ICoord2D *centerCell, Int maxCells, void *adjustTargetInfoData);
 
 protected:
 	friend struct AdjustTargetInfo;
-	Bool checkForTarget(const Object *obj, Int cellX, Int cellY,
+	Bool checkForTarget(const Object *object, Int cellX, Int cellY,
 		const Weapon *weapon, const Object *target,
-		const Coord3D *targetPos, Int radius, Bool center, Coord3D *dest);
+		const Coord3D *targetPosition, Int radius, Bool centerInCell, Coord3D *destination);
 };
 
-__forceinline Bool AdjustTargetInfo::check(Int x, Int y) const
+__forceinline Bool AdjustTargetInfo::check(Int cellX, Int cellY) const
 {
-	return m_pathfinder->checkForTarget(m_object, x, y, m_weapon, m_target,
+	return m_pathfinder->checkForTarget(m_object, cellX, cellY, m_weapon, m_target,
 		m_targetPosition, m_radius, m_centerInCell, m_destination);
 }
 
-Bool Pathfinder::iterateCircular2(ICoord2D *cell, Int limit, void *userData)
+Bool Pathfinder::iterateCircular2(ICoord2D *centerCell, Int maxCells, void *adjustTargetInfoData)
 {
 	if (Glo012F0239 && TheCRCParameterCheck)
 	{
 		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 			"\t\tIterateCircular2 called with center=%d,%d, maxCells=%d",
-			cell->x, cell->y, limit);
+			centerCell->x, centerCell->y, maxCells);
 	}
 
-	AdjustTargetInfo *info = (AdjustTargetInfo *)userData;
-	if (info->check(cell->x, cell->y))
+	AdjustTargetInfo *info = (AdjustTargetInfo *)adjustTargetInfoData;
+	if (info->check(centerCell->x, centerCell->y))
 	{
 		return true;
 	}
@@ -82,15 +82,15 @@ Bool Pathfinder::iterateCircular2(ICoord2D *cell, Int limit, void *userData)
 	Int j = 0;
 	Int delta = 1;
 
-	while (limit > 0)
+	while (maxCells > 0)
 	{
-		limit -= 4 * delta + 2;
+		maxCells -= 4 * delta + 2;
 		for (Int count = delta; count > 0; --count)
 		{
 			++i;
 			if (bestDistSq == 0 || i * i + j * j < bestDistSq)
 			{
-				if (info->check(cell->x + i, cell->y + j))
+				if (info->check(centerCell->x + i, centerCell->y + j))
 				{
 					bestDistSq = i * i + j * j;
 				}
@@ -102,7 +102,7 @@ Bool Pathfinder::iterateCircular2(ICoord2D *cell, Int limit, void *userData)
 			++j;
 			if (bestDistSq == 0 || i * i + j * j < bestDistSq)
 			{
-				if (info->check(cell->x + i, cell->y + j))
+				if (info->check(centerCell->x + i, centerCell->y + j))
 				{
 					bestDistSq = i * i + j * j;
 				}
@@ -114,7 +114,7 @@ Bool Pathfinder::iterateCircular2(ICoord2D *cell, Int limit, void *userData)
 			--i;
 			if (bestDistSq == 0 || i * i + j * j < bestDistSq)
 			{
-				if (info->check(cell->x + i, cell->y + j))
+				if (info->check(centerCell->x + i, centerCell->y + j))
 				{
 					bestDistSq = i * i + j * j;
 				}
@@ -126,7 +126,7 @@ Bool Pathfinder::iterateCircular2(ICoord2D *cell, Int limit, void *userData)
 			--j;
 			if (bestDistSq == 0 || i * i + j * j < bestDistSq)
 			{
-				if (info->check(cell->x + i, cell->y + j))
+				if (info->check(centerCell->x + i, centerCell->y + j))
 				{
 					bestDistSq = i * i + j * j;
 				}
