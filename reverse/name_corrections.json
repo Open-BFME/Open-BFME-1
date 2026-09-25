@@ -5018,5 +5018,35 @@
   "after_sha256": "2518a6392f8e8c8265602cf1be5886f87ad667e897cec9e929f582829c7b1117",
   "evidence": "docs/naming_evidence.md",
   "reason": "stash local temp removed by typed assignment; +0xC member is read as a float by fld at 0x002350C0+0x36 so it keeps an offset token"
+ },
+ {
+  "old_path": "reverse/attempts/0x0060c620.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/LivingWorldEyeTowerRva0060C620.cpp",
+  "old_name": "m_firstTarget",
+  "new_name": "m_ptr18",
+  "before_sha256": "bca3c2303915f695f5bc4492765480876d83da87147cd5fac1cd14aee1d338aa",
+  "after_sha256": "e58b9e0c368e65a500ea49949562b7b229989065caf049c9acbaa07536d5803d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank guess with no layout witness (name_oracle has no LivingWorldEyeTower layout)"
+ },
+ {
+  "old_path": "reverse/attempts/0x0060c620.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/LivingWorldEyeTowerRva0060C620.cpp",
+  "old_name": "m_secondTarget",
+  "new_name": "m_ptr20",
+  "before_sha256": "bca3c2303915f695f5bc4492765480876d83da87147cd5fac1cd14aee1d338aa",
+  "after_sha256": "e58b9e0c368e65a500ea49949562b7b229989065caf049c9acbaa07536d5803d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank guess with no layout witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x0060c620.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/LivingWorldEyeTowerRva0060C620.cpp",
+  "old_name": "updatePosition",
+  "new_name": "rva0060C620",
+  "before_sha256": "bca3c2303915f695f5bc4492765480876d83da87147cd5fac1cd14aee1d338aa",
+  "after_sha256": "e58b9e0c368e65a500ea49949562b7b229989065caf049c9acbaa07536d5803d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "updatePosition was a bank guess with no caller string or vtable evidence and the matched caller plus existing symbols.csv pin already use rva0060C620 on the vtable-proven LivingWorldEyeTower owner"
  }
 ]
