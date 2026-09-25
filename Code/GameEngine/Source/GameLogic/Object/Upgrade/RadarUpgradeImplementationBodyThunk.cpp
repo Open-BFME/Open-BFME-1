@@ -1,74 +1,90 @@
 // cl: /DNDEBUG /MD /GX- /O2 /Ob2
+//
+// Retail 0x002D7BD0, 67 bytes: Zero Hour's RadarUpgrade::upgradeImplementation.
+// It overrides the UpgradeMux base at +0x10, so `this` arrives adjusted and the
+// module data (+4) and object (+8) are read at -0xC and -8.  addRadar is the
+// Player body the ledger keeps as Rva000CBFA0Player::addRadar, and BFME's module
+// lookup is the protected Object::findModule.
 
-__declspec(naked) void RadarUpgradeImplementationBodyThunk()
+typedef bool Bool;
+enum NameKeyType { NAMEKEY_INVALID = 0 };
+
+class NameKeyGenerator
 {
-	__asm {
-		_emit 056h
-		_emit 08Bh
-		_emit 0F1h
-		_emit 08Bh
-		_emit 04Eh
-		_emit 0F8h
-		_emit 057h
-		_emit 08Bh
-		_emit 07Eh
-		_emit 0F4h
-		_emit 0E8h
-		_emit 045h
-		_emit 08Ch
-		_emit 0D4h
-		_emit 0FFh
-		_emit 033h
-		_emit 0C9h
-		_emit 08Ah
-		_emit 04Fh
-		_emit 070h
-		_emit 051h
-		_emit 08Bh
-		_emit 0C8h
-		_emit 0E8h
-		_emit 012h
-		_emit 0FEh
-		_emit 0D3h
-		_emit 0FFh
-		_emit 08Bh
-		_emit 00Dh
-		_emit 000h
-		_emit 0D6h
-		_emit 02Eh
-		_emit 001h
-		_emit 068h
-		_emit 014h
-		_emit 001h
-		_emit 009h
-		_emit 001h
-		_emit 0E8h
-		_emit 0DBh
-		_emit 031h
-		_emit 0D6h
-		_emit 0FFh
-		_emit 08Bh
-		_emit 04Eh
-		_emit 0F8h
-		_emit 050h
-		_emit 0E8h
-		_emit 01Eh
-		_emit 032h
-		_emit 0D5h
-		_emit 0FFh
-		_emit 085h
-		_emit 0C0h
-		_emit 05Fh
-		_emit 05Eh
-		_emit 074h
-		_emit 007h
-		_emit 08Bh
-		_emit 0C8h
-		_emit 0E9h
-		_emit 0E2h
-		_emit 087h
-		_emit 0D6h
-		_emit 0FFh
-		_emit 0C3h
-	}
+public:
+	NameKeyType nameToKey(const char *name);
+};
+
+extern NameKeyGenerator *TheNameKeyGenerator;
+
+#define NAMEKEY(s) TheNameKeyGenerator->nameToKey(s)
+
+class Player;
+
+class Rva000CBFA0Player
+{
+public:
+	void addRadar(Bool disableProof);
+};
+
+class Module;
+
+class Object
+{
+	friend class RadarUpgrade;
+
+public:
+	Player *getControllingPlayer() const;
+
+protected:
+	Module *findModule(NameKeyType key) const;
+};
+
+class RadarUpdate
+{
+public:
+	void extendRadar();
+};
+
+struct RadarUpgradeModuleData
+{
+	char m_unmodelled00[0x70];
+	Bool m_isDisableProof;
+};
+
+class ObjectModule
+{
+public:
+	virtual ~ObjectModule();
+
+protected:
+	const RadarUpgradeModuleData *m_moduleData;
+	Object *m_object;
+	int m_unmodelled0C;
+};
+
+class UpgradeMux
+{
+protected:
+	virtual void upgradeImplementation() = 0;
+};
+
+class RadarUpgrade : public ObjectModule, public UpgradeMux
+{
+protected:
+	virtual void upgradeImplementation();
+};
+
+void RadarUpgrade::upgradeImplementation()
+{
+	const RadarUpgradeModuleData *md = m_moduleData;
+
+	Player *player = m_object->getControllingPlayer();
+
+	((Rva000CBFA0Player *)player)->addRadar(md->m_isDisableProof);
+
+	NameKeyType radarUpdateKey = NAMEKEY("RadarUpdate");
+	RadarUpdate *radarUpdate = (RadarUpdate *)m_object->findModule(radarUpdateKey);
+	if (radarUpdate)
+		radarUpdate->extendRadar();
 }
