@@ -25,6 +25,7 @@
 // down, so neither is affected by it.
 #define _BFME_RETAIL_TREE_INSERT_LAYOUT
 #include <set>
+#include <vector>
 
 typedef unsigned char Bool;
 typedef unsigned char UnsignedByte;
@@ -141,6 +142,11 @@ extern BfmeTaintManager *TheTaintManager;
 
 unsigned int packShroudPixel(UnsignedByte level);
 
+struct tagRECT;
+typedef tagRECT RECT;
+
+extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
+
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DShroud.h
 class W3DShroud
 {
@@ -149,6 +155,9 @@ public:
 	~W3DShroud();
 	Bool ReAcquireResources(void);
 	void setShroudLevel(int x, int y, UnsignedByte level, bool textureOnly);
+
+protected:
+	void interpolateFogLevels(RECT *rect);
 
 private:
 	int m_numCellsX;                    // +0x00
@@ -279,6 +288,110 @@ void W3DShroud::setShroudLevel(int x, int y, UnsignedByte level, bool textureOnl
 		{
 			shroud30BC->setShroudLevel30BC(
 				x, y, TheTaintManager->getTaintLevelByte006e(x, y), true);
+		}
+	}
+}
+
+// ?interpolateFogLevels@W3DShroud@@IAEXPAUtagRECT@@@Z
+// Retail 0x0071B840, reached only from W3DShroud::render (0x0071BBC0) through
+// ILT 0x0041494D with the address of its source rectangle, which this body
+// never reads. Zero Hour W3DShroud.cpp:747 is the shape: the timeGetTime
+// static, the per-frame change clamped to 255 and a setShroudLevel(i, j, level,
+// TRUE) per changed cell. BFME halves the rate (VA 0x01120D58 holds 0.1275f,
+// ZH's 255/1000 is 0.255) and, while m_40 is set, walks only m_dirty, retiring
+// cells that reached their final level after the walk.
+void W3DShroud::interpolateFogLevels(RECT *rect)
+{
+	static unsigned int prevTime = (unsigned int)timeGetTime();
+	unsigned int timeDiff = (unsigned int)timeGetTime() - prevTime;
+	if (timeDiff == 0)
+		return;
+	prevTime += timeDiff;
+
+	int maxFogChange = (int)((float)timeDiff * 0.1275f);
+	if (maxFogChange > 255)
+		maxFogChange = 255;
+	UnsignedByte levelDelta = (UnsignedByte)maxFogChange;
+
+	UnsignedByte *finalLevel = m_finalFogData;
+	UnsignedByte *startLevel = m_currentFogData;
+	if (m_40)
+	{
+		int dirtyCount = (int)m_dirty.size();
+		int width = m_numCellsX;
+		if (width <= 0 || dirtyCount <= 0)
+			return;
+
+		_STL::vector<int> remove;
+		for (_STL::set<int>::iterator it = m_dirty.begin();
+			it != m_dirty.end(); ++it)
+		{
+			int index = *it;
+			UnsignedByte start = startLevel[index];
+			UnsignedByte final = finalLevel[index];
+
+			if (final != start)
+			{
+				if (final < start)
+				{
+					if ((int)start - (int)final < (int)levelDelta)
+					{
+						startLevel[index] = final;
+						remove.push_back(index);
+					}
+					else
+						startLevel[index] = (UnsignedByte)(start - levelDelta);
+				}
+				else
+				{
+					if ((int)final - (int)start < (int)levelDelta)
+					{
+						startLevel[index] = final;
+						remove.push_back(index);
+					}
+					else
+						startLevel[index] = (UnsignedByte)(start + levelDelta);
+				}
+
+				setShroudLevel(index % m_numCellsX, index / m_numCellsX,
+					startLevel[index], true);
+			}
+			else
+				remove.push_back(index);
+		}
+
+		for (_STL::vector<int>::iterator it = remove.begin();
+			it != remove.end(); ++it)
+			m_dirty.erase(*it);
+	}
+	else
+	{
+		for (int j = 0; j < m_numCellsY; ++j)
+		{
+			for (int i = 0; i < m_numCellsX; ++i, ++startLevel, ++finalLevel)
+			{
+				UnsignedByte start = *startLevel;
+				UnsignedByte final = *finalLevel;
+				if (final == start)
+					continue;
+
+				if (final < start)
+				{
+					if ((int)start - (int)final < (int)levelDelta)
+						*startLevel = final;
+					else
+						*startLevel = (UnsignedByte)(start - levelDelta);
+				}
+				else
+				{
+					if ((int)final - (int)start < (int)levelDelta)
+						*startLevel = final;
+					else
+						*startLevel = (UnsignedByte)(start + levelDelta);
+				}
+
+				setShroudLevel(i, j, *startLevel, true);
+			}
 		}
 	}
 }
