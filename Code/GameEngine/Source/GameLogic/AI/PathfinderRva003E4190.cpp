@@ -124,11 +124,11 @@ void Pathfinder::Rva003E4190(Object *object)
 	{
 		if (layer->isUsed())
 		{
-			ICoord2D cell;
-			if (!worldToCell(&worldPosition, &cell))
+			ICoord2D cellIndex;
+			if (!worldToCell(&worldPosition, &cellIndex))
 			{
 				PathfindCell *candidate = getCell((PathfindLayerEnum)layerNumber,
-					cell.x, cell.y);
+					cellIndex.x, cellIndex.y);
 				if (candidate != 0 && candidate->getLayer() == layerNumber &&
 					candidate->getType() != 5)
 				{
