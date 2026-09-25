@@ -67,7 +67,7 @@ class Pathfinder
 {
 public:
 	void removeGoal(Object *object);
-	void snapPosition(Object *object, Coord3D *position);
+	void snapPosition(Object *object, Coord3D *destinationPosition);
 };
 
 class AI
