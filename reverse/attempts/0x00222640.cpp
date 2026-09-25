@@ -1,5 +1,5 @@
-// ?dispatch@Rva00222640Owner@@QAEXPAX@Z
-// partial score=0.87 date=2026-09-23
+// ?d_00222640@@YAXXZ
+// partial score=0.92 date=2026-09-24
 // ?dispatch@Rva00222640Owner@@QAEXPAX@Z present-unmatched
 // cl: /DNDEBUG /MD /EHs-c-
 // stlport
@@ -89,6 +89,13 @@ public:
 	virtual void notify(void);
 };
 
+struct Rva00222640ListNode
+{
+	Rva00222640ListNode *m_next;
+	Rva00222640ListNode *m_prev;
+	Rva00222640Probe *m_value;
+};
+
 class Rva00222640Owner
 {
 public:
@@ -124,12 +131,13 @@ void Rva00222640Owner::dispatch(void *arg)
 		return ((Rva00222640BaseA *)((char *)owner - 8))->finish(0);
 	}
 
-	_STL::list<Rva00222640Probe *>::iterator current = m_nodes.begin();
-	while (current != m_nodes.end())
+	Rva00222640ListNode *head =
+		*(Rva00222640ListNode **)&m_nodes;
+	Rva00222640ListNode *node = head->m_next;
+	while (node != head)
 	{
-		register Rva00222640Probe *probe;
-		probe = *current;
-		++current;
+		Rva00222640Probe *probe = node->m_value;
+		node = node->m_next;
 		if (probe != 0)
 		{
 			if (probe->check() != 0)
