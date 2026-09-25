@@ -18,8 +18,6 @@
 ?dup_003e25f0@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/RTS/ScoreKeeper.cpp)
 ?dup_00401600@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/RTS/ScoreKeeper.cpp)
 ?dup_00401630@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp)
-?dup_00473400@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp)
-?dup_004739f0@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp)
 ?dup_004e5d30@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/RTS/PlayerTemplate.cpp)
 ?dup_00587390@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/RTS/ScoreKeeper.cpp)
 ?dup_006016b0@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameNetwork/GameSpy/GSConfig.cpp)
