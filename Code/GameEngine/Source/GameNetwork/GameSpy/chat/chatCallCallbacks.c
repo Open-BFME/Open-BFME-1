@@ -560,6 +560,9 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 
 	param = data->param;
 
+	/* Cases are not in enum order. MSVC 7.1 colours each case from the one
+	   before it and then merges identical case bodies; this order gives
+	   retail's ten merged blocks, their registers and its jump table. */
 	switch(data->type)
 	{
 	case CALLBACK_RAW:
@@ -642,14 +645,6 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
-	case CALLBACK_CHANNEL_MODE_CHANGED:
-	{
-		ciCallbackChannelModeChangedParams *callbackParams = (ciCallbackChannelModeChangedParams *)data->callbackParams;
-		chatChannelModeChanged callback = (chatChannelModeChanged)data->callback;
-		callback(chat, CHANNEL, MODE, param);
-		break;
-	}
-
 	case CALLBACK_USER_MODE_CHANGED:
 	{
 		ciCallbackUserModeChangedParams *callbackParams = (ciCallbackUserModeChangedParams *)data->callbackParams;
@@ -658,11 +653,19 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
-	case CALLBACK_USER_LIST_UPDATED:
+	case CALLBACK_GET_BASIC_USER_INFO:
 	{
-		ciCallbackUserListUpdatedParams *callbackParams = (ciCallbackUserListUpdatedParams *)data->callbackParams;
-		chatUserListUpdated callback = (chatUserListUpdated)data->callback;
-		callback(chat, CHANNEL, param);
+		ciCallbackGetBasicUserInfoParams *callbackParams = (ciCallbackGetBasicUserInfoParams *)data->callbackParams;
+		chatGetBasicUserInfoCallback callback = (chatGetBasicUserInfoCallback)data->callback;
+		callback(chat, SUCCESS, NICK, USER, ADDRESS, param);
+		break;
+	}
+
+	case CALLBACK_CHANNEL_MODE_CHANGED:
+	{
+		ciCallbackChannelModeChangedParams *callbackParams = (ciCallbackChannelModeChangedParams *)data->callbackParams;
+		chatChannelModeChanged callback = (chatChannelModeChanged)data->callback;
+		callback(chat, CHANNEL, MODE, param);
 		break;
 	}
 
@@ -682,28 +685,11 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
-	case CALLBACK_ENTER_CHANNEL:
-	{
-		ciCallbackEnterChannelParams *callbackParams = (ciCallbackEnterChannelParams *)data->callbackParams;
-		chatEnterChannelCallback callback = (chatEnterChannelCallback)data->callback;
-		ciJoinCallbackCalled(chat, CHANNEL);
-		callback(chat, SUCCESS, RESULT, CHANNEL, param);
-		break;
-	}
-
 	case CALLBACK_GET_CHANNEL_TOPIC:
 	{
 		ciCallbackGetChannelTopicParams *callbackParams = (ciCallbackGetChannelTopicParams *)data->callbackParams;
 		chatGetChannelTopicCallback callback = (chatGetChannelTopicCallback)data->callback;
 		callback(chat, SUCCESS, CHANNEL, TOPIC, param);
-		break;
-	}
-
-	case CALLBACK_GET_CHANNEL_MODE:
-	{
-		ciCallbackGetChannelModeParams *callbackParams = (ciCallbackGetChannelModeParams *)data->callbackParams;
-		chatGetChannelModeCallback callback = (chatGetChannelModeCallback)data->callback;
-		callback(chat, SUCCESS, CHANNEL, MODE, param);
 		break;
 	}
 
@@ -723,27 +709,52 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		break;
 	}
 
-	case CALLBACK_GET_USER_INFO:
-	{
-		ciCallbackGetUserInfoParams *callbackParams = (ciCallbackGetUserInfoParams *)data->callbackParams;
-		chatGetUserInfoCallback callback = (chatGetUserInfoCallback)data->callback;
-		callback(chat, SUCCESS, NICK, USER, NAME, ADDRESS, NUM_CHANNELS, (const char **)CHANNELS, param);
-		break;
-	}
-
-	case CALLBACK_GET_BASIC_USER_INFO:
-	{
-		ciCallbackGetBasicUserInfoParams *callbackParams = (ciCallbackGetBasicUserInfoParams *)data->callbackParams;
-		chatGetBasicUserInfoCallback callback = (chatGetBasicUserInfoCallback)data->callback;
-		callback(chat, SUCCESS, NICK, USER, ADDRESS, param);
-		break;
-	}
-
 	case CALLBACK_GET_CHANNEL_BASIC_USER_INFO:
 	{
 		ciCallbackGetChannelBasicUserInfoParams *callbackParams = (ciCallbackGetChannelBasicUserInfoParams *)data->callbackParams;
 		chatGetChannelBasicUserInfoCallback callback = (chatGetChannelBasicUserInfoCallback)data->callback;
 		callback(chat, SUCCESS, CHANNEL, NICK, USER, ADDRESS, param);
+		break;
+	}
+
+	case CALLBACK_GET_GLOBAL_KEYS:
+	{
+		ciCallbackGetGlobalKeysParams *callbackParams = (ciCallbackGetGlobalKeysParams *)data->callbackParams;
+		chatGetGlobalKeysCallback callback = (chatGetGlobalKeysCallback)data->callback;
+		callback(chat, SUCCESS, USER, NUM, (const char **)KEYS, (const char **)VALUES, param);
+		break;
+	}
+
+	case CALLBACK_USER_LIST_UPDATED:
+	{
+		ciCallbackUserListUpdatedParams *callbackParams = (ciCallbackUserListUpdatedParams *)data->callbackParams;
+		chatUserListUpdated callback = (chatUserListUpdated)data->callback;
+		callback(chat, CHANNEL, param);
+		break;
+	}
+
+	case CALLBACK_GET_CHANNEL_MODE:
+	{
+		ciCallbackGetChannelModeParams *callbackParams = (ciCallbackGetChannelModeParams *)data->callbackParams;
+		chatGetChannelModeCallback callback = (chatGetChannelModeCallback)data->callback;
+		callback(chat, SUCCESS, CHANNEL, MODE, param);
+		break;
+	}
+
+	case CALLBACK_ENTER_CHANNEL:
+	{
+		ciCallbackEnterChannelParams *callbackParams = (ciCallbackEnterChannelParams *)data->callbackParams;
+		chatEnterChannelCallback callback = (chatEnterChannelCallback)data->callback;
+		ciJoinCallbackCalled(chat, CHANNEL);
+		callback(chat, SUCCESS, RESULT, CHANNEL, param);
+		break;
+	}
+
+	case CALLBACK_GET_USER_INFO:
+	{
+		ciCallbackGetUserInfoParams *callbackParams = (ciCallbackGetUserInfoParams *)data->callbackParams;
+		chatGetUserInfoCallback callback = (chatGetUserInfoCallback)data->callback;
+		callback(chat, SUCCESS, NICK, USER, NAME, ADDRESS, NUM_CHANNELS, (const char **)CHANNELS, param);
 		break;
 	}
 
@@ -792,14 +803,6 @@ static void ciCallCallback(CHAT chat, ciCallbackData *data)
 		ciCallbackBroadcastKeyChangedParams *callbackParams = (ciCallbackBroadcastKeyChangedParams *)data->callbackParams;
 		chatBroadcastKeyChanged callback = (chatBroadcastKeyChanged)data->callback;
 		callback(chat, CHANNEL, USER, KEY, VALUE, param);
-		break;
-	}
-
-	case CALLBACK_GET_GLOBAL_KEYS:
-	{
-		ciCallbackGetGlobalKeysParams *callbackParams = (ciCallbackGetGlobalKeysParams *)data->callbackParams;
-		chatGetGlobalKeysCallback callback = (chatGetGlobalKeysCallback)data->callback;
-		callback(chat, SUCCESS, USER, NUM, (const char **)KEYS, (const char **)VALUES, param);
 		break;
 	}
 
