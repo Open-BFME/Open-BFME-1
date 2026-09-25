@@ -1,5 +1,5 @@
-// Three more: four pairs of a flag and its permission bit, a fraction taken
-// between one entry and the next, and a tag test.
+// Four pairs of a flag and its permission bit, and a fraction taken
+// between one entry and the next. The peer tag test lives with its callers.
 
 class Gen_00694960
 {
@@ -58,18 +58,3 @@ void Gen_005EE410::bfmeUpdate(void)
 		/ (float)(next - m_bfmeEntries[index].m_bfmeStamp);
 }
 
-extern "C" unsigned int strlen(const char *text);
-#pragma intrinsic(strlen)
-
-// Three markers and something other than a blank behind them.
-int __fastcall bfmeIsTag(int unused, const char *text)
-{
-	if (text == 0)
-		return 0;
-	if (strlen(text) < 4)
-		return 0;
-
-	if (text[0] != '@' || text[1] != '@' || text[2] != '@' || text[3] == ' ')
-		return 0;
-	return 1;
-}

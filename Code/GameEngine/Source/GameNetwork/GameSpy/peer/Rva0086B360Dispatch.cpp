@@ -147,7 +147,106 @@ extern "C" static __declspec(noinline) void piProcessUTM(PEER peer, piPlayer *pl
 	}
 }
 
+__declspec(dllimport) int __cdecl bfmeCmp1026(char *left, char *right, int count);
+extern char *(__cdecl *g_bfmeStrStrVMZ)(const char *text, const char *find);
+
+static void Rva0086B2F0(char *text, piPlayer *player)
+{
+	int length = (int)strlen(text);
+	if (bfmeCmp1026(text + length - 2, "X\\", 2) == 0)
+		return;
+	if (!player->inRoom[2])
+		return;
+	char *flags = g_bfmeStrStrVMZ(text, "\\$flags$\\");
+	if (!flags)
+		return;
+	flags += 9;
+	char value = *flags;
+	if (!value)
+		goto clearFlag;
+	do
+	{
+		if (value == '\\')
+			goto clearFlag;
+		++flags;
+		if (value == 'r')
+			goto setFlag;
+		value = *flags;
+	} while (value);
+clearFlag:
+	player->flags[2] &= ~2;
+	return;
+setFlag:
+	player->flags[2] |= 2;
+}
+
+
+extern "C" unsigned int strlen(const char *text);
+#pragma intrinsic(strlen)
+
+// Three markers and something other than a blank behind them.
+static __declspec(noinline) int __fastcall bfmeIsTag(int unused, const char *text)
+{
+	if (text == 0)
+		return 0;
+	if (strlen(text) < 4)
+		return 0;
+
+	if (text[0] != '@' || text[1] != '@' || text[2] != '@' || text[3] == ' ')
+		return 0;
+	return 1;
+}
+
+
+extern "C" {
+ piPlayer *piGetPlayer(PEER peer, const char *nick);
+ void piAddPlayerMessageCallback(PEER peer, const char *nick, const char *message, int mode);
+ void piAddPlayerUTMCallback(PEER peer, const char *nick, const char *command, const char *parameters, int authenticated);
+ PEERBool piParseUTM(const char *message);
+}
+
+// Retail 0x0086B360. The private helpers remain in this TU so MSVC can
+// reproduce their witnessed register conventions without assembly adapters.
+extern "C" void __declspec(noinline) __cdecl Rva0086B360Dispatch(
+	void *chat, const char *nick, const char *message, int mode, PEER peer)
+{
+	piPlayer *player;
+	(void)chat;
+	if (!nick || !nick[0])
+		return;
+
+	if (bfmeIsTag(0, message))
+	{
+		if (_strnicmp(message, "@@@NFO", 6) != 0)
+			return;
+		player = piGetPlayer(peer, nick);
+		if (player)
+			Rva0086B2F0((char *)message, player);
+		return;
+	}
+
+	if (mode != 3 && mode != 4)
+	{
+		piAddPlayerMessageCallback(peer, nick, message, mode);
+	}
+	else if (piParseUTM(message))
+	{
+		player = piGetPlayer(peer, nick);
+		if (player)
+			piProcessUTM(peer, player, PEERFalse, TitleRoom);
+		piAddPlayerUTMCallback(peer, nick, piUTMCommand, piUTMParameters,
+			mode == 4);
+	}
+}
+
 extern "C" __declspec(noinline) void piProcessUTM_anchor(PEER peer, piPlayer *player)
 {
 	piProcessUTM(peer, player, PEERFalse, TitleRoom);
+}
+
+// absent-from-retail: This caller makes MSVC pass both pointers in registers.
+void Rva0086B2F0PrivateCallAnchor(char *text, piPlayer *player, int enabled)
+{
+	if (enabled)
+		Rva0086B2F0(text, player);
 }
