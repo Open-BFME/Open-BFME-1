@@ -26,7 +26,7 @@ public:
 class BfmeAnimationHolder
 {
 public:
-	void applyRotationPayload(const Matrix4 &rotationTransform);
+	void applyRotationPayload(const Matrix3D &rotationTransform);
 
 private:
 	unsigned char m_beforeReceivers[8];
@@ -34,8 +34,8 @@ private:
 	BfmeAnimationReceiver *m_secondary;
 };
 
-// ?applyRotationPayload@BfmeAnimationHolder@@QAEXABVMatrix4@@@Z
-void BfmeAnimationHolder::applyRotationPayload(const Matrix4 &rotationTransform)
+// ?applyRotationPayload@BfmeAnimationHolder@@QAEXABVMatrix3D@@@Z
+void BfmeAnimationHolder::applyRotationPayload(const Matrix3D &rotationTransform)
 {
 	if (m_primary == 0)
 		return;

@@ -173,12 +173,8 @@ void Matrix3::Set(const Quaternion & q)
 }
 
 
-// operator=(const Matrix3D&) and operator=(const Matrix4&) are omitted: their
-// bodies compile byte-for-byte identical to the Matrix3D/Matrix4 constructors
-// above (all four return `this` in eax), so the four share an unresolvable set
-// of COMDAT addresses (0x8d8f80, 0x8d8fc0, 0x8d9150, 0x8d9190). The constructors
-// keep this family covered; the assignment overloads cannot be pinned to a
-// specific address, so they are left unmatched rather than guessed.
+// operator=(const Matrix3D&) and operator=(const Matrix4&) are omitted: they compile
+// to the constructors' bytes, which verify 0x8d9150 and 0x8d9190 via object-symbol=.
 
 void Matrix3::Multiply(const Matrix3D & a, const Matrix3 & b,Matrix3 * res)
 {
