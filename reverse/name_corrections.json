@@ -2598,5 +2598,15 @@
   "after_sha256": "54cd4b03a3d772aea1f720bd12396aa90d640cd6d11c9551bc76b6e09d7cf656",
   "evidence": "reverse/identity_evidence/00141770.md",
   "reason": "The prior nested Nugget destructor symbol resolves to a different specialization and fails the observed call. Retail uses the independently matched Gen00134590 20-byte element destructor at00134590; preserve ModuleInfo::Nugget as a typedef to that witnessed address-qualified record and keep the existing semantic field names."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "RingRenderObjClass",
+  "new_name": "Rva005638D0",
+  "before_sha256": "cf123f292572ca6bd3095bf61132437d742ac0d467141426eb3d8c6d6eaed6ce",
+  "after_sha256": "3e7af90cb6fbf18b2741f925c9d295ab1c0958d6d58ec3cae5031ce4533a4342",
+  "evidence": "reverse/identity_evidence/005638d0.md",
+  "reason": "The retail padded function tail-calls the independently verified no-argument initializer Rva00597F30::init at receiver+17C. It does not assign a Vector2 animation channel; preserve the unknown owner with its address token instead of the refuted RingRenderObjClass claim."
  }
 ]
