@@ -97,7 +97,7 @@ public:
 class AIUpdateInterface
 {
 public:
-	void ignoreObstacle(Object *);
+	void ignoreObstacle(Object *obstacle);
 };
 
 class Object

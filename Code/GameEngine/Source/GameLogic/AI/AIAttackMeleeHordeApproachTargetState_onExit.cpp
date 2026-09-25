@@ -45,7 +45,7 @@ typedef BitFlags<86> ObjectStatusMaskType;
 class AIUpdateInterface
 {
 public:
-	void ignoreObstacle(Object *object);
+	void ignoreObstacle(Object *obstacle);
 };
 
 template <Int N>

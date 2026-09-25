@@ -24,7 +24,7 @@ class Rva0017EE60Virtuals<0>
 class Rva0017EE60AI : public Rva0017EE60Virtuals<127>
 {
 public:
-	virtual void ignoreObstacle(Object *);
+	virtual void ignoreObstacle(Object *obstacle);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Object.h

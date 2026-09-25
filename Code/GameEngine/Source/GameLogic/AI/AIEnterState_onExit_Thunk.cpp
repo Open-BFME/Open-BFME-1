@@ -41,7 +41,7 @@ private:
 class AIUpdateInterface
 {
 public:
-	void ignoreObstacle(Object *obj);					///< ILT thunk at 0x0000315C
+	void ignoreObstacle(Object *obstacle);					///< ILT thunk at 0x0000315C
 
 	Locomotor *getCurLocomotor(void) const { return m_curLocomotor; }
 
