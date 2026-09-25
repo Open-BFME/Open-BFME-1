@@ -1,5 +1,5 @@
 // ?d_007d7910@@YAXXZ
-// partial score=0.38 date=2026-09-22
+// partial score=0.41 date=2026-09-25
 // cl: /DNDEBUG /MD
 // Retail 0x007D7910: the slot-3 postRender body of Rva007D85C0.
 // Its owner is proven by the constructor-installed vtable 0x01128BAC.
@@ -184,9 +184,9 @@ Bool Rva007D85C0::postRender(FilterModes mode, Coord2D &scrollDelta,
 	pDev->v->SetTextureStageState(pDev, 1, 5, 1);
 	pDev->v->SetTextureStageState(pDev, 1, 6, 2);
 	pDev->v->SetTextureStageState(pDev, 1, 4, 2);
-	pDev->v->SetTextureStageState(pDev, 0, 2, 0);
-	pDev->v->SetTextureStageState(pDev, 0, 1, 2);
-	pDev->v->SetTextureStageState(pDev, 0, 3, 0);
+    pDev->v->SetTextureStageState(pDev, 0, 2, 2);
+    pDev->v->SetTextureStageState(pDev, 0, 3, 0);
+    pDev->v->SetTextureStageState(pDev, 0, 1, 2);
 	pDev->v->SetTextureStageState(pDev, 1, 2, 1);
 	pDev->v->SetTextureStageState(pDev, 1, 3, 3);
 	pDev->v->SetTextureStageState(pDev, 1, 7, 1);
