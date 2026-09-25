@@ -1612,7 +1612,6 @@ void TurretAIIdleScanState::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@TurretAIIdleScanState@@MAEXXZ present-unmatched
 void TurretAIIdleScanState::loadPostProcess( void )
 {
 }  // end loadPostProcess
