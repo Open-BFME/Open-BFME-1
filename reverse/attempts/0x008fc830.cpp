@@ -1,10 +1,15 @@
 // ?clear@W3DRadarResetSurface@@QAEXI@Z
-// partial score=0.94 date=2026-09-11
+// partial score=0.95 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// BFME W3DRadarResetSurface::clear body at retail RVA 0x008FC830.
-// The one-pointer surface ABI, SurfaceClass descriptor query, ECX-based
-// SurfaceDescription pixel-size helper, and BFME DX8 error stream are all
-// established by the matched neighboring SurfaceClass bodies.
+// ?clear@W3DRadarResetSurface@@QAEXI@Z
+// BFME W3DRadarResetSurface::clear body at retail RVA 0x008FC830 (508 bytes).
+// Identity: the matched W3DRadar::reset and W3DRadar::clearShroud callers
+// call this symbol.  The one-pointer surface ABI, SurfaceClass descriptor
+// query, ECX-based SurfaceDescription pixel-size helper (0x008FC4F0) and the
+// BFME DX8 error stream follow the matched SurfaceClass bodies in
+// Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.cpp.  DXT surfaces are
+// filled a block row at a time: a black fill clears pitch bytes per block row,
+// a white fill writes one 8-byte block and replicates it along the row.
 
 #include <string.h>
 
@@ -113,6 +118,7 @@ static __forceinline void BFME_Surface_ErrorCode(unsigned result)
 	}
 }
 
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/surfaceclass.h
 class SurfaceClass
 {
 public:
@@ -120,15 +126,12 @@ public:
 	{
 		WW3DFormat Format;
 		unsigned Width;
-		volatile unsigned Height;
-		unsigned Rva008FC4F0_PixelSize() const;
+		unsigned Height;
+		UnsignedInt Rva008FC4F0_PixelSize() const;
 	};
 
 	void Get_Description(SurfaceDescription &description);
 };
-
-extern UnsignedInt Rva008FC4F0_PixelSize(
-	const SurfaceClass::SurfaceDescription &description);
 
 class W3DRadarResetSurface
 {
@@ -145,12 +148,7 @@ void W3DRadarResetSurface::clear(UnsignedInt color)
 	{
 		SurfaceClass::SurfaceDescription description;
 		reinterpret_cast<SurfaceClass *>(this)->Get_Description(description);
-		typedef UnsignedInt (SurfaceClass::SurfaceDescription::*PixelSizeOperation)(void);
-		union { void *asVoid; PixelSizeOperation asMember; } pixelSizeCast;
-		pixelSizeCast.asVoid = reinterpret_cast<void *>(Rva008FC4F0_PixelSize);
-		UnsignedInt size =
-			(reinterpret_cast<SurfaceClass::SurfaceDescription *>(&description)->*pixelSizeCast.asMember)()
-			* description.Width;
+		UnsignedInt size = description.Rva008FC4F0_PixelSize() * description.Width;
 
 		BfmeLockedRect locked;
 		::memset(&locked, 0, sizeof(locked));
@@ -158,6 +156,7 @@ void W3DRadarResetSurface::clear(UnsignedInt color)
 
 		UnsignedInt fill = static_cast<UnsignedByte>(color) ? 0xff : 0;
 		unsigned char *memory = static_cast<unsigned char *>(locked.bits);
+		UnsignedInt i;
 		if (size == 0 && (description.Format == static_cast<WW3DFormat>(0x31545844) ||
 			description.Format == static_cast<WW3DFormat>(0x32545844) ||
 			description.Format == static_cast<WW3DFormat>(0x33545844) ||
@@ -165,16 +164,15 @@ void W3DRadarResetSurface::clear(UnsignedInt color)
 			description.Format == static_cast<WW3DFormat>(0x35545844)))
 		{
 			size = locked.pitch;
-			UnsignedInt i = description.Height >> 2;
+			i = description.Height >> 2;
 			if (static_cast<UnsignedByte>(color))
 			{
-				unsigned char pattern[8];
+				char pattern[8];
 				Int copy_count = size >> 3;
-				fill |= 0xff;
-				pattern[0] = static_cast<unsigned char>(fill);
-				pattern[1] = 0xfe;
-				pattern[2] = static_cast<unsigned char>(fill);
-				pattern[3] = static_cast<unsigned char>(fill);
+				pattern[0] = -1;
+				pattern[1] = -2;
+				pattern[2] = -1;
+				pattern[3] = -1;
 				pattern[4] = 0x55;
 				pattern[5] = 0x55;
 				pattern[6] = 0x55;
@@ -194,8 +192,11 @@ void W3DRadarResetSurface::clear(UnsignedInt color)
 				goto unlock;
 			}
 		}
-		UnsignedInt i;
-		for (i = description.Height; i > 0; --i)
+		else
+		{
+			i = description.Height;
+		}
+		for (; i > 0; --i)
 		{
 			::memset(memory, fill, size);
 			memory += locked.pitch;
