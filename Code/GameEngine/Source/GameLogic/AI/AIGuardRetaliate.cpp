@@ -606,7 +606,6 @@ void AIGuardRetaliateReturnState::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@AIGuardRetaliateReturnState@@ present-unmatched
 void AIGuardRetaliateReturnState::loadPostProcess( void )
 {
 }  // end loadPostProcess
