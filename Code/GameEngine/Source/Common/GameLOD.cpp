@@ -358,7 +358,7 @@ LODPresetInfo *GameLODManager::newLODPreset(StaticGameLODLevel index)
 }
 
 // ?init@GameLODManager@@QAEXXZ present-unmatched
-// Retail body 0x0007EEB0 is 1063 bytes. Its GameLOD.ini,
+// Retail body 0x0007EEB0 is 1074 bytes. Its GameLOD.ini,
 // GameLODPresets.ini, Benchmark.txt, and BenchProfile format references identify
 // the initialization flow; do not confuse it with applyStaticLODLevel, whose
 // matched caller routes through ILT 0x00036A11 to 0x0007E9B0.

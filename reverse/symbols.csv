@@ -84108,6 +84108,7 @@ name,address,notes
 ?init@BFMEPathfindLayer@@QAE_NPAVBridge@@W4PathfindLayerEnum@@@Z,0x003FB950,alias of the ledgered spelling at the same body; AIPathfind.cpp reaches it through a view class because the reference AIPathfind.h inlines it
 ?init@BfmeOwnVVB@@AAEXPAX@Z,0x000026C1,ILT thunk: BfmeOwnVVB post-construction init called by both constructors
 ?init@CustomAsciiStringShim@@QAEXPBD@Z,0x00888BC0,CustomMatchPreferences getter key constructor shim
+?init@GameLODManager@@QAEXXZ,0x0007EEB0,BODY; unique GameLOD.ini/GameLODPresets.ini/Benchmark.txt/BenchProfile anchors and matching source flow; ECX saved as receiver and complete 1074B boundary ends plain ret; evidence=reverse/identity_evidence/0007eeb0.md
 ?init@FrameData@@QAEXXZ,0x0003BB6F,ILT thunk retail's call sites encode; double hop via 0x00670220 to the body at 0x00670170, which build_call_thunks only follows one level of
 ?init@Mouse@@UAEXXZ,0x0000245A,ILT thunk to Mouse::init; base call from DirectInputMouse::init
 ?init@NetCommandList@@QAEXXZ,0x0000B9CE,ICF-folded onto reset; retail calls both through this thunk
