@@ -30,4 +30,4 @@ target_rva,target_size,zh_source,alternates,confidence,ghidra_name,anchor
 0x006247B0,756,GUIUtil.cpp,6,medium,FUN_00a247b0,GUI:Observer
 0x00649790,659,GameSpy.cpp,2,medium,FUN_00a49790,peerchat.gamespy.com
 0x004A2F80,583,CommandXlat.cpp,3,medium,FUN_008a2f80,ControlBar.wnd:ControlBarParent
-0x00139B40,350,FileSystem.h,1,medium,FUN_00539b40,DefaultThingTemplate
+0x00139B40,350,ThingFactory.cpp,1,high,FUN_00539b40,DefaultThingTemplate
