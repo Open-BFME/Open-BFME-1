@@ -1,19 +1,6 @@
 // ?rva003B4250@BfmeLivingWorldCampaignManager@@QAEXABVAsciiString@@00@Z
-// partial score=0.6 date=2026-09-23
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/campaignmanagerascii /Ireference/shims/moduledata /Ireference/shims/sweep /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
-//
-// The LivingWorldPlayerArmy block -- BFME-only, like everything Living World.
-//
-// The global is named the same way INILivingWorld.cpp names its own:
-// GameEngine::init passes the literal "TheLivingWorldCampaignManager"
-// immediately before pushing 0x012F1024, and the ledger already carries the
-// initSubsystem<LivingWorldCampaignManager> instantiation, so the class has a
-// real name.
-//
-// The relocation-named constructor and its Snapshot vtable recover the record
-// identity. The field table fixes the named offsets; the destructor and vector
-// erase target account for every non-trivial member in the 0x58-byte record.
 #include "PreRTS.h"
 #include "Common/INI.h"
 #include <vector>
@@ -46,7 +33,6 @@ public:
 	~LivingWorldPlayerArmy();
 	void clearArmies();
 	Int currentCommandPoints() const;
-	// Takes the index by int * -- PAH in its own mangled name -- not Int *.
 	LivingWorldArmy *findArmy( const AsciiString &name, int *outIndex );
 	virtual void crc( Xfer *xfer );
 	virtual void xfer( Xfer *xfer );
@@ -76,7 +62,6 @@ public:
 	AsciiString m_replenishArmyName;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
 class ThingTemplate
 {
 public:
@@ -87,7 +72,6 @@ private:
 	Int m_commandPointCost;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingFactory.h
 class ThingFactory
 {
 public:
@@ -210,22 +194,11 @@ struct Rva003B4250StringData
 	char m_text[ 1 ];
 };
 
-static __forceinline int rva003B4250CompareStrings(
-	const AsciiString &left, const AsciiString &right )
+static int rva003B4250StringLength( const AsciiString &string )
 {
-	const Rva003B4250StringData *leftData =
-		*reinterpret_cast<const Rva003B4250StringData * const *>( &left );
-	const Rva003B4250StringData *rightData =
-		*reinterpret_cast<const Rva003B4250StringData * const *>( &right );
-	int leftLength = leftData ? leftData->m_length : 0;
-	int rightLength = rightData ? rightData->m_length : 0;
-	const char *leftText = leftData ? leftData->m_text : "";
-	const char *rightText = rightData ? rightData->m_text : "";
-	int count = leftLength < rightLength ? leftLength : rightLength;
-	int difference = memcmp( leftText, rightText, count );
-	if( difference != 0 )
-		return difference;
-	return leftLength - rightLength;
+	const Rva003B4250StringData *data =
+		*reinterpret_cast<const Rva003B4250StringData * const *>( &string );
+	return data ? data->m_length : 0;
 }
 
 class BfmeLivingWorldCampaignManager
@@ -249,9 +222,6 @@ void BfmeLivingWorldCampaignManager::addPlayerArmy( LivingWorldPlayerArmy *army 
 	m_playerArmies.back().m_index = m_playerArmies.size() - 1;
 }
 
-// The player army's own findArmy, placed beside the campaign manager's so the
-// two are not mistaken for one: this one searches a single army list and can
-// report the index, the one below searches the manager's player armies.
 LivingWorldArmy *LivingWorldPlayerArmy::findArmy(const AsciiString &name, int *outIndex)
 {
 	for (unsigned i = 0; i < m_armies.size(); ++i)
@@ -278,21 +248,16 @@ LivingWorldArmy *BfmeLivingWorldCampaignManager::findArmy( const AsciiString &na
 	return NULL;
 }
 
-// ?rva003B4250@BfmeLivingWorldCampaignManager@@QAEXABVAsciiString@@00@Z
 void BfmeLivingWorldCampaignManager::rva003B4250(
 	const AsciiString &guard, const AsciiString &first, const AsciiString &second )
 {
-	const Rva003B4250StringData *nameData =
-		*reinterpret_cast<const Rva003B4250StringData * const *>( &guard );
-	UnsignedInt i = 0;
-	if( nameData == reinterpret_cast<const Rva003B4250StringData *>( i ) )
-		return;
-	if( nameData->m_length == i )
+	if( rva003B4250StringLength( guard ) == 0 )
 		return;
 
+	UnsignedInt i = 0;
 	for( ; i < m_playerArmies.size(); ++i )
 	{
-		if( rva003B4250CompareStrings( m_playerArmies[ i ].getName(), second ) == 0 )
+		if( m_playerArmies[ i ].getName().compare( guard ) == 0 )
 		{
 			Rva003B4250StoreThunk *store =
 				*reinterpret_cast<Rva003B4250StoreThunk **>( 0x012F0898 );
@@ -305,7 +270,6 @@ void BfmeLivingWorldCampaignManager::rva003B4250(
 	}
 }
 
-// ?parseLivingWorldPlayerArmy@@YAXPAVINI@@@Z
 void parseLivingWorldPlayerArmy( INI *ini )
 {
 	if( !TheLivingWorldCampaignManager )
