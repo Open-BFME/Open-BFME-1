@@ -37,15 +37,15 @@ public:
 	void bfmeSetWaypoint(Int cellX, Int cellY, Bool shouldInsert, Waypoint *waypoint);
 };
 
-Bool Pathfinder::worldToCell(const Coord3D *position, ICoord2D *cell)
+Bool Pathfinder::worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex)
 {
-	cell->x = REAL_TO_INT_FLOOR(position->x/PATHFIND_CELL_SIZE);
-	cell->y = REAL_TO_INT_FLOOR(position->y/PATHFIND_CELL_SIZE);
+	cellIndex->x = REAL_TO_INT_FLOOR(worldPosition->x/PATHFIND_CELL_SIZE);
+	cellIndex->y = REAL_TO_INT_FLOOR(worldPosition->y/PATHFIND_CELL_SIZE);
 	Bool overflow = false;
-	if (cell->x < m_extent.lo.x) {overflow = true; cell->x = m_extent.lo.x;}
-	if (cell->y < m_extent.lo.y) {overflow = true; cell->y = m_extent.lo.y;}
-	if (cell->x > m_extent.hi.x) {overflow = true; cell->x = m_extent.hi.x;}
-	if (cell->y > m_extent.hi.y) {overflow = true; cell->y = m_extent.hi.y;}
+	if (cellIndex->x < m_extent.lo.x) {overflow = true; cellIndex->x = m_extent.lo.x;}
+	if (cellIndex->y < m_extent.lo.y) {overflow = true; cellIndex->y = m_extent.lo.y;}
+	if (cellIndex->x > m_extent.hi.x) {overflow = true; cellIndex->x = m_extent.hi.x;}
+	if (cellIndex->y > m_extent.hi.y) {overflow = true; cellIndex->y = m_extent.hi.y;}
 	return overflow;
 }
 
