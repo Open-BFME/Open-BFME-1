@@ -60,29 +60,29 @@ struct TightenPathStruct
 
 	// Out-of-line: retail emits a call to the initializer at thunk 0x0002D7F9
 	// (body 0x003E1720). Declared only; REL32 pinned in symbols.csv.
-	TightenPathStruct(Pathfinder *pf, Object *o, const LocomotorSet *ls,
-		PathfindLayerEnum lay, const Coord3D *to);
+	TightenPathStruct(Pathfinder *pathfinder, Object *object, const LocomotorSet *locomotorSet,
+		PathfindLayerEnum layer, const Coord3D *destinationPosition);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class Pathfinder
 {
 public:
-	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
+	Bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
 
 protected:
 	// 4-arg BFME iterate (no CellAlongLineProc): always invokes the tighten
 	// callback body with userData as ecx. Thunk 0x000190B0 / body 0x003F1F00.
-	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
-		PathfindLayerEnum layer, void *userData);
+	Int iterateCellsAlongLine(const ICoord2D &startCell, const ICoord2D &destinationCell,
+		PathfindLayerEnum layer, void *callbackInfo);
 
-	void tightenPath(Object *obj, const LocomotorSet &locomotorSet,
-		Coord3D *from, const Coord3D *to);
+	void tightenPath(Object *object, const LocomotorSet &locomotorSet,
+		Coord3D *startPosition, const Coord3D *destinationPosition);
 };
 
 // ?tightenPath@Pathfinder@@IAEXPAVObject@@ABVLocomotorSet@@PAUCoord3D@@PBU4@@Z
-void Pathfinder::tightenPath(Object *obj, const LocomotorSet &locomotorSet,
-	Coord3D *from, const Coord3D *to)
+void Pathfinder::tightenPath(Object *object, const LocomotorSet &locomotorSet,
+	Coord3D *startPosition, const Coord3D *destinationPosition)
 {
 	// Local order chosen so MSVC 7.1 places two ICoord2D cells below the 0x34
 	// info block inside a 0x44-byte frame (retail: end@+0x10, start@+0x18,
@@ -92,19 +92,19 @@ void Pathfinder::tightenPath(Object *obj, const LocomotorSet &locomotorSet,
 	// RTL ctor-arg eval pushes `to` first, then getLayer(obj,from) (which
 	// leaves `to` under the layer result for the 5-arg initializer), matching
 	// retail's intentional leftover-stack setup between the two calls.
-	TightenPathStruct info(this, obj, &locomotorSet,
-		TheTerrainLogic->getLayerForDestination(obj, from), to);
+	TightenPathStruct info(this, object, &locomotorSet,
+		TheTerrainLogic->getLayerForDestination(object, startPosition), destinationPosition);
 
 	// Pull layer into a register before the worldToCell calls so it survives
 	// in ebp across them (retail: mov ebp,[esp+0x34] immediately after ctor).
 	PathfindLayerEnum layer = info.layer;
-	worldToCell(from, &start);
-	worldToCell(to, &end);
+	worldToCell(startPosition, &start);
+	worldToCell(destinationPosition, &end);
 	iterateCellsAlongLine(start, end, layer, &info);
 	if (info.foundDest)
 	{
 		// Three dword loads/stores (eax,ecx,edx) — matches retail's unrolled
 		// Coord3D copy through edi rather than a block move.
-		*from = info.destPos;
+		*startPosition = info.destPos;
 	}
 }
