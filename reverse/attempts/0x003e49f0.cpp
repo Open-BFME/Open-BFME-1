@@ -1,5 +1,5 @@
 // ?bfmeCheckAttackViewHelper@Pathfinder@@QAEHPAVObject@@PAUCoord3D@@PAX@Z
-// partial score=0.15 date=2026-09-20
+// partial score=0.167 date=2026-09-25
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD
 // BFME perimeter-cell attack-view helper at retail 0x003E49F0.
 
@@ -155,8 +155,7 @@ Int Pathfinder::bfmeCheckAttackViewHelper(Object *object, Coord3D *position,
 	if (layer != 1 && layer < 16)
 	{
 		useLayer = true;
-		if (TheTerrainLogic->queryObjectLayer(object, layer))
-			terrainConfirmed = true;
+		terrainConfirmed = TheTerrainLogic->queryObjectLayer(object, layer);
 	}
 
 	ObjectID *ids = (ObjectID *)cellIds;
