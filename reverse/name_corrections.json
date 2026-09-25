@@ -5048,5 +5048,65 @@
   "after_sha256": "e58b9e0c368e65a500ea49949562b7b229989065caf049c9acbaa07536d5803d",
   "evidence": "docs/naming_evidence.md",
   "reason": "updatePosition was a bank guess with no caller string or vtable evidence and the matched caller plus existing symbols.csv pin already use rva0060C620 on the vtable-proven LivingWorldEyeTower owner"
+ },
+ {
+  "old_path": "reverse/attempts/0x00361250.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/Rva00361250IndicatorColor.cpp",
+  "old_name": "BfmeEntryBV",
+  "new_name": "Rva00361250Entry",
+  "before_sha256": "9441baa173ebe2f0139b03e08de1e6f83d691a0073c6934d1dc3f02a34a85bc3",
+  "after_sha256": "43a8145c8de3af6838efaae910de43e548f801c41d8b1798d4009e7ca9c060c5",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "the stash name was coined by the banking session (its own header says identity unknown); no caller vtable or string names the owner so the landed source keeps the address token"
+ },
+ {
+  "old_path": "reverse/attempts/0x00361250.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/Rva00361250IndicatorColor.cpp",
+  "old_name": "BfmeHostBV",
+  "new_name": "Rva00361250Owner",
+  "before_sha256": "9441baa173ebe2f0139b03e08de1e6f83d691a0073c6934d1dc3f02a34a85bc3",
+  "after_sha256": "43a8145c8de3af6838efaae910de43e548f801c41d8b1798d4009e7ca9c060c5",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "the stash name was coined by the banking session (its own header says identity unknown); no caller vtable or string names the owner so the landed source keeps the address token"
+ },
+ {
+  "old_path": "reverse/attempts/0x00361250.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/Rva00361250IndicatorColor.cpp",
+  "old_name": "BfmeTargetBV",
+  "new_name": "Rva00361250Target",
+  "before_sha256": "9441baa173ebe2f0139b03e08de1e6f83d691a0073c6934d1dc3f02a34a85bc3",
+  "after_sha256": "43a8145c8de3af6838efaae910de43e548f801c41d8b1798d4009e7ca9c060c5",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "the stash name was coined by the banking session (its own header says identity unknown); no caller vtable or string names the owner so the landed source keeps the address token"
+ },
+ {
+  "old_path": "reverse/attempts/0x00361250.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/Rva00361250IndicatorColor.cpp",
+  "old_name": "m_bfmeHeadBV",
+  "new_name": "m_unmodelled",
+  "before_sha256": "9441baa173ebe2f0139b03e08de1e6f83d691a0073c6934d1dc3f02a34a85bc3",
+  "after_sha256": "43a8145c8de3af6838efaae910de43e548f801c41d8b1798d4009e7ca9c060c5",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "the stash name was coined by the banking session (its own header says identity unknown); no caller vtable or string names the owner so the landed source keeps the address token"
+ },
+ {
+  "old_path": "reverse/attempts/0x00361250.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/Rva00361250IndicatorColor.cpp",
+  "old_name": "m_bfmeHeadBV",
+  "new_name": "m_unmodelled00",
+  "before_sha256": "9441baa173ebe2f0139b03e08de1e6f83d691a0073c6934d1dc3f02a34a85bc3",
+  "after_sha256": "43a8145c8de3af6838efaae910de43e548f801c41d8b1798d4009e7ca9c060c5",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "the stash name was coined by the banking session (its own header says identity unknown); no caller vtable or string names the owner so the landed source keeps the address token"
+ },
+ {
+  "old_path": "reverse/attempts/0x00361250.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/Rva00361250IndicatorColor.cpp",
+  "old_name": "m_bfmeTailBV",
+  "new_name": "m_unmodelled20",
+  "before_sha256": "9441baa173ebe2f0139b03e08de1e6f83d691a0073c6934d1dc3f02a34a85bc3",
+  "after_sha256": "43a8145c8de3af6838efaae910de43e548f801c41d8b1798d4009e7ca9c060c5",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "the stash name was coined by the banking session (its own header says identity unknown); no caller vtable or string names the owner so the landed source keeps the address token"
  }
 ]
