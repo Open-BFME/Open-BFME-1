@@ -108,63 +108,64 @@ private:
 
 void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *baseCenter, Real *baseRadius)
 {
-	BuildListInfo *info;
-	Coord2D totalPos;
-	totalPos.x = 0.0f;
-	totalPos.y = 0.0f;
-	Int numBldg = 0;
+	BuildListInfo *buildListInfo;
+	Coord2D totalBuildingPosition;
+	totalBuildingPosition.x = 0.0f;
+	totalBuildingPosition.y = 0.0f;
+	Int buildingCount = 0;
 
-	for (info = m_player->getBuildList(); info; info = info->getNext())
+	for (buildListInfo = m_player->getBuildList(); buildListInfo;
+		buildListInfo = buildListInfo->getNext())
 	{
-		AsciiString name = info->getTemplateName();
-		if (name.isEmpty())
+		AsciiString templateName = buildListInfo->getTemplateName();
+		if (templateName.isEmpty())
 			continue;
-		const ThingTemplate *bldgPlan = TheThingFactory->findTemplate(name);
-		if (!bldgPlan)
+		const ThingTemplate *buildingTemplate = TheThingFactory->findTemplate(templateName);
+		if (!buildingTemplate)
 			continue;
-		Real posY = info->getLocation()->y;
-		SinglePosition posX;
-		posX.x = info->getLocation()->x;
-		totalPos.x += posX.x;
-		totalPos.y += posY;
-		++numBldg;
+		Real buildingY = buildListInfo->getLocation()->y;
+		SinglePosition buildingX;
+		buildingX.x = buildListInfo->getLocation()->x;
+		totalBuildingPosition.x += buildingX.x;
+		totalBuildingPosition.y += buildingY;
+		++buildingCount;
 	}
 
-	if (numBldg > 0)
+	if (buildingCount > 0)
 	{
-		totalPos.x /= numBldg;
-		totalPos.y /= numBldg;
+		totalBuildingPosition.x /= buildingCount;
+		totalBuildingPosition.y /= buildingCount;
 	}
 
-	m_baseCenterSet = numBldg > 0;
-	baseCenter->x = totalPos.x;
-	baseCenter->y = totalPos.y;
+	m_baseCenterSet = buildingCount > 0;
+	baseCenter->x = totalBuildingPosition.x;
+	baseCenter->y = totalBuildingPosition.y;
 
-	Real maxRadSqr = 0.0f;
-	for (info = m_player->getBuildList(); info; info = info->getNext())
+	Real maxRadiusSquared = 0.0f;
+	for (buildListInfo = m_player->getBuildList(); buildListInfo;
+		buildListInfo = buildListInfo->getNext())
 	{
-		AsciiString name = info->getTemplateName();
-		if (name.isEmpty())
+		AsciiString templateName = buildListInfo->getTemplateName();
+		if (templateName.isEmpty())
 			continue;
-		const ThingTemplate *bldgPlan = TheThingFactory->findTemplate(name);
-		if (!bldgPlan)
+		const ThingTemplate *buildingTemplate = TheThingFactory->findTemplate(templateName);
+		if (!buildingTemplate)
 			continue;
-		Coord3D pos;
-		pos.x = info->getLocation()->x;
-		pos.y = info->getLocation()->y;
-		Real dx = pos.x - baseCenter->x;
-		Real dy = pos.y - baseCenter->y;
-		if (dx < 0.0f)
-			dx = -dx;
-		if (dy < 0.0f)
-			dy = -dy;
-		Real bldgRadius = bldgPlan->getBoundingCircleRadius() * 0.4f;
-		dx += bldgRadius;
-		dy += bldgRadius;
-		Real radSqr = dx * dx + dy * dy;
-		if (radSqr > maxRadSqr)
-			maxRadSqr = radSqr;
+		Coord3D buildingPosition;
+		buildingPosition.x = buildListInfo->getLocation()->x;
+		buildingPosition.y = buildListInfo->getLocation()->y;
+		Real radiusDeltaX = buildingPosition.x - baseCenter->x;
+		Real radiusDeltaY = buildingPosition.y - baseCenter->y;
+		if (radiusDeltaX < 0.0f)
+			radiusDeltaX = -radiusDeltaX;
+		if (radiusDeltaY < 0.0f)
+			radiusDeltaY = -radiusDeltaY;
+		Real buildingRadius = buildingTemplate->getBoundingCircleRadius() * 0.4f;
+		radiusDeltaX += buildingRadius;
+		radiusDeltaY += buildingRadius;
+		Real radiusSquared = radiusDeltaX * radiusDeltaX + radiusDeltaY * radiusDeltaY;
+		if (radiusSquared > maxRadiusSquared)
+			maxRadiusSquared = radiusSquared;
 	}
-	*baseRadius = (Real)sqrt(maxRadSqr);
+	*baseRadius = (Real)sqrt(maxRadiusSquared);
 }
-
