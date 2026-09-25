@@ -4118,5 +4118,35 @@
   "after_sha256": "328070102e94244829487fa74adb4e0d43a98c02b09c8bb7d187d542c1e21519",
   "evidence": "docs/naming_evidence.md",
   "reason": "offset placeholder to offset placeholder"
+ },
+ {
+  "old_path": "reverse/attempts/0x005fc320.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/System/FXParticleSystem/ParticleModuleState005FC800Slot1.cpp",
+  "old_name": "m_active",
+  "new_name": "m_byte1c",
+  "before_sha256": "1fea49c28a76d3c87ecd259f7b3295a174167203443a3b4ad356840566319409",
+  "after_sha256": "892c574d63ab654ad9ee62b9c62918e5ac735b4345eb7a9cb94ade80aaa5702f",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "active was a guessed member name with no witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x005fc320.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/System/FXParticleSystem/ParticleModuleState005FC800Slot1.cpp",
+  "old_name": "m_complete",
+  "new_name": "m_byte0c",
+  "before_sha256": "1fea49c28a76d3c87ecd259f7b3295a174167203443a3b4ad356840566319409",
+  "after_sha256": "892c574d63ab654ad9ee62b9c62918e5ac735b4345eb7a9cb94ade80aaa5702f",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "complete was a guessed member name with no witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x005fc320.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/System/FXParticleSystem/ParticleModuleState005FC800Slot1.cpp",
+  "old_name": "m_threshold",
+  "new_name": "m_dword14",
+  "before_sha256": "1fea49c28a76d3c87ecd259f7b3295a174167203443a3b4ad356840566319409",
+  "after_sha256": "892c574d63ab654ad9ee62b9c62918e5ac735b4345eb7a9cb94ade80aaa5702f",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "threshold was a guessed member name with no witness"
  }
 ]
