@@ -1,5 +1,5 @@
 // ?d_006a9ce0@@YAXXZ
-// partial score=0.3 date=2026-09-24
+// partial score=0.345 date=2026-09-25
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -162,6 +162,7 @@ struct Rva006A0810Buckets
 	Rva006A0810Node **m_storageEnd;
 
 	unsigned int size(void) const { return (unsigned int)(m_finish - m_start); }
+	Rva006A0810Node **begin(void) { return m_start; }
 	Rva006A0810Node *&operator[](unsigned int slot) { return m_start[slot]; }
 };
 
@@ -195,9 +196,13 @@ inline Rva006A0810Table::iterator Rva006A0810Table::begin(void)
 {
 	unsigned int slot = 0;
 	unsigned int bucketCount = m_buckets.size();
+	Rva006A0810Node **bucket = m_buckets.begin();
 	Rva006A0810Node *node = 0;
 	while (node == 0 && slot < bucketCount)
-		node = m_buckets[slot++];
+	{
+		node = *bucket++;
+		++slot;
+	}
 	return iterator(node, this);
 }
 
@@ -216,9 +221,10 @@ inline Rva006A0810Iterator &Rva006A0810Iterator::operator++(void)
 			hash = key->m_hash;
 		unsigned int bucket = hash % m_owner->m_buckets.size();
 		unsigned int bucketCount = m_owner->m_buckets.size();
+		Rva006A0810Node **buckets = m_owner->m_buckets.begin();
 		Rva006A0810Node *node = 0;
 		while (node == 0 && ++bucket < bucketCount)
-			node = m_owner->m_buckets[bucket];
+			node = buckets[bucket];
 		m_value = node;
 	}
 	return *this;
