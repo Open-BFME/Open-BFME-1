@@ -13,3 +13,14 @@ extern "C" void piBroadcastKeyChangedA(void *chat, const char *channel,
  if (piRoomToType(peer, channel, &roomType))
   piRoomKeyChanged(peer, roomType, nick, key, value);
 }
+
+// 0x0086B990: userModeChanged (54 bytes; RET+0x35, then INT3).
+extern "C" void piSetPlayerModeFlags(PEER, const char *, int, int);
+extern "C" void piUserModeChangedA(void *chat, const char *channel,
+ const char *nick, int mode, void *param)
+{
+ PEER peer = (PEER)param;
+ int roomType;
+ if (piRoomToType(peer, channel, &roomType))
+  piSetPlayerModeFlags(peer, nick, roomType, mode);
+}
