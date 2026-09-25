@@ -1468,7 +1468,6 @@ void TurretAIIdleState::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@TurretAIIdleState@@MAEXXZ present-unmatched
 void TurretAIIdleState::loadPostProcess( void )
 {
 }  // end loadPostProcess
