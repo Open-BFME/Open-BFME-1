@@ -82,7 +82,7 @@ class Path
 {
 public:
 	void appendNode(const Coord3D *nodePosition, PathfindLayerEnum pathLayer);
-	void prependNode(const Coord3D *position, PathfindLayerEnum layer);
+	void prependNode(const Coord3D *nodePosition, PathfindLayerEnum pathLayer);
 
 private:
 	char m_slice_pad[4];					// retail this+0x00, untouched
@@ -123,9 +123,9 @@ void Path::appendNode( const Coord3D *nodePosition, PathfindLayerEnum pathLayer 
 }
 
 // ?prependNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z
-void Path::prependNode(const Coord3D *position, PathfindLayerEnum layer)
+void Path::prependNode(const Coord3D *nodePosition, PathfindLayerEnum pathLayer)
 {
-	PathNode *node = new PathNode(position, layer);
+	PathNode *node = new PathNode(nodePosition, pathLayer);
 	PathNode *head = m_path;
 	node->m_nextOpti = head;
 	node->m_next = head;
