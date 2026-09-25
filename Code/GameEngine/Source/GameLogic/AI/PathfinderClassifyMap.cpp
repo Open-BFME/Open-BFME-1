@@ -57,7 +57,7 @@ public:
 class Pathfinder
 {
 public:
-	static void classifyMapCell(Int x, Int y, PathfindCell *cell);
+	static void classifyMapCell(Int cellX, Int cellY, PathfindCell *cell);
 
 	void bfmePrepareRefresh(void);
 
