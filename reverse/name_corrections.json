@@ -3158,5 +3158,45 @@
   "after_sha256": "eeaf8b481741465bb87ea7db31264b8380e5f9842f3ce65394c3b0936d196514",
   "evidence": "docs/naming_evidence.md",
   "reason": "the bank's method name had no evidence (the only caller, MemoryPool::_Free, is a naked lift and names no symbol; there is no vtable slot, string or ZH twin)"
+ },
+ {
+  "old_path": "reverse/attempts/0x001b7200.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Locomotor_rva001B7200.cpp",
+  "old_name": "getPathPosition",
+  "new_name": "Rva003FDCF0",
+  "before_sha256": "4f21067d6ad5067a762ba0808c203ea6ed4282e91a63f6e1e79ae99ca00239ff",
+  "after_sha256": "6706f9e813f7c9fdd0781a87950a7ad0453d14e68ecaa7b8867e6bd24a6cdc21",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "no evidence for the semantic name of Path 0x003FDCF0; address token matches the 0x003FDCF0 bank"
+ },
+ {
+  "old_path": "reverse/attempts/0x001b7200.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Locomotor_rva001B7200.cpp",
+  "old_name": "m_objectID",
+  "new_name": "m_int0A8",
+  "before_sha256": "4f21067d6ad5067a762ba0808c203ea6ed4282e91a63f6e1e79ae99ca00239ff",
+  "after_sha256": "6706f9e813f7c9fdd0781a87950a7ad0453d14e68ecaa7b8867e6bd24a6cdc21",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset name for the unwitnessed field at +0xA8"
+ },
+ {
+  "old_path": "reverse/attempts/0x001b7200.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Locomotor_rva001B7200.cpp",
+  "old_name": "m_stamp",
+  "new_name": "m_dword60",
+  "before_sha256": "4f21067d6ad5067a762ba0808c203ea6ed4282e91a63f6e1e79ae99ca00239ff",
+  "after_sha256": "6706f9e813f7c9fdd0781a87950a7ad0453d14e68ecaa7b8867e6bd24a6cdc21",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "unwitnessed offset +0x60 on an address-named class"
+ },
+ {
+  "old_path": "reverse/attempts/0x001b7200.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Locomotor_rva001B7200.cpp",
+  "old_name": "move",
+  "new_name": "rva001B7200",
+  "before_sha256": "4f21067d6ad5067a762ba0808c203ea6ed4282e91a63f6e1e79ae99ca00239ff",
+  "after_sha256": "6706f9e813f7c9fdd0781a87950a7ad0453d14e68ecaa7b8867e6bd24a6cdc21",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "no caller vtable slot string or ZH twin names the method (caller 0x001BB530 is itself an unlanded carved body)"
  }
 ]
