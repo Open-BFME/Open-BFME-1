@@ -242,6 +242,40 @@ def extent_problems(name, rva, size, starts, ends, reader=read, base=None):
     return problems
 
 
+_ECX = {capstone.x86.X86_REG_ECX, capstone.x86.X86_REG_CX,
+        capstone.x86.X86_REG_CL, capstone.x86.X86_REG_CH}
+
+
+def identity_warnings(name, rva, size, reader=read):
+    """Hints that the lift's NAME is wrong; a warning, never a refusal.
+
+    The first lift finishers (2026-09-25) found 3 of 4 names wrong even though
+    stack cleanup agreed with them: an INI parser under a WeaponStore method,
+    a MeshClass virtual under W3DAssetManager, a six-argument cdecl under a
+    no-argument thiscall. A thiscall body whose first touch of ecx is a write
+    (or that never touches it before returning) is not using `this`. Among
+    thiscall bodies >= 60 B that is 2.3% of landed C++ against 6.8% of lifts,
+    so it is a lead worth checking first, not a verdict."""
+    import audit_ret_arity
+
+    if audit_ret_arity.expected_ret(name)[1] != "__thiscall" or size < 60:
+        return []
+    md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
+    md.detail = True
+    for ins in md.disasm(reader(rva, size), rva):
+        try:
+            regs_read, regs_written = ins.regs_access()
+        except capstone.CsError:
+            return []
+        if ins.mnemonic == "call" or _ECX & set(regs_read):
+            return []
+        if _ECX & set(regs_written) or ins.mnemonic in ("ret", "jmp"):
+            break
+    return ["thiscall name, but the body overwrites or ignores ecx before using it: "
+            "`this` looks unused, so prove the class and convention (callers' pushes, "
+            "vtable slot) before porting"]
+
+
 SCAN_LIMIT = 0x10000
 # 61,015 of 61,018 landed C++ bodies that follow int3 padding start on a
 # 16-byte boundary (measured 2026-09-25), so a padding run is only a function
@@ -487,6 +521,8 @@ def main(argv=None):
         print(f"{int(row['target_size']):6}B {row['target_rva']} {'ZH ' if twins[id(row)] else '   '}"
               f"verdicts={counts.get(rva, 0)} {row['name']}")
         print(f"         lift: {row['source']}" + (f"  readable: {home}" if home else ""))
+        for warning in identity_warnings(row["name"], rva, int(row["target_size"])):
+            print(f"         ? {warning}")
         if correction:
             print(f"         extent: {correction['start']} {correction['size']}B, not the ledger's "
                   f"{row['target_size']}B ({correction['evidence']})")

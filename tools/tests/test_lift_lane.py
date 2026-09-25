@@ -97,6 +97,21 @@ def test_a_start_that_decodes_to_hlt_is_refused():
     assert "start: first instruction is hlt" in found
 
 
+def test_a_thiscall_name_on_a_body_that_ignores_ecx_is_flagged():
+    # mov ecx, [esp+4]; ... ret 4 -- ecx is written before `this` is ever read
+    body = b"\x8b\x4c\x24\x04" + b"\x90" * 60 + b"\xc2\x04\x00"
+    read = image(PAD, body, PAD)
+    assert lift_lane.identity_warnings("?m@C@@QAEXH@Z", LEAF_AT, len(body), read)
+    # the same bytes under a cdecl name say nothing about `this`
+    assert lift_lane.identity_warnings("?f@@YAXH@Z", LEAF_AT, len(body), read) == []
+
+
+def test_a_thiscall_body_that_reads_ecx_is_not_flagged():
+    body = b"\x8b\x41\x04" + b"\x90" * 60 + b"\xc3"   # mov eax, [ecx+4]
+    read = image(PAD, body, PAD)
+    assert lift_lane.identity_warnings("?m@C@@QAEHXZ", LEAF_AT, len(body), read) == []
+
+
 def _ledger(*spans):
     rows = [{"status": "matched", "target_rva": f"0x{s:08X}", "target_size": str(n)}
             for s, n in spans]

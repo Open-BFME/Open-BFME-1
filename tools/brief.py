@@ -199,6 +199,8 @@ def lift_lines(r):
              f"`python3 tools/add_match.py NAME 0xSTART SIZE SOURCE --replace-existing --model MODEL`, and delete the naked "
              f"function (the whole lift file when nothing else lives in it); precedent 33110b4b40. "
              f"The name came with the lift: confirm it from callers/vtable/ZH before landing."]
+    for warning in lift_lane.identity_warnings(r["name"], int(r["target_rva"], 16), int(r["target_size"])):
+        lines.append(f"    IDENTITY CHECK: {warning}.")
     fix = lift_lane.correction_for(r)
     if fix:
         moved = int(fix["start"], 16) != int(r["target_rva"], 16)
