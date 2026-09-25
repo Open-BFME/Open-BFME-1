@@ -32,7 +32,7 @@ METHOD. Read AGENTS.md and docs/matching.md first. docs/shape_levers.md is a 97 
 reference, not reading: open the sections a target's LEVER SECTIONS line names, and
 `grep -n "^## " docs/shape_levers.md` for the first divergence you meet. The HISTORY
 block under a target is every earlier verdict on it: do not repeat a lever it lists. For each
-target: confirm the row still points at a .asm dump or carved boundary (`grep ,0xRVA, reverse/functions.csv reverse/carved.csv`);
+target: confirm the row still points at a .asm dump, a carved boundary, or (LIFT) a naked __emit copy (`grep ,0xRVA, reverse/functions.csv reverse/carved.csv`);
 grep reverse/symbols.csv and reverse/re_attempts.log for the RVA; use
 `python3 tools/vtable_lookup.py <vtable VA>` for owning-class questions; port from the
 Zero Hour twin under reference/CnC_Generals_Zero_Hour when one is named. Iterate with
@@ -187,6 +187,28 @@ def digest(rva, depth):
     return out
 
 
+def lift_lines(r):
+    """What a seat must know when the target is a naked __emit lift, not a dump file."""
+    import eligibility
+    if not eligibility.is_lift_row(r):
+        return []
+    import lift_lane
+    home = lift_lane.readable_home(r["source"])
+    lines = [f"    LIFT: {r['source']} is a naked __emit copy of retail under this name, so it scores as a dump. "
+             f"Write the real body in {home or 'the class TU its Zero Hour home suggests'}, land it with "
+             f"`python3 tools/add_match.py NAME 0xSTART SIZE SOURCE --replace-existing`, and delete the naked "
+             f"function (the whole lift file when nothing else lives in it); precedent 33110b4b40. "
+             f"The name came with the lift: confirm it from callers/vtable/ZH before landing."]
+    fix = lift_lane.correction_for(r)
+    if fix:
+        moved = int(fix["start"], 16) != int(r["target_rva"], 16)
+        lines.append(f"    EXTENT: the retail body is {fix['start']} {fix['size']}B, not the ledger's "
+                     f"{r['target_rva']} {r['target_size']}B ({fix['evidence']}); land that extent"
+                     + (" -- the start moved, so the name was attached inside this body: prove it" if moved else "")
+                     + ".")
+    return lines
+
+
 def describe(rva, rows, pins, latest, near, depth=5):
     r = rows[rva]
     parts = [f"- 0x{rva:08X} {r['target_size']}B {r['name']} (dump {Path(r['source']).name})"]
@@ -201,6 +223,7 @@ def describe(rva, rows, pins, latest, near, depth=5):
         parts += digest(rva, depth) or [f"    last attempt ({p[3]}{', score ' + sc.group(1) if sc else ''}): {ev[:220]}"]
         if st and (ROOT / st.group(1)).exists():
             parts.append(f"    START FROM STASH: {st.group(1)}")
+    parts += lift_lines(r)
     if rva in near:
         parts.append(f"    ZH twin: {near[rva]}")
     from source_donors import lookup

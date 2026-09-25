@@ -12,7 +12,9 @@ Rules (Claude/Astra consensus, 2026-09-15; see docs/baseline-2026-09-15.md):
 
   * a DUMP row is open work: gen-dump note or a .asm/.s source; it fixes a
     boundary and holds no source (build.is_scaffold_row is the canonical
-    note test, the suffix test covers MASM rows outside Code/gen_asm/).
+    note test, the suffix test covers MASM rows outside Code/gen_asm/). A
+    named naked/__emit lift in a .cpp is the same thing under a real name,
+    and counts once lift_lane.py has proven its extent (is_lift_row).
   * a DEAD-END verdict retires the address: no-match, refuted, ... are
     findings about the BOUNDARY (tools/re_log.DEAD_END_STATUSES).
   * a DEFERRAL never retires: blocked/attempted/abandoned/partial say a
@@ -26,6 +28,7 @@ Library use only; nothing here writes.
 """
 import csv
 import bisect
+import functools
 import hashlib
 import json
 import datetime
@@ -84,7 +87,34 @@ def rva_of(row):
 def is_dump_row(row):
     return (row.get("status") == "matched"
             and (build.is_scaffold_row(row)
-                 or Path(row.get("source", "")).suffix.lower() in (".asm", ".s")))
+                 or Path(row.get("source", "")).suffix.lower() in (".asm", ".s")
+                 or is_lift_row(row)))
+
+
+@functools.lru_cache(maxsize=1)
+def _lift_keys():
+    """lift_lane's servable set, computed once per process. A checkout with no
+    Code/ tree (the tools-only CI checkout) has no lifts to find."""
+    if not (ROOT / "Code").is_dir():
+        return frozenset()
+    import lift_lane
+
+    return frozenset(lift_lane.servable_lift_keys())
+
+
+def is_lift_row(row):
+    """A named __declspec(naked)/__emit body inside a .c/.cpp whose extent is
+    proven (tools/lift_lane.py): retail bytes, so progress.py scores it as a
+    dump and it is open work. Until 2026-09-25 this predicate did not know the
+    shape, and 592 lift bodies (496 KB, 5.1 pp) were counted as unconverted
+    but never served. A lift whose extent fails the boundary checks is NOT
+    admitted -- it would invite a match against the wrong bytes -- and is
+    listed by `lift_lane.py --suspect` instead."""
+    source = row.get("source", "")
+    if (row.get("status") != "matched" or Path(source).suffix.lower() not in (".c", ".cpp")
+            or source.startswith(("Code/gen_small/", "Code/gen_asm/"))):
+        return False
+    return (row.get("name"), row.get("target_rva")) in _lift_keys()
 
 
 def is_anonymous(name):

@@ -1,0 +1,49 @@
+name,ledger_rva,ledger_size,start,size,evidence
+?getIdealStaticGameDetail@OptionPreferences@@QAEHXZ,0x0007E0F0,942,0x0007E0F0,948,end 0x0007E4A4 meets int3 padding before a 16-aligned start
+?canDoSpecialPowerAtLocation@ActionManager@@QAE_NPBVObject@@PBUCoord3D@@W4CommandSourceType@@PBVSpecialPowerTemplate@@0I_N@Z,0x000C6930,3094,0x000C6930,3447,end 0x000C76A7 meets int3 padding before a 16-aligned start
+?updateGenericScripts@Team@@QAEXXZ,0x000F1430,412,0x000F1430,415,end 0x000F15CF meets int3 padding before a 16-aligned start
+?checkReadyTeams@AIPlayer@@MAEXXZ,0x00162560,722,0x00162560,729,end 0x00162839 meets int3 padding before a 16-aligned start
+?buildSpecificAITeam@AIPlayer@@UAEXPAVTeamPrototype@@_N@Z,0x001650F0,1335,0x001650F0,1341,end 0x0016562D meets int3 padding before a 16-aligned start
+?queueSupplyTruck@AIPlayer@@,0x00165D50,2330,0x00165D50,2333,end 0x0016666D meets int3 padding before a 16-aligned start
+??4?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEAAV01@ABV01@@Z,0x00170228,221,0x00170200,261,start 0x00170200 is 16-aligned after int3
+?update@AIFollowWaypointPathState@@UAE?AW4StateReturnType@@XZ,0x001888D9,794,0x001888B0,835,start 0x001888B0 is 16-aligned after int3
+?createTower@Bridge@@QAEPAVObject@@PAUCoord3D@@W4BridgeTowerType@@PBVThingTemplate@@PAV2@@Z,0x001A9730,265,0x001A9730,284,end 0x001A984C meets int3 padding before a 16-aligned start
+?getHealthBoxDimensions@Object@@QBE_NAAM0@Z,0x001C9E64,166,0x001C9E20,234,start 0x001C9E20 is 16-aligned after int3
+??0CashHackSpecialPowerModuleData@@QAE@XZ,0x00258D70,98,0x00258D70,101,end 0x00258DD5 meets int3 padding before a 16-aligned start
+??1AutoPickUpUpdate@@UAE@XZ,0x00281F40,1490,0x00281F40,1498,end 0x0028251A meets int3 padding before a 16-aligned start
+?setStatus@BattlePlanUpdate@@IAEXW4TransitionStatus@@@Z,0x00286440,1298,0x00286440,1316,end 0x00286964 meets int3 padding before a 16-aligned start
+??1BroadcastStealthUpdate@@UAE@XZ,0x00289E50,803,0x00289E50,806,end 0x0028A176 meets int3 padding before a 16-aligned start
+??1WeaponSetSpecialAbilityUpdate@@UAE@XZ,0x002A9850,2403,0x002A9850,2531,end 0x002AA233 meets int3 padding before a 16-aligned start
+??1SpecialEnemySenseUpdate@@UAE@XZ,0x002AB0F0,543,0x002AB0F0,549,end 0x002AB315 meets int3 padding before a 16-aligned start
+?createUnitOnTeamAt@ScriptActions@@IAEXABVAsciiString@@000@Z,0x002F92A5,604,0x002F9290,625,start 0x002F9290 is 16-aligned after int3
+?executeAction@ScriptActions@@UAEXPAVScriptAction@@@Z,0x00303BF0,39600,0x00303BF0,41772,end 0x0030DF1C meets int3 padding before a 16-aligned start
+?getUiText@Parameter@@QBE?AVAsciiString@@XZ,0x00352E80,3667,0x00352E80,4012,end 0x00353E2C meets int3 padding before a 16-aligned start
+?init@GameLogic@@UAEXXZ,0x0038A1F0,1014,0x0038A1F0,1017,end 0x0038A5E9 meets int3 padding before a 16-aligned start
+?deleteLoadScreen@GameLogic@@QAEXXZ,0x0038D100,1473,0x0038D100,1516,end 0x0038D6EC meets int3 padding before a 16-aligned start
+?startNewGame@GameLogic@@QAEX_N@Z,0x00394260,7640,0x00394260,7643,end 0x0039603B meets int3 padding before a 16-aligned start
+?logicMessageDispatcher@GameLogic@@,0x00397540,11543,0x00397540,12044,end 0x0039A44C meets int3 padding before a 16-aligned start
+?clientSafeQuickDoesPathExistForUI@Pathfinder@@QAE_NABVLocomotorSet@@PBUCoord3D@@1@Z,0x003D96A3,375,0x003D96A0,378,start 0x003D96A0 is 16-aligned after int3
+?tryUnderAttackEvent@Radar@@,0x004271B0,373,0x004271B0,379,end 0x0042732B meets int3 padding before a 16-aligned start
+?write@SkirmishPreferences@@,0x004559A0,830,0x004559A0,838,end 0x00455CE6 meets int3 padding before a 16-aligned start
+?assignDefaultGadgetLook@GameWindowManager@@UAEXPAVGameWindow@@PAVGameFont@@_N@Z,0x004800FC,9955,0x00480090,10063,start 0x00480090 is 16-aligned after int3
+?initObserverControls@ControlBar@@QAEXXZ,0x004A9CD0,1047,0x004A9CD0,1061,end 0x004AA0F5 meets int3 padding before a 16-aligned start
+?GadgetListBoxMultiInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,0x004B9A50,908,0x004B9A50,972,end 0x004B9E1C meets int3 padding before a 16-aligned start
+?GadgetListBoxSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,0x004B9F10,4328,0x004B9F10,4400,end 0x004BB040 meets int3 padding before a 16-aligned start
+?GadgetPushButtonInput@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,0x004BBFC0,1383,0x004BBFC0,1444,end 0x004BC564 meets int3 padding before a 16-aligned start
+?WOLLobbyMenuUpdate@@YAXPAVWindowLayout@@PAX@Z,0x004FD9B0,4417,0x004FD9B0,4536,end 0x004FEB68 meets int3 padding before a 16-aligned start
+?WOLLoginMenuSystem@@YA?AW4WindowMsgHandledType@@PAVGameWindow@@III@Z,0x00501B90,7078,0x00501B90,7088,end 0x00503740 meets int3 padding before a 16-aligned start
+?populateGroupRoomListbox@@YAXPAVGameWindow@@@Z,0x005397D0,298,0x005397D0,329,end 0x00539919 meets int3 padding before a 16-aligned start
+?update@LANAPI@@,0x006870F0,2030,0x006870F0,2436,end 0x00687A74 meets int3 padding before a 16-aligned start
+??0BaseHeightMapRenderObjClass@@QAE@XZ,0x006CFAE0,1304,0x006CFAE0,1307,end 0x006CFFFB meets int3 padding before a 16-aligned start
+?Set_Name@GameFileClass@@QAEXPBD@Z,0x006F63B0,1214,0x006F63B0,1217,end 0x006F6871 meets int3 padding before a 16-aligned start
+?generateVertexBuffer@WaterRenderObjClass@@IAEJHHH_N@Z,0x0079EAB0,790,0x0079EAB0,797,end 0x0079EDCD meets int3 padding before a 16-aligned start
+?_Init@MemoryPool@@YAXXZ,0x008827D0,366,0x008827D0,372,end 0x00882944 meets int3 padding before a 16-aligned start
+?_VerifyIntegrity@MemoryPool@@YAXXZ,0x00882D50,180,0x00882D50,187,end 0x00882E0B meets int3 padding before a 16-aligned start
+?ExecCommand@Debug@@AAEXPBD0@Z,0x0088ABA0,788,0x0088ABA0,794,end 0x0088AEBA meets int3 padding before a 16-aligned start
+?ExpandMagic@DebugIOFlat@@CAXPBD0PAD@Z,0x008900A0,701,0x008900A0,733,end 0x0089037D meets int3 padding before a 16-aligned start
+?Reset_Device@DX8Wrapper@@SA_N_N@Z,0x009082B0,962,0x009082B0,969,end 0x00908679 meets int3 padding before a 16-aligned start
+?_Init_Filters@TextureFilterClass@@SAXW4TextureFilterMode@1@@Z,0x00920D10,438,0x00920D10,446,end 0x00920ECE meets int3 padding before a 16-aligned start
+?Save_W3D@AggregateDefClass@@UAE?AW4WW3DErrorType@@AAVChunkSaveClass@@@Z,0x00980590,83,0x00980590,196,end 0x00980654 meets int3 padding before a 16-aligned start
+?Add_Prototype_Impl@AssetRegistry@@QAEXPAX@Z,0x009EF1A0,224,0x009EF1A0,1326,end 0x009EF6CE meets int3 padding before a 16-aligned start
+?toLower@?$StringBase@G@@QAEXXZ,0x888640,248,0x00888640,251,end 0x0088873B meets int3 padding before a 16-aligned start
+?toUpper@?$StringBase@G@@QAEXXZ,0x888740,248,0x00888740,251,end 0x0088883B meets int3 padding before a 16-aligned start

@@ -42,6 +42,19 @@ An explicit request or assigned lane overrides the queue:
    plausible GUESSED class or method name is prohibited; no gate can see it.
    The second, boundary-evidence pool is described in `docs/carving.md` and is
    served by `tools/carve_unclaimed.py`.
+3a'. **Named `__emit` lifts are dumps too, and they are the best-evidenced
+   open pool.** 592 rows (496 KB, 5.1 pp, measured 2026-09-25) are
+   `__declspec(naked)` copies of retail under real names -- mostly the
+   2026-08-11 Open-BFME5 `*Thunk.cpp` lifts -- and until then no picker saw
+   them. `python3 tools/lift_lane.py` lists the servable ones, Zero Hour twins
+   first; `eligibility.is_lift_row` admits a lift only when its extent passes
+   the boundary checks, because an `__emit` body matches whatever extent it
+   claims and the lifts copied Ghidra sizes that stop short of the real `ret`.
+   `reverse/lift_extents.csv` carries the proven corrections (the brief says
+   EXTENT); `--suspect` lists the rest, mostly names whose stack cleanup
+   contradicts the body. Convert one like `33110b4b40`: real body in the TU the
+   lift's `// readable body of` comment names, `add_match --replace-existing`
+   at the proven extent, delete the naked function.
 3b. **Replacing generator-written C++ with hand-written C++ is deferred.**
    It scores +0 on the headline (generated code already compiles and is
    already counted) and it consumed the seats meant for dumps once the naked
