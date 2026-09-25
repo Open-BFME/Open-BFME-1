@@ -4918,5 +4918,25 @@
   "after_sha256": "6ecc68e5032f84f9b120f3654e4b3dc882958e59b3526455941bf82a45927a9e",
   "evidence": "docs/naming_evidence.md",
   "reason": "slot semantics unproven"
+ },
+ {
+  "old_path": "reverse/attempts/0x00362760.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/Gen00362760ElemHandle.cpp",
+  "old_name": "BfmeVecEAP",
+  "new_name": "Gen00362760",
+  "before_sha256": "37a9feecad4bbbb530b34ec62949b5642222e6a1cf80affdcbeb2112433c91f9",
+  "after_sha256": "c2f4eea3f218a095872b6184cddb426ff843837704d526a5780558a96b665a8a",
+  "evidence": "reverse/symbols.csv",
+  "reason": "stash owner name was invented; reverse/symbols.csv already pins 0x00362760 to the address-derived Gen00362760 family used by tail thunk 0x00383940 and the matched Gen00362760Elem callee"
+ },
+ {
+  "old_path": "reverse/attempts/0x00362760.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/Gen00362760ElemHandle.cpp",
+  "old_name": "m_bfmeHeadEAP",
+  "new_name": "m_unmodelled",
+  "before_sha256": "37a9feecad4bbbb530b34ec62949b5642222e6a1cf80affdcbeb2112433c91f9",
+  "after_sha256": "c2f4eea3f218a095872b6184cddb426ff843837704d526a5780558a96b665a8a",
+  "evidence": "reverse/symbols.csv",
+  "reason": "invented member name for unread bytes 0x00-0x17; nothing reads them so they stay unmodelled like the sibling Gen00362760Elem"
  }
 ]

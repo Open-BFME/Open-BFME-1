@@ -74,6 +74,7 @@ public:
 private:
 	char m_unmodelled[ 0x30 ];
 	_STL::vector<LivingWorldArmy> m_armies;
+	char m_unmodelled3C[ 0x1C ];
 };
 
 void Gen00362760Elem::handle( void *visitor )
@@ -85,4 +86,23 @@ void Gen00362760Elem::handle( void *visitor )
 		const LivingWorldArmy &army = m_armies[ i ];
 		functor( army.getName(), army.getCount() );
 	}
+}
+
+// Retail 0x00362760, 62 bytes.  Reached by the add-ecx tail thunk at 0x00383940
+// (this + 0x170).  Only an STLport vector's size()/operator[] keeps `this` in
+// ESI and reloads _M_start after the division; a raw begin/end pair caches it.
+class Gen00362760
+{
+public:
+	void handle( int index, void *visitor );
+
+private:
+	char m_unmodelled[ 0x18 ];
+	_STL::vector<Gen00362760Elem> m_elems;
+};
+
+void Gen00362760::handle( int index, void *visitor )
+{
+	if( index >= 0 && index < m_elems.size() )
+		m_elems[ index ].handle( visitor );
 }
