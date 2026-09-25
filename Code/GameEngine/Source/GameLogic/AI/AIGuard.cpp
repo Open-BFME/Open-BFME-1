@@ -643,7 +643,6 @@ void AIGuardReturnState::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@AIGuardReturnState@@ present-unmatched
 void AIGuardReturnState::loadPostProcess( void )
 {
 }  // end loadPostProcess
