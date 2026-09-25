@@ -4148,5 +4148,55 @@
   "after_sha256": "892c574d63ab654ad9ee62b9c62918e5ac735b4345eb7a9cb94ade80aaa5702f",
   "evidence": "docs/naming_evidence.md",
   "reason": "threshold was a guessed member name with no witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x005217a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/AptMapPreviewMapNameUpdate.cpp",
+  "old_name": "updateMapName",
+  "new_name": "rva005217A0",
+  "before_sha256": "f8e29217b3f65b507d5a8b42b928f45ad09695f447723ca0210b99613fb87825",
+  "after_sha256": "ce43e27ce4c3402c2b2561b441ed0af1ffb7c5203ee391f3b024ee44442bb5e7",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "updateMapName was a bank guess with no string/vtable/twin evidence and the existing pin plus the landed caller AptMapPreview::mapGadgetInit already spell rva005217A0"
+ },
+ {
+  "old_path": "reverse/attempts/0x005217a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/AptMapPreviewMapNameUpdate.cpp",
+  "old_name": "bfmeApplyVSH",
+  "new_name": "rva005216B0",
+  "before_sha256": "f8e29217b3f65b507d5a8b42b928f45ad09695f447723ca0210b99613fb87825",
+  "after_sha256": "ce43e27ce4c3402c2b2561b441ed0af1ffb7c5203ee391f3b024ee44442bb5e7",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank name was unevidenced and the landed name is at 0x005216B0"
+ },
+ {
+  "old_path": "reverse/attempts/0x005217a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/AptMapPreviewMapNameUpdate.cpp",
+  "old_name": "bfmeStep1VSH",
+  "new_name": "rva00521390",
+  "before_sha256": "f8e29217b3f65b507d5a8b42b928f45ad09695f447723ca0210b99613fb87825",
+  "after_sha256": "ce43e27ce4c3402c2b2561b441ed0af1ffb7c5203ee391f3b024ee44442bb5e7",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank placeholders were replaced by the landed ledger names of the ILT targets"
+ },
+ {
+  "old_path": "reverse/attempts/0x005217a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/AptMapPreviewMapNameUpdate.cpp",
+  "old_name": "bfmeStep2VSH",
+  "new_name": "rva00521000",
+  "before_sha256": "f8e29217b3f65b507d5a8b42b928f45ad09695f447723ca0210b99613fb87825",
+  "after_sha256": "ce43e27ce4c3402c2b2561b441ed0af1ffb7c5203ee391f3b024ee44442bb5e7",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank placeholders were replaced by the landed ledger names of the ILT targets"
+ },
+ {
+  "old_path": "reverse/attempts/0x005217a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/AptMapPreviewMapNameUpdate.cpp",
+  "old_name": "m_description",
+  "new_name": "m_unmodelledF4",
+  "before_sha256": "f8e29217b3f65b507d5a8b42b928f45ad09695f447723ca0210b99613fb87825",
+  "after_sha256": "ce43e27ce4c3402c2b2561b441ed0af1ffb7c5203ee391f3b024ee44442bb5e7",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank's m_description at +0xF4 had no witness (name_oracle has no MapMetaData layout)"
  }
 ]
