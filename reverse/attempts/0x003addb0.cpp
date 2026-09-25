@@ -1,50 +1,23 @@
-// ?j_0002eeec@Glo012F1024Item@@QAEXXZ
-// partial score=0.4 date=2026-09-15
-// Identity: ILT thunk 0x0002EEEC (functions.csv d_0002eeec gen-thunk,
-// target=FUN_007addb0) is called directly by bfmeEnter's tail sequence
-// (Glo012F1024Entry_bfmeStep.cpp, matched, 0x003AEE70). Retail body is
-// 224B (ghidra boundary 217 was short of the trailing ret).
-//
-// Same wall and same shape as j_00021f26 (see reverse/attempts/0x003adcc0.cpp):
-// walks the +0x90 BfmeElem20Vector (20-byte records: char head[0x10];
-// unsigned char byte; char tail[3];) instead of the 16-byte one. Per
-// record: heap-allocate 16 bytes (push 0x10; call ??2@YAPAXI@Z), and on
-// success construct with value dword at +4, ADDRESS of the dword at
-// +0xC, and the flag byte at +0x10, via a DIFFERENT callee at retail VA
-// 0x41407E (RVA 0x0001407E). The (possibly-null) item is always handed
-// to the SAME Glo012F1028Type::j_00003f0d (RVA 0x00003F0D) used by
-// j_00021f26.
-//
-// New pin landed clean (pin_consistency --check OK):
-//   ??0Glo012F1024FlagCtor16B@@QAE@HPAXE@Z,0x0001407E
-//
-// THE WALL: identical to j_00021f26 -- retail's SEH prologue is Form B
-// (mov eax,fs:[0] first); every source shape tried here compiles to
-// Form A instead, and 'this'/byte-offset land in the opposite pair of
-// callee-saved registers versus retail (edi/ebx swapped) with a
-// different push grouping around the early-exit branch. Best result:
-// 214/224, 173 non-reloc bytes differing per tools/probe.py. Making
-// j_0002eeec a real Glo012F1024Item member does not disturb bfmeEnter's
-// own matched 129B compile (checked after every edit).
-//
-// t=90min model=claude-sonnet-5 (shared session with 0x003adcc0)
-
+// ?d_003addb0@@YAXXZ
+// partial score=0.5 date=2026-09-25
+// stlport
 // cl: /DNDEBUG /MD /EHsc
+// partial score=0.50 date=2026-09-25
+//
+// The matched Glo012F1024Item::bfmeEnter body at RVA 0x003AEE70 calls ILT 0x0002EEEC, which jumps to the body at 0x003ADDB0. The pin at ILT 0x0002EEEC names it Glo012F1024Item::j_0002eeec. Retail ends with ret after 224 bytes. The retail unwind map frees the allocated pointer if the constructor throws.
+//
+// This source uses explicit allocation and placement construction. The compiler loads fs:[0] before it writes the exception record, as retail does. The probe reports 224 source bytes and 58 non-relocation differences.
+//
+// The frame listing shows slots for the flag, the raw allocation pointer, and a temporary pointer passed to placement cleanup. The source reserves 12 local bytes while retail reserves 8. The initial STLport vector accessors left 149 differences. Removing the flag local left 121 differences in a 205-byte draft. The next attempt should reduce the frame and match the constructor call sequence.
+//
+// t=26min model=GPT-6 blocker=stack-frame/constructor-call-layout
+#include <vector>
 
 struct BfmeElem20
 {
 	char m_bfmeHead[0x10];
 	unsigned char m_bfmeByte;
 	char m_bfmeTail[0x03];
-};
-
-class BfmeElem20Vector
-{
-public:
-	unsigned int bfmeSize(void) const { return m_bfmeEnd - m_bfmeBegin; }
-
-	BfmeElem20 *m_bfmeBegin;
-	BfmeElem20 *m_bfmeEnd;
 };
 
 class Glo012F1028Type
@@ -60,6 +33,8 @@ extern Glo012F1028Type *Glo012F1028;
 class Glo012F1024FlagCtor16B
 {
 public:
+	static __forceinline void *operator new(unsigned int size, void *storage) { (void)size; return storage; }
+	static void operator delete(void *storage, void *placement) { ::operator delete(storage); (void)placement; }
 	Glo012F1024FlagCtor16B(int value, void *addr, unsigned char flag);
 	char m_bfmeBody[0x10];
 };
@@ -70,25 +45,26 @@ public:
 	void j_0002eeec(void);
 
 	char m_bfmePad[0x90];
-	BfmeElem20Vector m_bfmeFlag20;			// +0x90
+	std::vector<BfmeElem20> m_bfmeFlag20;
 };
 
 void Glo012F1024Item::j_0002eeec(void)
 {
 	unsigned int index = 0;
-	int count = ((int)m_bfmeFlag20.m_bfmeEnd -
-		(int)m_bfmeFlag20.m_bfmeBegin) / 20;
-	if (count != 0)
+	if (m_bfmeFlag20.size() != 0)
 	{
 		do
 		{
-			BfmeElem20 *elem = m_bfmeFlag20.m_bfmeBegin + index;
-			Glo012F1024FlagCtor16B *obj = new Glo012F1024FlagCtor16B(*(int *)((char *)elem + 4), (void *)((char *)elem + 0xC), elem->m_bfmeByte);
-			void *item = 0;
-			if (obj != 0)
-				item = obj;
-			Glo012F1028->j_00003f0d(item);
+			BfmeElem20 *elem = m_bfmeFlag20.begin() + index;
+			unsigned char flag;
+			void *storage = ::operator new(0x10);
+			if (storage != 0)
+			{
+				flag = elem->m_bfmeByte;
+				storage = new (storage) Glo012F1024FlagCtor16B(*(int *)((char *)elem + 4), (void *)((char *)elem + 0xC), flag);
+			}
+			Glo012F1028->j_00003f0d(storage);
 			++index;
-		} while (index < m_bfmeFlag20.bfmeSize());
+		} while (index < m_bfmeFlag20.size());
 	}
 }
