@@ -1,5 +1,5 @@
 // ?d_007f9d00@@YAXXZ
-// partial score=0.3 date=2026-09-22
+// partial score=0.33 date=2026-09-25
 // ABI experiment: raw message storage and one declared request parameter.
 // cl: /O2 /GX-
 
@@ -88,25 +88,22 @@ void Rva007F9D00Owner::process(Rva007F9D00Request *request)
     MESSAGE->Rva007E8810Message::Rva007E8810Message();
     MESSAGE->m_10 = (char *)request->m_08;
     MESSAGE->m_14 = request->m_0C;
-    MESSAGE->m_1C = request->m_00;
     MESSAGE->m_20 = request->m_04;
+    MESSAGE->m_1C = request->m_00;
     MESSAGE->m_04 = request->m_18;
-    MESSAGE->m_0C = request->m_20;
     MESSAGE->m_08 = request->m_1C;
+    MESSAGE->m_0C = request->m_20;
     MESSAGE->setError(m_hub->v2(MESSAGE));
     int result = m_hub->v1(MESSAGE);
-    bool accepted = m_hub->v7(MESSAGE);
+    int accepted = m_hub->v7(MESSAGE);
     if (result != 0 && !m_hub->v6(MESSAGE))
     {
-        Rva007FA170Slot *slot = m_slots;
         int index = 0;
-        while (slot->m_00 != (void *)result && index < 0x20)
-        {
+        while (index < 0x20 && m_slots[index].m_00 != (void *)result)
             ++index;
-            ++slot;
-        }
-        if (slot->m_00 == (void *)result)
+        if (index < 0x20)
         {
+            Rva007FA170Slot *slot = &m_slots[index];
             if (m_hub->v7(MESSAGE))
             {
                 ((Rva007FA2C0 *)((char *)this - 4))->d_007f97b0(
