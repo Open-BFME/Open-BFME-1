@@ -10770,7 +10770,6 @@ name,address,notes
 ??_7Rva00641C60Queue@@6B@,0x01119380,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
 ??_7Rva006609D0@@6B@,0x0111A1D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
 ??_7Rva006609D0Base@@6B@,0x0111A138,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
-??_7W3DRenderObjectSnapshot@@6B@,0x0111D024,W3DRenderObjectSnapshot vtable; slot 2 returns the class-name literal at 0x0111D038
 ??_7Rva006BDB50@@6B@,0x0111CFE0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006BDB50 calls; autopin
 ??_7Rva006F92D0@@6B@,0x01120360,address-derived vtable for the unnamed W3D resource at 0x006F92D0
 ??_7Rva00740AE0@@6B@,0x0112171C,derived vftable stored by the 0x00740AE0 constructor
@@ -10876,6 +10875,7 @@ name,address,notes
 ??_7VisPolyClass@@6B@,0x00D27AC8,exact constructor 0x007A1750 installs this dedicated vtable
 ??_7W3DMouse@@6B@,0x01120928,W3DMouse constructor vftable store
 ??_7W3DProjectedShadowManager@@6B@,0x01128404,W3DProjectedShadowManager constructor vftable store at 0x007AF5C7
+??_7W3DRenderObjectSnapshot@@6B@,0x0111D024,W3DRenderObjectSnapshot vtable; slot 2 returns the class-name literal at 0x0111D038
 ??_7W3DShadowGeometryManagerIterator@@6B@,0x00D284A8,exact constructor 0x007B96B0 installs this dedicated vtable
 ??_7W3DShroudMaterialPassClass@@6B@,0x00D209C8,vtable whose slots name W3DShroudMaterialPassClass
 ??_7W3DSmudgeManager@@6B@,0x01120FBC,W3DSmudgeManager vftable stored by its constructor
@@ -12641,6 +12641,7 @@ name,address,notes
 ?Rva008AC750Span@@3MB,0x01136850,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008AC750 calls; autopin
 ?Rva008AC750TwoPi@@3NB,0x01126CE8,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008AC750 calls; autopin
 ?Rva008AE770TheStack@@3URva008AE770Stack@@A,0x01338748,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008AE770 calls; autopin
+?Rva008AF330Head@@3PAVRva008A4C00Value@@A,0x013387CC,free-list pointer global VA013387CC;008AF330 pops node next at8 then stores float payload at8; newpath constructs Rva008A4C00Value
 ?Rva008B6D70MakeValue@@YAPAVAptValue@@H@Z,0x008A11E0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008B6D70 calls; autopin
 ?Rva008B6D70Refresh@@YAXPAX00@Z,0x008B65E0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008B6D70 calls; autopin
 ?Rva008B6D70Refresh@@YGXPAX00@Z,0x008B65E0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x008B6D70 calls; autopin
@@ -12744,6 +12745,7 @@ name,address,notes
 ?Rva01336E50Str@@3URva002E5FF0Str@@A,0x01336E50,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x002E5FF0 calls; autopin
 ?Rva01336E50Str@@3VRva0036CA00Str@@A,0x01336E50,Open-BFME5 global Rva0036CA00Str immediate used by 0x00385180/0x003855C0 reset
 ?Rva01336E50Str@@3VUnicodeString@@A,0x01336E50,UnicodeString view of the global string the WaterRenderObjClass constructor copies into its five name slots (same address as ?Rva01336E50Str@@3URva002E5FF0Str@@A)
+?Rva013378B8@@3P6AHPBDH@ZA,0x013378B8,global VA013378B8; independently decoded008AF330 call pushes char pointer and zero then caller cleans8; EAX converted by signed FILD into float
 ?Rva0133F478Textures@@3PAPAURva006C9270Texture@@A,0x0133F478,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006C9270 calls; autopin
 ?Rva01340510Device@@3PAXA,0x01340510,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x0090ADC0 calls; autopin
 ?Rva01340534Device@@3PAURva006C9270Device@@A,0x01340534,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006C9270 calls; autopin
@@ -15296,6 +15298,7 @@ name,address,notes
 ?apply@Rva001705A0Inner@@QAEXH_N@Z,0x0001EA24,address-derived call target from the exact lazy-owner body at 0x001705A0; ILT fronts the shared body at 0x0018BCF0
 ?apply@Rva001F6960@@QAEXPAVS4Sink004135C0@@H@Z,0x0002E64A,2-argument sink apply callee of BuildingBehavior::update at 0x001F6A40; address-derived identity
 ?apply@Rva00202DF0Head@@QAEXPAVRva00202DF0Face@@H@Z,0x000157DA,address-derived callee of Rva00202DF0Part::seed; ILT to 0x002B2040
+?apply@Rva002147E0Owner@@QAEXMPAUDamageInfo@@@Z,0x002147E0,address-derived secondary-body-interface callee; independently decoded394B body consumes float stackarg and pointer plus ECX receiver with object at minus8; RET8 on all exits; aligned350B caller via ILT00030BBB
 ?apply@Rva0025CAA0ElvenWoodDispatch@@QAEXPAVRva0025CAA0Subject@@PAVRva0025CAA0Context@@@Z,0x000170DA,address-derived dispatch call from the 73-byte Elven Wood body
 ?apply@Rva0025D7E0FreezingRainDispatch@@QAEXPAVRva0025D7E0Subject@@PAVRva0025D7E0Context@@@Z,0x000170DA,address-derived dispatch target read from retail RVA 0x0025D7E0
 ?apply@Rva002CDF00Result@@QAEXPAX@Z,0x00041998,ILT tail jump at 0x002CDF4C reaches the matched result update body at 0x004140E0
@@ -84108,8 +84111,8 @@ name,address,notes
 ?init@BFMEPathfindLayer@@QAE_NPAVBridge@@W4PathfindLayerEnum@@@Z,0x003FB950,alias of the ledgered spelling at the same body; AIPathfind.cpp reaches it through a view class because the reference AIPathfind.h inlines it
 ?init@BfmeOwnVVB@@AAEXPAX@Z,0x000026C1,ILT thunk: BfmeOwnVVB post-construction init called by both constructors
 ?init@CustomAsciiStringShim@@QAEXPBD@Z,0x00888BC0,CustomMatchPreferences getter key constructor shim
-?init@GameLODManager@@QAEXXZ,0x0007EEB0,BODY; unique GameLOD.ini/GameLODPresets.ini/Benchmark.txt/BenchProfile anchors and matching source flow; ECX saved as receiver and complete 1074B boundary ends plain ret; evidence=reverse/identity_evidence/0007eeb0.md
 ?init@FrameData@@QAEXXZ,0x0003BB6F,ILT thunk retail's call sites encode; double hop via 0x00670220 to the body at 0x00670170, which build_call_thunks only follows one level of
+?init@GameLODManager@@QAEXXZ,0x0007EEB0,BODY; unique GameLOD.ini/GameLODPresets.ini/Benchmark.txt/BenchProfile anchors and matching source flow; ECX saved as receiver and complete 1074B boundary ends plain ret; evidence=reverse/identity_evidence/0007eeb0.md
 ?init@Mouse@@UAEXXZ,0x0000245A,ILT thunk to Mouse::init; base call from DirectInputMouse::init
 ?init@NetCommandList@@QAEXXZ,0x0000B9CE,ICF-folded onto reset; retail calls both through this thunk
 ?init@Network@@UAEXXZ,0x00681E40,vtable 0x0111A968 slot 1 (+0x04) via ILT 0x00040FB6; ZH Network::init: destroy@BFMEConnectionManager 0x00668D90 + delete of +0x08 then new 0x12190 B ConnectionManager via construct@BFMEConnectionManager 0x00669630 and its vslot 0 init; status +0x0C=0 PREGAME QueryPerformanceFrequency->+0x10 QueryPerformanceCounter->+0x18 +0x2C=0 +0x34=0 +0x38=-1; called right after construction by the factory 0x00682320 (call [vt+4] at 0x0068237B)
@@ -84148,7 +84151,6 @@ name,address,notes
 ?initLaserInner@LaserUpdate@@AAEXPAXPBUCoord3D@@10@Z,0x00024FC3,ILT to 0x00603FE0 LaserUpdate 4-arg inner init used by 0x00604460
 ?initReplayMultiPlayer@@YAXXZ,0x004E8D10,ZH initReplayMultiPlayer: screenType=4 at entry; grabMultiPlayerInfo 0x004E8D1A; winHide(TRUE) on the 7 chat/continue/buddy windows; byte-shape twin of initReplaySinglePlayer except the grab call; ILT 0x00007F6D; sole caller ScoreScreenInit 0x004E929A (replay && isMultiplayer)
 ?initReplaySinglePlayer@@YAXXZ,0x004E89C0,ZH initReplaySinglePlayer: screenType=4 (REPLAY) at entry; grabSinglePlayerInfo 0x004E89CA; winHide(TRUE) on staticTextGameSaved textEntryChat buttonEmote chatBoxBorder buttonContinue buttonBuddies listboxChat (0x012F4178/68/6C/70/64/74/7C); ILT 0x0002BF44; sole caller ScoreScreenInit 0x004E92C5 (replay && !TheRecorder->isMultiplayer)
-?update@W3DRenderObjectSnapshot@@AAEXPAVRenderObjClass@@PAUDrawableInfo@@_N@Z,0x00044341,ILT thunk to W3DRenderObjectSnapshot::update 0x006BCC80, called by the constructor at 0x006BCD80
 ?initSamplePools@MilesAudioManager@@AAEXXZ,0x006A3130,MilesAudioManager sample-pool helper reached through retail ILT 0x0002CA8E
 ?initSinglePlayer@@YAXXZ,0x004E88E0,ZH initSinglePlayer: screenType=0 (0x004E88F7); TheCampaignManager(0x012F4CB0)+0x14 = floor(localPlayer->+0x25c skill points) +0x18 = TheScriptEngine(0x012F076C)+0x17620 difficulty; grabSinglePlayerInfo 0x004E8936; s_needToFinishSinglePlayerInit(0x012F4182)=1; s_blankLayout(0x012F4184) = TheWindowManager->winCreateLayout(Menus/BlankWindow.wnd) hide(FALSE) bringForward getFirstWindow()->winClearStatus(0x80); ILT 0x0003E612; sole caller ScoreScreenInit 0x004E92F7
 ?initSubsystem@SubsystemInterfaceList@@QAEXPAVSubsystemInterface@@PAXPBD22PAVXfer@@VAsciiString@@@Z,0x009A20B0,SubsystemInterfaceList::initSubsystem body,
@@ -86037,6 +86039,7 @@ name,address,notes
 ?rva00366A20IntrosortLoop@@YAXPAURva00364980HeapElement@@00HURva00364980HeapCompare@@@Z,0x0000AE61,REL32 introsort-loop target from 0x00366FE6
 ?rva0036B250ConditionsAt@AttributeModifierDefinitionStore@@QBE?AV?$BitFlags@$0BEA@@@H@Z,0x0001FAE6,ILT to body 0x0036B250; address-derived getter; body bounds-checks index against the definition-pointer vector at +8/+0xC exactly as the landed valueAt and secondaryValueAt then rep-movsd copies ten dwords from definition+0x1C into the hidden return else a zeroed 40-byte flags; thiscall ret8; caller bfmeUseXI 0x00369240 +9D passes TheAttributeModifierDefinitionStore in ecx and hands the result to Object clearAndSetModelConditionFlags ILT 95ED
 ?rva0036BB10FindCastleMemberBehavior@@YAPAVModule@@PBVObject@@@Z,0x0000E6E7,ProductionUpdate queueUpgrade behavior lookup thunk
+?rva00371650@CastleBehavior@@QAEPAVObject@@PAVBuildListInfo@@_N@Z,0x00371650,address-derived method; initiateUnpack reaches caller 0x00374F20 with the CastleBehavior receiver; caller passes BuildListInfo* and Bool then gives the Object* return to registerOwnedObject
 ?rva00377060@CastleBehavior@@QAEXXZ,0x00377060,address-derived no-argument thiscall; state body 0x00377740 calls via ILT 0x0001CD41 with ecx=this-0x10; identity-evidence=reverse/identity_evidence/00377060.md
 ?rva0037F050@ExperienceLevelSystem@@QAEPAVExperienceLevelCollection@@PAVObject@@@Z,0x0037F050,System map lookup returns borrowed circular-list-like collection at mapped node+8; not a single ExperienceLevel; actual caller37F0F0 and next-level helper traversal prove ABI;campaign=luna36h-20260907;lane=finish;model=gpt-5.6-sol-ultra
 ?rva00380110@ExperienceLevelSystem@@QAEXPAVExperienceLevel@@PAVObject@@_N2@Z,0x00380110,Two named caller chains pass selected ExperienceLevel Object and two Bool flags; ret16 and Object tracker accesses prove nonowning member ABI;campaign=luna36h-20260907;lane=finish;model=gpt-5.6-sol-ultra
@@ -86131,6 +86134,7 @@ name,address,notes
 ?rva006ca4f0@@YAXXZ,0x0003B309,Open-BFME5 ILT thunk b_006ca4f0
 ?rva0071EEC0@Rva0071EEC0Buffer@@QAEXPAVCameraClass@@PAV?$RefMultiListIterator@VRenderObjClass@@@@@Z,0x0071EEC0,address-derived direct body with the caller-proven CameraClass and RefRenderObjListIterator ABI; renderTrees calls it through ILT 0x00049D5F on the distinct buffer at owner+0x3098; campaign=luna36h-20260907;lane=shaders;model=gpt-5.6-sol-ultra
 ?rva0072D210@W3DTerrainBackground@@QAEXABURva0072E150Region@@PAVWorldHeightMap@@_N2@Z,0x0072D210,Address-derived four-argument terrain update; independent full1920B boundary ends RET16 at72D98D; arg2 refcounted map at+4C; arg4 byte stored+51; region/map/arg3 forwarded to tessellation; caller72E150 via324D4
+?rva00736940@W3DTreeBuffer@@QAEHABVAsciiString@@H0@Z,0x00736940,address-derived tree-type lookup; independent full342B callee RET12 and aligned1313B caller establish AsciiString ref plus int plus AsciiString ref; owner from matched BaseHeightMap tree-buffer caller
 ?rva007397E0@@YA_NPAVRva0077B3F0Render@@MMM@Z,0x0002C9DA,Rva0077B3F0 call-site ABI; +0x331 REL32 reaches ILT 0x0002C9DA to generated body 0x007397E0
 ?rva0074C690@WorldHeightMap@@QAE?AVBfmeHandleCX@@HHH@Z,0x0074C690,Address-derived texture handle getter; independently decoded full407B ending RET16 at74C824; hidden first output receives cached pointer from this+120DC and is returned in EAX with ushort refcount+4; caller72DC30 passes three explicit ints through ILT11220 and releases returned temporary via9EB7A0
 ?rva0075C9F0@Rva0077B3F0@@QAEXPAVRva0077B3F0Render@@@Z,0x00016671,Rva0077B3F0 call-site ABI; +0x49B REL32 reaches ILT 0x00016671 to matched body 0x0075C9F0
@@ -86944,6 +86948,7 @@ name,address,notes
 ?update@TunnelContain@@UAE?AW4UpdateSleepTime@@XZ,0x0022f570,vtable-slot ??_7TunnelContain@@6BUpdateModuleInterface@@@ slot 0 anchors=1
 ?update@UpdateModuleInterface@@QAE?AW4UpdateSleepTime@@XZ,0x00044B0C,GiveUpgradeUpdate update calls the inherited update body through this ILT
 ?update@VictorySystem@@UAEXXZ,0x001DFBA0,vtable 0x0109FD8C slot 5 (+0x14) via ILT 0x0000C630; called from the GameLogic update body 0x0038DA10 at 0x0038DC4D; early-out until +0x100; active grid (+0x104 0/1 -> +0xF8/+0xFC) fed to 0x001B1AD0 then 0x001DFAA0 and 0x001DE3C0
+?update@W3DRenderObjectSnapshot@@AAEXPAVRenderObjClass@@PAUDrawableInfo@@_N@Z,0x00044341,ILT thunk to W3DRenderObjectSnapshot::update 0x006BCC80, called by the constructor at 0x006BCD80
 ?updateAnimateWindow@ProcessAnimateWindowSlideFromRight@@UAE_NPAVAnimateWindow@@@Z,0x00495850,vtable-slot ??_7ProcessAnimateWindowSlideFromRight@@6B@ slot 3 anchors=3
 ?updateAnimateWindow@ProcessAnimateWindowSlideFromRightFast@@UAE_NPAVAnimateWindow@@@Z,0x00497640,vtable-slot ??_7ProcessAnimateWindowSlideFromRightFast@@6B@ slot 3 anchors=3
 ?updateAnimateWindow@ProcessAnimateWindowSlideFromTop@@UAE_NPAVAnimateWindow@@@Z,0x00496130,vtable-slot ??_7ProcessAnimateWindowSlideFromTop@@6B@ slot 3 anchors=3
@@ -89056,7 +89061,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-?rva00736940@W3DTreeBuffer@@QAEHABVAsciiString@@H0@Z,0x00736940,address-derived tree-type lookup; independent full342B callee RET12 and aligned1313B caller establish AsciiString ref plus int plus AsciiString ref; owner from matched BaseHeightMap tree-buffer caller
-?apply@Rva002147E0Owner@@QAEXMPAUDamageInfo@@@Z,0x002147E0,address-derived secondary-body-interface callee; independently decoded394B body consumes float stackarg and pointer plus ECX receiver with object at minus8; RET8 on all exits; aligned350B caller via ILT00030BBB
-?Rva013378B8@@3P6AHPBDH@ZA,0x013378B8,global VA013378B8; independently decoded008AF330 call pushes char pointer and zero then caller cleans8; EAX converted by signed FILD into float
-?Rva008AF330Head@@3PAVRva008A4C00Value@@A,0x013387CC,free-list pointer global VA013387CC;008AF330 pops node next at8 then stores float payload at8; newpath constructs Rva008A4C00Value
