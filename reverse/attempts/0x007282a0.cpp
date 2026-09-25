@@ -1,5 +1,5 @@
 // ?setFlipRecursive@W3DTerrainBackground@@IAEXHHHH@Z
-// partial score=0.1 date=2026-09-23
+// partial score=0.14 date=2026-09-25
 // Scratch reconstruction for retail 0x007282A0..0x007285D5 (821 bytes).
 // Caller, pin, and matched source establish the W3D member identity.
 //
@@ -52,15 +52,12 @@ public:
     unsigned short heightAt(int x, int y) const
     {
         int index = y * width() + x;
-        if (index < 0)
+        if (index < 0 || index >= count())
             return 0;
-        if (index >= count())
+        unsigned short *data = heights();
+        if (data == 0)
             return 0;
-
-        unsigned short *heightData = heights();
-        if (heightData == 0)
-            return 0;
-        return heightData[index];
+        return data[index];
     }
 
     bool cliffAt(int x, int y) const
@@ -125,10 +122,10 @@ void W3DTerrainBackground::setFlipRecursive(int xOffset, int yOffset, int width,
     {
         for (j = 0; j <= width; ++j)
         {
-            int k = minX + i;
+            int k = minX + j;
             if (k >= limitX)
                 k = limitX;
-            int l = minY + j;
+            int l = minY + i;
             if (l >= limitY)
                 l = limitY;
 
@@ -138,8 +135,8 @@ void W3DTerrainBackground::setFlipRecursive(int xOffset, int yOffset, int width,
                 break;
             }
 
-            float u = (float)i / (float)width;
-            float v = (float)j / (float)width;
+            float u = (float)j / (float)width;
+            float v = (float)i / (float)width;
             float predicted;
             if (v > (1.0f - u))
             {
