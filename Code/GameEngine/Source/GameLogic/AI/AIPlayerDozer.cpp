@@ -295,19 +295,20 @@ enum { DOZER_TASK_BUILD = 0, KINDOF_DOZER = 1 << 14 };
 // TeamInQueue::includesADozer is inlined here.
 Bool AIPlayer::dozerInQueue()
 {
-	TeamInQueue *team = m_teamBuildQueue;
-	unsigned int mask = 0x4000;
-	if (team)
+	TeamInQueue *currentTeam = m_teamBuildQueue;
+	if (currentTeam)
 	{
 		do
 		{
-			for (WorkOrder *order = team->m_workOrders; order; order = order->m_next)
+			for (WorkOrder *workOrder = currentTeam->m_workOrders;
+				workOrder; workOrder = workOrder->m_next)
 			{
-				if ((order->m_thing->m_kindOf & mask) && !order->m_isResourceGatherer)
+				if ((workOrder->m_thing->m_kindOf & KINDOF_DOZER) &&
+					!workOrder->m_isResourceGatherer)
 					return true;
 			}
-			team = team->next();
-		} while (team);
+			currentTeam = currentTeam->next();
+		} while (currentTeam);
 	}
 	return false;
 }
