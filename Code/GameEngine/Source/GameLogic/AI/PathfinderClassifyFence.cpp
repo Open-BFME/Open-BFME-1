@@ -79,7 +79,7 @@ private:
 class PathfindZoneManager
 {
 public:
-	void markZonesDirty(const IRegion2D *bounds, Bool b);
+	void markZonesDirty(const IRegion2D *bounds, Bool force);
 
 private:
 	Bool m_bfmeDirty;

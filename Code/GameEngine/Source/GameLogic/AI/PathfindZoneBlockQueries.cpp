@@ -54,7 +54,7 @@ public:
 	Waypoint *bfmeGetWaypoint(Int cellX, Int cellY, UnsignedInt index) const;
 	zoneStorageType bfmeGetBlockZone(const PathfindMovementProfile &profile,
 		Int cellX, Int cellY, PathfindCell **map) const;
-	void bfmeSetTailFlag(Int cellX, Int cellY, Bool flag);
+	void bfmeSetTailFlag(Int cellX, Int cellY, Bool tailFlag);
 
 private:
 	unsigned char m_prefix[0x23628];
@@ -121,7 +121,7 @@ zoneStorageType PathfindZoneManager::bfmeGetBlockZone(
 		profile, map[cellX][cellY].m_zone);
 }
 
-void PathfindZoneManager::bfmeSetTailFlag(Int cellX, Int cellY, Bool flag)
+void PathfindZoneManager::bfmeSetTailFlag(Int cellX, Int cellY, Bool tailFlag)
 {
 	if (cellX < 0 || cellY < 0)
 		return;
@@ -129,5 +129,5 @@ void PathfindZoneManager::bfmeSetTailFlag(Int cellX, Int cellY, Bool flag)
 	Int blockX = cellX / 16;
 	Int blockY = cellY / 16;
 	if (blockX < m_zoneBlockExtent.x && blockY < m_zoneBlockExtent.y)
-		m_zoneBlocks[blockX][blockY].m_tailFlag = flag;
+		m_zoneBlocks[blockX][blockY].m_tailFlag = tailFlag;
 }
