@@ -182,7 +182,6 @@ void ObjectModule::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@ObjectModule@@ present-unmatched
 void ObjectModule::loadPostProcess( void )
 {
 
