@@ -4058,5 +4058,55 @@
   "after_sha256": "f745a006965a412a0a8ee7a9a30f4ba379a7656d539cfb2ca62bf8060b747688",
   "evidence": "docs/naming_evidence.md",
   "reason": "GameWindow+0x0 is not witnessed (name_oracle) and ZH has no own member there"
+ },
+ {
+  "old_path": "reverse/attempts/0x001dfba0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/System/VictorySystemUpdate.cpp",
+  "old_name": "_bfme_update",
+  "new_name": "rva001B1AD0",
+  "before_sha256": "ade4574c4a4f4f3f48b358daca678f536050ae8ed2144e8919c7c3bbdb42bef1",
+  "after_sha256": "7b84cb907bf58ae03c2a85418fcb80611bbcf61e9ce1b21579175b46f5a6f37e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "stash guess with no caller/string/vtable evidence, ledger holds the address-token name at 0x001B1AD0"
+ },
+ {
+  "old_path": "reverse/attempts/0x001dfba0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/System/VictorySystemUpdate.cpp",
+  "old_name": "m_activeGrid",
+  "new_name": "m_dword104",
+  "before_sha256": "ade4574c4a4f4f3f48b358daca678f536050ae8ed2144e8919c7c3bbdb42bef1",
+  "after_sha256": "7b84cb907bf58ae03c2a85418fcb80611bbcf61e9ce1b21579175b46f5a6f37e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank member name without name_oracle/field_names witness (no layout witness for VictorySystem)"
+ },
+ {
+  "old_path": "reverse/attempts/0x001dfba0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/System/VictorySystemUpdate.cpp",
+  "old_name": "m_alignment",
+  "new_name": "m_pad101",
+  "before_sha256": "ade4574c4a4f4f3f48b358daca678f536050ae8ed2144e8919c7c3bbdb42bef1",
+  "after_sha256": "7b84cb907bf58ae03c2a85418fcb80611bbcf61e9ce1b21579175b46f5a6f37e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "padding placeholder aligned to offset token"
+ },
+ {
+  "old_path": "reverse/attempts/0x001dfba0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/System/VictorySystemUpdate.cpp",
+  "old_name": "m_currentPlayer",
+  "new_name": "m_dword108",
+  "before_sha256": "ade4574c4a4f4f3f48b358daca678f536050ae8ed2144e8919c7c3bbdb42bef1",
+  "after_sha256": "7b84cb907bf58ae03c2a85418fcb80611bbcf61e9ce1b21579175b46f5a6f37e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank member name without name_oracle/field_names witness (no layout witness for VictorySystem)"
+ },
+ {
+  "old_path": "reverse/attempts/0x001dfba0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/System/VictorySystemUpdate.cpp",
+  "old_name": "m_initialized",
+  "new_name": "m_byte100",
+  "before_sha256": "ade4574c4a4f4f3f48b358daca678f536050ae8ed2144e8919c7c3bbdb42bef1",
+  "after_sha256": "7b84cb907bf58ae03c2a85418fcb80611bbcf61e9ce1b21579175b46f5a6f37e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank member name without name_oracle/field_names witness (no layout witness for VictorySystem)"
  }
 ]
