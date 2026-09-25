@@ -317,24 +317,24 @@ Object *AIPlayer::findSupplyCenter(Int minimumCash)
 					continue;
 				}
 
-				Coord3D center;
-				center.x = candidateObject->getPosition()->x;
-				center.y = candidateObject->getPosition()->y;
-				center.z = candidateObject->getPosition()->z;
-				Real radius = 200.0f + candidateObject->getBoundingCircleRadius();
+				Coord3D candidatePosition;
+				candidatePosition.x = candidateObject->getPosition()->x;
+				candidatePosition.y = candidateObject->getPosition()->y;
+				candidatePosition.z = candidateObject->getPosition()->z;
+				Real searchRadius = 200.0f + candidateObject->getBoundingCircleRadius();
 
 				Object *nearbyObject;
 				{
-					PartitionFilterOnMap filterMapStatus;
+					PartitionFilterOnMap mapFilter;
 					PartitionFilterPlayer playerFilter(m_player, true);
 					PartitionFilterAcceptByKindOf kindFilter(
 						KindOfMaskType(KindOfMaskType::kInit, 34), KINDOFMASK_NONE);
 
 					PartitionFilter *partitionFilters =
-						kindFilter.link(playerFilter.link(&filterMapStatus));
+						kindFilter.link(playerFilter.link(&mapFilter));
 
 					nearbyObject = ThePartitionManager->getClosestObject(
-						&center, radius, 1, partitionFilters);
+						&candidatePosition, searchRadius, 1, partitionFilters);
 				}
 				if (nearbyObject) {
 					continue;
