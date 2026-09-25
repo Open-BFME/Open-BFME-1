@@ -1,13 +1,16 @@
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /ICode/Libraries/Source/WWVegas/WWLib
+// stlport
 // readable body of ?init@ShellGameLoadScreen@@UAEXPAVGameInfo@@@Z: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
 // readable body of ?init@MapTransferLoadScreen@@UAEXPAVGameInfo@@@Z: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
 // readable body of ?init@MultiPlayerLoadScreen@@UAEXPAVGameInfo@@@Z: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
+// readable body of ?init@GameSpyLoadScreen@@UAEXPAVGameInfo@@@Z: Code/GameEngine/Source/GameClient/GUI/LoadScreen.cpp
 //
 // The load screens' init methods, slot 2 of each subclass's table:
 //
 //   ShellGameLoadScreen   vtable 0x010F9B0C  0x004920E0
 //   MapTransferLoadScreen vtable 0x010F9B60  0x00492C40
 //   MultiPlayerLoadScreen vtable 0x010F9B28  0x00492400
+//   GameSpyLoadScreen     vtable 0x010F9B44  0x00493120
 //
 // Written beside LoadScreenUpdates.cpp rather than inside LoadScreen.cpp,
 // which builds against Zero Hour's headers: BFME's LoadScreen base is eight
@@ -15,6 +18,9 @@
 // the StringBase<char> shim, none of which that TU can say without putting
 // its matched rows at risk.
 
+#define _STLP_NO_EXCEPTIONS 1
+#include <map>
+#include <string.h>
 #include "string_base.h"
 
 typedef int Int;
@@ -27,7 +33,7 @@ enum NameKeyType { NAMEKEY_INVALID = 0 };
 #define NULL 0
 
 extern "C" __declspec(dllimport) UnsignedInt __stdcall timeGetTime( void );
-extern "C" __declspec(dllimport) void __stdcall Sleep( UnsignedInt milliseconds );
+extern "C" __declspec(dllimport) void __stdcall Sleep( unsigned long milliseconds );
 
 // Retail's AsciiString is the StringBase<char> shim, and str() is inline:
 // the text is read eight bytes past the header, "" when there is none.
@@ -46,6 +52,13 @@ public:
 			*(const StringBase<char> *)&that );
 	}
 	~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+
+	// Inline: retail folds the literal's length into set(const char *, int).
+	AsciiString &operator=( const char *s )
+	{
+		((StringBase<char> *)this)->set( s, (int)strlen( s ) );
+		return *this;
+	}
 
 	void __cdecl format( AsciiString fmt, ... );
 
@@ -71,12 +84,19 @@ class UnicodeString
 public:
 	static UnicodeString TheEmptyString;
 
+	UnicodeString() { m_data = 0; }
+	UnicodeString( const wchar_t *s )
+	{
+		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase( s );
+	}
 	UnicodeString( const UnicodeString &that )
 	{
 		((StringBase<unsigned short> *)this)->StringBase<unsigned short>::StringBase(
 			*(const StringBase<unsigned short> *)&that );
 	}
 	~UnicodeString() { ((StringBase<unsigned short> *)this)->releaseBuffer(); }
+
+	void __cdecl format( UnicodeString fmt, ... );
 
 private:
 	unsigned short *m_data;
@@ -608,6 +628,305 @@ void MultiPlayerLoadScreen::init( GameInfo *game )
 		m_playerSide[i]->winHide( TRUE );
 		teamWin[i]->winHide( TRUE );
 	}
+
+	if( m_mapPreview )
+	{
+		const MapMetaData *mmd = TheMapCache->findMap( game->getMap() );
+		Image *image = getMapPreviewImage( game->getMap() );
+		m_mapPreview->winSetUserData( (void *)mmd );
+
+		positionStartSpots( game, m_buttonMapStartPosition, m_mapPreview, FALSE );
+		updateMapStartSpots( game, m_buttonMapStartPosition, TRUE );
+		if( image )
+		{
+			m_mapPreview->winSetStatus( WIN_STATUS_IMAGE );
+			m_mapPreview->winSetEnabledImage( 0, image );
+		}
+		else
+		{
+			m_mapPreview->winClearStatus( WIN_STATUS_IMAGE );
+		}
+	}
+
+	TheGameLogic->initTimeOutValues();
+}
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/StagingRoomGameInfo.h
+class GameSpyGameSlot : public GameSlot
+{
+public:
+	Int getProfileID( void ) const { return m_profileID; }
+
+private:
+	unsigned char m_unmodelled_01C[0x44 - 0x1c];
+	Int m_profileID;							// +0x44
+};
+
+typedef _STL::map<Int, UnsignedInt> PerGeneralMap;
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PersistentStorageThread.h
+// Only the maps this body walks are placed. games sits at +0x4C, where the
+// matched GetFavoriteSide (0x004DA4C0) walks it; wins and losses feed the
+// "%d/%d" label in Zero Hour's order, discons and desyncs the disconnect
+// total. The record is 0x1C4 bytes, its copy constructor's extent.
+class PSPlayerStats
+{
+public:
+	~PSPlayerStats();
+
+	Int id;										// +0x00
+	PerGeneralMap wins;							// +0x04
+	PerGeneralMap losses;						// +0x10
+
+private:
+	unsigned char m_unmodelled_01C[0x4c - 0x1c];
+
+public:
+	PerGeneralMap games;						// +0x4C
+
+private:
+	unsigned char m_unmodelled_058[0xb8 - 0x58];
+
+public:
+	PerGeneralMap discons;						// +0xB8
+	PerGeneralMap desyncs;						// +0xC4
+
+private:
+	unsigned char m_unmodelled_0D0[0x1c4 - 0xd0];
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PersistentStorageThread.h
+class GameSpyPSMessageQueueInterface
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual PSPlayerStats findPlayerStatsByID( Int id );				// +0x24
+};
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/PeerDefs.h
+class GameSpyInfoInterface
+{
+public:
+	virtual void slot00(); virtual void slot01(); virtual void slot02();
+	virtual void slot03(); virtual void slot04(); virtual void slot05();
+	virtual void slot06(); virtual void slot07(); virtual void slot08();
+	virtual void slot09(); virtual void slot10(); virtual void slot11();
+	virtual void slot12(); virtual void slot13(); virtual void slot14();
+	virtual void slot15(); virtual void slot16(); virtual void slot17();
+	virtual void slot18(); virtual void slot19(); virtual void slot20();
+	virtual void slot21(); virtual void slot22(); virtual void slot23();
+	virtual void slot24(); virtual void slot25(); virtual void slot26();
+	virtual void slot27(); virtual void slot28(); virtual void slot29();
+	virtual void slot30(); virtual void slot31(); virtual void slot32();
+	virtual void slot33(); virtual void slot34(); virtual void slot35();
+	virtual void slot36(); virtual void slot37(); virtual void slot38();
+	virtual void slot39(); virtual void slot40(); virtual void slot41();
+	virtual void slot42(); virtual void slot43(); virtual void slot44();
+	virtual void slot45(); virtual void slot46(); virtual void slot47();
+	virtual void slot48(); virtual void slot49(); virtual void slot50();
+	virtual void slot51(); virtual void slot52(); virtual void slot53();
+	virtual void slot54(); virtual void slot55(); virtual void slot56();
+	virtual void slot57(); virtual void slot58(); virtual void slot59();
+	virtual void slot60(); virtual void slot61(); virtual void slot62();
+	virtual void slot63(); virtual void slot64(); virtual void slot65();
+	virtual void slot66(); virtual void slot67(); virtual void slot68();
+	virtual void slot69(); virtual void slot70(); virtual void slot71();
+	virtual void slot72(); virtual void slot73(); virtual void slot74();
+	virtual void slot75(); virtual void slot76(); virtual void slot77();
+	virtual void slot78(); virtual void slot79(); virtual void slot80();
+	virtual void slot81(); virtual void slot82(); virtual void slot83();
+	virtual void slot84(); virtual void slot85(); virtual void slot86();
+	virtual void slot87();
+	virtual Bool didPlayerPreorder( Int profileID ) const;				// +0x160
+};
+
+extern GameSpyPSMessageQueueInterface *TheGameSpyPSMessageQueue;
+extern GameSpyInfoInterface *TheGameSpyInfo;
+
+Int CalculateRank( const PSPlayerStats &stats );
+Int GetFavoriteSide( const PSPlayerStats &stats );
+const Image *LookupSmallRankImage( Int side, Int rankPoints );
+Int GetAdditionalDisconnectsFromUserFile( Int playerID );
+
+// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/LoadScreen.h
+class GameSpyLoadScreen : public LoadScreen
+{
+public:
+	virtual void init( GameInfo *game );
+
+private:
+	GameWindow *m_progressBars[MAX_SLOTS];			// this+0x10
+	GameWindow *m_playerNames[MAX_SLOTS];			// this+0x30
+	GameWindow *m_playerSide[MAX_SLOTS];			// this+0x50
+	GameWindow *m_playerFavoriteFactions[MAX_SLOTS];	// this+0x70
+	GameWindow *m_playerTotalDisconnects[MAX_SLOTS];	// this+0x90
+	GameWindow *m_playerWin[MAX_SLOTS];				// this+0xB0
+	GameWindow *m_playerWinLosses[MAX_SLOTS];		// this+0xD0
+	GameWindow *m_playerRank[MAX_SLOTS];			// this+0xF0
+	GameWindow *m_playerOfficerMedal[MAX_SLOTS];	// this+0x110
+	GameWindow *m_mapPreview;						// this+0x130
+	GameWindow *m_buttonMapStartPosition[MAX_SLOTS];	// this+0x134
+	Int m_playerLookup[MAX_SLOTS];					// this+0x154
+};
+
+// ?init@GameSpyLoadScreen@@UAEXPAVGameInfo@@@Z
+// Retail 0x00493120, 2717 bytes, slot 2 of 0x010F9B44. Zero Hour's body
+// without the local-general panel: the local faction's load-screen image
+// goes on the screen itself, and each progress bar is coloured rather than
+// given a house image. The team label still looks up the
+// MultiplayerLoadScreen.wnd window name, as in Zero Hour.
+void GameSpyLoadScreen::init( GameInfo *game )
+{
+	m_loadScreen = TheWindowManager->winCreateFromScript( AsciiString( "Menus/GameSpyLoadScreen.wnd" ) );
+	m_loadScreen->winHide( FALSE );
+	m_loadScreen->winBringToTop();
+	m_mapPreview = TheWindowManager->winGetWindowFromId( m_loadScreen, TheNameKeyGenerator->nameToKey( "GameSpyLoadScreen.wnd:WinMapPreview" ) );
+
+	GameSlot *lSlot = game->getSlot( game->getLocalSlotNum() );
+	const PlayerTemplate *pt;
+	if( lSlot->getPlayerTemplate() >= 0 )
+		pt = ThePlayerTemplateStore->getNthPlayerTemplate( lSlot->getPlayerTemplate() );
+	else
+		pt = ThePlayerTemplateStore->findPlayerTemplate( TheNameKeyGenerator->nameToKey( "FactionObserver" ) );
+
+	const Image *loadScreenImage = TheMappedImageCollection->findImageByName( pt->getLoadScreenImage() );
+	if( loadScreenImage )
+		m_loadScreen->winSetEnabledImage( 0, loadScreenImage );
+
+	// Cleared with memset here where MultiPlayerLoadScreen::init loops: a loop
+	// stores the zero already held in edi, retail materialises a fresh one.
+	GameWindow *teamWin[MAX_SLOTS];
+	memset( teamWin, 0, sizeof( teamWin ) );
+	Int i;
+
+	Int netSlot = 0;
+	for( i = 0; i < MAX_SLOTS; ++i )
+	{
+		AsciiString winName;
+		winName.format( "GameSpyLoadScreen.wnd:ProgressLoad%d", i );
+		m_progressBars[i] = TheWindowManager->winGetWindowFromId( m_loadScreen, TheNameKeyGenerator->nameToKey( winName.str() ) );
+		GadgetProgressBarSetProgress( m_progressBars[i], 0 );
+
+		winName.format( "GameSpyLoadScreen.wnd:StaticTextPlayer%d", i );
+		m_playerNames[i] = TheWindowManager->winGetWindowFromId( m_loadScreen, TheNameKeyGenerator->nameToKey( winName.str() ) );
+
+		winName.format( "GameSpyLoadScreen.wnd:ButtonMapStartPosition%d", i );
+		m_buttonMapStartPosition[i] = TheWindowManager->winGetWindowFromId( m_loadScreen, TheNameKeyGenerator->nameToKey( winName.str() ) );
+
+		winName.format( "GameSpyLoadScreen.wnd:StaticTextSide%d", i );
+		m_playerSide[i] = TheWindowManager->winGetWindowFromId( m_loadScreen, TheNameKeyGenerator->nameToKey( winName.str() ) );
+
+		winName.format( "GameSpyLoadScreen.wnd:WinPlayer%d", i );
+		m_playerWin[i] = TheWindowManager->winGetWindowFromId( m_loadScreen, TheNameKeyGenerator->nameToKey( winName.str() ) );
+
+		winName.format( "GameSpyLoadScreen.wnd:StaticTextTotalDisconnects%d", i );
+		m_playerTotalDisconnects[i] = TheWindowManager->winGetWindowFromId( m_loadScreen, TheNameKeyGenerator->nameToKey( winName.str() ) );
+
+		winName.format( "GameSpyLoadScreen.wnd:StaticTextWinLoss%d", i );
+		m_playerWinLosses[i] = TheWindowManager->winGetWindowFromId( m_loadScreen, TheNameKeyGenerator->nameToKey( winName.str() ) );
+
+		winName.format( "GameSpyLoadScreen.wnd:WinRank%d", i );
+		m_playerRank[i] = TheWindowManager->winGetWindowFromId( m_loadScreen, TheNameKeyGenerator->nameToKey( winName.str() ) );
+
+		winName.format( "GameSpyLoadScreen.wnd:WinOfficer%d", i );
+		m_playerOfficerMedal[i] = TheWindowManager->winGetWindowFromId( m_loadScreen, TheNameKeyGenerator->nameToKey( winName.str() ) );
+
+		winName.format( "MultiplayerLoadScreen.wnd:StaticTextTeam%d", i );
+		teamWin[i] = TheWindowManager->winGetWindowFromId( m_loadScreen, TheNameKeyGenerator->nameToKey( winName.str() ) );
+
+		GameSpyGameSlot *slot = (GameSpyGameSlot *)game->getSlot( i );
+		if( !slot || !slot->isOccupied() )
+			continue;
+
+		Int houseColor = TheMultiplayerSettings->getColor( slot->getApparentColor() )->getColor();
+		GadgetProgressBarSetEnabledBarColor( m_progressBars[netSlot], houseColor );
+
+		UnicodeString name = slot->getName();
+		GadgetStaticTextSetText( m_playerNames[netSlot], name );
+		m_playerNames[netSlot]->winSetEnabledTextColors( houseColor, m_playerNames[netSlot]->winGetEnabledTextBorderColor() );
+
+		PSPlayerStats stats = TheGameSpyPSMessageQueue->findPlayerStatsByID( slot->getProfileID() );
+
+		Bool isPreorder = TheGameSpyInfo->didPlayerPreorder( stats.id );
+		Int rankPoints = CalculateRank( stats );
+		Int favSide = GetFavoriteSide( stats );
+		const Image *preorderImg = TheMappedImageCollection->findImageByName( AsciiString( "OfficersClubsmall" ) );
+		if( !isPreorder )
+			preorderImg = NULL;
+		const Image *rankImg = LookupSmallRankImage( favSide, rankPoints );
+		m_playerOfficerMedal[i]->winSetEnabledImage( 0, preorderImg );
+		m_playerRank[i]->winSetEnabledImage( 0, rankImg );
+
+		UnicodeString formatString;
+
+		Int numLosses = 0;
+		PerGeneralMap::iterator it;
+		for( it = stats.losses.begin(); it != stats.losses.end(); ++it )
+			numLosses += it->second;
+		Int numWins = 0;
+		for( it = stats.wins.begin(); it != stats.wins.end(); ++it )
+			numWins += it->second;
+		formatString.format( L"%d/%d", numWins, numLosses );
+		GadgetStaticTextSetText( m_playerWinLosses[netSlot], formatString );
+		m_playerWinLosses[netSlot]->winSetEnabledTextColors( houseColor, m_playerWinLosses[netSlot]->winGetEnabledTextBorderColor() );
+
+		Int numGames = 0;
+		Int favorite = 0;
+		for( it = stats.games.begin(); it != stats.games.end(); ++it )
+		{
+			if( it->second >= numGames )
+			{
+				numGames = it->second;
+				favorite = it->first;
+			}
+		}
+
+		numGames = 0;
+		for( it = stats.discons.begin(); it != stats.discons.end(); ++it )
+			numGames += it->second;
+		for( it = stats.desyncs.begin(); it != stats.desyncs.end(); ++it )
+			numGames += it->second;
+		numGames += GetAdditionalDisconnectsFromUserFile( stats.id );
+
+		formatString.format( L"%d", numGames );
+		GadgetStaticTextSetText( m_playerTotalDisconnects[netSlot], formatString );
+		m_playerTotalDisconnects[netSlot]->winSetEnabledTextColors( houseColor, m_playerTotalDisconnects[netSlot]->winGetEnabledTextBorderColor() );
+		GadgetStaticTextSetText( m_playerSide[netSlot], slot->getApparentPlayerTemplateDisplayName() );
+		m_playerSide[netSlot]->winSetEnabledTextColors( houseColor, m_playerSide[netSlot]->winGetEnabledTextBorderColor() );
+
+		if( slot->isAI() )
+		{
+			if( m_progressBars[netSlot] )
+				m_progressBars[netSlot]->winHide( TRUE );
+			if( m_playerTotalDisconnects[netSlot] )
+				m_playerTotalDisconnects[netSlot]->winHide( TRUE );
+			if( m_playerWinLosses[netSlot] )
+				m_playerWinLosses[netSlot]->winHide( TRUE );
+			if( m_playerRank[netSlot] )
+				m_playerRank[netSlot]->winHide( TRUE );
+			if( m_playerOfficerMedal[netSlot] )
+				m_playerOfficerMedal[netSlot]->winHide( TRUE );
+		}
+
+		if( teamWin[netSlot] )
+		{
+			AsciiString teamStr;
+			teamStr.format( "Team:%d", slot->getTeamNumber() + 1 );
+			if( slot->isAI() && slot->getTeamNumber() == -1 )
+				teamStr = "Team:AI";
+			GadgetStaticTextSetText( teamWin[netSlot], TheGameText->fetch( teamStr ) );
+			teamWin[netSlot]->winSetEnabledTextColors( houseColor, m_playerNames[netSlot]->winGetEnabledTextBorderColor() );
+		}
+
+		m_playerLookup[i] = netSlot;
+
+		netSlot++;
+	}
+
+	for( i = netSlot; i < MAX_SLOTS; ++i )
+		m_playerWin[i]->winHide( TRUE );
 
 	if( m_mapPreview )
 	{

@@ -1637,7 +1637,7 @@ GameSpyLoadScreen::~GameSpyLoadScreen( void )
 
 extern Int GetAdditionalDisconnectsFromUserFile(Int playerID);
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/GameSpyLoadScreenInitThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/LoadScreenInit.cpp
 // ?init@GameSpyLoadScreen@@ present-unmatched
 void GameSpyLoadScreen::init( GameInfo *game )
 {
