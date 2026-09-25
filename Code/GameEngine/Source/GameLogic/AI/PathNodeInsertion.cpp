@@ -53,12 +53,12 @@ struct Coord3D
 class PathNode
 {
 public:
-	PathNode(const Coord3D *pos, PathfindLayerEnum layer)
+	PathNode(const Coord3D *position, PathfindLayerEnum layer)
 	{
 		m_next = 0;
 		m_prev = 0;
 		m_nextOpti = 0;
-		m_pos = *pos;
+		m_pos = *position;
 		m_layer = layer;
 		m_canOptimize = false;
 		m_costSoFar = 0x7FFFFFFF;
@@ -82,7 +82,7 @@ class Path
 {
 public:
 	void appendNode(const Coord3D *pos, PathfindLayerEnum layer);
-	void prependNode(const Coord3D *pos, PathfindLayerEnum layer);
+	void prependNode(const Coord3D *position, PathfindLayerEnum layer);
 
 private:
 	char m_slice_pad[4];					// retail this+0x00, untouched
@@ -123,9 +123,9 @@ void Path::appendNode( const Coord3D *pos, PathfindLayerEnum layer )
 }
 
 // ?prependNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z
-void Path::prependNode(const Coord3D *pos, PathfindLayerEnum layer)
+void Path::prependNode(const Coord3D *position, PathfindLayerEnum layer)
 {
-	PathNode *node = new PathNode(pos, layer);
+	PathNode *node = new PathNode(position, layer);
 	PathNode *head = m_path;
 	node->m_nextOpti = head;
 	node->m_next = head;
