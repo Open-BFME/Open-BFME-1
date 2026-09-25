@@ -17,17 +17,18 @@ class Pathfinder
 {
 public:
 	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
-	int bfmeWalkWorldCells(const ICoord2D &start, const ICoord2D &end,
+	int bfmeWalkWorldCells(const ICoord2D &startCell, const ICoord2D &endCell,
 		int layer, const Coord3D **context);
-	Bool bfmeWorldLineHasNoHit(const Coord3D *start, const Coord3D *end);
+	Bool bfmeWorldLineHasNoHit(const Coord3D *startPosition, const Coord3D *endPosition);
 };
 
 // ?bfmeWorldLineHasNoHit@Pathfinder@@QAE_NPBUCoord3D@@0@Z
-Bool Pathfinder::bfmeWorldLineHasNoHit(const Coord3D *start, const Coord3D *end)
+Bool Pathfinder::bfmeWorldLineHasNoHit(const Coord3D *startPosition,
+	const Coord3D *endPosition)
 {
 	ICoord2D startCell;
 	ICoord2D endCell;
-	worldToCell(start, &startCell);
-	worldToCell(end, &endCell);
-	return bfmeWalkWorldCells(startCell, endCell, 1, &start) == 0;
+	worldToCell(startPosition, &startCell);
+	worldToCell(endPosition, &endCell);
+	return bfmeWalkWorldCells(startCell, endCell, 1, &startPosition) == 0;
 }
