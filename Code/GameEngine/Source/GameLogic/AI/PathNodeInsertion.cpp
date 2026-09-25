@@ -81,7 +81,7 @@ public:
 class Path
 {
 public:
-	void appendNode(const Coord3D *pos, PathfindLayerEnum layer);
+	void appendNode(const Coord3D *nodePosition, PathfindLayerEnum pathLayer);
 	void prependNode(const Coord3D *position, PathfindLayerEnum layer);
 
 private:
@@ -92,16 +92,16 @@ private:
 };
 
 // ?appendNode@Path@@QAEXPBUCoord3D@@W4PathfindLayerEnum@@@Z
-void Path::appendNode( const Coord3D *pos, PathfindLayerEnum layer )
+void Path::appendNode( const Coord3D *nodePosition, PathfindLayerEnum pathLayer )
 {
 	if (m_isOptimized && m_pathTail)
 	{
 		/* Check for duplicates. */
-		if (pos->x == m_pathTail->getPosition()->x && pos->y == m_pathTail->getPosition()->y) {
+		if (nodePosition->x == m_pathTail->getPosition()->x && nodePosition->y == m_pathTail->getPosition()->y) {
 			return;
 		}
 	}
-	PathNode *node = new PathNode( pos, layer );
+	PathNode *node = new PathNode( nodePosition, pathLayer );
 
 	PathNode *tail = m_pathTail;
 	if (tail)
