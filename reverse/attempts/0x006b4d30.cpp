@@ -1,12 +1,12 @@
 // ?xfer@MilesAudioManager@@UAEXPAVXfer@@@Z
-// partial score=0.457437661221 date=2026-09-23
+// partial score=0.52 date=2026-09-24
 // cl: /O2 /Ob1 /I. /ICode/Libraries/Source/WWVegas/WWLib /EHsc /DNDEBUG /DWIN32 /D_WINDOWS /MD /D_STLP_USE_STATIC_LIB
 // stlport
 #define _STLP_NO_EXCEPTIONS 1
 // MilesAudioManager::xfer at RVA 006B4D30, secondary interface this = complete +8.
 // Witness: 006B0E30/36 installs 0111C0C0/0111C0AC; secondary slot 2
 // -> ILT 000306D4 -> 00696360 -> literal MilesAudioManager; slot 3
-// -> ILT 00003080 -> this body. End: ret 4 at 006B5643, int3 006B5646.
+// -> ILT 00003080 -> this body, which returns 4 at 006B5643 before int3 006B5646.
 // Reconstruction extends the original stash. Offsets are interface-relative.
 #include <vector>
 #include <list>
@@ -132,7 +132,9 @@ typedef UnicodeString Rva006B4D30Wide;
 typedef AsciiString Rva006B4D30Narrow;
 typedef std::deque<Rva006B4D30Ptr> Rva006B4D30Deque;
 typedef std::list<Rva006B4D30Ptr> Rva006B4D30List;
-class MilesAudioManager {
+// Retail passes this interface pointer in ECX at the first helper call sites.
+// The empty base adds no data or vtable and only carries that call declaration.
+class MilesAudioManager : public Rva006AEF20 {
 public:
     virtual void xfer(Xfer*);
     template<class T> T& field(int offset) {return *(T*)((char*)this+offset);}
@@ -213,11 +215,11 @@ void MilesAudioManager::xfer(Xfer* argument)
         xfer->slot30(count);
         for(i=0;i<count;++i) {
             Rva006B4D30Ptr value;
-            field<Rva006AEF20>(-8).invoke(xfer,&value,&version);
-            field<Rva006AEF20>(-8).rva006B2D80();
+            invoke(xfer,&value,&version);
+            rva006B2D80();
         }
         for(i=0;i<3;++i) {
-            if(i==2 && version.second>=3 && !m_b68) continue;
+            if(i==2 && !m_b68) continue;
             for(int j=0;j<2;++j) {
                 Rva006B4D30Deque& queue=m_9cc[i][j];
                 int oldSize=queue.size();
@@ -232,7 +234,7 @@ void MilesAudioManager::xfer(Xfer* argument)
             }
         }
         for(i=0;i<3;++i) {
-            if(i==2 && version.second>=3 && !m_b68) continue;
+            if(i==2 && !m_b68) continue;
             Rva006B4D30Ref* value=m_ac8[i];
             if(value) {
                 if(InterlockedDecrement(&value->m_04)<=0) delete value;
@@ -258,7 +260,7 @@ void MilesAudioManager::xfer(Xfer* argument)
         for(Rva006B4D30List::iterator it=selected.begin();it!=selected.end();++it)
             field<Rva006AEF20>(-8).invoke(xfer,&*it,&version);
         for(i=0;i<3;++i) {
-            if(i==2 && version.second>=3 && !m_b68) continue;
+            if(i==2 && !m_b68) continue;
             for(int j=0;j<2;++j) {
                 Rva006B4D30Deque& queue=m_9cc[i][j];
                 int count=queue.size();
