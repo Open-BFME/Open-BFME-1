@@ -4748,5 +4748,75 @@
   "after_sha256": "1ea45d734fff0af957ffac4f3fb740ee3f341332cdf06fa2684218d5ff0274cd",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank name for the element +0x1C AsciiString (m_name) had no caller vtable string or field-parse witness tying it to GeometryName, and the element +0x20 byte (m_enabled) had no witness tying it to GeometryActive; renamed to offset-derived m_string1C/m_byte20 per GeometryInfoSet.cpp landing"
+ },
+ {
+  "old_path": "reverse/attempts/0x0063eb00.cpp",
+  "new_path": "Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadClassThreadFunction.cpp",
+  "old_name": "challenge",
+  "new_name": "m_bfme104",
+  "before_sha256": "54f58d69999df264cc6ac46872539237caead74252d82b5fb6786883e5670f03",
+  "after_sha256": "ea87d93fb8cd9244938a454efbf0f71a19ae37b474c13cbec5450987291dc7ad",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "retail calls the ledger ctor ??0BfmeA1279@@QAE@PAVBFMEQ1279 at 0x0063A750 via ILT 0x00017C01; the +0x104 field is re-spelled to that class's m_bfme104; 'challenge' had no evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x0063eb00.cpp",
+  "new_path": "Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadClassThreadFunction.cpp",
+  "old_name": "m_lock",
+  "new_name": "m_00",
+  "before_sha256": "54f58d69999df264cc6ac46872539237caead74252d82b5fb6786883e5670f03",
+  "after_sha256": "ea87d93fb8cd9244938a454efbf0f71a19ae37b474c13cbec5450987291dc7ad",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BuddyResponse +0x00 is the response type passed to queue slot +0x20 (ZH addResponse); 'lock' had no evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x0063eb00.cpp",
+  "new_path": "Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadClassThreadFunction.cpp",
+  "old_name": "m_lock",
+  "new_name": "m_opaque",
+  "before_sha256": "54f58d69999df264cc6ac46872539237caead74252d82b5fb6786883e5670f03",
+  "after_sha256": "ea87d93fb8cd9244938a454efbf0f71a19ae37b474c13cbec5450987291dc7ad",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeC994 storage is opaque message storage; 'lock' had no evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x0063eb00.cpp",
+  "new_path": "Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadClassThreadFunction.cpp",
+  "old_name": "m_name",
+  "new_name": "m_04",
+  "before_sha256": "54f58d69999df264cc6ac46872539237caead74252d82b5fb6786883e5670f03",
+  "after_sha256": "ea87d93fb8cd9244938a454efbf0f71a19ae37b474c13cbec5450987291dc7ad",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BuddyResponse +0x04 is never accessed by this body; 'name' had no evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x0063eb00.cpp",
+  "new_path": "Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadClassThreadFunction.cpp",
+  "old_name": "m_name",
+  "new_name": "m_unmodelled04",
+  "before_sha256": "54f58d69999df264cc6ac46872539237caead74252d82b5fb6786883e5670f03",
+  "after_sha256": "ea87d93fb8cd9244938a454efbf0f71a19ae37b474c13cbec5450987291dc7ad",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BuddyThreadClass +0x04 0x4C bytes are the whole ThreadClass base storage not a name field"
+ },
+ {
+  "old_path": "reverse/attempts/0x0063eb00.cpp",
+  "new_path": "Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadClassThreadFunction.cpp",
+  "old_name": "token",
+  "new_name": "m_bfme04",
+  "before_sha256": "54f58d69999df264cc6ac46872539237caead74252d82b5fb6786883e5670f03",
+  "after_sha256": "ea87d93fb8cd9244938a454efbf0f71a19ae37b474c13cbec5450987291dc7ad",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the +0x04 field belongs to ledger class BfmeA1279 (ctor 0x0063A750 via ILT 0x00017C01); 'token' had no evidence"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "Thread_Function",
+  "new_name": "dup_0063D210",
+  "before_sha256": "8c41f9b212d4af74b0c5ea6d21ed9345b17ccc0790e377d91f37be6e1fa236ea",
+  "after_sha256": "484169d51aaa26bc53fc2cc9109844c9821d3d70ec56e740045242dfa2ca50c4",
+  "evidence": "reverse/identity_evidence/0063d210.md",
+  "reason": "0x0063D210 is the errorCallback body reached from callbackWrapper 0x0063EA60 +0x36 via ILT 0x0000BEE2; Thread_Function is 0x0063EB00 per ctor 0x0063C4F0 vtable 0x01118E60 slot 2 ILT 0x0003CAD8"
  }
 ]
