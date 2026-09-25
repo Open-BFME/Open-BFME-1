@@ -75,14 +75,14 @@ private:
 
 void Rva003D8530Owner::bfmeDrop(void *entry)
 {
-	ICoord2D cell;
+	ICoord2D cellIndex;
 	reinterpret_cast<Pathfinder *>(this)->worldToCell(
-		(const Coord3D *)((const char *)entry + 0x0c), &cell);
+		(const Coord3D *)((const char *)entry + 0x0c), &cellIndex);
 
-	Gen_003F68F0 *pathCell = getGroundCell(cell.x, cell.y);
+	Gen_003F68F0 *pathCell = getGroundCell(cellIndex.x, cellIndex.y);
 	if (pathCell && pathCell->m_child == entry)
 	{
 		pathCell->bfmeAttach(0);
-		m_zoneManager.bfmeSetWaypoint(cell.x, cell.y, false, (Waypoint *)entry);
+		m_zoneManager.bfmeSetWaypoint(cellIndex.x, cellIndex.y, false, (Waypoint *)entry);
 	}
 }
