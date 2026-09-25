@@ -42,16 +42,16 @@ public:
 	}
 };
 
-class Rva006BCE40 : public BfmeBaseVUQ
+class W3DRenderObjectSnapshot : public BfmeBaseVUQ
 {
 public:
-	~Rva006BCE40();
+	~W3DRenderObjectSnapshot();
 
 	Rva006BCE40Member *m_member;                              ///< +0x04
 };
 
 // @??1Rva006BCE40@@UAEXXZ 0x006BCE40
-Rva006BCE40::~Rva006BCE40()
+W3DRenderObjectSnapshot::~W3DRenderObjectSnapshot()
 {
 	Rva006BCE40Member *member = m_member;
 

@@ -105,9 +105,9 @@ struct Rva006ED5B0Guard {
 };
 // Constructor targets 0x009EB960 and 0x006FC970, reached by 0x006EDA88
 // and 0x006EDB15 respectively. Sizes are the preceding allocation immediates.
-class W3DRenderObjectSnapshot { char bytes[12]; public: W3DRenderObjectSnapshot(); };
+class Rva009EB960 { char bytes[12]; public: Rva009EB960(); };
 class Rva006FC970 { char bytes[0x2868]; public: Rva006FC970(); };
-extern W3DRenderObjectSnapshot *Rva0134FAA0;
+extern Rva009EB960 *Rva0134FAA0;
 class Rva00711050 { public: void store(Open2Counted *, int); };
 class FontLibrary { public: GameFont *getFont(AsciiString *, float, bool); };
 bool Rva00938620(AsciiString, AsciiString);
@@ -194,7 +194,7 @@ void W3DDisplay::init(void)
         if (d->slot40()) Rva008FD330(false); else clipCursorToClient();
     }
     render164->Set_Coordinate_Range(RectClass(0,0,(float)d->slot2c(),(float)d->slot30()));
-    Rva0134FAA0 = new W3DRenderObjectSnapshot;
+    Rva0134FAA0 = new Rva009EB960;
     Rva00938620(rvaF<AsciiString>(TheGlobalData,0xdc0),rvaF<AsciiString>(TheGlobalData,0xdc4));
     if (rvaF<bool>(TheGlobalData,0x1278)) Rva009EBC00(0);
     Rva006FC970 *p = new Rva006FC970;

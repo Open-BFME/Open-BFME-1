@@ -7,7 +7,7 @@
 // 0x0134FAAC, test, push the one stack argument, call) and called directly by
 // the registry destructor at 0x009F23C0 with the +0x1B8 set group, so this is
 // a one-argument method of the Q1Receiver0134FAAC object built by
-// ??0Gen_dtor_009eb9e0 (W3DRenderObjectSnapshotCtor.cpp).
+// ??0Gen_dtor_009eb9e0 (Rva009EB960Ctor.cpp).
 // Sibling of m009F0D40 (assetmanager_impl.cpp): copy the argument set with
 // 0x009EE8E0, hand the local group to 0x009EFD40, then under the +0x60 and
 // +0x2C locks walk the +0x44 hash map (begin at 0x009EE0F0) and store, per

@@ -18,17 +18,17 @@ public:
 	~Gen_dtor_009eb9e0();
 };
 
-class W3DRenderObjectSnapshot : public BfmeModuleDataSnapshotBase
+class Rva009EB960 : public BfmeModuleDataSnapshotBase
 {
 public:
-	virtual ~W3DRenderObjectSnapshot();
+	virtual ~Rva009EB960();
 
 private:
 	void *m_debugName;
 	Gen_dtor_009eb9e0 *m_renderObject;
 };
 
-W3DRenderObjectSnapshot::~W3DRenderObjectSnapshot()
+Rva009EB960::~Rva009EB960()
 {
 	delete m_renderObject;
 }

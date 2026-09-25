@@ -2887,7 +2887,7 @@ name,address,notes
 ??0Gen_006BC530@@QAE@XZ,0x006BC530,Existing25B neutral constructor body; factory6BAE20 allocates12B then reaches it via ILT2BA49; own vtable111CF68 slot8 name getter6BC550 returns W3DBuffLogic
 ??0Gen_dtor_000edca0@@QAE@XZ,0x00019CF9,Open-BFME5 DelayedLuaEventUpdate member constructor ILT pin
 ??0Gen_dtor_007f6d20@@QAE@XZ,0x00800280,V2 lane: 8-byte element constructor placement-new'd by ?allocate@Rva007F78E0Block@@QAEXH@Z; same class the tree pins ??1Gen_dtor_007f6d20@@UAE@XZ at 0x00800290
-??0Gen_dtor_009eb9e0@@QAE@XZ,0x009F2140,W3DRenderObjectSnapshot allocated member constructor paired with the destructor at RVA 0x009F23C0
+??0Gen_dtor_009eb9e0@@QAE@XZ,0x009F2140,Rva009EB960 allocated member constructor paired with the destructor at RVA 0x009F23C0
 ??0Gen_mci_002e1140@@QAE@ABU0@@Z,0x0000B537,"stand-in second type for the pair/_Construct copies at 0x002E1140 and 0x002E1520; ILT to the 111-byte copy ctor at 0x002E0F20 those two encode"
 ??0Gen_mci_007408f0@@QAE@ABU0@@Z,0x000087C4,"stand-in second type for the pair copy at 0x007408F0; ILT to the 31-byte copy ctor at 0x0073DAB0 it encodes"
 ??0Gen_t_00062210_mc4@@QAE@ABU0@@Z,0x00887B60,family-emit payload member
@@ -6668,7 +6668,7 @@ name,address,notes
 ??1Gen_dtor_009e3030@@UAE@XZ,0x009E2F30,gen-dtor class destructor
 ??1Gen_dtor_009e35b0@@UAE@XZ,0x009E31C0,gen-dtor class destructor
 ??1Gen_dtor_009e3860@@UAE@XZ,0x009E3880,gen-dtor class destructor
-??1Gen_dtor_009eb9e0@@QAE@XZ,0x009F23C0,W3DRenderObjectSnapshot member deleting destructor target at RVA 0x009EBC70
+??1Gen_dtor_009eb9e0@@QAE@XZ,0x009F23C0,Rva009EB960 member deleting destructor target at RVA 0x009EBC70
 ??1Gen_dtor_009eb9e0@@UAE@XZ,0x009F23C0,gen-dtor class destructor
 ??1Gen_dtor_009ed840@@UAE@XZ,0x009ED2F0,gen-dtor class destructor
 ??1Gen_dtor_009f2600@@UAE@XZ,0x009F5970,gen-dtor class destructor
@@ -10770,7 +10770,7 @@ name,address,notes
 ??_7Rva00641C60Queue@@6B@,0x01119380,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00641C60 calls; autopin
 ??_7Rva006609D0@@6B@,0x0111A1D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
 ??_7Rva006609D0Base@@6B@,0x0111A138,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
-??_7Rva006BCE40@@6B@,0x0111D024,address-derived vtable written by RVA 0x006BCE40 (BfmeBaseVUQ destructor family)
+??_7W3DRenderObjectSnapshot@@6B@,0x0111D024,W3DRenderObjectSnapshot vtable; slot 2 returns the class-name literal at 0x0111D038
 ??_7Rva006BDB50@@6B@,0x0111CFE0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006BDB50 calls; autopin
 ??_7Rva006F92D0@@6B@,0x01120360,address-derived vtable for the unnamed W3D resource at 0x006F92D0
 ??_7Rva00740AE0@@6B@,0x0112171C,derived vftable stored by the 0x00740AE0 constructor
@@ -84148,7 +84148,7 @@ name,address,notes
 ?initLaserInner@LaserUpdate@@AAEXPAXPBUCoord3D@@10@Z,0x00024FC3,ILT to 0x00603FE0 LaserUpdate 4-arg inner init used by 0x00604460
 ?initReplayMultiPlayer@@YAXXZ,0x004E8D10,ZH initReplayMultiPlayer: screenType=4 at entry; grabMultiPlayerInfo 0x004E8D1A; winHide(TRUE) on the 7 chat/continue/buddy windows; byte-shape twin of initReplaySinglePlayer except the grab call; ILT 0x00007F6D; sole caller ScoreScreenInit 0x004E929A (replay && isMultiplayer)
 ?initReplaySinglePlayer@@YAXXZ,0x004E89C0,ZH initReplaySinglePlayer: screenType=4 (REPLAY) at entry; grabSinglePlayerInfo 0x004E89CA; winHide(TRUE) on staticTextGameSaved textEntryChat buttonEmote chatBoxBorder buttonContinue buttonBuddies listboxChat (0x012F4178/68/6C/70/64/74/7C); ILT 0x0002BF44; sole caller ScoreScreenInit 0x004E92C5 (replay && !TheRecorder->isMultiplayer)
-?initRva006BCD80@Rva006BCE40@@AAEXPAX00@Z,0x00044341,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006BCD80 calls; autopin
+?update@W3DRenderObjectSnapshot@@AAEXPAVRenderObjClass@@PAUDrawableInfo@@_N@Z,0x00044341,ILT thunk to W3DRenderObjectSnapshot::update 0x006BCC80, called by the constructor at 0x006BCD80
 ?initSamplePools@MilesAudioManager@@AAEXXZ,0x006A3130,MilesAudioManager sample-pool helper reached through retail ILT 0x0002CA8E
 ?initSinglePlayer@@YAXXZ,0x004E88E0,ZH initSinglePlayer: screenType=0 (0x004E88F7); TheCampaignManager(0x012F4CB0)+0x14 = floor(localPlayer->+0x25c skill points) +0x18 = TheScriptEngine(0x012F076C)+0x17620 difficulty; grabSinglePlayerInfo 0x004E8936; s_needToFinishSinglePlayerInit(0x012F4182)=1; s_blankLayout(0x012F4184) = TheWindowManager->winCreateLayout(Menus/BlankWindow.wnd) hide(FALSE) bringForward getFirstWindow()->winClearStatus(0x80); ILT 0x0003E612; sole caller ScoreScreenInit 0x004E92F7
 ?initSubsystem@SubsystemInterfaceList@@QAEXPAVSubsystemInterface@@PAXPBD22PAVXfer@@VAsciiString@@@Z,0x009A20B0,SubsystemInterfaceList::initSubsystem body,

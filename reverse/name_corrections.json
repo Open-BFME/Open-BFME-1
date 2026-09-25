@@ -3288,5 +3288,55 @@
   "after_sha256": "4fe8bb8b5f327f5ffa823321c8a5efa4067a1416d8f5676f30b4a228f9a9a6d1",
   "evidence": "reverse/identity_evidence/004c1510-controlbar-handle.md",
   "reason": "GUI adapter construction and six-slot table refute the inherited partition-filter attribution and its allow method; preserve clone RVA in opaque native adapter types."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayInit_Bfme.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayInit_Bfme.cpp",
+  "old_name": "W3DRenderObjectSnapshot",
+  "new_name": "Rva009EB960",
+  "before_sha256": "6426697124606826fe1d479094f70e5da4dec6741b475d84ebb1cfd4d7110356",
+  "after_sha256": "c852ec2b2b66bbe7cd6bde112cbee639af167f6e82c4d49b672599c629fdc65f",
+  "evidence": "reverse/string_xrefs.tsv",
+  "reason": "W3DRenderObjectSnapshot is the class of vtable 0x0111D024: its slot 2 (0x006BCE00) returns the class-name literal at 0x0111D038, its constructor 0x006BCD80 zeroes m_robj and m_next and forwards to W3DRenderObjectSnapshot::update, and W3DGhostObject::snapShot allocates 12 bytes and calls it. The 0x009EB960 class derives from SubsystemInterface, is created once by W3DDisplay init into Rva0134FAA0 and has no snapshot evidence, so it takes the address-derived name Rva009EB960."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameLogic/W3DRenderObjectSnapshotCtor.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameLogic/Rva009EB960Ctor.cpp",
+  "old_name": "W3DRenderObjectSnapshot",
+  "new_name": "Rva009EB960",
+  "before_sha256": "915abb538b92d7384804c1baec36495d1a453e122d3cdbd63e6f9d3d1c780b6e",
+  "after_sha256": "52589c9404714916c7daa6bbe1fe4ee67b2e2d5e054fca8b40ea1ffac7f71ac6",
+  "evidence": "reverse/string_xrefs.tsv",
+  "reason": "W3DRenderObjectSnapshot is the class of vtable 0x0111D024: its slot 2 (0x006BCE00) returns the class-name literal at 0x0111D038, its constructor 0x006BCD80 zeroes m_robj and m_next and forwards to W3DRenderObjectSnapshot::update, and W3DGhostObject::snapShot allocates 12 bytes and calls it. The 0x009EB960 class derives from SubsystemInterface, is created once by W3DDisplay init into Rva0134FAA0 and has no snapshot evidence, so it takes the address-derived name Rva009EB960."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameLogic/W3DRenderObjectSnapshotDestructor.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameLogic/Rva009EB960Destructor.cpp",
+  "old_name": "W3DRenderObjectSnapshot",
+  "new_name": "Rva009EB960",
+  "before_sha256": "a600d816c1836a9cc159ff5be579036e7b5d8f65233c0bc0b04f33827c286154",
+  "after_sha256": "5171fd815c825e4ef50f272f7fc13d4f99687f043fe5da9068dce65a249f8118",
+  "evidence": "reverse/string_xrefs.tsv",
+  "reason": "W3DRenderObjectSnapshot is the class of vtable 0x0111D024: its slot 2 (0x006BCE00) returns the class-name literal at 0x0111D038, its constructor 0x006BCD80 zeroes m_robj and m_next and forwards to W3DRenderObjectSnapshot::update, and W3DGhostObject::snapShot allocates 12 bytes and calls it. The 0x009EB960 class derives from SubsystemInterface, is created once by W3DDisplay init into Rva0134FAA0 and has no snapshot evidence, so it takes the address-derived name Rva009EB960."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "W3DRenderObjectSnapshot",
+  "new_name": "Rva009EB960",
+  "before_sha256": "2b496f7df65cf4a78c188746293211776d8c09791cf8491070e2e4c68739197b",
+  "after_sha256": "c42b9e73ca37dd58f1709c9f5fac5ce79e31352c594283167cc51f46161e7cbd",
+  "evidence": "reverse/string_xrefs.tsv",
+  "reason": "W3DRenderObjectSnapshot is the class of vtable 0x0111D024: its slot 2 (0x006BCE00) returns the class-name literal at 0x0111D038, its constructor 0x006BCD80 zeroes m_robj and m_next and forwards to W3DRenderObjectSnapshot::update, and W3DGhostObject::snapShot allocates 12 bytes and calls it. The 0x009EB960 class derives from SubsystemInterface, is created once by W3DDisplay init into Rva0134FAA0 and has no snapshot evidence, so it takes the address-derived name Rva009EB960."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "W3DRenderObjectSnapshot",
+  "new_name": "Rva009EB960",
+  "before_sha256": "6ae858a40f2813f91dc6f034ac7ae3d6432d05fc22f5ca47df59d1c36bcd539d",
+  "after_sha256": "594b4b72773c4fb103659e84320dab7ceb06fcd851c9a8dde1f85789bffafd5a",
+  "evidence": "reverse/string_xrefs.tsv",
+  "reason": "W3DRenderObjectSnapshot is the class of vtable 0x0111D024: its slot 2 (0x006BCE00) returns the class-name literal at 0x0111D038, its constructor 0x006BCD80 zeroes m_robj and m_next and forwards to W3DRenderObjectSnapshot::update, and W3DGhostObject::snapShot allocates 12 bytes and calls it. The 0x009EB960 class derives from SubsystemInterface, is created once by W3DDisplay init into Rva0134FAA0 and has no snapshot evidence, so it takes the address-derived name Rva009EB960."
  }
 ]

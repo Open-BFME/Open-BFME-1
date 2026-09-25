@@ -5,7 +5,7 @@
 // Retail RVA 0x009F0BD0, 238 bytes; identity is address-derived.
 // The matched guarded forwarder Rva009EBAC0 (Q1GlobalGuardedForwarders.cpp)
 // reaches this method on the object held in global 0x0134FAAC, whose
-// constructor is ??0Gen_dtor_009eb9e0 (W3DRenderObjectSnapshotCtor.cpp):
+// constructor is ??0Gen_dtor_009eb9e0 (Rva009EB960Ctor.cpp):
 // lock at +0x60, first pointer-set group at +0x190 (set/count/active).
 // Under the lock, every non-null key of the argument set that is missing
 // from the +0x190 set is inserted (insert_unique via ILT 0x00030413);

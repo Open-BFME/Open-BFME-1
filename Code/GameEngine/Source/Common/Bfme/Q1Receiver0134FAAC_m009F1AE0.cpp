@@ -11,7 +11,7 @@
 // The receiver is the object g_theAssetRegistry (0x0134FAAC) points at, the
 // same object as the matched Q1Receiver0134FAAC methods beside this file and
 // the Gen_dtor_009eb9e0 constructor in
-// W3DDevice/GameLogic/W3DRenderObjectSnapshotCtor.cpp: it holds the section
+// W3DDevice/GameLogic/Rva009EB960Ctor.cpp: it holds the section
 // at +0x60, seven 0x28-byte STLport deques from +0x78 and four 0x14-byte set
 // wrappers from +0x190. Retail proves each piece here:
 //   * every deque block is 0x80 bytes and operator[] advances 32 elements per

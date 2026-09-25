@@ -5,7 +5,7 @@
 // Retail RVA 0x009F1510, 1199 bytes of code (its seven-entry switch table
 // follows at 0x009F19C0). Identity is address-derived. The name is the pin the
 // matched pointer-tail thunk 0x009EBA30 (IndirectMemberTailThunks.cpp) already
-// calls through W3DRenderObjectSnapshot's +8 pointer; the 0x009F1AE0 sweep
+// calls through Rva009EB960's +8 pointer; the 0x009F1AE0 sweep
 // and the matched registry destructor ??1Gen_dtor_009eb9e0@@QAE@XZ
 // (0x009F23C0) also call it with the receiver in ECX. Gen009F1510 is that
 // pinned view of the Q1Receiver0134FAAC object g_theAssetRegistry

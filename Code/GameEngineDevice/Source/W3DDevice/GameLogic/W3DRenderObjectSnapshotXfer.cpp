@@ -1,6 +1,6 @@
 // cl: /O2 /Ob2 /GR- /EHsc /MD /DNDEBUG /DWIN32 /D_WINDOWS
-// ?rva006BD380@Rva006BCE40@@UAEXPAVXfer@@@Z
-// Slot 3 of the pinned Rva006BCE40 vtable 0x0111D024 (ILT 0x0002DC45); Zero Hour twin W3DRenderObjectSnapshot::xfer.
+// ?xfer@W3DRenderObjectSnapshot@@MAEXPAVXfer@@@Z
+// Retail 0x006BD380, slot 3 of the W3DRenderObjectSnapshot vtable 0x0111D024 through ILT 0x0002DC45.
 
 #include <string.h>
 
@@ -295,19 +295,19 @@ public:
 	virtual void anchor( void );
 };
 
-class Rva006BCE40 : public Snapshot
+class W3DRenderObjectSnapshot : public Snapshot
 {
-public:
-	virtual void rva006BD380( Xfer *xfer );
+protected:
+	virtual void xfer( Xfer *xfer );
 
 public:
 	RenderObjClass *m_robj;
-	Rva006BCE40 *m_next;
+	W3DRenderObjectSnapshot *m_next;
 };
 
 extern void BfmeParticleSystemXferMatrix( Xfer &xfer, void *value );
 
-void Rva006BCE40::rva006BD380( Xfer *const xfer )
+void W3DRenderObjectSnapshot::xfer( Xfer *const xfer )
 {
 	XferVersion version( 1 );
 	xfer->xferVersion( &version );

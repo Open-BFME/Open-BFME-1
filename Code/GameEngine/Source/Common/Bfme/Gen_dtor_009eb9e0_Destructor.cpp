@@ -4,9 +4,9 @@
 //
 // Retail RVA 0x009F23C0, 563 bytes: the complete-object destructor of the
 // object at global 0x0134FAAC (pins ??1Gen_dtor_009eb9e0 on this row; callers
-// W3DRenderObjectSnapshot::~W3DRenderObjectSnapshot and the generated
+// Rva009EB960::~Rva009EB960 and the generated
 // ??_GGen_dtor_009eb9e0). Its constructor ??0Gen_dtor_009eb9e0 at 0x009F2140
-// (W3DRenderObjectSnapshotCtor.cpp) fixes the 0x1F4-byte layout used here,
+// (Rva009EB960Ctor.cpp) fixes the 0x1F4-byte layout used here,
 // and the retail member-destructor order matches it: four set groups
 // (+0x1CC..+0x190) through ILT 0x00015D7A, the seven deques through the EH
 // vector destructor with 0x009EDFE0, then the hash maps at +0x44 (0x009EE750)

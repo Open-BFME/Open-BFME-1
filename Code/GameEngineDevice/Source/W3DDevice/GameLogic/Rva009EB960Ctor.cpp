@@ -1,4 +1,4 @@
-// ??0W3DRenderObjectSnapshot@@QAE@XZ
+// ??0Rva009EB960@@QAE@XZ
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
 
@@ -133,17 +133,17 @@ private:
 typedef char GenDtorSizeCheck[sizeof(Gen_dtor_009eb9e0) == 0x1f4 ? 1 : -1];
 typedef char RegistryWorkerSizeCheck[sizeof(Rva009EEA70CleanupDeleting) == 0x2bf44 ? 1 : -1];
 
-class W3DRenderObjectSnapshot : public BfmeBase1134
+class Rva009EB960 : public BfmeBase1134
 {
 public:
-	W3DRenderObjectSnapshot();
-	virtual ~W3DRenderObjectSnapshot();
+	Rva009EB960();
+	virtual ~Rva009EB960();
 
 private:
 	Gen_dtor_009eb9e0 *m_renderObject;
 };
 
-W3DRenderObjectSnapshot::W3DRenderObjectSnapshot()
+Rva009EB960::Rva009EB960()
 {
 	m_renderObject = new Gen_dtor_009eb9e0;
 }
