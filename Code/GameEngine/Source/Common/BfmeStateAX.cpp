@@ -34,10 +34,10 @@ public:
 
 extern "C" void *bfmeVftableAX[];
 
-class BfmeStateAX
+class AIBackAwayState
 {
 public:
-	BfmeStateAX(void *owner);
+	AIBackAwayState(void *owner);
 
 	void bfmeBaseInitAX(void *owner, AsciiStringAX name) throw();
 
@@ -49,7 +49,7 @@ public:
 	char m_bfmeSecondAX;
 };
 
-BfmeStateAX::BfmeStateAX(void *owner)
+AIBackAwayState::AIBackAwayState(void *owner)
 {
 	bfmeBaseInitAX(owner, AsciiStringAX("AIBackAwayState"));
 
