@@ -1,5 +1,5 @@
 // ?d_002fa4e0@@YAXXZ
-// partial score=0.67 date=2026-09-22
+// partial score=0.87 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
 // stlport
 // NAMED_USE_COMMANDBUTTON_ON_NEAREST_KINDOF at retail RVA 0x002FA4E0.
@@ -260,34 +260,40 @@ void ScriptActions::doNamedUseCommandButtonOnNearestKindof(
 
 	if (button->m_options.isSet(5))
 	{
-		PartitionFilterSameMapStatus mapFilter(unit);
-		Object *target = ThePartitionManager->getClosestObject(
-			unit->getPosition(), 1000000.0f, 0,
-			PartitionFilterPlayerAffiliation(
-				unit->getControllingPlayer(), ALLOW_ENEMIES, true).link(
-				Rva000C3DD0VptrZeroBlockObject(
-					*(const VptrZeroBlock24 *)&MAKE_KINDOF_MASK(kindofBit),
-					*(const VptrZeroBlock24 *)&KINDOFMASK_NONE).link(&mapFilter)));
+		Object *target = 0;
+		{
+			PartitionFilterSameMapStatus mapFilter(unit);
+			target = ThePartitionManager->getClosestObject(
+				unit->getPosition(), 1000000.0f, 0,
+				PartitionFilterPlayerAffiliation(
+					unit->getControllingPlayer(), ALLOW_ENEMIES, true).link(
+					Rva000C3DD0VptrZeroBlockObject(
+						*(const VptrZeroBlock24 *)&MAKE_KINDOF_MASK(kindofBit),
+						*(const VptrZeroBlock24 *)&KINDOFMASK_NONE).link(&mapFilter)));
+		}
 		if (target)
 			unit->doCommandButtonAtPosition(button, target->getPosition(),
 				CMD_FROM_SCRIPT, false);
 	}
 	else
 	{
-		PartitionFilterSameMapStatus mapFilter(unit);
-		Rva001ED510 validFilter;
-		PartitionFilter *validFilterBase =
-			reinterpret_cast<PartitionFilter *>(
-				&validFilter.set((int)unit, (int)button, 1,
-					CMD_FROM_SCRIPT));
-		Object *target = ThePartitionManager->getClosestObject(
-			unit->getPosition(), 1000000.0f, 0,
-			PartitionFilterPlayerAffiliation(
-				unit->getControllingPlayer(), ALLOW_ENEMIES, true).link(
-				Rva000C3DD0VptrZeroBlockObject(
-					*(const VptrZeroBlock24 *)&MAKE_KINDOF_MASK(kindofBit),
-					*(const VptrZeroBlock24 *)&KINDOFMASK_NONE).link(
-					validFilterBase->link(&mapFilter))));
+		Object *target = 0;
+		{
+			PartitionFilterSameMapStatus mapFilter(unit);
+			Rva001ED510 validFilter;
+			PartitionFilter *validFilterBase =
+				reinterpret_cast<PartitionFilter *>(
+					&validFilter.set((int)unit, (int)button, 1,
+						CMD_FROM_SCRIPT));
+			target = ThePartitionManager->getClosestObject(
+				unit->getPosition(), 1000000.0f, 0,
+				PartitionFilterPlayerAffiliation(
+					unit->getControllingPlayer(), ALLOW_ENEMIES, true).link(
+					Rva000C3DD0VptrZeroBlockObject(
+						*(const VptrZeroBlock24 *)&MAKE_KINDOF_MASK(kindofBit),
+						*(const VptrZeroBlock24 *)&KINDOFMASK_NONE).link(
+						validFilterBase->link(&mapFilter))));
+		}
 		if (target)
 			unit->doCommandButtonAtObject(button, target, CMD_FROM_SCRIPT, false);
 	}
