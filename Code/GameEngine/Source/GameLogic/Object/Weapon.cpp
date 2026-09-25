@@ -2044,7 +2044,7 @@ void Weapon::onWeaponBonusChange(const Object *source)
 }
 
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/WeaponComputeApproachTargetThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Weapon_computeApproachTarget.cpp
 // ?computeApproachTarget@Weapon@@QBE_NPBVObject@@0PBUCoord3D@@MAAU3@@Z present-unmatched
 Bool Weapon::computeApproachTarget(const Object *source, const Object *target, const Coord3D *pos, Real angleOffset, Coord3D& approachTargetPos) const
 {
