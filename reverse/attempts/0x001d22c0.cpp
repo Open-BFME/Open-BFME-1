@@ -1,5 +1,5 @@
 // ?defect@Object@@QAEXPAVTeam@@I@Z
-// partial score=0.94 date=2026-09-10
+// partial score=0.975 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // Open-BFME: readable reconstruction of Object::defect, retail RVA 0x001D22C0.
@@ -152,6 +152,7 @@ class Object
 {
 public:
 	void defect(Team *newTeam, UnsignedInt detectionTime);
+	void friend_setUndetectedDefector(Bool status);
 
 #define BFME_DEFECT_OBJECT_SLOT(n) virtual void slot##n(void) = 0;
 	BFME_DEFECT_OBJECT_SLOT(00) BFME_DEFECT_OBJECT_SLOT(01)
@@ -281,6 +282,19 @@ struct Rva005A00B0AudioClient
 extern Rva005A00B0AudioClient *TheAudioClientUpdate;
 
 // ?defect@Object@@QAEXPAVTeam@@I@Z
+// Probe-only definition: this mirrors the existing Object.cpp helper so the
+// compiler can see which registers it preserves. Remove it when integrating
+// this body into Object.cpp; do not keep a second helper definition there.
+__declspec(noinline) void Object::friend_setUndetectedDefector(Bool status)
+{
+	unsigned char &privateStatus =
+		*reinterpret_cast<unsigned char *>(reinterpret_cast<char *>(this) + 0x344);
+	if (status)
+		privateStatus |= 0x02;
+	else
+		privateStatus &= static_cast<unsigned char>(~0x02);
+}
+
 void Object::defect(Team *newTeam, UnsignedInt detectionTime)
 {
 	BfmeDefectObjectFields *self = reinterpret_cast<BfmeDefectObjectFields *>(this);
@@ -316,21 +330,21 @@ void Object::defect(Team *newTeam, UnsignedInt detectionTime)
 		reinterpret_cast<BfmeDefectRadarCall *>(TheRadar)->tryInfiltrationEvent(this);
 	}
 
-	reinterpret_cast<BfmeDefectObjectCall *>(this)->friend_setUndetectedDefector(detectionTime > 0);
+	friend_setUndetectedDefector(detectionTime > 0);
 
 	if (self->m_defectionHelper)
 		self->m_defectionHelper->startDefectionTimer(detectionTime, true);
 
 	setTeam(newTeam);
 
+	void *ai = self->m_ai;
 	if (self->m_partitionData)
 		self->m_partitionData->makeDirty();
 
-	if (self->m_ai)
+	if (ai)
 	{
-		BfmeDefectAICommandCall *commands = reinterpret_cast<BfmeDefectAICommandCall *>(
-			reinterpret_cast<char *>(self->m_ai) + 0x20);
-		commands->aiIdle(BFME_DEFECT_FROM_AI);
+		reinterpret_cast<BfmeDefectAICommandCall *>(
+			reinterpret_cast<char *>(ai) + 0x20)->aiIdle(BFME_DEFECT_FROM_AI);
 	}
 
 	Drawable *drawable = getDrawable();
