@@ -3654,9 +3654,69 @@ void W3DVolumetricShadow::addSilhouetteIndices(Int meshIndex, Short edgeStart, S
 // Given a light position, and our polygon neighbor information this will
 // build the silhouette of the object edges from the given light position
 // ============================================================================
-// ?buildSilhouette@W3DVolumetricShadow@@IAEXHPAVVector3@@@Z present-unmatched
 void W3DVolumetricShadow::buildSilhouette(Int meshIndex, Vector3 *lightPosObject)
 {
+	struct BFMEShadowGeometryMeshData
+	{
+		char m_beforePolygons[0xc];
+		const TriIndex *m_polygons;
+	};
+	struct BFMEShadowGeometryMeshView
+	{
+		BFMEShadowGeometryMeshData *m_mesh;
+		char m_pad04[4];
+		const Vector3 *m_verts;
+		char m_pad0c[4];
+		Vector3 *m_polygonNormals;
+		char m_pad14[8];
+		Int m_numPolygons;
+		UnsignedShort *m_parentVerts;
+		PolyNeighbor *m_polyNeighbors;
+		Int m_numPolyNeighbors;
+		char m_tail[8];
+
+		__forceinline PolyNeighbor *GetPolyNeighbor(Int polyIndex)
+		{
+			if (!m_polyNeighbors)
+				reinterpret_cast<W3DShadowGeometryMesh *>(this)->buildPolygonNeighbors();
+			if (polyIndex < 0 || polyIndex >= m_numPolyNeighbors)
+				return NULL;
+			return &m_polyNeighbors[polyIndex];
+		}
+
+		__forceinline Int GetNumPolygon() const
+		{
+			return m_numPolygons;
+		}
+
+		__forceinline const Vector3 &GetPolygonNormal(long polygon) const
+		{
+			return m_polygonNormals[polygon];
+		}
+
+		__forceinline void GetPolygonIndex(long polygon, Short *indexList) const
+		{
+			const TriIndex *poly = &m_mesh->m_polygons[polygon];
+			*indexList++ = m_parentVerts[poly->I];
+			*indexList++ = m_parentVerts[poly->J];
+			*indexList++ = m_parentVerts[poly->K];
+		}
+	};
+	struct BFMEShadowGeometryView
+	{
+		char m_beforeMeshList[0x14];
+		BFMEShadowGeometryMeshView m_meshList[MAX_SHADOW_CASTER_MESHES];
+	};
+	struct BFMEVolumetricShadowView
+	{
+		char m_beforeGeometry[0x6c];
+		BFMEShadowGeometryView *m_geometry;
+		char m_beforeSilhouette[0x4110];
+		Short *m_silhouetteIndex[MAX_SHADOW_CASTER_MESHES];
+		Short m_numSilhouetteIndices[MAX_SHADOW_CASTER_MESHES];
+		char m_beforeIndicesPerMesh[0x140];
+		Int m_numIndicesPerMesh[MAX_SHADOW_CASTER_MESHES];
+	};
 	PolyNeighbor *polyNeighbor;  // the poly we're looking at right now
 	Vector3 lightVector;  // vector from light to polygon
 	Bool visibleNeighborless;
@@ -3670,27 +3730,32 @@ void W3DVolumetricShadow::buildSilhouette(Int meshIndex, Vector3 *lightPosObject
 	// which polys are visible from this light source and which ones are not
 	//
 
-	geomMesh = m_geometry->getMesh(meshIndex);
+	BFMEVolumetricShadowView *shadow = (BFMEVolumetricShadowView *)this;
+	BFMEShadowGeometryView *geometry = shadow->m_geometry;
+	BFMEShadowGeometryMeshView *mesh = &geometry->m_meshList[meshIndex];
+	geomMesh = (W3DShadowGeometryMesh *)mesh;
+	if (!mesh->m_polygonNormals)
+		geomMesh->buildPolygonNormals();
 
 	//record where this meshes indices will begin.
-	meshEdgeStart=m_numSilhouetteIndices[meshIndex];
+	meshEdgeStart=shadow->m_numSilhouetteIndices[meshIndex];
 
-	numPolys = geomMesh->GetNumPolygon();
+	numPolys = mesh->GetNumPolygon();
 	for( i = 0; i < numPolys; i++ )
 	{
 		Short poly[ 3 ];
 
 		// get this polygon neighbor information
-		polyNeighbor = geomMesh->GetPolyNeighbor( i );
+		polyNeighbor = mesh->GetPolyNeighbor( i );
 
 		// take this opportunity to initialize our processing flags to zero
 		polyNeighbor->status = 0;
 
 		// get the normal for this polygon
-		const Vector3& normal=geomMesh->GetPolygonNormal(i);
+		const Vector3& normal=mesh->GetPolygonNormal(i);
 
 		// get the vertex indices at this polygon
-		geomMesh->GetPolygonIndex( i, poly );
+		mesh->GetPolygonIndex( i, poly );
 
 		//
 		// find out "lightVector" to this polygon
@@ -3702,7 +3767,7 @@ void W3DVolumetricShadow::buildSilhouette(Int meshIndex, Vector3 *lightPosObject
 		// this is a good approximation ... an ever broader approximation that
 		// we could use would be the object center
 		//
-		const Vector3& vertex=geomMesh->GetVertex( poly[ 0 ] );
+		const Vector3& vertex=mesh->m_verts[poly[ 0 ]];
 		lightVector= vertex - *lightPosObject;
 
 		//
@@ -3724,7 +3789,7 @@ void W3DVolumetricShadow::buildSilhouette(Int meshIndex, Vector3 *lightPosObject
 		PolyNeighbor *otherNeighbor;
 
 		// get this poly neighbor ... this is "us"
-		polyNeighbor = geomMesh->GetPolyNeighbor( i );
+		polyNeighbor = mesh->GetPolyNeighbor( i );
 
 		// initialize ourselves to not be a visible edge
 		visibleNeighborless = FALSE;
@@ -3742,7 +3807,7 @@ void W3DVolumetricShadow::buildSilhouette(Int meshIndex, Vector3 *lightPosObject
 
 				// get the jth polygon neighbor ... this is "them"
 				otherNeighbor = 
-					geomMesh->GetPolyNeighbor( 
+					mesh->GetPolyNeighbor(
 						polyNeighbor->neighbor[ j ].neighborIndex );
 
 				//
@@ -3813,7 +3878,7 @@ void W3DVolumetricShadow::buildSilhouette(Int meshIndex, Vector3 *lightPosObject
 	}  // end for i
 	
 	//record number of edge indices contrinuted by this mesh
-	m_numIndicesPerMesh[meshIndex]=m_numSilhouetteIndices[meshIndex]-meshEdgeStart;
+	shadow->m_numIndicesPerMesh[meshIndex]=shadow->m_numSilhouetteIndices[meshIndex]-meshEdgeStart;
 	
 }  // end buildSilhouette
 

@@ -15102,6 +15102,7 @@ name,address,notes
 ?addScorch@BaseHeightMapRenderObjClass@@QAEXVVector3@@MW4Scorches@@@Z,0x00047906
 ?addShadow@W3DShadowManager@@QAEPAVShadow@@PAVRenderObjClass@@PAUShadowTypeInfo@2@PAVDrawable@@@Z,0x007B76C0,canonical W3DShadowManager dispatcher body identified by its ILT 0x0002DCA4 and exact setModelName caller ABI; upstream W3DShadow declaration and source establish the render-object plus ShadowTypeInfo plus Drawable signature
 ?addShadowCore@BFMEShadowManagerLayout@@QAEPAVW3DProjectedShadow@@PAVW3DShadowTexture@@PAVRenderObjClass@@W4ShadowType@@_NMMHMMPAPAV2@3PAVDrawable@@3@Z,0x000193BC,retail projected-shadow 13-argument core ILT thunk
+?addSilhouetteEdge@W3DVolumetricShadow@@IAEXHPAUPolyNeighbor@@0@Z,0x007BAC10,retail helper ABI and BFME source signature at 0x007BAC10
 ?addString@BfmeC994@@QAEXPBD0@Z,0x007E8A10,FESL create-game request appends UGID and SECRET string fields through the recovered message writer
 ?addString@FeslEchoMessage@@QAEXPBD0@Z,0x007E8A10,FESL string field writer
 ?addString@Rva007E8810Message@@QAEXPBD0@Z,0x007E8A10,V2 lane: FESL message append key/value string field
