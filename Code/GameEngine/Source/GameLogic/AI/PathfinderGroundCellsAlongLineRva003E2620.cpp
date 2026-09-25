@@ -43,7 +43,8 @@ public:
 extern PathfindCellInfo *g_bfmePathfindFreeList;
 
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
-	PathfindCellInfo **freeList, PathfindCell *cell, const ICoord2D *pos );
+	PathfindCellInfo **freeListHead, PathfindCell *pathfindCell,
+	const ICoord2D *cellPosition );
 
 class PathfindCell
 {
@@ -68,7 +69,7 @@ public:
 class PathfindLayer
 {
 public:
-	PathfindCell *getCell( Int x, Int y );
+	PathfindCell *getCell( Int cellX, Int cellY );
 
 private:
 	char m_unreconstructed[0x44];
@@ -78,7 +79,7 @@ class Pathfinder;
 
 struct Rva003E2620GroundCellsStruct
 {
-	Pathfinder *thePathfinder;
+	Pathfinder *pathfinder;
 	Bool centerInCell;
 	PathfindCell *goalCell;
 	Int pathDiameter;
@@ -87,8 +88,8 @@ struct Rva003E2620GroundCellsStruct
 class Pathfinder
 {
 public:
-	Int groundCellsAlongLine003E2620( const ICoord2D &start, const ICoord2D &end,
-		PathfindLayerEnum layer, Rva003E2620GroundCellsStruct *info );
+	Int groundCellsAlongLine003E2620( const ICoord2D &startCell, const ICoord2D &destinationCell,
+		PathfindLayerEnum layer, Rva003E2620GroundCellsStruct *searchInfo );
 	Int clearCellForDiameter( Int crusher, Int cellX, Int cellY, Int layer,
 		Int pathDiameter, Int attackerOnWall );
 	Int rva003db900( PathfindCell *cell, PathfindCell *goalCell );
@@ -106,28 +107,29 @@ public:
 	char m_beforeLayers[0x85c - 0x838];
 	PathfindLayer m_layers[16];
 
-	__forceinline PathfindCell *getCell( PathfindLayerEnum layer, Int x, Int y )
+	__forceinline PathfindCell *getCell( PathfindLayerEnum layer, Int cellX, Int cellY )
 	{
-		if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
-			y >= m_extent.lo.y && y <= m_extent.hi.y)
+		if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+			cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
 		{
 			if (layer > 1 && layer <= 15)
 			{
-				PathfindCell *cell = m_layers[layer].getCell( x, y );
+				PathfindCell *cell = m_layers[layer].getCell( cellX, cellY );
 				if (cell)
 					return cell;
 			}
-			return &m_map[x][y];
+			return &m_map[cellX][cellY];
 		}
 		return 0;
 	}
 };
 
-Int Pathfinder::groundCellsAlongLine003E2620( const ICoord2D &start,
-	const ICoord2D &end, PathfindLayerEnum layer, Rva003E2620GroundCellsStruct *info )
+Int Pathfinder::groundCellsAlongLine003E2620( const ICoord2D &startCell,
+	const ICoord2D &destinationCell, PathfindLayerEnum layer,
+	Rva003E2620GroundCellsStruct *searchInfo )
 {
-	Int delta_x = abs( end.x - start.x );
-	Int delta_y = abs( end.y - start.y );
+	Int delta_x = abs( destinationCell.x - startCell.x );
+	Int delta_y = abs( destinationCell.y - startCell.y );
 
 	Int xinc2, yinc1, xinc1, numpixels, numadd, den;
 	Int yinc2, num;
@@ -154,19 +156,19 @@ Int Pathfinder::groundCellsAlongLine003E2620( const ICoord2D &start,
 		xinc1 = 1;
 	}
 
-	if (start.x > end.x)
+	if (startCell.x > destinationCell.x)
 	{
 		xinc2 = -xinc2;
 		xinc1 = -1;
 	}
-	if (start.y > end.y)
+	if (startCell.y > destinationCell.y)
 	{
 		yinc2 = -yinc2;
 		yinc1 = -1;
 	}
 
-	Int x = start.x;
-	Int y = start.y;
+	Int x = startCell.x;
+	Int y = startCell.y;
 	PathfindCell *from = 0;
 	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
 	{
@@ -179,8 +181,8 @@ Int Pathfinder::groundCellsAlongLine003E2620( const ICoord2D &start,
 			if (to->getOpen() || to->getClosed())
 				return 1;
 
-			if (info->thePathfinder->clearCellForDiameter( 0, x, y, to->getLayer(),
-				info->pathDiameter, 1 ) != info->pathDiameter)
+			if (searchInfo->pathfinder->clearCellForDiameter( 0, x, y, to->getLayer(),
+				searchInfo->pathDiameter, 1 ) != searchInfo->pathDiameter)
 				return 1;
 
 			ICoord2D newCellCoord;
@@ -198,13 +200,13 @@ Int Pathfinder::groundCellsAlongLine003E2620( const ICoord2D &start,
 			}
 			to->m_info->m_flags &= ~1u;
 
-			Int costRemaining = info->thePathfinder->rva003db900( to, info->goalCell );
+			Int costRemaining = searchInfo->pathfinder->rva003db900( to, searchInfo->goalCell );
 			to->m_info->m_costSoFar = from->m_info->m_costSoFar + (((to->m_packed >> 24) & 1) ? 2 : 5);
 			to->setParentCellHierarchical( from );
 			to->m_info->m_totalCost = to->m_info->m_costSoFar + costRemaining;
 
 			Int bucket = to->m_info->m_totalCost >> 7;
-			Pathfinder *pathfinder = info->thePathfinder;
+			Pathfinder *pathfinder = searchInfo->pathfinder;
 			((BfmeThingBRE *)to)->bfmeGoBRE( &pathfinder->m_bucketHeads034[bucket] );
 			if (bucket < pathfinder->m_lowestBucket834)
 				pathfinder->m_lowestBucket834 = bucket;
