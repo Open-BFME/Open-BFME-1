@@ -134,3 +134,37 @@ extern "C" void piChannelUserJoinedA(void *chat, const char *channel,
   }
  }
 }
+
+extern "C" {
+piPlayer *piGetPlayer(PEER, const char *);
+int piCountRoomOps(PEER, int, const char *);
+void piPlayerLeftRoom(PEER, const char *, int);
+void piAddPlayerLeftCallback(PEER, int, const char *, const char *);
+}
+// 0x0086B710, 243 bytes; same callback initializer witnesses this identity.
+extern "C" void piChannelUserPartedA(void *chat, const char *channel,
+ const char *nick, int why, const char *reason, const char *kicker, PEER peer)
+{
+ piConnection *connection = (piConnection *)peer;
+ int roomType;
+ int status = 0;
+ int changeStatus = 0;
+ if (!piRoomToType(peer, channel, &roomType)) return;
+ if (roomType == 2 && peerIsAutoMatching(peer)) {
+  piGetPlayer(peer, nick);
+  if (!connection->hosting && !piCountRoomOps(peer, 2, connection->nick)) {
+   status = 1;
+   changeStatus = 1;
+  } else if (connection->hosting && connection->numPlayers[2] == 2) {
+   status = 2;
+   changeStatus = 1;
+  } else if (connection->numPlayers[2] == connection->maxPlayers) {
+   status = 3;
+   changeStatus = 1;
+  }
+ }
+ piPlayerLeftRoom(peer, nick, roomType);
+ piAddPlayerLeftCallback(peer, roomType, nick,
+  (why == 2 || why == 3) ? "Kicked" : (reason ? reason : ""));
+ if (changeStatus) piSetAutoMatchStatus(peer, status);
+}
