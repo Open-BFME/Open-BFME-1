@@ -4208,5 +4208,15 @@
   "after_sha256": "d99e00fe3791adf67de9e2c111383ea7563f12f365cc17867b1f1eacb1c0f5cb",
   "evidence": "docs/naming_evidence.md",
   "reason": "ClientSubsystem is an invented descriptive name for the vtable at TheAudioClientUpdate; the existing pin types that global as struct Rva005A00B0AudioClient, so the re-banked body keeps the address-derived name instead of guessing a class identity."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameClient/GUI/GameWindowManager_gogoGadgetRadioButton.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GameWindowManager_gogoGadgetRadioButton.cpp",
+  "old_name": "GameWindow",
+  "new_name": "Rva0047DEC0Desc",
+  "before_sha256": "f745a006965a412a0a8ee7a9a30f4ba379a7656d539cfb2ca62bf8060b747688",
+  "after_sha256": "fd0862c4ce39740031dc25592779dbe59dee0703a6f331684a46aeab62864bba",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "arg1 of gogoGadgetRadioButton at 0x0047DEC0 is not a GameWindow: the body reads [arg1+0x30] as a WinInstanceData pointer and passes [arg1+0] to winSetOwner while retail GameWindow embeds WinInstanceData at +0x30 (winGetInstanceData 0x00478C60 is lea eax [ecx+0x30]); the creation descriptor type is unproven so it keeps the address-derived Rva0047DEC0Desc."
  }
 ]

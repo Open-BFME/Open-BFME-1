@@ -64,12 +64,19 @@ public:
 class GameWindow
 {
 public:
-	GameWindow *m_unmodelled00;
-	char m_gap04[0x2c];
-	WinInstanceData *m_instData;
-
 	int winSetOwner(GameWindow *owner);
 	void winSetUserData(void *data);
+};
+
+// The first argument is a creation descriptor, not a GameWindow: the body
+// reads [arg1+0x30] as a WinInstanceData pointer, while retail GameWindow
+// embeds its WinInstanceData at +0x30 (winGetInstanceData 0x00478C60 is
+// lea eax,[ecx+0x30]). Field names keep the offset until the type is known.
+struct Rva0047DEC0Desc
+{
+	GameWindow *m_owner00;
+	char m_gap04[0x2c];
+	WinInstanceData *m_instData30;
 };
 
 struct RadioButtonData
@@ -110,7 +117,7 @@ public:
 	virtual void v26();
 	virtual void v27();
 	virtual void v28();
-	virtual GameWindow *rva0047EDE0(GameWindow *);
+	virtual GameWindow *rva0047EDE0(Rva0047DEC0Desc *);
 	virtual void v30();
 	virtual void v31();
 	virtual void v32();
@@ -152,30 +159,30 @@ public:
 	virtual void v68();
 	virtual void v69();
 	virtual UnicodeString winTextLabelToText(AsciiString);
-	virtual GameWindow *gogoGadgetRadioButton(GameWindow *, RadioButtonData *, GameFont *, bool);
+	virtual GameWindow *gogoGadgetRadioButton(Rva0047DEC0Desc *, RadioButtonData *, GameFont *, bool);
 };
 
 extern GameWindowManager *TheWindowManager;
 extern void rva004BD400(GameWindow *, UnicodeString);
 
 
-GameWindow *GameWindowManager::gogoGadgetRadioButton(GameWindow *parent,
+GameWindow *GameWindowManager::gogoGadgetRadioButton(Rva0047DEC0Desc *desc,
 	RadioButtonData *rData, GameFont *defaultFont, bool defaultVisual)
 {
 	GameWindow *radioButton;
 	RadioButtonData *radioData;
 
-	if ((parent->m_instData->getStyle() & 2) == 0)
+	if ((desc->m_instData30->getStyle() & 2) == 0)
 		return 0;
-	radioButton = TheWindowManager->rva0047EDE0(parent);
+	radioButton = TheWindowManager->rva0047EDE0(desc);
 	if (radioButton == 0)
 		return 0;
 	radioData = new RadioButtonData;
 	memcpy(radioData, rData, sizeof(RadioButtonData));
 	radioButton->winSetUserData(radioData);
-	radioButton->winSetOwner(parent->m_unmodelled00);
+	radioButton->winSetOwner(desc->m_owner00);
 	assignDefaultGadgetLook(radioButton, defaultFont, defaultVisual);
-	UnicodeString text = winTextLabelToText(parent->m_instData->m_textLabelString);
+	UnicodeString text = winTextLabelToText(desc->m_instData30->m_textLabelString);
 	if (text.getLength())
 		rva004BD400(radioButton, text);
 	return radioButton;
