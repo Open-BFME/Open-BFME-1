@@ -18,8 +18,8 @@ int __cdecl GetGameLogicRandomValue(int lo, int hi, const char *file, int line);
 class AI
 {
 public:
-	Object *findEnemyNear(Object *obj, float range, int a, int b, int c);
-	Object *findAllyNear(Object *obj, float range, int a);
+	Object *findEnemyNear(Object *object, float range, int a, int b, int c);
+	Object *findAllyNear(Object *object, float range, int a);
 };
 
 extern AI *TheAI;
