@@ -11,19 +11,18 @@
 // The curve's record vector is a native STLport vector: its constructor zeroes
 // start/finish/end-of-storage and m_current = m_points.end() reloads the
 // finish pointer, and clear() is the out-of-line __copy(finish, finish, start)
-// at 0x000B98F0. That helper's only ledger spelling names the ICF-shared
-// GarrisonContain::StationPointData element, so the 16-byte record reuses it;
-// the record's fields are not read here.
+// at 0x000B98F0. The 16-byte record is the curve's address-derived
+// Rva0006AA90Element (Rva0006AB10CurveSet.cpp); its fields are not read here.
 
 #define _STLP_NO_EXCEPTIONS 1
 #include <vector>
 
-struct GarrisonContain
+struct Rva0006AA90Element
 {
-	struct StationPointData
-	{
-		int m_words[4];
-	};
+	float m_key;
+	float m_real;
+	int m_inTangent;
+	int m_outTangent;
 };
 
 class Rva0006AB10Curve
@@ -42,14 +41,17 @@ public:
 
 	int m_field0;
 	int m_field4;
-	_STL::vector<GarrisonContain::StationPointData> m_points;
+	_STL::vector<Rva0006AA90Element> m_points;
 	int m_unmodelled14;
-	_STL::vector<GarrisonContain::StationPointData>::iterator m_current;
+	_STL::vector<Rva0006AA90Element>::iterator m_current;
 	int m_dword1c;
 	int m_dword20;
 	int m_dword24;
 	int m_dword28;
 };
+
+// The unwind funclet's curve teardown (see above) resolves to that ILT.
+#pragma comment(linker, "/alternatename:??1Rva0006AB10Curve@@QAE@XZ=?j_000136dd@@YAXXZ")
 
 class BfmeLivingWorldManager
 {

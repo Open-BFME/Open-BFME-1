@@ -3578,5 +3578,15 @@
   "after_sha256": "3ee550e9a300eb16f30f3a2595ae1bec8a2d66e359519c0b9a4995a0ea5d90cf",
   "evidence": "docs/naming_evidence.md",
   "reason": "banked findPlaying had no caller/vtable/string/twin evidence; reverse/re_attempts.log 0x006A20D0 verdict records the helper method identity as unproven so the address-derived rva006A20D0 is used"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva006092D0StateConstructor.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva006092D0StateConstructor.cpp",
+  "old_name": "GarrisonContain",
+  "new_name": "Rva0006AA90Element",
+  "before_sha256": "2bfde7932969d2cf46d1b58a3d12d983d400ca3f1dcb6d7f19c20d2f1702e1af",
+  "after_sha256": "db279a0aeb392bc5242f3cf1dfc967f49630aaf17678279cead9f78e89f51bcc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "GarrisonContain::StationPointData was a borrowed Zero Hour class with no evidence tying it to this curve; the 16-byte curve record is the address-derived Rva0006AA90Element already established by Rva0006AB10CurveSet.cpp and the matched 0x0006A850/0x0006AA90 vector bodies"
  }
 ]
