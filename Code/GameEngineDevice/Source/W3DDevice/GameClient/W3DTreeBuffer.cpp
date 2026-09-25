@@ -300,67 +300,6 @@ ShaderClass ShaderClass::_PresetAlpha2DShader(SC_ALPHA_2D);
 //         Private Functions                                               
 //-----------------------------------------------------------------------------
 
-// BFME inserted fields before the tree records and in the tail, so the Zero Hour
-// header cannot describe the offsets used by retail's otherwise shared cull body.
-struct BFMETreeCullTree
-{
-	Vector3 m_location;
-	char m_unreconstructed_00c[0x34];
-	Int m_treeType;
-	Bool m_visible;
-	char m_unreconstructed_045[3];
-	SphereClass m_bounds;
-	Real m_sortKey;
-	DrawableID m_drawableID;
-	Real m_pushAside;
-	Real m_pushAsideDelta;
-	Real m_pushAsideSin;
-	Real m_pushAsideCos;
-	ObjectID m_pushAsideSource;
-	UnsignedInt m_lastFrameUpdated;
-	char m_unreconstructed_078[0x2c];
-};
-
-struct BFMETreePushData
-{
-	char m_unreconstructed_000[0x10];
-	UnsignedInt m_framesToMoveOutward;
-};
-
-struct BFMETreePushType
-{
-	BFMETreePushData *m_data;
-	char m_unreconstructed_004[0x58];
-};
-
-struct BFMETreeCullView
-{
-	char m_unreconstructed_000000[0x1548];
-	BFMETreeCullTree m_trees[12000];
-	Int m_numTrees;
-	Bool m_anythingChanged;
-	Bool m_anyPushChanged;
-	Bool m_updateAllKeys;
-	char m_unreconstructed_1e1ccf[0x1709];
-	Vector3 m_cameraLookAtVector;
-	char m_unreconstructed_1e33e4[0x53c];
-	Int m_treeIndexStep;
-};
-
-struct BFMETreePushView
-{
-	char m_unreconstructed_000000[0x1548];
-	BFMETreeCullTree m_trees[12000];
-	Int m_numTrees;
-	Bool m_anythingChanged;
-	Bool m_anyPushChanged;
-	Bool m_updateAllKeys;
-	char m_unreconstructed_1e1ccf[0x25];
-	BFMETreePushType m_treeTypes[64];
-};
-
-extern GameLogic *TheBfmeGameLogic;
-
 // Several matched neighbors witness this older linked generation independently:
 // its records begin at 0x1B0, use a 0xE8 stride, and end at the 0x2A7CB0 count.
 struct BFMETreeLegacyTree
@@ -596,81 +535,6 @@ public:
 	BfmeRadarResetGuard(void) { W3DRadarResetLock(); }
 	~BfmeRadarResetGuard(void) { W3DRadarResetUnlock(); }
 };
-
-//=============================================================================
-// W3DTreeBuffer::cull
-//=============================================================================
-/** Culls the trees, marking the visible flag.  If a tree becomes visible, it sets
-it's sortKey */
-//=============================================================================
-// ?cull@W3DTreeBuffer@@IAEXPBVCameraClass@@@Z
-void W3DTreeBuffer::cull(const CameraClass * camera)
-{
-	BFMETreeCullView *self = (BFMETreeCullView *)this;
-
-	// Calulate the vector direction that the camera is looking at.
-	Matrix3D camera_matrix = camera->Get_Transform();
-	float zmod = -1;
-	float x = zmod * camera_matrix[0][2] ;
-	float y = zmod * camera_matrix[1][2] ;
-	float z = zmod * camera_matrix[2][2] ;
-	self->m_cameraLookAtVector.Set(x,y,z);
-
-	Int curTree;
-	for (curTree=0; curTree<self->m_numTrees; ) {
-		Bool doKey = false;
-		Bool visible = !camera->Cull_Sphere(self->m_trees[curTree].m_bounds);
-		if (visible != self->m_trees[curTree].m_visible) {
-			self->m_trees[curTree].m_visible = visible;
-			self->m_anythingChanged = true;
-			if (visible) {
-				doKey = true;
-			}
-		}
-		if (doKey || (visible && self->m_updateAllKeys)) {
-			// The scoped view otherwise reverses three equivalent x87 loads under MSVC 7.1.
-			const volatile Real &locationX = self->m_trees[curTree].m_location.X;
-			const volatile Real &lookAtY = self->m_cameraLookAtVector.Y;
-			const volatile Real &lookAtZ = self->m_cameraLookAtVector.Z;
-			self->m_trees[curTree].m_sortKey =
-				locationX * self->m_cameraLookAtVector.X +
-				self->m_trees[curTree].m_location.Y * lookAtY +
-				self->m_trees[curTree].m_location.Z * lookAtZ;
-		}
-		curTree += self->m_treeIndexStep;
-	}
-	self->m_updateAllKeys = false;
-}
-//=============================================================================
-// W3DTreeBuffer::getPartitionBucket
-//=============================================================================
-/** Returns the bucket index into m_areaPartition for a given location. */
-//=============================================================================
-// BFME's 50-by-50 partition array leaves the bounds at 0x1440; the ZH header's
-// 100-by-100 array moves this field, so only this retail-witnessed prefix is used.
-struct BFMETreePartitionView
-{
-	char m_unreconstructed_0000[0x1440];
-	Region2D m_bounds;
-};
-
-extern "C" __declspec(dllimport) double __cdecl floor(double);
-
-Int W3DTreeBuffer::getPartitionBucket(const Coord3D &pos) const
-{
-	const BFMETreePartitionView *self = reinterpret_cast<const BFMETreePartitionView *>(this);
-	Real x = pos.x;
-	Real y = pos.y;
-	if (x<self->m_bounds.lo.x) x = self->m_bounds.lo.x;
-	if (y<self->m_bounds.lo.y) y = self->m_bounds.lo.y;
-	if (x>self->m_bounds.hi.x) x = self->m_bounds.hi.x;
-	if (y>self->m_bounds.hi.y) y = self->m_bounds.hi.y;
-	Real xRatio = (x/(self->m_bounds.hi.x-self->m_bounds.lo.x)) * (50-0.1f);
-	Int xIndex = fast_float2long_round((Real)floor((double)(xRatio)));
-	Real yRatio = (y/(self->m_bounds.hi.y-self->m_bounds.lo.y)) * (50-0.1f);
-	Int yIndex = fast_float2long_round((Real)floor((double)(yRatio)));
-	return yIndex*50 + xIndex;
-}
 
 //=============================================================================
 // W3DTreeBuffer::cull
@@ -959,61 +823,6 @@ void W3DTreeBuffer::setTextureLOD(Int lod)
 {
 	if (m_treeTexture)
 		((W3DTreeTextureClass*)m_treeTexture)->setLOD(lod);
-}
-
-//=============================================================================
-// W3DTreeBuffer::doLighting
-//=============================================================================
-/** Calculates the diffuse lighting as affected by dynamic lighting. */
-//=============================================================================
-UnsignedInt W3DTreeBuffer::doLighting(const Vector3 *normal,  
-															const GlobalData::TerrainLighting	*objectLighting, 
-															const Vector3 *emissive, UnsignedInt vertDiffuse, Real scale) const
-{
-
-	Real shadeR, shadeG, shadeB;
-	Real shade;
-	shadeR = objectLighting[0].ambient.red+emissive->X;	//only the first light contributes to ambient
-	shadeG = objectLighting[0].ambient.green+emissive->Y;
-	shadeB = objectLighting[0].ambient.blue+emissive->Z;
-
-	Int i;
-	for	(i=0; i<MAX_GLOBAL_LIGHTS; i++) {
-		Vector3 lightDirection(objectLighting[i].lightPos.x, objectLighting[i].lightPos.y, objectLighting[i].lightPos.z);
-		lightDirection.Normalize();
-		Vector3 lightRay(-lightDirection.X, -lightDirection.Y, -lightDirection.Z);
-		shade = WWMath::Fabs(Vector3::Dot_Product(lightRay, *normal));
-
-		if (shade > 1.0) shade = 1.0;
-		if(shade < 0.0f) shade = 0.0f;
-		shadeR += shade*objectLighting[i].diffuse.red;
-		shadeG += shade*objectLighting[i].diffuse.green;
-		shadeB += shade*objectLighting[i].diffuse.blue;	
-	}
-
-	if (vertDiffuse!=0xFFFFFFFF) {
-		shade = vertDiffuse&0xff; //blue;
-		shadeB *= shade/255.0f;
-		shade = (vertDiffuse>>8)&0xFF; // green;
-		shadeG *= shade/255.0f;
-		shade = (vertDiffuse>>16)&0xFF; // red;
-		shadeR *= shade/255.0f;
-	}
-
-	shadeR *= scale;
-	shadeG *= scale;
-	shadeB *= scale;
-	
-	if (shadeR > 1.0) shadeR = 1.0;
-	if(shadeR < 0.0f) shadeR = 0.0f;
-	if (shadeG > 1.0) shadeG = 1.0;
-	if(shadeG < 0.0f) shadeG = 0.0f;
-	if (shadeB > 1.0) shadeB = 1.0;
-	if(shadeB < 0.0f) shadeB = 0.0f;
-
-	const Real alpha = 255.0;
-	return (UnsignedInt)(shadeB*255.0f) | ((Int)(shadeG*255.0f) << 8) | ((Int)(shadeR*255.0f) << 16) | ((Int)alpha << 24);
-	
 }
 
 //=============================================================================
@@ -1866,51 +1675,6 @@ Bool W3DTreeBuffer::updateTreePosition(DrawableID id, Coord3D location, Real ang
 		}
 	}
 	return false;
-}
-
-//=============================================================================
-// W3DTreeBuffer::pushAsideTree
-//=============================================================================
-/** Push sideways tree or grass. */
-//=============================================================================
-void W3DTreeBuffer::pushAsideTree(DrawableID id, const Coord3D *pusherPos, 
-																	const Coord3D *pusherDirection, ObjectID pusherID )
-{
-	if (*(const UnsignedByte *)((const char *)TheWritableGlobalData + 0x18) == 0)
-		return;
-
-	BFMETreePushView *self = reinterpret_cast<BFMETreePushView *>(this);
-	for (Int i = 0; i < self->m_numTrees; ++i) {
-		BFMETreeCullTree *tree = &self->m_trees[i];
-		if (tree->m_drawableID == id) {
-			UnsignedInt lastFrame = tree->m_lastFrameUpdated;
-			tree->m_lastFrameUpdated = TheBfmeGameLogic->getFrame();
-			if (tree->m_pushAsideSource == pusherID) {
-				if (tree->m_lastFrameUpdated - lastFrame < 3)
-					return;
-			}
-
-			if (tree->m_pushAside != 0.0f)
-				return;
-
-			tree->m_pushAsideSource = pusherID;
-			Coord3D delta;
-			delta.set(tree->m_location.X, tree->m_location.Y, tree->m_location.Z);
-			delta.sub(pusherPos);
-			if (pusherDirection->x * delta.y - pusherDirection->y * delta.x > 0.0f) {
-				tree->m_pushAsideCos = -pusherDirection->y;
-				tree->m_pushAsideSin = pusherDirection->x;
-			} else {
-				tree->m_pushAsideCos = pusherDirection->y;
-				tree->m_pushAsideSin = -pusherDirection->x;
-			}
-
-			self->m_anyPushChanged = true;
-			tree->m_pushAsideDelta = 1.0f /
-				((Real)self->m_treeTypes[tree->m_treeType].m_data->m_framesToMoveOutward *
-				*(Real *)((char *)this + 0x1e3910));
-		}
-	}
 }
 
 DECLARE_PERF_TIMER(Tree_Render)

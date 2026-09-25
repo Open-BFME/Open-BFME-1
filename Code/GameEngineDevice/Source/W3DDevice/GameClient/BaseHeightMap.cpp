@@ -735,221 +735,24 @@ void BaseHeightMapRenderObjClass::updateMacroTexture(AsciiString textureName)
 //=============================================================================
 /** Updates the macro noise/lightmap texture (pass 3) */
 //=============================================================================
-class BaseHeightMapResetBuffer
+// BFME terrain children the Zero Hour header does not describe (+0x3098, +0x30A4, +0x30B4).
+class W3DShrubBuffer
 {
 public:
-	void clear3094();
-	void clear30B4();
-	void clear3098();
-	void clear30AC();
-	void clear30B0();
-	void clear30A4();
-	void clear30A0();
+	void clearAllTrees();
 };
 
-class BFMETextureRelease
+class W3DFloorBuffer
 {
 public:
-	void Release_Ref();
+	void rva006F9050();
 };
 
-void W3DRadarResetLock(void);
-void W3DRadarResetUnlock(void);
-
-class BaseHeightMapResetGuard
+class Rva006DED60RoadBuffer
 {
 public:
-	BaseHeightMapResetGuard() { W3DRadarResetLock(); }
-	~BaseHeightMapResetGuard() { W3DRadarResetUnlock(); }
+	void rva006DEB70();
 };
-
-class BaseHeightMapResetList
-{
-public:
-	void clear(bool reset);
-};
-
-struct BaseHeightMapResetTreeType
-{
-	RefCountClass *m_mesh;
-	char m_padding04[0x58];
-};
-
-struct BaseHeightMapResetDualType
-{
-	char m_padding00[4];
-	RefCountClass *m_first;
-	RefCountClass *m_second;
-	char m_padding0c[0x98];
-};
-
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/GameEngine.h
-class GameEngine
-{
-private:
-	char m_padding00[0x34];
-
-public:
-	Int m_field34;
-};
-
-extern GameEngine *TheGameEngine;
-
-void BaseHeightMapResetBuffer::clear3094()
-{
-	BaseHeightMapResetGuard guard;
-	char *base = reinterpret_cast<char *>(this);
-	Int zero = 0;
-
-	*reinterpret_cast<Int *>(base + 0x2a7cb0) = zero;
-	BFMETextureRelease **texture =
-		reinterpret_cast<BFMETextureRelease **>(base + 0xb8);
-	if (*texture) {
-		(*texture)->Release_Ref();
-		*texture = NULL;
-	}
-	texture = reinterpret_cast<BFMETextureRelease **>(base + 0xbc);
-	if (*texture) {
-		(*texture)->Release_Ref();
-		*texture = NULL;
-	}
-	reinterpret_cast<BaseHeightMapResetList *>(base + 0xc0)->clear(false);
-	reinterpret_cast<BaseHeightMapResetList *>(base + 0xe8)->clear(false);
-	*reinterpret_cast<Int *>(base + 0x160) = zero;
-	*reinterpret_cast<UnsignedByte *>(base + 0x2a7cb4) = 1;
-
-	BaseHeightMapResetTreeType *type =
-		reinterpret_cast<BaseHeightMapResetTreeType *>(base + 0x2a7cbc);
-	for (Int i = 0; i < 64; ++i, ++type) {
-		if (type->m_mesh) {
-			type->m_mesh->Release_Ref();
-			type->m_mesh = NULL;
-		}
-	}
-
-	if (TheGameEngine) {
-		*reinterpret_cast<Real *>(base + 0x2a98f8) =
-			static_cast<Real>(TheGameEngine->m_field34);
-	}
-	*reinterpret_cast<Int *>(base + 0x2a93bc) = zero;
-}
-
-void BaseHeightMapResetBuffer::clear3098()
-{
-	char *base = reinterpret_cast<char *>(this);
-	BaseHeightMapResetDualType *entry =
-		reinterpret_cast<BaseHeightMapResetDualType *>(base + 0x15dc);
-	for (Int i = 0; i < *reinterpret_cast<Int *>(base + 0x1e1cc8);
-		++i, ++entry) {
-		if (entry->m_first) {
-			entry->m_first->Release_Ref();
-			entry->m_first = NULL;
-		}
-		if (entry->m_second) {
-			entry->m_second->Release_Ref();
-			entry->m_second = NULL;
-		}
-	}
-
-	Int zero = 0;
-	*reinterpret_cast<Int *>(base + 0x1e1cc8) = zero;
-	*reinterpret_cast<Int *>(base + 0x1444) = zero;
-	*reinterpret_cast<Int *>(base + 0x1440) = zero;
-	*reinterpret_cast<Real *>(base + 0x144c) = 1.0f;
-	*reinterpret_cast<Real *>(base + 0x1448) = 1.0f;
-	BFMETextureRelease **texture =
-		reinterpret_cast<BFMETextureRelease **>(base + 0x1450);
-	if (*texture) {
-		(*texture)->Release_Ref();
-		*texture = NULL;
-	}
-	texture = reinterpret_cast<BFMETextureRelease **>(base + 0x1454);
-	if (*texture) {
-		(*texture)->Release_Ref();
-		*texture = NULL;
-	}
-	reinterpret_cast<BaseHeightMapResetList *>(base + 0x1458)->clear(false);
-	reinterpret_cast<BaseHeightMapResetList *>(base + 0x1480)->clear(false);
-	*reinterpret_cast<Int *>(base + 0x14f8) = zero;
-	*reinterpret_cast<UnsignedByte *>(base + 0x1e1ccc) = 1;
-
-	BaseHeightMapResetTreeType *type =
-		reinterpret_cast<BaseHeightMapResetTreeType *>(base + 0x1e1cd4);
-	for (Int i = 0; i < 64; ++i, ++type) {
-		if (type->m_mesh) {
-			type->m_mesh->Release_Ref();
-			type->m_mesh = NULL;
-		}
-	}
-
-	if (TheGameEngine) {
-		*reinterpret_cast<Real *>(base + 0x1e3910) =
-			static_cast<Real>(TheGameEngine->m_field34);
-	}
-	UnsignedInt *sentinel =
-		reinterpret_cast<UnsignedInt *>(base + 0xb8);
-	for (Int i = 0; i < 0x4e2; ++i) {
-		sentinel[i] = 0xffffffff;
-	}
-	*reinterpret_cast<Int *>(base + 0x1e33d4) = zero;
-}
-
-// BFME's +0x30A4 buffer is a W3DFloorBuffer.  Its list is the STLport
-// circular list at +0x20; the payloads are the floor render objects allocated
-// by the buffer and owned by this reset path.
-struct BaseHeightMapFloorElement
-{
-	virtual ~BaseHeightMapFloorElement();
-	char m_pad04[0x1c];
-	BFMETextureRelease *m_texture;
-	RefCountClass *m_renderObject;
-	void *m_field28;
-	char m_pad2c[0x1c];
-	void *m_field48;
-	char m_pad4c[0x30];
-	bool m_active;
-};
-
-struct BaseHeightMapFloorBufferLayout
-{
-	char m_pad00[0x18];
-	Int m_field18;
-	char m_pad1c[4];
-	_STL::list<void *> m_elements;
-	Int m_field24;
-};
-
-void BaseHeightMapResetBuffer::clear30A4()
-{
-	BaseHeightMapFloorBufferLayout *buffer =
-		reinterpret_cast<BaseHeightMapFloorBufferLayout *>(this);
-	for (_STL::list<void *>::iterator it = buffer->m_elements.begin();
-		it != buffer->m_elements.end(); ++it) {
-		BaseHeightMapFloorElement *element =
-			reinterpret_cast<BaseHeightMapFloorElement *>(*it);
-		RefCountClass *renderObject = element->m_renderObject;
-		element->m_active = false;
-		if (renderObject) {
-			renderObject->Release_Ref();
-			element->m_renderObject = NULL;
-		}
-		BFMETextureRelease *texture = element->m_texture;
-		if (texture) {
-			texture->Release_Ref();
-			element->m_texture = NULL;
-		}
-		element->m_field28 = NULL;
-		element->m_field48 = NULL;
-		element = reinterpret_cast<BaseHeightMapFloorElement *>(*it);
-		if (element) {
-			element->BaseHeightMapFloorElement::~BaseHeightMapFloorElement();
-			::operator delete(element);
-		}
-	}
-	buffer->m_elements.clear();
-	buffer->m_field18 = 0;
-	buffer->m_field24 = 0;
-}
 
 class BfmeListHeader;
 
@@ -1043,6 +846,8 @@ private:
 	void *m_data;
 };
 
+// Spells BaseHeightMapRenderObjClass::updateMacroTexture(AsciiString, Bool) (0x006CB8D0) so the
+// temporary keeps retail's unwind order; the shim header declares only the one-argument form.
 class BaseHeightMapResetTerrain
 {
 public:
@@ -1054,21 +859,21 @@ void BaseHeightMapRenderObjClass::reset(void)
 {
 	// BFME added terrain buffers and a second cliff vector absent from the imported header.
 	char *heightMap = reinterpret_cast<char *>(this);
-	BaseHeightMapResetBuffer *buffer3094 =
-		*reinterpret_cast<BaseHeightMapResetBuffer **>(heightMap + 0x3094);
+	W3DTreeBuffer *treeBuffer =
+		*reinterpret_cast<W3DTreeBuffer **>(heightMap + 0x3094);
 	*reinterpret_cast<UnsignedByte *>(heightMap + 0x30d0) = 1;
-	if (buffer3094) {
-		buffer3094->clear3094();
+	if (treeBuffer) {
+		treeBuffer->clearAllTrees();
 	}
-	BaseHeightMapResetBuffer *buffer30B4 =
-		*reinterpret_cast<BaseHeightMapResetBuffer **>(heightMap + 0x30b4);
+	Rva006DED60RoadBuffer *buffer30B4 =
+		*reinterpret_cast<Rva006DED60RoadBuffer **>(heightMap + 0x30b4);
 	if (buffer30B4) {
-		buffer30B4->clear30B4();
+		buffer30B4->rva006DEB70();
 	}
-	BaseHeightMapResetBuffer *buffer3098 =
-		*reinterpret_cast<BaseHeightMapResetBuffer **>(heightMap + 0x3098);
-	if (buffer3098) {
-		buffer3098->clear3098();
+	W3DShrubBuffer *shrubBuffer =
+		*reinterpret_cast<W3DShrubBuffer **>(heightMap + 0x3098);
+	if (shrubBuffer) {
+		shrubBuffer->clearAllTrees();
 	}
 	W3DPropBuffer *propBuffer =
 		*reinterpret_cast<W3DPropBuffer **>(heightMap + 0x309c);
@@ -1076,29 +881,29 @@ void BaseHeightMapRenderObjClass::reset(void)
 		propBuffer->clearAllProps();
 	}
 
-	BaseHeightMapResetBuffer *buffer30AC =
-		*reinterpret_cast<BaseHeightMapResetBuffer **>(heightMap + 0x30ac);
+	W3DRoadBuffer *roadBuffer =
+		*reinterpret_cast<W3DRoadBuffer **>(heightMap + 0x30ac);
 	*reinterpret_cast<Int *>(heightMap + 0x2fc4) = 0;
 	*reinterpret_cast<Int *>(heightMap + 0x2fc8) = 0;
 	*reinterpret_cast<Int *>(heightMap + 0x2fcc) = 0;
 	*reinterpret_cast<Int *>(heightMap + 0x2fe0) = 0;
-	if (buffer30AC) {
-		buffer30AC->clear30AC();
+	if (roadBuffer) {
+		roadBuffer->clearAllRoads();
 	}
-	BaseHeightMapResetBuffer *buffer30B0 =
-		*reinterpret_cast<BaseHeightMapResetBuffer **>(heightMap + 0x30b0);
-	if (buffer30B0) {
-		buffer30B0->clear30B0();
+	W3DBridgeBuffer *bridgeBuffer =
+		*reinterpret_cast<W3DBridgeBuffer **>(heightMap + 0x30b0);
+	if (bridgeBuffer) {
+		bridgeBuffer->clearAllBridges();
 	}
-	BaseHeightMapResetBuffer *buffer30A4 =
-		*reinterpret_cast<BaseHeightMapResetBuffer **>(heightMap + 0x30a4);
-	if (buffer30A4) {
-		buffer30A4->clear30A4();
+	W3DFloorBuffer *floorBuffer =
+		*reinterpret_cast<W3DFloorBuffer **>(heightMap + 0x30a4);
+	if (floorBuffer) {
+		floorBuffer->rva006F9050();
 	}
-	BaseHeightMapResetBuffer *buffer30A0 =
-		*reinterpret_cast<BaseHeightMapResetBuffer **>(heightMap + 0x30a0);
-	if (buffer30A0) {
-		buffer30A0->clear30A0();
+	W3DBibBuffer *bibBuffer =
+		*reinterpret_cast<W3DBibBuffer **>(heightMap + 0x30a0);
+	if (bibBuffer) {
+		bibBuffer->clearAllBibs();
 	}
 
 	BaseHeightMapRenderObjClass *bfmeVisibleCliffLayout =

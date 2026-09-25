@@ -58,7 +58,7 @@ class Rva006DED60RoadBuffer
 public:
 	Rva006DED60RoadBuffer();
 
-	void freeRoadBuffers();
+	void rva006DEB70();
 	void allocateRoadBuffers();
 
 private:
@@ -87,7 +87,7 @@ Rva006DED60RoadBuffer::Rva006DED60RoadBuffer()
 	for (int i = 0; i < 10; ++i)
 		m_roadRefs[i].m_first = 0;
 
-	freeRoadBuffers();
+	rva006DEB70();
 	allocateRoadBuffers();
 	m_initialized = 1;
 }

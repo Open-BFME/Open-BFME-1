@@ -22,8 +22,7 @@ public:
 	void notifyShroudChanged();
 };
 
-// The terrain child at +0x3098; its class is not established yet.
-class BaseHeightMapResetBuffer
+class W3DShrubBuffer
 {
 public:
 	void stampShroudVisible();
@@ -100,10 +99,10 @@ __declspec(noinline) void BaseHeightMapRenderObjClass::notifyShroudChanged()
 	if (propBuffer) {
 		propBuffer->notifyShroudChanged();
 	}
-	BaseHeightMapResetBuffer *buffer3098 =
-		*(BaseHeightMapResetBuffer **)((unsigned char *)this + 0x3098);
-	if (buffer3098) {
-		buffer3098->stampShroudVisible();
+	W3DShrubBuffer *shrubBuffer =
+		*(W3DShrubBuffer **)((unsigned char *)this + 0x3098);
+	if (shrubBuffer) {
+		shrubBuffer->stampShroudVisible();
 	}
 }
 

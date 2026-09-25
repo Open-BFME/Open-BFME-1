@@ -1,8 +1,6 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
-// readable body of ?freeTreeBuffers@W3DTreeBuffer@@QAEXXZ: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer.cpp
-// BFME W3DTreeBuffer resource release path.  The BFME layout has per-type
-// vertex/index resources at +0x04/+0x54, five shader/resource slots at
-// +0xA4, and the tree texture/count at +0x1E3914/+0x1E3918.
+// W3DTreeBuffer::freeTreeBuffers, retail 0x00732960: the terrain's +0x3094 child; the twin of
+// W3DShrubBuffer's at 0x0071C2D0, with the texture and type count at +0x2A9904/+0x2A9908.
 
 typedef int Int;
 
@@ -13,7 +11,7 @@ void W3DRadarResetLock(void);
 void W3DRadarResetUnlock(void);
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib/refcount.h
-class RefCountClass
+class RefCountClass_732960
 {
 public:
 	virtual void Delete_This(void);
@@ -29,7 +27,7 @@ private:
 	Int m_refCount;
 };
 
-class BfmeShaderResource
+class BfmeShaderResource_732960
 {
 public:
 	virtual long __stdcall slot0(void);
@@ -38,17 +36,17 @@ public:
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/texture.h
-class TextureClass
+class TextureClass_732960
 {
 public:
 	void Release_Ref(void);
 };
 
-class BfmeRadarResetLock
+class BfmeRadarResetLock_732960
 {
 public:
-	BfmeRadarResetLock() { W3DRadarResetLock(); }
-	~BfmeRadarResetLock() { W3DRadarResetUnlock(); }
+	BfmeRadarResetLock_732960() { W3DRadarResetLock(); }
+	~BfmeRadarResetLock_732960() { W3DRadarResetUnlock(); }
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/W3DTreeBuffer.h
@@ -59,21 +57,21 @@ public:
 
 private:
 	void *m_vftable;
-	RefCountClass *m_typeVertex[20];
-	RefCountClass *m_typeIndex[20];
-	BfmeShaderResource *m_resource0;
-	BfmeShaderResource *m_resource1;
-	BfmeShaderResource *m_resource2;
-	BfmeShaderResource *m_resource3;
-	BfmeShaderResource *m_resource4;
-	char m_padding[0x1e3914 - 0xb8];
-	TextureClass *m_treeTexture;
+	RefCountClass_732960 *m_typeVertex[20];
+	RefCountClass_732960 *m_typeIndex[20];
+	BfmeShaderResource_732960 *m_resource0;
+	BfmeShaderResource_732960 *m_resource1;
+	BfmeShaderResource_732960 *m_resource2;
+	BfmeShaderResource_732960 *m_resource3;
+	BfmeShaderResource_732960 *m_resource4;
+	char m_padding[0x2a9904 - 0xb8];
+	TextureClass_732960 *m_treeTexture;
 	Int m_numTreeTypes;
 };
 
 void W3DTreeBuffer::freeTreeBuffers(void)
 {
-	BfmeRadarResetLock lock;
+	BfmeRadarResetLock_732960 lock;
 
 	Int i;
 	for (i = 0; i < m_numTreeTypes; ++i) {

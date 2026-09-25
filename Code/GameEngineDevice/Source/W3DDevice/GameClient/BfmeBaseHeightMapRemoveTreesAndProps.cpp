@@ -4,7 +4,7 @@
 struct Coord3D;
 class GeometryInfo;
 
-class W3DTreeBuffer
+class W3DShrubBuffer
 {
 public:
 	void removeTreesForConstruction(const Coord3D *pos, const GeometryInfo &geom, float angle);
@@ -25,15 +25,15 @@ public:
 
 private:
 	char m_pad[0x3098];
-	W3DTreeBuffer *m_treeBuffer;
+	W3DShrubBuffer *m_shrubBuffer;
 	W3DPropBuffer *m_propBuffer;
 };
 
 void BfmeBaseHeightMapRenderObjClass::removeTreesAndPropsForConstruction(
 	const Coord3D *pos, const GeometryInfo &geom, float angle)
 {
-	if (m_treeBuffer)
-		m_treeBuffer->removeTreesForConstruction(pos, geom, angle);
+	if (m_shrubBuffer)
+		m_shrubBuffer->removeTreesForConstruction(pos, geom, angle);
 	if (m_propBuffer)
 		m_propBuffer->removePropsForConstruction(pos, geom, angle);
 }

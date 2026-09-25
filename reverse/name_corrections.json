@@ -4218,5 +4218,255 @@
   "after_sha256": "fd0862c4ce39740031dc25592779dbe59dee0703a6f331684a46aeab62864bba",
   "evidence": "docs/naming_evidence.md",
   "reason": "arg1 of gogoGadgetRadioButton at 0x0047DEC0 is not a GameWindow: the body reads [arg1+0x30] as a WinInstanceData pointer and passes [arg1+0] to winSetOwner while retail GameWindow embeds WinInstanceData at +0x30 (winGetInstanceData 0x00478C60 is lea eax [ecx+0x30]); the creation descriptor type is unproven so it keeps the address-derived Rva0047DEC0Desc."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "old_name": "BaseHeightMapResetBuffer",
+  "new_name": "Rva006DED60RoadBuffer",
+  "before_sha256": "545d1915e1cb4f9c816ee77ad34481ae2fb6a1f6e841a041f32556d94f8a2597",
+  "after_sha256": "2001f8e259c6415c10615441b0ba2952ff5b6eeae2b088b349752571f74ef0e7",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "BaseHeightMapResetBuffer was one pseudo-class for seven terrain children; this one is the +0x30B4 child built by 0x006DED60, whose class keeps its existing address-derived name."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "old_name": "BaseHeightMapResetGuard",
+  "new_name": "Rva006DED60RoadBuffer",
+  "before_sha256": "545d1915e1cb4f9c816ee77ad34481ae2fb6a1f6e841a041f32556d94f8a2597",
+  "after_sha256": "2001f8e259c6415c10615441b0ba2952ff5b6eeae2b088b349752571f74ef0e7",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "Falsely paired: BaseHeightMapResetGuard moved with clear3094 into W3DTreeBuffer_clearAllTrees.cpp as BfmeRadarResetGuard; Rva006DED60RoadBuffer is an unrelated new declaration."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "old_name": "Release_Ref",
+  "new_name": "rva006F9050",
+  "before_sha256": "545d1915e1cb4f9c816ee77ad34481ae2fb6a1f6e841a041f32556d94f8a2597",
+  "after_sha256": "2001f8e259c6415c10615441b0ba2952ff5b6eeae2b088b349752571f74ef0e7",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "Falsely paired: BFMETextureRelease::Release_Ref left BaseHeightMap.cpp with the bodies that call it; rva006F9050 is the floor buffer method reset now calls."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "old_name": "clear30A4",
+  "new_name": "rva006F9050",
+  "before_sha256": "545d1915e1cb4f9c816ee77ad34481ae2fb6a1f6e841a041f32556d94f8a2597",
+  "after_sha256": "2001f8e259c6415c10615441b0ba2952ff5b6eeae2b088b349752571f74ef0e7",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "The +0x30A4 reset body is a W3DFloorBuffer method (constructor 0x006F92D0 installs vtable 0x01120360 whose name getter returns W3DFloorBuffer); clear30A4 named it by the terrain offset and its real method name is unproven, so it keeps its address."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "old_name": "clear30B4",
+  "new_name": "rva006DEB70",
+  "before_sha256": "545d1915e1cb4f9c816ee77ad34481ae2fb6a1f6e841a041f32556d94f8a2597",
+  "after_sha256": "2001f8e259c6415c10615441b0ba2952ff5b6eeae2b088b349752571f74ef0e7",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "The +0x30B4 reset body belongs to the class built by 0x006DED60; clear30B4 named it by the terrain offset and its real method name is unproven, so it keeps its address."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DFloorBuffer_rva006F9050.cpp",
+  "old_name": "clear30A4",
+  "new_name": "rva006F9050",
+  "before_sha256": "545d1915e1cb4f9c816ee77ad34481ae2fb6a1f6e841a041f32556d94f8a2597",
+  "after_sha256": "47987d9c420a4238bf94b77176f07d92a63f32b09a2f0744d257324087a2a313",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "The +0x30A4 reset body is a W3DFloorBuffer method (constructor 0x006F92D0 installs vtable 0x01120360 whose name getter returns W3DFloorBuffer); clear30A4 named it by the terrain offset and its real method name is unproven, so it keeps its address."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShrubBuffer_clearAllTrees.cpp",
+  "old_name": "BaseHeightMapResetList",
+  "new_name": "Rva0094D1E0List",
+  "before_sha256": "545d1915e1cb4f9c816ee77ad34481ae2fb6a1f6e841a041f32556d94f8a2597",
+  "after_sha256": "5483dba02f82d8ebcda984784ec6b526bd2b73c9a28625f11b3f9c56bfe26e6a",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "BaseHeightMapResetList is not a BaseHeightMap type: 0x0094CE50 clears the list members of both tree buffers, which the shrub constructor builds with 0x0094D1E0, already pinned as Rva0094D1E0List."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMap.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBuffer_clearAllTrees.cpp",
+  "old_name": "BaseHeightMapResetList",
+  "new_name": "Rva0094D1E0List",
+  "before_sha256": "545d1915e1cb4f9c816ee77ad34481ae2fb6a1f6e841a041f32556d94f8a2597",
+  "after_sha256": "f8e15488dbfd59fd7791218e15b82299a1a197e9f29ceadeb65bfac9db12c636",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "BaseHeightMapResetList is not a BaseHeightMap type: 0x0094CE50 clears the list members of both tree buffers, which the shrub constructor builds with 0x0094D1E0, already pinned as Rva0094D1E0List."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapResetBuffer_clear30B4.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva006DED60RoadBuffer_rva006DEB70.cpp",
+  "old_name": "BaseHeightMapResetBuffer",
+  "new_name": "Rva006DED60RoadBuffer",
+  "before_sha256": "5a294131178493a97b43d0c43f8f6612395795e026bc5ad6b967cf9e02df2cd8",
+  "after_sha256": "4c1e4329882671135d65325acce2a2bd2116f7d07394e0d1d78fe093a3276939",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "BaseHeightMapResetBuffer was one pseudo-class for seven terrain children; this one is the +0x30B4 child built by 0x006DED60, whose class keeps its existing address-derived name."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapResetBuffer_clear30B4.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva006DED60RoadBuffer_rva006DEB70.cpp",
+  "old_name": "clear30B4",
+  "new_name": "rva006DEB70",
+  "before_sha256": "5a294131178493a97b43d0c43f8f6612395795e026bc5ad6b967cf9e02df2cd8",
+  "after_sha256": "4c1e4329882671135d65325acce2a2bd2116f7d07394e0d1d78fe093a3276939",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "The +0x30B4 reset body belongs to the class built by 0x006DED60; clear30B4 named it by the terrain offset and its real method name is unproven, so it keeps its address."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapResetListClear.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva0094D1E0List_clear.cpp",
+  "old_name": "BaseHeightMapResetList",
+  "new_name": "Rva0094D1E0List",
+  "before_sha256": "525fb1b033fe7f9032190c4d921fca4c861848efd93212f49f486f6dad0540c0",
+  "after_sha256": "9f52b43da6b6f432931d12f8b9f2ecdd5fa5dece3d0ef2c8202e924ed0f152b2",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "BaseHeightMapResetList is not a BaseHeightMap type: 0x0094CE50 clears the list members of both tree buffers, which the shrub constructor builds with 0x0094D1E0, already pinned as Rva0094D1E0List."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapResetListClear.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva0094D1E0List_clear.cpp",
+  "old_name": "BaseHeightMapResetNode",
+  "new_name": "Rva0094D1E0ListNode",
+  "before_sha256": "525fb1b033fe7f9032190c4d921fca4c861848efd93212f49f486f6dad0540c0",
+  "after_sha256": "9f52b43da6b6f432931d12f8b9f2ecdd5fa5dece3d0ef2c8202e924ed0f152b2",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "TU-local typedef of the STLport tree inside the list cleared by 0x0094CE50; it follows the class rename from BaseHeightMapResetList to Rva0094D1E0List and appears in no emitted symbol."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapResetListClear.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva0094D1E0List_clear.cpp",
+  "old_name": "BaseHeightMapResetPair",
+  "new_name": "Rva0094D1E0ListPair",
+  "before_sha256": "525fb1b033fe7f9032190c4d921fca4c861848efd93212f49f486f6dad0540c0",
+  "after_sha256": "9f52b43da6b6f432931d12f8b9f2ecdd5fa5dece3d0ef2c8202e924ed0f152b2",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "TU-local typedef of the STLport tree inside the list cleared by 0x0094CE50; it follows the class rename from BaseHeightMapResetList to Rva0094D1E0List and appears in no emitted symbol."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/BaseHeightMapResetListClear.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva0094D1E0List_clear.cpp",
+  "old_name": "BaseHeightMapResetTree",
+  "new_name": "Rva0094D1E0ListTree",
+  "before_sha256": "525fb1b033fe7f9032190c4d921fca4c861848efd93212f49f486f6dad0540c0",
+  "after_sha256": "9f52b43da6b6f432931d12f8b9f2ecdd5fa5dece3d0ef2c8202e924ed0f152b2",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "TU-local typedef of the STLport tree inside the list cleared by 0x0094CE50; it follows the class rename from BaseHeightMapResetList to Rva0094D1E0List and appears in no emitted symbol."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva006DED60RoadBufferConstructor.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva006DED60RoadBufferConstructor.cpp",
+  "old_name": "freeRoadBuffers",
+  "new_name": "rva006DEB70",
+  "before_sha256": "c129b23b709a7dc14fd5de98706add6e0af9db69ee84703e63d99a13a8d3d943",
+  "after_sha256": "b6d14f37602aefd75f5485ffa55007653713c9692bcdb6d43ab3109b89ef1039",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "freeRoadBuffers named 0x006DEB70 by analogy only: the body clears ten road sets and releases ten references, which matches neither Zero Hour's freeRoadBuffers (it deletes two arrays) nor its clearAllRoads, so the body keeps its address."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva006DED60RoadBufferConstructor.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva006DED60RoadBuffer_rva006DEB70.cpp",
+  "old_name": "allocateRoadBuffers",
+  "new_name": "rva006DEB70",
+  "before_sha256": "c129b23b709a7dc14fd5de98706add6e0af9db69ee84703e63d99a13a8d3d943",
+  "after_sha256": "4c1e4329882671135d65325acce2a2bd2116f7d07394e0d1d78fe093a3276939",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "Falsely paired by the class address 0x006DED60 in both file names; allocateRoadBuffers is unchanged in the constructor file."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva006F92D0Init.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DFloorBufferConstructor.cpp",
+  "old_name": "DX8IndexBufferClass",
+  "new_name": "Rva006F92D0List",
+  "before_sha256": "6f7712797b42ca080646f83dd248964f4f9f354d356e8da1c2c9917aecd9b7da",
+  "after_sha256": "883ddbf664733f77f27dadefb4222412e4472c671021a06e463bfb15d2988d8c",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "Falsely paired: the init TU moved unchanged to W3DFloorBuffer_init.cpp; the old file name only shares the class address 0x006F92D0 with the constructor file, whose declarations are unrelated."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva006F92D0Init.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DFloorBufferConstructor.cpp",
+  "old_name": "SurfaceResource",
+  "new_name": "Rva006F92D0Base",
+  "before_sha256": "6f7712797b42ca080646f83dd248964f4f9f354d356e8da1c2c9917aecd9b7da",
+  "after_sha256": "883ddbf664733f77f27dadefb4222412e4472c671021a06e463bfb15d2988d8c",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "Falsely paired: the init TU moved unchanged to W3DFloorBuffer_init.cpp; the old file name only shares the class address 0x006F92D0 with the constructor file, whose declarations are unrelated."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva006F92D0Init.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DFloorBufferConstructor.cpp",
+  "old_name": "m_body",
+  "new_name": "m_pad",
+  "before_sha256": "6f7712797b42ca080646f83dd248964f4f9f354d356e8da1c2c9917aecd9b7da",
+  "after_sha256": "883ddbf664733f77f27dadefb4222412e4472c671021a06e463bfb15d2988d8c",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "Falsely paired: the init TU moved unchanged to W3DFloorBuffer_init.cpp; the old file name only shares the class address 0x006F92D0 with the constructor file, whose declarations are unrelated."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva006F92D0Init.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DFloorBufferConstructor.cpp",
+  "old_name": "m_p",
+  "new_name": "m_value",
+  "before_sha256": "6f7712797b42ca080646f83dd248964f4f9f354d356e8da1c2c9917aecd9b7da",
+  "after_sha256": "883ddbf664733f77f27dadefb4222412e4472c671021a06e463bfb15d2988d8c",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "Falsely paired: the init TU moved unchanged to W3DFloorBuffer_init.cpp; the old file name only shares the class address 0x006F92D0 with the constructor file, whose declarations are unrelated."
+ },
+ {
+  "old_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Rva006F92D0Init.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DFloorBufferConstructor.cpp",
+  "old_name": "slot00",
+  "new_name": "Rva006F92D0Base",
+  "before_sha256": "6f7712797b42ca080646f83dd248964f4f9f354d356e8da1c2c9917aecd9b7da",
+  "after_sha256": "883ddbf664733f77f27dadefb4222412e4472c671021a06e463bfb15d2988d8c",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "Falsely paired: the init TU moved unchanged to W3DFloorBuffer_init.cpp; the old file name only shares the class address 0x006F92D0 with the constructor file, whose declarations are unrelated."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "BaseHeightMapResetBuffer",
+  "new_name": "Rva006DED60RoadBuffer",
+  "before_sha256": "916f5dd0b2ddaf44fd84be9cf82e0464d319127ead43dda372a3f51cbd214a8f",
+  "after_sha256": "414c240428f46649a116a635f93f3ffcd2821886aeefa719c2484335a1a1d2d3",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "BaseHeightMapResetBuffer was one pseudo-class for seven terrain children; this one is the +0x30B4 child built by 0x006DED60, whose class keeps its existing address-derived name."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "clear30B4",
+  "new_name": "rva006DEB70",
+  "before_sha256": "916f5dd0b2ddaf44fd84be9cf82e0464d319127ead43dda372a3f51cbd214a8f",
+  "after_sha256": "414c240428f46649a116a635f93f3ffcd2821886aeefa719c2484335a1a1d2d3",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "The +0x30B4 reset body belongs to the class built by 0x006DED60; clear30B4 named it by the terrain offset and its real method name is unproven, so it keeps its address."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "clear30A4",
+  "new_name": "rva006F9050",
+  "before_sha256": "f0a9590d07fb287119a40f974d09e9b9165576b566550ce9d2dd97566d0c203f",
+  "after_sha256": "6b95289e080dca01599c2a0125d84ee483dff679864ff767badc8dcdb3438900",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "The +0x30A4 reset body is a W3DFloorBuffer method (constructor 0x006F92D0 installs vtable 0x01120360 whose name getter returns W3DFloorBuffer); clear30A4 named it by the terrain offset and its real method name is unproven, so it keeps its address."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "BaseHeightMapResetList",
+  "new_name": "Rva0094D1E0List",
+  "before_sha256": "fbdd8ce4aabd87ff45f341ff75f154b1baf7a7c707847ac32521c4e06939735a",
+  "after_sha256": "c779b3178c1a003b92fd16e472750f13b6a65cbb75b2ec1fad0a35e31fd0a55c",
+  "evidence": "reverse/identity_evidence/00720820.md",
+  "reason": "BaseHeightMapResetList is not a BaseHeightMap type: 0x0094CE50 clears the list members of both tree buffers, which the shrub constructor builds with 0x0094D1E0, already pinned as Rva0094D1E0List."
  }
 ]

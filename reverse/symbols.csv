@@ -3915,7 +3915,7 @@ name,address,notes
 ??0T4B005EA0D0@@QAE@ABV0@@Z,0x005EA0D0,T4 lane: second base copy ctor called by the ctor at 0x005EA080; address-derived name; identity not recovered
 ??0T4B005EA240@@QAE@ABV0@@Z,0x005EA240,T4 lane: second base copy ctor called by the ctor at 0x005EA1F0; address-derived name; identity not recovered
 ??0TC_Base@@QAE@PAVThing@@PBVModuleData@@@Z,0x00036E49,TunnelContain ctor base call; ILT thunk for OpenContain ctor (body 0x002277A0)
-??0TTreeType@@QAE@XZ,0x00012148,W3DTreeBuffer 64-element m_treeTypes constructor ILT
+??0TTreeType@@QAE@XZ,0x00012148,W3DShrubBuffer 64-element m_treeTypes constructor ILT
 ??0TU_DeepBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,ToppleUpdate constructor calls the shared ObjectModule constructor ILT
 ??0TaintSpecialPower@@QAE@PAVThing@@PBVModuleData@@@Z,0x00006014,link thunk to the TaintSpecialPower constructor; named from the ModuleFactory registration that pairs "TaintSpecialPower" with factory 0x00120700
 ??0TaintSpecialPowerModuleData@@QAE@XZ,0x00021012,module-data constructor called by TaintSpecialPower::friend_newModuleData at 0x00120780
@@ -9329,7 +9329,7 @@ name,address,notes
 ??1Rva006DED60RoadRef@@QAE@XZ,0x0002266F,first road-buffer array element destructor used by retail EH vector construction
 ??1Rva006DED60RoadSet@@QAE@XZ,0x00029B9F,road-buffer set element destructor used by retail EH vector construction
 ??1Rva006F8340String@@QAE@XZ,0x00887940,StringBase dtor
-??1Rva006F92D0@@UAE@XZ,0x006F91F0,address-derived complete destructor for the unnamed W3D resource
+??1W3DFloorBuffer@@UAE@XZ,0x006F91F0,W3DFloorBuffer complete destructor
 ??1Rva00739C70State@@QAE@XZ,0x00739F00,body pin for the address-derived 20-byte W3DVideoBuffer state destructor proven by matched texture and surface cleanup; campaign=luna36h-20260907;lane=particle;model=gpt-5.6-sol-ultra
 ??1Rva00740BC0Elem@@QAE@XZ,0x0001DF2A,element destructor of the 0x14-byte arrays destroyed at 0x00740BC0
 ??1Rva00740BC0Member@@QAE@XZ,0x000063DE,ILT thunk to the Rva00740BC0 two-array destructor called by 0x007461B0
@@ -9719,7 +9719,7 @@ name,address,notes
 ??1T2Vb0084B580@@UAE@XZ,0x0084B580,T2 lane: same body as ??1Rva0084B580 in R4VirtualBaseDestructors.cpp
 ??1TAiData@@UAE@XZ,0x00004499,exact constructor 0x0014B150 and dedicated vtable 0x01095754 establish the complete destructor thunk called by wrapper 0x0014AD90
 ??1TBuff@@MAE@XZ,0x0003AF5D,vtable 0x00D1E134 slots name TBuff; protected complete destructor called by wrapper 0x006DB540
-??1TTreeType@@QAE@XZ,0x00032CF9,W3DTreeBuffer 64-element m_treeTypes destructor ILT
+??1TTreeType@@QAE@XZ,0x00032CF9,W3DShrubBuffer 64-element m_treeTypes destructor ILT
 ??1TaintSpecialPower@@MAE@XZ,0x00020202,destructor ILT to 0x0026B6A0
 ??1TaintSpecialPowerModuleData@@UAE@XZ,0x0000A187,public complete destructor ILT called by scalar wrapper 0x0026B8B0; exact constructor 0x0026B870 installs dedicated vtable 0x010B8550
 ??1TeamFactory@@UAE@XZ,0x00013502,ILT to the matched TeamFactory destructor at RVA 0x000F74C0
@@ -10771,7 +10771,7 @@ name,address,notes
 ??_7Rva006609D0@@6B@,0x0111A1D0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
 ??_7Rva006609D0Base@@6B@,0x0111A138,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006609D0 calls; autopin
 ??_7Rva006BDB50@@6B@,0x0111CFE0,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006BDB50 calls; autopin
-??_7Rva006F92D0@@6B@,0x01120360,address-derived vtable for the unnamed W3D resource at 0x006F92D0
+??_7W3DFloorBuffer@@6B@,0x01120360,W3DFloorBuffer vtable; slot 2 returns the W3DFloorBuffer literal at 0x01120374
 ??_7Rva00740AE0@@6B@,0x0112171C,derived vftable stored by the 0x00740AE0 constructor
 ??_7Rva00740AE0Base@@6B@,0x010C7450,base vftable stored by the 0x00740AE0 constructor
 ??_7Rva00745B10Owner@@6B@,0x011217A0,primary vftable of the 0x2450-byte owner (ctor 0x00745B10 dtor 0x007461B0)
@@ -11389,7 +11389,7 @@ name,address,notes
 ??_GRva003B6680@@UAEPAXI@Z,0x0000993F,"Full30B deleting wrapper exact, tableCEC850 contains40993F; COFF E weak alias resolves this G body"
 ??_GRva00490350Derived@@UAEPAXI@Z,0x000421C7,dedicated vtable 0x010F9AE4 slot zero routes through this ILT to scalar wrapper 0x00491030
 ??_GRva00641C60Queue@@UAEPAXI@Z,0x0001E3DF,vtable 0x01119380 slot zero routes through this ILT to scalar wrapper 0x00642410
-??_GRva006F92D0@@UAEPAXI@Z,0x006F92A0,address-derived scalar deleting destructor for the unnamed W3D resource
+??_GW3DFloorBuffer@@UAEPAXI@Z,0x006F92A0,W3DFloorBuffer scalar deleting destructor
 ??_GRva007A1230ArrayOwner@@UAEPAXI@Z,0x000099B2,one-slot vtable 0x01127EB4 routes through this ILT to scalar wrapper 0x007A2490
 ??_GSalvageCrateCollide@@MAEPAXI@Z,0x0003C90C,primary class vtable slot zero ILT to 0x00218190
 ??_GScaleUpTransition@@MAEPAXI@Z,0x00001D34,vtable 0x00D0CAF4 slot zero routes through this ILT to scalar wrapper 0x0059F250
@@ -79352,13 +79352,11 @@ name,address,notes
 ?cleanup@NestedAt2C@@QAEXXZ,0x0003DE97,member cleanup at +0x2C of Gen0035B3A0 via ILT thunk
 ?cleanup@Rva00785FD0Item@@QAEXXZ,0x00049062,ILT to claimed 0x00785300 queue-element cleanup
 ?cleanupRva0003A4AE@Gen0003A4AE@@QAEXXZ,0x0003A4AE,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00470360 calls; autopin
-?clear3094@BaseHeightMapResetBuffer@@QAEXXZ,0x0000DDD7,BaseHeightMap reset call for BFME buffer at this+0x3094
-?clear3098@BaseHeightMapResetBuffer@@QAEXXZ,0x00045D72,BaseHeightMap reset call for BFME buffer at this+0x3098
-?clear30A0@BaseHeightMapResetBuffer@@QAEXXZ,0x000404D0,BaseHeightMap reset call for BFME buffer at this+0x30A0
-?clear30A4@BaseHeightMapResetBuffer@@QAEXXZ,0x0003A5E4,BaseHeightMap reset call for BFME buffer at this+0x30A4
-?clear30AC@BaseHeightMapResetBuffer@@QAEXXZ,0x000336F9,BaseHeightMap reset call for BFME buffer at this+0x30AC
-?clear30B0@BaseHeightMapResetBuffer@@QAEXXZ,0x00003E59,BaseHeightMap reset call for BFME buffer at this+0x30B0
-?clear30B4@BaseHeightMapResetBuffer@@QAEXXZ,0x0003697B,BaseHeightMap reset call for BFME buffer at this+0x30B4
+?clearAllTrees@W3DTreeBuffer@@QAEXXZ,0x0000DDD7,ILT to 0x00732E70; terrain reset clears the +0x3094 tree buffer through it
+?clearAllTrees@W3DShrubBuffer@@QAEXXZ,0x00045D72,ILT to 0x0071C7E0; terrain reset clears the +0x3098 shrub buffer through it
+?clearAllBibs@W3DBibBuffer@@QAEXXZ,0x000404D0,ILT to 0x006D6AD0; terrain reset clears the +0x30A0 bib buffer through it
+?rva006F9050@W3DFloorBuffer@@QAEXXZ,0x0003A5E4,ILT to 0x006F9050; terrain reset clears the +0x30A4 floor buffer through it
+?rva006DEB70@Rva006DED60RoadBuffer@@QAEXXZ,0x0003697B,ILT to 0x006DEB70; terrain reset (+0x30B4) and the road-buffer constructor call it
 ?clear@?$StringBase@D@@QAEXXZ,0x00887940,retail StringBase<char>::clear body (folds with releaseBuffer); SubsystemLegendEntry ctor calls it directly not via the 0x000680C0 thunk
 ?clear@?$_List_base@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@QAEXXZ,0x0002FB8A,ILT thunk to already-matched body 0x000CD120; TunnelTracker::onTunnelDestroyed m_containList.clear() call
 ?clear@?$_List_base@UBfmeFontEntry@@V?$allocator@UBfmeFontEntry@@@_STL@@@_STL@@QAEXXZ,0x0001A8AC,GlobalLanguage local-font list clear through retail incremental-link thunk
@@ -79483,7 +79481,7 @@ name,address,notes
 ?clear@AptPalantirRegion@@QAEXXZ,0x00047B6D,AptPalantir immediate-hide cleanup for the subobject at +0x68
 ?clear@AptPalantirStore@@QAEXXZ,0x0002F801,AptPalantir immediate-hide cleanup for the subobject at +0x154
 ?clear@AsciiString@@QAEXXZ,0x00887940,retail AsciiString::clear body called from DictPair::copyFrom
-?clear@BaseHeightMapResetList@@QAEX_N@Z,0x0094CE50,BaseHeightMap reset list cleanup helper at +0xC0 and +0xE8
+?clear@Rva0094D1E0List@@QAEX_N@Z,0x0094CE50,clear of the list members at +0xC0/+0xE8 (tree buffer) and +0x1458/+0x1480 (shrub buffer)
 ?clear@BfmeC994@@QAEXXZ,0x007E86C0,FESL transaction sender clears its fixed-buffer message after submission
 ?clear@BfmeDtorMemberJ@@AAEXXZ,0x009D0E20,Open-BFME5 tree clear called by the 0x009CF1E0 member destructor
 ?clear@BfmeLegendString@@QAEXXZ,0x00887940,SubsystemLegend.cpp AsciiString stand-in clear(); retail AsciiString::clear body
@@ -80774,7 +80772,6 @@ name,address,notes
 ?freeListOfMapObjects@WorldHeightMap@@SAXXZ,0x00047127,Open-BFME5 ILT fronts unclaimed 38-byte body 0x00746E90; called by W3DTerrainLogic init/reset
 ?freeMapResources@HeightMapRenderObjClass@@UAEHXZ,0x000225D4,HeightMapRenderObjClass destructor call target through retail ILT
 ?freeMapResources@W3DStatusCircle@@QAEHXZ,0x00014BC3,derived-ICF
-?freeRoadBuffers@Rva006DED60RoadBuffer@@QAEXXZ,0x0003697B,road-buffer constructor cleanup call through the retail ILT
 ?freeScorchBuffers@BaseHeightMapRenderObjClass@@AAEXXZ,0x00040728,incremental thunk called by freeMapResources
 ?freeSockets@NameKeyGenerator@@AAEXXZ,0x000226E7,pinharvest x4 (thunk)
 ?freeSockets@Rva0008FE00Owner@@AAEXXZ,0x000226E7,Open-BFME5 near-twin sibling of NameKeyGenerator::freeSockets; reuses the same pinned 0x226E7 callee
@@ -82479,7 +82476,7 @@ name,address,notes
 ?get@Rva0003DAA5LocoSpeedIlt@@QAEMXZ,0x0003DAA5,decoded locomotor speed helper ABI uses nonconst this and returns Real through the target ILT
 ?get@Rva0007F560@@QAE_NXZ,0x0001B74D,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x00092D70 calls; autopin
 ?get@Rva003D4C50@@QAE_NXZ,0x00024FAA,byte-return alias of the matched guarded bitfield getter body at 0x003D4C50; the obstacle callback at 0x003DEBB0 tests only al so the return has to be byte-typed
-?get@Rva006F92D0@@QAEPADXZ,0x006F9290,address-derived return-address slot from vtable 0x01120360
+?get@W3DFloorBuffer@@QAEPADXZ,0x006F9290,W3DFloorBuffer name getter; slot 2 of vtable 0x01120360
 ?get@Rva007EA650FieldAddress@@QAEPADXZ,0x007EA650,address-derived FESL owner field at +0x30
 ?get@Rva007EA690FieldAddress@@QAEPADXZ,0x007EA690,address-derived FESL owner field at +0x50
 ?get@Rva007EA6A0FieldAddress@@QAEPADXZ,0x007EA6A0,address-derived FESL owner field at +0x70
@@ -84121,7 +84118,7 @@ name,address,notes
 ?init@Player@@QAEXPBVPlayerTemplate@@@Z,0x00020AEA,
 ?init@Rva006AEE00@@AAEXXZ,0x0004744C,ILT thunk to 0x006AECE0 called from 0x006AEE00
 ?init@Rva006D6050@@QAEXHHHHHH@Z,0x0090DBC0,6-arg initializer called by Rva006D6050 ctor
-?init@Rva006F92D0@@QAEXXZ,0x000129EF,address-derived resource initializer thunk
+?init@W3DFloorBuffer@@QAEXXZ,0x000129EF,W3DFloorBuffer initializer thunk
 ?init@ServiceHubImpl@@QAEXXZ,0x007EA9C0,FESL NetConn init after hub ctor
 ?init@SmudgeManager@@UAEXXZ,0x0003D0BE,W3DSmudgeManager init base call ILT
 ?init@SpawnPointInitializeBonePositionsShim@@QAEXXZ,0x002D18F0,SpawnPointProductionExitUpdate initializeBonePositions incremental-link thunk target through a TU-local forwarding shim
@@ -85035,7 +85032,7 @@ name,address,notes
 ?notifyRva001C89E0@BFMEGameLogicObjectSelectionDeselectShim@@QAEXPAVPlayer@@@Z,0x000380CD,GameLogic::deselectObject tail call at 0x00382FEC passes Object as this and Player as its only argument; retail body 0x001C89E0 clears the Object selection bit and updates drawable, AI, and contain interfaces
 ?notifyScriptEngine@SpecialPowerCompletionDie@@QAEXXZ,0x00017981,Open-BFME5 ILT from zh_sweep packet 00256070
 ?notifyShroudChanged@BaseHeightMapRenderObjClass@@QAEXXZ,0x00036F43,W3DDisplay::setShroudLevel terrain notification target read from retail REL32
-?stampShroudVisible@BaseHeightMapResetBuffer@@QAEXXZ,0x00005371,ILT to 0x0071CD20; called for the +0x3098 terrain child by BaseHeightMapRenderObjClass::notifyShroudChanged
+?stampShroudVisible@W3DShrubBuffer@@QAEXXZ,0x00005371,ILT to 0x0071CD20; called for the +0x3098 shrub buffer by BaseHeightMapRenderObjClass::notifyShroudChanged
 ?notifyShroudChanged@W3DPropBuffer@@QAEXXZ,0x00028B55,ILT to 0x007024E0; called for the +0x309C prop buffer by BaseHeightMapRenderObjClass::notifyShroudChanged
 ?notifyState@@YGXH@Z,0x0000DBF2,address-derived stdcall ILT recovered from 0x00569BA0
 ?notifyStatus@BfmeRvaBA00Object@@QAEXXZ,0x0002191D,assigned-body helper for Rva0024BA00
@@ -85645,10 +85642,10 @@ name,address,notes
 ?removeTerrainBibHighlighting@BaseHeightMapRenderObjClass@@QAEXXZ,0x0000CC8E,pinharvest x1 (thunk)
 ?removeTree@W3DTreeBuffer@@QAEXW4DrawableID@@@Z,0x0003AC60
 ?removeTreesAndPropsForConstruction@BaseHeightMapRenderObjClass@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z,0x0001A492,pinharvest x1 (thunk)
-?removeTreesForConstruction@W3DTreeBuffer@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z,0x000318FE,incremental thunk used by BaseHeightMap construction clearing
+?removeTreesForConstruction@W3DShrubBuffer@@QAEXPBUCoord3D@@ABVGeometryInfo@@M@Z,0x000318FE,ILT to 0x00721F40; the terrain calls it on the +0x3098 shrub buffer
 ?render@BaseHeightMapRenderTreesShim@@QAEXPAVCameraClass@@@Z,0x006CD990,BaseHeightMapRenderObjClass renderTrees incremental-link thunk target through a TU-local forwarding shim
 ?render@BfmeShadowBufferEntry@@QAEXPAXG0PAG@Z,0x0003D253,render buffer entry helper ILT
-?render@Rva006F92D0@@QAEXXZ,0x006F9CD0,address-derived render slot from vtable 0x01120360
+?render@W3DFloorBuffer@@QAEXXZ,0x006F9CD0,W3DFloorBuffer render slot from vtable 0x01120360
 ?renderAsQuads@W3DSnowManager@@QAEXAAVRenderInfoClass@@HHHH@Z,0x00724A20,Full2388 RET20 thiscall ends725374 not truncated inventory2360; ILT499B8 from render725710; upstream camera-oriented quad offsets UVs dynamic vertices and indexed batching; same owner resource layout as matched ReAcquireResources723FB0
 ?renderBuffer@BfmeVolumetricShadowBufferOwner@@QAEXXZ,0x000465C9,render buffer helper ILT
 ?renderBuffer@W3DVolumetricShadow@@QAEXXZ,0x000465C9,render helper ILT
@@ -85874,7 +85871,7 @@ name,address,notes
 ?run@Rva00526660Body@@QAEXHH@Z,0x00526660,opaque forwarding target from retail ILT 0x0001C8D2; body identity unresolved
 ?run@Rva00591560Resource@@QAEXXZ,0x00011900,address-derived resource action thunk called by the 0x00591560 callback
 ?run@Rva00694570@@QAEXXZ,0x000279A8,Open-BFME5 ILT thunk b_00694570
-?run@Rva006F92D0@@QAEXXZ,0x006F75F0,address-derived run slot from vtable 0x01120360
+?run@W3DFloorBuffer@@QAEXXZ,0x006F75F0,W3DFloorBuffer run slot from vtable 0x01120360
 ?run@Rva007EB6C0Cleanup@@QAEXXZ,0x007EB6C0,__thiscall callee address decoded from the retail REL32 call site; name is address-derived
 ?run@Rva007FA650Cleanup@@QAEXXZ,0x007FA650,__thiscall callee address decoded from the retail REL32 call site; name is address-derived
 ?run@Rva008A25C0Object@@QAEXPAX@Z,0x008A25C0,address-derived thiscall target used by BfmeSubVBW::bfmeDtorVBW
@@ -86981,7 +86978,7 @@ name,address,notes
 ?updateLighting@W3DRoadBuffer@@QAEXXZ,0x000109A1,incremental thunk used by BaseHeightMap setTimeOfDay
 ?updateLights@@YAXMPBUTerrainLighting@@PAPAVLightClass@@@Z,0x006E9760,Parent full372B through6E98D3 confirms EAX lighting EDX light-array and stack scale; four null-guarded lights zero ambient/specular and scaled diffuse; scalar-first TU-local compiler ABI view of existing matched updateLights; calls6E99D7 and6E99E5
 ?updateMPBattleHonors@@YAXAAHAAVPSPlayerStats@@@Z,0x004E59E0,ZH updateMPBattleHonors(Int& honors PSPlayerStats& stats) with stats in EAX (LTCG custom convention) and honors on the stack: winsInARow(+0x188)>=3/10/25 -> 0x2/0x8/0x10 (ZH only STREAK at 5); gamesInRowWithLastGeneral(+0x17c)>=20 && localPlayer side America/China/GLA -> 0x20/0x40/0x200; getTotalUnitsBuilt(VEHICLE !AIRCRAFT)>=50 -> 0x80 (BATTLE_TANK); (AIRCRAFT)>=20 -> 0x100 (AIR_WING); TheGameLogic frame/300<5 -> 0x4000 BLITZ5 frame/5/60<10 -> 0x8000 BLITZ10; no apocalypse/global-general arms; sole caller populatePlayerInfo 0x004E75F1 gated on !crc !discon !isLocalAlliedDefeat getEndFrame
-?updateMacroTexture@BaseHeightMapResetTerrain@@QAEXVBaseHeightMapResetAsciiString@@_N@Z,0x00003CE2,BaseHeightMap reset two-argument macro-texture ILT thunk
+?updateMacroTexture@BaseHeightMapResetTerrain@@QAEXVBaseHeightMapResetAsciiString@@_N@Z,0x00003CE2,ILT to 0x006CB8D0; TU-local spelling in BaseHeightMap.cpp reset() of BaseHeightMapRenderObjClass::updateMacroTexture with a force flag
 ?updateMacroTexture@Rva006D23C0Owner@@QAEXVBaseHeightMapResetAsciiString@@_N@Z,0x006CB8D0,refresh6CCDB0 same receiver ECX; ILT3CE2 ->6CB8D0; macro texture name3070 and force306C match existing body; campaign=luna36h-20260907;lane=shaders
 ?updateMapOverrides@WaterRenderObjClass@@AAEXXZ,0x00028B8C,retail ILT called by WaterRenderObjClass reset and forwarding to 0x007A1330
 ?updateMapStartSpots@@YAXPAVGameInfo@@QAPAVGameWindow@@_N@Z,0x004559A0,Generals source signature and WOLDisplayGameOptions aligned three-argument call prove direct BFME body
