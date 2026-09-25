@@ -1,24 +1,48 @@
-// ?d_001b0e90@@YAXXZ
-// partial score=0.22 date=2026-09-22
+// ?Rva001B0E90Dispatch@@YGHPAVRva001B0E90Owner@@PAX@Z
+// partial score=0.2876 date=2026-09-25
+// ?Rva001B0E90Dispatch@@YGHPAVRva001B0E90Owner@@PAX@Z
 // cl: /DNDEBUG /MD /EHsc
-// Address-qualified reconstruction of retail 0x001B0E90.
 
 typedef int Int;
 
-class BFMERetailAsciiString
+template <typename T>
+class StringBase;
+
+template <>
+class StringBase<char>
+{
+	friend class BFMERetailAsciiString;
+
+private:
+	struct Header
+	{
+		int ref_count;
+		unsigned short length;
+		unsigned short capacity;
+		char data[1];
+	};
+
+	StringBase() : m_data(0) {}
+	StringBase(const char *text);
+	StringBase(const StringBase<char> &other);
+	~StringBase();
+	void releaseBuffer();
+	Header *m_data;
+};
+
+class BFMERetailAsciiString : private StringBase<char>
 {
 public:
-	BFMERetailAsciiString() : m_data(0) {}
-	BFMERetailAsciiString(const char *text);
+	BFMERetailAsciiString() : StringBase<char>() {}
+	BFMERetailAsciiString(const char *text) : StringBase<char>(text) {}
+	BFMERetailAsciiString(const BFMERetailAsciiString &other)
+		: StringBase<char>(other) {}
 	~BFMERetailAsciiString() { releaseBuffer(); }
 	void __cdecl format(BFMERetailAsciiString format, ...);
-	void releaseBuffer();
 	const char *str() const
 	{
-		return m_data ? (const char *)m_data + 8 : (const char *)0x0107388B;
+		return m_data ? m_data->data : (const char *)0x0107388B;
 	}
-
-	void *m_data;
 };
 
 class Rva001B0E90EntryObject
@@ -48,8 +72,6 @@ struct Rva001B0E90Range
 {
 	Rva001B0E90Record *m_begin;
 	Rva001B0E90Record *m_end;
-	Rva001B0E90Record *begin() const { return m_begin; }
-	int size() const { return m_end - m_begin; }
 };
 
 class Rva001B0E90Owner
@@ -167,10 +189,11 @@ extern "C" Rva001B0E90TerrainVisual *g_bfmeTerrainVisual;
 
 Int __stdcall Rva001B0E90Dispatch(Rva001B0E90Owner *self, void *context)
 {
-	if (self->m_records.size() == 0)
-		goto warning;
-	if (self->m_records.begin()->m_object != 0)
-		goto success;
+	if ((int)(self->m_records.m_end - self->m_records.m_begin) != 0)
+	{
+		if (self->m_records.m_begin->m_object != 0)
+			goto success;
+	}
 
 warning:
 	{
@@ -181,9 +204,9 @@ warning:
 	}
 	return 0;
 
-success:
+	success:
 	{
-		void *result = self->m_records.begin()->m_object->slot28();
+		void *result = self->m_records.m_begin->m_object->slot28();
 		if (result == 0)
 		{
 			if (_bfme_debugReportingEnabled())
