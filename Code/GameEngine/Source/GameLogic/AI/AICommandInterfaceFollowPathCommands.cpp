@@ -103,8 +103,8 @@ public:
 	void aiFollowWaypointPathAsTeam(const Waypoint *waypoint, CommandSourceType commandSource);
 	void aiBfmeCommand33(const Waypoint *waypoint, CommandSourceType commandSource);
 	void aiBfmeCommand9FollowPath(const _STL::vector<Coord3D> *path, Object *ignoreObject, CommandSourceType commandSource);
-	void aiBfmeCommand36FollowPath(const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType commandSource);
-	void aiBfmeCommand37FollowPath(const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType commandSource);
+	void aiBfmeCommand36FollowPath(const _STL::vector<Coord3D> *path, Object *object, Object *otherObject, CommandSourceType commandSource);
+	void aiBfmeCommand37FollowPath(const _STL::vector<Coord3D> *path, Object *object, Object *otherObject, CommandSourceType commandSource);
 	void aiFollowExitProductionPath(const _STL::vector<Coord3D> *path, Object *ignoreObject, CommandSourceType commandSource);
 };
 
@@ -144,21 +144,21 @@ void AICommandInterface::aiBfmeCommand9FollowPath( const _STL::vector<Coord3D> *
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand36FollowPath( const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType commandSource )
+void AICommandInterface::aiBfmeCommand36FollowPath( const _STL::vector<Coord3D> *path, Object *object, Object *otherObject, CommandSourceType commandSource )
 {
 	AICommandParms parms(AICMD_BFME_36, commandSource);
 	parms.m_coords = *path;
-	parms.m_obj = obj;
-	*(Object **)&parms.m_pos.x = otherObj;
+	parms.m_obj = object;
+	*(Object **)&parms.m_pos.x = otherObject;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiBfmeCommand37FollowPath( const _STL::vector<Coord3D> *path, Object *obj, Object *otherObj, CommandSourceType commandSource )
+void AICommandInterface::aiBfmeCommand37FollowPath( const _STL::vector<Coord3D> *path, Object *object, Object *otherObject, CommandSourceType commandSource )
 {
 	AICommandParms parms(AICMD_BFME_37, commandSource);
 	parms.m_coords = *path;
-	parms.m_obj = obj;
-	*(Object **)&parms.m_pos.x = otherObj;
+	parms.m_obj = object;
+	*(Object **)&parms.m_pos.x = otherObject;
 	aiDoCommand(&parms);
 }
 
