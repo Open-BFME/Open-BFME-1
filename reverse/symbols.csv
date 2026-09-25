@@ -89040,3 +89040,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?transferAttributeStrings@BfmeOwnerCGF@@QAEXPAVXfer@@PAX@Z,0x0039E8D0,ABI from caller 003A01E0 +116/+122 through ILT1082F: ECX owner and stack Xfer/vector; native matched199B loader ignores ECX and RET8; loads strings via slots78/68
 ?rva006B0410@Rva006B0630Owner@@QAEXE@Z,0x006B0410,Body ABI: ECX audio owner and RET4; caller006B0630 +BD passes0 via ILT34626; independent006B1E60 passes one byte; body+172 forwards argument to MilesAudioManager::setHardwareAccelerated through ILT1F046
 ?d_0032b190@@YAXXZ,0x0032B190,Address-only compatibility for withdrawn dump; native Rva0032B190Condition body; dispatcher typed member cast and ILT00033EBF JMP prove target; no semantic identity claim
+?d_00323550@@YAXXZ,0x00323550,Address-only compatibility for withdrawn dump; native Rva00323550Condition body; dispatcher typed member cast and ILT0003CF74 JMP prove target; no semantic identity claim
