@@ -194,9 +194,10 @@ public:
 void AIGroup::computeIndividualDestination(Coord3D *individualDestination, const Coord3D *groupDestination,
 	Object *object, const Coord3D *groupCenter, Bool isFormation)
 {
-	const unsigned int flags = object->getTemplate()->m_flags;
-	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(object, groupDestination);
-	if ((flags & 0x1000) != 0 && layer != LAYER_GROUND)
+	const unsigned int templateFlags = object->getTemplate()->m_flags;
+	PathfindLayerEnum destinationLayer =
+		TheTerrainLogic->getLayerForDestination(object, groupDestination);
+	if ((templateFlags & 0x1000) != 0 && destinationLayer != LAYER_GROUND)
 	{
 		*individualDestination = *groupDestination;
 		return;
@@ -224,19 +225,20 @@ void AIGroup::computeIndividualDestination(Coord3D *individualDestination, const
 
 	individualDestination->x = groupDestination->x + groupOffset.x;
 	individualDestination->y = groupDestination->y + groupOffset.y;
-	individualDestination->z = TheTerrainLogic->getLayerHeight(individualDestination->x, individualDestination->y, layer, 0, true);
+	individualDestination->z = TheTerrainLogic->getLayerHeight(
+		individualDestination->x, individualDestination->y, destinationLayer, 0, true);
 
 	AIUpdateInterface *aiUpdate = object->getAIUpdateInterface();
 	if (aiUpdate && aiUpdate->isDoingGroundMovement())
 	{
-		Bool adjusted;
+		Bool destinationAdjusted;
 		if (isFormation)
-			adjusted = TheAI->pathfinder()->adjustDestination(object,
+			destinationAdjusted = TheAI->pathfinder()->adjustDestination(object,
 				*aiUpdate->getLocomotorSet(), individualDestination, 0);
 		else
-			adjusted = TheAI->pathfinder()->adjustDestination(object,
+			destinationAdjusted = TheAI->pathfinder()->adjustDestination(object,
 				*aiUpdate->getLocomotorSet(), individualDestination, groupDestination);
-		if (!adjusted)
+		if (!destinationAdjusted)
 			*individualDestination = *groupDestination;
 		TheAI->pathfinder()->updateGoal(object, individualDestination, 1, (const char *)0x1095f44,
 			0x233);
