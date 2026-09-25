@@ -346,7 +346,6 @@ void AIGuardRetaliateMachine::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@AIGuardRetaliateMachine@@ present-unmatched
 void AIGuardRetaliateMachine::loadPostProcess( void )
 {
 }  // end loadPostProcess
