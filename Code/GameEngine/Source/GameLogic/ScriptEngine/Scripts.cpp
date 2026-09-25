@@ -830,7 +830,6 @@ void ScriptGroup::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@ScriptGroup@@MAEXXZ present-unmatched
 void ScriptGroup::loadPostProcess( void )
 {
 
