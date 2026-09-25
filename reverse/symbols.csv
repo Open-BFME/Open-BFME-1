@@ -89045,3 +89045,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?d_00328a80@@YAXXZ,0x00328A80,Address-only compatibility for withdrawn dump; native Rva00328A80Condition body; dispatcher typed member cast and ILT00042C49 JMP prove target; no semantic identity claim
 ?d_00326490@@YAXXZ,0x00326490,Address-only compatibility for withdrawn dump; native Rva00326490Condition body; dispatcher typed member cast and ILT0002772D JMP prove target; no semantic identity claim
 ?d_00329c20@@YAXXZ,0x00329C20,Address-only compatibility for withdrawn dump; native evaluateRva00329C20 body; dispatcher typed member cast and ILT0004318A JMP prove target; no semantic identity claim
+?setObjectCount@ScriptEngine@@QAEXHABVAsciiString@@H@Z,0x00349090,Independent33B body selects player map at170E0+12*index and stores thirdarg through string-key map subscript thenRET12; matched getObjectCount345F80 uses same maps; upstream setter and caller329400 agree
+?d_00329400@@YAXXZ,0x00329400,Address-only compatibility for withdrawn dump; native Rva00329400Condition body; dispatcher typed member cast and ILT00023F29 JMP prove target; no semantic identity claim
