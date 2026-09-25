@@ -3898,5 +3898,45 @@
   "after_sha256": "c7e7f974aae730af79e0225a56901c32bec507adb7300a1f42495bccfd01c702",
   "evidence": "docs/naming_evidence.md",
   "reason": "The bank's Context003E29F0/Profile003E29F0 struct and field names for the iterateCircular3 userData record were unwitnessed placeholders (score=0.95 partial, reverse/attempts/0x003e29f0.cpp). The body's only struct-shaped use of userData is 5+ calls to the landed Rva003DEAB0Struct::checkCell (0x003DEAB0, via ILT 0x000469BB) plus reading Object+0x38 (Thing::m_cachedPos, name_oracle layout witness, confidence 1.00) through its m_target; no other field is read, so the unwitnessed leading bytes are renamed m_pad and the record itself takes the landed struct's name; see docs/naming_evidence.md."
+ },
+ {
+  "old_path": "reverse/attempts/0x00574aa0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ScoreRowS4SortElem8Less.cpp",
+  "old_name": "LivingWorldArmyState",
+  "new_name": "Rva00574AA0Record",
+  "before_sha256": "784941dbb135de710e05dfe37847e97b74267cc99e0fbe1e1dd6178556299ff8",
+  "after_sha256": "3b0094aef5375d1611ab63a0aeedcc34e05079efcaf54b53420791d0e19531c6",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank class name had no caller vtable string or witness evidence for the +4 pointee"
+ },
+ {
+  "old_path": "reverse/attempts/0x00574aa0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ScoreRowS4SortElem8Less.cpp",
+  "old_name": "Prefix",
+  "new_name": "m_unmodelled00",
+  "before_sha256": "784941dbb135de710e05dfe37847e97b74267cc99e0fbe1e1dd6178556299ff8",
+  "after_sha256": "3b0094aef5375d1611ab63a0aeedcc34e05079efcaf54b53420791d0e19531c6",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "padding placeholder"
+ },
+ {
+  "old_path": "reverse/attempts/0x00574aa0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ScoreRowS4SortElem8Less.cpp",
+  "old_name": "SortKey",
+  "new_name": "m_field44",
+  "before_sha256": "784941dbb135de710e05dfe37847e97b74267cc99e0fbe1e1dd6178556299ff8",
+  "after_sha256": "3b0094aef5375d1611ab63a0aeedcc34e05079efcaf54b53420791d0e19531c6",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle has no LivingWorldArmy witness and landed Rva00364B10ScanArmyGroups.cpp names +0x44 m_field44"
+ },
+ {
+  "old_path": "reverse/attempts/0x00574aa0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ScoreRowS4SortElem8Less.cpp",
+  "old_name": "StringBase",
+  "new_name": "Rva00574AA0Bits",
+  "before_sha256": "784941dbb135de710e05dfe37847e97b74267cc99e0fbe1e1dd6178556299ff8",
+  "after_sha256": "3b0094aef5375d1611ab63a0aeedcc34e05079efcaf54b53420791d0e19531c6",
+  "evidence": "docs/header_adoption.md",
+  "reason": "covered type must not be redeclared"
  }
 ]
