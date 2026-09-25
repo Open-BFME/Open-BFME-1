@@ -69,7 +69,7 @@ struct TightenLineWork
 class Pathfinder
 {
 public:
-	void tightenLine(Object *obj, const Coord3D *from, Coord3D *to);
+	void tightenLine(Object *object, const Coord3D *startPosition, Coord3D *endPosition);
 
 	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);	///< ILT thunk at 0x000461FF
 	bool worldToCell(const Coord3D *world, ICoord2D *cell);	///< ILT thunk at 0x000171E8
@@ -78,22 +78,22 @@ public:
 };
 
 // ?tightenLine@Pathfinder@@QAEXPAVObject@@PBUCoord3D@@PAU3@@Z
-void Pathfinder::tightenLine(Object *obj, const Coord3D *from, Coord3D *to)
+void Pathfinder::tightenLine(Object *object, const Coord3D *startPosition, Coord3D *endPosition)
 {
 	TightenLineWork w;
 	Bool center;
-	bfmeQuery(obj, (Int *)&w.adjFrom.x, &center);
+	bfmeQuery(object, (Int *)&w.adjFrom.x, &center);
 	Bool centerInCell = *(volatile Bool *)&center;
 
-	w.adjFrom.x = from->x;
-	w.adjFrom.y = from->y;
-	w.adjFrom.z = from->z;
+	w.adjFrom.x = startPosition->x;
+	w.adjFrom.y = startPosition->y;
+	w.adjFrom.z = startPosition->z;
 
 	if (!centerInCell) {
 		w.adjFrom.x += PATHFIND_CELL_SIZE_F/2;
 		w.adjFrom.y += PATHFIND_CELL_SIZE_F/2;
-		to->x += PATHFIND_CELL_SIZE_F/2;
-		to->y += PATHFIND_CELL_SIZE_F/2;
+		endPosition->x += PATHFIND_CELL_SIZE_F/2;
+		endPosition->y += PATHFIND_CELL_SIZE_F/2;
 	}
 
 	w.pos.x = w.adjFrom.x;
@@ -102,19 +102,19 @@ void Pathfinder::tightenLine(Object *obj, const Coord3D *from, Coord3D *to)
 
 	w.info.m_pos = &w.pos;
 	w.info.m_pathfinder = this;
-	w.info.m_layer = obj->getLayer();
+	w.info.m_layer = object->getLayer();
 
 	worldToCell(&w.adjFrom, &w.fromCell);
 
 	ICoord2D &toCell = *(ICoord2D *)&w.adjFrom;
-	worldToCell(to, &toCell);
+	worldToCell(endPosition, &toCell);
 
 	if (iterateCellsAlongLine(w.fromCell, toCell, LAYER_GROUND, &w.info)) {
-		*to = w.pos;
+		*endPosition = w.pos;
 	}
 
 	if (!centerInCell) {
-		to->x -= PATHFIND_CELL_SIZE_F/2;
-		to->y -= PATHFIND_CELL_SIZE_F/2;
+		endPosition->x -= PATHFIND_CELL_SIZE_F/2;
+		endPosition->y -= PATHFIND_CELL_SIZE_F/2;
 	}
 }
