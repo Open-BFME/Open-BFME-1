@@ -179,6 +179,11 @@ def rewrite(path, forward, reverse, headers):
 
 
 def main():
+    # Any other argument (even --help) used to fall through to write mode and
+    # rewrite thousands of tracked files; refuse it instead.
+    unknown = [arg for arg in sys.argv[1:] if arg != "--check"]
+    if unknown:
+        sys.exit(f"{__doc__}\ncrosslink.py: unknown argument(s): {' '.join(unknown)}")
     check = "--check" in sys.argv[1:]
     index = ledger_index()
     names = sorted(index)
