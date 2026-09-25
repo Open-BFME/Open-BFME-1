@@ -169,49 +169,49 @@ Int Pathfinder::groundCellsAlongLine003E2620( const ICoord2D &startCell,
 
 	Int x = startCell.x;
 	Int y = startCell.y;
-	PathfindCell *from = 0;
+	PathfindCell *previousCell = 0;
 	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
 	{
-		PathfindCell *to = getCell( layer, x, y );
-		if (to == 0)
+		PathfindCell *currentCell = getCell( layer, x, y );
+		if (currentCell == 0)
 			return 0;
 
-		if (from)
+		if (previousCell)
 		{
-			if (to->getOpen() || to->getClosed())
+			if (currentCell->getOpen() || currentCell->getClosed())
 				return 1;
 
-			if (searchInfo->pathfinder->clearCellForDiameter( 0, x, y, to->getLayer(),
+			if (searchInfo->pathfinder->clearCellForDiameter( 0, x, y, currentCell->getLayer(),
 				searchInfo->pathDiameter, 1 ) != searchInfo->pathDiameter)
 				return 1;
 
 			ICoord2D newCellCoord;
 			newCellCoord.x = x;
 			newCellCoord.y = y;
-			if (to->m_info == 0)
+			if (currentCell->m_info == 0)
 			{
 				if (g_bfmePathfindFreeList == 0)
 					PathfindCellInfo::allocateCellInfos();
-				to->m_info = bfmeAcquirePathfindCellInfo( &g_bfmePathfindFreeList, to, &newCellCoord );
+				currentCell->m_info = bfmeAcquirePathfindCellInfo( &g_bfmePathfindFreeList, currentCell, &newCellCoord );
 			}
 			else
 			{
-				to->m_info->m_prevOpen = 0;
+				currentCell->m_info->m_prevOpen = 0;
 			}
-			to->m_info->m_flags &= ~1u;
+			currentCell->m_info->m_flags &= ~1u;
 
-			Int costRemaining = searchInfo->pathfinder->rva003db900( to, searchInfo->goalCell );
-			to->m_info->m_costSoFar = from->m_info->m_costSoFar + (((to->m_packed >> 24) & 1) ? 2 : 5);
-			to->setParentCellHierarchical( from );
-			to->m_info->m_totalCost = to->m_info->m_costSoFar + costRemaining;
+			Int costRemaining = searchInfo->pathfinder->rva003db900( currentCell, searchInfo->goalCell );
+			currentCell->m_info->m_costSoFar = previousCell->m_info->m_costSoFar + (((currentCell->m_packed >> 24) & 1) ? 2 : 5);
+			currentCell->setParentCellHierarchical( previousCell );
+			currentCell->m_info->m_totalCost = currentCell->m_info->m_costSoFar + costRemaining;
 
-			Int bucket = to->m_info->m_totalCost >> 7;
+			Int bucket = currentCell->m_info->m_totalCost >> 7;
 			Pathfinder *pathfinder = searchInfo->pathfinder;
-			((BfmeThingBRE *)to)->bfmeGoBRE( &pathfinder->m_bucketHeads034[bucket] );
+			((BfmeThingBRE *)currentCell)->bfmeGoBRE( &pathfinder->m_bucketHeads034[bucket] );
 			if (bucket < pathfinder->m_lowestBucket834)
 				pathfinder->m_lowestBucket834 = bucket;
 		}
-		from = to;
+		previousCell = currentCell;
 
 		if (num < 0)
 		{
