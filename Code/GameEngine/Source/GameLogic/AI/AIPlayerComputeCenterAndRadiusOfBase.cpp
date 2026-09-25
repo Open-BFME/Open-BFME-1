@@ -97,7 +97,7 @@ extern BfmeThingFactory *TheThingFactory;
 class AIPlayer
 {
 protected:
-	void computeCenterAndRadiusOfBase(Coord3D *center, Real *radius);
+	void computeCenterAndRadiusOfBase(Coord3D *baseCenter, Real *baseRadius);
 
 private:
 	unsigned char m_gap00[0x0c];
@@ -106,7 +106,7 @@ private:
 	bool m_baseCenterSet;
 };
 
-void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *center, Real *radius)
+void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *baseCenter, Real *baseRadius)
 {
 	BuildListInfo *info;
 	Coord2D totalPos;
@@ -137,8 +137,8 @@ void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *center, Real *radius)
 	}
 
 	m_baseCenterSet = numBldg > 0;
-	center->x = totalPos.x;
-	center->y = totalPos.y;
+	baseCenter->x = totalPos.x;
+	baseCenter->y = totalPos.y;
 
 	Real maxRadSqr = 0.0f;
 	for (info = m_player->getBuildList(); info; info = info->getNext())
@@ -152,8 +152,8 @@ void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *center, Real *radius)
 		Coord3D pos;
 		pos.x = info->getLocation()->x;
 		pos.y = info->getLocation()->y;
-		Real dx = pos.x - center->x;
-		Real dy = pos.y - center->y;
+		Real dx = pos.x - baseCenter->x;
+		Real dy = pos.y - baseCenter->y;
 		if (dx < 0.0f)
 			dx = -dx;
 		if (dy < 0.0f)
@@ -165,7 +165,6 @@ void AIPlayer::computeCenterAndRadiusOfBase(Coord3D *center, Real *radius)
 		if (radSqr > maxRadSqr)
 			maxRadSqr = radSqr;
 	}
-	*radius = (Real)sqrt(maxRadSqr);
+	*baseRadius = (Real)sqrt(maxRadSqr);
 }
-
 
