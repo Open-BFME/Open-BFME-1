@@ -254,13 +254,13 @@ protected:
 	virtual void bfmeFollowPath36(const void *coords, Object *object, float value, CommandSourceType source) = 0;
 	virtual void bfmeFollowPath3D(const void *coords, Object *object, float value, CommandSourceType source) = 0;
 	virtual void privateFollowPathAppend(const Coord3D *position, CommandSourceType source) = 0;
-	virtual void dispatch_78(Object *object, Int value, CommandSourceType source) = 0;
+	virtual void privateAttackObject(Object *object, Int value, CommandSourceType source) = 0;
 	virtual void dispatch_7c(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_80(Object *object, CommandSourceType source) = 0;
 	virtual void dispatch_84(const Coord3D *position, CommandSourceType source) = 0;
-	virtual void dispatch_88(Object *object, Int value, CommandSourceType source) = 0;
-	virtual void privateAttackObject(const Team *team, Int value, CommandSourceType source) = 0;
-	virtual void dispatch_90(const Coord3D *position, Int value, CommandSourceType source) = 0;
+	virtual void privateForceAttackObject(Object *object, Int value, CommandSourceType source) = 0;
+	virtual void privateAttackTeam(const Team *team, Int value, CommandSourceType source) = 0;
+	virtual void privateAttackPosition(const Coord3D *position, Int value, CommandSourceType source) = 0;
 	virtual void privateAttackMoveToPosition(const Coord3D *position, Int value, CommandSourceType source) = 0;
 	virtual void privateAttackFollowWaypointPath(const Waypoint *waypoint, Int value, Bool asTeam, CommandSourceType source) = 0;
 	virtual void privateHunt(CommandSourceType source) = 0;
@@ -695,10 +695,10 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 			privateFollowPath(parms->m_coords, parms->m_obj, parms->m_cmdSource, true);
 			break;
 		case 0x0b:
-			dispatch_78(parms->m_obj, parms->m_intValue, parms->m_cmdSource);
+			privateAttackObject(parms->m_obj, parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x0c:
-			dispatch_88(parms->m_obj, parms->m_intValue, parms->m_cmdSource);
+			privateForceAttackObject(parms->m_obj, parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x39:
 			dispatch_7c(parms->m_obj, parms->m_cmdSource);
@@ -710,10 +710,10 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 			dispatch_84(&parms->m_pos, parms->m_cmdSource);
 			break;
 		case 0x0d:
-			privateAttackObject(parms->m_team, parms->m_intValue, parms->m_cmdSource);
+			privateAttackTeam(parms->m_team, parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x0e:
-			dispatch_90(&parms->m_pos, parms->m_intValue, parms->m_cmdSource);
+			privateAttackPosition(&parms->m_pos, parms->m_intValue, parms->m_cmdSource);
 			break;
 		case 0x0f:
 			privateAttackMoveToPosition(&parms->m_pos, parms->m_intValue, parms->m_cmdSource);
