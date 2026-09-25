@@ -70,6 +70,8 @@ public:
 	Int get();
 };
 
+typedef Rva001BDFF0 ObjectCurrentLocomotorFieldGetter;
+
 class Object
 {
 public:
@@ -113,12 +115,14 @@ Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *candidateVictim)
 	if (!(victimFacingVector2D * *(const MeleeHordeVector2 *)&attackerToVictim
 		< BfmeZeroRange))
 	{
-		BfmeSub1CC_EC3 *locomotor =
-			(BfmeSub1CC_EC3 *)((Rva001BDFF0 *)candidateVictim)->get();
-		if (locomotor != 0)
+		// The guarded getter reads Object+0x204, then AIUpdate+0x1CC; its
+		// recovered runtime accessor identity remains unknown.
+		BfmeSub1CC_EC3 *currentLocomotor =
+			(BfmeSub1CC_EC3 *)((ObjectCurrentLocomotorFieldGetter *)candidateVictim)->get();
+		if (currentLocomotor != 0)
 		{
 			IntegerBackedBoolResult integerBackedBoolResult;
-			integerBackedBoolResult.integer = locomotor->queryBelowQuarter(candidateVictim);
+			integerBackedBoolResult.integer = currentLocomotor->queryBelowQuarter(candidateVictim);
 			return integerBackedBoolResult.boolean;
 		}
 	}
