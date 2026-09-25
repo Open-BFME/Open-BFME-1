@@ -1,20 +1,19 @@
-// ?d_006adee0@@YAXXZ
-// partial score=0.37 date=2026-09-24
+// ?processRequestList@MilesAudioManager@@QAEXXZ
+// partial score=0.4 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc
 
-// This source reconstructs the carved 305-byte body at 0x006ADEE0.
-// Its only caller at 0x006B9C90 remains anonymous, so this source keeps the address.
-
-// The list at this+0xB04 stores pointers at node+8, as the matched iterator at
-// 0x00696B80 shows for AudioRequest* entries. The unwind map names ThingRef and
-// BfmeStr4BE cleanup calls at 0x00696870 and 0x00694BE0.
-
+// Vtable 0x0111C0C0 puts retail 0x006B9C90 in slot 5. The Zero Hour update
+// calls processRequestList after setDeviceListenerPosition, and retail update
+// calls 0x006ADEE0 at the same point.
+//
+// The matched iterator at 0x00696B80 shows that list payloads start at node+8.
+// The unwind map sends ThingRef at EBP-0x14 to its matched destructor at
+// 0x00696870 and sends BfmeStr4BE at EBP-0x10 to freeStr at 0x00694BE0.
+//
 // The helper at 0x006ADD50 receives this in ECX and ThingRef* on the stack.
-// It returns with ret 4 and reads the pointer without changing it.
-// The import table names the AIL lock and unlock calls and both Interlocked calls.
-
-// This draft compiles to 304 bytes. Its first byte mismatch is at +0x1B, where
-// MSVC saves EDI instead of EBP.
+// This draft compiles to 282 of 305 bytes. It differs at 171 bytes outside
+// relocations, with its first mismatch at +0x40. The external ThingRef
+// destructor keeps this in EBP.
 
 extern "C" __declspec(dllimport) int __stdcall AIL_lock_mutex();
 extern "C" __declspec(dllimport) int __stdcall AIL_unlock_mutex();
@@ -50,11 +49,7 @@ class ThingRef
 {
 public:
 	ThingRef() : m_ptr(0) {}
-	~ThingRef()
-	{
-		if (m_ptr && InterlockedDecrement(&m_ptr->m_refCount) <= 0)
-			m_ptr->slot00();
-	}
+	~ThingRef();
 	RefCounted *m_ptr;
 };
 
@@ -80,14 +75,14 @@ struct BfmeStr4BE
 	}
 };
 
-class Rva006ADEE0Owner
+class MilesAudioManager
 {
 public:
-	void bfmeClearList006ADEE0();
+	void processRequestList();
 	void rva006ADD50(ThingRef *held);
 
 	unsigned char m_pad[0xb04];
-	ListNodeBase *m_listHead;   // +0xb04, sentinel node of an STL::list
+	ListNodeBase *m_rva006ADEE0ListHead;   // +0xb04, sentinel node of an STL::list
 };
 
 static void bfmeReleaseIfLast(RefCounted *obj)
@@ -99,16 +94,16 @@ static void bfmeReleaseIfLast(RefCounted *obj)
 	}
 }
 
-void Rva006ADEE0Owner::bfmeClearList006ADEE0()
+void MilesAudioManager::processRequestList()
 {
 	ThingRef held;
 	BfmeStr4BE mutex;
 
-	if (*reinterpret_cast<ListNodeBase *volatile *>(m_listHead) != m_listHead)
+	if (*reinterpret_cast<ListNodeBase *volatile *>(m_rva006ADEE0ListHead) != m_rva006ADEE0ListHead)
 	{
 		do
 		{
-			ListNodeBase *node = m_listHead->m_next;
+			ListNodeBase *node = m_rva006ADEE0ListHead->m_next;
 			RefCounted **slot = (RefCounted **)((char *)node + 8);
 			if (slot != &held.m_ptr)
 			{
@@ -118,7 +113,7 @@ void Rva006ADEE0Owner::bfmeClearList006ADEE0()
 				held.m_ptr = payload;
 			}
 
-			node = m_listHead->m_next;
+			node = m_rva006ADEE0ListHead->m_next;
 			RefCounted *payload = *(RefCounted **)((char *)node + 8);
 			ListNodeBase *next = node->m_next;
 			ListNodeBase *prev = node->m_prev;
@@ -131,7 +126,7 @@ void Rva006ADEE0Owner::bfmeClearList006ADEE0()
 			bfmeReleaseIfLast(held.m_ptr);
 			held.m_ptr = 0;
 			mutex.lock();
-		} while (*reinterpret_cast<ListNodeBase *volatile *>(m_listHead) != m_listHead);
+		} while (*reinterpret_cast<ListNodeBase *volatile *>(m_rva006ADEE0ListHead) != m_rva006ADEE0ListHead);
 	}
 
 	mutex.unlock();
