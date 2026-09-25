@@ -36,7 +36,7 @@ public:
 class PathfindLayer
 {
 public:
-	PathfindCell *getCell( Int x, Int y );
+	PathfindCell *getCell( Int cellX, Int cellY );
 
 private:
 	char m_unreconstructed[0x44];
@@ -47,8 +47,9 @@ struct Rva003D7440Struct;
 class Rva003D7440Pathfinder
 {
 public:
-	Int iterateCellsAlongLine003D7440( const ICoord2D &start, const ICoord2D &end,
-		PathfindLayerEnum layer, Rva003D7440Struct *userData );
+	Int iterateCellsAlongLine003D7440( const ICoord2D &startCell,
+		const ICoord2D &destinationCell, PathfindLayerEnum layer,
+		Rva003D7440Struct *unusedContext );
 
 private:
 	char m_beforeMap[0x10];
@@ -61,29 +62,29 @@ private:
 	char m_beforeLayers[0x85c - 0x24];
 	PathfindLayer m_layers[16];
 
-	__forceinline PathfindCell *getCell( PathfindLayerEnum layer, Int x, Int y )
+	__forceinline PathfindCell *getCell( PathfindLayerEnum layer, Int cellX, Int cellY )
 	{
-		if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
-			y >= m_extent.lo.y && y <= m_extent.hi.y)
+		if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+			cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
 		{
 			if (layer > 1 && layer <= 15)
 			{
-				PathfindCell *cell = m_layers[layer].getCell( x, y );
+				PathfindCell *cell = m_layers[layer].getCell( cellX, cellY );
 				if (cell)
 					return cell;
 			}
-			return &m_map[x][y];
+			return &m_map[cellX][cellY];
 		}
 		return 0;
 	}
 };
 
-Int Rva003D7440Pathfinder::iterateCellsAlongLine003D7440( const ICoord2D &start,
-	const ICoord2D &end, PathfindLayerEnum layer,
-	Rva003D7440Struct *userData )
+Int Rva003D7440Pathfinder::iterateCellsAlongLine003D7440( const ICoord2D &startCell,
+	const ICoord2D &destinationCell, PathfindLayerEnum layer,
+	Rva003D7440Struct *unusedContext )
 {
-	const ICoord2D *start_ptr = &start;
-	const ICoord2D *end_ptr = &end;
+	const ICoord2D *start_ptr = &startCell;
+	const ICoord2D *end_ptr = &destinationCell;
 	Int end_x = end_ptr->x;
 	Int x = start_ptr->x;
 	Int delta_x = abs( end_x - x );
@@ -116,12 +117,12 @@ Int Rva003D7440Pathfinder::iterateCellsAlongLine003D7440( const ICoord2D &start,
 		xinc1 = 1;
 	}
 
-	if (start.x > end_x)
+	if (startCell.x > end_x)
 	{
 		xinc2 = -xinc2;
 		xinc1 = -1;
 	}
-	if (start.y > end_y)
+	if (startCell.y > end_y)
 	{
 		yinc2 = -yinc2;
 		yinc1 = -1;
