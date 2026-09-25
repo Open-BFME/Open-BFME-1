@@ -3238,5 +3238,35 @@
   "after_sha256": "bbab68d885ec6bf86ae80b81d9b772e2d34df016e76906adefd2e4761d37f087",
   "evidence": "reverse/identity_evidence/000d9d30.md",
   "reason": "0x000D9D30 is not Player::loadPostProcess: Player's vftable slot 1 (loadPostProcess) is the ret at 0x000DD960 and nothing references 0x000D9D30 but PlayerList's per-player routine; the real method name is unproven, so the owner is address-derived"
+ },
+ {
+  "old_path": "reverse/attempts/0x0073df50.cpp",
+  "new_path": "reverse/attempts/0x0073df50.cpp",
+  "old_name": "BfmeCamEUF",
+  "new_name": "Rva0073DF50Camera",
+  "before_sha256": "a22141fc81d377d164a26dca8157b59c69b116fb647e88166709b67941c078d7",
+  "after_sha256": "b70e753147e469ce0fa0e004123a301605a6fe698cc52b725a2e8610b72f554a",
+  "evidence": "reverse/identity_evidence/0x0073df50-name-correction.md",
+  "reason": "The prior BfmeCamEUF name was a local shape shim; +0x104 supports a camera pointer but does not prove that owner's identity. Keep an address-derived layout view."
+ },
+ {
+  "old_path": "reverse/attempts/0x0073df50.cpp",
+  "new_path": "reverse/attempts/0x0073df50.cpp",
+  "old_name": "BfmeHostEUF",
+  "new_name": "Rva0073DF50",
+  "before_sha256": "a22141fc81d377d164a26dca8157b59c69b116fb647e88166709b67941c078d7",
+  "after_sha256": "b70e753147e469ce0fa0e004123a301605a6fe698cc52b725a2e8610b72f554a",
+  "evidence": "reverse/identity_evidence/0x0073df50-name-correction.md",
+  "reason": "No named caller or vtable slot identifies the target's owning class; the previous BfmeHostEUF was an unsupported local owner guess."
+ },
+ {
+  "old_path": "reverse/attempts/0x0073df50.cpp",
+  "new_path": "reverse/attempts/0x0073df50.cpp",
+  "old_name": "sphere",
+  "new_name": "Rva0073DF50Camera",
+  "before_sha256": "a22141fc81d377d164a26dca8157b59c69b116fb647e88166709b67941c078d7",
+  "after_sha256": "b70e753147e469ce0fa0e004123a301605a6fe698cc52b725a2e8610b72f554a",
+  "evidence": "reverse/identity_evidence/0x0073df50-name-correction.md",
+  "reason": "The token alignment pairs the removed BfmeSphereEUF shape shim with a separate new camera layout declaration; the actual sphere local now uses the evidenced SphereClass type."
  }
 ]
