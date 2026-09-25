@@ -5273,19 +5273,19 @@ Bool Pathfinder::checkForMovement(const Object *obj, TCheckMovementInfo &info)
 // Snaps the current position to it's grid location.
 // byte-exact reconstruction: Code/GameEngine/Source/GameLogic/AI/PathfinderSnapPosition.cpp
 // ?snapPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z present-unmatched
-void Pathfinder::snapPosition(Object *obj, Coord3D *pos)
+void Pathfinder::snapPosition(Object *object, Coord3D *position)
 {
 	Int iRadius;
 	Bool center;
-	getRadiusAndCenter(obj, iRadius, center);
+	getRadiusAndCenter(object, iRadius, center);
 	ICoord2D cell;
-	Coord3D adjustDest = *pos;
+	Coord3D adjustDest = *position;
 	if (!center) {
 		adjustDest.x += PATHFIND_CELL_SIZE_F/2;
 		adjustDest.y += PATHFIND_CELL_SIZE_F/2;
 	}
 	worldToCell( &adjustDest, &cell );
-	adjustCoordToCell(cell.x, cell.y,  center, *pos, LAYER_GROUND);
+	adjustCoordToCell(cell.x, cell.y,  center, *position, LAYER_GROUND);
 }
 
 /**
