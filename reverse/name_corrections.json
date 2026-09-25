@@ -4488,5 +4488,45 @@
   "after_sha256": "c3f934d22d37919c93555b0149277bd2d24b2a68059f9e69b743a41ca327f001",
   "evidence": "docs/naming_evidence.md",
   "reason": "the layout witness names Shadow+0x08 m_opacity (from W3DVolumetricShadow bodies) so a semantic name there conflicts; this placeholder spans the witnessed +0x10 and stays unknown space"
+ },
+ {
+  "old_path": "reverse/attempts/0x0009b150.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/RecorderPlaybackFile.cpp",
+  "old_name": "m_gameMode",
+  "new_name": "m_dword2AC",
+  "before_sha256": "365421f004f703cce14634ed34f9539e9b592969dc8cac31a76881e08379560f",
+  "after_sha256": "e02b5f11ba86cafaa507e4f823f8b1eaddd1cf21fc0cbe7f2368e14c23ea4f5b",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "no name_oracle witness at RecorderClass+0x2AC (ZH twin reads into m_originalGameMode but the matched readReplayHeader puts that at +0x29C) so the bank name was a guess"
+ },
+ {
+  "old_path": "reverse/attempts/0x0009b150.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/RecorderPlaybackFile.cpp",
+  "old_name": "m_replayFlag",
+  "new_name": "m_byte11EC",
+  "before_sha256": "365421f004f703cce14634ed34f9539e9b592969dc8cac31a76881e08379560f",
+  "after_sha256": "e02b5f11ba86cafaa507e4f823f8b1eaddd1cf21fc0cbe7f2368e14c23ea4f5b",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle has no witness at GlobalData+0x11EC so the bank name was a guess"
+ },
+ {
+  "old_path": "reverse/attempts/0x0009b150.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/RecorderPlaybackFile.cpp",
+  "old_name": "m_replayValue",
+  "new_name": "m_dword11F0",
+  "before_sha256": "365421f004f703cce14634ed34f9539e9b592969dc8cac31a76881e08379560f",
+  "after_sha256": "e02b5f11ba86cafaa507e4f823f8b1eaddd1cf21fc0cbe7f2368e14c23ea4f5b",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle has no witness at GlobalData+0x11F0 so the bank name was a guess"
+ },
+ {
+  "old_path": "reverse/attempts/0x0009b150.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/RecorderPlaybackFile.cpp",
+  "old_name": "m_state",
+  "new_name": "m_dword04",
+  "before_sha256": "365421f004f703cce14634ed34f9539e9b592969dc8cac31a76881e08379560f",
+  "after_sha256": "e02b5f11ba86cafaa507e4f823f8b1eaddd1cf21fc0cbe7f2368e14c23ea4f5b",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "GameInfo+4 is unused here and matched GameInfo_assign.cpp has m_preorderMask at +4 so the bank name m_state was wrong"
  }
 ]

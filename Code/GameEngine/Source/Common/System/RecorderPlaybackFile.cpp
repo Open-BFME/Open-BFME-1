@@ -1,12 +1,16 @@
-// ?playbackFile@RecorderClass@@QAE_NVAsciiString@@@Z
-// partial score=0.92 date=2026-09-20
 // cl: /DNDEBUG /DWIN32 /MD /O2 /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
+// ?playbackFile@RecorderClass@@QAE_NVAsciiString@@@Z  retail 0x0009B150, 636 bytes.
+// Identity: the matched callers reallyLoadReplay (0x004E08D0) and
+// restartMissionMenu (0x00569E10) call RecorderClass::playbackFile(AsciiString)
+// through its pinned ILT 0x00028B2D; the body is ZH Recorder.cpp playbackFile
+// line for line plus BFME's saved GlobalData pair, which
+// RecorderClass::restoreGlobalDataFields (0x00097360) puts back.
 
 #define _STLP_USE_STATIC_LIB 1
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
-#include "string_base.h"
+#include "ascii_string.h"
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -16,41 +20,13 @@ struct _iobuf;
 typedef _iobuf FILE;
 extern "C" __declspec(dllimport) unsigned int __cdecl fread(void *, unsigned int, unsigned int, FILE *);
 
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString() : StringBase<char>() {}
-	AsciiString(const AsciiString &that) : StringBase<char>(that) {}
-	~AsciiString() {}
-	AsciiString &operator=(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->set(*(const StringBase<char> *)&that);
-		return *this;
-	}
-};
-
-class UnicodeString : private StringBase<unsigned short>
-{
-public:
-	UnicodeString() : StringBase<unsigned short>() {}
-	~UnicodeString() {}
-};
-
-struct RvaAsciiString
-{
-	volatile void *m_data;
-	__forceinline RvaAsciiString() : m_data(0) {}
-	RvaAsciiString &operator=(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->set(*(const StringBase<char> *)&that);
-		return *this;
-	}
-};
-
+// ReplayHeader's UnicodeString slots: retail zeroes the pointer inline, while
+// unicode_string.h declares the ctor out of line. ~ReplayHeader (0x00098450)
+// releases them.
 struct RvaUnicodeString
 {
-	volatile void *m_data;
-	__forceinline RvaUnicodeString() : m_data(0) {}
+	void *m_data;
+	RvaUnicodeString() : m_data(0) {}
 };
 
 struct RvaSystemTime
@@ -67,16 +43,22 @@ public:
 
 private:
 	void *m_vtable;
-	Int m_state;
+	Int m_dword04;
 	Int m_crcInterval;
 	char m_gap0c[0x4c - 0x0c];
 	UnsignedInt m_seed;
 };
 
+// ZH Recorder.cpp CRCInfo; the ctor body order is retail's store order.
 class CRCInfo
 {
 public:
-	CRCInfo() : m_sawCRCMismatch(false), m_skippedOne(false), m_localPlayer(~0U) {}
+	CRCInfo()
+	{
+		m_localPlayer = ~0U;
+		m_skippedOne = false;
+		m_sawCRCMismatch = false;
+	}
 	void setLocalPlayer(UnsignedInt value) { m_localPlayer = value; }
 
 private:
@@ -101,10 +83,13 @@ public:
 	virtual void slot30(); virtual GameMessage *appendMessage(Int type);
 };
 
-class GameLogic
+// Same spelling as the matched callers RestartMissionMenu, SoloMordorFade_LoadGame
+// and FadeScreenRegionToMapBlack: the two-Bool GameLogic::clearGameData (0x00396B00)
+// reached through ILT 0x0001C46D.
+class BfmeGameLogicPause
 {
 public:
-	void clearGameData(Bool keepObjects, Bool keepPlayers);
+	void clearGameData(Bool showScoreScreen, Bool unknown);
 };
 
 class GlobalData
@@ -113,9 +98,9 @@ public:
 	char m_head[0xB84];
 	AsciiString m_pendingFile;
 	char m_gapB88[0x11EC - 0xB88];
-	unsigned char m_replayFlag;
+	unsigned char m_byte11EC;
 	char m_gap11ED[3];
-	Int m_replayValue;
+	Int m_dword11F0;
 };
 
 class SubsystemInterface
@@ -139,9 +124,9 @@ public:
 		Bool quitEarly;
 		Bool playerDiscons[8];
 		char gap1[3];
-		RvaAsciiString gameOptions;
+		AsciiString gameOptions;
 		Int localPlayerIndex;
-		RvaAsciiString filename;
+		AsciiString filename;
 		Bool forPlayback;
 		RvaUnicodeString replayName;
 		RvaSystemTime timeVal;
@@ -157,39 +142,34 @@ public:
 
 	Bool playbackFile(AsciiString filename);
 	Bool readReplayHeader(ReplayHeader &header);
+
+protected:
 	void readNextFrame();
 
 private:
 	CRCInfo *m_crcInfo;
 	FILE *m_file;
-	AsciiString m_fileName;
-	Int m_currentFilePosition;
+	char m_gap10[0x18 - 0x10];
 	Int m_mode;
 	AsciiString m_currentReplayFilename;
 	GameInfo m_gameInfo;
-	char m_gameInfoTail[0x278 - sizeof(GameInfo)];
-	Int m_networkCRCInterval;
-	Int m_originalGameMode;
-	Int m_nextFrame;
-	Int m_seedOrDesync;
+	char m_gap70[0x2A8 - 0x70];
 	Bool m_doingAnalysis;
-	char m_pad2A9[3];
-	Int m_gameMode;
+	char m_gap2A9[3];
+	Int m_dword2AC;
 };
 
-extern GameLogic *TheGameLogic;
+extern BfmeGameLogicPause *TheGameLogic;
 extern GlobalData *TheWritableGlobalData;
 extern MessageStream *TheMessageStream;
-extern Int g_recorderSavedGlobalValue;
-extern unsigned char g_recorderSavedGlobalFlag;
 extern Int REPLAY_CRC_INTERVAL;
 
-void InitRandom(UnsignedInt seed);
+// File statics of the recorder TU: nothing outside it takes their address, so
+// MSVC schedules the GlobalData loads ahead of these stores as retail does.
+static Int g_recorderSavedGlobalValue;
+static unsigned char g_recorderSavedGlobalFlag;
 
-// The retail target currently has an address-derived ledger name.  The matched
-// callers prove that this body is GameLogic::clearGameData(Bool, Bool).
-#pragma comment(linker, "/alternatename:?clearGameData@GameLogic@@QAEX_N0@Z=?push@U4Sink0060D3B0@@QAEX_N0@Z")
-#pragma comment(linker, "/alternatename:??1ReplayHeader@RecorderClass@@QAE@XZ=??1BfmeOwnVUL@@QAE@XZ")
+void InitRandom(UnsignedInt seed);
 
 Bool RecorderClass::playbackFile(AsciiString filename)
 {
@@ -204,10 +184,10 @@ Bool RecorderClass::playbackFile(AsciiString filename)
 	if (!success)
 		return false;
 
-	g_recorderSavedGlobalFlag = TheWritableGlobalData->m_replayFlag;
-	g_recorderSavedGlobalValue = TheWritableGlobalData->m_replayValue;
-	TheWritableGlobalData->m_replayFlag = header.desyncGame;
-	TheWritableGlobalData->m_replayValue = header.headerTail;
+	g_recorderSavedGlobalFlag = TheWritableGlobalData->m_byte11EC;
+	g_recorderSavedGlobalValue = TheWritableGlobalData->m_dword11F0;
+	TheWritableGlobalData->m_byte11EC = header.desyncGame;
+	TheWritableGlobalData->m_dword11F0 = header.headerTail;
 	TheWritableGlobalData->m_pendingFile = m_gameInfo.getMap();
 
 	m_crcInfo = new CRCInfo;
@@ -216,7 +196,7 @@ Bool RecorderClass::playbackFile(AsciiString filename)
 
 	Int difficulty = 0;
 	fread(&difficulty, sizeof(difficulty), 1, m_file);
-	fread(&m_gameMode, sizeof(m_gameMode), 1, m_file);
+	fread(&m_dword2AC, sizeof(m_dword2AC), 1, m_file);
 	Int rankPoints = 0;
 	fread(&rankPoints, sizeof(rankPoints), 1, m_file);
 	Int maxFPS = 0;
