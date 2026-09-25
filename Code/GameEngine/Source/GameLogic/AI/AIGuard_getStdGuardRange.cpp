@@ -14,7 +14,7 @@ class Object;
 class AI
 {
 public:
-	static Real getAdjustedVisionRangeForObject(const Object *obj, int factors);
+	static Real getAdjustedVisionRangeForObject(const Object *object, int factors);
 };
 
 enum
@@ -28,12 +28,12 @@ enum
 class AIGuardMachine
 {
 public:
-	static Real _bfme_getStdGuardRange(const Object *obj);
+	static Real _bfme_getStdGuardRange(const Object *object);
 };
 
-Real AIGuardMachine::_bfme_getStdGuardRange(const Object *obj)
+Real AIGuardMachine::_bfme_getStdGuardRange(const Object *object)
 {
-	Real visionRange = AI::getAdjustedVisionRangeForObject(obj,
+	Real visionRange = AI::getAdjustedVisionRangeForObject(object,
 		AI_VISIONFACTOR_OWNERTYPE | AI_VISIONFACTOR_MOOD | AI_VISIONFACTOR_GUARDINNER);
 
 	const Real cap = 300.0f;
