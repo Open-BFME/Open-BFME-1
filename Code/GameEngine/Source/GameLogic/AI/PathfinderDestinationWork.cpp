@@ -114,6 +114,12 @@ public:
 		const Coord3D *targetPos, const Weapon *weapon, Coord3D *dest);
 	void moveAlliesAwayFromDestination(Object *obj, const Coord3D &destination);
 
+protected:
+	friend struct AdjustTargetInfo;
+	bool checkForTarget(const Object *obj, Int cellX, Int cellY,
+		const Weapon *weapon, const Object *target,
+		const Coord3D *targetPos, Int radius, bool center, Coord3D *dest);
+
 private:
 	void iterateCellsAlongLine(const ICoord2D *from, const ICoord2D *to,
 			PathfindLayerEnum layer, MADStruct *info);		///< ILT thunk at 0x00014092
@@ -123,12 +129,13 @@ struct AdjustTargetInfo
 {
 	Pathfinder *m_pathfinder;
 	Object *m_obj;
-	Bool m_center;
+	bool m_center;
 	Int m_radius;
 	Coord3D *m_dest;
 	Object *m_target;
 	const Coord3D *m_targetPos;
 	const Weapon *m_weapon;
+	__forceinline bool check(Int x, Int y) const;
 };
 
 // ?adjustTargetDestination@Pathfinder@@QAE_NPBVObject@@0PBUCoord3D@@PBVWeapon@@PAU3@@Z
@@ -158,7 +165,8 @@ bool Pathfinder::adjustTargetDestination(const Object *obj, const Object *target
 	info.m_target = (Object *)target;
 	info.m_targetPos = targetPos;
 	info.m_weapon = weapon;
-	bfmeQuery(info.m_obj, &info.m_radius, &info.m_center);
+	bfmeQuery(info.m_obj, &info.m_radius,
+		reinterpret_cast<Bool *>(&info.m_center));
 	return iterateCircular2(&cell, 0x190, &info);
 }
 
