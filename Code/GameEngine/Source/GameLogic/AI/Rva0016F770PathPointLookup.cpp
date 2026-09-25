@@ -18,15 +18,15 @@ private:
 	Rva0016F770Coord3D *m_end;
 
 public:
-	Rva0016F770Coord3D *getPoint( int index );
+	Rva0016F770Coord3D *getPoint( int pointIndex );
 };
 
-Rva0016F770Coord3D *Rva0016F770Path::getPoint( int index )
+Rva0016F770Coord3D *Rva0016F770Path::getPoint( int pointIndex )
 {
-	if( index >= 0 )
+	if( pointIndex >= 0 )
 	{
-		if( (unsigned int) index < (unsigned int) (m_end - m_begin) )
-			return m_begin + index;
+		if( (unsigned int) pointIndex < (unsigned int) (m_end - m_begin) )
+			return m_begin + pointIndex;
 	}
 
 	return 0;
