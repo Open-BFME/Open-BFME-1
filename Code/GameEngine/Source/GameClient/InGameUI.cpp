@@ -2177,42 +2177,224 @@ void InGameUI::preDraw( void )
 //-------------------------------------------------------------------------------------------------
 /** Update the in game user interface */
 //-------------------------------------------------------------------------------------------------
-//DECLARE_PERF_TIMER(InGameUI_update)
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/InGameUIUpdateThunk.cpp
-// ?update@InGameUI@@ present-unmatched
+// Retail InGameUI::update is InGameUI vtable slot 5 (+0x14 of table 0x010F5B38,
+// through ILT 0x0040750E).  BFME moved the military-subtitle block out of line
+// (0x0043E700), dropped ZH's observer money lookup, polls both movie streams
+// through their own interfaces, and adds a keyboard-scroll block after the
+// ZH camera rotate/zoom block.  Fields are spelled at their retail offsets:
+// the vendored class is far larger and places every one of them elsewhere.
+namespace {
+
+#define BFME_UPDATE_SLOT(n) virtual void bfmeSlot##n() = 0;
+
+// The movie streams at this+0x560 (main) and this+0x568 (cameo).
+struct BfmeUpdateVideoStream
+{
+	BFME_UPDATE_SLOT(0)
+	BFME_UPDATE_SLOT(1)
+	BFME_UPDATE_SLOT(2)
+	BFME_UPDATE_SLOT(3)
+	BFME_UPDATE_SLOT(4)
+	BFME_UPDATE_SLOT(5)
+	virtual UnsignedInt bfmeSlot6( Int arg ) = 0;			///< +0x18
+	BFME_UPDATE_SLOT(7)
+	BFME_UPDATE_SLOT(8)
+	BFME_UPDATE_SLOT(9)
+	BFME_UPDATE_SLOT(10)
+	BFME_UPDATE_SLOT(11)
+	BFME_UPDATE_SLOT(12)
+	virtual Bool bfmeSlot13( void ) = 0;					///< +0x34
+};
+
+// SubsystemInterface::update sits at +0x14 in BFME's subsystem tables.
+struct BfmeUpdateSubsystem
+{
+	BFME_UPDATE_SLOT(0)
+	BFME_UPDATE_SLOT(1)
+	BFME_UPDATE_SLOT(2)
+	BFME_UPDATE_SLOT(3)
+	BFME_UPDATE_SLOT(4)
+	virtual void update( void ) = 0;						///< +0x14
+};
+
+// Each registered window layout is run through slot 2 with a NULL argument.
+struct BfmeUpdateWindowLayout
+{
+	BFME_UPDATE_SLOT(0)
+	BFME_UPDATE_SLOT(1)
+	virtual void bfmeSlot2( void *userData ) = 0;			///< +0x08
+};
+
+struct BfmeUpdateWindowLayoutNode
+{
+	BfmeUpdateWindowLayoutNode *next;
+	BfmeUpdateWindowLayoutNode *prev;
+	BfmeUpdateWindowLayout *layout;
+};
+
+// TheTacticalView's camera entry points, retail slot numbers.
+struct BfmeUpdateTacticalView
+{
+	BFME_UPDATE_SLOT(0)  BFME_UPDATE_SLOT(1)  BFME_UPDATE_SLOT(2)  BFME_UPDATE_SLOT(3)
+	BFME_UPDATE_SLOT(4)  BFME_UPDATE_SLOT(5)  BFME_UPDATE_SLOT(6)  BFME_UPDATE_SLOT(7)
+	BFME_UPDATE_SLOT(8)  BFME_UPDATE_SLOT(9)  BFME_UPDATE_SLOT(10) BFME_UPDATE_SLOT(11)
+	BFME_UPDATE_SLOT(12) BFME_UPDATE_SLOT(13) BFME_UPDATE_SLOT(14) BFME_UPDATE_SLOT(15)
+	BFME_UPDATE_SLOT(16) BFME_UPDATE_SLOT(17) BFME_UPDATE_SLOT(18) BFME_UPDATE_SLOT(19)
+	BFME_UPDATE_SLOT(20) BFME_UPDATE_SLOT(21) BFME_UPDATE_SLOT(22)
+	virtual void bfmeSlot23( Coord2D *delta ) = 0;			///< +0x5C
+	BFME_UPDATE_SLOT(24) BFME_UPDATE_SLOT(25) BFME_UPDATE_SLOT(26) BFME_UPDATE_SLOT(27)
+	BFME_UPDATE_SLOT(28) BFME_UPDATE_SLOT(29) BFME_UPDATE_SLOT(30) BFME_UPDATE_SLOT(31)
+	BFME_UPDATE_SLOT(32) BFME_UPDATE_SLOT(33) BFME_UPDATE_SLOT(34) BFME_UPDATE_SLOT(35)
+	BFME_UPDATE_SLOT(36) BFME_UPDATE_SLOT(37) BFME_UPDATE_SLOT(38) BFME_UPDATE_SLOT(39)
+	BFME_UPDATE_SLOT(40) BFME_UPDATE_SLOT(41) BFME_UPDATE_SLOT(42) BFME_UPDATE_SLOT(43)
+	BFME_UPDATE_SLOT(44) BFME_UPDATE_SLOT(45) BFME_UPDATE_SLOT(46) BFME_UPDATE_SLOT(47)
+	BFME_UPDATE_SLOT(48) BFME_UPDATE_SLOT(49) BFME_UPDATE_SLOT(50) BFME_UPDATE_SLOT(51)
+	BFME_UPDATE_SLOT(52) BFME_UPDATE_SLOT(53) BFME_UPDATE_SLOT(54) BFME_UPDATE_SLOT(55)
+	BFME_UPDATE_SLOT(56) BFME_UPDATE_SLOT(57) BFME_UPDATE_SLOT(58) BFME_UPDATE_SLOT(59)
+	BFME_UPDATE_SLOT(60) BFME_UPDATE_SLOT(61)
+	virtual void bfmeSlot62( Real angle ) = 0;				///< +0xF8
+	virtual Real bfmeSlot63( void ) = 0;					///< +0xFC
+	BFME_UPDATE_SLOT(64) BFME_UPDATE_SLOT(65) BFME_UPDATE_SLOT(66) BFME_UPDATE_SLOT(67)
+	BFME_UPDATE_SLOT(68) BFME_UPDATE_SLOT(69) BFME_UPDATE_SLOT(70) BFME_UPDATE_SLOT(71)
+	BFME_UPDATE_SLOT(72) BFME_UPDATE_SLOT(73) BFME_UPDATE_SLOT(74) BFME_UPDATE_SLOT(75)
+	virtual void bfmeSlot76( void ) = 0;					///< +0x130
+	virtual void bfmeSlot77( void ) = 0;					///< +0x134
+};
+
+// InGameUI's own slots 78 (+0x138) and 106 (+0x1A8).
+struct BfmeUpdateSelfView
+{
+	BFME_UPDATE_SLOT(0)  BFME_UPDATE_SLOT(1)  BFME_UPDATE_SLOT(2)  BFME_UPDATE_SLOT(3)
+	BFME_UPDATE_SLOT(4)  BFME_UPDATE_SLOT(5)  BFME_UPDATE_SLOT(6)  BFME_UPDATE_SLOT(7)
+	BFME_UPDATE_SLOT(8)  BFME_UPDATE_SLOT(9)  BFME_UPDATE_SLOT(10) BFME_UPDATE_SLOT(11)
+	BFME_UPDATE_SLOT(12) BFME_UPDATE_SLOT(13) BFME_UPDATE_SLOT(14) BFME_UPDATE_SLOT(15)
+	BFME_UPDATE_SLOT(16) BFME_UPDATE_SLOT(17) BFME_UPDATE_SLOT(18) BFME_UPDATE_SLOT(19)
+	BFME_UPDATE_SLOT(20) BFME_UPDATE_SLOT(21) BFME_UPDATE_SLOT(22) BFME_UPDATE_SLOT(23)
+	BFME_UPDATE_SLOT(24) BFME_UPDATE_SLOT(25) BFME_UPDATE_SLOT(26) BFME_UPDATE_SLOT(27)
+	BFME_UPDATE_SLOT(28) BFME_UPDATE_SLOT(29) BFME_UPDATE_SLOT(30) BFME_UPDATE_SLOT(31)
+	BFME_UPDATE_SLOT(32) BFME_UPDATE_SLOT(33) BFME_UPDATE_SLOT(34) BFME_UPDATE_SLOT(35)
+	BFME_UPDATE_SLOT(36) BFME_UPDATE_SLOT(37) BFME_UPDATE_SLOT(38) BFME_UPDATE_SLOT(39)
+	BFME_UPDATE_SLOT(40) BFME_UPDATE_SLOT(41) BFME_UPDATE_SLOT(42) BFME_UPDATE_SLOT(43)
+	BFME_UPDATE_SLOT(44) BFME_UPDATE_SLOT(45) BFME_UPDATE_SLOT(46) BFME_UPDATE_SLOT(47)
+	BFME_UPDATE_SLOT(48) BFME_UPDATE_SLOT(49) BFME_UPDATE_SLOT(50) BFME_UPDATE_SLOT(51)
+	BFME_UPDATE_SLOT(52) BFME_UPDATE_SLOT(53) BFME_UPDATE_SLOT(54) BFME_UPDATE_SLOT(55)
+	BFME_UPDATE_SLOT(56) BFME_UPDATE_SLOT(57) BFME_UPDATE_SLOT(58) BFME_UPDATE_SLOT(59)
+	BFME_UPDATE_SLOT(60) BFME_UPDATE_SLOT(61) BFME_UPDATE_SLOT(62) BFME_UPDATE_SLOT(63)
+	BFME_UPDATE_SLOT(64) BFME_UPDATE_SLOT(65) BFME_UPDATE_SLOT(66) BFME_UPDATE_SLOT(67)
+	BFME_UPDATE_SLOT(68) BFME_UPDATE_SLOT(69) BFME_UPDATE_SLOT(70) BFME_UPDATE_SLOT(71)
+	BFME_UPDATE_SLOT(72) BFME_UPDATE_SLOT(73) BFME_UPDATE_SLOT(74) BFME_UPDATE_SLOT(75)
+	BFME_UPDATE_SLOT(76) BFME_UPDATE_SLOT(77) BFME_UPDATE_SLOT(78) BFME_UPDATE_SLOT(79)
+	BFME_UPDATE_SLOT(80) BFME_UPDATE_SLOT(81) BFME_UPDATE_SLOT(82) BFME_UPDATE_SLOT(83)
+	BFME_UPDATE_SLOT(84) BFME_UPDATE_SLOT(85) BFME_UPDATE_SLOT(86) BFME_UPDATE_SLOT(87)
+	BFME_UPDATE_SLOT(88) BFME_UPDATE_SLOT(89) BFME_UPDATE_SLOT(90) BFME_UPDATE_SLOT(91)
+	BFME_UPDATE_SLOT(92) BFME_UPDATE_SLOT(93) BFME_UPDATE_SLOT(94) BFME_UPDATE_SLOT(95)
+	BFME_UPDATE_SLOT(96) BFME_UPDATE_SLOT(97) BFME_UPDATE_SLOT(98) BFME_UPDATE_SLOT(99)
+	BFME_UPDATE_SLOT(100) BFME_UPDATE_SLOT(101) BFME_UPDATE_SLOT(102) BFME_UPDATE_SLOT(103)
+	BFME_UPDATE_SLOT(104) BFME_UPDATE_SLOT(105) BFME_UPDATE_SLOT(106)
+};
+
+#undef BFME_UPDATE_SLOT
+
+// One message ring entry: InGameUI::UIMessage's layout, which the ring
+// keeps in BFME.
+struct BfmeUpdateMessage
+{
+	UnicodeString fullText;
+	DisplayString *displayString;
+	UnsignedInt timestamp;
+	Color color;
+};
+
+// InGameUI+0x560..: the two movie streams, the message ring, and the
+// keyboard camera flags, at retail offsets.
+struct BfmeUpdateLayout
+{
+	UnsignedByte pad0[0x10];
+	BfmeUpdateWindowLayoutNode *windowLayouts;		///< +0x010 list head node
+	UnsignedByte pad1[0x560 - 0x14];
+	BfmeUpdateVideoStream *videoStream;				///< +0x560
+	UnsignedByte pad2[4];
+	BfmeUpdateVideoStream *cameoVideoStream;		///< +0x568
+	BfmeUpdateMessage uiMessages[ 6 ];				///< +0x56C
+	UnsignedByte pad3[0x81c - 0x5cc];
+	BfmeUpdateSubsystem *subsystem81C;				///< +0x81C
+	UnsignedByte pad4[0x858 - 0x820];
+	Int messageDelayMS;								///< +0x858
+	UnsignedByte pad5[0x12b4 - 0x85c];
+	Bool cameraRotatingLeft;						///< +0x12B4
+	Bool cameraRotatingRight;						///< +0x12B5
+	Bool camera12B6;								///< +0x12B6
+	Bool camera12B7;								///< +0x12B7
+	Bool scroll12B8;								///< +0x12B8
+	Bool scroll12B9;								///< +0x12B9
+	Bool scroll12BA;								///< +0x12BA
+	Bool scroll12BB;								///< +0x12BB
+};
+
+// GlobalData fields the camera block reads.
+struct BfmeUpdateGlobalData
+{
+	UnsignedByte pad0[0xb64];
+	Real horizontalScrollSpeedFactor;				///< +0xB64
+	UnsignedByte pad1[0xbbc - 0xb68];
+	Real keyboardScrollFactor;						///< +0xBBC
+	UnsignedByte pad2[0xcc8 - 0xbc0];
+	Real keyboardCameraRotateSpeed;					///< +0xCC8
+};
+
+}  // namespace
+
+// Out-of-line BFME helpers update reaches through ILT thunks.
+// 0x0043E700 (ILT 0x0043C47A) is ZH update's military-subtitle block moved out
+// of line: it runs off the subtitle record at this+0x818 and plays
+// "MissionBriefingCharacter".
+struct Rva0043E700InGameUI
+{
+	void updateMilitarySubtitle( void );
+};
+
+// The screen singleton at 0x012F4C38, run once a frame while its byte at
+// +0x259 is set; 0x005999B0 (ILT 0x0040B893), thiscall, no arguments.
+struct Rva005999B0Screen
+{
+	UnsignedByte pad0[0x259];
+	Bool flag259;									///< +0x259
+	void frameUpdate( void );
+};
+
+class Rva00589320Player;
+struct Rva002EE330PlayerList
+{
+	Rva00589320Player *getLocalPlayer( void );
+};
+
+extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+class AptPalantir;
+extern AptPalantir *TheAptPalantir;
+class BannerUI;
+extern BannerUI *TheBannerUI;
+extern void *g_obj12F4C38;
+
+// Retail keyboard-scroll speed, 250.0f in .data at 0x012B54B8.
+extern Real g_bfmeKeyboardScrollSpeed012B54B8;
+// The 0x30-byte subsystem InGameUI::init creates at 0x012F4B78.
+extern void *g_bfmeSubsystem012F4B78;
+
+// The by-value text argument goes through the TU's BfmeUnicodeStringArg view,
+// which records the unwind slot before loading the copy's `this` as retail
+// does; the view only changes the mangled type, the callee is the same ILT.
+extern void GadgetStaticTextSetText( GameWindow *g, BfmeUnicodeStringArg text );
+
 void InGameUI::update( void )
-{ 
-	//USE_PERF_TIMER(InGameUI_update)
+{
+	BfmeUpdateLayout *self = reinterpret_cast<BfmeUpdateLayout *>( this );
 	Int i;
 
-	/// @todo make sure this code gets called even when the UI is not being drawn
-	if ( m_videoStream && m_videoBuffer )
-	{
-		if ( m_videoStream->isFrameReady())
-		{
-			m_videoStream->frameDecompress();
-			m_videoStream->frameRender( m_videoBuffer );
-			m_videoStream->frameNext();
-			if ( m_videoStream->frameIndex() == 0 )
-			{
-				stopMovie();
-			}
-		}
-	}
+	if( self->videoStream && (self->videoStream->bfmeSlot6( 0 ) & 4) && self->videoStream->bfmeSlot13() )
+		reinterpret_cast<BfmeUpdateSelfView *>( this )->bfmeSlot78();
 
-	if ( m_cameoVideoStream && m_cameoVideoBuffer )
-	{
-		if ( m_cameoVideoStream->isFrameReady())
-		{
-			m_cameoVideoStream->frameDecompress();
-			m_cameoVideoStream->frameRender( m_cameoVideoBuffer );
-			m_cameoVideoStream->frameNext();
-//			if ( m_cameoVideoStream->frameIndex() == 0 )
-//			{
-//				stopMovie();
-//			}
-		}
-	}
+	if( self->cameoVideoStream )
+		self->cameoVideoStream->bfmeSlot6( 0 );
 
 	//
 	// remove any message strings that have expired, note that the oldest strings are
@@ -2221,227 +2403,136 @@ void InGameUI::update( void )
 	// frame
 	//
 	UnsignedInt currLogicFrame = TheGameLogic->getFrame();
-	const int messageTimeout = m_messageDelayMS / LOGICFRAMES_PER_SECOND / 1000;
+	const int messageTimeout = self->messageDelayMS / 5 / 1000;
 	UnsignedByte r, g, b, a;
 	Int amount;
-	for( i = MAX_UI_MESSAGES - 1; i >= 0; i-- )
+	for( i = 6 - 1; i >= 0; i-- )
 	{
 
-		if( currLogicFrame - m_uiMessages[ i ].timestamp > messageTimeout )
+		if( currLogicFrame - self->uiMessages[ i ].timestamp > messageTimeout )
 		{
 
 			// get the current color of this text
-			GameGetColorComponents( m_uiMessages[ i ].color, &r, &g, &b, &a );
+			GameGetColorComponents( self->uiMessages[ i ].color, &r, &g, &b, &a );
 
 			// start fading the alpha on this color down
-			amount = REAL_TO_INT( ((currLogicFrame - m_uiMessages[ i ].timestamp) * 0.01f) );
+			amount = (Int)( (currLogicFrame - self->uiMessages[ i ].timestamp) * 0.01f );
 			if( a - amount < 0 )
 				a = 0;
 			else
 				a -= amount;
-			
+
 			// set the new color
-			m_uiMessages[ i ].color = GameMakeColor( r, g, b, a );
+			self->uiMessages[ i ].color = GameMakeColor( r, g, b, a );
 
 			// when alpha is completely zero we remove this string
 			if( a == 0 )
-				removeMessageAtIndex( i );
+			{
+				self->uiMessages[ i ].fullText.clear();
+				if( self->uiMessages[ i ].displayString )
+					reinterpret_cast<BfmeDisplayStringManagerView *>(TheDisplayStringManager)
+						->freeDisplayString( self->uiMessages[ i ].displayString );
+				self->uiMessages[ i ].displayString = NULL;
+				self->uiMessages[ i ].timestamp = 0;
+			}
 
 		}  // end if
 
 	}  // end for i
 
-	//
-	// Update the Military Subtitle display
-	//
-	if( m_militarySubtitle )		// if we have a subtitle, work on it
-	{
-		// if the timeis frozen by a script, then we still want the text to display
-		if(TheScriptEngine->isTimeFrozenScript())
-		{
-			m_militarySubtitle->lifetime--;
-			m_militarySubtitle->blockBeginFrame--;
-			m_militarySubtitle->incrementOnFrame--;
-		}
-		// if it's time to remove the subtitle, Then remove it
-		if((Int)m_militarySubtitle->lifetime < (Int)currLogicFrame)
-		{
-			//steal colins fade from above :)
-			GameGetColorComponents( m_militarySubtitle->color, &r, &g, &b, &a );
-			// start fading the alpha on this color down
-			amount = REAL_TO_INT( ((currLogicFrame - m_militarySubtitle->lifetime ) * 0.1f) );
-			if( a - amount < 0 )
-			{
-				removeMilitarySubtitle();
-			}
-			else
-			{
-				a -= amount;
-				m_militarySubtitle->color = GameMakeColor(r, g, b, a);
-			}
-		}
-		else
-		{
-			// trigger whether or not we should draw the block	
-			if( m_militarySubtitle->blockBeginFrame + 9 < currLogicFrame )
-			{
-				m_militarySubtitle->blockBeginFrame = currLogicFrame;
-				m_militarySubtitle->blockDrawn = !m_militarySubtitle->blockDrawn;
-			}
+	reinterpret_cast<Rva0043E700InGameUI *>( this )->updateMilitarySubtitle();
 
-			// If it's time to add another letter to the display string, lets do that.
-			if( m_militarySubtitle->incrementOnFrame < currLogicFrame )
-			{
-				// first grab the letter we want to add
-				WideChar tempWChar = m_militarySubtitle->subtitle.getCharAt(m_militarySubtitle->index);
-				// if that letter is a return, add a new line
-				if(tempWChar == L'\n')
-				{
-					// increment the Block position's Y value to draw it on the next line
-					Int height;
-					m_militarySubtitle->displayStrings[m_militarySubtitle->currentDisplayString]->getSize(NULL, &height);
-					m_militarySubtitle->blockPos.y = m_militarySubtitle->blockPos.y + height;
-
-					// Now add a new display string
-					m_militarySubtitle->currentDisplayString++;
-					if(!(m_militarySubtitle->currentDisplayString >= MAX_SUBTITLE_LINES) )
-					{	
-						m_militarySubtitle->blockPos.x = m_militarySubtitle->position.x;
-						m_militarySubtitle->displayStrings[m_militarySubtitle->currentDisplayString] = TheDisplayStringManager->newDisplayString();
-						m_militarySubtitle->displayStrings[m_militarySubtitle->currentDisplayString]->reset();
-						m_militarySubtitle->displayStrings[m_militarySubtitle->currentDisplayString]->setFont(	TheFontLibrary->getFont( m_militaryCaptionFont, TheGlobalLanguageData->adjustFontSize(m_militaryCaptionPointSize), m_militaryCaptionBold ) )	;
-
-						m_militarySubtitle->blockDrawn = TRUE;
-						m_militarySubtitle->incrementOnFrame = currLogicFrame + (Int)(((Real)LOGICFRAMES_PER_SECOND * TheGlobalLanguageData->m_militaryCaptionDelayMS)/1000.0f);
-					}
-					else
-					{
-						// if we've exceeded the allocated number of display strings, this will force us to essentially truncate the remaining text
-						m_militarySubtitle->index = m_militarySubtitle->subtitle.getLength();
-						DEBUG_CRASH(("You're Only Allowed to use %d lines of subtitle text\n",MAX_SUBTITLE_LINES));
-					}
-				}
-				else
-				{
-					// okay, we're not a \n, lets append this character to the display string
-					m_militarySubtitle->displayStrings[m_militarySubtitle->currentDisplayString]->appendChar(tempWChar);
-					// increment the draw position of the block
-					Int width;
-					m_militarySubtitle->displayStrings[m_militarySubtitle->currentDisplayString]->getSize(&width,NULL);
-					m_militarySubtitle->blockPos.x = m_militarySubtitle->position.x + width;
-
-					// lets make a sound
-					static AudioEventRTS click("MilitarySubtitlesTyping");
-					TheAudio->addAudioEvent(&click);
-					if(TheGlobalLanguageData)
-						m_militarySubtitle->incrementOnFrame = currLogicFrame + TheGlobalLanguageData->m_militaryCaptionSpeed;
-					else
-						m_militarySubtitle->incrementOnFrame = currLogicFrame + m_militaryCaptionSpeed;
-
-				}
-				// increment the index			
-				m_militarySubtitle->index++;
-				if(m_militarySubtitle->index >= m_militarySubtitle->subtitle.getLength())
-				{
-					// We're at the end of the subtitle, set everything to persist till the subtitle has expired
-					m_militarySubtitle->incrementOnFrame = m_militarySubtitle->lifetime + 1;
-				}
-	/*
-							else
-								{
-									// randomize the space between printing of characters
-									if(GameClientRandomValueReal(0,1) < 0.95f)
-									{
-										m_militarySubtitle->incrementOnFrame = GameClientRandomValue(2, 5) + currLogicFrame;
-									}
-									else
-									{
-										m_militarySubtitle->incrementOnFrame = GameClientRandomValue(10, 13) + currLogicFrame;
-									}
-								}*/
-				
-			}
-		}
-	}
+	self->subsystem81C->update();
 
 	// update the player money window if the money amount has changed
 	// this seems like as good a place as any to do the power hide/show
 	static Int lastMoney = -1;
-	static NameKeyType moneyWindowKey = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:MoneyDisplay" );	
-	static NameKeyType powerWindowKey = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:PowerWindow" );	
+	static NameKeyType moneyWindowKey = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:MoneyDisplay" );
+	static NameKeyType powerWindowKey = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:PowerWindow" );
 
 	GameWindow *moneyWin = TheWindowManager->winGetWindowFromId( NULL, moneyWindowKey );
 	GameWindow *powerWin = TheWindowManager->winGetWindowFromId( NULL, powerWindowKey );
-//	if( moneyWin == NULL )
-//	{
-//		NameKeyType moneyWindowKey = TheNameKeyGenerator->nameToKey( "ControlBar.wnd:MoneyDisplay" );	
-//
-//		moneyWin = TheWindowManager->winGetWindowFromId( NULL, moneyWindowKey );
-//
-//	}  // end if
-	Player *moneyPlayer = NULL;
-	if( TheControlBar->isObserverControlBarOn())
-		moneyPlayer = TheControlBar->getObserverLookAtPlayer();
-	else
-		moneyPlayer = ThePlayerList->getLocalPlayer();
-	if( moneyPlayer)
+
+	Player *moneyPlayer = reinterpret_cast<Player *>( Rva002EE330ThePlayers->getLocalPlayer() );
+	if( moneyPlayer )
 	{
-		Int currentMoney = moneyPlayer->getMoney()->countMoney();
+		Int currentMoney = *reinterpret_cast<Int *>( reinterpret_cast<UnsignedByte *>( moneyPlayer ) + 0x4c );
 		if( lastMoney != currentMoney )
 		{
 			UnicodeString buffer;
 
 			buffer.format( TheGameText->fetch( "GUI:ControlBarMoneyDisplay" ), currentMoney );
-			GadgetStaticTextSetText( moneyWin, buffer );
+			static_cast<void (*)( GameWindow *, BfmeUnicodeStringArg )>( GadgetStaticTextSetText )( moneyWin, buffer );
 			lastMoney = currentMoney;
-			
+
 		}  // end if
-		moneyWin->winHide(FALSE);
-		powerWin->winHide(FALSE);
+		if( moneyWin->winIsHidden() )
+		{
+			moneyWin->winHide( FALSE );
+			powerWin->winHide( FALSE );
+		}
 	}
 	else
 	{
-		moneyWin->winHide(TRUE);
-		powerWin->winHide(TRUE);
+		if( !moneyWin->winIsHidden() )
+		{
+			moneyWin->winHide( TRUE );
+			powerWin->winHide( TRUE );
+		}
 	}
-	
+
 	// Update the floating Text;
 	updateFloatingText();
 
 	// update the control bar
-	TheControlBar->update();
+	reinterpret_cast<BfmeUpdateSubsystem *>( TheControlBar )->update();
 
-	updateIdleWorker();
+	reinterpret_cast<BfmeUpdateSelfView *>( this )->bfmeSlot106();
 
 	// update any random window layout that so requests
-	for (std::list<WindowLayout *>::iterator it = m_windowLayouts.begin(); it != m_windowLayouts.end(); ++it)
-	{
-		WindowLayout *layout = *it;
-		layout->runUpdate();
-	}
+	for( BfmeUpdateWindowLayoutNode *it = self->windowLayouts->next; it != self->windowLayouts; it = it->next )
+		it->layout->bfmeSlot2( NULL );
+
+#define view reinterpret_cast<BfmeUpdateTacticalView *>( TheTacticalView )
+#define data reinterpret_cast<const BfmeUpdateGlobalData *>( TheGlobalData )
 
 	//Handle keyboard camera rotations
-	if( m_cameraRotatingLeft && !m_cameraRotatingRight )
-	{
-		//Keyboard rotate left
-		TheTacticalView->setAngle( TheTacticalView->getAngle() - TheGlobalData->m_keyboardCameraRotateSpeed );
-	}
-	if( m_cameraRotatingRight && !m_cameraRotatingLeft )
-	{
-		//Keyboard rotate right
-		TheTacticalView->setAngle( TheTacticalView->getAngle() + TheGlobalData->m_keyboardCameraRotateSpeed );
-	}
-	if( m_cameraZoomingIn && !m_cameraZoomingOut )
-	{
-		//Keyboard zoom in
-		TheTacticalView->zoomIn();
-	}
-	if( m_cameraZoomingOut && !m_cameraZoomingIn )
-	{
-		//Keyboard zoom out
-		TheTacticalView->zoomOut();
-	}
+	if( self->cameraRotatingLeft && !self->cameraRotatingRight )
+		view->bfmeSlot62( view->bfmeSlot63() - data->keyboardCameraRotateSpeed );
+	else if( self->cameraRotatingRight && !self->cameraRotatingLeft )
+		view->bfmeSlot62( view->bfmeSlot63() + data->keyboardCameraRotateSpeed );
 
+	if( self->camera12B6 && !self->camera12B7 )
+		view->bfmeSlot76();
+	else if( self->camera12B7 && !self->camera12B6 )
+		view->bfmeSlot77();
+
+	Coord2D scroll;
+	scroll.x = 0.0f;
+	scroll.y = 0.0f;
+	if( self->scroll12B8 && !self->scroll12B9 )
+		scroll.x = -(data->keyboardScrollFactor * data->horizontalScrollSpeedFactor * g_bfmeKeyboardScrollSpeed012B54B8);
+	else if( self->scroll12B9 && !self->scroll12B8 )
+		scroll.x = data->keyboardScrollFactor * data->horizontalScrollSpeedFactor * g_bfmeKeyboardScrollSpeed012B54B8;
+	if( self->scroll12BA && !self->scroll12BB )
+		scroll.y = -(data->keyboardScrollFactor * data->horizontalScrollSpeedFactor * g_bfmeKeyboardScrollSpeed012B54B8);
+	else if( self->scroll12BB && !self->scroll12BA )
+		scroll.y = data->keyboardScrollFactor * data->horizontalScrollSpeedFactor * g_bfmeKeyboardScrollSpeed012B54B8;
+
+	Real ax = fabs( scroll.x );
+	Real ay = fabs( scroll.y );
+	Real length = ( ax > ay ) ? ax + ay * 0.25f : ay + ax * 0.25f;
+	if( length > 0.0f )
+		view->bfmeSlot23( &scroll );
+#undef view
+#undef data
+
+	reinterpret_cast<BfmeUpdateSubsystem *>( TheAptPalantir )->update();
+	reinterpret_cast<BfmeUpdateSubsystem *>( TheBannerUI )->update();
+	Rva005999B0Screen *screen = static_cast<Rva005999B0Screen *>( g_obj12F4C38 );
+	if( screen && screen->flag259 )
+		screen->frameUpdate();
+	static_cast<BfmeUpdateSubsystem *>( g_bfmeSubsystem012F4B78 )->update();
 
 }  // end update
 
