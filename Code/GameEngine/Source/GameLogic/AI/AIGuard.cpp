@@ -378,7 +378,6 @@ void AIGuardMachine::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@AIGuardMachine@@ present-unmatched
 void AIGuardMachine::loadPostProcess( void )
 {
 }  // end loadPostProcess
