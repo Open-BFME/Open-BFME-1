@@ -30,7 +30,7 @@ public:
 class PathfindLayer
 {
 public:
-	PathfindCell *getCell( Int x, Int y );
+	PathfindCell *getCell( Int cellX, Int cellY );
 
 private:
 	char m_unreconstructed[0x44];
@@ -38,14 +38,14 @@ private:
 
 struct MADStruct
 {
-	Int cellCallback( PathfindCell *from, PathfindCell *to, Int x, Int y );
+	Int cellCallback( PathfindCell *previousCell, PathfindCell *currentCell, Int cellX, Int cellY );
 };
 
 class Pathfinder
 {
 private:
-	Int iterateCellsAlongLine( const ICoord2D *start, const ICoord2D *end,
-		PathfindLayerEnum layer, MADStruct *userData );
+	Int iterateCellsAlongLine( const ICoord2D *startCell, const ICoord2D *destinationCell,
+		PathfindLayerEnum layer, MADStruct *callbackInfo );
 
 	char m_beforeMap[0x10];
 	PathfindCell **m_map;
@@ -57,29 +57,29 @@ private:
 	char m_beforeLayers[0x85c - 0x24];
 	PathfindLayer m_layers[16];
 
-	__forceinline PathfindCell *getCell( PathfindLayerEnum layer, Int x, Int y )
+	__forceinline PathfindCell *getCell( PathfindLayerEnum layer, Int cellX, Int cellY )
 	{
-		if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
-			y >= m_extent.lo.y && y <= m_extent.hi.y)
+		if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+			cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
 		{
 			if (layer > 1 && layer <= 15)
 			{
-				PathfindCell *cell = m_layers[layer].getCell( x, y );
+				PathfindCell *cell = m_layers[layer].getCell( cellX, cellY );
 				if (cell)
 					return cell;
 			}
-			return &m_map[x][y];
+			return &m_map[cellX][cellY];
 		}
 		return 0;
 	}
 };
 
-Int Pathfinder::iterateCellsAlongLine( const ICoord2D *start,
-	const ICoord2D *end, PathfindLayerEnum layer,
-	MADStruct *userData )
+Int Pathfinder::iterateCellsAlongLine( const ICoord2D *startCell,
+	const ICoord2D *destinationCell, PathfindLayerEnum layer,
+	MADStruct *callbackInfo )
 {
-	Int delta_x = abs( end->x - start->x );
-	Int delta_y = abs( end->y - start->y );
+	Int delta_x = abs( destinationCell->x - startCell->x );
+	Int delta_y = abs( destinationCell->y - startCell->y );
 
 	Int xinc2, yinc1, xinc1, numpixels, numadd, den;
 	Int yinc2, num;
@@ -106,19 +106,19 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D *start,
 		xinc1 = 1;
 	}
 
-	if (start->x > end->x)
+	if (startCell->x > destinationCell->x)
 	{
 		xinc2 = -xinc2;
 		xinc1 = -1;
 	}
-	if (start->y > end->y)
+	if (startCell->y > destinationCell->y)
 	{
 		yinc2 = -yinc2;
 		yinc1 = -1;
 	}
 
-	Int x = start->x;
-	Int y = start->y;
+	Int x = startCell->x;
+	Int y = startCell->y;
 	PathfindCell *from = 0;
 	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
 	{
@@ -126,7 +126,7 @@ Int Pathfinder::iterateCellsAlongLine( const ICoord2D *start,
 		if (to == 0)
 			return 0;
 
-		Int ret = userData->cellCallback( from, to, x, y );
+		Int ret = callbackInfo->cellCallback( from, to, x, y );
 		if (ret != 0)
 			return ret;
 		from = to;
