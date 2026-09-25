@@ -1,5 +1,5 @@
 // ?decompress@LZHLDecompressor@@QAEHPAEPAIPBE1@Z
-// partial score=0.46 date=2026-09-25
+// partial score=0.5 date=2026-09-25
 // cl: /DNDEBUG /MD -ICode/Libraries/Source/Compression/LZHCompress/CompLibHeader -ICode/Libraries/Source/Compression/LZHCompress/CompLibSource
 /* LZH-Light 1.0 (Sergey Ignatchenko, 1998) -- upstream C++ source, verbatim
    from github.com/TheSuperHackers/lzhl-1.0 commit dfd96e2, EXCEPT for comments:
@@ -421,7 +421,7 @@ BOOL LZHLDecompressor::decompress( BYTE* dst, size_t* dstSz, const BYTE* src, si
     nBits = 0;
     int i, n;
     Group* group;
-    if( src >= endSrc )
+    if( dst >= endDst )
         goto failure;
     do
         {
