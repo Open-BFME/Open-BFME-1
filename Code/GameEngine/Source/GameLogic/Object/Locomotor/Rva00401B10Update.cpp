@@ -1,9 +1,10 @@
-// ?update@Rva00401B10Owner@@QAEXIPAV?@HV?@H@_STL@@@_STL@@@Z
-// partial score=0.93 date=2026-09-19
+// ?update@Rva00401B10Owner@@QAEXIPAV?$vector@UGen_t_004019b0_m4pod@@V?$allocator@UGen_t_004019b0_m4pod@@@_STL@@@_STL@@@Z
 // cl: /DNDEBUG /MD /EHs-c-
 // stlport
 
 #include <vector>
+
+struct Gen_t_004019b0_m4pod { int a[1]; };
 
 struct Rva00401B10Payload
 {
@@ -18,13 +19,13 @@ struct Rva00401B10Node
 	Rva00401B10Node *m_next;
 	Rva00401B10Payload m_payload;
 	char m_unmodelled18[ 8 ];
-	int m_key;
+	Gen_t_004019b0_m4pod m_key;
 };
 
 class Rva00401B10Owner
 {
 public:
-	void update( unsigned int key, std::vector<int> *output );
+	void update( unsigned int key, std::vector<Gen_t_004019b0_m4pod> *output );
 
 private:
 	char m_unmodelled00[ 4 ];
@@ -36,7 +37,7 @@ private:
 	int m_unmodelled20;
 };
 
-void Rva00401B10Owner::update( unsigned int key, std::vector<int> *output )
+void Rva00401B10Owner::update( unsigned int key, std::vector<Gen_t_004019b0_m4pod> *output )
 {
 	Rva00401B10Owner *self = this;
 	if( self->m_head == 0 || self->m_current == 0 || key == 0x7FFFFFFF )
@@ -46,7 +47,7 @@ void Rva00401B10Owner::update( unsigned int key, std::vector<int> *output )
 	while( self->m_current != 0 )
 	{
 		node = self->m_current;
-		if( node->m_key == key )
+		if( node->m_key.a[0] == key )
 			break;
 		self->m_payload = node->m_payload;
 		Rva00401B10Node *next = node->m_next;
@@ -54,12 +55,13 @@ void Rva00401B10Owner::update( unsigned int key, std::vector<int> *output )
 	}
 
 	while( self->m_current != 0 &&
-		self->m_current->m_key != 0x7FFFFFFF )
+		self->m_current->m_key.a[0] != 0x7FFFFFFF )
 	{
-		if( self->m_current->m_next == 0 ||
-			self->m_current->m_next->m_key == 0x7FFFFFFF )
+		if( self->m_current->m_next != 0 &&
+			self->m_current->m_next->m_key.a[0] == 0x7FFFFFFF )
 			break;
-		output->push_back( self->m_current->m_key );
+		Gen_t_004019b0_m4pod key = self->m_current->m_key;
+		output->push_back( key );
 		self->m_payload = self->m_current->m_payload;
 		self->m_current = self->m_current->m_next;
 	}
