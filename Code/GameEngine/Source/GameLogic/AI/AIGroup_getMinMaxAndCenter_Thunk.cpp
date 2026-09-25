@@ -77,7 +77,8 @@ private:
 class AIGroup
 {
 public:
-	Bool getMinMaxAndCenter( Coord2D *min, Coord2D *max, Coord3D *center );
+	Bool getMinMaxAndCenter( Coord2D *minimumBounds, Coord2D *maximumBounds,
+		Coord3D *groupCenter );
 
 private:
 	unsigned char m_unreconstructed_00[4];						///< +0x00
@@ -85,16 +86,17 @@ private:
 };
 
 // ?getMinMaxAndCenter@AIGroup@@QAE_NPAUCoord2D@@0PAUCoord3D@@@Z
-Bool AIGroup::getMinMaxAndCenter( Coord2D *min, Coord2D *max, Coord3D *center )
+Bool AIGroup::getMinMaxAndCenter( Coord2D *minimumBounds,
+	Coord2D *maximumBounds, Coord3D *groupCenter )
 {
 	Int count = 0;
-	min->x = 1e10f;
-	max->x = -1e10f;
-	min->y = 1e10f;
-	max->y = -1e10f;
-	center->x = 0.0f;
-	center->y = 0.0f;
-	center->z = 0.0f;
+	minimumBounds->x = 1e10f;
+	maximumBounds->x = -1e10f;
+	minimumBounds->y = 1e10f;
+	maximumBounds->y = -1e10f;
+	groupCenter->x = 0.0f;
+	groupCenter->y = 0.0f;
+	groupCenter->z = 0.0f;
 
 	std::list<Object *>::iterator i;
 	FormationID id = NO_FORMATION_ID;
@@ -108,15 +110,15 @@ Bool AIGroup::getMinMaxAndCenter( Coord2D *min, Coord2D *max, Coord3D *center )
 		if (ai)
 		{
 			const Coord3D *objPos = (*i)->getPosition();
-			center->x += objPos->x;
-			center->y += objPos->y;
-			center->z += objPos->z;
+			groupCenter->x += objPos->x;
+			groupCenter->y += objPos->y;
+			groupCenter->z += objPos->z;
 
 			//Calculate the bounding coordinates of all units
-			min->x = min->x > objPos->x ? objPos->x : min->x;
-			max->x = max->x < objPos->x ? objPos->x : max->x;
-			min->y = min->y > objPos->y ? objPos->y : min->y;
-			max->y = max->y < objPos->y ? objPos->y : max->y;
+			minimumBounds->x = minimumBounds->x > objPos->x ? objPos->x : minimumBounds->x;
+			maximumBounds->x = maximumBounds->x < objPos->x ? objPos->x : maximumBounds->x;
+			minimumBounds->y = minimumBounds->y > objPos->y ? objPos->y : minimumBounds->y;
+			maximumBounds->y = maximumBounds->y < objPos->y ? objPos->y : maximumBounds->y;
 			FormationID curID = (*i)->getFormationID() ;
 			if (count==0) {
 				id = curID;
@@ -131,9 +133,9 @@ Bool AIGroup::getMinMaxAndCenter( Coord2D *min, Coord2D *max, Coord3D *center )
 	}
 
 	Real oneOverCount = 1.0f / count;
-	center->x *= oneOverCount;
-	center->y *= oneOverCount;
-	center->z *= oneOverCount;
+	groupCenter->x *= oneOverCount;
+	groupCenter->y *= oneOverCount;
+	groupCenter->z *= oneOverCount;
 	Bool isFormation = (id != NO_FORMATION_ID);
 	if (count < 2) isFormation = false;
 	return isFormation;
