@@ -89,7 +89,7 @@ inline ObjectID PathfindCell::getGoalUnit( void ) const
 class PathfindLayer
 {
 public:
-	PathfindCell *getCell( Int x, Int y );
+	PathfindCell *getCell( Int cellX, Int cellY );
 
 private:
 	unsigned char m_body[0x44];		// stride 0x44
@@ -101,7 +101,7 @@ class Pathfinder
 public:
 	Bool checkDestination( const Object *object, Int cellX, Int cellY,
 		PathfindLayerEnum layer, Int radius, Bool centerInCell );
-	PathfindCell *getCell( PathfindLayerEnum layer, Int x, Int y );
+	PathfindCell *getCell( PathfindLayerEnum layer, Int cellX, Int cellY );
 
 private:
 	unsigned char m_prefix[0x10];		// +0x000 opaque
@@ -111,18 +111,18 @@ private:
 	PathfindLayer m_layers[16];			// +0x85c
 };
 
-inline PathfindCell *Pathfinder::getCell( PathfindLayerEnum layer, Int x, Int y )
+inline PathfindCell *Pathfinder::getCell( PathfindLayerEnum layer, Int cellX, Int cellY )
 {
-	if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
-		y >= m_extent.lo.y && y <= m_extent.hi.y)
+	if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+		cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
 	{
 		if (layer > 1 && layer <= 15)
 		{
-			PathfindCell *cell = m_layers[layer].getCell( x, y );
+			PathfindCell *cell = m_layers[layer].getCell( cellX, cellY );
 			if (cell)
 				return cell;
 		}
-		return &m_map[x][y];
+		return &m_map[cellX][cellY];
 	}
 	return 0;
 }
