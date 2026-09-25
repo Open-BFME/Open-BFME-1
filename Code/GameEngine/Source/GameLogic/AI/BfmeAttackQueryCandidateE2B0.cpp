@@ -54,7 +54,7 @@ public:
 class PathfindLayer
 {
 public:
-	PathfindCell *getCell(Int x, Int y);
+	PathfindCell *getCell(Int cellX, Int cellY);
 
 private:
 	unsigned char m_unreconstructed[0x44];
@@ -76,8 +76,8 @@ public:
 	Bool validMovement(Int layer, Int fromZone, zoneStorageType toZone,
 		const void *extra);
 
-	Bool checkCandidate(const ICoord2D *base, Int dx, Int dy, Int unused,
-		Int layer, Int fromZone, BfmeCellResult *result,
+	Bool checkCandidate(const ICoord2D *base, Int offsetX, Int offsetY,
+		Int movementLayer, Int pathLayer, Int fromZone, BfmeCellResult *result,
 		const PathfindMovementProfile *profile, const void *extra);
 
 private:
@@ -92,18 +92,18 @@ private:
 	PathfindLayer m_layers[16];
 	PathfindZoneManager m_zoneManager;
 
-	__forceinline PathfindCell *getCell(Int layer, Int x, Int y)
+	__forceinline PathfindCell *getCell(Int layerIndex, Int cellX, Int cellY)
 	{
-		if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
-			y >= m_extent.lo.y && y <= m_extent.hi.y)
+		if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+			cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
 		{
-			if (layer > 1 && layer <= 15)
+			if (layerIndex > 1 && layerIndex <= 15)
 			{
-				PathfindCell *cell = m_layers[layer].getCell(x, y);
+				PathfindCell *cell = m_layers[layerIndex].getCell(cellX, cellY);
 				if (cell)
 					return cell;
 			}
-			return &m_map[x][y];
+			return &m_map[cellX][cellY];
 		}
 		return 0;
 	}
@@ -193,21 +193,22 @@ Int BfmeAttackQuery::fillCellAlongLine(const ICoord2D *from,
 	return false;
 }
 
-Bool BfmeAttackQuery::checkCandidate(const ICoord2D *base, Int dx, Int dy,
-	Int unused, Int layer, Int fromZone, BfmeCellResult *result,
+Bool BfmeAttackQuery::checkCandidate(const ICoord2D *base, Int offsetX,
+	Int offsetY, Int movementLayer, Int pathLayer, Int fromZone,
+	BfmeCellResult *result,
 	const PathfindMovementProfile *profile, const void *extra)
 {
 	ICoord2D candidate = *base;
-	candidate.x += dx;
-	candidate.y += dy;
-	fillCellAlongLine(base, &candidate, layer, result);
+	candidate.x += offsetX;
+	candidate.y += offsetY;
+	fillCellAlongLine(base, &candidate, pathLayer, result);
 
 	if (result->m_candidateZone != 0)
 	{
 		Int effectiveZone = m_zoneManager.getEffectiveZone(
 			*profile, (zoneStorageType)result->m_candidateZone);
 		if (fromZone == effectiveZone ||
-			validMovement(unused, fromZone, effectiveZone, extra))
+			validMovement(movementLayer, fromZone, effectiveZone, extra))
 			return true;
 	}
 	return false;
