@@ -28,7 +28,6 @@ protected:
 	void logGameEnd(void);
 };
 
-// ?logGameEnd@RecorderClass@@ present-unmatched
 void RecorderClass::logGameEnd(void)
 {
 	if (!m_file)
