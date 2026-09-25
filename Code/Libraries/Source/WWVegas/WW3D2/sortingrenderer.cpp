@@ -164,14 +164,34 @@ void InsertionSort(TempIndexStruct *begin, TempIndexStruct *end)
 }
 
 // ----------------------------------------------------------------------------
-static
+// ?Sort@@YAXPAUTempIndexStruct@@0@Z
 void Sort(TempIndexStruct *begin, TempIndexStruct *end)
 {
-	const int diff = end - begin;
-	if (diff <= 16) {
-		// Insertion sort has less overhead for small arrays
-		InsertionSort(begin, end);
-	} else {
+	if (begin >= end)
+		return;
+
+	TempIndexStruct *ranges[64];
+	TempIndexStruct **next_range = ranges;
+	for (;;) {
+		const int diff = end - begin;
+		if (diff <= 16) {
+			for (TempIndexStruct *iter = begin + 1; iter < end; ++iter) {
+				TempIndexStruct val = iter[0];
+				TempIndexStruct *insert = iter;
+				while (insert != begin && insert[-1] > val) {
+					insert[0] = insert[-1];
+					insert -= 1;
+				}
+				insert[0] = val;
+			}
+
+			if (next_range == ranges)
+				return;
+			begin = *(--next_range);
+			end = *(--next_range);
+			continue;
+		}
+
 		// Choose the median of begin, mid, and (end - 1) as the partitioning element.
 		// Rearrange so that *(begin + 1) <= *begin <= *(end - 1).  These will be guard
 		// elements.
@@ -209,11 +229,13 @@ void Sort(TempIndexStruct *begin, TempIndexStruct *end)
 
 		// Sort the smaller subarray first then the larger
 		if (right - begin > end - (right + 1)) {
-			Sort(right + 1, end);
-			Sort(begin, right);
+			*next_range++ = right;
+			*next_range++ = begin;
+			begin = right + 1;
 		} else {
-			Sort(begin, right);
-			Sort(right + 1, end);
+			*next_range++ = end;
+			*next_range++ = right + 1;
+			end = right;
 		}
 	}
 }
