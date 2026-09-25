@@ -46,7 +46,7 @@ enum
 
 struct TCheckMovementInfo
 {
-	ICoord2D	cell;
+	ICoord2D	currentCell;
 	Int			layer;
 	Int			m_rest[8];
 	Bool		m_limited;
@@ -54,7 +54,7 @@ struct TCheckMovementInfo
 
 struct Rva003E0930Struct
 {
-	ICoord2D	cell;
+	ICoord2D	queryCell;
 };
 
 struct Rva003D4F90Struct
@@ -68,39 +68,39 @@ class Pathfinder
 public:
 	// Address-derived names already pinned in reverse/symbols.csv at the
 	// incremental-link thunks 0x00024299, 0x0004A980 and 0x0002B9E0.
-	Bool bfmeStepE0930( Object *obj, ICoord2D *info, ICoord2D *query );
-	Bool bfmeStepE05B0( Object *obj, ICoord2D *info );
+	Bool bfmeStepE0930( Object *object, ICoord2D *currentCell, ICoord2D *queryCell );
+	Bool bfmeStepE05B0( Object *object, ICoord2D *currentCell );
 	Bool bfmeStepD4F90( void *parms, PathfindCell *cell );
 };
 
 class LinePassableStruct
 {
 public:
-	Int linePassableCallback( PathfindCell *from, PathfindCell *to,
-		Int to_x, Int to_y );
+	Int linePassableCallback( PathfindCell *previousCell, PathfindCell *currentCell,
+		Int cellX, Int cellY );
 
 	Pathfinder			*m_pathfinder;
-	Object				*m_obj;
+	Object				*m_object;
 	TCheckMovementInfo	m_info;
 	Int					m_allyFixedCount;
 	Rva003D4F90Struct	m_valid;
 	Rva003E0930Struct	m_query;
 };
 
-Int LinePassableStruct::linePassableCallback( PathfindCell *from, PathfindCell *to,
-	Int to_x, Int to_y )
+Int LinePassableStruct::linePassableCallback( PathfindCell *previousCell, PathfindCell *currentCell,
+	Int cellX, Int cellY )
 {
-	m_info.cell.x = to_x;
-	m_info.cell.y = to_y;
-	m_info.layer = to->getLayer();
+	m_info.currentCell.x = cellX;
+	m_info.currentCell.y = cellY;
+	m_info.layer = currentCell->getLayer();
 
-	if (from) {
-		if (!m_pathfinder->bfmeStepE0930( m_obj, &m_info.cell, &m_query.cell )) {
+	if (previousCell) {
+		if (!m_pathfinder->bfmeStepE0930( m_object, &m_info.currentCell, &m_query.queryCell )) {
 			_WriteBarrier();
 			return 1;
 		}
 	} else {
-		if (!m_pathfinder->bfmeStepE05B0( m_obj, &m_info.cell )) {
+		if (!m_pathfinder->bfmeStepE05B0( m_object, &m_info.currentCell )) {
 			_ReadWriteBarrier();
 			return 1;
 		}
@@ -111,16 +111,16 @@ Int LinePassableStruct::linePassableCallback( PathfindCell *from, PathfindCell *
 		return 1;
 	}
 
-	m_query.cell.x = to_x;
-	m_query.cell.y = to_y;
+	m_query.queryCell.x = cellX;
+	m_query.queryCell.y = cellY;
 
-	if (from) {
-		Int layer = to->getLayer();
+	if (previousCell) {
+		Int layer = currentCell->getLayer();
 		if (layer >= LAYER_WALL_START && layer <= LAYER_LAST &&
-				from->getLayer() == layer && to->getType() == CELL_CLEAR) {
+				previousCell->getLayer() == layer && currentCell->getType() == CELL_CLEAR) {
 			return 0;
 		}
 	}
 
-	return !m_pathfinder->bfmeStepD4F90( &m_valid, to );
+	return !m_pathfinder->bfmeStepD4F90( &m_valid, currentCell );
 }
