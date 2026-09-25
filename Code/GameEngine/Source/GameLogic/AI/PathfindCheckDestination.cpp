@@ -99,8 +99,8 @@ private:
 class Pathfinder
 {
 public:
-	Bool checkDestination( const Object *obj, Int cellX, Int cellY,
-		PathfindLayerEnum layer, Int iRadius, Bool centerInCell );
+	Bool checkDestination( const Object *object, Int cellX, Int cellY,
+		PathfindLayerEnum layer, Int radius, Bool centerInCell );
 	PathfindCell *getCell( PathfindLayerEnum layer, Int x, Int y );
 
 private:
@@ -127,18 +127,18 @@ inline PathfindCell *Pathfinder::getCell( PathfindLayerEnum layer, Int x, Int y 
 	return 0;
 }
 
-Bool Pathfinder::checkDestination( const Object *obj, Int cellX, Int cellY,
-	PathfindLayerEnum layer, Int iRadius, Bool centerInCell )
+Bool Pathfinder::checkDestination( const Object *object, Int cellX, Int cellY,
+	PathfindLayerEnum layer, Int radius, Bool centerInCell )
 {
-	Int numCellsAbove = iRadius;
+	Int numCellsAbove = radius;
 	if (centerInCell) numCellsAbove++;
 
-	ObjectID objID = obj->getID();
+	ObjectID objectID = object->getID();
 
 	Int i, j;
-	for (i = cellX - iRadius; i < cellX + numCellsAbove; i++)
+	for (i = cellX - radius; i < cellX + numCellsAbove; i++)
 	{
-		for (j = cellY - iRadius; j < cellY + numCellsAbove; j++)
+		for (j = cellY - radius; j < cellY + numCellsAbove; j++)
 		{
 			PathfindCell *cell = getCell( layer, i, j );
 			if (cell == 0)
@@ -149,7 +149,7 @@ Bool Pathfinder::checkDestination( const Object *obj, Int cellX, Int cellY,
 
 			if (cell->getGoalAircraftByte() & 1)
 			{
-				if (obj->bfmeIsComputerControlled())
+				if (object->bfmeIsComputerControlled())
 					return false;
 			}
 
@@ -159,7 +159,7 @@ Bool Pathfinder::checkDestination( const Object *obj, Int cellX, Int cellY,
 			if (cell->getFlags())
 			{
 				ObjectID goalUnitID = cell->getGoalUnit();
-				if (goalUnitID != objID && goalUnitID != INVALID_ID)
+				if (goalUnitID != objectID && goalUnitID != INVALID_ID)
 					return false;
 			}
 		}
