@@ -475,7 +475,8 @@ def hook_fixture(repo):
     # Unrelated gates are inert; run the real hook to verify that it refuses
     # unreviewed checker code even if that local checker would return success.
     for tool in ('name_regression', 'name_history', 'name_oracle', 'check_case_collisions',
-                 'conversion_gate', 'check_csv', 'retired_guard', 'one_identity'):
+                 'conversion_gate', 'check_csv', 'retired_guard', 'one_identity',
+                 'eol_guard', 'b_pin_check'):
         put(repo, f'tools/{tool}.py', 'raise SystemExit(0)\n')
     put(repo, 'Code/Names.cpp', BEFORE)
     return commit(repo)
