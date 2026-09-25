@@ -3528,5 +3528,45 @@
   "after_sha256": "50f4bf9afe10b51ce79bbd12d36df3954d73389762078f253b6ca9dae851c8bc",
   "evidence": "docs/naming_evidence.md",
   "reason": "the bank's method name Remove had no caller, string, vtable or ZH-twin evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x006a5e60.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006A5E60.cpp",
+  "old_name": "m_audio",
+  "new_name": "m_dword10",
+  "before_sha256": "e7c3905b785c1659f616e76a288477ee6b2ee065abae4b6a7e810dce17751ab8",
+  "after_sha256": "c27b292d406eaf36b8d050d3bd98276affbdc17d98d12cf104b39ee27a9b9ca0",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "no witness names slot +0x10 of the 0x40-byte array at +0xb44"
+ },
+ {
+  "old_path": "reverse/attempts/0x006a5e60.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006A5E60.cpp",
+  "old_name": "m_stream",
+  "new_name": "m_dword8",
+  "before_sha256": "e7c3905b785c1659f616e76a288477ee6b2ee065abae4b6a7e810dce17751ab8",
+  "after_sha256": "c27b292d406eaf36b8d050d3bd98276affbdc17d98d12cf104b39ee27a9b9ca0",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "+0x8 is used as an index here and is the sample handle in ZH so stream was a guess"
+ },
+ {
+  "old_path": "reverse/attempts/0x006a5e60.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006A5E60.cpp",
+  "old_name": "notify",
+  "new_name": "rva006A5E60",
+  "before_sha256": "e7c3905b785c1659f616e76a288477ee6b2ee065abae4b6a7e810dce17751ab8",
+  "after_sha256": "c27b292d406eaf36b8d050d3bd98276affbdc17d98d12cf104b39ee27a9b9ca0",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the claimed vtable slot 0x11C is refuted (slot 71 of 0x0111C0C0 is j_00001343) and the body is reached only by a direct ILT call from PlayingAudio dtor 0x006BA030 so no method name is evidenced"
+ },
+ {
+  "old_path": "reverse/attempts/0x006a5e60.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006A5E60.cpp",
+  "old_name": "releasePlayingAudio",
+  "new_name": "rva006A59F0",
+  "before_sha256": "e7c3905b785c1659f616e76a288477ee6b2ee065abae4b6a7e810dce17751ab8",
+  "after_sha256": "c27b292d406eaf36b8d050d3bd98276affbdc17d98d12cf104b39ee27a9b9ca0",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the ledger pin for ILT 0x0002669D is address-derived (?rva006A59F0@MilesAudioManager) and releasePlayingAudio had no evidence and would not resolve"
  }
 ]
