@@ -103,18 +103,18 @@ class Pathfinder
 {
 public:
 	void removeGoal003E3D20(Object *object);
-	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
+	PathfindCell *getCell(PathfindLayerEnum layer, Int cellX, Int cellY);
 
-	PathfindCell *getGroundCell(Int x, Int y)
+	PathfindCell *getGroundCell(Int cellX, Int cellY)
 	{
-		if (x >= m_extentLoX && x <= m_extentHiX &&
-			y >= m_extentLoY && y <= m_extentHiY)
-			return &m_map[x][y];
+		if (cellX >= m_extentLoX && cellX <= m_extentHiX &&
+			cellY >= m_extentLoY && cellY <= m_extentHiY)
+			return &m_map[cellX][cellY];
 		return 0;
 	}
 
 protected:
-	void getRadiusAndCenter(const Object *object, Int &radius, Bool &center);
+	void getRadiusAndCenter(const Object *object, Int &radius, Bool &centerInCell);
 	unsigned char m_pad00[0x10];
 	PathfindCell **m_map;
 	Int m_extentLoX;
@@ -187,40 +187,41 @@ void Pathfinder::removeGoal003E3D20(Object *object)
 #undef REAL_TO_INT_FLOOR
 #define REAL_TO_INT_FLOOR(x) (fast_float2long_round((Real)floor((double)(x))))
 extern "C" __declspec(dllimport) double __cdecl floor(double);
-__declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *obj, Int &radius, Bool &center )
+__declspec(noinline) void Pathfinder::getRadiusAndCenter(
+	const Object *object, Int &radius, Bool &centerInCell )
 {
 	Real diameter;
 	Int maxRadius = 2;
-	BfmeOverridable *t1 = obj->getTemplate();
+	BfmeOverridable *t1 = object->getTemplate();
 	if ((t1 == 0 ? t1 : t1->getFinalOverride())->m_flagsC8 & 0x400) {
 		maxRadius = 4;
 	} else {
-		BfmeOverridable *t2 = obj->getTemplate();
+		BfmeOverridable *t2 = object->getTemplate();
 		if ((t2 == 0 ? t2 : t2->getFinalOverride())->m_flagsD4 & 0x1000) {
 			maxRadius = 4;
 		}
 	}
 
-	diameter = obj->m_boundingCircleRadius * 2.0f;
+	diameter = object->m_boundingCircleRadius * 2.0f;
 	if (diameter > g_pathfindCellSize && diameter < g_pathfindDoubleCellSize) {
 		diameter = 20.0f;
 	}
 
-	if ((obj->getTemplate() == 0 ? obj->getTemplate() :
-		obj->getTemplate()->getFinalOverride())->m_level > g_pathfindLevelLimit) {
-		diameter = (obj->getTemplate() == 0 ? obj->getTemplate() :
-		obj->getTemplate()->getFinalOverride())->m_level;
+	if ((object->getTemplate() == 0 ? object->getTemplate() :
+		object->getTemplate()->getFinalOverride())->m_level > g_pathfindLevelLimit) {
+		diameter = (object->getTemplate() == 0 ? object->getTemplate() :
+		object->getTemplate()->getFinalOverride())->m_level;
 	}
 
 	radius = REAL_TO_INT_FLOOR( diameter / 10.0f + g_pathfindCellCenterBias );
-	center = false;
+	centerInCell = false;
 	if (radius == 0) radius++;
 	if (radius & 1) {
-		center = true;
+		centerInCell = true;
 	}
 	radius /= 2;
 	if (radius > maxRadius) {
 		radius = maxRadius;
-		center = true;
+		centerInCell = true;
 	}
 }
