@@ -1,17 +1,9 @@
-// ?charAt@BfmeUtf8Cursor0089F8D0@@QBEHH@Z
-// partial score=0.92 date=2026-09-12
-// ?charAt@BfmeUtf8Cursor0089F8D0@@QBEHH@Z
 // cl: /O2 /DNDEBUG /MD
 
 class BfmeUtf8Cursor0089F8D0
 {
-	struct StringData
-	{
-		unsigned short m_refCount;
-		unsigned short m_size;
-		unsigned short m_maxSize;
-		unsigned short m_hash;
-	};
+	// Opaque 8-byte string header; the UTF-8 bytes follow it.
+	struct StringData;
 
 	StringData *m_data;
 
@@ -61,17 +53,17 @@ int BfmeUtf8Cursor0089F8D0::charAt(int index) const
 				p += 4;
 			}
 			if (value == 0)
-				goto ret_neg1;
+			{
+				p = 0;
+				break;
+			}
 			++count;
 			if (count >= index)
 				break;
 		}
 	}
-	if (p != 0)
-		goto decode_final;
-ret_neg1:
-	return -1;
-decode_final:
+	if (p == 0)
+		return -1;
 	unsigned char c = *p;
 	if (c <= 0x7f)
 		return c;
@@ -88,12 +80,6 @@ decode_final:
 		value = (p[2] & 0x3f) | (value << 6);
 		return value;
 	}
-	value = c & 7;
-	value <<= 6;
-	value |= p[1] & 0x3f;
-	value <<= 6;
-	value |= p[2] & 0x3f;
-	value <<= 6;
-	value |= p[3] & 0x3f;
+	value = (((c & 7) << 12) | ((p[1] & 0x3f) << 6) | (p[2] & 0x3f)) << 6 | (p[3] & 0x3f);
 	return value;
 }
