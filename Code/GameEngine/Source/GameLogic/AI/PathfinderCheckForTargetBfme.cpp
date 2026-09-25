@@ -23,8 +23,9 @@ public:
 		void **, Int);
 protected:
 	void adjustCoordToCell(Int, Int, Int, Coord3D &, PathfindLayerEnum);
-	Bool checkForTarget(const Object *, Int, Int, const Weapon *,
-		const Object *, const Coord3D *, Int, Bool, Coord3D *);
+	Bool checkForTarget(const Object *object, Int cellX, Int cellY, const Weapon *weapon,
+		const Object *targetObject, const Coord3D *targetPosition, Int radius,
+		Bool centerFlag, Coord3D *adjustedDestination);
 };
 
 extern void j_000411d2(void);
@@ -49,25 +50,25 @@ static __forceinline void luna39Adjust(Pathfinder *self, Int cellX, Int cellY,
 		cellX, cellY, centerInCell, dest, layer);
 }
 
-Bool Pathfinder::checkForTarget(const Object *obj, Int cellX, Int cellY,
-	const Weapon *weapon, const Object *victim, const Coord3D *victimPos,
-	Int iRadius, Bool center, Coord3D *dest)
+Bool Pathfinder::checkForTarget(const Object *object, Int cellX, Int cellY,
+	const Weapon *weapon, const Object *targetObject, const Coord3D *targetPosition,
+	Int radius, Bool centerFlag, Coord3D *adjustedDestination)
 {
 	Coord3D adjustDest;
-	Int centerInCell = *(volatile const Int *)&center;
-	if (bfmeInnerE6E90((void *)obj, (void *)cellX, (void *)cellY, (void *)1,
-					   (void *)iRadius, (void *)centerInCell,
-					   (void **)&center, 0))
+	Int centerInCell = *(volatile const Int *)&centerFlag;
+	if (bfmeInnerE6E90((void *)object, (void *)cellX, (void *)cellY, (void *)1,
+					   (void *)radius, (void *)centerInCell,
+					   (void **)&centerFlag, 0))
 	{
-		Bool centerOK = (*(const Int *)&center == 0);
+		Bool centerOK = (*(const Int *)&centerFlag == 0);
 		_ReadWriteBarrier();
 		if (centerOK)
 		{
 			luna39Adjust(this, cellX, cellY, centerInCell, adjustDest, LAYER_GROUND);
-			if (weapon->isGoalPosWithinAttackRange(obj, &adjustDest, victim,
-										victimPos, 0x41200000))
+			if (weapon->isGoalPosWithinAttackRange(object, &adjustDest, targetObject,
+									targetPosition, 0x41200000))
 			{
-				*dest = adjustDest;
+				*adjustedDestination = adjustDest;
 				return true;
 			}
 		}
