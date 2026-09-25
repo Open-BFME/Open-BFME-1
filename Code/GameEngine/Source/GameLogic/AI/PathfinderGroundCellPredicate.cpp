@@ -27,15 +27,15 @@ public:
 class Pathfinder
 {
 public:
-	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
-	PathfindCell *getCell(PathfindLayerEnum layer, int x, int y);
-	Bool bfmeGroundCellThreshold(const Coord3D *pos, Bool requireClearType);
+	Bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
+	PathfindCell *getCell(PathfindLayerEnum layer, int cellX, int cellY);
+	Bool bfmeGroundCellThreshold(const Coord3D *worldPosition, Bool requireClearType);
 };
 
-Bool Pathfinder::bfmeGroundCellThreshold(const Coord3D *pos, Bool requireClearType)
+Bool Pathfinder::bfmeGroundCellThreshold(const Coord3D *worldPosition, Bool requireClearType)
 {
 	ICoord2D cellIndex;
-	if (!worldToCell(pos, &cellIndex))
+	if (!worldToCell(worldPosition, &cellIndex))
 	{
 		PathfindCell *cell = getCell(LAYER_GROUND, cellIndex.x, cellIndex.y);
 		if (cell != 0)

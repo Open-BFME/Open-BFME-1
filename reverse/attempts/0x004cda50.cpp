@@ -1,5 +1,5 @@
 // ?LanGameOptionsMenuInit@@YAXPAVWindowLayout@@PAX@Z
-// partial score=0.579 date=2026-09-25
+// partial score=0.879 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
@@ -850,6 +850,15 @@ void lanUpdateSlotList( void )
 
 
 // InitLanGameGadgets reaches BFME's shifted LAN and GameWindow slots.
+class BfmeStartPositionAddress
+{
+public:
+	BfmeStartPositionAddress() : m_ip( 0 ), m_port( 0 ) {}
+
+	UnsignedInt m_ip;
+	UnsignedShort m_port;
+};
+
 class BfmeInitVirtualLanApi
 {
 public:
@@ -868,15 +877,15 @@ public:
     virtual void slot030() = 0;
     virtual void slot034() = 0;
     virtual void slot038() = 0;
-    virtual void slot03C() = 0;
+    virtual void RequestHasMap( void ) = 0;
     virtual void slot040() = 0;
     virtual void slot044() = 0;
     virtual void slot048() = 0;
     virtual void slot04C() = 0;
     virtual void slot050() = 0;
-    virtual void slot054() = 0;
+    virtual void RequestGameOptions( AsciiString options, Bool isPublic, const BfmeStartPositionAddress &address ) = 0;
     virtual void slot058() = 0;
-    virtual void slot05C() = 0;
+    virtual void RequestGameAnnounce( void ) = 0;
     virtual void slot060() = 0;
     virtual void slot064() = 0;
     virtual void slot068() = 0;
@@ -899,9 +908,21 @@ public:
     virtual void slot0AC() = 0;
     virtual void slot0B0() = 0;
     virtual void slot0B4() = 0;
-    virtual void slot0B8() = 0;
+    virtual Bool AmIHost( void ) = 0;
     virtual UnicodeString GetMyName( void ) = 0;
     virtual LANGameInfo *GetMyGame( void ) = 0;
+    virtual void slot0C4() = 0;
+    virtual void slot0C8() = 0;
+    virtual Bool slot0CC() = 0;
+};
+
+class BfmeInitLanGameInfoMapApi
+{
+public:
+    virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0;
+    virtual void slot0C() = 0; virtual void slot10() = 0; virtual void slot14() = 0;
+    virtual void slot18() = 0; virtual void slot1C() = 0;
+    virtual void adjustSlotsForMap() = 0;
 };
 
 class BfmeInitVirtualLanGameInfo
@@ -1083,7 +1104,7 @@ void DeinitLanGameGadgets( void )
 //-------------------------------------------------------------------------------------------------
 void LanGameOptionsMenuInit( WindowLayout *layout, void *userData )
 {
-	if (TheLAN->GetMyGame() && TheLAN->GetMyGame()->isGameInProgress())
+	if (((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame() && ((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->isGameInProgress())
 	{
 		// If we init while the game is in progress, we are really returning to the menu
 		// after the game.  So, we pop the menu and go back to the lobby.  Whee!
@@ -1108,56 +1129,52 @@ void LanGameOptionsMenuInit( WindowLayout *layout, void *userData )
 
 	//The dialog needs to react differently depending on whether it's the host or not.
 	TheMapCache->updateCache();
-	if (TheLAN->AmIHost())
+	if (((BfmeInitVirtualLanApi *)TheLAN)->AmIHost())
 	{
 		// read in some prefs
-		LANGameInfo *game = TheLAN->GetMyGame();
+		LANGameInfo *game = ((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame();
 		LANGameSlot *slot = game->getLANSlot(0);
 		LANPreferences pref;
 		slot->setColor( pref.getPreferredColor() );
 		slot->setPlayerTemplate( pref.getPreferredFaction() );
-		slot->setNATBehavior(FirewallHelperClass::FIREWALL_TYPE_SIMPLE);
+		*(UnsignedInt *)((char *)slot + 0x38) = FirewallHelperClass::FIREWALL_TYPE_SIMPLE;
 		game->setMap( pref.getPreferredMap() );
-    game->setStartingCash( pref.getStartingCash() );
-    game->setSuperweaponRestriction( pref.getSuperweaponRestricted() ? 1 : 0 );
-		std::map<AsciiString, MapMetaData>::iterator it;
+		AsciiString lowerMap = pref.getPreferredMap();
+		lowerMap.toLower();
+		MapCache *mapCache = TheMapCache;
+		std::map<AsciiString, MapMetaData>::iterator it = mapCache->find(lowerMap);
+		if (it != mapCache->end())
 		{
-			AsciiString lowerMap = pref.getPreferredMap();
-			lowerMap.toLower();
-			it = TheMapCache->find(lowerMap);
-		}
-		if (it != TheMapCache->end())
-		{
-			TheLAN->GetMyGame()->getSlot(0)->setMapAvailability(true);
-			TheLAN->GetMyGame()->setMapCRC( it->second.m_CRC );
-			TheLAN->GetMyGame()->setMapSize( it->second.m_filesize );
+			((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->getSlot(0)->setMapAvailability(true);
+			((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->setMapCRC( it->second.m_CRC );
+			((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->setMapSize( it->second.m_filesize );
 
-			TheLAN->GetMyGame()->adjustSlotsForMap(); // BGC- adjust the slots for the selected map.
+			((BfmeInitLanGameInfoMapApi *)((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame())->adjustSlotsForMap(); // BGC- adjust the slots for the selected map.
 		}
 
 		//GadgetTextEntrySetText(comboBoxPlayer[0], TheLAN->GetMyName());
 		lanUpdateSlotList();
 		updateGameOptions();
 		start = 1; // leave my combo boxes usable
+		if (((BfmeInitVirtualLanApi *)TheLAN)->slot0CC())
+			buttonSelectMap->winEnable(FALSE);
 	}
 	else
 	{
 
-		//DEBUG_LOG(("LanGameOptionsMenuInit(): map is %s\n", TheLAN->GetMyGame()->getMap().str()));
-		buttonStart->winSetText(TheGameText->fetch("GUI:Accept"));
+		//DEBUG_LOG(("LanGameOptionsMenuInit(): map is %s\n", ((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->getMap().str()));
+		buttonStart->GameWindow::winSetText(TheGameText->fetch("GUI:Accept"));
 		buttonSelectMap->winEnable( FALSE );
-    checkboxLimitSuperweapons->winEnable( FALSE ); // Can look but only host can touch
-    comboBoxStartingCash->winEnable( FALSE );      // Ditto
-		TheLAN->GetMyGame()->setMapCRC( TheLAN->GetMyGame()->getMapCRC() );		// force a recheck
-		TheLAN->GetMyGame()->setMapSize( TheLAN->GetMyGame()->getMapSize() ); // of if we have the map
-		TheLAN->RequestHasMap();
+		((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->setMapCRC( *(UnsignedInt *)((char *)((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame() + 0x40) );		// force a recheck
+		((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->setMapSize( *(UnsignedInt *)((char *)((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame() + 0x44) ); // of if we have the map
+		((BfmeInitVirtualLanApi *)TheLAN)->RequestHasMap();
 		lanUpdateSlotList();
 		updateGameOptions();
 	}
 	for (Int i = start; i < MAX_SLOTS; ++i)
 	{
 		//I'm a client, disable the controls I can't touch.
-		if (!TheLAN->AmIHost())
+		if (!((BfmeInitVirtualLanApi *)TheLAN)->AmIHost())
 			comboBoxPlayer[i]->winEnable(FALSE);
 
 		comboBoxColor[i]->winEnable(FALSE);
@@ -1180,10 +1197,10 @@ void LanGameOptionsMenuInit( WindowLayout *layout, void *userData )
 
 	s_isIniting = FALSE;
 
-	if (TheLAN->AmIHost())
+	if (((BfmeInitVirtualLanApi *)TheLAN)->AmIHost())
 	{
-		TheLAN->RequestGameOptions(GenerateGameOptionsString(),true);
-		TheLAN->RequestGameAnnounce();
+		((BfmeInitVirtualLanApi *)TheLAN)->RequestGameOptions(GenerateGameOptionsString(),true, BfmeStartPositionAddress());
+		((BfmeInitVirtualLanApi *)TheLAN)->RequestGameAnnounce();
 	}
 	lanUpdateSlotList();
 	LanPositionStartSpots();
@@ -1664,14 +1681,6 @@ void PostToLanGameOptions( PostToLanGameType post )
 	}
 }
 
-class BfmeStartPositionAddress
-{
-public:
-	BfmeStartPositionAddress() : m_ip( 0 ), m_port( 0 ) {}
-
-	UnsignedInt m_ip;
-	UnsignedShort m_port;
-};
 
 class BfmeStartPositionLANAPI
 {
