@@ -32,7 +32,7 @@ public:
 	~AudioEventRTS();                            // ILT 0x00026F35
 
 	void setObjectID(ObjectID id);              // ILT 0x00019A6A
-	void setPlayerIndex(int index);              // ILT 0x0003AC88
+	void setPlayerIndex(int playerIndex);         // ILT 0x0003AC88
 
 private:
 	unsigned char m_unmodelled[0x70];
