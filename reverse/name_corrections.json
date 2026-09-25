@@ -3368,5 +3368,15 @@
   "after_sha256": "b70e753147e469ce0fa0e004123a301605a6fe698cc52b725a2e8610b72f554a",
   "evidence": "reverse/identity_evidence/0x0073df50-name-correction.md",
   "reason": "The token alignment pairs the removed BfmeSphereEUF shape shim with a separate new camera layout declaration; the actual sphere local now uses the evidenced SphereClass type."
+ },
+ {
+  "old_path": "reverse/attempts/0x00365c20.cpp",
+  "new_path": "reverse/attempts/0x00365c20.cpp",
+  "old_name": "AsciiString",
+  "new_name": "Rva00365C20SourceRecord",
+  "before_sha256": "a6ce00bcc0eb812018797b578689cd438aeef9d8a9cc9d771dd89ad92d0c0723",
+  "after_sha256": "3f28ebbfd8ef51b285ec227f1f483b842d2a82c3590bc5c50de8a83ea3abde31",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "The earlier bank typed the first parameter as AsciiString; the retail caller 0x000F99C0 passes a pointer to a callback record whose 0x18-byte payload follows, so the attempt now declares that record under the address-derived type Rva00365C20SourceRecord."
  }
 ]

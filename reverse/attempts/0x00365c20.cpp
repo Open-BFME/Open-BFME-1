@@ -1,5 +1,5 @@
-// ?d_00365c20@@YAXXZ
-// partial score=0.5163 date=2026-09-23
+// ?method@Rva00365C20Owner@@QAEXABURva00365C20SourceRecord@@HHURva00365C20Payload6@@HABURva00365C20Tail@@@Z
+// partial score=0.5245 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -30,6 +30,16 @@ struct Rva00365C20Tail
 };
 
 typedef char Rva00365C20TailSize[ sizeof( Rva00365C20Tail ) == 0x1c ? 1 : -1 ];
+
+struct Rva00365C20SourceRecord
+{
+	AsciiString m_00;
+	int m_04;
+	int m_08;
+	int m_0c;
+	int m_10;
+	int m_14;
+};
 
 class BfmeOwnVUM
 {
@@ -88,7 +98,7 @@ typedef char Rva00365C20PlayerArmySize[
 class Rva00365C20Owner
 {
 public:
-	void method( const AsciiString &source00, int source08, int source0c,
+	void method( const Rva00365C20SourceRecord &source00, int source08, int source0c,
 		Rva00365C20Payload6 source14, int index,
 		const Rva00365C20Tail &source44 );
 
@@ -97,8 +107,8 @@ private:
 	std::vector<Rva00365C20PlayerArmy> m_playerArmies;
 };
 
-// ?method@Rva00365C20Owner@@QAEXABVAsciiString@@HHURva00365C20Payload6@@HABURva00365C20Tail@@@Z
-void Rva00365C20Owner::method( const AsciiString &source00,
+// ?method@Rva00365C20Owner@@QAEXABURva00365C20SourceRecord@@HHURva00365C20Payload6@@HABURva00365C20Tail@@@Z
+void Rva00365C20Owner::method( const Rva00365C20SourceRecord &source00,
 	int source08, int source0c, Rva00365C20Payload6 source14,
 	int index, const Rva00365C20Tail &source44 )
 {
@@ -108,14 +118,14 @@ void Rva00365C20Owner::method( const AsciiString &source00,
 		return;
 
 	BfmeOwnVUM record;
-	record.m_04.set( source00 );
+	record.m_04.set( source00.m_00 );
 	record.m_0c = source0c;
 	record.m_08 = source08;
 	record.m_10 = source14;
 	record.m_39 = source44.m_10;
 	record.m_3c = source44.m_00 + 1;
-	record.m_40 = source44.m_04;
 	record.m_44 = source44.m_08;
+	record.m_40 = source44.m_04;
 	record.m_48 = source44.m_0c;
 	reinterpret_cast<StringBase<unsigned short> &>( record.m_78 ).set(
 		reinterpret_cast<const StringBase<unsigned short> &>( source44.m_14 ) );
