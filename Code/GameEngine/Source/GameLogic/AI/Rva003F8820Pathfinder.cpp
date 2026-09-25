@@ -165,7 +165,7 @@ class Pathfinder
 public:
 	void rva003F8820(Bridge *theBridge, Bool keep);
 	Int bfmeLayerForPosition(Object *object, Coord3D position);
-	Bool worldToCell(const Coord3D *pos, ICoord2D *cell);
+	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
 
 	__forceinline void classify(Int i, Int j, PathfindCell *cell, Bridge *theBridge,
 		Bool keep, PathfindCell *bridgeCell, Real height)

@@ -148,7 +148,7 @@ class Pathfinder
 {
 public:
 	Bool rva003E5E40( Object *obj );
-	Bool worldToCell( const Coord3D *pos, ICoord2D *cell );
+	Bool worldToCell( const Coord3D *position, ICoord2D *cell );
 	PathfindCell *getCell( PathfindLayerEnum layer, Int x, Int y );
 
 protected:
@@ -204,10 +204,10 @@ __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, 
 }
 
 // Retail 0x003D7EC0; logic of pathfind_getcell.cpp.
-__declspec(noinline) Bool Pathfinder::worldToCell( const Coord3D *pos, ICoord2D *cell )
+__declspec(noinline) Bool Pathfinder::worldToCell( const Coord3D *position, ICoord2D *cell )
 {
-	cell->x = REAL_TO_INT_FLOOR(pos->x/PATHFIND_CELL_SIZE);
-	cell->y = REAL_TO_INT_FLOOR(pos->y/PATHFIND_CELL_SIZE);
+	cell->x = REAL_TO_INT_FLOOR(position->x/PATHFIND_CELL_SIZE);
+	cell->y = REAL_TO_INT_FLOOR(position->y/PATHFIND_CELL_SIZE);
 	Bool overflow = false;
 	if (cell->x < m_extent.lo.x) {overflow = true; cell->x = m_extent.lo.x;}
 	if (cell->y < m_extent.lo.y) {overflow = true; cell->y = m_extent.lo.y;}

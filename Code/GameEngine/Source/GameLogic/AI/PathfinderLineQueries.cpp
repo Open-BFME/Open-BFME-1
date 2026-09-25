@@ -151,7 +151,7 @@ public:
 class Pathfinder
 {
 public:
-	bool worldToCell(const Coord3D *pos, ICoord2D *cell);
+	bool worldToCell(const Coord3D *position, ICoord2D *cell);
 
 	// One name, four callees -- the user-data type is what selects the walker.
 	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,

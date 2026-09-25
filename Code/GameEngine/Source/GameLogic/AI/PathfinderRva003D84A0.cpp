@@ -66,7 +66,7 @@ public:
 class Pathfinder
 {
 public:
-	__declspec(noinline) Bool worldToCell(const Coord3D *pos, ICoord2D *cell);
+	__declspec(noinline) Bool worldToCell(const Coord3D *position, ICoord2D *cell);
 	void rva003D84A0(Waypoint *waypoint);
 
 private:
@@ -87,10 +87,10 @@ private:
 	PathfindZoneManager m_zoneManager;
 };
 
-Bool Pathfinder::worldToCell(const Coord3D *pos, ICoord2D *cell)
+Bool Pathfinder::worldToCell(const Coord3D *position, ICoord2D *cell)
 {
-	cell->x = REAL_TO_INT_FLOOR(pos->x/10);
-	cell->y = REAL_TO_INT_FLOOR(pos->y/10);
+	cell->x = REAL_TO_INT_FLOOR(position->x/10);
+	cell->y = REAL_TO_INT_FLOOR(position->y/10);
 	Bool overflow = false;
 	if (cell->x < m_extent.lo.x) {overflow = true; cell->x = m_extent.lo.x;}
 	if (cell->y < m_extent.lo.y) {overflow = true; cell->y = m_extent.lo.y;}

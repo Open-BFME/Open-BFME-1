@@ -37,10 +37,10 @@ PathfindCell *Pathfinder::getCell(PathfindLayerEnum layer, Int x, Int y)
 	return 0;
 }
 
-Bool Pathfinder::worldToCell(const Coord3D *pos, ICoord2D *cell)
+Bool Pathfinder::worldToCell(const Coord3D *position, ICoord2D *cell)
 {
-	cell->x = REAL_TO_INT_FLOOR(pos->x/PATHFIND_CELL_SIZE);
-	cell->y = REAL_TO_INT_FLOOR(pos->y/PATHFIND_CELL_SIZE);
+	cell->x = REAL_TO_INT_FLOOR(position->x/PATHFIND_CELL_SIZE);
+	cell->y = REAL_TO_INT_FLOOR(position->y/PATHFIND_CELL_SIZE);
 	Bool overflow = false;
 	if (cell->x < m_extent.lo.x) {overflow = true; cell->x = m_extent.lo.x;}
 	if (cell->y < m_extent.lo.y) {overflow = true; cell->y = m_extent.lo.y;}
