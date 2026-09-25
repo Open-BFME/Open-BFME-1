@@ -11,7 +11,6 @@
 ?dup_00137660@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/Thing/ThingFactory.cpp)
 ?dup_0013c0e0@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/Thing/ThingFactory.cpp)
 ?dup_0013c170@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/Thing/ThingFactory.cpp)
-?dup_0090b4e0@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp)
 ?friend_newModuleData@MissileAIUpdate@@SAPAVModuleData@@PAVINI@@@Z (Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp)
 _$E27 (Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp)
 uw_00c4ba18 (Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp)
