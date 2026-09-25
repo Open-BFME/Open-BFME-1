@@ -58,11 +58,11 @@ public:
 private:
 	// Ground-map subset of Pathfinder::getCell(layer, x, y), as in
 	// PathfinderGetLayer.cpp; not a separate retail function.
-	Gen_003F68F0 *getGroundCell(Int x, Int y)
+	Gen_003F68F0 *getGroundCell(Int cellX, Int cellY)
 	{
-		if (x >= m_extent.lo.x && x <= m_extent.hi.x &&
-			y >= m_extent.lo.y && y <= m_extent.hi.y)
-			return &m_map[x][y];
+		if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x &&
+			cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
+			return &m_map[cellX][cellY];
 		return 0;
 	}
 
