@@ -102,7 +102,7 @@ public:
 class Pathfinder
 {
 public:
-	void removeGoal003E3D20(Object *obj);
+	void removeGoal003E3D20(Object *object);
 	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
 
 	PathfindCell *getGroundCell(Int x, Int y)
@@ -123,24 +123,24 @@ protected:
 	Int m_extentHiY;
 };
 
-void Pathfinder::removeGoal003E3D20(Object *obj)
+void Pathfinder::removeGoal003E3D20(Object *object)
 {
-	BfmeOverridable *kindTemplate = obj->m_template;
+	BfmeOverridable *kindTemplate = object->m_template;
 	if (kindTemplate && kindTemplate->m_override)
 		kindTemplate = (BfmeOverridable *)kindTemplate->getFinalOverride();
 	if (kindTemplate->m_flagsC8 & 4) {
 		return;
 	}
-	ObjectID objID = obj->getID();
-	void *ai = obj->getAIUpdateInterface();
+	ObjectID objID = object->getID();
+	void *ai = object->getAIUpdateInterface();
 	if (ai == 0)
 		return;
-	ICoord2D goalCell = *obj->getPathfindGoalCell();
+	ICoord2D goalCell = *object->getPathfindGoalCell();
 
 	Bool centerInCell;
 	Int radius;
 	ICoord2D newCell;
-	getRadiusAndCenter(obj, radius, centerInCell);
+	getRadiusAndCenter(object, radius, centerInCell);
 	if (radius == 0)
 		radius++;
 	Int numCellsAbove = radius;
@@ -150,7 +150,7 @@ void Pathfinder::removeGoal003E3D20(Object *obj)
 	if (newCell.x == goalCell.x && newCell.y == goalCell.y)
 		return;
 	ICoord2D cellNdx;
-	obj->setPathfindGoalCell(newCell);
+	object->setPathfindGoalCell(newCell);
 	Int i, j;
 	if (goalCell.x >= 0 && goalCell.y >= 0) {
 		for (i = goalCell.x - radius; i < goalCell.x + numCellsAbove; i++) {
@@ -168,10 +168,10 @@ void Pathfinder::removeGoal003E3D20(Object *obj)
 						cell->setGoalAircraft(0, cellNdx);
 					}
 				}
-				if (obj->getDestinationLayer() != LAYER_GROUND &&
-					obj->getDestinationLayer() < 16) {
+				if (object->getDestinationLayer() != LAYER_GROUND &&
+					object->getDestinationLayer() < 16) {
 					cell = (PathfindCell *)getCell(
-						(PathfindLayerEnum)obj->getDestinationLayer(), i, j);
+						(PathfindLayerEnum)object->getDestinationLayer(), i, j);
 					if (cell && cell->getGoalUnit() == objID) {
 						cellNdx.x = i;
 						cellNdx.y = j;
