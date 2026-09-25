@@ -60,7 +60,7 @@ private:
 class PathfindZoneManager
 {
 public:
-	void bfmeSetWaypoint(Int cellX, Int cellY, Bool insert, Waypoint *waypoint);
+	void bfmeSetWaypoint(Int cellX, Int cellY, Bool shouldInsert, Waypoint *waypoint);
 };
 
 class Pathfinder

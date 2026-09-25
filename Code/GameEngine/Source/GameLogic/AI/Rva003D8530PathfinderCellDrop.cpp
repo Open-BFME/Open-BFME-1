@@ -34,7 +34,7 @@ public:
 class PathfindZoneManager
 {
 public:
-	void bfmeSetWaypoint(Int cellX, Int cellY, Bool insert, Waypoint *waypoint);
+	void bfmeSetWaypoint(Int cellX, Int cellY, Bool shouldInsert, Waypoint *waypoint);
 };
 
 Bool Pathfinder::worldToCell(const Coord3D *position, ICoord2D *cell)

@@ -9,7 +9,7 @@ class Waypoint;
 class ZoneBlock
 {
 public:
-	void bfmeSetWaypoint(Bool insert, Waypoint *waypoint);
+	void bfmeSetWaypoint(Bool shouldInsert, Waypoint *waypoint);
 
 private:
 	int m_numWaypoints;
@@ -18,9 +18,9 @@ private:
 };
 
 // ?bfmeSetWaypoint@ZoneBlock@@QAEX_NPAVWaypoint@@@Z
-void ZoneBlock::bfmeSetWaypoint(Bool insert, Waypoint *waypoint)
+void ZoneBlock::bfmeSetWaypoint(Bool shouldInsert, Waypoint *waypoint)
 {
-	if (insert)
+	if (shouldInsert)
 	{
 		if (m_numWaypoints < 12)
 		{

@@ -19,7 +19,7 @@ class Waypoint;
 class ZoneBlock
 {
 public:
-	void bfmeSetWaypoint(Bool insert, Waypoint *waypoint);
+	void bfmeSetWaypoint(Bool shouldInsert, Waypoint *waypoint);
 };
 
 class Rva00402C50

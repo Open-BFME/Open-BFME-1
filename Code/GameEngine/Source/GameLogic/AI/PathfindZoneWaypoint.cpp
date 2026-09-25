@@ -6,7 +6,7 @@ class Waypoint;
 class ZoneBlock
 {
 public:
-	void bfmeSetWaypoint(Bool insert, Waypoint *waypoint);
+	void bfmeSetWaypoint(Bool shouldInsert, Waypoint *waypoint);
 
 private:
 	unsigned char opaque[0x228];
@@ -17,7 +17,7 @@ class PathfindZoneManager
 {
 public:
 	void bfmeSetWaypoint(
-		int cellX, int cellY, Bool insert, Waypoint *waypoint);
+		int cellX, int cellY, Bool shouldInsert, Waypoint *waypoint);
 
 private:
 	unsigned char opaque[0x23628];
@@ -27,7 +27,7 @@ private:
 };
 
 void PathfindZoneManager::bfmeSetWaypoint(
-	int cellX, int cellY, Bool insert, Waypoint *waypoint)
+	int cellX, int cellY, Bool shouldInsert, Waypoint *waypoint)
 {
 	if (cellX < 0 || cellY < 0)
 		return;
@@ -40,5 +40,5 @@ void PathfindZoneManager::bfmeSetWaypoint(
 	if (blockY >= zoneBlocksHigh)
 		return;
 
-	zoneBlocks[blockX][blockY].bfmeSetWaypoint(insert, waypoint);
+	zoneBlocks[blockX][blockY].bfmeSetWaypoint(shouldInsert, waypoint);
 }
