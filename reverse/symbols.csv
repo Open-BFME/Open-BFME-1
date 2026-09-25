@@ -88995,3 +88995,6 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?Rva0013EA50Copy@@YAPAUGen00134590@@PBU1@0PAU1@ABUrandom_access_iterator_tag@_STL@@PAH@Z,0x0013EA50,Five-argument cdecl copy ABI from caller00141770+32 and full105Bcallee; first3args used and tag/distance unused; 20Belements; evidence reverse/identity_evidence/00141770.md
 ?insert_unique@Rva000EA360Tree@@QAE?AURva000EA360Iterator@@U2@ABURva000EA360Value@@@Z,0x000E9CC0,independent complete callee ABI; evidence=reverse/identity_evidence/000ea360-tree-wrappers.md
 ?insert_unique@Rva001AB2D0Tree@@QAE?AURva001AB2D0Iterator@@U2@ABURva001AB2D0Value@@@Z,0x001AB2D0,independent complete callee ABI; evidence=reverse/identity_evidence/000ea360-tree-wrappers.md
+?insert_unique@Rva003DE190Tree@@QAE?AURva003E25F0Iterator@@U2@ABURva003E25F0Value@@@Z,0x003DE190,independent full callee ABI; evidence=reverse/identity_evidence/003e25f0-tree-wrappers.md
+?insert_unique@Rva00400A90Tree@@QAE?AURva00401600Iterator@@U2@ABURva00401600Value@@@Z,0x00400A90,independent full callee ABI; evidence=reverse/identity_evidence/003e25f0-tree-wrappers.md
+?insert_unique@Rva00586D60Tree@@QAE?AURva00587390Iterator@@U2@ABURva00587390Value@@@Z,0x00586D60,independent full callee ABI; evidence=reverse/identity_evidence/003e25f0-tree-wrappers.md
