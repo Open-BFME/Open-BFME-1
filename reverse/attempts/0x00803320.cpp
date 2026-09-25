@@ -13,7 +13,7 @@ extern "C" void *memset(void *, int, unsigned int);
 
 struct Rva00808660Result
 {
-	char m_text[0x14]; int m_from; int m_elapsed; int m_sequence;
+	char m_text[0x14]; unsigned int m_from; int m_elapsed; int m_sequence;
 	int m_icmpType; int m_server; int m_pad28;
 };
 int Rva00808660(Rva00807BA0Ping *, void *, int *, Rva00808660Result *);
@@ -76,8 +76,7 @@ void Rva00803080::update(unsigned int now)
 	memset(&result, 0, sizeof(result));
 	result.m_sequence = sentinel;
 	Rva00808660(m_08, payload, &length, &result);
-	int sequence = result.m_sequence;
-	if (sequence == sentinel)
+	if (result.m_sequence == sentinel)
 		goto timeout_sweep;
 
 	for (;;)
@@ -85,9 +84,10 @@ void Rva00803080::update(unsigned int now)
 		int index = 0;
 		if (m_10 > 0)
 		{
+			Rva00803080Request *requests = m_0c;
 			while (index < m_10)
 			{
-				if (m_0c[index].m_00 == sequence)
+				if (requests[index].m_00 == result.m_sequence)
 					goto got_result;
 				++index;
 			}
@@ -123,8 +123,7 @@ void Rva00803080::update(unsigned int now)
 		memset(&result, 0, sizeof(result));
 		result.m_sequence = sentinel;
 		Rva00808660(m_08, payload, &length, &result);
-		sequence = result.m_sequence;
-		if (sequence == sentinel)
+		if (result.m_sequence == sentinel)
 			break;
 	}
 
