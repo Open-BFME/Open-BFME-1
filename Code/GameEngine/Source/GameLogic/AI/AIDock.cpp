@@ -208,9 +208,9 @@ public:
 	virtual Bool reserveAdvancePosition( Object *owner, Coord3D *goalPos, Int *approach ) = 0;	///< +0x08
 	virtual void slot00c() = 0;
 	virtual void slot010() = 0;
-	virtual void getEnterPosition( Object *owner, Coord3D *pos ) = 0;	///< +0x14
-	virtual void getExitPosition( Object *owner, Coord3D *pos ) = 0;	///< +0x18
-	virtual void getDockPosition( Object *owner, Coord3D *pos ) = 0;	///< +0x1C
+	virtual void getEnterPosition( Object *owner, Coord3D *enterPosition ) = 0;	///< +0x14
+	virtual void getExitPosition( Object *owner, Coord3D *exitPosition ) = 0;	///< +0x18
+	virtual void getDockPosition( Object *owner, Coord3D *dockPosition ) = 0;	///< +0x1C
 	virtual void slot020() = 0;
 	virtual void slot024() = 0;
 	virtual void slot028() = 0;
