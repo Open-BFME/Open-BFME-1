@@ -101,12 +101,12 @@ Bool Pathfinder::worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex)
 
 void Pathfinder::rva003D84A0(Waypoint *waypoint)
 {
-	ICoord2D cell;
-	worldToCell(waypoint->getLocation(), &cell);
-	PathfindCell *pathCell = getGroundCell(cell.x, cell.y);
+	ICoord2D cellIndex;
+	worldToCell(waypoint->getLocation(), &cellIndex);
+	PathfindCell *pathCell = getGroundCell(cellIndex.x, cellIndex.y);
 	if (pathCell && pathCell->getPtr4() == 0)
 	{
 		((Gen_003F68F0 *)pathCell)->bfmeAttach((Rva001A1DE0Owner *)waypoint);
-		m_zoneManager.bfmeSetWaypoint(cell.x, cell.y, true, waypoint);
+		m_zoneManager.bfmeSetWaypoint(cellIndex.x, cellIndex.y, true, waypoint);
 	}
 }
