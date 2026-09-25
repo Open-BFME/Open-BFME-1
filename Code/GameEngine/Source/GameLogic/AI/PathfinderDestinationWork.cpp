@@ -110,15 +110,15 @@ public:
 	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);
 	bool iterateCircular2(ICoord2D *cell, Int limit, void *info);
 
-	bool adjustTargetDestination(const Object *obj, const Object *target,
-		const Coord3D *targetPos, const Weapon *weapon, Coord3D *dest);
+	bool adjustTargetDestination(const Object *object, const Object *target,
+		const Coord3D *targetPosition, const Weapon *weapon, Coord3D *destination);
 	void moveAlliesAwayFromDestination(Object *obj, const Coord3D &destination);
 
 protected:
 	friend struct AdjustTargetInfo;
-	bool checkForTarget(const Object *obj, Int cellX, Int cellY,
+	bool checkForTarget(const Object *object, Int cellX, Int cellY,
 		const Weapon *weapon, const Object *target,
-		const Coord3D *targetPos, Int radius, bool center, Coord3D *dest);
+		const Coord3D *targetPosition, Int radius, bool centerInCell, Coord3D *destination);
 
 private:
 	void iterateCellsAlongLine(const ICoord2D *from, const ICoord2D *to,
@@ -139,17 +139,17 @@ struct AdjustTargetInfo
 };
 
 // ?adjustTargetDestination@Pathfinder@@QAE_NPBVObject@@0PBUCoord3D@@PBVWeapon@@PAU3@@Z
-bool Pathfinder::adjustTargetDestination(const Object *obj, const Object *target,
-	const Coord3D *targetPos, const Weapon *weapon, Coord3D *dest)
+bool Pathfinder::adjustTargetDestination(const Object *object, const Object *target,
+	const Coord3D *targetPosition, const Weapon *weapon, Coord3D *destination)
 {
 	ICoord2D cell;
 	Bool center;
 	Coord3D adjustDest;
 
-	bfmeQuery((Object *)obj, &cell.x, &center);
-	adjustDest.x = dest->x;
-	adjustDest.y = dest->y;
-	adjustDest.z = dest->z;
+	bfmeQuery((Object *)object, &cell.x, &center);
+	adjustDest.x = destination->x;
+	adjustDest.y = destination->y;
+	adjustDest.z = destination->z;
 	if (!center)
 	{
 		adjustDest.x += 5.0f;
@@ -160,10 +160,10 @@ bool Pathfinder::adjustTargetDestination(const Object *obj, const Object *target
 
 	AdjustTargetInfo info;
 	info.m_pathfinder = this;
-	info.m_obj = (Object *)obj;
-	info.m_dest = dest;
+	info.m_obj = (Object *)object;
+	info.m_dest = destination;
 	info.m_target = (Object *)target;
-	info.m_targetPos = targetPos;
+	info.m_targetPos = targetPosition;
 	info.m_weapon = weapon;
 	bfmeQuery(info.m_obj, &info.m_radius,
 		reinterpret_cast<Bool *>(&info.m_center));
