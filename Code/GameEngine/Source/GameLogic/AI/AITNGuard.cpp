@@ -736,7 +736,6 @@ void AITNGuardIdleState::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@AITNGuardIdleState@@ present-unmatched
 void AITNGuardIdleState::loadPostProcess( void )
 {
 }  // end loadPostProcess
