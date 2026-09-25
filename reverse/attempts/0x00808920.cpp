@@ -1,5 +1,5 @@
 // ??0Rva00808920LanGame@@QAE@H@Z
-// partial score=0.97 date=2026-09-24
+// partial score=0.98 date=2026-09-24
 // cl: /O2 /Og /GX- /GS
 #include <stdio.h>
 #include <stdlib.h>
@@ -66,7 +66,7 @@ Rva00808920LanGame::Rva00808920LanGame( int maxPlayers )
 	Rva007EFFC0Allocator *allocator = Rva007EFFC0Get();
 	unsigned int allocationBytes;
 	allocationBytes = m_maxPlayers * 4;
-	m_players = (void **)Rva007EFFC0Allocate( allocator, allocationBytes, 0 );
+	m_players = (void **)allocator->allocate( allocationBytes, 0 );
 	for ( int index = 0; index < m_maxPlayers; ++index )
 		m_players[ index ] = 0;
 
