@@ -18,8 +18,8 @@ class Object
 {
 public:
 	char m_bfmeHead[0x38];
-	Coord3D m_pos;
-	const Coord3D *getPosition(void) const { return &m_pos; }
+	Coord3D m_position;
+	const Coord3D *getPosition(void) const { return &m_position; }
 };
 
 class StateMachine
