@@ -283,11 +283,12 @@ public:
 class AIGroup
 {
 public:
-	void groupAttackPosition(const Coord3D *, Int, CommandSourceType);
+	void groupAttackPosition(const Coord3D *position, Int maxShotsToFire,
+		CommandSourceType commandSource);
  UnsignedInt getID(void);
  Bool getMinMaxAndCenter(Coord2D *min, Coord2D *max, Coord3D *center);
 	void recompute(void);
-	Bool checkSpecial(const Coord3D *pos, Int a);
+	Bool checkSpecial(const Coord3D *position, Int commandSource);
 
 private:
  unsigned char m_unmodelled_000[4];
@@ -307,12 +308,12 @@ extern TerrainLogic *TheTerrainLogic;
 
 
 
-Bool AIGroup::checkSpecial(const Coord3D *pos, Int a)
+Bool AIGroup::checkSpecial(const Coord3D *position, Int commandSource)
 {
-	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(0, pos);
+	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(0, position);
 	if (layer != LAYER_GROUND)
 		return false;
-	if (TheTerrainLogic->slot47(pos))
+	if (TheTerrainLogic->slot47(position))
 		return false;
 
 	if (m_dirty)
@@ -326,7 +327,7 @@ Bool AIGroup::checkSpecial(const Coord3D *pos, Int a)
 	Real distance = TheAI->m_aiData->m_minDistanceForGroup * 4.0f;
 	distance *= distance;
 	rva01c = center;
-	rva028 = *pos;
+	rva028 = *position;
 	Real centerDistance = distance * 10.0f;
 
 	Object *closest = 0;
@@ -363,8 +364,8 @@ Bool AIGroup::checkSpecial(const Coord3D *pos, Int a)
 		obj = *i;
 		const Coord3D *unitPos = obj->getPosition();
 		Real x = unitPos->x, y = unitPos->y;
-		Real dx = x - pos->x;
-		Real dy = y - pos->y;
+		Real dx = x - position->x;
+		Real dy = y - position->y;
 		if (dx * dx + dy * dy < distance)
 			distance = dx * dx + dy * dy;
 		dx = x - center.x;
@@ -408,10 +409,10 @@ Bool AIGroup::checkSpecial(const Coord3D *pos, Int a)
 
 	reinterpret_cast<Rva00150700Owner *>(this)->reset();
 	pf = TheAI->m_pathfinder;
-	Path *path = pf->rva003F2160(selected, &center, pos, 4);
+	Path *path = pf->rva003F2160(selected, &center, position, 4);
 	rva01c = center;
 	m_groundPath = path;
-	rva028 = *pos;
+	rva028 = *position;
 	if (m_groundPath != 0)
 	{
 		PathNode *node = m_groundPath->m_head;
@@ -465,17 +466,17 @@ UnsignedInt AIGroup::getID( void )
 	return m_id;
 }
 
-void AIGroup::groupAttackPosition(const Coord3D *pos, Int maxShotsToFire,
+void AIGroup::groupAttackPosition(const Coord3D *position, Int maxShotsToFire,
 	CommandSourceType commandSource)
 {
 	Coord3D attackPos;
-	if (pos)
-		attackPos = *pos;
+	if (position)
+		attackPos = *position;
 
 	std::list<Object *>::iterator i;
 	for (i = m_memberList.begin(); i != m_memberList.end(); ++i)
 	{
-		if (!pos)
+		if (!position)
 			attackPos.set((*i)->getPosition());
 
 		ContainModuleInterface *contain = (*i)->getContain();
