@@ -4728,5 +4728,25 @@
   "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x008804e0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoSet.cpp",
+  "old_name": "m_enabled",
+  "new_name": "m_byte20",
+  "before_sha256": "6429ea110408a2ce156ba602d3d4d119b08bfcff038ff0f3a0270fdb691cb9c8",
+  "after_sha256": "1ea45d734fff0af957ffac4f3fb740ee3f341332cdf06fa2684218d5ff0274cd",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name for the element +0x1C AsciiString (m_name) had no caller vtable string or field-parse witness tying it to GeometryName, and the element +0x20 byte (m_enabled) had no witness tying it to GeometryActive; renamed to offset-derived m_string1C/m_byte20 per GeometryInfoSet.cpp landing"
+ },
+ {
+  "old_path": "reverse/attempts/0x008804e0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoSet.cpp",
+  "old_name": "m_name",
+  "new_name": "m_string1C",
+  "before_sha256": "6429ea110408a2ce156ba602d3d4d119b08bfcff038ff0f3a0270fdb691cb9c8",
+  "after_sha256": "1ea45d734fff0af957ffac4f3fb740ee3f341332cdf06fa2684218d5ff0274cd",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name for the element +0x1C AsciiString (m_name) had no caller vtable string or field-parse witness tying it to GeometryName, and the element +0x20 byte (m_enabled) had no witness tying it to GeometryActive; renamed to offset-derived m_string1C/m_byte20 per GeometryInfoSet.cpp landing"
  }
 ]
