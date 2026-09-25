@@ -33,18 +33,18 @@ struct Coord3D
 
 	void normalize(void);
 
-	void add(const Coord3D *a)
+	void add(const Coord3D *position)
 	{
-		x += a->x;
-		y += a->y;
-		z += a->z;
+		x += position->x;
+		y += position->y;
+		z += position->z;
 	}
 
-	void set(const Coord3D *a)
+	void set(const Coord3D *position)
 	{
-		x = a->x;
-		y = a->y;
-		z = a->z;
+		x = position->x;
+		y = position->y;
+		z = position->z;
 	}
 };
 
