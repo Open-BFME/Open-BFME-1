@@ -591,7 +591,7 @@ INI::~INI( void )
 }
 
 //-------------------------------------------------------------------------------------------------
-// Was a __declspec(naked) byte dump in ini.cpp. Retail inlines getNextToken here
+// Was a naked byte dump in ini.cpp. Retail inlines getNextToken here
 // (the body carries m_seps at +0x414 and getNextToken's own "Expected additional
 // data after '%s'" throw) but calls scanInt out of line at 0x00852620, which is
 // exactly what this TU's header gives.
