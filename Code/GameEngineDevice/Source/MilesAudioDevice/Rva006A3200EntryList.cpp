@@ -29,15 +29,28 @@ class AudioEventRTS
 {
 public:
 	AudioEventRTS( const AsciiString &eventName, int objectID );
+	AudioEventRTS( const AudioEventRTS &right );
 	virtual ~AudioEventRTS();
 	unsigned int getSoundClass( void ) const;
 	void setIsLogicalAudio( bool isLogicalAudio );
+	void setPlayingHandle( unsigned int handle );
+	void bfmeGenerateFilename( void );
+	void generatePlayInfo( void );
 
 	char m_unmodelled04[ 0x28 - 4 ];
 	int m_field28;
-	char m_unmodelled2C[ 0x64 - 0x2C ];
+	char m_unmodelled2C[ 0x58 - 0x2C ];
+	int m_field58;
+	char m_unmodelled5C[ 0x64 - 0x5C ];
 	int m_field64;
 	char m_unmodelled68[ 0x70 - 0x68 ];
+};
+
+// The ledger's name for the 0x000B3BC0 getter of AudioEventRTS+0x58.
+class BfmeThingDDE
+{
+public:
+	int bfmeGoDDE( void );
 };
 
 // The ledger's name for the 0x000B21A0 setter of AudioEventRTS+0x28.
@@ -77,11 +90,33 @@ public:
 		AudioEventRTS( eventName, objectID )
 	{
 	}
+
+	Rva006A1790Event( const AudioEventRTS &right ) : AudioEventRTS( right )
+	{
+	}
 };
 
 class Rva006A1790EventRef
 {
 public:
+	Rva006A1790EventRef( Rva006A1790Event *ptr ) : m_ptr( ptr )
+	{
+		if( m_ptr )
+			m_ptr->Add_Ref();
+	}
+
+	Rva006A1790EventRef( const Rva006A1790EventRef &other ) : m_ptr( other.m_ptr )
+	{
+		if( m_ptr )
+			m_ptr->Add_Ref();
+	}
+
+	~Rva006A1790EventRef( void )
+	{
+		if( m_ptr )
+			m_ptr->Release_Ref();
+	}
+
 	Rva006A1790EventRef &operator=( const Rva006A1790EventRef &other )
 	{
 		if( this != &other )
@@ -152,13 +187,16 @@ public:
 	void pushNewEvent5( unsigned int value28, int value64, int handle );
 	void pushNewEvent6( unsigned int value28, int value64, int handle, int logical );
 	void pushNewEvent7( unsigned int value28, int value64, int handle );
+	Rva006A1790EventRef newEventCopy( const AudioEventRTS *source );
 
 	void pushNewEntry( unsigned int kind );
 
 private:
 	char m_unmodelled[ 0x4C ];
 	_STL::list<Rva006A3200Entry *> m_entries;
-	char m_unmodelled50[ 0x63C - 0x50 ];
+	char m_unmodelled50[ 0x84 - 0x50 ];
+	unsigned int m_nextHandle;
+	char m_unmodelled88[ 0x63C - 0x88 ];
 	unsigned int m_classMask63C[ 3 ];
 	unsigned int m_classMask648[ 3 ];
 	char m_unmodelled654[ 0x95C - 0x654 ];
@@ -294,4 +332,18 @@ void Rva006A3200Owner::pushNewEvent7( unsigned int value28, int value64, int han
 	( (Rva000B21A0Object *)entry->m_event.operator->() )->setValue( value28 );
 	entry->m_event->m_field64 = value64;
 	m_entries.push_back( entry );
+}
+
+// Retail 0x0069A0D0, 269 bytes: copies the source into a new counted event,
+// gives it the next handle from +0x84, and writes the copy's +0x58 value
+// back into the source, as Zero Hour's addAudioEvent does inline.
+Rva006A1790EventRef Rva006A3200Owner::newEventCopy( const AudioEventRTS *source )
+{
+	Rva006A1790EventRef event = new Rva006A1790Event( *source );
+	event->setPlayingHandle( m_nextHandle++ );
+	event->bfmeGenerateFilename();
+	( (AudioEventRTS *)source )->m_field58 =
+		( (BfmeThingDDE *)event.operator->() )->bfmeGoDDE();
+	event->generatePlayInfo();
+	return event;
 }
