@@ -1,5 +1,4 @@
 // ?render@W3DSmudgeManager@@QAEXAAVRenderInfoClass@@@Z
-// partial score=0.998 date=2026-09-23
 // cl: /DNDEBUG /MD /EHsc
 
 // W3DSmudgeManager::render, retail 0x00722BD0, 2829 bytes.
@@ -37,6 +36,7 @@ public:
 	Vector3 &operator=(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
 	float &operator[](int i) { return (&X)[i]; }
 	const float &operator[](int i) const { return (&X)[i]; }
+	void Set(float x, float y, float z) { X = x; Y = y; Z = z; }
 
 	friend __forceinline Vector3 operator*(const Vector3 &a, float k)
 	{
@@ -366,7 +366,7 @@ public:
 	static void Set_Vertex_Buffer(const DynamicVBAccessClass &vba);
 	static void Draw_Triangles(unsigned short start_index, unsigned short polygon_count,
 		unsigned short min_vertex_index, unsigned short vertex_count);
-	static void Get_DX8_Texture_Stage_State_Value_Name(StringClass &name, int state, unsigned value);
+	static void Get_DX8_Texture_Stage_State_Value_Name(StringClass &name, unsigned long state, unsigned value);
 
 	static IDirect3DDevice8 *_Get_D3D_Device8(void)
 	{
@@ -435,15 +435,16 @@ public:
 		++texture_stage_state_changes;
 	}
 
-	static __forceinline void Set_DX8_Texture_Stage_State(unsigned stage, unsigned state, unsigned value)
+	static __forceinline void Set_DX8_Texture_Stage_State(unsigned stage, unsigned long state, unsigned value)
 	{
-		if (TextureStageStates[stage][state] == value)
+		unsigned int stateIndex = state;
+		if (TextureStageStates[stage][stateIndex] == value)
 			return;
 		if (Is_Snapshot_Activated()) {
 			StringClass value_name(0, true);
 			Get_DX8_Texture_Stage_State_Value_Name(value_name, state, value);
 		}
-		TextureStageStates[stage][state] = value;
+		TextureStageStates[stage][stateIndex] = value;
 		_Get_D3D_Device8()->SetTextureStageState(stage, state, value);
 		++number_of_DX8_calls;
 		++texture_stage_state_changes;
@@ -611,7 +612,8 @@ void W3DSmudgeManager::render(RenderInfoClass &rinfo)
 
 			for (Int i = 0; i < 4; i++)
 			{
-				verts[i].pos = vsVert + vertex_offsets[i] * smudge->m_size;
+				Vector3 offset = vertex_offsets[i] * smudge->m_size;
+				verts[i].pos.Set(vsVert.X + offset.X, vsVert.Y + offset.Y, vsVert.Z + offset.Z);
 				ssVert = proj * verts[i].pos;
 				Real oow = 1.0f / ssVert.W;
 				ssVert *= oow;
