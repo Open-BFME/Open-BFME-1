@@ -1,14 +1,14 @@
-// ?applyAttributeModifier@HordeContainInterface@@QAEXABVAsciiString@@PAVRva2225E0Filter@@H@Z
-// partial score=0.9 date=2026-09-07
+// Retail RVA 0x00239AF0 is installed at slot 108 in the AOD, Horde, and Horse
+// contain vtables. That establishes the shared slot, not a class or method name,
+// so the C++ identity remains address-derived. The retail lookup is indexOf(key)
+// followed by itemAt(index); the owning Object supplies the filter's Player.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
-// Open-BFME5: HordeContain::applyAttributeModifier, retail 0x00239AF0.
-// The HordeContain interface vtable at 0x010AED58 uses this body at slot 108.
+// Retail body: 330 bytes. Caller identity remains address-derived.
 
 #define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
-#include <hash_map>
 #include <list>
 
 typedef bool Bool;
@@ -42,7 +42,15 @@ public:
 class AttributeModifierDefinitionStore
 {
 public:
-	AttributeModifierDefinition *findDefinition(UnsignedInt key);
+	Int indexOf(Int key) const;
+};
+
+class Rva0036B140Item;
+
+class Rva0036B140Collection
+{
+public:
+	Rva0036B140Item *itemAt(Int index) const;
 };
 
 extern AttributeModifierDefinitionStore *TheAttributeModifierDefinitionStore;
@@ -53,10 +61,16 @@ public:
 	Bool applyAttributeModifier(const AsciiString &name, Int duration);
 };
 
+class Rva00239AF0;
+
 class Object
 {
 public:
+	Player *getControllingPlayer(void) const;
 	Bool applyAttributeModifier(const AsciiString &name, Int duration);
+
+private:
+	friend class Rva00239AF0;
 	AttributeModifierPoolUpdate *findAttributeModifierPoolUpdate(void) const;
 };
 
@@ -67,15 +81,6 @@ public:
 };
 
 struct BfmeMemberIndexNode;
-
-class BfmeRvaA760CountOwner
-{
-public:
-	Int getCount(void);
-
-	char m_head[0x30];
-	BfmeMemberIndexNode *m_memberIndex;
-};
 
 struct BfmeMemberIndexNode
 {
@@ -100,29 +105,17 @@ struct _Rb_global
 }
 
 typedef _STL::list<Object *> BfmeMemberList;
-typedef _STL::hash_map<UnsignedInt, Object *, _STL::hash<UnsignedInt>,
-	_STL::equal_to<UnsignedInt> > BfmeObjectPtrHash;
-
 class GameLogic
 {
 public:
-	Object *findObjectByID(UnsignedInt key)
-	{
-		BfmeObjectPtrHash::iterator it = m_objectHash.find(key);
-		if (it == m_objectHash.end())
-			return 0;
-		return (*it).second;
-	}
-
-	char m_head[0xb0];
-	BfmeObjectPtrHash m_objectHash;
+	Object *findObjectByID(Int key);
 };
 
 extern GameLogic *TheGameLogic;
 
 #define BFME_SLOT(N) virtual Int bfmeSlot##N(void) = 0
 
-class BfmeHordeContainBase
+class Rva00239AF0MemberListInterface
 {
 public:
 	BFME_SLOT(00); BFME_SLOT(01); BFME_SLOT(02); BFME_SLOT(03);
@@ -147,69 +140,34 @@ public:
 
 #undef BFME_SLOT
 
-class BfmeHordeContainFields
-{
-};
-
-#define BFME_HORDE_SLOT(N)
-
-class HordeContainInterface
+// These helpers are all matched elsewhere. Select the ILTs used by this body.
+#pragma comment(linker, "/alternatename:?nameToKey@NameKeyGenerator@@QAEIPBD@Z=?j_0003add7@@YAXXZ")
+#pragma comment(linker, "/alternatename:?indexOf@AttributeModifierDefinitionStore@@QBEHH@Z=?j_000268e6@@YAXXZ")
+#pragma comment(linker, "/alternatename:?itemAt@Rva0036B140Collection@@QBEPAVRva0036B140Item@@H@Z=?j_0001dbba@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getControllingPlayer@Object@@QBEPAVPlayer@@XZ=?j_00020824@@YAXXZ")
+#pragma comment(linker, "/alternatename:?accepts@Rva2225E0Filter@@QAE_NPAVObject@@PAVPlayer@@@Z=?j_0001da34@@YAXXZ")
+#pragma comment(linker, "/alternatename:?applyAttributeModifier@Object@@QAE_NABVAsciiString@@H@Z=?j_00037a56@@YAXXZ")
+#pragma comment(linker, "/alternatename:?findObjectByID@GameLogic@@QAEPAVObject@@H@Z=?j_0001f253@@YAXXZ")
+class Rva00239AF0
 {
 public:
-	BFME_HORDE_SLOT(00); BFME_HORDE_SLOT(01); BFME_HORDE_SLOT(02);
-	BFME_HORDE_SLOT(03); BFME_HORDE_SLOT(04); BFME_HORDE_SLOT(05);
-	BFME_HORDE_SLOT(06); BFME_HORDE_SLOT(07); BFME_HORDE_SLOT(08);
-	BFME_HORDE_SLOT(09); BFME_HORDE_SLOT(10); BFME_HORDE_SLOT(11);
-	BFME_HORDE_SLOT(12); BFME_HORDE_SLOT(13); BFME_HORDE_SLOT(14);
-	BFME_HORDE_SLOT(15); BFME_HORDE_SLOT(16); BFME_HORDE_SLOT(17);
-	BFME_HORDE_SLOT(18); BFME_HORDE_SLOT(19); BFME_HORDE_SLOT(20);
-	BFME_HORDE_SLOT(21); BFME_HORDE_SLOT(22); BFME_HORDE_SLOT(23);
-	BFME_HORDE_SLOT(24); BFME_HORDE_SLOT(25); BFME_HORDE_SLOT(26);
-	BFME_HORDE_SLOT(27); BFME_HORDE_SLOT(28); BFME_HORDE_SLOT(29);
-	BFME_HORDE_SLOT(30); BFME_HORDE_SLOT(31); BFME_HORDE_SLOT(32);
-	BFME_HORDE_SLOT(33); BFME_HORDE_SLOT(34); BFME_HORDE_SLOT(35);
-	BFME_HORDE_SLOT(36); BFME_HORDE_SLOT(37); BFME_HORDE_SLOT(38);
-	BFME_HORDE_SLOT(39); BFME_HORDE_SLOT(40); BFME_HORDE_SLOT(41);
-	BFME_HORDE_SLOT(42); BFME_HORDE_SLOT(43); BFME_HORDE_SLOT(44);
-	BFME_HORDE_SLOT(45); BFME_HORDE_SLOT(46); BFME_HORDE_SLOT(47);
-	BFME_HORDE_SLOT(48); BFME_HORDE_SLOT(49); BFME_HORDE_SLOT(50);
-	BFME_HORDE_SLOT(51); BFME_HORDE_SLOT(52); BFME_HORDE_SLOT(53);
-	BFME_HORDE_SLOT(54); BFME_HORDE_SLOT(55); BFME_HORDE_SLOT(56);
-	BFME_HORDE_SLOT(57); BFME_HORDE_SLOT(58); BFME_HORDE_SLOT(59);
-	BFME_HORDE_SLOT(60); BFME_HORDE_SLOT(61); BFME_HORDE_SLOT(62);
-	BFME_HORDE_SLOT(63); BFME_HORDE_SLOT(64); BFME_HORDE_SLOT(65);
-	BFME_HORDE_SLOT(66); BFME_HORDE_SLOT(67); BFME_HORDE_SLOT(68);
-	BFME_HORDE_SLOT(69); BFME_HORDE_SLOT(70); BFME_HORDE_SLOT(71);
-	BFME_HORDE_SLOT(72); BFME_HORDE_SLOT(73); BFME_HORDE_SLOT(74);
-	BFME_HORDE_SLOT(75); BFME_HORDE_SLOT(76); BFME_HORDE_SLOT(77);
-	BFME_HORDE_SLOT(78); BFME_HORDE_SLOT(79); BFME_HORDE_SLOT(80);
-	BFME_HORDE_SLOT(81); BFME_HORDE_SLOT(82); BFME_HORDE_SLOT(83);
-	BFME_HORDE_SLOT(84); BFME_HORDE_SLOT(85); BFME_HORDE_SLOT(86);
-	BFME_HORDE_SLOT(87); BFME_HORDE_SLOT(88); BFME_HORDE_SLOT(89);
-	BFME_HORDE_SLOT(90); BFME_HORDE_SLOT(91); BFME_HORDE_SLOT(92);
-	BFME_HORDE_SLOT(93); BFME_HORDE_SLOT(94); BFME_HORDE_SLOT(95);
-	BFME_HORDE_SLOT(96); BFME_HORDE_SLOT(97); BFME_HORDE_SLOT(98);
-	BFME_HORDE_SLOT(99); BFME_HORDE_SLOT(100); BFME_HORDE_SLOT(101);
-	BFME_HORDE_SLOT(102); BFME_HORDE_SLOT(103); BFME_HORDE_SLOT(104);
-	BFME_HORDE_SLOT(105); BFME_HORDE_SLOT(106); BFME_HORDE_SLOT(107);
-	void applyAttributeModifier(const AsciiString &name,
+	void rva00239AF0(const AsciiString &name,
 		Rva2225E0Filter *filter, Int duration);
-
 };
 
-// ?applyAttributeModifier@HordeContainInterface@@QAEXABVAsciiString@@PAVRva2225E0Filter@@H@Z
-void HordeContainInterface::applyAttributeModifier(const AsciiString &name,
+// ?rva00239AF0@Rva00239AF0@@QAEXABVAsciiString@@PAVRva2225E0Filter@@H@Z
+void Rva00239AF0::rva00239AF0(const AsciiString &name,
 	Rva2225E0Filter *filter, Int duration)
 {
 	void *savedThis = this;
-	BfmeHordeContainBase *base =
-		(BfmeHordeContainBase *)((char *)savedThis - 0xc4);
+	Rva00239AF0MemberListInterface *base =
+		(Rva00239AF0MemberListInterface *)((char *)savedThis - 0xc4);
 	BfmeMemberList &members =
 		*base->getMemberList();
 	BfmeMemberList::iterator node = members.begin();
 	{
-		BfmeRvaA760CountOwner *countOwner =
-			*(BfmeRvaA760CountOwner **)((char *)savedThis - 0xdc);
+		Object *owner =
+			*(Object **)((char *)savedThis - 0xdc);
 
 	const char *nameData = (const char *)name.m_data;
 	if (nameData != 0)
@@ -218,8 +176,11 @@ void HordeContainInterface::applyAttributeModifier(const AsciiString &name,
 		nameData = (const char *)0x0107388b;
 
 	UnsignedInt key = TheNameKeyGenerator->nameToKey(nameData);
+	Int definitionIndex = TheAttributeModifierDefinitionStore->indexOf(key);
 	AttributeModifierDefinition *definition =
-		TheAttributeModifierDefinitionStore->findDefinition(key);
+		(AttributeModifierDefinition *)
+		((Rva0036B140Collection *)TheAttributeModifierDefinitionStore)->itemAt(
+			definitionIndex);
 	if (definition != 0 && (definition->m_flags & 0x40) == 0)
 	{
 		while (node != members.end())
@@ -227,7 +188,7 @@ void HordeContainInterface::applyAttributeModifier(const AsciiString &name,
 			Object *object = *node;
 			if (filter == 0 ||
 				filter->accepts(object, (Player *)
-						countOwner->getCount()))
+						owner->getControllingPlayer()))
 				object->applyAttributeModifier(name, duration);
 			++node;
 		}
@@ -243,12 +204,12 @@ void HordeContainInterface::applyAttributeModifier(const AsciiString &name,
 				if (object != 0 &&
 					(filter == 0 ||
 						filter->accepts(object, (Player *)
-								countOwner->getCount())))
+								owner->getControllingPlayer())))
 					object->applyAttributeModifier(name, duration);
 				entry = (BfmeMemberIndexNode *)_STL::_Rb_global<bool>::_M_increment(
 					(_STL::_Rb_tree_node_base *)entry);
 			}
-			while (entry != countOwner->m_memberIndex);
+			while (entry != *(BfmeMemberIndexNode **)((char *)this + 0x30));
 		}
 	}
 	}
