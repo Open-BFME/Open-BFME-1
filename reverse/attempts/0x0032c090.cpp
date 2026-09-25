@@ -1,49 +1,27 @@
 // ?bfmeAreaBody@ScriptConditions@@IAE_NPAVParameter@@00@Z
-// partial score=0.70 date=2026-09-11
+// partial score=0.312857 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/objectdlink
 //
 // BFME ScriptConditions area-body recovery. The named sibling bfmeAreaGate
 // (0x0032C400, matched) calls this body through ILT 0x0000C586 as
 // `!bfmeAreaBody(a, b, c)` with its own params in the same order, confirming
 // conditionParm=a, playerParm=b, triggerParm=c. The brief's callee count
-// (?ask@BfmeSubBIA getFinalOverride thunk, x5) is real: the kindOf loop must
-// call bfmeFinalTemplate(object) FRESH at each of 5 call sites (one null
-// check plus the four kindOf tests), not once into a cached local -- doing so
-// closed 93 of the 97 previously-missing bytes (603B -> 693B of 700B).
+// Retail makes five independent final-template calls for five bit tests;
+// containment and the dead-bit test sit between the fourth and fifth tests.
 
 #include "ObjectDlinkPmf.h"
+#include "../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 typedef bool Bool;
 typedef int Int;
 typedef unsigned short UnsignedShort;
 typedef unsigned int UnsignedInt;
 
-// This copy-construction shape is not a guess: it is copied verbatim from the
-// matched sibling caller bfmeAreaGate (BfmeScriptCondAreaGate.cpp), which does
-// the identical by-value AsciiString-from-reference construction and is
-// already byte-verified against retail.
-template <class T> class StringBase
+// Retail calls StringBase::releaseBuffer directly for this local's cleanup.
+inline AsciiString::~AsciiString()
 {
-	friend class AsciiString;
-
-private:
-	StringBase(const StringBase &);
-	~StringBase();
-};
-
-class AsciiString
-{
-public:
-	AsciiString(const AsciiString &that)
-	{
-		((StringBase<char> *)this)->StringBase<char>::StringBase(
-			*(const StringBase<char> *)&that);
-	}
-	~AsciiString();
-
-private:
-	char *m_text;
-};
+	((StringBase<char> *)this)->releaseBuffer();
+}
 
 class PolygonTrigger;
 
@@ -174,7 +152,7 @@ class Team;
 class TeamPrototype
 {
 public:
-	unsigned char m_beforeInstances[8];
+	unsigned char m_beforeInstances[0x274];
 	Team *m_teamInstanceList;
 };
 
@@ -280,74 +258,73 @@ Bool ScriptConditions::bfmeAreaBody(Parameter *conditionParm,
 {
 	AsciiString triggerName = triggerParm->getString();
 	PolygonTrigger *trigger =
-		TheScriptEngine->getQualifiedTriggerAreaByName(triggerName);
+		TheScriptEngine->getQualifiedTriggerAreaByName(triggerParm->getString());
 	BfmeConditionCache *condition =
 		reinterpret_cast<BfmeConditionCache *>(conditionParm);
-	if (!trigger) {
-		condition->m_customData = -1;
+	if (!trigger)
 		return false;
-	}
 
 	UnsignedShort playerMask = g_bfmeP1087->bfmeNext1087(playerParm);
-	if (!playerMask) {
-		condition->m_customData = -1;
-		return false;
-	}
-	Player *player = bfmeGetEachPlayerFromMask(ThePlayerList, playerMask);
-	if (!player) {
-		condition->m_customData = -1;
-		return false;
-	}
+	if (!playerMask)
+		goto failed;
 
-	BfmeScriptEngineFrames *engine =
-		reinterpret_cast<BfmeScriptEngineFrames *>(TheScriptEngine);
-	if (condition->m_customData != 0 &&
-		engine->m_frameChanged <= condition->m_customFrame &&
-		engine->m_frame <= condition->m_customFrame) {
-		if (condition->m_customData == -1)
-			return false;
-		if (condition->m_customData == 1)
-			return true;
-	}
+	do {
+		Player *player = bfmeGetEachPlayerFromMask(ThePlayerList, playerMask);
+		if (!player)
+			goto failed;
 
-	Int count = 0;
-	BfmePlayerTeamNode *sentinel =
-		reinterpret_cast<BfmePlayer *>(player)->m_teams.m_sentinel;
-	for (BfmePlayerTeamNode *node = sentinel->m_next;
-		node != sentinel;
-		node = node->m_next) {
-		TeamPrototype *prototype =
-			reinterpret_cast<TeamPrototype *>(node->m_prototype);
-		for (BfmeTeamInstanceIterator teams(prototype->m_teamInstanceList);
-			!teams.done(); teams.advance()) {
-			for (DLINK_ITERATOR<Object> members =
-					teams.cur()->iterate_TeamMemberList();
-				!members.done(); members.advance()) {
-				Object *object = members.cur();
-				if (!bfmeFinalTemplate(object))
-					continue;
-				if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf2 & 0x01000000) != 0)
-					continue;
-				if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf4 & 0x20) != 0)
-					continue;
-				if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf4 & 0x00800000) != 0)
-					continue;
-				if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf5 & 0x00002000) != 0)
-					continue;
-				if (!bfmeObjectIsInside(object, trigger))
-					continue;
-				if ((reinterpret_cast<BfmeObjectState *>(object)->m_dead & 1) != 0)
-					continue;
-				++count;
+		BfmeScriptEngineFrames *engine =
+			reinterpret_cast<BfmeScriptEngineFrames *>(TheScriptEngine);
+		if (condition->m_customData != 0 &&
+			engine->m_frameChanged <= condition->m_customFrame &&
+			engine->m_frame <= condition->m_customFrame) {
+			if (condition->m_customData == -1)
+				goto failed;
+			if (condition->m_customData == 1)
+				return true;
+		}
+
+		Int count = 0;
+		BfmePlayerTeamNode *sentinel =
+			reinterpret_cast<BfmePlayer *>(player)->m_teams.m_sentinel;
+		for (BfmePlayerTeamNode *node = sentinel->m_next;
+			node != reinterpret_cast<BfmePlayer *>(player)->m_teams.m_sentinel;
+			node = node->m_next) {
+			TeamPrototype *prototype =
+				reinterpret_cast<TeamPrototype *>(node->m_prototype);
+			for (BfmeTeamInstanceIterator teams(prototype->m_teamInstanceList);
+				!teams.done(); teams.advance()) {
+				for (DLINK_ITERATOR<Object> members =
+						teams.cur()->iterate_TeamMemberList();
+					!members.done(); members.advance()) {
+					Object *object = members.cur();
+					if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf2 & 0x01000000) != 0)
+						continue;
+					if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf4 & 0x20) != 0)
+						continue;
+					if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf4 & 0x00800000) != 0)
+						continue;
+					if ((reinterpret_cast<BfmeThingTemplate *>(bfmeFinalTemplate(object))->m_kindOf5 & 0x00002000) != 0)
+						continue;
+					if (!bfmeObjectIsInside(object, trigger))
+						continue;
+					if ((reinterpret_cast<BfmeObjectState *>(object)->m_dead & 1) != 0)
+						continue;
+					if ((*(UnsignedInt *)((char *)bfmeFinalTemplate(object) + 0xc8) & 0x02000000) != 0)
+						continue;
+					++count;
+				}
 			}
 		}
-	}
 
-	condition->m_customFrame = engine->m_frameChanged;
-	if (count > 0) {
-		condition->m_customData = 1;
-		return true;
-	}
+		condition->m_customFrame = reinterpret_cast<BfmeScriptEngineFrames *>(TheScriptEngine)->m_frameChanged;
+		if (count > 0) {
+			condition->m_customData = 1;
+			return true;
+		}
+	} while (playerMask != 0);
+
+	failed:
 	condition->m_customData = -1;
 	return false;
 }
