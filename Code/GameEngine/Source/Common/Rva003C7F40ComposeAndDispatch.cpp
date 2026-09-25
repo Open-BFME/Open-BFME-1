@@ -3,7 +3,8 @@
 
 // Retail 0x003C7F40, 184 bytes. The 0x003C8030 thunk-mediated caller is
 // unnamed, so the callback owner remains address-qualified. Retail cleans up
-// three stack arguments (ret 12). Its direct calls copy an AsciiString, join
+// three stack arguments (ret 12). The caller passes its incoming ECX straight
+// through, so this is a __thiscall member that never reads this. Its direct calls copy an AsciiString, join
 // two AsciiStrings with the literal ".", then release the temporary buffer.
 inline AsciiString::~AsciiString()
 {
@@ -26,7 +27,13 @@ public:
     virtual void *slot1F(const char *name, int flags);
 };
 
-void *__stdcall Rva003C7F40ComposeAndDispatch(
+class Rva003C7F40Owner
+{
+public:
+	void *rva003C7F40(Rva003C7F40Receiver *receiver, const AsciiString &left, const AsciiString &right);
+};
+
+void *Rva003C7F40Owner::rva003C7F40(
     Rva003C7F40Receiver *receiver,
     const AsciiString &left,
     const AsciiString &right)
