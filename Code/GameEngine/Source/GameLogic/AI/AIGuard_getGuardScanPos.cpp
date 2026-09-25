@@ -70,49 +70,49 @@ public:
 
 void AIGuardMachine::getGuardScanPos(Coord3D *scanPosition)
 {
-	Object *obj = TheGameLogic->findObjectByID(m_targetToGuard);
-	Team *team = TheTeamFactory->findTeamByID(m_teamToGuard);
-	Coord3D pos = { 0.0f, 0.0f, 0.0f };
+	Object *targetAddress = TheGameLogic->findObjectByID(m_targetToGuard);
+	Team *targetTeam = TheTeamFactory->findTeamByID(m_teamToGuard);
+	Coord3D scanAnchor = { 0.0f, 0.0f, 0.0f };
 
-	if (obj)
+	if (targetAddress)
 	{
-		obj = (Object *)((unsigned)obj + 0x38);
+		targetAddress = (Object *)((unsigned)targetAddress + 0x38);
 		_ReadWriteBarrier();
-		pos.x = ((Coord3D *)obj)->x;
-		pos.y = ((Coord3D *)obj)->y;
-		pos.z = ((Coord3D *)obj)->z;
+		scanAnchor.x = ((Coord3D *)targetAddress)->x;
+		scanAnchor.y = ((Coord3D *)targetAddress)->y;
+		scanAnchor.z = ((Coord3D *)targetAddress)->z;
 	}
-	else if (team)
+	else if (targetTeam)
 	{
-		team->getPosition(&pos);
+		targetTeam->getPosition(&scanAnchor);
 	}
 	else
 	{
-		pos = m_positionToGuard;
+		scanAnchor = m_positionToGuard;
 	}
 
 	if (m_areaToGuard)
 	{
 		if (m_areaFlag)
 		{
-			pos = m_areaBox;
+			scanAnchor = m_areaBox;
 		}
 		else
 		{
-			m_areaToGuard->getCenter(&pos);
+			m_areaToGuard->getCenter(&scanAnchor);
 		}
 	}
 
-	if (pos.x == BfmeZeroRange && pos.y == BfmeZeroRange)
+	if (scanAnchor.x == BfmeZeroRange && scanAnchor.y == BfmeZeroRange)
 	{
-		Object *owner = (Object *)((unsigned)m_owner + 0x38);
+		Object *ownerPositionAddress = (Object *)((unsigned)m_owner + 0x38);
 		_ReadWriteBarrier();
-		pos.x = ((Coord3D *)owner)->x;
-		pos.y = ((Coord3D *)owner)->y;
-		pos.z = ((Coord3D *)owner)->z;
+		scanAnchor.x = ((Coord3D *)ownerPositionAddress)->x;
+		scanAnchor.y = ((Coord3D *)ownerPositionAddress)->y;
+		scanAnchor.z = ((Coord3D *)ownerPositionAddress)->z;
 	}
 
-	scanPosition->x = pos.x;
-	scanPosition->y = pos.y;
-	scanPosition->z = pos.z;
+	scanPosition->x = scanAnchor.x;
+	scanPosition->y = scanAnchor.y;
+	scanPosition->z = scanAnchor.z;
 }
