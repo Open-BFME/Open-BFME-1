@@ -53,7 +53,7 @@ public:
 struct Rva003D7680Struct
 {
 	Pathfinder *m_pathfinder;							///< retail this+0x00
-	Coord3D *m_pos;										///< retail this+0x04
+	Coord3D *m_workingPosition;							///< retail this+0x04
 	Int m_layer;										///< retail this+0x08
 };
 
@@ -100,7 +100,7 @@ void Pathfinder::tightenLine(Object *object, const Coord3D *startPosition, Coord
 	w.pos.y = w.adjFrom.y;
 	w.pos.z = w.adjFrom.z;
 
-	w.info.m_pos = &w.pos;
+	w.info.m_workingPosition = &w.pos;
 	w.info.m_pathfinder = this;
 	w.info.m_layer = object->getLayer();
 
