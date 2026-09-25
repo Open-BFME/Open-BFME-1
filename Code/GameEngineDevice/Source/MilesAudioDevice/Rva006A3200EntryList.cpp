@@ -13,26 +13,45 @@
 #define _STLP_NO_EXCEPTIONS 1
 #include <list>
 
+extern "C" __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(
+	void *handle, unsigned long milliseconds );
+extern "C" __declspec(dllimport) int __stdcall ReleaseMutex( void *handle );
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(
 	long volatile *value );
 extern "C" __declspec(dllimport) long __stdcall InterlockedDecrement(
 	long volatile *value );
 
+class AsciiString;
+
+extern const AsciiString Rva01336E50EmptyString;
+
 class AudioEventRTS
 {
 public:
+	AudioEventRTS( const AsciiString &eventName, int objectID );
 	virtual ~AudioEventRTS();
 	unsigned int getSoundClass( void ) const;
+	void setIsLogicalAudio( bool isLogicalAudio );
 
 	char m_unmodelled04[ 0x28 - 4 ];
 	int m_field28;
-	char m_unmodelled2C[ 0x70 - 0x2C ];
+	char m_unmodelled2C[ 0x64 - 0x2C ];
+	int m_field64;
+	char m_unmodelled68[ 0x70 - 0x68 ];
 };
 
-class Rva006A1790RefCounted
+// The ledger's name for the 0x000B21A0 setter of AudioEventRTS+0x28.
+struct Rva000B21A0Object
+{
+	void setValue( unsigned int value );
+};
+
+// Counted base shared with PlayingAudio (PlayingAudioDestructor.cpp).
+class BfmeBaseASCa
 {
 public:
-	virtual ~Rva006A1790RefCounted();
+	BfmeBaseASCa() : m_refCount( 0 ) {}
+	virtual ~BfmeBaseASCa();
 
 	void Add_Ref( void )
 	{
@@ -51,8 +70,13 @@ private:
 
 // The counted base sits at +0x70, after the AudioEventRTS part that
 // getSoundClass receives unadjusted.
-class Rva006A1790Event : public AudioEventRTS, public Rva006A1790RefCounted
+class Rva006A1790Event : public AudioEventRTS, public BfmeBaseASCa
 {
+public:
+	Rva006A1790Event( const AsciiString &eventName, int objectID ) :
+		AudioEventRTS( eventName, objectID )
+	{
+	}
 };
 
 class Rva006A1790EventRef
@@ -71,6 +95,22 @@ public:
 		return *this;
 	}
 
+	Rva006A1790EventRef &operator=( Rva006A1790Event *ptr )
+	{
+		if( ptr != m_ptr )
+		{
+			if( m_ptr )
+			{
+				m_ptr->Release_Ref();
+				m_ptr = 0;
+			}
+			m_ptr = ptr;
+			if( m_ptr )
+				m_ptr->Add_Ref();
+		}
+		return *this;
+	}
+
 	Rva006A1790Event *operator->( void ) const { return m_ptr; }
 
 private:
@@ -82,7 +122,9 @@ struct Rva006A3200Entry
 	unsigned int m_state;
 	Rva006A1790EventRef m_event;
 	unsigned int m_kind;
-	unsigned char m_unmodelled0C[ 6 ];
+	unsigned char m_unmodelled0C[ 4 ];
+	bool m_flag10;
+	unsigned char m_unmodelled11;
 	bool m_flag12;
 	bool m_flag13;
 	bool m_flag14;
@@ -105,6 +147,7 @@ class Rva006A3200Owner
 {
 public:
 	bool pushEventEntry( const Rva006A1790EventRef &event, int mode );
+	void pushNewEvent( unsigned int value28, int value64, int handle, int logical );
 	void pushNewEntry( unsigned int kind );
 
 private:
@@ -113,6 +156,34 @@ private:
 	char m_unmodelled50[ 0x63C - 0x50 ];
 	unsigned int m_classMask63C[ 3 ];
 	unsigned int m_classMask648[ 3 ];
+	char m_unmodelled654[ 0x95C - 0x654 ];
+	void *m_mutex;
+};
+
+class Rva006A1890ScopedMutex
+{
+public:
+	__forceinline Rva006A1890ScopedMutex( void *mutex )
+	{
+		m_held = 0;
+		m_mutex = mutex;
+		unsigned long status = WaitForSingleObject( m_mutex, 0xFFFFFFFFu );
+		if( status != 0x102u )
+			m_held = 1;
+	}
+
+	__forceinline ~Rva006A1890ScopedMutex( void )
+	{
+		if( m_held )
+		{
+			ReleaseMutex( m_mutex );
+			m_held = 0;
+		}
+	}
+
+private:
+	void *m_mutex;
+	unsigned char m_held;
 };
 
 // Retail 0x006A1790, 195 bytes: the same entry source and list as
@@ -143,5 +214,21 @@ void Rva006A3200Owner::pushNewEntry( unsigned int kind )
 		( (W3DGameClient *)this )->W3DGameClient::createVideoPlayer();
 	entry->m_kind = kind;
 	entry->m_state = 1;
+	m_entries.push_back( entry );
+}
+
+// Retail 0x006A1890, 360 bytes: under the +0x95C mutex, a type-4 entry
+// takes a freshly built counted event (constructor as at 0x00694A00).
+void Rva006A3200Owner::pushNewEvent( unsigned int value28, int value64, int handle, int logical )
+{
+	Rva006A1890ScopedMutex lock( m_mutex );
+	Rva006A3200Entry *entry = (Rva006A3200Entry *)
+		( (W3DGameClient *)this )->W3DGameClient::createVideoPlayer();
+	entry->m_state = 4;
+	entry->m_flag10 = handle == 0;
+	entry->m_event = new Rva006A1790Event( Rva01336E50EmptyString, 0 );
+	entry->m_event->setIsLogicalAudio( logical == 0 );
+	( (Rva000B21A0Object *)entry->m_event.operator->() )->setValue( value28 );
+	entry->m_event->m_field64 = value64;
 	m_entries.push_back( entry );
 }
