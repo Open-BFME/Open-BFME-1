@@ -105,7 +105,7 @@ struct MADStruct
 class Pathfinder
 {
 public:
-	bool worldToCell(const Coord3D *world, ICoord2D *cell);	///< ILT thunk at 0x000171E8
+	bool worldToCell(const Coord3D *worldPosition, ICoord2D *cell);	///< ILT thunk at 0x000171E8
 
 	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);
 	bool iterateCircular2(ICoord2D *cell, Int limit, void *info);
@@ -121,8 +121,8 @@ protected:
 		const Coord3D *targetPosition, Int radius, bool centerInCell, Coord3D *destination);
 
 private:
-	void iterateCellsAlongLine(const ICoord2D *from, const ICoord2D *to,
-			PathfindLayerEnum layer, MADStruct *info);		///< ILT thunk at 0x00014092
+	void iterateCellsAlongLine(const ICoord2D *startCell, const ICoord2D *destinationCell,
+			PathfindLayerEnum layer, MADStruct *walkInfo);		///< ILT thunk at 0x00014092
 };
 
 struct AdjustTargetInfo
