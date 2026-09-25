@@ -46,6 +46,8 @@ private:
 	char m_body[0x44];
 };
 
+// The factory registers this instance as "AIHordeMachine". That runtime state
+// label does not independently recover the constructor's C++ class identity.
 class Rva001812B0AIHordeMachine
 {
 public:
