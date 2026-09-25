@@ -201,7 +201,7 @@ public:
 	virtual void d11();
 	virtual void d12();
 	virtual void d13();
-	virtual void setGoalObject(Object *);
+	virtual void setGoalObject(Object *goalObject);
 
 	char Pad0[0x10 - 4];
 	Object *Owner;						// +0x10

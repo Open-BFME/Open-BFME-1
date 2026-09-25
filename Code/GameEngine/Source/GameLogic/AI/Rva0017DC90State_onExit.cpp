@@ -119,7 +119,7 @@ public:
 	virtual void unused11();
 	virtual void unused12();
 	virtual void unused13();
-	virtual void setGoalObject(const Object *);
+	virtual void setGoalObject(const Object *goalObject);
 	Object *getOwner() const
 	{
 		return m_owner;

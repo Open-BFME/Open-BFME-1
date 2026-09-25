@@ -73,7 +73,7 @@ public:
 	virtual void slot2c();
 	virtual void slot30();
 	virtual void slot34();
-	virtual void setGoalObject(Object *obj);
+	virtual void setGoalObject(Object *goalObject);
 
 	Object *getOwner() { return m_owner; }
 	Object *getGoalObject();
@@ -105,7 +105,7 @@ public:
 	virtual void slot2c();
 	virtual void slot30();
 	virtual void slot34();
-	virtual void setGoalObject(Object *obj);
+	virtual void setGoalObject(Object *goalObject);
 	virtual void halt();
 
 	unsigned char m_machineFields04[0x44];

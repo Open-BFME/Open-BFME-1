@@ -86,7 +86,7 @@ public:
 	virtual void v2c();
 	virtual void v30();
 	virtual void v34();
-	virtual void setGoalObject(Object *obj);
+	virtual void setGoalObject(Object *goalObject);
 
 	StateID getCurrentStateID() const
 	{
