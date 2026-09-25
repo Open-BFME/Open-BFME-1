@@ -89011,3 +89011,5 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
+?dispatch@Rva001BE220Receiver@@QAEXHI@Z,0x001BE220,body ABI: receiver+1DC tail-forwards signed condition and unsigned duration through ILT12B70 to setModelConditionState2572A0/185 ret8; independently decoded for caller2DECC0
+?Rva001C0930FindNameIndex@@YAHPBD@Z,0x001C0930,address-derived full71B cdecl const-char name lookup over VA12A6918 returning signed index or minus1; caller2DECC0 via ILT190F1
