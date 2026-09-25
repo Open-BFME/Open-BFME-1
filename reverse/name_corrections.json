@@ -2628,5 +2628,25 @@
   "after_sha256": "9dafbc602f71e9809252768e60f9fa2d8ac9fb56a110d0d7d82af9be374b8aad",
   "evidence": "reverse/symbols.csv",
   "reason": "reverse/symbols.csv pins the local-player accessor this body calls as ?getLocalPlayer@Rva002EE330PlayerList@@QAEPAVRva00589320Player@@XZ at ILT 0x0000762B, so the returned type must use the pinned spelling Rva00589320Player for the call to resolve; the bank's Player was a local view name for the same object."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_apply.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Update/SpecialAbilityUpdate_apply.cpp",
+  "old_name": "apply",
+  "new_name": "rva002A7E90",
+  "before_sha256": "6903e9785ba3f868390fec4f7632d72604f05d87c58b79c7ca84e6b2deedf6ae",
+  "after_sha256": "1f304b4934f6d29012604c5c67fea19f51d9bfb00046f2fc0a2581343dc6d40c",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "The method name apply was a guess carried over from a bank: Zero Hour's SpecialAbilityUpdate has no apply() and the only caller of 0x002A7E90 is the anonymous d_002aa9d0, so the unproven method takes the address-derived name rva002A7E90 while the owner stays supported by module data +0x210 PersistentPrepTime."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "apply",
+  "new_name": "rva002A7E90",
+  "before_sha256": "9259cbe6c0f78bc8924ac491244a34748f2f3c96c2b4d7191861d33a7e8146eb",
+  "after_sha256": "691370729a6847c2416cebbef59b77275019c9856dbc350630fa4c4a37eec0ad",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "The method name apply was a guess carried over from a bank: Zero Hour's SpecialAbilityUpdate has no apply() and the only caller of 0x002A7E90 is the anonymous d_002aa9d0, so the unproven method takes the address-derived name rva002A7E90 while the owner stays supported by module data +0x210 PersistentPrepTime."
  }
 ]

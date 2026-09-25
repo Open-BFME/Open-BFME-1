@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /MD
-// SpecialAbilityUpdate::apply, retail 0x002A7E90 (141 bytes).
+// SpecialAbilityUpdate::rva002A7E90, retail 0x002A7E90 (141 bytes).
+// Method identity unproven (Zero Hour has no match; sole caller is the
+// anonymous 0x002AA9D0); owner from module data +0x210 PersistentPrepTime.
 // The type test reads the template through the Zero Hour getFO() chain: the
 // const friend_getFinalOverride inlines the non-const one once and only the
 // recursive step stays a call (ILT 0x00048C61 -> 0x00097880), as in the landed
@@ -76,7 +78,7 @@ public:
 class SpecialAbilityUpdate
 {
 public:
-	void apply();
+	void rva002A7E90();
 
 private:
 	unsigned int m_unmodelled_00;
@@ -86,8 +88,8 @@ private:
 	int m_targetID;
 };
 
-// ?apply@SpecialAbilityUpdate@@QAEXXZ
-void SpecialAbilityUpdate::apply()
+// ?rva002A7E90@SpecialAbilityUpdate@@QAEXXZ
+void SpecialAbilityUpdate::rva002A7E90()
 {
 	const SpecialAbilityUpdateModuleData *md = m_moduleData;
 	const SpecialPowerTemplate *tmpl = md->m_specialPowerTemplate;
