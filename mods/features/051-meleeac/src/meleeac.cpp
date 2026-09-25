@@ -1,7 +1,8 @@
-// 051-meleeac — let a contact weapon commit against a battalion that is
-// attacking a building.
+// 051-meleeac — attempted bypass for melee attacks against a structure-
+// attacking battalion. The in-game result has not been verified.
 //
-// HOW THE GATE WORKS. Documented in mods/features/051-meleeac/README.md.
+// PATCH HYPOTHESIS. Retail behavior and the unverified attempt are documented
+// in mods/features/051-meleeac/README.md.
 // bfmeMeleeHordeTargetInvalid (0x00175820) returns 0 immediately when bit 0
 // of the byte at Object+0x344 is set, before it looks at facing. Otherwise a
 // slow target whose back is toward the attacker is invalid, and
@@ -43,26 +44,26 @@ enum {
     PREDICATE_SKIP_BIT = 1
 };
 
-// The byte this call armed, so disarm clears only a bit it set. One logic
-// thread: arm returns before the predicate runs, and disarm is the next
+// The byte this call marked, so restore clears only a bit it set. One logic
+// thread: the setter returns before the predicate runs, and restore is the next
 // instruction after that call.
-static unsigned char *s_predicateSkipByte;
-static int s_predicateSkipArmed;
+static unsigned char *s_ownedPredicateSkipByteAddress;
+static int s_ownsPredicateSkipBit;
 
 static void *read_pointer_field(void *base, int offset)
 {
     return *(void **)((unsigned char *)base + offset);
 }
 
-static int unit_has_structure_goal(void *object)
+static int has_structure_attack_goal(void *predicateTarget)
 {
     void *ai;
     void *machine;
     void *goal;
 
-    if (object == 0)
+    if (predicateTarget == 0)
         return 0;
-    ai = read_pointer_field(object, OBJECT_AI);
+    ai = read_pointer_field(predicateTarget, OBJECT_AI);
     if (ai == 0)
         return 0;
     machine = read_pointer_field(ai, AI_STATE_MACHINE);
@@ -74,39 +75,41 @@ static int unit_has_structure_goal(void *object)
     return c_is_kind_of(goal, 0, KINDOF_STRUCTURE) != 0;
 }
 
-static int object_or_outer_has_structure_goal(void *object)
+static int predicate_target_or_outer_has_structure_attack_goal(void *predicateTarget)
 {
-    void *outer;
+    void *outerCandidate;
 
-    if (unit_has_structure_goal(object))
+    if (has_structure_attack_goal(predicateTarget))
         return 1;
-    if (object == 0)
+    if (predicateTarget == 0)
         return 0;
-    outer = read_pointer_field(object, OBJECT_OUTER);
-    if (outer == 0 || outer == object)
+    outerCandidate = read_pointer_field(predicateTarget, OBJECT_OUTER);
+    if (outerCandidate == 0 || outerCandidate == predicateTarget)
         return 0;
-    return unit_has_structure_goal(outer);
+    return has_structure_attack_goal(outerCandidate);
 }
 
-extern "C" __declspec(dllexport) void __cdecl armMeleeHordeTargetPredicateSkip(void *object)
+extern "C" __declspec(dllexport) void __cdecl setPredicateSkipForStructureAttack(void *predicateTarget)
 {
-    unsigned char *predicateSkipByte;
+    unsigned char *predicateSkipByteAddress;
 
-    s_predicateSkipArmed = 0;
-    if (object == 0 || !object_or_outer_has_structure_goal(object))
+    s_ownsPredicateSkipBit = 0;
+    if (predicateTarget == 0 ||
+        !predicate_target_or_outer_has_structure_attack_goal(predicateTarget))
         return;
-    predicateSkipByte = (unsigned char *)object + OBJECT_PREDICATE_SKIP;
-    if ((*predicateSkipByte & PREDICATE_SKIP_BIT) != 0)
+    predicateSkipByteAddress = (unsigned char *)predicateTarget + OBJECT_PREDICATE_SKIP;
+    if ((*predicateSkipByteAddress & PREDICATE_SKIP_BIT) != 0)
         return;
-    *predicateSkipByte = (unsigned char)(*predicateSkipByte | PREDICATE_SKIP_BIT);
-    s_predicateSkipByte = predicateSkipByte;
-    s_predicateSkipArmed = 1;
+    *predicateSkipByteAddress = (unsigned char)(*predicateSkipByteAddress | PREDICATE_SKIP_BIT);
+    s_ownedPredicateSkipByteAddress = predicateSkipByteAddress;
+    s_ownsPredicateSkipBit = 1;
 }
 
-extern "C" __declspec(dllexport) void __cdecl disarmMeleeHordeTargetPredicateSkip(void)
+extern "C" __declspec(dllexport) void __cdecl restorePredicateSkipAfterStructureAttackCheck(void)
 {
-    if (!s_predicateSkipArmed)
+    if (!s_ownsPredicateSkipBit)
         return;
-    *s_predicateSkipByte = (unsigned char)(*s_predicateSkipByte & (unsigned char)~PREDICATE_SKIP_BIT);
-    s_predicateSkipArmed = 0;
+    *s_ownedPredicateSkipByteAddress =
+        (unsigned char)(*s_ownedPredicateSkipByteAddress & (unsigned char)~PREDICATE_SKIP_BIT);
+    s_ownsPredicateSkipBit = 0;
 }

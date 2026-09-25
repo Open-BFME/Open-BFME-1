@@ -447,11 +447,11 @@ def build_meleeac(pe, feature_dir, probe=False):
             raise SystemExit(
                 f"0x{call:08X} is not the retail call to "
                 f"bfmeMeleeHordeTargetInvalid followed by add esp, 8 / test al")
-    return build_feature(pe, feature_dir / "src/meleeac.cpp", "armMeleeHordeTargetPredicateSkip", (
-        (MELEEAC_ONENTER_CALL, "armMeleeHordeTargetPredicateSkip", ("esi",)),
-        (MELEEAC_ONENTER_RESTORE, "disarmMeleeHordeTargetPredicateSkip", ()),
-        (MELEEAC_UPDATE_CALL, "armMeleeHordeTargetPredicateSkip", ("edi",)),
-        (MELEEAC_UPDATE_RESTORE, "disarmMeleeHordeTargetPredicateSkip", ()),
+    return build_feature(pe, feature_dir / "src/meleeac.cpp", "setPredicateSkipForStructureAttack", (
+        (MELEEAC_ONENTER_CALL, "setPredicateSkipForStructureAttack", ("esi",)),
+        (MELEEAC_ONENTER_RESTORE, "restorePredicateSkipAfterStructureAttackCheck", ()),
+        (MELEEAC_UPDATE_CALL, "setPredicateSkipForStructureAttack", ("edi",)),
+        (MELEEAC_UPDATE_RESTORE, "restorePredicateSkipAfterStructureAttackCheck", ()),
     ), probe=probe)
 
 

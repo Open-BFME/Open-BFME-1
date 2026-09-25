@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""051-meleeac borrows the predicate's own skip bit, and does not ship."""
+"""Structural checks for the attempted 051-meleeac patch; no gameplay claim."""
 import shutil
 import struct
 import subprocess
@@ -20,7 +20,7 @@ import modbuild  # noqa: E402
 from cave import PE  # noqa: E402
 
 # call site -> first instruction after the five stolen bytes.
-# The call's resume is the disarm hook. The disarm hook's resume is the je.
+# Each predicate call resumes at the restore hook, which resumes at the je.
 HOOK_RESUMES = {
     modbuild.MELEEAC_ONENTER_CALL: modbuild.MELEEAC_ONENTER_RESTORE,
     modbuild.MELEEAC_ONENTER_RESTORE: modbuild.MELEEAC_ONENTER_RESTORE + 5,
@@ -51,7 +51,7 @@ def built():
         yield PE(out)
 
 
-def test_meleeac_is_a_shipped_feature():
+def test_meleeac_is_registered_in_the_shipped_feature_set():
     assert "051-meleeac" in modbuild.FEATURES
     assert "051-meleeac" not in modbuild.UNSHIPPED
 
@@ -64,19 +64,28 @@ def test_meleeac_payload_has_no_unresolved_runtime_symbols():
         assert modbuild.undefined_externals(obj) == []
 
 
-def test_retail_hook_sites_preserve_predicate_test_and_branch():
+def test_retail_call_sites_resolve_through_ilt_to_the_melee_horde_predicate():
     pe = PE(EXE)
-    for call, restore in (
-            (modbuild.MELEEAC_ONENTER_CALL, modbuild.MELEEAC_ONENTER_RESTORE),
-            (modbuild.MELEEAC_UPDATE_CALL, modbuild.MELEEAC_UPDATE_RESTORE)):
-        assert pe.read(call, 1) == b"\xE8"
+    predicate_ilt_rva = 0x0002056D
+    for call in (modbuild.MELEEAC_ONENTER_CALL, modbuild.MELEEAC_UPDATE_CALL):
+        call_bytes = pe.read(call, 5)
+        assert call_bytes[0] == 0xE8
+        displacement = struct.unpack("<i", call_bytes[1:])[0]
+        assert call + 5 + displacement == predicate_ilt_rva
+        thunk = next(_md().disasm(pe.read(predicate_ilt_rva, 5),
+                                  pe.image_base + predicate_ilt_rva))
+        assert thunk.mnemonic == "jmp"
+        assert int(thunk.op_str, 16) == pe.image_base + 0x00175820
+
+
+def test_retail_restore_sites_preserve_predicate_test_and_branch():
+    pe = PE(EXE)
+    for restore in (modbuild.MELEEAC_ONENTER_RESTORE, modbuild.MELEEAC_UPDATE_RESTORE):
         assert pe.read(restore, 5) == modbuild.MELEEAC_AFTER_CALL
-        # The short je stays outside the stolen bytes, so the disarm hook can
-        # return to it.
         assert pe.read(restore + 5, 1) == b"\x74"
 
 
-def test_meleeac_detours_both_calls_and_returns_to_the_je(built):
+def test_hook_detours_land_in_payload_and_resume_at_expected_addresses(built):
     pe = built
     cave = next(section for section in pe.sections() if section["name"] == ".bfmemod")
     cave_start = pe.image_base + cave["vaddr"]
@@ -84,10 +93,10 @@ def test_meleeac_detours_both_calls_and_returns_to_the_je(built):
     md = _md()
     shim_targets = []
 
-    for target, resume in HOOK_RESUMES.items():
-        detour = pe.read(target, 5)
-        assert detour[0] == 0xE9, f"0x{target:08X} was not replaced by a rel32 detour"
-        shim = target + 5 + struct.unpack("<i", detour[1:])[0]
+    for hook_rva, resume in HOOK_RESUMES.items():
+        detour = pe.read(hook_rva, 5)
+        assert detour[0] == 0xE9, f"0x{hook_rva:08X} was not replaced by a rel32 detour"
+        shim = hook_rva + 5 + struct.unpack("<i", detour[1:])[0]
         instructions = list(md.disasm(pe.read(shim, 96), pe.image_base + shim))
         assert [ins.mnemonic for ins in instructions[:3]] == ["pushal", "pushfd", "cld"]
         call = next(ins for ins in instructions if ins.mnemonic == "call")

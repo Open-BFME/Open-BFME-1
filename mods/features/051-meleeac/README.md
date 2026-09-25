@@ -1,9 +1,15 @@
-# 051-meleeac — a battalion on a building can be meleed from behind
+# 051-meleeac — attempted structure-attack melee gate bypass
+
+This feature contains a patch hypothesis for melee attacks against a battalion
+that is attacking a structure. The patch builds and its hook layout is checked;
+its intended in-game effect has **not** been verified, and the reported attempt
+did not fix the issue. The numeric feature ID remains `051-meleeac`; the heading
+describes the attempted behavior without presenting it as a working fix.
 
 Ships in `mods/dist/lotrbfme.exe`. `python3 tools/modbuild.py --dist` builds
 that executable from every feature in `FEATURES`, and this one is on the list.
 
-## What retail does
+## Observed retail behavior
 
 Melee hordes do not swing from the ordinary attack cycle. When the weapon is a
 contact weapon and the template bit at `+0xD4` is `0x400000`, the machine built
@@ -56,12 +62,14 @@ that one loop. Skirmish AI reissues instead of camping the back of a horde.
 return `STATE_FAILURE`, which sends the horde machine to path-wait. The earlier
 inverted labels were corrected without changing the matched retail bytes.
 
-## The fix, and why it is shaped like this
+## Failed patch hypothesis and implementation shape
 
-The predicate already has the exit we want: bit 0 at `Object+0x344` returns
-"not invalid" before the facing test. The hook sets that bit for the duration
-of the two calls, and only when the object whose facing is about to be tested
-is attacking a structure, then puts the bit back before `test al`.
+The hypothesis was that the predicate's bit 0 at `Object+0x344` could bypass
+the facing test. The hook sets that bit for the duration of the two calls, and
+only when the object whose facing is about to be tested is attacking a
+structure, then puts the bit back before `test al`. This describes what the
+patch attempts; it does not establish that this produces the desired gameplay
+result.
 
 The shim `cave.py` generates saves every register and puts them back. A hook
 that cleared `al` itself would be undone before `test al` ran. Setting the bit
@@ -81,7 +89,7 @@ Two shapes that look simpler and are worse:
 The two call sites, and the five bytes that follow each of them (`add esp, 8` /
 `test al`), which is where the bit is restored:
 
-| | arm, target in | disarm |
+| Predicate call | register value passed to setter | restore hook |
 |---|---|---|
 | `onEnter` | `0x00175979`, `esi` | `0x0017597E` |
 | `update` | `0x00175AF0`, `edi` | `0x00175AF5` |
@@ -95,5 +103,16 @@ pushes 7 for the same question. If the object in the register has no such goal,
 the pointer at `Object+0x214` is checked once — that is the other object
 `bfmeResolveMeleeTarget` (`0x001CB020`) will substitute when it is kind `0x6C`.
 
-A runner, a unit tapping stop, and a unit whose goal is another unit all fail
-this test. The bit is not set, and the retail facing check runs unchanged.
+A runner, a unit tapping stop, and a unit whose goal is another unit are intended
+to fail the patch's structure-goal filter. The byte-level checks below establish
+hook placement and control-flow preservation only. They do not test target
+selection, a melee swing, or the reported gameplay outcome.
+
+## What the automated checks establish
+
+`tools/tests/test_meleeac.py` checks that the feature is registered for
+distribution, the payload has no unresolved runtime symbols, both retail call
+sites target the predicate, the restore sites preserve the following test and
+branch, and the installed detours enter the payload and resume at the expected
+addresses. None of those checks exercises a match or verifies that the patch
+changes the melee outcome.
