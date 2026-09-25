@@ -4,6 +4,7 @@
 // browser is sitting in, and the eight slots inside it.
 //
 //   LANGameInfo::LANGameInfo            0x0068E980  176 B  QAE
+//   LANGameInfo::getPlayerName          0x004C8800   38 B  QAE
 //   LANGameInfo::getPlayerLastHeard     0x00684C60   39 B  QAE
 //   LANGameInfo::setPlayerLastHeard     0x00688960   37 B  QAE
 //   LANGameInfo::setSlot                0x0068EA70  119 B  QAE
@@ -124,6 +125,7 @@ public:
 	~GameSlot();					// ILT thunk 0x0000B988
 
 	Bool isHuman(void) const;			// ILT thunk 0x000279CB
+	UnicodeString getName(void) const;		// ILT thunk 0x0003A20B
 	void unAccept(void);
 	void setAccept(void) { m_isAccepted = true; }
 	void setMapAvailability(Bool hasMap);
@@ -252,6 +254,7 @@ public:
 	virtual Int getLocalSlotNum(void) const;
 	virtual void resetAccepted(void);
 
+	UnicodeString getPlayerName(Int who);
 	UnsignedInt getPlayerLastHeard(Int who);
 	void setPlayerLastHeard(Int who, UnsignedInt lastHeard);
 	void setSlot(Int slotNum, LANGameSlot slotInfo);
@@ -286,6 +289,13 @@ UnsignedInt LANGameInfo::getPlayerLastHeard( Int who )
 	if (m_LANSlot[who].isHuman())
 		return m_LANSlot[who].getLastHeard();
 	return 0;
+}
+
+// LANGameInfo::getPlayerName, 0x004C8800, 38 bytes: ZH's inline, out of line;
+// callers are LANAPI::update, LANDisplayGameList and the game info window.
+UnicodeString LANGameInfo::getPlayerName( Int who )
+{
+	return m_LANSlot[who].getName();
 }
 
 // LANGameInfo::setPlayerLastHeard, 0x00688960, 37 bytes.

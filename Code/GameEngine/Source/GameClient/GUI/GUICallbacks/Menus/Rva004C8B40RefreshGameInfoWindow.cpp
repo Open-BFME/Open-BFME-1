@@ -83,24 +83,11 @@ public:
     int getPlayerTemplate() const { return *(const int *)((const char *)this + 0x14); }
 };
 
-class BfmeOtherDQG
-{
-    unsigned char m_bfmeHead[4];
-};
-
-class BfmeThingDQG
+class LANGameInfo
 {
 public:
-    BfmeOtherDQG *bfmeGoDQG(BfmeOtherDQG *other, int index);
+    UnicodeString getPlayerName(int who);
 };
-
-class Rva004C8800GameInfoView
-{
-public:
-    UnicodeString getPlayerName(int index) throw();
-};
-
-#pragma comment(linker, "/alternatename:?getPlayerName@Rva004C8800GameInfoView@@QAE?AVUnicodeString@@H@Z=?bfmeGoDQG@BfmeThingDQG@@QAEPAVBfmeOtherDQG@@PAV2@H@Z")
 
 class GameInfo
 {
@@ -233,7 +220,7 @@ void Rva004C8B40GameInfoWindowRefresh(GameInfo *gameInfo, UnicodeString gameName
     gameInfoWindowParent->winBringToTop();
 
     GadgetStaticTextSetText(gameInfoWindowStaticTextGameName,
-                            ((Rva004C8800GameInfoView *)gameInfo)->getPlayerName(0));
+                            ((LANGameInfo *)gameInfo)->getPlayerName(0));
 
     UnicodeString map;
     AsciiString asciiMap = gameInfo->getMap();
