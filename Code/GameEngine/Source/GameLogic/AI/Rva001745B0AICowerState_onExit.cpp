@@ -24,9 +24,9 @@ class BitFlags
 public:
     enum _dummy_kInit { kInit };
 
-    BitFlags(_dummy_kInit, int idx1)
+    BitFlags(_dummy_kInit, int bitIndex)
     {
-        m_bits.set(idx1);
+        m_bits.set(bitIndex);
     }
 
     BitFlags()
