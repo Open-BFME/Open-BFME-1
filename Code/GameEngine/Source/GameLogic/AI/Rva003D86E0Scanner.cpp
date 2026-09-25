@@ -71,10 +71,10 @@ class Rva003D86E0Scanner
   private:
     Pathfinder *m_pathfinder;
     void *m_field04;
-    Int m_resultX, m_resultY;
+    Int m_resultCellX, m_resultCellY;
     PathfindLayerEnum m_layer;
-    Int m_field14;
-    Int m_cachedCellA, m_cachedCellB;
+    Int m_requestedLayer;
+    Int m_cachedCellX, m_cachedCellY;
     Int m_lowerCellOffset, m_upperCellOffset;
 };
 char Rva003D86E0Scanner::scan(Int cellX, Int cellY)
@@ -87,7 +87,7 @@ char Rva003D86E0Scanner::scan(Int cellX, Int cellY)
             if (!cell)
                 return false;
             Int type = (cell->m_word >> 6) & 0x3f;
-            Int requested = m_field14;
+            Int requested = m_requestedLayer;
             if (requested != type)
             {
                 if (requested == 1)
@@ -111,16 +111,16 @@ char Rva003D86E0Scanner::scan(Int cellX, Int cellY)
                                             true);
         }
     }
-    m_resultX = cellX;
-    m_resultY = cellY;
-    if (m_field14 == 1 || m_field14 >= 16)
+    m_resultCellX = cellX;
+    m_resultCellY = cellY;
+    if (m_requestedLayer == 1 || m_requestedLayer >= 16)
     {
-        if (*(ICoord2D *)&m_resultX != *(ICoord2D *)&m_cachedCellA)
+        if (*(ICoord2D *)&m_resultCellX != *(ICoord2D *)&m_cachedCellX)
         {
             Rva003D7010Struct data;
-            if (m_pathfinder->iterateCellsAlongLine(*(ICoord2D *)&m_resultX,
-                                                    *(ICoord2D *)&m_cachedCellA,
-                                                    (PathfindLayerEnum)m_field14, &data))
+            if (m_pathfinder->iterateCellsAlongLine(*(ICoord2D *)&m_resultCellX,
+                                                    *(ICoord2D *)&m_cachedCellX,
+                                                    (PathfindLayerEnum)m_requestedLayer, &data))
                 return false;
         }
     }
