@@ -280,20 +280,20 @@ __forceinline Bool Pathfinder::rva003E5E40Cells( const Object *object, Int cellX
 
 Bool Pathfinder::rva003E5E40( Object *object )
 {
-	const Coord3D *pos = object->getPosition();
+	const Coord3D *worldPosition = object->getPosition();
 	Int iRadius;
 	Bool center;
 	getRadiusAndCenter( object, iRadius, center );
 	Coord3D adjustDest;
-	adjustDest.set( pos );
+	adjustDest.set( worldPosition );
 	if (!center)
 	{
 		adjustDest.x += PATHFIND_CELL_SIZE_F/2;
 		adjustDest.y += PATHFIND_CELL_SIZE_F/2;
 	}
-	ICoord2D cell;
-	if (worldToCell( &adjustDest, &cell ))
+	ICoord2D cellIndex;
+	if (worldToCell( &adjustDest, &cellIndex ))
 		return false;
-	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination( object, pos );
-	return rva003E5E40Cells( object, cell.x, cell.y, layer, iRadius, center );
+	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination( object, worldPosition );
+	return rva003E5E40Cells( object, cellIndex.x, cellIndex.y, layer, iRadius, center );
 }
