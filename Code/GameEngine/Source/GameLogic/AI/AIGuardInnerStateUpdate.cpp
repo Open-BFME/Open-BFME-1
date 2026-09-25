@@ -57,7 +57,7 @@ public:
 class Team
 {
 public:
-	Coord3D *getEstimateTeamPosition_000EDCD0( Coord3D *pos ) const;
+	Coord3D *getEstimateTeamPosition_000EDCD0( Coord3D *position ) const;
 };
 
 class TeamFactory
