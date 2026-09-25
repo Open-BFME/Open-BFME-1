@@ -72,12 +72,12 @@ public:
 	unsigned char m_bfmeB;
 };
 
-static __forceinline void markState(Object *obj)
+static __forceinline void markState(Object *object)
 {
-	if (!obj->m_bfmeFlags.test(124))
+	if (!object->m_bfmeFlags.test(124))
 	{
-		obj->m_bfmeFlags.set(124);
-		obj->notifyModelConditionChanged();
+		object->m_bfmeFlags.set(124);
+		object->notifyModelConditionChanged();
 	}
 }
 
