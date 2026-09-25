@@ -105,7 +105,7 @@ class Rva001764E0AIUpdate
 {
 public:
 	WhichTurretType getWhichTurretForCurWeapon() const;
-	void setTurretTargetObject(WhichTurretType turret, Object *target, Bool forceAttacking);
+	void setTurretTargetObject(WhichTurretType turret, Object *targetObject, Bool forceAttacking);
 };
 
 class Pathfinder

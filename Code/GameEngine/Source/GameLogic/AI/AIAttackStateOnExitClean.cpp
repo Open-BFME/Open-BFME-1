@@ -56,7 +56,7 @@ class AIUpdateInterface
 {
 public:
 	void setCurrentVictim(const Object *victim);
-	void setTurretTargetObject(WhichTurretType turret, Object *target,
+	void setTurretTargetObject(WhichTurretType turret, Object *targetObject,
 		Bool forceAttacking);
 	void friend_setGoalObject(Object *object);
 };
