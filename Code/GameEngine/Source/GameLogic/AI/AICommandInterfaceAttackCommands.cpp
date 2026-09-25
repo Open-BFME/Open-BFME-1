@@ -225,8 +225,8 @@ class AICommandInterface
 public:
 	virtual void aiDoCommand(const AICommandParms *parms) = 0;	// slot 0, vtable+0x00
 
-	void aiAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType commandSource);
-	void aiForceAttackObject(Object *victim, Int maxShotsToFire, CommandSourceType commandSource);
+	void aiAttackObject(Object *target, Int maxShotsToFire, CommandSourceType commandSource);
+	void aiForceAttackObject(Object *target, Int maxShotsToFire, CommandSourceType commandSource);
 	void aiAttackTeam(const Team *team, Int maxShotsToFire, CommandSourceType commandSource);
 	void aiAttackPosition(const Coord3D *position, Int maxShotsToFire, CommandSourceType commandSource);
 	void aiAttackArea(const PolygonTrigger *attackArea, CommandSourceType commandSource);
@@ -235,18 +235,18 @@ public:
 	void aiAttackFollowWaypointPathAsTeam(const Waypoint *waypoint, Int maxShotsToFire, CommandSourceType commandSource);
 };
 
-void AICommandInterface::aiAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType commandSource )
+void AICommandInterface::aiAttackObject( Object *target, Int maxShotsToFire, CommandSourceType commandSource )
 {
 	AICommandParms parms(AICMD_ATTACK_OBJECT, commandSource);
-	parms.m_obj = victim;
+	parms.m_obj = target;
 	parms.m_intValue = maxShotsToFire;
 	aiDoCommand(&parms);
 }
 
-void AICommandInterface::aiForceAttackObject( Object *victim, Int maxShotsToFire, CommandSourceType commandSource )
+void AICommandInterface::aiForceAttackObject( Object *target, Int maxShotsToFire, CommandSourceType commandSource )
 {
 	AICommandParms parms(AICMD_FORCE_ATTACK_OBJECT, commandSource);
-	parms.m_obj = victim;
+	parms.m_obj = target;
 	parms.m_intValue = maxShotsToFire;
 	aiDoCommand(&parms);
 }
