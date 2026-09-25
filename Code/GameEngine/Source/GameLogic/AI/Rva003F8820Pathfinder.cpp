@@ -137,7 +137,7 @@ public:
 class PathfindLayer
 {
 public:
-	PathfindCell *getCell(Int x, Int y);
+	PathfindCell *getCell(Int cellX, Int cellY);
 	void bfmeRememberEndpoint(const ICoord2D *cell);
 
 	unsigned char m_pad00[0x40];
