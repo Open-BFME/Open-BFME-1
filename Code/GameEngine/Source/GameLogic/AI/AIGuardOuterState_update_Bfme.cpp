@@ -50,7 +50,7 @@ extern GameLogic *TheBfmeGameLogic;
 class Team
 {
 public:
-	void getPosition(Coord3D *out);
+	void getPosition(Coord3D *position);
 };
 
 class TeamFactory
