@@ -2758,5 +2758,15 @@
   "after_sha256": "105b022b98590244a1127f2a255ce7ed6038b9523562267f1213f2c3cc57973e",
   "evidence": "docs/naming_evidence.md",
   "reason": "The TU-local callee names initialize and finalize were guesses: 0x006ACE90 is already ledgered as Rva006ACE90Owner::addNamedRoom (a keyed map insert) and 0x006B24D0 is an unnamed gen-dump, so the call typedefs, union members and locals take address-derived names and the dead finalize declaration is removed."
+ },
+ {
+  "old_path": "reverse/attempts/0x001e7c30.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Rva001E7C30WeaponTemplateComputeScatter.cpp",
+  "old_name": "computeScatter",
+  "new_name": "rva001e7c30",
+  "before_sha256": "7fbe2e96cb60ddff855fb211bee3b5d45c477d1c43083724f26f246fe3693b0f",
+  "after_sha256": "18fe9973726b2fd4ea34f400665fa76c2b0fc83ed53038a25eccd432dbef4cb5",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "The bank's method name computeScatter was a guess: no Zero Hour source, pin or landed source names it. The caller 0x001E9380 via ILT 0x00040287 proves only the WeaponTemplate receiver and the hidden Coord3D return, so the method takes the address-derived name."
  }
 ]
