@@ -107,8 +107,8 @@ public:
 	virtual Real getLayerHeight(Real x, Real y, PathfindLayerEnum layer,
 		Coord3D *normal, Bool clip) const;
 
-	PathfindLayerEnum getLayerForDestination(Object *obj,
-		const Coord3D *destination);
+	PathfindLayerEnum getLayerForDestination(Object *object,
+		const Coord3D *position);
 };
 
 extern TerrainLogic *TheTerrainLogic;

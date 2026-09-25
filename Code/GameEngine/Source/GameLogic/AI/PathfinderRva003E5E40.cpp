@@ -97,7 +97,7 @@ public:
 class TerrainLogic
 {
 public:
-	PathfindLayerEnum getLayerForDestination( Object *obj, const Coord3D *pos );
+	PathfindLayerEnum getLayerForDestination( Object *object, const Coord3D *position );
 };
 
 extern TerrainLogic *TheTerrainLogic;

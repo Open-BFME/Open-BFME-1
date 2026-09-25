@@ -85,7 +85,7 @@ private:
 class TerrainLogic
 {
 public:
-	PathfindLayerEnum getLayerForDestination(Object *obj, const Coord3D *destination);	///< ILT thunk at 0x0001C675
+	PathfindLayerEnum getLayerForDestination(Object *object, const Coord3D *position);	///< ILT thunk at 0x0001C675
 };
 
 extern TerrainLogic *TheTerrainLogic;					///< retail [0x012EF4CC]
