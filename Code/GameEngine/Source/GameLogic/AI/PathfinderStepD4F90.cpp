@@ -36,17 +36,17 @@ extern Int g_Va012B49FC[];
 class Pathfinder
 {
 public:
-	bool bfmeStepD4F90( void *state, PathfindCell *cell );
+	bool bfmeStepD4F90( void *movementInfo, PathfindCell *pathfindCell );
 
 private:
 	unsigned char m_pad00[0x844];
 	Int m_ignoreObstacleID;
 };
 
-bool Pathfinder::bfmeStepD4F90( void *state, PathfindCell *cell )
+bool Pathfinder::bfmeStepD4F90( void *movementInfo, PathfindCell *pathfindCell )
 {
-	const PathfindCell *toCell = cell;
-	register BfmeMovementPositionInfo *info = (BfmeMovementPositionInfo *)state;
+	const PathfindCell *toCell = pathfindCell;
+	register BfmeMovementPositionInfo *info = (BfmeMovementPositionInfo *)movementInfo;
 	if (toCell == 0)
 		return false;
 
