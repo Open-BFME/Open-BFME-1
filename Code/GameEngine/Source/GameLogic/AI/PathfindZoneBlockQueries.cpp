@@ -51,7 +51,7 @@ class PathfindZoneManager
 public:
 	Bool bfmeInteractsWithBridge(Int cellX, Int cellY) const;
 	Bool bfmeHasWaypoints(Int cellX, Int cellY) const;
-	Waypoint *bfmeGetWaypoint(Int cellX, Int cellY, UnsignedInt index) const;
+	Waypoint *bfmeGetWaypoint(Int cellX, Int cellY, UnsignedInt waypointIndex) const;
 	zoneStorageType bfmeGetBlockZone(const PathfindMovementProfile &profile,
 		Int cellX, Int cellY, PathfindCell **map) const;
 	void bfmeSetTailFlag(Int cellX, Int cellY, Bool tailFlag);
@@ -89,7 +89,7 @@ Bool PathfindZoneManager::bfmeHasWaypoints(Int cellX, Int cellY) const
 }
 
 Waypoint *PathfindZoneManager::bfmeGetWaypoint(
-	Int cellX, Int cellY, UnsignedInt index) const
+	Int cellX, Int cellY, UnsignedInt waypointIndex) const
 {
 	if (cellX < 0 || cellY < 0)
 		return 0;
@@ -98,8 +98,8 @@ Waypoint *PathfindZoneManager::bfmeGetWaypoint(
 	Int blockY = cellY / 16;
 	if (blockX < m_zoneBlockExtent.x && blockY < m_zoneBlockExtent.y) {
 		const ZoneBlock &block = m_zoneBlocks[blockX][blockY];
-		if (index < (UnsignedInt)block.m_numWaypoints)
-			return block.m_waypoints[index];
+		if (waypointIndex < (UnsignedInt)block.m_numWaypoints)
+			return block.m_waypoints[waypointIndex];
 	}
 
 	return 0;
