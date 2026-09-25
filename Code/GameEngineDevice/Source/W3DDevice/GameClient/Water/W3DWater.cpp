@@ -3393,7 +3393,6 @@ void WaterRenderObjClass::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@WaterRenderObjClass@@MAEXXZ present-unmatched
 void WaterRenderObjClass::loadPostProcess( void )
 {
 
