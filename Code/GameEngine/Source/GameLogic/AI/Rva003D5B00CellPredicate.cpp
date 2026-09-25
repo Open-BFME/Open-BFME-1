@@ -20,14 +20,14 @@ struct Rva003D5B00Cell
 class Rva003D5B00Map
 {
 public:
-    __forceinline Rva003D5B00Cell *getGroundCell(Int x, Int y)
+    __forceinline Rva003D5B00Cell *getGroundCell(Int cellX, Int cellY)
     {
-        if (x < m_minX || x > m_maxX ||
-            y < m_minY || y > m_maxY)
+        if (cellX < m_minX || cellX > m_maxX ||
+            cellY < m_minY || cellY > m_maxY)
             return 0;
 
-        return (Rva003D5B00Cell *)((unsigned char *)m_rows[x] +
-            y * sizeof(Rva003D5B00Cell));
+        return (Rva003D5B00Cell *)((unsigned char *)m_rows[cellX] +
+            cellY * sizeof(Rva003D5B00Cell));
     }
 
 private:
@@ -44,16 +44,16 @@ public:
 class Rva003D5B00
 {
 public:
-    Int check(Int x, Int y) const;
+    Int check(Int cellX, Int cellY) const;
 
 private:
     Rva003D5B00Map *m_map;
 };
 
-Int Rva003D5B00::check(Int x, Int y) const
+Int Rva003D5B00::check(Int cellX, Int cellY) const
 {
     Rva003D5B00Map *map = m_map;
-    Rva003D5B00Cell *cell = map->getGroundCell(x, y);
+    Rva003D5B00Cell *cell = map->getGroundCell(cellX, cellY);
     if (cell != 0)
     {
         if ((cell->m_bits & 0xFC0u) == 0x40u)
