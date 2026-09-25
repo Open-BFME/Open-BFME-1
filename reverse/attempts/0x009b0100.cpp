@@ -1,5 +1,5 @@
 // ?d_009b0100@@YAXXZ
-// partial score=0.09 date=2026-09-22
+// partial score=0.11 date=2026-09-25
 // VP6 three-plane edge-filter driver at retail RVA 0x009B0100.
 // The owner remains address-derived; the context is witnessed by adjacent plane drivers.
 // cl: /O2 /Ob0 /DNDEBUG /DWIN32 /D_WINDOWS /MD
@@ -21,10 +21,10 @@ struct Rva009B0100Context
 	int m_extra84;
 	int m_extra88;
 	int m_pad8C;
-	int m_width;
-	int m_height;
-	int m_strideY;
-	int m_strideUV;
+	unsigned int m_width;
+	unsigned int m_height;
+	unsigned int m_strideY;
+	unsigned int m_strideUV;
 };
 
 typedef int *(__cdecl *Rva009B0100Setup)(Rva009B0100Context *, int);
@@ -41,14 +41,14 @@ extern "C" void __cdecl Rva009B0100Vp6BlockFilter(
 	unsigned char *flags, int flagStride, int flagMask)
 {
 	ctx->m_baseOffset = baseOffset;
-	int secondCount = ctx->m_height;
-	int firstCount = ctx->m_width;
-	int plane = 0;
+	volatile unsigned int secondCount = ctx->m_height;
+	volatile unsigned int firstCount = ctx->m_width;
+	int plane;
 	unsigned char *base;
 	int stride;
-	int planeOffset;
-	int planeWidth;
-	int planeHeight;
+	register int planeOffset = 0;
+	unsigned int planeWidth;
+	unsigned int planeHeight;
 	int row;
 	int count;
 	int edge;
@@ -64,10 +64,11 @@ extern "C" void __cdecl Rva009B0100Vp6BlockFilter(
 	ctx->m_flagMask = flagMask;
 
 	int setupValue = g_rva012D7B58[mode];
-	if (setupValue == 0)
+	if (setupValue == planeOffset)
 		return;
 
-	register int *work = g_rva01356E68(ctx, setupValue);
+	int *work = g_rva01356E68(ctx, setupValue);
+	plane = 0;
 
 	do
 	{
