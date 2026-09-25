@@ -1,5 +1,5 @@
 // ?xfer@Rva001CB270ModelConditionFlags@@QAEXPAVXfer@@@Z
-// partial score=0.985887 date=2026-09-25
+// partial score=0.993964 date=2026-09-25
 // Address-derived identity: the semantic owner of this model-condition flag
 // transfer is not established by the available caller evidence.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib /ICode/GameEngine/Source
@@ -63,10 +63,17 @@ inline const char *StringBase<char>::str() const
 
 void Rva001CB270ModelConditionFlags::xfer(Xfer *xfer)
 {
-	Xfer::Version version;
-	version.data[0] = 1;
-	version.data[1] = 1;
-	*xfer == version;
+	struct VersionSlot
+	{
+		Xfer::Version version;
+		Int unused;
+	};
+	{
+		VersionSlot slot;
+		slot.version.data[0] = 1;
+		slot.version.data[1] = 1;
+		*xfer == slot.version;
+	}
 
 	if (xfer->IsLightCRC())
 	{
