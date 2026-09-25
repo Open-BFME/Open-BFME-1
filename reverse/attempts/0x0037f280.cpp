@@ -1,5 +1,5 @@
 // ?call@Gen0002B7F6@@QAEXPAVExperienceLevelData@@PAVObject@@_N@Z
-// partial score=0.78 date=2026-09-10
+// partial score=0.898 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Ireference/shims/stlp_nodealloc
 // stlport
 // BFME ExperienceLevelSystem::update, retail 0x0037F4C0.  The pending list at
@@ -181,8 +181,7 @@ void Gen0002B7F6::call( ExperienceLevelData *level, Object *object,
 {
 	for ( unsigned int index = 0;
 		index < static_cast<unsigned int>(
-			level->m_attributeModifiers.end() -
-			level->m_attributeModifiers.begin() ); ++index )
+			level->m_attributeModifiers.size() ); ++index )
 	{
 		object->applyAttributeModifier(
 			level->m_attributeModifiers.begin()[ index ], -1 );
@@ -190,12 +189,12 @@ void Gen0002B7F6::call( ExperienceLevelData *level, Object *object,
 
 	for ( unsigned int index = 0;
 		index < static_cast<unsigned int>(
-			level->m_upgrades.end() - level->m_upgrades.begin() ); ++index )
+			level->m_upgrades.size() ); ++index )
 	{
 		object->giveUpgrade( level->m_upgrades.begin()[ index ] );
 	}
 
-	if ( showEffect && TheBfmeGameLogic->m_frame >= 10 )
+	if ( showEffect & ( TheBfmeGameLogic->m_frame >= 10 ) )
 	{
 		ExperienceLevelEffectCallValue effectCall;
 		effectCall.freeFunction = j_00038843;
@@ -205,12 +204,12 @@ void Gen0002B7F6::call( ExperienceLevelData *level, Object *object,
 
 	((BfmeItemRY *)object)->bfmeDoRY( (void *)0xc7, (void *)0xf );
 
-	ExperienceTracker *tracker = object->m_experienceTracker;
-	tracker->m_name.set( level->m_name );
-	tracker->m_experience = level->m_experienceAward;
-	tracker->m_experienceAwardOwnGuysDie = level->m_experienceAwardOwnGuysDie;
-	++tracker->m_scalarIndex;
-	tracker->bfmeSetScalarIndex( level->m_rank );
+	object->m_experienceTracker->m_name.set( level->m_name );
+	object->m_experienceTracker->m_experience = level->m_experienceAward;
+	object->m_experienceTracker->m_experienceAwardOwnGuysDie =
+		level->m_experienceAwardOwnGuysDie;
+	++object->m_experienceTracker->m_scalarIndex;
+	object->m_experienceTracker->bfmeSetScalarIndex( level->m_rank );
 
 	unsigned int nonzero = 0;
 	for ( unsigned int index = 0; index < 10; ++index )
@@ -232,16 +231,10 @@ void Gen0002B7F6::call( ExperienceLevelData *level, Object *object,
 	Int trueValue = 1;
 	if ( level->m_informUpdateModule )
 	{
-		if ( (*reinterpret_cast<unsigned char *>( 0x012f0894 ) & trueValue) == 0 )
-		{
-			*reinterpret_cast<unsigned int *>( 0x012f0894 ) |= trueValue;
-			NameKeyType key = TheNameKeyGenerator->nameToKey(
-				reinterpret_cast<const char *>( 0x010904a4 ) );
-			*reinterpret_cast<NameKeyType *>( 0x012f0890 ) = key;
-		}
+		static NameKeyType key = TheNameKeyGenerator->nameToKey(
+			reinterpret_cast<const char *>( 0x010904a4 ) );
 
-		Module *module = object->findModule(
-			*reinterpret_cast<NameKeyType *>( 0x012f0890 ) );
+		Module *module = object->findModule( key );
 		if ( module != 0 )
 			((Gen_00283790 *)module)->bfmeDispatch(
 				reinterpret_cast<void *>( level->m_rank ) );
