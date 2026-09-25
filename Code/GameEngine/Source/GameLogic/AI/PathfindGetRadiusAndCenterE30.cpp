@@ -66,10 +66,10 @@ public:
 class Pathfinder
 {
 protected:
-	void getRadiusAndCenter( const Object *object, Int &radius, Bool &center );
+	void getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell );
 };
 
-void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &center )
+void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
 {
 	Real diameter;
 	Int maxRadius = 2;
@@ -95,14 +95,14 @@ void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &ce
 	}
 
 	radius = REAL_TO_INT_FLOOR( diameter / 10.0f + g_pathfindCellCenterBias );
-	center = false;
+	centerInCell = false;
 	if (radius == 0) radius++;
 	if (radius & 1) {
-		center = true;
+		centerInCell = true;
 	}
 	radius /= 2;
 	if (radius > maxRadius) {
 		radius = maxRadius;
-		center = true;
+		centerInCell = true;
 	}
 }
