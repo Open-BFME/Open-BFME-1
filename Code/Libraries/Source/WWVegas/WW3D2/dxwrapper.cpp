@@ -3126,7 +3126,6 @@ void DX8Wrapper::_Update_Texture(TextureClass *system, TextureClass *video)
 	DX8CALL(UpdateTexture(system->Peek_D3D_Base_Texture(),video->Peek_D3D_Base_Texture()));
 }
 
-// ?Compute_Caps@DX8Wrapper@@ present-unmatched
 void DX8Wrapper::Compute_Caps(WW3DFormat display_format)
 {
 	DX8_THREAD_ASSERT();
