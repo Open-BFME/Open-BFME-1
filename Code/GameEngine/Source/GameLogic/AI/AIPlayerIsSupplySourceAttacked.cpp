@@ -121,9 +121,9 @@ public:
 	BodyModuleInterface *m_body;				// +0x200
 };
 
-static Overridable *bfmeFinalTemplate(Object *obj)
+static Overridable *bfmeFinalTemplate(Object *object)
 {
-	Overridable *d = ((BfmeObjectTemplateView *)obj)->m_template;
+	Overridable *d = ((BfmeObjectTemplateView *)object)->m_template;
 	Overridable *f;
 	if (d == 0)
 		f = d;
@@ -267,4 +267,3 @@ Bool AIPlayer::isSupplySourceAttacked()
 	}
 	return false;
 }
-
