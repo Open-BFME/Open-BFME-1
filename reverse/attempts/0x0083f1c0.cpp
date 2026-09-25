@@ -1,7 +1,10 @@
 // ?register_callback@ios_base@_STL@@QAEXP6AXW4event@12@AAV12@H@ZH@Z
-// partial score=0.95 date=2026-09-11
-// cl: /O2 /Ob0 /MD
-// Open-BFME5: STLport ios_base::iword, retail 0x0083F0C0, 117 bytes.
+// partial score=0.977 date=2026-09-25
+// cl: /O2 /MD
+// Open-BFME5: STLport ios_base::register_callback, retail 0x0083F1C0, 132
+// bytes. The grown pair is copied into a block-local before the member stores
+// (STLport's by-value pair from _Stl_expand_array); without that copy MSVC
+// reloads grown.first before the second callback field store.
 
 namespace _STL
 {
@@ -20,23 +23,17 @@ typedef void (__cdecl *IosBaseErrorCall)(void *, void *);
 extern IosBaseErrorCall g_call;
 extern void *g_global;
 
+struct Callback;
+
 class ios_base
 {
 public:
 	enum event { erase_event = 0, imbue_event = 1, copyfmt_event = 2 };
 	typedef void (*event_callback)(event, ios_base &, int);
 
-	long &iword(int index);
-	void *&pword(int index);
 	void register_callback(event_callback fn, int index);
 
 private:
-	struct Callback
-	{
-		event_callback fn;
-		int index;
-	};
-
 	char m_vtable[4];
 	int m_fmtflags;
 	int m_iostate;
@@ -55,39 +52,11 @@ private:
 	unsigned int m_num_pwords;
 };
 
-long &ios_base::iword(int index)
+struct Callback
 {
-	GrowPair<long> grown;
-	grow_array(&grown, m_iwords, m_num_iwords, index);
-	if (grown.first)
-	{
-		m_iwords = grown.first;
-		m_num_iwords = grown.second;
-		return m_iwords[index];
-	}
-
-	m_iostate |= 1;
-	if (m_iostate & m_exception_mask)
-		g_call((void *)0x0112EBAC, (char *)g_global + 0x40);
-	return *(long *)0x0130BD24;
-}
-
-void *&ios_base::pword(int index)
-{
-	GrowPair<void *> grown;
-	grow_array(&grown, m_pwords, m_num_pwords, index);
-	if (grown.first)
-	{
-		m_pwords = grown.first;
-		m_num_pwords = grown.second;
-		return m_pwords[index];
-	}
-
-	m_iostate |= 1;
-	if (m_iostate & m_exception_mask)
-		g_call((void *)0x0112EBAC, (char *)g_global + 0x40);
-	return *(void **)0x0130BD28;
-}
+	ios_base::event_callback fn;
+	int index;
+};
 
 void ios_base::register_callback(event_callback fn, int index)
 {
@@ -95,11 +64,11 @@ void ios_base::register_callback(event_callback fn, int index)
 	grow_array(&grown, m_callbacks, m_num_callbacks, m_callback_index);
 	if (grown.first)
 	{
-		m_num_callbacks = grown.second;
-		m_callbacks = grown.first;
-		m_callbacks[m_callback_index].fn = fn;
-		m_callbacks[m_callback_index].index = index;
-		++m_callback_index;
+		GrowPair<Callback> tmp = grown;
+		m_num_callbacks = tmp.second;
+		m_callbacks = tmp.first;
+		Callback cb = { fn, index };
+		m_callbacks[m_callback_index++] = cb;
 		return;
 	}
 

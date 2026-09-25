@@ -3738,5 +3738,205 @@
   "after_sha256": "03a9de4b46ff5e09493254456004fa2940ff27d3cfcfe1883071cd0ec9f397f0",
   "evidence": "reverse/identity_evidence/0x009f59d0-name-correction.md",
   "reason": "The matched state update copies six integers at offset zero, but no evidence supplies their member name. The source keeps the offset visible."
+ },
+ {
+  "old_path": "reverse/attempts/0x0071a680.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudMaterialPassClass_Install_Materials.cpp",
+  "old_name": "m_refs",
+  "new_name": "m_word4",
+  "before_sha256": "1d253bee4263a11567972a162796ddaf607283b29c9141cfc1cd87f63299825d",
+  "after_sha256": "a4d30485e025ca8e712178ba93865e976d44fc6fa676df0da4185e119529387f",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "TextureBaseClass+4 is not witnessed (name_oracle) so an offset token replaces the guessed refcount name"
+ },
+ {
+  "old_path": "reverse/attempts/0x0071a680.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DShroudMaterialPassClass_Install_Materials.cpp",
+  "old_name": "m_vptr",
+  "new_name": "m_pad0",
+  "before_sha256": "1d253bee4263a11567972a162796ddaf607283b29c9141cfc1cd87f63299825d",
+  "after_sha256": "a4d30485e025ca8e712178ba93865e976d44fc6fa676df0da4185e119529387f",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the body never reads +0"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "BfmeDisplaySlot10State",
+  "new_name": "Rva006ECF80Held",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank-invented type name with no layout witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "bfmeDisplaySlot10",
+  "new_name": "rva006ECF80",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name had no caller/string/ZH evidence and wrongly said slot 10 (vtable slot is 22)"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "m_begin",
+  "new_name": "m_field08",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "no field_names/name_oracle witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "m_end",
+  "new_name": "m_field0C",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "no field_names/name_oracle witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "m_entries",
+  "new_name": "m_field188",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle has no witnessed W3DDisplay layout at 0x188"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "m_mode",
+  "new_name": "m_field14",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "guessed semantic name with no witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ecf80.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayRva006ECF80.cpp",
+  "old_name": "m_state",
+  "new_name": "m_field184",
+  "before_sha256": "267f52188fb206cfeaa143b2fda4d17c931fe3ceda1a539f1eb6972e29a4c8c0",
+  "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle has no witnessed W3DDisplay layout at 0x184 (landed W3DDisplay TUs use m_unmodelled_184)"
+ },
+ {
+  "old_path": "reverse/attempts/0x0087ee60.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoCalcBoundingStuff.cpp",
+  "old_name": "GeometryBounds",
+  "new_name": "Rva0087E650Bounds",
+  "before_sha256": "903492213ca852e06e2fc7a9f563b607d6e8b4d8058f4340779ee0f73d491502",
+  "after_sha256": "76cfc73d49d43b13069ed3f1270acef14cfca64be53edb6c1f7262819145d8dc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank type name unevidenced; matches the 0x0087E650 bank"
+ },
+ {
+  "old_path": "reverse/attempts/0x0087ee60.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoCalcBoundingStuff.cpp",
+  "old_name": "getBoundingCircleRadius",
+  "new_name": "rva0087ED00",
+  "before_sha256": "903492213ca852e06e2fc7a9f563b607d6e8b4d8058f4340779ee0f73d491502",
+  "after_sha256": "76cfc73d49d43b13069ed3f1270acef14cfca64be53edb6c1f7262819145d8dc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank method name had no caller/vtable/string/ZH evidence (ZH GeometryShape has no such method)"
+ },
+ {
+  "old_path": "reverse/attempts/0x0087ee60.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoCalcBoundingStuff.cpp",
+  "old_name": "getBoundingSphereRadius",
+  "new_name": "rva0087ED70",
+  "before_sha256": "903492213ca852e06e2fc7a9f563b607d6e8b4d8058f4340779ee0f73d491502",
+  "after_sha256": "76cfc73d49d43b13069ed3f1270acef14cfca64be53edb6c1f7262819145d8dc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank method name had no caller/vtable/string/ZH evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x001e9e60.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Weapon_setClipPercentFull.cpp",
+  "old_name": "getStatusAmmo",
+  "new_name": "rva001E9E60AmmoCount",
+  "before_sha256": "8c620a9f2d8adcf124e3d047647d9ccd188bca616b889da1b5ba9b1e207f1be3",
+  "after_sha256": "ebb7de8ae3097ce3b1f5c28bb976c8cd614fb9f093c01f289c088265911ec7c4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank-invented inline helper name with no evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x001e9e60.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Weapon_setClipPercentFull.cpp",
+  "old_name": "m_wslot",
+  "new_name": "m_dword0c",
+  "before_sha256": "8c620a9f2d8adcf124e3d047647d9ccd188bca616b889da1b5ba9b1e207f1be3",
+  "after_sha256": "ebb7de8ae3097ce3b1f5c28bb976c8cd614fb9f093c01f289c088265911ec7c4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BFME shifted Weapon fields (template at +4 not ZH +8) so ZH m_wslot at +0xc is not a witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x003e29f0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/PathfinderIterateCircular3.cpp",
+  "old_name": "Profile003E29F0",
+  "new_name": "Rva003DEAB0Struct",
+  "before_sha256": "faec025f09a0a060c55a4b2f8a1ff04dfb833a7482c1f3811a5433a07efdb5e8",
+  "after_sha256": "c7e7f974aae730af79e0225a56901c32bec507adb7300a1f42495bccfd01c702",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "The bank's Context003E29F0/Profile003E29F0 struct and field names for the iterateCircular3 userData record were unwitnessed placeholders (score=0.95 partial, reverse/attempts/0x003e29f0.cpp). The body's only struct-shaped use of userData is 5+ calls to the landed Rva003DEAB0Struct::checkCell (0x003DEAB0, via ILT 0x000469BB) plus reading Object+0x38 (Thing::m_cachedPos, name_oracle layout witness, confidence 1.00) through its m_target; no other field is read, so the unwitnessed leading bytes are renamed m_pad and the record itself takes the landed struct's name; see docs/naming_evidence.md."
+ },
+ {
+  "old_path": "reverse/attempts/0x003e29f0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/PathfinderIterateCircular3.cpp",
+  "old_name": "u00",
+  "new_name": "m_pad",
+  "before_sha256": "faec025f09a0a060c55a4b2f8a1ff04dfb833a7482c1f3811a5433a07efdb5e8",
+  "after_sha256": "c7e7f974aae730af79e0225a56901c32bec507adb7300a1f42495bccfd01c702",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "The bank's Context003E29F0/Profile003E29F0 struct and field names for the iterateCircular3 userData record were unwitnessed placeholders (score=0.95 partial, reverse/attempts/0x003e29f0.cpp). The body's only struct-shaped use of userData is 5+ calls to the landed Rva003DEAB0Struct::checkCell (0x003DEAB0, via ILT 0x000469BB) plus reading Object+0x38 (Thing::m_cachedPos, name_oracle layout witness, confidence 1.00) through its m_target; no other field is read, so the unwitnessed leading bytes are renamed m_pad and the record itself takes the landed struct's name; see docs/naming_evidence.md."
+ },
+ {
+  "old_path": "reverse/attempts/0x00574aa0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ScoreRowS4SortElem8Less.cpp",
+  "old_name": "LivingWorldArmyState",
+  "new_name": "Rva00574AA0Record",
+  "before_sha256": "784941dbb135de710e05dfe37847e97b74267cc99e0fbe1e1dd6178556299ff8",
+  "after_sha256": "3b0094aef5375d1611ab63a0aeedcc34e05079efcaf54b53420791d0e19531c6",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank class name had no caller vtable string or witness evidence for the +4 pointee"
+ },
+ {
+  "old_path": "reverse/attempts/0x00574aa0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ScoreRowS4SortElem8Less.cpp",
+  "old_name": "Prefix",
+  "new_name": "m_unmodelled00",
+  "before_sha256": "784941dbb135de710e05dfe37847e97b74267cc99e0fbe1e1dd6178556299ff8",
+  "after_sha256": "3b0094aef5375d1611ab63a0aeedcc34e05079efcaf54b53420791d0e19531c6",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "padding placeholder"
+ },
+ {
+  "old_path": "reverse/attempts/0x00574aa0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ScoreRowS4SortElem8Less.cpp",
+  "old_name": "SortKey",
+  "new_name": "m_field44",
+  "before_sha256": "784941dbb135de710e05dfe37847e97b74267cc99e0fbe1e1dd6178556299ff8",
+  "after_sha256": "3b0094aef5375d1611ab63a0aeedcc34e05079efcaf54b53420791d0e19531c6",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle has no LivingWorldArmy witness and landed Rva00364B10ScanArmyGroups.cpp names +0x44 m_field44"
+ },
+ {
+  "old_path": "reverse/attempts/0x00574aa0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ScoreRowS4SortElem8Less.cpp",
+  "old_name": "StringBase",
+  "new_name": "Rva00574AA0Bits",
+  "before_sha256": "784941dbb135de710e05dfe37847e97b74267cc99e0fbe1e1dd6178556299ff8",
+  "after_sha256": "3b0094aef5375d1611ab63a0aeedcc34e05079efcaf54b53420791d0e19531c6",
+  "evidence": "docs/header_adoption.md",
+  "reason": "covered type must not be redeclared"
  }
 ]
