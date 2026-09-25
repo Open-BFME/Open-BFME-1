@@ -179,17 +179,19 @@ StateReturnType AIAttackMeleeHordeWaitState::onEnter()
 
 		// The machine goal is the initial candidate; successful horde resolution
 		// changes the object used by the readiness check and melee commands.
-		unsigned int formation = candidateVictim->getMeleeFormation();
+		unsigned int selectedMeleeFormation = candidateVictim->getMeleeFormation();
 		if (candidateVictim->hasMeleeHordeResolveFlag())
 		{
 			Object *resolvedMember = candidateVictim->bfmeResolveMeleeTarget(0);
 			if (resolvedMember != 0)
 			{
-				formation = resolvedMember->getMeleeFormation();
+				selectedMeleeFormation = resolvedMember->getMeleeFormation();
 				candidateVictim = resolvedMember;
 			}
 		}
 
+		// This formation follows the candidate unless resolution supplies a member.
+		// Predicate true selects failure; false can be an early-out, not validation.
 		if (bfmeMeleeHordeTargetInvalid(attacker, candidateVictim))
 			return STATE_FAILURE;
 
@@ -209,7 +211,7 @@ StateReturnType AIAttackMeleeHordeWaitState::onEnter()
 				return STATE_FAILURE;
 		}
 
-		owningHorde->setMeleeFormation(formation);
+		owningHorde->setMeleeFormation(selectedMeleeFormation);
 		m_waitUntil = TheGameLogic->m_frame + 15;
 		owningHorde->beginMelee(candidateVictim);
 	}
@@ -240,6 +242,7 @@ StateReturnType AIAttackMeleeHordeWaitState::update()
 
 		// Here the predicate receives the machine goal and resolves horde members
 		// after its status-bit check, unlike onEnter's resolution above.
+		// Predicate true selects failure; false can be an early-out, not validation.
 		if (bfmeMeleeHordeTargetInvalid(attacker, machineGoal))
 			return STATE_FAILURE;
 
