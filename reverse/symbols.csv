@@ -89076,3 +89076,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??$__copy@PAURva0006AA90Element@@PAU1@H@_STL@@YAPAURva0006AA90Element@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x000B98F0,aligned STLport __copy(finish finish start) for vector<Rva0006AA90Element>::clear; 0x0060A000 calls it via ILT 0x0001E6A5 to the 76-byte cdecl 5-arg body at 0x000B98F0
 ?examineNeighboringCells@Pathfinder@@IAEHPAVPathfindCell@@0ABVLocomotorSet@@_N2HABUICoord2D@@PBVObject@@H@Z,0x003E6EE0,Pathfinder identity from BFME definition and object-backed Zero Hour symbol
 ?stopClientParticleSystems@W3DModelDraw@@IAEXXZ,0x0077AB30,destructor route through ILT 0x0001B798 and BFME 20-byte records at this+0x130 identify W3DModelDraw::stopClientParticleSystems
+?W3DGadgetHorizontalSliderImageDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00790EA0,W3DHorizontalSlider.cpp definition plus caller via ILT and W3D draw lexicon row 0x012BA4FC identify this image-draw callback
