@@ -119,7 +119,7 @@ private:
 // ?classifyFence@Pathfinder@@QAEXPAVObject@@_N@Z
 void Pathfinder::classifyFence(Object *fenceObject, Bool insertFence)
 {
-	const Coord3D *pos = &fenceObject->m_position;
+	const Coord3D *fencePosition = &fenceObject->m_position;
 	Real angle = fenceObject->m_orientation;
 
 	ThingTemplateFence *widthTempl = fenceObject->m_template;
@@ -146,8 +146,8 @@ void Pathfinder::classifyFence(Object *fenceObject, Bool insertFence)
 	Int numStepsX = RealToIntCeil(2.0f * halfsizeX / STEP_SIZE);
 	Int numStepsY = RealToIntCeil(2.0f * halfsizeY / STEP_SIZE);
 
-	Real tl_x = pos->x - fenceOffset * c - halfsizeY * s;
-	Real tl_y = pos->y + halfsizeY * c - fenceOffset * s;
+	Real tl_x = fencePosition->x - fenceOffset * c - halfsizeY * s;
+	Real tl_y = fencePosition->y + halfsizeY * c - fenceOffset * s;
 
 	IRegion2D cellBounds;
 	cellBounds.loY = 0x7fffffff;
