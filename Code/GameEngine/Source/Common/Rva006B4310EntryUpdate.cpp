@@ -35,7 +35,8 @@ private:
 class Rva006B4310Entry
 {
 public:
-	void initialize(const AsciiString &first, float second);
+	// Callee 0x006ACE90; the ledger names it Rva006ACE90Owner::addNamedRoom.
+	void rva006ACE90(const AsciiString &first, float second);
 
 private:
 	char m_data[0x1c4];
@@ -45,7 +46,6 @@ class Rva006B4310Owner
 {
 public:
 	void update006B4310(const AsciiString &first, float second, int index);
-	void finalize(const AsciiString &first, float second, int third);
 
 private:
 	char m_padb8[0xb8];
@@ -63,23 +63,23 @@ void Rva006B4310Owner::update006B4310(
 {
 	Rva006B4310MutexGuard guard(m_mutex);
 	{
-		typedef void (Rva006B4310Entry::*Initialize)(const AsciiString &, float);
+		typedef void (Rva006B4310Entry::*Rva006ACE90Call)(const AsciiString &, float);
 		union
 		{
-			void (__cdecl *freeInitialize)();
-			Initialize memberInitialize;
-		} initialize;
-		initialize.freeInitialize = ::j_0002c7af;
-		(m_entries[index].*initialize.memberInitialize)(first, second);
+			void (__cdecl *free006ACE90)();
+			Rva006ACE90Call member006ACE90;
+		} call006ACE90;
+		call006ACE90.free006ACE90 = ::j_0002c7af;
+		(m_entries[index].*call006ACE90.member006ACE90)(first, second);
 	}
 	{
-		typedef void (Rva006B4310Owner::*Finalize)(const AsciiString &, float, int);
+		typedef void (Rva006B4310Owner::*Rva006B24D0Call)(const AsciiString &, float, int);
 		union
 		{
-			void (__cdecl *freeFinalize)();
-			Finalize memberFinalize;
-		} finalize;
-		finalize.freeFinalize = ::j_00023d21;
-		(this->*finalize.memberFinalize)(first, second, index);
+			void (__cdecl *free006B24D0)();
+			Rva006B24D0Call member006B24D0;
+		} call006B24D0;
+		call006B24D0.free006B24D0 = ::j_00023d21;
+		(this->*call006B24D0.member006B24D0)(first, second, index);
 	}
 }

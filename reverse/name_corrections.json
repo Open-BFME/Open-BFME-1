@@ -2728,5 +2728,35 @@
   "after_sha256": "6e811d91344c3310c75f0c87772c9a7a03ead0b9adabbac0f780ba6d88032db1",
   "evidence": "docs/naming_evidence.md",
   "reason": "BfmeCtxYY and BfmeCfgYY were batch-serial placeholder guesses with no address token and no evidence for the owner of the 0x003DB760 constructor or its config parameter type, so both take address-derived names (Rva003DB760Context and Rva003DB760Config) until their identity is proven."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva006B4310EntryUpdate.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva006B4310EntryUpdate.cpp",
+  "old_name": "Finalize",
+  "new_name": "Rva006B24D0Call",
+  "before_sha256": "fe3b8ed0e4dad6479ef137d7f8b6156140f69c5a8a33ee48d417172430c46452",
+  "after_sha256": "105b022b98590244a1127f2a255ce7ed6038b9523562267f1213f2c3cc57973e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "The TU-local callee names initialize and finalize were guesses: 0x006ACE90 is already ledgered as Rva006ACE90Owner::addNamedRoom (a keyed map insert) and 0x006B24D0 is an unnamed gen-dump, so the call typedefs, union members and locals take address-derived names and the dead finalize declaration is removed."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva006B4310EntryUpdate.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva006B4310EntryUpdate.cpp",
+  "old_name": "Initialize",
+  "new_name": "Rva006ACE90Call",
+  "before_sha256": "fe3b8ed0e4dad6479ef137d7f8b6156140f69c5a8a33ee48d417172430c46452",
+  "after_sha256": "105b022b98590244a1127f2a255ce7ed6038b9523562267f1213f2c3cc57973e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "The TU-local callee names initialize and finalize were guesses: 0x006ACE90 is already ledgered as Rva006ACE90Owner::addNamedRoom (a keyed map insert) and 0x006B24D0 is an unnamed gen-dump, so the call typedefs, union members and locals take address-derived names and the dead finalize declaration is removed."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Rva006B4310EntryUpdate.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva006B4310EntryUpdate.cpp",
+  "old_name": "initialize",
+  "new_name": "rva006ACE90",
+  "before_sha256": "fe3b8ed0e4dad6479ef137d7f8b6156140f69c5a8a33ee48d417172430c46452",
+  "after_sha256": "105b022b98590244a1127f2a255ce7ed6038b9523562267f1213f2c3cc57973e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "The TU-local callee names initialize and finalize were guesses: 0x006ACE90 is already ledgered as Rva006ACE90Owner::addNamedRoom (a keyed map insert) and 0x006B24D0 is an unnamed gen-dump, so the call typedefs, union members and locals take address-derived names and the dead finalize declaration is removed."
  }
 ]
