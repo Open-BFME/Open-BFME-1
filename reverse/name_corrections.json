@@ -4988,5 +4988,35 @@
   "after_sha256": "4287b7c406ccca3a974816e129afe0f9407e6952a1f2aff4d9ee786194a61d5c",
   "evidence": "docs/naming_evidence.md",
   "reason": "unread member, bank name had no witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x002350c0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Contain/Rva00233F30RotatedRecord.cpp",
+  "old_name": "Coord2D",
+  "new_name": "Rva00233F30Offset",
+  "before_sha256": "f3af1495eef6ead52c690b986a30c3f5dd5bb5a1fa1a71516186df96ad5af3ba",
+  "after_sha256": "2518a6392f8e8c8265602cf1be5886f87ad667e897cec9e929f582829c7b1117",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "rotatedOffset return type is the ledger spelling at 0x00233F30 (?rotatedOffset@Rva00233F30@@QAE?AURva00233F30Offset@@PBUCoord2D@@@Z); stash invented an unpinned callee spelling"
+ },
+ {
+  "old_path": "reverse/attempts/0x002350c0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Contain/Rva00233F30RotatedRecord.cpp",
+  "old_name": "RectClass",
+  "new_name": "Rva00233F30",
+  "before_sha256": "f3af1495eef6ead52c690b986a30c3f5dd5bb5a1fa1a71516186df96ad5af3ba",
+  "after_sha256": "2518a6392f8e8c8265602cf1be5886f87ad667e897cec9e929f582829c7b1117",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "RectClass return type retired: the local is built by ??0BfmeRva44E60Record@@QAE@XZ (ILT 0x33D39) and the returned copy is that type copy ctor (ILT 0x3535F); owner token is the callee 0x00233F30 receiving the unchanged ECX"
+ },
+ {
+  "old_path": "reverse/attempts/0x002350c0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Contain/Rva00233F30RotatedRecord.cpp",
+  "old_name": "x",
+  "new_name": "m_float0C",
+  "before_sha256": "f3af1495eef6ead52c690b986a30c3f5dd5bb5a1fa1a71516186df96ad5af3ba",
+  "after_sha256": "2518a6392f8e8c8265602cf1be5886f87ad667e897cec9e929f582829c7b1117",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "stash local temp removed by typed assignment; +0xC member is read as a float by fld at 0x002350C0+0x36 so it keeps an offset token"
  }
 ]
