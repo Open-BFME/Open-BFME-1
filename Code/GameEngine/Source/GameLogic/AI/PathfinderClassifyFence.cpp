@@ -106,7 +106,7 @@ static int RealToIntCeil(float v)
 class Pathfinder
 {
 public:
-	void classifyFence(Object *obj, Bool insert);
+	void classifyFence(Object *fenceObject, Bool insertFence);
 
 private:
 	char m_pad00[0x10];
@@ -117,19 +117,19 @@ private:
 };
 
 // ?classifyFence@Pathfinder@@QAEXPAVObject@@_N@Z
-void Pathfinder::classifyFence(Object *obj, Bool insert)
+void Pathfinder::classifyFence(Object *fenceObject, Bool insertFence)
 {
-	const Coord3D *pos = &obj->m_position;
-	Real angle = obj->m_orientation;
+	const Coord3D *pos = &fenceObject->m_position;
+	Real angle = fenceObject->m_orientation;
 
-	ThingTemplateFence *widthTempl = obj->m_template;
+	ThingTemplateFence *widthTempl = fenceObject->m_template;
 	if (widthTempl != 0 && widthTempl->m_override != 0)
 		widthTempl = (ThingTemplateFence *)widthTempl->m_override->getFinalOverride();
 	Real halfsizeX = widthTempl->m_fenceWidth * 0.5f;
 
 	Real halfsizeY = PATHFIND_CELL_SIZE_F / 10.0f;
 
-	ThingTemplateFence *offsetTempl = obj->m_template;
+	ThingTemplateFence *offsetTempl = fenceObject->m_template;
 	if (offsetTempl != 0 && offsetTempl->m_override != 0)
 		offsetTempl = (ThingTemplateFence *)offsetTempl->m_override->getFinalOverride();
 	Real fenceOffset = offsetTempl->m_fenceXOffset;
@@ -166,17 +166,17 @@ void Pathfinder::classifyFence(Object *obj, Bool insert)
 
 			if (cx >= 0 && cy >= 0 && cx < m_extent.hiX && cy < m_extent.hiY)
 			{
-				if (insert)
+				if (insertFence)
 				{
 					ICoord2D cellPos;
 					cellPos.x = cx;
 					cellPos.y = cy;
-					m_map[cx][cy].setTypeAsObstacle(obj, true, cellPos);
+					m_map[cx][cy].setTypeAsObstacle(fenceObject, true, cellPos);
 				}
 				else
 				{
 					((Rva003F7380State *)&m_map[cx][cy])->resetIfMatching(
-						(const Rva003F7380Argument *)obj);
+						(const Rva003F7380Argument *)fenceObject);
 				}
 
 				if (cx < cellBounds.loX) cellBounds.loX = cx;
