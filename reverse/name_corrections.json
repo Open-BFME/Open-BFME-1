@@ -2798,5 +2798,15 @@
   "after_sha256": "8060e97702ad486b2fa1d8b94f666df3816594db4da5cc980fef710951ac5f22",
   "evidence": "docs/naming_evidence.md",
   "reason": "the bank's method guess has no evidence (both callers are unnamed dumps reached through ILT thunks, and the body dispatches nothing)"
+ },
+ {
+  "old_path": "reverse/attempts/0x003d8530.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva003D8530PathfinderCellDrop.cpp",
+  "old_name": "BfmeCellETD",
+  "new_name": "Gen_003F68F0",
+  "before_sha256": "d0464da664a837362ed3b28cf6380d7fdaba5edc5b61aa718176b171784c8da1",
+  "after_sha256": "618556d16a92ef58e48660eabb7613f6374b88d6e6731e992650208f7e9dbe50",
+  "evidence": "reverse/functions.csv",
+  "reason": "ledger row for 0x003F68F0 names the matched body Gen_003F68F0::bfmeAttach (Code/GameEngine/Source/Common/Gen_003F68F0.cpp); the bank name BfmeCellETD was a placeholder, not a proven identity"
  }
 ]
