@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "2d05ad692c87275e0c7657e7d3df4818538ae74150e72d26b675bef82f40d56d",
+  "symbol": "?rva004340C0SubtitleCoordinate@@YAHHPAURva004340C0SubtitleOwner@@MM@Z",
+  "score_kind": "author-estimate",
+  "score": 0.700565,
+  "source": "// ?rva004340C0SubtitleCoordinate@@YAHHPAURva004340C0SubtitleOwner@@MM@Z\n// partial score=0.700565 date=2026-09-24\n// cl: /DNDEBUG /MD /EHsc /O2 /Ob2\n\n#include <math.h>\n\ntypedef int Int;\ntypedef float Real;\n\nstruct Rva004340C0SubtitleOwner\n{\n\tunsigned char unknown00[0x60];\n\tunsigned char alternateMode;\n};\n\nInt rva004340C0SubtitleCoordinate(Int index,\n\tRva004340C0SubtitleOwner *owner, Real low, Real high)\n{\n\tconst Real difference = (Real)fabs(high - low);\n\tif (owner->alternateMode)\n\t{\n\t\tconst Int highCoordinate = (Int)high;\n\t\tconst Int lowCoordinate = (Int)low;\n\t\tconst Int *selectedCoordinate = highCoordinate < lowCoordinate ?\n\t\t\t&highCoordinate : &lowCoordinate;\n\t\tconst Real *coordinates = reinterpret_cast<const Real *>(\n\t\t\treinterpret_cast<const unsigned char *>(owner) + 0x24);\n\t\treturn (Int)(difference * coordinates[index]) + *selectedCoordinate;\n\t}\n\n\tconst Int highCoordinate = (Int)high;\n\tconst Int lowCoordinate = (Int)low;\n\tif (index < 15)\n\t{\n\t\tif (index <= 0) index = 0;\n\t}\n\telse\n\t{\n\t\tindex = 15;\n\t}\n\tconst Int *selectedCoordinate = highCoordinate < lowCoordinate ?\n\t\t&highCoordinate : &lowCoordinate;\n\treturn ((Int)difference / 15) * index + *selectedCoordinate;\n}\n"
+}
