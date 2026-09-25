@@ -3248,5 +3248,45 @@
   "after_sha256": "cee43eedbaf72fb26f4461dc24c0515d3dc0e0b4589594b202755f0396a0f94d",
   "evidence": "reverse/identity_evidence/004c1510-controlbar-handle.md",
   "reason": "Raw virtual deleting-destructor slot and owning by-value argument replace the former release(int) ABI view; textual alignment is not a semantic rename."
+ },
+ {
+  "old_path": "reverse/attempts/0x004c1ae0.cpp",
+  "new_path": "reverse/attempts/0x004c1ae0.cpp",
+  "old_name": "PartitionFilter",
+  "new_name": "Rva004C1150AdapterBase",
+  "before_sha256": "b635ebcf98bbabde1b5049393f2f94943810ac003a57d6644a57b24d18a70943",
+  "after_sha256": "4fe8bb8b5f327f5ffa823321c8a5efa4067a1416d8f5676f30b4a228f9a9a6d1",
+  "evidence": "reverse/identity_evidence/004c1510-controlbar-handle.md",
+  "reason": "GUI adapter construction and six-slot table refute the inherited partition-filter attribution and its allow method; preserve clone RVA in opaque native adapter types."
+ },
+ {
+  "old_path": "reverse/attempts/0x004c1ae0.cpp",
+  "new_path": "reverse/attempts/0x004c1ae0.cpp",
+  "old_name": "PartitionFilterPossibleToAttack",
+  "new_name": "Rva004C1AE0Adapter",
+  "before_sha256": "b635ebcf98bbabde1b5049393f2f94943810ac003a57d6644a57b24d18a70943",
+  "after_sha256": "4fe8bb8b5f327f5ffa823321c8a5efa4067a1416d8f5676f30b4a228f9a9a6d1",
+  "evidence": "reverse/identity_evidence/004c1510-controlbar-handle.md",
+  "reason": "GUI adapter construction and six-slot table refute the inherited partition-filter attribution and its allow method; preserve clone RVA in opaque native adapter types."
+ },
+ {
+  "old_path": "reverse/attempts/0x004c1ae0.cpp",
+  "new_path": "reverse/attempts/0x004c1ae0.cpp",
+  "old_name": "allow",
+  "new_name": "Rva004C1150AdapterBase",
+  "before_sha256": "b635ebcf98bbabde1b5049393f2f94943810ac003a57d6644a57b24d18a70943",
+  "after_sha256": "4fe8bb8b5f327f5ffa823321c8a5efa4067a1416d8f5676f30b4a228f9a9a6d1",
+  "evidence": "reverse/identity_evidence/004c1510-controlbar-handle.md",
+  "reason": "GUI adapter construction and six-slot table refute the inherited partition-filter attribution and its allow method; preserve clone RVA in opaque native adapter types."
+ },
+ {
+  "old_path": "reverse/attempts/0x004c1ae0.cpp",
+  "new_path": "reverse/attempts/0x004c1ae0.cpp",
+  "old_name": "allow",
+  "new_name": "Rva004C1AE0Adapter",
+  "before_sha256": "b635ebcf98bbabde1b5049393f2f94943810ac003a57d6644a57b24d18a70943",
+  "after_sha256": "4fe8bb8b5f327f5ffa823321c8a5efa4067a1416d8f5676f30b4a228f9a9a6d1",
+  "evidence": "reverse/identity_evidence/004c1510-controlbar-handle.md",
+  "reason": "GUI adapter construction and six-slot table refute the inherited partition-filter attribution and its allow method; preserve clone RVA in opaque native adapter types."
  }
 ]
