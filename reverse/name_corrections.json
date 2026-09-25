@@ -4818,5 +4818,45 @@
   "after_sha256": "ea71d1c359f1fe3ed64072c01d0b17e02ddb4fe1a778dcd0377239824d399c4b",
   "evidence": "docs/naming_evidence.md",
   "reason": "GeometryInfo+0x38 is never read by retail GeometryInfo::set (0x008804E0) and name_oracle has no layout witness or FieldParse entry for it, so the unwitnessed descriptive m_records is replaced by the offset token m_38"
+ },
+ {
+  "old_path": "reverse/attempts/0x001c7600.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/ObjectCanCrushOrSquish.cpp",
+  "old_name": "m_unreconstructed_00",
+  "new_name": "m_unmodelled00",
+  "before_sha256": "7fe4fe16a84acef6714f9f3966b9ca2d162c865024a9354681f13adeac0f3db2",
+  "after_sha256": "05f27da1f73cd92e3cd6a5da507cff01da9b2bb49e6bb378dccced754836c332",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "pad members respelled to the offset-token convention"
+ },
+ {
+  "old_path": "reverse/attempts/0x001c7600.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/ObjectCanCrushOrSquish.cpp",
+  "old_name": "m_unreconstructed_08",
+  "new_name": "m_unmodelled08",
+  "before_sha256": "7fe4fe16a84acef6714f9f3966b9ca2d162c865024a9354681f13adeac0f3db2",
+  "after_sha256": "05f27da1f73cd92e3cd6a5da507cff01da9b2bb49e6bb378dccced754836c332",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "pad members respelled to the offset-token convention"
+ },
+ {
+  "old_path": "reverse/attempts/0x001c7600.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/ObjectCanCrushOrSquish.cpp",
+  "old_name": "m_unreconstructed_12c",
+  "new_name": "m_unmodelled12c",
+  "before_sha256": "7fe4fe16a84acef6714f9f3966b9ca2d162c865024a9354681f13adeac0f3db2",
+  "after_sha256": "05f27da1f73cd92e3cd6a5da507cff01da9b2bb49e6bb378dccced754836c332",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "pad members respelled to the offset-token convention"
+ },
+ {
+  "old_path": "reverse/attempts/0x001c7600.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/ObjectCanCrushOrSquish.cpp",
+  "old_name": "m_unreconstructed_1f5",
+  "new_name": "m_unmodelled1f5",
+  "before_sha256": "7fe4fe16a84acef6714f9f3966b9ca2d162c865024a9354681f13adeac0f3db2",
+  "after_sha256": "05f27da1f73cd92e3cd6a5da507cff01da9b2bb49e6bb378dccced754836c332",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "pad members respelled to the offset-token convention"
  }
 ]
