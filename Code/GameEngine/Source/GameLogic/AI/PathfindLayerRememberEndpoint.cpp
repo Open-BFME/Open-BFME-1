@@ -14,7 +14,7 @@ struct ICoord2D
 class PathfindLayer
 {
 public:
-	void bfmeRememberEndpoint(const ICoord2D *cell);
+	void bfmeRememberEndpoint(const ICoord2D *endpointCell);
 
 private:
 	unsigned char opaque[0x18];
@@ -23,9 +23,9 @@ private:
 };
 
 // ?bfmeRememberEndpoint@PathfindLayer@@QAEXPBUICoord2D@@@Z
-void PathfindLayer::bfmeRememberEndpoint(const ICoord2D *cell)
+void PathfindLayer::bfmeRememberEndpoint(const ICoord2D *endpointCell)
 {
-	const volatile ICoord2D *coord = cell;
+	const volatile ICoord2D *coord = endpointCell;
 	volatile PathfindLayer *layer = this;
 	Int value = coord->x;
 	if (value == layer->startCell.x)
