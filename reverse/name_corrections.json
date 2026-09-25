@@ -4198,5 +4198,15 @@
   "after_sha256": "ce43e27ce4c3402c2b2561b441ed0af1ffb7c5203ee391f3b024ee44442bb5e7",
   "evidence": "docs/naming_evidence.md",
   "reason": "the bank's m_description at +0xF4 had no witness (name_oracle has no MapMetaData layout)"
+ },
+ {
+  "old_path": "reverse/attempts/0x004175f0.cpp",
+  "new_path": "reverse/attempts/0x004175f0.cpp",
+  "old_name": "ClientSubsystem",
+  "new_name": "Rva005A00B0AudioClient",
+  "before_sha256": "a9b6d795926938750615360bcff5437801cb048ecf68e38f25c3ceb5aef1857d",
+  "after_sha256": "d99e00fe3791adf67de9e2c111383ea7563f12f365cc17867b1f1eacb1c0f5cb",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "ClientSubsystem is an invented descriptive name for the vtable at TheAudioClientUpdate; the existing pin types that global as struct Rva005A00B0AudioClient, so the re-banked body keeps the address-derived name instead of guessing a class identity."
  }
 ]
