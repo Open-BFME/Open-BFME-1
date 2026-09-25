@@ -34,20 +34,20 @@ public:
 	{
 	}
 
-	BitFlags(_dummy_kInit, int idx1)
+	BitFlags(_dummy_kInit, int firstBitIndex)
 	{
-		m_bits.set(idx1);
+		m_bits.set(firstBitIndex);
 	}
 
-	BitFlags(_dummy_kInit, int idx1, int idx2)
+	BitFlags(_dummy_kInit, int firstBitIndex, int secondBitIndex)
 	{
-		m_bits.set(idx1);
-		m_bits.set(idx2);
+		m_bits.set(firstBitIndex);
+		m_bits.set(secondBitIndex);
 	}
 
-	void set(int idx)
+	void set(int bitIndex)
 	{
-		m_bits.set(idx);
+		m_bits.set(bitIndex);
 	}
 
 private:
