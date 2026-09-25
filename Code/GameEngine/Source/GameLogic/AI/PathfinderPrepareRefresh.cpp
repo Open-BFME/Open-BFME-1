@@ -45,26 +45,26 @@ public:
 
 void Pathfinder::bfmePrepareRefresh(void)
 {
-	PathfindLayer *layer = m_layers;
-	int count = 15;
-	while (count != 0)
+	PathfindLayer *currentLayer = m_layers;
+	int remainingLayerCount = 15;
+	while (remainingLayerCount != 0)
 	{
-		if (layer->isUsed())
+		if (currentLayer->isUsed())
 		{
-			if (layer->m_bfmeOther != 0)
-				layer->bfmeNotifyPlain();
+			if (currentLayer->m_bfmeOther != 0)
+				currentLayer->bfmeNotifyPlain();
 			else
-				layer->bfmeNotifyBridge();
+				currentLayer->bfmeNotifyBridge();
 		}
-		layer++;
-		--count;
+		currentLayer++;
+		--remainingLayerCount;
 	}
 
-	PathfindCell *cell = m_openList;
-	while (cell != 0)
+	PathfindCell *openCell = m_openList;
+	while (openCell != 0)
 	{
-		releaseCell(cell, 1);
-		cell = cell->m_next;
+		releaseCell(openCell, 1);
+		openCell = openCell->m_next;
 	}
 
 	m_bfmeDirtyA = 0;
