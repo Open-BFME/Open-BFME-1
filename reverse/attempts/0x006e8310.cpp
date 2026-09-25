@@ -1,5 +1,5 @@
 // ?d_006e8310@@YAXXZ
-// partial score=0.38 date=2026-09-22
+// partial score=0.10 date=2026-09-25
 // ?update@Rva006E8310TransitionState@@QAEXXZ
 // cl: /DNDEBUG /MD /EHsc
 
@@ -135,6 +135,7 @@ void Rva006E8310TransitionState::update()
 	Rva006E8310TerrainLighting *objects = lightingAt(global, timeOfDay, 0x4ac);
 	Rva006E8310TerrainLighting *active = lightingAt(global, timeOfDay, 0x734);
 
+	Rva006E8310Rgb *current = reinterpret_cast<Rva006E8310Rgb *>(global + 0x9e0);
 	for (int i = 0; i < 3; ++i)
 	{
 		const Rva006E8310TerrainLighting &a = terrain[i];
@@ -144,19 +145,19 @@ void Rva006E8310TransitionState::update()
 		const Real greenValue = from * green + to * a.diffuse.green;
 		const Real blueValue = from * blue + to * a.diffuse.blue;
 
-		TheDisplay->setLighting(0,
+		TheDisplay->setLighting(i,
 			from * a.diffuse.red + to * b.diffuse.red,
 			from * a.diffuse.green + to * b.diffuse.green,
 			from * a.diffuse.blue + to * b.diffuse.blue);
-		TheDisplay->setObjectLighting(0,
+		TheDisplay->setObjectLighting(i,
 			from * a.diffuse.red + to * c.diffuse.red,
 			from * a.diffuse.green + to * c.diffuse.green,
 			from * a.diffuse.blue + to * c.diffuse.blue);
 
-		Rva006E8310Rgb *current = reinterpret_cast<Rva006E8310Rgb *>(global + 0x9e0);
-		current[i].red = redValue;
-		current[i].green = greenValue;
-		current[i].blue = blueValue;
+		current->red = redValue;
+		current->green = greenValue;
+		current->blue = blueValue;
+		++current;
 	}
 
 	if (TheTerrainRenderObject != 0)
