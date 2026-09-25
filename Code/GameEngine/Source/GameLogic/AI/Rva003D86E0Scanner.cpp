@@ -79,36 +79,39 @@ class Rva003D86E0Scanner
 };
 char Rva003D86E0Scanner::scan(Int cellX, Int cellY)
 {
-    for (Int x = cellX - m_lowerCellOffset; x < cellX + m_upperCellOffset; ++x)
+    for (Int scannedCellX = cellX - m_lowerCellOffset;
+         scannedCellX < cellX + m_upperCellOffset; ++scannedCellX)
     {
-        for (Int y = cellY - m_lowerCellOffset; y < cellY + m_upperCellOffset; ++y)
+        for (Int scannedCellY = cellY - m_lowerCellOffset;
+             scannedCellY < cellY + m_upperCellOffset; ++scannedCellY)
         {
-            PathfindCell *cell = m_pathfinder->getCell(m_scanLayer, x, y);
+            PathfindCell *cell = m_pathfinder->getCell(m_scanLayer, scannedCellX, scannedCellY);
             if (!cell)
                 return false;
-            Int type = (cell->m_word >> 6) & 0x3f;
-            Int requested = m_requestedLayer;
-            if (requested != type)
+            Int encodedLayerType = (cell->m_word >> 6) & 0x3f;
+            Int requestedLayer = m_requestedLayer;
+            if (requestedLayer != encodedLayerType)
             {
-                if (requested == 1)
+                if (requestedLayer == 1)
                 {
-                    if (type != 16)
+                    if (encodedLayerType != 16)
                         return false;
                 }
-                else if (requested != 16)
+                else if (requestedLayer != 16)
                 {
-                    if ((requested >= 17 && requested <= 64) || (requested >= 2 && requested <= 15))
-                        if (type != 16)
+                    if ((requestedLayer >= 17 && requestedLayer <= 64)
+                        || (requestedLayer >= 2 && requestedLayer <= 15))
+                        if (encodedLayerType != 16)
                             return false;
                 }
             }
             if (!m_pathfinder->bfmeStepD4F90(m_stepState, cell))
                 return false;
-            Coord3D position;
-            position.x = x * 10 + 5.0f;
-            position.y = y * 10 + 5.0f;
-            TheTerrainLogic->getLayerHeight(position.x, position.y, (PathfindLayerEnum)type, 0,
-                                            true);
+            Coord3D cellCenterPosition;
+            cellCenterPosition.x = scannedCellX * 10 + 5.0f;
+            cellCenterPosition.y = scannedCellY * 10 + 5.0f;
+            TheTerrainLogic->getLayerHeight(cellCenterPosition.x, cellCenterPosition.y,
+                                            (PathfindLayerEnum)encodedLayerType, 0, true);
         }
     }
     m_resultCellX = cellX;
@@ -117,10 +120,10 @@ char Rva003D86E0Scanner::scan(Int cellX, Int cellY)
     {
         if (*(ICoord2D *)&m_resultCellX != *(ICoord2D *)&m_cachedCellX)
         {
-            Rva003D7010Struct data;
+            Rva003D7010Struct lineTraversalState;
             if (m_pathfinder->iterateCellsAlongLine(*(ICoord2D *)&m_resultCellX,
                                                     *(ICoord2D *)&m_cachedCellX,
-                                                    (PathfindLayerEnum)m_requestedLayer, &data))
+                                                    (PathfindLayerEnum)m_requestedLayer, &lineTraversalState))
                 return false;
         }
     }
