@@ -89058,3 +89058,5 @@ rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?rva00736940@W3DTreeBuffer@@QAEHABVAsciiString@@H0@Z,0x00736940,address-derived tree-type lookup; independent full342B callee RET12 and aligned1313B caller establish AsciiString ref plus int plus AsciiString ref; owner from matched BaseHeightMap tree-buffer caller
 ?apply@Rva002147E0Owner@@QAEXMPAUDamageInfo@@@Z,0x002147E0,address-derived secondary-body-interface callee; independently decoded394B body consumes float stackarg and pointer plus ECX receiver with object at minus8; RET8 on all exits; aligned350B caller via ILT00030BBB
+?Rva013378B8@@3P6AHPBDH@ZA,0x013378B8,global VA013378B8; independently decoded008AF330 call pushes char pointer and zero then caller cleans8; EAX converted by signed FILD into float
+?Rva008AF330Head@@3PAVRva008A4C00Value@@A,0x013387CC,free-list pointer global VA013387CC;008AF330 pops node next at8 then stores float payload at8; newpath constructs Rva008A4C00Value
