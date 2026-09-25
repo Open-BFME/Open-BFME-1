@@ -89077,3 +89077,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?examineNeighboringCells@Pathfinder@@IAEHPAVPathfindCell@@0ABVLocomotorSet@@_N2HABUICoord2D@@PBVObject@@H@Z,0x003E6EE0,Pathfinder identity from BFME definition and object-backed Zero Hour symbol
 ?stopClientParticleSystems@W3DModelDraw@@IAEXXZ,0x0077AB30,destructor route through ILT 0x0001B798 and BFME 20-byte records at this+0x130 identify W3DModelDraw::stopClientParticleSystems
 ?W3DGadgetHorizontalSliderImageDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00790EA0,W3DHorizontalSlider.cpp definition plus caller via ILT and W3D draw lexicon row 0x012BA4FC identify this image-draw callback
+?isLocationSafe@AIPlayer@@QAE_NPBUCoord3D@@PBVThingTemplate@@@Z,0x00163030,body identity from AIPlayer.cpp:1023; matched caller isSupplySourceSafe at 0x00166A10; ILT 0x0003E504 resolves here
