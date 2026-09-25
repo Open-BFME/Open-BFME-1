@@ -1,8 +1,6 @@
 # full-gate red rows, shrink-only (tools/gate_baseline.py). One 'name (source)' per line.
 ??1GiantBirdAIUpdate@@UAE@XZ (Code/GameEngine/Source/Common/GiantBirdAIUpdateDestructorThunk.cpp)
 ??1W3DDisplayString@@MAE@XZ (Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp)
-??4AddInfoStruct@MixFileFactoryClass@@QAEAAU01@ABU01@@Z (Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp)
-??4FileInfoStruct@MixFileCreator@@QAEAAU01@ABU01@@Z (Code/Libraries/Source/WWVegas/WWLib/mixfile.cpp)
 ??A?$map@VAsciiString@@W4Rva0054FA30Mapped@@U?$less@VAsciiString@@@_STL@@V?$allocator@U?$pair@$$CBVAsciiString@@W4Rva0054FA30Mapped@@@_STL@@@4@@_STL@@QAEAAW4Rva0054FA30Mapped@@ABVAsciiString@@@Z (Code/Libraries/Source/WWVegas/WWLib/RvaMapIndexAsciiStringNothrow.cpp)
 ?Set_Alpha_Channel@RingRenderObjClass@@QAEXABV?$LERPAnimationChannelClass@M@@@Z (Code/Libraries/Source/WWVegas/WW3D2/ringobj.cpp)
 ?Set_Color_Channel@RingRenderObjClass@@QAEXABV?$LERPAnimationChannelClass@VVector3@@@@@Z (Code/Libraries/Source/WWVegas/WW3D2/ringobj.cpp)
