@@ -161,10 +161,10 @@ public:
 
 extern BfmeLogVHJ *g_bfmeLogVHJ;
 
-class BfmeNameVHN
+class Rva0090C950Texture
 {
 public:
-	char bfmeIsRawVHN();
+	char rva0090C950();
 };
 
 class BfmeTexVHN
@@ -178,7 +178,7 @@ public:
 	virtual char bfmeTex28VHN(); virtual void bfmeTex2CVHN();
 	virtual void bfmeTex30VHN();
 	char m_bfmePad[0x10];
-	BfmeNameVHN *m_bfme14;
+	Rva0090C950Texture *m_bfme14;
 	const char *m_bfme18;
 	char m_bfmePad2[0x18];
 	int m_bfme34;
@@ -204,7 +204,7 @@ void BfmeThingVHN::bfmeGoVHN(int code)
 		return;
 	if (!m_bfmeTex->bfmeTex28VHN())
 		return;
-	if (t->m_bfme14->bfmeIsRawVHN())
+	if (t->m_bfme14->rva0090C950())
 		return;
 	if (_bfme_debugReportingEnabled())
 	{

@@ -3588,5 +3588,65 @@
   "after_sha256": "db279a0aeb392bc5242f3cf1dfc967f49630aaf17678279cead9f78e89f51bcc",
   "evidence": "docs/naming_evidence.md",
   "reason": "GarrisonContain::StationPointData was a borrowed Zero Hour class with no evidence tying it to this curve; the 16-byte curve record is the address-derived Rva0006AA90Element already established by Rva0006AB10CurveSet.cpp and the matched 0x0006A850/0x0006AA90 vector bodies"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/BfmeNameVHN_bfmeIsRawVHN.cpp",
+  "new_path": "Code/Libraries/Source/WWVegas/WW3D2/Rva0090C950Texture.cpp",
+  "old_name": "BfmeNameVHN",
+  "new_name": "Rva0090C950Texture",
+  "before_sha256": "25972fbd4f6e9786d647e9a7272ce770e24b5c9daf55b4284998752f77ac31fb",
+  "after_sha256": "bd9467a713112ffaac2caecb4f1066d626db722e615bfa8150694d7505bf6ada",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeNameVHN::bfmeIsRawVHN was invented and contradicts the bytes: the body calls texture vslot 0x48 (GetSurfaceLevel) and surface vslot 0x30 (GetDesc) and range-checks Format against 0x3c..0x40 (D3DFMT_V8U8..D3DFMT_V16U16), a bump-map format check whose only caller 0x0090E1A0 logs 'is not a bump map format'; no evidence names the class or method so both are address-derived"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/BfmeNameVHN_bfmeIsRawVHN.cpp",
+  "new_path": "Code/Libraries/Source/WWVegas/WW3D2/Rva0090C950Texture.cpp",
+  "old_name": "bfmeIsRawVHN",
+  "new_name": "rva0090C950",
+  "before_sha256": "25972fbd4f6e9786d647e9a7272ce770e24b5c9daf55b4284998752f77ac31fb",
+  "after_sha256": "bd9467a713112ffaac2caecb4f1066d626db722e615bfa8150694d7505bf6ada",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeNameVHN::bfmeIsRawVHN was invented and contradicts the bytes: the body calls texture vslot 0x48 (GetSurfaceLevel) and surface vslot 0x30 (GetDesc) and range-checks Format against 0x3c..0x40 (D3DFMT_V8U8..D3DFMT_V16U16), a bump-map format check whose only caller 0x0090E1A0 logs 'is not a bump map format'; no evidence names the class or method so both are address-derived"
+ },
+ {
+  "old_path": "Code/Libraries/Source/WWVegas/WW3D2/texture.cpp",
+  "new_path": "Code/Libraries/Source/WWVegas/WW3D2/texture.cpp",
+  "old_name": "BfmeNameVHN",
+  "new_name": "Rva0090C950Texture",
+  "before_sha256": "f0f601bd5e8e5c40e3cfd80ed2dadf7a9fa9c2fc33cd7fe9e1ccea4ab245afea",
+  "after_sha256": "549c9c430ab0a2788c565d5bd1d5b93d6d5dcaf76477d8c11e97bc4ed89b3064",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeNameVHN::bfmeIsRawVHN was invented and contradicts the bytes: the body calls texture vslot 0x48 (GetSurfaceLevel) and surface vslot 0x30 (GetDesc) and range-checks Format against 0x3c..0x40 (D3DFMT_V8U8..D3DFMT_V16U16), a bump-map format check whose only caller 0x0090E1A0 logs 'is not a bump map format'; no evidence names the class or method so both are address-derived"
+ },
+ {
+  "old_path": "Code/Libraries/Source/WWVegas/WW3D2/texture.cpp",
+  "new_path": "Code/Libraries/Source/WWVegas/WW3D2/texture.cpp",
+  "old_name": "bfmeIsRawVHN",
+  "new_name": "rva0090C950",
+  "before_sha256": "f0f601bd5e8e5c40e3cfd80ed2dadf7a9fa9c2fc33cd7fe9e1ccea4ab245afea",
+  "after_sha256": "549c9c430ab0a2788c565d5bd1d5b93d6d5dcaf76477d8c11e97bc4ed89b3064",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeNameVHN::bfmeIsRawVHN was invented and contradicts the bytes: the body calls texture vslot 0x48 (GetSurfaceLevel) and surface vslot 0x30 (GetDesc) and range-checks Format against 0x3c..0x40 (D3DFMT_V8U8..D3DFMT_V16U16), a bump-map format check whose only caller 0x0090E1A0 logs 'is not a bump map format'; no evidence names the class or method so both are address-derived"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "BfmeNameVHN",
+  "new_name": "Rva0090C950Texture",
+  "before_sha256": "862ef46e28d7d141ad995b2f4bb142de16ff9fed099282ef4f8c29638d96a72f",
+  "after_sha256": "453723a7479d7fcd213d81cd498a3c3682e369852b485cdbcc4f97ec3778d659",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeNameVHN::bfmeIsRawVHN was invented and contradicts the bytes: the body calls texture vslot 0x48 (GetSurfaceLevel) and surface vslot 0x30 (GetDesc) and range-checks Format against 0x3c..0x40 (D3DFMT_V8U8..D3DFMT_V16U16), a bump-map format check whose only caller 0x0090E1A0 logs 'is not a bump map format'; no evidence names the class or method so both are address-derived"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "bfmeIsRawVHN",
+  "new_name": "rva0090C950",
+  "before_sha256": "862ef46e28d7d141ad995b2f4bb142de16ff9fed099282ef4f8c29638d96a72f",
+  "after_sha256": "453723a7479d7fcd213d81cd498a3c3682e369852b485cdbcc4f97ec3778d659",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeNameVHN::bfmeIsRawVHN was invented and contradicts the bytes: the body calls texture vslot 0x48 (GetSurfaceLevel) and surface vslot 0x30 (GetDesc) and range-checks Format against 0x3c..0x40 (D3DFMT_V8U8..D3DFMT_V16U16), a bump-map format check whose only caller 0x0090E1A0 logs 'is not a bump map format'; no evidence names the class or method so both are address-derived"
  }
 ]

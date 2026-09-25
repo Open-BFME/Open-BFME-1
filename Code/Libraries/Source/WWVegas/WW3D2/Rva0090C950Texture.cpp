@@ -1,6 +1,10 @@
 // cl: /DNDEBUG /MD /EHsc
-// BfmeNameVHN::bfmeIsRawVHN -- retail 0x0090C950, 142 bytes.
-// Caller: BfmeThingVHN::bfmeGoVHN (0x0090E1A0, texture.cpp) names this method.
+// Rva0090C950Texture::rva0090C950 -- retail 0x0090C950, 142 bytes.
+// A bump-map format check: level-0 surface via texture vslot 0x48
+// (GetSurfaceLevel), its desc via surface vslot 0x30 (GetDesc), then
+// Format in 0x3c..0x40 (D3DFMT_V8U8..D3DFMT_V16U16). The only caller,
+// BfmeThingVHN::bfmeGoVHN (0x0090E1A0, texture.cpp), logs "is not a bump
+// map format" when it returns 0. Class and method stay address-derived.
 // The EH-unwound local is a scope lock: unwind funclet 0x00C5B8B0 does
 // lea ecx,[ebp-0x34] and jumps via 0x0000BFAF -> 0x0007BCE0 -> 0x00905B10,
 // the same unlock the normal path calls after the state=-1 store. The
@@ -46,17 +50,17 @@ public:
 	virtual long __stdcall slot18(unsigned int index, Rva0090C950Iface **out);
 };
 
-class BfmeNameVHN
+class Rva0090C950Texture
 {
 public:
-	char bfmeIsRawVHN();
+	char rva0090C950();
 
 	int m_dword0;
 	int m_dword4;
 	Rva0090C950Iface *m_dword8;
 };
 
-char BfmeNameVHN::bfmeIsRawVHN()
+char Rva0090C950Texture::rva0090C950()
 {
 	char ok = 0;
 
