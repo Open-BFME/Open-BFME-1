@@ -1,6 +1,6 @@
 // cl: /DNDEBUG /MD /EHsc
 // Retail 0x0071B1F0, 384 B, from dump d_006e7d70.asm (neighbours 0x0071B3D0
-// W3DShroud destructor, 0x0071B4B0 Rva0071B4B0::reset, both landed nearby in
+// W3DShroud destructor, 0x0071B4B0 W3DShroud::reset, both landed nearby in
 // this directory). Identity is NOT recovered -- class/field names are
 // address-derived.
 //

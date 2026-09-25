@@ -1,6 +1,5 @@
-// Six more: the same counted handle returned by value from two classes, a dot
-// product, a triple of mixed types, a rate that a flag overrides, and five
-// flags raised together.
+// Five more: a counted handle returned by value, a dot product, a triple of
+// mixed types, a rate that a flag overrides, and five flags raised together.
 
 class BfmeThingCX
 {
@@ -51,22 +50,6 @@ private:
 // disappears and the body is nine bytes shorter.
 // ?bfmeGet@Gen_006C5690@@QBE?AVBfmeHandleCX@@XZ
 BfmeHandleCX Gen_006C5690::bfmeGet(void) const
-{
-	return m_bfmeHandle;
-}
-
-class Gen_006D2630
-{
-public:
-	BfmeHandleCX bfmeGet(void) const;
-
-private:
-	char m_bfmeHead[0x1C];					// +0x00
-	BfmeHandleCX m_bfmeHandle;				// +0x1C
-};
-
-// ?bfmeGet@Gen_006D2630@@QBE?AVBfmeHandleCX@@XZ
-BfmeHandleCX Gen_006D2630::bfmeGet(void) const
 {
 	return m_bfmeHandle;
 }

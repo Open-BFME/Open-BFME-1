@@ -100,7 +100,8 @@ void __stdcall Rva007110F0( const Open2Triple5 *record )
 }
 
 // ---------------------------------------------------------------------------
-// 0x0071B4B0 -- release three arrays, latch a flag, and empty a circular list.
+// 0x0071B4B0 -- W3DShroud::reset: release three arrays, latch a flag, and
+// empty the dirty-cell set.
 //
 // The three releases call `??_V` (operator delete[]), not `??3`, so all three
 // members are ARRAY allocations.  Each clear is emitted after the next load,
@@ -128,7 +129,7 @@ public:
 	int m_count;
 };
 
-class Rva0071B4B0
+class W3DShroud
 {
 public:
 	void reset( void );
@@ -143,8 +144,8 @@ public:
 	Open2List m_list;
 };
 
-// @?reset@Rva0071B4B0@@QAEXXZ 0x0071B4B0
-void Rva0071B4B0::reset( void )
+// @?reset@W3DShroud@@QAEXXZ 0x0071B4B0
+void W3DShroud::reset( void )
 {
 	if( m_bufferA )
 		delete[] (char *)m_bufferA;

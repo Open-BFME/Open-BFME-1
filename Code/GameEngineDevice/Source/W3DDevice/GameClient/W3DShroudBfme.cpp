@@ -109,10 +109,12 @@ void W3DRadarResetUnlock(void);
 
 void operator delete[](void *);
 
-class BaseHeightMapResetShroud
+class W3DShroud;
+
+class TaintBuffer
 {
 public:
-	void setShroudLevel30BC(int x, int y, UnsignedByte level, bool immediate);
+	void setShroudLevel(int x, int y, UnsignedByte level, bool textureOnly);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
@@ -120,13 +122,13 @@ class BaseHeightMapRenderObjClass
 {
 private:
 	unsigned char m_unmodelled_00[0x30b8];
-	BaseHeightMapResetShroud *m_shroud;
-	BaseHeightMapResetShroud *m_shroud30BC;
+	W3DShroud *m_shroud;
+	TaintBuffer *m_taintBuffer;
 
 public:
-	BaseHeightMapResetShroud *getShroud30BC() const
+	TaintBuffer *getTaintBuffer() const
 	{
-		return m_shroud30BC;
+		return m_taintBuffer;
 	}
 };
 
@@ -282,11 +284,11 @@ void W3DShroud::setShroudLevel(int x, int y, UnsignedByte level, bool textureOnl
 		m_shroudData[x + y * m_numCellsX] =
 			(UnsignedShort)packShroudPixel(level);
 
-		BaseHeightMapResetShroud *shroud30BC =
-			TheTerrainRenderObject->getShroud30BC();
-		if (shroud30BC && TheTaintManager)
+		TaintBuffer *taintBuffer =
+			TheTerrainRenderObject->getTaintBuffer();
+		if (taintBuffer && TheTaintManager)
 		{
-			shroud30BC->setShroudLevel30BC(
+			taintBuffer->setShroudLevel(
 				x, y, TheTaintManager->getTaintLevelByte006e(x, y), true);
 		}
 	}

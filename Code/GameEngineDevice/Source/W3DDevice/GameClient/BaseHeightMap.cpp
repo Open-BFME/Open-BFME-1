@@ -971,7 +971,7 @@ public:
 	BfmeListHeader *m_last;
 };
 
-struct BaseHeightMapResetShroudFields
+struct TaintBufferFields
 {
 	char m_padding00[0x18];
 	void *m_field18;
@@ -981,19 +981,17 @@ struct BaseHeightMapResetShroudFields
 	char m_padding40[4];
 };
 
-class BaseHeightMapResetShroud : public BaseHeightMapResetShroudFields,
+class TaintBuffer : public TaintBufferFields,
 	public BfmeShroudList
 {
 public:
-	void reset30B8();
-	void setBorderShroudLevel30B8(UnsignedByte level);
-	void reset30BC();
-	void setBorderShroudLevel30BC(UnsignedByte level);
+	void reset();
+	void setBorderShroudLevel(UnsignedByte level);
 };
 
 // All three releases go to 0x00881EF0, the ARRAY operator delete, not to the
 // scalar 0x00881EB0 next to it: these members are arrays.
-void BaseHeightMapResetShroud::reset30BC()
+void TaintBuffer::reset()
 {
 	if (m_field18) {
 		::operator delete[](m_field18);
@@ -1110,14 +1108,14 @@ void BaseHeightMapRenderObjClass::reset(void)
 		reinterpret_cast<BaseHeightMapRenderObjClass *>(heightMap + 0x1c);
 	bfmeImpassableLayout->m_showAsVisibleCliff.clear();
 
-	if (*reinterpret_cast<BaseHeightMapResetShroud **>(heightMap + 0x30b8)) {
-		(*reinterpret_cast<BaseHeightMapResetShroud **>(heightMap + 0x30b8))->reset30B8();
-		(*reinterpret_cast<BaseHeightMapResetShroud **>(heightMap + 0x30b8))->setBorderShroudLevel30B8(
+	if (*reinterpret_cast<W3DShroud **>(heightMap + 0x30b8)) {
+		(*reinterpret_cast<W3DShroud **>(heightMap + 0x30b8))->reset();
+		(*reinterpret_cast<W3DShroud **>(heightMap + 0x30b8))->setBorderShroudLevel(
 			*reinterpret_cast<const UnsignedByte *>(reinterpret_cast<const char *>(TheGlobalData) + 0xc86));
 	}
-	if (*reinterpret_cast<BaseHeightMapResetShroud **>(heightMap + 0x30bc)) {
-		(*reinterpret_cast<BaseHeightMapResetShroud **>(heightMap + 0x30bc))->reset30BC();
-		(*reinterpret_cast<BaseHeightMapResetShroud **>(heightMap + 0x30bc))->setBorderShroudLevel30BC(
+	if (*reinterpret_cast<TaintBuffer **>(heightMap + 0x30bc)) {
+		(*reinterpret_cast<TaintBuffer **>(heightMap + 0x30bc))->reset();
+		(*reinterpret_cast<TaintBuffer **>(heightMap + 0x30bc))->setBorderShroudLevel(
 			*reinterpret_cast<const UnsignedByte *>(reinterpret_cast<const char *>(TheGlobalData) + 0xca0));
 	}
 	reinterpret_cast<BaseHeightMapResetTerrain *>(this)->updateMacroTexture(

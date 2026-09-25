@@ -18,10 +18,10 @@ typedef unsigned char UnsignedByte;
 
 extern "C" __declspec(dllimport) unsigned long __stdcall timeGetTime();
 
-class BaseHeightMapResetShroud
+class TaintBuffer
 {
 public:
-	void setShroudLevel30BC(int x, int y, UnsignedByte level, bool textureOnly);
+	void setShroudLevel(int x, int y, UnsignedByte level, bool textureOnly);
 };
 
 class Rva00727A80
@@ -97,7 +97,7 @@ void Rva00727A80::update(const void *unused)
 
 				int x = index % m_numCellsX;
 				int y = index / m_numCellsX;
-				((BaseHeightMapResetShroud *)this)->setShroudLevel30BC(
+				((TaintBuffer *)this)->setShroudLevel(
 					x, y, current[index], true);
 			}
 			else
@@ -134,7 +134,7 @@ void Rva00727A80::update(const void *unused)
 						*current = (UnsignedByte)(currentLevel + stepByte);
 				}
 
-				((BaseHeightMapResetShroud *)this)->setShroudLevel30BC(
+				((TaintBuffer *)this)->setShroudLevel(
 					x, y, *current, true);
 			}
 		}

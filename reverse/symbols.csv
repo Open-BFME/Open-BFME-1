@@ -76485,7 +76485,7 @@ name,address,notes
 ?bfmeErase1279@BfmeLookup1279@@QAEXAAUBfmeKey1279@@@Z,0x0089CC80,address decoded from the 0x008BD400 erase call
 ?bfmeErase@AnimationSoundClientBehaviorModuleDataMember@@AAEXPAX@Z,0x000082D3,Open-BFME5 ILT thunk; ??1AnimationSoundClientBehaviorModuleDataMember@@QAE@XZ at 0x00605E60 hands it the field at +4 of its header before putting the header back to itself; address-derived name
 ?bfmeErase@BfmeDrawableLookupTable@@QAEXABI@Z,0x00043F31,Open-BFME5 ILT removeDrawableFromLookupTable at 0x00430B50 erases through
-?bfmeErase@BfmeShroudList@@QAEXPAVBfmeListHeader@@@Z,0x00016ED2,Open-BFME5 ILT thunk; ?reset30BC@BaseHeightMapResetShroud@@QAEXXZ at 0x00727450 hands it the first node of the list at +0x44 before putting the header back to itself; address-derived name
+?bfmeErase@BfmeShroudList@@QAEXPAVBfmeListHeader@@@Z,0x00016ED2,Open-BFME5 ILT thunk; TaintBuffer::reset at 0x00727450 hands it the first node of the list at +0x44 before putting the header back to itself; address-derived name
 ?bfmeErase@S4Mem005879C0@@AAEXPAX@Z,0x00037353,Open-BFME5 ILT thunk; ??1S4Mem005879C0@@QAE@XZ at 0x005879C0 hands it the field at +4 of its header before putting the header back to itself; address-derived name
 ?bfmeEraseCA@BfmeMapCA@@QAEXPAUBfmeIterCA@@@Z,0x00016F36,map erase
 ?bfmeEraseEAY@BfmeListEAY@@QAEXPAVBfmeNodeEAY@@@Z,0x00035F12,pin erase for BfmeConv2014
@@ -85034,9 +85034,9 @@ name,address,notes
 ?notifyRva001C8830@Object@@QAEXPAVPlayer@@@Z,0x0001FE3D,Independently reviewed full retail callee for selectObject382E30; typed receiver and arguments; address names for unresolved identities
 ?notifyRva001C89E0@BFMEGameLogicObjectSelectionDeselectShim@@QAEXPAVPlayer@@@Z,0x000380CD,GameLogic::deselectObject tail call at 0x00382FEC passes Object as this and Player as its only argument; retail body 0x001C89E0 clears the Object selection bit and updates drawable, AI, and contain interfaces
 ?notifyScriptEngine@SpecialPowerCompletionDie@@QAEXXZ,0x00017981,Open-BFME5 ILT from zh_sweep packet 00256070
-?notifyShroudChanged006e@BaseHeightMapRenderObjClass@@QAEXXZ,0x00036F43,W3DDisplay terrain shroud-notification target read from retail REL32
-?notifyShroudChanged30B8@BaseHeightMapResetShroud@@QAEXXZ,0x00005371,retail thunk called for the +0x3098 shroud child by notifyShroudChanged006e
-?notifyShroudChanged30BC@BaseHeightMapResetShroud@@QAEXXZ,0x00028B55,retail thunk called for the +0x309C shroud child by notifyShroudChanged006e
+?notifyShroudChanged@BaseHeightMapRenderObjClass@@QAEXXZ,0x00036F43,W3DDisplay::setShroudLevel terrain notification target read from retail REL32
+?stampShroudVisible@BaseHeightMapResetBuffer@@QAEXXZ,0x00005371,ILT to 0x0071CD20; called for the +0x3098 terrain child by BaseHeightMapRenderObjClass::notifyShroudChanged
+?notifyShroudChanged@W3DPropBuffer@@QAEXXZ,0x00028B55,ILT to 0x007024E0; called for the +0x309C prop buffer by BaseHeightMapRenderObjClass::notifyShroudChanged
 ?notifyState@@YGXH@Z,0x0000DBF2,address-derived stdcall ILT recovered from 0x00569BA0
 ?notifyStatus@BfmeRvaBA00Object@@QAEXXZ,0x0002191D,assigned-body helper for Rva0024BA00
 ?notifyTarget@Glo012F4B98Type@@QAEXXZ,0x000371C3,Existing matched58962020B bit-guarded notify
@@ -85694,8 +85694,7 @@ name,address,notes
 ?reserve@?$vector@W4ScienceType@@V?$allocator@W4ScienceType@@@_STL@@@_STL@@QAEXI@Z,0x000D1420,ScienceType vector reserve reached through ILT 0x0003616A from full 0x000D7010 transfer; complete 167-byte four-byte element allocation and ownership audit
 ?reserve@HorzLineVectorReserveShim@_STL@@QAEXI@Z,0x00068FA0,incremental-link thunk target through a TU-local forwarding shim
 ?reserve@U1Buffer_005C5FB0@@QAEXPAXH@Z,0x005C46C0,member called by the ctor 0x005C5FB0; address-derived name
-?reset30B8@BaseHeightMapResetShroud@@QAEXXZ,0x0000AA4C,BaseHeightMap reset call for BFME shroud at this+0x30B8
-?reset30BC@BaseHeightMapResetShroud@@QAEXXZ,0x000272FF,BaseHeightMap reset call for BFME shroud at this+0x30BC
+?reset@TaintBuffer@@QAEXXZ,0x000272FF,BaseHeightMap reset call for the taint buffer at this+0x30BC
 ?reset@?$bitset@$0BEA@@_STL@@QAEAAV12@XZ,0x0002194A,address-derived call target from the exact 320-bit INI token sink at 0x00208810; ILT fronts the shared bitset reset body at 0x001C2B80
 ?reset@BfmeMgr089_152@@QAEXXZ,0x00003486,pin
 ?reset@BfmePathfindLayerReset@@QAEXXZ,0x000379FC,Pathfinder reset layer alias
@@ -86374,8 +86373,8 @@ name,address,notes
 ?setAttitude@AIUpdateInterface@@QAEXW4AttitudeType@@@Z,0x00030553,Open-BFME5 ILT thunk to body 0x0027DEF0 in the AIUpdate range; ?setAttitude@AIGroup@@QAEXW4AttitudeType@@@Z at 0x00150FE0 calls it on each member AI read from Object+0x204
 ?setBestWinStreak@SkirmishBattleHonors@@QAEXVAsciiString@@H@Z,0x0009CBF0,BFME per-side variant of ZH SkirmishBattleHonors::setBestWinStreak: concat("BestWinStreak" at VA 0x01080504) onto the by-value AsciiString side prefix (the callers pass Gondor/Rohan/Isengard/Mordor) then setInt ILT 0x00009B3D (pinned) -> 0x000A96F0; ret 8
 ?setBool@UserPreferences@@QAEXVAsciiString@@_N@Z,0x00017CC9,incremental-link thunk
-?setBorderShroudLevel30B8@BaseHeightMapResetShroud@@QAEXE@Z,0x00028420,BaseHeightMap border-level call for BFME shroud at this+0x30B8
-?setBorderShroudLevel30BC@BaseHeightMapResetShroud@@QAEXE@Z,0x0000BFF5,BaseHeightMap border-level call for BFME shroud at this+0x30BC
+?setBorderShroudLevel@W3DShroud@@QAEXE@Z,0x00028420,BaseHeightMap border-level call for the shroud at this+0x30B8
+?setBorderShroudLevel@TaintBuffer@@QAEXE@Z,0x0000BFF5,BaseHeightMap border-level call for the taint buffer at this+0x30BC
 ?setBuilder@Object@@QAEXPBV1@@Z,0x00001F41,Worker newTask2CA130 build-task arm; ILT to existing matched25B Object::setBuilder1BE470 stores builder ObjectID at object+7C
 ?setButtonImage@BFMERetailCommandButton@@QAEXPBVImage@@@Z,0x0002A7ED,Open-BFME5 ControlBar retail out-of-line button image setter thunk
 ?setCameraTransform@W3DView@@AAEXXZ,0x000312A0,BFME thunk reached by W3DView::setPitch
@@ -86566,8 +86565,8 @@ name,address,notes
 ?setShellMenuScheme@ShellMenuSchemeManager@@QAEXVAsciiString@@@Z,0x0000FAC9
 ?setShoreLineDetail@BaseHeightMapRenderObjClass@@QAEXXZ,0x0000CC8E,pinharvest x1 (thunk)
 ?setShouldPlay@Eva@@QAE_NW4EvaMessage@@PBUCoord3D@@@Z,0x004233A0,this=TheEva 0x012F142C (initSubsystem<Eva> tag at 0x000794E4); (msg pos): msg==-1 -> false; bounds against the +0x4C/+0x50 (0x18) and +0x0C/+0x10 (0x1C) vectors then per-message trigger 0x004223F0(state[msg] def[msg] pos) storing an optional Coord3D; update calls it at 0x0035FBBC with (9 NULL) when an allied player is defeated; ZH Eva::setShouldPlay(EvaMessage) extended with a position
-?setShroudLevel30B8@BaseHeightMapResetShroud@@QAEXHHE_N@Z,0x000029F5,W3DDisplay primary shroud update target read from retail REL32
-?setShroudLevel30BC@BaseHeightMapResetShroud@@QAEXHHE_N@Z,0x0003D1DB,W3DDisplay 0x006EA700 direct +0x30BC shroud update target read from retail REL32
+?setShroudLevel@W3DShroud@@QAEXHHE_N@Z,0x000029F5,W3DDisplay primary shroud update target read from retail REL32
+?setShroudLevel@TaintBuffer@@QAEXHHE_N@Z,0x0003D1DB,W3DDisplay 0x006EA700 direct +0x30BC taint update target read from retail REL32
 ?setSize@Shadow@@QAEXMM@Z,0x0002133C,pinharvest x1 (thunk)
 ?setSize@ShadowSetSizeShim@@QAEXMM@Z,0x001E4250,Shadow::setSize incremental-link thunk target through a TU-local forwarding shim
 ?setSkyBoxRotation007A15A0@WaterSkyBoxSettingsOwner@@QAEXPBM@Z,0x0003F481,SkyboxSettings reader direct call through the retail ILT to 0x007A15A0

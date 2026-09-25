@@ -2,15 +2,31 @@
 // readable body of ?setBorderShroudLevel@W3DDisplay@@UAEXE@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 // readable body of ?setShroudLevel@W3DDisplay@@UAEXHHW4CellShroudStatus@@@Z: Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplay.cpp
 
-class BaseHeightMapResetShroud
+class W3DShroud
 {
 public:
-	void notifyShroudChanged30B8();
-	void notifyShroudChanged30BC();
-	void setBorderShroudLevel30B8(unsigned char level);
-	void setBorderShroudLevel30BC(unsigned char level);
-	void setShroudLevel30B8(int x, int y, unsigned char level, bool immediate);
-	void setShroudLevel30BC(int x, int y, unsigned char level, bool immediate);
+	void setBorderShroudLevel(unsigned char level);
+	void setShroudLevel(int x, int y, unsigned char level, bool textureOnly);
+};
+
+class TaintBuffer
+{
+public:
+	void setBorderShroudLevel(unsigned char level);
+	void setShroudLevel(int x, int y, unsigned char level, bool textureOnly);
+};
+
+class W3DPropBuffer
+{
+public:
+	void notifyShroudChanged();
+};
+
+// The terrain child at +0x3098; its class is not established yet.
+class BaseHeightMapResetBuffer
+{
+public:
+	void stampShroudVisible();
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include/W3DDevice/GameClient/BaseHeightMap.h
@@ -18,21 +34,21 @@ class BaseHeightMapRenderObjClass
 {
 private:
 	unsigned char m_unmodelled_00[0x30b8];
-	BaseHeightMapResetShroud *m_shroud;
-	BaseHeightMapResetShroud *m_shroud30BC;
+	W3DShroud *m_shroud;
+	TaintBuffer *m_taintBuffer;
 
 public:
-	BaseHeightMapResetShroud *getShroud() const
+	W3DShroud *getShroud() const
 	{
 		return m_shroud;
 	}
 
-	BaseHeightMapResetShroud *getShroud30BC() const
+	TaintBuffer *getTaintBuffer() const
 	{
-		return m_shroud30BC;
+		return m_taintBuffer;
 	}
 
-	__declspec(noinline) void notifyShroudChanged006e();
+	__declspec(noinline) void notifyShroudChanged();
 };
 
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
@@ -76,18 +92,18 @@ public:
 	virtual void setShroudLevel30BC(int x, int y, int level);
 };
 
-// ?notifyShroudChanged006e@BaseHeightMapRenderObjClass@@QAEXXZ
-__declspec(noinline) void BaseHeightMapRenderObjClass::notifyShroudChanged006e()
+// ?notifyShroudChanged@BaseHeightMapRenderObjClass@@QAEXXZ
+__declspec(noinline) void BaseHeightMapRenderObjClass::notifyShroudChanged()
 {
-	BaseHeightMapResetShroud *shroud30BC =
-		*(BaseHeightMapResetShroud **)((unsigned char *)this + 0x309c);
-	if (shroud30BC) {
-		shroud30BC->notifyShroudChanged30BC();
+	W3DPropBuffer *propBuffer =
+		*(W3DPropBuffer **)((unsigned char *)this + 0x309c);
+	if (propBuffer) {
+		propBuffer->notifyShroudChanged();
 	}
-	BaseHeightMapResetShroud *shroud30B8 =
-		*(BaseHeightMapResetShroud **)((unsigned char *)this + 0x3098);
-	if (shroud30B8) {
-		shroud30B8->notifyShroudChanged30B8();
+	BaseHeightMapResetBuffer *buffer3098 =
+		*(BaseHeightMapResetBuffer **)((unsigned char *)this + 0x3098);
+	if (buffer3098) {
+		buffer3098->stampShroudVisible();
 	}
 }
 
@@ -95,23 +111,23 @@ __declspec(noinline) void BaseHeightMapRenderObjClass::notifyShroudChanged006e()
 void W3DDisplay::setBorderShroudLevel(unsigned char level)
 {
 	if (TheTerrainRenderObject && TheTerrainRenderObject->getShroud()) {
-		TheTerrainRenderObject->getShroud()->setBorderShroudLevel30B8(level);
+		TheTerrainRenderObject->getShroud()->setBorderShroudLevel(level);
 	}
 }
 
 // ?setBorderShroudLevel30BC@W3DDisplay@@UAEXE@Z
 void W3DDisplay::setBorderShroudLevel30BC(unsigned char level)
 {
-	if (TheTerrainRenderObject && TheTerrainRenderObject->getShroud30BC()) {
-		TheTerrainRenderObject->getShroud30BC()->setBorderShroudLevel30BC(level);
+	if (TheTerrainRenderObject && TheTerrainRenderObject->getTaintBuffer()) {
+		TheTerrainRenderObject->getTaintBuffer()->setBorderShroudLevel(level);
 	}
 }
 
 // ?setShroudLevel30BC@W3DDisplay@@UAEXHHH@Z
 void W3DDisplay::setShroudLevel30BC(int x, int y, int level)
 {
-	if (TheTerrainRenderObject && TheTerrainRenderObject->getShroud30BC()) {
-		TheTerrainRenderObject->getShroud30BC()->setShroudLevel30BC(
+	if (TheTerrainRenderObject && TheTerrainRenderObject->getTaintBuffer()) {
+		TheTerrainRenderObject->getTaintBuffer()->setShroudLevel(
 			x, y, static_cast<unsigned char>(level), false);
 	}
 }
@@ -121,20 +137,20 @@ void W3DDisplay::setShroudLevel(int x, int y, CellShroudStatus setting)
 {
 	if (TheTerrainRenderObject && TheTerrainRenderObject->getShroud()) {
 		if (setting == CELLSHROUD_SHROUDED) {
-			TheTerrainRenderObject->getShroud()->setShroudLevel30B8(
+			TheTerrainRenderObject->getShroud()->setShroudLevel(
 				x, y, TheWritableGlobalData->m_shroudAlpha, false);
 		} else if (setting == CELLSHROUD_FOGGED) {
-			TheTerrainRenderObject->getShroud()->setShroudLevel30B8(
+			TheTerrainRenderObject->getShroud()->setShroudLevel(
 				x, y, TheWritableGlobalData->m_fogAlpha, false);
 		} else {
-			TheTerrainRenderObject->getShroud()->setShroudLevel30B8(
+			TheTerrainRenderObject->getShroud()->setShroudLevel(
 				x, y, TheWritableGlobalData->m_clearAlpha, false);
 		}
 
-		TheTerrainRenderObject->notifyShroudChanged006e();
-		BaseHeightMapResetShroud *shroud30BC = TheTerrainRenderObject->getShroud30BC();
-		if (shroud30BC && TheTaintManager) {
-			shroud30BC->setShroudLevel30BC(
+		TheTerrainRenderObject->notifyShroudChanged();
+		TaintBuffer *taintBuffer = TheTerrainRenderObject->getTaintBuffer();
+		if (taintBuffer && TheTaintManager) {
+			taintBuffer->setShroudLevel(
 				x, y, TheTaintManager->getTaintLevelByte006e(x, y), true);
 		}
 	}

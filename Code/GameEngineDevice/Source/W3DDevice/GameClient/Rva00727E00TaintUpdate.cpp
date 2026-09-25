@@ -28,12 +28,6 @@ public:
 	void m(void);
 };
 
-class BaseHeightMapResetShroud
-{
-public:
-	void reset30BC(void);
-};
-
 class Bfme5TextureHolderB
 {
 public:
@@ -83,6 +77,7 @@ public:
 class TaintBuffer
 {
 public:
+	void reset(void);
 	void init(class WorldHeightMap *map, float cellWidth, float cellHeight);
 	void fillTaintSurface(unsigned char alpha, SurfaceClass *surface);
 };
@@ -189,7 +184,7 @@ void Rva00727E00::update(CameraClass *unused)
 	if (TheWritableGlobalData != 0 &&
 		TheWritableGlobalData->m_taintOn != m_taintOn)
 	{
-		reinterpret_cast<BaseHeightMapResetShroud *>(this)->reset30BC();
+		reinterpret_cast<TaintBuffer *>(this)->reset();
 		reinterpret_cast<Bfme5TextureHolderB *>(this)->bfmeDropTexture();
 
 		Rva00727E00Map *map =
