@@ -11848,7 +11848,9 @@ name,address,notes
 ?GadgetButtonSetBorder@@YAXPAVGameWindow@@IH@Z,0x00002982,ILT thunk to the gadget button border setter
 ?GadgetComboBoxAddEntry@@YAHPAVGameWindow@@VUnicodeString@@H@Z,0x0002F338,route=0x004B4F40; skirmish profile callback calls canonical combo add through retail ILT
 ?GadgetComboBoxAddEntryPopulateRemoteIPComboBox@@YAHPAVGameWindow@@VPopulateRemoteIPComboBoxEntry@@H@Z,0x0002F338,ABI-compatible call alias required for BFME VC7.1 argument scheduling
+?GadgetComboBoxReset@@YAXPAVGameWindow@@@Z,0x00007004,route=0x004B39D0; matched canonical GadgetComboBoxReset body and OnlineQuickMatch max-ping caller prove the one-argument cdecl ABI
 ?GadgetComboBoxSetFont@@YAXPAVGameWindow@@PAVGameFont@@@Z,0x00009CD2,Open-BFME5 ILT thunk to the body already matched at 0x004B3A30; ?winSetFont@GameWindow@@UAEXPAVGameFont@@@Z at 0x00478550 dispatches to it on the matching style bit
+?GadgetComboBoxSetSelectedPos@@YAXPAVGameWindow@@H_N@Z,0x000439C3,route=0x004B3C70; matched canonical GadgetComboBoxSetSelectedPos body and OnlineQuickMatch max-ping caller prove the three-argument cdecl ABI
 ?GadgetListBoxAddEntryImage@@YAHPAVGameWindow@@PBVImage@@HHHH_NH@Z,0x0001712A
 ?GadgetListBoxGetItemData@@YAPAXPAVGameWindow@@HH@Z,0x00009084,pinharvest x1 (thunk)
 ?GadgetListBoxGetSelected@@YAXPAVGameWindow@@PAH@Z,0x00008945,pinharvest x2 (thunk)
@@ -14936,6 +14938,7 @@ name,address,notes
 ?_bfme_loginGadgetsState@BfmeAptScreenOnlineLogin@@QAE_NXZ,0x00049639,ILT to OnlineLogin helper 0x0054DA10 called by syncLoginGadgets
 ?_bfme_newMap@VictorySystem@@UAEXXZ,0x001DF4A0,vtable 0x0109FD8C slot 9 (+0x24) via ILT 0x000086B1 = first VictorySystem virtual; called by GameLogic::startNewGame 0x003957B7 right after ThePlayerList->newMap (ZH PlayerList slot +0x28); reset then clamps CellSize +0x0C; terrain extents via 0x012EF4CC vcall +0x24 -> two new(0x1C) cell grids 0x001B1830 (second offset by -CellSize/2) at +0xF8/+0xFC; +0x1C = CellSize*sqrt(2)/2; per player side AsciiString (Player+0x28) -> faction index 0x001DF350 (Default fallback; Observer/Civilian flagged 0x80000000) into +0x24[i]; +0x100=1
 ?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ,0x00022A70,Open-BFME5 view-class spelling of the team instance-list advance already pinned as ?_bfme_nextInInstanceList@Team@@QAEPAV1@XZ; TeamPrototype walks in Team.cpp reach it through the view
+?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QBEPAV1@XZ,0x000C8A30,Const view of Team instance-list advance: retail 0032C680 calls ILT22A70 -> C8A30; complete 4B body reads this+14 and returns without mutation; independent Team.cpp prototype iteration uses same target and receiver
 ?_bfme_nextInInstanceList@Team@@QAEPAV1@XZ,0x00022A70,Open-BFME5 shape-only pin: the thunk the team instance list walk advances through; thiscall on the team with the next team back
 ?_bfme_onBttnClose@BfmeAptScreenSpellStore@@QAEXXZ,0x00010401,SpellStore OnBttnClose callback target thunk
 ?_bfme_onBttnSpell@BfmeAptScreenSpellStore@@QAEXXZ,0x00017D2D,SpellStore OnBttnSpell callback target thunk
@@ -43057,7 +43060,6 @@ name,address,notes
 ?b_00376b00@@YAXXZ,0x00376B00,gen-thunk body
 ?b_00376c70@@YAXXZ,0x00376C70,gen-thunk body
 ?b_00377060@@YAXXZ,0x00377060,gen-thunk body
-?rva00377060@CastleBehavior@@QAEXXZ,0x00377060,address-derived no-argument thiscall; state body 0x00377740 calls via ILT 0x0001CD41 with ecx=this-0x10; identity-evidence=reverse/identity_evidence/00377060.md
 ?b_00377550@@YAXXZ,0x00377550,gen-thunk body
 ?b_00377740@@YAXXZ,0x00377740,gen-thunk body
 ?b_003779e0@@YAXXZ,0x003779E0,gen-thunk body
@@ -79871,6 +79873,7 @@ name,address,notes
 ?d_00329a80@@YAXXZ,0x00329A80,Address-only compatibility for withdrawn dump; native evaluateRva00329A80 body; dispatcher typed member cast and ILT0001034D JMP prove target; no semantic identity claim
 ?d_00329c20@@YAXXZ,0x00329C20,Address-only compatibility for withdrawn dump; native evaluateRva00329C20 body; dispatcher typed member cast and ILT0004318A JMP prove target; no semantic identity claim
 ?d_0032b190@@YAXXZ,0x0032B190,Address-only compatibility for withdrawn dump; native Rva0032B190Condition body; dispatcher typed member cast and ILT00033EBF JMP prove target; no semantic identity claim
+?d_0032c680@@YAXXZ,0x0032C680,Address-only compatibility for matched Rva0032D720Dispatcher condition176; ILT6537 routes to body32C680; implementation now ScriptConditionsRva0032C680.cpp
 ?d_003c9470@@YAXXZ,0x00033EBA,additive: retail call target of the red row ?updateStatus@Rva003C9530Owner@@QAE_NPAVRva003C9530Key@@PAV?$BitFlags@$0CN@@@@Z
 ?d_003f9140@@YAXXZ,0x003F9140,address-derived tail callee used by Rva003D5780
 ?d_006ccdb0@@YAXXZ,0x0001F2FD,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006D23C0 calls; autopin
@@ -86033,6 +86036,7 @@ name,address,notes
 ?rva00366A20IntrosortLoop@@YAXPAURva00364980HeapElement@@00HURva00364980HeapCompare@@@Z,0x0000AE61,REL32 introsort-loop target from 0x00366FE6
 ?rva0036B250ConditionsAt@AttributeModifierDefinitionStore@@QBE?AV?$BitFlags@$0BEA@@@H@Z,0x0001FAE6,ILT to body 0x0036B250; address-derived getter; body bounds-checks index against the definition-pointer vector at +8/+0xC exactly as the landed valueAt and secondaryValueAt then rep-movsd copies ten dwords from definition+0x1C into the hidden return else a zeroed 40-byte flags; thiscall ret8; caller bfmeUseXI 0x00369240 +9D passes TheAttributeModifierDefinitionStore in ecx and hands the result to Object clearAndSetModelConditionFlags ILT 95ED
 ?rva0036BB10FindCastleMemberBehavior@@YAPAVModule@@PBVObject@@@Z,0x0000E6E7,ProductionUpdate queueUpgrade behavior lookup thunk
+?rva00377060@CastleBehavior@@QAEXXZ,0x00377060,address-derived no-argument thiscall; state body 0x00377740 calls via ILT 0x0001CD41 with ecx=this-0x10; identity-evidence=reverse/identity_evidence/00377060.md
 ?rva0037F050@ExperienceLevelSystem@@QAEPAVExperienceLevelCollection@@PAVObject@@@Z,0x0037F050,System map lookup returns borrowed circular-list-like collection at mapped node+8; not a single ExperienceLevel; actual caller37F0F0 and next-level helper traversal prove ABI;campaign=luna36h-20260907;lane=finish;model=gpt-5.6-sol-ultra
 ?rva00380110@ExperienceLevelSystem@@QAEXPAVExperienceLevel@@PAVObject@@_N2@Z,0x00380110,Two named caller chains pass selected ExperienceLevel Object and two Bool flags; ret16 and Object tracker accesses prove nonowning member ABI;campaign=luna36h-20260907;lane=finish;model=gpt-5.6-sol-ultra
 ?rva003806D0@ExperienceLevelSystem@@QAEPAVExperienceLevel@@PAVExperienceLevelCollection@@ABVAsciiString@@@Z,0x003806D0,System member consumes borrowed collection and const AsciiString reference then returns selected borrowed ExperienceLevel; sentinel traversal and ret8 prove ABI;campaign=luna36h-20260907;lane=finish;model=gpt-5.6-sol-ultra
@@ -89051,5 +89055,3 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
-?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QBEPAV1@XZ,0x000C8A30,Const view of Team instance-list advance: retail 0032C680 calls ILT22A70 -> C8A30; complete 4B body reads this+14 and returns without mutation; independent Team.cpp prototype iteration uses same target and receiver
-?d_0032c680@@YAXXZ,0x0032C680,Address-only compatibility for matched Rva0032D720Dispatcher condition176; ILT6537 routes to body32C680; implementation now ScriptConditionsRva0032C680.cpp

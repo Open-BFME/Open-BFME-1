@@ -1,5 +1,7 @@
 // ?rva00558A30Ready@BfmeAptScreenOnlineQuickMatch@@QAE_NXZ
-// partial score=0.9 date=2026-09-19
+// BFME APT OnlineQuickMatch max-ping combo population helper, retail
+// 0x00558A30, 335 bytes. The matched update caller establishes the owner and
+// bool/no-argument ABI; the BFME-only split-helper method name remains unknown.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /FAsc /Fabuild/online_quick_match.cod
 typedef int Color;
 
@@ -69,8 +71,8 @@ extern int GadgetComboBoxAddEntry(
 	GameWindow *comboBox, UnicodeString text, int color );
 
 
-extern void rva00558A30Reset( GameWindow *comboBox );
-extern void rva00558A30SetSelectedPos(
+extern void GadgetComboBoxReset( GameWindow *comboBox );
+extern void GadgetComboBoxSetSelectedPos(
 	GameWindow *comboBox, int selected, bool dontHide );
 
 #pragma comment(linker, "/alternatename:?GadgetComboBoxAddEntryPopulateRemoteIPComboBox@@YAHPAVGameWindow@@VPopulateRemoteIPComboBoxEntry@@H@Z=?j_0002f338@@YAXXZ")
@@ -125,7 +127,7 @@ bool BfmeAptScreenOnlineQuickMatch::rva00558A30Ready()
 
 	color = GameSpyColor[ 0 ];
 	UnicodeString text;
-	rva00558A30Reset( view.m_maxPing );
+	GadgetComboBoxReset( view.m_maxPing );
 
 	maxPingEntries =
 		(TheGameSpyConfig->getPingTimeoutInMs() - 1) / 100;
@@ -149,27 +151,10 @@ bool BfmeAptScreenOnlineQuickMatch::rva00558A30Ready()
 		view.m_maxPing, TheGameText->fetch( "GUI:ANY" ), color );
 
 	int selected = view.m_preferences.getMaxPing();
-	if ( selected < 0 )
-		selected = 0;
-	if ( selected >= maxPingEntries )
+	if ( selected < 0 || selected >= maxPingEntries )
 		selected = maxPingEntries - 1;
-	rva00558A30SetSelectedPos(
+	GadgetComboBoxSetSelectedPos(
 		view.m_maxPing, selected, false );
 
 	return true;
-}
-
-void BfmeAptScreenOnlineQuickMatch::update()
-{
-	if ( !m_ready && rva005588E0Ready() && rva00558A30Ready()
-		&& rva00559E60Ready() )
-	{
-		m_ready = true;
-	}
-
-	if ( m_startRequested )
-	{
-		_bfme_sendStartQuickMatchRequest();
-		m_startRequested = false;
-	}
 }
