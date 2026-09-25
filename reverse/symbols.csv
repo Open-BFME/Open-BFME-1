@@ -89109,3 +89109,6 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ?invoke@Rva0004067ECall@@QAEXH@Z,0x0004067E,Object::defect at RVA 0x001D22C0 calls thunk 0x0004067E on its Drawable with mode zero. This name keeps the retail address and makes no semantic claim.
 ?setObjectID@BfmeAudioEventRTS@@QAEXI@Z,0x00019A6A,Object::defect at RVA 0x001D22C0 sets the copied audio event ID through thunk 0x00019A6A. The OpenContain::onContaining caller and AudioEventRTS setter pin identify the target.
 ?tryInfiltrationEvent@Radar@@QAEXPBVObject@@@Z,0x0000D805,Radar.cpp defines Radar::tryInfiltrationEvent with one const Object pointer. Object::defect reaches the body at RVA 0x001083D0 through thunk 0x0000D805.
+?Rva01306D88@@3IA,0x01306D88,Retail body 0x007A7D70 reads and writes global address 0x01306D88.
+?Rva01306D8C@@3IA,0x01306D8C,Retail body 0x007A7D70 reads and writes global address 0x01306D8C.
+?Rva01306D90@@3IA,0x01306D90,Retail body 0x007A7D70 tests a byte and sets bit 0 at global address 0x01306D90.
