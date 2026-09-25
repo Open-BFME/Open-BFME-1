@@ -31,18 +31,18 @@ private:
 bool BfmeFacingView::bfmeIsPositionAhead(
 	const Thing *origin, const Coord3D *position) const
 {
-	Coord3D offset;
-	offset.x = position->x;
-	offset.y = position->y;
-	const Thing *thing = m_thing;
-	offset.x -= origin->m_cachedPos.x;
-	offset.y -= origin->m_cachedPos.y;
-	if (thing != 0)
+	Coord3D positionOffset;
+	positionOffset.x = position->x;
+	positionOffset.y = position->y;
+	const Thing *facingThing = m_thing;
+	positionOffset.x -= origin->m_cachedPos.x;
+	positionOffset.y -= origin->m_cachedPos.y;
+	if (facingThing != 0)
 	{
-		Coord3D direction;
-		thing->getUnitDirectionVector2D(direction);
-		if (*(volatile float *)&offset.x * direction.x
-			+ *(volatile float *)&offset.y * direction.y < 0.0f)
+		Coord3D facingDirection;
+		facingThing->getUnitDirectionVector2D(facingDirection);
+		if (*(volatile float *)&positionOffset.x * facingDirection.x
+			+ *(volatile float *)&positionOffset.y * facingDirection.y < 0.0f)
 			return true;
 	}
 	return false;
