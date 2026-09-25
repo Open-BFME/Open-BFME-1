@@ -3420,7 +3420,7 @@ void TeamInQueue::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@TeamInQueue@@MAEXXZ present-unmatched
+// ?loadPostProcess@TeamInQueue@@MAEXXZ
 void TeamInQueue::loadPostProcess( void )
 {
 
