@@ -66,7 +66,7 @@ public:
 class Pathfinder
 {
 public:
-	Int bfmeLayerForPosition(Object *object, Coord3D position);
+	Int bfmeLayerForPosition(Object *object, Coord3D worldPosition);
 
 	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);
 	bool worldToCell(const Coord3D *position, ICoord2D *cell);
@@ -89,7 +89,7 @@ public:
 	PathfindLayer m_layers[16];
 };
 
-Int Pathfinder::bfmeLayerForPosition(Object *object, Coord3D position)
+Int Pathfinder::bfmeLayerForPosition(Object *object, Coord3D worldPosition)
 {
 	ICoord2D cell;
 	if (object != 0)
@@ -101,8 +101,8 @@ Int Pathfinder::bfmeLayerForPosition(Object *object, Coord3D position)
 		bfmeQuery(object, &cell.x, &center);
 		if (!center)
 		{
-			position.x += 5.0f;
-			position.y += 5.0f;
+			worldPosition.x += 5.0f;
+			worldPosition.y += 5.0f;
 		}
 	}
 
@@ -113,13 +113,13 @@ Int Pathfinder::bfmeLayerForPosition(Object *object, Coord3D position)
 		if (((PathfindLayer *)(bridge - 0x3c))->isUsed() &&
 			*(void **)bridge != 0)
 		{
-			if (!worldToCell(&position, &cell))
+			if (!worldToCell(&worldPosition, &cell))
 			{
 				PathfindCell *pathCell = getCell((PathfindLayerEnum)layer,
 					cell.x, cell.y);
 				if (pathCell != 0 && pathCell->getLayer() == layer &&
 					pathCell->getType() != 5 &&
-					*(Int *)(bridge + 4) - position.z < 25.0f)
+					*(Int *)(bridge + 4) - worldPosition.z < 25.0f)
 					return layer;
 			}
 		}
@@ -127,7 +127,7 @@ Int Pathfinder::bfmeLayerForPosition(Object *object, Coord3D position)
 		bridge += 0x44;
 	}
 
-	if (worldToCell(&position, &cell))
+	if (worldToCell(&worldPosition, &cell))
 		return LAYER_GROUND;
 	PathfindCell *pathCell = getGroundCell(cell.x, cell.y);
 	if (pathCell != 0)
