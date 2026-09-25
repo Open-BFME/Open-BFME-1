@@ -36,20 +36,20 @@ namespace _STL { template <> void _Construct(NoFlyZone *p, const NoFlyZone &val)
 class AerialPathfinder
 {
 public:
-	void addNoFlyZone(PolygonTrigger *pTrig, Real radius);
+	void addNoFlyZone(PolygonTrigger *trigger, Real zoneRadius);
 
 private:
 	char m_slice_pad[0x0C];					// retail this+0x00 .. +0x0B, untouched
 	_STL::list<NoFlyZone> m_noFlyZones;			// this+0x0C
 };
 
-void AerialPathfinder::addNoFlyZone(PolygonTrigger *pTrig, Real radius)
+void AerialPathfinder::addNoFlyZone(PolygonTrigger *trigger, Real zoneRadius)
 {
-	if (pTrig)
+	if (trigger)
 	{
 		NoFlyZone zone;
-		zone.m_trigger = pTrig;
-		zone.m_radius = radius;
+		zone.m_trigger = trigger;
+		zone.m_radius = zoneRadius;
 		m_noFlyZones.push_back(zone);
 	}
 }
