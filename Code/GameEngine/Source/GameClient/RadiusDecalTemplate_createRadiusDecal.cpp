@@ -90,9 +90,9 @@ class RenderObjClass;
 class ProjectedShadowManager
 {
 public:
-	virtual void _bfme_slot_00(void) = 0;
 	virtual ~ProjectedShadowManager();
-	virtual Shadow *addDecal(RenderObjClass *, ShadowTypeInfo *);
+	virtual void _bfme_slot_04(void) = 0;
+	virtual Shadow *addDecal(RenderObjClass *, ShadowTypeInfo *, int, int);
 	virtual Shadow *addDecal(ShadowTypeInfo *);
 };
 
