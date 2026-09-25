@@ -47,7 +47,7 @@ struct AdjustTargetInfo
 class Pathfinder
 {
 public:
-	Bool iterateCircular2(ICoord2D *centerCell, Int maxCells, void *adjustTargetInfoData);
+	Bool iterateCircular2(ICoord2D *scanCenterCell, Int remainingCellBudget, void *adjustTargetInfoData);
 
 protected:
 	friend struct AdjustTargetInfo;
@@ -62,80 +62,84 @@ __forceinline Bool AdjustTargetInfo::check(Int cellX, Int cellY) const
 		m_targetPosition, m_radius, m_centerInCell, m_destination);
 }
 
-Bool Pathfinder::iterateCircular2(ICoord2D *centerCell, Int maxCells, void *adjustTargetInfoData)
+Bool Pathfinder::iterateCircular2(ICoord2D *scanCenterCell, Int remainingCellBudget, void *adjustTargetInfoData)
 {
 	if (Glo012F0239 && TheCRCParameterCheck)
 	{
 		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 			"\t\tIterateCircular2 called with center=%d,%d, maxCells=%d",
-			centerCell->x, centerCell->y, maxCells);
+			scanCenterCell->x, scanCenterCell->y, remainingCellBudget);
 	}
 
-	AdjustTargetInfo *info = (AdjustTargetInfo *)adjustTargetInfoData;
-	if (info->check(centerCell->x, centerCell->y))
+	AdjustTargetInfo *targetSearch = (AdjustTargetInfo *)adjustTargetInfoData;
+	if (targetSearch->check(scanCenterCell->x, scanCenterCell->y))
 	{
 		return true;
 	}
 
-	Int bestDistSq = 0;
-	Int i = 0;
-	Int j = 0;
-	Int delta = 1;
+	Int bestOffsetDistanceSquared = 0;
+	Int cellOffsetX = 0;
+	Int cellOffsetY = 0;
+	Int ringExtent = 1;
 
-	while (maxCells > 0)
+	while (remainingCellBudget > 0)
 	{
-		maxCells -= 4 * delta + 2;
-		for (Int count = delta; count > 0; --count)
+		remainingCellBudget -= 4 * ringExtent + 2;
+		for (Int stepsRemaining = ringExtent; stepsRemaining > 0; --stepsRemaining)
 		{
-			++i;
-			if (bestDistSq == 0 || i * i + j * j < bestDistSq)
+			++cellOffsetX;
+			if (bestOffsetDistanceSquared == 0
+				|| cellOffsetX * cellOffsetX + cellOffsetY * cellOffsetY < bestOffsetDistanceSquared)
 			{
-				if (info->check(centerCell->x + i, centerCell->y + j))
+				if (targetSearch->check(scanCenterCell->x + cellOffsetX, scanCenterCell->y + cellOffsetY))
 				{
-					bestDistSq = i * i + j * j;
+					bestOffsetDistanceSquared = cellOffsetX * cellOffsetX + cellOffsetY * cellOffsetY;
 				}
 			}
 		}
 
-		for (Int count = delta; count > 0; --count)
+		for (Int stepsRemaining = ringExtent; stepsRemaining > 0; --stepsRemaining)
 		{
-			++j;
-			if (bestDistSq == 0 || i * i + j * j < bestDistSq)
+			++cellOffsetY;
+			if (bestOffsetDistanceSquared == 0
+				|| cellOffsetX * cellOffsetX + cellOffsetY * cellOffsetY < bestOffsetDistanceSquared)
 			{
-				if (info->check(centerCell->x + i, centerCell->y + j))
+				if (targetSearch->check(scanCenterCell->x + cellOffsetX, scanCenterCell->y + cellOffsetY))
 				{
-					bestDistSq = i * i + j * j;
+					bestOffsetDistanceSquared = cellOffsetX * cellOffsetX + cellOffsetY * cellOffsetY;
 				}
 			}
 		}
 
-		for (Int count = 0; count <= delta; ++count)
+		for (Int stepsRemaining = 0; stepsRemaining <= ringExtent; ++stepsRemaining)
 		{
-			--i;
-			if (bestDistSq == 0 || i * i + j * j < bestDistSq)
+			--cellOffsetX;
+			if (bestOffsetDistanceSquared == 0
+				|| cellOffsetX * cellOffsetX + cellOffsetY * cellOffsetY < bestOffsetDistanceSquared)
 			{
-				if (info->check(centerCell->x + i, centerCell->y + j))
+				if (targetSearch->check(scanCenterCell->x + cellOffsetX, scanCenterCell->y + cellOffsetY))
 				{
-					bestDistSq = i * i + j * j;
+					bestOffsetDistanceSquared = cellOffsetX * cellOffsetX + cellOffsetY * cellOffsetY;
 				}
 			}
 		}
 
-		for (Int count = 0; count <= delta; ++count)
+		for (Int stepsRemaining = 0; stepsRemaining <= ringExtent; ++stepsRemaining)
 		{
-			--j;
-			if (bestDistSq == 0 || i * i + j * j < bestDistSq)
+			--cellOffsetY;
+			if (bestOffsetDistanceSquared == 0
+				|| cellOffsetX * cellOffsetX + cellOffsetY * cellOffsetY < bestOffsetDistanceSquared)
 			{
-				if (info->check(centerCell->x + i, centerCell->y + j))
+				if (targetSearch->check(scanCenterCell->x + cellOffsetX, scanCenterCell->y + cellOffsetY))
 				{
-					bestDistSq = i * i + j * j;
+					bestOffsetDistanceSquared = cellOffsetX * cellOffsetX + cellOffsetY * cellOffsetY;
 				}
 			}
 		}
 
-		if (bestDistSq == 0)
+		if (bestOffsetDistanceSquared == 0)
 		{
-			delta += 2;
+			ringExtent += 2;
 		}
 		else
 		{
