@@ -264,18 +264,20 @@ extern PlayerList *ThePlayerList;
 class AIPlayer
 {
 protected:
-	static Int getPlayerSuperweaponValue(Coord3D *center, Int playerNdx, Real radius);
+	static Int getPlayerSuperweaponValue(Coord3D *searchCenter, Int playerIndex,
+		Real searchRadius);
 };
 
-Int AIPlayer::getPlayerSuperweaponValue(Coord3D *center, Int playerNdx, Real radius)
+Int AIPlayer::getPlayerSuperweaponValue(Coord3D *searchCenter, Int playerIndex,
+	Real searchRadius)
 {
-	if (radius < 4 * 10.0f)
-		radius = 4 * 10.0f;
+	if (searchRadius < 4 * 10.0f)
+		searchRadius = 4 * 10.0f;
 	Player::PlayerTeamList::const_iterator it;
 	Real cash = 0;
-	Real radSqr = radius * radius;
+	Real radSqr = searchRadius * searchRadius;
 
-	Player *pPlayer = ThePlayerList->getNthPlayer(playerNdx);
+	Player *pPlayer = ThePlayerList->getNthPlayer(playerIndex);
 	if (pPlayer == 0)
 		return 0;
 	for (it = pPlayer->getPlayerTeams()->begin();
@@ -301,12 +303,12 @@ Int AIPlayer::getPlayerSuperweaponValue(Coord3D *center, Int playerNdx, Real rad
 						continue;
 				}
 				Coord3D pos = *(pObj->getPosition());
-				Real dx = center->x - pos.x;
-				Real dy = center->y - pos.y;
+				Real dx = searchCenter->x - pos.x;
+				Real dy = searchCenter->y - pos.y;
 				if (dx * dx + dy * dy < radSqr)
 				{
 					Real dist = sqrt(dx * dx + dy * dy);
-					Real factor = 1.0f - (dist / (2 * radius));
+					Real factor = 1.0f - (dist / (2 * searchRadius));
 					Real cost = pObj->getTemplate()->calcCostToBuild(pPlayer);
 					if ((pObj->getTemplate()->m_kindof & 0x20000) != 0)
 						cost = cost / 10;
