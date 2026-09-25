@@ -3858,5 +3858,25 @@
   "after_sha256": "76cfc73d49d43b13069ed3f1270acef14cfca64be53edb6c1f7262819145d8dc",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank method name had no caller/vtable/string/ZH evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x001e9e60.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Weapon_setClipPercentFull.cpp",
+  "old_name": "getStatusAmmo",
+  "new_name": "rva001E9E60AmmoCount",
+  "before_sha256": "8c620a9f2d8adcf124e3d047647d9ccd188bca616b889da1b5ba9b1e207f1be3",
+  "after_sha256": "ebb7de8ae3097ce3b1f5c28bb976c8cd614fb9f093c01f289c088265911ec7c4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank-invented inline helper name with no evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x001e9e60.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Weapon_setClipPercentFull.cpp",
+  "old_name": "m_wslot",
+  "new_name": "m_dword0c",
+  "before_sha256": "8c620a9f2d8adcf124e3d047647d9ccd188bca616b889da1b5ba9b1e207f1be3",
+  "after_sha256": "ebb7de8ae3097ce3b1f5c28bb976c8cd614fb9f093c01f289c088265911ec7c4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BFME shifted Weapon fields (template at +4 not ZH +8) so ZH m_wslot at +0xc is not a witness"
  }
 ]
