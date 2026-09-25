@@ -11,7 +11,7 @@
 // the Zero Hour command surface, so the slot-only base below is intentional.
 //
 // bfmeAttackTarget goes the other way through the same base: when the unit is
-// not already in a state worth preserving (0x21 attack-move or 0x3d) it hands
+// not already in attack-move (state 0x21) or follow-path-3D (state 0x3d), it hands
 // the target back to AICommandInterface::aiAttackObject rather than driving the
 // state machine, and it reaches that method by casting `(char *)this + 0x20`
 // rather than through the base subobject. The cast is what retail's bytes want;
@@ -542,8 +542,8 @@ protected:
 	char m_to1d8[0x1d8 - 0x1a8];
 	void *m_field1d8;
 	char m_to27c[0x27c - 0x1dc];
-	AICommandParmsStorage m_field27c;
-	unsigned char m_field31c;
+	AICommandParmsStorage m_deferredCommandParameters;	// +0x27C, copied when dispatch is deferred
+	unsigned char m_hasDeferredCommand;			// +0x31C
 	char m_to335[0x335 - 0x31d];
 	unsigned char m_bfmeTargeting;
 	char m_to33a[0x33a - 0x336];
@@ -852,21 +852,28 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 	}
 	else
 	{
-		new (&m_field27c) AICommandParmsStorage(*parms);
-		m_field31c = 1;
+		new (&m_deferredCommandParameters) AICommandParmsStorage(*parms);
+		m_hasDeferredCommand = 1;
 	}
 }
 
 // ?bfmeAttackTarget@AIUpdateInterface@@QAEXPAVObject@@@Z
-// BFME target handoff: preserve a live attack/retaliate state, otherwise route
+// BFME target handoff: preserve attack-move or 3D follow-path, otherwise route
 // the target through the command interface; an already-owned state machine gets
 // its goal replaced under the retail lock protocol.
 void AIUpdateInterface::bfmeAttackTarget(Object *target)
 {
-	Int stateID = m_stateMachine->getCurrentStateID();
-	Bool preserve = stateID == 0x21 || stateID == 0x3d;
+	enum PreservedStateID
+	{
+		STATE_ATTACK_MOVE_TO_POSITION = 0x21,
+		STATE_FOLLOW_PATH_3D = 0x3D
+	};
 
-	if (!m_stateMachine->isInIdleState() && !preserve)
+	Int currentStateId = m_stateMachine->getCurrentStateID();
+	Bool preserveCurrentOrder = currentStateId == STATE_ATTACK_MOVE_TO_POSITION ||
+		currentStateId == STATE_FOLLOW_PATH_3D;
+
+	if (!m_stateMachine->isInIdleState() && !preserveCurrentOrder)
 	{
 		if (m_field34 == 0)
 		{

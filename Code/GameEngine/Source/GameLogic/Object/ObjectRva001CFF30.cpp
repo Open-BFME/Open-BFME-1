@@ -151,7 +151,7 @@ private:
 	unsigned char m_pad280[4];
 	void *m_weaponSet;						// +0x284
 	unsigned char m_pad288[0x36a - 0x288];
-	Bool m_reentryGuardAt0x36a;				// +0x36A
+	Bool m_isHandlingReciprocalAttackReentry;	// +0x36A
 };
 
 Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *target);
@@ -163,7 +163,7 @@ void Object::rva001cff30(Object *otherObject)
 	AIUpdateInterface *ai = m_ai;
 	if (ai == 0)
 		return;
-	if (m_reentryGuardAt0x36a)
+	if (m_isHandlingReciprocalAttackReentry)
 		return;
 	if (bfmeMeleeHordeTargetInvalid(this, otherObject))
 		return;
@@ -214,8 +214,8 @@ void Object::rva001cff30(Object *otherObject)
 
 	ai->bfmeAttackTarget(otherObject);
 	rva001c7200();
-	m_reentryGuardAt0x36a = true;
+	m_isHandlingReciprocalAttackReentry = true;
 	if (otherObject->getRelationship(this) == ENEMIES && !otherObject->isKindOf(KINDOF_MINE))
 		otherObject->rva001cff30(this);
-	m_reentryGuardAt0x36a = false;
+	m_isHandlingReciprocalAttackReentry = false;
 }
