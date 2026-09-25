@@ -139,9 +139,19 @@ public:
 	GlobalData11E0StringVec m_stringVec11E0;		// +0x11E0
 };
 
+class ScriptEngine
+{
+public:
+	Bool isTimeFast();					// ILT 0x0000A8A8 -> 0x00336FB0
+};
+
+extern "C" __declspec(dllimport) int __cdecl sprintf(char *buffer,
+	const char *format, ...);
+
 extern void *TheScriptDebugWindowDLL;				// 0x012F0758
 extern GlobalData *TheWritableGlobalData;			// 0x012ED5C8
 extern GameLogic *TheGameLogic;					// 0x012F0898
+extern ScriptEngine *TheScriptEngine;				// 0x012F076C
 
 // 0x012ED4D8 carries no ledger pin; the address-derived spelling already used
 // by Code/GameEngine/Source/Common/T3CommandLineParsers.cpp is kept.
@@ -194,10 +204,58 @@ static void _appendMessage(const AsciiString &str, Bool isTrueMessage,
 	}
 }
 
-// Scaffold, not a retail body: the only call site of the helper inside this TU,
-// which is what makes MSVC emit it at all and keep its private register-passed
-// first argument.  It goes away when the caller at 0x00340F10 is converted.
+// ?_adjustVariable@@YAXABVAsciiString@@H_N1@Z
+// Retail 0x0033EB70, 297 bytes: the Zero Hour twin at ScriptEngine.cpp:9389
+// (same "AdjustVariableAndPause"/"AdjustVariable" GetProcAddress pair and
+// "%d" formatting of the value).  BFME adds the same early-outs as
+// _appendMessage plus a TheScriptEngine->isTimeFast() guard, and a trailing
+// flag selecting "%d (%0.2f secs)" with the value scaled by 0.2.  Same private
+// convention: str live in EDI and no argument pop.
+static void _adjustVariable(const AsciiString &str, Int value,
+	Bool shouldPause, Bool showSeconds)
+{
+	if (g_flag12ED4D8)
+		return;
+	if (TheScriptEngine->isTimeFast())
+		return;
+	if (!TheScriptDebugWindowDLL)
+		return;
+
+	for (AsciiString *name = TheWritableGlobalData->m_stringVec11E0.begin();
+		 name != TheWritableGlobalData->m_stringVec11E0.end();
+		 ++name)
+	{
+		if (str.startsWith(*name))
+			return;
+	}
+
+	char buff[32];
+	if (showSeconds)
+		sprintf(buff, "%d (%0.2f secs)", value, value * 0.2f);
+	else
+		sprintf(buff, "%d ", value);
+
+	HMODULE module = TheScriptDebugWindowDLL;
+	if (!module)
+		return;
+
+	FARPROC proc;
+	if (shouldPause)
+		proc = GetProcAddress(module, "AdjustVariableAndPause");
+	else
+		proc = GetProcAddress(module, "AdjustVariable");
+	if (!proc)
+		return;
+
+	((void(__cdecl *)(const char *, const char *))proc)(str.str(), buff);
+}
+
+// Scaffold, not a retail body: the only call sites of the helpers inside this
+// TU, which is what makes MSVC emit them at all and keep their private
+// register-passed first argument.  They go away when the callers at
+// 0x00340F10, 0x00341350 and 0x0034B9A0 are converted.
 void Rva0033E9A0AppendMessageCallSite(const AsciiString &str)
 {
 	_appendMessage(str, true, false);
+	_adjustVariable(str, 0, false, false);
 }
