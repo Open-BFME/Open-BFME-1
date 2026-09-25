@@ -1,5 +1,3 @@
-// ?JoinDirectConnectGame@@YAXXZ
-// partial score=0.95 date=2026-09-22
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 
@@ -74,11 +72,14 @@ private:
 #include "GameClient/GadgetComboBox.h"
 #include "GameClient/GadgetTextEntry.h"
 
-// Retail's direct-connect body passes the BFME address pair to vtable slot 12.
+// Retail's direct-connect body passes the BFME address pair to vtable slot 12
+// as a temporary; a named local keeps its own frame slot and makes the frame
+// four bytes too big.
 // The caller ILT at 0x000208E7 names this body JoinDirectConnectGame; the
 // class owner is otherwise left unclaimed here.
 struct BfmeNetAddress
 {
+	BfmeNetAddress(UnsignedInt ip, UnsignedShort port) : m_ip(ip), m_port(port) {}
 	UnsignedInt m_ip;
 	UnsignedShort m_port;
 };
@@ -91,7 +92,7 @@ public:
 	BFME_SLOT(00) BFME_SLOT(01) BFME_SLOT(02) BFME_SLOT(03)
 	BFME_SLOT(04) BFME_SLOT(05) BFME_SLOT(06) BFME_SLOT(07)
 	BFME_SLOT(08) BFME_SLOT(09) BFME_SLOT(10) BFME_SLOT(11)
-	virtual void requestGameJoinDirectConnectAddress(BfmeNetAddress *address);
+	virtual void requestGameJoinDirectConnectAddress(const BfmeNetAddress &address);
 	BFME_SLOT(13) BFME_SLOT(14) BFME_SLOT(15) BFME_SLOT(16)
 	BFME_SLOT(17) BFME_SLOT(18) BFME_SLOT(19) BFME_SLOT(20)
 	BFME_SLOT(21) BFME_SLOT(22) BFME_SLOT(23)
@@ -156,8 +157,5 @@ void JoinDirectConnectGame()
 		name.removeLastChar();
 	TheLAN->RequestSetName(name);
 
-	BfmeNetAddress address;
-	address.m_ip = ipaddress;
-	address.m_port = 0x1f98;
-	TheLAN->requestGameJoinDirectConnectAddress(&address);
+	TheLAN->requestGameJoinDirectConnectAddress(BfmeNetAddress(ipaddress, 0x1f98));
 }
