@@ -360,10 +360,9 @@ Object *AIPlayer::findDozer(const Coord3D *searchPosition)
 					if (fallbackDozer && !dozerAI->isAnyTaskPending())
 					{
 						Real dozerDistanceSquared;
-						Real dx, dy;
-						dx = searchPosition->x - fallbackDozer->getPosition()->x;
-						dy = searchPosition->y - fallbackDozer->getPosition()->y;
-						dozerDistanceSquared = dx * dx + dy * dy;
+						Real deltaX = searchPosition->x - fallbackDozer->getPosition()->x;
+						Real deltaY = searchPosition->y - fallbackDozer->getPosition()->y;
+						dozerDistanceSquared = deltaX * deltaX + deltaY * deltaY;
 						if (closestIdleDozer == NULL)
 						{
 							closestIdleDozer = fallbackDozer;
