@@ -1,5 +1,3 @@
-// ?update@GiantBirdGuardInnerState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.97 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
 
 // GiantBirdGuardInnerState::update (0x002BD230): slot 6 of
@@ -8,7 +6,9 @@
 // (AIGuardInnerStateUpdate.cpp, whose views this reuses): restart flag, follow
 // the guarded object or team, run the attack state. It then gives up with
 // STATE_SUCCESS once the attack goal is gone or dead and the attack state
-// answers true at vtable +0x48, instead of rescanning.
+// answers true at vtable +0x48, instead of rescanning. The give-up test
+// null-checks the attack state as a value (?:), not as an && guard: MSVC then
+// keeps the reloaded pointer in ECX, as retail does, instead of the dead ESI.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -188,7 +188,7 @@ StateReturnType GiantBirdGuardInnerState::update( void )
 	Object *goal = m_attackState->getMachineGoalObject();
 	if (goal == 0 || goal->bfmePrivateStatusBit0())
 	{
-		if (m_attackState && m_attackState->bfmeStateSlot18())
+		if (m_attackState ? m_attackState->bfmeStateSlot18() : false)
 			return STATE_SUCCESS;
 	}
 
