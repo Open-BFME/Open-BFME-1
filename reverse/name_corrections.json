@@ -3478,5 +3478,35 @@
   "after_sha256": "32106adfabf990014d59897c18d5de2c25400f10391fc0d0ff937e69798185b1",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank method name had no caller vtable string or ZH twin evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x0090c950.cpp",
+  "new_path": "Code/GameEngine/Source/Common/BfmeNameVHN_bfmeIsRawVHN.cpp",
+  "old_name": "BfmeDescEQS",
+  "new_name": "Rva0090C950Desc",
+  "before_sha256": "3343bd1602ea3757c3811fd8629aca1921c04b311fe74bbc6d8788e7b02c97d1",
+  "after_sha256": "25972fbd4f6e9786d647e9a7272ce770e24b5c9daf55b4284998752f77ac31fb",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank-invented descriptor name with no evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x0090c950.cpp",
+  "new_path": "Code/GameEngine/Source/Common/BfmeNameVHN_bfmeIsRawVHN.cpp",
+  "old_name": "BfmeIfaceEQS",
+  "new_name": "Rva0090C950Iface",
+  "before_sha256": "3343bd1602ea3757c3811fd8629aca1921c04b311fe74bbc6d8788e7b02c97d1",
+  "after_sha256": "25972fbd4f6e9786d647e9a7272ce770e24b5c9daf55b4284998752f77ac31fb",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank-invented interface name with no caller/vtable/string evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x0090c950.cpp",
+  "new_path": "Code/GameEngine/Source/Common/BfmeNameVHN_bfmeIsRawVHN.cpp",
+  "old_name": "m_bfmeDevEQS",
+  "new_name": "m_dword8",
+  "before_sha256": "3343bd1602ea3757c3811fd8629aca1921c04b311fe74bbc6d8788e7b02c97d1",
+  "after_sha256": "25972fbd4f6e9786d647e9a7272ce770e24b5c9daf55b4284998752f77ac31fb",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "'Dev' (device) was a guess with no name_oracle/field witness"
  }
 ]
