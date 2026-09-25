@@ -44,11 +44,11 @@ public:
 	int cellCallback(PathfindCell *previousCell, PathfindCell *currentCell,
 		int currentCellX, int currentCellY);
 
-	Pathfinder *m_bfme00ABE;
-	int m_bfme04ABE;
-	float m_bfme08ABE;
-	float m_bfme0CABE;
-	float m_bfme10ABE;
+	Pathfinder *m_pathfinder;
+	int m_diameter;
+	float m_lastClearCellX;
+	float m_lastClearCellY;
+	float m_lastClearCellHeight;
 };
 
 int Rva003D61C0::cellCallback(PathfindCell *previousCell, PathfindCell *currentCell,
@@ -56,28 +56,28 @@ int Rva003D61C0::cellCallback(PathfindCell *previousCell, PathfindCell *currentC
 {
 	if (previousCell != 0)
 	{
-		int f1 = currentCell->getLayer();
+		int currentCellLayer = currentCell->getLayer();
 
-		if (f1 >= 2 && f1 <= 0xf)
+		if (currentCellLayer >= 2 && currentCellLayer <= 0xf)
 		{
-			if (previousCell->getLayer() == f1)
+			if (previousCell->getLayer() == currentCellLayer)
 				return 0;
 		}
 	}
 
-	if (m_bfme00ABE->clearCellForDiameter(0, currentCellX, currentCellY, currentCell->getLayer(),
-		m_bfme04ABE, 1) == m_bfme04ABE)
+	if (m_pathfinder->clearCellForDiameter(0, currentCellX, currentCellY, currentCell->getLayer(),
+		m_diameter, 1) == m_diameter)
 	{
-		int f = currentCell->getLayer();
+		int currentCellLayer = currentCell->getLayer();
 
-		float x = ((float)currentCellX + g_bfmeK1253) * g_bfmeDirectionWeight1285;
+		float terrainX = ((float)currentCellX + g_bfmeK1253) * g_bfmeDirectionWeight1285;
 
-		m_bfme08ABE = x;
+		m_lastClearCellX = terrainX;
 
-		float y = ((float)currentCellY + g_bfmeK1253) * g_bfmeDirectionWeight1285;
+		float terrainY = ((float)currentCellY + g_bfmeK1253) * g_bfmeDirectionWeight1285;
 
-		m_bfme0CABE = y;
-		m_bfme10ABE = TheTerrainLogic->bfmeHeightABE(x, y, f, 0, 1);
+		m_lastClearCellY = terrainY;
+		m_lastClearCellHeight = TheTerrainLogic->bfmeHeightABE(terrainX, terrainY, currentCellLayer, 0, 1);
 
 		return 0;
 	}
