@@ -46,7 +46,7 @@ extern const Real g_pathfindCellCenterBias;
 struct Coord3D
 {
 	Real x, y, z;
-	void set( const Coord3D *a ) { x = a->x; y = a->y; z = a->z; }
+	void set( const Coord3D *sourcePosition ) { x = sourcePosition->x; y = sourcePosition->y; z = sourcePosition->z; }
 };
 struct ICoord2D { Int x, y; };
 struct IRegion2D { ICoord2D lo, hi; };
@@ -137,7 +137,7 @@ private:
 class PathfindLayer
 {
 public:
-	PathfindCell *getCell( Int x, Int y );
+	PathfindCell *getCell( Int cellX, Int cellY );
 
 private:
 	unsigned char m_body[0x44];		// stride 0x44
