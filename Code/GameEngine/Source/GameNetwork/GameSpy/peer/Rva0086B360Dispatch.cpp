@@ -250,3 +250,41 @@ void Rva0086B2F0PrivateCallAnchor(char *text, piPlayer *player, int enabled)
 	if (enabled)
 		Rva0086B2F0(text, player);
 }
+
+// 0x0086B430, 305 bytes: channelMessage slot in piSetChannelCallbacks.
+extern "C" {
+	PEERBool piRoomToType(PEER peer, const char *channel, RoomType *roomType);
+	void piAddRoomMessageCallback(PEER peer, RoomType roomType, const char *nick, const char *message, int type);
+	void piAddRoomUTMCallback(PEER peer, RoomType roomType, const char *nick, const char *command, const char *parameters, PEERBool authenticated);
+}
+
+extern "C" void __declspec(noinline) __cdecl piChannelMessageA(
+	const char *chat, const char *channel, const char *nick, const char *message,
+	int type, void *param)
+{
+	PEER peer = (PEER)param;
+	RoomType roomType;
+	piPlayer *player;
+	(void)chat;
+	if (!piRoomToType(peer, channel, &roomType)) return;
+	player = piGetPlayer(peer, nick);
+	if (player && bfmeIsTag(0, message)) {
+		if (roomType != StagingRoom) return;
+		if (_strnicmp(message, "@@@GML", 6) == 0) {
+			if (strncmp(message + strlen(message) - 4, "/OLD", 4) == 0) return;
+			type = 3;
+			message = "GML";
+		} else {
+			if (_strnicmp(message, "@@@NFO", 6) == 0)
+				Rva0086B2F0((char *)message, player);
+			return;
+		}
+	} else if (type != 3 && type != 4) {
+		piAddRoomMessageCallback(peer, roomType, nick, message, type);
+		return;
+	}
+	if (piParseUTM(message)) {
+		if (player) piProcessUTM(peer, player, PEERTrue, roomType);
+		piAddRoomUTMCallback(peer, roomType, nick, piUTMCommand, piUTMParameters, type == 4);
+	}
+}
