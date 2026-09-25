@@ -49,7 +49,8 @@ public:
 class Path
 {
 public:
-	Real bfmeComputeFlightDistToGoal(const Coord3D *pos, Coord3D &goalPos);
+	Real bfmeComputeFlightDistToGoal(const Coord3D *currentPosition,
+		Coord3D &goalPosition);
 
 private:
 	unsigned char m_head[4];
@@ -60,29 +61,30 @@ private:
 };
 
 // ?bfmeComputeFlightDistToGoal@Path@@QAEMPBUCoord3D@@AAU2@@Z
-Real Path::bfmeComputeFlightDistToGoal(const Coord3D *pos, Coord3D &goalPos)
+Real Path::bfmeComputeFlightDistToGoal(const Coord3D *currentPosition,
+	Coord3D &goalPosition)
 {
 	if (m_path == 0)
 	{
-		goalPos.x = 0.0f;
-		goalPos.y = 0.0f;
-		goalPos.z = 0.0f;
+		goalPosition.x = 0.0f;
+		goalPosition.y = 0.0f;
+		goalPosition.z = 0.0f;
 		return 0.0f;
 	}
 
 	PathNode *curNode = m_path;
 	PathNode *nextNode = curNode->m_nextOptimized;
-	goalPos = curNode->m_position;
+	goalPosition = curNode->m_position;
 	Real distance = 0.0f;
 	Bool useNext = true;
 	while (nextNode)
 	{
 		if (useNext)
-			goalPos = nextNode->m_position;
+			goalPosition = nextNode->m_position;
 
 		Coord2D posToGoalVector;
-		posToGoalVector.x = nextNode->m_position.x - pos->x;
-		posToGoalVector.y = nextNode->m_position.y - pos->y;
+		posToGoalVector.x = nextNode->m_position.x - currentPosition->x;
+		posToGoalVector.y = nextNode->m_position.y - currentPosition->y;
 
 		Coord2D pathVector;
 		pathVector.x = nextNode->m_position.x - curNode->m_position.x;
