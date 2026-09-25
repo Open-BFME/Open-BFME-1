@@ -97,8 +97,8 @@ struct AdjustTargetInfo;
 // pathfinder in it, where Zero Hour's third field is exactly that.
 struct MADStruct
 {
-	Object *obj;										///< retail this+0x00
-	Int ignoreID;										///< retail this+0x04
+	Object *object;										///< retail this+0x00
+	Int ignoredObstacleID;								///< retail this+0x04
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
@@ -112,7 +112,7 @@ public:
 
 	bool adjustTargetDestination(const Object *object, const Object *target,
 		const Coord3D *targetPosition, const Weapon *weapon, Coord3D *destination);
-	void moveAlliesAwayFromDestination(Object *obj, const Coord3D &destination);
+	void moveAlliesAwayFromDestination(Object *object, const Coord3D &destination);
 
 protected:
 	friend struct AdjustTargetInfo;
@@ -171,19 +171,19 @@ bool Pathfinder::adjustTargetDestination(const Object *object, const Object *tar
 }
 
 // ?moveAlliesAwayFromDestination@Pathfinder@@QAEXPAVObject@@ABUCoord3D@@@Z
-void Pathfinder::moveAlliesAwayFromDestination(Object *obj,const Coord3D& destination)
+void Pathfinder::moveAlliesAwayFromDestination(Object *object,const Coord3D& destination)
 {
-	PathfindLayerEnum layer = (PathfindLayerEnum)obj->getLayer();
+	PathfindLayerEnum layer = (PathfindLayerEnum)object->getLayer();
 	if (layer==LAYER_GROUND) {
-		layer = TheTerrainLogic->getLayerForDestination(obj, &destination);
+		layer = TheTerrainLogic->getLayerForDestination(object, &destination);
 	}
 
 	MADStruct info;
-	info.obj = obj;
-	info.ignoreID = obj->getAI()->getIgnoredObstacleID();
+	info.object = object;
+	info.ignoredObstacleID = object->getAI()->getIgnoredObstacleID();
 
 	ICoord2D from, to;
-	worldToCell(obj->getPosition(), &from);
+	worldToCell(object->getPosition(), &from);
 	worldToCell(&destination, &to);
 	iterateCellsAlongLine(&from, &to, layer, &info);
 
