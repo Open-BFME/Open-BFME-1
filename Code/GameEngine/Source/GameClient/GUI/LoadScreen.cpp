@@ -2003,7 +2003,7 @@ MapTransferLoadScreen::~MapTransferLoadScreen( void )
 	m_timeoutText = NULL;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/MapTransferLoadScreenInitThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/LoadScreenInit.cpp
 // ?init@MapTransferLoadScreen@@ present-unmatched
 void MapTransferLoadScreen::init( GameInfo *game )
 {
