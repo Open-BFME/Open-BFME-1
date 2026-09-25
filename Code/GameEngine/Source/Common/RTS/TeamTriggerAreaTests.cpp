@@ -3,6 +3,7 @@
 // Every Team question that is answered by walking the member list and asking
 // each member where it is relative to a trigger area:
 //
+//   0x000F5580  didAllEnter            265B  evaluateTeamEnteredAreaEntirely
 //   0x000F56D0  didPartialEnter        191B  evaluateTeamEnteredAreaPartially
 //   0x000F57C0  didPartialExit         191B  evaluateTeamExitedAreaPartially
 //   0x000F58B0  didAllExit             297B  evaluateTeamExitedAreaEntirely
@@ -134,6 +135,7 @@ public:
 	Bool hasAnyObjects(Bool bfmeFlag) const;
 	Bool didPartialEnter(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;
 	Bool didPartialExit(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;
+	Bool didAllEnter(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;
 	Bool didAllExit(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;
 	Bool allInside(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;
 	Bool noneInside(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const;
@@ -222,6 +224,45 @@ Bool Team::didPartialExit(PolygonTrigger *pTrigger, UnsignedInt whichToConsider)
 			return true;
 	}
 	return false;
+}
+
+// ?didAllEnter@Team@@QBE_NPAVPolygonTrigger@@I@Z
+// Zero Hour's body as written: any member that entered, and none still
+// outside. Like the partial bodies it applies only the first KindOf skip.
+Bool Team::didAllEnter(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const
+{
+	if (!m_enteredOrExited)
+		return false;
+
+	Bool entered = false;
+	Bool outside = false;
+	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
+	{
+		Object *cur = iter.cur();
+		void *ai = ((BfmeObjectInsideView *)cur)->m_ai;
+		if (ai)
+		{
+			if ((((BfmeAISurfacesView *)ai)->m_surfaces
+				& ((whichToConsider & 1) | ((whichToConsider & 2) << 2))) == 0)
+				continue;
+		}
+		else if ((whichToConsider & 1) == 0)
+			continue;
+
+		if ((((BfmeObjectInsideView *)cur)->m_dead & 1) != 0)
+			continue;
+
+		ThingTemplate *tmpl = (ThingTemplate *)bfmeFinalTemplate(cur);
+		if ((tmpl->m_kindOf2 & 0x01000000) != 0)
+			continue;
+
+		if (((BfmeObjectInsideView *)cur)->didEnter(pTrigger))
+			entered = true;
+		else if (!((BfmeObjectInsideView *)cur)->isInside(pTrigger))
+			outside = true;
+	}
+
+	return entered && !outside;
 }
 
 // ?didAllExit@Team@@QBE_NPAVPolygonTrigger@@I@Z

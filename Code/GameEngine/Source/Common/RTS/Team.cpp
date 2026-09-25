@@ -2629,53 +2629,7 @@ void Team::notifyTeamOfObjectDeath( void )
 	TheScriptEngine->runScript(pInfo->m_scriptOnUnitDestroyed, this);
 }
 
-// ------------------------------------------------------------------------
-Bool Team::didAllEnter(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const
-{
-	// If any units entered or exited, they set this flag.
-	if (!*(const Bool *)((const char *)this + 0x30)) return false;
-	volatile Int bfmeFramePad[ 1 ];
-	bfmeFramePad[ 0 ] = 0;
 
-	Bool anyConsidered = false;
-	Bool entered = false;
-	Bool outside = false;
-	for (DLINK_ITERATOR<Object> iter = iterate_TeamMemberList(); !iter.done(); iter.advance())
-	{
-		AIUpdateInterface *ai = iter.cur()->getAIUpdateInterface();
-		if (ai) {
-			const LocomotorSet& locoSet = ai->getLocomotorSet();
-			{
-				if (!locoSetMatches(locoSet.getValidSurfaces(), whichToConsider)) {
-					continue;
-				}
-			}
-		} else {
-			// things without ai should consider themselves ground units
-			if (!locoSetMatches(LOCOMOTORSURFACE_GROUND, whichToConsider)) {
-				continue;
-			}
-		}
-
-		if (iter.cur()->isEffectivelyDead())
-			continue;
-		
-		if (iter.cur()->isKindOf(KINDOF_INERT))
-			continue;
-
-		if (iter.cur()->didEnter(pTrigger)) {
-			entered = true;
-		} else {
-			if (!iter.cur()->isInside(pTrigger)) {
-				outside = true;
-			}
-		}
-
-		// We need this in order to prevent this from returning a false positive
-		anyConsidered = true;
-	}
-	return entered && !outside;
-}
 
 // ------------------------------------------------------------------------
 Bool Team::didPartialEnter(PolygonTrigger *pTrigger, UnsignedInt whichToConsider) const
