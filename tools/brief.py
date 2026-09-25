@@ -199,12 +199,15 @@ def lift_lines(r):
              f"`python3 tools/add_match.py NAME 0xSTART SIZE SOURCE --replace-existing --model MODEL`, and delete the naked "
              f"function (the whole lift file when nothing else lives in it); precedent 33110b4b40. "
              f"The name came with the lift: confirm it from callers/vtable/ZH before landing. "
-             f"NAME must be the ledger's name exactly as written ({r['name']})"
-             + ("; it is truncated, so either keep it and pass --notes \"object-symbol=<full mangled "
-                "name>\", or land the full (or corrected) name with `--replace-rva 0xRVA "
-                "--correct-identity <ledger name> --identity-evidence reverse/identity_evidence/<rva>.md` "
-                "instead of --replace-existing"
-                if r["name"].endswith("@@") else "") + "."]
+             + (f"The ledger name {r['name']} is a truncated decoration: pass the FULL mangled name "
+                f"to --replace-existing and it completes the row (a DIFFERENT name needs --replace-rva "
+                f"--correct-identity --identity-evidence)." if r["name"].endswith("@@") else "")]
+    homes = lift_lane.class_homes(r["name"])
+    if homes:
+        lines.append("    CLASS HOME: landed methods of this class live in "
+                     + "; ".join(f"{src} ({n})" for src, n in homes)
+                     + " -- prefer the one whose cl: line and layout already match BFME; the readable-body "
+                       "comment may name a Zero Hour-layout TU that cannot hold this body.")
     for warning in lift_lane.identity_warnings(r["name"], int(r["target_rva"], 16), int(r["target_size"])):
         lines.append(f"    IDENTITY CHECK: {warning}.")
     fix = lift_lane.correction_for(r)

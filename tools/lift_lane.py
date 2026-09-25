@@ -276,6 +276,46 @@ def identity_warnings(name, rva, size, reader=read):
             "vtable slot) before porting"]
 
 
+_SPECIAL_RE = re.compile(r"^\?\?(?:_[0-9A-Z]|[0-9A-Z])([A-Za-z_]\w*)@")   # ??0 ctor, ??1 dtor, ??_G ...
+_MEMBER_RE = re.compile(r"^\?([A-Za-z_]\w*)@([A-Za-z_]\w*)@")
+
+
+def class_of(name):
+    """Owning class of a decorated member name, else None (free functions)."""
+    m = _SPECIAL_RE.match(name or "")
+    if m:
+        return m.group(1)
+    m = _MEMBER_RE.match(name or "")
+    return m.group(2) if m else None
+
+
+@lru_cache(maxsize=1)
+def _class_index():
+    """{class: Counter(source)} over landed real C++ (no lifts, dumps or gen)."""
+    from collections import Counter, defaultdict
+    import eligibility
+
+    index = defaultdict(Counter)
+    rows = eligibility.load_rows()
+    lifts = set(lift_rows(rows))
+    for row in rows:
+        source = row.get("source", "")
+        if (row.get("status") != "matched" or not source.endswith((".cpp", ".c"))
+                or source.startswith("Code/gen_") or (row["name"], row["target_rva"]) in lifts
+                or build.is_scaffold_row(row)):
+            continue
+        cls = class_of(row["name"])
+        if cls:
+            index[cls][source] += 1
+    return index
+
+
+def class_homes(name, limit=3):
+    """[(source, landed rows)] where this class's landed methods already live."""
+    cls = class_of(name)
+    return _class_index().get(cls, {}).most_common(limit) if cls else []
+
+
 SCAN_LIMIT = 0x10000
 # 61,015 of 61,018 landed C++ bodies that follow int3 padding start on a
 # 16-byte boundary (measured 2026-09-25), so a padding run is only a function

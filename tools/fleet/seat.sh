@@ -55,8 +55,30 @@ run_engine() {  # $1 brief, $2 log
     sleep "${FLEET_BACKOFF_OVERRIDE:-$wait}"
   else
     FAST_FAILS=0
+    dry_check
   fi
   return "$rc"
+}
+
+# A seat whose sessions land nothing and bank nothing is writing `blocked`
+# rows for their own sake: on 2026-09-25 one host made 727 commits that added
+# 28 ledger lines. After FLEET_DRY_LIMIT such sessions in a row (default 3;
+# 0 disables) the seat pauses FLEET_DRY_PAUSE seconds (default 1800) so the
+# queue can move on; one landing or bank resets the streak.
+DRY=0
+dry_check() {
+  [ "${FLEET_DRY_LIMIT:-3}" -gt 0 ] || return 0
+  local verdict
+  verdict=$(python tools/fleet/session_yield.py --engine "$ENGINE" --seat "$SEAT" 2>/dev/null)
+  case $? in
+    0) DRY=0 ;;
+    1) DRY=$((DRY + 1))
+       if [ "$DRY" -ge "${FLEET_DRY_LIMIT:-3}" ]; then
+         echo "$(date '+%H:%M') seat $ENGINE$SEAT dry streak $DRY ($verdict); pausing ${FLEET_DRY_PAUSE:-1800}s" >> build/fleet_logs/seats.log
+         sleep "${FLEET_DRY_PAUSE:-1800}"
+         DRY=0
+       fi ;;
+  esac
 }
 
 while true; do

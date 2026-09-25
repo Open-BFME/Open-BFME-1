@@ -62,6 +62,9 @@ for checker in tools/name_regression.py tools/name_oracle.py; do
         || fail "name checker differs from staged snapshot: $checker; stage or revert its edits"
 done
 python3 tools/name_regression.py HEAD : || fail "descriptive names regressed (see above)"
+# A three-body edit must not ride on a whole-file line-ending rewrite (mixed-
+# terminator sources under core.autocrlf=true lose every CR on `git add`).
+python3 tools/eol_guard.py || fail "staged change rewrites line endings (see above)"
 # A deliberately deleted file may not come back by accident (reverse/retired_paths.txt).
 python3 tools/retired_guard.py --staged || fail "retired path re-added (see above)"
 

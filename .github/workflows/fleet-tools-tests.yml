@@ -69,3 +69,4 @@ jobs:
           tools/tests/test_verdict_tags.py
           tools/tests/test_b_pin_check.py
           tools/tests/test_dedup_csv_cli.py
+          tools/tests/test_session_tooling.py

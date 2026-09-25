@@ -283,3 +283,31 @@ def test_replace_existing_tombstones_only_when_the_identity_key_moves(
     if expect_tombstone:
         assert tombstones[0][:2] == [REAL, "0x00ABCD00"]
         assert "0x00ABCE00/32B" in tombstones[0][2]
+
+
+def test_replace_existing_completes_a_truncated_lift_name(tmp_path, monkeypatch):
+    # 36 named __emit lifts carry decorations like ?init@ShellGameLoadScreen@@;
+    # the converter passes the full mangled name and must still find the row.
+    lift = ("?realBody@Thing@@,,0x00ABCD00,32,Code/GameEngine/Source/Common/ThingThunk.cpp,"
+            "matched,object-symbol=_bfme_Thing_realBody")
+    functions, deleted, _source = arrange(tmp_path, monkeypatch, gate=0, scaffold=lift)
+    monkeypatch.setattr(sys, "argv", [
+        "add_match.py", REAL, "0x00ABCD00", "32", SOURCE_REL,
+        "--replace-existing", "--root", str(tmp_path)])
+    add_match.main()
+    ledger = functions.read_text(encoding="utf-8")
+    assert f"{REAL},," in ledger and "?realBody@Thing@@,," not in ledger
+    assert "completes-decoration=?realBody@Thing@@" in ledger
+    tombstone = list(csv.reader(io.StringIO(deleted.read_text(encoding="utf-8"))))[-1]
+    assert tombstone[:2] == ["?realBody@Thing@@", "0x00ABCD00"]
+
+
+def test_replace_existing_does_not_complete_a_name_at_another_address(tmp_path, monkeypatch):
+    lift = ("?realBody@Thing@@,,0x00ABCE00,32,Code/GameEngine/Source/Common/ThingThunk.cpp,"
+            "matched,")
+    arrange(tmp_path, monkeypatch, gate=0, scaffold=lift)
+    monkeypatch.setattr(sys, "argv", [
+        "add_match.py", REAL, "0x00ABCD00", "32", SOURCE_REL,
+        "--replace-existing", "--root", str(tmp_path)])
+    with pytest.raises(SystemExit):
+        add_match.main()

@@ -447,6 +447,18 @@ def main():
                  "this replacement already preserves the scaffold extent")
         replaced = at_rva[0]
     if args.replace_existing:
+        if not claims:
+            # 36 named __emit lifts carry a truncated decoration such as
+            # ?init@ShellGameLoadScreen@@: the full mangled name matched no row,
+            # so converters fell back to object-symbol= notes or an identity
+            # correction for what is only the rest of the same decoration.
+            claims = [row for row in rows
+                      if row["rva"] == rva and row["status"] == "matched"
+                      and row["name"].endswith("@@") and len(name) > len(row["name"])
+                      and name.startswith(row["name"])]
+            if len(claims) == 1:
+                args.notes = (f"{args.notes};completes-decoration={claims[0]['name']}"
+                              if args.notes else f"completes-decoration={claims[0]['name']}")
         if len(claims) != 1:
             fail(f"--replace-existing requires exactly one existing row for {name}; "
                  f"found {len(claims)}")

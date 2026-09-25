@@ -14,7 +14,7 @@ change does not replace a shell that is already executing an older copy.
 | Script | Role |
 |---|---|
 | `launch_fleet.sh N B F M A R C K` | start N file-lane, B big-body, F finish-lane, M mid-lane, A anonymous-lane, R reviewer, C class-lane and K blocker-lane seats plus the watchdog and harvest loop (defaults `6 0 0 14 11 2 4 1`; the finish lane is off since 2026-09-25, its capped pool is empty) |
-| `seat.sh ENGINE SEAT` | one seat loop; engines `luna`, `lunamid`, `lunaclass`, `lunablock`, `lunafin`, `lunabig`, `lunaanon`, `lunareview`, `lunaxhigh*`, `solhigh*`, `grok*`; SESSION_CAP default 150 min; a session that fails inside `FLEET_ABORT_SECONDS` (300) backs the seat off 60 s doubling to 30 min (30 min at once on a usage-limit message) |
+| `seat.sh ENGINE SEAT` | one seat loop; engines `luna`, `lunamid`, `lunaclass`, `lunablock`, `lunafin`, `lunabig`, `lunaanon`, `lunareview`, `lunaxhigh*`, `solhigh*`, `grok*`; SESSION_CAP default 150 min; a session that fails inside `FLEET_ABORT_SECONDS` (300) backs the seat off 60 s doubling to 30 min (30 min at once on a usage-limit message); after `FLEET_DRY_LIMIT` (3) sessions in a row that land nothing and bank nothing (`session_yield.py`, by run id) the seat pauses `FLEET_DRY_PAUSE` (1800 s) |
 | `pick_file.py` | select a dump file, ordered by landed-neighbour density (46.5% vs 19.5% land rate) |
 | `pick_big.py` | select one large body (1000..2500 B), fewest prior attempts first then largest; the `*big` seat stays on it for up to 3 sessions while its stash keeps changing |
 | `pick_mid.py` | select 3 bodies of 300..2500 B, largest first, from the file with the densest landed C++ neighbourhood; skips boundary suspects |

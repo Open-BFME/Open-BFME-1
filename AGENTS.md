@@ -114,6 +114,9 @@ shared header edit costs a full gate: edit every dependent body, pay once.
    poll it; never launch a duplicate build.
 3. Stage explicit paths only: `git add <specific-paths>`, never `git add .`.
    Check every new ledger source is tracked.
+   A source with mixed line endings loses every CR under `core.autocrlf=true`
+   when rewritten or plainly added; `tools/eol_guard.py` refuses that rewrite in
+   pre-commit -- stage it with `git -c core.autocrlf=false add <file>`.
 3b. **A green byte-match says nothing about the NAME.** A pin on the wrong
    function still compiles to retail's bytes, so no other check can see that
    class of defect. Five detectors find it, and the commit hook now runs the three
