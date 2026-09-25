@@ -33,13 +33,14 @@ public:
 extern PathfindCellInfo *g_bfmePathfindFreeList;
 
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
-	PathfindCellInfo **freeList, PathfindCell *cell, const ICoord2D *pos);
+	PathfindCellInfo **freeListHead, PathfindCell *pathfindCell,
+	const ICoord2D *cellPosition);
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell
 {
 public:
-	void setPosUnit(unsigned int unitID, const ICoord2D &pos);
+	void setPosUnit(unsigned int positionUnitID, const ICoord2D &cellPosition);
 
 private:
 	PathfindCellInfo *m_info;
@@ -47,13 +48,13 @@ private:
 	unsigned int m_packed;
 };
 
-void PathfindCell::setPosUnit(unsigned int unitID, const ICoord2D &pos)
+void PathfindCell::setPosUnit(unsigned int positionUnitID, const ICoord2D &cellPosition)
 {
-	if (unitID == 0)
+	if (positionUnitID == 0)
 	{
 		if (m_info)
 		{
-			m_info->m_posUnitID = unitID;
+			m_info->m_posUnitID = positionUnitID;
 			if (m_info->m_goalUnitID == 0)
 			{
 				m_packed &= ~0x38u;
@@ -71,12 +72,12 @@ void PathfindCell::setPosUnit(unsigned int unitID, const ICoord2D &pos)
 		{
 			if (g_bfmePathfindFreeList == 0)
 				PathfindCellInfo::allocateCellInfos();
-			m_info = bfmeAcquirePathfindCellInfo(&g_bfmePathfindFreeList, this, &pos);
+			m_info = bfmeAcquirePathfindCellInfo(&g_bfmePathfindFreeList, this, &cellPosition);
 		}
 		if (m_info->m_goalUnitID != 0 && m_info->m_goalUnitID == m_info->m_posUnitID)
 			return;
-		m_info->m_posUnitID = unitID;
-		if (unitID == m_info->m_goalUnitID)
+		m_info->m_posUnitID = positionUnitID;
+		if (positionUnitID == m_info->m_goalUnitID)
 			m_packed = (m_packed & ~0x20u) | 0x18u;
 		else if (m_info->m_goalUnitID == 0)
 			m_packed = (m_packed & ~0x28u) | 0x10u;
