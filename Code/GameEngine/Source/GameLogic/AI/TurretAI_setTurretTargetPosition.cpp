@@ -117,7 +117,7 @@ public:
 class TurretAI
 {
 public:
-	void setTurretTargetPosition(const Coord3D *pos);
+	void setTurretTargetPosition(const Coord3D *targetPosition);
 
 private:
 	void *m_vptr;
@@ -134,11 +134,11 @@ private:
 };
 
 // ?setTurretTargetPosition@TurretAI@@QAEXPBUCoord3D@@@Z
-void TurretAI::setTurretTargetPosition(const Coord3D *pos)
+void TurretAI::setTurretTargetPosition(const Coord3D *targetPosition)
 {
 	WeaponSlotType wslot;
-	if (!pos || !m_owner->getCurrentWeapon(&wslot) || (m_data->m_turretWeaponSlots & (1 << wslot)) == 0)
-		pos = 0;
+	if (!targetPosition || !m_owner->getCurrentWeapon(&wslot) || (m_data->m_turretWeaponSlots & (1 << wslot)) == 0)
+		targetPosition = 0;
 
 	if (m_target == TARGET_OBJECT && m_turretStateMachine)
 	{
@@ -153,13 +153,13 @@ void TurretAI::setTurretTargetPosition(const Coord3D *pos)
 	}
 
 	m_turretStateMachine->setGoalObject(0);
-	if (pos)
-		m_turretStateMachine->setGoalPosition(pos);
-	m_target = pos ? TARGET_POSITION : TARGET_NONE;
+	if (targetPosition)
+		m_turretStateMachine->setGoalPosition(targetPosition);
+	m_target = targetPosition ? TARGET_POSITION : TARGET_NONE;
 	m_targetWasSetByIdleMood = 0;
 
 	StateID sid = m_turretStateMachine->getCurrentStateID();
-	if (pos)
+	if (targetPosition)
 	{
 		if (sid != TURRETAI_AIM && sid != TURRETAI_FIRE)
 			m_turretStateMachine->setState(TURRETAI_AIM);
