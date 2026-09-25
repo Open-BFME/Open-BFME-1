@@ -89113,3 +89113,4 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ?Rva01306D8C@@3IA,0x01306D8C,Retail body 0x007A7D70 reads and writes global address 0x01306D8C.
 ?Rva01306D90@@3IA,0x01306D90,Retail body 0x007A7D70 tests a byte and sets bit 0 at global address 0x01306D90.
 ?isStealthedAndUndetected@Object@@QBE_NPBVPlayer@@@Z,0x00003B1B,typed Player-viewer ABI for the matched stealth visibility query body
+??4TerrainType@@QAEAAV0@ABV0@@Z,0x0001A00A,ILT jmp to body 0x000A8490 (sole caller newTerrain 0x000A8680+0x6A); ZH TerrainTypes.cpp newTerrain *terrain = *defaultTerrain after findTerrain; ecx=new TerrainType from ctor 0x000A82F0 and one pushed TerrainType* arg; body ret 4 returning this; vptr-skipping memberwise copy from +0x04
