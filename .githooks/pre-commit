@@ -173,6 +173,13 @@ python3 tools/check_csv.py --staged || fail "ledger integrity (see above)"
 if [ "$ledger_changed" -ne 0 ]; then
     python3 tools/pin_consistency.py --check || fail "pin consistency (see above)"
 fi
+# 1c) Every b_<rva>() a compiled source calls keeps its ?b_<rva>@@YAXXZ pin.
+#     a8ad18240f replaced one with the target's real name instead of adding the
+#     name beside it; check_csv, pin_consistency and one_identity all passed and
+#     the full gate went red. No compiler, ~1.5s.
+if [ "$ledger_changed" -ne 0 ] || [ "${#staged_sources[@]}" -ne 0 ]; then
+    python3 tools/b_pin_check.py --staged || fail "a b_<rva> call lost its pin (see above)"
+fi
 # The baseline is a debt register that may only shrink. --write-baseline refuses
 # to grow it, but a hand-typed line is the same anti-pattern, so the committed
 # file is checked against HEAD as well.

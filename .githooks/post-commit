@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# After a commit -- in practice after `git cherry-pick`, the one commit path
+# that runs this hook but not pre-commit. Re-check the ledgers when the new
+# commit touched them. A rebase in progress is skipped here: post-rewrite
+# checks once when it ends. A post hook cannot block; it warns.
+set -uo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+GIT_DIR="$(git rev-parse --git-dir)"
+[ -d "$GIT_DIR/rebase-merge" ] || [ -d "$GIT_DIR/rebase-apply" ] && exit 0
+
+if git diff-tree --no-commit-id --name-only -r HEAD 2>/dev/null \
+        | grep -qE '^reverse/(functions|symbols|deleted_rows)\.csv$|^Code/.*\.cpp$'; then
+    python3 tools/ledger_after_rewrite.py "post-commit" || true
+fi
+exit 0

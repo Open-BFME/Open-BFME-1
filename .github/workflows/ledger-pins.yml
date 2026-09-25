@@ -1,0 +1,43 @@
+name: Ledger pin check
+
+# The compiler-free half of the ledger gate, for pushes that skipped the local
+# hooks: a8ad18240f was pushed without pre-push, replaced ?b_0053dfc0@@YAXXZ
+# with a real name instead of adding the name beside it, and left the full
+# gate red. check_csv, pin_consistency and one_identity all passed on it;
+# tools/b_pin_check.py catches it from git objects alone, no checkout of Code/.
+on:
+  push:
+    branches: [master]
+    paths:
+      - 'Code/**'
+      - 'reverse/functions.csv'
+      - 'reverse/symbols.csv'
+      - 'tools/b_pin_check.py'
+      - '.github/workflows/ledger-pins.yml'
+  pull_request:
+    paths:
+      - 'Code/**'
+      - 'reverse/functions.csv'
+      - 'reverse/symbols.csv'
+      - 'tools/b_pin_check.py'
+      - '.github/workflows/ledger-pins.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  b-pins:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            tools/b_pin_check.py
+          sparse-checkout-cone-mode: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Every b_<rva>() call keeps its pin
+        run: python tools/b_pin_check.py --ref HEAD

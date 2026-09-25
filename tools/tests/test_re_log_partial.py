@@ -30,6 +30,8 @@ def log(tmp_path, monkeypatch):
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text("", encoding="utf-8")
     monkeypatch.setattr(re_log, "RE_ATTEMPTS", path)
+    # every verdict names its model (fleet_run exports BFME_MODEL for workers)
+    monkeypatch.setenv("BFME_MODEL", "test-model")
     re_log._reset()
     try:
         yield path
@@ -90,7 +92,7 @@ def test_stash_round_trips_through_its_header(log, tmp_path):
     """record --stash banks the body; stash_for is the only reader of it."""
     body = tmp_path / "attempt.cpp"
     body.write_text("void Sym() { return; }\n", encoding="utf-8")
-    assert record(SYM, "0x00401000", "16", "partial", "92%, arm order",
+    assert record(SYM, "0x00401000", "16", "partial", "92%, arm order blocker=other/test",
                   "--stash", str(body), "--score", "0.92") is None
 
     found = re_log.stash_for(RVA)
@@ -129,7 +131,7 @@ def test_refusals_are_loud(log, tmp_path, args, expect):
     body = tmp_path / "attempt.cpp"
     body.write_text("void Sym() {}\n", encoding="utf-8")
     full = args if "--stash" in args else ("--stash", str(body)) + args
-    refusal = record(SYM, "0x00401000", "16", "partial", "evidence", *full)
+    refusal = record(SYM, "0x00401000", "16", "partial", "evidence blocker=other/test", *full)
     assert refusal is not None, f"accepted {full}"
     assert expect in refusal, refusal
 
@@ -138,7 +140,7 @@ def test_empty_body_is_refused(log, tmp_path):
     """An empty stash banks nothing while looking like evidence."""
     body = tmp_path / "empty.cpp"
     body.write_text("", encoding="utf-8")
-    refusal = record(SYM, "0x00401000", "16", "partial", "evidence",
+    refusal = record(SYM, "0x00401000", "16", "partial", "evidence blocker=other/test",
                      "--stash", str(body), "--score", "0.5")
     assert refusal is not None and "outside 1.." in refusal, refusal
 
@@ -147,7 +149,7 @@ def test_flags_come_as_a_pair(log, tmp_path):
     body = tmp_path / "attempt.cpp"
     body.write_text("void Sym() {}\n", encoding="utf-8")
     for partial_args in (("--stash", str(body)), ("--score", "0.5")):
-        refusal = record(SYM, "0x00401000", "16", "partial", "evidence",
+        refusal = record(SYM, "0x00401000", "16", "partial", "evidence blocker=other/test",
                          *partial_args)
         assert refusal is not None, f"accepted half a pair: {partial_args}"
         assert "one pair" in refusal, refusal
@@ -180,7 +182,7 @@ def test_lower_scored_attempt_keeps_best_and_archives_both(log, tmp_path):
     body = tmp_path / "attempt.cpp"
     for value, score in [(1, "0.99"), (2, "0.80")]:
         body.write_text(f"int f() {{ return {value}; }}\n")
-        assert record(SYM, hex(RVA), "16", "partial", "trial",
+        assert record(SYM, hex(RVA), "16", "partial", "trial blocker=other/test",
                       "--stash", str(body), "--score", score) is None
     path, score = re_log.stash_for(RVA)
     assert score == .99 and "return 1" in path.read_text()
@@ -216,7 +218,7 @@ def test_bom_source_is_normalized_before_metadata(log, tmp_path):
     body = tmp_path / "bom-source.cpp"
     body.write_bytes(re_log.UTF8_BOM + b"// near miss\nvoid Sym() {}\n")
 
-    assert record(SYM, hex(RVA), "16", "partial", "bom source",
+    assert record(SYM, hex(RVA), "16", "partial", "bom source blocker=other/test",
                   "--stash", str(body), "--score", "0.8") is None
 
     path, score = re_log.stash_for(RVA)

@@ -277,6 +277,10 @@ def main():
     parser.add_argument("target_size", help="function size in bytes, decimal")
     parser.add_argument("source", help="repo-relative source path (src/...)")
     parser.add_argument("--notes", default="", help="notes column text (no commas)")
+    parser.add_argument("--model", default="",
+                        help="model that wrote the body (recorded as model= in notes; a fleet "
+                             "worker gets it from BFME_MODEL). Required: landings with no "
+                             "model cannot be counted per lane.")
     parser.add_argument("--icf-owner", help="refused: retail has no identical-code folding, "
                         "so a body takes one name (python3 tools/one_identity.py)")
     parser.add_argument("--replace-existing", action="store_true",
@@ -321,8 +325,19 @@ def main():
             fail("--boundary-evidence must not be empty")
         if set(args.boundary_evidence) & set("\r\n"):
             fail("--boundary-evidence must be one line")
-    from fleet_run import run_tag
+    from fleet_run import MODEL_TOKEN, run_tag
     args.notes = run_tag(args.notes)
+    # ~80% of the 637 landings between efdc0c4dd7 and 9c9c8b35d0 had no model
+    # anywhere, so nobody could say which seats were worth paying for.
+    model = args.model or os.environ.get("BFME_MODEL", "")
+    if model and not re.search(r"(?:^|[\s;])model=", args.notes):
+        if not MODEL_TOKEN.fullmatch(model):
+            fail(f"--model {model!r} is not a model token")
+        args.notes = f"{args.notes};model={model}" if args.notes else f"model={model}"
+    if (args.root.resolve() == DEFAULT_ROOT.resolve()
+            and not re.search(r"(?:^|[\s;])model=(?!MODEL\b)\S", args.notes)):
+        fail("a landing needs its model: pass --model <model> (fleet workers get BFME_MODEL "
+             "from fleet_run)")
 
     root = args.root.resolve()
     if args.identity_evidence:

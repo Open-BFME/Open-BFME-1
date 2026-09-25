@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+# After `git rebase` and `git commit --amend`: re-check the ledgers.
+#
+# A rebase replays commits without the pre-commit hook, and the union merge
+# driver combines functions.csv with no conflict markers, so a row tombstoned
+# in reverse/deleted_rows.csv can come back from a branch that forked before
+# the delete -- and was first caught at pre-push. A post hook cannot undo the
+# rewrite; it says so loudly while the fix is one command.
+set -uo pipefail
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT"
+
+python3 tools/ledger_after_rewrite.py "post-rewrite ($1)" || true
+exit 0

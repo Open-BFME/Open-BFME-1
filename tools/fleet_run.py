@@ -583,6 +583,26 @@ def active_rvas(root):
             if not lease_dead(expires, pid, now, root, run, cgroup_path)}
 
 
+MODEL_TOKEN = re.compile(r"[A-Za-z0-9._/-]{1,60}")
+
+
+def launched_model(command):
+    """The model a worker command runs (`-m X`, `--model X`, `--model=X`), so
+    re_log and add_match can attribute its verdicts and landings without
+    trusting the session to type it: on 2026-09-25 about 80% of landings and
+    3,000 verdict rows carried no usable model, so no lane's yield could be
+    measured."""
+    for i, arg in enumerate(command):
+        value = None
+        if arg in ("-m", "--model") and i + 1 < len(command):
+            value = command[i + 1]
+        elif arg.startswith("--model="):
+            value = arg.split("=", 1)[1]
+        if value and MODEL_TOKEN.fullmatch(value):
+            return value
+    return ""
+
+
 def run_tag(text):
     """Attach provenance without letting an environment value corrupt a ledger."""
     run = os.environ.get("BFME_RUN_ID", "")
@@ -793,8 +813,12 @@ def execute(root, brief, legacy_log, engine, seat, command):
                 feed = body.decode("utf-8-sig", errors="replace").encode("utf-8")
             record["launch_phase"] = "preexec"
             save_record()
+            env = dict(os.environ, BFME_RUN_ID=run, BFME_RUN_DIR=str(directory))
+            model = launched_model(command)
+            if model:
+                env["BFME_MODEL"] = model
             bootstrap = fleet_cgroup.BlockedBootstrap(
-                command, cwd=root, env=dict(os.environ, BFME_RUN_ID=run, BFME_RUN_DIR=str(directory)),
+                command, cwd=root, env=env,
                 stdin=subprocess.PIPE if feed else subprocess.DEVNULL,
                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
             child = bootstrap.child

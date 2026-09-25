@@ -39,7 +39,7 @@ Zero Hour twin under reference/CnC_Generals_Zero_Hour when one is named. Iterate
 `python3 tools/probe.py SOURCE.cpp "MANGLED" 0xRVA` -- it compiles, diffs against retail
 with relocations masked, and prints a CANDIDATE cause with evidence; treat the label as
 a hint and check the evidence lines. Land with
-`python3 tools/add_match.py NAME 0xRVA SIZE SOURCE --notes "no commas"` (add
+`python3 tools/add_match.py NAME 0xRVA SIZE SOURCE --model MODEL --notes "no commas"` (add
 `--replace-rva 0xRVA` only when replacing a generated scaffold; carved rows are
 ordinary new claims). The command byte-verifies, auto-reverts, and may wait on the
 ledger lock -- that is normal. If a body
@@ -196,7 +196,7 @@ def lift_lines(r):
     home = lift_lane.readable_home(r["source"])
     lines = [f"    LIFT: {r['source']} is a naked __emit copy of retail under this name, so it scores as a dump. "
              f"Write the real body in {home or 'the class TU its Zero Hour home suggests'}, land it with "
-             f"`python3 tools/add_match.py NAME 0xSTART SIZE SOURCE --replace-existing`, and delete the naked "
+             f"`python3 tools/add_match.py NAME 0xSTART SIZE SOURCE --replace-existing --model MODEL`, and delete the naked "
              f"function (the whole lift file when nothing else lives in it); precedent 33110b4b40. "
              f"The name came with the lift: confirm it from callers/vtable/ZH before landing."]
     fix = lift_lane.correction_for(r)
@@ -319,7 +319,7 @@ def main():
         # a 12-to-40 body brief gets the last two so it stays readable
         out.append(describe(rva, rows, pins, latest, near, depth=5 if len(live) <= 4 else 2))
     out.append(METHOD.replace("model=MODEL", f"model={a.model}"))
-    print("\n".join(out))
+    print("\n".join(out).replace("--model MODEL", f"--model {a.model}"))
     print(f"[brief: {len(live)} live target(s), {sum(int(rows[v]['target_size']) for v in live)} bytes; {len(dropped)} dropped as stale; {len(retired)} retired by a dead-end verdict]", file=sys.stderr)
 
 

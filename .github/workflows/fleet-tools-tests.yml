@@ -66,3 +66,6 @@ jobs:
           tools/tests/test_setup_local_fleet.py
           tools/tests/test_zh_fuzzy_twins.py
           tools/tests/test_ghidra_decompile.py
+          tools/tests/test_verdict_tags.py
+          tools/tests/test_b_pin_check.py
+          tools/tests/test_dedup_csv_cli.py

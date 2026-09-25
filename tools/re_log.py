@@ -526,6 +526,8 @@ def _record(argv):
             f"that only describes the near miss measured WORSE than recording "
             f"nothing (5.1% vs 7.5% landing). Bank the body you are about to "
             f"revert, or record `blocked` with your evidence instead.")
+    # before _bank: a refused row must not leave a stash behind
+    evidence = _require_tags(status, evidence)
     if stash_text is not None:
         if status != STASH_STATUS:
             raise SystemExit(
@@ -537,6 +539,42 @@ def _record(argv):
     with RE_ATTEMPTS.open("ab") as handle:
         handle.write(row.encode("utf-8"))
     print(f"recorded: {symbol} @ {rva_text} -> {status}")
+
+
+MODEL_TAG = re.compile(r"(?:^|\s)model=(\S+)")
+
+
+def _require_tags(status, evidence):
+    """Every verdict names its model; every real deferral names its blocker.
+
+    Measured 2026-09-25 over 3,807 new rows: 3,011 said only `gpt-6`/`codex`
+    or nothing, so bytes per hour per model could not be computed, and 901
+    blocked/partial rows had no blocker= so pick_blocker could not cluster
+    them. A fleet worker gets model= from BFME_MODEL (fleet_run exports what
+    it launched). A quick look -- `blocked`, t<=10 min, no bank -- may omit
+    the blocker: eligibility.quick_look deliberately does not count it as an
+    attempt, and demanding a blocker would turn every glance into one."""
+    import os
+    import blockers
+
+    model = os.environ.get("BFME_MODEL", "")
+    if model and not MODEL_TAG.search(evidence) and re.fullmatch(r"[A-Za-z0-9._/-]{1,60}", model):
+        evidence = f"{evidence} model={model}"
+    if status == VOID_STATUS:
+        return evidence
+    tag = MODEL_TAG.search(evidence)
+    if not tag or tag.group(1).upper() == "MODEL":
+        raise SystemExit(
+            "evidence needs model=<the model that did the work> (e.g. model=gpt-6-astra, "
+            "model=claude-opus-5-5): without it no lane's yield can be measured.")
+    minutes = re.search(r"(?:^|\s)t=(\d+)", evidence)
+    quick = status == "blocked" and minutes and int(minutes.group(1)) <= 10
+    if status in ("blocked", STASH_STATUS) and not quick and not blockers.TAG.search(evidence):
+        raise SystemExit(
+            f"a {status} verdict needs blocker=<family>[/detail] naming what stopped it; "
+            f"families: {', '.join(blockers.NAMES)}. (A `blocked` quick look with t<=10 "
+            f"and no bank may omit it.)")
+    return evidence
 
 
 if __name__ == "__main__":

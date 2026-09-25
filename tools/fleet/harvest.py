@@ -98,7 +98,8 @@ def quarantine(source, funcs, status="blocked", why=None):
     subprocess.run(["git", "reset", "-q", "--", source], cwd=ROOT)
     for r in mine:
         reason = why or "source defines helpers the ledger does not declare (%s); declare the helpers or land them as rows, then re-land" % ", ".join(funcs)[:200]
-        evidence = "harvest quarantine: %s; byte-exact file kept at build/quarantine/%s on this host" % (reason, source)
+        evidence = ("harvest quarantine: %s; byte-exact file kept at build/quarantine/%s on this host "
+                    "blocker=callee/harvest-quarantine model=harvest" % (reason, source))
         subprocess.run([sys.executable, "tools/re_log.py", "record", r[0], r[2], r[3], status, evidence], cwd=ROOT)
 
 

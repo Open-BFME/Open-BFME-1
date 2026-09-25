@@ -59,6 +59,7 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
     python3 tools/pin_consistency.py --check || fail "pin consistency (see above)"
     python3 tools/pin_consistency.py --assert-shrink-only "$base" --at "$local_sha" \
         || fail "pin_consistency_baseline.csv grew across the outgoing range (see above)"
+    python3 tools/b_pin_check.py --ref "$local_sha" || fail "a b_<rva> call lost its pin at $local_sha (see above)"
 
     delta_out=$(mktemp)
     python3 tools/delta_sources.py --range "$base" "$local_sha" --selectors > "$delta_out" \

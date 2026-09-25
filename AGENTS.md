@@ -167,7 +167,13 @@ progress take a fresh candidate, never leaving a nonmatching reconstruction in
 `Code/`. Record the verdict:
 `python3 tools/re_log.py record <symbol> <rva> <size> <status> <evidence>`
 (never hand-edit `reverse/re_attempts.log`); cite the real boundary and
-include `t=<minutes>` and your model.
+include `t=<minutes>` and your model. `re_log` refuses a verdict with no
+`model=`, and a `partial` or a real `blocked` session (more than 10 minutes)
+with no `blocker=<family>` (`tools/blockers.py` lists the families);
+`add_match.py` refuses a landing without `--model`. Fleet workers get both
+from `BFME_MODEL`, which `fleet_run` exports from the command it launched.
+On 2026-09-25 about 80% of landings and 3,000 verdict rows had no usable
+model, so no lane's yield could be measured.
 
 **Close, not exact? Bank the body.**
 `partial '<what is wrong>' --stash <your .cpp> --score <0..1>` keeps the

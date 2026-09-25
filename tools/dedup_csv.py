@@ -31,7 +31,7 @@ ROOT = Path(__file__).resolve().parents[1]
 FIELDS = ["name", "export_rva", "target_rva", "target_size", "source", "status", "notes"]
 
 
-def dedup_functions(path):
+def dedup_functions(path, drop=frozenset()):
     # Each row is carried as the bytes it arrived as, terminator included, and a
     # survivor is re-emitted verbatim. Rebuilding rows through csv.DictWriter
     # rewrote all three of functions.csv's historical terminators as \r\n --
@@ -61,6 +61,11 @@ def dedup_functions(path):
 
     best, ambiguous = {}, []
     for key, group in groups.items():
+        # A tombstoned (name, rva) that a union merge brought back: the delete
+        # was a decision recorded in reverse/deleted_rows.csv, not merge noise.
+        if (key[1], key[0]) in drop:
+            print(f"functions.csv: dropped tombstoned {key[1]} @ 0x{key[0]:08X}")
+            continue
         finalists = [r for r in group if rank(r) == min(rank(r) for r in group)]
         if len({r["source"] for r in finalists}) > 1:
             ambiguous.append((key, sorted({r["source"] for r in finalists})))
@@ -128,8 +133,16 @@ def main(argv=None):
     # Parse before any reads or writes: historically even --help silently
     # normalized both live ledgers and reordered thousands of unrelated rows.
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.parse_args(argv)
-    before, after = dedup_functions(ROOT / "reverse" / "functions.csv")
+    parser.add_argument("--drop-tombstoned", action="store_true",
+                        help="also drop functions.csv rows whose (name, rva) reverse/deleted_rows.csv "
+                             "tombstones -- the rows a union merge resurrects during a rebase or "
+                             "cherry-pick, which skip the pre-commit hook")
+    args = parser.parse_args(argv)
+    drop = frozenset()
+    if args.drop_tombstoned:
+        import check_csv
+        drop = frozenset(check_csv.tombstones())
+    before, after = dedup_functions(ROOT / "reverse" / "functions.csv", drop)
     print(f"functions.csv: {before} -> {after} rows")
     before, after = dedup_symbols(ROOT / "reverse" / "symbols.csv")
     print(f"symbols.csv:   {before} -> {after} rows")
