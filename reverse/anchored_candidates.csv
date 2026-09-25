@@ -21,7 +21,7 @@ target_rva,target_size,zh_source,alternates,confidence,ghidra_name,anchor
 0x005307B0,2117,WOLGameSetupMenu.cpp,1,high,FUN_009307b0,TOOLTIP:ProfiledPlayer
 0x00908680,1944,IPEnumeration.cpp,3,medium,FUN_00d08680,%d.%d.%d.%d
 0x00639E50,1078,GameSpyGameInfo.cpp,1,medium,FUN_00a39e50,SnmpExtensionQuery
-0x00377060,1006,GameLogic.cpp,2,medium,FUN_00777060,CAMP: Frame %d: Castle %s(%d) Packed(aka:DIE) called by %s
+0x00377060,1009,CastleBehavior.cpp,0,high,FUN_00777060,CAMP: Frame %d: Castle %s(%d) Packed(aka:DIE) called by %s
 0x00689F00,989,ChallengeGenerals.cpp,6,medium,FUN_00a89f00,PlayerTemplate
 0x00164C10,883,AIPlayer.cpp,9,medium,FUN_00564c10,SupplyWarehouseDockUpdate
 0x0055A240,843,ScoreScreen.cpp,2,medium,FUN_0095a240,ScoreScreen.wnd:ListboxChatWindowScoreScreen
