@@ -20,9 +20,9 @@ class BitFlags
 public:
 	enum _dummy_kInit { kInit };
 
-	BitFlags(_dummy_kInit, int idx1)
+	BitFlags(_dummy_kInit, int bitIndex)
 	{
-		m_bits.set(idx1);
+		m_bits.set(bitIndex);
 	}
 
 	BitFlags() { }
@@ -36,14 +36,14 @@ typedef BitFlags<86> ObjectStatusMaskType;
 class Rva00174520FlagWord
 {
 public:
-	Bool test(int index) const
+	Bool test(int bitIndex) const
 	{
-		return m_bits.test(index);
+		return m_bits.test(bitIndex);
 	}
 
-	void set(int index)
+	void set(int bitIndex)
 	{
-		m_bits.set(index);
+		m_bits.set(bitIndex);
 	}
 
 private:
