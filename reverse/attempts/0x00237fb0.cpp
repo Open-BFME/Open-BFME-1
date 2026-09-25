@@ -1,5 +1,5 @@
-// ?copyMembersToList@Rva00237FB0Owner@@QAEXPAV?$list@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@@Z
-// partial score=0.92 date=2026-09-23
+// ?d_00237fb0@@YAXXZ
+// partial score=0.939 date=2026-09-24
 // cl: /DNDEBUG /MD /D_STLP_USE_STATIC_LIB /EHsc /FAsc /Fabuild/rva00237fb0_inline_header.cod
 // stlport
 // The body at 0x00237FB0 reads a member index at this+0x30.
@@ -18,6 +18,13 @@ typedef unsigned int UnsignedInt;
 class Object;
 
 typedef _STL::list<Object *> BfmeMemberList;
+typedef _STL::list<int> BfmeMemberIdList;
+
+class ListIntDtorAdapter : public BfmeMemberIdList
+{
+public:
+	__declspec(noinline) ~ListIntDtorAdapter() {}
+};
 typedef _STL::hash_map<UnsignedInt, Object *, _STL::hash<UnsignedInt>,
 	_STL::equal_to<UnsignedInt> > BfmeObjectPtrHash;
 
@@ -130,15 +137,16 @@ void Rva00237FB0Owner::copyMembersToList(BfmeMemberList *output)
 			(_STL::_Rb_tree_node_base *)entry);
 	}
 
-	BfmeMemberList temp;
+	ListIntDtorAdapter temp;
 	for (BfmeMemberList::const_iterator it = members.begin(); it != members.end(); ++it)
 	{
-		temp.push_back(*it);
+		const int &memberValue = *(const int *)(const void *)&*it;
+		temp.push_back(memberValue);
 	}
 
-	for (BfmeMemberList::iterator it = temp.begin(); it != temp.end(); ++it)
+	for (BfmeMemberIdList::iterator it = temp.begin(); it != temp.end(); ++it)
 	{
-		applyMember(*it);
+		applyMember((Object *)(unsigned int)*it);
 	}
 }
 
