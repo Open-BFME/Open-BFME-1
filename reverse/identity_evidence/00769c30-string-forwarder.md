@@ -1,0 +1,9 @@
+# RVA 0x00769C30: adjusted string forwarding
+
+The 159-byte body has three pointer arguments, returns bool in AL and ends at 0x00769CCF with ret12. It builds an AsciiString, choosing the nonempty string at incoming receiver+0x1FC or the string at +0xEC of the object pointer stored at receiver-8. It then adjusts its receiver by -0x0C and forwards the three original pointers with a by-value copy of the selected string. No enclosing semantic class is asserted.
+
+The independently decoded callee is the full 3386-byte body at 0x00766AA0, reached through ILT0x12C92. Its entry frame is 0xD8 bytes including register saves: argument one is at ESP+0xDC, the by-value string at +0xE0, and pointer outputs at +0xE4/+0xE8. At +0x34/+0x41 it loads the two output pointers and zeroes their pointed-to slots when nonnull. At +0x25E it loads the first argument as the nullable output buffer; later paths write float words through offsets 0..0x48. Thus the worker's original three `int` declarations were rejected in favor of an opaque buffer pointer and two pointer-output arguments.
+
+The callee uses the string at +0xE0 as a narrow string buffer, calls releaseBuffer at +0xBCB on success and +0xD18 on failure, returns true/false in AL, and ends with ret16. The new address-qualified pin therefore preserves thiscall, all four argument slots, by-value lifetime and return ABI. It is a body pin, not an identity inferred from a green gate. Original buffer and reference-counted output class names remain unproved.
+
+The new source includes canonical ascii_string.h and defines only the TU-local inline StringBase<char>::isEmpty method, replacing raw buffer/length casts. Existing StringBase<char> copy/set/release definitions supply the other three calls. Typed pointer correction and canonical emptiness access retain the exact 159-byte probe. Pin consistency was checked before adding the new symbol and must pass afterward; scoped relocation verification is the final claim gate.
