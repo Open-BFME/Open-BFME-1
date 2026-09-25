@@ -1,6 +1,30 @@
-// ?isAGoodIdeaToBuildTeam@AISkirmishPlayer@@MAE_NPAVTeamPrototype@@@Z
-// partial score=0.95 date=2026-09-19
+// ?isAGoodIdeaToBuildTeam@AIPlayer@@MAE_NPAVTeamPrototype@@@Z
+// partial score=0.957 date=2026-09-23
+// ?isAGoodIdeaToBuildTeam@AIPlayer@@MAE_NPAVTeamPrototype@@@Z
 // cl: /DNDEBUG /MD /EHsc
+//
+// Retail 0x001649B0, 486 bytes. IDENTITY CORRECTION: this is AIPlayer's
+// override, not AISkirmishPlayer's. Slot 25 of vtable 0x010968B0 (pinned
+// ??_7AIPlayer@@6B@; slot 0 reaches ??_GAIPlayer) jumps through ILT
+// 0x000320EC to this body, while slot 25 of 0x01096FB0 (??_7AISkirmishPlayer,
+// installed by ??0AISkirmishPlayer at 0x00168660) holds ILT 0x0001272E ->
+// 0x00168AE0, the landed "Rva00168AE0TeamBuildCheckOwner" body. The body sits
+// in the AIPlayer.cpp run (isPossibleToBuildTeam 0x001645B0, dump 0x00164750).
+// NOTE: the ledger already spends ?isAGoodIdeaToBuildTeam@AIPlayer@@ on a naked
+// lift at 0x00167E80 (786 B); that row needs review before this can land.
+//
+// Callees are the ledger names: TeamPrototype::evaluateProductionCondition,
+// countTeamInstances, AIPlayer::isPossibleToBuildTeam, ScriptEngine::
+// AppendDebugMessage, Gen_001604e0::m (queue next) and the dump
+// ?d_00164750@@YAXXZ through the neighbours' typed union cast.
+//
+// STATE: 486/486, 21 non-relocation bytes. Retail packs the first message,
+// needMoney and the second arg-temp tracker into the dead proto argument slot
+// (frame 8); this compiler gives that slot to needMoney alone (frame 0xC),
+// which is exactly what retail did for the AISkirmishPlayer copy at
+// 0x00168AE0. A micro test shows the first message does take the proto slot
+// when needMoney is absent. Block-scoping needMoney, an else block, a
+// parameter copy, DLINK_ITERATOR, and /Ob and /O flag variants do not move it.
 
 typedef bool Bool;
 typedef int Int;
@@ -45,12 +69,19 @@ public:
 class TeamPrototype;
 class Team;
 
+// ?m@Gen_001604e0@@QAEHXZ
+class Gen_001604e0
+{
+public:
+    int m();
+};
+
 class TeamInQueue
 {
 public:
+    TeamInQueue *getNext() { return (TeamInQueue *)((Gen_001604e0 *)this)->m(); }
     char m_pad[0x1c];
     Team *m_team;
-    TeamInQueue *next();
 };
 
 class TeamPrototypeInfo
@@ -103,155 +134,69 @@ public:
     void AppendDebugMessage(const AsciiString &message, Bool forcePause);
 };
 
-class AIPlayer
-{
-public:
-    Bool isPossibleToBuildTeam(TeamPrototype *proto, Bool requireIdleFactory,
-        Bool &notEnoughMoney);
-};
+extern void d_00164750();
 
-class AISkirmishPlayer
+class AIPlayer
 {
 protected:
     virtual Bool isAGoodIdeaToBuildTeam(TeamPrototype *proto);
+    Bool isPossibleToBuildTeam(TeamPrototype *proto, Bool requireIdleFactory,
+        Bool &notEnoughMoney);
+    Bool rva00164750Check(TeamPrototype *proto)
+    {
+        // retail 0x00164750 is still the dump ?d_00164750@@YAXXZ
+        typedef Bool (AIPlayer::*Call)(TeamPrototype *);
+        union { void (*raw)(); Call member; } call;
+        call.raw = d_00164750;
+        return (this->*call.member)(proto);
+    }
 
-public:
     TeamInQueue *m_teamBuildQueue;
 };
+
+
 
 extern GlobalData *TheWritableGlobalData;
 extern ScriptEngine *TheScriptEngine;
 
-extern void j_00002c98();
-extern void j_000077b1();
-extern void j_0000e372();
-extern void j_00028ce0();
-extern void j_0002fee6();
-extern void j_0003de8d();
-
-static Bool evaluateProductionCondition(TeamPrototype *proto)
+// ?isAGoodIdeaToBuildTeam@AIPlayer@@MAE_NPAVTeamPrototype@@@Z
+Bool AIPlayer::isAGoodIdeaToBuildTeam(TeamPrototype *proto)
 {
-    typedef Bool (TeamPrototype::*Call)();
-    union
-    {
-        void (*raw)();
-        Call member;
-    } call;
-    call.raw = j_00002c98;
-    return (proto->*call.member)();
-}
-
-static Int countTeamInstances(TeamPrototype *proto)
-{
-    typedef Int (TeamPrototype::*Call)();
-    union
-    {
-        void (*raw)();
-        Call member;
-    } call;
-    call.raw = j_0003de8d;
-    return (proto->*call.member)();
-}
-
-static TeamInQueue *nextTeam(TeamInQueue *queue)
-{
-    typedef TeamInQueue *(TeamInQueue::*Call)();
-    union
-    {
-        void (*raw)();
-        Call member;
-    } call;
-    call.raw = j_0002fee6;
-    return (queue->*call.member)();
-}
-
-static Bool quickTeamCheck(AIPlayer *player, TeamPrototype *proto)
-{
-    typedef Bool (AIPlayer::*Call)(TeamPrototype *);
-    union
-    {
-        void (*raw)();
-        Call member;
-    } call;
-    call.raw = j_000077b1;
-    return (player->*call.member)(proto);
-}
-
-static Bool isPossibleToBuildTeam(AIPlayer *player, TeamPrototype *proto,
-    Bool requireIdleFactory, Bool &notEnoughMoney)
-{
-    typedef Bool (AIPlayer::*Call)(TeamPrototype *, Bool, Bool &);
-    union
-    {
-        void (*raw)();
-        Call member;
-    } call;
-    call.raw = j_0000e372;
-    return (player->*call.member)(proto, requireIdleFactory, notEnoughMoney);
-}
-
-static void appendDebugMessage(ScriptEngine *engine,
-    const AsciiString &message, Bool forcePause)
-{
-    typedef void (ScriptEngine::*Call)(const AsciiString &, Bool);
-    union
-    {
-        void (*raw)();
-        Call member;
-    } call;
-    call.raw = j_00028ce0;
-    (engine->*call.member)(message, forcePause);
-}
-
-// ?isAGoodIdeaToBuildTeam@AISkirmishPlayer@@MAE_NPAVTeamPrototype@@@Z
-Bool AISkirmishPlayer::isAGoodIdeaToBuildTeam(TeamPrototype *proto)
-{
-    if (!evaluateProductionCondition(proto))
+    if (!proto->evaluateProductionCondition())
         return false;
 
-    if (countTeamInstances(proto) >= proto->getTemplateInfo()->m_maxInstances)
+    if (proto->countTeamInstances() >= proto->getTemplateInfo()->m_maxInstances)
     {
         if (TheWritableGlobalData->m_debugAI)
         {
-            AsciiString message;
-            message.format(AsciiString("Team %s not chosen - %d already exist."),
-                proto->getName().str(), countTeamInstances(proto));
-            appendDebugMessage(TheScriptEngine, message, false);
+            AsciiString str;
+            str.format(AsciiString("Team %s not chosen - %d already exist."),
+                proto->getName().str(), proto->countTeamInstances());
+            TheScriptEngine->AppendDebugMessage(str, false);
         }
         return false;
     }
 
-    TeamInQueue *queue = m_teamBuildQueue;
-    if (queue != 0)
+    for (TeamInQueue *team = m_teamBuildQueue; team; team = team->getNext())
     {
-        do
-        {
-            if (queue->m_team->getPrototype() == proto)
-                return false;
-            queue = nextTeam(queue);
-        } while (queue != 0);
+        if (team->m_team->getPrototype() == proto)
+            return false;
     }
 
-    if (quickTeamCheck((AIPlayer *)this, proto))
+    if (rva00164750Check(proto))
         return true;
 
     Bool needMoney;
-    if (!::isPossibleToBuildTeam((AIPlayer *)this, proto, true, needMoney))
+    if (!isPossibleToBuildTeam(proto, true, needMoney))
     {
         if (TheWritableGlobalData->m_debugAI)
         {
-            AsciiString message;
+            AsciiString str;
             if (needMoney)
-            {
-                message.format(AsciiString("Team %s not chosen - Not enough money."),
-                    proto->getName().str());
-            }
+                str.format(AsciiString("Team %s not chosen - Not enough money."), proto->getName().str());
             else
-            {
-                message.format(AsciiString("Team %s not chosen - Factory/tech missing or busy."),
-                    proto->getName().str());
-            }
-            appendDebugMessage(TheScriptEngine, message, false);
+                str.format(AsciiString("Team %s not chosen - Factory/tech missing or busy."), proto->getName().str());
+            TheScriptEngine->AppendDebugMessage(str, false);
         }
         return false;
     }

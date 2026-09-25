@@ -3938,5 +3938,65 @@
   "after_sha256": "3b0094aef5375d1611ab63a0aeedcc34e05079efcaf54b53420791d0e19531c6",
   "evidence": "docs/header_adoption.md",
   "reason": "covered type must not be redeclared"
+ },
+ {
+  "old_path": "reverse/attempts/0x001649b0.cpp",
+  "new_path": "reverse/attempts/0x001649b0.cpp",
+  "old_name": "isAGoodIdeaToBuildTeam",
+  "new_name": "rva00164750Check",
+  "before_sha256": "bb5f3a3272f3461bc10d318fd5b281e76419a9dd9022cffc741a4bffc35d8281",
+  "after_sha256": "f16ce66fc8a125c3a90c9a931d8c2badae73b05b43bc13be6ef86eb319288275",
+  "evidence": "reverse/identity_evidence/0x001649b0.md",
+  "reason": "Vtable 0x010968B0 slot 25 proves the body is AIPlayer's, not AISkirmishPlayer's; the old static helper quickTeamCheck was an unproved name for the member at 0x00164750, now address-derived."
+ },
+ {
+  "old_path": "reverse/attempts/0x001649b0.cpp",
+  "new_path": "reverse/attempts/0x001649b0.cpp",
+  "old_name": "quickTeamCheck",
+  "new_name": "rva00164750Check",
+  "before_sha256": "bb5f3a3272f3461bc10d318fd5b281e76419a9dd9022cffc741a4bffc35d8281",
+  "after_sha256": "f16ce66fc8a125c3a90c9a931d8c2badae73b05b43bc13be6ef86eb319288275",
+  "evidence": "reverse/identity_evidence/0x001649b0.md",
+  "reason": "Vtable 0x010968B0 slot 25 proves the body is AIPlayer's, not AISkirmishPlayer's; the old static helper quickTeamCheck was an unproved name for the member at 0x00164750, now address-derived."
+ },
+ {
+  "old_path": "reverse/attempts/0x00925d10.cpp",
+  "new_path": "reverse/attempts/0x00925d10.cpp",
+  "old_name": "Bfme1016ArrayView",
+  "new_name": "Rva00925D10Buf",
+  "before_sha256": "6f5826f580c1537d7eb45da54be1d606e58ac33e54aba656db77089d273289c9",
+  "after_sha256": "9076b8c75010f1e63ea0e41dbe8bde8f094a57c5d5088620cb9293abec203846",
+  "evidence": "reverse/identity_evidence/0x00925d10.md",
+  "reason": "Bfme1016ArrayView, bfmeVS01016 and m_bfmePad* were invented temporary names with no witness; replaced by address-derived Rva00925D10Buf/rva009371E0Inc and plain padding names."
+ },
+ {
+  "old_path": "reverse/attempts/0x00925d10.cpp",
+  "new_path": "reverse/attempts/0x00925d10.cpp",
+  "old_name": "bfmeVS01016",
+  "new_name": "rva009371E0Inc",
+  "before_sha256": "6f5826f580c1537d7eb45da54be1d606e58ac33e54aba656db77089d273289c9",
+  "after_sha256": "9076b8c75010f1e63ea0e41dbe8bde8f094a57c5d5088620cb9293abec203846",
+  "evidence": "reverse/identity_evidence/0x00925d10.md",
+  "reason": "Bfme1016ArrayView, bfmeVS01016 and m_bfmePad* were invented temporary names with no witness; replaced by address-derived Rva00925D10Buf/rva009371E0Inc and plain padding names."
+ },
+ {
+  "old_path": "reverse/attempts/0x00925d10.cpp",
+  "new_path": "reverse/attempts/0x00925d10.cpp",
+  "old_name": "m_bfmePad00",
+  "new_name": "m_pad0",
+  "before_sha256": "6f5826f580c1537d7eb45da54be1d606e58ac33e54aba656db77089d273289c9",
+  "after_sha256": "9076b8c75010f1e63ea0e41dbe8bde8f094a57c5d5088620cb9293abec203846",
+  "evidence": "reverse/identity_evidence/0x00925d10.md",
+  "reason": "Bfme1016ArrayView, bfmeVS01016 and m_bfmePad* were invented temporary names with no witness; replaced by address-derived Rva00925D10Buf/rva009371E0Inc and plain padding names."
+ },
+ {
+  "old_path": "reverse/attempts/0x00925d10.cpp",
+  "new_path": "reverse/attempts/0x00925d10.cpp",
+  "old_name": "m_bfmePad74",
+  "new_name": "m_pad2",
+  "before_sha256": "6f5826f580c1537d7eb45da54be1d606e58ac33e54aba656db77089d273289c9",
+  "after_sha256": "9076b8c75010f1e63ea0e41dbe8bde8f094a57c5d5088620cb9293abec203846",
+  "evidence": "reverse/identity_evidence/0x00925d10.md",
+  "reason": "Bfme1016ArrayView, bfmeVS01016 and m_bfmePad* were invented temporary names with no witness; replaced by address-derived Rva00925D10Buf/rva009371E0Inc and plain padding names."
  }
 ]
