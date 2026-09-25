@@ -72,7 +72,7 @@ public:
 	void tightenLine(Object *object, const Coord3D *startPosition, Coord3D *endPosition);
 
 	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);	///< ILT thunk at 0x000461FF
-	bool worldToCell(const Coord3D *world, ICoord2D *cell);	///< ILT thunk at 0x000171E8
+	bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);	///< ILT thunk at 0x000171E8
 	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
 			PathfindLayerEnum layer, Rva003D7680Struct *info);	///< ILT thunk at 0x00048419
 };
