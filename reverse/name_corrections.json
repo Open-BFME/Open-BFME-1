@@ -4958,5 +4958,35 @@
   "after_sha256": "6471f1a180be2f3393c31dfdd160c8efdb8986a04a5149580611fe81b5d88e3a",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank class name for the slot 0x6C result object had no caller/vtable/string evidence"
+ },
+ {
+  "old_path": "reverse/attempts/0x00302c70.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGuardForFramecount.cpp",
+  "old_name": "m_id",
+  "new_name": "m_unmodelled08",
+  "before_sha256": "5720c3dd997cc81ec96393192f20222440dfea82e23b9c980947f436dcfb3c98",
+  "after_sha256": "4287b7c406ccca3a974816e129afe0f9407e6952a1f2aff4d9ee786194a61d5c",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "unread member, no witness at +0x8"
+ },
+ {
+  "old_path": "reverse/attempts/0x00302c70.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGuardForFramecount.cpp",
+  "old_name": "m_proto",
+  "new_name": "m_unmodelled04",
+  "before_sha256": "5720c3dd997cc81ec96393192f20222440dfea82e23b9c980947f436dcfb3c98",
+  "after_sha256": "4287b7c406ccca3a974816e129afe0f9407e6952a1f2aff4d9ee786194a61d5c",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "unread member, ZH hint puts m_proto at +0x8 and name_oracle has no BFME witness at +0x4"
+ },
+ {
+  "old_path": "reverse/attempts/0x00302c70.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/ScriptActions_doTeamGuardForFramecount.cpp",
+  "old_name": "m_vptr",
+  "new_name": "m_unmodelled00",
+  "before_sha256": "5720c3dd997cc81ec96393192f20222440dfea82e23b9c980947f436dcfb3c98",
+  "after_sha256": "4287b7c406ccca3a974816e129afe0f9407e6952a1f2aff4d9ee786194a61d5c",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "unread member, bank name had no witness"
  }
 ]
