@@ -1,5 +1,5 @@
 // ?update@Rva00593E60State@@QAEXXZ
-// partial score=0.9456193353 date=2026-09-25
+// partial score=0.9758308157 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 #include "unicode_string.h"
 
@@ -69,8 +69,7 @@ void Rva00593E60State::update() {
         if (m_ptrC && !static_cast<unsigned char>(rva005933A0Equal(
             reinterpret_cast<Rva005933A0Value *>(m_ptr8),
             reinterpret_cast<Rva005933A0Value *>(m_ptrC)))) {
-            if (m_byte0) Rva00564A10::go();
-            m_byte0 = 0;
+            if (m_byte0) { Rva00564A10::go(); m_byte0 = 0; }
             reinterpret_cast<Rva005907F0 *>(&m_ptrC)->release();
         }
         if (!m_ptrC) {
@@ -80,8 +79,7 @@ void Rva00593E60State::update() {
         }
         m_value10 = 5;
     } else if (m_ptrC && m_value10 <= 0) {
-        if (m_byte0) Rva00564A10::go();
-        m_byte0 = 0;
+        if (m_byte0) { Rva00564A10::go(); m_byte0 = 0; }
         reinterpret_cast<Rva005907F0 *>(&m_ptrC)->release();
     } else {
         --m_value10;
