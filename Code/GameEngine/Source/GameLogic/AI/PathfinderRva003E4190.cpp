@@ -89,8 +89,8 @@ class Pathfinder
 {
 public:
 	PathfindCell *bfmeObjectCell(Object *object);
-	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
-	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
+	Bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
+	PathfindCell *getCell(PathfindLayerEnum layer, Int cellX, Int cellY);
 
 	void Rva003E4190(Object *object);
 };
