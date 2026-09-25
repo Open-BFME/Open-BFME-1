@@ -180,15 +180,16 @@ Bool AIAttackMeleeEngageState::computePath()
         if (!weapon)
             return false;
         Rva00177A90Object *victim = CALL(Rva000A1490,m_machine,j_0000e570)();
-        Coord3D position;
-        position.x = victim->m_cachedPos.x;
-        position.y = victim->m_cachedPos.y;
-        position.z = victim->m_cachedPos.z;
-        CALL(Rva001C0010,victim,j_00027bc9)(&position);
-        position5c = position;
+        Coord3D victimPosition;
+        victimPosition.x = victim->m_cachedPos.x;
+        victimPosition.y = victim->m_cachedPos.y;
+        victimPosition.z = victim->m_cachedPos.z;
+        CALL(Rva001C0010,victim,j_00027bc9)(&victimPosition);
+        position5c = victimPosition;
         if (((Rva00175820)j_0002056d)(source,victim))
         {
-            setGoalAlongDirection00177A90(CALL(Rva00132140,victim,j_00040246)(), victim, position);
+            setGoalAlongDirection00177A90(
+                CALL(Rva00132140,victim,j_00040246)(), victim, victimPosition);
             CALL(Rva003EAC80,TheAI->m_pathfinder,j_00011252)(source,(char*)ai+0x1a8,&m_goalPosition);
             if (Glo012F0239 && TheCRCParameterCheck)
                 ((BfmeCritterDesyncLog)j_0003a17a)(TheCRCParameterCheck,
