@@ -49,14 +49,14 @@ extern TerrainLogic *TheTerrainLogic;
 struct TightenPathStruct
 {
 	Pathfinder *pathfinder;
-	Object *obj;
+	Object *object;
 	const LocomotorSet *locomotorSet;
 	Int radius;
-	Bool center;
+	Bool centerInCell;
 	PathfindLayerEnum layer;
-	Bool foundDest;
-	Coord3D scratch;
-	Coord3D destPos;
+	Bool foundDestination;
+	Coord3D requestedDestination;
+	Coord3D adjustedDestination;
 
 	// Out-of-line: retail emits a call to the initializer at thunk 0x0002D7F9
 	// (body 0x003E1720). Declared only; REL32 pinned in symbols.csv.
@@ -101,10 +101,10 @@ void Pathfinder::tightenPath(Object *object, const LocomotorSet &locomotorSet,
 	worldToCell(startPosition, &start);
 	worldToCell(destinationPosition, &end);
 	iterateCellsAlongLine(start, end, layer, &info);
-	if (info.foundDest)
+	if (info.foundDestination)
 	{
 		// Three dword loads/stores (eax,ecx,edx) — matches retail's unrolled
 		// Coord3D copy through edi rather than a block move.
-		*startPosition = info.destPos;
+		*startPosition = info.adjustedDestination;
 	}
 }

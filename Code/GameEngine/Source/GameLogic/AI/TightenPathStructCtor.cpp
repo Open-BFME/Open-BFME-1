@@ -8,14 +8,14 @@
 // the locomotor set, the starting layer and the destination, then asks the
 // pathfinder for the object's radius and centre flag through
 // Pathfinder::bfmeQuery -- the out-of-line replacement for ZH's inlined
-// getRadiusAndCenter(obj, info.radius, info.center).  foundDest is cleared
+// getRadiusAndCenter(obj, info.radius, info.centerInCell). foundDestination is cleared
 // after that query and the found-destination Coord3D starts zeroed.
 //
 // Layout recovered from the stores: pathfinder 0x00, obj 0x04, locomotorSet
 // 0x08, radius 0x0C, center 0x10, layer 0x14, foundDest 0x18, the requested
 // destination 0x1C and the found destination 0x28.
 //
-// Codegen note: the zeroing of m_destPos has to go through Coord3D::zero().
+// Codegen note: the zeroing of adjustedDestination has to go through Coord3D::zero().
 // Writing the three floats directly lets MSVC 7.1 forward the just-stored
 // pathfinder and obj registers into the bfmeQuery argument pushes; storing
 // through Coord3D's own this pointer blocks that forwarding, so retail's
@@ -47,37 +47,37 @@ public:
 class TightenPathStruct
 {
 public:
-	TightenPathStruct( Pathfinder *pathfinder, Object *obj,
+	TightenPathStruct( Pathfinder *pathfinder, Object *object,
 		const LocomotorSet *locomotorSet, PathfindLayerEnum layer,
-		const Coord3D *to );
+		const Coord3D *destinationPosition );
 
-	Pathfinder *m_pathfinder;			// 0x00
-	Object *m_obj;						// 0x04
-	const LocomotorSet *m_locomotorSet;	// 0x08
-	int m_radius;						// 0x0C
-	int m_center;						// 0x10
-	PathfindLayerEnum m_layer;			// 0x14
-	bool m_foundDest;					// 0x18
-	Coord3D m_to;						// 0x1C
-	Coord3D m_destPos;					// 0x28
+	Pathfinder *pathfinder;				// 0x00
+	Object *object;						// 0x04
+	const LocomotorSet *locomotorSet;		// 0x08
+	int radius;						// 0x0C
+	int centerInCell;					// 0x10
+	PathfindLayerEnum layer;				// 0x14
+	bool foundDestination;				// 0x18
+	Coord3D requestedDestination;			// 0x1C
+	Coord3D adjustedDestination;			// 0x28
 };
 
-TightenPathStruct::TightenPathStruct( Pathfinder *pathfinder, Object *obj,
+TightenPathStruct::TightenPathStruct( Pathfinder *pathfinder, Object *object,
 	const LocomotorSet *locomotorSet, PathfindLayerEnum layer,
-	const Coord3D *to )
+	const Coord3D *destinationPosition )
 {
-	m_pathfinder = pathfinder;
-	m_obj = obj;
-	m_locomotorSet = locomotorSet;
-	m_layer = layer;
+	this->pathfinder = pathfinder;
+	this->object = object;
+	this->locomotorSet = locomotorSet;
+	this->layer = layer;
 
-	m_to.x = to->x;
-	m_to.y = to->y;
-	m_to.z = to->z;
+	this->requestedDestination.x = destinationPosition->x;
+	this->requestedDestination.y = destinationPosition->y;
+	this->requestedDestination.z = destinationPosition->z;
 
-	m_destPos.zero();
+	this->adjustedDestination.zero();
 
-	m_pathfinder->bfmeQuery( m_obj, &m_radius, &m_center );
+	this->pathfinder->bfmeQuery(this->object, &this->radius, &this->centerInCell);
 
-	m_foundDest = false;
+	this->foundDestination = false;
 }
