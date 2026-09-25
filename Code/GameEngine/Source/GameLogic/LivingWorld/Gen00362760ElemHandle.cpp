@@ -24,10 +24,11 @@ public:
 	FunctorNotSet() : std::exception() {}
 };
 
+// 0xB4-byte record. +0x28..+0x33 are plain words and +0x34 an int, as the
+// matched copyFrom 0x00361B30 (LivingWorldArmyAssign.cpp) copies them.
 class LivingWorldArmy
 {
 public:
-	virtual ~LivingWorldArmy();
 	AsciiString getName() const;
 
 	int getCount() const
@@ -36,8 +37,8 @@ public:
 	}
 
 private:
-	char m_unmodelled04[ 0x2C ];
-	_STL::vector<LivingWorldArmy> m_armies;
+	char m_header[ 4 ];
+	char m_unmodelled04[ 0x38 ];
 	char m_unmodelled3C[ 0x78 ];
 };
 
