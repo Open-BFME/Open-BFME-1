@@ -59,20 +59,20 @@ protected:
 void Pathfinder::snapPosition(Object *object, Coord3D *destinationPosition)
 {
 	Object *o = object;
-	ICoord2D cell;
+	ICoord2D cellIndex;
 	Bool center;
-	getRadiusAndCenter(o, cell.x, center);
+	getRadiusAndCenter(o, cellIndex.x, center);
 	Int centerInCell = *(volatile const Int *)&center;
-	Coord3D *p = destinationPosition;
+	Coord3D *destination = destinationPosition;
 	Coord3D adjustDest;
-	adjustDest.x = p->x;
-	adjustDest.y = p->y;
-	adjustDest.z = p->z;
+	adjustDest.x = destination->x;
+	adjustDest.y = destination->y;
+	adjustDest.z = destination->z;
 	if (!(*(Bool *)&centerInCell)) {
 		adjustDest.x += PATHFIND_CELL_SIZE_F / 2;
 		adjustDest.y += PATHFIND_CELL_SIZE_F / 2;
 	}
-	worldToCell(&adjustDest, &cell);
+	worldToCell(&adjustDest, &cellIndex);
 	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(o, destinationPosition);
-	adjustCoordToCell(cell.x, cell.y, *(Bool *)&centerInCell, *destinationPosition, layer);
+	adjustCoordToCell(cellIndex.x, cellIndex.y, *(Bool *)&centerInCell, *destinationPosition, layer);
 }
