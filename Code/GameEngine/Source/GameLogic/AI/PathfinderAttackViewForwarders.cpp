@@ -34,36 +34,36 @@ public:
 class Pathfinder
 {
 public:
-	int bfmeCheckAttackViewAlt(Object *obj, void *targetPos);
-	int bfmeCheckAttackViewAltHelper(Object *obj, Coord3D *cachedPos, void *targetPos);
+	int bfmeCheckAttackViewAlt(Object *object, void *targetPosition);
+	int bfmeCheckAttackViewAltHelper(Object *object, Coord3D *cachedPosition, void *targetPosition);
 
-	int bfmeCheckAttackView(Object *obj, void *targetPos);
-	int bfmeCheckAttackViewHelper(Object *obj, Coord3D *cachedPos, void *targetPos);
+	int bfmeCheckAttackView(Object *object, void *targetPosition);
+	int bfmeCheckAttackViewHelper(Object *object, Coord3D *cachedPosition, void *targetPosition);
 
-	bool isAttackViewBlockedByObstacle(const Object *source, const Coord3D *pos);
+	bool isAttackViewBlockedByObstacle(const Object *source, const Coord3D *targetPosition);
 	bool isAttackViewBlockedByObstacle(const Object *source, const Object *target);
-	bool isAttackViewBlockedByObstacle(const Object *source, const Coord3D *sourcePos, const Object *target, const Coord3D *targetPos);
+	bool isAttackViewBlockedByObstacle(const Object *source, const Coord3D *sourcePosition, const Object *target, const Coord3D *targetPosition);
 };
 
 // ?bfmeCheckAttackViewAlt@Pathfinder@@QAEHPAVObject@@PAX@Z
-int Pathfinder::bfmeCheckAttackViewAlt(Object *obj, void *targetPos)
+int Pathfinder::bfmeCheckAttackViewAlt(Object *object, void *targetPosition)
 {
-	Coord3D *cachedPos = (Coord3D *)((char *)obj + 0x38);
-	return bfmeCheckAttackViewAltHelper(obj, cachedPos, targetPos);
+	Coord3D *cachedPos = (Coord3D *)((char *)object + 0x38);
+	return bfmeCheckAttackViewAltHelper(object, cachedPos, targetPosition);
 }
 
 // ?bfmeCheckAttackView@Pathfinder@@QAEHPAVObject@@PAX@Z
-int Pathfinder::bfmeCheckAttackView(Object *obj, void *targetPos)
+int Pathfinder::bfmeCheckAttackView(Object *object, void *targetPosition)
 {
-	Coord3D *cachedPos = (Coord3D *)((char *)obj + 0x38);
-	return bfmeCheckAttackViewHelper(obj, cachedPos, targetPos);
+	Coord3D *cachedPos = (Coord3D *)((char *)object + 0x38);
+	return bfmeCheckAttackViewHelper(object, cachedPos, targetPosition);
 }
 
 // ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@PBUCoord3D@@@Z
-bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source, const Coord3D *pos)
+bool Pathfinder::isAttackViewBlockedByObstacle(const Object *source, const Coord3D *targetPosition)
 {
 	const Coord3D *sourcePos = (const Coord3D *)((const char *)source + 0x38);
-	return isAttackViewBlockedByObstacle(source, sourcePos, 0, pos);
+	return isAttackViewBlockedByObstacle(source, sourcePos, 0, targetPosition);
 }
 
 // ?isAttackViewBlockedByObstacle@Pathfinder@@QAE_NPBVObject@@0@Z
