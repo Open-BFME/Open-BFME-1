@@ -1,12 +1,10 @@
-// ?Rva003FEBB0@Path@@QAEXPAVPathNode@@00M@Z
-// partial score=0.18 date=2026-09-17
+// ?bfmeFinishTurnArc@Path@@QAEXPAVPathNode@@00M@Z
+// partial score=0.18 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc
 //
-// Address-derived reconstruction of the anonymous Path turn-arc body at
-// retail RVA 0x003FEBB0 (1990 bytes).  The carved boundary is ret 0x10 at
-// +0x07C3 followed by int3 padding.  The callers in the current evidence
-// pack are still anonymous; keep that identity honest until a caller naming
-// this body is matched.
+// Reconstructs Path::bfmeFinishTurnArc at retail RVA 0x003FEBB0.
+// The symbol pin at ILT 0x00021BF2 and Path::bfmeBuildTurnArc at 0x003FFB50
+// prove the method's identity. The carved body is 1,990 bytes.
 
 #include <math.h>
 
@@ -101,7 +99,7 @@ public:
 class Path
 {
 public:
-	void Rva003FEBB0(PathNode *created, PathNode *node, PathNode *next,
+	void bfmeFinishTurnArc(PathNode *created, PathNode *node, PathNode *next,
 		Real radius);
 	void appendNode(const PathNode *source);
 	void appendNode(const Coord3D *position, PathfindLayerEnum layer);
@@ -134,7 +132,7 @@ static void normalizeRvaVector(Vector3 &value)
 	}
 }
 
-void Path::Rva003FEBB0(PathNode *created, PathNode *node,
+void Path::bfmeFinishTurnArc(PathNode *created, PathNode *node,
 	PathNode *next, Real radius)
 {
 	LineSegClass first;
