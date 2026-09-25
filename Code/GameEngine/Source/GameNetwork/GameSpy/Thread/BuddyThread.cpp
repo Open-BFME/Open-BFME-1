@@ -83,6 +83,8 @@ private:
 	RequestQueue m_requests;
 	ResponseQueue m_responses;
 	BuddyThreadClass *m_thread;
+	MutexClass m_bfme_rva0063e080_mutex68;
+	Int m_bfme_rva0063e080_word70;
 };
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameResultsThread.cpp
@@ -166,9 +168,9 @@ void callbackWrapper( GPConnection *con, void *arg, void *param )
 //-------------------------------------------------------------------------
 
 // byte-exact reconstruction: Code/GameEngine/Source/GameNetwork/GameSpy/Thread/GameSpyBuddyMessageQueueCtorThunk.cpp
-// ??0GameSpyBuddyMessageQueue@@QAE@XZ present-unmatched
 GameSpyBuddyMessageQueue::GameSpyBuddyMessageQueue()
 {
+	m_bfme_rva0063e080_word70 = 0;
 	m_thread = NULL;
 }
 
