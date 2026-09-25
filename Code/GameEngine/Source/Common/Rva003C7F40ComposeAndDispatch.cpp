@@ -1,11 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 #include "ascii_string.h"
 
-// Retail 0x003C7F40, 184 bytes. The 0x003C8030 thunk-mediated caller is
-// unnamed, so the callback owner remains address-qualified. Retail cleans up
+// Retail 0x003C7F40, 184 bytes. Its only caller, reached through ILT
+// 0x00029B31, is the landed Rva003C7F40Owner::rva003C8030 (0x003C8030); no
+// name is proven, so the owner stays address-qualified. Retail cleans up
 // three stack arguments (ret 12). The caller passes its incoming ECX straight
-// through, so this is a __thiscall member that never reads this. Its direct calls copy an AsciiString, join
-// two AsciiStrings with the literal ".", then release the temporary buffer.
+// through, so this is a __thiscall member that never reads this. Its direct
+// calls copy an AsciiString, join two AsciiStrings with the literal ".", then
+// release the temporary buffer.
 inline AsciiString::~AsciiString()
 {
     ((StringBase<char> *)this)->releaseBuffer();
