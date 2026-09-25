@@ -83,16 +83,17 @@ extern GameLogic *TheBfmeGameLogic;
 class MADStruct
 {
 public:
-	Int cellCallback( PathfindCell *from, PathfindCell *to, Int to_x, Int to_y );
+	Int cellCallback( PathfindCell *previousCell, PathfindCell *currentCell,
+		Int currentCellX, Int currentCellY );
 
 	Object *m_obj;
 	ObjectID m_ignoreID;
 };
 
-Int MADStruct::cellCallback( PathfindCell *from, PathfindCell *to,
-	Int to_x, Int to_y )
+Int MADStruct::cellCallback( PathfindCell *previousCell, PathfindCell *currentCell,
+	Int currentCellX, Int currentCellY )
 {
-	PathfindCellInfo *info = to->m_info;
+	PathfindCellInfo *info = currentCell->m_info;
 	if (info != 0)
 	{
 		ObjectID objectID = info->m_posUnit;

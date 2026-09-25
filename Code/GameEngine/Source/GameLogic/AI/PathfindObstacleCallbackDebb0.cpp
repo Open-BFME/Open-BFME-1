@@ -114,7 +114,8 @@ Int bfme5WalkFirstValue( Bfme5WalkOwner *owner );
 class ObstacleCellStruct
 {
 public:
-	Int cellCallback( PathfindCell *from, PathfindCell *to, Int to_x, Int to_y );
+	Int cellCallback( PathfindCell *previousCell, PathfindCell *currentCell,
+		Int currentCellX, Int currentCellY );
 
 	Object *m_obj;					// 0x00
 	Object *m_other;				// 0x04
@@ -125,10 +126,10 @@ public:
 	Int m_runLength;				// 0x18
 };
 
-Int ObstacleCellStruct::cellCallback( PathfindCell *from, PathfindCell *to,
-	Int to_x, Int to_y )
+Int ObstacleCellStruct::cellCallback( PathfindCell *previousCell, PathfindCell *currentCell,
+	Int currentCellX, Int currentCellY )
 {
-	Int layer = to->getLayer();
+	Int layer = currentCell->getLayer();
 	if (layer >= 0x11 && layer <= 0x40)
 	{
 		m_hitLayer = true;
@@ -146,13 +147,13 @@ Int ObstacleCellStruct::cellCallback( PathfindCell *from, PathfindCell *to,
 		return 0;
 	}
 
-	if (to->getRawType() != 4)
+	if (currentCell->getRawType() != 4)
 		return 0;
 
 	ObjectID objID = m_obj->getID();
 	if (objID != 0)
 	{
-		PathfindCellInfo *info = to->m_info;
+		PathfindCellInfo *info = currentCell->m_info;
 		if (info != 0 && info->m_obstacleID == objID)
 			return 0;
 	}
@@ -160,9 +161,9 @@ Int ObstacleCellStruct::cellCallback( PathfindCell *from, PathfindCell *to,
 	Object *other = m_other;
 	if (other != 0)
 	{
-		if (to->isObstaclePresent( other->m_id ))
+		if (currentCell->isObstaclePresent( other->m_id ))
 			return 0;
-		if (to->isObstaclePresent( bfme5WalkFirstValue( (Bfme5WalkOwner *)other ) ))
+		if (currentCell->isObstaclePresent( bfme5WalkFirstValue( (Bfme5WalkOwner *)other ) ))
 			return 0;
 	}
 
@@ -170,29 +171,29 @@ Int ObstacleCellStruct::cellCallback( PathfindCell *from, PathfindCell *to,
 	Object *held = obj->m_containedBy;
 	if (held != 0)
 	{
-		if (to->isObstaclePresent( held->m_id ))
+		if (currentCell->isObstaclePresent( held->m_id ))
 			return 0;
 		held = held->m_containedBy;
 		if (held != 0)
 		{
-			if (to->isObstaclePresent( held->m_id ))
+			if (currentCell->isObstaclePresent( held->m_id ))
 				return 0;
 		}
 	}
 
-	if (to->isObstaclePresent( bfme5WalkFirstValue( (Bfme5WalkOwner *)obj ) ))
+	if (currentCell->isObstaclePresent( bfme5WalkFirstValue( (Bfme5WalkOwner *)obj ) ))
 		return 0;
 
-	if (((Rva003D4C50 *)to)->get())
+	if (((Rva003D4C50 *)currentCell)->get())
 		return 0;
 
 	if (m_cell != 0)
 	{
-		if (to->isObstaclePresent( m_cell->getObstacleID() ))
+		if (currentCell->isObstaclePresent( m_cell->getObstacleID() ))
 			return 0;
 	}
 
-	Object *unit = TheGameLogic->findObjectByID( to->getObstacleID() );
+	Object *unit = TheGameLogic->findObjectByID( currentCell->getObstacleID() );
 	if (unit != 0)
 	{
 		if (unit->isKindOf( (KindOfType)0x3b ))

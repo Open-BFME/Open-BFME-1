@@ -51,17 +51,21 @@ public:
 class GroundPathPassableStruct
 {
 public:
-	Int cellCallback( PathfindCell *from, PathfindCell *to, Int to_x, Int to_y );
+	Int cellCallback( PathfindCell *previousCell, PathfindCell *currentCell,
+		Int currentCellX, Int currentCellY );
 
 	Pathfinder *m_pathfinder;		// 0x00
 	Int m_diameter;					// 0x04
 };
 
-Int GroundPathPassableStruct::cellCallback( PathfindCell *from, PathfindCell *to, Int to_x, Int to_y )
+Int GroundPathPassableStruct::cellCallback( PathfindCell *previousCell,
+	PathfindCell *currentCell, Int currentCellX, Int currentCellY )
 {
-	if (from && to->getLayer() >= 2 && to->getLayer() <= 15 && from->getLayer() == to->getLayer()) {
+	if (previousCell && currentCell->getLayer() >= 2 && currentCell->getLayer() <= 15 &&
+		previousCell->getLayer() == currentCell->getLayer()) {
 		return 0;
 	}
 
-	return m_pathfinder->clearCellForDiameter( 0, to_x, to_y, to->getLayer(), m_diameter, 1 ) != m_diameter;
+	return m_pathfinder->clearCellForDiameter( 0, currentCellX, currentCellY,
+		currentCell->getLayer(), m_diameter, 1 ) != m_diameter;
 }

@@ -41,7 +41,8 @@ public:
 class Rva003D61C0
 {
 public:
-	int cellCallback(PathfindCell *from, PathfindCell *to, int to_x, int to_y);
+	int cellCallback(PathfindCell *previousCell, PathfindCell *currentCell,
+		int currentCellX, int currentCellY);
 
 	Pathfinder *m_bfme00ABE;
 	int m_bfme04ABE;
@@ -50,30 +51,30 @@ public:
 	float m_bfme10ABE;
 };
 
-int Rva003D61C0::cellCallback(PathfindCell *from, PathfindCell *to,
-	int to_x, int to_y)
+int Rva003D61C0::cellCallback(PathfindCell *previousCell, PathfindCell *currentCell,
+	int currentCellX, int currentCellY)
 {
-	if (from != 0)
+	if (previousCell != 0)
 	{
-		int f1 = to->getLayer();
+		int f1 = currentCell->getLayer();
 
 		if (f1 >= 2 && f1 <= 0xf)
 		{
-			if (from->getLayer() == f1)
+			if (previousCell->getLayer() == f1)
 				return 0;
 		}
 	}
 
-	if (m_bfme00ABE->clearCellForDiameter(0, to_x, to_y, to->getLayer(),
+	if (m_bfme00ABE->clearCellForDiameter(0, currentCellX, currentCellY, currentCell->getLayer(),
 		m_bfme04ABE, 1) == m_bfme04ABE)
 	{
-		int f = to->getLayer();
+		int f = currentCell->getLayer();
 
-		float x = ((float)to_x + g_bfmeK1253) * g_bfmeDirectionWeight1285;
+		float x = ((float)currentCellX + g_bfmeK1253) * g_bfmeDirectionWeight1285;
 
 		m_bfme08ABE = x;
 
-		float y = ((float)to_y + g_bfmeK1253) * g_bfmeDirectionWeight1285;
+		float y = ((float)currentCellY + g_bfmeK1253) * g_bfmeDirectionWeight1285;
 
 		m_bfme0CABE = y;
 		m_bfme10ABE = TheTerrainLogic->bfmeHeightABE(x, y, f, 0, 1);
