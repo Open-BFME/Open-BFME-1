@@ -3148,5 +3148,15 @@
   "after_sha256": "7d4b1cae261417996131cefbad61e195a8f6c9cc210683a7dfbd4cd34af959c9",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank guess for the +0x00 Int with no witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x008839b0.cpp",
+  "new_path": "Code/Libraries/Source/memorypool/memorypool_tracker_free.cpp",
+  "old_name": "trackFree",
+  "new_name": "rva008839B0",
+  "before_sha256": "45125a99f1fa7c9a9ad77a2739dfaf35111814c22044b7b6694ff5eec6c70b13",
+  "after_sha256": "eeaf8b481741465bb87ea7db31264b8380e5f9842f3ce65394c3b0936d196514",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank's method name had no evidence (the only caller, MemoryPool::_Free, is a naked lift and names no symbol; there is no vtable slot, string or ZH twin)"
  }
 ]
