@@ -84,7 +84,7 @@ public:
     virtual void slot18();
     virtual void slot1C();
     virtual void setState(int state);
-    void setGoalPosition(const Coord3D *pos);
+    void setGoalPosition(const Coord3D *position);
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/AIUpdate.h

@@ -129,7 +129,7 @@ public:
 class StateMachine
 {
 public:
-	void setGoalPosition(const Coord3D *pos);
+	void setGoalPosition(const Coord3D *position);
 
 	Object *getOwner() const
 	{

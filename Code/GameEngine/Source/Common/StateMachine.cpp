@@ -875,22 +875,22 @@ struct BfmeStateMachineGoal
 };
 
 // ?setGoalPosition@StateMachine@@QAEXPBUCoord3D@@@Z
-void StateMachine::setGoalPosition( const Coord3D *pos ) 
+void StateMachine::setGoalPosition( const Coord3D *position )
 { 
 	BfmeStateMachineGoal *self = (BfmeStateMachineGoal *)this;
 	if (self->m_locked)
 		return;
-	if (pos == 0)
+	if (position == 0)
 		return;
-	self->m_goalPosition = *pos;
+	self->m_goalPosition = *position;
 }
 
 //-----------------------------------------------------------------------------
 // ?internalSetGoalPosition@StateMachine@@ present-unmatched
-void StateMachine::internalSetGoalPosition( const Coord3D *pos ) 
+void StateMachine::internalSetGoalPosition( const Coord3D *position )
 { 
-	if (pos) {
-		m_goalPosition = *pos; 
+	if (position) {
+		m_goalPosition = *position;
 		// Don't clear the goal object, or everything breaks.  Like construction of buildings.
 	}
 }

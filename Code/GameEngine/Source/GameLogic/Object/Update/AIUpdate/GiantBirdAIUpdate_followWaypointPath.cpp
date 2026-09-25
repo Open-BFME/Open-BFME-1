@@ -105,7 +105,7 @@ public:
 	virtual void slot1C();
 	virtual void setState(Int id);
 
-	void setGoalPosition(const Coord3D *pos);
+	void setGoalPosition(const Coord3D *position);
 };
 
 class BfmeSub30_7F0 : public StateMachine

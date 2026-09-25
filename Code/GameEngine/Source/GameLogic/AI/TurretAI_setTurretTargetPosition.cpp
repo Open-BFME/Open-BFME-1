@@ -94,7 +94,7 @@ public:
 	}
 
 	Object *getGoalObject();
-	void setGoalPosition(const Coord3D *pos);
+	void setGoalPosition(const Coord3D *position);
 
 	char m_pad4[0x18];
 	State *m_curState;
