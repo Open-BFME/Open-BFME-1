@@ -1,5 +1,5 @@
 // ?render@W3DShroud@@QAEXPAVCameraClass@@@Z
-// partial score=0.69 date=2026-09-20
+// Retail 0x0071BBC0 (572 bytes): BFME W3DShroud::render.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /ICode/GameEngine/Include /ICode/GameEngine/Source /ICode/Libraries/Include /ICode/Libraries/Source /ICode/Libraries/Source/Compression /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib /ICode/GameEngineDevice/Include /ICode/GameEngineDevice/Source /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad /ICode/Main
 // BFME W3DShroud::render, retail 0x0071BBC0.
 //
@@ -10,7 +10,7 @@
 // terrain-map offsets are witnessed by WorldHeightMap.cpp and the retail
 // loads in this body.
 
-#include "../../../../../reference/shims/dx8state/DX8State.h"
+#include "../../../../../reference/shims/d3d8_shim_validated.h"
 
 #include <string.h>
 
@@ -19,31 +19,40 @@ typedef unsigned short UnsignedShort;
 
 extern "C" __declspec(dllimport) double __cdecl floor(double value);
 
-extern const float BfmeZeroRange;
 extern const float g_bfmeDirectionWeight1285;
 
 class CameraClass;
 
-// The BFME SurfaceClass rectangle-lock overload is a real retail method, but
-// the canonical WW3D header only declares the full-surface Lock(int*) form.
-// Keep the canonical DX8 header as the source of the class declaration and
-// route this ABI view to the already matched overload without redeclaring the
-// class in this TU.
-class Rva0090C710SurfaceLockView
+class TextureBaseClass;
+
+class DX8Wrapper
+{
+public:
+	static IDirect3DDevice8 *_Get_D3D_Device8(void)
+	{
+		return D3DDevice;
+	}
+
+private:
+	static IDirect3DDevice8 *D3DDevice;
+};
+
+// The BFME SurfaceClass rectangle-lock overload is absent from the header.
+class SurfaceClass
 {
 public:
 	void *Lock(int *pitch, int left, int top, int right, int bottom);
 	void Unlock(void);
 };
 
-#pragma comment(linker, "/alternatename:?Lock@Rva0090C710SurfaceLockView@@QAEPAXPAHHHHH@Z=?Lock@SurfaceClass@@QAEPAXPAHHHHH@Z")
-#pragma comment(linker, "/alternatename:?Unlock@Rva0090C710SurfaceLockView@@QAEXXZ=?Unlock@SurfaceClass@@QAEXXZ")
-
 class ShroudFilter
 {
 public:
-	int m_minFilter;
-	int m_magFilter;
+	int getMagFilter(void) const { return m_filter4; }
+	void setMagFilter(int filter) { m_filter4 = filter; }
+	void setMinFilter(int filter) { m_filter0 = filter; }
+	int m_filter0;
+	int m_filter4;
 };
 
 class ShroudTexture
@@ -76,6 +85,11 @@ public:
 class WorldHeightMap
 {
 public:
+	int getBorderSize(void) const { return m_borderSize; }
+	int getDrawOriginX(void) const { return m_drawOriginX; }
+	int getDrawOriginY(void) const { return m_drawOriginY; }
+	int getDrawWidth(void) const { return m_drawWidth; }
+	int getDrawHeight(void) const { return m_drawHeight; }
 	unsigned char m_head[0x10];
 	int m_borderSize;
 	unsigned char m_between[0x120e0 - 0x14];
@@ -161,7 +175,9 @@ void W3DShroud::render(CameraClass *cam)
 	if (!m_shroudData)
 		return;
 
-	if (!m_dstTexture.m_p)
+	ShroudTexture *texture =
+		reinterpret_cast<ShroudTexture *>(&m_dstTexture);
+	if (!texture->m_p)
 		return;
 
 	IDirect3DDevice8 *device = DX8Wrapper::_Get_D3D_Device8();
@@ -170,33 +186,29 @@ void W3DShroud::render(CameraClass *cam)
 
 	WorldHeightMap *hm = TheTerrainRenderObject->getMap();
 	int visStartX = BfmeFloatToLong(BfmeFloor(
-		(float)(hm->m_drawOriginX - hm->m_borderSize) /
+		(float)(hm->getDrawOriginX() - hm->getBorderSize()) /
 		m_cellWidth * g_bfmeDirectionWeight1285));
 	int visStartY = BfmeFloatToLong(BfmeFloor(
-		(float)(hm->m_drawOriginY - hm->m_borderSize) /
+		(float)(hm->getDrawOriginY() - hm->getBorderSize()) /
 		m_cellHeight * g_bfmeDirectionWeight1285));
 	int visEndX = BfmeFloatToLong(BfmeFloor(
-		(float)(hm->m_drawWidth - 1) /
+		(float)(hm->getDrawWidth() - 1) /
 		m_cellWidth * g_bfmeDirectionWeight1285));
 	int visEndY = BfmeFloatToLong(BfmeFloor(
-		(float)(hm->m_drawHeight - 1) /
+		(float)(hm->getDrawHeight() - 1) /
 		m_cellHeight * g_bfmeDirectionWeight1285));
 	(void)visStartX;
 	(void)visStartY;
 	visEndX = m_numCellsX;
 	visEndY = m_numCellsY;
 
-	m_drawOriginX = BfmeZeroRange * m_cellWidth;
-	m_drawOriginY = BfmeZeroRange * m_cellHeight;
+	m_drawOriginX = m_cellWidth * 0.0f;
+	m_drawOriginY = m_cellHeight * 0.0f;
 
-	ShroudFilter *filter =
-		reinterpret_cast<ShroudTexture *>(&m_dstTexture)->getFilter();
-	if (filter->m_magFilter != m_shroudFilter)
+	if (texture->getFilter()->getMagFilter() != m_shroudFilter)
 	{
-		reinterpret_cast<ShroudTexture *>(&m_dstTexture)->getFilter()->m_magFilter =
-			m_shroudFilter;
-	reinterpret_cast<ShroudTexture *>(&m_dstTexture)->getFilter()->m_minFilter =
-		m_shroudFilter;
+		texture->getFilter()->setMagFilter(m_shroudFilter);
+		texture->getFilter()->setMinFilter(m_shroudFilter);
 	}
 
 	W3DRadarResetSurface surface =
@@ -212,22 +224,24 @@ void W3DShroud::render(CameraClass *cam)
 			reinterpret_cast<SurfaceClass *>(&surface));
 	}
 
-	UnsignedShort *src = m_shroudData;
-	int pitch;
-	UnsignedShort *dst = (UnsignedShort *)
-		reinterpret_cast<Rva0090C710SurfaceLockView *>(&surface)->Lock(
-		&pitch, 1, 1, visEndX + 1, visEndY + 1);
-
-	if (visEndY > 0)
 	{
-		int row_bytes = visEndX * (int)sizeof(UnsignedShort);
-		for (int y = 0; y < visEndY; ++y)
-		{
-			memcpy(dst, src, row_bytes);
-			dst = (UnsignedShort *)((char *)dst + pitch);
-			src += m_numCellsX;
-		}
-	}
+		UnsignedShort *src = m_shroudData;
+		int pitch;
+		UnsignedShort *dst = (UnsignedShort *)
+			reinterpret_cast<SurfaceClass *>(&surface)->Lock(
+			&pitch, 1, 1, visEndX + 1, visEndY + 1);
 
-	reinterpret_cast<Rva0090C710SurfaceLockView *>(&surface)->Unlock();
+		if (visEndY > 0)
+		{
+			int row_bytes = visEndX * (int)sizeof(UnsignedShort);
+			for (int y = 0; y < visEndY; ++y)
+			{
+				memcpy(dst, src, row_bytes);
+				dst = (UnsignedShort *)((char *)dst + pitch);
+				src += m_numCellsX;
+			}
+		}
+
+		reinterpret_cast<SurfaceClass *>(&surface)->Unlock();
+	}
 }
