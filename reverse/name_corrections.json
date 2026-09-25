@@ -4878,5 +4878,15 @@
   "after_sha256": "859df61a8c9ed4a96cd5ddbf05e106fcf236d583d4f7716a68436aab0defaf5a",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank method name with no matched caller naming it (the caller at 0x008CE1E0 uses ?d_008b8e10@@YAXXZ) and no vtable slot string or ZH twin"
+ },
+ {
+  "old_path": "reverse/attempts/0x00732700.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DTreeBufferDoLighting.cpp",
+  "old_name": "Vector3",
+  "new_name": "Rva00732700Rgb",
+  "before_sha256": "3953f06bae173e0ecab08a7e7b60a7690b99e64758318ed5a62d681b7bdc473d",
+  "after_sha256": "b7d71cd7cbda15e3c3a7e19676a2f949f453acc99a698e6616f2231bae3c3727",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "a TU-local shim named after a real class whose copy semantics contradict it (real Vector3 has a user copy constructor and retail copies via integer registers)"
  }
 ]
