@@ -1,15 +1,18 @@
 // ?Render@DX8TextureCategoryClass@@QAEXXZ
-// partial score=0.9897657493745736 date=2026-09-23
+// partial score=0.9918125999545144 date=2026-09-25
 // ?Render@DX8TextureCategoryClass@@QAEXXZ
 // BFME RVA 0x00948BD0, 4397 bytes: decoded through RET at 0x00949CFC;
 // INT3 begins at 0x00949CFD. The internal branch target 0x009498A0 is not a start.
+
 // Identity: matched DX8RigidFVFCategoryContainer::Render at 0x00949EA0 calls
 // this body; the source-level task loop and category layout agree.
 // Rebuilt from the ZH dx8renderer.cpp Render body, reconciled to retail.
-// Compared using tools/probe.py: ours=4397, retail=4397, 45 differing bytes.
+
+// Compared using tools/probe.py: ours=4397, retail=4397, 36 differing bytes.
 // Remaining differences are the sorted-render argument preparation at +0x683
 // through +0x6CA, its join jump at +0x6D3, and the task reload at +0xFD9..+0xFE9.
 // All 14 exception states and all other operations are reproduced.
+
 // Important BFME differences kept here:
 // - owning BfmeHandleCX texture accessor and BoxSetTexture reference argument;
 // - snapshot state-name temporaries, supplied by including ww3d.h before dx8wrapper.h;
@@ -18,11 +21,12 @@
 // - a separate bool stage comparison retains retail's sete/test sequence;
 // - texture-stage device slot is +0x10C, not the shared D3D interface's +0x118;
 // - task pool contains a lock at +0x10, absent from the shared ZH ObjectPoolClass.
+
 // Mesh and mapper views retain address-derived names for unproved virtual identities.
 // The category and math classes use the existing headers. A declaration-only
 // polygon Render is necessary because retail calls 0x0092CB30 out of line.
 // No compiler-generated helper bytes are included in the claimed body extent.
-// cl: /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWDebug /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// cl: /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWDebug /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /FAsc /Fabuild/Rva00948BD0RenderScratch.cod /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4
 #include "wwstring.h"
@@ -32,6 +36,8 @@
 #include "matrix3d.h"
 #include "sphere.h"
 #include "sortingrenderer.h"
+extern "C" void _ReadWriteBarrier();
+#pragma intrinsic(_ReadWriteBarrier)
 
 class BfmeHandleCX {
 public:
@@ -188,12 +194,21 @@ public:
     char pad04[0x14-4]; Vector2 field14; Vector2 field1c; unsigned field24;
 };
 struct Rva00948BD0MaterialOverride { int tag; Vector2 field04; };
+static __forceinline void Rva00948BD0SetIndexBaseOffset(unsigned offset)
+{
+    RenderStateStruct *state = (RenderStateStruct *)0x01340EC0;
+    if (state->index_base_offset == offset) return;
+    unsigned changed = *(unsigned *)0x0133F49C;
+    changed |= 0x00020000;
+    state->index_base_offset = (unsigned short)offset;
+    *(unsigned *)0x0133F49C = changed;
+}
 class DX8PolygonRendererClass : public MultiListObjectClass {
 public:
     void Render(int);
     MeshModelClass *mmc; DX8TextureCategoryClass *category; unsigned field10; unsigned field14; unsigned field18; unsigned field1c; unsigned field20;
     void Render_Sorted(int base,const SphereClass &sphere) {
-        DX8Wrapper::Set_Index_Buffer_Index_Offset(base);
+        Rva00948BD0SetIndexBaseOffset(base);
         SortingRendererClass::Insert_Triangles(sphere,field10,field18/3,field1c,field20);
     }
 };
@@ -342,6 +357,7 @@ void DX8TextureCategoryClass::Render()
                 }
                 DX8Wrapper::Set_Material(0);
                 DX8Wrapper::Set_Material(vmaterial);
+                _ReadWriteBarrier();
             } else renderer->Render(mesh->Get_Base_Vertex_Offset());
         }
         if(mesh->Get_ObjectScale()!=1.0f)

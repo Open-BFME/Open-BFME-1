@@ -1,5 +1,5 @@
-// ?d_002ec0a0@@YAXXZ
-// partial score=0.212274368231 date=2026-09-24
+// ?rva002EC0A0ParseTokenEventList@LuaScriptEngine@@QAEXPAVBfmeLexEAN@@@Z
+// partial score=0.22 date=2026-09-25
 // cl: /O2 /EHsc /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /ICode/GameEngine/Include /ICode/GameEngine/Include/Precompiled /ICode/GameEngine/Source/Common/System /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x002EC0A0. Owner layout and helper contracts are read from retail.
 // stlport
@@ -158,9 +158,9 @@ void LuaScriptEngine::rva002EC0A0ParseTokenEventList(BfmeLexEAN *parser)
 		{
 			const char *value = xml->nameAt(index);
 			const char *tag = xml->tagAt(index);
-			if (memcmp(tag, "Name", 5) == 0)
+			if (strcmp(tag, "Name") == 0)
 				setString(name, value);
-			else if (memcmp(tag, "Inherit", 8) == 0)
+			else if (strcmp(tag, "Inherit") == 0)
 				setString(inherit, value);
 			++index;
 		} while (index < xml->count());
@@ -176,7 +176,7 @@ void LuaScriptEngine::rva002EC0A0ParseTokenEventList(BfmeLexEAN *parser)
 	while (status == 1)
 	{
 		const char *current = ((Rva0035EF40 *)parser)->get();
-		if (memcmp(current, "EventHandler", 13) == 0)
+		if (strcmp(current, "EventHandler") == 0)
 		{
 			AsciiString eventName;
 			AsciiString functionName;
@@ -188,12 +188,12 @@ void LuaScriptEngine::rva002EC0A0ParseTokenEventList(BfmeLexEAN *parser)
 				{
 					const char *value = xml->nameAt(index);
 					const char *tag = xml->tagAt(index);
-					if (memcmp(tag, "EventName", 10) == 0)
+					if (strcmp(tag, "EventName") == 0)
 						setString(eventName, value);
-					else if (memcmp(tag, "ScriptFunctionName", 19) == 0)
+					else if (strcmp(tag, "ScriptFunctionName") == 0)
 						setString(functionName, value);
-					else if (memcmp(tag, "DebugSingleStep", 16) == 0)
-						debugSingleStep = memcmp(value, "true", 5) == 0;
+					else if (strcmp(tag, "DebugSingleStep") == 0)
+						debugSingleStep = strcmp(value, "true") == 0;
 					++index;
 				} while (index < xml->count());
 			}
