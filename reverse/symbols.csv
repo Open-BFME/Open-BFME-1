@@ -43057,6 +43057,7 @@ name,address,notes
 ?b_00376b00@@YAXXZ,0x00376B00,gen-thunk body
 ?b_00376c70@@YAXXZ,0x00376C70,gen-thunk body
 ?b_00377060@@YAXXZ,0x00377060,gen-thunk body
+?rva00377060@CastleBehavior@@QAEXXZ,0x00377060,address-derived no-argument thiscall; state body 0x00377740 calls via ILT 0x0001CD41 with ecx=this-0x10; identity-evidence=reverse/identity_evidence/00377060.md
 ?b_00377550@@YAXXZ,0x00377550,gen-thunk body
 ?b_00377740@@YAXXZ,0x00377740,gen-thunk body
 ?b_003779e0@@YAXXZ,0x003779E0,gen-thunk body
