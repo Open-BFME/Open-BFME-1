@@ -13,7 +13,7 @@ target_rva,target_size,zh_source,alternates,confidence,ghidra_name,anchor
 0x0062E8F0,286,MainMenuUtils.cpp,0,high,FUN_00a2e8f0,PatchAccessTest.txt
 0x001103D2,199,GameState.cpp,0,high,Catch@005103d2,GUI:ErrorSavingGame
 0x00621C40,4777,GameInfo.cpp,5,medium,FUN_00a21c40,GUI:MediumAI
-0x0062AD50,3077,LadderDefs.cpp,1,medium,FUN_00a2ad50,RandomFactions 
+0x0062AD50,3077,LadderDefs.cpp,0,high,FUN_00a2ad50,"RandomFactions "
 0x00392D00,2342,ControlBar.cpp,4,medium,FUN_00792d00,FactionObserver
 0x0056F1F0,2280,PopupReplay.cpp,2,medium,FUN_0096f1f0,GUI:NewSaveReplayFile
 0x004CC980,2223,GameSpyGameInfo.cpp,3,medium,FUN_008cc980,GUI:AllPlayersMustSelectStartPosition
