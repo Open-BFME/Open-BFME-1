@@ -38,22 +38,11 @@
 // 0899560Pool@@A) -- this didn't change the byte diff but is the honest fix
 // (the old names were unpinned externs that happened to still compile).
 //
-// RESIDUAL (92B, two distinct issues, both isolated -- tried and ruled out
-// separately, see reverse/re_attempts.log for this RVA):
-//  1. The FIRST memcmp (n=8, offset+0x23..+0x33) compiles to `repe cmpsd`
-//     (dword-granularity) here vs retail's `repe cmpsb` (byte-granularity).
-//     The OTHER two memcmp calls in the same function (n=5, n=9 -- neither
-//     a multiple of 4) already match retail's cmpsb byte-for-byte with NO
-//     changes needed, so this is specific to n=8 being divisible by 4.
-//     Tried and ruled out: /O1, /O2 without /Ob1, /Ox, unsigned char vs
-//     char operand types, dropping `#pragma intrinsic(memcmp)`, and routing
-//     all three calls through one shared __forceinline `bfmeNameMatches()`
-//     helper (still resolves n as a compile-time constant per call site,
-//     no change). NEXT LEVER TO TRY: whatever makes retail treat n=8 as
-//     "not provably a multiple of 4" to the intrinsic -- maybe the real
-//     source computes the length via a variable/field rather than a bare
-//     literal `8`, or reads it as `sizeof` of a type the compiler can't
-//     see through the same way our plain array can.
+// RESIDUAL (67 non-relocation diffs, see reverse/re_attempts.log for this
+// RVA):
+//  1. The three strcmp calls now reproduce retail's repe cmpsb setup. This
+//     spelling is independently supported by Rva8CBB80MessageName.cpp and
+//     its retail body, which compares the same message/name literals.
 //  2. Branch 3 (BfmeA1029 default, offset ~+0x1a4 onward): retail's EH
 //     state 2 stays ACTIVE (not reset to -1) through the bfmeGo1029A call
 //     AND the subsequent flag-bit manipulation on obj->m_bfmeBits, only
@@ -99,11 +88,8 @@ public:
 	virtual void bfmeNotify();
 };
 
-extern "C" int __cdecl memcmp(const void *a, const void *b, unsigned int n);
-
-extern const char g_rva0112abcc[8];
-extern const char g_rva0111195a0[5];
-extern const char g_rva0113666c[9];
+extern "C" int __cdecl strcmp(const char *a, const char *b);
+#pragma intrinsic(strcmp)
 
 extern BfmeA1029 *g_rva01337abc;
 
@@ -206,7 +192,7 @@ public:
 
 void *Rva008A78D0Owner::bfmeGetOrCreateDefault(int unused, void **arg2)
 {
-	if (memcmp((const char *)*arg2 + 8, g_rva0112abcc, 8) == 0)
+	if (strcmp((const char *)*arg2 + 8, "message") == 0)
 	{
 		Rva008A9B00 *obj = Rva008C3B60Head;
 
@@ -229,7 +215,7 @@ void *Rva008A78D0Owner::bfmeGetOrCreateDefault(int unused, void **arg2)
 		return obj;
 	}
 
-	if (memcmp((const char *)*arg2 + 8, g_rva0111195a0, 5) == 0)
+	if (strcmp((const char *)*arg2 + 8, "name") == 0)
 	{
 		Rva008A9B00 *obj = Rva008C3B60Head;
 
@@ -252,7 +238,7 @@ void *Rva008A78D0Owner::bfmeGetOrCreateDefault(int unused, void **arg2)
 		return obj;
 	}
 
-	if (memcmp((const char *)*arg2 + 8, g_rva0113666c, 9) == 0)
+	if (strcmp((const char *)*arg2 + 8, "toString") == 0)
 	{
 		BfmeA1029 *obj = g_rva01337abc;
 
