@@ -1,5 +1,5 @@
 // ?doSpecialPowerAtObject@PlayerHealSpecialPower@@UAEXPAVObject@@I@Z
-// partial score=0.3 date=2026-09-20
+// partial score=0.996 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib
 // PlayerHealSpecialPower::doSpecialPowerAtObject, retail RVA 0x00263CA0.
 // stlport
@@ -96,9 +96,8 @@ public:
 	PartitionFilter *m_next;
 };
 
-class Rva00263CA0RootFilter : public PartitionFilter
+struct Rva00263CA0RootFilter
 {
-public:
 	Rva00263CA0RootFilter()
 	{
 		m_next = 0;
@@ -108,6 +107,13 @@ public:
 	{
 		m_vtable = 0x01083B5C;
 	}
+	Rva00263CA0RootFilter *link()
+	{
+		return this;
+	}
+
+	volatile UnsignedInt m_vtable;
+	PartitionFilter * volatile m_next;
 };
 
 struct Rva00263CA0Entry
@@ -166,19 +172,74 @@ struct PlayerHealSpecialPowerModuleData
 	ObjectCreationList *m_healOCL;
 };
 
-struct PlayerHealSpecialPowerBase
-{
-	unsigned char m_pad00[4];
-	PlayerHealSpecialPowerModuleData *m_moduleData;
-	Object *m_object;
-	unsigned char m_pad0c[4];
-};
-
-class Rva00268CB0PlayerHealAction
+class Module
 {
 public:
-	void run(Object *target);
+	virtual ~Module();
+	const PlayerHealSpecialPowerModuleData *getModuleData() const
+	{
+		return m_moduleData;
+	}
+
+private:
+	const PlayerHealSpecialPowerModuleData *m_moduleData;
 };
+
+class ObjectModule : public Module
+{
+public:
+	Object *getObject() const
+	{
+		return m_object;
+	}
+
+private:
+	Object * volatile m_object;
+};
+
+class BehaviorModuleInterface
+{
+public:
+	virtual void behaviorModuleInterfaceAnchor() = 0;
+};
+
+class BehaviorModule : public ObjectModule, public BehaviorModuleInterface
+{
+};
+
+class SpecialPowerModuleInterface
+{
+public:
+	virtual void slot00() = 0;
+	virtual void slot01() = 0;
+	virtual void slot02() = 0;
+	virtual void slot03() = 0;
+	virtual void slot04() = 0;
+	virtual void slot05() = 0;
+	virtual void slot06() = 0;
+	virtual void slot07() = 0;
+	virtual void slot08() = 0;
+	virtual void slot09() = 0;
+	virtual void slot10() = 0;
+	virtual void slot11() = 0;
+	virtual void slot12() = 0;
+	virtual void doSpecialPowerAtObject(Object *target, UnsignedInt commandOptions) = 0;
+	virtual void slot14() = 0;
+	virtual void slot15() = 0;
+	virtual void startPowerRecharge() = 0;
+};
+
+class SpecialPowerModule : public BehaviorModule, public SpecialPowerModuleInterface
+{
+};
+
+class Rva00268CB0
+{
+public:
+	void invoke(Object *target);
+};
+
+#pragma comment(linker, "/alternatename:?invoke@Rva00268CB0@@QAEXPAVObject@@@Z=?j_00046c13@@YAXXZ")
 
 #pragma comment(linker, "/alternatename:?run@Rva00268CB0PlayerHealAction@@QAEXPAVObject@@@Z=?j_00046c13@@YAXXZ")
 #pragma comment(linker, "/alternatename:?create@ObjectCreationList@@QAEXPBVObject@@0HH@Z=?j_00002a59@@YAXXZ")
@@ -187,29 +248,7 @@ public:
 #pragma comment(linker, "/alternatename:?isAnyKindOf@Object@@QBE_NABVRva00263CA0KindOfMask@@@Z=?j_0004250a@@YAXXZ")
 #pragma comment(linker, "/alternatename:?isKindOf@Object@@QBE_NW4KindOfType@@@Z=?j_0003251f@@YAXXZ")
 
-class SpecialPowerModuleInterfaceView
-{
-public:
-	virtual void slot00() = 0;
-	virtual void slot04() = 0;
-	virtual void slot08() = 0;
-	virtual void slot0c() = 0;
-	virtual void slot10() = 0;
-	virtual void slot14() = 0;
-	virtual void slot18() = 0;
-	virtual void slot1c() = 0;
-	virtual void slot20() = 0;
-	virtual void slot24() = 0;
-	virtual void slot28() = 0;
-	virtual void slot2c() = 0;
-	virtual void slot30() = 0;
-	virtual void slot34() = 0;
-	virtual void slot38() = 0;
-	virtual void slot3c() = 0;
-	virtual void startPowerRecharge();
-};
-
-class PlayerHealSpecialPower
+class PlayerHealSpecialPower : public SpecialPowerModule
 {
 public:
 	virtual void doSpecialPowerAtObject(Object *target, UnsignedInt commandOptions);
@@ -218,8 +257,7 @@ public:
 void PlayerHealSpecialPower::doSpecialPowerAtObject(Object *target,
 	UnsignedInt commandOptions)
 {
-	Object *owner =
-		((PlayerHealSpecialPowerBase *)((char *)this - 0x10))->m_object;
+	Object *owner = getObject();
 	UnsignedInt disabledMask = owner->m_disabledMask;
 	Object *volatile savedOwner;
 	savedOwner = owner;
@@ -228,23 +266,21 @@ void PlayerHealSpecialPower::doSpecialPowerAtObject(Object *target,
 	if (owner->getControllingPlayer() == 0)
 		return;
 
-	Object *targetObject = target;
-	((Rva00268CB0PlayerHealAction *)((char *)this - 0x10))->run(targetObject);
-	((SpecialPowerModuleInterfaceView *)this)->startPowerRecharge();
+	((Rva00268CB0 *)this)->invoke(target);
+	startPowerRecharge();
 
-	if ((*(PlayerHealSpecialPowerModuleData **)((char *)this - 0xc))->m_healOCL != 0)
-		(*(PlayerHealSpecialPowerModuleData **)((char *)this - 0xc))->m_healOCL->create(
-			savedOwner, targetObject, 0, 0);
+	ObjectCreationList *healOCL = getModuleData()->m_healOCL;
+	Object *healOwner = getObject();
+	if (healOCL != 0)
+		healOCL->create(healOwner, target, 0, 0);
 
-	{
-		Rva00263CA0RootFilter filter;
-		Rva00263CA0WideResult iterator =
-			ThePartitionManager->bfmeForwardWideC(
-			(int)((char *)targetObject + 0x38),
-			*(Int *)&(*(PlayerHealSpecialPowerModuleData **)((char *)this - 0xc))->m_healRadius, 0,
-			(int)&filter, 1);
+	Rva00263CA0WideResult iterator =
+		ThePartitionManager->bfmeForwardWideC(
+			(int)target,
+			*(Int *)&getModuleData()->m_healRadius, 0,
+			(int)Rva00263CA0RootFilter().link(), 1);
 
-		Object *other;
+	Object *other;
 		while (iterator.next(other))
 		{
 		if (other->getRelationship(savedOwner) != (Relationship)2)
@@ -252,26 +288,31 @@ void PlayerHealSpecialPower::doSpecialPowerAtObject(Object *target,
 		if ((*(UnsignedByte *)((char *)other + 0x344) & 1) != 0)
 			continue;
 		if (!other->isAnyKindOf(
-			*(Rva00263CA0KindOfMask *)((char *)*(PlayerHealSpecialPowerModuleData **)((char *)this - 0xc) + 0x218)))
+			getModuleData()->m_healAffects))
 			continue;
 		if (other->isKindOf((KindOfType)0x9a))
 			continue;
-		if (!other->isKindOf((KindOfType)7))
-			continue;
-		if (other->m_constructionPercent < BfmeZeroRange)
-			continue;
-		if (!(other->m_constructionPercent < *(const Real *)0x010B6554))
+		if (other->isKindOf((KindOfType)7))
+		{
+			if (other->m_constructionPercent >= BfmeZeroRange)
+			{
+				if (other->m_constructionPercent < *(const Real *)0x010B6554)
+					continue;
+			}
+		}
+
+		BodyModuleInterface *body = other->m_body;
+		if (body == 0)
 			continue;
 
-		Real amount = other->m_body->getMaxHealth() *
-			(*(PlayerHealSpecialPowerModuleData **)((char *)this - 0xc))->m_healAmount;
+		Real amount = body->getMaxHealth() *
+			getModuleData()->m_healAmount;
 		if (!(amount > BfmeZeroRange))
 			continue;
 		other->attemptHealing(amount, 0);
-		if ((*(PlayerHealSpecialPowerModuleData **)((char *)this - 0xc))->m_healFX != 0)
+		if (getModuleData()->m_healFX != 0)
 			FXList::doFXObj(
-				(*(PlayerHealSpecialPowerModuleData **)((char *)this - 0xc))->m_healFX,
+				getModuleData()->m_healFX,
 				other, 0);
-		}
 	}
 }
