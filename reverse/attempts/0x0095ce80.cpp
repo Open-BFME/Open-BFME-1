@@ -1,6 +1,6 @@
 // ?RenderStreak@StreakRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@PAVVector4@@PAMABVSphereClass@@PAI@Z
-// partial score=0.6 date=2026-09-06
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main  
+// partial score=0.61 date=2026-09-25
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -344,6 +344,8 @@ void StreakRendererClass::subdivision_util(unsigned int point_cnt, const Vector3
 	subdiv_tex_v[sub_pointIndex++] = base_tex_v[point_cnt - 1];
 	*p_sub_point_cnt = sub_pointIndex;
 }
+void BoxSetTexture(unsigned,TextureBaseClass *&);
+
 void StreakRendererClass::RenderStreak
 (	
 	RenderInfoClass & rinfo,
@@ -376,7 +378,8 @@ void StreakRendererClass::RenderStreak
 	** Process line geometry:
 	*/
 	const float parallel_factor = 0.9f;
-	unsigned int chunk_size = (STREAK_CHUNK_SIZE >> SubdivisionLevel) + 1;
+	const unsigned int chunk_capacity = (STREAK_CHUNK_SIZE >> SubdivisionLevel) + 1;
+	unsigned int chunk_size = chunk_capacity;
 	if (chunk_size > num_points) chunk_size = num_points;
 	for (unsigned int chunkIndex = 0; chunkIndex < num_points - 1; chunkIndex += (chunk_size - 1)) 
 	{
@@ -423,7 +426,7 @@ void StreakRendererClass::RenderStreak
 				u_values[0] = 0.0f;
 				u_values[1] = 0.0f;
 				break;
-			case TILED_TEXTURE_MAP:
+			default:
 				for (pointIndex = 0; pointIndex < point_cnt; pointIndex++) 
 				{
 					base_tex_v[pointIndex] = (float)(pointIndex + chunkIndex) * TextureTileFactor;
@@ -629,11 +632,11 @@ void StreakRendererClass::RenderStreak
 			intersection[intersectionIndex][TOP_EDGE].PointCount = 1;
 			intersection[intersectionIndex][TOP_EDGE].NextSegmentID = intersectionIndex;
 			intersection[intersectionIndex][TOP_EDGE].Point = midpoint;
-			intersection[intersectionIndex][TOP_EDGE].TexV = personalities[intersectionIndex]&1;//LORENZEN LORENZEN 
+			intersection[intersectionIndex][TOP_EDGE].TexV = mid_tex_v;
 			intersection[intersectionIndex][BOTTOM_EDGE].PointCount = 1;
 			intersection[intersectionIndex][BOTTOM_EDGE].NextSegmentID = intersectionIndex;
 			intersection[intersectionIndex][BOTTOM_EDGE].Point = midpoint;
-			intersection[intersectionIndex][BOTTOM_EDGE].TexV = personalities[intersectionIndex]&1;//LORENZEN LORENZEN 
+			intersection[intersectionIndex][BOTTOM_EDGE].TexV = mid_tex_v;
 			vdp = Vector3::Dot_Product(segment[intersectionIndex - 1].EdgePlane[TOP_EDGE], segment[intersectionIndex].EdgePlane[TOP_EDGE]);
 			if (fabs(vdp) < parallel_factor) 
 			{
@@ -1028,7 +1031,7 @@ void StreakRendererClass::RenderStreak
 		}
 		DX8Wrapper::Set_Index_Buffer(ib_access,0);
 		DX8Wrapper::Set_Vertex_Buffer(Verts);				
-		DX8Wrapper::Set_Texture(0,Texture);
+		BoxSetTexture(0,(TextureBaseClass *&)Texture);
 		DX8Wrapper::Set_Shader(shader);
 		if (sorting) 
 		{	
