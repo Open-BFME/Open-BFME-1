@@ -390,25 +390,6 @@ void VirtualSlot2ArgumentCallOwner::invokeArgument(VirtualSlot2ArgumentThunk *ta
     target->invoke();
 }
 
-extern void *TheTerrainLogic;
-
-struct VirtualSlot4GlobalCallThunk
-{
-    virtual void slot0();
-    virtual void slot1();
-    virtual void slot2();
-    virtual void slot3();
-    virtual void invoke(void *value);
-
-    void invokeTerrainLogic();
-};
-
-// ?d_00107270@@YAXXZ
-void VirtualSlot4GlobalCallThunk::invokeTerrainLogic()
-{
-    invoke(TheTerrainLogic);
-}
-
 struct VirtualSlot11SecondArgumentCallThunk
 {
     virtual void slot0();
