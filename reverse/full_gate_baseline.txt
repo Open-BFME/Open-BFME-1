@@ -15,7 +15,6 @@
 ?friend_newModuleData@MissileAIUpdate@@SAPAVModuleData@@PAVINI@@@Z (Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp)
 _$E25 (Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLobbyMenu.cpp)
 _$E27 (Code/GameEngine/Source/GameNetwork/GameSpy/MainMenuUtils.cpp)
-dup_462880 (Code/gen_small/zhstl_005.cpp)
 dup_93da50 (Code/Libraries/Source/WWVegas/WW3D2/collect.cpp)
 uw_00c4ba18 (Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp)
 uw_00c4ba23 (Code/GameEngineDevice/Source/W3DDevice/GameClient/W3DDisplayString.cpp)
