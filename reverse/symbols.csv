@@ -89068,3 +89068,5 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ??1Rva000C0B90MapMetaDataReader@@QAE@XZ,0x0003404F,opaque address-derived reader cleanup; retail ILT targets the unnamed body at 0x000C0B90
 ??ARva000C1D10MapCache@@QAEAAVMapMetaData@@ABVAsciiString@@@Z,0x00031E99,opaque address-derived cache index; retail ILT targets the unnamed body at 0x000C1D10
 ?bfmeRunRE@BfmeThingRE@@QAEXPAX@Z,0x007EA4F0,body 0x007EA4F0 (44B ledger row ?bfmeRunRE@BfmeThingRE@@QAEXXZ); direct E8 call from 0x007F8400+0x35 with ecx=[esi+0xc] and one pushed dword; caller stack accounting at +0x13c/+0x15b ([esp+8]=arg1) proves callee cleans 4 bytes via its jmp [edx+0x14] tail call; same identity with corrected thiscall(void*) ABI
+?rva003A50F0@Gen003BDE80Element@@QAEXXZ,0x00049355,address-derived; ILT jmp to body 0x003A50F0; call site 0x003A51EC mov ecx=this no pushes; body mov esi=ecx and plain ret so thiscall void()
+?rva003A44A0@Gen003BDE80Element@@QAEX_N@Z,0x00020509,address-derived; ILT jmp to body 0x003A44A0; call sites 0x003A521A/0x003A522A mov ecx=this push al; body reads byte arg and ret 4 so thiscall void(bool)
