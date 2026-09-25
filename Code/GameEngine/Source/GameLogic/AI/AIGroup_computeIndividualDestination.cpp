@@ -202,40 +202,40 @@ void AIGroup::computeIndividualDestination(Coord3D *individualDestination, const
 		return;
 	}
 
-	Coord2D v;
-	const Coord3D *pos = object->getPosition();
+	Coord2D groupOffset;
+	const Coord3D *objectPosition = object->getPosition();
 	if (isFormation)
 	{
-		object->getFormationOffset(&v);
+		object->getFormationOffset(&groupOffset);
 	}
 	else
 	{
-		v.x = pos->x - groupCenter->x;
-		v.y = pos->y - groupCenter->y;
+		groupOffset.x = objectPosition->x - groupCenter->x;
+		groupOffset.y = objectPosition->y - groupCenter->y;
 	}
 
-	Real length = v.length();
-	Real maxLength = 6.0f * object->getBoundingCircleRadius();
-	if (length > maxLength)
-		length = maxLength;
-	v.normalize();
-	v.x *= length;
-	v.y *= length;
+	Real offsetLength = groupOffset.length();
+	Real maxOffsetLength = 6.0f * object->getBoundingCircleRadius();
+	if (offsetLength > maxOffsetLength)
+		offsetLength = maxOffsetLength;
+	groupOffset.normalize();
+	groupOffset.x *= offsetLength;
+	groupOffset.y *= offsetLength;
 
-	individualDestination->x = groupDestination->x + v.x;
-	individualDestination->y = groupDestination->y + v.y;
+	individualDestination->x = groupDestination->x + groupOffset.x;
+	individualDestination->y = groupDestination->y + groupOffset.y;
 	individualDestination->z = TheTerrainLogic->getLayerHeight(individualDestination->x, individualDestination->y, layer, 0, true);
 
-	AIUpdateInterface *ai = object->getAIUpdateInterface();
-	if (ai && ai->isDoingGroundMovement())
+	AIUpdateInterface *aiUpdate = object->getAIUpdateInterface();
+	if (aiUpdate && aiUpdate->isDoingGroundMovement())
 	{
 		Bool adjusted;
 		if (isFormation)
 			adjusted = TheAI->pathfinder()->adjustDestination(object,
-				*ai->getLocomotorSet(), individualDestination, 0);
+				*aiUpdate->getLocomotorSet(), individualDestination, 0);
 		else
 			adjusted = TheAI->pathfinder()->adjustDestination(object,
-				*ai->getLocomotorSet(), individualDestination, groupDestination);
+				*aiUpdate->getLocomotorSet(), individualDestination, groupDestination);
 		if (!adjusted)
 			*individualDestination = *groupDestination;
 		TheAI->pathfinder()->updateGoal(object, individualDestination, 1, (const char *)0x1095f44,
