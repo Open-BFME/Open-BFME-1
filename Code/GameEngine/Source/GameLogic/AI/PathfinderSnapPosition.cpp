@@ -36,7 +36,8 @@ class Object;
 class TerrainLogic
 {
 public:
-	PathfindLayerEnum getLayerForDestination(Object *object, const Coord3D *position);
+	PathfindLayerEnum getLayerForDestination(Object *object,
+		const Coord3D *destinationPosition);
 };
 
 extern TerrainLogic *TheTerrainLogic;
