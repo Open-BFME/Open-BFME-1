@@ -1200,7 +1200,6 @@ void TeamTemplateInfo::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------
-// ?loadPostProcess@TeamTemplateInfo@@MAEXXZ present-unmatched
 void TeamTemplateInfo::loadPostProcess( void )
 {
 
