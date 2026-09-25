@@ -1,8 +1,8 @@
-// ?d_005b1a80@@YAXXZ
-// partial score=0.94 date=2026-09-25
-// Candidate for retail 0x005B1A80 using the proven GUI translator TU context.
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/sweep /Ireference/shims/locomotor /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/sweep /Ireference/shims/locomotor /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
+// doGuardCommand (retail 0x005B1A80): Zero Hour GUICommandTranslator.cpp twin; the
+// caller at 0x005B2077/0x005B2088/0x005B2099 passes GUARDMODE 0/1/2 and &mouse beside
+// the doAttackMoveCommand (0x005B17E0) call. BFME adds PickAndPlayInfo to the voice call.
 
 #include "PreRTS.h"
 #include "Common/Player.h"
@@ -11,6 +11,7 @@
 #include "GameClient/ControlBar.h"
 #include "GameClient/Drawable.h"
 #include "GameClient/View.h"
+#include "GameClient/InGameUI.h"
 
 class GuardTargetObject
 {
@@ -29,19 +30,19 @@ public:
 	}
 };
 
-static GuardTargetObject *validUnderCursor(const ICoord2D *mouse,
-	const CommandButton *command, PickType pickType)
+static Object *validUnderCursor(const ICoord2D *mouse, const CommandButton *command, PickType pickType)
 {
-	GuardTargetObject *pickObj = NULL;
+	Object *pickObj = NULL;
 	Drawable *pick = TheTacticalView->pickDrawable(mouse, FALSE, pickType);
-	GuardTargetObject *pickedObject = pick ?
-		*(GuardTargetObject **)((char *)pick + 0xFC) : NULL;
+
+	Object *pickedObject = pick ? *reinterpret_cast<Object **>(reinterpret_cast<char *>(pick) + 0xFC) : NULL;
 	if (pickedObject) {
 		Player *player = ThePlayerList->getLocalPlayer();
 		pickObj = pickedObject;
-		if (!command->isValidObjectTarget(player, (Object *)pickObj))
+		if (!command->isValidObjectTarget(player, pickObj))
 			pickObj = NULL;
 	}
+
 	return pickObj;
 }
 
@@ -174,9 +175,9 @@ enum CommandStatus
 extern Bool pickAndPlayUnitVoiceResponse(const GuardDrawableList *,
 	GameMessage::Type, PickAndPlayInfo *);
 
-#define GuardTheTacticalView (*(GuardTacticalView **)0x012F1600)
-#define GuardTheInGameUI (*(GuardInGameUI **)0x012F148C)
-#define GuardTheMessageStream (*(GuardMessageStream **)0x012ED5EC)
+#define GuardTheTacticalView (reinterpret_cast<GuardTacticalView *>(TheTacticalView))
+#define GuardTheInGameUI (reinterpret_cast<GuardInGameUI *>(TheInGameUI))
+#define GuardTheMessageStream (reinterpret_cast<GuardMessageStream *>(TheMessageStream))
 
 static CommandStatus doGuardCommand(const CommandButton *command,
 	GuardMode guardMode, const ICoord2D *mouse)
@@ -192,7 +193,8 @@ static CommandStatus doGuardCommand(const CommandButton *command,
 		(const GuardCommandButton *)command;
 	if (msg == NULL && (guardCommand->getOptions() & 7))
 	{
-		GuardTargetObject *target = validUnderCursor(mouse, command, PICK_TYPE_SELECTABLE);
+		GuardTargetObject *target = reinterpret_cast<GuardTargetObject *>(
+			validUnderCursor(mouse, command, PICK_TYPE_SELECTABLE));
 		if (target)
 		{
 			msg = GuardTheMessageStream->appendMessage(
@@ -226,11 +228,8 @@ static CommandStatus doGuardCommand(const CommandButton *command,
 		msg->appendLocationArgument(world);
 		msg->appendIntegerArgument((Int)guardMode);
 		PickAndPlayInfo info;
-		info.m_position.z = world.z;
-		info.m_position.x = world.x;
-		GuardInGameUI *ui = GuardTheInGameUI;
-		info.m_position.y = world.y;
-		pickAndPlayUnitVoiceResponse(ui->getAllSelectedDrawables(),
+		info.m_position = world;
+		pickAndPlayUnitVoiceResponse(GuardTheInGameUI->getAllSelectedDrawables(),
 			(GameMessage::Type)0x432, &info);
 	}
 
