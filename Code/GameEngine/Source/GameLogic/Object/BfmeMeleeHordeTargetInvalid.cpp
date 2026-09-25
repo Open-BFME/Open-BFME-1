@@ -76,7 +76,7 @@ public:
 	char m_bfmeHeadA[0x38];
 	Coord3D m_position;
 	char m_bfmeHeadB[0x94 - 0x44];
-	unsigned char m_kindFlags;
+	unsigned char m_statusByteAt0x94;
 	char m_bfmeHeadC[0x204 - 0x95];
 	void *m_bfmeAI;
 	char m_bfmeHeadD[0x344 - 0x208];
@@ -95,7 +95,9 @@ Bool bfmeMeleeHordeTargetInvalid(Object *attacker, Object *candidateVictim)
 
 	// Resolve only after the status check: geometry below may describe a member,
 	// while the early-out above always observes the machine's original target.
-	if (candidateVictim->m_kindFlags & 0x20)
+	// Object+0x94 is a byte view of the status dword; bit 0x20 selects the
+	// BFME relation resolver and is separate from any KindOfType value.
+	if (candidateVictim->m_statusByteAt0x94 & 0x20)
 	{
 		if (((RvaC4390Second *)candidateVictim)->resolve(0) != 0)
 			candidateVictim = (Object *)((RvaC4390Second *)candidateVictim)->resolve(0);

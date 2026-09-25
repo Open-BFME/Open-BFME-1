@@ -10,7 +10,8 @@
 // right about the one offset its body touched and silent -- or wrong -- about
 // every other. Placed together they agree:
 //
-//   Object        m_position +0x38, m_id +0x74, kind flags +0x94, m_ai +0x204
+//   Object        m_position +0x38, m_id +0x74, status byte view +0x94,
+//                 m_ai +0x204; bit 0x20 at +0x94 selects BFME relation resolution.
 //   StateMachine  m_owner +0x10, m_goalPosition +0x24, initDefaultState vslot
 //                 +0x1C, setState +0x20, createHuntMachine +0x24
 //   AIUpdate      m_stateMachine +0x30, getGuardLocation vslot +0x1A0,
@@ -25,7 +26,7 @@
 //   new AITNGuardMachine, guard location into +0x44 and guard mode into +0x54,
 //   initDefaultState, then setState(AI_TN_GUARD_RETURN).
 // AIGuardRetaliateState::onEnter      retail 0x0017E1F0 (199B).
-//   ZH's body plus BFME's kindFlags 0x20 melee-target resolve. The accessors
+//   ZH's body plus BFME's +0x94 status-byte 0x20 relation resolve. The accessors
 //   match the inlines in StateMachine.h / AIUpdate.h / AIGuardRetaliate.h, so
 //   the goal-position copy stays `add`-based (src +0x24, dest +0x44) and the
 //   second getMachineOwner reload can land in ecx.
@@ -130,7 +131,7 @@ public:
 	unsigned char m_objectFields44[0x30];
 	UnsignedInt m_id;
 	unsigned char m_objectFields78[0x1c];
-	unsigned char m_kindFlags;
+	unsigned char m_statusByteAt0x94;
 	unsigned char m_objectFields95[0x16f];
 	AIUpdateInterface *m_ai;
 };
@@ -374,7 +375,7 @@ StateReturnType AIGuardRetaliateState::onEnter()
 	Object *goalObject = ai->getGoalObject();
 	if (goalObject)
 	{
-		if ((goalObject->m_kindFlags & 0x20) != 0)
+		if ((goalObject->m_statusByteAt0x94 & 0x20) != 0)
 		{
 			Object *resolved = goalObject->bfmeResolveMeleeTarget(0);
 			if (resolved != 0)

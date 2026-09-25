@@ -110,13 +110,13 @@ public:
 	float getDistanceSquared(const Object *other) const;
 	ContainModuleInterface *getContain() const { return m_contain; }
 	unsigned int getMeleeFormation() const { return m_meleeFormation; }
-	Bool isMeleeHordeTarget() const { return (m_kindFlags & 0x20) != 0; }
+	Bool hasMeleeHordeResolveFlag() const { return (m_statusByteAt0x94 & 0x20) != 0; }
 
 private:
 	unsigned char m_pad_048[0x2c];
 	unsigned int m_meleeFormation;
 	unsigned char m_pad_078[0x1c];
-	unsigned char m_kindFlags;
+	unsigned char m_statusByteAt0x94;
 	unsigned char m_pad_095[0x167];
 	ContainModuleInterface *m_contain;
 };
@@ -176,7 +176,7 @@ StateReturnType AIAttackMeleeHordeWaitState::onEnter()
 		// The machine goal is the initial candidate; successful horde resolution
 		// changes the object used by the readiness check and melee commands.
 		unsigned int formation = candidateVictim->getMeleeFormation();
-		if (candidateVictim->isMeleeHordeTarget())
+		if (candidateVictim->hasMeleeHordeResolveFlag())
 		{
 			Object *resolvedMember = candidateVictim->bfmeResolveMeleeTarget(0);
 			if (resolvedMember != 0)
@@ -192,6 +192,8 @@ StateReturnType AIAttackMeleeHordeWaitState::onEnter()
 		if (!owningHorde->isMeleeTargetReady(candidateVictim))
 		{
 			int maximumDistance = 40;
+			// This template KindOfType test is distinct from the Object+0x94
+			// resolver flag above.
 			if (candidateVictim->bfmeIsKindOf(KINDOF_MELEE_HORDE_TARGET) &&
 				attacker->getLayer() != 1)
 				maximumDistance = 60;
