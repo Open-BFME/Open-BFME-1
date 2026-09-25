@@ -3198,5 +3198,25 @@
   "after_sha256": "6706f9e813f7c9fdd0781a87950a7ad0453d14e68ecaa7b8867e6bd24a6cdc21",
   "evidence": "docs/naming_evidence.md",
   "reason": "no caller vtable slot string or ZH twin names the method (caller 0x001BB530 is itself an unlanded carved body)"
+ },
+ {
+  "old_path": "reverse/attempts/0x00177f40.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_xfer.cpp",
+  "old_name": "m_fireWeaponState",
+  "new_name": "m_field50",
+  "before_sha256": "7788e0dbc8f2d1e882350903cabf5d7a1b8963b1d75e0b520b4456305f17a5aa",
+  "after_sha256": "23359c3e515c38661ae9359b38253249825b743a84e42d703dc7f43aac524d67",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "stash-invented member name with no witness (name_oracle has no layout for AIAttackMeleeEngageState); only the pointee type is evidenced by ctor 0x001712C0"
+ },
+ {
+  "old_path": "reverse/attempts/0x00177f40.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/AIAttackMeleeEngageState_xfer.cpp",
+  "old_name": "m_notifyWeaponFired",
+  "new_name": "m_field78",
+  "before_sha256": "7788e0dbc8f2d1e882350903cabf5d7a1b8963b1d75e0b520b4456305f17a5aa",
+  "after_sha256": "23359c3e515c38661ae9359b38253249825b743a84e42d703dc7f43aac524d67",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "stash-invented name with no witness; the landed ctor TU spells the same offset m_targetId so the offset name avoids the conflict; only the type is evidenced (passed as the NotifyWeaponFiredInterface* ctor argument)"
  }
 ]
