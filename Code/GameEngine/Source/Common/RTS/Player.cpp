@@ -5607,3 +5607,12 @@ void Rva000D9D30Player::method( void )
 	}
 
 }  // end Rva000D9D30Player::method
+
+// ------------------------------------------------------------------------------------------------
+/** Load post process */
+// ------------------------------------------------------------------------------------------------
+// ?loadPostProcess@Player@@MAEXXZ
+void Player::loadPostProcess( void )
+{
+
+}  // end loadPostProcess
