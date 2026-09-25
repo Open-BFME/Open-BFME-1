@@ -40,8 +40,8 @@ private:
 class Bridge
 {
 public:
-	Bool isPointOnBridge(const Coord3D *point);
-	Real getBridgeHeight(const Coord3D *point, Coord3D *normal);
+	Bool isPointOnBridge(const Coord3D *worldPosition);
+	Real getBridgeHeight(const Coord3D *worldPosition, Coord3D *surfaceNormal);
 
 	unsigned char m_pad00[4];
 	Bridge *m_next;
@@ -50,7 +50,7 @@ public:
 class Bfme5BridgeList
 {
 public:
-	char bfmeAnyBridgeAt(const Coord3D *point);
+	char bfmeAnyBridgeAt(const Coord3D *worldPosition);
 
 	unsigned char m_pad00[0x858];
 	Bridge *m_bridgeList;
@@ -65,7 +65,7 @@ public:
 	virtual void preSlot3();
 	virtual void preSlot4();
 	virtual void preSlot5();
-	virtual Real getGroundHeight(Real x, Real y, Coord3D *normal);
+	virtual Real getGroundHeight(Real worldX, Real worldY, Coord3D *surfaceNormal);
 };
 
 extern TerrainLogic *TheTerrainLogic;
@@ -73,10 +73,10 @@ extern TerrainLogic *TheTerrainLogic;
 class Pathfinder : public Bfme5BridgeList
 {
 public:
-	Bool worldToCell(const Coord3D *point, ICoord2D *cell);
-	PathfindCell *getCell(PathfindLayerEnum layer, int x, int y);
-	Real getLayerHeight(PathfindLayerEnum layer, const Coord3D *point,
-		Coord3D *normal);
+	Bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
+	PathfindCell *getCell(PathfindLayerEnum layer, int cellX, int cellY);
+	Real getLayerHeight(PathfindLayerEnum layer, const Coord3D *worldPosition,
+		Coord3D *surfaceNormal);
 
 private:
 	unsigned char m_pad858[0x243B8 - 0x85C];
@@ -84,12 +84,12 @@ private:
 };
 
 Real Pathfinder::getLayerHeight(PathfindLayerEnum layer,
-	const Coord3D *point, Coord3D *normal)
+	const Coord3D *worldPosition, Coord3D *surfaceNormal)
 {
 	{
 		ICoord2D cell;
 		PathfindCell *pathCell = 0;
-		if (!worldToCell(point, &cell))
+		if (!worldToCell(worldPosition, &cell))
 			pathCell = getCell(layer, cell.x, cell.y);
 		if (pathCell != 0 && layer != LAYER_GROUND)
 		{
@@ -98,7 +98,7 @@ Real Pathfinder::getLayerHeight(PathfindLayerEnum layer,
 			{
 				if (actualLayer == 0x10)
 				{
-					if (bfmeAnyBridgeAt(point))
+					if (bfmeAnyBridgeAt(worldPosition))
 						goto bridge_scan;
 				}
 				else
@@ -114,28 +114,28 @@ Real Pathfinder::getLayerHeight(PathfindLayerEnum layer,
 	if (layer >= 0x11 && layer <= 0x40)
 	{
 		Real height = m_layerHeights[layer];
-		if (normal != 0)
+		if (surfaceNormal != 0)
 		{
-			normal->x = 0;
-			normal->y = 0;
-			normal->z = 1;
+			surfaceNormal->x = 0;
+			surfaceNormal->y = 0;
+			surfaceNormal->z = 1;
 		}
 		return height;
 	}
 	if (layer != 0x10)
-		return point->z;
+		return worldPosition->z;
 
 bridge_scan:
 	{
 		Bridge *bridge = m_bridgeList;
 		while (bridge != 0)
 		{
-			if (bridge->isPointOnBridge(point))
-				return bridge->getBridgeHeight(point, normal);
+			if (bridge->isPointOnBridge(worldPosition))
+				return bridge->getBridgeHeight(worldPosition, surfaceNormal);
 			bridge = bridge->m_next;
 		}
 
-		Coord3D first = *point;
+		Coord3D first = *worldPosition;
 		first.x -= 10.0f;
 		first.y -= 10.0f;
 		Coord3D second = first;
@@ -151,12 +151,12 @@ bridge_scan:
 				bridge->isPointOnBridge(&second) ||
 				bridge->isPointOnBridge(&third) ||
 				bridge->isPointOnBridge(&fourth))
-				return bridge->getBridgeHeight(point, normal);
+				return bridge->getBridgeHeight(worldPosition, surfaceNormal);
 		}
 	}
 
-	return point->z;
+	return worldPosition->z;
 
 ground_height:
-	return TheTerrainLogic->getGroundHeight(point->x, point->y, normal);
+	return TheTerrainLogic->getGroundHeight(worldPosition->x, worldPosition->y, surfaceNormal);
 }
