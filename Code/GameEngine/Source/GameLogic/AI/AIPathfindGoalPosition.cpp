@@ -39,23 +39,23 @@ protected:
 		Coord3D &position, PathfindLayerEnum layer);
 };
 
-bool Pathfinder::goalPosition(Object *object, Coord3D *position)
+bool Pathfinder::goalPosition(Object *object, Coord3D *outputPosition)
 {
 	if (!object->AIUpdate)
 		return false;
 
-	int radius;
-	bool center;
-	getRadiusAndCenter(object, radius, center);
+	int objectRadius;
+	bool centerInCell;
+	getRadiusAndCenter(object, objectRadius, centerInCell);
 
-	int cellX = object->PathfindGoalX;
-	int cellY = object->PathfindGoalY;
-	position->x = 0.0f;
-	position->y = 0.0f;
-	position->z = 0.0f;
-	if (cellX < 0 || cellY < 0)
+	int goalCellX = object->PathfindGoalX;
+	int goalCellY = object->PathfindGoalY;
+	outputPosition->x = 0.0f;
+	outputPosition->y = 0.0f;
+	outputPosition->z = 0.0f;
+	if (goalCellX < 0 || goalCellY < 0)
 		return false;
 
-	adjustCoordToCell(cellX, cellY, center, *position, LAYER_GROUND);
+	adjustCoordToCell(goalCellX, goalCellY, centerInCell, *outputPosition, LAYER_GROUND);
 	return true;
 }
