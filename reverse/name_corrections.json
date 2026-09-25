@@ -4818,5 +4818,15 @@
   "after_sha256": "484169d51aaa26bc53fc2cc9109844c9821d3d70ec56e740045242dfa2ca50c4",
   "evidence": "reverse/identity_evidence/0063d210.md",
   "reason": "0x0063D210 is the errorCallback body reached from callbackWrapper 0x0063EA60 +0x36 via ILT 0x0000BEE2; Thread_Function is 0x0063EB00 per ctor 0x0063C4F0 vtable 0x01118E60 slot 2 ILT 0x0003CAD8"
+ },
+ {
+  "old_path": "reverse/attempts/0x001d22c0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Object.cpp",
+  "old_name": "BfmeDefectAICommandCall",
+  "new_name": "Rva00024D70AICommandCall",
+  "before_sha256": "c7597f4dfd465e28d31cf916c4137f4a4edb1fd0669e832f2eee6bce212e55c2",
+  "after_sha256": "6133318f442b58de2722fa55f0981d336bcd1ddf746a0ad645e96b936a6df8c2",
+  "evidence": "reverse/identity_evidence/0x001d22c0-defect.md",
+  "reason": "BfmeDefectAICommandCall is only a local ABI adapter in the banked draft, not a retail class. The source names the adapter with the callee address because ILT 0x00024D70 is pinned as AICommandInterface::aiIdle, but it does not prove a separate adapter identity."
  }
 ]

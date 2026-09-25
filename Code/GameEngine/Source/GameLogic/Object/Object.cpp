@@ -86,6 +86,7 @@ public:
 #include "GameClient/Eva.h"
 #include "GameClient/GameClient.h"
 #include "GameClient/InGameUI.h"
+#include "GameClient/CommandXlat.h"
 
 #include "GameLogic/AI.h"
 #include "GameLogic/AIPathfind.h"
@@ -6830,117 +6831,277 @@ Bool Object::canProduceUpgrade( const UpgradeTemplate *upgrade )
 //=============================================================================
 // Object::defect, and related methods                                        =
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Object/Object_defect_Thunk.cpp
-// ?defect@Object@@QAEXPAVTeam@@I@Z present-unmatched
-void Object::defect( Team* newTeam, UnsignedInt detectionTime )
+class Rva00024D70AICommandCall
 {
-	if ( isContained() ) //@todo (KRIS?) make contained units unselectable, until then... lorenzen 
-	{
-		return;
-	}
+public:
+	void invoke(int source);
+};
+#pragma comment(linker, "/alternatename:?invoke@Rva00024D70AICommandCall@@QAEXH@Z=?j_00024d70@@YAXXZ")
 
-	Player *player = getControllingPlayer();
-	if ( !player )
+// Retail calls cancelAndRefundAllProduction at vtable offset +0x34.
+class BfmeDefectProductionUpdateCall
+{
+public:
+#define BFME_DEFECT_PRODUCTION_SLOT(n) virtual void slot##n(void) = 0;
+	BFME_DEFECT_PRODUCTION_SLOT(00) BFME_DEFECT_PRODUCTION_SLOT(01)
+	BFME_DEFECT_PRODUCTION_SLOT(02) BFME_DEFECT_PRODUCTION_SLOT(03)
+	BFME_DEFECT_PRODUCTION_SLOT(04) BFME_DEFECT_PRODUCTION_SLOT(05)
+	BFME_DEFECT_PRODUCTION_SLOT(06) BFME_DEFECT_PRODUCTION_SLOT(07)
+	BFME_DEFECT_PRODUCTION_SLOT(08) BFME_DEFECT_PRODUCTION_SLOT(09)
+	BFME_DEFECT_PRODUCTION_SLOT(10) BFME_DEFECT_PRODUCTION_SLOT(11)
+	BFME_DEFECT_PRODUCTION_SLOT(12)
+	virtual void cancelAndRefundAllProduction(void) = 0;
+#undef BFME_DEFECT_PRODUCTION_SLOT
+};
+
+// The retail calls containment slots +0xBC and +0x94 for isKickOutOnCapture and removeAllContained.
+class BfmeDefectContainModuleCall
+{
+public:
+#define BFME_DEFECT_CONTAIN_SLOT(n) virtual void slot##n(void) = 0;
+	BFME_DEFECT_CONTAIN_SLOT(00) BFME_DEFECT_CONTAIN_SLOT(01)
+	BFME_DEFECT_CONTAIN_SLOT(02) BFME_DEFECT_CONTAIN_SLOT(03)
+	BFME_DEFECT_CONTAIN_SLOT(04) BFME_DEFECT_CONTAIN_SLOT(05)
+	BFME_DEFECT_CONTAIN_SLOT(06) BFME_DEFECT_CONTAIN_SLOT(07)
+	BFME_DEFECT_CONTAIN_SLOT(08) BFME_DEFECT_CONTAIN_SLOT(09)
+	BFME_DEFECT_CONTAIN_SLOT(10) BFME_DEFECT_CONTAIN_SLOT(11)
+	BFME_DEFECT_CONTAIN_SLOT(12) BFME_DEFECT_CONTAIN_SLOT(13)
+	BFME_DEFECT_CONTAIN_SLOT(14) BFME_DEFECT_CONTAIN_SLOT(15)
+	BFME_DEFECT_CONTAIN_SLOT(16) BFME_DEFECT_CONTAIN_SLOT(17)
+	BFME_DEFECT_CONTAIN_SLOT(18) BFME_DEFECT_CONTAIN_SLOT(19)
+	BFME_DEFECT_CONTAIN_SLOT(20) BFME_DEFECT_CONTAIN_SLOT(21)
+	BFME_DEFECT_CONTAIN_SLOT(22) BFME_DEFECT_CONTAIN_SLOT(23)
+	BFME_DEFECT_CONTAIN_SLOT(24) BFME_DEFECT_CONTAIN_SLOT(25)
+	BFME_DEFECT_CONTAIN_SLOT(26) BFME_DEFECT_CONTAIN_SLOT(27)
+	BFME_DEFECT_CONTAIN_SLOT(28) BFME_DEFECT_CONTAIN_SLOT(29)
+	BFME_DEFECT_CONTAIN_SLOT(30) BFME_DEFECT_CONTAIN_SLOT(31)
+	BFME_DEFECT_CONTAIN_SLOT(32) BFME_DEFECT_CONTAIN_SLOT(33)
+	BFME_DEFECT_CONTAIN_SLOT(34) BFME_DEFECT_CONTAIN_SLOT(35)
+	BFME_DEFECT_CONTAIN_SLOT(36)
+	virtual void removeAllContained(Bool ejectAll) = 0;
+	BFME_DEFECT_CONTAIN_SLOT(38) BFME_DEFECT_CONTAIN_SLOT(39)
+	BFME_DEFECT_CONTAIN_SLOT(40) BFME_DEFECT_CONTAIN_SLOT(41)
+	BFME_DEFECT_CONTAIN_SLOT(42) BFME_DEFECT_CONTAIN_SLOT(43)
+	BFME_DEFECT_CONTAIN_SLOT(44) BFME_DEFECT_CONTAIN_SLOT(45)
+	BFME_DEFECT_CONTAIN_SLOT(46)
+	virtual Bool isKickOutOnCapture(void) = 0;
+#undef BFME_DEFECT_CONTAIN_SLOT
+};
+
+// The retail calls Object slots +0x28 and +0x50 for getDrawable and setTeam.
+class BfmeDefectObjectVtableView
+{
+public:
+#define BFME_DEFECT_OBJECT_SLOT(n) virtual void slot##n(void) = 0;
+	BFME_DEFECT_OBJECT_SLOT(00) BFME_DEFECT_OBJECT_SLOT(01)
+	BFME_DEFECT_OBJECT_SLOT(02) BFME_DEFECT_OBJECT_SLOT(03)
+	BFME_DEFECT_OBJECT_SLOT(04) BFME_DEFECT_OBJECT_SLOT(05)
+	BFME_DEFECT_OBJECT_SLOT(06) BFME_DEFECT_OBJECT_SLOT(07)
+	BFME_DEFECT_OBJECT_SLOT(08) BFME_DEFECT_OBJECT_SLOT(09)
+	virtual Drawable *getDrawable(void) = 0;
+	BFME_DEFECT_OBJECT_SLOT(11) BFME_DEFECT_OBJECT_SLOT(12)
+	BFME_DEFECT_OBJECT_SLOT(13) BFME_DEFECT_OBJECT_SLOT(14)
+	BFME_DEFECT_OBJECT_SLOT(15) BFME_DEFECT_OBJECT_SLOT(16)
+	BFME_DEFECT_OBJECT_SLOT(17) BFME_DEFECT_OBJECT_SLOT(18)
+	BFME_DEFECT_OBJECT_SLOT(19)
+	virtual void setTeam(Team *newTeam) = 0;
+#undef BFME_DEFECT_OBJECT_SLOT
+};
+
+// The Zero Hour Object declaration supplies these member names. Retail instructions place them at the BFME offsets below.
+class BfmeDefectObjectFields
+{
+public:
+	void *m_vtable;
+	unsigned char m_beforeID[0x74 - 0x04];
+	UnsignedInt m_id;
+	unsigned char m_beforeStatus[0x90 - 0x78];
+	UnsignedInt m_status;
+	unsigned char m_beforeDefectionHelper[0x1e4 - 0x94];
+	ObjectDefectionHelper *m_defectionHelper;
+	unsigned char m_beforeContain[0x1fc - 0x1e8];
+	BfmeDefectContainModuleCall *m_contain;
+	unsigned char m_beforeAI[0x204 - 0x200];
+	AIUpdateInterface *m_ai;
+	unsigned char m_beforeRadar[0x20c - 0x208];
+	RadarObject *m_radarData;
+	unsigned char m_beforeContainedBy[0x214 - 0x210];
+	Object *m_containedBy;
+	unsigned char m_beforeTeam[0x23c - 0x218];
+	Team *m_team;
+	unsigned char m_beforePartition[0x3b0 - 0x240];
+	BfmeDirtyablePartitionData *m_partitionData;
+};
+
+class Rva0004067ECall
+{
+public:
+	void invoke(int mode);
+};
+#pragma comment(linker, "/alternatename:?invoke@Rva0004067ECall@@QAEXH@Z=?j_0004067e@@YAXXZ")
+
+class BfmeAudioEventRTS
+{
+public:
+	BfmeAudioEventRTS(const BfmeAudioEventRTS &other);
+	~BfmeAudioEventRTS(void);
+	void setObjectID(UnsignedInt objectID);
+	void setPlayerIndex(int playerIndex);
+
+private:
+	unsigned char m_data[0x70];
+};
+#pragma comment(linker, "/alternatename:??0BfmeAudioEventRTS@@QAE@ABV0@@Z=?j_00047b27@@YAXXZ")
+#pragma comment(linker, "/alternatename:??1BfmeAudioEventRTS@@QAE@XZ=?j_00026f35@@YAXXZ")
+#pragma comment(linker, "/alternatename:?setObjectID@BfmeAudioEventRTS@@QAEXI@Z=?j_00019a6a@@YAXXZ")
+#pragma comment(linker, "/alternatename:?setPlayerIndex@BfmeAudioEventRTS@@QAEXH@Z=?j_0003ac88@@YAXXZ")
+
+struct Rva005A00B0MiscAudio
+{
+	unsigned char m_beforeDefectorTimerSound[0x230];
+	BfmeAudioEventRTS m_defectorTimerTickSound;
+};
+
+// Retail uses audio slots +0x44 and +0x124 for addAudioEvent and getMiscAudio.
+class Rva005A00B0AudioClient
+{
+public:
+#define BFME_DEFECT_AUDIO_SLOT(n) virtual void slot##n(void) = 0;
+	BFME_DEFECT_AUDIO_SLOT(00) BFME_DEFECT_AUDIO_SLOT(01)
+	BFME_DEFECT_AUDIO_SLOT(02) BFME_DEFECT_AUDIO_SLOT(03)
+	BFME_DEFECT_AUDIO_SLOT(04) BFME_DEFECT_AUDIO_SLOT(05)
+	BFME_DEFECT_AUDIO_SLOT(06) BFME_DEFECT_AUDIO_SLOT(07)
+	BFME_DEFECT_AUDIO_SLOT(08) BFME_DEFECT_AUDIO_SLOT(09)
+	BFME_DEFECT_AUDIO_SLOT(10) BFME_DEFECT_AUDIO_SLOT(11)
+	BFME_DEFECT_AUDIO_SLOT(12) BFME_DEFECT_AUDIO_SLOT(13)
+	BFME_DEFECT_AUDIO_SLOT(14) BFME_DEFECT_AUDIO_SLOT(15)
+	BFME_DEFECT_AUDIO_SLOT(16)
+	virtual UnsignedInt addAudioEvent(BfmeAudioEventRTS *event) = 0;
+	BFME_DEFECT_AUDIO_SLOT(18) BFME_DEFECT_AUDIO_SLOT(19)
+	BFME_DEFECT_AUDIO_SLOT(20) BFME_DEFECT_AUDIO_SLOT(21)
+	BFME_DEFECT_AUDIO_SLOT(22) BFME_DEFECT_AUDIO_SLOT(23)
+	BFME_DEFECT_AUDIO_SLOT(24) BFME_DEFECT_AUDIO_SLOT(25)
+	BFME_DEFECT_AUDIO_SLOT(26) BFME_DEFECT_AUDIO_SLOT(27)
+	BFME_DEFECT_AUDIO_SLOT(28) BFME_DEFECT_AUDIO_SLOT(29)
+	BFME_DEFECT_AUDIO_SLOT(30) BFME_DEFECT_AUDIO_SLOT(31)
+	BFME_DEFECT_AUDIO_SLOT(32) BFME_DEFECT_AUDIO_SLOT(33)
+	BFME_DEFECT_AUDIO_SLOT(34) BFME_DEFECT_AUDIO_SLOT(35)
+	BFME_DEFECT_AUDIO_SLOT(36) BFME_DEFECT_AUDIO_SLOT(37)
+	BFME_DEFECT_AUDIO_SLOT(38) BFME_DEFECT_AUDIO_SLOT(39)
+	BFME_DEFECT_AUDIO_SLOT(40) BFME_DEFECT_AUDIO_SLOT(41)
+	BFME_DEFECT_AUDIO_SLOT(42) BFME_DEFECT_AUDIO_SLOT(43)
+	BFME_DEFECT_AUDIO_SLOT(44) BFME_DEFECT_AUDIO_SLOT(45)
+	BFME_DEFECT_AUDIO_SLOT(46) BFME_DEFECT_AUDIO_SLOT(47)
+	BFME_DEFECT_AUDIO_SLOT(48) BFME_DEFECT_AUDIO_SLOT(49)
+	BFME_DEFECT_AUDIO_SLOT(50) BFME_DEFECT_AUDIO_SLOT(51)
+	BFME_DEFECT_AUDIO_SLOT(52) BFME_DEFECT_AUDIO_SLOT(53)
+	BFME_DEFECT_AUDIO_SLOT(54) BFME_DEFECT_AUDIO_SLOT(55)
+	BFME_DEFECT_AUDIO_SLOT(56) BFME_DEFECT_AUDIO_SLOT(57)
+	BFME_DEFECT_AUDIO_SLOT(58) BFME_DEFECT_AUDIO_SLOT(59)
+	BFME_DEFECT_AUDIO_SLOT(60) BFME_DEFECT_AUDIO_SLOT(61)
+	BFME_DEFECT_AUDIO_SLOT(62) BFME_DEFECT_AUDIO_SLOT(63)
+	BFME_DEFECT_AUDIO_SLOT(64) BFME_DEFECT_AUDIO_SLOT(65)
+	BFME_DEFECT_AUDIO_SLOT(66) BFME_DEFECT_AUDIO_SLOT(67)
+	BFME_DEFECT_AUDIO_SLOT(68) BFME_DEFECT_AUDIO_SLOT(69)
+	BFME_DEFECT_AUDIO_SLOT(70) BFME_DEFECT_AUDIO_SLOT(71)
+	BFME_DEFECT_AUDIO_SLOT(72)
+	virtual Rva005A00B0MiscAudio *getMiscAudio(void) = 0;
+#undef BFME_DEFECT_AUDIO_SLOT
+};
+
+extern Rva005A00B0AudioClient *TheAudioClientUpdate;
+
+// The __fastcall pointer puts the event in EDX and on the stack. The retail slot receives the event from the stack.
+typedef UnsignedInt (__fastcall *Rva005A00B0AddAudioEventCall)(
+	Rva005A00B0AudioClient *, BfmeAudioEventRTS *, BfmeAudioEventRTS *);
+struct Rva005A00B0AudioClientVtable
+{
+	void *slots[17];
+	Rva005A00B0AddAudioEventCall addAudioEvent;
+};
+
+// The matched CaveContain::changeTeamOnAllConnectedCaves caller invokes Object::defect for each connected cave.
+void Object::defect(Team *newTeam, UnsignedInt detectionTime)
+{
+	BfmeDefectObjectFields *self = reinterpret_cast<BfmeDefectObjectFields *>(this);
+
+	if (self->m_containedBy)
 		return;
 
-	Team* myTeam = player->getDefaultTeam();
-	if ( myTeam == newTeam ) // can't defect from my own team, that would be silly
+	if (!self->m_team)
 		return;
-	
-	// things that are under construction, or sold, cannot defect.
-	if (testStatus(OBJECT_STATUS_UNDER_CONSTRUCTION) ||
-			testStatus(OBJECT_STATUS_SOLD))
-	{
+
+	Player *player = self->m_team->getControllingPlayer();
+	if (!player)
 		return;
-	}	
 
-	// Before switch ////////////////////////////////////////
+	Team *myTeam = *reinterpret_cast<Team **>(reinterpret_cast<char *>(player) + 0x230);
+	if (myTeam == newTeam)
+		return;
 
-	//Design says: 
-	ProductionUpdateInterface *production = getProductionUpdateInterface();
-	if ( production )
-	{
+	if ((self->m_status & 0x00000004) != 0 || (self->m_status & 0x00080000) != 0)
+		return;
+
+	BfmeDefectProductionUpdateCall *production =
+		reinterpret_cast<BfmeDefectProductionUpdateCall *>(getProductionUpdateInterface());
+	if (production)
 		production->cancelAndRefundAllProduction();
+
+	if (self->m_radarData &&
+		newTeam->getControllingPlayer()->isPlayableSide() &&
+		myTeam->getControllingPlayer()->isPlayableSide())
+	{
+		TheRadar->tryInfiltrationEvent(this);
 	}
 
-	// pop it up on the radar, so as to warn those who care
-	// do this first, since after setTeam() the infiltrator
-	// becomes the controllingplayer, not me 
+	friend_setUndetectedDefector(detectionTime > 0);
 
-	// But don't do this is if the new team is not a real team.  "'Enemy' infiltration" wouldn't make
-	// sense, and we are probably just reverting a cave or something.
-	if( friend_getRadarData() && newTeam->getControllingPlayer()->isPlayableSide() && myTeam->getControllingPlayer()->isPlayableSide())
+	if (self->m_defectionHelper)
+		self->m_defectionHelper->startDefectionTimer(detectionTime, true);
+
+	reinterpret_cast<BfmeDefectObjectVtableView *>(this)->setTeam(newTeam);
+
+	AIUpdateInterface *ai = self->m_ai;
+	if (self->m_partitionData)
+		self->m_partitionData->makeDirty();
+
+	if (ai)
 	{
-		TheRadar->tryInfiltrationEvent( this );
+		reinterpret_cast<Rva00024D70AICommandCall *>(
+			reinterpret_cast<char *>(ai) + 0x20)->invoke(2);
 	}
 
-	friend_setUndetectedDefector( detectionTime > 0 );
-
-	if (m_defectionHelper)
-		m_defectionHelper->startDefectionTimer(detectionTime);
-
-	// Switch ////////////////////////////////////////
-	setTeam( newTeam );
-
-	// After switch ////////////////////////////////////////
-	
-	AIUpdateInterface *ai = getAI();
-
-	handlePartitionCellMaintenance();// to clear the shoud for my new master
-
-	if ( ai )
+	Drawable *drawable =
+		reinterpret_cast<BfmeDefectObjectVtableView *>(this)->getDrawable();
+	if (drawable)
 	{
-		ai->aiIdle( CMD_FROM_AI );
-	}
+		reinterpret_cast<Rva0004067ECall *>(drawable)->invoke(0);
 
-	// Play our sound indicating we've been defected. (weird verbage, but true.)
-	AudioEventRTS voiceDefect = *getTemplate()->getVoiceDefect();
-	voiceDefect.setObjectID(getID());
-	TheAudio->addAudioEvent(&voiceDefect);
-
-	//make the new recruit the only selected thing, awaiting new command to move, attack, etc...
-	Drawable *dr = getDrawable();
-	if (dr)
-	{
-		dr->flashAsSelected(); //This is the first of several flashes which get cue'd by doDefectorUpdateStuff()
-		AudioEventRTS defectorTimerSound = TheAudio->getMiscAudio()->m_defectorTimerTickSound;
-		defectorTimerSound.setObjectID( getID() );
-		TheAudio->addAudioEvent(&defectorTimerSound);
-	}
-	
-	ContainModuleInterface *ct = getContain();
-	if( ct  &&  ct->isKickOutOnCapture() )
-	{
-		// Caves really really don't want to do this.
-		ct->removeAllContained( TRUE );
-	}
-
-	// if it has parking places, defect anything parked there.
-	for (BehaviorModule** i = getBehaviorModules(); *i; ++i)
-	{
-		ParkingPlaceBehaviorInterface* pp = (*i)->getParkingPlaceBehaviorInterface();
-		if (pp)
+		Rva005A00B0MiscAudio *misc = TheAudioClientUpdate->getMiscAudio();
+		BfmeAudioEventRTS defectorTimerSound(misc->m_defectorTimerTickSound);
+		defectorTimerSound.setObjectID(self->m_id);
+		if (newTeam->getControllingPlayer())
 		{
-			pp->defectAllParkedUnits(newTeam, detectionTime);
-			break;
+			Player *newPlayer = newTeam->getControllingPlayer();
+			int playerIndex = *reinterpret_cast<int *>(reinterpret_cast<char *>(newPlayer) + 0x24);
+			defectorTimerSound.setPlayerIndex(playerIndex);
 		}
+
+		Rva005A00B0AudioClientVtable *audioVtable =
+			reinterpret_cast<Rva005A00B0AudioClientVtable *>(
+				*reinterpret_cast<void **>(TheAudioClientUpdate));
+		audioVtable->addAudioEvent(TheAudioClientUpdate, &defectorTimerSound,
+			&defectorTimerSound);
+
+		_STL::list<Drawable *> drawables;
+		drawables.push_back(drawable);
+		pickAndPlayUnitVoiceResponse(&drawables,
+			static_cast<GameMessage::Type>(0x7df), 0);
 	}
 
-	// defect any mines that are owned by this structure, right now.
-	// unfortunately, structures don't keep list of mines they own, so we must do
-	// this the hard way :-( [fortunately, this doens't happen very often, so this
-	// is probably an acceptable, if icky, solution.] (srj)
-	for (Object* mine = TheGameLogic->getFirstObject(); mine; mine = mine->getNextObject())
-	{
-		if (mine->isKindOf(KINDOF_MINE))
-		{
-			if (mine->getProducerID() == this->getID())
-			{
-				mine->setTeam(newTeam);
-			}
-		}
-	}
-
+	BfmeDefectContainModuleCall *contain = self->m_contain;
+	if (contain && contain->isKickOutOnCapture())
+		contain->removeAllContained(true);
 }
 
 //=============================================================================
