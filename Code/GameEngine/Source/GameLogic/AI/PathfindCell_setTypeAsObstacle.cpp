@@ -74,13 +74,13 @@ public:
 extern PathfindCellInfo *g_bfmePathfindFreeList;
 
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
-	PathfindCellInfo **freeList, PathfindCell *cell, const ICoord2D *pos);
+	PathfindCellInfo **freeListHead, PathfindCell *pathfindCell, const ICoord2D *cellPosition);
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
 class PathfindCell
 {
 public:
-	void setTypeAsObstacle(Object *obstacle, Bool isFence, const ICoord2D &pos);
+	void setTypeAsObstacle(Object *obstacle, Bool isFence, const ICoord2D &cellPosition);
 
 private:
 	PathfindCellInfo *m_info;
@@ -89,7 +89,7 @@ private:
 };
 
 void PathfindCell::setTypeAsObstacle(Object *obstacle, Bool isFence,
-	const ICoord2D &pos)
+	const ICoord2D &cellPosition)
 {
 	unsigned int type = m_packed & 7;
 	if (type != 0 && type != 5)
@@ -116,7 +116,7 @@ void PathfindCell::setTypeAsObstacle(Object *obstacle, Bool isFence,
 		{
 			if (g_bfmePathfindFreeList == 0)
 				PathfindCellInfo::allocateCellInfos();
-			m_info = bfmeAcquirePathfindCellInfo(&g_bfmePathfindFreeList, this, &pos);
+			m_info = bfmeAcquirePathfindCellInfo(&g_bfmePathfindFreeList, this, &cellPosition);
 		}
 		else
 			m_info->m_next = 0;

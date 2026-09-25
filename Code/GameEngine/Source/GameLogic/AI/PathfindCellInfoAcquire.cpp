@@ -34,9 +34,9 @@ extern PathfindCellInfo *g_bfmePathfindFreeList; // retail 0x012F1094
 extern int g_bfmePathfindInfoIssued;             // retail 0x012F1098
 
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
-	PathfindCellInfo **freeList, PathfindCell *cell, const ICoord2D *pos)
+	PathfindCellInfo **freeListHead, PathfindCell *pathfindCell, const ICoord2D *cellPosition)
 {
-	PathfindCellInfo *info = *freeList;
+	PathfindCellInfo *info = *freeListHead;
 	if (info->m_freePrevLink != 0)
 	{
 		*info->m_freePrevLink = info->m_freeNext;
@@ -46,8 +46,8 @@ PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 		info->m_freeNext = 0;
 	}
 
-	info->m_cell = cell;
-	info->m_pos = *pos;
+	info->m_cell = pathfindCell;
+	info->m_pos = *cellPosition;
 	info->m_nextOpen = 0;
 	info->m_prevOpen = 0;
 	info->m_totalCost = 0;
@@ -65,17 +65,17 @@ PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 class PathfindCell
 {
 public:
-	void bfmeEnsureInfo(const ICoord2D *pos);
+	void bfmeEnsureInfo(const ICoord2D *cellPosition);
 	PathfindCellInfo *m_info;
 };
 
-void PathfindCell::bfmeEnsureInfo(const ICoord2D *pos)
+void PathfindCell::bfmeEnsureInfo(const ICoord2D *cellPosition)
 {
 	if (m_info == 0)
 	{
 		if (g_bfmePathfindFreeList == 0)
 			PathfindCellInfo::allocateCellInfos();
-		m_info = bfmeAcquirePathfindCellInfo(&g_bfmePathfindFreeList, this, pos);
+		m_info = bfmeAcquirePathfindCellInfo(&g_bfmePathfindFreeList, this, cellPosition);
 	}
 	else
 	{
