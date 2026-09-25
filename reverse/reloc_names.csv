@@ -1589,7 +1589,7 @@ _gpiCheckSocketConnect,0x008ECB40,181,Code/GameEngine/Source/GameNetwork/GameSpy
 ??1Gen_dtor_00956240@@UAE@XZ,0x00956260,235,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ?handle@Gen00958BF0@@QAEXXZ,0x00958BF0,70,Code/GameEngine/Source/Common/R1GuardedReleaseHelpers.cpp,reloc-derived;call-sites=1;identity=generated
 ?Set_Texture@Rva0095C7A0SegLineRendererClass@@QAEXPAVTextureClass@@@Z,0x0095C7A0,47,Code/Libraries/Source/WWVegas/WW3D2/streak.cpp,reloc-derived;call-sites=1;identity=generated
-?RenderStreak@StreakRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@PAVVector4@@PAMABVSphereClass@@PAI@Z,0x0095CE80,12206,Code/Libraries/Source/WWVegas/WW3D2/StreakLineRender.cpp,reloc-derived;call-sites=1;identity=real
+?RenderStreak@StreakRendererClass@@QAEXAAVRenderInfoClass@@ABVMatrix3D@@IPAVVector3@@PAVVector4@@PAMABVSphereClass@@PAI@Z,0x0095CE80,12233,Code/Libraries/Source/WWVegas/WW3D2/StreakLineRender.cpp,reloc-derived;call-sites=1;identity=real;boundary=ret32-at-0x0095FE46-followed-by-int3-through-0x0095FE4F
 ??1Gen_dtor_0096aca0@@UAE@XZ,0x0096A920,73,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_0096ea40@@UAE@XZ,0x0096E900,45,Code/gen_small/dtors_009.cpp,reloc-derived;call-sites=1;identity=generated
 ?read_shaders@MeshModelClass@@IAE_NAAVChunkLoadClass@@PAVMeshLoadContextClass@@@Z,0x0096EB30,272,Code/Libraries/Source/WWVegas/WW3D2/MeshModelClass_read_prelit_material_Thunk.cpp,reloc-derived;call-sites=1;identity=real
