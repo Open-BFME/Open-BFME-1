@@ -1,5 +1,5 @@
-// ?d_0020c3b0@@YAXXZ
-// partial score=0.33 date=2026-09-23
+// ?createSpawn@SpawnBehavior@@AAE_NXZ
+// partial score=0.37 date=2026-09-24
 // BFME SpawnBehavior::createSpawn reconstruction at retail RVA 0x0020C3B0.
 // The local views preserve the BFME module and object offsets without shared-header edits.
 // stlport
@@ -463,7 +463,8 @@ Bool SpawnBehavior::createSpawn()
 							continue;
 						Real dx = curSpawn->getPosition()->x - parent->getPosition()->x;
 						Real dy = curSpawn->getPosition()->y - parent->getPosition()->y;
-						tapeMeasure = dx * dx + dy * dy;
+						tapeMeasure = dx * dx;
+						tapeMeasure = tapeMeasure + dy * dy;
 						if (tapeMeasure < closest)
 						{
 							closest = tapeMeasure;
