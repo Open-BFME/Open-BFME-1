@@ -46,26 +46,26 @@ struct Rva003D79C0Struct : Gen_003d6680
 class Pathfinder : public BfmeP1181
 {
 public:
-	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
-		PathfindLayerEnum layer, Rva003D79C0Struct *info);
-	void bfmeAdjustLOSPoints(Coord3D *first, Coord3D *second);
+	Int iterateCellsAlongLine(const ICoord2D &startCell, const ICoord2D &destinationCell,
+		PathfindLayerEnum layer, Rva003D79C0Struct *resultInfo);
+	void bfmeAdjustLOSPoints(Coord3D *startPosition, Coord3D *endPosition);
 };
 
 // ?bfmeAdjustLOSPoints@Pathfinder@@QAEXPAUCoord3D@@0@Z
-void Pathfinder::bfmeAdjustLOSPoints(Coord3D *first, Coord3D *second)
+void Pathfinder::bfmeAdjustLOSPoints(Coord3D *startPosition, Coord3D *endPosition)
 {
 	Rva003D79C0Struct info;
 	info.m((Int)this);
 
 	BfmePair1181 firstCell;
 	BfmePair1181 secondCell;
-	bfmeConv1181(first, &firstCell);
-	bfmeConv1181(second, &secondCell);
+	bfmeConv1181(startPosition, &firstCell);
+	bfmeConv1181(endPosition, &secondCell);
 
 	if (iterateCellsAlongLine(*(ICoord2D *)&firstCell,
 		*(ICoord2D *)&secondCell, LAYER_GROUND, &info))
 	{
-		first->x = info.x;
-		first->y = info.y;
+		startPosition->x = info.x;
+		startPosition->y = info.y;
 	}
 }
