@@ -55,7 +55,7 @@ public:
 class AIGuardMachine
 {
 public:
-	void getGuardScanPos(Coord3D *out);
+	void getGuardScanPos(Coord3D *scanPosition);
 
 	char m_pad00[0x10];
 	Object *m_owner;
@@ -68,7 +68,7 @@ public:
 	unsigned char m_areaFlag;
 };
 
-void AIGuardMachine::getGuardScanPos(Coord3D *out)
+void AIGuardMachine::getGuardScanPos(Coord3D *scanPosition)
 {
 	Object *obj = TheGameLogic->findObjectByID(m_targetToGuard);
 	Team *team = TheTeamFactory->findTeamByID(m_teamToGuard);
@@ -112,7 +112,7 @@ void AIGuardMachine::getGuardScanPos(Coord3D *out)
 		pos.z = ((Coord3D *)owner)->z;
 	}
 
-	out->x = pos.x;
-	out->y = pos.y;
-	out->z = pos.z;
+	scanPosition->x = pos.x;
+	scanPosition->y = pos.y;
+	scanPosition->z = pos.z;
 }
