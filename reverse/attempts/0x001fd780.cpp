@@ -1,11 +1,11 @@
-// ?onObjectCreated@GateOpenAndCloseBehavior@@UAEXXZ
-// partial score=0.85 date=2026-09-25
-// Scratch-only follow-up for retail RVA 0x001FD780 (381 bytes).
+// ?d_001fd780@@YAXXZ
+// partial score=0.98 date=2026-09-25
+// Partial reconstruction for retail RVA 0x001FD780 (381 bytes).
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
-// Identity remains GateOpenAndCloseBehavior::onObjectCreated: vtable
-// 0x010A40C4 slot 1, the matched constructor at 0x001FC580, and the
-// GateProxyBehavior lookup all agree.  The secondary-base adjustment before
-// update(bool) is retained from the prior evidence-backed draft.
+// Vtable 0x010A40C4 slot 1, constructor 0x001FC580, and the
+// GateProxyBehavior lookup prove GateOpenAndCloseBehavior::onObjectCreated.
+// The prior draft models the adjustment for the secondary base before
+// update(bool).
 //
 // This TU deliberately uses the canonical WWLib AsciiString/StringBase view.
 // The target's local is default-constructed, filled by StringBase::set at
@@ -143,11 +143,10 @@ void GateOpenAndCloseBehavior::onObjectCreated()
 			Module *module = candidate->findModule(gateKey);
 			if (module != 0)
 			{
-				GateOpenAndCloseBehavior *gate =
-					(GateOpenAndCloseBehavior *)((unsigned char *)module - 4);
-				if (gate != 0)
+				if (((GateOpenAndCloseBehavior *)((unsigned char *)module - 4)) != 0)
 				{
-					gate->m_linkedObjectId = self->m_object->m_id_at_74;
+					((GateOpenAndCloseBehavior *)((unsigned char *)module - 4))
+						->m_linkedObjectId = self->m_object->m_id_at_74;
 					((GateOpenAndCloseBehavior *)((unsigned char *)this - 4))
 						->m_linkedObjectId = candidate->m_id_at_74;
 				}

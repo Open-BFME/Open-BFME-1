@@ -1,5 +1,5 @@
 // ?d_002475a0@@YAXXZ
-// partial score=0.4 date=2026-09-17
+// partial score=0.43 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
 // stlport
 
@@ -22,6 +22,10 @@ typedef unsigned int UnsignedInt;
 
 struct Rva002475A0XferVersion
 {
+	Rva002475A0XferVersion() {}
+	Rva002475A0XferVersion(unsigned char version, unsigned char currentVersion)
+		: m_version(version), m_currentVersion(currentVersion) {}
+
 	unsigned char m_version;
 	unsigned char m_currentVersion;
 };
@@ -66,6 +70,12 @@ public:
 	virtual void slot34();
 	virtual Rva002475A0Xfer &xferBool(Bool *value);
 };
+
+static __forceinline void rva002475a0XferVersion(
+	Rva002475A0Xfer *xfer, const Rva002475A0XferVersion &version)
+{
+	xfer->xferVersion((Rva002475A0XferVersion *)&version);
+}
 
 extern void j_0000c9b4();
 extern void j_0001f91f();
@@ -256,10 +266,8 @@ void Rva002475A0HordeContain::xfer(Rva002475A0Xfer *xfer)
 	if (xfer->isLightCRC())
 		return;
 
-	Rva002475A0XferVersion version;
-	version.m_version = 1;
-	version.m_currentVersion = 3;
-	xfer->xferVersion(&version);
+	const Rva002475A0XferVersion &version = Rva002475A0XferVersion(1, 3);
+	rva002475a0XferVersion(xfer, version);
 	xfer->xferBool(&m_flagE8);
 	xfer->xferUnsignedInt((UnsignedInt *)((unsigned char *)this + 0x140));
 	xfer->xferBool(&m_flagE9);
@@ -383,7 +391,7 @@ void Rva002475A0HordeContain::xfer(Rva002475A0Xfer *xfer)
 
 	xfer->xferBool(&m_flag1fc);
 	xfer->xferBool(&m_flag1fd);
-	int vector28Count = (int)(m_vector28._M_finish - m_vector28._M_start);
+	int vector28Count = (int)m_vector28.size();
 	xfer->xferInt(&vector28Count);
 	if (xfer->isLoading())
 	{
@@ -395,7 +403,7 @@ void Rva002475A0HordeContain::xfer(Rva002475A0Xfer *xfer)
 		value.m_flag = true;
 		value.m_tail0 = 0;
 		value.m_tail1 = 0;
-		int oldCount = (int)(m_vector28._M_finish - m_vector28._M_start);
+		int oldCount = (int)m_vector28.size();
 		if (vector28Count < oldCount)
 			m_vector28._M_finish = m_vector28._M_start + vector28Count;
 		else if (vector28Count > oldCount)
@@ -415,11 +423,11 @@ void Rva002475A0HordeContain::xfer(Rva002475A0Xfer *xfer)
 		value.m_tail0 = 0;
 		value.m_tail1 = 0;
 		if (!xfer->isLoading())
-			value = m_vector28._M_start[i];
+			value = m_vector28.begin()[i];
 		xfer->xferSnapshot(&value.m_snapshot0);
 		xfer->xferBool(&value.m_flag);
 		if (xfer->isLoading())
-			m_vector28._M_start[i] = value;
+			m_vector28.begin()[i] = value;
 	}
 
 	rva002475a0ObjectID(xfer, &m_objectID1e4);
