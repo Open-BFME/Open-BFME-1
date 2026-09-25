@@ -17,9 +17,9 @@ public:
 		kInit = 0
 	};
 
-	BitFlags(BogusInitType, Int index)
+	BitFlags(BogusInitType, Int bitIndex)
 	{
-		m_bits.set(index);
+		m_bits.set(bitIndex);
 	}
 
 private:
