@@ -589,47 +589,11 @@ void Animatable3DObjClass::Set_Animation
 	HAnimComboClass * anim_combo
 )
 {
-	__asm {
-		_emit 056h
-		_emit 08Bh
-		_emit 0F1h
-		_emit 0E8h
-		_emit 058h
-		_emit 0FDh
-		_emit 0FFh
-		_emit 0FFh
-		_emit 08Bh
-		_emit 044h
-		_emit 024h
-		_emit 008h
-		_emit 0C7h
-		_emit 086h
-		_emit 004h
-		_emit 001h
-		_emit 000h
-		_emit 000h
-		_emit 004h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 089h
-		_emit 086h
-		_emit 008h
-		_emit 001h
-		_emit 000h
-		_emit 000h
-		_emit 0C6h
-		_emit 086h
-		_emit 0F8h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 000h
-		_emit 05Eh
-		_emit 0C2h
-		_emit 004h
-		_emit 000h
-	}
+	Release();
+
+	CurMotionMode = MULTIPLE_ANIM;
+	ModeCombo.AnimCombo = anim_combo;
+	Set_Hierarchy_Valid(false);
 }
 
 
