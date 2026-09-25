@@ -1,6 +1,10 @@
 // ?select@Rva003C1EE0Owner@@QAEHPAX0PAURva003C1EE0Pair@@@Z
-// partial score=0.2 date=2026-09-23
+// partial score=0.55 date=2026-09-25
+// ?select@Rva003C1EE0Owner@@QAEHPAX0PAURva003C1EE0Pair@@@Z
+// Hypothesis: the byte flags are passed as direct one-byte value objects.
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /D_STLP_NO_EXCEPTIONS
+
+#include "../../Code/Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 struct Rva003C1EE0Pair
 {
@@ -8,17 +12,11 @@ struct Rva003C1EE0Pair
 	float m_y;
 };
 
-struct Rva003C1EE0OpaqueValue
-{
-	unsigned int m_opaque;
-	void releaseBuffer();
-};
-
 struct Rva003C1EE0TempList
 {
-	Rva003C1EE0OpaqueValue *m_begin;
-	Rva003C1EE0OpaqueValue *m_end;
-	Rva003C1EE0OpaqueValue *m_capacity;
+	AsciiString *m_begin;
+	AsciiString *m_end;
+	AsciiString *m_capacity;
 
 	Rva003C1EE0TempList()
 		: m_begin(0), m_end(0), m_capacity(0)
@@ -30,9 +28,17 @@ struct Rva003C1EE0TempList
 
 class Gen003BD8D0Built;
 
+struct Rva003C1EE0Flag
+{
+	unsigned char m_value;
+	Rva003C1EE0Flag(unsigned char value) : m_value(value) {}
+};
+
 class Rva003CA710Owner
 {
 public:
+	void refreshRaw(Rva003C1EE0Flag includeDisabled,
+		Rva003C1EE0Flag requireSecond);
 	void refresh(bool includeDisabled, bool requireSecond);
 };
 
@@ -55,8 +61,8 @@ struct Rva003C1EE0InputView
 	int m_resultC4;
 	int m_resultC8;
 	int m_resultCC;
-	bool m_flagD0;
-	bool m_flagD1;
+	unsigned char m_flagD0;
+	unsigned char m_flagD1;
 	unsigned char m_padD2[0x1A];
 	Rva003C1EE0NestedView *m_nestedEC;
 };
@@ -74,7 +80,7 @@ private:
 
 #pragma comment(linker, "/alternatename:?measurePair@Rva003C1EE0Owner@@QAEXPAURva003C1EE0TempList@@PAURva003C1EE0Pair@@@Z=?j_000231d7@@YAXXZ")
 #pragma comment(linker, "/alternatename:??1Rva003C1EE0TempList@@QAE@XZ=?j_00026ab2@@YAXXZ")
-#pragma comment(linker, "/alternatename:?releaseBuffer@Rva003C1EE0OpaqueValue@@QAEXXZ=?releaseBuffer@BFMERetailAsciiString@@AAEXXZ")
+#pragma comment(linker, "/alternatename:?refreshRaw@Rva003CA710Owner@@QAEXURva003C1EE0Flag@@0@Z=?refresh@Rva003CA710Owner@@QAEX_N0@Z")
 
 int Rva003C1EE0Owner::select(void *input, void *candidate,
 	Rva003C1EE0Pair *out)
@@ -92,8 +98,9 @@ int Rva003C1EE0Owner::select(void *input, void *candidate,
 	int selectedIndex;
 	{
 		Rva003C1EE0TempList list;
-		((Rva003CA710Owner *)m_manager)->refresh(
-			view->m_flagD0, view->m_flagD1);
+		((Rva003CA710Owner *)m_manager)->refreshRaw(
+			Rva003C1EE0Flag(view->m_flagD0),
+			Rva003C1EE0Flag(view->m_flagD1));
 		if (view->m_flagD1)
 			view->m_nestedEC->m_flag18 = true;
 
@@ -109,7 +116,7 @@ int Rva003C1EE0Owner::select(void *input, void *candidate,
 		int index = 0;
 		while (index < list.m_end - list.m_begin)
 		{
-			list.m_begin[index].releaseBuffer();
+			list.m_begin[index].clear();
 			++index;
 		}
 	}
