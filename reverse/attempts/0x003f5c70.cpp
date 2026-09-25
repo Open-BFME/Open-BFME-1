@@ -1,5 +1,5 @@
 // ?rva003f5c70@Pathfinder@@QAEEPAVObject@@PAXPAUCoord3D@@@Z
-// partial score=0.61 date=2026-09-23
+// partial score=0.68 date=2026-09-25
 // cl: /O2 /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath
 
 typedef int Int;
@@ -119,28 +119,32 @@ Bool Pathfinder::rva003f5c70(Object *obj, void *arg3, Coord3D *dest)
 		return true;
 
 	Bool center;
-	Coord3D adjusted;
 	ICoord2D cell;
-	getRadiusAndCenter(object, (Int &)adjusted.y, center);
-	adjusted = *dest;
-	if (!center)
 	{
-		adjusted.x += 5.0f;
-		adjusted.y += 5.0f;
+		Coord3D adjusted;
+		getRadiusAndCenter(object, (Int &)adjusted.x, center);
+		adjusted = *dest;
+		if (!center)
+		{
+			adjusted.x += 5.0f;
+			adjusted.y += 5.0f;
+		}
+		worldToCell(&adjusted, &cell);
 	}
-	worldToCell(&adjusted, &cell);
 
 	TerrainLogic *terrainLogic = TheTerrainLogic;
 	PathfindLayerEnum layer = terrainLogic->getLayerForDestination(object,
 		dest);
 	Rva003E6200Info info(this, object, arg3, dest,
 		terrainLogic->getLayerHeight(dest->x, dest->y, layer, 0, true));
-	ICoord2D found;
-	if (((Rva003F55E0 *)this)->call(&cell, 200, &found, &info))
 	{
-		adjustCoordToCell(found.x, found.y, center, *dest,
-			(PathfindLayerEnum)info.m_layer);
-		return true;
+		ICoord2D found;
+		if (((Rva003F55E0 *)this)->call(&cell, 200, &found, &info))
+		{
+			adjustCoordToCell(found.x, found.y, center, *dest,
+				(PathfindLayerEnum)info.m_layer);
+			return true;
+		}
 	}
 	if (info.m_zero24)
 	{
