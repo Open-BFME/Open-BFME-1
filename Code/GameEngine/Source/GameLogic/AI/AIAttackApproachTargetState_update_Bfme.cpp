@@ -56,7 +56,7 @@ public:
 
 	WhichTurretType getWhichTurretForCurWeapon() const;
 	Object *getNextMoodTarget(Bool calledByAI, Bool calledDuringIdle);
-	void setTurretTargetObject(WhichTurretType turret, Object *target,
+	void setTurretTargetObject(WhichTurretType turret, Object *targetObject,
 		Bool forceAttacking);
 };
 

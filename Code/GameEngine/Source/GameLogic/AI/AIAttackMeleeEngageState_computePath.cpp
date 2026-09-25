@@ -139,14 +139,14 @@ public:
     bool flag75;
 protected:
     virtual Bool computePath();
-    __forceinline void setGoalAlongDirection00177A90(const Coord3D *dir, Rva00177A90Object *victim, const Coord3D &pos);
+    __forceinline void setGoalAlongDirection00177A90(const Coord3D *directionVector, Rva00177A90Object *targetObject, const Coord3D &goalPosition);
 };
 
-__forceinline void AIAttackMeleeEngageState::setGoalAlongDirection00177A90(const Coord3D *dir, Rva00177A90Object *victim, const Coord3D &pos)
+__forceinline void AIAttackMeleeEngageState::setGoalAlongDirection00177A90(const Coord3D *directionVector, Rva00177A90Object *targetObject, const Coord3D &goalPosition)
 {
-    Coord3D direction = *dir;
-    CALL(Rva0014FFD0,&direction,j_0000e1c4)(2.0f*victim->valueBC + 60.0f);
-    m_goalPosition = pos;
+    Coord3D direction = *directionVector;
+    CALL(Rva0014FFD0,&direction,j_0000e1c4)(2.0f*targetObject->valueBC + 60.0f);
+    m_goalPosition = goalPosition;
     CALL(Rva000EC6F0,&m_goalPosition,j_0002f66c)(direction);
 }
 

@@ -23,7 +23,7 @@ class Rva001764E0AIUpdate
 public:
 	WhichTurretType getWhichTurretForCurWeapon() const;
 	Object *getNextMoodTarget(Bool calledByAI, Bool calledDuringIdle);
-	void setTurretTargetObject(WhichTurretType turret, Object *target, Bool forceAttacking);
+	void setTurretTargetObject(WhichTurretType turret, Object *targetObject, Bool forceAttacking);
 };
 
 #pragma comment(linker, "/alternatename:?getWhichTurretForCurWeapon@Rva001764E0AIUpdate@@QBE?AW4WhichTurretType@@XZ=?j_000346a3@@YAXXZ")
