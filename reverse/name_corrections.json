@@ -2878,5 +2878,25 @@
   "after_sha256": "ef6c7b81b512b402cecea2665d1911f6fdd39bf734dd8d094728e25043adef8d",
   "evidence": "docs/naming_evidence.md",
   "reason": "name_oracle reports Object+0xbc unwitnessed so an offset name is used"
+ },
+ {
+  "old_path": "reverse/attempts/0x00365630.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldPlayerArmyRva00365630.cpp",
+  "old_name": "bfmeApplyPair",
+  "new_name": "rva00365630",
+  "before_sha256": "d58283767891cef89c54db26feb94875672e8fc89f608069bc5c9a318b0329dc",
+  "after_sha256": "b9a0c0f095aa1cbb4daf947720d8ec9e6204bcb65b4424e9b23462a7328baae5",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank's method name was invented (no string vtable slot ZH twin or independent caller evidence -- the caller's own ILT pin ?bfmeApplyPair@LivingWorldArmy@@QAEXPAX0@Z at 0x0001756C was minted by the same Open-BFME5 lane); address token kept"
+ },
+ {
+  "old_path": "reverse/attempts/0x00365630.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/LivingWorld/LivingWorldPlayerArmyRva00365630.cpp",
+  "old_name": "m_prefix",
+  "new_name": "m_unmodelled00",
+  "before_sha256": "d58283767891cef89c54db26feb94875672e8fc89f608069bc5c9a318b0329dc",
+  "after_sha256": "b9a0c0f095aa1cbb4daf947720d8ec9e6204bcb65b4424e9b23462a7328baae5",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "opaque 0x30-byte pad before the +0x30 vector; the body never reads it"
  }
 ]
