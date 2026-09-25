@@ -78,29 +78,29 @@ private:
 Path *Pathfinder::buildHierachicalPath(const Coord3D *fromPos,
 	PathfindCell *goalCell)
 {
-	Path *path;
-	PathfindCellInfo *info;
+	Path *hierarchicalPath;
+	PathfindCellInfo *currentCellInfo;
 	PathfindCell *currentCell = goalCell;
-	PathfindCell *nextCell;
+	PathfindCell *parentCell;
 	Rva003DDF00Element element;
 	for (;;)
 	{
 		if (currentCell->getParentCell() == 0)
 			break;
-		info = currentCell->m_info;
+		currentCellInfo = currentCell->m_info;
 
-		if (info->m_prevOpen != 0)
+		if (currentCellInfo->m_prevOpen != 0)
 		{
-			element.m_value[0] = (unsigned int)info->m_prevOpen->m_pos[1];
+			element.m_value[0] = (unsigned int)currentCellInfo->m_prevOpen->m_pos[1];
 			element.m_value[1] = currentCell->getParentCell()->getXIndex();
 			element.m_value[2] = currentCell->getParentCell()->getYIndex();
 			m_pathCells.push_back(element);
 		}
-		nextCell = currentCell->getParentCell();
-		currentCell = nextCell;
+		parentCell = currentCell->getParentCell();
+		currentCell = parentCell;
 	}
 
-	path = new Path;
-	prependCells(path, fromPos, goalCell, true);
-	return path;
+	hierarchicalPath = new Path;
+	prependCells(hierarchicalPath, fromPos, goalCell, true);
+	return hierarchicalPath;
 }
