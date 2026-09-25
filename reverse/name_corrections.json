@@ -4730,26 +4730,6 @@
   "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
  },
  {
-  "old_path": "reverse/attempts/0x008804e0.cpp",
-  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoSet.cpp",
-  "old_name": "m_enabled",
-  "new_name": "m_byte20",
-  "before_sha256": "6429ea110408a2ce156ba602d3d4d119b08bfcff038ff0f3a0270fdb691cb9c8",
-  "after_sha256": "1ea45d734fff0af957ffac4f3fb740ee3f341332cdf06fa2684218d5ff0274cd",
-  "evidence": "docs/naming_evidence.md",
-  "reason": "bank name for the element +0x1C AsciiString (m_name) had no caller vtable string or field-parse witness tying it to GeometryName, and the element +0x20 byte (m_enabled) had no witness tying it to GeometryActive; renamed to offset-derived m_string1C/m_byte20 per GeometryInfoSet.cpp landing"
- },
- {
-  "old_path": "reverse/attempts/0x008804e0.cpp",
-  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoSet.cpp",
-  "old_name": "m_name",
-  "new_name": "m_string1C",
-  "before_sha256": "6429ea110408a2ce156ba602d3d4d119b08bfcff038ff0f3a0270fdb691cb9c8",
-  "after_sha256": "1ea45d734fff0af957ffac4f3fb740ee3f341332cdf06fa2684218d5ff0274cd",
-  "evidence": "docs/naming_evidence.md",
-  "reason": "bank name for the element +0x1C AsciiString (m_name) had no caller vtable string or field-parse witness tying it to GeometryName, and the element +0x20 byte (m_enabled) had no witness tying it to GeometryActive; renamed to offset-derived m_string1C/m_byte20 per GeometryInfoSet.cpp landing"
- },
- {
   "old_path": "reverse/attempts/0x0063eb00.cpp",
   "new_path": "Code/GameEngine/Source/GameNetwork/GameSpy/Thread/BuddyThreadClassThreadFunction.cpp",
   "old_name": "challenge",
@@ -4828,5 +4808,15 @@
   "after_sha256": "6133318f442b58de2722fa55f0981d336bcd1ddf746a0ad645e96b936a6df8c2",
   "evidence": "reverse/identity_evidence/0x001d22c0-defect.md",
   "reason": "BfmeDefectAICommandCall is only a local ABI adapter in the banked draft, not a retail class. The source names the adapter with the callee address because ILT 0x00024D70 is pinned as AICommandInterface::aiIdle, but it does not prove a separate adapter identity."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/System/GeometryInfoSet.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoSet.cpp",
+  "old_name": "m_records",
+  "new_name": "m_38",
+  "before_sha256": "1ea45d734fff0af957ffac4f3fb740ee3f341332cdf06fa2684218d5ff0274cd",
+  "after_sha256": "ea71d1c359f1fe3ed64072c01d0b17e02ddb4fe1a778dcd0377239824d399c4b",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "GeometryInfo+0x38 is never read by retail GeometryInfo::set (0x008804E0) and name_oracle has no layout witness or FieldParse entry for it, so the unwitnessed descriptive m_records is replaced by the offset token m_38"
  }
 ]

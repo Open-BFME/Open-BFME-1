@@ -76,14 +76,14 @@ struct BfmeElem60 : public BfmeElem60Head
 	BfmeElem60(int type, Real height, Real majorRadius,
 		Real minorRadius)
 		: BfmeElem60Head(type, height, majorRadius, minorRadius),
-		  m_string1C(),
-		  m_byte20(true)
+		  m_name(),
+		  m_enabled(true)
 	{
 	}
 
 	BfmeElem60()
-		: m_string1C(),
-		  m_byte20(true)
+		: m_name(),
+		  m_enabled(true)
 	{
 	}
 
@@ -94,14 +94,14 @@ struct BfmeElem60 : public BfmeElem60Head
 		m_majorRadius = other.m_majorRadius;
 		m_minorRadius = other.m_minorRadius;
 		m_triple10 = other.m_triple10;
-		m_string1C = other.m_string1C;
-		m_byte20 = other.m_byte20;
+		m_name = other.m_name;
+		m_enabled = other.m_enabled;
 		return *this;
 	}
 
 	Triple10 m_triple10;
-	AsciiString m_string1C;
-	Bool m_byte20;
+	AsciiString m_name;
+	Bool m_enabled;
 	char m_padding21[3];
 };
 
@@ -153,7 +153,7 @@ private:
 	int m_scalar24;
 	int m_scalar28;
 	BfmeVec60 m_shapes;
-	RawVec m_records;
+	RawVec m_38;
 };
 
 // ?set@GeometryInfo@@QAEXW4GeometryType@@_NMMM@Z
