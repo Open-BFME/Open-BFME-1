@@ -1,10 +1,10 @@
-# 051-meleeac — attempted structure-attack melee gate bypass
+# 051-structure-melee-gate — unverified bypass hypothesis
 
 This feature contains a patch hypothesis for melee attacks against a battalion
 that is attacking a structure. The patch builds and its hook layout is checked;
 its intended in-game effect has **not** been verified, and the reported attempt
-did not fix the issue. The numeric feature ID remains `051-meleeac`; the heading
-describes the attempted behavior without presenting it as a working fix.
+did not fix the issue. The feature name describes the gate this attempt targeted;
+the attempted gameplay result remains unverified.
 
 Ships in `mods/dist/lotrbfme.exe`. `python3 tools/modbuild.py --dist` builds
 that executable from every feature in `FEATURES`, and this one is on the list.
@@ -110,7 +110,7 @@ selection, a melee swing, or the reported gameplay outcome.
 
 ## What the automated checks establish
 
-`tools/tests/test_meleeac.py` checks that the feature is registered for
+`tools/tests/test_structure_melee_gate.py` checks that the feature is registered for
 distribution, the payload has no unresolved runtime symbols, both retail call
 sites target the predicate, the restore sites preserve the following test and
 branch, and the installed detours enter the payload and resume at the expected

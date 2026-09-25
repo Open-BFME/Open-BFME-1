@@ -1,8 +1,8 @@
-// 051-meleeac — attempted bypass for melee attacks against a structure-
+// 051-structure-melee-gate — attempted bypass for melee attacks against a structure-
 // attacking battalion. The in-game result has not been verified.
 //
 // PATCH HYPOTHESIS. Retail behavior and the unverified attempt are documented
-// in mods/features/051-meleeac/README.md.
+// in mods/features/051-structure-melee-gate/README.md.
 // bfmeMeleeHordeTargetInvalid (0x00175820) returns 0 immediately when bit 0
 // of the byte at Object+0x344 is set, before it looks at facing. Otherwise a
 // slow target whose back is toward the attacker is invalid, and

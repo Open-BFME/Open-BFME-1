@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Structural checks for the attempted 051-meleeac patch; no gameplay claim."""
+"""Structural checks for the attempted structure melee gate; no gameplay claim."""
 import shutil
 import struct
 import subprocess
@@ -22,10 +22,10 @@ from cave import PE  # noqa: E402
 # call site -> first instruction after the five stolen bytes.
 # Each predicate call resumes at the restore hook, which resumes at the je.
 HOOK_RESUMES = {
-    modbuild.MELEEAC_ONENTER_CALL: modbuild.MELEEAC_ONENTER_RESTORE,
-    modbuild.MELEEAC_ONENTER_RESTORE: modbuild.MELEEAC_ONENTER_RESTORE + 5,
-    modbuild.MELEEAC_UPDATE_CALL: modbuild.MELEEAC_UPDATE_RESTORE,
-    modbuild.MELEEAC_UPDATE_RESTORE: modbuild.MELEEAC_UPDATE_RESTORE + 5,
+    modbuild.STRUCTURE_MELEE_ONENTER_CALL: modbuild.STRUCTURE_MELEE_ONENTER_RESTORE,
+    modbuild.STRUCTURE_MELEE_ONENTER_RESTORE: modbuild.STRUCTURE_MELEE_ONENTER_RESTORE + 5,
+    modbuild.STRUCTURE_MELEE_UPDATE_CALL: modbuild.STRUCTURE_MELEE_UPDATE_RESTORE,
+    modbuild.STRUCTURE_MELEE_UPDATE_RESTORE: modbuild.STRUCTURE_MELEE_UPDATE_RESTORE + 5,
 }
 
 pytestmark = [
@@ -42,32 +42,32 @@ def _md():
 @pytest.fixture(scope="module")
 def built():
     with tempfile.TemporaryDirectory() as tmp:
-        out = Path(tmp) / "meleeac.exe"
+        out = Path(tmp) / "structure-melee-gate.exe"
         result = subprocess.run(
-            [sys.executable, str(ROOT / "tools/modbuild.py"), "--only", "051-meleeac",
+            [sys.executable, str(ROOT / "tools/modbuild.py"), "--only", "051-structure-melee-gate",
              "-o", str(out)],
             capture_output=True, text=True, cwd=ROOT)
         assert result.returncode == 0, result.stderr or result.stdout
         yield PE(out)
 
 
-def test_meleeac_is_registered_in_the_shipped_feature_set():
-    assert "051-meleeac" in modbuild.FEATURES
-    assert "051-meleeac" not in modbuild.UNSHIPPED
+def test_structure_melee_gate_is_registered_in_the_shipped_feature_set():
+    assert "051-structure-melee-gate" in modbuild.FEATURES
+    assert "051-structure-melee-gate" not in modbuild.UNSHIPPED
 
 
-def test_meleeac_payload_has_no_unresolved_runtime_symbols():
+def test_structure_melee_gate_payload_has_no_unresolved_runtime_symbols():
     with tempfile.TemporaryDirectory() as tmp:
         obj = modbuild.compile_payload(
-            ROOT / "mods/features/051-meleeac/src/meleeac.cpp",
-            Path(tmp) / "meleeac.obj")
+            ROOT / "mods/features/051-structure-melee-gate/src/structure_melee_gate.cpp",
+            Path(tmp) / "structure_melee_gate.obj")
         assert modbuild.undefined_externals(obj) == []
 
 
 def test_retail_call_sites_resolve_through_ilt_to_the_melee_horde_predicate():
     pe = PE(EXE)
     predicate_ilt_rva = 0x0002056D
-    for call in (modbuild.MELEEAC_ONENTER_CALL, modbuild.MELEEAC_UPDATE_CALL):
+    for call in (modbuild.STRUCTURE_MELEE_ONENTER_CALL, modbuild.STRUCTURE_MELEE_UPDATE_CALL):
         call_bytes = pe.read(call, 5)
         assert call_bytes[0] == 0xE8
         displacement = struct.unpack("<i", call_bytes[1:])[0]
@@ -80,8 +80,8 @@ def test_retail_call_sites_resolve_through_ilt_to_the_melee_horde_predicate():
 
 def test_retail_restore_sites_preserve_predicate_test_and_branch():
     pe = PE(EXE)
-    for restore in (modbuild.MELEEAC_ONENTER_RESTORE, modbuild.MELEEAC_UPDATE_RESTORE):
-        assert pe.read(restore, 5) == modbuild.MELEEAC_AFTER_CALL
+    for restore in (modbuild.STRUCTURE_MELEE_ONENTER_RESTORE, modbuild.STRUCTURE_MELEE_UPDATE_RESTORE):
+        assert pe.read(restore, 5) == modbuild.STRUCTURE_MELEE_AFTER_CALL
         assert pe.read(restore + 5, 1) == b"\x74"
 
 

@@ -10,14 +10,14 @@
   },
   "output": {
     "path": "mods/dist/lotrbfme.exe",
-    "sha256": "510a1e097e05210f0a9928907bff7005ca09a33acbe53e7f3a9252dab845f1a4",
+    "sha256": "764ad7447b3b19dcb65cc427fbea9dfc60a106cd519c35310ab5161a3d169860",
     "size": 16498688
   },
   "cave": {
     "section": ".bfmemod",
     "rva": "0x01016000",
     "size": "0x10000",
-    "used": 4439
+    "used": 4503
   },
   "features": [
     {
@@ -29,19 +29,19 @@
       "target_rva": "0x0006BA44"
     },
     {
-      "name": "051-meleeac",
+      "name": "051-structure-melee-gate",
       "target_rva": "0x00175979"
     },
     {
-      "name": "051-meleeac",
+      "name": "051-structure-melee-gate",
       "target_rva": "0x0017597E"
     },
     {
-      "name": "051-meleeac",
+      "name": "051-structure-melee-gate",
       "target_rva": "0x00175AF0"
     },
     {
-      "name": "051-meleeac",
+      "name": "051-structure-melee-gate",
       "target_rva": "0x00175AF5"
     },
     {
