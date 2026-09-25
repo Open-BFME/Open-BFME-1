@@ -1,12 +1,14 @@
-// ?handle@Gen00362760Elem@@QAEXPAX@Z
-// partial score=0.93 date=2026-09-12
-// The retail caller at 0x00362760 (ledger symbol address-derived) walks
-// 0x58-byte army elements and calls ILT 0x0001D0E8, which routes to this
-// body.  That proves the address-derived dispatch relation; no semantic
-// method name is proven, so no real-name pin is added.
-// LivingWorldArmy's +0x04 name, +0x34 count, and 0xB4 element size are
-// witnessed by INILivingWorldPlayerArmy.cpp and LivingWorldArmyAssign.cpp.
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ivendor/stlport /Ireference/shims/campaignmanagerascii /Ireference/shims/moduledata /Ireference/shims/sweep /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
+// stlport
+//
+// Retail 0x00362550, 219 bytes.  Reached only through ILT 0x0001D0E8 from the
+// generated caller at 0x00362760, which bounds-checks an index into a vector of
+// 0x58-byte elements at +0x18 and calls this with the element as `this`.
+// The element's vector at +0x30 holds 0xB4-byte LivingWorldArmy records: each
+// is passed to ?getName@LivingWorldArmy (ILT 0x000041D3, pinned from the
+// currentCommandPoints call site) and its +0x34 count, and both go to the
+// visitor's slot +4.  A null visitor throws FunctorNotSet (vtable 0x010766DC,
+// RTTI .?AVFunctorNotSet@@).  Owner and method names stay address-derived.
 
 #define _STLP_USE_NEWALLOC 1
 #include <stl/_config.h>
@@ -39,8 +41,6 @@ private:
 	char m_unmodelled3C[ 0x78 ];
 };
 
-#pragma comment(linker, "/alternatename:?getName@LivingWorldArmy@@QBE?AVAsciiString@@XZ=?j_000041d3@@YAXXZ")
-
 class Rva00362550ArmyVisitor
 {
 public:
@@ -48,14 +48,18 @@ public:
 	virtual void visit( const AsciiString &name, int count );
 };
 
+// Functor-style holder: the call operator throws FunctorNotSet on a null
+// target, then forwards to vtable slot +4.  The arguments are evaluated
+// before the inlined null check, which is why retail loads the count
+// before the branch.
 class Rva00362550ArmyVisitorPtr
 {
 public:
-	__forceinline Rva00362550ArmyVisitor *operator->() const
+	void operator()( const AsciiString &name, int count ) const
 	{
 		if( m_ptr == 0 )
 			throw FunctorNotSet();
-		return m_ptr;
+		m_ptr->visit( name, count );
 	}
 
 	Rva00362550ArmyVisitor *m_ptr;
@@ -73,17 +77,11 @@ private:
 
 void Gen00362760Elem::handle( void *visitor )
 {
-	_STL::vector<LivingWorldArmy>::size_type i;
-	i = 0;
-	for( ; i < m_armies.size(); ++i )
+	const Rva00362550ArmyVisitorPtr &functor =
+		*(const Rva00362550ArmyVisitorPtr *)visitor;
+	for( _STL::vector<LivingWorldArmy>::size_type i = 0; i < m_armies.size(); ++i )
 	{
-		LivingWorldArmy &army = *( m_armies.begin() + i );
-		( *(Rva00362550ArmyVisitorPtr *)visitor )->visit(
-			army.getName(), army.getCount() );
+		const LivingWorldArmy &army = m_armies[ i ];
+		functor( army.getName(), army.getCount() );
 	}
 }
-
-// Probe result for this indexed vector shape: 220/219 bytes and 22
-// non-relocation differences.  The remaining source-shape residue is the
-// exact VC7.1 allocation of EBP as index versus EBX as byte offset together
-// with retail's EH-state/count-load order.
