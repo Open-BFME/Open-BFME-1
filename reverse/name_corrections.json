@@ -4948,5 +4948,15 @@
   "after_sha256": "6007de4777a24e271658c58d5571e793e1ac380e0bb6fd9c3e844aecc44e68f8",
   "evidence": "reverse/re_attempts.log",
   "reason": "the 0x006A3200 verdicts record no caller vtable slot or data pointer naming the owner and its neighbours are MilesAudioManager bodies; the stash owner was chosen only because the body calls the ILT whose target carries a W3DGameClient ledger name"
+ },
+ {
+  "old_path": "reverse/attempts/0x0088a5f0.cpp",
+  "new_path": "Code/Libraries/Source/debug/Debug_HeapAbort_0088A5F0.cpp",
+  "old_name": "BfmeDebugMessage",
+  "new_name": "Rva0088A5F0Report",
+  "before_sha256": "aec7855a557ac21696f323577b7981ee0ca53024b914c57a36dcadb5354ee10e",
+  "after_sha256": "6471f1a180be2f3393c31dfdd160c8efdb8986a04a5149580611fe81b5d88e3a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank class name for the slot 0x6C result object had no caller/vtable/string evidence"
  }
 ]
