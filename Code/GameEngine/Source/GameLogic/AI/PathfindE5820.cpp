@@ -61,73 +61,73 @@ public:
 class Pathfinder
 {
 public:
-	bool bfmeStepE0930( Object *obj, ICoord2D *pos, ICoord2D *prev );
-	bool bfmeStepE05B0( Object *obj, ICoord2D *pos );
+	bool bfmeStepE0930( Object *object, ICoord2D *currentCell, ICoord2D *previousCell );
+	bool bfmeStepE05B0( Object *object, ICoord2D *currentCell );
 	bool bfmeStepD4F90( void *state, PathfindCell *cell );
 };
 
 class Rva003E5820Info
 {
 public:
-	int examine( PathfindCell *from, PathfindCell *cell, int x, int y );
+	int examine( PathfindCell *previousCell, PathfindCell *currentCell, int cellX, int cellY );
 
 	Pathfinder *m_pathfinder;		// 0x00
-	Object *m_obj;					// 0x04
+	Object *m_object;				// 0x04
 	bool m_field08;					// 0x08
-	ICoord2D m_pos;					// 0x0C
+	ICoord2D m_currentCell;			// 0x0C
 	int m_zone;						// 0x14
 	char m_pad18[0x3c - 0x18];
 	int m_field3C;					// 0x3C
-	ICoord2D m_prev;				// 0x40
+	ICoord2D m_previousCell;		// 0x40
 	int m_field48;					// 0x48
 	char m_pad4C[0x54 - 0x4c];
 	bool m_field54;					// 0x54
 	bool m_field55;					// 0x55
 };
 
-int Rva003E5820Info::examine( PathfindCell *from, PathfindCell *cell, int x, int y )
+int Rva003E5820Info::examine( PathfindCell *previousCell, PathfindCell *currentCell, int cellX, int cellY )
 {
 	if (m_field54)
 	{
-		if (cell->m_open)
+		if (currentCell->m_open)
 			m_field55 = true;
 		else if (m_field55)
 			return 1;
 	}
 
-	m_pos.x = x;
-	m_pos.y = y;
-	m_zone = cell->m_zone;
+	m_currentCell.x = cellX;
+	m_currentCell.y = cellY;
+	m_zone = currentCell->m_zone;
 
-	if (from != 0)
+	if (previousCell != 0)
 	{
-		if (!m_pathfinder->bfmeStepE0930( m_obj, &m_pos, &m_prev ))
+		if (!m_pathfinder->bfmeStepE0930( m_object, &m_currentCell, &m_previousCell ))
 			return 1;
 	}
 	else
 	{
-		if (!m_pathfinder->bfmeStepE05B0( m_obj, &m_pos ))
+		if (!m_pathfinder->bfmeStepE05B0( m_object, &m_currentCell ))
 			return 1;
 	}
 
 	if (m_field3C != 0)
 		return 1;
 
-	m_prev.x = x;
-	m_prev.y = y;
+	m_previousCell.x = cellX;
+	m_previousCell.y = cellY;
 
-	if (!m_field08 && ((unsigned char)(cell->m_word >> 18) & 1))
+	if (!m_field08 && ((unsigned char)(currentCell->m_word >> 18) & 1))
 		return 1;
 
-	if (from != 0)
+	if (previousCell != 0)
 	{
-		int zone = cell->m_zone;
+		int zone = currentCell->m_zone;
 
 		if (zone >= 2 && zone <= 15 &&
-			(int)from->m_zone == zone &&
-			cell->m_type == 0)
+			(int)previousCell->m_zone == zone &&
+			currentCell->m_type == 0)
 			return 0;
 	}
 
-	return !m_pathfinder->bfmeStepD4F90( &m_field48, cell );
+	return !m_pathfinder->bfmeStepD4F90( &m_field48, currentCell );
 }
