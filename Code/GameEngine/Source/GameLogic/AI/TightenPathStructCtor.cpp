@@ -41,7 +41,7 @@ enum PathfindLayerEnum { LAYER_INVALID = 0 };
 class Pathfinder
 {
 public:
-	void bfmeQuery( Object *obj, int *radius, int *center );
+	void bfmeQuery( Object *object, int *radius, int *centerInCell );
 };
 
 class TightenPathStruct

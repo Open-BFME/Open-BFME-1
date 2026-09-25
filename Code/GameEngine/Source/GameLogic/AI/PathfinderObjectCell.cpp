@@ -78,68 +78,68 @@ public:
 class Pathfinder
 {
 public:
-	void bfmeQuery( Object *obj, Int *radius, Int *center );
+	void bfmeQuery( Object *object, Int *radius, Int *centerInCell );
 	PathfindCell *bfmeGetCellByIndicesTwin( PathfindLayerEnum layer,
 		Int cellX, Int cellY );
 
-	void bfmeObjectCell( Object *obj );
-	void bfmeObjectCell( Object *obj, ICoord2D *cell );
+	void bfmeObjectCell( Object *object );
+	void bfmeObjectCell( Object *object, ICoord2D *cell );
 };
 
-void Pathfinder::bfmeObjectCell( Object *obj )
+void Pathfinder::bfmeObjectCell( Object *object )
 {
 	BFMEQueryScratch radius;
 	BFMEQueryScratch center;
-	bfmeQuery( obj, &radius.i, &center.i );
+	bfmeQuery( object, &radius.i, &center.i );
 	Bool centerInCell = *(volatile Bool *)&center.b;
 
 	ICoord2D cell;
 	if (centerInCell) {
-		center.f = (Real)floor( obj->m_pos.x * PATHFIND_CELL_SIZE_INV );
+		center.f = (Real)floor( object->m_pos.x * PATHFIND_CELL_SIZE_INV );
 		BFME_FLOOR_TO_LONG_ASM;
 	} else {
-		center.f = (Real)floor( 0.5f + obj->m_pos.x * PATHFIND_CELL_SIZE_INV );
+		center.f = (Real)floor( 0.5f + object->m_pos.x * PATHFIND_CELL_SIZE_INV );
 		BFME_FLOOR_TO_LONG_ASM;
 	}
 	cell.x = radius.i;
 
 	if (centerInCell) {
-		center.f = (Real)floor( obj->m_pos.y * PATHFIND_CELL_SIZE_INV );
+		center.f = (Real)floor( object->m_pos.y * PATHFIND_CELL_SIZE_INV );
 		BFME_FLOOR_TO_LONG_ASM;
 	} else {
-		center.f = (Real)floor( 0.5f + obj->m_pos.y * PATHFIND_CELL_SIZE_INV );
+		center.f = (Real)floor( 0.5f + object->m_pos.y * PATHFIND_CELL_SIZE_INV );
 		BFME_FLOOR_TO_LONG_ASM;
 	}
 	cell.y = radius.i;
 
 	Int cellY = *(volatile Int *)&radius.i;
-	bfmeGetCellByIndicesTwin( (PathfindLayerEnum)obj->getLayer(), cell.x, cellY );
+	bfmeGetCellByIndicesTwin( (PathfindLayerEnum)object->getLayer(), cell.x, cellY );
 }
 
-void Pathfinder::bfmeObjectCell( Object *obj, ICoord2D *cell )
+void Pathfinder::bfmeObjectCell( Object *object, ICoord2D *cell )
 {
 	BFMEQueryScratch radius;
 	BFMEQueryScratch center;
-	bfmeQuery( obj, &radius.i, &center.i );
+	bfmeQuery( object, &radius.i, &center.i );
 	Bool centerInCell = center.b;
 
 	if (centerInCell) {
-		center.f = (Real)floor( obj->m_pos.x * PATHFIND_CELL_SIZE_INV );
+		center.f = (Real)floor( object->m_pos.x * PATHFIND_CELL_SIZE_INV );
 		BFME_FLOOR_TO_LONG_ASM;
 	} else {
-		center.f = (Real)floor( 0.5f + obj->m_pos.x * PATHFIND_CELL_SIZE_INV );
+		center.f = (Real)floor( 0.5f + object->m_pos.x * PATHFIND_CELL_SIZE_INV );
 		BFME_FLOOR_TO_LONG_ASM;
 	}
 	cell->x = radius.i;
 
 	if (centerInCell) {
-		center.f = (Real)floor( obj->m_pos.y * PATHFIND_CELL_SIZE_INV );
+		center.f = (Real)floor( object->m_pos.y * PATHFIND_CELL_SIZE_INV );
 		BFME_FLOOR_TO_LONG_ASM;
 	} else {
-		center.f = (Real)floor( 0.5f + obj->m_pos.y * PATHFIND_CELL_SIZE_INV );
+		center.f = (Real)floor( 0.5f + object->m_pos.y * PATHFIND_CELL_SIZE_INV );
 		BFME_FLOOR_TO_LONG_ASM;
 	}
 	cell->y = radius.i;
 
-	bfmeGetCellByIndicesTwin( (PathfindLayerEnum)obj->getLayer(), cell->x, cell->y );
+	bfmeGetCellByIndicesTwin( (PathfindLayerEnum)object->getLayer(), cell->x, cell->y );
 }

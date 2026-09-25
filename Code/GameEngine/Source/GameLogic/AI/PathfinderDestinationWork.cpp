@@ -107,7 +107,7 @@ class Pathfinder
 public:
 	bool worldToCell(const Coord3D *world, ICoord2D *cell);	///< ILT thunk at 0x000171E8
 
-	void bfmeQuery(Object *obj, Int *radius, Bool *center);
+	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);
 	bool iterateCircular2(ICoord2D *cell, Int limit, void *info);
 
 	bool adjustTargetDestination(const Object *obj, const Object *target,

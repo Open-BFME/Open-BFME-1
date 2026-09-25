@@ -68,7 +68,7 @@ class Pathfinder
 public:
 	Int bfmeLayerForPosition(Object *object, Coord3D position);
 
-	void bfmeQuery(Object *object, Int *radius, Bool *center);
+	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);
 	bool worldToCell(const Coord3D *position, ICoord2D *cell);
 	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
 	PathfindCell *getGroundCell(Int x, Int y)

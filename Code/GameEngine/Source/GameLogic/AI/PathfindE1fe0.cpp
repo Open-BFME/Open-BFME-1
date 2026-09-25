@@ -71,7 +71,7 @@ class Pathfinder
 public:
 	void tightenLine(Object *obj, const Coord3D *from, Coord3D *to);
 
-	void bfmeQuery(Object *obj, Int *radius, Bool *center);	///< ILT thunk at 0x000461FF
+	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);	///< ILT thunk at 0x000461FF
 	bool worldToCell(const Coord3D *world, ICoord2D *cell);	///< ILT thunk at 0x000171E8
 	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
 			PathfindLayerEnum layer, Rva003D7680Struct *info);	///< ILT thunk at 0x00048419
