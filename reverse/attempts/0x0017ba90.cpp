@@ -1,7 +1,7 @@
 // ?d_0017ba90@@YAXXZ
-// partial score=0.27 date=2026-09-22
-// Candidate reconstruction for the shared AIAttackAimAtTargetState update body.
-// The address-derived owner is retained until the method identity is independently landed.
+// partial score=0.3 date=2026-09-25
+// ?handle@Gen00039BD5@@QAEXH@Z
+// Candidate v2 for retail 0x0017BA90, preserving the indexed helper ABI.
 
 #include <math.h>
 
@@ -74,7 +74,7 @@ public:
 	Real getMaxTurnRate(Object *object) const;
 };
 
-class AIUpdateInterface : public BfmeVirtualSlots<114>
+class AIUpdateInterface : public BfmeVirtualSlots<115>
 {
 public:
 	virtual void addTargeter(Int id, Bool add) = 0;
@@ -189,7 +189,9 @@ public:
 extern Real normalizeAngle(Real);
 
 #define BFME_ZERO_RANGE (*(const Real *)0x01075350)
+#define BFME_MIN_AIM_DELTA (*(const Real *)0x010977F0)
 #define BFME_TURN_THRESHOLD (*(const Real *)0x01095F98)
+#define BFME_TURN_RATE_FACTOR (*(const Real *)0x0107533C)
 
 StateReturnType Gen00039BD5::handle(Int index)
 {
@@ -223,14 +225,18 @@ StateReturnType Gen00039BD5::handle(Int index)
 			return STATE_CONTINUE;
 	}
 
-	Real aimDelta = weapon ? weapon->m_template->m_aimDelta : BFME_ZERO_RANGE;
-	if (aimDelta < 0.035f)
-		aimDelta = 0.035f;
+	Real aimDelta = BFME_MIN_AIM_DELTA;
+	if (weapon)
+	{
+		aimDelta = weapon->m_template->m_aimDelta;
+		if (aimDelta < BFME_MIN_AIM_DELTA)
+			aimDelta = BFME_MIN_AIM_DELTA;
+	}
 
-	Real turnRate = BFME_ZERO_RANGE;
+	Real turnRate = 0.0f;
 	if (source->getCurLocomotor())
 		turnRate = source->getCurLocomotor()->getMaxTurnRate(source);
-	if (aimDelta < BFME_TURN_THRESHOLD)
+	if ((source->m_status1a4 & 8) != 0 && aimDelta < BFME_TURN_THRESHOLD)
 		aimDelta = 0.3f;
 
 	if ((source->m_status98 & 0x400) != 0)
@@ -240,7 +246,7 @@ StateReturnType Gen00039BD5::handle(Int index)
 	if (m_isAttackingObject && victim)
 	{
 		Bool gotContact = false;
-		if (!victim->isKindOf(KINDOF_3B) && victim->isKindOf(KINDOF_88))
+		if (victim->isKindOf(KINDOF_3B) || victim->isKindOf(KINDOF_88))
 		{
 			gotContact = victim->m_template->isContactWeapon();
 			if (!gotContact)
@@ -280,7 +286,8 @@ StateReturnType Gen00039BD5::handle(Int index)
 	if (index != 0)
 		return STATE_CONTINUE;
 
-	if (fabs(relativeAngle) < aimDelta)
+	if (fabs(relativeAngle) < aimDelta ||
+		fabs(relativeAngle) < turnRate * BFME_TURN_RATE_FACTOR)
 	{
 		AIUpdateInterface *victimAI = victim ? victim->m_ai : 0;
 		if (victimAI)
