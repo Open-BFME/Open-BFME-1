@@ -1,5 +1,5 @@
 // ?removePos@Pathfinder@@QAEXPAVObject@@@Z
-// partial score=0.82 date=2026-09-08
+// partial score=0.141509 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc /Oy-
 // BFME Pathfinder::removePos uses the BFME Object and PathfindCell layouts.
 // Keep those views local: the larger AIPathfind.cpp TU still uses the ZH
@@ -57,6 +57,12 @@ struct BFMEPathfinderLayout
 {
 	char m_padding00[8];
 	unsigned char m_flags;
+	char m_padding09[7];
+	void **m_padding10;
+	Int m_witnessedExtent14;
+	Int m_witnessedExtent18;
+	Int m_witnessedExtent1c;
+	Int m_witnessedExtent20;
 };
 
 struct BFMEPathfindCellInfo
@@ -69,7 +75,7 @@ struct BFMEPathfindCellInfo
 class PathfindCell
 {
 public:
-	void setPosUnit(ObjectID unitID, const ICoord2D &pos);
+	void setPosUnit(unsigned int unitID, const ICoord2D &pos);
 
 	BFMEPathfindCellInfo *m_info;
 	char m_padding04[8];
@@ -79,9 +85,11 @@ public:
 class Pathfinder
 {
 public:
-	void bfmeQuery(Object *object, Int *radius, Int *center);
 	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
 	void removePos(Object *object);
+
+protected:
+	void getRadiusAndCenter(const Object *object, Int &radius, Bool &center);
 };
 
 void Pathfinder::removePos(Object *object)
@@ -108,7 +116,7 @@ void Pathfinder::removePos(Object *object)
 	Int radius;
 	Int currentY = objectLayout->m_currentY;
 	Int currentX = objectLayout->m_currentX;
-	bfmeQuery(object, &radius, reinterpret_cast<Int *>(&center));
+	getRadiusAndCenter(object, radius, center);
 	Int numCellsAbove = radius;
 	if (center) {
 		++numCellsAbove;
@@ -134,7 +142,16 @@ void Pathfinder::removePos(Object *object)
 				}
 			}
 			if (layer != PATHFIND_LAYER_GROUND && layer < 16) {
-				cell = getCell(PATHFIND_LAYER_GROUND, cellNdx.x, cellNdx.y);
+				void **columns = pathfinderLayout->m_padding10;
+				if (i >= pathfinderLayout->m_witnessedExtent14 &&
+					i <= pathfinderLayout->m_witnessedExtent1c &&
+					j >= pathfinderLayout->m_witnessedExtent18 &&
+					j <= pathfinderLayout->m_witnessedExtent20) {
+					cell = reinterpret_cast<PathfindCell *>(
+						reinterpret_cast<char *>(columns[i]) + 16 * j);
+				} else {
+					cell = 0;
+				}
 				if (cell) {
 					BFMEPathfindCellInfo *info = cell->m_info;
 					ObjectID posUnitID = info ? info->m_posUnitID : 0;
