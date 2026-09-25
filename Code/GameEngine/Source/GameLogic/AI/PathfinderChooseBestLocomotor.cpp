@@ -58,16 +58,16 @@ class Pathfinder
 {
 public:
 	Locomotor *chooseBestLocomotorForPosition(PathfindLayerEnum layer,
-		LocomotorSet *locomotorSet, const Coord3D *pos);
+		LocomotorSet *locomotorSet, const Coord3D *position);
 	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
 };
 
 // ?chooseBestLocomotorForPosition@Pathfinder@@QAEPAVLocomotor@@W4PathfindLayerEnum@@PAVLocomotorSet@@PBUCoord3D@@@Z
 Locomotor *Pathfinder::chooseBestLocomotorForPosition(PathfindLayerEnum layer,
-	LocomotorSet *locomotorSet, const Coord3D *pos)
+	LocomotorSet *locomotorSet, const Coord3D *position)
 {
-	Int x = BFME_FLOOR(pos->x * BFME_CELL_INV);
-	Int y = BFME_FLOOR(pos->y * BFME_CELL_INV);
+	Int x = BFME_FLOOR(position->x * BFME_CELL_INV);
+	Int y = BFME_FLOOR(position->y * BFME_CELL_INV);
 	PathfindCell *cell = getCell(layer, x, y);
 	Int type = cell ? cell->getType() : 0;
 	LocomotorSurfaceTypeMask surfaces = g_Va012B49FC[type];

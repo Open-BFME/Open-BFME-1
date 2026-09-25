@@ -39,7 +39,7 @@ class Pathfinder
 {
 public:
 	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
-	Int getLayer(const Coord3D *pos);
+	Int getLayer(const Coord3D *worldPosition);
 
 private:
 	__forceinline PathfindCell *getGroundCell(Int x, Int y)
@@ -60,13 +60,13 @@ private:
 	} m_extent;
 };
 
-Int Pathfinder::getLayer(const Coord3D *pos)
+Int Pathfinder::getLayer(const Coord3D *worldPosition)
 {
 	if (m_map == 0)
 		return 1;
 
 	ICoord2D cell;
-	if (worldToCell(pos, &cell))
+	if (worldToCell(worldPosition, &cell))
 		return 1;
 
 	PathfindCell *pathCell = getGroundCell(cell.x, cell.y);

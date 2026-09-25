@@ -99,31 +99,31 @@ class Pathfinder
 {
 public:
 	bool bfmeStepD4F90( void *state, PathfindCell *cell );
-	bool bfmeStepE0370( Object *obj, PathfindCell *cell, ICoord2D *info, ObjectID *lastID );
+	bool bfmeStepE0370( Object *object, PathfindCell *cell, ICoord2D *walkInfo, ObjectID *lastUnitID );
 };
 
-bool Pathfinder::bfmeStepE0370( Object *obj, PathfindCell *cell, ICoord2D *info, ObjectID *lastID )
+bool Pathfinder::bfmeStepE0370( Object *object, PathfindCell *cell, ICoord2D *walkInfo, ObjectID *lastUnitID )
 {
 	if (cell->m_type == 5)
-		info->blockCount++;
+		walkInfo->blockCount++;
 
-	if (((unsigned char)(cell->m_word >> 21) & 1) && obj->bfmeIsComputerControlled())
-		info->blockCount++;
+	if (((unsigned char)(cell->m_word >> 21) & 1) && object->bfmeIsComputerControlled())
+		walkInfo->blockCount++;
 
-	if (info->checkMask & 8)
+	if (walkInfo->checkMask & 8)
 	{
 		Int zone = cell->m_zone;
-		Int layer = info->layer;
-		if (info->layer != zone &&
-			((info->layer == 1 && zone != 16) ||
+		Int layer = walkInfo->layer;
+		if (walkInfo->layer != zone &&
+			((walkInfo->layer == 1 && zone != 16) ||
 			 (layer >= 17 && layer <= 64 && zone != 16)))
-			info->blockCount++;
+			walkInfo->blockCount++;
 	}
 
-	if (info->checkMask & 4)
+	if (walkInfo->checkMask & 4)
 	{
-		if (!bfmeStepD4F90( &info->blob1C, cell ))
-			info->blockCount++;
+		if (!bfmeStepD4F90( &walkInfo->blob1C, cell ))
+			walkInfo->blockCount++;
 	}
 
 	Int flags = cell->m_flags;
@@ -131,17 +131,17 @@ bool Pathfinder::bfmeStepE0370( Object *obj, PathfindCell *cell, ICoord2D *info,
 		return true;
 
 	if (flags == 1 || flags == 4)
-		info->allyGoal = true;
+		walkInfo->allyGoal = true;
 
 	ObjectID posUnit = cell->m_info ? cell->m_info->m_posUnit : 0;
-	if (posUnit == obj->m_id)
+	if (posUnit == object->m_id)
 		return true;
-	if (posUnit == info->ignoreID)
+	if (posUnit == walkInfo->ignoreID)
 		return true;
-	if (posUnit == *lastID)
+	if (posUnit == *lastUnitID)
 		return true;
 
-	*lastID = posUnit;
+	*lastUnitID = posUnit;
 	Object *unit = (Object *)g_bfmeLook1011->bfmeFind1011( posUnit );
 	if (unit == 0)
 		return true;
@@ -150,40 +150,40 @@ bool Pathfinder::bfmeStepE0370( Object *obj, PathfindCell *cell, ICoord2D *info,
 	bool isAlly;
 	if (flags == 2 || flags == 4)
 	{
-		isAlly = (obj->getRelationship( unit ) == ALLIES);
+		isAlly = (object->getRelationship( unit ) == ALLIES);
 		if (isAlly)
-			info->allyMoving = true;
-		if (info->considerTransient)
+			walkInfo->allyMoving = true;
+		if (walkInfo->considerTransient)
 			check = true;
 	}
 	if (flags == 3)
 	{
 		check = true;
-		isAlly = (obj->getRelationship( unit ) == ALLIES);
+		isAlly = (object->getRelationship( unit ) == ALLIES);
 	}
 	if (!check)
 		return true;
 
-	if (isAlly && obj->isKindOf( (KindOfType)0x73 ) && unit->isKindOf( (KindOfType)0x73 ))
+	if (isAlly && object->isKindOf( (KindOfType)0x73 ) && unit->isKindOf( (KindOfType)0x73 ))
 		return true;
-	if (obj->isKindOf( (KindOfType)0x7c ) && unit->isKindOf( (KindOfType)0x08 ))
+	if (object->isKindOf( (KindOfType)0x7c ) && unit->isKindOf( (KindOfType)0x08 ))
 		return true;
 
 	if (isAlly)
 	{
 		if (unit->m_ai == 0)
 			return false;
-		if (info->checkMask & 2)
+		if (walkInfo->checkMask & 2)
 			return false;
-		info->allyFixed = 1;
+		walkInfo->allyFixed = 1;
 	}
 	else
 	{
-		if (!obj->canCrushOrSquish( unit, TEST_CRUSH_OR_SQUISH ))
+		if (!object->canCrushOrSquish( unit, TEST_CRUSH_OR_SQUISH ))
 		{
-			if (info->checkMask & 1)
+			if (walkInfo->checkMask & 1)
 				return false;
-			info->enemyFixed = true;
+			walkInfo->enemyFixed = true;
 		}
 	}
 
