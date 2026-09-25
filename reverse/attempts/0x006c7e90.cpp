@@ -1,26 +1,16 @@
 // ?updateScorches@BaseHeightMapScorchUpdater@@QAEXXZ
 // partial score=0.8 date=2026-09-07
-// Retail 0x006C7E90 (1528B). Identity proven by the byte-true call in matched
-// BaseHeightMapRenderObjClass::drawScorches (reinterpret_cast to
-// BaseHeightMapScorchUpdater, call resolves via ILT-thunk pin 0x00032966).
-// What matches: SEH+realign prologue byte-exact through +0021; guard shapes;
-// GlobalData ambient@0x9BC/diffuse@0x9E0 triples; diffuse packed R,G,B-first
-// via chained shl-8 (or 0xffffff00); border hoisted before locks; idx-then-vtx
-// WriteLock order with inlined array accessors; per-scorch flag skip, type
-// clamp, idiv by 3, CRT floor/ceil (dllimport, TU-scoped REAL_TO_INT_*
-// redefine), reciprocal fmul, inlined U16 height read with clamp, flip call.
-// Blocker: compiler puts `this` in EDI/EBX, retail EBP (+0022 mov ebp,ecx).
-// Tried: state-pointer local vs member access (identical bytes), removing
-// map/global/indexScorch/extents/sample locals (EBX, smaller frame),
-// re-adding them (EDI), explicit entry local, type-before-radius reads,
-// u/v-before-min/max order, UnsignedByte flag, fresh vs hoisted map reads.
-// Entry-anchor follows first body read (&type here); retail anchors &flag
-// (lea const 0xF8 vs ours 0xF4) with cmp-byte-mem check. Fix EBP first: the
-// [esp+0x40] base spill it removes also unshifts the shade temp slots.
-// Requires in TU: extern dllimport floor/ceil + TU-scoped
-// REAL_TO_INT_FLOOR/CEIL -> fast_float2long_round((Real)floor|ceil((double)x)).
-// Needs pin for WorldHeightMap::getFlipState (retail calls j-stub 0x000489A5;
-// run decode_calls once the symbol compiles).
+// Retail 0x006C7E90 ends at ret +0x600 and spans 1,537 bytes. The matched
+// drawScorches caller invokes ILT 0x00032966 through BaseHeightMapScorchUpdater,
+// which proves the method identity.
+//
+// The draft matches the prologue through +0x21, guards, color packing, lock
+// order, scorch checks, type clamp, floor and ceil calls, height read, and
+// flip-state call. Retail keeps `this` in EBP at +0x22. The draft uses EDI or
+// EBX, reads type at +0xF4 before flag at +0xF8, and uses a different shade
+// spill at [esp+0x40].
+// The full translation unit declares floor and ceil with dllimport. Its
+// REAL_TO_INT macros call fast_float2long_round.
 struct BFMEScorchEntry {
 	Vector3 location;
 	Real radius;
