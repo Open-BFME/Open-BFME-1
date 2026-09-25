@@ -83,7 +83,7 @@ public:
 		Int cellX, Int cellY );
 
 	void bfmeObjectCell( Object *object );
-	void bfmeObjectCell( Object *object, ICoord2D *cell );
+	void bfmeObjectCell( Object *object, ICoord2D *cellIndex );
 };
 
 void Pathfinder::bfmeObjectCell( Object *object )
@@ -116,7 +116,7 @@ void Pathfinder::bfmeObjectCell( Object *object )
 	bfmeGetCellByIndicesTwin( (PathfindLayerEnum)object->getLayer(), cell.x, cellY );
 }
 
-void Pathfinder::bfmeObjectCell( Object *object, ICoord2D *cell )
+void Pathfinder::bfmeObjectCell( Object *object, ICoord2D *cellIndex )
 {
 	BFMEQueryScratch radius;
 	BFMEQueryScratch center;
@@ -130,7 +130,7 @@ void Pathfinder::bfmeObjectCell( Object *object, ICoord2D *cell )
 		center.f = (Real)floor( 0.5f + object->m_pos.x * PATHFIND_CELL_SIZE_INV );
 		BFME_FLOOR_TO_LONG_ASM;
 	}
-	cell->x = radius.i;
+	cellIndex->x = radius.i;
 
 	if (centerInCell) {
 		center.f = (Real)floor( object->m_pos.y * PATHFIND_CELL_SIZE_INV );
@@ -139,7 +139,7 @@ void Pathfinder::bfmeObjectCell( Object *object, ICoord2D *cell )
 		center.f = (Real)floor( 0.5f + object->m_pos.y * PATHFIND_CELL_SIZE_INV );
 		BFME_FLOOR_TO_LONG_ASM;
 	}
-	cell->y = radius.i;
+	cellIndex->y = radius.i;
 
-	bfmeGetCellByIndicesTwin( (PathfindLayerEnum)object->getLayer(), cell->x, cell->y );
+	bfmeGetCellByIndicesTwin( (PathfindLayerEnum)object->getLayer(), cellIndex->x, cellIndex->y );
 }
