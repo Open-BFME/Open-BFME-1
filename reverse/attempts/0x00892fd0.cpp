@@ -1,5 +1,5 @@
 // ?rva00892FD0@Rva00892FD0Table@@QAE_NHH@Z
-// partial score=0.62 date=2026-09-22
+// partial score=0.88 date=2026-09-25
 // Retail 0x00892FD0, 71 bytes, a carved extent.  A __thiscall predicate over an
 // array of eight-byte entries: count at +0x00, entry array at +0x08, the tested
 // field at +0x04 of each entry, two dword arguments, `mov al,1` / `xor al,al`
@@ -39,12 +39,16 @@ private:
 
 bool Rva00892FD0Table::rva00892FD0(int first, int second)
 {
-	for (Rva00892FD0Entry *entry = m_entries;
-		entry != m_entries + m_count;
-		entry++)
+	Rva00892FD0Entry *entry = m_entries;
+	Rva00892FD0Entry *end = entry + m_count;
+	if (entry != end)
 	{
-		if (entry->m_key != first && entry->m_key != second)
-			return false;
+		do
+		{
+			if (entry->m_key != first && entry->m_key != second)
+				return false;
+			++entry;
+		} while (entry != m_entries + m_count);
 	}
 
 	return true;
