@@ -4468,5 +4468,25 @@
   "after_sha256": "c779b3178c1a003b92fd16e472750f13b6a65cbb75b2ec1fad0a35e31fd0a55c",
   "evidence": "reverse/identity_evidence/00720820.md",
   "reason": "BaseHeightMapResetList is not a BaseHeightMap type: 0x0094CE50 clears the list members of both tree buffers, which the shrub constructor builds with 0x0094D1E0, already pinned as Rva0094D1E0List."
+ },
+ {
+  "old_path": "reverse/attempts/0x00458c80.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/RadiusDecalTemplate_createRadiusDecal.cpp",
+  "old_name": "m_playerColor",
+  "new_name": "m_unmodelled1c4",
+  "before_sha256": "7e7b757c3c22186a9f6f56fb10cf228a9c73528ea45f5c332d619ad4d4624904",
+  "after_sha256": "c3f934d22d37919c93555b0149277bd2d24b2a68059f9e69b743a41ca327f001",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "Player+0x1c4 has no witness and the ZH getPlayerColor member is m_color so the bank name was a guess (the getPlayerColor accessor name stays from the ZH twin call)"
+ },
+ {
+  "old_path": "reverse/attempts/0x00458c80.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/RadiusDecalTemplate_createRadiusDecal.cpp",
+  "old_name": "m_position",
+  "new_name": "m_unmodelled08",
+  "before_sha256": "7e7b757c3c22186a9f6f56fb10cf228a9c73528ea45f5c332d619ad4d4624904",
+  "after_sha256": "c3f934d22d37919c93555b0149277bd2d24b2a68059f9e69b743a41ca327f001",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the layout witness names Shadow+0x08 m_opacity (from W3DVolumetricShadow bodies) so a semantic name there conflicts; this placeholder spans the witnessed +0x10 and stays unknown space"
  }
 ]
