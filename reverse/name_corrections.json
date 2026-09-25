@@ -4938,5 +4938,15 @@
   "after_sha256": "c2f4eea3f218a095872b6184cddb426ff843837704d526a5780558a96b665a8a",
   "evidence": "reverse/symbols.csv",
   "reason": "invented member name for unread bytes 0x00-0x17; nothing reads them so they stay unmodelled like the sibling Gen00362760Elem"
+ },
+ {
+  "old_path": "reverse/attempts/0x006a3200.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/Rva006A3200EntryList.cpp",
+  "old_name": "W3DGameClient",
+  "new_name": "Rva006A3200Owner",
+  "before_sha256": "9458307ab021a02c00f2f78367d6976384c5931c36bcd18b3550a6ffd84b02d1",
+  "after_sha256": "6007de4777a24e271658c58d5571e793e1ac380e0bb6fd9c3e844aecc44e68f8",
+  "evidence": "reverse/re_attempts.log",
+  "reason": "the 0x006A3200 verdicts record no caller vtable slot or data pointer naming the owner and its neighbours are MilesAudioManager bodies; the stash owner was chosen only because the body calls the ILT whose target carries a W3DGameClient ledger name"
  }
 ]
