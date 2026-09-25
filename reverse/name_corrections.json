@@ -4028,5 +4028,35 @@
   "after_sha256": "586869996e727436d125e9195cb7a6bb9ec8b8ca4ca9a27b8fc1e69cf9615cdd",
   "evidence": "docs/naming_evidence.md",
   "reason": "opaque pad never read by the body"
+ },
+ {
+  "old_path": "reverse/attempts/0x0047dec0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GameWindowManager_gogoGadgetRadioButton.cpp",
+  "old_name": "GadgetRadioSetText",
+  "new_name": "rva004BD400",
+  "before_sha256": "d9e41fffda548b9e4aaf6a2366bc6b7729e7e7485068f0db411924b434c450e6",
+  "after_sha256": "f745a006965a412a0a8ee7a9a30f4ba379a7656d539cfb2ca62bf8060b747688",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the call encodes ILT 0x3A52B to 0x004BD400 while the ledger name GadgetRadioSetText sits at 0x004BC6E0 (a different body) so the bank name resolved to the wrong address"
+ },
+ {
+  "old_path": "reverse/attempts/0x0047dec0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GameWindowManager_gogoGadgetRadioButton.cpp",
+  "old_name": "create",
+  "new_name": "rva0047EDE0",
+  "before_sha256": "d9e41fffda548b9e4aaf6a2366bc6b7729e7e7485068f0db411924b434c450e6",
+  "after_sha256": "f745a006965a412a0a8ee7a9a30f4ba379a7656d539cfb2ca62bf8060b747688",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "slot 29 target 0x0047EDE0 is an unnamed gen_asm dump and its one-argument BFME ABI does not match ZH winCreate"
+ },
+ {
+  "old_path": "reverse/attempts/0x0047dec0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/GameWindowManager_gogoGadgetRadioButton.cpp",
+  "old_name": "owner",
+  "new_name": "m_unmodelled00",
+  "before_sha256": "d9e41fffda548b9e4aaf6a2366bc6b7729e7e7485068f0db411924b434c450e6",
+  "after_sha256": "f745a006965a412a0a8ee7a9a30f4ba379a7656d539cfb2ca62bf8060b747688",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "GameWindow+0x0 is not witnessed (name_oracle) and ZH has no own member there"
  }
 ]

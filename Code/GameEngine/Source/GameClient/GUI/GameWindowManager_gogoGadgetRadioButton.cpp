@@ -1,7 +1,16 @@
-// ?gogoGadgetRadioButton@GameWindowManager@@UAEPAVGameWindow@@PAV2@PAURadioButtonData@@PAVGameFont@@_N@Z
-// partial score=0.94 date=2026-09-09
-// ?gogoGadgetRadioButton@GameWindowManager@@UAEPAVGameWindow@@PAV2@PAURadioButtonData@@PAVGameFont@@_N@Z
-// BFME radio-button construction with the shared gadget setup sequence.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/gamewindowlist /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+
+// GameWindowManager slot 17 (+0x44) of the vtable at VA 0x010F8B60, next to
+// the landed gogoGadgetCheckbox in slot 16 at 0x0047DD90. The style-bit-2
+// guard (GWS_RADIO_BUTTON), the 8-byte RadioButtonData copy and the setup
+// sequence follow the Zero Hour gogoGadgetRadioButton; retail ends with
+// ret 0x10, so BFME keeps the reduced four-argument ABI of its siblings.
+// The style test goes through the inline WinInstanceData::getStyle() over the
+// dword m_style, as the Zero Hour BitTest(instData->getStyle(), ...) does:
+// reading the field directly swaps ESI and EDI for this and the new window.
+//
+// Slot 29 (0x0047EDE0) and the ILT 0x0003A52B -> 0x004BD400 text setter
+// keep address-derived names; see the ledger notes for their evidence.
 
 #include <string.h>
 
@@ -44,18 +53,20 @@ public:
 class WinInstanceData
 {
 public:
-	char padBeforeStyle[0xc];
-	unsigned char style;
-	char padAfterStyle[0x17b];
-	AsciiString textLabel;
+	char m_gap00[0xc];
+	unsigned int m_style;
+	char m_gap10[0x178];
+	AsciiString m_textLabelString;
+
+	unsigned int getStyle() const { return m_style; }
 };
 
 class GameWindow
 {
 public:
-	GameWindow *owner;
-	char pad[0x2c];
-	WinInstanceData *instanceData;
+	GameWindow *m_unmodelled00;
+	char m_gap04[0x2c];
+	WinInstanceData *m_instData;
 
 	int winSetOwner(GameWindow *owner);
 	void winSetUserData(void *data);
@@ -63,8 +74,8 @@ public:
 
 struct RadioButtonData
 {
-	int group;
-	int screen;
+	int dword_0;
+	int dword_4;
 };
 
 class GameWindowManager
@@ -99,7 +110,7 @@ public:
 	virtual void v26();
 	virtual void v27();
 	virtual void v28();
-	virtual GameWindow *create(GameWindow *);
+	virtual GameWindow *rva0047EDE0(GameWindow *);
 	virtual void v30();
 	virtual void v31();
 	virtual void v32();
@@ -141,32 +152,31 @@ public:
 	virtual void v68();
 	virtual void v69();
 	virtual UnicodeString winTextLabelToText(AsciiString);
-	virtual GameWindow *gogoGadgetCheckbox(GameWindow *, GameFont *, bool);
 	virtual GameWindow *gogoGadgetRadioButton(GameWindow *, RadioButtonData *, GameFont *, bool);
 };
 
 extern GameWindowManager *TheWindowManager;
-extern void GadgetRadioSetText(GameWindow *, UnicodeString);
+extern void rva004BD400(GameWindow *, UnicodeString);
 
-#pragma comment(linker, "/alternatename:?winSetOwner@GameWindow@@QAEHPAV1@@Z=?j_00047230@@YAXXZ")
-#pragma comment(linker, "/alternatename:?GadgetRadioSetText@@YAXPAVGameWindow@@VUnicodeString@@@Z=?j_0003a52b@@YAXXZ")
-#pragma comment(linker, "/alternatename:?winSetUserData@GameWindow@@QAEXPAX@Z=?j_00002e69@@YAXXZ")
 
 GameWindow *GameWindowManager::gogoGadgetRadioButton(GameWindow *parent,
-	RadioButtonData *data, GameFont *font, bool visual)
+	RadioButtonData *rData, GameFont *defaultFont, bool defaultVisual)
 {
-	if ((parent->instanceData->style & 2) == 0)
+	GameWindow *radioButton;
+	RadioButtonData *radioData;
+
+	if ((parent->m_instData->getStyle() & 2) == 0)
 		return 0;
-	GameWindow *radioButton = TheWindowManager->create(parent);
+	radioButton = TheWindowManager->rva0047EDE0(parent);
 	if (radioButton == 0)
 		return 0;
-	RadioButtonData *radioData = new RadioButtonData;
-	memcpy(radioData, data, sizeof(RadioButtonData));
+	radioData = new RadioButtonData;
+	memcpy(radioData, rData, sizeof(RadioButtonData));
 	radioButton->winSetUserData(radioData);
-	radioButton->winSetOwner(parent->owner);
-	assignDefaultGadgetLook(radioButton, font, visual);
-	UnicodeString text = winTextLabelToText(parent->instanceData->textLabel);
+	radioButton->winSetOwner(parent->m_unmodelled00);
+	assignDefaultGadgetLook(radioButton, defaultFont, defaultVisual);
+	UnicodeString text = winTextLabelToText(parent->m_instData->m_textLabelString);
 	if (text.getLength())
-		GadgetRadioSetText(radioButton, text);
+		rva004BD400(radioButton, text);
 	return radioButton;
 }
