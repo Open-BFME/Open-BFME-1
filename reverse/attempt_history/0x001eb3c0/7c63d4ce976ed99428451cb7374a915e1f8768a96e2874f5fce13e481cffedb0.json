@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "7c63d4ce976ed99428451cb7374a915e1f8768a96e2874f5fce13e481cffedb0",
+  "symbol": "?d_001eb3c0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.67,
+  "source": "// ?d_001eb3c0@@YAXXZ\n// partial score=0.67 date=2026-09-25\n// cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2\n//\n// Retail 0x001EB3C0, 24 bytes through the int3 run at +0x18: a cdecl clear of\n// six consecutive words.  Nothing references it or its ILT 0x00019FFB, so the\n// names keep the address.  Its last 20 bytes equal\n// ModelConditionInfo::TurretInfo::clear and were claimed as an alias of it;\n// retail has no COMDAT folding, so they belong to this body.\n\nstruct Rva001EB3C0Words\n{\n\tint m_word00;\n\tint m_word04;\n\tint m_word08;\n\tint m_word0C;\n\tint m_word10;\n\tint m_word14;\n};\n\nvoid Rva001EB3C0Clear( Rva001EB3C0Words *words )\n{\n\twords->m_word00 = 0;\n\twords->m_word04 = 0;\n\twords->m_word08 = 0;\n\twords->m_word0C = 0;\n\twords->m_word10 = 0;\n\twords->m_word14 = 0;\n}\n"
+}
