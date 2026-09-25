@@ -154,14 +154,14 @@ Int Pathfinder::iterateCellsAlongLine(const ICoord2D &startCell,
 	Int y = startCell.y;
 	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
 	{
-		PathfindCell *to = getCell( layer, x, y );
-		if (to == 0)
+		PathfindCell *currentCell = getCell( layer, x, y );
+		if (currentCell == 0)
 			return 0;
 
-		Int cellLayer = to->getLayer();
+		Int cellLayer = currentCell->getLayer();
 		if (cellLayer < 0x11 || cellLayer > 0x40)
 		{
-			PathfindLayerEnum hitLayer = (PathfindLayerEnum)to->getLayer();
+			PathfindLayerEnum hitLayer = (PathfindLayerEnum)currentCell->getLayer();
 			Real wx = ((Real)x + g_bfmeK1253) * g_bfmeDirectionWeight1285;
 			resultInfo->x = wx;
 			Real wy = ((Real)y + g_bfmeK1253) * g_bfmeDirectionWeight1285;
