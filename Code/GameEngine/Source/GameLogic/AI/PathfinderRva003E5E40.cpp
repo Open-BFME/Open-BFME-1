@@ -152,7 +152,7 @@ public:
 	PathfindCell *getCell( PathfindLayerEnum layer, Int x, Int y );
 
 protected:
-	void getRadiusAndCenter( const Object *obj, Int &iRadius, Bool &center );
+	void getRadiusAndCenter( const Object *object, Int &iRadius, Bool &center );
 	Bool rva003E5E40Cells( const Object *obj, Int cellX, Int cellY,
 		PathfindLayerEnum layer, Int iRadius, Bool centerInCell );
 
@@ -165,29 +165,29 @@ private:
 };
 
 // Retail 0x003DEE30; logic of PathfindGetRadiusAndCenterE30.cpp.
-__declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *obj, Int &radius, Bool &center )
+__declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &center )
 {
 	Real diameter;
 	Int maxRadius = 2;
-	BfmeOverridable *t1 = obj->getTemplate();
+	BfmeOverridable *t1 = object->getTemplate();
 	if ((t1 == 0 ? t1 : t1->getFinalOverride())->m_flagsC8 & 0x400) {
 		maxRadius = 4;
 	} else {
-		BfmeOverridable *t2 = obj->getTemplate();
+		BfmeOverridable *t2 = object->getTemplate();
 		if ((t2 == 0 ? t2 : t2->getFinalOverride())->m_flagsD4 & 0x1000) {
 			maxRadius = 4;
 		}
 	}
 
-	diameter = obj->m_boundingCircleRadius * 2.0f;
+	diameter = object->m_boundingCircleRadius * 2.0f;
 	if (diameter > g_pathfindCellSize && diameter < g_pathfindDoubleCellSize) {
 		diameter = 20.0f;
 	}
 
-	if ((obj->getTemplate() == 0 ? obj->getTemplate() :
-		obj->getTemplate()->getFinalOverride())->m_level > g_pathfindLevelLimit) {
-		diameter = (obj->getTemplate() == 0 ? obj->getTemplate() :
-		obj->getTemplate()->getFinalOverride())->m_level;
+	if ((object->getTemplate() == 0 ? object->getTemplate() :
+		object->getTemplate()->getFinalOverride())->m_level > g_pathfindLevelLimit) {
+		diameter = (object->getTemplate() == 0 ? object->getTemplate() :
+		object->getTemplate()->getFinalOverride())->m_level;
 	}
 
 	radius = REAL_TO_INT_FLOOR( diameter / 10.0f + g_pathfindCellCenterBias );

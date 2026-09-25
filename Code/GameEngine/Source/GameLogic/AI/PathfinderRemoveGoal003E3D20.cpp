@@ -114,7 +114,7 @@ public:
 	}
 
 protected:
-	void getRadiusAndCenter(const Object *obj, Int &radius, Bool &center);
+	void getRadiusAndCenter(const Object *object, Int &radius, Bool &center);
 	unsigned char m_pad00[0x10];
 	PathfindCell **m_map;
 	Int m_extentLoX;
