@@ -46,7 +46,7 @@ class Pathfinder
 {
 public:
 	void snapPosition(Object *obj, Coord3D *pos);
-	Bool worldToCell(const Coord3D *pos, ICoord2D *cell);
+	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
 
 protected:
 	void getRadiusAndCenter(const Object *object, Int &radius, Bool &center);

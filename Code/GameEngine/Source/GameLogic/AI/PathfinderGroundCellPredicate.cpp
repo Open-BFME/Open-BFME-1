@@ -27,7 +27,7 @@ public:
 class Pathfinder
 {
 public:
-	Bool worldToCell(const Coord3D *pos, ICoord2D *cell);
+	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
 	PathfindCell *getCell(PathfindLayerEnum layer, int x, int y);
 	Bool bfmeGroundCellThreshold(const Coord3D *pos, Bool requireClearType);
 };

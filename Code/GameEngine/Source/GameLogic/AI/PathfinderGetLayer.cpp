@@ -38,7 +38,7 @@ private:
 class Pathfinder
 {
 public:
-	Bool worldToCell(const Coord3D *pos, ICoord2D *cell);
+	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
 	Int getLayer(const Coord3D *pos);
 
 private:

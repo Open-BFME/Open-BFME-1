@@ -21,7 +21,7 @@ struct ICoord2D
 class Pathfinder
 {
 public:
-	Bool worldToCell(const Coord3D *pos, ICoord2D *cell);
+	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
 	PathfindCell *bfmeGetCellByIndicesTwin(PathfindLayerEnum layer, int x, int y);
 	PathfindCell *bfmeGetCellTwin(PathfindLayerEnum layer, const Coord3D *pos);
 };

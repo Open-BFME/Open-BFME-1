@@ -68,7 +68,7 @@ struct TightenPathStruct
 class Pathfinder
 {
 public:
-	Bool worldToCell(const Coord3D *pos, ICoord2D *cell);
+	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
 
 protected:
 	// 4-arg BFME iterate (no CellAlongLineProc): always invokes the tighten
