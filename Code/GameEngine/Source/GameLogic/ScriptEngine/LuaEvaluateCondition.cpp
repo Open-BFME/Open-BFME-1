@@ -1,14 +1,43 @@
-// ?EvaluateCondition@@YAHPAUlua_State@@@Z
-// partial score=0.97 date=2026-09-11
-// cl: /DNDEBUG /MD /EHsc
-// The Lua binding resolves a condition template by its internal name, builds
-// the matching Condition, fills its Parameters from the Lua stack, and sends
-// it through the ScriptConditions interface.
+// cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc
+// Lua script binding EvaluateCondition (cdecl int f(lua_State*)), retail
+// 0x002E4760 (510 B). Identity: the Lua registration routine at 0x002EC990
+// pushes ILT 0x0001A0C3 (jmp 0x002E4760) with lua_pushcclosure and binds it
+// with the next lua_setglobal("EvaluateCondition"). The body resolves a
+// condition template by its internal name, builds the matching Condition,
+// fills its Parameters from the Lua stack, and sends it through the
+// ScriptConditions interface. Its twin ExecuteAction (0x002E49E0, ILT
+// 0x00031061) walks the same parameter loop over ScriptAction.
 
 #include <string.h>
 
 #pragma intrinsic(strcmp)
 
+// StringBase<char> as ascii_string.h's base declares it, but without the
+// out-of-line destructor: retail inlines ~AsciiString here as one direct
+// releaseBuffer call (the 5-byte ~AsciiString at 0x0005EE90 is only a jmp to
+// it).
+template <typename T>
+class StringBase
+{
+	friend class AsciiString;
+
+public:
+	void set(const StringBase<T> &src);
+
+private:
+	StringBase(const T *str);
+	void releaseBuffer();
+
+	struct Header
+	{
+		int ref_count;
+		unsigned short length;
+		unsigned short capacity;
+		T data[1];
+	};
+
+	Header *m_data;
+};
 
 struct lua_State;
 
@@ -34,74 +63,35 @@ class ObjectStatusMask
 	unsigned int m_bits[2];
 };
 
-struct AsciiStringData
-{
-	int m_refCount;
-	unsigned short m_length;
-	unsigned short m_capacity;
-	char m_text[1];
-};
-
-class AsciiString
+class AsciiString : private StringBase<char>
 {
 public:
-	const char *str() const
+	AsciiString(const char *text) : StringBase<char>(text) {}
+	~AsciiString() { releaseBuffer(); }
+
+	AsciiString &operator=(const AsciiString &other)
 	{
-		return m_data ? m_data->m_text : (const char *)0x0107388B;
+		StringBase<char>::set(other);
+		return *this;
 	}
 
-private:
-	AsciiStringData *m_data;
-};
-
-class UnicodeString
-{
-public:
-	void set(const UnicodeString &other);
-
-private:
-	char *m_data;
-};
-
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString(const char *text);
-	~BFMERetailAsciiString() { releaseBuffer(); }
-
-	operator const UnicodeString &() const
-	{
-		return *(const UnicodeString *)this;
-	}
-
-private:
-	void releaseBuffer();
-	char *m_data;
+	const char *str() const { return m_data ? m_data->data : ""; }
 };
 
 class Parameter
 {
 public:
-	void setNumber(double value)
-	{
-		m_real = (float)value;
-		m_int = (int)value;
-	}
-
-	void setBoolean()
-	{
-		m_int = 0;
-	}
+	void friend_setInt(int value) { m_int = value; }
+	void friend_setReal(float value) { m_real = value; }
 
 private:
 	int m_paramType;
 	bool m_initialized;
-	unsigned char m_padding[3];
 	int m_int;
 	float m_real;
 
 public:
-	UnicodeString m_string;
+	AsciiString m_string;
 
 private:
 	Coord3D m_coord;
@@ -124,7 +114,6 @@ public:
 		return 0;
 	}
 
-	public:
 	ConditionType m_conditionType;
 	int m_numParms;
 	Parameter *m_parms[12];
@@ -199,34 +188,32 @@ int EvaluateCondition(lua_State *state)
 
 	Condition *condition = new Condition((Condition::ConditionType)conditionType);
 
-	int numParameters;
-	if ((numParameters = lua_gettop(state)) != condition->m_numParms + 1)
+	// Argument 1 is the condition name; the rest fill its parameters.
+	int numArgs = lua_gettop(state);
+	if (numArgs != condition->getNumParameters() + 1)
 		return 0;
-	--numParameters;
 
-	if (numParameters > 0)
+	for (int i = 0; i < numArgs - 1; ++i)
 	{
-		for (int index = 2; index - 2 < numParameters; ++index)
+		Parameter *parameter = condition->getParameter(i);
+		if (lua_isnumber(state, i + 2))
 		{
-			register Parameter *parameter = condition->getParameter(index - 2);
-			if (lua_isnumber(state, index))
-			{
-				parameter->setNumber(lua_tonumber(state, index));
-			}
-			else if (lua_isstring(state, index))
-			{
-				BFMERetailAsciiString value(lua_tostring(state, index));
-				UnicodeString *string = &parameter->m_string;
-				string->set((const UnicodeString &)value);
-			}
-			else if (lua_type(state, index) == 1)
-			{
-				parameter->setBoolean();
-			}
-			else
-			{
-				return 0;
-			}
+			double value = lua_tonumber(state, i + 2);
+			parameter->friend_setReal(value);
+			parameter->friend_setInt(value);
+		}
+		else if (lua_isstring(state, i + 2))
+		{
+			AsciiString value(lua_tostring(state, i + 2));
+			parameter->m_string = value;
+		}
+		else if (lua_type(state, i + 2) == 1)
+		{
+			parameter->friend_setInt(0);
+		}
+		else
+		{
+			return 0;
 		}
 	}
 
