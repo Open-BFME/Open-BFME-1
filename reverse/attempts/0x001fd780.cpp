@@ -1,5 +1,5 @@
 // ?onObjectCreated@GateOpenAndCloseBehavior@@UAEXXZ
-// partial score=0.8 date=2026-09-23
+// partial score=0.85 date=2026-09-25
 // Scratch-only follow-up for retail RVA 0x001FD780 (381 bytes).
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /O2 /Ob2 /ICode/Libraries/Source/WWVegas/WWLib
 // Identity remains GateOpenAndCloseBehavior::onObjectCreated: vtable
@@ -131,9 +131,6 @@ void GateOpenAndCloseBehavior::onObjectCreated()
 		return;
 
 	Object *candidate = TheBfmeGameLogic->getFirstObject();
-	if (candidate == 0)
-		return;
-
 	AsciiString candidateName;
 	while (candidate != 0)
 	{
@@ -155,7 +152,7 @@ void GateOpenAndCloseBehavior::onObjectCreated()
 						->m_linkedObjectId = candidate->m_id_at_74;
 				}
 			}
-			return;
+			break;
 		}
 		candidate = candidate->m_next;
 	}
