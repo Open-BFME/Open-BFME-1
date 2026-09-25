@@ -64,10 +64,10 @@ private:
 extern int g_Va012B49FC[];
 
 Bool Pathfinder::validMovementTerrain(Int layer, const Locomotor *locomotor,
-	const Coord3D *position)
+	const Coord3D *worldPosition)
 {
-	Int x = REAL_TO_INT_FLOOR(position->x / PATHFIND_CELL_SIZE);
-	Int y = REAL_TO_INT_FLOOR(position->y / PATHFIND_CELL_SIZE);
+	Int x = REAL_TO_INT_FLOOR(worldPosition->x / PATHFIND_CELL_SIZE);
+	Int y = REAL_TO_INT_FLOOR(worldPosition->y / PATHFIND_CELL_SIZE);
 
 	PathfindCell *toCell = getCell((PathfindLayerEnum)layer, x, y);
 	if (toCell == 0)
