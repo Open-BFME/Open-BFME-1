@@ -245,7 +245,10 @@ def regressions(before, after):
         else:
             shape = {off: value[1:] for off, value in members.items()}
             candidates = [name for name, fields in right.items()
+                          if name not in left
                           if {off: value[1:] for off, value in fields.items()} == shape]
+            # Removing a local type during header adoption does not rename it
+            # to an unrelated, already-present type with the same layout.
             # Never pick arbitrarily between two identical carrier layouts.
             if len(candidates) != 1:
                 continue

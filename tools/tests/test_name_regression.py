@@ -68,6 +68,19 @@ def test_offset_pointer_name_is_already_opaque():
                          'class C { void *m_reserved; };') == []
 
 
+def test_header_adoption_does_not_pair_removed_type_with_retained_layout():
+    retained = 'class Rva0050F8B0FunctorHolder { void *m_ptr; };'
+    before = 'class StringBase { void *m_data; };\n' + retained
+    after = '#include "string_base.h"\n' + retained
+    assert N.regressions(before, after) == []
+
+
+def test_new_owner_with_same_layout_still_reports_name_regression():
+    assert set(N.regressions('class StringBase { void *m_data; };',
+                            'class Rva0050F8B0FunctorHolder { void *m_ptr; };')) == {
+        ('StringBase', 'Rva0050F8B0FunctorHolder'), ('m_data', 'm_ptr')}
+
+
 def test_pushed_history_catches_a_regression_restored_later(repo):
     put(repo, BANK, BEFORE)
     old = commit(repo)
@@ -462,7 +475,7 @@ def hook_fixture(repo):
     # Unrelated gates are inert; run the real hook to verify that it refuses
     # unreviewed checker code even if that local checker would return success.
     for tool in ('name_regression', 'name_history', 'name_oracle', 'check_case_collisions',
-                 'conversion_gate', 'check_csv', 'retired_guard'):
+                 'conversion_gate', 'check_csv', 'retired_guard', 'one_identity'):
         put(repo, f'tools/{tool}.py', 'raise SystemExit(0)\n')
     put(repo, 'Code/Names.cpp', BEFORE)
     return commit(repo)

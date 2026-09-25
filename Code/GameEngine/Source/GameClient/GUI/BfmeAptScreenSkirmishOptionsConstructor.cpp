@@ -5,23 +5,7 @@
 // single-inheritance wrapper family at 0x0110A318 and the same WindowManager
 // registration surface as the landed neighbours.
 
-template <typename T> class StringBase
-{
-	friend class AsciiString;
-
-private:
-	StringBase( const T *text );
-	~StringBase();
-
-	void *m_data;
-};
-
-class AsciiString : private StringBase<char>
-{
-public:
-	AsciiString( const char *text ) : StringBase<char>( text ) {}
-	~AsciiString() {}
-};
+#include "../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 
 extern void j_00047767( void );
 
@@ -139,7 +123,8 @@ BfmeAptScreenSkirmish::BfmeAptScreenSkirmish( void )
 	*(BfmeAptScreenSkirmish **)0x012F4B3C = this;
 
 	{
-		AsciiString name( (const char *)0x0110A2E4 );
+		// "Skirmish/tooltipPlayerLevelIconGondor" (also used by the destructor).
+		AsciiString name( "Skirmish/tooltipPlayerLevelIconGondor" );
 		FunctorBindingSingle binding(
 			rawFunctorMethod( 0x0044219F ),
 			(FunctorTargetSingle *)this );
@@ -147,7 +132,8 @@ BfmeAptScreenSkirmish::BfmeAptScreenSkirmish( void )
 			Rva0050F8B0FunctorHolder( binding ) );
 	}
 	{
-		AsciiString name( (const char *)0x0110A2B8 );
+		// "Skirmish/tooltipPlayerLevelIconRohan".
+		AsciiString name( "Skirmish/tooltipPlayerLevelIconRohan" );
 		FunctorBindingSingle binding(
 			rawFunctorMethod( 0x0044219F ),
 			(FunctorTargetSingle *)this );
@@ -155,7 +141,8 @@ BfmeAptScreenSkirmish::BfmeAptScreenSkirmish( void )
 			Rva0050F8B0FunctorHolder( binding ) );
 	}
 	{
-		AsciiString name( (const char *)0x0110A288 );
+		// "Skirmish/tooltipPlayerLevelIconIsengard".
+		AsciiString name( "Skirmish/tooltipPlayerLevelIconIsengard" );
 		FunctorBindingSingle binding(
 			rawFunctorMethod( 0x0044219F ),
 			(FunctorTargetSingle *)this );
@@ -163,7 +150,8 @@ BfmeAptScreenSkirmish::BfmeAptScreenSkirmish( void )
 			Rva0050F8B0FunctorHolder( binding ) );
 	}
 	{
-		AsciiString name( (const char *)0x0110A258 );
+		// "Skirmish/tooltipPlayerLevelIconMordor".
+		AsciiString name( "Skirmish/tooltipPlayerLevelIconMordor" );
 		FunctorBindingSingle binding(
 			rawFunctorMethod( 0x0044219F ),
 			(FunctorTargetSingle *)this );
