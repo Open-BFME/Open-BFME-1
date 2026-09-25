@@ -1,5 +1,5 @@
 // ?rva0044a2e0@Rva00449790Owner@@QAEXXZ
-// partial score=0.88 date=2026-09-23
+// partial score=0.89 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
 // stlport
 // Address-derived reconstruction of the embedded BFME cursor-animation owner.
@@ -124,8 +124,8 @@ public:
 struct Rva0044A2E0Mouse
 {
 	char m_pad0000[0x4D10];
-	Int m_x;
-	Int m_y;
+	volatile Int m_x;
+	volatile Int m_y;
 	char m_pad4D18[0x4DA8 - 0x4D18];
 	Int m_cursor;
 };
@@ -173,7 +173,8 @@ private:
 extern Rva0044A2E0Mouse *TheMouse;
 extern Anim2DCollection *TheAnim2DCollection;
 extern Rva0044A2E0GlobalData *TheWritableGlobalData;
-extern ClientRoot4120 *TheGameClient;
+// Retail loads this pointer between the two mouse-coordinate reads.
+extern ClientRoot4120 * volatile TheGameClient;
 extern InGameUI *TheInGameUI;
 
 void Rva00449790Owner::rva0044a2e0()
@@ -190,10 +191,13 @@ void Rva00449790Owner::rva0044a2e0()
 		&global->m_blob_E04,
 		&global->m_blob_E10);
 
+	Int mouseX = TheMouse->m_x;
+	ClientRoot4120 *gameClient = TheGameClient;
+	Int mouseY = TheMouse->m_y;
 	Rva0044A2E0Coord mousePosition;
-	mousePosition.x = TheMouse->m_x;
-	mousePosition.y = TheMouse->m_y;
-	UnsignedInt frame = TheGameClient->getFrame();
+	mousePosition.x = mouseX;
+	mousePosition.y = mouseY;
+	UnsignedInt frame = gameClient->getFrame();
 
 	for (Rva0044A2E0List::iterator it = m_animations.begin();
 		it != m_animations.end();)
