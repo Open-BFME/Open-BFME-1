@@ -163,7 +163,7 @@ public:
 	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
 		PathfindLayerEnum layer, Rva003E5A50Info *info);			///< ILT 0x0001DAA2 -> 0x003E8440
 
-	void snapLine(const Coord3D *from, Coord3D *to);
+	void snapLine(const Coord3D *sourcePosition, Coord3D *destinationPosition);
 	bool isGroundPathPassable(const Coord3D &startWorld,
 		PathfindLayerEnum startLayer, const Coord3D &endWorld,
 		int pathDiameter);
@@ -187,18 +187,18 @@ private:
 // ?snapLine@Pathfinder@@QAEXPBUCoord3D@@PAU2@@Z
 // Walk the segment on LAYER_GROUND and, if the cell iterator reports a hit,
 // write the payload's working Coord3D back onto the destination.
-void Pathfinder::snapLine(const Coord3D *from, Coord3D *to)
+void Pathfinder::snapLine(const Coord3D *sourcePosition, Coord3D *destinationPosition)
 {
 	Rva003D61C0 info;
-	info.set((Int)this, 4, (const Rva003D61C0Vec *)from);
+	info.set((Int)this, 4, (const Rva003D61C0Vec *)sourcePosition);
 	ICoord2D start;
-	worldToCell(from, &start);
+	worldToCell(sourcePosition, &start);
 	ICoord2D end;
-	worldToCell(to, &end);
+	worldToCell(destinationPosition, &end);
 	if (iterateCellsAlongLine(start, end, LAYER_GROUND, (Rva003DE480Struct *)&info)) {
-		to->x = info.m_pos.x;
-		to->y = info.m_pos.y;
-		to->z = info.m_pos.z;
+		destinationPosition->x = info.m_pos.x;
+		destinationPosition->y = info.m_pos.y;
+		destinationPosition->z = info.m_pos.z;
 	}
 }
 
