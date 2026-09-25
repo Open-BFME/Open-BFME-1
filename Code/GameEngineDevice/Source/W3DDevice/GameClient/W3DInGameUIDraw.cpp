@@ -241,7 +241,6 @@ public:
 	virtual void inGameTailD2(); virtual void inGameTailD3();
 	virtual void drawSelectionRegion();       // +0x1b8, slot 110
 	virtual void rva006FC5A0Slot(View *view);   // +0x1bc, slot 111; routes to drawMoveHints
-	void drawMoveHints(View *view);            // requested nonvirtual body spelling
 	virtual void drawAttackHints(View *view);  // +0x1c0, slot 112
 	virtual void drawPlaceAngle(View *view);   // +0x1c4, slot 113
 
@@ -292,84 +291,4 @@ void W3DInGameUI::draw()
 
 	postDraw();
 	TheWindowManager->winRepaintWindows();
-}
-
-// Retail 0x006FC5A0, 650 bytes including the string cleanup return.
-void W3DInGameUI::drawMoveHints(View * /*view*/)
-{
-	// The retail loop carries the frame field and render-object slot as
-    // parallel cursors. Animation slots are 25 pointers after render slots.
-    // See LAYOUTS.md for the +0x44 / +0x13ac / +0x1410 witnesses.
-    Int i=0;
-    RenderObjClass **render=m_moveHintRenderObj;
-    UnsignedInt *frameCursor=&m_moveHint[0].frame;
-
-	for (; i < MAX_MOVE_HINTS; i++, render++, frameCursor+=5)
-	{
-		Int elapsed = TheGameClient->getFrame() - *frameCursor;
-		if (TheGameClient->getFrame() <= 40)
-			elapsed = 41;
-
-		if (!*(const Bool*)(frameCursor+1) && elapsed <= 40)
-		{
-			if ((*render) == NULL)
-			{
-				RenderObjClass *hint;
-				HAnimClass *anim;
-
-				hint = Create_Render_Obj(asciiText(TheWritableGlobalData->m_moveHintName));
-
-				AsciiString animName;
-				animName.format("%s.%s", asciiText(TheWritableGlobalData->m_moveHintName),
-					asciiText(TheWritableGlobalData->m_moveHintName));
-				anim = Get_HAnim(asciiText(animName));
-
-				if (hint == NULL)
-					return;
-
-				hint->Set_Hidden(1);
-				(*render) = hint;
-
-				REF_PTR_RELEASE(reinterpret_cast<HAnimClass**>(render)[25]);
-				reinterpret_cast<HAnimClass**>(render)[25] = anim;
-			}
-
-			if ((*render)->Is_Hidden() == 1)
-			{
-				(*render)->Set_Hidden(0);
-				W3DDisplay::m_3DScene->Add_Render_Object((*render));
-				if (reinterpret_cast<HAnimClass**>(render)[25])
-					(*render)->Set_Animation(reinterpret_cast<HAnimClass**>(render)[25], 0, RenderObjClass::ANIM_MODE_ONCE);
-			}
-
-			Matrix3D transform;
-			const Coord3D &pos = *(const Coord3D*)(frameCursor-3);
-			PathfindLayerEnum layer = TheTerrainLogic->alignOnTerrain(0, pos, true, transform);
-
-			Real waterZ;
-			if (layer == LAYER_GROUND && TheTerrainLogic->isUnderwater(pos.x, pos.y, &waterZ))
-			{
-				Coord3D tmp;
-				tmp.x = pos.x;
-				tmp.y = pos.y;
-				tmp.z = waterZ;
-				Coord3D normal;
-				normal.x = 0;
-				normal.y = 0;
-				normal.z = 1;
-				makeAlignToNormalMatrix(0, tmp, normal, transform);
-			}
-
-			(*render)->Set_Transform(transform);
-		}
-		else
-		{
-			if ((*render))
-				if ((*render)->Is_Hidden() == 0)
-				{
-					(*render)->Set_Hidden(1);
-					W3DDisplay::m_3DScene->Remove_Render_Object((*render));
-				}
-		}
-	}
 }
