@@ -1,5 +1,5 @@
 // ?d_00269780@@YAXXZ
-// partial score=0.37 date=2026-09-22
+// partial score=0.3729508197 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 // Retail 0x00269780 consumes special-power target records from a result vector.
 
@@ -135,6 +135,7 @@ struct Rva00269780Payload
 	Rva00269780Pair *storageEnd;
 	Rva00269780Pair *cursor;
 	Int refCount;
+	Rva00269780Pair *getCursor() const { return cursor; }
 };
 
 struct Rva009F3C70Result
@@ -247,11 +248,10 @@ void Rva00269780Owner::apply(Rva009F3C70Result *result)
 	for (;;)
 	{
 		Rva00269780Payload *payload = result->value;
-		Rva00269780Pair *cursor = payload->cursor;
-		if (cursor == payload->end)
+		if (payload->getCursor() == payload->end)
 			break;
-		register Object *target = (Object *)(unsigned int)cursor->first;
-		payload->cursor = cursor + 1;
+		register Object *target = (Object *)(unsigned int)payload->getCursor()->first;
+		payload->cursor = payload->getCursor() + 1;
 		if (target == 0)
 			continue;
 
