@@ -2768,5 +2768,25 @@
   "after_sha256": "18fe9973726b2fd4ea34f400665fa76c2b0fc83ed53038a25eccd432dbef4cb5",
   "evidence": "docs/naming_evidence.md",
   "reason": "The bank's method name computeScatter was a guess: no Zero Hour source, pin or landed source names it. The caller 0x001E9380 via ILT 0x00040287 proves only the WeaponTemplate receiver and the hidden Coord3D return, so the method takes the address-derived name."
+ },
+ {
+  "old_path": "reverse/attempts/0x00371b00.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva00371B00.cpp",
+  "old_name": "checkRepairsPending",
+  "new_name": "rva00371b00",
+  "before_sha256": "598a9824ba321f2b31044c99fb4256878e43592eef53ccc90167e0bfee8cbb0d",
+  "after_sha256": "f7f0a9e34d1efe19d3e23b001e15d29f171a502e00dd0f9bf0be8989c97778ba",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "no caller or vtable slot or string names the method (only caller 0x00377740 reaches it through unnamed ILT 0x0000B7FD)"
+ },
+ {
+  "old_path": "reverse/attempts/0x00371b00.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Behavior/CastleBehaviorRva00371B00.cpp",
+  "old_name": "m_rva00371B00Threshold",
+  "new_name": "m_unmodelled11F8",
+  "before_sha256": "598a9824ba321f2b31044c99fb4256878e43592eef53ccc90167e0bfee8cbb0d",
+  "after_sha256": "f7f0a9e34d1efe19d3e23b001e15d29f171a502e00dd0f9bf0be8989c97778ba",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "unwitnessed field and threshold was an interpretation"
  }
 ]
