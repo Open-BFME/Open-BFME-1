@@ -3228,5 +3228,15 @@
   "after_sha256": "973be5ddaf72c03ff58347c1027bf6d474c1abe11bccdec364cc9c0e739739b9",
   "evidence": "docs/naming_evidence.md",
   "reason": "name_oracle reports Object+0x360 unwitnessed (ZH has no member there) so leader-ID was a bank guess"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "Player",
+  "new_name": "Rva000D9D30Player",
+  "before_sha256": "2ac8c17a2c90c8d4aa25ea05ebd874cf976909fec22fa807849d39b3fc898f9e",
+  "after_sha256": "bbab68d885ec6bf86ae80b81d9b772e2d34df016e76906adefd2e4761d37f087",
+  "evidence": "reverse/identity_evidence/000d9d30.md",
+  "reason": "0x000D9D30 is not Player::loadPostProcess: Player's vftable slot 1 (loadPostProcess) is the ret at 0x000DD960 and nothing references 0x000D9D30 but PlayerList's per-player routine; the real method name is unproven, so the owner is address-derived"
  }
 ]

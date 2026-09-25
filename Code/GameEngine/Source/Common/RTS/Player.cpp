@@ -5518,7 +5518,20 @@ void Player::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-void Player::loadPostProcess( void )
+// Retail 0x000D9D30 (434 bytes) was filed here as Player::loadPostProcess, but
+// Player's vftable holds the one-byte ret at 0x000DD960 in slot 1 (BFME's
+// Snapshot loadPostProcess slot) and no table references this body: its only
+// caller is the PlayerList routine at 0x000DF330, once per player. It creates
+// the player's starting object and runs the new-map step, so its name is not
+// proven and it keeps the address.
+class Rva000D9D30Player : public Player
+{
+public:
+	void method( void );
+};
+
+// ?method@Rva000D9D30Player@@QAEXXZ
+void Rva000D9D30Player::method( void )
 {
 	BfmePlayerLoadFields *self = (BfmePlayerLoadFields *)this;
 	if (self->m_defaultTeam != NULL && self->m_playerTemplate != NULL)
@@ -5593,4 +5606,4 @@ void Player::loadPostProcess( void )
 		(((BfmePlayerFinalHelper *)this)->*finalCall.member)();
 	}
 
-}  // end loadPostProcess
+}  // end Rva000D9D30Player::method
