@@ -3448,5 +3448,25 @@
   "after_sha256": "a5d1d372688efccbf4c7f25d1c3cd1d93359fd3f6f7c7f82849cef221a544636",
   "evidence": "docs/naming_evidence.md",
   "reason": "the bank's class and method spelling had no caller, vtable slot or string evidence, and the pinned callee fixes the owner token"
+ },
+ {
+  "old_path": "reverse/attempts/0x0049b9b0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ControlBar/CommandButtonRva0049B9B0.cpp",
+  "old_name": "getBuildUpgradeMask",
+  "new_name": "rva0049B9B0",
+  "before_sha256": "8331beb801043a4eaeebb4aa70f9ab6e7fc1410181e290b052644ac725912e20",
+  "after_sha256": "ea4c8b920e4fa48e4038bd883ba7b25214721898b282397629ca5af7638071c9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "no caller, vtable slot, string literal, or ZH twin names the method (verdicts #6-#9 agree)"
+ },
+ {
+  "old_path": "reverse/attempts/0x0049b9b0.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/ControlBar/CommandButtonRva0049B9B0.cpp",
+  "old_name": "m_upgradeMask",
+  "new_name": "m_value20",
+  "before_sha256": "8331beb801043a4eaeebb4aa70f9ab6e7fc1410181e290b052644ac725912e20",
+  "after_sha256": "ea4c8b920e4fa48e4038bd883ba7b25214721898b282397629ca5af7638071c9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "name_oracle reports UpgradeTemplate+0x20 unwitnessed and ZH has no member there"
  }
 ]
