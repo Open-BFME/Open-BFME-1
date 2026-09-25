@@ -148,7 +148,7 @@ class Pathfinder
 {
 public:
 	Bool rva003E5E40( Object *object );
-	Bool worldToCell( const Coord3D *position, ICoord2D *cell );
+	Bool worldToCell( const Coord3D *worldPosition, ICoord2D *cellIndex );
 	PathfindCell *getCell( PathfindLayerEnum layer, Int cellX, Int cellY );
 
 protected:
@@ -204,15 +204,15 @@ __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, 
 }
 
 // Retail 0x003D7EC0; logic of pathfind_getcell.cpp.
-__declspec(noinline) Bool Pathfinder::worldToCell( const Coord3D *position, ICoord2D *cell )
+__declspec(noinline) Bool Pathfinder::worldToCell( const Coord3D *worldPosition, ICoord2D *cellIndex )
 {
-	cell->x = REAL_TO_INT_FLOOR(position->x/PATHFIND_CELL_SIZE);
-	cell->y = REAL_TO_INT_FLOOR(position->y/PATHFIND_CELL_SIZE);
+	cellIndex->x = REAL_TO_INT_FLOOR(worldPosition->x/PATHFIND_CELL_SIZE);
+	cellIndex->y = REAL_TO_INT_FLOOR(worldPosition->y/PATHFIND_CELL_SIZE);
 	Bool overflow = false;
-	if (cell->x < m_extent.lo.x) {overflow = true; cell->x = m_extent.lo.x;}
-	if (cell->y < m_extent.lo.y) {overflow = true; cell->y = m_extent.lo.y;}
-	if (cell->x > m_extent.hi.x) {overflow = true; cell->x = m_extent.hi.x;}
-	if (cell->y > m_extent.hi.y) {overflow = true; cell->y = m_extent.hi.y;}
+	if (cellIndex->x < m_extent.lo.x) {overflow = true; cellIndex->x = m_extent.lo.x;}
+	if (cellIndex->y < m_extent.lo.y) {overflow = true; cellIndex->y = m_extent.lo.y;}
+	if (cellIndex->x > m_extent.hi.x) {overflow = true; cellIndex->x = m_extent.hi.x;}
+	if (cellIndex->y > m_extent.hi.y) {overflow = true; cellIndex->y = m_extent.hi.y;}
 	return overflow;
 }
 
