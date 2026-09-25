@@ -594,6 +594,30 @@ The listing catches the opposite mistake too. At `0x009C0A30` we merged the
 `fild` temporary with a user integer on `[ebp-4]`. Retail kept the two apart on
 -4 and -8, so every double below them sat eight bytes lower than ours.
 
+The same scope rule decides the other two frame shapes landed on 2026-09-25:
+
+- **A struct built only to pass by pointer.** `JoinDirectConnectGame`
+  (0x004D3650) was 0x58 against retail's 0x54 because a named
+  `BfmeNetAddress address;` held its own slot. Passing it as a constructed
+  temporary, `TheLAN->join(BfmeNetAddress(ip, port))` with a `const &`
+  parameter, let it share the by-value `UnicodeString` argument's slot.
+  Wrapping the named local in a block works too.
+- **One late local.** `exitObjectViaDoor` (0x002D01E0) was 12 bytes over.
+  Retail packs the `std::vector exitPath` onto the dead `Vector3 loc`. Only
+  `exitPath` goes in its own block, after `tmp`. Wrapping `tmp` with it
+  leaves 6 bytes.
+
+**A dead parameter slot takes only block-scoped locals.** Retail often keeps a
+local in an incoming parameter's slot once that parameter lives in a register:
+`[esp+N]` above the return address is written with a local's value. VC7.1 does
+this only for a local declared in a nested block. A function-scope local keeps
+its own frame slot, and the frame grows by four. At `0x006BDC10` the count and
+the version pair had to be sibling blocks before `count` reached the dead
+`xfer` slot. Which block-scoped local wins the slot is still open. There,
+`version` took it as well. Nesting the version block inside the count block
+swapped the two. `parseLineTable` (0x0081D600) and `isAGoodIdeaToBuildTeam`
+(0x001649B0) stop at the same question.
+
 ## A run of locals on the wrong slots: retail had one more object
 
 Read this when the frame is the right size, every local is the right size, and
