@@ -45,7 +45,7 @@ extern TerrainLogic *TheTerrainLogic;
 class Pathfinder
 {
 public:
-	void snapPosition(Object *obj, Coord3D *pos);
+	void snapPosition(Object *object, Coord3D *position);
 	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
 
 protected:

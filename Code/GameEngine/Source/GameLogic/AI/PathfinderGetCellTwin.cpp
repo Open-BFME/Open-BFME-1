@@ -23,14 +23,14 @@ class Pathfinder
 public:
 	Bool worldToCell(const Coord3D *position, ICoord2D *cell);
 	PathfindCell *bfmeGetCellByIndicesTwin(PathfindLayerEnum layer, int x, int y);
-	PathfindCell *bfmeGetCellTwin(PathfindLayerEnum layer, const Coord3D *pos);
+	PathfindCell *bfmeGetCellTwin(PathfindLayerEnum layer, const Coord3D *worldPosition);
 };
 
 // ?bfmeGetCellTwin@Pathfinder@@QAEPAVPathfindCell@@W4PathfindLayerEnum@@PBUCoord3D@@@Z
-PathfindCell *Pathfinder::bfmeGetCellTwin(PathfindLayerEnum layer, const Coord3D *pos)
+PathfindCell *Pathfinder::bfmeGetCellTwin(PathfindLayerEnum layer, const Coord3D *worldPosition)
 {
 	ICoord2D cell;
-	Bool overflow = worldToCell(pos, &cell);
+	Bool overflow = worldToCell(worldPosition, &cell);
 	if (overflow)
 		return 0;
 	return bfmeGetCellByIndicesTwin(layer, cell.x, cell.y);
