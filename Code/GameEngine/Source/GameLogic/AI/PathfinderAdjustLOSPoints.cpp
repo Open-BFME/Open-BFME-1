@@ -54,18 +54,18 @@ public:
 // ?bfmeAdjustLOSPoints@Pathfinder@@QAEXPAUCoord3D@@0@Z
 void Pathfinder::bfmeAdjustLOSPoints(Coord3D *startPosition, Coord3D *endPosition)
 {
-	Rva003D79C0Struct info;
-	info.m((Int)this);
+	Rva003D79C0Struct adjustmentResult;
+	adjustmentResult.m((Int)this);
 
-	BfmePair1181 firstCell;
-	BfmePair1181 secondCell;
-	bfmeConv1181(startPosition, &firstCell);
-	bfmeConv1181(endPosition, &secondCell);
+	BfmePair1181 startCell;
+	BfmePair1181 endCell;
+	bfmeConv1181(startPosition, &startCell);
+	bfmeConv1181(endPosition, &endCell);
 
-	if (iterateCellsAlongLine(*(ICoord2D *)&firstCell,
-		*(ICoord2D *)&secondCell, LAYER_GROUND, &info))
+	if (iterateCellsAlongLine(*(ICoord2D *)&startCell,
+		*(ICoord2D *)&endCell, LAYER_GROUND, &adjustmentResult))
 	{
-		startPosition->x = info.x;
-		startPosition->y = info.y;
+		startPosition->x = adjustmentResult.x;
+		startPosition->y = adjustmentResult.y;
 	}
 }
