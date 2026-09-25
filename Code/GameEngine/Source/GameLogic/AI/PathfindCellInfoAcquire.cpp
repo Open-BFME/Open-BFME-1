@@ -36,29 +36,29 @@ extern int g_bfmePathfindInfoIssued;             // retail 0x012F1098
 PathfindCellInfo *__cdecl bfmeAcquirePathfindCellInfo(
 	PathfindCellInfo **freeListHead, PathfindCell *pathfindCell, const ICoord2D *cellPosition)
 {
-	PathfindCellInfo *info = *freeListHead;
-	if (info->m_freePrevLink != 0)
+	PathfindCellInfo *cellInfoRecord = *freeListHead;
+	if (cellInfoRecord->m_freePrevLink != 0)
 	{
-		*info->m_freePrevLink = info->m_freeNext;
-		if (info->m_freeNext != 0)
-			info->m_freeNext->m_freePrevLink = info->m_freePrevLink;
-		info->m_freePrevLink = 0;
-		info->m_freeNext = 0;
+		*cellInfoRecord->m_freePrevLink = cellInfoRecord->m_freeNext;
+		if (cellInfoRecord->m_freeNext != 0)
+			cellInfoRecord->m_freeNext->m_freePrevLink = cellInfoRecord->m_freePrevLink;
+		cellInfoRecord->m_freePrevLink = 0;
+		cellInfoRecord->m_freeNext = 0;
 	}
 
-	info->m_cell = pathfindCell;
-	info->m_pos = *cellPosition;
-	info->m_nextOpen = 0;
-	info->m_prevOpen = 0;
-	info->m_totalCost = 0;
-	info->m_costSoFar = 0;
-	info->m_pathParent = 0;
-	info->m_goalUnitID = 0;
-	info->m_posUnitID = 0;
-	info->m_goalAircraftID = 0;
-	info->m_flags &= 0xffffffe0;
+	cellInfoRecord->m_cell = pathfindCell;
+	cellInfoRecord->m_pos = *cellPosition;
+	cellInfoRecord->m_nextOpen = 0;
+	cellInfoRecord->m_prevOpen = 0;
+	cellInfoRecord->m_totalCost = 0;
+	cellInfoRecord->m_costSoFar = 0;
+	cellInfoRecord->m_pathParent = 0;
+	cellInfoRecord->m_goalUnitID = 0;
+	cellInfoRecord->m_posUnitID = 0;
+	cellInfoRecord->m_goalAircraftID = 0;
+	cellInfoRecord->m_flags &= 0xffffffe0;
 	++g_bfmePathfindInfoIssued;
-	return info;
+	return cellInfoRecord;
 }
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/AIPathfind.h
