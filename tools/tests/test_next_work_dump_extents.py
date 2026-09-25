@@ -62,6 +62,39 @@ def test_conflicting_dump_extents_fail_explicitly(tmp_path, monkeypatch):
         next_work.proven_dump_extents({0x1400})
 
 
+def test_ret_int3_carving_supersedes_stale_inventory_extent(tmp_path, monkeypatch):
+    ledger(tmp_path, monkeypatch, [{"target_rva": "0x00001500"}])
+    with (tmp_path / "reverse/carved.csv").open("w", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=[
+            "rva", "size", "start_evidence", "callers", "end_evidence", "ghidra"])
+        writer.writeheader()
+        writer.writerow(dict(rva="0x00001400", size=534,
+                             start_evidence="rel32-call/jmp;ghidra-start", callers=1,
+                             end_evidence="ret+int3", ghidra="FUN_00401400"))
+    monkeypatch.setattr(next_work, "_ghidra_sizes", lambda: {0x1400: 525})
+    body = b"\x90" * 531 + b"\xc2\x04\x00"
+    monkeypatch.setattr(build, "read_target_bytes", lambda rva, size: body[:size])
+
+    items, _ = next_work.collapse_and_validate([candidate()])
+
+    assert items[0]["extent"] == 534
+    assert "--size 534 " in items[0]["command"]
+    assert any("supersedes stale inventory extent 525B" in warning
+               for warning in items[0]["warnings"])
+
+
+def test_only_ret_int3_carvings_are_boundary_proof(tmp_path, monkeypatch):
+    ledger(tmp_path, monkeypatch, [{"target_rva": "0x00001500"}])
+    with (tmp_path / "reverse/carved.csv").open("w", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=[
+            "rva", "size", "start_evidence", "callers", "end_evidence", "ghidra"])
+        writer.writeheader()
+        writer.writerow(dict(rva="0x00001400", size=534,
+                             start_evidence="ghidra-start", callers=0,
+                             end_evidence="jmp-tail", ghidra="FUN_00401400"))
+    assert next_work.proven_carved_extents({0x1400}) == {}
+
+
 def test_inventory_disagreement_is_not_silently_overwritten(tmp_path, monkeypatch):
     ledger(tmp_path, monkeypatch, [{}])
     monkeypatch.setattr(next_work, "_ghidra_sizes", lambda: {0x1400: 540})

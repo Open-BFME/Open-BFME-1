@@ -766,12 +766,51 @@ def proven_dump_extents(rvas):
     return extents
 
 
+def proven_carved_extents(rvas):
+    """Read newer image-derived extents with an explicit ret+int3 end.
+
+    ``ghidra_functions.csv`` is an inventory snapshot and can retain a stale
+    end after ``carve_unclaimed.py`` has established the complete body.  Only
+    the strongest carved end witness is allowed to supersede it here; weaker
+    fall-through and tail-jump rows remain candidates, not boundary proof.
+    """
+    wanted = set(rvas)
+    extents = {}
+    path = ROOT / "reverse" / "carved.csv"
+    if not wanted or not path.exists():
+        return extents
+    with path.open(newline="", encoding="utf-8", errors="replace") as stream:
+        for row in csv.DictReader(stream):
+            try:
+                rva = int(row.get("rva", ""), 16)
+                size = int(row.get("size", "0"))
+            except (TypeError, ValueError):
+                continue
+            if (rva not in wanted or size <= 0
+                    or row.get("end_evidence") != "ret+int3"):
+                continue
+            if rva in extents and extents[rva] != size:
+                raise SystemExit(f"conflicting carved extents at 0x{rva:08X}: "
+                                 "repair reverse/carved.csv")
+            extents[rva] = size
+    return extents
+
+
 def structural_validator(rvas=()):
     """Validate against inventory boundaries and current high-confidence dumps."""
     import build
-    sizes = dict(_ghidra_sizes())
+    inventory_sizes = dict(_ghidra_sizes())
+    sizes = dict(inventory_sizes)
+    carved = proven_carved_extents(rvas)
     dumps = proven_dump_extents(rvas)
     inventory = boundary_validator.BoundaryValidator(build.read_target_bytes, dict(sizes))
+    # A ret followed by alignment padding is direct image evidence for the end
+    # of a body.  It is newer and stronger than Ghidra's occasionally truncated
+    # inventory extent, while check_start still prevents an interior address
+    # from being promoted merely because carved.csv contains it.
+    for rva, size in carved.items():
+        if inventory.check_start(rva)[0] is not False:
+            sizes[rva] = size
     # An existing inventory disagreement is evidence to inspect, not permission
     # to silently replace one boundary with the other. Fill only missing RVAs,
     # without turning a known interior or padding address into an accepted start.
@@ -779,7 +818,9 @@ def structural_validator(rvas=()):
         if inventory.check_start(rva)[0] is not False:
             sizes.setdefault(rva, size)
     validator = boundary_validator.BoundaryValidator(build.read_target_bytes, sizes)
+    validator.carved_extents = carved
     validator.dump_extents = dumps
+    validator.inventory_extents = inventory_sizes
     validator.inventory_names = _ghidra_names()
     # A no-boundary verdict is a fact about the address, not just the source
     # name that happened to expose it.  Structural drift collapses many names
@@ -848,6 +889,12 @@ def collapse_and_validate(candidates, validator=None):
         best = group[0]
         served = verdict["extent"] or best["size"]
         warnings = list(verdict["warnings"])
+        carved_size = getattr(validator, "carved_extents", {}).get(rva)
+        inventory_size = getattr(validator, "inventory_extents", {}).get(rva)
+        if (carved_size is not None and inventory_size is not None
+                and carved_size != inventory_size):
+            warnings.append(f"carved ret+int3 extent {carved_size}B supersedes "
+                            f"stale inventory extent {inventory_size}B")
         dump_size = getattr(validator, "dump_extents", {}).get(rva)
         if dump_size is not None:
             if dump_size == verdict["extent"]:
