@@ -1,5 +1,7 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/scriptenginelayout /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
+#define ASCIISTRING_H
+#include "../../../../../Libraries/Source/WWVegas/WWLib/ascii_string.h"
 #include "PreRTS.h"
 #include "Common/NameKeyGenerator.h"
 #include "GameClient/AnimateWindowManager.h"
@@ -7,21 +9,10 @@
 #include "GameClient/GameWindow.h"
 #include "GameClient/GameWindowManager.h"
 
-class BFMERetailAsciiString
-{
-public:
-	BFMERetailAsciiString( const char *text );
-	~BFMERetailAsciiString() { releaseBuffer(); }
-	const char *str() const
-	{
-		static const char empty = 0;
-		return m_data ? m_data + 8 : &empty;
-	}
-
-private:
-	void releaseBuffer();
-	char *m_data;
-};
+inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
+template <> inline const char *StringBase<char>::str() const {
+    return m_data ? m_data->data : "";
+}
 
 class BFMEWindowManagerVTable
 {
@@ -155,7 +146,7 @@ void HideControlBar( bool immediate )
 	{
 		int id;
 		{
-			BFMERetailAsciiString name( "ControlBar.wnd:ControlBarParent" );
+			AsciiString name( "ControlBar.wnd:ControlBarParent" );
 			id = TheNameKeyGenerator->nameToKey( name.str() );
 		}
 		GameWindow *window = reinterpret_cast<BFMEWindowManagerVTable *>( TheWindowManager )->winGetWindowFromId( 0, id );
@@ -187,4 +178,75 @@ void HideControlBar( bool immediate )
 		TheAptPalantir->hide( true );
 	if( TheBannerUI )
 		TheBannerUI->hide( true );
+}
+
+// The BFME mode transition is separately matched at 0049E5A0. Its member
+// is absent from the upstream ControlBar declaration, so this narrow view
+// retains the address until the shared header can carry its declaration.
+class Rva0049E5A0View {
+public:
+    int transition();
+    int mode() const { return word2EC; }
+    char opaque0[0x2EC];
+    int word2EC;
+};
+// Vtable010F6F2C slot10 -> ILT0002848E -> reset0045DAB0.
+// BFME inserted loadIniFilesFromLegend before postProcessLoad.
+class Rva004C0E10AnimationView {
+public:
+    virtual void slot0();
+    virtual void slot4();
+    virtual void slot8();
+    virtual void slotC();
+    virtual void reset();
+};
+class Glo012F4B98Type;
+extern Glo012F4B98Type *Glo012F4B98;
+extern void showReplayControls();
+// name_oracle witnesses ControlBar::m_UIDirty at +24.
+struct Rva004C0E10DirtyView { char opaque0[0x24]; bool m_UIDirty; };
+
+// Retail 004C0E10 and named ScriptActions callers agree with ShowControlBar.
+// Mode +2EC is BFME-specific; the original header's member at that offset
+// is unrelated. Only mode 2 marks the control-bar UI dirty.
+void ShowControlBar(bool immediate)
+{
+    HideControlBar(true);
+    if (reinterpret_cast<Rva0049E5A0View *>(TheControlBar)->mode() == 0)
+        reinterpret_cast<Rva0049E5A0View *>(TheControlBar)->transition();
+    switch (reinterpret_cast<Rva0049E5A0View *>(TheControlBar)->mode()) {
+    case 1:
+        if (Glo012F4B98)
+            reinterpret_cast<AptPalantir *>(Glo012F4B98)->hide(false);
+        if (TheBannerUI)
+            TheBannerUI->hide(false);
+        break;
+    case 2:
+        showReplayControls();
+        if (TheControlBar)
+            TheControlBar->showSpecialPowerShortcut();
+        if (TheWindowManager) {
+            int id;
+            {
+                AsciiString name("ControlBar.wnd:ControlBarParent");
+                id = TheNameKeyGenerator->nameToKey(name.str());
+            }
+            GameWindow *window = reinterpret_cast<BFMEWindowManagerVTable *>(TheWindowManager)->winGetWindowFromId(0, id);
+            if (window) {
+                TheControlBar->switchControlBarStage(CONTROL_BAR_STAGE_DEFAULT);
+                reinterpret_cast<BFMEViewVTable *>(TheTacticalView)->setHeight(
+                    (int)((unsigned int)reinterpret_cast<BFMEDisplayVTable *>(TheDisplay)->getHeight() * 0.80f));
+                if (TheControlBar->m_animateWindowManager && !immediate) {
+                    reinterpret_cast<Rva004C0E10AnimationView *>(TheControlBar->m_animateWindowManager)->reset();
+                    TheControlBar->m_animateWindowManager->registerGameWindow(
+                        window, WIN_ANIMATION_SLIDE_BOTTOM, true, 500, 0);
+                    TheControlBar->animateSpecialPowerShortcut(true);
+                }
+                window->winHide(false);
+            }
+        }
+        if (TheControlBar)
+            reinterpret_cast<Rva004C0E10DirtyView *>(TheControlBar)->m_UIDirty = true;
+        break;
+    }
 }
