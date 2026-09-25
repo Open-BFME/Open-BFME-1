@@ -348,7 +348,6 @@ void AITNGuardMachine::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@AITNGuardMachine@@ present-unmatched
 void AITNGuardMachine::loadPostProcess( void )
 {
 }  // end loadPostProcess
