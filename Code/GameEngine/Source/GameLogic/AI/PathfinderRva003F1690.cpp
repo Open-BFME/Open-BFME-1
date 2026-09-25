@@ -72,11 +72,11 @@ struct Rva003F1690BoundsView
 class Pathfinder
 {
 public:
-	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
+	PathfindCell *getCell(PathfindLayerEnum layer, Int cellX, Int cellY);
 
 protected:
-	void adjustCoordToCell(Int x, Int y, Bool centerInCell,
-		Coord3D &pos, PathfindLayerEnum layer);
+	void adjustCoordToCell(Int cellX, Int cellY, Bool centerInCell,
+		Coord3D &worldPosition, PathfindLayerEnum layer);
 
 public:
 	Bool rva003f1690(
