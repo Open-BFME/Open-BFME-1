@@ -41,9 +41,28 @@
 #include "Common/RandomValue.h"
 #include "Common/PerfTimer.h"
 #include "Common/Xfer.h"
+#include "Common/GameEngine.h"
 #include "GameLogic/Object.h"
 #include "GameLogic/ScriptEngine.h"
 #include "GameLogic/GameLogic.h"
+
+extern const Real BfmeZeroRange;
+
+class BfmeCalc919G
+{
+public:
+	Int bfmeCalc919G();
+};
+
+struct Rva00604840StatusWord
+{
+	UnsignedInt m_word;
+
+	Bool test( Int bit ) const
+	{
+		return (m_word & (1UL << bit)) != 0;
+	}
+};
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -83,19 +102,26 @@ SwayClientUpdate::~SwayClientUpdate( void )
 //-------------------------------------------------------------------------------------------------
 // Update the sway parameters.
 //-------------------------------------------------------------------------------------------------
-// ?updateSway@SwayClientUpdate@@IAEXXZ present-unmatched
 void SwayClientUpdate::updateSway()
 {
 	const BreezeInfo& info = TheScriptEngine->getBreezeInfo();
-	if (info.m_randomness == 0.0f) 
+	if (info.m_randomness == BfmeZeroRange)
 	{
 		m_curValue = 0;
 	} 
-	Real delta				= info.m_randomness * 0.5f;
-	m_curAngleLimit		= info.m_intensity * GameClientRandomValueReal(1.0f-delta, 1.0f+delta);
-	m_curDelta				= 2*PI/info.m_breezePeriod * GameClientRandomValueReal(1.0f-delta, 1.0f+delta);
-	m_leanAngle				= info.m_lean * GameClientRandomValueReal(1.0f-delta, 1.0f+delta);
+	Real delta = info.m_randomness * 0.5f;
+	m_curAngleLimit = info.m_intensity * GetGameClientRandomValueReal(1.0f - delta, 1.0f + delta, const_cast<char *>("F:\\bfme\\Code\\gameengine\\Source\\GameClient\\Drawable\\Update\\SwayClientUpdate.cpp"), 73);
+	m_curDelta = 2 * PI / ((Real)*(const Int *)((const char *)TheGameEngine + 0x34) * info.m_breezePeriod) * GetGameClientRandomValueReal(1.0f - delta, 1.0f + delta, const_cast<char *>("F:\\bfme\\Code\\gameengine\\Source\\GameClient\\Drawable\\Update\\SwayClientUpdate.cpp"), 74);
+	m_leanAngle = info.m_lean * GetGameClientRandomValueReal(1.0f - delta, 1.0f + delta, const_cast<char *>("F:\\bfme\\Code\\gameengine\\Source\\GameClient\\Drawable\\Update\\SwayClientUpdate.cpp"), 75);
 	m_curVersion			= info.m_breezeVersion;
+	Drawable *draw = getDrawable();
+	if (draw)
+	{
+		const Matrix3D *matrix = reinterpret_cast<const Matrix3D *>(reinterpret_cast<BfmeCalc919G *>(draw)->bfmeCalc919G());
+		Real angle = info.m_direction - matrix->Get_Z_Rotation();
+		_bfme_hole_a = Sin(angle);
+		_bfme_hole_b = Cos(angle);
+	}
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -104,7 +130,6 @@ void SwayClientUpdate::updateSway()
 //-------------------------------------------------------------------------------------------------
 /** The client update callback. */
 //-------------------------------------------------------------------------------------------------
-// ?clientUpdate@SwayClientUpdate@@UAEXXZ present-unmatched
 void SwayClientUpdate::clientUpdate( void )
 {
 	if( !m_swaying )
@@ -114,8 +139,7 @@ void SwayClientUpdate::clientUpdate( void )
 
 	// if breeze changes, always process the full update, even if not visible, 
 	// so that things offscreen won't 'pop' when first viewed
-	const BreezeInfo& info = TheScriptEngine->getBreezeInfo();
-	if (info.m_breezeVersion != m_curVersion) 
+	if (TheScriptEngine->getBreezeInfo().m_breezeVersion != m_curVersion)
 	{
 		updateSway();
 	}
@@ -129,21 +153,22 @@ void SwayClientUpdate::clientUpdate( void )
 	m_curValue += m_curDelta;
 	if (m_curValue > 2*PI) 
 		m_curValue -= 2*PI;
-	Real cosine = Cos(m_curValue);
+	Real cosine = Sin(m_curValue);
 
 	Real targetAngle = cosine * m_curAngleLimit + m_leanAngle;
 	Real deltaAngle = targetAngle - m_curAngle;
 
 	Matrix3D xfrm = *draw->getInstanceMatrix();
-	xfrm.In_Place_Pre_Rotate_X(-deltaAngle * info.m_directionVec.x);
-	xfrm.In_Place_Pre_Rotate_Y(deltaAngle * info.m_directionVec.y);
-	draw->setInstanceMatrix(&xfrm);
+	xfrm.In_Place_Pre_Rotate_X(-deltaAngle * _bfme_hole_a);
+	xfrm.In_Place_Pre_Rotate_Y(deltaAngle * _bfme_hole_b);
+	draw->setInstanceMatrix(&xfrm, false);
 
 	m_curAngle = targetAngle;
 	
 	// burned things don't sway.
 	Object* obj = draw->getObject();
-	if( obj && obj->getStatusBits().test( OBJECT_STATUS_BURNED ) )
+	if( obj && (reinterpret_cast<const Rva00604840StatusWord *>(reinterpret_cast<const char *>(obj) + 0x90)->test( 11 ) ||
+				*(reinterpret_cast<const UnsignedByte *>(reinterpret_cast<const char *>(obj) + 0x344)) & 1) )
 		stopSway();
 
 }
