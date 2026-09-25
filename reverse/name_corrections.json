@@ -4888,5 +4888,35 @@
   "after_sha256": "b7d71cd7cbda15e3c3a7e19676a2f949f453acc99a698e6616f2231bae3c3727",
   "evidence": "docs/naming_evidence.md",
   "reason": "a TU-local shim named after a real class whose copy semantics contradict it (real Vector3 has a user copy constructor and retail copies via integer registers)"
+ },
+ {
+  "old_path": "reverse/attempts/0x00285300.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Update/BannerCarrierUpdate_update.cpp",
+  "old_name": "BfmeHordeOwnerInterface",
+  "new_name": "Gen_0028F480",
+  "before_sha256": "4ae90781c2f7bf4d1effc7bab20d6b0dbd435cc6544773ee5b62f7a7830ea365",
+  "after_sha256": "6ecc68e5032f84f9b120f3654e4b3dc882958e59b3526455941bf82a45927a9e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "semantic pin had no caller/vtable/string evidence here so the ledger's address-derived body name at 0x0028F480 is used"
+ },
+ {
+  "old_path": "reverse/attempts/0x00285300.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Update/BannerCarrierUpdate_update.cpp",
+  "old_name": "bfmeGetFormationRefreshValue",
+  "new_name": "rva001BE390Get",
+  "before_sha256": "4ae90781c2f7bf4d1effc7bab20d6b0dbd435cc6544773ee5b62f7a7830ea365",
+  "after_sha256": "6ecc68e5032f84f9b120f3654e4b3dc882958e59b3526455941bf82a45927a9e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "semantic pin unevidenced so the ledger's address-derived body name at 0x001BE390 is used"
+ },
+ {
+  "old_path": "reverse/attempts/0x00285300.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Update/BannerCarrierUpdate_update.cpp",
+  "old_name": "bfmeResolveMeleeTarget",
+  "new_name": "rva00285300Slot68",
+  "before_sha256": "4ae90781c2f7bf4d1effc7bab20d6b0dbd435cc6544773ee5b62f7a7830ea365",
+  "after_sha256": "6ecc68e5032f84f9b120f3654e4b3dc882958e59b3526455941bf82a45927a9e",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "slot semantics unproven"
  }
 ]
