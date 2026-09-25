@@ -1,58 +1,40 @@
 // ?d_0073df50@@YAXXZ
-// partial score=0.7 date=2026-09-07
-class Vector3EUF
+// partial score=0.66 date=2026-09-25
+// cl: /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Include /ICode/Libraries/Source /ICode/Libraries/Source/WWVegas/WWDebug /ICode/Libraries/Source/WWVegas/WWSaveLoad
+#include "../../Code/Libraries/Source/WWVegas/WWMath/sphere.h"
+#include "../../Code/Libraries/Source/WWVegas/WWMath/frustum.h"
+#include "../../Code/Libraries/Source/WWVegas/WWMath/colmath.h"
+
+class CameraClass
 {
-public:
-	Vector3EUF() {}
-	Vector3EUF(float x, float y, float z) { X = x; Y = y; Z = z; }
-	float X;
-	float Y;
-	float Z;
+protected:
+	void Update_Frustum(void) const;
+	unsigned char m_bfmeCameraHead[0x104];
+	FrustumClass m_frustum;
 };
 
-class BfmeFrustumEUF
+class Rva0073DF50Camera : public CameraClass
 {
 public:
-	unsigned char m_bfmeBodyEUF[4];
+	using CameraClass::Update_Frustum;
+	using CameraClass::m_frustum;
 };
 
-class BfmeSphereEUF
+class Rva0073DF50
 {
 public:
-	Vector3EUF Center;
-	float Radius;
+	int isVisible(const Vector3 *position, float radius);
+
+	unsigned char m_bfmeHead[0x104];
+	Rva0073DF50Camera *m_camera;
 };
 
-class BfmeCamEUF
+int Rva0073DF50::isVisible(const Vector3 *position, float radius)
 {
-public:
-	void bfmeUpdateFrustumEUF();
+	Vector3 center(position->X, position->Y, position->Z);
+	SphereClass sphere(center, radius);
+	Rva0073DF50Camera *camera = m_camera;
 
-	unsigned char m_bfmeHeadEUF[0x104];
-	BfmeFrustumEUF m_bfmeFrustumEUF;
-};
-
-int bfmeOverlapEUF(const BfmeFrustumEUF &frustum, const BfmeSphereEUF &sphere);
-
-class BfmeHostEUF
-{
-public:
-	int bfmeVisibleEUF(const Vector3EUF *pos, float radius);
-
-	unsigned char m_bfmeHeadEUF[0x104];
-	BfmeCamEUF *m_bfmeCamEUF;
-};
-
-int BfmeHostEUF::bfmeVisibleEUF(const Vector3EUF *pos, float radius)
-{
-	BfmeCamEUF *cam = m_bfmeCamEUF;
-	Vector3EUF center(pos->X, pos->Y, pos->Z);
-	BfmeSphereEUF sphere;
-
-	sphere.Center = center;
-	sphere.Radius = radius;
-
-	cam->bfmeUpdateFrustumEUF();
-
-	return bfmeOverlapEUF(cam->m_bfmeFrustumEUF, sphere) != 1;
+	camera->Update_Frustum();
+	return CollisionMath::Overlap_Test(camera->m_frustum, sphere) != 1;
 }
