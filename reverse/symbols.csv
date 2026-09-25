@@ -79878,9 +79878,6 @@ name,address,notes
 ?d_00329c20@@YAXXZ,0x00329C20,Address-only compatibility for withdrawn dump; native evaluateRva00329C20 body; dispatcher typed member cast and ILT0004318A JMP prove target; no semantic identity claim
 ?d_0032b190@@YAXXZ,0x0032B190,Address-only compatibility for withdrawn dump; native Rva0032B190Condition body; dispatcher typed member cast and ILT00033EBF JMP prove target; no semantic identity claim
 ?d_0032c680@@YAXXZ,0x0032C680,Address-only compatibility for matched Rva0032D720Dispatcher condition176; ILT6537 routes to body32C680; implementation now ScriptConditionsRva0032C680.cpp
-?d_00328a80@@YAXXZ,0x00328A80,Address-only compatibility for withdrawn dump; native Rva00328A80Condition body; dispatcher typed member cast and ILT00042C49 JMP prove target; no semantic identity claim
-?d_00329c20@@YAXXZ,0x00329C20,Address-only compatibility for withdrawn dump; native evaluateRva00329C20 body; dispatcher typed member cast and ILT0004318A JMP prove target; no semantic identity claim
-?d_0032b190@@YAXXZ,0x0032B190,Address-only compatibility for withdrawn dump; native Rva0032B190Condition body; dispatcher typed member cast and ILT00033EBF JMP prove target; no semantic identity claim
 ?d_003c9470@@YAXXZ,0x00033EBA,additive: retail call target of the red row ?updateStatus@Rva003C9530Owner@@QAE_NPAVRva003C9530Key@@PAV?$BitFlags@$0CN@@@@Z
 ?d_003f9140@@YAXXZ,0x003F9140,address-derived tail callee used by Rva003D5780
 ?d_006ccdb0@@YAXXZ,0x0001F2FD,Open-BFME7 retail REL32 target (ILT thunk) the body at 0x006D23C0 calls; autopin
