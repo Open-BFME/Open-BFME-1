@@ -1,54 +1,14 @@
-// ?rva0088D9B0@DebugExceptionhandler@@CAXAAVDebug@@PAU_EXCEPTION_POINTERS@@@Z
-// partial score=0.9984251968503937 date=2026-09-23
-//
-// 634 of the 635 retail bytes. ONE byte differs, at +0x20C: retail encodes the
-// inner byte read as `movzx eax, byte ptr [edi + ebx]` (SIB base EDI, index
-// EBX) and MSVC 7.1 emits `[ebx + edi]` (0f b6 04 3b against retail's
-// 0f b6 04 1f). Register ROLES are already retail's -- EDI is the ten-byte
-// slot pointer that `add edi,0xa` advances, EBX the 0..9 counter that
-// `cmp ebx,0xa` bounds -- so this is the SIB base/index preference alone, the
-// family docs/sib_lea_experiments.md measures and AGENTS.md warns may stay
-// compiler-internal.
-//
-// Everything else is exact, including the 0xC frame, the dead `exptr` slot
-// reused for the register counter, the [ebp-4] home the `_asm` forces for the
-// slot pointer, both loop shapes, every manipulator store and all twenty-six
-// Debug calls.
-//
-// Spent without moving that byte: slot[byte], *(slot+byte), *(loaded+byte),
-// *(unsigned char *)(byte + (unsigned)slot), *((unsigned char *)((unsigned)slot
-// + byte)), *(slot + (int)byte), loaded[byte & 0xff], a second copy indexed
-// instead of the original, an `unsigned index = byte` intervening touch (the
-// lever docs/sib_lea_experiments.md isolates), a `const unsigned char *at`
-// reload inside the body, int / unsigned / unsigned long counters, `!=` and
-// do-while loop forms, a 10-byte struct slot with `slot++` and
-// `slot->m_bytes[byte]`, splitting `dbg << Width(2)` into its own statement,
-// moving the asm copy above and below the loop, and the
-// /G5 /G6 /G7 /Ot /Os flag sweep. tools/shape_family_levers.py --families sib
-// reports no applicable source-level lever for this body.
-//
-// Land it by fixing that one byte; do not rewrite the body.
-//
+// Open-BFME: DebugExceptionhandler::LogFPURegisters, retail 0x0088D9B0.
+// ExceptionFilter at 0x0088E5F0 calls this after LogRegisters. The Zero Hour
+// source names the method and confirms the FPU fields and print order.
+// BFME calls Debug stream methods through vtable offsets +0x38 and +0x50.
+// Zero Hour's debug.h declares those methods nonvirtual and omits RawHex, so
+// this file declares the Debug interface used by the retail body.
 // cl: /DNDEBUG /MD /EHs-c- /Oy-
-// Open-BFME: retail 0x0088D9B0, the FPU half of the debug exception dump.
-//
-// Same private static ABI as the landed LogRegisters at 0x0088E340 -- cdecl,
-// a Debug reference and an EXCEPTION_POINTERS pointer -- and the same Debug
-// interface view: the double writer at +0x1C, the unsigned-long writer at
-// +0x28, the unsigned writer at +0x30, the int writer at +0x34, the string
-// writer at +0x38 and SetPrefixAndRadix at +0x50, with the manipulator fields
-// at +0x9F44/+0x9F48. The body prints the control, status and tag words in
-// binary, the error and data pointers and Cr0NpxState in hex, then each of the
-// eight ST slots as its ten raw bytes followed by its value.
-//
-// Nothing in the image names the method, so the address stays in the name.
-//
-// The one `_asm` block is a codegen blocker, not a lift: an ST slot is an
-// 80-bit extended double and MSVC 7.1's `long double` is 64 bits, so no C++
-// expression loads it. The rest of the body is ordinary C++.
 
 #include "windows.h"
 
+// This shim declares the BFME virtual slots and manipulator fields used below.
 class Debug
 {
 public:
@@ -142,13 +102,10 @@ private:
     char m_fillChar;
 };
 
-class DebugExceptionhandler
-{
-    static void rva0088D9B0(Debug &, struct _EXCEPTION_POINTERS *);
-};
+#include "internal_except.h"
 
-// ?rva0088D9B0@DebugExceptionhandler@@CAXAAVDebug@@PAU_EXCEPTION_POINTERS@@@Z
-void DebugExceptionhandler::rva0088D9B0(Debug &dbg, struct _EXCEPTION_POINTERS *exptr)
+// ?LogFPURegisters@DebugExceptionhandler@@CAXAAVDebug@@PAU_EXCEPTION_POINTERS@@@Z
+void DebugExceptionhandler::LogFPURegisters(Debug &dbg, struct _EXCEPTION_POINTERS *exptr)
 {
     struct _CONTEXT &ctx = *exptr->ContextRecord;
 
@@ -175,19 +132,18 @@ void DebugExceptionhandler::rva0088D9B0(Debug &dbg, struct _EXCEPTION_POINTERS *
         << (const char *)0x0113428C << Debug::Width(8) << ctx.FloatSave.Cr0NpxState
         << (const char *)0x01080294;
 
-    unsigned reg = 0;
-    unsigned char *slot = ctx.FloatSave.RegisterArea;
-
-    while (reg < 8)
+    for (unsigned reg = 0; reg < 8; ++reg)
     {
         dbg << Debug::Dec() << (const char *)0x01134288 << reg << (const char *)0x01134284;
         dbg << Debug::RawHex();
 
-        unsigned char *loaded = slot;
+        unsigned char *loaded = ctx.FloatSave.RegisterArea + reg * 10;
 
-        for (unsigned byte = 0; byte < 10; byte++)
-            dbg << Debug::Width(2) << *(loaded + byte);
+        for (unsigned byte = 0; byte < 10; ++byte)
+            dbg << Debug::Width(2) << loaded[byte];
 
+        // Windows stores each FPU value in 80 bits.
+        // MSVC 7.1 treats long double as 64 bits.
         double value;
         _asm
         {
@@ -198,8 +154,6 @@ void DebugExceptionhandler::rva0088D9B0(Debug &dbg, struct _EXCEPTION_POINTERS *
 
         dbg << (const char *)0x0108ED1C << value << (const char *)0x01080294;
 
-        reg++;
-        slot += 10;
     }
 
     dbg << Debug::FillChar() << Debug::Dec();
