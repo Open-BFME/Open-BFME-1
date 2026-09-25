@@ -442,22 +442,22 @@ WindowMsgHandledType WOLMapSelectMenuSystem( GameWindow *window, UnsignedInt msg
 			}
 			else if( controlID == buttonOK )
 			{
-				Int selected;
+				Int selected[3];
 				UnicodeString map;
 				
 				// get the selected index
-				GadgetListBoxGetSelected( winMapWindow, &selected );
+				GadgetListBoxGetSelected( winMapWindow, &selected[2] );
 
-				if( selected != -1 )
+				if( selected[2] != -1 )
 				{
 
 					// get text of the map to load
-					map = GadgetListBoxGetText( winMapWindow, selected, 0 );
+					map = GadgetListBoxGetText( winMapWindow, selected[2], 0 );
 					
 					
 					// set the map name in the global data map name
 					AsciiString asciiMap;
-					const char *mapFname = (const char *)GadgetListBoxGetItemData( winMapWindow, selected );
+					const char *mapFname = (const char *)GadgetListBoxGetItemData( winMapWindow, selected[2] );
 					DEBUG_ASSERTCRASH(mapFname, ("No map item data"));
 					if (mapFname)
 						asciiMap = mapFname;
