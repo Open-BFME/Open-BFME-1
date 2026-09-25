@@ -1,5 +1,3 @@
-// ?xfer@W3DTerrainVisual@@MAEXPAVXfer@@@Z
-// partial score=0.98 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc /ICode/GameEngine/Source/Common/System
 // W3DTerrainVisual::xfer, retail 0x007318A0 (259 bytes): slot 3 (BFME's
 // Snapshot xfer slot) of W3DTerrainVisual's vftable 0x011212F0, the only table
@@ -23,6 +21,15 @@ __declspec(noreturn) void __stdcall _CxxThrowException(
 extern int g_rva005c5100ThrowInfo;
 
 // The water render object is xferred through a Snapshot at offset 0.
+struct XferVersion : public Xfer::Version
+{
+	XferVersion(unsigned char version, unsigned char currentVersion)
+	{
+		data[0] = version;
+		data[1] = currentVersion;
+	}
+};
+
 class W3DTerrainVisualWater : public Snapshot
 {
 };
@@ -94,10 +101,10 @@ void W3DTerrainVisual::xfer( Xfer *xfer )
 		return;
 
 	// version
-	Xfer::Version version;
-	version.data[0] = 1;
-	version.data[1] = 1;
-	*xfer == version;
+	{
+		XferVersion version( 1, 1 );
+		*xfer == version;
+	}
 
 	// flag for whether or not the water grid is enabled
 	bool gridEnabled = m_isWaterGridRenderingEnabled;
@@ -113,21 +120,20 @@ void W3DTerrainVisual::xfer( Xfer *xfer )
 	if( gridEnabled )
 		*xfer == *m_waterRenderObject;
 
+	// Write out the terrain height data.
+	unsigned char *data = m_logicHeightMap->getDataPtr();
+	int len = m_logicHeightMap->getXExtent() * m_logicHeightMap->getYExtent() * 2;
+	int xferLen = len;
+	*xfer == xferLen;
+	if( len > xferLen )
+		len = xferLen;
+	xfer->XferRawBytes( data, len );
+	if( xfer->IsLoading() )
 	{
-		// Write out the terrain height data.
-		unsigned char *data = m_logicHeightMap->getDataPtr();
-		int len = m_logicHeightMap->getXExtent() * m_logicHeightMap->getYExtent() * 2;
-		int xferLen = len;
-		*xfer == xferLen;
-		if( len > xferLen )
-			len = xferLen;
-		xfer->XferRawBytes( data, len );
-		if( xfer->IsLoading() )
-		{
-			// Update the display height map.
-			m_terrainRenderObject->slot138( true );
-		}
+		// Update the display height map.
+		m_terrainRenderObject->slot138( true );
 	}
+
 	Snapshot *terrain = m_terrainRenderObject;
 	*xfer == *terrain;
 }
