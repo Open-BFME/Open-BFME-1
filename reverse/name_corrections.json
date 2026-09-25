@@ -2788,5 +2788,15 @@
   "after_sha256": "f7f0a9e34d1efe19d3e23b001e15d29f171a502e00dd0f9bf0be8989c97778ba",
   "evidence": "docs/naming_evidence.md",
   "reason": "unwitnessed field and threshold was an interpretation"
+ },
+ {
+  "old_path": "reverse/attempts/0x002e42c0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/ScriptEngine/Rva002E42C0LuaGlobalIdCheck.cpp",
+  "old_name": "dispatchGlobalById",
+  "new_name": "rva002E42C0",
+  "before_sha256": "5ee2b1fc72460f1763c218c1160680a3431b0847d24a864ee5144a99a6c8e26a",
+  "after_sha256": "8060e97702ad486b2fa1d8b94f666df3816594db4da5cc980fef710951ac5f22",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank's method guess has no evidence (both callers are unnamed dumps reached through ILT thunks, and the body dispatches nothing)"
  }
 ]
