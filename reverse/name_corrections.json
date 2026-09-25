@@ -4528,5 +4528,205 @@
   "after_sha256": "e02b5f11ba86cafaa507e4f823f8b1eaddd1cf21fc0cbe7f2368e14c23ea4f5b",
   "evidence": "docs/naming_evidence.md",
   "reason": "GameInfo+4 is unused here and matched GameInfo_assign.cpp has m_preorderMask at +4 so the bank name m_state was wrong"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfmeXZV",
+  "new_name": "m_00",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "X/Y/Z component naming was a guess with no witness that the three floats are a coordinate"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfmeYZV",
+  "new_name": "m_04",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "X/Y/Z component naming was a guess with no witness that the three floats are a coordinate"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfmeZZV",
+  "new_name": "m_08",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "X/Y/Z component naming was a guess with no witness that the three floats are a coordinate"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme00ZV",
+  "new_name": "m_00",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme04ZV",
+  "new_name": "m_04",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme08ZV",
+  "new_name": "m_08",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme0CZV",
+  "new_name": "m_0C",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme0CZV",
+  "new_name": "m_50",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme10ZV",
+  "new_name": "m_10",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme14ZV",
+  "new_name": "m_14",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme18ZV",
+  "new_name": "m_18",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme1CZV",
+  "new_name": "m_1C",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme20ZV",
+  "new_name": "m_20",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme24ZV",
+  "new_name": "m_24",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme28ZV",
+  "new_name": "m_28",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme34ZV",
+  "new_name": "m_34",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme40ZV",
+  "new_name": "m_40",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme4CZV",
+  "new_name": "m_4C",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme50ZV",
+  "new_name": "m_50",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
+ },
+ {
+  "old_path": "reverse/attempts/0x00421d30.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva00421D30Defaults.cpp",
+  "old_name": "m_bfme54ZV",
+  "new_name": "m_54",
+  "before_sha256": "29375180a1860e2ca05a736bbbf80c759b46aa30fb147c9e290f311bbe6a769d",
+  "after_sha256": "d7da97643fc981ba56a6b0f3e14ef9fabdb030cf2ee5999adf3cc92ba899ea7a",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank names carried no evidence beyond the offset they already encoded so offset-only names replace them"
  }
 ]
