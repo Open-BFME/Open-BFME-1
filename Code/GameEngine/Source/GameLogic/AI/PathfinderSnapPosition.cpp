@@ -45,7 +45,7 @@ extern TerrainLogic *TheTerrainLogic;
 class Pathfinder
 {
 public:
-	void snapPosition(Object *object, Coord3D *position);
+	void snapPosition(Object *object, Coord3D *destinationPosition);
 	Bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
 
 protected:
@@ -55,14 +55,14 @@ protected:
 };
 
 // ?snapPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z
-void Pathfinder::snapPosition(Object *object, Coord3D *position)
+void Pathfinder::snapPosition(Object *object, Coord3D *destinationPosition)
 {
 	Object *o = object;
 	ICoord2D cell;
 	Bool center;
 	getRadiusAndCenter(o, cell.x, center);
 	Int centerInCell = *(volatile const Int *)&center;
-	Coord3D *p = position;
+	Coord3D *p = destinationPosition;
 	Coord3D adjustDest;
 	adjustDest.x = p->x;
 	adjustDest.y = p->y;
@@ -72,6 +72,6 @@ void Pathfinder::snapPosition(Object *object, Coord3D *position)
 		adjustDest.y += PATHFIND_CELL_SIZE_F / 2;
 	}
 	worldToCell(&adjustDest, &cell);
-	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(o, position);
-	adjustCoordToCell(cell.x, cell.y, *(Bool *)&centerInCell, *position, layer);
+	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(o, destinationPosition);
+	adjustCoordToCell(cell.x, cell.y, *(Bool *)&centerInCell, *destinationPosition, layer);
 }
