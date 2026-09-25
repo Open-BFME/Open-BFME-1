@@ -151,16 +151,16 @@ public:
 class Pathfinder
 {
 public:
-	bool worldToCell(const Coord3D *position, ICoord2D *cell);
+	bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
 
 	// One name, four callees -- the user-data type is what selects the walker.
-	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
+	Int iterateCellsAlongLine(const ICoord2D &startCell, const ICoord2D &destinationCell,
 		PathfindLayerEnum layer, Rva003DE480Struct *userData);		///< ILT 0x00005713 -> 0x003DE480
-	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
+	Int iterateCellsAlongLine(const ICoord2D &startCell, const ICoord2D &destinationCell,
 		PathfindLayerEnum layer, BfmeCheckMovementInfo *info);		///< ILT 0x00029DF7 -> 0x003E7F80
-	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
+	Int iterateCellsAlongLine(const ICoord2D &startCell, const ICoord2D &destinationCell,
 		PathfindLayerEnum layer, Rva003DB640Info *info);			///< ILT 0x00023DDF -> 0x003E81E0
-	Int iterateCellsAlongLine(const ICoord2D &start, const ICoord2D &end,
+	Int iterateCellsAlongLine(const ICoord2D &startCell, const ICoord2D &destinationCell,
 		PathfindLayerEnum layer, Rva003E5A50Info *info);			///< ILT 0x0001DAA2 -> 0x003E8440
 
 	void snapLine(const Coord3D *sourcePosition, Coord3D *destinationPosition);
@@ -168,14 +168,14 @@ public:
 		PathfindLayerEnum startLayer, const Coord3D &endWorld,
 		int pathDiameter);
 	Bool isLinePassable(Object *object, Int validSurfaces, PathfindLayerEnum layer,
-		const Coord3D *start, const Coord3D *end, Bool considerTransient,
+		const Coord3D *startPosition, const Coord3D *endPosition, Bool considerTransient,
 		Bool isCrusher, Bool restrictSurfaces);
 	Bool lineBlocked(Object *object, Int validSurfaces, PathfindLayerEnum layer,
-		const Coord3D *start, const Coord3D *end);
+		const Coord3D *startPosition, const Coord3D *endPosition);
 	Bool isLinePassable(Object *object, Int validSurfaces, PathfindLayerEnum layer,
-		const Coord3D *start, const Coord3D *end, Bool considerTransient);
+		const Coord3D *startPosition, const Coord3D *endPosition, Bool considerTransient);
 	Bool lineClear(Object *object, Int value, PathfindLayerEnum layer,
-		const Coord3D *start, const Coord3D *end);
+		const Coord3D *startPosition, const Coord3D *endPosition);
 
 private:
 	// Same ILT as the public ...PAURva003E33F0Struct@@... spelling, but the
