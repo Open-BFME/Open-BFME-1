@@ -125,11 +125,13 @@ public: HarvestRecord *invoke(const Coord3D *, Real, int, int);
 class Pathfinder
 {
 public:
-	Bool adjustDestination(Object *o, const LocomotorSet &l, Coord3D *d, const Coord3D *g) {
+	Bool adjustDestination(Object *object, const LocomotorSet &locomotorSet,
+		Coord3D *destination, const Coord3D *groupDestination) {
         struct Call { Bool invoke(Object *, const LocomotorSet &, Coord3D *, const Coord3D *); };
         typedef Bool (Call::*Fn)(Object *, const LocomotorSet &, Coord3D *, const Coord3D *);
         union { void (*raw)(); Fn fn; } u; u.raw=j_00027ffc;
-        return (reinterpret_cast<Call *>(this)->*u.fn)(o,l,d,g);
+        return (reinterpret_cast<Call *>(this)->*u.fn)(object,locomotorSet,
+			destination,groupDestination);
     }
 	Bool bfmeGroundCellThreshold(const Coord3D *position, Bool requireClearType) {
         struct Call { Bool invoke(const Coord3D *, Bool); };
