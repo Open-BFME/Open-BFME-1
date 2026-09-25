@@ -16,7 +16,7 @@
 // (GlobalData+0x11F8 times 5.0, or 25.0 with no GlobalData).  It then
 // recomputes the +0xA5 flag from the object at +0xA0: effectively dead,
 // model-condition bits 66 or 59, or bit 67 when its builder (Object+0x7C) is
-// gone or is an effectively dead KINDOF_COMMANDCENTER.  With the flag clear
+// gone or is an effectively dead KINDOF_DOZER.  With the flag clear
 // it returns false.
 // Otherwise it walks the ObjectID vectors at +0xB8 and +0xDC (the destructor
 // 0x003728E0 frees vectors at both offsets) and returns false for the first
@@ -40,9 +40,10 @@
 typedef bool Bool;
 typedef int ObjectID;
 
-// KINDOF_COMMANDCENTER = 14 in the reference KindOf.h with ALLOW_SURRENDER
-// undefined; the call site pushes 0xE.
-enum KindOfType { KINDOF_COMMANDCENTER = 14 };
+// The call site pushes 0xE; BFME's own KindOf name table (.data RVA
+// 0x00EAA068: OBSTACLE, SELECTABLE, IMMOBILE, ...) gives index 14 = DOZER,
+// as SelectionInfo_addDrawableToList.cpp and AIUpdatePathPriority.cpp use.
+enum KindOfType { KINDOF_DOZER = 14 };
 
 class ThingTemplate;
 class ProjectileUpdateInterface;
@@ -172,7 +173,7 @@ Bool CastleBehavior::rva00371b00()
 		{
 			Object *builder = TheGameLogic->findObjectByID(object->m_builderID);
 			if (builder == 0 ||
-				((builder->m_privateStatus & 1) && builder->isKindOf(KINDOF_COMMANDCENTER)))
+				((builder->m_privateStatus & 1) && builder->isKindOf(KINDOF_DOZER)))
 				m_flagA5 = true;
 		}
 		if (object->m_modelConditionFlags[1] & 0x8000000)
