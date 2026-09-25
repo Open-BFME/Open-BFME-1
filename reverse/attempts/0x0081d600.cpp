@@ -1,5 +1,5 @@
 // ?parseLineTable@SubtitleManager@@SAXPAVINI@@PAX1PBX@Z
-// partial score=0.947 date=2026-09-23
+// partial score=0.95 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /FAsc /Fabuild/subtitle_line_table.cod
 
 #include "../../Code/GameEngine/Include/GameClient/Video.h"
@@ -75,14 +75,14 @@ void SubtitleManager::parseLineTable(INI *ini, void *, void *store, const void *
 	if (manager != 0 && store != 0)
 	{
 	manager->m_enabled = true;
-	volatile float lastValue = -FLT_MAX;
+	float lastValue = -FLT_MAX;
 	int index = 0;
 	float *lineTable = (float *)store;
 	while (index < 15)
 	{
 		float value = INI::scanReal(ini->getNextToken(0));
 		if (!(value >= BfmeZeroRange) || !(value <= g_bfmeDefaultBU) ||
-			!(value > lastValue + Rva0112CF08LineTableStep))
+			!(value > lastValue + 0.01875f))
 			throw INIException(8,
 				"LineTable values must be in the range (0.0 - 1.0) must increase in value. %s line %d",
 				ini->getFilename(), ini->getLineNum());
