@@ -25,7 +25,7 @@ struct Rva00732700Rgb
 
 class W3DTreeBuffer
 {
-public:
+protected:
 	UnsignedInt doLighting(const Vector3 *normal, const Rva00732700Rgb *shade,
 		const Vector3 *light, const Rva00732700Rgb *diffuse,
 		UnsignedInt vertexDiffuse, UnsignedInt alpha) const;
