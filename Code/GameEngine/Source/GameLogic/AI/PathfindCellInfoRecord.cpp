@@ -88,16 +88,16 @@ private:
 // ?startPathfind@PathfindCell@@QAE_NPAV1@@Z
 Bool PathfindCell::startPathfind(PathfindCell *)
 {
-	PathfindCellInfo *owner = m_info;
-	PathfindCellInfo *next = owner->m_next;
-	if (next != 0)
+	PathfindCellInfo *cellInfoRecord = m_info;
+	PathfindCellInfo *nextFreeRecord = cellInfoRecord->m_next;
+	if (nextFreeRecord != 0)
 	{
-		next->m_freeListBack = (Int)owner->m_prev;
-		PathfindCellInfo *previous = owner->m_prev;
-		if (previous != 0)
-			previous->m_next = owner->m_next;
-		owner->m_next = 0;
-		owner->m_prev = 0;
+		nextFreeRecord->m_freeListBack = (Int)cellInfoRecord->m_prev;
+		PathfindCellInfo *previousFreeRecord = cellInfoRecord->m_prev;
+		if (previousFreeRecord != 0)
+			previousFreeRecord->m_next = cellInfoRecord->m_next;
+		cellInfoRecord->m_next = 0;
+		cellInfoRecord->m_prev = 0;
 	}
 	m_info->m_pathParent = 0;
 	m_info->m_costSoFar = 0;
@@ -110,8 +110,9 @@ Bool PathfindCell::startPathfind(PathfindCell *)
 // ?costToHierGoal@PathfindCell@@QAEIPAV1@@Z
 UnsignedInt PathfindCell::costToHierGoal(PathfindCell *goal)
 {
-	Int dx = m_info->m_pos.x - goal->getXIndex();
-	Int dy = m_info->m_pos.y - goal->getYIndex();
-	Int cost = REAL_TO_INT_FLOOR(10.0f * (Real)sqrt(dx * dx + dy * dy) + 0.5f);
-	return cost;
+	Int cellDeltaX = m_info->m_pos.x - goal->getXIndex();
+	Int cellDeltaY = m_info->m_pos.y - goal->getYIndex();
+	Int heuristicCost = REAL_TO_INT_FLOOR(
+		10.0f * (Real)sqrt(cellDeltaX * cellDeltaX + cellDeltaY * cellDeltaY) + 0.5f);
+	return heuristicCost;
 }
