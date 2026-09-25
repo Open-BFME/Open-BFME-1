@@ -1,23 +1,26 @@
-// ?newObject@ThingFactory@@QAEPAVObject@@PBVThingTemplate@@PAVTeam@@ABV?$BitFlags@$0FG@@@I@Z
-// partial score=0.971223021583 date=2026-09-22
-// ?newObject@ThingFactory@@QAEPAVObject@@PBVThingTemplate@@PAVTeam@@ABV?$BitFlags@$0FG@@@I@Z
-// cl: /DNDEBUG /MD /EHsc
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
+// stlport
 
 // ?newObject@ThingFactory@@QAEPAVObject@@PBVThingTemplate@@PAVTeam@@ABV?$BitFlags@$0FG@@@I@Z
-// Retail 0x00138520 is ThingFactory::newObject. The retail newObj string and
+// Retail 0x00138520 (278 bytes, ret 0x10) is ThingFactory::newObject. The
+// retail "newObj %s id %i" string, the ThingFactory.cpp assert path and
 // thirteen named callers prove that identity.
-
-// The body uses the build-variation array at +0x2d0 and the behavior array at
-// +0x1f0 before it initializes and logs the new Object.
-// The call through ILT 0x000168DD reaches GameLogic::friend_createObject at
-// 0x003830C0. That callee now has a verified BFME identity and source body.
-// Resumed with the analyst pack docs/analysis/0x001d88c0.md.
+// BFME keeps the Zero Hour shape: pick a build variation, have GameLogic create
+// the Object, run each behavior's create module, then initObject. It returns 0
+// for a null template, adds a Sleep(0) debug hook and logs the new object.
+// Calls: GetGameLogicRandomValue via ILT 0x00001BAE; findTemplate via ILT
+// 0x00028560 -> 0x00137E80; GameLogic::friend_createObject via ILT 0x000168DD
+// -> 0x003830C0; the CRCParameterCheck logger via ILT 0x0003A17A -> 0x00065C80.
+// The build variations must be the real std::vector read through the ZH
+// getBuildVariations()/empty()/size()/operator[] inlines. Raw begin/end
+// pointers compile to the same variation code but rotate the registers of the
+// friend_createObject argument shuttle (extra/team/statusBits).
 // The status mask is three DWORDs, as both hub calls independently witness.
-// Native StringInline and a symbolic GameLogic global preserve the full body.
-// Measured: 278 bytes; 8 masked byte differences, including a displaced DIR32.
-// This is the same unresolved argument register schedule, not an instruction
-// improvement over the old 12-byte residue with a literal global address.
-// Compiler tuning and per-argument compiler barriers did not resolve it.
+
+#define _STLP_NO_EXCEPTIONS 1
+
+#include "StringInline.h"
+#include <vector>
 
 typedef unsigned int UnsignedInt;
 
@@ -31,26 +34,28 @@ public:
 typedef BitFlags<86> ObjectStatusMaskType;
 
 class Object;
-class ThingTemplate;
 class Team;
+class CRCParameterCheck;
+
+class ThingTemplate
+{
+public:
+	const std::vector<AsciiString> &getBuildVariations() const
+	{
+		return m_buildVariations;
+	}
+
+	unsigned char m_pad00[0x20];
+	AsciiString m_name;
+	unsigned char m_pad24[0x2ac];
+	std::vector<AsciiString> m_buildVariations;
+};
+
 class GameLogic
 {
 public:
 	Object *friend_createObject(const ThingTemplate *thing,
 		const ObjectStatusMaskType &statusBits, Team *team, UnsignedInt extra);
-};
-
-class CRCParameterCheck;
-#include "../../reference/shims/stringinline/StringInline.h"
-
-class ThingTemplate
-{
-public:
-	unsigned char m_pad00[0x20];
-	AsciiString m_name;
-	unsigned char m_pad24[0x2ac];
-	AsciiString *m_buildVariationsBegin;
-	AsciiString *m_buildVariationsEnd;
 };
 
 class CreateModuleInterface
@@ -105,21 +110,17 @@ class ThingFactory
 public:
 	Object *newObject(const ThingTemplate *tmplate, Team *team,
 		const ObjectStatusMaskType &statusBits, UnsignedInt extra);
-	ThingTemplate *findTemplate(const AsciiString &name);
+	const ThingTemplate *findTemplate(const AsciiString &name);
 };
 
+extern "C" __declspec(dllimport) void __stdcall Sleep(unsigned long milliseconds);
 extern int GetGameLogicRandomValue(int lo, int hi, char *file, int line);
-extern void j_000168dd();
-extern void j_0003a17a();
-extern const char Rva006A16B0Empty[];
-extern void *g_012ED4FC;
-
-extern "C" __declspec(dllimport) void __stdcall Sleep(UnsignedInt milliseconds);
 extern "C" void __cdecl bfmeRetailCritterDesyncLog(
 	CRCParameterCheck *check, const char *format, ...);
 
-#define BFME_NEW_OBJECT_DEBUG (*(unsigned char *)0x012EF1DC)
+extern unsigned char g_Va012EF1DC;
 extern GameLogic *TheGameLogic;
+extern CRCParameterCheck *TheCRCParameterCheck;
 
 Object *ThingFactory::newObject(const ThingTemplate *tmplate, Team *team,
 	const ObjectStatusMaskType &statusBits, UnsignedInt extra)
@@ -127,19 +128,16 @@ Object *ThingFactory::newObject(const ThingTemplate *tmplate, Team *team,
 	if (tmplate == 0)
 		return 0;
 
-	if (BFME_NEW_OBJECT_DEBUG)
+	if (g_Va012EF1DC)
 		Sleep(0);
 
-	if (tmplate->m_buildVariationsBegin != tmplate->m_buildVariationsEnd)
+	const std::vector<AsciiString> &asv = tmplate->getBuildVariations();
+	if (!asv.empty())
 	{
-		UnsignedInt count = (UnsignedInt)(tmplate->m_buildVariationsEnd -
-			tmplate->m_buildVariationsBegin);
-		int which = GetGameLogicRandomValue(
-			0, count - 1,
+		int which = GetGameLogicRandomValue(0, asv.size() - 1,
 			"F:\\bfme\\Code\\gameengine\\Source\\Common\\Thing\\ThingFactory.cpp",
 			0x184);
-		AsciiString *variation = tmplate->m_buildVariationsBegin + which;
-		ThingTemplate *replacement = findTemplate(*variation);
+		const ThingTemplate *replacement = findTemplate(asv[which]);
 		if (replacement != 0)
 			tmplate = replacement;
 	}
@@ -149,25 +147,25 @@ Object *ThingFactory::newObject(const ThingTemplate *tmplate, Team *team,
 
 	for (BehaviorModule **m = obj->m_behaviors; *m != 0; ++m)
 	{
-		if (BFME_NEW_OBJECT_DEBUG)
+		if (g_Va012EF1DC)
 			Sleep(0);
 		CreateModuleInterface *create = (*m)->getCreate();
 		if (create != 0)
 			create->onCreate();
 	}
 
-	if (BFME_NEW_OBJECT_DEBUG)
+	if (g_Va012EF1DC)
 		Sleep(0);
 	obj->initObject();
 
-	if (BFME_NEW_OBJECT_DEBUG)
+	if (g_Va012EF1DC)
 		Sleep(0);
-	if (g_012ED4FC != 0)
+	if (TheCRCParameterCheck != 0)
 	{
 		UnsignedInt id = obj->m_id;
 		const char *name = tmplate->m_name.str();
-		((void (__cdecl *)(void *, const char *, ...))j_0003a17a)(
-			g_012ED4FC, "newObj %s id %i", name, id);
+		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "newObj %s id %i",
+			name, id);
 	}
 
 	return obj;
