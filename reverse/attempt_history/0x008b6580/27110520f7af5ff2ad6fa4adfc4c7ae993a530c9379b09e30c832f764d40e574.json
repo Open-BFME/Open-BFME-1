@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "27110520f7af5ff2ad6fa4adfc4c7ae993a530c9379b09e30c832f764d40e574",
+  "symbol": "?d_008b6580@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.93,
+  "source": "// ?d_008b6580@@YAXXZ\n// partial score=0.93 date=2026-09-26\n// cl: /DNDEBUG /DWIN32 /MD /EHsc /O2 /Ob2\n// ?daysInMonth@@YGHIH@Z\nbool __stdcall isLeapYear( int year );\n\nint __stdcall daysInMonth( unsigned int month, int year )\n{\n\tint days = 31;\n\tswitch( month )\n\t{\n\tcase 0: case 2: case 4: case 6: case 7: case 9: case 11:\n\t\tdays = 31;\n\t\tbreak;\n\tcase 1:\n\t\tdays = isLeapYear( year ) ? 29 : 28;\n\t\tbreak;\n\tcase 3: case 5: case 8: case 10:\n\t\tdays = 30;\n\t\tbreak;\n\t}\n\treturn days;\n}\n"
+}

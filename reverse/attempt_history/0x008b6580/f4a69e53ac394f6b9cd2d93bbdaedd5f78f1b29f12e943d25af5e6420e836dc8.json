@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "f4a69e53ac394f6b9cd2d93bbdaedd5f78f1b29f12e943d25af5e6420e836dc8",
+  "symbol": "?daysInMonth@@YGHIH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.7,
+  "source": "// ?daysInMonth@@YGHIH@Z\n// partial score=0.7 date=2026-09-02\n// cl: /O2 /DNDEBUG /MD\n\nbool __stdcall isLeapYear(int year);\n\nint __stdcall daysInMonth(unsigned int month, int year)\n{\n\tint days = 31;\n\tunsigned int m = month;\n\tif (m > 11)\n\t\treturn days;\n\tswitch (m)\n\t{\n\tcase 0:\n\tcase 2:\n\tcase 4:\n\tcase 6:\n\tcase 7:\n\tcase 9:\n\tcase 11:\n\t\treturn days;\n\tcase 1:\n\t\treturn 28 + isLeapYear(year);\n\tcase 3:\n\tcase 5:\n\tcase 8:\n\tcase 10:\n\t\treturn 30;\n\tdefault:\n\t\treturn days;\n\t}\n}\n"
+}
