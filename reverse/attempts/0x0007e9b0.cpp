@@ -1,5 +1,5 @@
 // ?applyStaticLODLevel@GameLODManager@@IAEXW4StaticGameLODLevel@@@Z
-// partial score=0.86 date=2026-09-09
+// partial score=0.99 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc
 
 typedef int Int;
@@ -94,7 +94,7 @@ public:
 	OptionPreferences();
 	virtual ~OptionPreferences();
 	Bool getUnitDecals();
-	unsigned char m_preferenceStorage[0x14];
+	unsigned char m_preferenceStorage[0x10];
 };
 
 class ClientRoot4120
@@ -129,7 +129,7 @@ public:
 
 extern "C" TerrainVisualDispatch *g_bfmeTerrainVisual;
 
-#define BFME_A1087_SLOT(n) virtual void slot##n(Int);
+#define BFME_A1087_SLOT(n) virtual void slot##n();
 class BfmeA1087
 {
 public:
@@ -172,6 +172,12 @@ public:
 extern BfmeA1087 *volatile g_bfmeA1087;
 extern void W3DRadarResetLock();
 extern char bfmeUnlock1179();
+class BfmeRadarResetGuard
+{
+public:
+	BfmeRadarResetGuard() { W3DRadarResetLock(); }
+	~BfmeRadarResetGuard() { bfmeUnlock1179(); }
+};
 extern Int Rva008FD440Get();
 
 class GameLODManager
@@ -314,10 +320,9 @@ void GameLODManager::applyStaticLODLevel(StaticGameLODLevel level)
 
 		if (g_bfmeA1087)
 		{
-			W3DRadarResetLock();
-			g_bfmeA1087->slot130(1);
-			g_bfmeA1087->slot131(1);
-			bfmeUnlock1179();
+			BfmeRadarResetGuard guard;
+			g_bfmeA1087->slot130();
+			g_bfmeA1087->slot131();
 		}
 	}
 
