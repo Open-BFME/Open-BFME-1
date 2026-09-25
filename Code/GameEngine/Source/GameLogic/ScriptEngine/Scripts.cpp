@@ -386,7 +386,6 @@ void ScriptList::xfer( Xfer *xfer )
 // ------------------------------------------------------------------------------------------------
 /** Load post process */
 // ------------------------------------------------------------------------------------------------
-// ?loadPostProcess@ScriptList@@MAEXXZ present-unmatched
 void ScriptList::loadPostProcess( void )
 {
 
