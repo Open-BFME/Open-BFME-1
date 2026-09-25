@@ -1,33 +1,27 @@
-// ?rva0032C990@@YG_NPAUParameter@@00@Z
-// partial score=0.17 date=2026-09-21
-// cl: /DNDEBUG /MD /EHsc
-//
-// Open-BFME5: retail 0x0032C990 (288 B). ScriptConditions-family
-// predicate: resolves a player from parameter[0]'s mask and an upgrade
-// template from parameter[1]'s name, then walks every team the player
-// owns (player+0x288, a circular list) and every object in each team
-// (Team::iterate_TeamMemberList, the BfmeDlinkIterator<Object> pattern
-// already landed in RTS/Team_countObjects.cpp) counting objects whose
-// 0x94 flag byte does not have bit 0x20 set and that report the upgrade
-// via Object::hasUpgrade; returns whether that count reached
-// parameter[2]'s +8 threshold. Every callee below is the already-landed
-// real body its ILT jumps to (see brief evidence), not a fresh guess:
-// ScriptEngine::unidentified_0034DB40, PlayerList::getPlayerFromMask,
-// UpgradeCenter::findUpgrade, Object::hasUpgrade, and the DLink next/
-// instance-list-advance pair from the same family as Team_countObjects.
+// ?rva0032C990@ScriptConditions@@IAE_NPAUParameter@@00@Z
+// partial score=0.625 date=2026-09-25
+// stlport
+// cl: /DNDEBUG /MD /EHsc /Ireference/shims/objectdlink /ICode/Libraries/Source/WWVegas/WWLib
+// Retail RVA 0x0032C990 (288 bytes), dispatcher-proven thiscall member.
+// Parameters: player mask, minimum count, upgrade name. Three nested loops
+// visit player prototypes, live Team instances, and Object team members.
+// Object PMF layout mirrors ObjectDlinkPmf.h; this local view additionally
+// declares hasUpgrade, which that narrow shim does not expose.
+// The raw body reloads Player+0x288 after the nested calls, so the circular
+// list head is read again for the closing comparison rather than cached.
 
-typedef unsigned short PlayerMaskType;
+#include "ascii_string.h"
+#include <list>
+
 typedef bool Bool;
-
-class AsciiString
-{
-public:
-	void *m_data;
-};
+typedef unsigned short PlayerMaskType;
 
 struct Parameter
 {
-	unsigned char m_pad00[0x10];
+public:
+	unsigned char m_beforeInt[8];
+ int m_int; int m_at0C;
+ int getInt() const {return m_int;}
 	AsciiString m_string;
 };
 
@@ -38,7 +32,6 @@ class ScriptEngine
 public:
 	PlayerMaskType unidentified_0034DB40(Parameter *);
 };
-
 extern ScriptEngine *TheScriptEngine;
 
 class PlayerList
@@ -46,44 +39,60 @@ class PlayerList
 public:
 	Player *getPlayerFromMask(PlayerMaskType);
 };
-
 extern PlayerList *ThePlayerList;
 
 class UpgradeTemplate;
-
 class UpgradeCenter
 {
 public:
-	const UpgradeTemplate *findUpgrade(const AsciiString &name) const;
+	const UpgradeTemplate *findUpgrade(const AsciiString &) const;
 };
-
 extern UpgradeCenter *TheUpgradeCenter;
 
-class Object
+class Object;
+class BfmeObjectVirtualTail { public: unsigned char m_vt[4]; };
+class BfmeObjectVbptrCarrier : public virtual BfmeObjectVirtualTail
 {
 public:
-	Object *dlink_next_TeamMemberList() const;
-	bool hasUpgrade(const UpgradeTemplate *upgrade) const;
-
-	unsigned char m_pad00[0x94];
-	unsigned char m_flags94;
+	unsigned char m_carrier[4];
+};
+class BfmeObjectVtbl { public: virtual void bfmeObjectSlot0(); };
+class BfmeObjectDlinkBase
+{
+public:
+	Object *dlink_next_TeamMemberList(void) const;
+};
+class BfmeObjectDlinkPad { public: unsigned char m_pad[0x64]; };
+class Object : public BfmeObjectVtbl, public BfmeObjectDlinkBase,
+	public BfmeObjectDlinkPad, public BfmeObjectVbptrCarrier
+{
+public:
+	Bool hasUpgrade(const UpgradeTemplate *) const;
+	unsigned char m_tail[0x40];
 };
 
 class BfmeTeamInstanceLink
 {
 public:
 	BfmeTeamInstanceLink *_bfme_nextInInstanceList();
+	unsigned char m_link[8];
+	void *m_prototype;
+};
 
-	unsigned char m_pad00[8];
-	unsigned char m_teamPad[0x274 - 8];
-	Object *m_head;
+class Team { public: unsigned char m_prefix[12]; Object *m_head; Team *_bfme_nextInInstanceList() const; };
+
+class TeamPrototypeView
+{
+public:
+	unsigned char m_beforeMembers[0x274];
+	Team *m_teamHead;
 };
 
 class Player
 {
 public:
-	unsigned char m_pad00[0x288];
-	BfmeTeamInstanceLink m_teamListHead;
+	unsigned char m_beforeTeamList[0x288];
+	std::list<TeamPrototypeView *> m_playerTeamPrototypes;
 };
 
 template <class ObjectType>
@@ -91,58 +100,56 @@ class BfmeDlinkIterator
 {
 public:
 	typedef ObjectType *(ObjectType::*GetNextFunc)() const;
-
 	BfmeDlinkIterator(ObjectType *cur, GetNextFunc getNext)
-		: m_cur(cur), m_getNext(getNext)
-	{
-	}
-
-	bool done() const { return m_cur == 0; }
+		: m_cur(cur), m_getNext(getNext) { }
+	Bool done() const { return m_cur == 0; }
 	ObjectType *cur() const { return m_cur; }
-
 	void advance()
 	{
 		if (m_cur)
 			m_cur = (m_cur->*m_getNext)();
 	}
-
 private:
 	ObjectType *m_cur;
 	GetNextFunc m_getNext;
 };
 
-bool __stdcall rva0032C990(Parameter *playerParam, Parameter *upgradeParam, Parameter *thresholdParam)
+class ScriptConditions { protected: Bool rva0032C990(Parameter*,Parameter*,Parameter*); };
+
+Bool ScriptConditions::rva0032C990(Parameter *playerParam, Parameter *thresholdParam,
+	Parameter *upgradeParam)
 {
-	Player *player = ThePlayerList->getPlayerFromMask(
-		TheScriptEngine->unidentified_0034DB40(playerParam));
-	if (player == 0)
+	PlayerMaskType mask =
+		TheScriptEngine->unidentified_0034DB40(playerParam);
+	Player *player = ThePlayerList->getPlayerFromMask(mask);
+	if (!player)
 		return false;
 
-	const UpgradeTemplate *upgrade = TheUpgradeCenter->findUpgrade(upgradeParam->m_string);
-	if (upgrade == 0)
+	const UpgradeTemplate *upgrade =
+		TheUpgradeCenter->findUpgrade(upgradeParam->m_string);
+	if (!upgrade)
 		return false;
 
 	int count = 0;
-
-	BfmeTeamInstanceLink *node = &player->m_teamListHead;
-	BfmeTeamInstanceLink *cur = *(BfmeTeamInstanceLink **)node;
-	if (cur != node)
+	for (std::list<TeamPrototypeView *>::iterator node = player->m_playerTeamPrototypes.begin();
+		node != player->m_playerTeamPrototypes.end(); ++node)
 	{
-		do
-		{
-			Object *head = cur->m_head;
-			for (BfmeDlinkIterator<Object> iter(head, &Object::dlink_next_TeamMemberList);
+		TeamPrototypeView *prototype = *node;
+			for(BfmeDlinkIterator<Team> instances(prototype->m_teamHead,&Team::_bfme_nextInInstanceList); !instances.done(); instances.advance()) {
+			Team *instance=instances.cur();
+			if (!instance) continue;
+			Object *head = instance->m_head;
+			for (BfmeDlinkIterator<Object> iter(
+				head, &BfmeObjectDlinkBase::dlink_next_TeamMemberList);
 				 !iter.done(); iter.advance())
 			{
-				Object *obj = iter.cur();
-				if ((obj->m_flags94 & 0x20) == 0 && obj->hasUpgrade(upgrade))
+				Object *object = iter.cur();
+				if ((((unsigned char *)object)[0x94] & 0x20) == 0 &&
+					object->hasUpgrade(upgrade))
 					++count;
 			}
-			cur = cur->_bfme_nextInInstanceList();
-		} while (cur != node);
+			}
 	}
 
-	return count >= *(int *)(thresholdParam->m_pad00 + 8);
+	return count >= thresholdParam->getInt();
 }
-
-// @?rva0032C990@@YA_NPAUParameter@@00@Z 0x0032C990
