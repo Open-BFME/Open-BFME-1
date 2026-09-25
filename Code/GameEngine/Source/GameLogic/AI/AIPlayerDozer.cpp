@@ -316,10 +316,10 @@ Bool AIPlayer::dozerInQueue()
 Object *AIPlayer::findDozer(const Coord3D *searchPosition)
 {
 	Object *candidateObject;
-	Object *dozer = NULL;
+	Object *fallbackDozer = NULL;
 	Bool needDozer = true;
-	Object *closestDozer = NULL;
-	Real closestDistSqr = 0;
+	Object *closestIdleDozer = NULL;
+	Real closestIdleDistanceSquared = 0;
 
 	for (candidateObject = TheGameLogic->getFirstObject(); candidateObject;
 		candidateObject = candidateObject->getNextObject())
@@ -354,25 +354,25 @@ Object *AIPlayer::findDozer(const Coord3D *searchPosition)
 					if (dozerAI->isTaskPending(DOZER_TASK_BUILD))
 						continue;
 					if (!dozerAI->isAnyTaskPending())
-						dozer = candidateObject;
-					if (dozer == NULL)
-						dozer = candidateObject;
-					if (dozer && !dozerAI->isAnyTaskPending())
+						fallbackDozer = candidateObject;
+					if (fallbackDozer == NULL)
+						fallbackDozer = candidateObject;
+					if (fallbackDozer && !dozerAI->isAnyTaskPending())
 					{
-						Real distSqr;
+						Real dozerDistanceSquared;
 						Real dx, dy;
-						dx = searchPosition->x - dozer->getPosition()->x;
-						dy = searchPosition->y - dozer->getPosition()->y;
-						distSqr = dx * dx + dy * dy;
-						if (closestDozer == NULL)
+						dx = searchPosition->x - fallbackDozer->getPosition()->x;
+						dy = searchPosition->y - fallbackDozer->getPosition()->y;
+						dozerDistanceSquared = dx * dx + dy * dy;
+						if (closestIdleDozer == NULL)
 						{
-							closestDozer = dozer;
-							closestDistSqr = distSqr;
+							closestIdleDozer = fallbackDozer;
+							closestIdleDistanceSquared = dozerDistanceSquared;
 						}
-						else if (distSqr < closestDistSqr)
+						else if (dozerDistanceSquared < closestIdleDistanceSquared)
 						{
-							closestDozer = dozer;
-							closestDistSqr = distSqr;
+							closestIdleDozer = fallbackDozer;
+							closestIdleDistanceSquared = dozerDistanceSquared;
 						}
 					}
 				}
@@ -381,7 +381,7 @@ Object *AIPlayer::findDozer(const Coord3D *searchPosition)
 	}
 	if (needDozer)
 		queueDozer();
-	if (closestDozer)
-		return closestDozer;
-	return dozer;
+	if (closestIdleDozer)
+		return closestIdleDozer;
+	return fallbackDozer;
 }
