@@ -47,11 +47,17 @@ public:
 	Object *m_owner;
 };
 
+enum PlayerType
+{
+	PLAYER_HUMAN,
+	PLAYER_COMPUTER
+};
+
 class Player
 {
 public:
 	unsigned char m_pad000[0x2c];
-	Int m_field2c;
+	PlayerType m_playerType;
 };
 
 class AIUpdateInterface
@@ -65,7 +71,7 @@ class Object
 {
 public:
 	unsigned char m_pad000[0x98];
-	UnsignedInt m_field98;
+	UnsignedInt m_statusWordAt0x98;
 	unsigned char m_pad09c[0x1fc - 0x9c];
 	ContainModuleInterface *m_contain;
 	unsigned char m_pad200[0x204 - 0x200];
@@ -164,7 +170,7 @@ private:
 	Int m_field54;
 	Int m_field58;
 	Int m_field5c;
-	unsigned char m_field60;
+	unsigned char m_successOnPathFailure;
 	unsigned char m_isInitialApproach;
 };
 
@@ -174,8 +180,8 @@ StateReturnType AIAttackMeleeHordeApproachTargetState::onEnter()
 	Object *owner = machine->m_owner;
 
 	Player *player = ownerGetControllingPlayer(owner);
-	register Int field2c = player->m_field2c;
-	if (field2c == 1)
+	register PlayerType playerType = player->m_playerType;
+	if (playerType == PLAYER_COMPUTER)
 		m_isInitialApproach = false;
 
 	Object *goalObject = machineGetGoalObject(m_machine);
@@ -193,7 +199,7 @@ StateReturnType AIAttackMeleeHordeApproachTargetState::onEnter()
 			return STATE_SUCCESS;
 	}
 
-	if ((owner->m_field98 & 8) != 0 || owner->m_ai->m_playerIdle != 0)
+	if ((owner->m_statusWordAt0x98 & 8) != 0 || owner->m_ai->m_playerIdle != 0)
 	{
 		if (!passesWeaponTargetPredicate(owner, goalObject))
 		{
@@ -212,7 +218,7 @@ StateReturnType AIAttackMeleeHordeApproachTargetState::onEnter()
 		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: ComputePath11");
 
 	if (!computePath())
-		return m_field60 ? STATE_SUCCESS : STATE_FAILURE;
+		return m_successOnPathFailure ? STATE_SUCCESS : STATE_FAILURE;
 
 	if (Glo012F0239 && TheCRCParameterCheck != 0)
 		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, "CritterDesync: setAdjustDestination(FALSE) 24");
