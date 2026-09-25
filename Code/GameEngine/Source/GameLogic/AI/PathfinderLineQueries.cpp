@@ -126,7 +126,7 @@ public:
 class Rva003DB640Info
 {
 public:
-	Rva003DB640Info(Pathfinder *pathfinder, Object *obj, Int value);
+	Rva003DB640Info(Pathfinder *pathfinder, Object *object, Int validSurfaces);
 
 	unsigned char m_body[0x50];
 };
@@ -170,7 +170,7 @@ public:
 	Bool isLinePassable(Object *obj, Int zone, PathfindLayerEnum layer,
 		const Coord3D *start, const Coord3D *end, Bool considerTransient,
 		Bool isCrusher, Bool restrictSurfaces);
-	Bool lineBlocked(Object *obj, Int value, PathfindLayerEnum layer,
+	Bool lineBlocked(Object *object, Int validSurfaces, PathfindLayerEnum layer,
 		const Coord3D *start, const Coord3D *end);
 	Bool isLinePassable(Object *obj, Int zone, PathfindLayerEnum layer,
 		const Coord3D *start, const Coord3D *end, Bool considerTransient);
@@ -239,13 +239,13 @@ Bool Pathfinder::isLinePassable(Object *obj, Int zone, PathfindLayerEnum layer,
 
 // ?lineBlocked@Pathfinder@@QAEHPAVObject@@HW4PathfindLayerEnum@@PBUCoord3D@@2@Z
 // The only one of the six that answers true when the walk DID hit something.
-Bool Pathfinder::lineBlocked(Object *obj, Int value, PathfindLayerEnum layer,
+Bool Pathfinder::lineBlocked(Object *object, Int validSurfaces, PathfindLayerEnum layer,
 	const Coord3D *startWorld, const Coord3D *endWorld)
 {
 	ICoord2D end;
 	ICoord2D start;
 	unsigned char storage[0x50];
-	Rva003DB640Info *payload = new (storage) Rva003DB640Info(this, obj, value);
+	Rva003DB640Info *payload = new (storage) Rva003DB640Info(this, object, validSurfaces);
 	worldToCell(startWorld, &start);
 	worldToCell(endWorld, &end);
 	return iterateCellsAlongLine(start, end, layer, payload) != 0;

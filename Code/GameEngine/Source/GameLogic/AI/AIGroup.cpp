@@ -191,7 +191,7 @@ class Pathfinder
 {
 public:
 	void removeGoal003E3D20(Object *object);
-	Int lineBlocked(Object *obj, Int value, PathfindLayerEnum layer,
+	Int lineBlocked(Object *object, Int validSurfaces, PathfindLayerEnum layer,
 		const Coord3D *start, const Coord3D *end);
 	Path *rva003F2160(Object *,const Coord3D *,const Coord3D *,Int);
 };
