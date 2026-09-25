@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "d19921916a950617983dcebcf75d54ba93eae7d79b6935362ac9f80f412c7b05",
+  "symbol": "?d_005eff60@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.3,
+  "source": "// ?d_005eff60@@YAXXZ\n// partial score=0.3 date=2026-09-25\n// Retail RVA 0x005EFF60, 349 B.\n// The address-derived owner and base names preserve unresolved identity.\n// cl: /DNDEBUG /MD /EHsc /O2 /Ob2\n\nclass GameClientRandomVariable {\npublic:\n  enum DistributionType { CONSTANT = 0, UNIFORM, GAUSSIAN };\n  float getValue() const;\n  DistributionType distribution;\n  float minimum;\n  float maximum;\n};\n\nstruct BfmeQuad1189\n{\n\tint m_bfme00;\n\tint m_bfme04;\n\tint m_bfme08;\n\tint m_bfme0c;\n};\n\nclass BfmeA1189\n{\npublic:\n\tBfmeA1189();\n\tvirtual ~BfmeA1189()\n\t{\n\t\t*(volatile unsigned int *)this = 0x01073744;\n\t}\n\tBfmeQuad1189 m_bfme04[8];\n\tint m_bfme84;\n};\n\nclass OwnerY005E5D90\n{\npublic:\n\tchar m_pad00[0x20];\n\tBfmeQuad1189 m_bfme04[8];\n\tGameClientRandomVariable m_value;\n};\n\nclass __declspec(novtable) BaseY005E5D90Primary\n{\npublic:\n\tvirtual void primarySlot();\n};\n\nclass BaseY005E5D90Category\n{\npublic:\n\tvirtual void categorySlot();\n};\n\nclass BaseY005E5D90\n\t: public BaseY005E5D90Primary,\n\t  public BaseY005E5D90Category,\n\t  public BfmeA1189\n{\npublic:\n\tBaseY005E5D90(OwnerY005E5D90 *owner);\n};\n\nBaseY005E5D90::BaseY005E5D90(OwnerY005E5D90 *owner)\n{\n\tm_bfme04[0] = owner->m_bfme04[0];\n\tm_bfme04[1] = owner->m_bfme04[1];\n\tm_bfme04[2] = owner->m_bfme04[2];\n\tm_bfme04[3] = owner->m_bfme04[3];\n\tm_bfme04[4] = owner->m_bfme04[4];\n\tm_bfme04[5] = owner->m_bfme04[5];\n\tm_bfme04[6] = owner->m_bfme04[6];\n\tm_bfme04[7] = owner->m_bfme04[7];\n\tm_bfme84 = owner->m_value.getValue();\n}\n"
+}
