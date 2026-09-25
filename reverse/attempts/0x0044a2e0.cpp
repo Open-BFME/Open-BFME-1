@@ -1,5 +1,5 @@
 // ?rva0044a2e0@Rva00449790Owner@@QAEXXZ
-// partial score=0.89 date=2026-09-25
+// partial score=0.92 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringinline
 // stlport
 // Address-derived reconstruction of the embedded BFME cursor-animation owner.
@@ -237,7 +237,7 @@ void Rva00449790Owner::rva0044a2e0()
 			point.x = (Real)(TheWritableGlobalData->m_int_E3C + previousX);
 			point.y = (Real)(TheWritableGlobalData->m_int_E40 + previousY);
 			Real zRise = 1.0f;
-			Real zStep = 0.99f / (Real)count;
+			Real zStep = (*(volatile Real *)0x01083BFC) / (Real)count;
 
 			for (Int i = 0; i < count; ++i)
 			{
