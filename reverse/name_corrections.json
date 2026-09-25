@@ -3518,5 +3518,15 @@
   "after_sha256": "684e3984793a33dab163b7dd19be54dbf49318a16706e55d8f58b52d6e0de5a5",
   "evidence": "docs/naming_evidence.md",
   "reason": "stash TU-local RenderObjClass/MaterialInfoClass/VertexMaterialClass shims (including Delete_This) removed and replaced by #include of Code/Libraries/Source/WWVegas/WW3D2 rendobj.h matinfo.h vertmaterial.h; Delete_This is now inherited from RefCountClass in those headers, not renamed"
+ },
+ {
+  "old_path": "reverse/attempts/0x0089eef0.cpp",
+  "new_path": "Code/Libraries/Source/EA/Apt/AptString/EAStringCRemoveRange.cpp",
+  "old_name": "Remove",
+  "new_name": "rva0089EEF0",
+  "before_sha256": "5c5df8269354a80d41525171dcc127739c2dd4d2bdc9f6e66b384cff641803ae",
+  "after_sha256": "50f4bf9afe10b51ce79bbd12d36df3954d73389762078f253b6ca9dae851c8bc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank's method name Remove had no caller, string, vtable or ZH-twin evidence"
  }
 ]
