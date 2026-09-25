@@ -23,13 +23,23 @@ enum StateReturnType { STATE_FAILURE=-2, STATE_SUCCESS=-1 };
 // Slot +68 yields the receiver for slot +124(Object*); both use thiscall.
 
 class Object;
-template<int N> class Rva001834E0Slots : public Rva001834E0Slots<N-1> { public: virtual void slot(char (*)[N])=0; };
-template<> class Rva001834E0Slots<0> {};
-class Rva001834E0Slot124 : public Rva001834E0Slots<73> { public: virtual Bool call124(Object*)=0; };
-class Rva001834E0Slot68 : public Rva001834E0Slots<26> { public: virtual Rva001834E0Slot124 *call68()=0; };
+template<int N> class UnresolvedVtablePrefix : public UnresolvedVtablePrefix<N-1> { public: virtual void slot(char (*)[N])=0; };
+template<> class UnresolvedVtablePrefix<0> {};
+
+class HordeContainInterface : public UnresolvedVtablePrefix<73>
+{
+public:
+	virtual Bool isMeleeTargetReady(Object *target) = 0;
+};
+
+class ContainModuleInterface : public UnresolvedVtablePrefix<26>
+{
+public:
+	virtual HordeContainInterface *getHordeContainInterface() = 0;
+};
 
 
-class StateMachineView : public Rva001834E0Slots<14>
+class StateMachine : public UnresolvedVtablePrefix<14>
 {
 public:
 	virtual void call38(Int)=0;
@@ -57,7 +67,7 @@ public:
 	unsigned char m_pad000[0x98];
 	UnsignedInt m_field98;
 	unsigned char m_pad09c[0x1fc - 0x9c];
-	Rva001834E0Slot68 *m_contain;
+	ContainModuleInterface *m_contain;
 	unsigned char m_pad200[0x204 - 0x200];
 	AIUpdateInterface *m_ai;
 };
@@ -82,7 +92,7 @@ static Player *ownerGetControllingPlayer(Object *self)
 	return reinterpret_cast<Player *>((reinterpret_cast<Thunk *>(self)->*fn.member)());
 }
 
-static Object *machineGetGoalObject(StateMachineView *self)
+static Object *machineGetGoalObject(StateMachine *self)
 {
 	struct Thunk { void *call(); };
 	typedef void *(Thunk::*Function)();
@@ -91,7 +101,7 @@ static Object *machineGetGoalObject(StateMachineView *self)
 	return reinterpret_cast<Object *>((reinterpret_cast<Thunk *>(self)->*fn.member)());
 }
 
-static Bool machineIsGoalObjectDestroyed(StateMachineView *self)
+static Bool machineIsGoalObjectDestroyed(StateMachine *self)
 {
 	struct Thunk { Bool call(); };
 	typedef Bool (Thunk::*Function)();
@@ -116,7 +126,7 @@ static Bool passesWeaponTargetPredicate(Object *attacker, Object *target)
 	return fn.member(attacker, target);
 }
 
-class AIInternalMoveToState : public Rva001834E0Slots<4>
+class AIInternalMoveToState : public UnresolvedVtablePrefix<4>
 {
 public:
 	virtual StateReturnType onEnter();
@@ -136,7 +146,7 @@ public:
 
 protected:
 	unsigned char m_unmodelled004[0x18];
-	StateMachineView *m_machine;
+	StateMachine *m_machine;
 };
 
 class AIAttackMeleeHordeApproachTargetState : public AIInternalMoveToState
@@ -160,7 +170,7 @@ private:
 
 StateReturnType AIAttackMeleeHordeApproachTargetState::onEnter()
 {
-	StateMachineView *machine = m_machine;
+	StateMachine *machine = m_machine;
 	Object *owner = machine->m_owner;
 
 	Player *player = ownerGetControllingPlayer(owner);
@@ -177,8 +187,9 @@ StateReturnType AIAttackMeleeHordeApproachTargetState::onEnter()
 
 	if (owner->m_contain != 0 && !bfmeMeleeHordeTargetInvalid(owner, goalObject))
 	{
-		Rva001834E0Slot124 *bodyInterface = owner->m_contain->call68();
-		if (bodyInterface != 0 && bodyInterface->call124(goalObject))
+		HordeContainInterface *hordeContain =
+			owner->m_contain->getHordeContainInterface();
+		if (hordeContain != 0 && hordeContain->isMeleeTargetReady(goalObject))
 			return STATE_SUCCESS;
 	}
 
