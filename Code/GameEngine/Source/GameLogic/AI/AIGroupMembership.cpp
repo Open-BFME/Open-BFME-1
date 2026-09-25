@@ -65,9 +65,9 @@ extern AI *TheAI;
 class AIGroup
 {
 public:
-	Bool isMember(Object *obj);
+	Bool isMember(Object *member);
 	Bool containsAnyObjectsNotOwnedByPlayer(const Player *ownerPlayer);
-	Bool remove(Object *obj);
+	Bool remove(Object *member);
 	Bool removeAnyObjectsNotOwnedByPlayer(const Player *ownerPlayer);
 
 	Bool isEmpty(void) { return m_memberList.empty(); }
@@ -81,9 +81,9 @@ private:
 	Bool m_dirty;						// this+0x10
 };
 
-Bool AIGroup::isMember( Object *obj )
+Bool AIGroup::isMember( Object *member )
 {
-	_STL::list<Object *>::iterator i = _STL::find( m_memberList.begin(), m_memberList.end(), obj );
+	_STL::list<Object *>::iterator i = _STL::find( m_memberList.begin(), m_memberList.end(), member );
 
 	if (i == m_memberList.end())
 		return false;
@@ -109,9 +109,9 @@ Bool AIGroup::containsAnyObjectsNotOwnedByPlayer( const Player *ownerPlayer )
 	return false;
 }
 
-Bool AIGroup::remove( Object *obj )
+Bool AIGroup::remove( Object *member )
 {
-	_STL::list<Object *>::iterator i = _STL::find( m_memberList.begin(), m_memberList.end(), obj );
+	_STL::list<Object *>::iterator i = _STL::find( m_memberList.begin(), m_memberList.end(), member );
 
 	// make sure object is actually in the group
 	if (i == m_memberList.end())
@@ -122,7 +122,7 @@ Bool AIGroup::remove( Object *obj )
 	--m_memberListSize;
 
 	// tell object to forget about group
-	obj->leaveGroup();
+	member->leaveGroup();
 
 	// list has changed, properties need recomputation
 	m_dirty = true;

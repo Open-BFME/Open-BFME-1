@@ -57,7 +57,7 @@ private:
 class AIGroup
 {
 public:
-	void add(Object *obj);
+	void add(Object *member);
 
 private:
 	unsigned char m_unreconstructed_000[4];
@@ -68,18 +68,18 @@ private:
 };
 
 // ?add@AIGroup@@QAEXPAVObject@@@Z
-void AIGroup::add(Object *obj)
+void AIGroup::add(Object *member)
 {
-	if (obj == 0)
+	if (member == 0)
 		return;
 
 	BfmeKindOfMask validNonAIKindofs;
-	BfmeGroupAI *ai = obj->getAI();
-	if (ai == 0 && !reinterpret_cast<const BfmeKindOfTester *>(obj)->isAnyKindOf(validNonAIKindofs))
+	BfmeGroupAI *ai = member->getAI();
+	if (ai == 0 && !reinterpret_cast<const BfmeKindOfTester *>(member)->isAnyKindOf(validNonAIKindofs))
 		return;
 
-	m_memberList.push_back(obj);
+	m_memberList.push_back(member);
 	++m_memberListSize;
-	obj->enterGroup(this);
+	member->enterGroup(this);
 	m_dirty = true;
 }
