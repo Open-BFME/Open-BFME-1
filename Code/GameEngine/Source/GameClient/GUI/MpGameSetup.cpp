@@ -1,12 +1,13 @@
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 
 #include "ascii_string.h"
+#include "../game_window.h"
 
-class GameWindow;
 class GameSlot;
 
 void GadgetComboBoxGetSelectedPos(GameWindow *window, int *selected);
 void *GadgetComboBoxGetItemData(GameWindow *window, int selected);
+void GadgetComboBoxHideList(GameWindow *window);
 void _bfme_closeAptScreen(const AsciiString &screenName);
 
 // The embedded preview extent is witnessed by constructor 0x00520670
@@ -146,6 +147,108 @@ private:
 	unsigned char m_unmodelled125[7];
 	bool m_ready[8];
 };
+
+class Gen_004b5a60 { public: void *m(void *value); };
+class Gen_004b5a70 { public: void m(); };
+class Rva004B5C90 { public: void invoke(bool hide); };
+
+class Rva00526660Body
+{
+public:
+	void run(int enable, int slotIndex);
+
+private:
+	char m_00[4];
+	Gen00525EE0Owner *m_04;
+	GameInfo *m_08;
+	GameInfo *m_0C;
+	char m_10[0x2c];
+	GameWindow *m_3C[8];
+	char m_5C[0x0c];
+	GameWindow *m_68[8];
+	void *m_88[8];
+	GameWindow *m_A8[8];
+	GameWindow *m_C8[8];
+	char m_E8[0x3c];
+	bool m_124;
+};
+
+struct Rva00526660Adapter
+{
+	GameWindow *m_00;
+	Rva00526660Adapter(void *value) { ((Gen_004b5a60 *)this)->m(value); }
+	void invoke(bool hide) { ((Rva004B5C90 *)this)->invoke(hide); }
+	~Rva00526660Adapter() { ((Gen_004b5a70 *)this)->m(); }
+};
+
+// ?run@Rva00526660Body@@QAEXHH@Z
+void Rva00526660Body::run(int enable, int slotIndex)
+{
+	if (m_08 && !m_04->bfmeContains(m_08))
+		m_08 = 0;
+	if (m_0C && !m_04->bfmeContains(m_0C))
+		m_0C = 0;
+	if (m_08 == 0)
+		return;
+
+	if (slotIndex == -1 || slotIndex >= 8)
+		slotIndex = m_08->getLocalSlotNum();
+
+	bool currentEnable;
+	currentEnable = *(bool *)&enable;
+	if (m_124 && ((MpGameSetup *)this)->bfmeGetStartPositionInfo(slotIndex) == 0)
+		currentEnable = 0;
+
+	bool empty;
+	empty = m_08->getConstSlot(slotIndex)->getPlayerTemplate() == -2;
+	Rva00526660Adapter adapter(&m_88[slotIndex]);
+	if (adapter.m_00)
+	{
+		if (empty)
+			adapter.invoke(true);
+		adapter.m_00->winEnable(((char)enable) && !empty);
+	}
+
+	if (m_C8[slotIndex])
+		m_C8[slotIndex]->winEnable(currentEnable);
+	if (m_A8[slotIndex])
+	{
+		if (empty)
+			GadgetComboBoxHideList(m_A8[slotIndex]);
+		m_A8[slotIndex]->winEnable(currentEnable && !empty);
+	}
+
+	empty = !empty || m_124;
+	for (int index = 0; index < 8 && !empty && m_08->amIHost(); ++index)
+	{
+		if (m_08->getConstSlot(index) && m_08->getConstSlot(index)->isAI())
+			empty = true;
+	}
+
+	if (slotIndex == m_08->getLocalSlotNum())
+	{
+		const GameSlot *localSlot = m_08->getConstSlot(m_08->getLocalSlotNum());
+		GameWindow * volatile *preview = (GameWindow * volatile *)((char *)this + 0x3c);
+		if (*(const unsigned char *)((const char *)localSlot + 9))
+		{
+			for (int index = 0; index < 8; ++index)
+			{
+				GameWindow *window = preview[index];
+				if (window)
+					window->winEnable(((char)enable) && empty);
+			}
+		}
+		else
+		{
+			for (int index = 0; index < 8; ++index)
+			{
+				GameWindow *window = preview[index];
+				if (window)
+					window->winEnable(false);
+			}
+		}
+	}
+}
 
 // MpGameSetup owner proof: vtable 0x0110B030 (installed by 0x0057DA50)
 // routes slots 12/13 to 0x0057D110/0x00579390. Both pass their receiver+0x25C

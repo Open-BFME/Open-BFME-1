@@ -5,5 +5,6 @@ class WinInstanceData { public: void setVideoBuffer(VideoBuffer*); };
 class GameWindow {
 public:
 	WinInstanceData* winGetInstanceData(void);
+	int winEnable(bool enable);
 	int winIsHidden(void);
 };
