@@ -3508,5 +3508,15 @@
   "after_sha256": "25972fbd4f6e9786d647e9a7272ce770e24b5c9daf55b4284998752f77ac31fb",
   "evidence": "docs/naming_evidence.md",
   "reason": "'Dev' (device) was a guess with no name_oracle/field witness"
+ },
+ {
+  "old_path": "reverse/attempts/0x007397e0.cpp",
+  "new_path": "Code/Libraries/Source/WWVegas/WW3D2/Rva007397E0EmissiveWalk.cpp",
+  "old_name": "Delete_This",
+  "new_name": "Rva007397E0",
+  "before_sha256": "dc9e6800724f4816f07268094c556f94eb6e969f3cb6dcaa783840d3fb5d0695",
+  "after_sha256": "684e3984793a33dab163b7dd19be54dbf49318a16706e55d8f58b52d6e0de5a5",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "stash TU-local RenderObjClass/MaterialInfoClass/VertexMaterialClass shims (including Delete_This) removed and replaced by #include of Code/Libraries/Source/WWVegas/WW3D2 rendobj.h matinfo.h vertmaterial.h; Delete_This is now inherited from RefCountClass in those headers, not renamed"
  }
 ]
