@@ -1196,7 +1196,7 @@ ShellGameLoadScreen::~ShellGameLoadScreen( void )
 	m_progressBar = NULL;
 }
 
-// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/ShellGameLoadScreenInitThunk.cpp
+// byte-exact reconstruction: Code/GameEngine/Source/GameClient/GUI/LoadScreenInit.cpp
 // ?init@ShellGameLoadScreen@@ present-unmatched
 void ShellGameLoadScreen::init( GameInfo *game )
 {
