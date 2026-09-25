@@ -1,4 +1,4 @@
-// cl: /DNDEBUG /MD /EHsc /DBFME_MODULE_NO_MPO /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
+// cl: /DNDEBUG /MD /EHsc /DBFME_MODULE_NO_MPO /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WW3D2 /ICode/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 #define Matrix4x4 Matrix4  // BFME renamed it
 /*
@@ -42,7 +42,9 @@
 #include "GameClient/GameClient.h"
 #include "GameLogic/GameLogic.h"
 #include "W3DDevice/GameClient/W3DDisplay.h"
+#define W3DMPO_GLUE(ARGCLASS)
 #include "W3DDevice/GameClient/Module/W3DRopeDraw.h"
+#undef W3DMPO_GLUE
 #include "WW3D2/Line3D.h"
 #include "W3DDevice/GameClient/W3DScene.h"
 #include "Common/GameState.h"
@@ -67,7 +69,6 @@ public:
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// ?buildSegments@W3DRopeDraw@@AAEXXZ present-unmatched
 void W3DRopeDraw::buildSegments()
 {
 	DEBUG_ASSERTCRASH(m_segments.empty(), ("Hmmn, not empty"));
@@ -75,12 +76,14 @@ void W3DRopeDraw::buildSegments()
 
 	Int numSegs = ceil(m_maxLen / m_wobbleLen);
 	Real eachLen = m_maxLen / (Real)numSegs;
-	Coord3D pos = *getDrawable()->getPosition();
+	Coord3D pos = *((const BFMERopeDrawable *)getDrawable())->getPosition();
 	for (int i = 0; i < numSegs; ++i, pos.z += eachLen)
 	{
 		SegInfo info;
 
+#line 74 "F:\\bfme\\Code\\gameenginedevice\\Source\\W3DDevice\\GameClient\\Drawable\\W3DRopeDraw.cpp"
 		Real axis = GameClientRandomValueReal(0, 2*PI);
+#line 84
 		info.wobbleAxisX = Cos(axis);
 		info.wobbleAxisY = Sin(axis);
 		info.line = NEW Line3DClass( Vector3(pos.x,pos.y,pos.z),
