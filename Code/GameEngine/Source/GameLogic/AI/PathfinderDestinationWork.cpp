@@ -105,7 +105,7 @@ struct MADStruct
 class Pathfinder
 {
 public:
-	bool worldToCell(const Coord3D *worldPosition, ICoord2D *cell);	///< ILT thunk at 0x000171E8
+	bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);	///< ILT thunk at 0x000171E8
 
 	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);
 	bool iterateCircular2(ICoord2D *cell, Int limit, void *info);
@@ -142,11 +142,11 @@ struct AdjustTargetInfo
 bool Pathfinder::adjustTargetDestination(const Object *object, const Object *target,
 	const Coord3D *targetPosition, const Weapon *weapon, Coord3D *destination)
 {
-	ICoord2D cell;
+	ICoord2D cellIndex;
 	Bool center;
 	Coord3D adjustDest;
 
-	bfmeQuery((Object *)object, &cell.x, &center);
+	bfmeQuery((Object *)object, &cellIndex.x, &center);
 	adjustDest.x = destination->x;
 	adjustDest.y = destination->y;
 	adjustDest.z = destination->z;
@@ -155,7 +155,7 @@ bool Pathfinder::adjustTargetDestination(const Object *object, const Object *tar
 		adjustDest.x += 5.0f;
 		adjustDest.y += 5.0f;
 	}
-	if (worldToCell(&adjustDest, &cell))
+	if (worldToCell(&adjustDest, &cellIndex))
 		return false;
 
 	AdjustTargetInfo info;
@@ -167,7 +167,7 @@ bool Pathfinder::adjustTargetDestination(const Object *object, const Object *tar
 	info.m_weapon = weapon;
 	bfmeQuery(info.m_object, &info.m_radius,
 		reinterpret_cast<Bool *>(&info.m_centerInCell));
-	return iterateCircular2(&cell, 0x190, &info);
+	return iterateCircular2(&cellIndex, 0x190, &info);
 }
 
 // ?moveAlliesAwayFromDestination@Pathfinder@@QAEXPAVObject@@ABUCoord3D@@@Z
@@ -182,9 +182,9 @@ void Pathfinder::moveAlliesAwayFromDestination(Object *object,const Coord3D& des
 	info.object = object;
 	info.ignoredObstacleID = object->getAI()->getIgnoredObstacleID();
 
-	ICoord2D from, to;
-	worldToCell(object->getPosition(), &from);
-	worldToCell(&destination, &to);
-	iterateCellsAlongLine(&from, &to, layer, &info);
+	ICoord2D startCell, destinationCell;
+	worldToCell(object->getPosition(), &startCell);
+	worldToCell(&destination, &destinationCell);
+	iterateCellsAlongLine(&startCell, &destinationCell, layer, &info);
 
 }
