@@ -13,14 +13,14 @@ typedef bool Bool;
 class PathfindZoneManager
 {
 public:
-	void markZonesDirty(Bool a, Bool b);
+	void markZonesDirty(Bool unusedFirstFlag, Bool unusedSecondFlag);
 
 private:
 	Bool m_bfmeDirty;					// +0x00
 };
 
 // ?markZonesDirty@PathfindZoneManager@@QAEX_N0@Z
-void PathfindZoneManager::markZonesDirty(Bool a, Bool b)
+void PathfindZoneManager::markZonesDirty(Bool unusedFirstFlag, Bool unusedSecondFlag)
 {
 	m_bfmeDirty = true;
 }
