@@ -140,15 +140,15 @@ Int Pathfinder::iterateCellsAlongLine(const ICoord2D &startCell,
 	Int y = startCell.y;
 	for (Int curpixel = 0; curpixel < numpixels; curpixel++)
 	{
-		PathfindCell *to = getCell( layer, x, y );
-		if (to == 0)
+		PathfindCell *currentCell = getCell( layer, x, y );
+		if (currentCell == 0)
 			return 0;
 
-		unsigned int flags = to->m_packed;
+		unsigned int flags = currentCell->m_packed;
 		Int type = flags & 7;
 		if (type == 5 || type == 2 || type == 4)
 			return 1;
-		if (to->getFlagBit21())
+		if (currentCell->getFlagBit21())
 			return 1;
 		if (callbackData->m_layer == 1)
 		{
