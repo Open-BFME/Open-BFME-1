@@ -684,7 +684,7 @@ _BfmePathfindMapUpdate@12,0x003FA5B0,3964,Code/GameEngine/Source/GameLogic/AI/Pa
 ?clear@?$hashtable@U?$pair@$$CBHUGen_t_0042dd70_p12cd@@@_STL@@HU?$hash@H@2@U?$_Select1st@U?$pair@$$CBHUGen_t_0042dd70_p12cd@@@_STL@@@2@U?$equal_to@H@2@V?$allocator@U?$pair@$$CBHUGen_t_0042dd70_p12cd@@@_STL@@@2@@_STL@@QAEXXZ,0x0042DC10,95,Code/gen_small/tgrid_128.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_0042e0a0@@UAE@XZ,0x0042DE50,98,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_00432750@@UAE@XZ,0x00431380,1040,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
-??0Rva006FB500Base@@QAE@XZ,0x00433340,612,Code/GameEngine/Source/Common/Rva006FB500Ctor.cpp,reloc-derived;call-sites=1;identity=real
+??0Rva00020004@@QAE@XZ,0x00433340,612,Code/GameEngine/Source/Common/Rva006FB500Ctor.cpp,reloc-derived;call-sites=1;identity=generated
 ??1Gen_dtor_00433f90@@UAE@XZ,0x00433AE0,128,Code/gen_small/dtors_005.cpp,reloc-derived;call-sites=1;identity=generated
 ??$__uninitialized_copy@PBUGen_t_00434540_m12cd@@PAU1@@_STL@@YAPAUGen_t_00434540_m12cd@@PBU1@0PAU1@ABU__false_type@0@@Z,0x00433CF0,120,Code/gen_small/fam_012.cpp,reloc-derived;call-sites=1;identity=generated
 ?Gen004371E0@@YAXPAX0000@Z,0x004371E0,99,Code/GameEngine/Source/Common/Q2TrailingZeroForwarders.cpp,reloc-derived;call-sites=1;identity=generated

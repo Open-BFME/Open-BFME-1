@@ -3431,6 +3431,7 @@ name,address,notes
 ??0RunOffMapBehaviorBase@@QAE@PAVThing@@PBVModuleData@@@Z,0x000170E4,RunOffMapBehavior ctor base call (shared ILT)
 ??0Rva00003409Open2SlotOwner@@QAE@XZ,0x00075C10,opaque GameInfo plus Snapshot slot-owner ctor; matched Open2SlotOwner75C10 body and retail ILT 0x00003409
 ??0Rva0001DD31CtorBase@@QAE@PAX@Z,0x0001DD31,base constructor address decoded from the retail REL32 call site; name is address-derived
+??0Rva00020004@@QAE@XZ,0x00020004,address-derived ILT constructor claim called by 0x006FB500
 ??0Rva0002E802QuickMatchPreferences@@QAE@XZ,0x0002E802,OnlineQuickMatch constructor's +0x40 member calls this ILT; the address-derived type preserves the witnessed 0x14-byte preference layout
 ??0Rva0003707ECtorBase@@QAE@PAX@Z,0x0003707E,base constructor address decoded from the retail REL32 call site; name is address-derived
 ??0Rva000441CAModuleDataBase@@QAE@XZ,0x000441CA,address-derived spelling for the shared module-data base constructor thunk
@@ -3597,7 +3598,6 @@ name,address,notes
 ??0Rva006E1700Base@@QAE@XZ,0x0002ACD4,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x006E1700
 ??0Rva006E6C10Base@@QAE@XZ,0x00032F1F,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x006E6C10
 ??0Rva006F6330@@QAE@XZ,0x00034F86,W3DDisplay init calls the retail ILT for the matched W3DFileSystem constructor; this local four-byte receiver facade preserves the observed allocation and thunk call
-??0Rva006FB500Base@@QAE@XZ,0x00020004,Open-BFME5 fresh thiscall ctor at ILT of derived ctor 0x006FB500
 ??0Rva006FB780Product@@QAE@P6AXXZ00@Z,0x0003574C,ILT to product ctor body 0x007E3A80
 ??0Rva006FC970@@QAE@XZ,0x00007FC2,W3DDisplay init allocates 0x2868 bytes and calls this retail constructor ILT; its jump target is the body at 0x006FC970
 ??0Rva00712F60@@QAE@XZ,0x000337DA,W3DDisplay init allocates 0x8A0 bytes and calls this retail constructor ILT; the target body is 0x00712F60
