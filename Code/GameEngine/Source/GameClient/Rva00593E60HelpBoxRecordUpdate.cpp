@@ -1,6 +1,14 @@
-// ?update@Rva00593E60State@@QAEXXZ
-// partial score=0.9758308157 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+//
+// Retail 0x00593E60 (331 bytes): address-derived owner Rva00593E60State.
+// The +8 record is copied into the owned +0xC record (0x0058BE30 copy ctor,
+// 0x005907B0 holder reset), compared with 0x005933A0, and released through
+// 0x005907F0. The static helpers 0x00564A10/0x00564A40 raise the UI events
+// "HideHelpBox"/"SampleHelpBoxTextWidth" (their string literals).
+// The +8 record is read through an inline by-reference accessor: that
+// extra temporary is what moves the copy-ctor argument off ECX, and the
+// register round-robin then puts EAX on the 0x005900C0 argument and EDX on
+// the TheDisplay vtable temporary, as retail does.
 #include "unicode_string.h"
 
 // Four Unicode strings and a trailing UTF-16 code unit, witnessed by
@@ -55,7 +63,8 @@ public:
     int m_value4;
     Rva0058BE30FourString *m_ptr8, *m_ptrC;
     int m_value10;
-    void notify(Rva0058BE30FourString *);
+    const Rva0058BE30FourString &recordAt8() const { return *m_ptr8; }
+    void rva005900C0(Rva0058BE30FourString *);
     void update();
 };
 void Rva00593E60State::update() {
@@ -73,9 +82,9 @@ void Rva00593E60State::update() {
             reinterpret_cast<Rva005907F0 *>(&m_ptrC)->release();
         }
         if (!m_ptrC) {
-            Rva0058BE30FourString *entry = new Rva0058BE30FourString(*m_ptr8);
+            Rva0058BE30FourString *entry = new Rva0058BE30FourString(recordAt8());
             reinterpret_cast<BfmeThingCHB *>(&m_ptrC)->bfmeGoCHB(reinterpret_cast<BfmeRefCHB *>(entry));
-            notify(m_ptrC);
+            rva005900C0(m_ptrC);
         }
         m_value10 = 5;
     } else if (m_ptrC && m_value10 <= 0) {

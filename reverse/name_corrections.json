@@ -2898,5 +2898,15 @@
   "after_sha256": "b9a0c0f095aa1cbb4daf947720d8ec9e6204bcb65b4424e9b23462a7328baae5",
   "evidence": "docs/naming_evidence.md",
   "reason": "opaque 0x30-byte pad before the +0x30 vector; the body never reads it"
+ },
+ {
+  "old_path": "reverse/attempts/0x00593e60.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/Rva00593E60HelpBoxRecordUpdate.cpp",
+  "old_name": "notify",
+  "new_name": "rva005900C0",
+  "before_sha256": "cb967898c93f0c52b9d681f3c1fa69317640e22039bce023ba4bf96058b7cb81",
+  "after_sha256": "2c09a9aca0e53cccd308c51649a88b36e8860963aa966ce078ae46259be9ebfc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the stash name notify for the 0x005900C0 callee was a guess with no matched caller or vtable slot or string or ZH twin behind it"
  }
 ]
