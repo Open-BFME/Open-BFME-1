@@ -3648,5 +3648,95 @@
   "after_sha256": "453723a7479d7fcd213d81cd498a3c3682e369852b485cdbcc4f97ec3778d659",
   "evidence": "docs/naming_evidence.md",
   "reason": "BfmeNameVHN::bfmeIsRawVHN was invented and contradicts the bytes: the body calls texture vslot 0x48 (GetSurfaceLevel) and surface vslot 0x30 (GetDesc) and range-checks Format against 0x3c..0x40 (D3DFMT_V8U8..D3DFMT_V16U16), a bump-map format check whose only caller 0x0090E1A0 logs 'is not a bump map format'; no evidence names the class or method so both are address-derived"
+ },
+ {
+  "old_path": "reverse/attempts/0x009f59d0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009F59D0Method.cpp",
+  "old_name": "BfmeNode912C",
+  "new_name": "Gen009F5040Node",
+  "before_sha256": "a6e8929e6d0a625bddc9cbd371f4f7c021a39b8e6b416163904ae3373dac8a36",
+  "after_sha256": "03a9de4b46ff5e09493254456004fa2940ff27d3cfcfe1883071cd0ec9f397f0",
+  "evidence": "reverse/identity_evidence/0x009f59d0-name-correction.md",
+  "reason": "The matched callee at 0x009F4D80 is Gen009F5040::linkNode_009F4D80 and takes a Gen009F5040Node pointer. The bank's BfmeThing912C helper owner was not supported."
+ },
+ {
+  "old_path": "reverse/attempts/0x009f59d0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009F59D0Method.cpp",
+  "old_name": "BfmeNode912C",
+  "new_name": "Rva009F59D0Node",
+  "before_sha256": "a6e8929e6d0a625bddc9cbd371f4f7c021a39b8e6b416163904ae3373dac8a36",
+  "after_sha256": "03a9de4b46ff5e09493254456004fa2940ff27d3cfcfe1883071cd0ec9f397f0",
+  "evidence": "reverse/identity_evidence/0x009f59d0-name-correction.md",
+  "reason": "Retail follows a link at node+0x0C without proving the node's semantic type. The new view keeps address 0x009F59D0 in its name."
+ },
+ {
+  "old_path": "reverse/attempts/0x009f59d0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009F59D0Method.cpp",
+  "old_name": "BfmeThing912C",
+  "new_name": "Gen009F5040",
+  "before_sha256": "a6e8929e6d0a625bddc9cbd371f4f7c021a39b8e6b416163904ae3373dac8a36",
+  "after_sha256": "03a9de4b46ff5e09493254456004fa2940ff27d3cfcfe1883071cd0ec9f397f0",
+  "evidence": "reverse/identity_evidence/0x009f59d0-name-correction.md",
+  "reason": "The matched callee at 0x009F4D80 names Gen009F5040::linkNode_009F4D80. The bank's BfmeThing912C owner was not supported by evidence."
+ },
+ {
+  "old_path": "reverse/attempts/0x009f59d0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009F59D0Method.cpp",
+  "old_name": "ICoord2D",
+  "new_name": "Gen_t_009f51f0_p8cd",
+  "before_sha256": "a6e8929e6d0a625bddc9cbd371f4f7c021a39b8e6b416163904ae3373dac8a36",
+  "after_sha256": "03a9de4b46ff5e09493254456004fa2940ff27d3cfcfe1883071cd0ec9f397f0",
+  "evidence": "reverse/identity_evidence/0x009f59d0-name-correction.md",
+  "reason": "The temporary calls Vector_base<Gen_t_009f51f0_p8cd> at 0x009F51F0, while stored vectors use vector<ICoord2D> assignment at 0x009F5810. The source keeps those element types in their separate roles."
+ },
+ {
+  "old_path": "reverse/attempts/0x009f59d0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009F59D0Method.cpp",
+  "old_name": "T_009f59d0",
+  "new_name": "Rva009F59D0",
+  "before_sha256": "a6e8929e6d0a625bddc9cbd371f4f7c021a39b8e6b416163904ae3373dac8a36",
+  "after_sha256": "03a9de4b46ff5e09493254456004fa2940ff27d3cfcfe1883071cd0ec9f397f0",
+  "evidence": "reverse/identity_evidence/0x009f59d0-name-correction.md",
+  "reason": "The caller casts a no-argument T_009f59d0 member pointer to one unsigned argument, and retail returns with ret 4. This proves the call shape but not the class, so the source keeps 0x009F59D0 in the owner name."
+ },
+ {
+  "old_path": "reverse/attempts/0x009f59d0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009F59D0Method.cpp",
+  "old_name": "m_flags",
+  "new_name": "m_00EC",
+  "before_sha256": "a6e8929e6d0a625bddc9cbd371f4f7c021a39b8e6b416163904ae3373dac8a36",
+  "after_sha256": "03a9de4b46ff5e09493254456004fa2940ff27d3cfcfe1883071cd0ec9f397f0",
+  "evidence": "reverse/identity_evidence/0x009f59d0-name-correction.md",
+  "reason": "Retail compares and stores a mask at this+0xEC without establishing a member name. The source labels that field by its offset."
+ },
+ {
+  "old_path": "reverse/attempts/0x009f59d0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009F59D0Method.cpp",
+  "old_name": "m_head",
+  "new_name": "m_00E4",
+  "before_sha256": "a6e8929e6d0a625bddc9cbd371f4f7c021a39b8e6b416163904ae3373dac8a36",
+  "after_sha256": "03a9de4b46ff5e09493254456004fa2940ff27d3cfcfe1883071cd0ec9f397f0",
+  "evidence": "reverse/identity_evidence/0x009f59d0-name-correction.md",
+  "reason": "Retail loads the traversal pointer at this+0xE4. It does not establish a semantic field name."
+ },
+ {
+  "old_path": "reverse/attempts/0x009f59d0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009F59D0Method.cpp",
+  "old_name": "m_items",
+  "new_name": "m_0018",
+  "before_sha256": "a6e8929e6d0a625bddc9cbd371f4f7c021a39b8e6b416163904ae3373dac8a36",
+  "after_sha256": "03a9de4b46ff5e09493254456004fa2940ff27d3cfcfe1883071cd0ec9f397f0",
+  "evidence": "reverse/identity_evidence/0x009f59d0-name-correction.md",
+  "reason": "The matched destructor processes seventeen 12-byte elements from this+0x18. The source keeps the witnessed offset because the field's declared name is unknown."
+ },
+ {
+  "old_path": "reverse/attempts/0x009f59d0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009F59D0Method.cpp",
+  "old_name": "m_values",
+  "new_name": "m_0000",
+  "before_sha256": "a6e8929e6d0a625bddc9cbd371f4f7c021a39b8e6b416163904ae3373dac8a36",
+  "after_sha256": "03a9de4b46ff5e09493254456004fa2940ff27d3cfcfe1883071cd0ec9f397f0",
+  "evidence": "reverse/identity_evidence/0x009f59d0-name-correction.md",
+  "reason": "The matched state update copies six integers at offset zero, but no evidence supplies their member name. The source keeps the offset visible."
  }
 ]
