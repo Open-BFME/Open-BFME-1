@@ -12,7 +12,6 @@
 ?dup_0013c0e0@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/Thing/ThingFactory.cpp)
 ?dup_0013c170@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/Common/Thing/ThingFactory.cpp)
 ?dup_0090b4e0@@YAXXZ (reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2/dx8wrapper.cpp)
-?erase@?$vector@UPrereqUnitRec@ProductionPrerequisite@@V?$allocator@UPrereqUnitRec@ProductionPrerequisite@@@_STL@@@_STL@@QAEPAUPrereqUnitRec@ProductionPrerequisite@@PAU34@0@Z (Code/GameEngine/Source/Common/RTS/ProductionPrerequisite.cpp)
 ?friend_newModuleData@MissileAIUpdate@@SAPAVModuleData@@PAVINI@@@Z (Code/GameEngine/Source/Common/Thing/ModuleFactory.cpp)
 ?insert_unique@?$_Rb_tree@HU?$pair@$$CBHI@_STL@@U?$_Select1st@U?$pair@$$CBHI@_STL@@@2@U?$less@H@2@V?$allocator@U?$pair@$$CBHI@_STL@@@2@@_STL@@QAE?AU?$pair@U?$_Rb_tree_iterator@U?$pair@$$CBHI@_STL@@U?$_Nonconst_traits@U?$pair@$$CBHI@_STL@@@2@@_STL@@_N@2@ABU?$pair@$$CBHI@2@@Z (Code/GameEngine/Source/GameLogic/System/GameLogicDispatch.cpp)
 _$E25 (Code/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLLobbyMenu.cpp)
