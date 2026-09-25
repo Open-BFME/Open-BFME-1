@@ -2608,5 +2608,15 @@
   "after_sha256": "3e7af90cb6fbf18b2741f925c9d295ab1c0958d6d58ec3cae5031ce4533a4342",
   "evidence": "reverse/identity_evidence/005638d0.md",
   "reason": "The retail padded function tail-calls the independently verified no-argument initializer Rva00597F30::init at receiver+17C. It does not assign a Vector2 animation channel; preserve the unknown owner with its address token instead of the refuted RingRenderObjClass claim."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "W3DTerrainVisual",
+  "new_name": "Rva00730D30Owner",
+  "before_sha256": "e2e585b437a0ba6e311b860469628d6d9c91f9aabbc02253d042b6414379d6d2",
+  "after_sha256": "a2b77f5b4a874786e6355f53d21f67e152d7c3a3e0542e7f6f7fae1606e3522f",
+  "evidence": "reverse/identity_evidence/00730d30-terrain-forwarders.md",
+  "reason": "The 00730D30 caller forwards point radius context to006C8890; independent consumers720C20 and7023C0 interpret the second argument as float. The prior construction method declares a GeometryInfo reference and calls a different006C8930 body. Preserve unknown owner through its address token and keep distinct sibling call contracts."
  }
 ]
