@@ -34,7 +34,7 @@ public:
 class Rva00027BC9Object : public Object
 {
 public:
-	void getPosition(Coord3D *out);
+	void getPosition(Coord3D *position);
 };
 
 template <int N>
