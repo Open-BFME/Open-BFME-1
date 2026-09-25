@@ -276,7 +276,7 @@ protected:
 	virtual void slot44();
 	virtual void slot48();
 	virtual void slot4c();
-	virtual Object *findDozer(const Coord3D *pos);		// vtable slot 20
+	virtual Object *findDozer(const Coord3D *searchPosition);		// vtable slot 20
 	virtual void queueDozer();				// vtable slot 21
 
 	Bool dozerInQueue();
@@ -313,26 +313,27 @@ Bool AIPlayer::dozerInQueue()
 }
 
 // ?findDozer@AIPlayer@@MAEPAVObject@@PBUCoord3D@@@Z
-Object *AIPlayer::findDozer(const Coord3D *pos)
+Object *AIPlayer::findDozer(const Coord3D *searchPosition)
 {
-	Object *obj;
+	Object *candidateObject;
 	Object *dozer = NULL;
 	Bool needDozer = true;
 	Object *closestDozer = NULL;
 	Real closestDistSqr = 0;
 
-	for (obj = TheGameLogic->getFirstObject(); obj; obj = obj->getNextObject())
+	for (candidateObject = TheGameLogic->getFirstObject(); candidateObject;
+		candidateObject = candidateObject->getNextObject())
 	{
-		Player *owner = obj->getControllingPlayer();
+		Player *owner = candidateObject->getControllingPlayer();
 		if (owner == m_player)
 		{
-			const ThingTemplate *thingTemplate = obj->getTemplate();
+			const ThingTemplate *thingTemplate = candidateObject->getTemplate();
 			if (thingTemplate && thingTemplate->getNextOverride())
 				thingTemplate = static_cast<const ThingTemplate *>(
 					thingTemplate->getNextOverride()->getFinalOverride());
 			if ((thingTemplate->m_kindOf & KINDOF_DOZER) != 0)
 			{
-				AIUpdateInterface *ai = obj->getAIUpdateInterface();
+				AIUpdateInterface *ai = candidateObject->getAIUpdateInterface();
 				if (ai == NULL)
 					continue;
 
@@ -347,21 +348,21 @@ Object *AIPlayer::findDozer(const Coord3D *pos)
 							|| supplyTruckAI->isForcedIntoWantingState())
 							continue;
 					}
-					if (obj->getID() == m_repairDozer)
+					if (candidateObject->getID() == m_repairDozer)
 						continue;
 					needDozer = false;
 					if (dozerAI->isTaskPending(DOZER_TASK_BUILD))
 						continue;
 					if (!dozerAI->isAnyTaskPending())
-						dozer = obj;
+						dozer = candidateObject;
 					if (dozer == NULL)
-						dozer = obj;
+						dozer = candidateObject;
 					if (dozer && !dozerAI->isAnyTaskPending())
 					{
 						Real distSqr;
 						Real dx, dy;
-						dx = pos->x - dozer->getPosition()->x;
-						dy = pos->y - dozer->getPosition()->y;
+						dx = searchPosition->x - dozer->getPosition()->x;
+						dy = searchPosition->y - dozer->getPosition()->y;
 						distSqr = dx * dx + dy * dy;
 						if (closestDozer == NULL)
 						{
