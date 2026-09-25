@@ -8,6 +8,24 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
+
+struct Rva007EFFC0Allocator;
+
+struct Rva007E9B70Obj
+{
+	virtual void v0();
+	virtual void v1();
+	virtual int v2();
+};
+
+// Retail uses EDX for the allocator table at slot +8.
+// This fastcall view keeps the table in EDX while size and flags stay on the stack.
+typedef void *(__fastcall *Rva007EFFC0AllocateSlot)(
+	Rva007EFFC0Allocator *, void *, unsigned int, int);
+
+void *bfmeGo929C(void);
+Rva007E9B70Obj *Rva007E9B70Get();
 
 class Gen007F0130
 {
@@ -124,4 +142,30 @@ void Rva00803620Sink::apply( int tid, char *name, int port,
 	Rva007EA650FieldAddress *address = m_browser->m_address;
 	Rva0080EF50( m_advert, address->get(), name, portText );
 	m_tid = tid;
+}
+
+Rva00808920LanGame::Rva00808920LanGame( int maxPlayers )
+{
+	m_state = 1;
+	m_maxPlayers = maxPlayers;
+	Rva007EFFC0Allocator *allocator = (Rva007EFFC0Allocator *)bfmeGo929C();
+	m_players = (void **)((Rva007EFFC0AllocateSlot)(*(void ***)allocator)[2])(
+		allocator, *(void ***)allocator, m_maxPlayers * 4, 0);
+	for( int index = 0; index < m_maxPlayers; ++index )
+		m_players[ index ] = 0;
+
+	char text[ 0x24 ];
+	int value = Rva007E9B70Get()->v2() * rand() * m_maxPlayers;
+	sprintf( text, "%032x", value );
+	memset( m_ugid, 0, 0x25 );
+	strncpy( m_ugid, text, 8 );
+	strcat( m_ugid, "-" );
+	strncat( m_ugid, text + 8, 4 );
+	strcat( m_ugid, "-" );
+	strncat( m_ugid, text + 12, 4 );
+	strcat( m_ugid, "-" );
+	strncat( m_ugid, text + 16, 4 );
+	strcat( m_ugid, "-" );
+	strncat( m_ugid, text + 20, 12 );
+	m_ugid[ 0x24 ] = 0;
 }
