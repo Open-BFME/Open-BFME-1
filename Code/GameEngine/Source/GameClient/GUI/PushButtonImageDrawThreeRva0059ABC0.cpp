@@ -51,15 +51,13 @@ private:
 struct WinDrawData
 {
 	const Image *image;
-	Color color;
-	Color borderColor;
+	unsigned char m_unreconstructed_04[0x8];
 };
 
 class WinInstanceData
 {
 public:
-	virtual ~WinInstanceData(void);
-	unsigned char m_unreconstructed_004[0x14];
+	unsigned char m_unreconstructed_000[0x18];
 	WinDrawData m_enabledDrawData[9]; // retail this+0x18
 	unsigned char m_unreconstructed_084[0xF8];
 	ICoord2D m_imageOffset; // retail this+0x17c
@@ -68,7 +66,6 @@ public:
 class GameWindow
 {
 public:
-	virtual void winDrawBorder(void) = 0;
 	WinInstanceData *winGetInstanceData(void);
 	Int winGetScreenPosition(Int *x, Int *y);
 	Int winGetSize(Int *width, Int *height);
@@ -79,7 +76,7 @@ public:
 	}
 
 private:
-	unsigned char m_unreconstructed_04[0x2C];
+	unsigned char m_unreconstructed_00[0x30];
 	WinInstanceData m_instData; // retail this+0x30
 };
 
@@ -145,10 +142,10 @@ inline const Image *GadgetButtonGetRightEnabledImage(GameWindow *window)
 	return window->winGetEnabledImage(6);
 }
 
-inline Color GameMakeColor(unsigned char, unsigned char, unsigned char,
-	unsigned char alpha)
+inline Color GameMakeColor(unsigned char red, unsigned char green,
+	unsigned char blue, unsigned char alpha)
 {
-	return (alpha << 24) | 0x00ffffff;
+	return (alpha << 24) | (red << 16) | (green << 8) | (blue);
 }
 
 namespace Rva0059ABC0
