@@ -68,12 +68,12 @@ public:
 class Pathfinder
 {
 public:
-	Bool iterateCircular3(const ICoord2D *center, Int maxCells, ICoord2D *out,
-		void *userData, Int afterHit);
+	Bool iterateCircular3(const ICoord2D *searchCenterCell, Int maxCells,
+		ICoord2D *foundCell, void *callbackData, Int iterationsAfterHit);
 };
 
-Bool Pathfinder::iterateCircular3(const ICoord2D *center, Int maxCells, ICoord2D *out,
-	void *userData, Int afterHit)
+Bool Pathfinder::iterateCircular3(const ICoord2D *searchCenterCell, Int maxCells,
+	ICoord2D *foundCell, void *callbackData, Int iterationsAfterHit)
 {
 	Bool found = false;
 	Real best = 0.0f;
@@ -83,19 +83,19 @@ Bool Pathfinder::iterateCircular3(const ICoord2D *center, Int maxCells, ICoord2D
 	{
 		bfmeRetailCritterDesyncLog(TheCRCParameterCheck,
 			"\t\tIterateCircular3 called with center=%d,%d, maxCells=%d",
-			center->x, center->y, maxCells);
+			searchCenterCell->x, searchCenterCell->y, maxCells);
 	}
 
-	Rva003DEAB0Struct *info = (Rva003DEAB0Struct *)userData;
-	if (info->checkCellCopy(*center))
+	Rva003DEAB0Struct *info = (Rva003DEAB0Struct *)callbackData;
+	if (info->checkCellCopy(*searchCenterCell))
 	{
-		out->x = center->x;
-		out->y = center->y;
-		Real dx = (Real)(center->x * 10) - info->m_target->getPosition()->x;
-		Real dy = (Real)(center->y * 10) - info->m_target->getPosition()->y;
+		foundCell->x = searchCenterCell->x;
+		foundCell->y = searchCenterCell->y;
+		Real dx = (Real)(searchCenterCell->x * 10) - info->m_target->getPosition()->x;
+		Real dy = (Real)(searchCenterCell->y * 10) - info->m_target->getPosition()->y;
 		found = true;
 		best = dx * dx + dy * dy;
-		remaining = afterHit;
+		remaining = iterationsAfterHit;
 	}
 
 	Int x = 0;
@@ -108,67 +108,67 @@ Bool Pathfinder::iterateCircular3(const ICoord2D *center, Int maxCells, ICoord2D
 
 		for (Int i = 0; i < side; ++i)
 		{
-			Int cellX = center->x;
+			Int cellX = searchCenterCell->x;
 			++x;
 			cellX += x;
 			Real dx = (Real)(cellX * 10) - info->m_target->getPosition()->x;
-			Real dy = (Real)((center->y + y) * 10) - info->m_target->getPosition()->y;
+			Real dy = (Real)((searchCenterCell->y + y) * 10) - info->m_target->getPosition()->y;
 			Real distance = dx * dx + dy * dy;
-			if ((!found || !(distance >= best)) && info->checkCell(cellX, center->y + y))
+			if ((!found || !(distance >= best)) && info->checkCell(cellX, searchCenterCell->y + y))
 			{
-				out->x = center->x + x;
-				out->y = center->y + y;
+				foundCell->x = searchCenterCell->x + x;
+				foundCell->y = searchCenterCell->y + y;
 				found = true;
 				best = distance;
-				remaining = afterHit;
+				remaining = iterationsAfterHit;
 			}
 		}
 
 		for (Int j = 0; j < side; ++j)
 		{
 			++y;
-			Real dx = (Real)((center->x + x) * 10) - info->m_target->getPosition()->x;
-			Real dy = (Real)((center->y + y) * 10) - info->m_target->getPosition()->y;
+			Real dx = (Real)((searchCenterCell->x + x) * 10) - info->m_target->getPosition()->x;
+			Real dy = (Real)((searchCenterCell->y + y) * 10) - info->m_target->getPosition()->y;
 			Real distance = dx * dx + dy * dy;
-			if ((!found || !(distance >= best)) && info->checkCell(center->x + x, center->y + y))
+			if ((!found || !(distance >= best)) && info->checkCell(searchCenterCell->x + x, searchCenterCell->y + y))
 			{
-				out->x = center->x + x;
-				out->y = center->y + y;
+				foundCell->x = searchCenterCell->x + x;
+				foundCell->y = searchCenterCell->y + y;
 				found = true;
 				best = distance;
-				remaining = afterHit;
+				remaining = iterationsAfterHit;
 			}
 		}
 
 		for (Int k = 0; k <= side; ++k)
 		{
 			--x;
-			Real dx = (Real)((center->x + x) * 10) - info->m_target->getPosition()->x;
-			Real dy = (Real)((center->y + y) * 10) - info->m_target->getPosition()->y;
+			Real dx = (Real)((searchCenterCell->x + x) * 10) - info->m_target->getPosition()->x;
+			Real dy = (Real)((searchCenterCell->y + y) * 10) - info->m_target->getPosition()->y;
 			Real distance = dx * dx + dy * dy;
-			if ((!found || !(distance >= best)) && info->checkCell(center->x + x, center->y + y))
+			if ((!found || !(distance >= best)) && info->checkCell(searchCenterCell->x + x, searchCenterCell->y + y))
 			{
-				out->x = center->x + x;
-				out->y = center->y + y;
+				foundCell->x = searchCenterCell->x + x;
+				foundCell->y = searchCenterCell->y + y;
 				found = true;
 				best = distance;
-				remaining = afterHit;
+				remaining = iterationsAfterHit;
 			}
 		}
 
 		for (Int n = 0; n <= side; ++n)
 		{
 			--y;
-			Real dx = (Real)((center->x + x) * 10) - info->m_target->getPosition()->x;
-			Real dy = (Real)((center->y + y) * 10) - info->m_target->getPosition()->y;
+			Real dx = (Real)((searchCenterCell->x + x) * 10) - info->m_target->getPosition()->x;
+			Real dy = (Real)((searchCenterCell->y + y) * 10) - info->m_target->getPosition()->y;
 			Real distance = dx * dx + dy * dy;
-			if ((!found || !(distance >= best)) && info->checkCell(center->x + x, center->y + y))
+			if ((!found || !(distance >= best)) && info->checkCell(searchCenterCell->x + x, searchCenterCell->y + y))
 			{
-				out->x = center->x + x;
-				out->y = center->y + y;
+				foundCell->x = searchCenterCell->x + x;
+				foundCell->y = searchCenterCell->y + y;
 				found = true;
 				best = distance;
-				remaining = afterHit;
+				remaining = iterationsAfterHit;
 			}
 		}
 	}
