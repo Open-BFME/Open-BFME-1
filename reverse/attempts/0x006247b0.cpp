@@ -1,5 +1,5 @@
 // ?PopulatePlayerTemplateComboBox@@YAXHQAPAVGameWindow@@PAVGameInfo@@_N@Z
-// partial score=0.4 date=2026-09-06
+// partial score=0.53 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/stringbaseunicode /Ireference/shims/stringbaseascii /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /ICode/Libraries/Source/WWVegas/WWLib
 // stlport
 #define Matrix4x4 Matrix4
@@ -24,6 +24,12 @@
 // reads a static flag before doing anything else and bails if it is set.
 static int s_bfmePopulatingPlayerTemplateCombo = 0;
 
+static const char *playerTemplateSideText(const PlayerTemplate *fac)
+{
+	const char *buffer = *(const char * const *)((const char *)fac + 8);
+	return buffer ? buffer + 8 : (const char *)0x0107388B;
+}
+
 void PopulatePlayerTemplateComboBox(Int comboBox, GameWindow *comboArray[], GameInfo *myGame, Bool allowObservers)
 {
 	if (s_bfmePopulatingPlayerTemplateCombo)
@@ -46,27 +52,20 @@ void PopulatePlayerTemplateComboBox(Int comboBox, GameWindow *comboArray[], Game
 		if (!fac)
 			continue;
 
-		if (fac->getStartingBuilding().isEmpty())
-			continue;
-
-		if (myGame->oldFactionsOnly() && !fac->isOldFaction())
-			continue;
-
-		Bool disallowLockedGenerals = TRUE;
-		const GeneralPersona *general = TheChallengeGenerals->getGeneralByTemplateName(fac->getName());
-		Bool startsLocked = general ? !general->isStartingEnabled() : FALSE;
-		if (disallowLockedGenerals && startsLocked)
-			continue;
-
 		AsciiString side;
-		side.format("SIDE:%s", fac->getSide().str());
+		side.format("SIDE:%s", playerTemplateSideText(fac));
 		if (seenSides.find(side) != seenSides.end())
 			continue;
 
 		seenSides.insert(side);
 
-		newIndex = GadgetComboBoxAddEntry(comboArray[comboBox], TheGameText->fetch(side), def->getColor());
-		GadgetComboBoxSetItemData(comboArray[comboBox], newIndex, (void *)c);
+		Bool sideExists;
+		UnicodeString localizedSide = TheGameText->fetch(side, &sideExists);
+		if (sideExists)
+		{
+			newIndex = GadgetComboBoxAddEntry(comboArray[comboBox], localizedSide, def->getColor());
+			GadgetComboBoxSetItemData(comboArray[comboBox], newIndex, (void *)c);
+		}
 	}
 	seenSides.clear();
 
