@@ -1,7 +1,7 @@
-// ?isCellEntryPoint@Bridge@@QAE_NPBURegion2D@@PAM@Z
-// partial score=0.912 date=2026-09-17
-// Bridge::isCellEntryPoint, retail 0x001A2950.
 // cl: /DNDEBUG /MD /EHsc
+// Bridge::isCellEntryPoint, retail 0x001A2950 (510 bytes, ret 8).
+// Zero Hour's TerrainLogic.cpp body; BFME adds an out parameter that receives
+// the z of the entry line's first corner (fromLeft.z or toLeft.z).
 
 #include <math.h>
 
@@ -43,22 +43,6 @@ struct Coord3D
 	}
 };
 
-// Retail keeps the copied z members in stack slots even though the entry
-// test only consumes x/y.  The volatile member preserves those stores.
-struct Coord3DLocal
-{
-	Real x;
-	Real y;
-	volatile Real z;
-
-	Coord3DLocal(const Coord3D &that)
-	{
-		x = that.x;
-		y = that.y;
-		z = that.z;
-	}
-};
-
 struct BridgeInfo
 {
 	Coord3D from;
@@ -72,22 +56,20 @@ struct BridgeInfo
 
 extern Bool LineInRegion(const Coord2D *p1, const Coord2D *p2,
 	const Region2D *clipRegion);
-#pragma comment(linker, "/alternatename:?LineInRegion@@YA_NPBUCoord2D@@0PBURegion2D@@@Z=?j_0001ffe1@@YAXXZ")
 
-#define PATHFIND_CELL_SIZE (*(const Real *)0x01075C74)
-#define HALF_PATHFIND_CELL_SIZE (*(const Real *)0x01075344)
+#define PATHFIND_CELL_SIZE 10 // retail 10.0f at 0x01075C74; half is 5.0f at 0x01075344
 
 class Bridge
 {
 public:
-	Bool isCellEntryPoint(const Region2D *cell, Real *entryX);
+	Bool isCellEntryPoint(const Region2D *cell, Real *entryZ);
 
 private:
 	unsigned char m_pad[0x0C];
 	BridgeInfo m_bridgeInfo;
 };
 
-Bool Bridge::isCellEntryPoint(const Region2D *cell, Real *entryX)
+Bool Bridge::isCellEntryPoint(const Region2D *cell, Real *entryZ)
 {
 	Coord3D endVector;
 	endVector.x = m_bridgeInfo.fromRight.x - m_bridgeInfo.fromLeft.x;
@@ -102,10 +84,10 @@ Bool Bridge::isCellEntryPoint(const Region2D *cell, Real *entryX)
 	bridgeVector.y = m_bridgeInfo.to.y - m_bridgeInfo.from.y;
 	bridgeVector.z = m_bridgeInfo.to.z - m_bridgeInfo.from.z;
 	bridgeVector.normalize();
-	bridgeVector.x *= HALF_PATHFIND_CELL_SIZE;
-	bridgeVector.y *= HALF_PATHFIND_CELL_SIZE;
+	bridgeVector.x *= PATHFIND_CELL_SIZE/2;
+	bridgeVector.y *= PATHFIND_CELL_SIZE/2;
 
-	Coord3DLocal fromLeft = m_bridgeInfo.fromLeft;
+	Coord3D fromLeft = m_bridgeInfo.fromLeft;
 	fromLeft.x -= bridgeVector.x;
 	fromLeft.y -= bridgeVector.y;
 	fromLeft.x += endVector.x;
@@ -117,7 +99,7 @@ Bool Bridge::isCellEntryPoint(const Region2D *cell, Real *entryX)
 	fromRight.x -= endVector.x;
 	fromRight.y -= endVector.y;
 
-	Coord3DLocal toLeft = m_bridgeInfo.toLeft;
+	Coord3D toLeft = m_bridgeInfo.toLeft;
 	toLeft.x += bridgeVector.x;
 	toLeft.y += bridgeVector.y;
 	toLeft.x += endVector.x;
@@ -136,7 +118,7 @@ Bool Bridge::isCellEntryPoint(const Region2D *cell, Real *entryX)
 	line2.y = fromRight.y;
 	if (LineInRegion(&line1, &line2, cell))
 	{
-		*entryX = fromLeft.x;
+		*entryZ = fromLeft.z;
 		return true;
 	}
 
@@ -146,7 +128,7 @@ Bool Bridge::isCellEntryPoint(const Region2D *cell, Real *entryX)
 	line2.y = toRight.y;
 	if (LineInRegion(&line1, &line2, cell))
 	{
-		*entryX = toLeft.x;
+		*entryZ = toLeft.z;
 		return true;
 	}
 
