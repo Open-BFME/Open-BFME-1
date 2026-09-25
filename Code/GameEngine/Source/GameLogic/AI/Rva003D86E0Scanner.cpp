@@ -70,9 +70,9 @@ class Rva003D86E0Scanner
 
   private:
     Pathfinder *m_pathfinder;
-    void *m_field04;
+    void *m_stepState;
     Int m_resultCellX, m_resultCellY;
-    PathfindLayerEnum m_layer;
+    PathfindLayerEnum m_scanLayer;
     Int m_requestedLayer;
     Int m_cachedCellX, m_cachedCellY;
     Int m_lowerCellOffset, m_upperCellOffset;
@@ -83,7 +83,7 @@ char Rva003D86E0Scanner::scan(Int cellX, Int cellY)
     {
         for (Int y = cellY - m_lowerCellOffset; y < cellY + m_upperCellOffset; ++y)
         {
-            PathfindCell *cell = m_pathfinder->getCell(m_layer, x, y);
+            PathfindCell *cell = m_pathfinder->getCell(m_scanLayer, x, y);
             if (!cell)
                 return false;
             Int type = (cell->m_word >> 6) & 0x3f;
@@ -102,7 +102,7 @@ char Rva003D86E0Scanner::scan(Int cellX, Int cellY)
                             return false;
                 }
             }
-            if (!m_pathfinder->bfmeStepD4F90(m_field04, cell))
+            if (!m_pathfinder->bfmeStepD4F90(m_stepState, cell))
                 return false;
             Coord3D position;
             position.x = x * 10 + 5.0f;
