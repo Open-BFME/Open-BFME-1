@@ -58,6 +58,7 @@
 #include "GameClient/Gadget.h"
 #include "GameClient/GameWindowManager.h"
 #include "GameClient/IMEManager.h"
+#include "GameClient/LookAtXlat.h"
 
 // Retail's UnicodeString derives from StringBase<unsigned short> and holds
 // nothing of its own, so its copy ctor is a forwarder retail inlines at every
@@ -73,9 +74,103 @@ inline UnicodeString::UnicodeString(const UnicodeString &stringSrc)
 		*(const StringBase<unsigned short> *)&stringSrc);
 }
 
+
 // DEFINES ////////////////////////////////////////////////////////////////////
 
 // PRIVATE TYPES //////////////////////////////////////////////////////////////
+struct BfmeTextEntrySystemData
+{
+	DisplayString *text;
+	DisplayString *sText;
+	DisplayString *constructText;
+	UnsignedInt flags;
+	Short maxTextLen;
+	UnsignedByte receivedUnichar;
+	UnsignedByte drawTextFromStart;
+	UnsignedByte systemFlag;
+	UnsignedByte padding15[3];
+	GameWindow *constructList;
+	UnsignedShort charPos;
+	UnsignedShort conCharPos;
+	UnsignedShort unknown20;
+};
+
+struct BfmeUnicodeStringData
+{
+	UnsignedShort *data;
+};
+
+class BfmeTextEntryDisplayString
+{
+public:
+	virtual void slot0( void );
+	virtual void setText( UnicodeString text );
+	virtual UnicodeString getText( void );
+	virtual Int getTextLength( void );
+	virtual void slot4( void );
+	virtual void slot5( void );
+	virtual void slot6( void );
+	virtual void slot7( void );
+	virtual void slot8( void );
+	virtual void slot9( void );
+	virtual void slot10( void );
+	virtual void slot11( void );
+	virtual void slot12( void );
+	virtual void slot13( void );
+	virtual void slot14( void );
+	virtual void slot15( void );
+	virtual void slot16( void );
+	virtual void slot17( void );
+	virtual void slot18( void );
+	virtual void slot19( void );
+	virtual void slot20( void );
+	virtual void slot21( void );
+	virtual void appendChar( WideChar character );
+};
+
+class BfmeDisplayStringManager
+{
+public:
+	virtual void slot0( void );
+	virtual void slot1( void );
+	virtual void slot2( void );
+	virtual void slot3( void );
+	virtual void slot4( void );
+	virtual void slot5( void );
+	virtual void slot6( void );
+	virtual void slot7( void );
+	virtual void slot8( void );
+	virtual void slot9( void );
+	virtual void freeDisplayString( DisplayString *string );
+};
+
+class BfmeImeManagerInterface
+{
+public:
+	virtual void slot0( void );
+	virtual void slot1( void );
+	virtual void slot2( void );
+	virtual void slot3( void );
+	virtual void slot4( void );
+	virtual void slot5( void );
+	virtual void slot6( void );
+	virtual void slot7( void );
+	virtual void slot8( void );
+	virtual void attach( GameWindow *window );
+	virtual void slot10( void );
+	virtual void slot11( void );
+	virtual void slot12( void );
+	virtual Bool slot13( void );
+	virtual Bool isAttachedTo( GameWindow *window );
+};
+
+struct Rva005A6790Object
+{
+	char padding[0x1ec];
+	Int value;
+	Int setValue( Int value );
+};
+
 #ifdef _INTERNAL
 // for occasional debugging...
 //#pragma optimize("", off)
@@ -92,6 +187,7 @@ static GameWindow *curWindow = NULL;  /**< so we can keep track of the input
 // PUBLIC DATA ////////////////////////////////////////////////////////////////
 
 // PRIVATE PROTOTYPES /////////////////////////////////////////////////////////
+extern void GadgetTextEntrySetCursorPosition( GameWindow *window, UnsignedInt pos );
 
 // PRIVATE FUNCTIONS //////////////////////////////////////////////////////////
 
@@ -337,9 +433,9 @@ WindowMsgHandledType GadgetTextEntryInput( GameWindow *window, UnsignedInt msg,
 /** Handle system messages for entry field */
 //=============================================================================
 WindowMsgHandledType GadgetTextEntrySystem( GameWindow *window, UnsignedInt msg,
-														WindowMsgData mData1, WindowMsgData mData2 )
+																WindowMsgData mData1, WindowMsgData mData2 )
 {
-	EntryData *e = (EntryData *)window->winGetUserData();
+	BfmeTextEntrySystemData *e = (BfmeTextEntrySystemData *)window->winGetUserData();
 	WinInstanceData *instData = window->winGetInstanceData();
 
 	switch( msg )
@@ -347,7 +443,8 @@ WindowMsgHandledType GadgetTextEntrySystem( GameWindow *window, UnsignedInt msg,
 
 		// ------------------------------------------------------------------------
 		case GEM_GET_TEXT:
-			*(UnicodeString*)mData2 = e->text->getText();
+			((StringBase<unsigned short> *)mData2)->set(
+				*(const StringBase<unsigned short> *)&((BfmeTextEntryDisplayString *)e->text)->getText());
 			break;
 
 		// ------------------------------------------------------------------------
@@ -355,16 +452,20 @@ WindowMsgHandledType GadgetTextEntrySystem( GameWindow *window, UnsignedInt msg,
 		{
 
 			const UnicodeString* ustr = (const UnicodeString*)mData1;
-			e->text->setText( *ustr );
-			e->charPos = ustr->getLength();
-			e->constructText->setText( UnicodeString::TheEmptyString );
-			e->conCharPos = 0;
+			((BfmeTextEntryDisplayString *)e->text)->setText( *ustr );
+			if( TheWindowManager->winGetFocus() == window )
+				GadgetTextEntrySetCursorPosition( window, ((BfmeUnicodeStringData *)ustr)->data ? ((BfmeUnicodeStringData *)ustr)->data[2] : 0 );
+			else
+				GadgetTextEntrySetCursorPosition( window, 0 );
+			((BfmeTextEntryDisplayString *)e->constructText)->setText( UnicodeString::TheEmptyString );
+			e->conCharPos = e->charPos;
+			e->unknown20 = 0;
 
 			// set our secret text string to be filled with '*' the same length
-			e->sText->setText( UnicodeString::TheEmptyString );
-			Int len = ustr->getLength();
+			((BfmeTextEntryDisplayString *)e->sText)->setText( UnicodeString::TheEmptyString );
+			Int len = ((BfmeUnicodeStringData *)ustr)->data ? ((BfmeUnicodeStringData *)ustr)->data[2] : 0;
 			for( Int i = 0; i < len; i++ )
-				e->sText->appendChar( L'*' );
+				((BfmeTextEntryDisplayString *)e->sText)->appendChar( L'*' );
 
 			break;
 
@@ -377,14 +478,16 @@ WindowMsgHandledType GadgetTextEntrySystem( GameWindow *window, UnsignedInt msg,
 
 		// ------------------------------------------------------------------------
 		case GWM_DESTROY:
+			if( e && e->systemFlag )
+				((Rva005A6790Object *)TheLookAtTranslator)->setValue( 2 );
 
 			// delete the edit display string
-			TheDisplayStringManager->freeDisplayString( e->text );
-			TheDisplayStringManager->freeDisplayString( e->sText );
-			TheDisplayStringManager->freeDisplayString( e->constructText );
+			((BfmeDisplayStringManager *)TheDisplayStringManager)->freeDisplayString( e->text );
+			((BfmeDisplayStringManager *)TheDisplayStringManager)->freeDisplayString( e->sText );
+			((BfmeDisplayStringManager *)TheDisplayStringManager)->freeDisplayString( e->constructText );
 
 			// delete construct list
-			if( e->constructList )
+			if( e->constructList && TheWindowManager )
 				TheWindowManager->winDestroy( e->constructList );
 
 			// free all edit data
@@ -398,27 +501,39 @@ WindowMsgHandledType GadgetTextEntrySystem( GameWindow *window, UnsignedInt msg,
 				// If we're losing focus
 				/// @todo need to enable this for IME support
 				// ourIME->UnActivate();
-				curWindow = NULL;
+				if( e->drawTextFromStart )
+				{
+					e->drawTextFromStart = 0;
+					TheWindowManager->winSendSystemMsg( window->winGetOwner(),
+																			GEM_EDIT_DONE,
+																			(WindowMsgData)window, 1 );
+				}
+				GadgetTextEntrySetCursorPosition( window, ((BfmeTextEntryDisplayString *)e->text)->getTextLength() );
+				e->conCharPos = e->charPos;
 				BitClear( instData->m_state, WIN_STATE_SELECTED );
 				BitClear( instData->m_state, WIN_STATE_HILITED );
+				curWindow = NULL;
 
 				if( e->constructList )
 					e->constructList->winHide( TRUE );
-				e->constructText->setText( UnicodeString::TheEmptyString );
-				e->conCharPos = 0;
-				if(TheIMEManager && TheIMEManager->isAttachedTo(window))
-					TheIMEManager->attach(NULL);
+				((BfmeTextEntryDisplayString *)e->constructText)->setText( UnicodeString::TheEmptyString );
+				e->unknown20 = 0;
+				if(TheIMEManager && ((BfmeImeManagerInterface *)TheIMEManager)->isAttachedTo(window))
+					((BfmeImeManagerInterface *)TheIMEManager)->attach(NULL);
 				//TheIMEManager->detatch();
 			}
 			else
 			{
+				GadgetTextEntrySetCursorPosition( window, ((BfmeTextEntryDisplayString *)e->text)->getTextLength() );
+				e->conCharPos = 0;
 				curWindow = window;
 				/// @todo need to enable this for IME support
 				if (TheIMEManager)
-					TheIMEManager->attach( window );
+					((BfmeImeManagerInterface *)TheIMEManager)->attach( window );
 				// ourIME->Activate( (void *)ApplicationHWnd );
 				BitSet( instData->m_state, WIN_STATE_SELECTED );
 				BitSet( instData->m_state, WIN_STATE_HILITED );
+				e->drawTextFromStart = 0;
 			}
 
 			TheWindowManager->winSendSystemMsg( window->winGetOwner(), 
