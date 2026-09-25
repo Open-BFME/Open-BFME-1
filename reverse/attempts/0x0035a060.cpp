@@ -1,5 +1,5 @@
-// ?rvaUniqueName0035a060@@YAXPAXPAVAsciiString@@@Z
-// partial score=0.58 date=2026-09-23
+// ?d_0035a060@@YAXXZ
+// partial score=0.603 date=2026-09-25
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
 //
 // Retail 0x0035A060, 350 bytes, bare RET: file-static unique-name helper.  Its
