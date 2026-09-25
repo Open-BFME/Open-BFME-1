@@ -240,9 +240,9 @@ void Pathfinder::rva003F8820(Bridge *theBridge, Bool keep)
 		rawA = layerA = bfmeLayerForPosition(0, info.from);
 		if (layerA >= 2 && layerA <= 15)
 		{
-			ICoord2D cell;
-			worldToCell(&info.from, &cell);
-			m_layers[layerA].bfmeRememberEndpoint(&cell);
+			ICoord2D endpointCell;
+			worldToCell(&info.from, &endpointCell);
+			m_layers[layerA].bfmeRememberEndpoint(&endpointCell);
 		}
 		else
 		{
@@ -252,9 +252,9 @@ void Pathfinder::rva003F8820(Bridge *theBridge, Bool keep)
 		rawB = layerB = bfmeLayerForPosition(0, info.to);
 		if (layerB >= 2 && layerB <= 15)
 		{
-			ICoord2D cell;
-			worldToCell(&info.to, &cell);
-			m_layers[layerB].bfmeRememberEndpoint(&cell);
+			ICoord2D endpointCell;
+			worldToCell(&info.to, &endpointCell);
+			m_layers[layerB].bfmeRememberEndpoint(&endpointCell);
 		}
 		else
 		{
