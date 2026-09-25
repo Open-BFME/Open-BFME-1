@@ -164,72 +164,74 @@ private:
 
 	template <class Owner, Int (Owner::*Callback)( PathfindCell *, PathfindCell *, Int, Int )>
 	__forceinline Int walkCellsAlongLine( const ICoord2D &startCell, const ICoord2D &destinationCell,
-		PathfindLayerEnum layer, Owner *callbackInfo )
+		PathfindLayerEnum pathfindLayer, Owner *callbackInfo )
 	{
-		Int delta_x = abs( destinationCell.x - startCell.x );
-		Int delta_y = abs( destinationCell.y - startCell.y );
+		Int horizontalDelta = abs( destinationCell.x - startCell.x );
+		Int verticalDelta = abs( destinationCell.y - startCell.y );
 
-		Int xinc2, yinc1, xinc1, numpixels, numadd, den;
-		Int yinc2, num;
-		if (delta_x >= delta_y)
+		Int majorAxisXIncrement, diagonalYIncrement, diagonalXIncrement;
+		Int totalCellsToVisit, errorIncrement, diagonalErrorCorrection;
+		Int majorAxisYIncrement, errorTerm;
+		if (horizontalDelta >= verticalDelta)
 		{
-			numpixels = delta_x + 1;
-			num = 2 * delta_y - delta_x;
-			numadd = delta_y << 1;
-			den = 2 * (delta_y - delta_x);
-			xinc2 = 1;
-			yinc2 = 0;
-			yinc1 = 1;
-			xinc1 = 1;
+			totalCellsToVisit = horizontalDelta + 1;
+			errorTerm = 2 * verticalDelta - horizontalDelta;
+			errorIncrement = verticalDelta << 1;
+			diagonalErrorCorrection = 2 * (verticalDelta - horizontalDelta);
+			majorAxisXIncrement = 1;
+			majorAxisYIncrement = 0;
+			diagonalYIncrement = 1;
+			diagonalXIncrement = 1;
 		}
 		else
 		{
-			numpixels = delta_y + 1;
-			num = 2 * delta_x - delta_y;
-			numadd = delta_x << 1;
-			den = 2 * (delta_x - delta_y);
-			yinc2 = 1;
-			xinc2 = 0;
-			yinc1 = 1;
-			xinc1 = 1;
+			totalCellsToVisit = verticalDelta + 1;
+			errorTerm = 2 * horizontalDelta - verticalDelta;
+			errorIncrement = horizontalDelta << 1;
+			diagonalErrorCorrection = 2 * (horizontalDelta - verticalDelta);
+			majorAxisYIncrement = 1;
+			majorAxisXIncrement = 0;
+			diagonalYIncrement = 1;
+			diagonalXIncrement = 1;
 		}
 
 		if (startCell.x > destinationCell.x)
 		{
-			xinc2 = -xinc2;
-			xinc1 = -1;
+			majorAxisXIncrement = -majorAxisXIncrement;
+			diagonalXIncrement = -1;
 		}
 		if (startCell.y > destinationCell.y)
 		{
-			yinc2 = -yinc2;
-			yinc1 = -1;
+			majorAxisYIncrement = -majorAxisYIncrement;
+			diagonalYIncrement = -1;
 		}
 
-		Int x = startCell.x;
-		Int y = startCell.y;
+		Int currentCellX = startCell.x;
+		Int currentCellY = startCell.y;
 		PathfindCell *previousCell = 0;
-		for (Int curpixel = 0; curpixel < numpixels; curpixel++)
+		for (Int cellIndex = 0; cellIndex < totalCellsToVisit; cellIndex++)
 		{
-			PathfindCell *currentCell = getCell( layer, x, y );
+			PathfindCell *currentCell = getCell( pathfindLayer, currentCellX, currentCellY );
 			if (currentCell == 0)
 				return 0;
 
-			Int ret = (callbackInfo->*Callback)( previousCell, currentCell, x, y );
-			if (ret != 0)
-				return ret;
+			Int callbackResult = (callbackInfo->*Callback)( previousCell, currentCell,
+				currentCellX, currentCellY );
+			if (callbackResult != 0)
+				return callbackResult;
 			previousCell = currentCell;
 
-			if (num < 0)
+			if (errorTerm < 0)
 			{
-				num += numadd;
-				x += xinc2;
-				y += yinc2;
+				errorTerm += errorIncrement;
+				currentCellX += majorAxisXIncrement;
+				currentCellY += majorAxisYIncrement;
 			}
 			else
 			{
-				num += den;
-				x += xinc1;
-				y += yinc1;
+				errorTerm += diagonalErrorCorrection;
+				currentCellX += diagonalXIncrement;
+				currentCellY += diagonalYIncrement;
 			}
 		}
 
