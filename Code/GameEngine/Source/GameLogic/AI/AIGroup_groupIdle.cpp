@@ -205,7 +205,7 @@ private:
 extern void j_00044201();
 
 static SpawnBehaviorInterface *getSpawnBehaviorInterfaceViaIlt(
-	const Object *obj)
+	const Object *object)
 {
 	typedef SpawnBehaviorInterface *(Object::*GetSpawnBehaviorCall)() const;
 	union
@@ -214,7 +214,7 @@ static SpawnBehaviorInterface *getSpawnBehaviorInterfaceViaIlt(
 		GetSpawnBehaviorCall asMember;
 	} getSpawnBehaviorCast;
 	getSpawnBehaviorCast.asVoid = (void *)j_00044201;
-	return (obj->*getSpawnBehaviorCast.asMember)();
+	return (object->*getSpawnBehaviorCast.asMember)();
 }
 
 enum
