@@ -69,7 +69,7 @@ public:
 class PolygonTrigger
 {
 public:
-	void getCenterPoint(Coord3D *position) const;
+	void getCenterPoint(Coord3D *centerPosition) const;
 };
 
 // BFME layout view: 0x0015C330 and this body independently use polygon
