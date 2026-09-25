@@ -1,21 +1,24 @@
 // ?xfer@LuaSpyData@@UAEXPAVXfer@@@Z
-// partial score=0.37 date=2026-09-24
+// partial score=0.53 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc
-//
-// LuaSpyData::xfer, retail 0x002E22F0 (657 bytes).  Identity: the vtable at
-// 0x010BA790 (installed by the constructor at 0x0027EE90, and by
-// AIUpdateInterface's constructor for its embedded copy) has four slots: the
-// scalar-deleting destructor, an empty method, a getter returning the string
-// "LuaSpyData" (VA 0x010BA7A4, stored right after the table) and this body,
-// which takes the Xfer and versions the object like every Snapshot::xfer.
-//
-// The object holds a vector of 12-byte records at +4: two NameKeyTypes and an
-// STLport list<int>.  Saving writes each record's keys as names (KEYNAME) and
-// hands its list to the list transfer at ILT 0x0000FFE2; loading reads the two
-// names back into keys, appends a record with an empty list and fills that
-// list through the same transfer.  The vector and list views below model
-// retail's STLport: push_back calls its element construct out of line, the
-// list constructor and clear() are inline, and ~_List_base is out of line.
+
+// Constructor 0x0027EE90 installs vtable 0x010BA790.
+// Slot 2 returns the name "LuaSpyData".
+// Slot 3 reaches this body through ILT 0x0003C62D.
+
+// Each 12-byte record holds two NameKeyType fields and one list<int>.
+// The save branch converts keys to names with KEYNAME.
+// It transfers both strings and the list through ILT 0x0000FFE2.
+// The load branch reads both strings.
+// It converts the strings with NameKeyGenerator::nameToKey.
+// It appends a record, then calls bfmeHandOver_0000FFE2 for its list.
+
+// The body emits 654 bytes against retail's 657.
+// It has 306 differing bytes outside relocation operands.
+// The inline vector size() and begin() calls reproduce retail's EBP owner
+// and EBX record offset.
+// Retail stores the count in the version slot and the second string in the
+// expired Xfer argument slot. This source keeps them in separate locals.
 
 enum NameKeyType
 {
@@ -140,6 +143,7 @@ class vector
 public:
 	void reserve(unsigned int count);
 	int size() const { return _M_finish - _M_start; }
+	Type *begin() { return _M_start; }
 	Type &operator[](int index) { return _M_start[index]; }
 	Type &back() { return _M_finish[-1]; }
 	void push_back(const Type &value)
@@ -242,7 +246,7 @@ void LuaSpyData::xfer(Xfer *xfer)
 		AsciiString second;
 		if (xfer->slot08())
 		{
-			LuaSpyRecord &record = m_records[i];
+			LuaSpyRecord &record = m_records.begin()[i];
 			first = KEYNAME(record.m_first);
 			second = KEYNAME(record.m_second);
 			xfer->xferAsciiString(&first);
