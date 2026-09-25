@@ -3568,5 +3568,15 @@
   "after_sha256": "c27b292d406eaf36b8d050d3bd98276affbdc17d98d12cf104b39ee27a9b9ca0",
   "evidence": "docs/naming_evidence.md",
   "reason": "the ledger pin for ILT 0x0002669D is address-derived (?rva006A59F0@MilesAudioManager) and releasePlayingAudio had no evidence and would not resolve"
+ },
+ {
+  "old_path": "reverse/attempts/0x006a2750.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerIsCurrentlyPlaying.cpp",
+  "old_name": "findPlaying",
+  "new_name": "rva006A20D0",
+  "before_sha256": "19672a616d9bf31c6828615d2dd2ee02f9bdff108497b0d205476edfc7f59237",
+  "after_sha256": "3ee550e9a300eb16f30f3a2595ae1bec8a2d66e359519c0b9a4995a0ea5d90cf",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "banked findPlaying had no caller/vtable/string/twin evidence; reverse/re_attempts.log 0x006A20D0 verdict records the helper method identity as unproven so the address-derived rva006A20D0 is used"
  }
 ]
