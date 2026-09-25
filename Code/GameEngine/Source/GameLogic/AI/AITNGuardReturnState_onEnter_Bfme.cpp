@@ -199,7 +199,7 @@ public:
 // Kept in this TU so MSVC uses the same internal-call shape as the original
 // AITNGuard.cpp static helper (the canonical helper is matched separately at
 // 0x0018A190).
-static Object *findBestTunnel(Player *ownerPlayer, const Coord3D *pos)
+static Object *findBestTunnel(Player *ownerPlayer, const Coord3D *searchPosition)
 {
 	if (!ownerPlayer)
 		return 0;
@@ -214,8 +214,8 @@ static Object *findBestTunnel(Player *ownerPlayer, const Coord3D *pos)
 		Object *currentTunnel = TheGameLogic->findObjectByID(*iter);
 		if (currentTunnel)
 		{
-			Real dx = currentTunnel->getPosition()->x - pos->x;
-			Real dy = currentTunnel->getPosition()->y - pos->y;
+			Real dx = currentTunnel->getPosition()->x - searchPosition->x;
+			Real dy = currentTunnel->getPosition()->y - searchPosition->y;
 			Real distSqr = dx * dx + dy * dy;
 			if (bestTunnel == 0 || distSqr < bestDistSqr)
 			{

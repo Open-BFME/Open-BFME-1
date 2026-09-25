@@ -138,7 +138,7 @@ static Bool hasAttackedMeAndICanReturnFire( State *thisState, void* /*userData*/
 	return FALSE;
 }
 
-static Object *findBestTunnel(Player *ownerPlayer, const Coord3D *pos) 
+static Object *findBestTunnel(Player *ownerPlayer, const Coord3D *searchPosition)
 {
 	if (!ownerPlayer) return NULL; // should never happen, but hey.  jba.
 	TunnelTracker *tunnels = ownerPlayer->getTunnelSystem();
@@ -149,8 +149,8 @@ static Object *findBestTunnel(Player *ownerPlayer, const Coord3D *pos)
 		// For each ID, look it up and change its team.  We all get captured together.
 		Object *currentTunnel = TheGameLogic->findObjectByID( *iter );
 		if( currentTunnel ) {
-			Real dx = currentTunnel->getPosition()->x-pos->x;
-			Real dy = currentTunnel->getPosition()->y-pos->y;
+			Real dx = currentTunnel->getPosition()->x-searchPosition->x;
+			Real dy = currentTunnel->getPosition()->y-searchPosition->y;
 			Real distSqr = dx*dx+dy*dy;
 			if (bestTunnel==NULL || distSqr<bestDistSqr) {
 				bestDistSqr = distSqr;
@@ -928,4 +928,3 @@ void AITNGuardAttackAggressorState::loadPostProcess()
 {
 	onEnter();
 }
-
