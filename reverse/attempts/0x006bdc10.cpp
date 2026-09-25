@@ -1,6 +1,6 @@
-// ?xfer@W3DGhostObjectManager@@UAEXPAVXfer@@@Z
-// partial score=0.5 date=2026-09-25
-// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /ICode/GameEngine/Source/Common/System
+// ?xfer@W3DGhostObjectManager@@MAEXPAVXfer@@@Z
+// partial score=0.99 date=2026-09-25
+// cl: /DNDEBUG /DWIN32 /MD /D_STLP_USE_STATIC_LIB /EHsc /FAsc /Fabuild/luna5-006bdc10.cod /ICode/GameEngine/Source/Common/System
 // stlport
 
 typedef unsigned int UnsignedInt;
@@ -61,6 +61,9 @@ class GameLogic
 public:
 	__forceinline Object *findObjectByID(ObjectID id)
 	{
+		if (id == INVALID_ID)
+			return 0;
+
 		BfmeObjectPtrHash::iterator it = m_objectHash.find(id);
 		if (it == m_objectHash.end())
 			return 0;
@@ -119,7 +122,10 @@ extern GhostObjectManager *TheGhostObjectManager;
 class W3DGhostObjectManager : public GhostObjectManager
 {
 public:
+	protected:
 	virtual void xfer(Xfer *xfer);
+
+	public:
 	virtual GhostObject *addGhostObject(Object *object);
 
 	W3DGhostObject *m_freeModules;	// +0x0c
@@ -133,13 +139,14 @@ void W3DGhostObjectManager::xfer(Xfer *xfer)
 	if (xfer->IsLightCRC())
 		return;
 
-	{
+		{
 		Xfer::Version version;
 		version.data[0] = 1;
 		version.data[1] = 1;
 		*xfer == version;
 	}
 
+	{
 	UnsignedShort count = 0;
 	W3DGhostObject *w3dGhostObject;
 	for (w3dGhostObject = m_usedModules; w3dGhostObject; w3dGhostObject = w3dGhostObject->m_nextSystem)
@@ -184,5 +191,7 @@ void W3DGhostObjectManager::xfer(Xfer *xfer)
 
 			*xfer == *ghostObject;
 		}
+	}
+
 	}
 }
