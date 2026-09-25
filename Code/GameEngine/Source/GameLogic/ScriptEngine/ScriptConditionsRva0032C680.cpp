@@ -1,6 +1,4 @@
 // ?rva0032c680@ScriptConditions@@IAE_NPAVParameter@@00@Z
-// partial score=0.188811 date=2026-09-25
-// ?rva0032c680@ScriptConditions@@IAE_NPAVParameter@@00@Z
 // Retail RVA 0x0032C680, 286 bytes. The dispatcher at 0x0032D720 calls this
 // as a ScriptConditions member with three Parameter pointers. Its semantic
 // identity is unresolved, so the method name stays address-derived.
@@ -27,7 +25,8 @@ typedef unsigned short PlayerMaskType;
 class Parameter
 {
 public:
-	Int getInt() const { return *(const Int *)((const char *)this + 0x08); }
+	Int getInt() const { return m_int; }
+private: unsigned char m_prefix[8]; Int m_int;
 };
 
 class Player;
@@ -67,9 +66,10 @@ public:
 class BfmeTeamInstanceLink
 {
 public:
-	BfmeTeamInstanceLink *_bfme_nextInInstanceList();
+	BfmeTeamInstanceLink *_bfme_nextInInstanceList() const;
 };
 
+// Preserve the native pointer-to-member representation used by both loops.
 template<class OBJCLASS>
 class DLINK_ITERATOR
 {
@@ -90,18 +90,13 @@ public:
 	}
 };
 
-struct BfmePlayerTeamListNode
-{
-	BfmePlayerTeamListNode *m_next;
-	BfmePlayerTeamListNode *m_prev;
-	struct BfmePlayerTeamPrototypeInstances *m_prototype;
-};
+class BfmePlayerTeamPrototypeInstances;
 
 class Player
 {
 public:
 	UnsignedByte m_beforeTeamList[0x288];
-	std::list<BfmePlayerTeamPrototypeInstances *> m_teamList;
+	std::list<BfmePlayerTeamPrototypeInstances *> m_playerTeamPrototypes;
 };
 
 class BfmePlayerTeamPrototypeInstances
@@ -109,24 +104,6 @@ class BfmePlayerTeamPrototypeInstances
 public:
 	UnsignedByte m_beforeInstances[0x274];
 	BfmeTeamInstanceLink *m_teamInstanceList;
-};
-
-class BfmeTeamInstanceIterator
-{
-public:
-	explicit BfmeTeamInstanceIterator(BfmeTeamInstanceLink *cur)
-		: m_cur(cur) {}
-
-	Bool done() const { return m_cur == 0; }
-	BfmeTeamInstanceLink *cur() const { return m_cur; }
-	void advance()
-	{
-		if (m_cur)
-			m_cur = m_cur->_bfme_nextInInstanceList();
-	}
-
-private:
-	BfmeTeamInstanceLink *m_cur;
 };
 
 class BfmeTeamInstance
@@ -160,13 +137,6 @@ protected:
 	Bool rva0032c680(Parameter *, Parameter *, Parameter *);
 };
 
-extern "C" void j_000022bb(void);
-extern "C" void j_0001dde5(void);
-extern "C" void j_00022a70(void);
-extern "C" void j_000230b5(void);
-
-#pragma comment(linker, "/alternatename:?_bfme_nextInInstanceList@BfmeTeamInstanceLink@@QAEPAV1@XZ=?j_00022a70@@YAXXZ")
-
 Bool ScriptConditions::rva0032c680(
 	Parameter *playerParameter, Parameter *minimumCountParameter,
 	Parameter *memberThresholdParameter)
@@ -178,13 +148,14 @@ Bool ScriptConditions::rva0032c680(
 		return false;
 
 	Int count = 0;
-	for (std::list<BfmePlayerTeamPrototypeInstances *>::iterator node=player->m_teamList.begin();
-         node!=player->m_teamList.end(); ++node)
+	for (std::list<BfmePlayerTeamPrototypeInstances *>::iterator node=player->m_playerTeamPrototypes.begin();
+         node!=player->m_playerTeamPrototypes.end(); ++node)
 	{
-		BfmeTeamInstanceIterator teams((*node)->m_teamInstanceList);
+		DLINK_ITERATOR<BfmeTeamInstanceLink> teams((*node)->m_teamInstanceList, &BfmeTeamInstanceLink::_bfme_nextInInstanceList);
 		for (; !teams.done(); teams.advance())
 		{
 			BfmeTeamInstance *team = (BfmeTeamInstance *)teams.cur();
+			if (!team) continue;
 			DLINK_ITERATOR<Object> members = team->iterateMembers();
 			for (; !members.done(); members.advance())
 			{
@@ -208,9 +179,9 @@ Bool ScriptConditions::rva0032c680(
 		}
 	}
 
-	return count >= minimumCountParameter->getInt();
+	// Explicit Boolean branches reproduce the retail return sequence.
+	if (count >= minimumCountParameter->getInt())
+		return true;
+	return false;
 }
 
-#pragma comment(linker, "/alternatename:?unidentified_0034DB40@ScriptEngine@@QAEGPAVParameter@@@Z=?j_000230b5@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getPlayerFromMask@PlayerList@@QAEPAVPlayer@@G@Z=?j_0001dde5@@YAXXZ")
-#pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
