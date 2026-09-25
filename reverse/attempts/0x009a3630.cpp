@@ -1,5 +1,5 @@
 // ?unlinkChain@Rva009A36F0Owner@@QAEXPAVRva009A36F0Thing@@@Z
-// partial score=0.53 date=2026-09-22
+// partial score=0.878947 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc
 //
 // Retail RVA 0x009A3630 (190 bytes). Pinned identity (reverse/symbols.csv):
@@ -50,46 +50,44 @@ public:
 	void *m_cursor;                       // +0xae0c
 };
 
-void Rva009A36F0Owner::unlinkChain( Rva009A36F0Thing *thing )
+struct PairNode3630
 {
-	while ( thing->m_queueHead )
-	{
-		char *anchor = (char *)thing->m_queueHead;
-		char *node = *(char **)( anchor + 8 );
-
-		void *nextA = *(void **)( node + 0x18 );
-		if ( nextA )
-			*(void **)nextA = *(void **)( node + 0x14 );
-		void *backlinkA = *(void **)( node + 0x14 );
-		nextA = *(void **)( node + 0x18 );
-		*(void **)backlinkA = nextA;
-		*(void **)( node + 0x14 ) = 0;
-
-		void *nextB = *(void **)( node + 0x24 );
-		if ( nextB )
-			*(void **)nextB = *(void **)( node + 0x20 );
-		void *backlinkB = *(void **)( node + 0x20 );
-		nextB = *(void **)( node + 0x24 );
-		*(void **)backlinkB = nextB;
-
-		unsigned int keyA = *(unsigned int *)( node + 8 );
-		unsigned int keyB = *(unsigned int *)( node + 0xc );
-		Rva009A3300Node key;
-		key.m_key0 = keyA;
-		*(void **)( node + 0x20 ) = 0;
-		key.m_key1 = keyB;
-		( (Rva009A3300HashTable *)( (char *)this + 0xae10 ) )->remove( &key );
-
-		if ( m_cursor == node )
-			m_cursor = *(void **)( node + 0x30 );
-
-		void *nextC = *(void **)( node + 0x30 );
-		if ( nextC )
-			*(void **)( (char *)nextC + 0x2c ) = *(void **)( node + 0x2c );
-		*(void **)( *(void **)( node + 0x2c ) ) = *(void **)( node + 0x30 );
-		*(void **)( node + 0x2c ) = 0;
-
-		*(void **)( node + 0x30 ) = m_freeHead;
-		m_freeHead = node;
-	}
+    struct Link { Link **backlink; Link *next; };
+    char pad00[8];
+    unsigned key0, key1, counter;
+    Link first;
+    unsigned pad1c;
+    Link second;
+    unsigned pad28;
+    PairNode3630 **backlink;
+    PairNode3630 *next;
+};
+void Rva009A36F0Owner::unlinkChain(Rva009A36F0Thing *thing)
+{
+    while (thing->m_queueHead)
+    {
+        PairNode3630 *node = *(PairNode3630 **)((char *)thing->m_queueHead + 8);
+        if (node->first.next)
+            node->first.next->backlink = node->first.backlink;
+        *node->first.backlink = node->first.next;
+        PairNode3630::Link *next = node->second.next;
+        node->first.backlink = 0;
+        if (next)
+            next->backlink = node->second.backlink;
+        *node->second.backlink = node->second.next;
+        Rva009A3300Node key;
+        key.m_key0 = node->key0;
+        key.m_key1 = node->key1;
+        node->second.backlink = 0;
+        ((Rva009A3300HashTable *)((char *)this + 0xae10))->remove(&key);
+        PairNode3630 *cursor = (PairNode3630 *)m_cursor;
+        if (cursor == node)
+            m_cursor = cursor->next;
+        if (node->next)
+            node->next->backlink = node->backlink;
+        *node->backlink = node->next;
+        node->backlink = 0;
+        node->next = (PairNode3630 *)m_freeHead;
+        m_freeHead = node;
+    }
 }
