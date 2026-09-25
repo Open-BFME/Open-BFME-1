@@ -89079,3 +89079,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?isLocationSafe@AIPlayer@@QAE_NPBUCoord3D@@PBVThingTemplate@@@Z,0x00163030,body identity from AIPlayer.cpp:1023; matched caller isSupplySourceSafe at 0x00166A10; ILT 0x0003E504 resolves here
 ?calcPhysicsXformHoverOrWings@Drawable@@IAEXPBVLocomotor@@AAUPhysicsXformInfo@1@@Z,0x00410E10,body identity from Drawable.cpp:1708; matched calcPhysicsXform caller at 0x004213F0; ILT 0x00020865 resolves here
 ?W3DGadgetCheckBoxImageDraw@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x007901F0,W3DCheckBox.cpp definition; FunctionLexicon registration and ILT caller identify checkbox image draw; tail calls drawCheckBoxText at 0x0078FDE0
+?W3DGadgetProgressBarImageDrawA@@YAXPAVGameWindow@@PAVWinInstanceData@@@Z,0x00793520,W3DProgressBar.cpp definition; ILT 0x0001CAA3 routes to this body; draw slot and GameWindow calls identify progress-bar image callback
