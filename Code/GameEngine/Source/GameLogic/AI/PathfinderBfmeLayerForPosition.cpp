@@ -69,13 +69,13 @@ public:
 	Int bfmeLayerForPosition(Object *object, Coord3D worldPosition);
 
 	void bfmeQuery(Object *object, Int *radius, Bool *centerInCell);
-	bool worldToCell(const Coord3D *position, ICoord2D *cell);
-	PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y);
-	PathfindCell *getGroundCell(Int x, Int y)
+	bool worldToCell(const Coord3D *worldPosition, ICoord2D *cellIndex);
+	PathfindCell *getCell(PathfindLayerEnum layer, Int cellX, Int cellY);
+	PathfindCell *getGroundCell(Int cellX, Int cellY)
 	{
-		if (x >= m_extentLoX && x <= m_extentHiX &&
-			y >= m_extentLoY && y <= m_extentHiY)
-			return &m_map[x][y];
+		if (cellX >= m_extentLoX && cellX <= m_extentHiX &&
+			cellY >= m_extentLoY && cellY <= m_extentHiY)
+			return &m_map[cellX][cellY];
 		return 0;
 	}
 
