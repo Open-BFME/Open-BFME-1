@@ -222,9 +222,9 @@ AIGuardMachine::~AIGuardMachine()
 }
 
 //--------------------------------------------------------------------------------------
-/*static*/ Real AIGuardMachine::getStdGuardRange(const Object* obj)
+/*static*/ Real AIGuardMachine::getStdGuardRange(const Object* object)
 {
-	Real visionRange = TheAI->getAdjustedVisionRangeForObject(obj, 
+	Real visionRange = TheAI->getAdjustedVisionRangeForObject(object,
 		AI_VISIONFACTOR_OWNERTYPE | AI_VISIONFACTOR_MOOD | AI_VISIONFACTOR_GUARDINNER);
 
 	return visionRange;
