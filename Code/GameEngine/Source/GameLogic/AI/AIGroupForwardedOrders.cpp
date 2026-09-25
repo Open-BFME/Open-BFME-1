@@ -187,7 +187,7 @@ public:
 	virtual ~SimpleObjectIterator();
 	virtual Object *first();
 	virtual Object *next();
-	void insert(Object *obj, float numeric);
+	void insert(Object *object, float distanceSquared);
 	void sort(IterOrderType order);
 
 private:
