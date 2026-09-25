@@ -148,6 +148,11 @@ class Rva006A3200Owner
 public:
 	bool pushEventEntry( const Rva006A1790EventRef &event, int mode );
 	void pushNewEvent( unsigned int value28, int value64, int handle, int logical );
+	void pushNewEvent2( unsigned int value28, int value64, int handle );
+	void pushNewEvent5( unsigned int value28, int value64, int handle );
+	void pushNewEvent6( unsigned int value28, int value64, int handle, int logical );
+	void pushNewEvent7( unsigned int value28, int value64, int handle );
+
 	void pushNewEntry( unsigned int kind );
 
 private:
@@ -228,6 +233,64 @@ void Rva006A3200Owner::pushNewEvent( unsigned int value28, int value64, int hand
 	entry->m_flag10 = handle == 0;
 	entry->m_event = new Rva006A1790Event( Rva01336E50EmptyString, 0 );
 	entry->m_event->setIsLogicalAudio( logical == 0 );
+	( (Rva000B21A0Object *)entry->m_event.operator->() )->setValue( value28 );
+	entry->m_event->m_field64 = value64;
+	m_entries.push_back( entry );
+}
+
+// Retail 0x006A1A60, 342 bytes: 0x006A1890 with entry type 2 and no logical flag.
+void Rva006A3200Owner::pushNewEvent2( unsigned int value28, int value64, int handle )
+{
+	Rva006A1890ScopedMutex lock( m_mutex );
+	Rva006A3200Entry *entry = (Rva006A3200Entry *)
+		( (W3DGameClient *)this )->W3DGameClient::createVideoPlayer();
+	entry->m_state = 2;
+	entry->m_flag10 = handle == 0;
+	entry->m_event = new Rva006A1790Event( Rva01336E50EmptyString, 0 );
+	( (Rva000B21A0Object *)entry->m_event.operator->() )->setValue( value28 );
+	entry->m_event->m_field64 = value64;
+	m_entries.push_back( entry );
+}
+
+// Retail 0x006A3410, 342 bytes: 0x006A1890 with entry type 5 and no logical flag.
+void Rva006A3200Owner::pushNewEvent5( unsigned int value28, int value64, int handle )
+{
+	Rva006A1890ScopedMutex lock( m_mutex );
+	Rva006A3200Entry *entry = (Rva006A3200Entry *)
+		( (W3DGameClient *)this )->W3DGameClient::createVideoPlayer();
+	entry->m_state = 5;
+	entry->m_flag10 = handle == 0;
+	entry->m_event = new Rva006A1790Event( Rva01336E50EmptyString, 0 );
+	( (Rva000B21A0Object *)entry->m_event.operator->() )->setValue( value28 );
+	entry->m_event->m_field64 = value64;
+	m_entries.push_back( entry );
+}
+
+// Retail 0x006A35C0, 360 bytes: 0x006A1890 with entry type 6, setting the
+// +0x28 value before the logical flag.
+void Rva006A3200Owner::pushNewEvent6( unsigned int value28, int value64, int handle, int logical )
+{
+	Rva006A1890ScopedMutex lock( m_mutex );
+	Rva006A3200Entry *entry = (Rva006A3200Entry *)
+		( (W3DGameClient *)this )->W3DGameClient::createVideoPlayer();
+	entry->m_state = 6;
+	entry->m_flag10 = handle == 0;
+	entry->m_event = new Rva006A1790Event( Rva01336E50EmptyString, 0 );
+	( (Rva000B21A0Object *)entry->m_event.operator->() )->setValue( value28 );
+	entry->m_event->setIsLogicalAudio( logical == 0 );
+	entry->m_event->m_field64 = value64;
+	m_entries.push_back( entry );
+}
+
+// Retail 0x006A3260, 342 bytes: 0x006A1890 with entry type 7 and no logical flag.
+void Rva006A3200Owner::pushNewEvent7( unsigned int value28, int value64, int handle )
+{
+	Rva006A1890ScopedMutex lock( m_mutex );
+	Rva006A3200Entry *entry = (Rva006A3200Entry *)
+		( (W3DGameClient *)this )->W3DGameClient::createVideoPlayer();
+	entry->m_state = 7;
+	entry->m_flag10 = handle == 0;
+	entry->m_event = new Rva006A1790Event( Rva01336E50EmptyString, 0 );
 	( (Rva000B21A0Object *)entry->m_event.operator->() )->setValue( value28 );
 	entry->m_event->m_field64 = value64;
 	m_entries.push_back( entry );
