@@ -3418,5 +3418,35 @@
   "after_sha256": "6ed6f9f19b23b51c5e419a8805b14cd7e20872b2ab26c93c57aa27f3cc5edba4",
   "evidence": "reverse/re_attempts.log",
   "reason": "Both names label unknown padding; the converted source splits the bank's single pad block into offset-named m_pad000 fields around the decoded members, so no descriptive name is lost."
+ },
+ {
+  "old_path": "reverse/attempts/0x006a5570.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Audio/Rva006A5570HandleSweep.cpp",
+  "old_name": "MilesAudioManager",
+  "new_name": "Rva006A9800This",
+  "before_sha256": "21e3fb96dc3e6eebad69f14414d2d49c6b37613922b1c5b8c4235d2a5df71e63",
+  "after_sha256": "a5d1d372688efccbf4c7f25d1c3cd1d93359fd3f6f7c7f82849cef221a544636",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank's class and method spelling had no caller, vtable slot or string evidence, and the pinned callee fixes the owner token"
+ },
+ {
+  "old_path": "reverse/attempts/0x006a5570.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Audio/Rva006A5570HandleSweep.cpp",
+  "old_name": "MilesHandleState",
+  "new_name": "Rva006A9800Elem",
+  "before_sha256": "21e3fb96dc3e6eebad69f14414d2d49c6b37613922b1c5b8c4235d2a5df71e63",
+  "after_sha256": "a5d1d372688efccbf4c7f25d1c3cd1d93359fd3f6f7c7f82849cef221a544636",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank guessed the struct name, and the pinned callee's parameter type is Rva006A9800Elem"
+ },
+ {
+  "old_path": "reverse/attempts/0x006a5570.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Audio/Rva006A5570HandleSweep.cpp",
+  "old_name": "processHandleStates",
+  "new_name": "rva006A5570",
+  "before_sha256": "21e3fb96dc3e6eebad69f14414d2d49c6b37613922b1c5b8c4235d2a5df71e63",
+  "after_sha256": "a5d1d372688efccbf4c7f25d1c3cd1d93359fd3f6f7c7f82849cef221a544636",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "the bank's class and method spelling had no caller, vtable slot or string evidence, and the pinned callee fixes the owner token"
  }
 ]
