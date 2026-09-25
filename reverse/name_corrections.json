@@ -3468,5 +3468,15 @@
   "after_sha256": "ea4c8b920e4fa48e4038bd883ba7b25214721898b282397629ca5af7638071c9",
   "evidence": "docs/naming_evidence.md",
   "reason": "name_oracle reports UpgradeTemplate+0x20 unwitnessed and ZH has no member there"
+ },
+ {
+  "old_path": "reverse/attempts/0x0075f0e0.cpp",
+  "new_path": "Code/GameEngineDevice/Source/W3DDevice/GameClient/Drawable/Draw/Rva0075F0E0WeightedIndex.cpp",
+  "old_name": "bfmeRandom",
+  "new_name": "rva0075F0E0",
+  "before_sha256": "e2dea634eca2882d22cd1391f30aed4e2058abf13fa12418e9e9df207f4d33b0",
+  "after_sha256": "32106adfabf990014d59897c18d5de2c25400f10391fc0d0ff937e69798185b1",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank method name had no caller vtable string or ZH twin evidence"
  }
 ]
