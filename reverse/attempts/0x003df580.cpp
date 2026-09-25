@@ -87,9 +87,13 @@ class Rva003DF580AICall
 {
 };
 
-class Rva003DF580GameLogicCall
+class GameLogic
 {
+public:
+	Object *findObjectByID(ObjectID);
 };
+
+extern GameLogic *TheGameLogic;
 
 class Rva003DF580ObjectCall
 {
@@ -99,7 +103,6 @@ extern void j_000022bb();
 extern void j_000105cd();
 extern void j_00010ea1();
 extern void j_0001a36b();
-extern void j_0001f253();
 extern void j_00024c99();
 extern void j_0003251f();
 extern void j_0003a17a();
@@ -149,14 +152,6 @@ static __forceinline Bool rva003df580AircraftDestination(void *ai)
 	return (reinterpret_cast<Rva003DF580AICall *>(ai)->*call.member)();
 }
 
-static __forceinline Object *rva003df580FindObject(void *logic, ObjectID id)
-{
-	typedef Object *(Rva003DF580GameLogicCall::*Function)(ObjectID);
-	union { void (*raw)(); Function member; } call;
-	call.raw = j_0001f253;
-	return (reinterpret_cast<Rva003DF580GameLogicCall *>(logic)->*call.member)(id);
-}
-
 static __forceinline Bool rva003df580CanCrush(Object *object, Object *other)
 {
 	typedef Bool (Rva003DF580ObjectCall::*Function)(Object *, Int) const;
@@ -197,10 +192,10 @@ static __forceinline Bool rva003df580TerrainCheck(
 	return (terrain->*call.member)(value);
 }
 
-class Rva003DF580Pathfinder
+class Pathfinder
 {
 public:
-	Bool checkDestination(void *, void *, void *, void *, void *, void *,
+	Bool bfmeInnerE6E90(void *, void *, void *, void *, void *, void *,
 		void **, Int);
 
 	unsigned char m_head[0x10];
@@ -211,7 +206,7 @@ public:
 	Rva003DF580PathfindLayer m_layers[16];
 };
 
-Bool Rva003DF580Pathfinder::checkDestination(void *a1, void *a2, void *a3,
+Bool Pathfinder::bfmeInnerE6E90(void *a1, void *a2, void *a3,
 	void *a4, void *a5, void *a6, void **a7, Int a8)
 {
 	Object *object = (Object *)a1;
@@ -434,8 +429,7 @@ Bool Rva003DF580Pathfinder::checkDestination(void *a1, void *a2, void *a3,
 				continue;
 			if (a8 != 0)
 				continue;
-			Object *unit = rva003df580FindObject(
-				*(void **)0x012F0898, goal);
+			Object *unit = TheGameLogic->findObjectByID(goal);
 			if (unit == 0)
 				continue;
 			if (object->getRelationship(unit) == ALLIES)
