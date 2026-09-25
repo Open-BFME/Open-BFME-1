@@ -291,7 +291,7 @@ Object *AIPlayer::findSupplyCenter(Int minimumCash)
 {
 	Object *bestSupplyWarehouse = 0;
 	Real bestDistSqr = 0;
-	Object *obj;
+	Object *candidateObject;
 	Coord3D enemyCenter;
 	enemyCenter.zero();
 	Region2D bounds;
@@ -302,25 +302,26 @@ Object *AIPlayer::findSupplyCenter(Int minimumCash)
 	}
 
 	do {
-		for (obj = TheGameLogic->getFirstObject(); obj; obj = obj->getNextObject())
+		for (candidateObject = TheGameLogic->getFirstObject(); candidateObject;
+			candidateObject = candidateObject->getNextObject())
 		{
-			if (!obj->isKindOfStructure()) continue;
-			if (!(obj->resolveTemplate()->m_kindD0 & 0x200000u)) continue;
+			if (!candidateObject->isKindOfStructure()) continue;
+			if (!(candidateObject->resolveTemplate()->m_kindD0 & 0x200000u)) continue;
 			static const NameKeyType key_warehouseUpdate =
 				TheNameKeyGenerator->nameToKey("SupplyWarehouseDockUpdate");
-			SupplyWarehouseDockUpdate *warehouseModule = obj->findUpdateModule(key_warehouseUpdate);
+			SupplyWarehouseDockUpdate *warehouseModule = candidateObject->findUpdateModule(key_warehouseUpdate);
 			if (warehouseModule) {
 				Int availableCash = warehouseModule->getBoxesStored() * TheWritableGlobalData->m_baseValuePerSupplyBox;
 				if (availableCash < minimumCash) continue;
-				if (m_player->getRelationship(obj->getTeam()) == ENEMIES) {
+				if (m_player->getRelationship(candidateObject->getTeam()) == ENEMIES) {
 					continue;
 				}
 
 				Coord3D center;
-				center.x = obj->getPosition()->x;
-				center.y = obj->getPosition()->y;
-				center.z = obj->getPosition()->z;
-				Real radius = 200.0f + obj->getBoundingCircleRadius();
+				center.x = candidateObject->getPosition()->x;
+				center.y = candidateObject->getPosition()->y;
+				center.z = candidateObject->getPosition()->z;
+				Real radius = 200.0f + candidateObject->getBoundingCircleRadius();
 
 				Object *supplyCenter;
 				{
@@ -338,22 +339,22 @@ Object *AIPlayer::findSupplyCenter(Int minimumCash)
 				}
 
 				Real dx, dy;
-				dx = obj->getPosition()->x - m_baseCenter.x;
-				dy = obj->getPosition()->y - m_baseCenter.y;
+				dx = candidateObject->getPosition()->x - m_baseCenter.x;
+				dy = candidateObject->getPosition()->y - m_baseCenter.y;
 				Real distSqr = dx * dx + dy * dy;
 				if (enemy) {
-					dx = obj->getPosition()->x - enemyCenter.x;
-					dy = obj->getPosition()->y - enemyCenter.y;
+					dx = candidateObject->getPosition()->x - enemyCenter.x;
+					dy = candidateObject->getPosition()->y - enemyCenter.y;
 					if (distSqr * 0.4 > (dx * dx + dy * dy) * 0.6f) {
 						continue;
 					}
 				}
 
 				if (bestSupplyWarehouse == 0) {
-					bestSupplyWarehouse = obj;
+					bestSupplyWarehouse = candidateObject;
 					bestDistSqr = distSqr;
 				} else if (bestDistSqr > distSqr) {
-					bestSupplyWarehouse = obj;
+					bestSupplyWarehouse = candidateObject;
 					bestDistSqr = distSqr;
 				}
 			}
