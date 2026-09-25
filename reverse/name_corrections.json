@@ -2648,5 +2648,55 @@
   "after_sha256": "691370729a6847c2416cebbef59b77275019c9856dbc350630fa4c4a37eec0ad",
   "evidence": "docs/naming_evidence.md",
   "reason": "The method name apply was a guess carried over from a bank: Zero Hour's SpecialAbilityUpdate has no apply() and the only caller of 0x002A7E90 is the anonymous d_002aa9d0, so the unproven method takes the address-derived name rva002A7E90 while the owner stays supported by module data +0x210 PersistentPrepTime."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/AI/BfmeHostCH_bfmeSendCH.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0015A190Owner_rva0015A130.cpp",
+  "old_name": "BfmeHostCH",
+  "new_name": "Rva0015A190Owner",
+  "before_sha256": "9bfdcc12ea3a067b554b08b3c6d13851f5ada3c6c433f9d6ad2ed0d03cc077a5",
+  "after_sha256": "52f50dae286082fdd86605c0bc9b0027100292c0bfff5f303c393ff1ef732ada",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeHostCH, BfmeSrcCH and bfmeSendCH were invented batch names with no evidence (earlier re_attempts verdicts kept the address identity) and BfmeHostCH collides with an unrelated class in BfmeOneHundredEighty.cpp; the 0x0015A130 body calls applyPacket on this, so it is re-homed on the pinned receiver Rva0015A190Owner as the address-derived rva0015A130 with the address-token parameter type Rva0015A130Source."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/AI/BfmeHostCH_bfmeSendCH.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0015A190Owner_rva0015A130.cpp",
+  "old_name": "BfmeSrcCH",
+  "new_name": "Rva0015A130Source",
+  "before_sha256": "9bfdcc12ea3a067b554b08b3c6d13851f5ada3c6c433f9d6ad2ed0d03cc077a5",
+  "after_sha256": "52f50dae286082fdd86605c0bc9b0027100292c0bfff5f303c393ff1ef732ada",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeHostCH, BfmeSrcCH and bfmeSendCH were invented batch names with no evidence (earlier re_attempts verdicts kept the address identity) and BfmeHostCH collides with an unrelated class in BfmeOneHundredEighty.cpp; the 0x0015A130 body calls applyPacket on this, so it is re-homed on the pinned receiver Rva0015A190Owner as the address-derived rva0015A130 with the address-token parameter type Rva0015A130Source."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/GameLogic/AI/BfmeHostCH_bfmeSendCH.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/AI/Rva0015A190Owner_rva0015A130.cpp",
+  "old_name": "bfmeSendCH",
+  "new_name": "rva0015A130",
+  "before_sha256": "9bfdcc12ea3a067b554b08b3c6d13851f5ada3c6c433f9d6ad2ed0d03cc077a5",
+  "after_sha256": "52f50dae286082fdd86605c0bc9b0027100292c0bfff5f303c393ff1ef732ada",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeHostCH, BfmeSrcCH and bfmeSendCH were invented batch names with no evidence (earlier re_attempts verdicts kept the address identity) and BfmeHostCH collides with an unrelated class in BfmeOneHundredEighty.cpp; the 0x0015A130 body calls applyPacket on this, so it is re-homed on the pinned receiver Rva0015A190Owner as the address-derived rva0015A130 with the address-token parameter type Rva0015A130Source."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "BfmeHostCH",
+  "new_name": "Rva0015A190Owner",
+  "before_sha256": "b017114d2ee853876c20d8a69752001b1641b04f8a20251e5b744b8c4d1ec56e",
+  "after_sha256": "8cf3f0fb469a6fd131a58000396d46315a885804945cab94cfb128725b26c1f6",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeHostCH, BfmeSrcCH and bfmeSendCH were invented batch names with no evidence (earlier re_attempts verdicts kept the address identity) and BfmeHostCH collides with an unrelated class in BfmeOneHundredEighty.cpp; the 0x0015A130 body calls applyPacket on this, so it is re-homed on the pinned receiver Rva0015A190Owner as the address-derived rva0015A130 with the address-token parameter type Rva0015A130Source."
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "bfmeSendCH",
+  "new_name": "rva0015A130",
+  "before_sha256": "b017114d2ee853876c20d8a69752001b1641b04f8a20251e5b744b8c4d1ec56e",
+  "after_sha256": "8cf3f0fb469a6fd131a58000396d46315a885804945cab94cfb128725b26c1f6",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "BfmeHostCH, BfmeSrcCH and bfmeSendCH were invented batch names with no evidence (earlier re_attempts verdicts kept the address identity) and BfmeHostCH collides with an unrelated class in BfmeOneHundredEighty.cpp; the 0x0015A130 body calls applyPacket on this, so it is re-homed on the pinned receiver Rva0015A190Owner as the address-derived rva0015A130 with the address-token parameter type Rva0015A130Source."
  }
 ]

@@ -94,10 +94,10 @@ public:
 	virtual void bfmeSlot78CH();
 	virtual void bfmeSlot79CH();
 	virtual void bfmeSlot80CH();
-	virtual void *bfmeMakeCH();
+	virtual void *bfmeSlot81CH();
 };
 
-class BfmeSrcCH
+class Rva0015A130Source
 {
 public:
 	unsigned char m_bfmeHeadCH[0x1fc];
@@ -109,29 +109,24 @@ struct BfmeReqCH
 	void *m_bfmeACH;
 	unsigned char m_bfmeBCH;
 	unsigned char m_bfmePadCH[3];
-	BfmeSrcCH *m_bfmeCCH;
-	BfmeSrcCH *m_bfmeDCH;
+	Rva0015A130Source *m_bfmeCCH;
+	Rva0015A130Source *m_bfmeDCH;
 };
 
 struct Rva0015A190Packet;
 
-// The apply helper is pinned under the owner spelling its 0x0015A190 sibling
-// landed with; the receiver is the same object, cast through as
-// ScriptActions_doTeamMoveToNearestObjectOfKindof.cpp does.
+// The receiver is the object the landed 0x0015A190 sibling and the pinned apply
+// helper (ILT 0x00048C43) are spelled on, so the body lives on that owner under
+// an address-derived name; its semantic identity is unproven.
 class Rva0015A190Owner
 {
 public:
 	void applyPacket(Rva0015A190Packet *packet, int b);
+	void rva0015A130(Rva0015A130Source *src, void *unused);
 };
 
-class BfmeHostCH
-{
-public:
-	void bfmeSendCH(BfmeSrcCH *src, void *unused);
-};
-
-// ?bfmeSendCH@BfmeHostCH@@QAEXPAVBfmeSrcCH@@PAX@Z
-void BfmeHostCH::bfmeSendCH(BfmeSrcCH *src, void *unused)
+// ?rva0015A130@Rva0015A190Owner@@QAEXPAVRva0015A130Source@@PAX@Z
+void Rva0015A190Owner::rva0015A130(Rva0015A130Source *src, void *unused)
 {
 	BfmeThingCH *t = src->m_bfmeTargetCH;
 
@@ -142,8 +137,8 @@ void BfmeHostCH::bfmeSendCH(BfmeSrcCH *src, void *unused)
 		req.m_bfmeDCH = src;
 		req.m_bfmeCCH = src;
 		req.m_bfmeBCH = 0;
-		req.m_bfmeACH = t->bfmeMakeCH();
+		req.m_bfmeACH = t->bfmeSlot81CH();
 
-		((Rva0015A190Owner *)this)->applyPacket((Rva0015A190Packet *)&req, 0);
+		applyPacket((Rva0015A190Packet *)&req, 0);
 	}
 }
