@@ -24,3 +24,15 @@ extern "C" void piUserModeChangedA(void *chat, const char *channel,
  if (piRoomToType(peer, channel, &roomType))
   piSetPlayerModeFlags(peer, nick, roomType, mode);
 }
+
+// 0x0086B9D0: channelModeChanged (49 bytes; RET+0x30, then INT3).
+struct CHATChannelMode;
+extern "C" void piAddRoomModeChangedCallback(PEER, int, CHATChannelMode *);
+extern "C" void piChannelModeChangedA(void *chat, const char *channel,
+ CHATChannelMode *mode, void *param)
+{
+ PEER peer = (PEER)param;
+ int roomType;
+ if (piRoomToType(peer, channel, &roomType))
+  piAddRoomModeChangedCallback(peer, roomType, mode);
+}
