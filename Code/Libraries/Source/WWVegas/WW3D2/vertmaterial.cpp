@@ -532,7 +532,6 @@ void VertexMaterialClass::Set_UV_Source(int stage,int array_index)
 	UVSource[stage] = array_index;
 }
 
-// ?Get_UV_Source@VertexMaterialClass@@QAEHH@Z present-unmatched
 int VertexMaterialClass::Get_UV_Source(int stage)
 {
 	WWASSERT(stage >= 0);

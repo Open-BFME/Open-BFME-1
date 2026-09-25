@@ -12136,6 +12136,7 @@ name,address,notes
 ?Get_Texture_Name@BfmeHandleCX@@QBE?AVStringClass@@XZ,0x008FF5B0,BFME legacy texture-name comparison96F45B/96F477; handle dereference and name slot then StringClass copy ctor8FF470
 ?Get_Transform@HCompressedAnimClass@@UBEXAAVMatrix3D@@HM@Z,0x0095bcb0,vtable-slot ??_7HCompressedAnimClass@@6BRefCountClass@@@ slot 11 anchors=19
 ?Get_UV_Array_By_Index@MeshMatDescClass@@QAEPAVVector2@@H_N@Z,0x0001D179
+?Get_UV_Source@VertexMaterialClass@@QAEHH@Z,0x00921270,MeshModelClass::post_process_fog calls the exact VertexMaterialClass getter
 ?Get_User_Text@MeshGeometryClass@@QAEPBDXZ,0x00924C30,pinharvest x1 (body)
 ?Get_Vector@TimeCodedMotionChannelClass@@QAEXMPAM@Z,0x009781A0
 ?Get_View_Plane@CameraClass@@QBEXAAVVector2@@0@Z,0x00931DC0,derived from part_buf matched-caller call sites
