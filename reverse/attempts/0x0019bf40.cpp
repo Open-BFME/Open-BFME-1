@@ -1,5 +1,5 @@
 // ?parseSidesDataChunk@Rva0019BE80SidesList@@QAE_NAAVDataChunkInput@@PAUDataChunkInfo@@@Z
-// partial score=0.7067669 date=2026-09-22
+// partial score=0.8254 date=2026-09-24
 // ?parseSidesDataChunk@Rva0019BE80SidesList@@QAE_NAAVDataChunkInput@@PAUDataChunkInfo@@@Z
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath
 // Retail 0x0019BF40: SidesList's DataChunk parse callback -- the BFME variant
@@ -52,20 +52,12 @@ private:
 
 #include "ascii_string.h"
 inline AsciiString::~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
-#include "coord3d.h"
-inline Coord3D::Coord3D() {}
-inline Coord3D::~Coord3D() {}
-inline Coord3D::Coord3D(const Coord3D &that) { x=that.x; y=that.y; z=that.z; }
-inline Coord3DBase &Coord3DBase::operator=(const Coord3DBase &that)
+struct Coord3D
 {
-    struct Raw { unsigned int x,y,z; };
-    *(Raw *)this=*(const Raw *)&that;
-    return *this;
-}
-inline Coord3D &Coord3D::operator=(const Coord3D &that)
-{
-    Coord3DBase *base=this; *base=that; return *this;
-}
+    Coord3D() {}
+    Coord3D(const Coord3D &that) : x(that.x), y(that.y), z(that.z) {}
+    float x, y, z;
+};
 struct DataChunkInfo
 {
 	AsciiString m_label;			// +0x00
