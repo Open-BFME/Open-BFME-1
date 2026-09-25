@@ -1,5 +1,5 @@
 // _Rva00812690
-// partial score=0.64 date=2026-09-20
+// partial score=0.65 date=2026-09-25
 // cl: /Od /GZ /GS /MD /DNDEBUG
 // _Rva00812690
 // partial score=0.62 date=2026-09-09
@@ -83,11 +83,11 @@ int __cdecl Rva00812690( struct Rva007FD4E0Socket *socket, int reason,
 				from, &fromLength );
 			if ( result > 0 )
 			{
-				if ( packet[ 8 ] != 0 )
-					goto receive_packet;
-				goto receive_guard_fail;
+				if ( packet[ 8 ] == 0 )
+					goto expire;
+				goto receive_packet;
 			}
-			goto receive_guard_fail;
+			goto expire;
 	receive_packet:
 				Rva007FE310( base, 0x10, from, 0x10 );
 				status = 0;
