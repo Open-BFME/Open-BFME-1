@@ -173,42 +173,43 @@ extern void j_0001041a();	// -> 0x0016EE00
 extern void j_00032b46();	// -> 0x003F5E20
 extern void j_0000e7dc();
 
-class Rva00182360Receiver {};
-template<class T> __forceinline T Rva00182360Member(void (*raw)())
+class ThiscallReceiverView {};
+template<class MemberFunctionType> __forceinline MemberFunctionType makeThiscallMemberPointer(void (*raw)())
 {
-	union { void (*raw)(); T member; } fn;
+	union { void (*raw)(); MemberFunctionType member; } fn;
 	fn.raw = raw;
 	return fn.member;
 }
-#define CALL(T, obj, fn) (((Rva00182360Receiver *)(obj))->*Rva00182360Member<T>(fn))
+#define CALL_THISCALL(MemberFunctionType, obj, fn) \
+	(((ThiscallReceiverView *)(obj))->*makeThiscallMemberPointer<MemberFunctionType>(fn))
 
 // ILT 0x0000B8AC: WeaponTemplate::isContactWeapon (ZH Weapon.h inline forwards
 // weapon->isContactWeapon() to m_template; retail passes [weapon+4] in ECX).
-typedef Bool (Rva00182360Receiver::*IsContactWeapon)();
+typedef Bool (ThiscallReceiverView::*WeaponTemplateIsContactWeaponMethod)();
 // ILT 0x0000EBAB -> 0x0026FE90 stores its float at AIUpdateInterface+0x168,
 // the witnessed m_pathExtraDistance; ZH calls setPathExtraDistance here.
-typedef void (Rva00182360Receiver::*SetPathExtraDistance)(Real);
-// ILT 0x0000E7DC: Weapon::isTooClose(source, victim), ZH canPursue.
-typedef Bool (Rva00182360Receiver::*IsTooClose)(Object *, Object *);
+typedef void (ThiscallReceiverView::*AIUpdateSetPathExtraDistanceMethod)(Real);
+// ILT 0x0000E7DC: Weapon::isTooClose(attacker, target), ZH canPursue.
+typedef Bool (ThiscallReceiverView::*WeaponIsTooCloseMethod)(Object *, Object *);
 // Opaque BFME callees, named by body address.
-typedef Bool (Rva00182360Receiver::*Rva0026F330)();
-typedef Bool (Rva00182360Receiver::*Rva0016EE00)(Coord3D *, Object *);
-typedef Bool (Rva00182360Receiver::*Rva003F5E20)(Object *, const Coord3D *, Weapon *, Bool);
+typedef Bool (ThiscallReceiverView::*Rva0026F330)();
+typedef Bool (ThiscallReceiverView::*Rva0016EE00)(Coord3D *, Object *);
+typedef Bool (ThiscallReceiverView::*Rva003F5E20)(Object *, const Coord3D *, Weapon *, Bool);
 
 #define CRCDEBUG_LOG(msg) \
 	if (Glo012F0239 && TheCRCParameterCheck) \
 		bfmeRetailCritterDesyncLog(TheCRCParameterCheck, msg)
 
 // Authentic static helper from AIStates.cpp; resolves to 0x0016AA70.
-static __declspec(noinline) Bool isSamePosition(const Coord3D *ourPos,
-	const Coord3D *prevTargetPos, const Coord3D *curTargetPos)
+static __declspec(noinline) Bool isSamePosition(const Coord3D *attackerPosition,
+	const Coord3D *previousTargetPosition, const Coord3D *currentTargetPosition)
 {
 	Coord3D diff;
-	diff.x = curTargetPos->x - prevTargetPos->x;
-	diff.y = curTargetPos->y - prevTargetPos->y;
+	diff.x = currentTargetPosition->x - previousTargetPosition->x;
+	diff.y = currentTargetPosition->y - previousTargetPosition->y;
 	Coord3D toTarget;
-	toTarget.x = curTargetPos->x - ourPos->x;
-	toTarget.y = curTargetPos->y - ourPos->y;
+	toTarget.x = currentTargetPosition->x - attackerPosition->x;
+	toTarget.y = currentTargetPosition->y - attackerPosition->y;
 	const float TOLERANCE_FACTOR = 1.0f / (10.0f * 10.0f);
 	float toleranceSqr = (toTarget.x*toTarget.x+toTarget.y*toTarget.y) * TOLERANCE_FACTOR;
 	if (diff.x * diff.x + diff.y * diff.y > toleranceSqr)
@@ -232,8 +233,8 @@ static __declspec(noinline) Bool canPursue(Object *attacker, Weapon *weapon, Obj
 		return false;
 
 	// Have to have a turret to pursue.
-	WhichTurretType tur = ai->getWhichTurretForCurWeapon();
-	if (tur == TURRET_INVALID)
+	WhichTurretType turretType = ai->getWhichTurretForCurWeapon();
+	if (turretType == TURRET_INVALID)
 		return false;
 
 	if (TheAI->m_aiData->m_aiCrushesInfantry)
@@ -246,23 +247,24 @@ static __declspec(noinline) Bool canPursue(Object *attacker, Weapon *weapon, Obj
 		}
 	}
 
-	if (CALL(IsTooClose, weapon, j_0000e7dc)(attacker, target))
+	if (CALL_THISCALL(WeaponIsTooCloseMethod, weapon, j_0000e7dc)(attacker, target))
 		return false;		// Don't chase it if we are already too close.
 
 	Real ourMaxSpeed = attacker->getAI()->getCurLocomotorSpeed();
 
-	Real victimSpeed = target->bfmeGetNonnegativePreferredLocomotorHeight();
-	if (victimSpeed >= ourMaxSpeed)
+	// Retail uses this height-named preferred value as a movement speed.
+	Real targetPreferredSpeed = target->bfmeGetNonnegativePreferredLocomotorHeight();
+	if (targetPreferredSpeed >= ourMaxSpeed)
 		return false; // we can't catch them.
-	if (victimSpeed < ourMaxSpeed * 0.1f)
+	if (targetPreferredSpeed < ourMaxSpeed * 0.1f)
 		return false; // They aren't moving very fast, so don't chase.
 	Real dx = target->getPosition()->x - attacker->getPosition()->x;
 	Real dy = target->getPosition()->y - attacker->getPosition()->y;
-	const Coord3D *dir = target->getUnitDirectionVector2D();
-	Coord3D victimVector;
-	victimVector.x = dir->x;
-	victimVector.y = dir->y;
-	if (dx*victimVector.x + dy*victimVector.y < 0)
+	const Coord3D *targetDirection = target->getUnitDirectionVector2D();
+	Coord3D targetDirectionVector;
+	targetDirectionVector.x = targetDirection->x;
+	targetDirectionVector.y = targetDirection->y;
+	if (dx*targetDirectionVector.x + dy*targetDirectionVector.y < 0)
 		return false; // they are moving towards us.
 	return true;
 }
@@ -323,64 +325,66 @@ Bool AIAttackApproachTargetState::computePath()
 	// if we have a goal object, move to it, otherwise move to goal position
 	if (getMachineGoalObject())
 	{
-		Object *source = getMachineOwner();
-		// if our victim's position hasn't changed, don't re-path
-		if (!forceRepath && isSamePosition(source->getPosition(), &m_prevVictimPos,
+		Object *attacker = getMachineOwner();
+		// if our target's position hasn't changed, don't re-path
+		if (!forceRepath && isSamePosition(attacker->getPosition(), &m_prevVictimPos,
 				getMachineGoalObject()->getPosition()))
 			return true;
 
-		Weapon *weapon = source->getCurrentWeapon();
+		Weapon *weapon = attacker->getCurrentWeapon();
 		if (!weapon)
 			return false;
 
-		// remember where we think our victim is, so if it moves, we can re-path
-		Object *victim = getMachineGoalObject();
-		m_prevVictimPos = *victim->getPosition();
+		// remember where we think our target is, so if it moves, we can re-path
+		Object *target = getMachineGoalObject();
+		m_prevVictimPos = *target->getPosition();
 		CRCDEBUG_LOG("CritterDesync: setAdjustDestination(TRUE) 18");
 		m_adjustDestinations = true;
 
 		Bool usePathfinder = false;
-		if (!source->isKindOf((KindOfType)58))	// BFME kind index 58; name unproven
+		if (!attacker->isKindOf((KindOfType)58))	// BFME kind index 58; name unproven
 			usePathfinder = true;
 		m_goalPosition = m_prevVictimPos;
 		if (!usePathfinder)
 		{
 			Pathfinder *pathfinder = TheAI->m_pathfinder;
-			if (CALL(Rva003F5E20, pathfinder, j_00032b46)(source, victim->getPosition(), weapon, false))
+			if (CALL_THISCALL(Rva003F5E20, pathfinder, j_00032b46)(attacker, target->getPosition(), weapon, false))
 				usePathfinder = true;
 		}
 
-		if (canPursue(source, weapon, victim) && usePathfinder)
+		// This helper requires a movable pursuit target, a usable turret and a
+		// viable distance/speed/direction; its computer crush case is an exception.
+		if (canPursue(attacker, weapon, target) && usePathfinder)
 			return false;
 
-		if (CALL(IsContactWeapon, weapon->m_template, j_0000b8ac)())
+		if (CALL_THISCALL(WeaponTemplateIsContactWeaponMethod, weapon->m_template, j_0000b8ac)())
 		{
 			// Weapon is basically a contact weapon, so let the attacker pathfind into the target.
-			ai->ignoreObstacle(victim);
+			ai->ignoreObstacle(target);
 			CRCDEBUG_LOG("CritterDesync: setAdjustDestination(FALSE) 19");
 			m_adjustDestinations = false;
-			CALL(SetPathExtraDistance, ai, j_0000ebab)(100.0f);
+			CALL_THISCALL(AIUpdateSetPathExtraDistanceMethod, ai, j_0000ebab)(100.0f);
 			TheAI->m_pathfinder->adjustDestination(getMachineOwner(), ai->m_locomotorSet,
 				&m_goalPosition, 0);
 		}
-		else if (ai->m_path && CALL(Rva0026F330, ai, j_0000142e)())
+		else if (ai->m_path && CALL_THISCALL(Rva0026F330, ai, j_0000142e)())
 		{
 			return true;
 		}
 
 		Coord3D pos;
-		((Rva00027BC9Object *)victim)->getPosition(&pos);
-		Bool invalid = bfmeMeleeHordeTargetInvalid(source, victim);
+		((Rva00027BC9Object *)target)->getPosition(&pos);
+		Bool invalid = bfmeMeleeHordeTargetInvalid(attacker, target);
 		if (usePathfinder)
 		{
 			if (invalid)
 				ai->requestPath(&pos, false);
 			else
-				ai->requestAttackPath(victim->getID(), &pos);
+				ai->requestAttackPath(target->getID(), &pos);
 		}
 		else
 		{
-			if (!CALL(Rva0016EE00, this, j_0001041a)(&pos, source))
+			if (!CALL_THISCALL(Rva0016EE00, this, j_0001041a)(&pos, attacker))
 			{
 				m_byte75 = true;
 				m_dword6c = TheBfmeGameLogic->m_frame + 50;
@@ -388,8 +392,8 @@ Bool AIAttackApproachTargetState::computePath()
 			}
 
 			Pathfinder *pathfinder = TheAI->m_pathfinder;
-			pathfinder->updateGoal(source, &pos,
-				TheTerrainLogic->getLayerForDestination(source, &pos),
+			pathfinder->updateGoal(attacker, &pos,
+				TheTerrainLogic->getLayerForDestination(attacker, &pos),
 				"F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Ai\\AIStates.cpp", 0x1118);
 			ai->requestPath(&pos, true);
 		}

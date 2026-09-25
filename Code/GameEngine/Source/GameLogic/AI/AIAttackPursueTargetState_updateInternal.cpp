@@ -93,12 +93,12 @@ public:
 	}
 };
 
-// The victim setter and the turret pair sit at their own recovered thunks, so
+// The target setter and the turret pair sit at their own recovered thunks, so
 // they are reached through the views the ledger already pins for them.
 class BfmeAIUpdateVictimThunk
 {
 public:
-	void clearCurrentVictim(const Object *victim);
+	void clearCurrentVictim(const Object *target);
 };
 
 class Rva001764E0AIUpdate
@@ -107,6 +107,8 @@ public:
 	WhichTurretType getWhichTurretForCurWeapon() const;
 	void setTurretTargetObject(WhichTurretType turret, Object *targetObject, Bool forceAttacking);
 };
+
+typedef Rva001764E0AIUpdate AIUpdateTurretTargetingView;
 
 class Pathfinder
 {
@@ -144,6 +146,10 @@ public:
 		const BfmeOutOfWeaponRangeObject *target, Int forceAttacking) const;
 };
 
+// The retail ILT names identify these narrow ABI views used for the range call.
+typedef BfmeOutOfWeaponRangeObject OutOfWeaponRangeObjectView;
+typedef BfmeOutOfWeaponRangeWeapon OutOfWeaponRangeWeaponView;
+
 class BfmeObjectCall
 {
 public:
@@ -154,7 +160,7 @@ public:
 class Object
 {
 public:
-	Bool queryRva001CAEE0(const Player *player) const;
+	Bool isStealthedAndUndetected(const Player *player) const;
 	Bool isSignificantlyAboveTerrain() const;
 	Real bfmeGetNonnegativePreferredLocomotorHeight() const;
 	Weapon *getCurrentWeapon(WeaponSlotType *slot);
@@ -223,18 +229,19 @@ StateReturnType AIAttackPursueTargetState::updateInternal()
 	}
 	m_stopIfInRange = false;
 
-	Object *source = m_machine->m_owner;
+	Object *attacker = m_machine->m_owner;
 	StateReturnType code = STATE_FAILURE;
-	Object *victim = m_machine->getGoalObject();
-	if (victim)
+	Object *target = m_machine->getGoalObject();
+	if (target)
 	{
-		if (victim->m_status & BFME_OBJECT_STATUS_UNPURSUABLE)
+		if (target->m_status & BFME_OBJECT_STATUS_UNPURSUABLE)
 			return STATE_FAILURE;
 
-		if (victim->queryRva001CAEE0(((BfmeObjectCall *)source)->getControllingPlayer()))
+		if (target->isStealthedAndUndetected(
+			((BfmeObjectCall *)attacker)->getControllingPlayer()))
 			return STATE_FAILURE;
 
-		((BfmeAIUpdateVictimThunk *)ai)->clearCurrentVictim(victim);
+		((BfmeAIUpdateVictimThunk *)ai)->clearCurrentVictim(target);
 
 		bfmePursueLog("CritterDesync: ComputePath14");
 
@@ -245,38 +252,42 @@ StateReturnType AIAttackPursueTargetState::updateInternal()
 		if (code != STATE_CONTINUE)
 			return STATE_SUCCESS;
 
-		Weapon *weapon = source->getCurrentWeapon(0);
+		Weapon *weapon = attacker->getCurrentWeapon(0);
 		if (!weapon)
 			return STATE_FAILURE;
 
-		WhichTurretType tur = ((Rva001764E0AIUpdate *)ai)->getWhichTurretForCurWeapon();
-		if (tur == TURRET_INVALID)
+		WhichTurretType turretType =
+			((AIUpdateTurretTargetingView *)ai)->getWhichTurretForCurWeapon();
+		if (turretType == TURRET_INVALID)
 			return STATE_SUCCESS;
 
 		Bool viewBlocked = false;
-		if (ai->isDoingGroundMovement() && !victim->isSignificantlyAboveTerrain())
+		if (ai->isDoingGroundMovement() && !target->isSignificantlyAboveTerrain())
 		{
-			viewBlocked = TheAI->pathfinder()->isAttackViewBlockedByObstacle(source,
-				&source->m_position, victim, &victim->m_position);
+			viewBlocked = TheAI->pathfinder()->isAttackViewBlockedByObstacle(attacker,
+				&attacker->m_position, target, &target->m_position);
 		}
-		if (!viewBlocked && victim->m_physics
-			&& ((BfmeOutOfWeaponRangeWeapon *)weapon)->isWithinAttackRange(
-				(const BfmeOutOfWeaponRangeObject *)source,
-				(const BfmeOutOfWeaponRangeObject *)victim, 0))
+		if (!viewBlocked && target->m_physics
+			&& ((OutOfWeaponRangeWeaponView *)weapon)->isWithinAttackRange(
+				(const OutOfWeaponRangeObjectView *)attacker,
+				(const OutOfWeaponRangeObjectView *)target, 0))
 		{
-			((Rva001764E0AIUpdate *)ai)->setTurretTargetObject(tur, victim, m_isForceAttacking);
+			((AIUpdateTurretTargetingView *)ai)->setTurretTargetObject(
+				turretType, target, m_isForceAttacking);
 			m_isInitialApproach = false;
-			Real victimSpeed = victim->bfmeGetNonnegativePreferredLocomotorHeight();
-			if (weapon->isGoalPosWithinAttackRange(source, &source->m_position, victim,
-				&victim->m_position, 0))
+			// Retail uses this height-named preferred value as a movement speed.
+			Real targetPreferredSpeed =
+				target->bfmeGetNonnegativePreferredLocomotorHeight();
+			if (weapon->isGoalPosWithinAttackRange(attacker, &attacker->m_position, target,
+				&target->m_position, 0))
 			{
-				victimSpeed *= 0.95f;
+				targetPreferredSpeed *= 0.95f;
 			}
-			if (source->crushPolicy(victim, TEST_CRUSH_OR_SQUISH))
+			if (attacker->crushPolicy(target, TEST_CRUSH_OR_SQUISH))
 			{
-				victimSpeed = FAST_AS_POSSIBLE;
+				targetPreferredSpeed = FAST_AS_POSSIBLE;
 			}
-			ai->setDesiredSpeed(victimSpeed);
+			ai->setDesiredSpeed(targetPreferredSpeed);
 			Locomotor *locomotor = ai->getCurLocomotor();
 			if (locomotor && locomotor->getPreferredHeight() == BfmeZeroRange)
 				return STATE_SUCCESS;

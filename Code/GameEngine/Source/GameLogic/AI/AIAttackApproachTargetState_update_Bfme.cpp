@@ -89,14 +89,14 @@ public:
 StateReturnType AIAttackApproachTargetState::update()
 {
 	StateReturnType code = updateInternal();
-	Object *source = m_machine->m_owner;
-	AIUpdateInterface *ai = source->m_ai;
+	Object *attacker = m_machine->m_owner;
+	AIUpdateInterface *ai = attacker->m_ai;
 
 	if (m_follow && m_isAttackingObject)
 	{
-		Object *victim = m_machine->getGoalObject();
-		if (victim && source->isMobile()
-			&& !((Thing *)victim)->getTemplate()->isKindOf(KINDOF_IMMOBILE))
+		Object *target = m_machine->getGoalObject();
+		if (target && attacker->isMobile()
+			&& !((Thing *)target)->getTemplate()->isKindOf(KINDOF_IMMOBILE))
 		{
 			if (code != STATE_CONTINUE)
 				m_isInitialApproach = false;
@@ -106,13 +106,13 @@ StateReturnType AIAttackApproachTargetState::update()
 
 	if (m_isInitialApproach)
 	{
-		WhichTurretType turret = ai->getWhichTurretForCurWeapon();
-		if (turret != TURRET_INVALID)
+		WhichTurretType turretType = ai->getWhichTurretForCurWeapon();
+		if (turretType != TURRET_INVALID)
 		{
-			Object *temporaryTarget = ai->getNextMoodTarget(true, false);
-			if (temporaryTarget)
+			Object *nextMoodTarget = ai->getNextMoodTarget(true, false);
+			if (nextMoodTarget)
 			{
-				ai->setTurretTargetObject(turret, temporaryTarget, m_isForceAttacking);
+				ai->setTurretTargetObject(turretType, nextMoodTarget, m_isForceAttacking);
 				ai->m_bfmeTargeting = true;
 			}
 		}
