@@ -16,8 +16,8 @@ class Path
 {
 public:
 	Path();
-	void optimize( const Object *obj, LocomotorSurfaceTypeMask acceptableSurfaces, Bool blocked );
-	void bfmeOptimizeDir( const Object *obj, const Coord3D *dir,
+	void optimize( const Object *object, LocomotorSurfaceTypeMask acceptableSurfaces, Bool blocked );
+	void bfmeOptimizeDir( const Object *object, const Coord3D *unitDirection,
 		LocomotorSurfaceTypeMask acceptableSurfaces, Bool blocked );
 
 	Int m_pad[9];
@@ -27,10 +27,10 @@ public:
 class Pathfinder
 {
 public:
-	Path *buildActualPath( const Object *obj, LocomotorSurfaceTypeMask acceptableSurfaces,
-		const Coord3D *fromPos, PathfindCell *goalCell, Bool center, Bool blocked );
+	Path *buildActualPath( const Object *object, LocomotorSurfaceTypeMask acceptableSurfaces,
+		const Coord3D *startPosition, PathfindCell *goalCell, Bool centerInCell, Bool blocked );
 
-	void prependCells( Path *path, const Coord3D *fromPos, PathfindCell *goalCell, Bool center );
+	void prependCells( Path *path, const Coord3D *startPosition, PathfindCell *goalCell, Bool centerInCell );
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Thing.h
@@ -40,18 +40,18 @@ public:
 	const Coord3D *getUnitDirectionVector2D( void ) const;
 };
 
-Path *Pathfinder::buildActualPath( const Object *obj, LocomotorSurfaceTypeMask acceptableSurfaces,
-	const Coord3D *fromPos, PathfindCell *goalCell, Bool center, Bool blocked )
+Path *Pathfinder::buildActualPath( const Object *object, LocomotorSurfaceTypeMask acceptableSurfaces,
+	const Coord3D *startPosition, PathfindCell *goalCell, Bool centerInCell, Bool blocked )
 {
 	Path *path = new Path;
 
-	prependCells( path, fromPos, goalCell, center );
+	prependCells( path, startPosition, goalCell, centerInCell );
 
-	path->optimize( obj, acceptableSurfaces, blocked );
+	path->optimize( object, acceptableSurfaces, blocked );
 
-	Coord3D dir = *((const Thing *)obj)->getUnitDirectionVector2D();
+	Coord3D dir = *((const Thing *)object)->getUnitDirectionVector2D();
 
-	path->bfmeOptimizeDir( obj, &dir, acceptableSurfaces, blocked );
+	path->bfmeOptimizeDir( object, &dir, acceptableSurfaces, blocked );
 
 	return path;
 }
