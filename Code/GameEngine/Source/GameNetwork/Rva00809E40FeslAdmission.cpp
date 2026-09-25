@@ -1,13 +1,10 @@
-// ?d_00809e40@@YAXXZ
-// partial score=0.36 date=2026-09-23
+// Retail 0x00809E40: FESL game-browser admission and request.
 // cl: /O2 /GX- /GS
-// Retail 0x00809E40: FESL game-browser record admission and request.
 
 #include <new>
 
-extern "C" __declspec( dllimport ) char *__cdecl strncpy(
-	char *destination, const char *source, unsigned int count );
-#pragma intrinsic( strncpy )
+char *__cdecl ji_009f70ba( char *destination, const char *source,
+	unsigned int count );
 
 class Rva007E86B0Base
 {
@@ -161,7 +158,7 @@ public:
 void Rva00809E40Owner::rva00809E40( Rva007E8810Message *input )
 {
 	char buffer[ 0x40 ];
-	BfmeC994 message( buffer, sizeof( buffer ) );
+	BfmeC994 message( buffer, 0x40 );
 	message.m_category = input->m_category;
 	void *value = (void *)( long )input->getInt(
 		(const char *)&g_bfmeKeyVHE, -1 );
@@ -172,25 +169,25 @@ void Rva00809E40Owner::rva00809E40( Rva007E8810Message *input )
 	message.m_field08 = input->m_field08;
 	message.m_field0c = input->m_field0c;
 
-	Rva00809E40State *state = m_state;
-	if( state->m_manager == 0 )
+	Rva00802040Owner *manager = m_state->m_manager;
+	if( manager == 0 )
 	{
 		message.m_field20 = 'ngam';
 		Rva007F93E0( &message, (void *)0x0112C7C0, m_routeOwner );
 		return;
 	}
 
-	Rva00802680Owner *slot = state->m_manager->findFree();
+	Rva00802680Owner *slot = manager->findFree();
 	if( slot == 0 )
 	{
-		message.m_field20 = 'jden';
 		Rva007EB810Get()->report( (const char *)0x0112C8B8 );
+		message.m_field20 = 'jden';
 		message.addString(
 			(const char *)0x0112B588, (const char *)0x0112C8B4 );
 		Rva007F93E0( &message, (void *)0x0112C7C0, m_routeOwner );
 		return;
 	}
-	if( state->m_manager->rva00801460() != 0 )
+	if( manager->rva00801460() != 0 )
 	{
 		Rva007EB810Get()->report( (const char *)0x0112C8A0 );
 		message.m_field20 = 'jden';
@@ -206,7 +203,8 @@ void Rva00809E40Owner::rva00809E40( Rva007E8810Message *input )
 			(const char *)0x0112C88C,
 			(const char *)0x0112C7D8,
 			0x307 );
-	if( m_game->m_players[ index ] != 0 )
+	Rva00809E40Record **players = m_game->m_players;
+	if( players[ index ] != 0 )
 		Rva007EB810Get()->fail(
 			(const char *)0x0112C878,
 			(const char *)0x0112C7D8,
@@ -214,13 +212,15 @@ void Rva00809E40Owner::rva00809E40( Rva007E8810Message *input )
 
 	void *raw = Gen007F0130::operator new( 0x38 );
 	Rva00809E40Record *record = raw != 0
-		? new( raw ) Rva00809E40Record
+		? reinterpret_cast< Rva00809E40Record * >( new( raw ) Energy )
 		: (Rva00809E40Record *)0;
-	((Rva00809E40Record **)m_game->m_players)[ index ] = record;
+	players[ index ] = record;
 	record->m_owner = (void *)( long )input->m_field04;
 	record->m_energyProduction = input->m_field08;
 	record->m_energyConsumption = input->m_field0c;
-	record->m_powerSabotagedTillFrame = m_game->m_state++;
+	int state = m_game->m_state;
+	++m_game->m_state;
+	record->m_powerSabotagedTillFrame = state;
 	record->m_field14 = reinterpret_cast< Rva007E8810Message * >( input )->getInt(
 		(const char *)0x0112B568, 0 );
 	Rva007F93E0( &message, (void *)0x0112C7C0, m_routeOwner );
@@ -231,11 +231,11 @@ void Rva00809E40Owner::rva00809E40( Rva007E8810Message *input )
 		{
 			char second[ 0x20 ];
 			input->getString( (const char *)0x01102DE0, second, 0x20 );
-			strncpy( record->m_field18, second, 0x20 );
+			ji_009f70ba( record->m_field18, second, 0x20 );
 		}
 
-		BfmeC994 request( buffer, sizeof( buffer ) );
-		request.m_category = 'RQGE';
+		BfmeC994 request( buffer, 0x40 );
+		request.m_category = 'EGRQ';
 		request.addString( (const char *)0x010F91BC, first );
 		request.addInt( (const char *)0x0112B554, record->m_powerSabotagedTillFrame );
 		request.addString( (const char *)0x0112B590, (const char *)0x01118E50 );
