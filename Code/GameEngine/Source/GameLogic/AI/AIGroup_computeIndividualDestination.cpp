@@ -116,9 +116,9 @@ extern TerrainLogic *TheTerrainLogic;
 class Pathfinder
 {
 public:
-	bool adjustDestination(Object *obj, const LocomotorSet &locomotorSet,
-		Coord3D *dest, const Coord3D *groupDest);
-	void updateGoal(Object *obj, const Coord3D *dest, int layer,
+	bool adjustDestination(Object *object, const LocomotorSet &locomotorSet,
+		Coord3D *destination, const Coord3D *groupDestination);
+	void updateGoal(Object *object, const Coord3D *destination, int layer,
 		const char *reason, int flags);
 };
 
@@ -191,54 +191,54 @@ public:
 };
 
 // ?computeIndividualDestination@AIGroup@@QAEXPAUCoord3D@@PBU2@PAVObject@@1E@Z
-void AIGroup::computeIndividualDestination(Coord3D *dest, const Coord3D *groupDest,
-	Object *obj, const Coord3D *center, Bool isFormation)
+void AIGroup::computeIndividualDestination(Coord3D *individualDestination, const Coord3D *groupDestination,
+	Object *object, const Coord3D *groupCenter, Bool isFormation)
 {
-	const unsigned int flags = obj->getTemplate()->m_flags;
-	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(obj, groupDest);
+	const unsigned int flags = object->getTemplate()->m_flags;
+	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination(object, groupDestination);
 	if ((flags & 0x1000) != 0 && layer != LAYER_GROUND)
 	{
-		*dest = *groupDest;
+		*individualDestination = *groupDestination;
 		return;
 	}
 
 	Coord2D v;
-	const Coord3D *pos = obj->getPosition();
+	const Coord3D *pos = object->getPosition();
 	if (isFormation)
 	{
-		obj->getFormationOffset(&v);
+		object->getFormationOffset(&v);
 	}
 	else
 	{
-		v.x = pos->x - center->x;
-		v.y = pos->y - center->y;
+		v.x = pos->x - groupCenter->x;
+		v.y = pos->y - groupCenter->y;
 	}
 
 	Real length = v.length();
-	Real maxLength = 6.0f * obj->getBoundingCircleRadius();
+	Real maxLength = 6.0f * object->getBoundingCircleRadius();
 	if (length > maxLength)
 		length = maxLength;
 	v.normalize();
 	v.x *= length;
 	v.y *= length;
 
-	dest->x = groupDest->x + v.x;
-	dest->y = groupDest->y + v.y;
-	dest->z = TheTerrainLogic->getLayerHeight(dest->x, dest->y, layer, 0, true);
+	individualDestination->x = groupDestination->x + v.x;
+	individualDestination->y = groupDestination->y + v.y;
+	individualDestination->z = TheTerrainLogic->getLayerHeight(individualDestination->x, individualDestination->y, layer, 0, true);
 
-	AIUpdateInterface *ai = obj->getAIUpdateInterface();
+	AIUpdateInterface *ai = object->getAIUpdateInterface();
 	if (ai && ai->isDoingGroundMovement())
 	{
 		Bool adjusted;
 		if (isFormation)
-			adjusted = TheAI->pathfinder()->adjustDestination(obj,
-				*ai->getLocomotorSet(), dest, 0);
+			adjusted = TheAI->pathfinder()->adjustDestination(object,
+				*ai->getLocomotorSet(), individualDestination, 0);
 		else
-			adjusted = TheAI->pathfinder()->adjustDestination(obj,
-				*ai->getLocomotorSet(), dest, groupDest);
+			adjusted = TheAI->pathfinder()->adjustDestination(object,
+				*ai->getLocomotorSet(), individualDestination, groupDestination);
 		if (!adjusted)
-			*dest = *groupDest;
-		TheAI->pathfinder()->updateGoal(obj, dest, 1, (const char *)0x1095f44,
+			*individualDestination = *groupDestination;
+		TheAI->pathfinder()->updateGoal(object, individualDestination, 1, (const char *)0x1095f44,
 			0x233);
 	}
 }
