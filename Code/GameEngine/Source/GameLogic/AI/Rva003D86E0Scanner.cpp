@@ -29,7 +29,7 @@ class PathfindCell
 class PathfindLayer
 {
   public:
-    PathfindCell *getCell(Int x, Int y);
+    PathfindCell *getCell(Int cellX, Int cellY);
     char m_pad[0x44];
 };
 class Pathfinder
@@ -38,17 +38,17 @@ class Pathfinder
     bool bfmeStepD4F90(void *state, PathfindCell *cell);
     Int iterateCellsAlongLine(const ICoord2D &, const ICoord2D &, PathfindLayerEnum,
                               Rva003D7010Struct *);
-    __forceinline PathfindCell *getCell(PathfindLayerEnum layer, Int x, Int y)
+    __forceinline PathfindCell *getCell(PathfindLayerEnum layer, Int cellX, Int cellY)
     {
-        if (x >= m_extent.lo.x && x <= m_extent.hi.x && y >= m_extent.lo.y && y <= m_extent.hi.y)
+        if (cellX >= m_extent.lo.x && cellX <= m_extent.hi.x && cellY >= m_extent.lo.y && cellY <= m_extent.hi.y)
         {
             if (layer > 1 && layer <= 15)
             {
-                PathfindCell *cell = m_layers[layer].getCell(x, y);
+                PathfindCell *cell = m_layers[layer].getCell(cellX, cellY);
                 if (cell)
                     return cell;
             }
-            return &m_map[x][y];
+            return &m_map[cellX][cellY];
         }
         return 0;
     }
@@ -66,7 +66,7 @@ class Pathfinder
 class Rva003D86E0Scanner
 {
   public:
-    char scan(Int a, Int b);
+    char scan(Int cellX, Int cellY);
 
   private:
     Pathfinder *m_pathfinder;
@@ -78,11 +78,11 @@ class Rva003D86E0Scanner
     // Existing bank names retained; these are lower and upper extents on both axes.
     Int m_originX, m_originY;
 };
-char Rva003D86E0Scanner::scan(Int a, Int b)
+char Rva003D86E0Scanner::scan(Int cellX, Int cellY)
 {
-    for (Int x = a - m_originX; x < a + m_originY; ++x)
+    for (Int x = cellX - m_originX; x < cellX + m_originY; ++x)
     {
-        for (Int y = b - m_originX; y < b + m_originY; ++y)
+        for (Int y = cellY - m_originX; y < cellY + m_originY; ++y)
         {
             PathfindCell *cell = m_pathfinder->getCell(m_layer, x, y);
             if (!cell)
@@ -112,8 +112,8 @@ char Rva003D86E0Scanner::scan(Int a, Int b)
                                             true);
         }
     }
-    m_resultX = a;
-    m_resultY = b;
+    m_resultX = cellX;
+    m_resultY = cellY;
     if (m_field14 == 1 || m_field14 >= 16)
     {
         if (*(ICoord2D *)&m_resultX != *(ICoord2D *)&m_cachedCellA)
