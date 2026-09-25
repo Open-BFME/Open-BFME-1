@@ -147,14 +147,14 @@ private:
 class Pathfinder
 {
 public:
-	Bool rva003E5E40( Object *obj );
+	Bool rva003E5E40( Object *object );
 	Bool worldToCell( const Coord3D *position, ICoord2D *cell );
 	PathfindCell *getCell( PathfindLayerEnum layer, Int x, Int y );
 
 protected:
-	void getRadiusAndCenter( const Object *object, Int &iRadius, Bool &center );
-	Bool rva003E5E40Cells( const Object *obj, Int cellX, Int cellY,
-		PathfindLayerEnum layer, Int iRadius, Bool centerInCell );
+	void getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell );
+	Bool rva003E5E40Cells( const Object *object, Int cellX, Int cellY,
+		PathfindLayerEnum layer, Int radius, Bool centerInCell );
 
 private:
 	unsigned char m_prefix[0x10];		// +0x000 opaque
@@ -165,7 +165,7 @@ private:
 };
 
 // Retail 0x003DEE30; logic of PathfindGetRadiusAndCenterE30.cpp.
-__declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &center )
+__declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, Int &radius, Bool &centerInCell )
 {
 	Real diameter;
 	Int maxRadius = 2;
@@ -191,15 +191,15 @@ __declspec(noinline) void Pathfinder::getRadiusAndCenter( const Object *object, 
 	}
 
 	radius = REAL_TO_INT_FLOOR( diameter / 10.0f + g_pathfindCellCenterBias );
-	center = false;
+	centerInCell = false;
 	if (radius == 0) radius++;
 	if (radius & 1) {
-		center = true;
+		centerInCell = true;
 	}
 	radius /= 2;
 	if (radius > maxRadius) {
 		radius = maxRadius;
-		center = true;
+		centerInCell = true;
 	}
 }
 
@@ -235,18 +235,18 @@ inline PathfindCell *Pathfinder::getCell( PathfindLayerEnum layer, Int x, Int y 
 // Retail inlines this scan; it matches only as a by-value helper, whose
 // parameter copies give the loop bounds retail's operand order.
 // ?rva003E5E40Cells@Pathfinder@@IAE_NPBVObject@@HHW4PathfindLayerEnum@@H_N@Z absent-from-retail
-__forceinline Bool Pathfinder::rva003E5E40Cells( const Object *obj, Int cellX, Int cellY,
-	PathfindLayerEnum layer, Int iRadius, Bool centerInCell )
+__forceinline Bool Pathfinder::rva003E5E40Cells( const Object *object, Int cellX, Int cellY,
+	PathfindLayerEnum layer, Int radius, Bool centerInCell )
 {
-	Int numCellsAbove = iRadius;
+	Int numCellsAbove = radius;
 	if (centerInCell) numCellsAbove++;
 
-	ObjectID objID = obj->getID();
+	ObjectID objID = object->getID();
 
 	Int i, j;
-	for (i = cellX - iRadius; i < cellX + numCellsAbove; i++)
+	for (i = cellX - radius; i < cellX + numCellsAbove; i++)
 	{
-		for (j = cellY - iRadius; j < cellY + numCellsAbove; j++)
+		for (j = cellY - radius; j < cellY + numCellsAbove; j++)
 		{
 			PathfindCell *cell = getCell( layer, i, j );
 			if (cell == 0)
@@ -257,7 +257,7 @@ __forceinline Bool Pathfinder::rva003E5E40Cells( const Object *obj, Int cellX, I
 
 			if (cell->getGoalAircraftByte() & 1)
 			{
-				if (obj->bfmeIsComputerControlled())
+				if (object->bfmeIsComputerControlled())
 					return false;
 			}
 
@@ -278,12 +278,12 @@ __forceinline Bool Pathfinder::rva003E5E40Cells( const Object *obj, Int cellX, I
 	return true;
 }
 
-Bool Pathfinder::rva003E5E40( Object *obj )
+Bool Pathfinder::rva003E5E40( Object *object )
 {
-	const Coord3D *pos = obj->getPosition();
+	const Coord3D *pos = object->getPosition();
 	Int iRadius;
 	Bool center;
-	getRadiusAndCenter( obj, iRadius, center );
+	getRadiusAndCenter( object, iRadius, center );
 	Coord3D adjustDest;
 	adjustDest.set( pos );
 	if (!center)
@@ -294,6 +294,6 @@ Bool Pathfinder::rva003E5E40( Object *obj )
 	ICoord2D cell;
 	if (worldToCell( &adjustDest, &cell ))
 		return false;
-	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination( obj, pos );
-	return rva003E5E40Cells( obj, cell.x, cell.y, layer, iRadius, center );
+	PathfindLayerEnum layer = TheTerrainLogic->getLayerForDestination( object, pos );
+	return rva003E5E40Cells( object, cell.x, cell.y, layer, iRadius, center );
 }
