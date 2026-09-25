@@ -11741,16 +11741,16 @@ __declspec(naked) Path *Pathfinder::findClosestPath( Object *obj, const Locomoto
 }
 
 
-void Pathfinder::adjustCoordToCell(Int cellX, Int cellY, Bool centerInCell, Coord3D &pos, PathfindLayerEnum layer)
+void Pathfinder::adjustCoordToCell(Int cellX, Int cellY, Bool centerInCell, Coord3D &position, PathfindLayerEnum layer)
 {
 	if (centerInCell) {
-		pos.x = ((Real)cellX + 0.5f) * PATHFIND_CELL_SIZE_F;
-		pos.y = ((Real)cellY + 0.5f) * PATHFIND_CELL_SIZE_F;
+		position.x = ((Real)cellX + 0.5f) * PATHFIND_CELL_SIZE_F;
+		position.y = ((Real)cellY + 0.5f) * PATHFIND_CELL_SIZE_F;
 	} else {
-		pos.x = ((Real)cellX+0.05) * PATHFIND_CELL_SIZE_F;
-		pos.y = ((Real)cellY+0.05) * PATHFIND_CELL_SIZE_F;
+		position.x = ((Real)cellX+0.05) * PATHFIND_CELL_SIZE_F;
+		position.y = ((Real)cellY+0.05) * PATHFIND_CELL_SIZE_F;
 	}
-	pos.z = TheTerrainLogic->getLayerHeight( pos.x, pos.y, layer );
+	position.z = TheTerrainLogic->getLayerHeight( position.x, position.y, layer );
 }
 
 

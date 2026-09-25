@@ -51,7 +51,7 @@ public:
 protected:
 	void getRadiusAndCenter(const Object *object, Int &radius, Bool &center);
 	void adjustCoordToCell(Int cellX, Int cellY, Bool centerInCell,
-		Coord3D &pos, PathfindLayerEnum layer);
+		Coord3D &position, PathfindLayerEnum layer);
 };
 
 // ?snapPosition@Pathfinder@@QAEXPAVObject@@PAUCoord3D@@@Z
