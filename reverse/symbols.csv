@@ -89088,3 +89088,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?parseFontFileName@GlobalLanguage@@SAXPAVINI@@PAX1PBX@Z,0x0043A3B0,GlobalLanguage.cpp LocalFontFile FieldParse callback and exact body definition identify parser
 ?releaseWeaponLock@WeaponSet@@QAEXW4WeaponLockType@@@Z,0x001EBB40,WeaponSet.cpp exact method; matched BfmeThing916D caller at 0x001C9B80 calls ILT 0x0001192D with WeaponSet subobject at +0x264
 ?handleGameStart@LANAPI@@IAEXPAULANMessage@@I@Z,0x0068BFA0,LANAPIhandlers.cpp exact definition; matched LANAPI::update MSG_GAME_START caller at 0x006870F0; ILT 0x0001529E targets this body
+?isValidAudioEvent@AudioManager@@UBE_NPAVAudioEventRTS@@@Z,0x0069CFB0,AudioManager vtable 0x0111C0C0 slot 23 ILT 0x00041952; INI::parseAudioEventRTS calls mutable overload
