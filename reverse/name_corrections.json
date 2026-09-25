@@ -3828,5 +3828,35 @@
   "after_sha256": "b5a8725de2dd9835c715d3af9beb6c50b59dcaf85822f4b4bf8afcecf883d900",
   "evidence": "docs/naming_evidence.md",
   "reason": "name_oracle has no witnessed W3DDisplay layout at 0x184 (landed W3DDisplay TUs use m_unmodelled_184)"
+ },
+ {
+  "old_path": "reverse/attempts/0x0087ee60.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoCalcBoundingStuff.cpp",
+  "old_name": "GeometryBounds",
+  "new_name": "Rva0087E650Bounds",
+  "before_sha256": "903492213ca852e06e2fc7a9f563b607d6e8b4d8058f4340779ee0f73d491502",
+  "after_sha256": "76cfc73d49d43b13069ed3f1270acef14cfca64be53edb6c1f7262819145d8dc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank type name unevidenced; matches the 0x0087E650 bank"
+ },
+ {
+  "old_path": "reverse/attempts/0x0087ee60.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoCalcBoundingStuff.cpp",
+  "old_name": "getBoundingCircleRadius",
+  "new_name": "rva0087ED00",
+  "before_sha256": "903492213ca852e06e2fc7a9f563b607d6e8b4d8058f4340779ee0f73d491502",
+  "after_sha256": "76cfc73d49d43b13069ed3f1270acef14cfca64be53edb6c1f7262819145d8dc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank method name had no caller/vtable/string/ZH evidence (ZH GeometryShape has no such method)"
+ },
+ {
+  "old_path": "reverse/attempts/0x0087ee60.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/GeometryInfoCalcBoundingStuff.cpp",
+  "old_name": "getBoundingSphereRadius",
+  "new_name": "rva0087ED70",
+  "before_sha256": "903492213ca852e06e2fc7a9f563b607d6e8b4d8058f4340779ee0f73d491502",
+  "after_sha256": "76cfc73d49d43b13069ed3f1270acef14cfca64be53edb6c1f7262819145d8dc",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank method name had no caller/vtable/string/ZH evidence"
  }
 ]
