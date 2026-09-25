@@ -1,5 +1,5 @@
 // ?input@AptMainMenu@@UAEHIII@Z
-// partial score=0.571776 date=2026-09-23
+// partial score=0.644444 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc
 
 #include <stdlib.h>
@@ -81,37 +81,37 @@ int AptMainMenu::input( unsigned int message, unsigned int data, unsigned int st
 	if ( m_b25a )
 		m_b259 = 1;
 
-	if ( message == 0x15 )
+	if ( message != 0x15 )
 	{
-		if ( m_i264 != 4 )
-			m_b259 = 1;
-	}
-	else if ( message == 0x18 )
-	{
-		int y = (int)( data >> 16 );
-		int x = (int)( data & 0xffff );
-
-		if ( x != 0 || y != 0 )
+		if ( message == 0x18 )
 		{
-			unsigned int flags = *(unsigned int *)0x012F49C0;
-			if ( ( flags & 1 ) == 0 )
-			{
-				flags |= 1;
-				*(unsigned int *)0x012F49C0 = flags;
-				*(int *)0x012F49BC = x;
-			}
-			if ( ( flags & 2 ) == 0 )
-			{
-				flags |= 2;
-				*(unsigned int *)0x012F49C0 = flags;
-				*(int *)0x012F49B8 = y;
-			}
+			int y = (int)( data >> 16 );
+			int x = (int)( data & 0xffff );
 
-			if ( abs( x - *(int *)0x012F49BC ) > 20 ||
-				abs( y - *(int *)0x012F49B8 ) > 20 )
-				m_b259 = 1;
+			if ( x != 0 || y != 0 )
+			{
+				unsigned int flags = *(unsigned int *)0x012F49C0;
+				if ( ( flags & 1 ) == 0 )
+				{
+					flags |= 1;
+					*(unsigned int *)0x012F49C0 = flags;
+					*(int *)0x012F49BC = x;
+				}
+				if ( ( flags & 2 ) == 0 )
+				{
+					flags |= 2;
+					*(unsigned int *)0x012F49C0 = flags;
+					*(int *)0x012F49B8 = y;
+				}
+
+				if ( abs( x - *(int *)0x012F49BC ) > 20 ||
+					abs( y - *(int *)0x012F49B8 ) > 20 )
+					m_b259 = 1;
+			}
 		}
 	}
+	else if ( m_i264 != 4 )
+		m_b259 = 1;
 
 	if ( m_b259 )
 	{
