@@ -2588,5 +2588,15 @@
   "after_sha256": "e205edae1713339a5309feb903a7820fd2787ad9e88d3c9c60522b198f697183",
   "evidence": "docs/naming_evidence.md",
   "reason": "bfmeDispatchDescriptor1288 is an invented bfme-prefixed placeholder: 1288 is a batch serial and not the address and the only caller of 0x008BEF00 is the anonymous gen_asm dump d_008d3860 so no retail evidence names the method. docs/naming_evidence.md requires the address token for an unproven method so it becomes rva008BEF00 on the unchanged BfmeSubmitter1283 owner."
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/Thing/ModuleInfoClearAi.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Thing/ModuleInfoClearAi.cpp",
+  "old_name": "Nugget",
+  "new_name": "Gen00134590",
+  "before_sha256": "d07f30e4eeaf28e17b35abad6db774b43e30e687610cb50c81b2369ba5cbfc08",
+  "after_sha256": "54cd4b03a3d772aea1f720bd12396aa90d640cd6d11c9551bc76b6e09d7cf656",
+  "evidence": "reverse/identity_evidence/00141770.md",
+  "reason": "The prior nested Nugget destructor symbol resolves to a different specialization and fails the observed call. Retail uses the independently matched Gen00134590 20-byte element destructor at00134590; preserve ModuleInfo::Nugget as a typedef to that witnessed address-qualified record and keep the existing semantic field names."
  }
 ]

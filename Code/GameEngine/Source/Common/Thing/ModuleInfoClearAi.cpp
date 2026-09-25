@@ -13,21 +13,21 @@ public:
 	virtual Bool isAiModuleData() const;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
+// Retail 20-byte element shared with the matched 0x00134590 destruction family.
+// Its original class name is not established by these container operations.
+struct Gen00134590
+{
+    unsigned char m_strings[8];
+    const ModuleData *second;
+    int m_interfaceMask;
+    unsigned char m_flags[4];
+    ~Gen00134590();
+};
+
 class ModuleInfo
 {
 public:
-	// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ThingTemplate.h
-	struct Nugget
-	{
-		unsigned char m_strings[8];
-		const ModuleData *second;
-		int m_interfaceMask;
-		unsigned char m_flags[4];
-
-		~Nugget();
-	};
-
+    typedef Gen00134590 Nugget;
 	Bool clearAiModuleInfo();
 
 private:
@@ -39,14 +39,13 @@ private:
 namespace _STL
 {
 struct random_access_iterator_tag {};
-
-template <class InputIterator, class OutputIterator, class Distance>
-OutputIterator __copy(InputIterator first,
-	InputIterator last,
-	OutputIterator result,
-	const random_access_iterator_tag &,
-	Distance *);
 }
+
+// Retail target 0x0013EA50. Its caller pushes the three iterator arguments,
+// the category tag by reference, and an unused Distance pointer.
+ModuleInfo::Nugget *Rva0013EA50Copy(const ModuleInfo::Nugget *first,
+	const ModuleInfo::Nugget *last, ModuleInfo::Nugget *result,
+	const _STL::random_access_iterator_tag &, int *);
 
 Bool ModuleInfo::clearAiModuleInfo()
 {
@@ -60,7 +59,7 @@ Bool ModuleInfo::clearAiModuleInfo()
 			if (next != m_end)
 			{
 				_STL::random_access_iterator_tag category;
-				_STL::__copy(next, m_end, it, category, (int *)0);
+				Rva0013EA50Copy(next, m_end, it, category, (int *)0);
 			}
 			--m_end;
 			m_end->~Nugget();
