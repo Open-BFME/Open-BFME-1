@@ -89084,3 +89084,4 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?doTeamGuard@ScriptActions@@IAEXABVAsciiString@@@Z,0x00301C10,ScriptActions.cpp definition and TEAM_GUARD dispatch arm identify callback; two ILT-mediated callers
 ?onEnter@GiantBirdGuardOuterState@@UAE?AW4StateReturnType@@XZ,0x002BD310,GiantBirdGuardOuterState vtable 0x010C7C28 installed at 0x002C04D0; slot 4 ILT 0x00040142 reaches body; exact destructor and name getter support class identity
 ?Rva00149130@AerialPathfinder@@QAEHPAVObject@@PBUCoord3D@@PAU3@@Z,0x00149130,AerialPathfinder owner from matched caller; five calls at 0x00149470 pass Object and Coord3D arguments; opaque method label preserves unresolved name
+?parseFontFileName@GlobalLanguage@@SAXPAVINI@@PAX1PBX@Z,0x0043A3B0,GlobalLanguage.cpp LocalFontFile FieldParse callback and exact body definition identify parser
