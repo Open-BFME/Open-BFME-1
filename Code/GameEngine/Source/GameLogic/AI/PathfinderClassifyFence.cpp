@@ -70,7 +70,7 @@ public:
 class PathfindCell
 {
 public:
-	void setTypeAsObstacle(Object *obstacle, Bool isFence, const ICoord2D &pos);
+	void setTypeAsObstacle(Object *obstacle, Bool isFence, const ICoord2D &cellPosition);
 
 private:
 	char m_pad[16];
