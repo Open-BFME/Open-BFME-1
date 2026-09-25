@@ -31,7 +31,7 @@ struct NoFlyZone
 class AerialPathfinder
 {
 public:
-	Real getNoFlyZoneHeight(Real x, Real y);
+	Real getNoFlyZoneHeight(Real worldX, Real worldY);
 
 private:
 	char m_slice_pad[0x0C];
@@ -46,7 +46,7 @@ struct NoFlyQueryState
 	ICoord3D location;
 };
 
-Real AerialPathfinder::getNoFlyZoneHeight(Real x, Real y)
+Real AerialPathfinder::getNoFlyZoneHeight(Real worldX, Real worldY)
 {
 	NoFlyQueryState state;
 
@@ -60,8 +60,8 @@ Real AerialPathfinder::getNoFlyZoneHeight(Real x, Real y)
 		NoFlyZone *zone = &*it;
 		PolygonTrigger *trigger = zone->m_trigger;
 		state.zoneHeight = zone->m_height;
-		state.location.x = (Int)x;
-		state.location.y = (Int)y;
+		state.location.x = (Int)worldX;
+		state.location.y = (Int)worldY;
 		state.location.z = 0;
 		Bool inside = trigger->pointInTrigger(state.location);
 		if (inside && !(state.height > state.zoneHeight))
