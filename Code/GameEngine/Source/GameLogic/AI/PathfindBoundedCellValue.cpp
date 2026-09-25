@@ -6,7 +6,7 @@ extern const float BfmeZeroRange; // retail 0x01075350
 class Gen_003D5BF0
 {
 public:
-	float bfmeValue(int index) const;
+	float bfmeValue(int entryIndex) const;
 
 private:
 	char m_bfmeHead[0x89c];
@@ -18,11 +18,11 @@ private:
 };
 
 // ?bfmeValue@Gen_003D5BF0@@QBEMH@Z
-float Gen_003D5BF0::bfmeValue(int index) const
+float Gen_003D5BF0::bfmeValue(int entryIndex) const
 {
-	if (index < 2)
+	if (entryIndex < 2)
 		goto zero;
-	if (index > 15)
+	if (entryIndex > 15)
 		goto zero;
 	goto table;
 
@@ -30,5 +30,5 @@ zero:
 	return BfmeZeroRange;
 
 table:
-	return (float)m_bfmeEntries[index].m_bfmeValue;
+	return (float)m_bfmeEntries[entryIndex].m_bfmeValue;
 }
