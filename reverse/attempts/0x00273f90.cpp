@@ -1,5 +1,5 @@
 // ?d_00273f90@@YAXXZ
-// partial score=0.3162486368593239 date=2026-09-21
+// partial score=0.335877862595 date=2026-09-25
 // cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include
 // Retail 00273F90, 917 bytes. The update flow parallels ZH AIUpdate.cpp:1009.
 // Opaque owner retained: caller metadata alone is not an identity witness.
@@ -244,20 +244,22 @@ unsigned UpdateTick00273F90::run()
     TickSub00273F90 *sub=obj->ptr208;
     if (sub && sub->flag5c) {
         if (obj->m_privateStatus&1) {
-            if (machine()->currentID()==13) return 1;
-            if (CALL(Bool0,machine(),j_00048928)()) return 1;
+            if (machine()->currentID()==13) goto clearConditions;
+            if (CALL(Bool0,machine(),j_00048928)()) goto clearConditions;
             machine()->slot20(13);
-clearConditions:
-            clear114();
-            clear120();
-            return 1;
         } else {
-            if (machine()->currentID()!=0) {
-                CALL(Void0,this,j_000065e1)();
-                slot1e8();
-            }
-            CALL(VoidPtr,(field<void*,0xc>(TheAI)),j_00015d02)(obj);
+            goto noPrivateStatus;
         }
+clearConditions:
+        clear114();
+        clear120();
+        return 1;
+noPrivateStatus:
+        if (machine()->currentID()!=0) {
+            CALL(Void0,this,j_000065e1)();
+            slot1e8();
+        }
+        CALL(VoidPtr,(field<void*,0xc>(TheAI)),j_00015d02)(obj);
         goto clearConditions;
     }
     if (!slot180()) flag336=true;
