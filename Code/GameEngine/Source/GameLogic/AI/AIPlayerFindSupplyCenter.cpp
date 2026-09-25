@@ -247,7 +247,7 @@ public:
 class PartitionManager
 {
 public:
-	Object *getClosestObject(const Coord3D *pos, Real radius, Int from,
+	Object *getClosestObject(const Coord3D *searchPosition, Real radius, Int from,
 		PartitionFilter *filters);
 };
 
