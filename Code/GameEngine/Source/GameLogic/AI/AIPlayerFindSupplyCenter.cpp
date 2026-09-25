@@ -290,7 +290,7 @@ private:
 Object *AIPlayer::findSupplyCenter(Int minimumCash)
 {
 	Object *bestSupplyWarehouse = 0;
-	Real bestDistSqr = 0;
+	Real bestDistanceSquared = 0;
 	Object *candidateObject;
 	Coord3D enemyCenter;
 	enemyCenter.zero();
@@ -338,24 +338,25 @@ Object *AIPlayer::findSupplyCenter(Int minimumCash)
 					continue;
 				}
 
-				Real dx, dy;
-				dx = candidateObject->getPosition()->x - m_baseCenter.x;
-				dy = candidateObject->getPosition()->y - m_baseCenter.y;
-				Real distSqr = dx * dx + dy * dy;
+				Real deltaX, deltaY;
+				deltaX = candidateObject->getPosition()->x - m_baseCenter.x;
+				deltaY = candidateObject->getPosition()->y - m_baseCenter.y;
+				Real candidateDistanceSquared = deltaX * deltaX + deltaY * deltaY;
 				if (enemy) {
-					dx = candidateObject->getPosition()->x - enemyCenter.x;
-					dy = candidateObject->getPosition()->y - enemyCenter.y;
-					if (distSqr * 0.4 > (dx * dx + dy * dy) * 0.6f) {
+					deltaX = candidateObject->getPosition()->x - enemyCenter.x;
+					deltaY = candidateObject->getPosition()->y - enemyCenter.y;
+					if (candidateDistanceSquared * 0.4 >
+						(deltaX * deltaX + deltaY * deltaY) * 0.6f) {
 						continue;
 					}
 				}
 
 				if (bestSupplyWarehouse == 0) {
 					bestSupplyWarehouse = candidateObject;
-					bestDistSqr = distSqr;
-				} else if (bestDistSqr > distSqr) {
+					bestDistanceSquared = candidateDistanceSquared;
+				} else if (bestDistanceSquared > candidateDistanceSquared) {
 					bestSupplyWarehouse = candidateObject;
-					bestDistSqr = distSqr;
+					bestDistanceSquared = candidateDistanceSquared;
 				}
 			}
 		}
