@@ -43,13 +43,13 @@ public:
 class Team
 {
 public:
-	void getPosition(Coord3D *out);
+	void getPosition(Coord3D *position);
 };
 
 class PolygonTrigger
 {
 public:
-	void getCenter(Coord3D *out);
+	void getCenter(Coord3D *center);
 };
 
 class AIGuardMachine
