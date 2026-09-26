@@ -104,9 +104,10 @@ public:
 
 extern AudioManager *TheAudio;
 
-// Player::addRadar is already claimed at 0x000FB3F0 by a naked thunk of a
-// different body. Keep Player as the base so okToPlayRadarEdgeSound mangles
-// to the matched ILT; the method itself lands under this address-derived type.
+// The old Player::addRadar claim at 0x000FB3F0 was a different two-argument
+// body. Keep Player as the base so okToPlayRadarEdgeSound mangles to its
+// matched ILT; this body retains its original COFF symbol while the ledger
+// records the proven Player::addRadar identity.
 class Player
 {
 public:

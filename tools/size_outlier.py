@@ -164,9 +164,15 @@ def verdict(method, cls, caller_names):
     the family median -- which counts the derived implementations -- makes every
     base look like an outlier. A caller with the SAME method name in a DIFFERENT
     class is a derived override calling its base, and that clears it."""
-    same_method, own_class = [], []
+    same_method, own_class, named = [], [], []
     for name in caller_names:
         m, k = method_and_class(name)
+        # An anonymous caller (?d_/?j_/placeholder) carries no method or class, so
+        # it can neither clear nor indict; counting it turned every newly dumped
+        # caller into "callers exist" without any identity evidence.
+        if m is None and k is None:
+            continue
+        named.append(name)
         if m == method and k != cls:
             same_method.append(name)
         elif k == cls:
@@ -175,7 +181,7 @@ def verdict(method, cls, caller_names):
         return "CLEARED - a derived override delegates to this base"
     if own_class:
         return "CLEARED - called by its own class"
-    if caller_names:
+    if named:
         return "callers exist, none same-method or same-class"
     return "UNDECIDED - no matched caller"
 

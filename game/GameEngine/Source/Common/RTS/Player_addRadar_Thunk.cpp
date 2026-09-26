@@ -1,6 +1,7 @@
 // cl: /DNDEBUG /MD /EHsc
-// readable body of ?addRadar@Player@@QAEX_N@Z: game/GameEngine/Source/Common/RTS/Player.cpp
-// Open-BFME5: lift the retail addRadar body into a standalone C++ thunk.
+// This historical lift bears the old Player::addRadar COFF symbol, but retail
+// 0x000FB3F0 is a two-argument template helper. The ledger carries its
+// address-derived identity until the naked body is converted to C++.
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/Player.h
 class Player

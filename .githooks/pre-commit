@@ -57,14 +57,22 @@ fi
 # cannot see this (an __emit lift of a retail dump is byte-true), so it gets
 # its own gate: no new naked/__emit bodies outside game/gen_small/, and no
 # clean-C++ ledger row repointed back at assembly.
-python3 tools/conversion_gate.py HEAD : || fail "conversion direction (see above)"
+layout_base=HEAD
+merge_head=$(git rev-parse -q --verify MERGE_HEAD 2>/dev/null || true)
+if [ -n "$merge_head" ] \
+   && [ "$(python3 tools/layout_migration.py detect "$merge_head" : || true)" = layout-migration ]; then
+    # The fleet's already-published rows are relocated by this merge, not minted
+    # by it. The exact mapping check below proves the merged parent's claims.
+    layout_base="$merge_head"
+fi
+python3 tools/conversion_gate.py "$layout_base" : || fail "conversion direction (see above)"
 # Historical names survive source moves and opaque owner renames.
 # Execute the reviewed checker, not an unstaged local experiment.
 for checker in tools/name_regression.py tools/name_oracle.py; do
     git cat-file -e ":$checker" && git diff --quiet -- "$checker" \
         || fail "name checker differs from staged snapshot: $checker; stage or revert its edits"
 done
-python3 tools/name_regression.py HEAD : || fail "descriptive names regressed (see above)"
+python3 tools/name_regression.py "$layout_base" : || fail "descriptive names regressed (see above)"
 # A three-body edit must not ride on a whole-file line-ending rewrite (mixed-
 # terminator sources under core.autocrlf=true lose every CR on `git add`).
 python3 tools/eol_guard.py || fail "staged change rewrites line endings (see above)"
@@ -86,9 +94,9 @@ rm -f "$target_sources_out"
 
 # A repository-wide relocation makes every TU look edited to the per-body gate.
 # Check the exact path/ledger mapping, then byte-verify the whole game once.
-if migration_marker=$(python3 tools/layout_migration.py detect HEAD :) \
+if migration_marker=$(python3 tools/layout_migration.py detect "$layout_base" :) \
    && [ "$migration_marker" = layout-migration ]; then
-    python3 tools/layout_migration.py check HEAD : || fail "layout mapping (see above)"
+    python3 tools/layout_migration.py check "$layout_base" : || fail "layout mapping (see above)"
     python3 tools/check_csv.py --staged || fail "ledger integrity (see above)"
     python3 tools/pin_consistency.py --check || fail "pin consistency (see above)"
     python3 tools/b_pin_check.py --staged || fail "b_<rva> pins (see above)"

@@ -1,6 +1,11 @@
 // ?handleGameLobbyReply@Rva007F65E0Owner@@QAEXPAVRva007E8810Message@@H@Z
-// partial score=0.33 date=2026-09-21
-// cl: /GS
+// partial score=0.45 date=2026-09-25
+// ?handleGameLobbyReply@Rva007F65E0Owner@@QAEXPAVRva007E8810Message@@H@Z
+// cl: /O2 /GS
+// Pump3 2026-09-25: go() takes &game itself (retail lea [esp+0x20] = game+0 after two pushes), not &game+8.
+// Remaining residue: retail keeps gid memory-resident at [esp+0x14] and done in bl split around the
+// hasError block. Making gid `volatile` reproduces that (24 non-reloc bytes left: cookie store order
+// and go() arg registers ebp/ecx/edx) -- a diagnostic only, not a landable spelling.
 // 0x007F65E0: FESL game-browser lobby/game-detail reply handler.
 //
 // The on-stack Rva007FBC60Game temporary (ctor at 0x007FBC60, matched in
@@ -13,6 +18,7 @@
 // the owning class, listener interface, or method name, so the remaining
 // names are address-derived.
 
+#define NULL 0
 class Rva007E8810Message
 {
 public:
@@ -106,14 +112,14 @@ void Rva007F65E0Owner::handleGameLobbyReply( Rva007E8810Message *msg, int flag )
 {
 	Rva007FBC60Game game( msg );
 	bool done = false;
-	int gid = game.m_gid;
 	int lid = game.m_lid;
+	int gid = game.m_gid;
 
 	if( msg->hasError() )
 		m_listener->notify( lid, gid, msg->getError() );
 
 	if( Rva00802A90Owner *lobby = findGameLobby( lid ) )
-		done = lobby->go( (Rva00802A90Query *)( (char *)&game + 8 ), flag, msg->m_txn );
+		done = lobby->go( (Rva00802A90Query *)&game, flag, msg->m_txn );
 
 	m_listener->notify( lid, gid, 0 );
 

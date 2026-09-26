@@ -5518,5 +5518,195 @@
   "after_sha256": "7b3329efa218f7e0e5bd374b0a1d0c087ebf78924474853c4da23782790b16c3",
   "evidence": "targets/game/reverse/identity_evidence/00720d10.md",
   "reason": "False whole-TU pairing caused by moving only the unchanged-name getPartitionBucket row. Vector3 and doLighting remain unchanged in the retained original source; Rva00720D10Data and rva00720D10 retain the existing bank identities of a separate append body."
+ },
+ {
+  "old_path": "reverse/attempts/0x001de2a0.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/System/BfmeCellRva001DE2A0.cpp",
+  "old_name": "compute",
+  "new_name": "rva001DE2A0",
+  "before_sha256": "30e035837cc04e5eebfad1110965c6b1cb90702b6528eca09c34c2319fc4f803",
+  "after_sha256": "c8cdbf39bedee61de249bb8e7927fd653b36d4b1aef141fbbf1a8ae1a3428cdc",
+  "evidence": "reverse/symbols.csv",
+  "reason": "compute was an invented method name in the 0.34 bank, whose own header says the owning method identity is not established. reverse/symbols.csv pins ?rva001DE2A0@BfmeCell@@QAEXPBUCoord3D@@MHPAX@Z at ILT 0x00004D27, the exact name the matched BfmeCellGrid::rva001B1AD0 sweep calls, so the landed body takes that address-keeping name."
+ },
+ {
+  "old_path": "reverse/attempts/0x0089f0e0.cpp",
+  "new_path": "Code/Libraries/Source/EA/Apt/AptString/EAStringCSuffix.cpp",
+  "old_name": "Right",
+  "new_name": "rva0089F0E0",
+  "before_sha256": "07ede233764d5c567bda8291ba3762cd973dae3aa485da1f4d79ff84149b76d0",
+  "after_sha256": "0c53f568acdde5c998ba2daa4da148183f44931d2f54fd46508aeb528d9f2812",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank's method name came only from adjacency to Left/Mid and suffix semantics; no caller (image has none), vtable slot, string literal or Zero Hour twin names it"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/BfmeConv767.cpp",
+  "new_path": "Code/GameEngine/Source/Common/BfmeConv767.cpp",
+  "old_name": "BfmeOtherDRE",
+  "new_name": "Rva00367E30Logic",
+  "before_sha256": "6f67cde5540d9f3532fee5784332c441e5462a978084b1e7b72dc41ebe62c9d5",
+  "after_sha256": "2ae14f02b999c6c380004dcb1bf6c74893d4e8c4db5a4a6cba505c1795a1e16c",
+  "evidence": "reverse/identity_evidence/003870f0.md",
+  "reason": "invented generator name for 0x003870F0 with no caller/vtable/string/ZH evidence and the wrong raw hidden-pointer ABI; replaced by the address-derived by-value AsciiString getter proven from the body and the applyOwner call site"
+ },
+ {
+  "old_path": "Code/GameEngine/Source/Common/BfmeConv767.cpp",
+  "new_path": "Code/GameEngine/Source/Common/BfmeConv767.cpp",
+  "old_name": "bfmeGoDRE",
+  "new_name": "rva003870f0",
+  "before_sha256": "6f67cde5540d9f3532fee5784332c441e5462a978084b1e7b72dc41ebe62c9d5",
+  "after_sha256": "2ae14f02b999c6c380004dcb1bf6c74893d4e8c4db5a4a6cba505c1795a1e16c",
+  "evidence": "reverse/identity_evidence/003870f0.md",
+  "reason": "invented generator name for 0x003870F0 with no caller/vtable/string/ZH evidence and the wrong raw hidden-pointer ABI; replaced by the address-derived by-value AsciiString getter proven from the body and the applyOwner call site"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "BfmeThingDRE",
+  "new_name": "Rva00367E30Logic",
+  "before_sha256": "ae30a0a90dffb75191ac58baa17b5068c75917e7711ea79ad4c8f51753b080eb",
+  "after_sha256": "01262356784e933a10405b38fb1fdaf66fcff2a3ecf87bca1d7a77c55c11a8ba",
+  "evidence": "reverse/identity_evidence/003870f0.md",
+  "reason": "invented generator name for 0x003870F0 with no caller/vtable/string/ZH evidence and the wrong raw hidden-pointer ABI; replaced by the address-derived by-value AsciiString getter proven from the body and the applyOwner call site"
+ },
+ {
+  "old_path": "reverse/functions.csv",
+  "new_path": "reverse/functions.csv",
+  "old_name": "bfmeGoDRE",
+  "new_name": "rva003870f0",
+  "before_sha256": "ae30a0a90dffb75191ac58baa17b5068c75917e7711ea79ad4c8f51753b080eb",
+  "after_sha256": "01262356784e933a10405b38fb1fdaf66fcff2a3ecf87bca1d7a77c55c11a8ba",
+  "evidence": "reverse/identity_evidence/003870f0.md",
+  "reason": "invented generator name for 0x003870F0 with no caller/vtable/string/ZH evidence and the wrong raw hidden-pointer ABI; replaced by the address-derived by-value AsciiString getter proven from the body and the applyOwner call site"
+ },
+ {
+  "old_path": "reverse/attempts/0x00107140.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/Rva00107140RadarEventLoc.cpp",
+  "old_name": "clearAllEvents",
+  "new_name": "rva00107140",
+  "before_sha256": "11d21d4045b428eaba5945f252652386ae517e649f1d4fd5f9bc28531a703985",
+  "after_sha256": "beba4d9745190cd26e6f5ccf70a31928dc842a265e23d26873c5010ea5518e52",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "address-token pin ?rva00107140@Radar@@QAE_NPAVCoord3D@@@Z kept over the bank getLastEventLoc/clearAllEvents spellings because it conflicts with the pinned caller spelling and only the ZH caller shape supports the semantic name; m_eventCursor/eventIndex/selected fold into m_field1430 and m_eventFrame becomes m_field1434 because the bank field names have no witness while landed RadarXferObjectList.cpp already names +0x1430 m_field1430 and +0x1434 m_field1434"
+ },
+ {
+  "old_path": "reverse/attempts/0x00107140.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/Rva00107140RadarEventLoc.cpp",
+  "old_name": "eventIndex",
+  "new_name": "m_field1430",
+  "before_sha256": "11d21d4045b428eaba5945f252652386ae517e649f1d4fd5f9bc28531a703985",
+  "after_sha256": "beba4d9745190cd26e6f5ccf70a31928dc842a265e23d26873c5010ea5518e52",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "address-token pin ?rva00107140@Radar@@QAE_NPAVCoord3D@@@Z kept over the bank getLastEventLoc/clearAllEvents spellings because it conflicts with the pinned caller spelling and only the ZH caller shape supports the semantic name; m_eventCursor/eventIndex/selected fold into m_field1430 and m_eventFrame becomes m_field1434 because the bank field names have no witness while landed RadarXferObjectList.cpp already names +0x1430 m_field1430 and +0x1434 m_field1434"
+ },
+ {
+  "old_path": "reverse/attempts/0x00107140.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/Rva00107140RadarEventLoc.cpp",
+  "old_name": "m_eventCursor",
+  "new_name": "m_field1430",
+  "before_sha256": "11d21d4045b428eaba5945f252652386ae517e649f1d4fd5f9bc28531a703985",
+  "after_sha256": "beba4d9745190cd26e6f5ccf70a31928dc842a265e23d26873c5010ea5518e52",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "address-token pin ?rva00107140@Radar@@QAE_NPAVCoord3D@@@Z kept over the bank getLastEventLoc/clearAllEvents spellings because it conflicts with the pinned caller spelling and only the ZH caller shape supports the semantic name; m_eventCursor/eventIndex/selected fold into m_field1430 and m_eventFrame becomes m_field1434 because the bank field names have no witness while landed RadarXferObjectList.cpp already names +0x1430 m_field1430 and +0x1434 m_field1434"
+ },
+ {
+  "old_path": "reverse/attempts/0x00107140.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/Rva00107140RadarEventLoc.cpp",
+  "old_name": "m_eventFrame",
+  "new_name": "m_field1434",
+  "before_sha256": "11d21d4045b428eaba5945f252652386ae517e649f1d4fd5f9bc28531a703985",
+  "after_sha256": "beba4d9745190cd26e6f5ccf70a31928dc842a265e23d26873c5010ea5518e52",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "address-token pin ?rva00107140@Radar@@QAE_NPAVCoord3D@@@Z kept over the bank getLastEventLoc/clearAllEvents spellings because it conflicts with the pinned caller spelling and only the ZH caller shape supports the semantic name; m_eventCursor/eventIndex/selected fold into m_field1430 and m_eventFrame becomes m_field1434 because the bank field names have no witness while landed RadarXferObjectList.cpp already names +0x1430 m_field1430 and +0x1434 m_field1434"
+ },
+ {
+  "old_path": "reverse/attempts/0x00107140.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/Rva00107140RadarEventLoc.cpp",
+  "old_name": "selected",
+  "new_name": "m_field1430",
+  "before_sha256": "11d21d4045b428eaba5945f252652386ae517e649f1d4fd5f9bc28531a703985",
+  "after_sha256": "beba4d9745190cd26e6f5ccf70a31928dc842a265e23d26873c5010ea5518e52",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "address-token pin ?rva00107140@Radar@@QAE_NPAVCoord3D@@@Z kept over the bank getLastEventLoc/clearAllEvents spellings because it conflicts with the pinned caller spelling and only the ZH caller shape supports the semantic name; m_eventCursor/eventIndex/selected fold into m_field1430 and m_eventFrame becomes m_field1434 because the bank field names have no witness while landed RadarXferObjectList.cpp already names +0x1430 m_field1430 and +0x1434 m_field1434"
+ },
+ {
+  "old_path": "reverse/attempts/0x006b0850.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/XferMapAsciiStringReal.cpp",
+  "old_name": "AsciiStringFloatMap",
+  "new_name": "Rva006AF6D0Map",
+  "before_sha256": "59be4f813311375cadc9a2315e260eadd567c7bee3cae90521309f8d10303162",
+  "after_sha256": "b248596f14dd5ab8e80c11cce6b345911b38d9c0d209c777379b312034d03655",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "stash typedef AsciiStringFloatMap was a bank name with no evidence; replaced by the opaque comparator-token map type Rva006AF6D0Map that the landed operator[] TU RvaMapAsciiStringQuad006AF6D0.cpp already defines for this comparator (Rva006AF6D0Less), per caller Rva006ABC60::xfer at 0x006B0CB0"
+ },
+ {
+  "old_path": "reverse/attempts/0x009a5aa0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009A5AA0InstallFilter.cpp",
+  "old_name": "_WriteBarrier",
+  "new_name": "Rva009C0D10Src",
+  "before_sha256": "cb6572018b7210fe4d86558e83dba782c25102a3a7c803e2edf853b0c0cbd562",
+  "after_sha256": "377e0a32d6cb3e9480de02c8103df515b4d4e6c43de6cf2c702c02d844f2df3e",
+  "evidence": "reverse/symbols.csv",
+  "reason": "not a rename: the bank called the MSVC compiler intrinsic _WriteBarrier (no storage and no identity) before storing to literal 0x01356A7C; the landed body drops the no-op barrier and stores through the existing pin ?Rva009C0D10Src@@3PAGA at VA 0x01356A7C (reverse/symbols.csv; read by landed spreadTable.cpp); the token diff aligned the two by position"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ae650.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006AE650.cpp",
+  "old_name": "BfmeLockTM",
+  "new_name": "Rva006AE650MutexGuard",
+  "before_sha256": "67dc5f5d0c1f486c09d14239ce058bedcd446c145ac398bf00ab93872b445e8f",
+  "after_sha256": "fa42f9bcb2888b6de7eaf7c88021f7ee70b7901999553ffb02ecb370c24fa9a4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name had no caller/vtable/string evidence; the address-token guard follows landed sibling MilesAudioManager guards (see landed 0x006A5E60/0x006AC030), per docs/naming_evidence.md"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ae650.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006AE650.cpp",
+  "old_name": "InsertResult",
+  "new_name": "Rva006AE650MutexGuard",
+  "before_sha256": "67dc5f5d0c1f486c09d14239ce058bedcd446c145ac398bf00ab93872b445e8f",
+  "after_sha256": "fa42f9bcb2888b6de7eaf7c88021f7ee70b7901999553ffb02ecb370c24fa9a4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "not a rename: the struct-layout heuristic paired the discarded bank's unrelated nested Rva006AEE00Tree::InsertResult helper (void* + bool, 2 members) with the new mutex guard purely because both are void*-then-1-byte shapes; the guard is a real RAII local with no relation to the bank's fictitious tree-insert API, and its address-token name follows landed sibling guards per docs/naming_evidence.md"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ae650.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006AE650.cpp",
+  "old_name": "bfmeStepTM",
+  "new_name": "rva006A9CE0",
+  "before_sha256": "67dc5f5d0c1f486c09d14239ce058bedcd446c145ac398bf00ab93872b445e8f",
+  "after_sha256": "fa42f9bcb2888b6de7eaf7c88021f7ee70b7901999553ffb02ecb370c24fa9a4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name had no caller/vtable/string evidence and vslot 18 routes via ILT 0x000474AB to unnamed body 0x006A9CE0, so the address token is kept per docs/naming_evidence.md"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ae650.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006AE650.cpp",
+  "old_name": "m_bfmeGapTM",
+  "new_name": "m_pad960",
+  "before_sha256": "67dc5f5d0c1f486c09d14239ce058bedcd446c145ac398bf00ab93872b445e8f",
+  "after_sha256": "fa42f9bcb2888b6de7eaf7c88021f7ee70b7901999553ffb02ecb370c24fa9a4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name (m_bfmeGapTM) was unevidenced filler; m_pad960 encodes the real retail starting offset (+0x960, after the mutex, up to the +0x998 sets) per the project's self-labelling pad-name convention, docs/naming_evidence.md"
+ },
+ {
+  "old_path": "reverse/attempts/0x006ae650.cpp",
+  "new_path": "Code/GameEngineDevice/Source/MilesAudioDevice/MilesAudioManagerRva006AE650.cpp",
+  "old_name": "m_bfmeHeadTM",
+  "new_name": "m_pad004",
+  "before_sha256": "67dc5f5d0c1f486c09d14239ce058bedcd446c145ac398bf00ab93872b445e8f",
+  "after_sha256": "fa42f9bcb2888b6de7eaf7c88021f7ee70b7901999553ffb02ecb370c24fa9a4",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name (m_bfmeHeadTM) was unevidenced filler; m_pad004 encodes the real retail starting offset (+0x4, up to the +0x95C mutex) per the project's self-labelling pad-name convention, docs/naming_evidence.md"
+ },
+ {
+  "old_path": "reverse/attempts/0x0039c260.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/SpecialPower/BfmeSpecialPowerAllowanceStore_bfmeRunEUAe.cpp",
+  "old_name": "BfmeAllowanceEntry",
+  "new_name": "Rva0039C260Entry",
+  "before_sha256": "d4899d2663b41e2a26282df410f7cdfaabfbdd6e076a94da417fae83b509fa6b",
+  "after_sha256": "b6d69d0c674bbe2c67a3869aa1b0ccc9a944f0c9985821a2384ae6de38a42008",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank-only class name with no vtable/caller/string evidence for the entry type"
  }
 ]

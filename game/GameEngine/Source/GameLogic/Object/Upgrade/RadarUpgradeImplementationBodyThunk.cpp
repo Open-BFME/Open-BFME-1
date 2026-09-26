@@ -2,9 +2,9 @@
 //
 // Retail 0x002D7BD0, 67 bytes: Zero Hour's RadarUpgrade::upgradeImplementation.
 // It overrides the UpgradeMux base at +0x10, so `this` arrives adjusted and the
-// module data (+4) and object (+8) are read at -0xC and -8.  addRadar is the
-// Player body the ledger keeps as Rva000CBFA0Player::addRadar, and BFME's module
-// lookup is the protected Object::findModule.
+// module data (+4) and object (+8) are read at -0xC and -8. The Player::addRadar
+// identity at 0x000CBFA0 follows from the matched caller and Boolean argument.
+// BFME's module lookup is the protected Object::findModule.
 
 typedef bool Bool;
 enum NameKeyType { NAMEKEY_INVALID = 0 };
@@ -19,9 +19,7 @@ extern NameKeyGenerator *TheNameKeyGenerator;
 
 #define NAMEKEY(s) TheNameKeyGenerator->nameToKey(s)
 
-class Player;
-
-class Rva000CBFA0Player
+class Player
 {
 public:
 	void addRadar(Bool disableProof);
@@ -81,7 +79,7 @@ void RadarUpgrade::upgradeImplementation()
 
 	Player *player = m_object->getControllingPlayer();
 
-	((Rva000CBFA0Player *)player)->addRadar(md->m_isDisableProof);
+	player->addRadar(md->m_isDisableProof);
 
 	NameKeyType radarUpdateKey = NAMEKEY("RadarUpdate");
 	RadarUpdate *radarUpdate = (RadarUpdate *)m_object->findModule(radarUpdateKey);
