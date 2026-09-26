@@ -1,5 +1,5 @@
 // ?helper@Rva00894120Vector@@QAEXPAX00@Z
-// partial score=0.97 date=2026-09-24
+// partial score=0.991247 date=2026-09-26
 // cl: /DNDEBUG /MD /EHsc /Oy
 
 struct BfmeStringData3AF0
@@ -132,5 +132,7 @@ void Rva00894120Vector::helper(void *first_arg, void *last_arg,
 
 	int offset = (int)(*insert_p - m_items);
 	resize(new_capacity);
-	helper(first_arg, last_arg, Rva00893F10Address(m_items + offset));
+	Rva00892640Item *base = *(Rva00892640Item *volatile *)&m_items;
+	void *last_copy = *(void *volatile *)&last_arg;
+	helper(first_arg, last_copy, Rva00893F10Address(base + offset));
 }
