@@ -5388,5 +5388,25 @@
   "after_sha256": "23206d547f84794159436305d2b85ef99b36a703b63ed3c380e7018ba3e3bf1c",
   "evidence": "docs/naming_evidence.md",
   "reason": "body never reads SpawnBehavior+0x4C and BFME layout is unwitnessed there"
+ },
+ {
+  "old_path": "reverse/attempts/0x0052a940.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/SkirmishScreenStateBfmeFlush11.cpp",
+  "old_name": "bfmeApplyMapList",
+  "new_name": "rva0052A2E0",
+  "before_sha256": "d0eaf3eb6f258d0abeaa164e4dba059ca503370acfd9b74434f53e2f8f25b3b3",
+  "after_sha256": "e0e125d7d829441d3dc825d4c16d001258412cbb386b82148a3eca7ce06f9ba9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name bfmeApplyMapList for 0x0052A2E0 had no pin or evidence (re_attempts records it as unproven); address-derived name pinned at ILT 0x00017B07 with proven thiscall one-dword ABI"
+ },
+ {
+  "old_path": "reverse/attempts/0x0052a940.cpp",
+  "new_path": "Code/GameEngine/Source/GameClient/GUI/SkirmishScreenStateBfmeFlush11.cpp",
+  "old_name": "bfmeSelectMap",
+  "new_name": "rva00528370",
+  "before_sha256": "d0eaf3eb6f258d0abeaa164e4dba059ca503370acfd9b74434f53e2f8f25b3b3",
+  "after_sha256": "e0e125d7d829441d3dc825d4c16d001258412cbb386b82148a3eca7ce06f9ba9",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank name bfmeSelectMap for 0x00528370 had no pin or evidence; address-derived name pinned at ILT 0x000430A9 with proven thiscall one-reference ABI"
  }
 ]
