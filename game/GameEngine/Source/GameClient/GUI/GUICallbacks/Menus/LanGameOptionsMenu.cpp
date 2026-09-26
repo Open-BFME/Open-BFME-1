@@ -111,6 +111,112 @@ public:
 	virtual void hide( Bool immediate ) = 0;
 };
 
+class BFMERetailAsciiString
+{
+public:
+	BFMERetailAsciiString() : m_data( 0 ) {}
+	BFMERetailAsciiString( const char *text );
+	BFMERetailAsciiString( const BFMERetailAsciiString &other );
+	~BFMERetailAsciiString() { releaseBuffer(); }
+	void releaseBuffer();
+
+private:
+	void *m_data;
+};
+
+class BfmePlayerTemplateAddress
+{
+public:
+	BfmePlayerTemplateAddress() : m_ip( 0 ), m_port( 0 ) {}
+
+	UnsignedInt m_ip;
+	UnsignedShort m_port;
+};
+
+class BfmePlayerTemplateLANAPI
+{
+public:
+	virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0;
+	virtual void slot0C() = 0; virtual void slot10() = 0; virtual void slot14() = 0;
+	virtual void slot18() = 0; virtual void slot1C() = 0; virtual void slot20() = 0;
+	virtual void slot24() = 0; virtual void slot28() = 0; virtual void slot2C() = 0;
+	virtual void slot30() = 0; virtual void slot34() = 0; virtual void slot38() = 0;
+	virtual void slot3C() = 0; virtual void slot40() = 0; virtual void slot44() = 0;
+	virtual void slot48() = 0; virtual void slot4C() = 0;
+	virtual void RequestGameOptions( BFMERetailAsciiString options, Bool isPublic,
+		const BfmePlayerTemplateAddress &address = BfmePlayerTemplateAddress() ) = 0;
+	virtual void requestSerializedGameInfo( Bool unused,
+		BfmePlayerTemplateAddress *destination ) = 0;
+	virtual void slot58() = 0; virtual void slot5C() = 0; virtual void slot60() = 0;
+	virtual void slot64() = 0; virtual void slot68() = 0; virtual void slot6C() = 0;
+	virtual void slot70() = 0; virtual void slot74() = 0; virtual void slot78() = 0;
+	virtual void slot7C() = 0; virtual void slot80() = 0; virtual void slot84() = 0;
+	virtual void slot88() = 0; virtual void slot8C() = 0; virtual void slot90() = 0;
+	virtual void slot94() = 0; virtual void slot98() = 0; virtual void slot9C() = 0;
+	virtual void slotA0() = 0; virtual void slotA4() = 0; virtual void slotA8() = 0;
+	virtual void slotAC() = 0; virtual void slotB0() = 0; virtual void slotB4() = 0;
+	virtual void slotB8() = 0; virtual void slotBC() = 0;
+	virtual LANGameInfo *GetMyGame() = 0;
+};
+
+class BfmePlayerTemplateGameInfo
+{
+public:
+	virtual void slot00() = 0; virtual void slot04() = 0; virtual void slot08() = 0;
+	virtual void slot0C() = 0; virtual void slot10() = 0; virtual void slot14() = 0;
+	virtual void resetAccepted() = 0;
+};
+
+struct Rva0068D3E0Slot
+{
+	char m_unmodelled[ 0x10 ];
+	Int m_startPos;
+	Int m_playerTemplate;
+	Int m_team;
+
+	Int getPlayerTemplate() const { return m_playerTemplate; }
+	void setPlayerTemplate( Int playerTemplate )
+	{
+		m_playerTemplate = playerTemplate;
+		if (playerTemplate <= PLAYERTEMPLATE_MIN)
+			m_startPos = -1;
+	}
+	void setStartPos( Int startPos ) { m_startPos = startPos; }
+	Int getTeam() const { return m_team; }
+	void setTeam( Int team ) { m_team = team; }
+	Int getStartPos() const { return m_startPos; }
+};
+
+class Rva0068D3E0Arr
+{
+public:
+	Rva0068D3E0Slot *at( Int index );
+};
+
+// BFME's LAN game slot and slot accessor under the names the ZH source uses.
+typedef Rva0068D3E0Slot BfmeLANGameSlot;
+class BfmeLANGameSlots : public Rva0068D3E0Arr
+{
+public:
+	__forceinline BfmeLANGameSlot *getLANSlot( Int index ) { return at( index ); }
+};
+
+class BfmeThing935B
+{
+public:
+	char bfmeGo935B();
+};
+
+class Rva004CD5F0GameInfo
+{
+public:
+	Bool rva004CD5F0( Int slotIndex ) const;
+};
+
+#pragma comment(linker, "/alternatename:?rva004CD5F0@Rva004CD5F0GameInfo@@QBE_NH@Z=?d_004cd5f0@@YAXXZ")
+
+static void rva004CB810StartPosition( Int player, Int startPos );
+
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -715,17 +821,18 @@ static void handleColorSelection(int index)
 	}
 }
 
-static void handlePlayerTemplateSelection(int index)
+static void handlePlayerTemplateSelection(register int index)
 {
 	GameWindow *combo = comboBoxPlayerTemplate[index];
-	Int playerTemplate, selIndex;
+	register Int playerTemplate;
+	Int selIndex;
 	GadgetComboBoxGetSelectedPos(combo, &selIndex);
 	playerTemplate = (Int)GadgetComboBoxGetItemData(combo, selIndex);
-	LANGameInfo *myGame = TheLAN->GetMyGame();
+	LANGameInfo *myGame = ((BfmePlayerTemplateLANAPI *)TheLAN)->GetMyGame();
 
 	if (myGame)
 	{
-		LANGameSlot * slot = myGame->getLANSlot(index);
+		BfmeLANGameSlot *slot = ((BfmeLANGameSlots *)myGame)->getLANSlot(index);
 		if (playerTemplate == slot->getPlayerTemplate())
 			return;
 
@@ -747,27 +854,32 @@ static void handlePlayerTemplateSelection(int index)
 			slot->setStartPos(-1);
 		}
 
-		myGame->resetAccepted();
+		((BfmePlayerTemplateGameInfo *)myGame)->resetAccepted();
 
-		if (myGame->amIHost())
+		if (((BfmeThing935B *)myGame)->bfmeGo935B())
 		{
 			if (!s_isIniting)
 			{
-				// send around a new slotlist
-				TheLAN->RequestGameOptions(GenerateGameOptionsString(), true);
-				lanUpdateSlotList();
+				BfmePlayerTemplateAddress address;
+				((BfmePlayerTemplateLANAPI *)TheLAN)->requestSerializedGameInfo(
+					TRUE, &address);
+				lanUpdateSlotList004CAF70();
 			}
 		}
 		else
 		{
-			// request the playerTemplate from the host
 			if (AreSlotListUpdatesEnabled())
 			{
-				AsciiString options;
-				options.format("PlayerTemplate=%d", playerTemplate);
-				TheLAN->RequestGameOptions(options, true);
+				BFMERetailAsciiString options;
+				((AsciiString *)&options)->format(
+					AsciiString("PlayerTemplate=%d"), playerTemplate);
+				((BfmePlayerTemplateLANAPI *)TheLAN)->RequestGameOptions(options, TRUE);
 			}
 		}
+
+		if (slot->getStartPos() >= 0 &&
+			!((Rva004CD5F0GameInfo *)myGame)->rva004CD5F0(index))
+			rva004CB810StartPosition(index, -1);
 	}
 }
 
@@ -1186,24 +1298,6 @@ void DeinitLanGameGadgets( void )
 
 //-------------------------------------------------------------------------------------------------
 /** Initialize the Lan Game Options Menu */
-//-------------------------------------------------------------------------------------------------
-struct Rva0068D3E0Slot
-{
-	char m_unmodelled[ 0x10 ];
-	Int m_startPos;
-	Int m_playerTemplate;
-	Int m_team;
-	Int getTeam() const { return m_team; }
-	void setTeam( Int team ) { m_team = team; }
-	Int getStartPos() const { return m_startPos; }
-};
-
-class Rva0068D3E0Arr
-{
-public:
-	Rva0068D3E0Slot *at( Int index );
-};
-
 void LanGameOptionsMenuInit( WindowLayout *layout, void *userData )
 {
 	if (((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame() && ((BfmeInitVirtualLanApi *)TheLAN)->GetMyGame()->isGameInProgress())
@@ -1857,13 +1951,6 @@ public:
 	Int size() const { return m_startPositions.size(); }
 };
 
-class BfmeThing935B
-{
-public:
-	char bfmeGo935B();
-};
-
-extern void lanUpdateSlotList004CAF70( void );
 
 __forceinline LANGameInfo *bfmeStartPositionGetMyGame( BfmeStartPositionLANAPI *lan )
 {
