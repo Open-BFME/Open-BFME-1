@@ -2,7 +2,7 @@
 // LANDisplayGameList, retail 0x0068EBF0, 710 bytes.
 //
 // Identity: the Zero Hour twin in
-// reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameNetwork/LANGameInfo.cpp
+// inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source/GameNetwork/LANGameInfo.cpp
 // (same selection-preserving rebuild: GetSelected / GetItemData / Reset /
 // AddEntryText / SetItemData / SetSelected, the "[" "]" in-progress brackets
 // around getPlayerName(0), gameInProgressColor vs gameColor, and the
@@ -154,7 +154,7 @@ public:
 
 extern ImageCollection *TheMappedImageCollection;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameInfo.h
 class GameInfo
 {
 public:
@@ -174,7 +174,7 @@ public:
 	Int countNonClosed(void) const;				// 0x0061EE90
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/LANGameInfo.h
 class LANGameInfo : public GameInfo
 {
 public:

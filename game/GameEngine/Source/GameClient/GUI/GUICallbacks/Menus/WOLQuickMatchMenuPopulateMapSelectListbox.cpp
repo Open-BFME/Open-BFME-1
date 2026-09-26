@@ -48,7 +48,7 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &that)
 
 class GameWindow;
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Image.h
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/Image.h
 // Image+0x24 m_imageSize is the layout witness (name_oracle).
 struct ICoord2D
 {
@@ -66,7 +66,7 @@ private:
 	ICoord2D m_imageSize;
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/LadderDefs.h
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/LadderDefs.h
 class LadderInfo
 {
 public:
@@ -84,7 +84,7 @@ public:
 	const LadderInfo *findLadderByIndex(Int index);
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameClient/MapUtil.h
 class MapMetaData
 {
 public:
@@ -99,7 +99,7 @@ public:
 	const MapMetaData *findMap(AsciiString mapName);
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/GSConfig.h
+// upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameNetwork/GameSpy/GSConfig.h
 class GameSpyConfigInterface
 {
 public:
