@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "4eeda8e1f76aa02acb9f0d1b44303d45290631a273ee7de7c464783f0ab82909",
+  "symbol": "?aptSetRectField008B6F90@@YAPAVAptValue@@PAURva008B6D70Obj@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.945,
+  "source": "// ?aptSetRectField008B6F90@@YAPAVAptValue@@PAURva008B6D70Obj@@H@Z\n// partial score=0.945 date=2026-09-26\n// cl: /DNDEBUG /MD /EHsc\r\nextern \"C\" void _ReadWriteBarrier();\r\n#pragma intrinsic(_ReadWriteBarrier)\r\nclass AptValue { public: int toInteger(); };\r\nextern AptValue* g_bfmeFallbackDB;\r\nextern AptValue** g_bfmeArr1233;\r\nextern int g_bfmeCount1233;\r\nstruct Rva008B6D70Obj {\r\n\tchar m_pad0[0x20];\r\n\tchar m_rect[0x20];\r\n\tchar m_extra[0x20];\r\n\tvoid* m_context;\r\n\tvoid refresh(void* rect, void* extra, void* context);\r\n};\r\nAptValue* __cdecl Rva008B6D70MakeValue(int value);\r\nAptValue* aptSetRectField008B6F90(Rva008B6D70Obj* self, int argc)\r\n{\r\n\tif (argc < 1)\r\n\t\treturn g_bfmeFallbackDB;\r\n\tint* field = (int*)self->m_rect;\r\n\tint value = g_bfmeArr1233[g_bfmeCount1233 - 1]->toInteger();\r\n\tvoid* context = self->m_context;\r\n\t_ReadWriteBarrier();\r\n\t*field = value;\r\n\t_ReadWriteBarrier();\r\n\tself->refresh(field, self->m_extra, context);\r\n\treturn Rva008B6D70MakeValue(0);\r\n}\r\n"
+}
