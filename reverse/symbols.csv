@@ -89150,3 +89150,4 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ?d_009a5aa0@@YAXXZ,0x009A5AA0,Address-only compatibility for withdrawn dump; native Rva009A5AA0InstallFilter body at 0x009A5AA0; Rva009A4D00Init call site 0x009A4D4C is a direct E8 to 0x009A5AA0 with four cdecl pushes and add esp 0x10; body ends in plain ret; no semantic identity claim
 ?Rva009C9AA0Target@@YAXXZ,0x009C9AA0,address-derived callable alias for the matched ArchivedDirectoryTree private find; the 0x009CA000 retail wrapper passes an AsciiString reference on stack with tree this in ECX
 ?Rva009C9B70Target@@YAXXZ,0x009C9B70,address-derived callable alias for matched ArchiveFileTree private find; 0x009CA040 and 0x009CA0F0 pass AsciiString reference on stack with tree this in ECX
+?Rva009C9CE0Target@@YAXXZ,0x009C9CE0,address-derived callable alias for matched tree private lower_bound; 0x009CA440 passes AsciiString reference on stack with tree this in ECX
