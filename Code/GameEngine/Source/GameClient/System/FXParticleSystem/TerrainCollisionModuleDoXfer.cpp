@@ -47,10 +47,10 @@ public:
 	// at 0x005FCF10.
 	virtual void DoXfer(Xfer &xfer)
 	{
-		Xfer::Version v;
-		v.data[0] = 1;
-		v.data[1] = 1;
-		xfer == v;
+		Xfer::Version version;
+		version.data[0] = 1;
+		version.data[1] = 1;
+		xfer == version;
 		xferRandomVariable(xfer, m_randomVariable08);
 		xfer == m_asciiString04;
 		xfer == m_bool14;
@@ -78,10 +78,10 @@ private:
 // ?DoXfer@TerrainCollisionModule@FXParticleSystem@@UAEXAAVXfer@@@Z
 void TerrainCollisionModule::DoXfer(Xfer &xfer)
 {
-	Xfer::Version v;
-	v.data[0] = 1;
-	v.data[1] = 1;
-	xfer == v;
+	Xfer::Version version;
+	version.data[0] = 1;
+	version.data[1] = 1;
+	xfer == version;
 	TerrainCollisionModuleInfo::DoXfer(xfer);
 	xfer == m_bool1C;
 	xfer == m_bool1D;

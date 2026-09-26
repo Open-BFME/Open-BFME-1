@@ -10478,14 +10478,14 @@ void BoxEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int flags) c
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1ByteFlagged *flagged = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
-    if (flagged->m_flag)
-        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, flagged);
+    U1ByteFlagged *isHollowSetting = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
+    if (isHollowSetting->m_flag)
+        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, isHollowSetting);
 
-    float *value = (float *)((unsigned char *)this + 0x10);
-    if (value[0] != BfmeZeroRange || value[1] != BfmeZeroRange ||
-        value[2] != BfmeZeroRange)
-        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x01113a70, value);
+    float *halfSize = (float *)((unsigned char *)this + 0x10);
+    if (halfSize[0] != BfmeZeroRange || halfSize[1] != BfmeZeroRange ||
+        halfSize[2] != BfmeZeroRange)
+        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x01113a70, halfSize);
 
     {
         writeStreamText(file,
@@ -10511,22 +10511,22 @@ void CylinderEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int fla
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1ByteFlagged *flagged = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
-    if (flagged->m_flag)
-        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, flagged);
+    U1ByteFlagged *isHollowSetting = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
+    if (isHollowSetting->m_flag)
+        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, isHollowSetting);
 
-    float *value0 = (float *)((unsigned char *)this + 0x10);
-    if (*value0 != BfmeZeroRange)
-        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x0108ee10, value0);
+    float *radius = (float *)((unsigned char *)this + 0x10);
+    if (*radius != BfmeZeroRange)
+        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x0108ee10, radius);
 
-    float *value1 = (float *)((unsigned char *)this + 0x14);
-    if (*value1 != BfmeZeroRange)
-        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x01113c94, value1);
+    float *length = (float *)((unsigned char *)this + 0x14);
+    if (*length != BfmeZeroRange)
+        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x01113c94, length);
 
-    float *value2 = (float *)((unsigned char *)this + 0x18);
-    if (*value2 != BfmeZeroRange || value2[1] != BfmeZeroRange ||
-        value2[2] != BfmeZeroRange)
-        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x0109f2a4, value2);
+    float *offset = (float *)((unsigned char *)this + 0x18);
+    if (*offset != BfmeZeroRange || offset[1] != BfmeZeroRange ||
+        offset[2] != BfmeZeroRange)
+        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x0109f2a4, offset);
 
     {
         writeStreamText(file,
@@ -10546,13 +10546,13 @@ void CylindricalEmissionVelocityModuleTemplate::writeINI(File &file, unsigned in
     FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1Pair *value0 = (U1Pair *)((unsigned char *)this + 0x0c);
-    if (value0->m_x != BfmeZeroRange || value0->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x010fa90c, value0);
+    U1Pair *radial = (U1Pair *)((unsigned char *)this + 0x0c);
+    if (radial->m_x != BfmeZeroRange || radial->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x010fa90c, radial);
 
-    U1Pair *value1 = (U1Pair *)((unsigned char *)this + 0x18);
-    if (value1->m_x != BfmeZeroRange || value1->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x0109c33c, value1);
+    U1Pair *normal = (U1Pair *)((unsigned char *)this + 0x18);
+    if (normal->m_x != BfmeZeroRange || normal->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x0109c33c, normal);
 
     {
         writeStreamText(file,
@@ -10596,25 +10596,25 @@ void LightningDrawModuleTemplate::writeINI(File &file, unsigned int flags) const
     writeDrawTemplateBase(this, file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1Pair *value0 = (U1Pair *)((unsigned char *)this + 0x0c);
-    if (value0->m_x != BfmeZeroRange || value0->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011136d8, value0);
+    U1Pair *offsetX = (U1Pair *)((unsigned char *)this + 0x0c);
+    if (offsetX->m_x != BfmeZeroRange || offsetX->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011136d8, offsetX);
 
-    U1Pair *value1 = (U1Pair *)((unsigned char *)this + 0x18);
-    if (value1->m_x != BfmeZeroRange || value1->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011136cc, value1);
+    U1Pair *offsetY = (U1Pair *)((unsigned char *)this + 0x18);
+    if (offsetY->m_x != BfmeZeroRange || offsetY->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011136cc, offsetY);
 
-    U1Pair *value2 = (U1Pair *)((unsigned char *)this + 0x24);
-    if (value2->m_x != BfmeZeroRange || value2->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011136c0, value2);
+    U1Pair *offsetZ = (U1Pair *)((unsigned char *)this + 0x24);
+    if (offsetZ->m_x != BfmeZeroRange || offsetZ->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011136c0, offsetZ);
 
-    float *value3 = (float *)((unsigned char *)this + 0x30);
-    if (*value3 != BfmeZeroRange)
-        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x011136b0, value3);
+    float *multiChance = (float *)((unsigned char *)this + 0x30);
+    if (*multiChance != BfmeZeroRange)
+        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x011136b0, multiChance);
 
-    U1ByteFlagged *value4 = (U1ByteFlagged *)((unsigned char *)this + 0x34);
-    if (value4->m_flag)
-        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x011136a0, value4);
+    U1ByteFlagged *tileTexture = (U1ByteFlagged *)((unsigned char *)this + 0x34);
+    if (tileTexture->m_flag)
+        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x011136a0, tileTexture);
 
     {
         writeStreamText(file,
@@ -10633,51 +10633,51 @@ void LightningEmissionModuleTemplate::writeINI(File &file, unsigned int flags) c
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    float *value0 = (float *)((unsigned char *)this + 0x10);
-    if (value0[0] != BfmeZeroRange || value0[1] != BfmeZeroRange ||
-        value0[2] != BfmeZeroRange)
-        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x01113e20, value0);
+    float *startPoint = (float *)((unsigned char *)this + 0x10);
+    if (startPoint[0] != BfmeZeroRange || startPoint[1] != BfmeZeroRange ||
+        startPoint[2] != BfmeZeroRange)
+        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x01113e20, startPoint);
 
-    float *value1 = (float *)((unsigned char *)this + 0x1c);
-    if (value1[0] != BfmeZeroRange || value1[1] != BfmeZeroRange ||
-        value1[2] != BfmeZeroRange)
-        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x01113e14, value1);
+    float *endPoint = (float *)((unsigned char *)this + 0x1c);
+    if (endPoint[0] != BfmeZeroRange || endPoint[1] != BfmeZeroRange ||
+        endPoint[2] != BfmeZeroRange)
+        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x01113e14, endPoint);
 
-    U1Pair *value2 = (U1Pair *)((unsigned char *)this + 0x28);
-    if (value2->m_x != BfmeZeroRange || value2->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x010f1a0c, value2);
+    U1Pair *amplitude1 = (U1Pair *)((unsigned char *)this + 0x28);
+    if (amplitude1->m_x != BfmeZeroRange || amplitude1->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x010f1a0c, amplitude1);
 
-    U1Pair *value3 = (U1Pair *)((unsigned char *)this + 0x34);
-    if (value3->m_x != BfmeZeroRange || value3->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142ec, value3);
+    U1Pair *frequency1 = (U1Pair *)((unsigned char *)this + 0x34);
+    if (frequency1->m_x != BfmeZeroRange || frequency1->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142ec, frequency1);
 
-    U1Pair *value4 = (U1Pair *)((unsigned char *)this + 0x40);
-    if (value4->m_x != BfmeZeroRange || value4->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142e4, value4);
+    U1Pair *phase1 = (U1Pair *)((unsigned char *)this + 0x40);
+    if (phase1->m_x != BfmeZeroRange || phase1->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142e4, phase1);
 
-    U1Pair *value5 = (U1Pair *)((unsigned char *)this + 0x4c);
-    if (value5->m_x != BfmeZeroRange || value5->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x010f19fc, value5);
+    U1Pair *amplitude2 = (U1Pair *)((unsigned char *)this + 0x4c);
+    if (amplitude2->m_x != BfmeZeroRange || amplitude2->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x010f19fc, amplitude2);
 
-    U1Pair *value6 = (U1Pair *)((unsigned char *)this + 0x58);
-    if (value6->m_x != BfmeZeroRange || value6->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142d4, value6);
+    U1Pair *frequency2 = (U1Pair *)((unsigned char *)this + 0x58);
+    if (frequency2->m_x != BfmeZeroRange || frequency2->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142d4, frequency2);
 
-    U1Pair *value7 = (U1Pair *)((unsigned char *)this + 0x64);
-    if (value7->m_x != BfmeZeroRange || value7->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142cc, value7);
+    U1Pair *phase2 = (U1Pair *)((unsigned char *)this + 0x64);
+    if (phase2->m_x != BfmeZeroRange || phase2->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142cc, phase2);
 
-    U1Pair *value8 = (U1Pair *)((unsigned char *)this + 0x70);
-    if (value8->m_x != BfmeZeroRange || value8->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142bc, value8);
+    U1Pair *amplitude3 = (U1Pair *)((unsigned char *)this + 0x70);
+    if (amplitude3->m_x != BfmeZeroRange || amplitude3->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142bc, amplitude3);
 
-    U1Pair *value9 = (U1Pair *)((unsigned char *)this + 0x7c);
-    if (value9->m_x != BfmeZeroRange || value9->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142ac, value9);
+    U1Pair *frequency3 = (U1Pair *)((unsigned char *)this + 0x7c);
+    if (frequency3->m_x != BfmeZeroRange || frequency3->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142ac, frequency3);
 
-    U1Pair *value10 = (U1Pair *)((unsigned char *)this + 0x88);
-    if (value10->m_x != BfmeZeroRange || value10->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142a4, value10);
+    U1Pair *phase3 = (U1Pair *)((unsigned char *)this + 0x88);
+    if (phase3->m_x != BfmeZeroRange || phase3->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x011142a4, phase3);
 
     {
         writeStreamText(file,
@@ -10696,19 +10696,19 @@ void LineEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int flags) 
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1ByteFlagged *flagged = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
-    if (flagged->m_flag)
-        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, flagged);
+    U1ByteFlagged *isHollowSetting = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
+    if (isHollowSetting->m_flag)
+        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, isHollowSetting);
 
-    float *value0 = (float *)((unsigned char *)this + 0x10);
-    if (value0[0] != BfmeZeroRange || value0[1] != BfmeZeroRange ||
-        value0[2] != BfmeZeroRange)
-        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x01113e20, value0);
+    float *startPoint = (float *)((unsigned char *)this + 0x10);
+    if (startPoint[0] != BfmeZeroRange || startPoint[1] != BfmeZeroRange ||
+        startPoint[2] != BfmeZeroRange)
+        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x01113e20, startPoint);
 
-    float *value1 = (float *)((unsigned char *)this + 0x1c);
-    if (value1[0] != BfmeZeroRange || value1[1] != BfmeZeroRange ||
-        value1[2] != BfmeZeroRange)
-        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x01113e14, value1);
+    float *endPoint = (float *)((unsigned char *)this + 0x1c);
+    if (endPoint[0] != BfmeZeroRange || endPoint[1] != BfmeZeroRange ||
+        endPoint[2] != BfmeZeroRange)
+        u4Next005F8AE0((INI *)&stream, (void *)flags, (void *)0x01113e14, endPoint);
 
     {
         writeStreamText(file,
@@ -10727,17 +10727,17 @@ void OrthoEmissionVelocityModuleTemplate::writeINI(File &file, unsigned int flag
     FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1Pair *value0 = (U1Pair *)((unsigned char *)this + 0x0c);
-    if (value0->m_x != BfmeZeroRange || value0->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01089284, value0);
+    U1Pair *xComponent = (U1Pair *)((unsigned char *)this + 0x0c);
+    if (xComponent->m_x != BfmeZeroRange || xComponent->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01089284, xComponent);
 
-    U1Pair *value1 = (U1Pair *)((unsigned char *)this + 0x18);
-    if (value1->m_x != BfmeZeroRange || value1->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x010a141c, value1);
+    U1Pair *yComponent = (U1Pair *)((unsigned char *)this + 0x18);
+    if (yComponent->m_x != BfmeZeroRange || yComponent->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x010a141c, yComponent);
 
-    U1Pair *value2 = (U1Pair *)((unsigned char *)this + 0x24);
-    if (value2->m_x != BfmeZeroRange || value2->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x010af400, value2);
+    U1Pair *zComponent = (U1Pair *)((unsigned char *)this + 0x24);
+    if (zComponent->m_x != BfmeZeroRange || zComponent->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x010af400, zComponent);
 
     {
         writeStreamText(file,
@@ -10756,13 +10756,13 @@ void OutwardEmissionVelocityModuleTemplate::writeINI(File &file, unsigned int fl
     FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1Pair *value0 = (U1Pair *)((unsigned char *)this + 0x0c);
-    if (value0->m_x != BfmeZeroRange || value0->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x0109d84c, value0);
+    U1Pair *speed = (U1Pair *)((unsigned char *)this + 0x0c);
+    if (speed->m_x != BfmeZeroRange || speed->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x0109d84c, speed);
 
-    U1Pair *value1 = (U1Pair *)((unsigned char *)this + 0x18);
-    if (value1->m_x != BfmeZeroRange || value1->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01113fd4, value1);
+    U1Pair *otherSpeed = (U1Pair *)((unsigned char *)this + 0x18);
+    if (otherSpeed->m_x != BfmeZeroRange || otherSpeed->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01113fd4, otherSpeed);
 
     {
         writeStreamText(file,
@@ -12356,9 +12356,9 @@ void PointEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int flags)
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1ByteFlagged *flagged = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
-    if (flagged->m_flag)
-        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, flagged);
+    U1ByteFlagged *isHollowSetting = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
+    if (isHollowSetting->m_flag)
+        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, isHollowSetting);
 
     {
         writeStreamText(file,
@@ -12383,71 +12383,71 @@ void RenderObjectDrawModuleTemplate::writeINI(File &file, unsigned int flags) co
     writeDrawTemplateBase(this, file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1ByteFlagged *value0 = (U1ByteFlagged *)((unsigned char *)this + 0x14);
-    if (value0->m_flag)
-        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113894, value0);
+    U1ByteFlagged *multiRenderObjects = (U1ByteFlagged *)((unsigned char *)this + 0x14);
+    if (multiRenderObjects->m_flag)
+        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113894, multiRenderObjects);
 
-    U1CountedHolder *value1 = (U1CountedHolder *)((unsigned char *)this + 0x18);
-    U1Counted *item1 = value1->m_item;
+    U1CountedHolder *renderGroup1 = (U1CountedHolder *)((unsigned char *)this + 0x18);
+    U1Counted *item1 = renderGroup1->m_item;
     if (item1 != 0 && item1->m_count != 0)
-        u1Do_005C71F0((void *)&stream, (void *)flags, (void *)0x01113884, value1);
+        u1Do_005C71F0((void *)&stream, (void *)flags, (void *)0x01113884, renderGroup1);
 
-    unsigned int *value2 = (unsigned int *)((unsigned char *)this + 0x1c);
-    if (*value2 != 0)
-        u4Then005F7A30((INI *)&stream, (void *)flags, (void *)0x01113874, value2);
+    unsigned int *numObjects1 = (unsigned int *)((unsigned char *)this + 0x1c);
+    if (*numObjects1 != 0)
+        u4Then005F7A30((INI *)&stream, (void *)flags, (void *)0x01113874, numObjects1);
 
-    float *value3 = (float *)((unsigned char *)this + 0x20);
-    if (*value3 != BfmeZeroRange)
-        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x01113868, value3);
+    float *percent1 = (float *)((unsigned char *)this + 0x20);
+    if (*percent1 != BfmeZeroRange)
+        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x01113868, percent1);
 
     unsigned int enum0 = *(unsigned int *)((unsigned char *)this + 0x24);
     if (enum0 != 8)
         u1Call_005C7110((void *)&stream, (void *)flags, (void *)0x0111385c,
             (void **)(0x01110180 + enum0 * 4));
 
-    U1CountedHolder *value4 = (U1CountedHolder *)((unsigned char *)this + 0x28);
-    U1Counted *item4 = value4->m_item;
+    U1CountedHolder *renderGroup2 = (U1CountedHolder *)((unsigned char *)this + 0x28);
+    U1Counted *item4 = renderGroup2->m_item;
     if (item4 != 0 && item4->m_count != 0)
-        u1Do_005C71F0((void *)&stream, (void *)flags, (void *)0x0111384c, value4);
+        u1Do_005C71F0((void *)&stream, (void *)flags, (void *)0x0111384c, renderGroup2);
 
-    unsigned int *value5 = (unsigned int *)((unsigned char *)this + 0x2c);
-    if (*value5 != 0)
-        u4Then005F7A30((INI *)&stream, (void *)flags, (void *)0x0111383c, value5);
+    unsigned int *numObjects2 = (unsigned int *)((unsigned char *)this + 0x2c);
+    if (*numObjects2 != 0)
+        u4Then005F7A30((INI *)&stream, (void *)flags, (void *)0x0111383c, numObjects2);
 
-    float *value6 = (float *)((unsigned char *)this + 0x30);
-    if (*value6 != BfmeZeroRange)
-        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x01113830, value6);
+    float *percent2 = (float *)((unsigned char *)this + 0x30);
+    if (*percent2 != BfmeZeroRange)
+        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x01113830, percent2);
 
     unsigned int enum1 = *(unsigned int *)((unsigned char *)this + 0x34);
     if (enum1 != 8)
         u1Call_005C7110((void *)&stream, (void *)flags, (void *)0x01113824,
             (void **)(0x01110180 + enum1 * 4));
 
-    U1CountedHolder *value7 = (U1CountedHolder *)((unsigned char *)this + 0x38);
-    U1Counted *item7 = value7->m_item;
+    U1CountedHolder *renderGroup3 = (U1CountedHolder *)((unsigned char *)this + 0x38);
+    U1Counted *item7 = renderGroup3->m_item;
     if (item7 != 0 && item7->m_count != 0)
-        u1Do_005C71F0((void *)&stream, (void *)flags, (void *)0x01113814, value7);
+        u1Do_005C71F0((void *)&stream, (void *)flags, (void *)0x01113814, renderGroup3);
 
-    unsigned int *value8 = (unsigned int *)((unsigned char *)this + 0x3c);
-    if (*value8 != 0)
-        u4Then005F7A30((INI *)&stream, (void *)flags, (void *)0x01113804, value8);
+    unsigned int *numObjects3 = (unsigned int *)((unsigned char *)this + 0x3c);
+    if (*numObjects3 != 0)
+        u4Then005F7A30((INI *)&stream, (void *)flags, (void *)0x01113804, numObjects3);
 
-    float *value9 = (float *)((unsigned char *)this + 0x40);
-    if (*value9 != BfmeZeroRange)
-        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x011137f8, value9);
+    float *percent3 = (float *)((unsigned char *)this + 0x40);
+    if (*percent3 != BfmeZeroRange)
+        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x011137f8, percent3);
 
     unsigned int enum2 = *(unsigned int *)((unsigned char *)this + 0x44);
     if (enum2 != 8)
         u1Call_005C7110((void *)&stream, (void *)flags, (void *)0x011137ec,
             (void **)(0x01110180 + enum2 * 4));
 
-    U1ByteFlagged *value10 = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
-    if (value10->m_flag)
-        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x011137d0, value10);
+    U1ByteFlagged *sinkOnTerrainCollision = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
+    if (sinkOnTerrainCollision->m_flag)
+        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x011137d0, sinkOnTerrainCollision);
 
-    float *value11 = (float *)((unsigned char *)this + 0x10);
-    if (*value11 != BfmeZeroRange)
-        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x010a6938, value11);
+    float *sinkRate = (float *)((unsigned char *)this + 0x10);
+    if (*sinkRate != BfmeZeroRange)
+        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x010a6938, sinkRate);
 
     {
         writeStreamText(file,
@@ -12466,58 +12466,58 @@ void RenderObjectUpdateModuleTemplate::writeINI(File &file, unsigned int flags) 
     reinterpret_cast<BaseWriteFunction>(b_005fff00)(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1Pair *value0 = (U1Pair *)((unsigned char *)this + 0x0c);
-    if (value0->m_x != BfmeZeroRange || value0->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a90, value0);
+    U1Pair *startSizeX = (U1Pair *)((unsigned char *)this + 0x0c);
+    if (startSizeX->m_x != BfmeZeroRange || startSizeX->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a90, startSizeX);
 
-    U1Pair *value1 = (U1Pair *)((unsigned char *)this + 0x18);
-    if (value1->m_x != BfmeZeroRange || value1->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a80, value1);
+    U1Pair *startSizeY = (U1Pair *)((unsigned char *)this + 0x18);
+    if (startSizeY->m_x != BfmeZeroRange || startSizeY->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a80, startSizeY);
 
-    U1Pair *value2 = (U1Pair *)((unsigned char *)this + 0x24);
-    if (value2->m_x != BfmeZeroRange || value2->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a70, value2);
+    U1Pair *startSizeZ = (U1Pair *)((unsigned char *)this + 0x24);
+    if (startSizeZ->m_x != BfmeZeroRange || startSizeZ->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a70, startSizeZ);
 
-    U1Pair *value3 = (U1Pair *)((unsigned char *)this + 0x30);
-    if (value3->m_x != BfmeZeroRange || value3->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a64, value3);
+    U1Pair *sizeRateX = (U1Pair *)((unsigned char *)this + 0x30);
+    if (sizeRateX->m_x != BfmeZeroRange || sizeRateX->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a64, sizeRateX);
 
-    U1Pair *value4 = (U1Pair *)((unsigned char *)this + 0x3c);
-    if (value4->m_x != BfmeZeroRange || value4->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a58, value4);
+    U1Pair *sizeRateY = (U1Pair *)((unsigned char *)this + 0x3c);
+    if (sizeRateY->m_x != BfmeZeroRange || sizeRateY->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a58, sizeRateY);
 
-    U1Pair *value5 = (U1Pair *)((unsigned char *)this + 0x48);
-    if (value5->m_x != BfmeZeroRange || value5->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a4c, value5);
+    U1Pair *sizeRateZ = (U1Pair *)((unsigned char *)this + 0x48);
+    if (sizeRateZ->m_x != BfmeZeroRange || sizeRateZ->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a4c, sizeRateZ);
 
-    U1Pair *value6 = (U1Pair *)((unsigned char *)this + 0x54);
-    if (value6->m_x != BfmeZeroRange || value6->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a3c, value6);
+    U1Pair *sizeDampingX = (U1Pair *)((unsigned char *)this + 0x54);
+    if (sizeDampingX->m_x != BfmeZeroRange || sizeDampingX->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a3c, sizeDampingX);
 
-    U1Pair *value7 = (U1Pair *)((unsigned char *)this + 0x60);
-    if (value7->m_x != BfmeZeroRange || value7->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a2c, value7);
+    U1Pair *sizeDampingY = (U1Pair *)((unsigned char *)this + 0x60);
+    if (sizeDampingY->m_x != BfmeZeroRange || sizeDampingY->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a2c, sizeDampingY);
 
-    U1Pair *value8 = (U1Pair *)((unsigned char *)this + 0x6c);
-    if (value8->m_x != BfmeZeroRange || value8->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a1c, value8);
+    U1Pair *sizeDampingZ = (U1Pair *)((unsigned char *)this + 0x6c);
+    if (sizeDampingZ->m_x != BfmeZeroRange || sizeDampingZ->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114a1c, sizeDampingZ);
 
-    U1Pair *value9 = (U1Pair *)((unsigned char *)this + 0x78);
-    if (value9->m_x != BfmeZeroRange || value9->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114930, value9);
+    U1Pair *angleZ = (U1Pair *)((unsigned char *)this + 0x78);
+    if (angleZ->m_x != BfmeZeroRange || angleZ->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114930, angleZ);
 
-    U1Pair *value10 = (U1Pair *)((unsigned char *)this + 0x84);
-    if (value10->m_x != BfmeZeroRange || value10->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114920, value10);
+    U1Pair *angularRateZ = (U1Pair *)((unsigned char *)this + 0x84);
+    if (angularRateZ->m_x != BfmeZeroRange || angularRateZ->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x01114920, angularRateZ);
 
-    U1Pair *value11 = (U1Pair *)((unsigned char *)this + 0x90);
-    if (value11->m_x != BfmeZeroRange || value11->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x0111490c, value11);
+    U1Pair *angularDamping = (U1Pair *)((unsigned char *)this + 0x90);
+    if (angularDamping->m_x != BfmeZeroRange || angularDamping->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x0111490c, angularDamping);
 
-    unsigned int value12 = *(unsigned int *)((unsigned char *)this + 0x9c);
-    if (value12 != 1)
+    unsigned int rotation = *(unsigned int *)((unsigned char *)this + 0x9c);
+    if (rotation != 1)
         u1Call_005C7110((void *)&stream, (void *)flags, (void *)0x01114900,
-            (void **)(0x01110258 + value12 * 4));
+            (void **)(0x01110258 + rotation * 4));
 
     {
         writeStreamText(file,
@@ -12536,13 +12536,13 @@ void SphereEmissionVolumeModuleTemplate::writeINI(File &file, unsigned int flags
     reinterpret_cast<BaseWriteFunction>(b_005f8b40)(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1ByteFlagged *flagged = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
-    if (flagged->m_flag)
-        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, flagged);
+    U1ByteFlagged *isHollowSetting = (U1ByteFlagged *)((unsigned char *)this + 0x0c);
+    if (isHollowSetting->m_flag)
+        u1Do_005C7410((void *)&stream, (void *)flags, (void *)0x01113a7c, isHollowSetting);
 
-    float *value = (float *)((unsigned char *)this + 0x10);
-    if (*value != BfmeZeroRange)
-        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x0108ee10, value);
+    float *radius = (float *)((unsigned char *)this + 0x10);
+    if (*radius != BfmeZeroRange)
+        u4Next005F5120((INI *)&stream, (void *)flags, (void *)0x0108ee10, radius);
 
     {
         writeStreamText(file,
@@ -12561,9 +12561,9 @@ void SphericalEmissionVelocityModuleTemplate::writeINI(File &file, unsigned int 
     FXParticleSystem::Rva005F8FC0WriteVelocityHeader(this, &file, &flags);
 
     _STL::basic_ofstream<char, _STL::char_traits<char> > stream(0x10);
-    U1Pair *value = (U1Pair *)((unsigned char *)this + 0x0c);
-    if (value->m_x != BfmeZeroRange || value->m_y != BfmeZeroRange)
-        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x0109d84c, value);
+    U1Pair *speed = (U1Pair *)((unsigned char *)this + 0x0c);
+    if (speed->m_x != BfmeZeroRange || speed->m_y != BfmeZeroRange)
+        u1Do_005C9030((void *)&stream, (void *)flags, (void *)0x0109d84c, speed);
 
     {
         writeStreamText(file,

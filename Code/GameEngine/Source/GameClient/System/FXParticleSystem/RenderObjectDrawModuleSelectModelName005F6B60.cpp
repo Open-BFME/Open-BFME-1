@@ -63,9 +63,9 @@ AsciiString Rva005F6B60Owner::selectModelNameAt005F6B60()
             AsciiString name(choices[0].name);
             for (int i = 0; i < 6; ++i)
                 name.removeLastChar();
-            float count = (float)choices[0].count;
+            float variantCount = (float)choices[0].count;
             char suffix[4];
-            sprintf(suffix, "%02d", (int)(WWMath::Random_Float() * (count - 1.0f) + 1.5f));
+            sprintf(suffix, "%02d", (int)(WWMath::Random_Float() * (variantCount - 1.0f) + 1.5f));
             name.concat(suffix);
             name.concat(".w3d");
             return name;
@@ -74,9 +74,9 @@ AsciiString Rva005F6B60Owner::selectModelNameAt005F6B60()
             AsciiString name(choices[1].name);
             for (int i = 0; i < 6; ++i)
                 name.removeLastChar();
-            float count = (float)choices[1].count;
+            float variantCount = (float)choices[1].count;
             char suffix[4];
-            sprintf(suffix, "%02d", (int)(WWMath::Random_Float() * (count - 1.0f) + 1.5f));
+            sprintf(suffix, "%02d", (int)(WWMath::Random_Float() * (variantCount - 1.0f) + 1.5f));
             name.concat(suffix);
             name.concat(".w3d");
             return name;
@@ -85,9 +85,9 @@ AsciiString Rva005F6B60Owner::selectModelNameAt005F6B60()
             AsciiString name(choices[2].name);
             for (int i = 0; i < 6; ++i)
                 name.removeLastChar();
-            float count = (float)choices[2].count;
+            float variantCount = (float)choices[2].count;
             char suffix[4];
-            sprintf(suffix, "%02d", (int)(WWMath::Random_Float() * (count - 1.0f) + 1.5f));
+            sprintf(suffix, "%02d", (int)(WWMath::Random_Float() * (variantCount - 1.0f) + 1.5f));
             name.concat(suffix);
             name.concat(".w3d");
             return name;
