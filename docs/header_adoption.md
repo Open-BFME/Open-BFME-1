@@ -55,7 +55,7 @@ does the swap. Without that, this lane is a treadmill.
 
 ## Which header is canonical
 
-62 types are defined by more than one header, and they are exactly the
+The earlier inventory found 62 types defined by more than one header, including the
 high-leverage ones:
 
 | type | TU-local | headers |
@@ -137,12 +137,9 @@ compiler and recorded. The gate is what carries this from here.
 | `UnicodeString` | 112 | 24 different layout, 13 own `StringBase` |
 | recorded compiler refusals | 442 | declare `releaseBuffer`, `freeBytes`, `bfmeCompare1294` -- methods the header does not have |
 
-Two follow-ups this lane surfaced and did not take:
+The factory header now includes the canonical `AsciiString` definition; its
+private copy is gone. One follow-up remains:
 
-* **`module_factory.h` defines its own `AsciiString`** -- the same layout, four
-  methods, two includers against `ascii_string.h`'s 507. It should include the
-  header rather than restate it. A header edit costs a full gate, so it wants to
-  ride along with other header work.
 * **The compiler refusals name what the header is missing.** 442 shims declare
   `releaseBuffer` and friends. Adding those to `ascii_string.h` -- on evidence,
   not on demand -- would reopen most of that pool in one full gate.

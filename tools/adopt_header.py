@@ -101,10 +101,8 @@ def headers():
     apart. `want` is the number of non-static, non-array data members the class
     declares at depth 1 -- the layout a TU-local shim has to agree with.
     """
-    # Two headers define AsciiString and UnicodeString, so the rule below would
-    # drop them -- but the choice is already settled on evidence, not taste:
-    # ascii_string.h has 507 includers against module_factory.h's 2, and the two
-    # agree on layout. Curated entries are decisions somebody made and wrote down.
+    # These canonical string headers were settled by review; keep the selection
+    # stable while duplicate definitions elsewhere are removed.
     out = {
         "AsciiString": ("ascii_string.h", "Code/Libraries/Source/WWVegas/WWLib", 1),
         "UnicodeString": ("unicode_string.h", "Code/Libraries/Source/WWVegas/WWLib", 1),

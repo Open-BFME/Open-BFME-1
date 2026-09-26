@@ -6,23 +6,10 @@
 // for the early registrations (matching the target) and emits the shared body
 // for the rest; makeDecoratedNameKey and the template-map operator[] are the
 // out-of-line helpers the target calls (pinned in reverse/symbols.csv).
-#include "string_base.h"
+#include "ascii_string.h"
 
 typedef int NameKeyType;
 typedef int ModuleType;
-
-// A temporary AsciiString whose ctor/dtor inline to the (already matched)
-// StringBase<char> machinery, so each `AsciiString("Name")` compiles to the
-// target's StringBase ctor (0x888bc0) + releaseBuffer (0x887940) pair.
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/AsciiString.h
-class AsciiString {
-public:
-    AsciiString(const char *str) { ((StringBase<char> *)this)->StringBase<char>::StringBase(str); }
-    ~AsciiString() { ((StringBase<char> *)this)->releaseBuffer(); }
-
-private:
-    char *m_text;
-};
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/Common/ModuleFactory.h
 class ModuleFactory {
