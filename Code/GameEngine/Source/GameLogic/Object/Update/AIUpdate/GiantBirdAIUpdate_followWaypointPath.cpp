@@ -32,7 +32,7 @@ typedef float Real;
 enum CommandSourceType
 {
 	CMD_FROM_PLAYER = 0,
-	CMD_FROM_AI = 1
+	CMD_FROM_SCRIPT = 1
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h

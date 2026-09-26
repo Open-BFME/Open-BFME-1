@@ -9,7 +9,7 @@ typedef bool Bool;
 enum CommandSourceType
 {
 	CMD_FROM_PLAYER = 0,
-	CMD_FROM_AI = 1
+	CMD_FROM_SCRIPT = 1
 };
 
 enum AIStateType

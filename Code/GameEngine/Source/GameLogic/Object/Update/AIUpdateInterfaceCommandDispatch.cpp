@@ -11,7 +11,7 @@
 // the Zero Hour command surface, so the slot-only base below is intentional.
 //
 // bfmeAttackTarget goes the other way through the same base: when the unit is
-// not already in attack-move (state 0x21) or follow-path-3D (state 0x3d), it hands
+// not already in attack-move (state 0x21) or follow-path state 0x3D, it hands
 // the target back to AICommandInterface::aiAttackObject rather than driving the
 // state machine, and it reaches that method by casting `(char *)this + 0x20`
 // rather than through the base subobject. The cast is what retail's bytes want;
@@ -858,7 +858,7 @@ void AIUpdateInterface::aiDoCommand(const AICommandParms *parms)
 }
 
 // ?bfmeAttackTarget@AIUpdateInterface@@QAEXPAVObject@@@Z
-// BFME target handoff: preserve attack-move or 3D follow-path, otherwise route
+// BFME target handoff: preserve attack-move or follow-path state 0x3D, otherwise route
 // the target through the command interface; an already-owned state machine gets
 // its goal replaced under the retail lock protocol.
 void AIUpdateInterface::bfmeAttackTarget(Object *target)
@@ -866,12 +866,12 @@ void AIUpdateInterface::bfmeAttackTarget(Object *target)
 	enum PreservedStateID
 	{
 		STATE_ATTACK_MOVE_TO_POSITION = 0x21,
-		STATE_FOLLOW_PATH_3D = 0x3D
+		BFME_AI_FOLLOW_PATH_STATE_0x3D = 0x3D
 	};
 
 	Int currentStateId = m_stateMachine->getCurrentStateID();
 	Bool preserveCurrentOrder = currentStateId == STATE_ATTACK_MOVE_TO_POSITION ||
-		currentStateId == STATE_FOLLOW_PATH_3D;
+		currentStateId == BFME_AI_FOLLOW_PATH_STATE_0x3D;
 
 	if (!m_stateMachine->isInIdleState() && !preserveCurrentOrder)
 	{

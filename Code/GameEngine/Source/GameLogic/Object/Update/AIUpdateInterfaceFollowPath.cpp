@@ -10,7 +10,7 @@
 //
 // One contiguous run and one body: refuse the order if the object cannot move,
 // clear the state machine, take the LAST point of the path as the goal
-// position, play the move voice for a player or AI command, hand the whole
+// position, play the move voice for a player or script command, hand the whole
 // vector to the state machine's path step at +0x30, record the command source,
 // tell the AI to ignore one obstacle object, and set the state.
 //
@@ -41,15 +41,15 @@ typedef bool Bool;
 enum CommandSourceType
 {
     CMD_FROM_PLAYER = 0,
-    CMD_FROM_AI = 1
+    CMD_FROM_SCRIPT = 1
 };
 
 enum StateID
 {
     BFME_AI_FOLLOW_PATH = 0x06,
     BFME_AI_FOLLOW_EXIT_PRODUCTION_PATH = 0x07,
-    BFME_AI_FOLLOW_PATH_36 = 0x36,
-    BFME_AI_FOLLOW_PATH_3D = 0x3D
+    BFME_AI_FOLLOW_PATH_STATE_0x36 = 0x36,
+    BFME_AI_FOLLOW_PATH_STATE_0x3D = 0x3D
 };
 
 // upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include/Lib/BaseType.h
@@ -126,7 +126,7 @@ void AIUpdateInterface::privateFollowPath(const _STL::vector<Coord3D> *path,
         const Coord3D goal = *last;
         m_stateMachine->setGoalPosition(&goal);
         if (!exitProduction &&
-            (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_AI))
+            (cmdSource == CMD_FROM_PLAYER || cmdSource == CMD_FROM_SCRIPT))
             playMoveVoiceResponse(&goal);
     }
     reinterpret_cast<BfmeSub30_7F0 *>(m_stateMachine)->step2(
@@ -150,7 +150,7 @@ void AIUpdateInterface::bfmeFollowPath36(const _STL::vector<Coord3D> *path,
         const Coord3D goal = *last;
         m_stateMachine->setGoalPosition(&goal);
         const int source = *commandSource;
-        if (source == CMD_FROM_PLAYER || source == CMD_FROM_AI)
+        if (source == CMD_FROM_PLAYER || source == CMD_FROM_SCRIPT)
             playMoveVoiceResponse(&goal);
 
         reinterpret_cast<BfmeSub30_7F0 *>(m_stateMachine)->step2(
@@ -158,7 +158,7 @@ void AIUpdateInterface::bfmeFollowPath36(const _STL::vector<Coord3D> *path,
         m_lastCommandSource = (CommandSourceType)source;
         ignoreObstacle(ignoreObject);
         *reinterpret_cast<volatile int *>(reinterpret_cast<unsigned char *>(this) + 0x1A0) = extra;
-        m_stateMachine->setState(BFME_AI_FOLLOW_PATH_36);
+        m_stateMachine->setState(BFME_AI_FOLLOW_PATH_STATE_0x36);
     }
 }
 
@@ -176,7 +176,7 @@ void AIUpdateInterface::bfmeFollowPath3D(const _STL::vector<Coord3D> *path,
         const Coord3D goal = *last;
         m_stateMachine->setGoalPosition(&goal);
         const int source = *commandSource;
-        if (source == CMD_FROM_PLAYER || source == CMD_FROM_AI)
+        if (source == CMD_FROM_PLAYER || source == CMD_FROM_SCRIPT)
             playMoveVoiceResponse(&goal);
 
         reinterpret_cast<BfmeSub30_7F0 *>(m_stateMachine)->step2(
@@ -184,6 +184,6 @@ void AIUpdateInterface::bfmeFollowPath3D(const _STL::vector<Coord3D> *path,
         m_lastCommandSource = (CommandSourceType)source;
         ignoreObstacle(ignoreObject);
         *reinterpret_cast<volatile int *>(reinterpret_cast<unsigned char *>(this) + 0x1A0) = extra;
-        m_stateMachine->setState(BFME_AI_FOLLOW_PATH_3D);
+        m_stateMachine->setState(BFME_AI_FOLLOW_PATH_STATE_0x3D);
     }
 }

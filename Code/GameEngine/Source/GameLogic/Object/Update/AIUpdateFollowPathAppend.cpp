@@ -11,7 +11,7 @@
 #include <vector>
 
 typedef bool Bool;
-enum CommandSourceType { CMD_FROM_PLAYER, CMD_FROM_AI };
+enum CommandSourceType { CMD_FROM_PLAYER, CMD_FROM_SCRIPT };
 struct Coord3D { Coord3D(){} Coord3D(const Coord3D&c):x(c.x),y(c.y),z(c.z){} float x,y,z; };
 class Object;
 struct State { int getID() const { return id; } char prefix[4]; int id; };
@@ -85,6 +85,6 @@ void AIUpdateInterface::privateFollowPathAppend(const Coord3D *pos, CommandSourc
   _STL::vector<Coord3D> path;
   path.push_back(*pos);
   privateFollowPath(&path,0,command,false);
-  if (command == CMD_FROM_PLAYER || command == CMD_FROM_AI) playMoveVoiceResponse(pos);
+  if (command == CMD_FROM_PLAYER || command == CMD_FROM_SCRIPT) playMoveVoiceResponse(pos);
  }
 }

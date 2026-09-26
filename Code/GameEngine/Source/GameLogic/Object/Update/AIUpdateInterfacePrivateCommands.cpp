@@ -86,8 +86,8 @@ typedef unsigned int UnsignedInt;
 enum CommandSourceType
 {
 	CMD_FROM_PLAYER = 0,
-	CMD_FROM_AI = 1,
-	CMD_FROM_INTERNAL = 2
+	CMD_FROM_SCRIPT = 1,
+	CMD_FROM_AI = 2
 };
 
 enum CanEnterType
@@ -561,7 +561,7 @@ void AIUpdateInterface::bfmePrivateCommand01(void *first, CommandSourceType comm
 	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_MOVE_TO);
 
-	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_SCRIPT)
 		playMoveVoiceResponse((const Coord3D *)((const char *)first + 0x38));
 }
 
@@ -583,12 +583,12 @@ void AIUpdateInterface::bfmePrivateCommand38(void *first, CommandSourceType comm
 	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_38);
 
-	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_SCRIPT)
 		playMoveVoiceResponse((const Coord3D *)((const char *)first + 0x38));
 }
 
 // Retail 0x00278280. BFME rejects mine-clearing details, preserves the active
-// goal for an internal move, and uses a 100-frame temporary move state when the
+// goal for an AI move, and uses a 100-frame temporary move state when the
 // unit is busy.
 void AIUpdateInterface::privateMoveToPosition(const Coord3D *position, CommandSourceType commandSource)
 {
@@ -600,7 +600,7 @@ void AIUpdateInterface::privateMoveToPosition(const Coord3D *position, CommandSo
 	if (m_curLocomotor)
 		m_curLocomotor->set((const char *)m_object);
 
-	if (!isIdle() && commandSource == CMD_FROM_INTERNAL)
+	if (!isIdle() && commandSource == CMD_FROM_AI)
 	{
 		reinterpret_cast<Rva0016AD50 *>(m_stateMachine)->bfmeSnapshot();
 		reinterpret_cast<Rva002BC470StateAction *>(this)->prepare((void *)position, (void *)commandSource);
@@ -619,7 +619,7 @@ void AIUpdateInterface::privateMoveToPosition(const Coord3D *position, CommandSo
 	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_MOVE_TO);
 
-	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_SCRIPT)
 		playMoveVoiceResponse(position);
 }
 
@@ -677,7 +677,7 @@ void AIUpdateInterface::bfmePrivateCommand1C(const Coord3D *position, CommandSou
 	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_1C);
 
-	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_SCRIPT)
 		playMoveVoiceResponse(position);
 }
 
@@ -697,7 +697,7 @@ void AIUpdateInterface::bfmePrivateCommand1D(const Coord3D *position, CommandSou
 	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_1D);
 
-	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_SCRIPT)
 		playMoveVoiceResponse(position);
 }
 
@@ -717,7 +717,7 @@ void AIUpdateInterface::bfmePrivateCommand1E(const Coord3D *position, CommandSou
 	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_1E);
 
-	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_SCRIPT)
 		playMoveVoiceResponse(position);
 }
 
@@ -737,7 +737,7 @@ void AIUpdateInterface::bfmePrivateCommand37(const Coord3D *position, CommandSou
 	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_STATE_37);
 
-	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_SCRIPT)
 		playMoveVoiceResponse(position);
 }
 
@@ -774,12 +774,12 @@ void AIUpdateInterface::bfmePrivateCommand31(Object *object, CommandSourceType c
 	setCurrentVictim(oldGoal);
 	m_stateMachine->setState((StateID)0x31);
 
-	if (!commandSource || commandSource == CMD_FROM_AI)
+	if (!commandSource || commandSource == CMD_FROM_SCRIPT)
 		playMoveVoiceResponse((const Coord3D *)((const char *)target + 0x38));
 }
 
 // Retail 0x00273730. BFME command 0x39 orders a giant bird to force-attack
-// one object with one shot, then answers player and AI orders with attack voice.
+// one object with one shot, then answers player and script orders with attack voice.
 void AIUpdateInterface::bfmePrivateCommand39(Object *victim, CommandSourceType commandSource)
 {
 	if (!victim)
@@ -797,7 +797,7 @@ void AIUpdateInterface::bfmePrivateCommand39(Object *victim, CommandSourceType c
 		weapon->m_shotsFired = 0;
 	}
 
-	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_SCRIPT)
 		playAttackVoiceResponse(victim);
 }
 
@@ -825,7 +825,7 @@ void AIUpdateInterface::privateAttackMoveToPosition(const Coord3D *position, Int
 		weapon->m_shotsFired = 0;
 	}
 
-	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_SCRIPT)
 		playMoveVoiceResponse(position);
 }
 
@@ -869,7 +869,7 @@ void AIUpdateInterface::privateFaceObject(Object *target, CommandSourceType comm
 	m_lastCommandSource = commandSource;
 	m_stateMachine->setState(BFME_AI_FACE_OBJECT);
 
-	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_AI)
+	if (commandSource == CMD_FROM_PLAYER || commandSource == CMD_FROM_SCRIPT)
 	{
 		Coord3D pos = target->getPosition();
 		playAttackVoiceResponse(&pos);
