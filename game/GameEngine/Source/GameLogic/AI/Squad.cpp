@@ -41,6 +41,7 @@
 #include "PreRTS.h"	// This must go first in EVERY cpp file int the GameEngine
 
 #include "GameLogic/Squad.h"
+#include <hash_map>
 
 #include "Common/GameState.h"
 #include "Common/Team.h"
@@ -49,6 +50,26 @@
 #include "GameLogic/AI.h"
 #include "GameLogic/GameLogic.h"
 #include "GameLogic/Object.h"
+// BFME's object table has its STLport bucket vector at GameLogic+0xb4.
+typedef _STL::hash_map<unsigned int, Object *, _STL::hash<unsigned int>,
+	_STL::equal_to<unsigned int> > BFMESquadObjectHash;
+
+struct BFMESquadGameLogicHash
+{
+	char padding[0xb0];
+	BFMESquadObjectHash objects;
+};
+
+static __forceinline Object *findSquadObject(ObjectID id)
+{
+	if (id == 0)
+		return 0;
+	BFMESquadObjectHash &hash = ((BFMESquadGameLogicHash *)TheGameLogic)->objects;
+	BFMESquadObjectHash::iterator found = hash.find(id);
+	return found == hash.end() ? 0 : (*found).second;
+}
+
+
 
 #ifdef _INTERNAL
 // for occasional debugging...
@@ -102,22 +123,27 @@ void Squad::clearSquad() {
 }
 
 // getAllObjects //////////////////////////////////////////////////////////////////////////////////
-// ?getAllObjects@Squad@@QAEABV?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@XZ present-unmatched
-const VecObjectPtr& Squad::getAllObjects(void) // Not a const function cause we clear away dead object here too
+const VecObjectPtr& Squad::getAllObjects(void)
 {
-	// prunes all NULL objects
-	m_objectsCached.clear();
-	for (VecObjectIDIt it = m_objectIDs.begin(); it != m_objectIDs.end(); ) {
-		Object *obj = TheGameLogic->findObjectByID(*it);
+	// BFME's Squad omits the Zero Hour vtable and begins m_objectIDs at +4,
+	// followed by m_objectsCached at +0x10.
+	struct BFMESquad {
+		char pad[0x04];
+		VecObjectID m_objectIDs;
+		VecObjectPtr m_objectsCached;
+	};
+	BFMESquad *self = (BFMESquad *)this;
+	self->m_objectsCached.clear();
+	for (VecObjectIDIt it = self->m_objectIDs.begin(); it != self->m_objectIDs.end(); ) {
+		Object *obj = findSquadObject(*it);
 		if (obj) {
-			m_objectsCached.push_back(obj);
+			self->m_objectsCached.push_back(obj);
 			++it;
 		} else {
-			it = m_objectIDs.erase(it);
+			it = self->m_objectIDs.erase(it);
 		}
 	}
-
-	return m_objectsCached;
+	return self->m_objectsCached;
 }
 
 // getLiveObjects /////////////////////////////////////////////////////////////////////////////////
