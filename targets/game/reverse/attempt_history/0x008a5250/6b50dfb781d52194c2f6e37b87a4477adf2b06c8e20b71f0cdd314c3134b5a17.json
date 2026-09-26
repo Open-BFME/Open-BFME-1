@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "6b50dfb781d52194c2f6e37b87a4477adf2b06c8e20b71f0cdd314c3134b5a17",
+  "symbol": "?aptKeyMatches@@YAPAVAptValue@@PAXH@Z",
+  "score_kind": "author-estimate",
+  "score": 0.785,
+  "source": "// ?aptKeyMatches@@YAPAVAptValue@@PAXH@Z\n// partial score=0.785 date=2026-09-26\n// cl: /DNDEBUG /MD /EHsc\nclass AptValue { public: int toInteger(); };\nextern AptValue** g_bfmeArr1233;\nextern int g_bfmeCount1233;\nextern unsigned int Rva008A5250LastKey;\nextern const int Rva008A5250KeyTable[0x14];\nint __cdecl Rva008A5250KeyChar(int code);\nAptValue* Rva008A53D0MakeBool(bool value);\nAptValue* aptKeyMatches(void* self, int argc)\n{\n    AptValue** array = g_bfmeArr1233;\n    int count = g_bfmeCount1233;\n    unsigned int key = Rva008A5250LastKey;\n    AptValue* v = array[count - 1];\n    unsigned int bits = key & 3;\n    if (bits == 1) {\n        int code = key >> 17;\n        if (code >= 0x20 && code <= 0x7e) {\n            int c = Rva008A5250KeyChar(code);\n            return Rva008A53D0MakeBool(c == v->toInteger());\n        }\n        if (code < 0x14) {\n            int m = Rva008A5250KeyTable[code];\n            return Rva008A53D0MakeBool(m == v->toInteger());\n        }\n    }\n    return Rva008A53D0MakeBool(0);\n}\n"
+}
