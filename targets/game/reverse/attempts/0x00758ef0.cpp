@@ -1,5 +1,5 @@
 // ?doDrawModule@W3DPoliceCarDraw@@UAEXPBVMatrix3D@@@Z
-// partial score=0.76 date=2026-09-25
+// partial score=0.82 date=2026-09-26
 // cl: /EHsc /MD /DNDEBUG /DWIN32 /D_WINDOWS
 // BFME W3DPoliceCarDraw body at retail RVA 0x00758EF0.
 
@@ -11,7 +11,7 @@ struct Coord3D
 {
 	Real x;
 	Real y;
-	Real z;
+	union { Real z; unsigned int zbits; };
 
 };
 
@@ -105,8 +105,8 @@ public:
 class W3DDynamicLight : public RenderObjClass
 {
 public:
-	void Set_Ambient(const Vector3 &color) { m_ambient = color; }
-	void Set_Diffuse(const Vector3 &color) { m_diffuse = color; }
+	void Set_Ambient(const Vector3 &color) { m_ambient.X = color.X; m_ambient.Y = color.Y; m_ambient.Z = color.Z; }
+	void Set_Diffuse(const Vector3 &color) { m_diffuse.X = color.X; m_diffuse.Y = color.Y; m_diffuse.Z = color.Z; }
 	void Set_Far_Attenuation_Range(Real start, Real end)
 	{
 		m_farAttenStart = start;
@@ -268,7 +268,7 @@ void W3DPoliceCarDraw::doDrawModule(const Matrix3D *transformMtx)
 		Coord3D pos;
 		pos.x = position->x;
 		pos.y = position->y;
-		pos.z = position->z;
+		pos.zbits = position->zbits;
 		m_light->Set_Diffuse(Vector3(red, green, blue));
 		m_light->Set_Ambient(Vector3(red / 2, green / 2, blue / 2));
 		m_light->Set_Far_Attenuation_Range(3, 20);
