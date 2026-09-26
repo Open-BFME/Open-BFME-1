@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0fd938b3ecb73ea76c5e05830d1a1275f18036afd9a971a0266de9c71b818edf",
+  "symbol": "?d_007f94a0@@YAXXZ",
+  "score_kind": "author-estimate",
+  "score": 0.67,
+  "source": "// ?d_007f94a0@@YAXXZ\n// partial score=0.67 date=2026-09-26\n// cl: /O2\n// Search 32 embedded 28-byte records by their leading key.\nstruct Rva007F94A0Record\n{\n    void *m_key;\n    char m_rest[24];\n};\n\nstruct Rva007F94A0Owner\n{\n    char m_pad[0x28];\n    Rva007F94A0Record m_records[32];\n    Rva007F94A0Record *find(void *key);\n};\n\nRva007F94A0Record *Rva007F94A0Owner::find(void *key)\n{\n    Rva007F94A0Record *slot = m_records;\n    for (int i = 0; i < 32; ++i, ++slot)\n        if (slot->m_key == key)\n            return slot;\n    return 0;\n}\n"
+}
