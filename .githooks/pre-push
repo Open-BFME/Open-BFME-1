@@ -128,6 +128,23 @@ while read -r _local_ref local_sha _remote_ref remote_sha; do
             'inputs/reference/shims/*' 'inputs/toolchains/*'; then
         wide_change=1
     fi
+    # A changed .cpp, .c or table that another file #includes compiles inside it, and the
+    # pathspecs above miss .H headers: header_dependents names both, so widen.
+    if [ "$wide_change" -eq 0 ]; then
+        included_out=$(mktemp)
+        included_status=0
+        python3 tools/header_dependents.py --range "$base" "$local_sha" > "$included_out" \
+            || included_status=$?
+        if [ "$included_status" -eq 2 ] || { [ "$included_status" -eq 0 ] && [ -s "$included_out" ]; }; then
+            wide_change=1
+            git diff --quiet "$local_sha" -- game inputs \
+                || { rm -f "$included_out"; fail "working tree differs from $local_sha under game/ or inputs/; the scoped gate would verify the wrong bytes"; }
+        elif [ "$included_status" -ne 0 ]; then
+            rm -f "$included_out"
+            fail "header_dependents (see above)"
+        fi
+        rm -f "$included_out"
+    fi
     if [ "$wide_change" -ne 0 ]; then
         # Byte-verify only the ledger sources the changed headers can reach;
         # header_dependents.py exits 2 (toolchain, vendored, STLport, or too

@@ -215,6 +215,13 @@ def test_bounded_header_change_verifies_only_its_dependents(hook_runner):
     assert 'tools/gate_baseline.py --check' not in (root / 'guards').read_text()
 
 
+def test_unbounded_included_source_runs_the_full_gate(hook_runner):
+    result, chunks, root = hook_runner([], staged_source='game/Inc/Included.cpp', header_rc=2)
+    assert result.returncode == 0, result.stderr
+    assert 'running FULL gate' in result.stderr
+    assert 'tools/gate_baseline.py --check' in (root / 'guards').read_text()
+
+
 def test_unbounded_header_change_runs_the_full_gate(hook_runner):
     result, chunks, root = hook_runner([], staged_source='game/Inc/Low.h', header_rc=2)
     assert result.returncode == 0, result.stderr

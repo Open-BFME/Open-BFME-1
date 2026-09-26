@@ -15,6 +15,8 @@ Under-counting would let a broken TU through, so every doubt widens the set:
     every header; a `// cl: /FI<name>` forced include counts as an include;
   - the graph is read from #include text, so a deleted or renamed header's
     includers are still found;
+  - a changed .cpp, .c or table that a scanned file #includes by name compiles
+    inside that file, so it reaches its includers like a header does;
   - toolchain, vendored-library and STLport changes, or a set larger than
     --limit sources, exit 2: the caller runs the full gate.
 
@@ -52,8 +54,8 @@ def git(*args):
 
 def changed(args):
     if args.staged:
-        return git("diff", "--cached", "--name-only", "--diff-filter=ACMRTD").splitlines()
-    return git("diff", "--name-only", args.range[0], args.range[1]).splitlines()
+        return git("diff", "--cached", "--name-only", "--no-renames", "--diff-filter=ACMRTD").splitlines()
+    return git("diff", "--name-only", "--no-renames", args.range[0], args.range[1]).splitlines()
 
 
 def is_wide(path):
@@ -62,6 +64,16 @@ def is_wide(path):
 
 def name(path):
     return path.replace("\\", "/").rsplit("/", 1)[-1].lower()
+
+
+def included_names():
+    """Names that some scanned file #includes literally; one grep, far cheaper than graph()."""
+    result = subprocess.run(["git", "grep", "-h", "-I", "-E", "-e", "^[[:space:]]*#[[:space:]]*include",
+                             "--", *SCANNED_ROOTS], cwd=ROOT, capture_output=True, text=True,
+                            encoding="utf-8", errors="replace")
+    if result.returncode not in (0, 1):
+        raise SystemExit(f"header_dependents: git grep failed: {result.stderr.strip()}")
+    return {name(literal) for literal, _ in INCLUDE.findall(result.stdout) if literal}
 
 
 def ledger_sources():
@@ -110,8 +122,7 @@ def dependents(headers, includers, macro):
             if path in reached:
                 continue
             reached.add(path)
-            if path.lower().endswith(HEADER_SUFFIXES):
-                frontier.add(name(path))
+            frontier.add(name(path))  # a source can be #included as well
     return reached
 
 
@@ -124,16 +135,21 @@ def main(argv=None):
                     help="more dependent sources than this runs the full gate instead (default 2000)")
     args = ap.parse_args(argv)
     sys.stdout.reconfigure(newline="\n")  # the hooks read this with mapfile
-    wide = [p for p in changed(args) if is_wide(p) and not p.startswith(IGNORED_ROOTS)]
-    if not wide:
+    paths = [p for p in changed(args) if not p.startswith(IGNORED_ROOTS)]
+    wide = [p for p in paths if is_wide(p)]
+    others = [p for p in paths if not is_wide(p) and p.startswith(("game/", "inputs/"))]
+    names = included_names() if others else set()
+    included = [p for p in others if name(p) in names]
+    roots = wide + included
+    if not roots:
         return 0
-    blocked = [p for p in wide if p.startswith(FULL_GATE_ROOTS) or "stlport" in p.lower()]
+    blocked = [p for p in roots if p.startswith(FULL_GATE_ROOTS) or "stlport" in p.lower()]
     if blocked:
         print(f"header_dependents: {blocked[0]} is toolchain/vendored/STLport: full gate", file=sys.stderr)
         return 2
     includers, macro = graph()
     rows = ledger_sources()
-    reached = dependents(wide, includers, macro)
+    reached = dependents(roots, includers, macro)
     sources = sorted(p for p in reached if p in rows and p.lower().endswith(SOURCE_SUFFIXES))
     # a changed file that is itself a ledger source (a shim .cpp) is verified too
     sources = sorted(set(sources) | {p for p in wide if p in rows})
@@ -141,7 +157,8 @@ def main(argv=None):
         print(f"header_dependents: {len(sources):,} dependent sources exceed --limit {args.limit:,}: full gate",
               file=sys.stderr)
         return 2
-    print(f"header_dependents: {len(wide)} changed header(s) reach {len(sources):,} ledger source(s)",
+    print(f"header_dependents: {len(wide)} changed header(s) and {len(included)} included file(s) "
+          f"reach {len(sources):,} ledger source(s)",
           file=sys.stderr)
     for path in sources:
         print(path)

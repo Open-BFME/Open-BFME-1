@@ -160,6 +160,21 @@ while IFS= read -r path; do
     esac
 done < <(git diff --cached --name-only --diff-filter=ACMRT)
 
+# A staged .cpp, .c or table that another file #includes compiles inside it, and the
+# pattern above misses .inl and .H headers: header_dependents names both, so widen.
+if [ "$wide_change" -eq 0 ]; then
+    included_out=$(mktemp)
+    included_status=0
+    python3 tools/header_dependents.py --staged > "$included_out" || included_status=$?
+    if [ "$included_status" -eq 2 ] || { [ "$included_status" -eq 0 ] && [ -s "$included_out" ]; }; then
+        wide_change=1
+    elif [ "$included_status" -ne 0 ]; then
+        rm -f "$included_out"
+        fail "header_dependents (see above)"
+    fi
+    rm -f "$included_out"
+fi
+
 # Placement: game sources live only under game/ at the official BFME path
 # (plus inputs/reference/shims/ for shim headers, inputs/reference/CnC_Generals_Zero_Hour/ for
 # restoring vendored EA reference source, and tools/tests/ for fixtures).
@@ -206,7 +221,7 @@ if [ "$wide_change" -ne 0 ]; then
         rm -f "$header_deps_out"
         for path in $(git diff --cached --name-only --diff-filter=ACMRT); do
             case "$path" in
-                *.h|*.hpp|*.hh|*.hxx|*.inl|*.inc|inputs/reference/shims/*)
+                *.h|*.hpp|*.hh|*.hxx|*.inl|*.inc|inputs/reference/shims/*|game/*|inputs/*)
                     git diff --quiet -- "$path" || fail "unstaged edits in $path: the scoped header gate would verify the wrong bytes" ;;
             esac
         done
