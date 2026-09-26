@@ -124,6 +124,9 @@ def test_cgroup_kill_terminates_a_detached_tree(tmp_path):
 def test_persisted_unit_stays_observable_after_supervisor_crash(tmp_path):
     if not sys.platform.startswith("linux"):
         pytest.skip("cgroup-v2 process fixture is Linux-only")
+    # The supervisor below creates its own unit; probe first so a Linux host
+    # without cgroup-v2 delegation (GitHub runners) skips instead of failing.
+    assert new_unit().remove()
     metadata = tmp_path / "run.json"
     descendant_pid_file = tmp_path / "descendant.pid"
     supervisor = tmp_path / "supervisor.py"

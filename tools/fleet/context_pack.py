@@ -31,6 +31,9 @@ def call_index(raw, lo, path):
     """
     path = Path(path)
     digest = hashlib.sha256(raw).hexdigest()
+    # build/ is untracked scratch: since the toolchains moved to inputs/ a fresh
+    # checkout has no build/ at all, and the lock open failed before any index.
+    path.parent.mkdir(parents=True, exist_ok=True)
     with (path.parent / (path.name + '.lock')).open('a+b') as handle:
         lock(handle, exclusive=True)
         try:
