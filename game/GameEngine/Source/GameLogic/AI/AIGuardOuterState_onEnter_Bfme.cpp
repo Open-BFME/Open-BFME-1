@@ -1,7 +1,9 @@
-// ?onEnter@AIGuardOuterState@@UAE?AW4StateReturnType@@XZ
-// partial score=0.71 date=2026-09-24
-// cl: /DNDEBUG /MD /EHsc
-// ABI views follow the decoded 0x0015C7A0 body and its complete callees.
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB
+// stlport
+// AIGuardOuterState::onEnter, vtable 0x01096248 slot 4.
+#define _STLP_USE_NEWALLOC 1
+#define _STLP_NO_EXCEPTIONS 1
+#include <hash_map>
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -64,14 +66,25 @@ public:
 	unsigned char m_pad69[3];
 	Int m_nemesisID;
 	Int m_field70;
+	Int getNemesisID() const { return m_nemesisID; }
 };
 
+typedef _STL::hash_map<Int, Object *, _STL::hash<Int>, _STL::equal_to<Int> > ObjectPtrHash;
 class GameLogic
 {
 public:
-	Object *findObjectByID(Int id);
+	__declspec(noinline) Object *findObjectByID(Int id)
+	{
+		if (id == 0) return 0;
+		ObjectPtrHash::iterator it = m_objHash.find(id);
+		if (it == m_objHash.end()) return 0;
+		return (*it).second;
+	}
+	UnsignedInt getFrame() { return m_frame; }
 	unsigned char m_pad00[0x3c];
 	UnsignedInt m_frame;
+	unsigned char m_slice_pad[0x70];
+	ObjectPtrHash m_objHash;
 };
 
 class Team
@@ -104,6 +117,7 @@ class AIRootR0015C7A0
 public:
 	unsigned char m_pad00[0x14];
 	FactorsR0015C7A0 *m_factors;
+	const FactorsR0015C7A0 *getAiData() const { return m_factors; }
 };
 
 class AttackExitConditionsInterface
@@ -125,6 +139,7 @@ public:
 	UnsignedInt m_field18;
 };
 
+// Retail calls AIAttackState through ILT 0x0000BF3C.
 class CtorTargetR0015C7A0
 {
 public:
@@ -134,17 +149,31 @@ public:
 	virtual void slot00();
 	virtual void slot04();
 	virtual void slot08();
+	virtual void slot0c();
 	virtual StateReturnType onEnter();
+	unsigned char m_body[0x18];
+	StateMachine *m_machine;
+	unsigned char m_tail[0x34];
+};
+
+class State
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0c();
+	virtual StateReturnType onEnter();
+	StateMachine *getMachine() const { return m_machine; }
 	unsigned char m_body[0x18];
 	StateMachine *m_machine;
 };
 
-class AIGuardOuterState
+class AIGuardOuterState : public State
 {
 public:
 	virtual StateReturnType onEnter();
-	unsigned char m_body[0x18];
-	StateMachine *m_machine;
+	Rva0015C7A0GuardMachine *getGuardMachine() const { return (Rva0015C7A0GuardMachine *)getMachine(); }
 	unsigned char m_pad20[4];
 	QR0015C7A0 m_exitConditions;
 	CtorTargetR0015C7A0 *m_attackState;
@@ -184,24 +213,10 @@ StateReturnType AIGuardOuterState::onEnter()
 	Coord3D position;
 	{
 		GameLogic *logic = *(GameLogic **)0x012F0898;
-		union
-		{
-			void *asVoid;
-			FindObjectByIDCall asMember;
-		} findObjectCast;
-		findObjectCast.asVoid = (void *)j_0001f253;
-		Object *target = (logic->*findObjectCast.asMember)(
-			*reinterpret_cast<Int *>(container + 0x44));
+		Object *target = logic->findObjectByID(*reinterpret_cast<Int *>(container + 0x44));
 
-		union
-		{
-			void *asVoid;
-			FindTeamByIDCall asMember;
-		} findTeamCast;
-		findTeamCast.asVoid = (void *)j_00044c2e;
-		UnsignedInt teamID = *reinterpret_cast<UnsignedInt *>(container + 0x48);
-		TeamFactory *factory = *(TeamFactory **)0x012ED810;
-		Team *team = (factory->*findTeamCast.asMember)(teamID);
+		Team *team = (*(TeamFactory **)0x012ED810)->findTeamByID(
+			*reinterpret_cast<UnsignedInt *>(container + 0x48));
 
 		if (target)
 		{
@@ -227,14 +242,8 @@ StateReturnType AIGuardOuterState::onEnter()
 
 	container = *reinterpret_cast<unsigned char **>(self + 0x1c);
 	GameLogic *logic = *(GameLogic **)0x012F0898;
-	union
-	{
-		void *asVoid;
-		FindObjectByIDCall asMember;
-	} findObjectCast;
-	findObjectCast.asVoid = (void *)j_0001f253;
-	Object *nemesis = (logic->*findObjectCast.asMember)(
-		*reinterpret_cast<Int *>(container + 0x6c));
+	Object *nemesis = logic->findObjectByID(
+		((Rva0015C7A0GuardMachine *)container)->getNemesisID());
 	if (!nemesis)
 		return STATE_SUCCESS;
 
@@ -274,14 +283,13 @@ StateReturnType AIGuardOuterState::onEnter()
 
 	m_exitConditions.m_center = position;
 	m_exitConditions.m_radiusSqr = range * range;
-	logic = *(GameLogic **)0x012F0898;
-	AIRootR0015C7A0 *ai = *(AIRootR0015C7A0 **)0x012EF214;
 	m_exitConditions.m_field18 =
-		logic->m_frame + ai->m_factors->m_field3c;
+		(*(GameLogic **)0x012F0898)->getFrame() +
+		(*(AIRootR0015C7A0 **)0x012EF214)->getAiData()->m_field3c;
 	m_exitConditions.m_conditionsToConsider = 7;
 
 	m_attackState = new CtorTargetR0015C7A0(
-		m_machine, false, true, false, &m_exitConditions);
+		getMachine(), false, true, false, &m_exitConditions);
 	m_attackState->m_machine->setGoalObject(nemesis);
 	StateReturnType result = m_attackState->onEnter();
 	return result == STATE_CONTINUE ? STATE_CONTINUE : STATE_SUCCESS;

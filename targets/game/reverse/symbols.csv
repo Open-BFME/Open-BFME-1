@@ -89171,3 +89171,4 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ?findClosestByKindOf@Rva002C6DD0PlayerView@@QAEPAVObject@@PAV2@V?$BitFlags@$0MA@@@1@Z,0x000CFC30,TU-local ABI view proven by 3 target call sites and the canonical 192-bit Player body
 ?at@Rva0068D3E0Arr@@QAEPAURva0068D3E0Slot@@H@Z,0x000234D4,route=0x0068D3E0; caller 0x0068CF00 sites 0x0068D099 and 0x0068D0C1; ret 4 checked slot at +0x58 stride 0x68
 ?rva0039C260@LightPointSystem@@QAEXPAVBfmeUniqueIntegerStoreC8C0@@PAX@Z,0x00045039,ILT to 0x0039C260; BfmeItemEUA::bfmeRunEUAe at 0x000C9930 forwards its +0x274 store and context to the LightPointSystem global at 0x012F0FF8 (loaded by INI::parseLightPointLevel 0x0039CCF0)
+??0CtorTargetR0015C7A0@@QAE@PAVStateMachine@@_N11PAVAttackExitConditionsInterface@@@Z,0x0000BF3C,local ABI call view for AIAttackState constructor from 0x0015C7A0; target=0x0017C910
