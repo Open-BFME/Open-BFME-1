@@ -1,6 +1,6 @@
-// ?d_00303670@@YAXXZ
-// partial score=0.3443 date=2026-09-23
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/stringinline
+// ?Rva00303670@ScriptActions@@IAEXABVAsciiString@@M@Z
+// partial score=0.62 date=2026-09-26
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
 // stlport
 
 #define _STLP_USE_STATIC_LIB 1
@@ -191,32 +191,11 @@ private:
 	GetNextFunc m_getNext;
 };
 
-class BfmeTeamEstimatePositionCall
-{
-public:
-	Coord3D *getEstimateTeamPosition(Coord3D *position) const;
-};
-
-extern void j_0002990b(void);
-
-static __forceinline Coord3D *bfmeGetEstimateTeamPosition(Team *team,
-	Coord3D *position)
-{
-	typedef Coord3D *(BfmeTeamEstimatePositionCall::*Function)(Coord3D *) const;
-	union
-	{
-		void (*raw)(void);
-		Function member;
-	} function;
-	function.raw = j_0002990b;
-	return (reinterpret_cast<const BfmeTeamEstimatePositionCall *>(team)->*
-		function.member)(position);
-}
-
 class Team
 {
 public:
 	Player *getControllingPlayer() const;
+	Coord3D *getEstimateTeamPosition(Coord3D *position) const;
 
 	BfmeDlinkIterator<Object> iterate_TeamMemberList() const
 	{
@@ -270,7 +249,8 @@ class PartitionFilterAcceptByKindOf : public PartitionFilter
 {
 public:
 	PartitionFilterAcceptByKindOf(const KindOfMaskType &mustBeSet,
-		const KindOfMaskType &mustBeClear);
+		const KindOfMaskType &mustBeClear)
+		: m_mustBeSet(mustBeSet), m_mustBeClear(mustBeClear) { }
 	virtual Bool allow(Object *object);
 
 private:
@@ -342,11 +322,13 @@ extern Real g_bfmeDefaultBU;
 extern void j_00001140(void);
 extern void j_000022bb(void);
 extern void j_0002369b(void);
+extern void j_0002990b(void);
 extern void j_00029c08(void);
 
 #pragma comment(linker, "/alternatename:?dlink_next_TeamMemberList@BfmeObjectDlinkBase@@QBEPAVObject@@XZ=?j_00001140@@YAXXZ")
 #pragma comment(linker, "/alternatename:?getFinalOverride@Overridable@@QBEPBV1@XZ=?j_000022bb@@YAXXZ")
 #pragma comment(linker, "/alternatename:?getControllingPlayer@Team@@QBEPAVPlayer@@XZ=?j_0002369b@@YAXXZ")
+#pragma comment(linker, "/alternatename:?getEstimateTeamPosition@Team@@QBEPAUCoord3D@@PAU2@@Z=?j_0002990b@@YAXXZ")
 #pragma comment(linker, "/alternatename:?aiRepair@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z=?j_00029c08@@YAXXZ")
 
 class ScriptActions
@@ -363,10 +345,10 @@ void ScriptActions::Rva00303670(const AsciiString &teamName, Real radius)
 		return;
 
 	Coord3D teamPosition;
-	Coord3D *position = bfmeGetEstimateTeamPosition(team, &teamPosition);
 	int radiusBits = *(int *)&radius;
 	BfmeWideResult result = ((BfmeWideForwardC *)ThePartitionManager)->
-		bfmeForwardWideC((int)position, radiusBits, 0,
+		bfmeForwardWideC((int)team->getEstimateTeamPosition(&teamPosition),
+			radiusBits, 0,
 			(int)PartitionFilterPlayerAffiliation(
 				team->getControllingPlayer(), 2, true).link(
 					filterAddress(PartitionFilterAcceptByKindOf(
