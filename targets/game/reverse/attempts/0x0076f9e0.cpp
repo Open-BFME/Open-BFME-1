@@ -1,6 +1,6 @@
 // ?validate@Rva0076F9E0Owner@@QBEXPAURva0076F9E0Names@@@Z
-// partial score=0.19 date=2026-09-22
-// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Ireference/shims/namekeygenerator /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
+// partial score=0.22 date=2026-09-26
+// cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c- /Iinputs/reference/shims/namekeygenerator /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas
 // stlport
 
 #define _STLP_NO_EXCEPTIONS 1
@@ -167,6 +167,11 @@ struct ModelConditionInfo
 	};
 };
 
+namespace _STL
+{
+	 template<> __declspec(noinline) void _Construct<ModelConditionInfo::WeaponBarrelInfo, ModelConditionInfo::WeaponBarrelInfo>(ModelConditionInfo::WeaponBarrelInfo *, const ModelConditionInfo::WeaponBarrelInfo &);
+}
+
 class Rva0076F9E0Owner
 {
 public:
@@ -230,7 +235,6 @@ void Rva0076F9E0Owner::validate(Rva0076F9E0Names *names) const
 		_STL::vector<ModelConditionInfo::WeaponBarrelInfo> &barrelVec =
 			m_weaponBarrelInfoVec[wslot];
 		barrelVec.clear();
-		m_hasRecoilBonesOrMuzzleFlashes[wslot] = false;
 
 		const Rva0076F9E0AsciiString &firstName = names->m_first[wslot];
 		const Rva0076F9E0AsciiString &secondName = names->m_second[wslot];
@@ -321,8 +325,6 @@ void Rva0076F9E0Owner::validate(Rva0076F9E0Names *names) const
 			if (info.m_second != 0 || projectileMatrix != 0)
 			{
 				barrelVec.push_back(info);
-				if (info.m_first != 0 || info.m_third != 0)
-					m_hasRecoilBonesOrMuzzleFlashes[wslot] = true;
 			}
 		}
 	}
