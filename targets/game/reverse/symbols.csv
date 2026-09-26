@@ -89363,3 +89363,25 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeRva012B518CSource@@3URvaTriple@@A,0x012B518C,retail 0x00C6B5F0 source triple
 ?bfmeRva012B5198FirstCopy@@3URvaTriple@@A,0x012B5198,retail 0x00C6B5F0 first destination triple
 ?bfmeRva012B5180SecondCopy@@3URvaTriple@@A,0x012B5180,retail 0x00C6B5F0 second destination triple
+?bfmeRva012B4654RegistrationNext@@3PAXA,0x012B4654,registration node linked by retail at 0x00C6B260
+?bfmeRva012B4680RegistrationNext@@3PAXA,0x012B4680,registration node linked by retail at 0x00C6B280
+?bfmeRva012B4690RegistrationNext@@3PAXA,0x012B4690,registration node linked by retail at 0x00C6B2A0
+?bfmeRva012B46F0RegistrationNext@@3PAXA,0x012B46F0,registration node linked by retail at 0x00C6B2F0
+?bfmeRva012B477CRegistrationNext@@3PAXA,0x012B477C,registration node linked by retail at 0x00C6B310
+?bfmeRva012B4848RegistrationNext@@3PAXA,0x012B4848,registration node linked by retail at 0x00C6B330
+?bfmeRva012B48F4RegistrationNext@@3PAXA,0x012B48F4,registration node linked by retail at 0x00C6B350
+?bfmeRva012B4900RegistrationNext@@3PAXA,0x012B4900,registration node linked by retail at 0x00C6B370
+?bfmeRva012B4D48RegistrationNext@@3PAXA,0x012B4D48,registration node linked by retail at 0x00C6B3B0
+?bfmeRva012B4E54RegistrationNext@@3PAXA,0x012B4E54,registration node linked by retail at 0x00C6B430
+?bfmeRva012B4E64RegistrationNext@@3PAXA,0x012B4E64,registration node linked by retail at 0x00C6B490
+?bfmeRva012B5250RegistrationNext@@3PAXA,0x012B5250,registration node linked by retail at 0x00C6B640
+?bfmeRva012B525CRegistrationNext@@3PAXA,0x012B525C,registration node linked by retail at 0x00C6B660
+?bfmeRva012B5268RegistrationNext@@3PAXA,0x012B5268,registration node linked by retail at 0x00C6B680
+?bfmeRva012B52C4RegistrationNext@@3PAXA,0x012B52C4,registration node linked by retail at 0x00C6B6A0
+?bfmeRva012B53ACRegistrationNext@@3PAXA,0x012B53AC,registration node linked by retail at 0x00C6B6F0
+?bfmeRva012B5724RegistrationNext@@3PAXA,0x012B5724,registration node linked by retail at 0x00C6B7F0
+?bfmeRva012B591CRegistrationNext@@3PAXA,0x012B591C,registration node linked by retail at 0x00C6B8C0
+?bfmeRva012B5928RegistrationNext@@3PAXA,0x012B5928,registration node linked by retail at 0x00C6B8E0
+?bfmeRva012B5D00RegistrationNext@@3PAXA,0x012B5D00,registration node linked by retail at 0x00C6B980
+?bfmeRva012B5D18RegistrationNext@@3PAXA,0x012B5D18,registration node linked by retail at 0x00C6B9A0
+?bfmeRva012B652CRegistrationNext@@3PAXA,0x012B652C,registration node linked by retail at 0x00C6BA10
