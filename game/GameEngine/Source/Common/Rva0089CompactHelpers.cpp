@@ -70,3 +70,41 @@ struct Rva00894F00Pair
     Rva00894F00Pair(const int *pointer, int extra);
 };
 Rva00894F00Pair::Rva00894F00Pair(const int *pointer, int extra) : m_pointer(*pointer), m_extra(extra) {}
+
+struct Rva00894F80Handle
+{
+    int m_unused;
+    unsigned short *m_pointer;
+    int m_state;
+    int m_field0c;
+    int m_field10;
+    int m_field14;
+    Rva00894F80Handle(unsigned short **pointer);
+};
+Rva00894F80Handle::Rva00894F80Handle(unsigned short **pointer)
+{
+    m_unused = 0;
+    m_pointer = *pointer;
+    ++*m_pointer;
+    m_state = 1;
+    m_field0c = 0;
+    m_field10 = 0;
+    m_field14 = 0;
+}
+
+struct Rva00896360Handle
+{
+    int *m_pointer;
+    int m_extra;
+    Rva00896360Handle(const Rva00896360Handle &other, int extra);
+};
+Rva00896360Handle::Rva00896360Handle(const Rva00896360Handle &other, int extra)
+{
+    m_pointer = other.m_pointer;
+    if (m_pointer) {
+        ++*m_pointer;
+        m_extra = extra;
+        return;
+    }
+    m_extra = extra;
+}
