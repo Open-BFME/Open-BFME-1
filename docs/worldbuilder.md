@@ -4,6 +4,21 @@ WorldBuilder lives in this repository with its own binary, ledger, evidence,
 compiler profiles and work queue. Start with `python3 tools/worldbuilder.py next`.
 The ordinary game commands still operate on BFME1.
 
+The initial three-worker pilot recovered five additional editor functions
+(250 bytes) across two source files. The third file's two brush-feedback
+handlers reached an unexported-data blocker; their source is banked with the
+unproved operands excluded from the recorded scores. Together with the seed
+set, ten functions account for 490 verified bytes. The assertion-enabled
+`Coord2D::Negate` calibration is also banked, outside that total.
+
+A clean checkout reproduced the seed matches, the unchanged retail image,
+the compact inventory and a pinned BFME2 donor fetch without an existing
+Ghidra database or installed MFC runtime. Live claim collision and failed-worker
+cleanup checks passed. Start with two editor workers on distinct files and one
+dependency/tooling lane; the next shared blocker is support for independently
+witnessed unexported data and callees. These results establish a recovery lane,
+not a fully rebuilt or runnable editor.
+
 ## Target and source ownership
 
 `targets/worldbuilder/target.json` selects the vanilla 1.03 WorldBuilder image
@@ -37,6 +52,8 @@ python3 tools/worldbuilder.py progress --ref origin/master
 
 Packets contain the exact image hash, body extent, source family, compiler
 profile, identity chain, callees and donor provenance. Work the source family.
+`next` prefers untouched candidates and includes all siblings in the selected
+file; explicit selections can retry a banked or blocked candidate.
 Use the packet's decorated name, RVA, size, profile and evidence in
 `worldbuilder.py probe` or `land`:
 

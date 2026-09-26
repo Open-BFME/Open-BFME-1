@@ -54,6 +54,61 @@ def candidate(target):
     return result
 
 
+def queue_candidates(target, identities):
+    target.ledger_path.write_bytes(wb.serialize([row()]))
+    candidates = []
+    for index, identity in enumerate(identities):
+        family = identity.split("::")[0]
+        rva = 0x1002 + index * 2
+        packet = row(name=identity, target_rva=rva, source=f"Code/Tools/WorldBuilder/src/{family}.cpp")
+        packet.update(id=identity, bytes_sha256=hashlib.sha256(target.read_rva(rva, 1)).hexdigest())
+        packet["packet_sha256"] = wb.packet_hash(packet)
+        candidates.append(packet)
+    (target.ledger_root / "candidates.json").write_text(json.dumps(dict(
+        schema_version=1, target_id=target.target_id, binary_sha256=target.expected_sha256,
+        candidates=candidates)))
+    return candidates
+
+
+def blocked(target, selector):
+    return wb.record(target, SimpleNamespace(selector=selector, status="blocked", model="test-model",
+        evidence="complete RET boundary; unsupported dependency", blocker="dependency", stash=None, score=None))
+
+
+def test_fresh_family_precedes_earlier_blocked_family(target):
+    queue_candidates(target, ["Frame::Retry", "Doc::Fresh", "View::Fresh"])
+    blocked(target, "Frame::Retry")
+    assert [packet["id"] for packet in wb.open_candidates(target)] == [
+        "Doc::Fresh", "View::Fresh", "Frame::Retry"]
+
+
+def test_next_fresh_sibling_keeps_attempted_members_of_same_file(target, monkeypatch, capsys):
+    queue_candidates(target, ["Frame::Retry", "Frame::Fresh", "Doc::Fresh"])
+    blocked(target, "Frame::Retry")
+    monkeypatch.setattr(wb, "load_target", lambda name: target)
+    monkeypatch.setattr(wb.worldbuilder_donors, "lookup", lambda *args, **kwargs: [])
+    assert wb.main(["next"]) == 0
+    packets = json.loads(capsys.readouterr().out)["candidates"]
+    assert [packet["id"] for packet in packets] == ["Frame::Fresh", "Frame::Retry"]
+    assert len(packets[1]["previous_attempts"]) == 1
+
+
+def test_exhausted_fresh_queue_preserves_attempted_candidates_in_inventory_order(target):
+    queue_candidates(target, ["Frame::Retry", "Doc::Retry"])
+    blocked(target, "Doc::Retry")
+    blocked(target, "Frame::Retry")
+    assert [packet["id"] for packet in wb.open_candidates(target)] == ["Frame::Retry", "Doc::Retry"]
+
+
+def test_explicit_show_retry_remains_available_with_fresh_work(target, monkeypatch, capsys):
+    queue_candidates(target, ["Frame::Retry", "Doc::Fresh"])
+    blocked(target, "Frame::Retry")
+    monkeypatch.setattr(wb, "load_target", lambda name: target)
+    monkeypatch.setattr(wb.worldbuilder_donors, "lookup", lambda *args, **kwargs: [])
+    assert wb.main(["show", "Frame::Retry"]) == 0
+    assert [packet["id"] for packet in json.loads(capsys.readouterr().out)["candidates"]] == ["Frame::Retry"]
+
+
 def test_land_verifies_before_append_and_preserves_game(target, monkeypatch):
     before = target.ledger_path.read_bytes()
     calls = []

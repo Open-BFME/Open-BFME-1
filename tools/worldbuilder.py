@@ -155,7 +155,7 @@ def open_candidates(target):
             raise ValueError(f"candidate {candidate['name']} overlaps an accepted extent; rebuild inventory")
         result.append(dict(candidate, previous_attempts=[item for item in attempts
                       if number(item["target_rva"]) == start and number(item["target_size"]) == size]))
-    return result
+    return sorted(result, key=lambda candidate: bool(candidate["previous_attempts"]))
 
 
 def select(rows, selectors):
