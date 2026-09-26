@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """The finish tier serves a banked stash while its address is still a dump,
 survives a later deferral, and retires on a later dead-end verdict."""
+import importlib
 import sys
 import shlex
 from pathlib import Path
@@ -22,16 +23,23 @@ def world(tmp_path, monkeypatch):
     log = tmp_path / "re_attempts.log"
     log.write_text("", encoding="utf-8")
     (tmp_path / "attempts").mkdir()
-    monkeypatch.setattr(re_log, "RE_ATTEMPTS", log)
-    re_log._reset()
+    # Patch the modules next_work will actually use. Several sibling test files
+    # re-exec build.py into sys.modules at import time, and next_work imports
+    # build inside its functions, so the `build` bound above can be a stale
+    # object by the time this runs: patching it was a no-op and the real
+    # ledger leaked in (order-dependent failure in the full suite).
+    live_build = importlib.import_module("build")
+    live_re_log = next_work.re_log
+    monkeypatch.setattr(live_re_log, "RE_ATTEMPTS", log)
+    live_re_log._reset()
     rows = [{"name": SYM, "target_rva": f"0x{RVA:08X}", "target_size": "76",
              "source": "game/gen_asm/d_003492a0.asm", "status": "matched",
              "notes": "gen-dump"}]
-    monkeypatch.setattr(build, "load_all_function_rows", lambda: rows)
+    monkeypatch.setattr(live_build, "load_all_function_rows", lambda: rows)
     try:
         yield tmp_path, log, rows
     finally:
-        re_log._reset()
+        live_re_log._reset()
 
 
 def bank(tmp_path, score):
