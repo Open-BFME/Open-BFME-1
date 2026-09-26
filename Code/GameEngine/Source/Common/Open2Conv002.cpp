@@ -212,11 +212,11 @@ public:
 
 	void Release_Ref( void )
 	{
-		if( --m_refs == 0 )
+		if( --NumRefs == 0 )
 			Delete_This();
 	}
 
-	int m_refs;
+	int NumRefs;
 };
 
 class TextureClass
@@ -283,7 +283,7 @@ Gen0090F680::~Gen0090F680()
 	RefCountClass *globalB = *(RefCountClass **)0x01341218;
 	if( globalB )
 	{
-		bool last = globalB->m_refs == 1;
+		bool last = globalB->NumRefs == 1;
 		globalB->Release_Ref();
 		if( last )
 		{

@@ -14,7 +14,7 @@ class MeshModelClass;
 class RefCountClass {
 public:
     virtual void Delete_This();
-    int m_ref_count;
+    int NumRefs;
 };
 
 class RenderObjClass : public RefCountClass {
@@ -123,7 +123,7 @@ public:
 
 static void release(RefCountClass *object)
 {
-    if (object != 0 && --object->m_ref_count == 0) {
+    if (object != 0 && --object->NumRefs == 0) {
         object->Delete_This();
     }
 }

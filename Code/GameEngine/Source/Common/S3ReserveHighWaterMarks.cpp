@@ -8,26 +8,26 @@ extern void __cdecl operator delete[](void *pointer) throw();
 class ShaderClass
 {
 public:
-	__forceinline ShaderClass() : m_shaderBits(0x0010441b) {}
+	__forceinline ShaderClass() : ShaderBits(0x0010441b) {}
 
 	__forceinline ShaderClass &operator=(ShaderClass const &value)
 	{
-		m_shaderBits = value.m_shaderBits;
+		ShaderBits = value.ShaderBits;
 		return *this;
 	}
 
 	__forceinline bool operator==(ShaderClass const &value) const
 	{
-		return m_shaderBits == value.m_shaderBits;
+		return ShaderBits == value.ShaderBits;
 	}
 
 	__forceinline bool operator!=(ShaderClass const &value) const
 	{
-		return m_shaderBits != value.m_shaderBits;
+		return ShaderBits != value.ShaderBits;
 	}
 
 private:
-	unsigned int m_shaderBits;
+	unsigned int ShaderBits;
 };
 
 template <class T> class VectorClass
