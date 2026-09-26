@@ -37,9 +37,14 @@ HEADER = "# full-gate red rows, shrink-only (tools/gate_baseline.py). One 'name 
 def run_gate():
     env = dict(os.environ)
     env.setdefault("BUILD_POOL", env.get("BUILD_POOL", "4"))
-    result = subprocess.run(gate_command(), cwd=ROOT, env=env, text=True,
-                            stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
-    return result.returncode, result.stdout
+    env["PYTHONUNBUFFERED"] = "1"
+    output = []
+    with subprocess.Popen(gate_command(), cwd=ROOT, env=env, text=True,
+                          stdout=subprocess.PIPE, stderr=subprocess.STDOUT) as process:
+        for line in process.stdout:
+            output.append(line)
+            print(line, end="", flush=True)
+        return process.wait(), "".join(output)
 
 
 def gate_command():

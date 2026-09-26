@@ -6,6 +6,8 @@ import sys
 from contextlib import redirect_stdout, redirect_stderr
 from pathlib import Path
 
+import pytest
+
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "tools"))
 import gate_baseline as gb  # noqa: E402
@@ -68,3 +70,41 @@ def test_baseline_round_trip(tmp_path):
     gb.write_baseline(rows, path)
     assert gb.load_baseline(path) == rows
     assert gb.parse_baseline("# comment\n\n a (b) \n") == ["a (b)"]
+
+
+@pytest.mark.parametrize("exit_code", [0, 7])
+def test_run_gate_forwards_output_before_child_exits_and_captures_everything(
+        monkeypatch, tmp_path, exit_code):
+    acknowledged = tmp_path / "progress-seen"
+
+    class LiveOutput(io.StringIO):
+        def flush(self):
+            super().flush()
+            if "Compile: started\n" in self.getvalue():
+                acknowledged.touch()
+
+    child = """
+import pathlib, sys, time
+print("Compile: started")
+deadline = time.monotonic() + 2
+while not pathlib.Path(sys.argv[1]).exists():
+    if time.monotonic() > deadline:
+        raise SystemExit("parent did not forward progress before completion")
+    time.sleep(0.01)
+print("compiler diagnostic", file=sys.stderr)
+print("Functions: OK 1/1")
+sys.stdout.write("final partial line")
+sys.exit(int(sys.argv[2]))
+"""
+    monkeypatch.setattr(gb, "ROOT", tmp_path)
+    monkeypatch.setattr(gb, "gate_command", lambda: [
+        sys.executable, "-c", child, str(acknowledged), str(exit_code)])
+    monkeypatch.delenv("PYTHONUNBUFFERED", raising=False)
+    forwarded = LiveOutput()
+    with redirect_stdout(forwarded):
+        status, captured = gb.run_gate()
+
+    assert status == exit_code
+    assert acknowledged.exists()
+    assert captured == forwarded.getvalue() == (
+        "Compile: started\ncompiler diagnostic\nFunctions: OK 1/1\nfinal partial line")
