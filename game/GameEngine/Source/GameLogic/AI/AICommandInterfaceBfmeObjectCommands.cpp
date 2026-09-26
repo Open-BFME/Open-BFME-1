@@ -65,10 +65,7 @@ enum AICommandType
 	AICMD_BFME_45 = 0x45
 };
 
-enum CommandSourceType
-{
-	CMD_FROM_PLAYER = 0
-};
+#include "../command_source_type.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfo

@@ -47,7 +47,7 @@ enum AICommandType
 	AICMD_GUARD_TUNNEL_NETWORK		= 0x37
 };
 
-enum CommandSourceType { CMD_FROM_PLAYER = 0 };
+#include "../command_source_type.h"
 
 // upstream layout: inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Damage.h
 struct DamageInfo
