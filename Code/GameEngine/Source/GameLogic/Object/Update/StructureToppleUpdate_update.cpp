@@ -97,7 +97,7 @@ static __forceinline Bool bfmeStructureToppleDamageTypeFlag(Int damageType, Unsi
 // Slot 0 reaches this body through ILT 0x00016FA4.
 UpdateSleepTime StructureToppleUpdate::update( void )
 {
-	const BfmeStructureToppleModuleDataView *d =
+	const BfmeStructureToppleModuleDataView *moduleData =
 		(const BfmeStructureToppleModuleDataView *)getStructureToppleUpdateModuleData();
 
 	if (m_toppleState == TOPPLESTATE_STANDING)
@@ -108,26 +108,26 @@ UpdateSleepTime StructureToppleUpdate::update( void )
 	const DamageInfo *lastDamageInfo = objectView->getBodyModule()->getLastDamageInfo();
 
 	if (m_toppleState == TOPPLESTATE_WAITINGFORTOPPLESTART) {
-		UnsignedInt now = TheGameLogic->getFrame();
-		if (now >= m_nextBurstFrame) {
+		UnsignedInt currentFrame = TheGameLogic->getFrame();
+		if (currentFrame >= m_nextBurstFrame) {
 			doToppleDelayBurstFX();
 			#line 230 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\StructureToppleUpdate.cpp"
-			m_nextBurstFrame = now + GameLogicRandomValue(d->minToppleBurstDelay, d->maxToppleBurstDelay);
+			m_nextBurstFrame = currentFrame + GameLogicRandomValue(moduleData->minToppleBurstDelay, moduleData->maxToppleBurstDelay);
 		}
-		if (now >= m_toppleFrame) {
+		if (currentFrame >= m_toppleFrame) {
 			m_toppleState = TOPPLESTATE_TOPPLING;
-			m_structuralIntegrity = d->structuralIntegrity;
+			m_structuralIntegrity = moduleData->structuralIntegrity;
 		}
 	}
 
 	if (m_toppleState == TOPPLESTATE_TOPPLING) {
-		UnsignedInt now = TheGameLogic->getFrame();
+		UnsignedInt currentFrame = TheGameLogic->getFrame();
 		Real toppleAcceleration =
-			(Sin(m_accumulatedAngle) * (1.0 - m_structuralIntegrity)) * d->bfmeUnknown44;
+			(Sin(m_accumulatedAngle) * (1.0 - m_structuralIntegrity)) * moduleData->bfmeUnknown44;
 		m_toppleVelocity += toppleAcceleration;
 
 		if (m_structuralIntegrity > 0.0f) {
-			m_structuralIntegrity *= d->structuralDecay;
+			m_structuralIntegrity *= moduleData->structuralDecay;
 			if (m_structuralIntegrity < 0.0f)
 				m_structuralIntegrity = 0.0f;
 		}
@@ -148,28 +148,28 @@ UpdateSleepTime StructureToppleUpdate::update( void )
 
 			if (lastDamageInfo == NULL || bfmeStructureToppleDamageTypeFlag(
 				((const BfmeStructureToppleLastDamageInfoView *)lastDamageInfo)->damageType,
-				d->damageFXTypes))
+				moduleData->damageFXTypes))
 			{
 				Object *building = getObject();
-				FXList *fx = d->toppleDoneFXList;
-				if (fx != NULL && !fx->bfmeIsBlocked())
-					fx->doFXObj(building, NULL);
+				FXList *toppleDoneFX = moduleData->toppleDoneFXList;
+				if (toppleDoneFX != NULL && !toppleDoneFX->bfmeIsBlocked())
+					toppleDoneFX->doFXObj(building, NULL);
 			}
 
 			m_toppleFrame = TheGameLogic->getFrame();
 		}
 
-		if (now >= m_nextBurstFrame) {
+		if (currentFrame >= m_nextBurstFrame) {
 			doToppleDelayBurstFX();
 			#line 279 "F:\\bfme\\Code\\gameengine\\Source\\GameLogic\\Object\\Update\\StructureToppleUpdate.cpp"
-			m_nextBurstFrame = now + GameLogicRandomValue(d->minToppleBurstDelay, d->maxToppleBurstDelay);
+			m_nextBurstFrame = currentFrame + GameLogicRandomValue(moduleData->minToppleBurstDelay, moduleData->maxToppleBurstDelay);
 		}
 
 		Object *building = getObject();
-		Matrix3D xfrm = *building->getTransformMatrix();
-		xfrm.In_Place_Pre_Rotate_X(-m_toppleVelocity * m_toppleDirection.y);
-		xfrm.In_Place_Pre_Rotate_Y(m_toppleVelocity * m_toppleDirection.x);
-		((Rva00132200Target *)building)->rva00132200(&xfrm);
+		Matrix3D buildingTransform = *building->getTransformMatrix();
+		buildingTransform.In_Place_Pre_Rotate_X(-m_toppleVelocity * m_toppleDirection.y);
+		buildingTransform.In_Place_Pre_Rotate_Y(m_toppleVelocity * m_toppleDirection.x);
+		((Rva00132200Target *)building)->rva00132200(&buildingTransform);
 	}
 
 	if (m_toppleState == TOPPLESTATE_WAITINGFORDONE)
@@ -193,9 +193,9 @@ UpdateSleepTime StructureToppleUpdate::update( void )
 				}
 			}
 
-			BfmeStructureToppleBodyModuleView *body =
+			BfmeStructureToppleBodyModuleView *bodyModule =
 				((BfmeStructureToppleBodyObjectView *)building)->getBodyModule();
-			body->updateBodyParticleSystems();
+			bodyModule->updateBodyParticleSystems();
 
 			doToppleDoneStuff();
 

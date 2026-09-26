@@ -188,56 +188,56 @@ char pad34[0x140-0x34];Path*path;char pad144[0x16c-0x144];int framesBlocked;
 char pad170[0x1cc-0x170];BfmeSub1CC_EC3*locomotor;char pad1d0[8];int goalType;
 char pad1dc[0x32b-0x1dc];bool dead;
 };
-bool AIUpdateInterface::blockedBy(Object*other)
+bool AIUpdateInterface::blockedBy(Object*blockingObject)
 {
  Coord3D goalPos=*getStateMachine()->getGoalPosition();
- Object*obj=getObject();Coord3D pos=*obj->getPosition();
+ Object*ownerObject=getObject();Coord3D objectPosition=*ownerObject->getPosition();
  ICoord2D goalCell=*getPathfindGoalCell();
- if(goalCell.x>0&&goalCell.y>0){float dx=fabs(goalPos.x-pos.x),dy=fabs(goalPos.y-pos.y);if(dx<10.0f&&dy<10.0f)return false;}
- bool canCrush=obj->crushPolicy(other,TEST_CRUSH_OR_SQUISH);if(canCrush)return false;
- AIUpdateInterface*aiOther=other->ai;
- if(!aiOther->isDoingGroundMovement())return false;
+ if(goalCell.x>0&&goalCell.y>0){float goalDeltaX=fabs(goalPos.x-objectPosition.x),goalDeltaY=fabs(goalPos.y-objectPosition.y);if(goalDeltaX<10.0f&&goalDeltaY<10.0f)return false;}
+ bool canCrush=ownerObject->crushPolicy(blockingObject,TEST_CRUSH_OR_SQUISH);if(canCrush)return false;
+ AIUpdateInterface*blockingAI=blockingObject->ai;
+ if(!blockingAI->isDoingGroundMovement())return false;
  if(getCurLocomotor()&&getCurLocomotor()->isMovingBackwards())return false;
- bool otherMoving=aiOther->goalType!=0;
- Coord3D otherPos=*other->getPosition();
- float dx=pos.x-otherPos.x,dy=pos.y-otherPos.y;
- float curDSqr=dx*dx+dy*dy;
- if(obj->isKindOf(BFME115)&&other->isKindOf(BFME108))return false;
- if(other->isKindOf(BFME115)&&obj->isKindOf(BFME108))return false;
- if(other->isKindOf(BFME115)&&obj->isKindOf(BFME115))return false;
- if(obj->isKindOf(BFME124)&&other->isKindOf(INFANTRY))return false;
- if(obj->isKindOf(BFME115)&&other->isKindOf(BFME115))return false;
- if(obj->bfmeLocomotor()&&other->bfmeLocomotor()){
-  float ourSpeed=obj->bfmeLocomotor()->effectiveMaxSpeed(obj);
-  float otherSpeed=other->bfmeLocomotor()->effectiveMaxSpeed(other);
+ bool otherMoving=blockingAI->goalType!=0;
+ Coord3D blockingPosition=*blockingObject->getPosition();
+ float relativeX=objectPosition.x-blockingPosition.x,relativeY=objectPosition.y-blockingPosition.y;
+ float separationSquared=relativeX*relativeX+relativeY*relativeY;
+ if(ownerObject->isKindOf(BFME115)&&blockingObject->isKindOf(BFME108))return false;
+ if(blockingObject->isKindOf(BFME115)&&ownerObject->isKindOf(BFME108))return false;
+ if(blockingObject->isKindOf(BFME115)&&ownerObject->isKindOf(BFME115))return false;
+ if(ownerObject->isKindOf(BFME124)&&blockingObject->isKindOf(INFANTRY))return false;
+ if(ownerObject->isKindOf(BFME115)&&blockingObject->isKindOf(BFME115))return false;
+ if(ownerObject->bfmeLocomotor()&&blockingObject->bfmeLocomotor()){
+  float ourSpeed=ownerObject->bfmeLocomotor()->effectiveMaxSpeed(ownerObject);
+  float otherSpeed=blockingObject->bfmeLocomotor()->effectiveMaxSpeed(blockingObject);
   if(ourSpeed-otherSpeed>ourSpeed*0.1f)return false;
  }
  if(path&&path->bfmeHasSpecialNode())return false;
- if(curDSqr<0.01f)return hasHigherPathPriority(aiOther);
- Coord3D ourDir=*obj->getUnitDirectionVector2D();
- Coord3D theirDir=*other->getUnitDirectionVector2D();
- float dotProduct=ourDir.x*theirDir.x+ourDir.y*theirDir.y;
+ if(separationSquared<0.01f)return hasHigherPathPriority(blockingAI);
+ Coord3D objectDirection=*ownerObject->getUnitDirectionVector2D();
+ Coord3D blockingDirection=*blockingObject->getUnitDirectionVector2D();
+ float dotProduct=objectDirection.x*blockingDirection.x+objectDirection.y*blockingDirection.y;
  if(getNumFramesBlocked()>5){if(dotProduct<=0.0f)return false;}
- float collisionAngle=obj->bfmeRelativeAngleTo(&otherPos);
- float otherAngle=other->bfmeRelativeAngleTo(&pos);
+ float collisionAngle=ownerObject->bfmeRelativeAngleTo(&blockingPosition);
+ float blockerCollisionAngle=blockingObject->bfmeRelativeAngleTo(&objectPosition);
  float angleLimit=0.7853981852531433f;
  if(collisionAngle>1.5707963705062866f||collisionAngle< -1.5707963705062866f)return false;
- if(obj->group==other->group&&obj->group){
-  Coord2D ours=getObject()->formationPosition;
-  Coord2D theirs=other->formationPosition;
-  if(theirs.x<ours.x)return false;
-  if(ours.x<theirs.x)return true;
+ if(ownerObject->group==blockingObject->group&&ownerObject->group){
+  Coord2D objectFormationPosition=getObject()->formationPosition;
+  Coord2D blockingFormationPosition=blockingObject->formationPosition;
+  if(blockingFormationPosition.x<objectFormationPosition.x)return false;
+  if(objectFormationPosition.x<blockingFormationPosition.x)return true;
  }
  if(!otherMoving)angleLimit*=0.75f;
  if(collisionAngle>angleLimit||collisionAngle< -angleLimit){
   if(dotProduct<=0.0f)return false;
-  if(otherMoving&&(otherAngle>angleLimit||otherAngle< -angleLimit)){
-   dx+=ourDir.x-theirDir.x;dy+=ourDir.y-theirDir.y;
-   if(curDSqr>dx*dx+dy*dy){if(hasHigherPathPriority(aiOther))return false;}
+  if(otherMoving&&(blockerCollisionAngle>angleLimit||blockerCollisionAngle< -angleLimit)){
+   relativeX+=objectDirection.x-blockingDirection.x;relativeY+=objectDirection.y-blockingDirection.y;
+   if(separationSquared>relativeX*relativeX+relativeY*relativeY){if(hasHigherPathPriority(blockingAI))return false;}
    else return false;
   }else return false;
  }
- if(!aiOther->isAiInDeadState())return true;
+ if(!blockingAI->isAiInDeadState())return true;
  return false;
 }
 

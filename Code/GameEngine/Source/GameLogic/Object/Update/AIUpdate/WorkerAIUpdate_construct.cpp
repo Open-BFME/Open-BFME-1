@@ -258,8 +258,8 @@ public:
 class Rva002C96D0WorkerAIUpdate : public Rva002C96D0VirtualSlots<4>
 {
 public:
-	virtual Object *construct(const ThingTemplate *what, const Coord3D *pos,
-		Real angle, Player *owningPlayer, Bool isRebuild) = 0;
+	virtual Object *construct(const ThingTemplate *buildTemplate, const Coord3D *buildPosition,
+		Real buildOrientation, Player *owningPlayer, Bool isRebuild) = 0;
 	virtual void slot05() = 0;
 	virtual void slot06() = 0;
 	virtual void slot07() = 0;
@@ -515,13 +515,13 @@ extern const Real g_bfmeUint32Scale;
 #define BFME_DEFAULT_HEALTH (*(const Real *)0x01075334)
 
 // ?construct@WorkerAIUpdate@@WDEA@AEPAVObject@@PBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@_N@Z
-Object *Rva002C96D0WorkerAIUpdate::construct(const ThingTemplate *what,
-	const Coord3D *pos, Real angle, Player *owningPlayer, Bool isRebuild)
+Object *Rva002C96D0WorkerAIUpdate::construct(const ThingTemplate *buildTemplate,
+	const Coord3D *buildPosition, Real buildOrientation, Player *owningPlayer, Bool isRebuild)
 {
 	setRebuild(isRebuild);
 	bfmeCreateMachines((Rva002C96D0FullWorker *)((char *)this - 0x340));
 
-	if (what == 0 || pos == 0 || owningPlayer == 0)
+	if (buildTemplate == 0 || buildPosition == 0 || owningPlayer == 0)
 		return 0;
 
 	if (isRebuild == false)
@@ -529,15 +529,15 @@ Object *Rva002C96D0WorkerAIUpdate::construct(const ThingTemplate *what,
 		if (((Rva002C96D0Player *)owningPlayer)->getPlayerType() == 1)
 		{
 			if (TheBuildAssistant->isLocationLegalToBuild(
-					pos, what, angle, 6, getObject(), 0) != 0)
+					buildPosition, buildTemplate, buildOrientation, 6, getObject(), 0) != 0)
 				return 0;
 		}
 		else
 		{
-			if (TheBuildAssistant->canMakeUnit(getObject(), what, -1) != 0)
+			if (TheBuildAssistant->canMakeUnit(getObject(), buildTemplate, -1) != 0)
 				return 0;
 			if (TheBuildAssistant->isLocationLegalToBuild(
-					pos, what, angle, 0x17, getObject(), 0) != 0)
+					buildPosition, buildTemplate, buildOrientation, 0x17, getObject(), 0) != 0)
 				return 0;
 		}
 	}
@@ -546,35 +546,35 @@ Object *Rva002C96D0WorkerAIUpdate::construct(const ThingTemplate *what,
 	if (isRebuild)
 		statusBits.set(21);
 
-	Object *obj = bfmeNewObject(TheThingFactory, what,
+	Object *constructedObject = bfmeNewObject(TheThingFactory, buildTemplate,
 		((Rva002C96D0Player *)owningPlayer)->getDefaultTeam(), statusBits, 0);
-	bfmeSetProducer(obj, getObject());
-	bfmeSetBuilder(obj, getObject());
+	bfmeSetProducer(constructedObject, getObject());
+	bfmeSetBuilder(constructedObject, getObject());
 	((Rva002C96D0SupplyTruckInterface *)((char *)this + 8))
 		->exitingSupplyTruckState();
 
 	if (isRebuild == false)
 	{
-		Int cost = bfmeCalcCost(what, owningPlayer, -1);
-		bfmeWithdraw(bfmeGetMoney(owningPlayer), (UnsignedInt)cost, true);
-		((Rva002C96D0Object *)obj)->m_constructionCost =
-			(Real)(UnsignedInt)cost;
+		Int constructionCost = bfmeCalcCost(buildTemplate, owningPlayer, -1);
+		bfmeWithdraw(bfmeGetMoney(owningPlayer), (UnsignedInt)constructionCost, true);
+		((Rva002C96D0Object *)constructedObject)->m_constructionCost =
+			(Real)(UnsignedInt)constructionCost;
 	}
 
-	bfmeSetStatusBit(obj, 2, true);
-	bfmeSetPosition(obj, pos);
-	bfmeSetOrientation(obj, angle);
-	bfmeFlattenTerrain((Rva002C96D0TerrainLogic *)TheTerrainLogic, obj);
-	Coord3D adjustedPos = *pos;
-	adjustedPos.z = TheTerrainLogic->getGroundHeight(pos->x, pos->y);
-	bfmeSetPosition(obj, &adjustedPos);
-	bfmeAddObject(TheAI->pathfinder(), obj);
+	bfmeSetStatusBit(constructedObject, 2, true);
+	bfmeSetPosition(constructedObject, buildPosition);
+	bfmeSetOrientation(constructedObject, buildOrientation);
+	bfmeFlattenTerrain((Rva002C96D0TerrainLogic *)TheTerrainLogic, constructedObject);
+	Coord3D groundPosition = *buildPosition;
+	groundPosition.z = TheTerrainLogic->getGroundHeight(buildPosition->x, buildPosition->y);
+	bfmeSetPosition(constructedObject, &groundPosition);
+	bfmeAddObject(TheAI->pathfinder(), constructedObject);
 	bfmeOnStructureCreated((Rva002C96D0Player *)owningPlayer,
-		getObject(), obj);
+		getObject(), constructedObject);
 
-	((Rva002C96D0Object *)obj)->m_constructionPercent = 0.0f;
-	Rva002C96D0BodyModule *body = ((Rva002C96D0Object *)obj)->getBodyModule();
-	body->internalChangeHealth(-body->getHealth(0) + BFME_DEFAULT_HEALTH);
+	((Rva002C96D0Object *)constructedObject)->m_constructionPercent = 0.0f;
+	Rva002C96D0BodyModule *constructionBody = ((Rva002C96D0Object *)constructedObject)->getBodyModule();
+	constructionBody->internalChangeHealth(-constructionBody->getHealth(0) + BFME_DEFAULT_HEALTH);
 
 	Rva002C96D0ClearMask clearMask;
 	Rva002C96D0SetMask setMask;
@@ -584,10 +584,10 @@ Object *Rva002C96D0WorkerAIUpdate::construct(const ThingTemplate *what,
 	setCall.raw = j_00004048;
 	ClearAndSetCallBits clearAndSet;
 	clearAndSet.raw = j_000095ed;
-	(((Rva002C96D0Object *)obj)->*clearAndSet.member)(
+	(((Rva002C96D0Object *)constructedObject)->*clearAndSet.member)(
 		(const Rva002C96D0ModelMask &)*(setMask.*setCall.member)(0, 0x43, 0x44),
 		(const Rva002C96D0ModelMask &)*(clearMask.*clearCall.member)(0, 0x42));
 
-	newTask(0, obj);
-	return obj;
+	newTask(0, constructedObject);
+	return constructedObject;
 }

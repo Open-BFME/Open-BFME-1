@@ -125,18 +125,18 @@ extern GameLogic *TheGameLogic;
 UpdateSleepTime GiveUpgradeUpdate::update()
 {
 	char *rawThis = reinterpret_cast<char *>(this);
-	Object *object = *reinterpret_cast<Object **>(rawThis - 8);
-	AIUpdateInterface *ai =
-		*reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<char *>(object) + 0x204);
-	CommandSourceType source = ai->getLastCommandSource();
-	UpdateSleepTime result =
+	Object *ownerObject = *reinterpret_cast<Object **>(rawThis - 8);
+	AIUpdateInterface *ownerAI =
+		*reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<char *>(ownerObject) + 0x204);
+	CommandSourceType lastCommandSource = ownerAI->getLastCommandSource();
+	UpdateSleepTime baseSleepTime =
 		reinterpret_cast<UpdateModuleInterface *>(rawThis)->update();
 
-	if (source != CMD_FROM_AI)
+	if (lastCommandSource != CMD_FROM_AI)
 	{
 		*reinterpret_cast<bool *>(rawThis + 0xd9) = false;
 		reinterpret_cast<SpecialAbilityUpdate *>(rawThis - 0x10)->bfmeAbortAbility();
-		return result;
+		return baseSleepTime;
 	}
 
 	if (*reinterpret_cast<bool *>(rawThis + 0xd9))
@@ -152,10 +152,10 @@ UpdateSleepTime GiveUpgradeUpdate::update()
 		{
 			*reinterpret_cast<bool *>(rawThis + 0xd9) = false;
 			reinterpret_cast<SpecialAbilityUpdate *>(rawThis - 0x10)->bfmeAbortAbility();
-			AICommandInterface *commands =
-				reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ai) + 0x20);
-			commands->aiIdle(CMD_FROM_AI);
-			return result;
+			AICommandInterface *aiCommands =
+				reinterpret_cast<AICommandInterface *>(reinterpret_cast<char *>(ownerAI) + 0x20);
+			aiCommands->aiIdle(CMD_FROM_AI);
+			return baseSleepTime;
 		}
 	}
 
@@ -181,5 +181,5 @@ UpdateSleepTime GiveUpgradeUpdate::update()
 
 	if (*reinterpret_cast<bool *>(rawThis + 0xd9))
 		return UPDATE_SLEEP_NONE;
-	return result;
+	return baseSleepTime;
 }

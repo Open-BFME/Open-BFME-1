@@ -245,8 +245,8 @@ public:
 	virtual Real getRepairHealthPerSecond(void) const = 0;
 	virtual Real getBoredTime(void) const = 0;
 	virtual Real getBoredRange(void) const = 0;
-	virtual Object *construct(const ThingTemplate *what, const Coord3D *pos,
-		Real angle, Player *owningPlayer, Bool isRebuild) = 0;
+	virtual Object *construct(const ThingTemplate *buildTemplate, const Coord3D *buildPosition,
+		Real buildOrientation, Player *owningPlayer, Bool isRebuild) = 0;
 	virtual Int getMostRecentCommand(void) = 0;
 	virtual Bool isTaskPending(Int task) = 0;
 	virtual UnsignedInt getTaskTarget(Int task) = 0;
@@ -497,22 +497,22 @@ extern Rva002B7C80AI *TheAI;
 #define BFME_DEFAULT_HEALTH 1.0f
 
 // ?construct@DozerAIUpdate@@WDEA@AEPAVObject@@PBVThingTemplate@@PBUCoord3D@@MPAVPlayer@@_N@Z
-Object *Rva002B7C80DozerAIInterface::construct(const ThingTemplate *what,
-	const Coord3D *pos, Real angle, Player *owningPlayer, Bool isRebuild)
+Object *Rva002B7C80DozerAIInterface::construct(const ThingTemplate *buildTemplate,
+	const Coord3D *buildPosition, Real buildOrientation, Player *owningPlayer, Bool isRebuild)
 {
 	setRebuild(isRebuild);
 	bfmeCreateMachines((DozerAIUpdate *)((char *)this - 0x340));
 
-	if (what == 0 || pos == 0 || owningPlayer == 0)
+	if (buildTemplate == 0 || buildPosition == 0 || owningPlayer == 0)
 		return 0;
 
 	if (isRebuild == false &&
 		((Rva002B7C80Player *)owningPlayer)->getPlayerType() != 1)
 	{
-		if (TheBuildAssistant->canMakeUnit(getObject(), what, -1) != 0)
+		if (TheBuildAssistant->canMakeUnit(getObject(), buildTemplate, -1) != 0)
 			return 0;
 		if (TheBuildAssistant->isLocationLegalToBuild(
-				pos, what, angle, 0x17, getObject(), 0) != 0)
+				buildPosition, buildTemplate, buildOrientation, 0x17, getObject(), 0) != 0)
 			return 0;
 	}
 
@@ -520,34 +520,34 @@ Object *Rva002B7C80DozerAIInterface::construct(const ThingTemplate *what,
 	if (isRebuild)
 		statusBits.set(21);
 
-	Object *obj = bfmeNewObject(TheThingFactory, what,
+	Object *constructedObject = bfmeNewObject(TheThingFactory, buildTemplate,
 		((Rva002B7C80Player *)owningPlayer)->getDefaultTeam(), statusBits, 0);
-	bfmeSetProducer(obj, getObject());
-	bfmeSetBuilder(obj, getObject());
+	bfmeSetProducer(constructedObject, getObject());
+	bfmeSetBuilder(constructedObject, getObject());
 
 	if (isRebuild == false)
 	{
-		Int cost = bfmeCalcCost(what, owningPlayer, -1);
+		Int constructionCost = bfmeCalcCost(buildTemplate, owningPlayer, -1);
 		bfmeWithdraw(bfmeGetMoney(owningPlayer),
-			(UnsignedInt)cost, true);
-		((Rva002B7C80Object *)obj)->m_constructionCost =
-			(Real)(UnsignedInt)cost;
+			(UnsignedInt)constructionCost, true);
+		((Rva002B7C80Object *)constructedObject)->m_constructionCost =
+			(Real)(UnsignedInt)constructionCost;
 	}
 
-	bfmeSetPosition(obj, pos);
-	bfmeSetOrientation(obj, angle);
-	bfmeFlattenTerrain((Rva002B7C80TerrainLogic *)TheTerrainLogic, obj);
-	Coord3D adjustedPos = *pos;
-	adjustedPos.z = TheTerrainLogic->getGroundHeight(pos->x, pos->y);
-	bfmeSetPosition(obj, &adjustedPos);
-	bfmeAddObject(TheAI->pathfinder(), obj);
+	bfmeSetPosition(constructedObject, buildPosition);
+	bfmeSetOrientation(constructedObject, buildOrientation);
+	bfmeFlattenTerrain((Rva002B7C80TerrainLogic *)TheTerrainLogic, constructedObject);
+	Coord3D groundPosition = *buildPosition;
+	groundPosition.z = TheTerrainLogic->getGroundHeight(buildPosition->x, buildPosition->y);
+	bfmeSetPosition(constructedObject, &groundPosition);
+	bfmeAddObject(TheAI->pathfinder(), constructedObject);
 	bfmeOnStructureCreated((Rva002B7C80Player *)owningPlayer,
-		getObject(), obj);
+		getObject(), constructedObject);
 
-	((Rva002B7C80Object *)obj)->m_constructionPercent = 0.0f;
-	Rva002B7C80BodyModule *body =
-		((Rva002B7C80Object *)obj)->getBodyModule();
-	body->internalChangeHealth(-body->getHealth(0) + BFME_DEFAULT_HEALTH);
+	((Rva002B7C80Object *)constructedObject)->m_constructionPercent = 0.0f;
+	Rva002B7C80BodyModule *constructionBody =
+		((Rva002B7C80Object *)constructedObject)->getBodyModule();
+	constructionBody->internalChangeHealth(-constructionBody->getHealth(0) + BFME_DEFAULT_HEALTH);
 
 	Rva002B7C80ClearMask clearMask;
 	Rva002B7C80SetMask setMask;
@@ -557,11 +557,11 @@ Object *Rva002B7C80DozerAIInterface::construct(const ThingTemplate *what,
 	setCall.raw = j_00004048;
 	ClearAndSetCallBits clearAndSet;
 	clearAndSet.raw = j_000095ed;
-	(((Rva002B7C80Object *)obj)->*clearAndSet.member)(
+	(((Rva002B7C80Object *)constructedObject)->*clearAndSet.member)(
 		(const Rva002B7C80ModelMask &)*(setMask.*setCall.member)(
 			0, 0x43, 0x44),
 		(const Rva002B7C80ModelMask &)*(clearMask.*clearCall.member)(0, 0x42));
 
-	newTask(0, obj);
-	return obj;
+	newTask(0, constructedObject);
+	return constructedObject;
 }

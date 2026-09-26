@@ -24,27 +24,27 @@ enum BridgeTowerType {BRIDGE_TOWER_0,BRIDGE_TOWER_1,BRIDGE_TOWER_2,BRIDGE_TOWER_
 class BridgeBehaviorInterface {public:virtual void slot0();virtual ObjectID getTowerID(BridgeTowerType);}; class BridgeBehavior {public:static BridgeBehaviorInterface*getBridgeBehaviorInterfaceFromObject(Object*);};
 class WorkerAIUpdate {protected: bool findGoodBuildOrRepairPosition(const Object*,const Object*,Coord3D&); Object*findGoodBuildOrRepairPositionAndTarget(Object*,Object*,Coord3D&);};
 inline float sqr(float x){return x*x;}
-Object*WorkerAIUpdate::findGoodBuildOrRepairPositionAndTarget(Object*me,Object*target,Coord3D&positionOut){
+Object*WorkerAIUpdate::findGoodBuildOrRepairPositionAndTarget(Object*worker,Object*target,Coord3D&positionOut){
  if(g_bfmeDockingTraceActive&&TheCRCParameterCheck)
-  bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"  WorkerAIUpdate::findGoodBuildOrRepairPositionAndTarget() BEGIN: Object %s(%d) with target %s(%d)",me->getTemplate()->getName().str(),me->getID(),target?target->getTemplate()->getName().str():"NULL",target?target->getID():0);
+  bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"  WorkerAIUpdate::findGoodBuildOrRepairPositionAndTarget() BEGIN: Object %s(%d) with target %s(%d)",worker->getTemplate()->getName().str(),worker->getID(),target?target->getTemplate()->getName().str():"NULL",target?target->getID():0);
  if(target->isKindOf(KINDOF_BRIDGE)){
   if(g_bfmeDockingTraceActive&&TheCRCParameterCheck)bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"  target is a bridge case");
-  BridgeBehaviorInterface*bbi=BridgeBehavior::getBridgeBehaviorInterfaceFromObject(target);
-  if(bbi){
+  BridgeBehaviorInterface*bridgeBehavior=BridgeBehavior::getBridgeBehaviorInterfaceFromObject(target);
+  if(bridgeBehavior){
    if(g_bfmeDockingTraceActive&&TheCRCParameterCheck)bfmeRetailCritterDesyncLog(TheCRCParameterCheck,"  target has a bridge behavior");
-   AIUpdateInterface*ai=me->ai;
+   AIUpdateInterface*workerAI=worker->ai;
    float bestDistSqr=1e10f;Object*bestTower=0;
-   for(int i=0;i<4;++i){
-    Object*tower=TheGameLogic->findObjectByID(bbi->getTowerID((BridgeTowerType)i));
-    if(tower){Coord3D tmp;bool found=findGoodBuildOrRepairPosition(me,tower,tmp);
-     if(found&&ai->isPathAvailable(&tmp)){
-      float thisDistSqr=sqr(me->getPosition()->x-tmp.x)+sqr(me->getPosition()->y-tmp.y);
-      if(thisDistSqr<bestDistSqr){positionOut=tmp;bestDistSqr=thisDistSqr;bestTower=tower;}
+   for(int towerIndex=0;towerIndex<4;++towerIndex){
+    Object*tower=TheGameLogic->findObjectByID(bridgeBehavior->getTowerID((BridgeTowerType)towerIndex));
+    if(tower){Coord3D candidatePosition;bool foundBuildOrRepairPosition=findGoodBuildOrRepairPosition(worker,tower,candidatePosition);
+     if(foundBuildOrRepairPosition&&workerAI->isPathAvailable(&candidatePosition)){
+      float candidateDistanceSquared=sqr(worker->getPosition()->x-candidatePosition.x)+sqr(worker->getPosition()->y-candidatePosition.y);
+      if(candidateDistanceSquared<bestDistSqr){positionOut=candidatePosition;bestDistSqr=candidateDistanceSquared;bestTower=tower;}
      }
     }
    }
    return bestTower;
   }
  }
- findGoodBuildOrRepairPosition(me,target,positionOut);return target;
+ findGoodBuildOrRepairPosition(worker,target,positionOut);return target;
 }

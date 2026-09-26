@@ -114,32 +114,32 @@ public:
 // ?Rva00290520@@YAXPAVINI@@PAX1PBX@Z
 void Rva00290520(INI *ini, void *, void *store, const void *)
 {
-	EmotionTrackerUpdateModuleData *data = (EmotionTrackerUpdateModuleData *)store;
-	const char *token = ini->getNextToken();
-	bool hasAdditionalData = false;
+	EmotionTrackerUpdateModuleData *moduleData = (EmotionTrackerUpdateModuleData *)store;
+	const char *emotionToken = ini->getNextToken();
+	bool hasOverrideBlock = false;
 
-	if (token != 0)
+	if (emotionToken != 0)
 	{
-		if (_strcmpi(token, "override") == 0)
+		if (_strcmpi(emotionToken, "override") == 0)
 		{
-			hasAdditionalData = true;
-			token = ini->getNextToken();
+			hasOverrideBlock = true;
+			emotionToken = ini->getNextToken();
 		}
 	}
 
-	if (token == 0)
+	if (emotionToken == 0)
 		throw INIException(3, "Emotion name or 'OVERRIDE <Emotion name>' expected.");
 
-	EmotionNugget *nugget = TheEmotionSystem->findNugget(BfmeEmotionName(token));
-	if (nugget == 0)
+	EmotionNugget *sourceNugget = TheEmotionSystem->findNugget(BfmeEmotionName(emotionToken));
+	if (sourceNugget == 0)
 		throw INIException(3, "Emotion not found");
 
-	EmotionNugget *entry = new EmotionNugget;
-	((BfmeThingVKC *)entry)->bfmeCopyVKC(*(const BfmeThingVKC *)nugget);
-	entry->m_name.set(AsciiString(token));
+	EmotionNugget *copiedNugget = new EmotionNugget;
+	((BfmeThingVKC *)copiedNugget)->bfmeCopyVKC(*(const BfmeThingVKC *)sourceNugget);
+	copiedNugget->m_name.set(AsciiString(emotionToken));
 
-	if (hasAdditionalData)
-		((BfmeThingDCE *)entry)->bfmeGoDCE((BfmeOtherDCE *)ini);
+	if (hasOverrideBlock)
+		((BfmeThingDCE *)copiedNugget)->bfmeGoDCE((BfmeOtherDCE *)ini);
 
-	data->m_entries.push_back(entry);
+	moduleData->m_entries.push_back(copiedNugget);
 }

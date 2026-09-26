@@ -175,34 +175,34 @@ UpdateSleepTime FloatUpdate::update( void )
 {
 	if( m_enabled == TRUE )
 	{
-		const Coord3D *pos = getObject()->getPosition();
+		const Coord3D *objectPosition = getObject()->getPosition();
 
 		Real waterZ;
-		TheTerrainLogic->isUnderwater( pos->x, pos->y, &waterZ, 0 );
+		TheTerrainLogic->isUnderwater( objectPosition->x, objectPosition->y, &waterZ, 0 );
 
-		Coord3D newPos;
-		newPos.x = pos->x;
-		newPos.y = pos->y;
-		newPos.z = waterZ;
-		getObject()->setPosition( &newPos );
+		Coord3D waterSurfacePosition;
+		waterSurfacePosition.x = objectPosition->x;
+		waterSurfacePosition.y = objectPosition->y;
+		waterSurfacePosition.z = waterZ;
+		getObject()->setPosition( &waterSurfacePosition );
 	}
 
-	Drawable *draw = getObject()->getDrawable();
-	if (draw)
+	Drawable *drawable = getObject()->getDrawable();
+	if (drawable)
 	{
-		Real angle = INT_TO_REAL(TheGameLogic->getFrame());
-		Real yaw = sin(angle * 0.0291f) * 0.05f;
-		Real pitch = sin(angle * 0.0515f) * 0.05f;
+		Real frameNumber = INT_TO_REAL(TheGameLogic->getFrame());
+		Real yaw = sin(frameNumber * 0.0291f) * 0.05f;
+		Real pitch = sin(frameNumber * 0.0515f) * 0.05f;
 
-		Matrix3D mx = *draw->getInstanceMatrix();
+		Matrix3D instanceMatrix = *drawable->getInstanceMatrix();
 
-		Real zRot = mx.Get_Z_Rotation();
-		mx.Make_Identity();
-		mx.Rotate_Z(zRot);
-		mx.Rotate_Y(yaw);
-		mx.Rotate_X(pitch);
+		Real originalZRotation = instanceMatrix.Get_Z_Rotation();
+		instanceMatrix.Make_Identity();
+		instanceMatrix.Rotate_Z(originalZRotation);
+		instanceMatrix.Rotate_Y(yaw);
+		instanceMatrix.Rotate_X(pitch);
 
-		draw->setInstanceMatrix(&mx, 0);
+		drawable->setInstanceMatrix(&instanceMatrix, 0);
 	}
 
 	return UPDATE_SLEEP_NONE;
