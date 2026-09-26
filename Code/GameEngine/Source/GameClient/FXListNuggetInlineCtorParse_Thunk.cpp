@@ -14,7 +14,7 @@
 //     ...
 //
 // THE INI KEYWORD TABLE NAMES ALL SEVEN.  Their five-byte incremental-link
-// thunks appear in FXList's own FieldParse table at 0x00CF2130 under the
+// thunks appear in FXList's own FieldParse table at 0x00CF2118 under the
 // keywords Sound, EvaEvent, ViewShake, CameraShakerVolume, AttachedModel, Laser
 // and TerrainScorch; Zero Hour spells every nugget class <keyword>FXNugget.
 //
@@ -40,8 +40,8 @@
 // _M_create_node keeps its try block and cannot be inlined, and without
 // _STLP_USE_STATIC_LIB the node allocator is reached through __imp_.
 //
-// Identity beyond the keyword is not recovered: the member names carry their
-// offsets.
+// BFME FieldParse tables 0x00CF2550, 0x00CF2B28, 0x00CF2C20 and 0x00CF2AB0
+// name the EvaEvent, camera shake, attached model and laser members below.
 
 #include <list>
 
@@ -158,14 +158,14 @@ void ViewShakeFXNugget::parse( INI *ini, void *instance, void *, const void * )
 class EvaEventFXNugget : public FXNugget
 {
 public:
-	EvaEventFXNugget() : m_fieldB4( -1 ), m_fieldB8( -1 ), m_fieldBC( -1 )
+	EvaEventFXNugget() : m_evaEventOwner( -1 ), m_evaEventAlly( -1 ), m_evaEventEnemy( -1 )
 	{
 		m_field04 = 1;
 	}
 
 	static void parse( INI *, void *, void *, const void * );
 
-	int m_fieldB4, m_fieldB8, m_fieldBC;
+	int m_evaEventOwner, m_evaEventAlly, m_evaEventEnemy;
 };
 
 void EvaEventFXNugget::parse( INI *ini, void *instance, void *, const void * )
@@ -186,7 +186,7 @@ public:
 	// list cannot do -- it follows declaration order, and declaration order
 	// follows layout.  So 0xC0..0xC8 are the list and 0xB4..0xBC are the body.
 	CameraShakerVolumeFXNugget()
-		: m_fieldC0( 0 ), m_fieldC4( 0 ), m_fieldC8( 0 )
+		: m_radius( 0 ), m_durationSeconds( 0 ), m_amplitudeDegrees( 0 )
 	{
 		m_fieldB4 = 0;
 		m_fieldB8 = 0;
@@ -197,7 +197,7 @@ public:
 	static void parse( INI *, void *, void *, const void * );
 
 	int m_fieldB4, m_fieldB8, m_fieldBC;
-	int m_fieldC0, m_fieldC4, m_fieldC8;
+	int m_radius, m_durationSeconds, m_amplitudeDegrees;
 };
 
 void CameraShakerVolumeFXNugget::parse( INI *ini, void *instance, void *, const void * )
@@ -214,15 +214,15 @@ void CameraShakerVolumeFXNugget::parse( INI *ini, void *instance, void *, const 
 class AttachedModelFXNugget : public FXNugget
 {
 public:
-	AttachedModelFXNugget() : m_fieldB4( 0 ), m_fieldB8( 0 ), m_fieldBC( 0x28 )
+	AttachedModelFXNugget() : m_modelName( 0 ), m_randomlyRotate( 0 ), m_expireTimer( 0x28 )
 	{
 	}
 
 	static void parse( INI *, void *, void *, const void * );
 
-	int m_fieldB4;
-	char m_fieldB8;
-	int m_fieldBC;
+	int m_modelName;
+	char m_randomlyRotate;
+	int m_expireTimer;
 };
 
 void AttachedModelFXNugget::parse( INI *ini, void *instance, void *, const void * )
@@ -239,14 +239,14 @@ void AttachedModelFXNugget::parse( INI *ini, void *instance, void *, const void 
 class LaserFXNugget : public FXNugget
 {
 public:
-	LaserFXNugget() : m_fieldB4( 0 ), m_fieldB8( 0 )
+	LaserFXNugget() : m_laserName( 0 ), m_laserBackwards( 0 )
 	{
 	}
 
 	static void parse( INI *, void *, void *, const void * );
 
-	int m_fieldB4;
-	char m_fieldB8;
+	int m_laserName;
+	char m_laserBackwards;
 	char m_unreconstructed_b9[ 0xc8 - 0xbc + 3 ];
 };
 

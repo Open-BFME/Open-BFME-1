@@ -4,7 +4,8 @@
 //
 // FXList's Laser parser at 0x0042C090 constructs a C8-byte LaserFXNugget,
 // calls FXNugget's 225-byte base constructor, installs vtable 0x010F3438,
-// and initializes the +0xB4/+0xB8 Laser fields.  The standalone constructor
+// and initializes the +0xB4/+0xB8 fields named LaserName/LaserBackwards by
+// its FieldParse table at RVA 0x00CF2AB0.  The standalone constructor
 // at 0x00429460 performs that derived initialization; the old W3DOverlord
 // name was a false identity on the same byte range.
 
@@ -21,8 +22,8 @@ public:
 class LaserFXNugget : public FXNugget
 {
 public:
-	volatile unsigned int m_fieldB4;
-	volatile bool m_fieldB8;
+	volatile unsigned int m_laserName;
+	volatile bool m_laserBackwards;
 
 	LaserFXNugget();
 };
@@ -31,6 +32,6 @@ LaserFXNugget::LaserFXNugget()
 {
 	unsigned int zero = 0;
 	m_vtable = &bfme_LaserFXNugget_vtable;
-	m_fieldB4 = zero;
-	m_fieldB8 = static_cast<bool>( zero );
+	m_laserName = zero;
+	m_laserBackwards = static_cast<bool>( zero );
 }
