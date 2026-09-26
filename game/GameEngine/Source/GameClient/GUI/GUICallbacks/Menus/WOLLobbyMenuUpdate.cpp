@@ -1,11 +1,12 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/gamewindow /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 // Native lobby callbacks: Update at 004FD9B0 (4536 bytes with switch tables),
-// Init at 004FBBE0 (1711 bytes).
+// Init at 004FBBE0 (1711 bytes), playerTooltip at 004FA800 (1517 bytes).
 // Derived from WOLLobbyMenu.cpp; Copyright 2025 Electronic Arts Inc.,
 // GPL-3.0-or-later. Identity, helper ABI and BFME layout evidence:
 // targets/game/reverse/identity_evidence/004fd9b0-lobby-update.md and
-// targets/game/reverse/identity_evidence/004fbbe0-lobby-init.md.
+// targets/game/reverse/identity_evidence/004fbbe0-lobby-init.md and
+// targets/game/reverse/identity_evidence/004fa800-player-tooltip.md.
 #define _STLP_NO_EXCEPTIONS 1
 #define __PLACEMENT_VEC_NEW_INLINE
 #define ASCIISTRING_H
@@ -55,6 +56,10 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s) {
 
 #include "Common/GameState.h"
 #include "Common/CustomMatchPreferences.h"
+#include "Common/PlayerTemplate.h"
+#include "GameClient/Mouse.h"
+#include "GameClient/GadgetListBox.h"
+#include "GameNetwork/RankPointValue.h"
 #include "GameClient/GameWindowManager.h"
 #include "GameClient/GadgetTextEntry.h"
 #include "Common/NameKeyGenerator.h"
@@ -155,6 +160,12 @@ public:
   ~PeerResponse();
 };
 typedef char ResponseSize[sizeof(PeerResponse) == 0x330 ? 1 : -1];
+class BuddyInfo {
+public:
+ int m_id; AsciiString m_name,m_email,m_countryCode;
+ int m_status; UnicodeString m_statusString,m_locationString;
+};
+typedef std::map<int,BuddyInfo> BuddyInfoMap;
 class PlayerInfo {
 public:
   AsciiString name, baseName, locale;
@@ -281,9 +292,9 @@ public:
                                 AsciiString = Rva01336E50EmptyAscii);
   virtual void playerLeftGroupRoom(AsciiString);
   virtual PlayerInfoMap *getPlayerInfoMap();
-  virtual void slot4C();
+  virtual PlayerInfo *rva00632850Lookup(const char *);
   virtual void slot50();
-  virtual void slot54();
+  virtual BuddyInfoMap *getBuddyMap();
   virtual void slot58();
   virtual void slot5C();
   virtual void slot60();
@@ -338,13 +349,13 @@ public:
   virtual void slot120();
   virtual void slot124();
   virtual void slot128();
-  virtual void slot12C();
+  virtual bool isSavedIgnored(int);
   virtual void slot130();
   virtual void slot134();
   virtual void slot138();
   virtual void slot13C();
   virtual void slot140();
-  virtual void slot144();
+  virtual bool isIgnored(AsciiString);
   virtual void slot148();
   virtual void slot14C();
   virtual void slot150();
@@ -577,6 +588,8 @@ template <> inline int StringBase<char>::getLength() const {
   return m_data ? m_data->length : 0;
 }
 template <> inline void StringBase<char>::concat(char c) { concat(&c, 1); }
+// The real 91-byte comparison remains visible for exception analysis.
+// Its independent emitted body exactly matches 00090570.
 template <>
 __declspec(noinline) int StringBase<char>::compare(const char *str) const {
   int strLen = str ? (int)strlen(str) : 0;
@@ -1018,4 +1031,127 @@ void WOLLobbyMenuInit(WindowLayout *layout, void *userData) {
   if (win)
     win->winHide(TRUE);
   DontShowMainMenu = TRUE;
+}
+// PlayerTemplate+8 is m_side according to the field witness. This caller
+// reads the side string by reference; the Zero Hour value-return accessor
+// would introduce a copy lifetime absent from retail.
+struct Rva004FA800SideView {
+  int nameKey;
+  UnicodeString displayName;
+  AsciiString side;
+};
+// The real 91-byte comparison remains visible for exception analysis.
+// Its independent emitted body exactly matches 00090570.
+template <>
+__declspec(noinline) int
+StringBase<char>::compareNoCase(const StringBase<char> &other) const {
+  int theirLength = other.getLength();
+  const char *theirData = other.str();
+  int myLength = getLength();
+  const char *myData = str();
+  int result = _memicmp(myData, theirData,
+                        myLength < theirLength ? myLength : theirLength);
+  return result ? result : myLength - theirLength;
+}
+void playerTooltip(GameWindow *window, WinInstanceData *instData,
+                   UnsignedInt mouse) {
+  Int x, y, row, col;
+  x = mouse & 0xffff;
+  y = mouse >> 16;
+
+  GadgetListBoxGetEntryBasedOnXY(window, x, y, row, col);
+
+  if (row == -1 || col == -1) {
+    TheMouse->setCursorTooltip(Rva01336E54EmptyUnicode);
+    return;
+  }
+
+  UnicodeString uName = GadgetListBoxGetText(window, row, 2);
+  AsciiString aName;
+  aName.translate(uName);
+
+  PlayerInfo *info = TheGameSpyInfo->rva00632850Lookup(aName.str());
+  if (!info)
+    return;
+  Bool isLocalPlayer =
+      (((const StringBase<char> &)TheGameSpyInfo->getLocalName())
+           .compareNoCase((const StringBase<char> &)info->baseName) == 0);
+
+  if (col == 0) {
+    if (info->preorder) {
+      TheMouse->setCursorTooltip(
+          TheGameText->fetch("TOOLTIP:LobbyOfficersClub"));
+    } else {
+      TheMouse->setCursorTooltip(Rva01336E54EmptyUnicode);
+    }
+    return;
+  }
+
+  AsciiString playerLocale = info->locale;
+  AsciiString localeIdentifier;
+  localeIdentifier.format("WOL:Locale%2.2d", atoi(playerLocale.str()));
+  Int playerWins = info->wins;
+  Int playerLosses = info->losses;
+  UnicodeString playerInfo;
+  playerInfo.format(TheGameText->fetch("TOOLTIP:PlayerInfo"),
+                    TheGameText->fetch(localeIdentifier).str(), playerWins,
+                    playerLosses);
+
+  UnicodeString tooltip = Rva01336E54EmptyUnicode;
+  if (isLocalPlayer) {
+    tooltip.format(TheGameText->fetch("TOOLTIP:LocalPlayer"), uName.str());
+  } else {
+
+    if (TheGameSpyInfo->getBuddyMap()->find(info->profileID) !=
+        TheGameSpyInfo->getBuddyMap()->end()) {
+
+      tooltip.format(TheGameText->fetch("TOOLTIP:BuddyPlayer"), uName.str());
+    } else {
+      if (info->profileID) {
+
+        tooltip.format(TheGameText->fetch("TOOLTIP:ProfiledPlayer"),
+                       uName.str());
+      } else {
+
+        tooltip.format(TheGameText->fetch("TOOLTIP:GenericPlayer"),
+                       uName.str());
+      }
+    }
+  }
+
+  if ((info->profileID && TheGameSpyInfo->isSavedIgnored(info->profileID)) ||
+      TheGameSpyInfo->isIgnored(info->name)) {
+    ((StringBase<unsigned short> &)tooltip)
+        .concat((const StringBase<unsigned short> &)TheGameText->fetch(
+            "TOOLTIP:IgnoredModifier"));
+  }
+
+  if (info->profileID) {
+    ((StringBase<unsigned short> &)tooltip)
+        .concat((const StringBase<unsigned short> &)playerInfo);
+  }
+
+  Int rank = 0;
+  Int i = 0;
+  while (info->rankPoints >= TheRankPointValues->m_ranks[i + 1])
+    ++i;
+  rank = i;
+  AsciiString sideName = "GUI:RandomSide";
+  if (info->side > 0) {
+    const PlayerTemplate *fac =
+        ThePlayerTemplateStore->getNthPlayerTemplate(info->side);
+    if (fac) {
+      sideName.format("SIDE:%s",
+                      ((const Rva004FA800SideView *)fac)->side.str());
+    }
+  }
+  AsciiString rankName;
+  rankName.format("GUI:GSRank%d", rank);
+  UnicodeString tmp;
+  tmp.format(L"\n%ls %ls", TheGameText->fetch(sideName).str(),
+             TheGameText->fetch(rankName).str());
+  ((StringBase<unsigned short> &)tooltip)
+      .concat((const StringBase<unsigned short> &)tmp);
+
+  TheMouse->setCursorTooltip(tooltip, -1, NULL, 1.5f);
 }
