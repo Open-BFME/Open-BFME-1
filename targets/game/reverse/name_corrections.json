@@ -6088,5 +6088,15 @@
   "after_sha256": "238b5eef34a63231dab6edd87e5237045ae93b920315551fa3e2a3b4807e9f3d",
   "evidence": "targets/game/reverse/identity_evidence/004ee510-buddy-contracts.md",
   "reason": "The ZH two-string notification call reaches independently named dispatcher004EBA70; unchanged RequestBuddyAdd already uses that verified contract. Source pairing arises from moved helper ownership; the24B BuddyMessage routine004ECD10 is a distinct ABI."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x001a4630.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/Map/Rva001A4630TerrainRecordQuery.cpp",
+  "old_name": "TerrainLogic",
+  "new_name": "Rva001A4630TerrainRecordQuery",
+  "before_sha256": "ef16e6dcb9d14353981bc0f5950d575af0c677937d3114b7258da83ad229e04c",
+  "after_sha256": "27a968340c2e0923627426644bf6f5e7d8285a916a137767c38097f8138bc6b5",
+  "evidence": "targets/game/reverse/identity_evidence/0x001a4630.md",
+  "reason": "Owner class TerrainLogic was a guess in the bank; no caller, vtable slot, literal or twin proves it, so the exact landing keeps an address-derived owner."
  }
 ]
