@@ -4,6 +4,18 @@
 #include "ascii_string.h"
 #include "string_base.h"
 
+// AsciiString() is inline in the header (retail inlines it at every call site,
+// e.g. SubsystemLegendEntry's ctor at 0x009A1390 zeroes m_text with one store).
+// Retail still has an out-of-line body at 0x00062030 because the symbol is
+// exported (0x00017BD9), and an export cannot be inlined away. We have no export
+// table, so force the same COMDAT here.
+#pragma auto_inline(off)
+AsciiString bfme_force_ascii_string_default_ctor_emission()
+{
+    return AsciiString();
+}
+#pragma auto_inline(on)
+
 __declspec(naked) AsciiString::AsciiString(const UnicodeString &that)
 {
     __asm {

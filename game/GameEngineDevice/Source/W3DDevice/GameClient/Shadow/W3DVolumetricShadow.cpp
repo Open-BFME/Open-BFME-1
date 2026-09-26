@@ -1371,6 +1371,7 @@ struct BfmeRenderDevice;
 typedef long (__stdcall *BfmeSetTransform)(BfmeRenderDevice *, unsigned, void *);
 typedef long (__stdcall *BfmeSetStreamSource)(BfmeRenderDevice *, unsigned, void *, unsigned, unsigned);
 typedef long (__stdcall *BfmeSetIndices)(BfmeRenderDevice *, void *);
+typedef long (__stdcall *BfmeSetFVF)(BfmeRenderDevice *, unsigned);
 typedef long (__stdcall *BfmeSetRenderState)(BfmeRenderDevice *, unsigned, unsigned);
 typedef long (__stdcall *BfmeDrawIndexedPrimitive)(BfmeRenderDevice *, unsigned, unsigned, unsigned, unsigned, unsigned, unsigned);
 struct BfmeRenderDevice { void **vtable; };
@@ -2709,7 +2710,6 @@ __declspec(naked) void W3DVolumetricShadow::RenderDynamicMeshVolume(Int, Int, co
 }
 
 /** Debug function to draw bounding boxes around shadow volumes */
-// ?RenderMeshVolumeBounds@W3DVolumetricShadow@@ present-unmatched
 void W3DVolumetricShadow::RenderMeshVolumeBounds(Int meshIndex, Int lightIndex, const Matrix3D *meshXform)
 {
 	Geometry *geometry;
@@ -2838,18 +2838,19 @@ void W3DVolumetricShadow::RenderMeshVolumeBounds(Int meshIndex, Int lightIndex, 
 
 	shadowIndexBufferD3D->Unlock();
 
-	m_pDev->SetIndices(shadowIndexBufferD3D,nShadowStartBatchVertex);
+	BfmeRenderDevice *device = (BfmeRenderDevice *)m_pDev;
+	(*(BfmeSetIndices **)device)[104](device, shadowIndexBufferD3D);
 
 
 	//todo: replace this with mesh transform
 	Matrix4x4 mWorld(1);	//identity since boxes are pre-transformed to world space.
 
-	m_pDev->SetTransform(D3DTS_WORLD,(_D3DMATRIX *)&mWorld.Transpose());
+	(*(BfmeSetTransform **)device)[44](device, D3DTS_WORLD, (void *)&mWorld.Transpose());
 	
-	m_pDev->SetStreamSource(0,shadowVertexBufferD3D,sizeof(SHADOW_DYNAMIC_VOLUME_VERTEX));
-	m_pDev->SetVertexShader(SHADOW_DYNAMIC_VOLUME_FVF);
+	(*(BfmeSetStreamSource **)device)[100](device, 0, shadowVertexBufferD3D, 0, sizeof(SHADOW_DYNAMIC_VOLUME_VERTEX));
+	(*(BfmeSetFVF **)device)[89](device, SHADOW_DYNAMIC_VOLUME_FVF);
 
-	m_pDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,0,numVerts,nShadowStartBatchIndex,numPolys);
+	(*(BfmeDrawIndexedPrimitive **)device)[82](device, D3DPT_TRIANGLELIST, nShadowStartBatchVertex, 0, numVerts, nShadowStartBatchIndex, numPolys);
 
 	nShadowVertsInBuf += numVerts;
 	nShadowStartBatchVertex=nShadowVertsInBuf;
