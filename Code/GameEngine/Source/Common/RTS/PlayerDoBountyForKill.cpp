@@ -1,5 +1,4 @@
 // ?doBountyForKill@Player@@QAEXPBVObject@@0@Z
-// partial score=0.995 date=2026-09-10
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /D_STLP_USE_STATIC_LIB /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
 
@@ -13,12 +12,13 @@ typedef int Int;
 typedef unsigned int UnsignedInt;
 typedef float Real;
 
+// This pinned IAT slot is MSVCR71.dll!ceil (0x01359394).
 extern "C" __declspec(dllimport) double __cdecl bfmeMathVE(double value);
 
 class Object
 {
 public:
-	Int getBountyValue() const;
+	Int getBountyValueRva001C9310() const;
 	Bool getAttributeModifierBonus(Int which, Real *value) const;
 
 	const Coord3D *getPosition() const
@@ -27,8 +27,17 @@ public:
 	}
 };
 
-// The object value and modifier calls both use already matched retail ILTs.
-#pragma comment(linker, "/alternatename:?getBountyValue@Object@@QBEHXZ=?j_0001cd91@@YAXXZ")
+// The value query at 0x001C9310 loads template+0x448 and optionally scales it
+// by Object+0x210 / +0x28; its semantic method name is not established.
+// Both direct calls retain their independently decoded retail ILTs.
+void j_0001cd91();
+inline Int Object::getBountyValueRva001C9310() const
+{
+    typedef Int (Object::*Query)() const;
+    union { void (*raw)(); Query method; } target;
+    target.raw = j_0001cd91;
+    return (this->*target.method)();
+}
 #pragma comment(linker, "/alternatename:?getAttributeModifierBonus@Object@@QBE_NHPAM@Z=?j_0000bece@@YAXXZ")
 
 class ScoreKeeper
@@ -134,6 +143,10 @@ extern PlayerList *Rva002EE330ThePlayers;
 extern GlobalData *TheWritableGlobalData;
 extern InGameUI *TheInGameUI;
 
+// Object kill accounting at 0x001C9490 calls ILT 0x00003864 -> 0x000D5160
+// immediately after Player::addSkillPointsForKill. The GUI:AddCash literal,
+// Money deposit and ScoreKeeper increment agree with the Zero Hour method.
+// BFME adds attribute and living-world modifiers and displays at the victim.
 void Player::doBountyForKill(const Object *killer, const Object *victim)
 {
 	register const Object *killerObject = killer;
@@ -144,7 +157,7 @@ void Player::doBountyForKill(const Object *killer, const Object *victim)
 		return;
 
 	Int zero = 0;
-	Int victimBounty = victimObject->getBountyValue();
+	Int victimBounty = victimObject->getBountyValueRva001C9310();
 	UnsignedInt bounty = victimBounty;
 	Real bountyPercent;
 	killerObject->getAttributeModifierBonus(0xf, &bountyPercent);
@@ -168,10 +181,13 @@ void Player::doBountyForKill(const Object *killer, const Object *victim)
 	getMoney()->unidentified_00027d6d(bounty, true);
 	getScoreKeeper()->addMoneyEarned((Int)bounty);
 
-	Coord3D pos;
-	UnicodeString moneyString;
-	moneyString.format(TheGameText->fetch("GUI:AddCash"), bounty);
-	pos.set(victimObject->getPosition());
-	pos.z += 10.0f;
-	TheInGameUI->addFloatingText(moneyString, &pos, GameMakeColor(255, 255, 0, 255));
+	// This scope lets the conversion scratch share the later string home.
+	{
+		Coord3D pos;
+		UnicodeString moneyString;
+		moneyString.format(TheGameText->fetch("GUI:AddCash"), bounty);
+		pos.set(victimObject->getPosition());
+		pos.z += 10.0f;
+		TheInGameUI->addFloatingText(moneyString, &pos, GameMakeColor(255, 255, 0, 255));
+	}
 }

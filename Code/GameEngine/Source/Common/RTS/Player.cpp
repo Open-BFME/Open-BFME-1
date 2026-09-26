@@ -3129,7 +3129,7 @@ Bool Player::calcClosestConstructionZoneLocation( const ThingTemplate *construct
 }
 
 //=============================================================================
-// byte-exact reconstruction: Code/GameEngine/Source/Common/RTS/Player_doBountyForKill_Thunk.cpp
+// byte-exact BFME reconstruction: Code/GameEngine/Source/Common/RTS/PlayerDoBountyForKill.cpp
 // ?doBountyForKill@Player@@QAEXPBVObject@@0@Z present-unmatched
 // BFME's OBJECT_STATUS_UNDER_CONSTRUCTION is BIT 2, not bit 3, and retail tests
 // it as a single byte at Object+0x90 rather than through the vendored pair of
