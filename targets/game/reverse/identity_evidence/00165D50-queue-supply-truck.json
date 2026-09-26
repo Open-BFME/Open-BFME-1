@@ -1,0 +1,180 @@
+{
+  "source_sha256": "5925b37a013926c4e997b8e5cba7f048bab98af97ae716151094e21a3aca8cdc",
+  "length": 2333,
+  "retail_length": 2333,
+  "exact": false,
+  "unresolved": [],
+  "differences": [
+    "0x377",
+    "0x378",
+    "0x379",
+    "0x37a",
+    "0x37b",
+    "0x37d",
+    "0x384",
+    "0x385",
+    "0x386",
+    "0x38a"
+  ],
+  "calls": [
+    {
+      "offset": "0x4a",
+      "symbol": "?next@TeamInQueue@@QAEPAV1@XZ",
+      "chosen_rva": "0x2fee6",
+      "retail_rva": "0x2fee6"
+    },
+    {
+      "offset": "0xc1",
+      "symbol": "?getFinalOverride@Overridable@@QBEPBV1@XZ",
+      "chosen_rva": "0x22bb",
+      "retail_rva": "0x22bb"
+    },
+    {
+      "offset": "0x104",
+      "symbol": "?_bfme_nextInInstanceList@Team@@QBEPAV1@XZ",
+      "chosen_rva": "0x22a70",
+      "retail_rva": "0x22a70"
+    },
+    {
+      "offset": "0x1e6",
+      "symbol": "?getFinalOverride@Overridable@@QBEPBV1@XZ",
+      "chosen_rva": "0x22bb",
+      "retail_rva": "0x22bb"
+    },
+    {
+      "offset": "0x2eb",
+      "symbol": "?link@PartitionFilter@@QAEPAV1@PAV1@@Z",
+      "chosen_rva": "0x9f2ae0",
+      "retail_rva": "0x9f2ae0"
+    },
+    {
+      "offset": "0x2f5",
+      "symbol": "?link@PartitionFilter@@QAEPAV1@PAV1@@Z",
+      "chosen_rva": "0x9f2ae0",
+      "retail_rva": "0x9f2ae0"
+    },
+    {
+      "offset": "0x30d",
+      "symbol": "?getClosestObject@PartitionManager@@QAEPAVObject@@PBUCoord3D@@MHPAVPartitionFilter@@@Z",
+      "chosen_rva": "0x9f26a0",
+      "retail_rva": "0x9f26a0"
+    },
+    {
+      "offset": "0x355",
+      "symbol": "?nameToKey@NameKeyGenerator@@QAE?AW4NameKeyType@@PBD@Z",
+      "chosen_rva": "0x3add7",
+      "retail_rva": "0x3add7"
+    },
+    {
+      "offset": "0x36e",
+      "symbol": "?j_0002ae23@@YAXXZ",
+      "chosen_rva": "0x2ae23",
+      "retail_rva": "0x2ae23"
+    },
+    {
+      "offset": "0x3a0",
+      "symbol": "?getRelationship@Player@@QBE?AW4Relationship@@PBVTeam@@@Z",
+      "chosen_rva": "0x3e77a",
+      "retail_rva": "0x3e77a"
+    },
+    {
+      "offset": "0x3bd",
+      "symbol": "?checkForSupplyCenter@AIPlayer@@IAEXPAVBuildListInfo@@PAVObject@@@Z",
+      "chosen_rva": "0x24c4e",
+      "retail_rva": "0x24c4e"
+    },
+    {
+      "offset": "0x426",
+      "symbol": "?getFinalOverride@Overridable@@QBEPBV1@XZ",
+      "chosen_rva": "0x22bb",
+      "retail_rva": "0x22bb"
+    },
+    {
+      "offset": "0x47e",
+      "symbol": "?aiDock@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z",
+      "chosen_rva": "0x2221e",
+      "retail_rva": "0x2221e"
+    },
+    {
+      "offset": "0x4a8",
+      "symbol": "?_bfme_nextInInstanceList@Team@@QBEPAV1@XZ",
+      "chosen_rva": "0x22a70",
+      "retail_rva": "0x22a70"
+    },
+    {
+      "offset": "0x560",
+      "symbol": "?getFinalOverride@Overridable@@QBEPBV1@XZ",
+      "chosen_rva": "0x22bb",
+      "retail_rva": "0x22bb"
+    },
+    {
+      "offset": "0x67d",
+      "symbol": "?_bfme_nextInInstanceList@Team@@QBEPAV1@XZ",
+      "chosen_rva": "0x22a70",
+      "retail_rva": "0x22a70"
+    },
+    {
+      "offset": "0x708",
+      "symbol": "?findFactory@AIPlayer@@IAEPAVObject@@PBVThingTemplate@@_NPAH@Z",
+      "chosen_rva": "0x2b62f",
+      "retail_rva": "0x2b62f"
+    },
+    {
+      "offset": "0x724",
+      "symbol": "??2@YAPAXI@Z",
+      "chosen_rva": "0x881f30",
+      "retail_rva": "0x881f30"
+    },
+    {
+      "offset": "0x76b",
+      "symbol": "??2@YAPAXI@Z",
+      "chosen_rva": "0x881f30",
+      "retail_rva": "0x881f30"
+    },
+    {
+      "offset": "0x7f8",
+      "symbol": "??0?$StringBase@D@@AAE@PBD@Z",
+      "chosen_rva": "0x888bc0",
+      "retail_rva": "0x888bc0"
+    },
+    {
+      "offset": "0x816",
+      "symbol": "?getFinalOverride@Overridable@@QBEPBV1@XZ",
+      "chosen_rva": "0x22bb",
+      "retail_rva": "0x22bb"
+    },
+    {
+      "offset": "0x83e",
+      "symbol": "?concat@?$StringBase@D@@QAEXPBDH@Z",
+      "chosen_rva": "0x887d60",
+      "retail_rva": "0x887d60"
+    },
+    {
+      "offset": "0x850",
+      "symbol": "?AppendDebugMessage@ScriptEngine@@QAEXABVAsciiString@@_N@Z",
+      "chosen_rva": "0x28ce0",
+      "retail_rva": "0x28ce0"
+    },
+    {
+      "offset": "0x89f",
+      "symbol": "??0?$StringBase@D@@AAE@ABV0@@Z",
+      "chosen_rva": "0x887b60",
+      "retail_rva": "0x887b60"
+    },
+    {
+      "offset": "0x8bf",
+      "symbol": "??1?$StringBase@D@@AAE@XZ",
+      "chosen_rva": "0x887940",
+      "retail_rva": "0x887940"
+    },
+    {
+      "offset": "0x900",
+      "symbol": "?aiDock@AICommandInterface@@QAEXPAVObject@@W4CommandSourceType@@@Z",
+      "chosen_rva": "0x2221e",
+      "retail_rva": "0x2221e"
+    }
+  ],
+  "probe_source_sha256": "686370fd8714079e70e10d8b6b6534f22d086d0326a4197ceff4c0cde02d87e7",
+  "source": "targets/game/reverse/attempts/0x00165d50.cpp",
+  "framing": "re_log adds two comment lines; final bank re-probed with identical2333B/10diff and63relocs"
+}
