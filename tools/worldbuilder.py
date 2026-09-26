@@ -141,11 +141,18 @@ def read_attempts(target):
     return attempts
 
 
+def with_attempt_history(target, candidates):
+    attempts = read_attempts(target)
+    return [dict(candidate, previous_attempts=[item for item in attempts
+            if number(item["target_rva"]) == number(candidate["target_rva"])
+            and number(item["target_size"]) == number(candidate["target_size"])])
+            for candidate in candidates]
+
+
 def open_candidates(target):
     rows = target_verify.read_rows(target)
     target_verify.validate_rows(target, rows)
     landed = [(number(row["target_rva"]), number(row["target_size"])) for row in rows]
-    attempts = read_attempts(target)
     result = []
     for candidate in load_candidates(target):
         start, size = number(candidate["target_rva"]), number(candidate["target_size"])
@@ -153,9 +160,8 @@ def open_candidates(target):
             continue
         if any(start < rva + count and rva < start + size for rva, count in landed):
             raise ValueError(f"candidate {candidate['name']} overlaps an accepted extent; rebuild inventory")
-        result.append(dict(candidate, previous_attempts=[item for item in attempts
-                      if number(item["target_rva"]) == start and number(item["target_size"]) == size]))
-    return sorted(result, key=lambda candidate: bool(candidate["previous_attempts"]))
+        result.append(candidate)
+    return sorted(with_attempt_history(target, result), key=lambda candidate: bool(candidate["previous_attempts"]))
 
 
 def select(rows, selectors):
@@ -347,7 +353,7 @@ def main(argv=None):
         elif args.command in ("next", "show"):
             candidates = open_candidates(target) if args.command == "next" else load_candidates(target)
             if args.command == "show":
-                candidates = select(candidates, [args.selector])
+                candidates = with_attempt_history(target, select(candidates, [args.selector]))
             elif candidates and not args.all:
                 candidates = select(candidates, [candidates[0]["source"]])
             candidates = [dict(candidate, donor_suggestions=worldbuilder_donors.lookup(

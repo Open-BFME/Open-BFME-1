@@ -325,6 +325,26 @@ def test_show_attaches_offline_donors_without_changing_candidate_hash(target, mo
     assert calls == [(target, item["name"], True)]
 
 
+@pytest.mark.parametrize("landed", [False, True])
+def test_show_banked_rva_includes_verified_history_even_after_landing(target, monkeypatch, capsys, landed):
+    item = candidate(target)
+    attempt = wb.record(target, SimpleNamespace(selector="Editor::Body", status="partial", model="test-model",
+        evidence="complete RET extent; one-byte difference", blocker="codegen", stash=row()["source"], score=0.9))
+    if landed:
+        target.ledger_path.write_bytes(wb.serialize([row()]))
+    monkeypatch.setattr(wb, "load_target", lambda name: target)
+    monkeypatch.setattr(wb.worldbuilder_donors, "lookup", lambda *args, **kwargs: [])
+    assert wb.main(["show", "0x1000"]) == 0
+    packet = json.loads(capsys.readouterr().out)["candidates"][0]
+    assert packet["previous_attempts"] == [attempt]
+    assert packet["packet_sha256"] == item["packet_sha256"]
+    bank = target.root / packet["previous_attempts"][0]["stash"]
+    assert hashlib.sha256(bank.read_bytes()).hexdigest() == attempt["stash_sha256"]
+    bank.write_bytes(b"corrupted historical body")
+    assert wb.main(["show", "0x1000"]) == 1
+    assert "banked attempt hash mismatch" in capsys.readouterr().err
+
+
 @pytest.mark.parametrize("changes", [dict(model=""), dict(evidence=" "), dict(score=1), dict(packet_sha256="bad")])
 def test_attempt_integrity_rejects_invalid_metadata(target, changes):
     candidate(target)
