@@ -1,16 +1,11 @@
 // ?xfer@ObjectSMCHelper@@MAEXPAVXfer@@@Z
-// partial score=0.99 date=2026-09-24
 // cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB
 // stlport
-// ObjectSMCHelper::xfer, retail 0x00257390 (290 bytes).
-//
-// Identity: slot 3 of vftable 0x0109EBBC, which the matched ObjectSMCHelper
-// constructor 0x001C54A0 installs; slot 3 is the xfer position, as for the
-// matched RadarObject::xfer.  The body transfers the base helper, then (unless
-// the xfer is a light CRC pass) version 1 and the list of pending
-// (model condition, frame) timers that setModelConditionState fills.
+// ObjectSMCHelper::xfer at retail RVA 0x00257390.
+// The matched constructor at 0x001C54A0 installs vtable 0x0109EBBC; slot 3
+// is the xfer body. The timer list at this+0x20 is witnessed by the matched
+// update, setModelConditionState, and destructor bodies.
 
-#define _STLP_USE_NEWALLOC 1
 #define _STLP_NO_EXCEPTIONS 1
 #define _STLP_USE_STATIC_LIB 1
 #include <list>
@@ -63,12 +58,9 @@ public:
 };
 
 class MidVirtualSlot90Receiver;
-
 void Rva0010BDC0(MidVirtualSlot90Receiver *xfer, void *value);
 
 class FlagPairTarget;
-
-// The base helper's xfer, matched at 0x00256C90 under this address name.
 class Rva00256C90Caller
 {
 public:
@@ -80,11 +72,19 @@ struct __declspec(align(8)) Rva002571A0Elem
 	UnsignedInt m_condition;
 	UnsignedInt m_frame;
 };
-
 typedef _STL::list<Rva002571A0Elem> Rva002571A0List;
 
-class Object;
+// Retail reuses this aligned slot for the two-byte version, load index, and
+// storing-path timer. The loading timer remains live with the index and uses
+// its own eight-byte local.
+union XferLocalStorage
+{
+	XferVersion m_version;
+	Int m_index;
+	Rva002571A0Elem m_storingTimer;
+};
 
+class Object;
 class UpdateModule
 {
 public:
@@ -113,7 +113,6 @@ public:
 	virtual void updateModuleInterfaceAnchor();
 };
 
-// upstream layout: reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include/GameLogic/Module/ObjectSMCHelper.h
 class ObjectSMCHelper : public ObjectHelper,
 	public BehaviorModuleInterface,
 	public UpdateModuleInterface
@@ -126,7 +125,6 @@ private:
 	Rva002571A0List m_timers;
 };
 
-// ?xfer@ObjectSMCHelper@@MAEXPAVXfer@@@Z
 void ObjectSMCHelper::xfer(Xfer *xfer)
 {
 	((Rva00256C90Caller *)this)->invoke((FlagPairTarget *)xfer);
@@ -135,35 +133,37 @@ void ObjectSMCHelper::xfer(Xfer *xfer)
 		return;
 
 	{
-		XferVersion version;
-		version.m_version = 1;
-		version.m_currentVersion = 1;
-		xfer->xferVersion(&version);
-	}
+		XferLocalStorage local;
+		local.m_version.m_version = 1;
+		local.m_version.m_currentVersion = 1;
+		xfer->xferVersion(&local.m_version);
 
-	{
-	Int count = m_timers.size();
-	xfer->xferInt(&count);
+		{
+			Int count = m_timers.size();
+			xfer->xferInt(&count);
 
-	if (xfer->IsStoring())
-	{
-		for (Rva002571A0List::iterator it = m_timers.begin(); it != m_timers.end(); )
-		{
-			Rva002571A0Elem timer = *it;
-			++it;
-			Rva0010BDC0((MidVirtualSlot90Receiver *)xfer, &timer.m_condition);
-			xfer->xferUnsignedInt(&timer.m_frame);
+			if (xfer->IsStoring())
+			{
+				for (Rva002571A0List::iterator it = m_timers.begin(); it != m_timers.end(); )
+				{
+					local.m_storingTimer = *it;
+					++it;
+					Rva0010BDC0((MidVirtualSlot90Receiver *)xfer,
+						&local.m_storingTimer.m_condition);
+					xfer->xferUnsignedInt(&local.m_storingTimer.m_frame);
+				}
+			}
+			else
+			{
+				for (local.m_index = 0; local.m_index < count; ++local.m_index)
+				{
+					Rva002571A0Elem timer;
+					Rva0010BDC0((MidVirtualSlot90Receiver *)xfer,
+						&timer.m_condition);
+					xfer->xferUnsignedInt(&timer.m_frame);
+					m_timers.push_back(timer);
+				}
+			}
 		}
-	}
-	else
-	{
-		for (Int i = 0; i < count; ++i)
-		{
-			Rva002571A0Elem timer;
-			Rva0010BDC0((MidVirtualSlot90Receiver *)xfer, &timer.m_condition);
-			xfer->xferUnsignedInt(&timer.m_frame);
-			m_timers.push_back(timer);
-		}
-	}
 	}
 }
