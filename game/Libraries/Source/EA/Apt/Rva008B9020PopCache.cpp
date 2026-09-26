@@ -1,12 +1,5 @@
-// ?rva008B9020PopCache@@YAPAXPAURva008B9020Owner@@@Z
-// partial score=0.7 date=2026-09-06
-// ?rva008B9020PopCache@@YAPAXPAURva008B9020Owner@@@Z
-// Address-derived: pops the last entry of obj's cache array (m_arr/m_count)
-// when obj's flag word (m_flags) has type tag 0x16 and bit 15 set, returning
-// the tag-stripped element (or the global fallback g_bfmeFallbackDB if the
-// element was zero after stripping, or if the index computation is out of
-// range, or if the guard conditions fail). Always writes the new count and
-// clears the popped slot.
+// 0x008B9020: pop a tagged cache entry, falling back to the Apt null value.
+
 class AptValue;
 extern AptValue *g_bfmeFallbackDB;
 
@@ -40,8 +33,9 @@ void *rva008B9020PopCache(Rva008B9020Owner *obj)
 		{
 			void *elem = obj->m_arr[lastIndex];
 			unsigned int masked = (unsigned int)elem & ~1u;
-			if (masked != 0)
-				result = (void *)masked;
+			if (masked == 0)
+				masked = (unsigned int)result;
+			result = (void *)masked;
 		}
 
 		obj->m_count = lastIndex;
