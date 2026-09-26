@@ -197,18 +197,6 @@ Bool GameSpyInfo::sendChat( UnicodeString message, Bool isAction, GameWindow *pl
 	return false;
 }
 
-// ?addChat@GameSpyInfo@@ present-unmatched
-void GameSpyInfo::addChat( AsciiString nick, Int profileID, UnicodeString msg, Bool isPublic, Bool isAction, GameWindow *win )
-{
-	PlayerInfoMap::iterator it = getPlayerInfoMap()->find(nick);
-	if (it != getPlayerInfoMap()->end())
-	{
-		addChat( it->second, msg, isPublic, isAction, win );
-	}
-	else
-	{
-	}
-}
 
 // ?addChat@GameSpyInfo@@ present-unmatched
 void GameSpyInfo::addChat( PlayerInfo p, UnicodeString msg, Bool isPublic, Bool isAction, GameWindow *win )
