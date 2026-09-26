@@ -147,6 +147,13 @@ Combining those guards with `||` still merged a ten-byte failure tail.
 After splitting them, moving the second float multiplication before the
 state stores recovered the remaining scheduling bytes. Its native matrix
 identity/translation and typed FX calls then matched the complete body.
+At `0x001775A0` (299 bytes), the shared failure/success exits also depend on
+structure: keep the guarded work in one nested block, route its successful
+exits through `goto success`, and share one failure label. Direct failure
+returns moved that epilogue into the body. After the logger call, use
+`m_field1c->getGoalObject()` rather than a cached `machine` local; retail
+reloads the state-machine pointer from `this + 0x1c`. The `+0x44` virtual slot
+and owner identity remain opaque.
 
 ## Compiler-private ABI: compile the static helper with its caller
 
@@ -227,6 +234,14 @@ belongs to the fourth word here: bit **114**, not bit 18. Derive the word
 offset before assigning a semantic flag name. Temporary filters are destroyed
 after iterator initialization and before iteration, as in the other filter
 witnesses.
+
+The 193-byte dispatch body at `0x001743C0` also needs two 40-byte
+`_STL::bitset<320>` values passed by value. Construct each with the
+one-index `kInit` constructor (bits 280 and 279) and pass them to slot 94 in
+reverse local order. A set-based wrapper remained 195 bytes with 131
+differing bytes; the constructor-shaped wrapper matched all 193. The wrapper
+and slot stay address-derived: this byte match does not prove semantic flag
+names.
 
 The caller's nested pointer-vector base exposed a second boundary: native
 inlined node allocation emitted 130 bytes, whereas retail's 97-byte base at
