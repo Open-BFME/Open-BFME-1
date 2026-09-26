@@ -287,3 +287,14 @@ typedef _STL::_Rb_tree<unsigned int,
 template _STL::pair<Rva0094CCF0Tree::iterator, bool>
 Rva0094CCF0Tree::insert_unique( const Rva0094CCF0Pair & );
 
+
+struct Rva0094CEF0Tree : Rva0094CCF0Tree
+{
+	_STL::pair<Rva0094CCF0Tree::iterator, bool> insertAt94CEF0(const Rva0094CCF0Pair &value);
+};
+
+_STL::pair<Rva0094CCF0Tree::iterator, bool>
+Rva0094CEF0Tree::insertAt94CEF0(const Rva0094CCF0Pair &value)
+{
+	return insert_unique(value);
+}
