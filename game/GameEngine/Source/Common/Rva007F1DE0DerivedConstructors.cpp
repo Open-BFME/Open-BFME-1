@@ -25,6 +25,7 @@ NAME##Object::NAME##Object(void *payload) : Q3MakeBaseB(payload)     \
 {                                                                    \
 }
 
+BFME_DERIVED_CTOR(Rva007E9B40)
 BFME_DERIVED_CTOR(Rva007F1C20)
 BFME_DERIVED_CTOR(Rva007F2150)
 BFME_DERIVED_CTOR(Rva007F2E60)
