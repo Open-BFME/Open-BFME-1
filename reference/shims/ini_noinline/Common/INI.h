@@ -224,6 +224,10 @@ class INI
   INI(const INI&);
   INI& operator=(const INI&);
 
+	// ThingFactory::parseObjectDefinition (0x00139D00) saves m_loadType, sets it
+	// to 4 around a ChildObject's initFromINIMulti and restores it, all inline.
+	friend class ThingFactory;
+
 public:
 
 	INI();
@@ -245,13 +249,6 @@ public:
 
 	// data type parsing (the highest level of what type of thing we're parsing)
 	static void parseObjectDefinition( INI *ini );
-	// BFME's shared body takes three names, not Zero Hour's two: the block
-	// prints both "ObjectReskin must come after the original Object" and
-	// "ChildObject must come after the original Object", so reskinFrom and
-	// childOf are separate arguments.
-	static void parseObjectDefinition( INI *ini, const AsciiString &name,
-									   const AsciiString &reskinFrom,
-									   const AsciiString &childOf );
 	static void parseObjectReskinDefinition( INI *ini );
 	static void parseChildObjectDefinition( INI *ini );   // BFME-only block
 	static void parseWeaponTemplateDefinition( INI *ini );

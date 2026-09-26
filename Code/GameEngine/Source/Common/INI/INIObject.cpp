@@ -8,21 +8,30 @@
 // the original Object (%s, %s)." and "ChildObject must come after the original
 // Object (%s, %s)."
 //
-// Zero Hour's shared body takes two names; BFME's takes three.
+// That body is ThingFactory::parseObjectDefinition, as in Zero Hour, whose
+// shared body takes two names; BFME's takes three.
 #include "PreRTS.h"
 #include "Common/INI.h"
 
+class ThingFactory
+{
+public:
+	static void parseObjectDefinition( INI *ini, const AsciiString &name,
+									   const AsciiString &reskinFrom,
+									   const AsciiString &childOf );	// 0x00139D00
+};
+
 void INI::parseObjectDefinition( INI* ini )
 {
-	parseObjectDefinition( ini, AsciiString( ini->getNextToken() ),
-												 AsciiString::TheEmptyString, AsciiString::TheEmptyString );
+	ThingFactory::parseObjectDefinition( ini, AsciiString( ini->getNextToken() ),
+										 AsciiString::TheEmptyString, AsciiString::TheEmptyString );
 }
 
 void INI::parseObjectReskinDefinition( INI* ini )
 {
 	AsciiString name( ini->getNextToken() );
 	AsciiString reskinFrom( ini->getNextToken() );
-	parseObjectDefinition( ini, name, reskinFrom, AsciiString::TheEmptyString );
+	ThingFactory::parseObjectDefinition( ini, name, reskinFrom, AsciiString::TheEmptyString );
 }
 
 // BFME-only. Same shape as the reskin block, but the second name goes to the
@@ -32,5 +41,5 @@ void INI::parseChildObjectDefinition( INI* ini )
 {
 	AsciiString name( ini->getNextToken() );
 	AsciiString childOf( ini->getNextToken() );
-	parseObjectDefinition( ini, name, AsciiString::TheEmptyString, childOf );
+	ThingFactory::parseObjectDefinition( ini, name, AsciiString::TheEmptyString, childOf );
 }

@@ -1,18 +1,23 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/ini /Ireference/shims/iniexception /Ireference/shims/ini_noinline /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/debug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main
 // stlport
 //
-// INI::parseObjectDefinition( ini, name, reskinFrom, childOf ), retail 0x00139D00.
-// The shared body behind the Object, ObjectReskin and ChildObject blocks
-// (INIObject.cpp): Zero Hour's ThingFactory::parseObjectDefinition with a third
-// name. BFME builds one MultiIniFieldParse for every variant, and a ChildObject
+// ThingFactory::parseObjectDefinition( ini, name, reskinFrom, childOf ), retail
+// 0x00139D00. The shared body behind the Object, ObjectReskin and ChildObject
+// blocks (INIObject.cpp): Zero Hour's static ThingFactory::parseObjectDefinition
+// with a third name. It sits in ThingFactory.cpp's contribution, after
+// newOverride (0x00139A80) and newTemplate (0x00139B40) as in Zero Hour's
+// ThingFactory.cpp, and reaches the private newOverride directly.
+// BFME builds one MultiIniFieldParse for every variant, and a ChildObject
 // parses its block with the INI load type temporarily set to 4.
 #include "PreRTS.h"
 #include "Common/INI.h"
 #include "Common/INIException.h"
 
+// validateAudio is protected (its matched name is IAE); retail calls it from
+// this ThingFactory body, so BFME's ThingTemplate lets ThingFactory in.
 class ThingTemplate : public Overridable
 {
-	friend class INI;
+	friend class ThingFactory;
 public:
 	void copyFrom( const ThingTemplate *that );						// 0x00148600
 	void setCopiedFromDefault();										// 0x0013FDB0
@@ -47,6 +52,13 @@ public:
 	const ThingTemplate *findTemplate( const AsciiString &name );		// 0x00137E80
 	ThingTemplate *newTemplate( const AsciiString &name );				// 0x00139B40
 
+	// BFME's takes three names, not Zero Hour's two: the body prints both
+	// "ObjectReskin must come after the original Object" and "ChildObject must
+	// come after the original Object".
+	static void parseObjectDefinition( INI *ini, const AsciiString &name,
+									   const AsciiString &reskinFrom,
+									   const AsciiString &childOf );
+
 	// Also emitted out of line at 0x00137E20; retail inlines it here.
 	Bool rva00137E20( const AsciiString &name )
 	{
@@ -56,7 +68,6 @@ public:
 	}
 
 private:
-	friend class INI;
 	ThingTemplate *newOverride( ThingTemplate *thingTemplate );			// 0x00139A80
 
 	unsigned char m_unmodelled00[0x10];
@@ -72,9 +83,9 @@ public:
 	static void buildFieldParse( MultiIniFieldParse &p );
 };
 
-void INI::parseObjectDefinition( INI *ini, const AsciiString &name,
-								 const AsciiString &reskinFrom,
-								 const AsciiString &childOf )
+void ThingFactory::parseObjectDefinition( INI *ini, const AsciiString &name,
+										  const AsciiString &reskinFrom,
+										  const AsciiString &childOf )
 {
 	// find existing item if present
 	ThingTemplate *thingTemplate = NULL;
