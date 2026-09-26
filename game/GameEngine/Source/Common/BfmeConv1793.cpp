@@ -15,9 +15,13 @@ public:
 	int m_bfmeFlagsYT;
 };
 
-char __cdecl bfmeFilterYT(void *item);
+class Object;
 
-typedef char (__cdecl *BfmeFilterFnYT)(void *item);
+// 0x0024F280: state-gated aiMoveToObject iterate callback, see
+// GameLogic/AI/Rva0024F280StateGatedMoveCallback.cpp.
+void __cdecl Rva0024F280(Object *obj, void *userData);
+
+typedef void (__cdecl *BfmeFilterFnYT)(Object *obj, void *userData);
 
 class BfmeSinkYT
 {
@@ -112,8 +116,8 @@ void __cdecl bfmeNotifyYT(BfmeUnitYT *unit, void *param)
 
 			if (sink)
 			{
-				sink->bfmeVisitYT(bfmeFilterYT, param, 1);
-				sink->bfmeVisitYT(bfmeFilterYT, param, 0x10);
+				sink->bfmeVisitYT(Rva0024F280, param, 1);
+				sink->bfmeVisitYT(Rva0024F280, param, 0x10);
 			}
 		}
 	}

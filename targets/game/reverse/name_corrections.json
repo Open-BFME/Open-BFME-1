@@ -5998,5 +5998,25 @@
   "after_sha256": "8aabcd61fc22e049ba488dd7659673148de389c4b93ab96b08707bb04326debb",
   "evidence": "docs/naming_evidence.md",
   "reason": "not read by this body and no witness"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/BfmeConv1793.cpp",
+  "new_path": "game/GameEngine/Source/Common/BfmeConv1793.cpp",
+  "old_name": "bfmeFilterYT",
+  "new_name": "Rva0024F280",
+  "before_sha256": "94a24dba2ab855166590363bc890b552fc90a514289e191dfaca40b144cf5dbc",
+  "after_sha256": "9160d8538e492d51ecc847caf2323af7c6c85b99b4c79d99df1ac3a4b64a2fb4",
+  "evidence": "targets/game/reverse/identity_evidence/0x0024f280-state-gated-move-callback.md",
+  "reason": "retail 0x0024F280 takes two cdecl arguments and returns void; the pinned char(void*) filter signature is refuted and the callback identity is unknown"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0024f280.cpp",
+  "new_path": "game/GameEngine/Source/GameLogic/AI/Rva0024F280StateGatedMoveCallback.cpp",
+  "old_name": "notifyUnlessKind",
+  "new_name": "Rva0024F280",
+  "before_sha256": "ca1a0bccc02bd57a5318ee20eccceb14a9a56f722db956bdc151fed5f228561b",
+  "after_sha256": "38373519bc0e512ca8cd969b4e60d94c4f065e20e25a282653684db823bb2948",
+  "evidence": "targets/game/reverse/identity_evidence/0x0024f280-state-gated-move-callback.md",
+  "reason": "the tested value is StateMachine::getCurrentStateID (INVALID_STATE_ID 999999) and the call is aiMoveToObject; the kind/notify reading is refuted and the callback identity is unknown"
  }
 ]
