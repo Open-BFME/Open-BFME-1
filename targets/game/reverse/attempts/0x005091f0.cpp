@@ -1804,9 +1804,6 @@ void populateQuickMatchMapSelectListbox( QuickMatchPreferences &pref );
 
 static GameWindow *aptButtonBuddies = 0;
 
-#ifndef max
-#define max(a,b) ((a) > (b) ? (a) : (b))
-#endif
 
 void BfmeAptScreenQuickMatchMenu::_bfme_initGadgets()
 {
@@ -1878,7 +1875,7 @@ void BfmeAptScreenQuickMatchMenu::_bfme_initGadgets()
 		s.format( TheGameText->fetch( "GUI:PlayersVersusPlayers" ), i, i );
 		GadgetComboBoxAddEntry( m_numPlayers, s, c );
 	}
-	GadgetComboBoxSetSelectedPos( m_numPlayers, max( 0, pref.getNumPlayers() ) );
+	GadgetComboBoxSetSelectedPos( m_numPlayers, std::max( 0, pref.getNumPlayers() ) );
 
 	GadgetComboBoxReset( m_maxDisconnects );
 	GadgetComboBoxAddEntry( m_maxDisconnects, TheGameText->fetch( "GUI:Any" ), c );
@@ -1887,7 +1884,7 @@ void BfmeAptScreenQuickMatchMenu::_bfme_initGadgets()
 		s.format( L"%d", MAX_DISCONNECTS[i] );
 		GadgetComboBoxAddEntry( m_maxDisconnects, s, c );
 	}
-	m_selectedMap = max( 0, pref.getMaxDisconnects() );
+	m_selectedMap = std::max( 0, pref.getMaxDisconnects() );
 	GadgetComboBoxSetSelectedPos( m_maxDisconnects, m_selectedMap );
 	m_isStopping = false;
 	m_isMatching = true;
