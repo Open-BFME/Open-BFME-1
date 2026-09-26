@@ -729,3 +729,9 @@ Rva008F8E60SelfBody *Rva008F8E60SelfBody::body()
 {
 	return this;
 }
+
+// ?Rva008FD4B0AlwaysTrue@@YAEXZ
+unsigned char Rva008FD4B0AlwaysTrue()
+{
+	return 1;
+}
