@@ -12,13 +12,13 @@ public:
 	{
 		if (this == 0)
 			return this;
-		if (m_override != 0)
-			return m_override->getFinalOverride();
+		if (m_nextOverride != 0)
+			return m_nextOverride->getFinalOverride();
 		return this;
 	}
 
 	char m_head[4];
-	const Overridable *m_override;
+	const Overridable *m_nextOverride;
 	char m_middle0[0x1C];
 	float m_firstScale;
 	char m_middle1[8];

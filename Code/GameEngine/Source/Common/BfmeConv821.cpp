@@ -84,7 +84,7 @@ class CommandButton
 {
 public:
 	char m_pad[0x10];
-	int m_state;
+	int m_command;
 };
 
 class BfmeCommandButtonDispatchILT
@@ -139,7 +139,7 @@ void BfmeObj412::call(void *b, void *c)
 			button = m_button[i];
 		if (button)
 		{
-			switch (button->m_state)
+			switch (button->m_command)
 			{
 			case 1:
 			case 3:
