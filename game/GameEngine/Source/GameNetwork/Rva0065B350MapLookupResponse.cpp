@@ -41,6 +41,8 @@ public:
     char opaque0[0x5C];
     _STL::map<void *, void *> values;
     int handle(void *, int, const char *, int, int);
+    int handleLadderRankResponse(void *, int, const char *, int, int);
+    int handleXKResponse(void *, int, const char *, int, int);
 };
 int Rva0065B350::handle(void *key, int status, const char *text, int, int)
 {
@@ -73,6 +75,24 @@ int bfmeLadderCountCompleted(int key, int status, char *text, __int64 timestamp,
     if (!context)
         return 1;
     return static_cast<Rva0065B350 *>(context)->handle(
+        reinterpret_cast<void *>(key), status, text,
+        reinterpret_cast<const int *>(&timestamp)[0], reinterpret_cast<const int *>(&timestamp)[1]);
+}
+
+int bfmeLadderRankHttpComplete(int key, int status, char *text, __int64 timestamp, void *context)
+{
+    if (!context)
+        return 1;
+    return static_cast<Rva0065B350 *>(context)->handleLadderRankResponse(
+        reinterpret_cast<void *>(key), status, text,
+        reinterpret_cast<const int *>(&timestamp)[0], reinterpret_cast<const int *>(&timestamp)[1]);
+}
+
+extern "C" int __cdecl bfmeCbXK(int key, int status, char *text, __int64 timestamp, void *context)
+{
+    if (!context)
+        return 1;
+    return static_cast<Rva0065B350 *>(context)->handleXKResponse(
         reinterpret_cast<void *>(key), status, text,
         reinterpret_cast<const int *>(&timestamp)[0], reinterpret_cast<const int *>(&timestamp)[1]);
 }
