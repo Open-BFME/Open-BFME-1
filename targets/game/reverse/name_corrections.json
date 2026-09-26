@@ -6018,5 +6018,15 @@
   "after_sha256": "38373519bc0e512ca8cd969b4e60d94c4f065e20e25a282653684db823bb2948",
   "evidence": "targets/game/reverse/identity_evidence/0x0024f280-state-gated-move-callback.md",
   "reason": "the tested value is StateMachine::getCurrentStateID (INVALID_STATE_ID 999999) and the call is aiMoveToObject; the kind/notify reading is refuted and the callback identity is unknown"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00911020.cpp",
+  "new_path": "targets/game/reverse/attempts/0x00911020.cpp",
+  "old_name": "level",
+  "new_name": "Rva00911020SetNPatchMode",
+  "before_sha256": "d3bfdd600da24b16f801b64425bf68bb5677a14510d9a86288ebf1339a7045a8",
+  "after_sha256": "af7607425d485fb68f019e51303518e915ec55866fde9256ebc7bedad725d175",
+  "evidence": "targets/game/reverse/attempt_support/0x00911020-20260926.md",
+  "reason": "The old level identifier is an Apply local float initialized with parentheses, not a function. The parser pairs it with the new TU-local device-slot adapter; no identity was renamed. Evidence includes the precise old declaration."
  }
 ]
