@@ -89172,3 +89172,4 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ?YFlip@Targa@@QAEXXZ,0x009E0360,Targa Load direct call with thiscall receiver and ret0; helper reads Header Width Height PixelDepth and mImage at canonical offsets
 ?resetLanSession@@YAXH@Z,0x000280AB,route=0x004CC8B0; target 0x004D0820 calls ILT 0x000280AB with modes 1 and 0; 0x004CC8B0 has independently matched resetLanSession(int) body
 ?setRenderObj@MapObject@@QAEXPAVRenderObjClass@@@Z,0x009334D0,target 0x00712F60 calls 0x009334D0 twice; checked body is thiscall ret 4 and writes this+0x2c; existing object-symbol row identifies the method
+?_M_insert_overflow@?$vector@PAVObject@@V?$allocator@PAVObject@@@_STL@@@_STL@@IAEXPAPAVObject@@ABQAV3@ABU__true_type@2@I_N@Z,0x0001F6CC,ScriptActions 0x002FFB60 +0xDF pointer vector overflow through ILT to 0x0018B700
