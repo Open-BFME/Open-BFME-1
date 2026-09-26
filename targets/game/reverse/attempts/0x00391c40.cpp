@@ -1,6 +1,6 @@
 // ?xfer@GameLogic@@MAEXPAVXfer@@@Z
 // partial score=0.995695 date=2026-09-25
-// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Ireference/shims/stringbaseunicode /ICode/Libraries/Source/WWVegas/WWLib /ICode/Libraries/Source/WWVegas/WWMath /ICode/GameEngine/Source/Common/System
+// cl: /DNDEBUG /MD /EHsc /D_STLP_USE_STATIC_LIB /Iinputs/reference/shims/stringbaseunicode /Igame/Libraries/Source/WWVegas/WWLib /Igame/Libraries/Source/WWVegas/WWMath /Igame/GameEngine/Source/Common/System
 // stlport
 // GameLogic secondary Snapshot transfer, RVA00391C40,2323B.
 // Secondary receiver is complete-object+8. See IDENTITY.md and LAYOUTS.md.

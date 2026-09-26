@@ -1,8 +1,9 @@
 // ?xfer@W3DShrubBuffer@@MAEXPAVXfer@@@Z
 // partial score=0.99743 date=2026-09-26
-// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /ICode/Libraries/Source/WWVegas/WWMath /ICode/Libraries/Source/WWVegas/WWLib
-// Near miss (1553 of 1557 B): after the type search retail reloads treeType into EDI before this into EBX.
-// Landing also needs a pin for the addTree dump 0x00720D10 and a method name for the copy 0x0071CD80.
+// cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Igame/Libraries/Source/WWVegas/WWMath /Igame/Libraries/Source/WWVegas/WWLib
+// Probe: 1557/1557 bytes, four differing load-order bytes.
+// Retail loads treeType into EDI at 0x0072178E before this into EBX at 0x00721792.
+// The append callee 0x00720D10 and the 0x0071CD80 record copy are already typed.
 
 #include <string.h>
 
@@ -223,7 +224,7 @@ struct Rva00720D10Data
 	AsciiString m_textureName;
 };
 
-// The 0xA4-byte shrub record; 0x0071CD80 copies it but is ledgered as a copy ctor, so copyFrom is a stand-in.
+// The 0xA4-byte shrub record; 0x0071CD80 is its matched copy constructor.
 class Gen_0071CD80
 {
 public:
