@@ -185,3 +185,22 @@ U1Probe_00845890::U1Probe_00845890( U1Carrier_00845870 *p )
 	  m_present( m_pointer != 0 )
 {
 }
+
+// The 0x008450E0 constructor reads the same virtual-base-relative field,
+// but stores an absent flag at +6 and clears a separate byte at +7.
+class U1Probe_008450E0
+{
+public:
+	U1Probe_008450E0( U1Carrier_00845870 *p );
+
+	void *m_pointer;
+	unsigned short m_unused;
+	bool m_absent;
+	unsigned char m_cached;
+};
+
+U1Probe_008450E0::U1Probe_008450E0( U1Carrier_00845870 *p )
+	: m_pointer( *(void **)((char *)p + p->m_vbtable[1] + 0x58) ),
+	  m_absent( m_pointer == 0 ), m_cached( 0 )
+{
+}
