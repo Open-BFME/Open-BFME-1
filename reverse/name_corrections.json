@@ -5528,5 +5528,15 @@
   "after_sha256": "c8cdbf39bedee61de249bb8e7927fd653b36d4b1aef141fbbf1a8ae1a3428cdc",
   "evidence": "reverse/symbols.csv",
   "reason": "compute was an invented method name in the 0.34 bank, whose own header says the owning method identity is not established. reverse/symbols.csv pins ?rva001DE2A0@BfmeCell@@QAEXPBUCoord3D@@MHPAX@Z at ILT 0x00004D27, the exact name the matched BfmeCellGrid::rva001B1AD0 sweep calls, so the landed body takes that address-keeping name."
+ },
+ {
+  "old_path": "reverse/attempts/0x0089f0e0.cpp",
+  "new_path": "Code/Libraries/Source/EA/Apt/AptString/EAStringCSuffix.cpp",
+  "old_name": "Right",
+  "new_name": "rva0089F0E0",
+  "before_sha256": "07ede233764d5c567bda8291ba3762cd973dae3aa485da1f4d79ff84149b76d0",
+  "after_sha256": "0c53f568acdde5c998ba2daa4da148183f44931d2f54fd46508aeb528d9f2812",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank's method name came only from adjacency to Left/Mid and suffix semantics; no caller (image has none), vtable slot, string literal or Zero Hour twin names it"
  }
 ]
