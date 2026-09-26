@@ -99,35 +99,35 @@ private:
 	Real m_aiDozerBoredRadiusModifier;
 	Bool m_aiCrushesInfantry;
 	unsigned char m_retaliationAlignment[3];
+	Real m_meleeApproachTolerance;
+	Real m_meleeApproachDist;
+	Real m_meleeAcquireLimitDist;
+	Real m_wadeWaterDepth;
+	Real m_formationColumnWidth;
+	Real m_formationRowDepth;
+	Real m_formationSquadSpacing;
+	Real m_narrowPassageScale;
+	UnsignedInt m_formationColumns;
+	Bool m_waitForOthers;
+	Bool m_hordesWaitForHordes;
+	Bool m_attackMoveUsesFormations;
+	Bool m_forceHordesToLowLOD;
+	Bool m_allowForestFires;
+	Bool m_useFormations;
+	unsigned char m_bfmeBA[2];
+	Real m_altCameraZoomOverride;
+	Real m_altCameraPitchOverride;
 	Real m_maxRetaliateDistance;
 	Real m_retaliateFriendsRadius;
-	Real m_bfme98;
-	Real m_bfme9C;
-	Real m_bfmeA0;
-	Real m_bfmeA4;
-	Real m_bfmeA8;
-	Real m_bfmeAC;
-	UnsignedInt m_bfmeB0;
-	Bool m_bfmeB4;
-	Bool m_bfmeB5;
-	Bool m_bfmeB6;
-	Bool m_bfmeB7;
-	Bool m_bfmeB8;
-	Bool m_bfmeB9;
-	unsigned char m_bfmeBA[2];
-	Real m_bfmeBC;
-	Real m_bfmeC0;
-	Real m_bfmeC4;
-	Real m_bfmeC8;
-	Real m_bfmeCC;
-	Real m_bfmeD0;
-	Bool m_bfmeD4;
+	Real m_chaseFromBehindLimit;
+	Real m_castleSiegeStandBackDistance;
+	Bool m_useLowLODTrees;
 	unsigned char m_bfmeD5[3];
-	AsciiString m_treeF03;
-	AsciiString m_treeF02;
-	AsciiString m_ptStump02;
-	Real m_bfmeE4;
-	Bool m_bfmeE8;
+	AsciiString m_lowLodTreeName;
+	AsciiString m_lowLodTreeNameNoGrab;
+	AsciiString m_lowLodTreeNameNoHarvest;
+	Real m_lowLodTreeScale;
+	Bool m_disableTrees;
 	unsigned char m_bfmeE9[3];
 	void *m_sideInfo;
 	void *m_sideBuildLists;
@@ -174,36 +174,36 @@ TAiData::TAiData() :
 	m_supplyCenterSafeRadius( 250.0f ),
 	m_aiDozerBoredRadiusModifier( 2.0f ),
 	m_aiCrushesInfantry( 1 ),
-	m_maxRetaliateDistance( 20.0f ),
-	m_retaliateFriendsRadius( 60.0f ),
-	m_bfme98( 100.0f ),
-	m_bfme9C( 5.0f ),
-	m_bfmeA0( 65.0f ),
-	m_bfmeA4( 65.0f ),
-	m_bfmeA8( 30.0f ),
-	m_bfmeAC( 1.0f ),
-	m_bfmeB0( 2 ),
-	m_bfmeB4( 0 ),
-	m_bfmeB5( 1 ),
-	m_bfmeB6( 1 ),
-	m_bfmeB7( 1 ),
-	m_bfmeB8( 0 ),
-	m_bfmeB9( 1 ),
-	m_bfmeBC( 1.4f ),
-	m_bfmeC0( 0.5f ),
-	m_bfmeC4( 200.0f ),
-	m_bfmeC8( 120.0f ),
-	m_bfmeCC( 50.0f ),
-	m_bfmeD0( 100.0f ),
-	m_bfmeD4( 0 ),
-	m_treeF03( "TreeF03" ),
-	m_treeF02( "TreeF02" ),
-	m_ptStump02( "PTStump02" ),
-	m_bfmeE8( 0 ),
+	m_meleeApproachTolerance( 20.0f ),
+	m_meleeApproachDist( 60.0f ),
+	m_meleeAcquireLimitDist( 100.0f ),
+	m_wadeWaterDepth( 5.0f ),
+	m_formationColumnWidth( 65.0f ),
+	m_formationRowDepth( 65.0f ),
+	m_formationSquadSpacing( 30.0f ),
+	m_narrowPassageScale( 1.0f ),
+	m_formationColumns( 2 ),
+	m_waitForOthers( 0 ),
+	m_hordesWaitForHordes( 1 ),
+	m_attackMoveUsesFormations( 1 ),
+	m_forceHordesToLowLOD( 1 ),
+	m_allowForestFires( 0 ),
+	m_useFormations( 1 ),
+	m_altCameraZoomOverride( 1.4f ),
+	m_altCameraPitchOverride( 0.5f ),
+	m_maxRetaliateDistance( 200.0f ),
+	m_retaliateFriendsRadius( 120.0f ),
+	m_chaseFromBehindLimit( 50.0f ),
+	m_castleSiegeStandBackDistance( 100.0f ),
+	m_useLowLODTrees( 0 ),
+	m_lowLodTreeName( "TreeF03" ),
+	m_lowLodTreeNameNoGrab( "TreeF02" ),
+	m_lowLodTreeNameNoHarvest( "PTStump02" ),
+	m_disableTrees( 0 ),
 	m_sideInfo( 0 ),
 	m_sideBuildLists( 0 ),
 	m_namedLists( 0 ),
 	m_next( 0 )
 {
-	m_bfmeE4 = 0.55f;
+	m_lowLodTreeScale = 0.55f;
 }
