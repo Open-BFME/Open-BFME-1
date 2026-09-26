@@ -89516,3 +89516,6 @@ __Locale_d_fmt,0x0084ECA0,STLport time facet __get_date_order at 0x00845C10 dire
 ?rva004c15d0@ControlBar@@QAEXABVRva003BD770@@@Z,0x00043702,ILT of 0x004C15D0; called from applyOwner 0x003BF190 +0x177 with ecx=TheControlBar and one pushed pointer to the Rva003BD770 temporary; body ends ret 4 at all four exits; address-derived
 ?d_009a5aa0@@YAXXZ,0x009A5AA0,Address-only compatibility for withdrawn dump; native Rva009A5AA0InstallFilter body at 0x009A5AA0; Rva009A4D00Init call site 0x009A4D4C is a direct E8 to 0x009A5AA0 with four cdecl pushes and add esp 0x10; body ends in plain ret; no semantic identity claim
 ?findClosestByKindOf@RegroupingPlayerView@@QAEPAVObject@@PAV2@V?$BitFlags@$0MA@@@1@Z,0x00003909,RegroupingState onEnter retail calls ILT 0x00003909 three times with Player receiver and two 24-byte BFME kind-of masks; body 0x000CFC30 is matched Player::findClosestByKindOf
+?Rva00627A20Enabled@@3EA,0x012F70A4,Address-derived callback enable flag cleared before retail 0x00627A20 invokes shutdown callback
+?Rva00627A20Callback@@3P6AXXZA,0x012F70AC,Address-derived callback pointer called indirectly by retail 0x00627A20 and cleared afterward
+?Rva007EB820BoundCallback@@YAXXZ,0x007EB820,Address-derived callback bound by the retail logger constructor at 0x007EB850; callback at 0x007EB820 is a distinct stub
