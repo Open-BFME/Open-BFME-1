@@ -5428,5 +5428,15 @@
   "after_sha256": "a8bd0752d39ae415362b036cbd7fb6e7f0043c3770a0a0cc664e8ab52ea2345e",
   "evidence": "docs/naming_evidence.md",
   "reason": "offset token for an unread member; converter renames field cites docs/naming_evidence.md"
+ },
+ {
+  "old_path": "reverse/attempts/0x0020d310.cpp",
+  "new_path": "Code/GameEngine/Source/GameLogic/Object/Behavior/SpawnUnitBehaviorUpdate.cpp",
+  "old_name": "m_frame",
+  "new_name": "m_3c",
+  "before_sha256": "dd05922276bb0bb7141398d8fc6f3cf23d1659c926cd7a3cfe90b597c425b9d4",
+  "after_sha256": "919790b38b87fb2e7918f0ffb85e12fb4ede1646680cb8b0c6cde80a448e0f66",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "GameLogic+0x3c is only a ZH hint per name_oracle and the pinned global symbol types it GameLogicFrameSlice"
  }
 ]
