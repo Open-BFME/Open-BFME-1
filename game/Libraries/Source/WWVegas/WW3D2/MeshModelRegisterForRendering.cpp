@@ -7,6 +7,7 @@ class DX8MeshRendererClass
 {
 public:
 	void Register_Mesh_Type(MeshModelClass *mesh);
+	void Invalidate(bool shutdown);
 };
 
 extern DX8MeshRendererClass *TheDX8MeshRenderer;
@@ -35,4 +36,10 @@ void MeshModelClass::Register_For_Rendering()
 		Init_For_NPatch_Rendering();
 	}
 	TheDX8MeshRenderer->Register_Mesh_Type(this);
+}
+
+bool bfmeRva008FD4A0InvalidateRenderer()
+{
+	TheDX8MeshRenderer->Invalidate(false);
+	return true;
 }
