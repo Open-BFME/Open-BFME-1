@@ -109,20 +109,20 @@ void FXList::doFXPos(const Coord3D *primary, const Matrix3D *primaryMtx, Real pr
 			return;
 	}
 
-	FXNuggetNode *it = m_nuggetSentinel->next;
-	if (it != m_nuggetSentinel)
+	FXNuggetNode *node = m_nuggetSentinel->next;
+	if (node != m_nuggetSentinel)
 	{
-		const Coord3D *sec = secondary;
+		const Coord3D *secondaryPosition = secondary;
 		do
 		{
-			FXNugget *nugget = it->value;
+			FXNugget *nugget = node->value;
 			if (nugget->isVisible(0, 0))
 			{
-				nugget->doFXPos(primary, primaryMtx, primarySpeed, sec);
+				nugget->doFXPos(primary, primaryMtx, primarySpeed, secondaryPosition);
 				if (nugget->m_stopIfNuggetPlayed)
 					break;
 			}
-			it = it->next;
-		} while (it != self->m_nuggetSentinel);
+			node = node->next;
+		} while (node != self->m_nuggetSentinel);
 	}
 }

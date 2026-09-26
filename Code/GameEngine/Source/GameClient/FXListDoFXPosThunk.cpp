@@ -49,14 +49,14 @@ private:
 };
 
 // ?doFXPos@FXList@@IBEXPBUCoord3D@@PBVMatrix3D@@M0M@Z
-void FXList::doFXPos(const Coord3D *pos, const Matrix3D *mtx, Real speed, const Coord3D *secondary, Real radius) const
+void FXList::doFXPos(const Coord3D *primaryPosition, const Matrix3D *primaryTransform, Real primarySpeed, const Coord3D *secondary, Real overrideRadius) const
 {
-	((const FXListDoFXPosShim *)this)->run(pos, mtx, speed, secondary, radius);
+	((const FXListDoFXPosShim *)this)->run(primaryPosition, primaryTransform, primarySpeed, secondary, overrideRadius);
 }
 
 // ?run@FXListDoFXPosShim@@QBEXPBUCoord3D@@PBVMatrix3D@@MRBU2@M@Z
-void FXListDoFXPosShim::run(const Coord3D *pos, const Matrix3D *mtx, Real speed, const Coord3D *volatile secondary, Real radius) const
+void FXListDoFXPosShim::run(const Coord3D *primaryPosition, const Matrix3D *primaryTransform, Real primarySpeed, const Coord3D *volatile secondary, Real overrideRadius) const
 {
-	for (FXNugget **it = m_begin; it != m_end; ++it)
-		(*it)->doFXPos(pos, mtx, speed, secondary, radius);
+	for (FXNugget **nuggetSlot = m_begin; nuggetSlot != m_end; ++nuggetSlot)
+		(*nuggetSlot)->doFXPos(primaryPosition, primaryTransform, primarySpeed, secondary, overrideRadius);
 }

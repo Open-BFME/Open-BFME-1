@@ -142,9 +142,9 @@ void FXList::doFXObj(const Object *primary, const Object *secondary) const
 		}
 	}
 
-	for (FXNuggetNode *it = m_nuggetSentinel->next; it != m_nuggetSentinel; it = it->next)
+	for (FXNuggetNode *node = m_nuggetSentinel->next; node != m_nuggetSentinel; node = node->next)
 	{
-		FXNugget *nugget = it->value;
+		FXNugget *nugget = node->value;
 		if (nugget->isVisible(primary, secondary))
 		{
 			nugget->doFXObj(primary, secondary);

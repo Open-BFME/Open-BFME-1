@@ -70,14 +70,14 @@ static void adjustVector(Coord3D *vec, const Matrix3D* mtx)
 {
 	if (mtx)
 	{
-		Vector3 vectmp;
-		vectmp.X = vec->x;
-		vectmp.Y = vec->y;
-		vectmp.Z = vec->z;
-		vectmp = mtx->Rotate_Vector(vectmp);
-		vec->x = vectmp.X;
-		vec->y = vectmp.Y;
-		vec->z = vectmp.Z;
+		Vector3 rotatedVector;
+		rotatedVector.X = vec->x;
+		rotatedVector.Y = vec->y;
+		rotatedVector.Z = vec->z;
+		rotatedVector = mtx->Rotate_Vector(rotatedVector);
+		vec->x = rotatedVector.X;
+		vec->y = rotatedVector.Y;
+		vec->z = rotatedVector.Z;
 	}
 }
 
@@ -126,11 +126,11 @@ public:
 //-------------------------------------------------------------------------------------------------
 void FXNugget::doFXObj(const Object* primary, const Object* secondary) const
 {
-	const Coord3D* p = primary ? primary->getPosition() : NULL;
-	const Matrix3D* mtx = primary ? primary->getTransformMatrix() : NULL;
+	const Coord3D* primaryPosition = primary ? primary->getPosition() : NULL;
+	const Matrix3D* primaryTransform = primary ? primary->getTransformMatrix() : NULL;
 	const Real speed = 0.0f;	// yes, that's right -- NOT the object's speed.
-	const Coord3D* s = secondary ? secondary->getPosition() : NULL;
-	doFXPos(p, mtx, speed, s);
+	const Coord3D* secondaryPosition = secondary ? secondary->getPosition() : NULL;
+	doFXPos(primaryPosition, primaryTransform, speed, secondaryPosition);
 }
 
 //-------------------------------------------------------------------------------------------------
@@ -900,10 +900,10 @@ const FXList *FXListStore::findFXList(const char* name) const
 	if (stricmp(name, "None") == 0)
 		return NULL;
 
-  FXListMap::const_iterator it = m_fxmap.find(NAMEKEY(name));
-  if (it != m_fxmap.end()) 
+  FXListMap::const_iterator entry = m_fxmap.find(NAMEKEY(name));
+  if (entry != m_fxmap.end())
 	{
-		return &(*it).second;
+		return &(*entry).second;
 	}
 	return NULL;
 }

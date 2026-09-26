@@ -124,7 +124,7 @@ private:
 class FXListAtBonePosDoFxAtBonesShim : public FXNugget
 {
 public:
-	void run(const Object *obj, int start) const;
+	void run(const Object *obj, int startIndex) const;
 
 private:
 	const FXList *m_fx;
@@ -132,25 +132,25 @@ private:
 };
 
 // ?run@FXListAtBonePosDoFxAtBonesShim@@QBEXPBVObject@@H@Z
-void FXListAtBonePosDoFxAtBonesShim::run(const Object *obj, int start) const
+void FXListAtBonePosDoFxAtBonesShim::run(const Object *obj, int startIndex) const
 {
 	const Object *object = obj;
-	Coord3D bonePos[MAX_BONE_POINTS];
-	Matrix3D boneMtx[MAX_BONE_POINTS];
+	Coord3D bonePositions[MAX_BONE_POINTS];
+	Matrix3D boneTransforms[MAX_BONE_POINTS];
 
-	Drawable *draw = object->getDrawable();
-	if (draw)
+	Drawable *drawable = object->getDrawable();
+	if (drawable)
 	{
-		int count = draw->getPristineBonePositions(m_boneName.str(), start, bonePos, boneMtx, MAX_BONE_POINTS);
-		for (int i = 0; i < count; ++i)
+		int boneCount = drawable->getPristineBonePositions(m_boneName.str(), startIndex, bonePositions, boneTransforms, MAX_BONE_POINTS);
+		for (int boneIndex = 0; boneIndex < boneCount; ++boneIndex)
 		{
-			WorldPos p;
+			WorldPos worldPosition;
 			Matrix3D worldMtx[1];
-			object->convertBonePosToWorldPos(&bonePos[i], &boneMtx[i],
-				reinterpret_cast<Coord3D *>(&p), worldMtx);
-			const FXList *fx = m_fx;
-			if (fx && !fx->isEmpty())
-				fx->doFXPos(reinterpret_cast<const Coord3D *>(&p), worldMtx, 0.0f, 0);
+			object->convertBonePosToWorldPos(&bonePositions[boneIndex], &boneTransforms[boneIndex],
+				reinterpret_cast<Coord3D *>(&worldPosition), worldMtx);
+			const FXList *fxList = m_fx;
+			if (fxList && !fxList->isEmpty())
+				fxList->doFXPos(reinterpret_cast<const Coord3D *>(&worldPosition), worldMtx, 0.0f, 0);
 		}
 	}
 }

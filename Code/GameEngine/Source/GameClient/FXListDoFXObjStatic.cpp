@@ -11,8 +11,8 @@ class Matrix3D;
 class FXList
 {
 public:
-	static void doFXObj(const FXList *fx, const Object *primary, const Object *secondary);
-	static void doFXPos(const FXList *fx, const Coord3D *position,
+	static void doFXObj(const FXList *fxList, const Object *primary, const Object *secondary);
+	static void doFXPos(const FXList *fxList, const Coord3D *position,
 		const Matrix3D *transform, float speed, const Coord3D *secondary);
 	bool bfmeIsBlocked(void) const;
 	void doFXObj(const Object *primary, const Object *secondary) const;
@@ -21,22 +21,22 @@ public:
 };
 
 // ?doFXObj@FXList@@SAXPBV1@PBVObject@@1@Z
-void FXList::doFXObj(const FXList *fx, const Object *primary, const Object *secondary)
+void FXList::doFXObj(const FXList *fxList, const Object *primary, const Object *secondary)
 {
-	if (fx)
+	if (fxList)
 	{
-		if (!fx->bfmeIsBlocked())
-			fx->doFXObj(primary, secondary);
+		if (!fxList->bfmeIsBlocked())
+			fxList->doFXObj(primary, secondary);
 	}
 }
 
 // ?doFXPos@FXList@@SAXPBV1@PBUCoord3D@@PBVMatrix3D@@M1@Z
-void FXList::doFXPos(const FXList *fx, const Coord3D *position,
+void FXList::doFXPos(const FXList *fxList, const Coord3D *position,
 	const Matrix3D *transform, float speed, const Coord3D *secondary)
 {
-	if (fx)
+	if (fxList)
 	{
-		if (!fx->bfmeIsBlocked())
-			fx->doFXPos(position, transform, speed, secondary);
+		if (!fxList->bfmeIsBlocked())
+			fxList->doFXPos(position, transform, speed, secondary);
 	}
 }
