@@ -148,3 +148,40 @@ U1Probe_00845410::U1Probe_00845410( void *p )
 	: m_pointer( p ), m_present( p != 0 )
 {
 }
+
+// The next two constructors load a pointer through a virtual-base
+// displacement at entry 1 of the argument's vbtable, then test its presence.
+struct U1Carrier_00845870
+{
+	int *m_vbtable;
+};
+
+class U1Probe_00845870
+{
+public:
+	U1Probe_00845870( U1Carrier_00845870 *p );
+
+	void *m_pointer;
+	bool m_present;
+};
+
+U1Probe_00845870::U1Probe_00845870( U1Carrier_00845870 *p )
+	: m_pointer( *(void **)((char *)p + p->m_vbtable[1] + 0x58) ),
+	  m_present( m_pointer != 0 )
+{
+}
+
+class U1Probe_00845890
+{
+public:
+	U1Probe_00845890( U1Carrier_00845870 *p );
+
+	void *m_pointer;
+	bool m_present;
+};
+
+U1Probe_00845890::U1Probe_00845890( U1Carrier_00845870 *p )
+	: m_pointer( *(void **)((char *)p + p->m_vbtable[1] + 0x58) ),
+	  m_present( m_pointer != 0 )
+{
+}
