@@ -37359,3 +37359,4 @@ _Rva0084DE40Tail	0x0084DE40	433	partial	retail +0xD2 compares [ecx+3] directly w
 ?d_00266f40@@YAXXZ	0x00266F40	704	blocked	switch table plus 15 callees and multiple virtual dispatches no ZH twin t=15min model=openai-codex/gpt-6-sol blocker=layout
 ?d_00899800@@YAXXZ	0x00899800	748	blocked	Apt VM opcode2 branch uses custom allocator 0x01337828 pool push freelist subclass vtables and EH frame no ZH twin t=15min model=openai-codex/gpt-6-sol blocker=layout
 ?d_008c7500@@YAXXZ	0x008C7500	752	blocked	Apt opcode compares strings via refcount RAII and bool free-list allocation includes seven EH states no ZH twin t=15min model=openai-codex/gpt-6-sol blocker=layout
+?d_009acc80@@YAXXZ	0x009ACC80	773	blocked	VP6 eight-by-eight dering filter with squared-variance gate and seven coupled pixel updates lacks vendored source twin t=15min model=openai-codex/gpt-6-sol blocker=other/shape
