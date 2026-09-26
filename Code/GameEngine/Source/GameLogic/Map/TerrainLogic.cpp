@@ -2579,7 +2579,7 @@ Real TerrainLogic::getWaterHeight( const WaterHandle *water )
 /** Set the water height.  If the water rises, then any objects that now find themselves
 	* underwater will be damaged by the amount provided in the parameter 'damageAmount' */
 // ------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogic_setWaterHeight_Thunk.cpp
+// byte-exact BFME reconstruction: Code/GameEngine/Source/GameLogic/Map/TerrainLogicSetWaterHeight.cpp
 // ?setWaterHeight@TerrainLogic@@UAEXPBVWaterHandle@@MM_N@Z present-unmatched
 void TerrainLogic::setWaterHeight( const WaterHandle *water, Real height, Real damageAmount,
 																	 Bool forcePathfindUpdate )
