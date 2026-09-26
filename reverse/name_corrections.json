@@ -5638,5 +5638,15 @@
   "after_sha256": "b248596f14dd5ab8e80c11cce6b345911b38d9c0d209c777379b312034d03655",
   "evidence": "docs/naming_evidence.md",
   "reason": "stash typedef AsciiStringFloatMap was a bank name with no evidence; replaced by the opaque comparator-token map type Rva006AF6D0Map that the landed operator[] TU RvaMapAsciiStringQuad006AF6D0.cpp already defines for this comparator (Rva006AF6D0Less), per caller Rva006ABC60::xfer at 0x006B0CB0"
+ },
+ {
+  "old_path": "reverse/attempts/0x009a5aa0.cpp",
+  "new_path": "Code/GameEngine/Source/Common/Rva009A5AA0InstallFilter.cpp",
+  "old_name": "_WriteBarrier",
+  "new_name": "Rva009C0D10Src",
+  "before_sha256": "cb6572018b7210fe4d86558e83dba782c25102a3a7c803e2edf853b0c0cbd562",
+  "after_sha256": "377e0a32d6cb3e9480de02c8103df515b4d4e6c43de6cf2c702c02d844f2df3e",
+  "evidence": "reverse/symbols.csv",
+  "reason": "not a rename: the bank called the MSVC compiler intrinsic _WriteBarrier (no storage and no identity) before storing to literal 0x01356A7C; the landed body drops the no-op barrier and stores through the existing pin ?Rva009C0D10Src@@3PAGA at VA 0x01356A7C (reverse/symbols.csv; read by landed spreadTable.cpp); the token diff aligned the two by position"
  }
 ]
