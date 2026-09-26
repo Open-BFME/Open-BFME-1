@@ -6048,5 +6048,45 @@
   "old_name": "m_bfmePad34",
   "new_name": "m_unmodelled_34",
   "reason": "Both are padding names for the same unmodelled +0x34..+0x48 range of AIUpdateInterface; the class home TU already models it as m_unmodelled_34."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlay.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlayRequestBuddyAdd.cpp",
+  "old_name": "showNotificationBox",
+  "new_name": "Rva004EBA70NotificationDispatch",
+  "before_sha256": "6ebdef9fcabca85c3c472ac0d3720fb66f2e100dd604a476f8d8535ffd4e6783",
+  "after_sha256": "1070fb12e09044d2cf3428bd947d25ecc7748765a69e52741723cb2fec161aa1",
+  "evidence": "targets/game/reverse/identity_evidence/004ee510-buddy-contracts.md",
+  "reason": "The ZH two-string notification call reaches independently named dispatcher004EBA70; unchanged RequestBuddyAdd already uses that verified contract. Source pairing arises from moved helper ownership; the24B BuddyMessage routine004ECD10 is a distinct ABI."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlay.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyResponses.cpp",
+  "old_name": "buttonDeleteBuddyID",
+  "new_name": "Rva012F4248NotificationActive",
+  "before_sha256": "6ebdef9fcabca85c3c472ac0d3720fb66f2e100dd604a476f8d8535ffd4e6783",
+  "after_sha256": "238b5eef34a63231dab6edd87e5237045ae93b920315551fa3e2a3b4807e9f3d",
+  "evidence": "targets/game/reverse/identity_evidence/004ee510-buddy-contracts.md",
+  "reason": "False token alignment from helper source move: buttonDeleteBuddyID remains declared unchanged in WOLBuddyOverlay.cpp and is unrelated to the independently evidenced boolean at VA012F4248."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlay.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyResponses.cpp",
+  "old_name": "noticeLayout",
+  "new_name": "Rva012F4248NotificationActive",
+  "before_sha256": "6ebdef9fcabca85c3c472ac0d3720fb66f2e100dd604a476f8d8535ffd4e6783",
+  "after_sha256": "238b5eef34a63231dab6edd87e5237045ae93b920315551fa3e2a3b4807e9f3d",
+  "evidence": "targets/game/reverse/identity_evidence/004ee510-buddy-contracts.md",
+  "reason": "Retail compares one byte at VA012F4248 and existing teardown004E9CF0 clears it; the ZH WindowLayout-pointer name is not the BFME flag identity."
+ },
+ {
+  "old_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyOverlay.cpp",
+  "new_path": "game/GameEngine/Source/GameClient/GUI/GUICallbacks/Menus/WOLBuddyResponses.cpp",
+  "old_name": "showNotificationBox",
+  "new_name": "Rva004EBA70NotificationDispatch",
+  "before_sha256": "6ebdef9fcabca85c3c472ac0d3720fb66f2e100dd604a476f8d8535ffd4e6783",
+  "after_sha256": "238b5eef34a63231dab6edd87e5237045ae93b920315551fa3e2a3b4807e9f3d",
+  "evidence": "targets/game/reverse/identity_evidence/004ee510-buddy-contracts.md",
+  "reason": "The ZH two-string notification call reaches independently named dispatcher004EBA70; unchanged RequestBuddyAdd already uses that verified contract. Source pairing arises from moved helper ownership; the24B BuddyMessage routine004ECD10 is a distinct ABI."
  }
 ]
