@@ -39,6 +39,8 @@ public:
 			delete this;
 	}
 
+	// Matched parseDelay at RVA 0x000AFF40 writes the range at +0x28/+0x2C.
+	int getDelayMax() const { return m_delayMax; }
 	long m_refCount;
 	AsciiString m_audioName;
 	AsciiString m_filename;
@@ -48,13 +50,18 @@ public:
 	int m_word1c;
 	int m_word20;
 	int m_word24;
-	int m_word28;
-	int m_word2c;
+	int m_delayMin;
+	int m_delayMax;
 	int m_word30;
 	int m_word34;
 	int m_type;
 	int m_control;
-	unsigned char m_pad40[0x44];
+	unsigned char m_pad40[0x10];
+	// Attack/Decay INI fields at +0x50/+0x60 contain vector begin/end pointers.
+	struct SoundList { void *begin; void *end; unsigned char rest[8]; };
+	SoundList m_attackSounds;
+	SoundList m_decaySounds;
+	unsigned char m_pad70[0x14];
 	int m_soundType;
 };
 
@@ -115,6 +122,7 @@ extern AudioManager *TheAudio;
 class INI
 {
 public:
+	static void parseAudioEventDefinition(INI *ini);
 	static void parseMusicTrackDefinition(INI *ini);
 	static void parseDialogDefinition(INI *ini);
 	static void parseStreamedSoundDefinition(INI *ini);
@@ -237,4 +245,118 @@ void INI::parseAmbientStreamDefinition(INI *ini)
 	audioInfo->m_audioName = name;
 	audioInfo->m_soundType = 3;
 	ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
+}
+
+// Retail diagnostics use the BFME debug vtable: start +0x60; stream +0x6C;
+// string insertion +0x38; finalization +0x4C. StringBase insertion is already
+// matched at RVA 0x0005F590 and reached through ILT 0x00016F86.
+class BfmeAwakenLog
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1C();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void slot2C();
+	virtual void slot30();
+	virtual void slot34();
+	virtual BfmeAwakenLog *slot38(const char *text);
+	virtual void slot3C();
+	virtual void slot40();
+	virtual void slot44();
+	virtual void slot48();
+	virtual void slot4C(int report);
+};
+
+class BfmeAwakenDebug
+{
+public:
+	virtual void slot00();
+	virtual void slot04();
+	virtual void slot08();
+	virtual void slot0C();
+	virtual void slot10();
+	virtual void slot14();
+	virtual void slot18();
+	virtual void slot1C();
+	virtual void slot20();
+	virtual void slot24();
+	virtual void slot28();
+	virtual void slot2C();
+	virtual void slot30();
+	virtual void slot34();
+	virtual void slot38();
+	virtual void slot3C();
+	virtual void slot40();
+	virtual void slot44();
+	virtual void slot48();
+	virtual void slot4C();
+	virtual void slot50();
+	virtual void slot54();
+	virtual void slot58();
+	virtual void slot5C();
+	virtual void slot60();
+	virtual void slot64();
+	virtual void slot68();
+	virtual BfmeAwakenLog *slot6C(int first, int second);
+};
+
+extern BfmeAwakenDebug *TheBfmeAwakenDebug;
+extern void _bfme_debugRecordCallsite(int kind);
+extern bool _bfme_debugReportingEnabled(void);
+
+
+Debug &operator<<(Debug &debug, const StringBase<char> &str);
+void INI::parseAudioEventDefinition(INI *ini)
+{
+	if (ini->getLoadType() == 2)
+		throw INIException(3, "You cannot define or override an AudioEvent in map.ini");
+
+	AsciiString name;
+	AudioEventInfoRef track;
+	const char *token = ini->getNextToken();
+	name.set(token);
+	track = TheAudio->newAudioEventInfo(name);
+
+	AudioInfoViewRva000B1B70 *const audioInfo = track.m_info;
+	if (!audioInfo)
+		return;
+
+	AudioEventInfoRef defaultInfo =
+		TheAudio->findAudioEventInfo(AsciiString("DefaultSoundEffect"));
+	if (defaultInfo.m_info != 0)
+	{
+		audioInfo->copyFrom(*defaultInfo.m_info);
+		audioInfo->m_type &= 0xfffffbff;
+	}
+	audioInfo->m_audioName = name;
+	audioInfo->m_soundType = 2;
+	ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
+
+	if (audioInfo->m_control & 4) {
+		if (_bfme_debugReportingEnabled()) {
+			_bfme_debugRecordCallsite(1);
+			TheBfmeAwakenDebug->slot60();
+			TheBfmeAwakenDebug->slot6C(0, 0)->slot38("Control flag 'RANDOMSTART' is not valid for AudioEvents. Streaming sound types only, please.")->slot4C(2);
+		}
+		audioInfo->m_control &= ~4;
+	}
+	if (!(audioInfo->m_type & 2) && (float)audioInfo->getDelayMax() == 0.0f &&
+		((audioInfo->m_control & 1) || audioInfo->m_attackSounds.begin != audioInfo->m_attackSounds.end ||
+		audioInfo->m_decaySounds.begin != audioInfo->m_decaySounds.end)) {
+		if (_bfme_debugReportingEnabled()) {
+			_bfme_debugRecordCallsite(1);
+			TheBfmeAwakenDebug->slot60();
+			((BfmeAwakenLog *)&operator<<(*(Debug *)(TheBfmeAwakenDebug->slot6C(0, 0)->slot38(
+				"Warning: tightly-coupled 2D sounds (sounds with 0 delay and either a looping flag oran attack or decay list) are not well supported.\nConsider using a StreamedSound, or a single .wav file\nSound: ")),
+				(const StringBase<char> &)name))->slot4C(2);
+		}
+	}
 }
