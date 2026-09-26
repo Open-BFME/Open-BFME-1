@@ -1,9 +1,11 @@
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /D_STLP_USE_STATIC_LIB /DBFME_STLP_NODE_ALLOC /Iinputs/reference/shims/gamewindow /Iinputs/reference/shims/stlp_nodealloc /Iinputs/reference/shims/sweep /Igame/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
 // stlport
-// Native WOLLobbyMenuUpdate, RVA 004FD9B0, 4536 bytes including switch tables.
+// Native lobby callbacks: Update at 004FD9B0 (4536 bytes with switch tables),
+// Init at 004FBBE0 (1711 bytes).
 // Derived from WOLLobbyMenu.cpp; Copyright 2025 Electronic Arts Inc.,
 // GPL-3.0-or-later. Identity, helper ABI and BFME layout evidence:
-// targets/game/reverse/identity_evidence/004fd9b0-lobby-update.md.
+// targets/game/reverse/identity_evidence/004fd9b0-lobby-update.md and
+// targets/game/reverse/identity_evidence/004fbbe0-lobby-init.md.
 #define _STLP_NO_EXCEPTIONS 1
 #define __PLACEMENT_VEC_NEW_INLINE
 #define ASCIISTRING_H
@@ -52,6 +54,9 @@ inline UnicodeString &UnicodeString::operator=(const UnicodeString &s) {
 #include <time.h>
 
 #include "Common/GameState.h"
+#include "Common/CustomMatchPreferences.h"
+#include "GameClient/GameWindowManager.h"
+#include "GameClient/GadgetTextEntry.h"
 #include "Common/NameKeyGenerator.h"
 #include "GameClient/GadgetComboBox.h"
 #include "GameClient/GameText.h"
@@ -209,6 +214,8 @@ public:
 class GameInfo {
 public:
   virtual void slot00();
+  virtual void slot04();
+  virtual void reset();
   char opaque04[0x50];
   int useStats;
   const GameSlot *getConstSlot(int) const;
@@ -312,7 +319,7 @@ public:
   virtual void slotD8();
   virtual void slotDC();
   virtual void slotE0();
-  virtual void slotE4();
+  virtual void registerTextWindow(GameWindow *);
   virtual void slotE8();
   virtual int addText(UnicodeString, Color, GameWindow *);
   virtual void addChat(AsciiString, int, UnicodeString, bool, bool,
@@ -349,6 +356,31 @@ public:
   virtual void slot168();
   virtual int getMaxMessagesPerUpdate();
 };
+class PeerRequest {
+public:
+  enum {
+    PEERREQUEST_JOINSTAGINGROOM = 11,
+    PEERREQUEST_STARTGAMELIST = 7,
+    PEERREQUEST_GETEXTENDEDSTAGINGROOMINFO = 20
+  };
+  int peerRequestType;
+  std::string nick;
+  std::wstring text;
+  std::string password;
+  char opaque28[0xe4 - 0x28];
+  union {
+    struct {
+      int id;
+    } stagingRoom;
+    struct {
+      bool restrictGameList;
+    } gameList;
+    char extent[0xb0];
+  };
+  PeerRequest();
+  ~PeerRequest();
+};
+
 class GameSpyPeerMessageQueueInterface {
 public:
   virtual void slot00();
@@ -357,7 +389,7 @@ public:
   virtual void slot0C();
   virtual void slot10();
   virtual void slot14();
-  virtual void slot18();
+  virtual void addRequest(const PeerRequest &);
   virtual void slot1C();
   virtual void slot20();
   virtual bool getResponse(PeerResponse &);
@@ -373,6 +405,12 @@ public:
   virtual void slot18();
   virtual void slot1C();
   virtual int getQMChannel();
+  virtual void slot24();
+  virtual void slot28();
+  virtual void slot2C();
+  virtual void slot30();
+  virtual void slot34();
+  virtual bool restrictGamesToLobby();
 };
 
 extern GameSpyInfoInterface *TheGameSpyInfo;
@@ -864,4 +902,120 @@ void WOLLobbyMenuUpdate(WindowLayout *layout, void *userData) {
 
     refreshGameList();
   }
+}
+
+extern GameSpyStagingRoom *TheGameSpyGame;
+static GameWindow *parent, *buttonBack, *buttonHost, *buttonRefresh,
+    *buttonJoin, *buttonBuddy, *buttonEmote, *textEntryChat,
+    *listboxLobbyPlayers;
+static int parentWOLLobbyID, buttonBackID, buttonHostID, buttonRefreshID,
+    buttonJoinID, buttonBuddyID, buttonEmoteID, textEntryChatID,
+    listboxLobbyPlayersID, listboxLobbyChatID, comboLobbyGroupRoomsID;
+static bool DontShowMainMenu;
+void playerTooltip(GameWindow *, WinInstanceData *, unsigned);
+void GrabWindowInfo();
+void ToggleGameListType();
+void WOLLobbyMenuInit(WindowLayout *layout, void *userData) {
+  nextScreen = NULL;
+  buttonPushed = false;
+  isShuttingDown = false;
+
+  SetLobbyAttemptHostJoin(FALSE);
+
+  gameListRefreshTime = 0;
+  playerListRefreshTime = 0;
+
+  parentWOLLobbyID = TheNameKeyGenerator->nameToKey(
+      AsciiString("WOLCustomLobby.wnd:WOLLobbyMenuParent"));
+  parent = TheWindowManager->winGetWindowFromId(NULL, parentWOLLobbyID);
+
+  buttonBackID = TheNameKeyGenerator->nameToKey(
+      AsciiString("WOLCustomLobby.wnd:ButtonBack"));
+  buttonBack = TheWindowManager->winGetWindowFromId(parent, buttonBackID);
+
+  buttonHostID = TheNameKeyGenerator->nameToKey(
+      AsciiString("WOLCustomLobby.wnd:ButtonHost"));
+  buttonHost = TheWindowManager->winGetWindowFromId(parent, buttonHostID);
+
+  buttonRefreshID = TheNameKeyGenerator->nameToKey(
+      AsciiString("WOLCustomLobby.wnd:ButtonRefresh"));
+  buttonRefresh = TheWindowManager->winGetWindowFromId(parent, buttonRefreshID);
+
+  buttonJoinID = TheNameKeyGenerator->nameToKey(
+      AsciiString("WOLCustomLobby.wnd:ButtonJoin"));
+  buttonJoin = TheWindowManager->winGetWindowFromId(parent, buttonJoinID);
+  buttonJoin->winEnable(FALSE);
+
+  buttonBuddyID = TheNameKeyGenerator->nameToKey(
+      AsciiString("WOLCustomLobby.wnd:ButtonBuddy"));
+  buttonBuddy = TheWindowManager->winGetWindowFromId(parent, buttonBuddyID);
+
+  buttonEmoteID = TheNameKeyGenerator->nameToKey(
+      AsciiString("WOLCustomLobby.wnd:ButtonEmote"));
+  buttonEmote = TheWindowManager->winGetWindowFromId(parent, buttonEmoteID);
+
+  textEntryChatID = TheNameKeyGenerator->nameToKey(
+      AsciiString("WOLCustomLobby.wnd:TextEntryChat"));
+  textEntryChat = TheWindowManager->winGetWindowFromId(parent, textEntryChatID);
+
+  listboxLobbyPlayersID = TheNameKeyGenerator->nameToKey(
+      AsciiString("WOLCustomLobby.wnd:ListboxPlayers"));
+  listboxLobbyPlayers =
+      TheWindowManager->winGetWindowFromId(parent, listboxLobbyPlayersID);
+  listboxLobbyPlayers->winSetTooltipFunc(playerTooltip);
+
+  listboxLobbyChatID = TheNameKeyGenerator->nameToKey(
+      AsciiString("WOLCustomLobby.wnd:ListboxChat"));
+  listboxLobbyChat =
+      TheWindowManager->winGetWindowFromId(parent, listboxLobbyChatID);
+  TheGameSpyInfo->registerTextWindow(listboxLobbyChat);
+
+  comboLobbyGroupRoomsID = TheNameKeyGenerator->nameToKey(
+      AsciiString("WOLCustomLobby.wnd:ComboBoxGroupRooms"));
+  comboLobbyGroupRooms =
+      TheWindowManager->winGetWindowFromId(parent, comboLobbyGroupRoomsID);
+
+  GadgetTextEntrySetText(textEntryChat, Rva01336E54EmptyUnicode);
+
+  populateGroupRoomListbox_004FA240(comboLobbyGroupRooms);
+
+  ((Rva004FD9B0Layout *)layout)->hide(false);
+
+  if (!TheGameSpyInfo->getCurrentGroupRoom()) {
+    if (groupRoomToJoin) {
+      TheGameSpyInfo->joinGroupRoom(groupRoomToJoin);
+      groupRoomToJoin = 0;
+    } else {
+      TheGameSpyInfo->joinBestGroupRoom();
+    }
+  }
+
+  GrabWindowInfo();
+
+  TheGameSpyInfo->clearStagingRoomList();
+  PeerRequest req;
+  req.peerRequestType = PeerRequest::PEERREQUEST_STARTGAMELIST;
+  req.gameList.restrictGameList = TheGameSpyConfig->restrictGamesToLobby();
+  TheGameSpyPeerMessageQueue->addRequest(req);
+
+  TheShell->showShellMap(TRUE);
+  TheGameSpyGame->reset();
+
+  CustomMatchPreferences pref;
+
+  if (pref.usesLongGameList()) {
+    ToggleGameListType();
+  }
+
+  TheWindowManager->winSetFocus(textEntryChat);
+  raiseMessageBoxes = true;
+
+  TheLobbyQueuedUTMs.clear();
+  justEntered = TRUE;
+  initialGadgetDelay = 2;
+  GameWindow *win = TheWindowManager->winGetWindowFromId(
+      NULL, TheNameKeyGenerator->nameToKey("WOLCustomLobby.wnd:GadgetParent"));
+  if (win)
+    win->winHide(TRUE);
+  DontShowMainMenu = TRUE;
 }
