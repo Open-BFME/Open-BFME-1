@@ -5,6 +5,7 @@ class Rva009A2960
 {
 public:
 	void markState();
+	void markState3();
 
 private:
 	unsigned char m_unmodelled_000[0xC068];
@@ -17,6 +18,15 @@ void Rva009A2960::markState()
 	if (m_state != 2)
 	{
 		m_state = 2;
+		m_flag = 1;
+	}
+}
+
+void Rva009A2960::markState3()
+{
+	if (m_state != 3)
+	{
+		m_state = 3;
 		m_flag = 1;
 	}
 }
