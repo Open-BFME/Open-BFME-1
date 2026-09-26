@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "4e0fcebc526387406d3310117adc774015dd3372c9850057d3cb55f365bcda1d",
+  "symbol": "?aptSetRectField008B7210@@YAPAVAptValue@@PAURva008B6D70Obj@@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.91,
+  "source": "// ?aptSetRectField008B7210@@YAPAVAptValue@@PAURva008B6D70Obj@@H@Z\n// partial score=0.91 date=2026-09-26\n// cl: /DNDEBUG /MD /EHsc\n// RVA 0x008B7210: set the second rect field and refresh with a negative context.\nclass AptValue\n{\npublic:\n    int toInteger() const;\n};\n\nstruct Rva008B6D70Obj\n{\n    char m_padding00[0x20];\n    char m_rect[0x20];\n    char m_extra[0x20];\n    int m_context;\n    void refreshNeg(void *field, void *rect, int negativeContext);\n};\n\nextern AptValue *g_bfmeFallbackDB;\nextern AptValue **g_bfmeArr1233;\nextern int g_bfmeCount1233;\nAptValue *Rva008B6D70MakeValue(int value);\n\nAptValue *aptSetRectField008B7210(Rva008B6D70Obj *self, int argc)\n{\n    if (argc < 1)\n        return g_bfmeFallbackDB;\n    int *field = (int *)self->m_extra;\n    int value = g_bfmeArr1233[g_bfmeCount1233 - 1]->toInteger();\n    self->refreshNeg(&(*field = value), self->m_rect, -self->m_context);\n    return Rva008B6D70MakeValue(0);\n}\n"
+}
