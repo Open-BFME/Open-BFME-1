@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "18df095edc2cb3c281818bbbef1c6a5f5adbc193525795f1b76902e5f5699ca2",
+  "symbol": "?rva001E49E0Aim@@YAPAUCoord3D@@PBVLinearTargets@@HPBVObject@@PAU1@@Z",
+  "score_kind": "author-estimate",
+  "score": 0.1,
+  "source": "// ?rva001E49E0Aim@@YAPAUCoord3D@@PBVLinearTargets@@HPBVObject@@PAU1@@Z\n// partial score=0.10 date=2026-09-26\n// Retail 0x001E49E0, 144 bytes, called from Weapon::privateFireWeapon.\n// Include after the Object, LinearTargets, Matrix3D and TerrainLogic definitions\n// in 0x001e9fd0.cpp. The probe is 140/144 bytes with 124 non-relocation\n// differences and two relocation-layout mismatches. Retail uses a compiler-\n// private ABI: ECX=targets, EAX=index, EDI=source, ESI=out, without saving the\n// latter two. Ordinary C++ passes source in EDX and out in EDI and saves ESI;\n// do not pin this proposed semantic name without independent identity and\n// byte-match proof.\nstruct LinearAimStep\n{\n\tCoord2D offset;\n\tint marker;\n};\n\nstatic Coord3D *rva001E49E0Aim(const LinearTargets *targets, int index,\n\tconst Object *source, Coord3D *out)\n{\n\tconst LinearAimStep *step =\n\t\treinterpret_cast<const LinearAimStep *>(targets->m_begin) + index;\n\tCoord2D offset = step->offset;\n\tconst Matrix3D *transform = reinterpret_cast<const Matrix3D *>(\n\t\treinterpret_cast<const char *>(source) + 8);\n\tfloat rotation = transform->Get_Z_Rotation();\n\tfloat sinValue = sinf(rotation);\n\tfloat cosValue = cosf(rotation);\n\tCoord3D pos;\n\tpos.x = source->m_position.x + (offset.x * cosValue - offset.y * sinValue);\n\tpos.y = source->m_position.y + (offset.x * sinValue + offset.y * cosValue);\n\tpos.z = TheTerrainLogic->getGroundHeight(pos.x, pos.y, 0);\n\t*out = pos;\n\treturn out;\n}\n"
+}
