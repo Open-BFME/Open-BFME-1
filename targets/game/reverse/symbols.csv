@@ -85254,7 +85254,7 @@ name,address,notes
 ?parseFromINI@BitFlags116ParseFromINIShim@@SAXPAVINI@@PAX1PBX@Z,0x00129810,BitFlags<116>::parseFromINI incremental-link thunk target through a TU-local forwarding shim
 ?parseFromINI@BitFlags45ParseFromINIShim@@SAXPAVINI@@PAX1PBX@Z,0x00204E70,BitFlags<45>::parseFromINI incremental-link thunk target through a TU-local forwarding shim
 ?parseInt@INI@@SAXPAV1@PAX1PBX@Z,0x00852A60
-?parseLadder@@YAPAVLadderInfo@@VAsciiString@@@Z,0x0062AD50,checkLadder direct call at 0x0062BCDC and the file-local parser in GameNetwork/GameSpy/LadderDefs.cpp
+?parseLadder@@YAPAVLadderInfo@@VAsciiString@@@Z,0x0062AD50,checkLadder direct call at 0x0062BD3C; parser grammar and LadderInfo layout; evidence=identity_evidence/0062ad50-ladder-parser.md
 ?parseLine@INI@@IAEXVAsciiString@@@Z,0x00851350,BFME factors the per-line block dispatch out of load - name is ours
 ?parseLine@INI@@IAEXVBFMERetailAsciiString@@@Z,0x00851350,address-derived line parser call with the retail AsciiString ABI
 ?parseMappedImage@INI@@SAXPAV1@PAX1PBX@Z,0x0000FC3B
@@ -89219,3 +89219,5 @@ g_windGlobalA,0x012F7004,WindModuleInfo ctor global
 g_windGlobalB,0x012B8E00,WindModuleInfo ctor global
 rva00618600Names,0x012AA020,name table indexed by Rva00618600Poly constructor
 rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
+??$Rva00080110Find@U?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@_STL@@YA?AU?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@0@U10@0ABVAsciiString@@ABUinput_iterator_tag@0@@Z,0x00080110,Typed ASCII list-search call view; complete helper and aligned parseLadder calls verified; evidence=identity_evidence/0062ad50-ladder-parser.md
+??$Rva00080590Find@U?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@_STL@@VAsciiString@@@_STL@@YA?AU?$_List_iterator@VAsciiString@@U?$_Nonconst_traits@VAsciiString@@@_STL@@@0@U10@0ABVAsciiString@@@Z,0x00080590,Typed ASCII list-search call view; complete helper and aligned parseLadder calls verified; evidence=identity_evidence/0062ad50-ladder-parser.md

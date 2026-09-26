@@ -6108,5 +6108,15 @@
   "after_sha256": "3a24619db0dd4da9480f1986a1ce33b4257b690837ecccf6ef876d7fd4c82f8c",
   "evidence": "targets/game/reverse/identity_evidence/0x006d2730.md",
   "reason": "m_yExtent was invented with m_xExtent, which the WorldHeightMap layout witness refutes (+0x08 is m_width); +0x0C is unwitnessed, so it is named by offset."
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x0062ad50.cpp",
+  "new_path": "game/GameEngine/Source/GameNetwork/GameSpy/LadderParse.cpp",
+  "old_name": "find",
+  "new_name": "Rva00080590Find",
+  "before_sha256": "c5386ffffbdeb5891c8921a16e3b19235e3da76656805ecaa9fc9513ae4cf176",
+  "after_sha256": "8ac91bbdd1583ac2497c9531c57eccf5d23cd14de77a5563848b523e1c40be48",
+  "evidence": "targets/game/reverse/identity_evidence/0062ad50-ladder-parser.md",
+  "reason": "The old canonical AsciiString template pin routes to a UTF-16 search. This address-derived typed ASCII search view preserves find behavior; independently verified complete 130-byte loop and 46-byte wrapper establish the actual targets and ABI without renaming the existing claimed helpers."
  }
 ]
