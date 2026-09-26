@@ -1,39 +1,112 @@
 // ?readTexClass@WorldHeightMap@@IAEXPAUTXTextureClass@@PAPAVTileData@@@Z
-// partial score=0.55 date=2026-09-21
-// NOT a standalone TU. Candidate identity note for retail RVA 0x0074BBB0.
-//
-// The real source already lives at
-// Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp:2795
-// as WorldHeightMap::readTexClass, tagged in-source:
-//   "?readTexClass@WorldHeightMap@@IAEXPAUTXTextureClass@@PAPAVTileData@@@Z present-unmatched"
-//
-// Its callee sequence (TerrainTypeCollection::findTerrain, TerrainType::getTexture,
-// sprintf with format 0x1075310 and dir constant 0x1121b3c, FileSystem::openFile
-// mode 0x41, GDIFileStream+WorldHeightMap::countTiles, File::seek vtable slot 5,
-// a width*width search loop, WorldHeightMap::readTiles, File::close vtable slot 2)
-// matches retail 0x0074BBB0's disassembly instruction-for-instruction at the
-// call-site level.
-//
-// `python3 tools/probe.py Code/GameEngineDevice/Source/W3DDevice/GameClient/WorldHeightMap.cpp
-//   "?readTexClass@WorldHeightMap@@IAEXPAUTXTextureClass@@PAPAVTileData@@@Z" 0x0074BBB0 --size 270`
-// compiles clean against the file's own `// cl:` line and gives ours=304 retail=270
-// (34 bytes too long), diverging from the very first non-prologue instruction.
-//
-// Root cause isolated: this TU's real (reference-header) AsciiString copy
-// constructor, used when passing `texClass->name` by value into
-// `TheTerrainTypes->findTerrain(...)`, is inlined with an extra "is the source
-// string's data pointer null" fast-path branch that retail's actual compiled
-// body does not have -- ours reads texClass->name (this+0x14) twice (once for
-// that null check, once for the real copy), retail reads it once. Whoever picks
-// this up next should look at how AsciiString's copy constructor is declared for
-// this TU (Common/AsciiString.h via the reference includes) and find the lever
-// that drops the early-out branch, OR give findTerrain's parameter a shape that
-// does not trigger it (e.g. passing by a raw pointer/reference through a small
-// TU-local wrapper instead of relying on the production header's inlined ctor).
-//
-// Separately unverified: the width search loop is currently written as
-// `for (width = 10; width >= 1; width--)` but retail's own literal at the
-// mov eax, imm32 for that loop is 0x10 (16 decimal) -- check whether BFME
-// actually widened the search to 16 once the copy-ctor shape is fixed; do not
-// assume the reference's `10` is right for BFME without checking against the
-// disassembly again.
+// partial score=0.99 date=2026-09-26
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/stringinline
+// The retail WorldHeightMap texture reader uses the out-of-line StringBase copy
+// constructor for its by-value terrain name, unlike the broad ZH header TU.
+#include "StringInline.h"
+#include <stdio.h>
+
+class TileData;
+class TerrainType
+{
+public:
+    __declspec(noinline) AsciiString getTexture() { return m_texture; }
+private:
+    char m_poolState[4];
+    AsciiString m_name;
+    AsciiString m_texture;
+};
+class TerrainTypeCollection
+{
+public:
+    TerrainType *findTerrain(AsciiString name);
+};
+extern TerrainTypeCollection *TheTerrainTypes;
+
+class File
+{
+public:
+    virtual void slot0();
+    virtual void slot1();
+    virtual void close();
+    virtual int read(void *buffer, int count);
+    virtual void slot4();
+    virtual void seek(int offset, int origin);
+};
+class FileSystem
+{
+public:
+    File *openFile(const char *name, int mode);
+};
+extern FileSystem *TheFileSystem;
+
+class InputStream
+{
+public:
+    virtual int read(void *buffer, int count) = 0;
+};
+class GDIFileStream : public InputStream
+{
+public:
+    GDIFileStream(File *file) : m_file(file) {}
+    virtual int read(void *buffer, int count) { return m_file->read(buffer, count); }
+private:
+    File *m_file;
+};
+
+struct TXTextureClass
+{
+    int globalTextureClass;
+    int firstTile;
+    int numTiles;
+    int width;
+    int isBlendEdgeTile;
+    AsciiString name;
+};
+
+class WorldHeightMap
+{
+protected:
+    void readTexClass(TXTextureClass *texClass, TileData **tileData);
+public:
+    static int countTiles(InputStream *stream, bool *halfTile = 0);
+    static bool readTiles(InputStream *stream, TileData **tiles, int numRows);
+};
+
+void WorldHeightMap::readTexClass(TXTextureClass *texClass, TileData **tileData)
+{
+    File *file = 0;
+    TerrainType *terrain = TheTerrainTypes->findTerrain(texClass->name);
+    char texturePath[260];
+    if (!terrain)
+    {
+        file = TheFileSystem->openFile(texClass->name.str(), 0x41);
+    }
+    else
+    {
+        sprintf(texturePath, "%s%s", "Art/Terrain/", terrain->getTexture().str());
+        file = TheFileSystem->openFile(texturePath, 0x41);
+    }
+    if (file)
+    {
+        GDIFileStream stream(file);
+        InputStream *input = &stream;
+        int numTiles = WorldHeightMap::countTiles(input);
+        file->seek(0, 0);
+        if (numTiles >= texClass->numTiles)
+        {
+            numTiles = texClass->numTiles;
+            int width;
+            for (width = 16; width >= 1; --width)
+            {
+                if (numTiles >= width * width)
+                {
+                    numTiles = width * width;
+                    break;
+                }
+            }
+            WorldHeightMap::readTiles(input, tileData + texClass->firstTile, width);
+        }
+        file->close();
+    }
+}
