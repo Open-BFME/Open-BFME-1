@@ -24,7 +24,7 @@ public:
 
 private:
 	void *m_vtable;
-	ThingTemplate *m_override;
+	ThingTemplate *m_nextOverride;
 
 	friend int Rva000CDA90Compare(Object *, class CastleBehavior *, Object *, class CastleBehavior *);
 };
@@ -88,8 +88,8 @@ int Rva000CDA90Compare(Object *first, CastleBehavior *firstCastle,
 	ThingTemplate *firstBase = first->m_template;
 	if (firstBase)
 	{
-		ThingTemplate *firstTemplate = firstBase->m_override
-			? (ThingTemplate *)((BfmeSubBIA *)firstBase->m_override)->ask()
+		ThingTemplate *firstTemplate = firstBase->m_nextOverride
+			? (ThingTemplate *)((BfmeSubBIA *)firstBase->m_nextOverride)->ask()
 			: firstBase;
 		firstCost = firstTemplate
 			? firstTemplate->calcCostToBuild(first->getControllingPlayer(), -1) : 0;
@@ -103,8 +103,8 @@ int Rva000CDA90Compare(Object *first, CastleBehavior *firstCastle,
 	ThingTemplate *secondBase = second->m_template;
 	if (secondBase)
 	{
-		ThingTemplate *secondTemplate = secondBase->m_override
-			? (ThingTemplate *)((BfmeSubBIA *)secondBase->m_override)->ask()
+		ThingTemplate *secondTemplate = secondBase->m_nextOverride
+			? (ThingTemplate *)((BfmeSubBIA *)secondBase->m_nextOverride)->ask()
 			: secondBase;
 		secondCost = secondTemplate
 			? secondTemplate->calcCostToBuild(second->getControllingPlayer(), -1) : 0;

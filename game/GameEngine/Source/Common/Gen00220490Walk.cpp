@@ -14,7 +14,7 @@ public:
 	const Overridable *getFinalOverride() const;
 
 	void *m_vtable;
-	Overridable *m_next;
+	Overridable *m_nextOverride;
 };
 
 class BfmePred490
