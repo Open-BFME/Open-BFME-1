@@ -5858,5 +5858,45 @@
   "after_sha256": "db53b73a8a0029f83c1e8c63eeeb224645b7fef26c9109e72b7518bd18141dd6",
   "evidence": "targets/game/reverse/identity_evidence/0039c260.md",
   "reason": "bfmeRunEUAe/BfmeSpecialPowerAllowanceStore rested only on an Open-BFME5 pin note; retail shows this is the LightPointSystem global 0x012F0FF8 (INI::parseLightPointLevel 0x0039CCF0 passes it to addLevel) so the method keeps the address token like its twin rva0039CB60; m_specialPowerState was the same unproven semantic for the +0x274 level-index store and becomes the offset token m_at274"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva003BF540_applyOwner.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva003BF540_applyOwner.cpp",
+  "old_name": "m_id",
+  "new_name": "m_at08",
+  "before_sha256": "09b441c333b2d252e17c704d503f3d0826a26328974c1a49eeab0708f8fb2ce8",
+  "after_sha256": "fea1c05b117d671c5712820acff78e593544b4b752378565eccacfdc8de0294d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "m_text/m_id named the +4 wide string and +8 int of the address-derived message class, which applyOwner 0x003BF190 never reads; name_oracle has no witnessed layout for it and m_id guessed the meaning of the 0x00383890 result, so they become offset tokens like the neighbouring m_at00"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva003BF540_applyOwner.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva003BF540_applyOwner.cpp",
+  "old_name": "m_text",
+  "new_name": "m_at04",
+  "before_sha256": "09b441c333b2d252e17c704d503f3d0826a26328974c1a49eeab0708f8fb2ce8",
+  "after_sha256": "fea1c05b117d671c5712820acff78e593544b4b752378565eccacfdc8de0294d",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "m_text/m_id named the +4 wide string and +8 int of the address-derived message class, which applyOwner 0x003BF190 never reads; name_oracle has no witnessed layout for it and m_id guessed the meaning of the 0x00383890 result, so they become offset tokens like the neighbouring m_at00"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva003BF540_applyOwner.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva003BF540_applyOwner.cpp",
+  "old_name": "m_id",
+  "new_name": "m_at08",
+  "before_sha256": "df14d51c0cb8e8ce2b720a5ace338debec7d6075692d4a0d1ff5a7833d380e76",
+  "after_sha256": "3274ca7641daeb4ec258c6fb70183eb69cbc61ae0a2937aaa1c2c78962faa30c",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "m_text/m_id named the +4 wide string and +8 int of the address-derived message class, which applyOwner 0x003BF190 never reads; name_oracle has no witnessed layout for it and m_id guessed the meaning of the 0x00383890 result, so they become offset tokens like the neighbouring m_at00"
+ },
+ {
+  "old_path": "game/GameEngine/Source/Common/Rva003BF540_applyOwner.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva003BF540_applyOwner.cpp",
+  "old_name": "m_text",
+  "new_name": "m_at04",
+  "before_sha256": "df14d51c0cb8e8ce2b720a5ace338debec7d6075692d4a0d1ff5a7833d380e76",
+  "after_sha256": "3274ca7641daeb4ec258c6fb70183eb69cbc61ae0a2937aaa1c2c78962faa30c",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "m_text/m_id named the +4 wide string and +8 int of the address-derived message class, which applyOwner 0x003BF190 never reads; name_oracle has no witnessed layout for it and m_id guessed the meaning of the 0x00383890 result, so they become offset tokens like the neighbouring m_at00"
  }
 ]

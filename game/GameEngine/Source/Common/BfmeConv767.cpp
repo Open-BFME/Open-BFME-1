@@ -7,7 +7,7 @@
 // 0x003636C0) and copy-constructs the result (StringBase<char> 0x00887B60)
 // into the return slot. The matched caller Rva003BF540::applyOwner
 // (0x003BF190 +0xDA) calls it on TheBfmeGameLogic through ILT 0x000228DB.
-// Address-derived name; see reverse/identity_evidence/0x003870F0.md.
+// Address-derived name; see targets/game/reverse/identity_evidence/003870f0.md.
 
 #include "ascii_string.h"
 

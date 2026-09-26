@@ -69,24 +69,39 @@ struct Rva00367E30Logic
 
 extern Rva00367E30Logic *TheBfmeGameLogic;
 
-// Constructed by 0x003BD700 (vptr, wide string copy at +4, int at +8) and
-// destroyed by 0x003BD770 in the same caller frame slot.
+// The ledger claims 0x003BD700 as Rva003BD700's constructor and 0x003BD770 as
+// Rva003BD770's destructor; retail pairs them on one frame slot here, so the
+// temporary is an Rva003BD700 whose destruction routes through the claimed
+// destructor. vptr, wide string at +4, int at +8 (sizeof 12).
+class Rva003BD700String;
+
 class Rva003BD770
 {
 public:
-	Rva003BD770(const UnicodeString &text, int id);
 	~Rva003BD770();
+};
+
+class Rva003BD700
+{
+public:
+	Rva003BD700(const Rva003BD700String &s, int n);
+	~Rva003BD700()
+	{
+		((Rva003BD770 *)this)->~Rva003BD770();
+	}
 
 private:
 	void *m_at00;
-	UnicodeString m_text;
-	int m_id;
+	void *m_at04;
+	int m_at08;
 };
+
+struct BfmeMsgDN;
 
 class ControlBar
 {
 public:
-	void rva004c15d0(const Rva003BD770 &message);
+	void bfmeShowDN(BfmeMsgDN *msg);
 };
 
 extern ControlBar *TheControlBar;
@@ -137,5 +152,6 @@ void Rva003BF540::applyOwner(Gen003BD7D0Node *owner)
 	if (!label.isEmpty())
 		text = TheGameText->fetch(label);
 
-	TheControlBar->rva004c15d0(Rva003BD770(text, id));
+	TheControlBar->bfmeShowDN((BfmeMsgDN *)&static_cast<const Rva003BD700 &>(
+		Rva003BD700(*(const Rva003BD700String *)&text, id)));
 }
