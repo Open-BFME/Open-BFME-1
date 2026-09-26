@@ -1,6 +1,6 @@
 // ?executeCrateBehavior@UnitCrateCollide@@UAE_NPAVObject@@@Z
 // partial score=0.85 date=2026-09-25
-// cl: /DNDEBUG /MD /EHsc /ICode/Libraries/Source/WWVegas/WWLib
+// cl: /DNDEBUG /MD /EHsc /Igame/Libraries/Source/WWVegas/WWLib
 
 // UnitCrateCollide::executeCrateBehavior (0x00218A00): slot 10 (+0x28) of
 // UnitCrateCollide's table 0x010AAB8C through ILT 0x000189BC; slot 11 is
@@ -160,7 +160,7 @@ public:
 
 #undef BFME_AUDIO_SLOT
 
-extern AudioManager *TheAudio;
+extern AudioManager *TheAudioClientUpdate;
 
 struct UnitCrateCollideModuleData
 {
@@ -209,9 +209,9 @@ Bool UnitCrateCollide::executeCrateBehavior( Object *other )
 	}
 
 	//Play a crate pickup sound.
-	AudioEventRTS soundToPlay = TheAudio->getMiscAudio()->m_crateFreeUnit;
+	AudioEventRTS soundToPlay = TheAudioClientUpdate->getMiscAudio()->m_crateFreeUnit;
 	soundToPlay.setObjectID( other->getID() );
-	TheAudio->addAudioEvent(&soundToPlay);
+	TheAudioClientUpdate->addAudioEvent(&soundToPlay);
 
 	return true;
 }
