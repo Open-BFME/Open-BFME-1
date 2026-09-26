@@ -1,7 +1,8 @@
-// ?d_007ba590@@YAXXZ
-// partial score=0.29 date=2026-09-23
+// ?updateOptimalExtrusionPadding@W3DVolumetricShadow@@IAEXXZ
+// partial score=0.56 date=2026-09-26
 // cl: /O2 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
 
+#include <math.h>
 
 typedef float Real;
 
@@ -11,7 +12,30 @@ public:
 	Real X;
 	Real Y;
 	Real Z;
+
+	__forceinline Vector3(void) {}
+	__forceinline Vector3(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; }
+	__forceinline Vector3(Real x, Real y, Real z) { X = x; Y = y; Z = z; }
+	__forceinline Vector3 &operator=(const Vector3 &v) { X = v.X; Y = v.Y; Z = v.Z; return *this; }
+	__forceinline Vector3 &operator-=(const Vector3 &v) { X -= v.X; Y -= v.Y; Z -= v.Z; return *this; }
+	__forceinline Vector3 &operator*=(Real scale) { X *= scale; Y *= scale; Z *= scale; return *this; }
+	__forceinline Real Length2(void) const { return X * X + Y * Y + Z * Z; }
 };
+
+static __forceinline Vector3 operator+(const Vector3 &a, const Vector3 &b)
+{
+	return Vector3(a.X + b.X, a.Y + b.Y, a.Z + b.Z);
+}
+
+static __forceinline Vector3 operator-(const Vector3 &a, const Vector3 &b)
+{
+	return Vector3(a.X - b.X, a.Y - b.Y, a.Z - b.Z);
+}
+
+static __forceinline Vector3 operator*(const Vector3 &a, Real scale)
+{
+	return Vector3(a.X * scale, a.Y * scale, a.Z * scale);
+}
 
 class W3DShadowManager
 {
@@ -100,31 +124,41 @@ public:
 #undef HT_DUMMY
 
 extern BaseHeightMapRenderObjClass *TheTerrainRenderObject;
-extern const Real BfmeZeroRange;
-extern const Real g_bfmeScaleBK;
-extern Real bfmeInvSqrt(Real value);
+
+#define BfmeZeroRange (*(const Real *)0x01075350)
+#define BfmeSamplingInterval (*(const Real *)0x010977E0)
+#define BfmeMaxExtrusionLength (*(const Real *)0x01083C44)
+#define BfmeShadowLengthLimit (*(const Real *)0x011284C8)
+#define g_bfmeScaleBK (*(const Real *)0x01075C70)
+
+class WWMath
+{
+public:
+	static Real __fastcall Inv_Sqrt(Real value);
+};
 
 class W3DVolumetricShadow
 {
-protected:
-	void updateOptimalExtrusionPadding(void);
-
 private:
 	char m_padding[0x70];
 	RenderObjClass *m_robj;
 	Real m_shadowLengthScale;
 	Real m_robjExtent;
 	Real m_extraExtrusionPadding;
+
+protected:
+	void updateOptimalExtrusionPadding(void);
 };
 
+// ?updateOptimalExtrusionPadding@W3DVolumetricShadow@@IAEXXZ present-unmatched
 void W3DVolumetricShadow::updateOptimalExtrusionPadding(void)
 {
 	if (m_robj)
 	{
 		Vector3 lightPosWorld = TheW3DShadowManager->getLightPosWorld(0);
-		if (m_shadowLengthScale > BfmeZeroRange)
+		if (m_shadowLengthScale)
 		{
-			Real lightXYDistance = lightPosWorld.X * lightPosWorld.X + lightPosWorld.Y * lightPosWorld.Y;
+			Real lightXYDistance = sqrt(lightPosWorld.X * lightPosWorld.X + lightPosWorld.Y * lightPosWorld.Y);
 			Real newZ = lightXYDistance * m_shadowLengthScale;
 			if (newZ > lightPosWorld.Z)
 				lightPosWorld.Z = newZ;
@@ -134,9 +168,7 @@ void W3DVolumetricShadow::updateOptimalExtrusionPadding(void)
 		Real baseGroundHeight = objPos.Z;
 		const AABoxClass &box = m_robj->Get_Bounding_Box();
 		Vector3 corners[4];
-		corners[0].X = box.Center.X + box.Extent.X;
-		corners[0].Y = box.Center.Y + box.Extent.Y;
-		corners[0].Z = box.Center.Z + box.Extent.Z;
+		corners[0] = box.Extent + box.Center;
 		corners[1] = corners[0];
 		corners[1].X -= 2.0f * box.Extent.X;
 		corners[2] = corners[1];
@@ -146,32 +178,33 @@ void W3DVolumetricShadow::updateOptimalExtrusionPadding(void)
 
 		for (int i = 0; i < 4; ++i)
 		{
-			Vector3 ray;
-			ray.X = corners[i].X - lightPosWorld.X;
-			ray.Y = corners[i].Y - lightPosWorld.Y;
-			ray.Z = corners[i].Z - lightPosWorld.Z;
-			Real length2 = ray.X * ray.X + ray.Y * ray.Y + ray.Z * ray.Z;
+			Vector3 lightRay = corners[i] - lightPosWorld;
+			Real length2 = lightRay.Length2();
 			if (length2 != BfmeZeroRange)
 			{
-				Real inverseLength = bfmeInvSqrt(length2);
-				ray.X *= inverseLength;
-				ray.Y *= inverseLength;
-				ray.Z *= inverseLength;
+				Real inverseLength = WWMath::Inv_Sqrt(length2);
+				lightRay.X *= inverseLength;
+				lightRay.Y *= inverseLength;
+				lightRay.Z *= inverseLength;
 			}
 
-			Real nearX = corners[i].X + ray.X * 20.0f;
-			Real nearY = corners[i].Y + ray.Y * 20.0f;
-			Real nearZ = corners[i].Z + ray.Z * 20.0f;
-			Real nearHeight = TheTerrainRenderObject->getHeightMapHeight(nearX, nearY, 0);
-			if (nearHeight < nearZ)
+			Vector3 sampleRay = lightRay * BfmeSamplingInterval;
+			Vector3 shadowRay = lightRay * BfmeMaxExtrusionLength;
+			Real currentLength = BfmeSamplingInterval;
+			do
 			{
-				Real farX = corners[i].X + ray.X * 200.0f;
-				Real farY = corners[i].Y + ray.Y * 200.0f;
-				Real farZ = corners[i].Z + ray.Z * 200.0f;
-				Real farHeight = TheTerrainRenderObject->getHeightMapHeight(farX, farY, 0);
-				if (farHeight < farZ && farHeight < baseGroundHeight)
-					baseGroundHeight = farHeight;
-			}
+				Vector3 samplePoint = corners[i] + sampleRay;
+				Real sampleHeight = TheTerrainRenderObject->getHeightMapHeight(samplePoint.X, samplePoint.Y, 0);
+				if (sampleHeight < samplePoint.Z)
+				{
+					Vector3 shadowPoint = corners[i] + shadowRay;
+					Real shadowHeight = TheTerrainRenderObject->getHeightMapHeight(shadowPoint.X, shadowPoint.Y, 0);
+					if (shadowHeight < shadowPoint.Z && shadowHeight < baseGroundHeight)
+						baseGroundHeight = shadowHeight;
+				}
+
+				currentLength += BfmeSamplingInterval;
+			} while (currentLength < BfmeShadowLengthLimit);
 		}
 
 		m_extraExtrusionPadding = objPos.Z - baseGroundHeight + g_bfmeScaleBK;
