@@ -1,5 +1,4 @@
 // ?_M_fill_insert@?$vector@URva0087FDC0Element@@V?$allocator@URva0087FDC0Element@@@_STL@@@_STL@@QAEXPAURva0087FDC0Element@@IABU3@@Z
-// partial score=0.99 date=2026-09-26
 // cl: /O2 /Ob1 /G6 /GX-
 // stlport
 
@@ -10,24 +9,32 @@ class BFMERetailAsciiString
 public:
 	void releaseBuffer() throw();
 	BFMERetailAsciiString &operator=(const BFMERetailAsciiString &);
+private:
+	void *m_data;
 };
 
-struct Rva0087FDC0Element
+struct GeometryShape
 {
-	int type;
-	float height;
-	float majorRadius;
-	int scalar0C;
+	int m_type;
+	float m_height;
+	float m_majorRadius;
+	int m_minorRadius;
 	int scalar10;
 	int scalar14;
-	float offsetZ;
-	BFMERetailAsciiString name;
-	bool enabled;
+	float m_offsetZ;
+	BFMERetailAsciiString m_name;
+	bool m_enabled;
 	char padding[3];
 
-	Rva0087FDC0Element(const Rva0087FDC0Element &) throw();
-	~Rva0087FDC0Element() throw() { name.releaseBuffer(); }
-	Rva0087FDC0Element &operator=(const Rva0087FDC0Element &) throw();
+	GeometryShape(const GeometryShape &) throw();
+	~GeometryShape() throw() { m_name.releaseBuffer(); }
+	GeometryShape &operator=(const GeometryShape &) throw();
+};
+
+struct Rva0087FDC0Element : GeometryShape
+{
+	Rva0087FDC0Element(const Rva0087FDC0Element &other) throw()
+		: GeometryShape(other) {}
 };
 
 struct BfmeFalseBE {};
@@ -46,6 +53,7 @@ struct BfmeElemBE
 	char padding[3];
 };
 
+// ?bfmeFillBE@@YAPAUBfmeElemBE@@PAU1@IABU1@ABUBfmeFalseBE@@@Z present-unmatched
 __declspec(noinline) BfmeElemBE *bfmeFillBE(BfmeElemBE *first, unsigned count,
 	const BfmeElemBE &value, const BfmeFalseBE &)
 {
@@ -69,3 +77,5 @@ namespace _STL
 
 template void _STL::vector<Rva0087FDC0Element>::_M_fill_insert(
 	Rva0087FDC0Element *, unsigned, const Rva0087FDC0Element &);
+
+

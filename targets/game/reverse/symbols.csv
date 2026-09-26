@@ -89165,3 +89165,7 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ?aptHelper008AE3A0@@YAPAVAptValue@@PAXHH@Z,0x008AE3A0,address-derived Apt helper alias; retail callers 0x008AE450 and 0x008AE470 pass entry count and flag; callee 0x008AE3A0 reads all three args and returns AptValue fallback
 ?Rva013378BC@@3P6AHPAXH@ZA,0x013378BC,address-derived callback slot; retail 0x008A60D0 calls through VA 0x013378BC with null and 3 then converts signed EAX to float; caller cleans two cdecl arguments
 ?push_back@?$list@PAVCreditsLine@@V?$allocator@PAVCreditsLine@@@_STL@@@_STL@@QAEXABQAVCreditsLine@@@Z,0x0040CDC0,decoded 0x0040D540 call at +0x15B with list at owner +0x08 and CreditsLine pointer node value
+??$__copy_backward@PAURva0087FDC0Element@@PAU1@H@_STL@@YAPAURva0087FDC0Element@@PAU1@00ABUrandom_access_iterator_tag@0@PAH@Z,0x0087EAA0,Rva0087FDC0 call +0x9A; 0x24 copy backward body; cdecl prefix ABI
+??$__uninitialized_copy@PAURva0087FDC0Element@@PAU1@@_STL@@YAPAURva0087FDC0Element@@PAU1@00ABU__false_type@0@@Z,0x0087EFA0,Rva0087FDC0 calls +0x7F and +0xF6; 0x24 copy body; cdecl prefix ABI
+??$fill@PAURva0087FDC0Element@@U1@@_STL@@YAXPAURva0087FDC0Element@@0ABU1@@Z,0x0087E9B0,Rva0087FDC0 calls +0xA8 and +0x110; 0x24 fill body; cdecl three args
+?_M_insert_overflow@?$vector@URva0087FDC0Element@@V?$allocator@URva0087FDC0Element@@@_STL@@@_STL@@IAEXPAURva0087FDC0Element@@ABU3@ABU__false_type@2@I_N@Z,0x0087FBE0,Rva0087FDC0 call +0x13F; vector thiscall five args ret 0x14
