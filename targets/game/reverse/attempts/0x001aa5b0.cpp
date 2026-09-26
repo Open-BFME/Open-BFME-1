@@ -1,200 +1,142 @@
 // ?resolve@TerrainLogicFireSpreadHelper@@QAEPAVObject@@PAVTerrainLogicFireSpreadRecord@@@Z
-// partial score=0.42 date=2026-09-10
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /Ireference/shims/sweep /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WW3D2 /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWDebug /Ireference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWSaveLoad
-// BFME TerrainLogic helper at retail RVA 0x001AA5B0 (367 bytes).
-//
-// The matched FireSpreadUpdate::update caller supplies TheTerrainLogic and
-// consumes this body's Object* result as the receiver of findModule.  The
-// helper first turns a terrain P48 record into an object; its no-record path
-// performs the same ten-unit filtered partition query used by FireSpread.
-
+// partial score=0.4263 date=2026-09-26
+// ?resolve@TerrainLogicFireSpreadHelper@@QAEPAVObject@@PAVTerrainLogicFireSpreadRecord@@@Z
+// experiment: canonical query, status-mask and kind-mask declarations
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /Iinputs/reference/shims/sweep /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngine/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/Compression /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/GameEngineDevice/Include /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Main /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWLib /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWVegas/WWMath /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWDebug /Iinputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Libraries/Source/WWLib
 // stlport
-
-typedef bool Bool;
-typedef int Int;
-typedef float Real;
+#define _STLP_USE_STATIC_LIB 1
+#define _STLP_NO_EXCEPTIONS 1
+#include "PreRTS.h"
+#include "Common/BitFlags.h"
 
 class Object;
 class Team;
 class ThingTemplate;
-class TerrainLogic;
 
-struct Coord3D
+typedef BitFlags<192> BfmeKindOfMaskType;
+typedef BitFlags<86> BfmeObjectStatusMaskType;
+
+class TerrainLogicFireSpreadRecord
 {
-	Real x;
-	Real y;
-	Real z;
+	public:
+	Coord3D position;
+	int key;
+	int field10;
+	const ThingTemplate *thingTemplate;
+	unsigned char field18;
+	unsigned char padding19[15];
+	int field28;
+	unsigned char field2C;
+	unsigned char field2D;
 };
 
-struct ObjectStatusMaskType
+struct Rva001A62D0TerrainQueryResult;
+
+class TerrainLogic
 {
-	unsigned int m_bits[3];
+public:
+	void queryPointImplAt001A4630(const Coord3D *, Real,
+		Rva001A62D0TerrainQueryResult *, Bool, Bool);
 };
 
-struct KindOfMaskType
+class TerrainLogicP48Clear
 {
-	unsigned int m_bits[6];
+public:
+	void clear(Int key);
+};
 
-	KindOfMaskType(Int bit)
+extern TerrainLogic *TheTerrainLogic;
+
+struct Rva002EE330PlayerList
+{
+	char prefix[0x14];
+	struct State
 	{
-		m_bits[0] = 0;
-		m_bits[1] = 0;
-		m_bits[2] = 0;
-		m_bits[3] = 0;
-		m_bits[4] = 0;
-		m_bits[5] = 0;
-		m_bits[bit >> 5] = 1u << (bit & 31);
-	}
+		char prefix[0x230];
+		Team *team;
+	} *state;
+};
+
+extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
+
+class ThingFactory
+{
+public:
+	Object *newObject(const ThingTemplate *, Team *,
+		const BfmeObjectStatusMaskType &, unsigned int);
+};
+
+extern ThingFactory *TheThingFactory;
+
+class BfmePosTP;
+class BfmeHostTP
+{
+public:
+	void bfmeSetPositionTP(const TerrainLogicFireSpreadRecord *, Bool);
 };
 
 class PartitionFilter
 {
 public:
-	PartitionFilter() : m_next(0) {}
+	PartitionFilter() : next(0) {}
 	virtual ~PartitionFilter() {}
-	virtual Bool allow(Object *object) = 0;
-	PartitionFilter *link(PartitionFilter *next);
-	PartitionFilter *m_next;
+	virtual Bool allow(Object *) = 0;
+	virtual Int getPlayerMask();
+	PartitionFilter *link(PartitionFilter *);
+	PartitionFilter *next;
 };
 
-class PartitionManager
+class PartitionFilterAcceptByKindOf : public PartitionFilter
 {
 public:
-	Object *getClosestObject(const Coord3D *position, Real maxDistance,
-		Int distanceCalculation, PartitionFilter *filters);
-};
-
-class ThingFactory
-{
-};
-
-class TerrainLogicFireSpreadRecord
-{
-	public:
-	int m_word00;
-	int m_word04;
-	int m_word08;
-	int m_key;
-	int m_word10;
-	const ThingTemplate *m_template;
-	unsigned char m_byte18;
-	unsigned char m_pad19[0x0F];
-	int m_word28;
-	unsigned char m_byte2c;
-	unsigned char m_byte2d;
-	unsigned char m_pad2e[2];
-};
-
-class BfmeQ1275
-{
-public:
-	BfmeQ1275()
-	{
-		m_word0c = 0;
-		m_word10 = 0x4B189680;
-		m_word14 = 0;
-		m_word00 = 0;
-		m_word04 = 0;
-		m_word08 = 0;
-	}
-
-	void *m_word00;
-	int m_word04;
-	int m_word08;
-	int m_word0c;
-	int m_word10;
-	TerrainLogicFireSpreadRecord *m_word14;
-};
-
-class BfmeA1275
-{
-public:
-	void bfmeDo1275(int a1, int a2, BfmeQ1275 *query, int a3, int a4);
+	__declspec(noinline) PartitionFilterAcceptByKindOf(
+		const BfmeKindOfMaskType &mustSet,
+		const BfmeKindOfMaskType &mustClear)
+		: m_mustSet(mustSet), m_mustClear(mustClear) {}
+	virtual ~PartitionFilterAcceptByKindOf() {}
+	virtual Bool allow(Object *);
+	BfmeKindOfMaskType m_mustSet;
+	BfmeKindOfMaskType m_mustClear;
 };
 
 class PartitionFilterFlammable : public PartitionFilter
 {
 public:
 	PartitionFilterFlammable() {}
-	virtual Bool allow(Object *object);
+	virtual Bool allow(Object *);
 };
 
-struct VptrZeroBlock24
+enum DistanceCalculationType
 {
-	unsigned int m_dword00;
-	unsigned int m_dword04;
-	unsigned int m_dword08;
-	unsigned int m_dword0c;
-	unsigned int m_dword10;
-	unsigned int m_dword14;
+	FROM_CENTER_2D = 0,
+	FROM_CENTER_3D = 1
 };
 
-class Rva000C3DD0VptrZeroBlockObject : public PartitionFilter
+class PartitionManager
 {
 public:
-	Rva000C3DD0VptrZeroBlockObject(const VptrZeroBlock24 &first,
-		const VptrZeroBlock24 &second);
-	virtual Bool allow(Object *object);
-	VptrZeroBlock24 m_first;
-	VptrZeroBlock24 m_second;
+	Object *getClosestObject(const Coord3D *, Real,
+		DistanceCalculationType, PartitionFilter *);
 };
 
-class TerrainLogicP48Clear
-{
-public:
-	void clear(int key);
-};
-
-class Rva002EE330PlayerList
-{
-public:
-	char m_pad00[0x14];
-	struct PlayerListState
-	{
-		char m_pad00[0x230];
-		Team *m_currentTeam;
-	};
-	PlayerListState *m_state;
-};
-
-extern Rva002EE330PlayerList *Rva002EE330ThePlayers;
-extern ThingFactory *TheThingFactory;
-extern TerrainLogic *TheTerrainLogic;
 extern PartitionManager *ThePartitionManager;
 
-static const KindOfMaskType &terrainFireSpreadKindOfMaskNone =
-	*(const KindOfMaskType *)0x012ED8B8;
-
-static __forceinline Object *terrainFireSpreadNewObject(
-	ThingFactory *factory, const ThingTemplate *thingTemplate, Team *team,
-	const volatile ObjectStatusMaskType &statusBits, void *extra)
+struct Rva001A62D0TerrainQueryResult
 {
-	typedef Object *(ThingFactory::*NewObjectCall)(
-		const ThingTemplate *, Team *, const volatile ObjectStatusMaskType &, void *);
-	union { void (*raw)(); NewObjectCall member; } call;
-	extern void j_0004494a();
-	call.raw = j_0004494a;
-	return (factory->*call.member)(thingTemplate, team, statusBits, extra);
-}
-
-static __forceinline void terrainFireSpreadSetPosition(
-	Object *object, const TerrainLogicFireSpreadRecord *record)
-{
-	class BfmeHostTP
+	Coord3D position;
+	Int field0C;
+	Real bestDistanceSquared;
+	Coord3D *result;
+	Rva001A62D0TerrainQueryResult()
+		: field0C(0), bestDistanceSquared(10000000.0f), result(0)
 	{
-	public:
-		void setPosition(const TerrainLogicFireSpreadRecord *position, bool flag);
-	};
-	typedef void (BfmeHostTP::*SetPositionCall)(
-		const TerrainLogicFireSpreadRecord *, bool);
-	union { void (*raw)(); SetPositionCall member; } call;
-	extern void j_0001621b();
-	call.raw = j_0001621b;
-	(reinterpret_cast<BfmeHostTP *>(object)->*call.member)(record, false);
-}
+		position.x = 0;
+		position.y = 0;
+		position.z = 0;
+	}
+};
 
-// ?resolve@TerrainLogicFireSpreadHelper@@QAEPAVObject@@PAVTerrainLogicFireSpreadRecord@@@Z
-class TerrainLogicFireSpreadHelper
+class TerrainLogicFireSpreadHelper : public TerrainLogic
 {
 public:
 	Object *resolve(TerrainLogicFireSpreadRecord *record);
@@ -202,45 +144,47 @@ public:
 
 Object *TerrainLogicFireSpreadHelper::resolve(TerrainLogicFireSpreadRecord *record)
 {
-	BfmeQ1275 query;
-	(reinterpret_cast<BfmeA1275 *>(this))->bfmeDo1275(
-		reinterpret_cast<int>(record), 0x41200000, &query, 0, 0);
-
-	TerrainLogicFireSpreadRecord *found = query.m_word14;
+	TerrainLogicFireSpreadRecord *found;
+	{
+		Rva001A62D0TerrainQueryResult query;
+		queryPointImplAt001A4630((const Coord3D *)record, 10.0f,
+			&query, false, false);
+		found = (TerrainLogicFireSpreadRecord *)query.result;
+	}
+	Object *object = 0;
 	if (found != 0)
 	{
-		if (found->m_template == 0)
-			return 0;
+		if (found->thingTemplate != 0)
+		{
+			Rva002EE330PlayerList *players = Rva002EE330ThePlayers;
+			Team *team = players->state->team;
+			object = TheThingFactory->newObject(
+				found->thingTemplate, team, BfmeObjectStatusMaskType(), 0);
+			((BfmeHostTP *)object)->bfmeSetPositionTP(
+				found, false);
+		}
 
-		ObjectStatusMaskType statusBits;
-		Rva002EE330PlayerList *players = Rva002EE330ThePlayers;
-		Team *team = players->m_state->m_currentTeam;
-		Object *object = terrainFireSpreadNewObject(
-			TheThingFactory, found->m_template, team, statusBits, 0);
-		terrainFireSpreadSetPosition(object, found);
-
-		int key = found->m_key;
-		found->m_word00 = 0;
-		found->m_word04 = 0;
-		found->m_word08 = 0;
-		found->m_key = 0;
-		found->m_word10 = 0;
-		found->m_template = 0;
-		found->m_byte18 = 0;
-		found->m_word28 = 1;
-		found->m_byte2c = 1;
-		found->m_byte2d = 1;
-		reinterpret_cast<TerrainLogicP48Clear *>(TheTerrainLogic)->clear(key);
+		Int key = found->key;
+		found->position.x = 0;
+		found->position.y = 0;
+		found->position.z = 0;
+		found->key = 0;
+		found->field10 = 0;
+		found->thingTemplate = 0;
+		found->field28 = 1;
+		found->field18 = 0;
+		found->field2C = 1;
+		found->field2D = 1;
+		((TerrainLogicP48Clear *)TheTerrainLogic)->clear(key);
 		return object;
 	}
 
-	KindOfMaskType wanted(117);
-	Rva000C3DD0VptrZeroBlockObject kindFilter(
-		*(const VptrZeroBlock24 *)&wanted,
-		*(const VptrZeroBlock24 *)&terrainFireSpreadKindOfMaskNone);
-	PartitionFilterFlammable flammableFilter;
-	flammableFilter.link(&kindFilter);
+	BfmeKindOfMaskType wanted(BfmeKindOfMaskType::kInit, 117);
+	PartitionFilterAcceptByKindOf kind(
+		wanted,
+		*reinterpret_cast<const BfmeKindOfMaskType *>(&KINDOFMASK_NONE));
+	PartitionFilterFlammable flammable;
+	flammable.link(&kind);
 	return ThePartitionManager->getClosestObject(
-		reinterpret_cast<const Coord3D *>(record), 10.0f, 1,
-		&flammableFilter);
+		(const Coord3D *)record, 10.0f, FROM_CENTER_3D, &flammable);
 }
