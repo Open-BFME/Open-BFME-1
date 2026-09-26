@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "0857a0fcfd9e4ec2c2c5684e1b3c2591f85e3217e5941ee8766c5d5fa01dd2c0",
+  "symbol": "??0Rva009E12B0Table@@QAE@H@Z",
+  "score_kind": "author-estimate",
+  "score": 0.91,
+  "source": "// ??0Rva009E12B0Table@@QAE@H@Z\n// partial score=0.91 date=2026-09-26\nextern \"C\" void* __cdecl memset(void*, int, unsigned int);\n#pragma intrinsic(memset)\nstruct Rva009E12B0Pair { int m_a; int m_b; Rva009E12B0Pair() : m_a(0), m_b(0) {} };\nstruct Rva009E12B0Table {\n\tint m_owner;\n\tint m_4;\n\tint m_8;\n\tint m_table[0x100];\n\tRva009E12B0Pair m_pairs[0x100];\n\tbool m_flag;\n\tint m_c10;\n\tshort m_c14;\n\tRva009E12B0Table(int owner);\n};\nRva009E12B0Table::Rva009E12B0Table(int owner)\n\t: m_owner(owner), m_4(0), m_8(0)\n{\n\tvolatile Rva009E12B0Table *tail = this;\n\ttail->m_flag = false;\n\ttail->m_c10 = 0;\n\tmemset(m_table, 0, 0x400);\n\tmemset(m_pairs, 0, 0x800);\n\tm_c14 = 0;\n}\n"
+}

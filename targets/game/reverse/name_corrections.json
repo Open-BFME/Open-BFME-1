@@ -1,5 +1,15 @@
 [
  {
+  "old_path": "targets/game/reverse/attempts/0x0088c4e0.cpp",
+  "new_path": "game/GameEngine/Source/Common/Rva0088C4E0PostStaticInitLookup.cpp",
+  "old_name": "purecallHandler",
+  "new_name": "rva0088C4E0PostStaticInitLookup",
+  "before_sha256": "16f2fa85fabdee49924642dfa82dc2c2cc9f96868d205bba23f693121b71a37d",
+  "after_sha256": "360d38197a8d69d6b3d4e6e25d97e38f1dd5806d2cc1b5e7913c4ca01cf72415",
+  "evidence": "targets/game/reverse/identity_evidence/0x0088c4e0-split.md",
+  "reason": "Retail ends the first 31-byte body at an unconditional jmp eax then int3; the pure-virtual reporter starts at 0x0088C500. The old bank combined both bodies under purecallHandler."
+ },
+ {
   "old_path": "targets/game/reverse/attempts/0x0024eac0.cpp",
   "new_path": "game/GameEngine/Source/GameLogic/Object/Contain/Rva0024EAC0OnRemoving.cpp",
   "old_name": "BfmeOwnAZ",
