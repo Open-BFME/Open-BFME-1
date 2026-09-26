@@ -749,3 +749,20 @@ int Rva008AB800OffsetGetter::body() const
 {
 	return m_value;
 }
+
+class Rva0083FE30VirtualForward
+{
+public:
+	virtual int slot0() = 0;
+	virtual int slot1() = 0;
+	virtual int slot2() = 0;
+	virtual int slot3() = 0;
+	virtual int slot4() = 0;
+	int body();
+};
+
+// ?body@Rva0083FE30VirtualForward@@QAEHXZ
+int Rva0083FE30VirtualForward::body()
+{
+	return slot4();
+}
