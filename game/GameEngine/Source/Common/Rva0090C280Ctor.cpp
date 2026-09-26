@@ -4,7 +4,7 @@ class Rva0090C280
 {
 	void *m_vptr;
 	char m_04;
-	int m_08;
+	void *m_08;
 	int m_0C;
 	int m_10;
 	int m_14;
@@ -23,6 +23,7 @@ class Rva0090C280
 
 public:
 	Rva0090C280();
+	void releaseResource0090C2D0();
 };
 
 Rva0090C280::Rva0090C280()
@@ -45,4 +46,14 @@ Rva0090C280::Rva0090C280()
 	m_3C = 0;
 	m_40 = 2;
 	m_44 = 0;
+}
+
+void Rva0090C280::releaseResource0090C2D0()
+{
+	m_vptr = (void *)0x0113A56C;
+	void *resource = m_08;
+	if (resource) {
+		void (__stdcall *destroy)(void *) = ((void (__stdcall **)(void *))*(void **)resource)[2];
+		destroy(resource);
+	}
 }
