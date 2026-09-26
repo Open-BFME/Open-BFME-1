@@ -89169,3 +89169,4 @@ _gpDisconnect,0x008E9800,body 0x008E9800; Thread_Function 0x0063EB00 +0xB49 jump
 ??$__uninitialized_copy@PAURva0087FDC0Element@@PAU1@@_STL@@YAPAURva0087FDC0Element@@PAU1@00ABU__false_type@0@@Z,0x0087EFA0,Rva0087FDC0 calls +0x7F and +0xF6; 0x24 copy body; cdecl prefix ABI
 ??$fill@PAURva0087FDC0Element@@U1@@_STL@@YAXPAURva0087FDC0Element@@0ABU1@@Z,0x0087E9B0,Rva0087FDC0 calls +0xA8 and +0x110; 0x24 fill body; cdecl three args
 ?_M_insert_overflow@?$vector@URva0087FDC0Element@@V?$allocator@URva0087FDC0Element@@@_STL@@@_STL@@IAEXPAURva0087FDC0Element@@ABU3@ABU__false_type@2@I_N@Z,0x0087FBE0,Rva0087FDC0 call +0x13F; vector thiscall five args ret 0x14
+?YFlip@Targa@@QAEXXZ,0x009E0360,Targa Load direct call with thiscall receiver and ret0; helper reads Header Width Height PixelDepth and mImage at canonical offsets
