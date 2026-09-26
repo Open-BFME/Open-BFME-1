@@ -9,7 +9,7 @@
 // 0x007F2A50..0x007F9660 (ariesudp.cpp).  The span claimed here therefore
 // continues EA's FESL SDK, not game code.  The literal keys pushed by these
 // rows -- LKEY PROD VERS PRES RSRC USER PASS DOMN DIST MAXR GROUP LSRC SESS
-// TITL ANSW SUBJ BODY SECS ADDR ENAB -- together with the boolean value
+// TITL ANSW SUBJ BODY SECS ADDR ATTR ENAB -- together with the boolean value
 // spellings "Y"/"N" and "T"/"F" are the EA buddy/presence wire vocabulary.
 //
 // Every row below is __stdcall with the FESL message object as first argument
@@ -17,7 +17,7 @@
 // V2FeslTxnRequests.cpp: reset(); category = <FourCC>; depth = 3; then a run of
 // addString/addInt calls keyed by literal field names.  The FourCC written to
 // +0x1C is an imm32 with NO relocation, so it is hard evidence and is spelled
-// as an MSVC multi-character literal below: 'AUTH', 'USCH', 'PADD', 'PDEL',
+// as an MSVC multi-character literal below: 'AUTH', 'USCH', 'PADD', 'PDEL', 'RADD',
 // 'RADM', 'MLST', 'TCKL', 'RDEM', 'GINV', 'GRVK', 'EPST'.
 //
 // The message class is re-declared here rather than shared through a header:
@@ -107,7 +107,7 @@ void __stdcall Rva007FAFB0( FeslTxnMessage *msg, const char *user,
 	msg->addInt( "MAXR", maxResults );
 }
 
-// ---- 'PADD' / 'PDEL' / 'TCKL' ---------------------------------------------
+// ---- 'PADD' / 'PDEL' / 'RADD' / 'TCKL' -------------------------------------
 
 void __stdcall Rva007FB080( FeslTxnMessage *msg, const char *user )
 {
@@ -123,6 +123,41 @@ void __stdcall Rva007FB0B0( FeslTxnMessage *msg, const char *user )
 	msg->m_category = 'PDEL';
 	msg->m_depth = 3;
 	msg->addString( "USER", user );
+}
+
+void __stdcall FeslRaddRequest007FB260( FeslTxnMessage *msg, int list,
+	const char *user, const char *group, const char *lsrc, bool pres,
+	int attr )
+{
+	msg->reset();
+	msg->m_category = 'RADD';
+	msg->m_depth = 3;
+	switch( list )
+	{
+		case 1:
+			msg->addString( "LIST", "B" );
+			break;
+		case 2:
+			msg->addString( "LIST", "I" );
+			break;
+	}
+	msg->addString( "USER", user );
+	if( group )
+		msg->addString( "GROUP", group );
+	if( lsrc )
+		msg->addString( "LSRC", lsrc );
+	msg->addString( "PRES", pres ? "Y" : "N" );
+	if( attr )
+	{
+		char attrString[ 4 ] = "";
+		if( attr == 1 )
+			strcat( attrString, "A" );
+		else if( attr == 2 )
+			strcat( attrString, "M" );
+		else if( attr == 3 )
+			strcat( attrString, "I" );
+		msg->addString( "ATTR", attrString );
+	}
 }
 
 void __stdcall Rva007FB510( FeslTxnMessage *msg, const char *user )
