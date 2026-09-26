@@ -5948,5 +5948,25 @@
   "after_sha256": "d91f804094aef0773f209f7a23a6ef447a55c1e23e19a1e0e1c204acec830a85",
   "evidence": "docs/naming_evidence.md",
   "reason": "bank name with no witness (name_oracle has only a ZH hint m_frame at GameLogic+0x3C)"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00723b60.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnowManagerLightningRva00723B60.cpp",
+  "old_name": "m_flag44",
+  "new_name": "m_byte44",
+  "before_sha256": "fb2e99236f4a259e0fe948af56af582432ca86c66f926dd39bd805bf72b1d309",
+  "after_sha256": "e5a0f7cb86fe3d5e3037a6dcd47bd76d99af1da1c2965cac29e66a5985e8c888",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "offset placeholder: W3DSnowManager +0x44 not witnessed by name_oracle; the stash name m_flag44 had no evidence"
+ },
+ {
+  "old_path": "targets/game/reverse/attempts/0x00723b60.cpp",
+  "new_path": "game/GameEngineDevice/Source/W3DDevice/GameClient/W3DSnowManagerLightningRva00723B60.cpp",
+  "old_name": "refreshCache",
+  "new_name": "rva00723B60",
+  "before_sha256": "fb2e99236f4a259e0fe948af56af582432ca86c66f926dd39bd805bf72b1d309",
+  "after_sha256": "e5a0f7cb86fe3d5e3037a6dcd47bd76d99af1da1c2965cac29e66a5985e8c888",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "bank guess with no evidence; owner proven by matched W3DSnowManager::update 0x00725AC0 tail call via ILT 0x000092AF but no string/vtable/ZH twin names the method so the address token is kept"
  }
 ]
