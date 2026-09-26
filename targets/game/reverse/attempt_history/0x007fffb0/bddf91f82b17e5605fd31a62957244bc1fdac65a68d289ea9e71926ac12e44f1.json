@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "bddf91f82b17e5605fd31a62957244bc1fdac65a68d289ea9e71926ac12e44f1",
+  "symbol": "?Rva007FFFB0NullStringSpan@@YAIPBD@Z",
+  "score_kind": "author-estimate",
+  "score": 0.85,
+  "source": "// ?Rva007FFFB0NullStringSpan@@YAIPBD@Z\n// partial score=0.85 date=2026-09-26\n// Includes the NUL terminator for a present byte string; null stays empty.\nunsigned int Rva007FFFB0NullStringSpan(const char *text)\n{\n    if (!text)\n        return 0;\n    const char *afterStart = text + 1;\n    while (*text++)\n    {\n    }\n    return (unsigned int)(text - afterStart) + 1;\n}\n"
+}

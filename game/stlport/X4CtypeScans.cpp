@@ -40,3 +40,14 @@ const wchar_t *Rva00840F60(const wchar_t *first, const wchar_t *last,
 {
 	return _STL::find_if(first, last, predicate);
 }
+
+struct Rva00840CE0Predicate
+{
+	_STL::_Ctype_w_is_mask m_mask;
+	bool notMasked(const wchar_t *character) const;
+};
+
+bool Rva00840CE0Predicate::notMasked(const wchar_t *character) const
+{
+	return !m_mask(*character);
+}
