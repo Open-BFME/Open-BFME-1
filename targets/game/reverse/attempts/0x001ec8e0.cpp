@@ -1,14 +1,16 @@
 // ?getAbleToAttackSpecificObject@WeaponSet@@QBE?AW4CanAttackResult@@W4AbleToAttackType@@PBVObject@@1W4CommandSourceType@@@Z
-// partial score=0.25 date=2026-09-04
+// partial score=0.26 date=2026-09-26
 // cl: /DNDEBUG /MD /EHsc
 // Open-BFME5: WeaponSet::getAbleToAttackSpecificObject (4-arg), retail 0x001EC8E0 size 999.
 // Matched Object 3-arg wrapper at 0x001C77B0 calls ILT 0x291D6 -> this body.
 // Eligibility half then forwards through ILT 0x1A889 (UseWeapon-merge at 0x001EBEB0).
 // Function-local static NameKey "StealthUpdate" is what buys the SEH frame.
-// Candidate probes 1022/999 bytes, 749 non-relocation differences and 48
-// relocation-layout mismatches; static key initializer has sub esp,8 where
-// retail SEH uses push ecx. Declaring nameToKey throw() removed SEH and
-// worsened to 926/999 bytes, so that experiment was reverted.
+// Candidate probes 1018/999 bytes, 752 non-relocation differences and 48
+// relocation-layout mismatches. Retail kind-7 target branch at +0x029f
+// skips relationship rejection and resumes containment checks at +0x02f8;
+// it does not reject the target. The static key initializer still allocates
+// eight bytes where retail SEH uses push ecx (four). Declaring nameToKey
+// throw() removed SEH and worsened to 926/999 bytes; that was reverted.
 
 typedef int Int;
 typedef unsigned int UnsignedInt;
@@ -273,7 +275,7 @@ CanAttackResult WeaponSet::getAbleToAttackSpecificObject(
 		if (r == ALLIES)
 			return ATTACKRESULT_NOT_POSSIBLE;
 		if (victim->isKindOf(7))
-			return ATTACKRESULT_NOT_POSSIBLE;
+			goto relationshipChecksDone;
 	}
 
 	if (!(victim->isKindOf(0x5D) && TheAIParseDefinitionAI->m_inner->m_flagB8)
@@ -283,6 +285,8 @@ CanAttackResult WeaponSet::getAbleToAttackSpecificObject(
 		&& commandSource == CMD_FROM_PLAYER
 		&& (victim->m_scriptTargetable & 0x10) == 0)
 		return ATTACKRESULT_NOT_POSSIBLE;
+
+relationshipChecksDone:
 
 	Object *victimsContainer = victim->m_containedBy;
 	BfmeContainInterface *containerContain = victimsContainer
