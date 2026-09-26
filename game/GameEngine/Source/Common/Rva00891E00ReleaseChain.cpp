@@ -16,6 +16,18 @@ extern void rva008B2BD0ReleaseGlobals();
 extern void d_008acac0();
 extern void rva008A98B0ReleaseAll();
 extern void Rva008A4AA0Invoke();
+extern void __cdecl bfmeAppend(int first, int second, int third);
+struct Rva008A1DF0State;
+extern char *Rva008A5380Holder;
+extern void *Rva008A1DF0(Rva008A1DF0State *state, int unused);
+extern void d_008a1e80();
+
+void rva00891DE0RegisterChain()
+{
+	bfmeAppend(reinterpret_cast<int>(Rva008A5380Holder),
+		reinterpret_cast<int>(&Rva008A1DF0),
+		reinterpret_cast<int>(&d_008a1e80));
+}
 
 void rva00891E00ReleaseChain()
 {
