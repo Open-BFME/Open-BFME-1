@@ -42,6 +42,7 @@ public:
 class PB_Iface2
 {
 public:
+	UpdateSleepTime rva0028b540Update();
 	virtual void slot();
 };
 
@@ -167,6 +168,7 @@ public:
 
 class CommandButtonHuntUpdate : public UpdateModule
 {
+	friend class PB_Iface2;
 	protected:
 	UpdateSleepTime huntSpecialPower(AIUpdateInterface *ai);
 
@@ -209,4 +211,51 @@ UpdateSleepTime CommandButtonHuntUpdate::huntSpecialPower(AIUpdateInterface *ai)
 		obj->doCommandButtonAtObject(m_commandButton, victim, CMD_FROM_AI, false);
 	}
 	return (UpdateSleepTime)data->m_scanFrames;
+}
+
+class BFMERetailAsciiString
+{
+public:
+	void clear() { releaseBuffer(); }
+private:
+	void releaseBuffer();
+};
+
+class Rva0028B540AIView : public BfmeVirtualSlots<128>
+{
+public:
+	virtual int status();
+};
+
+class BfmeTarget;
+class Gen_0028B440
+{
+public:
+	int bfmeApply(BfmeTarget *target);
+};
+
+UpdateSleepTime PB_Iface2::rva0028b540Update()
+{
+	register PB_Iface2 *self = this;
+	Object *object = *(Object **)((char *)self - 8);
+	Rva0028B540AIView *ai = *(Rva0028B540AIView **)((char *)object + 0x204);
+	if (ai && *(const CommandButton **)((char *)self + 0x14))
+	{
+		if (ai->status() != 2)
+		{
+			*(const CommandButton **)((char *)self + 0x14) = 0;
+			((BFMERetailAsciiString *)((char *)self + 0x10))->clear();
+			return UPDATE_SLEEP_FOREVER;
+		}
+		const CommandButton *button = *(const CommandButton **)((char *)self + 0x14);
+		const int command = *(const int *)((const char *)button + 0x10);
+		switch (command)
+		{
+		case 23: case 36:
+			return ((CommandButtonHuntUpdate *)((char *)self - 0x10))->huntSpecialPower((AIUpdateInterface *)ai);
+		case 22: case 26:
+			return (UpdateSleepTime)((Gen_0028B440 *)((char *)self - 0x10))->bfmeApply((BfmeTarget *)ai);
+		}
+	}
+	return UPDATE_SLEEP_FOREVER;
 }
