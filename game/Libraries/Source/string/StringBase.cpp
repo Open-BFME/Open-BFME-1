@@ -753,47 +753,6 @@ __declspec(naked) StringBase<wchar_t>::StringBase(const StringBase<wchar_t> &src
     }
 }
 
-__declspec(naked) StringBase<wchar_t>::StringBase(wchar_t c)
-{
-    __asm {
-        __emit 0x56
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x6a
-        __emit 0x01
-        __emit 0x8d
-        __emit 0x44
-        __emit 0x24
-        __emit 0x14
-        __emit 0x50
-        __emit 0x6a
-        __emit 0x00
-        __emit 0x8b
-        __emit 0xf1
-        __emit 0x6a
-        __emit 0x01
-        __emit 0xc7
-        __emit 0x06
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0x00
-        __emit 0xe8
-        __emit 0xd3
-        __emit 0xf4
-        __emit 0xff
-        __emit 0xff
-        __emit 0x8b
-        __emit 0xc6
-        __emit 0x5e
-        __emit 0xc2
-        __emit 0x04
-        __emit 0x00
-    }
-}
-
 __declspec(naked) StringBase<wchar_t>::StringBase(const wchar_t *str)
 {
     __asm {
