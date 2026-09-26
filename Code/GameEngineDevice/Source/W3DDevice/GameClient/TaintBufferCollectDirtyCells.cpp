@@ -74,9 +74,9 @@ public:
 	unsigned char m_clearDstTexture;
 	unsigned char m_borderShroudLevel;
 	unsigned char m_pad37;
-	unsigned char *m_38;
-	unsigned char *m_3c;
-	unsigned char m_40;
+	unsigned char *m_cellLevels;
+	unsigned char *m_referenceCellLevels;
+	unsigned char m_trackDirtyCells;
 	unsigned char m_pad41[3];
 	_STL::set<int> m_dirty;
 };
@@ -96,8 +96,8 @@ void TaintBuffer::collectDirtyCells()
 		}
 	}
 
-	unsigned char *a = m_3c;
-	unsigned char *b = m_38;
+	unsigned char *a = m_referenceCellLevels;
+	unsigned char *b = m_cellLevels;
 	int cell;
 	int y = 0;
 	cell = 0;
@@ -109,5 +109,5 @@ void TaintBuffer::collectDirtyCells()
 				m_dirty.insert(cell);
 		}
 	}
-	m_40 = 1;
+	m_trackDirtyCells = 1;
 }

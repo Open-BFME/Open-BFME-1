@@ -132,8 +132,8 @@ private:
 	int m_dstTextureWidth;
 	int m_dstTextureHeight;
 	unsigned char m_pad28[0x38 - 0x28];
-	unsigned char *m_38;
-	unsigned char *m_3c;
+	unsigned char *m_cellLevels;
+	unsigned char *m_referenceCellLevels;
 };
 
 // ?init@TaintBuffer@@QAEXPAVWorldHeightMap@@MM@Z
@@ -170,10 +170,10 @@ void TaintBuffer::init(WorldHeightMap *map, Real worldCellSizeX,
 		W3DRadarResetUnlock();
 	}
 
-	m_38 = new unsigned char[*(volatile int *)&m_numCellsX * m_numCellsY];
-	m_3c = new unsigned char[*(volatile int *)&m_numCellsX * m_numCellsY];
-	memset(m_3c, 0x80, *(volatile int *)&m_numCellsX * m_numCellsY);
-	memset(m_38, 0x80, *(volatile int *)&m_numCellsX * m_numCellsY);
+	m_cellLevels = new unsigned char[*(volatile int *)&m_numCellsX * m_numCellsY];
+	m_referenceCellLevels = new unsigned char[*(volatile int *)&m_numCellsX * m_numCellsY];
+	memset(m_referenceCellLevels, 0x80, *(volatile int *)&m_numCellsX * m_numCellsY);
+	memset(m_cellLevels, 0x80, *(volatile int *)&m_numCellsX * m_numCellsY);
 
 	if (TheWritableGlobalData && TheWritableGlobalData->m_taintOn)
 	{

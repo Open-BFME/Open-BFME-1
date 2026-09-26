@@ -51,49 +51,49 @@ public:
 	TaintBuffer();
 
 private:
-	int m_00;
-	int m_04;
-	int m_08;
-	int m_0C;
-	float m_10;
-	float m_14;
-	void *m_18;
-	TexHandle m_1C;
-	void *m_20;
-	void *m_24;
+	int m_numCellsX;
+	int m_numCellsY;
+	int m_numMaxVisibleCellsX;
+	int m_numMaxVisibleCellsY;
+	float m_cellWidth;
+	float m_cellHeight;
+	void *m_taintData;
+	TexHandle m_dstTexture;
+	void *m_dstTextureWidth;
+	void *m_dstTextureHeight;
 	int m_28;
 	int m_2C;
 	int m_30;
 	unsigned char m_34;
-	unsigned char m_35;
-	unsigned char m_36;
+	unsigned char m_clearDstTexture;
+	unsigned char m_borderShroudLevel;
 	unsigned char m_pad37;
-	void *m_38;
-	void *m_3C;
-	unsigned char m_40;
+	void *m_cellLevels;
+	void *m_referenceCellLevels;
+	unsigned char m_trackDirtyCells;
 	unsigned char m_pad41[3];
 	_STL::set<int> m_dirty;
 };
 
 // ??0TaintBuffer@@QAE@XZ
 TaintBuffer::TaintBuffer()
-	: m_00(0)
-	, m_04(0)
-	, m_08(0)
-	, m_0C(0)
-	, m_10(10.0f)
-	, m_14(10.0f)
-	, m_18(0)
-	, m_20(0)
-	, m_24(0)
+	: m_numCellsX(0)
+	, m_numCellsY(0)
+	, m_numMaxVisibleCellsX(0)
+	, m_numMaxVisibleCellsY(0)
+	, m_cellWidth(10.0f)
+	, m_cellHeight(10.0f)
+	, m_taintData(0)
+	, m_dstTextureWidth(0)
+	, m_dstTextureHeight(0)
 	, m_28(4)
 	, m_2C(0)
 	, m_30(0)
 	, m_34(0)
-	, m_35(1)
-	, m_36(TheWritableGlobalData->m_taintAlpha)
-	, m_38(0)
-	, m_3C(0)
-	, m_40(1)
+	, m_clearDstTexture(1)
+	, m_borderShroudLevel(TheWritableGlobalData->m_taintAlpha)
+	, m_cellLevels(0)
+	, m_referenceCellLevels(0)
+	, m_trackDirtyCells(1)
 {
 }

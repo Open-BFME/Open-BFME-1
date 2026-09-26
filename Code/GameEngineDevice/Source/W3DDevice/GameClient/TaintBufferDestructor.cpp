@@ -51,11 +51,11 @@ public:
 
 private:
 	unsigned char m_pad00[0x18];
-	void *m_18;
-	TexHandle m_1C;
+	void *m_taintData;
+	TexHandle m_dstTexture;
 	unsigned char m_pad20[0x38 - 0x20];
-	void *m_38;
-	void *m_3C;
+	void *m_cellLevels;
+	void *m_referenceCellLevels;
 	unsigned char m_pad40[0x44 - 0x40];
 	_STL::set<int> m_dirty;
 };
@@ -63,15 +63,15 @@ private:
 // ??1TaintBuffer@@QAE@XZ
 TaintBuffer::~TaintBuffer()
 {
-	if (m_1C.m_p)
-		m_1C.Clear();
-	if (m_18)
-		operator delete[](m_18);
-	m_18 = 0;
-	if (m_38)
-		operator delete[](m_38);
-	m_38 = 0;
-	if (m_3C)
-		operator delete[](m_3C);
-	m_3C = 0;
+	if (m_dstTexture.m_p)
+		m_dstTexture.Clear();
+	if (m_taintData)
+		operator delete[](m_taintData);
+	m_taintData = 0;
+	if (m_cellLevels)
+		operator delete[](m_cellLevels);
+	m_cellLevels = 0;
+	if (m_referenceCellLevels)
+		operator delete[](m_referenceCellLevels);
+	m_referenceCellLevels = 0;
 }

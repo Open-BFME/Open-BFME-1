@@ -52,9 +52,9 @@ private:
 	unsigned char m_padding08[0x10];
 	unsigned int *m_taintData;
 	unsigned char m_padding1c[0x1c];
-	UnsignedByte *m_38;
-	UnsignedByte *m_3c;
-	UnsignedByte m_40;
+	UnsignedByte *m_cellLevels;
+	UnsignedByte *m_referenceCellLevels;
+	UnsignedByte m_trackDirtyCells;
 	unsigned char m_padding41[3];
 	_STL::set<int> m_dirty;
 };
@@ -79,8 +79,8 @@ void TaintBuffer::setShroudLevel(int x, int y,
 	if (!textureOnly)
 	{
 		int cell = x + y * m_numCellsX;
-		m_38[cell] = level;
-		if (m_40)
+		m_cellLevels[cell] = level;
+		if (m_trackDirtyCells)
 			m_dirty.insert(cell);
 	}
 
