@@ -76,3 +76,9 @@ void Rva007F6260GameBrowser::handleConnectingProtocolReply(
 
 	m_listener->onSlot0( status );
 }
+
+void Rva007F62E0Callback(Rva007E8810Message *message,
+	Rva007F6260GameBrowser *browser)
+{
+	browser->handleConnectingProtocolReply(message);
+}
