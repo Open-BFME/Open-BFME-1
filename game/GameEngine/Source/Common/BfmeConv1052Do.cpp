@@ -29,6 +29,13 @@ public:
 	int m_0c;
 };
 
+struct BfmeRecord00800C80
+{
+	int m_value;
+	char m_pad[12];
+	BfmeI1052 m_item;
+};
+
 extern char g_bfmeName1052[];
 extern int g_bfmeKeyCVHD;
 
@@ -36,6 +43,7 @@ class BfmeH1052
 {
 public:
 	void bfmeDo1052(int a, BfmeI1052 *p, int r);
+	void forward00800C80(BfmeRecord00800C80 *record);
 
 	char m_pad[0x10];
 	void *m_10;
@@ -57,4 +65,9 @@ void BfmeH1052::bfmeDo1052(int a, BfmeI1052 *p, int r)
 	msg.addInt(g_bfmeName1052, r);
 	msg.addInt((const char *)&g_bfmeKeyCVHD, 1);
 	Rva007F93E0(&msg, "->D", m_10);
+}
+
+void BfmeH1052::forward00800C80(BfmeRecord00800C80 *record)
+{
+	bfmeDo1052(1, &record->m_item, record->m_value);
 }

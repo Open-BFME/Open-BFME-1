@@ -126,6 +126,53 @@ public:
 void *Rva007F93E0( void *message, void *route, void *owner );
 char * __cdecl ji_009f70ba( char *dest, const char *src, unsigned count );
 
+void Rva007E8640Copy(char *dest, unsigned int capacity, const char *source);
+
+class Rva00808900Owner
+{
+public:
+	void copy(char *source);
+
+private:
+	char m_pad[0x18];
+	char m_dest[0x20];
+};
+
+void Rva00808900Owner::copy(char *source)
+{
+	ji_009f70ba(m_dest, source, 0x20);
+}
+
+class Rva00808AC0Owner
+{
+public:
+	void copy(char *source);
+
+private:
+	char m_pad[0x0c];
+	char m_dest[0x80];
+};
+
+void Rva00808AC0Owner::copy(char *source)
+{
+	ji_009f70ba(m_dest, source, 0x80);
+}
+
+class Rva00808AF0Owner
+{
+public:
+	void copy(const char *source);
+
+private:
+	char m_pad[0x8c];
+	char m_dest[0x25];
+};
+
+void Rva00808AF0Owner::copy(const char *source)
+{
+	Rva007E8640Copy(m_dest, sizeof(m_dest), source);
+}
+
 class LanTheaterEmulator
 {
 public:
