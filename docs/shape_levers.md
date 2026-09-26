@@ -1473,6 +1473,10 @@ use it.
 copied, each single-use local inlined) in a few seconds and ranks them; it
 finds 0x0024C420's fix first. A winner is a hypothesis: respell it as a local
 copy or the ZH accessor and land only that spelling.
+Measured 2026-09-26 on the 35 allocation-only banks left after the four
+landings: no single toggle, and (`--pairs`, two rotation steps) no pair on the
+8 scratch-only ones, moved a byte. What remains there is not reached by
+argument spelling; the lever is for NEW scratch-class banks.
 
 | body | pushed load toggled | control (direct) |
 |---|---|---|

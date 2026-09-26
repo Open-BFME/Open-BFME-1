@@ -42,8 +42,10 @@ LITERAL = re.compile(r"-?[\d.]+f?|0x[0-9a-fA-F]+|true|false|this|NULL")
 
 def locate(text, symbol):
     """(line start of the definition, index of its `{`, index of its `}`)."""
-    m = re.match(r"\?(\w+)@(\w+)@@", symbol)
-    head = f"{m.group(2)}::{m.group(1)}(" if m else re.match(r"\?(\w+)@@", symbol).group(1) + "("
+    m = re.match(r"\?(\w+)@(\w+)@", symbol)          # method@Class@ (nested scopes follow)
+    if symbol.startswith("??") or not re.match(r"\?\w+@", symbol):
+        raise SystemExit("rotation_sweep: special members and templates are not supported")
+    head = f"{m.group(2)}::{m.group(1)}(" if m and not symbol.startswith(f"?{m.group(1)}@@")         else re.match(r"\?(\w+)@@", symbol).group(1) + "("
     for hit in re.finditer(re.escape(head), text):
         line0 = text.rfind("\n", 0, hit.start()) + 1
         if text[line0:hit.start()].strip().startswith("//"):
@@ -118,6 +120,20 @@ def variants(text, symbol):
     return out
 
 
+def pairs(text, symbol, first):
+    """Second-order toggles: the rotation has three registers, so a body two
+    steps off needs two copies (or a copy and an inline). {name: (what, text)}."""
+    out, seen = {}, {t for _, t in first.values()}
+    for name, (what, text1) in first.items():
+        base = text1.replace(PRELUDE, "", 1)
+        for what2, text2 in variants(base, symbol).values():
+            if text2 in seen or what2 == what or COPY + "(" in what2:
+                continue
+            seen.add(text2)
+            out[f"{name}+{len(out) + 1}"] = (f"{what} AND {what2}", text2)
+    return out
+
+
 def measure(source, text, symbol, retail):
     scratch = source.with_name(f"_rotsweep_{uuid.uuid4().hex[:10]}{source.suffix}")
     obj = build.ROOT / "build" / "rotation_sweep" / (scratch.stem + ".obj")
@@ -148,6 +164,8 @@ def main(argv=None):
     ap.add_argument("--size", type=int)
     ap.add_argument("--jobs", type=int, default=4)
     ap.add_argument("--top", type=int, default=10)
+    ap.add_argument("--pairs", action="store_true",
+                    help="also try every pair of toggles (two rotation steps; slower)")
     args = ap.parse_args(argv)
 
     source = Path(args.source)
@@ -159,6 +177,8 @@ def main(argv=None):
     retail = build.read_target_bytes(rva, size)
     text = source.read_text(encoding="utf-8-sig", errors="replace")
     found = variants(text, args.symbol)
+    if args.pairs:
+        found.update(pairs(text, args.symbol, found))
     jobs = {"base": ("unchanged source", text), **found}
     with ThreadPoolExecutor(max_workers=args.jobs) as pool:
         results = dict(zip(jobs, pool.map(lambda item: measure(source, item[1], args.symbol, retail),

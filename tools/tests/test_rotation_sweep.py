@@ -44,3 +44,18 @@ def test_a_single_use_local_can_be_inlined():
 def test_every_variant_carries_the_identity_inline_once():
     for _, text in R.variants(SOURCE, SYMBOL).values():
         assert text.count(R.PRELUDE) == 1
+
+
+def test_pairs_combine_two_distinct_toggles_once():
+    first = R.variants(SOURCE, SYMBOL)
+    second = R.pairs(SOURCE, SYMBOL, first)
+    assert second
+    for what, text in second.values():
+        assert " AND " in what and text.count(R.PRELUDE) == 1
+    assert len({t for _, t in second.values()}) == len(second)
+
+
+def test_a_nested_scope_names_the_innermost_class():
+    text = "struct ios_base { void f(int); };\nvoid ios_base::f(int x)\n{\n\tg(x);\n}\n"
+    line0, brace, _ = R.locate(text, "?f@ios_base@_STL@@QAEXH@Z")
+    assert text[line0:brace].startswith("void ios_base::f(int x)")
