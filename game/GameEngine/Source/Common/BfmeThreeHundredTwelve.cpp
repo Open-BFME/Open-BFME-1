@@ -16,12 +16,14 @@ struct BfmeHolderRE
 };
 
 BfmeMakerRE *bfmeMakeRE();
+void Rva007E8640Copy(char *destination, unsigned int capacity, const char *source);
 
 class BfmeThingRE
 {
 public:
 	void bfmeRunRE();
 	void bfmeRva007EA4C0SetHolderByte(unsigned char value);
+	void bfmeRva007EA4D0SetHolderText(const char *text);
 	unsigned char m_bfmeHead[4];
 	BfmeHolderRE *m_bfmeHolder;
 };
@@ -37,4 +39,9 @@ void BfmeThingRE::bfmeRunRE()
 void BfmeThingRE::bfmeRva007EA4C0SetHolderByte(unsigned char value)
 {
 	m_bfmeHolder->m_bfmeHead[0x230] = value;
+}
+
+void BfmeThingRE::bfmeRva007EA4D0SetHolderText(const char *text)
+{
+	Rva007E8640Copy((char *)&m_bfmeHolder->m_bfmeHead[0x90], 16, text);
 }
