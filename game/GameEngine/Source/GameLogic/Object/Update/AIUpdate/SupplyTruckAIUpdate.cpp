@@ -801,6 +801,34 @@ StateReturnType SupplyTruckWantsToPickUpOrDeliverBoxesState::update()
 	return STATE_FAILURE;
 }
 
+extern Bool findPositionAround(const Coord3D *, const FindPositionOptions *, Coord3D *);
+
+typedef BitFlags<192> RegroupingKindMask;
+class RegroupingPlayerView
+{
+public:
+	Object *findClosestByKindOf(Object *, RegroupingKindMask, RegroupingKindMask);
+};
+
+
+template <int N>
+class RegroupingVirtualSlots : public RegroupingVirtualSlots<N - 1>
+{
+public:
+	virtual void slot(char (*)[N]);
+};
+template <> class RegroupingVirtualSlots<0> {};
+class RegroupingAIView : public RegroupingVirtualSlots<81>
+{
+public:
+	virtual SupplyTruckAIInterface *getSupplyTruckAIInterface();
+};
+class RegroupingSupplyView : public RegroupingVirtualSlots<11>
+{
+public:
+	virtual void setForceBusyState(Bool);
+};
+
 //-------------------------------------------------------------------------------------------------
 StateReturnType RegroupingState::onEnter()
 {
@@ -816,6 +844,11 @@ TheInGameUI->DEBUG_addFloatingText("entering regrouping state", getMachineOwner(
 	Coord3D destination;
 	AIUpdateInterface *ownerAI = *reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<unsigned char *>(owner) + 0x204);
 	Player* ownerPlayer = owner->getControllingPlayer();
+
+	StateMachine *machine = *reinterpret_cast<StateMachine **>(reinterpret_cast<unsigned char *>(this) + 0x1c);
+	Object *owner = *reinterpret_cast<Object **>(reinterpret_cast<unsigned char *>(machine) + 0x10);
+	AIUpdateInterface *ownerAI = *reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<unsigned char *>(owner) + 0x204);
+	Player *ownerPlayer = owner->getControllingPlayer();
 	if( !ownerPlayer || !ownerAI )
 		return STATE_FAILURE;
 
@@ -823,8 +856,12 @@ TheInGameUI->DEBUG_addFloatingText("entering regrouping state", getMachineOwner(
 	Rva002C6CC0AIUpdateView *ownerAIView = reinterpret_cast<Rva002C6CC0AIUpdateView *>(
 		*reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<unsigned char *>(owner) + 0x204));
 	Rva002C6DD0SupplyInterfaceView *update = reinterpret_cast<Rva002C6DD0SupplyInterfaceView *>(ownerAIView->getSupplyTruckAIInterface());
+
+	SupplyTruckAIInterface *update =
+		reinterpret_cast<RegroupingAIView *>(
+			*reinterpret_cast<AIUpdateInterface **>(reinterpret_cast<unsigned char *>(owner) + 0x204))
+			->getSupplyTruckAIInterface();
 	if( !update )
-	{
 		return STATE_FAILURE;
 	}
 	Bool hasBoxes = update->getNumberBoxes() > 0;
@@ -856,6 +893,36 @@ TheInGameUI->DEBUG_addFloatingText("entering regrouping state", getMachineOwner(
 		return STATE_FAILURE;
 
 found_destination:
+
+
+	Bool hasBoxes = update->getNumberBoxes() > 0;
+	reinterpret_cast<RegroupingSupplyView *>(update)->setForceBusyState(hasBoxes);
+
+	Object *destinationObject = NULL;
+	RegroupingKindMask kindof;
+	RegroupingKindMask kindofnot;
+	kindof.set(34); // BFME CASH_GENERATOR
+	kindofnot.clear();
+	destinationObject = reinterpret_cast<RegroupingPlayerView *>(ownerPlayer)->findClosestByKindOf(owner, kindof, kindofnot);
+	if( !destinationObject )
+	{
+		kindof.clear();
+		kindof.set(17); // BFME COMMANDCENTER
+		kindofnot.clear();
+		destinationObject = reinterpret_cast<RegroupingPlayerView *>(ownerPlayer)->findClosestByKindOf(owner, kindof, kindofnot);
+	}
+	if( !destinationObject )
+	{
+		kindof.clear();
+		kindof.set(7); // BFME STRUCTURE
+		kindofnot.clear();
+		destinationObject = reinterpret_cast<RegroupingPlayerView *>(ownerPlayer)->findClosestByKindOf(owner, kindof, kindofnot);
+	}
+	if( !destinationObject )
+	{
+		return STATE_FAILURE;
+	}
+
 	
 	FindPositionOptions fpOptions;
 	fpOptions.minRadius = 0.0f;
@@ -864,6 +931,8 @@ found_destination:
 	if( ! findPositionAround(
 		reinterpret_cast<const Coord3D *>(reinterpret_cast<const unsigned char *>(destinationObject) + 0x38),
 		&fpOptions, &destination ) )
+
+	if( !findPositionAround( destinationObject->getPosition(), &fpOptions, &destination ) )
 		return STATE_FAILURE;
 
 	ownerAI->aiMoveToPosition( &destination, CMD_FROM_AI );
