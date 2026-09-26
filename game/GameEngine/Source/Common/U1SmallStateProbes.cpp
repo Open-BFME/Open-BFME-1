@@ -132,3 +132,19 @@ int u1IsEmpty_005C1C20( const U1Holder_005C1C20 *h )
 	}
 	return 1;
 }
+
+// The independent retail constructor at 0x00845410 has the same layout and
+// instructions as the 0x005C0DE0 body above; its owner remains unidentified.
+class U1Probe_00845410
+{
+public:
+	U1Probe_00845410( void *p );
+
+	void *m_pointer;
+	bool m_present;
+};
+
+U1Probe_00845410::U1Probe_00845410( void *p )
+	: m_pointer( p ), m_present( p != 0 )
+{
+}
