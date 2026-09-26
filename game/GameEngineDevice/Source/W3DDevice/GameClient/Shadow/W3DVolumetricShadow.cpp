@@ -1367,65 +1367,68 @@ void W3DVolumetricShadow::RenderVolume(Int meshIndex, Int lightIndex)
 	}
 }
 
-// ?RenderMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@@Z present-unmatched
+struct BfmeRenderDevice;
+typedef long (__stdcall *BfmeSetTransform)(BfmeRenderDevice *, unsigned, void *);
+typedef long (__stdcall *BfmeSetStreamSource)(BfmeRenderDevice *, unsigned, void *, unsigned, unsigned);
+typedef long (__stdcall *BfmeSetIndices)(BfmeRenderDevice *, void *);
+typedef long (__stdcall *BfmeSetRenderState)(BfmeRenderDevice *, unsigned, unsigned);
+typedef long (__stdcall *BfmeDrawIndexedPrimitive)(BfmeRenderDevice *, unsigned, unsigned, unsigned, unsigned, unsigned, unsigned);
+struct BfmeRenderDevice { void **vtable; };
+
+// ?RenderMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@@Z
 void W3DVolumetricShadow::RenderMeshVolume(Int meshIndex, Int lightIndex, const Matrix3D *meshXform)
 {
-	Geometry *geometry;
-	Int numVerts, numPolys, numIndex;
+    BfmeRenderDevice *device = *(BfmeRenderDevice **)0x01340534;
+    if (!device) return;
 
-	//Get D3D Device used by W3D for quicker access.
-	LPDIRECT3DDEVICE8 m_pDev=DX8Wrapper::_Get_D3D_Device8();
+    int shadowMask = *(int *)((char *)this + 0x34) >> 7 & 7;
+    if (shadowMask) {
+        unsigned shadowRef = shadowMask << 4;
+        unsigned mask = *(unsigned *)((char *)*(void **)0x01306EEC + 8);
+        unsigned repeated = shadowRef;
+        repeated = (repeated << 8) | shadowRef;
+        repeated = (repeated << 8) | shadowRef;
+        repeated = (repeated << 8) | mask;
+        repeated |= shadowRef;
+        (*(BfmeSetRenderState **)device)[57](device, 0x3a, repeated);
+        (*(BfmeSetRenderState **)device)[57](device, 0x39, shadowRef);
+    }
 
-	if (!m_pDev)
-		return;
+    Geometry *geometry = m_shadowVolume[lightIndex][meshIndex];
+    int numVerts = geometry->GetNumActiveVertex();
+    int numPolys = geometry->GetNumActivePolygon();
+    if (!numVerts || !numPolys) return;
 
-	geometry = m_shadowVolume[lightIndex][ meshIndex ];
+    Matrix4x4 mWorld(*meshXform);
+    (*(BfmeSetTransform **)device)[44](device, 0x100, (void *)&mWorld.Transpose());
 
-	//
-	// if our count is out of sync with our geometry data something
-	// is wrong here
-	//
-	assert( geometry );
+    W3DBufferManager::W3DVertexBufferSlot *vbSlot =
+        m_shadowVolumeVB[lightIndex][meshIndex];
+    if (!vbSlot) return;
+    if (vbSlot->m_VB->m_DX8VertexBuffer->Get_DX8_Vertex_Buffer() != lastActiveVertexBuffer) {
+        lastActiveVertexBuffer = vbSlot->m_VB->m_DX8VertexBuffer->Get_DX8_Vertex_Buffer();
+        (*(BfmeSetStreamSource **)device)[100](device, 0,
+            vbSlot->m_VB->m_DX8VertexBuffer->Get_DX8_Vertex_Buffer(), 0,
+            vbSlot->m_VB->m_DX8VertexBuffer->FVF_Info().Get_FVF_Size());
+    }
 
-	// get geometry requirements
-	numVerts = geometry->GetNumActiveVertex();
-	numPolys = geometry->GetNumActivePolygon();
-	numIndex = numPolys * 3;
+    W3DBufferManager::W3DIndexBufferSlot *ibSlot =
+        m_shadowVolumeIB[lightIndex][meshIndex];
+    if (!ibSlot) return;
+    (*(BfmeSetIndices **)device)[104](device,
+        ibSlot->m_IB->m_DX8IndexBuffer->Get_DX8_Index_Buffer());
 
-	// reject shadows with no data
-	if( numVerts == 0 || numPolys == 0 )
-		return;
+    if (*(unsigned char *)0x012D6DAD) {
+        Debug_Statistics::Record_DX8_Polys_And_Vertices(numPolys, numVerts, *reinterpret_cast<const ShaderClass *>(0x012D6E08));
+        (*(BfmeDrawIndexedPrimitive **)device)[82](device, 4, vbSlot->m_start, 0,
+            numVerts, ibSlot->m_start, numPolys);
+    }
 
-	Matrix4x4 mWorld(*meshXform);
-
-	///@todo: W3D always does transpose on all of matrix sets.  Slow???  Better to hack view matrix.
-	m_pDev->SetTransform(D3DTS_WORLD,(_D3DMATRIX *)&mWorld.Transpose());
-	
-	W3DBufferManager::W3DVertexBufferSlot *vbSlot=m_shadowVolumeVB[lightIndex][ meshIndex ];
-	if (!vbSlot)
-		return;
-	if (vbSlot->m_VB->m_DX8VertexBuffer->Get_DX8_Vertex_Buffer() != lastActiveVertexBuffer)
-	{	lastActiveVertexBuffer=vbSlot->m_VB->m_DX8VertexBuffer->Get_DX8_Vertex_Buffer();
-		m_pDev->SetStreamSource(0,lastActiveVertexBuffer,
-			vbSlot->m_VB->m_DX8VertexBuffer->FVF_Info().Get_FVF_Size());	//12 bytes per vertex.
-	}
-
-	DEBUG_ASSERTCRASH(vbSlot->m_size >= numVerts,("Overflowing Shadow Vertex Buffer Slot"));
-
-	W3DBufferManager::W3DIndexBufferSlot *ibSlot=m_shadowVolumeIB[lightIndex][ meshIndex ];
-	if (!ibSlot)
-		return;
-
-	DEBUG_ASSERTCRASH(ibSlot->m_size >= numIndex,("Overflowing Shadow Index Buffer Slot"));
-
-	m_pDev->SetIndices(ibSlot->m_IB->m_DX8IndexBuffer->Get_DX8_Index_Buffer(),vbSlot->m_start);
-
-	if (DX8Wrapper::_Is_Triangle_Draw_Enabled())
-	{
-		Debug_Statistics::Record_DX8_Polys_And_Vertices(numPolys,numVerts,ShaderClass::_PresetOpaqueShader);
-		m_pDev->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,0,numVerts,ibSlot->m_start,numPolys);
-	}
-
+    if (shadowMask) {
+        unsigned mask = *(unsigned *)((char *)*(void **)0x01306EEC + 8);
+        (*(BfmeSetRenderState **)device)[57](device, 0x3a, mask);
+        (*(BfmeSetRenderState **)device)[57](device, 0x39, 0x80808080);
+    }
 }
 
 // ?RenderDynamicMeshVolume@W3DVolumetricShadow@@IAEXHHPBVMatrix3D@@@Z matched 1269 bytes (Open-BFME5)
