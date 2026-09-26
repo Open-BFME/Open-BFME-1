@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "fee355c13b3933d137070e2a247fc4def636e4346e9b2075d898b9e1a2992f56",
+  "symbol": "?firstValue@Rva0094EE40Owner@@QBEHXZ",
+  "score_kind": "author-estimate",
+  "score": 0.59,
+  "source": "// ?firstValue@Rva0094EE40Owner@@QBEHXZ\n// partial score=0.59 date=2026-09-26\nstruct Rva0094EE40Link { Rva0094EE40Link* m_prev; Rva0094EE40Link* m_next; };\nstruct Rva0094EE40Inner { char m_pad[0x34]; int m_value; };\nstruct Rva0094EE40Mid { char m_pad[0xc]; Rva0094EE40Inner* m_inner; };\nstruct Rva0094EE40Node : Rva0094EE40Link { int m_8; Rva0094EE40Mid* m_mid; };\nstruct Rva0094EE40Owner {\n    char m_pad[0xa8];\n    Rva0094EE40Link m_head;\n    Rva0094EE40Mid* getFirstMid() const { Rva0094EE40Link* p = m_head.m_next; return p == &m_head ? 0 : ((Rva0094EE40Node*)p)->m_mid; }\n    int firstValue() const;\n};\nint Rva0094EE40Owner::firstValue() const\n{\n    if (*(Rva0094EE40Link* volatile*)&m_head.m_next == &m_head)\n        return 0;\n    return getFirstMid()->m_inner->m_value;\n}\n"
+}
