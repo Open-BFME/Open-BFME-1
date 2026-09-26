@@ -533,7 +533,7 @@ static int io_flush (lua_State *L) {
   lua_pop(L, 1);  /* remove upvalue */
   f = gethandle(L, ctrl, 1);
   luaL_arg_check(L, f || lua_isnull(L, 1), 1, "invalid file handle");
-  return pushresult(L, fflush(f) == 0);
+  return pushresult_close(L, fflush(f) == 0);
 }
 
 /* }====================================================== */
