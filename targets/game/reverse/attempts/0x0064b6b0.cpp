@@ -1,6 +1,6 @@
 // ?listingGamesCallback@@YAXPAXHPBDPAU_SBServer@@HHH0@Z
-// partial score=0.9934640523 date=2026-09-23
-// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /ICode/Libraries/Source/WWVegas/WWLib
+// partial score=0.9935 date=2026-09-26
+// cl: /DNDEBUG /DWIN32 /MD /EHsc /D_STLP_USE_STATIC_LIB /Oy /Igame/Libraries/Source/WWVegas/WWLib
 // stlport
 // PeerThread.cpp reconstruction bank. GPL-3.0-or-later, derived from EA Zero Hour.
 // Identity and boundaries: build/unclaimed_map/astra_J/IDENTITY.md.
