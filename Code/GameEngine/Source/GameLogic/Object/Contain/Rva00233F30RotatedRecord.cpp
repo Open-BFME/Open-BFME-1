@@ -5,8 +5,9 @@
 // default-constructs a 16-byte record with 0x00233C80 (ILT 0x00033D39, the
 // same constructor Rva00244E60::add uses before pushing into the +0x12C
 // vector), stores the rotated +4 pair and the source record's +0xC float,
-// and returns it through 0x00232470 (ILT 0x0003535F, whose only caller in the
-// image is this body).  Both constructors keep their bodies visible here and
+// and returns it through the record's copy constructor 0x00232470 (ILT
+// 0x0003535F, whose only caller in the image is this body; claimed from this
+// TU, reverse/identity_evidence/00232470.md).  Both constructors keep their bodies visible here and
 // __declspec(noinline) (docs/shape_levers.md: give the callee its real body in
 // the TU): MSVC 7.1 then proves the local never escapes and hoists the +0xC
 // load above the pair stores exactly as retail does.  A declaration-only
