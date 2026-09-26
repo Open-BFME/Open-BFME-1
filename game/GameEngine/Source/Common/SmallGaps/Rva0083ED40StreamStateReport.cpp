@@ -1,5 +1,5 @@
 // ?setState@Rva0083ED40Stream@@QAEXH@Z
-// Open-BFME7: STLport ios_base state setters with exceptions off (2 x 50 B):
+// STLport ios-style stream state setters with exceptions off:
 // the failure path reports through the global callback instead of throwing.
 extern void* g_global;
 extern void (__cdecl* g_call)(const char* what, void* where);
@@ -12,6 +12,7 @@ struct Rva0083ED40Stream {
 	void* m_buffer;
 	void setState(int state);
 	void addState(int state);
+	void rva0083ED00(int exceptions);
 	void rva0083EDB0(int exceptions);
 	__forceinline void clearState(int state)
 	{
@@ -37,6 +38,12 @@ void Rva0083ED40Stream::addState(int state)
 }
 
 void Rva0083ED40Stream::rva0083EDB0(int exceptions)
+{
+	m_exceptions = exceptions;
+	clearState(m_state);
+}
+
+void Rva0083ED40Stream::rva0083ED00(int exceptions)
 {
 	m_exceptions = exceptions;
 	clearState(m_state);
