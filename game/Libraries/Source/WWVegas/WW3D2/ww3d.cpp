@@ -867,6 +867,16 @@ WW3DErrorType WW3D::Registry_Save_Render_Device( const char *sub_key, int device
 	}
 }
 
+// The retail one-argument helper returns a normalized bool rather than WW3DErrorType.
+bool rva008fd210RegistrySaveRenderDevice(const char *sub_key)
+{
+	bool success = DX8Wrapper::Registry_Save_Render_Device(sub_key);
+	if (success) {
+		return true;
+	}
+	return false;
+}
+
 // Retail RVA 0x008FD230 is a distinct seven-argument bool wrapper.  The
 // semantic WW3DErrorType overload above is not an identity-safe name for its
 // low-byte return, so retain the proven ABI as an address-qualified helper.
