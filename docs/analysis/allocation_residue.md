@@ -32,7 +32,8 @@ callee-saved, stack-slot or SIB classes, and 0x0020DF90 has no upstream site.
 - Scratch harness (untracked, `build/alloc/`): `cod.py` compiles a probe TU
   with `-FAsc` and prints the listing; `exp.py` applies literal source edits
   to a bank and diffs each variant against retail; `autorot.py` generates the
-  push-copy toggles described below, one site per variant.
+  push-copy toggles described below, one site per variant. Both are now one
+  tracked tool, `tools/rotation_sweep.py`.
 
 ## The dataset
 

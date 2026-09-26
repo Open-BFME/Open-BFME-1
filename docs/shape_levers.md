@@ -1468,6 +1468,12 @@ nearest pushed load above the first mismatch (other arguments of the same
 call count) and try the other spelling. Where Zero Hour writes an accessor,
 use it.
 
+`python3 tools/rotation_sweep.py SRC.cpp "MANGLED" 0xRVA` tries every toggle
+(each call argument, member-call receiver and memory-reading initialiser
+copied, each single-use local inlined) in a few seconds and ranks them; it
+finds 0x0024C420's fix first. A winner is a hypothesis: respell it as a local
+copy or the ZH accessor and land only that spelling.
+
 | body | pushed load toggled | control (direct) |
 |---|---|---|
 | `AIUpdateInterface::privateMoveToObject` 0x00271630 (70 B) | `getObject()` into the ActionManager test; the `__fastcall` table adapter became unnecessary | 6 bytes (all three vtable temps) |
