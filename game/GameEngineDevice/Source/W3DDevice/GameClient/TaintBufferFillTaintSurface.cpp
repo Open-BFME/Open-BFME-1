@@ -37,8 +37,8 @@ public:
 
 private:
 	unsigned char m_pad00[0x20];
-	int m_width;
-	int m_height;
+	int m_dstTextureWidth;
+	int m_dstTextureHeight;
 };
 
 // ?fillTaintSurface@TaintBuffer@@QAEXEPAVSurfaceClass@@@Z
@@ -57,9 +57,9 @@ void TaintBuffer::fillTaintSurface(unsigned char alpha, SurfaceClass *surface)
 
 	int pitch;
 	unsigned int *pixels = (unsigned int *)surface->Lock(&pitch, false);
-	for (int y = 0; y < m_height; y++)
+	for (int y = 0; y < m_dstTextureHeight; y++)
 	{
-		for (int x = 0; x < m_width; x++)
+		for (int x = 0; x < m_dstTextureWidth; x++)
 			pixels[x] = color;
 		pixels = (unsigned int *)((unsigned char *)pixels + pitch);
 	}

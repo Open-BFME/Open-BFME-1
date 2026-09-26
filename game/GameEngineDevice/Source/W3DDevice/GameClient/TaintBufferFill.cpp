@@ -25,12 +25,12 @@ public:
 	void fill(unsigned char alpha);
 
 private:
-	unsigned int m_width;
-	unsigned int m_height;
+	unsigned int m_numCellsX;
+	unsigned int m_numCellsY;
 	unsigned char m_pad08[0x18 - 0x08];
-	unsigned int *m_dwords;
+	unsigned int *m_taintData;
 	unsigned char m_pad1C[0x38 - 0x1C];
-	unsigned char *m_bytes;
+	unsigned char *m_cellLevels;
 };
 
 // ?fill@TaintBuffer@@QAEXE@Z
@@ -48,12 +48,12 @@ void TaintBuffer::fill(unsigned char alpha)
 	color = (color << 8) | alpha;
 	color = (color << 8) | alpha;
 	color = (color << 8) | alpha;
-	unsigned int *dst = m_dwords;
+	unsigned int *dst = m_taintData;
 	unsigned int y;
-	for (y = 0; y < m_height; y++)
+	for (y = 0; y < m_numCellsY; y++)
 	{
 		unsigned int x;
-		for (x = 0; x < m_width; )
+		for (x = 0; x < m_numCellsX; )
 		{
 			*dst = color;
 			x++;
@@ -61,15 +61,15 @@ void TaintBuffer::fill(unsigned char alpha)
 		}
 	}
 	unsigned int i = 0;
-	unsigned int row = (unsigned int)m_bytes;
-	for (y = 0; y < m_height; y++)
+	unsigned int row = (unsigned int)m_cellLevels;
+	for (y = 0; y < m_numCellsY; y++)
 	{
 		i = 0;
-		for (; i < m_width; )
+		for (; i < m_numCellsX; )
 		{
 			*(char *)(i + row) = alpha;
 			i++;
 		}
-		row += m_width;
+		row += m_numCellsX;
 	}
 }
