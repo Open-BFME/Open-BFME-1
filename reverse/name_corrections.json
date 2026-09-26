@@ -5628,5 +5628,15 @@
   "after_sha256": "beba4d9745190cd26e6f5ccf70a31928dc842a265e23d26873c5010ea5518e52",
   "evidence": "docs/naming_evidence.md",
   "reason": "address-token pin ?rva00107140@Radar@@QAE_NPAVCoord3D@@@Z kept over the bank getLastEventLoc/clearAllEvents spellings because it conflicts with the pinned caller spelling and only the ZH caller shape supports the semantic name; m_eventCursor/eventIndex/selected fold into m_field1430 and m_eventFrame becomes m_field1434 because the bank field names have no witness while landed RadarXferObjectList.cpp already names +0x1430 m_field1430 and +0x1434 m_field1434"
+ },
+ {
+  "old_path": "reverse/attempts/0x006b0850.cpp",
+  "new_path": "Code/GameEngine/Source/Common/System/XferMapAsciiStringReal.cpp",
+  "old_name": "AsciiStringFloatMap",
+  "new_name": "Rva006AF6D0Map",
+  "before_sha256": "59be4f813311375cadc9a2315e260eadd567c7bee3cae90521309f8d10303162",
+  "after_sha256": "b248596f14dd5ab8e80c11cce6b345911b38d9c0d209c777379b312034d03655",
+  "evidence": "docs/naming_evidence.md",
+  "reason": "stash typedef AsciiStringFloatMap was a bank name with no evidence; replaced by the opaque comparator-token map type Rva006AF6D0Map that the landed operator[] TU RvaMapAsciiStringQuad006AF6D0.cpp already defines for this comparator (Rva006AF6D0Less), per caller Rva006ABC60::xfer at 0x006B0CB0"
  }
 ]
