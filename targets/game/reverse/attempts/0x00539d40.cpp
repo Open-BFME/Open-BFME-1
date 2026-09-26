@@ -1,6 +1,10 @@
-// ?d_00539d40@@YAXXZ
-// partial score=0.97 date=2026-09-26
+// ?rva00539D40HandleEvent@BfmeC995@@QAEHHHEH@Z
+// partial score=0.99 date=2026-09-26
 // cl: /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHs-c-
+extern "C" void _ReadWriteBarrier(void);
+extern "C" void _WriteBarrier(void);
+#pragma intrinsic(_ReadWriteBarrier)
+#pragma intrinsic(_WriteBarrier)
 // Retail 0x00539D40: custom-match event dispatch for state-dependent actions.
 struct BfmeOwner995C
 {
@@ -41,7 +45,14 @@ public:
 
 int BfmeC995::rva00539D40HandleEvent(int unused, int event, unsigned char action, int flags)
 {
-	if (event != 21 || static_cast<int>(action) - 1 || !(flags & 1))
+	if (event != 21)
+		return 0;
+	switch (action)
+	{
+	case 1: break;
+	default: return 0;
+	}
+	if (!(flags & 1))
 		return 0;
 	if (m_count > 0)
 		goto handled;
@@ -49,6 +60,7 @@ int BfmeC995::rva00539D40HandleEvent(int unused, int event, unsigned char action
 	{
 	case 10:
 		bfmeGo995C(0);
+		_ReadWriteBarrier();
 		return 1;
 	case 3:
 		{
@@ -57,12 +69,13 @@ int BfmeC995::rva00539D40HandleEvent(int unused, int event, unsigned char action
 			g_bfmeLog995->bfmeLog995(id, g_bfmeFmt1057, 1, g_bfmeEscAI, 0, 0, 0, 0);
 			m_state = 1;
 			m_flag = 0;
+			_WriteBarrier();
 			return 1;
 		}
 	case 6:
 	case 12:
 		reinterpret_cast<BfmeAptScreenOnlineCustomMatch *>(this)->leaveStagingRoom(0);
-		break;
+		goto handled;
 	case 2:
 		return 0;
 	default:
