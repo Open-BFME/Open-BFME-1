@@ -91,21 +91,21 @@ private:
 	void freeBlocks(void);
 
 	unsigned char m_bfmeHead[0x23624];
-	Rva004029F0 *m_bfmeBlocks;				// +0x23624
-	short *m_bfmeZones;					// +0x23628
-	int m_bfmeZoneCount;					// +0x2362C
-	int m_bfmeZoneMax;					// +0x23630
+	Rva004029F0 *m_blockOfZoneBlocks;				// +0x23624
+	short *m_zoneBlocks;					// +0x23628
+	int m_zoneBlockExtentX;					// +0x2362C
+	int m_zoneBlockExtentY;					// +0x23630
 };
 
 // ?freeBlocks@PathfindZoneManager@@AAEXXZ
 void PathfindZoneManager::freeBlocks(void)
 {
-	delete [] m_bfmeBlocks;
-	m_bfmeBlocks = 0;
+	delete [] m_blockOfZoneBlocks;
+	m_blockOfZoneBlocks = 0;
 
-	delete [] m_bfmeZones;
-	m_bfmeZones = 0;
+	delete [] m_zoneBlocks;
+	m_zoneBlocks = 0;
 
-	m_bfmeZoneCount = 0;
-	m_bfmeZoneMax = 0;
+	m_zoneBlockExtentX = 0;
+	m_zoneBlockExtentY = 0;
 }
