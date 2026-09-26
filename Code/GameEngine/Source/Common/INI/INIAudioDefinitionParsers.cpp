@@ -1,5 +1,6 @@
 // cl: /O2 /Ob1 /DNDEBUG /DWIN32 /D_WINDOWS /MD /EHsc /Ireference/shims/iniexception /ICode/Libraries/Source/WWVegas/WWLib
-// BFME MusicTrack parser. Registry row VA 0x012A829C names RVA 0x000B1B70.
+// BFME audio parsers. INI registry entries and the exception/default literals
+// identify the individual event categories; MusicTrack is at RVA 0x000B1B70.
 // AudioManager slots +0x110/+0x118 are the matched factories returning
 // AudioEventInfoRef; the common field table is VA 0x010813F8.
 #include <string.h>
@@ -73,7 +74,6 @@ public:
 };
 
 
-
 extern "C" __declspec(dllimport) long __stdcall InterlockedIncrement(long volatile *value);
 __declspec(noinline) AudioEventInfoRef &AudioEventInfoRef::operator=(const AudioEventInfoRef &other)
 {
@@ -116,6 +116,7 @@ class INI
 {
 public:
 	static void parseMusicTrackDefinition(INI *ini);
+	static void parseDialogDefinition(INI *ini);
 
 	const char *getNextToken(const char *separators = 0);
 	void initFromINI(void *what, const FieldParse *parseTable);
@@ -139,17 +140,45 @@ void INI::parseMusicTrackDefinition(INI *ini)
 	name.set(token);
 	track = TheAudio->newAudioEventInfo(name);
 
-		AudioInfoViewRva000B1B70 *const audioInfo = track.m_info;
-		if (!audioInfo) return;
+	AudioInfoViewRva000B1B70 *const audioInfo = track.m_info;
+	if (!audioInfo)
+		return;
 
-			AudioEventInfoRef defaultInfo =
-				TheAudio->findAudioEventInfo(AsciiString("DefaultMusicTrack"));
-			if (defaultInfo.m_info != 0)
-			{
-				audioInfo->copyFrom(*defaultInfo.m_info);
-				audioInfo->m_type &= 0xfffffbff;
-			}
-			audioInfo->m_audioName = name;
-			audioInfo->m_soundType = 0;
-			ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
+	AudioEventInfoRef defaultInfo =
+		TheAudio->findAudioEventInfo(AsciiString("DefaultMusicTrack"));
+	if (defaultInfo.m_info != 0)
+	{
+		audioInfo->copyFrom(*defaultInfo.m_info);
+		audioInfo->m_type &= 0xfffffbff;
+	}
+	audioInfo->m_audioName = name;
+	audioInfo->m_soundType = 0;
+	ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
+}
+
+void INI::parseDialogDefinition(INI *ini)
+{
+	if (ini->getLoadType() == 2)
+		throw INIException(3, "You cannot define or override a DialogEvent in map.ini");
+
+	AsciiString name;
+	AudioEventInfoRef track;
+	const char *token = ini->getNextToken();
+	name.set(token);
+	track = TheAudio->newAudioEventInfo(name);
+
+	AudioInfoViewRva000B1B70 *const audioInfo = track.m_info;
+	if (!audioInfo)
+		return;
+
+	AudioEventInfoRef defaultInfo =
+		TheAudio->findAudioEventInfo(AsciiString("DefaultDialog"));
+	if (defaultInfo.m_info != 0)
+	{
+		audioInfo->copyFrom(*defaultInfo.m_info);
+		audioInfo->m_type &= 0xfffffbff;
+	}
+	audioInfo->m_audioName = name;
+	audioInfo->m_soundType = 1;
+	ini->initFromINI(audioInfo, (const FieldParse *)0x010813F8);
 }
