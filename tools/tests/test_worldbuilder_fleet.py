@@ -25,11 +25,11 @@ def context(tmp_path, monkeypatch):
     target = SimpleNamespace(root=tmp_path, build_root=tmp_path / "build/worldbuilder",
                              expected_sha256="a" * 64, target_id="worldbuilder",
                              verify_hash=lambda: b"target")
-    packets = [{"id": "view-grid", "source": "worldbuilder/src/WorldBuilderView.cpp",
+    packets = [{"id": "view-grid", "source": "worldbuilder/WorldBuilderView.cpp",
                 "packet_sha256": "b" * 64},
-               {"id": "view-texture", "source": "worldbuilder/src/WorldBuilderView.cpp",
+               {"id": "view-texture", "source": "worldbuilder/WorldBuilderView.cpp",
                 "packet_sha256": "c" * 64},
-               {"id": "frame-brush", "source": "worldbuilder/src/MainFrm.cpp",
+               {"id": "frame-brush", "source": "worldbuilder/MainFrm.cpp",
                 "packet_sha256": "d" * 64}]
     monkeypatch.setitem(sys.modules, "worldbuilder", SimpleNamespace(open_candidates=lambda _t: packets))
     return target, packets

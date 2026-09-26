@@ -1,11 +1,11 @@
 name,target_rva,target_size,status,source,profile,evidence,model
-?OnUpdateShowGrid@CWorldBuilderView@@IAEXPAVCCmdUI@@@Z,0x00104431,51,matched,worldbuilder/src/WorldBuilderView.cpp,editor-size,mfc:CWorldBuilderView::OnUpdateShowGrid,gpt-6
+?OnUpdateShowGrid@CWorldBuilderView@@IAEXPAVCCmdUI@@@Z,0x00104431,51,matched,worldbuilder/WorldBuilderView.cpp,editor-size,mfc:CWorldBuilderView::OnUpdateShowGrid,gpt-6
 ??6@YAAAVDebug@@AAV0@ABURegion3D@@@Z,0x1bfac,47,matched,game/Libraries/Source/WWVegas/WWMath/region.cpp,engine-size,export,gpt-6
 ??6@YAAAVDebug@@AAV0@ABUIRegion3D@@@Z,0x1bfe6,47,matched,game/Libraries/Source/WWVegas/WWMath/region.cpp,engine-size,export,gpt-6
 ??6@YAAAVDebug@@AAV0@ABURealRange@@@Z,0x1bd2e,78,matched,game/Libraries/Source/WWVegas/WWMath/region.cpp,engine-size,export,gpt-6
 ??9IRegion2D@@QBE_NABU0@@Z,0x1b024,17,matched,game/Libraries/Source/WWVegas/WWMath/region.cpp,engine-size,export,gpt-6
-?OnShowGrid@CWorldBuilderView@@IAEXXZ,0x001043DE,67,matched,worldbuilder/src/WorldBuilderView.cpp,editor-size,mfc:CWorldBuilderView::OnShowGrid,gpt-6
-?OnUpdateWindowPreview1024x768@CWB3dFrameWnd@@IAEXPAVCCmdUI@@@Z,0x000CC466,44,matched,worldbuilder/src/WBFrameWnd.cpp,editor-size,mfc:CWB3dFrameWnd::OnUpdateWindowPreview1024x768,gpt-6
-?OnViewShowtexture@CWorldBuilderView@@IAEXXZ,0x00104470,67,matched,worldbuilder/src/WorldBuilderView.cpp,editor-size,mfc:CWorldBuilderView::OnViewShowtexture,gpt-6
-?OnUpdateWindowPreview640x480@CWB3dFrameWnd@@IAEXPAVCCmdUI@@@Z,0x000CC512,44,matched,worldbuilder/src/WBFrameWnd.cpp,editor-size,mfc:CWB3dFrameWnd::OnUpdateWindowPreview640x480,gpt-6
-?OnUpdateViewShowtexture@CWorldBuilderView@@IAEXPAVCCmdUI@@@Z,0x001044C3,28,matched,worldbuilder/src/WorldBuilderView.cpp,editor-size,mfc:CWorldBuilderView::OnUpdateViewShowtexture,gpt-6
+?OnShowGrid@CWorldBuilderView@@IAEXXZ,0x001043DE,67,matched,worldbuilder/WorldBuilderView.cpp,editor-size,mfc:CWorldBuilderView::OnShowGrid,gpt-6
+?OnUpdateWindowPreview1024x768@CWB3dFrameWnd@@IAEXPAVCCmdUI@@@Z,0x000CC466,44,matched,worldbuilder/WBFrameWnd.cpp,editor-size,mfc:CWB3dFrameWnd::OnUpdateWindowPreview1024x768,gpt-6
+?OnViewShowtexture@CWorldBuilderView@@IAEXXZ,0x00104470,67,matched,worldbuilder/WorldBuilderView.cpp,editor-size,mfc:CWorldBuilderView::OnViewShowtexture,gpt-6
+?OnUpdateWindowPreview640x480@CWB3dFrameWnd@@IAEXPAVCCmdUI@@@Z,0x000CC512,44,matched,worldbuilder/WBFrameWnd.cpp,editor-size,mfc:CWB3dFrameWnd::OnUpdateWindowPreview640x480,gpt-6
+?OnUpdateViewShowtexture@CWorldBuilderView@@IAEXPAVCCmdUI@@@Z,0x001044C3,28,matched,worldbuilder/WorldBuilderView.cpp,editor-size,mfc:CWorldBuilderView::OnUpdateViewShowtexture,gpt-6

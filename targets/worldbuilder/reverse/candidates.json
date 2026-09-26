@@ -30,7 +30,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/WorldBuilderView.cpp",
       "donor_line": 1013,
-      "source": "worldbuilder/src/WorldBuilderView.cpp",
+      "source": "worldbuilder/WorldBuilderView.cpp",
       "profile": "editor-size",
       "target_rva": 1065950,
       "target_size": 67,
@@ -115,7 +115,7 @@
           }
         }
       ],
-      "packet_sha256": "9b66a2425daf186f011044a46122b3ff330c12a84f0b246c0ce61d0ac77558ec"
+      "packet_sha256": "d4bde1b9d942e855544ff9621c196f2a7970cd378bcee29e2d5715af4cfc4842"
     },
     {
       "id": "CWorldBuilderView::OnUpdateShowGrid",
@@ -142,7 +142,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/WorldBuilderView.cpp",
       "donor_line": 1014,
-      "source": "worldbuilder/src/WorldBuilderView.cpp",
+      "source": "worldbuilder/WorldBuilderView.cpp",
       "profile": "editor-size",
       "target_rva": 1066033,
       "target_size": 51,
@@ -184,7 +184,7 @@
           "operands": "dword ptr [eax]"
         }
       ],
-      "packet_sha256": "b7888b80c846ce0c99980037c9b86a92be544ae2a917d59368fe1428d54ef14e"
+      "packet_sha256": "41cfaec64cb1b3cc874160f45ced707316f4d2bed0ddbfbd59ed8f933e8b44e9"
     },
     {
       "id": "CWorldBuilderView::OnViewShowtexture",
@@ -211,7 +211,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/WorldBuilderView.cpp",
       "donor_line": 1016,
-      "source": "worldbuilder/src/WorldBuilderView.cpp",
+      "source": "worldbuilder/WorldBuilderView.cpp",
       "profile": "editor-size",
       "target_rva": 1066096,
       "target_size": 67,
@@ -296,7 +296,7 @@
           }
         }
       ],
-      "packet_sha256": "6326d4e48c2c0594f8b69853a09a8c88a8f5cee9e38acbe2c4529c97085b5579"
+      "packet_sha256": "1a765ca73e19f558f0bcfca2ce8b6ad8ec092fdc99d35d973e4141cea40e10e4"
     },
     {
       "id": "CWorldBuilderView::OnUpdateViewShowtexture",
@@ -323,7 +323,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/WorldBuilderView.cpp",
       "donor_line": 1017,
-      "source": "worldbuilder/src/WorldBuilderView.cpp",
+      "source": "worldbuilder/WorldBuilderView.cpp",
       "profile": "editor-size",
       "target_rva": 1066179,
       "target_size": 28,
@@ -361,7 +361,7 @@
           "operands": "dword ptr [edx + 4]"
         }
       ],
-      "packet_sha256": "d23bc11cdfd0d31607b019408180521ce3f9660fc01ca52935a534794beed919"
+      "packet_sha256": "8ffe8a01d39e0a769adf2038fc9c3590b0e58a8aaec2eddd05a60d5633de00d4"
     },
     {
       "id": "CMainFrame::OnViewBrushfeedback",
@@ -388,7 +388,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/MainFrm.cpp",
       "donor_line": 46,
-      "source": "worldbuilder/src/MainFrm.cpp",
+      "source": "worldbuilder/MainFrm.cpp",
       "profile": "editor-size",
       "target_rva": 467633,
       "target_size": 60,
@@ -478,7 +478,7 @@
           }
         }
       ],
-      "packet_sha256": "0a00b436ae018a7aaa71bd50c7e94ad7ad9f0e1fc05a3ecbfe97d3b1c340255a"
+      "packet_sha256": "03cfe7728aaf55c96331e0f0f68493c03505dcdeaa2c184c60d81c78ef05aa32"
     },
     {
       "id": "CMainFrame::OnUpdateViewBrushfeedback",
@@ -505,7 +505,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/MainFrm.cpp",
       "donor_line": 47,
-      "source": "worldbuilder/src/MainFrm.cpp",
+      "source": "worldbuilder/MainFrm.cpp",
       "profile": "editor-size",
       "target_rva": 467708,
       "target_size": 24,
@@ -545,7 +545,7 @@
           "operands": "dword ptr [eax + 4]"
         }
       ],
-      "packet_sha256": "755fc09cfd985bf7d68ca4939d13feb180fdc9f6a33751a07f51e8fb12c8058f"
+      "packet_sha256": "655369010a252686cdb60d4ba505a1efae2937d2a58ecf9cbb151b062f02935e"
     },
     {
       "id": "CWorldBuilderDoc::OnEditLinkCenters",
@@ -572,7 +572,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/WorldBuilderDoc.cpp",
       "donor_line": 109,
-      "source": "worldbuilder/src/WorldBuilderDoc.cpp",
+      "source": "worldbuilder/WorldBuilderDoc.cpp",
       "profile": "editor-size",
       "target_rva": 1020960,
       "target_size": 11,
@@ -605,7 +605,7 @@
       "highlow_operand_rvas": [],
       "string_witnesses": [],
       "callee_contract": [],
-      "packet_sha256": "78cc0479c0994807ce54c2ad89be86df4377ec8d0dbf4815d957b7443c174e35"
+      "packet_sha256": "2d2f0e9752c9802cb74724384409c0846ab92978db63f5c41159553d6ab0c3ee"
     },
     {
       "id": "CWorldBuilderDoc::OnUpdateEditLinkCenters",
@@ -632,7 +632,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/WorldBuilderDoc.cpp",
       "donor_line": 110,
-      "source": "worldbuilder/src/WorldBuilderDoc.cpp",
+      "source": "worldbuilder/WorldBuilderDoc.cpp",
       "profile": "editor-size",
       "target_rva": 1020973,
       "target_size": 25,
@@ -670,7 +670,7 @@
           "operands": "dword ptr [edx + 4]"
         }
       ],
-      "packet_sha256": "a7fc5b917c0c073d5463dbf71fd3627cf3febe783420ed546e1394a16d489e57"
+      "packet_sha256": "397a1e535a5eeb9068cde9dfb6a7881a6e1b6e493b8e531ea5a2ec554e20462d"
     },
     {
       "id": "CWB3dFrameWnd::OnUpdateWindowPreview1024x768",
@@ -697,7 +697,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/WBFrameWnd.cpp",
       "donor_line": 109,
-      "source": "worldbuilder/src/WBFrameWnd.cpp",
+      "source": "worldbuilder/WBFrameWnd.cpp",
       "profile": "editor-size",
       "target_rva": 836710,
       "target_size": 44,
@@ -735,7 +735,7 @@
           "operands": "dword ptr [edx + 4]"
         }
       ],
-      "packet_sha256": "b54554e22c5e4b1973bb6e3593ed7efda1d722904d130c99832b8f649f766b9a"
+      "packet_sha256": "fa289189c189241dfeccd9d6ba588a134d0577b0e1758a8cf69424ab3de2de80"
     },
     {
       "id": "CWB3dFrameWnd::OnUpdateWindowPreview640x480",
@@ -762,7 +762,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/WBFrameWnd.cpp",
       "donor_line": 111,
-      "source": "worldbuilder/src/WBFrameWnd.cpp",
+      "source": "worldbuilder/WBFrameWnd.cpp",
       "profile": "editor-size",
       "target_rva": 836882,
       "target_size": 44,
@@ -800,7 +800,7 @@
           "operands": "dword ptr [edx + 4]"
         }
       ],
-      "packet_sha256": "dbc0df1acb30c8b2fa7d93d06400bc322dc8cdff56a995177b987ec4abb6e772"
+      "packet_sha256": "ed9b1bdbd3c5987efe775575071a0b7bc14ffff1d958090ba783b0e95d0b5322"
     },
     {
       "id": "WbView3d::OnUpdateViewShowwireframe",
@@ -827,7 +827,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/wbview3d.cpp",
       "donor_line": 2149,
-      "source": "worldbuilder/src/wbview3d.cpp",
+      "source": "worldbuilder/wbview3d.cpp",
       "profile": "editor-size",
       "target_rva": 873075,
       "target_size": 28,
@@ -865,7 +865,7 @@
           "operands": "dword ptr [edx + 4]"
         }
       ],
-      "packet_sha256": "b6e66d8e0ed2879e71ba42c159fa608102f72bc1e4bb28f85a1a5184b221b7b7"
+      "packet_sha256": "30e45e274495d220859a0d6fed74b362b80be4a17c8478bb2eb4c179df48c21a"
     },
     {
       "id": "WbView3d::OnUpdateViewShowentire3dmap",
@@ -892,7 +892,7 @@
       ],
       "donor_source": "inputs/reference/CnC_Generals_Zero_Hour/GeneralsMD/Code/Tools/WorldBuilder/src/wbview3d.cpp",
       "donor_line": 2152,
-      "source": "worldbuilder/src/wbview3d.cpp",
+      "source": "worldbuilder/wbview3d.cpp",
       "profile": "editor-size",
       "target_rva": 873256,
       "target_size": 28,
@@ -930,7 +930,7 @@
           "operands": "dword ptr [edx + 4]"
         }
       ],
-      "packet_sha256": "67e3a50f4599587694e724b1de109c81e9ac8d8b74640e8567bc4c1f4928aa3c"
+      "packet_sha256": "ebdf188af0ab3745169e716a732ad436522e9fe89e5f8feeefe414d319914366"
     },
     {
       "id": "Coord2D::Negate",

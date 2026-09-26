@@ -25,11 +25,11 @@ def target(tmp_path):
     game_ledger = tmp_path / "targets/game/reverse/functions.csv"
     game_ledger.parent.mkdir(parents=True)
     game_ledger.write_bytes(b"GAME LEDGER MUST NOT CHANGE\r\n")
-    source = tmp_path / "worldbuilder/src/Editor.cpp"
+    source = tmp_path / "worldbuilder/Editor.cpp"
     source.parent.mkdir(parents=True)
     source.write_text("void Body() {}\n")
     subprocess.run(["git", "init", "--quiet", str(tmp_path)], check=True)
-    subprocess.run(["git", "add", "worldbuilder/src/Editor.cpp"], cwd=tmp_path, check=True)
+    subprocess.run(["git", "add", "worldbuilder/Editor.cpp"], cwd=tmp_path, check=True)
     return Target("worldbuilder", tmp_path, tmp_path / "manifest.json", image,
                   hashlib.sha256(image.read_bytes()).hexdigest(), ledger,
                   tmp_path / "build/worldbuilder", {"editor-size": CompilerProfile(("-O1",), ())},
@@ -39,7 +39,7 @@ def target(tmp_path):
 
 def row(**changes):
     result = dict(name="?Body@@YAXXZ", target_rva="0x00001000", target_size="1",
-                  status="matched", source="worldbuilder/src/Editor.cpp",
+                  status="matched", source="worldbuilder/Editor.cpp",
                   profile="editor-size", evidence="export", model="test-model")
     result.update(changes)
     return result
@@ -62,7 +62,7 @@ def queue_candidates(target, identities):
     for index, identity in enumerate(identities):
         family = identity.split("::")[0]
         rva = 0x1002 + index * 2
-        packet = row(name=identity, target_rva=rva, source=f"worldbuilder/src/{family}.cpp")
+        packet = row(name=identity, target_rva=rva, source=f"worldbuilder/{family}.cpp")
         packet.update(id=identity, bytes_sha256=hashlib.sha256(target.read_rva(rva, 1)).hexdigest())
         packet["packet_sha256"] = wb.packet_hash(packet)
         candidates.append(packet)
@@ -215,7 +215,7 @@ def test_queue_rejects_wrong_image_and_altered_packet(target):
     with pytest.raises(ValueError, match="target hash mismatch"):
         wb.load_candidates(target)
     data["binary_sha256"] = target.expected_sha256
-    data["candidates"][0]["source"] = "worldbuilder/src/Wrong.cpp"
+    data["candidates"][0]["source"] = "worldbuilder/Wrong.cpp"
     path.write_text(json.dumps(data))
     with pytest.raises(ValueError, match="packet hash"):
         wb.load_candidates(target)

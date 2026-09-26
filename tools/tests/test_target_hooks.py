@@ -16,7 +16,7 @@ TOOLS = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location("target_hooks", TOOLS / "target_hooks.py")
 H = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(H)
-SOURCE = "worldbuilder/src/Example.cpp"
+SOURCE = "worldbuilder/Example.cpp"
 SHARED = "game/GameEngine/Shared.cpp"
 
 
@@ -340,7 +340,7 @@ def test_game_source_scan_does_not_consult_editor_claims(tmp_path, monkeypatch):
 @pytest.mark.parametrize("suffix", ["cpp", "c", "cc", "cxx", "asm", "s"])
 def test_other_worker_untracked_translation_unit_does_not_block_landing(repo, suffix):
     add_source(repo)
-    put(repo, f"worldbuilder/src/OtherWorker.{suffix}", "unfinished work\n")
+    put(repo, f"worldbuilder/OtherWorker.{suffix}", "unfinished work\n")
     assert H.run(repo, ":", "HEAD")
     assert calls(repo) == ["check", "verify"]
 

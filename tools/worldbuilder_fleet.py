@@ -63,7 +63,7 @@ def claim(target, candidate_id, run_id, expected_packet=None):
         raise ValueError(f"candidate {candidate_id!r} is absent, already landed or ambiguous")
     packet = selected[0]
     source = packet["source"]
-    if not source.startswith(("worldbuilder/", "worldbuilder/")):
+    if not source.startswith("worldbuilder/"):
         raise ValueError("pilot workers may edit only WorldBuilder-exclusive sources; shared engine donors are read-only")
     if ".." in Path(source).parts or Path(source).is_absolute():
         raise ValueError(f"invalid source ownership path: {source}")

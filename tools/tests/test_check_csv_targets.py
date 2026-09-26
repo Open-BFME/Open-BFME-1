@@ -14,7 +14,7 @@ from target_verify import LEDGER_FIELDS
 from test_targets import configure, image
 
 
-SOURCES = ["worldbuilder/src/First.cpp", "worldbuilder/src/Second.cpp"]
+SOURCES = ["worldbuilder/First.cpp", "worldbuilder/Second.cpp"]
 LEDGER = "targets/worldbuilder/reverse/functions.csv"
 
 
@@ -76,7 +76,7 @@ def test_two_editor_sources_pass_actual_ledger_check(repo, monkeypatch, capsys, 
 
 def test_unclaimed_editor_source_is_not_hidden_by_orphan_allowance(repo):
     root, git = repo
-    path = root / "worldbuilder/src/Unclaimed.cpp"
+    path = root / "worldbuilder/Unclaimed.cpp"
     path.write_text("void unclaimed() {}\n")
     git("add", "--", str(path))
     problems = []

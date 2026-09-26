@@ -12,7 +12,7 @@ try:
     import pefile
 except ModuleNotFoundError as error:   # the hooks import this through check_csv
     raise SystemExit("tools/targets.py needs the pefile package: "
-                     "python3 -m pip install -r requirements.txt") from error
+                     "python3 -m pip install -r tools/requirements.txt") from error
 
 
 ROOT = Path(__file__).resolve().parents[1]

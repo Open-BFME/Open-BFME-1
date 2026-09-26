@@ -300,7 +300,7 @@ def editor_candidates(image, maps):
                 strings.append(dict(operand_rva=ins.address + 1, string_rva=address, value=image.string(address)))
         ident = f"{cls}::{method}"
         candidates.append(dict(id=ident, evidence=f"mfc:{ident}", readable_name=ident, **donor,
-                               source=f"worldbuilder/src/{filename}.cpp", profile="editor-size",
+                               source=f"worldbuilder/{filename}.cpp", profile="editor-size",
                                target_rva=rva, target_size=size, bytes_sha256=sha256(raw),
                                boundary="message-map entry, complete instructions, contained branches, RET then INT3",
                                chain={k: v for k, v in owner.items() if k != "entries"}, message_entry=entry,

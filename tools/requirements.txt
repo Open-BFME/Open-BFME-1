@@ -1,4 +1,4 @@
-# Python packages the repository tools need: python3 -m pip install -r requirements.txt
+# Python packages the repository tools need: python3 -m pip install -r tools/requirements.txt
 # The commit hooks run check_csv, which reads target PE images through pefile
 # (tools/targets.py, since 904cff16ec); without it every commit on the host fails.
 capstone>=5.0

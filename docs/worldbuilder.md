@@ -27,7 +27,7 @@ before comparing bytes. The target ledger is
 `targets/worldbuilder/reverse/functions.csv`; generated runs live under ignored
 `build/worldbuilder/`.
 
-Editor sources belong in `worldbuilder/src/`. Independently verified
+Editor sources belong in `worldbuilder/`. Independently verified
 engine implementations can reuse existing `game/` sources. When WorldBuilder
 needs a different implementation, put it at the corresponding path beneath
 `worldbuilder/`. A game claim never implies a WorldBuilder claim.
