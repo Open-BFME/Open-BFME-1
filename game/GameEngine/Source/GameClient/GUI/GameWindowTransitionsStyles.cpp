@@ -549,60 +549,7 @@ void FadeTransition::reverse( void )
 
 }
 
-// ?draw@FadeTransition@@UAEXXZ present-unmatched
-void FadeTransition::draw( void )
-{
-	if(!m_win)
-		return;
-	const Image *image = m_win->winGetEnabledImage(0);
-	switch (m_drawState) 
-	{
-		case FADETRANSITION_FADE_IN_1:
-		{
-			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 25));
-		}
-		break;
-		case FADETRANSITION_FADE_IN_2:
-		{
-			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 50));
-		}
-		break;
-		case FADETRANSITION_FADE_IN_3:
-		{
-			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 75));
-		}
-		break;
-		case FADETRANSITION_FADE_IN_4:
-		{
-			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 100));
-		}
-		break;
-		case FADETRANSITION_FADE_IN_5:
-		{
-			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 125));
-		}
-		break;
-		case FADETRANSITION_FADE_IN_6:
-		{
-			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 150));
-		}
-		break;
-		case FADETRANSITION_FADE_IN_7:
-		{
-			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 175));
-		}
-		break;
-		case FADETRANSITION_FADE_IN_8:
-		{
-			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 200));
-		}
-		break;
-		case FADETRANSITION_FADE_IN_9:
-		{
-			TheDisplay->drawImage(image, m_pos.x, m_pos.y, m_pos.x + m_size.x, m_pos.y + m_size.y, GameMakeColor(255, 255, 255, 225));
-		}
-	}
-}
+// FadeTransition::draw is reconstructed in FadeTransition_draw.cpp.
 	
 void FadeTransition::skip( void )
 {
