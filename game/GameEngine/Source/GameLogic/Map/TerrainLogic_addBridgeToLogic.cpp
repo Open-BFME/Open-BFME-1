@@ -40,10 +40,6 @@ private:
 	char m_tail[4];
 };
 
-// Bridge's retail constructor takes a fourth stack word although its public
-// declaration exposes only three source arguments.
-#pragma comment(linker, "/alternatename:??0Bridge@@QAE@AAVBridgeInfo@@PAVDict@@VAsciiString@@H@Z=_bfme_Bridge_ctor_1A98A0")
-
 class Pathfinder
 {
 public:

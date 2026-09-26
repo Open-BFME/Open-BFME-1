@@ -232,8 +232,8 @@ Object *Bridge::createTower( Coord3D *worldPos,
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Bridge_ctor_Thunk.cpp
-// ??0Bridge@@ present-unmatched
+// The retail four-argument overload is reconstructed in Bridge_ctor.cpp.
+// This three-argument form documents the Zero Hour reference behavior.
 Bridge::Bridge(BridgeInfo &theInfo, Dict *props, AsciiString bridgeTemplateName) :
 m_bridgeInfo(theInfo)
 {
@@ -346,8 +346,7 @@ m_bridgeInfo(theInfo)
 
 //-------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------
-// byte-exact reconstruction: game/GameEngine/Source/GameLogic/Bridge_ctor_Thunk.cpp
-// ??0Bridge@@ present-unmatched
+// The Object-based overload remains an unmatched reference implementation.
 Bridge::Bridge(Object *bridgeObj) 
 {
 

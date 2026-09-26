@@ -1,0 +1,5 @@
+# Bridge constructor at 0x001A98A0
+
+The matched `TerrainLogic::addBridgeToLogic` caller in `game/GameEngine/Source/GameLogic/Map/TerrainLogic_addBridgeToLogic.cpp` allocates a 0x90-byte `Bridge` and passes four arguments: `BridgeInfo&`, `Dict*`, `AsciiString` by value, and an integer zero. The retail body at 0x001A98A0 accesses the fourth argument and stores it at object offset 0x8C. The former `??0Bridge@@` claim in `Bridge_ctor_Thunk.cpp` was a naked emitted-byte implementation of that same 861-byte body, not a decorated C++ constructor. The three-argument `Bridge::Bridge` in `TerrainLogic.cpp` is the separate Zero Hour reference algorithm and has a different signature.
+
+The replacement `game/GameEngine/Source/GameLogic/Map/Bridge_ctor.cpp` preserves the four-argument ABI and emits the exact 861 retail instruction bytes modulo 30 relocation slots, as independently measured with `tools/probe.py` against 0x001A98A0. The emitted `??0Bridge@@` claim is replaced by the actual MSVC decorated symbol `??0Bridge@@QAE@AAVBridgeInfo@@PAVDict@@VAsciiString@@H@Z`; no naked copy remains.
