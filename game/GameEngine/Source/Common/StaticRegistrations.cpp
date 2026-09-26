@@ -32,6 +32,27 @@ extern void *bfmeRva012A86DCRegistrationNext;
 extern void *bfmeRva012A86ECRegistrationNext;
 extern void *bfmeRva012A86FCRegistrationNext;
 extern void *bfmeRva012A8708RegistrationNext;
+extern void *bfmeRva012A8754RegistrationNext;
+extern void *bfmeRva012A8760RegistrationNext;
+extern void *bfmeRva012A876CRegistrationNext;
+extern void *bfmeRva012A878CRegistrationNext;
+extern void *bfmeRva012A879CRegistrationNext;
+extern void *bfmeRva012A87A8RegistrationNext;
+extern void *bfmeRva012A87F4RegistrationNext;
+extern void *bfmeRva012A884CRegistrationNext;
+extern void *bfmeRva012A8868RegistrationNext;
+extern void *bfmeRva012A889CRegistrationNext;
+extern void *bfmeRva012A88A8RegistrationNext;
+extern void *bfmeRva012A88C0RegistrationNext;
+extern void *bfmeRva012A88CCRegistrationNext;
+extern void *bfmeRva012A8900RegistrationNext;
+extern void *bfmeRva012A8BD0RegistrationNext;
+extern void *bfmeRva012A8C4CRegistrationNext;
+extern void *bfmeRva012A8CFCRegistrationNext;
+extern void *bfmeRva012ACD34RegistrationNext;
+extern void *bfmeRva012ACFE8RegistrationNext;
+extern void *bfmeRva012AD1A4RegistrationNext;
+extern void *bfmeRva012B3C78RegistrationNext;
 
 extern void *bfmeRva012B3C84RegistrationNext;
 extern void *bfmeRva012B3FCCRegistrationNext;
@@ -229,6 +250,132 @@ void bfmeRva00C6ADA0LinkRegistration()
 {
     bfmeRva012A8708RegistrationNext = bfmeRva0130CE50RegistrationHead;
     bfmeRva0130CE50RegistrationHead = &bfmeRva012A8708RegistrationNext;
+}
+
+void bfmeRva00C6ADC0LinkRegistration()
+{
+    bfmeRva012A8754RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8754RegistrationNext;
+}
+
+void bfmeRva00C6ADE0LinkRegistration()
+{
+    bfmeRva012A8760RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8760RegistrationNext;
+}
+
+void bfmeRva00C6AE00LinkRegistration()
+{
+    bfmeRva012A876CRegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A876CRegistrationNext;
+}
+
+void bfmeRva00C6AE20LinkRegistration()
+{
+    bfmeRva012A878CRegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A878CRegistrationNext;
+}
+
+void bfmeRva00C6AE40LinkRegistration()
+{
+    bfmeRva012A879CRegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A879CRegistrationNext;
+}
+
+void bfmeRva00C6AE60LinkRegistration()
+{
+    bfmeRva012A87A8RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A87A8RegistrationNext;
+}
+
+void bfmeRva00C6AE80LinkRegistration()
+{
+    bfmeRva012A87F4RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A87F4RegistrationNext;
+}
+
+void bfmeRva00C6AEA0LinkRegistration()
+{
+    bfmeRva012A884CRegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A884CRegistrationNext;
+}
+
+void bfmeRva00C6AEC0LinkRegistration()
+{
+    bfmeRva012A8868RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8868RegistrationNext;
+}
+
+void bfmeRva00C6AEE0LinkRegistration()
+{
+    bfmeRva012A889CRegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A889CRegistrationNext;
+}
+
+void bfmeRva00C6AF00LinkRegistration()
+{
+    bfmeRva012A88A8RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A88A8RegistrationNext;
+}
+
+void bfmeRva00C6AF20LinkRegistration()
+{
+    bfmeRva012A88C0RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A88C0RegistrationNext;
+}
+
+void bfmeRva00C6AF40LinkRegistration()
+{
+    bfmeRva012A88CCRegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A88CCRegistrationNext;
+}
+
+void bfmeRva00C6AF60LinkRegistration()
+{
+    bfmeRva012A8900RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8900RegistrationNext;
+}
+
+void bfmeRva00C6AF80LinkRegistration()
+{
+    bfmeRva012A8BD0RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8BD0RegistrationNext;
+}
+
+void bfmeRva00C6AFA0LinkRegistration()
+{
+    bfmeRva012A8C4CRegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8C4CRegistrationNext;
+}
+
+void bfmeRva00C6AFC0LinkRegistration()
+{
+    bfmeRva012A8CFCRegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012A8CFCRegistrationNext;
+}
+
+void bfmeRva00C6B010LinkRegistration()
+{
+    bfmeRva012ACD34RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012ACD34RegistrationNext;
+}
+
+void bfmeRva00C6B030LinkRegistration()
+{
+    bfmeRva012ACFE8RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012ACFE8RegistrationNext;
+}
+
+void bfmeRva00C6B100LinkRegistration()
+{
+    bfmeRva012AD1A4RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012AD1A4RegistrationNext;
+}
+
+void bfmeRva00C6B160LinkRegistration()
+{
+    bfmeRva012B3C78RegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012B3C78RegistrationNext;
 }
 
 void bfmeRva00C6B180LinkRegistration()

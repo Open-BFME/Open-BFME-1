@@ -89330,3 +89330,36 @@ rva00618600Vft,0x01116D64,vtable installed by Rva00618600Poly constructor
 ?bfmeRva012A86ECRegistrationNext@@3PAXA,0x012A86EC,registration node linked by retail at 0x00C6AD60
 ?bfmeRva012A86FCRegistrationNext@@3PAXA,0x012A86FC,registration node linked by retail at 0x00C6AD80
 ?bfmeRva012A8708RegistrationNext@@3PAXA,0x012A8708,registration node linked by retail at 0x00C6ADA0
+?bfmeRva012A8754RegistrationNext@@3PAXA,0x012A8754,registration node linked by retail at 0x00C6ADC0
+?bfmeRva012A8760RegistrationNext@@3PAXA,0x012A8760,registration node linked by retail at 0x00C6ADE0
+?bfmeRva012A876CRegistrationNext@@3PAXA,0x012A876C,registration node linked by retail at 0x00C6AE00
+?bfmeRva012A878CRegistrationNext@@3PAXA,0x012A878C,registration node linked by retail at 0x00C6AE20
+?bfmeRva012A879CRegistrationNext@@3PAXA,0x012A879C,registration node linked by retail at 0x00C6AE40
+?bfmeRva012A87A8RegistrationNext@@3PAXA,0x012A87A8,registration node linked by retail at 0x00C6AE60
+?bfmeRva012A87F4RegistrationNext@@3PAXA,0x012A87F4,registration node linked by retail at 0x00C6AE80
+?bfmeRva012A884CRegistrationNext@@3PAXA,0x012A884C,registration node linked by retail at 0x00C6AEA0
+?bfmeRva012A8868RegistrationNext@@3PAXA,0x012A8868,registration node linked by retail at 0x00C6AEC0
+?bfmeRva012A889CRegistrationNext@@3PAXA,0x012A889C,registration node linked by retail at 0x00C6AEE0
+?bfmeRva012A88A8RegistrationNext@@3PAXA,0x012A88A8,registration node linked by retail at 0x00C6AF00
+?bfmeRva012A88C0RegistrationNext@@3PAXA,0x012A88C0,registration node linked by retail at 0x00C6AF20
+?bfmeRva012A88CCRegistrationNext@@3PAXA,0x012A88CC,registration node linked by retail at 0x00C6AF40
+?bfmeRva012A8900RegistrationNext@@3PAXA,0x012A8900,registration node linked by retail at 0x00C6AF60
+?bfmeRva012A8BD0RegistrationNext@@3PAXA,0x012A8BD0,registration node linked by retail at 0x00C6AF80
+?bfmeRva012A8C4CRegistrationNext@@3PAXA,0x012A8C4C,registration node linked by retail at 0x00C6AFA0
+?bfmeRva012A8CFCRegistrationNext@@3PAXA,0x012A8CFC,registration node linked by retail at 0x00C6AFC0
+?bfmeRva012ACD34RegistrationNext@@3PAXA,0x012ACD34,registration node linked by retail at 0x00C6B010
+?bfmeRva012ACFE8RegistrationNext@@3PAXA,0x012ACFE8,registration node linked by retail at 0x00C6B030
+?bfmeRva012AD1A4RegistrationNext@@3PAXA,0x012AD1A4,registration node linked by retail at 0x00C6B100
+?bfmeRva012B3C78RegistrationNext@@3PAXA,0x012B3C78,registration node linked by retail at 0x00C6B160
+?bfmeRva012B5074Source@@3URvaTriple@@A,0x012B5074,retail 0x00C6B500 source triple
+?bfmeRva012B5080FirstCopy@@3URvaTriple@@A,0x012B5080,retail 0x00C6B500 first destination triple
+?bfmeRva012B5068SecondCopy@@3URvaTriple@@A,0x012B5068,retail 0x00C6B500 second destination triple
+?bfmeRva012B50D4Source@@3URvaTriple@@A,0x012B50D4,retail 0x00C6B550 source triple
+?bfmeRva012B50E0FirstCopy@@3URvaTriple@@A,0x012B50E0,retail 0x00C6B550 first destination triple
+?bfmeRva012B50C8SecondCopy@@3URvaTriple@@A,0x012B50C8,retail 0x00C6B550 second destination triple
+?bfmeRva012B5134Source@@3URvaTriple@@A,0x012B5134,retail 0x00C6B5A0 source triple
+?bfmeRva012B5140FirstCopy@@3URvaTriple@@A,0x012B5140,retail 0x00C6B5A0 first destination triple
+?bfmeRva012B5128SecondCopy@@3URvaTriple@@A,0x012B5128,retail 0x00C6B5A0 second destination triple
+?bfmeRva012B518CSource@@3URvaTriple@@A,0x012B518C,retail 0x00C6B5F0 source triple
+?bfmeRva012B5198FirstCopy@@3URvaTriple@@A,0x012B5198,retail 0x00C6B5F0 first destination triple
+?bfmeRva012B5180SecondCopy@@3URvaTriple@@A,0x012B5180,retail 0x00C6B5F0 second destination triple
