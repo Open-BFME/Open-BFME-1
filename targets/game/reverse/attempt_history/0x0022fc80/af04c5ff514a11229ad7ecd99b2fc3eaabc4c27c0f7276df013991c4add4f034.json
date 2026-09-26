@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "sha256": "af04c5ff514a11229ad7ecd99b2fc3eaabc4c27c0f7276df013991c4add4f034",
+  "symbol": "?rva0022fc80Curve@@YAMM@Z",
+  "score_kind": "author-estimate",
+  "score": 0.7,
+  "source": "// ?rva0022fc80Curve@@YAMM@Z\n// partial score=0.7 date=2026-09-26\n// Retail 0x0022FC80 computes a smooth scalar blend using the shared unit float.\n#include <math.h>\n#pragma intrinsic(sqrt)\n\nextern float g_bfmeDefaultBU;\nfloat __cdecl rva0022fc80Curve(float t)\n{\n\tfloat eased = t * (float)sqrt(t);\n\tfloat weight = t * t;\n\treturn eased + weight * (g_bfmeDefaultBU - t);\n}\n"
+}
