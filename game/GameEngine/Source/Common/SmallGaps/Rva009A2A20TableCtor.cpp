@@ -7,6 +7,7 @@ struct Rva009A2A20Table {
 	int m_first;
 	int m_last;
 	Rva009A2A20Table();
+	void restartAt9A2A90();
 };
 Rva009A2A20Table::Rva009A2A20Table()
 {
@@ -14,4 +15,11 @@ Rva009A2A20Table::Rva009A2A20Table()
 	m_last = 0;
 	memset(m_slots, 0, sizeof(m_slots));
 	m_count = 0;
+}
+
+void Rva009A2A20Table::restartAt9A2A90()
+{
+	int current = m_slots[0];
+	m_first = 0;
+	m_last = current;
 }
