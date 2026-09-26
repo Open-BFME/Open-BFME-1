@@ -246,7 +246,35 @@ _ECX = {capstone.x86.X86_REG_ECX, capstone.x86.X86_REG_CX,
         capstone.x86.X86_REG_CL, capstone.x86.X86_REG_CH}
 
 
+ARITY = ROOT / "targets/game/reverse" / "lift_arity.csv"
+
+
+@lru_cache(maxsize=1)
+def _arity():
+    """{(name, target_rva): row} from targets/game/reverse/lift_arity.csv (tools/lift_arity.py)."""
+    import csv
+
+    if not ARITY.exists():
+        return {}
+    with ARITY.open(newline="", encoding="utf-8") as handle:
+        return {(r["name"], r["target_rva"]): r for r in csv.DictReader(handle)}
+
+
 def identity_warnings(name, rva, size, reader=read):
+    """Every hint that the lift's NAME is wrong; warnings, never refusals."""
+    warnings = []
+    row = _arity().get((name, f"0x{rva:08X}"))
+    if row and row["verdict"] == "reads-more":
+        # tools/lift_arity.py: 0.5% of correctly landed rows read more stack
+        # slots than their name declares, 15% of lifts; it caught both misnamed
+        # cdecl lifts of the first finisher round.
+        warnings.append(f"the decompiled body reads {row['inferred_slots']} stack argument slot(s) "
+                        f"but the name declares {row['declared_slots']}: the name is probably wrong "
+                        f"(prove it from callers' pushes and cleanup, or land under an address-derived name)")
+    return warnings + _ecx_warnings(name, rva, size, reader)
+
+
+def _ecx_warnings(name, rva, size, reader=read):
     """Hints that the lift's NAME is wrong; a warning, never a refusal.
 
     The first lift finishers (2026-09-25) found 3 of 4 names wrong even though
@@ -313,7 +341,9 @@ def _class_index():
 def class_homes(name, limit=3):
     """[(source, landed rows)] where this class's landed methods already live."""
     cls = class_of(name)
-    return _class_index().get(cls, {}).most_common(limit) if cls else []
+    homes = _class_index().get(cls) if cls else None
+    # a class with no landed method yet has no entry; brief.py crashed on it
+    return homes.most_common(limit) if homes else []
 
 
 SCAN_LIMIT = 0x10000

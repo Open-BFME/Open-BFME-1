@@ -57,7 +57,10 @@ An explicit request or assigned lane overrides the queue:
    claims and the lifts copied Ghidra sizes that stop short of the real `ret`.
    `targets/game/reverse/lift_extents.csv` carries the proven corrections (the brief says
    EXTENT); `--suspect` lists the rest, mostly names whose stack cleanup
-   contradicts the body. Convert one like `33110b4b40`: real body in the TU the
+   contradicts the body. The names came with the lifts and are often wrong
+   (4 of the first 11): `targets/game/reverse/lift_arity.csv` (`tools/lift_arity.py`,
+   GhidraSQL) marks bodies that read more stack arguments than their name
+   declares, and the brief says IDENTITY CHECK. Convert one like `33110b4b40`: real body in the TU the
    lift's `// readable body of` comment names, `add_match --replace-existing`
    at the proven extent, delete the naked function.
 3b. **Replacing generator-written C++ with hand-written C++ is deferred.**

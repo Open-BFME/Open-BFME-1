@@ -112,6 +112,23 @@ def test_a_thiscall_body_that_reads_ecx_is_not_flagged():
     assert lift_lane.identity_warnings("?m@C@@QAEHXZ", LEAF_AT, len(body), read) == []
 
 
+def test_class_homes_of_a_class_with_nothing_landed_is_empty(monkeypatch):
+    from collections import Counter
+    monkeypatch.setattr(lift_lane, "_class_index", lambda: {"Known": Counter({"game/Known.cpp": 3})})
+    assert lift_lane.class_homes("?f@Known@@QAEXXZ") == [("game/Known.cpp", 3)]
+    assert lift_lane.class_homes("?f@NeverLanded@@QAEXXZ") == []
+    assert lift_lane.class_homes("?free@@YAXXZ") == []
+
+
+def test_arity_verdict_becomes_an_identity_warning(monkeypatch):
+    rows = {("?m@C@@QAEXXZ", "0x00001010"): {"verdict": "reads-more", "inferred_slots": "3",
+                                             "declared_slots": "0"}}
+    monkeypatch.setattr(lift_lane, "_arity", lambda: rows)
+    read = image(PAD, LEAF, PAD)
+    warnings = lift_lane.identity_warnings("?m@C@@QAEXXZ", LEAF_AT, 5, read)
+    assert any("reads 3 stack argument slot(s)" in w for w in warnings)
+
+
 def _ledger(*spans):
     rows = [{"status": "matched", "target_rva": f"0x{s:08X}", "target_size": str(n)}
             for s, n in spans]
