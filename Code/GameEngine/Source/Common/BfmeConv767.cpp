@@ -1,27 +1,36 @@
+// cl: /ICode/Libraries/Source/WWVegas/WWLib
+//
+// Rva00367E30Logic::rva003870f0, retail 0x003870F0, 45 bytes.
+//
+// __thiscall AsciiString getter taking const AsciiString& (hidden return
+// slot, ret 8): forwards the name to the store at this+0x170 (ILT 0x00014943,
+// 0x003636C0) and copy-constructs the result (StringBase<char> 0x00887B60)
+// into the return slot. The matched caller Rva003BF540::applyOwner
+// (0x003BF190 +0xDA) calls it on TheBfmeGameLogic through ILT 0x000228DB.
+// Address-derived name; see reverse/identity_evidence/0x003870F0.md.
+
+#include "ascii_string.h"
+
+inline AsciiString::~AsciiString()
+{
+	((StringBase<char> *)this)->releaseBuffer();
+}
+
 class BfmeSubDRE
 {
 public:
 	void *bfmeOneDRE(void *what);
 };
 
-class BfmeOtherDRE
+struct Rva00367E30Logic
 {
-public:
-	void bfmeTwoDRE(void *value);
-};
+	AsciiString rva003870f0(const AsciiString &name);
 
-class BfmeThingDRE
-{
-public:
-	BfmeOtherDRE *bfmeGoDRE(BfmeOtherDRE *other, void *what);
-	unsigned char m_bfmeHead[0x170];
+	unsigned char m_head[0x170];
 	BfmeSubDRE m_bfmeSub;
 };
 
-BfmeOtherDRE *BfmeThingDRE::bfmeGoDRE(BfmeOtherDRE *other, void *what)
+AsciiString Rva00367E30Logic::rva003870f0(const AsciiString &name)
 {
-	volatile int tmp = 0;
-	void *r = m_bfmeSub.bfmeOneDRE(what);
-	other->bfmeTwoDRE(r);
-	return other;
+	return *(const AsciiString *)m_bfmeSub.bfmeOneDRE((void *)&name);
 }
