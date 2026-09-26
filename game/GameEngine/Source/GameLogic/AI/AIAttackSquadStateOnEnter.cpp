@@ -24,6 +24,7 @@ enum StateReturnType
 typedef unsigned char Bool;
 
 enum { INVALID_STATE_ID = 999999 };	// Zero Hour StateMachine.h
+enum { AI_IDLE = 0, AI_ATTACK_OBJECT = 10, AI_PICK_UP_CRATE = 39 };
 
 class Object;
 class State;
@@ -37,11 +38,11 @@ public:
 	virtual void slot04() = 0;
 	virtual void slot08() = 0;
 	virtual void slot0c() = 0;
-	virtual void slot10() = 0;
+	virtual StateReturnType updateStateMachine() = 0;
 	virtual void slot14() = 0;
 	virtual void slot18() = 0;
 	virtual StateReturnType initDefaultState() = 0;
-	virtual void slot20() = 0;
+	virtual StateReturnType setState(unsigned int state) = 0;
 	virtual StateMachine *slot24() = 0;	// AIStateMachine slot 9 -> 0x00184C00 factory
 	virtual void slot28() = 0;
 	virtual void slot2c() = 0;
@@ -51,6 +52,7 @@ public:
 
 	Object *getOwner() const { return m_owner; }
 	int getCurrentStateID() const;
+	Object *getGoalObject();
 
 	unsigned char m_pad04[0x10 - 0x04];
 	Object *m_owner;			// +0x10 witnessed
@@ -125,19 +127,27 @@ class Object
 {
 public:
 	Weapon *getCurrentWeapon(WeaponSlotType *slot);
+	bool testStatus(int status) const;
 	void *find(int slot);
 	Player *getControllingPlayer() const;
 
-	unsigned char m_pad000[0x1f5];
+	unsigned char m_pad000[0x90];
+	unsigned int m_status;
+	unsigned char m_pad094[0x1f5 - 0x94];
 	Bool byte_1f5;
 	unsigned char m_pad1f6[0x204 - 0x1f6];
 	AIUpdateInterface *m_ai;	// receiver of the matched AIUpdateInterface callees
+	unsigned char m_pad208[0x214 - 0x208];
+	Object *m_containedBy;
+	unsigned char m_pad218[0x344 - 0x218];
+	unsigned char m_privateStatus;
 };
 
 class AIAttackSquadState : public State
 {
 public:
 	virtual StateReturnType onEnter();
+	virtual StateReturnType update();
 	Object *chooseVictim();
 
 	unsigned char m_pad20[0x24 - 0x20];
@@ -185,4 +195,121 @@ StateReturnType AIAttackSquadState::onEnter()
 	}
 	byte_28 = 0;
 	return m_attackSquadMachine->initDefaultState();
+}
+
+struct Coord3D { float x, y, z; };
+class Pathfinder
+{
+public:
+	unsigned char m_padding00[0x0c];
+};
+
+class AI
+{
+public:
+	unsigned char m_padding00[0x0c];
+	Pathfinder *m_pathfinder;
+};
+
+extern AI *TheAI;
+
+// These ABI views keep the verified ILT routes at this retail call site.
+// In particular the pathfinder receives the current Weapon* as its third argument.
+class BfmePathfinderMethods
+{
+public:
+	bool check(const Object *source, const Coord3D *goal,
+		const Weapon *weapon, int extra);
+};
+class BfmeAIUpdateMethods
+{
+public:
+	Object *checkForCrateToPickup();
+};
+class BfmeThingMethods
+{
+public:
+	bool isKindOf(int kind) const;
+};
+// ?update@AIAttackSquadState@@UAE?AW4StateReturnType@@XZ
+// Retail vtable 0x01097E30 slot 6 routes here. Keep the actual rva0016B010
+// helper in this TU: the compiler passes its Object* in EDI, not on the stack.
+// The update and onEnter callers each require that compiler-private ABI.
+StateReturnType AIAttackSquadState::update()
+{
+	if (this->m_attackSquadMachine == 0)
+		return STATE_FAILURE;
+
+	if ((this->m_machine->m_owner->m_status & 0x10000000) != 0)
+		this->byte_28 = true;
+
+	Object *owner = this->m_machine->m_owner;
+	Object *goal;
+	AIUpdateInterface *ai = owner->m_ai;
+	goal = this->m_machine->getGoalObject();
+	if (goal != this->m_attackSquadMachine->getGoalObject())
+		this->m_attackSquadMachine->setGoalObject(goal);
+
+	StateReturnType attackStatus = this->m_attackSquadMachine->updateStateMachine();
+	attackStatus = attackStatus > STATE_CONTINUE ? STATE_CONTINUE : attackStatus;
+
+	if (this->m_attackSquadMachine == 0)
+		return STATE_CONTINUE;
+	State *current = this->m_attackSquadMachine->m_currentState;
+	if (current == 0 || current->m_ID != AI_IDLE)
+		return attackStatus;
+
+	Weapon *weapon = owner->getCurrentWeapon(0);
+	if (weapon == 0)
+		return STATE_FAILURE;
+
+	if (goal != 0 && (goal->m_privateStatus & 1) == 0)
+	{
+		if (!((BfmePathfinderMethods *)TheAI->m_pathfinder)->check(owner,
+			reinterpret_cast<const Coord3D *>(reinterpret_cast<const char *>(goal) + 0x38),
+			weapon, 0))
+			return STATE_FAILURE;
+	}
+
+	if (owner->testStatus(0x25) && owner->m_containedBy != 0)
+		return STATE_SUCCESS;
+
+	Object *crate = ((BfmeAIUpdateMethods *)ai)->checkForCrateToPickup();
+	if (crate != 0)
+	{
+		this->m_attackSquadMachine->setGoalObject(crate);
+		this->m_attackSquadMachine->setState(AI_PICK_UP_CRATE);
+		return STATE_CONTINUE;
+	}
+
+	goal = chooseVictim();
+	if (goal == 0)
+		return STATE_SUCCESS;
+
+	if (owner->testStatus(0x40) ||
+		((BfmeThingMethods *)goal)->isKindOf(0x36) ||
+		((BfmeThingMethods *)goal)->isKindOf(0x9a) ||
+		((BfmeThingMethods *)goal)->isKindOf(0x5d) ||
+		goal->getControllingPlayer() != owner->getControllingPlayer())
+	{
+		if (!weapon->isWithinAttackRange(owner, goal, 0))
+		{
+			if (!rva0016B010(owner))
+				return STATE_FAILURE;
+			if (ai->byte_33a)
+				return STATE_FAILURE;
+		}
+
+		this->m_attackSquadMachine->setGoalObject(goal);
+		ai->setCurrentVictim(goal);
+		this->m_machine->setGoalObject(goal);
+		ai->friend_setGoalObject(goal);
+		this->m_attackSquadMachine->setState(AI_ATTACK_OBJECT);
+		return STATE_CONTINUE;
+	}
+
+	ai->friend_setGoalObject(0);
+	this->m_machine->setGoalObject(0);
+	this->m_attackSquadMachine->setGoalObject(0);
+	return STATE_SUCCESS;
 }
