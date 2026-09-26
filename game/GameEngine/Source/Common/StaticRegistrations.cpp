@@ -4,6 +4,7 @@ extern void *bfmeRva012B3C84RegistrationNext;
 extern void *bfmeRva012B3FCCRegistrationNext;
 extern void *bfmeRva012B4120RegistrationNext;
 extern void *bfmeRva012B42E4RegistrationNext;
+extern void *bfmeRva012B438CRegistrationNext;
 
 void bfmeRva00C6B180LinkRegistration()
 {
@@ -27,4 +28,10 @@ void bfmeRva00C6B1E0LinkRegistration()
 {
     bfmeRva012B42E4RegistrationNext = bfmeRva0130CE50RegistrationHead;
     bfmeRva0130CE50RegistrationHead = &bfmeRva012B42E4RegistrationNext;
+}
+
+void bfmeRva00C6B200LinkRegistration()
+{
+    bfmeRva012B438CRegistrationNext = bfmeRva0130CE50RegistrationHead;
+    bfmeRva0130CE50RegistrationHead = &bfmeRva012B438CRegistrationNext;
 }
