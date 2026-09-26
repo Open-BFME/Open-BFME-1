@@ -22,3 +22,8 @@ Rva008AB8B0Base::Rva008AB8B0Base()
       m_0c(0), m_10(0), m_14(0)
 {
 }
+
+// Vtable 0x01136854 slot 0 points here; its semantic name is not witnessed.
+void Rva008AB8B0Base::rva008ab8d0()
+{
+}
