@@ -44,6 +44,8 @@ extern void __cdecl bfmeAddPack8Sse(void *, void *, const void *, const void *, 
 extern void __cdecl bfmeAddPack8MmxRow(void *, void *, const void *, const void *, int);
 extern void __cdecl bfmePackXor80Sse(void *, void *, const void *, int);
 extern void __cdecl bfmePackXor80Mmx(void *, void *, const void *, int);
+extern void __cdecl rva009C7380BinkSse(const unsigned char *, const unsigned char *,
+	void *, int, int, int);
 
 // Unconverted gen-dump callees that already carry a functions.csv row (the
 // row is the candidate; no new pin needed).
@@ -56,7 +58,6 @@ extern void __cdecl rva009C7CC0(const void *, const void *, void *);
 
 // Slot fillers with neither a real identity nor a ghidra-boundary row yet;
 // address-derived names, pinned in targets/game/reverse/symbols.csv.
-extern void __cdecl Rva009C7380(void);
 extern void __cdecl Rva009C6900(void);
 extern void __cdecl Rva009A8110(void);
 extern void __cdecl Rva009A74D0(void);
@@ -128,7 +129,7 @@ void __cdecl bfmeInstallSpreadTable(void)
 		g_bfmeSlotD88 = (void *)&bfmeAddPack8Mmx;
 		g_bfmeSlotB5C = (void *)&bfmeSub8to16Mmx;
 		g_bfmeSlotB44 = (void *)&d_009c6d30;
-		g_bfmeSlotABC = (void *)&Rva009C7380;
+		g_bfmeSlotABC = (void *)&rva009C7380BinkSse;
 		g_bfmeSlotB54 = (void *)&d_009c74f0;
 		g_bfmeSlotB40 = (void *)&copyTwelveVec3;
 		return;
