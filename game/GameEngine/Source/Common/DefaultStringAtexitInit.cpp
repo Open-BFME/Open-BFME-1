@@ -6,10 +6,17 @@ struct BfmeStringData3AF0
 
 extern BfmeStringData3AF0 g_bfmeDefaultString1284;
 void bfmeGoEMIa();
+void bfmeGoEMIb();
 extern "C" int __cdecl atexit(void (__cdecl *callback)());
 
 void bfmeRva00C6DC50InitializeDefaultString()
 {
     ++g_bfmeDefaultString1284.m_refCount;
     atexit(bfmeGoEMIa);
+}
+
+void bfmeRva00C6DC70InitializeDefaultString()
+{
+    ++g_bfmeDefaultString1284.m_refCount;
+    atexit(bfmeGoEMIb);
 }
